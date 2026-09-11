@@ -1,5 +1,126 @@
 [gd_scene format=3 uid="uid://bipfa7yko86fv"]
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="3_sugp2"]
+[ext_resource type="Texture2D" uid="uid://c841dvm6hwgt3" path="res://assets/images/main/card_mode_dungeon_normal.svg" id="4_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://bi5jg176w3kn7" path="res://assets/images/main/card_mode_dungeon_pressed.svg" id="5_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://bs4gjdwpxo7ss" path="res://assets/images/main/card_mode_classic_normal.svg" id="5_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://bumgm06s2bhu0" path="res://assets/images/main/card_mode_daily_normal.svg" id="6_tefeu"]
+[ext_resource type="Texture2D" uid="uid://dihgfo2w73ydi" path="res://assets/images/main/btn_menu_leaderboard.svg" id="8_choun"]
+[ext_resource type="Texture2D" uid="uid://dgrfwbbakoy1" path="res://assets/images/main/btn_menu_rules.svg" id="9_ya4ey"]
+[ext_resource type="Texture2D" uid="uid://cgddw6scnxi63" path="res://assets/images/main/btn_menu_settings.svg" id="10_eb6dy"]
+[ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="11_ya4ey"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_o5qli")]
+
+[node name="Panel" type="TextureRect" parent="." index="1" unique_id=76192589]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025925925
+anchor_top = 0.0734375
+anchor_right = 0.98
+anchor_bottom = 0.96400005
+offset_right = -0.4000244
+offset_bottom = 0.11999512
+texture = ExtResource("2_0wfyh")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Panel" index="0" unique_id=1517190442]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.432
+anchor_top = 0.061000004
+anchor_right = 0.56
+anchor_bottom = 0.13000001
+offset_left = 0.039978027
+offset_top = -13.310013
+offset_right = 0.2000122
+offset_bottom = 0.69996643
+texture = ExtResource("3_sugp2")
+
+[node name="GameMode" type="VBoxContainer" parent="Panel" index="1" unique_id=1934788947]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15400001
+anchor_top = 0.231
+anchor_right = 0.85300004
+anchor_bottom = 0.68600005
+offset_left = 0.37998962
+offset_top = -0.010040283
+offset_right = 0.40997314
+offset_bottom = -0.060180664
+theme_override_constants/separation = 0
+
+[node name="Play" type="TextureButton" parent="Panel/GameMode" index="0" unique_id=1410235984]
+layout_mode = 2
+texture_normal = ExtResource("4_jyhfs")
+texture_pressed = ExtResource("5_o6xl0")
+texture_hover = ExtResource("4_jyhfs")
+texture_disabled = ExtResource("4_jyhfs")
+texture_focused = ExtResource("4_jyhfs")
+
+[node name="Dungeon" type="TextureButton" parent="Panel/GameMode" index="1" unique_id=1434776496]
+layout_mode = 2
+texture_normal = ExtResource("5_tbgi4")
+texture_pressed = ExtResource("5_tbgi4")
+texture_hover = ExtResource("5_tbgi4")
+texture_disabled = ExtResource("5_tbgi4")
+texture_focused = ExtResource("5_tbgi4")
+
+[node name="DailyChallenge" type="TextureButton" parent="Panel/GameMode" index="2" unique_id=539366582]
+layout_mode = 2
+texture_normal = ExtResource("6_tefeu")
+texture_pressed = ExtResource("6_tefeu")
+texture_hover = ExtResource("6_tefeu")
+texture_disabled = ExtResource("6_tefeu")
+texture_focused = ExtResource("6_tefeu")
+
+[node name="Other" type="HBoxContainer" parent="Panel" index="2" unique_id=935967521]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18349515
+anchor_top = 0.7052631
+anchor_right = 0.83800006
+anchor_bottom = 0.777
+offset_right = -0.14001465
+offset_bottom = -0.670166
+metadata/_edit_use_anchors_ = true
+
+[node name="Leaderboard" type="TextureButton" parent="Panel/Other" index="0" unique_id=1366981905]
+layout_mode = 2
+texture_normal = ExtResource("8_choun")
+texture_pressed = ExtResource("8_choun")
+texture_hover = ExtResource("8_choun")
+texture_disabled = ExtResource("8_choun")
+texture_focused = ExtResource("8_choun")
+
+[node name="Rule" type="TextureButton" parent="Panel/Other" index="1" unique_id=1591510809]
+layout_mode = 2
+texture_normal = ExtResource("9_ya4ey")
+texture_pressed = ExtResource("9_ya4ey")
+texture_hover = ExtResource("9_ya4ey")
+texture_disabled = ExtResource("9_ya4ey")
+texture_focused = ExtResource("9_ya4ey")
+
+[node name="Settings" type="TextureButton" parent="Panel/Other" index="2" unique_id=488535435]
+layout_mode = 2
+texture_normal = ExtResource("10_eb6dy")
+texture_pressed = ExtResource("10_eb6dy")
+texture_hover = ExtResource("10_eb6dy")
+texture_disabled = ExtResource("10_eb6dy")
+texture_focused = ExtResource("10_eb6dy")
+
+[node name="Stamp" type="TextureRect" parent="Panel" index="3" unique_id=1043027324]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6590874
+anchor_top = 0.85242116
+anchor_right = 0.9172206
+anchor_bottom = 0.92967844
+offset_left = 0.13995361
+offset_top = 0.3597412
+offset_right = 0.059936523
+offset_bottom = -0.75024414
+texture = ExtResource("11_ya4ey")
+metadata/_edit_use_anchors_ = true

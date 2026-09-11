@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c66v5bmdvegnd"
-path="res://.godot/imported/star_highlight.svg-bf6cfa639938a74618116f60d5e3434f.ctex"
+path="res://.godot/imported/star_highlight.svg-14227f4d1a6b8fc3e884d814f89ffd40.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/level_selector/star_highlight.svg"
-dest_files=["res://.godot/imported/star_highlight.svg-bf6cfa639938a74618116f60d5e3434f.ctex"]
+source_file="res://assets/images/star_highlight.svg"
+dest_files=["res://.godot/imported/star_highlight.svg-14227f4d1a6b8fc3e884d814f89ffd40.ctex"]
 
 [params]
 
