@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 926 1216" width="926" height="1216">
+  <defs>
+    <!-- Đổ bóng tự nhiên cho tờ giấy -->
+    <filter id="winPaperShadow" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#2D2115" flood-opacity="0.25"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#2D2115" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- ================= 1. MẢNH GIẤY TRẮNG NGÀ (y: 40 -> 1160) ================= -->
+  <g transform="translate(40, 40)" filter="url(#winPaperShadow)">
+    <rect width="850" height="1120" rx="18" fill="#FFFDF9"/>
+    
+    <!-- Hàng lỗ bấm ghim mép trái -->
+    <g fill="#EAE3D2" opacity="0.65">
+      <circle cx="24" cy="80" r="7"/><circle cx="24" cy="180" r="7"/><circle cx="24" cy="280" r="7"/>
+      <circle cx="24" cy="380" r="7"/><circle cx="24" cy="480" r="7"/><circle cx="24" cy="580" r="7"/>
+      <circle cx="24" cy="680" r="7"/><circle cx="24" cy="780" r="7"/><circle cx="24" cy="880" r="7"/>
+      <circle cx="24" cy="980" r="7"/><circle cx="24" cy="1080" r="7"/>
+    </g>
+
+    <!-- Các dòng kẻ ngang mờ của sổ tay -->
+    <g stroke="#8FB9D2" stroke-width="1" opacity="0.32">
+      <line x1="60" y1="200" x2="790" y2="200"/><line x1="60" y1="270" x2="790" y2="270"/>
+      <line x1="60" y1="340" x2="790" y2="340"/><line x1="60" y1="410" x2="790" y2="410"/>
+      <line x1="60" y1="480" x2="790" y2="480"/><line x1="60" y1="550" x2="790" y2="550"/>
+      <line x1="60" y1="620" x2="790" y2="620"/><line x1="60" y1="690" x2="790" y2="690"/>
+      <line x1="60" y1="760" x2="790" y2="760"/><line x1="60" y1="830" x2="790" y2="830"/>
+      <line x1="60" y1="900" x2="790" y2="900"/>
+    </g>
+
+    <!-- Lề đỏ vở học sinh -->
+    <line x1="75" y1="0" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" opacity="0.85"/>
+    <!-- Viền mực xanh bao quanh mảnh giấy -->
+    <rect width="850" height="1120" rx="18" fill="none" stroke="#6EA0C8" stroke-width="3"/>
+  </g>
+
+  <!-- ================= 2. BĂNG DÍNH WASHI TAPE DÁN ĐÈ Ở ĐỈNH ================= -->
+  <!-- Đặt tại x=355, y=17 (nhô lên khỏi mép giấy 23px, đè vào giấy 25px) -->
+  <g transform="translate(355, 17)">
+    <rect width="220" height="48" rx="4" fill="#E8DFCA" fill-opacity="0.85" stroke="#D1C6AE" stroke-width="1.5"/>
+    <!-- Họa tiết caro chéo của Washi Tape -->
+    <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" 
+          stroke="#B5A98F" stroke-width="1.2" opacity="0.35"/>
+  </g>
+</svg>

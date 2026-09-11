@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" width="130" height="150">
+  <!-- Lún xuống 2px, màu giấy tối hơn 1 tông, viền đậm hơn -->
+  <g transform="translate(0, 2)">
+    <rect x="2" y="2" width="126" height="146" rx="14" fill="#F4EEDF"/>
+    <rect x="2" y="2" width="126" height="146" rx="14" fill="none" stroke="#9E6322" stroke-width="4"/>
+  </g>
+</svg>

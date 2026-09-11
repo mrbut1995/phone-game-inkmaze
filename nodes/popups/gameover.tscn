@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://c43u1q7j8h7vg"]
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_psrev"]
+[ext_resource type="Texture2D" uid="uid://nnkku81rvntx" path="res://assets/images/popups/popup_game_over.svg" id="2_6oayo"]
 
 [node name="Base" unique_id=1370178296 instance=ExtResource("1_psrev")]
+
+[node name="Panel" parent="." index="0" unique_id=1845041549]
+texture = ExtResource("2_6oayo")

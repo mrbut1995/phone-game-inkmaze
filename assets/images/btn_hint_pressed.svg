@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50">
+  <g transform="translate(0, 1.5)">
+    <rect x="0.5" y="0.5" width="49" height="48" rx="12" fill="#EDE6D8" stroke="#B45309" stroke-width="2.2"/>
+    <!-- Icon bóng đèn màu cam đậm -->
+    <path d="M25 14 C20 14 17 18 20 23 L22 27 L28 27 L30 23 C33 18 30 14 25 14 Z" fill="#FDE68A" stroke="#B45309" stroke-width="2.4"/>
+    <line x1="22" y1="31" x2="28" y2="31" stroke="#B45309" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+</svg>

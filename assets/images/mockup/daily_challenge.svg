@@ -1,0 +1,357 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <!-- 1. Lưới vở học sinh nền 40px -->
+    <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.6"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.2"/>
+    </pattern>
+
+    <!-- 2. Đổ bóng các loại Card và Button -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#1E1610" flood-opacity="0.22"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#1E1610" flood-opacity="0.08"/>
+    </filter>
+
+    <filter id="focusShadow" x="-20%" y="-20%" width="140%" height="145%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#C4843A" flood-opacity="0.32"/>
+    </filter>
+
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <!-- 3. Khuôn cắt bo góc -->
+    <clipPath id="calBoardClip">
+      <rect width="980" height="970" rx="28" />
+    </clipPath>
+
+    <clipPath id="challengeClip">
+      <rect width="980" height="430" rx="24" />
+    </clipPath>
+
+    <!-- 4. NGÔI SAO VÀNG NHỎ TRÊN LỊCH -->
+    <g id="mini-star">
+      <path d="M 12 2 L 15 8 L 22 9 L 17 14 L 18 21 L 12 17.5 L 6 21 L 7 14 L 2 9 L 9 8 Z" 
+            fill="#FBBF24" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round"/>
+    </g>
+  </defs>
+
+  <!-- ================= 1. NỀN VỞ Ô LY & LỀ ĐỎ ================= -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#notebookGrid)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+
+  <!-- ================= 2. ANDROID STATUS BAR ================= -->
+  <g fill="#3D5A73" font-family="-apple-system, sans-serif" font-size="28" font-weight="600">
+    <text x="60" y="55">09:41</text>
+    <g transform="translate(940, 34)" stroke="#3D5A73" stroke-width="3" fill="none">
+      <path d="M0 16 A 16 16 0 0 1 24 16" stroke-linecap="round"/>
+      <circle cx="12" cy="24" r="2" fill="#3D5A73"/>
+    </g>
+    <rect x="980" y="36" width="44" height="22" rx="5" fill="none" stroke="#3D5A73" stroke-width="3"/>
+    <rect x="984" y="40" width="28" height="14" rx="2" fill="#3D5A73"/>
+  </g>
+
+  <!-- ================= 3. TOP HEADER ================= -->
+  <g transform="translate(50, 85)" filter="url(#uiShadow)">
+    <!-- Nút Back -->
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <path d="M42 23 L26 35 L42 47" fill="none" stroke="#3D83AE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="500" y="135" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="40" font-weight="800" fill="#244E6E">THỬ THÁCH HẰNG NGÀY</text>
+
+  <!-- Huy hiệu Chuỗi Streak (Ngọn lửa ngày liên tiếp) -->
+  <g transform="translate(830, 85)" filter="url(#uiShadow)">
+    <rect width="200" height="70" rx="18" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/>
+    <text x="35" y="46" font-size="26">🔥</text>
+    <text x="120" y="46" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="900" fill="#D84444">7 NGÀY</text>
+  </g>
+
+  <!-- ================= 4. LỊCH THÁNG KHỔ LỚN (980 x 970 px) ================= -->
+  <!-- Đặt tại x=50, y=180 -->
+  <g transform="translate(50, 180)" filter="url(#cardShadow)">
+    <!-- Khung nền lịch trắng ngà -->
+    <g clip-path="url(#calBoardClip)">
+      <rect width="980" height="970" fill="#FEFDFA"/>
+      <!-- Vạch lề đỏ sổ tay bên trái lịch -->
+      <line x1="38" y1="0" x2="38" y2="970" stroke="#D84444" stroke-width="3"/>
+    </g>
+    <rect width="980" height="970" rx="28" fill="none" stroke="#6EA0C8" stroke-width="5"/>
+    <line x1="35" y1="3" x2="945" y2="3" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="5" stroke-linecap="round"/>
+
+    <!-- THANH ĐIỀU HƯỚNG THÁNG (y: 20 -> 90) -->
+    <g transform="translate(60, 30)">
+      <!-- Nút Tháng trước -->
+      <rect x="0" y="8" width="50" height="50" rx="12" fill="#FAF5EB" stroke="#8FB9D2" stroke-width="2"/>
+      <path d="M30 23 L20 33 L30 43" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Tiêu đề Tháng & Năm -->
+      <text x="430" y="46" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#224C6D" letter-spacing="1.5">THÁNG 09 • 2026</text>
+
+      <!-- Nút Tháng sau -->
+      <rect x="810" y="8" width="50" height="50" rx="12" fill="#FAF5EB" stroke="#8FB9D2" stroke-width="2"/>
+      <path d="M830 23 L840 33 L830 43" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round"/>
+    </g>
+
+    <line x1="45" y1="110" x2="945" y2="110" stroke="#8FB9D2" stroke-width="1.8" opacity="0.6"/>
+
+    <!-- HÀNG THỨ TRONG TUẦN (7 CỘT: T2 -> CN, y: 125 -> 175) -->
+    <g transform="translate(35, 125)" font-family="sans-serif" font-size="22" font-weight="800" fill="#718B9E" text-anchor="middle">
+      <text x="65"  y="36">T2</text>
+      <text x="195" y="36">T3</text>
+      <text x="325" y="36">T4</text>
+      <text x="455" y="36" fill="#3D83AE">T5</text> <!-- Thứ 5 hôm nay -->
+      <text x="585" y="36">T6</text>
+      <text x="715" y="36">T7</text>
+      <text x="845" y="36" fill="#D84444">CN</text>
+    </g>
+
+    <!-- ================= MA TRẬN CÁC NGÀY TO RÕ (5 HÀNG x 7 CỘT) ================= -->
+    <!-- Gốc toạ độ lưới ngày: x=35, y=185. Kích thước mỗi ô: 130 x 150 px -->
+    <g transform="translate(35, 185)">
+
+      <!-- HÀNG 1 (Ngày 31/08 -> 06/09) -->
+      <!-- 31 (Tháng trước - Mờ) -->
+      <g transform="translate(0, 0)">
+        <rect width="130" height="150" fill="none" stroke="#EAE4D5" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="28" font-weight="700" fill="#C5BFB3">31</text>
+      </g>
+      <!-- 01 (Đã hoàn thành - 3 sao) -->
+      <g transform="translate(130, 0)">
+        <rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">01</text>
+        <path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/>
+        <rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/>
+        <text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">3/3 SAO</text>
+      </g>
+      <!-- 02 -->
+      <g transform="translate(260, 0)">
+        <rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">02</text>
+        <path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/>
+        <rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/>
+        <text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">3/3 SAO</text>
+      </g>
+      <!-- 03 -->
+      <g transform="translate(390, 0)">
+        <rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">03</text>
+        <path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/>
+        <rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/>
+        <text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">3/3 SAO</text>
+      </g>
+      <!-- 04 -->
+      <g transform="translate(520, 0)">
+        <rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">04</text>
+        <path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/>
+        <rect x="14" y="98" width="102" height="36" rx="8" fill="#FFF8E1"/>
+        <text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#D97706">2/3 SAO</text>
+      </g>
+      <!-- 05 -->
+      <g transform="translate(650, 0)">
+        <rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">05</text>
+        <path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/>
+        <rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/>
+        <text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">3/3 SAO</text>
+      </g>
+      <!-- 06 -->
+      <g transform="translate(780, 0)">
+        <rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#D84444">06</text>
+        <path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/>
+        <rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/>
+        <text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">3/3 SAO</text>
+      </g>
+
+      <!-- HÀNG 2 (Ngày 07/09 -> 13/09) -->
+      <!-- 07 -->
+      <g transform="translate(0, 150)">
+        <rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">07</text>
+        <path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/>
+        <rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/>
+        <text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">3/3 SAO</text>
+      </g>
+      <!-- 08 -->
+      <g transform="translate(130, 150)">
+        <rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">08</text>
+        <path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/>
+        <rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/>
+        <text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">3/3 SAO</text>
+      </g>
+      <!-- 09 -->
+      <g transform="translate(260, 150)">
+        <rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">09</text>
+        <path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/>
+        <rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/>
+        <text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">3/3 SAO</text>
+      </g>
+
+      <!-- >>> NGÀY 10 (HÔM NAY - ĐANG ĐƯỢC CHỌN VÀ HIỂN THỊ CHI TIẾT) <<< -->
+      <g transform="translate(390, 150)" filter="url(#focusShadow)">
+        <!-- Nền nổi bật sáng rực -->
+        <rect width="130" height="150" rx="14" fill="#FFFDF8"/>
+        <rect width="130" height="150" rx="14" fill="none" stroke="#C4843A" stroke-width="4"/>
+        <!-- Nhãn "HÔM NAY" -->
+        <rect x="15" y="-12" width="100" height="24" rx="6" fill="#C4843A"/>
+        <text x="65" y="4" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#FFFFFF">HÔM NAY</text>
+
+        <!-- Số ngày to bản -->
+        <text x="24" y="52" font-family="'Segoe UI', sans-serif" font-size="40" font-weight="900" fill="#C4843A">10</text>
+        <!-- Huy hiệu 3 sao đang chờ -->
+        <g transform="translate(68, 28) scale(0.9)"><use href="#mini-star"/></g>
+
+        <!-- Tag thử thách đang mở -->
+        <rect x="12" y="96" width="106" height="40" rx="10" fill="#C4843A" fill-opacity="0.15"/>
+        <text x="65" y="121" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="900" fill="#C4843A">2/3 XONG</text>
+      </g>
+
+      <!-- 11 (Ngày mai - Khóa nhẹ) -->
+      <g transform="translate(520, 150)">
+        <rect width="130" height="150" fill="#F4EFE6" fill-opacity="0.6" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="700" fill="#8DA2B0">11</text>
+        <circle cx="95" cy="35" r="14" fill="#E2DDD2"/>
+        <path d="M90 35 L90 30 A 5 5 0 0 1 100 30 L100 35 M88 35 L102 35 L102 42 L88 42 Z" fill="#788D9B" stroke="#788D9B" stroke-width="1"/>
+        <text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#A1B1BC">CHƯA MỞ</text>
+      </g>
+
+      <!-- 12 -->
+      <g transform="translate(650, 150)">
+        <rect width="130" height="150" fill="#F4EFE6" fill-opacity="0.6" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="700" fill="#8DA2B0">12</text>
+        <circle cx="95" cy="35" r="14" fill="#E2DDD2"/>
+        <path d="M90 35 L90 30 A 5 5 0 0 1 100 30 L100 35 M88 35 L102 35 L102 42 L88 42 Z" fill="#788D9B" stroke="#788D9B" stroke-width="1"/>
+      </g>
+
+      <!-- 13 -->
+      <g transform="translate(780, 150)">
+        <rect width="130" height="150" fill="#F4EFE6" fill-opacity="0.6" stroke="#D1E2ED" stroke-width="1"/>
+        <text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="700" fill="#D87878">13</text>
+        <circle cx="95" cy="35" r="14" fill="#E2DDD2"/>
+        <path d="M90 35 L90 30 A 5 5 0 0 1 100 30 L100 35 M88 35 L102 35 L102 42 L88 42 Z" fill="#788D9B" stroke="#788D9B" stroke-width="1"/>
+      </g>
+
+      <!-- HÀNG 3 (Ngày 14 -> 20) -->
+      <g transform="translate(0, 300)" opacity="0.7">
+        <rect x="0" width="910" height="150" fill="none"/>
+        <!-- Dãy các ô bị khóa hàng 3 -->
+        <g transform="translate(0,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">14</text></g>
+        <g transform="translate(130,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">15</text></g>
+        <g transform="translate(260,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">16</text></g>
+        <g transform="translate(390,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">17</text></g>
+        <g transform="translate(520,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">18</text></g>
+        <g transform="translate(650,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">19</text></g>
+        <g transform="translate(780,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#D87878">20</text></g>
+      </g>
+
+      <!-- HÀNG 4 (Ngày 21 -> 27) -->
+      <g transform="translate(0, 450)" opacity="0.6">
+        <g transform="translate(0,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">21</text></g>
+        <g transform="translate(130,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">22</text></g>
+        <g transform="translate(260,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">23</text></g>
+        <g transform="translate(390,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">24</text></g>
+        <g transform="translate(520,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">25</text></g>
+        <g transform="translate(650,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#8DA2B0">26</text></g>
+        <g transform="translate(780,0)"><rect width="130" height="150" fill="#F4EFE6" stroke="#E5E0D5" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="28" fill="#D87878">27</text></g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= 5. BẢNG THỬ THÁCH GẮN LIỀN VỚI NGÀY ĐANG CHỌN ================= -->
+  <!-- Nằm ngay dưới lịch tại x=50, y=1180, kích thước 980 x 470 px -->
+  <g transform="translate(50, 1180)" filter="url(#cardShadow)">
+    <g clip-path="url(#challengeClip)">
+      <!-- Nền giấy ngà card board -->
+      <rect width="980" height="470" fill="#FEFDFA"/>
+      <!-- Lưới ngang mờ trang vở -->
+      <path d="M 0 160 L 980 160 M 0 250 L 980 250 M 0 340 L 980 340" stroke="#8FB9D2" stroke-width="1" opacity="0.35"/>
+      <!-- Lề đỏ dọc -->
+      <line x1="42" y1="0" x2="42" y2="470" stroke="#D84444" stroke-width="3"/>
+    </g>
+    <rect width="980" height="470" rx="24" fill="none" stroke="#3D83AE" stroke-width="3.5"/>
+
+    <!-- TIÊU ĐỀ BẢNG THỬ THÁCH (GẮN CHẶT VỚI NGÀY 10/09) -->
+    <g transform="translate(65, 36)">
+      <!-- Nhãn ngày màu đỏ nổi -->
+      <rect x="0" y="0" width="165" height="42" rx="10" fill="#D84444"/>
+      <text x="82" y="28" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="900" fill="#FFFFFF">NGÀY 10/09</text>
+
+      <!-- Tiêu đề chính -->
+      <text x="185" y="30" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="800" fill="#224C6D">THỬ THÁCH TRONG NGÀY</text>
+
+      <!-- Phần thưởng sao của ngày -->
+      <g transform="translate(730, -5)">
+        <rect width="120" height="46" rx="12" fill="#FAF5EB" stroke="#D97706" stroke-width="1.8"/>
+        <g transform="translate(14, 10)"><use href="#mini-star"/></g>
+        <text x="75" y="32" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="900" fill="#D97706">+30 ⭐</text>
+      </g>
+    </g>
+
+    <line x1="50" y1="95" x2="930" y2="95" stroke="#6EA0C8" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+
+    <!-- DANH SÁCH CHALLENGE TEXT (CÁC NHIỆM VỤ CỤ THỂ) -->
+
+    <!-- NHIỆM VỤ 1: ĐÃ XONG (CHECKED) -->
+    <g transform="translate(65, 125)">
+      <!-- Checkbox Checked (Đã làm xong ở bước trước) -->
+      <g transform="translate(0, 0)">
+        <rect width="40" height="40" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.2"/>
+        <path d="M 8 20 L 17 29 L 32 12" fill="none" stroke="#D84444" stroke-width="3.5" stroke-linecap="round"/>
+      </g>
+      <!-- Text Challenge -->
+      <text x="56" y="28" font-family="sans-serif" font-size="24" font-weight="700" fill="#7A8E9B" text-decoration="line-through">Chiếm ít nhất 10 ô vuông trong 1 ván đấu</text>
+      <text x="800" y="28" font-family="sans-serif" font-size="20" font-weight="800" fill="#2E7D32">10/10 ✔</text>
+    </g>
+
+    <!-- NHIỆM VỤ 2: ĐÃ XONG (CHECKED) -->
+    <g transform="translate(65, 215)">
+      <g transform="translate(0, 0)">
+        <rect width="40" height="40" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.2"/>
+        <path d="M 8 20 L 17 29 L 32 12" fill="none" stroke="#D84444" stroke-width="3.5" stroke-linecap="round"/>
+      </g>
+      <!-- Text Challenge -->
+      <text x="56" y="28" font-family="sans-serif" font-size="24" font-weight="700" fill="#7A8E9B" text-decoration="line-through">Nối 5 bức tường liên tiếp không bị chặn</text>
+      <text x="800" y="28" font-family="sans-serif" font-size="20" font-weight="800" fill="#2E7D32">5/5 ✔</text>
+    </g>
+
+    <!-- NHIỆM VỤ 3: ĐANG CẦN LÀM (EMPTY CHECKBOX - NỔI BẬT) -->
+    <g transform="translate(65, 305)">
+      <!-- Checkbox Empty -->
+      <rect width="40" height="40" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.5"/>
+      <!-- Text Challenge nổi bật đậm nét mực học sinh -->
+      <text x="56" y="28" font-family="sans-serif" font-size="24" font-weight="800" fill="#1D4B6E">Chiến thắng đối thủ AI mà không để mất góc</text>
+      <rect x="760" y="2" width="105" height="34" rx="8" fill="#FFF3E0"/>
+      <text x="812" y="25" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="900" fill="#E65100">0/1 CHƯA</text>
+    </g>
+
+    <!-- Thanh tiến độ hoàn thành ngày (Slider Bar nhỏ) -->
+    <g transform="translate(65, 395)">
+      <rect width="700" height="12" rx="6" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1"/>
+      <rect width="466" height="12" rx="6" fill="#2E7D32"/>
+      <text x="730" y="12" font-family="sans-serif" font-size="20" font-weight="800" fill="#2E7D32">Tiến độ: 66% (2/3 nhiệm vụ)</text>
+    </g>
+  </g>
+
+  <!-- ================= 6. NÚT HÀNH ĐỘNG CHÍNH (ACTION BUTTON) ================= -->
+  <!-- Nút "LÀM NHIỆM VỤ NGÀY 10" to bản ở chân màn hình -->
+  <g transform="translate(140, 1690)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <rect width="800" height="120" rx="28" fill="#3D83AE" stroke="#265B7D" stroke-width="4"/>
+    <line x1="60" y1="0" x2="60" y2="120" stroke="#FAF5EB" stroke-width="3.5" opacity="0.6"/>
+
+    <!-- Icon Bút mực viết tay -->
+    <g transform="translate(95, 42)" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2l4 4-11 11H3v-4L14 2z"/>
+      <path d="M11 5l4 4"/>
+    </g>
+
+    <text x="460" y="73" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#FFFFFF" letter-spacing="1.5">LÀM NHIỆM VỤ NGÀY</text>
+  </g>
+
+  <!-- Thanh điều hướng Android Gesture Bar -->
+  <rect x="420" y="1875" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
+</svg>

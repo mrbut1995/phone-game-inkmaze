@@ -1,5 +1,112 @@
 [gd_scene format=3 uid="uid://efuxbstp7y2c"]
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_myu88"]
+[ext_resource type="Texture2D" uid="uid://cgdm4cbsmmbbu" path="res://assets/images/popups/popup_win.svg" id="2_wjasx"]
+[ext_resource type="Texture2D" uid="uid://cqe1sdpj4yw71" path="res://assets/images/level_selector/star_empty.svg" id="3_tlyfm"]
+[ext_resource type="Texture2D" uid="uid://d28i01rd30obn" path="res://assets/images/popups/stamp_excellent.svg" id="4_x62yc"]
+[ext_resource type="Texture2D" uid="uid://c4cv31tihnj1" path="res://assets/images/popups/btn_paper_primary_normal.svg" id="5_1ymje"]
+[ext_resource type="Texture2D" uid="uid://c4277ksy08pue" path="res://assets/images/popups/btn_paper_secondary_normal.svg" id="5_16mpa"]
+[ext_resource type="Texture2D" uid="uid://g6jguuu3mgrt" path="res://assets/images/popups/btn_paper_secondary_pressed.svg" id="6_6gi7u"]
+[ext_resource type="Texture2D" uid="uid://bfod2u4o5b5i" path="res://assets/images/popups/btn_paper_primary_pressed.svg" id="6_021lv"]
+[ext_resource type="Texture2D" uid="uid://dvobapoh8dr6a" path="res://assets/images/popups/btn_paper_primary_focus.svg" id="7_16mpa"]
+[ext_resource type="Texture2D" uid="uid://bgstufvwvogbj" path="res://assets/images/popups/btn_paper_secondary_focus.svg" id="7_exhbw"]
 
 [node name="Base" unique_id=1370178296 instance=ExtResource("1_myu88")]
+
+[node name="Panel" parent="." index="0" unique_id=1845041549]
+texture = ExtResource("2_wjasx")
+
+[node name="Rating" type="Control" parent="Panel" index="0" unique_id=955492189]
+layout_mode = 1
+anchor_left = 0.27537796
+anchor_top = 0.1981908
+anchor_right = 0.7471296
+anchor_bottom = 0.31842127
+offset_right = 0.15795898
+offset_bottom = -0.53601074
+metadata/_edit_use_anchors_ = true
+
+[node name="RatingStar1" type="TextureRect" parent="Panel/Rating" index="0" unique_id=420506613]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06161327
+anchor_top = 0.18429486
+anchor_right = 0.3136133
+anchor_bottom = 1.013
+offset_left = -0.17500019
+offset_top = 1.9047775
+offset_right = 0.07370758
+offset_bottom = 0.006591797
+texture = ExtResource("3_tlyfm")
+metadata/_edit_use_anchors_ = true
+
+[node name="RatingStar2" type="TextureRect" parent="Panel/Rating" index="1" unique_id=2005006171]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33308366
+anchor_top = -0.0721154
+anchor_right = 0.6469199
+anchor_bottom = 0.9050001
+offset_left = 4.192436
+offset_top = -0.7453451
+offset_right = -0.02645874
+offset_bottom = 0.015716553
+texture = ExtResource("3_tlyfm")
+metadata/_edit_use_anchors_ = true
+
+[node name="RatingStar3" type="TextureRect" parent="Panel/Rating" index="2" unique_id=1413491724]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.67637986
+anchor_top = 0.18429486
+anchor_right = 0.9483799
+anchor_bottom = 1.0
+offset_left = 0.17199707
+offset_top = 1.9047775
+offset_right = -0.14831543
+offset_bottom = 1.9047852
+texture = ExtResource("3_tlyfm")
+metadata/_edit_use_anchors_ = true
+
+[node name="RatingStar1" type="TextureRect" parent="Panel" index="1" unique_id=400133954]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.699973
+anchor_top = 0.099584885
+anchor_right = 0.94160503
+anchor_bottom = 0.20476432
+offset_left = -0.17500019
+offset_top = 1.9047775
+offset_right = 0.07370758
+offset_bottom = 0.006591797
+texture = ExtResource("4_x62yc")
+metadata/_edit_use_anchors_ = true
+
+[node name="Buttons" type="HBoxContainer" parent="Panel" index="2" unique_id=601592211]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.193
+anchor_top = 0.78300005
+anchor_right = 0.87700003
+anchor_bottom = 0.87200004
+offset_left = 0.28199768
+offset_top = -0.12805176
+offset_right = -0.10205078
+offset_bottom = -0.35205078
+metadata/_edit_use_anchors_ = true
+
+[node name="Replay" type="TextureButton" parent="Panel/Buttons" index="0" unique_id=1871082094]
+layout_mode = 2
+texture_normal = ExtResource("5_16mpa")
+texture_pressed = ExtResource("6_6gi7u")
+texture_hover = ExtResource("5_16mpa")
+texture_disabled = ExtResource("5_16mpa")
+texture_focused = ExtResource("7_exhbw")
+
+[node name="Next" type="TextureButton" parent="Panel/Buttons" index="1" unique_id=1742334247]
+layout_mode = 2
+texture_normal = ExtResource("5_1ymje")
+texture_pressed = ExtResource("6_021lv")
+texture_hover = ExtResource("5_1ymje")
+texture_disabled = ExtResource("5_1ymje")
+texture_focused = ExtResource("7_16mpa")

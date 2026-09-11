@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130">
+  <defs>
+    <!-- Độ sâu thăm thẳm của hầm ngục tối -->
+    <linearGradient id="dungeonDeepVoid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3C4B59" stop-opacity="0.1"/>
+      <stop offset="60%" stop-color="#1B2834" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#0A1118" stop-opacity="0.95"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Nền ô -->
+  <rect width="130" height="130" fill="#FAF5EB"/>
+
+  <!-- ================= MIỆNG HỐ THANG KHOÉT XUỐNG SÀN ================= -->
+  <!-- Khung miệng hầm khoét trên mặt sàn hiện tại -->
+  <rect x="14" y="14" width="102" height="102" rx="6" fill="#EAE3D2" stroke="#1E283A" stroke-width="3"/>
+  <!-- Lòng hầm chìm dần vào bóng tối -->
+  <rect x="18" y="18" width="94" height="94" fill="url(#dungeonDeepVoid)"/>
+
+  <!-- CÁC BẬC THANG CHÌM XUỐNG VỰC SÂU (BẬC TRÊN NÔNG VÀ SÁNG, BẬC DƯỚI TỤ LẠI VÀ CHÌM VÀO BÓNG ĐÊM) -->
+  <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Gờ mép sàn trên cùng -->
+    <line x1="14" y1="18" x2="116" y2="18" stroke-width="3.2"/>
+
+    <!-- Bậc 1: Bắt đầu từ sàn bước xuống -->
+    <polygon points="18,18 112,18 106,34 24,34" fill="#F7F1E6" stroke-width="2.5"/>
+    <!-- Mặt đứng Bậc 1 -->
+    <rect x="24" y="34" width="82" height="12" fill="#CBBFAA" stroke-width="2.5"/>
+    <!-- Đánh bóng chì khe bậc -->
+    <line x1="36" y1="34" x2="36" y2="46" stroke-width="1.5" opacity="0.6"/>
+    <line x1="52" y1="34" x2="52" y2="46" stroke-width="1.5" opacity="0.6"/>
+    <line x1="66" y1="34" x2="66" y2="46" stroke-width="1.5" opacity="0.6"/>
+    <line x1="80" y1="34" x2="80" y2="46" stroke-width="1.5" opacity="0.6"/>
+    <line x1="94" y1="34" x2="94" y2="46" stroke-width="1.5" opacity="0.6"/>
+
+    <!-- Bậc 2: Thụt lùi vào sâu hơn, tối hơn -->
+    <polygon points="24,46 106,46 100,60 30,60" fill="#E2D5C0" stroke-width="2.5"/>
+    <rect x="30" y="60" width="70" height="13" fill="#A49580" stroke-width="2.5"/>
+    <line x1="42" y1="60" x2="42" y2="73" stroke-width="1.6" opacity="0.6"/>
+    <line x1="56" y1="60" x2="56" y2="73" stroke-width="1.6" opacity="0.6"/>
+    <line x1="70" y1="60" x2="70" y2="73" stroke-width="1.6" opacity="0.6"/>
+    <line x1="84" y1="60" x2="84" y2="73" stroke-width="1.6" opacity="0.6"/>
+
+    <!-- Bậc 3: Sâu hơn nữa -->
+    <polygon points="30,73 100,73 94,85 36,85" fill="#BFAF9B" stroke-width="2.5"/>
+    <rect x="36" y="85" width="58" height="13" fill="#756755" stroke-width="2.5"/>
+    <line x1="48" y1="85" x2="48" y2="98" stroke-width="1.6" opacity="0.7"/>
+    <line x1="64" y1="85" x2="64" y2="98" stroke-width="1.6" opacity="0.7"/>
+    <line x1="78" y1="85" x2="78" y2="98" stroke-width="1.6" opacity="0.7"/>
+
+    <!-- Bậc 4: Rất tối -->
+    <polygon points="36,98 94,98 88,106 42,106" fill="#807260" stroke-width="2.2"/>
+    <rect x="42" y="106" width="46" height="8" fill="#42382C" stroke-width="2.2"/>
+
+    <!-- Lỗ hổng đáy hầm (đen kịt dẫn sang Floor tiếp theo) -->
+    <polygon points="42,114 88,114 84,118 46,118" fill="#130E09" stroke-width="1.5"/>
+  </g>
+
+  <!-- Nét gạch chéo đánh bóng chì (Pencil Hatching) ở vách thành hầm hai bên -->
+  <g stroke="#1E283A" stroke-width="1.4" opacity="0.55">
+    <line x1="16" y1="25" x2="24" y2="35"/>
+    <line x1="16" y1="45" x2="26" y2="55"/>
+    <line x1="16" y1="65" x2="28" y2="77"/>
+    <line x1="16" y1="85" x2="32" y2="101"/>
+
+    <line x1="114" y1="25" x2="106" y2="35"/>
+    <line x1="114" y1="45" x2="104" y2="55"/>
+    <line x1="114" y1="65" x2="102" y2="77"/>
+    <line x1="114" y1="85" x2="98" y2="101"/>
+  </g>
+
+  <!-- Viền ô vuông chuẩn bàn cờ -->
+  <rect x="1" y="1" width="128" height="128" fill="none" stroke="#6285B0" stroke-width="2"/>
+</svg>

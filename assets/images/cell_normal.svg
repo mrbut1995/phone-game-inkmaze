@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130">
+  <!-- Vuông phẳng hoàn toàn, khép góc 90 độ -->
+  <rect x="1" y="1" width="128" height="128" fill="#CEE0EC" fill-opacity="0.22"/>
+  <rect x="1" y="1" width="128" height="128" fill="none" stroke="#6285B0" stroke-width="2"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" width="130" height="150">
+  <!-- Vòng Focus Ring nét đứt bên ngoài -->
+  <rect x="1" y="1" width="128" height="148" rx="16" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="5 3"/>
+  <!-- Thân ô -->
+  <rect x="6" y="6" width="118" height="138" rx="12" fill="#FFFDF8"/>
+  <rect x="6" y="6" width="118" height="138" rx="12" fill="none" stroke="#C4843A" stroke-width="3"/>
+</svg>

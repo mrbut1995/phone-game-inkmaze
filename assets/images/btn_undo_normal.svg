@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50">
+  <defs>
+    <filter id="undoShadowNorm" x="-20%" y="-20%" width="140%" height="145%">
+      <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <g filter="url(#undoShadowNorm)">
+    <rect width="50" height="50" rx="12" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/>
+    <!-- Đầu mũi tên nhọn chỉ sang trái -->
+    <path d="M 21 13 L 14 19 L 21 25" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Thân mũi tên cong mượt mà chuẩn Bezier -->
+    <path d="M 15 19 H 26 C 33 19 37 23 37 29 C 37 35 32 37 25 37 H 19" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

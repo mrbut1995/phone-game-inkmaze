@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 970" width="980" height="970">
+  <defs>
+    <filter id="calShadowTpl" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#1E1610" flood-opacity="0.22"/>
+    </filter>
+    <clipPath id="calClipTpl"><rect width="980" height="970" rx="28" /></clipPath>
+  </defs>
+
+  <g filter="url(#calShadowTpl)">
+    <g clip-path="url(#calClipTpl)">
+      <rect width="980" height="970" fill="#FEFDFA"/>
+      <line x1="38" y1="0" x2="38" y2="970" stroke="#D84444" stroke-width="3"/>
+    </g>
+    <rect width="980" height="970" rx="28" fill="none" stroke="#6EA0C8" stroke-width="5"/>
+    <line x1="35" y1="3" x2="945" y2="3" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="5" stroke-linecap="round"/>
+
+    <!-- Tiêu đề tháng -->
+    <text x="490" y="70" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#224C6D">THÁNG 09 • 2026</text>
+    <line x1="45" y1="110" x2="945" y2="110" stroke="#8FB9D2" stroke-width="1.8" opacity="0.6"/>
+
+    <!-- Hàng thứ T2 -> CN -->
+    <g transform="translate(35, 125)" font-family="sans-serif" font-size="22" font-weight="800" fill="#718B9E" text-anchor="middle">
+      <text x="65" y="36">T2</text><text x="195" y="36">T3</text><text x="325" y="36">T4</text>
+      <text x="455" y="36" fill="#3D83AE">T5</text><text x="585" y="36">T6</text><text x="715" y="36">T7</text><text x="845" y="36" fill="#D84444">CN</text>
+    </g>
+  </g>
+</svg>

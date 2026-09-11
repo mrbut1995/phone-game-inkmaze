@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <pattern id="bgGridFail" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.5"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.15"/>
+    </pattern>
+
+    <filter id="failPaperShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#301A1A" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+
+  <!-- NỀN TRANG VỞ VẪN HIỆN DIỆN MỜ PHÍA SAU -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#bgGridFail)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+  <rect width="1080" height="1920" fill="#2E1B1B" fill-opacity="0.35"/>
+
+  <!-- ================= MẢNH GIẤY NHÁP GAME OVER (HƠI XOAY NHẸ -1 ĐỘ TẠO ĐỘ THẬT) ================= -->
+  <g transform="translate(115, 390) rotate(-1 425 560)">
+
+    <!-- TỜ GIẤY CÓ BÓNG NỔI TỰ NHIÊN -->
+    <g filter="url(#failPaperShadow)">
+      <!-- Màu giấy hơi ố xám nhạt thể hiện bài thi hỏng -->
+      <rect width="850" height="1120" rx="18" fill="#FDFBF7"/>
+      
+      <!-- Lưới ngang mờ -->
+      <g stroke="#BAC7CF" stroke-width="1" opacity="0.4">
+        <line x1="60" y1="200" x2="790" y2="200"/><line x1="60" y1="270" x2="790" y2="270"/>
+        <line x1="60" y1="340" x2="790" y2="340"/><line x1="60" y1="410" x2="790" y2="410"/>
+        <line x1="60" y1="480" x2="790" y2="480"/><line x1="60" y1="550" x2="790" y2="550"/>
+        <line x1="60" y1="620" x2="790" y2="620"/><line x1="60" y1="690" x2="790" y2="690"/>
+      </g>
+
+      <!-- Lề đỏ nét đứt -->
+      <line x1="75" y1="0" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <!-- Viền mực đỏ quanh mép giấy nháp -->
+      <rect width="850" height="1120" rx="18" fill="none" stroke="#D84444" stroke-width="3"/>
+    </g>
+
+    <!-- GHIM KẸP GIẤY KIM LOẠI Ở GÓC TRÊN TRÁI -->
+    <g transform="translate(100, -15)">
+      <path d="M 0 45 L 0 10 A 12 12 0 0 1 24 10 L 24 55 A 18 18 0 0 1 -12 55 L -12 18" 
+            fill="none" stroke="#7A8F9B" stroke-width="4.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- CON DẤU MỘC VUÔNG MỰC ĐỎ CHẤM THI: "CHƯA ĐẠT / HẾT BƯỚC" -->
+    <g transform="translate(630, 85) rotate(-8)">
+      <rect x="0" y="0" width="150" height="90" rx="10" fill="#D84444" fill-opacity="0.08" stroke="#D84444" stroke-width="3.5" stroke-dasharray="6 3"/>
+      <text x="75" y="42" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="900" fill="#D84444">HẾT BƯỚC</text>
+      <text x="75" y="68" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#D84444">00 / 20 BƯỚC</text>
+    </g>
+
+    <!-- TIÊU ĐỀ BÚT MỰC ĐỎ GẠCH CHÉO -->
+    <g transform="translate(120, 95)">
+      <text x="0" y="0" font-family="'Segoe UI', sans-serif" font-size="40" font-weight="900" fill="#D84444">ĐỨT ĐOẠN ĐƯỜNG ĐI!</text>
+      <text x="0" y="36" font-family="sans-serif" font-size="22" font-weight="700" fill="#718B9E">Không thể tới được điểm F an toàn</text>
+    </g>
+
+    <!-- DẤU X ĐỎ TO VẼ BẰNG BÚT DẠ -->
+    <g transform="translate(425, 230)">
+      <circle cx="0" cy="0" r="44" fill="#FEE2E2" stroke="#D84444" stroke-width="3"/>
+      <path d="M -20 -20 L 20 20 M 20 -20 L -20 20" stroke="#D84444" stroke-width="6" stroke-linecap="round"/>
+    </g>
+
+    <!-- BẢNG TỔNG KẾT NGUYÊN NHÂN THẤT BẠI -->
+    <g transform="translate(115, 360)">
+      <text x="0" y="40" font-family="sans-serif" font-size="24" font-weight="700" fill="#5A6D7C">Quãng đường đã đi:</text>
+      <text x="640" y="40" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="28" font-weight="900" fill="#D84444">Đạt 75% mê cung</text>
+
+      <text x="0" y="110" font-family="sans-serif" font-size="24" font-weight="700" fill="#5A6D7C">Va chạm tường vô hình:</text>
+      <text x="640" y="110" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="28" font-weight="900" fill="#D84444">3 lần (-3 bước)</text>
+
+      <text x="0" y="180" font-family="sans-serif" font-size="24" font-weight="700" fill="#5A6D7C">Điểm an ủi tích lũy:</text>
+      <text x="640" y="180" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="28" font-weight="900" fill="#718B9E">+850 PTS</text>
+    </g>
+
+    <!-- MIẾNG GIẤY DÁN STICKER VÀNG CỨU NGUY (HỒI SINH) -->
+    <g transform="translate(115, 620)" style="cursor: pointer;">
+      <rect width="640" height="88" rx="14" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2.5"/>
+      <!-- Băng keo dán mép sticker -->
+      <rect x="20" y="-8" width="50" height="18" fill="#E6DFCC" opacity="0.8"/>
+      <text x="45" y="52" font-family="sans-serif" font-size="22" font-weight="800" fill="#B45309">🎬 Nhận thêm +3 Bước bằng bút chì</text>
+      <rect x="470" y="18" width="145" height="52" rx="12" fill="#F59E0B"/>
+      <text x="542" y="51" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="900" fill="#FFFFFF">HỒI SINH</text>
+    </g>
+
+    <!-- CỤM NÚT DẠNG THẺ GIẤY Ở CHÂN TRANG -->
+    <g transform="translate(115, 780)">
+      <!-- Thoát ra menu -->
+      <g transform="translate(0, 0)" style="cursor: pointer;">
+        <rect width="210" height="96" rx="16" fill="#FEFDFA" stroke="#BAC7CF" stroke-width="2.5"/>
+        <text x="105" y="58" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="800" fill="#718B9E">VỀ MENU</text>
+      </g>
+
+      <!-- Nút Thử lại (Sticker màu đỏ đậm bút mực) -->
+      <g transform="translate(240, 0)" style="cursor: pointer;">
+        <rect width="400" height="96" rx="18" fill="#D84444" stroke="#A72828" stroke-width="3"/>
+        <line x1="30" y1="0" x2="30" y2="96" stroke="#FAF5EB" stroke-width="2.5" opacity="0.6"/>
+        <text x="220" y="58" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="900" fill="#FFFFFF" letter-spacing="1">THỬ LẠI TRANG NÀY ⟲</text>
+      </g>
+    </g>
+
+    <text x="425" y="960" text-anchor="middle" font-family="sans-serif" font-size="18" font-style="italic" fill="#718B9E">
+      "Hãy dùng công cụ Ghi Nhớ để cắm cờ các cạnh có nguy cơ là tường!"
+    </text>
+  </g>
+</svg>

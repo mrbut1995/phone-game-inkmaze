@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <pattern id="bgGridDun" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.5"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.15"/>
+    </pattern>
+
+    <filter id="dunSlipShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#1B2834" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- NỀN TRANG VỞ VẪN THẤY RÕ PHÍA SAU -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#bgGridDun)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+  <rect width="1080" height="1920" fill="#182A38" fill-opacity="0.32"/>
+
+  <!-- ================= MẢNH GIẤY THẺ THÁM HIỂM (DUNGEON SLIP) ================= -->
+  <g transform="translate(115, 390)">
+
+    <!-- TỜ GIẤY THẺ CÓ RĂNG CƯA XÉ SỔ Ở ĐỈNH -->
+    <g filter="url(#dunSlipShadow)">
+      <!-- Mặt giấy thẻ hơi ngả vàng ấm của tập giấy nhớ -->
+      <rect width="850" height="1120" rx="18" fill="#FFFDF8"/>
+
+      <!-- Họa tiết răng cưa sổ tay ở mép trên cùng (Perforated torn edge) -->
+      <path d="M 0 18 C 15 18 15 0 30 0 C 45 0 45 18 60 18 C 75 18 75 0 90 0 C 105 0 105 18 120 18 C 135 18 135 0 150 0 C 165 0 165 18 180 18 C 195 18 195 0 210 0 C 225 0 225 18 240 18 C 255 0 255 0 270 0 C 285 0 285 18 300 18 C 315 18 315 0 330 0 C 345 0 345 18 360 18 C 375 18 375 0 390 0 C 405 0 405 18 420 18 C 435 18 435 0 450 0 C 465 0 465 18 480 18 C 495 18 495 0 510 0 C 525 0 525 18 540 18 C 555 18 555 0 570 0 C 585 0 585 18 600 18 C 615 18 615 0 630 0 C 645 0 645 18 660 18 C 675 18 675 0 690 0 C 705 0 705 18 720 18 C 735 18 735 0 750 0 C 765 0 765 18 780 18 C 795 18 795 0 810 0 C 825 0 825 18 850 18" 
+            fill="#FAF5EB" opacity="0.9"/>
+
+      <!-- Lưới ngang sổ tay -->
+      <g stroke="#8FB9D2" stroke-width="1" opacity="0.35">
+        <line x1="60" y1="200" x2="790" y2="200"/><line x1="60" y1="270" x2="790" y2="270"/>
+        <line x1="60" y1="340" x2="790" y2="340"/><line x1="60" y1="410" x2="790" y2="410"/>
+        <line x1="60" y1="480" x2="790" y2="480"/><line x1="60" y1="550" x2="790" y2="550"/>
+        <line x1="60" y1="620" x2="790" y2="620"/><line x1="60" y1="690" x2="790" y2="690"/>
+      </g>
+
+      <!-- Lề đỏ -->
+      <line x1="75" y1="20" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5"/>
+      <rect width="850" height="1120" rx="18" fill="none" stroke="#3D83AE" stroke-width="3"/>
+    </g>
+
+    <!-- DẤU MỘC TRÒN MỰC XANH LỤC: "PASSED • TẦNG 04" -->
+    <g transform="translate(650, 105) rotate(8)">
+      <circle cx="50" cy="50" r="52" fill="none" stroke="#2E7D32" stroke-width="3.5" stroke-dasharray="6 3"/>
+      <circle cx="50" cy="50" r="45" fill="#2E7D32" fill-opacity="0.08" stroke="#2E7D32" stroke-width="1.8"/>
+      <text x="50" y="44" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="900" fill="#2E7D32">ĐÃ QUA</text>
+      <text x="50" y="66" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="800" fill="#2E7D32">TẦNG 04 ✔</text>
+    </g>
+
+    <!-- TIÊU ĐỀ THÁM HIỂM -->
+    <g transform="translate(115, 105)">
+      <text x="0" y="0" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="900" fill="#224C6D">PHIẾU THÔNG QUA TẦNG</text>
+      <text x="0" y="36" font-family="sans-serif" font-size="22" font-weight="700" fill="#D84444">Dungeon Mode • Chế độ Vô Tận</text>
+    </g>
+
+    <!-- THÔNG BÁO THƯỞNG BƯỚC ĐI CỦA GDD (KHUNG BÚT CHÌ XANH) -->
+    <g transform="translate(115, 230)">
+      <rect width="640" height="110" rx="16" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2.5"/>
+      <text x="35" y="44" font-family="sans-serif" font-size="22" font-weight="800" fill="#1B5E20">THƯỞNG THÊM BƯỚC CHO TẦNG KẾ:</text>
+      <text x="35" y="80" font-family="sans-serif" font-size="16" font-weight="600" fill="#388E3C">Số bước dư được tích lũy vào kho hành trang</text>
+      <text x="600" y="66" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="36" font-weight="900" fill="#2E7D32">+5 👣</text>
+    </g>
+
+    <!-- BẢNG TÍNH ĐIỂM CHI TIẾT -->
+    <g transform="translate(115, 410)">
+      <text x="0" y="0" font-family="sans-serif" font-size="24" font-weight="700" fill="#4B6A82">Điểm chuẩn tầng (Base):</text>
+      <text x="640" y="0" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="800" fill="#224C6D">+500 PTS</text>
+
+      <text x="0" y="65" font-family="sans-serif" font-size="24" font-weight="700" fill="#4B6A82">Thưởng bước dư (Move Bonus):</text>
+      <text x="640" y="65" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="800" fill="#224C6D">+240 PTS</text>
+
+      <text x="0" y="130" font-family="sans-serif" font-size="24" font-weight="700" fill="#4B6A82">Thưởng Perfect Floor:</text>
+      <text x="640" y="130" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="800" fill="#2E7D32">+300 PTS</text>
+
+      <line x1="0" y1="170" x2="640" y2="170" stroke="#3D83AE" stroke-width="2"/>
+      <text x="0" y="225" font-family="sans-serif" font-size="26" font-weight="800" fill="#224C6D">TỔNG TÍCH LŨY DUNGEON:</text>
+      <text x="640" y="225" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="900" fill="#D97706">4,690 PTS</text>
+    </g>
+
+    <!-- GHI CHÚ BẰNG BÚT BI CẢNH BÁO TẦNG 05 -->
+    <g transform="translate(115, 710)">
+      <rect width="640" height="85" rx="14" fill="#FFF8E1" stroke="#F59E0B" stroke-width="2"/>
+      <text x="30" y="36" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="900" fill="#B45309">CẢNH BÁO TẦNG 05:</text>
+      <text x="30" y="65" font-family="sans-serif" font-size="16" font-weight="700" fill="#D97706">Tường vô hình tăng lên 70% • Lưới giữ nguyên 5×5</text>
+    </g>
+
+    <!-- HAI NÚT BẤM DẠNG THẺ GIẤY DÁN -->
+    <g transform="translate(115, 870)">
+      <g transform="translate(0, 0)" style="cursor: pointer;">
+        <rect width="180" height="96" rx="16" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+        <text x="90" y="58" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="800" fill="#3D83AE">TẠM NGHỈ</text>
+      </g>
+
+      <!-- Nút Tiến vào tầng tiếp theo (Màu xanh thám hiểm) -->
+      <g transform="translate(215, 0)" style="cursor: pointer;">
+        <rect width="425" height="96" rx="18" fill="#2E7D32" stroke="#1E5C23" stroke-width="3.5"/>
+        <line x1="32" y1="0" x2="32" y2="96" stroke="#FAF5EB" stroke-width="2.5" opacity="0.6"/>
+        <text x="240" y="58" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="900" fill="#FFFFFF" letter-spacing="1">TIẾN VÀO TẦNG 05 ›</text>
+      </g>
+    </g>
+
+    <text x="425" y="1035" text-anchor="middle" font-family="sans-serif" font-size="18" font-style="italic" fill="#718B9E">
+      ~ Càng xuống sâu, tường càng ẩn mình ~
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 926 1216" width="926" height="1216">
+  <defs>
+    <filter id="winSlipShadow" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#2D2115" flood-opacity="0.25"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#2D2115" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+  <g transform="translate(40, 40)" filter="url(#winSlipShadow)">
+    <rect width="850" height="1120" rx="18" fill="#FFFDF9"/>
+    <!-- Lỗ bấm ghim sổ tay mép trái -->
+    <g fill="#EAE3D2" opacity="0.65">
+      <circle cx="24" cy="80" r="7"/><circle cx="24" cy="180" r="7"/><circle cx="24" cy="280" r="7"/>
+      <circle cx="24" cy="380" r="7"/><circle cx="24" cy="480" r="7"/><circle cx="24" cy="580" r="7"/>
+      <circle cx="24" cy="680" r="7"/><circle cx="24" cy="780" r="7"/><circle cx="24" cy="880" r="7"/>
+      <circle cx="24" cy="980" r="7"/><circle cx="24" cy="1080" r="7"/>
+    </g>
+    <!-- Lưới kẻ ngang mờ -->
+    <g stroke="#8FB9D2" stroke-width="1" opacity="0.32">
+      <line x1="60" y1="200" x2="790" y2="200"/><line x1="60" y1="270" x2="790" y2="270"/>
+      <line x1="60" y1="340" x2="790" y2="340"/><line x1="60" y1="410" x2="790" y2="410"/>
+      <line x1="60" y1="480" x2="790" y2="480"/><line x1="60" y1="550" x2="790" y2="550"/>
+      <line x1="60" y1="620" x2="790" y2="620"/><line x1="60" y1="690" x2="790" y2="690"/>
+      <line x1="60" y1="760" x2="790" y2="760"/><line x1="60" y1="830" x2="790" y2="830"/>
+      <line x1="60" y1="900" x2="790" y2="900"/>
+    </g>
+    <!-- Lề đỏ -->
+    <line x1="75" y1="0" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" opacity="0.85"/>
+    <rect width="850" height="1120" rx="18" fill="none" stroke="#6EA0C8" stroke-width="3"/>
+  </g>
+</svg>

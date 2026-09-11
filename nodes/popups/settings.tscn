@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://cqgyjmx2v3ga1"]
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_51i0t"]
+[ext_resource type="Texture2D" uid="uid://cgdm4cbsmmbbu" path="res://assets/images/popups/popup_win.svg" id="2_jhcse"]
 
 [node name="Base" unique_id=1370178296 instance=ExtResource("1_51i0t")]
+
+[node name="Panel" parent="." index="0" unique_id=1845041549]
+texture = ExtResource("2_jhcse")

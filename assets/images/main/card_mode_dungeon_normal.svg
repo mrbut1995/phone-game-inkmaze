@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 720 270" width="720" height="270">
+  <defs>
+    <filter id="dgCleanShadow" x="-10%" y="-15%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <g filter="url(#dgCleanShadow)">
+    <rect width="680" height="230" rx="24" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
+    <line x1="38" y1="0" x2="38" y2="230" stroke="#FAF5EB" stroke-width="3" opacity="0.65"/>
+  </g>
+</svg>
