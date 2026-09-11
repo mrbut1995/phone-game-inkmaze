@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dao8wks2p2p58"]
+
+[node name="MineExplosion" type="Control" unique_id=1105092308]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Khuôn cắt bo góc Squircle cho App Icon (128x128, rx=28) -->
+    <clipPath id="squircleClip">
+      <rect width="128" height="128" rx="28"/>
+    </clipPath>
+
+    <!-- Hào quang phát sáng cho đường nối người chơi -->
+    <filter id="iconPathGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#2575A7" flood-opacity="0.45"/>
+    </filter>
+
+    <!-- Đổ bóng nổi khối các nút S và F -->
+    <filter id="badgeShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#1E2830" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- ================= 1. NỀN ICON TRANG VỞ Ô LY ================= -->
+  <g clip-path="url(#squircleClip)">
+    <!-- Mặt giấy ngà ấm -->
+    <rect width="128" height="128" fill="#FAF5EB"/>
+
+    <!-- Lưới ô ly mờ sổ tay -->
+    <g stroke="#8FB9D2" stroke-width="0.9" opacity="0.45">
+      <line x1="20" y1="28" x2="118" y2="28"/>
+      <line x1="20" y1="64" x2="118" y2="64"/>
+      <line x1="20" y1="100" x2="118" y2="100"/>
+      <line x1="28" y1="0" x2="28" y2="128"/>
+      <line x1="64" y1="0" x2="64" y2="128"/>
+      <line x1="100" y1="0" x2="100" y2="128"/>
+    </g>
+
+    <!-- Đường chỉ đỏ lề vở đặc trưng ở x = 20 -->
+    <line x1="20" y1="0" x2="20" y2="128" stroke="#D84444" stroke-width="2.5"/>
+
+    <!-- Vùng bàn cờ 2x2 mini bên trong (từ x=28 đến 100, y=28 đến 100) -->
+    <rect x="28" y="28" width="72" height="72" rx="10" fill="#FEFDFA" fill-opacity="0.8" stroke="#6EA0C8" stroke-width="1.5"/>
+
+    <!-- ================= 2. BỨC TƯỜNG NGĂN CÁCH (OBSTACLE WALL) ================= -->
+    <!-- Tường đen dày chặn nước đi từ ô S xuống dưới -->
+    <line x1="30" y1="64" x2="62" y2="64" stroke="#1E283A" stroke-width="5" stroke-linecap="round"/>
+
+    <!-- ================= 3. ĐƯỜNG MỰC DẪN LỐI (HERO PATH) ================= -->
+    <!-- Nối từ S(46, 46) -> qua Số 2(82, 46) -> xuống F(82, 82) -->
+    <path d="M 46 46 L 82 46 L 82 82" fill="none" stroke="#2575A7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" filter="url(#iconPathGlow)"/>
+    <path d="M 46 46 L 82 46 L 82 82" fill="none" stroke="#E0F2FE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- ================= 4. ĐIỂM NEO GÓC (CORNER ANCHOR CROSSHAIR) ================= -->
+    <!-- Dấu chữ thập tâm (64, 64) nơi giao nhau giữa các ô -->
+    <g stroke="#1E283A" stroke-width="2.2" stroke-linecap="round">
+      <line x1="64" y1="56" x2="64" y2="60"/>
+      <line x1="64" y1="68" x2="64" y2="72"/>
+      <line x1="56" y1="64" x2="60" y2="64"/>
+      <line x1="68" y1="64" x2="72" y2="64"/>
+    </g>
+
+    <!-- ================= 5. CON SỐ GỢI Ý & ĐIỂM S, F ================= -->
+    <!-- Ô S (Start - Bắt đầu tại 46, 46) -->
+    <g transform="translate(46, 46)" filter="url(#badgeShadow)">
+      <circle cx="0" cy="0" r="13" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+      <text x="0" y="5.5" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="900" fill="#2E7D32">S</text>
+    </g>
+
+    <!-- Con số manh mối logic: SỐ 2 (tại 82, 46) -->
+    <text x="82" y="53" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="950" fill="#224C6D">2</text>
+
+    <!-- Ô F (Finish - Đích đến tại 82, 82) -->
+    <g transform="translate(82, 82)" filter="url(#badgeShadow)">
+      <circle cx="0" cy="0" r="13" fill="#FFF8E1" stroke="#F59E0B" stroke-width="2"/>
+      <text x="0" y="5.5" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="900" fill="#D97706">F</text>
+    </g>
+  </g>
+
+  <!-- ================= 6. VIỀN NGOÀI & HIGHLIGHT CẠNH TRÊN ================= -->
+  <!-- Viền mực xanh đậm bo quanh squircle -->
+  <rect width="128" height="128" rx="28" fill="none" stroke="#6EA0C8" stroke-width="3"/>
+  <!-- Highlight kính bóng nhẹ mép trên -->
+  <path d="M 32 2.5 H 96" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
