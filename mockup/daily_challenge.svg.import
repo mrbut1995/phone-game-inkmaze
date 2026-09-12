@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://6p0sbbwccm5k"
-path="res://.godot/imported/daily_challenge.svg-87f51f00798fa2f2161764a59e3e5f29.ctex"
+path="res://.godot/imported/daily_challenge.svg-78057a3b21016f0f11eb242f0ec1c507.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/mockup/daily_challenge.svg"
-dest_files=["res://.godot/imported/daily_challenge.svg-87f51f00798fa2f2161764a59e3e5f29.ctex"]
+source_file="res://mockup/daily_challenge.svg"
+dest_files=["res://.godot/imported/daily_challenge.svg-78057a3b21016f0f11eb242f0ec1c507.ctex"]
 
 [params]
 

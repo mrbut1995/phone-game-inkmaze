@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dio4sqhpah13x"
-path="res://.godot/imported/level_card_locked.svg-ca15d32117f0d678ac3b14c2fd5a99d7.ctex"
+path="res://.godot/imported/level_card_locked.svg-b1b27acc98af9e5a6c0d5b3932acdb81.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/mockup/level_card_locked.svg"
-dest_files=["res://.godot/imported/level_card_locked.svg-ca15d32117f0d678ac3b14c2fd5a99d7.ctex"]
+source_file="res://mockup/level_card_locked.svg"
+dest_files=["res://.godot/imported/level_card_locked.svg-b1b27acc98af9e5a6c0d5b3932acdb81.ctex"]
 
 [params]
 

@@ -21,11 +21,6 @@
     <filter id="clipShadow" x="-30%" y="-30%" width="160%" height="160%">
       <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.25"/>
     </filter>
-
-    <!-- Hào quang phát sáng cho đường nối logo -->
-    <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#2575A7" flood-opacity="0.4"/>
-    </filter>
   </defs>
 
   <!-- ================= 1. NỀN VỞ Ô LY HỌC SINH ================= -->
@@ -59,7 +54,6 @@
   </g>
 
   <!-- ================= 3. MẢNH GIẤY MENU CHÍNH (880 x 1560 px) ================= -->
-  <!-- Đặt tại x=100, y=160 -->
   <g transform="translate(100, 160)">
 
     <!-- THÂN TỜ GIẤY CÓ BÓNG NỔI TỰ NHIÊN -->
@@ -108,8 +102,7 @@
 
     <!-- ================= 4. KHU VỰC LOGO GAME (HEADER) ================= -->
     <g transform="translate(440, 85)" text-anchor="middle">
-      <!-- Nhãn thể loại -->
-            <!-- Phác thảo Doodle Mê Cung 3x3 Mini -->
+      <!-- Phác thảo Doodle Mê Cung 3x3 Mini (Bản cập nhật của bạn) -->
       <g transform="translate(-60, -40)" stroke="#3D83AE" stroke-linecap="round">
         <rect x="0" y="0" width="120" height="120" rx="14" fill="#F4F8FA" stroke-width="3"/>
         <line x1="40" y1="0" x2="40" y2="120" stroke-width="1.5" opacity="0.5"/>
@@ -129,98 +122,75 @@
       <!-- TÊN GAME: NUMBER MAZE VIẾT TAY ĐẬM ĐÀ -->
       <text y="182" font-family="'Segoe UI', Roboto, sans-serif" font-size="64" font-weight="950" fill="#224C6D" letter-spacing="2">NUMBER MAZE</text>
       <text y="228" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Mê Cung Suy Luận • Vở Ô Ly</text>
-
-      <!-- Sơ đồ minh họa mini: [S] ➔ [2] ➔ [F] -->
-      <!-- <g transform="translate(-160, 155)"> -->
-        <!-- Đường nối phát sáng -->
-        <!-- <line x1="35" y1="35" x2="285" y2="35" stroke="#2575A7" stroke-width="8" stroke-linecap="round" filter="url(#logoGlow)"/> -->
-        <!-- <line x1="35" y1="35" x2="285" y2="35" stroke="#E0F2FE" stroke-width="3" stroke-linecap="round"/> -->
-
-        <!-- Ô S (Start) -->
-        <!-- <g transform="translate(0, 0)"> -->
-          <!-- <rect width="70" height="70" rx="14" fill="#E8F5E9" stroke="#2E7D32" stroke-width="3"/> -->
-          <!-- <text x="35" y="47" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#2E7D32">S</text> -->
-        <!-- </g> -->
-        <!-- Ô Số 2 (Manh mối tường) -->
-        <!-- <g transform="translate(125, 0)"> -->
-          <!-- <rect width="70" height="70" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/> -->
-          <!-- <text x="35" y="47" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#224C6D">2</text> -->
-        <!-- </g> -->
-        <!-- Ô F (Finish) -->
-        <!-- <g transform="translate(250, 0)"> -->
-          <!-- <rect width="70" height="70" rx="14" fill="#FFF8E1" stroke="#F59E0B" stroke-width="3"/> -->
-          <!-- <text x="35" y="47" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#D97706">F</text> -->
-        <!-- </g> -->
-      <!-- </g> -->
     </g>
 
     <!-- Đường phân cách Header đôi -->
     <line x1="100" y1="340" x2="780" y2="340" stroke="#3D83AE" stroke-width="2"/>
     <line x1="100" y1="345" x2="780" y2="345" stroke="#8FB9D2" stroke-width="1"/>
 
-    <!-- ================= 5. CỤM 3 THẺ CHỌN CHẾ ĐỘ CHƠI (MODE SELECTION) ================= -->
+    <!-- ================= 5. CỤM 3 THẺ CHỌN CHẾ ĐỘ CHƠI ĐÃ TRÁO ĐỔI ================= -->
 
-    <!-- CHẾ ĐỘ 1: DUNGEON MODE (CHẾ ĐỘ CHÍNH - ENDLESS) -->
+    <!-- VỊ TRÍ 1 (MỚI): BUTTON PLAY / CHỌN MÀN CHƠI (CHẾ ĐỘ CHÍNH NỔI BẬT NHẤT) -->
     <g transform="translate(100, 380)" filter="url(#stickerShadow)" style="cursor: pointer;">
-      <!-- Thẻ dán màu mực xanh đậm nổi bật nhất -->
+      <!-- Thẻ dán màu mực xanh đậm tâm điểm -->
       <rect width="680" height="230" rx="24" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
       <!-- Lề sáng tạo vân giấy vở -->
       <line x1="38" y1="0" x2="38" y2="230" stroke="#FAF5EB" stroke-width="3" opacity="0.65"/>
 
-      <!-- Nhãn "CHẾ ĐỘ CỐT LÕI" -->
+      <!-- Nhãn "CHẾ ĐỘ CHÍNH" -->
       <rect x="55" y="22" width="165" height="32" rx="8" fill="#FBBF24"/>
       <text x="137" y="44" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="900" fill="#78350F" letter-spacing="1">CHẾ ĐỘ CHÍNH</text>
 
-      <!-- Icon Lâu đài / Tháp ngục -->
+      <!-- Icon Nút PLAY tam giác trong vòng tròn nổi -->
       <g transform="translate(60, 80)">
         <circle cx="45" cy="45" r="42" fill="#256286"/>
-        <text x="45" y="58" text-anchor="middle" font-size="44">🏰</text>
+        <polygon points="36,25 36,65 68,45" fill="#FAF5EB"/>
       </g>
 
-      <!-- Tiêu đề & Mô tả từ GDD -->
-      <text x="175" y="105" font-family="'Segoe UI', sans-serif" font-size="36" font-weight="950" fill="#FFFFFF" letter-spacing="1">DUNGEON MODE</text>
-      <text x="175" y="142" font-family="sans-serif" font-size="20" font-weight="600" fill="#BAE6FD">Vượt tầng vô tận • Tường ẩn tăng dần</text>
-      <text x="175" y="172" font-family="sans-serif" font-size="18" font-weight="600" fill="#BAE6FD">Bảo toàn số bước để tiến sâu nhất</text>
+      <!-- Tiêu đề PLAY & Mô tả chọn level -->
+      <text x="175" y="105" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="950" fill="#FFFFFF" letter-spacing="1">PLAY • CHỌN MÀN</text>
+      <text x="175" y="142" font-family="sans-serif" font-size="20" font-weight="600" fill="#BAE6FD">Chinh phục từng cấp độ</text>
+      <text x="175" y="172" font-family="sans-serif" font-size="18" font-weight="600" fill="#BAE6FD">Tự do chọn màn • Đua thời gian phá giải</text>
 
-      <!-- Huy hiệu kỷ lục cá nhân góc phải -->
-      <g transform="translate(485, 172)">
-        <rect width="165" height="36" rx="10" fill="#20506E"/>
-        <text x="82" y="24" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#FDE68A">KỶ LỤC: TẦNG 18</text>
+      <!-- Huy hiệu hiển thị LEVEL CUỐI CÙNG ĐẠT ĐƯỢC -->
+      <g transform="translate(470, 172)">
+        <rect width="180" height="36" rx="10" fill="#20506E"/>
+        <text x="90" y="24" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#FDE68A">MÀN HIỆN TẠI: 07</text>
       </g>
 
       <!-- Mũi tên điều hướng sang phải -->
       <path d="M 625 115 L 640 115 M 633 105 L 643 115 L 633 125" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
 
-    <!-- CHẾ ĐỘ 2: CLASSIC MAZE (MÊ CUNG CỔ ĐIỂN - 1 TẦNG THUA NGAY) -->
+    <!-- VỊ TRÍ 2 (MỚI): BUTTON DUNGEON MODE (CHUYỂN XUỐNG VỊ TRÍ 2) -->
     <g transform="translate(100, 640)" filter="url(#stickerShadow)" style="cursor: pointer;">
-      <rect width="680" height="210" rx="24" fill="#FEFDFA" stroke="#F59E0B" stroke-width="3.5"/>
-      <line x1="38" y1="0" x2="38" y2="210" stroke="#F59E0B" stroke-width="3"/>
+      <rect width="680" height="210" rx="24" fill="#FEFDFA" stroke="#3D83AE" stroke-width="3.5"/>
+      <line x1="38" y1="0" x2="38" y2="210" stroke="#3D83AE" stroke-width="3"/>
 
-      <!-- Nhãn "THỬ THÁCH TỐC ĐỘ" -->
-      <rect x="55" y="20" width="165" height="30" rx="8" fill="#FEF3C7"/>
-      <text x="137" y="41" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#B45309" letter-spacing="1">THỬ THÁCH TỐC ĐỘ</text>
+      <!-- Nhãn "LEO TẦNG VÔ TẬN" -->
+      <rect x="55" y="20" width="165" height="30" rx="8" fill="#EBF3F8"/>
+      <text x="137" y="41" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#256286" letter-spacing="1">CHẾ ĐỘ VÔ TẬN</text>
 
-      <!-- Icon Tia chớp -->
+      <!-- Icon Lâu đài / Ngục tối -->
       <g transform="translate(60, 75)">
-        <circle cx="45" cy="45" r="42" fill="#FFFBEB" stroke="#FDE68A" stroke-width="2"/>
-        <text x="45" y="58" text-anchor="middle" font-size="44">⚡</text>
+        <circle cx="45" cy="45" r="42" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="2"/>
+        <text x="45" y="58" text-anchor="middle" font-size="44">🏰</text>
       </g>
 
-      <text x="175" y="98" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="950" fill="#224C6D">CLASSIC MAZE</text>
-      <text x="175" y="132" font-family="sans-serif" font-size="20" font-weight="600" fill="#718B9E">1 Tầng duy nhất • Đâm tường = Thua ngay</text>
-      <text x="175" y="162" font-family="sans-serif" font-size="18" font-weight="600" fill="#9CA3AF">Đua thời gian giải nhanh nhất</text>
+      <text x="175" y="98" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="950" fill="#224C6D">DUNGEON MODE</text>
+      <text x="175" y="132" font-family="sans-serif" font-size="20" font-weight="600" fill="#718B9E">Chinh phục từng tầng</text>
+      <text x="175" y="162" font-family="sans-serif" font-size="18" font-weight="600" fill="#9CA3AF">Bảo toàn số bước để đi xa nhất</text>
 
-      <!-- Huy hiệu thành tích thời gian -->
+      <!-- Huy hiệu kỷ lục tầng cá nhân -->
       <g transform="translate(485, 152)">
-        <rect width="165" height="36" rx="10" fill="#FEF3C7"/>
-        <text x="82" y="24" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#D97706">NHANH NHẤT: 32s</text>
+        <rect width="165" height="36" rx="10" fill="#F0F7FB"/>
+        <text x="82" y="24" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#256286">KỶ LỤC: TẦNG 18</text>
       </g>
 
-      <path d="M 625 105 L 640 105 M 633 95 L 643 105 L 633 115" stroke="#F59E0B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M 625 105 L 640 105 M 633 95 L 643 105 L 633 115" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
 
-    <!-- CHẾ ĐỘ 3: DAILY CHALLENGE (THỬ THÁCH HẰNG NGÀY) -->
+    <!-- VỊ TRÍ 3: DAILY CHALLENGE (GIỮ NGUYÊN KHÔNG ĐỔI) -->
     <g transform="translate(100, 880)" filter="url(#stickerShadow)" style="cursor: pointer;">
       <rect width="680" height="210" rx="24" fill="#FEFDFA" stroke="#D84444" stroke-width="3.5"/>
       <line x1="38" y1="0" x2="38" y2="210" stroke="#D84444" stroke-width="3"/>
@@ -236,7 +206,7 @@
       </g>
 
       <text x="175" y="98" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="950" fill="#224C6D">DAILY CHALLENGE</text>
-      <text x="175" y="132" font-family="sans-serif" font-size="20" font-weight="600" fill="#718B9E">Thử thách theo ngày • Bàn cờ đặc biệt</text>
+      <text x="175" y="132" font-family="sans-serif" font-size="20" font-weight="600" fill="#718B9E">Thử thách theo ngày</text>
       <text x="175" y="162" font-family="sans-serif" font-size="18" font-weight="600" fill="#9CA3AF">Tích lũy sao &amp; duy trì chuỗi Streak</text>
 
       <!-- Huy hiệu Streak -->
