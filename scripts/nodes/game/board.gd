@@ -389,16 +389,52 @@ func _clear_runtime_layers() -> void:
 func move_cursor_to(pos: Vector2i) -> void:
 	if _cursor == null or maze == null:
 		return
+	var prev_cell := _player_current_cell
 	_player_current_cell = pos
-	var target_pos := _cell_center(pos) - _cursor.size * 0.5
+	var from_center := _cell_center(prev_cell)
+	var target_center := _cell_center(pos)
+	var target_pos := target_center - _cursor.size * 0.5
+	var move_dir := (Vector2(pos) - Vector2(prev_cell)).normalized()
 
-	var tw := create_tween().set_parallel(true)
-	tw.tween_property(_cursor, "position", target_pos, 0.11).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# Hiệu ứng vệt chân mực lan nhẹ khi cất bước
+	_spawn_ink_footstep(from_center)
+
+	# Chạy animation bước nhảy (Hop / Squash & Stretch / Tilt)
+	if _cursor.has_method("run_to"):
+		_cursor.call("run_to", target_pos, move_dir, 0.16)
+	else:
+		var tw := create_tween().set_parallel(true)
+		tw.tween_property(_cursor, "position", target_pos, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 	var c_idx := _cell_index(pos.x, pos.y)
 	if c_idx >= 0 and c_idx < _cell_nodes.size():
 		var cell_node: MazeCell = _cell_nodes[c_idx]
 		cell_node.pulse()
+
+
+func _spawn_ink_footstep(pos: Vector2) -> void:
+	if _markers_layer == null:
+		return
+	var ripple := Control.new()
+	ripple.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ripple.position = pos - Vector2(18, 18)
+	ripple.size = Vector2(36, 36)
+	ripple.pivot_offset = Vector2(18, 18)
+
+	var tex_rect := TextureRect.new()
+	tex_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	tex_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	tex_rect.texture = preload("res://assets/images/game/player_cursor.svg")
+	tex_rect.modulate = Color(0.25, 0.52, 0.78, 0.45)
+	tex_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	ripple.add_child(tex_rect)
+	_markers_layer.add_child(ripple)
+
+	var tw := create_tween().set_parallel(true)
+	tw.tween_property(ripple, "scale", Vector2(1.9, 1.9), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(ripple, "modulate:a", 0.0, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tw.chain().tween_callback(ripple.queue_free)
 
 
 func set_moving_path(path: Array[Vector2i]) -> void:
@@ -616,6 +652,12 @@ func set_interaction_enabled(enabled: bool) -> void:
 		_pressed_cell = Vector2i(-1, -1)
 		_has_dragged = false
 		_cancel_anchor_drag()
+
+
+var tool_mode: String = "path"
+
+func set_tool_mode(p_tool: String) -> void:
+	tool_mode = p_tool
 
 
 func _set_path_focus(path: Array[Vector2i]) -> void:

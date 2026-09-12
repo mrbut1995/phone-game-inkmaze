@@ -95,14 +95,8 @@ func _setup_mvc() -> void:
 	)
 
 func _bind_buttons() -> void:
-	if restart_btn != null:
-		restart_btn.pressed.connect(_on_restart_pressed)
-	if pause_btn != null:
-		pause_btn.pressed.connect(_on_pause_pressed)
-	if undo_btn != null:
-		undo_btn.pressed.connect(_on_undo_pressed)
-	if hint_btn != null:
-		hint_btn.pressed.connect(_on_hint_pressed)
+	# Cac button chinh da duoc bind truc tiep bang signal trong scenes/game.tscn
+	pass
 
 
 func _on_restart_pressed() -> void:
@@ -111,13 +105,8 @@ func _on_restart_pressed() -> void:
 
 
 func _on_pause_pressed() -> void:
-	if popup_settings != null:
-		popup_settings.visible = not popup_settings.visible
-		if timer_controller != null:
-			if popup_settings.visible:
-				timer_controller.pause()
-			else:
-				timer_controller.resume()
+	if ui_controller != null:
+		ui_controller.toggle_settings()
 
 
 func _on_undo_pressed() -> void:
@@ -132,30 +121,12 @@ func _on_hint_pressed() -> void:
 
 ## API chuyển đổi chế độ chơi linh hoạt từ bên ngoài
 func switch_mode(mode_name: String, difficulty := "medium") -> void:
-	var new_mode: BaseGameMode = null
-	match mode_name.to_lower():
-		"play", "classic", "standard":
-			new_mode = StandardGameMode.new(difficulty)
-		"dungeon":
-			new_mode = DungeonGameMode.new()
-		"time_attack":
-			new_mode = TimeAttackGameMode.new(difficulty)
-		"minesweeper":
-			new_mode = MinesweeperPathGameMode.new()
-		"sum_path":
-			new_mode = SumPathGameMode.new(difficulty)
-		"countdown_cost":
-			new_mode = CountdownCostGameMode.new(difficulty)
-		"blind_memory":
-			new_mode = BlindMemoryGameMode.new(difficulty)
-		"fog_of_war":
-			new_mode = FogOfWarGameMode.new(difficulty)
-		"area":
-			new_mode = AreaGameMode.new()
-		_:
-			new_mode = DungeonGameMode.new()
-
-	if game_controller != null:
+	if game_mode_controller != null:
+		game_mode_controller.set_mode_by_name(mode_name, difficulty)
+		if game_controller != null:
+			game_controller.start_new_run()
+	elif game_controller != null:
+		var new_mode: BaseGameMode = StandardGameMode.new(difficulty) if mode_name.to_lower() == "play" else DungeonGameMode.new()
 		game_controller.set_game_mode(new_mode)
 		game_controller.start_new_run()
 

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_bwa2w"]
+
+[resource]
+script = ExtResource("1_bwa2w")
+level_id = 6
+level_title = "Level 1-6 · Mở Rộng 4x4"
+chapter = 1
+mode_id = "play"
+difficulty = "medium"
+width = 4
+height = 4
+start_pos = Vector2i(0, 3)
+end_pos = Vector2i(3, 0)
+max_steps = 20
+par_time = 50.0
+v_walls = PackedByteArray(1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1)
+custom_cell_values = {}

@@ -8,6 +8,7 @@ signal continue_requested
 signal retry_requested
 signal quit_requested
 signal home_requested
+signal pause_toggled(is_paused: bool)
 
 @export var level_label: Label = null
 @export var step_val_label: Label = null
@@ -21,20 +22,10 @@ var settings_view: Control = null
 
 
 func setup(
-	#p_level_label: Label,
-	#p_step_val: Label,
-	#p_step_max: Label,
-	#p_time_val: Label,
-	#p_score_val: Label,
 	p_floor_complete: Control = null,
 	p_game_over: Control = null,
 	p_settings: Control = null
 ) -> void:
-	#level_label = p_level_label
-	#step_val_label = p_step_val
-	#step_max_label = p_step_max
-	#time_val_label = p_time_val
-	#score_val_label = p_score_val
 	floor_complete_view = p_floor_complete
 	game_over_view = p_game_over
 	settings_view = p_settings
@@ -58,8 +49,30 @@ func _bind_popups() -> void:
 		if retry_btn is BaseButton:
 			retry_btn.pressed.connect(func() -> void: retry_requested.emit())
 		var home_btn := game_over_view.find_child("Home", true, false)
+		if home_btn == null:
+			home_btn = game_over_view.find_child("Menu", true, false)
 		if home_btn is BaseButton:
 			home_btn.pressed.connect(func() -> void: home_requested.emit())
+
+	if settings_view != null:
+		var resume_btn := settings_view.find_child("Resume", true, false)
+		if resume_btn is BaseButton:
+			resume_btn.pressed.connect(func() -> void:
+				settings_view.visible = false
+				pause_toggled.emit(false)
+			)
+		var menu_btn := settings_view.find_child("Menu", true, false)
+		if menu_btn is BaseButton:
+			menu_btn.pressed.connect(func() -> void:
+				settings_view.visible = false
+				home_requested.emit()
+			)
+
+
+func toggle_settings() -> void:
+	if settings_view != null:
+		settings_view.visible = not settings_view.visible
+		pause_toggled.emit(settings_view.visible)
 
 
 func update_hud(
@@ -119,3 +132,4 @@ func hide_overlays() -> void:
 		game_over_view.visible = false
 	if settings_view != null:
 		settings_view.visible = false
+		pause_toggled.emit(false)

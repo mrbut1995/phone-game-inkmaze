@@ -41,5 +41,5 @@ func _refresh_ui() -> void:
 		tb.texture_normal = WALL_ACTIVE_TEX if current_tool == ToolMode.WALL else WALL_INACTIVE_TEX
 
 
-func _on_wall_pressed(extra_arg_0: String) -> void:
-	pass # Replace with function body.
+func _on_wall_pressed(_mode: String = "wall") -> void:
+	select_tool(ToolMode.WALL)

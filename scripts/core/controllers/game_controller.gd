@@ -21,11 +21,21 @@ var _floor_finished := false
 var _run_active := false
 
 
+var game_mode: BaseGameMode:
+	get:
+		return game_mode_controller.game_mode if game_mode_controller != null else null
+	set(value):
+		if game_mode_controller != null:
+			game_mode_controller.game_mode = value
+
+
 func _init() -> void:
 	game_state = GameState.new()
 
+
 func set_game_mode(p_mode: BaseGameMode) -> void:
-	game_mode_controller.game_mode = p_mode
+	if game_mode_controller != null:
+		game_mode_controller.game_mode = p_mode
 
 
 func start_new_run() -> void:
@@ -172,14 +182,23 @@ func _game_over() -> void:
 func _on_continue_requested() -> void:
 	if game_state == null:
 		return
-	if game_mode_controller.game_mode != null and not game_mode_controller.game_mode.is_endless:
-		if ui_controller != null:
-			ui_controller.hide_overlays()
-		start_new_run()
-		return
-
 	if ui_controller != null:
 		ui_controller.hide_overlays()
+
+	if game_mode_controller != null and game_mode_controller.game_mode != null and not game_mode_controller.game_mode.is_endless:
+		var gm: Node = get_node_or_null("/root/GameManager")
+		if gm != null:
+			var stars: int = 3 if game_state.wall_hits == 0 else 2
+			gm.call("record_level_clear", int(gm.get("current_level")), stars, game_state.elapsed_time)
+			var next_lvl := int(gm.get("current_level")) + 1
+			if next_lvl <= 9:
+				gm.call("start_level", next_lvl)
+			else:
+				gm.call("go_to_levels")
+		else:
+			start_new_run()
+		return
+
 	game_state.start_next_floor(_pending_bonus)
 	_start_floor(game_state.floor_number)
 
@@ -193,7 +212,11 @@ func _on_retry_requested() -> void:
 func _on_home_requested() -> void:
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-	start_new_run()
+	var gm: Node = get_node_or_null("/root/GameManager")
+	if gm != null:
+		gm.call("go_to_main_menu")
+	else:
+		get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 
 # ---------------------------------------------------------------------------
@@ -213,3 +236,11 @@ func undo() -> void:
 func hint() -> void:
 	if grid_controller != null:
 		grid_controller.give_hint()
+
+
+func _on_pause_toggled(is_paused: bool) -> void:
+	if timer_controller != null:
+		if is_paused:
+			timer_controller.pause()
+		else:
+			timer_controller.resume()

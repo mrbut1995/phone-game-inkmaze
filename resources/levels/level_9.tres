@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_34vbr"]
+
+[resource]
+script = ExtResource("1_34vbr")
+level_id = 9
+level_title = "Level 1-9 · Bậc Thầy Mê Cung (5x5)"
+chapter = 1
+mode_id = "play"
+difficulty = "hard"
+width = 5
+height = 5
+start_pos = Vector2i(0, 4)
+end_pos = Vector2i(4, 0)
+max_steps = 30
+par_time = 75.0
+v_walls = PackedByteArray(1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1)
+custom_cell_values = {}
