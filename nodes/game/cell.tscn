@@ -1,9 +1,18 @@
 [gd_scene format=3 uid="uid://dby0vymb3wuhs"]
 
-[node name="Cell" type="Control" unique_id=2113303006]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[ext_resource type="Texture2D" uid="uid://cyyrwbsf7i2x" path="res://assets/images/game/cell_normal.svg" id="1_pne7a"]
+
+[node name="Cell" type="CenterContainer" unique_id=80577587]
+anchors_preset = -1
+anchor_right = 0.16296296
+anchor_bottom = 0.090625
+offset_top = -1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite" type="TextureRect" parent="." unique_id=2043945818]
+layout_mode = 2
+texture = ExtResource("1_pne7a")
+metadata/_edit_use_anchors_ = true
