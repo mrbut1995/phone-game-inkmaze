@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-LevelManager="*res://scripts/core/level_manager.gd"
+LevelManager="*uid://daq360u2thk66"
 GameManager="*res://scripts/core/game_manager.gd"
 AppManager="*uid://bhpw6qvxun88p"
 SettingManager="*uid://4o631v7cy502"
@@ -25,7 +25,6 @@ SceneManager="*uid://c1bhxness6juu"
 ScreenManager="*uid://llk3itpnkef4"
 SfxManager="*uid://bghkexi6w5018"
 DataManager="*uid://cv8cm2i8nr5gw"
-LevelManager="*uid://daq360u2thk66"
 DailyManager="*uid://bxus37ntramd1"
 DebugManager="*uid://drkig4dljo3f7"
 AdsManager="*uid://kducqs2nm8b0"

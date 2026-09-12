@@ -1,5 +1,5 @@
 class_name UIController
-extends RefCounted
+extends Node
 ## ============================================================================
 ## Controller: Quản lý và điều phối các thành phần giao diện (HUD, Popups).
 ## ============================================================================
@@ -9,11 +9,11 @@ signal retry_requested
 signal quit_requested
 signal home_requested
 
-var level_label: Label = null
-var step_val_label: Label = null
-var step_max_label: Label = null
-var time_val_label: Label = null
-var score_val_label: Label = null
+@export var level_label: Label = null
+@export var step_val_label: Label = null
+@export var step_max_label: Label = null
+@export var time_val_label: Label = null
+@export var score_val_label: Label = null
 
 var floor_complete_view: Control = null
 var game_over_view: Control = null
@@ -21,20 +21,20 @@ var settings_view: Control = null
 
 
 func setup(
-	p_level_label: Label,
-	p_step_val: Label,
-	p_step_max: Label,
-	p_time_val: Label,
-	p_score_val: Label,
+	#p_level_label: Label,
+	#p_step_val: Label,
+	#p_step_max: Label,
+	#p_time_val: Label,
+	#p_score_val: Label,
 	p_floor_complete: Control = null,
 	p_game_over: Control = null,
 	p_settings: Control = null
 ) -> void:
-	level_label = p_level_label
-	step_val_label = p_step_val
-	step_max_label = p_step_max
-	time_val_label = p_time_val
-	score_val_label = p_score_val
+	#level_label = p_level_label
+	#step_val_label = p_step_val
+	#step_max_label = p_step_max
+	#time_val_label = p_time_val
+	#score_val_label = p_score_val
 	floor_complete_view = p_floor_complete
 	game_over_view = p_game_over
 	settings_view = p_settings

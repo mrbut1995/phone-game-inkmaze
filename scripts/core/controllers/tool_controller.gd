@@ -1,5 +1,5 @@
 class_name ToolController
-extends RefCounted
+extends Node
 ## ============================================================================
 ## Controller: Quản lý chuyển đổi chế độ công cụ: "Vẽ Đường" và "Ghi Nhớ".
 ## ============================================================================
@@ -10,8 +10,8 @@ enum ToolMode { PATH, WALL }
 
 var current_tool: ToolMode = ToolMode.PATH
 
-var tool_path_btn: BaseButton = null
-var tool_wall_btn: BaseButton = null
+@export var tool_path_btn: BaseButton = null
+@export var tool_wall_btn: BaseButton = null
 
 const PATH_ACTIVE_TEX := preload("res://assets/images/game/btn_tool_path_active.svg")
 const PATH_INACTIVE_TEX := preload("res://assets/images/game/btn_tool_path_inactive.svg")
@@ -19,17 +19,11 @@ const WALL_ACTIVE_TEX := preload("res://assets/images/game/btn_tool_wall_active.
 const WALL_INACTIVE_TEX := preload("res://assets/images/game/btn_tool_wall_inactive.svg")
 
 
-func setup(p_tool_path: BaseButton, p_tool_wall: BaseButton) -> void:
-	tool_path_btn = p_tool_path
-	tool_wall_btn = p_tool_wall
-
-	if tool_path_btn != null:
-		tool_path_btn.pressed.connect(func() -> void: select_tool(ToolMode.PATH))
-	if tool_wall_btn != null:
-		tool_wall_btn.pressed.connect(func() -> void: select_tool(ToolMode.WALL))
-
-	_refresh_ui()
-
+func _on_tool_pressed(mode : String) :
+	if mode == "path":
+		select_tool(ToolMode.PATH)
+	elif mode == "wall":
+		select_tool(ToolMode.WALL)
 
 func select_tool(mode: ToolMode) -> void:
 	current_tool = mode
@@ -45,3 +39,7 @@ func _refresh_ui() -> void:
 	if tool_wall_btn is TextureButton:
 		var tb := tool_wall_btn as TextureButton
 		tb.texture_normal = WALL_ACTIVE_TEX if current_tool == ToolMode.WALL else WALL_INACTIVE_TEX
+
+
+func _on_wall_pressed(extra_arg_0: String) -> void:
+	pass # Replace with function body.

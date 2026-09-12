@@ -1,5 +1,5 @@
 class_name HintController
-extends RefCounted
+extends Node
 ## ============================================================================
 ## Controller: Cung cấp gợi ý (Hint) cho người chơi.
 ## - Tìm bước đi hợp lệ tiếp theo hướng tới đích F bằng thuật toán BFS.

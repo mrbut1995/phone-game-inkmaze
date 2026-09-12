@@ -31,9 +31,29 @@
 [ext_resource type="LabelSettings" uid="uid://cb662usl7mhkf" path="res://resources/settings/text/text_game_information_value.tres" id="14_suyxu"]
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="15_sgl2t"]
 [ext_resource type="LabelSettings" uid="uid://bwpq01l1whp4t" path="res://resources/settings/text/text_game_button_label.tres" id="18_qnb83"]
+[ext_resource type="Script" uid="uid://cxkejvefm60q1" path="res://scripts/core/controllers/anchor_controller.gd" id="32_gxtfn"]
+[ext_resource type="Script" uid="uid://dpvjjtn4enoyu" path="res://scripts/core/controllers/hint_controller.gd" id="33_02fa5"]
+[ext_resource type="Script" uid="uid://b60h5vj4wkts5" path="res://scripts/core/controllers/undo_controller.gd" id="33_m4url"]
+[ext_resource type="Script" uid="uid://noqw2uhwrxj5" path="res://scripts/core/controllers/grid_controller.gd" id="33_twgab"]
+[ext_resource type="Script" uid="uid://bhoypxp82uf61" path="res://scripts/core/controllers/floor_controller.gd" id="34_02fa5"]
+[ext_resource type="Script" uid="uid://4m1fycwf44gm" path="res://scripts/core/controllers/game_mode_controller.gd" id="35_8ool0"]
+[ext_resource type="Script" uid="uid://cka6sxqao71wc" path="res://scripts/core/controllers/game_controller.gd" id="35_nepv3"]
+[ext_resource type="Script" uid="uid://baibccmdx3g5u" path="res://scripts/core/controllers/timer_controller.gd" id="36_02fa5"]
+[ext_resource type="Script" uid="uid://bcqi64nve5wp5" path="res://scripts/core/controllers/ui_controller.gd" id="38_8ool0"]
+[ext_resource type="Script" uid="uid://btmprlxpqdg6j" path="res://scripts/core/controllers/tool_controller.gd" id="39_pr1ej"]
 
-[node name="Scene" unique_id=1978794255 instance=ExtResource("1_80q71")]
+[node name="Scene" unique_id=1978794255 node_paths=PackedStringArray("game_controller", "grid_controller", "anchor_controller", "floor_controller", "timer_controller", "ui_controller", "tool_controller", "undo_controller", "hint_controller", "game_mode_controller") instance=ExtResource("1_80q71")]
 script = ExtResource("2_qouja")
+game_controller = NodePath("Controllers/GameController")
+grid_controller = NodePath("Controllers/GridController")
+anchor_controller = NodePath("Controllers/AnchorController")
+floor_controller = NodePath("Controllers/FloorController")
+timer_controller = NodePath("Controllers/TimerController")
+ui_controller = NodePath("Controllers/UIController")
+tool_controller = NodePath("Controllers/ToolController")
+undo_controller = NodePath("Controllers/UndoController")
+hint_controller = NodePath("Controllers/HintController")
+game_mode_controller = NodePath("Controllers/GameModeController")
 
 [node name="Board" parent="." index="1" unique_id=181012636 instance=ExtResource("2_yqjtg")]
 layout_mode = 1
@@ -286,3 +306,69 @@ texture_focused = ExtResource("13_trtic")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Controllers" type="Node" parent="." index="6" unique_id=955863401]
+
+[node name="GameController" type="Node" parent="Controllers" index="0" unique_id=881543567 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "grid_view")]
+script = ExtResource("35_nepv3")
+floor_controller = NodePath("../FloorController")
+timer_controller = NodePath("../TimerController")
+grid_controller = NodePath("../GridController")
+ui_controller = NodePath("../UIController")
+tool_controller = NodePath("../ToolController")
+game_mode_controller = NodePath("../GameModeController")
+grid_view = NodePath("../../Board")
+
+[node name="AnchorController" type="Node" parent="Controllers" index="1" unique_id=1130337566]
+script = ExtResource("32_gxtfn")
+
+[node name="UndoController" type="Node" parent="Controllers" index="2" unique_id=1595138216]
+script = ExtResource("33_m4url")
+
+[node name="HintController" type="Node" parent="Controllers" index="3" unique_id=1371592110]
+script = ExtResource("33_02fa5")
+
+[node name="GameModeController" type="Node" parent="Controllers" index="4" unique_id=1920860723]
+script = ExtResource("35_8ool0")
+
+[node name="GridController" type="Node" parent="Controllers" index="5" unique_id=295667286 node_paths=PackedStringArray("board_view", "anchor_controller", "undo_controller", "hint_controller", "game_mode_controller")]
+script = ExtResource("33_twgab")
+board_view = NodePath("../../Board")
+anchor_controller = NodePath("../AnchorController")
+undo_controller = NodePath("../UndoController")
+hint_controller = NodePath("../HintController")
+game_mode_controller = NodePath("../GameModeController")
+
+[node name="FloorController" type="Node" parent="Controllers" index="6" unique_id=480494204]
+script = ExtResource("34_02fa5")
+
+[node name="TimerController" type="Node" parent="Controllers" index="7" unique_id=1851640039]
+script = ExtResource("36_02fa5")
+
+[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=1862639245 node_paths=PackedStringArray("level_label", "step_val_label", "step_max_label", "time_val_label", "score_val_label")]
+script = ExtResource("38_8ool0")
+level_label = NodePath("../../Status/LevelLabel")
+step_val_label = NodePath("../../Information/Step/ValueContainer/Value")
+step_max_label = NodePath("../../Information/Step/ValueContainer/MaxValue")
+time_val_label = NodePath("../../Information/Time/Value")
+score_val_label = NodePath("../../Information/Score/Value")
+
+[node name="ToolController" type="Node" parent="Controllers" index="9" unique_id=1503824 node_paths=PackedStringArray("tool_path_btn", "tool_wall_btn")]
+script = ExtResource("39_pr1ej")
+tool_path_btn = NodePath("../../Button/Tool")
+tool_wall_btn = NodePath("../../Button/Wall")
+
+[connection signal="anchor_connected" from="Board" to="Controllers/GridController" method="handle_anchor_connected"]
+[connection signal="cell_pressed" from="Board" to="Controllers/GridController" method="handle_cell_pressed"]
+[connection signal="drag_updated" from="Board" to="Controllers/GridController" method="handle_drag_updated"]
+[connection signal="pressed" from="Button/Tool" to="Controllers/ToolController" method="_on_tool_pressed" binds= ["path"]]
+[connection signal="pressed" from="Button/Wall" to="Controllers/ToolController" method="_on_wall_pressed" binds= ["wall"]]
+[connection signal="suspected_wall_toggled" from="Controllers/AnchorController" to="Controllers/GridController" method="_on_suspected_wall_toggled"]
+[connection signal="reached_end" from="Controllers/GridController" to="Controllers/GameController" method="_on_reached_end"]
+[connection signal="step_consumed" from="Controllers/GridController" to="Controllers/GameController" method="_on_step_consumed"]
+[connection signal="wall_hit" from="Controllers/GridController" to="Controllers/GameController" method="_on_wall_hit"]
+[connection signal="time_updated" from="Controllers/TimerController" to="Controllers/GameController" method="_on_time_updated"]
+[connection signal="timeout" from="Controllers/TimerController" to="Controllers/GameController" method="_on_timer_timeout"]
+[connection signal="continue_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_continue_requested"]
+[connection signal="home_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_home_requested"]
+[connection signal="retry_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_retry_requested"]

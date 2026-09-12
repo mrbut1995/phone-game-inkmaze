@@ -1,5 +1,5 @@
 class_name FloorController
-extends RefCounted
+extends Node
 ## ============================================================================
 ## Controller: Quản lý vòng đời Floor & Sinh dữ liệu Mê Cung theo GameMode.
 ## ============================================================================

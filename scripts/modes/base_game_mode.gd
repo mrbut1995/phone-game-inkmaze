@@ -1,5 +1,5 @@
 class_name BaseGameMode
-extends RefCounted
+extends Resource 
 ## ============================================================================
 ## Strategy Pattern / Base Class cho tất cả các Chế độ chơi (Game Modes).
 ## Tuân thủ OCP (Open/Closed Principle) & LSP (Liskov Substitution Principle).
@@ -53,7 +53,7 @@ func evaluate_move(from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> Dict
 
 
 ## Kiểm tra điều kiện hoàn thành màn chơi / floor.
-func check_completion(current_pos: Vector2i, maze: MazeData, _anchor_controller: RefCounted) -> bool:
+func check_completion(current_pos: Vector2i, maze: MazeData, _anchor_controller: Node) -> bool:
 	if maze == null:
 		return false
 	return current_pos == maze.get_end()

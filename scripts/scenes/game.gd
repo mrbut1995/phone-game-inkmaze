@@ -24,15 +24,18 @@ const SETTINGS_SCENE := preload("res://nodes/popups/settings.tscn")
 @onready var undo_btn: TextureButton = $Button/Undo
 @onready var hint_btn: TextureButton = $Button/Hint
 
-var game_controller: GameController = null
-var grid_controller: GridController = null
-var anchor_controller: AnchorController = null
-var floor_controller: FloorController = null
-var timer_controller: TimerController = null
-var ui_controller: UIController = null
-var tool_controller: ToolController = null
-var undo_controller: UndoController = null
-var hint_controller: HintController = null
+@export var game_controller: GameController = null
+@export var grid_controller: GridController = null
+@export var anchor_controller: AnchorController = null
+@export var floor_controller: FloorController = null
+@export var timer_controller: TimerController = null
+@export var ui_controller: UIController = null
+@export var tool_controller: ToolController = null
+@export var undo_controller: UndoController = null
+@export var hint_controller: HintController = null
+@export var game_mode_controller : GameModeController = null
+
+#@export var game_mode : BaseGameMode
 
 var popup_win: Control = null
 var popup_gameover: Control = null
@@ -85,56 +88,11 @@ func _setup_popups() -> void:
 
 
 func _setup_mvc() -> void:
-	anchor_controller = AnchorController.new()
-	undo_controller = UndoController.new()
-	hint_controller = HintController.new()
-
-	var default_mode: BaseGameMode = DungeonGameMode.new()
-	grid_controller = GridController.new(
-		board_view,
-		anchor_controller,
-		default_mode,
-		undo_controller,
-		hint_controller
-	)
-
-	floor_controller = FloorController.new()
-	timer_controller = TimerController.new()
-
-	ui_controller = UIController.new()
 	ui_controller.setup(
-		level_label,
-		step_val,
-		step_max,
-		time_val,
-		score_val,
 		popup_win,
 		popup_gameover,
 		popup_settings
 	)
-
-	tool_controller = ToolController.new()
-	tool_controller.setup(tool_path_btn, tool_wall_btn)
-
-	# Master GameController
-	game_controller = GameController.new()
-	add_child(game_controller)
-	game_controller.setup(
-		grid_controller,
-		board_view,
-		ui_controller,
-		floor_controller,
-		timer_controller,
-		tool_controller,
-		default_mode
-	)
-
-	# Kết nối signal từ BoardView sang GridController
-	if board_view != null:
-		board_view.connect("cell_pressed", Callable(grid_controller, "handle_cell_pressed"))
-		board_view.connect("drag_updated", Callable(grid_controller, "handle_drag_updated"))
-		board_view.connect("anchor_connected", Callable(grid_controller, "handle_anchor_connected"))
-
 
 func _bind_buttons() -> void:
 	if restart_btn != null:

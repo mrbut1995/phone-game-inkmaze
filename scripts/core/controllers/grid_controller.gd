@@ -1,5 +1,5 @@
 class_name GridController
-extends RefCounted
+extends Node
 ## ============================================================================
 ## Controller: Cầu nối giữa Model/GameMode và View (board.gd).
 ## - Nhận gesture input từ View: handle_drag_updated / handle_anchor_connected.
@@ -14,36 +14,17 @@ signal wall_hit
 signal reached_end
 
 var maze: MazeData = null
-var view: Control = null
-var anchor_controller: AnchorController = null
-var undo_controller: UndoController = null
-var hint_controller: HintController = null
-var game_mode: BaseGameMode = null
+#var view: Control = null
+
+@export var board_view : BoardView = null
+@export var anchor_controller: AnchorController = null
+@export var undo_controller: UndoController = null
+@export var hint_controller: HintController = null
+@export var game_mode_controller: GameModeController = null
 
 var current_pos: Vector2i = Vector2i.ZERO
 var path: Array[Vector2i] = []
 var _visited_edges: Dictionary = {}
-
-
-func _init(
-	p_view: Control = null,
-	p_anchor_controller: AnchorController = null,
-	p_mode: BaseGameMode = null,
-	p_undo_controller: UndoController = null,
-	p_hint_controller: HintController = null
-) -> void:
-	view = p_view
-	anchor_controller = p_anchor_controller if p_anchor_controller != null else AnchorController.new()
-	undo_controller = p_undo_controller if p_undo_controller != null else UndoController.new()
-	hint_controller = p_hint_controller if p_hint_controller != null else HintController.new()
-	game_mode = p_mode if p_mode != null else DungeonGameMode.new()
-
-	anchor_controller.suspected_wall_toggled.connect(_on_suspected_wall_toggled)
-
-
-func set_game_mode(p_mode: BaseGameMode) -> void:
-	game_mode = p_mode
-
 
 func set_maze(p_maze: MazeData) -> void:
 	maze = p_maze
@@ -54,16 +35,16 @@ func set_maze(p_maze: MazeData) -> void:
 		anchor_controller.reset()
 	if undo_controller != null:
 		undo_controller.reset()
-	if game_mode != null and view != null:
-		game_mode.on_grid_setup(view, maze)
+	if game_mode_controller.game_mode != null and board_view != null:
+		game_mode_controller.game_mode.on_grid_setup(board_view, maze)
 
 
 # ---------------------------------------------------------------------------
 # Handlers nhận signal từ View
 # ---------------------------------------------------------------------------
 func handle_cell_pressed(pos: Vector2i) -> void:
-	if view != null and view.has_method("highlight_real_walls_of_cell"):
-		view.call("highlight_real_walls_of_cell", pos)
+	if board_view != null and board_view.has_method("highlight_real_walls_of_cell"):
+		board_view.call("highlight_real_walls_of_cell", pos)
 
 
 func handle_drag_updated(pos: Vector2i) -> void:
@@ -73,20 +54,20 @@ func handle_drag_updated(pos: Vector2i) -> void:
 func handle_anchor_connected(corner_a: Vector2i, corner_b: Vector2i) -> void:
 	if anchor_controller != null:
 		anchor_controller.handle_anchor_connection(corner_a, corner_b)
-		if game_mode != null and game_mode.check_completion(current_pos, maze, anchor_controller):
+		if game_mode_controller.game_mode != null and game_mode_controller.game_mode.check_completion(current_pos, maze, anchor_controller):
 			reached_end.emit()
 
 
 func _on_suspected_wall_toggled(is_h: bool, lattice: Vector2i, active: bool) -> void:
-	if view != null and view.has_method("set_suspected_wall"):
-		view.call("set_suspected_wall", is_h, lattice, active)
+	if board_view != null and board_view.has_method("set_suspected_wall"):
+		board_view.call("set_suspected_wall", is_h, lattice, active)
 
 
 # ---------------------------------------------------------------------------
 # Logic di chuyển theo GameMode Strategy
 # ---------------------------------------------------------------------------
 func try_move_to(pos: Vector2i) -> void:
-	if maze == null or view == null or game_mode == null:
+	if maze == null or board_view == null or game_mode_controller.game_mode == null:
 		return
 	if not maze.is_in_bounds(pos):
 		return
@@ -95,8 +76,8 @@ func try_move_to(pos: Vector2i) -> void:
 	if not _is_adjacent(current_pos, pos):
 		return
 
-	var step_cost := game_mode.get_step_cost(current_pos, pos, maze)
-	var eval_result := game_mode.evaluate_move(current_pos, pos, maze)
+	var step_cost := game_mode_controller.game_mode.get_step_cost(current_pos, pos, maze)
+	var eval_result := game_mode_controller.game_mode.evaluate_move(current_pos, pos, maze)
 
 	if eval_result.get("is_hazard", false):
 		var hazard_type: String = eval_result.get("hazard_type", "wall")
@@ -109,14 +90,14 @@ func try_move_to(pos: Vector2i) -> void:
 
 		if hazard_type == "mine":
 			var mine_pos: Vector2i = eval_result.get("pos", pos)
-			if view.has_method("show_mine_hit"):
-				view.call("show_mine_hit", mine_pos)
+			if board_view.has_method("show_mine_hit"):
+				board_view.call("show_mine_hit", mine_pos)
 		else:
-			if view.has_method("show_wall_hit"):
-				view.call("show_wall_hit", from_cell, pos)
+			if board_view.has_method("show_wall_hit"):
+				board_view.call("show_wall_hit", from_cell, pos)
 
-		if view.has_method("reset_to_start"):
-			view.call("reset_to_start")
+		if board_view.has_method("reset_to_start"):
+			board_view.call("reset_to_start")
 	elif eval_result.get("allowed", false):
 		var prev_pos := current_pos
 		_record_edge(current_pos, pos)
@@ -126,15 +107,15 @@ func try_move_to(pos: Vector2i) -> void:
 		if undo_controller != null:
 			undo_controller.record_move(prev_pos, pos, step_cost)
 
-		if view.has_method("move_cursor_to"):
-			view.call("move_cursor_to", pos)
-		if view.has_method("set_moving_path"):
-			view.call("set_moving_path", path)
+		if board_view.has_method("move_cursor_to"):
+			board_view.call("move_cursor_to", pos)
+		if board_view.has_method("set_moving_path"):
+			board_view.call("set_moving_path", path)
 
-		game_mode.on_player_moved(view, pos, maze)
+		game_mode_controller.game_mode.on_player_moved(board_view, pos, maze)
 		step_consumed.emit(step_cost, false)
 
-		if game_mode.check_completion(current_pos, maze, anchor_controller):
+		if game_mode_controller.game_mode.check_completion(current_pos, maze, anchor_controller):
 			reached_end.emit()
 
 
@@ -151,34 +132,34 @@ func undo_last_move() -> bool:
 		current_pos = target_pos
 		if path.size() > 1:
 			path.pop_back()
-		if view != null:
-			if view.has_method("move_cursor_to"):
-				view.call("move_cursor_to", current_pos)
-			if view.has_method("set_moving_path"):
-				view.call("set_moving_path", path)
+		if board_view != null:
+			if board_view.has_method("move_cursor_to"):
+				board_view.call("move_cursor_to", current_pos)
+			if board_view.has_method("set_moving_path"):
+				board_view.call("set_moving_path", path)
 		return true
 	return false
 
 
 func give_hint() -> void:
-	if hint_controller == null or maze == null or view == null:
+	if hint_controller == null or maze == null or board_view == null:
 		return
 	var next_cell := hint_controller.get_next_step_hint(maze, current_pos)
 	if next_cell != current_pos:
-		if view.has_method("pulse_cell"):
-			view.call("pulse_cell", next_cell)
+		if board_view.has_method("pulse_cell"):
+			board_view.call("pulse_cell", next_cell)
 	else:
 		var wall_info := hint_controller.reveal_one_invisible_wall(maze)
-		if not wall_info.is_empty() and view.has_method("reveal_wall_segment"):
-			view.call("reveal_wall_segment", wall_info.is_h, wall_info.lattice)
+		if not wall_info.is_empty() and board_view.has_method("reveal_wall_segment"):
+			board_view.call("reveal_wall_segment", wall_info.is_h, wall_info.lattice)
 
 
 func _record_edge(a: Vector2i, b: Vector2i) -> void:
 	var key := _edge_key(a, b)
 	if not _visited_edges.has(key):
 		_visited_edges[key] = true
-		if view != null and view.has_method("show_history_edge"):
-			view.call("show_history_edge", a, b)
+		if board_view != null and board_view.has_method("show_history_edge"):
+			board_view.call("show_history_edge", a, b)
 
 
 func _is_adjacent(a: Vector2i, b: Vector2i) -> bool:

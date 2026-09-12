@@ -1,5 +1,5 @@
 class_name AnchorController
-extends RefCounted
+extends Node
 ## ============================================================================
 ## Controller: Quản lý logic nối các Anchor và trạng thái Tường Nghi Ngờ.
 ## Tuân thủ SRP: Tách biệt logic quản lý trạng thái Tường Nghi Ngờ ra khỏi View.

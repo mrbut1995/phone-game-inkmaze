@@ -109,7 +109,7 @@ func evaluate_move(from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> Dict
 	}
 
 
-func check_completion(current_pos: Vector2i, maze: MazeData, anchor_controller: RefCounted) -> bool:
+func check_completion(current_pos: Vector2i, maze: MazeData, anchor_controller: Node) -> bool:
 	if maze == null or anchor_controller == null:
 		return false
 
@@ -143,7 +143,7 @@ func check_completion(current_pos: Vector2i, maze: MazeData, anchor_controller: 
 	return has_sf_area
 
 
-func detect_areas(maze: MazeData, anchor_controller: RefCounted) -> Array:
+func detect_areas(maze: MazeData, anchor_controller: Node) -> Array:
 	var areas: Array = []
 	var visited := {}
 	var size := maze.width

@@ -1,5 +1,5 @@
 class_name UndoController
-extends RefCounted
+extends Node
 ## ============================================================================
 ## Controller: Quản lý Undo / Hoàn tác bước đi và tường nghi ngờ.
 ## ============================================================================

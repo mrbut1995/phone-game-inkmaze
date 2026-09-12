@@ -7,71 +7,37 @@ extends Node
 const INITIAL_STEPS := 15
 
 var game_state: GameState = null
-var game_mode: BaseGameMode = null
 
-var floor_controller: FloorController = null
-var timer_controller: TimerController = null
-var grid_controller: GridController = null
-var ui_controller: UIController = null
-var tool_controller: ToolController = null
-var grid_view: Control = null
+@export var floor_controller: FloorController = null
+@export var timer_controller: TimerController = null
+@export var grid_controller: GridController = null
+@export var ui_controller: UIController = null
+@export var tool_controller: ToolController = null
+@export var game_mode_controller: GameModeController = null
+@export var grid_view: BoardView = null
 
 var _pending_bonus := 0
 var _floor_finished := false
 var _run_active := false
 
 
-func setup(
-	p_grid_controller: GridController,
-	p_grid_view: Control,
-	p_ui_controller: UIController,
-	p_floor_controller: FloorController = null,
-	p_timer_controller: TimerController = null,
-	p_tool_controller: ToolController = null,
-	p_mode: BaseGameMode = null
-) -> void:
-	grid_controller = p_grid_controller
-	grid_view = p_grid_view
-	ui_controller = p_ui_controller
-	tool_controller = p_tool_controller
-	
-	game_mode = p_mode if p_mode != null else DungeonGameMode.new()
-	floor_controller = p_floor_controller if p_floor_controller != null else FloorController.new()
-	timer_controller = p_timer_controller if p_timer_controller != null else TimerController.new()
+func _init() -> void:
 	game_state = GameState.new()
 
-	if grid_controller != null:
-		grid_controller.set_game_mode(game_mode)
-		grid_controller.step_consumed.connect(_on_step_consumed)
-		grid_controller.wall_hit.connect(_on_wall_hit)
-		grid_controller.reached_end.connect(_on_reached_end)
-
-	if timer_controller != null:
-		timer_controller.time_updated.connect(_on_time_updated)
-		timer_controller.timeout.connect(_on_timer_timeout)
-
-	if ui_controller != null:
-		ui_controller.continue_requested.connect(_on_continue_requested)
-		ui_controller.retry_requested.connect(_on_retry_requested)
-		ui_controller.home_requested.connect(_on_home_requested)
-
-
 func set_game_mode(p_mode: BaseGameMode) -> void:
-	game_mode = p_mode
-	if grid_controller != null:
-		grid_controller.set_game_mode(game_mode)
+	game_mode_controller.game_mode = p_mode
 
 
 func start_new_run() -> void:
 	game_state = GameState.new()
-	var init_steps: int = game_mode.initial_steps if game_mode != null else INITIAL_STEPS
-	game_state.begin_run(init_steps, game_mode.mode_id)
+	var init_steps: int = game_mode_controller.game_mode.initial_steps if game_mode_controller.game_mode != null else INITIAL_STEPS
+	game_state.begin_run(init_steps, game_mode_controller.game_mode.mode_id)
 	_run_active = true
 	_floor_finished = false
 
 	if timer_controller != null:
-		if game_mode is TimeAttackGameMode:
-			var ta := game_mode as TimeAttackGameMode
+		if game_mode_controller.game_mode is TimeAttackGameMode:
+			var ta := game_mode_controller.game_mode as TimeAttackGameMode
 			timer_controller.start_countdown(ta.time_limit)
 		else:
 			timer_controller.start_new_run()
@@ -83,10 +49,10 @@ func start_new_run() -> void:
 
 
 func _start_floor(floor_number: int) -> void:
-	var maze := floor_controller.setup_floor(floor_number, game_mode)
+	var maze := floor_controller.setup_floor(floor_number, game_mode_controller.game_mode)
 	grid_controller.set_maze(maze)
 	if grid_view != null and grid_view.has_method("setup_maze"):
-		grid_view.call("setup_maze", maze, game_mode)
+		grid_view.call("setup_maze", maze, game_mode_controller.game_mode)
 
 	_floor_finished = false
 	if timer_controller != null:
@@ -116,8 +82,8 @@ func _on_timer_timeout() -> void:
 func _update_hud() -> void:
 	if ui_controller == null or game_state == null:
 		return
-	var extra_info := game_mode.get_hud_extra_info() if game_mode != null else ""
-	var title := game_mode.get_hud_floor_title(game_state.floor_number) if game_mode != null else "TẦNG %d" % game_state.floor_number
+	var extra_info := game_mode_controller.game_mode.get_hud_extra_info() if game_mode_controller.game_mode != null else ""
+	var title := game_mode_controller.game_mode.get_hud_floor_title(game_state.floor_number) if game_mode_controller.game_mode != null else "TẦNG %d" % game_state.floor_number
 	ui_controller.update_hud(
 		title,
 		game_state.steps_remaining,
@@ -134,7 +100,7 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 	game_state.consume_step(cost)
 	if hit_hazard:
 		game_state.record_wall_hit()
-		if game_mode != null and game_mode.instant_game_over_on_hazard:
+		if game_mode_controller.game_mode != null and game_mode_controller.game_mode.instant_game_over_on_hazard:
 			_game_over.call_deferred()
 			return
 
@@ -161,7 +127,7 @@ func _complete_floor() -> void:
 		grid_view.call("set_interaction_enabled", false)
 
 	var floor_time: float = timer_controller.floor_elapsed if timer_controller != null else 0.0
-	var score_data := game_mode.calculate_score(
+	var score_data := game_mode_controller.game_mode.calculate_score(
 		game_state.floor_number,
 		game_state.steps_remaining,
 		floor_time,
@@ -206,7 +172,7 @@ func _game_over() -> void:
 func _on_continue_requested() -> void:
 	if game_state == null:
 		return
-	if game_mode != null and not game_mode.is_endless:
+	if game_mode_controller.game_mode != null and not game_mode_controller.game_mode.is_endless:
 		if ui_controller != null:
 			ui_controller.hide_overlays()
 		start_new_run()

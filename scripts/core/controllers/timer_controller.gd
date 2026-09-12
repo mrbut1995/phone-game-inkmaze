@@ -1,5 +1,5 @@
 class_name TimerController
-extends RefCounted
+extends Node
 ## ============================================================================
 ## Controller: Quản lý thời gian chạy (Stopwatch hoặc Countdown).
 ## ============================================================================

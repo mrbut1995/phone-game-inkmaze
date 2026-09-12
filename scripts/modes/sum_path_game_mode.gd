@@ -105,7 +105,7 @@ func on_player_moved(_grid_view: Control, new_pos: Vector2i, _maze: MazeData) ->
 			current_sum += _cell_scores.get(p, 1)
 
 
-func check_completion(current_pos: Vector2i, maze: MazeData, _anchor_controller: RefCounted) -> bool:
+func check_completion(current_pos: Vector2i, maze: MazeData, _anchor_controller: Node) -> bool:
 	if maze == null:
 		return false
 	if current_pos != maze.get_end():
