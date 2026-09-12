@@ -2,12 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_y4r07"]
 [ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="2_fop1b"]
+[ext_resource type="Script" uid="uid://cxb1slgndopaa" path="res://scripts/scenes/daily.gd" id="2_oqj28"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_vevov"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_2aa7n"]
 [ext_resource type="Texture2D" uid="uid://cpiryq18o3y70" path="res://assets/images/calendar/panel_daily_mission.svg" id="6_fnv54"]
 [ext_resource type="LabelSettings" uid="uid://bonmr0e8ujeq3" path="res://resources/settings/text/text_game_title.tres" id="7_1ph8s"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_y4r07")]
+script = ExtResource("2_oqj28")
 
 [node name="Calendar" parent="." index="1" unique_id=826878321 instance=ExtResource("2_fop1b")]
 layout_mode = 1

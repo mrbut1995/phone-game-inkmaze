@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://d273xrya2wmxq"]
+
+[ext_resource type="Texture2D" uid="uid://8a220iuerp3e" path="res://assets/images/game/cell_finish.svg" id="1_tjg0f"]
+
+[node name="EndCell" type="CenterContainer" unique_id=1489738087]
+anchors_preset = -1
+anchor_right = 0.16296296
+anchor_bottom = 0.09166667
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=485243662]
+layout_mode = 2
+texture = ExtResource("1_tjg0f")

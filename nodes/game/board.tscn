@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://chbg12rc46dp"]
 
 [ext_resource type="Texture2D" uid="uid://co2apcdowivue" path="res://assets/images/game/card_board.svg" id="1_pr7sl"]
+[ext_resource type="Script" uid="uid://ctapikig1gy5k" path="res://scripts/nodes/game/board.gd" id="1_v7f7a"]
 
 [node name="Board" type="Control" unique_id=181012636]
 custom_minimum_size = Vector2(1020, 1020)
@@ -11,6 +12,7 @@ offset_right = 0.47991943
 offset_bottom = 0.47998047
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_v7f7a")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="TextureRect" parent="." unique_id=1799900499]

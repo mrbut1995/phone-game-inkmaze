@@ -1,0 +1,2 @@
+class_name MainScene
+extends BaseScene

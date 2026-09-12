@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://dby0vymb3wuhs"]
 
+[ext_resource type="Script" uid="uid://dbnom6k6sjlek" path="res://scripts/nodes/game/cell.gd" id="1_fj7pj"]
 [ext_resource type="Texture2D" uid="uid://cyyrwbsf7i2x" path="res://assets/images/game/cell_normal.svg" id="1_pne7a"]
+[ext_resource type="LabelSettings" uid="uid://d1q5q45o84b40" path="res://resources/settings/text/text_game_cell.tres" id="2_cjyvu"]
+[ext_resource type="Texture2D" uid="uid://dkbn5t5dxj5i0" path="res://assets/images/game/cell_pressed.svg" id="3_cobij"]
+[ext_resource type="Texture2D" uid="uid://b1vsvjb6jjpd0" path="res://assets/images/game/cell_disabled.svg" id="4_lli7j"]
 
 [node name="Cell" type="CenterContainer" unique_id=80577587]
 anchors_preset = -1
@@ -10,9 +14,26 @@ offset_top = -1.0
 offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_fj7pj")
 metadata/_edit_use_anchors_ = true
 
-[node name="Sprite" type="TextureRect" parent="." unique_id=2043945818]
+[node name="Sprite" type="TextureButton" parent="." unique_id=1804456079]
 layout_mode = 2
-texture = ExtResource("1_pne7a")
+texture_normal = ExtResource("1_pne7a")
+texture_pressed = ExtResource("3_cobij")
+texture_hover = ExtResource("1_pne7a")
+texture_disabled = ExtResource("4_lli7j")
+texture_focused = ExtResource("1_pne7a")
 metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Sprite" unique_id=815119634]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = ExtResource("2_cjyvu")
+horizontal_alignment = 1
+vertical_alignment = 1

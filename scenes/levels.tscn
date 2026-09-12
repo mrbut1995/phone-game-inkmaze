@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://bdu75fucx6353"]
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_hcnff"]
+[ext_resource type="Script" uid="uid://byfef235y6820" path="res://scripts/scenes/levels.gd" id="2_5ekxl"]
 [ext_resource type="PackedScene" uid="uid://dfmh01huguti4" path="res://nodes/level_selection/level_card.tscn" id="2_hk6qi"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_hcnff")]
+script = ExtResource("2_5ekxl")
 
 [node name="GridContainer" type="GridContainer" parent="." index="1" unique_id=783028615]
 layout_mode = 1

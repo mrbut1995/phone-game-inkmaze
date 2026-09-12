@@ -1,5 +1,11 @@
 [gd_scene format=3 uid="uid://dig7mt8e1aqsg"]
 
+[ext_resource type="Texture2D" uid="uid://dk4f7tb5u0b7t" path="res://assets/images/game/anchor_normal.svg" id="1_aae84"]
+[ext_resource type="Script" uid="uid://ija82o52h4mq" path="res://scripts/nodes/game/anchor.gd" id="1_fgv2j"]
+[ext_resource type="Texture2D" uid="uid://skq0744148rx" path="res://assets/images/game/anchor_pressed.svg" id="2_6q3p4"]
+[ext_resource type="Texture2D" uid="uid://cy0vghc1vdbc8" path="res://assets/images/game/anchor_disabled.svg" id="3_6q3p4"]
+[ext_resource type="Texture2D" uid="uid://cgrxktrgq3wbp" path="res://assets/images/game/anchor_focus.svg" id="3_fgv2j"]
+
 [node name="Anchor" type="Control" unique_id=946968232]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +13,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_fgv2j")
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=63874327]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_aae84")
+texture_pressed = ExtResource("2_6q3p4")
+texture_hover = ExtResource("1_aae84")
+texture_disabled = ExtResource("3_6q3p4")
+texture_focused = ExtResource("3_fgv2j")

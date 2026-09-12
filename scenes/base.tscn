@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://3ol477wsv33k"]
 
 [ext_resource type="Texture2D" uid="uid://b370lb2u0nfda" path="res://assets/images/game/background.svg" id="1_3ffsd"]
+[ext_resource type="Script" uid="uid://bxshv77j0bvff" path="res://scripts/scenes/base.gd" id="1_baglu"]
 
 [node name="Control" type="Control" unique_id=1978794255]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_baglu")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1260349669]
 layout_mode = 1

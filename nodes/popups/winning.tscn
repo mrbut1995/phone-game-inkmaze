@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_myu88"]
 [ext_resource type="Texture2D" uid="uid://cgdm4cbsmmbbu" path="res://assets/images/popups/popup_win.svg" id="2_wjasx"]
 [ext_resource type="Texture2D" uid="uid://cqe1sdpj4yw71" path="res://assets/images/game/star_empty.svg" id="3_tlyfm"]
-[ext_resource type="Texture2D" path="res://assets/images/level_selector/stamp_excellent.svg" id="4_x62yc"]
+[ext_resource type="Texture2D" uid="uid://ciq3atnbl2qi4" path="res://assets/images/popups/stamp_excellent.svg" id="4_x62yc"]
 [ext_resource type="Texture2D" uid="uid://c4cv31tihnj1" path="res://assets/images/popups/btn_paper_primary_normal.svg" id="5_1ymje"]
 [ext_resource type="Texture2D" uid="uid://c4277ksy08pue" path="res://assets/images/popups/btn_paper_secondary_normal.svg" id="5_16mpa"]
 [ext_resource type="Texture2D" uid="uid://g6jguuu3mgrt" path="res://assets/images/popups/btn_paper_secondary_pressed.svg" id="6_6gi7u"]
@@ -13,7 +13,7 @@
 
 [node name="Base" unique_id=1370178296 instance=ExtResource("1_myu88")]
 
-[node name="Panel" parent="." index="0" unique_id=1845041549]
+[node name="Panel" parent="." index="1" unique_id=1845041549]
 texture = ExtResource("2_wjasx")
 
 [node name="Rating" type="Control" parent="Panel" index="0" unique_id=955492189]

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cnkyiyp088ugn"]
+
+[ext_resource type="Texture2D" uid="uid://8v8qmvb67nvx" path="res://assets/images/game/cell_start.svg" id="1_mxrhr"]
+
+[node name="StartCell" type="CenterContainer" unique_id=527954368]
+anchors_preset = -1
+anchor_right = 0.163
+anchor_bottom = 0.09200001
+offset_right = -0.040008545
+offset_bottom = -0.64001465
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=572899236]
+layout_mode = 2
+texture = ExtResource("1_mxrhr")
