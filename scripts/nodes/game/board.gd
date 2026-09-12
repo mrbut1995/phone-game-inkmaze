@@ -2,7 +2,8 @@ class_name BoardView
 extends Control
 ## ============================================================================
 ## View: Board - Thành phần View thuần túy theo chuẩn MVC:
-##   - Giữ nguyên kích thước chuẩn của Cell (176x176px theo mockup).
+##   - Kích thước cell/anchor/tường/đường/cursor đọc trực tiếp từ scene gốc
+##     (cell.tscn, anchor.tscn, wall_segment.tscn...) nên chỉnh .tscn là ăn ngay.
 ##   - Căn giữa toàn bộ bàn cờ trên Board Panel nếu còn khoảng trống.
 ##   - Các ô liền sát nhau 100% không có khe hở.
 ## ============================================================================
@@ -23,21 +24,21 @@ const MINE_SFX_SCENE := preload("res://nodes/sfx/mine_explosion.tscn")
 
 const GLOW_LINE_SHADER := preload("res://shaders/line_glowing_shader.gdshader")
 
-## Kích thước chuẩn cố định của cell theo thiết kế mockup matchup.svg (176px)
-const FIXED_CELL_SIZE := 176.0
+## Fallback an toàn khi không đọc được scene gốc (giá trị thật nằm trong .tscn)
+const FALLBACK_CELL_SIZE := 176.0
+const FALLBACK_ANCHOR_SIZE := 40.0
+const FALLBACK_WALL_WIDTH := 11.0
 
 var maze: MazeData = null
 var game_mode: BaseGameMode = null
 
 var _width := 0
 var _height := 0
-var _step := FIXED_CELL_SIZE
-var _cell_size := FIXED_CELL_SIZE
-var _anchor_size := 36.0
-var _wall_width := 11.0
-var _line_width := 14.0
-var _cursor_size := 44.0
-var _anchor_hit_radius := 30.0
+var _step := FALLBACK_CELL_SIZE
+var _cell_size := FALLBACK_CELL_SIZE
+var _anchor_size := FALLBACK_ANCHOR_SIZE
+var _wall_width := FALLBACK_WALL_WIDTH
+var _anchor_hit_radius := FALLBACK_ANCHOR_SIZE * 0.75
 
 var _cell_nodes: Array = []        # MazeCell
 var _cell_rects: Array[Rect2] = []
@@ -149,11 +150,14 @@ func setup_maze(p_maze: MazeData, p_mode: BaseGameMode = null) -> void:
 		_is_shaking = false
 
 	_clear_runtime_layers()
-	_compute_layout()
 
+	# Dựng node trước để lấy đúng kích thước từ scene gốc, rồi mới tính layout
 	_build_cells()
-	_build_walls()
 	_build_anchors()
+	_read_metrics_from_scenes()
+	_update_layout_positions()
+
+	_build_walls()
 	_build_moving_line()
 	_build_drag_guide_line()
 	_place_cursor_at_start()
@@ -164,17 +168,41 @@ func _cell_index(x: int, y: int) -> int:
 
 
 # ============================================================================
-# Layout: Giữ nguyên cố định kích cỡ cell 176px (không resize), căn giữa Board Panel
+# Metrics: đọc trực tiếp từ scene gốc => .tscn luôn là source of truth
+# ============================================================================
+func _read_metrics_from_scenes() -> void:
+	if not _cell_nodes.is_empty():
+		var cell_sz: Vector2 = _cell_nodes[0].size
+		if cell_sz.x > 0.0 and cell_sz.y > 0.0:
+			_cell_size = cell_sz.x
+
+	if not _anchor_nodes.is_empty():
+		var anchor_sz: Vector2 = _anchor_nodes[0].node.size
+		if anchor_sz.x > 0.0:
+			_anchor_size = anchor_sz.x
+
+	_wall_width = _read_scene_line_width(WALL_SEGMENT_SCENE, FALLBACK_WALL_WIDTH)
+
+	_step = _cell_size
+	# Bán kính bắt dính anchor suy ra từ kích thước anchor (không hard-code riêng)
+	_anchor_hit_radius = _anchor_size * 0.75
+
+
+func _read_scene_line_width(scene: PackedScene, fallback: float) -> float:
+	var probe := scene.instantiate() as Line2D
+	if probe == null:
+		return fallback
+	var w := probe.width
+	probe.free()
+	return w if w > 0.0 else fallback
+
+
+# ============================================================================
+# Layout: Kích cỡ cell/anchor/tường... lấy từ scene gốc (_read_metrics_from_scenes)
+#         => Chỉnh sửa trực tiếp trong .tscn là Board tự cập nhật theo.
 # ============================================================================
 func _compute_layout() -> void:
-	# Luôn giữ nguyên kích cỡ cell chuẩn 176px theo yêu cầu, không resize
-	_step = FIXED_CELL_SIZE
-	_cell_size = FIXED_CELL_SIZE
-	_anchor_size = 36.0
-	_wall_width = 11.0
-	_line_width = 40.0
-	_cursor_size = 44.0
-	_anchor_hit_radius = 30.0
+	_step = _cell_size
 
 	# Lấy kích thước và vị trí của Board Panel
 	var panel: Control = get_node_or_null("Panel") as Control
@@ -220,7 +248,7 @@ func _update_layout_positions() -> void:
 			if idx < _cell_nodes.size():
 				var c: MazeCell = _cell_nodes[idx]
 				c.position = Vector2(_col_edge_x[x], _row_edge_y[y])
-				c.size = Vector2(_cell_size, _cell_size)
+				c.pivot_offset = c.size * 0.5
 				_cell_rects[idx] = Rect2(c.position, c.size)
 
 	# Cập nhật vị trí các anchor
@@ -228,6 +256,7 @@ func _update_layout_positions() -> void:
 		var a: Control = info.node
 		var corner: Vector2i = info.corner
 		var pos := Vector2(_col_edge_x[corner.x], _row_edge_y[corner.y])
+		a.pivot_offset = a.size * 0.5
 		a.position = pos - a.size * 0.5
 
 	# Cập nhật toạ độ các wall segments
@@ -258,10 +287,7 @@ func _build_cells() -> void:
 		for x in _width:
 			var c: MazeCell = CELL_SCENE.instantiate()
 			c.set_anchors_preset(Control.PRESET_TOP_LEFT)
-			c.size = Vector2(_cell_size, _cell_size)
-			c.pivot_offset = c.size * 0.5
-			# Đặt các ô liền kề nhau 100% không khe hở
-			c.position = Vector2(_col_edge_x[x], _row_edge_y[y])
+			# Không set size: kích thước lấy nguyên từ cell.tscn
 			c.grid_pos = Vector2i(x, y)
 			_cells_layer.add_child(c)
 			_cell_nodes.append(c)
@@ -304,7 +330,6 @@ func _create_wall_segment(is_h: bool, lattice: Vector2i, state: String) -> WallS
 	var pts := _edge_points(is_h, lattice)
 	_walls_layer.add_child(seg)
 	seg.set_wall_points(pts[0], pts[1])
-	seg.set_line_width(_wall_width)
 	seg.set_meta("base_state", state)
 	seg.set_state(state)
 	return seg
@@ -325,12 +350,10 @@ func _build_anchors() -> void:
 	var id := 0
 	for iy in _height + 1:
 		for ix in _width + 1:
-			var pos := Vector2(_col_edge_x[ix], _row_edge_y[iy])
 			var a: Control = ANCHOR_SCENE.instantiate()
 			a.set_anchors_preset(Control.PRESET_TOP_LEFT)
-			a.size = Vector2(_anchor_size, _anchor_size)
-			a.pivot_offset = a.size * 0.5
-			a.position = pos - a.size * 0.5
+			# Không set size/position: kích thước lấy từ anchor.tscn,
+			# vị trí do _update_layout_positions() căn theo lưới
 			a.set("anchor_id", id)
 			_anchors_layer.add_child(a)
 			_anchor_nodes.append({ "node": a, "corner": Vector2i(ix, iy) })
@@ -341,7 +364,7 @@ func _build_moving_line() -> void:
 	_moving_line = MOVING_LINE_SCENE.instantiate()
 	_lines_layer.add_child(_moving_line)
 	_moving_line.position = Vector2.ZERO
-	_moving_line.width = _line_width
+	# width/default_color lấy nguyên từ moving_line.tscn
 	_moving_line.points = PackedVector2Array()
 
 
@@ -359,7 +382,7 @@ func _place_cursor_at_start() -> void:
 		_cursor = PLAYER_CURSOR_SCENE.instantiate()
 		_markers_layer.add_child(_cursor)
 		_cursor.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_cursor.size = Vector2(_cursor_size, _cursor_size)
+	# Kích thước cursor lấy nguyên từ player_cursor.tscn
 	_cursor.pivot_offset = _cursor.size * 0.5
 	_cursor.position = _cell_center(maze.get_start()) - _cursor.size * 0.5
 	_cursor.visible = true
@@ -465,7 +488,6 @@ func show_history_edge(a: Vector2i, b: Vector2i) -> void:
 	var line: Line2D = HISTORY_LINE_SCENE.instantiate()
 	_lines_layer.add_child(line)
 	line.position = Vector2.ZERO
-	line.width = _line_width
 	line.points = PackedVector2Array([_cell_center(a), _cell_center(b)])
 	line.modulate = Color(1, 1, 1, 0.45)
 	_history_lines[key] = line

@@ -14,11 +14,6 @@ const NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
 @onready var _button: TextureButton = $TextureButton
 
 
-func _ready() -> void:
-	if _button != null:
-		_button.pressed.connect(_on_button_pressed)
-
-
 func _on_button_pressed() -> void:
 	anchor_tapped.emit(anchor_id)
 

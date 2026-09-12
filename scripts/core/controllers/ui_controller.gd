@@ -16,57 +16,34 @@ signal pause_toggled(is_paused: bool)
 @export var time_val_label: Label = null
 @export var score_val_label: Label = null
 
-var floor_complete_view: Control = null
-var game_over_view: Control = null
-var settings_view: Control = null
+## Popup được instance sẵn trong scenes/game.tscn và gán NodePath qua Inspector.
+## Mọi signal button của popup được connect trực tiếp trong .tscn (không connect bằng code).
+@export var floor_complete_view: Control = null
+@export var game_over_view: Control = null
+@export var settings_view: Control = null
 
 
-func setup(
-	p_floor_complete: Control = null,
-	p_game_over: Control = null,
-	p_settings: Control = null
-) -> void:
-	floor_complete_view = p_floor_complete
-	game_over_view = p_game_over
-	settings_view = p_settings
-
-	_bind_popups()
+# ---------------------------------------------------------------------------
+# Handlers cho button của popup (được .tscn gọi trực tiếp)
+# ---------------------------------------------------------------------------
+func _on_next_pressed() -> void:
+	continue_requested.emit()
 
 
-func _bind_popups() -> void:
-	if floor_complete_view != null:
-		var next_btn := floor_complete_view.find_child("Next", true, false)
-		if next_btn is BaseButton:
-			next_btn.pressed.connect(func() -> void: continue_requested.emit())
-		var replay_btn := floor_complete_view.find_child("Replay", true, false)
-		if replay_btn is BaseButton:
-			replay_btn.pressed.connect(func() -> void: retry_requested.emit())
+func _on_replay_pressed() -> void:
+	retry_requested.emit()
 
-	if game_over_view != null:
-		var retry_btn := game_over_view.find_child("Replay", true, false)
-		if retry_btn == null:
-			retry_btn = game_over_view.find_child("Retry", true, false)
-		if retry_btn is BaseButton:
-			retry_btn.pressed.connect(func() -> void: retry_requested.emit())
-		var home_btn := game_over_view.find_child("Home", true, false)
-		if home_btn == null:
-			home_btn = game_over_view.find_child("Menu", true, false)
-		if home_btn is BaseButton:
-			home_btn.pressed.connect(func() -> void: home_requested.emit())
 
+func _on_home_pressed() -> void:
 	if settings_view != null:
-		var resume_btn := settings_view.find_child("Resume", true, false)
-		if resume_btn is BaseButton:
-			resume_btn.pressed.connect(func() -> void:
-				settings_view.visible = false
-				pause_toggled.emit(false)
-			)
-		var menu_btn := settings_view.find_child("Menu", true, false)
-		if menu_btn is BaseButton:
-			menu_btn.pressed.connect(func() -> void:
-				settings_view.visible = false
-				home_requested.emit()
-			)
+		settings_view.visible = false
+	home_requested.emit()
+
+
+func _on_resume_pressed() -> void:
+	if settings_view != null:
+		settings_view.visible = false
+	pause_toggled.emit(false)
 
 
 func toggle_settings() -> void:
