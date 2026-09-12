@@ -1,9 +1,22 @@
-[gd_scene format=3 uid="uid://yuvv5j8lalrj"]
+[gd_scene format=3]
 
-[node name="PlayerCursor" type="Control" unique_id=555470303]
+[ext_resource type="Texture2D" path="res://assets/images/game/player_cursor.svg" id="1_tex"]
+
+[node name="PlayerCursor" type="Control"]
 layout_mode = 3
+anchors_preset = 0
+offset_right = 44.0
+offset_bottom = 44.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("1_tex")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2

@@ -1,1 +1,900 @@
+class_name BoardView
 extends Control
+## ============================================================================
+## View: Board - Thành phần View thuần túy theo chuẩn MVC:
+##   - Giữ nguyên kích thước chuẩn của Cell (176x176px theo mockup).
+##   - Căn giữa toàn bộ bàn cờ trên Board Panel nếu còn khoảng trống.
+##   - Các ô liền sát nhau 100% không có khe hở.
+## ============================================================================
+
+signal cell_pressed(pos: Vector2i)
+signal drag_updated(pos: Vector2i)
+signal anchor_tapped(anchor_id: int)
+signal anchor_connected(corner_a: Vector2i, corner_b: Vector2i)
+
+const CELL_SCENE := preload("res://nodes/game/cell.tscn")
+const ANCHOR_SCENE := preload("res://nodes/game/anchor.tscn")
+const WALL_SEGMENT_SCENE := preload("res://nodes/game/wall_segment.tscn")
+const MOVING_LINE_SCENE := preload("res://nodes/game/moving_line.tscn")
+const HISTORY_LINE_SCENE := preload("res://nodes/game/history_line.tscn")
+const PLAYER_CURSOR_SCENE := preload("res://nodes/game/player_cursor.tscn")
+const CRASH_SFX_SCENE := preload("res://nodes/sfx/crash.tscn")
+const MINE_SFX_SCENE := preload("res://nodes/sfx/mine_explosion.tscn")
+
+const GLOW_LINE_SHADER := preload("res://shaders/line_glowing_shader.gdshader")
+
+## Kích thước chuẩn cố định của cell theo thiết kế mockup matchup.svg (176px)
+const FIXED_CELL_SIZE := 176.0
+
+var maze: MazeData = null
+var game_mode: BaseGameMode = null
+
+var _width := 0
+var _height := 0
+var _step := FIXED_CELL_SIZE
+var _cell_size := FIXED_CELL_SIZE
+var _anchor_size := 36.0
+var _wall_width := 11.0
+var _line_width := 14.0
+var _cursor_size := 44.0
+var _anchor_hit_radius := 30.0
+
+var _cell_nodes: Array = []        # MazeCell
+var _cell_rects: Array[Rect2] = []
+var _col_edge_x: Array = []
+var _row_edge_y: Array = []
+var _col_center_x: Array = []
+var _row_center_y: Array = []
+
+var _anchor_nodes: Array = []
+var _wall_segments: Dictionary = {}     # lattice key -> wall_segment
+var _suspected_lines: Dictionary = {}   # lattice key -> wall_segment
+var _history_lines: Dictionary = {}     # cell-edge key -> history Line2D
+var _moving_line: Line2D = null
+var _drag_guide_line: Line2D = null
+var _cursor: Control = null
+
+var _interaction_enabled := true
+
+# Player drag movement
+var _dragging_player := false
+var _player_current_cell := Vector2i.ZERO
+
+# Cell tap tracking
+var _pressed_cell := Vector2i(-1, -1)
+var _press_start_pos := Vector2.ZERO
+var _has_dragged := false
+
+# Anchor dragging
+var _is_dragging_anchor := false
+var _drag_source_anchor_id := -1
+var _drag_source_anchor_corner := Vector2i(-1, -1)
+var _hover_target_anchor_id := -1
+
+# Shake tracking
+var _shake_tween: Tween = null
+var _original_position := Vector2.ZERO
+var _is_shaking := false
+
+# Container Layers
+var _cells_layer: Control = null
+var _walls_layer: Control = null
+var _anchors_layer: Control = null
+var _lines_layer: Control = null
+var _markers_layer: Control = null
+
+
+func _ready() -> void:
+	_init_layers()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED:
+		if maze != null and _cell_nodes.size() > 0:
+			_update_layout_positions()
+
+
+func _init_layers() -> void:
+	if _cells_layer != null:
+		return
+
+	_cells_layer = Control.new()
+	_cells_layer.name = "Cells"
+	_cells_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_cells_layer)
+
+	_lines_layer = Control.new()
+	_lines_layer.name = "Lines"
+	_lines_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_lines_layer)
+
+	_walls_layer = Control.new()
+	_walls_layer.name = "Walls"
+	_walls_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_walls_layer)
+
+	_anchors_layer = Control.new()
+	_anchors_layer.name = "Anchors"
+	_anchors_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_anchors_layer)
+
+	_markers_layer = Control.new()
+	_markers_layer.name = "Markers"
+	_markers_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_markers_layer)
+
+
+# ============================================================================
+# Thiết lập maze & mode (gọi từ Controller)
+# ============================================================================
+func setup_maze(p_maze: MazeData, p_mode: BaseGameMode = null) -> void:
+	_init_layers()
+	maze = p_maze
+	game_mode = p_mode if p_mode != null else DungeonGameMode.new()
+	_width = maze.width
+	_height = maze.height
+	_interaction_enabled = true
+	_dragging_player = false
+	_pressed_cell = Vector2i(-1, -1)
+	_press_start_pos = Vector2.ZERO
+	_has_dragged = false
+	_is_dragging_anchor = false
+	_drag_source_anchor_id = -1
+	_hover_target_anchor_id = -1
+	_player_current_cell = maze.get_start()
+
+	if _is_shaking and _shake_tween != null and _shake_tween.is_valid():
+		_shake_tween.kill()
+		position = _original_position
+		_is_shaking = false
+
+	_clear_runtime_layers()
+	_compute_layout()
+
+	_build_cells()
+	_build_walls()
+	_build_anchors()
+	_build_moving_line()
+	_build_drag_guide_line()
+	_place_cursor_at_start()
+
+
+func _cell_index(x: int, y: int) -> int:
+	return x + y * _width
+
+
+# ============================================================================
+# Layout: Giữ nguyên cố định kích cỡ cell 176px (không resize), căn giữa Board Panel
+# ============================================================================
+func _compute_layout() -> void:
+	# Luôn giữ nguyên kích cỡ cell chuẩn 176px theo yêu cầu, không resize
+	_step = FIXED_CELL_SIZE
+	_cell_size = FIXED_CELL_SIZE
+	_anchor_size = 36.0
+	_wall_width = 11.0
+	_line_width = 40.0
+	_cursor_size = 44.0
+	_anchor_hit_radius = 30.0
+
+	# Lấy kích thước và vị trí của Board Panel
+	var panel: Control = get_node_or_null("Panel") as Control
+	var panel_pos := Vector2.ZERO
+	var panel_sz := size
+	if panel != null:
+		panel_pos = panel.position
+		panel_sz = panel.size
+
+	# Kích thước toàn bộ lưới cell
+	var total_w := float(_width) * _step
+	var total_h := float(_height) * _step
+
+	# Căn giữa chính xác nếu còn trống so với board panel
+	var panel_center := panel_pos + panel_sz * 0.5
+	var margin_x := panel_center.x - total_w * 0.5
+	var margin_y := panel_center.y - total_h * 0.5
+
+	_col_edge_x.clear()
+	for ix in _width + 1:
+		_col_edge_x.append(margin_x + ix * _step)
+
+	_row_edge_y.clear()
+	for iy in _height + 1:
+		_row_edge_y.append(margin_y + iy * _step)
+
+	_col_center_x.clear()
+	for ix in _width:
+		_col_center_x.append(margin_x + (ix + 0.5) * _step)
+
+	_row_center_y.clear()
+	for iy in _height:
+		_row_center_y.append(margin_y + (iy + 0.5) * _step)
+
+
+func _update_layout_positions() -> void:
+	_compute_layout()
+
+	# Cập nhật toạ độ và kích cỡ từng cell
+	for y in _height:
+		for x in _width:
+			var idx := _cell_index(x, y)
+			if idx < _cell_nodes.size():
+				var c: MazeCell = _cell_nodes[idx]
+				c.position = Vector2(_col_edge_x[x], _row_edge_y[y])
+				c.size = Vector2(_cell_size, _cell_size)
+				_cell_rects[idx] = Rect2(c.position, c.size)
+
+	# Cập nhật vị trí các anchor
+	for info in _anchor_nodes:
+		var a: Control = info.node
+		var corner: Vector2i = info.corner
+		var pos := Vector2(_col_edge_x[corner.x], _row_edge_y[corner.y])
+		a.position = pos - a.size * 0.5
+
+	# Cập nhật toạ độ các wall segments
+	for key: String in _wall_segments:
+		var seg: WallSegment = _wall_segments[key]
+		var parts: PackedStringArray = key.split(",")
+		var is_h: bool = parts[0] == "h"
+		var lattice := Vector2i(int(parts[1]), int(parts[2]))
+		var pts := _edge_points(is_h, lattice)
+		seg.set_wall_points(pts[0], pts[1])
+
+	# Cập nhật toạ độ các suspected lines
+	for key: String in _suspected_lines:
+		var seg: WallSegment = _suspected_lines[key]
+		var parts: PackedStringArray = key.split(",")
+		var is_h: bool = parts[0] == "h"
+		var lattice := Vector2i(int(parts[1]), int(parts[2]))
+		var pts := _edge_points(is_h, lattice)
+		seg.set_wall_points(pts[0], pts[1])
+
+	# Cập nhật toạ độ player cursor
+	if _cursor != null:
+		_cursor.position = _cell_center(_player_current_cell) - _cursor.size * 0.5
+
+
+func _build_cells() -> void:
+	for y in _height:
+		for x in _width:
+			var c: MazeCell = CELL_SCENE.instantiate()
+			c.set_anchors_preset(Control.PRESET_TOP_LEFT)
+			c.size = Vector2(_cell_size, _cell_size)
+			c.pivot_offset = c.size * 0.5
+			# Đặt các ô liền kề nhau 100% không khe hở
+			c.position = Vector2(_col_edge_x[x], _row_edge_y[y])
+			c.grid_pos = Vector2i(x, y)
+			_cells_layer.add_child(c)
+			_cell_nodes.append(c)
+			_cell_rects.append(Rect2(c.position, c.size))
+
+			var pos := Vector2i(x, y)
+			var text := ""
+			if game_mode != null:
+				text = game_mode.get_cell_text(pos, maze)
+			else:
+				if pos == maze.get_start():
+					text = "S"
+				elif pos == maze.get_end():
+					text = "F"
+				else:
+					text = str(maze.get_wall_count(pos))
+
+			c.set_text(text)
+			c.set_focused(false)
+
+
+func _build_walls() -> void:
+	_wall_segments.clear()
+	for ix in _width:
+		for iy in _height + 1:
+			if maze.has_h_wall(ix, iy):
+				var seg := _create_wall_segment(true, Vector2i(ix, iy),
+					"visible" if maze.is_h_wall_visible(ix, iy) else "invisible")
+				_wall_segments[_lattice_key(true, Vector2i(ix, iy))] = seg
+	for ix in _width + 1:
+		for iy in _height:
+			if maze.has_v_wall(ix, iy):
+				var seg := _create_wall_segment(false, Vector2i(ix, iy),
+					"visible" if maze.is_v_wall_visible(ix, iy) else "invisible")
+				_wall_segments[_lattice_key(false, Vector2i(ix, iy))] = seg
+
+
+func _create_wall_segment(is_h: bool, lattice: Vector2i, state: String) -> WallSegment:
+	var seg: WallSegment = WALL_SEGMENT_SCENE.instantiate()
+	var pts := _edge_points(is_h, lattice)
+	_walls_layer.add_child(seg)
+	seg.set_wall_points(pts[0], pts[1])
+	seg.set_line_width(_wall_width)
+	seg.set_meta("base_state", state)
+	seg.set_state(state)
+	return seg
+
+
+func _edge_points(is_h: bool, lattice: Vector2i) -> PackedVector2Array:
+	if is_h:
+		var p1 := Vector2(_col_edge_x[lattice.x], _row_edge_y[lattice.y])
+		var p2 := Vector2(_col_edge_x[lattice.x + 1], _row_edge_y[lattice.y])
+		return PackedVector2Array([p1, p2])
+	var p1 := Vector2(_col_edge_x[lattice.x], _row_edge_y[lattice.y])
+	var p2 := Vector2(_col_edge_x[lattice.x], _row_edge_y[lattice.y + 1])
+	return PackedVector2Array([p1, p2])
+
+
+func _build_anchors() -> void:
+	_anchor_nodes.clear()
+	var id := 0
+	for iy in _height + 1:
+		for ix in _width + 1:
+			var pos := Vector2(_col_edge_x[ix], _row_edge_y[iy])
+			var a: Control = ANCHOR_SCENE.instantiate()
+			a.set_anchors_preset(Control.PRESET_TOP_LEFT)
+			a.size = Vector2(_anchor_size, _anchor_size)
+			a.pivot_offset = a.size * 0.5
+			a.position = pos - a.size * 0.5
+			a.set("anchor_id", id)
+			_anchors_layer.add_child(a)
+			_anchor_nodes.append({ "node": a, "corner": Vector2i(ix, iy) })
+			id += 1
+
+
+func _build_moving_line() -> void:
+	_moving_line = MOVING_LINE_SCENE.instantiate()
+	_lines_layer.add_child(_moving_line)
+	_moving_line.position = Vector2.ZERO
+	_moving_line.width = _line_width
+	_moving_line.points = PackedVector2Array()
+
+
+func _build_drag_guide_line() -> void:
+	_drag_guide_line = MOVING_LINE_SCENE.instantiate()
+	_lines_layer.add_child(_drag_guide_line)
+	_drag_guide_line.position = Vector2.ZERO
+	_drag_guide_line.width = _wall_width
+	_drag_guide_line.default_color = Color(0.77, 0.52, 0.23, 0.75)
+	_drag_guide_line.visible = false
+
+
+func _place_cursor_at_start() -> void:
+	if _cursor == null:
+		_cursor = PLAYER_CURSOR_SCENE.instantiate()
+		_markers_layer.add_child(_cursor)
+		_cursor.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_cursor.size = Vector2(_cursor_size, _cursor_size)
+	_cursor.pivot_offset = _cursor.size * 0.5
+	_cursor.position = _cell_center(maze.get_start()) - _cursor.size * 0.5
+	_cursor.visible = true
+	_player_current_cell = maze.get_start()
+
+
+func _clear_runtime_layers() -> void:
+	for layer in [_cells_layer, _walls_layer, _anchors_layer, _lines_layer, _markers_layer]:
+		if layer == null:
+			continue
+		for child in layer.get_children():
+			child.queue_free()
+	_cell_nodes.clear()
+	_cell_rects.clear()
+	_anchor_nodes.clear()
+	_wall_segments.clear()
+	_suspected_lines.clear()
+	_history_lines.clear()
+	_moving_line = null
+	_drag_guide_line = null
+	_cursor = null
+
+
+# ============================================================================
+# API cho Controller gọi (Render & Animation)
+# ============================================================================
+func move_cursor_to(pos: Vector2i) -> void:
+	if _cursor == null or maze == null:
+		return
+	_player_current_cell = pos
+	var target_pos := _cell_center(pos) - _cursor.size * 0.5
+
+	var tw := create_tween().set_parallel(true)
+	tw.tween_property(_cursor, "position", target_pos, 0.11).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+	var c_idx := _cell_index(pos.x, pos.y)
+	if c_idx >= 0 and c_idx < _cell_nodes.size():
+		var cell_node: MazeCell = _cell_nodes[c_idx]
+		cell_node.pulse()
+
+
+func set_moving_path(path: Array[Vector2i]) -> void:
+	if _moving_line == null:
+		return
+	var pts := PackedVector2Array()
+	for p in path:
+		pts.append(_cell_center(p))
+	_moving_line.points = pts
+	_set_path_focus(path)
+
+
+func reset_to_start() -> void:
+	if maze == null or _cursor == null:
+		return
+	_player_current_cell = maze.get_start()
+	var target_pos := _cell_center(maze.get_start()) - _cursor.size * 0.5
+
+	var tw := create_tween()
+	tw.tween_property(_cursor, "position", target_pos, 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	set_moving_path([maze.get_start()])
+
+
+func show_history_edge(a: Vector2i, b: Vector2i) -> void:
+	var key := _cell_edge_key(a, b)
+	if _history_lines.has(key):
+		return
+	var line: Line2D = HISTORY_LINE_SCENE.instantiate()
+	_lines_layer.add_child(line)
+	line.position = Vector2.ZERO
+	line.width = _line_width
+	line.points = PackedVector2Array([_cell_center(a), _cell_center(b)])
+	line.modulate = Color(1, 1, 1, 0.45)
+	_history_lines[key] = line
+
+
+func show_wall_hit(from_pos: Vector2i, to_pos: Vector2i) -> void:
+	var is_h := (from_pos.x == to_pos.x)
+	var lattice: Vector2i
+	if is_h:
+		lattice = Vector2i(from_pos.x, maxi(from_pos.y, to_pos.y))
+	else:
+		lattice = Vector2i(maxi(from_pos.x, to_pos.x), from_pos.y)
+
+	var key := _lattice_key(is_h, lattice)
+
+	var seg: WallSegment = null
+	if _wall_segments.has(key):
+		seg = _wall_segments[key]
+		seg.flash_hit_then_stay_visible()
+	else:
+		seg = _create_wall_segment(is_h, lattice, "hit")
+		_wall_segments[key] = seg
+		seg.flash_hit_then_stay_visible()
+
+	var pts := _edge_points(is_h, lattice)
+	var wall_center: Vector2 = (pts[0] + pts[1]) * 0.5
+
+	var crash: Control = CRASH_SFX_SCENE.instantiate()
+	_markers_layer.add_child(crash)
+	crash.position = wall_center - crash.size * 0.5
+	crash.scale = Vector2.ZERO
+
+	var tw_crash := create_tween()
+	tw_crash.tween_property(crash, "scale", Vector2(1.3, 1.3), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw_crash.tween_property(crash, "scale", Vector2.ONE, 0.06)
+	tw_crash.tween_interval(0.45)
+	tw_crash.tween_property(crash, "modulate:a", 0.0, 0.22)
+	tw_crash.tween_callback(crash.queue_free)
+
+	_play_grid_shake()
+
+
+func show_mine_hit(pos: Vector2i) -> void:
+	var c_idx := _cell_index(pos.x, pos.y)
+	if c_idx >= 0 and c_idx < _cell_nodes.size():
+		var cell_node: MazeCell = _cell_nodes[c_idx]
+		cell_node.set_text("X")
+
+	var center := _cell_center(pos)
+	var mine_sfx: Control = MINE_SFX_SCENE.instantiate()
+	_markers_layer.add_child(mine_sfx)
+	mine_sfx.position = center - mine_sfx.size * 0.5
+	mine_sfx.scale = Vector2.ZERO
+
+	var tw := create_tween()
+	tw.tween_property(mine_sfx, "scale", Vector2(1.4, 1.4), 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(mine_sfx, "scale", Vector2.ONE, 0.08)
+	tw.tween_interval(0.5)
+	tw.tween_property(mine_sfx, "modulate:a", 0.0, 0.2)
+	tw.tween_callback(mine_sfx.queue_free)
+
+	_play_grid_shake()
+
+
+func pulse_cell(pos: Vector2i) -> void:
+	var idx := _cell_index(pos.x, pos.y)
+	if idx >= 0 and idx < _cell_nodes.size():
+		var c: MazeCell = _cell_nodes[idx]
+		c.pulse()
+
+
+func reveal_wall_segment(is_h: bool, lattice: Vector2i) -> void:
+	var key := _lattice_key(is_h, lattice)
+	if _wall_segments.has(key):
+		var seg: WallSegment = _wall_segments[key]
+		seg.set_state("visible")
+		seg.animate_appear()
+
+
+func reveal_all_walls_with_countdown(seconds: int = 3) -> void:
+	set_interaction_enabled(false)
+	for key in _wall_segments:
+		var seg: WallSegment = _wall_segments[key]
+		seg.set_state("visible")
+
+	var cd_label := Label.new()
+	_markers_layer.add_child(cd_label)
+	cd_label.set_anchors_preset(Control.PRESET_CENTER)
+	cd_label.size = Vector2(200, 80)
+	cd_label.pivot_offset = Vector2(100, 40)
+	cd_label.position = size * 0.5 - Vector2(100, 40)
+	cd_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	cd_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	cd_label.add_theme_font_size_override("font_size", 54)
+	cd_label.add_theme_color_override("font_color", Color(0.9, 0.2, 0.2, 1.0))
+
+	var tw := create_tween()
+	for s in range(seconds, 0, -1):
+		tw.tween_callback(func() -> void:
+			cd_label.text = str(s)
+			cd_label.scale = Vector2(1.5, 1.5)
+			var p_tw := create_tween()
+			p_tw.tween_property(cd_label, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_BACK)
+		)
+		tw.tween_interval(1.0)
+
+	tw.tween_callback(func() -> void:
+		cd_label.text = "GO!"
+		cd_label.add_theme_color_override("font_color", Color(0.15, 0.65, 0.3, 1.0))
+	)
+	tw.tween_interval(0.5)
+
+	tw.tween_callback(func() -> void:
+		for key in _wall_segments:
+			var seg: WallSegment = _wall_segments[key]
+			var base: String = seg.get_meta("base_state", "invisible")
+			seg.set_state(base)
+		cd_label.queue_free()
+		set_interaction_enabled(true)
+	)
+
+
+func apply_fog_of_war(_center: Vector2i, _radius: int, explored: Dictionary) -> void:
+	if maze == null or game_mode == null:
+		return
+	for y in _height:
+		for x in _width:
+			var p := Vector2i(x, y)
+			var idx := _cell_index(x, y)
+			if idx >= 0 and idx < _cell_nodes.size():
+				var cell_node: MazeCell = _cell_nodes[idx]
+				var text: String = game_mode.get_cell_text(p, maze)
+				cell_node.set_text(text)
+				if explored.has(p):
+					cell_node.modulate = Color(1, 1, 1, 1.0)
+				else:
+					cell_node.modulate = Color(0.6, 0.6, 0.6, 0.4)
+
+
+func _play_grid_shake() -> void:
+	if not _is_shaking:
+		_original_position = position
+		_is_shaking = true
+	elif _shake_tween != null and _shake_tween.is_valid():
+		_shake_tween.kill()
+		position = _original_position
+
+	_shake_tween = create_tween()
+	_shake_tween.tween_property(self, "position", _original_position + Vector2(-6, 4), 0.035)
+	_shake_tween.tween_property(self, "position", _original_position + Vector2(6, -4), 0.035)
+	_shake_tween.tween_property(self, "position", _original_position + Vector2(-3, 3), 0.035)
+	_shake_tween.tween_property(self, "position", _original_position, 0.04)
+	_shake_tween.tween_callback(func() -> void:
+		position = _original_position
+		_is_shaking = false
+	)
+
+
+func set_suspected_wall(is_h: bool, lattice: Vector2i, active: bool) -> void:
+	var key := _lattice_key(is_h, lattice)
+	var seg: WallSegment = null
+	if _wall_segments.has(key):
+		seg = _wall_segments[key]
+	elif _suspected_lines.has(key):
+		seg = _suspected_lines[key]
+	else:
+		seg = _create_wall_segment(is_h, lattice, "suspected")
+		_suspected_lines[key] = seg
+
+	if active:
+		seg.set_state("suspected")
+		seg.animate_appear()
+	else:
+		if _wall_segments.has(key):
+			seg.set_state(seg.get_meta("base_state", "invisible"))
+		else:
+			seg.visible = false
+
+
+func set_interaction_enabled(enabled: bool) -> void:
+	_interaction_enabled = enabled
+	if not enabled:
+		_dragging_player = false
+		_pressed_cell = Vector2i(-1, -1)
+		_has_dragged = false
+		_cancel_anchor_drag()
+
+
+func _set_path_focus(path: Array[Vector2i]) -> void:
+	for y in _height:
+		for x in _width:
+			_cell_nodes[_cell_index(x, y)].set_focused(false)
+	for p in path:
+		_cell_nodes[_cell_index(p.x, p.y)].set_focused(true)
+
+
+# ============================================================================
+# Input: Xử lý Kéo di chuyển Player & Kéo nối Anchor
+# ============================================================================
+func _gui_input(event: InputEvent) -> void:
+	_process_gesture_event(event)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not _interaction_enabled or maze == null:
+		return
+	if event is InputEventScreenTouch or event is InputEventScreenDrag or event is InputEventMouseButton or event is InputEventMouseMotion:
+		_process_gesture_event(event)
+
+
+func _process_gesture_event(event: InputEvent) -> void:
+	if not _interaction_enabled or maze == null:
+		return
+
+	if event is InputEventMouseButton:
+		var mb := event as InputEventMouseButton
+		if mb.button_index == MOUSE_BUTTON_LEFT:
+			if mb.pressed:
+				_on_press(_to_local(get_global_mouse_position()))
+			else:
+				_on_release(_to_local(get_global_mouse_position()))
+	elif event is InputEventMouseMotion:
+		var mm := event as InputEventMouseMotion
+		if (_dragging_player or _is_dragging_anchor) and (mm.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
+			_on_drag(_to_local(get_global_mouse_position()))
+	elif event is InputEventScreenTouch:
+		var st := event as InputEventScreenTouch
+		if st.pressed:
+			_on_press(_to_local(_screen_to_canvas(st.position)))
+		else:
+			_on_release(_to_local(_screen_to_canvas(st.position)))
+	elif event is InputEventScreenDrag:
+		var sd := event as InputEventScreenDrag
+		if _dragging_player or _is_dragging_anchor:
+			_on_drag(_to_local(_screen_to_canvas(sd.position)))
+
+
+func _screen_to_canvas(pos: Vector2) -> Vector2:
+	return get_viewport().get_canvas_transform().affine_inverse() * pos
+
+
+func _to_local(canvas_pos: Vector2) -> Vector2:
+	return get_global_transform_with_canvas().affine_inverse() * canvas_pos
+
+
+func _on_press(local_pos: Vector2) -> void:
+	_press_start_pos = local_pos
+	_has_dragged = false
+	_pressed_cell = Vector2i(-1, -1)
+
+	var anchor_info := _hit_anchor_info(local_pos)
+	if not anchor_info.is_empty() and anchor_info.has("node"):
+		_start_anchor_drag(anchor_info)
+		return
+
+	var cell := _hit_cell(local_pos)
+	if cell != Vector2i(-1, -1):
+		_pressed_cell = cell
+		_dragging_player = true
+
+
+func _on_drag(local_pos: Vector2) -> void:
+	if not _has_dragged and local_pos.distance_to(_press_start_pos) > 8.0:
+		_has_dragged = true
+
+	if _is_dragging_anchor:
+		_update_anchor_drag(local_pos)
+		return
+
+	if _dragging_player:
+		var cell := _hit_cell(local_pos)
+		if cell != Vector2i(-1, -1) and cell != _player_current_cell:
+			if _is_adjacent(_player_current_cell, cell):
+				drag_updated.emit(cell)
+
+
+func _on_release(local_pos: Vector2) -> void:
+	if _is_dragging_anchor:
+		_finish_anchor_drag(local_pos)
+		_dragging_player = false
+		_pressed_cell = Vector2i(-1, -1)
+		_has_dragged = false
+		return
+
+	if _dragging_player:
+		_dragging_player = false
+
+	if not _has_dragged and _pressed_cell != Vector2i(-1, -1):
+		var release_cell := _hit_cell(local_pos)
+		if release_cell == _pressed_cell:
+			cell_pressed.emit(_pressed_cell)
+
+	_pressed_cell = Vector2i(-1, -1)
+	_has_dragged = false
+
+
+# ============================================================================
+# Anchor Dragging Visual Helpers
+# ============================================================================
+func _start_anchor_drag(anchor_info: Dictionary) -> void:
+	if anchor_info.is_empty() or not anchor_info.has("node"):
+		return
+
+	_is_dragging_anchor = true
+	var node: Control = anchor_info.node
+	_drag_source_anchor_id = node.get("anchor_id")
+	_drag_source_anchor_corner = anchor_info.corner
+	_hover_target_anchor_id = -1
+
+	if node.has_method("set_selected"):
+		node.call("set_selected", true)
+
+	var anchor_center := _anchor_center_pos(_drag_source_anchor_corner)
+	_drag_guide_line.visible = true
+	_drag_guide_line.points = PackedVector2Array([anchor_center, anchor_center])
+
+
+func _update_anchor_drag(local_pos: Vector2) -> void:
+	if not _is_dragging_anchor or _drag_source_anchor_id == -1:
+		return
+
+	var anchor_a_pos := _anchor_center_pos(_drag_source_anchor_corner)
+	var hovered_anchor := _hit_anchor_info(local_pos)
+
+	if not hovered_anchor.is_empty() and hovered_anchor.has("node"):
+		var node: Control = hovered_anchor.node
+		if node.get("anchor_id") != _drag_source_anchor_id:
+			var edge := _corner_edge(_drag_source_anchor_corner, hovered_anchor.corner)
+			if not edge.is_empty():
+				var target_id: int = node.get("anchor_id")
+				if _hover_target_anchor_id != target_id:
+					_clear_hover_target_highlight()
+					_hover_target_anchor_id = target_id
+					if node.has_method("set_selected"):
+						node.call("set_selected", true)
+
+				var target_pos := _anchor_center_pos(hovered_anchor.corner)
+				_drag_guide_line.points = PackedVector2Array([anchor_a_pos, target_pos])
+				return
+
+	_clear_hover_target_highlight()
+	_hover_target_anchor_id = -1
+	_drag_guide_line.points = PackedVector2Array([anchor_a_pos, local_pos])
+
+
+func _finish_anchor_drag(local_pos: Vector2) -> void:
+	if not _is_dragging_anchor:
+		return
+
+	var target_anchor := _hit_anchor_info(local_pos)
+	var target_id := -1
+	if not target_anchor.is_empty() and target_anchor.has("node"):
+		var node: Control = target_anchor.node
+		if node.get("anchor_id") != _drag_source_anchor_id:
+			target_id = node.get("anchor_id")
+	elif _hover_target_anchor_id != -1:
+		target_id = _hover_target_anchor_id
+
+	if target_id != -1 and _drag_source_anchor_id != -1:
+		var target_corner := _anchor_corner(target_id)
+		anchor_connected.emit(_drag_source_anchor_corner, target_corner)
+
+		var src_node := _get_anchor_node(_drag_source_anchor_id)
+		if src_node != null and src_node.has_method("pulse"):
+			src_node.call("pulse")
+		var dst_node := _get_anchor_node(target_id)
+		if dst_node != null and dst_node.has_method("pulse"):
+			dst_node.call("pulse")
+
+	_cancel_anchor_drag()
+
+
+func _cancel_anchor_drag() -> void:
+	_clear_hover_target_highlight()
+	if _drag_source_anchor_id != -1:
+		var src_node := _get_anchor_node(_drag_source_anchor_id)
+		if src_node != null and src_node.has_method("set_selected"):
+			src_node.call("set_selected", false)
+
+	if _drag_guide_line != null:
+		_drag_guide_line.visible = false
+
+	_is_dragging_anchor = false
+	_drag_source_anchor_id = -1
+	_drag_source_anchor_corner = Vector2i(-1, -1)
+	_hover_target_anchor_id = -1
+
+
+func _clear_hover_target_highlight() -> void:
+	if _hover_target_anchor_id != -1:
+		var target_node := _get_anchor_node(_hover_target_anchor_id)
+		if target_node != null and target_node.has_method("set_selected"):
+			target_node.call("set_selected", false)
+
+
+func _get_anchor_node(anchor_id: int) -> Control:
+	for info in _anchor_nodes:
+		var node: Control = info.node
+		if node.get("anchor_id") == anchor_id:
+			return node
+	return null
+
+
+func _anchor_center_pos(corner: Vector2i) -> Vector2:
+	return Vector2(_col_edge_x[corner.x], _row_edge_y[corner.y])
+
+
+func _hit_anchor_info(local_pos: Vector2) -> Dictionary:
+	for info in _anchor_nodes:
+		var node: Control = info.node
+		var center: Vector2 = node.position + node.size * 0.5
+		if center.distance_to(local_pos) <= _anchor_hit_radius:
+			return info
+	return {}
+
+
+func _hit_cell(local_pos: Vector2) -> Vector2i:
+	for y in _height:
+		for x in _width:
+			if _cell_rects[_cell_index(x, y)].has_point(local_pos):
+				return Vector2i(x, y)
+	return Vector2i(-1, -1)
+
+
+func _is_adjacent(a: Vector2i, b: Vector2i) -> bool:
+	var d := (a - b).abs()
+	return d.x + d.y == 1
+
+
+func _anchor_corner(anchor_id: int) -> Vector2i:
+	for info in _anchor_nodes:
+		var node: Control = info.node
+		if node.get("anchor_id") == anchor_id:
+			return info.corner
+	return Vector2i(-1, -1)
+
+
+func _corner_edge(a: Vector2i, b: Vector2i) -> Array:
+	if a == b:
+		return []
+	if a.x == b.x and absi(a.y - b.y) == 1:
+		return [false, Vector2i(a.x, mini(a.y, b.y))]
+	if a.y == b.y and absi(a.x - b.x) == 1:
+		return [true, Vector2i(mini(a.x, b.x), a.y)]
+	return []
+
+
+# ============================================================================
+# Helpers
+# ============================================================================
+func _cell_center(pos: Vector2i) -> Vector2:
+	return Vector2(_col_center_x[pos.x], _row_center_y[pos.y])
+
+
+func _lattice_key(is_h: bool, lattice: Vector2i) -> String:
+	return ("h,%d,%d" if is_h else "v,%d,%d") % [lattice.x, lattice.y]
+
+
+func _cell_edge_key(a: Vector2i, b: Vector2i) -> String:
+	var lo: Vector2i
+	var hi: Vector2i
+	if a.x < b.x or (a.x == b.x and a.y < b.y):
+		lo = a
+		hi = b
+	else:
+		lo = b
+		hi = a
+	return "%d,%d->%d,%d" % [lo.x, lo.y, hi.x, hi.y]

@@ -3,11 +3,42 @@
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_hcnff"]
 [ext_resource type="Script" uid="uid://byfef235y6820" path="res://scripts/scenes/levels.gd" id="2_5ekxl"]
 [ext_resource type="PackedScene" uid="uid://dfmh01huguti4" path="res://nodes/level_selection/level_card.tscn" id="2_hk6qi"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="LabelSettings" uid="uid://bonmr0e8ujeq3" path="res://resources/settings/text/text_game_title.tres" id="5_title"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_hcnff")]
 script = ExtResource("2_5ekxl")
 
-[node name="GridContainer" type="GridContainer" parent="." index="1" unique_id=783028615]
+[node name="TopBar" type="HBoxContainer" parent="." index="1" unique_id=1720649669]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.033770833
+anchor_right = 0.961
+anchor_bottom = 0.07877084
+offset_left = 0.27999878
+offset_top = -0.84000015
+offset_right = 0.11999512
+offset_bottom = -0.2400055
+metadata/_edit_use_anchors_ = true
+
+[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=305592045]
+layout_mode = 2
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+texture_hover = ExtResource("3_back_n")
+texture_disabled = ExtResource("3_back_n")
+texture_focused = ExtResource("3_back_n")
+
+[node name="Title" type="Label" parent="TopBar" index="1" unique_id=27927468]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CHỌN MÀN CHƠI"
+label_settings = ExtResource("5_title")
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="." index="2" unique_id=783028615]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.051777776
