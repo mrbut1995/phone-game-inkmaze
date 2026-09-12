@@ -30,28 +30,32 @@ func _ready() -> void:
 
 
 func _on_play_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
 	var gm := get_node_or_null("/root/GameManager")
 	if gm != null and gm.has_method("go_to_levels"):
 		gm.go_to_levels()
 	else:
-		get_tree().change_scene_to_file("res://scenes/levels.tscn")
+		Nav.goto_levels()
 
 
 func _on_dungeon_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
 	var gm := get_node_or_null("/root/GameManager")
 	if gm != null and gm.has_method("start_dungeon"):
 		gm.start_dungeon()
 	else:
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		Nav.goto_game()
 
 
 func _on_daily_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
 	var gm := get_node_or_null("/root/GameManager")
 	if gm != null and gm.has_method("go_to_daily"):
 		gm.go_to_daily()
 	else:
-		get_tree().change_scene_to_file("res://scenes/daily.tscn")
+		Nav.goto_daily()
 
 
 func _on_settings_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/settings.tscn")
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	Nav.goto_settings()

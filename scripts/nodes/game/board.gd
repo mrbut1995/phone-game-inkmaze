@@ -60,6 +60,7 @@ var _interaction_enabled := true
 # Player drag movement
 var _dragging_player := false
 var _player_current_cell := Vector2i.ZERO
+var _drag_draw_sfx_on := false    # Đã phát tiếng miết bút trong lượt kéo này chưa
 
 # Cell tap tracking
 var _pressed_cell := Vector2i(-1, -1)
@@ -387,6 +388,8 @@ func _place_cursor_at_start() -> void:
 	_cursor.position = _cell_center(maze.get_start()) - _cursor.size * 0.5
 	_cursor.visible = true
 	_player_current_cell = maze.get_start()
+	# SFX: bước vào ô xuất phát S khi bắt đầu mỗi floor
+	Sfx.play(Sfx.STAIRS_ENTER)
 
 
 func _clear_runtime_layers() -> void:
@@ -421,6 +424,11 @@ func move_cursor_to(pos: Vector2i) -> void:
 
 	# Hiệu ứng vệt chân mực lan nhẹ khi cất bước
 	_spawn_ink_footstep(from_center)
+
+	# SFX: chấm bút chì khi vào tâm ô mới; thêm tiếng "vào cầu thang" khi tới ô F
+	Sfx.play(Sfx.CELL_STEP)
+	if pos == maze.get_end():
+		Sfx.play(Sfx.STAIRS_ENTER)
 
 	# Chạy animation bước nhảy (Hop / Squash & Stretch / Tilt)
 	if _cursor.has_method("run_to"):
@@ -494,6 +502,8 @@ func show_history_edge(a: Vector2i, b: Vector2i) -> void:
 
 
 func show_wall_hit(from_pos: Vector2i, to_pos: Vector2i) -> void:
+	# SFX: gãy ngòi bút chì khi đâm trúng tường vô hình
+	Sfx.play(Sfx.WALL_HIT)
 	var is_h := (from_pos.x == to_pos.x)
 	var lattice: Vector2i
 	if is_h:
@@ -743,6 +753,7 @@ func _on_press(local_pos: Vector2) -> void:
 	_press_start_pos = local_pos
 	_has_dragged = false
 	_pressed_cell = Vector2i(-1, -1)
+	_drag_draw_sfx_on = false
 
 	var anchor_info := _hit_anchor_info(local_pos)
 	if not anchor_info.is_empty() and anchor_info.has("node"):
@@ -764,6 +775,10 @@ func _on_drag(local_pos: Vector2) -> void:
 		return
 
 	if _dragging_player:
+		# SFX: tiếng ngòi chì miết trên giấy khi bắt đầu kéo vẽ đường đi
+		if not _drag_draw_sfx_on:
+			_drag_draw_sfx_on = true
+			Sfx.play(Sfx.PATH_DRAW)
 		var cell := _hit_cell(local_pos)
 		if cell != Vector2i(-1, -1) and cell != _player_current_cell:
 			if _is_adjacent(_player_current_cell, cell):
@@ -805,6 +820,9 @@ func _start_anchor_drag(anchor_info: Dictionary) -> void:
 
 	if node.has_method("set_selected"):
 		node.call("set_selected", true)
+
+	# SFX: "tách" cơ học khi rê trúng điểm neo
+	Sfx.play(Sfx.ANCHOR_SNAP)
 
 	var anchor_center := _anchor_center_pos(_drag_source_anchor_corner)
 	_drag_guide_line.visible = true
@@ -855,6 +873,8 @@ func _finish_anchor_drag(local_pos: Vector2) -> void:
 	if target_id != -1 and _drag_source_anchor_id != -1:
 		var target_corner := _anchor_corner(target_id)
 		anchor_connected.emit(_drag_source_anchor_corner, target_corner)
+		# SFX: nét chì dứt khoát khi hoàn tất một đường "Tường nghi ngờ"
+		Sfx.play(Sfx.WALL_MARK)
 
 		var src_node := _get_anchor_node(_drag_source_anchor_id)
 		if src_node != null and src_node.has_method("pulse"):

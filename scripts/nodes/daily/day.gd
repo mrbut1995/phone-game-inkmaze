@@ -25,4 +25,6 @@ func setup(p_day: int, p_completed: bool = false, p_today: bool = false) -> void
 
 
 func _on_btn_pressed() -> void:
+	# SFX: miết mép giấy khi chọn ngày trong lịch Daily
+	Sfx.play(Sfx.DAY_SWITCH)
 	day_selected.emit(day_number)

@@ -51,8 +51,10 @@ func _on_level_selected(level_id: int) -> void:
 
 
 func _on_back_pressed() -> void:
+	# SFX: gõ thẻ giấy cho nút phụ (Back)
+	Sfx.play(Sfx.BTN_WOOD_TAP)
 	var gm: Node = get_node_or_null("/root/GameManager")
 	if gm != null:
 		gm.go_to_main_menu()
 	else:
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		Nav.goto_main()

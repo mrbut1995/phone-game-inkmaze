@@ -148,6 +148,15 @@ func _complete_floor() -> void:
 
 	_pending_bonus = ScoreCalculator.calculate_bonus_steps(game_state.steps_remaining)
 
+	# SFX: jingle thắng màn; floor hoàn hảo -> thành tích; có thưởng bước -> tiếng đếm hạt gỗ
+	Sfx.play(Sfx.LEVEL_WIN)
+	if game_state.floor_wall_hits == 0:
+		_play_sfx_delayed(Sfx.ACHIEVEMENT, 1.6)
+	if _pending_bonus > 0:
+		_play_sfx_delayed(Sfx.FLOOR_BONUS, 1.1)
+
+	_mark_daily_completed_if_needed()
+
 	if ui_controller != null:
 		ui_controller.show_floor_complete(
 			game_state.floor_number,
@@ -223,11 +232,15 @@ func _on_home_requested() -> void:
 # Public Actions từ Game Screen Buttons
 # ---------------------------------------------------------------------------
 func restart_run() -> void:
+	# SFX: gõ thẻ giấy cho nút phụ (Restart trên HUD)
+	Sfx.play(Sfx.BTN_WOOD_TAP)
 	_on_retry_requested()
 
 
 func undo() -> void:
 	if grid_controller != null and grid_controller.undo_last_move():
+		# SFX: tiếng gôm tẩy quẹt trên giấy
+		Sfx.play(Sfx.UNDO)
 		if game_state != null:
 			game_state.refund_step(1)
 			_update_hud()
@@ -235,6 +248,8 @@ func undo() -> void:
 
 func hint() -> void:
 	if grid_controller != null:
+		# SFX: chuông gió khi bấm Gợi ý
+		Sfx.play(Sfx.HINT)
 		grid_controller.give_hint()
 
 
@@ -244,3 +259,25 @@ func _on_pause_toggled(is_paused: bool) -> void:
 			timer_controller.pause()
 		else:
 			timer_controller.resume()
+
+
+# ---------------------------------------------------------------------------
+# Helpers SFX & Daily
+# ---------------------------------------------------------------------------
+func _play_sfx_delayed(sfx_name: String, delay: float) -> void:
+	if not is_inside_tree():
+		return
+	var tw := create_tween()
+	tw.tween_interval(delay)
+	tw.tween_callback(func() -> void: Sfx.play(sfx_name))
+
+
+## Đánh dấu ngày Daily đã hoàn thành (nếu ván đang chơi là 1 Daily Challenge Mode)
+func _mark_daily_completed_if_needed() -> void:
+	if game_state == null or not GameManagerClass.DAILY_MODES.has(game_state.mode_id):
+		return
+	var gm: Variant = get_node_or_null("/root/GameManager")
+	var dm: Variant = get_node_or_null("/root/DailyManager")
+	if gm == null or dm == null:
+		return
+	dm.call("mark_completed", int(gm.get("selected_daily_day")))

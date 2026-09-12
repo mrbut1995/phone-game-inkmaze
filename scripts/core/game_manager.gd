@@ -38,7 +38,7 @@ func start_dungeon() -> void:
 	current_mode = "dungeon"
 	current_difficulty = "medium"
 	mode_changed.emit(current_mode)
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	_change_scene("res://scenes/game.tscn")
 
 
 ## Khởi động Level cụ thể trong Classic / Play Mode
@@ -47,7 +47,7 @@ func start_level(level_id: int) -> void:
 	current_level = level_id
 	current_difficulty = "medium"
 	mode_changed.emit(current_mode)
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	_change_scene("res://scenes/game.tscn")
 
 
 ## Khởi động Daily Challenge theo ngày
@@ -57,22 +57,27 @@ func start_daily(day: int) -> void:
 	current_mode = DAILY_MODES[mode_index]
 	current_difficulty = "medium"
 	mode_changed.emit(current_mode)
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	_change_scene("res://scenes/game.tscn")
 
 
 ## Điều hướng tới Main Menu
 func go_to_main_menu() -> void:
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	_change_scene("res://scenes/main.tscn")
 
 
 ## Điều hướng tới Màn hình Chọn Màn
 func go_to_levels() -> void:
-	get_tree().change_scene_to_file("res://scenes/levels.tscn")
+	_change_scene("res://scenes/levels.tscn")
 
 
 ## Điều hướng tới Màn hình Daily Challenge
 func go_to_daily() -> void:
-	get_tree().change_scene_to_file("res://scenes/daily.tscn")
+	_change_scene("res://scenes/daily.tscn")
+
+
+## Chuyển màn qua Nav/SceneManager (tự có SFX lật trang + ghi lịch sử cho nút Back)
+func _change_scene(path: String) -> void:
+	Nav.change_scene(path)
 
 
 ## Ghi nhận hoàn thành màn

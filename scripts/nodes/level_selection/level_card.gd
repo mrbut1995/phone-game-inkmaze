@@ -67,4 +67,6 @@ func update_visuals() -> void:
 
 func _on_pressed() -> void:
 	if not is_locked:
+		# SFX: bấm bút bi khi chọn màn chơi
+		Sfx.play(Sfx.BTN_CLICK)
 		selected.emit(level_id)

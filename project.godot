@@ -28,6 +28,7 @@ DataManager="*uid://cv8cm2i8nr5gw"
 DailyManager="*uid://bxus37ntramd1"
 DebugManager="*uid://drkig4dljo3f7"
 AdsManager="*uid://kducqs2nm8b0"
+LocalizationManager="*res://scripts/manager/LocalizationManager.gd"
 
 [display]
 

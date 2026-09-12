@@ -20,6 +20,7 @@ const WALL_INACTIVE_TEX := preload("res://assets/images/game/btn_tool_wall_inact
 
 
 func _on_tool_pressed(mode : String) :
+	Sfx.play(Sfx.BTN_WOOD_TAP)
 	if mode == "path":
 		select_tool(ToolMode.PATH)
 	elif mode == "wall":
@@ -42,4 +43,5 @@ func _refresh_ui() -> void:
 
 
 func _on_wall_pressed(_mode: String = "wall") -> void:
+	Sfx.play(Sfx.BTN_WOOD_TAP)
 	select_tool(ToolMode.WALL)
