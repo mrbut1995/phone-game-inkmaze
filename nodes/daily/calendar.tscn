@@ -1,9 +1,266 @@
 [gd_scene format=3 uid="uid://ba36iykveefpu"]
 
+[ext_resource type="Texture2D" uid="uid://u8qflwwscdl1" path="res://assets/images/calendar/calendar_board.svg" id="1_aqpsk"]
+[ext_resource type="LabelSettings" uid="uid://udn5bq4xkddb" path="res://resources/settings/text/text_daily_month.tres" id="2_3m1d1"]
+[ext_resource type="PackedScene" uid="uid://cggt0mrkea7fs" path="res://nodes/daily/day.tscn" id="2_de8bm"]
+[ext_resource type="Texture2D" uid="uid://btoscldl6syrd" path="res://assets/images/calendar/day_btn_prev_normal.svg" id="2_n0qm4"]
+[ext_resource type="Texture2D" uid="uid://s8rw4dpgpdap" path="res://assets/images/calendar/day_btn_prev_pressed.svg" id="3_iai16"]
+[ext_resource type="Texture2D" uid="uid://biecmwqjrpvq8" path="res://assets/images/calendar/day_btn_prev_disabled.svg" id="4_33jll"]
+[ext_resource type="Texture2D" uid="uid://dplf26ftpl61w" path="res://assets/images/calendar/day_btn_prev_focus.svg" id="5_mi7j5"]
+[ext_resource type="Texture2D" uid="uid://cmhk3b2oias7f" path="res://assets/images/calendar/day_btn_next_normal.svg" id="7_ut84u"]
+[ext_resource type="Texture2D" uid="uid://cdbr77m4yqupo" path="res://assets/images/calendar/day_btn_next_pressed.svg" id="8_g7v8n"]
+[ext_resource type="Texture2D" uid="uid://cw5gf0usrygw6" path="res://assets/images/calendar/day_btn_next_disabled.svg" id="9_w5v05"]
+[ext_resource type="Texture2D" uid="uid://djqiboymxnogp" path="res://assets/images/calendar/day_btn_next_focus.svg" id="10_fe7dn"]
+
 [node name="Calendar" type="Control" unique_id=826878321]
+custom_minimum_size = Vector2(980, 970)
 layout_mode = 3
+anchor_right = 0.91300005
+anchor_bottom = 0.513
+offset_right = -0.040039063
+offset_bottom = 0.039978027
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="TextureRect" parent="." unique_id=1039618330]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("1_aqpsk")
+
+[node name="Months" type="HBoxContainer" parent="." unique_id=1099688971]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.07216024
+anchor_top = 0.01928934
+anchor_right = 0.9628966
+anchor_bottom = 0.096319795
+offset_left = -0.1499939
+offset_right = -0.41601563
+offset_bottom = 0.125
+metadata/_edit_use_anchors_ = true
+
+[node name="Previous" type="TextureButton" parent="Months" unique_id=965805203]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("2_n0qm4")
+texture_pressed = ExtResource("3_iai16")
+texture_hover = ExtResource("2_n0qm4")
+texture_disabled = ExtResource("4_33jll")
+texture_focused = ExtResource("5_mi7j5")
+
+[node name="Label" type="Label" parent="Months" unique_id=1725294983]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Tháng 9 / 2024"
+label_settings = ExtResource("2_3m1d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Next" type="TextureButton" parent="Months" unique_id=136817814]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("7_ut84u")
+texture_pressed = ExtResource("8_g7v8n")
+texture_hover = ExtResource("7_ut84u")
+texture_disabled = ExtResource("9_w5v05")
+texture_focused = ExtResource("10_fe7dn")
+
+[node name="DayTitle" type="HBoxContainer" parent="." unique_id=1404840939]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.095000006
+anchor_top = 0.108
+anchor_right = 0.93100005
+anchor_bottom = 0.185
+offset_left = 0.3299942
+offset_top = -0.38000488
+offset_right = 0.033935547
+offset_bottom = -0.2250061
+theme_override_constants/separation = 80
+
+[node name="Sunday" type="Label" parent="DayTitle" unique_id=1135267634]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SU"
+label_settings = ExtResource("2_3m1d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Monday" type="Label" parent="DayTitle" unique_id=368123721]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "MO"
+label_settings = ExtResource("2_3m1d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tuesday" type="Label" parent="DayTitle" unique_id=1475940002]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TU"
+label_settings = ExtResource("2_3m1d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Wednesday" type="Label" parent="DayTitle" unique_id=1338416401]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "WE"
+label_settings = ExtResource("2_3m1d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Thursday" type="Label" parent="DayTitle" unique_id=389724260]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TH"
+label_settings = ExtResource("2_3m1d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Friday" type="Label" parent="DayTitle" unique_id=690594891]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FR"
+label_settings = ExtResource("2_3m1d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Saturday" type="Label" parent="DayTitle" unique_id=41241561]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ST"
+label_settings = ExtResource("2_3m1d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Days" type="GridContainer" parent="." unique_id=698131839]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.043610547
+anchor_top = 0.18883249
+anchor_right = 0.9669635
+anchor_bottom = 0.9506447
+offset_right = -0.4260025
+offset_bottom = -0.38500214
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 7
+metadata/_edit_use_anchors_ = true
+
+[node name="Day" parent="Days" unique_id=1518492561 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day2" parent="Days" unique_id=1975390353 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day3" parent="Days" unique_id=798622367 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day4" parent="Days" unique_id=1735364146 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day5" parent="Days" unique_id=2109828274 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day6" parent="Days" unique_id=1514454543 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day7" parent="Days" unique_id=1753890136 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day8" parent="Days" unique_id=373509829 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day9" parent="Days" unique_id=1673508459 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day10" parent="Days" unique_id=800706057 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day11" parent="Days" unique_id=1209532924 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day12" parent="Days" unique_id=2082459379 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day13" parent="Days" unique_id=181243579 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day14" parent="Days" unique_id=761570231 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day15" parent="Days" unique_id=326243164 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day16" parent="Days" unique_id=502008704 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day17" parent="Days" unique_id=876999203 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day18" parent="Days" unique_id=549206500 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day19" parent="Days" unique_id=1610799268 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day20" parent="Days" unique_id=1848469542 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day21" parent="Days" unique_id=479070230 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day22" parent="Days" unique_id=1259428941 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day23" parent="Days" unique_id=337647854 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day24" parent="Days" unique_id=183796582 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day25" parent="Days" unique_id=537462810 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day26" parent="Days" unique_id=528588685 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day27" parent="Days" unique_id=983047380 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day28" parent="Days" unique_id=1794969940 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day29" parent="Days" unique_id=479496072 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day35" parent="Days" unique_id=401271265 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day30" parent="Days" unique_id=1892754562 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day31" parent="Days" unique_id=1277132446 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day32" parent="Days" unique_id=2139529704 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day33" parent="Days" unique_id=449960180 instance=ExtResource("2_de8bm")]
+layout_mode = 2
+
+[node name="Day34" parent="Days" unique_id=865205689 instance=ExtResource("2_de8bm")]
+layout_mode = 2

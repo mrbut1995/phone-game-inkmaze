@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+  <defs>
+    <filter id="cursorGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#2575A7" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <g filter="url(#cursorGlow)">
+    <!-- Con trỏ vị trí hiện tại: r22 -> r14 -> r7 (đúng mockup) -->
+    <circle cx="30" cy="30" r="22" fill="#2575A7"/>
+    <circle cx="30" cy="30" r="14" fill="#FFFFFF"/>
+    <circle cx="30" cy="30" r="7" fill="#2575A7"/>
+  </g>
+</svg>

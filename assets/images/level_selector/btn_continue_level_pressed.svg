@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 140" width="820" height="140">
+  <g transform="translate(10, 8)">
+    <rect width="800" height="116" rx="28" fill="#205477" stroke="#16394F" stroke-width="4"/>
+    <line x1="60" y1="0" x2="60" y2="116" stroke="#FAF5EB" stroke-width="3.5" opacity="0.4"/>
+  </g>
+</svg>

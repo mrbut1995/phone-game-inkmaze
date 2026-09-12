@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://ceqbsoy3ipfjh"]
+
+[ext_resource type="FontFile" uid="uid://op7o2oudfc2g" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Bold.ttf" id="1_ugo8e"]
+
+[resource]
+line_spacing = 1.0
+font = ExtResource("1_ugo8e")
+font_size = 29
+font_color = Color(0.84705883, 0.26666668, 0.26666668, 1)

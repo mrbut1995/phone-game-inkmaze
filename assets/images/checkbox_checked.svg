@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 3 44 45" width="44" height="45">
+  <defs>
+    <filter id="cb-shadow-checked" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#1E384D" flood-opacity="0.16" />
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#1E384D" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <g filter="url(#cb-shadow-checked)">
+    <!-- Nền giấy -->
+    <rect x="7" y="7" width="34" height="34" rx="8" fill="#FAF5EB" />
+    <!-- Viền mực xanh -->
+    <rect x="7" y="7" width="34" height="34" rx="8" fill="none" stroke="#3D83AE" stroke-width="2.2" />
+    <!-- Nét tích đỏ lề/mực chấm điểm -->
+    <path d="M 14 24.5 L 21 31.5 L 34 16.5" fill="none" stroke="#D84444" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

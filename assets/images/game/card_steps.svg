@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 320 140" width="320" height="140">
+  <defs>
+    <filter id="cardStepsShadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <!-- Thẻ SỐ BƯỚC 306x125 đúng size mockup - bản trống, không text/icon (chừa 20px lề cho đổ bóng) -->
+  <g filter="url(#cardStepsShadow)">
+    <rect width="306" height="125" rx="20" fill="#FEFDFA" stroke="#D84444" stroke-width="3.5"/>
+    <line x1="22" y1="0" x2="22" y2="125" stroke="#D84444" stroke-width="2.5"/>
+  </g>
+</svg>

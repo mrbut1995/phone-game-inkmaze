@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 140" width="820" height="140">
+  <defs>
+    <filter id="btnLvlCleanShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#1E2830" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <g transform="translate(10, 5)" filter="url(#btnLvlCleanShadow)">
+    <rect width="800" height="120" rx="28" fill="#3D83AE" stroke="#265B7D" stroke-width="4"/>
+    <line x1="60" y1="0" x2="60" y2="120" stroke="#FAF5EB" stroke-width="3.5" opacity="0.6"/>
+  </g>
+</svg>

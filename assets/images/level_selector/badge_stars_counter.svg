@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 210 85" width="210" height="85">
+  <defs>
+    <filter id="starBadgeCleanShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <g transform="translate(5, 3)" filter="url(#starBadgeCleanShadow)">
+    <rect width="200" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+  </g>
+</svg>

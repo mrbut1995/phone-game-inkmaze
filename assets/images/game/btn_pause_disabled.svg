@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -6 84 87" width="84" height="87">
+  <!-- Nút phẳng, mực nhạt khi bị khoá -->
+  <rect width="70" height="70" rx="18" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="1.5"/>
+  <g opacity="0.6">
+    <line x1="26" y1="22" x2="26" y2="48" stroke="#BAC7CF" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="44" y1="22" x2="44" y2="48" stroke="#BAC7CF" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+</svg>

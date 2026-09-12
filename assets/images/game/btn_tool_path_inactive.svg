@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 374 155" width="374" height="155">
+  <defs>
+    <filter id="toolPathShadowOff" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <!-- Nút 360x140 đúng size mockup (chừa 20px lề cho đổ bóng) -->
+  <g filter="url(#toolPathShadowOff)">
+    <rect width="360" height="140" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3.5"/>
+    <line x1="35" y1="0" x2="35" y2="140" stroke="#3D83AE" stroke-width="3"/>
+    <!-- Icon bút chì -->
+    <g transform="translate(55, 45)" stroke="#3D83AE" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 2L30 22L12 40L2 40L2 30Z"/>
+      <path d="M22 14L28 20"/>
+    </g>
+  </g>
+</svg>

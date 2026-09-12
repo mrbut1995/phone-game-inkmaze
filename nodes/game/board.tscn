@@ -1,9 +1,24 @@
 [gd_scene format=3 uid="uid://chbg12rc46dp"]
 
+[ext_resource type="Texture2D" uid="uid://co2apcdowivue" path="res://assets/images/game/card_board.svg" id="1_pr7sl"]
+
 [node name="Board" type="Control" unique_id=181012636]
+custom_minimum_size = Vector2(1020, 1020)
 layout_mode = 3
+anchor_right = 0.94400007
+anchor_bottom = 0.531
+offset_right = 0.47991943
+offset_bottom = 0.47998047
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="TextureRect" parent="." unique_id=1799900499]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("1_pr7sl")
+metadata/_edit_use_anchors_ = true

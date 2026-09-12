@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 64" width="170" height="64">
-  <rect width="170" height="64" rx="16" fill="#3D83AE" stroke="#235A7D" stroke-width="2.5"/>
-  <line x1="20" y1="0" x2="20" y2="64" stroke="#FAF5EB" stroke-width="2" opacity="0.6"/>
-  <!-- Icon bút -->
-  <g transform="translate(30, 20)" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M6 2L18 14L8 24L2 24L2 18Z"/>
-  </g>
-</svg>

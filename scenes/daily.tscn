@@ -1,5 +1,64 @@
 [gd_scene format=3 uid="uid://jvn38aocsdwl"]
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_y4r07"]
+[ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="2_fop1b"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_vevov"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_2aa7n"]
+[ext_resource type="Texture2D" uid="uid://cpiryq18o3y70" path="res://assets/images/calendar/panel_daily_mission.svg" id="6_fnv54"]
+[ext_resource type="LabelSettings" uid="uid://bonmr0e8ujeq3" path="res://resources/settings/text/text_game_title.tres" id="7_1ph8s"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_y4r07")]
+
+[node name="Calendar" parent="." index="1" unique_id=826878321 instance=ExtResource("2_fop1b")]
+layout_mode = 1
+anchor_left = 0.053000003
+anchor_top = 0.162
+anchor_right = 0.966
+anchor_bottom = 0.675
+offset_left = -0.24000168
+offset_top = -108.04001
+offset_right = -0.2800293
+offset_bottom = -108.0
+
+[node name="TopBar" type="HBoxContainer" parent="." index="2" unique_id=1720649669]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.033770833
+anchor_right = 0.961
+anchor_bottom = 0.07877084
+offset_left = 0.27999878
+offset_top = -0.84000015
+offset_right = 0.11999512
+offset_bottom = -0.2400055
+metadata/_edit_use_anchors_ = true
+
+[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=305592045]
+layout_mode = 2
+texture_normal = ExtResource("3_vevov")
+texture_pressed = ExtResource("4_2aa7n")
+texture_hover = ExtResource("3_vevov")
+texture_disabled = ExtResource("3_vevov")
+texture_focused = ExtResource("3_vevov")
+
+[node name="Title" type="Label" parent="TopBar" index="1" unique_id=27927468]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "DAILY CHALLENGE"
+label_settings = ExtResource("7_1ph8s")
+horizontal_alignment = 1
+
+[node name="Control" type="Container" parent="." index="3" unique_id=43398412]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.033333335
+anchor_top = 0.63854164
+anchor_right = 0.986
+anchor_bottom = 0.86877084
+offset_right = 0.11999512
+offset_bottom = 0.95996094
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Control" index="0" unique_id=593016990]
+layout_mode = 2
+texture = ExtResource("6_fnv54")

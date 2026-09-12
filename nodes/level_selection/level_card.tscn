@@ -1,35 +1,37 @@
 [gd_scene format=3 uid="uid://dfmh01huguti4"]
 
 [ext_resource type="Script" uid="uid://3e0i4bldywkh" path="res://scripts/nodes/level_selection/level_card.gd" id="1_066fa"]
-[ext_resource type="Texture2D" uid="uid://wfgwn3j8w2la" path="res://assets/images/level_selector/level_card.svg" id="2_slt54"]
-[ext_resource type="Texture2D" uid="uid://cqe1sdpj4yw71" path="res://assets/images/star_empty.svg" id="3_h4clh"]
-[ext_resource type="Texture2D" uid="uid://d28i01rd30obn" path="res://assets/images/level_selector/stamp_excellent.svg" id="4_slt54"]
+[ext_resource type="Texture2D" uid="uid://dexk21ag2ifyv" path="res://assets/images/level_selector/level_card_unlocked_normal.svg" id="2_23rcg"]
+[ext_resource type="Texture2D" uid="uid://o5y7d4xy6nr2" path="res://assets/images/level_selector/level_card_locked.svg" id="3_fwgxh"]
+[ext_resource type="Texture2D" uid="uid://cqe1sdpj4yw71" path="res://assets/images/game/star_empty.svg" id="3_h4clh"]
+[ext_resource type="Texture2D" uid="uid://etr7viier6ak" path="res://assets/images/level_selector/level_card_focus.svg" id="4_xwruh"]
+[ext_resource type="Texture2D" uid="uid://ceu3tnfq77j3j" path="res://assets/images/level_selector/stamp_done_circle.svg" id="6_23rcg"]
+[ext_resource type="Texture2D" uid="uid://blikk0nkl6dow" path="res://assets/images/level_selector/icon_lock_locked.svg" id="6_fwgxh"]
+[ext_resource type="LabelSettings" uid="uid://ceqbsoy3ipfjh" path="res://resources/settings/text/text_stamp.tres" id="8_xwruh"]
 
 [node name="Level" type="Control" unique_id=212139280]
-custom_minimum_size = Vector2(337.5, 517.5)
+custom_minimum_size = Vector2(297, 355)
 layout_mode = 3
-anchor_right = 0.41759259
-anchor_bottom = 0.35665816
-grow_horizontal = 2
-grow_vertical = 2
+anchor_right = 0.275
+anchor_bottom = 0.18489583
 script = ExtResource("1_066fa")
 metadata/_edit_use_anchors_ = true
 
-[node name="Panel" type="NinePatchRect" parent="." unique_id=1324682516]
+[node name="Panel" type="TextureButton" parent="." unique_id=977953001]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1.0
-offset_bottom = 5.2163086
+offset_left = -17.0
+offset_top = -14.891846
+offset_right = 16.0
+offset_bottom = 20.108154
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_slt54")
-region_rect = Rect2(0, 0, 220, 300)
-patch_margin_left = 60
-patch_margin_top = 49
-patch_margin_right = 48
-patch_margin_bottom = 56
+texture_normal = ExtResource("2_23rcg")
+texture_hover = ExtResource("2_23rcg")
+texture_disabled = ExtResource("3_fwgxh")
+texture_focused = ExtResource("4_xwruh")
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
@@ -119,16 +121,54 @@ resize_font_to_fit = true
 maximum_font_size = 120
 metadata/_edit_use_anchors_ = true
 
-[node name="Stamp" type="TextureRect" parent="." unique_id=1370524902]
+[node name="Lock" type="TextureRect" parent="Panel" unique_id=1506707115]
+visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5807406
-anchor_top = 0.034603152
-anchor_right = 0.9357406
-anchor_bottom = 0.16660316
+anchor_left = 0.39100003
+anchor_top = 0.5
+anchor_right = 0.58500004
+anchor_bottom = 0.66400003
+offset_left = -0.030014038
+offset_top = -0.1081543
+offset_right = -0.05000305
+offset_bottom = -0.06817627
+texture = ExtResource("6_fwgxh")
+metadata/_edit_use_anchors_ = true
+
+[node name="Stamp" type="TextureRect" parent="." unique_id=1370524902]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.585569
+anchor_top = 0.0097777955
+anchor_right = 1.0
+anchor_bottom = 0.349
 offset_left = 0.085998535
 offset_top = 0.3043251
-offset_right = -0.019012451
-offset_bottom = -0.087127686
-texture = ExtResource("4_slt54")
+offset_right = -3.0
+offset_bottom = -0.11956024
+texture = ExtResource("6_23rcg")
 metadata/_edit_use_anchors_ = true
+
+[node name="CenterContainer" type="CenterContainer" parent="Stamp" unique_id=733002662]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -22.775442
+offset_right = 50.0
+offset_bottom = -22.775444
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.657467
+
+[node name="Label" type="Label" parent="Stamp/CenterContainer" unique_id=787399988]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75069183, 0.25092328, 0.29985005, 1)
+text = "DONE"
+label_settings = ExtResource("8_xwruh")
+horizontal_alignment = 1
+vertical_alignment = 1
+maximum_font_size = 120

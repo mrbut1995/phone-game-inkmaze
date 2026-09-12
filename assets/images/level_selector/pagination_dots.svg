@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="16 4 94 16" width="94" height="16">
+  <g transform="translate(60, 12)">
+    <!-- Trang 1 Active -->
+    <rect x="-42" y="-6" width="34" height="12" rx="6" fill="#3D83AE"/>
+    <!-- Trang 2 -->
+    <circle cx="14" cy="0" r="6" fill="#8FB9D2" opacity="0.6"/>
+    <!-- Trang 3 -->
+    <circle cx="42" cy="0" r="6" fill="#8FB9D2" opacity="0.6"/>
+  </g>
+</svg>

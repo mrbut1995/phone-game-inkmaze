@@ -8,12 +8,18 @@
 [node name="GridContainer" type="GridContainer" parent="." index="1" unique_id=783028615]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.008333334
-anchor_top = 0.11875
-anchor_right = 0.95185184
-anchor_bottom = 0.93072915
+anchor_left = 0.051777776
+anchor_top = 0.191125
+anchor_right = 0.98077774
+anchor_bottom = 0.7824375
+offset_left = 10.08
+offset_top = 11.039993
+offset_right = -10.240051
+offset_bottom = -11.280029
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/h_separation = 46
+theme_override_constants/v_separation = 24
 columns = 3
 metadata/_edit_use_anchors_ = true
 

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="8 0 24 176" width="24" height="176">
+  <!-- Tường nối 2 anchor cách nhau 176px, để hở 8px mỗi đầu cho tâm anchor -->
+  <line x1="20" y1="8" x2="20" y2="168" stroke="#1E283A" stroke-width="11" stroke-linecap="round"/>
+</svg>

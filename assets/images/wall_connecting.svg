@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 130" width="40" height="130">
-  <!-- Tia dẫn hướng đàn hồi -->
-  <line x1="20" y1="8" x2="20" y2="122" stroke="#D84444" stroke-width="8" stroke-linecap="round" stroke-dasharray="6 4"/>
-  <!-- Đầu ngón tay đang kéo (viên bi dẫn đường) -->
-  <circle cx="20" cy="115" r="9" fill="#D84444"/>
-  <circle cx="20" cy="115" r="4" fill="#FFFFFF"/>
-</svg>

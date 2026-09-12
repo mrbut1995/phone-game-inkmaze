@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 374 155" width="374" height="155">
+  <!-- Nút lún xuống 2px, thân tối màu tạo cảm giác bị nén -->
+  <g transform="translate(0, 2)">
+    <rect width="360" height="138" rx="26" fill="#205477" stroke="#16394F" stroke-width="4"/>
+    <line x1="35" y1="0" x2="35" y2="138" stroke="#FAF5EB" stroke-width="3" opacity="0.4"/>
+    <!-- Icon bút chì dịch chuyển theo phím -->
+    <g transform="translate(55, 45)" stroke="#E0F2FE" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 2L30 22L12 40L2 40L2 30Z"/>
+      <path d="M22 14L28 20"/>
+    </g>
+  </g>
+</svg>

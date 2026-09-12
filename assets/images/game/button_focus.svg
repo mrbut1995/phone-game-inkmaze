@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6 3 308 77" width="308" height="77">
+  <defs>
+    <filter id="shadow-focus" x="-10%" y="-15%" width="125%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#22394A" flood-opacity="0.16" />
+    </filter>
+
+    <pattern id="grid-focus" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#90BBD4" stroke-width="0.9" opacity="0.75" />
+    </pattern>
+
+    <clipPath id="clip-focus">
+      <rect x="15" y="12" width="290" height="56" rx="12" />
+    </clipPath>
+  </defs>
+
+  <!-- Vòng Focus Ring ngoài (Hào quang mực xanh) -->
+  <rect x="10" y="7" width="300" height="66" rx="16" fill="none" stroke="#3D83AE" stroke-width="3" stroke-opacity="0.35" />
+  <rect x="11" y="8" width="298" height="64" rx="15" fill="none" stroke="#256C96" stroke-width="1.5" stroke-dasharray="5 3" />
+
+  <!-- Thân nút -->
+  <g filter="url(#shadow-focus)">
+    <g clip-path="url(#clip-focus)">
+      <rect x="15" y="12" width="290" height="56" fill="#FFFDF8" />
+      <rect x="15" y="12" width="290" height="56" fill="url(#grid-focus)" />
+      <line x1="55" y1="12" x2="55" y2="68" stroke="#D84444" stroke-width="2.5" />
+    </g>
+
+    <rect x="15" y="12" width="290" height="56" rx="12" fill="none" stroke="#236892" stroke-width="2.2" />
+  </g>
+</svg>
