@@ -143,22 +143,39 @@ func _on_win_next_pressed() -> void:
 		popup_win.visible = false
 
 	var gm: Node = get_node_or_null("/root/GameManager")
-	if game_controller != null and game_controller.game_mode is DungeonGameMode:
-		game_controller.next_floor()
-	else:
-		if gm != null:
-			var stars: int = 3
-			if game_controller != null and game_controller.game_state != null:
-				stars = 3 if game_controller.game_state.wall_hits == 0 else 2
-			var elapsed: float = game_controller.game_state.elapsed_time if game_controller != null and game_controller.game_state != null else 10.0
-			gm.record_level_clear(gm.current_level, stars, elapsed)
-			if gm.current_level < 9:
-				gm.start_level(gm.current_level + 1)
-			else:
-				gm.go_to_levels()
+
+	# Dungeon Mode: chuyển sang floor tiếp theo không cần GameManager
+	if game_controller != null and game_mode_controller != null \
+			and game_mode_controller.game_mode is DungeonGameMode:
+		_on_continue_next_floor()
+		return
+
+	# Play Mode / Standard: báo cáo level clear rồi chuyển qua level kế tiếp
+	if gm != null:
+		var stars: int = 3
+		if game_controller != null and game_controller.game_state != null:
+			stars = 3 if game_controller.game_state.floor_wall_hits == 0 else 2
+		var elapsed: float = game_controller.game_state.elapsed_time \
+				if game_controller != null and game_controller.game_state != null else 10.0
+		gm.call("record_level_clear", gm.get("current_level"), stars, elapsed)
+		var next_lvl: int = int(gm.get("current_level")) + 1
+		if next_lvl <= 9:
+			gm.call("start_level", next_lvl)
 		else:
-			if game_controller != null:
-				game_controller.restart_run()
+			gm.call("go_to_levels")
+	else:
+		# Fallback không có GameManager: restart lại run
+		if game_controller != null:
+			game_controller.restart_run()
+
+
+## Chuyển sang floor kế tiếp trong Dungeon Mode (không cần GameManager)
+func _on_continue_next_floor() -> void:
+	if game_controller == null or game_controller.game_state == null:
+		return
+	# Dùng lại _on_continue_requested bên trong GameController
+	# (signal continue_requested → GameController._on_continue_requested)
+	game_controller._on_continue_requested()
 
 
 func _on_gameover_replay_pressed() -> void:

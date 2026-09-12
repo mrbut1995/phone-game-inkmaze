@@ -188,7 +188,7 @@ func _on_continue_requested() -> void:
 	if game_mode_controller != null and game_mode_controller.game_mode != null and not game_mode_controller.game_mode.is_endless:
 		var gm: Node = get_node_or_null("/root/GameManager")
 		if gm != null:
-			var stars: int = 3 if game_state.wall_hits == 0 else 2
+			var stars: int = 3 if game_state.floor_wall_hits == 0 else 2
 			gm.call("record_level_clear", int(gm.get("current_level")), stars, game_state.elapsed_time)
 			var next_lvl := int(gm.get("current_level")) + 1
 			if next_lvl <= 9:
