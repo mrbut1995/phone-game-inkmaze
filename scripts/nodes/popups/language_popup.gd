@@ -1,46 +1,34 @@
 class_name LanguagePopup
-extends Control
+extends BasePopup
 ## ============================================================================
-## Popup chọn ngôn ngữ (mockup popup_language.svg)
-## - Danh sách ngôn ngữ dựng động từ LocalizationManager.SUPPORTED_LOCALES.
-## - "ÁP DỤNG" mới đổi ngôn ngữ thật, "HỦY BỎ" đóng mà không đổi.
+## Popup: Chọn ngôn ngữ (nodes/popups/language.tscn) - mockup popup_language.svg
+## - Danh sách ngôn ngữ dựng động từ LocalizationManager.supported_locales
+## - Cờ quốc gia là TextureRect (không dùng emoji)
+## - "ÁP DỤNG" mới đổi ngôn ngữ thật, "HỦY BỎ" đóng mà không đổi
 ## ============================================================================
 
 signal locale_applied(code: String)
-signal closed
 
 const TEX_ROW_NORMAL := preload("res://assets/images/popups/lang_item_normal.svg")
 const TEX_ROW_SELECTED := preload("res://assets/images/popups/lang_item_selected.svg")
+const TEX_ROW_PRESSED := preload("res://assets/images/popups/lang_item_pressed.svg")
 const TEX_ROW_FOCUS := preload("res://assets/images/popups/lang_item_focus.svg")
 const TEX_CHECK := preload("res://assets/images/popups/icon_check_red.svg")
-
-const STYLE_FLAG := preload("res://resources/settings/text/text_settings_title.tres")
-const STYLE_NAME := preload("res://resources/settings/text/text_settings_row.tres")
-const STYLE_SUB := preload("res://resources/settings/text/text_settings_desc.tres")
+const FLAG_FALLBACK := preload("res://assets/images/icons/flags/flag_generic.svg")
 
 const ROW_HEIGHT := 103.0
 
 @onready var _list: VBoxContainer = $Panel/Content/Scroll/List
-@onready var _btn_cancel: TextureButton = $Panel/Content/Buttons/Cancel
-@onready var _btn_apply: TextureButton = $Panel/Content/Buttons/Apply
 
 var _pending_locale := ""
 var _rows: Dictionary = {}
 
 
-func _ready() -> void:
-	hide()
-	if _btn_cancel != null:
-		_btn_cancel.pressed.connect(_on_cancel_pressed)
-	if _btn_apply != null:
-		_btn_apply.pressed.connect(_on_apply_pressed)
-
-
-## Mở popup, dựng lại danh sách theo ngôn ngữ đang dùng
-func open() -> void:
+func _on_open() -> void:
 	_pending_locale = Loc.current()
 	_rebuild()
-	show()
+	bind_button("Panel/Content/Buttons/Cancel", _on_cancel_pressed)
+	bind_button("Panel/Content/Buttons/Apply", _on_apply_pressed)
 
 
 # ---------------------------------------------------------------------------
@@ -62,40 +50,47 @@ func _add_row(code: String) -> void:
 
 	var row := TextureButton.new()
 	row.name = "Row_" + code
-	# Chieu cao chon theo ti le texture (616x106) de khong meo hinh khi keo gian ngang
+	# Chiều cao chọn theo tỉ lệ texture (616x106) để không méo hình khi kéo giãn ngang
 	row.custom_minimum_size = Vector2(0, ROW_HEIGHT)
 	row.toggle_mode = true
 	row.ignore_texture_size = true
 	row.texture_normal = TEX_ROW_NORMAL
 	row.texture_pressed = TEX_ROW_SELECTED
-	row.texture_hover = TEX_ROW_NORMAL
+	row.texture_hover = TEX_ROW_PRESSED
+	row.texture_focused = TEX_ROW_FOCUS
 	row.focus_mode = Control.FOCUS_NONE
 	row.pressed.connect(_on_row_pressed.bind(code))
 	_list.add_child(row)
 
-	var flag := Label.new()
-	flag.label_settings = STYLE_FLAG
-	flag.text = str(info.get("flag", ""))
-	flag.position = Vector2(30, 24)
-	flag.size = Vector2(50, 44)
+	# Cờ quốc gia: ảnh svg, thay cho emoji 🇻🇳 trước đây
+	var flag := TextureRect.new()
+	flag.name = "Flag"
+	flag.texture = _flag_texture(str(info.get("flag", "")))
+	flag.position = Vector2(26, 26)
+	flag.size = Vector2(52, 52)
+	flag.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	flag.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	row.add_child(flag)
 
 	var name_lbl := Label.new()
-	name_lbl.label_settings = STYLE_NAME
+	name_lbl.name = "Name"
+	name_lbl.theme_type_variation = &"PopupRowLabel"
 	name_lbl.text = str(info.get("name", code))
-	name_lbl.position = Vector2(80, 12)
+	name_lbl.position = Vector2(90, 12)
 	name_lbl.size = Vector2(400, 40)
 	row.add_child(name_lbl)
 
 	var sub_lbl := Label.new()
-	sub_lbl.label_settings = STYLE_SUB
+	sub_lbl.name = "Sub"
+	sub_lbl.theme_type_variation = &"LangSub"
 	sub_lbl.text = str(info.get("sub", ""))
-	sub_lbl.position = Vector2(80, 46)
+	sub_lbl.position = Vector2(90, 52)
 	sub_lbl.size = Vector2(400, 30)
 	row.add_child(sub_lbl)
 
 	# Dấu tích đỏ báo ngôn ngữ đang chọn (ẩn/hiện theo lựa chọn)
 	var check := TextureRect.new()
+	check.name = "Check"
 	check.texture = TEX_CHECK
 	check.position = Vector2(520, 32)
 	check.size = Vector2(40, 30)
@@ -103,6 +98,12 @@ func _add_row(code: String) -> void:
 	row.add_child(check)
 
 	_rows[code] = {"button": row, "check": check}
+
+
+func _flag_texture(path: String) -> Texture2D:
+	if path.is_empty() or not ResourceLoader.exists(path):
+		return FLAG_FALLBACK
+	return load(path) as Texture2D
 
 
 func _update_selection() -> void:
@@ -129,15 +130,10 @@ func _on_apply_pressed() -> void:
 	if _pending_locale != "" and _pending_locale != Loc.current():
 		Loc.set_locale(_pending_locale)
 	locale_applied.emit(_pending_locale)
-	_close()
+	close()
 
 
 func _on_cancel_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	_pending_locale = Loc.current()
-	_close()
-
-
-func _close() -> void:
-	hide()
-	closed.emit()
+	close()

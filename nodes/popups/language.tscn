@@ -1,22 +1,17 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene format=3 uid="uid://dusrddwoc1rqw"]
 
 [ext_resource type="Script" path="res://scripts/nodes/popups/language_popup.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://rjtixf6klpgu" path="res://assets/images/popups/lang_panel.svg" id="2_panel"]
-[ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="3_washi"]
-[ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="4_clip"]
-[ext_resource type="Texture2D" path="res://assets/images/settings/divider_dashed.svg" id="5_divider"]
-[ext_resource type="Texture2D" uid="uid://c4277ksy08pue" path="res://assets/images/common/btn_paper_secondary_normal.svg" id="6_sec_n"]
-[ext_resource type="Texture2D" uid="uid://g6jguuu3mgrt" path="res://assets/images/common/btn_paper_secondary_pressed.svg" id="7_sec_p"]
-[ext_resource type="Texture2D" uid="uid://bgstufvwvogbj" path="res://assets/images/common/btn_paper_secondary_focus.svg" id="8_sec_f"]
-[ext_resource type="Texture2D" uid="uid://dkoyjq853hfgc" path="res://assets/images/common/btn_paper_secondary_disabled.svg" id="9_sec_d"]
-[ext_resource type="Texture2D" uid="uid://c4cv31tihnj1" path="res://assets/images/common/btn_paper_primary_normal.svg" id="10_pri_n"]
-[ext_resource type="Texture2D" uid="uid://bfod2u4o5b5i" path="res://assets/images/common/btn_paper_primary_pressed.svg" id="11_pri_p"]
-[ext_resource type="Texture2D" uid="uid://dvobapoh8dr6a" path="res://assets/images/common/btn_paper_primary_focus.svg" id="12_pri_f"]
-[ext_resource type="Texture2D" uid="uid://qjks6clxxblo" path="res://assets/images/common/btn_paper_primary_disabled.svg" id="13_pri_d"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_title.tres" id="14_title"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_subtitle.tres" id="15_subtitle"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_row.tres" id="16_row"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_button.tres" id="17_btn"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/lang_panel.svg" id="3_panel"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/washi_tape.svg" id="4_washi"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/paper_clip.svg" id="5_clip"]
+[ext_resource type="Texture2D" path="res://assets/images/settings/divider_dashed.svg" id="6_divider"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_muted_normal.svg" id="7_sec_n"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_muted_pressed.svg" id="8_sec_p"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_muted_focus.svg" id="9_sec_f"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_wide_normal.svg" id="10_pri_n"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_wide_pressed.svg" id="11_pri_p"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_wide_focus.svg" id="12_pri_f"]
 
 [node name="Base" type="Control"]
 layout_mode = 3
@@ -25,46 +20,58 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_theme")
 script = ExtResource("1_script")
 
-[node name="Dim" type="ColorRect" parent="." index="0"]
+[node name="Dim" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.10980392, 0.1764706, 0.22745098, 0.38)
+color = Color(0.09411765, 0.14117648, 0.18039216, 0.6392157)
 
-[node name="Panel" type="TextureRect" parent="." index="1"]
+[node name="Panel" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.1388889
-anchor_top = 0.20833333
-anchor_right = 0.8611111
-anchor_bottom = 0.7916667
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_panel")
-metadata/_edit_use_anchors_ = true
+offset_left = 150.0
+offset_top = 400.0
+offset_right = 930.0
+offset_bottom = 1520.0
+mouse_filter = 2
 
-[node name="Washi" type="TextureRect" parent="Panel" index="0"]
-layout_mode = 0
+[node name="Art" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 788.0
+offset_bottom = 1128.0
+mouse_filter = 2
+texture = ExtResource("3_panel")
+
+[node name="Washi" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
 offset_left = 288.0
-offset_top = -14.0
+offset_top = -17.0
 offset_right = 514.0
-offset_bottom = 40.0
-texture = ExtResource("3_washi")
+offset_bottom = 37.0
+mouse_filter = 2
+texture = ExtResource("4_washi")
 
-[node name="Clip" type="TextureRect" parent="Panel" index="1"]
-layout_mode = 0
-offset_left = 103.0
-offset_top = -10.0
-offset_right = 149.0
-offset_bottom = 71.0
-texture = ExtResource("4_clip")
+[node name="Clip" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 97.0
+offset_top = -15.0
+offset_right = 143.0
+offset_bottom = 66.0
+mouse_filter = 2
+texture = ExtResource("5_clip")
 
-[node name="Content" type="VBoxContainer" parent="Panel" index="2"]
+[node name="Content" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -77,84 +84,82 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="Panel/Content" index="0"]
+[node name="Title" type="Label" parent="Panel/Content"]
 layout_mode = 2
-text = "CHỌN NGÔN NGỮ"
-label_settings = ExtResource("14_title")
+theme_type_variation = &"PopupTitle"
+text = "STR_LANGUAGE_TITLE"
 
-[node name="Subtitle" type="Label" parent="Panel/Content" index="1"]
+[node name="Subtitle" type="Label" parent="Panel/Content"]
 layout_mode = 2
-text = "Select your preferred language"
-label_settings = ExtResource("15_subtitle")
+theme_type_variation = &"PopupSubtitle"
+text = "STR_LANGUAGE_SUBTITLE"
 
-[node name="Divider" type="TextureRect" parent="Panel/Content" index="2"]
+[node name="Divider" type="TextureRect" parent="Panel/Content"]
 custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
-texture = ExtResource("5_divider")
+texture = ExtResource("6_divider")
 expand_mode = 1
 stretch_mode = 1
 
-[node name="Scroll" type="ScrollContainer" parent="Panel/Content" index="3"]
+[node name="Scroll" type="ScrollContainer" parent="Panel/Content"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="List" type="VBoxContainer" parent="Panel/Content/Scroll" index="0"]
+[node name="List" type="VBoxContainer" parent="Panel/Content/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 20
 
-[node name="Buttons" type="HBoxContainer" parent="Panel/Content" index="4"]
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Cancel" type="TextureButton" parent="Panel/Content/Buttons" index="0"]
-custom_minimum_size = Vector2(180, 96)
+[node name="Cancel" type="TextureButton" parent="Panel/Content/Buttons"]
+custom_minimum_size = Vector2(300, 88)
 layout_mode = 2
-texture_normal = ExtResource("6_sec_n")
-texture_pressed = ExtResource("7_sec_p")
-texture_hover = ExtResource("6_sec_n")
-texture_disabled = ExtResource("9_sec_d")
-texture_focused = ExtResource("8_sec_f")
+texture_normal = ExtResource("7_sec_n")
+texture_pressed = ExtResource("8_sec_p")
+texture_hover = ExtResource("7_sec_n")
+texture_focused = ExtResource("9_sec_f")
 ignore_texture_size = true
 
-[node name="Label" type="Label" parent="Panel/Content/Buttons/Cancel" index="0"]
+[node name="Label" type="Label" parent="Panel/Content/Buttons/Cancel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "HỦY BỎ"
-label_settings = ExtResource("16_row")
+theme_type_variation = &"PopupBtnTextMuted"
+text = "STR_BTN_CANCEL"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Apply" type="TextureButton" parent="Panel/Content/Buttons" index="1"]
+[node name="Apply" type="TextureButton" parent="Panel/Content/Buttons"]
 custom_minimum_size = Vector2(390, 96)
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = ExtResource("10_pri_n")
 texture_pressed = ExtResource("11_pri_p")
 texture_hover = ExtResource("10_pri_n")
-texture_disabled = ExtResource("13_pri_d")
 texture_focused = ExtResource("12_pri_f")
 ignore_texture_size = true
 
-[node name="Label" type="Label" parent="Panel/Content/Buttons/Apply" index="0"]
+[node name="Label" type="Label" parent="Panel/Content/Buttons/Apply"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "ÁP DỤNG ✔"
-label_settings = ExtResource("17_btn")
+theme_type_variation = &"PopupBtnPrimarySm"
+text = "STR_BTN_APPLY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Footer" type="Label" parent="Panel/Content" index="5"]
+[node name="Footer" type="Label" parent="Panel/Content"]
 layout_mode = 2
-text = "~ Ngôn ngữ sẽ được cập nhật ngay lập tức cho toàn bộ màn chơi ~"
-label_settings = ExtResource("15_subtitle")
+theme_type_variation = &"PopupQuote"
+text = "STR_LANGUAGE_FOOTER"
 horizontal_alignment = 1

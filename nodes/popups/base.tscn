@@ -1,33 +1,52 @@
 [gd_scene format=3 uid="uid://j75ew1kc04k7"]
 
-[ext_resource type="Texture2D" uid="uid://cs45eohxsfgf6" path="res://assets/images/popups/paper_slip_win.svg" id="1_hnnh5"]
+[ext_resource type="Script" path="res://scripts/nodes/popups/base.gd" id="1_base"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/paper_slip_win.svg" id="2_slip"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="3_theme"]
 
-[node name="Base" type="Control" unique_id=1370178296]
+[node name="Base" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_theme")
+script = ExtResource("1_base")
 
-[node name="TextureRect" type="ColorRect" parent="." unique_id=1171360456]
+[node name="Dim" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.6509804)
+color = Color(0.09411765, 0.14117648, 0.18039216, 0.6392157)
 
-[node name="Panel" type="TextureRect" parent="." unique_id=1845041549]
+[node name="Panel" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.074074075
-anchor_top = 0.1268125
-anchor_right = 0.93111116
-anchor_bottom = 0.76068753
-offset_top = 0.519989
-offset_right = 0.39996338
-offset_bottom = -0.52001953
-texture = ExtResource("1_hnnh5")
-metadata/_edit_use_anchors_ = true
+offset_left = 115.0
+offset_top = 390.0
+offset_right = 965.0
+offset_bottom = 1510.0
+mouse_filter = 2
+
+[node name="Art" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -23.0
+offset_top = -26.0
+offset_right = 873.0
+offset_bottom = 1159.0
+mouse_filter = 2
+texture = ExtResource("2_slip")
+
+[node name="Content" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

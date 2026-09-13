@@ -33,12 +33,6 @@ extends BaseScene
 
 #@export var game_mode : BaseGameMode
 
-# Popup được instance sẵn trong scenes/game.tscn (visible = false); toàn bộ signal
-# button được connect trực tiếp trong .tscn, không connect bằng code.
-@onready var popup_win: Control = $Winning
-@onready var popup_gameover: Control = $GameOver
-@onready var popup_settings: Control = $Settings
-
 
 func _ready() -> void:
 	# Khởi động ván chơi dựa trên GameManager hoặc mặc định

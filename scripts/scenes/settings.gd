@@ -29,7 +29,6 @@ const PLAYER_ID_PLACEHOLDER := "#NM-8924-VN"
 @onready var btn_guide: TextureButton = $Panel/Content/Actions/Guide
 @onready var btn_reset: TextureButton = $Panel/Content/Actions/Reset
 @onready var lbl_version: Label = $Panel/Content/Footer/Stamp/Label
-@onready var language_popup: Control = $LanguagePopup
 
 ## Chặn ghi ngược khi đang đồng bộ UI từ SettingManager
 var _syncing := false
@@ -60,9 +59,6 @@ func _ready() -> void:
 		btn_guide.pressed.connect(_on_guide_pressed)
 	if btn_reset != null:
 		btn_reset.pressed.connect(_on_reset_pressed)
-
-	if language_popup != null and language_popup.has_signal("locale_applied"):
-		language_popup.connect("locale_applied", _on_locale_applied)
 
 	_sync_from_settings()
 
@@ -155,14 +151,12 @@ func _on_toggle_changed(toggled_on: bool, key: String) -> void:
 # ---------------------------------------------------------------------------
 func _on_language_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
-	if language_popup != null and language_popup.has_method("open"):
-		language_popup.call("open")
-	else:
-		# Fallback khi chưa gắn popup: xoay vòng ngôn ngữ hỗ trợ
-		var locales := Loc.locales()
-		var index := locales.find(Loc.current())
-		Loc.set_locale(str(locales[posmod(index + 1, locales.size())]))
-		_refresh_language()
+	# Popup được PopupManager tạo khi mở và xoá khi đóng
+	var popup := Popups.open(Popups.LANGUAGE)
+	if popup == null:
+		return
+	if not popup.is_connected("locale_applied", _on_locale_applied):
+		popup.connect("locale_applied", _on_locale_applied)
 
 
 func _on_locale_applied(_code: String) -> void:

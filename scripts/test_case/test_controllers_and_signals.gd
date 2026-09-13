@@ -66,17 +66,21 @@ func _init() -> void:
 	assert(maze1.width == 2 and maze1.height == 2, "MazeData phai co size 2x2")
 	print("[SUCCESS] LevelManager & LevelData Resource nạp dữ liệu chuẩn xác!")
 
-	# 4. Kiem tra Settings Popup va Resume/Menu button
-	assert(ui_ctrl.settings_view != null, "settings_view phai duoc setup trong UIController")
+	# 4. Kiem tra Settings Popup (Pause) do PopupManager tao ra khi bam Pause
 	var pause_btn: TextureButton = game_scene.get_node("Status/Pause")
 	pause_btn.emit_signal("pressed")
-	assert(ui_ctrl.settings_view.visible == true, "Pause phai hien thi settings popup")
+	await process_frame
+	var pause_popup := Popups.get_popup(Popups.PAUSE)
+	assert(pause_popup != null, "Pause phai tao popup tam dung qua PopupManager")
+	assert(pause_popup.visible == true, "Pause phai hien thi settings popup")
 	assert(timer_ctrl.is_running == false, "Timer phai pause khi bat settings")
 
-	var resume_btn: TextureButton = ui_ctrl.settings_view.find_child("Resume", true, false)
+	var resume_btn: TextureButton = pause_popup.find_child("ResumeBtn", true, false)
 	assert(resume_btn != null, "Resume button phai ton tai trong settings popup")
 	resume_btn.emit_signal("pressed")
-	assert(ui_ctrl.settings_view.visible == false, "Resume phai dong settings popup")
+	# Popup chay hieu ung dong (0.14s) roi moi bi xoa khoi node Popups
+	await create_timer(0.4).timeout
+	assert(not Popups.has_open(), "Resume phai dong va xoa settings popup khoi node Popups")
 	assert(timer_ctrl.is_running == true, "Timer phai tiep tuc sau khi Resume")
 
 	print("[SUCCESS] Settings Popup (Pause/Resume/Home) hoat dong dong bo voi TimerController!")

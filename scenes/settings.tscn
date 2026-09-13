@@ -41,7 +41,6 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_dropdown.tres" id="39_dropdown"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_chip.tres" id="40_chip_text"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="41_version"]
-[ext_resource type="PackedScene" path="res://nodes/popups/language.tscn" id="42_lang_popup"]
 [ext_resource type="Texture2D" path="res://assets/images/icons/icon_music.svg" id="43_icon_music"]
 [ext_resource type="Texture2D" path="res://assets/images/icons/icon_bell.svg" id="44_icon_bell"]
 [ext_resource type="Texture2D" path="res://assets/images/icons/icon_globe.svg" id="45_icon_globe"]
@@ -620,7 +619,3 @@ text = "VER 1.0.0"
 label_settings = ExtResource("41_version")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="LanguagePopup" parent="." index="3" unique_id=1672077421 instance=ExtResource("42_lang_popup")]
-visible = false
-layout_mode = 1

@@ -61,5 +61,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	# Nút Back Android / Esc: quay lại màn trước nếu có lịch sử
 	if not event.is_action_pressed("ui_cancel"):
 		return
+	# Popup đang mở thì để PopupManager xử lý (đóng popup, không đổi màn)
+	var popup_manager: Node = get_node_or_null("/root/PopupManager")
+	if popup_manager != null and popup_manager.has_method("has_open") and bool(popup_manager.call("has_open")):
+		return
 	if go_back():
 		get_viewport().set_input_as_handled()

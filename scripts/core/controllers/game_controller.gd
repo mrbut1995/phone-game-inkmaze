@@ -5,6 +5,8 @@ extends Node
 ## ============================================================================
 
 const INITIAL_STEPS := 15
+## Số bước thưởng khi xem quảng cáo hồi sinh (khớp mockup popup_game_over.svg)
+const REVIVE_BONUS_STEPS := 3
 
 var game_state: GameState = null
 
@@ -94,6 +96,13 @@ func _update_hud() -> void:
 		return
 	var extra_info := game_mode_controller.game_mode.get_hud_extra_info() if game_mode_controller.game_mode != null else ""
 	var title := game_mode_controller.game_mode.get_hud_floor_title(game_state.floor_number) if game_mode_controller.game_mode != null else "TẦNG %d" % game_state.floor_number
+	if ui_controller != null:
+		ui_controller.set_run_info({
+			"floor": game_state.floor_number,
+			"steps_left": game_state.steps_remaining,
+			"steps_max": game_state.max_steps,
+			"mode_name": game_mode_controller.game_mode.mode_id if game_mode_controller.game_mode != null else "dungeon",
+		})
 	ui_controller.update_hud(
 		title,
 		game_state.steps_remaining,
@@ -158,13 +167,25 @@ func _complete_floor() -> void:
 	_mark_daily_completed_if_needed()
 
 	if ui_controller != null:
-		ui_controller.show_floor_complete(
-			game_state.floor_number,
-			game_state.floor_moves,
-			floor_time,
-			gained,
-			_pending_bonus
-		)
+		ui_controller.show_floor_complete({
+			"level": game_state.floor_number,
+			"floor": game_state.floor_number,
+			"next_floor": game_state.floor_number + 1,
+			"grid": "5×5",
+			"time": floor_time,
+			"steps_used": game_state.floor_moves,
+			"steps_max": game_state.max_steps,
+			"wall_hits": game_state.floor_wall_hits,
+			"score": game_state.score,
+			"stars": 3 if game_state.floor_wall_hits == 0 else 2,
+			"bonus_steps": _pending_bonus,
+			"steps_bonus": _pending_bonus,
+			"base_score": score_data.get("base_score", 0),
+			"move_bonus": score_data.get("move_bonus", 0),
+			"perfect_bonus": score_data.get("perfect_bonus", 0),
+			"total_score": game_state.score,
+			"endless": game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless,
+		})
 
 
 func _check_game_over() -> void:
@@ -181,11 +202,12 @@ func _game_over() -> void:
 		grid_view.call("set_interaction_enabled", false)
 
 	if ui_controller != null:
-		ui_controller.show_game_over(
-			game_state.floor_number,
-			game_state.total_moves,
-			game_state.elapsed_time
-		)
+		ui_controller.show_game_over({
+			"floor": game_state.floor_number,
+			"progress": _maze_progress_percent(),
+			"wall_hits": game_state.floor_wall_hits,
+			"score": game_state.score,
+		})
 
 
 func _on_continue_requested() -> void:
@@ -216,6 +238,30 @@ func _on_retry_requested() -> void:
 	if ui_controller != null:
 		ui_controller.hide_overlays()
 	start_new_run()
+
+
+## Xem quảng cáo để hồi sinh: thưởng thêm bước và chơi lại tầng hiện tại
+func _on_revive_requested() -> void:
+	var ads: Node = get_node_or_null("/root/AdsManager")
+	var rewarded := true
+	if ads != null and ads.has_method("show_rewarded"):
+		rewarded = bool(ads.call("show_rewarded", "revive"))
+	if not rewarded or game_state == null:
+		return
+
+	if ui_controller != null:
+		ui_controller.hide_overlays()
+	game_state.add_bonus_steps(REVIVE_BONUS_STEPS)
+	_run_active = true
+	_start_floor(game_state.floor_number)
+
+
+## % quãng đường đã đi trong mê cung hiện tại (0..100)
+func _maze_progress_percent() -> int:
+	if game_state == null or game_state.floor_moves <= 0:
+		return 0
+	var max_steps := maxi(game_state.max_steps, 1)
+	return clampi(int(round(100.0 * float(game_state.max_steps - game_state.steps_remaining) / float(max_steps))), 0, 100)
 
 
 func _on_home_requested() -> void:

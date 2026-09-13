@@ -1,13 +1,10 @@
-[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://ym6erukug5p3"]
 
-[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_hndnq"]
+[ext_resource type="Script" uid="uid://db1uxhq02q40b" path="res://scripts/resources/level_data.gd" id="1_hndnq"]
 
 [resource]
 script = ExtResource("1_hndnq")
-level_id = 1
 level_title = "Level 1-1 · Bước Khởi Đầu"
-chapter = 1
-mode_id = "play"
 difficulty = "easy"
 width = 2
 height = 2
@@ -19,4 +16,3 @@ v_walls = PackedByteArray(1, 1, 0, 0, 1, 1)
 v_walls_visible = PackedByteArray(1, 1, 0, 0, 1, 1)
 h_walls = PackedByteArray(1, 1, 1, 1, 0, 1)
 h_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 1)
-custom_cell_values = {}

@@ -42,8 +42,6 @@
 [ext_resource type="Script" uid="uid://bcqi64nve5wp5" path="res://scripts/core/controllers/ui_controller.gd" id="38_8ool0"]
 [ext_resource type="Script" uid="uid://btmprlxpqdg6j" path="res://scripts/core/controllers/tool_controller.gd" id="39_pr1ej"]
 [ext_resource type="PackedScene" uid="uid://efuxbstp7y2c" path="res://nodes/popups/winning.tscn" id="40_win"]
-[ext_resource type="PackedScene" uid="uid://c43u1q7j8h7vg" path="res://nodes/popups/gameover.tscn" id="41_over"]
-[ext_resource type="PackedScene" uid="uid://cqgyjmx2v3ga1" path="res://nodes/popups/settings.tscn" id="42_set"]
 
 [node name="Scene" unique_id=1978794255 node_paths=PackedStringArray("game_controller", "grid_controller", "anchor_controller", "floor_controller", "timer_controller", "ui_controller", "tool_controller", "undo_controller", "hint_controller", "game_mode_controller") instance=ExtResource("1_80q71")]
 script = ExtResource("2_qouja")
@@ -348,30 +346,18 @@ script = ExtResource("34_02fa5")
 [node name="TimerController" type="Node" parent="Controllers" index="7" unique_id=1851640039]
 script = ExtResource("36_02fa5")
 
-[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=1862639245 node_paths=PackedStringArray("level_label", "step_val_label", "step_max_label", "time_val_label", "score_val_label", "floor_complete_view", "game_over_view", "settings_view")]
+[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=1862639245 node_paths=PackedStringArray("level_label", "step_val_label", "step_max_label", "time_val_label", "score_val_label")]
 script = ExtResource("38_8ool0")
 level_label = NodePath("../../Status/LevelLabel")
 step_val_label = NodePath("../../Information/Step/ValueContainer/Value")
 step_max_label = NodePath("../../Information/Step/ValueContainer/MaxValue")
 time_val_label = NodePath("../../Information/Time/Value")
 score_val_label = NodePath("../../Information/Score/Value")
-floor_complete_view = NodePath("../../Winning")
-game_over_view = NodePath("../../GameOver")
-settings_view = NodePath("../../Settings")
 
 [node name="ToolController" type="Node" parent="Controllers" index="9" unique_id=1503824 node_paths=PackedStringArray("tool_path_btn", "tool_wall_btn")]
 script = ExtResource("39_pr1ej")
 tool_path_btn = NodePath("../../Button/Tool")
 tool_wall_btn = NodePath("../../Button/Wall")
-
-[node name="Winning" parent="." index="7" instance=ExtResource("40_win")]
-visible = false
-
-[node name="GameOver" parent="." index="8" instance=ExtResource("41_over")]
-visible = false
-
-[node name="Settings" parent="." index="9" instance=ExtResource("42_set")]
-visible = false
 
 [connection signal="anchor_connected" from="Board" to="Controllers/GridController" method="handle_anchor_connected"]
 [connection signal="cell_pressed" from="Board" to="Controllers/GridController" method="handle_cell_pressed"]
@@ -392,10 +378,5 @@ visible = false
 [connection signal="home_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_home_requested"]
 [connection signal="retry_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_retry_requested"]
 [connection signal="pause_toggled" from="Controllers/UIController" to="Controllers/GameController" method="_on_pause_toggled"]
+[connection signal="revive_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_revive_requested"]
 [connection signal="tool_changed" from="Controllers/ToolController" to="Board" method="set_tool_mode"]
-[connection signal="pressed" from="Winning/Panel/Buttons/Replay" to="Controllers/UIController" method="_on_replay_pressed"]
-[connection signal="pressed" from="Winning/Panel/Buttons/Next" to="Controllers/UIController" method="_on_next_pressed"]
-[connection signal="pressed" from="GameOver/Panel/Buttons/Menu" to="Controllers/UIController" method="_on_home_pressed"]
-[connection signal="pressed" from="GameOver/Panel/Buttons/Replay" to="Controllers/UIController" method="_on_replay_pressed"]
-[connection signal="pressed" from="Settings/Panel/Buttons/Menu" to="Controllers/UIController" method="_on_home_pressed"]
-[connection signal="pressed" from="Settings/Panel/Buttons/Resume" to="Controllers/UIController" method="_on_resume_pressed"]

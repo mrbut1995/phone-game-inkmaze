@@ -1,7 +1,11 @@
 class_name UIController
 extends Node
 ## ============================================================================
-## Controller: Quản lý và điều phối các thành phần giao diện (HUD, Popups).
+## Controller: Quản lý HUD và các popup trong ván chơi.
+##
+## Popup KHÔNG còn instance sẵn trong scenes/game.tscn. Controller chỉ yêu cầu
+## PopupManager tạo popup khi cần; mọi nút bên trong popup tự phát signal riêng
+## (winning/gameover/next_floor/pause) và được nối tại đây.
 ## ============================================================================
 
 signal continue_requested
@@ -9,6 +13,7 @@ signal retry_requested
 signal quit_requested
 signal home_requested
 signal pause_toggled(is_paused: bool)
+signal revive_requested
 
 @export var level_label: Label = null
 @export var step_val_label: Label = null
@@ -16,48 +21,17 @@ signal pause_toggled(is_paused: bool)
 @export var time_val_label: Label = null
 @export var score_val_label: Label = null
 
-## Popup được instance sẵn trong scenes/game.tscn và gán NodePath qua Inspector.
-## Mọi signal button của popup được connect trực tiếp trong .tscn (không connect bằng code).
-@export var floor_complete_view: Control = null
-@export var game_over_view: Control = null
-@export var settings_view: Control = null
+## Thông tin ván đang chơi (GameController cập nhật) - dùng cho popup tạm dừng
+var run_info: Dictionary = {}
+
+
+func set_run_info(info: Dictionary) -> void:
+	run_info = info
 
 
 # ---------------------------------------------------------------------------
-# Handlers cho button của popup (được .tscn gọi trực tiếp)
+# HUD
 # ---------------------------------------------------------------------------
-func _on_next_pressed() -> void:
-	Sfx.play(Sfx.BTN_CLICK)
-	continue_requested.emit()
-
-
-func _on_replay_pressed() -> void:
-	Sfx.play(Sfx.BTN_CLICK)
-	retry_requested.emit()
-
-
-func _on_home_pressed() -> void:
-	Sfx.play(Sfx.BTN_WOOD_TAP)
-	if settings_view != null:
-		settings_view.visible = false
-	home_requested.emit()
-
-
-func _on_resume_pressed() -> void:
-	Sfx.play(Sfx.BTN_WOOD_TAP)
-	if settings_view != null:
-		settings_view.visible = false
-	pause_toggled.emit(false)
-
-
-func toggle_settings() -> void:
-	# SFX: gõ thẻ giấy cho nút Pause trên HUD
-	Sfx.play(Sfx.BTN_WOOD_TAP)
-	if settings_view != null:
-		settings_view.visible = not settings_view.visible
-		pause_toggled.emit(settings_view.visible)
-
-
 func update_hud(
 	title: String,
 	steps_remaining: int,
@@ -84,43 +58,129 @@ func update_hud(
 		score_val_label.text = "%05d" % score
 
 
-func show_floor_complete(
-	floor_number: int,
-	_moves_used: int,
-	_time_sec: float,
-	_gained_score: int,
-	_bonus_steps: int
-) -> void:
-	if floor_complete_view != null:
-		floor_complete_view.visible = true
-		# SFX: con dấu "cộp" lên giấy + 3 ngôi sao reo theo quãng Đồ - Mi - Son
-		Sfx.play(Sfx.STAMP_IMPACT)
+# ---------------------------------------------------------------------------
+# Popup kết quả màn chơi (Dungeon -> phiếu thông qua tầng, chế độ thường -> win)
+# ---------------------------------------------------------------------------
+func show_floor_complete(result: Dictionary) -> void:
+	Popups.close_all()
+	var id := Popups.NEXT_FLOOR if bool(result.get("endless", false)) else Popups.WIN
+	# SFX: con dấu "cộp" lên giấy
+	Sfx.play(Sfx.STAMP_IMPACT)
+
+	var popup := Popups.open(id, result)
+	if popup == null:
+		return
+
+	if popup.has_signal("next_requested"):
+		_connect_once(popup, "next_requested", _emit_continue)
+	elif popup.has_signal("enter_requested"):
+		_connect_once(popup, "enter_requested", _emit_continue)
+	if popup.has_signal("replay_requested"):
+		_connect_once(popup, "replay_requested", _emit_retry)
+	if popup.has_signal("rest_requested"):
+		_connect_once(popup, "rest_requested", _emit_home)
+
+	if id == Popups.WIN:
 		_play_star_sequence()
-		if floor_complete_view.has_method("show_result"):
-			floor_complete_view.call("show_result", floor_number)
 
 
-func show_game_over(
-	floor_reached: int,
-	_moves_used: int,
-	_elapsed: float
-) -> void:
-	if game_over_view != null:
-		game_over_view.visible = true
-		# SFX: tiếng vo tròn tờ giấy nháp ném đi
-		Sfx.play(Sfx.GAME_OVER)
-		if game_over_view.has_method("show_result"):
-			game_over_view.call("show_result", floor_reached)
+func show_game_over(result: Dictionary) -> void:
+	Popups.close_all()
+	# SFX: tiếng vo tròn tờ giấy nháp ném đi
+	Sfx.play(Sfx.GAME_OVER)
+
+	var popup := Popups.open(Popups.GAME_OVER, result)
+	if popup == null:
+		return
+	if popup.has_signal("retry_requested"):
+		_connect_once(popup, "retry_requested", _emit_retry)
+	if popup.has_signal("menu_requested"):
+		_connect_once(popup, "menu_requested", _emit_home)
+	if popup.has_signal("revive_requested"):
+		_connect_once(popup, "revive_requested", _emit_revive)
 
 
+# ---------------------------------------------------------------------------
+# Popup tạm dừng (Pause menu)
+# ---------------------------------------------------------------------------
+func toggle_settings() -> void:
+	# SFX: gõ thẻ giấy cho nút Pause trên HUD
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	if Popups.is_open(Popups.PAUSE):
+		Popups.close_id(Popups.PAUSE)
+		return
+
+	var data := run_info.duplicate()
+	var popup := Popups.open(Popups.PAUSE, data)
+	if popup == null:
+		return
+	_connect_once(popup, "resume_requested", _on_pause_closed)
+	_connect_once(popup, "restart_requested", _on_pause_restart)
+	_connect_once(popup, "menu_requested", _on_pause_menu)
+	pause_toggled.emit(true)
+
+
+## Nối signal một lần duy nhất (popup có thể được mở lại trên cùng một node)
+func _connect_once(source: Object, signal_name: String, handler: Callable) -> void:
+	if not source.is_connected(signal_name, handler):
+		source.connect(signal_name, handler)
+
+
+func _emit_continue() -> void:
+	continue_requested.emit()
+
+
+func _emit_retry() -> void:
+	retry_requested.emit()
+
+
+func _emit_home() -> void:
+	home_requested.emit()
+
+
+func _emit_revive() -> void:
+	revive_requested.emit()
+
+
+func _on_pause_restart() -> void:
+	pause_toggled.emit(false)
+	retry_requested.emit()
+
+
+func _on_pause_menu() -> void:
+	pause_toggled.emit(false)
+	home_requested.emit()
+
+
+func _on_pause_closed() -> void:
+	pause_toggled.emit(false)
+
+
+## Đóng mọi popup đang hiển thị
 func hide_overlays() -> void:
-	if floor_complete_view != null:
-		floor_complete_view.visible = false
-	if game_over_view != null:
-		game_over_view.visible = false
-	if settings_view != null:
-		settings_view.visible = false
-		pause_toggled.emit(false)
+	Popups.close_all()
+
+
+## Các nút của popup ngắt sẵn trong .tscn (nếu scene còn nối) đi qua các hàm này
+func _on_next_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
+	continue_requested.emit()
+
+
+func _on_replay_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
+	retry_requested.emit()
+
+
+func _on_home_pressed() -> void:
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	home_requested.emit()
+
+
+func _on_resume_pressed() -> void:
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	pause_toggled.emit(false)
+
 
 ## 3 ngôi sao hiện lần lượt trên popup thắng -> 3 tiếng chuông gỗ cao dần
 func _play_star_sequence() -> void:

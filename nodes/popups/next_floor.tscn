@@ -1,9 +1,335 @@
 [gd_scene format=3 uid="uid://5vqprcso3rsh"]
 
-[ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_28sda"]
-[ext_resource type="Texture2D" uid="uid://cgdm4cbsmmbbu" path="res://assets/images/popups/popup_win.svg" id="2_pw35a"]
+[ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/popups/next_floor.gd" id="2_next"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/paper_slip_dungeon.svg" id="3_slip"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/stamp_passed.svg" id="4_stamp"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/box_dungeon_bonus.svg" id="5_bonus_box"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_steps.svg" id="6_steps"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/box_floor_warning.svg" id="7_warn_box"]
+[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_normal.svg" id="8_rest_n"]
+[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_pressed.svg" id="9_rest_p"]
+[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_focus.svg" id="10_rest_f"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_success_normal.svg" id="11_go_n"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_success_pressed.svg" id="12_go_p"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_success_focus.svg" id="13_go_f"]
 
-[node name="Base" unique_id=1370178296 instance=ExtResource("1_28sda")]
+[node name="Base" instance=ExtResource("1_base")]
+script = ExtResource("2_next")
 
-[node name="Panel" parent="." index="1" unique_id=1845041549]
-texture = ExtResource("2_pw35a")
+[node name="Art" parent="Panel" index="0"]
+texture = ExtResource("3_slip")
+
+[node name="Stamp" type="TextureRect" parent="Panel/Content" index="0"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -8.0
+offset_top = -3.0
+offset_right = 108.0
+offset_bottom = 113.0
+mouse_filter = 2
+texture = ExtResource("4_stamp")
+
+[node name="Title" type="Label" parent="Panel/Content" index="1"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 67.0
+offset_right = 715.0
+offset_bottom = 115.0
+mouse_filter = 2
+theme_type_variation = &"PopupTitle"
+text = "STR_NEXT_FLOOR_TITLE"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Subtitle" type="Label" parent="Panel/Content" index="2"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 121.0
+offset_right = 715.0
+offset_bottom = 145.0
+mouse_filter = 2
+theme_type_variation = &"PopupSubtitleDanger"
+text = "STR_NEXT_FLOOR_SUBTITLE"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="BonusBox" type="TextureRect" parent="Panel/Content" index="3"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 111.0
+offset_top = 226.0
+offset_right = 759.0
+offset_bottom = 344.0
+mouse_filter = 2
+texture = ExtResource("5_bonus_box")
+
+[node name="Title" type="Label" parent="Panel/Content/BonusBox" index="0"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 39.0
+offset_top = 26.0
+offset_right = 459.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_type_variation = &"PopupBonusTitle"
+text = "STR_NEXT_FLOOR_STEPS_BONUS"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Desc" type="Label" parent="Panel/Content/BonusBox" index="1"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 39.0
+offset_top = 68.0
+offset_right = 459.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_type_variation = &"PopupBonusDescSmall"
+text = "STR_NEXT_FLOOR_STEPS_DESC"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Value" type="Label" parent="Panel/Content/BonusBox" index="2"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 400.0
+offset_top = 35.0
+offset_right = 574.0
+offset_bottom = 79.0
+mouse_filter = 2
+theme_type_variation = &"PopupBonusValue"
+text = "+0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="StepsIcon" type="TextureRect" parent="Panel/Content/BonusBox" index="3"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 580.0
+offset_top = 46.0
+offset_right = 612.0
+offset_bottom = 78.0
+mouse_filter = 2
+texture = ExtResource("6_steps")
+
+[node name="StatLabel1" type="Label" parent="Panel/Content" index="4"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 387.0
+offset_right = 615.0
+offset_bottom = 415.0
+mouse_filter = 2
+theme_type_variation = &"PopupStatLabel"
+text = "STR_STAT_BASE_SCORE"
+vertical_alignment = 1
+
+[node name="StatValue1" type="Label" parent="Panel/Content" index="5"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 400.0
+offset_top = 387.0
+offset_right = 755.0
+offset_bottom = 413.0
+mouse_filter = 2
+theme_type_variation = &"PopupStatValueSm"
+text = "+0 PTS"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="StatLabel2" type="Label" parent="Panel/Content" index="6"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 452.0
+offset_right = 615.0
+offset_bottom = 480.0
+mouse_filter = 2
+theme_type_variation = &"PopupStatLabel"
+text = "STR_STAT_MOVE_BONUS"
+vertical_alignment = 1
+
+[node name="StatValue2" type="Label" parent="Panel/Content" index="7"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 400.0
+offset_top = 452.0
+offset_right = 755.0
+offset_bottom = 478.0
+mouse_filter = 2
+theme_type_variation = &"PopupStatValueSm"
+text = "+0 PTS"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="StatLabel3" type="Label" parent="Panel/Content" index="8"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 517.0
+offset_right = 615.0
+offset_bottom = 545.0
+mouse_filter = 2
+theme_type_variation = &"PopupStatLabel"
+text = "STR_STAT_PERFECT_FLOOR_BONUS"
+vertical_alignment = 1
+
+[node name="StatValue3" type="Label" parent="Panel/Content" index="9"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 400.0
+offset_top = 517.0
+offset_right = 755.0
+offset_bottom = 543.0
+mouse_filter = 2
+theme_type_variation = &"PopupStatValueSmGood"
+text = "+0 PTS"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Divider" type="ColorRect" parent="Panel/Content" index="10"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 579.0
+offset_right = 755.0
+offset_bottom = 581.0
+mouse_filter = 2
+color = Color(0.23921569, 0.5137255, 0.68235296, 1)
+
+[node name="TotalLabel" type="Label" parent="Panel/Content" index="11"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 613.0
+offset_right = 515.0
+offset_bottom = 639.0
+mouse_filter = 2
+theme_type_variation = &"PopupTotalLabelSm"
+text = "STR_STAT_TOTAL_DUNGEON_SCORE"
+vertical_alignment = 1
+
+[node name="TotalValue" type="Label" parent="Panel/Content" index="12"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 400.0
+offset_top = 602.0
+offset_right = 755.0
+offset_bottom = 640.0
+mouse_filter = 2
+theme_type_variation = &"PopupTotalValueAmber"
+text = "0 PTS"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="WarnBox" type="TextureRect" parent="Panel/Content" index="13"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 111.0
+offset_top = 706.0
+offset_right = 759.0
+offset_bottom = 799.0
+mouse_filter = 2
+texture = ExtResource("7_warn_box")
+
+[node name="Title" type="Label" parent="Panel/Content/WarnBox" index="0"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 34.0
+offset_top = 21.0
+offset_right = 474.0
+offset_bottom = 45.0
+mouse_filter = 2
+theme_type_variation = &"PopupWarningTitle"
+text = "STR_FLOOR_WARNING_TITLE"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Desc" type="Label" parent="Panel/Content/WarnBox" index="1"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 34.0
+offset_top = 53.0
+offset_right = 614.0
+offset_bottom = 73.0
+mouse_filter = 2
+theme_type_variation = &"PopupWarningDesc"
+text = "STR_FLOOR_WARNING_DESC"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="RestBtn" type="TextureButton" parent="Panel/Content" index="14"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 109.0
+offset_top = 864.0
+offset_right = 301.0
+offset_bottom = 972.0
+texture_normal = ExtResource("8_rest_n")
+texture_pressed = ExtResource("9_rest_p")
+texture_hover = ExtResource("8_rest_n")
+texture_focused = ExtResource("10_rest_f")
+
+[node name="Label" type="Label" parent="Panel/Content/RestBtn" index="0"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 0.0
+offset_top = 34.0
+offset_right = 192.0
+offset_bottom = 74.0
+theme_type_variation = &"PopupBtnTextAccent"
+text = "STR_BTN_TAKE_REST"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="GoBtn" type="TextureButton" parent="Panel/Content" index="15"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 324.0
+offset_top = 864.0
+offset_right = 761.0
+offset_bottom = 972.0
+texture_normal = ExtResource("11_go_n")
+texture_pressed = ExtResource("12_go_p")
+texture_hover = ExtResource("11_go_n")
+texture_focused = ExtResource("13_go_f")
+
+[node name="Label" type="Label" parent="Panel/Content/GoBtn" index="0"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 0.0
+offset_top = 36.0
+offset_right = 437.0
+offset_bottom = 72.0
+theme_type_variation = &"PopupBtnPrimarySm"
+text = "STR_BTN_ENTER_NEXT_FLOOR"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Quote" type="Label" parent="Panel/Content" index="16"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 0.0
+offset_top = 1016.0
+offset_right = 850.0
+offset_bottom = 1040.0
+mouse_filter = 2
+theme_type_variation = &"PopupQuote"
+text = "STR_NEXT_FLOOR_FOOTER_QUOTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3

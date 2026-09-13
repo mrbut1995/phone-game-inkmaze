@@ -45,8 +45,11 @@ func _init() -> void:
 	await process_frame
 	await process_frame
 	assert(daily_scene.btn_back != null, "DailyScene phai co btn_back")
-	assert(daily_scene.calendar_days != null, "DailyScene phai co calendar_days")
-	assert(daily_scene.calendar_days.get_child_count() > 0, "Calendar phai co cac ngay")
+	# Lich thang duoc dung lai theo thang hien tai (nodes/daily/calendar.tscn)
+	var days_grid: GridContainer = daily_scene.get_node_or_null("Calendar/Days")
+	assert(days_grid != null, "DailyScene phai co Calendar/Days")
+	assert(days_grid.get_child_count() == 35, "Lich phai co 35 o ngay (7x5)")
+	assert((days_grid.get_child(0) as DailyDayCell) != null, "O lich phai la DailyDayCell")
 	daily_scene.queue_free()
 	await process_frame
 
@@ -60,8 +63,7 @@ func _init() -> void:
 	await process_frame
 	assert(game_scene.board_view != null, "GameScene phai co board_view")
 	assert(game_scene.game_controller != null, "GameScene phai co game_controller")
-	assert(game_scene.popup_win != null, "GameScene phai co popup_win")
-	assert(game_scene.popup_gameover != null, "GameScene phai co popup_gameover")
+	assert(game_scene.find_child("Popups", true, false) != null, "GameScene phai co node Popups de chua popup")
 
 	print("\n[SUCCESS] Toan bo luong chuyen canh va cac man hinh hoat dong hoan hao!")
 	quit(0)
