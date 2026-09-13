@@ -97,6 +97,15 @@
 # [ ] Debug Console: chưa có nhóm "giả lập trong ván chơi" (thêm/xoá bước,
 #     teleport, ép thắng/thua ngay trong game) — mở rộng sau nếu cần
 #
+# [x] ĐÃ SỬA (2026-09): Nút "Thử lại" / "Chơi lại" luôn nhảy về màn 1-1
+#     - Nguyên nhân: scripts/core/controllers/game_controller.gd::_on_retry_requested()
+#       gọi `start_new_run()` không tham số -> dùng mặc định start_floor = 1
+#     - Sửa: thêm `GameController.current_floor()` (ưu tiên game_state.floor_number,
+#       fallback GameManager.current_level khi mode không endless) và gọi `start_new_run(current_floor())`
+#       Nhánh fallback trong `_on_continue_requested` (không có GameManager) cũng đổi theo
+#     - Áp dụng cho: popup Game Over · nút Restart trên HUD · "Chơi lại" ở popup thắng màn · Dungeon
+#     - Test hồi quy: scripts/test_case/test_retry_floor.gd (đã verify test FAIL khi bỏ fix)
+#
 # [x] ĐÃ LÀM (2026-09): Quy ước "số tường trong ô" — TƯỜNG VIỀN NGOÀI KHÔNG tính vào ô
 #     - scripts/core/maze_data.gd::_compute_wall_counts(): bỏ cạnh thuộc viền board
 #       (y==0 bỏ h[.][0] · y==height-1 bỏ h[.][height] · x==0 bỏ v[0][.] · x==width-1 bỏ v[width][.])

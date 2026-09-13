@@ -237,7 +237,8 @@ func _on_continue_requested() -> void:
 			else:
 				gm.call("go_to_levels")
 		else:
-			start_new_run()
+			# Không có GameManager: chơi lại đúng màn hiện tại thay vì về màn 1
+			start_new_run(current_floor())
 		return
 
 	game_state.start_next_floor(_pending_bonus)
@@ -247,7 +248,22 @@ func _on_continue_requested() -> void:
 func _on_retry_requested() -> void:
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-	start_new_run()
+	# Chơi lại ĐÚNG màn đang chơi: trước đây gọi start_new_run() không tham số
+	# -> luôn nhảy về màn 1 (bug báo cáo từ người chơi).
+	start_new_run(current_floor())
+
+
+## Màn/tầng hiện tại của ván đang chơi (Retry / Chơi lại luôn dùng giá trị này).
+func current_floor() -> int:
+	if game_state != null and game_state.floor_number >= 1:
+		return game_state.floor_number
+	# Chưa có ván nào: mode theo màn (Play) thì lấy màn đang chọn trong GameManager
+	if game_mode_controller != null and game_mode_controller.game_mode != null:
+		if not game_mode_controller.game_mode.is_endless:
+			var gm: Node = get_node_or_null("/root/GameManager")
+			if gm != null:
+				return maxi(int(gm.get("current_level")), 1)
+	return 1
 
 
 ## Xem quảng cáo để hồi sinh: thưởng thêm bước và chơi lại tầng hiện tại
