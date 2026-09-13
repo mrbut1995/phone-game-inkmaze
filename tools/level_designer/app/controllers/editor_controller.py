@@ -13,6 +13,7 @@ from typing import Any, Callable
 from ..config import (
     MAX_SIZE,
     MIN_SIZE,
+    TOOL_CELL,
     TOOL_END,
     TOOL_ERASE,
     TOOL_START,
@@ -107,13 +108,13 @@ class EditorController:
         self.events.emit(EV_MODEL_UPDATED)
 
     def apply_wall_tool(self, ref: WallRef, toggle: bool = True) -> None:
-        """Áp công cụ tường hiện tại lên 1 cạnh (bỏ qua viền ngoài).
+        """Áp công cụ tường hiện tại lên 1 cạnh (bỏ qua cạnh bao quanh board).
 
         toggle=True  : click đơn - click lại đúng loại tường đang có thì xoá
         toggle=False : đang kéo rê - luôn đặt theo công cụ (không lật qua lại)
         """
-        if self.level.is_border(ref):
-            self.events.emit(EV_STATUS, "Viền ngoài luôn là tường, không sửa được")
+        if self.level.is_outline(ref):
+            self.events.emit(EV_STATUS, "Cạnh bao quanh board luôn là tường, không sửa được")
             return
 
         if self.tool == TOOL_ERASE:
@@ -136,10 +137,25 @@ class EditorController:
 
     def erase_wall(self, ref: WallRef) -> None:
         """Xoá tường (chuột phải) - không phụ thuộc công cụ đang chọn."""
-        if self.level.is_border(ref) or not self.level.has_wall(ref):
+        if self.level.is_outline(ref) or not self.level.has_wall(ref):
             return
         self.level.set_wall(ref, False)
         self.events.emit(EV_MODEL_UPDATED)
+
+    def apply_cell_tool(self, cell: Cell) -> None:
+        """Bật/tắt 1 ô khỏi board (công cụ sửa ô - polyomino)."""
+        before = self.level.snapshot()
+        if not self.level.toggle_cell_active(cell):
+            return
+        if not self.level.is_cell_active(self.level.start):
+            self.level.start = self.level.nearest_active_cell(self.level.start)
+        if not self.level.is_cell_active(self.level.end):
+            self.level.end = self.level.nearest_active_cell(self.level.end)
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        state = "thêm vào" if self.level.is_cell_active(cell) else "bỏ khỏi"
+        self.events.emit(EV_STATUS, "Ô (%d, %d) %s board" % (cell[0], cell[1], state))
 
     def apply_marker_tool(self, cell: Cell) -> None:
         """Áp công cụ S/F; các công cụ tường thì bỏ qua ô trống."""
@@ -198,19 +214,44 @@ class EditorController:
     def clear_walls(self) -> None:
         before = self.level.snapshot()
         for ref in list(self.level.iter_walls()):
-            if not self.level.is_border(ref):
+            if not self.level.is_outline(ref):
                 self.level.set_wall(ref, False)
         self._push_undo(before)
         self._set_dirty(True)
         self.events.emit(EV_MODEL_UPDATED)
-        self.events.emit(EV_STATUS, "Đã xoá toàn bộ tường bên trong")
+        self.events.emit(EV_STATUS, "Đã xoá toàn bộ tường bên trong board")
+
+    def fill_board(self) -> None:
+        """Trả board về hình chữ nhật đầy đủ (bỏ polyomino)."""
+        if self.level.is_full_rect():
+            self.events.emit(EV_STATUS, "Board đang là hình chữ nhật đầy đủ")
+            return
+        before = self.level.snapshot()
+        self.level.fill_mask()
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS, "Đã chuyển board về hình chữ nhật đầy đủ")
+
+    def invert_row_cells(self, row: int) -> None:
+        """Đảo trạng thái ô của cả 1 hàng (tiện vẽ polyomino nhanh)."""
+        if row < 0 or row >= self.level.height:
+            return
+        before = self.level.snapshot()
+        for x in range(self.level.width):
+            self.level.set_cell_active((x, row), not self.level.is_cell_active((x, row)))
+        self.level.ensure_borders()
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS, "Đảo các ô của hàng y=%d" % row)
 
     def fill_hidden_random(self, ratio: float = 0.35, seed: int | None = None) -> None:
         """Sinh tường ẩn ngẫu nhiên (chừa đường đi) để làm mẫu rồi tinh chỉnh."""
         rng = random.Random(seed)
         before = self.level.snapshot()
         for ref in list(self.level.iter_walls()):
-            if self.level.is_border(ref):
+            if self.level.is_outline(ref):
                 continue
             kind, ix, iy = ref
             # chỉ dùng tường ẩn (đặc trưng lối chơi), tránh tường hiện ngẫu nhiên

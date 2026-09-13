@@ -71,6 +71,8 @@ func try_move_to(pos: Vector2i) -> void:
 		return
 	if not maze.is_in_bounds(pos):
 		return
+	if not maze.is_cell_active(pos):
+		return      # ô ngoài board (polyomino): không tính là nước đi, không hazard
 	if pos == current_pos:
 		return
 	if not _is_adjacent(current_pos, pos):

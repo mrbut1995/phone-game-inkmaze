@@ -58,14 +58,17 @@ Các cờ hữu ích khác (không mở cửa sổ):
 - Vẽ tường **hiện** (đường liền) / **ẩn** (đường nét đứt) bằng chuột trái, kéo để vẽ liên tục.
 - Chuột phải (hoặc `Delete`) để xoá tường. Click lại đúng loại tường đang có = xoá nhanh.
 - Đặt điểm xuất phát **S** và đích **F** bằng công cụ 4/5 hoặc sửa toạ độ ở bảng phải.
-- Viền ngoài luôn là tường cứng (khớp với `level_manager.gd`), không sửa được.
+- **Sửa hình dạng board (công cụ 6)**: bấm/kéo để **bật-tắt ô** — board có thể là hình bất kỳ
+  (chữ H, thập tự, vòng có lỗ, chữ U…). Ô tắt (ô trống) không có số, không bước vào được, và mọi cạnh
+  bao quanh board tự động thành tường hiện (giống viền ngoài) nên không sửa được.
+- Nút **“Toàn bộ ô = board (chữ nhật)”** để quay về lưới đặc.
 
 **Hỗ trợ thiết kế**
 - Hiện **số tường** từng ô đúng như trong game (0 thì ẩn, giống `MazeData`).
-- Hiện **đường đi ngắn nhất** bằng BFS để biết màn có lời giải hay không.
-- Bảng **Kiểm tra** tự động: S/F trùng hoặc ngoài lưới, không có đường đi, `max_steps`
-  nhỏ hơn đường ngắn nhất (không thể thắng), ô không tới được, màn thiếu tường ẩn…
-- Nút **Tính max_steps theo đường đi**, **Xoá hết tường bên trong**, **Sinh tường ẩn ngẫu nhiên**.
+- Hiện **đường đi ngắn nhất** bằng BFS để biết màn có lời giải hay không — BFS chỉ đi trong **các ô thuộc board**.
+- Bảng **Kiểm tra** tự động: S/F trùng, S/F nằm ở **ô trống**, **không có đường đi từ S tới F**,
+  `max_steps` nhỏ hơn đường ngắn nhất (không thể thắng), **ô thuộc board không tới được**,
+  màn thiếu tường ẩn… ⇒ **nút Lưu bị chặn nếu có lỗi** (cảnh báo thì vẫn lưu được).
 - **Hoàn tác / Làm lại** (Ctrl+Z / Ctrl+Y) theo từng "nét vẽ".
 - Panel bên trái: mở / tạo mới / nhân bản / xoá file level.
 - Cảnh báo **chưa lưu** khi mở màn khác, tạo màn mới hoặc thoát.
@@ -76,7 +79,7 @@ Các cờ hữu ích khác (không mở cửa sổ):
 | Phím | Việc | Phím | Việc |
 |---|---|---|---|
 | `1` `2` `3` | Tường hiện · Tường ẩn · Xoá | `Ctrl+S` | Lưu |
-| `4` `5` | Đặt S · Đặt F | `Ctrl+Shift+S` | Lưu thành level khác |
+| `4` `5` `6` | Đặt S · Đặt F · **Sửa ô board** | `Ctrl+Shift+S` | Lưu thành level khác |
 | `Delete` | Xoá tường đang trỏ | `Ctrl+N` | Màn mới |
 | `Ctrl+Z` / `Ctrl+Y` | Hoàn tác / Làm lại | `Ctrl+0` | Zoom mặc định |
 | `G` `P` `H` | Số tường · đường đi · tường ẩn | `+` `-` / `Ctrl+lăn` | Zoom |
@@ -148,16 +151,19 @@ v_walls = PackedByteArray(...)          # tường DỌC  (w+1)*h phần tử, i
 v_walls_visible = PackedByteArray(...)  # 1 = tường nhìn thấy, 0 = tường ẩn
 h_walls = PackedByteArray(...)          # tường NGANG w*(h+1) phần tử, index = x*(h+1) + y
 h_walls_visible = PackedByteArray(...)
+cell_mask = PackedByteArray(...)        # HÌNH DẠNG BOARD: w*h phần tử, index = y*w + x
+                                        # 1 = ô thuộc board, 0 = ô trống (ngoài board)
+                                        # PackedByteArray() = chữ nhật đầy đủ (màn cũ)
 custom_cell_values = {}                 # giữ nguyên khi sửa (tool không đổi)
 ```
 
 Quy ước toạ độ (khớp `maze_data.gd` / `level_manager.gd`):
 - `x` tăng sang **phải**, `y` tăng xuống **dưới** ⇒ `y = 0` là hàng **TRÊN cùng**.
 - `v_walls[x][y]` = tường dọc bên **trái** ô `(x, y)`; `h_walls[x][y]` = tường ngang **trên** ô `(x, y)`.
-- Số tường của ô = tổng 4 cạnh **bên trong board** là tường: `h[x][y] + h[x][y+1] + v[x][y] + v[x+1][y]`,
-  **nhưng BỎ QUA cạnh nào thuộc viền ngoài board** (tường bao quanh board không tính vào ô).
-  Ô góc/sát biên không bị cộng thêm vì viền; ô có số 0 thì game không hiện số.
-- Viền ngoài luôn là tường và luôn nhìn thấy, **vẫn chặn đường đi** nhưng **không được đếm** vào ô.
+- Số tường của ô = tổng các cạnh **giữa 2 Ô THUỘC BOARD** là tường:
+  `h[x][y] + h[x][y+1] + v[x][y] + v[x+1][y]` nhưng **bỏ mọi cạnh bao quanh board**
+  (viền ngoài hoặc giáp ô trống). Ô có số 0 thì game không hiện số.
+- Cạnh bao quanh board luôn là tường và luôn nhìn thấy, **vẫn chặn đường đi** nhưng **không được đếm** vào ô.
 
 ---
 
@@ -166,11 +172,14 @@ Quy ước toạ độ (khớp `maze_data.gd` / `level_manager.gd`):
 ```powershell
 cd tools\level_designer
 
-# chạy test (29 test)
+# chạy test (50 test)
 python -m unittest discover -s tests -t .
 
-# self-test đọc/ghi 9 màn thật
+# self-test đọc/ghi các màn thật (kể cả màn polyomino) + kiểm tra đường đi
 python main.py --selftest
+
+# tạo lại các MÀN MẪU polyomino (level_10..13) - có sẵn trong repo, chạy lại khi cần
+python make_samples.py             # thêm --dry-run để chỉ kiểm tra, không ghi file
 
 # build file .exe  ->  dist\LevelDesigner.exe
 python build_exe.py            # hoặc double-click build_exe.bat
@@ -198,6 +207,9 @@ Sau khi build, kiểm tra nhanh bản exe:
 
 ## 6. Ghi chú
 
+- **Board dạng polyomino**: màn chơi không nhất thiết là lưới chữ nhật — `cell_mask` đánh dấu ô nào
+  thuộc board. Màn mẫu có sẵn: `level_10` chữ H · `level_11` thập tự · `level_12` vòng có lỗ ·
+  `level_13` chữ U (đều ở chương 2).
 - Game **hỗ trợ nhiều hơn 9 màn**: màn *Chọn Màn* tự chia **9 thẻ/trang** và **vuốt ngang để sang trang**
   (chỉ số trang + bấm dot để nhảy trang). Tạo `level_10.tres`, `level_11.tres`… bằng tool này là chơi được ngay,
   không cần sửa code game.

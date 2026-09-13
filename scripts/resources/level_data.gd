@@ -28,6 +28,11 @@ extends Resource
 ## Hiển thị tường ngang: width * (height + 1) bytes (1 = thấy, 0 = tàng hình)
 @export var h_walls_visible: PackedByteArray = PackedByteArray()
 
+## HÌNH DẠNG BOARD (polyomino): width * height bytes, index = y * width + x
+## 1 = ô thuộc board (có hình vuông để chơi), 0 = ô trống (ngoài board, không đi được).
+## Để trống = chữ nhật đầy đủ (tương thích với các màn cũ).
+@export var cell_mask: PackedByteArray = PackedByteArray()
+
 ## Dữ liệu mở rộng cho các mode khác (Minesweeper, Sum Path, ...)
 @export var custom_cell_values: Dictionary = {}
 
@@ -75,7 +80,9 @@ func to_maze_data() -> MazeData:
 		maze._h_walls[ix][maze.height] = 1
 		maze._h_visible[ix][maze.height] = 1
 
-	maze._compute_wall_counts()
+	# Nạp hình dạng board (polyomino) - rỗng = chữ nhật đầy đủ
+	# Hàm này tự ép tường bao quanh các ô ngoài board + tính lại số trên ô
+	maze.set_cell_mask(cell_mask)
 	return maze
 
 

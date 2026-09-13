@@ -171,7 +171,7 @@ class MainWindow(tk.Tk):
         self.grid.pack(fill="both", expand=True)
         caption = ttk.Label(center, style="Hint.TLabel",
                             text="Chuột trái: vẽ · Chuột phải: xoá · Ctrl+lăn chuột: zoom · "
-                                 "y=0 là hàng trên cùng")
+                                 "công cụ 6: bật/tắt ô board · y=0 là hàng trên cùng")
         caption.pack(anchor="w", padx=10, pady=(2, 6))
 
         right = ttk.Frame(panes, width=360)

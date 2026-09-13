@@ -57,6 +57,7 @@ def dumps(level: LevelModel) -> str:
         "v_walls_visible = %s" % _gd_bytes(level.v_walls_visible),
         "h_walls = %s" % _gd_bytes(level.h_walls),
         "h_walls_visible = %s" % _gd_bytes(level.h_walls_visible),
+        "cell_mask = %s" % _gd_mask(level),
         "custom_cell_values = %s" % (level.custom_cell_values_raw or "{}"),
     ]
     return "\n".join(lines) + "\n"
@@ -118,6 +119,8 @@ def loads(text: str) -> LevelModel:
             level.h_walls = _parse_bytes(value)
         elif key == "h_walls_visible":
             level.h_walls_visible = _parse_bytes(value)
+        elif key == "cell_mask":
+            level.cell_mask = _parse_bytes(value)
         elif key == "custom_cell_values":
             level.custom_cell_values_raw = value or "{}"
 
@@ -150,6 +153,17 @@ def _gd_float(value: float) -> str:
 
 def _gd_bytes(values: list[int]) -> str:
     return "PackedByteArray(%s)" % ", ".join(str(1 if int(v) else 0) for v in values)
+
+
+def _gd_mask(level: LevelModel) -> str:
+    """Mask ô thuộc board: rỗng khi là hình chữ nhật đầy đủ (giống mặc định Godot).
+
+    Nhờ vậy các màn cũ không đổi nội dung khi lưu lại, còn file mới thêm
+    `cell_mask = PackedByteArray()` ở cuối (vô hại với game).
+    """
+    if level.is_full_rect():
+        return "PackedByteArray()"
+    return _gd_bytes(level.cell_mask)
 
 
 def _parse_gd_string(value: str) -> str:

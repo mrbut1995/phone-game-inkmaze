@@ -172,10 +172,13 @@ func _cell_index(x: int, y: int) -> int:
 # Metrics: đọc trực tiếp từ scene gốc => .tscn luôn là source of truth
 # ============================================================================
 func _read_metrics_from_scenes() -> void:
-	if not _cell_nodes.is_empty():
-		var cell_sz: Vector2 = _cell_nodes[0].size
+	for node in _cell_nodes:
+		if node == null:
+			continue
+		var cell_sz: Vector2 = (node as MazeCell).size
 		if cell_sz.x > 0.0 and cell_sz.y > 0.0:
 			_cell_size = cell_sz.x
+		break
 
 	if not _anchor_nodes.is_empty():
 		var anchor_sz: Vector2 = _anchor_nodes[0].node.size
@@ -242,15 +245,16 @@ func _compute_layout() -> void:
 func _update_layout_positions() -> void:
 	_compute_layout()
 
-	# Cập nhật toạ độ và kích cỡ từng cell
+	# Cập nhật toạ độ và kích cỡ từng cell (ô ngoài board không có node)
 	for y in _height:
 		for x in _width:
 			var idx := _cell_index(x, y)
-			if idx < _cell_nodes.size():
-				var c: MazeCell = _cell_nodes[idx]
-				c.position = Vector2(_col_edge_x[x], _row_edge_y[y])
-				c.pivot_offset = c.size * 0.5
-				_cell_rects[idx] = Rect2(c.position, c.size)
+			var cell := _cell_node(Vector2i(x, y))
+			if cell == null or idx < 0 or idx >= _cell_rects.size():
+				continue
+			cell.position = Vector2(_col_edge_x[x], _row_edge_y[y])
+			cell.pivot_offset = cell.size * 0.5
+			_cell_rects[idx] = Rect2(cell.position, cell.size)
 
 	# Cập nhật vị trí các anchor
 	for info in _anchor_nodes:
@@ -284,17 +288,22 @@ func _update_layout_positions() -> void:
 
 
 func _build_cells() -> void:
+	# Board có thể là polyomino: ô ngoài board KHÔNG có node -> mảng giữ null
+	_cell_nodes.resize(_width * _height)
+	_cell_rects.resize(_width * _height)
 	for y in _height:
 		for x in _width:
+			var pos := Vector2i(x, y)
+			if maze != null and not maze.is_cell_active(pos):
+				continue
 			var c: MazeCell = CELL_SCENE.instantiate()
 			c.set_anchors_preset(Control.PRESET_TOP_LEFT)
 			# Không set size: kích thước lấy nguyên từ cell.tscn
-			c.grid_pos = Vector2i(x, y)
+			c.grid_pos = pos
 			_cells_layer.add_child(c)
-			_cell_nodes.append(c)
-			_cell_rects.append(Rect2(c.position, c.size))
+			_cell_nodes[_cell_index(x, y)] = c
+			_cell_rects[_cell_index(x, y)] = Rect2(c.position, c.size)
 
-			var pos := Vector2i(x, y)
 			var text := ""
 			if game_mode != null:
 				text = game_mode.get_cell_text(pos, maze)
@@ -314,12 +323,16 @@ func _build_walls() -> void:
 	_wall_segments.clear()
 	for ix in _width:
 		for iy in _height + 1:
+			if not _edge_touches_board(true, Vector2i(ix, iy)):
+				continue      # cạnh giữa 2 ô ngoài board -> không vẽ
 			if maze.has_h_wall(ix, iy):
 				var seg := _create_wall_segment(true, Vector2i(ix, iy),
 					"visible" if maze.is_h_wall_visible(ix, iy) else "invisible")
 				_wall_segments[_lattice_key(true, Vector2i(ix, iy))] = seg
 	for ix in _width + 1:
 		for iy in _height:
+			if not _edge_touches_board(false, Vector2i(ix, iy)):
+				continue
 			if maze.has_v_wall(ix, iy):
 				var seg := _create_wall_segment(false, Vector2i(ix, iy),
 					"visible" if maze.is_v_wall_visible(ix, iy) else "invisible")
@@ -351,6 +364,9 @@ func _build_anchors() -> void:
 	var id := 0
 	for iy in _height + 1:
 		for ix in _width + 1:
+			# Chỉ tạo anchor ở góc có dính ít nhất 1 ô thuộc board
+			if not _corner_touches_board(ix, iy):
+				continue
 			var a: Control = ANCHOR_SCENE.instantiate()
 			a.set_anchors_preset(Control.PRESET_TOP_LEFT)
 			# Không set size/position: kích thước lấy từ anchor.tscn,
@@ -359,6 +375,43 @@ func _build_anchors() -> void:
 			_anchors_layer.add_child(a)
 			_anchor_nodes.append({ "node": a, "corner": Vector2i(ix, iy) })
 			id += 1
+
+
+# ============================================================================
+# Hình dạng board (polyomino): vài tiện ích dùng lại nhiều lần
+# ============================================================================
+## Node của 1 ô (null nếu ô đó ngoài board)
+func _cell_node(pos: Vector2i) -> MazeCell:
+	if maze != null and not maze.is_cell_active(pos):
+		return null
+	var idx := _cell_index(pos.x, pos.y)
+	if idx < 0 or idx >= _cell_nodes.size():
+		return null
+	return _cell_nodes[idx]
+
+
+## Cạnh này có dính ít nhất 1 ô thuộc board không
+func _edge_touches_board(is_h: bool, lattice: Vector2i) -> bool:
+	if maze == null:
+		return true
+	if is_h:
+		var above := maze.is_cell_active(Vector2i(lattice.x, lattice.y - 1))
+		var below := maze.is_cell_active(Vector2i(lattice.x, lattice.y))
+		return above or below
+	var left := maze.is_cell_active(Vector2i(lattice.x - 1, lattice.y))
+	var right := maze.is_cell_active(Vector2i(lattice.x, lattice.y))
+	return left or right
+
+
+## Góc lưới này có dính ít nhất 1 ô thuộc board không
+func _corner_touches_board(ix: int, iy: int) -> bool:
+	if maze == null:
+		return true
+	for dy in [-1, 0]:
+		for dx in [-1, 0]:
+			if maze.is_cell_active(Vector2i(ix + dx, iy + dy)):
+				return true
+	return false
 
 
 func _build_moving_line() -> void:
@@ -563,10 +616,9 @@ func show_mine_hit(pos: Vector2i) -> void:
 
 
 func pulse_cell(pos: Vector2i) -> void:
-	var idx := _cell_index(pos.x, pos.y)
-	if idx >= 0 and idx < _cell_nodes.size():
-		var c: MazeCell = _cell_nodes[idx]
-		c.pulse()
+	var node := _cell_node(pos)
+	if node != null:
+		node.pulse()
 
 
 func reveal_wall_segment(is_h: bool, lattice: Vector2i) -> void:
@@ -626,15 +678,15 @@ func apply_fog_of_war(_center: Vector2i, _radius: int, explored: Dictionary) -> 
 	for y in _height:
 		for x in _width:
 			var p := Vector2i(x, y)
-			var idx := _cell_index(x, y)
-			if idx >= 0 and idx < _cell_nodes.size():
-				var cell_node: MazeCell = _cell_nodes[idx]
-				var text: String = game_mode.get_cell_text(p, maze)
-				cell_node.set_text(text)
-				if explored.has(p):
-					cell_node.modulate = Color(1, 1, 1, 1.0)
-				else:
-					cell_node.modulate = Color(0.6, 0.6, 0.6, 0.4)
+			var cell_node := _cell_node(p)
+			if cell_node == null:
+				continue      # ô ngoài board: không có số để làm mờ
+			var text: String = game_mode.get_cell_text(p, maze)
+			cell_node.set_text(text)
+			if explored.has(p):
+				cell_node.modulate = Color(1, 1, 1, 1.0)
+			else:
+				cell_node.modulate = Color(0.6, 0.6, 0.6, 0.4)
 
 
 func _play_grid_shake() -> void:
@@ -657,6 +709,9 @@ func _play_grid_shake() -> void:
 
 
 func set_suspected_wall(is_h: bool, lattice: Vector2i, active: bool) -> void:
+	# Cạnh ngoài board (giữa 2 ô trống) thì không có gì để đánh dấu
+	if not _edge_touches_board(is_h, lattice):
+		return
 	var key := _lattice_key(is_h, lattice)
 	var seg: WallSegment = null
 	if _wall_segments.has(key):
@@ -695,9 +750,13 @@ func set_tool_mode(p_tool: String) -> void:
 func _set_path_focus(path: Array[Vector2i]) -> void:
 	for y in _height:
 		for x in _width:
-			_cell_nodes[_cell_index(x, y)].set_focused(false)
+			var cell := _cell_node(Vector2i(x, y))
+			if cell != null:
+				cell.set_focused(false)
 	for p in path:
-		_cell_nodes[_cell_index(p.x, p.y)].set_focused(true)
+		var cell := _cell_node(p)
+		if cell != null:
+			cell.set_focused(true)
 
 
 # ============================================================================
@@ -933,8 +992,11 @@ func _hit_anchor_info(local_pos: Vector2) -> Dictionary:
 func _hit_cell(local_pos: Vector2) -> Vector2i:
 	for y in _height:
 		for x in _width:
+			var pos := Vector2i(x, y)
+			if maze != null and not maze.is_cell_active(pos):
+				continue      # ô ngoài board: không bấm được
 			if _cell_rects[_cell_index(x, y)].has_point(local_pos):
-				return Vector2i(x, y)
+				return pos
 	return Vector2i(-1, -1)
 
 

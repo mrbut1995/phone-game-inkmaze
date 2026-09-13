@@ -27,6 +27,7 @@ from ..config import (
     COLOR_START,
     COLOR_WALL_HIDDEN,
     COLOR_WALL_VISIBLE,
+    TOOL_CELL,
     TOOL_END,
     TOOL_START,
 )
@@ -46,6 +47,8 @@ MARGIN = 54.0
 EDGE_GRAB = 0.30      # bán kính (theo tỉ lệ ô) để bắt cạnh khi click
 WALL_WIDTH = 5
 HIDDEN_WALL_WIDTH = 4
+EMPTY_CELL_FILL = "#F1EBDF"     # ô trống (ngoài board): xám nhạt hơn giấy
+EMPTY_CELL_STIPPLE = "gray50"
 
 
 class GridView(tk.Frame):
@@ -219,6 +222,10 @@ class GridView(tk.Frame):
 
     def _apply_at(self, px: float, py: float, toggle: bool) -> None:
         cell, ref, _ = self._locate(px, py)
+        if self.editor.tool == TOOL_CELL:
+            if cell is not None:
+                self.editor.apply_cell_tool(cell)
+            return
         if self.editor.tool in (TOOL_START, TOOL_END):
             if cell is not None:
                 self.editor.apply_marker_tool(cell)
@@ -242,8 +249,11 @@ class GridView(tk.Frame):
         parts: list[str] = []
         if self.hover_cell is not None:
             cell = self.hover_cell
-            parts.append("Ô (%d, %d) · %d tường" % (cell[0], cell[1], level.wall_count(cell)))
-        if self.hover_ref is not None and not level.is_border(self.hover_ref):
+            if level.is_cell_active(cell):
+                parts.append("Ô (%d, %d) · %d tường" % (cell[0], cell[1], level.wall_count(cell)))
+            else:
+                parts.append("Ô (%d, %d) · TRỐNG (ngoài board)" % cell)
+        if self.hover_ref is not None and not level.is_outline(self.hover_ref):
             kind, ix, iy = self.hover_ref
             name = "dọc" if kind == "v" else "ngang"
             state = "trống"
@@ -284,11 +294,21 @@ class GridView(tk.Frame):
         canvas = self.canvas
         for y in range(level.height):
             for x in range(level.width):
-                left, top, right, bottom = self._cell_box((x, y))
+                cell = (x, y)
+                left, top, right, bottom = self._cell_box(cell)
+
+                if not level.is_cell_active(cell):
+                    # Ô trống (ngoài board): tô nhạt + gạch chéo cho dễ nhận biết
+                    canvas.create_rectangle(left, top, right, bottom, fill=EMPTY_CELL_FILL,
+                                            outline=COLOR_GRID, width=1)
+                    canvas.create_line(left, bottom, right, top, fill=COLOR_GRID,
+                                       width=1, dash=(4, 4))
+                    continue
+
                 canvas.create_rectangle(left, top, right, bottom, outline=COLOR_GRID, width=1)
 
                 if self.editor.show_numbers:
-                    count = level.wall_count((x, y))
+                    count = level.wall_count(cell)
                     if count > 0:
                         canvas.create_text(
                             (left + right) / 2, (top + bottom) / 2,
@@ -296,9 +316,9 @@ class GridView(tk.Frame):
                             font=(None, max(9, int(self.cell_size * 0.28)), "bold"),
                         )
 
-        if level.in_bounds(level.start):
+        if level.is_cell_active(level.start):
             self._draw_marker(level.start, "S", COLOR_START)
-        if level.in_bounds(level.end):
+        if level.is_cell_active(level.end):
             self._draw_marker(level.end, "F", COLOR_END)
 
     def _draw_marker(self, cell: Cell, text: str, color: str) -> None:
@@ -325,23 +345,41 @@ class GridView(tk.Frame):
         level = self.editor.level
         canvas = self.canvas
         for ref in level.iter_walls():
+            # Cạnh giữa 2 ô trống (ngoài board) thì không vẽ
+            kind, ix, iy = ref
+            if kind == "v":
+                touches = (level.is_cell_active((ix - 1, iy)) or level.is_cell_active((ix, iy)))
+            else:
+                touches = (level.is_cell_active((ix, iy - 1)) or level.is_cell_active((ix, iy)))
+            if not touches:
+                continue
             if not level.has_wall(ref):
                 continue
             x1, y1, x2, y2 = self._wall_segment(ref)
-            if level.is_border(ref):
-                canvas.create_line(x1, y1, x2, y2, fill=COLOR_INK, width=WALL_WIDTH + 1, capstyle="round")
+            if level.is_outline(ref):
+                # Cạnh bao quanh board (viền/polyomino): nét đậm liền
+                canvas.create_line(x1, y1, x2, y2, fill=COLOR_INK, width=WALL_WIDTH + 1,
+                                   capstyle="round")
                 continue
             if not self.editor.show_hidden and not level.is_visible(ref):
                 continue
             if level.is_visible(ref):
-                canvas.create_line(x1, y1, x2, y2, fill=COLOR_WALL_VISIBLE, width=WALL_WIDTH, capstyle="round")
+                canvas.create_line(x1, y1, x2, y2, fill=COLOR_WALL_VISIBLE, width=WALL_WIDTH,
+                                   capstyle="round")
             else:
                 canvas.create_line(x1, y1, x2, y2, fill=COLOR_WALL_HIDDEN, width=HIDDEN_WALL_WIDTH,
                                    dash=(7, 5), capstyle="round")
 
     def _draw_hover(self) -> None:
         level = self.editor.level
-        if self.hover_ref is not None and not level.is_border(self.hover_ref):
+        if self.editor.tool == TOOL_CELL and self.hover_cell is not None:
+            left, top, right, bottom = self._cell_box(self.hover_cell)
+            active = level.is_cell_active(self.hover_cell)
+            self.canvas.create_rectangle(left, top, right, bottom,
+                                         outline=COLOR_SELECT, width=3 if active else 2,
+                                         dash=() if active else (4, 3))
+            return
+        if self.hover_ref is not None and not level.is_outline(self.hover_ref):
             x1, y1, x2, y2 = self._wall_segment(self.hover_ref)
             self.canvas.create_line(x1, y1, x2, y2, fill=COLOR_SELECT, width=WALL_WIDTH + 2,
                                     capstyle="round", dash=(3, 3))

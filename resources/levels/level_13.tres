@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_level"]
+
+[resource]
+script = ExtResource("1_level")
+level_id = 13
+level_title = "Level 2-4 · Chữ U 2 ô dày"
+chapter = 2
+mode_id = "play"
+difficulty = "medium"
+width = 6
+height = 4
+start_pos = Vector2i(0, 0)
+end_pos = Vector2i(5, 3)
+max_steps = 14
+par_time = 42.0
+v_walls = PackedByteArray(1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1)
+cell_mask = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1)
+custom_cell_values = {}

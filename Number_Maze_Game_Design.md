@@ -13,10 +13,15 @@ Game có **9 bộ luật chơi** dùng chung 1 bộ khung Grid / S-F / vẽ đư
 ## 2. Cấu trúc bàn chơi (Grid)
 
 - Grid kích thước linh hoạt từ **2x2, 3x3, 4x4, 5x5** hoặc lớn hơn tùy chế độ / độ khó.
+- **Board có thể KHÔNG phải hình chữ nhật**: mỗi màn có thêm `cell_mask` đánh dấu **ô nào thuộc board**,
+  nên board có thể là **hình bất kỳ (polyomino)** — ví dụ chữ H, thập tự, vòng có lỗ, chữ U…
+  Ô không thuộc board coi như “ngoài board”: không có ô để bước vào, không hiện số, và **viền bao quanh
+  board luôn là tường nhìn thấy được**.
 - Mỗi ô (cell) có:
   - 4 điểm neo (dot / anchor) ở 4 góc, dùng để kéo nối đánh dấu tường giữa các khe (Tường Nghi Ngờ).
+    Góc nào không dính ô nào thuộc board thì không có neo.
   - Con số ở giữa ô (ý nghĩa con số **thay đổi tùy theo chế độ chơi** — xem mục 5).
-- Ở các chế độ dùng số làm "tường vô hình" (Dungeon Mode, Play Mode, Fog of War), con số biểu thị **số lượng cạnh BÊN TRONG board của ô đó là tường vô hình (0 đến 4)** — tường viền bao quanh board không tính vào ô; số này không hiển thị mặc định — người chơi phải suy luận để biết cạnh nào là tường thật.
+- Ở các chế độ dùng số làm "tường vô hình" (Dungeon Mode, Play Mode, Fog of War), con số biểu thị **số lượng cạnh GIỮA 2 Ô THUỘC BOARD của ô đó là tường vô hình (0 đến 4)** — cạnh bao quanh board (viền ngoài hoặc giáp ô trống) không tính vào ô; số này không hiển thị mặc định — người chơi phải suy luận để biết cạnh nào là tường thật.
 - Riêng **Countdown Cost** con số **không liên quan tới tường**: nó là **chi phí bước** của ô (xem mục 5).
 
 ---

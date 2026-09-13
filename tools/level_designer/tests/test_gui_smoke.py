@@ -72,6 +72,25 @@ class GuiSmokeTest(unittest.TestCase):
             window.inspector._on_int("width")()
             window.update()
             self.assertEqual(self.app.editor.level.width, 5)
+
+            # Công cụ sửa ô board: bấm vào ô (0,0) để bỏ khỏi board
+            from app.config import TOOL_CELL
+
+            window.editor.set_tool(TOOL_CELL)
+            self.assertTrue(self.app.editor.level.is_cell_active((0, 0)))
+            origin = window.grid._origin()
+            window.grid._apply_at(origin[0] + 10, origin[1] + 10, toggle=True)
+            window.update()
+            self.assertFalse(self.app.editor.level.is_cell_active((0, 0)))
+            self.assertEqual(self.app.editor.level.wall_count((0, 0)), 0)
+            # Bật lại
+            window.grid._apply_at(origin[0] + 10, origin[1] + 10, toggle=True)
+            self.assertTrue(self.app.editor.level.is_cell_active((0, 0)))
+
+            # Nút "Toàn bộ ô = board" trả về hình chữ nhật
+            self.app.editor.fill_board()
+            window.update()
+            self.assertTrue(self.app.editor.level.is_full_rect())
         finally:
             window.destroy()
 

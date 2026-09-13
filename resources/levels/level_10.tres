@@ -1,20 +1,23 @@
-[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://cdy04veewmflb"]
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]
 
-[ext_resource type="Script" uid="uid://db1uxhq02q40b" path="res://scripts/resources/level_data.gd" id="1_314mw"]
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_level"]
 
 [resource]
-script = ExtResource("1_314mw")
+script = ExtResource("1_level")
 level_id = 10
-level_title = "Level 1-10 · Bậc Thầy Mê Cung (5x5)"
-difficulty = "hard"
-width = 5
-height = 5
-start_pos = Vector2i(0, 4)
-end_pos = Vector2i(4, 0)
-max_steps = 30
-par_time = 75.0
-v_walls = PackedByteArray(1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1)
-v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
-h_walls = PackedByteArray(1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1)
-h_walls_visible = PackedByteArray(1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1)
-metadata/_custom_type_script = "uid://db1uxhq02q40b"
+level_title = "Level 2-1 · Chữ H (polyomino)"
+chapter = 2
+mode_id = "play"
+difficulty = "easy"
+width = 4
+height = 3
+start_pos = Vector2i(0, 2)
+end_pos = Vector2i(3, 0)
+max_steps = 9
+par_time = 27.0
+v_walls = PackedByteArray(1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1)
+h_walls = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+h_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1)
+cell_mask = PackedByteArray(1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1)
+custom_cell_values = {}

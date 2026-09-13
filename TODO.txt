@@ -39,6 +39,29 @@
 #       thêm level_selector/{dot_active,dot_inactive,icon_play_triangle}.svg; xoá pagination_dots.svg (tĩnh)
 #     - Test mới: scripts/test_case/test_levels_paging.gd (12 màn tạm trong user://test_levels)
 # [ ] Màn Chọn Màn: nhãn "ĐỔI CHƯƠNG" còn tĩnh — cần bộ chọn chương khi có nhiều chương thật
+#
+# [x] ĐÃ LÀM (2026-09): BOARD DẠNG POLYOMINO — board không chỉ hình chữ nhật (H, thập tự, vòng, U...)
+#     - Game data: scripts/resources/level_data.gd thêm `cell_mask` (w*h bytes, index = y*w + x,
+#       1 = ô thuộc board, để trống = chữ nhật đầy đủ nên 9 màn cũ không đổi)
+#     - scripts/core/maze_data.gd: set_cell_mask()/is_cell_active()/reset_cell_mask();
+#       _apply_mask_walls() tự ép MỌI cạnh giáp ô trống thành tường hiện (như viền ngoài);
+#       _compute_wall_counts() chỉ tính cạnh giữa 2 ô THUỘC BOARD (tổng quát hoá luật "không tính
+#       tường viền" trước đó); has_wall() chặn mọi nước đi vào ô ngoài board; BFS cũng chặn theo
+#     - Board render: scripts/nodes/game/board.gd — ô ngoài board KHÔNG có cell node
+#       (mảng _cell_nodes dạng thưa + guard null), anchor chỉ tạo ở góc dính board,
+#       tường chỉ vẽ ở cạnh dính board, _hit_cell bỏ qua ô trống, set_suspected_wall bỏ qua cạnh ngoài board
+#     - Di chuyển: grid_controller.try_move_to() bỏ qua ô ngoài board (không hazard, không tốn bước)
+#     - Tool: LevelModel.cell_mask + công cụ 6 (bật/tắt ô, kéo để vẽ), canvas tô ô trống + gạch chéo,
+#       cạnh bao quanh board vẽ nét đậm, is_outline() (giữ is_border làm alias), nút
+#       "Toàn bộ ô = board (chữ nhật)", số trên ô chỉ tính tường giữa 2 ô thuộc board
+#     - KIỂM TRA ĐƯỜNG ĐI (theo yêu cầu): solver chỉ đi trong ô thuộc board; validator báo LỖI khi
+#       S/F nằm ở ô trống hoặc KHÔNG có đường tới F (nút Lưu bị chặn), CẢNH BÁO khi có ô board
+#       không tới được từ S; inspector hiện đường ngắn nhất + số ô board/ô trống
+#     - Màn mẫu: resources/levels/level_10 (chữ H 4x3) · level_11 (thập tự 4x4) ·
+#       level_12 (vòng 2 ô dày có lỗ 6x6) · level_13 (chữ U 2 ô dày 6x4) — chương 2
+#       + script tạo lại: tools/level_designer/make_samples.py (--dry-run để chỉ kiểm tra)
+#     - Test: scripts/test_case/test_polyomino_board.gd (mask, số tường, đường đi, cell node, chặn đi vào ô trống)
+#       + tools/level_designer/tests/test_polyomino.py (tool: 50 test) — đã render kiểm tra mắt level 10/12
 
 
 # ----------------------------------------------------------------------------

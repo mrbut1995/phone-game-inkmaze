@@ -82,6 +82,7 @@ TOOL_WALL_HIDDEN = "wall_hidden"
 TOOL_ERASE = "erase"
 TOOL_START = "start"
 TOOL_END = "end"
+TOOL_CELL = "cell"
 
 TOOL_LABELS = (
     (TOOL_WALL_VISIBLE, "Tường hiện (1)"),
@@ -89,6 +90,7 @@ TOOL_LABELS = (
     (TOOL_ERASE, "Xoá tường (3)"),
     (TOOL_START, "Điểm S (4)"),
     (TOOL_END, "Đích F (5)"),
+    (TOOL_CELL, "Sửa ô board (6)"),
 )
 
 # --- Hàm tiện ích ----------------------------------------------------------

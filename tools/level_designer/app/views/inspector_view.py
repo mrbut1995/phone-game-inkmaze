@@ -94,6 +94,12 @@ class InspectorView(ttk.Frame):
             .pack(fill="x", pady=2)
         ttk.Button(frame, text="Sinh tường ẩn ngẫu nhiên (35%)",
                    command=lambda: self.editor.fill_hidden_random(0.35)).pack(fill="x", pady=2)
+        ttk.Button(frame, text="Toàn bộ ô = board (chữ nhật)", command=self.editor.fill_board) \
+            .pack(fill="x", pady=2)
+        hint = ttk.Label(frame, style="Hint.TLabel", wraplength=280, justify="left",
+                         text="Mẹo: chọn công cụ 6 rồi bấm/kéo trên lưới để bật-tắt ô "
+                              "thuộc board (tạo hình H, hình thập tự, v.v.).")
+        hint.pack(fill="x", pady=(4, 0))
 
     def _build_report(self) -> None:
         frame = ttk.LabelFrame(self, text="Kiểm tra & phân tích", padding=(8, 6))
@@ -224,8 +230,8 @@ class InspectorView(ttk.Frame):
         self.report.insert("end", "\n")
         self.report.insert(
             "end",
-            "Lưới %dx%d · %d ô · %d tường hiện · %d tường ẩn\n" % (
-                level.width, level.height, stats["cells"],
+            "Lưới %dx%d · %d/%d ô thuộc board · %d tường hiện · %d tường ẩn\n" % (
+                level.width, level.height, stats["board_cells"], stats["cells"],
                 stats["visible_walls"], stats["hidden_walls"]),
             "info",
         )

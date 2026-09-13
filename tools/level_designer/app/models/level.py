@@ -9,7 +9,9 @@ Quy ước trục toạ độ (giống hệt game):
     - Tường NGANG (ngăn 2 ô trên/dưới): mảng width * (height + 1)
         chỉ số = ix * (height + 1) + iy  (ix thuộc [0, width), iy thuộc [0, height])
         tường tại (ix, iy) nằm giữa ô (ix, iy-1) và ô (ix, iy)
-    - Viền ngoài luôn là tường và luôn hiển thị (game tự ép khi nạp)
+    - BOARD CÓ THỂ KHÔNG PHẢI HÌNH CHỮ NHẬT (polyomino): `cell_mask` đánh dấu ô nào
+      thuộc board. Mọi cạnh bao quanh board (viền ngoài hoặc giáp ô trống) tự động
+      là tường hiển thị và KHÔNG sửa được; số trên ô chỉ tính tường giữa 2 ô thuộc board.
 """
 
 from __future__ import annotations
@@ -45,6 +47,10 @@ class LevelModel:
     h_walls: list[int] = field(default_factory=list)
     h_walls_visible: list[int] = field(default_factory=list)
 
+    ## Ô thuộc board (polyomino): width*height phần tử, chỉ số = y*width + x
+    ## 1 = ô thuộc board, 0 = ô trống ngoài board (không có ô để chơi)
+    cell_mask: list[int] = field(default_factory=list)
+
     custom_cell_values: dict = field(default_factory=dict)
     ## Chuỗi gốc của `custom_cell_values` trong .tres (giữ nguyên khi ghi lại)
     custom_cell_values_raw: str = "{}"
@@ -58,6 +64,8 @@ class LevelModel:
     # Khởi tạo / kích thước
     # ------------------------------------------------------------------
     def __post_init__(self) -> None:
+        if len(self.cell_mask) != self.width * self.height:
+            self.cell_mask = default_cell_mask(self.width, self.height)
         if not self.v_walls:
             self.reset_walls()
 
@@ -71,25 +79,37 @@ class LevelModel:
         self.ensure_borders()
 
     def ensure_borders(self) -> None:
-        """Viền ngoài luôn là tường hiển thị (giống game ép khi nạp màn)."""
-        w, h = self.width, self.height
-        for iy in range(h):
-            self.set_v_wall(0, iy, True, True)
-            self.set_v_wall(w, iy, True, True)
-        for ix in range(w):
-            self.set_h_wall(ix, 0, True, True)
-            self.set_h_wall(ix, h, True, True)
+        """Cạnh bao quanh board (viền ngoài + giáp ô trống) luôn là tường hiển thị.
+
+        Giống game ép khi nạp màn (level_data.gd -> MazeData.set_cell_mask).
+        """
+        for ref in self.iter_walls():
+            if self.is_outline(ref):
+                kind, ix, iy = ref
+                if kind == "v":
+                    self.set_v_wall(ix, iy, True, True)
+                else:
+                    self.set_h_wall(ix, iy, True, True)
 
     def resize(self, width: int, height: int) -> None:
-        """Đổi kích thước lưới, cố giữ lại các tường còn nằm trong vùng mới."""
+        """Đổi kích thước lưới, cố giữ lại các tường + ô thuộc board trong vùng mới."""
         width = max(MIN_SIZE, int(width))
         height = max(MIN_SIZE, int(height))
         old_v = self._grid_v()
         old_h = self._grid_h()
         old_v_vis = self._grid_v_visible()
         old_h_vis = self._grid_h_visible()
+        old_mask = self.cell_mask
+        old_w, old_h_size = self.width, self.height
 
         self.width, self.height = width, height
+        # Ô mới thêm vào mặc định THUỘC board (giữ hành vi lưới chữ nhật như trước)
+        self.cell_mask = default_cell_mask(width, height)
+        for y in range(min(height, old_h_size)):
+            for x in range(min(width, old_w)):
+                if y * old_w + x < len(old_mask):
+                    self.cell_mask[y * width + x] = old_mask[y * old_w + x]
+
         self.reset_walls()
 
         for ix in range(min(width + 1, len(old_v))):
@@ -121,16 +141,34 @@ class LevelModel:
         return 0 <= ix < self.width and 0 <= iy <= self.height
 
     def is_border_v(self, ix: int, iy: int) -> bool:
+        """Cạnh dọc có phải viền ngoài hộp bao không."""
         return ix in (0, self.width) and self.in_bounds_v(ix, iy)
 
     def is_border_h(self, ix: int, iy: int) -> bool:
+        """Cạnh ngang có phải viền ngoài hộp bao không."""
         return iy in (0, self.height) and self.in_bounds_h(ix, iy)
 
-    def is_border(self, ref: WallRef) -> bool:
+    def is_outline(self, ref: WallRef) -> bool:
+        """Cạnh BAO QUANH BOARD: viền ngoài hoặc giáp ô trống (ngoài polyomino).
+
+        Các cạnh này luôn là tường hiển thị và không sửa được (giống viền ngoài).
+        """
         kind, ix, iy = ref
-        return self.is_border_v(ix, iy) if kind == "v" else self.is_border_h(ix, iy)
+        if kind == "v":
+            if not self.in_bounds_v(ix, iy):
+                return True
+            return not (self.is_cell_active((ix - 1, iy)) and self.is_cell_active((ix, iy)))
+        if not self.in_bounds_h(ix, iy):
+            return True
+        return not (self.is_cell_active((ix, iy - 1)) and self.is_cell_active((ix, iy)))
+
+    def is_border(self, ref: WallRef) -> bool:
+        """Tên cũ của `is_outline` (giữ để tương thích)."""
+        return self.is_outline(ref)
 
     def has_wall(self, ref: WallRef) -> bool:
+        if self.is_outline(ref):
+            return True      # cạnh bao quanh board luôn là tường
         kind, ix, iy = ref
         if kind == "v":
             return self.in_bounds_v(ix, iy) and bool(self.v_walls[self.v_index(ix, iy)])
@@ -159,8 +197,8 @@ class LevelModel:
         self.h_walls_visible[idx] = 1 if (wall and visible) else 0
 
     def set_wall(self, ref: WallRef, wall: bool, visible: bool = False) -> bool:
-        """Đặt/xoá 1 tường. Trả về False nếu là viền ngoài (không cho sửa)."""
-        if self.is_border(ref):
+        """Đặt/xoá 1 tường. Trả về False nếu là cạnh bao quanh board (không cho sửa)."""
+        if self.is_outline(ref):
             return False
         kind, ix, iy = ref
         if kind == "v":
@@ -178,6 +216,79 @@ class LevelModel:
                 yield ("h", ix, iy)
 
     # ------------------------------------------------------------------
+    # Hình dạng board (polyomino)
+    # ------------------------------------------------------------------
+    def mask_index(self, cell: Cell) -> int:
+        return cell[1] * self.width + cell[0]
+
+    def is_cell_active(self, cell: Cell) -> bool:
+        """Ô này có thuộc board không (ô trống / ngoài hộp bao đều là False)."""
+        if not self.in_bounds(cell):
+            return False
+        index = self.mask_index(cell)
+        if index < 0 or index >= len(self.cell_mask):
+            return True
+        return bool(self.cell_mask[index])
+
+    def set_cell_active(self, cell: Cell, active: bool) -> bool:
+        """Bật/tắt 1 ô khỏi board. Trả về True nếu có thay đổi.
+
+        Khi BẬT: mở các cạnh nối tới các ô đang hoạt động bên cạnh để ô mới
+        không bị bao kín sau khi thêm vào board.
+        """
+        if not self.in_bounds(cell):
+            return False
+        x, y = cell
+        if self.is_cell_active(cell) == bool(active):
+            return False
+        self.cell_mask[self.mask_index(cell)] = 1 if active else 0
+        if active:
+            neighbours = ((x - 1, y, ("v", x, y)), (x + 1, y, ("v", x + 1, y)),
+                          (x, y - 1, ("h", x, y)), (x, y + 1, ("h", x, y + 1)))
+            for nx, ny, ref in neighbours:
+                if self.is_cell_active((nx, ny)):
+                    self.set_wall(ref, False)
+        self.ensure_borders()
+        return True
+
+    def toggle_cell_active(self, cell: Cell) -> bool:
+        return self.set_cell_active(cell, not self.is_cell_active(cell))
+
+    def fill_mask(self) -> None:
+        """Toàn bộ lưới là board (chữ nhật đầy đủ)."""
+        self.cell_mask = default_cell_mask(self.width, self.height)
+        self.ensure_borders()
+
+    def fill_board(self) -> None:
+        """Tên khác của `fill_mask` (đọc thuận hơn khi gọi từ UI)."""
+        self.fill_mask()
+
+    def full_rect_mask(self) -> None:
+        self.fill_mask()
+
+    def is_full_rect(self) -> bool:
+        return all(self.cell_mask)
+
+    def active_cells(self) -> list[Cell]:
+        return [(x, y) for y in range(self.height) for x in range(self.width)
+                if self.is_cell_active((x, y))]
+
+    def active_count(self) -> int:
+        return sum(1 for value in self.cell_mask if value)
+
+    def nearest_active_cell(self, cell: Cell) -> Cell:
+        """Ô hoạt động gần nhất (dùng khi ô hiện tại bị bỏ khỏi board)."""
+        if self.is_cell_active(cell):
+            return cell
+        best = None
+        best_distance = None
+        for candidate in self.active_cells():
+            distance = abs(candidate[0] - cell[0]) + abs(candidate[1] - cell[1])
+            if best_distance is None or distance < best_distance:
+                best, best_distance = candidate, distance
+        return best if best is not None else self.clamp_cell(cell)
+
+    # ------------------------------------------------------------------
     # Ô / S / F
     # ------------------------------------------------------------------
     def in_bounds(self, cell: Cell) -> bool:
@@ -191,23 +302,24 @@ class LevelModel:
     def wall_count(self, cell: Cell) -> int:
         """Số tường quanh 1 ô - dùng để hiện số trong ô (khớp game).
 
-        KHÔNG tính tường VIỀN NGOÀI (bao quanh cả board): mọi ô sát biên đều thấy
-        tường đó nên tính vào sẽ thành vô nghĩa (ô góc luôn >= 2). Số trong ô chỉ
-        phản ánh tường BÊN TRONG board - giống maze_data.gd::_compute_wall_counts().
+        Chỉ tính cạnh GIỮA 2 Ô THUỘC BOARD. Cạnh bao quanh board (viền ngoài hoặc
+        giáp ô trống) không tính - giống maze_data.gd::_compute_wall_counts().
         """
         x, y = cell
-        if not self.in_bounds(cell):
+        if not self.is_cell_active(cell):
             return 0
         edges = (
-            ("h", x, y),        # cạnh trên
-            ("h", x, y + 1),    # cạnh dưới
-            ("v", x, y),        # cạnh trái
-            ("v", x + 1, y),    # cạnh phải
+            ((x, y - 1), ("h", x, y)),        # cạnh trên
+            ((x, y + 1), ("h", x, y + 1)),    # cạnh dưới
+            ((x - 1, y), ("v", x, y)),        # cạnh trái
+            ((x + 1, y), ("v", x + 1, y)),    # cạnh phải
         )
-        return sum(1 for ref in edges if not self.is_border(ref) and self.has_wall(ref))
+        return sum(1 for neighbour, ref in edges
+                   if self.is_cell_active(neighbour) and self.has_wall(ref))
 
     def start_end_ok(self) -> bool:
-        return self.in_bounds(self.start) and self.in_bounds(self.end) and self.start != self.end
+        return (self.is_cell_active(self.start) and self.is_cell_active(self.end)
+                and self.start != self.end)
 
     # ------------------------------------------------------------------
     # Thống kê / tiện ích
@@ -215,22 +327,30 @@ class LevelModel:
     def stats(self) -> dict:
         visible = sum(1 for ref in self.iter_walls() if self.has_wall(ref) and self.is_visible(ref))
         hidden = sum(1 for ref in self.iter_walls() if self.has_wall(ref) and not self.is_visible(ref))
-        return {"visible_walls": visible, "hidden_walls": hidden, "cells": self.width * self.height}
+        return {
+            "visible_walls": visible,
+            "hidden_walls": hidden,
+            "cells": self.width * self.height,
+            "board_cells": self.active_count(),
+        }
 
     def to_grid_arrays(self) -> None:
         """Chuẩn hoá lại kích thước mảng (dùng sau khi nạp từ file)."""
         self.normalize_arrays()
 
     def normalize_arrays(self) -> None:
-        """Bảo đảm 4 mảng tường đúng kích thước theo width/height hiện tại.
+        """Bảo đảm mask + 4 mảng tường đúng kích thước theo width/height hiện tại.
 
         File .tres cũ/hỏng có thể thiếu byte -> thiếu chỗ nào coi như không tường.
         """
         w, h = self.width, self.height
+        if len(self.cell_mask) != w * h:
+            self.cell_mask = default_cell_mask(w, h)
         self.v_walls = _fit(self.v_walls, (w + 1) * h)
         self.v_walls_visible = _fit(self.v_walls_visible, (w + 1) * h)
         self.h_walls = _fit(self.h_walls, w * (h + 1))
         self.h_walls_visible = _fit(self.h_walls_visible, w * (h + 1))
+        self.ensure_borders()
 
     def snapshot(self) -> dict:
         """Ảnh chụp trạng thái để phục vụ undo/redo."""
@@ -250,6 +370,7 @@ class LevelModel:
             "v_walls_visible": list(self.v_walls_visible),
             "h_walls": list(self.h_walls),
             "h_walls_visible": list(self.h_walls_visible),
+            "cell_mask": list(self.cell_mask),
             "custom_cell_values": dict(self.custom_cell_values),
             "custom_cell_values_raw": self.custom_cell_values_raw,
         }
@@ -284,6 +405,11 @@ class LevelModel:
             [self.h_walls_visible[self.h_index(ix, iy)] for iy in range(self.height + 1)]
             for ix in range(self.width)
         ]
+
+
+def default_cell_mask(width: int, height: int) -> list[int]:
+    """Mask mặc định: toàn bộ ô thuộc board (lưới chữ nhật đầy đủ)."""
+    return [1] * (width * height)
 
 
 def _fit(values: list[int], size: int) -> list[int]:

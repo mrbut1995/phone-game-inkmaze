@@ -4,8 +4,11 @@ extends RefCounted
 ## Model: Dữ liệu và cấu trúc Mê Cung (thuần túy, KHÔNG phụ thuộc Scene Tree).
 ## - Sinh mê cung bảo đảm luôn có ít nhất 1 đường đi hợp lệ từ S đến F.
 ## - Mỗi ô có 4 cạnh: biên lưới luôn là tường, cạnh trong có thể mở/đóng.
-## - Số hiển thị trên ô = tổng số cạnh BÊN TRONG là tường của ô đó (0..4);
-##   tường viền ngoài bao quanh board KHÔNG được tính vào ô.
+## - Số hiển thị trên ô = tổng số cạnh là tường GIỮA 2 Ô THUỘC BOARD (0..4);
+##   cạnh bao quanh board (viền ngoài hoặc giáp ô trống) KHÔNG được tính vào ô.
+## - BOARD CÓ THỂ KHÔNG PHẢI HÌNH CHỮ NHẬT: `_cells` (cell_mask) đánh dấu ô nào
+##   thuộc board (polyomino). Ô không thuộc board coi như "ngoài board":
+##   mọi cạnh giáp nó tự động thành tường hiện, và không đi vào được.
 ## - Tường có thể được đánh dấu hiển thị trước (is_visible) theo visible_wall_ratio.
 ## ============================================================================
 
@@ -16,6 +19,9 @@ var height: int = 0
 var start: Vector2i = Vector2i.ZERO
 var end: Vector2i = Vector2i.ZERO
 var visible_wall_ratio: float = 0.0
+
+## Ô thuộc board: width*height bytes, index = y*width + x (1 = thuộc board)
+var _cells: PackedByteArray = PackedByteArray()
 
 ## Lưới tường dọc: _v_walls[ix] (ix: 0..width) là PackedByteArray[height]
 var _v_walls: Array = []
@@ -73,8 +79,67 @@ func set_v_wall(ix: int, iy: int, is_wall: bool) -> void:
 		_compute_wall_counts()
 
 
+# ---------------------------------------------------------------------------
+# HÌNH DẠNG BOARD (polyomino)
+# ---------------------------------------------------------------------------
+## Nạp mask ô thuộc board. `mask` rỗng/sai kích thước = chữ nhật đầy đủ.
+func set_cell_mask(mask: PackedByteArray) -> void:
+	if mask.size() == width * height:
+		_cells = mask.duplicate()
+	else:
+		reset_cell_mask()
+	_apply_mask_walls()
+	_compute_wall_counts()
+
+
+## Toàn bộ ô vuông đều thuộc board (màn chữ nhật)
+func reset_cell_mask() -> void:
+	_cells = PackedByteArray()
+	_cells.resize(width * height)
+	_cells.fill(1)
+
+
+func get_cell_mask() -> PackedByteArray:
+	if _cells.size() != width * height:
+		reset_cell_mask()
+	return _cells.duplicate()
+
+
+func is_full_rect() -> bool:
+	if _cells.size() != width * height:
+		return true
+	for value in _cells:
+		if value == 0:
+			return false
+	return true
+
+
+## Ô này có thuộc board không (ngoài biên hoặc ô trống đều là false)
+func is_cell_active(pos: Vector2i) -> bool:
+	if pos.x < 0 or pos.y < 0 or pos.x >= width or pos.y >= height:
+		return false
+	if _cells.size() != width * height:
+		return true
+	return _cells[pos.y * width + pos.x] == 1
+
+
+## Mọi cạnh giáp ô NGOÀI board trở thành tường hiện (giống viền ngoài board)
+func _apply_mask_walls() -> void:
+	for ix in width:
+		for iy in height + 1:
+			if not (is_cell_active(Vector2i(ix, iy - 1)) and is_cell_active(Vector2i(ix, iy))):
+				_h_walls[ix][iy] = 1
+				_h_visible[ix][iy] = 1
+	for ix in width + 1:
+		for iy in height:
+			if not (is_cell_active(Vector2i(ix - 1, iy)) and is_cell_active(Vector2i(ix, iy))):
+				_v_walls[ix][iy] = 1
+				_v_visible[ix][iy] = 1
+
+
 # --- Khởi tạo: biên là tường, cạnh trong mở ---
 func _init_walls() -> void:
+	reset_cell_mask()
 	_v_walls.clear()
 	_h_walls.clear()
 	_v_visible.clear()
@@ -170,24 +235,24 @@ func _add_random_walls() -> void:
 				_v_walls[ix][iy] = 1
 
 
-# --- Tính số tường bao quanh từng ô (0..4) ---
-# LƯU Ý: tường VIỀN NGOÀI (bao quanh cả board) KHÔNG tính vào ô. Mọi ô sát biên
-# đều "thấy" tường đó, tính vào thì số trong ô thành vô nghĩa (ô góc luôn >= 2).
-# Số hiển thị trong ô chỉ phản ánh tường BÊN TRONG board.
+# --- Tính số tường quanh từng ô (0..4) ---
+# LƯU Ý: chỉ tính cạnh GIỮA 2 Ô THUỘC BOARD. Cạnh viền ngoài hoặc giáp ô trống
+# (ngoài board) KHÔNG tính vào ô - xem thêm set_cell_mask().
 func _compute_wall_counts() -> void:
 	_wall_count.clear()
 	for y in height:
 		var row: Array = []
 		for x in width:
 			var c := 0
-			if y > 0:
-				c += _h_walls[x][y]          # cạnh trên (bỏ qua nếu là viền)
-			if y < height - 1:
-				c += _h_walls[x][y + 1]      # cạnh dưới (bỏ qua nếu là viền)
-			if x > 0:
-				c += _v_walls[x][y]          # cạnh trái (bỏ qua nếu là viền)
-			if x < width - 1:
-				c += _v_walls[x + 1][y]      # cạnh phải (bỏ qua nếu là viền)
+			if is_cell_active(Vector2i(x, y)):
+				if is_cell_active(Vector2i(x, y - 1)):
+					c += _h_walls[x][y]          # cạnh trên
+				if is_cell_active(Vector2i(x, y + 1)):
+					c += _h_walls[x][y + 1]      # cạnh dưới
+				if is_cell_active(Vector2i(x - 1, y)):
+					c += _v_walls[x][y]          # cạnh trái
+				if is_cell_active(Vector2i(x + 1, y)):
+					c += _v_walls[x + 1][y]      # cạnh phải
 			row.append(c)
 		_wall_count.append(row)
 
@@ -214,7 +279,7 @@ func get_wall_count(pos: Vector2i) -> int:
 
 
 func has_wall(from_pos: Vector2i, to_pos: Vector2i) -> bool:
-	if not is_in_bounds(from_pos) or not is_in_bounds(to_pos):
+	if not is_cell_active(from_pos) or not is_cell_active(to_pos):
 		return true
 	if from_pos.x == to_pos.x:
 		return _h_walls[from_pos.x][maxi(from_pos.y, to_pos.y)] == 1
@@ -269,8 +334,10 @@ func is_solvable() -> bool:
 
 ## Thuật toán BFS tìm đường đi ngắn nhất từ from_pos đến to_pos
 func get_shortest_path(from_pos: Vector2i, to_pos: Vector2i) -> Array[Vector2i]:
-	if width <= 0 or height <= 0 or not is_in_bounds(from_pos) or not is_in_bounds(to_pos):
+	if width <= 0 or height <= 0:
 		return []
+	if not is_cell_active(from_pos) or not is_cell_active(to_pos):
+		return []      # S/F nằm ngoài board (ô trống) => không có đường
 	if from_pos == to_pos:
 		return [from_pos]
 

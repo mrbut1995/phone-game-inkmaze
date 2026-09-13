@@ -37,6 +37,13 @@ def validate(level: LevelModel) -> list[Issue]:
         issues.append(Issue(LEVEL_WARNING, "Chưa đặt tên màn (level_title đang trống)"))
     if not (MIN_SIZE <= level.width <= MAX_SIZE and MIN_SIZE <= level.height <= MAX_SIZE):
         issues.append(Issue(LEVEL_ERROR, "Kích thước lưới phải trong khoảng %d..%d" % (MIN_SIZE, MAX_SIZE)))
+    if level.active_count() < 2:
+        issues.append(Issue(LEVEL_ERROR, "Board phải có ít nhất 2 ô (hiện có %d ô)" % level.active_count()))
+    if not level.start_end_ok():
+        if not level.is_cell_active(level.start) and level.in_bounds(level.start):
+            issues.append(Issue(LEVEL_ERROR, "Điểm S đang nằm ở Ô TRỐNG (ngoài board) - bấm vào ô đó để thêm vào board"))
+        if not level.is_cell_active(level.end) and level.in_bounds(level.end):
+            issues.append(Issue(LEVEL_ERROR, "Đích F đang nằm ở Ô TRỐNG (ngoài board) - bấm vào ô đó để thêm vào board"))
     if level.max_steps <= 0:
         issues.append(Issue(LEVEL_ERROR, "max_steps phải lớn hơn 0"))
     if level.par_time <= 0:
@@ -68,13 +75,22 @@ def validate(level: LevelModel) -> list[Issue]:
 
     blocked = int(info["blocked_cells"])
     if blocked:
-        issues.append(Issue(LEVEL_WARNING, "%d ô không thể tới được từ S" % blocked))
+        issues.append(Issue(
+            LEVEL_WARNING,
+            "%d ô thuộc board KHÔNG tới được từ S (bị tường chặn kín)" % blocked,
+        ))
 
     stats = level.stats()
     if stats["hidden_walls"] == 0:
         issues.append(Issue(LEVEL_INFO, "Màn chưa có tường ẩn nào (toàn bộ tường đều nhìn thấy)"))
     if level.mode_id != "play":
         issues.append(Issue(LEVEL_INFO, "mode_id = '%s' (không phải chế độ Play)" % level.mode_id))
+    if int(info["empty_cells"]) > 0:
+        issues.append(Issue(
+            LEVEL_INFO,
+            "Board dạng polyomino: %d/%d ô thuộc board (còn %d ô trống)"
+            % (int(info["board_cells"]), level.width * level.height, int(info["empty_cells"])),
+        ))
 
     issues.append(Issue(
         LEVEL_INFO,
