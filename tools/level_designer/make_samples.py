@@ -109,6 +109,25 @@ SAMPLES: dict[int, dict] = {
             ("v", 4, 3, True),     # tường hiện: chặn (3,3) - (4,3)
         ],
     },
+    14: {
+        "title": "Level 2-5 · Bàn cờ lớn 11×11",
+        "difficulty": "hard",
+        "chapter": 2,
+        # Lưới chữ nhật đầy đủ 11x11: để thử board nhiều ô (ô tự co cho vừa khung giấy)
+        "shape": ["###########"] * 11,
+        "start": (0, 10),
+        "end": (10, 0),
+        "walls": [
+            ("v", 2, 9, True),
+            ("h", 3, 6, True),
+            ("v", 6, 3, False),
+            ("h", 7, 7, True),
+            ("v", 4, 4, False),
+            ("h", 5, 2, True),
+            ("v", 8, 5, True),
+            ("h", 1, 8, False),
+        ],
+    },
 }
 
 

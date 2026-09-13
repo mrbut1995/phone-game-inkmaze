@@ -61,8 +61,34 @@
 #       level_12 (vòng 2 ô dày có lỗ 6x6) · level_13 (chữ U 2 ô dày 6x4) — chương 2
 #       + script tạo lại: tools/level_designer/make_samples.py (--dry-run để chỉ kiểm tra)
 #     - Test: scripts/test_case/test_polyomino_board.gd (mask, số tường, đường đi, cell node, chặn đi vào ô trống)
-#       + tools/level_designer/tests/test_polyomino.py (tool: 50 test) — đã render kiểm tra mắt level 10/12
-
+#       + tools/level_designer/tests/test_polyomino.py (tool: 50 test) — đã render kiểm tra mắt level 10/12#
+# [x] ĐÃ SỬA (2026-09): board từ 6 ô trở lên bị TRÀN ra ngoài khung giấy
+#     - scripts/nodes/game/board.gd::_compute_layout(): tính tỉ lệ vừa khít khung
+#       _fit_scale = clamp(min(khung_w/số_cột, khung_h/số_hàng) / cỡ_ô_gốc, 0.24, 1.0);
+#       _step = cỡ_ô_gốc × _fit_scale; _apply_metrics_scale() đặt lại size cell/anchor/cursor,
+#       cỡ chữ số trên ô, và bề rộng tường/suspected/history/moving/drag line (có ngưỡng nhỏ nhất:
+#       tường ≥ 3px, chữ ≥ 12, anchor ≥ 14px, cursor ≥ 18px)
+#     - Lưới nhỏ (≤ 5×5) giữ nguyên scale = 1.0 -> không đổi gì so với trước
+#     - cell.gd::set_font_size(): sửa cả LabelSettings (duplicate trước khi đổi) — trước đây
+#       LabelSettings đè theme override nên cỡ chữ không đổi được
+#     - Art ô + mọi trạng thái đều cùng khung 176×176 và TextureButton để stretch nên co bao nhiêu
+#       vẫn khớp nhau, KHÔNG cần vẽ lại SVG theo cỡ mới
+#     - Màn mẫu mới: resources/levels/level_14.tres (bàn cờ lớn 11×11) + thêm vào make_samples.py
+#     - Test: scripts/test_case/test_board_fit.gd (3/5/8/11/15/20 ô: vừa khung, lưới nhỏ giữ cỡ gốc,
+#       chữ/tường/anchor co theo, không ô nào tràn khung)
+#     - LƯU Ý: "khung giấy" ở lần sửa trên vẫn là RECT của node Panel (1020×1020), mà art
+#       game/card_board.svg có viền trong suốt + bóng đổ -> giấy thật nhỏ hơn, nên lưới vẫn
+#       chạm mép giấy. Xem mục ngay dưới.
+# [x] ĐÃ SỬA (2026-09): cell vẫn tràn ra mép giấy — nay đo VÙNG GIẤY THẬT của art rồi chừa margin
+#     - board.gd::_read_panel_insets(): đọc texture của Panel, thu về 64×64, quét alpha > 0.05
+#       để lấy bbox giấy thật, nhân ngược tỉ lệ -> Vector4(l, t, r, b) (đo được 963×968 / 1020)
+#     - board.gd::panel_inner_rect(): rect giấy thật, dùng cho CẢ fit lẫn căn giữa
+#     - _compute_layout(): available = inner − BOARD_PADDING(12px)×2;
+#       trừ thêm overhang = max(cỡ anchor, bề rộng tường) vì tường vẽ canh TÂM mép lưới
+#       -> không còn tường/anchor thò ra ngoài giấy
+#     - Test bổ sung: mọi thành con (cell/tường kể cả bề rộng nét/anchor) phải nằm trong
+#       panel_inner_rect() và mép chừa tối thiểu 4px; thực đo được 17–25px ở cỡ lớn
+#     - Render kiểm tra mắt: 6×6 (level_12), 11×11 (level_14), 5×5 (giữ nguyên 176px)
 
 # ----------------------------------------------------------------------------
 # GOOGLE PLAY — LƯU DỮ LIỆU NGƯỜI CHƠI TRÊN ĐÁM MÂY (Play Games Saved Games)

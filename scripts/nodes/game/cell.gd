@@ -2,7 +2,9 @@ class_name MazeCell
 extends Control
 ## ============================================================================
 ## View: Một ô trên lưới (Control chứa TextureButton + Label số tường).
-## Tự co giãn theo kích thước ô (không có khoảng cách).
+## Tự co giãn theo kích thước ô (không có khoảng cách): board.gd đặt `size` cho ô,
+## art (mọi trạng thái) đều cùng khung 176x176 và TextureButton ở chế độ stretch
+## nên co lại vẫn khớp nhau; số trên ô co theo qua set_font_size().
 ## ============================================================================
 
 signal cell_pressed(grid_pos: Vector2i)
@@ -55,8 +57,15 @@ func set_text(text: String) -> void:
 func set_font_size(fs: int) -> void:
 	if _label == null:
 		_label = $Sprite/Label
-	if _label != null:
-		_label.add_theme_font_size_override("font_size", fs)
+	if _label == null:
+		return
+	# LƯU Ý: LabelSettings sẽ đè theme override, nên phải sửa cả LabelSettings.
+	# Resource này dùng chung cho mọi ô -> phải duplicate trước khi đổi cỡ chữ.
+	if _label.label_settings != null and _label.label_settings.font_size != fs:
+		var settings := _label.label_settings.duplicate() as LabelSettings
+		settings.font_size = fs
+		_label.label_settings = settings
+	_label.add_theme_font_size_override("font_size", fs)
 
 
 func get_text() -> String:

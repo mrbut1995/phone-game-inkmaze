@@ -209,7 +209,9 @@ Sau khi build, kiểm tra nhanh bản exe:
 
 - **Board dạng polyomino**: màn chơi không nhất thiết là lưới chữ nhật — `cell_mask` đánh dấu ô nào
   thuộc board. Màn mẫu có sẵn: `level_10` chữ H · `level_11` thập tự · `level_12` vòng có lỗ ·
-  `level_13` chữ U (đều ở chương 2).
+  `level_13` chữ U · `level_14` bàn cờ lớn 11×11 (đều ở chương 2).
+- **Board nhiều ô vẫn vừa khung**: trong game, ô tự co lại cho vừa khung giấy (lưới ≤ 5×5 giữ nguyên cỡ gốc;
+  11×11 ≈ 92px/ô, 20×20 ≈ 50px/ô và số vẫn đọc được). Tool cho tạo tới **20×20**; xem trước bằng zoom (`+`/`-`).
 - Game **hỗ trợ nhiều hơn 9 màn**: màn *Chọn Màn* tự chia **9 thẻ/trang** và **vuốt ngang để sang trang**
   (chỉ số trang + bấm dot để nhảy trang). Tạo `level_10.tres`, `level_11.tres`… bằng tool này là chơi được ngay,
   không cần sửa code game.

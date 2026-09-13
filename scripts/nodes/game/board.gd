@@ -28,6 +28,19 @@ const GLOW_LINE_SHADER := preload("res://shaders/line_glowing_shader.gdshader")
 const FALLBACK_CELL_SIZE := 176.0
 const FALLBACK_ANCHOR_SIZE := 40.0
 const FALLBACK_WALL_WIDTH := 11.0
+const FALLBACK_CURSOR_SIZE := 44.0
+const FALLBACK_MOVING_LINE_WIDTH := 40.0
+const FALLBACK_FONT_SIZE := 56.0
+
+## Mép chừa thêm bên trong phần GIẤY VẼ THẬT (px) - để ô không chạm viền giấy
+const BOARD_PADDING := 12.0
+## Nhỏ nhất có thể co (0.24 * 176 ≈ 42px) -> board 20x20 vẫn nằm gọn
+const MIN_FIT_SCALE := 0.24
+## Kích thước tối thiểu để còn nhìn thấy rõ
+const MIN_WALL_WIDTH := 3.0
+const MIN_ANCHOR_SIZE := 14.0
+const MIN_CURSOR_SIZE := 18.0
+const MIN_FONT_SIZE := 12
 
 var maze: MazeData = null
 var game_mode: BaseGameMode = null
@@ -38,7 +51,15 @@ var _step := FALLBACK_CELL_SIZE
 var _cell_size := FALLBACK_CELL_SIZE
 var _anchor_size := FALLBACK_ANCHOR_SIZE
 var _wall_width := FALLBACK_WALL_WIDTH
+var _cursor_size := FALLBACK_CURSOR_SIZE
+var _moving_line_width := FALLBACK_MOVING_LINE_WIDTH
+var _history_line_width := FALLBACK_MOVING_LINE_WIDTH
+var _base_font_size := FALLBACK_FONT_SIZE
 var _anchor_hit_radius := FALLBACK_ANCHOR_SIZE * 0.75
+## Tỉ lệ co board cho vừa panel (1.0 = board nhỏ, giữ nguyên cỡ gốc)
+var _fit_scale := 1.0
+## Vùng GIẤY VẼ THẬT bên trong node Panel (art card_board.svg có lề đổ bóng)
+var _panel_insets := Vector4.ZERO      # left, top, right, bottom (px trong node Panel)
 
 var _cell_nodes: Array = []        # MazeCell
 var _cell_rects: Array[Rect2] = []
@@ -162,6 +183,9 @@ func setup_maze(p_maze: MazeData, p_mode: BaseGameMode = null) -> void:
 	_build_moving_line()
 	_build_drag_guide_line()
 	_place_cursor_at_start()
+	# Sau khi đã có đủ node: áp lại tỉ lệ vừa khít (tường/cursor/line...)
+	_apply_metrics_scale()
+	_apply_wall_width()
 
 
 func _cell_index(x: int, y: int) -> int:
@@ -178,6 +202,10 @@ func _read_metrics_from_scenes() -> void:
 		var cell_sz: Vector2 = (node as MazeCell).size
 		if cell_sz.x > 0.0 and cell_sz.y > 0.0:
 			_cell_size = cell_sz.x
+		# Cỡ chữ số trên ô (LabelSettings của cell) để scale theo từng cỡ board
+		var label: Label = (node as MazeCell).get_node_or_null("Sprite/Label")
+		if label != null and label.label_settings != null and label.label_settings.font_size > 0:
+			_base_font_size = float(label.label_settings.font_size)
 		break
 
 	if not _anchor_nodes.is_empty():
@@ -186,10 +214,68 @@ func _read_metrics_from_scenes() -> void:
 			_anchor_size = anchor_sz.x
 
 	_wall_width = _read_scene_line_width(WALL_SEGMENT_SCENE, FALLBACK_WALL_WIDTH)
+	_moving_line_width = _read_scene_line_width(MOVING_LINE_SCENE, FALLBACK_MOVING_LINE_WIDTH)
+	_history_line_width = _read_scene_line_width(HISTORY_LINE_SCENE, FALLBACK_MOVING_LINE_WIDTH)
+	_cursor_size = _read_scene_size(PLAYER_CURSOR_SCENE, FALLBACK_CURSOR_SIZE)
 
 	_step = _cell_size
 	# Bán kính bắt dính anchor suy ra từ kích thước anchor (không hard-code riêng)
 	_anchor_hit_radius = _anchor_size * 0.75
+	_read_panel_insets()
+
+
+## Đo vùng GIẤY VẼ THẬT của art Panel (card_board.svg có lề đổ bóng quanh mép)
+## bằng alpha bbox trên ảnh thu nhỏ -> canh lưới vào đúng phần giấy, không chạm viền.
+func _read_panel_insets() -> void:
+	_panel_insets = Vector4.ZERO
+	var panel: TextureRect = get_node_or_null("Panel") as TextureRect
+	if panel == null or panel.texture == null:
+		return
+	var img := panel.texture.get_image()
+	if img == null or img.get_width() <= 0 or img.get_height() <= 0:
+		return
+
+	const PROBE := 64
+	var probe := img.duplicate() as Image
+	probe.resize(PROBE, PROBE, Image.INTERPOLATE_BILINEAR)
+	var min_x := PROBE
+	var min_y := PROBE
+	var max_x := -1
+	var max_y := -1
+	for y in PROBE:
+		for x in PROBE:
+			if probe.get_pixel(x, y).a > 0.05:
+				min_x = mini(min_x, x)
+				max_x = maxi(max_x, x)
+				min_y = mini(min_y, y)
+				max_y = maxi(max_y, y)
+	if max_x < min_x or max_y < min_y:
+		return
+
+	var sx := float(img.get_width()) / float(PROBE)
+	var sy := float(img.get_height()) / float(PROBE)
+	_panel_insets = Vector4(min_x * sx, min_y * sy, max_x * sx, max_y * sy)
+
+
+## Vùng giấy vẽ thật (toạ độ cục bộ của Board) - dùng để canh lưới + cho test
+func panel_inner_rect() -> Rect2:
+	var panel: Control = get_node_or_null("Panel") as Control
+	if panel == null:
+		return Rect2(Vector2.ZERO, size)
+	var inner_pos := panel.position + Vector2(_panel_insets.x, _panel_insets.y)
+	var inner_size := Vector2(_panel_insets.z - _panel_insets.x, _panel_insets.w - _panel_insets.y)
+	if inner_size.x <= 0.0 or inner_size.y <= 0.0:
+		return Rect2(panel.position, panel.size)
+	return Rect2(inner_pos, inner_size)
+
+
+func _read_scene_size(scene: PackedScene, fallback: float) -> float:
+	var probe := scene.instantiate() as Control
+	if probe == null:
+		return fallback
+	var side := probe.size.x
+	probe.free()
+	return side if side > 0.0 else fallback
 
 
 func _read_scene_line_width(scene: PackedScene, fallback: float) -> float:
@@ -206,24 +292,30 @@ func _read_scene_line_width(scene: PackedScene, fallback: float) -> float:
 #         => Chỉnh sửa trực tiếp trong .tscn là Board tự cập nhật theo.
 # ============================================================================
 func _compute_layout() -> void:
-	_step = _cell_size
+	# Vùng giấy vẽ thật của panel (đã trừ lề đổ bóng của art)
+	var inner := panel_inner_rect()
 
-	# Lấy kích thước và vị trí của Board Panel
-	var panel: Control = get_node_or_null("Panel") as Control
-	var panel_pos := Vector2.ZERO
-	var panel_sz := size
-	if panel != null:
-		panel_pos = panel.position
-		panel_sz = panel.size
+	# --- Co board cho VỪA KHÍT phần giấy, CHỪA MÉP ---
+	# Board nhỏ (<= 5x5) giữ nguyên cỡ ô gốc; board lớn (11x11, 20x20...) tự thu nhỏ.
+	# Trừ thêm phần "nhô ra" của tường/anchor vì chúng vẽ canh tâm ở mép lưới.
+	var available_w := maxf(inner.size.x - BOARD_PADDING * 2.0, 1.0)
+	var available_h := maxf(inner.size.y - BOARD_PADDING * 2.0, 1.0)
+	var overhang := maxf(_anchor_size, _wall_width)
+	var denom_w := _cell_size * float(maxi(_width, 1)) + overhang
+	var denom_h := _cell_size * float(maxi(_height, 1)) + overhang
+	var fit_scale := minf(available_w / maxf(denom_w, 1.0), available_h / maxf(denom_h, 1.0))
+	_fit_scale = clampf(fit_scale, MIN_FIT_SCALE, 1.0)
+	_step = _cell_size * _fit_scale
+	_apply_metrics_scale()
 
 	# Kích thước toàn bộ lưới cell
 	var total_w := float(_width) * _step
 	var total_h := float(_height) * _step
 
-	# Căn giữa chính xác nếu còn trống so với board panel
-	var panel_center := panel_pos + panel_sz * 0.5
-	var margin_x := panel_center.x - total_w * 0.5
-	var margin_y := panel_center.y - total_h * 0.5
+	# Căn giữa lưới vào vùng giấy vẽ thật
+	var inner_center := inner.position + inner.size * 0.5
+	var margin_x := inner_center.x - total_w * 0.5
+	var margin_y := inner_center.y - total_h * 0.5
 
 	_col_edge_x.clear()
 	for ix in _width + 1:
@@ -240,6 +332,56 @@ func _compute_layout() -> void:
 	_row_center_y.clear()
 	for iy in _height:
 		_row_center_y.append(margin_y + (iy + 0.5) * _step)
+
+
+# ============================================================================
+# Co giãn theo tỉ lệ vừa khít: cell / anchor / cursor / bề rộng tường / cỡ chữ
+# ============================================================================
+func _apply_metrics_scale() -> void:
+	var cell_side := _step
+	for node in _cell_nodes:
+		if node == null:
+			continue
+		var cell: MazeCell = node
+		cell.size = Vector2(cell_side, cell_side)
+		cell.pivot_offset = cell.size * 0.5
+		cell.set_font_size(_scaled_font_size())
+
+	var anchor_side := maxf(_anchor_size * _fit_scale, MIN_ANCHOR_SIZE)
+	for info in _anchor_nodes:
+		var anchor: Control = info.node
+		anchor.size = Vector2(anchor_side, anchor_side)
+		anchor.pivot_offset = anchor.size * 0.5
+	_anchor_hit_radius = maxf(_anchor_size * 0.75 * _fit_scale, anchor_side * 0.5)
+
+	_apply_wall_width()
+
+	if _cursor != null:
+		var cursor_side := maxf(_cursor_size * _fit_scale, MIN_CURSOR_SIZE)
+		_cursor.size = Vector2(cursor_side, cursor_side)
+		_cursor.pivot_offset = _cursor.size * 0.5
+
+
+func _scaled_wall_width() -> float:
+	return maxf(_wall_width * _fit_scale, MIN_WALL_WIDTH)
+
+
+func _scaled_font_size() -> int:
+	return maxi(int(round(_base_font_size * _fit_scale)), MIN_FONT_SIZE)
+
+
+func _apply_wall_width() -> void:
+	var width := _scaled_wall_width()
+	for key in _wall_segments:
+		(_wall_segments[key] as Line2D).width = width
+	for key in _suspected_lines:
+		(_suspected_lines[key] as Line2D).width = width
+	for key in _history_lines:
+		(_history_lines[key] as Line2D).width = width
+	if _drag_guide_line != null:
+		_drag_guide_line.width = width
+	if _moving_line != null:
+		_moving_line.width = maxf(_moving_line_width * _fit_scale, MIN_WALL_WIDTH)
 
 
 func _update_layout_positions() -> void:
@@ -344,6 +486,8 @@ func _create_wall_segment(is_h: bool, lattice: Vector2i, state: String) -> WallS
 	var pts := _edge_points(is_h, lattice)
 	_walls_layer.add_child(seg)
 	seg.set_wall_points(pts[0], pts[1])
+	# Bề rộng tường co theo cỡ board (board càng nhiều ô thì nét càng mảnh)
+	seg.width = _scaled_wall_width()
 	seg.set_meta("base_state", state)
 	seg.set_state(state)
 	return seg
@@ -550,6 +694,7 @@ func show_history_edge(a: Vector2i, b: Vector2i) -> void:
 	_lines_layer.add_child(line)
 	line.position = Vector2.ZERO
 	line.points = PackedVector2Array([_cell_center(a), _cell_center(b)])
+	line.width = _scaled_wall_width()      # vệt bút mờ cũng co theo cỡ board
 	line.modulate = Color(1, 1, 1, 0.45)
 	_history_lines[key] = line
 
