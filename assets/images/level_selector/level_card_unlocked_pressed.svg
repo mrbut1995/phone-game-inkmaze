@@ -1,9 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -4 340 406" width="340" height="406">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-14 -14 318 378" width="318" height="378">
+  <!-- The man choi (pressed): lun 3px, mac xanh dam, cung kich thuoc voi normal -->
   <defs>
     <clipPath id="lvlPressedClip"><rect width="290" height="348" rx="24"/></clipPath>
   </defs>
 
-  <g transform="translate(20, 18)">
+  <g transform="translate(0, 3)">
     <g clip-path="url(#lvlPressedClip)">
       <rect width="290" height="348" fill="#EDE6D8"/>
       <path d="M0 90 L290 90 M0 170 L290 170 M0 250 L290 250" stroke="#8FB9D2" stroke-width="1" opacity="0.3"/>

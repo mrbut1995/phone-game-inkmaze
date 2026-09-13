@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk7amg5p6bi7a"
-path="res://.godot/imported/level_card_unlocked_normal.svg-0fb499974e5e4f451ced4a3da6ede44a.ctex"
+uid="uid://cgbp27e1ip682"
+path="res://.godot/imported/panel_genre_container.svg-8d7d98186567cdcdefe3b6a5de890d69.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/level_selector/level_card_unlocked_normal.svg"
-dest_files=["res://.godot/imported/level_card_unlocked_normal.svg-0fb499974e5e4f451ced4a3da6ede44a.ctex"]
+source_file="res://assets/images/main/panel_genre_container.svg"
+dest_files=["res://.godot/imported/panel_genre_container.svg-8d7d98186567cdcdefe3b6a5de890d69.ctex"]
 
 [params]
 

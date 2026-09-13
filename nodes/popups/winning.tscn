@@ -2,14 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_myu88"]
 [ext_resource type="Texture2D" uid="uid://cgdm4cbsmmbbu" path="res://assets/images/popups/popup_win.svg" id="2_wjasx"]
-[ext_resource type="Texture2D" uid="uid://cqe1sdpj4yw71" path="res://assets/images/game/star_empty.svg" id="3_tlyfm"]
+[ext_resource type="Texture2D" uid="uid://cqe1sdpj4yw71" path="res://assets/images/common/star_empty.svg" id="3_tlyfm"]
 [ext_resource type="Texture2D" uid="uid://ciq3atnbl2qi4" path="res://assets/images/popups/stamp_excellent.svg" id="4_x62yc"]
-[ext_resource type="Texture2D" uid="uid://c4cv31tihnj1" path="res://assets/images/popups/btn_paper_primary_normal.svg" id="5_1ymje"]
-[ext_resource type="Texture2D" uid="uid://c4277ksy08pue" path="res://assets/images/popups/btn_paper_secondary_normal.svg" id="5_16mpa"]
-[ext_resource type="Texture2D" uid="uid://g6jguuu3mgrt" path="res://assets/images/popups/btn_paper_secondary_pressed.svg" id="6_6gi7u"]
-[ext_resource type="Texture2D" uid="uid://bfod2u4o5b5i" path="res://assets/images/popups/btn_paper_primary_pressed.svg" id="6_021lv"]
-[ext_resource type="Texture2D" uid="uid://dvobapoh8dr6a" path="res://assets/images/popups/btn_paper_primary_focus.svg" id="7_16mpa"]
-[ext_resource type="Texture2D" uid="uid://bgstufvwvogbj" path="res://assets/images/popups/btn_paper_secondary_focus.svg" id="7_exhbw"]
+[ext_resource type="Texture2D" uid="uid://c4cv31tihnj1" path="res://assets/images/common/btn_paper_primary_normal.svg" id="5_1ymje"]
+[ext_resource type="Texture2D" uid="uid://c4277ksy08pue" path="res://assets/images/common/btn_paper_secondary_normal.svg" id="5_16mpa"]
+[ext_resource type="Texture2D" uid="uid://g6jguuu3mgrt" path="res://assets/images/common/btn_paper_secondary_pressed.svg" id="6_6gi7u"]
+[ext_resource type="Texture2D" uid="uid://bfod2u4o5b5i" path="res://assets/images/common/btn_paper_primary_pressed.svg" id="6_021lv"]
+[ext_resource type="Texture2D" uid="uid://dvobapoh8dr6a" path="res://assets/images/common/btn_paper_primary_focus.svg" id="7_16mpa"]
+[ext_resource type="Texture2D" uid="uid://bgstufvwvogbj" path="res://assets/images/common/btn_paper_secondary_focus.svg" id="7_exhbw"]
 
 [node name="Base" unique_id=1370178296 instance=ExtResource("1_myu88")]
 

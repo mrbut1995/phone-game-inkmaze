@@ -7,8 +7,8 @@ extends Control
 
 signal selected(level_id: int)
 
-const STAR_FULL := preload("res://assets/images/game/star_highlight.svg")
-const STAR_EMPTY := preload("res://assets/images/game/star_empty.svg")
+const STAR_FULL := preload("res://assets/images/common/star_highlight.svg")
+const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
 
 @export var level_id: int = 1
 @export var is_locked: bool = false

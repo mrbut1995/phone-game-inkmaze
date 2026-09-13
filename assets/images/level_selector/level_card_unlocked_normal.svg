@@ -1,13 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -4 340 406" width="340" height="406">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-14 -14 318 378" width="318" height="378">
+  <!-- The man choi (unlocked) - than the 290x350 dat tai goc (0,0), le 14px de chua focus ring -->
   <defs>
-    <filter id="lvlCleanShadow" x="-15%" y="-15%" width="130%" height="135%">
-      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#1E1610" flood-opacity="0.22"/>
-      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#1E1610" flood-opacity="0.08"/>
-    </filter>
     <clipPath id="lvlCleanClip"><rect width="290" height="350" rx="24"/></clipPath>
   </defs>
 
-  <g transform="translate(20, 15)" filter="url(#lvlCleanShadow)">
+  <g>
     <g clip-path="url(#lvlCleanClip)">
       <rect width="290" height="350" fill="#FEFDFA"/>
       <path d="M0 90 L290 90 M0 170 L290 170 M0 250 L290 250" stroke="#8FB9D2" stroke-width="1" opacity="0.35"/>

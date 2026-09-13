@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 196 112" width="196" height="112">
-  <!-- Nút HỦY BỎ khi focus -->
-  <rect x="-4" y="-4" width="188" height="104" rx="20" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3"/>
-  <rect width="180" height="96" rx="16" fill="#FFFDF8" stroke="#C4843A" stroke-width="2.5"/>
-</svg>

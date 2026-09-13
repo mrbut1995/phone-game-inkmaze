@@ -2,22 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk7amg5p6bi7a"
-path="res://.godot/imported/level_card_unlocked_normal.svg-0fb499974e5e4f451ced4a3da6ede44a.ctex"
+uid="uid://gva00yt1xk06"
+path="res://.godot/imported/checkbox_pressed.svg-5f8029205f3029837f3f934f00f57639.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/level_selector/level_card_unlocked_normal.svg"
-dest_files=["res://.godot/imported/level_card_unlocked_normal.svg-0fb499974e5e4f451ced4a3da6ede44a.ctex"]
+source_file="res://assets/images/common/checkbox_pressed.svg"
+dest_files=["res://.godot/imported/checkbox_pressed.svg-5f8029205f3029837f3f934f00f57639.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
-compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

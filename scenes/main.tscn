@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://dcn5tod78ae07" path="res://scripts/scenes/main.gd" id="2_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="3_sugp2"]
+[ext_resource type="Texture2D" uid="uid://cgbp27e1ip682" path="res://assets/images/main/panel_genre_container.svg" id="5_0ld40"]
 [ext_resource type="Texture2D" uid="uid://bn800jpgxtk1v" path="res://assets/images/main/card_mode_dungeon_pressed.svg" id="5_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://chgvp6vq7npl3" path="res://assets/images/main/card_mode_level_normal.svg" id="5_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://b44veo021gjvc" path="res://assets/images/main/card_mode_level_disabled.svg" id="6_trceg"]
@@ -12,12 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://dlg2c12rsejkc" path="res://assets/images/main/card_mode_daily_normal.svg" id="7_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://dihgfo2w73ydi" path="res://assets/images/main/btn_menu_leaderboard.svg" id="8_choun"]
 [ext_resource type="Texture2D" uid="uid://dgrfwbbakoy1" path="res://assets/images/main/btn_menu_rules.svg" id="9_ya4ey"]
-[ext_resource type="Texture2D" uid="uid://bimowm7hhuoqd" path="res://assets/images/main/card_mode_dungeon_disabled.svg" id="10_dp3eg"]
 [ext_resource type="Texture2D" uid="uid://cgddw6scnxi63" path="res://assets/images/main/btn_menu_settings.svg" id="10_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://bouakghotecup" path="res://assets/images/main/card_mode_dungeon_focus.svg" id="11_0ld40"]
 [ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="11_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://u7s4jqx5jo2r" path="res://assets/images/main/card_mode_daily_pressed.svg" id="13_gqmmt"]
-[ext_resource type="Texture2D" uid="uid://cnfdg6korh6gn" path="res://assets/images/main/card_mode_daily_disabled.svg" id="14_yc10j"]
+[ext_resource type="Texture2D" uid="uid://cnfdg6korh6gn" path="res://assets/images/main/card_mode_disabled.svg" id="14_yc10j"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_o5qli")]
 script = ExtResource("2_eb6dy")
@@ -34,7 +34,7 @@ offset_bottom = 0.11999512
 texture = ExtResource("2_0wfyh")
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect" type="TextureRect" parent="Panel" index="0" unique_id=1517190442]
+[node name="Logo" type="TextureRect" parent="Panel" index="0" unique_id=1517190442]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.432
@@ -42,22 +42,65 @@ anchor_top = 0.061000004
 anchor_right = 0.56
 anchor_bottom = 0.13000001
 offset_left = 0.039978027
-offset_top = -13.310013
-offset_right = 0.2000122
-offset_bottom = 0.69996643
+offset_top = -34.310013
+offset_right = 4.200012
+offset_bottom = -16.300034
 texture = ExtResource("3_sugp2")
 
-[node name="GameMode" type="VBoxContainer" parent="Panel" index="1" unique_id=1934788947]
+[node name="Title" type="VBoxContainer" parent="Panel" index="1" unique_id=1588437860]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36100003
+anchor_top = 0.132
+anchor_right = 0.4
+anchor_bottom = 0.155
+offset_left = 0.16998291
+offset_top = -0.7200165
+offset_bottom = -0.05001831
+
+[node name="Title" type="Label" parent="Panel/Title" index="0" unique_id=137644351]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 2
+text = "Ink Maze"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Container" type="TextureRect" parent="Panel/Title" index="1" unique_id=1272469916]
+layout_mode = 2
+texture = ExtResource("5_0ld40")
+
+[node name="Genre" type="Label" parent="Panel/Title/Container" index="0" unique_id=32933071]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "STR_GENRE_SUBTITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="SubTitle" type="Label" parent="Panel/Title" index="2" unique_id=91962281]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 2
+text = "STR_GAME_TAGLINE"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="GameMode" type="VBoxContainer" parent="Panel" index="2" unique_id=1934788947]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15400001
 anchor_top = 0.231
 anchor_right = 0.85300004
 anchor_bottom = 0.68600005
-offset_left = 0.37998962
-offset_top = -0.010040283
-offset_right = 0.40997314
-offset_bottom = -0.060180664
+offset_left = 8.37999
+offset_top = 31.98996
+offset_right = 8.409973
+offset_bottom = 31.93982
 theme_override_constants/separation = 0
 
 [node name="Play" type="TextureButton" parent="Panel/GameMode" index="0" unique_id=1410235984]
@@ -68,18 +111,18 @@ texture_hover = ExtResource("5_ya4ey")
 texture_disabled = ExtResource("6_trceg")
 texture_focused = ExtResource("7_a8y0u")
 
-[node name="Badge" type="Label" parent="Panel/GameMode/Play" index="0" unique_id=773805983]
+[node name="Tag" type="Label" parent="Panel/GameMode/Play" index="0" unique_id=773805983]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.104055576
 anchor_top = 0.14141989
-anchor_right = 0.3690555
-anchor_bottom = 0.23441984
+anchor_right = 0.34127778
+anchor_bottom = 0.25545806
 offset_left = 0.07998657
 offset_top = -0.052009583
 offset_right = 0.27999878
 offset_bottom = 0.069992065
-text = "STR_MODE_PLAY_TITLE"
+text = "STR_TAG_MAIN_MODE"
 metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="Panel/GameMode/Play" index="1" unique_id=709297743]
@@ -101,12 +144,12 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.24433336
 anchor_top = 0.5646259
-anchor_right = 0.5093334
-anchor_bottom = 0.87762576
-offset_left = 0.0799942
-offset_top = 0.06799698
+anchor_right = 0.5093333
+anchor_bottom = 0.755458
+offset_left = 0.07998657
+offset_top = 0.06800842
 offset_right = 0.27999878
-offset_bottom = 0.069999695
+offset_bottom = 0.070007324
 metadata/_edit_use_anchors_ = true
 
 [node name="PlayDesc1" type="Label" parent="Panel/GameMode/Play/VBoxContainer" index="0" unique_id=509606778]
@@ -119,20 +162,96 @@ layout_mode = 2
 text = "STR_MODE_PLAY_DESC_2"
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect" type="TextureRect" parent="Panel/GameMode/Play" index="3" unique_id=556235720]
-layout_mode = 0
-offset_left = 56.0
-offset_top = 11.0
-offset_right = 96.0
-offset_bottom = 51.0
+[node name="Badge" type="Label" parent="Panel/GameMode/Play" index="3" unique_id=933830205]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7026667
+anchor_top = 0.71012217
+anchor_right = 1.01
+anchor_bottom = 0.82400006
+offset_left = 0.07998657
+offset_top = -0.052001953
+offset_right = -0.2000122
+offset_bottom = 0.11198425
+text = "STR_CURRENT_LEVEL_BADGE"
+metadata/_edit_use_anchors_ = true
 
 [node name="Dungeon" type="TextureButton" parent="Panel/GameMode" index="1" unique_id=1434776496]
 layout_mode = 2
 texture_normal = ExtResource("6_ya4ey")
 texture_pressed = ExtResource("5_o6xl0")
 texture_hover = ExtResource("6_ya4ey")
-texture_disabled = ExtResource("10_dp3eg")
+texture_disabled = ExtResource("14_yc10j")
 texture_focused = ExtResource("11_0ld40")
+
+[node name="Tag" type="Label" parent="Panel/GameMode/Dungeon" index="0" unique_id=978315534]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.104055576
+anchor_top = 0.14141989
+anchor_right = 0.37800002
+anchor_bottom = 0.256
+offset_left = 0.07998657
+offset_top = -0.052009583
+offset_right = -26.160004
+offset_bottom = -0.06116104
+text = "STR_TAG_ENDLESS_MODE"
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Panel/GameMode/Dungeon" index="1" unique_id=1577834671]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24433336
+anchor_top = 0.3208092
+anchor_right = 0.549
+anchor_bottom = 0.416
+offset_left = 0.0799942
+offset_top = -0.052001953
+offset_right = -28.28006
+offset_bottom = -0.46018982
+text = "STR_MODE_DUNGEON_TITLE"
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/GameMode/Dungeon" index="2" unique_id=185576174]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24433336
+anchor_top = 0.5646259
+anchor_right = 0.569
+anchor_bottom = 0.77160335
+offset_left = 0.07998657
+offset_top = 0.067993164
+offset_right = 0.32000732
+offset_bottom = -0.020553589
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayDesc1" type="Label" parent="Panel/GameMode/Dungeon/VBoxContainer" index="0" unique_id=1255473362]
+layout_mode = 2
+text = "STR_MODE_DUNGEON_DESC_1"
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayDesc2" type="Label" parent="Panel/GameMode/Dungeon/VBoxContainer" index="1" unique_id=1448238396]
+layout_mode = 2
+text = "STR_MODE_DUNGEON_DESC_2"
+metadata/_edit_use_anchors_ = true
+
+[node name="Badge" type="Label" parent="Panel/GameMode/Dungeon" index="3" unique_id=1779795099]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.703
+anchor_top = 0.71012217
+anchor_right = 1.0070001
+anchor_bottom = 0.80500007
+offset_left = -0.16000366
+offset_top = -0.052017212
+offset_right = -0.040039063
+offset_bottom = -0.012466431
+text = "STR_RECORD_FLOOR_BADGE"
+metadata/_edit_use_anchors_ = true
 
 [node name="DailyChallenge" type="TextureButton" parent="Panel/GameMode" index="2" unique_id=539366582]
 layout_mode = 2
@@ -142,13 +261,82 @@ texture_hover = ExtResource("7_ya4ey")
 texture_disabled = ExtResource("14_yc10j")
 texture_focused = ExtResource("11_0ld40")
 
-[node name="Other" type="HBoxContainer" parent="Panel" index="2" unique_id=935967521]
+[node name="Tag" type="Label" parent="Panel/GameMode/DailyChallenge" index="0" unique_id=96439748]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.18349515
-anchor_top = 0.7052631
-anchor_right = 0.83800006
-anchor_bottom = 0.777
+anchor_left = 0.104055576
+anchor_top = 0.14141989
+anchor_right = 0.34600002
+anchor_bottom = 0.256
+offset_left = 0.07998657
+offset_top = -0.052009583
+offset_right = -3.1200104
+offset_bottom = -0.06116104
+text = "STR_TAG_DAILY_MODE"
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Panel/GameMode/DailyChallenge" index="1" unique_id=1512548199]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24433336
+anchor_top = 0.3208092
+anchor_right = 0.51000005
+anchor_bottom = 0.416
+offset_left = 0.0799942
+offset_top = -0.052001953
+offset_right = -0.20007324
+offset_bottom = -0.46018982
+text = "STR_MODE_DAILY_TITLE"
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/GameMode/DailyChallenge" index="2" unique_id=1783558552]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24433336
+anchor_top = 0.5646259
+anchor_right = 0.569
+anchor_bottom = 0.77160335
+offset_left = 0.07998657
+offset_top = 0.067993164
+offset_right = 0.32000732
+offset_bottom = -0.020553589
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayDesc1" type="Label" parent="Panel/GameMode/DailyChallenge/VBoxContainer" index="0" unique_id=1270035672]
+layout_mode = 2
+text = "STR_MODE_DAILY_DESC_1"
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayDesc2" type="Label" parent="Panel/GameMode/DailyChallenge/VBoxContainer" index="1" unique_id=1169553646]
+layout_mode = 2
+text = "STR_MODE_DAILY_DESC_2"
+metadata/_edit_use_anchors_ = true
+
+[node name="Badge" type="Label" parent="Panel/GameMode/DailyChallenge" index="3" unique_id=1790326617]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7026667
+anchor_top = 0.71012217
+anchor_right = 0.9156297
+anchor_bottom = 0.8223102
+offset_left = 0.07998657
+offset_top = -0.052017212
+offset_right = -0.25335693
+offset_bottom = 0.000869751
+text = "STR_STREAK_BADGE"
+metadata/_edit_use_anchors_ = true
+
+[node name="Other" type="HBoxContainer" parent="Panel" index="3" unique_id=935967521]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16796117
+anchor_top = 0.7146198
+anchor_right = 0.845767
+anchor_bottom = 0.7910351
 offset_right = -0.14001465
 offset_bottom = -0.670166
 metadata/_edit_use_anchors_ = true
@@ -161,6 +349,35 @@ texture_hover = ExtResource("8_choun")
 texture_disabled = ExtResource("8_choun")
 texture_focused = ExtResource("8_choun")
 
+[node name="Icon" type="TextureRect" parent="Panel/Other/Leaderboard" index="0" unique_id=273184213]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35191306
+anchor_top = 0.13092309
+anchor_right = 0.62200004
+anchor_bottom = 0.60800004
+offset_left = 0.05999756
+offset_top = -0.020002365
+offset_right = -0.060012817
+offset_bottom = -0.040008545
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/Other/Leaderboard" index="1" unique_id=222287884]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09095658
+anchor_top = 0.6465536
+anchor_right = 0.91300005
+anchor_bottom = 0.823
+offset_left = 0.07998657
+offset_top = -0.052017212
+offset_right = 0.010009766
+offset_bottom = 0.009941101
+text = "STR_BTN_LEADERBOARD"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
 [node name="Rule" type="TextureButton" parent="Panel/Other" index="1" unique_id=1591510809]
 layout_mode = 2
 texture_normal = ExtResource("9_ya4ey")
@@ -168,6 +385,35 @@ texture_pressed = ExtResource("9_ya4ey")
 texture_hover = ExtResource("9_ya4ey")
 texture_disabled = ExtResource("9_ya4ey")
 texture_focused = ExtResource("9_ya4ey")
+
+[node name="Icon" type="TextureRect" parent="Panel/Other/Rule" index="0" unique_id=2099598477]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35191306
+anchor_top = 0.13092309
+anchor_right = 0.62200004
+anchor_bottom = 0.60800004
+offset_left = 0.05999756
+offset_top = -0.020002365
+offset_right = -0.060012817
+offset_bottom = -0.040008545
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/Other/Rule" index="1" unique_id=1065697118]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09095658
+anchor_top = 0.6465536
+anchor_right = 0.91300005
+anchor_bottom = 0.823
+offset_left = 0.07998657
+offset_top = -0.052017212
+offset_right = 0.010009766
+offset_bottom = 0.009941101
+text = "STR_BTN_HOW_TO_PLAY"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Settings" type="TextureButton" parent="Panel/Other" index="2" unique_id=488535435]
 layout_mode = 2
@@ -177,7 +423,36 @@ texture_hover = ExtResource("10_eb6dy")
 texture_disabled = ExtResource("10_eb6dy")
 texture_focused = ExtResource("10_eb6dy")
 
-[node name="Stamp" type="TextureRect" parent="Panel" index="3" unique_id=1043027324]
+[node name="Icon" type="TextureRect" parent="Panel/Other/Settings" index="0" unique_id=638917422]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35191306
+anchor_top = 0.13092309
+anchor_right = 0.62200004
+anchor_bottom = 0.60800004
+offset_left = 0.05999756
+offset_top = -0.020002365
+offset_right = -0.060012817
+offset_bottom = -0.040008545
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/Other/Settings" index="1" unique_id=1333782322]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09095658
+anchor_top = 0.6465536
+anchor_right = 0.91300005
+anchor_bottom = 0.823
+offset_left = 0.07998657
+offset_top = -0.052017212
+offset_right = 0.010009766
+offset_bottom = 0.009941101
+text = "STR_BTN_SETTINGS"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Stamp" type="TextureRect" parent="Panel" index="4" unique_id=1043027324]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6590874

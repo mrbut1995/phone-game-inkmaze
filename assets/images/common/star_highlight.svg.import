@@ -2,22 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk7amg5p6bi7a"
-path="res://.godot/imported/level_card_unlocked_normal.svg-0fb499974e5e4f451ced4a3da6ede44a.ctex"
+uid="uid://c66v5bmdvegnd"
+path="res://.godot/imported/star_highlight.svg-08ae0545ac55bab96067a13ad69f66a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/level_selector/level_card_unlocked_normal.svg"
-dest_files=["res://.godot/imported/level_card_unlocked_normal.svg-0fb499974e5e4f451ced4a3da6ede44a.ctex"]
+source_file="res://assets/images/common/star_highlight.svg"
+dest_files=["res://.godot/imported/star_highlight.svg-08ae0545ac55bab96067a13ad69f66a9.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
-compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

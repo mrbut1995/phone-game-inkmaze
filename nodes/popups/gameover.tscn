@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_psrev"]
 [ext_resource type="Texture2D" uid="uid://nnkku81rvntx" path="res://assets/images/popups/popup_game_over.svg" id="2_6oayo"]
 
-[ext_resource type="Texture2D" uid="uid://c4277ksy08pue" path="res://assets/images/popups/btn_paper_secondary_normal.svg" id="3_sec_n"]
-[ext_resource type="Texture2D" uid="uid://g6jguuu3mgrt" path="res://assets/images/popups/btn_paper_secondary_pressed.svg" id="4_sec_p"]
-[ext_resource type="Texture2D" uid="uid://c4cv31tihnj1" path="res://assets/images/popups/btn_paper_primary_normal.svg" id="5_pri_n"]
-[ext_resource type="Texture2D" uid="uid://bfod2u4o5b5i" path="res://assets/images/popups/btn_paper_primary_pressed.svg" id="6_pri_p"]
+[ext_resource type="Texture2D" uid="uid://c4277ksy08pue" path="res://assets/images/common/btn_paper_secondary_normal.svg" id="3_sec_n"]
+[ext_resource type="Texture2D" uid="uid://g6jguuu3mgrt" path="res://assets/images/common/btn_paper_secondary_pressed.svg" id="4_sec_p"]
+[ext_resource type="Texture2D" uid="uid://c4cv31tihnj1" path="res://assets/images/common/btn_paper_primary_normal.svg" id="5_pri_n"]
+[ext_resource type="Texture2D" uid="uid://bfod2u4o5b5i" path="res://assets/images/common/btn_paper_primary_pressed.svg" id="6_pri_p"]
 
 [node name="Base" unique_id=1370178296 instance=ExtResource("1_psrev")]
 

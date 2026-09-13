@@ -2,6 +2,97 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_5p8wc"]
 [ext_resource type="Script" uid="uid://b2tlnr58h4d6u" path="res://scripts/scenes/settings.gd" id="2_r6d6q"]
+[ext_resource type="Texture2D" uid="uid://nwnmgpgwvc7y" path="res://assets/images/settings/settings_panel.svg" id="3_6wm04"]
+[ext_resource type="Texture2D" uid="uid://cviihr4gbxev4" path="res://assets/images/settings/section_chip.svg" id="4_f4mfi"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_5p8wc")]
 script = ExtResource("2_r6d6q")
+
+[node name="Panel" type="TextureRect" parent="." index="1" unique_id=143178994]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06574074
+anchor_top = 0.12604167
+anchor_right = 1.7623705
+anchor_bottom = 1.7368335
+offset_right = -896.36005
+offset_bottom = -1526.7201
+texture = ExtResource("3_6wm04")
+metadata/_edit_use_anchors_ = true
+
+[node name="Sections" type="VBoxContainer" parent="Panel" index="0" unique_id=1210858816]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Music" type="VBoxContainer" parent="Panel/Sections" index="0" unique_id=126270710]
+layout_mode = 2
+
+[node name="SectionPanel" type="TextureRect" parent="Panel/Sections/Music" index="0" unique_id=1392439238]
+layout_mode = 2
+texture = ExtResource("4_f4mfi")
+
+[node name="Label" type="Label" parent="Panel/Sections/Music/SectionPanel" index="0" unique_id=790885896]
+modulate = Color(0.1578539, 0.3377005, 0.4559167, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08018868
+anchor_top = 0.175
+anchor_right = 0.9103774
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+text = "Âm thanh"
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Sections/Music" index="1" unique_id=2043596894]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Sections/Music/HBoxContainer" index="0" unique_id=523782966]
+modulate = Color(0.1578539, 0.3377005, 0.4559167, 1)
+layout_mode = 2
+text = "Âm thanh"
+metadata/_edit_use_anchors_ = true
+
+[node name="Board" type="VBoxContainer" parent="Panel/Sections" index="1" unique_id=2006969508]
+layout_mode = 2
+
+[node name="SectionPanel" type="TextureRect" parent="Panel/Sections/Board" index="0" unique_id=1881797316]
+layout_mode = 2
+texture = ExtResource("4_f4mfi")
+
+[node name="Label" type="Label" parent="Panel/Sections/Board/SectionPanel" index="0" unique_id=2018529550]
+modulate = Color(0.1578539, 0.3377005, 0.4559167, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08018868
+anchor_top = 0.175
+anchor_right = 0.9103774
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+text = "Bàn cờ & Điều Khiển"
+metadata/_edit_use_anchors_ = true
+
+[node name="Language" type="VBoxContainer" parent="Panel/Sections" index="2" unique_id=1918901383]
+layout_mode = 2
+
+[node name="SectionPanel" type="TextureRect" parent="Panel/Sections/Language" index="0" unique_id=1371078982]
+layout_mode = 2
+texture = ExtResource("4_f4mfi")
+
+[node name="Label" type="Label" parent="Panel/Sections/Language/SectionPanel" index="0" unique_id=1297301470]
+modulate = Color(0.1578539, 0.3377005, 0.4559167, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08018868
+anchor_top = 0.175
+anchor_right = 0.9103774
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+text = "Ngôn ngữ"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="VBoxContainer" parent="Panel/Sections" index="3" unique_id=1617146451]
+layout_mode = 2

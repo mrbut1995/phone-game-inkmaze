@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 196 112" width="196" height="112">
-  <!-- Nút HỦY BỎ khi nhấn: lún 2px -->
-  <g transform="translate(0, 2)">
-    <rect width="180" height="96" rx="16" fill="#EDE6D8" stroke="#8FA6B4" stroke-width="2.5"/>
-  </g>
-</svg>

@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://dfmh01huguti4"]
 
 [ext_resource type="Script" uid="uid://3e0i4bldywkh" path="res://scripts/nodes/level_selection/level_card.gd" id="1_066fa"]
-[ext_resource type="Texture2D" uid="uid://dexk21ag2ifyv" path="res://assets/images/level_selector/level_card_unlocked_normal.svg" id="2_23rcg"]
-[ext_resource type="Texture2D" uid="uid://o5y7d4xy6nr2" path="res://assets/images/level_selector/level_card_locked.svg" id="3_fwgxh"]
-[ext_resource type="Texture2D" uid="uid://cqe1sdpj4yw71" path="res://assets/images/game/star_empty.svg" id="3_h4clh"]
-[ext_resource type="Texture2D" uid="uid://etr7viier6ak" path="res://assets/images/level_selector/level_card_focus.svg" id="4_xwruh"]
+[ext_resource type="Texture2D" uid="uid://dk7amg5p6bi7a" path="res://assets/images/level_selector/level_card_unlocked_normal.svg" id="2_23rcg"]
+[ext_resource type="Texture2D" uid="uid://b0qku0upl126x" path="res://assets/images/level_selector/level_card_locked.svg" id="3_fwgxh"]
+[ext_resource type="Texture2D" uid="uid://cqe1sdpj4yw71" path="res://assets/images/common/star_empty.svg" id="3_h4clh"]
+[ext_resource type="Texture2D" uid="uid://bainw7703u4ig" path="res://assets/images/level_selector/level_card_focus.svg" id="4_xwruh"]
+[ext_resource type="Texture2D" uid="uid://b36x4h1vea5ax" path="res://assets/images/level_selector/level_card_unlocked_pressed.svg" id="5_press"]
 [ext_resource type="Texture2D" uid="uid://ceu3tnfq77j3j" path="res://assets/images/level_selector/stamp_done_circle.svg" id="6_23rcg"]
 [ext_resource type="Texture2D" uid="uid://blikk0nkl6dow" path="res://assets/images/level_selector/icon_lock_locked.svg" id="6_fwgxh"]
 [ext_resource type="LabelSettings" uid="uid://ceqbsoy3ipfjh" path="res://resources/settings/text/text_stamp.tres" id="8_xwruh"]
@@ -19,21 +20,23 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="TextureButton" parent="." unique_id=977953001]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -17.0
-offset_top = -14.891846
-offset_right = 16.0
-offset_bottom = 20.108154
+anchors_preset = -1
+anchor_left = -0.05282496
+anchor_top = -0.06984506
+anchor_right = 1.0498251
+anchor_bottom = 1.0358452
+offset_left = 4.689
+offset_top = 7.295
+offset_right = -4.7980347
+offset_bottom = -7.2250366
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("2_23rcg")
+texture_pressed = ExtResource("5_press")
 texture_hover = ExtResource("2_23rcg")
 texture_disabled = ExtResource("3_fwgxh")
 texture_focused = ExtResource("4_xwruh")
 metadata/_edit_use_anchors_ = true
-metadata/_edit_lock_ = true
 
 [node name="Rating" type="Control" parent="Panel" unique_id=1004137755]
 layout_mode = 1
