@@ -9,6 +9,12 @@ signal locale_changed(locale: String)
 const SUPPORTED_LOCALES := ["vi", "en"]
 const DEFAULT_LOCALE := "vi"
 
+## Thong tin hien thi cua tung ngon ngu (co, ma quoc gia, ten, phu de)
+const LOCALE_INFO := {
+	"vi": {"flag": "🇻🇳", "code": "VN", "name": "Tiếng Việt", "sub": "Mặc định hệ thống"},
+	"en": {"flag": "🇺🇸", "code": "US", "name": "English", "sub": "United States"},
+}
+
 var current_locale := DEFAULT_LOCALE
 
 
@@ -41,6 +47,19 @@ func cycle_locale() -> void:
 
 func is_supported(code: String) -> bool:
 	return SUPPORTED_LOCALES.has(code)
+
+
+## Ten hien thi cua ngon ngu, vd: "Tiếng Việt (VN)"
+func get_display_name(code: String) -> String:
+	var info := get_locale_info(code)
+	return "%s (%s)" % [info["name"], info.get("code", code.to_upper())]
+
+
+## Thong tin (co, ma quoc gia, ten, phu de) cua mot ngon ngu, fallback ve ma ngon ngu
+func get_locale_info(code: String) -> Dictionary:
+	if LOCALE_INFO.has(code):
+		return LOCALE_INFO[code]
+	return {"flag": "🏳️", "code": code.to_upper(), "name": code.to_upper(), "sub": ""}
 
 
 ## Wrapper cho tr() để code gọi ngắn gọn: LocalizationManager.t("KEY")

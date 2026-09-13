@@ -18,7 +18,19 @@ var master_volume := 1.0
 var sfx_volume := 1.0
 var music_volume := 0.8
 var vibration := true
+var auto_mark_safe := true
+var glow_path := true
 var locale := "vi"
+
+## Gia tri mac dinh - dung cho nut "Khoi phuc cai dat mac dinh"
+const DEFAULTS := {
+	"master_volume": 1.0,
+	"sfx_volume": 1.0,
+	"music_volume": 0.8,
+	"vibration": true,
+	"auto_mark_safe": true,
+	"glow_path": true,
+}
 
 
 func _ready() -> void:
@@ -84,12 +96,22 @@ func apply_master_volume() -> void:
 	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(master_volume, 0.0001)))
 
 
+## Tra cac cai dat ve mac dinh (khong doi ngon ngu dang chon)
+func reset_to_defaults() -> void:
+	for key in DEFAULTS:
+		set_setting(key, DEFAULTS[key], false)
+	apply_master_volume()
+	save()
+
+
 func save() -> void:
 	var cfg := ConfigFile.new()
 	cfg.set_value(SECTION_AUDIO, "master_volume", master_volume)
 	cfg.set_value(SECTION_AUDIO, "sfx_volume", sfx_volume)
 	cfg.set_value(SECTION_AUDIO, "music_volume", music_volume)
 	cfg.set_value(SECTION_GAME, "vibration", vibration)
+	cfg.set_value(SECTION_GAME, "auto_mark_safe", auto_mark_safe)
+	cfg.set_value(SECTION_GAME, "glow_path", glow_path)
 	cfg.set_value(SECTION_LOCALE, "locale", locale)
 	var err := cfg.save(CONFIG_PATH)
 	if err != OK:
@@ -104,4 +126,6 @@ func load_settings() -> void:
 	sfx_volume = float(cfg.get_value(SECTION_AUDIO, "sfx_volume", sfx_volume))
 	music_volume = float(cfg.get_value(SECTION_AUDIO, "music_volume", music_volume))
 	vibration = bool(cfg.get_value(SECTION_GAME, "vibration", vibration))
+	auto_mark_safe = bool(cfg.get_value(SECTION_GAME, "auto_mark_safe", auto_mark_safe))
+	glow_path = bool(cfg.get_value(SECTION_GAME, "glow_path", glow_path))
 	locale = str(cfg.get_value(SECTION_LOCALE, "locale", locale))

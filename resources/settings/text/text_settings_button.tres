@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" format=3]
+
+[ext_resource type="FontFile" uid="uid://i8w4kewq1j3" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Black.ttf" id="1_font"]
+
+[resource]
+font = ExtResource("1_font")
+font_size = 26
+font_color = Color(1, 1, 1, 1)
