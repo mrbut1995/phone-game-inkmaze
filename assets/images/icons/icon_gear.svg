@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Bánh răng (cài đặt) - nét chì vẽ tay -->
+  <path d="M24 12 v-6 M24 42 v-6 M12 24 H6 M42 24 h-6 M15.6 15.6 l-4.2 -4.2 M36.6 36.6 l-4.2 -4.2 M32.4 15.6 l4.2 -4.2 M11.4 36.6 l4.2 -4.2" stroke="#224C6D" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="24" cy="24" r="9.5" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2"/>
+  <circle cx="24" cy="24" r="3" fill="#224C6D"/>
+</svg>

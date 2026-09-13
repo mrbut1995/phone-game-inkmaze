@@ -42,6 +42,12 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_chip.tres" id="40_chip_text"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="41_version"]
 [ext_resource type="PackedScene" path="res://nodes/popups/language.tscn" id="42_lang_popup"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_music.svg" id="43_icon_music"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_bell.svg" id="44_icon_bell"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_globe.svg" id="45_icon_globe"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_cloud.svg" id="46_icon_cloud"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_book.svg" id="47_icon_book"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_reset.svg" id="48_icon_reset"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
@@ -68,7 +74,7 @@ texture_focused = ExtResource("13_back_f")
 [node name="Title" type="Label" parent="TopBar" index="1" unique_id=27927468]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "CÀI ĐẶT HỆ THỐNG"
+text = "STR_BTN_SETTINGS"
 label_settings = ExtResource("31_title")
 horizontal_alignment = 1
 
@@ -119,12 +125,12 @@ theme_override_constants/separation = 0
 
 [node name="Title" type="Label" parent="Panel/Content/Header" index="0" unique_id=1210858818]
 layout_mode = 2
-text = "THIẾT LẬP TRẢI NGHIỆM"
+text = "STR_SETTINGS_SUBTITLE_TITLE"
 label_settings = ExtResource("32_sub_title")
 
 [node name="Subtitle" type="Label" parent="Panel/Content/Header" index="1" unique_id=1210858819]
 layout_mode = 2
-text = "Điều chỉnh âm thanh, điều khiển và lưu trữ"
+text = "STR_SETTINGS_SUBTITLE_DESC"
 label_settings = ExtResource("33_sub_subtitle")
 
 [node name="Audio" type="VBoxContainer" parent="Panel/Content" index="1" unique_id=126270710]
@@ -144,18 +150,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "ÂM THANH"
+text = "STR_SETTINGS_AUDIO_SECTION"
 label_settings = ExtResource("34_section")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BgmRow" type="HBoxContainer" parent="Panel/Content/Audio" index="1" unique_id=2043596894]
+[node name="BgmRow" type="HBoxContainer" parent="Panel/Content/Audio" unique_id=2043596894]
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="Panel/Content/Audio/BgmRow" index="0" unique_id=523782966]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Audio/BgmRow"]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("43_icon_music")
+
+[node name="Label" type="Label" parent="Panel/Content/Audio/BgmRow" unique_id=523782966]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "🎵 Nhạc nền (BGM)"
+text = "STR_SETTINGS_BGM"
 label_settings = ExtResource("35_row")
 vertical_alignment = 1
 
@@ -177,11 +191,19 @@ vertical_alignment = 1
 
 [node name="SfxRow" type="HBoxContainer" parent="Panel/Content/Audio" index="2" unique_id=2043596897]
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="Panel/Content/Audio/SfxRow" index="0" unique_id=523782967]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Audio/SfxRow"]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("44_icon_bell")
+
+[node name="Label" type="Label" parent="Panel/Content/Audio/SfxRow" unique_id=523782967]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "🔔 Hiệu ứng (SFX)"
+text = "STR_SETTINGS_SFX"
 label_settings = ExtResource("35_row")
 vertical_alignment = 1
 
@@ -225,7 +247,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "BÀN CỜ & ĐIỀU KHIỂN"
+text = "STR_SETTINGS_BOARD_SECTION"
 label_settings = ExtResource("34_section")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -251,12 +273,12 @@ theme_override_constants/separation = 0
 
 [node name="Title" type="Label" parent="Panel/Content/Board/HapticRow/Text" index="0" unique_id=2006969512]
 layout_mode = 2
-text = "Rung xúc giác khi đâm tường (Haptic)"
+text = "STR_SETTINGS_HAPTIC"
 label_settings = ExtResource("35_row")
 
-[node name="Desc" type="Label" parent="Panel/Content/Board/HapticRow/Text" index="1" unique_id=2006969513]
+[node name="Desc" type="Label" parent="Panel/Content/Board/HapticRow/Text" unique_id=2006969513]
 layout_mode = 2
-text = "Rung phản hồi cảnh báo khi bước vào tường ẩn"
+text = "STR_SETTINGS_HAPTIC_DESC"
 label_settings = ExtResource("37_desc")
 
 [node name="AutoMarkRow" type="HBoxContainer" parent="Panel/Content/Board" index="2" unique_id=2006969514]
@@ -280,12 +302,12 @@ theme_override_constants/separation = 0
 
 [node name="Title" type="Label" parent="Panel/Content/Board/AutoMarkRow/Text" index="0" unique_id=2006969517]
 layout_mode = 2
-text = "Tự động gạch cạnh an toàn"
+text = "STR_SETTINGS_AUTO_MARK_SAFE"
 label_settings = ExtResource("35_row")
 
-[node name="Desc" type="Label" parent="Panel/Content/Board/AutoMarkRow/Text" index="1" unique_id=2006969518]
+[node name="Desc" type="Label" parent="Panel/Content/Board/AutoMarkRow/Text" unique_id=2006969518]
 layout_mode = 2
-text = "Hỗ trợ tự loại trừ cạnh khi ô có số 0"
+text = "STR_SETTINGS_AUTO_MARK_SAFE_DESC"
 label_settings = ExtResource("37_desc")
 
 [node name="GlowRow" type="HBoxContainer" parent="Panel/Content/Board" index="3" unique_id=2006969519]
@@ -309,12 +331,12 @@ theme_override_constants/separation = 0
 
 [node name="Title" type="Label" parent="Panel/Content/Board/GlowRow/Text" index="0" unique_id=2006969522]
 layout_mode = 2
-text = "Hiển thị vệt dạ quang phát sáng"
+text = "STR_SETTINGS_GLOW"
 label_settings = ExtResource("35_row")
 
-[node name="Desc" type="Label" parent="Panel/Content/Board/GlowRow/Text" index="1" unique_id=2006969523]
+[node name="Desc" type="Label" parent="Panel/Content/Board/GlowRow/Text" unique_id=2006969523]
 layout_mode = 2
-text = "Làm nổi bật vệt đường đi đã vẽ từ điểm S"
+text = "STR_SETTINGS_GLOW_DESC"
 label_settings = ExtResource("37_desc")
 
 [node name="Divider2" type="TextureRect" parent="Panel/Content" index="4" unique_id=1260349673]
@@ -341,18 +363,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "NGÔN NGỮ & LƯU TRỮ"
+text = "STR_SETTINGS_LANGUAGE_SECTION"
 label_settings = ExtResource("34_section")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LangRow" type="HBoxContainer" parent="Panel/Content/Language" index="1" unique_id=1918901384]
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="Panel/Content/Language/LangRow" index="0" unique_id=1918901385]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Language/LangRow"]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("45_icon_globe")
+
+[node name="Label" type="Label" parent="Panel/Content/Language/LangRow" unique_id=1918901385]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "🌐 Ngôn ngữ hiển thị"
+text = "STR_SETTINGS_LANGUAGE"
 label_settings = ExtResource("35_row")
 vertical_alignment = 1
 
@@ -382,20 +412,28 @@ vertical_alignment = 1
 
 [node name="CloudRow" type="HBoxContainer" parent="Panel/Content/Language" index="2" unique_id=1918901388]
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="Text" type="VBoxContainer" parent="Panel/Content/Language/CloudRow" index="0" unique_id=1918901389]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Language/CloudRow"]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("46_icon_cloud")
+
+[node name="Text" type="VBoxContainer" parent="Panel/Content/Language/CloudRow" unique_id=1918901389]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
-[node name="Title" type="Label" parent="Panel/Content/Language/CloudRow/Text" index="0" unique_id=1918901390]
+[node name="Title" type="Label" parent="Panel/Content/Language/CloudRow/Text" unique_id=1918901390]
 layout_mode = 2
-text = "☁️ Lưu trữ đám mây"
+text = "STR_SETTINGS_CLOUD"
 label_settings = ExtResource("35_row")
 
-[node name="Desc" type="Label" parent="Panel/Content/Language/CloudRow/Text" index="1" unique_id=1918901391]
+[node name="Desc" type="Label" parent="Panel/Content/Language/CloudRow/Text" unique_id=1918901391]
 layout_mode = 2
-text = "Google Play Games • Đồng bộ tiến độ màn"
+text = "STR_SETTINGS_CLOUD_DESC"
 label_settings = ExtResource("37_desc")
 
 [node name="Chip" type="TextureRect" parent="Panel/Content/Language/CloudRow" index="1" unique_id=1918901392]
@@ -412,18 +450,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "ĐÃ KẾT NỐI ✔"
+text = "STR_SETTINGS_CONNECTED"
 label_settings = ExtResource("40_chip_text")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PlayerRow" type="HBoxContainer" parent="Panel/Content/Language" index="3" unique_id=1918901394]
+[node name="PlayerRow" type="HBoxContainer" parent="Panel/Content/Language" unique_id=1918901394]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/Content/Language/PlayerRow" index="0" unique_id=1918901395]
+[node name="Label" type="Label" parent="Panel/Content/Language/PlayerRow" unique_id=1918901395]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Mã người chơi (Player ID):"
+text = "STR_SETTINGS_PLAYER_ID"
 label_settings = ExtResource("37_desc")
 vertical_alignment = 1
 
@@ -454,7 +492,19 @@ texture_disabled = ExtResource("26_row_dis")
 texture_focused = ExtResource("25_row_f")
 ignore_texture_size = true
 
-[node name="Label" type="Label" parent="Panel/Content/Actions/Guide" index="0" unique_id=1617146453]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Actions/Guide"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = -17.0
+offset_right = 74.0
+offset_bottom = 17.0
+grow_vertical = 2
+texture = ExtResource("47_icon_book")
+
+[node name="Label" type="Label" parent="Panel/Content/Actions/Guide" unique_id=1617146453]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -463,7 +513,7 @@ offset_left = 85.0
 offset_right = -60.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "📖 Xem lại hướng dẫn & 9 bộ luật chơi"
+text = "STR_SETTINGS_GUIDE"
 label_settings = ExtResource("35_row")
 vertical_alignment = 1
 
@@ -492,7 +542,19 @@ texture_disabled = ExtResource("26_row_dis")
 texture_focused = ExtResource("29_dan_f")
 ignore_texture_size = true
 
-[node name="Label" type="Label" parent="Panel/Content/Actions/Reset" index="0" unique_id=1617146456]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Actions/Reset"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = -17.0
+offset_right = 74.0
+offset_bottom = 17.0
+grow_vertical = 2
+texture = ExtResource("48_icon_reset")
+
+[node name="Label" type="Label" parent="Panel/Content/Actions/Reset" unique_id=1617146456]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -501,7 +563,7 @@ offset_left = 85.0
 offset_right = -60.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "⟲ Khôi phục cài đặt mặc định"
+text = "STR_SETTINGS_RESET"
 label_settings = ExtResource("36_row_danger")
 vertical_alignment = 1
 
@@ -527,7 +589,7 @@ layout_mode = 2
 [node name="Quote" type="Label" parent="Panel/Content/Footer" index="0" unique_id=1617146459]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "~ Number Maze: Logic Puzzle & Hidden Walls ~"
+text = "STR_SETTINGS_FOOTER"
 label_settings = ExtResource("37_desc")
 vertical_alignment = 1
 

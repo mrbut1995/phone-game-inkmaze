@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="800" height="120">
+  <!-- Trạng thái khoá: giấy xám phẳng -->
+  <rect width="800" height="120" rx="28" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="3"/>
+  <line x1="60" y1="4" x2="60" y2="116" stroke="#BAC7CF" stroke-width="3" opacity="0.7"/>
+</svg>

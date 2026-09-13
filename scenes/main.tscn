@@ -18,9 +18,18 @@
 [ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="11_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://u7s4jqx5jo2r" path="res://assets/images/main/card_mode_daily_pressed.svg" id="13_gqmmt"]
 [ext_resource type="Texture2D" uid="uid://cnfdg6korh6gn" path="res://assets/images/main/card_mode_disabled.svg" id="14_yc10j"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_play.svg" id="15_icon_play"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_castle.svg" id="16_icon_castle"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_calendar.svg" id="17_icon_calendar"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_trophy.svg" id="18_icon_trophy"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_book.svg" id="19_icon_book"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_gear.svg" id="20_icon_gear"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="21_stamp_text"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="22_theme_text"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_o5qli")]
 script = ExtResource("2_eb6dy")
+theme = ExtResource("22_theme_text")
 
 [node name="Panel" type="TextureRect" parent="." index="1" unique_id=76192589]
 layout_mode = 1
@@ -62,6 +71,7 @@ offset_bottom = -0.05001831
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 text = "Ink Maze"
+theme_type_variation = &"MainTitle"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -78,6 +88,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_GENRE_SUBTITLE"
+theme_type_variation = &"MainGenre"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -87,6 +98,7 @@ metadata/_edit_lock_ = true
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 text = "STR_GAME_TAGLINE"
+theme_type_variation = &"MainTagline"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -123,20 +135,23 @@ offset_top = -0.052009583
 offset_right = 0.27999878
 offset_bottom = 0.069992065
 text = "STR_TAG_MAIN_MODE"
+theme_type_variation = &"CardTagPlay"
 metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="Panel/GameMode/Play" index="1" unique_id=709297743]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.24433336
-anchor_top = 0.3208092
-anchor_right = 0.5093333
-anchor_bottom = 0.41380915
+anchor_left = 0.266
+anchor_top = 0.30
+anchor_right = 0.90
+anchor_bottom = 0.49
 offset_left = 0.0799942
 offset_top = -0.052001953
 offset_right = 0.27999878
 offset_bottom = 0.069999695
 text = "STR_MODE_PLAY_TITLE"
+theme_type_variation = &"CardTitlePlay"
+vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/GameMode/Play" index="2" unique_id=1396577552]
@@ -155,11 +170,13 @@ metadata/_edit_use_anchors_ = true
 [node name="PlayDesc1" type="Label" parent="Panel/GameMode/Play/VBoxContainer" index="0" unique_id=509606778]
 layout_mode = 2
 text = "STR_MODE_PLAY_DESC_1"
+theme_type_variation = &"CardDescPlay"
 metadata/_edit_use_anchors_ = true
 
 [node name="PlayDesc2" type="Label" parent="Panel/GameMode/Play/VBoxContainer" index="1" unique_id=1601319029]
 layout_mode = 2
 text = "STR_MODE_PLAY_DESC_2"
+theme_type_variation = &"CardDescPlay"
 metadata/_edit_use_anchors_ = true
 
 [node name="Badge" type="Label" parent="Panel/GameMode/Play" index="3" unique_id=933830205]
@@ -174,7 +191,25 @@ offset_top = -0.052001953
 offset_right = -0.2000122
 offset_bottom = 0.11198425
 text = "STR_CURRENT_LEVEL_BADGE"
+theme_type_variation = &"CardBadgePlay"
+horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="ModeIcon" type="TextureRect" parent="Panel/GameMode/Play" index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16619
+anchor_top = 0.5229
+anchor_right = 0.16619
+anchor_bottom = 0.5229
+offset_left = -42.0
+offset_top = -42.0
+offset_right = 42.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_icon_play")
 
 [node name="Dungeon" type="TextureButton" parent="Panel/GameMode" index="1" unique_id=1434776496]
 layout_mode = 2
@@ -197,6 +232,7 @@ offset_top = -0.052009583
 offset_right = -26.160004
 offset_bottom = -0.06116104
 text = "STR_TAG_ENDLESS_MODE"
+theme_type_variation = &"CardTagDungeon"
 metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="Panel/GameMode/Dungeon" index="1" unique_id=1577834671]
@@ -212,6 +248,7 @@ offset_top = -0.052001953
 offset_right = -28.28006
 offset_bottom = -0.46018982
 text = "STR_MODE_DUNGEON_TITLE"
+theme_type_variation = &"CardTitle"
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/GameMode/Dungeon" index="2" unique_id=185576174]
@@ -231,11 +268,13 @@ metadata/_edit_use_anchors_ = true
 [node name="PlayDesc1" type="Label" parent="Panel/GameMode/Dungeon/VBoxContainer" index="0" unique_id=1255473362]
 layout_mode = 2
 text = "STR_MODE_DUNGEON_DESC_1"
+theme_type_variation = &"CardDesc"
 metadata/_edit_use_anchors_ = true
 
 [node name="PlayDesc2" type="Label" parent="Panel/GameMode/Dungeon/VBoxContainer" index="1" unique_id=1448238396]
 layout_mode = 2
 text = "STR_MODE_DUNGEON_DESC_2"
+theme_type_variation = &"CardDesc2"
 metadata/_edit_use_anchors_ = true
 
 [node name="Badge" type="Label" parent="Panel/GameMode/Dungeon" index="3" unique_id=1779795099]
@@ -251,7 +290,25 @@ offset_top = -0.052017212
 offset_right = -0.040039063
 offset_bottom = -0.012466431
 text = "STR_RECORD_FLOOR_BADGE"
+theme_type_variation = &"CardBadgeDungeon"
+horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="ModeIcon" type="TextureRect" parent="Panel/GameMode/Dungeon" index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16619
+anchor_top = 0.54545
+anchor_right = 0.16619
+anchor_bottom = 0.54545
+offset_left = -42.0
+offset_top = -42.0
+offset_right = 42.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_icon_castle")
 
 [node name="DailyChallenge" type="TextureButton" parent="Panel/GameMode" index="2" unique_id=539366582]
 layout_mode = 2
@@ -274,6 +331,7 @@ offset_top = -0.052009583
 offset_right = -3.1200104
 offset_bottom = -0.06116104
 text = "STR_TAG_DAILY_MODE"
+theme_type_variation = &"CardTagDaily"
 metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="Panel/GameMode/DailyChallenge" index="1" unique_id=1512548199]
@@ -289,6 +347,7 @@ offset_top = -0.052001953
 offset_right = -0.20007324
 offset_bottom = -0.46018982
 text = "STR_MODE_DAILY_TITLE"
+theme_type_variation = &"CardTitle"
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/GameMode/DailyChallenge" index="2" unique_id=1783558552]
@@ -308,11 +367,13 @@ metadata/_edit_use_anchors_ = true
 [node name="PlayDesc1" type="Label" parent="Panel/GameMode/DailyChallenge/VBoxContainer" index="0" unique_id=1270035672]
 layout_mode = 2
 text = "STR_MODE_DAILY_DESC_1"
+theme_type_variation = &"CardDesc"
 metadata/_edit_use_anchors_ = true
 
 [node name="PlayDesc2" type="Label" parent="Panel/GameMode/DailyChallenge/VBoxContainer" index="1" unique_id=1169553646]
 layout_mode = 2
 text = "STR_MODE_DAILY_DESC_2"
+theme_type_variation = &"CardDesc2"
 metadata/_edit_use_anchors_ = true
 
 [node name="Badge" type="Label" parent="Panel/GameMode/DailyChallenge" index="3" unique_id=1790326617]
@@ -328,7 +389,25 @@ offset_top = -0.052017212
 offset_right = -0.25335693
 offset_bottom = 0.000869751
 text = "STR_STREAK_BADGE"
+theme_type_variation = &"CardBadgeDaily"
+horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="ModeIcon" type="TextureRect" parent="Panel/GameMode/DailyChallenge" index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16619
+anchor_top = 0.54545
+anchor_right = 0.16619
+anchor_bottom = 0.54545
+offset_left = -42.0
+offset_top = -42.0
+offset_right = 42.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_icon_calendar")
 
 [node name="Other" type="HBoxContainer" parent="Panel" index="3" unique_id=935967521]
 layout_mode = 1
@@ -360,6 +439,7 @@ offset_left = 0.05999756
 offset_top = -0.020002365
 offset_right = -0.060012817
 offset_bottom = -0.040008545
+texture = ExtResource("18_icon_trophy")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Panel/Other/Leaderboard" index="1" unique_id=222287884]
@@ -375,6 +455,7 @@ offset_top = -0.052017212
 offset_right = 0.010009766
 offset_bottom = 0.009941101
 text = "STR_BTN_LEADERBOARD"
+theme_type_variation = &"OtherLabel"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -397,6 +478,7 @@ offset_left = 0.05999756
 offset_top = -0.020002365
 offset_right = -0.060012817
 offset_bottom = -0.040008545
+texture = ExtResource("19_icon_book")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Panel/Other/Rule" index="1" unique_id=1065697118]
@@ -412,6 +494,7 @@ offset_top = -0.052017212
 offset_right = 0.010009766
 offset_bottom = 0.009941101
 text = "STR_BTN_HOW_TO_PLAY"
+theme_type_variation = &"OtherLabel"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -434,6 +517,7 @@ offset_left = 0.05999756
 offset_top = -0.020002365
 offset_right = -0.060012817
 offset_bottom = -0.040008545
+texture = ExtResource("20_icon_gear")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Panel/Other/Settings" index="1" unique_id=1333782322]
@@ -449,6 +533,7 @@ offset_top = -0.052017212
 offset_right = 0.010009766
 offset_bottom = 0.009941101
 text = "STR_BTN_SETTINGS"
+theme_type_variation = &"OtherLabel"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -465,3 +550,15 @@ offset_right = 0.059936523
 offset_bottom = -0.75024414
 texture = ExtResource("11_ya4ey")
 metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/Stamp" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "STR_SETTINGS_VERSION"
+label_settings = ExtResource("21_stamp_text")
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -15,11 +15,11 @@ static func _mgr() -> Node:
 	return null
 
 
-## Danh sách mã ngôn ngữ được hỗ trợ
+## Danh sach ma ngon ngu duoc ho tro (nap tu string.csv)
 static func locales() -> Array:
 	var mgr := _mgr()
 	if mgr != null:
-		return mgr.get("SUPPORTED_LOCALES")
+		return mgr.get("supported_locales")
 	return ["vi"]
 
 

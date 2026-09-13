@@ -1,29 +1,101 @@
 [gd_scene format=3 uid="uid://cggt0mrkea7fs"]
 
-[ext_resource type="Texture2D" uid="uid://d1ado3ujid8d2" path="res://assets/images/calendar/day_cell_completed_normal.svg" id="1_7tl7n"]
-[ext_resource type="Script" uid="uid://c0jpbwfj0dbrw" path="res://scripts/nodes/daily/day.gd" id="1_g2ih2"]
-[ext_resource type="Texture2D" uid="uid://cik2c6s2cfxdt" path="res://assets/images/calendar/day_cell_completed_focus.svg" id="2_1qyry"]
-[ext_resource type="Texture2D" uid="uid://b38hyvpn88ddu" path="res://assets/images/calendar/day_cell_completed_pressed.svg" id="2_3562p"]
+[ext_resource type="Script" path="res://scripts/nodes/daily/day.gd" id="1_day"]
+[ext_resource type="Texture2D" path="res://assets/images/calendar/completed_icon.svg" id="2_check"]
+[ext_resource type="Texture2D" path="res://assets/images/common/star_highlight.svg" id="3_star"]
+[ext_resource type="Texture2D" path="res://assets/images/calendar/tag_day.svg" id="4_tag"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="5_theme"]
 
-[node name="Day" type="Container" unique_id=1980141894]
+[node name="Day" type="Control"]
 custom_minimum_size = Vector2(130, 150)
-anchors_preset = -1
-anchor_right = 0.12900001
-anchor_bottom = 0.083000004
-offset_left = -0.35999966
-offset_top = 0.10000038
-offset_right = -0.32000732
-offset_bottom = -0.86001587
+layout_mode = 3
+anchors_preset = 0
+offset_right = 130.0
+offset_bottom = 150.0
+theme = ExtResource("5_theme")
+script = ExtResource("1_day")
+
+[node name="Button" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_g2ih2")
-metadata/_edit_use_anchors_ = true
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="Button" type="TextureButton" parent="." unique_id=532035221]
-layout_mode = 2
-texture_normal = ExtResource("1_7tl7n")
-texture_pressed = ExtResource("2_3562p")
-texture_hover = ExtResource("1_7tl7n")
-texture_disabled = ExtResource("1_7tl7n")
-texture_focused = ExtResource("2_1qyry")
-metadata/_edit_use_anchors_ = true
+[node name="Number" type="Label" parent="Button"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 14.0
+offset_top = 6.0
+offset_right = 98.0
+offset_bottom = 58.0
+theme_type_variation = &"DailyDayNum"
+text = "01"
+vertical_alignment = 1
+
+[node name="CheckIcon" type="TextureRect" parent="Button"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 64.0
+offset_top = 12.0
+offset_right = 98.0
+offset_bottom = 41.0
+texture = ExtResource("2_check")
+
+[node name="StarIcon" type="TextureRect" parent="Button"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 66.0
+offset_top = 16.0
+offset_right = 96.0
+offset_bottom = 46.0
+texture = ExtResource("3_star")
+expand_mode = 1
+
+[node name="StatusPill" type="TextureRect" parent="Button"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 13.0
+offset_top = 98.0
+offset_right = 117.0
+offset_bottom = 134.0
+
+[node name="StatusLabel" type="Label" parent="Button/StatusPill"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"DailyDayStatusDone"
+text = "3/3 SAO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TodayTag" type="TextureRect" parent="Button"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 15.0
+offset_top = -13.0
+offset_right = 115.0
+offset_bottom = 13.0
+texture = ExtResource("4_tag")
+
+[node name="TodayLabel" type="Label" parent="Button/TodayTag"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"DailyTodayTag"
+text = "STR_TODAY"
+horizontal_alignment = 1
+vertical_alignment = 1

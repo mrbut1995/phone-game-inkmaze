@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ceu3tnfq77j3j" path="res://assets/images/level_selector/stamp_done_circle.svg" id="6_23rcg"]
 [ext_resource type="Texture2D" uid="uid://blikk0nkl6dow" path="res://assets/images/level_selector/icon_lock_locked.svg" id="6_fwgxh"]
 [ext_resource type="LabelSettings" uid="uid://ceqbsoy3ipfjh" path="res://resources/settings/text/text_stamp.tres" id="8_xwruh"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="9_theme_text"]
 
 [node name="Level" type="Control" unique_id=212139280]
 custom_minimum_size = Vector2(297, 355)
@@ -16,6 +17,7 @@ layout_mode = 3
 anchor_right = 0.275
 anchor_bottom = 0.18489583
 script = ExtResource("1_066fa")
+theme = ExtResource("9_theme_text")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="TextureButton" parent="." unique_id=977953001]
@@ -100,6 +102,7 @@ anchor_bottom = 0.63526165
 offset_right = 0.10897827
 offset_bottom = 0.14997864
 theme_override_colors/font_color = Color(0.13333334, 0.29803923, 0.42745098, 1)
+theme_type_variation = &"LevelCardNumber"
 text = "1-1"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -116,8 +119,9 @@ anchor_right = 0.68784255
 anchor_bottom = 0.30814874
 offset_right = 0.10897827
 offset_bottom = 0.14997864
-theme_override_colors/font_color = Color(0.13333334, 0.29803923, 0.42745098, 1)
-text = "Level"
+modulate = Color(1, 1, 1, 1)
+theme_type_variation = &"LevelCardPrefix"
+text = "STR_LEVEL_PREFIX"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
@@ -170,7 +174,7 @@ rotation = 0.657467
 [node name="Label" type="Label" parent="Stamp/CenterContainer" unique_id=787399988]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.75069183, 0.25092328, 0.29985005, 1)
-text = "DONE"
+text = "STR_STAMP_PASSED"
 label_settings = ExtResource("8_xwruh")
 horizontal_alignment = 1
 vertical_alignment = 1

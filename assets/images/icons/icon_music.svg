@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Nốt nhạc (BGM) - nét chì vẽ tay -->
+  <path d="M27 34 V15 c 5 1 8 3.5 8 8" fill="none" stroke="#224C6D" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <ellipse cx="21.5" cy="35" rx="6.5" ry="5" transform="rotate(-18 21.5 35)" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2"/>
+  <path d="M12 40 h24" stroke="#8FB9D2" stroke-width="2.2" stroke-linecap="round"/>
+</svg>

@@ -8,13 +8,35 @@ extends BaseScene
 
 @onready var btn_back: TextureButton = $TopBar/Back
 @onready var grid_container: GridContainer = $GridContainer
+@onready var btn_continue: TextureButton = $ContinueButton
+@onready var lbl_continue: Label = $ContinueButton/Label
+@onready var lbl_stars: Label = $StarsCounter/Count
 
 
 func _ready() -> void:
 	if btn_back != null:
 		btn_back.pressed.connect(_on_back_pressed)
+	if btn_continue != null:
+		btn_continue.pressed.connect(_on_continue_pressed)
 
 	_setup_level_cards()
+	_refresh_header()
+
+
+## Cap nhat so sao tich luy + nhan nut "Tiep tuc man {0}" theo String key
+func _refresh_header() -> void:
+	var gm: Node = get_node_or_null("/root/GameManager")
+	var unlocked: int = 1
+	var total_stars := 0
+	if gm != null:
+		unlocked = int(gm.get("unlocked_levels")) if gm.get("unlocked_levels") != null else 1
+		var stars_dict: Dictionary = gm.get("level_stars") if gm.get("level_stars") != null else {}
+		for value in stars_dict.values():
+			total_stars += int(value)
+	if lbl_stars != null:
+		lbl_stars.text = "%d/%d" % [total_stars, unlocked * 3]
+	if lbl_continue != null:
+		lbl_continue.text = tr("STR_BTN_CONTINUE_LEVEL").format([maxi(unlocked, 1)])
 
 
 func _setup_level_cards() -> void:
@@ -48,6 +70,18 @@ func _on_level_selected(level_id: int) -> void:
 		gm.start_level(level_id)
 	else:
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+
+func _on_continue_pressed() -> void:
+	var gm: Node = get_node_or_null("/root/GameManager")
+	var unlocked: int = 1
+	if gm != null and gm.get("unlocked_levels") != null:
+		unlocked = maxi(int(gm.get("unlocked_levels")), 1)
+	Sfx.play(Sfx.BTN_CLICK)
+	if gm != null and gm.has_method("start_level"):
+		gm.call("start_level", unlocked)
+	else:
+		Nav.goto_game()
 
 
 func _on_back_pressed() -> void:

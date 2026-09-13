@@ -116,7 +116,7 @@ func _refresh_version() -> void:
 		var version := "1.0.0"
 		if app != null:
 			version = str(app.call("get_version"))
-		lbl_version.text = "VER %s" % version
+		lbl_version.text = tr("STR_SETTINGS_VERSION").format([version])
 	if lbl_player_id != null:
 		lbl_player_id.text = PLAYER_ID_PLACEHOLDER
 

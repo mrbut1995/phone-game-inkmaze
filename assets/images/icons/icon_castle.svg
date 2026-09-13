@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Lâu đài (chế độ Dungeon) - nét chì vẽ tay -->
+  <path d="M10 38 V19 h6 v-5 l3 3 3 -3 v5 h4 v-7 l3 3 3 -3 v7 h4 v-5 l3 3 3 -3 v5 h6 v19 z" fill="#FEFDFA" stroke="#224C6D" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M20 38 v-8 a4 4 0 0 1 8 0 v8" fill="none" stroke="#224C6D" stroke-width="2.8"/>
+  <path d="M10 38 h28" stroke="#224C6D" stroke-width="3" stroke-linecap="round"/>
+</svg>

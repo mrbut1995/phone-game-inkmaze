@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Quả địa cầu (ngôn ngữ) - nét chì vẽ tay -->
+  <circle cx="24" cy="24" r="14" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2"/>
+  <ellipse cx="24" cy="24" rx="6" ry="14" fill="none" stroke="#224C6D" stroke-width="2.6"/>
+  <path d="M11 19 h26 M11 29 h26" stroke="#224C6D" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

@@ -15,9 +15,11 @@ extends BaseScene
 @onready var btn_leaderboard: TextureButton = $Panel/Other/Leaderboard
 @onready var btn_rules: TextureButton = $Panel/Other/Rule
 @onready var btn_settings: TextureButton = $Panel/Other/Settings
+@onready var stamp_label: Label = $Panel/Stamp/Label
 
 
 func _ready() -> void:
+	_refresh_stamp()
 	if btn_play != null:
 		btn_play.pressed.connect(_on_play_pressed)
 	if btn_dungeon != null:
@@ -59,3 +61,14 @@ func _on_daily_pressed() -> void:
 func _on_settings_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	Nav.goto_settings()
+
+
+## Con dau phien ban: "VER x.y.z" (lay tu AppManager, dung String key)
+func _refresh_stamp() -> void:
+	if stamp_label == null:
+		return
+	var app := get_node_or_null("/root/AppManager")
+	var version := "1.0.0"
+	if app != null:
+		version = str(app.call("get_version"))
+	stamp_label.text = tr("STR_SETTINGS_VERSION").format([version])

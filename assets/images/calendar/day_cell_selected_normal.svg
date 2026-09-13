@@ -1,11 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-9 -3 148 168" width="148" height="168">
-  <defs>
-    <filter id="selNormShadow" x="-20%" y="-20%" width="140%" height="145%">
-      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#C4843A" flood-opacity="0.25"/>
-    </filter>
-  </defs>
-  <g filter="url(#selNormShadow)">
-    <rect x="2" y="2" width="126" height="146" rx="14" fill="#FFFDF8"/>
-    <rect x="2" y="2" width="126" height="146" rx="14" fill="none" stroke="#C4843A" stroke-width="3.5"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" width="130" height="150">
+  <!-- Ô ngày HÔM NAY: nền giấy sáng, viền hổ phách đậm -->
+  <rect x="2" y="2" width="126" height="146" rx="14" fill="#FFFDF8"/>
+  <rect x="2" y="2" width="126" height="146" rx="14" fill="none" stroke="#C4843A" stroke-width="4"/>
 </svg>

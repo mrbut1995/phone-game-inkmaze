@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Màn hình có nút phát (xem quảng cáo) - nét chì vẽ tay -->
+  <rect x="8" y="12" width="32" height="22" rx="4" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2"/>
+  <path d="M21 19 L29 23 L21 27 z" fill="#D84444"/>
+  <path d="M18 38 h12 M24 34 v4" stroke="#224C6D" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="800" height="120">
+  <!-- Nút CTA lớn cuối màn Daily: thẻ giấy xanh mực -->
+  <rect width="800" height="120" rx="28" fill="#3D83AE" stroke="#265B7D" stroke-width="4"/>
+  <line x1="60" y1="4" x2="60" y2="116" stroke="#FAF5EB" stroke-width="3.5" opacity="0.6"/>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 28" width="38" height="28">
+  <!-- Cờ Việt Nam -->
+  <rect x="1.5" y="1.5" width="35" height="25" rx="3" fill="#DA251D" stroke="#224C6D" stroke-width="1.8"/>
+  <path d="M19 6.5 L21.2 13.4 L28.4 13.4 L22.6 17.7 L24.8 24.6 L19 20.3 L13.2 24.6 L15.4 17.7 L9.6 13.4 L16.8 13.4 Z" fill="#FFFF00"/>
+</svg>

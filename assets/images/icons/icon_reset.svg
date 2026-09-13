@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Mũi tên vòng (khôi phục mặc định) - nét chì vẽ tay -->
+  <path d="M36 24 a 12 12 0 1 1 -6.5 -10.7" fill="none" stroke="#D84444" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M29 8.5 L30.5 15 L37 13.5" fill="none" stroke="#D84444" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
