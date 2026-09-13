@@ -305,7 +305,7 @@ func _on_home_requested() -> void:
 	if gm != null:
 		gm.call("go_to_main_menu")
 	else:
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		Nav.goto_main()
 
 
 # ---------------------------------------------------------------------------

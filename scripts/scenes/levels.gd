@@ -12,6 +12,7 @@ extends BaseScene
 const LEVEL_CARD_SCENE := preload("res://nodes/level_selection/level_card.tscn")
 const DOT_ACTIVE := preload("res://assets/images/level_selector/dot_active.svg")
 const DOT_INACTIVE := preload("res://assets/images/level_selector/dot_inactive.svg")
+const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 const CARDS_PER_PAGE := 9                        # 3 cột x 3 hàng
 const GRID_COLUMNS := 3
@@ -51,8 +52,11 @@ var _drag_start_scroll := 0.0
 func _ready() -> void:
 	if btn_back != null:
 		btn_back.pressed.connect(_on_back_pressed)
+		UIAnim.attach_press_bounce(btn_back)
 	if btn_continue != null:
 		btn_continue.pressed.connect(_on_continue_pressed)
+		UIAnim.attach_press_bounce(btn_continue)
+		UIAnim.play_pulse(btn_continue, 1.03, 1.8)
 	resized.connect(_apply_layout)
 
 	_build_pages()
@@ -140,6 +144,8 @@ func _add_card(grid: GridContainer, level_id: int, chapter: int, index_in_chapte
 		card.call("update_visuals")
 	if card.has_signal("selected"):
 		card.connect("selected", _on_level_selected)
+	var card_idx := grid.get_child_count() - 1
+	UIAnim.play_pop_in(card, 0.02 * card_idx, 0.88, 0.2)
 
 
 ## Danh sách level_id có file .tres thật (LevelManager quét resources/levels)
@@ -376,7 +382,7 @@ func _on_level_selected(level_id: int) -> void:
 	if gm != null:
 		gm.call("start_level", level_id)
 	else:
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		Nav.goto_game()
 
 
 func _on_continue_pressed() -> void:

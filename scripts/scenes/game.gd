@@ -4,6 +4,7 @@ extends BaseScene
 ## View Controller: Quản lý Scene chính của Game Screen (scenes/game.tscn).
 ## Khởi tạo và liên kết các Controller theo chuẩn MVC & Component.
 ## ============================================================================
+const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 @onready var board_view: Control = $Board
 @onready var pause_btn: TextureButton = $Status/Pause
@@ -35,6 +36,21 @@ extends BaseScene
 
 
 func _ready() -> void:
+	# Gắn hiệu ứng nảy xúc giác cho các nút trong Game Screen
+	for btn in [pause_btn, restart_btn, tool_path_btn, tool_wall_btn, undo_btn, hint_btn]:
+		if btn != null:
+			UIAnim.attach_press_bounce(btn)
+
+	var status_bar := get_node_or_null("Status") as Control
+	if status_bar != null:
+		UIAnim.play_slide_in(status_bar, Vector2(0, -25), 0.0, 0.25)
+	var info_bar := get_node_or_null("Information") as Control
+	if info_bar != null:
+		UIAnim.play_slide_in(info_bar, Vector2(0, -15), 0.04, 0.25)
+	var button_bar := get_node_or_null("Button") as Control
+	if button_bar != null:
+		UIAnim.play_slide_in(button_bar, Vector2(0, 30), 0.08, 0.25)
+
 	# Khởi động ván chơi dựa trên GameManager hoặc mặc định
 	var gm: Node = get_node_or_null("/root/GameManager")
 	var initial_mode: String = "dungeon"

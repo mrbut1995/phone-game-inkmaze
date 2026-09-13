@@ -9,6 +9,7 @@ signal selected(level_id: int)
 
 const STAR_FULL := preload("res://assets/images/common/star_highlight.svg")
 const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
+const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 @export var level_id: int = 1
 @export var is_locked: bool = false
@@ -31,6 +32,8 @@ const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
 func _ready() -> void:
 	if panel_btn != null:
 		panel_btn.pressed.connect(_on_pressed)
+		if not is_locked:
+			UIAnim.attach_press_bounce(panel_btn)
 	update_visuals()
 
 

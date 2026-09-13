@@ -125,6 +125,8 @@ func _build_pool() -> void:
 
 
 func _take_player() -> AudioStreamPlayer:
+	if _players.is_empty():
+		_build_pool()
 	for i in _players.size():
 		var idx := (_next_player + i) % _players.size()
 		if not _players[idx].playing:

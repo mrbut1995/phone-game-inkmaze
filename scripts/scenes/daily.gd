@@ -9,6 +9,7 @@ extends BaseScene
 
 ## Thưởng sao cho 3 nhiệm vụ trong ngày (khớp mockup)
 const TASK_REWARDS: Array[int] = [15, 10, 10]
+const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 @onready var btn_back: TextureButton = $TopBar/Back
 @onready var calendar: DailyCalendar = $Calendar
@@ -32,12 +33,21 @@ func _ready() -> void:
 
 	if btn_back != null:
 		btn_back.pressed.connect(_on_back_pressed)
+		UIAnim.attach_press_bounce(btn_back)
 	if btn_play != null:
 		btn_play.pressed.connect(_on_play_pressed)
+		UIAnim.attach_press_bounce(btn_play)
+		UIAnim.play_pulse(btn_play, 1.03, 1.8)
 	if calendar != null:
 		calendar.day_selected.connect(_on_day_selected)
 	if _daily != null and _daily.has_signal("daily_changed"):
 		_daily.connect("daily_changed", _refresh)
+
+	var streak_badge := get_node_or_null("StreakBadge") as Control
+	if streak_badge != null:
+		UIAnim.play_pop_in(streak_badge, 0.08, 0.8, 0.25)
+	for i in _rows.size():
+		UIAnim.play_fade_in(_rows[i], 0.04 * i, 0.22)
 
 	_refresh()
 

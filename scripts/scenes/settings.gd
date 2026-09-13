@@ -14,6 +14,7 @@ extends BaseScene
 signal guide_requested
 
 const PLAYER_ID_PLACEHOLDER := "#NM-8924-VN"
+const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 @onready var btn_back: TextureButton = $TopBar/Back
 @onready var bgm_slider: HSlider = $Panel/Content/Audio/BgmRow/Slider
@@ -40,6 +41,7 @@ var _stamp_taps := 0
 func _ready() -> void:
 	if btn_back != null:
 		btn_back.pressed.connect(_on_back_pressed)
+		UIAnim.attach_press_bounce(btn_back)
 
 	if bgm_slider != null:
 		bgm_slider.value_changed.connect(_on_volume_changed.bind("music", bgm_value))
@@ -55,13 +57,21 @@ func _ready() -> void:
 		var check: TextureButton = pair[0]
 		if check != null:
 			check.toggled.connect(_on_toggle_changed.bind(str(pair[1])))
+			UIAnim.attach_press_bounce(check)
 
 	if btn_language != null:
 		btn_language.pressed.connect(_on_language_pressed)
+		UIAnim.attach_press_bounce(btn_language)
 	if btn_guide != null:
 		btn_guide.pressed.connect(_on_guide_pressed)
+		UIAnim.attach_press_bounce(btn_guide)
 	if btn_reset != null:
 		btn_reset.pressed.connect(_on_reset_pressed)
+		UIAnim.attach_press_bounce(btn_reset)
+
+	var content_node := get_node_or_null("Panel/Content") as Control
+	if content_node != null:
+		UIAnim.play_slide_in(content_node, Vector2(0, 25), 0.05, 0.25)
 
 	_setup_debug_stamp_taps()
 	_sync_from_settings()

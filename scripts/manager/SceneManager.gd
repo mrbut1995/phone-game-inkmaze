@@ -1,11 +1,14 @@
 extends Node
 ## ============================================================================
-## Manager: SceneManager - Điều hướng giữa các scene + SFX "lật trang".
+## Manager: SceneManager - Điều hướng giữa các scene + Animation chuyển cảnh
+## phong cách "Sổ tay giấy & Mực" (Page Turn, Ink Bloom) + SFX lật trang.
 ## - Tự phát sfx_page_turn khi chuyển màn (đúng chất sổ tay giấy).
 ## - Ghi lịch sử vào ScreenManager để phục vụ nút Back trên Android.
+## - Lớp phủ SceneTransition độc lập trên CanvasLayer chặn input khi đang đổi scene.
 ## ============================================================================
 
 signal scene_changing(path: String, previous_path: String)
+signal scene_changed(path: String)
 
 const SCENE_MAIN := "res://scenes/main.tscn"
 const SCENE_LEVELS := "res://scenes/levels.tscn"
@@ -14,17 +17,33 @@ const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
 
+const SceneTransitionScript := preload("res://scripts/nodes/common/scene_transition.gd")
+
+var transition: CanvasLayer = null
+
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_init_transition()
+
+
+func _init_transition() -> void:
+	if transition == null:
+		transition = SceneTransitionScript.new()
+		transition.name = "SceneTransition"
+		add_child(transition)
 
 
 # ---------------------------------------------------------------------------
 # API chính
 # ---------------------------------------------------------------------------
-func change_scene(path: String, record_history := true) -> void:
+func change_scene(path: String, record_history := true, style := "auto") -> void:
 	if path.is_empty() or not ResourceLoader.exists(path):
 		push_warning("[SceneManager] Scene không tồn tại: %s" % path)
+		return
+
+	if transition != null and transition.has_method("is_busy") and bool(transition.call("is_busy")):
+		push_warning("[SceneManager] Đang có chuyển cảnh đang diễn ra, bỏ qua yêu cầu mới.")
 		return
 
 	var previous := current_scene_path()
@@ -33,9 +52,44 @@ func change_scene(path: String, record_history := true) -> void:
 		if screen != null and screen.has_method("push_history"):
 			screen.call("push_history", previous)
 
-	_play_page_turn()
+	# Tự động xác định hiệu ứng nếu chọn "auto"
+	var resolved_style := style
+	if resolved_style == "auto":
+		if not record_history:
+			resolved_style = "page_turn_backward"
+		elif path == SCENE_GAME:
+			resolved_style = "ink_circle"
+		else:
+			resolved_style = "page_turn_forward"
+
+	_play_transition_sfx(resolved_style)
 	scene_changing.emit(path, previous)
-	get_tree().change_scene_to_file(path)
+
+	# Nếu chạy trong môi trường headless/test không cần frame render hoặc transition bị tắt
+	var is_headless := DisplayServer.get_name() == "headless"
+	if is_headless or transition == null or resolved_style == "none":
+		get_tree().change_scene_to_file(path)
+		scene_changed.emit(path)
+		return
+
+	# Chạy hiệu ứng mượt mà qua SceneTransition
+	transition.call(
+		"play_transition",
+		path,
+		func() -> void:
+			get_tree().change_scene_to_file(path)
+			scene_changed.emit(path),
+		resolved_style
+	)
+
+
+## Đổi scene tức thì không cần hiệu ứng (dành cho test hoặc reset nhanh)
+func change_scene_instant(path: String, record_history := true) -> void:
+	change_scene(path, record_history, "none")
+
+
+func is_transitioning() -> bool:
+	return transition != null and transition.has_method("is_busy") and bool(transition.call("is_busy"))
 
 
 func current_scene_path() -> String:
@@ -80,5 +134,8 @@ func is_debug_scene() -> bool:
 	return current_scene_path() == SCENE_DEBUG
 
 
-func _play_page_turn() -> void:
-	Sfx.play(Sfx.PAGE_TURN)
+func _play_transition_sfx(style: String) -> void:
+	if style == "ink_circle":
+		Sfx.play(Sfx.BTN_CLICK)
+	else:
+		Sfx.play(Sfx.PAGE_TURN)
