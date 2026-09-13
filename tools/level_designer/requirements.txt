@@ -1,0 +1,6 @@
+# Level Designer không cần thư viện ngoài:
+#   - giao diện dùng tkinter (có sẵn trong Python chuẩn)
+#   - đọc/ghi .tres, giải mê cung, kiểm tra dữ liệu đều viết tay bằng thư viện chuẩn
+#
+# Chỉ khi muốn build file .exe thì cài thêm:
+#   pip install -r requirements-dev.txt

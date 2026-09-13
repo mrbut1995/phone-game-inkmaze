@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# Môi trường ảo (nếu tạo venv trong thư mục này)
+venv/
+.venv/
+env/
+ENV/
+.python-version
+pyvenv.cfg
+
+# Kết quả build .exe
+build/
+dist/
+*.spec
+out/
+
+# IDE / OS
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini

@@ -1,0 +1,2 @@
+# Công cụ cần khi phát triển / build
+pyinstaller>=6.0

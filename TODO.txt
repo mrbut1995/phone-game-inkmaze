@@ -7,6 +7,24 @@
 
 
 # ----------------------------------------------------------------------------
+# LEVEL DESIGNER (PYTHON) — tools/level_designer
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): app thiết kế level riêng cho dev, kiến trúc MVC + Tkinter,
+#     build thành 1 file .exe (không cần cài Python), ghi thẳng resources/levels/*.tres
+#     - main.py              : giao diện + CLI (--selftest, --export-example, --level, --project)
+#     - app/models/          : level.py (LevelModel) · repository.py (đọc/ghi/xoá file level)
+#     - app/services/        : tres_io.py (parser .tres) · solver.py (BFS + phân tích) · validator.py (luật kiểm tra)
+#     - app/controllers/     : events.py · editor_controller.py (công cụ, undo/redo) · app_controller.py (file ops)
+#     - app/views/           : theme.py · grid_view.py · inspector_view.py · level_list_view.py · main_window.py
+#     - tests/ (29 test) · build_exe.py/.bat · requirements*.txt · README.md · .gitignore (venv/, dist/, build/, out/)
+#     => dist/LevelDesigner.exe (~11MB). Đã kiểm chứng: file .tres do tool ghi GIỐNG HỆT định dạng Godot
+#        và load OK bằng Godot headless; 9 màn thật đọc/ghi lại không sai 1 byte dữ liệu.
+# [ ] Level Designer: chưa sửa được custom_cell_values (giá trị ô đặc biệt của vài mode) — hiện giữ nguyên
+# [ ] Level Designer: chưa có preview 1:1 theo khung 1080x1920 / xem trước bằng art thật của game
+# [ ] Level Designer: chưa có sửa hàng loạt (đổi difficulty / max_steps / par_time cho nhiều màn cùng lúc)
+
+
+# ----------------------------------------------------------------------------
 # GOOGLE PLAY — LƯU DỮ LIỆU NGƯỜI CHƠI TRÊN ĐÁM MÂY (Play Games Saved Games)
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM (2026-09): tầng lưu trữ đã tách backend, hiện lưu LOCAL
