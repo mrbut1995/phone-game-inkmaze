@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 704 262" width="704" height="262">
+  <!-- Disabled: thẻ xanh bạc màu, phẳng khi bị khoá -->
+  <rect width="680" height="230" rx="24" fill="#C9D6DD" stroke="#A9BCC7" stroke-width="2.5"/>
+  <g opacity="0.75">
+    <line x1="38" y1="0" x2="38" y2="230" stroke="#FFFFFF" stroke-width="3" opacity="0.55"/>
+    <!-- Tag -->
+    <rect x="55" y="22" width="165" height="32" rx="8" fill="#DAD6CE"/>
+    <!-- Icon Lâu đài -->
+    <circle cx="105" cy="125" r="42" fill="#BED0DA"/>
+    <rect x="485" y="172" width="165" height="36" rx="10" fill="#B4C6D0"/>
+    <!-- Mũi tên -->
+    <path d="M 625 115 L 640 115 M 633 105 L 643 115 L 633 125" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

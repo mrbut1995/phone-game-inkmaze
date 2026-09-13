@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <!-- 1. Lưới vở học sinh nền 40px -->
+    <pattern id="settingsBgGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.55"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.18"/>
+    </pattern>
+
+    <!-- 2. Đổ bóng tự nhiên cho tờ giấy lớn -->
+    <filter id="settingsSheetShadow" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#2D2115" flood-opacity="0.25"/>
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#2D2115" flood-opacity="0.10"/>
+    </filter>
+
+    <!-- Đổ bóng ghim kim loại -->
+    <filter id="clipShadowSettings" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.25"/>
+    </filter>
+
+    <!-- Đổ bóng nút trượt Slider Thumb -->
+    <filter id="thumbShadowSettings" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.2"/>
+    </filter>
+
+    <!-- Đổ bóng nút Back -->
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <!-- ================= 1. NỀN TRANG VỞ Ô LY ================= -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#settingsBgGrid)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+
+  <!-- ================= 2. STATUS BAR ANDROID ================= -->
+  <g fill="#3D5A73" font-family="-apple-system, sans-serif" font-size="28" font-weight="600">
+    <text x="60" y="55">09:41</text>
+    <g transform="translate(940, 34)" stroke="#3D5A73" stroke-width="3" fill="none">
+      <path d="M0 16 A 16 16 0 0 1 24 16" stroke-linecap="round"/>
+      <circle cx="12" cy="24" r="2" fill="#3D5A73"/>
+    </g>
+    <rect x="980" y="36" width="44" height="22" rx="5" fill="none" stroke="#3D5A73" stroke-width="3"/>
+    <rect x="984" y="40" width="28" height="14" rx="2" fill="#3D5A73"/>
+  </g>
+
+  <!-- ================= 3. TOP HEADER ================= -->
+  <g transform="translate(50, 85)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <path d="M42 23 L26 35 L42 47" fill="none" stroke="#3D83AE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="540" y="135" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="44" font-weight="950" fill="#224C6D" letter-spacing="1.5">CÀI ĐẶT HỆ THỐNG</text>
+
+  <!-- ================= 4. MẢNH GIẤY CÀI ĐẶT (920 x 1550 px) ================= -->
+  <g transform="translate(80, 190)">
+
+    <!-- TỜ GIẤY LỚN CÓ ĐỔ BÓNG NỔI KHỐI -->
+    <g filter="url(#settingsSheetShadow)">
+      <rect width="920" height="1550" rx="24" fill="#FFFDF8"/>
+
+      <!-- Hàng lỗ bấm ghim mép trái -->
+      <g fill="#EAE3D2" opacity="0.65">
+        <circle cx="26" cy="100" r="8"/><circle cx="26" cy="220" r="8"/><circle cx="26" cy="340" r="8"/>
+        <circle cx="26" cy="460" r="8"/><circle cx="26" cy="580" r="8"/><circle cx="26" cy="700" r="8"/>
+        <circle cx="26" cy="820" r="8"/><circle cx="26" cy="940" r="8"/><circle cx="26" cy="1060" r="8"/>
+        <circle cx="26" cy="1180" r="8"/><circle cx="26" cy="1300" r="8"/><circle cx="26" cy="1420" r="8"/>
+      </g>
+
+      <!-- Dòng kẻ ngang mờ của sổ -->
+      <g stroke="#8FB9D2" stroke-width="1" opacity="0.32">
+        <line x1="65" y1="160" x2="855" y2="160"/><line x1="65" y1="240" x2="855" y2="240"/>
+        <line x1="65" y1="320" x2="855" y2="320"/><line x1="65" y1="400" x2="855" y2="400"/>
+        <line x1="65" y1="480" x2="855" y2="480"/><line x1="65" y1="560" x2="855" y2="560"/>
+        <line x1="65" y1="640" x2="855" y2="640"/><line x1="65" y1="720" x2="855" y2="720"/>
+        <line x1="65" y1="800" x2="855" y2="800"/><line x1="65" y1="880" x2="855" y2="880"/>
+        <line x1="65" y1="960" x2="855" y2="960"/><line x1="65" y1="1040" x2="855" y2="1040"/>
+        <line x1="65" y1="1120" x2="855" y2="1120"/><line x1="65" y1="1200" x2="855" y2="1200"/>
+        <line x1="65" y1="1280" x2="855" y2="1280"/><line x1="65" y1="1360" x2="855" y2="1360"/>
+        <line x1="65" y1="1440" x2="855" y2="1440"/>
+      </g>
+
+      <!-- Lề đỏ của mảnh giấy -->
+      <line x1="75" y1="0" x2="75" y2="1550" stroke="#D84444" stroke-width="2.5" opacity="0.85"/>
+      <rect width="920" height="1550" rx="24" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
+    </g>
+
+    <!-- DẢI BĂNG DÍNH WASHI TAPE TRÊN ĐỈNH GIỮA -->
+    <g transform="translate(350, -22)">
+      <rect width="220" height="48" rx="4" fill="#E8DFCA" fill-opacity="0.85" stroke="#D1C6AE" stroke-width="1.5"/>
+      <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" 
+            stroke="#B5A98F" stroke-width="1.2" opacity="0.35"/>
+    </g>
+
+    <!-- GHIM KẸP GIẤY KIM LOẠI Ở GÓC TRÊN TRÁI -->
+    <g transform="translate(105, -18)" filter="url(#clipShadowSettings)">
+      <path d="M 0 50 L 0 12 A 12 12 0 0 1 24 12 L 24 60 A 18 18 0 0 1 -12 60 L -12 18" 
+            fill="none" stroke="#7A8F9B" stroke-width="5" stroke-linecap="round"/>
+    </g>
+
+    <!-- TIÊU ĐỀ PHỤ -->
+    <g transform="translate(110, 75)">
+      <text x="0" y="0" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#224C6D">THIẾT LẬP TRẢI NGHIỆM</text>
+      <text x="0" y="32" font-family="sans-serif" font-size="18" font-weight="700" fill="#718B9E">Điều chỉnh âm thanh, điều khiển và lưu trữ</text>
+    </g>
+
+    <!-- ================= MỤC 1: ÂM THANH & HIỆU ỨNG ================= -->
+    <g transform="translate(110, 155)">
+      <rect x="0" y="0" width="140" height="28" rx="6" fill="#F4EFE6" stroke="#D1E2ED" stroke-width="1.2"/>
+      <text x="70" y="19" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" fill="#3D83AE" letter-spacing="1.5">ÂM THANH</text>
+
+      <!-- Nhạc nền (BGM) -->
+      <g transform="translate(0, 52)">
+        <text x="0" y="24" font-family="sans-serif" font-size="22" font-weight="800" fill="#224C6D">🎵 Nhạc nền (BGM)</text>
+        <g transform="translate(280, 16)">
+          <rect width="360" height="12" rx="6" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1"/>
+          <rect width="252" height="12" rx="6" fill="#3D83AE"/>
+          <g transform="translate(252, 6)" filter="url(#thumbShadowSettings)" style="cursor: pointer;">
+            <circle cx="0" cy="0" r="14" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.5"/>
+            <circle cx="0" cy="0" r="4" fill="#D84444"/>
+          </g>
+        </g>
+        <text x="730" y="24" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="900" fill="#3D83AE">70%</text>
+      </g>
+
+      <!-- Hiệu ứng (SFX) -->
+      <g transform="translate(0, 130)">
+        <text x="0" y="24" font-family="sans-serif" font-size="22" font-weight="800" fill="#224C6D">🔔 Hiệu ứng (SFX)</text>
+        <g transform="translate(280, 16)">
+          <rect width="360" height="12" rx="6" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1"/>
+          <rect width="306" height="12" rx="6" fill="#3D83AE"/>
+          <g transform="translate(306, 6)" filter="url(#thumbShadowSettings)" style="cursor: pointer;">
+            <circle cx="0" cy="0" r="14" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.5"/>
+            <circle cx="0" cy="0" r="4" fill="#D84444"/>
+          </g>
+        </g>
+        <text x="730" y="24" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="900" fill="#3D83AE">85%</text>
+      </g>
+    </g>
+
+    <line x1="110" y1="365" x2="820" y2="365" stroke="#8FB9D2" stroke-width="1.6" stroke-dasharray="6 4" opacity="0.6"/>
+
+    <!-- ================= MỤC 2: BÀN CỜ & ĐIỀU KHIỂN ================= -->
+    <g transform="translate(110, 395)">
+      <rect x="0" y="0" width="200" height="28" rx="6" fill="#F4EFE6" stroke="#D1E2ED" stroke-width="1.2"/>
+      <text x="100" y="19" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" fill="#3D83AE" letter-spacing="1.5">BÀN CỜ &amp; ĐIỀU KHIỂN</text>
+
+      <!-- Rung khi đâm tường -->
+      <g transform="translate(0, 50)" style="cursor: pointer;">
+        <rect width="38" height="38" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.2"/>
+        <path d="M 8 19 L 16 27 L 30 11" fill="none" stroke="#D84444" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="56" y="27" font-family="sans-serif" font-size="22" font-weight="800" fill="#224C6D">Rung xúc giác khi đâm tường (Haptic)</text>
+        <text x="56" y="55" font-family="sans-serif" font-size="16" font-weight="600" fill="#718B9E">Rung phản hồi cảnh báo khi bước vào tường ẩn</text>
+      </g>
+
+      <!-- Tự động gạch cạnh an toàn -->
+      <g transform="translate(0, 135)" style="cursor: pointer;">
+        <rect width="38" height="38" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.2"/>
+        <path d="M 8 19 L 16 27 L 30 11" fill="none" stroke="#D84444" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="56" y="27" font-family="sans-serif" font-size="22" font-weight="800" fill="#224C6D">Tự động gạch cạnh an toàn</text>
+        <text x="56" y="55" font-family="sans-serif" font-size="16" font-weight="600" fill="#718B9E">Hỗ trợ tự loại trừ cạnh khi ô có số 0</text>
+      </g>
+
+      <!-- Hiển thị vệt dạ quang phát sáng -->
+      <g transform="translate(0, 220)" style="cursor: pointer;">
+        <rect width="38" height="38" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.2"/>
+        <path d="M 8 19 L 16 27 L 30 11" fill="none" stroke="#D84444" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="56" y="27" font-family="sans-serif" font-size="22" font-weight="800" fill="#224C6D">Hiển thị vệt dạ quang phát sáng</text>
+        <text x="56" y="55" font-family="sans-serif" font-size="16" font-weight="600" fill="#718B9E">Làm nổi bật vệt đường đi đã vẽ từ điểm S</text>
+      </g>
+    </g>
+
+    <line x1="110" y1="705" x2="820" y2="705" stroke="#8FB9D2" stroke-width="1.6" stroke-dasharray="6 4" opacity="0.6"/>
+
+    <!-- ================= MỤC 3: NGÔN NGỮ (> 2 NGÔN NGỮ) & ĐỒNG BỘ ================= -->
+    <g transform="translate(110, 735)">
+      <rect x="0" y="0" width="180" height="28" rx="6" fill="#F4EFE6" stroke="#D1E2ED" stroke-width="1.2"/>
+      <text x="90" y="19" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" fill="#3D83AE" letter-spacing="1.5">NGÔN NGỮ &amp; LƯU TRỮ</text>
+
+      <!-- >>> DÒNG CHỌN NGÔN NGỮ DẠNG DROPDOWN THẢ XUỐNG CẬP NHẬT MỚI <<< -->
+      <g transform="translate(0, 50)">
+        <text x="0" y="24" font-family="sans-serif" font-size="22" font-weight="800" fill="#224C6D">🌐 Ngôn ngữ hiển thị</text>
+        <text x="0" y="52" font-family="sans-serif" font-size="16" font-weight="600" fill="#718B9E">Hỗ trợ đa ngôn ngữ (Tiếng Việt, English, 日本語...)</text>
+
+        <!-- Thẻ chọn ngôn ngữ Dropdown (310 x 54 px) -->
+        <g transform="translate(410, 8)" style="cursor: pointer;">
+          <rect width="310" height="54" rx="14" fill="#FEFDFA" stroke="#3D83AE" stroke-width="2.5"/>
+          <line x1="20" y1="0" x2="20" y2="54" stroke="#8FB9D2" stroke-width="1.8" opacity="0.6"/>
+          <!-- Ngôn ngữ đang active -->
+          <text x="35" y="34" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#224C6D">Tiếng Việt (VN)</text>
+          <!-- Mũi tên tam giác chỉ xuống ▾ -->
+          <path d="M 270 23 L 280 33 L 290 23" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </g>
+
+      <!-- Đồng bộ Cloud -->
+      <g transform="translate(0, 140)">
+        <text x="0" y="24" font-family="sans-serif" font-size="22" font-weight="800" fill="#224C6D">☁️ Lưu trữ đám mây</text>
+        <text x="0" y="52" font-family="sans-serif" font-size="16" font-weight="600" fill="#718B9E">Google Play Games • Đồng bộ tiến độ màn</text>
+        
+        <g transform="translate(560, 10)">
+          <rect width="160" height="42" rx="10" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.8"/>
+          <text x="80" y="27" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#2E7D32">ĐÃ KẾT NỐI ✔</text>
+        </g>
+      </g>
+
+      <!-- ID người chơi -->
+      <g transform="translate(0, 225)">
+        <text x="0" y="24" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Mã người chơi (Player ID):</text>
+        <text x="720" y="24" text-anchor="end" font-family="'Courier New', monospace" font-size="20" font-weight="800" fill="#3D83AE">#NM-8924-VN</text>
+      </g>
+    </g>
+
+    <line x1="110" y1="1025" x2="820" y2="1025" stroke="#8FB9D2" stroke-width="1.6" stroke-dasharray="6 4" opacity="0.6"/>
+
+    <!-- ================= MỤC 4: HỖ TRỢ & NÚT THAO TÁC ================= -->
+    <g transform="translate(110, 1055)">
+      <!-- Xem lại luật chơi -->
+      <g transform="translate(0, 0)" style="cursor: pointer;">
+        <rect width="710" height="80" rx="16" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
+        <text x="40" y="47" font-size="26">📖</text>
+        <text x="85" y="48" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="800" fill="#224C6D">Xem lại hướng dẫn &amp; 9 bộ luật chơi</text>
+        <text x="670" y="48" text-anchor="end" font-family="sans-serif" font-size="24" font-weight="900" fill="#3D83AE">›</text>
+      </g>
+
+      <!-- Khôi phục mặc định -->
+      <g transform="translate(0, 105)" style="cursor: pointer;">
+        <rect width="710" height="80" rx="16" fill="#FEFDFA" stroke="#D84444" stroke-width="2.2"/>
+        <text x="40" y="47" font-size="26">⟲</text>
+        <text x="85" y="48" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="800" fill="#D84444">Khôi phục cài đặt mặc định</text>
+        <text x="670" y="48" text-anchor="end" font-family="sans-serif" font-size="24" font-weight="900" fill="#D84444">›</text>
+      </g>
+    </g>
+
+    <!-- ================= 5. CHÂN TRANG: PHIÊN BẢN ================= -->
+    <g transform="translate(110, 1315)">
+      <text x="0" y="30" font-family="sans-serif" font-size="18" font-style="italic" font-weight="600" fill="#718B9E">
+        ~ Number Maze: Logic Puzzle &amp; Hidden Walls ~
+      </text>
+
+      <g transform="translate(560, 0) rotate(-6)" opacity="0.9">
+        <rect width="150" height="50" rx="8" fill="#D84444" fill-opacity="0.08" stroke="#D84444" stroke-width="2.5" stroke-dasharray="6 3"/>
+        <text x="75" y="33" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="17" font-weight="900" fill="#D84444">VER 1.0.0</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= 5. ANDROID HOME GESTURE BAR ================= -->
+  <rect x="420" y="1875" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
+</svg>

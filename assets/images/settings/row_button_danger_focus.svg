@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 726 96" width="726" height="96">
+  <!-- Hàng nút danger khi focus -->
+  <rect x="-4" y="-4" width="718" height="88" rx="20" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="6 4"/>
+  <rect width="710" height="80" rx="16" fill="#FFFDF8" stroke="#C4843A" stroke-width="2.2"/>
+</svg>

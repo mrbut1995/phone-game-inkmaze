@@ -1,0 +1,93 @@
+Với phong cách đồ họa **sổ tay / vở ô ly học sinh**, linh hồn của phần âm thanh (SFX) nằm ở chất âm **Foley văn phòng phẩm** (tiếng sột soạt của ngòi chì, tiếng bấm bút bi, tiếng con dấu cộp xuống giấy, tiếng gôm tẩy). Khi người chơi thao tác, những âm thanh xúc giác (tactile/ASMR) này sẽ tạo cảm giác như đang thật sự cầm bút giải đố trên một trang giấy thật.
+
+Dưới đây là **toàn bộ danh mục SFX cần có**, kèm theo **nguồn tải 100% miễn phí, không bản quyền (Public Domain / CC0)** và mẹo triển khai trên **Godot Engine**.
+
+---
+
+### 1. BẢNG DANH MỤC SFX TOÀN BỘ GAME (THEO TỪNG TÌNH HUỐNG)
+
+#### Nhóm 1: Thao tác Bàn cờ (Core In-Game)
+| Tên File gợi ý | Mô tả âm thanh | Tình huống kích hoạt trong game |
+|---|---|---|
+| `sfx_path_draw.wav` | Tiếng ngòi bút chì miết liên tục trên mặt giấy nhám (tiếng *sột soạt* nhẹ) | Khi ngón tay kéo nối đường đi giữa các ô |
+| `sfx_cell_step.wav` | Tiếng "chấm" đầu bút chì (*tap* nhẹ) hoặc tiếng *pop* gỗ siêu nhỏ | Khi đường đi vừa tiến vào tâm 1 ô mới |
+| `sfx_anchor_snap.wav` | Tiếng "tách" mảnh cơ học (như ngòi bút bấm vừa bật ra) | Khi ngón tay rê trúng điểm neo góc (Anchor) |
+| `sfx_wall_mark.wav` | Tiếng gạch một nét chì dứt khoát (*xoẹt*) | Khi kéo nối xong một đường "Tường nghi ngờ" |
+| `sfx_wall_hit.wav` | **Tiếng gãy ngòi bút chì (*tách*)** kèm tiếng rung thịch nhẹ | Khi đâm trúng tường vô hình (bị trừ 1 bước) |
+| `sfx_undo.wav` | Tiếng gôm cao su miết nhanh trên giấy (2–3 nhịp quẹt) | Khi bấm nút Undo để xóa nước đi |
+| `sfx_hint.wav` | Tiếng que diêm xòe sáng hoặc tiếng chuông gió kim loại thanh mảnh | Khi bấm nút Gợi ý (Hint) |
+| `sfx_stairs_enter.wav` | Tiếng bước chân nhẹ trên sàn gỗ hoặc tiếng lật giấy sâu | Khi bắt đầu từ ô cầu thang $S$ hoặc chạm đích cầu thang $F$ |
+
+#### Nhóm 2: Giao diện & Nút bấm (UI & Menu)
+| Tên File gợi ý | Mô tả âm thanh | Tình huống kích hoạt trong game |
+|---|---|---|
+| `sfx_btn_click.wav` | Tiếng bấm bút bi lò xo (*click-clack*) dứt khoát | Nhấn các nút bấm chính (Start, Màn tiếp, v.v.) |
+| `sfx_btn_wood_tap.wav` | Tiếng gõ vào thẻ giấy cứng (*thud* gỗ nhẹ) | Nhấn các nút phụ (Quay lại, Cài đặt, Bảng xếp hạng) |
+| `sfx_page_turn.wav` | Tiếng lật một trang vở thật (*woosh / paper rustle*) | Khi chuyển màn hình (Main sang Game, sang Level Select) |
+| `sfx_day_switch.wav` | Tiếng miết mép giấy nhanh | Bấm nút `<` hoặc `>` chuyển ngày trong lịch Daily |
+| `sfx_slider_tick.wav` | Tiếng trượt của thanh thước kẻ trên giấy | Kéo thanh trượt âm lượng Settings |
+| `sfx_checkbox.wav` | Tiếng bút bi vẽ dấu tích nhanh (*check*) | Đánh dấu chọn Checkbox |
+
+#### Nhóm 3: Kết quả ván chơi (Popups & Events)
+| Tên File gợi ý | Mô tả âm thanh | Tình huống kích hoạt trong game |
+|---|---|---|
+| `sfx_stamp_impact.wav` | **Tiếng "cộp" đầm tay** của con dấu cao su đóng lên giấy | Khi hiện con dấu đỏ *"XUẤT SẮC"* / *"PASSED"* |
+| `sfx_star_pop.wav` | Tiếng chuông ngọc hoặc đồ chơi gỗ reo (*ding* nốt cao dần: Đồ - Mi - Son) | Lần lượt 3 ngôi sao vàng hiện ra |
+| `sfx_level_win.wav` | Giai điệu ngắn (Jingle 2-3 giây) bằng đàn Kalimba hoặc Acoustic mộc mạc | Hoàn thành màn chơi |
+| `sfx_game_over.wav` | Tiếng vo tròn một tờ giấy nháp ném đi (*crumple*) hoặc tiếng thở dài mộc | Hết bước đi / Đâm tường thua cuộc |
+| `sfx_floor_bonus.wav` | Tiếng lắc hộp bút chì hoặc tiếng đếm hạt gỗ nhảy cẫng | Khi nhận thưởng `+5 Bước` ở Dungeon Mode |
+
+---
+
+### 2. NGUỒN TẢI MIỄN PHÍ 100%, KHÔNG LO BẢN QUYỀN
+
+Tất cả các nguồn dưới đây được cấp phép theo dạng **CC0 (Creative Commons 0 - Public Domain)** hoặc **Free Commercial License**, tức là bạn được dùng cho game thương mại, không bị đánh gậy bản quyền (Content ID) và không bắt buộc phải ghi công (dù ghi thì càng tốt).
+
+1. **Kenney.nl (Kho tàng game dev miễn phí tốt nhất):**
+   * Tải gói: **Kenney UI Audio** và **Kenney Impact Audio**.
+   * Chứa hàng trăm âm thanh click, pop, switch, wood tap cực sạch, định dạng chuẩn. Giấy phép: **CC0**.
+2. **Freesound.org (Kho âm thanh thực tế khổng lồ):**
+   * Khi tìm kiếm, ở cột bộ lọc bên phải chọn giấy phép: **"Creative Commons 0"**.
+   * Rất giàu âm thanh tiếng động thực tế (Foley).
+3. **OpenGameArt.org:**
+   * Chọn tag Audio và lọc giấy phép **CC0**. Tìm các bộ "Paper sound pack", "Stationery SFX".
+4. **Sonniss GDC Sound Archive:**
+   * Bộ thư viện khổng lồ (vài chục GB) được Sonniss phát hành miễn phí thương mại hàng năm. Rất nhiều tiếng giấy, bút chì cao cấp từ các phòng thu chuẩn phim ảnh.
+
+---
+
+### 3. TỪ KHÓA TÌM KIẾM CHUẨN XÁC TRÊN FREESOUND (DÙNG ĐỂ COPY/PASTE)
+
+Khi tìm kiếm trên [Freesound.org](https://freesound.org/) (nhớ tick chọn lọc **CC0**):
+* **Tiếng vẽ bút chì:** `pencil on paper`, `pencil sketch sound`, `writing with pencil`.
+* **Tiếng gãy ngòi chì (va tường):** `pencil break`, `wood snap`, `twig snap quiet`.
+* **Tiếng lật giấy:** `page turn`, `paper rustle`, `paper slide`.
+* **Tiếng đóng mộc:** `rubber stamp`, `stamp on paper`, `ink stamp thump`.
+* **Tiếng gôm tẩy:** `pencil eraser on paper`, `rubbing paper`.
+* **Tiếng bấm bút:** `ballpoint pen click`, `pen clicker`.
+* **Tiếng vo giấy (Game Over):** `paper crumple`, `crumpling paper`.
+* **Nhạc thắng/sao:** `kalimba jingle`, `wooden chime win`, `short acoustic win`.
+
+---
+
+### 4. MẸO CẤU HÌNH TRÊN GODOT ENGINE ĐỂ ÂM THANH "SỐNG ĐỘNG NHƯ THẬT"
+
+#### A. Định dạng file:
+* **SFX (Hiệu ứng):** Xuất file định dạng `.wav` (16-bit, 44.1 kHz) để Godot phát ngay lập tức không có độ trễ (zero latency).
+* **BGM (Nhạc nền):** Dùng định dạng `.ogg` (Vorbis) để tiết kiệm dung lượng RAM.
+
+#### B. Tránh cảm giác nhàm chán bằng ngẫu nhiên hóa cao độ (Random Pitch):
+Khi người chơi vẽ liên tục 10 ô, nếu tiếng "sột soạt" hay "tap" phát ra giống hệt nhau thì tai sẽ bị mỏi. Trong Godot, bạn có thể tạo một script đơn giản để mỗi lần phát âm thanh, cao độ sẽ lệch nhẹ:
+
+```gdscript
+# Tạo hàm phát SFX tự nhiên trong Godot 4
+func play_pencil_sound(player: AudioStreamPlayer):
+    # Thay đổi nhẹ cao độ từ 0.92 đến 1.08 để tạo cảm giác mỗi nét vẽ một khác
+    player.pitch_scale = randf_range(0.92, 1.08)
+    player.play()
+```
+
+#### C. Chế độ âm thanh nền (BGM gợi ý):
+Nên dùng các bản nhạc không lời mộc mạc:
+* **Nhạc cụ:** Đàn **Kalimba**, **Acoustic Guitar** hoặc **Lofi Piano** có tiếng mưa rơi/tiếng sột soạt nhẹ phía sau.
+* Nguồn nhạc CC0 thư giãn: Tìm kiếm các bản nhạc lofi/acoustic của *Kevin MacLeod* (Incompetech) hoặc tìm kiếm thẻ "CC0 acoustic cozy" trên Itch.io.

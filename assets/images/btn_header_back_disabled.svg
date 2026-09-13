@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 80 85" width="80" height="85">
+  <g transform="translate(5, 3)">
+    <!-- Nút back bị khoá: phẳng, mực nhạt -->
+    <rect width="70" height="70" rx="18" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="2.5"/>
+    <path d="M42 23 L26 35 L42 47" fill="none" stroke="#BAC7CF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

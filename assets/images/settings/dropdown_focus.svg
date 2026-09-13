@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 326 70" width="326" height="70">
+  <!-- Dropdown focus: vòng nét đứt + viền mực hổ phách -->
+  <rect x="-4" y="-4" width="318" height="62" rx="18" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="6 4"/>
+  <rect width="310" height="54" rx="14" fill="#FFFDF8" stroke="#C4843A" stroke-width="2.5"/>
+  <line x1="20" y1="0" x2="20" y2="54" stroke="#8FB9D2" stroke-width="1.8" opacity="0.6"/>
+  <path d="M 270 23 L 280 33 L 290 23" fill="none" stroke="#C4843A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

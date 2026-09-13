@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 50 50" width="50" height="50">
+  <!-- Checkbox đã tích: nét tích mực đỏ -->
+  <rect width="38" height="38" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.2"/>
+  <path d="M 8 19 L 16 27 L 30 11" fill="none" stroke="#D84444" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
