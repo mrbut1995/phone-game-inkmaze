@@ -4,7 +4,8 @@ extends RefCounted
 ## Model: Dữ liệu và cấu trúc Mê Cung (thuần túy, KHÔNG phụ thuộc Scene Tree).
 ## - Sinh mê cung bảo đảm luôn có ít nhất 1 đường đi hợp lệ từ S đến F.
 ## - Mỗi ô có 4 cạnh: biên lưới luôn là tường, cạnh trong có thể mở/đóng.
-## - Số hiển thị trên ô = tổng số cạnh là tường vô hình của ô đó (0..4).
+## - Số hiển thị trên ô = tổng số cạnh BÊN TRONG là tường của ô đó (0..4);
+##   tường viền ngoài bao quanh board KHÔNG được tính vào ô.
 ## - Tường có thể được đánh dấu hiển thị trước (is_visible) theo visible_wall_ratio.
 ## ============================================================================
 
@@ -170,16 +171,23 @@ func _add_random_walls() -> void:
 
 
 # --- Tính số tường bao quanh từng ô (0..4) ---
+# LƯU Ý: tường VIỀN NGOÀI (bao quanh cả board) KHÔNG tính vào ô. Mọi ô sát biên
+# đều "thấy" tường đó, tính vào thì số trong ô thành vô nghĩa (ô góc luôn >= 2).
+# Số hiển thị trong ô chỉ phản ánh tường BÊN TRONG board.
 func _compute_wall_counts() -> void:
 	_wall_count.clear()
 	for y in height:
 		var row: Array = []
 		for x in width:
 			var c := 0
-			c += _h_walls[x][y]      # cạnh trên
-			c += _h_walls[x][y + 1]  # cạnh dưới
-			c += _v_walls[x][y]      # cạnh trái
-			c += _v_walls[x + 1][y]  # cạnh phải
+			if y > 0:
+				c += _h_walls[x][y]          # cạnh trên (bỏ qua nếu là viền)
+			if y < height - 1:
+				c += _h_walls[x][y + 1]      # cạnh dưới (bỏ qua nếu là viền)
+			if x > 0:
+				c += _v_walls[x][y]          # cạnh trái (bỏ qua nếu là viền)
+			if x < width - 1:
+				c += _v_walls[x + 1][y]      # cạnh phải (bỏ qua nếu là viền)
 			row.append(c)
 		_wall_count.append(row)
 

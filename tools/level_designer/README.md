@@ -154,8 +154,10 @@ custom_cell_values = {}                 # giữ nguyên khi sửa (tool không �
 Quy ước toạ độ (khớp `maze_data.gd` / `level_manager.gd`):
 - `x` tăng sang **phải**, `y` tăng xuống **dưới** ⇒ `y = 0` là hàng **TRÊN cùng**.
 - `v_walls[x][y]` = tường dọc bên **trái** ô `(x, y)`; `h_walls[x][y]` = tường ngang **trên** ô `(x, y)`.
-- Số tường của ô: `h[x][y] + h[x][y+1] + v[x][y] + v[x+1][y]` (đúng như trong game, 0 thì không hiện số).
-- Viền ngoài luôn là tường và luôn nhìn thấy (`wall_count() == 0` ⇒ ô không thể tới).
+- Số tường của ô = tổng 4 cạnh **bên trong board** là tường: `h[x][y] + h[x][y+1] + v[x][y] + v[x+1][y]`,
+  **nhưng BỎ QUA cạnh nào thuộc viền ngoài board** (tường bao quanh board không tính vào ô).
+  Ô góc/sát biên không bị cộng thêm vì viền; ô có số 0 thì game không hiện số.
+- Viền ngoài luôn là tường và luôn nhìn thấy, **vẫn chặn đường đi** nhưng **không được đếm** vào ô.
 
 ---
 

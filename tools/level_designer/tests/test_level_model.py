@@ -37,16 +37,37 @@ class TestLevelModel(unittest.TestCase):
         # Tường ẩn ngăn cách (1,1) với (0,1)
         level.set_wall(("v", 1, 1), True, False)
         self.assertFalse(level.is_visible(("v", 1, 1)))
-        # (0,1): viền trái + tường ẩn bên phải
-        self.assertEqual(level.wall_count((0, 1)), 2)
+        # (0,1): chỉ tính tường ẩn bên phải (viền trái bị bỏ qua)
+        self.assertEqual(level.wall_count((0, 1)), 1)
         # (1,1): chỉ có tường ẩn bên trái
         self.assertEqual(level.wall_count((1, 1)), 1)
         level.set_wall(("v", 1, 1), False)
-        self.assertEqual(level.wall_count((0, 1)), 1)
+        self.assertEqual(level.wall_count((0, 1)), 0)
         self.assertEqual(level.wall_count((1, 1)), 0)
 
+    def test_border_walls_are_not_counted(self) -> None:
+        """Tường VIỀN NGOÀI board không tính vào số của ô (update 2026-09)."""
+        level = self.make(4, 4)
+        # Màn trống: viền là tường nhưng mọi ô đều phải là 0
+        for y in range(level.height):
+            for x in range(level.width):
+                self.assertEqual(level.wall_count((x, y)), 0, "ô (%d,%d)" % (x, y))
+        self.assertTrue(level.has_wall(("v", 0, 0)), "viền vẫn phải là tường để chặn đường")
+        self.assertTrue(level.has_wall(("h", 3, 4)))
+
+        # Tường bên trong vẫn được tính (cả tường ẩn)
+        level.set_wall(("v", 2, 2), True, False)
+        self.assertEqual(level.wall_count((1, 2)), 1)   # kề bên phải
+        self.assertEqual(level.wall_count((2, 2)), 1)   # kề bên trái
+        self.assertEqual(level.wall_count((1, 1)), 0)   # không kề tường nào
+
+        # Ô sát biên tối đa 3 tường, ô giữa tối đa 4
+        level.set_wall(("h", 0, 1), True)
+        level.set_wall(("h", 0, 2), True)
+        self.assertEqual(level.wall_count((0, 1)), 2)
+
     def test_wall_count_uses_godot_layout(self) -> None:
-        """wall_count = h[x][y] + h[x][y+1] + v[x][y] + v[x+1][y] (giống maze_data.gd)."""
+        """wall_count = h[x][y] + h[x][y+1] + v[x][y] + v[x+1][y], bỏ viền (maze_data.gd)."""
         level = self.make(4, 4)
         level.set_wall(("v", 2, 2), True, True)
         level.set_wall(("h", 1, 2), True, True)
@@ -58,8 +79,8 @@ class TestLevelModel(unittest.TestCase):
         self.assertEqual(level.wall_count((1, 1)), 1)
         # Ô trong không kề tường nào
         self.assertEqual(level.wall_count((2, 1)), 0)
-        # Ô góc dưới-phải: viền phải + viền dưới
-        self.assertEqual(level.wall_count((3, 3)), 2)
+        # Ô góc dưới-phải chỉ có viền -> không tính
+        self.assertEqual(level.wall_count((3, 3)), 0)
 
     def test_array_index_convention(self) -> None:
         """v_index = ix*h + iy ; h_index = ix*(h+1) + iy (khớp level_manager.gd)."""

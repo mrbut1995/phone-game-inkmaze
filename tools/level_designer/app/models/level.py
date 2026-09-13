@@ -189,16 +189,22 @@ class LevelModel:
         return (x, y)
 
     def wall_count(self, cell: Cell) -> int:
-        """Số tường bao quanh 1 ô - đúng công thức game dùng để hiện số."""
+        """Số tường quanh 1 ô - dùng để hiện số trong ô (khớp game).
+
+        KHÔNG tính tường VIỀN NGOÀI (bao quanh cả board): mọi ô sát biên đều thấy
+        tường đó nên tính vào sẽ thành vô nghĩa (ô góc luôn >= 2). Số trong ô chỉ
+        phản ánh tường BÊN TRONG board - giống maze_data.gd::_compute_wall_counts().
+        """
         x, y = cell
         if not self.in_bounds(cell):
             return 0
-        count = 0
-        count += 1 if self.has_wall(("h", x, y)) else 0
-        count += 1 if self.has_wall(("h", x, y + 1)) else 0
-        count += 1 if self.has_wall(("v", x, y)) else 0
-        count += 1 if self.has_wall(("v", x + 1, y)) else 0
-        return count
+        edges = (
+            ("h", x, y),        # cạnh trên
+            ("h", x, y + 1),    # cạnh dưới
+            ("v", x, y),        # cạnh trái
+            ("v", x + 1, y),    # cạnh phải
+        )
+        return sum(1 for ref in edges if not self.is_border(ref) and self.has_wall(ref))
 
     def start_end_ok(self) -> bool:
         return self.in_bounds(self.start) and self.in_bounds(self.end) and self.start != self.end

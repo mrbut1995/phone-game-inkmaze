@@ -96,6 +96,24 @@
 #     - Đã đưa vào test_full_flow (kiểm tra dựng được các hàng lệnh)
 # [ ] Debug Console: chưa có nhóm "giả lập trong ván chơi" (thêm/xoá bước,
 #     teleport, ép thắng/thua ngay trong game) — mở rộng sau nếu cần
+#
+# [x] ĐÃ LÀM (2026-09): Quy ước "số tường trong ô" — TƯỜNG VIỀN NGOÀI KHÔNG tính vào ô
+#     - scripts/core/maze_data.gd::_compute_wall_counts(): bỏ cạnh thuộc viền board
+#       (y==0 bỏ h[.][0] · y==height-1 bỏ h[.][height] · x==0 bỏ v[0][.] · x==width-1 bỏ v[width][.])
+#     - Viền vẫn CHẶN đường đi (has_wall) và luôn hiển thị — chỉ không được ĐẾM
+#     - Mọi mode hiện số (get_cell_text) tự theo; Number_Maze_Game_Design.md đã ghi rõ quy ước
+#     - tools/level_designer/app/models/level.py::wall_count() đổi cùng quy ước (README + test cập nhật)
+#     - Test mới: scripts/test_case/test_wall_count_rule.gd (+ tool: test_border_walls_are_not_counted)
+#     - Ảnh hưởng: 66 ô trên 9 màn hiện có đổi số (ô góc có thể 2 -> 0 = không hiện số)
+# [x] ĐÃ LÀM (2026-09): Countdown Cost — số trên ô CHỈ là CHI PHÍ BƯỚC (KHÔNG liên quan tường)
+#     - scripts/modes/countdown_cost_game_mode.gd::_generate_costs() sinh chi phí riêng theo độ khó:
+#       easy 1..2 · medium 1..3 · hard 1..4 (mọi ô >= 1, S/F không có chi phí)
+#       get_cell_text() hiện đúng con số đó · get_step_cost(ô đích) = con số đó
+#     - cheapest_path_cost() = Dijkstra với trọng số là chi phí ô đích;
+#       _ensure_budget() đặt initial_steps = max(ngân sách tối thiểu, đường rẻ nhất + dự phòng)
+#       (Easy 12/+6 · Medium 14/+4 · Hard 15/+3) => màn luôn thắng được nếu chọn đường rẻ
+#     - HUD: "CHI PHÍ Ô: 1-3 BƯỚC"; Number_Maze_Game_Design.md (mục 2, bảng mục 5, mục 7) đã cập nhật
+#     - Test mới: scripts/test_case/test_countdown_cost.gd (5 màn ngẫu nhiên × 3 độ khó + kiểm tra độc lập với tường)
 # [ ] Màn Settings: nút "Hướng dẫn" chưa có scene (guide_requested mới chỉ push_warning)
 # [ ] Popup ngôn ngữ: locale không có trong LOCALE_INFO (vd zh_TW) đang hiện mã thô
 # [ ] scenes/splash.tscn và các popup cũ chưa cập nhật localization/icon SVG
