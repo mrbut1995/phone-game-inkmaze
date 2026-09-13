@@ -30,6 +30,7 @@ DailyManager="*uid://bxus37ntramd1"
 DebugManager="*uid://drkig4dljo3f7"
 AdsManager="*uid://kducqs2nm8b0"
 LocalizationManager="*res://scripts/manager/LocalizationManager.gd"
+SaveManager="*res://scripts/manager/SaveManager.gd"
 
 [display]
 

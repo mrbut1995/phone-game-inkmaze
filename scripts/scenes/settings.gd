@@ -32,6 +32,9 @@ const PLAYER_ID_PLACEHOLDER := "#NM-8924-VN"
 
 ## Chặn ghi ngược khi đang đồng bộ UI từ SettingManager
 var _syncing := false
+## Số lần bấm vào con dấu phiên bản để mở màn debug
+const DEBUG_TAP_COUNT := 5
+var _stamp_taps := 0
 
 
 func _ready() -> void:
@@ -60,7 +63,37 @@ func _ready() -> void:
 	if btn_reset != null:
 		btn_reset.pressed.connect(_on_reset_pressed)
 
+	_setup_debug_stamp_taps()
 	_sync_from_settings()
+
+
+## Bấm liên tiếp vào con dấu phiên bản để mở màn debug (chỉ trong bản debug)
+func _setup_debug_stamp_taps() -> void:
+	if lbl_version == null:
+		return
+	var stamp := lbl_version.get_parent() as Control
+	if stamp == null:
+		return
+	stamp.mouse_filter = Control.MOUSE_FILTER_STOP
+	for child in stamp.get_children():
+		if child is Control:
+			(child as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
+	stamp.gui_input.connect(_on_stamp_gui_input)
+
+
+func _on_stamp_gui_input(event: InputEvent) -> void:
+	if not (event is InputEventMouseButton):
+		return
+	var mouse := event as InputEventMouseButton
+	if not mouse.pressed or mouse.button_index != MOUSE_BUTTON_LEFT:
+		return
+	_stamp_taps += 1
+	if _stamp_taps < DEBUG_TAP_COUNT:
+		return
+	_stamp_taps = 0
+	var dbg: Node = get_node_or_null("/root/DebugManager")
+	if dbg != null:
+		dbg.call("toggle_console")
 
 
 # ---------------------------------------------------------------------------

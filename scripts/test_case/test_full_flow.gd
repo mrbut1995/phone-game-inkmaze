@@ -65,5 +65,19 @@ func _init() -> void:
 	assert(game_scene.game_controller != null, "GameScene phai co game_controller")
 	assert(game_scene.find_child("Popups", true, false) != null, "GameScene phai co node Popups de chua popup")
 
+	# 5. Test Debug Scene (man hinh dev)
+	var debug_packed: PackedScene = load("res://scenes/debug.tscn")
+	assert(debug_packed != null, "scenes/debug.tscn phai load duoc")
+	var debug_scene: Node = debug_packed.instantiate()
+	root.add_child(debug_scene)
+	await process_frame
+	await process_frame
+	var debug_rows: Node = debug_scene.get_node_or_null("Panel/Content/Scroll/Rows")
+	assert(debug_rows != null, "Debug scene phai co vung Rows")
+	assert(debug_rows.get_child_count() > 0, "Debug scene phai dung duoc cac hang lenh")
+	print("[CHECK] DebugScene instantiated (%d hang lenh)." % debug_rows.get_child_count())
+	debug_scene.queue_free()
+	await process_frame
+
 	print("\n[SUCCESS] Toan bo luong chuyen canh va cac man hinh hoat dong hoan hao!")
 	quit(0)

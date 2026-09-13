@@ -93,4 +93,48 @@ func record_level_clear(level_id: int, stars: int, clear_time: float) -> void:
 	if level_id >= unlocked_levels and unlocked_levels < 9:
 		unlocked_levels = level_id + 1
 
+	# Lưu tiến trình (local, sẵn sàng đẩy lên Google Play sau này)
+	Save.queue_save()
 	level_completed.emit(level_id, stars, int(clear_time))
+
+
+# ---------------------------------------------------------------------------
+# Lưu trữ tiến trình (SaveManager gọi export_progress / import_progress)
+# ---------------------------------------------------------------------------
+func export_progress() -> Dictionary:
+	return {
+		"unlocked_levels": unlocked_levels,
+		"level_stars": level_stars.duplicate(),
+		"level_best_time": level_best_time.duplicate(),
+		"selected_daily_day": selected_daily_day,
+		"current_level": current_level,
+	}
+
+
+func import_progress(data: Dictionary) -> void:
+	if data.is_empty():
+		return
+	unlocked_levels = maxi(int(data.get("unlocked_levels", unlocked_levels)), 1)
+	level_stars = _int_key_dict(data.get("level_stars", null), level_stars, true)
+	level_best_time = _int_key_dict(data.get("level_best_time", null), level_best_time, false)
+	selected_daily_day = int(data.get("selected_daily_day", selected_daily_day))
+	current_level = clampi(int(data.get("current_level", current_level)), 1, 9)
+
+
+func reset_progress() -> void:
+	unlocked_levels = 1
+	level_stars = { 1: 0 }
+	level_best_time.clear()
+	selected_daily_day = 1
+	current_level = 1
+
+
+## Chuyển Dictionary từ JSON về đúng kiểu khoá int (JSON biến khoá số thành chuỗi)
+static func _int_key_dict(value: Variant, fallback: Dictionary, int_values: bool) -> Dictionary:
+	if not (value is Dictionary):
+		return fallback
+	var out: Dictionary = {}
+	for key in (value as Dictionary):
+		var v: Variant = (value as Dictionary)[key]
+		out[int(str(key))] = int(v) if int_values else float(v)
+	return out

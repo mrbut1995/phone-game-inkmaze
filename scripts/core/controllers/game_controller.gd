@@ -40,24 +40,32 @@ func set_game_mode(p_mode: BaseGameMode) -> void:
 		game_mode_controller.game_mode = p_mode
 
 
-func start_new_run() -> void:
+## Bắt đầu ván mới. `start_floor` là màn/tầng xuất phát (Play mode: id màn đang chọn).
+func start_new_run(start_floor := 1) -> void:
 	game_state = GameState.new()
-	var init_steps: int = game_mode_controller.game_mode.initial_steps if game_mode_controller.game_mode != null else INITIAL_STEPS
-	game_state.begin_run(init_steps, game_mode_controller.game_mode.mode_id)
 	_run_active = true
 	_floor_finished = false
 
-	if timer_controller != null:
-		if game_mode_controller.game_mode is TimeAttackGameMode:
-			var ta := game_mode_controller.game_mode as TimeAttackGameMode
-			timer_controller.start_countdown(ta.time_limit)
-		else:
-			timer_controller.start_new_run()
-
+	var mode := game_mode_controller.game_mode
 	if ui_controller != null:
 		ui_controller.hide_overlays()
 
-	_start_floor(1)
+	if timer_controller != null:
+		if mode is TimeAttackGameMode:
+			timer_controller.start_countdown((mode as TimeAttackGameMode).time_limit)
+		else:
+			timer_controller.start_new_run()
+
+	# Nạp màn trước để GameMode cập nhật `initial_steps` theo LevelData
+	_start_floor(start_floor)
+
+	# Sau đó mới khởi tạo state: đúng số bước thiết kế và đúng màn xuất phát
+	game_state.begin_run(
+		mode.initial_steps if mode != null else INITIAL_STEPS,
+		mode.mode_id if mode != null else "dungeon",
+		start_floor
+	)
+	_update_hud()
 
 
 func _start_floor(floor_number: int) -> void:
@@ -67,6 +75,8 @@ func _start_floor(floor_number: int) -> void:
 		grid_view.call("setup_maze", maze, game_mode_controller.game_mode)
 
 	_floor_finished = false
+	if game_state != null:
+		game_state.floor_number = floor_number
 	if timer_controller != null:
 		timer_controller.start_floor()
 	if grid_view != null and grid_view.has_method("set_interaction_enabled"):

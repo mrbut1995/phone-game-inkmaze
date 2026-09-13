@@ -14,6 +14,7 @@ const SCENE_LEVELS := "res://scenes/levels.tscn"
 const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
+const SCENE_DEBUG := "res://scenes/debug.tscn"
 
 
 static func change_scene(path: String) -> void:
@@ -44,6 +45,11 @@ static func goto_daily() -> void:
 
 static func goto_settings() -> void:
 	change_scene(SCENE_SETTINGS)
+
+
+## Màn hình debug (chỉ dùng khi phát triển)
+static func goto_debug() -> void:
+	change_scene(SCENE_DEBUG)
 
 
 static func _manager() -> Node:

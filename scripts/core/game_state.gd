@@ -17,9 +17,9 @@ var floor_wall_hits: int = 0    # số lần đâm tường trong floor hiện t
 var perfect_floor: bool = true  # chưa đâm tường lần nào trong floor
 
 
-func begin_run(initial_steps: int, p_mode_id := "dungeon") -> void:
+func begin_run(initial_steps: int, p_mode_id := "dungeon", start_floor := 1) -> void:
 	mode_id = p_mode_id
-	floor_number = 1
+	floor_number = maxi(start_floor, 1)
 	steps_remaining = maxi(1, initial_steps)
 	max_steps = steps_remaining
 	elapsed_time = 0.0

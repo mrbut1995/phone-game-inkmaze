@@ -104,13 +104,46 @@ func get_completed_count() -> int:
 	return completed_days.size()
 
 
+## Ghi dữ liệu Daily: từ nay đi qua SaveManager (local, sẵn sàng cloud sau này).
+## File user://daily.cfg cũ chỉ còn để DI TRÚ (đọc ở _load_completed).
 func _save_completed() -> void:
-	var cfg := ConfigFile.new()
-	cfg.set_value(SECTION, "completed_days", PackedInt32Array(completed_days))
-	cfg.set_value(SECTION, "day_stars", day_stars)
-	cfg.save(CONFIG_PATH)
+	Save.queue_save()
 
 
+# --- Tích hợp SaveManager -------------------------------------------------
+
+func export_progress() -> Dictionary:
+	return {
+		"completed_days": completed_days.duplicate(),
+		"day_stars": day_stars.duplicate(),
+	}
+
+
+func import_progress(data: Dictionary) -> void:
+	if data.is_empty():
+		return
+	completed_days.clear()
+	var days: Variant = data.get("completed_days", null)
+	if days is Array:
+		for day in (days as Array):
+			completed_days.append(int(day))
+	day_stars.clear()
+	var stars: Variant = data.get("day_stars", null)
+	if stars is Dictionary:
+		for day in (stars as Dictionary):
+			day_stars[int(str(day))] = int((stars as Dictionary)[day])
+	daily_changed.emit()
+
+
+func reset_progress() -> void:
+	completed_days.clear()
+	day_stars.clear()
+	daily_changed.emit()
+
+
+## Nạp dữ liệu Daily.
+## - Dữ liệu chính do SaveManager cấp qua import_progress().
+## - File user://daily.cfg là dữ liệu cũ: chỉ đọc để DI TRÚ sang SaveManager.
 func _load_completed() -> void:
 	completed_days.clear()
 	day_stars.clear()

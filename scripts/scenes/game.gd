@@ -74,8 +74,21 @@ func switch_mode(mode_name: String, difficulty := "medium") -> void:
 	if game_mode_controller != null:
 		game_mode_controller.set_mode_by_name(mode_name, difficulty)
 		if game_controller != null:
-			game_controller.start_new_run()
+			game_controller.start_new_run(_start_floor_for(mode_name))
 	elif game_controller != null:
 		var new_mode: BaseGameMode = StandardGameMode.new(difficulty) if mode_name.to_lower() == "play" else DungeonGameMode.new()
 		game_controller.set_game_mode(new_mode)
-		game_controller.start_new_run()
+		game_controller.start_new_run(_start_floor_for(mode_name))
+
+
+## Màn/tầng xuất phát của ván mới.
+## Play (Classic) luôn vào đúng màn đang chọn trong GameManager, các mode khác bắt đầu từ 1.
+func _start_floor_for(mode_name: String) -> int:
+	match mode_name.to_lower():
+		"play", "classic", "standard":
+			var gm: Node = get_node_or_null("/root/GameManager")
+			if gm != null:
+				return maxi(int(gm.get("current_level")), 1)
+			return 1
+		_:
+			return 1

@@ -1,1 +1,83 @@
+# ============================================================================
+# TODO — InkMaze / Number Maze
+# ============================================================================
+# Quy ước: [x] đã làm · [ ] chưa làm. Mỗi việc ghi kèm file liên quan.
+
 # Replace SFX Placeholder to correct sound
+
+
+# ----------------------------------------------------------------------------
+# GOOGLE PLAY — LƯU DỮ LIỆU NGƯỜI CHƠI TRÊN ĐÁM MÂY (Play Games Saved Games)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): tầng lưu trữ đã tách backend, hiện lưu LOCAL
+#     - scripts/services/save_backend.gd             (interface SaveBackend)
+#     - scripts/services/local_save_backend.gd       (user:// qua DataManager)
+#     - scripts/services/play_games_save_backend.gd  (STUB - chưa cài plugin)
+#     - scripts/manager/SaveManager.gd               (autoload: gom blob + auto-save)
+#     - scripts/utils/save.gd                        (facade tĩnh: Save.flush(), Save.reload_all())
+#     - GameManager / DailyManager đã có export_progress() / import_progress() / reset_progress()
+#     => Khi có plugin: CHỈ cần điền PlayGamesSaveBackend + gọi Save.use_play_games(),
+#        không phải sửa manager nào khác.
+#
+# [ ] 1. Cài plugin Play Games Services cho Godot 4 (Android)
+#        - Ví dụ: godot-play-games-services (bản Godot 4) hoặc plugin tương đương
+#        - Project > Install Android Build Template
+#        - Thêm plugin vào addons/, bật trong Project Settings > Plugins
+#        - Kiểm tra singleton: Engine.has_singleton("GodotPlayGamesServices")
+#          (nếu tên khác thì bổ sung vào PlayGamesSaveBackend.SINGLETON_CANDIDATES)
+#        - File liên quan: scripts/services/play_games_save_backend.gd
+#
+# [ ] 2. Cấu hình Google Play Console + OAuth
+#        - Tạo app, bật Play Games Services > Saved Games
+#        - Tạo OAuth 2.0 client (Android) với SHA-1 của keystore release
+#        - Khai báo app_id + OAuth client id vào plugin (AndroidManifest / export preset)
+#        - Thêm cả SHA-1 keystore debug để test nội bộ
+#
+# [ ] 3. Đăng nhập + bật backend cloud
+#        - Đăng nhập Play Games khi mở game (hoặc từ màn Settings)
+#        - Sau khi đăng nhập: Save.use_play_games()
+#        - Kiểm tra: Save.backend_id() == "play_games" và Save.is_cloud() == true
+#
+# [ ] 4. Hiện thực Snapshots API trong PlayGamesSaveBackend
+#        - load_data(): mở snapshot SNAPSHOT_NAME -> đọc byte[] -> JSON.parse_string
+#        - save_data(): JSON.stringify(blob) -> ghi byte[] -> commit snapshot
+#        - clear_data(): ghi đè snapshot rỗng
+#        - LƯU Ý: API bất đồng bộ -> cần signal/callback, không trả kết quả ngay
+#
+# [ ] 5. Xử lý xung đột local <-> cloud (QUAN TRỌNG)
+#        - Blob đã có "saved_at" (unix time) + "version" do SaveManager.collect() ghi
+#        - Khi 2 bên đều có dữ liệu: so sánh saved_at hoặc merge theo tiến trình cao hơn
+#          (unlocked_levels / level_stars lớn hơn thì giữ)
+#        - HIỆN TẠI SaveManager.set_backend() đang GHI ĐÈ bằng cloud -> phải đổi thành MERGE
+#        - File liên quan: scripts/manager/SaveManager.gd (mục TODO(google-play))
+#
+# [ ] 6. UI trạng thái đồng bộ ở màn Settings
+#        - Chip "Cloud save" đang tĩnh (scripts/scenes/settings.gd, STR_SETTINGS_CLOUD)
+#        - Cần hiện: Đang kết nối / Đã đồng bộ / Lỗi + nút "Đồng bộ ngay"
+#
+# [ ] 7. Dọn dẹp dữ liệu local cũ sau khi cloud chạy ổn
+#        - user://daily.cfg (DailyManager đọc 1 lần để DI TRÚ, sau đó xoá được)
+#        - user://inkmaze_data.json giữ lại làm cache offline
+#
+# [ ] 8. Kiểm thử
+#        - Cài lại game -> đăng nhập -> tiến trình tự về
+#        - Tắt mạng -> vẫn lưu local -> có mạng -> đồng bộ
+#        - 2 thiết bị cùng tài khoản: tiến trình mới nhất thắng
+
+
+# ----------------------------------------------------------------------------
+# KHÁC
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): Debug Console — scenes/debug.tscn + scripts/scenes/debug.gd
+#     - Mở: phím F9 (input action "debug_console" do DebugManager tự đăng ký)
+#       hoặc bấm 5 lần vào con dấu phiên bản ở màn Settings (bản debug)
+#     - Có: xem State/Save blob, nhảy tới màn 1..9, unlock all, ghi 3 sao,
+#       reset tiến trình, Daily (play/complete/reset), đổi backend lưu,
+#       mở thử 5 popup, bật/tắt log theo nhóm
+#     - Nội dung dựng bằng code trong debug.gd::_build() -> thêm mục mới rất nhanh
+#     - Đã đưa vào test_full_flow (kiểm tra dựng được các hàng lệnh)
+# [ ] Debug Console: chưa có nhóm "giả lập trong ván chơi" (thêm/xoá bước,
+#     teleport, ép thắng/thua ngay trong game) — mở rộng sau nếu cần
+# [ ] Màn Settings: nút "Hướng dẫn" chưa có scene (guide_requested mới chỉ push_warning)
+# [ ] Popup ngôn ngữ: locale không có trong LOCALE_INFO (vd zh_TW) đang hiện mã thô
+# [ ] scenes/splash.tscn và các popup cũ chưa cập nhật localization/icon SVG

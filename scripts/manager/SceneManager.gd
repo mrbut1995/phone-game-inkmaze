@@ -12,6 +12,7 @@ const SCENE_LEVELS := "res://scenes/levels.tscn"
 const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
+const SCENE_DEBUG := "res://scenes/debug.tscn"
 
 
 func _ready() -> void:
@@ -69,6 +70,14 @@ func goto_daily() -> void:
 
 func goto_settings() -> void:
 	change_scene(SCENE_SETTINGS)
+
+
+func goto_debug() -> void:
+	change_scene(SCENE_DEBUG)
+
+
+func is_debug_scene() -> bool:
+	return current_scene_path() == SCENE_DEBUG
 
 
 func _play_page_turn() -> void:
