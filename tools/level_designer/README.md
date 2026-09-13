@@ -198,6 +198,9 @@ Sau khi build, kiểm tra nhanh bản exe:
 
 ## 6. Ghi chú
 
+- Game **hỗ trợ nhiều hơn 9 màn**: màn *Chọn Màn* tự chia **9 thẻ/trang** và **vuốt ngang để sang trang**
+  (chỉ số trang + bấm dot để nhảy trang). Tạo `level_10.tres`, `level_11.tres`… bằng tool này là chơi được ngay,
+  không cần sửa code game.
 - File `.tres` do tool ghi **giống hệt** định dạng Godot sinh ra (khác duy nhất id nội bộ
   `1_level` của `ext_resource` — Godot không quan tâm giá trị này).
 - Lần đầu mở Godot sau khi thêm màn mới, editor sẽ tự import resource — không cần thao tác gì thêm.

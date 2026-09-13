@@ -7,17 +7,68 @@ extends Node
 
 const LEVELS_DIR := "res://resources/levels/"
 const TOTAL_CHAPTER1_LEVELS := 9
+## Quét tối đa tới id này khi dò danh sách màn (đủ rộng cho nhiều chương)
+const MAX_LEVEL_ID := 999
+## Dừng quét khi gặp bao nhiêu id liên tiếp không có file (chịu được vài khoảng trống)
+const SCAN_MISS_LIMIT := 3
 
 var _cache: Dictionary = {}
+var _levels_dir := LEVELS_DIR
+var _id_cache: Array[int] = []
+var _ids_ready := false
 
 
 func _ready() -> void:
 	ensure_default_levels()
 
 
+# ---------------------------------------------------------------------------
+# Danh sách màn (dùng cho màn Chọn Màn để phân trang khi > 9 màn)
+# ---------------------------------------------------------------------------
+func get_levels_dir() -> String:
+	return _levels_dir
+
+
+## Đổi thư mục chứa level (dùng cho test) - nhớ gọi refresh_levels() sau đó
+func set_levels_dir(dir_path: String) -> void:
+	_levels_dir = dir_path if dir_path.ends_with("/") else dir_path + "/"
+	refresh_levels()
+
+
+## Xoá cache danh sách màn -> lần gọi kế tiếp sẽ tự dò lại
+func refresh_levels() -> void:
+	_id_cache.clear()
+	_ids_ready = false
+
+
+## Danh sách level_id có file .tres thật, tăng dần (bỏ qua id trống)
+func get_level_ids() -> Array[int]:
+	if not _ids_ready:
+		_refresh_level_ids()
+	return _id_cache.duplicate()
+
+
+func get_level_count() -> int:
+	return get_level_ids().size()
+
+
+func _refresh_level_ids() -> void:
+	_id_cache.clear()
+	var level_id := 1
+	var misses := 0
+	while level_id <= MAX_LEVEL_ID and misses < SCAN_MISS_LIMIT:
+		if has_level(level_id):
+			_id_cache.append(level_id)
+			misses = 0
+		else:
+			misses += 1
+		level_id += 1
+	_ids_ready = true
+
+
 ## Lấy đường dẫn file resource của level
 func get_level_path(level_id: int) -> String:
-	return "%slevel_%d.tres" % [LEVELS_DIR, level_id]
+	return "%slevel_%d.tres" % [_levels_dir, level_id]
 
 
 ## Kiểm tra màn chơi có tồn tại file Resource hay không
@@ -50,17 +101,18 @@ func save_level(data: LevelData) -> Error:
 	if data == null:
 		return ERR_INVALID_DATA
 
-	_ensure_directory(LEVELS_DIR)
+	_ensure_directory(_levels_dir)
 	var path := get_level_path(data.level_id)
 	var err := ResourceSaver.save(data, path)
 	if err == OK:
 		_cache[data.level_id] = data
+		refresh_levels()
 	return err
 
 
 ## Đảm bảo toàn bộ 9 màn chơi của Chương 1 đã có sẵn file Resource .tres
 func ensure_default_levels() -> void:
-	_ensure_directory(LEVELS_DIR)
+	_ensure_directory(_levels_dir)
 	for id in range(1, TOTAL_CHAPTER1_LEVELS + 1):
 		if not has_level(id):
 			var lvl := _create_crafted_level(id)

@@ -14,6 +14,9 @@ const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
 @export var is_locked: bool = false
 @export var rating: int = 0
 @export var is_done: bool = false
+## Chương của màn (hiện trên thẻ kiểu "1-3") + vị trí trong chương
+@export var chapter: int = 1
+@export var index_in_chapter: int = 0
 
 @onready var panel_btn: TextureButton = $Panel
 @onready var level_lbl: Label = $Panel/Level
@@ -31,17 +34,22 @@ func _ready() -> void:
 	update_visuals()
 
 
-func setup(p_level_id: int, p_is_locked: bool, p_rating: int, p_is_done: bool) -> void:
+func setup(p_level_id: int, p_is_locked: bool, p_rating: int, p_is_done: bool,
+		p_chapter: int = 1, p_index_in_chapter: int = 0) -> void:
 	level_id = p_level_id
 	is_locked = p_is_locked
 	rating = p_rating
 	is_done = p_is_done
+	chapter = maxi(p_chapter, 1)
+	index_in_chapter = p_index_in_chapter
 	update_visuals()
 
 
 func update_visuals() -> void:
 	if level_lbl != null:
-		level_lbl.text = "1-%d" % level_id
+		# Màn đánh số theo chương (1-1, 1-2...) - nhiều hơn 9 màn vẫn hiện đúng
+		var shown := index_in_chapter if index_in_chapter > 0 else level_id
+		level_lbl.text = "%d-%d" % [maxi(chapter, 1), shown]
 		level_lbl.visible = not is_locked
 
 	if lock_icon != null:

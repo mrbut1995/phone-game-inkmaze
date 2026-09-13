@@ -31,8 +31,18 @@ func _init() -> void:
 	await process_frame
 	await process_frame
 	assert(levels_scene.btn_back != null, "LevelScenes phai co btn_back")
-	assert(levels_scene.grid_container != null, "LevelScenes phai co grid_container")
-	assert(levels_scene.grid_container.get_child_count() == 9, "GridContainer phai co 9 level card")
+	assert(levels_scene.scroll != null, "LevelScenes phai co ScrollContainer de phan trang")
+	assert(levels_scene.pages_host != null, "LevelScenes phai co Pages")
+	assert(levels_scene.page_count() >= 1, "LevelScenes phai co it nhat 1 trang")
+	var levels_card_count := 0
+	for page in levels_scene.pages_host.get_children():
+		levels_card_count += (page.get_child(0) as GridContainer).get_child_count()
+	assert(levels_card_count == maxi(levels_scene.level_ids().size(), 1),
+		"So the man phai bang so level (dang %d the / %d man)"
+			% [levels_card_count, levels_scene.level_ids().size()])
+	print("[CHECK] LevelScenes: %d man / %d trang, dots = %d."
+		% [levels_scene.level_ids().size(), levels_scene.page_count(),
+			levels_scene.dots_box.get_child_count()])
 	levels_scene.queue_free()
 	await process_frame
 

@@ -7,10 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
 [ext_resource type="Texture2D" path="res://assets/images/level_selector/chapter_banner.svg" id="6_banner"]
 [ext_resource type="Texture2D" path="res://assets/images/level_selector/badge_stars_counter.svg" id="7_stars"]
-[ext_resource type="Texture2D" path="res://assets/images/level_selector/pagination_dots.svg" id="8_dots"]
-[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_primary_normal.svg" id="9_cont_n"]
-[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_primary_pressed.svg" id="10_cont_p"]
-[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_primary_focus.svg" id="11_cont_f"]
+[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_cta_normal.svg" id="9_cont_n"]
+[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="10_cont_p"]
+[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cont_f"]
+[ext_resource type="Texture2D" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
+[ext_resource type="Texture2D" path="res://assets/images/level_selector/dot_active.svg" id="13_dot_on"]
+[ext_resource type="Texture2D" path="res://assets/images/level_selector/dot_inactive.svg" id="15_dot_off"]
 [ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="14_theme_text"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_hcnff")]
@@ -110,7 +112,7 @@ anchors_preset = -1
 anchor_left = 0.12962963
 anchor_top = 0.8385417
 anchor_right = 0.8703704
-anchor_bottom = 0.9114583
+anchor_bottom = 0.9010417
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("9_cont_n")
@@ -124,67 +126,64 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 120.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_BTN_CONTINUE_LEVEL"
 theme_type_variation = &"LevelsContinue"
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
 
-[node name="PaginationDots" type="TextureRect" parent="." index="5"]
+[node name="Icon" type="TextureRect" parent="ContinueButton" index="1"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4
-anchor_top = 0.94010416
-anchor_right = 0.6
-anchor_bottom = 0.95677084
+offset_left = 105.0
+offset_top = 42.0
+offset_right = 135.0
+offset_bottom = 78.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("8_dots")
+texture = ExtResource("12_play_icon")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="GridContainer" type="GridContainer" parent="." index="2" unique_id=783028615]
+[node name="PaginationDots" type="HBoxContainer" parent="." index="5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.8088542
+anchor_right = 0.7
+anchor_bottom = 0.8213542
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="CardArea" type="Control" parent="." index="2" unique_id=783028615]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.051777776
 anchor_top = 0.191125
 anchor_right = 0.98077774
 anchor_bottom = 0.7824375
-offset_left = 10.08
-offset_top = 11.039993
-offset_right = -10.240051
-offset_bottom = -11.280029
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/h_separation = 46
-theme_override_constants/v_separation = 24
-columns = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="Level" parent="GridContainer" index="0" unique_id=212139280 instance=ExtResource("2_hk6qi")]
-layout_mode = 2
+[node name="Scroll" type="ScrollContainer" parent="CardArea" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+follow_focus = false
+scroll_deadzone = 12
 
-[node name="Level2" parent="GridContainer" index="1" unique_id=328236377 instance=ExtResource("2_hk6qi")]
+[node name="Pages" type="HBoxContainer" parent="CardArea/Scroll" index="0"]
 layout_mode = 2
-
-[node name="Level3" parent="GridContainer" index="2" unique_id=1470704049 instance=ExtResource("2_hk6qi")]
-layout_mode = 2
-
-[node name="Level4" parent="GridContainer" index="3" unique_id=721935705 instance=ExtResource("2_hk6qi")]
-layout_mode = 2
-
-[node name="Level5" parent="GridContainer" index="4" unique_id=1145324204 instance=ExtResource("2_hk6qi")]
-layout_mode = 2
-
-[node name="Level6" parent="GridContainer" index="5" unique_id=20393376 instance=ExtResource("2_hk6qi")]
-layout_mode = 2
-
-[node name="Level7" parent="GridContainer" index="6" unique_id=1312256390 instance=ExtResource("2_hk6qi")]
-layout_mode = 2
-
-[node name="Level8" parent="GridContainer" index="7" unique_id=601745539 instance=ExtResource("2_hk6qi")]
-layout_mode = 2
-
-[node name="Level9" parent="GridContainer" index="8" unique_id=1132518280 instance=ExtResource("2_hk6qi")]
-layout_mode = 2
+theme_override_constants/separation = 0

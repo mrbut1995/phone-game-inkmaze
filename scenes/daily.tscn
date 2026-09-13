@@ -23,9 +23,9 @@
 [ext_resource type="Texture2D" uid="uid://cjx5vllc8vgfs" path="res://assets/images/calendar/btn_primary_focus.svg" id="21_act_pri_f"]
 [ext_resource type="Texture2D" uid="uid://88bsbnhxa7wf" path="res://assets/images/calendar/progress_bar_bg.svg" id="22_bar_bg"]
 [ext_resource type="Texture2D" uid="uid://31yj72v8vldh" path="res://assets/images/calendar/progress_bar_fill.svg" id="23_bar_fill"]
-[ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/calendar/btn_play_daily_normal.svg" id="24_play_n"]
-[ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/calendar/btn_play_daily_pressed.svg" id="25_play_p"]
-[ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/calendar/btn_play_daily_focus.svg" id="26_play_f"]
+[ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="24_play_n"]
+[ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="25_play_p"]
+[ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="26_play_f"]
 [ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/calendar/pencil_icon.svg" id="27_pencil"]
 
 [node name="Control" unique_id=1222391855 instance=ExtResource("1_base")]

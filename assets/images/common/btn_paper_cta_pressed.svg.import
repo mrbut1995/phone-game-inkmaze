@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbf8sgj8ykc6j"
-path="res://.godot/imported/btn_play_daily_normal.svg-7af8086f4b25ed0ebca68d2469740209.ctex"
+uid="uid://0joitk4s7box"
+path="res://.godot/imported/btn_paper_cta_pressed.svg-56d20b5de4d36328880188c4f451b2b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/calendar/btn_play_daily_normal.svg"
-dest_files=["res://.godot/imported/btn_play_daily_normal.svg-7af8086f4b25ed0ebca68d2469740209.ctex"]
+source_file="res://assets/images/common/btn_paper_cta_pressed.svg"
+dest_files=["res://.godot/imported/btn_paper_cta_pressed.svg-56d20b5de4d36328880188c4f451b2b6.ctex"]
 
 [params]
 

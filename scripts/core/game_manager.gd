@@ -90,8 +90,17 @@ func record_level_clear(level_id: int, stars: int, clear_time: float) -> void:
 	if clear_time < prev_time:
 		level_best_time[level_id] = clear_time
 
-	if level_id >= unlocked_levels and unlocked_levels < 9:
-		unlocked_levels = level_id + 1
+	if level_id >= unlocked_levels:
+		# Mở khoá màn kế tiếp nếu màn đó thật sự tồn tại (danh sách màn có thể > 9)
+		var next_id := level_id + 1
+		var lm: Node = get_node_or_null("/root/LevelManager")
+		var has_next := true
+		if lm != null and lm.has_method("has_level"):
+			has_next = bool(lm.call("has_level", next_id))
+		else:
+			has_next = next_id <= 9
+		if has_next:
+			unlocked_levels = maxi(unlocked_levels, next_id)
 
 	# Lưu tiến trình (local, sẵn sàng đẩy lên Google Play sau này)
 	Save.queue_save()

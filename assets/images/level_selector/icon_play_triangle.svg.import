@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0joitk4s7box"
-path="res://.godot/imported/btn_play_daily_pressed.svg-730f8118ad8d75b0d03f09a9d0038740.ctex"
+uid="uid://cusujyhrv8npo"
+path="res://.godot/imported/icon_play_triangle.svg-cdebf2251954b54f0a4e170ef0449ee4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/calendar/btn_play_daily_pressed.svg"
-dest_files=["res://.godot/imported/btn_play_daily_pressed.svg-730f8118ad8d75b0d03f09a9d0038740.ctex"]
+source_file="res://assets/images/level_selector/icon_play_triangle.svg"
+dest_files=["res://.godot/imported/icon_play_triangle.svg-cdebf2251954b54f0a4e170ef0449ee4.ctex"]
 
 [params]
 

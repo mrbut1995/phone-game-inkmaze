@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqy7ra52b2cfo"
-path="res://.godot/imported/btn_play_daily_disabled.svg-a40ba57b97fed9cb984b859f57d647d2.ctex"
+uid="uid://cug0or7wcq22h"
+path="res://.godot/imported/btn_paper_cta_focus.svg-4a4ba37bafa6b5b70bd6bb32b8c5044d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/calendar/btn_play_daily_disabled.svg"
-dest_files=["res://.godot/imported/btn_play_daily_disabled.svg-a40ba57b97fed9cb984b859f57d647d2.ctex"]
+source_file="res://assets/images/common/btn_paper_cta_focus.svg"
+dest_files=["res://.godot/imported/btn_paper_cta_focus.svg-4a4ba37bafa6b5b70bd6bb32b8c5044d.ctex"]
 
 [params]
 

@@ -22,6 +22,23 @@
 # [ ] Level Designer: chưa sửa được custom_cell_values (giá trị ô đặc biệt của vài mode) — hiện giữ nguyên
 # [ ] Level Designer: chưa có preview 1:1 theo khung 1080x1920 / xem trước bằng art thật của game
 # [ ] Level Designer: chưa có sửa hàng loạt (đổi difficulty / max_steps / par_time cho nhiều màn cùng lúc)
+#
+# [x] ĐÃ SỬA (2026-09): Màn Chọn Màn — quá 9 màn thì không vuốt sang trang + dots sai + nút sai
+#     - scripts/core/level_manager.gd: get_level_ids()/get_level_count() dò file level_*.tres thật
+#       (dùng ResourceLoader.exists, chịu được id trống) + set_levels_dir()/refresh_levels() cho test
+#     - scenes/levels.tscn: bỏ GridContainer 9 thẻ tĩnh -> CardArea/Scroll/Pages (ScrollContainer) + PaginationDots
+#       (HBoxContainer) + nút CTA đúng mockup (thẻ giấy xanh 800x120 + icon play, anchor_bottom 0.9010417)
+#     - scripts/scenes/levels.gd: dựng thẻ theo danh sách thật (9 thẻ/trang), TỰ xử lý gesture vuốt trong _input
+#       (card là Button nên "ăn" sự kiện kéo -> ScrollContainer không nhận được), snap về trang gần nhất khi thả tay,
+#       dots dựng động theo số trang + bấm dot để nhảy trang, mũi tên trái/phải + lăn chuột cho desktop,
+#       mở sẵn trang chứa màn đang chơi, khoá bấm thẻ 0.15s sau khi vuốt
+#     - level_card.gd: hiện số theo chương (1-1..2-3) thay vì luôn "1-x"
+#     - Bỏ hardcode 9 màn: GameManager.record_level_clear() chỉ mở khoá nếu màn kế tồn tại;
+#       GameController._on_continue_requested() dùng LevelManager.has_level()
+#     - Asset: calendar/btn_play_daily_* -> common/btn_paper_cta_* (giữ uid, cập nhật daily.tscn);
+#       thêm level_selector/{dot_active,dot_inactive,icon_play_triangle}.svg; xoá pagination_dots.svg (tĩnh)
+#     - Test mới: scripts/test_case/test_levels_paging.gd (12 màn tạm trong user://test_levels)
+# [ ] Màn Chọn Màn: nhãn "ĐỔI CHƯƠNG" còn tĩnh — cần bộ chọn chương khi có nhiều chương thật
 
 
 # ----------------------------------------------------------------------------

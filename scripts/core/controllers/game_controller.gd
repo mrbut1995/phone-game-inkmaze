@@ -232,7 +232,7 @@ func _on_continue_requested() -> void:
 			var stars: int = 3 if game_state.floor_wall_hits == 0 else 2
 			gm.call("record_level_clear", int(gm.get("current_level")), stars, game_state.elapsed_time)
 			var next_lvl := int(gm.get("current_level")) + 1
-			if next_lvl <= 9:
+			if _level_exists(next_lvl):
 				gm.call("start_level", next_lvl)
 			else:
 				gm.call("go_to_levels")
@@ -264,6 +264,14 @@ func current_floor() -> int:
 			if gm != null:
 				return maxi(int(gm.get("current_level")), 1)
 	return 1
+
+
+## Màn `level_id` có file .tres thật hay không (danh sách màn có thể > 9)
+func _level_exists(level_id: int) -> bool:
+	var lm: Node = get_node_or_null("/root/LevelManager")
+	if lm != null and lm.has_method("has_level"):
+		return bool(lm.call("has_level", level_id))
+	return level_id <= 9
 
 
 ## Xem quảng cáo để hồi sinh: thưởng thêm bước và chơi lại tầng hiện tại
