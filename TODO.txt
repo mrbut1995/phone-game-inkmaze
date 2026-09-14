@@ -5,6 +5,54 @@
 
 # Replace SFX Placeholder to correct sound
 
+# ----------------------------------------------------------------------------
+# THỬ THÁCH & SAO + POPUP THUA THEO CHẾ ĐỘ (2026-09)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): Sao KHÔNG còn tính theo thời gian còn lại -> 3 Thử thách / match-up,
+#     hoàn thành 1 Thử thách = 1 Sao (tối đa 3). Chỉ Dungeon Mode có bộ đếm số bước còn lại.
+#     - scripts/core/controllers/challenge_controller.gd (MỚI): 3 thử thách chuẩn suy ra từ dữ liệu màn
+#        1. Không đâm vào tường vô hình · 2. Đi không quá N bước (N = max_steps thiết kế)
+#        3. Về đích dưới T giây (T = N × 3, kẹp 30..240s)
+#        API: setup_for_floor(N) · refresh(state, floor_elapsed, final) · rows() · stars() · all_done()
+#        refresh() có cache theo (wall_hits, moves, giây) nên gọi mỗi frame vẫn rẻ.
+#     - scenes/game.tscn: thêm thẻ HUD "THỬ THÁCH" (Information/Challenge, art mới
+#        assets/images/game/card_challenge.svg, 624x125, 3 dòng Star/Name/Status + Count "x / 3"),
+#        NodePath card của ChallengeController + challenge_controller của GameController.
+#     - scripts/core/controllers/ui_controller.gd: apply_mode_layout(endless) -> Dungeon hiện
+#        BƯỚC CÒN + ĐIỂM SỐ, các chế độ khác chỉ hiện THỬ THÁCH + THỜI GIAN (đúng mockup matchup_level.svg).
+#     - scripts/core/controllers/game_controller.gd: chốt ngưỡng khi vào màn/tầng; CHỈ Dungeon thua vì
+#        hết bước (các mode khác không giới hạn bước); stars() thay cho "3 if hits==0 else 2";
+#        hồi sinh tách thành revive_run() (test gọi trực tiếp được khi AdsManager còn là stub).
+#     - Hồi sinh theo chế độ (Design.md 5.10): Level = quay lại bước trước đó (undo, KHÔNG cộng bước);
+#        Dungeon = nhận thêm +3 bước để đi tiếp.
+#     - Popup thua tách 2 bản: nodes/popups/gameover.tscn (Dungeon: bước còn lại, revive +bước, thêm
+#        label StampTitle/StampCount "HẾT BƯỚC · 0 / 20 BƯỚC") và nodes/popups/gameover_level.tscn (MỚI:
+#        tiêu đề "ĐÂM VÀO TƯỜNG VÔ HÌNH!", bảng 3 thử thách + trạng thái ĐẠT/CHƯA ĐẠT, con dấu in số
+#        thử thách đã hoàn thành, revive "Quay lại bước trước đó") + scripts/nodes/popups/gameover_level.gd
+#        (class GameOverLevelPopup) + PopupManager/Popups.GAME_OVER_LEVEL = "game_over_level".
+#     - Chuỗi mới trong resources/localization/string_extra.csv (STR_CHALLENGE_*, STR_GAME_OVER_LEVEL_*,
+#        STR_REVIVE_DESC_STEPS/UNDO, STR_GAMEOVER_STAMP_*) + 2 theme variation PopupStampTextDanger/SubDanger.
+#     - Test: scripts/test_case/test_challenge_controller.gd (HUD theo chế độ, ngưỡng 15 bước/45s,
+#        tính Sao: đang chơi=1 · hoàn hảo=3 · đâm tường=2 · chậm&lâu=0, popup level + hồi sinh undo).
+#        Đã render kiểm tra mắt: HUD Play (thẻ THỬ THÁCH 1/3 + THỜI GIAN) và 2 popup thua.
+# [x] ĐÃ SỬA (2026-09): Hồi sinh ở Level Mode bị ĐỨNG YÊN + không hiện tường vừa đâm
+#     - Nguyên nhân 1: AdsManager (stub) trả về false -> GameController thoát sớm, nhưng popup vẫn tự
+#       close() khi bấm HỒI SINH -> ván ở trạng thái thua (interaction off, timer stop, _run_active=false)
+#       => người chơi không kéo được nữa. Sửa: popup KHÔNG tự đóng nữa (GameController đóng khi được
+#       thưởng) + AdsManager thêm cờ `enabled = true` (giả lập xem xong quảng cáo) để chạy được khi chưa gắn SDK.
+#     - Nguyên nhân 2: GridController đưa nhân vật về S khi đâm tường kể cả ở chế độ thua-ngay -> mất vệt
+#       đường, hồi sinh không còn biết vị trí cũ. Sửa: chỉ chế độ Endless mới teleport về S.
+#     - Bổ sung: GridController nhớ cạnh vừa đâm (last_hazard_from/to/type) + reveal_last_hazard_wall();
+#       GameController.revive_run() gọi lại -> sau hồi sinh đoạn tường vừa đâm nháy đỏ rồi vẫn hiện (mực đậm).
+#       Hồi sinh còn hoàn lại 2 bước: 1 cho nước đi bị undo + 1 cho bước mất khi đâm tường.
+#     - Test: test_challenge_controller.gd phần hồi sinh chạy ĐÚNG luồng người chơi (đâm tường -> bấm
+#       HỒI SINH trên popup) và kiểm tra: về ô trước đó, tường vừa đâm hiện, bàn cờ nhận lại input, đồng hồ
+#       chạy lại, ván tiếp tục và ĐI TIẾP ĐƯỢC; kèm check Dungeon vẫn đưa về S khi đâm tường.
+# [ ] CHƯA LÀM: popup THẮNG màn (nodes/popups/winning.tscn) vẫn hiện "Số bước / Va chạm tường /
+#     TỔNG ĐIỂM" theo bản cũ — cần đổi sang bảng 3 Thử thách + 3 sticker sao như mockup popup_win_level.svg
+# [ ] CHƯA LÀM: bộ 3 thử thách hiện suy ra từ max_steps của màn; muốn mỗi màn có thử thách riêng thì
+#     thêm field vào LevelData (và cho Level Designer ghi field đó)
+
 
 # ----------------------------------------------------------------------------
 # LEVEL DESIGNER (PYTHON) — tools/level_designer

@@ -21,12 +21,33 @@ signal revive_requested
 @export var time_val_label: Label = null
 @export var score_val_label: Label = null
 
+## Thẻ HUD trong "Information": Dungeon Mode dùng BƯỚC CÒN + ĐIỂM SỐ,
+## các chế độ khác (Play/Daily) dùng thẻ THỬ THÁCH — xem apply_mode_layout()
+@export var step_card: Control = null
+@export var score_card: Control = null
+@export var challenge_card: Control = null
+
 ## Thông tin ván đang chơi (GameController cập nhật) - dùng cho popup tạm dừng
 var run_info: Dictionary = {}
 
 
 func set_run_info(info: Dictionary) -> void:
 	run_info = info
+
+
+# ---------------------------------------------------------------------------
+# Bố cục HUD theo chế độ chơi
+# ---------------------------------------------------------------------------
+## Chỉ Dungeon Mode mới có bộ đếm số bước còn lại (và điểm tích lũy).
+## Các chế độ còn lại hiện thẻ THỬ THÁCH (3 thử thách + số Sao) thay cho 2 thẻ đó.
+## Xem Number_Maze_Game_Design.md — mục 3.1 & quy ước "Số bước".
+func apply_mode_layout(endless: bool) -> void:
+	if step_card != null:
+		step_card.visible = endless
+	if score_card != null:
+		score_card.visible = endless
+	if challenge_card != null:
+		challenge_card.visible = not endless
 
 
 # ---------------------------------------------------------------------------
@@ -89,7 +110,10 @@ func show_game_over(result: Dictionary) -> void:
 	# SFX: tiếng vo tròn tờ giấy nháp ném đi
 	Sfx.play(Sfx.GAME_OVER)
 
-	var popup := Popups.open(Popups.GAME_OVER, result)
+	# Dungeon Mode thua vì HẾT BƯỚC (phiếu giấy + điểm an ủi);
+	# các chế độ khác thua vì ĐÂM TƯỜNG (phiếu nêu 3 thử thách + số Sao đạt được)
+	var id := Popups.GAME_OVER if bool(result.get("endless", true)) else Popups.GAME_OVER_LEVEL
+	var popup := Popups.open(id, result)
 	if popup == null:
 		return
 	if popup.has_signal("retry_requested"):

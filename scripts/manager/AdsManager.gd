@@ -12,8 +12,10 @@ signal rewarded_available_changed(available: bool)
 signal rewarded_completed(reward_id: String)
 signal interstitial_closed
 
-## Bật/tắt để test luồng UI khi chưa có SDK
-var enabled := false
+## Bật/tắt để test luồng UI khi chưa có SDK.
+## ĐANG ĐỂ true: giả lập xem quảng cáo xong thành công để nút HỒI SINH chạy được
+## trong bản chưa gắn SDK (khi gắn SDK thật thì thay thân hàm show_rewarded bên dưới).
+var enabled := true
 
 
 func _ready() -> void:
@@ -21,22 +23,29 @@ func _ready() -> void:
 
 
 func is_rewarded_ready() -> bool:
-	return false
+	return enabled
 
 
 func is_interstitial_ready() -> bool:
-	return false
+	return enabled
 
 
-## Trả về true nếu quảng cáo được hiển thị
-func show_rewarded(_reward_id := "default") -> bool:
-	_debug_log("show_rewarded bị bỏ qua (chưa gắn SDK quảng cáo)")
-	return false
+## Trả về true nếu quảng cáo được hiển thị (và người chơi đã xem xong)
+func show_rewarded(reward_id := "default") -> bool:
+	if not enabled:
+		_debug_log("show_rewarded bị bỏ qua (chưa gắn SDK quảng cáo)")
+		return false
+	_debug_log("show_rewarded: giả lập xem xong quảng cáo '%s'" % reward_id)
+	rewarded_completed.emit(reward_id)
+	return true
 
 
 func show_interstitial() -> bool:
-	_debug_log("show_interstitial bị bỏ qua (chưa gắn SDK quảng cáo)")
-	return false
+	if not enabled:
+		_debug_log("show_interstitial bị bỏ qua (chưa gắn SDK quảng cáo)")
+		return false
+	interstitial_closed.emit()
+	return true
 
 
 func _debug_log(message: String) -> void:

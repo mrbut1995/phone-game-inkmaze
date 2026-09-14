@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brb2w5j1fm033"
-path="res://.godot/imported/popup_game_over.svg-b3a10a46d19c1ad0963a67be306497c1.ctex"
+uid="uid://bu37eubkp0f6a"
+path="res://.godot/imported/popup_game_over_level.svg-c29d9a4956a0d5667b857175b817a9e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mockup/popup_game_over.svg"
-dest_files=["res://.godot/imported/popup_game_over.svg-b3a10a46d19c1ad0963a67be306497c1.ctex"]
+source_file="res://mockup/popup_game_over_level.svg"
+dest_files=["res://.godot/imported/popup_game_over_level.svg-c29d9a4956a0d5667b857175b817a9e8.ctex"]
 
 [params]
 

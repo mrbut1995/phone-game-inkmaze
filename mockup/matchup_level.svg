@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <!-- MOCKUP: MÀN CHƠI — PLAY MODE / CHỌN MÀN (HUD: 3 thử thách · thời gian; KHÔNG bước còn lại, KHÔNG điểm) -->
   <defs>
     <!-- Lưới vở học sinh nền 40px -->
     <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -49,6 +50,16 @@
         <line x1="6"   y1="0" x2="18"  y2="0"/>
       </g>
     </g>
+
+    <!-- TÁI SỬ DỤNG: NGÔI SAO THỬ THÁCH (ĐÃ ĐẠT / CHƯA ĐẠT) -->
+    <g id="star-got">
+      <path d="M 11 1.6 L 14.2 8.2 L 21.4 9.2 L 16.2 14.2 L 17.4 21.4 L 11 18 L 4.6 21.4 L 5.8 14.2 L 0.6 9.2 L 7.8 8.2 Z"
+            fill="#FBBF24" stroke="#D97706" stroke-width="1.6" stroke-linejoin="round"/>
+    </g>
+    <g id="star-pending">
+      <path d="M 11 1.6 L 14.2 8.2 L 21.4 9.2 L 16.2 14.2 L 17.4 21.4 L 11 18 L 4.6 21.4 L 5.8 14.2 L 0.6 9.2 L 7.8 8.2 Z"
+            fill="#F1EADB" stroke="#B5A98F" stroke-width="1.6" stroke-linejoin="round"/>
+    </g>
   </defs>
 
   <!-- ================= 1. NỀN GIẤY VỞ & LỀ ĐỎ ================= -->
@@ -75,10 +86,10 @@
     <line x1="44" y1="22" x2="44" y2="48" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round"/>
   </g>
 
-  <!-- Tiêu đề Chế độ chơi & Tầng Dungeon -->
+  <!-- Tiêu đề Chế độ chơi & Màn đang chơi -->
   <g transform="translate(540, 105)" text-anchor="middle">
-    <text y="0" font-family="sans-serif" font-size="18" font-weight="800" fill="#D84444" letter-spacing="2">DUNGEON MODE</text>
-    <text y="42" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="900" fill="#224C6D">TẦNG 04</text>
+    <text y="0" font-family="sans-serif" font-size="18" font-weight="800" fill="#D84444" letter-spacing="2">PLAY MODE · CHƯƠNG 1</text>
+    <text y="42" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="900" fill="#224C6D">MÀN 04</text>
   </g>
 
   <!-- Nút Restart / Reset -->
@@ -88,30 +99,46 @@
     <polyline points="42,20 52,24 50,34" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 
-  <!-- ================= 4. BẢNG CHỈ SỐ HUD (BƯỚC ĐI - THỜI GIAN - ĐIỂM) ================= -->
+  <!-- ================= 4. BẢNG CHỈ SỐ HUD (THỬ THÁCH - THỜI GIAN) ================= -->
+  <!-- Play Mode KHÔNG giới hạn / không hiển thị số bước còn lại và không tính điểm:
+       chỉ có tiến độ 3 Thử thách của màn + đồng hồ thời gian -->
   <g transform="translate(50, 185)" filter="url(#uiShadow)">
-    <!-- Thẻ 1: SỐ BƯỚC CÒN LẠI -->
+
+    <!-- Thẻ 1: TIẾN ĐỘ 3 THỬ THÁCH -->
     <g transform="translate(0, 0)">
-      <rect width="306" height="125" rx="20" fill="#FEFDFA" stroke="#D84444" stroke-width="3.5"/>
-      <line x1="22" y1="0" x2="22" y2="125" stroke="#D84444" stroke-width="2.5"/>
-      <text x="38" y="42" font-family="sans-serif" font-size="18" font-weight="800" fill="#D84444">👣 BƯỚC CÒN</text>
-      <text x="38" y="96" font-family="'Segoe UI', sans-serif" font-size="46" font-weight="900" fill="#D84444">14<tspan font-size="24" fill="#8FA0AC">/20</tspan></text>
+      <rect width="650" height="125" rx="20" fill="#FEFDFA" stroke="#F59E0B" stroke-width="3.5"/>
+      <line x1="22" y1="0" x2="22" y2="125" stroke="#F59E0B" stroke-width="2.5"/>
+      <text x="38" y="42" font-family="sans-serif" font-size="18" font-weight="800" fill="#B45309">🎯 THỬ THÁCH</text>
+      <text x="38" y="97" font-family="'Segoe UI', sans-serif" font-size="46" font-weight="900" fill="#B45309">1<tspan font-size="24" fill="#8FA0AC">/3 ★</tspan></text>
+
+      <!-- Thử thách 1: đã hoàn thành -->
+      <g transform="translate(165, 14)">
+        <use href="#star-got" x="0" y="0"/>
+        <text x="30" y="16" font-family="sans-serif" font-size="17" font-weight="700" fill="#224C6D">Không đâm vào tường</text>
+        <text x="465" y="16" text-anchor="end" font-family="sans-serif" font-size="15" font-weight="800" fill="#2E7D32">✓ ĐẠT</text>
+      </g>
+
+      <!-- Thử thách 2: đang đếm -->
+      <g transform="translate(165, 48)">
+        <use href="#star-pending" x="0" y="0"/>
+        <text x="30" y="16" font-family="sans-serif" font-size="17" font-weight="700" fill="#224C6D">Đi không quá 15 bước</text>
+        <text x="465" y="16" text-anchor="end" font-family="sans-serif" font-size="15" font-weight="800" fill="#B45309">11 / 15 bước</text>
+      </g>
+
+      <!-- Thử thách 3: chưa hoàn thành -->
+      <g transform="translate(165, 82)">
+        <use href="#star-pending" x="0" y="0"/>
+        <text x="30" y="16" font-family="sans-serif" font-size="17" font-weight="700" fill="#718B9E">Về đích dưới 45 giây</text>
+        <text x="465" y="16" text-anchor="end" font-family="sans-serif" font-size="15" font-weight="800" fill="#718B9E">còn 13s</text>
+      </g>
     </g>
 
     <!-- Thẻ 2: THỜI GIAN -->
-    <g transform="translate(336, 0)">
+    <g transform="translate(674, 0)">
       <rect width="306" height="125" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
       <line x1="22" y1="0" x2="22" y2="125" stroke="#3D83AE" stroke-width="2.5"/>
       <text x="38" y="42" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">⏱️ THỜI GIAN</text>
-      <text x="38" y="96" font-family="'Segoe UI', sans-serif" font-size="46" font-weight="900" fill="#224C6D">01:24</text>
-    </g>
-
-    <!-- Thẻ 3: ĐIỂM SỐ -->
-    <g transform="translate(672, 0)">
-      <rect width="306" height="125" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
-      <line x1="22" y1="0" x2="22" y2="125" stroke="#3D83AE" stroke-width="2.5"/>
-      <text x="38" y="42" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">🏆 ĐIỂM SỐ</text>
-      <text x="38" y="96" font-family="'Segoe UI', sans-serif" font-size="44" font-weight="900" fill="#224C6D">3,650</text>
+      <text x="38" y="96" font-family="'Segoe UI', sans-serif" font-size="46" font-weight="900" fill="#224C6D">00:32</text>
     </g>
   </g>
 
@@ -297,9 +324,6 @@
       <!-- 1. Tường thật đã lộ diện -->
       <line x1="176" y1="184" x2="176" y2="344" stroke="#1E283A" stroke-width="11" stroke-linecap="round"/>
       <line x1="360" y1="352" x2="520" y2="352" stroke="#1E283A" stroke-width="11" stroke-linecap="round"/>
-      <!-- Va chạm cảnh báo -->
-      <circle cx="440" cy="352" r="10" fill="#D84444"/>
-      <path d="M436 345 L444 359 M444 345 L436 359" stroke="#FFFFFF" stroke-width="2"/>
 
       <!-- 2. Tường nghi ngờ -->
       <line x1="528" y1="360" x2="528" y2="520" stroke="#C4843A" stroke-width="8" stroke-linecap="round" stroke-dasharray="10 7"/>
@@ -326,7 +350,7 @@
     <rect width="980" height="90" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
     <line x1="32" y1="0" x2="32" y2="90" stroke="#D84444" stroke-width="3"/>
     <text x="60" y="52" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="700" fill="#244E6E">
-      🏰 Vạch đường từ cầu thang tầng trên đến hố thang để tiến xuống tầng sâu hơn!
+      � Vẽ đường từ ô xuất phát tới ô đích — chạm tường vô hình là thua ngay!
     </text>
   </g>
 

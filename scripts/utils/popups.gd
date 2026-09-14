@@ -12,6 +12,8 @@ extends RefCounted
 ## Id các popup có sẵn (khớp PopupManager.POPUPS)
 const WIN := "win"
 const GAME_OVER := "game_over"
+## Popup thua của Play/Level Mode: 3 thử thách + số Sao thay cho bước còn lại
+const GAME_OVER_LEVEL := "game_over_level"
 const NEXT_FLOOR := "next_floor"
 const PAUSE := "pause"
 const LANGUAGE := "language"

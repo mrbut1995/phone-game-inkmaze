@@ -5,7 +5,7 @@ extends Node
 ## ============================================================================
 
 const INITIAL_STEPS := 15
-## Số bước thưởng khi xem quảng cáo hồi sinh (khớp mockup popup_game_over.svg)
+## Số bước thưởng khi xem quảng cáo hồi sinh (khớp mockup popup_game_over_dungeon.svg)
 const REVIVE_BONUS_STEPS := 3
 
 var game_state: GameState = null
@@ -16,6 +16,7 @@ var game_state: GameState = null
 @export var ui_controller: UIController = null
 @export var tool_controller: ToolController = null
 @export var game_mode_controller: GameModeController = null
+@export var challenge_controller: ChallengeController = null
 @export var grid_view: BoardView = null
 
 var _pending_bonus := 0
@@ -49,6 +50,8 @@ func start_new_run(start_floor := 1) -> void:
 	var mode := game_mode_controller.game_mode
 	if ui_controller != null:
 		ui_controller.hide_overlays()
+		# Dungeon Mode: BƯỚC CÒN + ĐIỂM SỐ · các chế độ khác: thẻ THỬ THÁCH
+		ui_controller.apply_mode_layout(mode != null and mode.is_endless)
 
 	if timer_controller != null:
 		if mode is TimeAttackGameMode:
@@ -77,6 +80,9 @@ func _start_floor(floor_number: int) -> void:
 	_floor_finished = false
 	if game_state != null:
 		game_state.floor_number = floor_number
+	# Chốt ngưỡng 3 thử thách của màn/tầng mới (số bước thiết kế đã nạp trong setup_floor)
+	if challenge_controller != null:
+		challenge_controller.setup_for_floor(game_mode_controller.game_mode.initial_steps)
 	if timer_controller != null:
 		timer_controller.start_floor()
 	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
@@ -121,6 +127,10 @@ func _update_hud() -> void:
 		game_state.score,
 		extra_info
 	)
+	# Cập nhật trạng thái sống của 3 thử thách (chưa chốt Sao khi đang chơi)
+	if challenge_controller != null:
+		var floor_time: float = timer_controller.floor_elapsed if timer_controller != null else game_state.elapsed_time
+		challenge_controller.refresh(game_state, floor_time)
 
 
 func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
@@ -134,8 +144,11 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 			return
 
 	_update_hud()
+	# Chỉ Dungeon Mode mới thua vì HẾT BƯỚC; các chế độ khác không giới hạn số bước.
 	if game_state.is_out_of_moves():
-		_check_game_over.call_deferred()
+		var endless := game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless
+		if endless:
+			_check_game_over.call_deferred()
 
 
 func _on_wall_hit() -> void:
@@ -176,6 +189,14 @@ func _complete_floor() -> void:
 
 	_mark_daily_completed_if_needed()
 
+	# Chốt 3 thử thách của màn/tầng -> số Sao (1 thử thách hoàn thành = 1 Sao)
+	var challenge_rows: Array[Dictionary] = []
+	var stars := 0
+	if challenge_controller != null:
+		challenge_controller.refresh(game_state, floor_time, true)
+		challenge_rows = challenge_controller.rows()
+		stars = challenge_controller.stars()
+
 	if ui_controller != null:
 		ui_controller.show_floor_complete({
 			"level": game_state.floor_number,
@@ -187,7 +208,8 @@ func _complete_floor() -> void:
 			"steps_max": game_state.max_steps,
 			"wall_hits": game_state.floor_wall_hits,
 			"score": game_state.score,
-			"stars": 3 if game_state.floor_wall_hits == 0 else 2,
+			"stars": stars,
+			"challenges": challenge_rows,
 			"bonus_steps": _pending_bonus,
 			"steps_bonus": _pending_bonus,
 			"base_score": score_data.get("base_score", 0),
@@ -211,12 +233,27 @@ func _game_over() -> void:
 	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
 		grid_view.call("set_interaction_enabled", false)
 
+	# Chốt 3 thử thách -> popup thua hiển thị trạng thái + số Sao đã đạt
+	var challenge_rows: Array[Dictionary] = []
+	var stars := 0
+	var floor_time: float = timer_controller.floor_elapsed if timer_controller != null else 0.0
+	if challenge_controller != null and game_state != null:
+		challenge_controller.refresh(game_state, floor_time, true)
+		challenge_rows = challenge_controller.rows()
+		stars = challenge_controller.stars()
+
 	if ui_controller != null:
 		ui_controller.show_game_over({
 			"floor": game_state.floor_number,
 			"progress": _maze_progress_percent(),
 			"wall_hits": game_state.floor_wall_hits,
 			"score": game_state.score,
+			"steps_left": game_state.steps_remaining,
+			"steps_max": game_state.max_steps,
+			"stars": stars,
+			"challenges": challenge_rows,
+			"time": floor_time,
+			"endless": game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless,
 		})
 
 
@@ -229,7 +266,7 @@ func _on_continue_requested() -> void:
 	if game_mode_controller != null and game_mode_controller.game_mode != null and not game_mode_controller.game_mode.is_endless:
 		var gm: Node = get_node_or_null("/root/GameManager")
 		if gm != null:
-			var stars: int = 3 if game_state.floor_wall_hits == 0 else 2
+			var stars: int = challenge_controller.stars() if challenge_controller != null else 0
 			gm.call("record_level_clear", int(gm.get("current_level")), stars, game_state.elapsed_time)
 			var next_lvl := int(gm.get("current_level")) + 1
 			if _level_exists(next_lvl):
@@ -274,7 +311,10 @@ func _level_exists(level_id: int) -> bool:
 	return level_id <= 9
 
 
-## Xem quảng cáo để hồi sinh: thưởng thêm bước và chơi lại tầng hiện tại
+## Xem quảng cáo để hồi sinh.
+## - Dungeon Mode: thua vì hết bước -> cộng thêm bước rồi chơi tiếp Tầng hiện tại.
+## - Play/Level Mode: thua vì đâm tường -> QUAY LẠI BƯỚC TRƯỚC ĐÓ (undo bước vừa đi),
+##   không cộng thêm bước vì chế độ này không giới hạn bước (xem Design.md 5.10).
 func _on_revive_requested() -> void:
 	var ads: Node = get_node_or_null("/root/AdsManager")
 	var rewarded := true
@@ -282,12 +322,38 @@ func _on_revive_requested() -> void:
 		rewarded = bool(ads.call("show_rewarded", "revive"))
 	if not rewarded or game_state == null:
 		return
+	revive_run()
 
+
+## Áp dụng phần thưởng hồi sinh (tách riêng để test được khi AdsManager còn là stub).
+func revive_run() -> void:
+	if game_state == null:
+		return
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-	game_state.add_bonus_steps(REVIVE_BONUS_STEPS)
+
+	var endless := game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless
+	if endless:
+		game_state.add_bonus_steps(REVIVE_BONUS_STEPS)
+		_run_active = true
+		_start_floor(game_state.floor_number)
+		return
+
+	# Level Mode: lùi nhân vật về ô ngay trước bước vừa rồi
+	if grid_controller != null and grid_controller.undo_last_move():
+		game_state.refund_step(1)
+	# Hoàn lại luôn bước đã mất cho lần đâm tường (sau khi hồi sinh nước đi đó coi như chưa xảy ra)
+	game_state.refund_step(1)
+	# Hiện lại đúng đoạn tường vừa đâm để người chơi thấy rõ chỗ vừa va vào
+	if grid_controller != null:
+		grid_controller.reveal_last_hazard_wall()
+	if timer_controller != null:
+		timer_controller.resume()
+	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
+		grid_view.call("set_interaction_enabled", true)
 	_run_active = true
-	_start_floor(game_state.floor_number)
+	_floor_finished = false
+	_update_hud()
 
 
 ## % quãng đường đã đi trong mê cung hiện tại (0..100)

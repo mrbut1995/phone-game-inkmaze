@@ -26,6 +26,11 @@ var current_pos: Vector2i = Vector2i.ZERO
 var path: Array[Vector2i] = []
 var _visited_edges: Dictionary = {}
 
+## Cạnh vừa đâm (để hồi sinh ở Level Mode hiện lại đúng đoạn tường đó)
+var last_hazard_from: Vector2i = Vector2i(-1, -1)
+var last_hazard_to: Vector2i = Vector2i(-1, -1)
+var last_hazard_type := ""
+
 func set_maze(p_maze: MazeData) -> void:
 	maze = p_maze
 	current_pos = maze.get_start()
@@ -84,8 +89,17 @@ func try_move_to(pos: Vector2i) -> void:
 	if eval_result.get("is_hazard", false):
 		var hazard_type: String = eval_result.get("hazard_type", "wall")
 		var from_cell: Vector2i = current_pos
-		current_pos = maze.get_start()
-		path = [current_pos]
+		# Nhớ cạnh vừa đâm để hồi sinh có thể hiện lại đoạn tường đó
+		last_hazard_from = from_cell
+		last_hazard_to = pos
+		last_hazard_type = hazard_type
+
+		# Chế độ thua-ngay (Play/Fog hardcore...): giữ nguyên vị trí + vệt đường đã vẽ,
+		# chỉ chế độ Endless mới đưa nhân vật về điểm S.
+		var instant_over: bool = game_mode_controller.game_mode.instant_game_over_on_hazard
+		if not instant_over:
+			current_pos = maze.get_start()
+			path = [current_pos]
 
 		step_consumed.emit(step_cost, true)
 		wall_hit.emit()
@@ -98,7 +112,7 @@ func try_move_to(pos: Vector2i) -> void:
 			if board_view.has_method("show_wall_hit"):
 				board_view.call("show_wall_hit", from_cell, pos)
 
-		if board_view.has_method("reset_to_start"):
+		if not instant_over and board_view.has_method("reset_to_start"):
 			board_view.call("reset_to_start")
 	elif eval_result.get("allowed", false):
 		var prev_pos := current_pos
@@ -141,6 +155,19 @@ func undo_last_move() -> bool:
 				board_view.call("set_moving_path", path)
 		return true
 	return false
+
+
+## Hiện lại đúng đoạn tường vừa đâm (gọi sau khi người chơi hồi sinh ở Level Mode).
+## Trả về true nếu có đoạn tường được hiện lại.
+func reveal_last_hazard_wall() -> bool:
+	if last_hazard_type != "wall" or board_view == null:
+		return false
+	if last_hazard_from == Vector2i(-1, -1) or last_hazard_to == Vector2i(-1, -1):
+		return false
+	if not board_view.has_method("show_wall_hit"):
+		return false
+	board_view.call("show_wall_hit", last_hazard_from, last_hazard_to)
+	return true
 
 
 func give_hint() -> void:

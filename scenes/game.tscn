@@ -27,10 +27,14 @@
 [ext_resource type="Texture2D" uid="uid://ch2kbq4shu53d" path="res://assets/images/game/btn_undo_focus.svg" id="12_ir15t"]
 [ext_resource type="LabelSettings" uid="uid://cq0y2s1c58iid" path="res://resources/settings/text/text_game_information_label.tres" id="13_sww3w"]
 [ext_resource type="Texture2D" uid="uid://dd61x6fjtobav" path="res://assets/images/game/btn_hint_normal.svg" id="13_trtic"]
+[ext_resource type="LabelSettings" uid="uid://bk5eo53yqroh8" path="res://resources/settings/text/text_game_information_title_label.tres" id="14_458eo"]
 [ext_resource type="Texture2D" uid="uid://c864ne3ni7vvn" path="res://assets/images/game/btn_hint_pressed.svg" id="14_ir15t"]
 [ext_resource type="LabelSettings" uid="uid://cb662usl7mhkf" path="res://resources/settings/text/text_game_information_value.tres" id="14_suyxu"]
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="15_sgl2t"]
 [ext_resource type="LabelSettings" uid="uid://bwpq01l1whp4t" path="res://resources/settings/text/text_game_button_label.tres" id="18_qnb83"]
+[ext_resource type="Texture2D" uid="uid://bqooopacxspei" path="res://assets/images/game/card_challenge.svg" id="19_chal"]
+[ext_resource type="LabelSettings" uid="uid://bdxo0371yh7yr" path="res://resources/settings/text/text_game_challenge_row.tres" id="20_chal_row"]
+[ext_resource type="Texture2D" uid="uid://cqe1sdpj4yw71" path="res://assets/images/common/star_empty.svg" id="21_star_off"]
 [ext_resource type="Script" uid="uid://cxkejvefm60q1" path="res://scripts/core/controllers/anchor_controller.gd" id="32_gxtfn"]
 [ext_resource type="Script" uid="uid://dpvjjtn4enoyu" path="res://scripts/core/controllers/hint_controller.gd" id="33_02fa5"]
 [ext_resource type="Script" uid="uid://b60h5vj4wkts5" path="res://scripts/core/controllers/undo_controller.gd" id="33_m4url"]
@@ -41,7 +45,7 @@
 [ext_resource type="Script" uid="uid://baibccmdx3g5u" path="res://scripts/core/controllers/timer_controller.gd" id="36_02fa5"]
 [ext_resource type="Script" uid="uid://bcqi64nve5wp5" path="res://scripts/core/controllers/ui_controller.gd" id="38_8ool0"]
 [ext_resource type="Script" uid="uid://btmprlxpqdg6j" path="res://scripts/core/controllers/tool_controller.gd" id="39_pr1ej"]
-[ext_resource type="PackedScene" uid="uid://efuxbstp7y2c" path="res://nodes/popups/winning.tscn" id="40_win"]
+[ext_resource type="Script" uid="uid://csd7cnldm2tu3" path="res://scripts/core/controllers/challenge_controller.gd" id="42_pr1ej"]
 
 [node name="Scene" unique_id=1978794255 node_paths=PackedStringArray("game_controller", "grid_controller", "anchor_controller", "floor_controller", "timer_controller", "ui_controller", "tool_controller", "undo_controller", "hint_controller", "game_mode_controller") instance=ExtResource("1_80q71")]
 script = ExtResource("2_qouja")
@@ -59,9 +63,9 @@ game_mode_controller = NodePath("Controllers/GameModeController")
 [node name="Board" parent="." index="1" unique_id=181012636 instance=ExtResource("2_yqjtg")]
 layout_mode = 1
 anchor_left = 0.038000003
-anchor_top = 0.20093751
+anchor_top = 0.21864584
 anchor_right = 0.98300004
-anchor_bottom = 0.7319375
+anchor_bottom = 0.7496459
 offset_left = 0.1999588
 offset_top = 0.19998169
 offset_right = -0.4000244
@@ -108,15 +112,203 @@ texture_focused = ExtResource("10_sww3w")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05185185
-anchor_top = 0.12135417
-anchor_right = 0.96266663
-anchor_bottom = 0.19435416
-offset_right = 0.32000732
-offset_bottom = -0.16000366
+anchor_top = 0.096875
+anchor_right = 1.565
+anchor_bottom = 0.194
+offset_right = -0.19995117
+offset_bottom = 0.519989
 theme_override_constants/separation = 12
 metadata/_edit_use_anchors_ = true
 
-[node name="Step" type="TextureRect" parent="Information" index="0" unique_id=1222827932]
+[node name="Challenge" type="TextureRect" parent="Information" index="0" unique_id=577520368]
+layout_mode = 2
+texture = ExtResource("19_chal")
+
+[node name="Label" type="Label" parent="Information/Challenge" index="0" unique_id=264180081]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.053000003
+anchor_top = 0.112
+anchor_right = 0.60200006
+anchor_bottom = 0.33200002
+offset_left = 0.18599701
+offset_top = 0.055999756
+offset_right = -0.076049805
+offset_bottom = -0.08400345
+text = "THỬ THÁCH"
+label_settings = ExtResource("14_458eo")
+metadata/_edit_use_anchors_ = true
+
+[node name="Count" type="Label" parent="Information/Challenge" index="1" unique_id=1429686650]
+modulate = Color(0.8509804, 0.46666667, 0.023529412, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8609248
+anchor_top = 0.09090909
+anchor_right = 0.9340001
+anchor_bottom = 0.28325668
+offset_left = -0.27001953
+offset_top = 4.0
+offset_right = 0.10797119
+offset_bottom = -0.96900177
+text = "0/3"
+label_settings = ExtResource("13_sww3w")
+horizontal_alignment = 2
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Row1" type="Control" parent="Information/Challenge" index="2" unique_id=1283567631]
+layout_mode = 1
+anchor_left = 0.053000003
+anchor_top = 0.326
+anchor_right = 0.934
+anchor_bottom = 0.476
+offset_left = 0.18599701
+offset_top = 0.0379982
+offset_right = 0.10797119
+offset_bottom = -0.012001038
+
+[node name="Star" type="TextureRect" parent="Information/Challenge/Row1" index="0" unique_id=181764677]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.14285715
+anchor_right = 0.040925268
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("21_star_off")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Name" type="Label" parent="Information/Challenge/Row1" index="1" unique_id=98498349]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.053000003
+anchor_right = 0.61600006
+anchor_bottom = 1.0
+offset_left = 0.2139988
+offset_right = -0.1920166
+text = "Không đâm vào tường"
+label_settings = ExtResource("20_chal_row")
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Status" type="Label" parent="Information/Challenge/Row1" index="2" unique_id=1862796993]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.651
+anchor_right = 1.0
+anchor_bottom = 1.107
+offset_left = 0.13800049
+offset_bottom = -2.9960003
+text = "CHƯA ĐẠT"
+label_settings = ExtResource("20_chal_row")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Row2" type="Control" parent="Information/Challenge" index="3" unique_id=222008910]
+layout_mode = 1
+anchor_left = 0.053000003
+anchor_top = 0.35300002
+anchor_right = 0.934
+anchor_bottom = 0.5
+offset_left = 0.18599701
+offset_top = 24.988998
+offset_right = 0.10797119
+offset_bottom = 25.5
+
+[node name="Star" type="TextureRect" parent="Information/Challenge/Row2" index="0" unique_id=81870623]
+layout_mode = 1
+anchors_preset = -1
+offset_top = 3.0
+offset_right = 22.0
+offset_bottom = 25.0
+mouse_filter = 2
+texture = ExtResource("21_star_off")
+expand_mode = 1
+
+[node name="Name" type="Label" parent="Information/Challenge/Row2" index="1" unique_id=976342480]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.053000003
+anchor_right = 0.61600006
+anchor_bottom = 1.107
+offset_left = 0.2139988
+offset_right = -0.1920166
+offset_bottom = -2.9960003
+text = "Đi không quá 15 bước"
+label_settings = ExtResource("20_chal_row")
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Status" type="Label" parent="Information/Challenge/Row2" index="2" unique_id=1800451870]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 1
+anchors_preset = -1
+offset_left = 366.0
+offset_right = 562.0
+offset_bottom = 28.0
+text = "0 / 15 bước"
+label_settings = ExtResource("20_chal_row")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Row3" type="Control" parent="Information/Challenge" index="4" unique_id=1320292633]
+layout_mode = 1
+anchor_left = 0.053000003
+anchor_top = 0.5
+anchor_right = 0.934
+anchor_bottom = 0.66300005
+offset_left = 0.18599701
+offset_top = 27.5
+offset_right = 0.10797119
+offset_bottom = 25.01899
+
+[node name="Star" type="TextureRect" parent="Information/Challenge/Row3" index="0" unique_id=166154074]
+layout_mode = 1
+anchors_preset = -1
+offset_top = 3.0
+offset_right = 22.0
+offset_bottom = 25.0
+mouse_filter = 2
+texture = ExtResource("21_star_off")
+expand_mode = 1
+
+[node name="Name" type="Label" parent="Information/Challenge/Row3" index="1" unique_id=1053543386]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.053000003
+anchor_right = 0.61600006
+anchor_bottom = 1.0
+offset_left = 0.2139988
+offset_right = -0.1920166
+text = "Về đích dưới 45 giây"
+label_settings = ExtResource("20_chal_row")
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Status" type="Label" parent="Information/Challenge/Row3" index="2" unique_id=1980319124]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 1
+anchors_preset = -1
+offset_left = 366.0
+offset_right = 562.0
+offset_bottom = 28.0
+text = "còn 45s"
+label_settings = ExtResource("20_chal_row")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Step" type="TextureRect" parent="Information" index="1" unique_id=1222827932]
 layout_mode = 2
 texture = ExtResource("4_rysoc")
 
@@ -130,7 +322,7 @@ anchor_right = 0.56902504
 anchor_bottom = 0.32857144
 offset_right = -0.088012695
 text = "Số Bước"
-label_settings = ExtResource("13_sww3w")
+label_settings = ExtResource("14_458eo")
 metadata/_edit_use_anchors_ = true
 
 [node name="ValueContainer" type="HBoxContainer" parent="Information/Step" index="1" unique_id=317524380]
@@ -165,7 +357,7 @@ text = "/3"
 label_settings = ExtResource("15_sgl2t")
 metadata/_edit_use_anchors_ = true
 
-[node name="Time" type="TextureRect" parent="Information" index="1" unique_id=663063649]
+[node name="Time" type="TextureRect" parent="Information" index="2" unique_id=663063649]
 layout_mode = 2
 texture = ExtResource("3_ir15t")
 
@@ -175,11 +367,12 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.140625
 anchor_top = 0.071428575
-anchor_right = 0.56902504
-anchor_bottom = 0.32857144
-offset_right = -0.088012695
+anchor_right = 0.62200004
+anchor_bottom = 0.32900003
+offset_right = -17.040009
+offset_bottom = -0.08014679
 text = "Thời gian"
-label_settings = ExtResource("13_sww3w")
+label_settings = ExtResource("14_458eo")
 metadata/_edit_use_anchors_ = true
 
 [node name="Value" type="Label" parent="Information/Time" index="1" unique_id=1938773859]
@@ -198,7 +391,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Score" type="TextureRect" parent="Information" index="2" unique_id=1076830876]
+[node name="Score" type="TextureRect" parent="Information" index="3" unique_id=1076830876]
 layout_mode = 2
 texture = ExtResource("4_ca42v")
 
@@ -212,7 +405,7 @@ anchor_right = 0.56902504
 anchor_bottom = 0.32857144
 offset_right = -0.088012695
 text = "Điểm số"
-label_settings = ExtResource("13_sww3w")
+label_settings = ExtResource("14_458eo")
 metadata/_edit_use_anchors_ = true
 
 [node name="Value" type="Label" parent="Information/Score" index="1" unique_id=282627773]
@@ -234,9 +427,9 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.06759259
-anchor_top = 0.7760417
+anchor_top = 0.79583335
 anchor_right = 0.9546296
-anchor_bottom = 0.85950196
+anchor_bottom = 0.8792936
 offset_left = -5.0
 offset_right = 5.0
 grow_horizontal = 2
@@ -310,7 +503,7 @@ offset_bottom = 40.0
 
 [node name="Controllers" type="Node" parent="." index="6" unique_id=955863401]
 
-[node name="GameController" type="Node" parent="Controllers" index="0" unique_id=881543567 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "grid_view")]
+[node name="GameController" type="Node" parent="Controllers" index="0" unique_id=881543567 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "challenge_controller", "grid_view")]
 script = ExtResource("35_nepv3")
 floor_controller = NodePath("../FloorController")
 timer_controller = NodePath("../TimerController")
@@ -318,6 +511,7 @@ grid_controller = NodePath("../GridController")
 ui_controller = NodePath("../UIController")
 tool_controller = NodePath("../ToolController")
 game_mode_controller = NodePath("../GameModeController")
+challenge_controller = NodePath("../ChallengeController")
 grid_view = NodePath("../../Board")
 
 [node name="AnchorController" type="Node" parent="Controllers" index="1" unique_id=1130337566]
@@ -346,18 +540,25 @@ script = ExtResource("34_02fa5")
 [node name="TimerController" type="Node" parent="Controllers" index="7" unique_id=1851640039]
 script = ExtResource("36_02fa5")
 
-[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=1862639245 node_paths=PackedStringArray("level_label", "step_val_label", "step_max_label", "time_val_label", "score_val_label")]
+[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=1862639245 node_paths=PackedStringArray("level_label", "step_val_label", "step_max_label", "time_val_label", "score_val_label", "step_card", "score_card", "challenge_card")]
 script = ExtResource("38_8ool0")
 level_label = NodePath("../../Status/LevelLabel")
 step_val_label = NodePath("../../Information/Step/ValueContainer/Value")
 step_max_label = NodePath("../../Information/Step/ValueContainer/MaxValue")
 time_val_label = NodePath("../../Information/Time/Value")
 score_val_label = NodePath("../../Information/Score/Value")
+step_card = NodePath("../../Information/Step")
+score_card = NodePath("../../Information/Score")
+challenge_card = NodePath("../../Information/Challenge")
 
 [node name="ToolController" type="Node" parent="Controllers" index="9" unique_id=1503824 node_paths=PackedStringArray("tool_path_btn", "tool_wall_btn")]
 script = ExtResource("39_pr1ej")
 tool_path_btn = NodePath("../../Button/Tool")
 tool_wall_btn = NodePath("../../Button/Wall")
+
+[node name="ChallengeController" type="Node" parent="Controllers" index="10" unique_id=301448501 node_paths=PackedStringArray("card")]
+script = ExtResource("42_pr1ej")
+card = NodePath("../../Information/Challenge")
 
 [connection signal="anchor_connected" from="Board" to="Controllers/GridController" method="handle_anchor_connected"]
 [connection signal="cell_pressed" from="Board" to="Controllers/GridController" method="handle_cell_pressed"]
@@ -376,7 +577,7 @@ tool_wall_btn = NodePath("../../Button/Wall")
 [connection signal="timeout" from="Controllers/TimerController" to="Controllers/GameController" method="_on_timer_timeout"]
 [connection signal="continue_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_continue_requested"]
 [connection signal="home_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_home_requested"]
-[connection signal="retry_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_retry_requested"]
 [connection signal="pause_toggled" from="Controllers/UIController" to="Controllers/GameController" method="_on_pause_toggled"]
+[connection signal="retry_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_retry_requested"]
 [connection signal="revive_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_revive_requested"]
 [connection signal="tool_changed" from="Controllers/ToolController" to="Board" method="set_tool_mode"]

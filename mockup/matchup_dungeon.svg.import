@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bu3lfdapfdat3"
-path="res://.godot/imported/matchup.svg-f29d6c405fe5db5b1078d6d36e67b8a3.ctex"
+path="res://.godot/imported/matchup_dungeon.svg-b892fc780ca6d31ff535a4c65170d711.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mockup/matchup.svg"
-dest_files=["res://.godot/imported/matchup.svg-f29d6c405fe5db5b1078d6d36e67b8a3.ctex"]
+source_file="res://mockup/matchup_dungeon.svg"
+dest_files=["res://.godot/imported/matchup_dungeon.svg-b892fc780ca6d31ff535a4c65170d711.ctex"]
 
 [params]
 

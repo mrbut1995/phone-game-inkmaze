@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <!-- MOCKUP: POPUP GAME OVER — DUNGEON MODE (hết bước / va chạm tường, hồi sinh = +bước) -->
   <defs>
     <pattern id="bgGridFail" width="40" height="40" patternUnits="userSpaceOnUse">
       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.5"/>
@@ -54,7 +55,7 @@
     <!-- TIÊU ĐỀ BÚT MỰC ĐỎ GẠCH CHÉO -->
     <g transform="translate(120, 95)">
       <text x="0" y="0" font-family="'Segoe UI', sans-serif" font-size="40" font-weight="900" fill="#D84444">ĐỨT ĐOẠN ĐƯỜNG ĐI!</text>
-      <text x="0" y="36" font-family="sans-serif" font-size="22" font-weight="700" fill="#718B9E">Không thể tới được điểm F an toàn</text>
+      <text x="0" y="36" font-family="sans-serif" font-size="22" font-weight="700" fill="#718B9E">Hết bước khi chưa tới được hố thang xuống Tầng 05</text>
     </g>
 
     <!-- DẤU X ĐỎ TO VẼ BẰNG BÚT DẠ -->
@@ -80,7 +81,7 @@
       <rect width="640" height="88" rx="14" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2.5"/>
       <!-- Băng keo dán mép sticker -->
       <rect x="20" y="-8" width="50" height="18" fill="#E6DFCC" opacity="0.8"/>
-      <text x="45" y="52" font-family="sans-serif" font-size="22" font-weight="800" fill="#B45309">🎬 Nhận thêm +3 Bước bằng bút chì</text>
+      <text x="45" y="52" font-family="sans-serif" font-size="22" font-weight="800" fill="#B45309">🎬 Nhận thêm +3 Bước để đi tiếp</text>
       <rect x="470" y="18" width="145" height="52" rx="12" fill="#F59E0B"/>
       <text x="542" y="51" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="900" fill="#FFFFFF">HỒI SINH</text>
     </g>
