@@ -98,7 +98,8 @@ func switch_mode(mode_name: String, difficulty := "medium") -> void:
 
 
 ## Màn/tầng xuất phát của ván mới.
-## Play (Classic) luôn vào đúng màn đang chọn trong GameManager, các mode khác bắt đầu từ 1.
+## Play (Classic) luôn vào đúng màn đang chọn trong GameManager, các mode khác bắt đầu từ 1
+## (trừ khi Debug Console ép tầng bắt đầu qua `start_floor_override`).
 func _start_floor_for(mode_name: String) -> int:
 	match mode_name.to_lower():
 		"play", "classic", "standard":
@@ -107,4 +108,9 @@ func _start_floor_for(mode_name: String) -> int:
 				return maxi(int(gm.get("current_level")), 1)
 			return 1
 		_:
+			var debug_gm: Node = get_node_or_null("/root/GameManager")
+			if debug_gm != null:
+				var override := int(debug_gm.get("start_floor_override"))
+				if override > 0:
+					return override
 			return 1

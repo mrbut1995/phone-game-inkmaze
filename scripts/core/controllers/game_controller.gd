@@ -414,6 +414,8 @@ func _on_home_requested() -> void:
 func _report_to_archivements(won: bool, floor_time: float) -> void:
 	if game_state == null or game_mode_controller.game_mode == null:
 		return
+	if _is_debug_run():
+		return                      # ván test từ Debug Console không tính vào danh hiệu
 	var mode := game_mode_controller.game_mode
 	Archivement.notify_run_result({
 		"mode_id": mode.mode_id,
@@ -480,8 +482,16 @@ func _play_sfx_delayed(sfx_name: String, delay: float) -> void:
 func _mark_daily_completed_if_needed() -> void:
 	if game_state == null or not GameManagerClass.DAILY_MODES.has(game_state.mode_id):
 		return
+	if _is_debug_run():
+		return                      # ván test từ Debug Console không đánh dấu Daily
 	var gm: Variant = get_node_or_null("/root/GameManager")
 	var dm: Variant = get_node_or_null("/root/DailyManager")
 	if gm == null or dm == null:
 		return
 	dm.call("mark_completed", int(gm.get("selected_daily_day")))
+
+
+## Ván hiện tại có phải ván TEST mở từ Debug Console? (không ghi tiến trình)
+func _is_debug_run() -> bool:
+	var gm: Variant = get_node_or_null("/root/GameManager")
+	return gm != null and bool(gm.get("debug_run"))

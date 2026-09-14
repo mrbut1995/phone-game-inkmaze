@@ -18,6 +18,10 @@ var level_stars: Dictionary = { 1: 0 }    # level_id -> stars (1-3)
 var level_best_time: Dictionary = {}     # level_id -> seconds
 var selected_daily_day: int = 1
 
+# [DEBUG/TEST] Ván chơi thử (Debug Console): không ghi tiến trình, có thể ép tầng bắt đầu
+var debug_run: bool = false
+var start_floor_override: int = 0        # 0 = tự động (mode tự quyết định)
+
 const DAILY_MODES: Array[String] = [
 	"time_attack",
 	"minesweeper",
@@ -37,6 +41,8 @@ func _ready() -> void:
 func start_dungeon() -> void:
 	current_mode = "dungeon"
 	current_difficulty = "medium"
+	debug_run = false
+	start_floor_override = 0
 	mode_changed.emit(current_mode)
 	_change_scene("res://scenes/game.tscn")
 
@@ -46,6 +52,8 @@ func start_level(level_id: int) -> void:
 	current_mode = "play"
 	current_level = level_id
 	current_difficulty = "medium"
+	debug_run = false
+	start_floor_override = 0
 	mode_changed.emit(current_mode)
 	_change_scene("res://scenes/game.tscn")
 
@@ -56,7 +64,33 @@ func start_daily(day: int) -> void:
 	var mode_index := (day - 1) % DAILY_MODES.size()
 	current_mode = DAILY_MODES[mode_index]
 	current_difficulty = "medium"
+	debug_run = false
+	start_floor_override = 0
 	mode_changed.emit(current_mode)
+	_change_scene("res://scenes/game.tscn")
+
+
+## Danh sách id của 7 chế độ SPECIAL (chỉ chơi được qua Daily Challenge)
+func special_mode_ids() -> Array[String]:
+	return DAILY_MODES.duplicate()
+
+
+## [DEBUG/TEST] Chuẩn bị 1 ván test nhưng KHÔNG chuyển scene (để test gọi được).
+##   test_run = true  -> không đánh dấu Daily, không tính vào danh hiệu
+##   floor_override   -> bắt đầu ở tầng đó (0 = mặc định tầng 1) — để thử bàn to/nhỏ
+func prepare_mode_run(mode_id: String, difficulty := "medium", test_run := false,
+		floor_override := 0) -> void:
+	current_mode = mode_id
+	current_difficulty = difficulty
+	debug_run = test_run
+	start_floor_override = maxi(floor_override, 0)
+	mode_changed.emit(current_mode)
+
+
+## [DEBUG/TEST] Vào thẳng 1 chế độ bất kỳ (kể cả 7 chế độ Special) — dùng cho Debug Console
+func start_mode(mode_id: String, difficulty := "medium", test_run := false,
+		floor_override := 0) -> void:
+	prepare_mode_run(mode_id, difficulty, test_run, floor_override)
 	_change_scene("res://scenes/game.tscn")
 
 

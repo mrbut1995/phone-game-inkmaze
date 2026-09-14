@@ -272,3 +272,32 @@ Màn hình `scenes/archivement.tscn` — vào từ **Main Screen → nút "SỔ 
 | `scripts/test_case/test_archivement.gd` | Test catalog · tiến độ · nhận thưởng · lưu trữ · phân trang scene (54 check) |
 | `archivements_list.txt` | Danh sách danh hiệu dạng văn bản (xuất từ catalog) |
 
+---
+
+## 9. Debug Console (chỉ có ở bản dev)
+
+Mở bằng **F9** (hoặc bấm 5 lần vào con dấu phiên bản ở màn Settings, hoặc `Nav.goto_debug()`); bấm F9 lần nữa để quay lại.
+
+| Nhóm | Nội dung |
+|---|---|
+| STATE | FPS/MEM/Obj · locale · mode · **ván test** (cờ + tầng ép) · số popup đang mở |
+| NAVIGATE | Main · Chọn màn · Daily · Settings · Sổ tay thành tựu · Dungeon run |
+| PROGRESS | Nhảy tới màn 1–9 · mở khoá tất cả · ghi 3 sao · xoá tiến trình |
+| DAILY | Ngày hôm nay · chuỗi ngày · chơi daily hôm nay · đánh dấu hoàn thành · xoá dữ liệu Daily |
+| **SPECIAL MODES (TEST)** | Vào thẳng **7 chế độ Special** (vốn chỉ chơi được qua Daily) — xem 9.1 |
+| SAVE | Backend · save now · reload · đổi backend · xoá toàn bộ + dump blob JSON |
+| POPUPS | Mở thử win / next floor / game over / pause / language |
+| DEBUG FLAGS | Bật/tắt log theo nhóm (general · sfx · flow · save) |
+
+### 9.1. Test 7 chế độ Special (SPECIAL MODES)
+
+Daily Challenge chỉ cho chơi **1 luật/ngày** (`(ngày-1) % 7`), nên Debug Console cho vào thẳng từng luật để test:
+
+- **Test mode (mặc định BẬT):** ván mở từ đây **không ghi tiến trình** — không đánh dấu ngày Daily (`_mark_daily_completed_if_needed` bỏ qua) và không tính vào Sổ tay thành tựu (`_report_to_archivements` bỏ qua). Tắt toggle nếu muốn ghi như chơi thật.
+- **Độ khó:** easy · medium · hard (áp dụng cho các luật có tham số độ khó: `time_attack`, `sum_path`, `countdown_cost`, `blind_memory`, `fog_of_war`).
+- **Tầng bắt đầu:** 1 · 2 · 3 · 5 — nhiều luật sinh bàn theo tầng (`minesweeper` / `area`: `2 + tầng`, tối đa 5×5) nên chọn tầng cao để test bàn to.
+- **Mỗi chế độ 1 hàng lệnh:** tiêu đề ghi `Tên mode [id] · Daily ngày N, N+7, N+14…`; dòng mô tả lấy trực tiếp từ `BaseGameMode.mode_description` của chính mode đó (không chép lại chữ).
+- Thêm **“Chế độ kế tiếp”** (xoay vòng 7 luật) và **“Chế độ ngẫu nhiên”** để test nhanh nhiều luật liên tiếp.
+
+Cơ chế: `GameManager.prepare_mode_run(mode_id, difficulty, test_run, floor_override)` (đặt cờ, **không** đổi scene — test gọi được) và `GameManager.start_mode(...)` (= prepare + vào `scenes/game.tscn`); `game.gd::_start_floor_for()` đọc `start_floor_override` để chọn tầng xuất phát cho ván test.
+

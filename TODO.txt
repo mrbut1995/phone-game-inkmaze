@@ -401,3 +401,20 @@
 #     - Test: test_main_layout.gd (btn_shop thay btn_rules; nút thành tựu >= 200px, nằm TRÊN hàng Other và bên phải;
 #       hàng Other = 3 nút 230x130; texture normal/pressed/focus phải khác nhau).
 # [ ] Màn XẾP HẠNG và màn CỬA HÀNG chưa có scene (2 nút mới chỉ chạy hiệu ứng bấm)
+
+# ----------------------------------------------------------------------------
+# DEBUG CONSOLE: TEST 7 CHẾ ĐỘ SPECIAL — 2026-02
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-02): mục "SPECIAL MODES (TEST)" trong màn Debug (F9)
+#     - GameManager: + `debug_run` (ván test) + `start_floor_override`; prepare_mode_run(mode_id,
+#       difficulty, test_run, floor_override) (đặt cờ, KHÔNG đổi scene) + start_mode(...) +
+#       special_mode_ids(); start_dungeon/start_level/start_daily reset 2 cờ này.
+#     - game.gd::_start_floor_for() đọc `start_floor_override` -> test được ở tầng 3/5 (bàn to dần).
+#     - GameController: ván test KHÔNG đánh dấu Daily (_mark_daily_completed_if_needed) và KHÔNG ghi
+#       số liệu vào Sổ tay thành tựu (_report_to_archivements) — tránh phá tiến trình khi test.
+#     - Debug scene: toggle Test mode · chọn độ khó (easy/medium/hard) · chọn tầng (1/2/3/5) ·
+#       7 hàng vào thẳng từng chế độ (tiêu đề = Tên mode [id] · Daily ngày N, N+7…) · mô tả lấy từ
+#       mode_description · "Chế độ kế tiếp" + "Chế độ ngẫu nhiên"; hàng lệnh cho mô tả xuống 2 dòng.
+#     - Test mới: scripts/test_case/test_debug_modes.gd (44 check: cờ test · map id->mode · mục
+#       SPECIAL MODES trong Debug scene · ván test không ghi tiến trình · ép tầng 3 -> bàn 5x5).
+# [ ] Chưa có nút xem nhanh dữ liệu riêng của mode (mìn/chi phí/vùng...) trong Debug Console

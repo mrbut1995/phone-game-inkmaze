@@ -28,6 +28,8 @@ const BACK_NORMAL := preload("res://assets/images/btn_header_back_normal.svg")
 const BACK_PRESSED := preload("res://assets/images/btn_header_back_pressed.svg")
 
 const TOTAL_LEVELS := 9
+const DIFFICULTIES := ["easy", "medium", "hard"]
+const TEST_FLOORS := [1, 2, 3, 5]
 
 @onready var _btn_back: TextureButton = $TopBar/Back
 @onready var _lbl_title: Label = $TopBar/Title
@@ -35,8 +37,14 @@ const TOTAL_LEVELS := 9
 @onready var _lbl_stats: Label = $Panel/Content/Stats
 @onready var _lbl_footer: Label = $Panel/Content/Footer
 
+# Lựa chọn cho mục SPECIAL MODES (giữ nguyên giữa các lần dựng lại)
+var _test_mode := true
+var _difficulty := "medium"
+var _floor := 1
+
 
 func _ready() -> void:
+	_sync_special_selection()
 	if _btn_back != null:
 		_btn_back.pressed.connect(_on_back_pressed)
 	if _lbl_title != null:
@@ -71,6 +79,7 @@ func _build() -> void:
 	_build_navigate()
 	_build_progress()
 	_build_daily()
+	_build_special_modes()
 	_build_save()
 	_build_popups()
 	_build_debug_flags()
@@ -84,6 +93,8 @@ func _build_state() -> void:
 	_add_value("Save backend", "%s (cloud=%s)" % [Save.backend_id(), str(Save.is_cloud())])
 	_add_value("Debug build", str(OS.is_debug_build()))
 	_add_value("Platform", OS.get_name())
+	_add_value("Test run", "%s · floor %d" % [str(_gm_value("debug_run", false)),
+		int(_gm_value("start_floor_override", 0))])
 	_add_value("Popups open", str(Popups.has_open()))
 
 
@@ -113,6 +124,46 @@ func _build_daily() -> void:
 	_add_action("Play today's daily", "Mở game với challenge của hôm nay", _play_today_daily)
 	_add_action("Mark today done (3★)", "Đánh dấu ngày hôm nay hoàn thành", _complete_today_daily)
 	_add_action("Reset daily data", "Xoá toàn bộ ngày/sao đã lưu", _reset_daily, true)
+
+
+# ---------------------------------------------------------------------------
+# SPECIAL MODES: vào thẳng 7 chế độ chỉ chơi được qua Daily để test
+# ---------------------------------------------------------------------------
+func _build_special_modes() -> void:
+	_add_section("SPECIAL MODES (TEST)")
+	_add_label("7 luật chỉ mở qua Daily — ở đây vào thẳng để thử, kèm chọn độ khó / tầng bắt đầu:",
+		&"PopupSubtitle")
+
+	_add_toggle("Test mode (không ghi tiến trình)",
+		"Ván test KHÔNG đánh dấu Daily và KHÔNG tính vào danh hiệu",
+		_test_mode, _set_test_mode)
+
+	_add_label("Độ khó (áp dụng cho lần vào chế độ kế tiếp):", &"PopupSubtitle")
+	for diff in DIFFICULTIES:
+		_add_action(_choice_text("Độ khó", str(diff).to_upper(), diff == _difficulty),
+			"Cho các mode có tham số độ khó", _set_difficulty.bind(diff))
+
+	_add_label("Tầng bắt đầu (tầng càng cao bàn càng to ở minesweeper / area...):", &"PopupSubtitle")
+	for floor_number in TEST_FLOORS:
+		_add_action(_choice_text("Tầng", str(floor_number), floor_number == _floor),
+			"Bắt đầu ván ở tầng %d" % floor_number, _set_test_floor.bind(floor_number))
+
+	_add_label("Vào chế độ:", &"PopupSubtitle")
+	var ids := _special_mode_ids()
+	if ids.is_empty():
+		_add_label("Không lấy được danh sách chế độ từ GameManager", &"PopupSubtitle")
+		return
+	var controller := GameModeController.new()
+	for index in ids.size():
+		var mode_id: String = ids[index]
+		var mode: BaseGameMode = controller.set_mode_by_name(mode_id, _difficulty)
+		var title := "%s   [%s]  ·  Daily ngày %d, %d, %d" % [mode.mode_name, mode_id, index + 1,
+			index + 1 + ids.size(), index + 1 + ids.size() * 2]
+		_add_action(title, mode.mode_description, _start_special_mode.bind(mode_id))
+	controller.free()
+
+	_add_action("Chế độ kế tiếp", "Xoay vòng qua 7 chế độ Special", _start_next_special_mode)
+	_add_action("Chế độ ngẫu nhiên", "Random 1 trong 7 chế độ Special", _start_random_special_mode)
 
 
 func _build_save() -> void:
@@ -216,6 +267,75 @@ func _reset_daily() -> void:
 		daily.call("reset_progress")
 	Save.queue_save()
 	_rebuild_after_action("Đã xoá dữ liệu Daily")
+
+
+# ---------------------------------------------------------------------------
+# SPECIAL MODES: lựa chọn + khởi động
+# ---------------------------------------------------------------------------
+## Đồng bộ lựa chọn hiển thị với GameManager (mở lại console vẫn nhớ độ khó/tầng)
+func _sync_special_selection() -> void:
+	var gm := _game_manager()
+	if gm == null:
+		return
+	var diff := str(gm.get("current_difficulty"))
+	if DIFFICULTIES.has(diff):
+		_difficulty = diff
+	var floor_override := int(gm.get("start_floor_override"))
+	if floor_override > 0:
+		_floor = floor_override
+
+
+func _choice_text(prefix: String, value: String, selected: bool) -> String:
+	return "%s: %s%s" % [prefix, value, "  ✔" if selected else ""]
+
+
+func _special_mode_ids() -> Array[String]:
+	var gm := _game_manager()
+	if gm != null and gm.has_method("special_mode_ids"):
+		return gm.call("special_mode_ids")
+	return []
+
+
+func _set_test_mode(on: bool) -> void:
+	_test_mode = on
+	var gm := _game_manager()
+	if gm != null:
+		gm.set("debug_run", on)
+	_rebuild_after_action("Test mode: %s" % ("BẬT — không ghi tiến trình" if on else "TẮT — có ghi tiến trình"))
+
+
+func _set_difficulty(diff: String) -> void:
+	_difficulty = diff
+	_rebuild_after_action("Độ khó test: %s" % diff.to_upper())
+
+
+func _set_test_floor(floor_number: int) -> void:
+	_floor = floor_number
+	_rebuild_after_action("Tầng bắt đầu test: %d" % floor_number)
+
+
+## Vào thẳng 1 chế độ Special với độ khó / tầng / chế độ test đang chọn
+func _start_special_mode(mode_id: String) -> void:
+	var gm := _game_manager()
+	if gm == null:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	gm.call("start_mode", mode_id, _difficulty, _test_mode, _floor)
+
+
+func _start_next_special_mode() -> void:
+	var ids := _special_mode_ids()
+	if ids.is_empty():
+		return
+	var index := ids.find(_current_mode())
+	_start_special_mode(ids[(index + 1) % ids.size()] if index >= 0 else ids[0])
+
+
+func _start_random_special_mode() -> void:
+	var ids := _special_mode_ids()
+	if ids.is_empty():
+		return
+	_start_special_mode(ids[randi() % ids.size()])
 
 
 func _test_logs() -> void:
@@ -350,17 +470,18 @@ func _add_action(text: String, desc: String, handler: Callable, danger := false)
 	var title := Label.new()
 	title.theme_type_variation = &"PopupBtnTextMuted" if danger else &"PopupBtnText"
 	title.text = text
-	title.position = Vector2(30, 10)
-	title.size = Vector2(600, 30)
+	title.position = Vector2(30, 8)
+	title.size = Vector2(660, 32)
 	title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	button.add_child(title)
 
 	var sub := Label.new()
 	sub.theme_type_variation = &"LangSub"
 	sub.text = desc
-	sub.position = Vector2(30, 42)
-	sub.size = Vector2(600, 26)
-	sub.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	sub.position = Vector2(30, 44)
+	sub.size = Vector2(660, 36)
+	sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	sub.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	button.add_child(sub)
 
 	return button
