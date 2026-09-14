@@ -6,6 +6,27 @@
 # Replace SFX Placeholder to correct sound
 
 # ----------------------------------------------------------------------------
+# LOADING SCENE + CHUYỂN CẢNH DÙNG NODE KHAI BÁO SẴN (2026-09)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): trước đây SceneTransition tự tạo Control + toàn bộ node con bằng code
+#     (`_build_ui()`) nên các node chỉ tồn tại sau khi gọi play_transition() -> user muốn chúng NẰM SẴN trong scene.
+#     - scenes/loading.tscn viết lại: root "Loading" (CanvasLayer, layer=128, process_mode=3) + script transition,
+#        cây node khai báo sẵn: TransitionRoot / InputBlocker / PaperPage {PaperBg, ShadowLeft, ShadowRight,
+#        Watermark (icon.svg 320x320 giữa trang)} / InkCircleDrawer / FadeRect.
+#        Bóng đổ 2 mép giấy là 2 GradientTexture2D khai báo inline trong scene (trước đây sinh bằng code).
+#        Các node con đều neo theo cha (full-rect / bám mép) nên KHÔNG cần set size/vị trí lúc chạy.
+#     - scripts/nodes/common/scene_transition.gd: bỏ _build_ui()/_create_gradient_texture(); thêm
+#        _bind_nodes() + hằng NODE_* (đường dẫn node trong loading.tscn) + has_ui();
+#        nối signal `draw` của InkCircleDrawer trong _ready(); _run_page_turn() chỉ còn ẩn/hiện + tween.
+#        Nếu thiếu node (ai đó gọi SceneTransition.new()) -> push_error + chuyển cảnh tức thì (không crash).
+#     - scripts/manager/SceneManager.gd: _init_transition() instantiate scenes/loading.tscn (preload LoadingScene)
+#        thay vì SceneTransitionScript.new().
+#     - Test: test_scene_transition.gd dùng loading.tscn; kiểm tra đủ 9 đường dẫn node, has_ui(),
+#        số node con KHÔNG đổi sau mỗi hiệu ứng (chứng minh không sinh node lúc chạy) + nhánh thiếu node.
+# [ ] CÓ THỂ LÀM: hiện trang giấy phủ kín màn hình khi đổi scene — có thể thêm spinner/nhãn "ĐANG TẢI…"
+#     vào loading.tscn để dùng đúng vai trò màn hình chờ khi scene nặng.
+
+# ----------------------------------------------------------------------------
 # HUD MÀN CHƠI THEO MOCKUP MATCH-UP MỚI (2026-09)
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM (2026-09): user cập nhật mockup/matchup_level.svg + matchup_dungeon.svg -> trích asset & dựng lại HUD.

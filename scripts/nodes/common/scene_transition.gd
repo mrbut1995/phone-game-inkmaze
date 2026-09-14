@@ -8,6 +8,15 @@ extends CanvasLayer
 ##   - ink_circle         : vết mực loang mở rộng che phủ rồi hé mở bàn cờ
 ##   - paper_fade         : chuyển cảnh mờ dần trên nền giấy nhám
 ##   - none               : chuyển cảnh tức thì (dùng cho tests hoặc khi tắt anim)
+##
+## TOÀN BỘ NODE GIAO DIỆN ĐƯỢC KHAI BÁO SẴN trong scenes/loading.tscn —
+## script KHÔNG tạo node lúc chạy, chỉ bật/tắt + tween:
+##   Loading (CanvasLayer, layer 128)
+##   └── TransitionRoot
+##       ├── InputBlocker    (chặn input khi đang chuyển cảnh)
+##       ├── PaperPage       (trang giấy lật) + PaperBg / ShadowLeft / ShadowRight / Watermark
+##       ├── InkCircleDrawer (vẽ vết mực loang - nối signal `draw` trong _ready)
+##       └── FadeRect        (lớp mờ dần)
 ## ============================================================================
 
 signal transition_started(style: String)
@@ -16,16 +25,27 @@ signal transition_finished(style: String)
 
 const COLOR_PAPER := Color(0.965, 0.945, 0.915, 1.0)          # Nền giấy ngà
 const COLOR_INK := Color(0.133, 0.298, 0.427, 1.0)            # Lam mực đậm InkMaze
-const COLOR_SHADOW := Color(0.12, 0.1, 0.08, 0.38)            # Bóng đổ mép gáy giấy
 
 const DURATION_PAGE_IN := 0.22
 const DURATION_PAGE_OUT := 0.22
 const DURATION_INK := 0.24
 const DURATION_FADE := 0.18
 
+## Đường dẫn node giao diện trong scenes/loading.tscn (không đổi tên nếu không sửa scene)
+const NODE_TRANSITION_ROOT := "TransitionRoot"
+const NODE_BLOCKER := "TransitionRoot/InputBlocker"
+const NODE_PAPER_PAGE := "TransitionRoot/PaperPage"
+const NODE_PAPER_BG := "TransitionRoot/PaperPage/PaperBg"
+const NODE_SHADOW_LEFT := "TransitionRoot/PaperPage/ShadowLeft"
+const NODE_SHADOW_RIGHT := "TransitionRoot/PaperPage/ShadowRight"
+const NODE_WATERMARK := "TransitionRoot/PaperPage/Watermark"
+const NODE_INK_DRAWER := "TransitionRoot/InkCircleDrawer"
+const NODE_FADE_RECT := "TransitionRoot/FadeRect"
+
 var _is_busy := false
 
-# Các node giao diện dựng động
+# Node giao diện lấy từ scenes/loading.tscn (KHÔNG sinh bằng code)
+var _ui_ready := false
 var _root_control: Control
 var _blocker: Control
 var _paper_page: Control
@@ -47,8 +67,32 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	_build_ui()
+	_ui_ready = _bind_nodes()
+	if not _ui_ready:
+		push_error("[SceneTransition] Thieu node giao dien — hay instantiate scenes/loading.tscn thay vi SceneTransition.new()")
+	elif not _ink_circle_drawer.draw.is_connected(_on_ink_draw):
+		_ink_circle_drawer.draw.connect(_on_ink_draw)
 	_reset_all()
+
+
+## Lấy các node giao diện đã khai báo trong scenes/loading.tscn.
+## `false` = scene thieu node (ví dụ ai đó gọi SceneTransition.new() trực tiếp).
+func _bind_nodes() -> bool:
+	_root_control = get_node_or_null(NODE_TRANSITION_ROOT) as Control
+	_blocker = get_node_or_null(NODE_BLOCKER) as Control
+	_paper_page = get_node_or_null(NODE_PAPER_PAGE) as Control
+	_page_bg = get_node_or_null(NODE_PAPER_BG) as ColorRect
+	_page_shadow_left = get_node_or_null(NODE_SHADOW_LEFT) as TextureRect
+	_page_shadow_right = get_node_or_null(NODE_SHADOW_RIGHT) as TextureRect
+	_watermark = get_node_or_null(NODE_WATERMARK) as TextureRect
+	_ink_circle_drawer = get_node_or_null(NODE_INK_DRAWER) as Control
+	_fade_rect = get_node_or_null(NODE_FADE_RECT) as ColorRect
+	return _blocker != null and _paper_page != null and _ink_circle_drawer != null and _fade_rect != null
+
+
+## Các node giao diện đã sẵn sàng (scene loading.tscn đã được dùng)
+func has_ui() -> bool:
+	return _ui_ready
 
 
 func is_busy() -> bool:
@@ -59,6 +103,13 @@ func is_busy() -> bool:
 func play_transition(target_path: String, change_callback: Callable, style := "page_turn_forward") -> void:
 	if _is_busy:
 		push_warning("[SceneTransition] Dang trong qua trinh chuyen canh, bo qua.")
+		return
+
+	# Không có node giao diện -> đổi cảnh tức thì (không chặn luồng game/test)
+	if not _ui_ready:
+		if change_callback.is_valid():
+			change_callback.call()
+		scene_swapped.emit()
 		return
 
 	_is_busy = true
@@ -92,16 +143,11 @@ func play_transition(target_path: String, change_callback: Callable, style := "p
 
 ## Hiệu ứng lật trang sổ tay
 func _run_page_turn(target_path: String, change_callback: Callable, forward: bool) -> void:
-	var vp_size := _get_screen_size()
-	var w := vp_size.x
-	var h := vp_size.y
+	var w := _get_screen_size().x
 
 	_paper_page.visible = true
-	_paper_page.size = Vector2(w, h)
-	_page_bg.size = Vector2(w, h)
-	_watermark.position = (Vector2(w, h) - _watermark.size) * 0.5
 
-	# Cấu hình bóng đổ mép trang giấy
+	# Cấu hình bóng đổ mép trang giấy (bóng nằm sẵn 2 bên trang trong loading.tscn)
 	_page_shadow_left.visible = forward
 	_page_shadow_right.visible = not forward
 
@@ -174,81 +220,8 @@ func _run_paper_fade(target_path: String, change_callback: Callable) -> void:
 
 
 # ---------------------------------------------------------------------------
-# Xây dựng giao diện tĩnh & trợ giúp
+# Trợ giúp
 # ---------------------------------------------------------------------------
-func _build_ui() -> void:
-	_root_control = Control.new()
-	_root_control.name = "TransitionRoot"
-	_root_control.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_root_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_root_control)
-
-	_blocker = Control.new()
-	_blocker.name = "InputBlocker"
-	_blocker.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_blocker.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_root_control.add_child(_blocker)
-
-	# 1. Trang giấy lật
-	_paper_page = Control.new()
-	_paper_page.name = "PaperPage"
-	_paper_page.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_root_control.add_child(_paper_page)
-
-	_page_bg = ColorRect.new()
-	_page_bg.name = "PaperBg"
-	_page_bg.color = COLOR_PAPER
-	_page_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_paper_page.add_child(_page_bg)
-
-	# Bóng mép trái (cho lật xuôi)
-	_page_shadow_left = TextureRect.new()
-	_page_shadow_left.name = "ShadowLeft"
-	_page_shadow_left.size = Vector2(70, 1920)
-	_page_shadow_left.position = Vector2(-70, 0)
-	_page_shadow_left.texture = _create_gradient_texture(COLOR_SHADOW, Color(0, 0, 0, 0))
-	_page_shadow_left.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_paper_page.add_child(_page_shadow_left)
-
-	# Bóng mép phải (cho lật ngược)
-	_page_shadow_right = TextureRect.new()
-	_page_shadow_right.name = "ShadowRight"
-	_page_shadow_right.size = Vector2(70, 1920)
-	_page_shadow_right.position = Vector2(1080, 0)
-	_page_shadow_right.texture = _create_gradient_texture(Color(0, 0, 0, 0), COLOR_SHADOW)
-	_page_shadow_right.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_paper_page.add_child(_page_shadow_right)
-
-	# Logo/dấu mờ InkMaze giữa trang giấy
-	_watermark = TextureRect.new()
-	_watermark.name = "Watermark"
-	_watermark.size = Vector2(320, 320)
-	_watermark.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_watermark.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_watermark.modulate = Color(0.133, 0.298, 0.427, 0.15)
-	var logo_tex := load("res://icon.svg") as Texture2D
-	if logo_tex != null:
-		_watermark.texture = logo_tex
-	_watermark.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_paper_page.add_child(_watermark)
-
-	# 2. Vết mực tròn
-	_ink_circle_drawer = Control.new()
-	_ink_circle_drawer.name = "InkCircleDrawer"
-	_ink_circle_drawer.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_ink_circle_drawer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_ink_circle_drawer.draw.connect(_on_ink_draw)
-	_root_control.add_child(_ink_circle_drawer)
-
-	# 3. Lớp phủ Fade giấy
-	_fade_rect = ColorRect.new()
-	_fade_rect.name = "FadeRect"
-	_fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_fade_rect.color = COLOR_PAPER
-	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_root_control.add_child(_fade_rect)
-
-
 func _reset_all() -> void:
 	if _paper_page != null:
 		_paper_page.visible = false
@@ -281,19 +254,6 @@ func _get_screen_size() -> Vector2:
 		if rect.size.x > 0 and rect.size.y > 0:
 			return rect.size
 	return Vector2(1080, 1920)
-
-
-func _create_gradient_texture(color_from: Color, color_to: Color) -> GradientTexture2D:
-	var grad := Gradient.new()
-	grad.colors = PackedColorArray([color_from, color_to])
-	grad.offsets = PackedFloat32Array([0.0, 1.0])
-	var tex := GradientTexture2D.new()
-	tex.gradient = grad
-	tex.width = 64
-	tex.height = 64
-	tex.fill_from = Vector2(0.0, 0.5)
-	tex.fill_to = Vector2(1.0, 0.5)
-	return tex
 
 
 func _wait_frames(count: int) -> void:

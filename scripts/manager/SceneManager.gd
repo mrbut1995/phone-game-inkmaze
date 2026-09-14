@@ -16,8 +16,10 @@ const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
-
-const SceneTransitionScript := preload("res://scripts/nodes/common/scene_transition.gd")
+## Lớp phủ chuyển cảnh: node giao diện (trang giấy, mực loang, fade, chặn input)
+## được khai báo SẴN trong scene này — xem scripts/nodes/common/scene_transition.gd
+const SCENE_LOADING := "res://scenes/loading.tscn"
+const LoadingScene := preload("res://scenes/loading.tscn")
 
 var transition: CanvasLayer = null
 
@@ -28,10 +30,14 @@ func _ready() -> void:
 
 
 func _init_transition() -> void:
+	if transition != null:
+		return
+	transition = LoadingScene.instantiate() as CanvasLayer
 	if transition == null:
-		transition = SceneTransitionScript.new()
-		transition.name = "SceneTransition"
-		add_child(transition)
+		push_error("[SceneManager] Khong tao duoc %s" % SCENE_LOADING)
+		return
+	transition.name = "Loading"
+	add_child(transition)
 
 
 # ---------------------------------------------------------------------------
