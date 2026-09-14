@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
-  <!-- MOCKUP: MÀN CHƠI — PLAY MODE / CHỌN MÀN (HUD: 3 thử thách · thời gian; KHÔNG bước còn lại, KHÔNG điểm) -->
+  <!-- MOCKUP: MÀN CHƠI — PLAY MODE / CHỌN MÀN (CẬP NHẬT: TIME TRÁI · CHALLENGE PHẢI · TÍCH ĐỎ · TĂNG KÍCH THƯỚC) -->
   <defs>
     <!-- Lưới vở học sinh nền 40px -->
     <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -51,14 +51,13 @@
       </g>
     </g>
 
-    <!-- TÁI SỬ DỤNG: NGÔI SAO THỬ THÁCH (ĐÃ ĐẠT / CHƯA ĐẠT) -->
-    <g id="star-got">
-      <path d="M 11 1.6 L 14.2 8.2 L 21.4 9.2 L 16.2 14.2 L 17.4 21.4 L 11 18 L 4.6 21.4 L 5.8 14.2 L 0.6 9.2 L 7.8 8.2 Z"
-            fill="#FBBF24" stroke="#D97706" stroke-width="1.6" stroke-linejoin="round"/>
+    <!-- BIỂU TƯỢNG TÍCH ĐỎ THỬ THÁCH (ĐÃ ĐẠT: NÉT TÍCH ĐỎ CHẤM BÀI / CHƯA ĐẠT: Ô CHỜ TÍCH) -->
+    <g id="check-got">
+      <circle cx="12" cy="12" r="11" fill="#FEE2E2" stroke="#D84444" stroke-width="1.8"/>
+      <path d="M 7 12 L 10.5 15.5 L 17 8.5" fill="none" stroke="#D84444" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
-    <g id="star-pending">
-      <path d="M 11 1.6 L 14.2 8.2 L 21.4 9.2 L 16.2 14.2 L 17.4 21.4 L 11 18 L 4.6 21.4 L 5.8 14.2 L 0.6 9.2 L 7.8 8.2 Z"
-            fill="#F1EADB" stroke="#B5A98F" stroke-width="1.6" stroke-linejoin="round"/>
+    <g id="check-pending">
+      <circle cx="12" cy="12" r="11" fill="#FAF5EB" stroke="#C8D6DF" stroke-width="1.8" stroke-dasharray="3 2"/>
     </g>
   </defs>
 
@@ -99,52 +98,73 @@
     <polyline points="42,20 52,24 50,34" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 
-  <!-- ================= 4. BẢNG CHỈ SỐ HUD (THỬ THÁCH - THỜI GIAN) ================= -->
-  <!-- Play Mode KHÔNG giới hạn / không hiển thị số bước còn lại và không tính điểm:
-       chỉ có tiến độ 3 Thử thách của màn + đồng hồ thời gian -->
-  <g transform="translate(50, 185)" filter="url(#uiShadow)">
+  <!-- ================= 4. BẢNG CHỈ SỐ HUD NÂNG CẤP (TIME TRÁI · CHALLENGE PHẢI · CAO 156px) ================= -->
+  <g transform="translate(50, 178)" filter="url(#uiShadow)">
 
-    <!-- Thẻ 1: TIẾN ĐỘ 3 THỬ THÁCH -->
-    <g transform="translate(0, 0)">
-      <rect width="650" height="125" rx="20" fill="#FEFDFA" stroke="#F59E0B" stroke-width="3.5"/>
-      <line x1="22" y1="0" x2="22" y2="125" stroke="#F59E0B" stroke-width="2.5"/>
-      <text x="38" y="42" font-family="sans-serif" font-size="18" font-weight="800" fill="#B45309">🎯 THỬ THÁCH</text>
-      <text x="38" y="97" font-family="'Segoe UI', sans-serif" font-size="46" font-weight="900" fill="#B45309">1<tspan font-size="24" fill="#8FA0AC">/3 ★</tspan></text>
-
-      <!-- Thử thách 1: đã hoàn thành -->
-      <g transform="translate(165, 14)">
-        <use href="#star-got" x="0" y="0"/>
-        <text x="30" y="16" font-family="sans-serif" font-size="17" font-weight="700" fill="#224C6D">Không đâm vào tường</text>
-        <text x="465" y="16" text-anchor="end" font-family="sans-serif" font-size="15" font-weight="800" fill="#2E7D32">✓ ĐẠT</text>
-      </g>
-
-      <!-- Thử thách 2: đang đếm -->
-      <g transform="translate(165, 48)">
-        <use href="#star-pending" x="0" y="0"/>
-        <text x="30" y="16" font-family="sans-serif" font-size="17" font-weight="700" fill="#224C6D">Đi không quá 15 bước</text>
-        <text x="465" y="16" text-anchor="end" font-family="sans-serif" font-size="15" font-weight="800" fill="#B45309">11 / 15 bước</text>
-      </g>
-
-      <!-- Thử thách 3: chưa hoàn thành -->
-      <g transform="translate(165, 82)">
-        <use href="#star-pending" x="0" y="0"/>
-        <text x="30" y="16" font-family="sans-serif" font-size="17" font-weight="700" fill="#718B9E">Về đích dưới 45 giây</text>
-        <text x="465" y="16" text-anchor="end" font-family="sans-serif" font-size="15" font-weight="800" fill="#718B9E">còn 13s</text>
-      </g>
+    <!-- ================= THẺ 1 (BÊN TRÁI): TIME PANEL (270 x 156 px) ================= -->
+    <g transform="translate(0, 10)" filter="url(#uiShadow)">
+      <rect width="250" height="138" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <line x1="18" y1="0" x2="18" y2="138" stroke="#3D83AE" stroke-width="2.5"/>
+      <text x="32" y="34" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">⏱️ THỜI GIAN</text>
+      <text x="62" y="95" font-family="'Segoe UI', monospace" font-size="46" font-weight="950" fill="#224C6D">01:24</text>
     </g>
 
-    <!-- Thẻ 2: THỜI GIAN -->
-    <g transform="translate(674, 0)">
-      <rect width="306" height="125" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
-      <line x1="22" y1="0" x2="22" y2="125" stroke="#3D83AE" stroke-width="2.5"/>
-      <text x="38" y="42" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">⏱️ THỜI GIAN</text>
-      <text x="38" y="96" font-family="'Segoe UI', sans-serif" font-size="46" font-weight="900" fill="#224C6D">00:32</text>
+    <!-- ================= THẺ 2 (BÊN PHẢI): CHALLENGE PANEL TO RÕ (690 x 156 px) ================= -->
+    <g transform="translate(265, 0)">
+      <rect width="720" height="156" rx="22" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/>
+      <line x1="20" y1="0" x2="20" y2="156" stroke="#D84444" stroke-width="3"/>
+
+      <!-- KHU VỰC TỔNG KẾT GÓC TRÁI (x: 35 -> 175) -->
+      <g transform="translate(36, 0)">
+        <text x="0" y="42" font-family="sans-serif" font-size="17" font-weight="900" fill="#D84444" letter-spacing="0.5">🎯 THỬ THÁCH</text>
+        
+        <!-- Điểm tích đỏ to bản: 1/3 ✓ -->
+        <text x="0" y="102" font-family="'Segoe UI', sans-serif" font-size="52" font-weight="950" fill="#D84444">1<tspan font-size="28" fill="#8FA0AC">/3 </tspan><tspan font-size="36" fill="#D84444">✓</tspan></text>
+        
+        <text x="0" y="132" font-family="sans-serif" font-size="14" font-weight="800" fill="#2E7D32">1 ĐÃ HOÀN THÀNH</text>
+      </g>
+
+      <!-- Vạch ngăn cách dọc giữa cột tổng kết và 3 dòng thử thách -->
+      <line x1="190" y1="14" x2="190" y2="142" stroke="#E2EBF1" stroke-width="2"/>
+
+      <!-- DANH SÁCH 3 THỬ THÁCH RÕ RÀNG (KHÔNG GIAN RỘNG 480px) -->
+      <g transform="translate(205, 8)">
+
+        <!-- THỬ THÁCH 1: ĐÃ ĐẠT (CÓ TÍCH ĐỎ) -->
+        <g transform="translate(0, 0)">
+          <!-- Nền dải thẻ nhiệm vụ đã xong -->
+          <rect width="490" height="42" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.2"/>
+          <!-- Dấu tích đỏ -->
+          <use href="#check-got" x="10" y="9"/>
+          <text x="42" y="27" font-family="'Segoe UI', sans-serif" font-size="17" font-weight="800" fill="#1E283A">Không đâm vào tường</text>
+          <rect x="405" y="8" width="75" height="26" rx="6" fill="#D84444"/>
+          <text x="442" y="26" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#FFFFFF">✓ ĐẠT</text>
+        </g>
+
+        <!-- THỬ THÁCH 2: ĐANG ĐẾM TIẾN ĐỘ -->
+        <g transform="translate(0, 48)">
+          <rect width="490" height="42" rx="10" fill="#FAF5EB" stroke="#E8E2D5" stroke-width="1.2"/>
+          <!-- Ô chờ tích -->
+          <use href="#check-pending" x="10" y="9"/>
+          <text x="42" y="27" font-family="'Segoe UI', sans-serif" font-size="17" font-weight="800" fill="#224C6D">Đi không quá 15 bước</text>
+          <text x="480" y="27" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#D84444">11 / 15 bước</text>
+        </g>
+
+        <!-- THỬ THÁCH 3: CHƯA HOÀN THÀNH -->
+        <g transform="translate(0, 96)">
+          <rect width="490" height="42" rx="10" fill="#FAF5EB" stroke="#E8E2D5" stroke-width="1.2"/>
+          <use href="#check-pending" x="10" y="9"/>
+          <text x="42" y="27" font-family="'Segoe UI', sans-serif" font-size="17" font-weight="700" fill="#718B9E">Về đích dưới 45 giây</text>
+          <text x="480" y="27" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#718B9E">còn 13s</text>
+        </g>
+
+      </g>
     </g>
   </g>
 
   <!-- ================= 5. KHUNG BÀN CỜ NUMBER MAZE 5x5 ================= -->
-  <!-- Kích thước 980x980 tại x=50, y=345. Lưới 5x5 cell: mỗi cell = 176x176 px, lề trong = 50px -->
-  <g transform="translate(50, 345)">
+  <!-- Kích thước 980x980 tại x=50, y=350. Lưới 5x5 cell: mỗi cell = 176x176 px, lề trong = 50px -->
+  <g transform="translate(50, 350)">
     <!-- Bề mặt card board -->
     <g clip-path="url(#boardClip)">
       <rect width="980" height="980" fill="#FEFDFA"/>
@@ -174,9 +194,8 @@
         <rect x="176" y="704" width="176" height="176"/><rect x="352" y="704" width="176" height="176"/><rect x="528" y="704" width="176" height="176"/><rect x="704" y="704" width="176" height="176"/>
       </g>
 
-      <!-- ================= 2 Ô CẦU THANG START & FINISH (KHÔNG CÓ CHỮ S/F) ================= -->
-      
-      <!-- 1. Ô START: CẦU THANG TỪ TẦNG TRÊN XUỐNG TẠI [4, 0] (x=0, y=704, size 176x176) -->
+      <!-- ================= 2 Ô CẦU THANG START & FINISH ================= -->
+      <!-- 1. Ô START TẠI [4, 0] -->
       <svg x="0" y="704" width="176" height="176" viewBox="0 0 130 130">
         <rect width="130" height="130" fill="#FAF5EB"/>
         <rect x="14" y="14" width="102" height="102" rx="6" fill="#EAE3D2" stroke="#1E283A" stroke-width="3"/>
@@ -213,16 +232,10 @@
           <rect x="22" y="110" width="86" height="8" fill="#DCD1BF" stroke-width="2.5"/>
           <line x1="14" y1="118" x2="116" y2="118" stroke-width="3.2"/>
         </g>
-        <g stroke="#1E283A" stroke-width="1.4" opacity="0.55">
-          <line x1="16" y1="25" x2="24" y2="35"/><line x1="16" y1="45" x2="26" y2="55"/>
-          <line x1="16" y1="65" x2="28" y2="77"/><line x1="16" y1="85" x2="32" y2="101"/>
-          <line x1="114" y1="25" x2="106" y2="35"/><line x1="114" y1="45" x2="104" y2="55"/>
-          <line x1="114" y1="65" x2="102" y2="77"/><line x1="114" y1="85" x2="98" y2="101"/>
-        </g>
         <rect x="1" y="1" width="128" height="128" fill="none" stroke="#6285B0" stroke-width="2"/>
       </svg>
 
-      <!-- 2. Ô FINISH: HỐ THANG XUỐNG TẦNG TIẾP TẠI [0, 4] (x=704, y=0, size 176x176) -->
+      <!-- 2. Ô FINISH TẠI [0, 4] -->
       <svg x="704" y="0" width="176" height="176" viewBox="0 0 130 130">
         <rect width="130" height="130" fill="#FAF5EB"/>
         <rect x="14" y="14" width="102" height="102" rx="6" fill="#EAE3D2" stroke="#1E283A" stroke-width="3"/>
@@ -253,38 +266,28 @@
           <!-- Bậc 4 -->
           <polygon points="36,98 94,98 88,106 42,106" fill="#807260" stroke-width="2.2"/>
           <rect x="42" y="106" width="46" height="8" fill="#42382C" stroke-width="2.2"/>
-          <!-- Lỗ sâu đen kịt -->
           <polygon points="42,114 88,114 84,118 46,118" fill="#130E09" stroke-width="1.5"/>
-        </g>
-        <g stroke="#1E283A" stroke-width="1.4" opacity="0.55">
-          <line x1="16" y1="25" x2="24" y2="35"/><line x1="16" y1="45" x2="26" y2="55"/>
-          <line x1="16" y1="65" x2="28" y2="77"/><line x1="16" y1="85" x2="32" y2="101"/>
-          <line x1="114" y1="25" x2="106" y2="35"/><line x1="114" y1="45" x2="104" y2="55"/>
-          <line x1="114" y1="65" x2="102" y2="77"/><line x1="114" y1="85" x2="98" y2="101"/>
         </g>
         <rect x="1" y="1" width="128" height="128" fill="none" stroke="#6285B0" stroke-width="2"/>
       </svg>
 
-      <!-- Lớp 2: Ô ĐÃ ĐI QUA (Highlight xanh nhạt) -->
+      <!-- Lớp 2: Ô ĐÃ ĐI QUA -->
       <rect x="0"   y="528" width="176" height="176" fill="#2575A7" fill-opacity="0.18"/>
       <rect x="0"   y="352" width="176" height="176" fill="#2575A7" fill-opacity="0.18"/>
       <rect x="176" y="352" width="176" height="176" fill="#2575A7" fill-opacity="0.18"/>
       <rect x="352" y="352" width="176" height="176" fill="#2575A7" fill-opacity="0.28"/>
 
-      <!-- ================= ĐƯỜNG VẼ CỦA NGƯỜI CHƠI (DRAWN PATH TỪ THỀM CẦU THANG) ================= -->
-      <!-- Xuất phát từ tâm thềm cầu thang [4,0] tại (88, 792) -> đi lên dần -->
+      <!-- ================= ĐƯỜNG VẼ CỦA NGƯỜI CHƠI ================= -->
       <path d="M 88 792 L 88 616 L 88 440 L 264 440 L 440 440" 
             fill="none" stroke="#2575A7" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" filter="url(#pathGlow)"/>
       <path d="M 88 792 L 88 616 L 88 440 L 264 440 L 440 440" 
             fill="none" stroke="#E0F2FE" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
 
-      <!-- Con trỏ vị trí hiện tại tại tâm (440, 440) -->
       <circle cx="440" cy="440" r="22" fill="#2575A7"/>
       <circle cx="440" cy="440" r="14" fill="#FFFFFF"/>
       <circle cx="440" cy="440" r="7" fill="#2575A7"/>
 
-      <!-- ================= CON SỐ Ở GIỮA CÁC Ô (MANH MỐI TƯỜNG) ================= -->
-      <!-- Đã xóa chữ S và F trên 2 ô cầu thang -->
+      <!-- ================= CON SỐ MANH MỐI TƯỜNG TRONG Ô ================= -->
       <g font-family="'Segoe UI', sans-serif" font-size="52" font-weight="900" fill="#2A4860" text-anchor="middle" dominant-baseline="central">
         <!-- Hàng 0 -->
         <text x="88"  y="88">2</text>
@@ -321,41 +324,33 @@
       </g>
 
       <!-- ================= CÁC TƯỜNG (WALLS) ================= -->
-      <!-- 1. Tường thật đã lộ diện -->
       <line x1="176" y1="184" x2="176" y2="344" stroke="#1E283A" stroke-width="11" stroke-linecap="round"/>
       <line x1="360" y1="352" x2="520" y2="352" stroke="#1E283A" stroke-width="11" stroke-linecap="round"/>
 
-      <!-- 2. Tường nghi ngờ -->
       <line x1="528" y1="360" x2="528" y2="520" stroke="#C4843A" stroke-width="8" stroke-linecap="round" stroke-dasharray="10 7"/>
       <line x1="184" y1="528" x2="344" y2="528" stroke="#C4843A" stroke-width="8" stroke-linecap="round" stroke-dasharray="10 7"/>
 
       <!-- ================= MA TRẬN 36 ANCHOR (6x6) ================= -->
-      <!-- Hàng 0 -->
       <use href="#anchor" x="0" y="0"/><use href="#anchor" x="176" y="0"/><use href="#anchor" x="352" y="0"/><use href="#anchor" x="528" y="0"/><use href="#anchor" x="704" y="0"/><use href="#anchor" x="880" y="0"/>
-      <!-- Hàng 1 -->
       <use href="#anchor" x="0" y="176"/><use href="#anchor" x="176" y="176"/><use href="#anchor" x="352" y="176"/><use href="#anchor" x="528" y="176"/><use href="#anchor" x="704" y="176"/><use href="#anchor" x="880" y="176"/>
-      <!-- Hàng 2 -->
       <use href="#anchor" x="0" y="352"/><use href="#anchor" x="176" y="352"/><use href="#anchor" x="352" y="352"/><use href="#anchor" x="528" y="352"/><use href="#anchor" x="704" y="352"/><use href="#anchor" x="880" y="352"/>
-      <!-- Hàng 3 -->
       <use href="#anchor" x="0" y="528"/><use href="#anchor" x="176" y="528"/><use href="#anchor" x="352" y="528"/><use href="#anchor" x="528" y="528"/><use href="#anchor" x="704" y="528"/><use href="#anchor" x="880" y="528"/>
-      <!-- Hàng 4 -->
       <use href="#anchor" x="0" y="704"/><use href="#anchor" x="176" y="704"/><use href="#anchor" x="352" y="704"/><use href="#anchor" x="528" y="704"/><use href="#anchor" x="704" y="704"/><use href="#anchor" x="880" y="704"/>
-      <!-- Hàng 5 -->
       <use href="#anchor" x="0" y="880"/><use href="#anchor" x="176" y="880"/><use href="#anchor" x="352" y="880"/><use href="#anchor" x="528" y="880"/><use href="#anchor" x="704" y="880"/><use href="#anchor" x="880" y="880"/>
     </g>
   </g>
 
   <!-- ================= 6. HƯỚNG DẪN LUẬT CHƠI TÓM TẮT ================= -->
-  <g transform="translate(50, 1345)" filter="url(#uiShadow)">
+  <g transform="translate(50, 1350)" filter="url(#uiShadow)">
     <rect width="980" height="90" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
     <line x1="32" y1="0" x2="32" y2="90" stroke="#D84444" stroke-width="3"/>
     <text x="60" y="52" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="700" fill="#244E6E">
-      � Vẽ đường từ ô xuất phát tới ô đích — chạm tường vô hình là thua ngay!
+      💡 Vẽ đường từ cầu thang xuất phát tới hố đích — chạm tường vô hình là thua ngay!
     </text>
   </g>
 
   <!-- ================= 7. THANH ĐIỀU KHIỂN & CÔNG CỤ (ACTION TOOLS) ================= -->
-  <g transform="translate(50, 1460)" filter="url(#uiShadow)">
+  <g transform="translate(50, 1465)" filter="url(#uiShadow)">
     <!-- CÔNG CỤ 1: VẼ ĐƯỜNG ĐI (ACTIVE) -->
     <g transform="translate(0, 0)" style="cursor: pointer;">
       <rect width="360" height="140" rx="26" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
@@ -381,7 +376,7 @@
       <text x="140" y="100" font-family="sans-serif" font-size="18" font-weight="700" fill="#718B9E">Nối 2 Anchor</text>
     </g>
 
-    <!-- CÔNG CỤ 3: HOÀN TÁC (ĐÃ CẬP NHẬT VECTOR MƯỢT MÀ KHÔNG LỖI) -->
+    <!-- CÔNG CỤ 3: HOÀN TÁC -->
     <g transform="translate(780, 0)" style="cursor: pointer;">
       <rect width="90" height="140" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
       <g transform="translate(20, 20)">

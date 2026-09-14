@@ -1,13 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 320 140" width="320" height="140">
-  <defs>
-    <filter id="cardStepsShadow" x="-15%" y="-15%" width="130%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14"/>
-    </filter>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 158" width="440" height="158">
+  <!-- Thẻ SỐ BƯỚC 440x158 - thẻ TO ở giữa HUD Dungeon (mockup/matchup_dungeon.svg).
+       Viền ĐỎ dày 4px, bo góc 24 - vẽ bằng 2 hình FILL lồng nhau để không bị cắt nét. -->
+  <rect width="440" height="158" rx="24" fill="#D84444"/>
+  <rect x="4" y="4" width="432" height="150" rx="20" fill="#FEFDFA"/>
 
-  <!-- Thẻ SỐ BƯỚC 306x125 đúng size mockup - bản trống, không text/icon (chừa 20px lề cho đổ bóng) -->
-  <g filter="url(#cardStepsShadow)">
-    <rect width="306" height="125" rx="20" fill="#FEFDFA" stroke="#D84444" stroke-width="3.5"/>
-    <line x1="22" y1="0" x2="22" y2="125" stroke="#D84444" stroke-width="2.5"/>
-  </g>
+  <!-- Lề đỏ sổ tay nổi bật -->
+  <line x1="24" y1="0" x2="24" y2="158" stroke="#D84444" stroke-width="3"/>
 </svg>

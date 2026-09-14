@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://daiq01a6mvmyv"
-path="res://.godot/imported/card_score.svg-ecc6d46497699afe0b9f474c177b4250.ctex"
+uid="uid://fhj3yt0effxd"
+path="res://.godot/imported/card_floor.svg-985e7740e05c899aacea32f42dbebb20.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/game/card_score.svg"
-dest_files=["res://.godot/imported/card_score.svg-ecc6d46497699afe0b9f474c177b4250.ctex"]
+source_file="res://assets/images/game/card_floor.svg"
+dest_files=["res://.godot/imported/card_floor.svg-985e7740e05c899aacea32f42dbebb20.ctex"]
 
 [params]
 

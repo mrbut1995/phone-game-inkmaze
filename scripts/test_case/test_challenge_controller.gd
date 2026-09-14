@@ -2,7 +2,7 @@ extends SceneTree
 ## ============================================================================
 ## Test Case: Hệ thống 3 Thử thách & Sao (ChallengeController) + popup thua.
 ##   - Mỗi màn có đúng 3 thử thách; hoàn thành 1 = 1 Sao (không tính theo thời gian còn lại).
-##   - HUD: Play/Level chỉ hiện thẻ THỬ THÁCH + THỜI GIAN; Dungeon mới hiện BƯỚC CÒN + ĐIỂM SỐ.
+##   - HUD: Play/Level chỉ hiện thẻ THỬ THÁCH + THỜI GIAN; Dungeon mới hiện SỐ BƯỚC + TẦNG.
 ##   - Popup thua: Level -> gameover_level.tscn (thử thách + số Sao), Dungeon -> gameover.tscn (bước).
 ##   - Hồi sinh: Level = quay lại bước trước đó, Dungeon = cộng thêm bước.
 ## ============================================================================
@@ -40,7 +40,7 @@ func _init() -> void:
 	assert(cc != null, "GameController phai duoc gan ChallengeController tu scene")
 	_check_play_hud(scene, gc, cc)
 
-	# 2. Chuyển sang Dungeon -> HUD đổi sang BƯỚC CÒN + ĐIỂM SỐ, ẩn thẻ thử thách
+	# 2. Chuyển sang Dungeon -> HUD đổi sang SỐ BƯỚC + TẦNG, ẩn thẻ thử thách
 	scene.switch_mode("dungeon")
 	await process_frame
 	_check_dungeon_hud(scene, cc)
@@ -66,38 +66,64 @@ func _init() -> void:
 # ---------------------------------------------------------------------------
 func _check_play_hud(scene: GameScene, gc: GameController, cc: ChallengeController) -> void:
 	var step_card := scene.get_node_or_null("Information/Step")
-	var score_card := scene.get_node_or_null("Information/Score")
+	var floor_card := scene.get_node_or_null("Information/Floor")
 	var chal_card := scene.get_node_or_null("Information/Challenge")
 	assert(chal_card != null, "The THU THACH phai ton tai trong scenes/game.tscn")
 
-	if step_card.visible or score_card.visible:
-		_fail("Play Mode khong duoc hien the BƯỚC CÒN / ĐIỂM SỐ")
+	if step_card.visible or floor_card.visible:
+		_fail("Play Mode khong duoc hien the SO BUOC / TANG")
 	if not chal_card.visible:
 		_fail("Play Mode phai hien the THỬ THÁCH")
 
-	# 3 dòng thử thách + số sao hiển thị trên HUD
-	var count_label := chal_card.get_node_or_null("Count") as Label
-	if count_label == null:
-		_fail("The THU THACH thieu nhan dem so sao (Count)")
-	elif not count_label.text.contains("/"):
-		_fail("Nhan dem so sao phai co dang 'x / 3', dang la '%s'" % count_label.text)
+	# Cột tổng kết: "x" + "/3 ✓" + dòng "n ĐÃ HOÀN THÀNH"
+	var count_label := chal_card.get_node_or_null("CountRow/Count") as Label
+	var count_max := chal_card.get_node_or_null("CountRow/CountMax") as Label
+	var note := chal_card.get_node_or_null("Note") as Label
+	if count_label == null or count_label.text.is_empty():
+		_fail("The THU THACH thieu nhan dem so da dat (Count)")
+	if count_max == null or not count_max.text.begins_with("/"):
+		_fail("Nhan dem phai co phan tong dang '/3', dang la '%s'" % (count_max.text if count_max != null else "<null>"))
+	if note == null or note.text.is_empty():
+		_fail("The THU THACH thieu dong 'n DA HOAN THANH' (Note)")
 
+	# Thẻ THỬ THÁCH phải đủ cao (đáy chạm mép trên vạch xanh của bàn cờ, KHÔNG đè lên bàn cờ) và chứa
+	# đủ 3 dải thử thách bên trong. Lưu ý: trong --headless viewport không phải 1080x1920 nên KHÔNG so
+	# toạ độ tuyệt đối với bàn cờ (đã kiểm bằng render 1:1: đáy thẻ y=424 = mép trên vạch xanh).
+	var chal_h := (chal_card as Control).size.y
+	var last_row := chal_card.get_node_or_null("Row3") as Control
+	if chal_h < 240.0:
+		_fail("The THU THACH phai cao >= 240px (dang la %.0f)" % chal_h)
+	if last_row == null or last_row.size.y < 50.0:
+		_fail("Dai thu thach phai cao >= 50px (dang la %.0f)" % (last_row.size.y if last_row != null else -1.0))
+	elif last_row.position.y + last_row.size.y > chal_h - 20.0:
+		_fail("Dai thu thach cuoi bi tran ra ngoai the THU THACH")
+	print("[CHECK] The THU THACH cao %.0fpx, 3 dai thu thach cao %.0fpx nam gon ben trong" % [chal_h, last_row.size.y if last_row != null else 0.0])
+
+	# 3 dải thử thách: nền (Bg) + ô tích (Check) + tên + (trạng thái HOẶC nhãn ĐẠT)
 	for i in ChallengeTypes.MAX_PER_LEVEL:
 		var row := chal_card.get_node_or_null("Row%d" % (i + 1)) as Control
 		if row == null:
-			_fail("Thieu dong thu thach Row%d tren HUD" % (i + 1))
+			_fail("Thieu dai thu thach Row%d tren HUD" % (i + 1))
 			continue
+		var bg := row.get_node_or_null("Bg") as TextureRect
+		var check := row.get_node_or_null("Check") as TextureRect
 		var title := row.get_node_or_null("Name") as Label
 		var status := row.get_node_or_null("Status") as Label
-		var star := row.get_node_or_null("Star") as TextureRect
+		var badge := row.get_node_or_null("Badge") as TextureRect
+		if bg == null or bg.texture == null:
+			_fail("Row%d thieu nen dai thu thach (Bg)" % (i + 1))
+		if check == null or check.texture == null:
+			_fail("Row%d thieu o tich (Check)" % (i + 1))
 		if title == null or title.text.is_empty():
 			_fail("Row%d thieu ten thu thach" % (i + 1))
-		if status == null or status.text.is_empty():
-			_fail("Row%d thieu trang thai" % (i + 1))
-		if star == null or star.texture == null:
-			_fail("Row%d thieu icon ngoi sao" % (i + 1))
+		if status == null:
+			_fail("Row%d thieu nhan trang thai" % (i + 1))
+		if badge == null or badge.texture == null:
+			_fail("Row%d thieu nhan 'DAT' (Badge)" % (i + 1))
+		elif status != null and status.visible == badge.visible:
+			_fail("Row%d phai hien dung 1 trong 2: trang thai hoac nhan DAT" % (i + 1))
 
-	print("[CHECK] Play Mode HUD: chi co the THU THACH (Count='%s') + THOI GIAN" % count_label.text)
+	print("[CHECK] Play Mode HUD: the THU THACH (%s%s) + THOI GIAN, an the SO BUOC / TANG" % [count_label.text, count_max.text])
 
 
 ## Dungeon Mode (endless) vẫn phải đưa nhân vật về điểm S khi đâm tường — khác Level Mode
@@ -123,13 +149,13 @@ func _check_dungeon_hazard(scene: GameScene) -> void:
 
 func _check_dungeon_hud(scene: GameScene, cc: ChallengeController) -> void:
 	var step_card := scene.get_node_or_null("Information/Step")
-	var score_card := scene.get_node_or_null("Information/Score")
+	var floor_card := scene.get_node_or_null("Information/Floor")
 	var chal_card := scene.get_node_or_null("Information/Challenge")
-	if not step_card.visible or not score_card.visible:
-		_fail("Dungeon Mode phai hien the BƯỚC CÒN + ĐIỂM SỐ")
+	if not step_card.visible or not floor_card.visible:
+		_fail("Dungeon Mode phai hien the SO BUOC + TANG")
 	if chal_card.visible:
 		_fail("Dungeon Mode khong hien the THỬ THÁCH tren HUD")
-	print("[CHECK] Dungeon Mode HUD: BƯỚC CÒN + THỜI GIAN + ĐIỂM SỐ (ẩn thẻ thử thách)")
+	print("[CHECK] Dungeon Mode HUD: SO BUOC + THOI GIAN + TANG (an the thu thach)")
 
 
 # ---------------------------------------------------------------------------

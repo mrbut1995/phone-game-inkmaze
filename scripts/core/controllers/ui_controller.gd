@@ -16,15 +16,16 @@ signal pause_toggled(is_paused: bool)
 signal revive_requested
 
 @export var level_label: Label = null
+## Dòng phụ nhỏ dưới tiêu đề (VD "PLAY MODE · CHƯƠNG 1"). Rỗng = ẩn.
+@export var subtitle_label: Label = null
 @export var step_val_label: Label = null
-@export var step_max_label: Label = null
 @export var time_val_label: Label = null
-@export var score_val_label: Label = null
+@export var floor_val_label: Label = null
 
-## Thẻ HUD trong "Information": Dungeon Mode dùng BƯỚC CÒN + ĐIỂM SỐ,
-## các chế độ khác (Play/Daily) dùng thẻ THỬ THÁCH — xem apply_mode_layout()
+## Thẻ HUD trong "Information" (mockup matchup_dungeon.svg / matchup_level.svg):
+## Dungeon Mode dùng thẻ SỐ BƯỚC + TẦNG, các chế độ khác dùng thẻ THỬ THÁCH
 @export var step_card: Control = null
-@export var score_card: Control = null
+@export var floor_card: Control = null
 @export var challenge_card: Control = null
 
 ## Thông tin ván đang chơi (GameController cập nhật) - dùng cho popup tạm dừng
@@ -38,14 +39,14 @@ func set_run_info(info: Dictionary) -> void:
 # ---------------------------------------------------------------------------
 # Bố cục HUD theo chế độ chơi
 # ---------------------------------------------------------------------------
-## Chỉ Dungeon Mode mới có bộ đếm số bước còn lại (và điểm tích lũy).
+## Chỉ Dungeon Mode mới có bộ đếm số bước còn lại (và số tầng đang chơi).
 ## Các chế độ còn lại hiện thẻ THỬ THÁCH (3 thử thách + số Sao) thay cho 2 thẻ đó.
 ## Xem Number_Maze_Game_Design.md — mục 3.1 & quy ước "Số bước".
 func apply_mode_layout(endless: bool) -> void:
 	if step_card != null:
 		step_card.visible = endless
-	if score_card != null:
-		score_card.visible = endless
+	if floor_card != null:
+		floor_card.visible = endless
 	if challenge_card != null:
 		challenge_card.visible = not endless
 
@@ -55,28 +56,28 @@ func apply_mode_layout(endless: bool) -> void:
 # ---------------------------------------------------------------------------
 func update_hud(
 	title: String,
+	subtitle: String,
 	steps_remaining: int,
-	max_steps: int,
 	elapsed_time: float,
-	score: int,
+	floor_number: int,
 	_extra_info := ""
 ) -> void:
 	if level_label != null:
 		level_label.text = title
+	if subtitle_label != null:
+		subtitle_label.text = subtitle
+		subtitle_label.visible = not subtitle.is_empty()
 
 	if step_val_label != null:
 		step_val_label.text = str(steps_remaining)
-	if step_max_label != null:
-		step_max_label.text = "/%d" % max_steps
+	if floor_val_label != null:
+		floor_val_label.text = "%02d" % maxi(floor_number, 1)
 
 	if time_val_label != null:
 		var total_sec := int(elapsed_time)
 		var mins := total_sec / 60
 		var secs := total_sec % 60
 		time_val_label.text = "%d:%02d" % [mins, secs]
-
-	if score_val_label != null:
-		score_val_label.text = "%05d" % score
 
 
 # ---------------------------------------------------------------------------

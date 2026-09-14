@@ -6,6 +6,48 @@
 # Replace SFX Placeholder to correct sound
 
 # ----------------------------------------------------------------------------
+# HUD MÀN CHƠI THEO MOCKUP MATCH-UP MỚI (2026-09)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): user cập nhật mockup/matchup_level.svg + matchup_dungeon.svg -> trích asset & dựng lại HUD.
+#     - assets/images/game/ (KHÔNG dùng stroke cho viền: vẽ 2 hình fill lồng nhau để ThorVG không cắt nét ở mép viewBox):
+#        card_time.svg 250x138 (thẻ THỜI GIAN, viền xanh 3px, lề xanh x=18)
+#        card_floor.svg 250x138 (MỚI - thẻ TẦNG, cùng kiểu thẻ thời gian)
+#        card_steps.svg 440x158 (thẻ SỐ BƯỚC ở giữa, viền ĐỎ dày 4px, bo 24)
+#        card_challenge.svg 720x246 (thẻ THỬ THÁCH, viền đỏ 3px, bo 22 — ĐÃ PHÓNG TO theo yêu cầu:
+#          đáy thẻ dừng đúng MÉP TRÊN vạch xanh của bàn cờ, y=424 ở khung 1080x1920)
+#        chal_row_done.svg / chal_row_pending.svg 490x58 (nền dải thử thách đã đạt / chưa đạt)
+#        chal_check_done.svg / chal_check_pending.svg 30x30 (ô tích đỏ / ô chờ tích nét đứt)
+#        chal_badge_done.svg 96x32 (nhãn đỏ "✓ ĐẠT") · ĐÃ XÓA card_score.svg (HUD Dungeon không còn thẻ điểm)
+#     - resources/settings/text/: + text_game_card_label(18) · text_game_card_value_steps(72) ·
+#        text_game_challenge_count(62) · text_game_challenge_count_sub(36) · text_game_challenge_small(16) ·
+#        text_game_challenge_row(22 - tăng từ 18 cho cân với thẻ cao 246px)
+#        (text_game_information_label 24 và _title_label 32 thành không dùng nữa - giữ lại phòng khi cần)
+#     - scenes/game.tscn: "Information" từ HBoxContainer -> Control định vị tuyệt đối tại (50,175) rộng 980, cao 249;
+#        Play Mode = Time(0,13) + Challenge(265,3);  Dungeon = Time(0,13) + Step(270,0) + Floor(730,10) (đúng toạ độ mockup).
+#        Thẻ THỬ THÁCH: cột tổng kết (Label/CountRow[Count+CountMax]/Note + Divider) + 3 dải Row1..3 {Bg, Check, Name,
+#        Status, Badge+BadgeLabel} + nhãn dùng khoá dịch STR_HUD_* (auto_translate).
+#        Header "Status": Pause · Title(VBox: Subtitle + LevelLabel) · Restart  -> đồng bộ 2 dòng với mockup.
+#     - scripts/core/controllers/challenge_controller.gd::_refresh_hud(): vẽ theo cấu trúc mới - Count "x",
+#        CountMax "/3 ✓", Note "n ĐÃ HOÀN THÀNH", mỗi dải đổi Bg/Check theo done, dải đã đạt ẩn Status + hiện Badge,
+#        màn khai báo < 3 thử thách thì ẩn các dải thừa (const ROW_DONE/ROW_PENDING/CHECK_DONE/CHECK_PENDING thay bộ sao).
+#     - scripts/core/controllers/ui_controller.gd: apply_mode_layout(endless) -> Step+Floor (endless) / Challenge;
+#        update_hud(title, subtitle, steps_remaining, elapsed_time, floor_number) - thẻ SỐ BƯỚC chỉ hiện số còn lại
+#        (bỏ "/max"), thẻ TẦNG hiện "%02d", subtitle rỗng thì tự ẩn.
+#     - scripts/modes/base_game_mode.gd: get_hud_floor_title() giờ trả TÊN CHẾ ĐỘ cho mọi mode (Dungeon không còn
+#        "TẦNG 01" trên tiêu đề - số tầng đã ở thẻ TẦNG) + hàm mới get_hud_subtitle() (mặc định rỗng).
+#        scripts/modes/standard_game_mode.gd: override -> title "MÀN 09" (STR_LEVEL_TITLE_FORMAT) + subtitle
+#        "PLAY MODE · CHƯƠNG 1" (STR_CHAPTER_FORMAT, chương lấy từ LevelData.chapter).
+#     - scripts/scenes/game.gd: đổi @onready sang $Status/Title/LevelLabel + $Status/Title/Subtitle + $Information/*/Value.
+#     - Chuỗi mới: STR_HUD_TIME/STEPS/FLOOR/CHALLENGE · STR_CHALLENGE_DONE_COUNT · STR_CHALLENGE_BADGE_DONE ·
+#        STR_CHAPTER_FORMAT · STR_LEVEL_TITLE_FORMAT.
+#     - Test: test_challenge_controller.gd cập nhật theo node mới (Bg/Check/Badge, CountRow/Count, thẻ TẦNG);
+#        13/13 bộ test game PASS; render 1:1 (SubViewport 1080x1920) đã đối chiếu 2 mockup.
+# [ ] CHƯA LÀM: mockup/archivement_scene.svg (MỚI) chưa dựng màn Thành tích; popup thắng màn (winning.tscn)
+#     vẫn theo layout cũ (xem mục THỬ THÁCH bên dưới).
+# [ ] CÓ THỂ LÀM: thẻ THỜI GIAN bên trái vẫn 250x138 (thấp hơn thẻ THỬ THÁCH 246) - nếu muốn 2 thẻ cao bằng nhau
+#     thì phóng to card_time.svg + card_floor.svg rồi giãn nội dung (chưa được yêu cầu).
+
+# ----------------------------------------------------------------------------
 # THỬ THÁCH & SAO + POPUP THUA THEO CHẾ ĐỘ (2026-09)
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM (2026-09): Sao KHÔNG còn tính theo thời gian còn lại -> 3 Thử thách / match-up,

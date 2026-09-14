@@ -9,12 +9,12 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @onready var board_view: Control = $Board
 @onready var pause_btn: TextureButton = $Status/Pause
 @onready var restart_btn: TextureButton = $Status/Restart
-@onready var level_label: Label = $Status/LevelLabel
+@onready var level_label: Label = $Status/Title/LevelLabel
+@onready var subtitle_label: Label = $Status/Title/Subtitle
 
-@onready var step_val: Label = $Information/Step/ValueContainer/Value
-@onready var step_max: Label = $Information/Step/ValueContainer/MaxValue
+@onready var step_val: Label = $Information/Step/Value
 @onready var time_val: Label = $Information/Time/Value
-@onready var score_val: Label = $Information/Score/Value
+@onready var floor_val: Label = $Information/Floor/Value
 
 @onready var tool_path_btn: TextureButton = $Button/Tool
 @onready var tool_wall_btn: TextureButton = $Button/Wall

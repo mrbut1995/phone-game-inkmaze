@@ -96,10 +96,15 @@ func calculate_score(
 
 
 ## Tiêu đề và thông tin phụ hiển thị trên HUD.
-func get_hud_floor_title(floor_number: int) -> String:
-	if not is_endless:
-		return mode_name.to_upper()
-	return "TẦNG %02d" % floor_number
+## Dungeon (endless) không hiện số tầng ở tiêu đề nữa — tầng nằm ở thẻ "TẦNG" trong HUD
+## (mockup matchup_dungeon.svg), nên tiêu đề chỉ còn tên chế độ.
+func get_hud_floor_title(_floor_number: int) -> String:
+	return mode_name.to_upper()
+
+
+## Dòng phụ nhỏ dưới tiêu đề HUD (VD "PLAY MODE · CHƯƠNG 1"). Rỗng = ẩn dòng phụ.
+func get_hud_subtitle(_floor_number: int) -> String:
+	return ""
 
 
 func get_hud_extra_info() -> String:

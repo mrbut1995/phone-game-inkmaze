@@ -117,6 +117,7 @@ func _update_hud() -> void:
 		return
 	var extra_info := game_mode_controller.game_mode.get_hud_extra_info() if game_mode_controller.game_mode != null else ""
 	var title := game_mode_controller.game_mode.get_hud_floor_title(game_state.floor_number) if game_mode_controller.game_mode != null else "TẦNG %d" % game_state.floor_number
+	var subtitle := game_mode_controller.game_mode.get_hud_subtitle(game_state.floor_number) if game_mode_controller.game_mode != null else ""
 	if ui_controller != null:
 		ui_controller.set_run_info({
 			"floor": game_state.floor_number,
@@ -126,10 +127,10 @@ func _update_hud() -> void:
 		})
 	ui_controller.update_hud(
 		title,
+		subtitle,
 		game_state.steps_remaining,
-		game_state.max_steps,
 		game_state.elapsed_time,
-		game_state.score,
+		game_state.floor_number,
 		extra_info
 	)
 	# Cập nhật trạng thái sống của các thử thách (chưa chốt Sao khi đang chơi)

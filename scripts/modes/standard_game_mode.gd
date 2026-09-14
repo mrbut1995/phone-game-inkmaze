@@ -85,3 +85,14 @@ func evaluate_move(from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> Dict
 
 func get_hud_extra_info() -> String:
 	return "ĐỘ KHÓ: %s" % difficulty.to_upper()
+
+
+## Tiêu đề HUD của Play Mode = số Màn đang chơi (mockup matchup_level.svg).
+func get_hud_floor_title(floor_number: int) -> String:
+	return tr("STR_LEVEL_TITLE_FORMAT").format(["%02d" % maxi(floor_number, 1)])
+
+
+## Dòng phụ = "PLAY MODE · CHƯƠNG n" (chương lấy từ dữ liệu màn đang chơi).
+func get_hud_subtitle(_floor_number: int) -> String:
+	var chapter := current_level_data.chapter if current_level_data != null else 1
+	return "%s · %s" % [mode_name.to_upper(), tr("STR_CHAPTER_FORMAT").format([maxi(chapter, 1)])]

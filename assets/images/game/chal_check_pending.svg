@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30">
+  <!-- Ô CHỜ TÍCH 30x30: thử thách CHƯA ĐẠT (mockup/matchup_level.svg - defs#check-pending, phóng to 1.25x) -->
+  <circle cx="15" cy="15" r="13.75" fill="#FAF5EB" stroke="#C8D6DF" stroke-width="2.25" stroke-dasharray="3.75 2.5"/>
+</svg>

@@ -22,8 +22,10 @@ const SECONDS_PER_STEP := 3.0
 const MIN_TIME_LIMIT := 30.0
 const MAX_TIME_LIMIT := 240.0
 
-const STAR_FULL := preload("res://assets/images/common/star_highlight.svg")
-const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
+const ROW_DONE := preload("res://assets/images/game/chal_row_done.svg")
+const ROW_PENDING := preload("res://assets/images/game/chal_row_pending.svg")
+const CHECK_DONE := preload("res://assets/images/game/chal_check_done.svg")
+const CHECK_PENDING := preload("res://assets/images/game/chal_check_pending.svg")
 
 const COLOR_DONE := Color(0.18039216, 0.49019608, 0.19607843, 1)
 const COLOR_FAIL := Color(0.84705883, 0.26666668, 0.26666668, 1)
@@ -418,39 +420,71 @@ func _pending(status: String, on_track: bool) -> Dictionary:
 	return {"done": false, "status": status, "color": COLOR_LIVE if on_track else COLOR_FAIL}
 
 
-## Vẽ trạng thái các thử thách lên thẻ HUD "THỬ THÁCH"
+## Vẽ trạng thái các thử thách lên thẻ HUD "THỬ THÁCH" (mockup matchup_level.svg):
+##   cột trái: số đã đạt "x/3 ✓" + dòng "n ĐÃ HOÀN THÀNH" · 3 dải bên phải: ô tích + tên + trạng thái/nhãn ĐẠT
 func _refresh_hud() -> void:
 	if card == null:
 		return
 
-	var count_label := card.get_node_or_null("Count") as Label
+	var total := maxi(_rows.size(), 1)
+	var done_total := stars()
+
+	var count_label := card.get_node_or_null("CountRow/Count") as Label
 	if count_label != null:
-		var count_text := tr("STR_CHALLENGE_COUNT_FORMAT").format([stars(), maxi(_rows.size(), 1)])
+		var count_text := str(done_total)
 		if count_label.text != count_text:
 			count_label.text = count_text
 
-	for i in _rows.size():
+	var count_max := card.get_node_or_null("CountRow/CountMax") as Label
+	if count_max != null:
+		var max_text := "/%d ✓" % total
+		if count_max.text != max_text:
+			count_max.text = max_text
+
+	var note := card.get_node_or_null("Note") as Label
+	if note != null:
+		var note_text := tr("STR_CHALLENGE_DONE_COUNT").format([done_total])
+		if note.text != note_text:
+			note.text = note_text
+
+	for i in ChallengeTypes.MAX_PER_LEVEL:
 		var row_node := card.get_node_or_null("Row%d" % (i + 1)) as Control
 		if row_node == null:
 			continue
+		# Màn chỉ khai báo 1-2 thử thách -> ẩn các dải còn lại
+		if i >= _rows.size():
+			row_node.visible = false
+			continue
+		row_node.visible = true
+
 		var row := _rows[i]
 		var done := bool(row.get("done", false))
+		var failed: bool = row.get("status_color", COLOR_IDLE) == COLOR_FAIL
 
-		var star := row_node.get_node_or_null("Star") as TextureRect
-		if star != null:
-			star.texture = STAR_FULL if done else STAR_EMPTY
-			star.modulate = Color(1, 1, 1, 1) if done else Color(1, 1, 1, 0.8)
+		var bg := row_node.get_node_or_null("Bg") as TextureRect
+		if bg != null:
+			bg.texture = ROW_DONE if done else ROW_PENDING
+
+		var check := row_node.get_node_or_null("Check") as TextureRect
+		if check != null:
+			check.texture = CHECK_DONE if done else CHECK_PENDING
 
 		var name_label := row_node.get_node_or_null("Name") as Label
 		if name_label != null:
 			var title_text := str(row.get("title", ""))
 			if name_label.text != title_text:
 				name_label.text = title_text
-			name_label.modulate = COLOR_NAME if done else COLOR_IDLE
+			name_label.modulate = COLOR_IDLE if failed else COLOR_NAME
 
+		# Đã đạt -> hiện nhãn "✓ ĐẠT" (góc phải) thay cho dòng trạng thái
 		var status_label := row_node.get_node_or_null("Status") as Label
 		if status_label != null:
+			status_label.visible = not done
 			var status_text := str(row.get("status", ""))
 			if status_label.text != status_text:
 				status_label.text = status_text
 			status_label.modulate = row.get("status_color", COLOR_IDLE)
+
+		var badge := row_node.get_node_or_null("Badge") as Control
+		if badge != null:
+			badge.visible = done
