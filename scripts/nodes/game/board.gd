@@ -458,7 +458,18 @@ func _build_cells() -> void:
 					text = str(maze.get_wall_count(pos))
 
 			c.set_text(text)
+			_sync_bomb_marker(c, pos)
 			c.set_focused(false)
+
+
+## Đồng bộ biểu tượng Bomb cho ô (mode nào có API has_bomb_marker — xem MinesweeperPathGameMode).
+func _sync_bomb_marker(cell_node: MazeCell, pos: Vector2i) -> void:
+	if cell_node == null:
+		return
+	var marked := game_mode != null \
+		and game_mode.has_method("has_bomb_marker") \
+		and bool(game_mode.call("has_bomb_marker", pos))
+	cell_node.set_bomb(marked)
 
 
 func _build_walls() -> void:
@@ -742,7 +753,9 @@ func show_mine_hit(pos: Vector2i) -> void:
 	var c_idx := _cell_index(pos.x, pos.y)
 	if c_idx >= 0 and c_idx < _cell_nodes.size():
 		var cell_node: MazeCell = _cell_nodes[c_idx]
-		cell_node.set_text("X")
+		if cell_node != null:
+			# Giữ nguyên con số trên ô, chỉ đánh dấu quả mìn đã nổ
+			cell_node.set_bomb(true)
 
 	var center := _cell_center(pos)
 	var mine_sfx: Control = MINE_SFX_SCENE.instantiate()
@@ -774,47 +787,23 @@ func reveal_wall_segment(is_h: bool, lattice: Vector2i) -> void:
 		seg.animate_appear()
 
 
-func reveal_all_walls_with_countdown(seconds: int = 3) -> void:
+## Pha GHI NHỚ (Blind Memory): hiện toàn bộ tường + khoá tương tác.
+## Đếm ngược nằm ở popup riêng (xem scripts/nodes/popups/memory_countdown.gd) — KHÔNG vẽ label
+## trong board nữa vì board bị dựng lại mỗi màn sẽ xoá mất label đó.
+func reveal_all_walls() -> void:
 	set_interaction_enabled(false)
 	for key in _wall_segments:
 		var seg: WallSegment = _wall_segments[key]
 		seg.set_state("visible")
 
-	var cd_label := Label.new()
-	_markers_layer.add_child(cd_label)
-	cd_label.set_anchors_preset(Control.PRESET_CENTER)
-	cd_label.size = Vector2(200, 80)
-	cd_label.pivot_offset = Vector2(100, 40)
-	cd_label.position = size * 0.5 - Vector2(100, 40)
-	cd_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	cd_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	cd_label.add_theme_font_size_override("font_size", 54)
-	cd_label.add_theme_color_override("font_color", Color(0.9, 0.2, 0.2, 1.0))
 
-	var tw := create_tween()
-	for s in range(seconds, 0, -1):
-		tw.tween_callback(func() -> void:
-			cd_label.text = str(s)
-			cd_label.scale = Vector2(1.5, 1.5)
-			var p_tw := create_tween()
-			p_tw.tween_property(cd_label, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_BACK)
-		)
-		tw.tween_interval(1.0)
-
-	tw.tween_callback(func() -> void:
-		cd_label.text = "GO!"
-		cd_label.add_theme_color_override("font_color", Color(0.15, 0.65, 0.3, 1.0))
-	)
-	tw.tween_interval(0.5)
-
-	tw.tween_callback(func() -> void:
-		for key in _wall_segments:
-			var seg: WallSegment = _wall_segments[key]
-			var base: String = seg.get_meta("base_state", "invisible")
-			seg.set_state(base)
-		cd_label.queue_free()
-		set_interaction_enabled(true)
-	)
+## Hết pha ghi nhớ: trả tường về trạng thái gốc (ẩn) + mở lại tương tác.
+func hide_all_walls() -> void:
+	for key in _wall_segments:
+		var seg: WallSegment = _wall_segments[key]
+		var base: String = seg.get_meta("base_state", "invisible")
+		seg.set_state(base)
+	set_interaction_enabled(true)
 
 
 func apply_fog_of_war(_center: Vector2i, _radius: int, explored: Dictionary) -> void:
@@ -828,6 +817,7 @@ func apply_fog_of_war(_center: Vector2i, _radius: int, explored: Dictionary) -> 
 				continue      # ô ngoài board: không có số để làm mờ
 			var text: String = game_mode.get_cell_text(p, maze)
 			cell_node.set_text(text)
+			_sync_bomb_marker(cell_node, p)
 			if explored.has(p):
 				cell_node.modulate = Color(1, 1, 1, 1.0)
 			else:

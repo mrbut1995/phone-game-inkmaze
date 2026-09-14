@@ -1,0 +1,75 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://nodes/popups/base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/popups/memory_countdown.gd" id="2_memorize"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/paper_note_memory.svg" id="3_note"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/washi_tape.svg" id="4_tape"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_memorize_countdown.tres" id="5_number"]
+
+[node name="Base" instance=ExtResource("1_base")]
+close_on_back = false
+script = ExtResource("2_memorize")
+
+[node name="Dim" parent="." index="0"]
+visible = false
+
+[node name="Panel" parent="." index="1"]
+offset_left = 220.0
+offset_top = 150.0
+offset_right = 860.0
+offset_bottom = 430.0
+
+[node name="Art" parent="Panel" index="0"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 650.0
+offset_bottom = 290.0
+texture = ExtResource("3_note")
+
+[node name="WashiTape" type="TextureRect" parent="Panel" index="1"]
+layout_mode = 0
+offset_left = 207.0
+offset_top = -24.0
+offset_right = 433.0
+offset_bottom = 30.0
+rotation = -0.05
+pivot_offset = Vector2(113.0, 27.0)
+mouse_filter = 2
+texture = ExtResource("4_tape")
+
+[node name="Title" type="Label" parent="Panel/Content" index="0"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 14.0
+offset_right = 596.0
+offset_bottom = 62.0
+mouse_filter = 2
+theme_type_variation = &"PopupTitle"
+text = "STR_MEMORIZE_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Number" type="Label" parent="Panel/Content" index="1"]
+modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+layout_mode = 0
+offset_left = 44.0
+offset_top = 62.0
+offset_right = 596.0
+offset_bottom = 218.0
+mouse_filter = 2
+text = "3"
+label_settings = ExtResource("5_number")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hint" type="Label" parent="Panel/Content" index="2"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 218.0
+offset_right = 596.0
+offset_bottom = 258.0
+mouse_filter = 2
+theme_type_variation = &"PopupQuote"
+text = "STR_MEMORIZE_HINT"
+horizontal_alignment = 1
+vertical_alignment = 1

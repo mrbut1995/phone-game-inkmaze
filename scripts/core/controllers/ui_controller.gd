@@ -14,19 +14,15 @@ signal quit_requested
 signal home_requested
 signal pause_toggled(is_paused: bool)
 signal revive_requested
+## Pha GHI NHỚ (Blind Memory) đếm ngược xong -> GameController ẩn tường và chạy đồng hồ
+signal memorize_finished
 
 @export var level_label: Label = null
 ## Dòng phụ nhỏ dưới tiêu đề (VD "PLAY MODE · CHƯƠNG 1"). Rỗng = ẩn.
 @export var subtitle_label: Label = null
-@export var step_val_label: Label = null
-@export var time_val_label: Label = null
-@export var floor_val_label: Label = null
 
-## Thẻ HUD trong "Information" (mockup matchup_dungeon.svg / matchup_level.svg):
-## Dungeon Mode dùng thẻ SỐ BƯỚC + TẦNG, các chế độ khác dùng thẻ THỬ THÁCH
-@export var step_card: Control = null
-@export var floor_card: Control = null
-@export var challenge_card: Control = null
+## HUD của chế độ đang chơi (BaseHUD). GameScene gắn vào qua set_hud() khi đổi chế độ.
+var hud: BaseHUD = null
 
 ## Thông tin ván đang chơi (GameController cập nhật) - dùng cho popup tạm dừng
 var run_info: Dictionary = {}
@@ -36,19 +32,9 @@ func set_run_info(info: Dictionary) -> void:
 	run_info = info
 
 
-# ---------------------------------------------------------------------------
-# Bố cục HUD theo chế độ chơi
-# ---------------------------------------------------------------------------
-## Chỉ Dungeon Mode mới có bộ đếm số bước còn lại (và số tầng đang chơi).
-## Các chế độ còn lại hiện thẻ THỬ THÁCH (3 thử thách + số Sao) thay cho 2 thẻ đó.
-## Xem Number_Maze_Game_Design.md — mục 3.1 & quy ước "Số bước".
-func apply_mode_layout(endless: bool) -> void:
-	if step_card != null:
-		step_card.visible = endless
-	if floor_card != null:
-		floor_card.visible = endless
-	if challenge_card != null:
-		challenge_card.visible = not endless
+## Gắn HUD của chế độ đang chơi (GameScene gọi trong _apply_hud_for_mode).
+func set_hud(p_hud: BaseHUD) -> void:
+	hud = p_hud
 
 
 # ---------------------------------------------------------------------------
@@ -60,7 +46,8 @@ func update_hud(
 	steps_remaining: int,
 	elapsed_time: float,
 	floor_number: int,
-	_extra_info := ""
+	extra_info := "",
+	mode: BaseGameMode = null
 ) -> void:
 	if level_label != null:
 		level_label.text = title
@@ -68,16 +55,17 @@ func update_hud(
 		subtitle_label.text = subtitle
 		subtitle_label.visible = not subtitle.is_empty()
 
-	if step_val_label != null:
-		step_val_label.text = str(steps_remaining)
-	if floor_val_label != null:
-		floor_val_label.text = "%02d" % maxi(floor_number, 1)
-
-	if time_val_label != null:
-		var total_sec := int(elapsed_time)
-		var mins := total_sec / 60
-		var secs := total_sec % 60
-		time_val_label.text = "%d:%02d" % [mins, secs]
+	# Mọi thành phần trong khung Information do HUD của từng chế độ tự vẽ
+	if hud != null:
+		hud.update_hud({
+			"title": title,
+			"subtitle": subtitle,
+			"steps_remaining": steps_remaining,
+			"elapsed_time": elapsed_time,
+			"floor_number": floor_number,
+			"extra": extra_info,
+			"mode": mode,
+		})
 
 
 # ---------------------------------------------------------------------------
@@ -149,6 +137,21 @@ func toggle_settings() -> void:
 func _connect_once(source: Object, signal_name: String, handler: Callable) -> void:
 	if not source.is_connected(signal_name, handler):
 		source.connect(signal_name, handler)
+
+
+## Popup đếm ngược pha GHI NHỚ của Blind Memory.
+## Popup không có nền mờ nên mê cung (đang hiện toàn bộ tường) vẫn nhìn rõ để ghi nhớ.
+## Nếu vì lý do nào đó không mở được popup thì báo `memorize_finished` luôn để ván chơi không bị kẹt.
+func show_memorize_countdown(seconds: int) -> void:
+	var popup := Popups.open(Popups.MEMORIZE, {"seconds": maxi(seconds, 1)})
+	if popup == null:
+		memorize_finished.emit()
+		return
+	_connect_once(popup, "finished", _emit_memorize_finished)
+
+
+func _emit_memorize_finished() -> void:
+	memorize_finished.emit()
 
 
 func _emit_continue() -> void:

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300" width="660" height="300">
+  <!-- Mẩu giấy GHI NHỚ cho popup đếm ngược (Blind Memory): giấy trắng + viền xanh + dòng kẻ ngang + lề đỏ.
+       Viền vẽ bằng 2 hình FILL lồng nhau -> không bị cắt nét ở mép viewBox. -->
+  <rect width="660" height="300" rx="26" fill="#6EA0C8"/>
+  <rect x="4" y="4" width="652" height="292" rx="22" fill="#FEFDFA"/>
+
+  <!-- Dòng kẻ ngang kiểu vở học sinh -->
+  <g stroke="#9FC0D6" stroke-width="2" opacity="0.5">
+    <line x1="44" y1="60" x2="648" y2="60"/>
+    <line x1="44" y1="100" x2="648" y2="100"/>
+    <line x1="44" y1="140" x2="648" y2="140"/>
+    <line x1="44" y1="180" x2="648" y2="180"/>
+    <line x1="44" y1="220" x2="648" y2="220"/>
+    <line x1="44" y1="260" x2="648" y2="260"/>
+  </g>
+
+  <!-- Lề đỏ sổ tay -->
+  <line x1="34" y1="4" x2="34" y2="296" stroke="#D84444" stroke-width="3"/>
+</svg>

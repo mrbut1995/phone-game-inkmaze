@@ -40,8 +40,9 @@ func set_maze(p_maze: MazeData) -> void:
 		anchor_controller.reset()
 	if undo_controller != null:
 		undo_controller.reset()
-	if game_mode_controller.game_mode != null and board_view != null:
-		game_mode_controller.game_mode.on_grid_setup(board_view, maze)
+	# LƯU Ý: KHÔNG gọi game_mode.on_grid_setup() ở đây — lúc này board chưa được dựng lại theo
+	# maze mới (setup_maze chạy sau), nên mọi thay đổi lên tường/ô sẽ bị ghi đè.
+	# GameController._start_floor() gọi on_grid_setup() SAU khi board đã setup xong.
 
 
 # ---------------------------------------------------------------------------
@@ -94,10 +95,12 @@ func try_move_to(pos: Vector2i) -> void:
 		last_hazard_to = pos
 		last_hazard_type = hazard_type
 
-		# Chế độ thua-ngay (Play/Fog hardcore...): giữ nguyên vị trí + vệt đường đã vẽ,
-		# chỉ chế độ Endless mới đưa nhân vật về điểm S.
+		# Chế độ thua-ngay (Play/Fog hardcore...): giữ nguyên vị trí + vệt đường đã vẽ.
+		# Mặc định các chế độ khác đưa nhân vật về điểm S; riêng Minesweeper
+		# (`respawn_on_hazard = false`) nổ tại chỗ, người chơi đứng nguyên ô hiện tại.
 		var instant_over: bool = game_mode_controller.game_mode.instant_game_over_on_hazard
-		if not instant_over:
+		var respawn: bool = game_mode_controller.game_mode.respawn_on_hazard and not instant_over
+		if respawn:
 			current_pos = maze.get_start()
 			path = [current_pos]
 
@@ -112,7 +115,7 @@ func try_move_to(pos: Vector2i) -> void:
 			if board_view.has_method("show_wall_hit"):
 				board_view.call("show_wall_hit", from_cell, pos)
 
-		if not instant_over and board_view.has_method("reset_to_start"):
+		if respawn and board_view.has_method("reset_to_start"):
 			board_view.call("reset_to_start")
 	elif eval_result.get("allowed", false):
 		var prev_pos := current_pos

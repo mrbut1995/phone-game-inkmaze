@@ -11,10 +11,8 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @onready var restart_btn: TextureButton = $Status/Restart
 @onready var level_label: Label = $Status/Title/LevelLabel
 @onready var subtitle_label: Label = $Status/Title/Subtitle
-
-@onready var step_val: Label = $Information/Step/Value
-@onready var time_val: Label = $Information/Time/Value
-@onready var floor_val: Label = $Information/Floor/Value
+## Khung chứa HUD của chế độ đang chơi (HUD được đổi bằng code — xem _apply_hud_for_mode)
+@onready var hud_host: Control = $Information
 
 @onready var tool_path_btn: TextureButton = $Button/Tool
 @onready var tool_wall_btn: TextureButton = $Button/Wall
@@ -31,6 +29,14 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @export var undo_controller: UndoController = null
 @export var hint_controller: HintController = null
 @export var game_mode_controller : GameModeController = null
+@export var challenge_controller : ChallengeController = null
+
+## HUD theo chế độ chơi — mỗi chế độ 1 scene HUD riêng, GameScene tự đổi (xem scripts/nodes/hud/base.gd)
+const HUD_LEVEL := preload("res://nodes/hud/level_mode.tscn")
+const HUD_DUNGEON := preload("res://nodes/hud/dungeon_mode.tscn")
+const HUD_MINESWEEP := preload("res://nodes/hud/minesweep_hud.tscn")
+const HUD_SUM_PATH := preload("res://nodes/hud/sum_path_hud.tscn")
+const HUD_BLIND_MEMORY := preload("res://nodes/hud/blind_memory_hud.tscn")
 
 #@export var game_mode : BaseGameMode
 
@@ -87,6 +93,8 @@ func _on_hint_pressed() -> void:
 
 ## API chuyển đổi chế độ chơi linh hoạt từ bên ngoài
 func switch_mode(mode_name: String, difficulty := "medium") -> void:
+	# Đổi khung HUD (Information) cho đúng chế độ trước khi ván mới bắt đầu
+	_apply_hud_for_mode(mode_name)
 	if game_mode_controller != null:
 		game_mode_controller.set_mode_by_name(mode_name, difficulty)
 		if game_controller != null:
@@ -114,3 +122,73 @@ func _start_floor_for(mode_name: String) -> int:
 				if override > 0:
 					return override
 			return 1
+
+
+# ---------------------------------------------------------------------------
+# HUD theo chế độ chơi
+# ---------------------------------------------------------------------------
+## Scene HUD ứng với từng chế độ (xem nodes/hud/*.tscn + scripts/nodes/hud/*.gd)
+func _hud_scene_for(mode_name: String) -> PackedScene:
+	match mode_name.to_lower():
+		"dungeon":
+			return HUD_DUNGEON
+		"minesweeper":
+			return HUD_MINESWEEP
+		"sum_path":
+			return HUD_SUM_PATH
+		"blind_memory":
+			return HUD_BLIND_MEMORY
+		_:
+			return HUD_LEVEL
+
+
+func _hud_class_for(mode_name: String) -> GDScript:
+	match mode_name.to_lower():
+		"dungeon":
+			return DungeonHUD
+		"minesweeper":
+			return MinesweepHUD
+		"sum_path":
+			return SumPathHUD
+		"blind_memory":
+			return BlindMemoryHUD
+		_:
+			return LevelHUD
+
+
+## Thay khung Information bằng HUD của chế độ đang chơi rồi gắn lại cho UIController /
+## ChallengeController (thẻ Thử thách nằm trong HUD nên phải trỏ lại node mới).
+func _apply_hud_for_mode(mode_name: String) -> void:
+	if hud_host == null or not is_inside_tree():
+		return
+	if hud_host.get_script() == _hud_class_for(mode_name):
+		_bind_hud_nodes()
+		return
+	var scene := _hud_scene_for(mode_name)
+	if scene == null:
+		return
+	var parent := hud_host.get_parent()
+	if parent == null:
+		return
+	var old_hud := hud_host
+	var new_hud := scene.instantiate() as BaseHUD
+	if new_hud == null:
+		return
+	parent.add_child(new_hud)
+	parent.move_child(new_hud, old_hud.get_index())
+	old_hud.queue_free()
+	hud_host = new_hud
+	# Khung (50,175)-(1030,424) đã được định nghĩa sẵn trong nodes/hud/base.tscn
+	UIAnim.play_slide_in(new_hud, Vector2(0, -15), 0.0, 0.25)
+	_bind_hud_nodes()
+
+
+## Gắn HUD hiện tại cho UIController (vẽ nội dung) và ChallengeController (thẻ Thử thách).
+func _bind_hud_nodes() -> void:
+	var hud := hud_host as BaseHUD
+	if hud == null:
+		return
+	if ui_controller != null:
+		ui_controller.set_hud(hud)
+	if challenge_controller != null:
+		challenge_controller.card = hud.challenge_card()

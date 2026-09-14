@@ -42,6 +42,13 @@ var _test_mode := true
 var _difficulty := "medium"
 var _floor := 1
 
+## Nhịp cập nhật dòng thống kê (giây). Đổi text mỗi frame làm font phải reshape
+## liên tục -> màn hình Debug bị giật; 0.2s (~5 lần/giây) là đủ để theo dõi.
+const STATS_REFRESH_SEC := 0.2
+
+var _stats_elapsed := 0.0
+var _stats_text := ""
+
 
 func _ready() -> void:
 	_sync_special_selection()
@@ -54,16 +61,24 @@ func _ready() -> void:
 	_build()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if _lbl_stats == null:
 		return
-	_lbl_stats.text = "FPS %d · MEM %.1f MB · Obj %d · Locale %s · Mode %s" % [
+	_stats_elapsed += delta
+	if _stats_elapsed < STATS_REFRESH_SEC:
+		return
+	_stats_elapsed = 0.0
+	# Số căn độ rộng cố định để bề ngang dòng không nhảy theo từng frame
+	var text := "FPS %3d · MEM %6.1f MB · Obj %6d · Locale %s · Mode %s" % [
 		Engine.get_frames_per_second(),
 		float(Performance.get_monitor(Performance.MEMORY_STATIC)) / 1048576.0,
 		int(Performance.get_monitor(Performance.OBJECT_COUNT)),
 		Loc.current(),
 		_current_mode(),
 	]
+	if text != _stats_text:
+		_stats_text = text
+		_lbl_stats.text = text
 
 
 # ---------------------------------------------------------------------------
@@ -72,7 +87,14 @@ func _process(_delta: float) -> void:
 func _build() -> void:
 	if _rows == null:
 		return
+	# Bỏ row cũ NGAY trong frame này: chỉ queue_free sẽ để row cũ + row mới
+	# cùng tồn tại 1 frame -> danh sách nhảy/nháy. Đồng thời giữ vị trí cuộn.
+	var scroll := _rows.get_parent() as ScrollContainer
+	var keep_scroll := 0
+	if scroll != null:
+		keep_scroll = scroll.scroll_vertical
 	for child in _rows.get_children():
+		_rows.remove_child(child)
 		child.queue_free()
 
 	_build_state()
@@ -83,6 +105,10 @@ func _build() -> void:
 	_build_save()
 	_build_popups()
 	_build_debug_flags()
+
+	if scroll != null:
+		scroll.scroll_vertical = keep_scroll
+		scroll.set_deferred("scroll_vertical", keep_scroll)
 
 
 func _build_state() -> void:

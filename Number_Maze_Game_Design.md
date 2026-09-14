@@ -102,7 +102,7 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 | **Play Mode** | Play · Chọn màn | Số tường quanh ô (0..4) | **Game Over ngay** (hồi sinh: quay lại bước trước đó) | Đến F an toàn, xếp hạng theo thời gian nhanh nhất |
 | **Dungeon Mode** | Dungeon | Số tường quanh ô (0..4) | Về lại S, trừ 1 bước | Vượt qua càng nhiều Floor càng tốt (chế độ DUY NHẤT có bộ đếm bước còn lại) |
 | Time Attack Maze | Daily Challenge | Số tường quanh ô (0..4) | Về lại S, mất thời gian | Đến F trước khi đồng hồ đếm ngược về 0 |
-| Minesweeper Maze | Daily Challenge | Số mìn quanh ô (0..8) | Đạp mìn: Nổ, lật ô, về S | Tránh các ô mìn ẩn, đến đích F an toàn |
+| Minesweeper Maze | Daily Challenge | Số mìn quanh ô (0..8) | Đạp mìn: **THUA NGAY** (nổ, đứng nguyên tại ô, hiện biểu tượng Bomb, giữ nguyên số) | Tránh các ô mìn ẩn, đến đích F an toàn |
 | Area Maze | Daily Challenge | Điểm số của ô (1..9) | Không có tường | Kéo nối Anchor chia các Area đạt đúng Target Score và chứa S & F |
 | Sum Path | Daily Challenge | Điểm số của ô (1..9) | Không có tường | Đến F với tổng điểm thỏa `SUM < / > / = Target` |
 | Countdown Cost | Daily Challenge | **Chi phí bước** của ô (số riêng, KHÔNG liên quan tường) | Về lại S, trừ theo ô đích | Đến F với ngân sách bước hạn chế, tối ưu chi phí |
@@ -117,7 +117,20 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 > - **Play Mode** (`matchup_level.svg`): thẻ **THỜI GIAN** 250×138 bên trái + thẻ **THỬ THÁCH** 720×156 bên phải.
 >   Thẻ THỬ THÁCH gồm cột tổng kết (**số Thử thách đã đạt** `x/3 ✓` + dòng `n ĐÃ HOÀN THÀNH`) và **3 dải thử thách** 490×42: **ô tích đỏ** = đã đạt (kèm nhãn đỏ `✓ ĐẠT`), **ô chờ tích** (nét đứt) = chưa đạt (kèm tiến độ ở góc phải).
 > - **Dungeon Mode** (`matchup_dungeon.svg`): thẻ **THỜI GIAN** 250×138 + thẻ **SỐ BƯỚC** 440×158 (viền đỏ, con số lớn 72px — KHÔNG còn dạng `14/20`) + thẻ **TẦNG** 250×138.
+> - **Minesweeper Maze**: thẻ **THỜI GIAN** 250×138 + thẻ **BOM CÒN LẠI** 440×158 — art `card_bomb.svg` (mẩu giấy viền ĐỎ + lề đỏ + dòng kẻ ngang kiểu vở) + **sticker icon_bomb** bên phải, con số `còn/tổng` mực đỏ 72px. Panel MISSION cũ được thay bằng thẻ Bomb.
+> - **Sum Path**: thẻ **THỜI GIAN** 250×138 + thẻ **TỔNG HIỆN TẠI** 440×158 (`card_sum.svg` — viền xanh đậm, mực xanh, dòng kẻ ngang) + **thẻ TOÁN TỬ 112×112** (`card_op.svg`, nằm CHÍNH GIỮA thẻ Tổng và thẻ Mục tiêu, đè lên mép 2 thẻ — dạng `12 = 23`, ký hiệu mực ĐỎ) + thẻ **MỤC TIÊU** 250×138 (chỉ hiện con số). Panel MISSION cũ được thay bằng 3 thẻ này.
+> - **Blind Memory**: thẻ **THỜI GIAN** 250×138 + thẻ **GHI NHỚ VỊ TRÍ TƯỜNG** 440×158 (`card_sum.svg`) — **KHÔNG có thẻ THỬ THÁCH**.
+> - **Chất liệu HUD (từ 2026-11):** mọi thẻ là **mẩu giấy trắng trên nền vở kẻ ngang** — viền màu (xanh `#6EA0C8` / xanh đậm `#3D83AE` / đỏ `#D84444`) + lề sổ tay cùng màu + **dòng kẻ ngang** `#9FC0D6` (opacity 0.5) như trang vở. Art dùng cho các HUD mới: `card_time_slip.svg` (250×138), `card_bomb.svg` (440×158), `card_sum.svg` (440×158), `card_op.svg` (112×112).
 > - Tiêu đề game: Dungeon = `DUNGEON MODE` (một dòng, số tầng đã chuyển xuống thẻ TẦNG); Play Mode = dòng phụ đỏ `PLAY MODE · CHƯƠNG n` + dòng lớn `MÀN xx`.
+
+> **Kiến trúc HUD (tách thành scene theo chế độ):** khung **Information** trong `scenes/game.tscn` không còn chứa sẵn mọi thẻ — mỗi chế độ có 1 scene HUD riêng, tất cả đều kế thừa `nodes/hud/base.tscn` (khung 980×249 tại `(50,175)`, script `scripts/nodes/hud/base.gd`):
+> - `nodes/hud/level_mode.tscn` → `LevelHUD` — thẻ **THỬ THÁCH** + **THỜI GIAN** (Play Mode và các bộ luật không có thẻ riêng).
+> - `nodes/hud/dungeon_mode.tscn` → `DungeonHUD` — **SỐ BƯỚC** + **THỜI GIAN** + **TẦNG**.
+> - `nodes/hud/minesweep_hud.tscn` → `MinesweepHUD` — **BOM CÒN LẠI** + **THỜI GIAN**.
+> - `nodes/hud/sum_path_hud.tscn` → `SumPathHUD` — **TỔNG HIỆN TẠI** + **TOÁN TỬ** (giữa) + **MỤC TIÊU** + **THỜI GIAN**.
+> - `nodes/hud/blind_memory_hud.tscn` → `BlindMemoryHUD` — **THỜI GIAN** + thẻ **GHI NHỚ VỊ TRÍ TƯỜNG** (không có thẻ Thử thách).
+>
+> `GameScene._apply_hud_for_mode()` thay node HUD đúng lúc đổi chế độ rồi gắn lại cho `UIController.set_hud()` (vẽ số liệu) và `ChallengeController.card` (chỉ LevelHUD có thẻ Thử thách). Mỗi HUD nhận dữ liệu qua `update_hud(ctx)` với các khoá `title / subtitle / steps_remaining / elapsed_time / floor_number / extra / mode`.
 ### 5.1. 🎯 Play Mode (Level Selection) *(đổi tên từ "Classic Maze" / "Level Maze")*
 
 > Đây là **chế độ chính, cửa vào đầu tiên của game** — thay cho khái niệm "chọn độ khó Dễ/Vừa/Khó" ở bản thiết kế cũ.
@@ -136,7 +149,7 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 - Áp dụng cơ chế **Endless Visible Wall**: tỉ lệ tường hiển thị (visible) giảm dần liên tục theo mỗi Floor càng lên cao, tiến tới 0% ở các floor sâu.
 - Đâm tường vô hình: trừ 1 bước, lộ tường thật, rung bàn cờ và đưa nhân vật về điểm S.
 - Đến đích F: cộng điểm (Base Score, Move Bonus, Time Bonus, Perfect Floor) và thưởng thêm số bước cho Floor tiếp theo.
-- ⚠️ **Dungeon Mode là chế độ DUY NHẤT có bộ đếm số bước còn lại** (thẻ **SỐ BƯỚC** + thẻ **TẦNG** trên HUD, theo mockup `matchup_dungeon.svg`; thẻ chỉ hiện con số bước còn lại, không có `/max`). Hết bước = thua Tầng; **hồi sinh = nhận thêm +3 bước** để đi tiếp ở đúng Tầng hiện tại (popup `popup_game_over_dungeon.svg`, xem 5.10).
+- ⚠️ **Dungeon Mode là chế độ DUY NHẤT có bộ đếm số bước còn lại** (thẻ **SỐ BƯỚC** + thẻ **TẦNG** trên HUD, theo mockup `matchup_dungeon.svg`; thẻ chỉ hiện con số bước còn lại, không có `/max`). Hết bước = thua Tầng; **hồi sinh = nhận thêm +3 bước** để đi tiếp ở đúng Tầng hiện tại, **giữ nguyên mê cung — vị trí nhân vật — đường đã vẽ — tường đã lộ** (không sinh lại màn, popup `popup_game_over_dungeon.svg`, xem 5.10).
 - Mỗi Tầng có **3 Thử thách**; hoàn thành 1 Thử thách = 1 Sao (tối đa 3 Sao) — xem 3.1.
 - Theo mockup `matchup_dungeon.svg`: màn chơi có thêm nút **UNDO** (hoàn tác bước vừa đi) và **GỢI Ý** (Hint) bên cạnh thao tác "VẼ ĐƯỜNG" (kéo từ tâm ô) và "GHI NHỚ" (nối 2 Anchor để đánh dấu tường nghi ngờ) — bổ sung so với bản thiết kế UX trước đó (mục 9).
 
@@ -145,9 +158,9 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 Nội dung luật của từng bộ **giữ nguyên như bản thiết kế trước**, chỉ khác về **cách truy cập**: không còn là mục chọn độc lập trên Main Screen, mà là **nội dung xoay vòng theo ngày** trong Daily Challenge.
 
 - **⏱️ Time Attack Maze** — Giới hạn thời gian tổng (60s/90s/120s) đếm ngược, không giới hạn số bước. Đâm tường về S mất thời gian. Hết giờ = Game Over.
-- **💣 Minesweeper Maze** — Số trên ô = số mìn trong 8 ô lân cận. S/F luôn an toàn, luôn tồn tại ít nhất 1 đường BFS không mìn. Đạp mìn: nổ, lật ô, đưa về S (mất thời gian và cơ hội đạt Challenge).
+- **💣 Minesweeper Maze** — Số trên ô = số mìn trong 8 ô lân cận. S/F luôn an toàn, luôn tồn tại ít nhất 1 đường BFS không mìn. **Đạp mìn = THUA NGAY** (giống Play Mode đâm tường): nhân vật **đứng nguyên tại ô vừa nổ** (không bị đưa về S), trừ 1 bước rồi mở **popup thua**; ô đó hiện **biểu tượng Bomb to ở giữa ô** (icon `game/icon_bomb.svg`) nhưng **giữ nguyên con số** — số nằm ĐÈ LÊN icon (có viền màu giấy cho dễ đọc). HUD hiện thẻ **BOM CÒN LẠI** dạng `còn/tổng` (giảm 1 mỗi quả đã nổ). Hồi sinh = quay lại ô ngay trước đó.
 - **📐 Area Maze** — Số trên ô là điểm (1..9). Kéo nối Anchor tạo Area khép kín đạt đúng Target Score, đúng số lượng Area yêu cầu, và có ít nhất 1 Area chứa cả S và F.
-- **➕ Sum Path** — Không có tường. Số trên ô là điểm (1..9). Thắng khi tới F với tổng điểm thỏa `SUM < / > / = Target`. Mỗi ô chỉ tính điểm 1 lần. Luôn đảm bảo tồn tại ít nhất 1 nghiệm đúng.
+- **➕ Sum Path** — Không có tường. Số trên ô là điểm (1..9). Thắng khi tới F với tổng điểm thỏa `SUM < / > / = Target`. Mỗi ô chỉ tính điểm 1 lần. Luôn đảm bảo tồn tại ít nhất 1 nghiệm đúng. **HUD hiện 3 thẻ theo đúng thứ tự `TỔNG HIỆN TẠI — TOÁN TỬ — MỤC TIÊU`** (thẻ TOÁN TỬ nhỏ 112×112 nằm chính giữa, đè lên mép 2 thẻ kia; MỤC TIÊU chỉ hiện con số) thay cho panel MISSION cũ.
 - **⏳ Countdown Cost** — **Số trên ô = CHI PHÍ BƯỚC khi bước vào ô đó**, hoàn toàn **không liên quan tới số tường quanh ô** (khác Play / Dungeon / Fog of War). Mọi ô trừ S/F đều có số ≥ 1 và luôn hiện số. Bước vào ô nào thì trừ đúng chi phí của ô đó; đâm tường: về S và trừ chi phí của ô đích vừa đâm vào. Ngân sách bước được tính đủ cho **đường đi rẻ nhất + khoảng dự phòng**, nên màn luôn thắng được nếu chọn đúng đường ít tốn kém; đi lệch qua các ô đắt sẽ hết bước.
 
   | Độ khó | Lưới | Chi phí mỗi ô | Dự phòng | Ngân sách tối thiểu |
@@ -157,7 +170,7 @@ Nội dung luật của từng bộ **giữ nguyên như bản thiết kế trư
   | Hard | 5×5 | 1..4 bước | +3 | 15 bước |
 
   > Ngân sách thực tế = `max(ngân sách tối thiểu, chi phí đường đi rẻ nhất + dự phòng)`, tính bằng Dijkstra trên trọng số là chi phí ô đích — xem `scripts/modes/countdown_cost_game_mode.gd` (`cheapest_path_cost()` / `_ensure_budget()`).
-- **🧠 Blind Memory Maze** — Không số. Hiện toàn bộ tường thật kèm Countdown trực quan (3..2..1..GO!), khóa tương tác lúc đếm. Sau đó tường ẩn, người chơi đi bằng trí nhớ. Tùy chọn Thường (về S) / Hardcore (thua ngay).
+- **🧠 Blind Memory Maze** — Không số. **Pha GHI NHỚ khi vào màn:** hiện **toàn bộ tường thật** + mở **popup giấy đếm ngược `3 → 2 → 1 → GO!`** (`nodes/popups/memory_countdown.tscn`, **không có nền mờ** nên vẫn nhìn rõ mê cung), **khoá tương tác** và **đồng hồ ĐỨNG YÊN** (thời gian ghi nhớ không tính vào giờ chơi). Hết đếm ngược: tường ẩn hoàn toàn, mở tương tác, đồng hồ bắt đầu chạy — người chơi đi bằng trí nhớ. **HUD riêng không có thẻ THỬ THÁCH** (`BlindMemoryHUD`): THỜI GIAN + thẻ nhắc GHI NHỚ. Tùy chọn Thường (về S) / Hardcore (thua ngay).
 - **🌫️ Fog of War Maze** — Có tường vô hình như Play Mode, nhưng chỉ hiện số ở các ô trong bán kính 1 quanh vị trí hiện tại; ô xa ẩn số. Tùy chọn Thường (về S) / Hardcore (thua ngay).
 
 ### 5.10. Popup kết quả & Hồi sinh khi thua (Revive)
@@ -168,7 +181,7 @@ Nội dung luật của từng bộ **giữ nguyên như bản thiết kế trư
 | **Dungeon Mode** | `popup_game_over_dungeon.svg` | Quãng đường đã đi · số lần va chạm tường vô hình · điểm an ủi tích lũy | **Bước còn lại** khi thua (ví dụ `HẾT BƯỚC — 00 / 20 BƯỚC`) | **Nhận thêm +3 bước để đi tiếp** |
 
 - **Play Mode — hồi sinh = Quay lại bước trước đó:** Play Mode thua vì **đâm vào tường vô hình**; hồi sinh đưa nhân vật **về đúng ô ngay trước bước vừa rồi** (giữ nguyên đường đã vẽ, đồng hồ vẫn chạy). Play Mode **không cộng thêm bước** vì vốn không có giới hạn bước.
-- **Dungeon Mode — hồi sinh = Thêm bước:** Dungeon thua vì **hết bước**; hồi sinh **cộng thêm +N bước** (`GameController.revive_bonus_steps`, mặc định **3** — dòng mô tả ở popup tự hiện đúng số này) và chơi tiếp ở **đúng Tầng hiện tại** (không reset về Tầng 1).
+- **Dungeon Mode — hồi sinh = Thêm bước (giữ nguyên màn đang chơi):** Dungeon thua vì **hết bước**; hồi sinh **cộng thêm +N bước** (`GameController.revive_bonus_steps`, mặc định **3** — dòng mô tả ở popup tự hiện đúng số này) và **chơi tiếp ngay tại chỗ**: mê cung, vị trí nhân vật, đường đã vẽ và các đoạn tường đã lộ **giữ nguyên 100%** (không sinh lại màn — sinh lại mê cung coi như chơi ván khác). Đồng hồ chạy tiếp.
 
 > **Quy ước nút "Chơi lại" (Retry) — phân biệt theo chế độ:**
 > | Chế độ | "Chơi lại" (popup thua · popup thắng · nút Restart trên HUD) | "Hồi sinh" |

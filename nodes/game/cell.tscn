@@ -5,6 +5,7 @@
 [ext_resource type="LabelSettings" uid="uid://d1q5q45o84b40" path="res://resources/settings/text/text_game_cell.tres" id="2_cjyvu"]
 [ext_resource type="Texture2D" uid="uid://dkbn5t5dxj5i0" path="res://assets/images/game/cell_pressed.svg" id="3_cobij"]
 [ext_resource type="Texture2D" uid="uid://b1vsvjb6jjpd0" path="res://assets/images/game/cell_disabled.svg" id="4_lli7j"]
+[ext_resource type="Texture2D" path="res://assets/images/game/icon_bomb.svg" id="5_bomb"]
 
 [node name="Cell" type="Control" unique_id=1607724359]
 layout_mode = 3
@@ -30,7 +31,22 @@ texture_focused = ExtResource("1_pne7a")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="Sprite" unique_id=2091843329]
+[node name="Bomb" type="TextureRect" parent="Sprite" index="0" unique_id=1305284501]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_bomb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Sprite" index="1" unique_id=2091843329]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

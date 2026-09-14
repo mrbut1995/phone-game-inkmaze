@@ -6,6 +6,99 @@
 # Replace SFX Placeholder to correct sound
 
 # ----------------------------------------------------------------------------
+# VÒNG SỬA 3 (2026-11): ART HUD MỚI + FIX BLIND MEMORY + POPUP ĐẾM NGƯỢC
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo phản hồi user ("HUD Minesweeper/SumPath xấu", "Blind Memory lỗi"):
+#     - Chất liệu HUD mới = mẩu giấy trắng trên vở kẻ ngang: viền màu + lề sổ tay + DÒNG KẺ NGANG
+#       (#9FC0D6, opacity 0.5). Art mới: assets/images/game/{card_time_slip,card_bomb,card_sum}.svg
+#       + vẽ lại card_op.svg. Bỏ hết `modulate` trên art thẻ (trước bị bẩn màu).
+#     - Minesweeper: thẻ BOM viền đỏ (card_bomb) + sticker icon_bomb bên phải + số mực đỏ 72px canh trái.
+#     - Sum Path: TỔNG = card_sum (viền xanh đậm) + thẻ TOÁN TỬ nằm giữa + MỤC TIÊU theo lề, ký hiệu `= / < / >`
+#       dùng mực ĐỎ; MỤC TIÊU chỉ hiện con số (dạng `12 = 23`).
+# [x] ĐÃ SỬA Blind Memory (bị crash "Invalid assignment ... on a base object of type 'Nil'"):
+#     - NGUYÊN NHÂN GỐC: GridController.set_maze() gọi game_mode.on_grid_setup() TRƯỚC khi board.setup_maze()
+#       dựng lại tường -> mọi thay đổi bị ghi đè, và label đếm ngược tự vẽ trong board bị setup_maze xoá
+#       -> tween ghi vào label đã free = crash. FIX: on_grid_setup() chuyển sang GameController._start_floor()
+#       gọi SAU grid_view.setup_maze() (Fog of War cũng được lợi).
+#     - Bỏ hẳn label đếm ngược trong board.gd; thay bằng Board.reveal_all_walls() / hide_all_walls().
+# [x] ĐÃ THÊM pha GHI NHỚ Blind Memory:
+#     - BaseGameMode.memorize_countdown_seconds (>0 = có pha ghi nhớ; BlindMemory = 3/2 giây);
+#       GameController._start_memorize_phase() dừng đồng hồ + hiện tường, _on_memorize_finished() ẩn tường
+#       + chạy đồng hồ (signal `memorize_finished` của UIController nối trong scenes/game.tscn).
+#     - Popup mới nodes/popups/memory_countdown.tscn (+ scripts/nodes/popups/memory_countdown.gd): mẩu giấy
+#       (assets/images/popups/paper_note_memory.svg + washi_tape) đếm 3-2-1-GO!, KHÔNG nền mờ để vẫn thấy tường,
+#       close_on_back = false. Đăng ký id `memory_countdown` trong PopupManager.POPUPS + Popups.MEMORIZE.
+#     - HUD mới cho Blind Memory: nodes/hud/blind_memory_hud.tscn + scripts/nodes/hud/blind_memory_hud.gd
+#       (class BlindMemoryHUD) — THỜI GIAN + thẻ GHI NHỚ (KHÔNG thẻ Thử thách); game.gd map "blind_memory".
+#     - Chuỗi mới: STR_HUD_BLIND_TITLE/HINT · STR_MEMORIZE_TITLE/HINT.
+#     - Test mới scripts/test_case/test_blind_memory.gd (HUD riêng, tường hiện hết + khoá tương tác + đồng hồ
+#       dừng + popup mở, hết đếm ngược thì ẩn tường + chạy đồng hồ từ 0). 19/19 bộ test PASS.
+#     - Đã render kiểm tra: HUD Minesweeper/Sum Path mới, popup GHI NHỚ + mê cung hiện tường, sau đếm ngược tường ẩn.
+
+# ----------------------------------------------------------------------------
+# VÒNG SỬA 2 (2026-11): ICON BOMB TO + ĐẠP MÌN THUA NGAY + PANEL TOÁN TỬ SUM PATH
+# ----------------------------------------------------------------------------
+# [x] ĐÃ SỬA theo phản hồi user:
+#     - Ô mìn: đổi icon sang `assets/images/game/icon_bomb.svg` (đúng icon user muốn), phóng to
+#       60% ô (anchors 0.2..0.8, giữ tỉ lệ) và đặt node Bomb TRƯỚC Label -> số trên ô vẽ ĐÈ LÊN
+#       icon. Thêm viền màu giấy (#FEFDFA, outline 8px) cho số khi có Bomb để vẫn đọc rõ
+#       (MazeCell._apply_bomb_text_outline; LabelSettings phải duplicate vì dùng chung).
+#     - Đạp mìn giờ THUA NGAY: `MinesweeperPathGameMode.instant_game_over_on_hazard = true`
+#       (grid_controller giữ nguyên vị trí + GameController._on_step_consumed -> _game_over()
+#       mở popup thua). Hồi sinh = quay lại ô trước đó.
+#     - HUD Sum Path: thêm thẻ TOÁN TỬ ở GIỮA thẻ TỔNG và thẻ MỤC TIÊU (dạng `12 = 23`):
+#       asset mới `assets/images/game/card_op.svg` 112x112 + node Operator (anchors 0.6776/0.2751/
+#       0.7918/0.7249, khai báo CUỐI để vẽ đè lên 2 thẻ) + `sum_path_hud.gd` đổ `mode.operator`;
+#       thẻ MỤC TIÊU chỉ còn con số (`str(mode.target_val)`).
+#     - Test `test_challenge_controller.gd`: kiểm panel TOÁN TỬ nằm giữa 2 thẻ + hiện đúng ký hiệu,
+#       MỤC TIÊU không chứa toán tử; đạp mìn -> assert `gc._run_active == false` + `Popups.has_open()`.
+#     - 18/18 bộ test PASS · render kiểm tra: số "1" đọc rõ trên icon bomb, HUD Sum Path có badge ">"/"<"/"=" ở giữa.
+#     - Design.md mục 5 đã cập nhật (bảng chế độ, bố cục HUD, chi tiết Minesweeper & Sum Path).
+
+# ----------------------------------------------------------------------------
+# HUD TÁCH SCENE THEO CHẾ ĐỘ + SỬA LUẬT MINESWEEPER + HỒI SINH ENDLESS (2026-11)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM: user tách khung "Information" thành các HUD riêng cho từng chế độ và yêu cầu
+#     GameScene/UIController/ChallengeController chạy được với kiến trúc mới.
+#     - nodes/hud/base.tscn: root "Hud" (Control, preset 0, khung 980x249 tại (50,175)) + base.gd
+#        (class_name BaseHUD: update_hud(ctx) · challenge_card() · set_time() · set_label_text() · format_time()).
+#        Mọi HUD kế thừa scene này nên chỉ cần khai báo thẻ bên trong.
+#     - HUD theo chế độ (đã đổi tên cho khớp nội dung — trước đây 2 file bị ngược tên nhau):
+#        nodes/hud/level_mode.tscn + scripts/nodes/hud/level_hud.gd   -> THỬ THÁCH + THỜI GIAN (LevelHUD)
+#        nodes/hud/dungeon_mode.tscn + dungeon_hud.gd                 -> SỐ BƯỚC + THỜI GIAN + TẦNG (DungeonHUD)
+#        nodes/hud/minesweep_hud.tscn + minesweep_hud.gd              -> BOM CÒN LẠI (còn/tổng) + THỜI GIAN
+#        nodes/hud/sum_path_hud.tscn + sum_path_hud.gd                -> TỔNG HIỆN TẠI + MỤC TIÊU (<,>,=) + THỜI GIAN
+#     - scripts/scenes/game.gd: thêm HUD_* preload + hud_host + @export challenge_controller;
+#        _hud_scene_for()/_hud_class_for()/_apply_hud_for_mode() (thay node, giữ index vẽ, slide-in)
+#        + _bind_hud_nodes() gắn HUD mới cho ui_controller.set_hud() và challenge_controller.card;
+#        switch_mode() gọi _apply_hud_for_mode() TRƯỚC start_new_run().
+#     - scripts/core/controllers/ui_controller.gd: bỏ apply_mode_layout() + các export thẻ HUD cũ
+#        (step_card/floor_card/challenge_card/step_val_label/time_val_label/floor_val_label) —
+#        thay bằng hud: BaseHUD + set_hud(); update_hud(..., extra_info, mode) giờ đóng gói ctx
+#        {title, subtitle, steps_remaining, elapsed_time, floor_number, extra, mode} cho HUD tự vẽ.
+#     - scenes/game.tscn: khung Information về đúng (50,175)-(1030,424) + nối challenge_controller.
+#     - Chuỗi mới: STR_HUD_BOMB ("BOMBS LEFT"/"BOMB CÒN LẠI") · STR_HUD_SUM ("CURRENT SUM"/"TỔNG HIỆN TẠI")
+#        · STR_HUD_TARGET ("TARGET"/"MỤC TIÊU") trong resources/localization/string_extra.csv.
+# [x] ĐÃ SỬA: Endless (Dungeon) hồi sinh TẠO LẠI màn — nay giữ nguyên mê cung + vị trí + đường đã vẽ
+#     + tường đã lộ, chỉ cộng `revive_bonus_steps`, chạy tiếp đồng hồ và bật lại tương tác
+#     (GameController.revive_run: bỏ _start_floor(), thêm timer_controller.resume() + set_interaction_enabled(true)).
+# [x] ĐÃ SỬA Minesweeper (user báo 3 lỗi):
+#     - Đạp mìn bị đưa về S -> thêm cờ `BaseGameMode.respawn_on_hazard` (mặc định true, Dungeon giữ nguyên);
+#        MinesweeperPathGameMode đặt false -> grid_controller chỉ teleport về S khi cờ này bật.
+#     - Mìn nổ LẶP LẠI mỗi lần đi vào -> evaluate_move chỉ hazard khi mìn CHƯA lộ; đi lại vào ô đã nổ hợp lệ.
+#     - Ô hiện chữ "X" ghi đè con số -> get_cell_text() bỏ nhánh "X", giữ số; thêm has_bomb_marker()/
+#        get_mines_left(); nodes/game/cell.tscn thêm node Bomb (icon_bomb.svg, góc trên-phải, ẩn mặc định)
+#        + MazeCell.set_bomb()/has_bomb(); board.gd _sync_bomb_marker() + show_mine_hit() đánh dấu Bomb.
+#     - HUD Minesweeper: thay panel MISSION bằng thẻ BOM CÒN LẠI `còn/tổng` (get_mines_left()/get_total_mines()).
+# [x] ĐÃ SỬA Debug Console bị giật: cập nhật dòng FPS/MEM/Obj theo nhịp 0.2s (thay vì mỗi frame, tránh
+#     reshape font liên tục) + số căn độ rộng cố định; _build() bỏ row cũ ngay trong frame (remove_child
+#     rồi queue_free) và giữ nguyên vị trí cuộn (Scroll.scroll_vertical + set_deferred).
+# [x] ĐÃ CẬP NHẬT: Number_Maze_Game_Design.md (mục 5 - bố cục HUD theo chế độ + kiến trúc HUD tách scene,
+#     luật Minesweeper, HUD Sum Path, hồi sinh Endless) · test_challenge_controller.gd (HUD theo chế độ,
+#     mìn nổ 1 lần, hồi sinh Endless giữ mê cung) · 18/18 test suite PASS · đã render kiểm tra mắt 4 HUD
+#     (tất cả nằm đúng khung (50,175) 980x249) + biểu tượng Bomb trên ô đã nổ.
+
+# ----------------------------------------------------------------------------
 # LOADING SCENE + CHUYỂN CẢNH DÙNG NODE KHAI BÁO SẴN (2026-09)
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM (2026-09): trước đây SceneTransition tự tạo Control + toàn bộ node con bằng code

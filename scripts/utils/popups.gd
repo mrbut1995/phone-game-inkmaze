@@ -17,6 +17,8 @@ const GAME_OVER_LEVEL := "game_over_level"
 const NEXT_FLOOR := "next_floor"
 const PAUSE := "pause"
 const LANGUAGE := "language"
+## Popup đếm ngược pha GHI NHỚ của Blind Memory (không có nền mờ — vẫn thấy tường)
+const MEMORIZE := "memory_countdown"
 
 
 static func _mgr() -> Node:

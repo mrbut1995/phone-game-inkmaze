@@ -21,6 +21,7 @@ const POPUPS := {
 	"next_floor": "res://nodes/popups/next_floor.tscn",
 	"pause": "res://nodes/popups/pause.tscn",
 	"language": "res://nodes/popups/language.tscn",
+	"memory_countdown": "res://nodes/popups/memory_countdown.tscn",
 }
 
 const HOST_NAME := "Popups"

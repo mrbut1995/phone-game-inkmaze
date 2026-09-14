@@ -20,6 +20,8 @@ func _init(p_difficulty := "normal") -> void:
 	instant_game_over_on_hazard = (p_difficulty == "hardcore")
 	initial_steps = 25
 	countdown_seconds = 3 if difficulty == "normal" else 2
+	# Pha GHI NHỚ: GameController hiện tường + mở popup đếm ngược rồi mới chạy đồng hồ
+	memorize_countdown_seconds = countdown_seconds
 
 
 func setup_floor(_floor_number: int) -> MazeData:
@@ -39,9 +41,11 @@ func get_cell_text(pos: Vector2i, maze: MazeData) -> String:
 	return ""
 
 
+## Hiện toàn bộ tường cho pha ghi nhớ. Phần đếm ngược do popup lo
+## (GameController._start_memorize_phase / UIController.show_memorize_countdown).
 func on_grid_setup(grid_view: Control, _maze: MazeData) -> void:
-	if grid_view != null and grid_view.has_method("reveal_all_walls_with_countdown"):
-		grid_view.reveal_all_walls_with_countdown(countdown_seconds)
+	if grid_view != null and grid_view.has_method("reveal_all_walls"):
+		grid_view.reveal_all_walls()
 
 
 func evaluate_move(from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> Dictionary:

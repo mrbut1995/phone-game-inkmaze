@@ -4,7 +4,8 @@ extends BaseGameMode
 ## Mode: Minesweeper Maze (Mê cung Dò Mìn).
 ## - Số trên ô là số mìn nằm trong 8 ô lân cận (0..8).
 ## - S và F luôn an toàn, bảo đảm luôn có ít nhất 1 đường BFS không mìn.
-## - Đạp mìn: Nổ, lật ô, trừ bước, về S.
+## - Đạp mìn: NỔ = THUA NGAY (không quay về S, không chơi tiếp) — ô vừa nổ giữ nguyên
+##   con số và hiện thêm biểu tượng Bomb (xem nodes/game/cell.tscn).
 ## ============================================================================
 
 var _mines: Dictionary = {}            # Vector2i -> bool
@@ -18,7 +19,11 @@ func _init() -> void:
 	mode_name = "Minesweeper Maze"
 	mode_description = "Dò mìn theo số lân cận, tìm đường an toàn từ S đến F."
 	is_endless = false
-	instant_game_over_on_hazard = false
+	## Đạp mìn = thua ngay (giống Play Mode đâm tường): grid_controller giữ nguyên vị trí,
+	## GameController._on_step_consumed() gọi _game_over() -> mở popup thua.
+	instant_game_over_on_hazard = true
+	## Đạp mìn KHÔNG bị đưa về S — nổ tại chỗ (dù đã thua-ngay, cờ này giữ hành vi rõ ràng).
+	respawn_on_hazard = false
 	initial_steps = 25
 
 
@@ -82,8 +87,7 @@ func get_cell_text(pos: Vector2i, maze: MazeData) -> String:
 		return "S"
 	if pos == maze.get_end():
 		return "F"
-	if _revealed_mines.has(pos):
-		return "X"
+	# Ô đã nổ mìn vẫn giữ nguyên con số (không ghi đè bằng X) — xem nodes/game/cell.tscn (Bomb)
 	var count: int = _neighbor_counts.get(pos, 0)
 	return "" if count == 0 else str(count)
 
@@ -93,6 +97,7 @@ func evaluate_move(from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> Dict
 	if not base_eval.get("allowed", false):
 		return base_eval
 
+	# Mìn luôn là hazard (đạp là thua ngay) — chỉ ghi nhận để HUD đếm "BOMB CÒN LẠI" + đánh dấu ô.
 	if _mines.get(to_pos, false):
 		_revealed_mines[to_pos] = true
 		return {
@@ -123,8 +128,18 @@ func get_total_mines() -> int:
 	return _total_mines
 
 
+## Số mìn CHƯA nổ (đã trừ những ô đã lộ diện) — HUD hiện "BOMB: còn/tổng".
+func get_mines_left() -> int:
+	return maxi(_total_mines - _revealed_mines.size(), 0)
+
+
+## Ô này đã nổ mìn chưa (Board vẽ biểu tượng Bomb lên ô đó).
+func has_bomb_marker(pos: Vector2i) -> bool:
+	return _revealed_mines.has(pos)
+
+
 func get_hud_extra_info() -> String:
-	return "MÌN: %d" % _total_mines
+	return "BOMB: %d/%d" % [get_mines_left(), _total_mines]
 
 
 func _generate_safe_path(size: int, start_pos: Vector2i, end_pos: Vector2i) -> Array[Vector2i]:

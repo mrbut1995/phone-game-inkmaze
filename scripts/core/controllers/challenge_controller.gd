@@ -12,7 +12,8 @@ extends Node
 ## 16 loại thử thách: xem ChallengeTypes (id · nhãn · loại tham số).
 ## Thử thách do LevelData khai báo qua `challenge_types` + `challenge_params` (mảng song song).
 ##
-## HUD: panel "THỬ THÁCH" (Information/Challenge trong scenes/game.tscn) hiển thị trạng thái sống.
+## HUD: panel "THỬ THÁCH" nằm trong HUD của chế độ (node Challenge của
+## nodes/hud/level_mode.tscn) — GameScene gắn node đó vào `card` mỗi lần đổi chế độ.
 ## Popup thua/kết quả lấy dữ liệu qua rows() (danh sách thử thách + trạng thái) và stars().
 ## ============================================================================
 
@@ -33,7 +34,7 @@ const COLOR_LIVE := Color(0.70980394, 0.38431373, 0.101960786, 1)
 const COLOR_IDLE := Color(0.44313726, 0.54509807, 0.61960787, 1)
 const COLOR_NAME := Color(0.13333334, 0.29803923, 0.42745098, 1)
 
-## Thẻ THỬ THÁCH trên HUD (Information/Challenge) — gán trong scenes/game.tscn
+## Thẻ THỬ THÁCH trên HUD — GameScene._bind_hud_nodes() gán theo HUD của chế độ đang chơi
 @export var card: Control = null
 
 ## Ngưỡng mặc định của màn/tầng đang chơi

@@ -11,6 +11,12 @@ var mode_description: String = "Vượt tháp mê cung tường vô hình bất 
 
 var is_endless: bool = true
 var instant_game_over_on_hazard: bool = false
+## Đạp vào ô nguy hiểm (tường ẩn / mìn...) thì có bị đưa về ô xuất phát không.
+## `false` = ở lại ô hiện tại (chỉ trừ bước) — dùng cho Minesweeper.
+var respawn_on_hazard: bool = true
+## Số giây đếm ngược pha "ghi nhớ" trước khi vào chơi (Blind Memory). 0 = không có pha này.
+## Khi > 0: GameController hiện toàn bộ tường + mở popup đếm ngược, đồng hồ đứng yên cho tới khi hết.
+var memorize_countdown_seconds: int = 0
 var initial_steps: int = 15
 var difficulty: String = "medium"  # "easy", "medium", "hard", "normal", "hardcore"
 

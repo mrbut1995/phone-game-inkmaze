@@ -124,6 +124,11 @@ func get_hud_extra_info() -> String:
 	return "TỔNG: %d %s %d" % [current_sum, operator, target_val]
 
 
+## Chuỗi mục tiêu hiển thị trên HUD (VD "= 24", "> 18").
+func get_target_text() -> String:
+	return "%s %d" % [operator, target_val]
+
+
 func _generate_valid_path(size: int, start_pos: Vector2i, end_pos: Vector2i) -> Array[Vector2i]:
 	var current := start_pos
 	var path: Array[Vector2i] = [current]

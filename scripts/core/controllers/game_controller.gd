@@ -23,6 +23,8 @@ var game_state: GameState = null
 var _pending_bonus := 0
 var _floor_finished := false
 var _run_active := false
+## Đang ở pha GHI NHỚ (Blind Memory): đồng hồ dừng, tường hiện, popup đếm ngược đang chạy
+var _memorize_active := false
 ## Dữ liệu đầu vào để chấm Thử thách (tái dùng, không cấp phát mỗi frame)
 var _challenge_ctx := ChallengeContext.new()
 
@@ -53,8 +55,7 @@ func start_new_run(start_floor := 1) -> void:
 	var mode := game_mode_controller.game_mode
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-		# Dungeon Mode: BƯỚC CÒN + ĐIỂM SỐ · các chế độ khác: thẻ THỬ THÁCH
-		ui_controller.apply_mode_layout(mode != null and mode.is_endless)
+		# HUD theo chế độ do GameScene quyết định (xem GameScene._apply_hud_for_mode)
 
 	if timer_controller != null:
 		if mode is TimeAttackGameMode:
@@ -75,10 +76,16 @@ func start_new_run(start_floor := 1) -> void:
 
 
 func _start_floor(floor_number: int) -> void:
-	var maze := floor_controller.setup_floor(floor_number, game_mode_controller.game_mode)
+	var mode := game_mode_controller.game_mode
+	var maze := floor_controller.setup_floor(floor_number, mode)
 	grid_controller.set_maze(maze)
 	if grid_view != null and grid_view.has_method("setup_maze"):
-		grid_view.call("setup_maze", maze, game_mode_controller.game_mode)
+		grid_view.call("setup_maze", maze, mode)
+
+	# Mode cần can thiệp lên board (Blind Memory hiện tường, Fog of War mở sương) phải chạy SAU khi
+	# board đã dựng lại theo maze mới — chạy trước sẽ bị setup_maze() ghi đè (lỗi cũ của Blind Memory).
+	if mode != null and grid_view != null:
+		mode.on_grid_setup(grid_view, maze)
 
 	_floor_finished = false
 	if game_state != null:
@@ -94,6 +101,36 @@ func _start_floor(floor_number: int) -> void:
 	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
 		grid_view.call("set_interaction_enabled", true)
 
+	_update_hud()
+
+	# Blind Memory: pha GHI NHỚ — hiện toàn bộ tường + popup đếm ngược, đồng hồ đứng yên tới khi hết
+	if mode != null and mode.memorize_countdown_seconds > 0:
+		_start_memorize_phase(mode.memorize_countdown_seconds)
+
+
+## Pha GHI NHỚ (Blind Memory): dừng đồng hồ, hiện toàn bộ tường, chạy popup đếm ngược trước khi vào chơi.
+## Popup không có nền mờ nên mê cung vẫn nhìn rõ để người chơi ghi nhớ.
+func _start_memorize_phase(seconds: int) -> void:
+	_memorize_active = true
+	if timer_controller != null:
+		timer_controller.pause()
+	if grid_view != null and grid_view.has_method("reveal_all_walls"):
+		grid_view.call("reveal_all_walls")
+	if ui_controller != null:
+		ui_controller.show_memorize_countdown(seconds)
+	else:
+		_on_memorize_finished()
+
+
+## Hết đếm ngược ghi nhớ: ẩn tường, mở lại tương tác và cho đồng hồ chạy tiếp
+func _on_memorize_finished() -> void:
+	if not _memorize_active:
+		return
+	_memorize_active = false
+	if grid_view != null and grid_view.has_method("hide_all_walls"):
+		grid_view.call("hide_all_walls")
+	if timer_controller != null:
+		timer_controller.resume()
 	_update_hud()
 
 
@@ -132,7 +169,8 @@ func _update_hud() -> void:
 		game_state.steps_remaining,
 		game_state.elapsed_time,
 		game_state.floor_number,
-		extra_info
+		extra_info,
+		game_mode_controller.game_mode
 	)
 	# Cập nhật trạng thái sống của các thử thách (chưa chốt Sao khi đang chơi)
 	if challenge_controller != null:
@@ -369,9 +407,16 @@ func revive_run() -> void:
 
 	var endless := game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless
 	if endless:
+		# Endless (Dungeon): hồi sinh GIỮ NGUYÊN mê cung + vị trí + đường đã đi,
+		# chỉ cộng thêm bước và cho chơi tiếp (trước đây tạo lại tầng mới).
 		game_state.add_bonus_steps(revive_bonus_steps)
+		if timer_controller != null:
+			timer_controller.resume()
+		if grid_view != null and grid_view.has_method("set_interaction_enabled"):
+			grid_view.call("set_interaction_enabled", true)
 		_run_active = true
-		_start_floor(game_state.floor_number)
+		_floor_finished = false
+		_update_hud()
 		return
 
 	# Level Mode: lùi nhân vật về ô ngay trước bước vừa rồi
