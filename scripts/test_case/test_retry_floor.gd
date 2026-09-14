@@ -1,10 +1,10 @@
 extends SceneTree
 ## ============================================================================
 ## Test Case: RETRY / CHƠI LẠI (bug 2026-09)
-## - Bấm "Thử lại" ở popup Game Over phải chơi lại ĐÚNG màn hiện tại,
+## - Play/Level (và các mode KHÔNG endless): "Thử lại" phải chơi lại ĐÚNG màn hiện tại,
 ##   không được nhảy về màn 1-1.
-## - Nút Restart trên HUD và nút "Chơi lại" ở popup thắng màn cũng vậy.
-## - Dungeon (endless): chơi lại đúng tầng đang chơi, không về tầng 1.
+## - Dungeon (endless): "Chơi lại" = mở VÁN MỚI -> bắt đầu từ TẦNG 1.
+## - Hồi sinh: Dungeon = +N bước và ở lại ĐÚNG tầng hiện tại (không reset về tầng 1).
 ## - Chơi lại phải reset bước/điểm theo thiết kế của màn (LevelData).
 ## ============================================================================
 
@@ -101,7 +101,7 @@ func _init() -> void:
 		await create_timer(0.5).timeout
 		failures += _expect_floor(controller, TEST_LEVEL, "Sau khi bam CHOI LAI (popup thang man)")
 
-	# --- 5. Dungeon (endless): chơi lại đúng TẦNG đang chơi ---
+	# --- 5. Dungeon (endless): "Chơi lại" = ván mới -> về TẦNG 1 ---
 	Popups.close_all()
 	game_scene.call("switch_mode", "dungeon")
 	await process_frame
@@ -113,7 +113,50 @@ func _init() -> void:
 	failures += _expect_floor(controller, 3, "Dungeon sau 2 tang")
 	controller.call("_on_retry_requested")
 	await process_frame
-	failures += _expect_floor(controller, 3, "Sau khi choi lai o Dungeon")
+	failures += _expect_floor(controller, 1, "Sau khi choi lai o Dungeon (van moi)")
+	if not controller.game_mode.is_endless:
+		print("[FAIL] Sau khi choi lai, che do phai la Dungeon (endless)")
+		failures += 1
+
+	# --- 6. Dungeon: hồi sinh = +N bước và Ở LẠI đúng tầng ---
+	controller.call("_on_continue_requested")   # choi lai xong -> thang tang 1 -> tang 2
+	await process_frame
+	var floor_before: int = controller.game_state.floor_number
+	var steps_before: int = controller.game_state.steps_remaining
+	var bonus: int = int(controller.get("revive_bonus_steps"))
+	controller.call("revive_run")
+	await process_frame
+	if controller.game_state.floor_number != floor_before:
+		print("[FAIL] Hoi sinh Dungeon phai o lai tang %d (dang o %d)"
+			% [floor_before, controller.game_state.floor_number])
+		failures += 1
+	var steps_after: int = controller.game_state.steps_remaining
+	if steps_after != steps_before + bonus:
+		print("[FAIL] Hoi sinh Dungeon phai cong %d buoc: %d -> %d"
+			% [bonus, steps_before, steps_after])
+		failures += 1
+	else:
+		print("[CHECK] Hoi sinh Dungeon: tang %d giu nguyen, buoc %d -> %d (+%d)."
+			% [floor_before, steps_before, steps_after, bonus])
+
+	# --- 7. Popup thua Dungeon: dòng mô tả nút HỒI SINH hiện đúng số bước của tham số ---
+	var over_popup: Node = (load("res://nodes/popups/gameover.tscn") as PackedScene).instantiate()
+	root.add_child(over_popup)
+	await process_frame
+	over_popup.call("open", {
+		"floor": 2, "progress": 40, "wall_hits": 0, "score": 120,
+		"steps_left": 0, "steps_max": 15, "revive_steps": 8,
+	})
+	await process_frame
+	var desc := over_popup.call("piece", "Banner/Desc") as Label
+	if desc == null or not desc.text.contains("8"):
+		print("[FAIL] Dong mo ta nut HOI SINH phai hien so buoc 8 (dang la '%s')"
+			% (desc.text if desc != null else "<null>"))
+		failures += 1
+	else:
+		print("[CHECK] Popup thua hien dung so buoc hoi sinh: '%s'" % desc.text)
+	over_popup.queue_free()
+	await process_frame
 
 	# --- Kết luận ---
 	Popups.close_all()
@@ -129,7 +172,7 @@ func _init() -> void:
 		quit(1)
 		return
 
-	print("\n[SUCCESS] Retry / Choi lai luon dung man - tang hien tai!\n")
+	print("\n[SUCCESS] Retry dung theo che do (Level: dung man - Dungeon: ve tang 1) + hoi sinh dung!\n")
 	quit(0)
 
 

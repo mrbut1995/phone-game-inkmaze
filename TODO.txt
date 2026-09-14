@@ -322,10 +322,21 @@
 #     - Nguyên nhân: scripts/core/controllers/game_controller.gd::_on_retry_requested()
 #       gọi `start_new_run()` không tham số -> dùng mặc định start_floor = 1
 #     - Sửa: thêm `GameController.current_floor()` (ưu tiên game_state.floor_number,
-#       fallback GameManager.current_level khi mode không endless) và gọi `start_new_run(current_floor())`
+#       fallback GameManager.current_level khi mode không endless)
 #       Nhánh fallback trong `_on_continue_requested` (không có GameManager) cũng đổi theo
-#     - Áp dụng cho: popup Game Over · nút Restart trên HUD · "Chơi lại" ở popup thắng màn · Dungeon
 #     - Test hồi quy: scripts/test_case/test_retry_floor.gd (đã verify test FAIL khi bỏ fix)
+#
+# [x] ĐÃ SỬA (2026-09) — PHÂN BIỆT RETRY THEO CHẾ ĐỘ (bug: Dungeon chơi lại vẫn ở tầng hiện tại):
+#     - Dungeon (endless): "Chơi lại" = mở VÁN MỚI -> `start_new_run(1)` (về TẦNG 1).
+#     - Play/Level + các mode khác: "Chơi lại" = chơi lại ĐÚNG màn đang chơi.
+#     - Code: `GameController.retry_start_floor()` (endless -> 1 · còn lại -> current_floor()),
+#       `_on_retry_requested()` dùng hàm này; áp dụng cho popup Thua · popup Thắng · nút Restart trên HUD.
+#     - HỒI SINH (revive): Dungeon = +`revive_bonus_steps` bước và Ở LẠI đúng tầng;
+#       Level/Play = quay lại bước trước đó (undo, không cộng bước).
+#       Số bước hồi sinh nay là @export `revive_bonus_steps` (mặc định 3) chỉnh trong Inspector;
+#       dòng mô tả nút HỒI SINH ở popup dùng chuỗi có tham số `STR_REVIVE_DESC_STEPS` (+{0}).
+#     - Test: test_retry_floor.gd — Dungeon sau 2 tầng -> chơi lại -> tầng 1;
+#       Dungeon hồi sinh -> giữ tầng + cộng đúng `revive_bonus_steps`.
 #
 # [x] ĐÃ LÀM (2026-09): Quy ước "số tường trong ô" — TƯỜNG VIỀN NGOÀI KHÔNG tính vào ô
 #     - scripts/core/maze_data.gd::_compute_wall_counts(): bỏ cạnh thuộc viền board

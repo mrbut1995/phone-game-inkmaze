@@ -1,36 +1,30 @@
-[gd_scene load_steps=7 format=3 uid="uid://gpu3hvws2a5j"]
+[gd_scene format=3 uid="uid://gpu3hvws2a5j"]
 
-[ext_resource type="Script" path="res://scripts/nodes/common/scene_transition.gd" id="1_transition"]
-[ext_resource type="Texture2D" path="res://icon.svg" id="2_logo"]
+[ext_resource type="Script" uid="uid://beu82xphg17i6" path="res://scripts/nodes/common/scene_transition.gd" id="1_transition"]
+[ext_resource type="Texture2D" uid="uid://dol12u34jktb3" path="res://icon.svg" id="2_logo"]
 
 [sub_resource type="Gradient" id="GradShadowLeft"]
-offsets = PackedFloat32Array(0, 1)
 colors = PackedColorArray(0.12, 0.1, 0.08, 0.38, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="TexShadowLeft"]
 gradient = SubResource("GradShadowLeft")
-width = 64
-height = 64
 fill_from = Vector2(0, 0.5)
 fill_to = Vector2(1, 0.5)
 
 [sub_resource type="Gradient" id="GradShadowRight"]
-offsets = PackedFloat32Array(0, 1)
 colors = PackedColorArray(0, 0, 0, 0, 0.12, 0.1, 0.08, 0.38)
 
 [sub_resource type="GradientTexture2D" id="TexShadowRight"]
 gradient = SubResource("GradShadowRight")
-width = 64
-height = 64
 fill_from = Vector2(0, 0.5)
 fill_to = Vector2(1, 0.5)
 
-[node name="Loading" type="CanvasLayer"]
-layer = 128
+[node name="Loading" type="CanvasLayer" unique_id=1836600101]
 process_mode = 3
+layer = 128
 script = ExtResource("1_transition")
 
-[node name="TransitionRoot" type="Control" parent="."]
+[node name="TransitionRoot" type="Control" parent="." unique_id=2081642660]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,7 +33,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="InputBlocker" type="Control" parent="TransitionRoot"]
+[node name="InputBlocker" type="Control" parent="TransitionRoot" unique_id=1630297414]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,7 +42,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PaperPage" type="Control" parent="TransitionRoot"]
+[node name="PaperPage" type="Control" parent="TransitionRoot" unique_id=9938624]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -58,7 +52,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PaperBg" type="ColorRect" parent="TransitionRoot/PaperPage"]
+[node name="PaperBg" type="ColorRect" parent="TransitionRoot/PaperPage" unique_id=91376094]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -68,7 +62,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.965, 0.945, 0.915, 1)
 
-[node name="ShadowLeft" type="TextureRect" parent="TransitionRoot/PaperPage"]
+[node name="ShadowLeft" type="TextureRect" parent="TransitionRoot/PaperPage" unique_id=878971299]
 layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.0
@@ -77,7 +71,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("TexShadowLeft")
 
-[node name="ShadowRight" type="TextureRect" parent="TransitionRoot/PaperPage"]
+[node name="ShadowRight" type="TextureRect" parent="TransitionRoot/PaperPage" unique_id=987592050]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -89,7 +83,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("TexShadowRight")
 
-[node name="Watermark" type="TextureRect" parent="TransitionRoot/PaperPage"]
+[node name="Watermark" type="TextureRect" parent="TransitionRoot/PaperPage" unique_id=1439752868]
 modulate = Color(0.133, 0.298, 0.427, 0.15)
 layout_mode = 1
 anchors_preset = -1
@@ -108,7 +102,7 @@ texture = ExtResource("2_logo")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="InkCircleDrawer" type="Control" parent="TransitionRoot"]
+[node name="InkCircleDrawer" type="Control" parent="TransitionRoot" unique_id=2094697202]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -118,7 +112,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="FadeRect" type="ColorRect" parent="TransitionRoot"]
+[node name="FadeRect" type="ColorRect" parent="TransitionRoot" unique_id=364417070]
 visible = false
 layout_mode = 1
 anchors_preset = 15

@@ -5,8 +5,9 @@ extends Node
 ## ============================================================================
 
 const INITIAL_STEPS := 15
-## Số bước thưởng khi xem quảng cáo hồi sinh (khớp mockup popup_game_over_dungeon.svg)
-const REVIVE_BONUS_STEPS := 3
+## Số bước thưởng khi xem quảng cáo hồi sinh ở Dungeon Mode (chỉnh được trong Inspector).
+## Popup thua lấy giá trị này để hiện đúng trong dòng mô tả nút HỒI SINH.
+@export var revive_bonus_steps := 3
 
 var game_state: GameState = null
 
@@ -273,6 +274,7 @@ func _game_over() -> void:
 			"score": game_state.score,
 			"steps_left": game_state.steps_remaining,
 			"steps_max": game_state.max_steps,
+			"revive_steps": revive_bonus_steps,
 			"stars": stars,
 			"challenges": challenge_rows,
 			"time": floor_time,
@@ -308,12 +310,20 @@ func _on_continue_requested() -> void:
 func _on_retry_requested() -> void:
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-	# Chơi lại ĐÚNG màn đang chơi: trước đây gọi start_new_run() không tham số
-	# -> luôn nhảy về màn 1 (bug báo cáo từ người chơi).
-	start_new_run(current_floor())
+	start_new_run(retry_start_floor())
 
 
-## Màn/tầng hiện tại của ván đang chơi (Retry / Chơi lại luôn dùng giá trị này).
+## Tầng/màn bắt đầu khi người chơi bấm "Chơi lại" (popup thua · popup thắng · nút Restart HUD):
+## - Dungeon (endless): **TẦNG 1** — chơi lại là mở ván mới hoàn toàn (không giữ tầng hiện tại).
+## - Play/Level và các mode khác: chơi lại **ĐÚNG màn đang chơi** (bug cũ: luôn nhảy về màn 1).
+func retry_start_floor() -> int:
+	if game_mode_controller != null and game_mode_controller.game_mode != null \
+			and game_mode_controller.game_mode.is_endless:
+		return 1
+	return current_floor()
+
+
+## Màn/tầng hiện tại của ván đang chơi (các mode KHÔNG endless dùng giá trị này khi chơi lại).
 func current_floor() -> int:
 	if game_state != null and game_state.floor_number >= 1:
 		return game_state.floor_number
@@ -357,7 +367,7 @@ func revive_run() -> void:
 
 	var endless := game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless
 	if endless:
-		game_state.add_bonus_steps(REVIVE_BONUS_STEPS)
+		game_state.add_bonus_steps(revive_bonus_steps)
 		_run_active = true
 		_start_floor(game_state.floor_number)
 		return

@@ -34,6 +34,11 @@ func _on_open() -> void:
 			int(data.get("steps_max", 0)),
 		])
 
+	# Dòng mô tả nút HỒI SINH: số bước thưởng do GameController truyền sang (mặc định 3)
+	var revive_desc := piece("Banner/Desc") as Label
+	if revive_desc != null:
+		revive_desc.text = tr("STR_REVIVE_DESC_STEPS").format([int(data.get("revive_steps", 3))])
+
 	bind_button("Panel/Content/Banner/ReviveBtn", _on_revive_pressed)
 	bind_button("Panel/Content/MenuBtn", _on_menu_pressed)
 	bind_button("Panel/Content/RetryBtn", _on_retry_pressed)
