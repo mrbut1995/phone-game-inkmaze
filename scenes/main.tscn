@@ -13,6 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://dlg2c12rsejkc" path="res://assets/images/main/card_mode_daily_normal.svg" id="7_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://dihgfo2w73ydi" path="res://assets/images/main/btn_menu_leaderboard.svg" id="8_choun"]
 [ext_resource type="Texture2D" uid="uid://dgrfwbbakoy1" path="res://assets/images/main/btn_menu_rules.svg" id="9_ya4ey"]
+[ext_resource type="Texture2D" path="res://assets/images/main/btn_menu_utility_normal.svg" id="21_btn_utility"]
+[ext_resource type="Texture2D" path="res://assets/images/main/btn_menu_utility_pressed.svg" id="22_btn_utility_p"]
+[ext_resource type="Texture2D" path="res://assets/images/main/btn_menu_utility_focus.svg" id="23_btn_utility_f"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/icon_medal.svg" id="24_icon_medal"]
 [ext_resource type="Texture2D" uid="uid://cgddw6scnxi63" path="res://assets/images/main/btn_menu_settings.svg" id="10_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://bouakghotecup" path="res://assets/images/main/card_mode_dungeon_focus.svg" id="11_0ld40"]
 [ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="11_ya4ey"]
@@ -421,6 +425,9 @@ offset_bottom = -0.670166
 metadata/_edit_use_anchors_ = true
 
 [node name="Leaderboard" type="TextureButton" parent="Panel/Other" index="0" unique_id=1366981905]
+ignore_texture_size = true
+stretch_mode = 5
+custom_minimum_size = Vector2(180, 146)
 layout_mode = 2
 texture_normal = ExtResource("8_choun")
 texture_pressed = ExtResource("8_choun")
@@ -460,6 +467,9 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Rule" type="TextureButton" parent="Panel/Other" index="1" unique_id=1591510809]
+ignore_texture_size = true
+stretch_mode = 5
+custom_minimum_size = Vector2(180, 146)
 layout_mode = 2
 texture_normal = ExtResource("9_ya4ey")
 texture_pressed = ExtResource("9_ya4ey")
@@ -499,12 +509,57 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Settings" type="TextureButton" parent="Panel/Other" index="2" unique_id=488535435]
+ignore_texture_size = true
+stretch_mode = 5
+custom_minimum_size = Vector2(180, 146)
 layout_mode = 2
 texture_normal = ExtResource("10_eb6dy")
 texture_pressed = ExtResource("10_eb6dy")
 texture_hover = ExtResource("10_eb6dy")
 texture_disabled = ExtResource("10_eb6dy")
 texture_focused = ExtResource("10_eb6dy")
+
+[node name="Archivement" type="TextureButton" parent="Panel/Other" index="3" unique_id=1784702193]
+ignore_texture_size = true
+stretch_mode = 5
+custom_minimum_size = Vector2(180, 146)
+layout_mode = 2
+texture_normal = ExtResource("21_btn_utility")
+texture_pressed = ExtResource("22_btn_utility_p")
+texture_hover = ExtResource("21_btn_utility")
+texture_disabled = ExtResource("21_btn_utility")
+texture_focused = ExtResource("23_btn_utility_f")
+
+[node name="Icon" type="TextureRect" parent="Panel/Other/Archivement" index="0" unique_id=1008134821]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35191306
+anchor_top = 0.13092309
+anchor_right = 0.62200004
+anchor_bottom = 0.60800004
+offset_left = 0.05999756
+offset_top = -0.020002365
+offset_right = -0.060012817
+offset_bottom = -0.040008545
+texture = ExtResource("24_icon_medal")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/Other/Archivement" index="1" unique_id=1484837883]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09095658
+anchor_top = 0.6465536
+anchor_right = 0.91300005
+anchor_bottom = 0.823
+offset_left = 0.07998657
+offset_top = -0.052017212
+offset_right = 0.010009766
+offset_bottom = 0.009941101
+text = "STR_BTN_ARCHIVEMENT"
+theme_type_variation = &"OtherLabel"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="TextureRect" parent="Panel/Other/Settings" index="0" unique_id=638917422]
 layout_mode = 1

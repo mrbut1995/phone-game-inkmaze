@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44" height="44">
+  <!-- Ổ khoá nét mực cho danh hiệu ẩn (mockup/archivement_scene.svg) -->
+  <g fill="none" stroke="#7A8F9B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 14 22 L 14 12 A 8 8 0 0 1 30 12 L 30 22"/>
+  </g>
+  <rect x="9" y="21" width="26" height="20" rx="5" fill="#DFDCD5" stroke="#7A8F9B" stroke-width="2.5"/>
+  <circle cx="22" cy="30" r="2.4" fill="#7A8F9B"/>
+</svg>

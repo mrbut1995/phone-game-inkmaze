@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_calendar.svg" id="1_cd1ym"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_iypl1"]
+
+[resource]
+script = ExtResource("2_iypl1")
+id = "dl_days_7"
+category = "daily"
+title = "Tuần Lễ Chăm Chỉ"
+description = "Hoàn thành 7 ngày Daily Challenge"
+icon = ExtResource("1_cd1ym")
+stat = "daily_days"
+target = 7
+unit = "Ngày"
+reward_coins = 150
+points = 25

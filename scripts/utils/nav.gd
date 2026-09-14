@@ -15,6 +15,7 @@ const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
+const SCENE_ARCHIVEMENT := "res://scenes/archivement.tscn"
 
 
 static func change_scene(path: String) -> void:
@@ -45,6 +46,11 @@ static func goto_daily() -> void:
 
 static func goto_settings() -> void:
 	change_scene(SCENE_SETTINGS)
+
+
+## Sổ tay thành tựu (danh hiệu)
+static func goto_archivement() -> void:
+	change_scene(SCENE_ARCHIVEMENT)
 
 
 ## Màn hình debug (chỉ dùng khi phát triển)

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_trophy.svg" id="1_3s0i4"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_l7jn5"]
+
+[resource]
+script = ExtResource("2_l7jn5")
+id = "dn_score_5000"
+category = "dungeon"
+title = "Thợ Săn Điểm"
+description = "Đạt 5.000 điểm trong một ván Dungeon"
+icon = ExtResource("1_3s0i4")
+stat = "dungeon_best_score"
+target = 5000
+unit = "Điểm"
+reward_coins = 150
+points = 25

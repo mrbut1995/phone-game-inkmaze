@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/common/star_highlight.svg" id="1_cvmtm"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_tixac"]
+
+[resource]
+script = ExtResource("2_tixac")
+id = "dl_stars_30"
+category = "daily"
+title = "Kho Sao Daily"
+description = "Thu thập 30 sao từ các ngày Daily Challenge"
+icon = ExtResource("1_cvmtm")
+stat = "daily_stars_total"
+target = 30
+unit = "Sao"
+reward_coins = 200
+points = 30

@@ -17,6 +17,7 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @onready var btn_leaderboard: TextureButton = $Panel/Other/Leaderboard
 @onready var btn_rules: TextureButton = $Panel/Other/Rule
 @onready var btn_settings: TextureButton = $Panel/Other/Settings
+@onready var btn_archivement: TextureButton = $Panel/Other/Archivement
 @onready var stamp_panel: Control = $Panel/Stamp
 @onready var stamp_label: Label = $Panel/Stamp/Label
 
@@ -38,13 +39,16 @@ func _setup_buttons() -> void:
 		btn_daily.pressed.connect(_on_daily_pressed)
 		UIAnim.attach_press_bounce(btn_daily)
 
-	if btn_settings != null:
-		btn_settings.pressed.connect(_on_settings_pressed)
-		UIAnim.attach_press_bounce(btn_settings)
 	if btn_leaderboard != null:
 		UIAnim.attach_press_bounce(btn_leaderboard)
 	if btn_rules != null:
 		UIAnim.attach_press_bounce(btn_rules)
+	if btn_settings != null:
+		btn_settings.pressed.connect(_on_settings_pressed)
+		UIAnim.attach_press_bounce(btn_settings)
+	if btn_archivement != null:
+		btn_archivement.pressed.connect(_on_archivement_pressed)
+		UIAnim.attach_press_bounce(btn_archivement)
 
 
 func _setup_animations() -> void:
@@ -74,6 +78,7 @@ func _setup_animations() -> void:
 	if btn_leaderboard != null: others.append(btn_leaderboard)
 	if btn_rules != null: others.append(btn_rules)
 	if btn_settings != null: others.append(btn_settings)
+	if btn_archivement != null: others.append(btn_archivement)
 
 	for i in others.size():
 		UIAnim.play_fade_in(others[i], 0.14 + 0.05 * i, 0.22)
@@ -115,7 +120,11 @@ func _on_settings_pressed() -> void:
 	Nav.goto_settings()
 
 
-## Con dau phien ban: "VER x.y.z" (lay tu AppManager, dung String key)
+func _on_archivement_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
+	Nav.goto_archivement()
+
+
 func _refresh_stamp() -> void:
 	if stamp_label == null:
 		return

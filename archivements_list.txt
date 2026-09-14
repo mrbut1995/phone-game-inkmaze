@@ -1,0 +1,175 @@
+DANH SÁCH DANH HIỆU — SỔ TAY THÀNH TỰU (Achievement)
+=========================================================
+Tổng: 28 danh hiệu | Thưởng tối đa: 5260 xu | Điểm tối đa: 810 AP
+
+Cách thêm danh hiệu mới: tạo 1 file .tres (ArchivementData) trong
+res://resources/archivements/  -> game tự quét, không cần sửa code.
+Trường: id, category (levels/dungeon/daily/special), title, description,
+icon, stat, target, unit, reward_coins, points, secret (tuỳ chọn).
+Số liệu `stat` hợp lệ đọc từ: scripts/manager/ArchivementManager.gd
+(mục STAT_DEFAULTS + các stat DẪN XUẤT trong stat_value()).
+
+Quy tắc trạng thái trong Sổ tay:
+  ĐÃ ĐẠT (xanh lá)   : đủ điều kiện + đã bấm NHẬN  -> hiện dấu mộc + xu
+  NHẬN THƯỞNG (cam)  : đủ điều kiện, chưa bấm NHẬN -> có nút NHẬN +N
+  ĐANG LÀM (xanh dương): chưa đủ điều kiện -> chip 'Thưởng: +N'
+  KHÓA / ẨN (xám)     : danh hiệu secret chưa đạt -> hiện ổ khoá, ??? / ???
+
+--------------------------------------------------------
+MÀN CHƠI (PLAY MODE) — 7 danh hiệu | 1010 xu | 170 AP
+--------------------------------------------------------
+• Người Vẽ Đường
+    id      : lv_clear_10
+    điều kiện: Số màn đã qua >= 10 Màn
+    mô tả   : Vượt qua 10 màn chơi
+    thưởng  : 100 xu · 20 AP
+• Bậc Thầy Mê Cung
+    id      : lv_clear_25
+    điều kiện: Số màn đã qua >= 25 Màn
+    mô tả   : Vượt qua 25 màn chơi
+    thưởng  : 200 xu · 30 AP
+• Nhà Thám Hiểm Tập Sự
+    id      : lv_first_step
+    điều kiện: Số màn đã qua >= 1 Màn
+    mô tả   : Vượt qua màn chơi đầu tiên ở Play Mode
+    thưởng  : 50 xu · 10 AP
+• Không Một Lỗi
+    id      : lv_perfect_10
+    điều kiện: Số màn đạt 3 sao >= 10 Màn
+    mô tả   : Đạt 3 sao ở 10 màn chơi
+    thưởng  : 200 xu · 30 AP
+• Hoàn Hảo Ba Lần
+    id      : lv_perfect_3
+    điều kiện: Số màn đạt 3 sao >= 3 Màn
+    mô tả   : Đạt 3 sao ở 3 màn chơi
+    thưởng  : 90 xu · 20 AP
+• Bộ Sưu Tập Sao
+    id      : lv_stars_15
+    điều kiện: Tổng số sao ở Play Mode >= 15 Sao
+    mô tả   : Thu thập 15 ngôi sao từ các màn chơi
+    thưởng  : 120 xu · 20 AP
+• Bầu Trời Sao
+    id      : lv_stars_45
+    điều kiện: Tổng số sao ở Play Mode >= 45 Sao
+    mô tả   : Thu thập 45 ngôi sao từ các màn chơi
+    thưởng  : 250 xu · 40 AP
+
+--------------------------------------------------------
+DUNGEON (ENDLESS) — 7 danh hiệu | 1550 xu | 235 AP
+--------------------------------------------------------
+• Chúa Tể Ngục Tối
+    id      : dn_floor_15
+    điều kiện: Tầng sâu nhất từng tới (Dungeon) >= 15 Tầng
+    mô tả   : Tiến sâu tới Tầng 15 trong Dungeon Mode
+    thưởng  : 200 xu · 35 AP
+• Vực Sâu Không Đáy
+    id      : dn_floor_30
+    điều kiện: Tầng sâu nhất từng tới (Dungeon) >= 30 Tầng
+    mô tả   : Tiến sâu tới Tầng 30 trong Dungeon Mode
+    thưởng  : 350 xu · 50 AP
+• Kẻ Chinh Phục Ngục Tối
+    id      : dn_floor_5
+    điều kiện: Tầng sâu nhất từng tới (Dungeon) >= 5 Tầng
+    mô tả   : Tiến sâu tới Tầng 5 trong Dungeon Mode
+    thưởng  : 100 xu · 20 AP
+• Máy Ủi Ngục Tối
+    id      : dn_floors_100
+    điều kiện: Tổng số tầng đã vượt (Dungeon) >= 100 Tầng
+    mô tả   : Vượt qua tổng cộng 100 Tầng ở Dungeon Mode
+    thưởng  : 300 xu · 40 AP
+• Người Dọn Tầng
+    id      : dn_floors_25
+    điều kiện: Tổng số tầng đã vượt (Dungeon) >= 25 Tầng
+    mô tả   : Vượt qua tổng cộng 25 Tầng ở Dungeon Mode
+    thưởng  : 150 xu · 25 AP
+• Huyền Thoại Dungeon
+    id      : dn_score_20000
+    điều kiện: Điểm cao nhất 1 ván Dungeon >= 20000 Điểm
+    mô tả   : Đạt 20.000 điểm trong một ván Dungeon
+    thưởng  : 300 xu · 40 AP
+• Thợ Săn Điểm
+    id      : dn_score_5000
+    điều kiện: Điểm cao nhất 1 ván Dungeon >= 5000 Điểm
+    mô tả   : Đạt 5.000 điểm trong một ván Dungeon
+    thưởng  : 150 xu · 25 AP
+
+--------------------------------------------------------
+DAILY CHALLENGE — 7 danh hiệu | 1350 xu | 205 AP
+--------------------------------------------------------
+• Một Tháng Kiên Trì
+    id      : dl_days_30
+    điều kiện: Số ngày Daily đã hoàn thành >= 30 Ngày
+    mô tả   : Hoàn thành 30 ngày Daily Challenge
+    thưởng  : 300 xu · 40 AP
+• Tuần Lễ Chăm Chỉ
+    id      : dl_days_7
+    điều kiện: Số ngày Daily đã hoàn thành >= 7 Ngày
+    mô tả   : Hoàn thành 7 ngày Daily Challenge
+    thưởng  : 150 xu · 25 AP
+• Ngày Đầu Tiên
+    id      : dl_first_day
+    điều kiện: Số ngày Daily đã hoàn thành >= 1 Ngày
+    mô tả   : Hoàn thành ngày Daily Challenge đầu tiên
+    thưởng  : 50 xu · 10 AP
+• Kho Sao Daily
+    id      : dl_stars_30
+    điều kiện: Tổng sao Daily >= 30 Sao
+    mô tả   : Thu thập 30 sao từ các ngày Daily Challenge
+    thưởng  : 200 xu · 30 AP
+• Chuỗi 14 Ngày
+    id      : dl_streak_14
+    điều kiện: Chuỗi ngày Daily liên tiếp >= 14 Ngày
+    mô tả   : Duy trì chuỗi 14 ngày liên tiếp
+    thưởng  : 350 xu · 50 AP
+• Chuỗi Ngày Kỷ Luật
+    id      : dl_streak_3
+    điều kiện: Chuỗi ngày Daily liên tiếp >= 3 Ngày
+    mô tả   : Duy trì chuỗi 3 ngày liên tiếp
+    thưởng  : 100 xu · 20 AP
+• Chuỗi 7 Ngày
+    id      : dl_streak_7
+    điều kiện: Chuỗi ngày Daily liên tiếp >= 7 Ngày
+    mô tả   : Duy trì chuỗi 7 ngày liên tiếp
+    thưởng  : 200 xu · 30 AP
+
+--------------------------------------------------------
+ĐẶC BIỆT (TOÀN CỤC / ẨN) — 7 danh hiệu | 1350 xu | 200 AP
+--------------------------------------------------------
+• Nhà Sưu Tầm Danh Hiệu
+    id      : sp_claimed_10
+    điều kiện: Số danh hiệu đã nhận thưởng >= 10 Danh hiệu
+    mô tả   : Nhận thưởng 10 danh hiệu
+    thưởng  : 100 xu · 20 AP
+• Kẻ Liều Lĩnh
+    id      : sp_hardcore_3
+    điều kiện: Số ván thắng Hardcore >= 3 Ván
+    mô tả   : Thắng 3 màn ở chế độ Hardcore (Blind / Fog of War)
+    thưởng  : 200 xu · 30 AP
+• Tự Lực Cánh Sinh
+    id      : sp_no_hint_5
+    điều kiện: Số ván thắng không dùng gợi ý >= 5 Ván
+    mô tả   : Thắng 5 màn/tầng mà KHÔNG dùng gợi ý
+    thưởng  : 100 xu · 20 AP
+• Đi Không Quay Lại
+    id      : sp_no_undo_10
+    điều kiện: Số ván thắng không dùng hoàn tác >= 10 Ván
+    mô tả   : Thắng 10 màn/tầng mà KHÔNG dùng hoàn tác
+    thưởng  : 150 xu · 25 AP
+• Thành Tựu Ẩn • Lời Thề Ngục Tối  [ẨN]
+    id      : sp_secret_dungeon_50
+    điều kiện: Tổng số tầng đã vượt (Dungeon) >= 50 Tầng
+    mô tả   : Vượt qua tổng cộng 50 Tầng ở Dungeon Mode
+    thưởng  : 250 xu · 30 AP
+• Thành Tựu Ẩn • Người Giữ Bầu Trời  [ẨN]
+    id      : sp_secret_star_60
+    điều kiện: Tổng số sao ở Play Mode >= 60 Sao
+    mô tả   : Thu thập 60 sao từ tất cả các chế độ
+    thưởng  : 300 xu · 40 AP
+• Lão Luyện
+    id      : sp_wins_50
+    điều kiện: Tổng số ván thắng >= 50 Ván
+    mô tả   : Thắng tổng cộng 50 màn/tầng ở mọi chế độ
+    thưởng  : 250 xu · 35 AP
+
+=========================================================
+TỔNG CỘNG: 28 danh hiệu · 5260 xu · 810 AP

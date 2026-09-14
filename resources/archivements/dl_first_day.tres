@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_calendar.svg" id="1_que4g"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_8mte1"]
+
+[resource]
+script = ExtResource("2_8mte1")
+id = "dl_first_day"
+category = "daily"
+title = "Ngày Đầu Tiên"
+description = "Hoàn thành ngày Daily Challenge đầu tiên"
+icon = ExtResource("1_que4g")
+stat = "daily_days"
+unit = "Ngày"

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_steps.svg" id="1_xxrmy"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_gbxm7"]
+
+[resource]
+script = ExtResource("2_gbxm7")
+id = "dn_floors_25"
+category = "dungeon"
+title = "Người Dọn Tầng"
+description = "Vượt qua tổng cộng 25 Tầng ở Dungeon Mode"
+icon = ExtResource("1_xxrmy")
+stat = "dungeon_floors_total"
+target = 25
+unit = "Tầng"
+reward_coins = 150
+points = 25

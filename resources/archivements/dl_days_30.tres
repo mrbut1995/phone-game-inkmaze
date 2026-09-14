@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_bell.svg" id="1_ik3yi"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_1het8"]
+
+[resource]
+script = ExtResource("2_1het8")
+id = "dl_days_30"
+category = "daily"
+title = "Một Tháng Kiên Trì"
+description = "Hoàn thành 30 ngày Daily Challenge"
+icon = ExtResource("1_ik3yi")
+stat = "daily_days"
+target = 30
+unit = "Ngày"
+reward_coins = 300
+points = 40

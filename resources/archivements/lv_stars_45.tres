@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/common/star_highlight.svg" id="1_axe6p"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_ih6i4"]
+
+[resource]
+script = ExtResource("2_ih6i4")
+id = "lv_stars_45"
+title = "Bầu Trời Sao"
+description = "Thu thập 45 ngôi sao từ các màn chơi"
+icon = ExtResource("1_axe6p")
+stat = "level_stars_total"
+target = 45
+unit = "Sao"
+reward_coins = 250
+points = 40

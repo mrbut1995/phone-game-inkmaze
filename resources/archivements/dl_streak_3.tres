@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_flame.svg" id="1_3m3qk"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_85aak"]
+
+[resource]
+script = ExtResource("2_85aak")
+id = "dl_streak_3"
+category = "daily"
+title = "Chuỗi Ngày Kỷ Luật"
+description = "Duy trì chuỗi 3 ngày liên tiếp"
+icon = ExtResource("1_3m3qk")
+stat = "daily_streak"
+target = 3
+unit = "Ngày"
+reward_coins = 100
+points = 20

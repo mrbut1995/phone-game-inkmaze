@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_steps.svg" id="1_33hnw"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_7np12"]
+
+[resource]
+script = ExtResource("2_7np12")
+id = "lv_clear_10"
+title = "Người Vẽ Đường"
+description = "Vượt qua 10 màn chơi"
+icon = ExtResource("1_33hnw")
+stat = "levels_cleared"
+target = 10
+unit = "Màn"
+reward_coins = 100
+points = 20

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_check_green.svg" id="1_0dmk4"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_mqhq2"]
+
+[resource]
+script = ExtResource("2_mqhq2")
+id = "lv_perfect_10"
+title = "Không Một Lỗi"
+description = "Đạt 3 sao ở 10 màn chơi"
+icon = ExtResource("1_0dmk4")
+stat = "level_perfect"
+target = 10
+unit = "Màn"
+reward_coins = 200
+points = 30

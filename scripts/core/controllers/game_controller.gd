@@ -203,6 +203,7 @@ func _complete_floor() -> void:
 		_play_sfx_delayed(Sfx.FLOOR_BONUS, 1.1)
 
 	_mark_daily_completed_if_needed()
+	_report_to_archivements(true, floor_time)
 
 	# Chốt 3 thử thách của màn/tầng -> số Sao (1 thử thách hoàn thành = 1 Sao)
 	var challenge_rows: Array[Dictionary] = []
@@ -265,6 +266,7 @@ func _game_over() -> void:
 		challenge_controller.refresh(_challenge_ctx)
 		challenge_rows = challenge_controller.rows()
 		stars = challenge_controller.stars()
+	_report_to_archivements(false, floor_time)
 
 	if ui_controller != null:
 		ui_controller.show_game_over({
@@ -405,6 +407,26 @@ func _on_home_requested() -> void:
 		gm.call("go_to_main_menu")
 	else:
 		Nav.goto_main()
+
+
+## Báo kết quả màn/tầng cho Sổ tay thành tựu (Archivement) — thắng hoặc thua.
+## Số liệu tích luỹ (tầng sâu nhất, số ván thắng, gợi ý/hoàn tác...) do ArchivementManager ghi nhận.
+func _report_to_archivements(won: bool, floor_time: float) -> void:
+	if game_state == null or game_mode_controller.game_mode == null:
+		return
+	var mode := game_mode_controller.game_mode
+	Archivement.notify_run_result({
+		"mode_id": mode.mode_id,
+		"won": won,
+		"endless": mode.is_endless,
+		"floor": game_state.floor_number,
+		"score": game_state.score,
+		"elapsed": floor_time,
+		"wall_hits": game_state.floor_wall_hits,
+		"hints_used": game_state.hints_used,
+		"undos_used": game_state.undos_used,
+		"hardcore": str(mode.difficulty).to_lower() == "hardcore",
+	})
 
 
 # ---------------------------------------------------------------------------

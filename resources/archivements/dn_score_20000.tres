@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_trophy.svg" id="1_brubn"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_51p8g"]
+
+[resource]
+script = ExtResource("2_51p8g")
+id = "dn_score_20000"
+category = "dungeon"
+title = "Huyền Thoại Dungeon"
+description = "Đạt 20.000 điểm trong một ván Dungeon"
+icon = ExtResource("1_brubn")
+stat = "dungeon_best_score"
+target = 20000
+unit = "Điểm"
+reward_coins = 300
+points = 40

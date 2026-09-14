@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_reset.svg" id="1_skmr5"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_38iha"]
+
+[resource]
+script = ExtResource("2_38iha")
+id = "sp_no_undo_10"
+category = "special"
+title = "Đi Không Quay Lại"
+description = "Thắng 10 màn/tầng mà KHÔNG dùng hoàn tác"
+icon = ExtResource("1_skmr5")
+stat = "wins_no_undo"
+target = 10
+unit = "Ván"
+reward_coins = 150
+points = 25

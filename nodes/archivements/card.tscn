@@ -1,0 +1,216 @@
+[gd_scene load_steps=16 format=3 uid="uid://cachv0rds8ydt"]
+
+[ext_resource type="Script" path="res://scripts/nodes/archivements/card.gd" id="1_card"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/card_progress.svg" id="2_bg_progress"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/card_claimed.svg" id="3_bg_claimed"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/card_claimable.svg" id="4_bg_claimable"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/card_locked.svg" id="5_bg_locked"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/badge_ring.svg" id="6_ring"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/bar_track_sm.svg" id="7_track"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/bar_fill.svg" id="8_fill"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/stamp_claimed.svg" id="9_stamp"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/chip_reward.svg" id="10_chip"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/icon_coin.svg" id="11_coin"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/btn_claim_normal.svg" id="12_claim_n"]
+[ext_resource type="Texture2D" path="res://assets/images/archivements/btn_claim_pressed.svg" id="13_claim_p"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="14_theme"]
+
+[node name="Card" type="Control"]
+custom_minimum_size = Vector2(710, 170)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 710.0
+offset_bottom = 170.0
+theme = ExtResource("14_theme")
+script = ExtResource("1_card")
+
+[node name="Bg" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 710.0
+offset_bottom = 170.0
+mouse_filter = 2
+texture = ExtResource("2_bg_progress")
+
+[node name="IconRing" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 53.0
+offset_right = 97.0
+offset_bottom = 117.0
+mouse_filter = 2
+texture = ExtResource("6_ring")
+
+[node name="Icon" type="TextureRect" parent="IconRing"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 49.0
+offset_bottom = 49.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 26.0
+offset_right = 545.0
+offset_bottom = 58.0
+text = "Tên danh hiệu"
+theme_type_variation = &"AchCardTitle"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Desc" type="Label" parent="."]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 60.0
+offset_right = 545.0
+offset_bottom = 84.0
+text = "Mô tả điều kiện đạt danh hiệu"
+theme_type_variation = &"AchCardDesc"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Bar" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_left = 115.0
+offset_top = 104.0
+offset_right = 475.0
+offset_bottom = 114.0
+mouse_filter = 2
+
+[node name="Track" type="TextureRect" parent="Bar"]
+layout_mode = 0
+offset_right = 360.0
+offset_bottom = 10.0
+mouse_filter = 2
+texture = ExtResource("7_track")
+
+[node name="Fill" type="TextureRect" parent="Bar"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 9.0
+mouse_filter = 2
+texture = ExtResource("8_fill")
+
+[node name="Progress" type="Label" parent="."]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 120.0
+offset_right = 545.0
+offset_bottom = 144.0
+text = "Tiến độ: 0 / 1 Màn"
+theme_type_variation = &"AchCardProgress"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Stamp" type="Control" parent="."]
+rotation = -0.13962634
+layout_mode = 0
+offset_left = 560.0
+offset_top = 48.0
+offset_right = 685.0
+offset_bottom = 122.0
+pivot_offset = Vector2(62.5, 37)
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Stamp"]
+layout_mode = 0
+offset_right = 125.0
+offset_bottom = 74.0
+mouse_filter = 2
+texture = ExtResource("9_stamp")
+
+[node name="State" type="Label" parent="Stamp"]
+layout_mode = 0
+offset_right = 125.0
+offset_bottom = 40.0
+text = "ĐÃ ĐẠT"
+theme_type_variation = &"AchStampBig"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Reward" type="Label" parent="Stamp"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 40.0
+offset_right = 96.0
+offset_bottom = 64.0
+text = "+0"
+theme_type_variation = &"AchStampSmall"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Coin" type="TextureRect" parent="Stamp"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 45.0
+offset_right = 122.0
+offset_bottom = 67.0
+mouse_filter = 2
+texture = ExtResource("11_coin")
+
+[node name="ClaimButton" type="TextureButton" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 520.0
+offset_top = 60.0
+offset_right = 685.0
+offset_bottom = 112.0
+focus_mode = 0
+texture_normal = ExtResource("12_claim_n")
+texture_pressed = ExtResource("13_claim_p")
+texture_hover = ExtResource("12_claim_n")
+texture_focused = ExtResource("12_claim_n")
+
+[node name="Coin" type="TextureRect" parent="ClaimButton"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 15.0
+offset_right = 38.0
+offset_bottom = 37.0
+mouse_filter = 2
+texture = ExtResource("11_coin")
+
+[node name="Label" type="Label" parent="ClaimButton"]
+layout_mode = 0
+offset_left = 42.0
+offset_right = 158.0
+offset_bottom = 52.0
+mouse_filter = 2
+text = "NHẬN +0"
+theme_type_variation = &"AchClaim"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Chip" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 545.0
+offset_top = 65.0
+offset_right = 680.0
+offset_bottom = 107.0
+mouse_filter = 2
+texture = ExtResource("10_chip")
+
+[node name="Label" type="Label" parent="Chip"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 9.0
+offset_right = 103.0
+offset_bottom = 33.0
+text = "Thưởng: +0"
+theme_type_variation = &"AchChip"
+vertical_alignment = 1
+
+[node name="Coin" type="TextureRect" parent="Chip"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 10.0
+offset_right = 127.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("11_coin")

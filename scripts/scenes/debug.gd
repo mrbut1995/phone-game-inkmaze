@@ -93,6 +93,7 @@ func _build_navigate() -> void:
 	_add_action("Select Level", "scenes/levels.tscn", func() -> void: Nav.goto_levels())
 	_add_action("Daily Challenge", "scenes/daily.tscn", func() -> void: Nav.goto_daily())
 	_add_action("Settings", "scenes/settings.tscn", func() -> void: Nav.goto_settings())
+	_add_action("Badge Book", "scenes/archivement.tscn", func() -> void: Nav.goto_archivement())
 	_add_action("Dungeon run", "DungeonGameMode - tầng 1", func() -> void: _gm_call("start_dungeon"))
 
 

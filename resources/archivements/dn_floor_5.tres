@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_castle.svg" id="1_tbtrr"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_ol020"]
+
+[resource]
+script = ExtResource("2_ol020")
+id = "dn_floor_5"
+category = "dungeon"
+title = "Kẻ Chinh Phục Ngục Tối"
+description = "Tiến sâu tới Tầng 5 trong Dungeon Mode"
+icon = ExtResource("1_tbtrr")
+stat = "dungeon_best_floor"
+target = 5
+unit = "Tầng"
+reward_coins = 100
+points = 20

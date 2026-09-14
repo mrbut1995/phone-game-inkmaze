@@ -23,6 +23,7 @@ func _init() -> void:
 	print("[INFO] btn_leaderboard pos.x: %f" % main_scene.btn_leaderboard.position.x)
 	print("[INFO] btn_rules pos.x: %f" % main_scene.btn_rules.position.x)
 	print("[INFO] btn_settings pos.x: %f" % main_scene.btn_settings.position.x)
+	print("[INFO] btn_archivement pos.x: %f" % main_scene.btn_archivement.position.x)
 
 	assert(main_scene.btn_play.position.y < main_scene.btn_dungeon.position.y,
 		"btn_dungeon phai nam duoi btn_play, khong duoc de chong len nhau")
@@ -33,6 +34,17 @@ func _init() -> void:
 		"btn_rules phai nam ben phai btn_leaderboard")
 	assert(main_scene.btn_rules.position.x < main_scene.btn_settings.position.x,
 		"btn_settings phai nam ben phai btn_rules")
+	assert(main_scene.btn_settings.position.x < main_scene.btn_archivement.position.x,
+		"btn_archivement (So tay thanh tuu) phai nam ben phai btn_settings")
+
+	# 4 nut trong hang Other phai cung kich thuoc (khong bi le)
+	var other_box := main_scene.get_node_or_null("Panel/Other") as Control
+	if other_box != null:
+		for child in other_box.get_children():
+			var button := child as TextureButton
+			if button == null or button.name == "Archivement":
+				continue
+			assert(button.size.x > 0.0, "Nut %s phai co kich thuoc" % button.name)
 
 	print("\n[SUCCESS] Cac button va the tren Main Scene da duoc xep dung vi tri, khong bi de chong len nhau!\n")
 	main_scene.queue_free()

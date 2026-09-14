@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_trophy.svg" id="1_wojss"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_pdtav"]
+
+[resource]
+script = ExtResource("2_pdtav")
+id = "sp_claimed_10"
+category = "special"
+title = "Nhà Sưu Tầm Danh Hiệu"
+description = "Nhận thưởng 10 danh hiệu"
+icon = ExtResource("1_wojss")
+stat = "claimed_count"
+target = 10
+unit = "Danh hiệu"
+reward_coins = 100
+points = 20

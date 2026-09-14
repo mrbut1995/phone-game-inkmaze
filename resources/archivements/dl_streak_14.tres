@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_flame.svg" id="1_vepfa"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_di1to"]
+
+[resource]
+script = ExtResource("2_di1to")
+id = "dl_streak_14"
+category = "daily"
+title = "Chuỗi 14 Ngày"
+description = "Duy trì chuỗi 14 ngày liên tiếp"
+icon = ExtResource("1_vepfa")
+stat = "daily_streak"
+target = 14
+unit = "Ngày"
+reward_coins = 350
+points = 50

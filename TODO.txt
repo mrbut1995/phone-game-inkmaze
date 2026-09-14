@@ -358,3 +358,30 @@
 # [ ] Màn Settings: nút "Hướng dẫn" chưa có scene (guide_requested mới chỉ push_warning)
 # [ ] Popup ngôn ngữ: locale không có trong LOCALE_INFO (vd zh_TW) đang hiện mã thô
 # [ ] scenes/splash.tscn và các popup cũ chưa cập nhật localization/icon SVG
+
+# ----------------------------------------------------------------------------
+# SỔ TAY THÀNH TỰU (ACHIEVEMENT / DANH HIỆU) — 2026-02
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-02): Màn "Sổ tay thành tựu" data-driven + phân trang
+#     - Catalog = các file .tres (ArchivementData) trong resources/archivements/ (hiện 28 danh hiệu:
+#       7 Màn chơi · 7 Dungeon · 7 Daily · 7 Đặc biệt, trong đó 2 danh hiệu ẨN).
+#       Thêm/bớt danh hiệu = thêm/bớt file .tres, KHÔNG sửa code (ArchivementManager tự quét).
+#     - scripts/manager/ArchivementManager.gd (autoload): số liệu DẪN XUẤT đọc từ GameManager/DailyManager
+#       (số màn, tổng sao, số màn 3 sao, best time, số ngày/chuỗi/sao Daily) + số liệu TÍCH LUỸ do game báo về
+#       qua Archivement.notify_run_result() (tầng sâu nhất, tổng tầng, điểm cao, số ván thắng, no-hint/no-undo,
+#       hints/undos, hardcore, tổng thời gian chơi). Provider của SaveManager (export/import/reset_progress
+#       + autosave qua signal progress_changed).
+#     - scripts/utils/archivement.gd = facade tĩnh cho UI/test; GameController báo kết quả ở _complete_floor()
+#       và _game_over() -> danh hiệu mở khoá ngay sau mỗi ván.
+#     - scenes/archivement.tscn + scripts/scenes/archivement.gd: 5 tab lọc (TẤT CẢ · MÀN CHƠI · DUNGEON ·
+#       DAILY · ĐẶC BIỆT) + 5 thẻ/trang, vuốt ngang/dots đổi trang (giống màn Chọn màn), tự nhảy tới trang
+#       chứa danh hiệu đang chờ NHẬN; thẻ tổng kết (% đã mở + x/y danh hiệu + AP + dấu mộc BADGES).
+#     - nodes/archivements/card.tscn: thẻ 4 trạng thái ĐÃ ĐẠT (xanh lá + dấu mộc) · NHẬN THƯỞNG (cam + nút NHẬN)
+#       · ĐANG LÀM (xanh dương + chip Thưởng) · ẨN/KHOÁ (xám + ổ khoá + ??? / ???).
+#     - Lối vào: Main -> nút "SỔ TAY THÀNH TỰU" (hàng Other, 4 nút 180x146) + Debug Console "Badge Book".
+#     - Test mới: scripts/test_case/test_archivement.gd (54 check: catalog · tiến độ · nhận thưởng 2 lần ·
+#       AP/% · export-import · 5 thẻ/trang · tabs · dots · bấm NHẬN trên thẻ) + test_main_layout.gd (nút thứ 4).
+#     - Tài liệu: Number_Maze_Game_Design.md mục 8 (Sổ tay thành tựu) · archivements_list.txt (danh sách 28 danh hiệu).
+# [ ] Xu chưa có chỗ tiêu (chưa có Shop/Đổi quà) — hiện chỉ tích luỹ ở ArchivementManager.coins
+# [ ] Chưa có toast "Vừa mở khoá danh hiệu" khi chơi (signal achievement_unlocked đã có sẵn, chỉ cần UI)
+# [ ] Hàng nút Main: Leaderboard + Rules chưa có màn hình (mới chỉ có nút)

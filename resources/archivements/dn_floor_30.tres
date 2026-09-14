@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_flame.svg" id="1_aykgq"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_ttcuf"]
+
+[resource]
+script = ExtResource("2_ttcuf")
+id = "dn_floor_30"
+category = "dungeon"
+title = "Vực Sâu Không Đáy"
+description = "Tiến sâu tới Tầng 30 trong Dungeon Mode"
+icon = ExtResource("1_aykgq")
+stat = "dungeon_best_floor"
+target = 30
+unit = "Tầng"
+reward_coins = 350
+points = 50

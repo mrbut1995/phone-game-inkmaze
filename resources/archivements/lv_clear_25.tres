@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_book.svg" id="1_wnrie"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_hitl8"]
+
+[resource]
+script = ExtResource("2_hitl8")
+id = "lv_clear_25"
+title = "Bậc Thầy Mê Cung"
+description = "Vượt qua 25 màn chơi"
+icon = ExtResource("1_wnrie")
+stat = "levels_cleared"
+target = 25
+unit = "Màn"
+reward_coins = 200
+points = 30

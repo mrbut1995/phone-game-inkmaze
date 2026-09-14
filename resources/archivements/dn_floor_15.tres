@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_castle.svg" id="1_wrlbx"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_k880w"]
+
+[resource]
+script = ExtResource("2_k880w")
+id = "dn_floor_15"
+category = "dungeon"
+title = "Chúa Tể Ngục Tối"
+description = "Tiến sâu tới Tầng 15 trong Dungeon Mode"
+icon = ExtResource("1_wrlbx")
+stat = "dungeon_best_floor"
+target = 15
+unit = "Tầng"
+reward_coins = 200
+points = 35

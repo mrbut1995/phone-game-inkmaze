@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/common/star_highlight.svg" id="1_g15xp"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_fgigt"]
+
+[resource]
+script = ExtResource("2_fgigt")
+id = "lv_stars_15"
+title = "Bộ Sưu Tập Sao"
+description = "Thu thập 15 ngôi sao từ các màn chơi"
+icon = ExtResource("1_g15xp")
+stat = "level_stars_total"
+target = 15
+unit = "Sao"
+reward_coins = 120
+points = 20

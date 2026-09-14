@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArchivementData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_trophy.svg" id="1_rk6hr"]
+[ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_5mk8g"]
+
+[resource]
+script = ExtResource("2_5mk8g")
+id = "sp_wins_50"
+category = "special"
+title = "Lão Luyện"
+description = "Thắng tổng cộng 50 màn/tầng ở mọi chế độ"
+icon = ExtResource("1_rk6hr")
+stat = "wins_total"
+target = 50
+unit = "Ván"
+reward_coins = 250
+points = 35
