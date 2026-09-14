@@ -2,22 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgrfwbbakoy1"
-path="res://.godot/imported/btn_menu_rules.svg-208c8a645b065a04e962bb3029a97513.ctex"
+uid="uid://ce4bov5qet800"
+path="res://.godot/imported/btn_menu_badge_disabled.svg-edd42a66259cdee728e3720fb06fe041.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/main/btn_menu_rules.svg"
-dest_files=["res://.godot/imported/btn_menu_rules.svg-208c8a645b065a04e962bb3029a97513.ctex"]
+source_file="res://assets/images/main/btn_menu_badge_disabled.svg"
+dest_files=["res://.godot/imported/btn_menu_badge_disabled.svg-edd42a66259cdee728e3720fb06fe041.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
-compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

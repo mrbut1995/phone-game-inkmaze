@@ -385,3 +385,19 @@
 # [ ] Xu chưa có chỗ tiêu (chưa có Shop/Đổi quà) — hiện chỉ tích luỹ ở ArchivementManager.coins
 # [ ] Chưa có toast "Vừa mở khoá danh hiệu" khi chơi (signal achievement_unlocked đã có sẵn, chỉ cần UI)
 # [ ] Hàng nút Main: Leaderboard + Rules chưa có màn hình (mới chỉ có nút)
+
+# ----------------------------------------------------------------------------
+# MAIN SCREEN: NÚT THÀNH TỰU LỚN + ĐỔI LUẬT CHƠI THÀNH CỬA HÀNG — 2026-02
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-02): theo yêu cầu user
+#     - Bỏ nút Danh hiệu khỏi hàng Other; thêm icon huy chương LỚN 224x224 ở góc TRÊN PHẢI tờ giấy
+#       (assets/images/main/btn_menu_badge_{normal,pressed,focus,disabled}.svg = sticker giấy + băng keo washi
+#       + huy chương ruy băng), ô giữa huy chương hiện "x/y" danh hiệu đã mở (node Count, variation MainBadgeCount),
+#       nhãn DANH HIỆU nằm dưới sticker (caption theo OtherLabel).
+#     - Nút LUẬT CHƠI -> CỬA HÀNG: icon mới assets/images/icons/icon_shop.svg + chuỗi STR_BTN_SHOP (string.csv, 20 locale);
+#       khung nút dùng lại btn_menu_utility_*; đã xoá btn_menu_rules.svg + archivements/icon_medal.svg (hết dùng).
+#     - Hàng Other còn 3 nút, mỗi nút = ĐÚNG kích thước art 230x130 (separation 5, alignment center) — trước đây
+#       để custom_minimum_size 180x146 + stretch_mode KEEP_ASPECT nên art bị co nhỏ.
+#     - Test: test_main_layout.gd (btn_shop thay btn_rules; nút thành tựu >= 200px, nằm TRÊN hàng Other và bên phải;
+#       hàng Other = 3 nút 230x130; texture normal/pressed/focus phải khác nhau).
+# [ ] Màn XẾP HẠNG và màn CỬA HÀNG chưa có scene (2 nút mới chỉ chạy hiệu ứng bấm)

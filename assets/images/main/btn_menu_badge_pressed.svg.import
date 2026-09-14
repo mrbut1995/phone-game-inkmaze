@@ -2,22 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5twyvm7w7gmm"
-path="res://.godot/imported/icon_medal.svg-c7e262409e37dce4aa7a4247ccc13c55.ctex"
+uid="uid://cbedwjjj8aba0"
+path="res://.godot/imported/btn_menu_badge_pressed.svg-57f55f4723267c9448668c9811e81dd0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/archivements/icon_medal.svg"
-dest_files=["res://.godot/imported/icon_medal.svg-c7e262409e37dce4aa7a4247ccc13c55.ctex"]
+source_file="res://assets/images/main/btn_menu_badge_pressed.svg"
+dest_files=["res://.godot/imported/btn_menu_badge_pressed.svg-57f55f4723267c9448668c9811e81dd0.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
-compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

@@ -15,15 +15,17 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @onready var btn_daily: TextureButton = $Panel/GameMode/DailyChallenge
 
 @onready var btn_leaderboard: TextureButton = $Panel/Other/Leaderboard
-@onready var btn_rules: TextureButton = $Panel/Other/Rule
+@onready var btn_shop: TextureButton = $Panel/Other/Shop
 @onready var btn_settings: TextureButton = $Panel/Other/Settings
-@onready var btn_archivement: TextureButton = $Panel/Other/Archivement
+@onready var btn_archivement: TextureButton = $Panel/Archivement
+@onready var badge_count_label: Label = $Panel/Archivement/Count
 @onready var stamp_panel: Control = $Panel/Stamp
 @onready var stamp_label: Label = $Panel/Stamp/Label
 
 
 func _ready() -> void:
 	_refresh_stamp()
+	_refresh_badge()
 	_setup_buttons()
 	_setup_animations()
 
@@ -41,8 +43,8 @@ func _setup_buttons() -> void:
 
 	if btn_leaderboard != null:
 		UIAnim.attach_press_bounce(btn_leaderboard)
-	if btn_rules != null:
-		UIAnim.attach_press_bounce(btn_rules)
+	if btn_shop != null:
+		UIAnim.attach_press_bounce(btn_shop)
 	if btn_settings != null:
 		btn_settings.pressed.connect(_on_settings_pressed)
 		UIAnim.attach_press_bounce(btn_settings)
@@ -76,12 +78,15 @@ func _setup_animations() -> void:
 
 	var others: Array[Control] = []
 	if btn_leaderboard != null: others.append(btn_leaderboard)
-	if btn_rules != null: others.append(btn_rules)
+	if btn_shop != null: others.append(btn_shop)
 	if btn_settings != null: others.append(btn_settings)
-	if btn_archivement != null: others.append(btn_archivement)
 
 	for i in others.size():
 		UIAnim.play_fade_in(others[i], 0.14 + 0.05 * i, 0.22)
+
+	# 3b. Nút Sổ tay thành tựu ở góc trên phải tờ giấy: nảy nhẹ khi mở màn
+	if btn_archivement != null:
+		UIAnim.play_pop_in(btn_archivement, 0.08, 0.9, 0.28)
 
 	# 4. Con dấu phiên bản nảy nhẹ
 	if stamp_panel != null:
@@ -133,3 +138,10 @@ func _refresh_stamp() -> void:
 	if app != null:
 		version = str(app.call("get_version"))
 	stamp_label.text = tr("STR_SETTINGS_VERSION").format([version])
+
+
+## Số danh hiệu đã đạt / tổng số danh hiệu — in ngay trên huy chương
+func _refresh_badge() -> void:
+	if badge_count_label == null:
+		return
+	badge_count_label.text = "%d/%d" % [Archivement.unlocked_count(), Archivement.total_count()]
