@@ -14,6 +14,15 @@ const NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
 @onready var _button: TextureButton = $TextureButton
 
 
+func _ready() -> void:
+	# Anchor KHÔNG được "ăn" sự kiện chuột/cảm ứng: Board cần nhận trọn cú NHẤN + KÉO
+	# để vẽ đường gợi ý (hint line) nối 2 anchor rồi tạo Tường Nghi Ngờ.
+	# Ô Cell cũng nhường sự kiện y hệt (cell.gd::_ready) nên kéo vẽ đường đi mới chạy được.
+	if _button != null:
+		_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+
 func _on_button_pressed() -> void:
 	anchor_tapped.emit(anchor_id)
 

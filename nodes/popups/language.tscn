@@ -1,19 +1,19 @@
 [gd_scene format=3 uid="uid://dusrddwoc1rqw"]
 
-[ext_resource type="Script" path="res://scripts/nodes/popups/language_popup.gd" id="1_script"]
-[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/lang_panel.svg" id="3_panel"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/washi_tape.svg" id="4_washi"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/paper_clip.svg" id="5_clip"]
-[ext_resource type="Texture2D" path="res://assets/images/settings/divider_dashed.svg" id="6_divider"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_muted_normal.svg" id="7_sec_n"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_muted_pressed.svg" id="8_sec_p"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_muted_focus.svg" id="9_sec_f"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_wide_normal.svg" id="10_pri_n"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_wide_pressed.svg" id="11_pri_p"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/btn_popup_wide_focus.svg" id="12_pri_f"]
+[ext_resource type="Script" uid="uid://155506bao726" path="res://scripts/nodes/popups/language_popup.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="Texture2D" uid="uid://rjtixf6klpgu" path="res://assets/images/popups/lang_panel.svg" id="3_panel"]
+[ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="4_washi"]
+[ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="5_clip"]
+[ext_resource type="Texture2D" uid="uid://b32mi2b0tw8ao" path="res://assets/images/settings/divider_dashed.svg" id="6_divider"]
+[ext_resource type="Texture2D" uid="uid://bva6sfwg1f8ha" path="res://assets/images/popups/btn_popup_muted_normal.svg" id="7_sec_n"]
+[ext_resource type="Texture2D" uid="uid://bub3b4m3wms76" path="res://assets/images/popups/btn_popup_muted_pressed.svg" id="8_sec_p"]
+[ext_resource type="Texture2D" uid="uid://chdinrp0gthby" path="res://assets/images/popups/btn_popup_muted_focus.svg" id="9_sec_f"]
+[ext_resource type="Texture2D" uid="uid://70kk5gh3n1y" path="res://assets/images/popups/btn_popup_wide_normal.svg" id="10_pri_n"]
+[ext_resource type="Texture2D" uid="uid://deiyafisu0cba" path="res://assets/images/popups/btn_popup_wide_pressed.svg" id="11_pri_p"]
+[ext_resource type="Texture2D" uid="uid://c1l1v41hv7wtk" path="res://assets/images/popups/btn_popup_wide_focus.svg" id="12_pri_f"]
 
-[node name="Base" type="Control"]
+[node name="Base" type="Control" unique_id=1015568792]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,7 @@ grow_vertical = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_script")
 
-[node name="Dim" type="ColorRect" parent="."]
+[node name="Dim" type="ColorRect" parent="." unique_id=1194060954]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,16 +32,15 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.09411765, 0.14117648, 0.18039216, 0.6392157)
 
-[node name="Panel" type="Control" parent="."]
+[node name="Panel" type="Control" parent="." unique_id=1621539942]
 layout_mode = 1
-anchors_preset = -1
 offset_left = 150.0
 offset_top = 400.0
 offset_right = 930.0
 offset_bottom = 1520.0
 mouse_filter = 2
 
-[node name="Art" type="TextureRect" parent="Panel"]
+[node name="Art" type="TextureRect" parent="Panel" unique_id=848801197]
 layout_mode = 1
 anchors_preset = -1
 offset_left = -8.0
@@ -51,7 +50,7 @@ offset_bottom = 1128.0
 mouse_filter = 2
 texture = ExtResource("3_panel")
 
-[node name="Washi" type="TextureRect" parent="Panel"]
+[node name="Washi" type="TextureRect" parent="Panel" unique_id=1925565409]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 288.0
@@ -61,7 +60,7 @@ offset_bottom = 37.0
 mouse_filter = 2
 texture = ExtResource("4_washi")
 
-[node name="Clip" type="TextureRect" parent="Panel"]
+[node name="Clip" type="TextureRect" parent="Panel" unique_id=1468092271]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 97.0
@@ -71,7 +70,7 @@ offset_bottom = 66.0
 mouse_filter = 2
 texture = ExtResource("5_clip")
 
-[node name="Content" type="VBoxContainer" parent="Panel"]
+[node name="Content" type="VBoxContainer" parent="Panel" unique_id=2075346937]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -84,38 +83,38 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="Panel/Content"]
+[node name="Title" type="Label" parent="Panel/Content" unique_id=649000259]
 layout_mode = 2
 theme_type_variation = &"PopupTitle"
 text = "STR_LANGUAGE_TITLE"
 
-[node name="Subtitle" type="Label" parent="Panel/Content"]
+[node name="Subtitle" type="Label" parent="Panel/Content" unique_id=613417771]
 layout_mode = 2
 theme_type_variation = &"PopupSubtitle"
 text = "STR_LANGUAGE_SUBTITLE"
 
-[node name="Divider" type="TextureRect" parent="Panel/Content"]
+[node name="Divider" type="TextureRect" parent="Panel/Content" unique_id=775125674]
 custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
 texture = ExtResource("6_divider")
 expand_mode = 1
 stretch_mode = 1
 
-[node name="Scroll" type="ScrollContainer" parent="Panel/Content"]
+[node name="Scroll" type="ScrollContainer" parent="Panel/Content" unique_id=33277931]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="List" type="VBoxContainer" parent="Panel/Content/Scroll"]
+[node name="List" type="VBoxContainer" parent="Panel/Content/Scroll" unique_id=1727273265]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 20
 
-[node name="Buttons" type="HBoxContainer" parent="Panel/Content"]
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content" unique_id=935925410]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Cancel" type="TextureButton" parent="Panel/Content/Buttons"]
+[node name="Cancel" type="TextureButton" parent="Panel/Content/Buttons" unique_id=577269955]
 custom_minimum_size = Vector2(300, 88)
 layout_mode = 2
 texture_normal = ExtResource("7_sec_n")
@@ -124,7 +123,7 @@ texture_hover = ExtResource("7_sec_n")
 texture_focused = ExtResource("9_sec_f")
 ignore_texture_size = true
 
-[node name="Label" type="Label" parent="Panel/Content/Buttons/Cancel"]
+[node name="Label" type="Label" parent="Panel/Content/Buttons/Cancel" unique_id=1419882142]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -136,7 +135,7 @@ text = "STR_BTN_CANCEL"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Apply" type="TextureButton" parent="Panel/Content/Buttons"]
+[node name="Apply" type="TextureButton" parent="Panel/Content/Buttons" unique_id=1975684081]
 custom_minimum_size = Vector2(390, 96)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -146,7 +145,7 @@ texture_hover = ExtResource("10_pri_n")
 texture_focused = ExtResource("12_pri_f")
 ignore_texture_size = true
 
-[node name="Label" type="Label" parent="Panel/Content/Buttons/Apply"]
+[node name="Label" type="Label" parent="Panel/Content/Buttons/Apply" unique_id=144376740]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -158,7 +157,7 @@ text = "STR_BTN_APPLY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Footer" type="Label" parent="Panel/Content"]
+[node name="Footer" type="Label" parent="Panel/Content" unique_id=537269353]
 layout_mode = 2
 theme_type_variation = &"PopupQuote"
 text = "STR_LANGUAGE_FOOTER"

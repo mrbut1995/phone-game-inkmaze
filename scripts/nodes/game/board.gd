@@ -906,43 +906,62 @@ func _set_path_focus(path: Array[Vector2i]) -> void:
 
 # ============================================================================
 # Input: Xử lý Kéo di chuyển Player & Kéo nối Anchor
+#
+# LƯU Ý TOẠ ĐỘ (bug 2026-09 — "không kéo được anchor để vẽ hint line"):
+#   - Godot đưa sự kiện vào `_gui_input` ở toạ độ **LOCAL** của node này (đã trừ vị trí
+#     của Board) => dùng `event.position` TRỰC TIẾP, KHÔNG chuyển đổi thêm (nếu chuyển
+#     nữa thì hint line bị lệch đúng bằng vị trí Board).
+#   - `_unhandled_input` (đường dự phòng, hiếm khi chạy vì GUI đã nhận sự kiện) lại ở
+#     toạ độ MÀN HÌNH => phải chuyển qua `_to_local(_screen_to_canvas(...))`.
 # ============================================================================
 func _gui_input(event: InputEvent) -> void:
-	_process_gesture_event(event)
+	if not _interaction_enabled or maze == null:
+		return
+	if event is InputEventScreenTouch:
+		var touch := event as InputEventScreenTouch
+		_handle_press_release(touch.pressed, touch.position)
+	elif event is InputEventScreenDrag:
+		_handle_drag((event as InputEventScreenDrag).position)
+	elif event is InputEventMouseButton:
+		var button := event as InputEventMouseButton
+		if button.button_index == MOUSE_BUTTON_LEFT:
+			_handle_press_release(button.pressed, button.position)
+	elif event is InputEventMouseMotion:
+		var motion := event as InputEventMouseMotion
+		if (motion.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
+			_handle_drag(motion.position)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not _interaction_enabled or maze == null:
 		return
-	if event is InputEventScreenTouch or event is InputEventScreenDrag or event is InputEventMouseButton or event is InputEventMouseMotion:
-		_process_gesture_event(event)
-
-
-func _process_gesture_event(event: InputEvent) -> void:
-	if not _interaction_enabled or maze == null:
-		return
-
-	if event is InputEventMouseButton:
-		var mb := event as InputEventMouseButton
-		if mb.button_index == MOUSE_BUTTON_LEFT:
-			if mb.pressed:
-				_on_press(_to_local(get_global_mouse_position()))
-			else:
-				_on_release(_to_local(get_global_mouse_position()))
-	elif event is InputEventMouseMotion:
-		var mm := event as InputEventMouseMotion
-		if (_dragging_player or _is_dragging_anchor) and (mm.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
-			_on_drag(_to_local(get_global_mouse_position()))
-	elif event is InputEventScreenTouch:
-		var st := event as InputEventScreenTouch
-		if st.pressed:
-			_on_press(_to_local(_screen_to_canvas(st.position)))
-		else:
-			_on_release(_to_local(_screen_to_canvas(st.position)))
+	if event is InputEventScreenTouch:
+		var touch := event as InputEventScreenTouch
+		_handle_press_release(touch.pressed, _to_local(_screen_to_canvas(touch.position)))
 	elif event is InputEventScreenDrag:
-		var sd := event as InputEventScreenDrag
-		if _dragging_player or _is_dragging_anchor:
-			_on_drag(_to_local(_screen_to_canvas(sd.position)))
+		_handle_drag(_to_local(_screen_to_canvas((event as InputEventScreenDrag).position)))
+	elif event is InputEventMouseButton:
+		var button := event as InputEventMouseButton
+		if button.button_index == MOUSE_BUTTON_LEFT:
+			_handle_press_release(button.pressed, _to_local(_screen_to_canvas(button.position)))
+	elif event is InputEventMouseMotion:
+		var motion := event as InputEventMouseMotion
+		if (motion.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
+			_handle_drag(_to_local(_screen_to_canvas(motion.position)))
+
+
+## Nhấn / thả chuột-cảm ứng tại 1 điểm đã ở toạ độ LOCAL của Board
+func _handle_press_release(pressed: bool, local_pos: Vector2) -> void:
+	if pressed:
+		_on_press(local_pos)
+	else:
+		_on_release(local_pos)
+
+
+## Kéo: chỉ xử lý khi đang kéo vẽ đường đi hoặc đang kéo nối anchor (hint line)
+func _handle_drag(local_pos: Vector2) -> void:
+	if _dragging_player or _is_dragging_anchor:
+		_on_drag(local_pos)
 
 
 func _screen_to_canvas(pos: Vector2) -> Vector2:

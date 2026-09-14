@@ -207,10 +207,10 @@ texture = ExtResource("8_ad")
 [node name="Desc" type="Label" parent="Panel/Content/Banner" index="1" unique_id=402594436]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 64.0
-offset_top = 26.0
-offset_right = 420.0
-offset_bottom = 64.0
+offset_left = 80.0
+offset_top = 36.0
+offset_right = 436.0
+offset_bottom = 74.0
 theme_type_variation = &"PopupBonusDesc"
 text = "STR_REVIVE_DESC_STEPS"
 vertical_alignment = 1

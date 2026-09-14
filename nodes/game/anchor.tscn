@@ -11,6 +11,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("1_fgv2j")
 
 [node name="TextureButton" type="TextureButton" parent="." unique_id=63874327]
@@ -20,6 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture_normal = ExtResource("1_aae84")
 texture_pressed = ExtResource("2_6q3p4")
 texture_hover = ExtResource("1_aae84")

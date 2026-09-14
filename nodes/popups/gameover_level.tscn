@@ -139,6 +139,7 @@ vertical_alignment = 1
 
 [node name="Row1" type="Control" parent="Panel/Content" index="7" unique_id=1252014784]
 layout_mode = 1
+anchors_preset = 0
 offset_left = 115.0
 offset_top = 428.0
 offset_right = 755.0
@@ -181,6 +182,7 @@ text_overrun_behavior = 3
 
 [node name="Row2" type="Control" parent="Panel/Content" index="8" unique_id=1928938053]
 layout_mode = 1
+anchors_preset = 0
 offset_left = 115.0
 offset_top = 496.0
 offset_right = 755.0
@@ -223,6 +225,7 @@ text_overrun_behavior = 3
 
 [node name="Row3" type="Control" parent="Panel/Content" index="9" unique_id=1329944406]
 layout_mode = 1
+anchors_preset = 0
 offset_left = 115.0
 offset_top = 564.0
 offset_right = 755.0
@@ -286,10 +289,10 @@ texture = ExtResource("8_ad")
 [node name="Desc" type="Label" parent="Panel/Content/Banner" index="1" unique_id=1744933823]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 64.0
-offset_top = 26.0
-offset_right = 420.0
-offset_bottom = 64.0
+offset_left = 83.0
+offset_top = 32.0
+offset_right = 439.0
+offset_bottom = 70.0
 theme_type_variation = &"PopupBonusDesc"
 text = "STR_REVIVE_DESC_UNDO"
 vertical_alignment = 1
