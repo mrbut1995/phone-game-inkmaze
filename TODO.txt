@@ -48,10 +48,54 @@
 #     - Test: test_challenge_controller.gd phần hồi sinh chạy ĐÚNG luồng người chơi (đâm tường -> bấm
 #       HỒI SINH trên popup) và kiểm tra: về ô trước đó, tường vừa đâm hiện, bàn cờ nhận lại input, đồng hồ
 #       chạy lại, ván tiếp tục và ĐI TIẾP ĐƯỢC; kèm check Dungeon vẫn đưa về S khi đâm tường.
+# ----------------------------------------------------------------------------
+# HỆ THỐNG THỬ THÁCH (CHALLENGE) — 16 LOẠI, TỐI ĐA 3 / MÀN (2026-09)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): ngoài 3 thử thách mặc định, màn có thể chọn tối đa 3 trong 16 loại
+#     - scripts/core/controllers/challenge_types.gd (MỚI, class ChallengeTypes): registry 16 loại
+#        A. mặc định: no_wall · steps_max · time_max
+#        B. ô/đường đi: only_numbered · avoid_numbered · no_revisit · visit_all · visit_all_numbered
+#        C. độ dài (% số ô): len_min_percent · len_max_percent
+#        D. tổng số trên ô đã đi: sum_lt · sum_le · sum_gt · sum_ge
+#        E. công cụ: no_hint · no_undo
+#       (màn không khai báo -> DEFAULTS = no_wall + steps_max(N=max_steps) + time_max(N×3, kẹp 30..240s))
+#     - scripts/core/controllers/challenge_context.gd (MỚI): state + mode + maze + path + elapsed + final
+#     - scripts/core/controllers/challenge_controller.gd: viết lại để chấm cả 16 loại
+#        · metrics: ô đã đi (không trùng), số lần đi đè, tổng số trên ô, số ô có số đã đi / toàn board
+#        · thử thách "vi phạm là mất ngay" (no_wall, only/avoid_numbered, no_revisit, no_hint, no_undo)
+#          hiện trạng thái sống; loại khác hiện tiến độ (bước / giây còn lại / % ô / tổng) rồi chốt khi kết thúc
+#        · cache theo (va chạm, bước, ô đã đi, đi đè, tổng, gợi ý, hoàn tác, giây, final) nên gọi mỗi frame vẫn rẻ
+#     - scripts/resources/level_data.gd: + challenge_types: PackedStringArray · challenge_params: PackedInt32Array
+#       + get_challenges() -> [{type, param}] (tối đa 3, bỏ loại lạ)
+#     - scripts/core/game_state.gd: + hints_used / undos_used (reset mỗi tầng) cho thử thách "không gợi ý/hoàn tác"
+#     - scripts/modes/base_game_mode.gd + standard_game_mode.gd: giữ current_level_data để lấy thử thách của màn
+#     - scripts/core/controllers/game_controller.gd: dựng ChallengeContext mỗi lần cập nhật HUD, chốt khi thắng/thua,
+#       đếm hints_used / undos_used trong hint() / undo()
+#     - scenes/game.tscn: thẻ THỬ THÁCH dùng font 18 + cột trạng thái rộng hơn (nhãn dài không bị cắt "...")
+#     - resources/localization/string_extra.csv: + 26 chuỗi thử thách (nhãn + trạng thái sống)
+#     - Test game: scripts/test_case/test_challenge_types.gd (16 loại + giới hạn 3 + đọc LevelData + mặc định)
+#       + test_challenge_controller.gd đã cập nhật theo ChallengeContext
+#     - TOOL (tools/level_designer):
+#        · app/models/challenges.py (MỚI): registry Python khớp ChallengeTypes (id · nhãn · loại tham số · mô tả)
+#        · LevelModel.challenges: list[(type, param)] + set_challenge/clear_challenge/clear_all_challenges/
+#          default_challenges + nằm trong snapshot (undo được)
+#        · tres_io: ghi/đọc `challenge_types = PackedStringArray(...)` + `challenge_params = PackedInt32Array(...)`
+#          (rỗng = PackedStringArray(); file cũ thiếu 2 dòng vẫn đọc được; quá 3 thì cắt còn 3)
+#        · validator: chặn lỗi mâu thuẫn (only+avoid numbered), steps_max < đường ngắn nhất,
+#          len_max_percent < % đường ngắn nhất, visit_all khi có ô không tới được, sum_gt/ge vượt tổng tối đa,
+#          tham số ngoài khoảng; cảnh báo trùng loại / màn không có ô số; info khi < 3 thử thách (tối đa N Sao)
+#        · inspector_view: mục "Thử thách (tối đa 3)" — 3 dòng combobox + spinbox tham số + nút × + 2 nút tiện ích
+#        · editor_controller: set_challenge / set_challenge_param / clear_challenge / reset_challenges /
+#          fill_default_challenges (đều có undo + dirty + sự kiện)
+#        · tests/test_challenges.py (26 test mới, tổng 76) · make_samples.py: màn mẫu 10..14 giờ có bộ thử thách
+#          (level_10: no_hint · level_11: 3 mặc định · level_12: no_revisit + len_max 80% ·
+#           level_13: len_min 60% + no_undo · level_14: len_max 45%)
+#        · README.md đã ghi format 2 trường mới; đã build lại dist/LevelDesigner.exe (--selftest exit code 0)
+#     - ĐÃ KIỂM CHỨNG end-to-end: tool ghi level_10..14 -> Godot đọc đúng (no_wall(0), steps_max(9)...),
+#       render HUD game hiện đúng nhãn/trạng thái của từng màn
 # [ ] CHƯA LÀM: popup THẮNG màn (nodes/popups/winning.tscn) vẫn hiện "Số bước / Va chạm tường /
-#     TỔNG ĐIỂM" theo bản cũ — cần đổi sang bảng 3 Thử thách + 3 sticker sao như mockup popup_win_level.svg
-# [ ] CHƯA LÀM: bộ 3 thử thách hiện suy ra từ max_steps của màn; muốn mỗi màn có thử thách riêng thì
-#     thêm field vào LevelData (và cho Level Designer ghi field đó)
+#     TỔNG ĐIỂM" theo bản cũ — cần đổi sang bảng các Thử thách + 3 sticker sao như mockup popup_win_level.svg
+# [ ] CHƯA LÀM: màn chọn màn hiển thị chi tiết từng thử thách (mới chỉ có số Sao)
 
 
 # ----------------------------------------------------------------------------

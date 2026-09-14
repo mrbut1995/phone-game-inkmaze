@@ -36,6 +36,26 @@ extends Resource
 ## Dữ liệu mở rộng cho các mode khác (Minesweeper, Sum Path, ...)
 @export var custom_cell_values: Dictionary = {}
 
+## THỬ THÁCH của màn (TỐI ĐA 3): challenge_types[i] + challenge_params[i] là 2 mảng song song.
+## Để TRỐNG = dùng 3 thử thách mặc định (không đâm tường · đủ bước · đủ thời gian).
+## Danh sách loại thử thách: scripts/core/controllers/challenge_types.gd (ChallengeTypes).
+@export var challenge_types: PackedStringArray = PackedStringArray()
+@export var challenge_params: PackedInt32Array = PackedInt32Array()
+
+
+## Danh sách thử thách của màn: [{ type, param }, ...] (rỗng = game tự dùng mặc định)
+func get_challenges() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for i in mini(challenge_types.size(), ChallengeTypes.MAX_PER_LEVEL):
+		var type_id := str(challenge_types[i])
+		if not ChallengeTypes.is_valid(type_id):
+			continue
+		out.append({
+			"type": type_id,
+			"param": int(challenge_params[i]) if i < challenge_params.size() else 0,
+		})
+	return out
+
 
 ## Chuyển đổi Resource LevelData thành đối tượng Runtime MazeData
 func to_maze_data() -> MazeData:

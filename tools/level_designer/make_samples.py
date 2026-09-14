@@ -26,6 +26,7 @@ APP_DIR = Path(__file__).resolve().parent
 if str(APP_DIR) not in sys.path:
     sys.path.insert(0, str(APP_DIR))
 
+from app.models import challenges as chal  # noqa: E402
 from app.models.repository import LevelRepository  # noqa: E402
 from app.services import solver, validator  # noqa: E402
 
@@ -46,6 +47,12 @@ SAMPLES: dict[int, dict] = {
             ("h", 2, 1, False),    # tường ẩn: chặn lối lên của ô (2,0)
             ("h", 2, 2, True),     # tường hiện: chặn lối xuống của ô (2,1)
         ],
+        # Thử thách: param 0 = tự lấy theo max_steps/par_time của màn
+        "challenges": [
+            (chal.NO_WALL, 0),
+            (chal.STEPS_MAX, 0),
+            (chal.NO_HINT, 0),
+        ],
     },
     11: {
         "title": "Level 2-2 · Thập tự (polyomino)",
@@ -64,6 +71,11 @@ SAMPLES: dict[int, dict] = {
             ("h", 0, 1, True),     # tường hiện dưới ô (0,0)
             ("h", 0, 2, True),     # tường hiện dưới ô (0,1)
             ("v", 3, 1, False),    # tường ẩn giữa (2,1) và (3,1)
+        ],
+        "challenges": [
+            (chal.NO_WALL, 0),
+            (chal.STEPS_MAX, 0),
+            (chal.TIME_MAX, 0),
         ],
     },
     12: {
@@ -90,6 +102,11 @@ SAMPLES: dict[int, dict] = {
             ("v", 1, 0, False),    # tường ẩn ở hành lang trên
             ("v", 2, 1, True),     # tường hiện ở hành lang trên
         ],
+        "challenges": [
+            (chal.NO_WALL, 0),
+            (chal.NO_REVISIT, 0),
+            (chal.LEN_MAX_PERCENT, 80),
+        ],
     },
     13: {
         "title": "Level 2-4 · Chữ U 2 ô dày",
@@ -107,6 +124,11 @@ SAMPLES: dict[int, dict] = {
             ("v", 1, 0, True),     # tường hiện: chặn (0,0) - (1,0)
             ("v", 1, 2, False),    # tường ẩn: chặn (0,2) - (1,2)
             ("v", 4, 3, True),     # tường hiện: chặn (3,3) - (4,3)
+        ],
+        "challenges": [
+            (chal.NO_WALL, 0),
+            (chal.LEN_MIN_PERCENT, 60),
+            (chal.NO_UNDO, 0),
         ],
     },
     14: {
@@ -126,6 +148,11 @@ SAMPLES: dict[int, dict] = {
             ("h", 5, 2, True),
             ("v", 8, 5, True),
             ("h", 1, 8, False),
+        ],
+        "challenges": [
+            (chal.NO_WALL, 0),
+            (chal.STEPS_MAX, 0),
+            (chal.LEN_MAX_PERCENT, 45),
         ],
     },
 }
@@ -161,6 +188,12 @@ def build_sample(sample: dict) -> object:
     # 4. Số bước = đường ngắn nhất + dự phòng, rồi kiểm tra lại toàn bộ
     level.max_steps = solver.auto_max_steps(level, extra=4)
     level.par_time = float(max(20, level.max_steps * 3))
+
+    # 5. THỬ THÁCH (tối đa 3): param 0 -> tự lấy theo max_steps/par_time vừa tính
+    level.challenges = []
+    for slot, entry in enumerate(sample.get("challenges", [])[:chal.MAX_PER_LEVEL]):
+        type_id, param = entry
+        level.set_challenge(slot, str(type_id), int(param))
     return level
 
 

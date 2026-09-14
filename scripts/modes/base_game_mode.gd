@@ -14,6 +14,17 @@ var instant_game_over_on_hazard: bool = false
 var initial_steps: int = 15
 var difficulty: String = "medium"  # "easy", "medium", "hard", "normal", "hardcore"
 
+## LevelData nguồn của màn/tầng hiện tại (null nếu mode tự sinh mê cung).
+## Dùng để lấy danh sách Thử thách do nhà thiết kế đặt cho màn.
+var current_level_data: LevelData = null
+
+
+## Thử thách của màn hiện tại: [{ type, param }, ...] (rỗng = game dùng 3 thử thách mặc định)
+func get_challenges() -> Array[Dictionary]:
+	if current_level_data != null:
+		return current_level_data.get_challenges()
+	return []
+
 
 ## Sinh dữ liệu mê cung/bàn cờ cho floor_number.
 func setup_floor(_floor_number: int) -> MazeData:

@@ -62,9 +62,9 @@ game_mode_controller = NodePath("Controllers/GameModeController")
 
 [node name="Board" parent="." index="1" unique_id=181012636 instance=ExtResource("2_yqjtg")]
 layout_mode = 1
-anchor_left = 0.038000003
+anchor_left = 0.037777815
 anchor_top = 0.21864584
-anchor_right = 0.98300004
+anchor_right = 0.9827778
 anchor_bottom = 0.7496459
 offset_left = 0.1999588
 offset_top = 0.19998169

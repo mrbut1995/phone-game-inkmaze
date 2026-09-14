@@ -82,7 +82,7 @@ func _check_play_hud(scene: GameScene, gc: GameController, cc: ChallengeControll
 	elif not count_label.text.contains("/"):
 		_fail("Nhan dem so sao phai co dang 'x / 3', dang la '%s'" % count_label.text)
 
-	for i in ChallengeController.COUNT:
+	for i in ChallengeTypes.MAX_PER_LEVEL:
 		var row := chal_card.get_node_or_null("Row%d" % (i + 1)) as Control
 		if row == null:
 			_fail("Thieu dong thu thach Row%d tren HUD" % (i + 1))
@@ -143,8 +143,8 @@ func _check_star_math(gc: GameController, cc: ChallengeController) -> void:
 		_fail("Nguong thoi gian phai la 45s (15 buoc x 3), dang la %.1f" % cc.time_limit)
 
 	var rows := cc.rows()
-	if rows.size() != ChallengeController.COUNT:
-		_fail("Phai co dung 3 thu thach, dang co %d" % rows.size())
+	if rows.size() != ChallengeTypes.MAX_PER_LEVEL:
+		_fail("Man khong khai bao thu thach phai dung 3 thu thach mac dinh, dang co %d" % rows.size())
 	var steps_title := str(rows[1].get("title", ""))
 	var time_title := str(rows[2].get("title", ""))
 	if not steps_title.contains("15"):
@@ -155,12 +155,12 @@ func _check_star_math(gc: GameController, cc: ChallengeController) -> void:
 	# Khi đang chơi: chỉ thử thách 1 có thể "đạt" ngay, 2 thử thách kia còn chờ
 	var state := GameState.new()
 	state.begin_run(15, "play", 1)
-	cc.refresh(state, 0.0)
+	cc.refresh(_ctx(gc, state, [], 0.0, false))
 	if cc.stars() != 1:
 		_fail("Dang choi: chi thu thach 'khong dam tuong' duoc tinh, dang co %d sao" % cc.stars())
 
 	# Kết thúc màn hoàn hảo: 0 va chạm, 10 bước, 30s -> 3 Sao
-	cc.refresh(state, 30.0, true)
+	cc.refresh(_ctx(gc, state, [], 30.0, true))
 	if cc.stars() != 3:
 		_fail("Man hoan hao (0 dam tuong, 10/15 buoc, 30/45s) phai duoc 3 Sao, dang co %d" % cc.stars())
 
@@ -169,7 +169,7 @@ func _check_star_math(gc: GameController, cc: ChallengeController) -> void:
 	hurt.begin_run(15, "play", 1)
 	hurt.record_wall_hit()
 	hurt.consume_step(1)
-	cc.refresh(hurt, 30.0, true)
+	cc.refresh(_ctx(gc, hurt, [], 30.0, true))
 	if cc.stars() != 2:
 		_fail("Dam tuong 1 lan (van kip buoc + thoi gian) phai duoc 2 Sao, dang co %d" % cc.stars())
 
@@ -179,9 +179,23 @@ func _check_star_math(gc: GameController, cc: ChallengeController) -> void:
 	slow.record_wall_hit()
 	for i in 20:
 		slow.consume_step(1)
-	cc.refresh(slow, 300.0, true)
+	cc.refresh(_ctx(gc, slow, [], 300.0, true))
 	if cc.stars() != 0:
 		_fail("Vuot nguong buoc + thoi gian (con dam tuong) phai la 0 Sao, dang co %d" % cc.stars())
+
+
+## Tạo ChallengeContext từ scene đang chơi (để chấm thử thách trong test)
+func _ctx(gc: GameController, state: GameState, path: Array[Vector2i], elapsed: float, is_final: bool) -> ChallengeContext:
+	var ctx := ChallengeContext.new()
+	ctx.set_values(
+		state,
+		gc.game_mode,
+		gc.grid_controller.maze if gc.grid_controller != null else null,
+		path,
+		elapsed,
+		is_final
+	)
+	return ctx
 
 	print("[CHECK] Tinh Sao: dang choi=1 · hoan hao=3 · dam tuong=2 · cham&lau=0; nguong 15 buoc/45s")
 

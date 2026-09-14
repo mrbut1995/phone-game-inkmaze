@@ -34,16 +34,37 @@ Phần thưởng **Sao (Star)** của **mọi match-up** nay do **3 Thử thách
 - Người chơi vẽ đường đi bằng cách kéo nối tâm các ô liền kề (lên/xuống/trái/phải), tạo thành một đường liên tục từ S đến F.
 - Người chơi có thể kéo nối (drag) giữa các điểm neo (anchor) kề nhau để tự vẽ ra "tường nghi ngờ" nhằm hỗ trợ hình dung — thao tác này **không bắt buộc đúng/sai**, chỉ là công cụ hỗ trợ suy luận cá nhân.
 
-### 3.1. Hệ thống 3 Thử thách & Sao (áp dụng MỌI chế độ)
+### 3.1. Hệ thống Thử thách & Sao (áp dụng MỌI chế độ)
 
-- Mỗi match-up — mỗi **Màn** (Play Mode), mỗi **Tầng** (Dungeon Mode), mỗi **ngày** (Daily Challenge) — đều gắn **đúng 3 Challenge (thử thách)**.
-- **Hoàn thành 1 Challenge ⇒ được thưởng 1 Sao.** Tối đa **3 Sao / match-up**.
+- Mỗi match-up — mỗi **Màn** (Play Mode), mỗi **Tầng** (Dungeon Mode), mỗi **ngày** (Daily Challenge) — gắn **TỐI ĐA 3 Challenge (thử thách)**.
+- **Hoàn thành 1 Challenge ⇒ được thưởng 1 Sao.** Tối đa **3 Sao / match-up** (màn chỉ chọn 2 challenge thì tối đa 2 Sao).
 - ❗ **Thay đổi so với bản thiết kế cũ:** Sao **KHÔNG** còn được tính theo **thời gian còn lại**; nay **Sao = số Challenge đã hoàn thành**.
-- Trạng thái 3 Challenge hiển thị **ngay trên HUD khi đang chơi** (panel "THỬ THÁCH" — xem mockup `matchup_level.svg`) và được **tổng kết ở popup kết quả / popup thua** (xem 5.10).
-- Bộ 3 Challenge được thiết kế **riêng cho từng bộ luật**, không dùng chung 1 khuôn. Ví dụ cho Play Mode & Dungeon Mode:
-  1. **Không đâm vào tường vô hình** (tức không phải hồi sinh lần nào).
-  2. **Đi không quá X bước** (tối ưu đường đi).
-  3. **Về đích dưới Y giây** (tối ưu thời gian).
+- Trạng thái các Challenge hiển thị **ngay trên HUD khi đang chơi** (panel "THỬ THÁCH" — xem mockup `matchup_level.svg`) và được **tổng kết ở popup kết quả / popup thua** (xem 5.10).
+- **Màn cũ / màn không chọn gì** → game tự dùng 3 thử thách mặc định:
+  1. `no_wall` — Không đâm vào tường vô hình
+  2. `steps_max` — Đi không quá N bước (N = `max_steps` thiết kế của màn)
+  3. `time_max` — Về đích dưới T giây (T = N × 3, kẹp trong 30..240 giây)
+
+**Danh sách 16 loại thử thách** (Level Designer cho chọn tối đa 3; lưu vào `LevelData.challenge_types` + `challenge_params`):
+
+| id | Ý nghĩa | Tham số |
+|---|---|---|
+| `no_wall` | Không đâm vào tường vô hình | – |
+| `steps_max` | Đi không quá N bước | N (bước) |
+| `time_max` | Về đích dưới T giây | T (giây) |
+| `only_numbered` | Chỉ đi vào ô CÓ số (trừ S/F) | – |
+| `avoid_numbered` | Không đi vào ô CÓ số | – |
+| `no_revisit` | Không đi lại ô đã đi (không lặp lại đường) | – |
+| `visit_all` | Đi qua hết mọi ô của board | – |
+| `visit_all_numbered` | Đi qua hết mọi ô CÓ số | – |
+| `len_min_percent` | Đi tối thiểu n% số ô của board | n (%) |
+| `len_max_percent` | Đi tối đa n% số ô của board | n (%) |
+| `sum_lt` · `sum_le` · `sum_gt` · `sum_ge` | Tổng số hiện trên các ô đã đi **<** / **≤** / **>** / **≥** N | N |
+| `no_hint` | Không dùng nút Gợi ý lần nào | – |
+| `no_undo` | Không dùng nút Hoàn tác lần nào | – |
+
+> Ô **"có số"** = ô mà chế độ chơi đang hiện số (Play/Dungeon/Fog: số tường quanh ô > 0 · Minesweeper: số mìn · Sum Path / Countdown Cost: giá trị riêng). S và F **không** tính là ô có số.
+> **Level Designer kiểm tra trước khi lưu:** mâu thuẫn `only_numbered` + `avoid_numbered`, `steps_max` nhỏ hơn đường đi ngắn nhất, `len_max_percent` nhỏ hơn độ dài đường ngắn nhất, `visit_all` khi có ô không tới được, `sum_gt/ge` lớn hơn tổng số tối đa của board… và cảnh báo khi màn không có ô nào hiện số.
 
 ---
 

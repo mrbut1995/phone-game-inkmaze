@@ -9,6 +9,7 @@ from ..config import DIFFICULTIES, MAX_ID, MAX_SIZE, MIN_ID, MIN_SIZE, MODE_IDS
 from ..controllers.app_controller import AppController
 from ..controllers.editor_controller import EditorController
 from ..controllers.events import EV_LEVEL_CHANGED, EV_MODEL_UPDATED, EV_STATUS
+from ..models import challenges as chal
 from ..models.level import Cell
 
 
@@ -23,6 +24,7 @@ class InspectorView(ttk.Frame):
 
         self._build_general()
         self._build_rules()
+        self._build_challenges()
         self._build_tools()
         self._build_report()
 
@@ -84,6 +86,47 @@ class InspectorView(ttk.Frame):
         hint = ttk.Label(frame, text="y = 0 là hàng TRÊN cùng (giống trong game)", style="Hint.TLabel")
         hint.grid(row=8, column=0, columnspan=2, sticky="w", pady=(4, 0))
         frame.columnconfigure(1, weight=1)
+
+    def _build_challenges(self) -> None:
+        """Mỗi màn TỐI ĐA 3 thử thách (1 thử thách hoàn thành = 1 Sao).
+
+        Để trống = game tự dùng 3 thử thách mặc định.
+        """
+        frame = ttk.LabelFrame(self, text="Thử thách (tối đa 3 · 1 thử thách = 1 Sao)", padding=(8, 6))
+        frame.pack(fill="x", pady=(0, 8))
+
+        self._challenge_rows: list[tuple] = []
+        for slot in range(chal.MAX_PER_LEVEL):
+            row = ttk.Frame(frame)
+            row.pack(fill="x", pady=2)
+            var_type = tk.StringVar()
+            var_param = tk.IntVar()
+            combo = ttk.Combobox(row, textvariable=var_type, values=chal.combo_values(),
+                                 width=30, state="readonly")
+            combo.pack(side="left", fill="x", expand=True)
+            spin = ttk.Spinbox(row, textvariable=var_param, width=6, from_=0, to=9999)
+            spin.pack(side="left", padx=(4, 2))
+            unit = ttk.Label(row, text="", width=5, style="Hint.TLabel")
+            unit.pack(side="left")
+            clear = ttk.Button(row, text="×", width=3,
+                               command=lambda s=slot: self.editor.clear_challenge(s))
+            clear.pack(side="left", padx=(2, 0))
+            combo.bind("<<ComboboxSelected>>", lambda _e, s=slot: self._on_challenge_type(s))
+            spin.bind("<Return>", lambda _e, s=slot: self._on_challenge_param(s))
+            spin.bind("<FocusOut>", lambda _e, s=slot: self._on_challenge_param(s))
+            self._challenge_rows.append((var_type, var_param, combo, spin, unit, clear))
+
+        buttons = ttk.Frame(frame)
+        buttons.pack(fill="x", pady=(4, 0))
+        ttk.Button(buttons, text="Ghi 3 mặc định", command=self.editor.fill_default_challenges) \
+            .pack(side="left", expand=True, fill="x", padx=(0, 4))
+        ttk.Button(buttons, text="Bỏ chọn (game tự mặc định)", command=self.editor.reset_challenges) \
+            .pack(side="left", expand=True, fill="x")
+        ttk.Label(
+            frame, style="Hint.TLabel", wraplength=280, justify="left",
+            text="Ô số bên phải là tham số N (bước / giây / % số ô / tổng số). "
+                 "Ô nhập bị mờ = loại thử thách không cần tham số.",
+        ).pack(fill="x", pady=(4, 0))
 
     def _build_tools(self) -> None:
         frame = ttk.LabelFrame(self, text="Trợ giúp", padding=(8, 6))
@@ -180,6 +223,51 @@ class InspectorView(ttk.Frame):
             self.editor.run_with_undo(action, "Cập nhật %s" % name)
         return handler
 
+    # ------------------------------------------------------------------
+    # Thử thách: đọc/ghi qua controller (có undo)
+    # ------------------------------------------------------------------
+    def _on_challenge_type(self, slot: int) -> None:
+        if self._suspend:
+            return
+        var_type, var_param, _combo, _spin, _unit, _clear = self._challenge_rows[slot]
+        type_id = chal.from_combo(var_type.get())
+        try:
+            param = int(var_param.get())
+        except (tk.TclError, ValueError):
+            param = 0
+        self.editor.set_challenge(slot, type_id, param)
+
+    def _on_challenge_param(self, slot: int) -> None:
+        if self._suspend:
+            return
+        var_type, var_param, _combo, _spin, _unit, _clear = self._challenge_rows[slot]
+        type_id = chal.from_combo(var_type.get())
+        if not chal.is_valid(type_id) or not chal.has_param(type_id):
+            return
+        try:
+            param = int(var_param.get())
+        except (tk.TclError, ValueError):
+            return
+        self.editor.set_challenge_param(slot, param)
+
+    def _refresh_challenges(self) -> None:
+        items = list(self.editor.level.challenges)
+        for slot, widgets in enumerate(self._challenge_rows):
+            var_type, var_param, _combo, spin, unit, _clear = widgets
+            if slot < len(items):
+                type_id, param = items[slot]
+                var_type.set(chal.to_combo(type_id))
+                var_param.set(int(param))
+                unit.configure(text=chal.unit(type_id))
+                low, high = chal.param_bounds(type_id)
+                spin.configure(from_=low, to=high,
+                               state="normal" if chal.has_param(type_id) else "disabled")
+            else:
+                var_type.set("")
+                var_param.set(0)
+                unit.configure(text="")
+                spin.configure(state="disabled")
+
     def var_of(self, field: str) -> tk.Variable:
         return {
             "level_id": self.var_id,
@@ -211,6 +299,7 @@ class InspectorView(ttk.Frame):
             self.var_par.set(level.par_time)
         finally:
             self._suspend = False
+        self._refresh_challenges()
         self._refresh_report()
 
     def _refresh_report(self) -> None:

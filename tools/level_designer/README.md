@@ -66,9 +66,15 @@ Các cờ hữu ích khác (không mở cửa sổ):
 **Hỗ trợ thiết kế**
 - Hiện **số tường** từng ô đúng như trong game (0 thì ẩn, giống `MazeData`).
 - Hiện **đường đi ngắn nhất** bằng BFS để biết màn có lời giải hay không — BFS chỉ đi trong **các ô thuộc board**.
+- **Thử thách (tối đa 3 / màn — 1 thử thách hoàn thành = 1 Sao)**: chọn loại ở 3 ô combobox bên phải,
+  nhập tham số N (bước / giây / % số ô / tổng số), nút `×` để bỏ. Để trống = game dùng 3 thử thách mặc định
+  (không đâm tường · đủ bước · đủ thời gian). Nút **“Ghi 3 mặc định”** để ghi rõ 3 thử thách chuẩn vào màn.
+  16 loại: xem bảng trong `Number_Maze_Game_Design.md` (mục 3.1) hoặc `app/models/challenges.py`.
 - Bảng **Kiểm tra** tự động: S/F trùng, S/F nằm ở **ô trống**, **không có đường đi từ S tới F**,
   `max_steps` nhỏ hơn đường ngắn nhất (không thể thắng), **ô thuộc board không tới được**,
-  màn thiếu tường ẩn… ⇒ **nút Lưu bị chặn nếu có lỗi** (cảnh báo thì vẫn lưu được).
+  màn thiếu tường ẩn, **thử thách mâu thuẫn / không thể đạt** (ví dụ `steps_max` < đường ngắn nhất,
+  `len_max_percent` quá nhỏ, `only_numbered` + `avoid_numbered` cùng lúc…)
+  ⇒ **nút Lưu bị chặn nếu có lỗi** (cảnh báo thì vẫn lưu được).
 - **Hoàn tác / Làm lại** (Ctrl+Z / Ctrl+Y) theo từng "nét vẽ".
 - Panel bên trái: mở / tạo mới / nhân bản / xoá file level.
 - Cảnh báo **chưa lưu** khi mở màn khác, tạo màn mới hoặc thoát.
@@ -154,6 +160,10 @@ h_walls_visible = PackedByteArray(...)
 cell_mask = PackedByteArray(...)        # HÌNH DẠNG BOARD: w*h phần tử, index = y*w + x
                                         # 1 = ô thuộc board, 0 = ô trống (ngoài board)
                                         # PackedByteArray() = chữ nhật đầy đủ (màn cũ)
+challenge_types = PackedStringArray("no_wall", "steps_max", "len_max_percent")
+                                        # THỬ THÁCH của màn — TỐI ĐA 3, hai mảng SONG SONG;
+challenge_params = PackedInt32Array(0, 15, 80)
+                                        # rỗng = game dùng 3 thử thách mặc định (màn cũ)
 custom_cell_values = {}                 # giữ nguyên khi sửa (tool không đổi)
 ```
 
@@ -172,7 +182,7 @@ Quy ước toạ độ (khớp `maze_data.gd` / `level_manager.gd`):
 ```powershell
 cd tools\level_designer
 
-# chạy test (50 test)
+# chạy test (76 test)
 python -m unittest discover -s tests -t .
 
 # self-test đọc/ghi các màn thật (kể cả màn polyomino) + kiểm tra đường đi

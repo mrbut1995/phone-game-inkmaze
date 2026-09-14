@@ -15,6 +15,8 @@ var total_moves: int = 0        # tổng số bước đã dùng
 var floor_moves: int = 0        # số bước dùng trong floor hiện tại
 var floor_wall_hits: int = 0    # số lần đâm tường trong floor hiện tại
 var perfect_floor: bool = true  # chưa đâm tường lần nào trong floor
+var hints_used: int = 0         # số lần bấm Gợi ý trong floor hiện tại (cho thử thách)
+var undos_used: int = 0         # số lần bấm Hoàn tác trong floor hiện tại (cho thử thách)
 
 
 func begin_run(initial_steps: int, p_mode_id := "dungeon", start_floor := 1) -> void:
@@ -45,6 +47,8 @@ func _begin_floor() -> void:
 	floor_moves = 0
 	floor_wall_hits = 0
 	perfect_floor = true
+	hints_used = 0
+	undos_used = 0
 
 
 func consume_step(amount: int = 1) -> void:

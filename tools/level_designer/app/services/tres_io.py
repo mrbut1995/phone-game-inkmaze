@@ -19,6 +19,7 @@ import re
 from pathlib import Path
 
 from ..config import LEVEL_SCRIPT_ID, LEVEL_SCRIPT_RES
+from ..models import challenges as chal
 from ..models.level import LevelModel
 
 _HEADER = '[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3'
@@ -58,6 +59,8 @@ def dumps(level: LevelModel) -> str:
         "h_walls = %s" % _gd_bytes(level.h_walls),
         "h_walls_visible = %s" % _gd_bytes(level.h_walls_visible),
         "cell_mask = %s" % _gd_mask(level),
+        "challenge_types = %s" % _gd_string_array([c[0] for c in level.challenges]),
+        "challenge_params = %s" % _gd_int_array([c[1] for c in level.challenges]),
         "custom_cell_values = %s" % (level.custom_cell_values_raw or "{}"),
     ]
     return "\n".join(lines) + "\n"
@@ -76,6 +79,8 @@ def save_file(level: LevelModel, path: Path) -> None:
 def loads(text: str) -> LevelModel:
     """Phân tích nội dung .tres thành LevelModel (bỏ qua phần không nhận biết)."""
     level = LevelModel(custom_cell_values_raw="{}")
+    challenge_types: list[str] = []
+    challenge_params: list[int] = []
 
     uid_match = re.search(r'\[gd_resource[^\]]*uid="([^"]+)"', text)
     if uid_match:
@@ -121,8 +126,19 @@ def loads(text: str) -> LevelModel:
             level.h_walls_visible = _parse_bytes(value)
         elif key == "cell_mask":
             level.cell_mask = _parse_bytes(value)
+        elif key == "challenge_types":
+            challenge_types = _parse_string_array(value)
+        elif key == "challenge_params":
+            challenge_params = _parse_int_array(value)
         elif key == "custom_cell_values":
             level.custom_cell_values_raw = value or "{}"
+
+    level.challenges = []
+    for index, type_id in enumerate(challenge_types[: chal.MAX_PER_LEVEL]):
+        if not chal.is_valid(type_id):
+            continue
+        param = challenge_params[index] if index < len(challenge_params) else 0
+        level.challenges.append((type_id, param))
 
     level.normalize_arrays()
     level.ensure_borders()
@@ -153,6 +169,16 @@ def _gd_float(value: float) -> str:
 
 def _gd_bytes(values: list[int]) -> str:
     return "PackedByteArray(%s)" % ", ".join(str(1 if int(v) else 0) for v in values)
+
+
+def _gd_string_array(values: list[str]) -> str:
+    """Mảng chuỗi kiểu Godot: PackedStringArray("a", "b") — rỗng là PackedStringArray()"""
+    return "PackedStringArray(%s)" % ", ".join(_gd_string(v) for v in values)
+
+
+def _gd_int_array(values: list[int]) -> str:
+    """Mảng số nguyên kiểu Godot: PackedInt32Array(1, 2) — rỗng là PackedInt32Array()"""
+    return "PackedInt32Array(%s)" % ", ".join(str(int(v)) for v in values)
 
 
 def _gd_mask(level: LevelModel) -> str:
@@ -202,3 +228,35 @@ def _parse_bytes(value: str) -> list[int]:
     if not body:
         return []
     return [1 if int(part.strip()) else 0 for part in body.split(",") if part.strip()]
+
+
+def _parse_string_array(value: str) -> list[str]:
+    match = re.search(r"PackedStringArray\((.*)\)", value, re.DOTALL)
+    if not match:
+        return []
+    body = match.group(1).strip()
+    if not body:
+        return []
+    return [
+        _parse_gd_string('"%s"' % token)
+        for token in re.findall(r'"((?:[^"\\]|\\.)*)"', body)
+    ]
+
+
+def _parse_int_array(value: str) -> list[int]:
+    match = re.search(r"PackedInt32Array\((.*)\)", value, re.DOTALL)
+    if not match:
+        return []
+    body = match.group(1).strip()
+    if not body:
+        return []
+    out: list[int] = []
+    for part in body.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        try:
+            out.append(int(part))
+        except ValueError:
+            out.append(0)
+    return out

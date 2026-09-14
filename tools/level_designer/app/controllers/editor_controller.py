@@ -20,6 +20,7 @@ from ..config import (
     TOOL_WALL_HIDDEN,
     TOOL_WALL_VISIBLE,
 )
+from ..models import challenges as chal
 from ..models.level import Cell, LevelModel, WallRef
 from ..services import solver
 from .events import (
@@ -232,6 +233,61 @@ class EditorController:
         self._set_dirty(True)
         self.events.emit(EV_MODEL_UPDATED)
         self.events.emit(EV_STATUS, "Đã chuyển board về hình chữ nhật đầy đủ")
+
+    # ------------------------------------------------------------------
+    # THỬ THÁCH (tối đa 3 / màn) — xem app/models/challenges.py
+    # ------------------------------------------------------------------
+    def set_challenge(self, slot: int, type_id: str, param: int = 0) -> None:
+        """Đặt thử thách ở vị trí `slot` (0..2)."""
+        if not chal.is_valid(type_id):
+            self.events.emit(EV_STATUS, "Loại thử thách không hợp lệ: %s" % type_id)
+            return
+        before = self.level.snapshot()
+        if not self.level.set_challenge(slot, type_id, int(param)):
+            return
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS, "Thử thách %d: %s" % (slot + 1, chal.label(type_id)))
+
+    def set_challenge_param(self, slot: int, param: int) -> None:
+        """Đổi tham số của thử thách đang có ở `slot`."""
+        if slot < 0 or slot >= len(self.level.challenges):
+            return
+        type_id = self.level.challenges[slot][0]
+        if not chal.has_param(type_id):
+            return
+        self.set_challenge(slot, type_id, int(param))
+
+    def clear_challenge(self, slot: int) -> None:
+        """Bỏ thử thách ở vị trí `slot`."""
+        before = self.level.snapshot()
+        if not self.level.clear_challenge(slot):
+            return
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS, "Đã bỏ thử thách %d" % (slot + 1))
+
+    def reset_challenges(self) -> None:
+        """Về chế độ mặc định: game tự dùng 3 thử thách chuẩn."""
+        before = self.level.snapshot()
+        if not self.level.clear_all_challenges():
+            self.events.emit(EV_STATUS, "Màn đang dùng thử thách mặc định")
+            return
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS, "Đã về 3 thử thách mặc định (không đâm tường · đủ bước · đủ thời gian)")
+
+    def fill_default_challenges(self) -> None:
+        """Ghi rõ 3 thử thách mặc định vào màn (theo max_steps/par_time hiện tại)."""
+        before = self.level.snapshot()
+        self.level.challenges = self.level.default_challenges()
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS, "Đã ghi 3 thử thách mặc định vào màn")
 
     def invert_row_cells(self, row: int) -> None:
         """Đảo trạng thái ô của cả 1 hàng (tiện vẽ polyomino nhanh)."""

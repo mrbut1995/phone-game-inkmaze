@@ -22,6 +22,8 @@ var game_state: GameState = null
 var _pending_bonus := 0
 var _floor_finished := false
 var _run_active := false
+## Dữ liệu đầu vào để chấm Thử thách (tái dùng, không cấp phát mỗi frame)
+var _challenge_ctx := ChallengeContext.new()
 
 
 var game_mode: BaseGameMode:
@@ -82,7 +84,10 @@ func _start_floor(floor_number: int) -> void:
 		game_state.floor_number = floor_number
 	# Chốt ngưỡng 3 thử thách của màn/tầng mới (số bước thiết kế đã nạp trong setup_floor)
 	if challenge_controller != null:
-		challenge_controller.setup_for_floor(game_mode_controller.game_mode.initial_steps)
+		challenge_controller.setup_for_floor(
+			game_mode_controller.game_mode.initial_steps,
+			game_mode_controller.game_mode.current_level_data
+		)
 	if timer_controller != null:
 		timer_controller.start_floor()
 	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
@@ -127,10 +132,18 @@ func _update_hud() -> void:
 		game_state.score,
 		extra_info
 	)
-	# Cập nhật trạng thái sống của 3 thử thách (chưa chốt Sao khi đang chơi)
+	# Cập nhật trạng thái sống của các thử thách (chưa chốt Sao khi đang chơi)
 	if challenge_controller != null:
 		var floor_time: float = timer_controller.floor_elapsed if timer_controller != null else game_state.elapsed_time
-		challenge_controller.refresh(game_state, floor_time)
+		_challenge_ctx.set_values(
+			game_state,
+			game_mode_controller.game_mode,
+			grid_controller.maze if grid_controller != null else null,
+			grid_controller.path if grid_controller != null else [],
+			floor_time,
+			false
+		)
+		challenge_controller.refresh(_challenge_ctx)
 
 
 func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
@@ -193,7 +206,8 @@ func _complete_floor() -> void:
 	var challenge_rows: Array[Dictionary] = []
 	var stars := 0
 	if challenge_controller != null:
-		challenge_controller.refresh(game_state, floor_time, true)
+		_challenge_ctx.final = true
+		challenge_controller.refresh(_challenge_ctx)
 		challenge_rows = challenge_controller.rows()
 		stars = challenge_controller.stars()
 
@@ -238,7 +252,15 @@ func _game_over() -> void:
 	var stars := 0
 	var floor_time: float = timer_controller.floor_elapsed if timer_controller != null else 0.0
 	if challenge_controller != null and game_state != null:
-		challenge_controller.refresh(game_state, floor_time, true)
+		_challenge_ctx.set_values(
+			game_state,
+			game_mode_controller.game_mode,
+			grid_controller.maze if grid_controller != null else null,
+			grid_controller.path if grid_controller != null else [],
+			floor_time,
+			true
+		)
+		challenge_controller.refresh(_challenge_ctx)
 		challenge_rows = challenge_controller.rows()
 		stars = challenge_controller.stars()
 
@@ -389,6 +411,7 @@ func undo() -> void:
 		Sfx.play(Sfx.UNDO)
 		if game_state != null:
 			game_state.refund_step(1)
+			game_state.undos_used += 1     # thử thách "không dùng hoàn tác"
 			_update_hud()
 
 
@@ -397,6 +420,8 @@ func hint() -> void:
 		# SFX: chuông gió khi bấm Gợi ý
 		Sfx.play(Sfx.HINT)
 		grid_controller.give_hint()
+		if game_state != null:
+			game_state.hints_used += 1     # thử thách "không dùng gợi ý"
 
 
 func _on_pause_toggled(is_paused: bool) -> void:

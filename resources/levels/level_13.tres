@@ -20,4 +20,6 @@ v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0
 h_walls = PackedByteArray(1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1)
 h_walls_visible = PackedByteArray(1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1)
 cell_mask = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1)
+challenge_types = PackedStringArray("no_wall", "len_min_percent", "no_undo")
+challenge_params = PackedInt32Array(0, 60, 0)
 custom_cell_values = {}
