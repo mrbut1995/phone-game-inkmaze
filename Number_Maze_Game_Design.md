@@ -277,7 +277,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Di chuyển** | 4 hướng · mỗi ô **chỉ tính điểm 1 lần** (quay lại ô cũ không cộng thêm) |
 | **Thắng** | Tới F với tổng điểm thỏa điều kiện `SUM < / > / = Target` (luôn tồn tại ít nhất 1 nghiệm đúng) |
 | **Thua** | Hết đường hợp lệ / hết thời gian (không có hazard) |
-| **HUD** | `nodes/hud/sum_path_hud.tscn` (`SumPathHUD`): **TỔNG HIỆN TẠI — TOÁN TỬ — MỤC TIÊU** + **THỜI GIAN** · mockup `mockup/matchup_sum_path.svg` |
+| **HUD** | `nodes/hud/sum_path_hud.tscn` (`SumPathHUD`) — **thiết kế mới 2026-02**: **THỜI GIAN** (250×156) + thẻ **CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI** (715×156) gồm **TỔNG HIỆN TẠI — con dấu TOÁN TỬ — MỤC TIÊU PHẢI ĐẠT** + thanh tiến độ + chip trạng thái (**KHÔNG có thẻ THỬ THÁCH** — thử thách chốt ở popup kết quả) · mockup `mockup/matchup_sum_path.svg` |
 | **Chi tiết** | ✨ **➕ Sum Path** — Không có tường. Số trên ô là điểm (1..9). Thắng khi tới F với tổng điểm thỏa `SUM < / > / = Target`. Mỗi ô chỉ tính điểm 1 lần. Luôn đảm bảo tồn tại ít nhất 1 nghiệm đúng. **HUD hiện 3 thẻ theo đúng thứ tự `TỔNG HIỆN TẠI — TOÁN TỬ — MỤC TIÊU`** (thẻ TOÁN TỬ nhỏ 112×112 nằm chính giữa, đè lên mép 2 thẻ kia; MỤC TIÊU chỉ hiện con số) thay cho panel MISSION cũ. |
 
 ### 5.8. ⏳ Countdown Cost
@@ -290,7 +290,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Di chuyển** | 4 hướng · bước vào ô nào trừ đúng chi phí ô đó · đâm tường về S và trừ chi phí ô đích |
 | **Thắng** | Tới F trong ngân sách (ngân sách = đường rẻ nhất + dự phòng ⇒ luôn thắng được nếu chọn đường rẻ) |
 | **Thua** | **Hết bước** |
-| **HUD** | `nodes/hud/level_mode.tscn` (`LevelHUD`) — thử thách thứ 2 (`steps_max`) đóng vai ngân sách bước · mockup `mockup/matchup_countdown_cost.svg` |
+| **HUD** | `nodes/hud/countdown_hud.tscn` (`CountdownHUD`) — **thiết kế mới 2026-02**: **THỜI GIAN** (250×156) + **SỔ THEO DÕI NGÂN SÁCH BƯỚC CHÂN** (715×156) gồm **NGÂN SÁCH CÒN** (`còn/tổng`) · **ĐÃ TIÊU TỐN** (`-N BƯỚC` + số ô đã đi) · **GIÁ CƯỚC MỖI Ô** (chip RẺ/ĐẮT theo độ khó + dự phòng) + **dải phân đoạn** (mỗi đoạn = 1 bước) — **KHÔNG có thẻ THỬ THÁCH** · mockup `mockup/matchup_countdown_cost.svg` |
 | **Chi tiết** | ✨ **⏳ Countdown Cost** — **Số trên ô = CHI PHÍ BƯỚC khi bước vào ô đó**, hoàn toàn **không liên quan tới số tường quanh ô** (khác Play / Dungeon / Fog of War). Mọi ô trừ S/F đều có số ≥ 1 và luôn hiện số. Bước vào ô nào thì trừ đúng chi phí của ô đó; đâm tường: về S và trừ chi phí của ô đích vừa đâm vào. Ngân sách bước được tính đủ cho **đường đi rẻ nhất + khoảng dự phòng**, nên màn luôn thắng được nếu chọn đúng đường ít tốn kém; đi lệch qua các ô đắt sẽ hết bước. |
 
   | Độ khó | Lưới | Chi phí mỗi ô | Dự phòng | Ngân sách tối thiểu |
@@ -312,8 +312,8 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Thắng** | Tới F trước khi mực phai hết — phải đi **đường ngắn nhất** |
 | **Thua** | **Hết lối đi mà chưa tới F** → popup thua tiêu đề riêng `HẾT ĐƯỜNG ĐI!` (`STR_GAME_OVER_NO_PATH`) |
 | **Hồi sinh** | Quay lại bước trước đó — **mực hồi lại** đúng 1 điểm cho mọi ô |
-| **HUD** | `nodes/hud/level_mode.tscn` (`LevelHUD`) · mockup `mockup/matchup_fading_ink.svg` |
-| **Chi tiết** | * **💧 Fading Ink (Mực Phai)** — *(thay cho Area Maze — đã BỎ từ 2026-11)* **Không có tường trong bàn.** Con số trên ô **KHÔNG phải số tường** mà là **MỰC của riêng ô đó** (mực ban đầu 2..9). **Người chơi chỉ được đi vào ô còn mực**; ô đã phai hết mực coi như ô trống — không đi vào được (bị chặn, KHÔNG mất bước, ô đó mờ đi và mất số). **MỖI BƯỚC ĐI làm MỌI ô trên bàn nhạt đi đúng 1 điểm mực** (không riêng ô vừa đi), nên phải tìm **đường ngắn nhất** tới F trước khi lối đi biến mất; đi vòng sẽ tự bịt đường của chính mình. Bàn luôn được sinh sao cho **đường ngắn nhất có đủ mực để tới F** (các ô trên đường đi được cấp mực theo số bước cần tới chúng, ô ngoài đường nhận mực thấp làm lối tắt dự phòng). **Đồng hồ đếm thời gian như thường**, không giới hạn số bước. **Hết lối đi mà chưa tới F = THUA** (popup thua hiện tiêu đề riêng `HẾT ĐƯỜNG ĐI!`). Nút **UNDO** lùi 1 bước thì **mực hồi lại** đúng 1 điểm cho mọi ô (trạng thái mực được tính lại từ số bước đã đi, không cần lưu lịch sử). HUD dùng bản mặc định (**THỬ THÁCH** + **THỜI GIAN**) — không có thẻ riêng. |
+| **HUD** | `nodes/hud/fading_ink_hud.tscn` (`FadingInkHUD`) — **thiết kế mới 2026-02**: **THỜI GIAN** (250×156) + **TRẠM ĐO ĐỘ PHAI MỰC** (715×156) gồm **BƯỚC ĐÃ ĐI** (`N` + `-N MỰC`) · **QUANG PHỔ ĐẬM NHẠT CỦA MỰC** (4 mức) · cảnh báo **N Ô ĐÃ CẠN MỰC** (ẩn khi chưa có ô nào cạn) — **KHÔNG có thẻ THỬ THÁCH** · mockup `mockup/matchup_fading_ink.svg` |
+| **Chi tiết** | * **💧 Fading Ink (Mực Phai)** — *(thay cho Area Maze — đã BỎ từ 2026-11)* **Không có tường trong bàn.** Con số trên ô **KHÔNG phải số tường** mà là **MỰC của riêng ô đó** (mực ban đầu 2..9). **Người chơi chỉ được đi vào ô còn mực**; ô đã phai hết mực coi như ô trống — không đi vào được (bị chặn, KHÔNG mất bước, ô đó mờ đi và mất số). **MỖI BƯỚC ĐI làm MỌI ô trên bàn nhạt đi đúng 1 điểm mực** (không riêng ô vừa đi), nên phải tìm **đường ngắn nhất** tới F trước khi lối đi biến mất; đi vòng sẽ tự bịt đường của chính mình. Bàn luôn được sinh sao cho **đường ngắn nhất có đủ mực để tới F** (các ô trên đường đi được cấp mực theo số bước cần tới chúng, ô ngoài đường nhận mực thấp làm lối tắt dự phòng). **Đồng hồ đếm thời gian như thường**, không giới hạn số bước. **Hết lối đi mà chưa tới F = THUA** (popup thua hiện tiêu đề riêng `HẾT ĐƯỜNG ĐI!`). Nút **UNDO** lùi 1 bước thì **mực hồi lại** đúng 1 điểm cho mọi ô (trạng thái mực được tính lại từ số bước đã đi, không cần lưu lịch sử). HUD dùng bản **thiết kế mới**: thẻ **THỜI GIAN** + **TRẠM ĐO ĐỘ PHAI MỰC** (số bước đã đi · số mực đã phai · quang phổ đậm nhạt · cảnh báo ô cạn mực) — xem 10.2b. |
 ### 5.10. Popup kết quả & Hồi sinh khi thua (Revive)
 
 | Cổng chơi | Mockup popup thua | Nội dung chính | Con dấu (stamp) | Nút HỒI SINH |
@@ -473,11 +473,11 @@ Cơ chế: `GameManager.prepare_mode_run(mode_id, difficulty, test_run, floor_ov
 | Minesweeper Maze | `minesweeper` | `nodes/hud/minesweep_hud.tscn` (MinesweepHUD) | `mockup/matchup_minesweeper.svg` | THỜI GIAN + BOM CÒN LẠI |
 | Blind Memory Maze | `blind_memory` | `nodes/hud/blind_memory_hud.tscn` (BlindMemoryHUD) | `mockup/matchup_blind_memory.svg` | THỜI GIAN + GHI NHỚ VỊ TRÍ TƯỜNG (+ popup đếm ngược) |
 | Fog of War Maze | `fog_of_war` | `nodes/hud/level_mode.tscn` | `mockup/matchup_fog_of_war.svg` | THỜI GIAN + THỬ THÁCH |
-| Sum Path | `sum_path` | `nodes/hud/sum_path_hud.tscn` (SumPathHUD) | `mockup/matchup_sum_path.svg` | THỜI GIAN + TỔNG HIỆN TẠI + TOÁN TỬ + MỤC TIÊU |
-| Countdown Cost | `countdown_cost` | `nodes/hud/level_mode.tscn` | `mockup/matchup_countdown_cost.svg` | THỜI GIAN + THỬ THÁCH |
-| Fading Ink | `fading_ink` | `nodes/hud/level_mode.tscn` | `mockup/matchup_fading_ink.svg` | THỜI GIAN + THỬ THÁCH |
+| Sum Path | `sum_path` | `nodes/hud/sum_path_hud.tscn` (SumPathHUD) | `mockup/matchup_sum_path.svg` | THỜI GIAN + CÂN BẰNG TỔNG ĐIỂM (TỔNG — TOÁN TỬ — MỤC TIÊU + tiến độ) |
+| Countdown Cost | `countdown_cost` | `nodes/hud/countdown_hud.tscn` (CountdownHUD) | `mockup/matchup_countdown_cost.svg` | THỜI GIAN + SỔ NGÂN SÁCH BƯỚC CHÂN |
+| Fading Ink | `fading_ink` | `nodes/hud/fading_ink_hud.tscn` (FadingInkHUD) | `mockup/matchup_fading_ink.svg` | THỜI GIAN + TRẠM ĐO ĐỘ PHAI MỰC |
 
-> 4 chế độ (`time_attack`, `countdown_cost`, `fog_of_war`, `fading_ink`) **dùng chung `LevelHUD`** nên mockup của chúng chỉ khác phần bàn cờ + chú thích luật; `matchup_level.svg` (Play) vẫn là mockup gốc cho layout này.
+> 2 chế độ (`time_attack`, `fog_of_war`) **dùng chung `LevelHUD`** nên mockup của chúng chỉ khác phần bàn cờ + chú thích luật; `matchup_level.svg` (Play) vẫn là mockup gốc cho layout này. **3 chế độ `sum_path` · `countdown_cost` · `fading_ink` đã chuyển sang HUD thiết kế mới (2026-02)** — mỗi chế độ 1 scene HUD riêng, không còn dùng `LevelHUD` và **không hiện thẻ THỬ THÁCH trên HUD** (thử thách/Sao vẫn được tính đủ và hiện ở popup thắng/thua).
 
 ### 10.2. Vị trí & kích thước thẻ (đo trực tiếp từ scene)
 
@@ -497,6 +497,33 @@ Khung HUD: `Information` = Control tại `(50, 175)` kích thước `980 × 249`
 
 > Toạ độ trên **khớp với scene thật** (kiểm tra bằng `tools/mockup/gen_matchup.py --dump`), thẻ TOÁN TỬ vẽ SAU cùng nên đè lên mép thẻ TỔNG và thẻ MỤC TIÊU (dạng `12 = 23`).
 
+### 10.2b. HUD thiết kế mới — Sum Path · Countdown Cost · Fading Ink (2026-02)
+
+3 chế độ này dùng **cùng một khung HUD mới**: 2 thẻ cao **156px** đặt tại `y = 178` trong khung `Information` `(50,175)-(1030,424)` (thẻ thời gian ở trái, thẻ chế độ rộng 715 ở phải).
+
+| Thẻ | Kích thước | Vị trí (trong khung) | Art | Nội dung động |
+|---|---|---|---|---|
+| **THỜI GIAN** | 250 × 156 | (0, 3) | `card_time_tall.svg` | `Time/Value` + dòng phụ theo chế độ (`STR_HUD_TIME_SUPPORT` “Phụ trợ xếp hạng” · `STR_HUD_TIME_FREE` “Không giới hạn”) |
+| **SỔ NGÂN SÁCH BƯỚC CHÂN** | 715 × 156 | (265, 3) | `card_budget_sheet.svg` + `chip_price_cheap/pricey.svg` + `budget_segment_on/off.svg` | NGÂN SÁCH CÒN `còn/tổng` · ĐÃ TIÊU TỐN `-N` (+ số ô đã đi) · GIÁ CƯỚC MỖI Ô (chip RẺ/ĐẮT theo độ khó + dự phòng) · **dải phân đoạn** (`CountdownHUD`) |
+| **TRẠM ĐO ĐỘ PHAI MỰC** | 715 × 156 | (265, 3) | `card_ink_meter.svg` + `bar_ink_warning.svg` | BƯỚC ĐÃ ĐI (`NN` + `(-N MỰC)`) · quang phổ 4 mức · cảnh báo `N Ô ĐÃ CẠN MỰC` (tự ẩn khi chưa có ô nào cạn) (`FadingInkHUD`) |
+| **CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI** | 715 × 156 | (265, 3) | `card_sum_balance.svg` + `bar_sum_fill.svg` + `bar_sum_ticks.svg` | TỔNG HIỆN TẠI (+ số ô) · con dấu TOÁN TỬ `< > =` · MỤC TIÊU · chip `CẦN THÊM / CÒN ĐƯỢC / ĐANG VƯỢT / ĐÃ ĐỦ` · thanh tiến độ (`SumPathHUD`) |
+
+- Cả 3 thẻ đều theo ngôn ngữ **sổ tay**: viền màu theo chế độ (cam `#C2410C` · mực `#1D4E72` · xanh `#3D83AE`), lề dọc, dòng kẻ ô ly mờ; số liệu dùng theme variation `Hud*` trong `theme_text.tres`.
+- **Dải phân đoạn ngân sách**: mỗi bước = 1 phân đoạn (đã dùng = xám `#E2E8F0`, còn lại = cam `#EA580C`); bề rộng phân đoạn **tự co** để cả dải luôn vừa 654px khi ngân sách > 16 bước.
+- 3 chế độ này **không hiện thẻ THỬ THÁCH** trên HUD (thử thách/Sao vẫn tính đủ, hiện ở popup kết quả) — thay hẳn bố cục cũ `THỜI GIAN 250×138 + THỬ THÁCH 720×246`; 6 chế độ còn lại vẫn dùng bảng 10.2.
+
+### 10.2c. Panel HƯỚNG DẪN LUẬT CHƠI (Hint Guide)
+
+| Thành phần | Vị trí | Ghi chú |
+|---|---|---|
+| `HintGuide` (`Control`) trong `scenes/game.tscn` | (50, 1424) 980×90 | nằm **dưới mép giấy bàn cờ** (~1414) và **trên thanh nút** (1528); khai báo `index="6"` để vẫn nằm dưới `Popups` |
+| `Bg` | full thẻ | `assets/images/game/panel_hint_guide.svg` (giấy + viền `#6EA0C8` + lề đỏ) |
+| `Icon` | (46, 23) 44×44 | `assets/images/icons/icon_bulb.svg` — bóng đèn nét cam (**không dùng emoji 💡**) |
+| `Text` | (106, 0) 844×90 | 1 dòng · variation `HintGuideText` (22px Be Vietnam Pro ExtraBold `#244E6E`) |
+
+- Nội dung đổi theo chế độ: `scripts/nodes/game/hint_guide.gd` → `HintGuide.show_mode()` tra khoá `STR_HINT_<MODE_ID>` (9 chế độ, `string_extra.csv`); chế độ chưa có khoá thì fallback `BaseGameMode.mode_description`. `GameScene.switch_mode()` gọi `_refresh_hint_guide()` mỗi lần đổi chế độ.
+- Chuỗi gợi ý phải **vừa đúng 1 dòng** trong 844px — test `scripts/test_case/test_hud_modes.gd` đo bằng **font thật của theme** (không đếm ký tự).
+
 ### 10.3. Sinh lại mockup
 
 ```bash
@@ -506,7 +533,7 @@ python tools/mockup/gen_matchup.py --dump     # in toạ độ node thật của
 ```
 
 - Tool đọc **toạ độ thật** từ `nodes/hud/*.tscn` + `scenes/game.tscn` (Board `(41,420)-(1061,1440)`, thanh nút `(73,1528)-(1031,1688)`, Status `(50,85)`).
-- **Không ghi đè** `matchup_level.svg` / `matchup_dungeon.svg` (bản vẽ tay có art bàn cờ chi tiết của bản thiết kế gốc).
+- Hằng `HAND_DRAWN` trong tool liệt kê **5 mockup art tay của user** (`matchup_level` · `matchup_dungeon` · `matchup_sum_path` · `matchup_countdown_cost` · `matchup_fading_ink`) → chạy tool sẽ **BO QUA** 5 file này, chỉ sinh lại 4 mockup còn lại (time_attack · minesweeper · blind_memory · fog_of_war).
 - Mockup mang **bảng chú thích đánh số**: badge số đặt ngay trên thành phần cần giải thích + danh sách chú thích dưới thanh nút.
 
 ---

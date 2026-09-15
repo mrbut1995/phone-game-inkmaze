@@ -168,6 +168,17 @@ func get_hud_extra_info() -> String:
 	return "MỰC PHAI: %d" % moves_made
 
 
+## Số ô đã cạn mực (bị chặn hoàn toàn) — HUD "TRẠM ĐO ĐỘ PHAI MỰC" hiện cảnh báo
+func count_exhausted() -> int:
+	var total := 0
+	for pos: Vector2i in _ink.keys():
+		if pos == _start_pos or pos == _end_pos:
+			continue
+		if ink_left(pos) <= 0:
+			total += 1
+	return total
+
+
 func _refresh_ink(grid_view: Control) -> void:
 	if grid_view != null and grid_view.has_method("refresh_cell_texts"):
 		grid_view.call("refresh_cell_texts", true)

@@ -10,7 +10,7 @@ Sinh mockup/matchup_<mode>.svg cho từng chế độ chơi (HUD matchup).
 
 Chạy:  python tools/mockup/gen_matchup.py            (ghi vào mockup/)
        python tools/mockup/gen_matchup.py --list     (liệt kê mode có mockup)
-Ghi chú: KHÔNG ghi đè matchup_level.svg / matchup_dungeon.svg (art tay của user).
+Ghi chú: KHÔNG ghi đè các mockup art tay của user — xem HAND_DRAWN bên dưới.
 """
 
 from __future__ import annotations
@@ -426,6 +426,17 @@ DEFAULT_ROWS = [("Không đâm vào tường", "✓ ĐẠT", True),
                 ("Đi không quá 14 bước", "0/14 bước", False),
                 ("Về đích dưới 42 giây", "còn 42s", False)]
 
+# Mockup do USER vẽ tay (thiết kế mới) — tool KHÔNG được ghi đè.
+# level/dungeon: art tay gốc · sum_path/countdown_cost/fading_ink: bản thiết kế lại 2026-02
+# (HUD mới: thẻ THỜI GIAN 250x156 + thẻ chế độ 715x156 + panel HƯỚNG DẪN LUẬT CHƠI dưới bàn cờ).
+HAND_DRAWN = {
+    "matchup_level",
+    "matchup_dungeon",
+    "matchup_sum_path",
+    "matchup_countdown_cost",
+    "matchup_fading_ink",
+}
+
 MODES = [
     {
         "id": "time_attack",
@@ -659,10 +670,14 @@ def main(argv=None):
         return 0
 
     for mode in MODES:
+        name = "matchup_%s" % mode["id"]
+        if name in HAND_DRAWN:
+            print("  [BO QUA] %s.svg (mockup nguoi dung ve tay)" % name)
+            continue
         body = build(mode)
-        path = write_svg("matchup_%s.svg" % mode["id"], mode["comment"], body)
+        path = write_svg("%s.svg" % name, mode["comment"], body)
         print("  [OK] %s" % os.path.relpath(path, ROOT).replace("\\", "/"))
-    print("Xong: %d mockup (khong ghi de matchup_level/dungeon)." % len(MODES))
+    print("Xong: mockup matchup (bo qua %d ban ve tay)." % len(HAND_DRAWN))
     return 0
 
 

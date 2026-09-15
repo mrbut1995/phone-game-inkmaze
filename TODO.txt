@@ -569,6 +569,39 @@
 #       Google Play Games chỉ cần thay thân RankingManager._build_board(), UI không đổi.
 
 # ----------------------------------------------------------------------------
+# GIAO DIỆN 3 MODE MỚI (SUM PATH · COUNTDOWN COST · FADING INK) + PANEL HINT GUIDE — 2026-02
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-02): theo 3 mockup mới matchup_{sum_path,countdown_cost,fading_ink}.svg
+#     - Khung HUD mới (2 thẻ cao 156 đặt tại y=178 trong khung Information (50,175)-(1030,424)):
+#       THỜI GIAN 250x156 (card_time_tall.svg) + thẻ chế độ 715x156 tại (265,3).
+#     - 3 scene HUD riêng (không còn dùng LevelHUD; KHÔNG hiện thẻ THỬ THÁCH trên HUD — thử thách/Sao
+#       vẫn tính đủ và hiện ở popup kết quả):
+#       * countdown_hud.tscn (CountdownHUD) — SỔ THEO DÕI NGÂN SÁCH BƯỚC CHÂN: NGÂN SÁCH CÒN (số dư/tổng) ·
+#         ĐÃ TIÊU TỐN (-N bước + số ô đã đi) · GIÁ CƯỚC MỖI Ô (chip RẺ/ĐẮT theo độ khó; easy thì ẩn chip đắt ·
+#         hard hiện "3-4: ĐẮT" · dự phòng +N bước) · dải phân đoạn (mỗi đoạn = 1 bước, bề rộng tự co khi > 16).
+#       * fading_ink_hud.tscn (FadingInkHUD) — TRẠM ĐO ĐỘ PHAI MỰC: BƯỚC ĐÃ ĐI + (-N MỰC) · quang phổ 4 mức
+#         (≥3 ĐẬM · 2 RÕ · 1 NGUY CẤP · 0 CẠN KHÓA) · cảnh báo "N Ô ĐÃ CẠN MỰC" (tự ẩn khi chưa có ô cạn).
+#       * sum_path_hud.tscn (SumPathHUD) — CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI: TỔNG HIỆN TẠI (+ số ô đã đi) ·
+#         con dấu TOÁN TỬ (< > =) · MỤC TIÊU · chip CẦN THÊM/CÒN ĐƯỢC/ĐANG VƯỢT/ĐÃ ĐỦ · thanh tiến độ + vạch mốc.
+#     - API mode thêm cho HUD: CountdownCostGameMode.cost_range()/budget_reserve() ·
+#       FadingInkGameMode.count_exhausted(); UIController.update_hud(...) nhận thêm `moves`
+#       (= game_state.floor_moves) để HUD hiện "đã đi N ô".
+#     - PANEL HINT GUIDE: node `HintGuide` (50,1424) 980x90 trong scenes/game.tscn — nằm dưới mép giấy bàn cờ,
+#       trên thanh nút, index=6 (vẫn dưới Popups); art panel_hint_guide.svg + icon_bulb.svg (KHÔNG dùng emoji);
+#       nội dung theo chế độ qua khoá STR_HINT_<MODE_ID> (đủ 9 chế độ) — HintGuide.show_mode() được
+#       GameScene.switch_mode() gọi; chế độ không có khoá thì fallback mode_description.
+#     - Asset mới: assets/images/game/{card_time_tall · card_budget_sheet · card_ink_meter · card_sum_balance ·
+#       budget_segment_on/off · chip_price_cheap/pricey · bar_sum_fill · bar_sum_ticks · bar_ink_warning ·
+#       panel_hint_guide}.svg + icons/icon_bulb.svg + 32 theme variation Hud*/HintGuideText.
+#     - Test mới scripts/test_case/test_hud_modes.gd (72 check): Hint Guide (9 chế độ, đo font THẬT để chắc
+#       vừa 1 dòng) · Sum Path HUD (tiến độ + chip theo toán tử) · Countdown HUD (ngân sách, phân đoạn, chip giá) ·
+#       Fading Ink HUD (bước/mực, cảnh báo cạn) · kích thước thẻ đúng mockup + map HUD theo mode.
+#     - tools/mockup/gen_matchup.py: thêm hằng HAND_DRAWN (5 mockup vẽ tay: level · dungeon · sum_path ·
+#       countdown_cost · fading_ink) → tool KHÔNG ghi đè các file này nữa.
+#     - GOTCHA test: hàm có `await` bên trong là COROUTINE — gọi mà thiếu `await` thì phần SAU `await`
+#       chạy lệch thời điểm (test HUD từng bắt nhầm HUD của chế độ khác).
+
+# ----------------------------------------------------------------------------
 # DEBUG CONSOLE: TEST 7 CHẾ ĐỘ SPECIAL — 2026-02
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM (2026-02): mục "SPECIAL MODES (TEST)" trong màn Debug (F9)

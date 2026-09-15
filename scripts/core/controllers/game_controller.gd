@@ -175,7 +175,8 @@ func _update_hud() -> void:
 		game_state.elapsed_time,
 		game_state.floor_number,
 		extra_info,
-		game_mode_controller.game_mode
+		game_mode_controller.game_mode,
+		game_state.floor_moves
 	)
 	# Cập nhật trạng thái sống của các thử thách (chưa chốt Sao khi đang chơi)
 	if challenge_controller != null:

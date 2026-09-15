@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 715 156" width="715" height="156">
+  <!-- Thẻ TRẠM ĐO ĐỘ PHAI MỰC (mode Fading Ink) — 715x156, mockup/matchup_fading_ink.svg
+       Phần TĨNH: khung, lề mực, dòng kẻ, lọ mực, vạch chia, 4 ô quang phổ. -->
+  <rect width="715" height="156" rx="22" fill="#1D4E72"/>
+  <rect x="1.5" y="1.5" width="712" height="153" rx="20.5" fill="#FEFDFA"/>
+  <!-- Lề mực xanh đậm -->
+  <line x1="18" y1="4" x2="18" y2="152" stroke="#1D4E72" stroke-width="3"/>
+  <g stroke="#9FC0D6" stroke-width="1" opacity="0.3">
+    <line x1="30" y1="42" x2="695" y2="42"/>
+    <line x1="30" y1="92" x2="695" y2="92"/>
+    <line x1="30" y1="130" x2="695" y2="130"/>
+  </g>
+  <!-- Lọ mực + giọt mực -->
+  <g>
+    <rect x="36" y="50" width="46" height="54" rx="8" fill="#E8F1F7" stroke="#1D4E72" stroke-width="2.5"/>
+    <rect x="44" y="40" width="30" height="10" rx="3" fill="#D2E3EF" stroke="#1D4E72" stroke-width="2"/>
+    <rect x="40" y="70" width="38" height="30" rx="5" fill="#256286"/>
+    <path d="M 59 58 C 55 63 54 67 59 69 C 64 67 63 63 59 58 Z" fill="#D84444"/>
+  </g>
+  <!-- Vạch chia dọc -->
+  <line x1="285" y1="18" x2="285" y2="138" stroke="#D1E2ED" stroke-width="1.8"/>
+  <!-- 4 ô quang phổ đậm nhạt của mực -->
+  <rect x="305" y="46" width="88" height="26" rx="6" fill="#1C3B5E"/>
+  <rect x="399" y="46" width="88" height="26" rx="6" fill="#4B7E9F"/>
+  <rect x="493" y="46" width="88" height="26" rx="6" fill="#E2A65E"/>
+  <rect x="587" y="46" width="98" height="26" rx="6" fill="#D1D9E0" stroke="#94A3B8" stroke-width="1.2"/>
+</svg>

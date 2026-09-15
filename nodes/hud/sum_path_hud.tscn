@@ -1,144 +1,182 @@
-[gd_scene format=3 uid="uid://bu7hccn663n2w"]
+[gd_scene load_steps=8 format=3 uid="uid://bu7hccn663n2w"]
 
 [ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/hud/sum_path_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" path="res://assets/images/game/card_time_slip.svg" id="3_time"]
-[ext_resource type="Texture2D" path="res://assets/images/game/card_sum.svg" id="4_sum"]
-[ext_resource type="Texture2D" path="res://assets/images/game/card_time_slip.svg" id="5_target"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="6_card_label"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_information_subvalue.tres" id="7_time_value"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="8_sum_label"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="9_sum_value"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_information_value.tres" id="10_target_value"]
-[ext_resource type="Texture2D" path="res://assets/images/game/card_op.svg" id="11_op"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_time_tall.svg" id="3_time"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_sum_balance.svg" id="4_sheet"]
+[ext_resource type="Texture2D" path="res://assets/images/game/bar_sum_fill.svg" id="5_fill"]
+[ext_resource type="Texture2D" path="res://assets/images/game/bar_sum_ticks.svg" id="6_ticks"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="7_theme"]
 
 [node name="Hud" instance=ExtResource("1_base")]
+theme = ExtResource("7_theme")
 script = ExtResource("2_script")
 
-[node name="Sum" type="TextureRect" parent="." index="0" unique_id=1551752387]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.27600002
-anchor_top = 0.072000004
-anchor_right = 0.72400004
-anchor_bottom = 0.707
-offset_left = -0.480011
-offset_top = 0.071998596
-offset_right = 0.47998047
-offset_bottom = -0.042999268
-texture = ExtResource("4_sum")
-
-[node name="Label" type="Label" parent="Sum" index="0" unique_id=1043611868]
-modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+[node name="Time" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 44.0
-offset_top = 12.0
-offset_right = 380.0
-offset_bottom = 48.0
-text = "STR_HUD_SUM"
-label_settings = ExtResource("8_sum_label")
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="Sum" index="1" unique_id=1641798744]
-modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
-layout_mode = 0
-offset_left = 44.0
-offset_top = 46.0
-offset_right = 380.0
-offset_bottom = 152.0
-text = "0"
-label_settings = ExtResource("9_sum_value")
-vertical_alignment = 1
-
-[node name="Target" type="TextureRect" parent="." index="1" unique_id=94590018]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.74500006
-anchor_top = 0.112
-anchor_right = 1.0
-anchor_bottom = 0.66700006
-offset_left = -0.10003662
-offset_top = 0.11199951
-offset_bottom = -0.08300781
-texture = ExtResource("5_target")
-
-[node name="Label" type="Label" parent="Target" index="0" unique_id=163492088]
-modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
-layout_mode = 0
-offset_left = 34.0
-offset_top = 14.0
-offset_right = 230.0
-offset_bottom = 42.0
-text = "STR_HUD_TARGET"
-label_settings = ExtResource("6_card_label")
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="Target" index="1" unique_id=1239213362]
-modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
-layout_mode = 0
-offset_left = 34.0
-offset_top = 44.0
-offset_right = 230.0
-offset_bottom = 128.0
-text = "0"
-label_settings = ExtResource("10_target_value")
-vertical_alignment = 1
-
-[node name="Time" type="TextureRect" parent="." index="2" unique_id=1299858555]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.124000005
-anchor_right = 0.25500003
-anchor_bottom = 0.679
-offset_top = 0.12399864
-offset_right = 0.099975586
-offset_bottom = -0.070999146
+offset_top = 3.0
+offset_right = 250.0
+offset_bottom = 159.0
+mouse_filter = 2
 texture = ExtResource("3_time")
 
-[node name="Label" type="Label" parent="Time" index="0" unique_id=954222727]
-modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+[node name="Head" type="Label" parent="Time"]
 layout_mode = 0
 offset_left = 32.0
-offset_top = 20.0
-offset_right = 240.0
+offset_top = 12.0
+offset_right = 244.0
 offset_bottom = 46.0
+theme_type_variation = &"HudTimeHead"
 text = "STR_HUD_TIME"
-label_settings = ExtResource("6_card_label")
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Time" index="1" unique_id=1818299324]
-modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+[node name="Value" type="Label" parent="Time"]
 layout_mode = 0
-offset_left = 62.0
-offset_top = 54.0
-offset_right = 240.0
-offset_bottom = 120.0
+offset_left = 60.0
+offset_top = 48.0
+offset_right = 244.0
+offset_bottom = 116.0
+theme_type_variation = &"HudTimeValue"
 text = "0:00"
-label_settings = ExtResource("7_time_value")
 vertical_alignment = 1
 
-[node name="Operator" type="TextureRect" parent="." index="3" unique_id=1551752389]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.677551
-anchor_top = 0.2751
-anchor_right = 0.791837
-anchor_bottom = 0.7249
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_op")
+[node name="Sheet" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 3.0
+offset_right = 980.0
+offset_bottom = 159.0
+mouse_filter = 2
+texture = ExtResource("4_sheet")
 
-[node name="Value" type="Label" parent="Operator" index="0" unique_id=1043611870]
-modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 301.0
+offset_top = 11.0
+offset_right = 760.0
+offset_bottom = 39.0
+theme_type_variation = &"HudSumTitle"
+text = "STR_HUD_SUM_TITLE"
+vertical_alignment = 1
+
+[node name="Sum" type="Control" parent="."]
+layout_mode = 0
+offset_left = 301.0
+offset_top = 39.0
+offset_right = 551.0
+offset_bottom = 113.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Sum"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 10.0
+offset_right = 234.0
+offset_bottom = 34.0
+theme_type_variation = &"HudSumLabel"
+text = "STR_HUD_SUM"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Sum"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 30.0
+offset_right = 150.0
+offset_bottom = 74.0
+theme_type_variation = &"HudSumValue"
+text = "0"
+vertical_alignment = 1
+
+[node name="Note" type="Label" parent="Sum"]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 34.0
+offset_right = 246.0
+offset_bottom = 70.0
+theme_type_variation = &"HudSumNote"
+text = "STR_HUD_SUM_MOVES"
+vertical_alignment = 1
+
+[node name="Operator" type="Control" parent="."]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 46.0
+offset_right = 630.0
+offset_bottom = 106.0
+mouse_filter = 2
+
+[node name="Value" type="Label" parent="Operator"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.12
-anchor_top = 0.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"HudOperator"
 text = "="
-label_settings = ExtResource("10_target_value")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Target" type="Control" parent="."]
+layout_mode = 0
+offset_left = 650.0
+offset_top = 39.0
+offset_right = 955.0
+offset_bottom = 113.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Target"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 286.0
+offset_bottom = 34.0
+theme_type_variation = &"HudTargetLabel"
+text = "STR_HUD_TARGET"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Target"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 30.0
+offset_right = 140.0
+offset_bottom = 74.0
+theme_type_variation = &"HudTargetValue"
+text = "0"
+vertical_alignment = 1
+
+[node name="Need" type="Label" parent="Target"]
+layout_mode = 0
+offset_left = 135.0
+offset_top = 38.0
+offset_right = 290.0
+offset_bottom = 64.0
+theme_type_variation = &"HudNeedChip"
+text = "STR_HUD_SUM_NEED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bar" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_left = 301.0
+offset_top = 125.0
+offset_right = 955.0
+offset_bottom = 143.0
+mouse_filter = 2
+
+[node name="Fill" type="TextureRect" parent="Bar"]
+layout_mode = 0
+offset_right = 654.0
+offset_bottom = 18.0
+mouse_filter = 2
+texture = ExtResource("5_fill")
+expand_mode = 1
+
+[node name="Ticks" type="TextureRect" parent="Bar"]
+layout_mode = 0
+offset_right = 654.0
+offset_bottom = 18.0
+mouse_filter = 2
+texture = ExtResource("6_ticks")
+expand_mode = 1

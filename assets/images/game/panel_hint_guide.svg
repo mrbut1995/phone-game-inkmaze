@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 90" width="980" height="90">
+  <!-- Panel HƯỚNG DẪN LUẬT CHƠI TÓM TẮT — 980x90 (mockup matchup_*.svg mục 6) -->
+  <rect width="980" height="90" rx="18" fill="#6EA0C8"/>
+  <rect x="1.5" y="1.5" width="977" height="87" rx="16.5" fill="#FEFDFA"/>
+  <line x1="32" y1="4" x2="32" y2="86" stroke="#D84444" stroke-width="3"/>
+</svg>

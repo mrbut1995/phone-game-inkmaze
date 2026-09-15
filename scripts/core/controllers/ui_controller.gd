@@ -47,7 +47,8 @@ func update_hud(
 	elapsed_time: float,
 	floor_number: int,
 	extra_info := "",
-	mode: BaseGameMode = null
+	mode: BaseGameMode = null,
+	moves := 0
 ) -> void:
 	if level_label != null:
 		level_label.text = title
@@ -65,6 +66,7 @@ func update_hud(
 			"floor_number": floor_number,
 			"extra": extra_info,
 			"mode": mode,
+			"moves": moves,
 		})
 
 

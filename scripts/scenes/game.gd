@@ -18,6 +18,8 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @onready var tool_wall_btn: TextureButton = $Button/Wall
 @onready var undo_btn: TextureButton = $Button/Undo
 @onready var hint_btn: TextureButton = $Button/Hint
+## Panel HƯỚNG DẪN LUẬT CHƠI TÓM TẮT dưới bàn cờ (đổi nội dung theo chế độ)
+@onready var hint_guide: HintGuide = $HintGuide
 
 @export var game_controller: GameController = null
 @export var grid_controller: GridController = null
@@ -37,6 +39,8 @@ const HUD_DUNGEON := preload("res://nodes/hud/dungeon_mode.tscn")
 const HUD_MINESWEEP := preload("res://nodes/hud/minesweep_hud.tscn")
 const HUD_SUM_PATH := preload("res://nodes/hud/sum_path_hud.tscn")
 const HUD_BLIND_MEMORY := preload("res://nodes/hud/blind_memory_hud.tscn")
+const HUD_COUNTDOWN := preload("res://nodes/hud/countdown_hud.tscn")
+const HUD_FADING_INK := preload("res://nodes/hud/fading_ink_hud.tscn")
 
 #@export var game_mode : BaseGameMode
 
@@ -97,12 +101,26 @@ func switch_mode(mode_name: String, difficulty := "medium") -> void:
 	_apply_hud_for_mode(mode_name)
 	if game_mode_controller != null:
 		game_mode_controller.set_mode_by_name(mode_name, difficulty)
+		_refresh_hint_guide()
 		if game_controller != null:
 			game_controller.start_new_run(_start_floor_for(mode_name))
 	elif game_controller != null:
 		var new_mode: BaseGameMode = StandardGameMode.new(difficulty) if mode_name.to_lower() == "play" else DungeonGameMode.new()
 		game_controller.set_game_mode(new_mode)
+		_refresh_hint_guide()
 		game_controller.start_new_run(_start_floor_for(mode_name))
+
+
+## Panel gợi ý luật chơi dưới bàn cờ: đổi nội dung theo chế độ vừa chọn
+func _refresh_hint_guide() -> void:
+	if hint_guide == null:
+		return
+	var mode: BaseGameMode = null
+	if game_mode_controller != null:
+		mode = game_mode_controller.game_mode
+	elif game_controller != null:
+		mode = game_controller.game_mode
+	hint_guide.show_mode(mode)
 
 
 ## Màn/tầng xuất phát của ván mới.
@@ -138,6 +156,10 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 			return HUD_SUM_PATH
 		"blind_memory":
 			return HUD_BLIND_MEMORY
+		"countdown_cost":
+			return HUD_COUNTDOWN
+		"fading_ink":
+			return HUD_FADING_INK
 		_:
 			return HUD_LEVEL
 
@@ -152,6 +174,10 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return SumPathHUD
 		"blind_memory":
 			return BlindMemoryHUD
+		"countdown_cost":
+			return CountdownHUD
+		"fading_ink":
+			return FadingInkHUD
 		_:
 			return LevelHUD
 

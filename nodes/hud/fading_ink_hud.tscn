@@ -1,0 +1,189 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/hud/fading_ink_hud.gd" id="2_script"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_time_tall.svg" id="3_time"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_ink_meter.svg" id="4_sheet"]
+[ext_resource type="Texture2D" path="res://assets/images/game/bar_ink_warning.svg" id="5_warn"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="6_theme"]
+
+[node name="Hud" instance=ExtResource("1_base")]
+theme = ExtResource("6_theme")
+script = ExtResource("2_script")
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = 3.0
+offset_right = 250.0
+offset_bottom = 159.0
+mouse_filter = 2
+texture = ExtResource("3_time")
+
+[node name="Head" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 12.0
+offset_right = 244.0
+offset_bottom = 46.0
+theme_type_variation = &"HudTimeHead"
+text = "STR_HUD_TIME"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 48.0
+offset_right = 244.0
+offset_bottom = 116.0
+theme_type_variation = &"HudTimeValue"
+text = "0:00"
+vertical_alignment = 1
+
+[node name="Sub" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 116.0
+offset_right = 246.0
+offset_bottom = 148.0
+theme_type_variation = &"HudTimeSub"
+text = "STR_HUD_TIME_FREE"
+vertical_alignment = 1
+
+[node name="Sheet" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 3.0
+offset_right = 980.0
+offset_bottom = 159.0
+mouse_filter = 2
+texture = ExtResource("4_sheet")
+
+[node name="Steps" type="Control" parent="."]
+layout_mode = 0
+offset_left = 361.0
+offset_top = 7.0
+offset_right = 600.0
+offset_bottom = 119.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Steps"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 204.0
+offset_bottom = 28.0
+theme_type_variation = &"HudInkLabel"
+text = "STR_HUD_INK_STEPS"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Steps"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 24.0
+offset_right = 90.0
+offset_bottom = 70.0
+theme_type_variation = &"HudInkValue"
+text = "00"
+vertical_alignment = 1
+
+[node name="Delta" type="Label" parent="Steps"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 26.0
+offset_right = 240.0
+offset_bottom = 62.0
+theme_type_variation = &"HudInkDelta"
+text = "(-0)"
+vertical_alignment = 1
+
+[node name="Note" type="Label" parent="Steps"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 66.0
+offset_right = 240.0
+offset_bottom = 92.0
+theme_type_variation = &"HudInkNote"
+text = "STR_HUD_INK_NOTE"
+vertical_alignment = 1
+
+[node name="ScaleTitle" type="Label" parent="."]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 19.0
+offset_right = 890.0
+offset_bottom = 43.0
+theme_type_variation = &"HudInkScaleTitle"
+text = "STR_HUD_INK_SCALE_TITLE"
+vertical_alignment = 1
+
+[node name="ScaleA" type="Label" parent="."]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 49.0
+offset_right = 658.0
+offset_bottom = 75.0
+theme_type_variation = &"HudScaleChip"
+text = "STR_HUD_INK_SCALE_A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScaleB" type="Label" parent="."]
+layout_mode = 0
+offset_left = 664.0
+offset_top = 49.0
+offset_right = 752.0
+offset_bottom = 75.0
+theme_type_variation = &"HudScaleChip"
+text = "STR_HUD_INK_SCALE_B"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScaleC" type="Label" parent="."]
+layout_mode = 0
+offset_left = 758.0
+offset_top = 49.0
+offset_right = 846.0
+offset_bottom = 75.0
+theme_type_variation = &"HudScaleChip"
+text = "STR_HUD_INK_SCALE_C"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScaleD" type="Label" parent="."]
+layout_mode = 0
+offset_left = 852.0
+offset_top = 49.0
+offset_right = 950.0
+offset_bottom = 75.0
+theme_type_variation = &"HudScaleChipOff"
+text = "STR_HUD_INK_SCALE_D"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Warn" type="Control" parent="."]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 91.0
+offset_right = 950.0
+offset_bottom = 133.0
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Warn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_warn")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Warn"]
+layout_mode = 0
+offset_left = 42.0
+offset_right = 374.0
+offset_bottom = 42.0
+theme_type_variation = &"HudInkWarn"
+text = "STR_HUD_INK_WARN"
+vertical_alignment = 1

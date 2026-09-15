@@ -1,0 +1,254 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/hud/countdown_hud.gd" id="2_script"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_time_tall.svg" id="3_time"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_budget_sheet.svg" id="4_sheet"]
+[ext_resource type="Texture2D" path="res://assets/images/game/chip_price_cheap.svg" id="5_cheap"]
+[ext_resource type="Texture2D" path="res://assets/images/game/chip_price_pricey.svg" id="6_pricey"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="7_theme"]
+
+[node name="Hud" instance=ExtResource("1_base")]
+theme = ExtResource("7_theme")
+script = ExtResource("2_script")
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = 3.0
+offset_right = 250.0
+offset_bottom = 159.0
+mouse_filter = 2
+texture = ExtResource("3_time")
+
+[node name="Head" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 12.0
+offset_right = 244.0
+offset_bottom = 46.0
+theme_type_variation = &"HudTimeHead"
+text = "STR_HUD_TIME"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 48.0
+offset_right = 244.0
+offset_bottom = 116.0
+theme_type_variation = &"HudTimeValue"
+text = "0:00"
+vertical_alignment = 1
+
+[node name="Sub" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 116.0
+offset_right = 246.0
+offset_bottom = 148.0
+theme_type_variation = &"HudTimeSub"
+text = "STR_HUD_TIME_SUPPORT"
+vertical_alignment = 1
+
+[node name="Sheet" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 3.0
+offset_right = 980.0
+offset_bottom = 159.0
+mouse_filter = 2
+texture = ExtResource("4_sheet")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 8.0
+offset_right = 765.0
+offset_bottom = 32.0
+theme_type_variation = &"HudBudgetTitle"
+text = "STR_HUD_BUDGET_TITLE"
+vertical_alignment = 1
+
+[node name="Budget" type="Control" parent="."]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 37.0
+offset_right = 515.0
+offset_bottom = 119.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Budget"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 8.0
+offset_right = 202.0
+offset_bottom = 32.0
+theme_type_variation = &"HudBudgetLabel"
+text = "STR_HUD_BUDGET_LEFT"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Budget"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 78.0
+theme_type_variation = &"HudBudgetValue"
+text = "0"
+vertical_alignment = 1
+
+[node name="Max" type="Label" parent="Budget"]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 36.0
+offset_right = 206.0
+offset_bottom = 78.0
+theme_type_variation = &"HudBudgetSuffix"
+text = "/ 0"
+vertical_alignment = 1
+
+[node name="Spent" type="Control" parent="."]
+layout_mode = 0
+offset_left = 545.0
+offset_top = 37.0
+offset_right = 745.0
+offset_bottom = 119.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Spent"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 8.0
+offset_right = 186.0
+offset_bottom = 32.0
+theme_type_variation = &"HudSpentLabel"
+text = "STR_HUD_BUDGET_SPENT"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Spent"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 30.0
+offset_right = 124.0
+offset_bottom = 78.0
+theme_type_variation = &"HudSpentValue"
+text = "-0"
+vertical_alignment = 1
+
+[node name="Unit" type="Label" parent="Spent"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 30.0
+offset_right = 190.0
+offset_bottom = 54.0
+theme_type_variation = &"HudSpentUnit"
+text = "STR_HUD_BUDGET_SPENT_UNIT"
+vertical_alignment = 1
+
+[node name="Note" type="Label" parent="Spent"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 52.0
+offset_right = 190.0
+offset_bottom = 74.0
+theme_type_variation = &"HudSpentNote"
+text = "STR_HUD_BUDGET_CELLS"
+vertical_alignment = 1
+
+[node name="Price" type="Control" parent="."]
+layout_mode = 0
+offset_left = 760.0
+offset_top = 37.0
+offset_right = 955.0
+offset_bottom = 119.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Price"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 8.0
+offset_right = 186.0
+offset_bottom = 32.0
+theme_type_variation = &"HudPriceLabel"
+text = "STR_HUD_BUDGET_PRICE"
+vertical_alignment = 1
+
+[node name="ChipCheap" type="Control" parent="Price"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 34.0
+offset_right = 92.0
+offset_bottom = 56.0
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Price/ChipCheap"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_cheap")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Price/ChipCheap"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"HudChipCheap"
+text = "STR_HUD_PRICE_CHEAP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChipPricey" type="Control" parent="Price"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 34.0
+offset_right = 178.0
+offset_bottom = 56.0
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Price/ChipPricey"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_pricey")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Price/ChipPricey"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"HudChipPricey"
+text = "STR_HUD_PRICE_PRICEY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Reserve" type="Label" parent="Price"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 62.0
+offset_right = 190.0
+offset_bottom = 82.0
+theme_type_variation = &"HudReserveNote"
+text = "STR_HUD_BUDGET_RESERVE"
+vertical_alignment = 1
+
+[node name="Segments" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 131.0
+offset_right = 954.0
+offset_bottom = 143.0
+theme_override_constants/separation = 4

@@ -98,6 +98,16 @@ func _ensure_budget(maze: MazeData) -> void:
 	initial_steps = maxi(floor_steps, cheapest + slack)
 
 
+## Khoảng chi phí ô của độ khó hiện tại (HUD hiện chip "1-2: RẺ" / "3-4: ĐẮT")
+func cost_range() -> Vector2i:
+	return COST_RANGE.get(difficulty, Vector2i(1, 3))
+
+
+## Số bước dự phòng cộng thêm ngoài đường đi rẻ nhất (HUD hiện "Dự phòng: +N bước")
+func budget_reserve() -> int:
+	return int(BUDGET_SLACK.get(difficulty, 4))
+
+
 # --- Chi phí nhỏ nhất để đi từ S tới F (Dijkstra, trọng số = chi phí ô đích) ---
 func cheapest_path_cost(maze: MazeData) -> int:
 	if maze == null:

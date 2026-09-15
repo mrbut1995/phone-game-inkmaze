@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 715 156" width="715" height="156">
+  <!-- Thẻ CÂN BẰNG TỔNG ĐIỂM (mode Sum Path) — 715x156, mockup/matchup_sum_path.svg
+       Phần TĨNH: khung, lề đỏ, dòng kẻ, 2 khối, con dấu tròn ở giữa, rãnh thanh tiến độ, chip "CẦN THÊM".
+       Toán tử (< > =) là Label đè lên con dấu; phần đã đạt của thanh tiến độ vẽ bằng art riêng. -->
+  <rect width="715" height="156" rx="22" fill="#3D83AE"/>
+  <rect x="1.5" y="1.5" width="712" height="153" rx="20.5" fill="#FEFDFA"/>
+  <line x1="18" y1="4" x2="18" y2="152" stroke="#D84444" stroke-width="3"/>
+  <g stroke="#9FC0D6" stroke-width="1" opacity="0.3">
+    <line x1="28" y1="40" x2="700" y2="40"/>
+    <line x1="28" y1="85" x2="700" y2="85"/>
+    <line x1="28" y1="125" x2="700" y2="125"/>
+  </g>
+  <!-- Khối TỔNG HIỆN TẠI -->
+  <rect x="36" y="36" width="250" height="74" rx="14" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="1.8"/>
+  <!-- Con dấu TOÁN TỬ ở giữa (nét đứt bên trong) -->
+  <circle cx="335" cy="73" r="28" fill="#FFFDF8" stroke="#D84444" stroke-width="3"/>
+  <circle cx="335" cy="73" r="24" fill="none" stroke="#D84444" stroke-width="1" stroke-dasharray="4 2"/>
+  <!-- Khối MỤC TIÊU PHẢI ĐẠT -->
+  <rect x="385" y="36" width="305" height="74" rx="14" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.8"/>
+  <rect x="520" y="74" width="155" height="26" rx="6" fill="#FEE2E2"/>
+  <!-- Rãnh thanh tiến độ -->
+  <rect x="36" y="122" width="654" height="18" rx="9" fill="#EAE3D2" opacity="0.6"/>
+</svg>
