@@ -294,6 +294,22 @@ func claim(id: String) -> bool:
 	return true
 
 
+## Ví Xu vừa đổi từ nơi khác (ShopManager mua / nạp Xu) -> phát tín hiệu để UI + autosave theo
+func notify_coins_changed() -> void:
+	progress_changed.emit()
+
+
+## Trừ Xu khi tiêu (mua hàng). Trả về true nếu ví đủ và đã trừ.
+func spend_coins(amount: int) -> bool:
+	if amount <= 0:
+		return true
+	if coins < amount:
+		return false
+	coins -= amount
+	notify_coins_changed()
+	return true
+
+
 ## Tổng điểm danh hiệu (AP) = tổng điểm của các danh hiệu ĐÃ ĐẠT
 func points() -> int:
 	var total := 0

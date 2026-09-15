@@ -31,8 +31,10 @@ DebugManager="*uid://drkig4dljo3f7"
 AdsManager="*uid://kducqs2nm8b0"
 LocalizationManager="*res://scripts/manager/LocalizationManager.gd"
 SaveManager="*res://scripts/manager/SaveManager.gd"
+ShopManager="*uid://t0hqkbfi0hal"
 ArchivementManager="*uid://b6kljl1rc6o52"
 RankingManager="*res://scripts/manager/RankingManager.gd"
+ThemeManager="*uid://bg3pxd8vw2vrw"
 
 [display]
 

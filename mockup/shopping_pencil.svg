@@ -1,0 +1,365 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <!-- 1. Lưới vở học sinh nền 40px -->
+    <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.6"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.2"/>
+    </pattern>
+
+    <!-- 2. Họa tiết giấy nháp mini -->
+    <pattern id="doodleGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="20" x2="20" y2="20" stroke="#8FB9D2" stroke-width="0.8" opacity="0.3"/>
+    </pattern>
+
+    <!-- 3. Đổ bóng thẻ sản phẩm & bàn nháp -->
+    <filter id="cardShadow" x="-10%" y="-15%" width="125%" height="135%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#1E1610" flood-opacity="0.16"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1E1610" flood-opacity="0.08"/>
+    </filter>
+
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <filter id="previewGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#7C3AED" flood-opacity="0.45"/>
+    </filter>
+
+    <!-- Đổ bóng kẹp ghim giấy -->
+    <filter id="clipShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.22"/>
+    </filter>
+
+    <!-- Icon Đồng Xu Mực 🪙 tái sử dụng -->
+    <g id="coin-icon">
+      <circle cx="16" cy="16" r="15" fill="#FBBF24" stroke="#D97706" stroke-width="2.5"/>
+      <circle cx="16" cy="16" r="11" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <text x="16" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="950" fill="#78350F">C</text>
+    </g>
+  </defs>
+
+  <!-- ================= 1. NỀN GIẤY VỞ & LỀ ĐỎ ================= -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#notebookGrid)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+
+  <!-- ================= 2. ANDROID STATUS BAR ================= -->
+  <g fill="#3D5A73" font-family="-apple-system, sans-serif" font-size="28" font-weight="600">
+    <text x="60" y="55">09:41</text>
+    <g transform="translate(940, 34)" stroke="#3D5A73" stroke-width="3" fill="none">
+      <path d="M0 16 A 16 16 0 0 1 24 16" stroke-linecap="round"/>
+      <circle cx="12" cy="24" r="2" fill="#3D5A73"/>
+    </g>
+    <rect x="980" y="36" width="44" height="22" rx="5" fill="none" stroke="#3D5A73" stroke-width="3"/>
+    <rect x="984" y="40" width="28" height="14" rx="2" fill="#3D5A73"/>
+  </g>
+
+  <!-- ================= 3. TOP BAR: BACK · TIÊU ĐỀ · VÍ XU ================= -->
+  <!-- Nút Quay lại Menu chính -->
+  <g transform="translate(50, 85)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <path d="M42 23 L26 35 L42 47" fill="none" stroke="#3D83AE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Tiêu đề Cửa Hàng -->
+  <g transform="translate(480, 105)" text-anchor="middle">
+    <text y="0" font-family="sans-serif" font-size="16" font-weight="800" fill="#D84444" letter-spacing="2">TIỆM VĂN PHÒNG PHẨM</text>
+    <text y="40" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="950" fill="#163A58" letter-spacing="1">CỬA HÀNG</text>
+  </g>
+
+  <!-- Ví Tiền Xu Mực của Người Chơi -->
+  <g transform="translate(775, 85)" filter="url(#uiShadow)">
+    <rect width="255" height="70" rx="18" fill="#FEFDFA" stroke="#F59E0B" stroke-width="3"/>
+    <line x1="16" y1="0" x2="16" y2="70" stroke="#F59E0B" stroke-width="2.5"/>
+    <g transform="translate(24, 19)"><use href="#coin-icon"/></g>
+    <text x="145" y="46" text-anchor="middle" font-family="'Segoe UI', monospace" font-size="32" font-weight="950" fill="#B45309">1,250</text>
+    <!-- Nút cộng thêm xu nhanh -->
+    <circle cx="225" cy="35" r="14" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.8"/>
+    <text x="225" y="41" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="900" fill="#B45309">+</text>
+  </g>
+
+  <!-- ================= 4. HÀNG 4 TAB NHÃN VỞ (BOOKMARK TABS) ================= -->
+  <!-- Tab 1: BÚT & MỰC (Đang chọn - Nổi lên) -->
+  <g transform="translate(50, 185)" style="cursor: pointer;">
+    <path d="M 0 16 A 16 16 0 0 1 16 0 L 224 0 A 16 16 0 0 1 240 16 L 240 65 L 0 65 Z" fill="#3D83AE" stroke="#235A7D" stroke-width="3"/>
+    <line x1="16" y1="0" x2="16" y2="65" stroke="#FAF5EB" stroke-width="2" opacity="0.6"/>
+    <text x="120" y="42" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF">✒️ BÚT &amp; MỰC</text>
+  </g>
+
+  <!-- Tab 2: GIẤY VỞ -->
+  <g transform="translate(298, 195)" style="cursor: pointer;">
+    <path d="M 0 16 A 16 16 0 0 1 16 0 L 224 0 A 16 16 0 0 1 240 16 L 240 55 L 0 55 Z" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
+    <text x="120" y="36" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="800" fill="#224C6D">📜 GIẤY VỞ</text>
+  </g>
+
+  <!-- Tab 3: DỤNG CỤ -->
+  <g transform="translate(546, 195)" style="cursor: pointer;">
+    <path d="M 0 16 A 16 16 0 0 1 16 0 L 224 0 A 16 16 0 0 1 240 16 L 240 55 L 0 55 Z" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
+    <text x="120" y="36" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="800" fill="#224C6D">🎒 DỤNG CỤ</text>
+  </g>
+
+  <!-- Tab 4: NẠP XU -->
+  <g transform="translate(794, 195)" style="cursor: pointer;">
+    <path d="M 0 16 A 16 16 0 0 1 16 0 L 220 0 A 16 16 0 0 1 236 16 L 236 55 L 0 55 Z" fill="#FEFDFA" stroke="#F59E0B" stroke-width="2.5"/>
+    <text x="118" y="36" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#B45309">🪙 NẠP XU</text>
+  </g>
+
+  <!-- Vạch đáy nối liền hệ thống tab -->
+  <line x1="50" y1="250" x2="1030" y2="250" stroke="#3D83AE" stroke-width="3.5"/>
+
+  <!-- ================= 5. KHU VỰC BÀN NHÁP THỬ BÚT TRỰC TIẾP (DOODLE TEST PAD) ================= -->
+  <!-- Kích thước 980 x 220 px tại (50, 270) -->
+  <g transform="translate(50, 270)" filter="url(#uiShadow)">
+    <rect width="980" height="215" rx="22" fill="#FFFDF8" stroke="#6EA0C8" stroke-width="3"/>
+    <!-- Lề đỏ giấy nháp -->
+    <line x1="36" y1="0" x2="36" y2="215" stroke="#D84444" stroke-width="3"/>
+    <rect x="42" y="10" width="926" height="195" fill="url(#doodleGrid)"/>
+
+    <!-- Ghim kẹp giấy nháp bên góc trái -->
+    <g transform="translate(60, -14)" filter="url(#clipShadow)">
+      <path d="M 0 45 L 0 10 A 10 10 0 0 1 20 10 L 20 55 A 15 15 0 0 1 -10 55 L -10 16" 
+            fill="none" stroke="#7A8F9B" stroke-width="4.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- Tiêu đề & Hướng dẫn nháp -->
+    <g transform="translate(100, 26)">
+      <text x="0" y="16" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#224C6D">📝 BÀN NHÁP THỬ BÚT</text>
+      <text x="215" y="16" font-family="sans-serif" font-size="14" font-weight="600" fill="#718B9E">• Vẽ thử ngón tay để cảm nhận màu mực đang chọn</text>
+    </g>
+
+    <!-- Nét vẽ thử màu mực tím hoa cà đang chọn (Demo Trail) -->
+    <g transform="translate(100, 75)">
+      <!-- Vệt mực tím phát sáng -->
+      <path d="M 20 60 Q 80 10 160 40 T 300 30 T 450 70 T 620 20" 
+            fill="none" stroke="#7C3AED" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" filter="url(#previewGlow)"/>
+      <path d="M 20 60 Q 80 10 160 40 T 300 30 T 450 70 T 620 20" 
+            fill="none" stroke="#DDD6FE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Ngòi bút máy minh họa ở cuối nét vẽ -->
+      <g transform="translate(620, 20) rotate(40)">
+        <polygon points="0,0 8,-28 -8,-28" fill="#7C3AED" stroke="#4C1D95" stroke-width="1.5"/>
+        <line x1="0" y1="0" x2="0" y2="-20" stroke="#FFFFFF" stroke-width="1"/>
+        <rect x="-8" y="-45" width="16" height="18" rx="2" fill="#C4B5FD" stroke="#6D28D9" stroke-width="1.5"/>
+      </g>
+    </g>
+
+    <!-- Thẻ tên skin đang thử ở góc phải -->
+    <g transform="translate(730, 45)">
+      <rect width="215" height="135" rx="16" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1.8"/>
+      <text x="107" y="32" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#6D28D9">ĐANG XEM THỬ</text>
+      <text x="107" y="62" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="19" font-weight="950" fill="#4C1D95">Mực Tím Hoa Cà</text>
+      <rect x="25" y="82" width="165" height="36" rx="10" fill="#7C3AED"/>
+      <text x="107" y="105" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="900" fill="#FFFFFF">DÙNG THỬ ✓</text>
+    </g>
+  </g>
+
+  <!-- ================= 6. LƯỚI SẢN PHẨM BÚT MỰC (TAB 1: 6 SẢN PHẨM) ================= -->
+  <!-- Kích thước mỗi card: 475 x 310 px. Cột 1: x=50 | Cột 2: x=555 -->
+
+  <!-- ================= HÀNG 1 ================= -->
+
+  <!-- ITEM 1: MỰC XANH HỌC TRÒ (MẶC ĐỊNH - ĐANG SỬ DỤNG) -->
+  <g transform="translate(50, 515)" filter="url(#cardShadow)">
+    <rect width="475" height="315" rx="22" fill="#FEFDFA" stroke="#3D83AE" stroke-width="3"/>
+    <line x1="28" y1="0" x2="28" y2="315" stroke="#3D83AE" stroke-width="2.5"/>
+    
+    <!-- Nhãn góc: MẶC ĐỊNH -->
+    <rect x="42" y="20" width="95" height="26" rx="6" fill="#EBF3F8"/>
+    <text x="89" y="37" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#256286">CƠ BẢN</text>
+
+    <!-- Minh họa lọ mực xanh -->
+    <g transform="translate(237, 100)">
+      <circle cx="0" cy="0" r="45" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="2"/>
+      <!-- Lọ mực -->
+      <rect x="-24" y="-15" width="48" height="42" rx="8" fill="#2575A7" stroke="#164663" stroke-width="2.5"/>
+      <rect x="-14" y="-28" width="28" height="14" rx="3" fill="#EAE3D2" stroke="#164663" stroke-width="2"/>
+      <!-- Nét mực xanh mẫu -->
+      <path d="M -70 65 Q -20 40 40 65 T 80 50" fill="none" stroke="#2575A7" stroke-width="8" stroke-linecap="round"/>
+    </g>
+
+    <text x="237" y="205" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="950" fill="#163A58">Mực Xanh Học Trò</text>
+    <text x="237" y="232" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#718B9E">Nét chữ ngây thơ thời cắp sách</text>
+
+    <!-- Nút / Con dấu: ĐANG SỬ DỤNG -->
+    <g transform="translate(137, 252)">
+      <rect width="200" height="46" rx="12" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/>
+      <text x="100" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="950" fill="#15803D">✓ ĐANG DÙNG</text>
+    </g>
+  </g>
+
+  <!-- ITEM 2: MỰC TÍM HOA CÀ (ĐÃ SỞ HỮU - BẤM SỬ DỤNG) -->
+  <g transform="translate(555, 515)" filter="url(#cardShadow)">
+    <rect width="475" height="315" rx="22" fill="#FEFDFA" stroke="#7C3AED" stroke-width="3"/>
+    <line x1="28" y1="0" x2="28" y2="315" stroke="#7C3AED" stroke-width="2.5"/>
+
+    <rect x="42" y="20" width="105" height="26" rx="6" fill="#F5F3FF"/>
+    <text x="94" y="37" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#6D28D9">ĐÃ MỞ KHÓA</text>
+
+    <!-- Minh họa lọ mực tím -->
+    <g transform="translate(237, 100)">
+      <circle cx="0" cy="0" r="45" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="2"/>
+      <rect x="-24" y="-15" width="48" height="42" rx="8" fill="#7C3AED" stroke="#4C1D95" stroke-width="2.5"/>
+      <rect x="-14" y="-28" width="28" height="14" rx="3" fill="#EAE3D2" stroke="#4C1D95" stroke-width="2"/>
+      <path d="M -70 65 Q -20 40 40 65 T 80 50" fill="none" stroke="#7C3AED" stroke-width="8" stroke-linecap="round"/>
+    </g>
+
+    <text x="237" y="205" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="950" fill="#4C1D95">Mực Tím Hoa Cà</text>
+    <text x="237" y="232" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#718B9E">Nét chữ nết người hoài niệm</text>
+
+    <!-- Nút Bấm: SỬ DỤNG NGAY -->
+    <g transform="translate(137, 252)" style="cursor: pointer;">
+      <rect width="200" height="46" rx="12" fill="#7C3AED" stroke="#5B21B6" stroke-width="2"/>
+      <text x="100" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="950" fill="#FFFFFF">SỬ DỤNG</text>
+    </g>
+  </g>
+
+  <!-- ================= HÀNG 2 ================= -->
+
+  <!-- ITEM 3: BÚT CHÌ GỖ 2B (MUA BẰNG XU - 350 XU) -->
+  <g transform="translate(50, 855)" filter="url(#cardShadow)">
+    <rect width="475" height="315" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.8"/>
+    <line x1="28" y1="0" x2="28" y2="315" stroke="#64748B" stroke-width="2.5"/>
+
+    <rect x="42" y="20" width="135" height="26" rx="6" fill="#F1F5F9"/>
+    <text x="109" y="37" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#475569">HIỆU ỨNG SỘT SOẠT</text>
+
+    <!-- Minh họa bút chì 2B -->
+    <g transform="translate(237, 100)">
+      <circle cx="0" cy="0" r="45" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+      <!-- Cây bút chì lục giác nằm chéo -->
+      <g transform="rotate(35)">
+        <rect x="-10" y="-40" width="20" height="65" rx="2" fill="#F59E0B" stroke="#B45309" stroke-width="2"/>
+        <polygon points="-10,25 10,25 0,45" fill="#FDE68A" stroke="#B45309" stroke-width="2"/>
+        <polygon points="-4,37 4,37 0,45" fill="#334155"/>
+      </g>
+      <!-- Nét chì vẽ than mờ -->
+      <path d="M -70 65 Q -20 40 40 65 T 80 50" fill="none" stroke="#475569" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 3"/>
+    </g>
+
+    <text x="237" y="205" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="950" fill="#163A58">Bút Chì Gỗ 2B</text>
+    <text x="237" y="232" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#718B9E">Âm thanh sột soạt trên mặt giấy</text>
+
+    <!-- Nút MUA: 350 XU -->
+    <g transform="translate(137, 252)" style="cursor: pointer;">
+      <rect width="200" height="46" rx="12" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+      <g transform="translate(30, 8) scale(0.9)"><use href="#coin-icon"/></g>
+      <text x="120" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#92400E">350 XU</text>
+    </g>
+  </g>
+
+  <!-- ITEM 4: BÚT ĐỎ GIÁO VIÊN (MUA BẰNG XU - 500 XU) -->
+  <g transform="translate(555, 855)" filter="url(#cardShadow)">
+    <rect width="475" height="315" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.8"/>
+    <line x1="28" y1="0" x2="28" y2="315" stroke="#D84444" stroke-width="2.5"/>
+
+    <rect x="42" y="20" width="125" height="26" rx="6" fill="#FEE2E2"/>
+    <text x="104" y="37" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#B91C1C">NÉT CHẤM BÀI</text>
+
+    <!-- Minh họa bút đỏ -->
+    <g transform="translate(237, 100)">
+      <circle cx="0" cy="0" r="45" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
+      <rect x="-24" y="-15" width="48" height="42" rx="8" fill="#DC2626" stroke="#991B1B" stroke-width="2.5"/>
+      <rect x="-14" y="-28" width="28" height="14" rx="3" fill="#EAE3D2" stroke="#991B1B" stroke-width="2"/>
+      <path d="M -70 65 Q -20 40 40 65 T 80 50" fill="none" stroke="#DC2626" stroke-width="9" stroke-linecap="round"/>
+    </g>
+
+    <text x="237" y="205" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="950" fill="#163A58">Bút Đỏ Giáo Viên</text>
+    <text x="237" y="232" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#718B9E">Nét mực đỏ tươi rực rỡ quyền lực</text>
+
+    <!-- Nút MUA: 500 XU -->
+    <g transform="translate(137, 252)" style="cursor: pointer;">
+      <rect width="200" height="46" rx="12" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+      <g transform="translate(30, 8) scale(0.9)"><use href="#coin-icon"/></g>
+      <text x="120" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#92400E">500 XU</text>
+    </g>
+  </g>
+
+  <!-- ================= HÀNG 3 ================= -->
+
+  <!-- ITEM 5: BÚT NHỚ DẠ QUANG NEON (650 XU) -->
+  <g transform="translate(50, 1195)" filter="url(#cardShadow)">
+    <rect width="475" height="315" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.8"/>
+    <line x1="28" y1="0" x2="28" y2="315" stroke="#EAB308" stroke-width="2.5"/>
+
+    <rect x="42" y="20" width="115" height="26" rx="6" fill="#FEF9C3"/>
+    <text x="99" y="37" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#854D0E">DẠ QUANG</text>
+
+    <!-- Minh họa bút dạ quang bản to -->
+    <g transform="translate(237, 100)">
+      <circle cx="0" cy="0" r="45" fill="#FEFCE8" stroke="#FEF08A" stroke-width="2"/>
+      <rect x="-18" y="-28" width="36" height="56" rx="8" fill="#FACC15" stroke="#CA8A04" stroke-width="2.5"/>
+      <polygon points="-12,-28 12,-28 0,-42" fill="#CA8A04"/>
+      <!-- Nét dạ quang trong suốt bản to -->
+      <path d="M -70 65 Q -20 40 40 65 T 80 50" fill="none" stroke="#FDE047" stroke-width="16" stroke-linecap="square" opacity="0.8"/>
+    </g>
+
+    <text x="237" y="205" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="950" fill="#163A58">Bút Nhớ Dạ Quang</text>
+    <text x="237" y="232" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#718B9E">Vạch sáng trong mờ nổi bật</text>
+
+    <!-- Nút MUA: 650 XU -->
+    <g transform="translate(137, 252)" style="cursor: pointer;">
+      <rect width="200" height="46" rx="12" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+      <g transform="translate(30, 8) scale(0.9)"><use href="#coin-icon"/></g>
+      <text x="120" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#92400E">650 XU</text>
+    </g>
+  </g>
+
+  <!-- ITEM 6: MỰC NHŨ HOÀNG GIA (1,200 XU - VIP) -->
+  <g transform="translate(555, 1195)" filter="url(#cardShadow)">
+    <rect width="475" height="315" rx="22" fill="#FFFDF8" stroke="#F59E0B" stroke-width="3"/>
+    <line x1="28" y1="0" x2="28" y2="315" stroke="#D97706" stroke-width="3"/>
+
+    <rect x="42" y="20" width="105" height="26" rx="6" fill="#FEF3C7"/>
+    <text x="94" y="37" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#B45309">ÁNH KIM VIP</text>
+
+    <!-- Minh họa lọ mực nhũ vàng lấp lánh -->
+    <g transform="translate(237, 100)">
+      <circle cx="0" cy="0" r="45" fill="#FEF3C7" stroke="#FDE68A" stroke-width="2"/>
+      <rect x="-24" y="-15" width="48" height="42" rx="8" fill="#F59E0B" stroke="#B45309" stroke-width="2.5"/>
+      <rect x="-14" y="-28" width="28" height="14" rx="3" fill="#FFFBE8" stroke="#B45309" stroke-width="2"/>
+      <!-- Nét mực ánh kim lấp lánh -->
+      <path d="M -70 65 Q -20 40 40 65 T 80 50" fill="none" stroke="#D97706" stroke-width="8" stroke-linecap="round"/>
+      <path d="M -70 65 Q -20 40 40 65 T 80 50" fill="none" stroke="#FEF3C7" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 6"/>
+    </g>
+
+    <text x="237" y="205" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="950" fill="#92400E">Mực Nhũ Hoàng Gia</text>
+    <text x="237" y="232" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#718B9E">Hạt kim tuyến phát sáng lấp lánh</text>
+
+    <!-- Nút MUA: 1,200 XU -->
+    <g transform="translate(137, 252)" style="cursor: pointer;">
+      <rect width="200" height="46" rx="12" fill="#F59E0B" stroke="#B45309" stroke-width="2"/>
+      <g transform="translate(22, 8) scale(0.9)"><use href="#coin-icon"/></g>
+      <text x="125" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#FFFFFF">1,200 XU</text>
+    </g>
+  </g>
+
+  <!-- ================= 7. BANNER QUẢNG CÁO TIẾP SỨC / NHẬN XU ================= -->
+  <!-- Kích thước 980 x 110 px tại (50, 1540) -->
+  <g transform="translate(50, 1545)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <rect width="980" height="115" rx="24" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/>
+    <line x1="36" y1="0" x2="36" y2="115" stroke="#D84444" stroke-width="3"/>
+    
+    <!-- Icon quà tặng -->
+    <g transform="translate(65, 30)">
+      <rect width="55" height="55" rx="14" fill="#FEE2E2" stroke="#D84444" stroke-width="2"/>
+      <text x="27" y="38" text-anchor="middle" font-size="30">🎁</text>
+    </g>
+
+    <text x="145" y="48" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="950" fill="#163A58">GÓC TIẾP SỨC HỌC TẬP • NHẬN XU MIỄN PHÍ</text>
+    <text x="145" y="82" font-family="sans-serif" font-size="16" font-weight="600" fill="#718B9E">Xem bài giảng ngắn mỗi ngày để nhận ngay 50 Xu Mực</text>
+
+    <!-- Nút Nhận ngay -->
+    <g transform="translate(770, 26)">
+      <rect width="180" height="62" rx="16" fill="#D84444" stroke="#991B1B" stroke-width="2.5"/>
+      <text x="90" y="38" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF">+50 XU ▶</text>
+    </g>
+  </g>
+
+  <!-- DÒNG ĐỀ TỰA CHÂN TRANG -->
+  <text x="540" y="1710" text-anchor="middle" font-family="sans-serif" font-size="18" font-style="italic" font-weight="600" fill="#718B9E">
+    ~ Bút sắc vẽ đường • Vở sạch luyện trí ~
+  </text>
+
+  <!-- ================= 8. ANDROID HOME GESTURE BAR ================= -->
+  <rect x="420" y="1875" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
+</svg>

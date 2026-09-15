@@ -719,4 +719,130 @@ Màn **Chọn màn** (`scripts/scenes/levels.gd`) nay **chỉ hiện màn của 
 - Danh sách màn ở panel trái hiện thêm cột chương (`#7  C2  5x5  Level 2-7`); màn tạo mới nằm cùng chương với màn đang mở.
 - Test: `tools/level_designer/tests/test_chapters.py` + phần **CHƯƠNG** trong `python main.py --selftest` (kiểm tra luôn dữ liệu chương thật của game).
 
+---
+
+## 13. CỬA HÀNG (SHOP) — TIỆM VĂN PHÒNG PHẨM
+
+### 13.1. Vai trò & lối vào
+
+- Nút **CỬA HÀNG** ở màn Main (`Panel/Other/Shop`) → `main.gd::_on_shop_pressed()` → `Nav.goto_shop()`.
+- Cửa hàng bán 4 nhóm: **ngòi bút**, **giấy vở (chủ đề)**, **dụng cụ**, **gói nạp Xu**. Mọi thứ mua bằng **Xu Mực** — dùng CHUNG một ví với Sổ tay thành tựu (`ArchivementManager.coins`), nhờ vậy Xu kiếm được khi chơi/hoàn thành nhiệm vụ đều tiêu được ở đây.
+- `ShopManager` là autoload (`project.godot`) + facade tĩnh `Shop` (`scripts/utils/shop.gd`) để test/UI gọi qua `/root` mà không cần identifier autoload.
+
+### 13.2. Bốn ngăn hàng
+
+`ShopManager.CATEGORIES = [pen, theme, tool, coin]`; `EQUIP_CATEGORIES = [pen, theme]` (chỉ 2 nhóm này mới "mặc" được).
+
+| Ngăn (tab) | Số món | Cách bán | Ghi chú |
+|---|---|---|---|
+| **BÚT & MỰC** (`pen`) | 10 | mở khoá vĩnh viễn | xếp lưới 2 cột, 4 thẻ/trang → 3 trang; chỉ 1 ngòi "đang dùng" |
+| **GIẤY VỞ** (`theme`) | 8 | mở khoá vĩnh viễn | xếp lưới 2 cột, 4 thẻ/trang → 2 trang; mỗi chủ đề có `paper` + `line` (bảng màu) |
+| **DỤNG CỤ** (`tool`) | 6 | **dùng theo lượt** | mua lại được (cộng dồn), mỗi món có `amount` = số lượt |
+| **NẠP XU** (`coin`) | 6 | IAP (STUB) | hàng VIP “Xoá quảng cáo” trên cùng + 5 gói Xu xếp lưới 2 cột; nút ghi giá **VNĐ**; `bonus` = Xu Mực tặng thêm; mỗi gói 1 **icon cấp Xu** (`coin_t1`→`coin_t5`) |
+
+Danh mục (giá tính bằng Xu Mực, trừ ngăn NẠP XU tính bằng VNĐ):
+
+| id | Tên | Giá | Ghi chú |
+|---|---|---|---|
+| `pen_blue` | Mực Xanh Học Trò | 0 | **mặc định** (đã có sẵn) |
+| `pen_purple` | Mực Tím Hoa Cà | 0 | đã mở khoá sẵn (quà tân thủ) |
+| `pen_pencil_2b` | Bút Chì Gỗ 2B | 350 | hiệu ứng sột soạt |
+| `pen_red_teacher` | Bút Đỏ Giáo Viên | 500 | nét chấm bài |
+| `pen_highlighter` | Bút Dạ Quang | 450 | |
+| `pen_gold_ink` | Mực Ánh Kim | 1200 | VIP |
+| `pen_green_tea` | Mực Xanh Trà | 400 | |
+| `pen_pink_diary` | Mực Hồng Nhật Ký | 380 | |
+| `pen_graphite_4b` | Chì Than 4B | 600 | |
+| `pen_navy_night` | Mực Đêm Xanh | 800 | |
+| `theme_gride_4ly` | Vở Ô Ly 4 Ly | 0 | **mặc định** |
+| `theme_blackboard` | Bảng Đen Phấn Trắng | 700 | giấy `#1E293B` · kẻ `#94A3B8` |
+| `theme_campus` | Vở Kẻ Ngang Campus | 500 | |
+| `theme_bullet` | Bullet Journal | 550 | |
+| `theme_tech_grid` | Giấy Kẻ Toán Kỹ Thuật | 800 | |
+| `theme_kraft` | Giấy Kraft Cổ Điển | 900 | |
+| `theme_pastel_caro` | Caro Pastel Hàn Quốc | 1000 | |
+| `theme_exam` | Tờ Giấy Thi Học Trò | 1200 | |
+| `tool_undo_x10` | Gôm Tẩy 4B (x10 Lượt) | 150 | hoàn tác không bị tính lỗi |
+| `tool_hint_x5` | Kính Lúp Soi Lối (x5) | 200 | |
+| `tool_reveal_x3` | Bút Xoá Tường Mờ (x3) | 320 | |
+| `tool_time_x3` | Đồng Hồ Cát Lật Nhanh (x3) | 280 | +30 giây |
+| `tool_revive_x1` | Kẹp Giấy Giữ Mạng (x1) | 450 | |
+| `tool_shield_x2` | Băng Dính Vá Giấy (x2) | 600 | |
+| `coin_500` | Túi Xu 500 | 19.000 VNĐ | icon cấp 1 `coin_t1` (xu đơn) |
+| `coin_2000` | Rương Xu 2,000 | 69.000 VNĐ | bonus +200 · icon cấp 2 `coin_t2` (cọc xu) |
+| `coin_3500` | Hộp Bút Xu 3,500 | 99.000 VNĐ | bonus +500 · icon cấp 3 `coin_t3` (đống xu) |
+| `coin_8000` | Cặp Sách Xu 8,000 | 199.000 VNĐ | bonus +1,600 · icon cấp 4 `coin_t4` (túi tiền) |
+| `coin_20000` | Kho Xu Khổng Lồ 20,000 | 399.000 VNĐ | bonus +5,000 · icon cấp 5 `coin_t5` (rương vàng) |
+| `coin_no_ads` | Gói Xoá Quảng Cáo | 49.000 VNĐ | mua 1 lần, kèm skin bút, nằm RIÊNG 1 HÀNG trên cùng
+
+### 13.3. Trạng thái thẻ & nút
+
+- **Thẻ dọc** (`nodes/shop/item_row.tscn`, 980×180) dùng cho DỤNG CỤ: Badge · Icon · Tên · Mô tả (**2 dòng**, ellipsis) · dòng phụ · nút 270×75.
+- **Thẻ ô** (`nodes/shop/item_tile.tscn`, **475×315** — đúng mockup `shopping_pencil.svg`) dùng cho BÚT & MỰC + GIẤY VỞ:
+  lề trái màu món · **nhãn góc trên-trái** (bề ngang tự co theo chữ) · **vòng icon** (`IconCircle`, alpha 0.16) + icon + **nét mực vẽ thử** (`ink_stroke`) · tên (24) · mô tả · dòng trạng thái · nút **200×46**.
+  Lưới 2 cột × 3 hàng = **6 ô/trang** (10 bút → 2 trang; 8 giấy vở → 2 trang).
+- **Thẻ gói nạp** (`nodes/shop/coin_tile.tscn`, **475×240**) dùng cho tab NẠP XU: vòng icon + **icon cấp Xu** (art riêng, không modulate) · tên 24 · mô tả · dòng ưu đãi (hổ phách) · nút giá VNĐ 419×56.
+- **Hàng VIP** (`nodes/shop/noads_row.tscn`, **980×200**) cho gói Xoá quảng cáo: nhãn đỏ `chip_red` · tiêu đề 32 · mô tả 17 · nút đỏ 230×80 (mua rồi → `ĐÃ SỞ HỮU` và khoá nút).
+- Nút đổi theo trạng thái: **giá Xu** (hổ phách + icon Xu; món VIP dùng nút hổ phách đặc chữ trắng) · **SỬ DỤNG** (đã sở hữu, art TRẮNG + `modulate` màu món hàng) · **ĐANG DÙNG ✓** (đang mặc, nút xanh lá, khoá) · **MUA THÊM N** (dụng cụ) · **giá VNĐ** (gói nạp) · chưa đủ Xu → **nút mờ + note "Chưa đủ Xu Mực"**.
+- Dòng phụ: dụng cụ → `Đang có: N lượt`; gói nạp có `bonus > 0` → `Tặng thêm +N xu mực` (không có bonus thì ẩn).
+
+### 13.4. Kinh tế Xu Mực
+
+- Xu vào: thưởng màn chơi + nhiệm vụ trong Sổ tay thành tựu (`claim()`) + gói nạp; Xu ra: mua bút/chủ đề/dụng cụ.
+- Ví trên góc phải (775,85) 255×70 — icon Xu + số (định dạng `1,250`, `Shop.thousands()`) + nút **+** (nhảy sang ngăn NẠP XU).
+- Banner chân trang `GÓC TIẾP SỨC HỌC TẬP`: xem bài giảng ngắn mỗi ngày nhận +50 Xu (nút `+50 XU ▶`).
+- `purchase_log` ghi lại id đã mua (phục vụ thống kê/test); nút **+** và gói nạp hiện là **STUB IAP** (`purchase_coin_pack`) — khi ghép Google Play Billing thì chỉ cần thay thân hàm này.
+- API ví: `coins/can_afford/buy/purchase_coin_pack/is_consumable/use_tool/tool_count/equip/is_owned/is_equipped`.
+
+### 13.5. Chủ đề & ngòi bút: ĐÃ CHUẨN BỊ nhưng CHƯA áp dụng
+
+Theo yêu cầu "chuẩn bị sẵn việc Apply Theme và Pen, chưa cần apply vội":
+
+- `scripts/manager/ThemeManager.gd` (autoload) + facade `scripts/utils/theme_skin.gd` (`class_name ThemeSkin`):
+  `sync_from_shop()` · `theme_id()` · `pen_id()` · `pen_color()` · `palette()` (paper/paper_alt/line/margin/ink/ink_soft/accent) · `color(key)` · `apply_theme(id)` · `apply_pen(id)` · signal `skin_changed(theme_id, pen_id)`.
+- Công tắc **`apply_enabled := false`** — mọi thứ đã nối (chọn là lưu + phát signal + cập nhật `ThemeManager`), chỉ còn `_apply_now()` là stub TODO: khi bật sẽ đổi nền giấy/đường kẻ/màu mực của màn chơi theo `palette()`.
+- LƯU Ý ĐẶT TÊN: ban đầu file facade đặt `class_name Skin` → **trùng class native của Godot** (`Skin`) nên parse lỗi; đã đổi thành `ThemeSkin`.
+
+### 13.6. Giao diện (đo từ scene thật)
+
+`scenes/shop.tscn` (script `scripts/scenes/shop.gd`, `class_name ShopScene extends BaseScene`):
+
+| Thành phần | Vị trí | Ghi chú |
+|---|---|---|
+| TopBar/Back | (50, 85) 70×70 | `btn_header_back_*` → về Main |
+| Eyebrow + Title | giữa, y ≈ 92/119 | "TIỆM VĂN PHÒNG PHẨM" (đỏ) + "CỬA HÀNG" (`STR_SHOP_*`) |
+| Ví Xu | (775, 85) 255×70 | icon Xu + số + nút **+** |
+| 4 tab nhãn vở | y=185 (tab chọn, 240×65) / y=195 (tab thường, 240×55) | dựng **bằng code** (TextureButton + Label), art `tab_active/tab_inactive`; vạch đáy `TabLine` y=250 |
+| Content (cuộn) | (50, 270) 980×**1200** | lưới 2 cột 6 ô/trang (bút/giấy) · thẻ gói nạp 2 cột + hàng VIP trên cùng (nạp xu) · danh sách thẻ dọc (dụng cụ) |
+| Pager | y ≈ 1500 | "TRANG x / y" + chấm + 2 mũi tên (ẩn khi 1 trang) |
+| GiftBanner | (50, 1545) 980×115 | viền đỏ + icon quà + nút `+50 XU` |
+| Footer | y ≈ 1710 | câu đề tựa chân trang |
+
+**Vuốt / cuộn** (tự xử lý ở `_input` — nút trên thẻ "ăn" sự kiện kéo nên `ScrollContainer` không tự cuộn được):
+vuốt **ngang** → đổi trang (khi tab có >1 trang) · vuốt **dọc** → cuộn danh sách món · chọn trục theo hướng di chuyển đầu tiên
+(ngưỡng 14px) · vuốt đủ xa (≥70px) mới đổi trang · sau mỗi lần vuốt **KHOÁ bấm nút 0.35s** (`clicks_locked()`) để không mua nhầm.
+
+Mọi node gốc của scene đều có `index="1".."8"` để node `Popups` của `base.tscn` vẫn nằm TRÊN CÙNG.
+
+### 13.7. Asset · theme · chuỗi dịch
+
+- `assets/images/shop/` (30 SVG): `tab_active`/`tab_inactive` · `card_row` (980×180) · **`card_tile` (475×315)** · **`card_coin` (475×240)** · **`card_noads` (980×200)** · `chip_price` · `chip_red` (nhãn đỏ no-ads) · `btn_action_{normal,pressed,amber}` · `btn_equipped` · **`btn_tile_{normal,done,price,price_vip}` (200×46)** · **`btn_coin` (419×56)** · **`btn_noads` (230×80)** · `wallet_chip` · `banner_gift` · `btn_plus` · `gift_box` · `icon_box` · **`icon_circle`** · `ink_stroke` · `icon_{pen,ink,paper,coin}` · `icon_tool_{undo,hint,reveal,time,revive,shield}` (art TRẮNG → `modulate`) · **`icon_coin_t1..t5`** (icon cấp Xu: xu đơn · cọc xu · đống xu · túi tiền · rương vàng — lấy từ `mockup/coin_tiers.svg`).
+- Theme variations (`theme_text.tres`, nhóm `Shop*`, 27 cái): `ShopTitle` · `ShopEyebrow` · `ShopTabLabel(Active)` · `ShopName(Tile)` · `ShopDesc` · `ShopStock` · `ShopPrice(Amber)` · `ShopBadge(Danger)` · `ShopBonus` · `ShopNoads{Title,Desc,Price}` · `ShopBtnText(Amber/Done)` · `ShopWalletCount/Label` · `ShopBannerTitle/Desc/Btn` · `ShopPageLabel` · `ShopFooter`.
+- Chuỗi mới (`string_extra.csv`): `STR_SHOP_TITLE/EYEBROW` · `STR_SHOP_TAB_{PEN,THEME,TOOL,COIN}` · `STR_SHOP_PAGE_FORMAT` · `STR_SHOP_STOCK_FORMAT` + `STR_SHOP_UNIT_{PACK,TURN,COIN}` · `STR_SHOP_BONUS_TAG` · `STR_SHOP_USE` · `STR_SHOP_BUY_MORE` · `STR_SHOP_EQUIPPED` · `STR_SHOP_OWNED_BTN` · `STR_SHOP_NOT_ENOUGH` · `STR_SHOP_PRICE_FORMAT` · `STR_SHOP_BANNER_*` · 23 nhãn `STR_SHOP_BADGE_*` · 60 khoá tên/mô tả món hàng (`STR_SHOP_ITEM_*`, `STR_SHOP_THEME_*`, `STR_SHOP_TOOL_*`, `STR_SHOP_COIN_*`).
+- Mockup: `mockup/shopping_pencil.svg` · `shopping_tool.svg` · `shopping_coin.svg` (hàng VIP + lưới 5 gói Xu có icon cấp) · `shopping_theme_page_1/2.svg` (**thẻ 475×315, 6 thẻ/trang**) · `coin_tiers.svg` (5 cấp icon, số Xu = 500/2,000/3,500/8,000/20,000 khớp gói nạp thật) — **cùng một bộ khung** (status bar · Back (50,85) · eyebrow + CỬA HÀNG · ví 255×70 tại (775,85) · 4 tab nhãn vở với tab đang chọn nổi lên + vạch đáy y=250 · banner (50,1545) · chân trang y≈1710 · thanh gesture home).
+
+### 13.8. File liên quan & kiểm thử
+
+| File | Vai trò |
+|---|---|
+| `scripts/manager/ShopManager.gd` | Autoload: catalog 30 món · ví Xu (dùng chung Xu Mực) · mua/mặc/dùng · `export/import/reset_progress` |
+| `scripts/utils/shop.gd` (`class_name Shop`) | Facade tĩnh: `items/item/buy/equip/use_tool/coins/tool_count/thousands/vnd_text`… |
+| `scripts/manager/ThemeManager.gd` + `scripts/utils/theme_skin.gd` (`ThemeSkin`) | Chuẩn bị việc áp chủ đề/ngòi bút (`apply_enabled = false`) |
+| `scripts/manager/ArchivementManager.gd` | Thêm `notify_coins_changed()` + `spend_coins(amount)` để ví Xu dùng chung |
+| `scripts/manager/SaveManager.gd` | Đăng ký `ShopManager` là provider (autosave khi `item_purchased`) |
+| `scripts/nodes/shop/item_row.gd/.tscn` · `item_tile.gd/.tscn` · `coin_tile.gd/.tscn` · `noads_row.gd/.tscn` | 4 loại thẻ: thẻ dọc (dụng cụ) · thẻ ô 475×315 (bút/giấy vở) · thẻ gói nạp 475×240 · hàng VIP 980×200 |
+| `scripts/scenes/shop.gd` + `scenes/shop.tscn` | Màn Cửa hàng: dựng 4 tab bằng code, đổi ngăn, phân trang 6 ô/trang, mua/mặc/dùng, **vuốt ngang đổi trang + vuốt dọc cuộn danh sách** |
+| `scripts/utils/nav.gd` · `scripts/manager/SceneManager.gd` | `SCENE_SHOP` + `goto_shop()` (Debug Console có mục mở Cửa hàng) |
+| `scripts/test_case/test_shop.gd` | **225 check**: catalog (đủ 30 món, giá, icon, khoá dịch) · ví Xu · dụng cụ (cộng dồn lượt) · trang bị bút/chủ đề (`ThemeSkin`) · lưu/tải/xoá · scene (4 tab, thẻ ô 475×315 + nút 200×46, hàng VIP no-ads trên cùng, icon cấp Xu của từng gói, mua thật qua nút thẻ) · **vuốt ngang đổi trang · vuốt dọc cuộn danh sách · không mua nhầm khi vừa vuốt** · nối dây điều hướng |
+
 

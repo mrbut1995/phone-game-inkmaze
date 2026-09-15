@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- ICON CẤP 4 — TÚI TIỀN DÂY RÚT (8,000 XU) -->
+  <g transform="translate(60,62) scale(0.85)">
+    <ellipse cx="0" cy="46" rx="46" ry="14" fill="#2D2115" opacity="0.2"/>
+    <g transform="translate(0,-18) scale(0.75)">
+      <g transform="translate(-12,0)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
+      <g transform="translate(12,-4)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
+      <g transform="translate(0,-8)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="20" ry="10.5" fill="none" stroke="#D97706" stroke-width="1.6" stroke-dasharray="4 2.5"/></g>
+    </g>
+    <path d="M -24 -24 C -28 -34 -14 -38 -8 -26 C -2 -38 12 -36 12 -26 C 18 -36 28 -32 24 -22 Z" fill="#D97706" stroke="#78350F" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M -18 -18 C -44 -10 -46 36 -28 44 C -12 50 12 50 28 44 C 46 36 44 -10 18 -18 Z" fill="#F59E0B" stroke="#78350F" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M -20 -18 Q 0 -14 20 -18" fill="none" stroke="#D84444" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="0" cy="-15" r="4" fill="#D84444"/>
+    <path d="M 0 -15 Q -10 -8 -12 6" fill="none" stroke="#D84444" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="-12" cy="7" r="3" fill="#FBBF24" stroke="#78350F" stroke-width="1"/>
+    <path d="M 0 -15 Q 8 -6 10 8" fill="none" stroke="#D84444" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="10" cy="9" r="3" fill="#FBBF24" stroke="#78350F" stroke-width="1"/>
+    <circle cx="0" cy="18" r="14" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/>
+    <polygon points="0,10 2,15 7,15 3,18 5,24 0,21 -5,24 -3,18 -7,15 -2,15" fill="#B45309"/>
+    <g transform="translate(-24,42) rotate(-15) scale(0.8)">
+      <path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
+      <ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/>
+    </g>
+    <g transform="translate(24,44) rotate(20) scale(0.8)">
+      <path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
+      <ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/>
+    </g>
+    <path d="M -26 -12 Q -16 -22 -6 -24 Q -16 -22 -26 -12 Z" fill="#FFFBE8" stroke="#F59E0B" stroke-width="1.2"/>
+  </g>
+</svg>

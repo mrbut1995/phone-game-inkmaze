@@ -19,6 +19,8 @@ const SCENE_ARCHIVEMENT := "res://scenes/archivement.tscn"
 const SCENE_RANKING := "res://scenes/ranking.tscn"
 ## Màn CHỌN CHƯƠNG — xem scripts/scenes/chapters.gd
 const SCENE_CHAPTERS := "res://scenes/chapters.tscn"
+## Màn CỬA HÀNG — xem scripts/scenes/shop.gd
+const SCENE_SHOP := "res://scenes/shop.tscn"
 
 
 static func change_scene(path: String) -> void:
@@ -64,6 +66,11 @@ static func goto_ranking() -> void:
 ## Màn CHỌN CHƯƠNG (xem tiến độ + mở khóa chương bằng Sao)
 static func goto_chapters() -> void:
 	change_scene(SCENE_CHAPTERS)
+
+
+## Màn CỬA HÀNG (bút · giấy vở · dụng cụ · nạp xu)
+static func goto_shop() -> void:
+	change_scene(SCENE_SHOP)
 
 
 ## Màn hình debug (chỉ dùng khi phát triển)

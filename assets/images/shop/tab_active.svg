@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 65" width="240" height="65">
+  <!-- Tab đang chọn (nhãn vở nổi lên) -->
+  <path d="M 0 16 A 16 16 0 0 1 16 0 L 224 0 A 16 16 0 0 1 240 16 L 240 65 L 0 65 Z" fill="#3D83AE"/>
+  <line x1="16" y1="0" x2="16" y2="65" stroke="#FAF5EB" stroke-width="2" opacity="0.6"/>
+</svg>

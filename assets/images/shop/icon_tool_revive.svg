@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Icon KẸP GIẤY GIỮ MẠNG (hồi sinh) -->
+  <path d="M 20 12 L 20 46 A 8 8 0 0 0 36 46 L 36 20 A 4 4 0 0 0 28 20 L 28 44"
+        fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 42 14 L 54 14 L 54 26" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M 52 16 L 40 28" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+</svg>

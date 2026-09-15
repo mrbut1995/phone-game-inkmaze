@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 475 315" width="475" height="315">
+  <!-- Thẻ ô (bút · giấy vở) 475x315 — theo mockup/shopping_pencil.svg:
+       giấy trắng + viền xanh; lề màu, vòng icon, nét mực, chữ, nút vẽ bằng code -->
+  <rect width="475" height="315" rx="22" fill="#FEFDFA"/>
+  <rect x="1.5" y="1.5" width="472" height="312" rx="20.5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
+</svg>

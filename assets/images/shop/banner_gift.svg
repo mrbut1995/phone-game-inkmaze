@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 115" width="980" height="115">
+  <!-- Banner "GÓC TIẾP SỨC HỌC TẬP" (viền đỏ + lề đỏ) -->
+  <rect width="980" height="115" rx="24" fill="#FEFDFA"/>
+  <rect x="1.5" y="1.5" width="977" height="112" rx="22.5" fill="none" stroke="#D84444" stroke-width="3"/>
+  <line x1="36" y1="0" x2="36" y2="115" stroke="#D84444" stroke-width="3"/>
+</svg>

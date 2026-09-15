@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 60" width="300" height="60">
+  <!-- Nét mực vẽ thử (art TRẮNG -> tô màu bút bằng modulate) -->
+  <path d="M 8 44 C 50 6 96 54 148 26 C 196 2 244 50 292 18" fill="none" stroke="#FFFFFF"
+        stroke-width="14" stroke-linecap="round"/>
+</svg>

@@ -705,3 +705,60 @@
 #     - Test mới: scripts/test_case/test_debug_modes.gd (44 check: cờ test · map id->mode · mục
 #       SPECIAL MODES trong Debug scene · ván test không ghi tiến trình · ép tầng 3 -> bàn 5x5).
 # [ ] Chưa có nút xem nhanh dữ liệu riêng của mode (mìn/chi phí/vùng...) trong Debug Console
+
+# ----------------------------------------------------------------------------
+# CỬA HÀNG (SHOP) — TIỆM VĂN PHÒNG PHẨM — 2026-02 (vòng 9)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-02): màn Cửa hàng + catalog 30 món + chuẩn bị việc apply chủ đề/ngòi bút
+#     - `ShopManager` (autoload) + facade `Shop`: 4 nhóm hàng pen(10) · theme(8) · tool(6) · coin(6);
+#       ví Xu Mực DÙNG CHUNG với Sổ tay thành tựu (ArchivementManager.coins) + `spend_coins()`/`notify_coins_changed()`.
+#       API: items/item/has_item/price_of/category_of/is_consumable/is_equippable/can_afford/buy/use_tool/equip/
+#       tool_count/purchase_coin_pack (STUB IAP)/export-import-reset_progress; signal coins_changed/item_purchased/item_equipped/tool_used.
+#     - Món mặc định có sẵn: `pen_blue` (Mực Xanh Học Trò) + `theme_gride_4ly` (Vở Ô Ly 4 Ly); dụng cụ mua lại được
+#       (cộng dồn lượt); gói nạp có `bonus` Xu tặng thêm; `coin_no_ads` mua 1 lần.
+#     - `ThemeManager` (autoload) + facade `ThemeSkin` — CHUẨN BỊ SẴN việc apply chủ đề/ngòi bút nhưng CHƯA bật
+#       (`apply_enabled = false`; `_apply_now()` là stub TODO). ĐÃ đổi tên facade từ `Skin` -> `ThemeSkin` vì
+#       `Skin` TRÙNG class native của Godot (parse lỗi).
+#     - Màn Cửa hàng: `scenes/shop.tscn` + `scripts/scenes/shop.gd` (ShopScene) — dựng 4 tab nhãn vở BẰNG CODE,
+#       lưới 2 cột 4 thẻ/trang cho bút/giấy + danh sách thẻ dọc cho dụng cụ/nạp xu, pager, ví Xu + nút +, banner
+#       tiếp sức, nút Back -> Main. 2 component `nodes/shop/item_row.tscn` (980x180) + `item_tile.tscn` (470x500).
+#     - Asset mới `assets/images/shop/` (20 SVG) + 21 theme variation `Shop*` + ~90 khoá chuỗi `STR_SHOP_*`.
+#     - Mockup viết lại theo MỘT bộ khung chung: `shopping_theme_page_1/2.svg` (trước đây collect từ nguồn khác,
+#       tab/tiêu đề/ví khác hẳn) giờ giống `shopping_pencil/tool/coin.svg` (status bar · Back (50,85) · eyebrow +
+#       CỬA HÀNG · ví 255x70 tại (775,85) · 4 tab y=185/195 + vạch đáy y=250 · banner (50,1545) · chân trang 1710).
+#     - Test mới `scripts/test_case/test_shop.gd` (196 check) -> 24/24 suite PASS. Render kiểm tra 4 tab bằng
+#       SubViewport 1080x1920 (phát hiện + sửa: mô tả thẻ dọc bị cắt -> cho phép 2 dòng; "Hiện có trong túi: N gói"
+#       -> "Đang có: N lượt"; gói nạp không bonus bị lặp lại mô tả; tên dụng cụ dài bị ellipsis).
+# [ ] Khi ghép Google Play Billing: thay thân `purchase_coin_pack()` (hiện là STUB) + nối AdsManager cho gói no_ads
+# [ ] Khi muốn bật thật Theme/Pen: điền `ThemeManager._apply_now()` rồi đổi `apply_enabled = true`
+
+# ----------------------------------------------------------------------------
+# CỬA HÀNG: THẺ Ô THEO MOCKUP + TAB NẠP XU + VUỐT/CUỘN — 2026-02 (vòng 10)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-02): theo phản hồi "card item_tile khác mockup" · "nạp xu giống mockup" · "không vuốt/cuộn được"
+#     - Thẻ ô bút/giấy vở dựng LẠI đúng khuôn mockup/shopping_pencil.svg: 470×500 -> **475×315**:
+#       nhãn góc trên-trái (bề ngang tự co theo chữ) · VÒNG icon + icon + NÉT MỰC vẽ thử · tên 24 / mô tả /
+#       dòng trạng thái canh giữa · nút **200×46** (giá Xu hổ phách + icon Xu · SỬ DỤNG tô đúng màu món hàng ·
+#       ĐANG DÙNG xanh lá · món VIP nút hổ phách đặc chữ trắng).
+#       Lưới 2 cột × 3 hàng = **6 ô/trang** (10 bút -> 2 trang; 8 giấy vở -> 2 trang).
+#     - Tab NẠP XU làm lại theo mockup/shopping_coin.svg: gói **XOÁ QUẢNG CÁO nằm riêng TRÊN CÙNG** (`noads_row`
+#       980×200, viền đỏ, nút giá 230×80, mua rồi -> "ĐÃ SỞ HỮU" + khoá) và **5 gói Xu xếp LƯỚI 2 CỘT**
+#       (`coin_tile` 475×240). Mỗi gói có **ICON CẤP XU riêng** lấy từ mockup/coin_tiers.svg:
+#       `icon_coin_t1..t5` = xu đơn · cọc xu · đống xu · túi tiền · rương vàng (art riêng, không modulate);
+#       đã cập nhật `coin_tiers.svg` cho khớp số Xu thật (500 / 2,000 / 3,500 / 8,000 / 20,000).
+#     - SỬA VUỐT/CUỘN (2 lỗi user báo): `shop.gd` tự xử lý ở `_input` vì nút trên thẻ "ăn" sự kiện kéo nên
+#       ScrollContainer không tự cuộn. Vuốt NGANG -> đổi trang (>=70px, chỉ khi tab có >1 trang);
+#       vuốt DỌC -> cuộn danh sách; chọn trục theo hướng di chuyển đầu tiên (ngưỡng 14px);
+#       `set_input_as_handled()` khi đã nhận kéo (tránh cuộn đôi); sau khi vuốt **KHOÁ bấm nút 0.35s**
+#       (`clicks_locked()`) để không mua nhầm. Content 1220 -> 1200 cao (danh sách dụng cụ dài hơn khung nhìn).
+#     - Màu nhấn chủ đề đổi cho đủ tương phản trên thẻ: 4 ly #3D83AE · campus #64748B · bullet #94A3B8.
+#     - Asset mới: card_coin · card_noads · icon_circle · btn_tile_{normal,done,price,price_vip} · btn_coin ·
+#       btn_noads · chip_red · icon_coin_t1..t5 (đã xoá preview_frame không còn dùng).
+#       Theme mới: ShopBadgeDanger · ShopBonus · ShopNoads{Title,Desc,Price}. Chuỗi mới: STR_SHOP_OWNED_BTN.
+#     - Mockup viết lại đồng bộ: shopping_coin.svg (VIP + lưới 5 gói có icon cấp) ·
+#       shopping_theme_page_1/2.svg (thẻ 475×315, 6 thẻ/trang) · coin_tiers.svg (số Xu khớp gói thật).
+#     - Test `test_shop.gd` 196 -> **225 check** (thêm phần 7: vuốt ngang đổi trang · vuốt dọc cuộn danh sách ·
+#       vuốt xong không mua nhầm · kéo ngắn không tính vuốt; section 6 kiểm thêm kích thước thẻ 475×315,
+#       nút 200×46, hàng VIP 980×200 và icon cấp Xu của từng gói). Render 4 tab đối chiếu OK. 24/24 suite PASS.
+# [ ] Bàn nháp "thử bút" (980×215 trong shopping_pencil.svg) chưa làm — chưa được yêu cầu
+# [ ] Tab DỤNG CỤ vẫn là thẻ dọc 980×180; muốn đồng bộ thẻ ô 475×315 thì báo thêm

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 419 56" width="419" height="56">
+  <!-- Nút giá VNĐ của thẻ gói nạp Xu (hổ phách nhạt, bề ngang đầy thẻ) -->
+  <rect x="1" y="1" width="417" height="54" rx="16" fill="#FEF3C7"/>
+  <rect x="1" y="1" width="417" height="54" rx="16" fill="none" stroke="#F59E0B" stroke-width="2"/>
+</svg>

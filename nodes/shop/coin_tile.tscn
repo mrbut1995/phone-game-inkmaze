@@ -1,0 +1,141 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/shop/coin_tile.gd" id="1_coin"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/images/shop/card_coin.svg" id="3_card"]
+[ext_resource type="Texture2D" path="res://assets/images/shop/icon_circle.svg" id="4_circle"]
+[ext_resource type="Texture2D" path="res://assets/images/settings/section_chip.svg" id="5_chip"]
+[ext_resource type="Texture2D" path="res://assets/images/shop/btn_coin.svg" id="6_btn"]
+[ext_resource type="Texture2D" path="res://assets/images/shop/icon_coin_t1.svg" id="7_icon"]
+
+[node name="CoinTile" type="Control"]
+custom_minimum_size = Vector2(475, 240)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 475.0
+offset_bottom = 240.0
+theme = ExtResource("2_theme")
+script = ExtResource("1_coin")
+
+[node name="Bg" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 475.0
+offset_bottom = 240.0
+mouse_filter = 2
+texture = ExtResource("3_card")
+expand_mode = 1
+
+[node name="Bar" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 18.0
+offset_right = 27.0
+offset_bottom = 222.0
+mouse_filter = 2
+color = Color(0.9607843, 0.61960787, 0.043137256, 1)
+
+[node name="IconCircle" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 64.0
+offset_right = 124.0
+offset_bottom = 160.0
+mouse_filter = 2
+texture = ExtResource("4_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 70.0
+offset_right = 118.0
+offset_bottom = 154.0
+mouse_filter = 2
+texture = ExtResource("7_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Badge" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 16.0
+offset_right = 208.0
+offset_bottom = 42.0
+mouse_filter = 2
+texture = ExtResource("5_chip")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="BadgeLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 16.0
+offset_right = 208.0
+offset_bottom = 42.0
+theme_type_variation = &"ShopBadge"
+text = "KHUYÊN DÙNG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 44.0
+offset_right = 447.0
+offset_bottom = 80.0
+theme_type_variation = &"ShopNameTile"
+text = "Túi Xu 500"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Desc" type="Label" parent="."]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 80.0
+offset_right = 447.0
+offset_bottom = 106.0
+theme_type_variation = &"ShopDesc"
+text = "Túi xu cơ bản"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Bonus" type="Label" parent="."]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 106.0
+offset_right = 447.0
+offset_bottom = 132.0
+theme_type_variation = &"ShopBonus"
+text = ""
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Action" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 168.0
+offset_right = 447.0
+offset_bottom = 224.0
+focus_mode = 0
+texture_normal = ExtResource("6_btn")
+texture_pressed = ExtResource("6_btn")
+texture_hover = ExtResource("6_btn")
+texture_disabled = ExtResource("6_btn")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ActionLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 168.0
+offset_right = 447.0
+offset_bottom = 224.0
+theme_type_variation = &"ShopPrice"
+text = "19.000 VNĐ"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Action" to="." method="_on_action_pressed"]
