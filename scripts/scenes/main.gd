@@ -96,6 +96,7 @@ func _setup_animations() -> void:
 
 func _on_play_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
+	# Luồng chơi: Main -> CHỌN MÀN (vào thẳng); muốn đổi chương thì bấm banner trong màn Chọn màn
 	var gm := get_node_or_null("/root/GameManager")
 	if gm != null and gm.has_method("go_to_levels"):
 		gm.go_to_levels()

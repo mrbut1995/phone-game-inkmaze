@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Icon chuong 4 · BAC THAY: luoi 9x9 + duong di xoan + vuong mien -->
+  <rect x="1.5" y="1.5" width="177" height="177" rx="16" fill="#FFFFFF" fill-opacity="0.12"
+        stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="2.5"/>
+  <g stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="0.9">
+    <line x1="21.2" y1="2" x2="21.2" y2="178"/><line x1="40.8" y1="2" x2="40.8" y2="178"/>
+    <line x1="60.5" y1="2" x2="60.5" y2="178"/><line x1="80.2" y1="2" x2="80.2" y2="178"/>
+    <line x1="99.8" y1="2" x2="99.8" y2="178"/><line x1="119.5" y1="2" x2="119.5" y2="178"/>
+    <line x1="139.2" y1="2" x2="139.2" y2="178"/><line x1="158.8" y1="2" x2="158.8" y2="178"/>
+    <line x1="2" y1="21.2" x2="178" y2="21.2"/><line x1="2" y1="40.8" x2="178" y2="40.8"/>
+    <line x1="2" y1="60.5" x2="178" y2="60.5"/><line x1="2" y1="80.2" x2="178" y2="80.2"/>
+    <line x1="2" y1="99.8" x2="178" y2="99.8"/><line x1="2" y1="119.5" x2="178" y2="119.5"/>
+    <line x1="2" y1="139.2" x2="178" y2="139.2"/><line x1="2" y1="158.8" x2="178" y2="158.8"/>
+  </g>
+  <path d="M 11.3 168.7 L 11.3 129.3 L 129.3 129.3 L 129.3 50.7 L 50.7 50.7 L 50.7 109.7 L 90 109.7
+           L 90 70.3 L 168.7 70.3 L 168.7 11.3 L 70.3 11.3"
+        fill="none" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="5.5"
+        stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="11.3" cy="168.7" r="6" fill="#FFFFFF" fill-opacity="0.9"/>
+  <circle cx="70.3" cy="11.3" r="6" fill="#FFFFFF" fill-opacity="0.9"/>
+  <path d="M 137 22 L 143 34 L 156 36 L 146 45 L 149 58 L 137 51 L 125 58 L 128 45 L 118 36 L 131 34 Z"
+        fill="#FFFFFF" fill-opacity="0.95"/>
+</svg>

@@ -1,0 +1,271 @@
+[gd_scene format=3 uid="uid://bte71rhr8lhcc"]
+
+[ext_resource type="Script" uid="uid://cft2rl8264qyk" path="res://scripts/nodes/chapters/chapter_card.gd" id="1_card"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="Texture2D" uid="uid://bac7rdg3cf6b3" path="res://assets/images/chapters/card_open.svg" id="3_card"]
+[ext_resource type="Texture2D" uid="uid://d7axlwujkc2q" path="res://assets/images/chapters/halo_ready.svg" id="4_halo"]
+[ext_resource type="Texture2D" uid="uid://b8641lodni8ao" path="res://assets/images/chapters/ribbon.svg" id="5_ribbon"]
+[ext_resource type="Texture2D" uid="uid://cblgd2w5oal7n" path="res://assets/images/chapters/chip_size.svg" id="6_chip"]
+[ext_resource type="Texture2D" uid="uid://dqf24srahnepo" path="res://assets/images/chapters/bar_track.svg" id="7_track"]
+[ext_resource type="Texture2D" uid="uid://dofgrbef5s2ut" path="res://assets/images/chapters/chip_need.svg" id="8_need"]
+[ext_resource type="Texture2D" uid="uid://bq3nphgm5twr7" path="res://assets/images/chapters/bar_fill.svg" id="9_fill"]
+[ext_resource type="Texture2D" uid="uid://cksv3j4fribw6" path="res://assets/images/chapters/chip_have.svg" id="10_have"]
+[ext_resource type="Texture2D" uid="uid://c66v5bmdvegnd" path="res://assets/images/common/star_highlight.svg" id="11_star"]
+[ext_resource type="Texture2D" uid="uid://idh2tbjo2x6a" path="res://assets/images/chapters/lock_overlay.svg" id="12_lock"]
+[ext_resource type="Texture2D" uid="uid://ccwikst7p5v6d" path="res://assets/images/chapters/maze_small.svg" id="13_maze"]
+
+[node name="ChapterCard" type="Control" unique_id=2037063166]
+custom_minimum_size = Vector2(970, 285)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 970.0
+offset_bottom = 285.0
+theme = ExtResource("2_theme")
+script = ExtResource("1_card")
+
+[node name="Halo" type="TextureRect" parent="." unique_id=1522376547]
+visible = false
+layout_mode = 0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 976.0
+offset_bottom = 291.0
+mouse_filter = 2
+texture = ExtResource("4_halo")
+
+[node name="Bg" type="TextureRect" parent="." unique_id=2055230155]
+layout_mode = 0
+offset_right = 970.0
+offset_bottom = 285.0
+mouse_filter = 2
+texture = ExtResource("3_card")
+expand_mode = 1
+
+[node name="Doodle" type="TextureRect" parent="." unique_id=1236952187]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 48.0
+offset_right = 248.0
+offset_bottom = 228.0
+mouse_filter = 2
+texture = ExtResource("13_maze")
+
+[node name="Lock" type="TextureRect" parent="." unique_id=1671124533]
+visible = false
+layout_mode = 0
+offset_left = 122.0
+offset_top = 91.0
+offset_right = 194.0
+offset_bottom = 163.0
+mouse_filter = 2
+texture = ExtResource("12_lock")
+
+[node name="Ribbon" type="TextureRect" parent="." unique_id=54159697]
+layout_mode = 0
+offset_left = 780.0
+offset_right = 970.0
+offset_bottom = 48.0
+mouse_filter = 2
+texture = ExtResource("5_ribbon")
+
+[node name="RibbonLabel" type="Label" parent="." unique_id=1786610814]
+layout_mode = 0
+offset_left = 800.0
+offset_top = 2.0
+offset_right = 964.0
+offset_bottom = 44.0
+theme_type_variation = &"ChapterRibbon"
+text = "ĐANG CHƠI"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Chip" type="TextureRect" parent="." unique_id=2072703360]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 44.0
+offset_right = 540.0
+offset_bottom = 78.0
+mouse_filter = 2
+texture = ExtResource("6_chip")
+
+[node name="ChipLabel" type="Label" parent="." unique_id=1044839075]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 44.0
+offset_right = 540.0
+offset_bottom = 78.0
+theme_type_variation = &"ChapterChipSize"
+text = "KÍCH THƯỚC"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title" type="Label" parent="." unique_id=330343107]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 80.0
+offset_right = 690.0
+offset_bottom = 131.0
+theme_type_variation = &"ChapterCardTitle"
+text = "CHƯƠNG 1"
+vertical_alignment = 1
+text_overrun_behavior = 3
+resize_font_to_fit = true
+
+[node name="Subtitle" type="Label" parent="." unique_id=84376013]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 128.0
+offset_right = 701.0
+offset_bottom = 158.79999
+theme_type_variation = &"ChapterCardSubtitle"
+text = "..."
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Bar" type="Control" parent="." unique_id=1011661792]
+clip_contents = true
+anchors_preset = 0
+offset_left = 280.0
+offset_top = 174.0
+offset_right = 660.0
+offset_bottom = 188.0
+mouse_filter = 2
+
+[node name="Track" type="TextureRect" parent="Bar" unique_id=2116522289]
+layout_mode = 0
+offset_right = 380.0
+offset_bottom = 14.0
+mouse_filter = 2
+texture = ExtResource("7_track")
+
+[node name="Fill" type="TextureRect" parent="Bar" unique_id=2113885124]
+layout_mode = 0
+offset_right = 380.0
+offset_bottom = 14.0
+mouse_filter = 2
+texture = ExtResource("9_fill")
+expand_mode = 1
+
+[node name="Stars" type="Label" parent="." unique_id=337808427]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 192.0
+offset_right = 640.0
+offset_bottom = 226.0
+theme_type_variation = &"ChapterStars"
+text = "0 / 0 SAO"
+vertical_alignment = 1
+
+[node name="StarsSub" type="Label" parent="." unique_id=1634893469]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 196.0
+offset_right = 700.0
+offset_bottom = 228.0
+theme_type_variation = &"ChapterStarsSub"
+text = "(0/0 màn)"
+vertical_alignment = 1
+
+[node name="NeedChip" type="TextureRect" parent="." unique_id=620297523]
+visible = false
+layout_mode = 0
+offset_left = 700.0
+offset_top = 188.0
+offset_right = 895.0
+offset_bottom = 220.0
+mouse_filter = 2
+texture = ExtResource("8_need")
+
+[node name="NeedLabel" type="Label" parent="." unique_id=46546071]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 188.0
+offset_right = 895.0
+offset_bottom = 220.0
+theme_type_variation = &"ChapterNeedChip"
+text = "CÒN THIẾU"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HaveChip" type="TextureRect" parent="." unique_id=1334234839]
+visible = false
+layout_mode = 0
+offset_left = 280.0
+offset_top = 174.0
+offset_right = 580.0
+offset_bottom = 214.0
+mouse_filter = 2
+texture = ExtResource("10_have")
+
+[node name="HaveLabel" type="Label" parent="." unique_id=344569581]
+layout_mode = 0
+offset_left = 292.0
+offset_top = 174.0
+offset_right = 568.0
+offset_bottom = 214.0
+theme_type_variation = &"ChapterHaveChip"
+text = "ĐÃ ĐỦ"
+vertical_alignment = 1
+
+[node name="Action" type="Control" parent="." unique_id=1449986150]
+anchors_preset = 0
+offset_left = 700.0
+offset_top = 88.0
+offset_right = 950.0
+offset_bottom = 188.0
+mouse_filter = 2
+
+[node name="Btn" type="TextureButton" parent="Action" unique_id=1533517246]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 100.0
+focus_mode = 0
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="Action" unique_id=1716327212]
+visible = false
+layout_mode = 0
+offset_left = 20.0
+offset_top = 32.0
+offset_right = 56.0
+offset_bottom = 68.0
+mouse_filter = 2
+texture = ExtResource("11_star")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LockIcon" type="TextureRect" parent="Action" unique_id=1732227354]
+visible = false
+layout_mode = 0
+offset_left = 20.0
+offset_top = 32.0
+offset_right = 56.0
+offset_bottom = 68.0
+mouse_filter = 2
+texture = ExtResource("12_lock")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Action" unique_id=743969444]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 10.0
+offset_right = 244.0
+offset_bottom = 52.0
+theme_type_variation = &"ChapterAction"
+text = "VÀO CHƠI"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sub" type="Label" parent="Action" unique_id=847799387]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 52.0
+offset_right = 244.0
+offset_bottom = 88.0
+theme_type_variation = &"ChapterActionSub"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Action/Btn" to="." method="_on_btn_pressed"]

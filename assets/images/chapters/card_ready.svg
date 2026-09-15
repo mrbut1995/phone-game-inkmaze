@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 970 285" width="970" height="285">
+  <!-- Thẻ CHƯƠNG — trạng thái ĐÃ ĐỦ ĐIỀU KIỆN (viền hổ phách đậm) -->
+  <rect width="970" height="285" rx="24" fill="#C4843A"/>
+  <rect x="2" y="2" width="966" height="281" rx="22" fill="#FFFDF8"/>
+  <g stroke="#8FB9D2" stroke-width="1" opacity="0.4">
+    <line x1="2" y1="70" x2="968" y2="70"/>
+    <line x1="2" y1="140" x2="968" y2="140"/>
+    <line x1="2" y1="210" x2="968" y2="210"/>
+  </g>
+  <line x1="42" y1="6" x2="42" y2="279" stroke="#D84444" stroke-width="3.5"/>
+</svg>

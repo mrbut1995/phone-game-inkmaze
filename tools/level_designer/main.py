@@ -130,6 +130,43 @@ def run_selftest() -> int:
         if editor.level.snapshot() != drawn:
             failures.append("Redo không trả về đúng trạng thái trước khi undo")
 
+    from app.models.chapter_repository import ChapterRepository
+
+    # --- CHƯƠNG: liệt kê chương thật + thử tạo chương & gán màn (thư mục tạm) ---
+    print("\n== CHƯƠNG (resources/chapters) ==")
+    real_chapters = ChapterRepository(levels=real_repo).list_summaries()
+    if not real_chapters:
+        print("  (chưa có chương nào — mở menu 'Chương' > 'Tạo chương theo dữ liệu màn')")
+    for summary in real_chapters:
+        print("  chương %d · %-14s · %-8s · %s · %d màn · tối đa %d sao" % (
+            summary.chapter_id, summary.title, summary.icon or "(auto)",
+            "mở sẵn" if summary.star_cost <= 0 else "cần %d sao" % summary.star_cost,
+            summary.level_count, summary.star_total))
+    used = {ChapterRepository(levels=real_repo).chapter_of_level(s.level_id) for s in summaries}
+    missing = sorted(n for n in used if n not in {c.chapter_id for c in real_chapters})
+    if missing:
+        failures.append("Thiếu file chapter cho chương: %s" % missing)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        temp_levels = LevelRepository(Path(tmp) / "levels")
+        chapters_repo = ChapterRepository(Path(tmp) / "chapters", levels=temp_levels)
+        app = AppController(repository=temp_levels, chapters=chapters_repo)
+        for level_id in range(1, 6):
+            temp_levels.save(temp_levels.create_level(level_id, 3, 3))
+        created = app.ensure_chapters_for_levels()
+        if created != 1:
+            failures.append("Phải tạo 1 chương từ dữ liệu màn (nhận %d)" % created)
+        if app.assign_levels_to_chapter(1, [4, 5]) != 2:
+            failures.append("Gán 2 màn vào chương 1 thất bại")
+        chapter_summaries = app.chapter_summaries()
+        if not chapter_summaries or chapter_summaries[0].level_count != 5:
+            failures.append("Chương 1 phải gom đủ 5 màn sau khi gán")
+        if chapter_summaries and chapter_summaries[0].star_cost != 0:
+            failures.append("Chương 1 phải mở sẵn (star_cost = 0)")
+        moved = chapters_repo.clear_levels(1)
+        if moved != 0:
+            failures.append("clear_levels(1) không được chuyển màn của chương 1")
+
     if failures:
         print("\nTHẤT BẠI:")
         for failure in failures:

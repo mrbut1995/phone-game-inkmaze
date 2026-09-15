@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ChapterData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/chapter_data.gd" id="1_chapter"]
+
+[resource]
+script = ExtResource("1_chapter")
+chapter_id = 3
+title = "BẪY ẨN"
+subtitle = "Thử thách trí nhớ và khả năng vẽ không chạm tường"
+size_label = "8×8"
+star_cost = 45
+icon = "trap"

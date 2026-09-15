@@ -595,4 +595,128 @@ Tờ giấy `rank_sheet.svg` **940×1570 tại (70,185)**, viền `#6EA0C8` 3.5p
 3. Bỏ dòng **"• • •"** vì danh sách đã **cuộn được** tới hạng 25 (giữ nguyên tinh thần "còn nữa" của mockup).
 4. Chân trang thêm 1 dòng nhỏ ghi rõ **bảng ngoại tuyến (demo) — đối thủ là dữ liệu mô phỏng** để không gây hiểu nhầm là bảng online thật.
 
+---
+
+## 12. Màn CHỌN CHƯƠNG (Chapter Selection)
+
+Thêm 2026-02 (tinh chỉnh 2026-09-15). Mockup: `mockup/chapter_selection.svg`. Luồng màn hình:
+
+```
+Main ──[CHƠI]──▶ Chọn màn ──[bấm BANNER chương ở trên]──▶ CHỌN CHƯƠNG
+                    ▲                                          │
+                    └──────[VÀO CHƠI / bấm thẻ / Back]─────────┘
+```
+
+- Màn **Chọn màn** là màn chính khi bấm CHƠI (vào thẳng, không qua Chọn Chương).
+- Bấm **bất kỳ chỗ nào trên banner chương** ở màn Chọn màn → màn Chọn Chương (không bắt bấm đúng chữ "ĐỔI CHƯƠNG").
+- Back ở màn Chọn Chương → Chọn màn; Back ở màn Chọn màn → Main.
+
+### 12.1. Dữ liệu: `ChapterData` + quan hệ với `LevelData`
+
+- Mỗi chương = **1 file `resources/chapters/chapter_<id>.tres`** (`script_class="ChapterData"`, schema `scripts/resources/chapter_data.gd`): `chapter_id` · `title` · `subtitle` · `size_label` (rỗng = ẩn chip) · `star_cost` (0 = mở sẵn).
+- **Quan hệ là NGƯỢC:** `LevelData.chapter` (int) trỏ tới chương của màn — "thêm màn vào chương" = ghi `chapter = N` cho file màn đó (nhờ vậy màn chỉ thuộc **đúng 1** chương, không sợ danh sách chương lệch dữ liệu).
+- `ChapterData.icon` = **tên icon riêng của chương** (`intro` · `logic` · `trap` · `master` — rỗng thì UI tự chọn theo số chương, ngoài phạm vi thì fallback theo cỡ bàn). Icon thật nằm ở `assets/images/chapters/icon_<tên>.svg`, mỗi chương một doodle mê cung khác nhau:
+
+| Chương | Icon | Hình |
+|---|---|---|
+| 1 · NHẬP MÔN | `icon_intro` | lưới 3×3 + đường chữ L đơn giản |
+| 2 · SUY LUẬN | `icon_logic` | lưới 5×5 + đường zigzag nhiều khúc |
+| 3 · BẪY ẨN | `icon_trap` | lưới 7×7 + 2 dấu X nét đứt (bẫy) |
+| 4 · BẬC THẦY | `icon_master` | lưới 9×9 + đường xoắn dài + ngôi sao |
+| ≥ 5 / chưa đặt | `maze_small`/`medium`/`large` | theo cỡ bàn lớn nhất của chương |
+- 4 chương hiện có: 1 · **NHẬP MÔN** (3×3–5×5, mở sẵn, 9 màn) · 2 · **SUY LUẬN** (4×4–11×11, 25 sao, 5 màn) · 3 · **BẪY ẨN** (8×8, 45 sao) · 4 · **BẬC THẦY** (9×9, 70 sao).
+
+| API `LevelManager` | Vai trò |
+|---|---|
+| `get_chapters()` / `get_chapter(id)` / `chapter_count()` / `has_chapter(id)` | Đọc dữ liệu chương |
+| `chapter_of_level(id)` / `levels_in_chapter(id)` | Gom màn theo chương |
+| `chapter_star_total(id)` · `chapter_cleared_count(id)` · `chapter_stars(id)` | Số liệu tiến độ của chương |
+| `current_chapter_id()` | Chương chứa `GameManager.current_level` |
+
+### 12.2. Bốn trạng thái thẻ chương
+
+| Trạng thái | Điều kiện | Thẻ hiện |
+|---|---|---|
+| **ĐANG CHƠI** | Chương chứa màn đang chơi (`current_chapter_id()`) | Viền xanh · ruy băng "ĐANG CHƠI" · thanh Sao **trong chương** + nút **VÀO CHƠI** (`Màn n ›`) |
+| **ĐÃ MỞ** | Đã mở khóa nhưng không phải chương đang chơi | Như trên, ruy băng "ĐÃ MỞ" || **ĐÃ ĐỦ ĐIỀU KIỆN** | Chưa mở + `total_stars >= star_cost` | Viền hổ phách + hào quang nét đứt · chip "✓ ĐÃ ĐỦ: `có` / `cần` SAO" · nút **MỞ KHÓA** (nền hổ phách, icon Sao) |
+| **ĐANG KHÓA** | Chưa mở + thiếu Sao | Giấy xám + ổ khóa trên doodle · thanh tiến độ **mở khóa** (`total / cost`) · chip đỏ "CÒN THIẾU n SAO" · nút xám "CẦN n SAO · Chưa đủ sao" |
+| **SẮP RA MẮT** | Đã mở nhưng chương **chưa có màn nào** | Nút xám "SẮP RA MẮT" |
+
+Doodle icon mê cung (nhỏ/vừa/lớn theo bàn lớn nhất của chương) là art **trắng** rồi `modulate` theo trạng thái: `#3D83AE` (đang chơi) · `#C4843A` (đủ điều kiện) · `#7A8F9B` (khóa).
+
+### 12.3. Mở khóa bằng Sao (`GameManager`)
+
+- `unlocked_chapters: Array[int] = [1]` (chương 1 luôn mở) + `current_chapter: int = 1`; cả hai được lưu trong save (`export_progress`/`import_progress`) và xoá khi `reset_progress()`.
+- `total_stars()` = tổng Sao **toàn bộ** màn · `chapter_star_cost(id)` = `star_cost` của chương · `can_unlock_chapter(id)` · `unlock_chapter(id)` → phát signal `chapter_unlocked` + `Save.queue_save()`.
+- Sao dùng để mở khóa là **tổng Sao tích lũy** (không tiêu mất) — mở chương 2 (25) xong vẫn còn nguyên Sao để tiến tới chương 3 (45).
+
+**Khóa theo chương (chống nhảy chương):**
+
+- `record_level_clear()` chỉ mở màn kế tiếp khi màn đó **tồn tại** *và* **chương của nó đã mở** → xong màn cuối chương 1 **không** tự mở màn 10 khi chương 2 còn khóa.
+- `next_level_in_chapter(level_id)` = màn kế tiếp **trong cùng chương** (−1 nếu là màn cuối chương) · `can_play_level(level_id)` = tồn tại + chương đã mở + đã mở theo tiến trình.
+- `has_unlockable_chapter()` = có chương **đủ Sao để mở** mà chưa mở (dùng cho banner focus ở màn Chọn màn).
+
+### 12.3b. Tiếp tục sau khi thắng màn (popup kết quả)
+
+- Nút phải của popup thắng: **"MÀN KẾ TIẾP"** khi còn màn trong cùng chương **và** chương đó đã mở; nếu đây là **màn cuối của chương** (hoặc chương kế chưa mở) thì đổi thành **"CHỌN CHƯƠNG"** và bấm sẽ mở màn Chọn Chương.
+- Dữ liệu popup có thêm cờ `next_available` (do `GameController._complete_floor()` tính) — `winning.gd` đổi nhãn theo cờ này; cả hai trường hợp đều đi qua `continue_requested` → `GameController._on_continue_requested()` (đi tiếp trong chương nếu được, ngược lại `go_to_chapters()`).
+- Màn **Chọn màn**: nút chân trang cũng theo cùng luật — hiện "TIẾP TỤC MÀN n" với n = **màn chưa đạt sao đầu tiên của chương**, và đổi thành **"CHỌN CHƯƠNG"** khi đã xong hết màn của chương; mở màn cũng nhảy tới trang chứa màn đó.
+- **Ô đếm Sao ở màn Chọn màn** hiện `chapter_stars(current) / chapter_star_total(current)` (sao TRONG chương đang xem) — trước đây cộng Sao mọi chương nhưng chia cho tối đa 1 chương nên ra số vô lý ("30/27").
+- **Banner chương có trạng thái FOCUS**: khi `has_unlockable_chapter()` → đổi art `level_selector/chapter_banner_focus.svg` (viền nét đứt hổ phách), nhấp nháy nhẹ (`UIAnim.play_pulse`) và dòng dưới đổi thành `STR_CHAPTER_UNLOCKABLE` ("Có Chương mới có thể mở khóa — bấm để xem!") với variation `LevelsChangeChapterFocus`.
+
+### 12.4. Giao diện (đo từ scene thật)
+
+`scenes/chapters.tscn` (script `scripts/scenes/chapters.gd`, `class_name ChaptersScene`):
+
+| Thành phần | Vị trí | Ghi chú |
+|---|---|---|
+| TopBar/Back + Title | y ≈ 85 · tiêu đề giữa | "CHỌN CHƯƠNG" (`STR_CHAPTER_SCREEN_TITLE`) |
+| Ví Sao | (775, 90) 250×70 | `wallet_chip.svg` + icon Sao + số Sao + "SAO CÓ" |
+| Băng hướng dẫn | (55, 185) 970×72 | `banner_rule.svg` + icon bóng đèn + `STR_CHAPTER_BANNER` (xuống dòng được) |
+| Danh sách chương | (55, 280) 970×1310 | `ScrollContainer` ẩn thanh cuộn → `VBox` cách 30px (mỗi thẻ cao 285px) |
+| Nút chân trang | (140, 1610) 800×120 | art `common/btn_paper_cta_*` + "TIẾP TỤC CHƯƠNG n (MÀN m)" |
+
+Thẻ chương (`nodes/chapters/chapter_card.tscn`, `class_name ChapterCard`, 970×285): nền giấy · hào quang (chỉ khi đủ điều kiện) · doodle 180×180 tại (68,48) · ổ khóa 72×72 tại **(122,91)** — đặt sao cho **thân khóa trùng tâm doodle** · ruy băng (780,0) 190×48 · chip kích thước (280,44) 260×34 · tiêu đề "CHƯƠNG n: Tên" (280,80) · mô tả (280,128) · thanh Sao 380×14 (280,174) + "(x/y màn)" · chip "còn thiếu/đã đủ" · nút hành động **250×100** tại (700,88).
+
+**Nút hành động** (250×100) có chỗ cho icon bên trái (20,32) 36×36 rồi tới tiêu đề/phụ (66→244):
+
+| Trạng thái | Nút | Icon | Tiêu đề / phụ |
+|---|---|---|---|
+| ĐANG CHƠI · ĐÃ MỞ | xanh `btn_play_*` | **tam giác PLAY** | `VÀO CHƠI` / `Màn n ›` |
+| ĐÃ ĐỦ ĐIỀU KIỆN | hổ phách `btn_unlock_*` | ngôi sao TRẮNG | `MỞ KHÓA` / `CẦN n SAO` |
+| ĐANG KHÓA | xám `btn_locked` | ổ khóa (xám) | `CẦN n SAO` / `Chưa đủ sao` |
+| SẮP RA MẮT | xám `btn_locked` | — | `SẮP RA MẮT` |
+
+Cỡ chữ trên thẻ đã tăng cho dễ đọc: tiêu đề 40 · mô tả 22 · thanh Sao 23 · chip 17–19 · nút 24–26 · ruy băng 17 · ví Sao 40 (xem `theme_text.tres`, nhóm `Chapter*`).
+
+Màn **Chọn màn** (`scripts/scenes/levels.gd`) nay **chỉ hiện màn của `current_chapter`** (chương rỗng → hiện tất cả để không chặn người chơi), banner trên cùng hiện "CHƯƠNG n: Tên" (30px) + dòng **ĐỔI CHƯƠNG** (24px); **bấm cả panel banner** (node `ChapterBanner`, đã nối `gui_input`) → màn Chọn Chương; nút Back → Main.
+
+### 12.5. Asset · theme · chuỗi dịch
+
+- `assets/images/chapters/` (25 SVG): 3 nền thẻ (`card_open`/`card_ready`/`card_locked`) · `halo_ready` · `ribbon` · `chip_size`/`chip_need`/`chip_have` · `bar_track`/`bar_fill` · `wallet_chip` · `banner_rule` · 3 nút 250×100 (`btn_play_*`, `btn_unlock_*`, `btn_locked`) · **4 icon riêng theo chương** (`icon_intro`/`logic`/`trap`/`master`) · 3 doodle theo cỡ (`maze_small`/`medium`/`large`) · `icon_star_white` · `lock_overlay`.
+- Theme variations (`resources/settings/theme_text.tres`): `ChapterCardTitle(Locked)` · `ChapterCardSubtitle(Locked)` · `ChapterChipSize(Amber/Muted)` · `ChapterRibbon` · `ChapterStars(Muted/Sub)` · `ChapterNeedChip`/`ChapterHaveChip` · `ChapterAction(Sub/SubAmber/Locked/LockedSub)` · `ChapterWalletCount`/`ChapterWalletLabel` · `ChapterBannerText`.
+- Chuỗi mới trong `string_extra.csv`: `STR_CHAPTER_SCREEN_TITLE` · `STR_CHAPTER_TITLE_FORMAT` · `STR_CHAPTER_RIBBON_{PLAYING,OPEN,READY,LOCKED,COMING}` · `STR_CHAPTER_SIZE_FORMAT` · `STR_CHAPTER_STARS_FORMAT` · `STR_CHAPTER_LEVELS_FORMAT` · `STR_CHAPTER_NEED_FORMAT` · `STR_CHAPTER_REQUIRE_FORMAT` · `STR_CHAPTER_HAVE_FORMAT` · `STR_CHAPTER_PLAY(_SUB)` · `STR_CHAPTER_UNLOCK` · `STR_CHAPTER_NOT_ENOUGH` · `STR_CHAPTER_STARS_HELD` · `STR_CHAPTER_BANNER` · `STR_CHAPTER_CONTINUE_FORMAT`.
+
+### 12.6. File liên quan
+
+| File | Vai trò |
+|---|---|
+| `scripts/resources/chapter_data.gd` + `resources/chapters/chapter_*.tres` | Schema + dữ liệu chương |
+| `scripts/core/level_manager.gd` | Quét chương · gom màn theo chương · số liệu Sao/màn |
+| `scripts/core/game_manager.gd` | `unlocked_chapters`/`current_chapter` · điều kiện + mở khóa · `total_stars`/`next_level_in_chapter`/`can_play_level`/`has_unlockable_chapter` · `go_to_chapters()` |
+| `scripts/nodes/chapters/chapter_card.gd` + `nodes/chapters/chapter_card.tscn` | Thẻ chương 5 trạng thái (component) |
+| `scripts/scenes/chapters.gd` + `scenes/chapters.tscn` | Màn Chọn Chương (dựng thẻ theo dữ liệu + xử lý mở khóa) |
+| `scripts/scenes/levels.gd` | Lọc màn theo chương · banner chương · ĐỔI CHƯƠNG |
+| `scripts/utils/nav.gd` · `scripts/manager/SceneManager.gd` | `SCENE_CHAPTERS` + `goto_chapters()` (Debug Console có mục "Select Chapter") |
+| `tools/level_designer/` | Tool Python: menu **Chương** (quản lý chương + gán màn vào chương) — xem 12.7 |
+| `scripts/test_case/test_chapters.gd` | **192 check**: dữ liệu chương · gom màn · mở khóa bằng Sao · lưu/tải/xoá tiến trình · 5 trạng thái thẻ · scene · lọc theo chương ở màn Chọn màn · nối dây điều hướng |
+
+### 12.7. Tool Level Designer (Python) — hỗ trợ chương
+
+- `app/models/chapter.py` (`ChapterModel`) · `app/services/chapter_io.py` (đọc/ghi `.tres` **cùng định dạng game**) · `app/models/chapter_repository.py` (`ChapterRepository`).
+- Menu **Chương**: *Quản lý chương…* (Ctrl+Shift+C) · *Tạo chương theo dữ liệu màn* · *Gán màn đang mở vào chương…* · *Mở thư mục chapters*; thanh công cụ có nút **Chương…**.
+- Hộp thoại quản lý chương (`app/views/chapter_dialog.py`): danh sách chương (số · tiêu đề · phí sao · **danh sách màn**) · sửa tiêu đề/mô tả/nhãn kích thước/phí sao/**icon** (combobox `intro · logic · trap · master`, để trống = game tự chọn) · **Chương mới** · **Tạo chương theo dữ liệu màn** · **Xoá file chương** · gán màn vào chương bằng danh sách (`1, 2, 3`) hoặc nút **Gán MÀN ĐANG MỞ** · **Gợi ý nhãn kích thước theo màn**.
+- Danh sách màn ở panel trái hiện thêm cột chương (`#7  C2  5x5  Level 2-7`); màn tạo mới nằm cùng chương với màn đang mở.
+- Test: `tools/level_designer/tests/test_chapters.py` + phần **CHƯƠNG** trong `python main.py --selftest` (kiểm tra luôn dữ liệu chương thật của game).
+
 

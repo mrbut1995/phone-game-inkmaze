@@ -17,6 +17,7 @@ class LevelSummary:
     path: Path
     width: int
     height: int
+    chapter: int = 1
 
 
 class LevelRepository:
@@ -50,16 +51,19 @@ class LevelRepository:
         level_id = _id_from_filename(path)
         title = ""
         width = height = 0
+        chapter = 1
         try:
             model = tres_io.load_file(path)
             level_id = model.level_id
             title = model.level_title
             width, height = model.width, model.height
+            chapter = max(1, int(model.chapter))
         except Exception:  # noqa: BLE001 - file hỏng vẫn phải hiện trong danh sách
             pass
         if level_id is None:
             return None
-        return LevelSummary(level_id=level_id, title=title or path.stem, path=path, width=width, height=height)
+        return LevelSummary(level_id=level_id, title=title or path.stem, path=path,
+                            width=width, height=height, chapter=chapter)
 
     # ------------------------------------------------------------------
     # Nạp / lưu / xoá
@@ -94,13 +98,15 @@ class LevelRepository:
             candidate += 1
         return candidate
 
-    def create_level(self, level_id: int | None = None, width: int = 3, height: int = 3) -> LevelModel:
+    def create_level(self, level_id: int | None = None, width: int = 3, height: int = 3,
+                     chapter: int = 1) -> LevelModel:
         """Tạo màn trống: viền kín, S ở góc dưới-trái, F ở góc trên-phải."""
         if level_id is None:
             level_id = self.next_free_id()
         model = LevelModel(
             level_id=level_id,
-            level_title="Level 1-%d" % level_id,
+            level_title="Level %d-%d" % (max(1, int(chapter)), level_id),
+            chapter=max(1, int(chapter)),
             width=width,
             height=height,
             start=(0, height - 1),

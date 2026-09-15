@@ -10,6 +10,8 @@ from pathlib import Path
 from typing import Any
 
 from ..config import ensure_levels_dir, project_root_hint
+from ..models.chapter import ChapterModel
+from ..models.chapter_repository import ChapterRepository, ChapterSummary
 from ..models.level import LevelModel
 from ..models.repository import LevelRepository, LevelSummary
 from ..services import solver, validator
@@ -29,12 +31,15 @@ class AppController:
         self,
         repository: LevelRepository | None = None,
         editor: EditorController | None = None,
+        chapters: ChapterRepository | None = None,
     ) -> None:
         self.events = EventEmitter()
         self.repository = repository or LevelRepository()
         self.editor = editor or EditorController(events=self.events)
         # editor dùng chung emitter với app controller để view chỉ cần nghe 1 chỗ
         self.editor.events = self.events
+        # Chương gom màn theo LevelData.chapter -> dùng CHUNG repository level
+        self.chapters = chapters or ChapterRepository(levels=self.repository)
 
     # ------------------------------------------------------------------
     # Danh sách level
@@ -61,12 +66,80 @@ class AppController:
         self.events.emit(EV_STATUS, "Đã mở level %d (%dx%d)" % (model.level_id, model.width, model.height))
         return True
 
-    def create_level(self, level_id: int | None = None, width: int = 3, height: int = 3) -> LevelModel:
-        model = self.repository.create_level(level_id, width, height)
+    def create_level(self, level_id: int | None = None, width: int = 3, height: int = 3,
+                     chapter: int | None = None) -> LevelModel:
+        if chapter is None:
+            # Màn mới nằm cùng chương với màn đang mở (tiện xếp chương theo nhóm)
+            chapter = max(1, int(self.editor.level.chapter))
+        model = self.repository.create_level(level_id, width, height, chapter)
         self.editor.replace_level(model)
-        self.events.emit(EV_STATUS, "Tạo màn mới #%d (%dx%d) - nhớ lưu để ghi ra file" % (
-            model.level_id, model.width, model.height))
+        self.events.emit(EV_STATUS, "Tạo màn mới #%d (%dx%d) - chương %d - nhớ lưu để ghi ra file" % (
+            model.level_id, model.width, model.height, model.chapter))
         return model
+
+    # ------------------------------------------------------------------
+    # Chương (CHỌN CHƯƠNG)
+    # ------------------------------------------------------------------
+    def chapters_dir(self) -> Path:
+        return self.chapters.chapters_dir
+
+    def chapter_summaries(self) -> list[ChapterSummary]:
+        return self.chapters.list_summaries()
+
+    def chapter_count(self) -> int:
+        return len(self.chapters.list_summaries())
+
+    def create_chapter(self, chapter_id: int | None = None) -> ChapterModel:
+        return self.chapters.create_chapter(chapter_id)
+
+    def save_chapter(self, chapter: ChapterModel) -> bool:
+        try:
+            path = self.chapters.save(chapter)
+        except Exception as error:  # noqa: BLE001 - ghi file lỗi
+            self.events.emit(EV_STATUS, "Lỗi khi ghi chương: %s" % error)
+            return False
+        self.events.emit(EV_STATUS, "Đã lưu chương %d: %s" % (chapter.chapter_id, chapter.title))
+        return bool(path)
+
+    def delete_chapter(self, chapter_id: int) -> bool:
+        if not self.chapters.delete(chapter_id):
+            self.events.emit(EV_STATUS, "Không tìm thấy file chapter_%d.tres" % chapter_id)
+            return False
+        self.events.emit(EV_STATUS, "Đã xoá chapter_%d.tres (màn trong chương vẫn còn)" % chapter_id)
+        self.refresh_levels()
+        return True
+
+    def ensure_chapters_for_levels(self) -> int:
+        """Tự tạo file chương cho mọi chương đang có màn nhưng chưa có .tres."""
+        created = self.chapters.ensure_for_levels()
+        if created:
+            self.events.emit(EV_STATUS, "Đã tạo %d chương theo dữ liệu màn: %s" % (
+                len(created), ", ".join(str(c.chapter_id) for c in created)))
+        else:
+            self.events.emit(EV_STATUS, "Mọi chương có màn đều đã có file .tres")
+        return len(created)
+
+    def assign_levels_to_chapter(self, chapter_id: int, level_ids) -> int:
+        """Gán danh sách màn vào chương (ghi `chapter` cho từng file màn)."""
+        assigned = self.chapters.assign_levels(chapter_id, level_ids)
+        if assigned:
+            self.refresh_levels()
+            self.events.emit(EV_STATUS, "Đã gán %d màn vào chương %d: %s" % (
+                len(assigned), chapter_id, ", ".join(str(i) for i in assigned)))
+        else:
+            self.events.emit(EV_STATUS, "Không có màn nào được gán (sai số hoặc thiếu file .tres)")
+        return len(assigned)
+
+    def assign_current_level_to_chapter(self, chapter_id: int) -> bool:
+        """Gán màn ĐANG MỞ trong editor vào chương (tiện thao tác nhanh)."""
+        level_id = int(self.editor.level.level_id)
+        ok = self.chapters.assign_level(level_id, chapter_id)
+        if ok:
+            self.editor.level.chapter = int(chapter_id)
+            self.refresh_levels()
+            self.events.emit(EV_STATUS, "Màn #%d đã thuộc chương %d (nhớ Ctrl+S để lưu)" % (
+                level_id, chapter_id))
+        return ok
 
     def duplicate_current(self) -> LevelModel:
         clone = self.repository.duplicate(self.editor.level)

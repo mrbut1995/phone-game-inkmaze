@@ -259,10 +259,20 @@ func _complete_floor() -> void:
 		stars = challenge_controller.stars()
 
 	if ui_controller != null:
+		var next_available := true
+		var gm_node: Node = get_node_or_null("/root/GameManager")
+		if gm_node != null:
+			# Còn màn kế tiếp TRONG CÙNG CHƯƠNG và chương đó đã mở -> nút "MÀN KẾ TIẾP",
+			# hết chương (hoặc chương sau chưa mở) -> nút "CHỌN CHƯƠNG" (mở màn Chọn Chương)
+			var next_in_chapter := int(gm_node.call(
+				"next_level_in_chapter", int(gm_node.get("current_level"))))
+			next_available = next_in_chapter > 0 and bool(gm_node.call(
+				"is_chapter_unlocked", int(gm_node.call("chapter_of_level", next_in_chapter))))
 		ui_controller.show_floor_complete({
 			"level": game_state.floor_number,
 			"floor": game_state.floor_number,
 			"next_floor": game_state.floor_number + 1,
+			"next_available": next_available,
 			"grid": "5×5",
 			"time": floor_time,
 			"steps_used": game_state.floor_moves,
@@ -341,12 +351,14 @@ func _on_continue_requested() -> void:
 		var gm: Node = get_node_or_null("/root/GameManager")
 		if gm != null:
 			var stars: int = challenge_controller.stars() if challenge_controller != null else 0
-			gm.call("record_level_clear", int(gm.get("current_level")), stars, game_state.elapsed_time)
-			var next_lvl := int(gm.get("current_level")) + 1
-			if _level_exists(next_lvl):
+			var current := int(gm.get("current_level"))
+			gm.call("record_level_clear", current, stars, game_state.elapsed_time)
+			# CHỈ đi tiếp trong cùng chương (và chương đó phải đã mở); hết chương -> màn Chọn Chương
+			var next_lvl := int(gm.call("next_level_in_chapter", current))
+			if next_lvl > 0 and bool(gm.call("can_play_level", next_lvl)):
 				gm.call("start_level", next_lvl)
 			else:
-				gm.call("go_to_levels")
+				gm.call("go_to_chapters")
 		else:
 			# Không có GameManager: chơi lại đúng màn hiện tại thay vì về màn 1
 			start_new_run(current_floor())
@@ -383,14 +395,6 @@ func current_floor() -> int:
 			if gm != null:
 				return maxi(int(gm.get("current_level")), 1)
 	return 1
-
-
-## Màn `level_id` có file .tres thật hay không (danh sách màn có thể > 9)
-func _level_exists(level_id: int) -> bool:
-	var lm: Node = get_node_or_null("/root/LevelManager")
-	if lm != null and lm.has_method("has_level"):
-		return bool(lm.call("has_level", level_id))
-	return level_id <= 9
 
 
 ## Xem quảng cáo để hồi sinh.

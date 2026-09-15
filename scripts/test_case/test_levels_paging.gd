@@ -4,7 +4,9 @@ extends SceneTree
 ## - Danh sách màn lấy từ file .tres thật -> 12 màn = 2 trang (9 + 3).
 ## - Vuốt ngang (mô phỏng cảm ứng) phải sang được trang mới.
 ## - Dots phải đúng số trang + đúng trang đang chọn (bấm dot để nhảy trang).
-## - Thẻ màn hiện số theo chương (2-1, 2-2...) và khoá/mở đúng.
+## - Thẻ màn hiện số theo chương (1-1, 1-2...) và khoá/mở đúng.
+## - Từ 2026-02 màn chọn màn CHỈ hiện màn của CHƯƠNG đang chơi
+##   (GameManager.current_chapter) -> phần cuối test kiểm tra đúng chương 1 / chương 2.
 ## Dùng thư mục user://test_levels/ tạm nên KHÔNG đụng resources/levels thật.
 ## ============================================================================
 
@@ -30,6 +32,7 @@ func _init() -> void:
 	_original_dir = str(lm.call("get_levels_dir"))
 	var backup_unlocked := int(gm.get("unlocked_levels"))
 	var backup_stars: Dictionary = gm.get("level_stars")
+	var backup_chapter := int(gm.get("current_chapter"))
 
 	var failures := 0
 	failures += _prepare_temp_levels()
@@ -37,6 +40,7 @@ func _init() -> void:
 	lm.call("set_levels_dir", TEMP_DIR)
 	gm.set("unlocked_levels", UNLOCKED)
 	gm.set("level_stars", { 1: 3, 2: 2, 10: 1 })
+	gm.set("current_chapter", 1)
 
 	var ids: Array = lm.call("get_level_ids")
 	if ids.size() != TEST_IDS:
@@ -91,33 +95,60 @@ func _init() -> void:
 		print("[FAIL] Phai co 2 dot cho 2 trang (dang %d)" % dots.size())
 		failures += 1
 
-	# --- Trở về thư mục levels THẬT: số trang phải khớp số màn thực tế ---
+	# --- Trở về thư mục levels THẬT: chỉ hiện màn của CHƯƠNG đang chơi ---
 	lm.call("set_levels_dir", _original_dir)
-	var real_ids: Array = lm.call("get_level_ids")
-	var expected_pages := maxi(1, int(ceil(float(real_ids.size()) / 9.0)))
+	gm.set("current_chapter", 1)
+	var chapter_ids: Array = lm.call("levels_in_chapter", 1)
+	var expected_pages := maxi(1, int(ceil(float(chapter_ids.size()) / 9.0)))
 	var real_scene: LevelScenes = (load("res://scenes/levels.tscn") as PackedScene).instantiate()
 	root.add_child(real_scene)
 	await process_frame
 	await process_frame
-	if real_scene.page_count() != expected_pages:
-		print("[FAIL] Thu muc that (%d man) phai co %d trang (dang %d)"
-			% [real_ids.size(), expected_pages, real_scene.page_count()])
+	if real_scene.level_ids().size() != chapter_ids.size():
+		print("[FAIL] Chuong 1: man chon man phai co %d man (dang %d)"
+			% [chapter_ids.size(), real_scene.level_ids().size()])
+		failures += 1
+	elif real_scene.page_count() != expected_pages:
+		print("[FAIL] Chuong 1 (%d man) phai co %d trang (dang %d)"
+			% [chapter_ids.size(), expected_pages, real_scene.page_count()])
 		failures += 1
 	elif real_scene.dots_box.visible != (expected_pages > 1):
 		print("[FAIL] Dots phai %s khi co %d trang"
 			% ["hien" if expected_pages > 1 else "an", expected_pages])
 		failures += 1
 	else:
-		print("[CHECK] Thu muc that: %d man -> %d trang, dots %s."
-			% [real_ids.size(), expected_pages, "hien" if expected_pages > 1 else "an"])
+		print("[CHECK] Chuong 1: %d man -> %d trang, dots %s."
+			% [chapter_ids.size(), expected_pages, "hien" if expected_pages > 1 else "an"])
 	real_scene.queue_free()
 	await process_frame
+
+	# --- Chương 2 (nếu đã có màn) -> chỉ hiện màn thuộc chương 2 ---
+	var chapter2_ids: Array = lm.call("levels_in_chapter", 2)
+	if chapter2_ids.size() > 0:
+		gm.set("current_chapter", 2)
+		var scene2: LevelScenes = (load("res://scenes/levels.tscn") as PackedScene).instantiate()
+		root.add_child(scene2)
+		await process_frame
+		await process_frame
+		var only_chapter2 := true
+		for level_id in scene2.level_ids():
+			if int(lm.call("chapter_of_level", level_id)) != 2:
+				only_chapter2 = false
+		if scene2.level_ids().size() != chapter2_ids.size() or not only_chapter2:
+			print("[FAIL] Chuong 2: phai hien dung %d man cua chuong 2 (dang %d)"
+				% [chapter2_ids.size(), scene2.level_ids().size()])
+			failures += 1
+		else:
+			print("[CHECK] Chuong 2: %d man, tat ca deu thuoc chuong 2." % chapter2_ids.size())
+		scene2.queue_free()
+		await process_frame
 
 	# --- Dọn dẹp ---
 	levels_scene.queue_free()
 	await process_frame
 	gm.set("unlocked_levels", backup_unlocked)
 	gm.set("level_stars", backup_stars)
+	gm.set("current_chapter", backup_chapter)
 	_remove_temp_levels()
 
 	if failures > 0:
@@ -153,10 +184,10 @@ func _check_pages(scene: LevelScenes) -> int:
 			% [page1.get_child_count(), page2.get_child_count()])
 		failures += 1
 
-	# Số trên thẻ: chương 1 là 1-1..1-9, chương 2 là 2-1..2-3
+	# Số trên thẻ: chương 1 là 1-1..1-12 (màn chọn màn chỉ hiện 1 chương)
 	failures += _expect_card_label(page1.get_child(0), "1-1", "the dau trang 1")
 	failures += _expect_card_label(page1.get_child(8), "1-9", "the cuoi trang 1")
-	failures += _expect_card_label(page2.get_child(0), "2-1", "the dau trang 2")
+	failures += _expect_card_label(page2.get_child(0), "1-10", "the dau trang 2")
 
 	# Trạng thái khoá/mở + sao
 	var card10: LevelCard = page2.get_child(0)
@@ -173,14 +204,15 @@ func _check_pages(scene: LevelScenes) -> int:
 		print("[FAIL] Man 1 phai co 3 sao")
 		failures += 1
 
-	# Trang hiện tại = trang chứa màn đang mở khoá (màn 10 -> trang 2)
-	if scene.current_page() != 1:
-		print("[FAIL] Phai mo san trang chua man dang choi (dang o trang %d)" % (scene.current_page() + 1))
+	# Trang hiện tại = trang chứa MÀN NÊN CHƠI TIẾP của chương (màn 3 chưa đạt sao -> trang 1)
+	if scene.current_page() != 0:
+		print("[FAIL] Phai mo san trang chua man nen choi tiep (dang o trang %d)"
+			% (scene.current_page() + 1))
 		failures += 1
 
-	failures += _check_dots(scene, 1)
+	failures += _check_dots(scene, 0)
 	if failures == 0:
-		print("[CHECK] 12 man -> 2 trang (9 + 3 the), the hien 1-1..2-3, khoa/mo dung.")
+		print("[CHECK] 12 man (cung chuong 1) -> 2 trang (9 + 3 the), the hien 1-1..1-12, khoa/mo dung.")
 	return failures
 
 
@@ -264,7 +296,7 @@ func _prepare_temp_levels() -> int:
 		var data := LevelData.new()
 		data.level_id = level_id
 		data.level_title = "Test %d" % level_id
-		data.chapter = 1 if level_id <= 9 else 2
+		data.chapter = 1        # màn chọn màn chỉ hiện 1 chương -> để 12 màn cùng chương 1
 		data.width = 2
 		data.height = 2
 		data.start_pos = Vector2i(0, 1)

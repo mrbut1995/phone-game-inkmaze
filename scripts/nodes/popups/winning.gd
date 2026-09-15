@@ -13,6 +13,7 @@ const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
 
 @onready var stars_row: Control = piece("Stars")
 @onready var label_subtitle: Label = piece("Subtitle")
+@onready var btn_next: TextureButton = piece("NextBtn")
 @onready var value_time: Label = piece("StatValue1")
 @onready var value_steps: Label = piece("StatValue2")
 @onready var value_walls: Label = piece("StatValue3")
@@ -53,6 +54,13 @@ func _on_open() -> void:
 	_set_stars(int(data.get("stars", 0)))
 	bind_button("Panel/Content/ReplayBtn", _on_replay_pressed)
 	bind_button("Panel/Content/NextBtn", _on_next_pressed)
+	# Hết chương (hoặc chương kế chưa mở) -> nút đổi thành "CHỌN CHƯƠNG" (bấm ra màn Chọn Chương)
+	if btn_next != null:
+		var label := btn_next.get_node_or_null("Label") as Label
+		if label != null:
+			label.text = TranslationServer.translate(
+				"STR_BTN_NEXT_LEVEL" if bool(data.get("next_available", true))
+				else "STR_CHAPTER_SCREEN_TITLE")
 
 
 ## 2850 -> "2,850" cho khớp mockup

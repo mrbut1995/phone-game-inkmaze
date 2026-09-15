@@ -35,10 +35,13 @@ func set_levels_dir(dir_path: String) -> void:
 	refresh_levels()
 
 
-## Xoá cache danh sách màn -> lần gọi kế tiếp sẽ tự dò lại
+## Xoá cache danh sách màn + cache dữ liệu màn -> lần gọi kế tiếp sẽ tự dò lại.
+## (Phải xoá cả `_cache` vì dữ liệu trong đó thuộc thư mục CŨ — lẫn `chapter`,
+##  nếu không màn Chọn màn sẽ gom màn sai chương sau khi đổi thư mục level.)
 func refresh_levels() -> void:
 	_id_cache.clear()
 	_ids_ready = false
+	_cache.clear()
 
 
 ## Danh sách level_id có file .tres thật, tăng dần (bỏ qua id trống)
@@ -108,6 +111,120 @@ func save_level(data: LevelData) -> Error:
 		_cache[data.level_id] = data
 		refresh_levels()
 	return err
+
+
+# ---------------------------------------------------------------------------
+# CHƯƠNG (màn "CHỌN CHƯƠNG" — mockup/chapter_selection.svg)
+# Chương gom các màn theo `LevelData.chapter`; file hiển thị/điều kiện sao nằm ở
+# resources/chapters/chapter_<id>.tres (ChapterData).
+# ---------------------------------------------------------------------------
+const CHAPTERS_DIR := "res://resources/chapters/"
+const MAX_CHAPTER_ID := 99
+
+var _chapters_dir := CHAPTERS_DIR
+var _chapter_cache: Dictionary = {}
+
+
+func get_chapters_dir() -> String:
+	return _chapters_dir
+
+
+## Đổi thư mục chứa chapter (dùng cho test)
+func set_chapters_dir(dir_path: String) -> void:
+	_chapters_dir = dir_path if dir_path.ends_with("/") else dir_path + "/"
+	refresh_chapters()
+
+
+func refresh_chapters() -> void:
+	_chapter_cache.clear()
+
+
+func chapter_path(chapter_id: int) -> String:
+	return "%schapter_%d.tres" % [_chapters_dir, chapter_id]
+
+
+func has_chapter(chapter_id: int) -> bool:
+	return ResourceLoader.exists(chapter_path(chapter_id))
+
+
+## Danh sách chương có file .tres thật, tăng dần theo chapter_id
+func get_chapters() -> Array[ChapterData]:
+	var out: Array[ChapterData] = []
+	for chapter_id in range(1, MAX_CHAPTER_ID + 1):
+		var data := get_chapter(chapter_id)
+		if data != null:
+			out.append(data)
+	return out
+
+
+func get_chapter(chapter_id: int) -> ChapterData:
+	if _chapter_cache.has(chapter_id):
+		return _chapter_cache[chapter_id]
+	var path := chapter_path(chapter_id)
+	if not ResourceLoader.exists(path):
+		return null
+	var res := ResourceLoader.load(path)
+	if res is ChapterData:
+		_chapter_cache[chapter_id] = res
+		return res
+	return null
+
+
+func chapter_count() -> int:
+	return get_chapters().size()
+
+
+## Chương chứa màn này (LevelData.chapter)
+func chapter_of_level(level_id: int) -> int:
+	var data := load_level(level_id)
+	return maxi(data.chapter, 1) if data != null else 1
+
+
+## Danh sách màn của 1 chương (theo thứ tự tăng dần)
+func levels_in_chapter(chapter_id: int) -> Array[int]:
+	var out: Array[int] = []
+	for level_id in get_level_ids():
+		if chapter_of_level(level_id) == chapter_id:
+			out.append(level_id)
+	return out
+
+
+## Tổng số Sao tối đa của chương (= số màn x 3)
+func chapter_star_total(chapter_id: int) -> int:
+	return levels_in_chapter(chapter_id).size() * 3
+
+
+## Số màn đã hoàn thành của chương (>= 1 Sao)
+func chapter_cleared_count(chapter_id: int) -> int:
+	var stars := _level_stars()
+	var count := 0
+	for level_id in levels_in_chapter(chapter_id):
+		if int(stars.get(level_id, 0)) > 0:
+			count += 1
+	return count
+
+
+## Số Sao đã đạt TRONG chương này
+func chapter_stars(chapter_id: int) -> int:
+	var stars := _level_stars()
+	var total := 0
+	for level_id in levels_in_chapter(chapter_id):
+		total += int(stars.get(level_id, 0))
+	return total
+
+
+## Chương đang chứa màn chơi hiện tại (GameManager.current_level)
+func current_chapter_id() -> int:
+	var gm := get_node_or_null("/root/GameManager")
+	if gm == null:
+		return 1
+	return chapter_of_level(maxi(int(gm.get("current_level")), 1))
+
+
+func _level_stars() -> Dictionary:
+	var gm := get_node_or_null("/root/GameManager")
+	var stars: Variant = gm.get("level_stars") if gm != null else null
+	return stars if stars is Dictionary else {}
 
 
 ## Đảm bảo toàn bộ 9 màn chơi của Chương 1 đã có sẵn file Resource .tres

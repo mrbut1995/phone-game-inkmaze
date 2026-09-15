@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Doodle mê cung 7x7 (icon chương) — art TRẮNG theo độ mờ, màu đổi bằng modulate -->
+  <rect x="1.5" y="1.5" width="177" height="177" rx="16" fill="#FFFFFF" fill-opacity="0.12"
+        stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="2.5"/>
+  <g stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1">
+    <line x1="25.7" y1="2" x2="25.7" y2="178"/><line x1="51.4" y1="2" x2="51.4" y2="178"/>
+    <line x1="77.1" y1="2" x2="77.1" y2="178"/><line x1="102.9" y1="2" x2="102.9" y2="178"/>
+    <line x1="128.6" y1="2" x2="128.6" y2="178"/><line x1="154.3" y1="2" x2="154.3" y2="178"/>
+    <line x1="2" y1="25.7" x2="178" y2="25.7"/><line x1="2" y1="51.4" x2="178" y2="51.4"/>
+    <line x1="2" y1="77.1" x2="178" y2="77.1"/><line x1="2" y1="102.9" x2="178" y2="102.9"/>
+    <line x1="2" y1="128.6" x2="178" y2="128.6"/><line x1="2" y1="154.3" x2="178" y2="154.3"/>
+  </g>
+  <path d="M 12.9 167.1 L 12.9 90 L 90 90 L 90 12.9 L 167.1 12.9" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.85" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="12.9" cy="167.1" r="6" fill="#FFFFFF" fill-opacity="0.9"/>
+  <circle cx="167.1" cy="12.9" r="6" fill="#FFFFFF" fill-opacity="0.9"/>
+</svg>

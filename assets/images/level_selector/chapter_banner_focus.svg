@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="7 6 986 157" width="986" height="157">
+  <!-- Banner chương ở màn Chọn màn — bản FOCUS: có chương đủ Sao để mở khóa -->
+  <g transform="translate(15, 10)">
+    <rect width="970" height="140" rx="22" fill="#FFF9EC" stroke="#C4843A" stroke-width="4"
+          stroke-dasharray="16 10"/>
+    <line x1="36" y1="0" x2="36" y2="140" stroke="#D84444" stroke-width="3"/>
+  </g>
+</svg>

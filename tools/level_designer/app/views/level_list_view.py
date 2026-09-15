@@ -77,7 +77,7 @@ class LevelListView(ttk.Frame):
     def _label(summary: LevelSummary) -> str:
         size = "%dx%d" % (summary.width, summary.height) if summary.width else "?"
         title = summary.title or "(không có tiêu đề)"
-        return "#%-3d %-7s %s" % (summary.level_id, size, title)
+        return "#%-3d C%-2d %-7s %s" % (summary.level_id, summary.chapter, size, title)
 
     def highlight_current(self) -> None:
         self._current_id = self.app.editor.level.level_id

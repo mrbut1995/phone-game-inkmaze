@@ -6,7 +6,7 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, messagebox, simpledialog, ttk
 
-from ..config import APP_NAME, APP_VERSION, TOOL_LABELS
+from ..config import APP_NAME, APP_VERSION, MAX_CHAPTER_ID, TOOL_LABELS
 from ..controllers.app_controller import AppController
 from ..controllers.editor_controller import EditorController
 from ..controllers.events import (
@@ -16,6 +16,7 @@ from ..controllers.events import (
     EV_TOOL_CHANGED,
     EV_VIEW_OPTIONS_CHANGED,
 )
+from .chapter_dialog import open_chapter_dialog
 from .grid_view import GridView
 from .inspector_view import InspectorView
 from .level_list_view import LevelListView
@@ -115,11 +116,22 @@ class MainWindow(tk.Tk):
         view_menu.add_command(label="Zoom mặc định", accelerator="Ctrl+0", command=self.action_reset_zoom)
         menubar.add_cascade(label="Xem", menu=view_menu)
 
+        chapter_menu = tk.Menu(menubar, tearoff=False)
+        chapter_menu.add_command(label="Quản lý chương…", accelerator="Ctrl+Shift+C",
+                                 command=self.action_manage_chapters)
+        chapter_menu.add_command(label="Tạo chương theo dữ liệu màn",
+                                 command=self.action_ensure_chapters)
+        chapter_menu.add_separator()
+        chapter_menu.add_command(label="Gán màn đang mở vào chương…",
+                                 command=self.action_assign_level_chapter)
+        chapter_menu.add_separator()
+        chapter_menu.add_command(label="Mở thư mục chapters", command=self.action_open_chapters_folder)
+        menubar.add_cascade(label="Chương", menu=chapter_menu)
+
         help_menu = tk.Menu(menubar, tearoff=False)
         help_menu.add_command(label="Phím tắt", command=lambda: messagebox.showinfo("Phím tắt", SHORTCUTS))
         help_menu.add_command(label="Giới thiệu", command=self.action_about)
         menubar.add_cascade(label="Trợ giúp", menu=help_menu)
-
         self.configure(menu=menubar)
 
     # ------------------------------------------------------------------
@@ -147,6 +159,8 @@ class MainWindow(tk.Tk):
         ttk.Button(bar, text="+", width=3, command=lambda: self.grid.zoom(16)).pack(side="left", padx=2)
 
         ttk.Button(bar, text="Lưu (Ctrl+S)", style="Accent.TButton", command=self.action_save).pack(side="right")
+        ttk.Button(bar, text="Chương…", command=self.action_manage_chapters).pack(
+            side="right", padx=(0, 4))
 
     # ------------------------------------------------------------------
     # Thân cửa sổ: 3 panel
@@ -211,6 +225,8 @@ class MainWindow(tk.Tk):
         self.bind("<Control-Shift-s>", lambda _e: self.action_save_as())
         self.bind("<Control-S>", lambda _e: self.action_save_as())
         self.bind("<Control-n>", lambda _e: self.action_new())
+        self.bind("<Control-Shift-C>", lambda _e: self.action_manage_chapters())
+        self.bind("<Control-Shift-c>", lambda _e: self.action_manage_chapters())
         self.bind("<Control-z>", lambda _e: self.editor.undo())
         self.bind("<Control-y>", lambda _e: self.editor.redo())
         self.bind("<Control-Key-0>", lambda _e: self.action_reset_zoom())
@@ -376,6 +392,47 @@ class MainWindow(tk.Tk):
             os.startfile(path)  # type: ignore[attr-defined]  # Windows
         except Exception:  # noqa: BLE001 - macOS/Linux hoặc lỗi quyền
             messagebox.showinfo("Thư mục level", path)
+
+    # ------------------------------------------------------------------
+    # Chương (màn CHỌN CHƯƠNG của game)
+    # ------------------------------------------------------------------
+    def action_manage_chapters(self) -> None:
+        if getattr(self, "_chapter_dialog", None) is not None \
+                and self._chapter_dialog.winfo_exists():
+            self._chapter_dialog.lift()
+            self._chapter_dialog.focus_set()
+            return
+        self._chapter_dialog = open_chapter_dialog(self, self.app)
+
+    def action_ensure_chapters(self) -> None:
+        """Tự tạo chapter_<n>.tres cho mọi chương đang có màn."""
+        created = self.app.ensure_chapters_for_levels()
+        if created == 0:
+            messagebox.showinfo("Chương", "Mọi chương có màn đều đã có file .tres.")
+        else:
+            messagebox.showinfo("Chương", "Đã tạo %d chương trong:\n%s" % (
+                created, self.app.chapters_dir()))
+
+    def action_assign_level_chapter(self) -> None:
+        """Gán màn đang mở trong editor vào 1 chương (nhập số chương)."""
+        level_id = int(self.editor.level.level_id)
+        current = int(self.editor.level.chapter)
+        answer = simpledialog.askinteger(
+            "Gán màn vào chương",
+            "Màn #%d đang thuộc chương %d.\nNhập chương muốn gán vào:" % (level_id, current),
+            initialvalue=current, minvalue=1, maxvalue=MAX_CHAPTER_ID, parent=self)
+        if answer is None:
+            return
+        if self.app.assign_current_level_to_chapter(int(answer)):
+            self._refresh_header()
+
+    def action_open_chapters_folder(self) -> None:
+        path = str(self.app.chapters_dir())
+        try:
+            import os
+            os.startfile(path)  # type: ignore[attr-defined]  # Windows
+        except Exception:  # noqa: BLE001
+            messagebox.showinfo("Thư mục chương", path)
 
     def action_erase_hover(self) -> None:
         ref = self.grid.hover_ref

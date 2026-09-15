@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 100" width="250" height="100">
+  <!-- Nút "MỞ KHÓA" bằng Sao (normal) -->
+  <rect width="250" height="100" rx="24" fill="#92400E"/>
+  <rect x="1.8" y="1.8" width="246.4" height="96.4" rx="22.2" fill="#D97706"/>
+</svg>

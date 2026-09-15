@@ -4,6 +4,8 @@ extends BaseScene
 ## View Controller: Màn hình Chọn Màn chơi (Level Selection)
 ## - Danh sách màn lấy từ LevelManager (quét res://resources/levels/level_*.tres)
 ##   => hỗ trợ NHIỀU HƠN 9 MÀN: chia 9 thẻ/trang, VUỐT NGANG để sang trang mới.
+## - CHỈ hiện các màn thuộc CHƯƠNG đang chơi (GameManager.current_chapter); banner
+##   trên cùng hiện tên chương + dòng "ĐỔI CHƯƠNG" bấm được (-> màn Chọn Chương).
 ## - Chỉ số trang (dots) dựng ĐỘNG theo số trang thật; bấm vào dot để nhảy trang.
 ## - Nút CTA dùng art "thẻ giấy xanh" đúng mockup (common/btn_paper_cta_*).
 ## Cấu trúc node: CardArea/Scroll/Pages (mỗi trang 1 GridContainer 3x3) + PaginationDots.
@@ -12,6 +14,9 @@ extends BaseScene
 const LEVEL_CARD_SCENE := preload("res://nodes/level_selection/level_card.tscn")
 const DOT_ACTIVE := preload("res://assets/images/level_selector/dot_active.svg")
 const DOT_INACTIVE := preload("res://assets/images/level_selector/dot_inactive.svg")
+## Banner chương: bản thường + bản "focus" (có chương đủ Sao để mở)
+const BANNER_NORMAL := preload("res://assets/images/level_selector/chapter_banner.svg")
+const BANNER_FOCUS := preload("res://assets/images/level_selector/chapter_banner_focus.svg")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 const CARDS_PER_PAGE := 9                        # 3 cột x 3 hàng
@@ -31,12 +36,16 @@ const CLICK_LOCK_TIME := 0.15
 @onready var btn_continue: TextureButton = $ContinueButton
 @onready var lbl_continue: Label = $ContinueButton/Label
 @onready var lbl_stars: Label = $StarsCounter/Count
+@onready var lbl_chapter: Label = $ChapterBanner/TitleContainer/Title
+@onready var lbl_change_chapter: Label = $ChapterBanner/TitleContainer/ChangeChapter
+@onready var banner: TextureRect = $ChapterBanner
 @onready var scroll: ScrollContainer = $CardArea/Scroll
 @onready var pages_host: HBoxContainer = $CardArea/Scroll/Pages
 @onready var dots_box: HBoxContainer = $PaginationDots
 
 var _level_ids: Array[int] = []
 var _level_data: Dictionary = {}        # level_id -> LevelData (chỉ các file có thật)
+var _banner_focus := false
 var _page_count := 1
 var _page := 0
 var _page_width := 0.0
@@ -57,6 +66,12 @@ func _ready() -> void:
 		btn_continue.pressed.connect(_on_continue_pressed)
 		UIAnim.attach_press_bounce(btn_continue)
 		UIAnim.play_pulse(btn_continue, 1.03, 1.8)
+	if lbl_change_chapter != null:
+		# Nhãn chỉ để trang trí: bấm Ở ĐÂU trên banner cũng chuyển sang màn Chọn Chương
+		lbl_change_chapter.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if banner != null:
+		banner.mouse_filter = Control.MOUSE_FILTER_STOP
+		banner.gui_input.connect(_on_banner_input)
 	resized.connect(_apply_layout)
 
 	_build_pages()
@@ -64,7 +79,7 @@ func _ready() -> void:
 	_refresh_header()
 	# Đợi layout xong mới biết bề rộng trang -> căn trang + nhảy tới màn đang chơi
 	call_deferred("_apply_layout")
-	call_deferred("_go_to_page", _page_for_level(_unlocked_level()), false)
+	call_deferred("_go_to_page", _page_for_level(chapter_continue_level()), false)
 
 
 # ---------------------------------------------------------------------------
@@ -159,11 +174,53 @@ func _load_level_ids() -> void:
 			_level_ids.append(int(level_id))
 		for level_id in _level_ids:
 			_level_data[level_id] = lm.call("load_level", level_id)
+		_filter_by_chapter()
 
 	if _level_ids.is_empty():
 		# Không có LevelManager (test/--script): giữ hành vi cũ 9 màn chương 1
 		for level_id in range(1, 10):
 			_level_ids.append(level_id)
+
+
+## Chỉ giữ các màn thuộc CHƯƠNG đang chơi (GameManager.current_chapter).
+## Chương rỗng / không có màn nào -> giữ toàn bộ để không chặn người chơi.
+func _filter_by_chapter() -> void:
+	var chapter := _current_chapter()
+	if chapter <= 0:
+		return
+	var filtered: Array[int] = []
+	for level_id in _level_ids:
+		if _chapter_of(level_id) == chapter:
+			filtered.append(level_id)
+	if not filtered.is_empty():
+		_level_ids = filtered
+
+
+## Chương đang chơi (0 = không có GameManager -> hiện tất cả)
+func _current_chapter() -> int:
+	var gm := _game_manager()
+	if gm == null:
+		return 0
+	var value: Variant = gm.get("current_chapter")
+	return maxi(int(value), 0) if value != null else 0
+
+
+## Tên chương để hiện trên banner ("CHƯƠNG 2: SUY LUẬN")
+func chapter_title() -> String:
+	var chapter := _chapter_data()
+	if chapter == null:
+		return ""
+	return TranslationServer.translate("STR_CHAPTER_TITLE_FORMAT").format([chapter.chapter_id, chapter.title])
+
+
+func _chapter_data() -> ChapterData:
+	var lm: Node = get_node_or_null("/root/LevelManager")
+	if lm == null or not lm.has_method("get_chapter"):
+		return null
+	var chapter := _current_chapter()
+	if chapter <= 0:
+		chapter = 1
+	return lm.call("get_chapter", chapter) as ChapterData
 
 
 func _chapter_of(level_id: int) -> int:
@@ -174,6 +231,24 @@ func _chapter_of(level_id: int) -> int:
 func _unlocked_level() -> int:
 	var gm := _game_manager()
 	return maxi(int(gm.get("unlocked_levels")), 1) if gm != null else 1
+
+
+## Màn "nên chơi tiếp" TRONG chương đang xem: màn CHƯA đạt sao đầu tiên (xong hết -> màn cuối)
+func chapter_continue_level() -> int:
+	var stars := _stars_dict()
+	for level_id in _level_ids:
+		if int(stars.get(level_id, 0)) <= 0:
+			return level_id
+	return _level_ids[_level_ids.size() - 1] if not _level_ids.is_empty() else 1
+
+
+## Chương đang xem đã hoàn thành HẾT màn chưa (mọi màn đều có ít nhất 1 sao)
+func chapter_cleared() -> bool:
+	var stars := _stars_dict()
+	for level_id in _level_ids:
+		if int(stars.get(level_id, 0)) <= 0:
+			return false
+	return not _level_ids.is_empty()
 
 
 func _stars_dict() -> Dictionary:
@@ -362,16 +437,58 @@ func _unhandled_input(event: InputEvent) -> void:
 # ---------------------------------------------------------------------------
 # Header + chọn màn
 # ---------------------------------------------------------------------------
-## Cập nhật số sao tích lũy + nhãn nút "TIẾP TỤC MÀN {0}"
+## Cập nhật số Sao CỦA CHƯƠNG + banner chương + nhãn nút "TIẾP TỤC MÀN {0}"
 func _refresh_header() -> void:
-	var total_stars := 0
-	for value in _stars_dict().values():
-		total_stars += int(value)
+	var chapter := _chapter_data()
+	var own := 0
+	var total := maxi(_level_ids.size(), 1) * 3
+	var lm: Node = get_node_or_null("/root/LevelManager")
+	if chapter != null and lm != null and lm.has_method("chapter_stars"):
+		# Số sao hiển thị là sao ĐẠT ĐƯỢC TRONG CHƯƠNG này (trước đây lấy tổng mọi chương
+		# nhưng chia cho tối đa của 1 chương -> ra "30/27" sai)
+		own = int(lm.call("chapter_stars", chapter.chapter_id))
+		total = maxi(int(lm.call("chapter_star_total", chapter.chapter_id)), 1)
+	else:
+		for value in _stars_dict().values():
+			own += int(value)
 
 	if lbl_stars != null:
-		lbl_stars.text = "%d/%d" % [total_stars, maxi(_level_ids.size(), 1) * 3]
+		lbl_stars.text = "%d/%d" % [own, total]
+	if lbl_chapter != null:
+		var title := chapter_title()
+		if not title.is_empty():
+			lbl_chapter.text = title
+	_refresh_chapter_banner()
 	if lbl_continue != null:
-		lbl_continue.text = tr("STR_BTN_CONTINUE_LEVEL").format([_unlocked_level()])
+		lbl_continue.text = TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE") if chapter_cleared() \
+			else tr("STR_BTN_CONTINUE_LEVEL").format([chapter_continue_level()])
+
+
+## Banner chương: có chương ĐỦ Sao để mở -> đổi sang art "focus" + nhấp nháy + đổi dòng gợi ý
+func _refresh_chapter_banner() -> void:
+	var gm := _game_manager()
+	var unlockable := gm != null and gm.has_method("has_unlockable_chapter") \
+		and bool(gm.call("has_unlockable_chapter"))
+	if unlockable != _banner_focus:
+		_banner_focus = unlockable
+		if banner != null:
+			banner.texture = BANNER_FOCUS if unlockable else BANNER_NORMAL
+		if lbl_change_chapter != null:
+			lbl_change_chapter.theme_type_variation = &"LevelsChangeChapterFocus" if unlockable \
+				else &"LevelsChangeChapter"
+		if unlockable and banner != null:
+			UIAnim.play_pulse(banner, 1.02, 1.6)
+	if lbl_change_chapter != null:
+		lbl_change_chapter.text = TranslationServer.translate(
+			"STR_CHAPTER_UNLOCKABLE" if unlockable else "STR_CHANGE_CHAPTER")
+
+
+## Bấm vào BANNER CHƯƠNG (bất kỳ chỗ nào) -> sang màn Chọn Chương
+func _on_banner_input(event: InputEvent) -> void:
+	var pressed: bool = (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT
+		and event.pressed) or (event is InputEventScreenTouch and event.pressed)
+	if pressed:
+		Nav.goto_chapters()
 
 
 func _on_level_selected(level_id: int) -> void:
@@ -387,10 +504,17 @@ func _on_level_selected(level_id: int) -> void:
 
 func _on_continue_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
-	var level_id := _unlocked_level()
 	var gm := _game_manager()
-	if gm != null and gm.has_method("start_level"):
+	if chapter_cleared():
+		# Đã xong hết màn của chương -> mời sang màn Chọn Chương để mở chương mới
+		Nav.goto_chapters()
+		return
+	var level_id := chapter_continue_level()
+	if gm != null and level_id <= _unlocked_level() and gm.has_method("start_level"):
 		gm.call("start_level", level_id)
+	elif gm != null:
+		# Màn chưa mở (ví dụ chương chưa unlock) -> về màn Chọn Chương thay vì nhảy màn sai
+		Nav.goto_chapters()
 	else:
 		Nav.goto_game()
 
@@ -398,8 +522,5 @@ func _on_continue_pressed() -> void:
 func _on_back_pressed() -> void:
 	# SFX: gõ thẻ giấy cho nút phụ (Back)
 	Sfx.play(Sfx.BTN_WOOD_TAP)
-	var gm := _game_manager()
-	if gm != null:
-		gm.call("go_to_main_menu")
-	else:
-		Nav.goto_main()
+	# Màn Chọn màn là màn CHÍNH khi bấm CHƠI -> Back quay về Main
+	Nav.goto_main()

@@ -33,11 +33,43 @@ def _find_project_root() -> Path:
 
 PROJECT_ROOT = _find_project_root()
 LEVELS_DIR = PROJECT_ROOT / "resources" / "levels"
+CHAPTERS_DIR = PROJECT_ROOT / "resources" / "chapters"
 
 # Đường dẫn script Godot mà file .tres trỏ tới (giữ nguyên như Godot sinh ra)
 LEVEL_SCRIPT_RES = "res://scripts/resources/level_data.gd"
 # Id ext_resource trong file .tres (Godot dùng id nội bộ, giá trị nào cũng hợp lệ)
 LEVEL_SCRIPT_ID = "1_level"
+
+# CHƯƠNG (màn "CHỌN CHƯƠNG" của game) - xem scripts/resources/chapter_data.gd
+CHAPTER_SCRIPT_RES = "res://scripts/resources/chapter_data.gd"
+CHAPTER_SCRIPT_ID = "1_chapter"
+MIN_CHAPTER_ID = 1
+MAX_CHAPTER_ID = 99
+
+# Tên chương gợi ý khi tạo tự động theo dữ liệu màn
+DEFAULT_CHAPTER_TITLES = (
+    "NHẬP MÔN",
+    "SUY LUẬN",
+    "BẪY ẨN",
+    "BẬC THẦY",
+    "CỰC HẠN",
+)
+DEFAULT_CHAPTER_SUBTITLES = (
+    "Làm quen với các quy luật bước & tường",
+    "Mê cung rộng hơn với mật độ tường tăng cao",
+    "Thử thách trí nhớ và khả năng vẽ không chạm tường",
+    "Mê cung khổng lồ dành cho cao thủ suy luận",
+    "Thử thách giới hạn dành cho người chơi kỳ cựu",
+)
+# Phí sao mặc định để mở chương (theo thứ tự chương 1..4)
+DEFAULT_CHAPTER_COSTS = (0, 25, 45, 70)
+# Icon riêng của từng chương (khớp assets/images/chapters/icon_<tên>.svg bên game)
+CHAPTER_ICONS = ("intro", "logic", "trap", "master")
+# Icon gợi ý cho chương N (ngoài danh sách -> lặp lại theo chu kỳ)
+def chapter_icon_for(chapter_id: int) -> str:
+    if not CHAPTER_ICONS:
+        return ""
+    return CHAPTER_ICONS[(max(1, int(chapter_id)) - 1) % len(CHAPTER_ICONS)]
 
 # --- Giới hạn thiết kế -----------------------------------------------------
 MIN_SIZE = 2
@@ -98,6 +130,24 @@ def ensure_levels_dir() -> Path:
     """Tạo thư mục resources/levels nếu chưa có và trả về đường dẫn."""
     LEVELS_DIR.mkdir(parents=True, exist_ok=True)
     return LEVELS_DIR
+
+
+def ensure_chapters_dir() -> Path:
+    """Tạo thư mục resources/chapters nếu chưa có và trả về đường dẫn."""
+    CHAPTERS_DIR.mkdir(parents=True, exist_ok=True)
+    return CHAPTERS_DIR
+
+
+def default_chapter_meta(chapter_id: int) -> tuple[str, str, int]:
+    """(tiêu đề, mô tả, phí sao) gợi ý cho chương N khi tạo mới."""
+    index = max(0, int(chapter_id) - 1)
+    title = DEFAULT_CHAPTER_TITLES[index] if index < len(DEFAULT_CHAPTER_TITLES) \
+        else "CHƯƠNG %d" % chapter_id
+    subtitle = DEFAULT_CHAPTER_SUBTITLES[index] if index < len(DEFAULT_CHAPTER_SUBTITLES) \
+        else ""
+    cost = DEFAULT_CHAPTER_COSTS[index] if index < len(DEFAULT_CHAPTER_COSTS) \
+        else 25 + 15 * index
+    return title, subtitle, cost
 
 
 def is_frozen() -> bool:

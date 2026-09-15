@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Icon chuong 1 · NHAP MON: luoi 3x3 + duong di chu L don gian -->
+  <rect x="1.5" y="1.5" width="177" height="177" rx="16" fill="#FFFFFF" fill-opacity="0.12"
+        stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="2.5"/>
+  <g stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1">
+    <line x1="60.5" y1="2" x2="60.5" y2="178"/><line x1="119.5" y1="2" x2="119.5" y2="178"/>
+    <line x1="2" y1="60.5" x2="178" y2="60.5"/><line x1="2" y1="119.5" x2="178" y2="119.5"/>
+  </g>
+  <path d="M 31.5 148.5 L 31.5 90 L 90 90 L 90 31.5 L 148.5 31.5" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.85" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="31.5" cy="148.5" r="7" fill="#FFFFFF" fill-opacity="0.9"/>
+  <circle cx="148.5" cy="31.5" r="7" fill="#FFFFFF" fill-opacity="0.9"/>
+</svg>

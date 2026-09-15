@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 100" width="250" height="100">
+  <!-- Nút chương bị khóa (không bấm được) -->
+  <rect width="250" height="100" rx="24" fill="#A7B9C3"/>
+  <rect x="1.4" y="1.4" width="247.2" height="97.2" rx="22.6" fill="#DFDCD5"/>
+</svg>

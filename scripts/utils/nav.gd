@@ -17,6 +17,8 @@ const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
 const SCENE_ARCHIVEMENT := "res://scenes/archivement.tscn"
 const SCENE_RANKING := "res://scenes/ranking.tscn"
+## Màn CHỌN CHƯƠNG — xem scripts/scenes/chapters.gd
+const SCENE_CHAPTERS := "res://scenes/chapters.tscn"
 
 
 static func change_scene(path: String) -> void:
@@ -57,6 +59,11 @@ static func goto_archivement() -> void:
 ## Bảng xếp hạng (Dungeon · Play · Daily)
 static func goto_ranking() -> void:
 	change_scene(SCENE_RANKING)
+
+
+## Màn CHỌN CHƯƠNG (xem tiến độ + mở khóa chương bằng Sao)
+static func goto_chapters() -> void:
+	change_scene(SCENE_CHAPTERS)
 
 
 ## Màn hình debug (chỉ dùng khi phát triển)

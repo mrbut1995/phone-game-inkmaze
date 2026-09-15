@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ChapterData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/chapter_data.gd" id="1_chapter"]
+
+[resource]
+script = ExtResource("1_chapter")
+chapter_id = 4
+title = "BẬC THẦY"
+subtitle = "Mê cung khổng lồ dành cho cao thủ suy luận"
+size_label = "9×9"
+star_cost = 70
+icon = "master"

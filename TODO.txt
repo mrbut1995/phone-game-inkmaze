@@ -6,6 +6,94 @@
 # Replace SFX Placeholder to correct sound
 
 # ----------------------------------------------------------------------------
+# VÒNG SỬA 8 (2026-09-15): CHẶN NHẢY CHƯƠNG + POPUP CHỌN CHƯƠNG + BANNER FOCUS
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo yêu cầu user (4 điểm):
+#     1. Xong màn cuối chương KHÔNG tự nhảy sang màn của chương chưa unlock:
+#        `record_level_clear()` chỉ mở màn kế khi màn đó TỒN TẠI và CHƯƠNG CỦA NÓ ĐÃ MỞ;
+#        thêm `next_level_in_chapter()` (màn kế trong CÙNG chương, -1 nếu hết chương),
+#        `can_play_level()`, `has_unlockable_chapter()`. GameController đi tiếp bằng
+#        `next_level_in_chapter` + `can_play_level` (không còn `current_level + 1`).
+#     2. Popup thắng màn: hết chương (hoặc chương kế chưa mở) -> nút phải đổi từ
+#        "MÀN KẾ TIẾP" thành "CHỌN CHƯƠNG", bấm là ra màn Chọn Chương (cờ `next_available`
+#        do `_complete_floor()` tính, `winning.gd` đổi nhãn).
+#     3. Banner chương ở màn Chọn màn có trạng thái FOCUS khi có chương đủ Sao để mở:
+#        art mới `level_selector/chapter_banner_focus.svg` (viền nét đứt hổ phách) + nhấp nháy
+#        + dòng gợi ý `STR_CHAPTER_UNLOCKABLE` (variation `LevelsChangeChapterFocus`).
+#     4. Sửa ô đếm Sao sai ("30/27"): giờ hiện Sao CỦA CHƯƠNG đang xem
+#        (`chapter_stars` / `chapter_star_total`); nút chân trang theo màn chưa đạt sao đầu tiên
+#        của chương và đổi thành "CHỌN CHƯƠNG" khi xong hết chương; mở màn đúng trang chứa màn đó.
+#     - Test: `test_chapters.gd` 243 check (thêm: gate theo chương, next_level_in_chapter,
+#       số sao theo chương, banner focus, nút popup đổi nhãn) · `test_levels_paging.gd` cập nhật
+#       theo luật mở trang mới · 23/23 suite PASS.
+
+# ----------------------------------------------------------------------------
+# VÒNG SỬA 7 (2026-09-15): TINH CHỈNH MÀN CHỌN CHƯƠNG THEO PHẢN HỒI USER
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo yêu cầu user (7 điểm):
+#     1. Icon ổ khóa bị lệch: ổ khóa LỚN trên doodle đặt lại (122,91) để THÂN khóa
+#        trùng tâm doodle; ổ khóa TRONG nút bị đè lên chữ ("CẦN 45" bị cắt) -> nút phóng to
+#        250x100 + tách vùng icon (20,32 36x36) và vùng chữ (66..244) nên không còn chồng nhau.
+#     2. Bấm banner chương ở màn Chọn màn: không cần bấm đúng chữ "ĐỔI CHƯƠNG" nữa —
+#        nối `gui_input` cho cả node `ChapterBanner` (nhãn + VBox đặt mouse_filter = IGNORE).
+#     3. Nút CHƠI ở Main vào thẳng màn CHỌN MÀN (như cũ), màn Chọn Chương thành màn con
+#        (Back ở Chọn Chương -> Chọn màn; Back ở Chọn màn -> Main).
+#     4. Mỗi chương 1 ICON riêng: `ChapterData.icon` + 4 SVG mới (icon_intro 3×3 L ·
+#        icon_logic 5×5 zigzag · icon_trap 7×7 + 2 dấu X nét đứt · icon_master 9×9 xoắn + sao);
+#        chưa đặt icon -> fallback theo cỡ bàn (maze_small/medium/large). Tool Python cũng
+#        có ô chọn icon + tự gợi ý theo số chương.
+#     5. Chỗ TRỐNG bên trái nút của chương đã mở/đang chơi -> đặt icon TAM GIÁC PLAY
+#        (icon_star_white cho nút MỞ KHÓA để không bị chìm màu trên nền hổ phách).
+#     6. Hết bị "cropping": nút 225x95 -> 250x100 (đủ chỗ icon + chữ), chip kích thước
+#        125x28 -> 260x34, chip còn thiếu 145x26 -> 195x32, chip đã đủ 240x34 -> 300x40,
+#        ruy băng 160x46 -> 190x48 (chữ không còn tràn ra ngoài art).
+#     7. Chữ to hơn toàn bộ màn chương: tiêu đề 34->40 · mô tả 18->22 · sao 18->23 ·
+#        chip 13->17 · nút 22->26 (+phụ 13->17) · ruy băng 14->17 · ví sao 34->40 ·
+#        banner 20->24; banner màn Chọn màn 26->30 + dòng ĐỔI CHƯƠNG 22->24 · CTA 34->36.
+#     - Test: `test_chapters.gd` 213 check (thêm: icon riêng từng chương, nút có icon play,
+#       ổ khóa canh giữa, chữ >= ngưỡng, banner bấm được, luồng điều hướng mới).
+#       Godot 23/23 suite PASS · tool 89 unittest + selftest PASS.
+#     - GOTCHA .tscn: `layout_mode` phải đứng TRƯỚC các dòng `offset_*`, nếu không nhãn
+#       (RibbonLabel) bị dời về sai chỗ và mất chữ.
+
+# ----------------------------------------------------------------------------
+# VÒNG SỬA 6 (2026-02): HỆ THỐNG CHƯƠNG (CHỌN CHƯƠNG + ICON CHƯƠNG + TOOL)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo yêu cầu user ("tạo Scene Chapter Selection / Icon cho các chương
+#     đang bị close / update tool để tạo chapter + add Level vào Chapter"):
+#     - Dữ liệu: scripts/resources/chapter_data.gd (ChapterData) + 4 file
+#       resources/chapters/chapter_1..4.tres (NHẬP MÔN 0 sao · SUY LUẬN 25 · BẪY ẨN 45 · BẬC THẦY 70).
+#       Quan hệ NGƯỢC: LevelData.chapter -> chương (thêm màn vào chương = ghi `chapter` cho file màn).
+#     - LevelManager: get_chapters/get_chapter/chapter_count/has_chapter · chapter_of_level ·
+#       levels_in_chapter · chapter_star_total/chapter_cleared_count/chapter_stars · current_chapter_id.
+#       (Sửa thêm: refresh_levels() giờ xoá cả cache LevelData — trước đây đổi thư mục level bị lẫn dữ liệu.)
+#     - GameManager: unlocked_chapters + current_chapter (lưu/tải/xoá trong save) · total_stars() ·
+#       can_unlock_chapter() · unlock_chapter() (signal chapter_unlocked + Save.queue_save) · go_to_chapters().
+#     - 21 SVG mới assets/images/chapters/ (3 nền thẻ, halo, ribbon, 3 chip, thanh tiến độ, ví sao,
+#       băng hướng dẫn, 3 nút play/unlock/locked, 3 doodle mê cung nhỏ/vừa/lớn, ổ khóa) + ~30 theme
+#       variation Chapter* + ~20 khoá dịch STR_CHAPTER_* ở string_extra.csv.
+#     - Scene mới: nodes/chapters/chapter_card.tscn (thẻ chương 5 trạng thái: ĐANG CHƠI · ĐÃ MỞ ·
+#       ĐÃ ĐỦ ĐIỀU KIỆN (nút MỞ KHÓA + hào quang) · ĐANG KHÓA (ổ khóa + chip CÒN THIẾU n SAO) · SẮP RA MẮT)
+#       + scenes/chapters.tscn & scripts/scenes/chapters.gd (ví Sao · băng hướng dẫn · danh sách cuộn · CTA).
+#     - Màn Chọn màn (scripts/scenes/levels.gd) chỉ hiện màn của current_chapter + banner "CHƯƠNG n: Tên"
+#       + dòng ĐỔI CHƯƠNG (bấm được) + Back về màn Chọn Chương; nút CHƠI ở Main mở màn Chọn Chương;
+#       Nav/SceneManager có SCENE_CHAPTERS + goto_chapters; Debug Console có mục "Select Chapter".
+#     - Tool Python (tools/level_designer): app/models/chapter.py + app/services/chapter_io.py +
+#       app/models/chapter_repository.py + app/views/chapter_dialog.py; menu "Chương" (Ctrl+Shift+C) +
+#       nút "Chương…" trên thanh công cụ; hộp thoại tạo/sửa/xoá chương, "Tạo chương theo dữ liệu màn",
+#       gán màn vào chương (danh sách "1, 2, 3" hoặc "Gán MÀN ĐANG MỞ"), gợi ý nhãn kích thước; danh sách
+#       màn hiện thêm cột chương.
+#     - Test: scripts/test_case/test_chapters.gd (192 check) — TOÀN BỘ 23/23 suite PASS; tool: 88 unit test
+#       + tests/test_chapters.py + phần CHƯƠNG trong `python main.py --selftest`; render 1080×1920 so mockup.
+#     - Tài liệu: Number_Maze_Game_Design.md **mục 12** (luồng màn hình · dữ liệu · 5 trạng thái thẻ ·
+#       quy tắc mở khóa bằng Sao · vị trí UI · asset/theme/chuỗi dịch · file liên quan · tool Python).
+
+# [ ] CHƯA LÀM (gợi ý cho vòng sau):
+#     - Thêm màn cho chương 3/4 (chương 3-4 hiện chưa có màn nào -> thẻ hiện "SẮP RA MẮT").
+#     - Hiệu ứng mở khóa chương: animation hào quang -> tan biến + SFX riêng (hiện dùng Sfx.ACHIEVEMENT).
+#     - Popup xác nhận "Dùng n Sao để mở chương?" trước khi mở khóa (hiện bấm là mở luôn).
+
+# ----------------------------------------------------------------------------
 # VÒNG SỬA 5 (2026-11): CHUẨN HOÁ DESIGN DOC + BỘ MOCKUP MATCHUP 9 CHẾ ĐỘ
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM theo yêu cầu user ("update Design markdown theo design template + tạo mockup matchup cho các mode"):
