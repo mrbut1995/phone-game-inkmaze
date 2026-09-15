@@ -126,3 +126,46 @@ static func _update_pivot(control: Control) -> void:
 
 static func _on_btn_resized(control: Control) -> void:
 	_update_pivot(control)
+
+
+## Hiệu ứng nhãn chữ nổi bay lên và mờ dần (Floating Ink Text, ví dụ: +5, BONUS, PERFECT)
+static func spawn_floating_text(parent: Node, text: String, world_pos: Vector2, color := Color(0.133, 0.298, 0.427, 1.0), duration := 0.65) -> Label:
+	if parent == null or not is_instance_valid(parent):
+		return null
+	var label := Label.new()
+	label.text = text
+	label.modulate = color
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.position = world_pos - Vector2(60, 20)
+	label.size = Vector2(120, 40)
+	label.pivot_offset = Vector2(60, 20)
+	label.scale = Vector2(0.5, 0.5)
+
+	parent.add_child(label)
+
+	var tw := label.create_tween().set_parallel(true)
+	tw.tween_property(label, "position:y", world_pos.y - 55.0, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(label, "scale", Vector2(1.15, 1.15), duration * 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(label, "scale", Vector2(1.0, 1.0), duration * 0.35).set_delay(duration * 0.25)
+	tw.tween_property(label, "modulate:a", 0.0, duration * 0.4).set_delay(duration * 0.6).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tw.chain().tween_callback(label.queue_free)
+	return label
+
+
+## Hiệu ứng cuộn số tăng dần (Number Roll-up) cho điểm số hoặc bước đi
+static func animate_counter(label: Label, from_val: int, to_val: int, duration := 0.45, prefix := "", suffix := "") -> Tween:
+	if label == null or not is_instance_valid(label):
+		return null
+	var proxy := {"val": float(from_val)}
+	var tw := label.create_tween()
+	tw.tween_method(func(v: float) -> void:
+		if is_instance_valid(label):
+			var current_int := int(round(v))
+			label.text = "%s%d%s" % [prefix, current_int, suffix],
+		float(from_val),
+		float(to_val),
+		duration
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	return tw

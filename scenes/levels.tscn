@@ -2,22 +2,19 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_hcnff"]
 [ext_resource type="Script" uid="uid://byfef235y6820" path="res://scripts/scenes/levels.gd" id="2_5ekxl"]
-[ext_resource type="PackedScene" uid="uid://dfmh01huguti4" path="res://nodes/level_selection/level_card.tscn" id="2_hk6qi"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
-[ext_resource type="Texture2D" path="res://assets/images/level_selector/chapter_banner.svg" id="6_banner"]
-[ext_resource type="Texture2D" path="res://assets/images/level_selector/badge_stars_counter.svg" id="7_stars"]
-[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_cta_normal.svg" id="9_cont_n"]
-[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="10_cont_p"]
-[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cont_f"]
-[ext_resource type="Texture2D" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
-[ext_resource type="Texture2D" path="res://assets/images/level_selector/dot_active.svg" id="13_dot_on"]
-[ext_resource type="Texture2D" path="res://assets/images/level_selector/dot_inactive.svg" id="15_dot_off"]
-[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="14_theme_text"]
+[ext_resource type="Texture2D" uid="uid://c21vwj05ijcrc" path="res://assets/images/level_selector/chapter_banner.svg" id="6_banner"]
+[ext_resource type="Texture2D" uid="uid://bciclj5c0layi" path="res://assets/images/level_selector/badge_stars_counter.svg" id="7_stars"]
+[ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="9_cont_n"]
+[ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="10_cont_p"]
+[ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cont_f"]
+[ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="14_theme_text"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_hcnff")]
-script = ExtResource("2_5ekxl")
 theme = ExtResource("14_theme_text")
+script = ExtResource("2_5ekxl")
 
 [node name="TopBar" type="HBoxContainer" parent="." index="1" unique_id=1720649669]
 layout_mode = 1
@@ -43,70 +40,106 @@ texture_focused = ExtResource("3_back_n")
 [node name="Title" type="Label" parent="TopBar" index="1" unique_id=27927468]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "STR_SELECT_LEVEL_TITLE"
 theme_type_variation = &"LevelsTitle"
+text = "STR_SELECT_LEVEL_TITLE"
 horizontal_alignment = 1
 
-[node name="StarsCounter" type="TextureRect" parent="." index="2"]
+[node name="CardArea" type="Control" parent="." index="2" unique_id=783028615]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.7638889
-anchor_top = 0.046875
-anchor_right = 0.9490741
-anchor_bottom = 0.0833333
+anchor_left = 0.051777776
+anchor_top = 0.191125
+anchor_right = 0.98077774
+anchor_bottom = 0.7824375
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("7_stars")
+metadata/_edit_use_anchors_ = true
 
-[node name="Count" type="Label" parent="StarsCounter" index="0"]
+[node name="Scroll" type="ScrollContainer" parent="CardArea" index="0" unique_id=1202015660]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "0"
-theme_type_variation = &"LevelsStarCount"
-horizontal_alignment = 1
-vertical_alignment = 1
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+scroll_deadzone = 12
 
-[node name="ChapterBanner" type="TextureRect" parent="." index="3"]
+[node name="Pages" type="HBoxContainer" parent="CardArea/Scroll" index="0" unique_id=1717521052]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="StarsCounter" type="TextureRect" parent="." index="3" unique_id=1234238601]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.050925925
-anchor_top = 0.1015625
+anchor_left = 0.7592593
+anchor_top = 0.042968735
+anchor_right = 0.9537037
+anchor_bottom = 0.08723957
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_stars")
+metadata/_edit_use_anchors_ = true
+
+[node name="Count" type="Label" parent="StarsCounter" index="0" unique_id=1688571106]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"LevelsStarCount"
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ChapterBanner" type="TextureRect" parent="." index="4" unique_id=1348293648]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.044000003
+anchor_top = 0.08400001
 anchor_right = 0.9490741
-anchor_bottom = 0.14791667
+anchor_bottom = 0.16600001
+offset_left = 7.4799957
+offset_top = 33.719986
+offset_bottom = -34.72003
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_banner")
 
-[node name="Title" type="Label" parent="ChapterBanner" index="0"]
+[node name="TitleContainer" type="VBoxContainer" parent="ChapterBanner" index="0" unique_id=95982347]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.33150712
+anchor_top = 0.2611529
+anchor_right = 0.66950715
+anchor_bottom = 0.73884714
+offset_left = 0.13397217
+offset_top = -0.0010032654
+offset_right = -0.1340332
+offset_bottom = 0.0009994507
 grow_horizontal = 2
 grow_vertical = 2
-text = "STR_CHAPTER_1_TITLE"
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="ChapterBanner/TitleContainer" index="0" unique_id=361920077]
+layout_mode = 2
+size_flags_vertical = 2
 theme_type_variation = &"LevelsBannerTitle"
+text = "STR_CHAPTER_1_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ChangeChapter" type="Label" parent="ChapterBanner" index="1"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 38.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_CHANGE_CHAPTER"
+[node name="ChangeChapter" type="Label" parent="ChapterBanner/TitleContainer" index="1" unique_id=2002940200]
+layout_mode = 2
+size_flags_vertical = 10
 theme_type_variation = &"LevelsChangeChapter"
+text = "STR_CHANGE_CHAPTER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ContinueButton" type="TextureButton" parent="." index="4"]
+[node name="ContinueButton" type="TextureButton" parent="." index="5" unique_id=2102539585]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.12962963
@@ -121,7 +154,7 @@ texture_hover = ExtResource("9_cont_n")
 texture_focused = ExtResource("11_cont_f")
 ignore_texture_size = true
 
-[node name="Label" type="Label" parent="ContinueButton" index="0"]
+[node name="Label" type="Label" parent="ContinueButton" index="0" unique_id=1526103947]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -129,14 +162,14 @@ anchor_bottom = 1.0
 offset_left = 120.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "STR_BTN_CONTINUE_LEVEL"
 theme_type_variation = &"LevelsContinue"
+text = "STR_BTN_CONTINUE_LEVEL"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Icon" type="TextureRect" parent="ContinueButton" index="1"]
+[node name="Icon" type="TextureRect" parent="ContinueButton" index="1" unique_id=1579838738]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 105.0
@@ -149,7 +182,7 @@ texture = ExtResource("12_play_icon")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="PaginationDots" type="HBoxContainer" parent="." index="5"]
+[node name="PaginationDots" type="HBoxContainer" parent="." index="6" unique_id=1503847340]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.3
@@ -160,30 +193,3 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 16
 alignment = 1
-
-[node name="CardArea" type="Control" parent="." index="2" unique_id=783028615]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.051777776
-anchor_top = 0.191125
-anchor_right = 0.98077774
-anchor_bottom = 0.7824375
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Scroll" type="ScrollContainer" parent="CardArea" index="0"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-horizontal_scroll_mode = 3
-vertical_scroll_mode = 0
-follow_focus = false
-scroll_deadzone = 12
-
-[node name="Pages" type="HBoxContainer" parent="CardArea/Scroll" index="0"]
-layout_mode = 2
-theme_override_constants/separation = 0

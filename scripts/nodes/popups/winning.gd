@@ -39,7 +39,16 @@ func _on_open() -> void:
 		else tr("STR_WALL_HITS_FORMAT").format([hits, ""]).strip_edges()
 	value_walls.theme_type_variation = &"PopupStatValueGood" if hits == 0 else &"PopupStatValueBad"
 
-	value_score.text = tr("STR_SCORE_FORMAT").format([_thousands(int(data.get("score", 0)))])
+	var target_score := int(data.get("score", 0))
+	if DisplayServer.get_name() != "headless" and target_score > 0:
+		value_score.text = tr("STR_SCORE_FORMAT").format([0])
+		var tw_s := create_tween()
+		tw_s.tween_method(func(v: float) -> void:
+			if is_instance_valid(value_score):
+				value_score.text = tr("STR_SCORE_FORMAT").format([_thousands(int(round(v)))])
+		, 0.0, float(target_score), 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	else:
+		value_score.text = tr("STR_SCORE_FORMAT").format([_thousands(target_score)])
 
 	_set_stars(int(data.get("stars", 0)))
 	bind_button("Panel/Content/ReplayBtn", _on_replay_pressed)

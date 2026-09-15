@@ -186,6 +186,40 @@ func setup_maze(p_maze: MazeData, p_mode: BaseGameMode = null) -> void:
 	# Sau khi đã có đủ node: áp lại tỉ lệ vừa khít (tường/cursor/line...)
 	_apply_metrics_scale()
 	_apply_wall_width()
+	_animate_board_entrance()
+
+
+func _animate_board_entrance() -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	for y in _height:
+		for x in _width:
+			var cell: MazeCell = _cell_node(Vector2i(x, y))
+			if cell == null:
+				continue
+			cell.pivot_offset = cell.size * 0.5
+			cell.scale = Vector2(0.65, 0.65)
+			cell.modulate.a = 0.0
+			var delay := float(x + y) * 0.015
+			var tw := cell.create_tween().set_parallel(true)
+			if delay > 0.0:
+				tw.tween_interval(delay)
+			tw.tween_property(cell, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tw.tween_property(cell, "modulate:a", 1.0, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+	for info in _anchor_nodes:
+		var anchor: Control = info.node
+		if anchor == null:
+			continue
+		anchor.pivot_offset = anchor.size * 0.5
+		anchor.scale = Vector2.ZERO
+		var corner: Vector2i = info.corner
+		var delay := float(corner.x + corner.y) * 0.015 + 0.04
+		var tw_a := anchor.create_tween()
+		if delay > 0.0:
+			tw_a.tween_interval(delay)
+		tw_a.tween_property(anchor, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
 
 
 func _cell_index(x: int, y: int) -> int:
@@ -593,11 +627,14 @@ func _place_cursor_at_start() -> void:
 		_cursor.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	# Kích thước cursor lấy nguyên từ player_cursor.tscn
 	_cursor.pivot_offset = _cursor.size * 0.5
-	_cursor.position = _cell_center(maze.get_start()) - _cursor.size * 0.5
+	var target_pos := _cell_center(maze.get_start()) - _cursor.size * 0.5
+	_cursor.position = target_pos
 	_cursor.visible = true
 	_player_current_cell = maze.get_start()
 	# SFX: bước vào ô xuất phát S khi bắt đầu mỗi floor
 	Sfx.play(Sfx.STAIRS_ENTER)
+	if DisplayServer.get_name() != "headless" and _cursor.has_method("play_spawn_drop"):
+		_cursor.call("play_spawn_drop", target_pos)
 
 
 func _clear_runtime_layers() -> void:
@@ -637,6 +674,8 @@ func move_cursor_to(pos: Vector2i) -> void:
 	Sfx.play(Sfx.CELL_STEP)
 	if pos == maze.get_end():
 		Sfx.play(Sfx.STAIRS_ENTER)
+		if _cursor != null and _cursor.has_method("play_celebration"):
+			_cursor.call("play_celebration")
 
 	# Chạy animation bước nhảy (Hop / Squash & Stretch / Tilt)
 	if _cursor.has_method("run_to"):
@@ -746,6 +785,11 @@ func show_wall_hit(from_pos: Vector2i, to_pos: Vector2i) -> void:
 	tw_crash.tween_property(crash, "modulate:a", 0.0, 0.22)
 	tw_crash.tween_callback(crash.queue_free)
 
+	# Tác động lực giật nảy lên con trỏ người chơi (Bonk recoil)
+	if _cursor != null and _cursor.has_method("play_bonk_recoil"):
+		var recoil_dir := (Vector2(from_pos) - Vector2(to_pos)).normalized()
+		_cursor.call("play_bonk_recoil", recoil_dir)
+
 	_play_grid_shake()
 
 
@@ -756,6 +800,11 @@ func show_mine_hit(pos: Vector2i) -> void:
 		if cell_node != null:
 			# Giữ nguyên con số trên ô, chỉ đánh dấu quả mìn đã nổ
 			cell_node.set_bomb(true)
+			if cell_node.has_method("play_shudder"):
+				cell_node.call("play_shudder")
+
+	if _cursor != null and _cursor.has_method("play_bonk_recoil"):
+		_cursor.call("play_bonk_recoil", Vector2(0, -1))
 
 	var center := _cell_center(pos)
 	var mine_sfx: Control = MINE_SFX_SCENE.instantiate()
@@ -777,6 +826,14 @@ func pulse_cell(pos: Vector2i) -> void:
 	var node := _cell_node(pos)
 	if node != null:
 		node.pulse()
+
+
+## Tạo chữ nổi bay lên và tan dần trên một ô (dùng cho +điểm, cảnh báo...)
+func spawn_floating_popup(text: String, cell_pos: Vector2i, color := Color(0.133, 0.298, 0.427, 1.0)) -> void:
+	var center := _cell_center(cell_pos)
+	if _markers_layer != null:
+		UIAnim.spawn_floating_text(_markers_layer, text, center, color)
+
 
 
 func reveal_wall_segment(is_h: bool, lattice: Vector2i) -> void:

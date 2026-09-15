@@ -119,6 +119,30 @@ func has_bomb() -> bool:
 
 
 func pulse() -> void:
+	pivot_offset = size * 0.5
 	var tw := create_tween()
-	tw.tween_property(self, "scale", Vector2(1.1, 1.1), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "scale", Vector2(1.12, 1.12), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+## Hiệu ứng rung lắc ô khi xảy ra va chạm nguy hiểm (nổ mìn, đâm gai)
+func play_shudder() -> void:
+	var base_pos := position
+	var tw := create_tween()
+	tw.tween_property(self, "position", base_pos + Vector2(-5, 3), 0.035)
+	tw.tween_property(self, "position", base_pos + Vector2(5, -3), 0.035)
+	tw.tween_property(self, "position", base_pos + Vector2(-3, 2), 0.035)
+	tw.tween_property(self, "position", base_pos, 0.04)
+
+
+## Hiệu ứng nảy số trên ô khi giá trị được cập nhật (Fading Ink / Sum Path)
+func play_pop_text() -> void:
+	if _label == null:
+		_label = get_node_or_null("Sprite/Label")
+	if _label == null or not _label.visible:
+		return
+	_label.pivot_offset = _label.size * 0.5
+	var tw := create_tween()
+	tw.tween_property(_label, "scale", Vector2(1.32, 1.32), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(_label, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+

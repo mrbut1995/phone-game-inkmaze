@@ -95,7 +95,8 @@ func evaluate_move(from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> Dict
 	}
 
 
-func on_player_moved(_grid_view: Control, new_pos: Vector2i, _maze: MazeData) -> void:
+func on_player_moved(grid_view: Control, new_pos: Vector2i, maze: MazeData) -> void:
+	var was_visited := _current_path.has(new_pos)
 	_current_path.append(new_pos)
 	var unique_cells := {}
 	current_sum = 0
@@ -103,6 +104,12 @@ func on_player_moved(_grid_view: Control, new_pos: Vector2i, _maze: MazeData) ->
 		if not unique_cells.has(p):
 			unique_cells[p] = true
 			current_sum += _cell_scores.get(p, 1)
+
+	# Hiệu ứng chữ nổi bay lên khi thu thập số ô mới
+	if not was_visited and grid_view != null and grid_view.has_method("spawn_floating_popup"):
+		if maze != null and new_pos != maze.get_start() and new_pos != maze.get_end():
+			var val: int = _cell_scores.get(new_pos, 1)
+			grid_view.call("spawn_floating_popup", "+%d" % val, new_pos, Color(0.133, 0.45, 0.65, 1.0))
 
 
 func check_completion(current_pos: Vector2i, maze: MazeData, _anchor_controller: Node) -> bool:
