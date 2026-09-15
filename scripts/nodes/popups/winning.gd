@@ -22,7 +22,7 @@ const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
 func _on_open() -> void:
 	if data.is_empty():
 		return
-	label_subtitle.text = tr("STR_WIN_SUBTITLE").format([
+	label_subtitle.text = tr("STR_RESULT_SUBTITLE").format([
 		int(data.get("level", 1)),
 		str(data.get("grid", "5×5")),
 	])

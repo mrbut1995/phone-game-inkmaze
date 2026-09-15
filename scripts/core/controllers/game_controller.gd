@@ -150,6 +150,11 @@ func _on_timer_timeout() -> void:
 	_game_over()
 
 
+## Hết đường đi (Fading Ink: mực phai hết lối) -> thua với lý do riêng để popup hiện đúng tiêu đề
+func _on_dead_end() -> void:
+	_game_over("dead_end")
+
+
 func _update_hud() -> void:
 	if ui_controller == null or game_state == null:
 		return
@@ -281,7 +286,9 @@ func _check_game_over() -> void:
 	_game_over()
 
 
-func _game_over() -> void:
+## Kết thúc ván (thua). `reason` = lý do để popup hiện đúng tiêu đề:
+## "" = thua thường (đâm tường/hết bước/hết giờ) · "dead_end" = hết đường đi (Fading Ink).
+func _game_over(reason := "") -> void:
 	_run_active = false
 	if timer_controller != null:
 		timer_controller.stop()
@@ -318,6 +325,7 @@ func _game_over() -> void:
 			"stars": stars,
 			"challenges": challenge_rows,
 			"time": floor_time,
+			"reason": reason,
 			"endless": game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless,
 		})
 

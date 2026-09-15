@@ -48,7 +48,7 @@ func _init() -> void:
 		CountdownCostGameMode.new("medium"),
 		BlindMemoryGameMode.new("normal"),
 		FogOfWarGameMode.new("normal"),
-		AreaGameMode.new()
+		FadingInkGameMode.new("medium")
 	]
 
 	for mode in modes:
@@ -186,11 +186,8 @@ func test_single_mode(mode: BaseGameMode) -> bool:
 	# Kiem tra ky tu o Start va Finish
 	var s_text := mode.get_cell_text(maze.get_start(), maze)
 	var f_text := mode.get_cell_text(maze.get_end(), maze)
-	if mode is AreaGameMode:
-		assert(not s_text.is_empty(), "Area mode hien thi diem so")
-	else:
-		assert(s_text == "S" or not s_text.is_empty(), "Start cell phai hien thi S hoac diem")
-		assert(f_text == "F" or not f_text.is_empty(), "Finish cell phai hien thi F hoac diem")
+	assert(s_text == "S" or not s_text.is_empty(), "Start cell phai hien thi S hoac diem")
+	assert(f_text == "F" or not f_text.is_empty(), "Finish cell phai hien thi F hoac diem")
 
 	# Kiem tra kiem dinh nuoc di
 	var start_pos := maze.get_start()
@@ -206,7 +203,7 @@ func test_single_mode(mode: BaseGameMode) -> bool:
 
 	# Kiem tra tinh toan hoan thanh
 	var anchor_ctrl := AnchorController.new()
-	if not (mode is AreaGameMode or mode is SumPathGameMode):
+	if not (mode is SumPathGameMode):
 		assert(mode.check_completion(maze.get_end(), maze, anchor_ctrl), "Den F phai hoan thanh man")
 		assert(not mode.check_completion(maze.get_start(), maze, anchor_ctrl), "O S chua the hoan thanh man")
 

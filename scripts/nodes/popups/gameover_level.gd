@@ -26,6 +26,12 @@ const VAR_STATUS_FAIL := &"PopupStatValueBad"
 
 
 func _on_open() -> void:
+	# Hết đường đi (Fading Ink) — đổi tiêu đề cho đúng lý do thua
+	if str(data.get("reason", "")) == "dead_end":
+		var title_node := piece("Title") as Label
+		if title_node != null:
+			title_node.text = "STR_GAME_OVER_NO_PATH"
+
 	var subtitle := piece("Subtitle") as Label
 	if subtitle != null:
 		subtitle.text = tr("STR_GAME_OVER_LEVEL_SUBTITLE").format([int(data.get("progress", 0))])

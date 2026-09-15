@@ -86,6 +86,18 @@ func on_player_moved(_grid_view: Control, _new_pos: Vector2i, _maze: MazeData) -
 	pass
 
 
+## Người chơi vừa LÙI 1 bước (Undo). Mode nào có trạng thái riêng thì lùi theo
+## (VD Fading Ink hồi lại mực đã phai). `from_pos` = ô vừa rời, `to_pos` = ô quay về.
+func on_move_undone(_grid_view: Control, _from_pos: Vector2i, _to_pos: Vector2i, _maze: MazeData) -> void:
+	pass
+
+
+## Hết lối đi mà chưa tới F (mode tự quyết định, mặc định = không bao giờ kẹt).
+## GridController phát signal `dead_end` -> GameController._on_dead_end() -> popup thua.
+func is_dead_end(_current_pos: Vector2i, _maze: MazeData) -> bool:
+	return false
+
+
 ## Tính toán điểm số khi kết thúc floor/màn chơi.
 func calculate_score(
 	floor_number: int,

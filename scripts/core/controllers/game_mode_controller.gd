@@ -41,8 +41,8 @@ func set_mode_by_name(mode_name: String, difficulty: String = "medium") -> BaseG
 			new_mode = BlindMemoryGameMode.new(difficulty)
 		"fog_of_war":
 			new_mode = FogOfWarGameMode.new(difficulty)
-		"area":
-			new_mode = AreaGameMode.new()
+		"fading_ink":
+			new_mode = FadingInkGameMode.new(difficulty)
 		_:
 			new_mode = DungeonGameMode.new()
 

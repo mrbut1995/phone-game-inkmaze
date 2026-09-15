@@ -54,7 +54,7 @@ MODE_IDS = (
     "countdown_cost",
     "blind_memory",
     "fog_of_war",
-    "area",
+    "fading_ink",
 )
 
 # --- Màu sắc (đồng bộ với theme sổ ô ly của game) --------------------------

@@ -34,7 +34,7 @@ func _init() -> void:
 	assert(initial_steps > 0, "Initial steps phai > 0")
 
 	# Test Switch Modes qua GameScene API
-	var test_modes := ["play", "time_attack", "minesweeper", "sum_path", "countdown_cost", "blind_memory", "fog_of_war", "area", "dungeon"]
+	var test_modes := ["play", "time_attack", "minesweeper", "sum_path", "countdown_cost", "blind_memory", "fog_of_war", "fading_ink", "dungeon"]
 	for mode_name in test_modes:
 		game_scene.switch_mode(mode_name)
 		await process_frame

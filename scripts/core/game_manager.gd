@@ -29,7 +29,7 @@ const DAILY_MODES: Array[String] = [
 	"countdown_cost",
 	"blind_memory",
 	"fog_of_war",
-	"area"
+	"fading_ink"
 ]
 
 

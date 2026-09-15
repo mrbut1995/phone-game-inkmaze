@@ -56,7 +56,7 @@ func generate(p_width: int, p_height: int, p_visible_ratio: float) -> void:
 		_assign_visibility()
 
 
-## Khởi tạo lưới trống (chỉ có tường biên ngoài) cho Minesweeper / Area / Sum Path.
+## Khởi tạo lưới trống (chỉ có tường biên ngoài) cho Minesweeper / Sum Path / Fading Ink.
 func create_empty(p_width: int, p_height: int) -> void:
 	width = maxi(2, p_width)
 	height = maxi(2, p_height)

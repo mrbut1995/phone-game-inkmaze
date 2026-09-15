@@ -1,5 +1,31 @@
 # Number Maze — Game Design Document
 
+## 0. Tiêu chuẩn tài liệu (Design Template)
+
+| | |
+|---|---|
+| **Tài liệu** | Number Maze — Game Design Document (InkMaze) |
+| **Phiên bản** | v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bổ sung bộ mockup matchup cho 9 chế độ) |
+| **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
+| **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
+| **Quy ước mode** | 1 bộ luật = 1 `class_name` kế thừa `BaseGameMode`; mỗi mode có `mode_id` (khoá xoay vòng Daily + tra chuỗi `STR_MODE_<ID>`), luật riêng, và **1 mockup matchup** ở mục 10 |
+
+**Template đặc tả mỗi bộ luật (mục 5.1–5.9)** — mọi mode dùng CÙNG bộ 9 trường sau, để đọc/đối chiếu nhanh giữa các mode:
+
+| Trường | Ý nghĩa |
+|---|---|
+| **Cổng vào** | Màn hình/mục mở được mode · `mode_id` · file mode |
+| **Bàn cờ** | Cách sinh bàn: kích thước, tường, ràng buộc bảo đảm màn **luôn thắng được** |
+| **Số trên ô** | Con số trên ô nghĩa là gì (tường · mìn · điểm · chi phí · mực · không có số) |
+| **Di chuyển** | Số hướng đi · chi phí bước · giới hạn bước/thời gian · công cụ (UNDO/GỢI Ý) |
+| **Thắng** | Điều kiện qua màn + thưởng/xếp hạng |
+| **Thua** | Điều kiện thua + hành vi khi đâm tường/đạp mìn |
+| **Hồi sinh** | Hồi sinh thay đổi những gì (undo bước · +bước · giữ nguyên màn) |
+| **HUD** | Scene HUD thật + các thẻ hiển thị + file mockup matchup |
+| **Chi tiết** | Diễn giải đầy đủ luật + ghi chú thiết kế/edge case |
+
+**Quy ước màu & chất liệu UI (áp dụng mọi màn hình):** nền giấy kem `#FAF5EB` + lưới vở ô ly 40px `#8FB9D2` + lề đỏ `#D84444`; thẻ HUD là **mẩu giấy trắng** `#FEFDFA` viền xanh `#6EA0C8` / xanh đậm `#3D83AE` / đỏ `#D84444` + **lề sổ tay** cùng màu + **dòng kẻ ngang** `#9FC0D6`; mực chữ `#224C6D`, nhãn phụ `#718B9E`. **Không dùng emoji trong UI thật** — icon là SVG vẽ tay trong `assets/images/icons/`.
+
 ## 1. Tổng quan
 
 **Tên game:** Number Maze
@@ -78,7 +104,7 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 | **DUNGEON MODE** | Dungeon Mode | Luôn mở, chơi endless không giới hạn |
 | **DAILY CHALLENGE** | 7 bộ luật còn lại (luân phiên theo ngày) | Chỉ chơi được đúng bộ luật của ngày hôm đó |
 
-**Nguyên tắc quan trọng:** Chỉ có **Play Mode** và **Dungeon Mode** là 2 chế độ "thường trực" người chơi có thể vào chơi bất cứ lúc nào. **7 bộ luật còn lại** (Time Attack Maze, Minesweeper Maze, Area Maze, Sum Path, Countdown Cost, Blind Memory Maze, Fog of War Maze) **không tồn tại như mục chọn riêng** trên Main Screen — chúng chỉ xuất hiện **lần lượt, mỗi ngày 1 bộ luật**, thông qua màn hình Daily Challenge (mục 6).
+**Nguyên tắc quan trọng:** Chỉ có **Play Mode** và **Dungeon Mode** là 2 chế độ "thường trực" người chơi có thể vào chơi bất cứ lúc nào. **7 bộ luật còn lại** (Time Attack Maze, Minesweeper Maze, **Fading Ink**, Sum Path, Countdown Cost, Blind Memory Maze, Fog of War Maze) **không tồn tại như mục chọn riêng** trên Main Screen — chúng chỉ xuất hiện **lần lượt, mỗi ngày 1 bộ luật**, thông qua màn hình Daily Challenge (mục 6).
 
 ### 4.1. Các nút truy cập khác trên Main Screen
 
@@ -103,7 +129,7 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 | **Dungeon Mode** | Dungeon | Số tường quanh ô (0..4) | Về lại S, trừ 1 bước | Vượt qua càng nhiều Floor càng tốt (chế độ DUY NHẤT có bộ đếm bước còn lại) |
 | Time Attack Maze | Daily Challenge | Số tường quanh ô (0..4) | Về lại S, mất thời gian | Đến F trước khi đồng hồ đếm ngược về 0 |
 | Minesweeper Maze | Daily Challenge | Số mìn quanh ô (0..8) | Đạp mìn: **THUA NGAY** (nổ, đứng nguyên tại ô, hiện biểu tượng Bomb, giữ nguyên số) | Tránh các ô mìn ẩn, đến đích F an toàn |
-| Area Maze | Daily Challenge | Điểm số của ô (1..9) | Không có tường | Kéo nối Anchor chia các Area đạt đúng Target Score và chứa S & F |
+| Fading Ink | Daily Challenge | **MỰC của ô** (giá trị riêng, KHÔNG liên quan tường) — giảm 1 mỗi bước đi | Không có tường; ô hết mực = không đi vào được (không mất bước) | Đến F trước khi mực phai hết; hết lối đi = THUA |
 | Sum Path | Daily Challenge | Điểm số của ô (1..9) | Không có tường | Đến F với tổng điểm thỏa `SUM < / > / = Target` |
 | Countdown Cost | Daily Challenge | **Chi phí bước** của ô (số riêng, KHÔNG liên quan tường) | Về lại S, trừ theo ô đích | Đến F với ngân sách bước hạn chế, tối ưu chi phí |
 | Blind Memory Maze | Daily Challenge | Không có số (ẩn hoàn toàn) | Tùy chọn (về S hoặc thua ngay) | Ghi nhớ tường khi Countdown (3..2..1) rồi đi khi tường ẩn |
@@ -113,13 +139,14 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 
 > **Quy ước "Số bước":** **CHỈ Dungeon Mode có bộ đếm số bước còn lại** (thẻ **SỐ BƯỚC** + thẻ **TẦNG** trên HUD — xem `matchup_dungeon.svg`). **Mọi chế độ khác KHÔNG giới hạn và KHÔNG hiển thị số bước còn lại** — Play Mode chỉ hiện thẻ **THỬ THÁCH** + **THỜI GIAN** (`matchup_level.svg`), các bộ luật Daily hiện tài nguyên riêng của chúng (đồng hồ, điểm, số mìn...). *Ngoại lệ duy nhất:* **Countdown Cost** vẫn dùng **ngân sách bước**, vì đó chính là cơ chế cốt lõi của bộ luật này (xem 5.3–5.9).
 
-> **Bố cục HUD màn chơi (theo 2 mockup match-up):** hàng thẻ cao **156–158px** nằm ngay dưới tiêu đề, rộng 980px (x = 50 → 1030):
+> **Bố cục HUD màn chơi (bộ mockup matchup — xem mục 10):** khung thẻ rộng **980px** (x = 50 → 1030) nằm tại `y = 175..424`; mỗi chế độ có 1 mockup `mockup/matchup_<mode>.svg` vẽ đúng hàng thẻ của mình:
 > - **Play Mode** (`matchup_level.svg`): thẻ **THỜI GIAN** 250×138 bên trái + thẻ **THỬ THÁCH** 720×156 bên phải.
 >   Thẻ THỬ THÁCH gồm cột tổng kết (**số Thử thách đã đạt** `x/3 ✓` + dòng `n ĐÃ HOÀN THÀNH`) và **3 dải thử thách** 490×42: **ô tích đỏ** = đã đạt (kèm nhãn đỏ `✓ ĐẠT`), **ô chờ tích** (nét đứt) = chưa đạt (kèm tiến độ ở góc phải).
 > - **Dungeon Mode** (`matchup_dungeon.svg`): thẻ **THỜI GIAN** 250×138 + thẻ **SỐ BƯỚC** 440×158 (viền đỏ, con số lớn 72px — KHÔNG còn dạng `14/20`) + thẻ **TẦNG** 250×138.
 > - **Minesweeper Maze**: thẻ **THỜI GIAN** 250×138 + thẻ **BOM CÒN LẠI** 440×158 — art `card_bomb.svg` (mẩu giấy viền ĐỎ + lề đỏ + dòng kẻ ngang kiểu vở) + **sticker icon_bomb** bên phải, con số `còn/tổng` mực đỏ 72px. Panel MISSION cũ được thay bằng thẻ Bomb.
 > - **Sum Path**: thẻ **THỜI GIAN** 250×138 + thẻ **TỔNG HIỆN TẠI** 440×158 (`card_sum.svg` — viền xanh đậm, mực xanh, dòng kẻ ngang) + **thẻ TOÁN TỬ 112×112** (`card_op.svg`, nằm CHÍNH GIỮA thẻ Tổng và thẻ Mục tiêu, đè lên mép 2 thẻ — dạng `12 = 23`, ký hiệu mực ĐỎ) + thẻ **MỤC TIÊU** 250×138 (chỉ hiện con số). Panel MISSION cũ được thay bằng 3 thẻ này.
-> - **Blind Memory**: thẻ **THỜI GIAN** 250×138 + thẻ **GHI NHỚ VỊ TRÍ TƯỜNG** 440×158 (`card_sum.svg`) — **KHÔNG có thẻ THỬ THÁCH**.
+> - **Blind Memory**: thẻ **THỜI GIAN** 250×138 + thẻ **GHI NHỚ VỊ TRÍ TƯỜNG** 440×158 (`card_sum.svg`) — **KHÔNG có thẻ THỬ THÁCH** (`mockup/matchup_blind_memory.svg`).
+> - **4 chế độ dùng chung LevelHUD** — Time Attack (`matchup_time_attack.svg`), Countdown Cost (`matchup_countdown_cost.svg`), Fog of War (`matchup_fog_of_war.svg`), Fading Ink (`matchup_fading_ink.svg`): cùng bố cục **THỜI GIAN + THỬ THÁCH**, mockup khác nhau ở phần bàn cờ minh hoạ + chú thích luật.
 > - **Chất liệu HUD (từ 2026-11):** mọi thẻ là **mẩu giấy trắng trên nền vở kẻ ngang** — viền màu (xanh `#6EA0C8` / xanh đậm `#3D83AE` / đỏ `#D84444`) + lề sổ tay cùng màu + **dòng kẻ ngang** `#9FC0D6` (opacity 0.5) như trang vở. Art dùng cho các HUD mới: `card_time_slip.svg` (250×138), `card_bomb.svg` (440×158), `card_sum.svg` (440×158), `card_op.svg` (112×112).
 > - Tiêu đề game: Dungeon = `DUNGEON MODE` (một dòng, số tầng đã chuyển xuống thẻ TẦNG); Play Mode = dòng phụ đỏ `PLAY MODE · CHƯƠNG n` + dòng lớn `MÀN xx`.
 
@@ -133,6 +160,18 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 > `GameScene._apply_hud_for_mode()` thay node HUD đúng lúc đổi chế độ rồi gắn lại cho `UIController.set_hud()` (vẽ số liệu) và `ChallengeController.card` (chỉ LevelHUD có thẻ Thử thách). Mỗi HUD nhận dữ liệu qua `update_hud(ctx)` với các khoá `title / subtitle / steps_remaining / elapsed_time / floor_number / extra / mode`.
 ### 5.1. 🎯 Play Mode (Level Selection) *(đổi tên từ "Classic Maze" / "Level Maze")*
 
+| Trường | Nội dung |
+|---|---|
+| **Cổng vào** | Nút **PLAY** trên Main Screen · `mode_id = play` (`standard_game_mode.gd`) |
+| **Bàn cờ** | Theo dữ liệu Màn trong `resources/levels/level_*.tres` (kích thước, tường, `cell_mask` polyomino, 3 thử thách riêng) |
+| **Số trên ô** | **Số tường quanh ô** (0..4, chỉ tính 4 cạnh bên trong board — xem quy ước ở đầu mục 5) — hiện cả tường vô hình |
+| **Di chuyển** | 4 hướng (không đi chéo) · **không giới hạn số bước** · kéo từ tâm ô / bấm ô kề · có **UNDO** + **GỢI Ý** |
+| **Thắng** | Tới F · 3 thử thách chốt khi kết thúc → tối đa 3 Sao · xếp hạng theo **thời gian nhanh nhất** |
+| **Thua** | **Đâm tường vô hình = THUA NGAY** (giữ nguyên vị trí + xử lý ở popup) |
+| **Hồi sinh** | **Quay lại ô ngay trước đó** (undo bước vừa đi, không cộng bước) — xem 5.10 |
+| **HUD** | `nodes/hud/level_mode.tscn` (`LevelHUD`): **THỜI GIAN** + **THỬ THÁCH** · mockup `mockup/matchup_level.svg` |
+| **Chi tiết** | Xem bên dưới |
+
 > Đây là **chế độ chính, cửa vào đầu tiên của game** — thay cho khái niệm "chọn độ khó Dễ/Vừa/Khó" ở bản thiết kế cũ.
 
 - Theo mockup `level_selection.svg`: màn chơi được tổ chức thành **Chương (Chapter)**, mỗi Chương có kích thước lưới cố định (ví dụ *"CHƯƠNG 1: BÀN CỜ NHẬP MÔN (7×7)"*), gồm nhiều **Màn (Level)** đánh số tuần tự (Màn 01, 02, 03...).
@@ -145,6 +184,18 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 
 ### 5.2. 🏰 Dungeon Mode
 
+| Trường | Nội dung |
+|---|---|
+| **Cổng vào** | Nút **DUNGEON** trên Main Screen · `mode_id = dungeon` (`dungeon_game_mode.gd`) |
+| **Bàn cờ** | Sinh theo Tầng: kích thước + mật độ tường tăng dần (`FloorController.setup_floor`) |
+| **Số trên ô** | **Số tường quanh ô** (0..4) · tỉ lệ tường **hiện sẵn** giảm dần theo Tầng (về 0% ở tầng sâu) |
+| **Di chuyển** | 4 hướng · có **bộ đếm bước còn lại** (duy nhất trong game) · UNDO + GỢI Ý |
+| **Thắng** | Tới F → cộng điểm + thưởng bước → sang **Tầng kế tiếp** (endless, không có màn cuối) |
+| **Thua** | **Hết bước** (đâm tường không thua ngay — chỉ về S và mất 1 bước) |
+| **Hồi sinh** | **+N bước** (`revive_bonus_steps`, mặc định 3) và **giữ nguyên 100%** mê cung · vị trí · đường vẽ · tường đã lộ |
+| **HUD** | `nodes/hud/dungeon_mode.tscn` (`DungeonHUD`): **SỐ BƯỚC** + **THỜI GIAN** + **TẦNG** · mockup `mockup/matchup_dungeon.svg` |
+| **Chi tiết** | Xem bên dưới |
+
 - Chế độ endless, chơi qua nhiều Floor liên tiếp — càng đi sâu càng khó.
 - Áp dụng cơ chế **Endless Visible Wall**: tỉ lệ tường hiển thị (visible) giảm dần liên tục theo mỗi Floor càng lên cao, tiến tới 0% ở các floor sâu.
 - Đâm tường vô hình: trừ 1 bước, lộ tường thật, rung bàn cờ và đưa nhân vật về điểm S.
@@ -155,13 +206,92 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 
 ### 5.3–5.9. Bảy bộ luật chỉ chơi được qua Daily Challenge
 
-Nội dung luật của từng bộ **giữ nguyên như bản thiết kế trước**, chỉ khác về **cách truy cập**: không còn là mục chọn độc lập trên Main Screen, mà là **nội dung xoay vòng theo ngày** trong Daily Challenge.
+Nội dung luật của từng bộ **giữ nguyên như bản thiết kế trước**, chỉ khác về **cách truy cập**: không còn là mục chọn độc lập trên Main Screen, mà là **nội dung xoay vòng theo ngày** trong Daily Challenge (`GameManager.DAILY_MODES`, xem mục 6).
 
-- **⏱️ Time Attack Maze** — Giới hạn thời gian tổng (60s/90s/120s) đếm ngược, không giới hạn số bước. Đâm tường về S mất thời gian. Hết giờ = Game Over.
-- **💣 Minesweeper Maze** — Số trên ô = số mìn trong 8 ô lân cận. S/F luôn an toàn, luôn tồn tại ít nhất 1 đường BFS không mìn. **Đạp mìn = THUA NGAY** (giống Play Mode đâm tường): nhân vật **đứng nguyên tại ô vừa nổ** (không bị đưa về S), trừ 1 bước rồi mở **popup thua**; ô đó hiện **biểu tượng Bomb to ở giữa ô** (icon `game/icon_bomb.svg`) nhưng **giữ nguyên con số** — số nằm ĐÈ LÊN icon (có viền màu giấy cho dễ đọc). HUD hiện thẻ **BOM CÒN LẠI** dạng `còn/tổng` (giảm 1 mỗi quả đã nổ). Hồi sinh = quay lại ô ngay trước đó.
-- **📐 Area Maze** — Số trên ô là điểm (1..9). Kéo nối Anchor tạo Area khép kín đạt đúng Target Score, đúng số lượng Area yêu cầu, và có ít nhất 1 Area chứa cả S và F.
-- **➕ Sum Path** — Không có tường. Số trên ô là điểm (1..9). Thắng khi tới F với tổng điểm thỏa `SUM < / > / = Target`. Mỗi ô chỉ tính điểm 1 lần. Luôn đảm bảo tồn tại ít nhất 1 nghiệm đúng. **HUD hiện 3 thẻ theo đúng thứ tự `TỔNG HIỆN TẠI — TOÁN TỬ — MỤC TIÊU`** (thẻ TOÁN TỬ nhỏ 112×112 nằm chính giữa, đè lên mép 2 thẻ kia; MỤC TIÊU chỉ hiện con số) thay cho panel MISSION cũ.
-- **⏳ Countdown Cost** — **Số trên ô = CHI PHÍ BƯỚC khi bước vào ô đó**, hoàn toàn **không liên quan tới số tường quanh ô** (khác Play / Dungeon / Fog of War). Mọi ô trừ S/F đều có số ≥ 1 và luôn hiện số. Bước vào ô nào thì trừ đúng chi phí của ô đó; đâm tường: về S và trừ chi phí của ô đích vừa đâm vào. Ngân sách bước được tính đủ cho **đường đi rẻ nhất + khoảng dự phòng**, nên màn luôn thắng được nếu chọn đúng đường ít tốn kém; đi lệch qua các ô đắt sẽ hết bước.
+Mỗi bộ luật dưới đây được đặc tả theo **cùng một template**: Cổng vào · Bàn cờ · Số trên ô · Di chuyển · Thắng · Thua · Hồi sinh · HUD & mockup · Chi tiết.
+
+### 5.3. ⏱ Time Attack Maze
+
+| Trường | Nội dung |
+|---|---|
+| **Cổng vào** | Daily Challenge · `mode_id = time_attack` |
+| **Bàn cờ** | Sinh theo Tầng/độ khó, tường vô hình |
+| **Số trên ô** | Số tường quanh ô (0..4) |
+| **Di chuyển** | 4 hướng · **không giới hạn bước** · đâm tường về S và mất thời gian |
+| **Thắng** | Tới F trước khi đồng hồ đếm ngược về 0 |
+| **Thua** | **Hết giờ** |
+| **Hồi sinh** | Quay lại bước trước đó (undo) |
+| **HUD** | `nodes/hud/level_mode.tscn` (`LevelHUD`) · mockup `mockup/matchup_time_attack.svg` |
+| **Chi tiết** | ✨ **⏱ Time Attack Maze** — Giới hạn thời gian tổng (60s/90s/120s) đếm ngược, không giới hạn số bước. Đâm tường về S mất thời gian. Hết giờ = Game Over. |
+
+### 5.4. 💣 Minesweeper Maze
+
+| Trường | Nội dung |
+|---|---|
+| **Cổng vào** | Daily Challenge · `mode_id = minesweeper` |
+| **Bàn cờ** | Vuông **`2 + tầng`, kẹp 3..5** (tầng 1 = 3×3) · **không tường trong** · luôn có đường BFS **không mìn** từ S tới F · mật độ mìn `min(0.18 + tầng×0.03, 0.32)` |
+| **Số trên ô** | Số mìn trong **8 ô lân cận** (0..8) · S/F luôn an toàn |
+| **Di chuyển** | 4 hướng · mỗi bước 1 điểm · hồi sinh = quay lại ô trước đó |
+| **Thắng** | Tới F mà không đạp mìn |
+| **Thua** | **Đạp mìn = THUA NGAY** — đứng nguyên tại ô, hiện **icon Bomb** (giữ nguyên con số), HUD **BOM CÒN LẠI** giảm 1 rồi mở popup thua |
+| **Hồi sinh** | Quay lại ô ngay trước đó |
+| **HUD** | `nodes/hud/minesweep_hud.tscn` (`MinesweepHUD`): **BOM CÒN LẠI** + **THỜI GIAN** · mockup `mockup/matchup_minesweeper.svg` |
+| **Chi tiết** | ✨ **💣 Minesweeper Maze** — Số trên ô = số mìn trong 8 ô lân cận. S/F luôn an toàn, luôn tồn tại ít nhất 1 đường BFS không mìn. **Đạp mìn = THUA NGAY** (giống Play Mode đâm tường): nhân vật **đứng nguyên tại ô vừa nổ** (không bị đưa về S), trừ 1 bước rồi mở **popup thua**; ô đó hiện **biểu tượng Bomb to ở giữa ô** (icon `game/icon_bomb.svg`) nhưng **giữ nguyên con số** — số nằm ĐÈ LÊN icon (có viền màu giấy cho dễ đọc). HUD hiện thẻ **BOM CÒN LẠI** dạng `còn/tổng` (giảm 1 mỗi quả đã nổ). Hồi sinh = quay lại ô ngay trước đó. |
+
+### 5.5. 🧠 Blind Memory Maze
+
+| Trường | Nội dung |
+|---|---|
+| **Cổng vào** | Daily Challenge · `mode_id = blind_memory` |
+| **Bàn cờ** | Thường: 4×4 · Hardcore: 5×5 · tường vô hình, **không hiện số** |
+| **Số trên ô** | **Không có số** (chỉ S/F) — người chơi phải **ghi nhớ** vị trí tường |
+| **Di chuyển** | 4 hướng · bị **khoá tương tác** trong lúc đếm ngược · có UNDO + GỢI Ý |
+| **Thắng** | Tới F sau khi tường đã ẩn, đi bằng trí nhớ |
+| **Thua** | Hết giờ · Hardcore: đâm tường = thua ngay (Thường: về S) |
+| **Hωi sinh** | Quay lại bước trước đó |
+| **HUD** | `nodes/hud/blind_memory_hud.tscn` (`BlindMemoryHUD`): **THỜI GIAN** + thẻ **GHI NHỚ VỊ TRÍ TƯỜNG** (**KHÔNG có thẻ Thử thách**) · mockup `mockup/matchup_blind_memory.svg` |
+| **Popup riêng** | `nodes/popups/memory_countdown.tscn` — mẩu giấy đếm ngược **3 → 2 → 1 → GO!**, **không nền mờ** (vẫn thấy mê cung) |
+| **Chi tiết** | * **🧠 Blind Memory Maze** — Không số. **Pha GHI NHỚ khi vào màn:** hiện **toàn bộ tường thật** + mở **popup giấy đếm ngược `3 → 2 → 1 → GO!`** (`nodes/popups/memory_countdown.tscn`, **không có nền mờ** nên vẫn nhìn rõ mê cung), **khoá tương tác** và **đồng hồ ĐỨNG YÊN** (thời gian ghi nhớ không tính vào giờ chơi). Hết đếm ngược: tường ẩn hoàn toàn, mở tương tác, đồng hồ bắt đầu chạy — người chơi đi bằng trí nhớ. **HUD riêng không có thẻ THỬ THÁCH** (`BlindMemoryHUD`): THỜI GIAN + thẻ nhắc GHI NHỚ. Tùy chọn Thường (về S) / Hardcore (thua ngay). |
+
+### 5.6. 🌫 Fog of War Maze
+
+| Trường | Nội dung |
+|---|---|
+| **Cổng vào** | Daily Challenge · `mode_id = fog_of_war` |
+| **Bàn cờ** | Sinh theo tầng/độ khó, tường vô hình như Play Mode |
+| **Số trên ô** | Số tường quanh ô — **chỉ hiện ở các ô trong bán kính 1** quanh nhân vật; ô xa bị phủ mờ (modulate `0.6` / alpha `0.4`) |
+| **Di chuyển** | 4 hướng · sương mù cập nhật theo từng bước đi |
+| **Thắng** | Tới F |
+| **Thua** | Hết giờ · Hardcore: đâm tường = thua ngay (Thường: về S) |
+| **Hồi sinh** | Quay lại bước trước đó |
+| **HUD** | `nodes/hud/level_mode.tscn` (`LevelHUD`) · mockup `mockup/matchup_fog_of_war.svg` |
+| **Chi tiết** | * **🌫️ Fog of War Maze** — Có tường vô hình như Play Mode, nhưng chỉ hiện số ở các ô trong bán kính 1 quanh vị trí hiện tại; ô xa ẩn số. Tùy chọn Thường (về S) / Hardcore (thua ngay). |
+
+### 5.7. ➕ Sum Path
+
+| Trường | Nội dung |
+|---|---|
+| **Cổng vào** | Daily Challenge · `mode_id = sum_path` |
+| **Bàn cờ** | Theo độ khó: easy 3×3 · medium 4×4 · hard 5×5 · **không có tường** |
+| **Số trên ô** | **Điểm số của ô (1..9)** — không liên quan tường |
+| **Di chuyển** | 4 hướng · mỗi ô **chỉ tính điểm 1 lần** (quay lại ô cũ không cộng thêm) |
+| **Thắng** | Tới F với tổng điểm thỏa điều kiện `SUM < / > / = Target` (luôn tồn tại ít nhất 1 nghiệm đúng) |
+| **Thua** | Hết đường hợp lệ / hết thời gian (không có hazard) |
+| **HUD** | `nodes/hud/sum_path_hud.tscn` (`SumPathHUD`): **TỔNG HIỆN TẠI — TOÁN TỬ — MỤC TIÊU** + **THỜI GIAN** · mockup `mockup/matchup_sum_path.svg` |
+| **Chi tiết** | ✨ **➕ Sum Path** — Không có tường. Số trên ô là điểm (1..9). Thắng khi tới F với tổng điểm thỏa `SUM < / > / = Target`. Mỗi ô chỉ tính điểm 1 lần. Luôn đảm bảo tồn tại ít nhất 1 nghiệm đúng. **HUD hiện 3 thẻ theo đúng thứ tự `TỔNG HIỆN TẠI — TOÁN TỬ — MỤC TIÊU`** (thẻ TOÁN TỬ nhỏ 112×112 nằm chính giữa, đè lên mép 2 thẻ kia; MỤC TIÊU chỉ hiện con số) thay cho panel MISSION cũ. |
+
+### 5.8. ⏳ Countdown Cost
+
+| Trường | Nội dung |
+|---|---|
+| **Cổng vào** | Daily Challenge · `mode_id = countdown_cost` |
+| **Bàn cờ** | Theo độ khó: easy 3×3 · medium 4×4 · hard 5×5 (xem bảng chi phí/ngân sách bên dưới) |
+| **Số trên ô** | **CHI PHÍ BƯỚC** khi bước vào ô đó (mọi ô trừ S/F đều có số ≥ 1) |
+| **Di chuyển** | 4 hướng · bước vào ô nào trừ đúng chi phí ô đó · đâm tường về S và trừ chi phí ô đích |
+| **Thắng** | Tới F trong ngân sách (ngân sách = đường rẻ nhất + dự phòng ⇒ luôn thắng được nếu chọn đường rẻ) |
+| **Thua** | **Hết bước** |
+| **HUD** | `nodes/hud/level_mode.tscn` (`LevelHUD`) — thử thách thứ 2 (`steps_max`) đóng vai ngân sách bước · mockup `mockup/matchup_countdown_cost.svg` |
+| **Chi tiết** | ✨ **⏳ Countdown Cost** — **Số trên ô = CHI PHÍ BƯỚC khi bước vào ô đó**, hoàn toàn **không liên quan tới số tường quanh ô** (khác Play / Dungeon / Fog of War). Mọi ô trừ S/F đều có số ≥ 1 và luôn hiện số. Bước vào ô nào thì trừ đúng chi phí của ô đó; đâm tường: về S và trừ chi phí của ô đích vừa đâm vào. Ngân sách bước được tính đủ cho **đường đi rẻ nhất + khoảng dự phòng**, nên màn luôn thắng được nếu chọn đúng đường ít tốn kém; đi lệch qua các ô đắt sẽ hết bước. |
 
   | Độ khó | Lưới | Chi phí mỗi ô | Dự phòng | Ngân sách tối thiểu |
   |---|---|---|---|---|
@@ -170,9 +300,20 @@ Nội dung luật của từng bộ **giữ nguyên như bản thiết kế trư
   | Hard | 5×5 | 1..4 bước | +3 | 15 bước |
 
   > Ngân sách thực tế = `max(ngân sách tối thiểu, chi phí đường đi rẻ nhất + dự phòng)`, tính bằng Dijkstra trên trọng số là chi phí ô đích — xem `scripts/modes/countdown_cost_game_mode.gd` (`cheapest_path_cost()` / `_ensure_budget()`).
-- **🧠 Blind Memory Maze** — Không số. **Pha GHI NHỚ khi vào màn:** hiện **toàn bộ tường thật** + mở **popup giấy đếm ngược `3 → 2 → 1 → GO!`** (`nodes/popups/memory_countdown.tscn`, **không có nền mờ** nên vẫn nhìn rõ mê cung), **khoá tương tác** và **đồng hồ ĐỨNG YÊN** (thời gian ghi nhớ không tính vào giờ chơi). Hết đếm ngược: tường ẩn hoàn toàn, mở tương tác, đồng hồ bắt đầu chạy — người chơi đi bằng trí nhớ. **HUD riêng không có thẻ THỬ THÁCH** (`BlindMemoryHUD`): THỜI GIAN + thẻ nhắc GHI NHỚ. Tùy chọn Thường (về S) / Hardcore (thua ngay).
-- **🌫️ Fog of War Maze** — Có tường vô hình như Play Mode, nhưng chỉ hiện số ở các ô trong bán kính 1 quanh vị trí hiện tại; ô xa ẩn số. Tùy chọn Thường (về S) / Hardcore (thua ngay).
 
+### 5.9. 💧 Fading Ink (Mực Phai)
+
+| Trường | Nội dung |
+|---|---|
+| **Cổng vào** | Daily Challenge (thay chỗ **Area Maze** — đã BỎ từ 2026-11) · `mode_id = fading_ink` |
+| **Bàn cờ** | Theo độ khó: easy 3×3 · medium 4×4 · hard 5×5 · **không có tường trong** |
+| **Số trên ô** | **MỰC của riêng ô đó** (ban đầu 2..9) — **giảm 1 mỗi bước đi** (mọi ô cùng phai một nhịp) |
+| **Di chuyển** | 4 hướng · **chỉ đi vào ô còn mực**; ô hết mực bị chặn (không mất bước), mất số và **mờ đi** (alpha 0.4) |
+| **Thắng** | Tới F trước khi mực phai hết — phải đi **đường ngắn nhất** |
+| **Thua** | **Hết lối đi mà chưa tới F** → popup thua tiêu đề riêng `HẾT ĐƯỜNG ĐI!` (`STR_GAME_OVER_NO_PATH`) |
+| **Hồi sinh** | Quay lại bước trước đó — **mực hồi lại** đúng 1 điểm cho mọi ô |
+| **HUD** | `nodes/hud/level_mode.tscn` (`LevelHUD`) · mockup `mockup/matchup_fading_ink.svg` |
+| **Chi tiết** | * **💧 Fading Ink (Mực Phai)** — *(thay cho Area Maze — đã BỎ từ 2026-11)* **Không có tường trong bàn.** Con số trên ô **KHÔNG phải số tường** mà là **MỰC của riêng ô đó** (mực ban đầu 2..9). **Người chơi chỉ được đi vào ô còn mực**; ô đã phai hết mực coi như ô trống — không đi vào được (bị chặn, KHÔNG mất bước, ô đó mờ đi và mất số). **MỖI BƯỚC ĐI làm MỌI ô trên bàn nhạt đi đúng 1 điểm mực** (không riêng ô vừa đi), nên phải tìm **đường ngắn nhất** tới F trước khi lối đi biến mất; đi vòng sẽ tự bịt đường của chính mình. Bàn luôn được sinh sao cho **đường ngắn nhất có đủ mực để tới F** (các ô trên đường đi được cấp mực theo số bước cần tới chúng, ô ngoài đường nhận mực thấp làm lối tắt dự phòng). **Đồng hồ đếm thời gian như thường**, không giới hạn số bước. **Hết lối đi mà chưa tới F = THUA** (popup thua hiện tiêu đề riêng `HẾT ĐƯỜNG ĐI!`). Nút **UNDO** lùi 1 bước thì **mực hồi lại** đúng 1 điểm cho mọi ô (trạng thái mực được tính lại từ số bước đã đi, không cần lưu lịch sử). HUD dùng bản mặc định (**THỬ THÁCH** + **THỜI GIAN**) — không có thẻ riêng. |
 ### 5.10. Popup kết quả & Hồi sinh khi thua (Revive)
 
 | Cổng chơi | Mockup popup thua | Nội dung chính | Con dấu (stamp) | Nút HỒI SINH |
@@ -213,7 +354,7 @@ Theo mockup `daily_challenge.svg`, đây là màn hình quản lý toàn bộ 7 
 - **Dungeon Mode:** Xếp hạng theo **Floor cao nhất đạt được** và tổng điểm tích lũy (chế độ duy nhất có bộ đếm bước còn lại).
 - **Time Attack Maze / Blind Memory Maze / Fog of War Maze:** Xếp hạng theo **Thời gian hoàn thành nhanh nhất** cho ngày Daily Challenge tương ứng.
 - **Countdown Cost:** Xếp hạng theo **tổng chi phí bước đã dùng** (càng ít càng tốt, đúng tinh thần "tối ưu chi phí"), sau đó mới tới thời gian — hoặc theo cách server tổ chức ngày hôm đó.
-- **Sum Path / Area Maze:** Xếp hạng theo **Điểm độ chính xác và thời gian**.
+- **Sum Path / Fading Ink:** Xếp hạng theo **Điểm độ chính xác và thời gian**.
 - Ngoài xếp hạng riêng từng bộ luật, Daily Challenge còn có **bảng xếp hạng theo tổng số sao tích lũy trong tháng** và **độ dài Streak**.
 
 ---
@@ -308,9 +449,61 @@ Daily Challenge chỉ cho chơi **1 luật/ngày** (`(ngày-1) % 7`), nên Debug
 
 - **Test mode (mặc định BẬT):** ván mở từ đây **không ghi tiến trình** — không đánh dấu ngày Daily (`_mark_daily_completed_if_needed` bỏ qua) và không tính vào Sổ tay thành tựu (`_report_to_archivements` bỏ qua). Tắt toggle nếu muốn ghi như chơi thật.
 - **Độ khó:** easy · medium · hard (áp dụng cho các luật có tham số độ khó: `time_attack`, `sum_path`, `countdown_cost`, `blind_memory`, `fog_of_war`).
-- **Tầng bắt đầu:** 1 · 2 · 3 · 5 — nhiều luật sinh bàn theo tầng (`minesweeper` / `area`: `2 + tầng`, tối đa 5×5) nên chọn tầng cao để test bàn to.
+- **Tầng bắt đầu:** 1 · 2 · 3 · 5 — một số luật sinh bàn theo tầng (`minesweeper`: `2 + tầng`, tối đa 5×5) nên chọn tầng cao để test bàn to.
 - **Mỗi chế độ 1 hàng lệnh:** tiêu đề ghi `Tên mode [id] · Daily ngày N, N+7, N+14…`; dòng mô tả lấy trực tiếp từ `BaseGameMode.mode_description` của chính mode đó (không chép lại chữ).
 - Thêm **“Chế độ kế tiếp”** (xoay vòng 7 luật) và **“Chế độ ngẫu nhiên”** để test nhanh nhiều luật liên tiếp.
 
 Cơ chế: `GameManager.prepare_mode_run(mode_id, difficulty, test_run, floor_override)` (đặt cờ, **không** đổi scene — test gọi được) và `GameManager.start_mode(...)` (= prepare + vào `scenes/game.tscn`); `game.gd::_start_floor_for()` đọc `start_floor_override` để chọn tầng xuất phát cho ván test.
+
+---
+
+## 10. Mockup matchup & đặc tả HUD theo chế độ
+
+**Mockup matchup** = bản vẽ 1080×1920 mô tả **đúng hàng HUD của một chế độ** (khung `Information` 980×249 tại `(50,175)`), kèm màn chơi, thanh nút dưới, và **bảng chú thích đánh số** cho từng thẻ.
+
+### 10.1. Danh sách mockup
+
+| Chế độ | `mode_id` | HUD scene | Mockup matchup | Thẻ trên HUD |
+|---|---|---|---|---|
+| Play Mode | `play` | `nodes/hud/level_mode.tscn` (LevelHUD) | `mockup/matchup_level.svg` | THỜI GIAN + THỬ THÁCH |
+| Dungeon Mode | `dungeon` | `nodes/hud/dungeon_mode.tscn` (DungeonHUD) | `mockup/matchup_dungeon.svg` | THỜI GIAN + SỐ BƯỚC + TẦNG |
+| Time Attack Maze | `time_attack` | `nodes/hud/level_mode.tscn` | `mockup/matchup_time_attack.svg` | THỜI GIAN (đếm ngược) + THỬ THÁCH |
+| Minesweeper Maze | `minesweeper` | `nodes/hud/minesweep_hud.tscn` (MinesweepHUD) | `mockup/matchup_minesweeper.svg` | THỜI GIAN + BOM CÒN LẠI |
+| Blind Memory Maze | `blind_memory` | `nodes/hud/blind_memory_hud.tscn` (BlindMemoryHUD) | `mockup/matchup_blind_memory.svg` | THỜI GIAN + GHI NHỚ VỊ TRÍ TƯỜNG (+ popup đếm ngược) |
+| Fog of War Maze | `fog_of_war` | `nodes/hud/level_mode.tscn` | `mockup/matchup_fog_of_war.svg` | THỜI GIAN + THỬ THÁCH |
+| Sum Path | `sum_path` | `nodes/hud/sum_path_hud.tscn` (SumPathHUD) | `mockup/matchup_sum_path.svg` | THỜI GIAN + TỔNG HIỆN TẠI + TOÁN TỬ + MỤC TIÊU |
+| Countdown Cost | `countdown_cost` | `nodes/hud/level_mode.tscn` | `mockup/matchup_countdown_cost.svg` | THỜI GIAN + THỬ THÁCH |
+| Fading Ink | `fading_ink` | `nodes/hud/level_mode.tscn` | `mockup/matchup_fading_ink.svg` | THỜI GIAN + THỬ THÁCH |
+
+> 4 chế độ (`time_attack`, `countdown_cost`, `fog_of_war`, `fading_ink`) **dùng chung `LevelHUD`** nên mockup của chúng chỉ khác phần bàn cờ + chú thích luật; `matchup_level.svg` (Play) vẫn là mockup gốc cho layout này.
+
+### 10.2. Vị trí & kích thước thẻ (đo trực tiếp từ scene)
+
+Khung HUD: `Information` = Control tại `(50, 175)` kích thước `980 × 249` (mọi toạ độ dưới đây tính trong khung này).
+
+| Thẻ | Kích thước | Vị trí (x, y) | Art (res://assets/images/game/) | Label / Value |
+|---|---|---|---|---|
+| **THỜI GIAN** | 250 × 138 | (0, 31) | `card_time_slip.svg` (HUD mới) · `card_time.svg` (Play/Dungeon) | `text_game_card_label` 18px · `text_game_information_subvalue` 42px |
+| **THỬ THÁCH** | 720 × 246 | (271, −29) | `card_challenge.svg` | 3 dải 490×58 tại y = 28/94/160 · cột tổng kết x = 36..186 |
+| **SỐ BƯỚC** | 440 × 158 | (270, 18) | `card_steps.svg` | `text_game_challenge_count_sub` 36px · `text_game_card_value_steps` 72px |
+| **TẦNG** | 250 × 138 | (730, 28) | `card_floor.svg` | label 18px · `text_game_information_value` 58px |
+| **BOM CÒN LẠI** | 440 × 158 | (270, 18) | `card_bomb.svg` + sticker `icon_bomb.svg` 80×80 tại (336, 39) | label 36px đỏ · value 72px đỏ dạng `còn/tổng` |
+| **TỔNG HIỆN TẠI** | 440 × 158 | (270, 18) | `card_sum.svg` | label 36px `#718B9E` · value 72px `#224C6D` |
+| **TOÁN TỬ** | 112 × 112 | (664, 68) | `card_op.svg` (lề đỏ) | `text_game_information_value` 58px mực đỏ, căn giữa |
+| **MỤC TIÊU** | 250 × 138 | (730, 28) | `card_time_slip.svg` | label 18px · value 58px (chỉ con số) |
+| **GHI NHỚ** | 440 × 158 | (270, 18) | `card_sum.svg` | title 36px · hint 18px (auto-wrap) · dòng chế độ 18px đỏ |
+
+> Toạ độ trên **khớp với scene thật** (kiểm tra bằng `tools/mockup/gen_matchup.py --dump`), thẻ TOÁN TỬ vẽ SAU cùng nên đè lên mép thẻ TỔNG và thẻ MỤC TIÊU (dạng `12 = 23`).
+
+### 10.3. Sinh lại mockup
+
+```bash
+python tools/mockup/gen_matchup.py            # sinh lại 7 mockup matchup_<mode>.svg
+python tools/mockup/gen_matchup.py --list     # danh sách mode sẽ sinh
+python tools/mockup/gen_matchup.py --dump     # in toạ độ node thật của các scene HUD
+```
+
+- Tool đọc **toạ độ thật** từ `nodes/hud/*.tscn` + `scenes/game.tscn` (Board `(41,420)-(1061,1440)`, thanh nút `(73,1528)-(1031,1688)`, Status `(50,85)`).
+- **Không ghi đè** `matchup_level.svg` / `matchup_dungeon.svg` (bản vẽ tay có art bàn cờ chi tiết của bản thiết kế gốc).
+- Mockup mang **bảng chú thích đánh số**: badge số đặt ngay trên thành phần cần giải thích + danh sách chú thích dưới thanh nút.
 

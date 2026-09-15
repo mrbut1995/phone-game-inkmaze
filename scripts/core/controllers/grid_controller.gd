@@ -12,6 +12,8 @@ extends Node
 signal step_consumed(cost: int, hit_hazard: bool)
 signal wall_hit
 signal reached_end
+## Hết đường đi (mode tự báo qua is_dead_end) -> GameController mở popup thua
+signal dead_end
 
 var maze: MazeData = null
 #var view: Control = null
@@ -136,6 +138,8 @@ func try_move_to(pos: Vector2i) -> void:
 
 		if game_mode_controller.game_mode.check_completion(current_pos, maze, anchor_controller):
 			reached_end.emit()
+		elif game_mode_controller.game_mode.is_dead_end(current_pos, maze):
+			dead_end.emit()
 
 
 # ---------------------------------------------------------------------------
@@ -148,6 +152,7 @@ func undo_last_move() -> bool:
 	var action := undo_controller.pop_last_action()
 	if action.get("type", "") == "move":
 		var target_pos: Vector2i = action.get("from", maze.get_start())
+		var left_pos: Vector2i = action.get("to", target_pos)
 		current_pos = target_pos
 		if path.size() > 1:
 			path.pop_back()
@@ -156,6 +161,9 @@ func undo_last_move() -> bool:
 				board_view.call("move_cursor_to", current_pos)
 			if board_view.has_method("set_moving_path"):
 				board_view.call("set_moving_path", path)
+		# Mode có trạng thái riêng thì lùi theo (VD Fading Ink hồi lại mực đã phai)
+		if game_mode_controller != null and game_mode_controller.game_mode != null:
+			game_mode_controller.game_mode.on_move_undone(board_view, left_pos, target_pos, maze)
 		return true
 	return false
 

@@ -260,6 +260,7 @@ script = ExtResource("42_pr1ej")
 [connection signal="pressed" from="Button/Hint" to="Controllers/GameController" method="hint"]
 [connection signal="suspected_wall_toggled" from="Controllers/AnchorController" to="Controllers/GridController" method="_on_suspected_wall_toggled"]
 [connection signal="reached_end" from="Controllers/GridController" to="Controllers/GameController" method="_on_reached_end"]
+[connection signal="dead_end" from="Controllers/GridController" to="Controllers/GameController" method="_on_dead_end"]
 [connection signal="step_consumed" from="Controllers/GridController" to="Controllers/GameController" method="_on_step_consumed"]
 [connection signal="wall_hit" from="Controllers/GridController" to="Controllers/GameController" method="_on_wall_hit"]
 [connection signal="time_updated" from="Controllers/TimerController" to="Controllers/GameController" method="_on_time_updated"]

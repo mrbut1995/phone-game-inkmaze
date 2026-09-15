@@ -169,7 +169,7 @@ func _build_special_modes() -> void:
 		_add_action(_choice_text("Độ khó", str(diff).to_upper(), diff == _difficulty),
 			"Cho các mode có tham số độ khó", _set_difficulty.bind(diff))
 
-	_add_label("Tầng bắt đầu (tầng càng cao bàn càng to ở minesweeper / area...):", &"PopupSubtitle")
+	_add_label("Tầng bắt đầu (tầng càng cao bàn càng to ở minesweeper / fading ink...):", &"PopupSubtitle")
 	for floor_number in TEST_FLOORS:
 		_add_action(_choice_text("Tầng", str(floor_number), floor_number == _floor),
 			"Bắt đầu ván ở tầng %d" % floor_number, _set_test_floor.bind(floor_number))

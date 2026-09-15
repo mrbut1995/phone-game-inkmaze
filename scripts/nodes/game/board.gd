@@ -806,6 +806,25 @@ func hide_all_walls() -> void:
 	set_interaction_enabled(true)
 
 
+## Cập nhật lại SỐ trên mọi ô theo GameMode (mode có giá trị đổi theo thời gian — Fading Ink).
+## `dim_unwalkable` = ô không còn đi vào được thì mờ đi (hết mực thì coi như trống).
+func refresh_cell_texts(dim_unwalkable: bool = false) -> void:
+	if maze == null or game_mode == null:
+		return
+	for y in _height:
+		for x in _width:
+			var pos := Vector2i(x, y)
+			var cell_node := _cell_node(pos)
+			if cell_node == null:
+				continue
+			cell_node.set_text(game_mode.get_cell_text(pos, maze))
+			_sync_bomb_marker(cell_node, pos)
+			if dim_unwalkable:
+				var walkable := not game_mode.has_method("is_walkable") \
+					or bool(game_mode.call("is_walkable", pos))
+				cell_node.modulate = Color(1, 1, 1, 1) if walkable else Color(1, 1, 1, 0.4)
+
+
 func apply_fog_of_war(_center: Vector2i, _radius: int, explored: Dictionary) -> void:
 	if maze == null or game_mode == null:
 		return

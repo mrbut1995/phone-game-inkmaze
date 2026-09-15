@@ -6,6 +6,54 @@
 # Replace SFX Placeholder to correct sound
 
 # ----------------------------------------------------------------------------
+# VÒNG SỬA 5 (2026-11): CHUẨN HOÁ DESIGN DOC + BỘ MOCKUP MATCHUP 9 CHẾ ĐỘ
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo yêu cầu user ("update Design markdown theo design template + tạo mockup matchup cho các mode"):
+#     - Number_Maze_Game_Design.md:
+#        · Thêm **mục 0 — Tiêu chuẩn tài liệu (Design Template)**: bảng thông tin tài liệu (phiên bản, trạng thái,
+#          "code là nguồn sự thật"), **template 9 trường cho mỗi bộ luật** (Cổng vào · Bàn cờ · Số trên ô ·
+#          Di chuyển · Thắng · Thua · Hồi sinh · HUD · Chi tiết) và **quy ước màu/chất liệu UI** (giấy kem, lưới vở,
+#          lề đỏ, thẻ giấy + dòng kẻ ngang, mực #224C6D, không emoji trong UI thật).
+#        · Mục 5 viết lại theo template: 5.1 Play · 5.2 Dungeon (bảng spec + phần diễn giải cũ) ·
+#          5.3 Time Attack · 5.4 Minesweeper · 5.5 Blind Memory · 5.6 Fog of War · 5.7 Sum Path ·
+#          5.8 Countdown Cost (kèm bảng chi phí/ngân sách) · 5.9 Fading Ink — mỗi mục có trường **HUD** trỏ
+#          tới đúng scene HUD + file mockup. Đã xoá các bullet trùng lặp cũ.
+#        · Thêm **mục 10 — Mockup matchup & đặc tả HUD theo chế độ**: bảng 9 chế độ → mode_id → HUD scene →
+#          mockup → thẻ; bảng **vị trí/kích thước thẻ** đo trực tiếp từ scene (khung 980×249 tại (50,175));
+#          cách sinh lại mockup bằng tool.
+#     - Bộ mockup mới (tools/mockup/gen_matchup.py sinh ra, KHÔNG ghi đè matchup_level/dungeon):
+#        mockup/matchup_{time_attack,minesweeper,blind_memory,fog_of_war,sum_path,countdown_cost,fading_ink}.svg
+#        · 1080×1920, đúng chất liệu (nền vở + lề đỏ + thẻ giấy + dòng kẻ ngang), vẽ ĐÚNG toạ độ thật:
+#          khung HUD (50,175) 980×249 · Board (41,420)-(1061,1440) · thanh nút (73,1528)-(1031,1688) · Status (50,85).
+#        · Mỗi mockup có **badge số + bảng chú thích** dưới thanh nút; minh hoạ riêng cho luật từng mode
+#          (mìn đã nổ + icon Bomb, sương mù, ô hết mực mờ đi, popup đếm ngược Blind Memory, phép tính Sum Path...).
+#        · Tool có 3 chế độ: mặc định (sinh mockup) · `--list` · `--dump` (in toạ độ node thật của các scene HUD).
+#     - Đã render kiểm tra bằng browser (Chromium): nội dung text của các mockup khớp spec; 20/20 bộ test PASS.
+
+# ----------------------------------------------------------------------------
+# VÒNG SỬA 4 (2026-11): BỎ AREA MAZE -> MODE MỚI "FADING INK" (MỰC PHAI)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo yêu cầu user (loại Area Maze, thay bằng bộ luật mới):
+#     - Mode mới `scripts/modes/fading_ink_game_mode.gd` (class FadingInkGameMode, mode_id "fading_ink"):
+#        · Bàn KHÔNG có tường trong (`MazeData.create_empty`) — số trên ô là MỰC của ô, KHÔNG phải số tường.
+#        · CHỈ đi vào ô còn mực; ô hết mực bị CHẶN (allowed=false, không mất bước), mất số và MỜ đi (alpha 0.4).
+#        · MỖI BƯỚC ĐI làm MỌI ô phai 1 điểm mực; mực hiện tại = mực_ban_đầu - số_bước_đã_đi (tính lại từ
+#          `moves_made` nên Undo tự "hồi mực", không cần lưu lịch sử).
+#        · Sinh bàn đảm bảo ĐƯỜNG NGẮN NHẤT luôn đủ mực tới F (ô trên đường được cấp mực theo số bước cần tới nó,
+#          ô ngoài đường mực thấp 2..6 làm lối tắt dự phòng). `initial_steps` = số bước đường ngắn nhất + 4.
+#        · `is_dead_end()`: hết lối đi mà chưa tới F -> GridController signal `dead_end` -> `GameController._on_dead_end()`
+#          -> popup thua với tiêu đề riêng `STR_GAME_OVER_NO_PATH` ("HẾT ĐƯỜNG ĐI!" / "NO PATH LEFT!").
+#     - XOÁ `scripts/modes/area_game_mode.gd`; thay "area" -> "fading_ink" ở `GameModeController.set_mode_by_name`,
+#       `GameManager.DAILY_MODES`, `tools/level_designer/app/config.py` (MODE_IDS), chuỗi `STR_MODE_AREA` ->
+#       `STR_MODE_FADING_INK` ("FADING INK" / "MỰC PHAI"); cập nhật `test_all_game_modes.gd` + `test_game_scene_integration.gd`.
+#     - Hook mới ở `BaseGameMode`: `on_move_undone()` (GridController.undo_last_move gọi khi lùi 1 bước) + `is_dead_end()`;
+#       `Board.refresh_cell_texts(dim_unwalkable)` để vẽ lại số + làm mờ ô theo mode (gọi từ mode mỗi bước).
+#     - Popup thắng dùng chuỗi mới `STR_RESULT_SUBTITLE` (bỏ "(Classic Maze)" lỗi thời trong `STR_WIN_SUBTITLE`).
+#     - Test mới `scripts/test_case/test_fading_ink.gd` (sinh bàn · luật đi + mực phai · đường ngắn nhất luôn tới được F
+#       với cả 3 độ khó · undo hồi mực · dead end · tích hợp scene + popup thua). 20/20 bộ test PASS.
+#     - Design.md mục 5 (bảng luật, chi tiết 5.3–5.9, xếp hạng, mục 9.1) đã cập nhật: bỏ Area Maze, thêm Fading Ink.
+
+# ----------------------------------------------------------------------------
 # VÒNG SỬA 3 (2026-11): ART HUD MỚI + FIX BLIND MEMORY + POPUP ĐẾM NGƯỢC
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM theo phản hồi user ("HUD Minesweeper/SumPath xấu", "Blind Memory lỗi"):
