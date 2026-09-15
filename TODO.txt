@@ -525,7 +525,7 @@
 #     - Tài liệu: Number_Maze_Game_Design.md mục 8 (Sổ tay thành tựu) · archivements_list.txt (danh sách 28 danh hiệu).
 # [ ] Xu chưa có chỗ tiêu (chưa có Shop/Đổi quà) — hiện chỉ tích luỹ ở ArchivementManager.coins
 # [ ] Chưa có toast "Vừa mở khoá danh hiệu" khi chơi (signal achievement_unlocked đã có sẵn, chỉ cần UI)
-# [ ] Hàng nút Main: Leaderboard + Rules chưa có màn hình (mới chỉ có nút)
+# [ ] Hàng nút Main: Leaderboard chưa có màn hình (mới chỉ có nút) — RIÊNG XẾP HẠNG ĐÃ XONG 2026-02 (xem log cuối file)
 
 # ----------------------------------------------------------------------------
 # MAIN SCREEN: NÚT THÀNH TỰU LỚN + ĐỔI LUẬT CHƠI THÀNH CỬA HÀNG — 2026-02
@@ -541,7 +541,32 @@
 #       để custom_minimum_size 180x146 + stretch_mode KEEP_ASPECT nên art bị co nhỏ.
 #     - Test: test_main_layout.gd (btn_shop thay btn_rules; nút thành tựu >= 200px, nằm TRÊN hàng Other và bên phải;
 #       hàng Other = 3 nút 230x130; texture normal/pressed/focus phải khác nhau).
-# [ ] Màn XẾP HẠNG và màn CỬA HÀNG chưa có scene (2 nút mới chỉ chạy hiệu ứng bấm)
+# [ ] Màn CỬA HÀNG chưa có scene (nút mới chỉ chạy hiệu ứng bấm) — màn XẾP HẠNG đã xong 2026-02
+
+# ----------------------------------------------------------------------------
+# MÀN XẾP HẠNG (RANKING) — 2026-02
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-02): theo mockup/ranking.svg
+#     - RankingManager (autoload mới): 3 bảng dungeon · play · daily; 24 đối thủ mô phỏng (RIVAL_POOL
+#       {name, flag, power}) + người chơi; điểm = khoá sắp xếp duy nhất (bằng điểm thì xếp theo tên).
+#       Kỷ lục người chơi lấy THẬT từ ArchivementManager.stat_value() (best_floor · best_score · levels_cleared ·
+#       stars · fastest_clear · streak · daily days/stars) — chưa chơi thì hiện "CHƯA CÓ".
+#     - Bảng tự "làm mới" mỗi 10 phút: seed đối thủ = hash("bảng|tên|khung-10-phút") nên ổn định giữa các phiên,
+#       chỉ đổi nhẹ mỗi khung → mô phỏng bảng xếp hạng sống (refresh(force) để dựng lại ngay, last_refresh_unix()).
+#     - scripts/utils/ranking.gd: facade tĩnh Ranking (test-safe) + định dạng dùng chung (record_text · points_text ·
+#       thousands · display_name · rank_text) — mọi chỗ hiển thị dùng chung nên không lệch nhau.
+#     - UI: scenes/ranking.tscn + scripts/scenes/ranking.gd (RankingScene) — tờ giấy 940x1570 + 3 tab + 2 đường kẻ
+#       nét đứt + bục vinh quang (Gold 240x200 giữa · Silver 200x155 · Bronze 200x130, đáy thẳng hàng) + danh sách cuộn
+#       (nodes/ranking/rank_row.tscn, hàng của bạn đổi art rank_row_you.svg) + thanh "hạng của bạn" dán đáy + chân trang.
+#     - Asset mới: assets/images/ranking/*.svg (rank_sheet · tab_active/normal · medal_* · podium_* · rank_row(_you) ·
+#       my_rank_bar · chip_scope) + theme variation Rank* trong theme_text.tres + chuỗi STR_RANK_* (string_extra.csv).
+#     - Nối: SceneManager.SCENE_RANKING/goto_ranking · Nav.goto_ranking() · nút XẾP HẠNG ở Main (đã connect pressed)
+#       · Debug Console NAVIGATE "Leaderboard".
+#     - Test mới: scripts/test_case/test_ranking.gd (84 check) — API · sắp hạng · người chơi · ổn định · làm mới ·
+#       định dạng · scene (3 tab · bục · danh sách · thanh đáy · đổi tab bằng API và bằng bấm nút · nút Back có signal).
+#     - Tài liệu: Number_Maze_Game_Design.md mục 11 (Bảng xếp hạng) + cập nhật mục 4.1 và mục 7.
+#     - LƯU Ý: bảng là OFFLINE/demo (chip ghi "MÁY NÀY", có dòng ghi chú "bảng ngoại tuyến") — khi nối
+#       Google Play Games chỉ cần thay thân RankingManager._build_board(), UI không đổi.
 
 # ----------------------------------------------------------------------------
 # DEBUG CONSOLE: TEST 7 CHẾ ĐỘ SPECIAL — 2026-02

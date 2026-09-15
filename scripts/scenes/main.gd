@@ -42,6 +42,7 @@ func _setup_buttons() -> void:
 		UIAnim.attach_press_bounce(btn_daily)
 
 	if btn_leaderboard != null:
+		btn_leaderboard.pressed.connect(_on_leaderboard_pressed)
 		UIAnim.attach_press_bounce(btn_leaderboard)
 	if btn_shop != null:
 		UIAnim.attach_press_bounce(btn_shop)
@@ -128,6 +129,11 @@ func _on_settings_pressed() -> void:
 func _on_archivement_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	Nav.goto_archivement()
+
+
+func _on_leaderboard_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
+	Nav.goto_ranking()
 
 
 func _refresh_stamp() -> void:

@@ -111,13 +111,13 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 | Nút | Vị trí | Nội dung |
 |---|---|---|
 | **Sổ tay thành tựu** (Badge Book) | **Góc trên phải tờ giấy** | Icon huy chương **lớn 224×224** vẽ theo theme giấy ô ly (sticker dán + băng keo washi + huy chương có ruy băng); **ô giữa huy chương hiện `x/y` danh hiệu đã mở**, nhãn `DANH HIỆU` ngay bên dưới sticker |
-| **XẾP HẠNG** | Hàng nút nhỏ (1/3) | Icon cúp vàng |
+| **XẾP HẠNG** | Hàng nút nhỏ (1/3) | Icon cúp vàng — mở **Bảng xếp hạng** (mục 11) |
 | **CỬA HÀNG (SHOP)** | Hàng nút nhỏ (2/3) | Icon cửa hiệu — **thay cho nút "LUẬT CHƠI" cũ** (bản mockup `mainscreen.svg` vẽ Luật Chơi; trong game nay là Cửa hàng) |
 | **CÀI ĐẶT** | Hàng nút nhỏ (3/3) | Icon bánh răng — mở màn Settings |
 
 - Icon huy chương có **đủ 4 trạng thái nút** (`assets/images/main/btn_menu_badge_{normal,pressed,focus,disabled}.svg`): normal = viền mực xanh đậm · pressed = sticker lún 3px, giấy sậm hơn · focus = viền nét đứt mực cam · disabled = bạc màu (khi chưa mở danh hiệu nào).
 - 3 nút nhỏ đều dùng chung khuôn giấy `btn_menu_utility_*` kích thước art **210×110** (node 230×130), xếp giữa hàng, cách nhau 5px — thay cho kích thước 180×146 trước đây (làm art bị co méo).
-- Bấm icon huy chương → mở **Sổ tay thành tựu** (mục 8); Xếp hạng và Cửa hàng chưa có màn hình riêng (nút mới chỉ chạy hiệu ứng bấm).
+- Bấm icon huy chương → mở **Sổ tay thành tựu** (mục 8); bấm nút XẾP HẠNG → mở **Bảng xếp hạng** (mục 11); nút CỬA HÀNG chưa có màn hình riêng (mới chỉ chạy hiệu ứng bấm).
 
 ---
 
@@ -357,6 +357,8 @@ Theo mockup `daily_challenge.svg`, đây là màn hình quản lý toàn bộ 7 
 - **Sum Path / Fading Ink:** Xếp hạng theo **Điểm độ chính xác và thời gian**.
 - Ngoài xếp hạng riêng từng bộ luật, Daily Challenge còn có **bảng xếp hạng theo tổng số sao tích lũy trong tháng** và **độ dài Streak**.
 
+**Đã hiện thực (bản offline, 2026-02):** màn **BẢNG XẾP HẠNG** với 3 tab DUNGEON · CHẾ ĐỘ PLAY · CHUỖI NGÀY — xem **mục 11** để biết công thức điểm, dữ liệu thật/mô phỏng và các file liên quan. Khi nối Google Play Games sẽ thay nguồn dữ liệu đối thủ, không phải sửa UI.
+
 ---
 
 ## 8. Sổ tay thành tựu (Badge Book / Achievement)
@@ -506,4 +508,64 @@ python tools/mockup/gen_matchup.py --dump     # in toạ độ node thật của
 - Tool đọc **toạ độ thật** từ `nodes/hud/*.tscn` + `scenes/game.tscn` (Board `(41,420)-(1061,1440)`, thanh nút `(73,1528)-(1031,1688)`, Status `(50,85)`).
 - **Không ghi đè** `matchup_level.svg` / `matchup_dungeon.svg` (bản vẽ tay có art bàn cờ chi tiết của bản thiết kế gốc).
 - Mockup mang **bảng chú thích đánh số**: badge số đặt ngay trên thành phần cần giải thích + danh sách chú thích dưới thanh nút.
+
+---
+
+## 11. Bảng xếp hạng (Ranking Screen)
+
+Màn hình mới theo mockup `mockup/ranking.svg` (1080×1920). Lối vào: nút **XẾP HẠNG** ở Main Screen (mục 4.1) hoặc Debug Console → NAVIGATE → *Leaderboard*.
+
+### 11.1. Ba bảng (tab)
+
+| Tab | Kỷ lục chính (dòng trên mỗi hàng) | Công thức điểm xếp hạng |
+|---|---|---|
+| **DUNGEON** | Tầng cao nhất | `best_floor × 620 + best_score ÷ 8` |
+| **CHẾ ĐỘ PLAY** | Số màn đã qua | `levels_cleared × 360 + stars × 40 + max(0, 600 − fastest_clear) × 2` |
+| **CHUỖI NGÀY** | Chuỗi ngày Daily | `streak × 280 + days × 30 + total_stars × 5` |
+
+- **Điểm là khoá sắp xếp duy nhất**; bằng điểm thì xếp theo tên (bảng luôn ổn định, không nhảy lung tung).
+- Mỗi bảng có **25 hạng = 24 đối thủ + người chơi**: bục vinh quang 3 hạng đầu (Gold giữa 240×200 · Silver trái 200×155 · Bronze phải 200×130, **đáy thẳng hàng**), danh sách cuộn hiển thị hạng 4 → 25 (7 hàng/lần, nhịp 105px).
+
+### 11.2. Dữ liệu: kỷ lục thật + đối thủ mô phỏng
+
+- **Người chơi — dữ liệu THẬT:** đọc từ `ArchivementManager.stat_value()`: `dungeon_best_floor`, `dungeon_best_score`, `levels_cleared`, `level_stars_total`, `fastest_clear`, `daily_streak`, `daily_days`, `daily_stars_total`. Chưa chơi ván nào → hàng hiện `CHƯA CÓ` + `0 ĐIỂM` và thanh đáy nhắc "hãy chơi một ván".
+- **Đối thủ — dữ liệu MÔ PHỎNG (offline):** `RankingManager.RIVAL_POOL` gồm 24 mục `{name, flag, power}`; điểm sinh bằng `RandomNumberGenerator` với seed `hash("bảng|tên|khung-10-phút")` → **ổn định giữa các phiên**, chỉ đổi nhẹ mỗi khung 10 phút ⇒ mô phỏng "bảng xếp hạng sống" đúng như ghi chú chân trang mockup.
+- Cờ quốc gia dùng asset có sẵn `assets/images/icons/flags/flag_{vi,en,ja,ko,zh_cn,fr,generic}.svg` (KHÔNG dùng emoji); cờ của người chơi suy từ ngôn ngữ đang chọn.
+- **Khi nối Google Play Games** (xem `TODO.txt`): chỉ cần thay thân `RankingManager._build_board()` bằng dữ liệu server — scene, hàng, định dạng giữ nguyên.
+
+### 11.3. Giao diện (đo từ scene thật)
+
+Tờ giấy `rank_sheet.svg` **940×1570 tại (70,185)**, viền `#6EA0C8` 3.5px, lề đỏ x=75, lỗ bấm giấy mỗi 120px, dòng kẻ ô ly mỗi 80px; băng keo washi + kẹp giấy ở mép trên (như Sổ tay thành tựu).
+
+| Thành phần | Vị trí trong tờ giấy | Ghi chú |
+|---|---|---|
+| 3 tab | (95, 52), rộng 240 · 235 · 245, cách 15 | tab đang chọn = nền `#3D83AE` + chữ trắng; tab còn lại = giấy + viền `#8FB9D2` |
+| 2 đường kẻ nét đứt | y = 126 và y = 522, rộng 755 | dùng lại `assets/images/settings/divider_dashed.svg` (STRETCH_TILE) |
+| Bục vinh quang | (95, 140), cao 370 | Gold (255,170) · Silver (20,215) · Bronze (525,240) — toạ độ trong cụm |
+| Danh sách cuộn | (95, 545) 755×770 | `ScrollContainer` ẩn thanh cuộn (`vertical_scroll_mode = 3`), VBox cách 15px |
+| Thanh "hạng của bạn" | (95, 1330) 755×110 | nền `#3D83AE` viền `#256286`, hạng màu `#FBBF24` |
+| Ghi chú chân trang | y = 1480 / 1516 | 1 dòng nghiêng (làm mới 10 phút) + 1 dòng nhỏ (bảng offline demo) |
+
+- Hàng danh sách: `nodes/ranking/rank_row.tscn` + `scripts/nodes/ranking/rank_row.gd` — `setup(entry, board)`; bố cục `#hạng (x=40) · cờ (x=96) · tên (x=152) · kỷ lục (phải, x=600) · điểm (phải, x=600)`; hàng của người chơi tự đổi sang art `rank_row_you.svg` (nền xanh nhạt).
+- Theme variations mới: `RankTabLabel` · `RankRowIndex/Name/Record/Points` · `RankPodiumRank{Gold,Silver,Bronze}` · `RankPodiumPoints{Gold,Silver,Bronze}` · `RankPodiumName/Record` · `RankMyRank/Name/Sub/Record/Value` · `RankChip` · `RankFooter` · `RankFooterNote`.
+- Chuỗi dịch mới nằm ở `resources/localization/string_extra.csv` (id,en,vi): `STR_RANK_TITLE`, `STR_RANK_SCOPE`, `STR_RANK_TAB_*`, `STR_RANK_RECORD_*`, `STR_RANK_POINTS`, `STR_RANK_YOU`, `STR_RANK_SUBTITLE`, `STR_RANK_NO_RECORD(_SHORT)`, `STR_RANK_FOOTER`, `STR_RANK_DEMO`.
+
+### 11.4. File liên quan
+
+| File | Vai trò |
+|---|---|
+| `scripts/manager/RankingManager.gd` | Autoload `RankingManager`: dựng 3 bảng · sắp hạng · cửa sổ làm mới 10 phút · `board_ids/entries/podium/rest/my_entry/my_rank/last_refresh_unix/refresh(force)` · signal `ranking_changed(board)` |
+| `scripts/utils/ranking.gd` | Facade tĩnh `Ranking` (test-safe) + định dạng dùng chung: `display_name`, `record_text`, `points_text`, `rank_text`, `thousands` |
+| `scenes/ranking.tscn` + `scripts/scenes/ranking.gd` | Màn hình (`class_name RankingScene`): 3 tab dựng bằng code · đổ bục · đổ danh sách · thanh hạng của bạn · Back → Main |
+| `nodes/ranking/rank_row.tscn` + `scripts/nodes/ranking/rank_row.gd` | Component 1 hàng 755×90 (`class_name RankRow`, có cache texture cờ) |
+| `assets/images/ranking/*.svg` | `rank_sheet` · `tab_active`/`tab_normal` · `medal_gold`/`silver`/`bronze` · `podium_gold`/`silver`/`bronze` · `rank_row` · `rank_row_you` · `my_rank_bar` · `chip_scope` |
+| `scripts/test_case/test_ranking.gd` | 84 check: API dữ liệu · sắp hạng · người chơi · ổn định seed · cửa sổ làm mới · định dạng · scene (3 tab · bục · danh sách · thanh đáy · đổi tab) |
+
+**Khác biệt so với mockup (có chủ đích):**
+
+1. Chip góc phải ghi **"MÁY NÀY"** (`STR_RANK_SCOPE`) thay vì "TOÀN CẦU" — bảng hiện là offline/demo, khi nối Google Play sẽ đổi nhãn.
+2. **Không dùng emoji** (👑🏆) trong UI thật — icon lấy từ `assets/images/` (quy ước chung của dự án); vương miện cạnh tên top 1 trong mockup được thay bằng huy chương vàng + bục vàng.
+3. Bỏ dòng **"• • •"** vì danh sách đã **cuộn được** tới hạng 25 (giữ nguyên tinh thần "còn nữa" của mockup).
+4. Chân trang thêm 1 dòng nhỏ ghi rõ **bảng ngoại tuyến (demo) — đối thủ là dữ liệu mô phỏng** để không gây hiểu nhầm là bảng online thật.
+
 

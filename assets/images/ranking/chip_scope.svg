@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 70" width="200" height="70">
+  <!-- Chip phạm vi bảng xếp hạng 200x70 (mockup/ranking.svg) -->
+  <rect width="200" height="70" rx="18" fill="#F59E0B"/>
+  <rect x="1.6" y="1.6" width="196.8" height="66.8" rx="16.6" fill="#FEFDFA"/>
+</svg>

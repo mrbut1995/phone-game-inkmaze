@@ -16,6 +16,7 @@ const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
 const SCENE_ARCHIVEMENT := "res://scenes/archivement.tscn"
+const SCENE_RANKING := "res://scenes/ranking.tscn"
 
 
 static func change_scene(path: String) -> void:
@@ -51,6 +52,11 @@ static func goto_settings() -> void:
 ## Sổ tay thành tựu (danh hiệu)
 static func goto_archivement() -> void:
 	change_scene(SCENE_ARCHIVEMENT)
+
+
+## Bảng xếp hạng (Dungeon · Play · Daily)
+static func goto_ranking() -> void:
+	change_scene(SCENE_RANKING)
 
 
 ## Màn hình debug (chỉ dùng khi phát triển)

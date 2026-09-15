@@ -18,6 +18,8 @@ const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
 ## Sổ tay thành tựu (danh hiệu) — xem scripts/scenes/archivement.gd
 const SCENE_ARCHIVEMENT := "res://scenes/archivement.tscn"
+## Bảng xếp hạng — xem scripts/scenes/ranking.gd
+const SCENE_RANKING := "res://scenes/ranking.tscn"
 ## Lớp phủ chuyển cảnh: node giao diện (trang giấy, mực loang, fade, chặn input)
 ## được khai báo SẴN trong scene này — xem scripts/nodes/common/scene_transition.gd
 const SCENE_LOADING := "res://scenes/loading.tscn"
@@ -136,6 +138,10 @@ func goto_settings() -> void:
 
 func goto_archivement() -> void:
 	change_scene(SCENE_ARCHIVEMENT)
+
+
+func goto_ranking() -> void:
+	change_scene(SCENE_RANKING)
 
 
 func goto_debug() -> void:
