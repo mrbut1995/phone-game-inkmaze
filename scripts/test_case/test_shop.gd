@@ -276,6 +276,58 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 		var action := tile.get_node_or_null("Action") as TextureButton
 		_entry(action != null and action.size == Vector2(200, 46),
 			"Nut the o dung 200x46 (nhan %s)" % str(action.size if action != null else Vector2.ZERO))
+		# BÚT & MỰC: thẻ hiện đúng icon CON TRỎ trong game của chính ngòi bút đó
+		var first_icon := tile.get_node_or_null("Icon") as TextureRect
+		_entry(first_icon != null and first_icon.texture == PenSkin.cursor_texture(first_id),
+			"The but dau tien dung icon con tro cua chinh no (%s)" % first_id)
+
+	# Bàn nháp thử bút (mockup/shopping_pencil.svg): có ở tab BÚT & MỰC, nằm TRÊN lưới
+	var pad: Control = scene.doodle_pad()
+	_entry(pad != null, "Tab BUT & MUC co Ban nhap thu but")
+	if pad != null:
+		_entry(scene.get_node("Content/List").get_child(0) == pad,
+			"Ban nhap nam TREN luoi mon hang")
+		_entry(pad.size.x >= 960.0 and absf(pad.size.y - 215.0) < 2.0,
+			"Ban nhap dung co 980x215 (nhan %s)" % str(pad.size))
+		_entry(str(pad.call("pen_id")) == Shop.equipped_pen(),
+			"Ban nhap mo dau voi but dang dung (%s)" % str(pad.call("pen_id")))
+		_entry(str(pad.call("stamp_text")) == TranslationServer.translate("STR_SHOP_TRY_USING"),
+			"Con dau bao DANG DUNG voi but dang dung (nhan '%s')" % str(pad.call("stamp_text")))
+		_entry(int(pad.call("stroke_count")) >= 1, "Ban nhap ve san NET MAU de thay chat lieu")
+		var badge_icon := pad.get_node_or_null("Badge/Icon") as TextureRect
+		_entry(badge_icon != null
+				and badge_icon.texture == PenSkin.cursor_texture(str(pad.call("pen_id"))),
+			"The DANG XEM THU hien icon con tro cua but")
+		# Vẽ thử bằng code: nét phải dùng đúng MÀU MỰC + CHẤT LIỆU của ngòi đang xem
+		var probe: InkStroke = pad.call("draw_test_stroke",
+			PackedVector2Array([Vector2(20, 30), Vector2(140, 60), Vector2(260, 40)]))
+		_entry(probe != null and probe.default_color.is_equal_approx(
+				PenSkin.line_color(str(pad.call("pen_id")))), "Net ve thu dung MAU MUC cua but")
+		# Chạm thẻ bút khác -> bàn nháp đổi ngòi + nét đổi màu + con dấu đổi trạng thái
+		scene.select_pen_for_preview("pen_purple")
+		_entry(str(pad.call("pen_id")) == "pen_purple",
+			"Cham the but -> ban nhap doi ngòi (nhan '%s')" % str(pad.call("pen_id")))
+		_entry(scene.preview_pen_id() == "pen_purple", "Shop nho ngòi đang xem thử")
+		_entry(str(pad.call("stamp_text")) == TranslationServer.translate("STR_SHOP_TRY_STAMP"),
+			"Ngòi chưa dùng -> con dau DUNG THU (nhan '%s')" % str(pad.call("stamp_text")))
+		var purple_stroke: InkStroke = pad.call("draw_test_stroke",
+			PackedVector2Array([Vector2(10, 20), Vector2(120, 80)]))
+		_entry(purple_stroke != null and purple_stroke.default_color.is_equal_approx(
+				PenSkin.line_color("pen_purple")), "Net ve thu doi mau theo ngòi mới")
+		# Vùng bàn nháp chặn cuộn trang để người chơi VẼ THỬ
+		_entry(bool(pad.call("blocks_scroll_at", pad.get_global_rect().get_center())),
+			"Vung ban nhap chan cuon/vuot trang (de ve thu)")
+		_entry(not bool(pad.call("blocks_scroll_at", Vector2(-40, -40))),
+			"Ngoai ban nhap van cuon binh thuong")
+		# Tab khác không có bàn nháp; quay lại thì nhớ ngòi đang xem thử
+		scene.show_tab("theme")
+		await process_frame
+		_entry(scene.doodle_pad() == null, "Tab GIAY VO khong co ban nhap thu but")
+		scene.show_tab("pen")
+		await process_frame
+		var pad_back: Control = scene.doodle_pad()
+		_entry(pad_back != null and str(pad_back.call("pen_id")) == "pen_purple",
+			"Quay lai tab BUT & MUC nho ngòi đang xem thử")
 	scene.goto_page(1)
 	await process_frame
 	_entry(scene.item_count() == 4, "Trang 2 con 4 mon (nhan %d)" % scene.item_count())
@@ -286,6 +338,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	scene.show_tab("tool")
 	await process_frame
 	_entry(scene.current_tab() == "tool", "Doi sang tab DUNG CU")
+	_entry(scene.doodle_pad() == null, "Tab DUNG CU khong co ban nhap thu but")
 	_entry(scene.item_count() == 6, "Tab dung cu hien 6 mon (nhan %d)" % scene.item_count())
 	_entry(scene.page_count() == 1, "Tab dung cu khong phan trang")
 	_entry(not scene.get_node("Pager").visible, "An thanh phan trang khi 1 trang")

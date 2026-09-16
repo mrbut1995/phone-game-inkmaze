@@ -75,6 +75,8 @@ var _history_lines: Dictionary = {}     # cell-edge key -> history Line2D
 var _moving_line: Line2D = null
 var _drag_guide_line: Line2D = null
 var _cursor: Control = null
+## Ngòi bút đang dùng (PenSkin) — quyết định icon con trỏ + màu/chất liệu nét mực
+var _pen_id := PenSkin.DEFAULT_PEN
 
 var _interaction_enabled := true
 
@@ -109,6 +111,20 @@ var _markers_layer: Control = null
 
 func _ready() -> void:
 	_init_layers()
+	_connect_skin_signal()
+
+
+## Người chơi đổi bút ở Cửa hàng -> đổi luôn con trỏ + nét mực đang hiển thị
+func _connect_skin_signal() -> void:
+	var themes := get_node_or_null("/root/ThemeManager")
+	if themes == null or not themes.has_signal("skin_changed"):
+		return
+	if not themes.is_connected("skin_changed", _on_skin_changed):
+		themes.connect("skin_changed", _on_skin_changed)
+
+
+func _on_skin_changed(_theme_id: String, _pen_id: String) -> void:
+	apply_pen_skin()
 
 
 func _notification(what: int) -> void:
@@ -183,10 +199,24 @@ func setup_maze(p_maze: MazeData, p_mode: BaseGameMode = null) -> void:
 	_build_moving_line()
 	_build_drag_guide_line()
 	_place_cursor_at_start()
+	apply_pen_skin()
 	# Sau khi đã có đủ node: áp lại tỉ lệ vừa khít (tường/cursor/line...)
 	_apply_metrics_scale()
 	_apply_wall_width()
 	_animate_board_entrance()
+
+
+## Áp skin NGÒI BÚT đang dùng (ShopManager.equipped_pen):
+##   · con trỏ người chơi -> icon player_cursor_*.svg tương ứng
+##   · moving_line -> màu mực + chất liệu (bề rộng/đầu nét/nét đứt/quầng sáng)
+##   · vệt bước chân mực -> đúng icon + màu mực của bút
+func apply_pen_skin() -> void:
+	_pen_id = PenSkin.equipped_id()
+	if _cursor != null and _cursor.has_method("apply_pen"):
+		_cursor.call("apply_pen", _pen_id)
+	if _moving_line != null and _moving_line.has_method("apply_pen"):
+		_moving_line.call("apply_pen", _pen_id)
+	_apply_wall_width()
 
 
 func _animate_board_entrance() -> void:
@@ -415,7 +445,11 @@ func _apply_wall_width() -> void:
 	if _drag_guide_line != null:
 		_drag_guide_line.width = width
 	if _moving_line != null:
-		_moving_line.width = maxf(_moving_line_width * _fit_scale, MIN_WALL_WIDTH)
+		var line_width := maxf(_moving_line_width * _fit_scale, MIN_WALL_WIDTH)
+		if _moving_line.has_method("set_base_width"):
+			_moving_line.call("set_base_width", line_width)
+		else:
+			_moving_line.width = line_width
 
 
 func _update_layout_positions() -> void:
@@ -702,8 +736,11 @@ func _spawn_ink_footstep(pos: Vector2) -> void:
 	var tex_rect := TextureRect.new()
 	tex_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tex_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	tex_rect.texture = preload("res://assets/images/game/player_cursor.svg")
-	tex_rect.modulate = Color(0.25, 0.52, 0.78, 0.45)
+	var cursor_tex := PenSkin.cursor_texture(_pen_id)
+	tex_rect.texture = cursor_tex if cursor_tex != null \
+		else preload("res://assets/images/game/player_cursor.svg")
+	var ink := PenSkin.ink_color(_pen_id)
+	tex_rect.modulate = Color(ink.r, ink.g, ink.b, 0.45)
 	tex_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	ripple.add_child(tex_rect)
@@ -721,7 +758,10 @@ func set_moving_path(path: Array[Vector2i]) -> void:
 	var pts := PackedVector2Array()
 	for p in path:
 		pts.append(_cell_center(p))
-	_moving_line.points = pts
+	if _moving_line.has_method("set_stroke"):
+		_moving_line.call("set_stroke", pts)
+	else:
+		_moving_line.points = pts
 	_set_path_focus(path)
 
 
@@ -744,8 +784,8 @@ func show_history_edge(a: Vector2i, b: Vector2i) -> void:
 	_lines_layer.add_child(line)
 	line.position = Vector2.ZERO
 	line.points = PackedVector2Array([_cell_center(a), _cell_center(b)])
-	line.width = _scaled_wall_width()      # vệt bút mờ cũng co theo cỡ board
-	line.modulate = Color(1, 1, 1, 0.45)
+	# Vệt bút mờ cũ: cùng MÀU + chất liệu ngòi bút (mờ hơn nét đang đi)
+	InkStroke.style_plain(line, _pen_id, _scaled_wall_width(), 0.55)
 	_history_lines[key] = line
 
 

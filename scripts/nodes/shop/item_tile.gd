@@ -10,6 +10,8 @@ extends Control
 ## ============================================================================
 
 signal action_pressed(item_id: String)
+## Chạm vào thân thẻ (ngoài nút) = chọn ngòi bút này để XEM THỬ ở Bàn nháp thử bút
+signal preview_pressed(item_id: String)
 
 const CARD_ART := preload("res://assets/images/shop/card_tile.svg")
 const CIRCLE := preload("res://assets/images/shop/icon_circle.svg")
@@ -27,6 +29,7 @@ const VIP_BADGE := "STR_SHOP_BADGE_VIP"
 
 var item_id: String = ""
 var item_data: Dictionary = {}
+var _selected := false
 
 
 func setup(data: Dictionary) -> void:
@@ -49,16 +52,50 @@ func _refresh_preview(color: Color) -> void:
 	var circle := get_node_or_null("IconCircle") as TextureRect
 	if circle != null:
 		circle.texture = CIRCLE
-		circle.modulate = Color(color.r, color.g, color.b, 0.16)
+		circle.modulate = Color(color.r, color.g, color.b, 0.30 if _selected else 0.16)
 	var icon := get_node_or_null("Icon") as TextureRect
 	if icon != null:
 		icon.visible = true
-		icon.texture = ICONS.get(str(item_data.get("icon", "pen")), ICONS["pen"])
-		icon.modulate = color
+		var cursor_tex := PenSkin.cursor_texture(item_id) if _is_pen() else null
+		if cursor_tex != null:
+			# BÚT & MỰC: hiện đúng icon con trỏ sẽ dùng trong game của ngòi bút này
+			icon.texture = cursor_tex
+			icon.modulate = Color.WHITE
+		else:
+			icon.texture = ICONS.get(str(item_data.get("icon", "pen")), ICONS["pen"])
+			icon.modulate = color
 	var stroke := get_node_or_null("Stroke") as TextureRect
 	if stroke != null:
 		stroke.texture = STROKE
-		stroke.modulate = color
+		# Nét mực mẫu: màu mực thật của ngòi bút (trùng màu nét vẽ trong game)
+		stroke.modulate = PenSkin.ink_color(item_id) if _is_pen() else color
+
+
+func _is_pen() -> bool:
+	return str(item_data.get("category", "")) == "pen"
+
+
+## Thẻ đang được Bàn nháp thử bút xem thử -> vòng tròn icon sáng hơn
+func set_selected(on: bool) -> void:
+	if _selected == on:
+		return
+	_selected = on
+	var color := Color(str(item_data.get("color", "#3D83AE")))
+	var circle := get_node_or_null("IconCircle") as TextureRect
+	if circle != null:
+		circle.modulate = Color(color.r, color.g, color.b, 0.30 if _selected else 0.16)
+
+
+## Chạm thân thẻ (vùng không bị nút hành động "ăn") = chọn xem thử
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mb := event as InputEventMouseButton
+		if mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
+			preview_pressed.emit(item_id)
+	elif event is InputEventScreenTouch:
+		var touch := event as InputEventScreenTouch
+		if touch.pressed:
+			preview_pressed.emit(item_id)
 
 
 func _set_texts() -> void:

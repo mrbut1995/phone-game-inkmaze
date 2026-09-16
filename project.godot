@@ -51,7 +51,7 @@ joypads/ignore_joypad_on_unfocused_application=true
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://resources/localization/string_extra.vi.translation", "res://resources/localization/string_extra.en.translation")
+locale/translations=PackedStringArray("res://resources/localization/string_extra.vi.translation", "res://resources/localization/string_extra.en.translation", "res://resources/localization/string.ar.translation", "res://resources/localization/string.de.translation", "res://resources/localization/string.en.translation", "res://resources/localization/string.es.translation", "res://resources/localization/string.fr.translation", "res://resources/localization/string.hi.translation", "res://resources/localization/string.id.translation", "res://resources/localization/string.it.translation", "res://resources/localization/string.ja.translation", "res://resources/localization/string.ko.translation", "res://resources/localization/string.ms.translation", "res://resources/localization/string.pt.translation", "res://resources/localization/string.pt_BR.translation", "res://resources/localization/string.ru.translation", "res://resources/localization/string.th.translation", "res://resources/localization/string.tr.translation", "res://resources/localization/string.vi.translation", "res://resources/localization/string.zh_CN.translation", "res://resources/localization/string.zh_TW.translation")
 
 [physics]
 

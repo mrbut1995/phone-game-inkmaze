@@ -16,6 +16,7 @@ const ROW_SCENE := preload("res://nodes/shop/item_row.tscn")
 const TILE_SCENE := preload("res://nodes/shop/item_tile.tscn")
 const COIN_SCENE := preload("res://nodes/shop/coin_tile.tscn")
 const NOADS_SCENE := preload("res://nodes/shop/noads_row.tscn")
+const DOODLE_PAD_SCENE := preload("res://nodes/shop/doodle_pad.tscn")
 const TAB_ACTIVE := preload("res://assets/images/shop/tab_active.svg")
 const TAB_INACTIVE := preload("res://assets/images/shop/tab_inactive.svg")
 const DOT_ACTIVE := preload("res://assets/images/level_selector/dot_active.svg")
@@ -56,6 +57,9 @@ var _cards: Array[Control] = []
 var _category := "pen"
 var _page := 0
 var _pages := 1
+## Bàn nháp thử bút (chỉ tab BÚT & MỰC) + ngòi bút đang xem thử trên đó
+var _doodle_pad: Control = null
+var _preview_pen := ""
 # Trạng thái kéo/vuốt (xem `_input`)
 var _drag_active := false
 var _drag_moved := false
@@ -148,6 +152,24 @@ func clicks_locked() -> bool:
 	return _clicks_locked()
 
 
+func doodle_pad() -> Control:
+	return _doodle_pad if _doodle_pad != null and is_instance_valid(_doodle_pad) else null
+
+
+func preview_pen_id() -> String:
+	return _preview_pen
+
+
+## Chọn 1 ngòi bút BÚT & MỰC để xem thử ở Bàn nháp (chạm thẻ bút)
+func select_pen_for_preview(item_id: String) -> void:
+	if _doodle_pad == null or not is_instance_valid(_doodle_pad):
+		return
+	if str(Shop.category_of(item_id)) != "pen" or item_id == _preview_pen:
+		return
+	Sfx.play(Sfx.CELL_STEP)
+	_doodle_pad.call("select_pen", item_id)
+
+
 # ---------------------------------------------------------------------------
 # Tab
 # ---------------------------------------------------------------------------
@@ -222,6 +244,7 @@ func _rebuild() -> void:
 		list_box.remove_child(child)
 		child.queue_free()
 	_cards.clear()
+	_doodle_pad = null
 
 	var items := Shop.items(_category)
 	if _category == "coin":
@@ -253,6 +276,9 @@ func _rebuild_rows(items: Array[Dictionary]) -> void:
 func _rebuild_grid(items: Array[Dictionary]) -> void:
 	_pages = maxi(1, int(ceil(float(items.size()) / float(TILES_PER_PAGE))))
 	_page = clampi(_page, 0, _pages - 1)
+	# Bàn nháp thử bút nằm TRÊN lưới (chỉ tab BÚT & MỰC — mockup/shopping_pencil.svg)
+	if _category == "pen":
+		_build_doodle_pad()
 	var grid := _make_grid()
 	list_box.add_child(grid)
 
@@ -267,9 +293,36 @@ func _rebuild_grid(items: Array[Dictionary]) -> void:
 		card.call("setup", items[item_index])
 		if card.has_signal("action_pressed"):
 			card.connect("action_pressed", _on_item_action)
+		if card.has_signal("preview_pressed"):
+			card.connect("preview_pressed", select_pen_for_preview)
 		_cards.append(card)
 		UIAnim.play_pop_in(card, 0.03 * index, 0.92, 0.2)
 		index += 1
+	_refresh_card_selection()
+
+
+## Bàn nháp thử bút: nhớ ngòi đang xem thử giữa các lần dựng lại (mua/đổi trang/tab)
+func _build_doodle_pad() -> void:
+	if _preview_pen.is_empty() or not PenSkin.has_pen(_preview_pen):
+		_preview_pen = Shop.equipped_pen()
+	_doodle_pad = DOODLE_PAD_SCENE.instantiate()
+	list_box.add_child(_doodle_pad)
+	_doodle_pad.call("setup", _preview_pen)
+	if _doodle_pad.has_signal("pen_changed"):
+		_doodle_pad.connect("pen_changed", _on_pad_pen_changed)
+	UIAnim.play_pop_in(_doodle_pad, 0.0, 0.96, 0.2)
+
+
+func _on_pad_pen_changed(pen_id: String) -> void:
+	_preview_pen = pen_id
+	_refresh_card_selection()
+
+
+## Thẻ đang xem thử sáng vòng tròn icon hơn các thẻ khác
+func _refresh_card_selection() -> void:
+	for card in _cards:
+		if card != null and is_instance_valid(card) and card.has_method("set_selected"):
+			card.call("set_selected", str(card.get("item_id")) == _preview_pen)
 
 
 ## Tab NẠP XU: hàng VIP "Xoá quảng cáo" chiếm TRỌN MỘT HÀNG trên cùng,
@@ -395,6 +448,11 @@ func _input(event: InputEvent) -> void:
 func _begin_drag(pos: Vector2) -> void:
 	if scroll == null or not scroll.get_global_rect().has_point(pos):
 		return
+	# Bàn nháp thử bút "ăn" sự kiện kéo để người chơi VẼ THỬ (không cuộn/vuốt trang)
+	if _doodle_pad != null and is_instance_valid(_doodle_pad) \
+			and _doodle_pad.has_method("blocks_scroll_at") \
+			and bool(_doodle_pad.call("blocks_scroll_at", pos)):
+		return
 	_drag_active = true
 	_drag_moved = false
 	_drag_axis = 0
@@ -460,6 +518,8 @@ func _on_item_action(item_id: String) -> void:
 			if Shop.buy(item_id):
 				Sfx.play(Sfx.BTN_CLICK)
 		"pen", "theme":
+			if category == "pen":
+				_preview_pen = item_id          # bàn nháp xem thử đúng món vừa mua/dùng
 			_handle_equip(item_id)
 		_:
 			return

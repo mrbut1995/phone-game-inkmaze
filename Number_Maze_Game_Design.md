@@ -888,6 +888,42 @@ Mọi node gốc của scene đều có `index="1".."8"` để node `Popups` c�
 | `scripts/manager/ThemeManager.gd` + `scripts/utils/theme_skin.gd` (`ThemeSkin`) | Chuẩn bị việc áp chủ đề/ngòi bút (`apply_enabled = false`) |
 | `scripts/manager/ArchivementManager.gd` | Thêm `notify_coins_changed()` + `spend_coins(amount)` để ví Xu dùng chung |
 | `scripts/manager/SaveManager.gd` | Đăng ký `ShopManager` là provider (autosave khi `item_purchased`) |
+
+### 13.9. Skin ngòi bút (con trỏ + chất liệu nét mực) + Bàn nháp thử bút — 2026-09
+
+**Nguồn sự thật:** `scripts/utils/pen_skins.gd` (`class_name PenSkin`) — bảng `SKINS` map 1-1 mỗi món `category = "pen"` trong ShopManager với
+`{ cursor: assets/images/game/player_cursor/*.svg · icon: assets/images/game/pen_type/*.svg · ink: màu mực · style: chất liệu }`:
+
+| Bút | Con trỏ trong game | Hình ngòi bút (shop/thẻ) | Màu mực | Chất liệu nét |
+|---|---|---|---|---|
+| `pen_blue` (mặc định) | `player_cursor_1` | `pen_fountain_pen_nib` | `#2575A7` | ink |
+| `pen_purple` | `player_cursor_7` | `pen_fountain_pen_nib` | `#7C3AED` | ink |
+| `pen_pencil_2b` | `player_cursor_2` | `pen_pencil` | `#4B5563` | pencil (nét đứt) |
+| `pen_red_teacher` | `player_cursor_3` | `pen_fountain_pen_nib` | `#DC2626` | ink |
+| `pen_highlighter` | `player_cursor_4` | `pen_stabilo_highlighter` | `#F59E0B` | highlighter (rộng 1.75× · đầu vuông · alpha thấp) |
+| `pen_gold_ink` | `player_cursor_6` | `pen_calligraphy_brush` | `#B45309` | gold (quầng sáng 2.3×) |
+| `pen_green_tea` | `player_cursor_8` | `pen_art_brush` | `#15803D` | brush |
+| `pen_pink_diary` | `player_cursor_9` | `pen_felt-tip_marker` | `#DB2777` | marker |
+| `pen_graphite_4b` | `player_cursor_5` | `pen_drafting_pencil` | `#374151` | graphite (nét đứt + quầng nhẹ) |
+| `pen_navy_night` | `player_cursor_10` | `pen_needle_point_gel` | `#1E3A8A` | gel (mảnh 0.85× + quầng nhẹ) |
+
+**Chất liệu** (`PenSkin.STYLES`): `width` (× bề rộng nét gốc) · `alpha` · `cap` · `dash/gap` · `glow_width/glow_alpha`.
+Nét đứt = **texture lặp sinh trong code** (`dash_texture_for(period_px, height)`), BẮT BUỘC bật `texture_repeat = ENABLED` trên Line2D
+(không bật thì Godot kẹp mép texture → nét gần như vô hình; Line2D cũng KHÔNG sinh UV khi không có texture nên shader-theo-UV không dùng được).
+Quầng sáng = Line2D con (`name = "Glow"`, blend CỘNG) nằm dưới nét chính.
+
+**Nối vào game:** `nodes/game/moving_line.tscn` gắn script `scripts/nodes/game/ink_stroke.gd` (`class_name InkStroke`):
+`apply_pen(pen_id)` + `set_base_width(w)` + `set_stroke(points)`; `Board.apply_pen_skin()` (gọi trong `setup_maze()` và khi `ThemeManager.skin_changed`)
+đổi icon con trỏ (`PlayerCursor.apply_pen`), nét `moving_line`, vệt bút mờ lịch sử (`InkStroke.style_plain`) và vết bước chân theo màu/icon bút.
+
+**Bàn nháp thử bút** (mockup `shopping_pencil.svg` khu 5): `nodes/shop/doodle_pad.tscn` + `scripts/nodes/shop/doodle_pad.gd` (`class_name ShopDoodlePad`),
+kích thước **980×215**, chỉ hiện ở tab BÚT & MỰC, nằm **TRÊN lưới thẻ**. Vẽ thử bằng ngón tay (mỗi nét là 1 `InkStroke` cùng chất liệu với game),
+có nét mẫu tự vẽ khi đổi ngòi, ngòi bút chạy theo tay, thẻ **ĐANG XEM THỬ** (tên bút + icon con trỏ + con dấu `DÙNG THỬ ✓` / `ĐANG DÙNG ✓`).
+Chạm vào THÂN thẻ bút → xem thử ngòi đó (nút hành động trên thẻ vẫn là mua/dùng); vùng bàn nháp **chặn cuộn/vuốt trang** (`blocks_scroll_at`).
+Thẻ bút trong lưới hiện đúng icon con trỏ của chính nó. Art: `assets/images/shop/doodle_pad.svg` + `doodle_badge.svg` (sinh bằng `tools/mockup/gen_doodle_pad.py`).
+Chuỗi mới: `STR_SHOP_TRY_{TITLE,HINT,BADGE,STAMP,USING}`.
+
+**Kiểm thử:** `scripts/test_case/test_pen_skin.gd` (89 check: bảng skin + con trỏ/nét mực thật trong màn chơi theo từng bút) và mục bàn nháp trong `test_shop.gd` (243 check).
 | `scripts/nodes/shop/item_row.gd/.tscn` · `item_tile.gd/.tscn` · `coin_tile.gd/.tscn` · `noads_row.gd/.tscn` | 4 loại thẻ: thẻ dọc (dụng cụ) · thẻ ô 475×315 (bút/giấy vở) · thẻ gói nạp 475×240 · hàng VIP 980×200 |
 | `scripts/scenes/shop.gd` + `scenes/shop.tscn` | Màn Cửa hàng: dựng 4 tab bằng code, đổi ngăn, phân trang 6 ô/trang, mua/mặc/dùng, **vuốt ngang đổi trang + vuốt dọc cuộn danh sách** |
 | `scripts/utils/nav.gd` · `scripts/manager/SceneManager.gd` | `SCENE_SHOP` + `goto_shop()` (Debug Console có mục mở Cửa hàng) |

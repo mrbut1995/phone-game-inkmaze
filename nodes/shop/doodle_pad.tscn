@@ -1,0 +1,150 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/shop/doodle_pad.gd" id="1_pad"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/images/shop/doodle_pad.svg" id="3_bg"]
+[ext_resource type="Texture2D" path="res://assets/images/shop/doodle_badge.svg" id="4_badge"]
+[ext_resource type="Texture2D" path="res://assets/images/shop/btn_tile_normal.svg" id="5_stamp"]
+
+[node name="DoodlePad" type="Control"]
+custom_minimum_size = Vector2(980, 215)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 980.0
+offset_bottom = 215.0
+theme = ExtResource("2_theme")
+script = ExtResource("1_pad")
+
+[node name="Bg" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_bg")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 18.0
+offset_right = 400.0
+offset_bottom = 46.0
+theme_type_variation = &"ShopBannerTitle"
+text = "STR_SHOP_TRY_TITLE"
+vertical_alignment = 1
+
+[node name="Hint" type="Label" parent="."]
+layout_mode = 0
+offset_left = 410.0
+offset_top = 22.0
+offset_right = 706.0
+offset_bottom = 44.0
+theme_type_variation = &"ShopDesc"
+text = "STR_SHOP_TRY_HINT"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="DrawArea" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_left = 90.0
+offset_top = 52.0
+offset_right = 706.0
+offset_bottom = 202.0
+
+[node name="Strokes" type="Control" parent="DrawArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PenTip" type="TextureRect" parent="DrawArea"]
+visible = false
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Badge" type="Control" parent="."]
+layout_mode = 0
+offset_left = 716.0
+offset_top = 40.0
+offset_right = 966.0
+offset_bottom = 185.0
+mouse_filter = 2
+
+[node name="Art" type="TextureRect" parent="Badge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_badge")
+expand_mode = 1
+
+[node name="Eyebrow" type="Label" parent="Badge"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 16.0
+offset_right = 240.0
+offset_bottom = 38.0
+theme_type_variation = &"ShopEyebrow"
+text = "ĐANG XEM THỬ"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Name" type="Label" parent="Badge"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 38.0
+offset_right = 240.0
+offset_bottom = 70.0
+theme_type_variation = &"ShopNameTile"
+theme_override_font_sizes/font_size = 19
+text = "Tên ngòi bút"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Icon" type="TextureRect" parent="Badge"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 82.0
+offset_right = 72.0
+offset_bottom = 128.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Stamp" type="TextureRect" parent="Badge"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 84.0
+offset_right = 226.0
+offset_bottom = 126.0
+mouse_filter = 2
+texture = ExtResource("5_stamp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StampLabel" type="Label" parent="Badge"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 84.0
+offset_right = 226.0
+offset_bottom = 126.0
+theme_type_variation = &"ShopBtnText"
+text = "DÙNG THỬ ✓"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2

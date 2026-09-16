@@ -28,6 +28,14 @@ func _ready() -> void:
 	start_idle()
 
 
+## Đổi icon con trỏ theo NGÒI BÚT đang dùng (bảng PenSkin) — Board gọi khi dựng ván /
+## khi người chơi đổi bút ở Cửa hàng (ThemeManager.skin_changed).
+func apply_pen(pen_id: String) -> void:
+	var tex := PenSkin.cursor_texture(pen_id)
+	if tex != null and icon != null:
+		icon.texture = tex
+
+
 ## Hoạt ảnh thở nhẹ kết hợp cựa quậy tự nhiên khi đứng yên
 func start_idle() -> void:
 	if _is_running or _is_celebrating:
