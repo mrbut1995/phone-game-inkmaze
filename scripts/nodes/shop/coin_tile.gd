@@ -73,13 +73,16 @@ func _refresh_badge() -> void:
 
 
 func _set_texts() -> void:
+	var desc := TranslationServer.translate(str(item_data.get("desc_key", "")))
 	_set_label("Name", TranslationServer.translate(str(item_data.get("name_key", ""))))
-	_set_label("Desc", TranslationServer.translate(str(item_data.get("desc_key", ""))))
+	_set_label("Desc", desc)
+	# Dòng ưu đãi: chỉ hiện khi MÔ TẢ chưa nhắc tới số Xu thưởng (tránh lặp 2 dòng giống nhau)
 	var bonus := int(item_data.get("bonus", 0))
 	var bonus_label := get_node_or_null("Bonus") as Label
 	if bonus_label != null:
-		bonus_label.visible = bonus > 0
-		if bonus > 0:
+		var show_bonus := bonus > 0 and not desc.contains(Shop.thousands(bonus))
+		bonus_label.visible = show_bonus
+		if show_bonus:
 			bonus_label.text = "%s +%s %s" % [
 				TranslationServer.translate("STR_SHOP_BONUS_TAG"),
 				Shop.thousands(bonus),

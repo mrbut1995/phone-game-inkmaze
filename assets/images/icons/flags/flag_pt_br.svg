@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 28" width="38" height="28">
+  <!-- Cờ Brazil (lục + thoi vàng + đĩa xanh) -->
+  <rect x="1.5" y="1.5" width="35" height="25" rx="3" fill="#009C3B" stroke="#224C6D" stroke-width="1.8"/>
+  <polygon points="19,5.5 33.5,14 19,22.5 4.5,14" fill="#FFDF00"/>
+  <circle cx="19" cy="14" r="5" fill="#002776"/>
+  <path d="M14.4 12.4 Q19 10.4 23.6 13.4" fill="none" stroke="#FFFFFF" stroke-width="1.1"/>
+</svg>

@@ -42,6 +42,10 @@ func _on_open() -> void:
 	_set_text("WarnBox/Title", tr("STR_FLOOR_WARNING_TITLE").format([next_floor]))
 	_set_text("GoBtn/Label", tr("STR_BTN_ENTER_NEXT_FLOOR").format([next_floor]))
 
+	# Con dấu xanh lục ở góc: "ĐÃ QUA" + "TẦNG 0n ✔" (mockup popup_to_next_floor.svg)
+	_set_text("Stamp/StampTitle", tr("STR_RESULT_STAMP_PASSED"))
+	_set_text("Stamp/StampSub", tr("STR_RESULT_STAMP_FLOOR").format(["%02d" % floor]))
+
 	bind_button("Panel/Content/RestBtn", _on_rest_pressed)
 	bind_button("Panel/Content/GoBtn", _on_enter_pressed)
 

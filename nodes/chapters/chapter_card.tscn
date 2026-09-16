@@ -43,9 +43,9 @@ expand_mode = 1
 
 [node name="Doodle" type="TextureRect" parent="." unique_id=1236952187]
 layout_mode = 0
-offset_left = 68.0
+offset_left = 51.0
 offset_top = 48.0
-offset_right = 248.0
+offset_right = 231.0
 offset_bottom = 228.0
 mouse_filter = 2
 texture = ExtResource("13_maze")
@@ -53,9 +53,9 @@ texture = ExtResource("13_maze")
 [node name="Lock" type="TextureRect" parent="." unique_id=1671124533]
 visible = false
 layout_mode = 0
-offset_left = 122.0
+offset_left = 105.0
 offset_top = 91.0
-offset_right = 194.0
+offset_right = 177.0
 offset_bottom = 163.0
 mouse_filter = 2
 texture = ExtResource("12_lock")
@@ -170,18 +170,18 @@ vertical_alignment = 1
 visible = false
 layout_mode = 0
 offset_left = 700.0
-offset_top = 188.0
+offset_top = 214.0
 offset_right = 895.0
-offset_bottom = 220.0
+offset_bottom = 246.0
 mouse_filter = 2
 texture = ExtResource("8_need")
 
 [node name="NeedLabel" type="Label" parent="." unique_id=46546071]
 layout_mode = 0
 offset_left = 700.0
-offset_top = 188.0
+offset_top = 214.0
 offset_right = 895.0
-offset_bottom = 220.0
+offset_bottom = 246.0
 theme_type_variation = &"ChapterNeedChip"
 text = "CÒN THIẾU"
 horizontal_alignment = 1

@@ -6,12 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="4_washi"]
 [ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="5_clip"]
 [ext_resource type="Texture2D" uid="uid://b32mi2b0tw8ao" path="res://assets/images/settings/divider_dashed.svg" id="6_divider"]
-[ext_resource type="Texture2D" uid="uid://bva6sfwg1f8ha" path="res://assets/images/popups/btn_popup_muted_normal.svg" id="7_sec_n"]
-[ext_resource type="Texture2D" uid="uid://bub3b4m3wms76" path="res://assets/images/popups/btn_popup_muted_pressed.svg" id="8_sec_p"]
-[ext_resource type="Texture2D" uid="uid://chdinrp0gthby" path="res://assets/images/popups/btn_popup_muted_focus.svg" id="9_sec_f"]
-[ext_resource type="Texture2D" uid="uid://70kk5gh3n1y" path="res://assets/images/popups/btn_popup_wide_normal.svg" id="10_pri_n"]
-[ext_resource type="Texture2D" uid="uid://deiyafisu0cba" path="res://assets/images/popups/btn_popup_wide_pressed.svg" id="11_pri_p"]
-[ext_resource type="Texture2D" uid="uid://c1l1v41hv7wtk" path="res://assets/images/popups/btn_popup_wide_focus.svg" id="12_pri_f"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_cancel_normal.svg" id="7_sec_n"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_cancel_pressed.svg" id="8_sec_p"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_cancel_focus.svg" id="9_sec_f"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_apply_normal.svg" id="10_pri_n"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_apply_pressed.svg" id="11_pri_p"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_apply_focus.svg" id="12_pri_f"]
 
 [node name="Base" type="Control" unique_id=1015568792]
 layout_mode = 3
@@ -34,6 +34,7 @@ color = Color(0.09411765, 0.14117648, 0.18039216, 0.6392157)
 
 [node name="Panel" type="Control" parent="." unique_id=1621539942]
 layout_mode = 1
+anchors_preset = 0
 offset_left = 150.0
 offset_top = 400.0
 offset_right = 930.0
@@ -75,9 +76,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 118.0
+offset_left = 110.0
 offset_top = 68.0
-offset_right = -78.0
+offset_right = -70.0
 offset_bottom = -68.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -115,7 +116,7 @@ layout_mode = 2
 theme_override_constants/separation = 30
 
 [node name="Cancel" type="TextureButton" parent="Panel/Content/Buttons" unique_id=577269955]
-custom_minimum_size = Vector2(300, 88)
+custom_minimum_size = Vector2(180, 96)
 layout_mode = 2
 texture_normal = ExtResource("7_sec_n")
 texture_pressed = ExtResource("8_sec_p")

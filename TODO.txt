@@ -762,3 +762,84 @@
 #       nút 200×46, hàng VIP 980×200 và icon cấp Xu của từng gói). Render 4 tab đối chiếu OK. 24/24 suite PASS.
 # [ ] Bàn nháp "thử bút" (980×215 trong shopping_pencil.svg) chưa làm — chưa được yêu cầu
 # [ ] Tab DỤNG CỤ vẫn là thẻ dọc 980×180; muốn đồng bộ thẻ ô 475×315 thì báo thêm
+
+# ----------------------------------------------------------------------------
+# SỬA ASSET/POPUP BỊ LỖI — 2026-09 (vòng 11)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): theo 3 ảnh user gửi (nút Restart · popup thắng màn · popup ngôn ngữ)
+#     - ICON NÚT RESTART (HUD) bị lỗi: mũi tên cũ là 1 đường gãy `M 18.5 22 L 27.5 22 L 23 29.8`
+#       nằm LỆCH ra ngoài cung tròn -> trông như hình hỏng. Đã thay cả 4 trạng thái
+#       (btn_restart_{normal,pressed,focus,disabled}.svg) bằng đúng hình mockup/matchup_level.svg:
+#       cung `M 50 25 A 15 15 0 1 0 52 42` + mũi tên `42,20 52,24 50,34`.
+#     - NÚT CHƠI LẠI (popup thắng màn) KHÔNG có icon: node TextureRect sẵn có bị để trống.
+#       Thêm asset `assets/images/popups/icon_replay.svg` (cùng hình mũi tên vòng) + gắn vào nút,
+#       canh giữa theo bề ngang nút (76,14)-(116,54) trên nút 192×108.
+#     - CON DẤU (stamp) thiếu chữ: art `stamp_excellent.svg` / `stamp_passed.svg` có `<text>` đã bị
+#       COMMENT (và ThorVG cũng KHÔNG render `<text>`), nên trước đây chỉ thấy vòng nét đứt.
+#       Nay thêm 2 Label con cho node `Stamp`:
+#         · winning: StampTitle = STR_WIN_STAMP_TITLE "{0} / {1} THỬ THÁCH" (màu đỏ, 20px),
+#           StampSub = STR_WIN_STAMP_SUB "★ ĐẠT {0} SAO ★" (14px) — điền từ data `challenges` + `stars`.
+#         · next_floor: StampTitle = STR_RESULT_STAMP_PASSED "ĐÃ QUA", StampSub = STR_RESULT_STAMP_FLOOR
+#           "TẦNG {0} ✔" (%02d, màu xanh lục). ĐỒNG THỜI sửa khung con dấu bị méo: node `Stamp` cũ dùng
+#           anchor + offset rác (offset_right = 0.049) -> cao 0.1px; nay là (592,47) 116×116.
+#     - POPUP NGÔN NGỮ hiển thị lỗi + không vuốt cuộn được:
+#         · Hàng nút tràn ra ngoài phiếu: nút HỦY BỎ đang 300×88 trong khi art là 180×96 và khung nội
+#           dung chỉ 584px (180+30+390 = 600) -> nay HỦY BỎ = 180×96 + `Content` rộng 600 (offsets 110/-70).
+#         · Không vuốt cuộn: hàng ngôn ngữ là TextureButton nên "ăn" sự kiện kéo, ScrollContainer không
+#           nhận được. `language_popup.gd` nay tự xử lý kéo ở `_input` (ngưỡng 14px, `set_input_as_handled()`,
+#           khoá bấm hàng 0.35s sau khi vuốt để không chọn nhầm ngôn ngữ) — giống cách màn Cửa hàng làm.
+#     - SỬA THÊM (cùng loại lỗi `<text>`): logo `assets/images/main/logo_doodle_maze.svg` có chữ S/F
+#       vẽ bằng `<text>` -> mất chữ trong game; nay vẽ bằng path (S xanh ở góc trên-trái, F hổ phách góc trên-phải).
+#     - 2 LỖI PHÁT HIỆN KHI CHẠY SUITE (do bản chỉnh trước đó):
+#         · `string_extra.csv` thiếu `STR_SHOP_COIN_NOADS_DESC` (catalog còn trỏ tới) -> đã thêm lại.
+#         · `chapter_card.tscn`: doodle dời sang x=51 nhưng ổ khoá vẫn ở 122 -> lệch 17px; đã dời ổ khoá
+#           về x=105 (đúng tâm doodle) cho khớp luật "thân khoá trùng tâm doodle".
+#         · Thẻ gói nạp: mô tả mới của user đã ghi "Tặng thêm 200 Xu" nên dòng ưu đãi riêng bị LẶP;
+#           `coin_tile.gd` nay chỉ hiện dòng ưu đãi khi mô tả CHƯA nhắc số Xu thưởng.
+#     - Test mới `scripts/test_case/test_popup_ui.gd` (45 check) + chạy lại toàn bộ: 26/26 SUITE PASS.
+
+# ----------------------------------------------------------------------------
+# POPUP NGÔN NGỮ: ĐỦ 19 NGÔN NGỮ + CỜ RIÊNG — 2026-09 (vòng 12)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): user báo "popup ngôn ngữ vẫn sai: nút ÁP DỤNG tràn, nhiều ngôn ngữ không có
+#     dịch thuật + không có cờ".
+#     - NGUYÊN NHÂN: `LocalizationManager.LOCALE_INFO` chỉ khai 6 ngôn ngữ (vi · en · ja · ko · zh_CN · fr)
+#       trong khi `string.csv` có **19 locale** -> 13 ngôn ngữ còn lại rơi vào fallback: hiện MÃ THÔ
+#       ("MS", "PT_BR", "RU", ...) + cờ dự phòng `flag_generic.svg`. Thư mục cờ chỉ có 7 file.
+#     - Đã khai đủ **19 ngôn ngữ** trong LOCALE_INFO: en · vi · zh_TW · zh_CN · es · ar · de · fr · hi · id
+#       · it · ja · ko · ms · pt · pt_BR · ru · th · tr (tên bản địa + phụ đề tiếng Anh + mã quốc gia).
+#       Thêm `LOCALE_ALIASES` (zh_cn/zh_tw/pt_br) cho an toàn nếu mã viết khác hoa-thường.
+#     - Vẽ thêm **13 lá cờ** (assets/images/icons/flags/): flag_zh_tw · flag_es · flag_ar · flag_de · flag_hi ·
+#       flag_id · flag_it · flag_ms · flag_pt · flag_pt_br · flag_ru · flag_th · flag_tr — cùng khuôn 38×28,
+#       nền bo góc + viền #224C6D, dải màu vẽ bằng path bo góc (không dùng clipPath).
+#     - NÚT ÁP DỤNG "tràn": đo lại đúng luồng (mở popup qua PopupManager trong màn Settings) —
+#       `apply` = (470,1321) 390×96 -> mép phải 860 < mép phiếu 938 => **KHÔNG tràn** (đã sửa từ vòng 11:
+#       HỦY BỎ 180×96 + `Content` rộng 600). Ảnh user gửi là bản TRƯỚC khi sửa; nếu còn thấy lệch thì do
+#       cửa sổ game chưa nạp lại (project dùng stretch `canvas_items` + aspect `expand` nên không bị cắt).
+#     - Test `test_popup_ui.gd`: 45 -> **52 check**, thêm mục 6 — đủ 19 mã ngôn ngữ · mỗi ngôn ngữ có TÊN riêng
+#       (không hiện mã thô) · FILE cờ tồn tại · không ngôn ngữ nào dùng cờ 'generic' · mỗi HÀNG trong popup
+#       có tên + cờ riêng. Toàn bộ **26/26 suite PASS**.
+#     - Render đối chiếu: bảng 19 cờ + tên bản địa OK; popup trong màn Settings: 6 hàng đầu hiện
+#       English · Tiếng Việt · 繁體中文 · 简体中文 · Español · العربية kèm cờ đúng.
+# [ ] Cờ 'ar' hiện là cờ giản lược (nền lục + trăng sao) — muốn dùng cờ 1 nước cụ thể thì báo
+
+# ----------------------------------------------------------------------------
+# NÚT POPUP NGÔN NGỮ DÙNG SAI RESOURCE (TRÀN) — 2026-09 (vòng 13)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): user nhấn mạnh "button overflow do dùng SAI RESOURCE".
+#     - TÌM RA THỦ PHẠM: `TextureButton` mặc định **stretch_mode = STRETCH_KEEP (2)** — art được vẽ
+#       ĐÚNG KÍCH THƯỚC GỐC, KHÔNG co theo node. Popup ngôn ngữ đang gán `btn_popup_wide_*` (art **630×96**,
+#       vốn là nút CTA rộng của popup khác) cho nút rộng 390 → art thò ra 2 bên, kéo thành vệt xanh tới mép màn.
+#       Nút HỦY BỎ cũng sai: dùng `btn_popup_muted_*` (300×88) cho nút 180×96.
+#     - SỬA: tạo BỘ ART RIÊNG đúng cỡ theo mockup `popup_language.svg`:
+#         · `popups/btn_lang_cancel_{normal,pressed,focus,disabled}.svg` — **180×96**, giấy #FEFDFA + viền #BAC7CF 2.5, rx 16.
+#         · `popups/btn_lang_apply_{normal,pressed,focus,disabled}.svg` — **390×96**, mực #3D83AE + viền #256286 3.5, rx 18.
+#       Gắn vào `language.tscn` (giữ `ignore_texture_size = true` + custom_minimum_size 180×96 / 390×96).
+#     - Đo lại sau khi sửa: nút Cancel 180×96 (art 180×96) · Apply 390×96 (art 390×96) — khớp 1:1;
+#       quét pixel hàng nút: vệt xanh xa nhất **x=856 < 860** (mép nút) => HẾT TRÀN.
+#     - QUÉT TOÀN BỘ POPUP (script tạm) tìm nút lệch art: chỉ còn `next_floor/GoBtn` (art 425×96 trong node
+#       437×108 — art NHỎ hơn nên canh giữa, không tràn) và 2 checkbox ở `pause` (art 50×50 trong node 44×44,
+#       `stretch_mode = 0` nên tự co — an toàn).
+#     - Test `test_popup_ui.gd` 52 -> **54 check**: thêm kiểm tra ART của HỦY BỎ / ÁP DỤNG phải khớp 1:1 với nút
+#       (chống tái phát đúng lỗi này). Toàn bộ **26/26 suite PASS**.
+#     - Ghi vào tài liệu §5.11: quy ước "art nút phải khớp 1:1 với node" + bảng art nút popup ngôn ngữ.

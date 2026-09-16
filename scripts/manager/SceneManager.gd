@@ -11,6 +11,8 @@ signal scene_changing(path: String, previous_path: String)
 signal scene_changed(path: String)
 
 const SCENE_MAIN := "res://scenes/main.tscn"
+const SCENE_SPLASH := "res://scenes/splash.tscn"
+const SCENE_TITLE := "res://scenes/title.tscn"
 const SCENE_LEVELS := "res://scenes/levels.tscn"
 const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
@@ -122,6 +124,15 @@ func reload_current_scene() -> void:
 # ---------------------------------------------------------------------------
 func goto_main() -> void:
 	change_scene(SCENE_MAIN)
+
+
+func goto_splash() -> void:
+	change_scene(SCENE_SPLASH, false)
+
+
+func goto_title() -> void:
+	change_scene(SCENE_TITLE, false)
+
 
 
 func goto_levels() -> void:

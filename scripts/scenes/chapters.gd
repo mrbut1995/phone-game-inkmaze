@@ -29,6 +29,20 @@ func _ready() -> void:
 	if btn_continue != null:
 		btn_continue.pressed.connect(_on_continue_pressed)
 		UIAnim.attach_press_bounce(btn_continue)
+		UIAnim.play_pulse(btn_continue, 1.035, 1.6)
+
+	var top_bar := get_node_or_null("TopBar") as Control
+	if top_bar != null:
+		UIAnim.play_slide_in(top_bar, Vector2(0, -22), 0.0, 0.25)
+	var wallet_bar := get_node_or_null("Wallet") as Control
+	if wallet_bar != null:
+		UIAnim.play_slide_in(wallet_bar, Vector2(0, -22), 0.04, 0.25)
+	var banner := get_node_or_null("Banner") as Control
+	if banner != null:
+		UIAnim.play_slide_in(banner, Vector2(0, -15), 0.08, 0.25)
+	if btn_continue != null:
+		UIAnim.play_slide_in(btn_continue, Vector2(0, 25), 0.15, 0.28)
+
 	# Chương đã mở hết thì tự ẩn nút "TIẾP TỤC CHƯƠNG n" dưới chân trang
 	if lbl_continue != null:
 		lbl_continue.theme_type_variation = &"LevelsContinue"
@@ -192,6 +206,11 @@ func _on_unlock_requested(chapter_id: int) -> void:
 		Sfx.play(Sfx.ACHIEVEMENT)
 		_build_cards()
 		_refresh_header()
+		if lbl_wallet != null and DisplayServer.get_name() != "headless":
+			lbl_wallet.pivot_offset = lbl_wallet.size * 0.5
+			var tw := lbl_wallet.create_tween()
+			tw.tween_property(lbl_wallet, "scale", Vector2(1.3, 1.3), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tw.tween_property(lbl_wallet, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	else:
 		Sfx.play(Sfx.BTN_CLICK)
 

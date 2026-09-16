@@ -2,7 +2,7 @@
   <!-- Lún xuống 2px, mực đậm hơn -->
   <g transform="translate(0, 2)">
     <rect x="0.5" y="0.5" width="69" height="68" rx="18" fill="#EDE6D8" stroke="#256286" stroke-width="2.6"/>
-    <path d="M 42.5 22 A 15 15 0 1 1 27.5 22" fill="none" stroke="#256286" stroke-width="4" stroke-linecap="round"/>
-    <path d="M 18.5 22 L 27.5 22 L 23 29.8" fill="none" stroke="#256286" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 50 25 A 15 15 0 1 0 52 42" fill="none" stroke="#256286" stroke-width="4" stroke-linecap="round"/>
+    <polyline points="42,20 52,24 50,34" fill="none" stroke="#256286" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 </svg>

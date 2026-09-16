@@ -15,13 +15,34 @@ const DEFAULT_LOCALE := "vi"
 var supported_locales: PackedStringArray = ["vi", "en"]
 
 ## Ten/co hien thi cho tung ngon ngu (co = icon svg, khong dung emoji)
+## Đủ CẢ 19 ngôn ngữ trong string.csv — thiếu ở đây thì popup sẽ hiện mã thô + cờ "generic"
 const LOCALE_INFO := {
 	"vi": {"flag": "res://assets/images/icons/flags/flag_vi.svg", "code": "VN", "name": "Tiếng Việt", "sub": "Mặc định hệ thống"},
 	"en": {"flag": "res://assets/images/icons/flags/flag_en.svg", "code": "US", "name": "English", "sub": "United States"},
-	"ja": {"flag": "res://assets/images/icons/flags/flag_ja.svg", "code": "JP", "name": "日本語", "sub": "Japan"},
-	"ko": {"flag": "res://assets/images/icons/flags/flag_ko.svg", "code": "KR", "name": "한국어", "sub": "Korean"},
+	"zh_TW": {"flag": "res://assets/images/icons/flags/flag_zh_tw.svg", "code": "TW", "name": "繁體中文", "sub": "Traditional Chinese"},
 	"zh_CN": {"flag": "res://assets/images/icons/flags/flag_zh_cn.svg", "code": "CN", "name": "简体中文", "sub": "Simplified Chinese"},
+	"es": {"flag": "res://assets/images/icons/flags/flag_es.svg", "code": "ES", "name": "Español", "sub": "Spanish"},
+	"ar": {"flag": "res://assets/images/icons/flags/flag_ar.svg", "code": "AR", "name": "العربية", "sub": "Arabic"},
+	"de": {"flag": "res://assets/images/icons/flags/flag_de.svg", "code": "DE", "name": "Deutsch", "sub": "German"},
 	"fr": {"flag": "res://assets/images/icons/flags/flag_fr.svg", "code": "FR", "name": "Français", "sub": "French"},
+	"hi": {"flag": "res://assets/images/icons/flags/flag_hi.svg", "code": "IN", "name": "हिन्दी", "sub": "Hindi"},
+	"id": {"flag": "res://assets/images/icons/flags/flag_id.svg", "code": "ID", "name": "Bahasa Indonesia", "sub": "Indonesian"},
+	"it": {"flag": "res://assets/images/icons/flags/flag_it.svg", "code": "IT", "name": "Italiano", "sub": "Italian"},
+	"ja": {"flag": "res://assets/images/icons/flags/flag_ja.svg", "code": "JP", "name": "日本語", "sub": "Japanese"},
+	"ko": {"flag": "res://assets/images/icons/flags/flag_ko.svg", "code": "KR", "name": "한국어", "sub": "Korean"},
+	"ms": {"flag": "res://assets/images/icons/flags/flag_ms.svg", "code": "MY", "name": "Bahasa Melayu", "sub": "Malay"},
+	"pt": {"flag": "res://assets/images/icons/flags/flag_pt.svg", "code": "PT", "name": "Português", "sub": "Portuguese"},
+	"pt_BR": {"flag": "res://assets/images/icons/flags/flag_pt_br.svg", "code": "BR", "name": "Português (Brasil)", "sub": "Brazilian Portuguese"},
+	"ru": {"flag": "res://assets/images/icons/flags/flag_ru.svg", "code": "RU", "name": "Русский", "sub": "Russian"},
+	"th": {"flag": "res://assets/images/icons/flags/flag_th.svg", "code": "TH", "name": "ไทย", "sub": "Thai"},
+	"tr": {"flag": "res://assets/images/icons/flags/flag_tr.svg", "code": "TR", "name": "Türkçe", "sub": "Turkish"},
+}
+
+## Mã ngôn ngữ trong CSV viết khác khoá ở trên (để tra LOCALE_INFO)
+const LOCALE_ALIASES := {
+	"zh_cn": "zh_CN",
+	"zh_tw": "zh_TW",
+	"pt_br": "pt_BR",
 }
 
 const FLAG_FALLBACK := "res://assets/images/icons/flags/flag_generic.svg"
@@ -166,8 +187,13 @@ func get_display_name(code: String) -> String:
 
 ## Thong tin (co, ma quoc gia, ten, phu de) cua mot ngon ngu, fallback ve ma ngon ngu
 func get_locale_info(code: String) -> Dictionary:
-	if LOCALE_INFO.has(code):
-		return LOCALE_INFO[code]
+	var key: String = str(LOCALE_ALIASES.get(code.to_lower(), ""))
+	if key.is_empty():
+		key = code
+	if not LOCALE_INFO.has(key) and LOCALE_ALIASES.has(code):
+		key = str(LOCALE_ALIASES[code])
+	if LOCALE_INFO.has(key):
+		return LOCALE_INFO[key]
 	return {"flag": FLAG_FALLBACK, "code": code.to_upper(), "name": code.to_upper(), "sub": ""}
 
 

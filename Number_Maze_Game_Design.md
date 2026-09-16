@@ -331,6 +331,54 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 > | **Play Mode / Level** và các mode khác (trừ endless) | Chơi lại **ĐÚNG màn đang chơi** | **Quay lại bước trước đó** (undo bước vừa đi, không cộng bước) |
 - **Popup thắng màn ở Play Mode** (`popup_win_level.svg`) hiển thị: thời gian hoàn thành, số bước đã đi, **3 sticker sao = 3 Thử thách** (sao vàng = đã đạt · sao rỗng = chưa đạt) cùng bảng trạng thái từng Thử thách và con dấu `2 / 3 THỬ THÁCH`.
 
+### 5.11. Con dấu · icon nút · vuốt cuộn trong popup (2026-09)
+
+**Quy tắc vàng về art SVG:** ThorVG (bộ nhập SVG của Godot) **KHÔNG render `<text>`** → mọi chữ trong game phải là **Label node**, art chỉ vẽ hình (vòng, khung, nét). Các file `stamp_*.svg` vì vậy chỉ có vòng nét đứt, **chữ nằm ở 2 Label con của node `Stamp`**:
+
+| Popup | StampTitle | StampSub | Khung con dấu |
+|---|---|---|---|
+| Thắng màn (`winning.tscn`) | `STR_WIN_STAMP_TITLE` — "{0} / {1} THỬ THÁCH" | `STR_WIN_STAMP_SUB` — "★ ĐẠT {0} SAO ★" | (622, 88) 156×90 · đỏ, chữ `PopupStampTextDanger`/`PopupStampSubDanger` |
+| Thông qua tầng (`next_floor.tscn`) | `STR_RESULT_STAMP_PASSED` — "ĐÃ QUA" | `STR_RESULT_STAMP_FLOOR` — "TẦNG {0} ✔" (`"%02d"`) | (592, 47) 116×116 · xanh lục, chữ `PopupStampText`/`PopupStampSub` |
+
+- **Icon nút CHƠI LẠI** (`winning.tscn` → `Panel/Content/ReplayBtn/TextureRect`) = `assets/images/popups/icon_replay.svg`, **cùng hình mũi tên vòng với nút Restart trên HUD** (`assets/images/game/btn_restart_*.svg`): cung `M 50 25 A 15 15 0 1 0 52 42` + mũi tên `42,20 52,24 50,34` (theo `mockup/matchup_level.svg`). Trước đây icon Restart bị vẽ **mũi tên gãy nằm lệch ngoài cung** nên trông như lỗi.
+- **Popup ngôn ngữ** (`language.tscn`): nút HỦY BỎ = **180×96** và ÁP DỤNG = **390×96** (đúng mockup `popup_language.svg`) + khung nội dung rộng **600px** (`Content` offsets 110 / -70) → hàng nút 180 + 30 + 390 = 600 **vừa khít**, không tràn.
+- **QUY ƯỚC ART NÚT (quan trọng):** `TextureButton` mặc định **`stretch_mode = STRETCH_KEEP (2)`** — art được vẽ **ĐÚNG kích thước gốc**, KHÔNG tự co theo node (khác `TextureRect`). Vì vậy **art nút phải khớp 1:1 với kích thước node**; nếu art to hơn thì hình **thò ra ngoài** (đã từng bị: nút 390×96 nhưng gán `btn_popup_wide_*` art **630×96** → vệt xanh thò tới mép màn hình).
+
+| Nút popup ngôn ngữ | Art | Cỡ | Kiểu |
+|---|---|---|---|
+| HỦY BỎ | `popups/btn_lang_cancel_{normal,pressed,focus,disabled}.svg` | **180×96** | giấy `#FEFDFA` + viền xám `#BAC7CF` 2.5, rx 16 |
+| ÁP DỤNG | `popups/btn_lang_apply_{normal,pressed,focus,disabled}.svg` | **390×96** | mực `#3D83AE` + viền `#256286` 3.5, rx 18 |
+
+> Các popup khác đã khớp 1:1: `winning` (CHƠI LẠI 192×108 = `btn_paper_secondary_*`; MÀN KẾ TIẾP 437×108 = `btn_paper_primary_*`), `next_floor` (art 425×96 nằm trong node 437×108 — nhỏ hơn nên canh giữa, không tràn), `pause` (checkbox art 50×50 trong node 44×44 nhưng `stretch_mode = 0` nên tự co).
+- **Vuốt cuộn danh sách ngôn ngữ:** hàng là `TextureButton` nên "ăn" hết sự kiện kéo → `language_popup.gd` tự xử lý kéo ở `_input` (giống màn Cửa hàng): ngưỡng 14px mới tính là vuốt, `set_input_as_handled()` khi cuộn, và **khoá bấm hàng 0.35s** sau khi vuốt để không chọn nhầm ngôn ngữ.
+- **Bảng 19 ngôn ngữ** (`LocalizationManager.LOCALE_INFO`): mỗi mã trong `string.csv` phải có **tên bản địa + phụ đề tiếng Anh + cờ riêng**. Thiếu khoá ở đây thì popup sẽ hiện **mã thô** (vd "MS", "PT_BR") và cờ dự phòng `flag_generic.svg` — đúng lỗi đã gặp.
+
+| Mã | Tên hiển thị | Phụ đề | Cờ |
+|---|---|---|---|
+| `en` | English | United States | `flag_en.svg` |
+| `vi` | Tiếng Việt | Mặc định hệ thống | `flag_vi.svg` |
+| `zh_TW` | 繁體中文 | Traditional Chinese | `flag_zh_tw.svg` |
+| `zh_CN` | 简体中文 | Simplified Chinese | `flag_zh_cn.svg` |
+| `es` | Español | Spanish | `flag_es.svg` |
+| `ar` | العربية | Arabic | `flag_ar.svg` |
+| `de` | Deutsch | German | `flag_de.svg` |
+| `fr` | Français | French | `flag_fr.svg` |
+| `hi` | हिन्दी | Hindi | `flag_hi.svg` |
+| `id` | Bahasa Indonesia | Indonesian | `flag_id.svg` |
+| `it` | Italiano | Italian | `flag_it.svg` |
+| `ja` | 日本語 | Japanese | `flag_ja.svg` |
+| `ko` | 한국어 | Korean | `flag_ko.svg` |
+| `ms` | Bahasa Melayu | Malay | `flag_ms.svg` |
+| `pt` | Português | Portuguese | `flag_pt.svg` |
+| `pt_BR` | Português (Brasil) | Brazilian Portuguese | `flag_pt_br.svg` |
+| `ru` | Русский | Russian | `flag_ru.svg` |
+| `th` | ไทย | Thai | `flag_th.svg` |
+| `tr` | Türkçe | Turkish | `flag_tr.svg` |
+
+- Cờ dùng chung khuôn: viewBox **38×28**, nền bo góc `rx=3` + viền `#224C6D` 1.8; các dải màu vẽ bằng path bo góc theo viền (không dùng `<clipPath>`). Còn `flag_generic.svg` (quả cầu nét đứt) chỉ là dự phòng.
+- **Logo `main/logo_doodle_maze.svg`**: chữ **S** (điểm bắt đầu, xanh) và **F** (đích, hổ phách) đã đổi từ `<text>` sang **path vẽ tay** — trước đây biến mất trong game vì ThorVG bỏ qua `<text>`.
+- Kiểm thử: `scripts/test_case/test_popup_ui.gd` (**54 check**) — icon Restart 4 trạng thái · con dấu 2 popup (kích thước + chữ đúng dữ liệu) · icon nút CHƠI LẠI căn giữa · popup ngôn ngữ (đủ hàng, hàng nút không tràn, **art nút khớp 1:1**, vuốt cuộn được, không chọn nhầm khi vừa vuốt) · quét art còn `<text>` · bảng 19 ngôn ngữ (tên + cờ riêng, không dùng cờ generic).
+
 ---
 
 ## 6. Hệ thống Daily Challenge

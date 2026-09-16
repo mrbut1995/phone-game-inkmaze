@@ -72,12 +72,30 @@ func _ready() -> void:
 		UIAnim.attach_press_bounce(btn_back)
 	if wallet_plus != null:
 		wallet_plus.pressed.connect(_on_wallet_plus_pressed)
+		UIAnim.attach_press_bounce(wallet_plus)
 	if btn_prev != null:
 		btn_prev.pressed.connect(_on_prev_page)
+		UIAnim.attach_press_bounce(btn_prev)
 	if btn_next != null:
 		btn_next.pressed.connect(_on_next_page)
+		UIAnim.attach_press_bounce(btn_next)
 	if btn_gift != null:
 		btn_gift.pressed.connect(_on_gift_pressed)
+		UIAnim.attach_press_bounce(btn_gift)
+		UIAnim.play_pulse(btn_gift, 1.04, 1.8)
+
+	var top_bar := get_node_or_null("TopBar") as Control
+	if top_bar != null:
+		UIAnim.play_slide_in(top_bar, Vector2(0, -22), 0.0, 0.25)
+	var wallet_bar := get_node_or_null("Wallet") as Control
+	if wallet_bar != null:
+		UIAnim.play_slide_in(wallet_bar, Vector2(0, -22), 0.04, 0.25)
+	if tabs_box != null:
+		UIAnim.play_slide_in(tabs_box, Vector2(0, -12), 0.08, 0.25)
+	var gift_banner := get_node_or_null("GiftBanner") as Control
+	if gift_banner != null:
+		UIAnim.play_slide_in(gift_banner, Vector2(0, 20), 0.12, 0.25)
+
 	_build_tabs()
 	_refresh_wallet()
 	show_tab(_category)
@@ -150,6 +168,7 @@ func _build_tabs() -> void:
 		button.texture_normal = TAB_INACTIVE
 		button.texture_pressed = TAB_ACTIVE
 		button.pressed.connect(_on_tab_pressed.bind(category))
+		UIAnim.attach_press_bounce(button, 0.96, 0.1)
 		tabs_box.add_child(button)
 
 		var label := Label.new()
@@ -444,7 +463,7 @@ func _on_item_action(item_id: String) -> void:
 			_handle_equip(item_id)
 		_:
 			return
-	_refresh_wallet()
+	_refresh_wallet(true)
 	_rebuild()
 
 
@@ -478,9 +497,14 @@ func _on_wallet_plus_pressed() -> void:
 	show_tab("coin")
 
 
-func _refresh_wallet() -> void:
+func _refresh_wallet(animate := false) -> void:
 	if wallet_count != null:
 		wallet_count.text = Shop.thousands(Shop.coins())
+		if animate and DisplayServer.get_name() != "headless":
+			wallet_count.pivot_offset = wallet_count.size * 0.5
+			var tw := wallet_count.create_tween()
+			tw.tween_property(wallet_count, "scale", Vector2(1.28, 1.28), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tw.tween_property(wallet_count, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
 func _on_back_pressed() -> void:

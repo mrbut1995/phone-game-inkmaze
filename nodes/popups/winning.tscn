@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c4cv31tihnj1" path="res://assets/images/common/btn_paper_primary_normal.svg" id="9_pri_n"]
 [ext_resource type="Texture2D" uid="uid://bfod2u4o5b5i" path="res://assets/images/common/btn_paper_primary_pressed.svg" id="10_pri_p"]
 [ext_resource type="Texture2D" uid="uid://dvobapoh8dr6a" path="res://assets/images/common/btn_paper_primary_focus.svg" id="11_pri_f"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/icon_replay.svg" id="12_replay"]
 
 [node name="Base" unique_id=1146332468 instance=ExtResource("1_base")]
 script = ExtResource("2_win")
@@ -23,6 +24,30 @@ offset_right = 778.0
 offset_bottom = 178.0
 mouse_filter = 2
 texture = ExtResource("3_stamp")
+
+[node name="StampTitle" type="Label" parent="Panel/Content/Stamp"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -10.0
+offset_top = 28.0
+offset_right = 166.0
+offset_bottom = 52.0
+theme_type_variation = &"PopupStampTextDanger"
+text = "0 / 0 THỬ THÁCH"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StampSub" type="Label" parent="Panel/Content/Stamp"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -10.0
+offset_top = 52.0
+offset_right = 166.0
+offset_bottom = 74.0
+theme_type_variation = &"PopupStampSubDanger"
+text = "★ ĐẠT 0 SAO ★"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Stars" type="Control" parent="Panel/Content" index="1" unique_id=2078131612]
 layout_mode = 1
@@ -220,10 +245,14 @@ text_overrun_behavior = 3
 
 [node name="TextureRect" type="TextureRect" parent="Panel/Content/ReplayBtn" index="1" unique_id=715849010]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 20.0
-offset_right = 112.0
-offset_bottom = 60.0
+offset_left = 76.0
+offset_top = 14.0
+offset_right = 116.0
+offset_bottom = 54.0
+mouse_filter = 2
+texture = ExtResource("12_replay")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="NextBtn" type="TextureButton" parent="Panel/Content" index="14" unique_id=1915845557]
 layout_mode = 1

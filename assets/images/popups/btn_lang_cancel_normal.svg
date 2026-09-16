@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 96" width="180" height="96">
+  <!-- Nút HỦY BỎ của popup chọn ngôn ngữ (180x96 — đúng mockup popup_language.svg) -->
+  <rect x="1.25" y="1.25" width="177.5" height="93.5" rx="16" fill="#FEFDFA" stroke="#BAC7CF" stroke-width="2.5"/>
+</svg>
