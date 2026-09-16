@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+  <defs>
+    <!-- Hào quang mực xanh thanh tao -->
+    <filter id="brushGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#2575A7" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#brushGlow)">
+    <g transform="translate(30, 30) rotate(-45)">
+      <!-- 1. Cán cọ sơn mài thon dài (Lacquer Handle) -->
+      <path d="M -3.5 -5 L -3 -22 L 3 -22 L 3.5 -5 Z" 
+            fill="#3E1F17" stroke="#1E283A" stroke-width="1.6" stroke-linejoin="round"/>
+      <!-- Đuôi cán cọ bo tròn nhẹ -->
+      <path d="M -3 -22 C -3 -23.5 3 -23.5 3 -22 Z" fill="#2575A7"/>
+
+      <!-- 2. Cổ bọc lông cọ bằng kim loại vàng đồng (Brass Ferrule) -->
+      <path d="M -4.5 3 L -3.5 -5 L 3.5 -5 L 4.5 3 Z" fill="#FBBF24" stroke="#78350F" stroke-width="1.4"/>
+      <line x1="-4" y1="-1" x2="4" y2="-1" stroke="#B45309" stroke-width="1"/>
+
+      <!-- 3. Bó lông cọ thư pháp vuốt nhọn (Brush Hair / Bristles) -->
+      <!-- Phần bụng lông cọ phình tròn tự nhiên -->
+      <path d="M -4.5 3 
+               C -6 8, -5 14, 0 22 
+               C 5 14, 6 8, 4.5 3 Z" 
+            fill="#F1F5F9" stroke="#1E283A" stroke-width="1.6" stroke-linejoin="round"/>
+
+      <!-- Mảng mực tàu đẫm từ nửa thân cọ vuốt ra mũi -->
+      <path d="M -3.5 10 
+               C -2.5 15, 0 22, 0 22 
+               C 0 22, 2.5 15, 3.5 10 
+               C 2 12, -2 12, -3.5 10 Z" 
+            fill="#1E283A"/>
+      <!-- Sợi mực xanh bóng ở trung tâm mũi cọ -->
+      <path d="M -1.8 13 C -1 18, 0 22, 0 22 C 0 22, 1 18, 1.8 13 Z" fill="#2575A7"/>
+
+      <!-- 4. Giọt mực đọng tại đầu mũi lông nhọn (Điểm định vị chính xác) -->
+      <circle cx="0" cy="22.5" r="1.3" fill="#2575A7"/>
+    </g>
+  </g>
+</svg>

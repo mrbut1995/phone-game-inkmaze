@@ -1,5 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="6 0 24 35" width="24" height="35">
-  <path d="M18 3 C18 3 22 9 22 13 C22 15 25 16 26 19 C27.5 22 27 26 24 29 C21 32 15 32 12 29 C9 26 9 21 12 17 C13 15 14 11 18 3 Z" 
-        fill="#D84444" stroke="#B32B2B" stroke-width="1.8" stroke-linejoin="round"/>
-  <path d="M18 16 C18 16 20 19 20 22 C20 24 16 27 15 25 C14 23 15 20 18 16 Z" fill="#FBBF24"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 35" width="24" height="35" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- 1. NGỌN LỬA CHÍNH (ĐỎ THẮM #D84444) -->
+  <path d="M 12.5 3 
+           C 14 7, 18.5 11, 19.5 16.5 
+           C 20.8 22.5, 18 29.5, 12 32 
+           C 6 29.5, 3.2 22.5, 4.5 16.5 
+           C 5.2 13.5, 6.8 11, 7.8 9.5 
+           C 7.5 12.5, 8.8 15, 10.2 15.5 
+           C 10.2 10.5, 11.2 6.5, 12.5 3 Z" 
+        fill="#D84444" stroke="#B32B2B" stroke-width="1.8"/>
+
+  <!-- 2. LÕI LỬA GIỮA (VÀNG CAM #FBBF24) -->
+  <path d="M 12 15 
+           C 13 18, 16 21, 16 24.5 
+           C 16 28, 14 30, 12 30 
+           C 10 30, 8 28, 8 24.5 
+           C 8 21, 9.5 19, 10.5 17 
+           C 10.8 18, 11.4 18.5, 11.8 18 
+           C 11.6 16.8, 11.8 15.8, 12 15 Z" 
+        fill="#FBBF24"/>
+
+  <!-- 3. TIM LỬA TRUNG TÂM SÁNG RỰC (#FEF08A) -->
+  <path d="M 12 21 
+           C 13 23, 14.5 25, 14.5 26.5 
+           C 14.5 28.2, 13.2 29, 12 29 
+           C 10.8 29, 9.5 28.2, 9.5 26.5 
+           C 9.5 25, 11 23, 12 21 Z" 
+        fill="#FEF08A"/>
+
+  <!-- 4. TÀN LỬA BAY LƠ LỬNG (EMBERS) -->
+  <circle cx="17.5" cy="6" r="1.2" fill="#FBBF24"/>
+  <circle cx="7.5" cy="4.5" r="0.8" fill="#FBBF24" opacity="0.85"/>
 </svg>

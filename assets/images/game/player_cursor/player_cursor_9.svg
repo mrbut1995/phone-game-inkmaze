@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+  <defs>
+    <filter id="glowPink" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.2" flood-color="#EC4899" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+  <g filter="url(#glowPink)">
+    <g transform="translate(30, 30) rotate(-45)">
+      <!-- Thân bút hồng nhật ký ngọt ngào -->
+      <path d="M -7 -10 L -9 -20 L 9 -20 L 7 -10 Z" fill="#DB2777" stroke="#831843" stroke-width="1.8" stroke-linejoin="round"/>
+      <rect x="-8" y="-12" width="16" height="3" rx="1" fill="#FBCFE8" stroke="#831843" stroke-width="0.8"/>
+      
+      <!-- Lá ngòi mạ vàng hồng (Rose Gold) bóng mịn -->
+      <path d="M 0 19 L -1.5 19 C -4 13.5 -10 9 -10 3 C -10 -2 -8 -6 -7 -10 L 0 -10 Z" fill="#F472B6" stroke="#831843" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M 0 19 L 1.5 19 C 4 13.5 10 9 10 3 C 10 -2 8 -6 7 -10 L 0 -10 Z" fill="#FDF2F8" stroke="#831843" stroke-width="1.8" stroke-linejoin="round"/>
+      
+      <!-- Hoa văn trái tim nhỏ ngọt ngào trên ngòi -->
+      <path d="M 0 4 C -1 2 -3.5 2 -3.5 4.5 C -3.5 6.5 0 8.5 0 8.5 C 0 8.5 3.5 6.5 3.5 4.5 C 3.5 2 1 2 0 4 Z" fill="#FDA4AF" stroke="#BE185D" stroke-width="0.7"/>
+      
+      <!-- Lỗ thở & khe dẫn mực hồng -->
+      <circle cx="0" cy="5" r="2" fill="#E11D48" stroke="#831843" stroke-width="1.1"/>
+      <line x1="0" y1="7" x2="0" y2="19.5" stroke="#E11D48" stroke-width="1.5" stroke-linecap="round"/>
+      
+      <!-- Giọt mực hồng kẹo ngọt phát sáng -->
+      <circle cx="0" cy="22" r="1.4" fill="#F43F5E"/>
+      <circle cx="4.5" cy="17" r="0.9" fill="#FBCFE8"/>
+    </g>
+  </g>
+</svg>

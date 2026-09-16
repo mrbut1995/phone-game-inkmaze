@@ -1,28 +1,164 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
-  <!-- ICON CẤP 5 — RƯƠNG VÀNG (20,000 XU) -->
-  <g transform="translate(60,68) scale(0.78)">
-    <ellipse cx="0" cy="46" rx="56" ry="16" fill="#2D2115" opacity="0.25"/>
-    <g transform="translate(0,-26) rotate(-14)">
-      <path d="M -44 -10 C -44 -26 44 -26 44 -10 L 40 4 L -40 4 Z" fill="#9A3412" stroke="#451A03" stroke-width="2.8"/>
-      <path d="M -24 -18 C -24 -24 -16 -26 -16 -26 L -16 4 L -24 4 Z" fill="#F59E0B" stroke="#451A03" stroke-width="1.8"/>
-      <path d="M 16 -18 C 16 -24 24 -26 24 -26 L 24 4 L 16 4 Z" fill="#F59E0B" stroke="#451A03" stroke-width="1.8"/>
-    </g>
-    <path d="M -44 -6 L 44 -6 L 38 40 L -38 40 Z" fill="#7C2D12" stroke="#451A03" stroke-width="3" stroke-linejoin="round"/>
-    <path d="M -44 -6 L -34 -6 L -30 40 L -38 40 Z" fill="#F59E0B" stroke="#451A03" stroke-width="2"/>
-    <path d="M 44 -6 L 34 -6 L 30 40 L 38 40 Z" fill="#F59E0B" stroke="#451A03" stroke-width="2"/>
-    <rect x="-10" y="2" width="20" height="22" rx="4" fill="#FBBF24" stroke="#451A03" stroke-width="2"/>
-    <circle cx="0" cy="11" r="2.5" fill="#451A03"/>
-    <g transform="translate(0,-6)">
-      <ellipse cx="0" cy="0" rx="38" ry="14" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
-      <g transform="translate(-18,-4) scale(0.8)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-      <g transform="translate(16,-6) scale(0.8)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-      <g transform="translate(-4,2) scale(0.85)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="20" ry="10.5" fill="none" stroke="#D97706" stroke-width="1.6" stroke-dasharray="4 2.5"/></g>
-      <g transform="translate(18,4) scale(0.75)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-      <g transform="translate(-22,8) scale(0.8)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-    </g>
-    <g transform="translate(-28,42) rotate(-22) scale(0.85)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-    <g transform="translate(26,42) rotate(18) scale(0.85)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-    <path d="M -34 -40 Q -22 -54 -8 -56 Q -22 -52 -34 -40 Z" fill="#FFFBE8" stroke="#F59E0B" stroke-width="1.4"/>
-    <path d="M 32 -30 Q 40 -40 50 -42 Q 40 -38 32 -30 Z" fill="#FFFBE8" stroke="#F59E0B" stroke-width="1.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTowOGVlY2IwMC0wY2ZhLTQyNDUtYWUyMy1kZjM4MWVlZGRhNGYAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaNyt5+ZFdPd906CqZVgYLmgAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo2NDA4MWQ4Zi0zZmFhLTRjMmEtOTRjMy1mYjYxNGU5NGVhYWZscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNouG0AdUFKIqJRJiWUrer64wAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggZKTjQr0/b/nLp+X/65g39Fzgzs1zpm4UJFlX7weEGy2kZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaAPFrrMdswYrtXRno3/IaIIAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCA+P5TsuqcTc4EDTUECzgm7P50Fwo4rn+ctqhMjrxNfQGRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBjRZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjA4ZWVjYjAwLTBjZmEtNDI0NS1hZTIzLWRmMzgxZWVkZGE0Zi9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjEzODVlZjdkLTNlNmItNGRkYS1iNTU5LTNkZTU4NGRmZmMwY3JjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCBkpONCvT9v+cun5f/rmDf0XODOzXOmbhQkWVfvB4QbLaJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggYB/4Ju+Jjt2/kqvpL2Z540cnbRAWjiWGRF3l188YOVOiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggk04r2EX748yVzhwl+5hBflS5dO/ZyovBlM9U3BKLLmp0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQIdwStqnJaT5O3q8SE8P1xQ/nK37YxWT0CtX0txChTj3E5uqZzeeAmjzyESSX4fqMN/xnP4hmIudU5wDqhY3v3o=</c2pa:manifest></metadata>
+  <!-- 1. BÓNG ĐỔ MẶT ĐẤT TOÀN CẢNH -->
+  <ellipse cx="60" cy="95" rx="54" ry="12" fill="#2D2115" opacity="0.25"/>
+  <ellipse cx="60" cy="94" rx="42" ry="7" fill="#2D2115" opacity="0.18"/>
+
+  <!-- ================= 2. NẮP RƯƠNG MỞ NGỬA RA SAU (3D OPEN LID) ================= -->
+  <!-- Vòm ngoài nắp rương (Gỗ gụ) - nối liền mép với thân rương tại y=63 -->
+  <path d="M 31 63 C 28 30 92 30 89 63 Z" fill="#9A3412" stroke="#451A03" stroke-width="2.5"/>
+  <!-- Lòng trong nắp rương (Lớp lót nhung đỏ sẫm chiều sâu 3D) -->
+  <path d="M 34 61 C 32 38 88 38 86 61 Z" fill="#781010" stroke="#451A03" stroke-width="1.8"/>
+  <!-- Dải vàng kim giữa nắp, đồng bộ và nối liền với dải vàng giữa thân -->
+  <path d="M 56 63 L 58 43 L 62 43 L 64 63 Z" fill="#F59E0B" stroke="#451A03" stroke-width="1.4"/>
+  <!-- Đinh tán trang trí trên vòm nắp -->
+  <circle cx="44" cy="48" r="1.3" fill="#451A03"/>
+  <circle cx="76" cy="48" r="1.3" fill="#451A03"/>
+
+  <!-- ================= 3. CỌC XU BÊN TRÁI (3 XU) ================= -->
+  <!-- Xu L1 -->
+  <path d="M 6 86 A 16 8 0 0 0 38 86 L 38 80 A 16 8 0 0 1 6 80 Z" fill="#D97706" stroke="#78350F" stroke-width="1.8"/>
+  <ellipse cx="22" cy="80" rx="16" ry="8" fill="#F59E0B" stroke="#78350F" stroke-width="1.8"/>
+  <!-- Xu L2 -->
+  <ellipse cx="22" cy="80" rx="14" ry="6.5" fill="#78350F" opacity="0.3"/>
+  <path d="M 6 79 A 16 8 0 0 0 38 79 L 38 73 A 16 8 0 0 1 6 73 Z" fill="#D97706" stroke="#78350F" stroke-width="1.8"/>
+  <ellipse cx="22" cy="73" rx="16" ry="8" fill="#F59E0B" stroke="#78350F" stroke-width="1.8"/>
+  <!-- Xu L3 (Đỉnh cọc trái - Vương miện) -->
+  <ellipse cx="22" cy="73" rx="14" ry="6.5" fill="#78350F" opacity="0.3"/>
+  <path d="M 6 72 A 16 8 0 0 0 38 72 L 38 66 A 16 8 0 0 1 6 66 Z" fill="#D97706" stroke="#78350F" stroke-width="1.8"/>
+  <!-- Rãnh khía -->
+  <g stroke="#B45309" stroke-width="1.4">
+    <line x1="14" y1="69" x2="14" y2="74"/>
+    <line x1="22" y1="71" x2="22" y2="76"/>
+    <line x1="30" y1="69" x2="30" y2="74"/>
   </g>
+  <ellipse cx="22" cy="66" rx="16" ry="8" fill="#F59E0B" stroke="#78350F" stroke-width="1.8"/>
+  <ellipse cx="22" cy="66" rx="13" ry="6.5" fill="#FBBF24" stroke="#D97706" stroke-width="1.2"/>
+  <!-- Vương miện nhỏ -->
+  <path d="M 17 68 L 16 63 L 19 65 L 22 61 L 25 65 L 28 63 L 27 68 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1"/>
+  <circle cx="16" cy="63" r="0.7" fill="#D84444"/>
+  <circle cx="22" cy="61" r="0.9" fill="#3D83AE"/>
+  <circle cx="28" cy="63" r="0.7" fill="#D84444"/>
+  <path d="M 10 65 A 13 6.5 0 0 1 30 61" stroke="#FFFFFF" stroke-width="1.4" opacity="0.8"/>
+
+  <!-- ================= 4. CỌC XU BÊN PHẢI (4 XU CAO) ================= -->
+  <!-- Xu R1 -->
+  <path d="M 82 88 A 16 8 0 0 0 114 88 L 114 82 A 16 8 0 0 1 82 82 Z" fill="#D97706" stroke="#78350F" stroke-width="1.8"/>
+  <ellipse cx="98" cy="82" rx="16" ry="8" fill="#F59E0B" stroke="#78350F" stroke-width="1.8"/>
+  <!-- Xu R2 -->
+  <ellipse cx="98" cy="82" rx="14" ry="6.5" fill="#78350F" opacity="0.3"/>
+  <path d="M 82 82 A 16 8 0 0 0 114 82 L 114 76 A 16 8 0 0 1 82 76 Z" fill="#D97706" stroke="#78350F" stroke-width="1.8"/>
+  <ellipse cx="98" cy="76" rx="16" ry="8" fill="#F59E0B" stroke="#78350F" stroke-width="1.8"/>
+  <!-- Xu R3 -->
+  <ellipse cx="98" cy="76" rx="14" ry="6.5" fill="#78350F" opacity="0.3"/>
+  <path d="M 82 76 A 16 8 0 0 0 114 76 L 114 70 A 16 8 0 0 1 82 70 Z" fill="#D97706" stroke="#78350F" stroke-width="1.8"/>
+  <ellipse cx="98" cy="70" rx="16" ry="8" fill="#F59E0B" stroke="#78350F" stroke-width="1.8"/>
+  <!-- Xu R4 (Đỉnh cọc phải - Vương miện) -->
+  <ellipse cx="98" cy="70" rx="14" ry="6.5" fill="#78350F" opacity="0.3"/>
+  <path d="M 82 70 A 16 8 0 0 0 114 70 L 114 64 A 16 8 0 0 1 82 64 Z" fill="#D97706" stroke="#78350F" stroke-width="1.8"/>
+  <!-- Rãnh khía -->
+  <g stroke="#B45309" stroke-width="1.4">
+    <line x1="90" y1="67" x2="90" y2="72"/>
+    <line x1="98" y1="69" x2="98" y2="74"/>
+    <line x1="106" y1="67" x2="106" y2="72"/>
+  </g>
+  <ellipse cx="98" cy="64" rx="16" ry="8" fill="#F59E0B" stroke="#78350F" stroke-width="1.8"/>
+  <ellipse cx="98" cy="64" rx="13" ry="6.5" fill="#FBBF24" stroke="#D97706" stroke-width="1.2"/>
+  <!-- Vương miện nhỏ -->
+  <path d="M 93 66 L 92 61 L 95 63 L 98 59 L 101 63 L 104 61 L 103 66 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1"/>
+  <circle cx="92" cy="61" r="0.7" fill="#D84444"/>
+  <circle cx="98" cy="59" r="0.9" fill="#3D83AE"/>
+  <circle cx="104" cy="61" r="0.7" fill="#D84444"/>
+  <path d="M 86 63 A 13 6.5 0 0 1 106 59" stroke="#FFFFFF" stroke-width="1.4" opacity="0.8"/>
+
+  <!-- ================= 5. THÂN RƯƠNG TRUNG TÂM (CHEST BASE) ================= -->
+  <!-- Khối thân rương gỗ gụ -->
+  <path d="M 31 63 L 89 63 L 84 89 L 36 89 Z" fill="#7C2D12" stroke="#451A03" stroke-width="2.6" stroke-linejoin="round"/>
+  <!-- Vát góc bóng tối 2 bên thành rương -->
+  <path d="M 31 63 L 38 63 L 42 89 L 36 89 Z" fill="#581C02"/>
+  <path d="M 89 63 L 82 63 L 78 89 L 84 89 Z" fill="#581C02"/>
+
+  <!-- Nẹp kim loại vàng bọc góc trái rương -->
+  <path d="M 31 63 L 40 63 L 44 89 L 36 89 Z" fill="#F59E0B" stroke="#78350F" stroke-width="1.6"/>
+  <!-- Nẹp kim loại vàng bọc góc phải rương -->
+  <path d="M 89 63 L 80 63 L 76 89 L 84 89 Z" fill="#F59E0B" stroke="#78350F" stroke-width="1.6"/>
+  <!-- Nẹp kim loại vàng chạy giữa thân rương -->
+  <path d="M 56 63 L 64 63 L 64 89 L 56 89 Z" fill="#F59E0B" stroke="#78350F" stroke-width="1.6"/>
+
+  <!-- Các đinh tán kim loại (Rivets) -->
+  <circle cx="37" cy="67" r="1.3" fill="#78350F"/>
+  <circle cx="39" cy="85" r="1.3" fill="#78350F"/>
+  <circle cx="83" cy="67" r="1.3" fill="#78350F"/>
+  <circle cx="81" cy="85" r="1.3" fill="#78350F"/>
+  <circle cx="60" cy="85" r="1.3" fill="#78350F"/>
+
+  <!-- Gờ viền miệng rương trước mặt (vẽ trước núi tiền để không đè lên xu) -->
+  <path d="M 30 63 H 90" stroke="#FBBF24" stroke-width="3"/>
+  <path d="M 30 63 H 90" stroke="#78350F" stroke-width="1.2" opacity="0.6"/>
+
+  <!-- ================= 6. NÚI TIỀN VÀNG TRÀN NGẬP TRONG LÒNG RƯƠNG ================= -->
+  <!-- Ụ vàng phồng cao -->
+  <path d="M 33 63 C 33 46 87 46 87 63 Z" fill="#D97706" stroke="#78350F" stroke-width="1.8"/>
+  <ellipse cx="60" cy="57" rx="25" ry="9" fill="#F59E0B"/>
+
+  <!-- Các đồng xu lớp dưới trong rương -->
+  <ellipse cx="46" cy="55" rx="10" ry="5" fill="#FBBF24" stroke="#78350F" stroke-width="1.2"/>
+  <ellipse cx="74" cy="55" rx="10" ry="5" fill="#FBBF24" stroke="#78350F" stroke-width="1.2"/>
+
+  <!-- Đồng xu Vương miện Hoàng gia ngự trị đỉnh rương -->
+  <ellipse cx="60" cy="53" rx="14" ry="7" fill="#FBBF24" stroke="#78350F" stroke-width="1.6"/>
+  <ellipse cx="60" cy="53" rx="11.5" ry="5.5" fill="#FEF08A" stroke="#D97706" stroke-width="1"/>
+  <!-- Vương miện trên đồng xu đỉnh rương -->
+  <path d="M 54 55 L 53 50 L 57 52 L 60 48 L 63 52 L 67 50 L 66 55 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1.2"/>
+  <circle cx="53" cy="50" r="0.8" fill="#D84444"/>
+  <circle cx="60" cy="48" r="1.1" fill="#3D83AE"/>
+  <circle cx="67" cy="50" r="0.8" fill="#D84444"/>
+
+  <!-- Các đồng xu trào ra phía trước mép rương -->
+  <g transform="translate(43, 62) rotate(-16)">
+    <path d="M -9 4 A 9 4.5 0 0 0 9 4 L 9 0 A 9 4.5 0 0 1 -9 0 Z" fill="#D97706" stroke="#78350F" stroke-width="1.2"/>
+    <ellipse cx="0" cy="0" rx="9" ry="4.5" fill="#FBBF24" stroke="#78350F" stroke-width="1.2"/>
+  </g>
+  <g transform="translate(77, 62) rotate(18)">
+    <path d="M -9 4 A 9 4.5 0 0 0 9 4 L 9 0 A 9 4.5 0 0 1 -9 0 Z" fill="#D97706" stroke="#78350F" stroke-width="1.2"/>
+    <ellipse cx="0" cy="0" rx="9" ry="4.5" fill="#FBBF24" stroke="#78350F" stroke-width="1.2"/>
+  </g>
+
+  <!-- Khóa rương vàng chính giữa (Lock Hasp) -->
+  <rect x="54" y="63" width="12" height="15" rx="3" fill="#FBBF24" stroke="#78350F" stroke-width="1.8"/>
+  <circle cx="60" cy="69" r="2" fill="#451A03"/>
+  <line x1="60" y1="69" x2="60" y2="74" stroke="#451A03" stroke-width="1.5"/>
+
+  <!-- ================= 7. ĐỒNG XU RƠI VƯƠNG VÃI TIỀN CẢNH ================= -->
+  <!-- Xu rơi bên trái chân rương -->
+  <g transform="translate(32, 90) rotate(-15)">
+    <path d="M -12 4.5 A 12 6 0 0 0 12 4.5 L 12 0 A 12 6 0 0 1 -12 0 Z" fill="#D97706" stroke="#78350F" stroke-width="1.4"/>
+    <ellipse cx="0" cy="0" rx="12" ry="6" fill="#F59E0B" stroke="#78350F" stroke-width="1.4"/>
+    <ellipse cx="0" cy="0" rx="10" ry="5" fill="#FBBF24" stroke="#D97706" stroke-width="1"/>
+  </g>
+  <!-- Xu rơi bên phải chân rương -->
+  <g transform="translate(86, 89) rotate(18)">
+    <path d="M -12 4.5 A 12 6 0 0 0 12 4.5 L 12 0 A 12 6 0 0 1 -12 0 Z" fill="#D97706" stroke="#78350F" stroke-width="1.4"/>
+    <ellipse cx="0" cy="0" rx="12" ry="6" fill="#F59E0B" stroke="#78350F" stroke-width="1.4"/>
+    <ellipse cx="0" cy="0" rx="10" ry="5" fill="#FBBF24" stroke="#D97706" stroke-width="1"/>
+  </g>
+  <!-- Xu nằm bẹt chính giữa đáy -->
+  <g transform="translate(58, 93)">
+    <ellipse cx="0" cy="0" rx="11" ry="5" fill="#F59E0B" stroke="#78350F" stroke-width="1.4"/>
+    <ellipse cx="0" cy="0" rx="9" ry="4" fill="#FBBF24" stroke="#D97706" stroke-width="1"/>
+    <path d="M -7 -1 A 9 4 0 0 1 4 -3.5" stroke="#FFFFFF" stroke-width="1.2" opacity="0.8"/>
+  </g>
+
+  <!-- ================= 8. HIỆU ỨNG LẤP LÁNH KHO BÁU 20,000 XU ================= -->
+  <!-- Sparkle lớn rực sáng đỉnh núi vàng -->
+  <path d="M 45 35 Q 45 42 52 42 Q 45 42 45 49 Q 45 42 38 42 Q 45 42 45 35 Z" fill="#FFFFFF"/>
+  <circle cx="45" cy="42" r="1.4" fill="#FEF08A"/>
+  <!-- Sparkle đỉnh cọc trái -->
+  <path d="M 12 55 Q 12 60 17 60 Q 12 60 12 65 Q 12 60 7 60 Q 12 60 12 55 Z" fill="#FFFFFF"/>
+  <circle cx="12" cy="60" r="1.1" fill="#FEF08A"/>
+  <!-- Sparkle đỉnh cọc phải -->
+  <path d="M 108 52 Q 108 57 113 57 Q 108 57 108 62 Q 108 57 103 57 Q 108 57 108 52 Z" fill="#FFFFFF"/>
+  <circle cx="108" cy="57" r="1.1" fill="#FEF08A"/>
+  <!-- Bụi vàng phát sáng lơ lửng -->
+  <circle cx="28" cy="44" r="1.2" fill="#FEF08A"/>
+  <circle cx="92" cy="42" r="1.2" fill="#FFFFFF"/>
 </svg>

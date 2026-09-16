@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+  <defs>
+    <filter id="glowViolet" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#8B5CF6" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+  <g filter="url(#glowViolet)">
+    <g transform="translate(30, 30) rotate(-45)">
+      <!-- Cổ bút tím hoa cà hoài niệm -->
+      <path d="M -7 -10 L -9 -20 L 9 -20 L 7 -10 Z" fill="#6D28D9" stroke="#3B0764" stroke-width="1.8" stroke-linejoin="round"/>
+      <rect x="-8" y="-12" width="16" height="3" rx="1" fill="#DDD6FE" stroke="#3B0764" stroke-width="0.8"/>
+      
+      <!-- Lá ngòi kim loại ánh bạc tím 2 mảng sáng/tối -->
+      <path d="M 0 19 L -1.5 19 C -4 13.5 -10 9 -10 3 C -10 -2 -8 -6 -7 -10 L 0 -10 Z" fill="#C4B5FD" stroke="#3B0764" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M 0 19 L 1.5 19 C 4 13.5 10 9 10 3 C 10 -2 8 -6 7 -10 L 0 -10 Z" fill="#EDE9FE" stroke="#3B0764" stroke-width="1.8" stroke-linejoin="round"/>
+      
+      <!-- Khắc hoa văn cánh hoa cà trên ngòi -->
+      <path d="M -4 4 C -4 -1 0 -4 0 -4 C 0 -4 4 -1 4 4 C 3 6 0 8 0 8 C 0 8 -3 6 -4 4 Z" fill="#A78BFA" stroke="#6D28D9" stroke-width="0.7"/>
+      
+      <!-- Lỗ thở & khe dẫn mực tím -->
+      <circle cx="0" cy="5" r="2.2" fill="#7C3AED" stroke="#3B0764" stroke-width="1.2"/>
+      <line x1="0" y1="7.2" x2="0" y2="19.5" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round"/>
+      
+      <!-- Giọt mực tím hoa cà lãng mạn -->
+      <circle cx="0" cy="22" r="1.4" fill="#8B5CF6"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+  <defs>
+    <filter id="cursorGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#2575A7" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#cursorGlow)">
+    <!-- Con trỏ Ngòi bút máy nghiêng góc 45 độ -->
+    <g transform="translate(30, 30) rotate(-45)">
+      <!-- 1. Cổ bút màu xanh thương hiệu (Grip Section) -->
+      <path d="M -7 -10 L -9 -20 L 9 -20 L 7 -10 Z" fill="#2575A7" stroke="#1E283A" stroke-width="1.8" stroke-linejoin="round"/>
+      <!-- Đai vàng nối cổ bút -->
+      <rect x="-8" y="-12" width="16" height="3" rx="1" fill="#FBBF24" stroke="#78350F" stroke-width="0.8"/>
+
+      <!-- 2. Lá ngòi kim loại 2 mảng sáng/tối tạo khối 3D -->
+      <!-- Mảng tối bên trái -->
+      <path d="M 0 19 L -1.5 19 C -4 13.5 -10 9 -10 3 C -10 -2 -8 -6 -7 -10 L 0 -10 Z" fill="#E2E8F0" stroke="#1E283A" stroke-width="1.8" stroke-linejoin="round"/>
+      <!-- Mảng sáng bóng bên phải -->
+      <path d="M 0 19 L 1.5 19 C 4 13.5 10 9 10 3 C 10 -2 8 -6 7 -10 L 0 -10 Z" fill="#FFFFFF" stroke="#1E283A" stroke-width="1.8" stroke-linejoin="round"/>
+
+      <!-- 3. Họa tiết hoa văn mạ vàng chạm khắc trên ngòi -->
+      <path d="M -5 3 C -5 -3 -1 -6 0 -6 C 1 -6 5 -3 5 3 C 4 6 2 8 0 10 C -2 8 -4 6 -5 3 Z" fill="#FDE68A" stroke="#B45309" stroke-width="0.8"/>
+
+      <!-- 4. Lỗ thở tròn đọng mực xanh (Breather hole) -->
+      <circle cx="0" cy="5" r="2.2" fill="#2575A7" stroke="#1E283A" stroke-width="1.2"/>
+
+      <!-- 5. Khe chẻ dẫn mực xuống mũi ngòi (Slit line) -->
+      <line x1="0" y1="7.2" x2="0" y2="19.5" stroke="#1E283A" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- 6. Đốm mực xanh định vị chính xác điểm chạm của ngòi -->
+      <circle cx="0" cy="22" r="1.4" fill="#2575A7"/>
+    </g>
+  </g>
+</svg>

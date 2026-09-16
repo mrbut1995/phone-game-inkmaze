@@ -1,23 +1,91 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
-  <!-- ICON CẤP 3 — ĐỐNG XU (3,500 XU) -->
-  <g transform="translate(60,54) scale(1.02)">
-    <ellipse cx="0" cy="46" rx="50" ry="13" fill="#2D2115" opacity="0.16"/>
-    <g transform="translate(-18,0) scale(1.02)">
-      <g transform="translate(0,28)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-      <g transform="translate(0,17)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-      <g transform="translate(0,6)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-      <g transform="translate(0,-5)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="20" ry="10.5" fill="none" stroke="#D97706" stroke-width="1.6" stroke-dasharray="4 2.5"/><path d="M -16 -4 A 18 9 0 0 1 4 -8" fill="none" stroke="#FEF3C7" stroke-width="1.8" stroke-linecap="round"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- 1. Bóng đổ bao quát toàn đống xu -->
+  <ellipse cx="60" cy="94" rx="48" ry="12" fill="#2D2115" opacity="0.22"/>
+  <ellipse cx="60" cy="92" rx="38" ry="8" fill="#2D2115" opacity="0.16"/>
+
+  <!-- ================= CỌC TRÁI (THÁP 3 XU CAO) ================= -->
+  <!-- Xu L1 (Dưới cùng cọc trái) -->
+  <path d="M 16 73 A 24 12 0 0 0 64 73 L 64 66 A 24 12 0 0 1 16 66 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
+  <ellipse cx="40" cy="66" rx="24" ry="12" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
+
+  <!-- Xu L2 (Giữa cọc trái) -->
+  <ellipse cx="40" cy="66" rx="22" ry="10" fill="#78350F" opacity="0.3"/>
+  <path d="M 16 62 A 24 12 0 0 0 64 62 L 64 55 A 24 12 0 0 1 16 55 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
+  <ellipse cx="40" cy="55" rx="24" ry="12" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
+
+  <!-- Xu L3 (Đỉnh cọc trái - Vương miện) -->
+  <ellipse cx="40" cy="55" rx="22" ry="10" fill="#78350F" opacity="0.3"/>
+  <path d="M 16 51 A 24 12 0 0 0 64 51 L 64 44 A 24 12 0 0 1 16 44 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
+  <ellipse cx="40" cy="44" rx="24" ry="12" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
+  <ellipse cx="40" cy="44" rx="21" ry="10.5" fill="#FBBF24" stroke="#D97706" stroke-width="1.3"/>
+  <ellipse cx="40" cy="44" rx="18" ry="9" stroke="#B45309" stroke-width="1.4" stroke-dasharray="1.8 3"/>
+  <!-- Vương miện nhỏ đỉnh tháp trái -->
+  <path d="M 32 48 L 30 40 L 35 43 L 40 37 L 45 43 L 50 40 L 48 48 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1.4"/>
+  <circle cx="30" cy="40" r="1.1" fill="#D84444"/>
+  <circle cx="40" cy="37" r="1.3" fill="#3D83AE"/>
+  <circle cx="50" cy="40" r="1.1" fill="#D84444"/>
+  <path d="M 20 42 A 21 10.5 0 0 1 48 35" stroke="#FFFFFF" stroke-width="1.8" opacity="0.8"/>
+
+  <!-- ================= CỌC PHẢI (THÁP 2 XU) ================= -->
+  <!-- Xu R1 (Dưới cùng cọc phải) -->
+  <path d="M 52 75 A 24 12 0 0 0 100 75 L 100 68 A 24 12 0 0 1 52 68 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
+  <ellipse cx="76" cy="68" rx="24" ry="12" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
+
+  <!-- Xu R2 (Đỉnh cọc phải) -->
+  <ellipse cx="76" cy="68" rx="22" ry="10" fill="#78350F" opacity="0.3"/>
+  <path d="M 52 64 A 24 12 0 0 0 100 64 L 100 57 A 24 12 0 0 1 52 57 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
+  <ellipse cx="76" cy="57" rx="24" ry="12" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
+  <ellipse cx="76" cy="57" rx="21" ry="10.5" fill="#FBBF24" stroke="#D97706" stroke-width="1.3"/>
+  <ellipse cx="76" cy="57" rx="18" ry="9" stroke="#B45309" stroke-width="1.4" stroke-dasharray="1.8 3"/>
+  <!-- Vương miện cọc phải -->
+  <path d="M 68 61 L 66 53 L 71 56 L 76 50 L 81 56 L 86 53 L 84 61 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1.4"/>
+  <circle cx="66" cy="53" r="1.1" fill="#D84444"/>
+  <circle cx="76" cy="50" r="1.3" fill="#3D83AE"/>
+  <circle cx="86" cy="53" r="1.1" fill="#D84444"/>
+  <path d="M 56 55 A 21 10.5 0 0 1 84 48" stroke="#FFFFFF" stroke-width="1.8" opacity="0.8"/>
+
+  <!-- ================= ĐỒNG XU RƠI NGHIÊNG TIỀN CẢNH ================= -->
+  <!-- Bóng đổ của đồng xu nghiêng -->
+  <ellipse cx="58" cy="88" rx="26" ry="8" fill="#2D2115" opacity="0.25"/>
+
+  <g transform="translate(58, 76) rotate(-16)">
+    <!-- Cạnh dày 3D -->
+    <path d="M -27 7.5 A 27 14 0 0 0 27 7.5 L 27 0 A 27 14 0 0 1 -27 0 Z" fill="#D97706" stroke="#78350F" stroke-width="2.2"/>
+    <!-- Rãnh khía -->
+    <g stroke="#B45309" stroke-width="1.6">
+      <line x1="-18" y1="4" x2="-18" y2="11"/>
+      <line x1="-8" y1="6" x2="-8" y2="13"/>
+      <line x1="2" y1="7" x2="2" y2="14"/>
+      <line x1="12" y1="6" x2="12" y2="13"/>
+      <line x1="20" y1="4" x2="20" y2="11"/>
     </g>
-    <g transform="translate(20,10)">
-      <g transform="translate(0,22)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-      <g transform="translate(0,11)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/></g>
-      <g transform="translate(0,0)"><path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/><ellipse cx="0" cy="0" rx="20" ry="10.5" fill="none" stroke="#D97706" stroke-width="1.6" stroke-dasharray="4 2.5"/></g>
-    </g>
-    <g transform="translate(0,38) rotate(-18) scale(1.05)">
-      <path d="M -26 0 A 26 14 0 0 0 26 0 L 26 8 A 26 14 0 0 1 -26 8 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
-      <ellipse cx="0" cy="0" rx="26" ry="14" fill="#FBBF24" stroke="#78350F" stroke-width="2"/>
-      <ellipse cx="0" cy="0" rx="20" ry="10.5" fill="none" stroke="#D97706" stroke-width="1.6" stroke-dasharray="4 2.5"/>
-      <path d="M -16 -4 A 18 9 0 0 1 4 -8" fill="none" stroke="#FEF3C7" stroke-width="1.8" stroke-linecap="round"/>
-    </g>
+    <!-- Mặt xu chính -->
+    <ellipse cx="0" cy="0" rx="27" ry="14" fill="#F59E0B" stroke="#78350F" stroke-width="2.2"/>
+    <ellipse cx="0" cy="0" rx="23.5" ry="12" fill="#FBBF24" stroke="#D97706" stroke-width="1.5"/>
+    <ellipse cx="0" cy="0" rx="20" ry="10" stroke="#B45309" stroke-width="1.4" stroke-dasharray="1.8 3"/>
+
+    <!-- Vương miện lớn mặt tiền cảnh -->
+    <path d="M -9 4 L -11 -4 L -5 -1 L 0 -7 L 5 -1 L 11 -4 L 9 4 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1.6"/>
+    <line x1="-9" y1="2" x2="9" y2="2" stroke="#B45309" stroke-width="1.2"/>
+    <circle cx="-11" cy="-4" r="1.3" fill="#D84444" stroke="#78350F" stroke-width="0.6"/>
+    <circle cx="0" cy="-7" r="1.5" fill="#3D83AE" stroke="#78350F" stroke-width="0.6"/>
+    <circle cx="11" cy="-4" r="1.3" fill="#D84444" stroke="#78350F" stroke-width="0.6"/>
+
+    <!-- Vệt sáng phản quang -->
+    <path d="M -22 -2 A 24 12 0 0 1 8 -11" stroke="#FFFFFF" stroke-width="2" opacity="0.85"/>
   </g>
+
+  <!-- ================= HIỆU ỨNG LẤP LÁNH KHO BÁU ================= -->
+  <!-- Sparkle lớn trên đỉnh cọc trái -->
+  <path d="M 22 22 Q 22 29 29 29 Q 22 29 22 36 Q 22 29 15 29 Q 22 29 22 22 Z" fill="#FFFFFF"/>
+  <circle cx="22" cy="29" r="1.3" fill="#FEF08A"/>
+
+  <!-- Sparkle góc dưới phải đồng xu rơi -->
+  <path d="M 88 72 Q 88 77 93 77 Q 88 77 88 82 Q 88 77 83 77 Q 88 77 88 72 Z" fill="#FFFFFF"/>
+  <circle cx="88" cy="77" r="1.2" fill="#FEF08A"/>
+
+  <!-- Hạt bụi vàng lấp lánh bay quanh -->
+  <circle cx="98" cy="50" r="1.4" fill="#FFFFFF"/>
+  <path d="M 98 47 V 53 M 95 50 H 101" stroke="#FFFFFF" stroke-width="1"/>
+  <circle cx="15" cy="55" r="1.2" fill="#FEF08A"/>
 </svg>

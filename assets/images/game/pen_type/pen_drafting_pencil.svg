@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+  <defs>
+    <filter id="cursorGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#2575A7" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <g filter="url(#cursorGlow)">
+    <g transform="translate(30, 30) rotate(-45)">
+      <!-- Thân bút kim loại kỹ thuật -->
+      <path d="M -6 -5 L -6 -20 L 6 -20 L 6 -5 Z" fill="#2575A7" stroke="#1E283A" stroke-width="1.6" stroke-linejoin="round"/>
+      
+      <!-- Cổ bút kim loại có vân nhám (Knurled grip) -->
+      <path d="M -6 5 L -6 -5 L 6 -5 L 6 5 Z" fill="#CBD5E1" stroke="#1E283A" stroke-width="1.6"/>
+      <line x1="-6" y1="-1" x2="6" y2="-1" stroke="#1E283A" stroke-width="1" opacity="0.4"/>
+      <line x1="-6" y1="2" x2="6" y2="2" stroke="#1E283A" stroke-width="1" opacity="0.4"/>
+
+      <!-- Mũi côn kim loại giật cấp -->
+      <path d="M -5 5 L -1.8 13 L 1.8 13 L 5 5 Z" fill="#E2E8F0" stroke="#1E283A" stroke-width="1.6" stroke-linejoin="round"/>
+
+      <!-- Ống dẫn ngòi kim loại siêu mảnh (Guide pipe) -->
+      <rect x="-0.9" y="13" width="1.8" height="5.5" fill="#94A3B8" stroke="#1E283A" stroke-width="1"/>
+
+      <!-- Ngòi than chì 0.5mm nhô ra -->
+      <line x1="0" y1="18.5" x2="0" y2="22.5" stroke="#1E283A" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

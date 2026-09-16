@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+  <defs>
+    <filter id="glowGold" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#F59E0B" flood-opacity="0.65"/>
+    </filter>
+  </defs>
+  <g filter="url(#glowGold)">
+    <g transform="translate(30, 30) rotate(-45)">
+      <!-- Cổ bút hoàng gia màu nâu hổ phách viền vàng -->
+      <path d="M -7 -10 L -9 -20 L 9 -20 L 7 -10 Z" fill="#78350F" stroke="#451A03" stroke-width="1.8" stroke-linejoin="round"/>
+      <rect x="-8" y="-12" width="16" height="3" rx="1" fill="#FDE68A" stroke="#78350F" stroke-width="0.8"/>
+      <!-- Lá ngòi vàng ròng 18K chạm khắc -->
+      <path d="M 0 19 L -1.5 19 C -4 13.5 -10 9 -10 3 C -10 -2 -8 -6 -7 -10 L 0 -10 Z" fill="#F59E0B" stroke="#78350F" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M 0 19 L 1.5 19 C 4 13.5 10 9 10 3 C 10 -2 8 -6 7 -10 L 0 -10 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1.8" stroke-linejoin="round"/>
+      <!-- Hoa văn vương miện mạ vàng & đá ruby đỏ ở lỗ thở -->
+      <circle cx="0" cy="5" r="2.2" fill="#D84444" stroke="#78350F" stroke-width="1.2"/>
+      <line x1="0" y1="7.2" x2="0" y2="19.5" stroke="#78350F" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Giọt nhũ vàng kim tuyến ở đầu ngòi -->
+      <circle cx="0" cy="22" r="1.6" fill="#FBBF24"/>
+      <!-- Các hạt kim tuyến phát sáng lơ lửng quanh ngòi -->
+      <circle cx="-5" cy="18" r="1" fill="#FEF08A"/>
+      <circle cx="5" cy="16" r="1.2" fill="#FFFFFF"/>
+      <circle cx="0" cy="24.5" r="0.8" fill="#FEF08A"/>
+    </g>
+  </g>
+</svg>
