@@ -151,9 +151,15 @@ func _build_daily() -> void:
 	_add_section("DAILY")
 	_add_value("Today", str(_daily_value("get_today", 1)))
 	_add_value("Streak", str(_daily_value("get_streak", 0)))
-	_add_action("Play today's daily", "Mở game với challenge của hôm nay", _play_today_daily)
-	_add_action("Mark today done (3★)", "Đánh dấu ngày hôm nay hoàn thành", _complete_today_daily)
-	_add_action("Reset daily data", "Xoá toàn bộ ngày/sao đã lưu", _reset_daily, true)
+	_add_value("Missions today", "%d / %d" % [
+		_daily_missions_today(), _daily_value("mission_count", 4)])
+	_add_action("Play today's CLASSIC maze", "Maze thường của ngày (3 nhiệm vụ đầu)",
+		_play_today_classic)
+	_add_action("Play today's SPECIAL maze", "Maze đặc biệt của ngày (nhiệm vụ thứ 4)",
+		_play_today_special)
+	_add_action("Mark today done (4 nhiệm vụ)", "Đánh dấu hôm nay xong hết nhiệm vụ", _complete_today_daily)
+	_add_action("Unlock yesterday", "Trả Xu mở khoá ngày đã bỏ lỡ (hôm qua)", _unlock_yesterday)
+	_add_action("Reset daily data", "Xoá toàn bộ ngày/nhiệm vụ/Xu đã thưởng", _reset_daily, true)
 
 
 # ---------------------------------------------------------------------------
@@ -277,16 +283,41 @@ func _reset_progress() -> void:
 	_rebuild_after_action("Đã xoá tiến trình màn chơi")
 
 
-func _play_today_daily() -> void:
+func _play_today_classic() -> void:
+	_gm_call("start_daily_classic", int(_daily_value("get_today", 1)))
+
+
+func _play_today_special() -> void:
 	_gm_call("start_daily", int(_daily_value("get_today", 1)))
+
+
+func _daily_missions_today() -> int:
+	var daily := _daily_manager()
+	if daily == null:
+		return 0
+	return int(daily.call("get_day_missions", int(daily.call("get_today"))))
 
 
 func _complete_today_daily() -> void:
 	var daily := _daily_manager()
 	if daily == null:
 		return
-	daily.call("set_day_stars", int(daily.call("get_today")), 3)
-	_rebuild_after_action("Đã đánh dấu hôm nay hoàn thành (3★)")
+	var day := int(daily.call("get_today"))
+	var flags: Array[bool] = [true, true, true, true]
+	daily.call("complete_day_missions", day, flags)
+	_rebuild_after_action("Đã đánh dấu hôm nay hoàn thành (4 nhiệm vụ)")
+
+
+## Trả Xu mở khoá ngày HÔM QUA nếu ngày đó đang bỏ lỡ (thử nút MỞ KHÓA ở màn Daily)
+func _unlock_yesterday() -> void:
+	var daily := _daily_manager()
+	if daily == null:
+		return
+	var day := int(daily.call("get_today")) - 1
+	if day >= 1 and bool(daily.call("unlock_day", day)):
+		_rebuild_after_action("Đã mở khoá ngày %d (−%d Xu)" % [day, int(daily.call("unlock_cost"))])
+	else:
+		_rebuild_after_action("Không mở khoá được ngày %d (chưa bỏ lỡ / thiếu Xu)" % day)
 
 
 func _reset_daily() -> void:

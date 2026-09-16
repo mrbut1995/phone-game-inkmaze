@@ -314,6 +314,7 @@ script = ExtResource("42_pr1ej")
 [connection signal="home_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_home_requested"]
 [connection signal="pause_toggled" from="Controllers/UIController" to="Controllers/GameController" method="_on_pause_toggled"]
 [connection signal="retry_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_retry_requested"]
+[connection signal="daily_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_daily_requested"]
 [connection signal="revive_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_revive_requested"]
 [connection signal="memorize_finished" from="Controllers/UIController" to="Controllers/GameController" method="_on_memorize_finished"]
 [connection signal="tool_changed" from="Controllers/ToolController" to="Board" method="set_tool_mode"]

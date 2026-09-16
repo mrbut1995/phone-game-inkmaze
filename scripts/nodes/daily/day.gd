@@ -23,7 +23,7 @@ enum State {
 	TODAY,    ## Ngày hôm nay
 }
 
-const MAX_STARS := 3
+const MAX_MISSIONS := 4
 const TEX_DIR := "res://assets/images/calendar/"
 
 ## state -> [normal, pressed, focus] ("" = dùng lại texture normal)
@@ -76,8 +76,11 @@ const PILL_VARIATIONS := {
 
 @export var day_number: int = 1
 @export var state: State = State.FUTURE
-@export var stars: int = 0
+## Số nhiệm vụ đã hoàn thành của ngày (0..4)
+@export var missions: int = 0
 @export var weekend: bool = false
+## Ngày bỏ lỡ đã trả Xu MỞ KHOÁ (hiện "ĐÃ MỞ" thay vì "BỎ LỠ")
+@export var unlocked: bool = false
 
 @onready var btn: TextureButton = $Button
 @onready var number_label: Label = $Button/Number
@@ -95,11 +98,12 @@ func _ready() -> void:
 	_apply()
 
 
-func setup(p_day: int, p_state: State, p_stars: int = 0, p_weekend: bool = false) -> void:
+func setup(p_day: int, p_state: State, p_missions: int = 0, p_weekend: bool = false, p_unlocked: bool = false) -> void:
 	day_number = p_day
 	state = p_state
-	stars = clampi(p_stars, 0, MAX_STARS)
+	missions = clampi(p_missions, 0, MAX_MISSIONS)
 	weekend = p_weekend
+	unlocked = p_unlocked
 	if is_node_ready():
 		_apply()
 
@@ -116,7 +120,10 @@ func _apply() -> void:
 	btn.texture_focused = _tex(files[0] if files[2] == "" else files[2])
 	btn.texture_disabled = _tex(files[0])
 
-	var playable := state == State.PARTIAL or state == State.DONE or state == State.TODAY
+	# Bấm vào ô ngày = XEM nhiệm vụ + maze của ngày đó (màn Daily tự xử lý).
+	# Ngày bỏ lỡ vẫn xem được; ngày tương lai xa / chưa mở thì khoá.
+	var playable := state == State.PARTIAL or state == State.DONE \
+		or state == State.TODAY or state == State.MISSED
 	btn.disabled = not playable
 	btn.focus_mode = Control.FOCUS_ALL if playable else Control.FOCUS_NONE
 
@@ -162,11 +169,10 @@ func _status_text() -> String:
 		State.FUTURE:
 			return tr("STR_DAILY_LOCKED")
 		State.MISSED:
-			return tr("STR_DAILY_MISSED")
-		State.TODAY:
-			return tr("STR_DAILY_DONE_FORMAT").format([stars, MAX_STARS])
+			return tr("STR_DAILY_UNLOCKED") if unlocked else tr("STR_DAILY_MISSED")
 		_:
-			return tr("STR_DAILY_STARS_FORMAT").format([stars, MAX_STARS])
+			# Cả ngày hôm nay lẫn ngày đã chơi đều hiển thị "x/4 XONG" (thưởng bằng Xu)
+			return tr("STR_DAILY_DONE_FORMAT").format([missions, MAX_MISSIONS])
 
 
 func _tex(file: String) -> Texture2D:

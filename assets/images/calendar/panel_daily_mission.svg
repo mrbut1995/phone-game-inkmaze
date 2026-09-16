@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 540" width="1020" height="540">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 592" width="1020" height="592">
   <defs>
     <filter id="dlgCleanShadow" x="-10%" y="-10%" width="125%" height="130%">
       <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#182E3E" flood-opacity="0.22" />
@@ -10,35 +10,39 @@
     </pattern>
 
     <clipPath id="dlgCleanClip">
-      <rect x="20" y="16" width="980" height="490" rx="22" />
+      <rect x="20" y="16" width="980" height="560" rx="22" />
     </clipPath>
   </defs>
 
   <g filter="url(#dlgCleanShadow)">
     <g clip-path="url(#dlgCleanClip)">
-      <!-- 1. Nền giấy chính -->
-      <rect x="20" y="16" width="980" height="490" fill="#FAF5EB" />
+      <!-- 1. Nền giấy chính (980 x 560: đã kéo dài thêm 1 hàng nhiệm vụ) -->
+      <rect x="20" y="16" width="980" height="560" fill="#FAF5EB" />
 
-      <!-- 2. Lưới ô ly Body -->
-      <rect x="20" y="86" width="980" height="344" fill="url(#dlgCleanGrid)" />
+      <!-- 2. Lưới ô ly Body (y: 76 -> 516) -->
+      <rect x="20" y="76" width="980" height="440" fill="url(#dlgCleanGrid)" />
 
-      <!-- 3. Header Section (y: 16 -> 86) -->
-      <rect x="20" y="16" width="980" height="70" fill="#F4EEDF" />
-      <line x1="20" y1="86" x2="1000" y2="86" stroke="#3D83AE" stroke-width="2.5" />
+      <!-- 2b. Hàng CHẾ ĐỘ ĐẶC BIỆT: phủ hồng nhạt để tách khỏi 3 hàng maze thường -->
+      <rect x="20" y="406" width="980" height="110" fill="#D84444" fill-opacity="0.07" />
 
-      <!-- 4. LỀ ĐỎ PHÂN TÁCH: Bên trái là Cột Status (rộng 130px), bên phải là Content + Button -->
-      <line x1="150" y1="86" x2="150" y2="430" stroke="#D84444" stroke-width="2.8" />
+      <!-- 3. Header Section (y: 16 -> 76) -->
+      <rect x="20" y="16" width="980" height="60" fill="#F4EEDF" />
+      <line x1="20" y1="76" x2="1000" y2="76" stroke="#3D83AE" stroke-width="2.5" />
 
-      <!-- Vạch phân cách các hàng nhiệm vụ -->
-      <line x1="20" y1="200" x2="1000" y2="200" stroke="#8FB9D2" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
-      <line x1="20" y1="315" x2="1000" y2="315" stroke="#8FB9D2" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+      <!-- 4. LỀ ĐỎ PHÂN TÁCH: trái = cột Status (rộng 130px), phải = Content + Button -->
+      <line x1="150" y1="76" x2="150" y2="516" stroke="#D84444" stroke-width="2.8" />
 
-      <!-- 5. Footer Section (y: 430 -> 506) -->
-      <rect x="20" y="430" width="980" height="76" fill="#F4EEDF" />
-      <line x1="20" y1="430" x2="1000" y2="430" stroke="#3D83AE" stroke-width="2" stroke-dasharray="7 4" />
+      <!-- Vạch phân cách 4 hàng nhiệm vụ -->
+      <line x1="20" y1="186" x2="1000" y2="186" stroke="#8FB9D2" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+      <line x1="20" y1="296" x2="1000" y2="296" stroke="#8FB9D2" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+      <line x1="20" y1="406" x2="1000" y2="406" stroke="#8FB9D2" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+
+      <!-- 5. Footer Section (y: 516 -> 576) -->
+      <rect x="20" y="516" width="980" height="60" fill="#F4EEDF" />
+      <line x1="20" y1="516" x2="1000" y2="516" stroke="#3D83AE" stroke-width="2" stroke-dasharray="7 4" />
     </g>
 
     <!-- Viền khung ngoài -->
-    <rect x="20" y="16" width="980" height="490" rx="22" fill="none" stroke="#3D83AE" stroke-width="3" />
+    <rect x="20" y="16" width="980" height="560" rx="22" fill="none" stroke="#3D83AE" stroke-width="3" />
   </g>
 </svg>

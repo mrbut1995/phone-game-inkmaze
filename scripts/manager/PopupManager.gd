@@ -16,6 +16,7 @@ signal popup_closed(id: String)
 ## Id -> scene của các popup có sẵn trong game
 const POPUPS := {
 	"win": "res://nodes/popups/winning.tscn",
+	"win_daily": "res://nodes/popups/winning_daily.tscn",
 	"game_over": "res://nodes/popups/gameover.tscn",
 	"game_over_level": "res://nodes/popups/gameover_level.tscn",
 	"next_floor": "res://nodes/popups/next_floor.tscn",

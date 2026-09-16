@@ -38,14 +38,14 @@ func _init() -> void:
 	var saved_test := bool(gm.get("debug_run"))
 	var saved_floor := int(gm.get("start_floor_override"))
 	var today := int(dm.call("get_today"))
-	var today_stars := int(dm.call("get_day_stars", today))
+	var today_mask := int(dm.call("get_day_mission_mask", today))
 	var arch: Node = root.get_node_or_null("ArchivementManager")
 	var saved_seconds := int(arch.call("stat_value", "play_seconds")) if arch != null else 0
 
 	_section_1_game_manager(gm)
 	_section_2_mode_mapping(gm)
 	await _section_3_debug_scene(gm)
-	await _section_4_no_progress(gm, dm, today, today_stars, arch)
+	await _section_4_no_progress(gm, dm, today, today_mask, arch)
 	await _section_5_floor_override(gm)
 
 	# Khôi phục trạng thái (không phá dữ liệu người chơi)
@@ -53,7 +53,7 @@ func _init() -> void:
 	gm.set("current_difficulty", saved_diff)
 	gm.set("debug_run", saved_test)
 	gm.set("start_floor_override", saved_floor)
-	dm.call("set_day_stars", today, today_stars)
+	dm.call("set_day_mission_mask", today, today_mask)
 	if arch != null:
 		arch.call("set_stat_for_test", "play_seconds", saved_seconds)
 	if not _backup.is_empty():
@@ -156,7 +156,7 @@ func _section_3_debug_scene(gm: Node) -> void:
 # ---------------------------------------------------------------------------
 # 4. Ván test không ghi tiến trình
 # ---------------------------------------------------------------------------
-func _section_4_no_progress(gm: Node, dm: Node, today: int, stars_before: int, arch: Node) -> void:
+func _section_4_no_progress(gm: Node, dm: Node, today: int, mask_before: int, arch: Node) -> void:
 	print("\n--- 4. VAN TEST KHONG GHI TIEN TRINH ---")
 	gm.call("prepare_mode_run", "time_attack", "medium", true, 1)
 	var game_scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
@@ -171,10 +171,17 @@ func _section_4_no_progress(gm: Node, dm: Node, today: int, stars_before: int, a
 		_check(controller.game_state.mode_id == "time_attack",
 			"Van dang choi che do time_attack (dang %s)" % controller.game_state.mode_id)
 
-		var stars_after_before := int(dm.call("get_day_stars", today))
-		controller.call("_mark_daily_completed_if_needed")
-		_check(int(dm.call("get_day_stars", today)) == stars_after_before,
-			"Van TEST: ngay Daily KHONG bi danh dau (%d sao)" % int(dm.call("get_day_stars", today)))
+		# Ván TEST: kể cả khi đang là ván DAILY thì cũng KHÔNG chốt nhiệm vụ ngày
+		var mask_before_call := int(dm.call("get_day_mission_mask", today))
+		var saved_variant := str(gm.get("daily_variant"))
+		var saved_day := int(gm.get("selected_daily_day"))
+		gm.set("daily_variant", "special")
+		gm.set("selected_daily_day", today)
+		controller.call("_complete_daily_missions", [])
+		gm.set("daily_variant", saved_variant)
+		gm.set("selected_daily_day", saved_day)
+		_check(int(dm.call("get_day_mission_mask", today)) == mask_before_call,
+			"Van TEST: ngay Daily KHONG bi chot nhiem vu (mask %d)" % mask_before_call)
 
 		if arch != null:
 			var seconds_before := int(arch.call("stat_value", "play_seconds"))
@@ -185,7 +192,7 @@ func _section_4_no_progress(gm: Node, dm: Node, today: int, stars_before: int, a
 
 	game_scene.queue_free()
 	await process_frame
-	_check(stars_before >= 0, "Trang thai Daily truoc test: %d sao (da sao luu)" % stars_before)
+	_check(mask_before >= 0, "Trang thai Daily truoc test: mask %d (da sao luu)" % mask_before)
 
 
 # ---------------------------------------------------------------------------

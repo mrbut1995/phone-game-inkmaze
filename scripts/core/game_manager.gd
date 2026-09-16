@@ -18,6 +18,8 @@ var unlocked_levels: int = 1
 var level_stars: Dictionary = { 1: 0 }    # level_id -> stars (1-3)
 var level_best_time: Dictionary = {}     # level_id -> seconds
 var selected_daily_day: int = 1
+## Loại ván Daily đang chơi: "" (không phải Daily) · "classic" (maze thường) · "special" (maze đặc biệt)
+var daily_variant: String = ""
 ## CHƯƠNG: danh sách chương đã mở khóa + chương đang xem ở màn Chọn màn
 var unlocked_chapters: Array[int] = [1]
 var current_chapter: int = 1
@@ -45,6 +47,7 @@ func _ready() -> void:
 func start_dungeon() -> void:
 	current_mode = "dungeon"
 	current_difficulty = "medium"
+	daily_variant = ""
 	debug_run = false
 	start_floor_override = 0
 	mode_changed.emit(current_mode)
@@ -56,22 +59,41 @@ func start_level(level_id: int) -> void:
 	current_mode = "play"
 	current_level = level_id
 	current_difficulty = "medium"
+	daily_variant = ""
 	debug_run = false
 	start_floor_override = 0
 	mode_changed.emit(current_mode)
 	_change_scene("res://scenes/game.tscn")
 
 
-## Khởi động Daily Challenge theo ngày
+## Khởi động Daily Challenge theo ngày — MAZE ĐẶC BIỆT (mode xoay vòng của ngày)
 func start_daily(day: int) -> void:
-	selected_daily_day = day
-	var mode_index := (day - 1) % DAILY_MODES.size()
-	current_mode = DAILY_MODES[mode_index]
+	prepare_daily_run(day, "special")
+	_change_scene("res://scenes/game.tscn")
+
+
+## Khởi động Daily Challenge theo ngày — MAZE THƯỜNG (classic)
+func start_daily_classic(day: int) -> void:
+	prepare_daily_run(day, "classic")
+	_change_scene("res://scenes/game.tscn")
+
+
+## [DEBUG/TEST] Chuẩn bị ván Daily nhưng KHÔNG chuyển scene.
+## variant = "classic" (maze thường) hoặc "special" (maze đặc biệt của ngày).
+## Trả về mode id sẽ dùng.
+func prepare_daily_run(day: int, variant := "special") -> String:
+	selected_daily_day = maxi(day, 1)
+	daily_variant = "classic" if variant == "classic" else "special"
 	current_difficulty = "medium"
 	debug_run = false
 	start_floor_override = 0
+	if daily_variant == "classic":
+		current_mode = "daily_classic"
+	else:
+		var mode_index := (selected_daily_day - 1) % DAILY_MODES.size()
+		current_mode = DAILY_MODES[mode_index]
 	mode_changed.emit(current_mode)
-	_change_scene("res://scenes/game.tscn")
+	return current_mode
 
 
 ## Danh sách id của 7 chế độ SPECIAL (chỉ chơi được qua Daily Challenge)
@@ -86,6 +108,7 @@ func prepare_mode_run(mode_id: String, difficulty := "medium", test_run := false
 		floor_override := 0) -> void:
 	current_mode = mode_id
 	current_difficulty = difficulty
+	daily_variant = ""
 	debug_run = test_run
 	start_floor_override = maxi(floor_override, 0)
 	mode_changed.emit(current_mode)
@@ -290,6 +313,7 @@ func reset_progress() -> void:
 	level_stars = { 1: 0 }
 	level_best_time.clear()
 	selected_daily_day = 1
+	daily_variant = ""
 	current_level = 1
 	unlocked_chapters = [1]
 	current_chapter = 1

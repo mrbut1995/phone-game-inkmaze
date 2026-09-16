@@ -14,6 +14,8 @@ signal quit_requested
 signal home_requested
 signal pause_toggled(is_paused: bool)
 signal revive_requested
+## Popup thắng Daily: người chơi bấm "VỀ DAILY" -> quay lại màn Daily
+signal daily_requested
 ## Pha GHI NHỚ (Blind Memory) đếm ngược xong -> GameController ẩn tường và chạy đồng hồ
 signal memorize_finished
 
@@ -75,7 +77,10 @@ func update_hud(
 # ---------------------------------------------------------------------------
 func show_floor_complete(result: Dictionary) -> void:
 	Popups.close_all()
-	var id := Popups.NEXT_FLOOR if bool(result.get("endless", false)) else Popups.WIN
+	# Ván Daily dùng popup riêng (nút "VỀ DAILY" thay cho "MÀN KẾ TIẾP")
+	var is_daily := bool(result.get("daily", false))
+	var id := Popups.NEXT_FLOOR if bool(result.get("endless", false)) \
+		else (Popups.WIN_DAILY if is_daily else Popups.WIN)
 	# SFX: con dấu "cộp" lên giấy
 	Sfx.play(Sfx.STAMP_IMPACT)
 
@@ -91,6 +96,8 @@ func show_floor_complete(result: Dictionary) -> void:
 		_connect_once(popup, "replay_requested", _emit_retry)
 	if popup.has_signal("rest_requested"):
 		_connect_once(popup, "rest_requested", _emit_home)
+	if popup.has_signal("daily_requested"):
+		_connect_once(popup, "daily_requested", _emit_daily)
 
 	if id == Popups.WIN:
 		_play_star_sequence()
@@ -166,6 +173,10 @@ func _emit_retry() -> void:
 
 func _emit_home() -> void:
 	home_requested.emit()
+
+
+func _emit_daily() -> void:
+	daily_requested.emit()
 
 
 func _emit_revive() -> void:

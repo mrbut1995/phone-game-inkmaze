@@ -251,7 +251,9 @@ func _section_5_scene(manager: Node) -> void:
 	_entry(summary.contains("/") and summary.contains("AP"),
 		"The tong ket hien thi tien do + AP ('%s')" % summary)
 
-	# Bấm NHẬN trên thẻ trong scene
+	# Bấm NHẬN trên ĐÚNG thẻ 'dn_floors_25'
+	# (không dùng "thẻ claimable đầu tiên" vì dữ liệu save thật có thể có thẻ khác
+	#  claimable đứng trước — VD dl_first_day / lv_first_step — làm test bấm nhầm)
 	manager.call("set_stat_for_test", "dungeon_floors_total", 25)
 	await process_frame
 	await process_frame
@@ -260,11 +262,15 @@ func _section_5_scene(manager: Node) -> void:
 		var page: Control = (scene.get("pages_host") as Node).get_child(page_index) as Control
 		var column: Control = page.get_child(0) as Control
 		for card in column.get_children():
+			var raw_entry: Variant = card.get("_entry")
+			var card_info: Dictionary = raw_entry if raw_entry is Dictionary else {}
+			if str(card_info.get("id", "")) != "dn_floors_25":
+				continue
 			var button := card.get("claim_btn") as TextureButton
 			if button != null and button.visible:
 				button.pressed.emit()
 				pressed = true
-				break
+			break
 		if pressed:
 			break
 	_entry(pressed, "Tim thay the dang cho NHAN trong scene")

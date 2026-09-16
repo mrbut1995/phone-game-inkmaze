@@ -133,6 +133,9 @@ func _start_floor_for(mode_name: String) -> int:
 			if gm != null:
 				return maxi(int(gm.get("current_level")), 1)
 			return 1
+		"daily_classic":
+			# Maze thường của Daily luôn bắt đầu ở tầng 1 (mê cung sinh tại chỗ)
+			return 1
 		_:
 			var debug_gm: Node = get_node_or_null("/root/GameManager")
 			if debug_gm != null:
@@ -150,6 +153,8 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 	match mode_name.to_lower():
 		"dungeon":
 			return HUD_DUNGEON
+		"daily_classic":
+			return HUD_LEVEL
 		"minesweeper":
 			return HUD_MINESWEEP
 		"sum_path":
@@ -168,6 +173,8 @@ func _hud_class_for(mode_name: String) -> GDScript:
 	match mode_name.to_lower():
 		"dungeon":
 			return DungeonHUD
+		"daily_classic":
+			return LevelHUD
 		"minesweeper":
 			return MinesweepHUD
 		"sum_path":

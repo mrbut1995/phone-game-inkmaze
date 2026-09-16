@@ -116,7 +116,7 @@
       <!-- HÀNG 2 -->
       <g transform="translate(0, 150)"><rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">07</text><path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/><rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/><text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">4/4 XONG</text></g>
       <g transform="translate(130, 150)"><rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">08</text><path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/><rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/><text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">4/4 XONG</text></g>
-      <g transform="translate(260, 150)"><rect width="130" height="150" fill="#FAF5EB" fill-opacity="0.4" stroke="#D1E2ED" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="800" fill="#224C6D">09</text><path d="M 68 32 L 80 44 L 105 18" fill="none" stroke="#D84444" stroke-width="3" stroke-linecap="round"/><rect x="14" y="98" width="102" height="36" rx="8" fill="#E8F4EC"/><text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">4/4 XONG</text></g>
+      <g transform="translate(260, 150)"><rect width="130" height="150" fill="#F4EFE6" fill-opacity="0.6" stroke="#D1E2ED" stroke-width="1"/><text x="20" y="42" font-family="sans-serif" font-size="30" font-weight="700" fill="#8DA2B0">09</text><rect x="14" y="98" width="102" height="36" rx="8" fill="#FDECEC" stroke="#F3C9C9" stroke-width="1"/><text x="65" y="122" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="800" fill="#B91C1C">BỎ LỠ</text></g>
 
       <!-- NGÀY 10 (HÔM NAY - ĐANG CHỌN) -->
       <g transform="translate(390, 150)" filter="url(#focusShadow)">
@@ -191,11 +191,11 @@
     <!-- Viền khung ngoài -->
     <rect width="980" height="560" rx="24" fill="none" stroke="#3D83AE" stroke-width="3" />
 
-    <!-- HEADER DIALOG: NGÀY + CHẾ ĐỘ ĐẶC BIỆT XOAY VÒNG HÔM NAY -->
+    <!-- HEADER DIALOG: NGÀY ĐANG XEM + CHẾ ĐỘ ĐẶC BIỆT CỦA NGÀY ĐÓ -->
     <g transform="translate(25, 14)">
       <rect x="0" y="0" width="130" height="32" rx="8" fill="#D84444"/>
-      <text x="65" y="22" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#FFFFFF">NGÀY 10/09</text>
-      <text x="150" y="23" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="900" fill="#224C6D">CHẾ ĐỘ ĐẶC BIỆT HÔM NAY: 💣 MINESWEEPER MAZE</text>
+      <text x="65" y="22" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#FFFFFF">NGÀY 09/09</text>
+      <text x="150" y="23" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="900" fill="#224C6D">CHẾ ĐỘ ĐẶC BIỆT: 💣 MINESWEEPER MAZE</text>
 
       <g transform="translate(815, -3)">
         <rect width="115" height="38" rx="10" fill="#FAF5EB" stroke="#D97706" stroke-width="1.5"/>
@@ -204,36 +204,34 @@
       </g>
     </g>
 
-    <!-- ===== HÀNG 1 · MISSION MAZE HÔM NAY #1 — KHÔNG ĐÂM TƯỜNG (XONG) ===== -->
+    <!-- ===== HÀNG 1 · MISSION MAZE NGÀY BỎ LỠ #1 — KHÔNG ĐÂM TƯỜNG (CHƯA XONG) ===== -->
     <!-- Cột trái (Status): -->
     <g transform="translate(25, 76)">
-      <rect width="36" height="36" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2"/>
-      <path d="M 8 18 L 16 26 L 28 10" fill="none" stroke="#D84444" stroke-width="3.2" stroke-linecap="round"/>
-      <text x="40" y="54" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#2E7D32">✔ XONG</text>
+      <rect width="36" height="36" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.5"/>
+      <text x="40" y="54" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#E65100">0/1 CHƯA</text>
       <text x="40" y="73" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#D97706">+10 XU</text>
     </g>
     <!-- Cột phải (Nhiệm vụ + Button): -->
     <text x="150" y="101" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="800" fill="#224C6D">Không đâm vào tường ẩn</text>
     <text x="150" y="127" font-family="sans-serif" font-size="16" font-weight="600" fill="#718B9E">Vẽ nét an toàn tới hố đích F, không chạm tường vô hình</text>
-    <text x="150" y="149" font-family="sans-serif" font-size="14" font-weight="800" fill="#2E7D32">Tiến độ: 1/1 ván sạch</text>
+    <text x="150" y="149" font-family="sans-serif" font-size="14" font-weight="800" fill="#E65100">Tiến độ: 0/1 ván sạch</text>
     <g transform="translate(800, 92)" style="cursor: pointer;">
-      <rect width="150" height="46" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
-      <text x="75" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#2E7D32">HOÀN THÀNH</text>
+      <rect width="150" height="46" rx="12" fill="#3D83AE" stroke="#256286" stroke-width="2.5"/>
+      <text x="75" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#FFFFFF">VÀO CHƠI ›</text>
     </g>
 
-    <!-- ===== HÀNG 2 · MISSION MAZE HÔM NAY #2 — GIỚI HẠN BƯỚC (XONG) ===== -->
+    <!-- ===== HÀNG 2 · MISSION MAZE NGÀY BỎ LỠ #2 — GIỚI HẠN BƯỚC (CHƯA XONG) ===== -->
     <g transform="translate(25, 186)">
-      <rect width="36" height="36" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2"/>
-      <path d="M 8 18 L 16 26 L 28 10" fill="none" stroke="#D84444" stroke-width="3.2" stroke-linecap="round"/>
-      <text x="40" y="54" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#2E7D32">✔ XONG</text>
+      <rect width="36" height="36" rx="8" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.5"/>
+      <text x="40" y="54" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#E65100">0/1 CHƯA</text>
       <text x="40" y="73" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#D97706">+10 XU</text>
     </g>
     <text x="150" y="211" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="800" fill="#224C6D">Hoàn thành trong 20 bước</text>
     <text x="150" y="237" font-family="sans-serif" font-size="16" font-weight="600" fill="#718B9E">Tối ưu lộ trình vẽ, không vượt quá 20 bước đi</text>
-    <text x="150" y="259" font-family="sans-serif" font-size="14" font-weight="800" fill="#2E7D32">Tiến độ: 18/20 bước</text>
+    <text x="150" y="259" font-family="sans-serif" font-size="14" font-weight="800" fill="#E65100">Tiến độ: 0/20 bước</text>
     <g transform="translate(800, 202)" style="cursor: pointer;">
-      <rect width="150" height="46" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
-      <text x="75" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#2E7D32">HOÀN THÀNH</text>
+      <rect width="150" height="46" rx="12" fill="#3D83AE" stroke="#256286" stroke-width="2.5"/>
+      <text x="75" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#FFFFFF">VÀO CHƠI ›</text>
     </g>
 
     <!-- ===== HÀNG 3 · MISSION MAZE HÔM NAY #3 — GIỚI HẠN THỜI GIAN (CHƯA XONG) ===== -->
@@ -268,26 +266,24 @@
       <text x="75" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#FFFFFF">VÀO CHƠI ›</text>
     </g>
 
-    <!-- FOOTER DIALOG: TIẾN TRÌNH TỔNG HÔM NAY (3 mission maze + 1 mission đặc biệt = 4) -->
+    <!-- FOOTER DIALOG: TIẾN TRÌNH NGÀY BỎ LỠ (0/4 — chưa trả Xu mở khoá) -->
     <g transform="translate(25, 522)">
-      <text x="0" y="22" font-family="sans-serif" font-size="18" font-weight="800" fill="#224C6D">TIẾN ĐỘ NGÀY: 50% (2/4 Hoàn Thành)</text>
+      <text x="0" y="22" font-family="sans-serif" font-size="18" font-weight="800" fill="#224C6D">TIẾN ĐỘ NGÀY: 0% (0/4 Hoàn Thành)</text>
       <rect x="350" y="8" width="370" height="14" rx="7" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1"/>
-      <rect x="350" y="8" width="185" height="14" rx="7" fill="#2E7D32"/>
-      <text x="740" y="22" font-family="sans-serif" font-size="16" font-weight="800" fill="#2E7D32">+20/50 XU</text>
+      <text x="740" y="22" font-family="sans-serif" font-size="16" font-weight="800" fill="#D97706">+0/50 XU</text>
     </g>
   </g>
 
-  <!-- ================= 6. NÚT HÀNH ĐỘNG CHÍNH CHÂN MÀN HÌNH ================= -->
+  <!-- ================= 6. NÚT HÀNH ĐỘNG CHÍNH — NGÀY BỎ LỠ: TRẢ XU ĐỂ MỞ KHOÁ ================= -->
   <g transform="translate(140, 1740)" filter="url(#uiShadow)" style="cursor: pointer;">
     <rect width="800" height="120" rx="28" fill="#3D83AE" stroke="#265B7D" stroke-width="4"/>
     <line x1="60" y1="0" x2="60" y2="120" stroke="#FAF5EB" stroke-width="3.5" opacity="0.6"/>
 
-    <g transform="translate(95, 42)" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M14 2l4 4-11 11H3v-4L14 2z"/>
-      <path d="M11 5l4 4"/>
+    <g transform="translate(95, 42)">
+      <use href="#mini-coin" transform="scale(1.15)"/>
     </g>
 
-    <text x="460" y="73" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#FFFFFF" letter-spacing="1.5">CHƠI MINESWEEPER MAZE</text>
+    <text x="460" y="73" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#FFFFFF" letter-spacing="1.5">MỞ KHÓA: 50 XU</text>
   </g>
 
   <!-- Thanh điều hướng Android Home -->

@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cpiryq18o3y70" path="res://assets/images/calendar/panel_daily_mission.svg" id="9_panel"]
 [ext_resource type="Texture2D" uid="uid://cwkukl6emlhmk" path="res://assets/images/calendar/tag_day.svg" id="10_tag_day"]
 [ext_resource type="Texture2D" uid="uid://balhmyit838gg" path="res://assets/images/calendar/tag_reward.svg" id="11_tag_reward"]
-[ext_resource type="Texture2D" uid="uid://c66v5bmdvegnd" path="res://assets/images/common/star_highlight.svg" id="12_star"]
+[ext_resource type="Texture2D" path="res://assets/images/shop/icon_coin.svg" id="12_coin"]
 [ext_resource type="Texture2D" uid="uid://cuvuerlccui1t" path="res://assets/images/calendar/tag_special_mode.svg" id="13_tag_special"]
 [ext_resource type="Texture2D" uid="uid://df4l8mgm1tdg8" path="res://assets/images/calendar/box_task_done.svg" id="14_box_done"]
 [ext_resource type="Texture2D" uid="uid://ci6507aw7lbrj" path="res://assets/images/calendar/box_task_todo.svg" id="15_box_todo"]
@@ -105,9 +105,9 @@ offset_bottom = 1182.0
 layout_mode = 1
 anchors_preset = -1
 offset_left = 30.0
-offset_top = 1154.0
+offset_top = 1144.0
 offset_right = 1050.0
-offset_bottom = 1694.0
+offset_bottom = 1736.0
 texture = ExtResource("9_panel")
 
 [node name="DateTag" type="TextureRect" parent="Missions" index="0" unique_id=1698417265]
@@ -153,14 +153,14 @@ offset_right = 975.0
 offset_bottom = 70.0
 texture = ExtResource("11_tag_reward")
 
-[node name="Star" type="TextureRect" parent="Missions/Reward" index="0" unique_id=2135901154]
+[node name="CoinIcon" type="TextureRect" parent="Missions/Reward" index="0" unique_id=2135901154]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 12.0
-offset_top = 9.0
-offset_right = 32.0
-offset_bottom = 29.0
-texture = ExtResource("12_star")
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 30.0
+offset_bottom = 28.0
+texture = ExtResource("12_coin")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Missions/Reward" index="1" unique_id=1390468146]
@@ -175,352 +175,22 @@ text = "+35"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Row1" type="Control" parent="Missions" index="3" unique_id=2049314427]
+[node name="Rows" type="Control" parent="Missions" index="3"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = -1
+offset_left = 20.0
+offset_top = 76.0
+offset_right = 1000.0
+offset_bottom = 516.0
 mouse_filter = 2
-
-[node name="Box" type="TextureRect" parent="Missions/Row1" index="0" unique_id=624123442]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 45.0
-offset_top = 106.0
-offset_right = 81.0
-offset_bottom = 142.0
-texture = ExtResource("14_box_done")
-
-[node name="Status" type="Label" parent="Missions/Row1" index="1" unique_id=800317034]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 45.0
-offset_top = 152.0
-offset_right = 145.0
-offset_bottom = 170.0
-theme_type_variation = &"DailyTaskStatusDone"
-text = "STR_STATUS_DONE_SHORT"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Reward" type="Label" parent="Missions/Row1" index="2" unique_id=1936509501]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 45.0
-offset_top = 172.0
-offset_right = 145.0
-offset_bottom = 190.0
-theme_type_variation = &"DailyTaskReward"
-text = "+15"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Special" type="TextureRect" parent="Missions/Row1" index="3" unique_id=2052063339]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 170.0
-offset_top = 111.0
-offset_right = 305.0
-offset_bottom = 135.0
-texture = ExtResource("13_tag_special")
-
-[node name="Label" type="Label" parent="Missions/Row1/Special" index="0" unique_id=1769065975]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"SpecialModeTag"
-text = "STR_TAG_SPECIAL_MODE"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Title" type="Label" parent="Missions/Row1" index="4" unique_id=929206606]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 317.0
-offset_top = 111.0
-offset_right = 800.0
-offset_bottom = 143.0
-theme_type_variation = &"DailyTaskTitle"
-text = "STR_DAILY_TASK_1_TITLE"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Desc" type="Label" parent="Missions/Row1" index="5" unique_id=1294423534]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 170.0
-offset_top = 150.0
-offset_right = 800.0
-offset_bottom = 174.0
-theme_type_variation = &"DailyTaskDesc"
-text = "STR_DAILY_TASK_1_DESC"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Progress" type="Label" parent="Missions/Row1" index="6" unique_id=1396052053]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 170.0
-offset_top = 172.0
-offset_right = 800.0
-offset_bottom = 196.0
-theme_type_variation = &"DailyTaskProgress"
-text = "STR_DAILY_TASK_1_PROGRESS"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Action" type="TextureButton" parent="Missions/Row1" index="7" unique_id=2072510540]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 820.0
-offset_top = 125.0
-offset_right = 970.0
-offset_bottom = 171.0
-texture_normal = ExtResource("16_act_idle")
-texture_pressed = ExtResource("17_act_idle_p")
-texture_hover = ExtResource("17_act_idle_p")
-texture_disabled = ExtResource("16_act_idle")
-texture_focused = ExtResource("18_act_idle_f")
-
-[node name="Label" type="Label" parent="Missions/Row1/Action" index="0" unique_id=2052077307]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"DailyActionIdle"
-text = "STR_BTN_REPLAY"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Row2" type="Control" parent="Missions" index="4" unique_id=866035967]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Box" type="TextureRect" parent="Missions/Row2" index="0" unique_id=1713782159]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 45.0
-offset_top = 221.0
-offset_right = 81.0
-offset_bottom = 257.0
-texture = ExtResource("14_box_done")
-
-[node name="Status" type="Label" parent="Missions/Row2" index="1" unique_id=2021438660]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 45.0
-offset_top = 267.0
-offset_right = 145.0
-offset_bottom = 285.0
-theme_type_variation = &"DailyTaskStatusDone"
-text = "STR_STATUS_DONE_SHORT"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Reward" type="Label" parent="Missions/Row2" index="2" unique_id=1705221734]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 45.0
-offset_top = 287.0
-offset_right = 145.0
-offset_bottom = 305.0
-theme_type_variation = &"DailyTaskReward"
-text = "+10"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Title" type="Label" parent="Missions/Row2" index="3" unique_id=52964035]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 170.0
-offset_top = 228.0
-offset_right = 800.0
-offset_bottom = 260.0
-theme_type_variation = &"DailyTaskTitle"
-text = "STR_DAILY_TASK_2_TITLE"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Desc" type="Label" parent="Missions/Row2" index="4" unique_id=781787756]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 170.0
-offset_top = 267.0
-offset_right = 800.0
-offset_bottom = 291.0
-theme_type_variation = &"DailyTaskDesc"
-text = "STR_DAILY_TASK_2_DESC"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Progress" type="Label" parent="Missions/Row2" index="5" unique_id=1671850411]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 170.0
-offset_top = 289.0
-offset_right = 800.0
-offset_bottom = 313.0
-theme_type_variation = &"DailyTaskProgress"
-text = "STR_DAILY_TASK_2_PROGRESS"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Action" type="TextureButton" parent="Missions/Row2" index="6" unique_id=257565430]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 820.0
-offset_top = 242.0
-offset_right = 970.0
-offset_bottom = 288.0
-texture_normal = ExtResource("16_act_idle")
-texture_pressed = ExtResource("17_act_idle_p")
-texture_hover = ExtResource("17_act_idle_p")
-texture_disabled = ExtResource("16_act_idle")
-texture_focused = ExtResource("18_act_idle_f")
-
-[node name="Label" type="Label" parent="Missions/Row2/Action" index="0" unique_id=2049186244]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"DailyActionIdle"
-text = "STR_BTN_REVIEW"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Row3" type="Control" parent="Missions" index="5" unique_id=1266692769]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Box" type="TextureRect" parent="Missions/Row3" index="0" unique_id=1846220842]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 45.0
-offset_top = 336.0
-offset_right = 81.0
-offset_bottom = 372.0
-texture = ExtResource("15_box_todo")
-
-[node name="Status" type="Label" parent="Missions/Row3" index="1" unique_id=1943127104]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 45.0
-offset_top = 382.0
-offset_right = 145.0
-offset_bottom = 400.0
-theme_type_variation = &"DailyTaskStatusTodo"
-text = "0/1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Reward" type="Label" parent="Missions/Row3" index="2" unique_id=1496589385]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 45.0
-offset_top = 402.0
-offset_right = 145.0
-offset_bottom = 420.0
-theme_type_variation = &"DailyTaskReward"
-text = "+10"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Title" type="Label" parent="Missions/Row3" index="3" unique_id=1787806325]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 170.0
-offset_top = 345.0
-offset_right = 800.0
-offset_bottom = 377.0
-theme_type_variation = &"DailyTaskTitle"
-text = "STR_DAILY_TASK_3_TITLE"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Desc" type="Label" parent="Missions/Row3" index="4" unique_id=1504890566]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 170.0
-offset_top = 381.0
-offset_right = 800.0
-offset_bottom = 405.0
-theme_type_variation = &"DailyTaskDesc"
-text = "STR_DAILY_TASK_3_DESC"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Progress" type="Label" parent="Missions/Row3" index="5" unique_id=328396772]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 170.0
-offset_top = 403.0
-offset_right = 800.0
-offset_bottom = 427.0
-theme_type_variation = &"DailyTaskProgressTodo"
-text = "STR_DAILY_TASK_3_PROGRESS"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Action" type="TextureButton" parent="Missions/Row3" index="6" unique_id=1240450118]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 820.0
-offset_top = 356.0
-offset_right = 970.0
-offset_bottom = 402.0
-texture_normal = ExtResource("19_act_pri")
-texture_pressed = ExtResource("20_act_pri_p")
-texture_hover = ExtResource("20_act_pri_p")
-texture_disabled = ExtResource("19_act_pri")
-texture_focused = ExtResource("21_act_pri_f")
-
-[node name="Label" type="Label" parent="Missions/Row3/Action" index="0" unique_id=707550497]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"DailyActionPrimary"
-text = "STR_BTN_PLAY_NOW"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="ProgressLabel" type="Label" parent="Missions" index="6" unique_id=1214704438]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 45.0
-offset_top = 470.0
-offset_right = 385.0
-offset_bottom = 498.0
+offset_top = 528.0
+offset_right = 405.0
+offset_bottom = 556.0
 theme_type_variation = &"DailyProgressLabel"
 text = "STR_DAILY_TOTAL_PROGRESS"
 vertical_alignment = 1
@@ -528,20 +198,20 @@ vertical_alignment = 1
 [node name="ProgressBar" type="TextureProgressBar" parent="Missions" index="7" unique_id=1143325296]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 395.0
-offset_top = 466.0
-offset_right = 765.0
-offset_bottom = 480.0
+offset_left = 370.0
+offset_top = 546.0
+offset_right = 740.0
+offset_bottom = 560.0
 texture_under = ExtResource("22_bar_bg")
 texture_progress = ExtResource("23_bar_fill")
 
 [node name="Claim" type="Label" parent="Missions" index="8" unique_id=1945106779]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 785.0
-offset_top = 470.0
+offset_left = 745.0
+offset_top = 528.0
 offset_right = 1000.0
-offset_bottom = 498.0
+offset_bottom = 556.0
 theme_type_variation = &"DailyProgressClaim"
 text = "STR_DAILY_CLAIMED_REWARD"
 vertical_alignment = 1
@@ -550,9 +220,9 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = -1
 offset_left = 140.0
-offset_top = 1690.0
+offset_top = 1740.0
 offset_right = 940.0
-offset_bottom = 1810.0
+offset_bottom = 1860.0
 texture_normal = ExtResource("24_play_n")
 texture_pressed = ExtResource("25_play_p")
 texture_hover = ExtResource("25_play_p")

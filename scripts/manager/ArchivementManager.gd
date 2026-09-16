@@ -201,6 +201,8 @@ func _daily_streak() -> int:
 
 func _daily_stars() -> int:
 	var dm: Node = _daily_manager()
+	if dm != null and dm.has_method("get_total_missions"):
+		return int(dm.call("get_total_missions"))
 	if dm != null and dm.has_method("get_total_stars"):
 		return int(dm.call("get_total_stars"))
 	return 0

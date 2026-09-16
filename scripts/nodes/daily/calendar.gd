@@ -102,7 +102,10 @@ func rebuild() -> void:
 			continue
 
 		var weekend := (i % COLS) >= 5
-		cell.setup(day, _state_for(day, is_current, today, daily), _stars_for(day, daily), weekend)
+		var unlocked := false
+		if daily != null and daily.has_method("is_day_unlocked"):
+			unlocked = bool(daily.call("is_day_unlocked", day))
+		cell.setup(day, _state_for(day, is_current, today, daily), _missions_for(day, daily), weekend, unlocked)
 
 
 ## Xác định trạng thái của một ngày trong tháng đang xem
@@ -110,25 +113,25 @@ func _state_for(day: int, is_current: bool, today: int, daily: Node) -> DailyDay
 	if not is_current:
 		# Chỉ theo dõi tháng hiện tại, các tháng khác xem như chưa mở khoá
 		return DailyDayCell.State.LATER
-	var stars := _stars_for(day, daily)
+	var missions := _missions_for(day, daily)
 	if day == today:
 		return DailyDayCell.State.TODAY
 	if day > today:
 		# 3 ngày kế tiếp hiển thị viên "CHƯA MỞ", xa hơn thì mờ gọn lại
 		return DailyDayCell.State.FUTURE if day - today <= 3 else DailyDayCell.State.LATER
-	if stars >= DailyDayCell.MAX_STARS:
+	if missions >= DailyDayCell.MAX_MISSIONS:
 		return DailyDayCell.State.DONE
-	if stars > 0:
+	if missions > 0:
 		return DailyDayCell.State.PARTIAL
 	return DailyDayCell.State.MISSED
 
 
-func _stars_for(day: int, daily: Node) -> int:
+func _missions_for(day: int, daily: Node) -> int:
 	if daily == null:
 		return 0
-	if daily.has_method("get_day_stars"):
-		return int(daily.call("get_day_stars", day))
-	return DailyDayCell.MAX_STARS if bool(daily.call("is_completed", day)) else 0
+	if daily.has_method("get_day_missions"):
+		return int(daily.call("get_day_missions", day))
+	return DailyDayCell.MAX_MISSIONS if bool(daily.call("is_completed", day)) else 0
 
 
 func _is_current_month() -> bool:

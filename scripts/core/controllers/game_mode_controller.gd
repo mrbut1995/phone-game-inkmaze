@@ -27,6 +27,8 @@ func set_mode_by_name(mode_name: String, difficulty: String = "medium") -> BaseG
 	match mode_name.to_lower():
 		"play", "classic", "standard":
 			new_mode = StandardGameMode.new(difficulty)
+		"daily_classic":
+			new_mode = DailyClassicGameMode.new(difficulty)
 		"dungeon":
 			new_mode = DungeonGameMode.new()
 		"time_attack":

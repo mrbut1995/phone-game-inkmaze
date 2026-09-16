@@ -246,7 +246,6 @@ func _complete_floor() -> void:
 	if _pending_bonus > 0:
 		_play_sfx_delayed(Sfx.FLOOR_BONUS, 1.1)
 
-	_mark_daily_completed_if_needed()
 	_report_to_archivements(true, floor_time)
 
 	# Chốt 3 thử thách của màn/tầng -> số Sao (1 thử thách hoàn thành = 1 Sao)
@@ -258,10 +257,13 @@ func _complete_floor() -> void:
 		challenge_rows = challenge_controller.rows()
 		stars = challenge_controller.stars()
 
+	# Daily: chốt NHIỆM VỤ của ngày (rỗng nếu ván này không phải ván Daily)
+	var daily := _complete_daily_missions(challenge_rows)
+
 	if ui_controller != null:
 		var next_available := true
 		var gm_node: Node = get_node_or_null("/root/GameManager")
-		if gm_node != null:
+		if gm_node != null and daily.is_empty():
 			# Còn màn kế tiếp TRONG CÙNG CHƯƠNG và chương đó đã mở -> nút "MÀN KẾ TIẾP",
 			# hết chương (hoặc chương sau chưa mở) -> nút "CHỌN CHƯƠNG" (mở màn Chọn Chương)
 			var next_in_chapter := int(gm_node.call(
@@ -288,6 +290,16 @@ func _complete_floor() -> void:
 			"perfect_bonus": score_data.get("perfect_bonus", 0),
 			"total_score": game_state.score,
 			"endless": game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless,
+			"daily": not daily.is_empty(),
+			"daily_day": int(daily.get("day", 1)),
+			"daily_variant": str(daily.get("variant", "")),
+			"daily_mode_id": str(daily.get("mode_id", "")),
+			"daily_mode_name": str(daily.get("mode_name", "")),
+			"daily_coins": int(daily.get("coins", 0)),
+			"daily_missions_done": int(daily.get("missions_done", 0)),
+			"daily_missions_total": int(daily.get("missions_total", 4)),
+			"daily_day_coins": int(daily.get("day_coins", 0)),
+			"daily_day_reward_max": int(daily.get("day_reward_max", 0)),
 		})
 
 
@@ -467,6 +479,18 @@ func _on_home_requested() -> void:
 		Nav.goto_main()
 
 
+## Popup thắng Daily: người chơi bấm "VỀ DAILY" -> quay lại màn Daily
+## (chọn ngày để chinh phục maze còn lại / xem lại nhiệm vụ)
+func _on_daily_requested() -> void:
+	if ui_controller != null:
+		ui_controller.hide_overlays()
+	var gm: Node = get_node_or_null("/root/GameManager")
+	if gm != null:
+		gm.call("go_to_daily")
+	else:
+		Nav.goto_daily()
+
+
 ## Báo kết quả màn/tầng cho Sổ tay thành tựu (Archivement) — thắng hoặc thua.
 ## Số liệu tích luỹ (tầng sâu nhất, số ván thắng, gợi ý/hoàn tác...) do ArchivementManager ghi nhận.
 func _report_to_archivements(won: bool, floor_time: float) -> void:
@@ -536,17 +560,51 @@ func _play_sfx_delayed(sfx_name: String, delay: float) -> void:
 	tw.tween_callback(func() -> void: Sfx.play(sfx_name))
 
 
-## Đánh dấu ngày Daily đã hoàn thành (nếu ván đang chơi là 1 Daily Challenge Mode)
-func _mark_daily_completed_if_needed() -> void:
-	if game_state == null or not GameManagerClass.DAILY_MODES.has(game_state.mode_id):
-		return
-	if _is_debug_run():
-		return                      # ván test từ Debug Console không đánh dấu Daily
+## Chốt NHIỆM VỤ Daily sau khi thắng ván:
+## - Maze THƯỜNG ("classic"): 3 thử thách của ván chính là nhiệm vụ 0..2 của ngày.
+## - Maze ĐẶC BIỆT ("special"): hoàn thành ván = nhiệm vụ 3 của ngày.
+## Trả về Dictionary mô tả kết quả (RỖNG nếu ván này không phải ván Daily).
+func _complete_daily_missions(challenge_rows: Array) -> Dictionary:
 	var gm: Variant = get_node_or_null("/root/GameManager")
 	var dm: Variant = get_node_or_null("/root/DailyManager")
-	if gm == null or dm == null:
-		return
-	dm.call("mark_completed", int(gm.get("selected_daily_day")))
+	if gm == null or dm == null or _is_debug_run():
+		return {}
+	var variant := str(gm.get("daily_variant"))
+	if variant.is_empty():
+		return {}
+
+	var day := maxi(int(gm.get("selected_daily_day")), 1)
+	var coins := 0
+	if variant == "classic":
+		var flags: Array[bool] = []
+		for i in 3:
+			var done := false
+			if i < challenge_rows.size() and challenge_rows[i] is Dictionary:
+				done = bool((challenge_rows[i] as Dictionary).get("done", false))
+			flags.append(done)
+		coins = int(dm.call("complete_day_missions", day, flags))
+	else:
+		# Nhiệm vụ cuối cùng trong ngày = nhiệm vụ của maze đặc biệt
+		var special_index := maxi(int(dm.call("mission_count")) - 1, 0)
+		coins = int(dm.call("complete_day_mission", day, special_index))
+
+	var mode_id := ""
+	var mode_name := ""
+	if game_mode_controller != null and game_mode_controller.game_mode != null:
+		mode_id = game_mode_controller.game_mode.mode_id
+		mode_name = game_mode_controller.game_mode.mode_name
+	return {
+		"day": day,
+		"variant": variant,
+		"mode_id": mode_id,
+		"mode_name": mode_name,
+		"coins": coins,
+		"missions_done": int(dm.call("get_day_missions", day)),
+		"missions_total": int(dm.call("mission_count")),
+		"day_coins": int(dm.call("day_coins_earned", day)),
+		"day_reward_max": int(dm.call("day_reward_max")),
+		"completed_day": bool(dm.call("is_completed", day)),
+	}
 
 
 ## Ván hiện tại có phải ván TEST mở từ Debug Console? (không ghi tiến trình)
