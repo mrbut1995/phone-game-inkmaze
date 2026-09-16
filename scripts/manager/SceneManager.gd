@@ -26,6 +26,8 @@ const SCENE_RANKING := "res://scenes/ranking.tscn"
 const SCENE_CHAPTERS := "res://scenes/chapters.tscn"
 ## Màn CỬA HÀNG — xem scripts/scenes/shop.gd
 const SCENE_SHOP := "res://scenes/shop.tscn"
+## Màn CREDIT — soundtrack + ghi công đội ngũ
+const SCENE_CREDIT := "res://scenes/credit.tscn"
 ## Lớp phủ chuyển cảnh: node giao diện (trang giấy, mực loang, fade, chặn input)
 ## được khai báo SẴN trong scene này — xem scripts/nodes/common/scene_transition.gd
 const SCENE_LOADING := "res://scenes/loading.tscn"
@@ -165,6 +167,10 @@ func goto_chapters() -> void:
 
 func goto_shop() -> void:
 	change_scene(SCENE_SHOP)
+
+
+func goto_credit() -> void:
+	change_scene(SCENE_CREDIT)
 
 
 func goto_debug() -> void:

@@ -28,6 +28,7 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @onready var lbl_language: Label = $Panel/Content/Language/LangRow/LangButton/LangValue
 @onready var lbl_player_id: Label = $Panel/Content/Language/PlayerRow/PlayerIdValue
 @onready var btn_guide: TextureButton = $Panel/Content/Actions/Guide
+@onready var btn_credits: TextureButton = $Panel/Content/Actions/Credits
 @onready var btn_reset: TextureButton = $Panel/Content/Actions/Reset
 @onready var lbl_version: Label = $Panel/Content/Footer/Stamp/Label
 
@@ -65,6 +66,9 @@ func _ready() -> void:
 	if btn_guide != null:
 		btn_guide.pressed.connect(_on_guide_pressed)
 		UIAnim.attach_press_bounce(btn_guide)
+	if btn_credits != null:
+		btn_credits.pressed.connect(_on_credits_pressed)
+		UIAnim.attach_press_bounce(btn_credits)
 	if btn_reset != null:
 		btn_reset.pressed.connect(_on_reset_pressed)
 		UIAnim.attach_press_bounce(btn_reset)
@@ -214,6 +218,11 @@ func _on_guide_pressed() -> void:
 	# TODO: mở màn "Hướng dẫn & 9 bộ luật chơi" khi có scene tương ứng
 	push_warning("[Settings] Chưa có scene hướng dẫn - cần bổ sung sau.")
 	guide_requested.emit()
+
+
+func _on_credits_pressed() -> void:
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	Nav.goto_credit()
 
 
 func _on_reset_pressed() -> void:

@@ -21,6 +21,8 @@ const SCENE_RANKING := "res://scenes/ranking.tscn"
 const SCENE_CHAPTERS := "res://scenes/chapters.tscn"
 ## Màn CỬA HÀNG — xem scripts/scenes/shop.gd
 const SCENE_SHOP := "res://scenes/shop.tscn"
+## Màn CREDIT — soundtrack + ghi công
+const SCENE_CREDIT := "res://scenes/credit.tscn"
 
 
 static func change_scene(path: String) -> void:
@@ -71,6 +73,11 @@ static func goto_chapters() -> void:
 ## Màn CỬA HÀNG (bút · giấy vở · dụng cụ · nạp xu)
 static func goto_shop() -> void:
 	change_scene(SCENE_SHOP)
+
+
+## Màn CREDIT (thông tin soundtrack và ghi công đội ngũ)
+static func goto_credit() -> void:
+	change_scene(SCENE_CREDIT)
 
 
 ## Màn hình debug (chỉ dùng khi phát triển)

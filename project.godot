@@ -25,6 +25,7 @@ SceneManager="*uid://c1bhxness6juu"
 ScreenManager="*uid://llk3itpnkef4"
 PopupManager="*res://scripts/manager/PopupManager.gd"
 SfxManager="*uid://bghkexi6w5018"
+MusicManager="*res://scripts/manager/MusicManager.gd"
 DataManager="*uid://cv8cm2i8nr5gw"
 DailyManager="*uid://bxus37ntramd1"
 DebugManager="*uid://drkig4dljo3f7"
@@ -47,6 +48,10 @@ window/handheld/orientation=1
 [input_devices]
 
 joypads/ignore_joypad_on_unfocused_application=true
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://resources/localization/string_extra.vi.translation", "res://resources/localization/string_extra.en.translation")
 
 [physics]
 

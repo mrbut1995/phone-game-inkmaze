@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 432 432" width="432" height="432">
+  <g transform="translate(216, 216) scale(2.25) translate(-64, -64)">
+    <rect x="21" y="21" width="86" height="86" rx="18" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+    <g stroke="#FFFFFF" stroke-width="1.6" opacity="0.6">
+      <line x1="49.6" y1="21" x2="49.6" y2="107"/>
+      <line x1="78.3" y1="21" x2="78.3" y2="107"/>
+      <line x1="21" y1="49.6" x2="107" y2="49.6"/>
+      <line x1="21" y1="78.3" x2="107" y2="78.3"/>
+    </g>
+    <g font-family="sans-serif" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF">
+      <text x="35.5" y="35.5" font-size="25">1</text>
+      <text x="64" y="35.5" font-size="25">2</text>
+      <text x="35.5" y="64" font-size="25">3</text>
+      <text x="92.5" y="92.5" font-size="25">4</text>
+    </g>
+    <path d="M 12 64 L 35.5 64 L 35.5 92.5 L 64 92.5 L 64 64 L 115 64" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+    <polygon points="112,57 123,64 112,71" fill="#FFFFFF"/>
+    <g transform="translate(64, 26) rotate(-45)">
+      <rect x="-8" y="-36" width="16" height="34" rx="2.5" fill="#FFFFFF"/>
+      <polygon points="-8,-2 8,-2 0,12" fill="#FFFFFF"/>
+    </g>
+  </g>
+</svg>

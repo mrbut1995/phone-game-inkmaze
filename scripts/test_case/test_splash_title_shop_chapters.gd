@@ -1,12 +1,26 @@
 extends SceneTree
 ## ============================================================================
-## Test: Kiểm tra Splash Scene, Title Scene, Shop Scene, Chapters Scene & Animations
+## Test: Kiểm tra Splash, Title, Shop, Credit, Chapters & music wiring
 ## ============================================================================
 
 func _init() -> void:
 	print("\n========================================================")
-	print("  TEST: SPLASH, TITLE, SHOP, CHAPTERS SCENES & ANIMATIONS")
+	print("  TEST: SPLASH, TITLE, SHOP, CREDIT, CHAPTERS + MUSIC")
 	print("========================================================\n")
+
+	await process_frame
+	var music := root.get_node_or_null("MusicManager")
+	assert(music != null, "Autoload MusicManager phai ton tai")
+	if music != null:
+		assert(music.has_method("current_track_path"), "MusicManager phai co API current_track_path")
+		music.call("set_context", "credits", true)
+		await process_frame
+		assert(str(music.call("context_name")) == "credits",
+			"MusicManager phai doi context credits khi duoc yeu cau")
+		var track_path := str(music.call("current_track_path"))
+		assert(track_path.ends_with("Wallpaper.mp3"),
+			"Credit context phai dung soundtrack Wallpaper (nhan '%s')" % track_path)
+		music.call("set_context", "menu", false)
 
 	# 1. Test Splash Scene
 	var splash_packed: PackedScene = load("res://scenes/splash.tscn")
@@ -68,7 +82,28 @@ func _init() -> void:
 	shop_inst.queue_free()
 	await process_frame
 
-	# 4. Test Chapters Scene
+	# 4. Test Credit Scene
+	var credit_packed: PackedScene = load("res://scenes/credit.tscn")
+	assert(credit_packed != null, "scenes/credit.tscn phai load duoc")
+	var credit_inst = credit_packed.instantiate()
+	assert(credit_inst != null, "scenes/credit.tscn phai instantiate duoc")
+	root.add_child(credit_inst)
+	await process_frame
+	await process_frame
+
+	assert(credit_inst.has_node("TopBar/Back"), "Credit phai co nut Back")
+	assert(credit_inst.has_node("Panel/Content/VBox/MusicSection/ThemeRow/Value"),
+		"Credit phai hien theme dang dung")
+	assert(credit_inst.has_node("Panel/Content/VBox/MusicSection/TrackRow/Value"),
+		"Credit phai hien track dang phat")
+	assert(credit_inst.has_node("Panel/Content/VBox/Footer/Stamp/VersionLabel"),
+		"Credit phai co con dau version")
+	print("[CHECK] CreditScene load va co day du thong tin soundtrack/attribution.")
+
+	credit_inst.queue_free()
+	await process_frame
+
+	# 5. Test Chapters Scene
 	var chapters_packed: PackedScene = load("res://scenes/chapters.tscn")
 	assert(chapters_packed != null, "scenes/chapters.tscn phai load duoc")
 	var chapters_inst = chapters_packed.instantiate()
@@ -87,6 +122,6 @@ func _init() -> void:
 	await process_frame
 
 	print("\n========================================================")
-	print("  TAT CA TEST SPLASH, TITLE, SHOP, CHAPTERS DEU PASS!")
+	print("  TAT CA TEST SPLASH, TITLE, SHOP, CREDIT, CHAPTERS DEU PASS!")
 	print("========================================================\n")
 	quit(0)
