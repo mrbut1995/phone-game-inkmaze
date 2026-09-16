@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="785" height="535">
+  <defs>
+    <!-- Đổ bóng nổi cho panel -->
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <!-- Hiệu ứng bùng nổ tia lửa bom -->
+    <filter id="boomGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#DC2626" flood-opacity="0.7"/>
+    </filter>
+
+    <!-- Quả bom vector -->
+    <g id="bomb-icon">
+      <circle cx="0" cy="4" r="26" fill="#1E293B" stroke="#0F172A" stroke-width="3"/>
+      <ellipse cx="-8" cy="-4" rx="6" ry="3" fill="#94A3B8" opacity="0.6"/>
+      <rect x="-6" y="-28" width="12" height="8" rx="2" fill="#64748B" stroke="#0F172A" stroke-width="2"/>
+      <path d="M 0 -28 Q 12 -38 18 -32" fill="none" stroke="#D97706" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="21" cy="-33" r="5" fill="#EF4444"/>
+      <circle cx="21" cy="-33" r="2.5" fill="#FDE047"/>
+    </g>
+  </defs>
+
+  <!-- ================= PANEL CON MINH HỌA GUIDELINE (TRANG 2) ================= -->
+  <g filter="url(#uiShadow)">
+    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/>
+
+    <!-- 1. NỬA TRÁI: ĐẠP PHẢI BOM PHÁT NỔ (ĐÃ XÓA CHỮ) -->
+    <g transform="translate(45, 35)">
+      <rect width="310" height="395" rx="18" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
+      <rect x="20" y="16" width="165" height="28" rx="8" fill="#FEE2E2"/>
+
+      <!-- Ô cờ nổ tung -->
+      <g transform="translate(75, 75)">
+        <rect width="160" height="160" rx="16" fill="#FEE2E2" stroke="#DC2626" stroke-width="3"/>
+
+        <!-- Tia lửa nổ tung -->
+        <g transform="translate(80, 80)" filter="url(#boomGlow)">
+          <path d="M 0 -70 L 18 -25 L 65 -50 L 35 -10 L 75 15 L 25 25 L 45 70 L 5 35 L -20 65 L -20 20 L -65 35 L -35 -10 L -70 -35 L -20 -20 Z" fill="#FBBF24" stroke="#DC2626" stroke-width="2.5"/>
+          <circle cx="0" cy="0" r="36" fill="#EF4444"/>
+          <!-- Quả bom đè lên vụ nổ -->
+          <g transform="scale(0.85)"><use href="#bomb-icon"/></g>
+        </g>
+      </g>
+    </g>
+
+    <!-- 2. NỬA PHẢI: VÙNG Ô SỐ 0 AN TOÀN (ĐÃ XÓA CHỮ) -->
+    <g transform="translate(400, 35)">
+      <rect width="310" height="395" rx="18" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="2"/>
+      <rect x="20" y="16" width="165" height="28" rx="8" fill="#DCFCE7"/>
+
+      <!-- Lưới mini 3x3 quanh ô số 0 -->
+      <g transform="translate(65, 65)">
+        <g fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.8">
+          <rect x="0" y="0" width="60" height="60"/><rect x="60" y="0" width="60" height="60"/><rect x="120" y="0" width="60" height="60"/>
+          <rect x="0" y="60" width="60" height="60"/>
+          <!-- Ô số 0 trung tâm -->
+          <rect x="60" y="60" width="60" height="60" fill="#DCFCE7" stroke="#16A34A" stroke-width="2.5"/>
+          <rect x="120" y="60" width="60" height="60"/>
+          <rect x="0" y="120" width="60" height="60"/><rect x="60" y="120" width="60" height="60"/><rect x="120" y="120" width="60" height="60"/>
+        </g>
+
+        <!-- GIỮ NGUYÊN SỐ 0 VÀ CÁC DẤU TÍCH XANH TRONG LƯỚI -->
+        <text x="90" y="90" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="950" fill="#15803D">0</text>
+        
+        <g fill="#16A34A" font-family="sans-serif" font-size="18" font-weight="900" text-anchor="middle" dominant-baseline="central">
+          <text x="30" y="30">✓</text><text x="90" y="30">✓</text><text x="150" y="30">✓</text>
+          <text x="30" y="90">✓</text><text x="150" y="90">✓</text>
+          <text x="30" y="150">✓</text><text x="90" y="150">✓</text><text x="150" y="150">✓</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- 3. DẢI NỀN GHI CHÚ CHÂN HÌNH (ĐÃ XÓA CHỮ) -->
+    <rect x="20" y="448" width="715" height="44" rx="10" fill="#F4EFE6"/>
+  </g>
+</svg>

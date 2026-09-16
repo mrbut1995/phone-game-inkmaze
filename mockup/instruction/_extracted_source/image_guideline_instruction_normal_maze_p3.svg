@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="785" height="535">
+  <defs>
+    <!-- Đổ bóng nổi cho panel -->
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <!-- Ký hiệu điểm neo Anchor góc ô lưới -->
+    <g id="anchor-cross">
+      <g stroke="#1E283A" stroke-width="3.5" stroke-linecap="round">
+        <line x1="0" y1="-14" x2="0" y2="-4"/>
+        <line x1="0" y1="4"   x2="0" y2="14"/>
+        <line x1="-14" y1="0" x2="-4" y2="0"/>
+        <line x1="4"   y1="0" x2="14"  y2="0"/>
+      </g>
+    </g>
+  </defs>
+
+  <!-- ================= PANEL CON MINH HỌA GUIDELINE (TRANG 3) ================= -->
+  <g filter="url(#uiShadow)">
+    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+
+    <!-- 1. PHẦN TRÊN: TÍNH NĂNG GHI NHỚ TƯỜNG (ĐÃ XÓA CHỮ) -->
+    <g transform="translate(45, 35)">
+      <rect width="665" height="215" rx="18" fill="#FFFDF8" stroke="#F59E0B" stroke-width="2"/>
+      <rect x="25" y="16" width="185" height="28" rx="8" fill="#FEF3C7"/>
+
+      <!-- Minh họa kéo nối 2 Anchor -->
+      <g transform="translate(60, 65)">
+        <rect width="130" height="110" rx="12" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5"/>
+        <!-- GIỮ NGUYÊN CON SỐ 2 TRONG GRID -->
+        <text x="65" y="55" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#718B9E">2</text>
+
+        <!-- 2 Anchor cạnh phải -->
+        <use href="#anchor-cross" x="130" y="0"/>
+        <use href="#anchor-cross" x="130" y="110"/>
+
+        <!-- Nét vẽ tường ghi nhớ màu cam nét đứt -->
+        <line x1="130" y1="0" x2="130" y2="110" stroke="#D97706" stroke-width="8" stroke-dasharray="10 6" stroke-linecap="round"/>
+
+        <!-- Con trỏ vuốt giữa 2 anchor -->
+        <g transform="translate(130, 55)">
+          <circle cx="0" cy="0" r="16" fill="#F59E0B" fill-opacity="0.3"/>
+          <circle cx="0" cy="0" r="8" fill="#D97706"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- 2. PHẦN DƯỚI: KHỐI HOÀN TÁC (UNDO) VÀ GỢI Ý (HINT) (ĐÃ XÓA CHỮ) -->
+    <g transform="translate(45, 270)">
+      <!-- Khối Hoàn Tác -->
+      <g transform="translate(0, 0)">
+        <rect width="320" height="155" rx="18" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="2"/>
+        <rect x="25" y="18" width="50" height="50" rx="14" fill="#FEFDFA" stroke="#3D83AE" stroke-width="2.5"/>
+        <!-- Icon Mũi tên Undo -->
+        <path d="M 46 36 L 38 43 L 46 50" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 39 43 H 50 C 56 43 60 47 60 52 C 60 58 55 60 48 60 H 42" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round"/>
+      </g>
+
+      <!-- Khối Gợi Ý -->
+      <g transform="translate(345, 0)">
+        <rect width="320" height="155" rx="18" fill="#FEFCE8" stroke="#FEF08A" stroke-width="2"/>
+        <rect x="25" y="18" width="50" height="50" rx="14" fill="#FEFDFA" stroke="#F59E0B" stroke-width="2.5"/>
+        <!-- Icon Bóng đèn Hint -->
+        <path d="M 50 35 C 44 35 41 40 45 47 L 55 47 C 59 40 56 35 50 35 Z" fill="none" stroke="#F59E0B" stroke-width="2.8"/>
+        <line x1="47" y1="52" x2="53" y2="52" stroke="#F59E0B" stroke-width="2.5"/>
+      </g>
+    </g>
+
+    <!-- 3. DẢI NỀN GHI CHÚ CHÂN HÌNH (ĐÃ XÓA CHỮ) -->
+    <rect x="20" y="448" width="715" height="42" rx="10" fill="#F4EFE6"/>
+  </g>
+</svg>

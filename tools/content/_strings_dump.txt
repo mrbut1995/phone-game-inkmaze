@@ -1,0 +1,596 @@
+blindmemory.p1.chip     :: BLIND MEMORY MAZE
+blindmemory.p1.title    :: Pha Đếm Ngược Ghi Nhớ
+blindmemory.p1.section  :: QUY TẮC PHA GHI NHỚ
+blindmemory.p1.cta      :: TIẾP THEO: TƯỜNG BIẾN MẤT (2/3) ›
+blindmemory.p1.link     :: Bỏ qua hướng dẫn & Vào ghi nhớ ngay
+blindmemory.p1.tab1     :: ĐẾM NGƯỢC 3 GIÂY
+blindmemory.p1.tab2     :: TƯỜNG BIẾN MẤT
+blindmemory.p1.tab3     :: DỰNG TƯỜNG NHÁP
+blindmemory.p1.row1T    :: Tường Hiển Thị Toàn Bộ Khi Bắt Đầu:
+blindmemory.p1.row1D    :: Bạn có 3 giây đếm ngược (3.. 2.. 1.. GO!) để nhìn thấy toàn bộ mê cung thật.
+blindmemory.p1.row2T    :: Đồng Hồ Chưa Tính Giờ:
+blindmemory.p1.row2D    :: Thời gian 3 giây ghi nhớ không bị tính vào thời gian chơi. Tương tác vẽ bị khóa tạm thời.
+blindmemory.p1.row3T    :: Không Có Bất Kỳ Số Manh Mối Nào:
+blindmemory.p1.row3D    :: Sau khi tường ẩn, các ô sẽ trống trơn — bạn hoàn toàn phải dựa vào bộ nhớ của mình!
+blindmemory.p1.panel    :: GHI NHỚ TRONG
+blindmemory.p1.panel    :: 3
+blindmemory.p1.panel    :: GIÂY
+blindmemory.p1.panel    :: TRONG 3 GIÂY ĐẦU
+blindmemory.p1.panel    :: TƯỜNG HIỆN
+blindmemory.p1.panel    :: 100% RÕ RÀNG
+blindmemory.p1.panel    :: (Đồng hồ đứng yên)
+blindmemory.p1.panel    :: ĐẶC BIỆT CHÚ Ý
+blindmemory.p1.panel    :: HOÀN TOÀN
+blindmemory.p1.panel    :: KHÔNG CÓ SỐ
+blindmemory.p1.panel    :: Chỉ có ô S và F!
+blindmemory.p1.panel    :: Tranh thủ 3 giây đếm ngược nhìn bao quát để khắc ghi đường thoát an toàn vào đầu!
+blindmemory.p2.title    :: Tường Biến Mất & Đi Bằng Trí Nhớ
+blindmemory.p2.section  :: QUY TẮC ĐI BẰNG TRÍ NHỚ
+blindmemory.p2.cta      :: TIẾP THEO: DỰNG TƯỜNG NHÁP (3/3) ›
+blindmemory.p2.row1T    :: Mê Cung Ẩn Kín Hoàn Toàn:
+blindmemory.p2.row1D    :: Mọi bức tường đều biến mất. Bạn chỉ thấy ô Cầu thang Start (S) và Hố thang Finish (F).
+blindmemory.p2.row2T    :: Hậu Quả Khi Chạm Tường Vô Hình:
+blindmemory.p2.row2D    :: Ở chế độ Thường bạn sẽ bị đẩy về S và mất thời gian; ở chế độ Hardcore sẽ THUA NGAY LẬP TỨC!
+blindmemory.p2.row3T    :: Vẽ Chậm Rãi Từng Bước Một:
+blindmemory.p2.row3D    :: Đừng vội vàng kéo lướt qua nhiều ô. Hãy vừa đi vừa nhớ lại hình ảnh mê cung lúc nãy.
+blindmemory.p2.panel    :: GO!
+blindmemory.p2.panel    :: BÀN CỜ SAU ĐÓ
+blindmemory.p2.panel    :: TRỐNG TRƠN
+blindmemory.p2.panel    :: 100% TƯỜNG ẨN
+blindmemory.p2.panel    :: Không còn vết tích!
+blindmemory.p2.panel    :: CẨN THẬN ĐÂM TƯỜNG
+blindmemory.p2.panel    :: CHẠM TƯỜNG ẨN
+blindmemory.p2.panel    :: BỊ PHẠT VỀ S
+blindmemory.p2.panel    :: (Hardcore: Thua ngay)
+blindmemory.p2.panel    :: Đồng hồ bắt đầu tính giờ! Hãy vẽ chậm rãi và tái hiện lại trí nhớ của bạn.
+blindmemory.p3.title    :: Dựng Tường Nháp & Gợi Ý
+blindmemory.p3.section  :: BÍ QUYẾT CHIẾN THẮNG
+blindmemory.p3.cta      :: ĐÃ HIỂU • THỬ THÁCH TRÍ NHỚ
+blindmemory.p3.link     :: Xem lại từ đầu (Trang 1)
+blindmemory.p3.row1T    :: Dựng Tường Nháp Ngay Lập Tức:
+blindmemory.p3.row1D    :: Nối 2 điểm Anchor để đánh dấu các bức tường quan trọng bạn vừa thấy trước khi bộ nhớ bị phai.
+blindmemory.p3.row2T    :: Tận Dụng Nút Gợi Ý Khi Bị Bí:
+blindmemory.p3.row2D    :: Nếu quên hẳn khúc giữa, đừng liều đâm bừa; hãy bấm Gợi Ý để soi ra 1 ô an toàn.
+blindmemory.p3.row3T    :: Rèn Luyện Trí Nhớ Mỗi Ngày:
+blindmemory.p3.row3D    :: Màn chơi càng rộng (4×4 rồi 5×5), số lượng tường càng nhiều, thử thách trí não đỉnh cao!
+blindmemory.p3.panel    :: CHIẾN THUẬT: VẼ TƯỜNG NHÁP
+blindmemory.p3.panel    :: Nhanh Tay Khóa Khe Nguy Hiểm
+blindmemory.p3.panel    :: Vừa hết 3 giây, hãy dùng công cụ Ghi Nhớ
+blindmemory.p3.panel    :: nối ngay các Anchor để dựng lại tường bạn nhớ.
+blindmemory.p3.panel    :: Giúp bạn không bị đãng trí giữa chừng!
+blindmemory.p3.panel    :: GỢI Ý (HINT)
+blindmemory.p3.panel    :: Soi lại đường an toàn
+blindmemory.p3.panel    :: Lỡ quên sạch đường đi?
+blindmemory.p3.panel    :: Bấm Gợi Ý để soi sáng ngay
+blindmemory.p3.panel    :: 1 đoạn đường đúng đắn tiếp theo.
+blindmemory.p3.panel    :: HOÀN TÁC (UNDO)
+blindmemory.p3.panel    :: Rút lại bước đi
+blindmemory.p3.panel    :: Vừa đặt chân vào ô thấy sai sai?
+blindmemory.p3.panel    :: Bấm Undo để lùi lại ô trước
+blindmemory.p3.panel    :: trước khi va phải tường ẩn!
+blindmemory.p3.panel    :: Kẻ có trí nhớ tốt chưa chắc đã thắng — kẻ biết dùng Anchor dựng tường mới là cao thủ!
+countdowncost.p1.chip     :: COUNTDOWN COST
+countdowncost.p1.title    :: Ngân Sách & Giá Cước Ô
+countdowncost.p1.section  :: QUY TẮC CHI PHÍ BƯỚC
+countdowncost.p1.cta      :: TIẾP THEO: ĐÂM TƯỜNG TRỪ CƯỚC (2/3) ›
+countdowncost.p1.link     :: Bỏ qua hướng dẫn & Vào tính cước ngay
+countdowncost.p1.tab1     :: NGÂN SÁCH & CƯỚC
+countdowncost.p1.tab2     :: ĐÂM TƯỜNG TRỪ BƯỚC
+countdowncost.p1.tab3     :: TỐI ƯU CHI PHÍ
+countdowncost.p1.row1T    :: Con Số Là Chi Phí Bước Của Ô:
+countdowncost.p1.row1D    :: Mỗi khi bạn bước vào ô nào, ngân sách sẽ trừ thẳng bấy nhiêu bước (từ 1 đến 4 bước).
+countdowncost.p1.row2T    :: Ngân Sách Tụt Về 0 Là Thua Ngay:
+countdowncost.p1.row2D    :: Nếu chưa kịp chạm tới hố thang Finish mà đã cạn kiệt ngân sách bước Game Over!
+countdowncost.p1.row3T    :: Không Liên Quan Tới Số Tường:
+countdowncost.p1.row3D    :: Con số ở chế độ này hoàn toàn không báo vị trí tường — chỉ biểu thị chi phí bước đi.
+countdowncost.p1.panel    :: NGÂN SÁCH CÒN:
+countdowncost.p1.panel    :: 13
+countdowncost.p1.panel    :: ĐÃ TIÊU: -3 BƯỚC (QUA 2 Ô)
+countdowncost.p1.panel    :: 1
+countdowncost.p1.panel    :: 2
+countdowncost.p1.panel    :: 4
+countdowncost.p1.panel    :: Ô GIÁ RẺ (1 - 2)
+countdowncost.p1.panel    :: TIẾT KIỆM
+countdowncost.p1.panel    :: Ưu tiên đi qua
+countdowncost.p1.panel    :: để giữ ngân sách!
+countdowncost.p1.panel    :: Ô GIÁ ĐẮT (3 - 4)
+countdowncost.p1.panel    :: TỐN KÉM!
+countdowncost.p1.panel    :: Đi 1 ô số 4 bằng
+countdowncost.p1.panel    :: 4 lần ô số 1!
+countdowncost.p1.panel    :: Đã đi qua 2 ô: Ô [1] + Ô [2] Tổng cước: -3 bước, ngân sách còn 13 bước!
+countdowncost.p2.title    :: Đâm Tường & Bẫy Ô Đắt
+countdowncost.p2.section  :: QUY TẮC ĐÂM TƯỜNG & CƯỚC PHÍ
+countdowncost.p2.cta      :: TIẾP THEO: TỐI ƯU CHI PHÍ & UNDO (3/3) ›
+countdowncost.p2.row1T    :: Đâm Tường Vẫn Bị Phạt Cước Bước:
+countdowncost.p2.row1D    :: Đâm vào tường vô hình sẽ văng về S và trừ thẳng chi phí của ô bạn vừa toan bước vào.
+countdowncost.p2.row2T    :: Hạn Chế Bước Vào Ô Số 3 & Số 4:
+countdowncost.p2.row2D    :: Chỉ 2-3 ô số to là đủ vét sạch ngân sách của bạn. Hãy ưu tiên các tuyến đường qua ô 1 và 2.
+countdowncost.p2.row3T    :: Tường Lộ Ra Để Rút Kinh Nghiệm:
+countdowncost.p2.row3D    :: Bức tường bị đâm sẽ hiện rõ trên bàn cờ. Đừng đâm lại lần thứ hai làm tiêu hao ngân sách!
+countdowncost.p2.panel    :: HẬU QUẢ ĐÂM TƯỜNG
+countdowncost.p2.panel    :: VẪN TRỪ -3 BƯỚC!
+countdowncost.p2.panel    :: Bị phạt đúng giá cước
+countdowncost.p2.panel    :: của ô bạn vừa đâm!
+countdowncost.p2.panel    :: CẨN THẬN BẪY Ô ĐẮT
+countdowncost.p2.panel    :: Ô SỐ 3 & SỐ 4
+countdowncost.p2.panel    :: Hao hụt ngân sách cực nhanh.
+countdowncost.p2.panel    :: Nên tìm đường né tránh!
+countdowncost.p2.panel    :: Đâm tường ở Countdown Cost bị phạt kép: vừa văng về S, vừa mất đứt số bước của ô đích!
+countdowncost.p3.title    :: Tối Ưu Chi Phí & Hoàn Cước
+countdowncost.p3.section  :: BÍ QUYẾT PHÁ ĐẢO
+countdowncost.p3.cta      :: ĐÃ HIỂU • TỐI ƯU NGÂN SÁCH
+countdowncost.p3.row1T    :: Tìm Tuyến Đường Rẻ Nhất Trước Khi Vẽ:
+countdowncost.p3.row1D    :: Nhẩm tính tổng số điểm của các ô trên đường đi; chọn nhánh có tổng số nhỏ nhất để tới F.
+countdowncost.p3.row2T    :: Tận Dụng Undo Để Thu Hồi Ngân Sách:
+countdowncost.p3.row2D    :: Nếu nhận thấy nhánh đang đi quá tốn bước, hãy Undo lùi lại để nhận lại toàn bộ số bước đã trừ.
+countdowncost.p3.row3T    :: Xếp Hạng Dựa Trên Chi Phí Tối Thiểu:
+countdowncost.p3.row3D    :: Người chơi về đích với tổng chi phí bước tiêu tốn càng ít sẽ giành thứ hạng càng cao!
+countdowncost.p3.panel    :: BÍ QUYẾT: ĐƯỜNG RẺ NHẤT
+countdowncost.p3.panel    :: S
+countdowncost.p3.panel    :: F
+countdowncost.p3.panel    :: CƯỚC: 6 BƯỚC • DƯ 10
+countdowncost.p3.panel    :: CƯỚC: 17 BƯỚC • THUA
+countdowncost.p3.panel    :: Ngân Sách Luôn Đủ Cho Đường Rẻ
+countdowncost.p3.panel    :: Mỗi màn đều cấp đủ số bước cho
+countdowncost.p3.panel    :: tuyến đường ít tốn kém nhất + dự phòng.
+countdowncost.p3.panel    :: Đi lệch qua ô đắt sẽ bị cạn sạch bước!
+countdowncost.p3.panel    :: UNDO
+countdowncost.p3.panel    :: HOÀN TRẢ CƯỚC 100%
+countdowncost.p3.panel    :: +HOÀN LẠI SỐ BƯỚC ĐÃ TRỪ!
+countdowncost.p3.panel    :: Lỡ bước vào ô đắt đỏ hoặc muốn đổi hướng?
+countdowncost.p3.panel    :: Bấm Undo lùi lại, số bước bị trừ sẽ lập tức cộng ngược lại vào ngân sách.
+countdowncost.p3.panel    :: Đừng tiếc một lần Undo! Lùi lại để chọn lối đi rẻ hơn sẽ cứu sống cả ván đấu.
+dungeon.p1.chip     :: CHẾ ĐỘ VÔ TẬN
+dungeon.p1.title    :: Leo Tầng & Quản Lý Bước
+dungeon.p1.section  :: LUẬT CHƠI VÔ TẬN
+dungeon.p1.cta      :: TIẾP THEO: CƠ CHẾ ĐÂM TƯỜNG (2/3) ›
+dungeon.p1.link     :: Bỏ qua hướng dẫn & Vào leo tầng ngay
+dungeon.p1.tab1     :: QUẢN LÝ BƯỚC
+dungeon.p1.tab2     :: ĐÂM TƯỜNG VỀ S
+dungeon.p1.tab3     :: BẪY VÔ TẬN
+dungeon.p1.row1T    :: Chế Độ Duy Nhất Giới Hạn Bước Đi:
+dungeon.p1.row1D    :: Mỗi ô di chuyển trừ 1 bước. Tuyệt đối không để số bước tụt về 0!
+dungeon.p1.row2T    :: Nhận Thêm Bước Thưởng Khi Qua Tầng:
+dungeon.p1.row2D    :: Xuống được hố thang F sẽ cộng thêm bước cho tầng kế tiếp và tích lũy điểm số.
+dungeon.p1.row3T    :: Chinh Phục Kỷ Lục Tầng Sâu Nhất:
+dungeon.p1.row3D    :: Game không có màn cuối! Hãy bảo toàn tối đa số bước để đi xa nhất có thể.
+dungeon.p1.panel    :: SỐ BƯỚC CÒN LẠI
+dungeon.p1.panel    :: 15
+dungeon.p1.panel    :: BƯỚC
+dungeon.p1.panel    :: TẦNG HIỆN TẠI
+dungeon.p1.panel    :: 04
+dungeon.p1.panel    :: THỜI GIAN
+dungeon.p1.panel    :: 01:24
+dungeon.p1.panel    :: 0
+dungeon.p1.panel    :: MỖI BƯỚC ĐI
+dungeon.p1.panel    :: -1 BƯỚC
+dungeon.p1.panel    :: Hết bước = THUA
+dungeon.p1.panel    :: CHẠM HỐ ĐÍCH F
+dungeon.p1.panel    :: +5 BƯỚC!
+dungeon.p1.panel    :: Xuống Tầng 05
+dungeon.p1.panel    :: Đi đường càng ngắn thì bước dư càng nhiều để chinh phục các tầng sâu hơn!
+dungeon.p2.title    :: Đâm Tường & Lộ Tường Thật
+dungeon.p2.section  :: QUY TẮC ĐÂM TƯỜNG
+dungeon.p2.cta      :: TIẾP THEO: BẪY VÔ TẬN & MẸO LEO SÂU (3/3) ›
+dungeon.p2.row1T    :: Không Bị Game Over Ngay Lập Tức:
+dungeon.p2.row1D    :: Đâm tường vô hình ở Dungeon không kết thúc màn chơi, chỉ trừ 1 bước di chuyển.
+dungeon.p2.row2T    :: Bức Tường Sẽ Lộ Diện Vĩnh Viễn:
+dungeon.p2.row2D    :: Vách tường bạn vừa đâm vào sẽ hiện thành nét đen đậm rõ ràng suốt tầng đó.
+dungeon.p2.row3T    :: Văng Ngược Về Cầu Thang Xuất Phát (S):
+dungeon.p2.row3D    :: Nhân vật trở lại điểm S để bắt đầu đường vẽ mới né tránh đoạn tường vừa biết.
+dungeon.p2.panel    :: TƯỜNG THẬT ĐÃ LỘ!
+dungeon.p2.panel    :: Nét đen đậm
+dungeon.p2.panel    :: Không biến mất
+dungeon.p2.panel    :: HẬU QUẢ VA CHẠM
+dungeon.p2.panel    :: -1 BƯỚC ĐI
+dungeon.p2.panel    :: Văng ngược về S
+dungeon.p2.panel    :: Đừng sợ đâm tường! Đâm tường là cách hy sinh 1 bước để bản đồ lộ ra manh mối thật.
+dungeon.p3.title    :: Bẫy Vô Tận & Mẹo Sinh Tồn
+dungeon.p3.section  :: BÍ QUYẾT LEO SÂU
+dungeon.p3.cta      :: ĐÃ HIỂU • BẮT ĐẦU LEO TẦNG
+dungeon.p3.row1T    :: Tường Gợi Ý Giảm Về 0%:
+dungeon.p3.row1D    :: Càng xuống sâu tường càng ẩn kín, đòi hỏi tính toán cẩn thận từng con số.
+dungeon.p3.row2T    :: Luôn Đánh Dấu Tường Nghi Ngờ:
+dungeon.p3.row2D    :: Dùng công cụ Ghi Nhớ nối 2 điểm neo để khóa các khe nguy hiểm trước khi vẽ.
+dungeon.p3.row3T    :: Hồi Sinh Tại Chỗ (+3 Bước):
+dungeon.p3.row3D    :: Khi cạn bước, hồi sinh sẽ cộng +3 bước và giữ nguyên 100% mê cung & tường đã lộ!
+dungeon.p3.panel    :: TẦNG ĐẦU (TẦNG 1 - 3)
+dungeon.p3.panel    :: CÒN TƯỜNG VẼ SẴN
+dungeon.p3.panel    :: Dễ hình dung lối thoát
+dungeon.p3.panel    :: Tỉ lệ tường lộ: 40% ~ 60%
+dungeon.p3.panel    :: TẦNG SÂU (TẦNG 5 TRỞ ĐI)
+dungeon.p3.panel    :: 100% TƯỜNG VÔ HÌNH!
+dungeon.p3.panel    :: Dùng Ghi Nhớ nối Anchor
+dungeon.p3.panel    :: để tự dựng tường nháp trước
+dungeon.p3.panel    :: Càng lên cao tường sẵn càng biến mất — hãy nối Anchor trước khi đặt bút vẽ đường!
+fadingink.p1.chip     :: FADING INK • MỰC PHAI
+fadingink.p1.title    :: Cơ Chế Phai Mực Toàn Bàn
+fadingink.p1.section  :: QUY TẮC MỰC PHAI CƠ BẢN
+fadingink.p1.cta      :: TIẾP THEO: Ô CẠN KHÓA ĐƯỜNG (2/3) ›
+fadingink.p1.link     :: Bỏ qua hướng dẫn & Vào chơi ngay
+fadingink.p1.tab1     :: MỖI BƯỚC -1 MỰC
+fadingink.p1.tab2     :: Ô CẠN KHÓA ĐƯỜNG
+fadingink.p1.tab3     :: ĐƯỜNG TỐI ƯU & UNDO
+fadingink.p1.row1T    :: Số Trên Ô Thể Hiện Lượng Mực Còn Lại:
+fadingink.p1.row1D    :: Mỗi ô có điểm mực riêng. Chỉ được phép bước vào các ô vẫn CÒN mực (> 0).
+fadingink.p1.row2T    :: Cả Bàn Cờ Cùng Phai Đi Một Nhịp:
+fadingink.p1.row2D    :: Mỗi bước bạn di chuyển, TẤT CẢ các ô đều bị trừ 1 mực, bất kể bạn có đi vào ô đó hay không!
+fadingink.p1.row3T    :: Hoàn Toàn Không Có Bức Tường Nào:
+fadingink.p1.row3D    :: Bàn cờ thông suốt; chướng ngại vật cản đường bạn duy nhất chính là các ô bị cạn sạch mực.
+fadingink.p1.panel    :: CÒN 1
+fadingink.p1.panel    :: SỐ TRÊN Ô LÀ
+fadingink.p1.panel    :: ĐIỂM MỰC
+fadingink.p1.panel    :: Không phải số tường!
+fadingink.p1.panel    :: Không phải bom!
+fadingink.p1.panel    :: -1 MỰC
+fadingink.p1.panel    :: Tất cả các ô trên
+fadingink.p1.panel    :: bàn cờ cùng phai!
+fadingink.p1.panel    :: Bạn đi được 3 bước = Toàn bộ các ô trên bàn cờ đều bị phai mất 3 điểm mực!
+fadingink.p2.title    :: Ô Cạn Khóa Lối & Cảnh Báo
+fadingink.p2.section  :: QUY TẮC CẠN MỰC & KHÓA ĐƯỜNG
+fadingink.p2.cta      :: TIẾP THEO: ĐƯỜNG NGẮN NHẤT & UNDO (3/3) ›
+fadingink.p2.row1T    :: Cảnh Báo Ô Viền Cam (Còn 1 Mực):
+fadingink.p2.row1D    :: Ô này chỉ tồn tại thêm đúng 1 lượt đi nữa. Nếu bạn không bước vào ngay, nó sẽ cạn sạch.
+fadingink.p2.row2T    :: Ô Về 0 Biến Thành Khoảng Trống Bị Khóa:
+fadingink.p2.row2D    :: Mất hoàn toàn con số và mờ đi. Người chơi bị chặn không thể bước chân vào ô cạn mực.
+fadingink.p2.row3T    :: Thua Cuộc Khi Bị Bít Lối Đi:
+fadingink.p2.row3D    :: Nếu các ô xung quanh đều cạn mực và không còn lối nào tới hố thang F HẾT ĐƯỜNG ĐI!
+fadingink.p2.panel    :: Ô CÒN 1 ĐIỂM MỰC
+fadingink.p2.panel    :: SẮP PHAI
+fadingink.p2.panel    :: CÒN ĐÚNG 1 BƯỚC!
+fadingink.p2.panel    :: Nếu đi thêm 1 bước nữa vào
+fadingink.p2.panel    :: bất kỳ đâu, ô này sẽ biến mất!
+fadingink.p2.panel    :: Ô 0 MỰC: BỊ KHÓA
+fadingink.p2.panel    :: CẠN
+fadingink.p2.panel    :: KHÔNG THỂ BƯỚC VÀO
+fadingink.p2.panel    :: Ô trở thành khoảng trống rỗng.
+fadingink.p2.panel    :: Bị bít hết đường = THUA NGAY!
+fadingink.p2.panel    :: Hãy để ý các ô viền cam! Chúng báo trước những lối đi sắp biến mất vĩnh viễn.
+fadingink.p3.title    :: Đường Ngắn & Hồi Mực
+fadingink.p3.cta      :: ĐÃ HIỂU • BẮT ĐẦU VẼ ĐƯỜNG
+fadingink.p3.row1T    :: Tìm Đường Ngắn Nhất Trước Khi Vẽ:
+fadingink.p3.row1D    :: Nhìn bao quát bàn cờ, đếm số bước tới F và chọn tuyến đường ít ô chuyển hướng nhất.
+fadingink.p3.row2T    :: Tận Dụng Undo Để Hồi Phục Đường Đi:
+fadingink.p3.row2D    :: Lỡ đi vào ngõ cụt làm ô phía trước biến mất? Undo ngay để cứu lại mực cho các ô đó.
+fadingink.p3.row3T    :: Đồng Hồ Thời Gian Vẫn Tính Điểm:
+fadingink.p3.row3D    :: Chế độ này không giới hạn số bước, nhưng hoàn thành càng nhanh thì điểm xếp hạng càng cao!
+fadingink.p3.panel    :: BÍ QUYẾT: ĐƯỜNG NGẮN NHẤT
+fadingink.p3.panel    :: 4 BƯỚC • THẮNG
+fadingink.p3.panel    :: 7 BƯỚC • CẠN MỰC
+fadingink.p3.panel    :: Đường Ngắn Luôn Đủ Mực
+fadingink.p3.panel    :: Mỗi màn đều được thiết kế sao cho
+fadingink.p3.panel    :: đường ngắn nhất có đủ mực để tới F.
+fadingink.p3.panel    :: Đi vòng vèo sẽ tự làm cạn mực bít đường!
+fadingink.p3.panel    :: ĐẶC QUYỀN HỒI MỰC
+fadingink.p3.panel    :: +1 MỰC CHO TOÀN BÀN CỜ!
+fadingink.p3.panel    :: Mỗi lần bấm Undo lùi 1 bước chân, tất cả
+fadingink.p3.panel    :: các ô trên bàn cờ đều được hồi phục lại đúng 1 điểm mực.
+fadingink.p3.panel    :: Đừng ngại Undo! Rút lại bước đi sẽ hồi sinh ngay các ô vừa bị cạn mực.
+fog_of_war.p1.chip     :: FOG OF WAR • SƯƠNG MÙ
+fog_of_war.p1.title    :: Màn Sương & Tầm Nhìn 1 Ô
+fog_of_war.p1.section  :: QUY TẮC MÀN SƯƠNG
+fog_of_war.p1.cta      :: TIẾP THEO: DÒ ĐƯỜNG TỪNG BƯỚC (2/3) ›
+fog_of_war.p1.link     :: Bỏ qua hướng dẫn & Vào dò đường ngay
+fog_of_war.p1.tab1     :: TẦM NHÌN BÁN KÍNH 1
+fog_of_war.p1.tab2     :: DÒ ĐƯỜNG TỪNG BƯỚC
+fog_of_war.p1.tab3     :: GHI NHỚ & BÍ QUYẾT
+fog_of_war.p1.row1T    :: Chỉ Thấy Số Trong Bán Kính 1 Ô:
+fog_of_war.p1.row1D    :: Bạn chỉ có thể đọc được manh mối số của các ô nằm ngay sát cạnh (ngang, dọc, chéo).
+fog_of_war.p1.row2T    :: Các Ô Ở Xa Bị Phủ Mờ Hoàn Toàn:
+fog_of_war.p1.row2D    :: Màn sương mù ẩn giấu toàn bộ con số của những ô phía xa cho đến khi bạn bước lại gần.
+fog_of_war.p1.row3T    :: Tường Vô Hình Vẫn Nằm Ẩn Mình:
+fog_of_war.p1.row3D    :: Vẫn có các bức tường vô hình giữa các ô — bước bừa vào sương mù là đâm tường ngay!
+fog_of_war.p1.panel    :: ?
+fog_of_war.p1.panel    :: VÙNG TẦM NHÌN
+fog_of_war.p1.panel    :: BÁN KÍNH 1 Ô
+fog_of_war.p1.panel    :: HIỆN RÕ SỐ
+fog_of_war.p1.panel    :: Chỉ thấy ô sát cạnh bạn!
+fog_of_war.p1.panel    :: VÙNG SƯƠNG MÙ
+fog_of_war.p1.panel    :: Ô Ở XA BẠN
+fog_of_war.p1.panel    :: ẨN CON SỐ
+fog_of_war.p1.panel    :: Che khuất manh mối!
+fog_of_war.p1.panel    :: Bạn đi đến đâu thì quầng sáng mở ra tới đó — ô ở xa sẽ bị sương mù che mất số!
+fog_of_war.p2.title    :: Dò Đường Theo Bước Chân
+fog_of_war.p2.section  :: QUY TẮC DI CHUYỂN TRONG SƯƠNG
+fog_of_war.p2.cta      :: TIẾP THEO: GHI NHỚ ANCHOR & BÍ QUYẾT (3/3) ›
+fog_of_war.p2.row1T    :: Tầm Nhìn Di Chuyển Theo Từng Bước:
+fog_of_war.p2.row1D    :: Đặt chân tới ô mới sẽ lập tức hé lộ con số của những ô tiếp giáp phía trước mặt bạn.
+fog_of_war.p2.row2T    :: Ô Cũ Phía Sau Sẽ Bị Che Lại:
+fog_of_war.p2.row2D    :: Các ô ở xa tầm nhìn sẽ bị sương mù bao phủ trở lại, khiến bạn khó nhìn lại số cũ.
+fog_of_war.p2.row3T    :: Nguy Cơ Va Phải Tường Vô Hình:
+fog_of_war.p2.row3D    :: Nếu bước liều sang ô chưa sáng, bạn có thể đâm trúng tường ẩn và bị phạt văng về điểm S!
+fog_of_war.p2.panel    :: Ô ĐÃ BƯỚC QUA
+fog_of_war.p2.panel    :: MỜ DẦN ĐI
+fog_of_war.p2.panel    :: ẨN LẠI SỐ
+fog_of_war.p2.panel    :: Sương mù phủ lại!
+fog_of_war.p2.panel    :: BẪY TƯỜNG ẨN
+fog_of_war.p2.panel    :: ĐÂM VÀO TƯỜNG
+fog_of_war.p2.panel    :: Bước tới đâu sương mù mở tới đó — nhưng tuyệt đối không bước bừa vào ô chưa rõ số!
+fog_of_war.p3.title    :: Ghi Nhớ Anchor & Bí Quyết
+fog_of_war.p3.cta      :: ĐÃ HIỂU • VƯỢT MÀN SƯƠNG
+fog_of_war.p3.row1T    :: Dựng Tường Nháp Ngay Khi Quầng Sáng Soi Thấy:
+fog_of_war.p3.row1D    :: Đừng để sương mù che khuất manh mối. Nối 2 Anchor để đánh dấu tường cam bảo vệ bản thân.
+fog_of_war.p3.row2T    :: Bật Đèn Bằng Nút Gợi Ý:
+fog_of_war.p3.row2D    :: Khi rơi vào ngõ cụt và không đoán được bước tiếp theo, hãy dùng Gợi Ý để soi ra 1 ô đúng.
+fog_of_war.p3.row3T    :: Tiến Lên Từng Ô Một Cách Chắc Chắn:
+fog_of_war.p3.row3D    :: Chế độ này không giới hạn số bước. Cứ bình tĩnh suy luận từng ô để đưa lối thoát về hố thang F!
+fog_of_war.p3.panel    :: CHIẾN THUẬT: KHÓA TƯỜNG ANCHOR
+fog_of_war.p3.panel    :: Khóa Tường Trước Khi Sương Mù Che Mất
+fog_of_war.p3.panel    :: Thấy ô có số 2? Hãy nối ngay 2 Anchor
+fog_of_war.p3.panel    :: để dựng vách tường cam bảo vệ.
+fog_of_war.p3.panel    :: Tường bạn tự vẽ KHÔNG bị sương mù xóa!
+fog_of_war.p3.panel    :: Soi đường trong tối
+fog_of_war.p3.panel    :: Mất phương hướng trong sương?
+fog_of_war.p3.panel    :: 1 đoạn đường an toàn phía trước.
+fog_of_war.p3.panel    :: Bước vào hướng thấy nguy hiểm?
+fog_of_war.p3.panel    :: Bấm Undo để lùi lại ô an toàn
+fog_of_war.p3.panel    :: trước khi đâm vào tường ẩn!
+fog_of_war.p3.panel    :: Kẻ mù quáng bước đi sẽ đâm tường — người biết dùng Anchor khóa lối sẽ chiến thắng!
+minesweeper.p1.chip     :: MINESWEEPER MAZE
+minesweeper.p1.title    :: Luật Dò Mìn 8 Ô
+minesweeper.p1.section  :: QUY TẮC DÒ MÌN CƠ BẢN
+minesweeper.p1.cta      :: TIẾP THEO: ĐẠP BOM & VÙNG SỐ 0 (2/3) ›
+minesweeper.p1.link     :: Bỏ qua hướng dẫn & Vào dò mìn ngay
+minesweeper.p1.tab1     :: LUẬT 8 Ô BOM
+minesweeper.p1.tab2     :: ĐẠP BOM & VÙNG 0
+minesweeper.p1.tab3     :: CÔNG CỤ DÒ BOM
+minesweeper.p1.row1T    :: Số Trên Ô = Số Bom Trong 8 Ô Lân Cận:
+minesweeper.p1.row1D    :: Bao gồm 4 ô vuông góc (trên, dưới, trái, phải) và 4 ô góc chéo xung quanh.
+minesweeper.p1.row2T    :: Cầu Thang Start (S) & Finish (F) Luôn An Toàn:
+minesweeper.p1.row2D    :: Ô xuất phát và hố thang đích 100% không có bom. Luôn có đường BFS không bom tới đích!
+minesweeper.p1.row3T    :: Không Có Bất Kỳ Vách Tường Nào:
+minesweeper.p1.row3D    :: Không có tường cản bước — bạn có thể đi tự do nhưng chỉ được bước vào ô sạch bom.
+minesweeper.p1.panel    :: CON SỐ Ở GIỮA
+minesweeper.p1.panel    :: SỐ 1 = 1 BOM
+minesweeper.p1.panel    :: Trong 8 ô xung quanh
+minesweeper.p1.panel    :: (tính cả góc chéo!)
+minesweeper.p1.panel    :: VỊ TRÍ CÓ BOM
+minesweeper.p1.panel    :: TRÁNH XA!
+minesweeper.p1.panel    :: Đạp trúng bom
+minesweeper.p1.panel    :: = THUA NGAY
+minesweeper.p1.panel    :: Khác với mê cung thường: Số chỉ bom trong 8 ô lân cận (ngang, dọc VÀ chéo)!
+minesweeper.p2.title    :: Đạp Bom Nổ & Vùng Số 0
+minesweeper.p2.section  :: CHIẾN THUẬT DÒ ĐƯỜNG
+minesweeper.p2.cta      :: TIẾP THEO: CÔNG CỤ DÒ BOM & CẮM CỜ (3/3) ›
+minesweeper.p2.row1T    :: Hậu Quả Khi Đạp Trúng Bom:
+minesweeper.p2.row1D    :: Ván đấu dừng ngay tức khắc. Bạn đứng tại ô nổ và có thể hồi sinh lùi lại 1 bước.
+minesweeper.p2.row2T    :: Tận Dụng Triệt Để Các Ô Số 0:
+minesweeper.p2.row2D    :: Nếu ô có số 0, toàn bộ 8 ô kề cạnh nó 100% không có bom — hãy đi qua vùng này!
+minesweeper.p2.row3T    :: Kéo Nét Vẽ Chậm Rãi:
+minesweeper.p2.row3D    :: Không vội vàng kéo lướt nhanh; chỉ vẽ vào các ô bạn đã chắc chắn an toàn.
+minesweeper.p2.panel    :: ĐẠP PHẢI BOM
+minesweeper.p2.panel    :: THUA NGAY TẠI CHỖ!
+minesweeper.p2.panel    :: Nhân vật dừng ngay tại ô nổ
+minesweeper.p2.panel    :: (Không văng về S như Dungeon)
+minesweeper.p2.panel    :: VÙNG Ô SỐ 0
+minesweeper.p2.panel    :: CẢ 8 Ô ĐỀU SẠCH BOM!
+minesweeper.p2.panel    :: Tự tin bước qua bất kỳ ô nào
+minesweeper.p2.panel    :: đang tiếp giáp với ô số 0
+minesweeper.p2.panel    :: Hãy tìm các ô số 0 trước tiên — đó là chìa khóa mở toang lối đi an toàn!
+minesweeper.p3.title    :: Công Cụ & HUD Đếm Bom
+minesweeper.p3.cta      :: ĐÃ HIỂU • BẮT ĐẦU DÒ MÌN
+minesweeper.p3.row1T    :: Cắm Cờ Trước Khi Vẽ Đường:
+minesweeper.p3.row1D    :: Khi phát hiện ô chắc chắn có bom, hãy cắm cờ khóa ô lại ngay để tránh tay quẹt trúng.
+minesweeper.p3.row2T    :: Kiểm Tra Tổng Số Bom Trên HUD:
+minesweeper.p3.row2D    :: Đối chiếu số cờ đã cắm với số bom còn lại trên HUD để đảm bảo không bỏ sót quả nào.
+minesweeper.p3.row3T    :: Hồi Sinh Rút Lại Bước Lỗi:
+minesweeper.p3.row3D    :: Nếu lỡ đạp trúng bom, bạn có thể hồi sinh để quay lại ô ngay trước đó và thử hướng khác.
+minesweeper.p3.panel    :: BOM CÒN LẠI TRÊN BÀN
+minesweeper.p3.panel    :: 03
+minesweeper.p3.panel    :: Đã phát hiện 2 quả • Còn 3 quả ẩn giấu
+minesweeper.p3.panel    :: CẮM CỜ KHÓA Ô
+minesweeper.p3.panel    :: Chống bấm nhầm
+minesweeper.p3.panel    :: Dùng nút Ghi Nhớ để cắm cờ
+minesweeper.p3.panel    :: vào ô bạn nghi là có bom.
+minesweeper.p3.panel    :: Ô cắm cờ sẽ bị khóa an toàn!
+minesweeper.p3.panel    :: HOÀN TÁC
+minesweeper.p3.panel    :: Lùi 1 bước an toàn
+minesweeper.p3.panel    :: Lỡ bước nhầm ô nguy hiểm?
+minesweeper.p3.panel    :: Bấm Undo để lùi lại ngay lập tức
+minesweeper.p3.panel    :: trước khi dẫn đến sai lầm.
+minesweeper.p3.panel    :: Luôn để mắt tới thẻ HUD Bom để biết mình đã cô lập hết bom trên bàn chưa!
+normal_maze.p1.chip     :: HƯỚNG DẪN CHƠI
+normal_maze.p1.title    :: Cách Vượt Mê Cung
+normal_maze.p1.section  :: QUY TẮC CẦN NHỚ
+normal_maze.p1.cta      :: TIẾP THEO: MANH MỐI SỐ (2/3) ›
+normal_maze.p1.tab1     :: BẮT ĐẦU & ĐÍCH
+normal_maze.p1.tab2     :: MANH MỐI SỐ
+normal_maze.p1.tab3     :: CÔNG CỤ
+normal_maze.p1.row1T    :: Nối Cầu Thang Xuất Phát tới Hố Đích:
+normal_maze.p1.row1D    :: Đặt ngón tay vào tâm ô Cầu Thang S, kéo liên tục qua các ô để vẽ đường.
+normal_maze.p1.row2T    :: Cảnh giác Tường Vô Hình:
+normal_maze.p1.row2D    :: Đâm phải tường ẩn giữa 2 ô sẽ bị Game Over ngay lập tức!
+normal_maze.p1.row3T    :: Dựa vào manh mối các con số:
+normal_maze.p1.row3D    :: Con số trên ô cho biết số cạnh xung quanh có tường (xem tiếp ở Trang 2).
+normal_maze.p1.panel    :: XUẤT PHÁT
+normal_maze.p1.panel    :: Cầu thang rọi sáng
+normal_maze.p1.panel    :: HỐ ĐÍCH (F)
+normal_maze.p1.panel    :: Thang xuống sâu
+normal_maze.p1.panel    :: KÉO NỐI TÂM Ô
+normal_maze.p1.panel    :: Bắt đầu từ Cầu Thang Trên Lầu Đi theo đường an toàn Xuống Hố Thang Đích
+normal_maze.p2.title    :: Manh Mối Con Số
+normal_maze.p2.section  :: QUY TẮC CON SỐ
+normal_maze.p2.cta      :: TIẾP THEO: CÁC CÔNG CỤ HỖ TRỢ (3/3) ›
+normal_maze.p2.row1T    :: Ý Nghĩa Con Số (0 đến 3):
+normal_maze.p2.row1D    :: Con số thể hiện số cạnh trong bảng là tường vô hình của ô đó.
+normal_maze.p2.row2T    :: Ưu Tiên Đi Qua Ô Số 0:
+normal_maze.p2.row2D    :: Ô số 0 không có bất kỳ tường nào, là lối đi thông suốt an toàn nhất.
+normal_maze.p2.row3T    :: Cẩn Thận Ô Số 2 & Số 3:
+normal_maze.p2.row3D    :: Có nhiều tường bao quanh, cần so sánh với các ô bên cạnh để tránh đâm tường!
+normal_maze.p2.panel    :: Ô SỐ 0 = AN TOÀN
+normal_maze.p2.panel    :: KHÔNG CÓ TƯỜNG
+normal_maze.p2.panel    :: Tự do đi qua theo mọi hướng
+normal_maze.p2.panel    :: Ô SỐ 3 = 3 TƯỜNG
+normal_maze.p2.panel    :: BỊ BỊT KÍN 3 MẶT
+normal_maze.p2.panel    :: Chỉ có 1 cạnh duy nhất để thoát
+normal_maze.p2.panel    :: Suy luận như Dò Mìn: Dùng con số để xác định khe nào có Tường Vô Hình
+normal_maze.p3.title    :: Công Cụ Trợ Giúp
+normal_maze.p3.cta      :: ĐÃ HIỂU • BẮT ĐẦU CHƠI
+normal_maze.p3.row1T    :: Quan Sát & Đánh Dấu Tường Trước:
+normal_maze.p3.row1D    :: Chưa vội vẽ đường ngay — hãy nối các Anchor để bịt các khe nguy hiểm trước.
+normal_maze.p3.row2T    :: Vẽ Chậm Rãi & Chắc Chắn:
+normal_maze.p3.row2D    :: Kéo nét mực từng ô một từ Cầu thang Start sang Finish theo lối đã mở.
+normal_maze.p3.row3T    :: Đạt 3 Sao Mỗi Màn:
+normal_maze.p3.row3D    :: Hoàn thành cả 3 Thử Thách trên bảng HUD để gom trọn vẹn 3 Sao mở Chương mới!
+normal_maze.p3.panel    :: CÔNG CỤ: GHI NHỚ
+normal_maze.p3.panel    :: Đánh dấu Tường Nghi Ngờ
+normal_maze.p3.panel    :: Kéo giữa 2 dấu cộng (+) ở góc ô để tự dựng
+normal_maze.p3.panel    :: tường cam nháp, giúp không bao giờ đâm nhầm!
+normal_maze.p3.panel    :: Lùi lại 1 bước
+normal_maze.p3.panel    :: Lỡ vẽ sai vào ngõ cụt? Bấm
+normal_maze.p3.panel    :: Undo để rút lại nét vẽ an toàn.
+normal_maze.p3.panel    :: GỢI Ý
+normal_maze.p3.panel    :: Mở 1 bước an toàn
+normal_maze.p3.panel    :: Gặp thế cờ quá khó? Soi sáng
+normal_maze.p3.panel    :: ngay 1 đoạn đường đúng đắn.
+normal_maze.p3.panel    :: Kết hợp linh hoạt Vẽ Đường + Ghi Nhớ Tường để phá đảo mọi câu đố!
+sumpath.p1.chip     :: SUM PATH • TOÁN ĐỐ
+sumpath.p1.title    :: Bài Toán Cộng Tổng Điểm
+sumpath.p1.section  :: QUY TẮC CỘNG TỔNG CƠ BẢN
+sumpath.p1.cta      :: TIẾP THEO: TOÁN TỬ & Ô 1 LẦN (2/3) ›
+sumpath.p1.link     :: Bỏ qua hướng dẫn & Vào cộng điểm ngay
+sumpath.p1.tab1     :: CỘNG TỔNG & MỤC TIÊU
+sumpath.p1.tab2     :: TOÁN TỬ & Ô 1 LẦN
+sumpath.p1.tab3     :: BÍ QUYẾT TÍNH & UNDO
+sumpath.p1.row1T    :: Con Số Là Điểm Số Của Ô (1 đến 9):
+sumpath.p1.row1D    :: Không có tường chắn, không có bom ẩn. Mỗi ô trên bàn cờ đóng vai trò là một điểm số.
+sumpath.p1.row2T    :: Cộng Dồn Liên Tục Vào Tổng Điểm:
+sumpath.p1.row2D    :: Mỗi khi nét vẽ kéo sang ô mới, điểm ô đó sẽ lập tức được cộng dồn vào thẻ Tổng Hiện Tại.
+sumpath.p1.row3T    :: Chạm Đích Khớp Đúng Mục Tiêu:
+sumpath.p1.row3D    :: Chỉ chiến thắng khi bạn chạm Hố Thang Đích F với Tổng Điểm thỏa mãn đúng phép tính yêu cầu.
+sumpath.p1.panel    :: TỔNG HIỆN TẠI
+sumpath.p1.panel    :: 18
+sumpath.p1.panel    :: (qua 3 ô)
+sumpath.p1.panel    :: =
+sumpath.p1.panel    :: MỤC TIÊU PHẢI ĐẠT
+sumpath.p1.panel    :: 50
+sumpath.p1.panel    :: CẦN THÊM +32
+sumpath.p1.panel    :: 8
+sumpath.p1.panel    :: 6
+sumpath.p1.panel    :: 9
+sumpath.p1.panel    :: 7
+sumpath.p1.panel    :: CỘNG DỒN ĐIỂM
+sumpath.p1.panel    :: 4 + 6 + 8
+sumpath.p1.panel    :: = 18 ĐIỂM
+sumpath.p1.panel    :: Cộng mỗi bước đi!
+sumpath.p1.panel    :: ĐI TỰ DO
+sumpath.p1.panel    :: Vẽ hướng nào cũng
+sumpath.p1.panel    :: không sợ đâm chết!
+sumpath.p1.panel    :: Kéo qua ô nào, điểm ô đó cộng dồn vào Tổng. Đích đến yêu cầu bạn đạt chính xác = 50!
+sumpath.p2.title    :: Toán Tử & Ô Điểm 1 Lần
+sumpath.p2.section  :: QUY TẮC MỤC TIÊU & ĐIỂM Ô
+sumpath.p2.cta      :: TIẾP THEO: CHIẾN THUẬT & UNDO (3/3) ›
+sumpath.p2.row1T    :: Để Ý Ký Hiệu Toán Tử (=, <, >):
+sumpath.p2.row1D    :: Với dấu =, tổng phải khớp tuyệt đối. Với dấu < hoặc >, chỉ cần tổng nằm trong khoảng hợp lệ.
+sumpath.p2.row2T    :: Mỗi Ô Chỉ Tính Điểm Một Lần:
+sumpath.p2.row2D    :: Bạn có thể vẽ đường giao cắt ô cũ để chuyển hướng, nhưng điểm ô đó sẽ không được cộng thêm.
+sumpath.p2.row3T    :: Về Đích Sai Mục Tiêu = Thất Bại:
+sumpath.p2.row3D    :: Dù bạn chạm được hố thang F nhưng tổng điểm không thỏa mãn phép tính thì màn chơi chưa kết thúc!
+sumpath.p2.panel    :: 3 DẠNG TOÁN TỬ HUD
+sumpath.p2.panel    :: BẰNG CHÍNH XÁC
+sumpath.p2.panel    :: Ví dụ: Tổng = 50
+sumpath.p2.panel    :: <
+sumpath.p2.panel    :: NHỎ HƠN MỨC TRẦN
+sumpath.p2.panel    :: Ví dụ: Tổng < 35
+sumpath.p2.panel    :: >
+sumpath.p2.panel    :: LỚN HƠN MỨC SÀN
+sumpath.p2.panel    :: Ví dụ: Tổng > 40
+sumpath.p2.panel    :: KIỂM TRA KỸ TOÁN TỬ
+sumpath.p2.panel    :: trên bảng HUD trước khi vẽ!
+sumpath.p2.panel    :: MỖI Ô CHỈ CỘNG 1 LẦN
+sumpath.p2.panel    :: 5
+sumpath.p2.panel    :: +0 ĐIỂM
+sumpath.p2.panel    :: KHÔNG THỂ ĐI VÒNG CÀY ĐIỂM
+sumpath.p2.panel    :: Quay lại ô cũ sẽ không cộng thêm.
+sumpath.p2.panel    :: Điểm chỉ tính ở lần bước đầu tiên!
+sumpath.p2.panel    :: Luôn nhìn toán tử trên HUD: Có màn yêu cầu = 50, nhưng có màn chỉ yêu cầu < 30!
+sumpath.p3.title    :: Chiến Thuật & Undo Sửa Sai
+sumpath.p3.section  :: BÍ QUYẾT TÍNH TOÁN
+sumpath.p3.cta      :: ĐÃ HIỂU • BẮT ĐẦU CỘNG ĐIỂM
+sumpath.p3.row1T    :: Bản Cờ Luôn Có Ít Nhất 1 Nghiệm Đúng:
+sumpath.p3.row1D    :: Mỗi màn đều đảm bảo có ít nhất một đường đi hoàn hảo thỏa mãn đúng toán tử mục tiêu.
+sumpath.p3.row2T    :: Dùng Undo Để Thu Hồi Điểm Lố:
+sumpath.p3.row2D    :: Nếu lỡ bước vào ô số to khiến tổng vượt quá mục tiêu, chỉ cần Undo lùi lại để trừ điểm ra.
+sumpath.p3.row3T    :: Đua Tốc Độ Phá Giải:
+sumpath.p3.row3D    :: Game không giới hạn số bước — người nhẩm tính nhanh và về đích sớm nhất sẽ đạt hạng cao!
+sumpath.p3.panel    :: CHIẾN THUẬT: SỐ LỚN & SỐ NHỎ
+sumpath.p3.panel    :: Ô 7, 8, 9
+sumpath.p3.panel    :: Dồn điểm cực nhanh
+sumpath.p3.panel    :: Ô 1, 2, 3
+sumpath.p3.panel    :: Tinh chỉnh vừa khít
+sumpath.p3.panel    :: 50 ĐIỂM
+sumpath.p3.panel    :: HOÀN HẢO
+sumpath.p3.panel    :: • Khi mục tiêu còn xa: Ưu tiên gom các ô số to. Khi gần chạm mốc: Rẽ qua ô số nhỏ để chốt hạ!
+sumpath.p3.panel    :: TRỪ NGƯỢC ĐIỂM SỐ
+sumpath.p3.panel    :: LỠ CỘNG LỐ ĐIỂM? SỬA NGAY!
+sumpath.p3.panel    :: Bấm Undo lùi lại 1 bước, điểm số của ô đó
+sumpath.p3.panel    :: sẽ được trừ ngược ra khỏi Tổng Hiện Tại để bạn chọn nhánh khác.
+sumpath.p3.panel    :: Luôn có ít nhất 1 nghiệm đúng! Hãy tận dụng Undo để thử nghiệm các hướng tính toán.
+time_attack.p1.chip     :: TIME ATTACK MAZE
+time_attack.p1.title    :: Đồng Hồ Đếm Ngược
+time_attack.p1.section  :: QUY TẮC ĐUA THỜI GIAN
+time_attack.p1.cta      :: TIẾP THEO: ĐÂM TƯỜNG MẤT GIỜ (2/3) ›
+time_attack.p1.link     :: Bỏ qua hướng dẫn & Vào đua giờ ngay
+time_attack.p1.tab1     :: ĐỒNG HỒ ĐẾM NGƯỢC
+time_attack.p1.tab2     :: ĐÂM TƯỜNG MẤT GIỜ
+time_attack.p1.tab3     :: TỐC ĐỘ & GỢI Ý
+time_attack.p1.row1T    :: Thời Gian Tổng Đếm Ngược:
+time_attack.p1.row1D    :: Màn chơi cấp một quỹ thời gian cố định (60s - 120s). Bạn phải chạm hố thang F trước khi hết giờ.
+time_attack.p1.row2T    :: Không Giới Hạn Số Bước Chân:
+time_attack.p1.row2D    :: Bạn có thể đi vòng, thử nhiều ngã rẽ mà không sợ hết bước — kẻ thù duy nhất là thời gian trôi.
+time_attack.p1.row3T    :: Quy Luật Tường Vô Hình Như Thường:
+time_attack.p1.row3D    :: Con số trên ô vẫn là số tường (0 - 4). Vừa đi nhanh vừa phải suy luận né tường chính xác.
+time_attack.p1.panel    :: THỜI GIAN CÒN LẠI
+time_attack.p1.panel    :: 00:45
+time_attack.p1.panel    :: ĐANG GIẢM
+time_attack.p1.panel    :: ÁP LỰC THỜI GIAN
+time_attack.p1.panel    :: ĐẾM NGƯỢC
+time_attack.p1.panel    :: VỀ 00:00
+time_attack.p1.panel    :: Hết giờ = THUA!
+time_attack.p1.panel    :: SỐ BƯỚC CHÂN
+time_attack.p1.panel    :: KHÔNG GIỚI HẠN
+time_attack.p1.panel    :: Đi bao nhiêu ô tùy ý
+time_attack.p1.panel    :: chỉ cần về đích kịp!
+time_attack.p1.panel    :: Bạn chỉ có 60s đến 120s: Hãy vẽ thật dứt khoát trước khi đồng hồ điểm 00:00!
+time_attack.p2.title    :: Đâm Tường & Mất Giờ
+time_attack.p2.section  :: HẬU QUẢ VA CHẠM TƯỜNG
+time_attack.p2.cta      :: TIẾP THEO: TỐC ĐỘ & GỢI Ý (3/3) ›
+time_attack.p2.row1T    :: Văng Ngược Về Cầu Thang Start (S):
+time_attack.p2.row1D    :: Đâm phải tường vô hình, nhân vật lập tức bị đẩy lùi về điểm S để bắt đầu đường vẽ mới.
+time_attack.p2.row2T    :: Đồng Hồ Vẫn Tiếp Tục Đếm Ngược:
+time_attack.p2.row2D    :: Thời gian không dừng lại. Việc vẽ lại từ đầu khiến bạn mất đứt nhiều giây sinh tử!
+time_attack.p2.row3T    :: Rút Kinh Nghiệm Từ Đoạn Tường Vừa Lộ:
+time_attack.p2.row3D    :: Bức tường bị đâm sẽ lộ ra vĩnh viễn. Hãy nhìn thật nhanh và vẽ đường né tránh dứt khoát.
+time_attack.p2.panel    :: BỊ ĐẨY VỀ XUẤT PHÁT
+time_attack.p2.panel    :: VẼ LẠI TỪ S!
+time_attack.p2.panel    :: Tường lộ diện nhưng
+time_attack.p2.panel    :: phải đi lại từ đầu.
+time_attack.p2.panel    :: THỜI GIAN VẪN TRÔI
+time_attack.p2.panel    :: MẤT 5 - 10 GIÂY!
+time_attack.p2.panel    :: Đồng hồ vẫn đếm lùi,
+time_attack.p2.panel    :: quỹ giờ cạn rất nhanh!
+time_attack.p2.panel    :: Đâm tường ở Time Attack không chết ngay, nhưng sẽ cướp đi thời gian quý báu của bạn!
+time_attack.p3.title    :: Tốc Độ & Gợi Ý Cứu Nguy
+time_attack.p3.section  :: BÍ QUYẾT BỨT TỐC
+time_attack.p3.cta      :: ĐÃ HIỂU • ĐUA THỜI GIAN
+time_attack.p3.row1T    :: Tìm Ô Số 0 Để Phóng Nhanh:
+time_attack.p3.row1D    :: Quét mắt tìm các ô số 0 trước tiên để vạch nhanh tuyến đường an toàn mà không tốn công nhẩm tính.
+time_attack.p3.row2T    :: Bấm Gợi Ý Khi Bị Bí Quá 3 Giây:
+time_attack.p3.row2D    :: Trong Time Attack, do dự là thất bại. Hãy bấm Gợi Ý để mở khóa nút thắt thay vì để đồng hồ cạn kiệt.
+time_attack.p3.row3T    :: Dùng Undo Kịp Thời Để Tránh Về S:
+time_attack.p3.row3D    :: Nếu cảm giác vừa rẽ nhầm nhánh bế tắc, bấm Undo lùi lại 1 ô sẽ nhanh hơn rất nhiều so với bị phạt về S!
+time_attack.p3.panel    :: CHIẾN THUẬT: PHÓNG QUA Ô 0
+time_attack.p3.panel    :: LƯỚT QUA • SIÊU TỐC
+time_attack.p3.panel    :: Ưu Tiên Ô Số 0 Để Tăng Tốc
+time_attack.p3.panel    :: Ô số 0 hoàn toàn không có tường bao.
+time_attack.p3.panel    :: Hãy phóng thẳng bút qua ô này mà không
+time_attack.p3.panel    :: cần dừng lại suy nghĩ, tiết kiệm tối đa giây!
+time_attack.p3.panel    :: Mở lối khi bí
+time_attack.p3.panel    :: Bí quá 3 giây? Đừng chôn chân!
+time_attack.p3.panel    :: Bấm ngay Gợi Ý để soi đường
+time_attack.p3.panel    :: thay vì đứng nhìn đồng hồ cạn!
+time_attack.p3.panel    :: Rút bước kịp thời
+time_attack.p3.panel    :: Lỡ tay quẹt nhầm hướng?
+time_attack.p3.panel    :: Bấm Undo lùi lại ngay
+time_attack.p3.panel    :: để không bị đâm tường văng về S!
+time_attack.p3.panel    :: Đứng yên là tự sát! Khi phân vân, bấm ngay Gợi Ý để cứu lấy thời gian sống còn.

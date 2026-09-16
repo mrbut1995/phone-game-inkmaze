@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="785" height="535">
+  <defs>
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14" />
+    </filter>
+    <g id="anchor-cross">
+      <g stroke="#1E283A" stroke-width="3.5" stroke-linecap="round">
+        <line x1="0" y1="-14" x2="0" y2="-4" />
+        <line x1="0" y1="4" x2="0" y2="14" />
+        <line x1="-14" y1="0" x2="-4" y2="0" />
+        <line x1="4" y1="0" x2="14" y2="0" />
+      </g>
+    </g>
+  </defs>
+  <g filter="url(#uiShadow)">
+    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3" />
+    <g transform="translate(45, 45)">
+      <rect width="310" height="380" rx="18" fill="#F0FDF4" stroke="#86EFAC" stroke-width="2.5" />
+      <rect x="25" y="18" width="160" height="28" rx="8" fill="#DCFCE7" />
+      <g transform="translate(75, 75)">
+        <rect width="160" height="160" rx="14" fill="#FFFFFF" stroke="#86EFAC" stroke-width="2.5" />
+        <g transform="translate(52.792, 106.6)">
+          <path d="M358 -10Q280 -10 219.5 19.5Q159 49 116.5 101.0Q74 153 52.0 222.0Q30 291 30 370Q30 449 52.0 518.0Q74 587 116.5 639.0Q159 691 219.5 720.5Q280 750 358 750Q436 750 496.5 720.5Q557 691 599.5 639.0Q642 587 664.0 518.0Q686 449 686 370Q686 291 664.0 222.0Q642 153 599.5 101.0Q557 49 496.5 19.5Q436 -10 358 -10ZM358 158Q415 158 451.5 211.0Q488 264 488 370Q488 477 451.5 529.0Q415 581 358 581Q301 581 264.5 529.0Q228 477 228 370Q228 264 264.5 211.0Q301 158 358 158Z" fill="#16A34A" transform="translate(0, 0) scale(0.076, -0.076)" />
+        </g>
+        <g stroke="#16A34A" stroke-width="4" stroke-linecap="round" fill="#16A34A">
+          <line x1="80" y1="20" x2="80" y2="-15" />
+          <polygon points="74,-15 86,-15 80,-25" />
+          <line x1="80" y1="140" x2="80" y2="175" />
+          <polygon points="74,175 86,175 80,185" />
+          <line x1="20" y1="80" x2="-15" y2="80" />
+          <polygon points="-15,74 -15,86 -25,80" />
+          <line x1="140" y1="80" x2="175" y2="80" />
+          <polygon points="175,74 175,86 185,80" />
+        </g>
+      </g>
+    </g>
+    <g transform="translate(400, 45)">
+      <rect width="310" height="380" rx="18" fill="#FEF2F2" stroke="#FECACA" stroke-width="2.5" />
+      <rect x="25" y="18" width="160" height="28" rx="8" fill="#FEE2E2" />
+      <g transform="translate(75, 75)">
+        <rect width="160" height="160" rx="14" fill="#FFFFFF" stroke="#FECACA" stroke-width="2.5" />
+        <g transform="translate(53.628, 106.6)">
+          <path d="M351 -10Q274 -10 221.5 7.5Q169 25 136.5 52.0Q104 79 86.5 110.0Q69 141 62.5 168.0Q56 195 55.0 212.5Q54 230 54 230H235Q235 230 236.5 217.5Q238 205 247.5 188.5Q257 172 280.5 159.5Q304 147 348 147Q396 147 423.5 169.0Q451 191 451 223Q451 253 426.5 276.5Q402 300 351 300H251V447H353Q397 447 419.5 469.5Q442 492 442 520Q442 550 417.0 572.0Q392 594 348 594Q309 594 288.0 580.5Q267 567 257.5 549.0Q248 531 246.5 517.5Q245 504 245 504H68Q68 504 69.0 522.0Q70 540 77.0 568.0Q84 596 100.5 627.0Q117 658 148.0 686.0Q179 714 228.5 732.0Q278 750 350 750Q404 750 454.0 736.0Q504 722 544.0 695.0Q584 668 607.5 628.5Q631 589 631 539Q631 491 610.5 457.5Q590 424 562.0 404.5Q534 385 511 378V371Q544 359 574.5 338.5Q605 318 624.0 287.0Q643 256 643 210Q643 140 602.5 90.5Q562 41 496.0 15.5Q430 -10 351 -10Z" fill="#DC2626" transform="translate(0, 0) scale(0.076, -0.076)" />
+        </g>
+        <line x1="0" y1="0" x2="160" y2="0" stroke="#1E283A" stroke-width="12" stroke-linecap="round" />
+        <line x1="0" y1="0" x2="0" y2="160" stroke="#1E283A" stroke-width="12" stroke-linecap="round" />
+        <line x1="0" y1="160" x2="160" y2="160" stroke="#1E283A" stroke-width="12" stroke-linecap="round" />
+        <g>
+          <g stroke="#1E283A" stroke-width="3.5" stroke-linecap="round">
+            <line x1="0" y1="-14" x2="0" y2="-4" />
+            <line x1="0" y1="4" x2="0" y2="14" />
+            <line x1="-14" y1="0" x2="-4" y2="0" />
+            <line x1="4" y1="0" x2="14" y2="0" />
+          </g>
+        </g>
+        <g>
+          <g stroke="#1E283A" stroke-width="3.5" stroke-linecap="round">
+            <line x1="0" y1="-14" x2="0" y2="-4" />
+            <line x1="0" y1="4" x2="0" y2="14" />
+            <line x1="-14" y1="0" x2="-4" y2="0" />
+            <line x1="4" y1="0" x2="14" y2="0" />
+          </g>
+        </g>
+        <g>
+          <g stroke="#1E283A" stroke-width="3.5" stroke-linecap="round">
+            <line x1="0" y1="-14" x2="0" y2="-4" />
+            <line x1="0" y1="4" x2="0" y2="14" />
+            <line x1="-14" y1="0" x2="-4" y2="0" />
+            <line x1="4" y1="0" x2="14" y2="0" />
+          </g>
+        </g>
+        <g>
+          <g stroke="#1E283A" stroke-width="3.5" stroke-linecap="round">
+            <line x1="0" y1="-14" x2="0" y2="-4" />
+            <line x1="0" y1="4" x2="0" y2="14" />
+            <line x1="-14" y1="0" x2="-4" y2="0" />
+            <line x1="4" y1="0" x2="14" y2="0" />
+          </g>
+        </g>
+        <line x1="100" y1="80" x2="185" y2="80" stroke="#2575A7" stroke-width="5" stroke-linecap="round" />
+        <polygon points="185,73 185,87 197,80" fill="#2575A7" />
+      </g>
+    </g>
+    <rect x="20" y="448" width="715" height="42" rx="10" fill="#F4EFE6" />
+  </g>
+</svg>

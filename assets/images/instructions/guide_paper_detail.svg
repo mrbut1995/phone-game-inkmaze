@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="1480" viewBox="0 0 920 1480">
+  <g fill="#EAE3D2" opacity="0.65">
+    <circle cx="28" cy="120" r="8"/>
+    <circle cx="28" cy="240" r="8"/>
+    <circle cx="28" cy="360" r="8"/>
+    <circle cx="28" cy="480" r="8"/>
+    <circle cx="28" cy="600" r="8"/>
+    <circle cx="28" cy="720" r="8"/>
+    <circle cx="28" cy="840" r="8"/>
+    <circle cx="28" cy="960" r="8"/>
+    <circle cx="28" cy="1080" r="8"/>
+    <circle cx="28" cy="1200" r="8"/>
+    <circle cx="28" cy="1320" r="8"/>
+    <circle cx="28" cy="1440" r="8"/>
+  </g>
+  <g stroke="#8FB9D2" stroke-width="1" opacity="0.35">
+    <line x1="80" y1="210" x2="860" y2="210"/>
+    <line x1="80" y1="770" x2="860" y2="770"/>
+    <line x1="80" y1="850" x2="860" y2="850"/>
+    <line x1="80" y1="930" x2="860" y2="930"/>
+    <line x1="80" y1="1010" x2="860" y2="1010"/>
+    <line x1="80" y1="1090" x2="860" y2="1090"/>
+    <line x1="80" y1="1170" x2="860" y2="1170"/>
+    <line x1="80" y1="1250" x2="860" y2="1250"/>
+  </g>
+  <line x1="80" y1="0" x2="80" y2="1480" stroke="#D84444" stroke-width="3" opacity="0.85"/>
+</svg>

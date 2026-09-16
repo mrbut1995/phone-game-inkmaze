@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <pattern id="bgGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.5"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.15"/>
+    </pattern>
+
+    <filter id="paperSlipShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#1A120B" flood-opacity="0.35"/>
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#1A120B" flood-opacity="0.15"/>
+    </filter>
+
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <filter id="boomGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#DC2626" flood-opacity="0.7"/>
+    </filter>
+
+    <!-- Quả bom vector -->
+    <g id="bomb-icon">
+      <circle cx="0" cy="4" r="26" fill="#1E293B" stroke="#0F172A" stroke-width="3"/>
+      <ellipse cx="-8" cy="-4" rx="6" ry="3" fill="#94A3B8" opacity="0.6"/>
+      <rect x="-6" y="-28" width="12" height="8" rx="2" fill="#64748B" stroke="#0F172A" stroke-width="2"/>
+      <path d="M 0 -28 Q 12 -38 18 -32" fill="none" stroke="#D97706" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="21" cy="-33" r="5" fill="#EF4444"/>
+      <circle cx="21" cy="-33" r="2.5" fill="#FDE047"/>
+    </g>
+  </defs>
+
+  <!-- NỀN MỜ PHÍA SAU -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#bgGrid)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+  <rect width="1080" height="1920" fill="#1C2D3A" fill-opacity="0.55"/>
+
+  <!-- TỜ GIẤY HƯỚNG DẪN (920 x 1480 px tại x=80, y=200) -->
+  <g transform="translate(80, 200)">
+    <!-- THÂN GIẤY CHÍNH -->
+    <g filter="url(#paperSlipShadow)">
+      <rect width="920" height="1480" rx="26" fill="#FFFDF9"/>
+      <!-- Hàng lỗ bấm sổ còng bên lề trái -->
+      <g fill="#EAE3D2" opacity="0.65">
+        <circle cx="28" cy="120" r="8"/><circle cx="28" cy="240" r="8"/><circle cx="28" cy="360" r="8"/>
+        <circle cx="28" cy="480" r="8"/><circle cx="28" cy="600" r="8"/><circle cx="28" cy="720" r="8"/>
+        <circle cx="28" cy="840" r="8"/><circle cx="28" cy="960" r="8"/><circle cx="28" cy="1080" r="8"/>
+        <circle cx="28" cy="1200" r="8"/><circle cx="28" cy="1320" r="8"/><circle cx="28" cy="1440" r="8"/>
+      </g>
+      <!-- Dòng kẻ ngang mờ -->
+      <g stroke="#8FB9D2" stroke-width="1" opacity="0.35">
+        <line x1="80" y1="210" x2="860" y2="210"/><line x1="80" y1="770" x2="860" y2="770"/>
+        <line x1="80" y1="850" x2="860" y2="850"/><line x1="80" y1="930" x2="860" y2="930"/>
+        <line x1="80" y1="1010" x2="860" y2="1010"/><line x1="80" y1="1090" x2="860" y2="1090"/>
+        <line x1="80" y1="1170" x2="860" y2="1170"/><line x1="80" y1="1250" x2="860" y2="1250"/>
+      </g>
+      <line x1="80" y1="0" x2="80" y2="1480" stroke="#D84444" stroke-width="3" opacity="0.85"/>
+      <rect width="920" height="1480" rx="26" fill="none" stroke="#D84444" stroke-width="3.5"/>
+    </g>
+
+    <!-- BĂNG DÍNH WASHI TAPE -->
+    <g transform="translate(350, -22)">
+      <rect width="220" height="46" rx="4" fill="#E8DFCA" fill-opacity="0.9" stroke="#D1C6AE" stroke-width="1.5"/>
+      <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" stroke="#B5A98F" stroke-width="1.2" opacity="0.4"/>
+    </g>
+
+    <!-- NÚT ĐÓNG NHANH "✕" -->
+    <g transform="translate(830, 24)" style="cursor: pointer;">
+      <circle cx="28" cy="28" r="24" fill="#F4EFE6" stroke="#BACEDC" stroke-width="2"/>
+      <path d="M 18 18 L 38 38 M 38 18 L 18 38" stroke="#224C6D" stroke-width="3.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- HEADER POPUP -->
+    <g transform="translate(110, 48)">
+      <rect width="210" height="30" rx="8" fill="#FEE2E2"/>
+      <text x="105" y="21" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#B91C1C" letter-spacing="1">MINESWEEPER MAZE 💣</text>
+      <text x="0" y="70" font-family="'Segoe UI', Roboto, sans-serif" font-size="38" font-weight="950" fill="#224C6D">Đạp Bom Nổ &amp; Vùng Số 0</text>
+    </g>
+
+    <!-- ================= THANH TAB: TAB 2 ĐANG ACTIVE ================= -->
+    <g transform="translate(105, 142)">
+      <rect x="0" y="0" width="245" height="48" rx="14" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5"/>
+      <text x="122" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="800" fill="#718B9E">① LUẬT 8 Ô BOM</text>
+
+      <rect x="255" y="0" width="245" height="48" rx="14" fill="#D84444"/>
+      <text x="377" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#FFFFFF">② ĐẠP BOM &amp; VÙNG 0</text>
+
+      <rect x="510" y="0" width="245" height="48" rx="14" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5"/>
+      <text x="632" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="800" fill="#718B9E">③ CÔNG CỤ DÒ BOM</text>
+    </g>
+
+    <!-- ================= KHUNG HÌNH MINH HỌA SO SÁNH ================= -->
+    <g transform="translate(105, 210)" filter="url(#uiShadow)">
+      <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/>
+
+      <!-- NỬA TRÁI: ĐẠP BOM PHÁT NỔ -->
+      <g transform="translate(45, 35)">
+        <rect width="310" height="395" rx="18" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
+        <rect x="20" y="16" width="165" height="28" rx="8" fill="#FEE2E2"/>
+        <text x="102" y="35" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#B91C1C">💥 ĐẠP PHẢI BOM</text>
+
+        <!-- Ô nổ tung có bom và nhân vật dừng lại -->
+        <g transform="translate(75, 75)">
+          <rect width="160" height="160" rx="16" fill="#FEE2E2" stroke="#DC2626" stroke-width="3"/>
+
+          <!-- Tia lửa nổ tung -->
+          <g transform="translate(80, 80)" filter="url(#boomGlow)">
+            <path d="M 0 -70 L 18 -25 L 65 -50 L 35 -10 L 75 15 L 25 25 L 45 70 L 5 35 L -20 65 L -20 20 L -65 35 L -35 -10 L -70 -35 L -20 -20 Z" fill="#FBBF24" stroke="#DC2626" stroke-width="2.5"/>
+            <circle cx="0" cy="0" r="36" fill="#EF4444"/>
+            <!-- Quả bom xuất hiện đè lên -->
+            <g transform="scale(0.85)"><use href="#bomb-icon"/></g>
+          </g>
+        </g>
+        <text x="155" y="285" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="17" font-weight="950" fill="#B91C1C">THUA NGAY TẠI CHỖ!</text>
+        <text x="155" y="312" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#7F1D1D">Nhân vật dừng ngay tại ô nổ</text>
+        <text x="155" y="334" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#DC2626">(Không văng về S như Dungeon)</text>
+      </g>
+
+      <!-- NỬA PHẢI: VÙNG Ô SỐ 0 AN TOÀN -->
+      <g transform="translate(400, 35)">
+        <rect width="310" height="395" rx="18" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="2"/>
+        <rect x="20" y="16" width="165" height="28" rx="8" fill="#DCFCE7"/>
+        <text x="102" y="35" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#15803D">✓ VÙNG Ô SỐ 0</text>
+
+        <!-- Lưới mini 3x3 quanh ô số 0 -->
+        <g transform="translate(65, 65)">
+          <!-- Lưới 3x3 -->
+          <g fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.8">
+            <rect x="0" y="0" width="60" height="60"/><rect x="60" y="0" width="60" height="60"/><rect x="120" y="0" width="60" height="60"/>
+            <rect x="0" y="60" width="60" height="60"/>
+            <!-- Ô trung tâm số 0 -->
+            <rect x="60" y="60" width="60" height="60" fill="#DCFCE7" stroke="#16A34A" stroke-width="2.5"/>
+            <rect x="120" y="60" width="60" height="60"/>
+            <rect x="0" y="120" width="60" height="60"/><rect x="60" y="120" width="60" height="60"/><rect x="120" y="120" width="60" height="60"/>
+          </g>
+
+          <text x="90" y="90" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="950" fill="#15803D">0</text>
+          
+          <!-- Dấu tích xanh ở 8 ô bao quanh -->
+          <g fill="#16A34A" font-family="sans-serif" font-size="18" font-weight="900" text-anchor="middle" dominant-baseline="central">
+            <text x="30" y="30">✓</text><text x="90" y="30">✓</text><text x="150" y="30">✓</text>
+            <text x="30" y="90">✓</text><text x="150" y="90">✓</text>
+            <text x="30" y="150">✓</text><text x="90" y="150">✓</text><text x="150" y="150">✓</text>
+          </g>
+        </g>
+        <text x="155" y="285" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="950" fill="#15803D">CẢ 8 Ô ĐỀU SẠCH BOM!</text>
+        <text x="155" y="312" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#166534">Tự tin bước qua bất kỳ ô nào</text>
+        <text x="155" y="334" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#15803D">đang tiếp giáp với ô số 0</text>
+      </g>
+
+      <!-- DẢI GHI CHÚ CHÂN HÌNH -->
+      <rect x="20" y="448" width="715" height="44" rx="10" fill="#F4EFE6"/>
+      <text x="377" y="475" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#224C6D">
+        💡 Hãy tìm các ô số 0 trước tiên — đó là chìa khóa mở toang lối đi an toàn!
+      </text>
+    </g>
+
+    <!-- NỘI DUNG CHI TIẾT DẠNG THẺ -->
+    <g transform="translate(105, 755)">
+      <text x="0" y="24" font-family="sans-serif" font-size="16" font-weight="900" fill="#D84444" letter-spacing="1.5">CHIẾN THUẬT DÒ ĐƯỜNG</text>
+
+      <!-- Ý 1 -->
+      <g transform="translate(0, 42)">
+        <rect width="755" height="76" rx="14" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#D84444"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">1</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#B91C1C">Hậu Quả Khi Đạp Trúng Bom:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#7F1D1D">Ván đấu dừng ngay tức khắc. Bạn đứng tại ô nổ và có thể hồi sinh lùi lại 1 bước.</text>
+      </g>
+
+      <!-- Ý 2 -->
+      <g transform="translate(0, 130)">
+        <rect width="755" height="76" rx="14" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#16A34A"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">2</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#15803D">Tận Dụng Triệt Để Các Ô Số 0:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#166534">Nếu ô có số 0, toàn bộ 8 ô kề cạnh nó 100% không có bom — hãy đi qua vùng này!</text>
+      </g>
+
+      <!-- Ý 3 -->
+      <g transform="translate(0, 218)">
+        <rect width="755" height="76" rx="14" fill="#F0F7FB" stroke="#D1E2ED" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#3D83AE"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">3</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#224C6D">Kéo Nét Vẽ Chậm Rãi:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#5A7385">Không vội vàng kéo lướt nhanh; chỉ vẽ vào các ô bạn đã chắc chắn an toàn.</text>
+      </g>
+    </g>
+
+    <!-- ĐIỀU KHIỂN PAGING SLIDE -->
+    <g transform="translate(105, 1100)">
+      <g transform="translate(0, 0)">
+        <!-- Nút lùi: BẬT (về Trang 1) -->
+        <g style="cursor: pointer;">
+          <rect width="52" height="52" rx="14" fill="#FEFDFA" stroke="#D84444" stroke-width="2.5"/>
+          <path d="M 30 18 L 20 26 L 30 34" fill="none" stroke="#D84444" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- Dots: Dot 2 active -->
+        <g transform="translate(80, 16)">
+          <circle cx="9" cy="9" r="8" fill="#D1E2ED"/>
+          <rect x="27" y="0" width="38" height="18" rx="9" fill="#D84444"/>
+          <circle cx="86" cy="9" r="8" fill="#D1E2ED"/>
+        </g>
+
+        <!-- Nút tiến: BẬT (sang Trang 3) -->
+        <g transform="translate(200, 0)" style="cursor: pointer;">
+          <rect width="52" height="52" rx="14" fill="#FEFDFA" stroke="#D84444" stroke-width="2.5"/>
+          <path d="M 22 18 L 32 26 L 22 34" fill="none" stroke="#D84444" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <text x="755" y="34" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="900" fill="#D84444">TRANG 2 / 3</text>
+      </g>
+
+      <!-- Nút hành động chính: TIẾP THEO SANG TRANG 3 -->
+      <g transform="translate(0, 80)" style="cursor: pointer;" filter="url(#uiShadow)">
+        <rect width="755" height="100" rx="22" fill="#D84444" stroke="#991B1B" stroke-width="3.5"/>
+        <line x1="42" y1="0" x2="42" y2="100" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
+        <text x="397" y="62" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="25" font-weight="950" fill="#FFFFFF" letter-spacing="1">
+          TIẾP THEO: CÔNG CỤ DÒ BOM &amp; CẮM CỜ (3/3) ›
+        </text>
+      </g>
+
+      <text x="377" y="222" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E" style="cursor: pointer;">
+        Bỏ qua hướng dẫn &amp; Vào dò mìn ngay
+      </text>
+    </g>
+  </g>
+
+  <rect x="420" y="1875" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
+</svg>

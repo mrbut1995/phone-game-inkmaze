@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="785" height="535">
+  <defs>
+    <!-- Đổ bóng nổi cho panel -->
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <!-- ================= PANEL CON MINH HỌA GUIDELINE (TRANG 2) ================= -->
+  <g filter="url(#uiShadow)">
+    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#256286" stroke-width="3"/>
+
+    <!-- 1. NỬA TRÁI: 3 DẠNG TOÁN TỬ TRỰC QUAN (ĐÃ XÓA CHỮ) -->
+    <g transform="translate(45, 30)">
+      <rect width="310" height="395" rx="18" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="2"/>
+      <rect x="20" y="16" width="175" height="28" rx="8" fill="#EBF3F8"/>
+
+      <!-- 3 Dòng toán tử trực quan -->
+      <g transform="translate(25, 65)">
+        <!-- Dấu = -->
+        <g transform="translate(0, 0)">
+          <rect width="260" height="68" rx="12" fill="#FFFFFF" stroke="#D84444" stroke-width="2"/>
+          <circle cx="35" cy="34" r="20" fill="#FEF2F2" stroke="#D84444" stroke-width="2"/>
+          <text x="35" y="42" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="950" fill="#D84444">=</text>
+        </g>
+
+        <!-- Dấu < -->
+        <g transform="translate(0, 80)">
+          <rect width="260" height="68" rx="12" fill="#FFFFFF" stroke="#256286" stroke-width="2"/>
+          <circle cx="35" cy="34" r="20" fill="#F0F7FB" stroke="#256286" stroke-width="2"/>
+          <text x="35" y="42" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="950" fill="#256286">&lt;</text>
+        </g>
+
+        <!-- Dấu > -->
+        <g transform="translate(0, 160)">
+          <rect width="260" height="68" rx="12" fill="#FFFFFF" stroke="#16A34A" stroke-width="2"/>
+          <circle cx="35" cy="34" r="20" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/>
+          <text x="35" y="42" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="950" fill="#16A34A">&gt;</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- 2. NỬA PHẢI: MỖI Ô CHỈ CỘNG 1 LẦN (ĐÃ XÓA CHỮ) -->
+    <g transform="translate(400, 30)">
+      <rect width="310" height="395" rx="18" fill="#FFFDF8" stroke="#F59E0B" stroke-width="2"/>
+      <rect x="20" y="16" width="185" height="28" rx="8" fill="#FEF3C7"/>
+
+      <!-- Lưới mini 2x2 -->
+      <g transform="translate(65, 65)">
+        <rect width="180" height="180" rx="14" fill="#FFFFFF" stroke="#BACEDC" stroke-width="2"/>
+        <line x1="90" y1="0" x2="90" y2="180" stroke="#BACEDC" stroke-width="1.5"/>
+        <line x1="0" y1="90" x2="180" y2="90" stroke="#BACEDC" stroke-width="1.5"/>
+
+        <!-- Ô [0,0] đã đi qua -->
+        <rect x="0" y="0" width="90" height="90" rx="8" fill="#E0F2FE" fill-opacity="0.6"/>
+        
+        <!-- GIỮ NGUYÊN CÁC CON SỐ TRONG GRID -->
+        <text x="45" y="45" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="950" fill="#256286">8</text>
+        <text x="135" y="45" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="900" fill="#718B9E">2</text>
+        <text x="45" y="135" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="900" fill="#718B9E">5</text>
+        <text x="135" y="135" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="900" fill="#718B9E">3</text>
+
+        <!-- Đường vẽ vòng quay lại ô cũ -->
+        <path d="M 45 45 L 135 45 L 135 135 L 45 135 L 45 45" 
+              fill="none" stroke="#D84444" stroke-width="6" stroke-dasharray="8 5" stroke-linecap="round" stroke-linejoin="round"/>
+        
+        <!-- Khung chặn cộng điểm -->
+        <rect x="6" y="28" width="78" height="32" rx="6" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+      </g>
+    </g>
+
+    <!-- 3. DẢI NỀN GHI CHÚ CHÂN HÌNH (ĐÃ XÓA CHỮ) -->
+    <rect x="20" y="448" width="715" height="44" rx="10" fill="#F4EFE6"/>
+  </g>
+</svg>

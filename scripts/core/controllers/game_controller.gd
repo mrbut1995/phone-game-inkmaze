@@ -523,14 +523,31 @@ func restart_run() -> void:
 
 
 ## Mở popup HƯỚNG DẪN của chế độ đang chơi (nút "?" cạnh nút Restart trên HUD).
+## Mỗi chế độ có scene hướng dẫn riêng trong nodes/popups/instruction/ (3 trang).
 ## Đồng hồ đứng trong lúc xem hướng dẫn để không mất thời gian oan — đóng popup thì chạy lại.
+const INSTRUCTION_SCENES := {
+	"play": "normal_maze",
+	"daily_classic": "normal_maze",
+	"time_attack": "time_attack",
+	"dungeon": "dungeon",
+	"minesweeper": "minesweeper",
+	"sum_path": "sumpath",
+	"countdown_cost": "countdowncost",
+	"blind_memory": "blindmemory",
+	"fog_of_war": "fog_of_war",
+	"fading_ink": "fadingink",
+}
+const INSTRUCTION_FALLBACK := "normal_maze"
+
+
 func open_instruction() -> void:
 	# SFX: gõ thẻ giấy cho nút phụ (Hướng dẫn trên HUD)
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	var mode: BaseGameMode = game_mode
-	var mode_id := mode.mode_id if mode != null else "dungeon"
-	var mode_name := mode.mode_name if mode != null else ""
-	var popup := Popups.open(Popups.INSTRUCTION, {"mode_id": mode_id, "mode_name": mode_name})
+	var mode_id := mode.mode_id if mode != null else ""
+	var scene_name: String = INSTRUCTION_SCENES.get(mode_id, INSTRUCTION_FALLBACK)
+	var popup := Popups.open_path("res://nodes/popups/instruction/%s.tscn" % scene_name,
+			{"mode_id": mode_id})
 	if popup == null:
 		return
 	if not popup.closed.is_connected(_on_instruction_closed):

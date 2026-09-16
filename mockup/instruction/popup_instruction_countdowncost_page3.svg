@@ -1,0 +1,221 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <pattern id="bgGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.5"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.15"/>
+    </pattern>
+
+    <filter id="paperSlipShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#1A120B" flood-opacity="0.35"/>
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#1A120B" flood-opacity="0.15"/>
+    </filter>
+
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <filter id="undoGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#16A34A" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#bgGrid)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+  <rect width="1080" height="1920" fill="#1C2D3A" fill-opacity="0.55"/>
+
+  <!-- TỜ GIẤY HƯỚNG DẪN (920 x 1480 px tại x=80, y=200) -->
+  <g transform="translate(80, 200)">
+    <g filter="url(#paperSlipShadow)">
+      <rect width="920" height="1480" rx="26" fill="#FFFDF9"/>
+      <g fill="#EAE3D2" opacity="0.65">
+        <circle cx="28" cy="120" r="8"/><circle cx="28" cy="240" r="8"/><circle cx="28" cy="360" r="8"/>
+        <circle cx="28" cy="480" r="8"/><circle cx="28" cy="600" r="8"/><circle cx="28" cy="720" r="8"/>
+        <circle cx="28" cy="840" r="8"/><circle cx="28" cy="960" r="8"/><circle cx="28" cy="1080" r="8"/>
+        <circle cx="28" cy="1200" r="8"/><circle cx="28" cy="1320" r="8"/><circle cx="28" cy="1440" r="8"/>
+      </g>
+      <g stroke="#8FB9D2" stroke-width="1" opacity="0.35">
+        <line x1="80" y1="210" x2="860" y2="210"/><line x1="80" y1="770" x2="860" y2="770"/>
+        <line x1="80" y1="850" x2="860" y2="850"/><line x1="80" y1="930" x2="860" y2="930"/>
+        <line x1="80" y1="1010" x2="860" y2="1010"/><line x1="80" y1="1090" x2="860" y2="1090"/>
+        <line x1="80" y1="1170" x2="860" y2="1170"/><line x1="80" y1="1250" x2="860" y2="1250"/>
+      </g>
+      <line x1="80" y1="0" x2="80" y2="1480" stroke="#D84444" stroke-width="3" opacity="0.85"/>
+      <rect width="920" height="1480" rx="26" fill="none" stroke="#C2410C" stroke-width="3.5"/>
+    </g>
+
+    <!-- WASHI TAPE -->
+    <g transform="translate(350, -22)">
+      <rect width="220" height="46" rx="4" fill="#E8DFCA" fill-opacity="0.9" stroke="#D1C6AE" stroke-width="1.5"/>
+      <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" stroke="#B5A98F" stroke-width="1.2" opacity="0.4"/>
+    </g>
+
+    <!-- NÚT ĐÓNG NHANH "✕" -->
+    <g transform="translate(830, 24)" style="cursor: pointer;">
+      <circle cx="28" cy="28" r="24" fill="#F4EFE6" stroke="#BACEDC" stroke-width="2"/>
+      <path d="M 18 18 L 38 38 M 38 18 L 18 38" stroke="#224C6D" stroke-width="3.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- HEADER POPUP -->
+    <g transform="translate(110, 48)">
+      <rect width="220" height="30" rx="8" fill="#FFEDD5"/>
+      <text x="110" y="21" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#C2410C" letter-spacing="1">COUNTDOWN COST ⏳</text>
+      <text x="0" y="70" font-family="'Segoe UI', Roboto, sans-serif" font-size="38" font-weight="950" fill="#224C6D">Tối Ưu Chi Phí &amp; Hoàn Cước</text>
+    </g>
+
+    <!-- THANH TAB: TAB 3 ĐANG ACTIVE -->
+    <g transform="translate(105, 142)">
+      <rect x="0" y="0" width="245" height="48" rx="14" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5"/>
+      <text x="122" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#718B9E">① NGÂN SÁCH &amp; CƯỚC</text>
+
+      <rect x="255" y="0" width="245" height="48" rx="14" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5"/>
+      <text x="377" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#718B9E">② ĐÂM TƯỜNG TRỪ BƯỚC</text>
+
+      <rect x="510" y="0" width="245" height="48" rx="14" fill="#C2410C"/>
+      <text x="632" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">③ TỐI ƯU CHI PHÍ</text>
+    </g>
+
+    <!-- KHUNG HÌNH MINH HỌA (755 x 510 px tại x=105, y=210) -->
+    <g transform="translate(105, 210)" filter="url(#uiShadow)">
+      <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#C2410C" stroke-width="3"/>
+
+      <!-- PHẦN 1: BÍ QUYẾT TÍNH ĐƯỜNG RẺ -->
+      <g transform="translate(45, 30)">
+        <rect width="665" height="195" rx="18" fill="#F0FDF4" stroke="#86EFAC" stroke-width="2"/>
+        <rect x="25" y="16" width="220" height="28" rx="8" fill="#DCFCE7"/>
+        <text x="135" y="35" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#15803D">✓ BÍ QUYẾT: ĐƯỜNG RẺ NHẤT</text>
+
+        <!-- Sơ đồ so sánh tuyến đường rẻ vs tuyến đường đắt -->
+        <g transform="translate(40, 60)">
+          <!-- Start -->
+          <circle cx="30" cy="45" r="22" fill="#2E7D32"/>
+          <text x="30" y="52" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="900" fill="#FFFFFF">S</text>
+
+          <!-- Tuyến rẻ (toàn ô 1 & 2): Tổng cước 6 bước ➔ Thắng -->
+          <path d="M 52 45 L 230 45" stroke="#16A34A" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="250" cy="45" r="22" fill="#D97706"/>
+          <text x="250" y="52" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="900" fill="#FFFFFF">F</text>
+          
+          <rect x="75" y="15" width="130" height="24" rx="6" fill="#DCFCE7"/>
+          <text x="140" y="31" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#15803D">CƯỚC: 6 BƯỚC • DƯ 10 ✓</text>
+
+          <!-- Tuyến đắt (đi qua ô 3, 4): Tổng cước 17 bước ➔ Cạn bước -->
+          <path d="M 30 67 Q 140 120 250 67" stroke="#DC2626" stroke-width="4" stroke-dasharray="6 4" fill="none"/>
+          <rect x="75" y="105" width="130" height="24" rx="6" fill="#FEE2E2"/>
+          <text x="140" y="121" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#B91C1C">CƯỚC: 17 BƯỚC • THUA ✕</text>
+        </g>
+
+        <!-- Giải thích -->
+        <g transform="translate(365, 55)">
+          <text x="0" y="24" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#14532D">Ngân Sách Luôn Đủ Cho Đường Rẻ</text>
+          <text x="0" y="52" font-family="sans-serif" font-size="14" font-weight="600" fill="#166534">Mỗi màn đều cấp đủ số bước cho</text>
+          <text x="0" y="74" font-family="sans-serif" font-size="14" font-weight="600" fill="#166534">tuyến đường ít tốn kém nhất + dự phòng.</text>
+          <text x="0" y="96" font-family="sans-serif" font-size="14" font-weight="800" fill="#B91C1C">Đi lệch qua ô đắt sẽ bị cạn sạch bước!</text>
+        </g>
+      </g>
+
+      <!-- PHẦN 2: NÚT HOÀN TÁC (UNDO) HOÀN CƯỚC -->
+      <g transform="translate(45, 245)">
+        <rect width="665" height="190" rx="18" fill="#FFF7ED" stroke="#FDBA74" stroke-width="2.2"/>
+        
+        <!-- Nút Undo lớn phát sáng -->
+        <g transform="translate(40, 30)" filter="url(#undoGlow)">
+          <rect width="110" height="130" rx="18" fill="#C2410C" stroke="#9A3412" stroke-width="3"/>
+          <path d="M 62 42 L 44 55 L 62 68" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 46 55 H 64 C 74 55 80 60 80 68 C 80 77 72 82 60 82 H 50" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+          <text x="55" y="112" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="950" fill="#FFEDD5">UNDO</text>
+        </g>
+
+        <!-- Giải thích tính năng hoàn cước -->
+        <g transform="translate(180, 35)">
+          <rect width="200" height="28" rx="8" fill="#DCFCE7"/>
+          <text x="100" y="20" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#15803D">HOÀN TRẢ CƯỚC 100%</text>
+
+          <text x="0" y="62" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="950" fill="#9A3412">+HOÀN LẠI SỐ BƯỚC ĐÃ TRỪ!</text>
+          <text x="0" y="92" font-family="sans-serif" font-size="15" font-weight="600" fill="#7C2D12">Lỡ bước vào ô đắt đỏ hoặc muốn đổi hướng?</text>
+          <text x="0" y="116" font-family="sans-serif" font-size="15" font-weight="600" fill="#7C2D12">Bấm Undo lùi lại, số bước bị trừ sẽ lập tức cộng ngược lại vào ngân sách.</text>
+        </g>
+      </g>
+
+      <!-- DẢI CHÂN HÌNH -->
+      <rect x="20" y="448" width="715" height="44" rx="10" fill="#F4EFE6"/>
+      <text x="377" y="475" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#224C6D">
+        💡 Đừng tiếc một lần Undo! Lùi lại để chọn lối đi rẻ hơn sẽ cứu sống cả ván đấu.
+      </text>
+    </g>
+
+    <!-- NỘI DUNG CHI TIẾT DẠNG THẺ -->
+    <g transform="translate(105, 755)">
+      <text x="0" y="24" font-family="sans-serif" font-size="16" font-weight="900" fill="#C2410C" letter-spacing="1.5">BÍ QUYẾT PHÁ ĐẢO</text>
+
+      <!-- Ý 1 -->
+      <g transform="translate(0, 42)">
+        <rect width="755" height="76" rx="14" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#16A34A"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">1</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#15803D">Tìm Tuyến Đường Rẻ Nhất Trước Khi Vẽ:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#166534">Nhẩm tính tổng số điểm của các ô trên đường đi; chọn nhánh có tổng số nhỏ nhất để tới F.</text>
+      </g>
+
+      <!-- Ý 2 -->
+      <g transform="translate(0, 130)">
+        <rect width="755" height="76" rx="14" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#EA580C"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">2</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#9A3412">Tận Dụng Undo Để Thu Hồi Ngân Sách:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#7C2D12">Nếu nhận thấy nhánh đang đi quá tốn bước, hãy Undo lùi lại để nhận lại toàn bộ số bước đã trừ.</text>
+      </g>
+
+      <!-- Ý 3 -->
+      <g transform="translate(0, 218)">
+        <rect width="755" height="76" rx="14" fill="#F0F7FB" stroke="#D1E2ED" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#3D83AE"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">3</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#224C6D">Xếp Hạng Dựa Trên Chi Phí Tối Thiểu:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#5A7385">Người chơi về đích với tổng chi phí bước tiêu tốn càng ít sẽ giành thứ hạng càng cao!</text>
+      </g>
+    </g>
+
+    <!-- ĐIỀU KHIỂN PAGING SLIDE & NÚT BẮT ĐẦU CHƠI -->
+    <g transform="translate(105, 1100)">
+      <g transform="translate(0, 0)">
+        <!-- Nút lùi: BẬT (về Trang 2) -->
+        <g style="cursor: pointer;">
+          <rect width="52" height="52" rx="14" fill="#FEFDFA" stroke="#C2410C" stroke-width="2.5"/>
+          <path d="M 30 18 L 20 26 L 30 34" fill="none" stroke="#C2410C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- Dots: Dot 3 active -->
+        <g transform="translate(80, 16)">
+          <circle cx="9" cy="9" r="8" fill="#D1E2ED"/>
+          <circle cx="37" cy="9" r="8" fill="#D1E2ED"/>
+          <rect x="55" y="0" width="38" height="18" rx="9" fill="#C2410C"/>
+        </g>
+
+        <!-- Nút tiến: Mờ vì đã là trang cuối -->
+        <g transform="translate(200, 0)" opacity="0.35">
+          <rect width="52" height="52" rx="14" fill="#FEFDFA" stroke="#BACEDC" stroke-width="2.5"/>
+          <path d="M 22 18 L 32 26 L 22 34" fill="none" stroke="#718B9E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <text x="755" y="34" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="900" fill="#C2410C">TRANG 3 / 3</text>
+      </g>
+
+      <!-- NÚT HÀNH ĐỘNG CUỐI CÙNG: ĐÃ HIỂU • TỐI ƯU NGÂN SÁCH -->
+      <g transform="translate(0, 80)" style="cursor: pointer;" filter="url(#uiShadow)">
+        <rect width="755" height="100" rx="22" fill="#C2410C" stroke="#9A3412" stroke-width="3.5"/>
+        <line x1="42" y1="0" x2="42" y2="100" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
+        
+        <text x="397" y="62" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="28" font-weight="950" fill="#FFFFFF" letter-spacing="1">
+          ĐÃ HIỂU • TỐI ƯU NGÂN SÁCH ⏳
+        </text>
+      </g>
+
+      <text x="377" y="222" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="800" fill="#C2410C" style="cursor: pointer;">
+        ↺ Xem lại từ đầu (Trang 1)
+      </text>
+    </g>
+  </g>
+
+  <rect x="420" y="1875" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
+</svg>

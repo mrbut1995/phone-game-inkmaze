@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="785" height="535">
+  <defs>
+    <!-- Đổ bóng nổi cho panel -->
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <!-- Ký hiệu điểm neo Anchor góc ô lưới -->
+    <g id="anchor-cross">
+      <g stroke="#1E283A" stroke-width="3.5" stroke-linecap="round">
+        <line x1="0" y1="-14" x2="0" y2="-4"/>
+        <line x1="0" y1="4"   x2="0" y2="14"/>
+        <line x1="-14" y1="0" x2="-4" y2="0"/>
+        <line x1="4"   y1="0" x2="14"  y2="0"/>
+      </g>
+    </g>
+  </defs>
+
+  <!-- ================= PANEL CON MINH HỌA GUIDELINE (TRANG 2) ================= -->
+  <g filter="url(#uiShadow)">
+    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+
+    <!-- 1. NỬA TRÁI: Ô SỐ 0 AN TOÀN TUYỆT ĐỐI (ĐÃ XÓA CHỮ) -->
+    <g transform="translate(45, 45)">
+      <rect width="310" height="380" rx="18" fill="#F0FDF4" stroke="#86EFAC" stroke-width="2.5"/>
+      <rect x="25" y="18" width="160" height="28" rx="8" fill="#DCFCE7"/>
+
+      <!-- Ô cờ lớn có số 0 và 4 mũi tên xanh tỏa hướng -->
+      <g transform="translate(75, 75)">
+        <rect width="160" height="160" rx="14" fill="#FFFFFF" stroke="#86EFAC" stroke-width="2.5"/>
+        <text x="80" y="80" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="76" font-weight="950" fill="#16A34A">0</text>
+        
+        <g stroke="#16A34A" stroke-width="4" stroke-linecap="round" fill="#16A34A">
+          <line x1="80" y1="20" x2="80" y2="-15"/><polygon points="74,-15 86,-15 80,-25"/>
+          <line x1="80" y1="140" x2="80" y2="175"/><polygon points="74,175 86,175 80,185"/>
+          <line x1="20" y1="80" x2="-15" y2="80"/><polygon points="-15,74 -15,86 -25,80"/>
+          <line x1="140" y1="80" x2="175" y2="80"/><polygon points="175,74 175,86 185,80"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- 2. NỬA PHẢI: Ô SỐ 3 BỊ CHẶN 3 TƯỜNG (ĐÃ XÓA CHỮ) -->
+    <g transform="translate(400, 45)">
+      <rect width="310" height="380" rx="18" fill="#FEF2F2" stroke="#FECACA" stroke-width="2.5"/>
+      <rect x="25" y="18" width="160" height="28" rx="8" fill="#FEE2E2"/>
+
+      <!-- Ô cờ lớn có số 3 bị 3 cạnh tường đen bao quanh -->
+      <g transform="translate(75, 75)">
+        <rect width="160" height="160" rx="14" fill="#FFFFFF" stroke="#FECACA" stroke-width="2.5"/>
+        <text x="80" y="80" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="76" font-weight="950" fill="#DC2626">3</text>
+
+        <!-- 3 Tường dày bao quanh: Trên, Trái, Dưới -->
+        <line x1="0" y1="0" x2="160" y2="0" stroke="#1E283A" stroke-width="12" stroke-linecap="round"/>
+        <line x1="0" y1="0" x2="0" y2="160" stroke="#1E283A" stroke-width="12" stroke-linecap="round"/>
+        <line x1="0" y1="160" x2="160" y2="160" stroke="#1E283A" stroke-width="12" stroke-linecap="round"/>
+
+        <!-- 4 Anchor góc -->
+        <use href="#anchor-cross" x="0" y="0"/><use href="#anchor-cross" x="160" y="0"/>
+        <use href="#anchor-cross" x="0" y="160"/><use href="#anchor-cross" x="160" y="160"/>
+
+        <!-- Lối thoát duy nhất bên Phải -->
+        <line x1="100" y1="80" x2="185" y2="80" stroke="#2575A7" stroke-width="5" stroke-linecap="round"/>
+        <polygon points="185,73 185,87 197,80" fill="#2575A7"/>
+      </g>
+    </g>
+
+    <!-- 3. DẢI NỀN GHI CHÚ CHÂN HÌNH (ĐÃ XÓA CHỮ) -->
+    <rect x="20" y="448" width="715" height="42" rx="10" fill="#F4EFE6"/>
+  </g>
+</svg>

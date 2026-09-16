@@ -23,7 +23,6 @@ const POPUPS := {
 	"pause": "res://nodes/popups/pause.tscn",
 	"language": "res://nodes/popups/language.tscn",
 	"memory_countdown": "res://nodes/popups/memory_countdown.tscn",
-	"instruction": "res://nodes/popups/instruction.tscn",
 }
 
 const HOST_NAME := "Popups"

@@ -1,405 +1,1051 @@
 id,en,vi
-STR_SETTINGS_SUBTITLE_TITLE,"EXPERIENCE SETUP","THIẾT LẬP TRẢI NGHIỆM"
+STR_SETTINGS_SUBTITLE_TITLE,EXPERIENCE SETUP,THIẾT LẬP TRẢI NGHIỆM
 STR_SETTINGS_SUBTITLE_DESC,"Adjust sound, controls and storage","Điều chỉnh âm thanh, điều khiển và lưu trữ"
-STR_SETTINGS_LANGUAGE_SECTION,"LANGUAGE & STORAGE","NGÔN NGỮ & LƯU TRỮ"
-STR_SETTINGS_LANGUAGE,"Display language","Ngôn ngữ hiển thị"
-STR_SETTINGS_CLOUD,"Cloud save","Lưu trữ đám mây"
-STR_SETTINGS_CLOUD_DESC,"Google Play Games • Sync level progress","Google Play Games • Đồng bộ tiến độ màn"
-STR_SETTINGS_PLAYER_ID,"Player ID:","Mã người chơi (Player ID):"
-STR_SETTINGS_CONNECTED,"CONNECTED","ĐÃ KẾT NỐI"
-STR_SETTINGS_GUIDE,"Review guide & 9 rule sets","Xem lại hướng dẫn & 9 bộ luật chơi"
-STR_SETTINGS_CREDITS,"Soundtrack & credits","Nhạc nền & ghi công"
-STR_SETTINGS_RESET,"Restore default settings","Khôi phục cài đặt mặc định"
-STR_SETTINGS_GLOW,"Show glowing path trail","Hiển thị vệt dạ quang phát sáng"
-STR_SETTINGS_GLOW_DESC,"Highlight the traced path from the S point","Làm nổi bật vệt đường đi đã vẽ từ điểm S"
-STR_SETTINGS_HAPTIC_DESC,"Vibrate as a warning when stepping into a hidden wall","Rung phản hồi cảnh báo khi bước vào tường ẩn"
-STR_SETTINGS_AUTO_MARK_SAFE_DESC,"Auto-eliminate edges when a cell shows 0","Hỗ trợ tự loại trừ cạnh khi ô có số 0"
-STR_SETTINGS_VERSION,"VER {0}","VER {0}"
-STR_SETTINGS_FOOTER,"~ Number Maze: Logic Puzzle & Hidden Walls ~","~ Number Maze: Logic Puzzle & Hidden Walls ~"
-STR_CREDITS_TITLE,"CREDITS","GHI CÔNG"
-STR_CREDITS_HEADER,"SOUNDTRACK BACKGROUND THEME","SOUNDTRACK THEO CHỦ ĐỀ"
-STR_CREDITS_SUBTITLE,"Background music adapts to your equipped paper theme and scene mood.","Nhạc nền thay đổi theo chủ đề giấy đang dùng và ngữ cảnh màn hình."
-STR_CREDITS_SOUNDTRACK_SECTION,"SOUNDTRACK","NHẠC NỀN"
-STR_CREDITS_THEME_LABEL,"Theme in use","Chủ đề đang dùng"
-STR_CREDITS_TRACK_LABEL,"Now playing","Đang phát"
-STR_CREDITS_ATTR_LABEL,"Music attribution","Nguồn nhạc"
+STR_SETTINGS_LANGUAGE_SECTION,LANGUAGE & STORAGE,NGÔN NGỮ & LƯU TRỮ
+STR_SETTINGS_LANGUAGE,Display language,Ngôn ngữ hiển thị
+STR_SETTINGS_CLOUD,Cloud save,Lưu trữ đám mây
+STR_SETTINGS_CLOUD_DESC,Google Play Games • Sync level progress,Google Play Games • Đồng bộ tiến độ màn
+STR_SETTINGS_PLAYER_ID,Player ID:,Mã người chơi (Player ID):
+STR_SETTINGS_CONNECTED,CONNECTED,ĐÃ KẾT NỐI
+STR_SETTINGS_GUIDE,Review guide & 9 rule sets,Xem lại hướng dẫn & 9 bộ luật chơi
+STR_SETTINGS_CREDITS,Soundtrack & credits,Nhạc nền & ghi công
+STR_SETTINGS_RESET,Restore default settings,Khôi phục cài đặt mặc định
+STR_SETTINGS_GLOW,Show glowing path trail,Hiển thị vệt dạ quang phát sáng
+STR_SETTINGS_GLOW_DESC,Highlight the traced path from the S point,Làm nổi bật vệt đường đi đã vẽ từ điểm S
+STR_SETTINGS_HAPTIC_DESC,Vibrate as a warning when stepping into a hidden wall,Rung phản hồi cảnh báo khi bước vào tường ẩn
+STR_SETTINGS_AUTO_MARK_SAFE_DESC,Auto-eliminate edges when a cell shows 0,Hỗ trợ tự loại trừ cạnh khi ô có số 0
+STR_SETTINGS_VERSION,VER {0},VER {0}
+STR_SETTINGS_FOOTER,~ Number Maze: Logic Puzzle & Hidden Walls ~,~ Number Maze: Logic Puzzle & Hidden Walls ~
+STR_CREDITS_TITLE,CREDITS,GHI CÔNG
+STR_CREDITS_HEADER,SOUNDTRACK BACKGROUND THEME,SOUNDTRACK THEO CHỦ ĐỀ
+STR_CREDITS_SUBTITLE,Background music adapts to your equipped paper theme and scene mood.,Nhạc nền thay đổi theo chủ đề giấy đang dùng và ngữ cảnh màn hình.
+STR_CREDITS_SOUNDTRACK_SECTION,SOUNDTRACK,NHẠC NỀN
+STR_CREDITS_THEME_LABEL,Theme in use,Chủ đề đang dùng
+STR_CREDITS_TRACK_LABEL,Now playing,Đang phát
+STR_CREDITS_ATTR_LABEL,Music attribution,Nguồn nhạc
 STR_CREDITS_ATTR_LINE1,"""Wallpaper"" Kevin MacLeod (incompetech.com)","""Wallpaper"" Kevin MacLeod (incompetech.com)"
-STR_CREDITS_ATTR_LINE2,"Licensed under Creative Commons: By Attribution 4.0","Giấy phép Creative Commons: By Attribution 4.0"
-STR_CREDITS_ATTR_LINE3,"http://creativecommons.org/licenses/by/4.0/","http://creativecommons.org/licenses/by/4.0/"
-STR_CREDITS_ATTR_LINE4,"Track file: assets/soundtrack/Wallpaper.mp3","Tệp nhạc: assets/soundtrack/Wallpaper.mp3"
-STR_CREDITS_TEAM_SECTION,"TEAM","ĐỘI NGŨ"
+STR_CREDITS_ATTR_LINE2,Licensed under Creative Commons: By Attribution 4.0,Giấy phép Creative Commons: By Attribution 4.0
+STR_CREDITS_ATTR_LINE3,http://creativecommons.org/licenses/by/4.0/,http://creativecommons.org/licenses/by/4.0/
+STR_CREDITS_ATTR_LINE4,Track file: assets/soundtrack/Wallpaper.mp3,Tệp nhạc: assets/soundtrack/Wallpaper.mp3
+STR_CREDITS_TEAM_SECTION,TEAM,ĐỘI NGŨ
 STR_CREDITS_TEAM_BODY,"Design, gameplay, UI implementation and testing by InkMaze team.","Thiết kế, gameplay, UI và kiểm thử bởi đội ngũ InkMaze."
-STR_CREDITS_THANKS,"Thanks for playing and supporting InkMaze.","Cảm ơn bạn đã chơi và đồng hành cùng InkMaze."
+STR_CREDITS_THANKS,Thanks for playing and supporting InkMaze.,Cảm ơn bạn đã chơi và đồng hành cùng InkMaze.
 STR_CREDITS_FOOTER,"~ Notebook puzzles, paper textures and music in one flow ~","~ Câu đố trên giấy, chủ đề nền và âm nhạc hòa chung một nhịp ~"
-STR_LANGUAGE_TITLE,"CHOOSE LANGUAGE","CHỌN NGÔN NGỮ"
-STR_LANGUAGE_SUBTITLE,"Select your preferred language","Chọn ngôn ngữ bạn muốn sử dụng"
-STR_LANGUAGE_FOOTER,"~ The language applies to every screen instantly ~","~ Ngôn ngữ sẽ được cập nhật ngay lập tức cho toàn bộ màn chơi ~"
-STR_BTN_CANCEL,"CANCEL","HỦY BỎ"
-STR_BTN_APPLY,"APPLY","ÁP DỤNG"
-STR_MODE_TIME_ATTACK,"TIME ATTACK","ĐUA THỜI GIAN"
-STR_MODE_MINESWEEPER,"MINESWEEPER MAZE","MÊ CUNG MÌN"
-STR_MODE_SUM_PATH,"SUM PATH","ĐƯỜNG TỔNG"
-STR_MODE_COUNTDOWN_COST,"COUNTDOWN COST","CHI PHÍ ĐẾM NGƯỢC"
-STR_MODE_BLIND_MEMORY,"BLIND MEMORY","TRÍ NHỚ MÙ"
-STR_MODE_FOG_OF_WAR,"FOG OF WAR","SƯƠNG MÙ"
-STR_MODE_FADING_INK,"FADING INK","MỰC PHAI"
-STR_DAILY_TODAY_MODE,"TODAY'S MODE: {0}","CHẾ ĐỘ HÔM NAY: {0}"
-STR_DAILY_SPECIAL_LABEL,"SPECIAL MODE: {0}","CHẾ ĐỘ ĐẶC BIỆT: {0}"
-STR_DAILY_DATE_BADGE,"DAY {0}/{1}","NGÀY {0}/{1}"
-STR_DAILY_STARS_FORMAT,"{0}/{1} DONE","{0}/{1} XONG"
-STR_DAILY_DONE_FORMAT,"{0}/{1} DONE","{0}/{1} XONG"
-STR_DAILY_LOCKED,"LOCKED","CHƯA MỞ"
-STR_DAILY_MISSED,"MISSED","BỎ LỠ"
-STR_DAILY_REWARD_STARS,"+{0}","+{0}"
-STR_DAILY_REWARD_COINS,"+{0} XU","+{0} XU"
-STR_DAILY_CLAIMED_REWARD,"+{0}/{1} XU","+{0}/{1} XU"
-STR_DAILY_TOTAL_PROGRESS,"{0}% ({1} DONE)","{0}% ({1} HOÀN THÀNH)"
-STR_DAILY_STREAK_UNIT,"{0} DAYS","{0} NGÀY"
-STR_DAILY_PLAY_MODE,"PLAY {0}","CHƠI {0}"
-STR_DAILY_UNLOCK_COST,"UNLOCK: {0} XU","MỞ KHÓA: {0} XU"
-STR_DAILY_UNLOCKED,"UNLOCKED","ĐÃ MỞ"
-STR_DAILY_TODO_FORMAT,"{0}/{1} TO DO","{0}/{1} CHƯA"
-STR_STATUS_DONE_SHORT,"DONE","XONG"
-STR_BTN_COMPLETE,"COMPLETED","HOÀN THÀNH"
-STR_BTN_BACK_DAILY,"BACK TO DAILY","VỀ DAILY"
-STR_DAILY_MISSION_NO_WALL_TITLE,"Do not touch a hidden wall","Không đâm vào tường ẩn"
-STR_DAILY_MISSION_NO_WALL_DESC,"Draw a safe ink line to F without touching any hidden wall","Vẽ nét an toàn tới hố đích F, không chạm tường vô hình"
-STR_DAILY_MISSION_STEPS_TITLE,"Finish within {0} steps","Hoàn thành trong {0} bước"
+STR_LANGUAGE_TITLE,CHOOSE LANGUAGE,CHỌN NGÔN NGỮ
+STR_LANGUAGE_SUBTITLE,Select your preferred language,Chọn ngôn ngữ bạn muốn sử dụng
+STR_LANGUAGE_FOOTER,~ The language applies to every screen instantly ~,~ Ngôn ngữ sẽ được cập nhật ngay lập tức cho toàn bộ màn chơi ~
+STR_BTN_CANCEL,CANCEL,HỦY BỎ
+STR_BTN_APPLY,APPLY,ÁP DỤNG
+STR_MODE_TIME_ATTACK,TIME ATTACK,ĐUA THỜI GIAN
+STR_MODE_MINESWEEPER,MINESWEEPER MAZE,MÊ CUNG MÌN
+STR_MODE_SUM_PATH,SUM PATH,ĐƯỜNG TỔNG
+STR_MODE_COUNTDOWN_COST,COUNTDOWN COST,CHI PHÍ ĐẾM NGƯỢC
+STR_MODE_BLIND_MEMORY,BLIND MEMORY,TRÍ NHỚ MÙ
+STR_MODE_FOG_OF_WAR,FOG OF WAR,SƯƠNG MÙ
+STR_MODE_FADING_INK,FADING INK,MỰC PHAI
+STR_DAILY_TODAY_MODE,TODAY'S MODE: {0},CHẾ ĐỘ HÔM NAY: {0}
+STR_DAILY_SPECIAL_LABEL,SPECIAL MODE: {0},CHẾ ĐỘ ĐẶC BIỆT: {0}
+STR_DAILY_DATE_BADGE,DAY {0}/{1},NGÀY {0}/{1}
+STR_DAILY_STARS_FORMAT,{0}/{1} DONE,{0}/{1} XONG
+STR_DAILY_DONE_FORMAT,{0}/{1} DONE,{0}/{1} XONG
+STR_DAILY_LOCKED,LOCKED,CHƯA MỞ
+STR_DAILY_MISSED,MISSED,BỎ LỠ
+STR_DAILY_REWARD_STARS,+{0},+{0}
+STR_DAILY_REWARD_COINS,+{0} XU,+{0} XU
+STR_DAILY_CLAIMED_REWARD,+{0}/{1} XU,+{0}/{1} XU
+STR_DAILY_TOTAL_PROGRESS,{0}% ({1} DONE),{0}% ({1} HOÀN THÀNH)
+STR_DAILY_STREAK_UNIT,{0} DAYS,{0} NGÀY
+STR_DAILY_PLAY_MODE,PLAY {0},CHƠI {0}
+STR_DAILY_UNLOCK_COST,UNLOCK: {0} XU,MỞ KHÓA: {0} XU
+STR_DAILY_UNLOCKED,UNLOCKED,ĐÃ MỞ
+STR_DAILY_TODO_FORMAT,{0}/{1} TO DO,{0}/{1} CHƯA
+STR_STATUS_DONE_SHORT,DONE,XONG
+STR_BTN_COMPLETE,COMPLETED,HOÀN THÀNH
+STR_BTN_BACK_DAILY,BACK TO DAILY,VỀ DAILY
+STR_DAILY_MISSION_NO_WALL_TITLE,Do not touch a hidden wall,Không đâm vào tường ẩn
+STR_DAILY_MISSION_NO_WALL_DESC,Draw a safe ink line to F without touching any hidden wall,"Vẽ nét an toàn tới hố đích F, không chạm tường vô hình"
+STR_DAILY_MISSION_STEPS_TITLE,Finish within {0} steps,Hoàn thành trong {0} bước
 STR_DAILY_MISSION_STEPS_DESC,"Optimize the route, do not exceed the step budget","Tối ưu lộ trình vẽ, không vượt quá số bước"
-STR_DAILY_MISSION_TIME_TITLE,"Reach F under {0}s","Về đích dưới {0} giây"
-STR_DAILY_MISSION_TIME_DESC,"Speed up the ink line and touch F before time runs out","Tăng tốc nét bút, chạm hố đích F trước khi hết giờ"
-STR_DAILY_MISSION_SPECIAL_TITLE,"Beat 1 {0} run","Chinh phục 1 ván {0}"
-STR_DAILY_MISSION_SPECIAL_DESC,"The second maze of the day — play it with special rules","Maze thứ hai của ngày — chơi theo luật đặc biệt"
-STR_DAILY_MISSION_PROGRESS_DONE,"Progress: 1/1","Tiến độ: 1/1"
-STR_DAILY_MISSION_PROGRESS_TODO,"Progress: 0/1","Tiến độ: 0/1"
-STR_DAILY_WIN_TITLE,"DAILY COMPLETE","HOÀN THÀNH DAILY"
-STR_DAILY_WIN_SUBTITLE,"Day {0}/{1} • {2}","Ngày {0}/{1} • {2}"
-STR_DAILY_WIN_STAMP_TITLE,"{0} / {1} MISSIONS","{0} / {1} NHIỆM VỤ"
-STR_DAILY_WIN_STAMP_SUB,"+{0} XU","+{0} XU"
-STR_DAILY_WIN_TOTAL_TODAY,"COINS TODAY","XU HÔM NAY"
-STR_DAILY_COINS_TOTAL,"+{0}/{1} XU","+{0}/{1} XU"
-STR_DAILY_WIN_QUOTE,"~ Back to Daily for your other maze ~","~ Quay lại Daily để chinh phục maze còn lại ~"
-STR_DAILY_WIN_CLASSIC,"CLASSIC MAZE","MAZE THƯỜNG"
+STR_DAILY_MISSION_TIME_TITLE,Reach F under {0}s,Về đích dưới {0} giây
+STR_DAILY_MISSION_TIME_DESC,Speed up the ink line and touch F before time runs out,"Tăng tốc nét bút, chạm hố đích F trước khi hết giờ"
+STR_DAILY_MISSION_SPECIAL_TITLE,Beat 1 {0} run,Chinh phục 1 ván {0}
+STR_DAILY_MISSION_SPECIAL_DESC,The second maze of the day — play it with special rules,Maze thứ hai của ngày — chơi theo luật đặc biệt
+STR_DAILY_MISSION_PROGRESS_DONE,Progress: 1/1,Tiến độ: 1/1
+STR_DAILY_MISSION_PROGRESS_TODO,Progress: 0/1,Tiến độ: 0/1
+STR_DAILY_WIN_TITLE,DAILY COMPLETE,HOÀN THÀNH DAILY
+STR_DAILY_WIN_SUBTITLE,Day {0}/{1} • {2},Ngày {0}/{1} • {2}
+STR_DAILY_WIN_STAMP_TITLE,{0} / {1} MISSIONS,{0} / {1} NHIỆM VỤ
+STR_DAILY_WIN_STAMP_SUB,+{0} XU,+{0} XU
+STR_DAILY_WIN_TOTAL_TODAY,COINS TODAY,XU HÔM NAY
+STR_DAILY_COINS_TOTAL,+{0}/{1} XU,+{0}/{1} XU
+STR_DAILY_WIN_QUOTE,~ Back to Daily for your other maze ~,~ Quay lại Daily để chinh phục maze còn lại ~
+STR_DAILY_WIN_CLASSIC,CLASSIC MAZE,MAZE THƯỜNG
 STR_HINT_DAILY_CLASSIC,"Classic maze of the day — draw a safe path to F, a hidden wall ends the run.","Maze thường của ngày — vẽ đường tới F an toàn, chạm tường ẩn là thua."
-STR_MONTH_01,"January","Tháng 1"
-STR_MONTH_02,"February","Tháng 2"
-STR_MONTH_03,"March","Tháng 3"
-STR_MONTH_04,"April","Tháng 4"
-STR_MONTH_05,"May","Tháng 5"
-STR_MONTH_06,"June","Tháng 6"
-STR_MONTH_07,"July","Tháng 7"
-STR_MONTH_08,"August","Tháng 8"
-STR_MONTH_09,"September","Tháng 9"
-STR_MONTH_10,"October","Tháng 10"
-STR_MONTH_11,"November","Tháng 11"
-STR_MONTH_12,"December","Tháng 12"
-STR_STEPS_LEFT_FORMAT,"{0} / {1} STEPS ({2} LEFT)","{0} / {1} Bước (Dư {2})"
-STR_WALL_HITS_FORMAT,"{0} times ({1})","{0} lần ({1})"
-STR_PERFECT_TAG,"Perfect","Hoàn hảo"
-STR_SCORE_FORMAT,"+{0} PTS","+{0} PTS"
-STR_GAMEOVER_DISTANCE_FORMAT,"Reached {0}% of the maze","Đạt {0}% mê cung"
-STR_GAMEOVER_WALLS_FORMAT,"{0} times (-{1} steps)","{0} lần (-{1} bước)"
-STR_BONUS_STEPS_GAINED,"+{0} steps","+{0} bước"
-STR_NEXT_FLOOR_STEPS_BONUS,"EXTRA STEPS FOR THE NEXT FLOOR:","THƯỞNG THÊM BƯỚC CHO TẦNG KẾ:"
-STR_NEXT_FLOOR_STEPS_DESC,"Leftover steps are stored in your bag","Số bước dư được tích lũy vào kho hành trang"
-STR_RESULT_STAMP_EXCELLENT,"EXCELLENT","XUẤT SẮC"
-STR_RESULT_STAMP_PASSED,"PASSED","ĐÃ QUA"
-STR_RESULT_STAMP_FLOOR,"FLOOR {0} ✔","TẦNG {0} ✔"
-STR_GAME_OVER_LEVEL_TITLE,"HIDDEN WALL HIT!","ĐÂM VÀO TƯỜNG VÔ HÌNH!"
-STR_GAME_OVER_LEVEL_SUBTITLE,"One wall hit ends the run — {0}% of the maze cleared","Chạm tường là hết màn — đã đi được {0}% mê cung"
-STR_REVIVE_DESC_STEPS,"Get +{0} more Steps to continue","Nhận thêm +{0} Bước để đi tiếp"
-STR_REVIVE_DESC_UNDO,"Return to the previous step","Quay lại bước trước đó"
-STR_HUD_TIME,"TIME","THỜI GIAN"
-STR_HUD_STEPS,"STEPS","SỐ BƯỚC"
-STR_HUD_FLOOR,"FLOOR","TẦNG"
-STR_HUD_CHALLENGE,"CHALLENGES","THỬ THÁCH"
-STR_HUD_BOMB,"BOMBS LEFT","BOMB CÒN LẠI"
-STR_HUD_SUM,"CURRENT SUM","TỔNG HIỆN TẠI"
-STR_HUD_TARGET,"TARGET","MỤC TIÊU"
-STR_HUD_BLIND_TITLE,"MEMORIZE THE WALLS","GHI NHỚ VỊ TRÍ TƯỜNG"
-STR_HUD_BLIND_HINT,"Watch the walls, then walk from memory","Nhìn kỹ các bức tường rồi đi bằng trí nhớ"
-STR_MEMORIZE_TITLE,"MEMORIZE!","GHI NHỚ!"
-STR_MEMORIZE_HINT,"The walls will vanish when the countdown ends","Tường sẽ biến mất khi đếm ngược kết thúc"
-STR_GAME_OVER_NO_PATH,"NO PATH LEFT!","HẾT ĐƯỜNG ĐI!"
-STR_RESULT_SUBTITLE,"Level {0} • {1} Grid","Màn {0} • Bàn cờ {1}"
-STR_WIN_STAMP_TITLE,"{0} / {1} CHALLENGES","{0} / {1} THỬ THÁCH"
-STR_WIN_STAMP_SUB,"★ {0} STARS EARNED ★","★ ĐẠT {0} SAO ★"
-STR_CHALLENGE_DONE_COUNT,"{0} COMPLETED","{0} ĐÃ HOÀN THÀNH"
-STR_CHALLENGE_BADGE_DONE,"✓ DONE","✓ ĐẠT"
-STR_CHAPTER_FORMAT,"CHAPTER {0}","CHƯƠNG {0}"
-STR_LEVEL_TITLE_FORMAT,"LEVEL {0}","MÀN {0}"
-STR_BTN_ARCHIVEMENT,"BADGES","DANH HIỆU"
-STR_ACH_TITLE,"BADGE BOOK","SỔ TAY THÀNH TỰU"
-STR_ACH_OVERVIEW_TITLE,"BADGE COLLECTION PROGRESS","TIẾN ĐỘ THU THẬP DANH HIỆU"
-STR_ACH_OVERVIEW_FORMAT,"Opened: {0} / {1} Badges • Points: {2} AP","Đã mở: {0} / {1} Danh hiệu • Điểm: {2} AP"
-STR_ACH_TAB_ALL,"ALL ({0})","TẤT CẢ ({0})"
-STR_ACH_TAB_LEVELS,"PLAY MODE","MÀN CHƠI"
-STR_ACH_TAB_DUNGEON,"DUNGEON","DUNGEON"
-STR_ACH_TAB_DAILY,"DAILY","DAILY"
-STR_ACH_TAB_SPECIAL,"SPECIAL","ĐẶC BIỆT"
-STR_ACH_STATE_CLAIMED,"CLAIMED","ĐÃ ĐẠT"
-STR_ACH_STATE_CLAIM,"CLAIM +{0}","NHẬN +{0}"
-STR_ACH_STATE_REWARD,"Reward: +{0}","Thưởng: +{0}"
-STR_ACH_STATE_LOCKED,"LOCKED","KHÓA"
-STR_ACH_SECRET_TITLE,"Secret Badge • Undiscovered","Thành Tựu Ẩn • Chưa Khám Phá"
-STR_ACH_SECRET_DESC,"Keep playing to reveal this badge","Tiếp tục chơi để mở khoá danh hiệu này"
-STR_ACH_SECRET_PROGRESS,"Progress: ??? / ???","Tiến độ: ??? / ???"
-STR_ACH_PROGRESS_DONE,"Progress: {0} / {1} {2} (Done)","Tiến độ: {0} / {1} {2} (Hoàn thành)"
-STR_ACH_PROGRESS_FORMAT,"Progress: {0} / {1} {2}","Tiến độ: {0} / {1} {2}"
-STR_ACH_QUOTE,"~ Every precise move leaves a mark in your badge book ~","~ Mỗi bước đi chuẩn xác đều ghi dấu vào sổ tay thành tích của bạn ~"
-STR_ACH_BADGES_FORMAT,"{0}/{1} BADGES","{0}/{1} BADGES"
-STR_ACH_EMPTY,"No badges in this category yet","Chưa có danh hiệu nào trong mục này"
-STR_ACH_PERCENT,"{0}%","{0}%"
-
-STR_CHALLENGE_NO_WALL,"Do not hit a hidden wall","Không đâm vào tường"
-STR_CHALLENGE_STEPS,"Finish within {0} steps","Đi không quá {0} bước"
-STR_CHALLENGE_TIME,"Reach F in under {0}s","Về đích dưới {0} giây"
-STR_CHALLENGE_ONLY_NUMBERED,"Step only on numbered cells","Chỉ đi vào ô CÓ số"
-STR_CHALLENGE_AVOID_NUMBERED,"Do not step on numbered cells","Không đi vào ô CÓ số"
-STR_CHALLENGE_NO_REVISIT,"Do not retrace your path","Không lặp lại ô cũ"
-STR_CHALLENGE_VISIT_ALL,"Visit every cell","Đi qua hết mọi ô"
-STR_CHALLENGE_VISIT_ALL_NUMBERED,"Visit every numbered cell","Đi hết mọi ô có số"
-STR_CHALLENGE_LEN_MIN,"Walk at least {0}% of the cells","Đi tối thiểu {0}% số ô"
-STR_CHALLENGE_LEN_MAX,"Walk at most {0}% of the cells","Đi tối đa {0}% số ô"
-STR_CHALLENGE_SUM_LT,"Path sum under {0}","Tổng số đã đi < {0}"
-STR_CHALLENGE_SUM_LE,"Path sum at most {0}","Tổng số đã đi <= {0}"
-STR_CHALLENGE_SUM_GT,"Path sum over {0}","Tổng số đã đi > {0}"
-STR_CHALLENGE_SUM_GE,"Path sum at least {0}","Tổng số đã đi >= {0}"
-STR_CHALLENGE_NO_HINT,"Do not use hints","Không dùng gợi ý"
-STR_CHALLENGE_NO_UNDO,"Do not use undo","Không dùng hoàn tác"
-STR_CHALLENGE_ST_OK,"OK","ổn"
-STR_CHALLENGE_ST_VIOLATED,"VIOLATED","VI PHẠM"
-STR_CHALLENGE_ST_NUMBERED_OK,"all numbered","toàn ô có số"
-STR_CHALLENGE_ST_VISITED_PCT,"{0}% cells","{0}% số ô"
-STR_CHALLENGE_ST_VISIT_ALL,"{0}/{1} cells","{0}/{1} ô"
-STR_CHALLENGE_ST_PATH_SUM,"sum {0}","tổng {0}"
-STR_CHALLENGE_ST_REVISITED,"{0} revisits","đi đè {0}"
-STR_CHALLENGE_ST_HINT_USED,"hints {0}","gợi ý {0}"
-STR_CHALLENGE_ST_UNDO_USED,"undos {0}","hoàn tác {0}"
-STR_CHALLENGE_STEPS_PROGRESS,"{0}/{1} steps","{0}/{1} bước"
-STR_CHALLENGE_TIME_LEFT,"{0}s left","còn {0}s"
-STR_CHALLENGE_TIME_OVER,"{0}s over","quá {0}s"
-STR_CHALLENGE_DONE,"★ DONE","★ ĐẠT"
-STR_CHALLENGE_NOT_DONE,"NOT DONE","CHƯA ĐẠT"
-STR_CHALLENGE_HEADER,"LEVEL CHALLENGES:","THỬ THÁCH CỦA MÀN:"
-STR_CHALLENGE_STAMP_TITLE,"CHALLENGES","THỬ THÁCH"
-STR_CHALLENGE_COUNT_FORMAT,"{0} / {1}","{0} / {1}"
-STR_GAMEOVER_STAMP_TITLE,"OUT OF STEPS","HẾT BƯỚC"
-STR_GAMEOVER_STAMP_STEPS,"{0} / {1} STEPS","{0} / {1} BƯỚC"
-STR_RANK_TITLE,"LEADERBOARD","BẢNG XẾP HẠNG"
-STR_RANK_SCOPE,"DEVICE","MÁY NÀY"
-STR_RANK_TAB_DUNGEON,"DUNGEON","DUNGEON"
-STR_RANK_TAB_PLAY,"PLAY MODE","CHẾ ĐỘ PLAY"
-STR_RANK_TAB_DAILY,"DAILY STREAK","CHUỖI NGÀY"
-STR_RANK_RECORD_FLOOR,"FLOOR {0}","TẦNG {0}"
-STR_RANK_RECORD_LEVEL,"LEVEL {0}","MÀN {0}"
-STR_RANK_RECORD_STREAK,"STREAK {0} DAYS","CHUỖI {0} NGÀY"
-STR_RANK_POINTS,"{0} PTS","{0} ĐIỂM"
-STR_RANK_YOU,"YOU (Player)","BẠN (Người chơi)"
-STR_RANK_SUBTITLE,"PERSONAL BEST","KỶ LỤC CÁ NHÂN"
-STR_RANK_NO_RECORD_SHORT,"NO RECORD","CHƯA CÓ"
-STR_RANK_NO_RECORD,"No record yet - play a run!","Chưa có kỷ lục - hãy chơi một ván!"
-STR_RANK_FOOTER,"Leaderboard refreshes every 10 minutes - climb to the top!","Bảng xếp hạng tự làm mới mỗi 10 phút - chúc bạn sớm leo Top!"
-STR_RANK_DEMO,"Offline board (demo) - rivals are simulated.","Bảng ngoại tuyến (demo) - đối thủ là dữ liệu mô phỏng."
-STR_HUD_SUM_TITLE,"BALANCE THE PATH TOTAL","CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI"
-STR_HUD_SUM_MOVES,"({0} cells)","({0} ô)"
-STR_HUD_SUM_NEED,"NEED +{0}","CẦN THÊM +{0}"
-STR_HUD_SUM_LEFT,"CAN ADD +{0}","CÒN ĐƯỢC +{0}"
-STR_HUD_SUM_OVER,"OVER BY {0}","ĐANG VƯỢT {0}"
-STR_HUD_SUM_OK,"ENOUGH!","ĐÃ ĐỦ!"
-STR_HUD_TIME_SUPPORT,"Ranking helper","Phụ trợ xếp hạng"
-STR_HUD_TIME_FREE,"No limit","Không giới hạn"
-STR_HUD_BUDGET_TITLE,"STEP BUDGET LEDGER","SỔ THEO DÕI NGÂN SÁCH BƯỚC CHÂN"
-STR_HUD_BUDGET_LEFT,"BUDGET LEFT","NGÂN SÁCH CÒN"
-STR_HUD_BUDGET_SPENT,"SPENT","ĐÃ TIÊU TỐN"
-STR_HUD_BUDGET_SPENT_UNIT,"STEPS","BƯỚC"
-STR_HUD_BUDGET_CELLS,"({0} cells walked)","({0} ô đã đi)"
-STR_HUD_BUDGET_PRICE,"COST PER CELL","GIÁ CƯỚC MỖI Ô"
-STR_HUD_PRICE_CHEAP,"{0}-{1}: CHEAP","{0}-{1}: RẺ"
-STR_HUD_PRICE_PRICEY,"{0}-{1}: PRICEY","{0}-{1}: ĐẮT"
-STR_HUD_PRICE_PRICEY_ONE,"{0}: PRICEY","{0}: ĐẮT"
-STR_HUD_BUDGET_RESERVE,"Reserve: +{0} steps","Dự phòng: +{0} bước"
-STR_HUD_INK_STEPS,"STEPS WALKED","BƯỚC ĐÃ ĐI"
-STR_HUD_INK_LOST,"(-{0} INK)","(-{0} MỰC)"
-STR_HUD_INK_NOTE,"Each step: -1 ink on the whole board","Mỗi bước: -1 mực toàn bàn"
-STR_HUD_INK_SCALE_TITLE,"INK DARKNESS SCALE","QUANG PHỔ ĐẬM NHẠT CỦA MỰC"
-STR_HUD_INK_SCALE_A,"≥ 3 DARK","≥ 3 ĐẬM"
-STR_HUD_INK_SCALE_B,"2 CLEAR","2 RÕ"
-STR_HUD_INK_SCALE_C,"1 CRITICAL","1 NGUY CẤP"
-STR_HUD_INK_SCALE_D,"0 LOCKED","0 CẠN KHÓA"
-STR_HUD_INK_WARN,"HAVE {0} DRIED CELLS (FULLY BLOCKED)","HIỆN CÓ: {0} Ô ĐÃ CẠN MỰC (BỊ CHẶN HOÀN TOÀN)"
-STR_HINT_PLAY,"Draw a path to the exit - touching an invisible wall is a loss!","Vẽ đường tới hố đích - chạm tường vô hình là thua ngay!"
-STR_HINT_DUNGEON,"Endless tower: clear each floor with as few steps as you can!","Tháp vô tận: qua mỗi tầng với ít bước nhất có thể!"
-STR_HINT_TIME_ATTACK,"Race the clock: reach the exit before time runs out!","Đua với đồng hồ: tới hố đích trước khi hết giờ!"
-STR_HINT_MINESWEEPER,"A cell number = how many walls touch it - stepping on a mine ends the run!","Số trên ô = số tường quanh ô - dẫm vào mìn là thua ngay!"
-STR_HINT_BLIND_MEMORY,"Memorize the walls, then walk the hidden maze from memory!","Ghi nhớ tường rồi đi trong mê cung ẩn theo trí nhớ!"
-STR_HINT_FOG_OF_WAR,"Only nearby walls show up - feel your way to the exit!","Chỉ hiện tường ở gần - dò dẫm từng bước tới hố đích!"
-STR_HINT_SUM_PATH,"Each cell is a score - your path total must satisfy the TARGET!","Mỗi ô là một điểm - tổng đường đi phải thỏa điều kiện MỤC TIÊU!"
-STR_HINT_COUNTDOWN_COST,"Each cell is a toll on your step budget - pick the cheapest path!","Mỗi ô là cước phí trừ quỹ bước - hãy chọn đường rẻ nhất!"
-STR_HINT_FADING_INK,"Every step drains 1 ink from every cell - dried cells block the way!","Mỗi bước làm mọi ô mất 1 mực - ô cạn mực bị bít lối!"
-STR_BTN_CLOSE,"CLOSE","ĐÓNG"
-STR_INSTRUCTION_TITLE,"GUIDE","HƯỚNG DẪN"
-STR_INSTRUCTION_MODE,"MODE: {0}","CHẾ ĐỘ: {0}"
-STR_INSTRUCTION_PAGE,"PAGE {0}/{1}","TRANG {0}/{1}"
-STR_INSTRUCTION_T_CONTROL,"HOW TO PLAY","CÁCH CHƠI"
-STR_INSTRUCTION_T_SCORE,"CHALLENGES & REWARDS","THỬ THÁCH & THƯỞNG"
-STR_INSTRUCTION_B_CONTROL,"Drag from the start cell to the exit F to draw your ink line. Touch an invisible wall and the run ends — stuck? Use Hint, or Undo to step back.","Kéo từ ô xuất phát tới hố đích F để vẽ nét mực. Chạm tường vô hình là thua ngay — bí quá thì bấm Gợi ý, hoặc Hoàn tác để lùi 1 bước."
-STR_MODE_PLAY_NAME,"PLAY MODE","CHẾ ĐỘ PLAY"
-STR_MODE_DUNGEON_NAME,"DUNGEON MODE","CHẾ ĐỘ DUNGEON"
-STR_MODE_DAILY_CLASSIC_NAME,"CLASSIC MAZE","MAZE THƯỜNG"
-STR_INSTRUCTION_B_MODE_PLAY,"Clear the selected level: reach F without touching any hidden wall.","Vượt màn đang chọn: tới hố đích F mà không chạm bất kỳ tường ẩn nào."
-STR_INSTRUCTION_B_SCORE_PLAY,"Each match-up has 3 challenges — every challenge you clear earns 1 Star.","Mỗi màn có 3 thử thách — hoàn thành mỗi thử thách nhận 1 Sao."
-STR_INSTRUCTION_B_MODE_DUNGEON,"Endless tower: every move costs 1 step. Running out of steps ends the run — revive grants +3 steps on the spot.","Tháp vô tận: mỗi bước đi tốn 1 bước. Hết bước là hết ván — hồi sinh được cộng thêm +3 bước ngay tại chỗ."
-STR_INSTRUCTION_B_SCORE_DUNGEON,"The deeper you go the higher your score — every cleared floor rewards bonus steps.","Càng lên tầng cao điểm càng lớn — mỗi tầng qua được thưởng thêm bước."
-STR_INSTRUCTION_B_MODE_TIME,"Race the clock: reach F before the countdown ends. Steps are unlimited.","Đua với đồng hồ: tới hố đích F trước khi hết giờ. Không giới hạn số bước."
-STR_INSTRUCTION_B_SCORE_TIME,"No step limit — the faster you reach F, the better your result.","Không giới hạn bước — tới F càng nhanh kết quả càng cao."
-STR_INSTRUCTION_B_MODE_MINESWEEPER,"A number on a cell counts the hidden mines around it. Step on a mine and the run ends instantly.","Số trên ô = số mìn ẩn quanh ô đó. Dẫm trúng mìn là thua ngay lập tức."
-STR_INSTRUCTION_B_SCORE_MINESWEEPER,"Read the clues and snake through safe cells — one wrong step ends everything.","Đọc con số gợi ý để luồn qua các ô an toàn — chỉ 1 bước sai là hết ván."
-STR_INSTRUCTION_B_MODE_SUM_PATH,"Every cell carries a score. The total of your path must match the requirement shown on the HUD.","Mỗi ô mang một điểm số. Tổng đường đi phải khớp yêu cầu hiển thị trên HUD."
-STR_INSTRUCTION_B_SCORE_SUM_PATH,"Plan which cells to add up — going over or under the target fails the challenge.","Tính toán các ô cộng vào — vượt quá hay thiếu mục tiêu đều không đạt thử thách."
-STR_INSTRUCTION_B_MODE_COUNTDOWN,"The number on a cell is its toll: entering it drains that many steps from your budget.","Số trên ô là cước phí: bước vào ô bị trừ đúng số bước đó trong quỹ."
-STR_INSTRUCTION_B_SCORE_COUNTDOWN,"Take the cheapest route, not the shortest — the step budget is tight by design.","Chọn đường RẺ NHẤT thay vì ngắn nhất — quỹ bước được tính vừa đủ cho đường rẻ nhất."
-STR_INSTRUCTION_B_MODE_BLIND,"All walls are revealed for a few seconds before the run — memorize them, then walk from memory.","Toàn bộ tường hiện ra vài giây trước khi chơi — hãy ghi nhớ rồi đi theo trí nhớ."
-STR_INSTRUCTION_B_SCORE_BLIND,"No numbers on the board: any hidden wall is a loss. Undo can save a wrong step.","Bàn cờ không có số: chạm tường ẩn là thua. Dùng Hoàn tác để cứu 1 bước đi nhầm."
-STR_INSTRUCTION_B_MODE_FOG,"You only see the cells around your marker — move step by step to reveal the way to F.","Chỉ thấy các ô quanh vị trí hiện tại — đi từng bước để mở dần đường tới F."
-STR_INSTRUCTION_B_SCORE_FOG,"The maze stays hidden the whole run — scout carefully, the clock still counts.","Mê cung ẩn suốt ván — dò dẫm cẩn thận, đồng hồ vẫn chạy."
-STR_INSTRUCTION_B_MODE_FADING,"Every step fades 1 ink from every cell. A cell at 0 ink hardens and blocks the way.","Mỗi bước làm mọi ô nhạt đi 1 mực. Ô về 0 mực sẽ khô cứng và chặn lối."
-STR_INSTRUCTION_B_SCORE_FADING,"The number on a cell is the ink left there — plan a route through still-wet cells.","Số trên ô = mực còn lại — tính đường đi qua những ô còn đủ mực."
-STR_INSTRUCTION_B_MODE_DAILY,"Classic maze of the chosen day: 20 steps and a 60-second limit, no hidden-wall mistakes.","Maze thường của ngày đang chọn: 20 bước, tối đa 60 giây, không được chạm tường ẩn."
-STR_INSTRUCTION_B_SCORE_DAILY,"Each mission pays Coins — clear all 4 missions of a day to keep the streak.","Mỗi nhiệm vụ thưởng Xu — hoàn thành cả 4 nhiệm vụ để giữ chuỗi ngày."
-STR_CHAPTER_SCREEN_TITLE,"SELECT CHAPTER","CHỌN CHƯƠNG"
-STR_CHAPTER_TITLE_FORMAT,"CHAPTER {0}: {1}","CHƯƠNG {0}: {1}"
-STR_CHAPTER_RIBBON_PLAYING,"IN PROGRESS","ĐANG CHƠI"
-STR_CHAPTER_RIBBON_OPEN,"UNLOCKED","ĐÃ MỞ"
-STR_CHAPTER_RIBBON_READY,"READY TO UNLOCK","ĐÃ ĐỦ ĐIỀU KIỆN"
-STR_CHAPTER_RIBBON_LOCKED,"LOCKED","ĐANG KHÓA"
-STR_CHAPTER_RIBBON_COMING,"COMING SOON","SẮP RA MẮT"
-STR_CHAPTER_SIZE_FORMAT,"SIZE {0}","KÍCH THƯỚC {0}"
-STR_CHAPTER_STARS_FORMAT,"{0} / {1} STARS","{0} / {1} SAO"
-STR_CHAPTER_LEVELS_FORMAT,"({0}/{1} levels)","({0}/{1} màn)"
-STR_CHAPTER_NEED_FORMAT,"{0} STARS SHORT","CÒN THIẾU {0} SAO"
-STR_CHAPTER_REQUIRE_FORMAT,"NEED {0} STARS","CẦN {0} SAO"
-STR_CHAPTER_HAVE_FORMAT,"✓ ENOUGH: {0} / {1} STARS","✓ ĐÃ ĐỦ: {0} / {1} SAO"
-STR_CHAPTER_PLAY,"PLAY","VÀO CHƠI"
-STR_CHAPTER_PLAY_SUB,"Level {0} ›","Màn {0} ›"
-STR_CHAPTER_UNLOCK,"UNLOCK","MỞ KHÓA"
-STR_CHAPTER_NOT_ENOUGH,"Not enough stars","Chưa đủ sao"
-STR_CHAPTER_STARS_HELD,"STARS","SAO CÓ"
-STR_CHAPTER_BANNER,"Clear level challenges to collect Stars and unlock new Chapters!","Chinh phục thử thách ở các màn để tích lũy Sao mở khóa Chương mới!"
-STR_CHAPTER_UNLOCKABLE,"A new Chapter is ready — tap to unlock!","Có Chương mới có thể mở khóa — bấm để xem!"
-STR_SHOP_TITLE,"SHOP","CỬA HÀNG"
-STR_SHOP_EYEBROW,"STATIONERY STORE","TIỆM VĂN PHÒNG PHẨM"
-STR_SHOP_TAB_PEN,"PEN & INK","✒️ BÚT & MỰC"
-STR_SHOP_TAB_THEME,"PAPER","📜 GIẤY VỞ"
-STR_SHOP_TAB_TOOL,"TOOLS","🎒 DỤNG CỤ"
-STR_SHOP_TAB_COIN,"TOP UP","🪙 NẠP XU"
-STR_SHOP_PAGE_FORMAT,"PAGE {0} / {1}","TRANG {0} / {1}"
-STR_SHOP_STOCK_FORMAT,"In your bag: {0} {1}","Đang có: {0} {1}"
-STR_SHOP_UNIT_PACK,"packs","gói"
-STR_SHOP_UNIT_TURN,"turns","lượt"
-STR_SHOP_UNIT_COIN,"ink coins","xu mực"
-STR_SHOP_BONUS_TAG,"Bonus","Tặng thêm"
-STR_SHOP_USE,"USE","SỬ DỤNG"
-STR_SHOP_BUY_MORE,"BUY MORE","MUA THÊM"
-STR_SHOP_EQUIPPED,"IN USE ✓","ĐANG DÙNG ✓"
-STR_SHOP_EQUIPPED_NOTE,"✓ Currently active","✓ Đang kích hoạt"
-STR_SHOP_OWNED_NOTE,"Tap USE to switch","Bấm SỬ DỤNG để đổi"
-STR_SHOP_NOT_ENOUGH,"Not enough ink coins","Chưa đủ Xu Mực"
-STR_SHOP_OWNED_BTN,"OWNED","ĐÃ SỞ HỮU"
-STR_SHOP_PRICE_FORMAT,"{0} XU","{0} XU"
-STR_SHOP_BANNER_TITLE,"DAILY BOOST • FREE INK COINS","GÓC TIẾP SỨC HỌC TẬP • NHẬN XU MIỄN PHÍ"
-STR_SHOP_BANNER_DESC,"Watch a short lesson every day to get 50 ink coins","Xem bài giảng ngắn mỗi ngày để nhận ngay 50 Xu Mực"
-STR_SHOP_BANNER_BTN,"+50 XU ▶","+50 XU ▶"
-STR_SHOP_FOOTER,"~ Sharp pen, clean notebook ~","~ Bút sắc vẽ đường • Vở sạch luyện trí ~"
-STR_SHOP_BADGE_BASIC,"BASIC","CƠ BẢN"
-STR_SHOP_BADGE_UNLOCKED,"UNLOCKED","ĐÃ MỞ KHÓA"
-STR_SHOP_BADGE_SOUND,"RUSTLE EFFECT","HIỆU ỨNG SỘT SOẠT"
-STR_SHOP_BADGE_MARK,"MARKING PEN","NÉT CHẤM BÀI"
-STR_SHOP_BADGE_GLOW,"GLOW","DẠ QUANG"
-STR_SHOP_BADGE_VIP,"GOLD VIP","ÁNH KIM VIP"
-STR_SHOP_BADGE_RELAX,"RELAXING","THƯ GIÃN"
-STR_SHOP_BADGE_DIARY,"DIARY","NHẬT KÝ"
-STR_SHOP_BADGE_SKETCH,"SKETCH","PHÁC THẢO"
-STR_SHOP_BADGE_NIGHT,"NIGHT INK","MỰC ĐÊM"
-STR_SHOP_BADGE_NIGHT_MODE,"EYE-FRIENDLY","ÊM MẮT"
-STR_SHOP_BADGE_MODERN,"MODERN","HIỆN ĐẠI"
-STR_SHOP_BADGE_MINIMAL,"MINIMAL","TỐI GIẢN"
-STR_SHOP_BADGE_PRECISE,"PRECISE","CHUẨN XÁC"
-STR_SHOP_BADGE_VINTAGE,"VINTAGE","CỔ ĐIỂN"
-STR_SHOP_BADGE_CUTE,"CUTE","DỄ THƯƠNG"
-STR_SHOP_BADGE_EXAM,"EXAM VIBE","KHÔNG KHÍ THI"
-STR_SHOP_BADGE_PACK,"PACK OF TURNS","GÓI LƯỢT"
-STR_SHOP_BADGE_NEW,"NEW","MỚI"
-STR_SHOP_BADGE_RECOMMEND,"RECOMMENDED","KHUYÊN DÙNG"
-STR_SHOP_BADGE_BEST,"BEST VALUE","LỜI NHẤT"
-STR_SHOP_BADGE_TYCOON,"BIG SPENDER","ĐẠI GIA"
-STR_SHOP_PEN_BLUE_NAME,"Classic Blue Ink","Mực Xanh Học Trò"
-STR_SHOP_PEN_BLUE_DESC,"Innocent school-day strokes","Nét chữ ngây thơ thời cắp sách"
-STR_SHOP_PEN_PURPLE_NAME,"Eggplant Purple Ink","Mực Tím Hoa Cà"
-STR_SHOP_PEN_PURPLE_DESC,"Nostalgic handwriting","Nét chữ nết người hoài niệm"
-STR_SHOP_PEN_PENCIL_NAME,"Wooden Pencil 2B","Bút Chì Gỗ 2B"
-STR_SHOP_PEN_PENCIL_DESC,"Rustling sound on paper","Âm thanh sột soạt trên mặt giấy"
-STR_SHOP_PEN_RED_NAME,"Teacher's Red Pen","Bút Đỏ Giáo Viên"
-STR_SHOP_PEN_RED_DESC,"Bold, powerful marking ink","Nét mực đỏ tươi rực rỡ quyền lực"
-STR_SHOP_PEN_HIGHLIGHT_NAME,"Highlighter Pen","Bút Nhớ Dạ Quang"
-STR_SHOP_PEN_HIGHLIGHT_DESC,"Soft glowing highlight lines","Vạch sáng trong mờ nổi bật"
-STR_SHOP_PEN_GOLD_NAME,"Royal Gold Ink","Mực Nhũ Hoàng Gia"
-STR_SHOP_PEN_GOLD_DESC,"Shimmering gold flakes","Hạt kim tuyến phát sáng lấp lánh"
-STR_SHOP_PEN_GREEN_NAME,"Green Tea Ink","Mực Xanh Trà"
-STR_SHOP_PEN_GREEN_DESC,"Calm and easy on the eyes","Dịu mắt, êm như lá trà"
-STR_SHOP_PEN_PINK_NAME,"Diary Pink Ink","Mực Hồng Nhật Ký"
-STR_SHOP_PEN_PINK_DESC,"Sweet tone for every page","Ngọt ngào cho từng trang viết"
-STR_SHOP_PEN_GRAPHITE_NAME,"Graphite Lead 4B","Bút Chì Kim 4B"
+STR_MONTH_01,January,Tháng 1
+STR_MONTH_02,February,Tháng 2
+STR_MONTH_03,March,Tháng 3
+STR_MONTH_04,April,Tháng 4
+STR_MONTH_05,May,Tháng 5
+STR_MONTH_06,June,Tháng 6
+STR_MONTH_07,July,Tháng 7
+STR_MONTH_08,August,Tháng 8
+STR_MONTH_09,September,Tháng 9
+STR_MONTH_10,October,Tháng 10
+STR_MONTH_11,November,Tháng 11
+STR_MONTH_12,December,Tháng 12
+STR_STEPS_LEFT_FORMAT,{0} / {1} STEPS ({2} LEFT),{0} / {1} Bước (Dư {2})
+STR_WALL_HITS_FORMAT,{0} times ({1}),{0} lần ({1})
+STR_PERFECT_TAG,Perfect,Hoàn hảo
+STR_SCORE_FORMAT,+{0} PTS,+{0} PTS
+STR_GAMEOVER_DISTANCE_FORMAT,Reached {0}% of the maze,Đạt {0}% mê cung
+STR_GAMEOVER_WALLS_FORMAT,{0} times (-{1} steps),{0} lần (-{1} bước)
+STR_BONUS_STEPS_GAINED,+{0} steps,+{0} bước
+STR_NEXT_FLOOR_STEPS_BONUS,EXTRA STEPS FOR THE NEXT FLOOR:,THƯỞNG THÊM BƯỚC CHO TẦNG KẾ:
+STR_NEXT_FLOOR_STEPS_DESC,Leftover steps are stored in your bag,Số bước dư được tích lũy vào kho hành trang
+STR_RESULT_STAMP_EXCELLENT,EXCELLENT,XUẤT SẮC
+STR_RESULT_STAMP_PASSED,PASSED,ĐÃ QUA
+STR_RESULT_STAMP_FLOOR,FLOOR {0} ✔,TẦNG {0} ✔
+STR_GAME_OVER_LEVEL_TITLE,HIDDEN WALL HIT!,ĐÂM VÀO TƯỜNG VÔ HÌNH!
+STR_GAME_OVER_LEVEL_SUBTITLE,One wall hit ends the run — {0}% of the maze cleared,Chạm tường là hết màn — đã đi được {0}% mê cung
+STR_REVIVE_DESC_STEPS,Get +{0} more Steps to continue,Nhận thêm +{0} Bước để đi tiếp
+STR_REVIVE_DESC_UNDO,Return to the previous step,Quay lại bước trước đó
+STR_HUD_TIME,TIME,THỜI GIAN
+STR_HUD_STEPS,STEPS,SỐ BƯỚC
+STR_HUD_FLOOR,FLOOR,TẦNG
+STR_HUD_CHALLENGE,CHALLENGES,THỬ THÁCH
+STR_HUD_BOMB,BOMBS LEFT,BOMB CÒN LẠI
+STR_HUD_SUM,CURRENT SUM,TỔNG HIỆN TẠI
+STR_HUD_TARGET,TARGET,MỤC TIÊU
+STR_HUD_BLIND_TITLE,MEMORIZE THE WALLS,GHI NHỚ VỊ TRÍ TƯỜNG
+STR_HUD_BLIND_HINT,"Watch the walls, then walk from memory",Nhìn kỹ các bức tường rồi đi bằng trí nhớ
+STR_MEMORIZE_TITLE,MEMORIZE!,GHI NHỚ!
+STR_MEMORIZE_HINT,The walls will vanish when the countdown ends,Tường sẽ biến mất khi đếm ngược kết thúc
+STR_GAME_OVER_NO_PATH,NO PATH LEFT!,HẾT ĐƯỜNG ĐI!
+STR_RESULT_SUBTITLE,Level {0} • {1} Grid,Màn {0} • Bàn cờ {1}
+STR_WIN_STAMP_TITLE,{0} / {1} CHALLENGES,{0} / {1} THỬ THÁCH
+STR_WIN_STAMP_SUB,★ {0} STARS EARNED ★,★ ĐẠT {0} SAO ★
+STR_CHALLENGE_DONE_COUNT,{0} COMPLETED,{0} ĐÃ HOÀN THÀNH
+STR_CHALLENGE_BADGE_DONE,✓ DONE,✓ ĐẠT
+STR_CHAPTER_FORMAT,CHAPTER {0},CHƯƠNG {0}
+STR_LEVEL_TITLE_FORMAT,LEVEL {0},MÀN {0}
+STR_BTN_ARCHIVEMENT,BADGES,DANH HIỆU
+STR_ACH_TITLE,BADGE BOOK,SỔ TAY THÀNH TỰU
+STR_ACH_OVERVIEW_TITLE,BADGE COLLECTION PROGRESS,TIẾN ĐỘ THU THẬP DANH HIỆU
+STR_ACH_OVERVIEW_FORMAT,Opened: {0} / {1} Badges • Points: {2} AP,Đã mở: {0} / {1} Danh hiệu • Điểm: {2} AP
+STR_ACH_TAB_ALL,ALL ({0}),TẤT CẢ ({0})
+STR_ACH_TAB_LEVELS,PLAY MODE,MÀN CHƠI
+STR_ACH_TAB_DUNGEON,DUNGEON,DUNGEON
+STR_ACH_TAB_DAILY,DAILY,DAILY
+STR_ACH_TAB_SPECIAL,SPECIAL,ĐẶC BIỆT
+STR_ACH_STATE_CLAIMED,CLAIMED,ĐÃ ĐẠT
+STR_ACH_STATE_CLAIM,CLAIM +{0},NHẬN +{0}
+STR_ACH_STATE_REWARD,Reward: +{0},Thưởng: +{0}
+STR_ACH_STATE_LOCKED,LOCKED,KHÓA
+STR_ACH_SECRET_TITLE,Secret Badge • Undiscovered,Thành Tựu Ẩn • Chưa Khám Phá
+STR_ACH_SECRET_DESC,Keep playing to reveal this badge,Tiếp tục chơi để mở khoá danh hiệu này
+STR_ACH_SECRET_PROGRESS,Progress: ??? / ???,Tiến độ: ??? / ???
+STR_ACH_PROGRESS_DONE,Progress: {0} / {1} {2} (Done),Tiến độ: {0} / {1} {2} (Hoàn thành)
+STR_ACH_PROGRESS_FORMAT,Progress: {0} / {1} {2},Tiến độ: {0} / {1} {2}
+STR_ACH_QUOTE,~ Every precise move leaves a mark in your badge book ~,~ Mỗi bước đi chuẩn xác đều ghi dấu vào sổ tay thành tích của bạn ~
+STR_ACH_BADGES_FORMAT,{0}/{1} BADGES,{0}/{1} BADGES
+STR_ACH_EMPTY,No badges in this category yet,Chưa có danh hiệu nào trong mục này
+STR_ACH_PERCENT,{0}%,{0}%
+STR_CHALLENGE_NO_WALL,Do not hit a hidden wall,Không đâm vào tường
+STR_CHALLENGE_STEPS,Finish within {0} steps,Đi không quá {0} bước
+STR_CHALLENGE_TIME,Reach F in under {0}s,Về đích dưới {0} giây
+STR_CHALLENGE_ONLY_NUMBERED,Step only on numbered cells,Chỉ đi vào ô CÓ số
+STR_CHALLENGE_AVOID_NUMBERED,Do not step on numbered cells,Không đi vào ô CÓ số
+STR_CHALLENGE_NO_REVISIT,Do not retrace your path,Không lặp lại ô cũ
+STR_CHALLENGE_VISIT_ALL,Visit every cell,Đi qua hết mọi ô
+STR_CHALLENGE_VISIT_ALL_NUMBERED,Visit every numbered cell,Đi hết mọi ô có số
+STR_CHALLENGE_LEN_MIN,Walk at least {0}% of the cells,Đi tối thiểu {0}% số ô
+STR_CHALLENGE_LEN_MAX,Walk at most {0}% of the cells,Đi tối đa {0}% số ô
+STR_CHALLENGE_SUM_LT,Path sum under {0},Tổng số đã đi < {0}
+STR_CHALLENGE_SUM_LE,Path sum at most {0},Tổng số đã đi <= {0}
+STR_CHALLENGE_SUM_GT,Path sum over {0},Tổng số đã đi > {0}
+STR_CHALLENGE_SUM_GE,Path sum at least {0},Tổng số đã đi >= {0}
+STR_CHALLENGE_NO_HINT,Do not use hints,Không dùng gợi ý
+STR_CHALLENGE_NO_UNDO,Do not use undo,Không dùng hoàn tác
+STR_CHALLENGE_ST_OK,OK,ổn
+STR_CHALLENGE_ST_VIOLATED,VIOLATED,VI PHẠM
+STR_CHALLENGE_ST_NUMBERED_OK,all numbered,toàn ô có số
+STR_CHALLENGE_ST_VISITED_PCT,{0}% cells,{0}% số ô
+STR_CHALLENGE_ST_VISIT_ALL,{0}/{1} cells,{0}/{1} ô
+STR_CHALLENGE_ST_PATH_SUM,sum {0},tổng {0}
+STR_CHALLENGE_ST_REVISITED,{0} revisits,đi đè {0}
+STR_CHALLENGE_ST_HINT_USED,hints {0},gợi ý {0}
+STR_CHALLENGE_ST_UNDO_USED,undos {0},hoàn tác {0}
+STR_CHALLENGE_STEPS_PROGRESS,{0}/{1} steps,{0}/{1} bước
+STR_CHALLENGE_TIME_LEFT,{0}s left,còn {0}s
+STR_CHALLENGE_TIME_OVER,{0}s over,quá {0}s
+STR_CHALLENGE_DONE,★ DONE,★ ĐẠT
+STR_CHALLENGE_NOT_DONE,NOT DONE,CHƯA ĐẠT
+STR_CHALLENGE_HEADER,LEVEL CHALLENGES:,THỬ THÁCH CỦA MÀN:
+STR_CHALLENGE_STAMP_TITLE,CHALLENGES,THỬ THÁCH
+STR_CHALLENGE_COUNT_FORMAT,{0} / {1},{0} / {1}
+STR_GAMEOVER_STAMP_TITLE,OUT OF STEPS,HẾT BƯỚC
+STR_GAMEOVER_STAMP_STEPS,{0} / {1} STEPS,{0} / {1} BƯỚC
+STR_RANK_TITLE,LEADERBOARD,BẢNG XẾP HẠNG
+STR_RANK_SCOPE,DEVICE,MÁY NÀY
+STR_RANK_TAB_DUNGEON,DUNGEON,DUNGEON
+STR_RANK_TAB_PLAY,PLAY MODE,CHẾ ĐỘ PLAY
+STR_RANK_TAB_DAILY,DAILY STREAK,CHUỖI NGÀY
+STR_RANK_RECORD_FLOOR,FLOOR {0},TẦNG {0}
+STR_RANK_RECORD_LEVEL,LEVEL {0},MÀN {0}
+STR_RANK_RECORD_STREAK,STREAK {0} DAYS,CHUỖI {0} NGÀY
+STR_RANK_POINTS,{0} PTS,{0} ĐIỂM
+STR_RANK_YOU,YOU (Player),BẠN (Người chơi)
+STR_RANK_SUBTITLE,PERSONAL BEST,KỶ LỤC CÁ NHÂN
+STR_RANK_NO_RECORD_SHORT,NO RECORD,CHƯA CÓ
+STR_RANK_NO_RECORD,No record yet - play a run!,Chưa có kỷ lục - hãy chơi một ván!
+STR_RANK_FOOTER,Leaderboard refreshes every 10 minutes - climb to the top!,Bảng xếp hạng tự làm mới mỗi 10 phút - chúc bạn sớm leo Top!
+STR_RANK_DEMO,Offline board (demo) - rivals are simulated.,Bảng ngoại tuyến (demo) - đối thủ là dữ liệu mô phỏng.
+STR_HUD_SUM_TITLE,BALANCE THE PATH TOTAL,CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI
+STR_HUD_SUM_MOVES,({0} cells),({0} ô)
+STR_HUD_SUM_NEED,NEED +{0},CẦN THÊM +{0}
+STR_HUD_SUM_LEFT,CAN ADD +{0},CÒN ĐƯỢC +{0}
+STR_HUD_SUM_OVER,OVER BY {0},ĐANG VƯỢT {0}
+STR_HUD_SUM_OK,ENOUGH!,ĐÃ ĐỦ!
+STR_HUD_TIME_SUPPORT,Ranking helper,Phụ trợ xếp hạng
+STR_HUD_TIME_FREE,No limit,Không giới hạn
+STR_HUD_BUDGET_TITLE,STEP BUDGET LEDGER,SỔ THEO DÕI NGÂN SÁCH BƯỚC CHÂN
+STR_HUD_BUDGET_LEFT,BUDGET LEFT,NGÂN SÁCH CÒN
+STR_HUD_BUDGET_SPENT,SPENT,ĐÃ TIÊU TỐN
+STR_HUD_BUDGET_SPENT_UNIT,STEPS,BƯỚC
+STR_HUD_BUDGET_CELLS,({0} cells walked),({0} ô đã đi)
+STR_HUD_BUDGET_PRICE,COST PER CELL,GIÁ CƯỚC MỖI Ô
+STR_HUD_PRICE_CHEAP,{0}-{1}: CHEAP,{0}-{1}: RẺ
+STR_HUD_PRICE_PRICEY,{0}-{1}: PRICEY,{0}-{1}: ĐẮT
+STR_HUD_PRICE_PRICEY_ONE,{0}: PRICEY,{0}: ĐẮT
+STR_HUD_BUDGET_RESERVE,Reserve: +{0} steps,Dự phòng: +{0} bước
+STR_HUD_INK_STEPS,STEPS WALKED,BƯỚC ĐÃ ĐI
+STR_HUD_INK_LOST,(-{0} INK),(-{0} MỰC)
+STR_HUD_INK_NOTE,Each step: -1 ink on the whole board,Mỗi bước: -1 mực toàn bàn
+STR_HUD_INK_SCALE_TITLE,INK DARKNESS SCALE,QUANG PHỔ ĐẬM NHẠT CỦA MỰC
+STR_HUD_INK_SCALE_A,≥ 3 DARK,≥ 3 ĐẬM
+STR_HUD_INK_SCALE_B,2 CLEAR,2 RÕ
+STR_HUD_INK_SCALE_C,1 CRITICAL,1 NGUY CẤP
+STR_HUD_INK_SCALE_D,0 LOCKED,0 CẠN KHÓA
+STR_HUD_INK_WARN,HAVE {0} DRIED CELLS (FULLY BLOCKED),HIỆN CÓ: {0} Ô ĐÃ CẠN MỰC (BỊ CHẶN HOÀN TOÀN)
+STR_HINT_PLAY,Draw a path to the exit - touching an invisible wall is a loss!,Vẽ đường tới hố đích - chạm tường vô hình là thua ngay!
+STR_HINT_DUNGEON,Endless tower: clear each floor with as few steps as you can!,Tháp vô tận: qua mỗi tầng với ít bước nhất có thể!
+STR_HINT_TIME_ATTACK,Race the clock: reach the exit before time runs out!,Đua với đồng hồ: tới hố đích trước khi hết giờ!
+STR_HINT_MINESWEEPER,A cell number = how many walls touch it - stepping on a mine ends the run!,Số trên ô = số tường quanh ô - dẫm vào mìn là thua ngay!
+STR_HINT_BLIND_MEMORY,"Memorize the walls, then walk the hidden maze from memory!",Ghi nhớ tường rồi đi trong mê cung ẩn theo trí nhớ!
+STR_HINT_FOG_OF_WAR,Only nearby walls show up - feel your way to the exit!,Chỉ hiện tường ở gần - dò dẫm từng bước tới hố đích!
+STR_HINT_SUM_PATH,Each cell is a score - your path total must satisfy the TARGET!,Mỗi ô là một điểm - tổng đường đi phải thỏa điều kiện MỤC TIÊU!
+STR_HINT_COUNTDOWN_COST,Each cell is a toll on your step budget - pick the cheapest path!,Mỗi ô là cước phí trừ quỹ bước - hãy chọn đường rẻ nhất!
+STR_HINT_FADING_INK,Every step drains 1 ink from every cell - dried cells block the way!,Mỗi bước làm mọi ô mất 1 mực - ô cạn mực bị bít lối!
+STR_BTN_CLOSE,CLOSE,ĐÓNG
+STR_MODE_PLAY_NAME,PLAY MODE,CHẾ ĐỘ PLAY
+STR_MODE_DUNGEON_NAME,DUNGEON MODE,CHẾ ĐỘ DUNGEON
+STR_MODE_DAILY_CLASSIC_NAME,CLASSIC MAZE,MAZE THƯỜNG
+STR_CHAPTER_SCREEN_TITLE,SELECT CHAPTER,CHỌN CHƯƠNG
+STR_CHAPTER_TITLE_FORMAT,CHAPTER {0}: {1},CHƯƠNG {0}: {1}
+STR_CHAPTER_RIBBON_PLAYING,IN PROGRESS,ĐANG CHƠI
+STR_CHAPTER_RIBBON_OPEN,UNLOCKED,ĐÃ MỞ
+STR_CHAPTER_RIBBON_READY,READY TO UNLOCK,ĐÃ ĐỦ ĐIỀU KIỆN
+STR_CHAPTER_RIBBON_LOCKED,LOCKED,ĐANG KHÓA
+STR_CHAPTER_RIBBON_COMING,COMING SOON,SẮP RA MẮT
+STR_CHAPTER_SIZE_FORMAT,SIZE {0},KÍCH THƯỚC {0}
+STR_CHAPTER_STARS_FORMAT,{0} / {1} STARS,{0} / {1} SAO
+STR_CHAPTER_LEVELS_FORMAT,({0}/{1} levels),({0}/{1} màn)
+STR_CHAPTER_NEED_FORMAT,{0} STARS SHORT,CÒN THIẾU {0} SAO
+STR_CHAPTER_REQUIRE_FORMAT,NEED {0} STARS,CẦN {0} SAO
+STR_CHAPTER_HAVE_FORMAT,✓ ENOUGH: {0} / {1} STARS,✓ ĐÃ ĐỦ: {0} / {1} SAO
+STR_CHAPTER_PLAY,PLAY,VÀO CHƠI
+STR_CHAPTER_PLAY_SUB,Level {0} ›,Màn {0} ›
+STR_CHAPTER_UNLOCK,UNLOCK,MỞ KHÓA
+STR_CHAPTER_NOT_ENOUGH,Not enough stars,Chưa đủ sao
+STR_CHAPTER_STARS_HELD,STARS,SAO CÓ
+STR_CHAPTER_BANNER,Clear level challenges to collect Stars and unlock new Chapters!,Chinh phục thử thách ở các màn để tích lũy Sao mở khóa Chương mới!
+STR_CHAPTER_UNLOCKABLE,A new Chapter is ready — tap to unlock!,Có Chương mới có thể mở khóa — bấm để xem!
+STR_SHOP_TITLE,SHOP,CỬA HÀNG
+STR_SHOP_EYEBROW,STATIONERY STORE,TIỆM VĂN PHÒNG PHẨM
+STR_SHOP_TAB_PEN,PEN & INK,✒️ BÚT & MỰC
+STR_SHOP_TAB_THEME,PAPER,📜 GIẤY VỞ
+STR_SHOP_TAB_TOOL,TOOLS,🎒 DỤNG CỤ
+STR_SHOP_TAB_COIN,TOP UP,🪙 NẠP XU
+STR_SHOP_PAGE_FORMAT,PAGE {0} / {1},TRANG {0} / {1}
+STR_SHOP_STOCK_FORMAT,In your bag: {0} {1},Đang có: {0} {1}
+STR_SHOP_UNIT_PACK,packs,gói
+STR_SHOP_UNIT_TURN,turns,lượt
+STR_SHOP_UNIT_COIN,ink coins,xu mực
+STR_SHOP_BONUS_TAG,Bonus,Tặng thêm
+STR_SHOP_USE,USE,SỬ DỤNG
+STR_SHOP_BUY_MORE,BUY MORE,MUA THÊM
+STR_SHOP_EQUIPPED,IN USE ✓,ĐANG DÙNG ✓
+STR_SHOP_EQUIPPED_NOTE,✓ Currently active,✓ Đang kích hoạt
+STR_SHOP_OWNED_NOTE,Tap USE to switch,Bấm SỬ DỤNG để đổi
+STR_SHOP_NOT_ENOUGH,Not enough ink coins,Chưa đủ Xu Mực
+STR_SHOP_OWNED_BTN,OWNED,ĐÃ SỞ HỮU
+STR_SHOP_PRICE_FORMAT,{0} XU,{0} XU
+STR_SHOP_BANNER_TITLE,DAILY BOOST • FREE INK COINS,GÓC TIẾP SỨC HỌC TẬP • NHẬN XU MIỄN PHÍ
+STR_SHOP_BANNER_DESC,Watch a short lesson every day to get 50 ink coins,Xem bài giảng ngắn mỗi ngày để nhận ngay 50 Xu Mực
+STR_SHOP_BANNER_BTN,+50 XU ▶,+50 XU ▶
+STR_SHOP_FOOTER,"~ Sharp pen, clean notebook ~",~ Bút sắc vẽ đường • Vở sạch luyện trí ~
+STR_SHOP_BADGE_BASIC,BASIC,CƠ BẢN
+STR_SHOP_BADGE_UNLOCKED,UNLOCKED,ĐÃ MỞ KHÓA
+STR_SHOP_BADGE_SOUND,RUSTLE EFFECT,HIỆU ỨNG SỘT SOẠT
+STR_SHOP_BADGE_MARK,MARKING PEN,NÉT CHẤM BÀI
+STR_SHOP_BADGE_GLOW,GLOW,DẠ QUANG
+STR_SHOP_BADGE_VIP,GOLD VIP,ÁNH KIM VIP
+STR_SHOP_BADGE_RELAX,RELAXING,THƯ GIÃN
+STR_SHOP_BADGE_DIARY,DIARY,NHẬT KÝ
+STR_SHOP_BADGE_SKETCH,SKETCH,PHÁC THẢO
+STR_SHOP_BADGE_NIGHT,NIGHT INK,MỰC ĐÊM
+STR_SHOP_BADGE_NIGHT_MODE,EYE-FRIENDLY,ÊM MẮT
+STR_SHOP_BADGE_MODERN,MODERN,HIỆN ĐẠI
+STR_SHOP_BADGE_MINIMAL,MINIMAL,TỐI GIẢN
+STR_SHOP_BADGE_PRECISE,PRECISE,CHUẨN XÁC
+STR_SHOP_BADGE_VINTAGE,VINTAGE,CỔ ĐIỂN
+STR_SHOP_BADGE_CUTE,CUTE,DỄ THƯƠNG
+STR_SHOP_BADGE_EXAM,EXAM VIBE,KHÔNG KHÍ THI
+STR_SHOP_BADGE_PACK,PACK OF TURNS,GÓI LƯỢT
+STR_SHOP_BADGE_NEW,NEW,MỚI
+STR_SHOP_BADGE_RECOMMEND,RECOMMENDED,KHUYÊN DÙNG
+STR_SHOP_BADGE_BEST,BEST VALUE,LỜI NHẤT
+STR_SHOP_BADGE_TYCOON,BIG SPENDER,ĐẠI GIA
+STR_SHOP_PEN_BLUE_NAME,Classic Blue Ink,Mực Xanh Học Trò
+STR_SHOP_PEN_BLUE_DESC,Innocent school-day strokes,Nét chữ ngây thơ thời cắp sách
+STR_SHOP_PEN_PURPLE_NAME,Eggplant Purple Ink,Mực Tím Hoa Cà
+STR_SHOP_PEN_PURPLE_DESC,Nostalgic handwriting,Nét chữ nết người hoài niệm
+STR_SHOP_PEN_PENCIL_NAME,Wooden Pencil 2B,Bút Chì Gỗ 2B
+STR_SHOP_PEN_PENCIL_DESC,Rustling sound on paper,Âm thanh sột soạt trên mặt giấy
+STR_SHOP_PEN_RED_NAME,Teacher's Red Pen,Bút Đỏ Giáo Viên
+STR_SHOP_PEN_RED_DESC,"Bold, powerful marking ink",Nét mực đỏ tươi rực rỡ quyền lực
+STR_SHOP_PEN_HIGHLIGHT_NAME,Highlighter Pen,Bút Nhớ Dạ Quang
+STR_SHOP_PEN_HIGHLIGHT_DESC,Soft glowing highlight lines,Vạch sáng trong mờ nổi bật
+STR_SHOP_PEN_GOLD_NAME,Royal Gold Ink,Mực Nhũ Hoàng Gia
+STR_SHOP_PEN_GOLD_DESC,Shimmering gold flakes,Hạt kim tuyến phát sáng lấp lánh
+STR_SHOP_PEN_GREEN_NAME,Green Tea Ink,Mực Xanh Trà
+STR_SHOP_PEN_GREEN_DESC,Calm and easy on the eyes,"Dịu mắt, êm như lá trà"
+STR_SHOP_PEN_PINK_NAME,Diary Pink Ink,Mực Hồng Nhật Ký
+STR_SHOP_PEN_PINK_DESC,Sweet tone for every page,Ngọt ngào cho từng trang viết
+STR_SHOP_PEN_GRAPHITE_NAME,Graphite Lead 4B,Bút Chì Kim 4B
 STR_SHOP_PEN_GRAPHITE_DESC,"Dark, smooth sketching lines","Đậm, mượt, đúng chất phác thảo"
-STR_SHOP_PEN_NAVY_NAME,"Midnight Navy Ink","Mực Xanh Đêm"
-STR_SHOP_PEN_NAVY_DESC,"Deep as the night sky","Sâu thẳm như bầu trời đêm"
-STR_SHOP_THEME_4LY_NAME,"4-Line Notebook","Vở Ô Ly 4 Ly"
-STR_SHOP_THEME_4LY_DESC,"Cream paper interface","Giao diện giấy vàng kem"
-STR_SHOP_THEME_BOARD_NAME,"Blackboard & Chalk","Bảng Đen Phấn Trắng"
+STR_SHOP_PEN_NAVY_NAME,Midnight Navy Ink,Mực Xanh Đêm
+STR_SHOP_PEN_NAVY_DESC,Deep as the night sky,Sâu thẳm như bầu trời đêm
+STR_SHOP_THEME_4LY_NAME,4-Line Notebook,Vở Ô Ly 4 Ly
+STR_SHOP_THEME_4LY_DESC,Cream paper interface,Giao diện giấy vàng kem
+STR_SHOP_THEME_BOARD_NAME,Blackboard & Chalk,Bảng Đen Phấn Trắng
 STR_SHOP_THEME_BOARD_DESC,"Classroom wood board, dusty chalk lines","Bảng gỗ lớp học, nét vẽ phấn bụi"
-STR_SHOP_THEME_CAMPUS_NAME,"Campus Ruled Book","Vở Kẻ Ngang Campus"
-STR_SHOP_THEME_CAMPUS_DESC,"Slim modern ruled lines","Dòng kẻ ngang thanh thoát hiện đại"
-STR_SHOP_THEME_BULLET_NAME,"Bullet Journal","Bullet Journal"
-STR_SHOP_THEME_BULLET_DESC,"Japanese dot-grid cream paper","Giấy kem chấm bi phong cách Nhật"
-STR_SHOP_THEME_TECH_NAME,"Technical Graph Paper","Giấy Kẻ Toán Kỹ Thuật"
+STR_SHOP_THEME_CAMPUS_NAME,Campus Ruled Book,Vở Kẻ Ngang Campus
+STR_SHOP_THEME_CAMPUS_DESC,Slim modern ruled lines,Dòng kẻ ngang thanh thoát hiện đại
+STR_SHOP_THEME_BULLET_NAME,Bullet Journal,Bullet Journal
+STR_SHOP_THEME_BULLET_DESC,Japanese dot-grid cream paper,Giấy kem chấm bi phong cách Nhật
+STR_SHOP_THEME_TECH_NAME,Technical Graph Paper,Giấy Kẻ Toán Kỹ Thuật
 STR_SHOP_THEME_TECH_DESC,"High precision, math style","Độ chuẩn xác cao, phong cách toán học"
-STR_SHOP_THEME_KRAFT_NAME,"Classic Kraft Paper","Giấy Kraft Cổ Điển"
-STR_SHOP_THEME_KRAFT_DESC,"Old adventurer notebook feel","Cảm giác sổ tay thám hiểm xưa"
-STR_SHOP_THEME_PASTEL_NAME,"Korean Pastel Check","Caro Pastel Hàn Quốc"
+STR_SHOP_THEME_KRAFT_NAME,Classic Kraft Paper,Giấy Kraft Cổ Điển
+STR_SHOP_THEME_KRAFT_DESC,Old adventurer notebook feel,Cảm giác sổ tay thám hiểm xưa
+STR_SHOP_THEME_PASTEL_NAME,Korean Pastel Check,Caro Pastel Hàn Quốc
 STR_SHOP_THEME_PASTEL_DESC,"Cute, youthful bullet style","Dễ thương, trẻ trung phong cách Bullet"
-STR_SHOP_THEME_EXAM_NAME,"Exam Paper","Tờ Giấy Thi Học Trò"
-STR_SHOP_THEME_EXAM_DESC,"Thrilling exam-room mood","Không khí phòng thi kịch tính"
-STR_SHOP_TOOL_UNDO_NAME,"Eraser 4B (x10 Turns)","Gôm Tẩy 4B (x10 Lượt)"
-STR_SHOP_TOOL_UNDO_DESC,"Undo a wrong step without any penalty","Hoàn tác bước đi sai lầm mà không bị tính lỗi hay trừ cước phí"
-STR_SHOP_TOOL_HINT_NAME,"Path Magnifier (x5)","Kính Lúp Soi Lối (x5)"
-STR_SHOP_TOOL_HINT_DESC,"Reveal one safe segment of the path","Vạch trần 1 đoạn đường an toàn tránh đâm vào tường vô hình"
-STR_SHOP_TOOL_REVEAL_NAME,"Ghost Wall Eraser (x3)","Bút Xoá Tường Mờ (x3)"
-STR_SHOP_TOOL_REVEAL_DESC,"Reveal every hidden wall for one floor","Hiện toàn bộ tường ẩn trong 1 lượt chơi"
-STR_SHOP_TOOL_TIME_NAME,"Flip Hourglass (x3)","Đồng Hồ Cát Lật Nhanh (x3)"
-STR_SHOP_TOOL_TIME_DESC,"Add 30 extra seconds to the current run","Cộng thêm 30 giây cho lượt đang chơi"
-STR_SHOP_TOOL_REVIVE_NAME,"Paper Clip of Life (x1)","Kẹp Giấy Giữ Mạng (x1)"
-STR_SHOP_TOOL_REVIVE_DESC,"Revive on the spot after a wall hit","Hồi sinh tại chỗ 1 lần khi đâm tường"
-STR_SHOP_TOOL_SHIELD_NAME,"Paper Tape Shield (x2)","Băng Dính Vá Giấy (x2)"
-STR_SHOP_TOOL_SHIELD_DESC,"Block one invisible-wall collision","Chặn 1 lần đâm vào tường vô hình"
-STR_SHOP_COIN_500_NAME,"Bag of 500","Túi Xu 500"
-STR_SHOP_COIN_500_DESC,"Starter ink coin bag","Túi xu cơ bản"
+STR_SHOP_THEME_EXAM_NAME,Exam Paper,Tờ Giấy Thi Học Trò
+STR_SHOP_THEME_EXAM_DESC,Thrilling exam-room mood,Không khí phòng thi kịch tính
+STR_SHOP_TOOL_UNDO_NAME,Eraser 4B (x10 Turns),Gôm Tẩy 4B (x10 Lượt)
+STR_SHOP_TOOL_UNDO_DESC,Undo a wrong step without any penalty,Hoàn tác bước đi sai lầm mà không bị tính lỗi hay trừ cước phí
+STR_SHOP_TOOL_HINT_NAME,Path Magnifier (x5),Kính Lúp Soi Lối (x5)
+STR_SHOP_TOOL_HINT_DESC,Reveal one safe segment of the path,Vạch trần 1 đoạn đường an toàn tránh đâm vào tường vô hình
+STR_SHOP_TOOL_REVEAL_NAME,Ghost Wall Eraser (x3),Bút Xoá Tường Mờ (x3)
+STR_SHOP_TOOL_REVEAL_DESC,Reveal every hidden wall for one floor,Hiện toàn bộ tường ẩn trong 1 lượt chơi
+STR_SHOP_TOOL_TIME_NAME,Flip Hourglass (x3),Đồng Hồ Cát Lật Nhanh (x3)
+STR_SHOP_TOOL_TIME_DESC,Add 30 extra seconds to the current run,Cộng thêm 30 giây cho lượt đang chơi
+STR_SHOP_TOOL_REVIVE_NAME,Paper Clip of Life (x1),Kẹp Giấy Giữ Mạng (x1)
+STR_SHOP_TOOL_REVIVE_DESC,Revive on the spot after a wall hit,Hồi sinh tại chỗ 1 lần khi đâm tường
+STR_SHOP_TOOL_SHIELD_NAME,Paper Tape Shield (x2),Băng Dính Vá Giấy (x2)
+STR_SHOP_TOOL_SHIELD_DESC,Block one invisible-wall collision,Chặn 1 lần đâm vào tường vô hình
+STR_SHOP_COIN_500_NAME,Bag of 500,Túi Xu 500
+STR_SHOP_COIN_500_DESC,Starter ink coin bag,Túi xu cơ bản
 STR_SHOP_COIN_2000_NAME,"Chest of 2,000","Rương Xu 2,000"
-STR_SHOP_COIN_2000_DESC,"Extra 200 coins included","Tặng thêm 200 Xu"
+STR_SHOP_COIN_2000_DESC,Extra 200 coins included,Tặng thêm 200 Xu
 STR_SHOP_COIN_3500_NAME,"Pencil Case of 3,500","Hộp Bút Xu 3,500"
-STR_SHOP_COIN_3500_DESC,"Extra 500 coins included","Tặng thêm 500 Xu"
+STR_SHOP_COIN_3500_DESC,Extra 500 coins included,Tặng thêm 500 Xu
 STR_SHOP_COIN_8000_NAME,"Backpack of 8,000","Cặp Sách Xu 8,000"
 STR_SHOP_COIN_8000_DESC,"Extra 1,600 coins included","Tặng thêm 1,600 Xu"
 STR_SHOP_COIN_20000_NAME,"Vault of 20,000","Kho Xu Khổng Lồ 20,000"
 STR_SHOP_COIN_20000_DESC,"Extra 5,000 coins for big spenders","Tặng thêm 5,000 Xu cho đại gia"
-STR_SHOP_COIN_NOADS_NAME,"Remove Ads Pack","Gói Xoá Quảng Cáo (No Ads)"
-STR_SHOP_COIN_NOADS_DESC,"Remove all ads forever + bonus golden pen skin","Loại bỏ vĩnh viễn quảng cáo + tặng kèm Skin Bút Máy Mạ Vàng"
-STR_CHAPTER_CONTINUE_FORMAT,"CONTINUE CHAPTER {0} (LEVEL {1})","TIẾP TỤC CHƯƠNG {0} (MÀN {1})"
-STR_SPLASH_STUDIO,"INK & PAPER GAMES","XƯỞNG TRÒ CHƠI MỰC & GIẤY"
-STR_SPLASH_TAGLINE,"A Hand-drawn Labyrinth","Mê Cung Bút Chì Trên Trang Giấy"
-STR_TITLE_TAP_TO_START,"TAP TO START","CHẠM ĐỂ BẮT ĐẦU"
-STR_TITLE_SUBTITLE,"Logic Maze on Notebook Paper","Mê Cung Logic Trên Trang Giấy"
-STR_SHOP_TRY_TITLE,"DOODLE TEST PAD","BÀN NHÁP THỬ BÚT"
-STR_SHOP_TRY_HINT,"Draw with your finger to feel the ink","Vẽ thử bằng ngón tay để cảm nhận nét mực"
-STR_SHOP_TRY_BADGE,"NOW TRYING","ĐANG XEM THỬ"
-STR_SHOP_TRY_STAMP,"TRYING ✓","DÙNG THỬ ✓"
-STR_SHOP_TRY_USING,"IN USE ✓","ĐANG DÙNG ✓"
+STR_SHOP_COIN_NOADS_NAME,Remove Ads Pack,Gói Xoá Quảng Cáo (No Ads)
+STR_SHOP_COIN_NOADS_DESC,Remove all ads forever + bonus golden pen skin,Loại bỏ vĩnh viễn quảng cáo + tặng kèm Skin Bút Máy Mạ Vàng
+STR_CHAPTER_CONTINUE_FORMAT,CONTINUE CHAPTER {0} (LEVEL {1}),TIẾP TỤC CHƯƠNG {0} (MÀN {1})
+STR_SPLASH_STUDIO,INK & PAPER GAMES,XƯỞNG TRÒ CHƠI MỰC & GIẤY
+STR_SPLASH_TAGLINE,A Hand-drawn Labyrinth,Mê Cung Bút Chì Trên Trang Giấy
+STR_TITLE_TAP_TO_START,TAP TO START,CHẠM ĐỂ BẮT ĐẦU
+STR_TITLE_SUBTITLE,Logic Maze on Notebook Paper,Mê Cung Logic Trên Trang Giấy
+STR_SHOP_TRY_TITLE,DOODLE TEST PAD,BÀN NHÁP THỬ BÚT
+STR_SHOP_TRY_HINT,Draw with your finger to feel the ink,Vẽ thử bằng ngón tay để cảm nhận nét mực
+STR_SHOP_TRY_BADGE,NOW TRYING,ĐANG XEM THỬ
+STR_SHOP_TRY_STAMP,TRYING ✓,DÙNG THỬ ✓
+STR_SHOP_TRY_USING,IN USE ✓,ĐANG DÙNG ✓
+STR_GI_BLINDMEMORY_CHIP,BLIND MEMORY MAZE,BLIND MEMORY MAZE
+STR_GI_BLINDMEMORY_P1_CTA,NEXT: WALLS VANISH (2/3) ›,TIẾP THEO: TƯỜNG BIẾN MẤT (2/3) ›
+STR_GI_BLINDMEMORY_P1_LINK,Skip guide & start memorizing now,Bỏ qua hướng dẫn & Vào ghi nhớ ngay
+STR_GI_BLINDMEMORY_P1_R1D,You get a 3-second countdown (3.. 2.. 1.. GO!) to study the entire real maze.,Bạn có 3 giây đếm ngược (3.. 2.. 1.. GO!) để nhìn thấy toàn bộ mê cung thật.
+STR_GI_BLINDMEMORY_P1_R1T,The Full Maze Shows At The Start:,Tường Hiển Thị Toàn Bộ Khi Bắt Đầu:
+STR_GI_BLINDMEMORY_P1_R2D,"The 3-second memory window is not counted toward your play time, and drawing is locked during it.",Thời gian 3 giây ghi nhớ không bị tính vào thời gian chơi. Tương tác vẽ bị khóa tạm thời.
+STR_GI_BLINDMEMORY_P1_R2T,The Timer Is Paused:,Đồng Hồ Chưa Tính Giờ:
+STR_GI_BLINDMEMORY_P1_R3D,"Once the walls hide, cells go blank — you must rely purely on your memory!","Sau khi tường ẩn, các ô sẽ trống trơn — bạn hoàn toàn phải dựa vào bộ nhớ của mình!"
+STR_GI_BLINDMEMORY_P1_R3T,There Are No Clue Numbers At All:,Không Có Bất Kỳ Số Manh Mối Nào:
+STR_GI_BLINDMEMORY_P1_SECTION,MEMORY PHASE RULES,QUY TẮC PHA GHI NHỚ
+STR_GI_BLINDMEMORY_P1_TAB1,3-SECOND COUNTDOWN,ĐẾM NGƯỢC 3 GIÂY
+STR_GI_BLINDMEMORY_P1_TAB2,WALLS VANISH,TƯỜNG BIẾN MẤT
+STR_GI_BLINDMEMORY_P1_TAB3,PLACE DRAFT WALLS,DỰNG TƯỜNG NHÁP
+STR_GI_BLINDMEMORY_P1_TITLE,The Memorize Countdown,Pha Đếm Ngược Ghi Nhớ
+STR_GI_BLINDMEMORY_P2_CTA,NEXT: PLACE DRAFT WALLS (3/3) ›,TIẾP THEO: DỰNG TƯỜNG NHÁP (3/3) ›
+STR_GI_BLINDMEMORY_P2_LINK,Skip guide & start memorizing now,Bỏ qua hướng dẫn & Vào ghi nhớ ngay
+STR_GI_BLINDMEMORY_P2_R1D,Every wall disappears. You only see the Start stair (S) and the Finish hole (F).,Mọi bức tường đều biến mất. Bạn chỉ thấy ô Cầu thang Start (S) và Hố thang Finish (F).
+STR_GI_BLINDMEMORY_P2_R1T,The Maze Hides Completely:,Mê Cung Ẩn Kín Hoàn Toàn:
+STR_GI_BLINDMEMORY_P2_R2D,In Normal mode you get pushed back to S and lose time; in Hardcore you LOSE INSTANTLY!,Ở chế độ Thường bạn sẽ bị đẩy về S và mất thời gian; ở chế độ Hardcore sẽ THUA NGAY LẬP TỨC!
+STR_GI_BLINDMEMORY_P2_R2T,Hitting An Invisible Wall:,Hậu Quả Khi Chạm Tường Vô Hình:
+STR_GI_BLINDMEMORY_P2_R3D,Don't rush across many cells at once. Walk while replaying the maze image from your memory.,Đừng vội vàng kéo lướt qua nhiều ô. Hãy vừa đi vừa nhớ lại hình ảnh mê cung lúc nãy.
+STR_GI_BLINDMEMORY_P2_R3T,"Draw Slowly, One Step At A Time:",Vẽ Chậm Rãi Từng Bước Một:
+STR_GI_BLINDMEMORY_P2_SECTION,MEMORY WALK RULES,QUY TẮC ĐI BẰNG TRÍ NHỚ
+STR_GI_BLINDMEMORY_P2_TAB1,3-SECOND COUNTDOWN,ĐẾM NGƯỢC 3 GIÂY
+STR_GI_BLINDMEMORY_P2_TAB2,WALLS VANISH,TƯỜNG BIẾN MẤT
+STR_GI_BLINDMEMORY_P2_TAB3,PLACE DRAFT WALLS,DỰNG TƯỜNG NHÁP
+STR_GI_BLINDMEMORY_P2_TITLE,Walls Vanish & Walking From Memory,Tường Biến Mất & Đi Bằng Trí Nhớ
+STR_GI_BLINDMEMORY_P3_CTA,UNDERSTOOD • MEMORY CHALLENGE,ĐÃ HIỂU • THỬ THÁCH TRÍ NHỚ
+STR_GI_BLINDMEMORY_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_BLINDMEMORY_P3_R1D,Connect 2 Anchors to mark the important walls you just saw before the memory fades.,Nối 2 điểm Anchor để đánh dấu các bức tường quan trọng bạn vừa thấy trước khi bộ nhớ bị phai.
+STR_GI_BLINDMEMORY_P3_R1T,Place Draft Walls Immediately:,Dựng Tường Nháp Ngay Lập Tức:
+STR_GI_BLINDMEMORY_P3_R2D,"If a middle section slips away, don't gamble — tap Hint to reveal 1 safe cell.","Nếu quên hẳn khúc giữa, đừng liều đâm bừa; hãy bấm Gợi Ý để soi ra 1 ô an toàn."
+STR_GI_BLINDMEMORY_P3_R2T,Use The Hint Button When Stuck:,Tận Dụng Nút Gợi Ý Khi Bị Bí:
+STR_GI_BLINDMEMORY_P3_R3D,Bigger boards (4×4 then 5×5) pack more walls for a top-tier brain challenge!,"Màn chơi càng rộng (4×4 rồi 5×5), số lượng tường càng nhiều, thử thách trí não đỉnh cao!"
+STR_GI_BLINDMEMORY_P3_R3T,Train Your Memory Daily:,Rèn Luyện Trí Nhớ Mỗi Ngày:
+STR_GI_BLINDMEMORY_P3_SECTION,WINNING SECRETS,BÍ QUYẾT CHIẾN THẮNG
+STR_GI_BLINDMEMORY_P3_TAB1,3-SECOND COUNTDOWN,ĐẾM NGƯỢC 3 GIÂY
+STR_GI_BLINDMEMORY_P3_TAB2,WALLS VANISH,TƯỜNG BIẾN MẤT
+STR_GI_BLINDMEMORY_P3_TAB3,PLACE DRAFT WALLS,DỰNG TƯỜNG NHÁP
+STR_GI_BLINDMEMORY_P3_TITLE,Draft Walls & Hints,Dựng Tường Nháp & Gợi Ý
+STR_GI_COUNTDOWNCOST_CHIP,COUNTDOWN COST,COUNTDOWN COST
+STR_GI_COUNTDOWNCOST_P1_CTA,NEXT: WALL HITS CHARGE THE TOLL (2/3) ›,TIẾP THEO: ĐÂM TƯỜNG TRỪ CƯỚC (2/3) ›
+STR_GI_COUNTDOWNCOST_P1_LINK,Skip guide & start counting the cost now,Bỏ qua hướng dẫn & Vào tính cước ngay
+STR_GI_COUNTDOWNCOST_P1_R1D,Every cell you enter charges its price straight from your budget (1 to 4 steps).,"Mỗi khi bạn bước vào ô nào, ngân sách sẽ trừ thẳng bấy nhiêu bước (từ 1 đến 4 bước)."
+STR_GI_COUNTDOWNCOST_P1_R1T,The Number Is The Cell's Step Cost:,Con Số Là Chi Phí Bước Của Ô:
+STR_GI_COUNTDOWNCOST_P1_R2D,If the step budget runs dry before you reach the Finish hole • Game Over!,Nếu chưa kịp chạm tới hố thang Finish mà đã cạn kiệt ngân sách bước • Game Over!
+STR_GI_COUNTDOWNCOST_P1_R2T,Budget Drops To 0 And You Lose:,Ngân Sách Tụt Về 0 Là Thua Ngay:
+STR_GI_COUNTDOWNCOST_P1_R3D,Numbers here never mark walls — they only show the step cost of walking through.,Con số ở chế độ này hoàn toàn không báo vị trí tường — chỉ biểu thị chi phí bước đi.
+STR_GI_COUNTDOWNCOST_P1_R3T,Nothing To Do With Wall Counts:,Không Liên Quan Tới Số Tường:
+STR_GI_COUNTDOWNCOST_P1_SECTION,STEP COST RULES,QUY TẮC CHI PHÍ BƯỚC
+STR_GI_COUNTDOWNCOST_P1_TAB1,BUDGET & TOLLS,NGÂN SÁCH & CƯỚC
+STR_GI_COUNTDOWNCOST_P1_TAB2,WALL HITS COST STEPS,ĐÂM TƯỜNG TRỪ BƯỚC
+STR_GI_COUNTDOWNCOST_P1_TAB3,OPTIMIZE COST,TỐI ƯU CHI PHÍ
+STR_GI_COUNTDOWNCOST_P1_TITLE,Budget & Cell Tolls,Ngân Sách & Giá Cước Ô
+STR_GI_COUNTDOWNCOST_P2_CTA,NEXT: OPTIMIZE COST & UNDO (3/3) ›,TIẾP THEO: TỐI ƯU CHI PHÍ & UNDO (3/3) ›
+STR_GI_COUNTDOWNCOST_P2_LINK,Skip guide & start counting the cost now,Bỏ qua hướng dẫn & Vào tính cước ngay
+STR_GI_COUNTDOWNCOST_P2_R1D,Hitting an invisible wall bounces you back to S and charges the cost of the cell you tried to enter.,Đâm vào tường vô hình sẽ văng về S và trừ thẳng chi phí của ô bạn vừa toan bước vào.
+STR_GI_COUNTDOWNCOST_P2_R1T,Wall Hits Still Charge The Toll:,Đâm Tường Vẫn Bị Phạt Cước Bước:
+STR_GI_COUNTDOWNCOST_P2_R2D,Just 2-3 big cells can wipe your entire budget. Prefer routes through cells 1 and 2.,Chỉ 2-3 ô số to là đủ vét sạch ngân sách của bạn. Hãy ưu tiên các tuyến đường qua ô 1 và 2.
+STR_GI_COUNTDOWNCOST_P2_R2T,Avoid Cells 3 & 4:,Hạn Chế Bước Vào Ô Số 3 & Số 4:
+STR_GI_COUNTDOWNCOST_P2_R3D,The wall you hit stays visible on the board. Don't hit it twice and burn more budget!,Bức tường bị đâm sẽ hiện rõ trên bàn cờ. Đừng đâm lại lần thứ hai làm tiêu hao ngân sách!
+STR_GI_COUNTDOWNCOST_P2_R3T,Walls Reveal Themselves As Lessons:,Tường Lộ Ra Để Rút Kinh Nghiệm:
+STR_GI_COUNTDOWNCOST_P2_SECTION,WALL HIT & TOLL RULES,QUY TẮC ĐÂM TƯỜNG & CƯỚC PHÍ
+STR_GI_COUNTDOWNCOST_P2_TAB1,BUDGET & TOLLS,NGÂN SÁCH & CƯỚC
+STR_GI_COUNTDOWNCOST_P2_TAB2,WALL HITS COST STEPS,ĐÂM TƯỜNG TRỪ BƯỚC
+STR_GI_COUNTDOWNCOST_P2_TAB3,OPTIMIZE COST,TỐI ƯU CHI PHÍ
+STR_GI_COUNTDOWNCOST_P2_TITLE,Wall Hits & Pricey-Cell Traps,Đâm Tường & Bẫy Ô Đắt
+STR_GI_COUNTDOWNCOST_P3_CTA,UNDERSTOOD • OPTIMIZE THE BUDGET,ĐÃ HIỂU • TỐI ƯU NGÂN SÁCH
+STR_GI_COUNTDOWNCOST_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_COUNTDOWNCOST_P3_R1D,Add up the cell values along each route; pick the branch with the smallest total to reach F.,Nhẩm tính tổng số điểm của các ô trên đường đi; chọn nhánh có tổng số nhỏ nhất để tới F.
+STR_GI_COUNTDOWNCOST_P3_R1T,Scout The Cheapest Route First:,Tìm Tuyến Đường Rẻ Nhất Trước Khi Vẽ:
+STR_GI_COUNTDOWNCOST_P3_R2D,"If a branch turns out too costly, Undo back and recover every step already spent.","Nếu nhận thấy nhánh đang đi quá tốn bước, hãy Undo lùi lại để nhận lại toàn bộ số bước đã trừ."
+STR_GI_COUNTDOWNCOST_P3_R2T,Use Undo To Reclaim Budget:,Tận Dụng Undo Để Thu Hồi Ngân Sách:
+STR_GI_COUNTDOWNCOST_P3_R3D,"The fewer steps you burn on the way to the exit, the higher you rank!",Người chơi về đích với tổng chi phí bước tiêu tốn càng ít sẽ giành thứ hạng càng cao!
+STR_GI_COUNTDOWNCOST_P3_R3T,Ranking Rewards Minimum Cost:,Xếp Hạng Dựa Trên Chi Phí Tối Thiểu:
+STR_GI_COUNTDOWNCOST_P3_SECTION,ISLAND-CLEARING SECRETS,BÍ QUYẾT PHÁ ĐẢO
+STR_GI_COUNTDOWNCOST_P3_TAB1,BUDGET & TOLLS,NGÂN SÁCH & CƯỚC
+STR_GI_COUNTDOWNCOST_P3_TAB2,WALL HITS COST STEPS,ĐÂM TƯỜNG TRỪ BƯỚC
+STR_GI_COUNTDOWNCOST_P3_TAB3,OPTIMIZE COST,TỐI ƯU CHI PHÍ
+STR_GI_COUNTDOWNCOST_P3_TITLE,Optimize Cost & Undo Refunds,Tối Ưu Chi Phí & Hoàn Cước
+STR_GI_DUNGEON_CHIP,ENDLESS MODE,CHẾ ĐỘ VÔ TẬN
+STR_GI_DUNGEON_P1_CTA,NEXT: WALL HIT MECHANICS (2/3) ›,TIẾP THEO: CƠ CHẾ ĐÂM TƯỜNG (2/3) ›
+STR_GI_DUNGEON_P1_LINK,Skip guide & start climbing now,Bỏ qua hướng dẫn & Vào leo tầng ngay
+STR_GI_DUNGEON_P1_R1D,Each move costs 1 step. Never let your step count hit 0!,Mỗi ô di chuyển trừ 1 bước. Tuyệt đối không để số bước tụt về 0!
+STR_GI_DUNGEON_P1_R1T,The Only Mode With A Step Limit:,Chế Độ Duy Nhất Giới Hạn Bước Đi:
+STR_GI_DUNGEON_P1_R2D,Descending the F shaft grants extra steps for the next floor and banks your score.,Xuống được hố thang F sẽ cộng thêm bước cho tầng kế tiếp và tích lũy điểm số.
+STR_GI_DUNGEON_P1_R2T,Bonus Steps For Clearing A Floor:,Nhận Thêm Bước Thưởng Khi Qua Tầng:
+STR_GI_DUNGEON_P1_R3D,There is no final level! Preserve as many steps as you can and go as deep as possible.,Game không có màn cuối! Hãy bảo toàn tối đa số bước để đi xa nhất có thể.
+STR_GI_DUNGEON_P1_R3T,Chase The Deepest-Floor Record:,Chinh Phục Kỷ Lục Tầng Sâu Nhất:
+STR_GI_DUNGEON_P1_SECTION,ENDLESS RUN RULES,LUẬT CHƠI VÔ TẬN
+STR_GI_DUNGEON_P1_TAB1,STEP MANAGEMENT,QUẢN LÝ BƯỚC
+STR_GI_DUNGEON_P1_TAB2,WALL HITS SEND TO S,ĐÂM TƯỜNG VỀ S
+STR_GI_DUNGEON_P1_TAB3,ENDLESS TRAPS,BẪY VÔ TẬN
+STR_GI_DUNGEON_P1_TITLE,Floor Climbing & Step Management,Leo Tầng & Quản Lý Bước
+STR_GI_DUNGEON_P2_CTA,NEXT: ENDLESS TRAPS & DEEP-CLIMB TIPS (3/3) ›,TIẾP THEO: BẪY VÔ TẬN & MẸO LEO SÂU (3/3) ›
+STR_GI_DUNGEON_P2_LINK,Skip guide & start climbing now,Bỏ qua hướng dẫn & Vào leo tầng ngay
+STR_GI_DUNGEON_P2_R1D,Hitting an invisible wall in Dungeon doesn't end the run — it only costs 1 step.,"Đâm tường vô hình ở Dungeon không kết thúc màn chơi, chỉ trừ 1 bước di chuyển."
+STR_GI_DUNGEON_P2_R1T,No Instant Game Over:,Không Bị Game Over Ngay Lập Tức:
+STR_GI_DUNGEON_P2_R2D,The wall you hit turns into a bold dark line for the rest of that floor.,Vách tường bạn vừa đâm vào sẽ hiện thành nét đen đậm rõ ràng suốt tầng đó.
+STR_GI_DUNGEON_P2_R2T,The Wall Stays Revealed Forever:,Bức Tường Sẽ Lộ Diện Vĩnh Viễn:
+STR_GI_DUNGEON_P2_R3D,Your piece returns to S to start a fresh line that avoids the wall you just learned about.,Nhân vật trở lại điểm S để bắt đầu đường vẽ mới né tránh đoạn tường vừa biết.
+STR_GI_DUNGEON_P2_R3T,Bounced Back To The Start Stair (S):,Văng Ngược Về Cầu Thang Xuất Phát (S):
+STR_GI_DUNGEON_P2_SECTION,WALL HIT RULES,QUY TẮC ĐÂM TƯỜNG
+STR_GI_DUNGEON_P2_TAB1,STEP MANAGEMENT,QUẢN LÝ BƯỚC
+STR_GI_DUNGEON_P2_TAB2,WALL HITS SEND TO S,ĐÂM TƯỜNG VỀ S
+STR_GI_DUNGEON_P2_TAB3,ENDLESS TRAPS,BẪY VÔ TẬN
+STR_GI_DUNGEON_P2_TITLE,Wall Hits & Real Walls Revealed,Đâm Tường & Lộ Tường Thật
+STR_GI_DUNGEON_P3_CTA,UNDERSTOOD • START CLIMBING,ĐÃ HIỂU • BẮT ĐẦU LEO TẦNG
+STR_GI_DUNGEON_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_DUNGEON_P3_R1D,"The deeper you go, the more hidden the walls — every number demands careful thought.","Càng xuống sâu tường càng ẩn kín, đòi hỏi tính toán cẩn thận từng con số."
+STR_GI_DUNGEON_P3_R1T,Pre-Drawn Walls Fade To 0%:,Tường Gợi Ý Giảm Về 0%:
+STR_GI_DUNGEON_P3_R2D,Use the Memory tool to connect 2 anchor points and lock dangerous gaps before drawing.,Dùng công cụ Ghi Nhớ nối 2 điểm neo để khóa các khe nguy hiểm trước khi vẽ.
+STR_GI_DUNGEON_P3_R2T,Always Mark Suspected Walls:,Luôn Đánh Dấu Tường Nghi Ngờ:
+STR_GI_DUNGEON_P3_R3D,"When steps run out, revive grants +3 steps while keeping 100% of the maze & revealed walls!","Khi cạn bước, hồi sinh sẽ cộng +3 bước và giữ nguyên 100% mê cung & tường đã lộ!"
+STR_GI_DUNGEON_P3_R3T,Revive On The Spot (+3 Steps):,Hồi Sinh Tại Chỗ (+3 Bước):
+STR_GI_DUNGEON_P3_SECTION,DEEP CLIMB SECRETS,BÍ QUYẾT LEO SÂU
+STR_GI_DUNGEON_P3_TAB1,STEP MANAGEMENT,QUẢN LÝ BƯỚC
+STR_GI_DUNGEON_P3_TAB2,WALL HITS SEND TO S,ĐÂM TƯỜNG VỀ S
+STR_GI_DUNGEON_P3_TAB3,ENDLESS TRAPS,BẪY VÔ TẬN
+STR_GI_DUNGEON_P3_TITLE,Endless Traps & Survival Tips,Bẫy Vô Tận & Mẹo Sinh Tồn
+STR_GI_FADINGINK_CHIP,FADING INK,FADING INK • MỰC PHAI
+STR_GI_FADINGINK_P1_CTA,NEXT: DRY CELLS BLOCK THE WAY (2/3) ›,TIẾP THEO: Ô CẠN KHÓA ĐƯỜNG (2/3) ›
+STR_GI_FADINGINK_P1_LINK,Skip guide & start playing now,Bỏ qua hướng dẫn & Vào chơi ngay
+STR_GI_FADINGINK_P1_R1D,Every cell has its own ink. You may only step into cells that STILL have ink (> 0).,Mỗi ô có điểm mực riêng. Chỉ được phép bước vào các ô vẫn CÒN mực (> 0).
+STR_GI_FADINGINK_P1_R1T,The Number Shows Remaining Ink:,Số Trên Ô Thể Hiện Lượng Mực Còn Lại:
+STR_GI_FADINGINK_P1_R2D,Every step you take drains 1 ink from EVERY cell — whether you enter it or not!,"Mỗi bước bạn di chuyển, TẤT CẢ các ô đều bị trừ 1 mực, bất kể bạn có đi vào ô đó hay không!"
+STR_GI_FADINGINK_P1_R2T,The Whole Board Fades One Tick:,Cả Bàn Cờ Cùng Phai Đi Một Nhịp:
+STR_GI_FADINGINK_P1_R3D,The board is wide open; the only obstacles are cells whose ink has run dry.,Bàn cờ thông suốt; chướng ngại vật cản đường bạn duy nhất chính là các ô bị cạn sạch mực.
+STR_GI_FADINGINK_P1_R3T,There Are No Walls At All:,Hoàn Toàn Không Có Bức Tường Nào:
+STR_GI_FADINGINK_P1_SECTION,BASIC INK FADING RULES,QUY TẮC MỰC PHAI CƠ BẢN
+STR_GI_FADINGINK_P1_TAB1,EACH MOVE: -1 INK,MỖI BƯỚC -1 MỰC
+STR_GI_FADINGINK_P1_TAB2,DRY CELLS BLOCK PATHS,Ô CẠN KHÓA ĐƯỜNG
+STR_GI_FADINGINK_P1_TAB3,OPTIMAL PATH & UNDO,ĐƯỜNG TỐI ƯU & UNDO
+STR_GI_FADINGINK_P1_TITLE,Whole-Board Ink Fading,Cơ Chế Phai Mực Toàn Bàn
+STR_GI_FADINGINK_P2_CTA,NEXT: SHORTEST PATH & UNDO (3/3) ›,TIẾP THEO: ĐƯỜNG NGẮN NHẤT & UNDO (3/3) ›
+STR_GI_FADINGINK_P2_LINK,Skip guide & start playing now,Bỏ qua hướng dẫn & Vào chơi ngay
+STR_GI_FADINGINK_P2_R1D,This cell survives exactly one more move. Step in now or it runs completely dry.,"Ô này chỉ tồn tại thêm đúng 1 lượt đi nữa. Nếu bạn không bước vào ngay, nó sẽ cạn sạch."
+STR_GI_FADINGINK_P2_R1T,Orange-Rimmed Cells (1 Ink Left):,Cảnh Báo Ô Viền Cam (Còn 1 Mực):
+STR_GI_FADINGINK_P2_R2D,The number vanishes and the cell greys out. You are blocked from entering a dry cell.,Mất hoàn toàn con số và mờ đi. Người chơi bị chặn không thể bước chân vào ô cạn mực.
+STR_GI_FADINGINK_P2_R2T,0-Ink Cells Become Locked Gaps:,Ô Về 0 Biến Thành Khoảng Trống Bị Khóa:
+STR_GI_FADINGINK_P2_R3D,If every surrounding cell is dry and no route to the F shaft remains • DEAD END!,Nếu các ô xung quanh đều cạn mực và không còn lối nào tới hố thang F • HẾT ĐƯỜNG ĐI!
+STR_GI_FADINGINK_P2_R3T,You Lose When Every Route Is Sealed:,Thua Cuộc Khi Bị Bít Lối Đi:
+STR_GI_FADINGINK_P2_SECTION,DRY INK & BLOCKED PATH RULES,QUY TẮC CẠN MỰC & KHÓA ĐƯỜNG
+STR_GI_FADINGINK_P2_TAB1,EACH MOVE: -1 INK,MỖI BƯỚC -1 MỰC
+STR_GI_FADINGINK_P2_TAB2,DRY CELLS BLOCK PATHS,Ô CẠN KHÓA ĐƯỜNG
+STR_GI_FADINGINK_P2_TAB3,OPTIMAL PATH & UNDO,ĐƯỜNG TỐI ƯU & UNDO
+STR_GI_FADINGINK_P2_TITLE,Dry Cells Block Paths & Warnings,Ô Cạn Khóa Lối & Cảnh Báo
+STR_GI_FADINGINK_P3_CTA,UNDERSTOOD • START DRAWING,ĐÃ HIỂU • BẮT ĐẦU VẼ ĐƯỜNG
+STR_GI_FADINGINK_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_FADINGINK_P3_R1D,"Scan the board, count the steps to F and pick the route with the fewest turns.","Nhìn bao quát bàn cờ, đếm số bước tới F và chọn tuyến đường ít ô chuyển hướng nhất."
+STR_GI_FADINGINK_P3_R1T,Plan The Shortest Path First:,Tìm Đường Ngắn Nhất Trước Khi Vẽ:
+STR_GI_FADINGINK_P3_R2D,Wandered into a dead end and lost the cells ahead? Undo to give that ink back.,Lỡ đi vào ngõ cụt làm ô phía trước biến mất? Undo ngay để cứu lại mực cho các ô đó.
+STR_GI_FADINGINK_P3_R2T,Use Undo To Restore The Path:,Tận Dụng Undo Để Hồi Phục Đường Đi:
+STR_GI_FADINGINK_P3_R3D,"This mode has no step limit, but the faster you finish, the higher you rank!","Chế độ này không giới hạn số bước, nhưng hoàn thành càng nhanh thì điểm xếp hạng càng cao!"
+STR_GI_FADINGINK_P3_R3T,The Clock Still Counts:,Đồng Hồ Thời Gian Vẫn Tính Điểm:
+STR_GI_FADINGINK_P3_SECTION,WINNING SECRETS,BÍ QUYẾT CHIẾN THẮNG
+STR_GI_FADINGINK_P3_TAB1,EACH MOVE: -1 INK,MỖI BƯỚC -1 MỰC
+STR_GI_FADINGINK_P3_TAB2,DRY CELLS BLOCK PATHS,Ô CẠN KHÓA ĐƯỜNG
+STR_GI_FADINGINK_P3_TAB3,OPTIMAL PATH & UNDO,ĐƯỜNG TỐI ƯU & UNDO
+STR_GI_FADINGINK_P3_TITLE,Shortest Path & Ink Recovery,Đường Ngắn & Hồi Mực
+STR_GI_FOG_OF_WAR_CHIP,FOG OF WAR,FOG OF WAR • SƯƠNG MÙ
+STR_GI_FOG_OF_WAR_P1_CTA,NEXT: SCOUTING STEP BY STEP (2/3) ›,TIẾP THEO: DÒ ĐƯỜNG TỪNG BƯỚC (2/3) ›
+STR_GI_FOG_OF_WAR_P1_LINK,Skip guide & start scouting now,Bỏ qua hướng dẫn & Vào dò đường ngay
+STR_GI_FOG_OF_WAR_P1_R1D,"You can only read clue numbers from cells directly beside you (horizontal, vertical, diagonal).","Bạn chỉ có thể đọc được manh mối số của các ô nằm ngay sát cạnh (ngang, dọc, chéo)."
+STR_GI_FOG_OF_WAR_P1_R1T,Only Numbers Within 1 Cell Show:,Chỉ Thấy Số Trong Bán Kính 1 Ô:
+STR_GI_FOG_OF_WAR_P1_R2D,The fog hides every number on far cells until you walk close enough.,Màn sương mù ẩn giấu toàn bộ con số của những ô phía xa cho đến khi bạn bước lại gần.
+STR_GI_FOG_OF_WAR_P1_R2T,Distant Cells Stay Fully Fogged:,Các Ô Ở Xa Bị Phủ Mờ Hoàn Toàn:
+STR_GI_FOG_OF_WAR_P1_R3D,Invisible walls still sit between cells — step blindly into the fog and you hit one!,Vẫn có các bức tường vô hình giữa các ô — bước bừa vào sương mù là đâm tường ngay!
+STR_GI_FOG_OF_WAR_P1_R3T,Invisible Walls Still Lurk:,Tường Vô Hình Vẫn Nằm Ẩn Mình:
+STR_GI_FOG_OF_WAR_P1_SECTION,FOG RULES,QUY TẮC MÀN SƯƠNG
+STR_GI_FOG_OF_WAR_P1_TAB1,RADIUS-1 VISION,TẦM NHÌN BÁN KÍNH 1
+STR_GI_FOG_OF_WAR_P1_TAB2,SCOUT STEP BY STEP,DÒ ĐƯỜNG TỪNG BƯỚC
+STR_GI_FOG_OF_WAR_P1_TAB3,MEMORY & TIPS,GHI NHỚ & BÍ QUYẾT
+STR_GI_FOG_OF_WAR_P1_TITLE,The Fog & 1-Cell Vision,Màn Sương & Tầm Nhìn 1 Ô
+STR_GI_FOG_OF_WAR_P2_CTA,NEXT: ANCHOR MEMORY & TIPS (3/3) ›,TIẾP THEO: GHI NHỚ ANCHOR & BÍ QUYẾT (3/3) ›
+STR_GI_FOG_OF_WAR_P2_LINK,Skip guide & start scouting now,Bỏ qua hướng dẫn & Vào dò đường ngay
+STR_GI_FOG_OF_WAR_P2_R1D,Stepping onto a new cell instantly reveals the numbers of the cells touching your front.,Đặt chân tới ô mới sẽ lập tức hé lộ con số của những ô tiếp giáp phía trước mặt bạn.
+STR_GI_FOG_OF_WAR_P2_R1T,Vision Moves With Every Step:,Tầm Nhìn Di Chuyển Theo Từng Bước:
+STR_GI_FOG_OF_WAR_P2_R2D,"Cells beyond your vision are swallowed by fog again, so old numbers are hard to recheck.","Các ô ở xa tầm nhìn sẽ bị sương mù bao phủ trở lại, khiến bạn khó nhìn lại số cũ."
+STR_GI_FOG_OF_WAR_P2_R2T,Cells Behind You Get Re-Fogged:,Ô Cũ Phía Sau Sẽ Bị Che Lại:
+STR_GI_FOG_OF_WAR_P2_R3D,Dare to step into an unlit cell and you may ram a hidden wall and get bounced back to S!,"Nếu bước liều sang ô chưa sáng, bạn có thể đâm trúng tường ẩn và bị phạt văng về điểm S!"
+STR_GI_FOG_OF_WAR_P2_R3T,Risk Of Hitting Invisible Walls:,Nguy Cơ Va Phải Tường Vô Hình:
+STR_GI_FOG_OF_WAR_P2_SECTION,MOVING THROUGH THE FOG,QUY TẮC DI CHUYỂN TRONG SƯƠNG
+STR_GI_FOG_OF_WAR_P2_TAB1,RADIUS-1 VISION,TẦM NHÌN BÁN KÍNH 1
+STR_GI_FOG_OF_WAR_P2_TAB2,SCOUT STEP BY STEP,DÒ ĐƯỜNG TỪNG BƯỚC
+STR_GI_FOG_OF_WAR_P2_TAB3,MEMORY & TIPS,GHI NHỚ & BÍ QUYẾT
+STR_GI_FOG_OF_WAR_P2_TITLE,Scouting With Every Step,Dò Đường Theo Bước Chân
+STR_GI_FOG_OF_WAR_P3_CTA,UNDERSTOOD • BEAT THE FOG,ĐÃ HIỂU • VƯỢT MÀN SƯƠNG
+STR_GI_FOG_OF_WAR_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_FOG_OF_WAR_P3_R1D,Don't let fog hide the clues. Connect 2 Anchors to mark orange walls and protect yourself.,Đừng để sương mù che khuất manh mối. Nối 2 Anchor để đánh dấu tường cam bảo vệ bản thân.
+STR_GI_FOG_OF_WAR_P3_R1T,Place Draft Walls While The Glow Shows:,Dựng Tường Nháp Ngay Khi Quầng Sáng Soi Thấy:
+STR_GI_FOG_OF_WAR_P3_R2D,Stuck in a dead end? Tap Hint to reveal 1 correct cell.,"Khi rơi vào ngõ cụt và không đoán được bước tiếp theo, hãy dùng Gợi Ý để soi ra 1 ô đúng."
+STR_GI_FOG_OF_WAR_P3_R2T,Light The Path With Hint:,Bật Đèn Bằng Nút Gợi Ý:
+STR_GI_FOG_OF_WAR_P3_R3D,No step limit here. Reason calmly cell by cell and bring the route home to the F shaft!,Chế độ này không giới hạn số bước. Cứ bình tĩnh suy luận từng ô để đưa lối thoát về hố thang F!
+STR_GI_FOG_OF_WAR_P3_R3T,Advance One Certain Cell At A Time:,Tiến Lên Từng Ô Một Cách Chắc Chắn:
+STR_GI_FOG_OF_WAR_P3_SECTION,WINNING SECRETS,BÍ QUYẾT CHIẾN THẮNG
+STR_GI_FOG_OF_WAR_P3_TAB1,RADIUS-1 VISION,TẦM NHÌN BÁN KÍNH 1
+STR_GI_FOG_OF_WAR_P3_TAB2,SCOUT STEP BY STEP,DÒ ĐƯỜNG TỪNG BƯỚC
+STR_GI_FOG_OF_WAR_P3_TAB3,MEMORY & TIPS,GHI NHỚ & BÍ QUYẾT
+STR_GI_FOG_OF_WAR_P3_TITLE,Anchor Memory & Secrets,Ghi Nhớ Anchor & Bí Quyết
+STR_GI_MINESWEEPER_CHIP,MINESWEEPER MAZE,MINESWEEPER MAZE
+STR_GI_MINESWEEPER_P1_CTA,NEXT: BOMBS & ZERO ZONES (2/3) ›,TIẾP THEO: ĐẠP BOM & VÙNG SỐ 0 (2/3) ›
+STR_GI_MINESWEEPER_P1_LINK,Skip guide & start sweeping now,Bỏ qua hướng dẫn & Vào dò mìn ngay
+STR_GI_MINESWEEPER_P1_R1D,"That includes the 4 orthogonal cells (up, down, left, right) and the 4 diagonal corners.","Bao gồm 4 ô vuông góc (trên, dưới, trái, phải) và 4 ô góc chéo xung quanh."
+STR_GI_MINESWEEPER_P1_R1T,The Number = Bombs In The 8 Neighbor Cells:,Số Trên Ô = Số Bom Trong 8 Ô Lân Cận:
+STR_GI_MINESWEEPER_P1_R2D,The start cell and the finish shaft are 100% bomb-free. A bomb-free route to the exit always exists!,Ô xuất phát và hố thang đích 100% không có bom. Luôn có đường BFS không bom tới đích!
+STR_GI_MINESWEEPER_P1_R2T,Start Stair (S) & Finish (F) Are Always Safe:,Cầu Thang Start (S) & Finish (F) Luôn An Toàn:
+STR_GI_MINESWEEPER_P1_R3D,"No walls block your steps — move freely, but only into bomb-free cells.",Không có tường cản bước — bạn có thể đi tự do nhưng chỉ được bước vào ô sạch bom.
+STR_GI_MINESWEEPER_P1_R3T,There Are No Walls At All:,Không Có Bất Kỳ Vách Tường Nào:
+STR_GI_MINESWEEPER_P1_SECTION,BASIC MINESWEEPER RULES,QUY TẮC DÒ MÌN CƠ BẢN
+STR_GI_MINESWEEPER_P1_TAB1,8-NEIGHBOR BOMB RULE,LUẬT 8 Ô BOM
+STR_GI_MINESWEEPER_P1_TAB2,BOMBS & ZERO ZONES,ĐẠP BOM & VÙNG 0
+STR_GI_MINESWEEPER_P1_TAB3,BOMB-SWEEPING TOOLS,CÔNG CỤ DÒ BOM
+STR_GI_MINESWEEPER_P1_TITLE,8-Neighbor Mine Rules,Luật Dò Mìn 8 Ô
+STR_GI_MINESWEEPER_P2_CTA,NEXT: TOOLS & FLAGGING (3/3) ›,TIẾP THEO: CÔNG CỤ DÒ BOM & CẮM CỜ (3/3) ›
+STR_GI_MINESWEEPER_P2_LINK,Skip guide & start sweeping now,Bỏ qua hướng dẫn & Vào dò mìn ngay
+STR_GI_MINESWEEPER_P2_R1D,The run stops immediately. You stand on the blast cell and can revive one step back.,Ván đấu dừng ngay tức khắc. Bạn đứng tại ô nổ và có thể hồi sinh lùi lại 1 bước.
+STR_GI_MINESWEEPER_P2_R1T,Stepping On A Bomb:,Hậu Quả Khi Đạp Trúng Bom:
+STR_GI_MINESWEEPER_P2_R2D,"If a cell shows 0, all 8 cells around it are 100% bomb-free — route through that zone!","Nếu ô có số 0, toàn bộ 8 ô kề cạnh nó 100% không có bom — hãy đi qua vùng này!"
+STR_GI_MINESWEEPER_P2_R2T,Exploit Zero Cells To The Fullest:,Tận Dụng Triệt Để Các Ô Số 0:
+STR_GI_MINESWEEPER_P2_R3D,Don't swipe fast; only draw into cells you are certain are safe.,Không vội vàng kéo lướt nhanh; chỉ vẽ vào các ô bạn đã chắc chắn an toàn.
+STR_GI_MINESWEEPER_P2_R3T,Draw Your Line Slowly:,Kéo Nét Vẽ Chậm Rãi:
+STR_GI_MINESWEEPER_P2_SECTION,PATH-SCOUTING TACTICS,CHIẾN THUẬT DÒ ĐƯỜNG
+STR_GI_MINESWEEPER_P2_TAB1,8-NEIGHBOR BOMB RULE,LUẬT 8 Ô BOM
+STR_GI_MINESWEEPER_P2_TAB2,BOMBS & ZERO ZONES,ĐẠP BOM & VÙNG 0
+STR_GI_MINESWEEPER_P2_TAB3,BOMB-SWEEPING TOOLS,CÔNG CỤ DÒ BOM
+STR_GI_MINESWEEPER_P2_TITLE,Bomb Detonation & Zero Zones,Đạp Bom Nổ & Vùng Số 0
+STR_GI_MINESWEEPER_P3_CTA,UNDERSTOOD • START SWEEPING,ĐÃ HIỂU • BẮT ĐẦU DÒ MÌN
+STR_GI_MINESWEEPER_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_MINESWEEPER_P3_R1D,"When a cell is certain to hold a bomb, flag it right away so a swipe can't touch it.","Khi phát hiện ô chắc chắn có bom, hãy cắm cờ khóa ô lại ngay để tránh tay quẹt trúng."
+STR_GI_MINESWEEPER_P3_R1T,Flag Before You Draw:,Cắm Cờ Trước Khi Vẽ Đường:
+STR_GI_MINESWEEPER_P3_R2D,Cross-check your flags against the HUD's remaining bombs so none slip past.,Đối chiếu số cờ đã cắm với số bom còn lại trên HUD để đảm bảo không bỏ sót quả nào.
+STR_GI_MINESWEEPER_P3_R2T,Check The Bomb Total On The HUD:,Kiểm Tra Tổng Số Bom Trên HUD:
+STR_GI_MINESWEEPER_P3_R3D,"If you step on a bomb, revive to return to the previous cell and try another direction.","Nếu lỡ đạp trúng bom, bạn có thể hồi sinh để quay lại ô ngay trước đó và thử hướng khác."
+STR_GI_MINESWEEPER_P3_R3T,Revive To Take Back The Bad Step:,Hồi Sinh Rút Lại Bước Lỗi:
+STR_GI_MINESWEEPER_P3_SECTION,ISLAND-CLEARING SECRETS,BÍ QUYẾT PHÁ ĐẢO
+STR_GI_MINESWEEPER_P3_TAB1,8-NEIGHBOR BOMB RULE,LUẬT 8 Ô BOM
+STR_GI_MINESWEEPER_P3_TAB2,BOMBS & ZERO ZONES,ĐẠP BOM & VÙNG 0
+STR_GI_MINESWEEPER_P3_TAB3,BOMB-SWEEPING TOOLS,CÔNG CỤ DÒ BOM
+STR_GI_MINESWEEPER_P3_TITLE,Tools & The Bomb-Count HUD,Công Cụ & HUD Đếm Bom
+STR_GI_NORMAL_MAZE_CHIP,HOW TO PLAY,HƯỚNG DẪN CHƠI
+STR_GI_NORMAL_MAZE_P1_CTA,NEXT: NUMBER CLUES (2/3) ›,TIẾP THEO: MANH MỐI SỐ (2/3) ›
+STR_GI_NORMAL_MAZE_P1_LINK,Skip guide & start playing now,Bỏ qua hướng dẫn & Vào chơi ngay
+STR_GI_NORMAL_MAZE_P1_R1D,"Touch the center of the S stair cell, then keep dragging across cells to draw your line.","Đặt ngón tay vào tâm ô Cầu Thang S, kéo liên tục qua các ô để vẽ đường."
+STR_GI_NORMAL_MAZE_P1_R1T,Connect The Start Stair To The Finish Hole:,Nối Cầu Thang Xuất Phát tới Hố Đích:
+STR_GI_NORMAL_MAZE_P1_R2D,Hitting a hidden wall between 2 cells ends the run instantly!,Đâm phải tường ẩn giữa 2 ô sẽ bị Game Over ngay lập tức!
+STR_GI_NORMAL_MAZE_P1_R2T,Beware Invisible Walls:,Cảnh giác Tường Vô Hình:
+STR_GI_NORMAL_MAZE_P1_R3D,A cell's number tells how many of its sides hide walls (more on Page 2).,Con số trên ô cho biết số cạnh xung quanh có tường (xem tiếp ở Trang 2).
+STR_GI_NORMAL_MAZE_P1_R3T,Lean On The Number Clues:,Dựa vào manh mối các con số:
+STR_GI_NORMAL_MAZE_P1_SECTION,RULES TO REMEMBER,QUY TẮC CẦN NHỚ
+STR_GI_NORMAL_MAZE_P1_TAB1,START & FINISH,BẮT ĐẦU & ĐÍCH
+STR_GI_NORMAL_MAZE_P1_TAB2,NUMBER CLUES,MANH MỐI SỐ
+STR_GI_NORMAL_MAZE_P1_TAB3,TOOLS,CÔNG CỤ
+STR_GI_NORMAL_MAZE_P1_TITLE,Clearing The Maze,Cách Vượt Mê Cung
+STR_GI_NORMAL_MAZE_P2_CTA,NEXT: SUPPORT TOOLS (3/3) ›,TIẾP THEO: CÁC CÔNG CỤ HỖ TRỢ (3/3) ›
+STR_GI_NORMAL_MAZE_P2_LINK,Skip guide & start playing now,Bỏ qua hướng dẫn & Vào chơi ngay
+STR_GI_NORMAL_MAZE_P2_R1D,The number counts how many sides of that cell hide an invisible wall.,Con số thể hiện số cạnh trong bảng là tường vô hình của ô đó.
+STR_GI_NORMAL_MAZE_P2_R1T,What The Number Means (0 to 3):,Ý Nghĩa Con Số (0 đến 3):
+STR_GI_NORMAL_MAZE_P2_R2D,"A 0 cell has no walls at all — the safest, fully open passage.","Ô số 0 không có bất kỳ tường nào, là lối đi thông suốt an toàn nhất."
+STR_GI_NORMAL_MAZE_P2_R2T,Prefer Walking Through 0 Cells:,Ưu Tiên Đi Qua Ô Số 0:
+STR_GI_NORMAL_MAZE_P2_R3D,Many walls surround them — compare with neighboring cells to avoid wall hits!,"Có nhiều tường bao quanh, cần so sánh với các ô bên cạnh để tránh đâm tường!"
+STR_GI_NORMAL_MAZE_P2_R3T,Take Care With 2s & 3s:,Cẩn Thận Ô Số 2 & Số 3:
+STR_GI_NORMAL_MAZE_P2_SECTION,NUMBER RULES,QUY TẮC CON SỐ
+STR_GI_NORMAL_MAZE_P2_TAB1,START & FINISH,BẮT ĐẦU & ĐÍCH
+STR_GI_NORMAL_MAZE_P2_TAB2,NUMBER CLUES,MANH MỐI SỐ
+STR_GI_NORMAL_MAZE_P2_TAB3,TOOLS,CÔNG CỤ
+STR_GI_NORMAL_MAZE_P2_TITLE,Number Clues,Manh Mối Con Số
+STR_GI_NORMAL_MAZE_P3_CTA,UNDERSTOOD • START PLAYING,ĐÃ HIỂU • BẮT ĐẦU CHƠI
+STR_GI_NORMAL_MAZE_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_NORMAL_MAZE_P3_R1D,Don't draw right away — connect Anchors to seal the dangerous gaps first.,Chưa vội vẽ đường ngay — hãy nối các Anchor để bịt các khe nguy hiểm trước.
+STR_GI_NORMAL_MAZE_P3_R1T,Observe & Mark Walls First:,Quan Sát & Đánh Dấu Tường Trước:
+STR_GI_NORMAL_MAZE_P3_R2D,Drag the ink line cell by cell from the Start stair to Finish along the opened path.,Kéo nét mực từng ô một từ Cầu thang Start sang Finish theo lối đã mở.
+STR_GI_NORMAL_MAZE_P3_R2T,Draw Slowly & Surely:,Vẽ Chậm Rãi & Chắc Chắn:
+STR_GI_NORMAL_MAZE_P3_R3D,Clear all 3 Challenges on the HUD to collect all 3 Stars and unlock the next Chapter!,Hoàn thành cả 3 Thử Thách trên bảng HUD để gom trọn vẹn 3 Sao mở Chương mới!
+STR_GI_NORMAL_MAZE_P3_R3T,Earn 3 Stars Per Level:,Đạt 3 Sao Mỗi Màn:
+STR_GI_NORMAL_MAZE_P3_SECTION,WINNING SECRETS,BÍ QUYẾT CHIẾN THẮNG
+STR_GI_NORMAL_MAZE_P3_TAB1,START & FINISH,BẮT ĐẦU & ĐÍCH
+STR_GI_NORMAL_MAZE_P3_TAB2,NUMBER CLUES,MANH MỐI SỐ
+STR_GI_NORMAL_MAZE_P3_TAB3,TOOLS,CÔNG CỤ
+STR_GI_NORMAL_MAZE_P3_TITLE,Helper Tools,Công Cụ Trợ Giúp
+STR_GI_PAGE_INDEX,PAGE {0} / {1},TRANG {0} / {1}
+STR_GI_SUMPATH_CHIP,SUM PATH,SUM PATH • TOÁN ĐỐ
+STR_GI_SUMPATH_P1_CTA,NEXT: OPERATORS & ONE-TIME CELLS (2/3) ›,TIẾP THEO: TOÁN TỬ & Ô 1 LẦN (2/3) ›
+STR_GI_SUMPATH_P1_LINK,Skip guide & start scoring now,Bỏ qua hướng dẫn & Vào cộng điểm ngay
+STR_GI_SUMPATH_P1_R1D,"No walls, no hidden bombs. Every cell on the board is simply a score value.","Không có tường chắn, không có bom ẩn. Mỗi ô trên bàn cờ đóng vai trò là một điểm số."
+STR_GI_SUMPATH_P1_R1T,The Number Is The Cell's Score (1 to 9):,Con Số Là Điểm Số Của Ô (1 đến 9):
+STR_GI_SUMPATH_P1_R2D,"Each time your line enters a new cell, its value is added straight to the Current Total card.","Mỗi khi nét vẽ kéo sang ô mới, điểm ô đó sẽ lập tức được cộng dồn vào thẻ Tổng Hiện Tại."
+STR_GI_SUMPATH_P1_R2T,Values Add Up Continuously:,Cộng Dồn Liên Tục Vào Tổng Điểm:
+STR_GI_SUMPATH_P1_R3D,You only win by touching the Finish hole F with a Total that satisfies the required math.,Chỉ chiến thắng khi bạn chạm Hố Thang Đích F với Tổng Điểm thỏa mãn đúng phép tính yêu cầu.
+STR_GI_SUMPATH_P1_R3T,Reach The Exit With The Exact Target:,Chạm Đích Khớp Đúng Mục Tiêu:
+STR_GI_SUMPATH_P1_SECTION,BASIC SUMMING RULES,QUY TẮC CỘNG TỔNG CƠ BẢN
+STR_GI_SUMPATH_P1_TAB1,SUMS & TARGETS,CỘNG TỔNG & MỤC TIÊU
+STR_GI_SUMPATH_P1_TAB2,OPERATORS & ONE-TIME CELLS,TOÁN TỬ & Ô 1 LẦN
+STR_GI_SUMPATH_P1_TAB3,MATH TIPS & UNDO,BÍ QUYẾT TÍNH & UNDO
+STR_GI_SUMPATH_P1_TITLE,The Sum-Adding Puzzle,Bài Toán Cộng Tổng Điểm
+STR_GI_SUMPATH_P2_CTA,NEXT: TACTICS & UNDO (3/3) ›,TIẾP THEO: CHIẾN THUẬT & UNDO (3/3) ›
+STR_GI_SUMPATH_P2_LINK,Skip guide & start scoring now,Bỏ qua hướng dẫn & Vào cộng điểm ngay
+STR_GI_SUMPATH_P2_R1D,"With =, the total must match exactly. With < or >, the total just needs to land in the valid range.","Với dấu =, tổng phải khớp tuyệt đối. Với dấu < hoặc >, chỉ cần tổng nằm trong khoảng hợp lệ."
+STR_GI_SUMPATH_P2_R1T,"Watch The Operator (=, <, >):","Để Ý Ký Hiệu Toán Tử (=, <, >):"
+STR_GI_SUMPATH_P2_R2D,"You may cross an old cell to change direction, but it adds no extra points.","Bạn có thể vẽ đường giao cắt ô cũ để chuyển hướng, nhưng điểm ô đó sẽ không được cộng thêm."
+STR_GI_SUMPATH_P2_R2T,Each Cell Scores Only Once:,Mỗi Ô Chỉ Tính Điểm Một Lần:
+STR_GI_SUMPATH_P2_R3D,"Touching the F shaft is not enough — if the total fails the math, the level is not over!",Dù bạn chạm được hố thang F nhưng tổng điểm không thỏa mãn phép tính thì màn chơi chưa kết thúc!
+STR_GI_SUMPATH_P2_R3T,Wrong Total At The Exit = Failure:,Về Đích Sai Mục Tiêu = Thất Bại:
+STR_GI_SUMPATH_P2_SECTION,TARGET & CELL-SCORE RULES,QUY TẮC MỤC TIÊU & ĐIỂM Ô
+STR_GI_SUMPATH_P2_TAB1,SUMS & TARGETS,CỘNG TỔNG & MỤC TIÊU
+STR_GI_SUMPATH_P2_TAB2,OPERATORS & ONE-TIME CELLS,TOÁN TỬ & Ô 1 LẦN
+STR_GI_SUMPATH_P2_TAB3,MATH TIPS & UNDO,BÍ QUYẾT TÍNH & UNDO
+STR_GI_SUMPATH_P2_TITLE,Operators & One-Time Cells,Toán Tử & Ô Điểm 1 Lần
+STR_GI_SUMPATH_P3_CTA,UNDERSTOOD • START SCORING,ĐÃ HIỂU • BẮT ĐẦU CỘNG ĐIỂM
+STR_GI_SUMPATH_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_SUMPATH_P3_R1D,Each level guarantees at least one perfect route that satisfies the target operator.,Mỗi màn đều đảm bảo có ít nhất một đường đi hoàn hảo thỏa mãn đúng toán tử mục tiêu.
+STR_GI_SUMPATH_P3_R1T,Every Board Has At Least 1 Correct Solution:,Bản Cờ Luôn Có Ít Nhất 1 Nghiệm Đúng:
+STR_GI_SUMPATH_P3_R2D,"If a big cell pushes the total past the target, just Undo back and the points come off.","Nếu lỡ bước vào ô số to khiến tổng vượt quá mục tiêu, chỉ cần Undo lùi lại để trừ điểm ra."
+STR_GI_SUMPATH_P3_R2T,Use Undo To Recover Overshoot:,Dùng Undo Để Thu Hồi Điểm Lố:
+STR_GI_SUMPATH_P3_R3D,No step limit — the quickest mental math and earliest finish earns the top rank!,Game không giới hạn số bước — người nhẩm tính nhanh và về đích sớm nhất sẽ đạt hạng cao!
+STR_GI_SUMPATH_P3_R3T,Race To Solve Fastest:,Đua Tốc Độ Phá Giải:
+STR_GI_SUMPATH_P3_SECTION,MATH SECRETS,BÍ QUYẾT TÍNH TOÁN
+STR_GI_SUMPATH_P3_TAB1,SUMS & TARGETS,CỘNG TỔNG & MỤC TIÊU
+STR_GI_SUMPATH_P3_TAB2,OPERATORS & ONE-TIME CELLS,TOÁN TỬ & Ô 1 LẦN
+STR_GI_SUMPATH_P3_TAB3,MATH TIPS & UNDO,BÍ QUYẾT TÍNH & UNDO
+STR_GI_SUMPATH_P3_TITLE,Tactics & Undo Fixes,Chiến Thuật & Undo Sửa Sai
+STR_GI_TIME_ATTACK_CHIP,TIME ATTACK MAZE,TIME ATTACK MAZE
+STR_GI_TIME_ATTACK_P1_CTA,NEXT: WALL HITS COST TIME (2/3) ›,TIẾP THEO: ĐÂM TƯỜNG MẤT GIỜ (2/3) ›
+STR_GI_TIME_ATTACK_P1_LINK,Skip guide & start the race now,Bỏ qua hướng dẫn & Vào đua giờ ngay
+STR_GI_TIME_ATTACK_P1_R1D,Each level grants a fixed time budget (60s - 120s). You must touch the F shaft before time runs out.,Màn chơi cấp một quỹ thời gian cố định (60s - 120s). Bạn phải chạm hố thang F trước khi hết giờ.
+STR_GI_TIME_ATTACK_P1_R1T,The Total Time Counts Down:,Thời Gian Tổng Đếm Ngược:
+STR_GI_TIME_ATTACK_P1_R2D,Loop around and try branches freely — the only enemy is the ticking clock.,"Bạn có thể đi vòng, thử nhiều ngã rẽ mà không sợ hết bước — kẻ thù duy nhất là thời gian trôi."
+STR_GI_TIME_ATTACK_P1_R2T,No Step Limit:,Không Giới Hạn Số Bước Chân:
+STR_GI_TIME_ATTACK_P1_R3D,Cell numbers still count walls (0 - 4). Sprint while reasoning precisely to dodge them.,Con số trên ô vẫn là số tường (0 - 4). Vừa đi nhanh vừa phải suy luận né tường chính xác.
+STR_GI_TIME_ATTACK_P1_R3T,Invisible Walls Work As Usual:,Quy Luật Tường Vô Hình Như Thường:
+STR_GI_TIME_ATTACK_P1_SECTION,TIME RACE RULES,QUY TẮC ĐUA THỜI GIAN
+STR_GI_TIME_ATTACK_P1_TAB1,COUNTDOWN CLOCK,ĐỒNG HỒ ĐẾM NGƯỢC
+STR_GI_TIME_ATTACK_P1_TAB2,WALL HITS COST TIME,ĐÂM TƯỜNG MẤT GIỜ
+STR_GI_TIME_ATTACK_P1_TAB3,SPEED & HINTS,TỐC ĐỘ & GỢI Ý
+STR_GI_TIME_ATTACK_P1_TITLE,The Countdown Clock,Đồng Hồ Đếm Ngược
+STR_GI_TIME_ATTACK_P2_CTA,NEXT: SPEED & HINTS (3/3) ›,TIẾP THEO: TỐC ĐỘ & GỢI Ý (3/3) ›
+STR_GI_TIME_ATTACK_P2_LINK,Skip guide & start the race now,Bỏ qua hướng dẫn & Vào đua giờ ngay
+STR_GI_TIME_ATTACK_P2_R1D,Hit an invisible wall and your piece is shoved back to S to begin a new line.,"Đâm phải tường vô hình, nhân vật lập tức bị đẩy lùi về điểm S để bắt đầu đường vẽ mới."
+STR_GI_TIME_ATTACK_P2_R1T,Bounced Back To The Start Stair (S):,Văng Ngược Về Cầu Thang Start (S):
+STR_GI_TIME_ATTACK_P2_R2D,Time never stops. Redrawing from scratch burns precious seconds!,Thời gian không dừng lại. Việc vẽ lại từ đầu khiến bạn mất đứt nhiều giây sinh tử!
+STR_GI_TIME_ATTACK_P2_R2T,The Clock Keeps Counting:,Đồng Hồ Vẫn Tiếp Tục Đếm Ngược:
+STR_GI_TIME_ATTACK_P2_R3D,The wall you hit stays revealed forever. Glance fast and draw a decisive detour.,Bức tường bị đâm sẽ lộ ra vĩnh viễn. Hãy nhìn thật nhanh và vẽ đường né tránh dứt khoát.
+STR_GI_TIME_ATTACK_P2_R3T,Learn From The Wall You Just Revealed:,Rút Kinh Nghiệm Từ Đoạn Tường Vừa Lộ:
+STR_GI_TIME_ATTACK_P2_SECTION,WALL IMPACT RESULTS,HẬU QUẢ VA CHẠM TƯỜNG
+STR_GI_TIME_ATTACK_P2_TAB1,COUNTDOWN CLOCK,ĐỒNG HỒ ĐẾM NGƯỢC
+STR_GI_TIME_ATTACK_P2_TAB2,WALL HITS COST TIME,ĐÂM TƯỜNG MẤT GIỜ
+STR_GI_TIME_ATTACK_P2_TAB3,SPEED & HINTS,TỐC ĐỘ & GỢI Ý
+STR_GI_TIME_ATTACK_P2_TITLE,Wall Hits & Lost Time,Đâm Tường & Mất Giờ
+STR_GI_TIME_ATTACK_P3_CTA,UNDERSTOOD • RACE THE CLOCK,ĐÃ HIỂU • ĐUA THỜI GIAN
+STR_GI_TIME_ATTACK_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_TIME_ATTACK_P3_R1D,Scan for 0 cells first to sketch a safe route fast without mental math.,Quét mắt tìm các ô số 0 trước tiên để vạch nhanh tuyến đường an toàn mà không tốn công nhẩm tính.
+STR_GI_TIME_ATTACK_P3_R1T,Find 0 Cells To Sprint:,Tìm Ô Số 0 Để Phóng Nhanh:
+STR_GI_TIME_ATTACK_P3_R2D,"In Time Attack, hesitation is defeat. Tap Hint to break the knot instead of burning the clock.","Trong Time Attack, do dự là thất bại. Hãy bấm Gợi Ý để mở khóa nút thắt thay vì để đồng hồ cạn kiệt."
+STR_GI_TIME_ATTACK_P3_R2T,Hit Hint After 3 Seconds Of Being Stuck:,Bấm Gợi Ý Khi Bị Bí Quá 3 Giây:
+STR_GI_TIME_ATTACK_P3_R3D,"If a branch feels like a dead end, Undo one cell — far faster than the penalty back to S!","Nếu cảm giác vừa rẽ nhầm nhánh bế tắc, bấm Undo lùi lại 1 ô sẽ nhanh hơn rất nhiều so với bị phạt về S!"
+STR_GI_TIME_ATTACK_P3_R3T,Use Undo In Time To Avoid Going Back To S:,Dùng Undo Kịp Thời Để Tránh Về S:
+STR_GI_TIME_ATTACK_P3_SECTION,BURST-SPEED SECRETS,BÍ QUYẾT BỨT TỐC
+STR_GI_TIME_ATTACK_P3_TAB1,COUNTDOWN CLOCK,ĐỒNG HỒ ĐẾM NGƯỢC
+STR_GI_TIME_ATTACK_P3_TAB2,WALL HITS COST TIME,ĐÂM TƯỜNG MẤT GIỜ
+STR_GI_TIME_ATTACK_P3_TAB3,SPEED & HINTS,TỐC ĐỘ & GỢI Ý
+STR_GI_TIME_ATTACK_P3_TITLE,Speed & Rescue Hints,Tốc Độ & Gợi Ý Cứu Nguy
+STR_GI_X001,1,1
+STR_GI_X002,2,2
+STR_GI_X003,3,3
+STR_GI_X004,0,0
+STR_GI_X005,START,XUẤT PHÁT
+STR_GI_X006,A stair that lights the way,Cầu thang rọi sáng
+STR_GI_X007,FINISH HOLE (F),HỐ ĐÍCH (F)
+STR_GI_X008,The shaft that leads down,Thang xuống sâu
+STR_GI_X009,DRAG BETWEEN CELL CENTERS,KÉO NỐI TÂM Ô
+STR_GI_X010,Start at the Upstairs Stair • Follow the safe path • Down to the Finish Shaft,Bắt đầu từ Cầu Thang Trên Lầu • Đi theo đường an toàn • Xuống Hố Thang Đích
+STR_GI_X011,A 0 CELL = SAFE,Ô SỐ 0 = AN TOÀN
+STR_GI_X012,NO WALLS,KHÔNG CÓ TƯỜNG
+STR_GI_X013,Move through freely in any direction,Tự do đi qua theo mọi hướng
+STR_GI_X014,A 3 CELL = 3 WALLS,Ô SỐ 3 = 3 TƯỜNG
+STR_GI_X015,3 SIDES SEALED,BỊ BỊT KÍN 3 MẶT
+STR_GI_X016,Only 1 side left to escape,Chỉ có 1 cạnh duy nhất để thoát
+STR_GI_X017,Reason like Minesweeper: use the numbers to pinpoint which gaps hide Invisible Walls,Suy luận như Dò Mìn: Dùng con số để xác định khe nào có Tường Vô Hình
+STR_GI_X018,TOOL: MEMORY,CÔNG CỤ: GHI NHỚ
+STR_GI_X019,Mark Suspected Walls,Đánh dấu Tường Nghi Ngờ
+STR_GI_X020,Drag between the 2 plus signs (+) at cell corners to build,Kéo giữa 2 dấu cộng (+) ở góc ô để tự dựng
+STR_GI_X021,a draft orange wall so you never hit the wrong one!,"tường cam nháp, giúp không bao giờ đâm nhầm!"
+STR_GI_X022,UNDO,HOÀN TÁC
+STR_GI_X023,Rewind 1 step,Lùi lại 1 bước
+STR_GI_X024,Drew into a dead end? Tap,Lỡ vẽ sai vào ngõ cụt? Bấm
+STR_GI_X025,Undo to safely pull the line back.,Undo để rút lại nét vẽ an toàn.
+STR_GI_X026,HINT,GỢI Ý
+STR_GI_X027,Reveal 1 safe step,Mở 1 bước an toàn
+STR_GI_X028,Facing a brutal position? Light up,Gặp thế cờ quá khó? Soi sáng
+STR_GI_X029,the next correct stretch right away.,ngay 1 đoạn đường đúng đắn.
+STR_GI_X030,Mix Draw Line + Wall Memory cleverly to crack every puzzle on the island!,Kết hợp linh hoạt Vẽ Đường + Ghi Nhớ Tường để phá đảo mọi câu đố!
+STR_GI_X031,STEPS REMAINING,SỐ BƯỚC CÒN LẠI
+STR_GI_X032,15,15
+STR_GI_X033,STEPS,BƯỚC
+STR_GI_X034,CURRENT FLOOR,TẦNG HIỆN TẠI
+STR_GI_X035,04,04
+STR_GI_X036,TIME,THỜI GIAN
+STR_GI_X037,01:24,01:24
+STR_GI_X038,EVERY MOVE,MỖI BƯỚC ĐI
+STR_GI_X039,-1 STEP,-1 BƯỚC
+STR_GI_X040,Out of steps = LOSS,Hết bước = THUA
+STR_GI_X041,REACH THE F SHAFT,CHẠM HỐ ĐÍCH F
+STR_GI_X042,+5 STEPS!,+5 BƯỚC!
+STR_GI_X043,Descend To Floor 05,Xuống Tầng 05
+STR_GI_X044,Shorter routes leave more spare steps for conquering deeper floors!,Đi đường càng ngắn thì bước dư càng nhiều để chinh phục các tầng sâu hơn!
+STR_GI_X045,A REAL WALL REVEALED!,TƯỜNG THẬT ĐÃ LỘ!
+STR_GI_X046,A bold dark line,Nét đen đậm
+STR_GI_X047,that never fades,Không biến mất
+STR_GI_X048,IMPACT RESULT,HẬU QUẢ VA CHẠM
+STR_GI_X049,-1 STEP,-1 BƯỚC ĐI
+STR_GI_X050,Bounced back to S,Văng ngược về S
+STR_GI_X051,Don't fear wall hits! Trading 1 step is how the map reveals its real clues.,Đừng sợ đâm tường! Đâm tường là cách hy sinh 1 bước để bản đồ lộ ra manh mối thật.
+STR_GI_X052,EARLY FLOORS (1 - 3),TẦNG ĐẦU (TẦNG 1 - 3)
+STR_GI_X053,PRE-DRAWN WALLS REMAIN,CÒN TƯỜNG VẼ SẴN
+STR_GI_X054,Easier to picture the way out,Dễ hình dung lối thoát
+STR_GI_X055,Wall reveal ratio: 40% ~ 60%,Tỉ lệ tường lộ: 40% ~ 60%
+STR_GI_X056,DEEP FLOORS (5 AND BEYOND),TẦNG SÂU (TẦNG 5 TRỞ ĐI)
+STR_GI_X057,100% INVISIBLE WALLS!,100% TƯỜNG VÔ HÌNH!
+STR_GI_X058,Use Memory to link Anchors,Dùng Ghi Nhớ nối Anchor
+STR_GI_X059,and build draft walls first,để tự dựng tường nháp trước
+STR_GI_X060,The deeper you go the fewer free walls you get — link Anchors before you draw!,Càng lên cao tường sẵn càng biến mất — hãy nối Anchor trước khi đặt bút vẽ đường!
+STR_GI_X061,THE NUMBER IN THE CENTER,CON SỐ Ở GIỮA
+STR_GI_X062,A 1 = 1 BOMB,SỐ 1 = 1 BOM
+STR_GI_X063,Among the 8 surrounding cells,Trong 8 ô xung quanh
+STR_GI_X064,(diagonals included!),(tính cả góc chéo!)
+STR_GI_X065,A BOMB IS HERE,VỊ TRÍ CÓ BOM
+STR_GI_X066,STAY AWAY!,TRÁNH XA!
+STR_GI_X067,Stepping on a bomb,Đạp trúng bom
+STR_GI_X068,= INSTANT LOSS,= THUA NGAY
+STR_GI_X069,"Unlike normal mazes: the number counts bombs in the 8 neighboring cells (horizontal, vertical AND diagonal)!","Khác với mê cung thường: Số chỉ bom trong 8 ô lân cận (ngang, dọc VÀ chéo)!"
+STR_GI_X070,STEPPED ON A BOMB,ĐẠP PHẢI BOM
+STR_GI_X071,INSTANT LOSS ON THE SPOT!,THUA NGAY TẠI CHỖ!
+STR_GI_X072,Your piece stops on the blast cell,Nhân vật dừng ngay tại ô nổ
+STR_GI_X073,(no bounce back to S like Dungeon),(Không văng về S như Dungeon)
+STR_GI_X074,THE ZERO ZONE,VÙNG Ô SỐ 0
+STR_GI_X075,ALL 8 CELLS ARE BOMB-FREE!,CẢ 8 Ô ĐỀU SẠCH BOM!
+STR_GI_X076,Confidently step onto any cell,Tự tin bước qua bất kỳ ô nào
+STR_GI_X077,that touches a 0 cell,đang tiếp giáp với ô số 0
+STR_GI_X078,Hunt for 0 cells first — they are the key that flings open a safe path!,Hãy tìm các ô số 0 trước tiên — đó là chìa khóa mở toang lối đi an toàn!
+STR_GI_X079,BOMBS LEFT ON THE BOARD,BOM CÒN LẠI TRÊN BÀN
+STR_GI_X080,03,03
+STR_GI_X081,2 found • 3 still hidden,Đã phát hiện 2 quả • Còn 3 quả ẩn giấu
+STR_GI_X082,FLAG A CELL LOCKED,CẮM CỜ KHÓA Ô
+STR_GI_X083,Guards against mis-taps,Chống bấm nhầm
+STR_GI_X084,Use the Memory button to flag,Dùng nút Ghi Nhớ để cắm cờ
+STR_GI_X085,cells you suspect of hiding bombs.,vào ô bạn nghi là có bom.
+STR_GI_X086,A flagged cell is safely locked!,Ô cắm cờ sẽ bị khóa an toàn!
+STR_GI_X087,Back up 1 step safely,Lùi 1 bước an toàn
+STR_GI_X088,Stepped into a dangerous cell?,Lỡ bước nhầm ô nguy hiểm?
+STR_GI_X089,Tap Undo to instantly back out,Bấm Undo để lùi lại ngay lập tức
+STR_GI_X090,before it turns into a mistake.,trước khi dẫn đến sai lầm.
+STR_GI_X091,Keep an eye on the Bomb HUD card to know when every bomb is isolated!,Luôn để mắt tới thẻ HUD Bom để biết mình đã cô lập hết bom trên bàn chưa!
+STR_GI_X092,CURRENT TOTAL,TỔNG HIỆN TẠI
+STR_GI_X093,18,18
+STR_GI_X094,(over 3 cells),(qua 3 ô)
+STR_GI_X095,=,=
+STR_GI_X096,TARGET TO HIT,MỤC TIÊU PHẢI ĐẠT
+STR_GI_X097,50,50
+STR_GI_X098,NEED +32 MORE,CẦN THÊM +32
+STR_GI_X099,8,8
+STR_GI_X100,4,4
+STR_GI_X101,6,6
+STR_GI_X102,9,9
+STR_GI_X103,7,7
+STR_GI_X104,RUNNING SCORE,CỘNG DỒN ĐIỂM
+STR_GI_X105,4 + 6 + 8,4 + 6 + 8
+STR_GI_X106,= 18 POINTS,= 18 ĐIỂM
+STR_GI_X107,Every step counts!,Cộng mỗi bước đi!
+STR_GI_X108,FREE MOVEMENT,ĐI TỰ DO
+STR_GI_X109,Draw in any direction,Vẽ hướng nào cũng
+STR_GI_X110,with no fear of dying!,không sợ đâm chết!
+STR_GI_X111,Every cell you drag through adds to the Total. The exit demands exactly = 50!,"Kéo qua ô nào, điểm ô đó cộng dồn vào Tổng. Đích đến yêu cầu bạn đạt chính xác = 50!"
+STR_GI_X112,3 HUD OPERATOR TYPES,3 DẠNG TOÁN TỬ HUD
+STR_GI_X113,EXACTLY EQUAL,BẰNG CHÍNH XÁC
+STR_GI_X114,Example: Total = 50,Ví dụ: Tổng = 50
+STR_GI_X115,<,<
+STR_GI_X116,BELOW THE CEILING,NHỎ HƠN MỨC TRẦN
+STR_GI_X117,Example: Total < 35,Ví dụ: Tổng < 35
+STR_GI_X118,>,>
+STR_GI_X119,ABOVE THE FLOOR,LỚN HƠN MỨC SÀN
+STR_GI_X120,Example: Total > 40,Ví dụ: Tổng > 40
+STR_GI_X121,CHECK THE OPERATOR CAREFULLY,KIỂM TRA KỸ TOÁN TỬ
+STR_GI_X122,on the HUD before you draw!,trên bảng HUD trước khi vẽ!
+STR_GI_X123,EACH CELL ADDS ONLY ONCE,MỖI Ô CHỈ CỘNG 1 LẦN
+STR_GI_X124,5,5
+STR_GI_X125,+0 POINTS,+0 ĐIỂM
+STR_GI_X126,NO FARMING BY LOOPING,KHÔNG THỂ ĐI VÒNG CÀY ĐIỂM
+STR_GI_X127,Re-entering an old cell adds nothing.,Quay lại ô cũ sẽ không cộng thêm.
+STR_GI_X128,Points count only on the first visit!,Điểm chỉ tính ở lần bước đầu tiên!
+STR_GI_X129,"Always read the HUD operator: some levels demand = 50, others only < 30!","Luôn nhìn toán tử trên HUD: Có màn yêu cầu = 50, nhưng có màn chỉ yêu cầu < 30!"
+STR_GI_X130,TACTIC: BIG & SMALL NUMBERS,CHIẾN THUẬT: SỐ LỚN & SỐ NHỎ
+STR_GI_X131,"Cells 7, 8, 9","Ô 7, 8, 9"
+STR_GI_X132,Bank points fast,Dồn điểm cực nhanh
+STR_GI_X133,"Cells 1, 2, 3","Ô 1, 2, 3"
+STR_GI_X134,Fine-tune the exact fit,Tinh chỉnh vừa khít
+STR_GI_X135,50 POINTS,50 ĐIỂM
+STR_GI_X136,PERFECT,HOÀN HẢO
+STR_GI_X137,Far from the target: grab big cells. Close to it: swing through small cells to nail the finish!,Khi mục tiêu còn xa: Ưu tiên gom các ô số to. Khi gần chạm mốc: Rẽ qua ô số nhỏ để chốt hạ!
+STR_GI_X138,UNDO,UNDO
+STR_GI_X139,POINTS REFUNDED,TRỪ NGƯỢC ĐIỂM SỐ
+STR_GI_X140,OVERSHOT THE TOTAL? FIX IT NOW!,LỠ CỘNG LỐ ĐIỂM? SỬA NGAY!
+STR_GI_X141,Tap Undo one step and the last cell's points,"Bấm Undo lùi lại 1 bước, điểm số của ô đó"
+STR_GI_X142,are subtracted from the Current Total so you can pick another branch.,sẽ được trừ ngược ra khỏi Tổng Hiện Tại để bạn chọn nhánh khác.
+STR_GI_X143,There is always at least 1 correct solution! Use Undo to test different math routes.,Luôn có ít nhất 1 nghiệm đúng! Hãy tận dụng Undo để thử nghiệm các hướng tính toán.
+STR_GI_X144,BUDGET LEFT:,NGÂN SÁCH CÒN:
+STR_GI_X145,13,13
+STR_GI_X146,SPENT: -3 STEPS (2 CELLS),ĐÃ TIÊU: -3 BƯỚC (QUA 2 Ô)
+STR_GI_X147,CHEAP CELLS (1 - 2),Ô GIÁ RẺ (1 - 2)
+STR_GI_X148,SAVINGS,TIẾT KIỆM
+STR_GI_X149,Route through these,Ưu tiên đi qua
+STR_GI_X150,to protect your budget!,để giữ ngân sách!
+STR_GI_X151,PRICEY CELLS (3 - 4),Ô GIÁ ĐẮT (3 - 4)
+STR_GI_X152,EXPENSIVE!,TỐN KÉM!
+STR_GI_X153,One step into a 4 costs,Đi 1 ô số 4 bằng
+STR_GI_X154,as much as four 1s!,4 lần ô số 1!
+STR_GI_X155,"Walked 2 cells: [1] + [2] • Total toll: -3 steps, leaving 13 steps in the budget!","Đã đi qua 2 ô: Ô [1] + Ô [2] • Tổng cước: -3 bước, ngân sách còn 13 bước!"
+STR_GI_X156,RESULT OF A WALL HIT,HẬU QUẢ ĐÂM TƯỜNG
+STR_GI_X157,STILL -3 STEPS!,VẪN TRỪ -3 BƯỚC!
+STR_GI_X158,You pay the exact toll,Bị phạt đúng giá cước
+STR_GI_X159,of the cell you rammed into!,của ô bạn vừa đâm!
+STR_GI_X160,BEWARE OF PRICEY TRAPS,CẨN THẬN BẪY Ô ĐẮT
+STR_GI_X161,CELLS 3 & 4,Ô SỐ 3 & SỐ 4
+STR_GI_X162,They drain the budget fast.,Hao hụt ngân sách cực nhanh.
+STR_GI_X163,Try to route around them!,Nên tìm đường né tránh!
+STR_GI_X164,"Wall hits in Countdown Cost punish twice: back to S, plus the cost of the target cell!","Đâm tường ở Countdown Cost bị phạt kép: vừa văng về S, vừa mất đứt số bước của ô đích!"
+STR_GI_X165,TACTIC: THE CHEAPEST PATH,BÍ QUYẾT: ĐƯỜNG RẺ NHẤT
+STR_GI_X166,S,S
+STR_GI_X167,F,F
+STR_GI_X168,COST: 6 STEPS • 10 LEFT,CƯỚC: 6 BƯỚC • DƯ 10
+STR_GI_X169,COST: 17 STEPS • LOSS,CƯỚC: 17 BƯỚC • THUA
+STR_GI_X170,The Budget Always Fits The Cheap Route,Ngân Sách Luôn Đủ Cho Đường Rẻ
+STR_GI_X171,Every level grants enough steps for,Mỗi màn đều cấp đủ số bước cho
+STR_GI_X172,the cheapest route plus a buffer.,tuyến đường ít tốn kém nhất + dự phòng.
+STR_GI_X173,Stray into pricey cells and the steps run dry!,Đi lệch qua ô đắt sẽ bị cạn sạch bước!
+STR_GI_X174,100% TOLL REFUND,HOÀN TRẢ CƯỚC 100%
+STR_GI_X175,+EVERY SPENT STEP COMES BACK!,+HOÀN LẠI SỐ BƯỚC ĐÃ TRỪ!
+STR_GI_X176,Stepped into an expensive cell or want to turn around?,Lỡ bước vào ô đắt đỏ hoặc muốn đổi hướng?
+STR_GI_X177,Tap Undo and every charged step is instantly refunded to your budget.,"Bấm Undo lùi lại, số bước bị trừ sẽ lập tức cộng ngược lại vào ngân sách."
+STR_GI_X178,Never regret an Undo! Backing up to a cheaper route can save the whole run.,Đừng tiếc một lần Undo! Lùi lại để chọn lối đi rẻ hơn sẽ cứu sống cả ván đấu.
+STR_GI_X179,1 LEFT,CÒN 1
+STR_GI_X180,THE NUMBER IS,SỐ TRÊN Ô LÀ
+STR_GI_X181,INK POINTS,ĐIỂM MỰC
+STR_GI_X182,Not a wall count!,Không phải số tường!
+STR_GI_X183,Not a bomb count!,Không phải bom!
+STR_GI_X184,-1 INK,-1 MỰC
+STR_GI_X185,Every cell on,Tất cả các ô trên
+STR_GI_X186,the board fades too!,bàn cờ cùng phai!
+STR_GI_X187,Walk 3 steps = every cell on the board loses 3 ink!,Bạn đi được 3 bước = Toàn bộ các ô trên bàn cờ đều bị phai mất 3 điểm mực!
+STR_GI_X188,CELL WITH 1 INK LEFT,Ô CÒN 1 ĐIỂM MỰC
+STR_GI_X189,ALMOST FADED,SẮP PHAI
+STR_GI_X190,EXACTLY 1 MOVE LEFT!,CÒN ĐÚNG 1 BƯỚC!
+STR_GI_X191,Take one more step into,Nếu đi thêm 1 bước nữa vào
+STR_GI_X192,anywhere and this cell vanishes!,"bất kỳ đâu, ô này sẽ biến mất!"
+STR_GI_X193,0-INK CELL: LOCKED,Ô 0 MỰC: BỊ KHÓA
+STR_GI_X194,DRY,CẠN
+STR_GI_X195,CANNOT ENTER,KHÔNG THỂ BƯỚC VÀO
+STR_GI_X196,The cell becomes an empty gap.,Ô trở thành khoảng trống rỗng.
+STR_GI_X197,Every route sealed = INSTANT LOSS!,Bị bít hết đường = THUA NGAY!
+STR_GI_X198,Watch the orange-rimmed cells! They warn about paths that are about to vanish forever.,Hãy để ý các ô viền cam! Chúng báo trước những lối đi sắp biến mất vĩnh viễn.
+STR_GI_X199,TACTIC: SHORTEST PATH,BÍ QUYẾT: ĐƯỜNG NGẮN NHẤT
+STR_GI_X200,4 STEPS • WIN,4 BƯỚC • THẮNG
+STR_GI_X201,7 STEPS • DRY INK,7 BƯỚC • CẠN MỰC
+STR_GI_X202,The Short Route Always Has Enough Ink,Đường Ngắn Luôn Đủ Mực
+STR_GI_X203,Every level is designed so that,Mỗi màn đều được thiết kế sao cho
+STR_GI_X204,the shortest path has enough ink to reach F.,đường ngắn nhất có đủ mực để tới F.
+STR_GI_X205,Wandering around drains the ink and seals your own path!,Đi vòng vèo sẽ tự làm cạn mực bít đường!
+STR_GI_X206,INK RESTORE PERK,ĐẶC QUYỀN HỒI MỰC
+STR_GI_X207,+1 INK FOR THE WHOLE BOARD!,+1 MỰC CHO TOÀN BÀN CỜ!
+STR_GI_X208,"Each Undo rewinds 1 step, and every","Mỗi lần bấm Undo lùi 1 bước chân, tất cả"
+STR_GI_X209,cell on the board regains exactly 1 ink point.,các ô trên bàn cờ đều được hồi phục lại đúng 1 điểm mực.
+STR_GI_X210,Don't hold back on Undo! Rewinding a step instantly revives cells that just ran dry.,Đừng ngại Undo! Rút lại bước đi sẽ hồi sinh ngay các ô vừa bị cạn mực.
+STR_GI_X211,MEMORIZE IN,GHI NHỚ TRONG
+STR_GI_X212,SECONDS,GIÂY
+STR_GI_X213,IN THE FIRST 3 SECONDS,TRONG 3 GIÂY ĐẦU
+STR_GI_X214,WALLS SHOWN,TƯỜNG HIỆN
+STR_GI_X215,100% CLEAR,100% RÕ RÀNG
+STR_GI_X216,(Timer paused),(Đồng hồ đứng yên)
+STR_GI_X217,SPECIAL NOTE,ĐẶC BIỆT CHÚ Ý
+STR_GI_X218,COMPLETELY,HOÀN TOÀN
+STR_GI_X219,NO NUMBERS,KHÔNG CÓ SỐ
+STR_GI_X220,Only the S and F cells remain!,Chỉ có ô S và F!
+STR_GI_X221,Use the 3-second countdown to scan the whole board and burn the safe escape route into your mind!,Tranh thủ 3 giây đếm ngược nhìn bao quát để khắc ghi đường thoát an toàn vào đầu!
+STR_GI_X222,GO!,GO!
+STR_GI_X223,THE BOARD AFTERWARDS,BÀN CỜ SAU ĐÓ
+STR_GI_X224,COMPLETELY BLANK,TRỐNG TRƠN
+STR_GI_X225,100% WALLS HIDDEN,100% TƯỜNG ẨN
+STR_GI_X226,Not a single trace left!,Không còn vết tích!
+STR_GI_X227,CAREFUL OF HIDDEN WALLS,CẨN THẬN ĐÂM TƯỜNG
+STR_GI_X228,TOUCH A HIDDEN WALL,CHẠM TƯỜNG ẨN
+STR_GI_X229,PENALTY: BACK TO S,BỊ PHẠT VỀ S
+STR_GI_X230,(Hardcore: instant loss),(Hardcore: Thua ngay)
+STR_GI_X231,The timer starts now! Draw slowly and reconstruct the maze from memory.,Đồng hồ bắt đầu tính giờ! Hãy vẽ chậm rãi và tái hiện lại trí nhớ của bạn.
+STR_GI_X232,TACTIC: DRAW DRAFT WALLS,CHIẾN THUẬT: VẼ TƯỜNG NHÁP
+STR_GI_X233,Quickly Lock Dangerous Gaps,Nhanh Tay Khóa Khe Nguy Hiểm
+STR_GI_X234,"The moment the 3 seconds end, use the Memory tool","Vừa hết 3 giây, hãy dùng công cụ Ghi Nhớ"
+STR_GI_X235,to reconnect the Anchors and rebuild the walls you remember.,nối ngay các Anchor để dựng lại tường bạn nhớ.
+STR_GI_X236,So you never blank out mid-run!,Giúp bạn không bị đãng trí giữa chừng!
+STR_GI_X237,HINT,GỢI Ý (HINT)
+STR_GI_X238,Reveal the safe route,Soi lại đường an toàn
+STR_GI_X239,Forgot the whole route?,Lỡ quên sạch đường đi?
+STR_GI_X240,Tap Hint to instantly light up,Bấm Gợi Ý để soi sáng ngay
+STR_GI_X241,the next correct stretch of path.,1 đoạn đường đúng đắn tiếp theo.
+STR_GI_X242,UNDO,HOÀN TÁC (UNDO)
+STR_GI_X243,Take back a step,Rút lại bước đi
+STR_GI_X244,Stepped somewhere and got a bad feeling?,Vừa đặt chân vào ô thấy sai sai?
+STR_GI_X245,Tap Undo to back up one cell,Bấm Undo để lùi lại ô trước
+STR_GI_X246,before you hit a hidden wall!,trước khi va phải tường ẩn!
+STR_GI_X247,A great memory alone won't win — the master is whoever rebuilds walls with Anchors!,Kẻ có trí nhớ tốt chưa chắc đã thắng — kẻ biết dùng Anchor dựng tường mới là cao thủ!
+STR_GI_X248,?,?
+STR_GI_X249,VISION ZONE,VÙNG TẦM NHÌN
+STR_GI_X250,RADIUS 1 CELL,BÁN KÍNH 1 Ô
+STR_GI_X251,NUMBERS SHOW,HIỆN RÕ SỐ
+STR_GI_X252,Only cells right beside you!,Chỉ thấy ô sát cạnh bạn!
+STR_GI_X253,FOG ZONE,VÙNG SƯƠNG MÙ
+STR_GI_X254,CELLS FAR AWAY,Ô Ở XA BẠN
+STR_GI_X255,NUMBERS HIDDEN,ẨN CON SỐ
+STR_GI_X256,Clues are masked!,Che khuất manh mối!
+STR_GI_X257,The glow opens up wherever you walk — distant cells keep their numbers hidden in fog!,Bạn đi đến đâu thì quầng sáng mở ra tới đó — ô ở xa sẽ bị sương mù che mất số!
+STR_GI_X258,CELL ALREADY VISITED,Ô ĐÃ BƯỚC QUA
+STR_GI_X259,FADING OUT,MỜ DẦN ĐI
+STR_GI_X260,NUMBER HIDDEN AGAIN,ẨN LẠI SỐ
+STR_GI_X261,The fog rolls back in!,Sương mù phủ lại!
+STR_GI_X262,HIDDEN WALL TRAP,BẪY TƯỜNG ẨN
+STR_GI_X263,WALL HIT,ĐÂM VÀO TƯỜNG
+STR_GI_X264,The fog parts wherever you go — but never step blindly into a cell whose number is unknown!,Bước tới đâu sương mù mở tới đó — nhưng tuyệt đối không bước bừa vào ô chưa rõ số!
+STR_GI_X265,TACTIC: LOCK WALLS WITH ANCHORS,CHIẾN THUẬT: KHÓA TƯỜNG ANCHOR
+STR_GI_X266,Lock Walls Before The Fog Hides Them,Khóa Tường Trước Khi Sương Mù Che Mất
+STR_GI_X267,See a 2? Instantly connect 2 Anchors,Thấy ô có số 2? Hãy nối ngay 2 Anchor
+STR_GI_X268,to raise an orange wall for cover.,để dựng vách tường cam bảo vệ.
+STR_GI_X269,Walls you draw are NEVER erased by fog!,Tường bạn tự vẽ KHÔNG bị sương mù xóa!
+STR_GI_X270,Light the way in the dark,Soi đường trong tối
+STR_GI_X271,Losing your bearings in the fog?,Mất phương hướng trong sương?
+STR_GI_X272,the next safe stretch of path ahead.,1 đoạn đường an toàn phía trước.
+STR_GI_X273,Stepped into a direction that feels wrong?,Bước vào hướng thấy nguy hiểm?
+STR_GI_X274,Tap Undo to retreat to a safe cell,Bấm Undo để lùi lại ô an toàn
+STR_GI_X275,before ramming a hidden wall!,trước khi đâm vào tường ẩn!
+STR_GI_X276,Blind steppers hit walls — whoever locks routes with Anchors wins!,Kẻ mù quáng bước đi sẽ đâm tường — người biết dùng Anchor khóa lối sẽ chiến thắng!
+STR_GI_X277,TIME REMAINING,THỜI GIAN CÒN LẠI
+STR_GI_X278,00:45,00:45
+STR_GI_X279,TICKING DOWN,ĐANG GIẢM
+STR_GI_X280,TIME PRESSURE,ÁP LỰC THỜI GIAN
+STR_GI_X281,COUNTDOWN,ĐẾM NGƯỢC
+STR_GI_X282,TO 00:00,VỀ 00:00
+STR_GI_X283,Time up = LOSS!,Hết giờ = THUA!
+STR_GI_X284,STEP COUNT,SỐ BƯỚC CHÂN
+STR_GI_X285,UNLIMITED,KHÔNG GIỚI HẠN
+STR_GI_X286,Walk as many cells as you like,Đi bao nhiêu ô tùy ý
+STR_GI_X287,just get there in time!,chỉ cần về đích kịp!
+STR_GI_X288,You only have 60s to 120s: draw decisively before the clock hits 00:00!,Bạn chỉ có 60s đến 120s: Hãy vẽ thật dứt khoát trước khi đồng hồ điểm 00:00!
+STR_GI_X289,SHOVED BACK TO START,BỊ ĐẨY VỀ XUẤT PHÁT
+STR_GI_X290,REDRAW FROM S!,VẼ LẠI TỪ S!
+STR_GI_X291,The wall is revealed but,Tường lộ diện nhưng
+STR_GI_X292,you must walk it all again.,phải đi lại từ đầu.
+STR_GI_X293,TIME KEEPS FLOWING,THỜI GIAN VẪN TRÔI
+STR_GI_X294,5 - 10 SECONDS LOST!,MẤT 5 - 10 GIÂY!
+STR_GI_X295,"The clock keeps counting down,","Đồng hồ vẫn đếm lùi,"
+STR_GI_X296,and the budget drains fast!,quỹ giờ cạn rất nhanh!
+STR_GI_X297,Wall hits in Time Attack don't kill you — but they rob you of precious seconds!,"Đâm tường ở Time Attack không chết ngay, nhưng sẽ cướp đi thời gian quý báu của bạn!"
+STR_GI_X298,TACTIC: BLITZ THROUGH 0 CELLS,CHIẾN THUẬT: PHÓNG QUA Ô 0
+STR_GI_X299,SWIPE THROUGH • TURBO,LƯỚT QUA • SIÊU TỐC
+STR_GI_X300,Prioritize 0 Cells To Gain Speed,Ưu Tiên Ô Số 0 Để Tăng Tốc
+STR_GI_X301,A 0 cell has no walls around it.,Ô số 0 hoàn toàn không có tường bao.
+STR_GI_X302,Sprint your pen straight through it without,Hãy phóng thẳng bút qua ô này mà không
+STR_GI_X303,pausing to think — saving every second!,"cần dừng lại suy nghĩ, tiết kiệm tối đa giây!"
+STR_GI_X304,Open the way when stuck,Mở lối khi bí
+STR_GI_X305,Stuck over 3 seconds? Don't freeze!,Bí quá 3 giây? Đừng chôn chân!
+STR_GI_X306,Tap Hint at once to light the route,Bấm ngay Gợi Ý để soi đường
+STR_GI_X307,instead of watching the clock drain!,thay vì đứng nhìn đồng hồ cạn!
+STR_GI_X308,Retreat in time,Rút bước kịp thời
+STR_GI_X309,Swiped the wrong way?,Lỡ tay quẹt nhầm hướng?
+STR_GI_X310,Tap Undo immediately,Bấm Undo lùi lại ngay
+STR_GI_X311,so you don't hit a wall and fly back to S!,để không bị đâm tường văng về S!
+STR_GI_X312,"Standing still is suicide! When in doubt, tap Hint and save your remaining time.","Đứng yên là tự sát! Khi phân vân, bấm ngay Gợi Ý để cứu lấy thời gian sống còn."

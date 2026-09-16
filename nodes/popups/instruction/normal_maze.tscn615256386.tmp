@@ -1,0 +1,2083 @@
+[gd_scene format=3 uid="uid://bnwx1sthvfi8n"]
+
+[ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://bxkk0sb6eplrp" path="res://scripts/nodes/popups/instruction_popup.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://dfvpi4g55xl42" path="res://assets/images/instructions/guide_washi.svg" id="3_washi"]
+[ext_resource type="Texture2D" uid="uid://bxxd1i3aewk15" path="res://assets/images/instructions/guide_paper_detail.svg" id="4_detail"]
+[ext_resource type="Texture2D" uid="uid://d30j1wch1er0k" path="res://assets/images/instructions/btn_guide_close_normal.svg" id="5_close_n"]
+[ext_resource type="Texture2D" uid="uid://d1w0541nuay8t" path="res://assets/images/instructions/btn_guide_close_pressed.svg" id="6_close_p"]
+[ext_resource type="FontFile" uid="uid://i8w4kewq1j3" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Black.ttf" id="7_font_black"]
+[ext_resource type="Texture2D" uid="uid://58cyer5xxriy" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_normal_maze_p1.svg" id="8_img_p1"]
+[ext_resource type="FontFile" uid="uid://p1fc40cda2vk" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-ExtraBold.ttf" id="9_font_xb"]
+[ext_resource type="FontFile" uid="uid://chl28gl8r6dmd" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-SemiBold.ttf" id="10_font_sb"]
+[ext_resource type="Texture2D" uid="uid://dlvx04n76yyl8" path="res://assets/images/instructions/guide_chevron_left.svg" id="11_chev_left"]
+[ext_resource type="Texture2D" uid="uid://b2prt4h0kr6gq" path="res://assets/images/instructions/guide_chevron_right.svg" id="12_chev_right"]
+[ext_resource type="FontFile" uid="uid://cdfpur4ttilys" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Regular.ttf" id="13_font_reg"]
+[ext_resource type="Texture2D" uid="uid://bkgn75duyj3yq" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_normal_maze_p2.svg" id="14_img_p2"]
+[ext_resource type="Texture2D" uid="uid://bmh0nb0v63c3r" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_normal_maze_p3.svg" id="15_img_p3"]
+
+[sub_resource type="StyleBoxFlat" id="sb1"]
+bg_color = Color(1, 0.9922, 0.9765, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.4314, 0.6275, 0.7843, 1)
+corner_radius_top_left = 26
+corner_radius_top_right = 26
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 26
+
+[sub_resource type="StyleBoxFlat" id="sb2"]
+bg_color = Color(0.9961, 0.8863, 0.8863, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="sb3"]
+bg_color = Color(0.2392, 0.5137, 0.6824, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxEmpty" id="sb4"]
+
+[sub_resource type="StyleBoxFlat" id="sb5"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="sb6"]
+bg_color = Color(0.9412, 0.9686, 0.9843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7294, 0.8078, 0.8627, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="sb7"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4431, 0.5451, 0.6196, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="sb8"]
+bg_color = Color(0.9412, 0.9686, 0.9843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8196, 0.8863, 0.9294, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="sb9"]
+bg_color = Color(0.2392, 0.5137, 0.6824, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="sb10"]
+bg_color = Color(0.9961, 0.949, 0.949, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9961, 0.7922, 0.7922, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="sb11"]
+bg_color = Color(0.8471, 0.2667, 0.2667, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="sb12"]
+bg_color = Color(0.9412, 0.9922, 0.9569, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7333, 0.9686, 0.8157, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="sb13"]
+bg_color = Color(0.0863, 0.6392, 0.2902, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="sb14"]
+bg_color = Color(1, 0.9922, 0.9765, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4314, 0.6275, 0.7843, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="sb15"]
+bg_color = Color(1, 0.9922, 0.9765, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2392, 0.5137, 0.6824, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="sb16"]
+bg_color = Color(0.2392, 0.5137, 0.6824, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="sb17"]
+bg_color = Color(0.8196, 0.8863, 0.9294, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="sb18"]
+bg_color = Color(0.2392, 0.5137, 0.6824, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.1451, 0.3843, 0.5255, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="sb19"]
+bg_color = Color(0.9961, 0.9529, 0.7804, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9922, 0.902, 0.5412, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="sb20"]
+bg_color = Color(0.851, 0.4667, 0.0235, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="sb21"]
+bg_color = Color(1, 0.9922, 0.9765, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7294, 0.8078, 0.8627, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="sb22"]
+bg_color = Color(0.0824, 0.502, 0.2392, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.0784, 0.3255, 0.1765, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[node name="Base" unique_id=744916297 instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+
+[node name="Panel" parent="." index="1"]
+offset_left = 80.0
+offset_top = 200.0
+offset_right = 1000.0
+offset_bottom = 1680.0
+
+[node name="Art" parent="Panel" index="0"]
+visible = false
+
+[node name="Guide" type="Control" parent="Panel" index="2" unique_id=2012307625]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 920.0
+offset_bottom = 1480.0
+mouse_filter = 2
+
+[node name="Washi" type="TextureRect" parent="Panel/Guide" index="0" unique_id=1374910194]
+layout_mode = 0
+offset_left = 350.0
+offset_top = -22.0
+offset_right = 570.0
+offset_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource("3_washi")
+
+[node name="Paper" type="Panel" parent="Panel/Guide" index="1" unique_id=1249283378]
+layout_mode = 0
+offset_right = 920.0
+offset_bottom = 1480.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb1")
+
+[node name="PaperDetail" type="TextureRect" parent="Panel/Guide" index="2" unique_id=267083061]
+layout_mode = 0
+offset_right = 920.0
+offset_bottom = 1480.0
+mouse_filter = 2
+texture = ExtResource("4_detail")
+
+[node name="Close" type="TextureButton" parent="Panel/Guide" index="3" unique_id=1044364299]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 24.0
+offset_right = 886.0
+offset_bottom = 80.0
+texture_normal = ExtResource("5_close_n")
+texture_pressed = ExtResource("6_close_p")
+
+[node name="Chip" type="Panel" parent="Panel/Guide" index="4" unique_id=492568423]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 48.0
+offset_right = 290.0
+offset_bottom = 78.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb2")
+
+[node name="ChipText" type="Label" parent="Panel/Guide" index="5" unique_id=181170526]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 48.0
+offset_right = 290.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+text = "STR_GI_NORMAL_MAZE_CHIP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pages" type="Control" parent="Panel/Guide" index="6" unique_id=238546109]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Page1" type="Control" parent="Panel/Guide/Pages" index="0" unique_id=926591887]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Img" type="TextureRect" parent="Panel/Guide/Pages/Page1" index="0" unique_id=85529306]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 200.0
+offset_right = 875.0
+offset_bottom = 735.0
+mouse_filter = 2
+texture = ExtResource("8_img_p1")
+expand_mode = 1
+
+[node name="PT1" type="Label" parent="Panel/Guide/Pages/Page1" index="1" unique_id=1500149270]
+layout_mode = 0
+offset_left = 210.3
+offset_top = 295.3
+offset_right = 497.7
+offset_bottom = 352.3
+theme_override_colors/font_color = Color(0.1647, 0.2824, 0.3765, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 38
+text = "STR_GI_X001"
+
+[node name="PT2" type="Label" parent="Panel/Guide/Pages/Page1" index="2" unique_id=1322939964]
+layout_mode = 0
+offset_left = 336.3
+offset_top = 295.3
+offset_right = 631.7
+offset_bottom = 352.3
+theme_override_colors/font_color = Color(0.1647, 0.2824, 0.3765, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 38
+text = "STR_GI_X002"
+
+[node name="PT3" type="Label" parent="Panel/Guide/Pages/Page1" index="3" unique_id=1293267755]
+layout_mode = 0
+offset_left = 206.3
+offset_top = 425.3
+offset_right = 501.7
+offset_bottom = 482.3
+theme_override_colors/font_color = Color(0.1647, 0.2824, 0.3765, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 38
+text = "STR_GI_X002"
+
+[node name="PT4" type="Label" parent="Panel/Guide/Pages/Page1" index="4" unique_id=110099037]
+layout_mode = 0
+offset_left = 340.3
+offset_top = 425.3
+offset_right = 627.7
+offset_bottom = 482.3
+theme_override_colors/font_color = Color(0.1647, 0.2824, 0.3765, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 38
+text = "STR_GI_X001"
+
+[node name="PT5" type="Label" parent="Panel/Guide/Pages/Page1" index="5" unique_id=496385116]
+layout_mode = 0
+offset_left = 465.9
+offset_top = 425.3
+offset_right = 762.1
+offset_bottom = 482.3
+theme_override_colors/font_color = Color(0.1647, 0.2824, 0.3765, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 38
+text = "STR_GI_X003"
+
+[node name="PT6" type="Label" parent="Panel/Guide/Pages/Page1" index="6" unique_id=1127537125]
+layout_mode = 0
+offset_left = 335.3
+offset_top = 555.3
+offset_right = 632.7
+offset_bottom = 612.3
+theme_override_colors/font_color = Color(0.1647, 0.2824, 0.3765, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 38
+text = "STR_GI_X004"
+
+[node name="PT7" type="Label" parent="Panel/Guide/Pages/Page1" index="7" unique_id=1318001136]
+layout_mode = 0
+offset_left = 466.3
+offset_top = 555.3
+offset_right = 761.7
+offset_bottom = 612.3
+theme_override_colors/font_color = Color(0.1647, 0.2824, 0.3765, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 38
+text = "STR_GI_X002"
+
+[node name="PT8" type="Label" parent="Panel/Guide/Pages/Page1" index="8" unique_id=69841575]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 543.0
+offset_right = 250.0
+offset_bottom = 562.5
+theme_override_colors/font_color = Color(0.1804, 0.4902, 0.1961, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 13
+text = "STR_GI_X005"
+
+[node name="PT9" type="Label" parent="Panel/Guide/Pages/Page1" index="9" unique_id=1313550917]
+layout_mode = 0
+offset_left = 138.2
+offset_top = 563.0
+offset_right = 257.8
+offset_bottom = 585.5
+theme_override_colors/font_color = Color(0.0784, 0.3255, 0.1765, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 15
+text = "STR_GI_X006"
+
+[node name="PT10" type="Label" parent="Panel/Guide/Pages/Page1" index="10" unique_id=119303360]
+layout_mode = 0
+offset_left = 715.6
+offset_top = 298.0
+offset_right = 818.4
+offset_bottom = 317.5
+theme_override_colors/font_color = Color(0.8471, 0.2667, 0.2667, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 13
+text = "STR_GI_X007"
+
+[node name="PT11" type="Label" parent="Panel/Guide/Pages/Page1" index="11" unique_id=438350039]
+layout_mode = 0
+offset_left = 707.4
+offset_top = 318.0
+offset_right = 826.6
+offset_bottom = 340.5
+theme_override_colors/font_color = Color(0.6, 0.1059, 0.1059, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 15
+text = "STR_GI_X008"
+
+[node name="PT12" type="Label" parent="Panel/Guide/Pages/Page1" index="12" unique_id=400307616]
+layout_mode = 0
+offset_left = 524.0
+offset_top = 492.0
+offset_right = 628.2
+offset_bottom = 511.5
+theme_override_colors/font_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 13
+text = "STR_GI_X009"
+
+[node name="PT13" type="Label" parent="Panel/Guide/Pages/Page1" index="13" unique_id=147502664]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 671.0
+offset_right = 541.0
+offset_bottom = 693.5
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 15
+text = "STR_GI_X010"
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page1" index="14" unique_id=1407940792]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 80.0
+offset_right = 834.6
+offset_bottom = 137.0
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 38
+text = "STR_GI_NORMAL_MAZE_P1_TITLE"
+
+[node name="Tabs" type="Control" parent="Panel/Guide/Pages/Page1" index="15" unique_id=255938237]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.136
+offset_bottom = 0.71998596
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Tab1" type="Button" parent="Panel/Guide/Pages/Page1/Tabs" index="0" unique_id=666456843]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.11400001
+anchor_top = 0.703
+anchor_right = 0.38000003
+anchor_bottom = 0.94100004
+offset_left = 0.11999512
+offset_top = -0.005996704
+offset_right = 0.39996338
+offset_bottom = -0.08201599
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb3")
+theme_override_styles/pressed = SubResource("sb3")
+theme_override_styles/hover = SubResource("sb3")
+theme_override_styles/disabled = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+metadata/_edit_use_anchors_ = true
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page1/Tabs/Tab1" index="0" unique_id=724908940]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.041
+anchor_top = 0.22900002
+anchor_right = 0.147
+anchor_bottom = 0.771
+offset_left = -0.045000076
+offset_top = 0.00799942
+offset_right = -0.01499939
+offset_bottom = -0.008003235
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb5")
+metadata/_edit_use_anchors_ = true
+
+[node name="Num" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab1/Ring" index="0" unique_id=519972350]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab1" index="1" unique_id=871746739]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.171
+anchor_right = 0.95900005
+anchor_bottom = 1.0
+offset_left = 0.10499954
+offset_right = 0.04498291
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P1_TAB1"
+vertical_alignment = 1
+resize_font_to_fit = true
+maximum_font_size = 40
+metadata/_edit_use_anchors_ = true
+
+[node name="Tab2" type="Button" parent="Panel/Guide/Pages/Page1/Tabs" index="1" unique_id=579206514]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.39100003
+anchor_top = 0.703
+anchor_right = 0.65800005
+anchor_bottom = 0.94100004
+offset_left = 0.27996826
+offset_top = -0.005996704
+offset_right = -0.3600464
+offset_bottom = -0.08201599
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb6")
+theme_override_styles/pressed = SubResource("sb6")
+theme_override_styles/hover = SubResource("sb6")
+theme_override_styles/disabled = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+metadata/_edit_use_anchors_ = true
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page1/Tabs/Tab2" index="0" unique_id=832581751]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.041
+anchor_top = 0.22900002
+anchor_right = 0.147
+anchor_bottom = 0.771
+offset_left = -0.045000076
+offset_top = 0.00799942
+offset_right = -0.01499939
+offset_bottom = -0.008003235
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb7")
+metadata/_edit_use_anchors_ = true
+
+[node name="Num" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab2/Ring" index="0" unique_id=1432472561]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab2" index="1" unique_id=983076963]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.171
+anchor_right = 0.95900005
+anchor_bottom = 1.0
+offset_left = 0.10499954
+offset_right = 0.04498291
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P1_TAB2"
+vertical_alignment = 1
+resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Tab3" type="Button" parent="Panel/Guide/Pages/Page1/Tabs" index="2" unique_id=676916583]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.66800004
+anchor_top = 0.703
+anchor_right = 0.93500006
+anchor_bottom = 0.94100004
+offset_left = 0.4399414
+offset_top = -0.005996704
+offset_right = -0.20007324
+offset_bottom = -0.08201599
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb6")
+theme_override_styles/pressed = SubResource("sb6")
+theme_override_styles/hover = SubResource("sb6")
+theme_override_styles/disabled = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+metadata/_edit_use_anchors_ = true
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page1/Tabs/Tab3" index="0" unique_id=1619257621]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.041
+anchor_top = 0.22900002
+anchor_right = 0.147
+anchor_bottom = 0.771
+offset_left = -0.045000076
+offset_top = 0.00799942
+offset_right = -0.01499939
+offset_bottom = -0.008003235
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb7")
+metadata/_edit_use_anchors_ = true
+
+[node name="Num" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab3/Ring" index="0" unique_id=394244942]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab3" index="1" unique_id=1192976345]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.171
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.10499954
+offset_right = -10.0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P1_TAB3"
+vertical_alignment = 1
+resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Section" type="Label" parent="Panel/Guide/Pages/Page1" index="16" unique_id=1098603770]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.11400001
+anchor_top = 0.51600003
+anchor_right = 0.47800002
+anchor_bottom = 0.532
+offset_left = 0.11999512
+offset_top = -0.6800537
+offset_right = -0.26000977
+offset_bottom = -0.35998535
+theme_override_colors/font_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P1_SECTION"
+metadata/_edit_use_anchors_ = true
+
+[node name="Row1" type="Panel" parent="Panel/Guide/Pages/Page1" index="17" unique_id=2054232274]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 797.0
+offset_right = 860.0
+offset_bottom = 873.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb8")
+
+[node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page1/Row1" index="0" unique_id=864145866]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 22.0
+offset_right = 52.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb9")
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page1/Row1" index="1" unique_id=1322612525]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 14.0
+offset_right = 392.9
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 18
+text = "STR_GI_NORMAL_MAZE_P1_R1T"
+
+[node name="Desc" type="Label" parent="Panel/Guide/Pages/Page1/Row1" index="2" unique_id=586914776]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 42.0
+offset_right = 346.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.3529, 0.451, 0.5216, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P1_R1D"
+
+[node name="Row2" type="Panel" parent="Panel/Guide/Pages/Page1" index="18" unique_id=348144835]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 885.0
+offset_right = 860.0
+offset_bottom = 961.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb10")
+
+[node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page1/Row2" index="0" unique_id=881242825]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 22.0
+offset_right = 52.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb11")
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page1/Row2" index="1" unique_id=1133219599]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 14.0
+offset_right = 396.8
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 18
+text = "STR_GI_NORMAL_MAZE_P1_R2T"
+
+[node name="Desc" type="Label" parent="Panel/Guide/Pages/Page1/Row2" index="2" unique_id=1899840618]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 42.0
+offset_right = 349.9
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.498, 0.1137, 0.1137, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P1_R2D"
+
+[node name="Row3" type="Panel" parent="Panel/Guide/Pages/Page1" index="19" unique_id=2049935537]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 973.0
+offset_right = 860.0
+offset_bottom = 1049.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb12")
+
+[node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page1/Row3" index="0" unique_id=86423386]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 22.0
+offset_right = 52.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb13")
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page1/Row3" index="1" unique_id=777841588]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 14.0
+offset_right = 397.1
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0.0784, 0.3255, 0.1765, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 18
+text = "STR_GI_NORMAL_MAZE_P1_R3T"
+
+[node name="Desc" type="Label" parent="Panel/Guide/Pages/Page1/Row3" index="2" unique_id=1988979517]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 42.0
+offset_right = 350.1
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P1_R3D"
+
+[node name="Prev" type="Button" parent="Panel/Guide/Pages/Page1" index="20" unique_id=1104145399]
+modulate = Color(1, 1, 1, 0.45)
+layout_mode = 0
+offset_left = 105.0
+offset_top = 1100.0
+offset_right = 157.0
+offset_bottom = 1152.0
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_colors/icon_focus_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_colors/icon_pressed_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_colors/icon_hover_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_colors/icon_disabled_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_styles/normal = SubResource("sb14")
+theme_override_styles/pressed = SubResource("sb14")
+theme_override_styles/hover = SubResource("sb14")
+theme_override_styles/disabled = SubResource("sb14")
+theme_override_styles/focus = SubResource("sb4")
+disabled = true
+icon = ExtResource("11_chev_left")
+
+[node name="Next" type="Button" parent="Panel/Guide/Pages/Page1" index="21" unique_id=1241137756]
+layout_mode = 0
+offset_left = 305.0
+offset_top = 1100.0
+offset_right = 357.0
+offset_bottom = 1152.0
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_focus_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_pressed_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_hover_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_disabled_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_styles/normal = SubResource("sb15")
+theme_override_styles/pressed = SubResource("sb15")
+theme_override_styles/hover = SubResource("sb15")
+theme_override_styles/disabled = SubResource("sb15")
+theme_override_styles/focus = SubResource("sb4")
+icon = ExtResource("12_chev_right")
+
+[node name="Dots" type="Control" parent="Panel/Guide/Pages/Page1" index="22" unique_id=660719051]
+anchors_preset = 0
+offset_right = 920.0
+offset_bottom = 1480.0
+mouse_filter = 2
+
+[node name="Dot1" type="Button" parent="Panel/Guide/Pages/Page1/Dots" index="0" unique_id=1654006098]
+layout_mode = 0
+offset_left = 185.0
+offset_top = 1116.0
+offset_right = 223.0
+offset_bottom = 1134.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb16")
+theme_override_styles/pressed = SubResource("sb16")
+theme_override_styles/hover = SubResource("sb16")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Dot2" type="Button" parent="Panel/Guide/Pages/Page1/Dots" index="1" unique_id=229978910]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 1117.0
+offset_right = 251.0
+offset_bottom = 1133.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb17")
+theme_override_styles/pressed = SubResource("sb17")
+theme_override_styles/hover = SubResource("sb17")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Dot3" type="Button" parent="Panel/Guide/Pages/Page1/Dots" index="2" unique_id=738874071]
+layout_mode = 0
+offset_left = 263.0
+offset_top = 1117.0
+offset_right = 279.0
+offset_bottom = 1133.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb17")
+theme_override_styles/pressed = SubResource("sb17")
+theme_override_styles/hover = SubResource("sb17")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Index" type="Label" parent="Panel/Guide/Pages/Page1" index="23" unique_id=46253416]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 1114.0
+offset_right = 860.0
+offset_bottom = 1144.0
+theme_override_colors/font_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_fonts/font = ExtResource("13_font_reg")
+theme_override_font_sizes/font_size = 20
+text = "STR_GI_PAGE_INDEX"
+horizontal_alignment = 2
+
+[node name="Cta" type="Button" parent="Panel/Guide/Pages/Page1" index="24" unique_id=47945370]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 1180.0
+offset_right = 860.0
+offset_bottom = 1280.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("sb18")
+theme_override_styles/pressed = SubResource("sb18")
+theme_override_styles/hover = SubResource("sb18")
+theme_override_styles/focus = SubResource("sb4")
+text = "STR_GI_NORMAL_MAZE_P1_CTA"
+
+[node name="Link" type="Button" parent="Panel/Guide/Pages/Page1" index="25" unique_id=1103457212]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 1288.0
+offset_right = 860.0
+offset_bottom = 1344.0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_colors/font_pressed_color = Color(0.4431, 0.5451, 0.6196, 0.75)
+theme_override_colors/font_hover_color = Color(0.4431, 0.5451, 0.6196, 0.75)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("sb4")
+theme_override_styles/pressed = SubResource("sb4")
+theme_override_styles/hover = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+text = "STR_GI_NORMAL_MAZE_P1_LINK"
+flat = true
+
+[node name="Page2" type="Control" parent="Panel/Guide/Pages" index="1" unique_id=869041542]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Img" type="TextureRect" parent="Panel/Guide/Pages/Page2" index="0" unique_id=1172451572]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 200.0
+offset_right = 875.0
+offset_bottom = 735.0
+mouse_filter = 2
+texture = ExtResource("14_img_p2")
+expand_mode = 1
+
+[node name="PT1" type="Label" parent="Panel/Guide/Pages/Page2" index="1" unique_id=2086859077]
+layout_mode = 0
+offset_left = 208.2
+offset_top = 279.0
+offset_right = 305.8
+offset_bottom = 298.5
+theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 13
+text = "STR_GI_X011"
+
+[node name="PT2" type="Label" parent="Panel/Guide/Pages/Page2" index="2" unique_id=608831721]
+layout_mode = 0
+offset_left = 11.6
+offset_top = 360.6
+offset_right = 602.4
+offset_bottom = 474.6
+theme_override_colors/font_color = Color(0.0863, 0.6392, 0.2902, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 76
+text = "STR_GI_X004"
+
+[node name="PT3" type="Label" parent="Panel/Guide/Pages/Page2" index="3" unique_id=665930079]
+layout_mode = 0
+offset_left = 245.7
+offset_top = 544.0
+offset_right = 368.3
+offset_bottom = 568.0
+theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_X012"
+
+[node name="PT4" type="Label" parent="Panel/Guide/Pages/Page2" index="4" unique_id=1892970005]
+layout_mode = 0
+offset_left = 255.5
+offset_top = 573.0
+offset_right = 358.5
+offset_bottom = 594.0
+theme_override_colors/font_color = Color(0.2941, 0.4941, 0.6235, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 14
+text = "STR_GI_X013"
+
+[node name="PT5" type="Label" parent="Panel/Guide/Pages/Page2" index="5" unique_id=1212516227]
+layout_mode = 0
+offset_left = 561.5
+offset_top = 279.0
+offset_right = 662.5
+offset_bottom = 298.5
+theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 13
+text = "STR_GI_X014"
+
+[node name="PT6" type="Label" parent="Panel/Guide/Pages/Page2" index="6" unique_id=1631475439]
+layout_mode = 0
+offset_left = 367.8
+offset_top = 360.6
+offset_right = 956.2
+offset_bottom = 474.6
+theme_override_colors/font_color = Color(0.8627, 0.149, 0.149, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 76
+text = "STR_GI_X003"
+
+[node name="PT7" type="Label" parent="Panel/Guide/Pages/Page2" index="7" unique_id=1342058154]
+layout_mode = 0
+offset_left = 600.5
+offset_top = 544.0
+offset_right = 723.5
+offset_bottom = 568.0
+theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_X015"
+
+[node name="PT8" type="Label" parent="Panel/Guide/Pages/Page2" index="8" unique_id=1019628394]
+layout_mode = 0
+offset_left = 610.3
+offset_top = 573.0
+offset_right = 713.7
+offset_bottom = 594.0
+theme_override_colors/font_color = Color(0.498, 0.1137, 0.1137, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 14
+text = "STR_GI_X016"
+
+[node name="PT9" type="Label" parent="Panel/Guide/Pages/Page2" index="9" unique_id=406822044]
+layout_mode = 0
+offset_left = 427.8
+offset_top = 669.0
+offset_right = 540.2
+offset_bottom = 691.5
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 15
+text = "STR_GI_X017"
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page2" index="10" unique_id=206728032]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 80.0
+offset_right = 842.6
+offset_bottom = 137.0
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 38
+text = "STR_GI_NORMAL_MAZE_P2_TITLE"
+
+[node name="Tabs" type="Control" parent="Panel/Guide/Pages/Page2" index="11" unique_id=1307356992]
+anchors_preset = 0
+offset_right = 920.0
+offset_bottom = 202.0
+mouse_filter = 2
+
+[node name="Tab1" type="Button" parent="Panel/Guide/Pages/Page2/Tabs" index="0" unique_id=1817170681]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 142.0
+offset_right = 350.0
+offset_bottom = 190.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb6")
+theme_override_styles/pressed = SubResource("sb6")
+theme_override_styles/hover = SubResource("sb6")
+theme_override_styles/disabled = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page2/Tabs/Tab1" index="0" unique_id=690538810]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb7")
+
+[node name="Num" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab1" index="1" unique_id=1428042572]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab1" index="2" unique_id=2094749626]
+layout_mode = 0
+offset_left = 42.0
+offset_right = 235.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P2_TAB1"
+vertical_alignment = 1
+
+[node name="Tab2" type="Button" parent="Panel/Guide/Pages/Page2/Tabs" index="1" unique_id=1893665341]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 142.0
+offset_right = 605.0
+offset_bottom = 190.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb3")
+theme_override_styles/pressed = SubResource("sb3")
+theme_override_styles/hover = SubResource("sb3")
+theme_override_styles/disabled = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page2/Tabs/Tab2" index="0" unique_id=953141646]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb5")
+
+[node name="Num" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab2" index="1" unique_id=2088777720]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab2" index="2" unique_id=1771491303]
+layout_mode = 0
+offset_left = 42.0
+offset_right = 235.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P2_TAB2"
+vertical_alignment = 1
+
+[node name="Tab3" type="Button" parent="Panel/Guide/Pages/Page2/Tabs" index="2" unique_id=837831563]
+layout_mode = 0
+offset_left = 615.0
+offset_top = 142.0
+offset_right = 860.0
+offset_bottom = 190.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb6")
+theme_override_styles/pressed = SubResource("sb6")
+theme_override_styles/hover = SubResource("sb6")
+theme_override_styles/disabled = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page2/Tabs/Tab3" index="0" unique_id=107045887]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb7")
+
+[node name="Num" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab3" index="1" unique_id=754863885]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab3" index="2" unique_id=1781670243]
+layout_mode = 0
+offset_left = 42.0
+offset_right = 235.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P2_TAB3"
+vertical_alignment = 1
+
+[node name="Section" type="Label" parent="Panel/Guide/Pages/Page2" index="12" unique_id=499483075]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 763.0
+offset_right = 442.9
+offset_bottom = 787.0
+theme_override_colors/font_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P2_SECTION"
+
+[node name="Row1" type="Panel" parent="Panel/Guide/Pages/Page2" index="13" unique_id=2004794774]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 797.0
+offset_right = 860.0
+offset_bottom = 873.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb8")
+
+[node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page2/Row1" index="0" unique_id=1204034913]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 22.0
+offset_right = 52.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb9")
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page2/Row1" index="1" unique_id=1707151633]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 14.0
+offset_right = 396.8
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 18
+text = "STR_GI_NORMAL_MAZE_P2_R1T"
+
+[node name="Desc" type="Label" parent="Panel/Guide/Pages/Page2/Row1" index="2" unique_id=557849751]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 42.0
+offset_right = 349.9
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.3529, 0.451, 0.5216, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P2_R1D"
+
+[node name="Row2" type="Panel" parent="Panel/Guide/Pages/Page2" index="14" unique_id=85468830]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 885.0
+offset_right = 860.0
+offset_bottom = 961.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb12")
+
+[node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page2/Row2" index="0" unique_id=966051166]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 22.0
+offset_right = 52.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb13")
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page2/Row2" index="1" unique_id=2046510410]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 14.0
+offset_right = 400.6
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 18
+text = "STR_GI_NORMAL_MAZE_P2_R2T"
+
+[node name="Desc" type="Label" parent="Panel/Guide/Pages/Page2/Row2" index="2" unique_id=1830043532]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 42.0
+offset_right = 353.8
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P2_R2D"
+
+[node name="Row3" type="Panel" parent="Panel/Guide/Pages/Page2" index="15" unique_id=69400813]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 973.0
+offset_right = 860.0
+offset_bottom = 1049.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb10")
+
+[node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page2/Row3" index="0" unique_id=623569120]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 22.0
+offset_right = 52.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb11")
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page2/Row3" index="1" unique_id=523376287]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 14.0
+offset_right = 400.9
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 18
+text = "STR_GI_NORMAL_MAZE_P2_R3T"
+
+[node name="Desc" type="Label" parent="Panel/Guide/Pages/Page2/Row3" index="2" unique_id=132407363]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 42.0
+offset_right = 354.1
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.498, 0.1137, 0.1137, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P2_R3D"
+
+[node name="Prev" type="Button" parent="Panel/Guide/Pages/Page2" index="16" unique_id=614273657]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 1100.0
+offset_right = 157.0
+offset_bottom = 1152.0
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_focus_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_pressed_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_hover_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_disabled_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_styles/normal = SubResource("sb15")
+theme_override_styles/pressed = SubResource("sb15")
+theme_override_styles/hover = SubResource("sb15")
+theme_override_styles/disabled = SubResource("sb15")
+theme_override_styles/focus = SubResource("sb4")
+icon = ExtResource("11_chev_left")
+
+[node name="Next" type="Button" parent="Panel/Guide/Pages/Page2" index="17" unique_id=629122571]
+layout_mode = 0
+offset_left = 305.0
+offset_top = 1100.0
+offset_right = 357.0
+offset_bottom = 1152.0
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_focus_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_pressed_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_hover_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_disabled_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_styles/normal = SubResource("sb15")
+theme_override_styles/pressed = SubResource("sb15")
+theme_override_styles/hover = SubResource("sb15")
+theme_override_styles/disabled = SubResource("sb15")
+theme_override_styles/focus = SubResource("sb4")
+icon = ExtResource("12_chev_right")
+
+[node name="Dots" type="Control" parent="Panel/Guide/Pages/Page2" index="18" unique_id=1279936905]
+anchors_preset = 0
+offset_right = 920.0
+offset_bottom = 1480.0
+mouse_filter = 2
+
+[node name="Dot1" type="Button" parent="Panel/Guide/Pages/Page2/Dots" index="0" unique_id=338735801]
+layout_mode = 0
+offset_left = 186.0
+offset_top = 1117.0
+offset_right = 202.0
+offset_bottom = 1133.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb17")
+theme_override_styles/pressed = SubResource("sb17")
+theme_override_styles/hover = SubResource("sb17")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Dot2" type="Button" parent="Panel/Guide/Pages/Page2/Dots" index="1" unique_id=817784614]
+layout_mode = 0
+offset_left = 212.0
+offset_top = 1116.0
+offset_right = 250.0
+offset_bottom = 1134.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb16")
+theme_override_styles/pressed = SubResource("sb16")
+theme_override_styles/hover = SubResource("sb16")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Dot3" type="Button" parent="Panel/Guide/Pages/Page2/Dots" index="2" unique_id=129181702]
+layout_mode = 0
+offset_left = 263.0
+offset_top = 1117.0
+offset_right = 279.0
+offset_bottom = 1133.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb17")
+theme_override_styles/pressed = SubResource("sb17")
+theme_override_styles/hover = SubResource("sb17")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Index" type="Label" parent="Panel/Guide/Pages/Page2" index="19" unique_id=300199414]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 1114.0
+offset_right = 860.0
+offset_bottom = 1144.0
+theme_override_colors/font_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_fonts/font = ExtResource("13_font_reg")
+theme_override_font_sizes/font_size = 20
+text = "STR_GI_PAGE_INDEX"
+horizontal_alignment = 2
+
+[node name="Cta" type="Button" parent="Panel/Guide/Pages/Page2" index="20" unique_id=1928146917]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 1180.0
+offset_right = 860.0
+offset_bottom = 1280.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("sb18")
+theme_override_styles/pressed = SubResource("sb18")
+theme_override_styles/hover = SubResource("sb18")
+theme_override_styles/focus = SubResource("sb4")
+text = "STR_GI_NORMAL_MAZE_P2_CTA"
+
+[node name="Link" type="Button" parent="Panel/Guide/Pages/Page2" index="21" unique_id=260808508]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 1288.0
+offset_right = 860.0
+offset_bottom = 1344.0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_colors/font_pressed_color = Color(0.4431, 0.5451, 0.6196, 0.75)
+theme_override_colors/font_hover_color = Color(0.4431, 0.5451, 0.6196, 0.75)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("sb4")
+theme_override_styles/pressed = SubResource("sb4")
+theme_override_styles/hover = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+text = "STR_GI_NORMAL_MAZE_P2_LINK"
+flat = true
+
+[node name="Page3" type="Control" parent="Panel/Guide/Pages" index="2" unique_id=1919261868]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Img" type="TextureRect" parent="Panel/Guide/Pages/Page3" index="0" unique_id=1049059357]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 200.0
+offset_right = 875.0
+offset_bottom = 735.0
+mouse_filter = 2
+texture = ExtResource("15_img_p3")
+expand_mode = 1
+
+[node name="PT1" type="Label" parent="Panel/Guide/Pages/Page3" index="1" unique_id=670349230]
+layout_mode = 0
+offset_left = 218.7
+offset_top = 267.0
+offset_right = 319.3
+offset_bottom = 286.5
+theme_override_colors/font_color = Color(0.7059, 0.3255, 0.0353, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 13
+text = "STR_GI_X018"
+
+[node name="PT2" type="Label" parent="Panel/Guide/Pages/Page3" index="2" unique_id=419893314]
+layout_mode = 0
+offset_left = 144.6
+offset_top = 331.0
+offset_right = 409.4
+offset_bottom = 382.0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 34
+text = "STR_GI_X002"
+
+[node name="PT3" type="Label" parent="Panel/Guide/Pages/Page3" index="3" unique_id=1135740667]
+layout_mode = 0
+offset_left = 410.0
+offset_top = 316.0
+offset_right = 548.2
+offset_bottom = 343.0
+theme_override_colors/font_color = Color(0.7059, 0.3255, 0.0353, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 18
+text = "STR_GI_X019"
+
+[node name="PT4" type="Label" parent="Panel/Guide/Pages/Page3" index="4" unique_id=222718537]
+layout_mode = 0
+offset_left = 410.0
+offset_top = 349.0
+offset_right = 524.1
+offset_bottom = 371.5
+theme_override_colors/font_color = Color(0.4706, 0.2078, 0.0588, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 15
+text = "STR_GI_X020"
+
+[node name="PT5" type="Label" parent="Panel/Guide/Pages/Page3" index="5" unique_id=1824482825]
+layout_mode = 0
+offset_left = 410.0
+offset_top = 373.0
+offset_right = 519.9
+offset_bottom = 395.5
+theme_override_colors/font_color = Color(0.4706, 0.2078, 0.0588, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 15
+text = "STR_GI_X021"
+
+[node name="PT6" type="Label" parent="Panel/Guide/Pages/Page3" index="6" unique_id=1079087086]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 504.0
+offset_right = 396.5
+offset_bottom = 534.0
+theme_override_colors/font_color = Color(0.0863, 0.2275, 0.3451, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 20
+text = "STR_GI_X022"
+
+[node name="PT7" type="Label" parent="Panel/Guide/Pages/Page3" index="7" unique_id=589771587]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 533.0
+offset_right = 342.0
+offset_bottom = 552.5
+theme_override_colors/font_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 13
+text = "STR_GI_X023"
+
+[node name="PT8" type="Label" parent="Panel/Guide/Pages/Page3" index="8" unique_id=626414003]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 571.0
+offset_right = 282.1
+offset_bottom = 592.0
+theme_override_colors/font_color = Color(0.3529, 0.451, 0.5216, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 14
+text = "STR_GI_X024"
+
+[node name="PT9" type="Label" parent="Panel/Guide/Pages/Page3" index="9" unique_id=253692385]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 594.0
+offset_right = 281.5
+offset_bottom = 615.0
+theme_override_colors/font_color = Color(0.3529, 0.451, 0.5216, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 14
+text = "STR_GI_X025"
+
+[node name="PT10" type="Label" parent="Panel/Guide/Pages/Page3" index="10" unique_id=550258652]
+layout_mode = 0
+offset_left = 585.0
+offset_top = 504.0
+offset_right = 742.3
+offset_bottom = 534.0
+theme_override_colors/font_color = Color(0.5216, 0.302, 0.0549, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 20
+text = "STR_GI_X026"
+
+[node name="PT11" type="Label" parent="Panel/Guide/Pages/Page3" index="11" unique_id=1492285081]
+layout_mode = 0
+offset_left = 585.0
+offset_top = 533.0
+offset_right = 685.9
+offset_bottom = 552.5
+theme_override_colors/font_color = Color(0.851, 0.4667, 0.0235, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 13
+text = "STR_GI_X027"
+
+[node name="PT12" type="Label" parent="Panel/Guide/Pages/Page3" index="12" unique_id=1197348932]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 571.0
+offset_right = 626.3
+offset_bottom = 592.0
+theme_override_colors/font_color = Color(0.4431, 0.2471, 0.0706, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 14
+text = "STR_GI_X028"
+
+[node name="PT13" type="Label" parent="Panel/Guide/Pages/Page3" index="13" unique_id=1049772055]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 594.0
+offset_right = 626.8
+offset_bottom = 615.0
+theme_override_colors/font_color = Color(0.4431, 0.2471, 0.0706, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 14
+text = "STR_GI_X029"
+
+[node name="PT14" type="Label" parent="Panel/Guide/Pages/Page3" index="14" unique_id=97126041]
+layout_mode = 0
+offset_left = 425.2
+offset_top = 669.0
+offset_right = 542.8
+offset_bottom = 691.5
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 15
+text = "STR_GI_X030"
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page3" index="15" unique_id=508893749]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 80.0
+offset_right = 843.4
+offset_bottom = 137.0
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 38
+text = "STR_GI_NORMAL_MAZE_P3_TITLE"
+
+[node name="Tabs" type="Control" parent="Panel/Guide/Pages/Page3" index="16" unique_id=1208808076]
+anchors_preset = 0
+offset_right = 920.0
+offset_bottom = 202.0
+mouse_filter = 2
+
+[node name="Tab1" type="Button" parent="Panel/Guide/Pages/Page3/Tabs" index="0" unique_id=1973012735]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 142.0
+offset_right = 350.0
+offset_bottom = 190.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb6")
+theme_override_styles/pressed = SubResource("sb6")
+theme_override_styles/hover = SubResource("sb6")
+theme_override_styles/disabled = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page3/Tabs/Tab1" index="0" unique_id=568713779]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb7")
+
+[node name="Num" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab1" index="1" unique_id=31719635]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab1" index="2" unique_id=943212788]
+layout_mode = 0
+offset_left = 42.0
+offset_right = 235.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P3_TAB1"
+vertical_alignment = 1
+
+[node name="Tab2" type="Button" parent="Panel/Guide/Pages/Page3/Tabs" index="1" unique_id=1061048756]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 142.0
+offset_right = 605.0
+offset_bottom = 190.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb6")
+theme_override_styles/pressed = SubResource("sb6")
+theme_override_styles/hover = SubResource("sb6")
+theme_override_styles/disabled = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page3/Tabs/Tab2" index="0" unique_id=1708461597]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb7")
+
+[node name="Num" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab2" index="1" unique_id=320077595]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab2" index="2" unique_id=1028244483]
+layout_mode = 0
+offset_left = 42.0
+offset_right = 235.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P3_TAB2"
+vertical_alignment = 1
+
+[node name="Tab3" type="Button" parent="Panel/Guide/Pages/Page3/Tabs" index="2" unique_id=1648461016]
+layout_mode = 0
+offset_left = 615.0
+offset_top = 142.0
+offset_right = 860.0
+offset_bottom = 190.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb3")
+theme_override_styles/pressed = SubResource("sb3")
+theme_override_styles/hover = SubResource("sb3")
+theme_override_styles/disabled = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page3/Tabs/Tab3" index="0" unique_id=571723218]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb5")
+
+[node name="Num" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab3" index="1" unique_id=99919276]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 36.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab3" index="2" unique_id=1210955113]
+layout_mode = 0
+offset_left = 42.0
+offset_right = 235.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P3_TAB3"
+vertical_alignment = 1
+
+[node name="Section" type="Label" parent="Panel/Guide/Pages/Page3" index="17" unique_id=60972255]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 763.0
+offset_right = 443.2
+offset_bottom = 787.0
+theme_override_colors/font_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P3_SECTION"
+
+[node name="Row1" type="Panel" parent="Panel/Guide/Pages/Page3" index="18" unique_id=1935527047]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 797.0
+offset_right = 860.0
+offset_bottom = 873.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb8")
+
+[node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page3/Row1" index="0" unique_id=703528697]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 22.0
+offset_right = 52.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb9")
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page3/Row1" index="1" unique_id=1195399054]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 14.0
+offset_right = 397.1
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 18
+text = "STR_GI_NORMAL_MAZE_P3_R1T"
+
+[node name="Desc" type="Label" parent="Panel/Guide/Pages/Page3/Row1" index="2" unique_id=285606724]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 42.0
+offset_right = 350.1
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.3529, 0.451, 0.5216, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P3_R1D"
+
+[node name="Row2" type="Panel" parent="Panel/Guide/Pages/Page3" index="19" unique_id=566284835]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 885.0
+offset_right = 860.0
+offset_bottom = 961.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb12")
+
+[node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page3/Row2" index="0" unique_id=1502240073]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 22.0
+offset_right = 52.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb13")
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page3/Row2" index="1" unique_id=1342931930]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 14.0
+offset_right = 400.9
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 18
+text = "STR_GI_NORMAL_MAZE_P3_R2T"
+
+[node name="Desc" type="Label" parent="Panel/Guide/Pages/Page3/Row2" index="2" unique_id=1198457379]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 42.0
+offset_right = 354.1
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P3_R2D"
+
+[node name="Row3" type="Panel" parent="Panel/Guide/Pages/Page3" index="20" unique_id=758121063]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 973.0
+offset_right = 860.0
+offset_bottom = 1049.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb19")
+
+[node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page3/Row3" index="0" unique_id=1360376731]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 22.0
+offset_right = 52.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb20")
+
+[node name="Title" type="Label" parent="Panel/Guide/Pages/Page3/Row3" index="1" unique_id=2096303195]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 14.0
+offset_right = 401.3
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0.5725, 0.251, 0.0549, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 18
+text = "STR_GI_NORMAL_MAZE_P3_R3T"
+
+[node name="Desc" type="Label" parent="Panel/Guide/Pages/Page3/Row3" index="2" unique_id=1093305471]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 42.0
+offset_right = 354.3
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.4706, 0.2078, 0.0588, 1)
+theme_override_fonts/font = ExtResource("10_font_sb")
+theme_override_font_sizes/font_size = 16
+text = "STR_GI_NORMAL_MAZE_P3_R3D"
+
+[node name="Prev" type="Button" parent="Panel/Guide/Pages/Page3" index="21" unique_id=1425662176]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 1100.0
+offset_right = 157.0
+offset_bottom = 1152.0
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_focus_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_pressed_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_hover_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/icon_disabled_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_styles/normal = SubResource("sb15")
+theme_override_styles/pressed = SubResource("sb15")
+theme_override_styles/hover = SubResource("sb15")
+theme_override_styles/disabled = SubResource("sb15")
+theme_override_styles/focus = SubResource("sb4")
+icon = ExtResource("11_chev_left")
+
+[node name="Next" type="Button" parent="Panel/Guide/Pages/Page3" index="22" unique_id=95641376]
+modulate = Color(1, 1, 1, 0.45)
+layout_mode = 0
+offset_left = 305.0
+offset_top = 1100.0
+offset_right = 357.0
+offset_bottom = 1152.0
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_colors/icon_focus_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_colors/icon_pressed_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_colors/icon_hover_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_colors/icon_disabled_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_styles/normal = SubResource("sb21")
+theme_override_styles/pressed = SubResource("sb21")
+theme_override_styles/hover = SubResource("sb21")
+theme_override_styles/disabled = SubResource("sb21")
+theme_override_styles/focus = SubResource("sb4")
+disabled = true
+icon = ExtResource("12_chev_right")
+
+[node name="Dots" type="Control" parent="Panel/Guide/Pages/Page3" index="23" unique_id=399349322]
+anchors_preset = 0
+offset_right = 920.0
+offset_bottom = 1480.0
+mouse_filter = 2
+
+[node name="Dot1" type="Button" parent="Panel/Guide/Pages/Page3/Dots" index="0" unique_id=1162357780]
+layout_mode = 0
+offset_left = 186.0
+offset_top = 1117.0
+offset_right = 202.0
+offset_bottom = 1133.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb17")
+theme_override_styles/pressed = SubResource("sb17")
+theme_override_styles/hover = SubResource("sb17")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Dot2" type="Button" parent="Panel/Guide/Pages/Page3/Dots" index="1" unique_id=1170552218]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 1117.0
+offset_right = 230.0
+offset_bottom = 1133.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb17")
+theme_override_styles/pressed = SubResource("sb17")
+theme_override_styles/hover = SubResource("sb17")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Dot3" type="Button" parent="Panel/Guide/Pages/Page3/Dots" index="2" unique_id=684573023]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 1116.0
+offset_right = 278.0
+offset_bottom = 1134.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb16")
+theme_override_styles/pressed = SubResource("sb16")
+theme_override_styles/hover = SubResource("sb16")
+theme_override_styles/focus = SubResource("sb4")
+
+[node name="Index" type="Label" parent="Panel/Guide/Pages/Page3" index="24" unique_id=923267449]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 1114.0
+offset_right = 860.0
+offset_bottom = 1144.0
+theme_override_colors/font_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_fonts/font = ExtResource("13_font_reg")
+theme_override_font_sizes/font_size = 20
+text = "STR_GI_PAGE_INDEX"
+horizontal_alignment = 2
+
+[node name="Cta" type="Button" parent="Panel/Guide/Pages/Page3" index="25" unique_id=2014894393]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 1180.0
+offset_right = 860.0
+offset_bottom = 1280.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("sb22")
+theme_override_styles/pressed = SubResource("sb22")
+theme_override_styles/hover = SubResource("sb22")
+theme_override_styles/focus = SubResource("sb4")
+text = "STR_GI_NORMAL_MAZE_P3_CTA"
+
+[node name="Link" type="Button" parent="Panel/Guide/Pages/Page3" index="26" unique_id=508465293]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 1288.0
+offset_right = 860.0
+offset_bottom = 1344.0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.2392, 0.5137, 0.6824, 1)
+theme_override_colors/font_pressed_color = Color(0.2392, 0.5137, 0.6824, 0.75)
+theme_override_colors/font_hover_color = Color(0.2392, 0.5137, 0.6824, 0.75)
+theme_override_fonts/font = ExtResource("9_font_xb")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("sb4")
+theme_override_styles/pressed = SubResource("sb4")
+theme_override_styles/hover = SubResource("sb4")
+theme_override_styles/focus = SubResource("sb4")
+text = "STR_GI_NORMAL_MAZE_P3_LINK"
+flat = true

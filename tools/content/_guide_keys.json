@@ -1,0 +1,2118 @@
+{
+ "modes": {
+  "normal_maze": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_NORMAL_MAZE_P1_TITLE",
+      "Cách Vượt Mê Cung"
+     ],
+     "section": [
+      "STR_GI_NORMAL_MAZE_P1_SECTION",
+      "QUY TẮC CẦN NHỚ"
+     ],
+     "cta": [
+      "STR_GI_NORMAL_MAZE_P1_CTA",
+      "TIẾP THEO: MANH MỐI SỐ (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_NORMAL_MAZE_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào chơi ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_NORMAL_MAZE_P1_TAB1",
+       "BẮT ĐẦU & ĐÍCH"
+      ],
+      [
+       "STR_GI_NORMAL_MAZE_P1_TAB2",
+       "MANH MỐI SỐ"
+      ],
+      [
+       "STR_GI_NORMAL_MAZE_P1_TAB3",
+       "CÔNG CỤ"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_NORMAL_MAZE_P1_R1T",
+        "Nối Cầu Thang Xuất Phát tới Hố Đích:"
+       ],
+       "desc": [
+        "STR_GI_NORMAL_MAZE_P1_R1D",
+        "Đặt ngón tay vào tâm ô Cầu Thang S, kéo liên tục qua các ô để vẽ đường."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_NORMAL_MAZE_P1_R2T",
+        "Cảnh giác Tường Vô Hình:"
+       ],
+       "desc": [
+        "STR_GI_NORMAL_MAZE_P1_R2D",
+        "Đâm phải tường ẩn giữa 2 ô sẽ bị Game Over ngay lập tức!"
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_NORMAL_MAZE_P1_R3T",
+        "Dựa vào manh mối các con số:"
+       ],
+       "desc": [
+        "STR_GI_NORMAL_MAZE_P1_R3D",
+        "Con số trên ô cho biết số cạnh xung quanh có tường (xem tiếp ở Trang 2)."
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_NORMAL_MAZE_P2_TITLE",
+      "Manh Mối Con Số"
+     ],
+     "section": [
+      "STR_GI_NORMAL_MAZE_P2_SECTION",
+      "QUY TẮC CON SỐ"
+     ],
+     "cta": [
+      "STR_GI_NORMAL_MAZE_P2_CTA",
+      "TIẾP THEO: CÁC CÔNG CỤ HỖ TRỢ (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_NORMAL_MAZE_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào chơi ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_NORMAL_MAZE_P2_TAB1",
+       "BẮT ĐẦU & ĐÍCH"
+      ],
+      [
+       "STR_GI_NORMAL_MAZE_P2_TAB2",
+       "MANH MỐI SỐ"
+      ],
+      [
+       "STR_GI_NORMAL_MAZE_P2_TAB3",
+       "CÔNG CỤ"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_NORMAL_MAZE_P2_R1T",
+        "Ý Nghĩa Con Số (0 đến 3):"
+       ],
+       "desc": [
+        "STR_GI_NORMAL_MAZE_P2_R1D",
+        "Con số thể hiện số cạnh trong bảng là tường vô hình của ô đó."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_NORMAL_MAZE_P2_R2T",
+        "Ưu Tiên Đi Qua Ô Số 0:"
+       ],
+       "desc": [
+        "STR_GI_NORMAL_MAZE_P2_R2D",
+        "Ô số 0 không có bất kỳ tường nào, là lối đi thông suốt an toàn nhất."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_NORMAL_MAZE_P2_R3T",
+        "Cẩn Thận Ô Số 2 & Số 3:"
+       ],
+       "desc": [
+        "STR_GI_NORMAL_MAZE_P2_R3D",
+        "Có nhiều tường bao quanh, cần so sánh với các ô bên cạnh để tránh đâm tường!"
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_NORMAL_MAZE_P3_TITLE",
+      "Công Cụ Trợ Giúp"
+     ],
+     "section": [
+      "STR_GI_NORMAL_MAZE_P3_SECTION",
+      "BÍ QUYẾT CHIẾN THẮNG"
+     ],
+     "cta": [
+      "STR_GI_NORMAL_MAZE_P3_CTA",
+      "ĐÃ HIỂU • BẮT ĐẦU CHƠI"
+     ],
+     "link": [
+      "STR_GI_NORMAL_MAZE_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_NORMAL_MAZE_P3_TAB1",
+       "BẮT ĐẦU & ĐÍCH"
+      ],
+      [
+       "STR_GI_NORMAL_MAZE_P3_TAB2",
+       "MANH MỐI SỐ"
+      ],
+      [
+       "STR_GI_NORMAL_MAZE_P3_TAB3",
+       "CÔNG CỤ"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_NORMAL_MAZE_P3_R1T",
+        "Quan Sát & Đánh Dấu Tường Trước:"
+       ],
+       "desc": [
+        "STR_GI_NORMAL_MAZE_P3_R1D",
+        "Chưa vội vẽ đường ngay — hãy nối các Anchor để bịt các khe nguy hiểm trước."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_NORMAL_MAZE_P3_R2T",
+        "Vẽ Chậm Rãi & Chắc Chắn:"
+       ],
+       "desc": [
+        "STR_GI_NORMAL_MAZE_P3_R2D",
+        "Kéo nét mực từng ô một từ Cầu thang Start sang Finish theo lối đã mở."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_NORMAL_MAZE_P3_R3T",
+        "Đạt 3 Sao Mỗi Màn:"
+       ],
+       "desc": [
+        "STR_GI_NORMAL_MAZE_P3_R3D",
+        "Hoàn thành cả 3 Thử Thách trên bảng HUD để gom trọn vẹn 3 Sao mở Chương mới!"
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_NORMAL_MAZE_CHIP",
+    "HƯỚNG DẪN CHƠI"
+   ]
+  },
+  "dungeon": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_DUNGEON_P1_TITLE",
+      "Leo Tầng & Quản Lý Bước"
+     ],
+     "section": [
+      "STR_GI_DUNGEON_P1_SECTION",
+      "LUẬT CHƠI VÔ TẬN"
+     ],
+     "cta": [
+      "STR_GI_DUNGEON_P1_CTA",
+      "TIẾP THEO: CƠ CHẾ ĐÂM TƯỜNG (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_DUNGEON_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào leo tầng ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_DUNGEON_P1_TAB1",
+       "QUẢN LÝ BƯỚC"
+      ],
+      [
+       "STR_GI_DUNGEON_P1_TAB2",
+       "ĐÂM TƯỜNG VỀ S"
+      ],
+      [
+       "STR_GI_DUNGEON_P1_TAB3",
+       "BẪY VÔ TẬN"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_DUNGEON_P1_R1T",
+        "Chế Độ Duy Nhất Giới Hạn Bước Đi:"
+       ],
+       "desc": [
+        "STR_GI_DUNGEON_P1_R1D",
+        "Mỗi ô di chuyển trừ 1 bước. Tuyệt đối không để số bước tụt về 0!"
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_DUNGEON_P1_R2T",
+        "Nhận Thêm Bước Thưởng Khi Qua Tầng:"
+       ],
+       "desc": [
+        "STR_GI_DUNGEON_P1_R2D",
+        "Xuống được hố thang F sẽ cộng thêm bước cho tầng kế tiếp và tích lũy điểm số."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_DUNGEON_P1_R3T",
+        "Chinh Phục Kỷ Lục Tầng Sâu Nhất:"
+       ],
+       "desc": [
+        "STR_GI_DUNGEON_P1_R3D",
+        "Game không có màn cuối! Hãy bảo toàn tối đa số bước để đi xa nhất có thể."
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_DUNGEON_P2_TITLE",
+      "Đâm Tường & Lộ Tường Thật"
+     ],
+     "section": [
+      "STR_GI_DUNGEON_P2_SECTION",
+      "QUY TẮC ĐÂM TƯỜNG"
+     ],
+     "cta": [
+      "STR_GI_DUNGEON_P2_CTA",
+      "TIẾP THEO: BẪY VÔ TẬN & MẸO LEO SÂU (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_DUNGEON_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào leo tầng ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_DUNGEON_P2_TAB1",
+       "QUẢN LÝ BƯỚC"
+      ],
+      [
+       "STR_GI_DUNGEON_P2_TAB2",
+       "ĐÂM TƯỜNG VỀ S"
+      ],
+      [
+       "STR_GI_DUNGEON_P2_TAB3",
+       "BẪY VÔ TẬN"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_DUNGEON_P2_R1T",
+        "Không Bị Game Over Ngay Lập Tức:"
+       ],
+       "desc": [
+        "STR_GI_DUNGEON_P2_R1D",
+        "Đâm tường vô hình ở Dungeon không kết thúc màn chơi, chỉ trừ 1 bước di chuyển."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_DUNGEON_P2_R2T",
+        "Bức Tường Sẽ Lộ Diện Vĩnh Viễn:"
+       ],
+       "desc": [
+        "STR_GI_DUNGEON_P2_R2D",
+        "Vách tường bạn vừa đâm vào sẽ hiện thành nét đen đậm rõ ràng suốt tầng đó."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_DUNGEON_P2_R3T",
+        "Văng Ngược Về Cầu Thang Xuất Phát (S):"
+       ],
+       "desc": [
+        "STR_GI_DUNGEON_P2_R3D",
+        "Nhân vật trở lại điểm S để bắt đầu đường vẽ mới né tránh đoạn tường vừa biết."
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_DUNGEON_P3_TITLE",
+      "Bẫy Vô Tận & Mẹo Sinh Tồn"
+     ],
+     "section": [
+      "STR_GI_DUNGEON_P3_SECTION",
+      "BÍ QUYẾT LEO SÂU"
+     ],
+     "cta": [
+      "STR_GI_DUNGEON_P3_CTA",
+      "ĐÃ HIỂU • BẮT ĐẦU LEO TẦNG"
+     ],
+     "link": [
+      "STR_GI_DUNGEON_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_DUNGEON_P3_TAB1",
+       "QUẢN LÝ BƯỚC"
+      ],
+      [
+       "STR_GI_DUNGEON_P3_TAB2",
+       "ĐÂM TƯỜNG VỀ S"
+      ],
+      [
+       "STR_GI_DUNGEON_P3_TAB3",
+       "BẪY VÔ TẬN"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_DUNGEON_P3_R1T",
+        "Tường Gợi Ý Giảm Về 0%:"
+       ],
+       "desc": [
+        "STR_GI_DUNGEON_P3_R1D",
+        "Càng xuống sâu tường càng ẩn kín, đòi hỏi tính toán cẩn thận từng con số."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_DUNGEON_P3_R2T",
+        "Luôn Đánh Dấu Tường Nghi Ngờ:"
+       ],
+       "desc": [
+        "STR_GI_DUNGEON_P3_R2D",
+        "Dùng công cụ Ghi Nhớ nối 2 điểm neo để khóa các khe nguy hiểm trước khi vẽ."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_DUNGEON_P3_R3T",
+        "Hồi Sinh Tại Chỗ (+3 Bước):"
+       ],
+       "desc": [
+        "STR_GI_DUNGEON_P3_R3D",
+        "Khi cạn bước, hồi sinh sẽ cộng +3 bước và giữ nguyên 100% mê cung & tường đã lộ!"
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_DUNGEON_CHIP",
+    "CHẾ ĐỘ VÔ TẬN"
+   ]
+  },
+  "minesweeper": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_MINESWEEPER_P1_TITLE",
+      "Luật Dò Mìn 8 Ô"
+     ],
+     "section": [
+      "STR_GI_MINESWEEPER_P1_SECTION",
+      "QUY TẮC DÒ MÌN CƠ BẢN"
+     ],
+     "cta": [
+      "STR_GI_MINESWEEPER_P1_CTA",
+      "TIẾP THEO: ĐẠP BOM & VÙNG SỐ 0 (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_MINESWEEPER_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào dò mìn ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_MINESWEEPER_P1_TAB1",
+       "LUẬT 8 Ô BOM"
+      ],
+      [
+       "STR_GI_MINESWEEPER_P1_TAB2",
+       "ĐẠP BOM & VÙNG 0"
+      ],
+      [
+       "STR_GI_MINESWEEPER_P1_TAB3",
+       "CÔNG CỤ DÒ BOM"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_MINESWEEPER_P1_R1T",
+        "Số Trên Ô = Số Bom Trong 8 Ô Lân Cận:"
+       ],
+       "desc": [
+        "STR_GI_MINESWEEPER_P1_R1D",
+        "Bao gồm 4 ô vuông góc (trên, dưới, trái, phải) và 4 ô góc chéo xung quanh."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_MINESWEEPER_P1_R2T",
+        "Cầu Thang Start (S) & Finish (F) Luôn An Toàn:"
+       ],
+       "desc": [
+        "STR_GI_MINESWEEPER_P1_R2D",
+        "Ô xuất phát và hố thang đích 100% không có bom. Luôn có đường BFS không bom tới đích!"
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_MINESWEEPER_P1_R3T",
+        "Không Có Bất Kỳ Vách Tường Nào:"
+       ],
+       "desc": [
+        "STR_GI_MINESWEEPER_P1_R3D",
+        "Không có tường cản bước — bạn có thể đi tự do nhưng chỉ được bước vào ô sạch bom."
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_MINESWEEPER_P2_TITLE",
+      "Đạp Bom Nổ & Vùng Số 0"
+     ],
+     "section": [
+      "STR_GI_MINESWEEPER_P2_SECTION",
+      "CHIẾN THUẬT DÒ ĐƯỜNG"
+     ],
+     "cta": [
+      "STR_GI_MINESWEEPER_P2_CTA",
+      "TIẾP THEO: CÔNG CỤ DÒ BOM & CẮM CỜ (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_MINESWEEPER_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào dò mìn ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_MINESWEEPER_P2_TAB1",
+       "LUẬT 8 Ô BOM"
+      ],
+      [
+       "STR_GI_MINESWEEPER_P2_TAB2",
+       "ĐẠP BOM & VÙNG 0"
+      ],
+      [
+       "STR_GI_MINESWEEPER_P2_TAB3",
+       "CÔNG CỤ DÒ BOM"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_MINESWEEPER_P2_R1T",
+        "Hậu Quả Khi Đạp Trúng Bom:"
+       ],
+       "desc": [
+        "STR_GI_MINESWEEPER_P2_R1D",
+        "Ván đấu dừng ngay tức khắc. Bạn đứng tại ô nổ và có thể hồi sinh lùi lại 1 bước."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_MINESWEEPER_P2_R2T",
+        "Tận Dụng Triệt Để Các Ô Số 0:"
+       ],
+       "desc": [
+        "STR_GI_MINESWEEPER_P2_R2D",
+        "Nếu ô có số 0, toàn bộ 8 ô kề cạnh nó 100% không có bom — hãy đi qua vùng này!"
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_MINESWEEPER_P2_R3T",
+        "Kéo Nét Vẽ Chậm Rãi:"
+       ],
+       "desc": [
+        "STR_GI_MINESWEEPER_P2_R3D",
+        "Không vội vàng kéo lướt nhanh; chỉ vẽ vào các ô bạn đã chắc chắn an toàn."
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_MINESWEEPER_P3_TITLE",
+      "Công Cụ & HUD Đếm Bom"
+     ],
+     "section": [
+      "STR_GI_MINESWEEPER_P3_SECTION",
+      "BÍ QUYẾT PHÁ ĐẢO"
+     ],
+     "cta": [
+      "STR_GI_MINESWEEPER_P3_CTA",
+      "ĐÃ HIỂU • BẮT ĐẦU DÒ MÌN"
+     ],
+     "link": [
+      "STR_GI_MINESWEEPER_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_MINESWEEPER_P3_TAB1",
+       "LUẬT 8 Ô BOM"
+      ],
+      [
+       "STR_GI_MINESWEEPER_P3_TAB2",
+       "ĐẠP BOM & VÙNG 0"
+      ],
+      [
+       "STR_GI_MINESWEEPER_P3_TAB3",
+       "CÔNG CỤ DÒ BOM"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_MINESWEEPER_P3_R1T",
+        "Cắm Cờ Trước Khi Vẽ Đường:"
+       ],
+       "desc": [
+        "STR_GI_MINESWEEPER_P3_R1D",
+        "Khi phát hiện ô chắc chắn có bom, hãy cắm cờ khóa ô lại ngay để tránh tay quẹt trúng."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_MINESWEEPER_P3_R2T",
+        "Kiểm Tra Tổng Số Bom Trên HUD:"
+       ],
+       "desc": [
+        "STR_GI_MINESWEEPER_P3_R2D",
+        "Đối chiếu số cờ đã cắm với số bom còn lại trên HUD để đảm bảo không bỏ sót quả nào."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_MINESWEEPER_P3_R3T",
+        "Hồi Sinh Rút Lại Bước Lỗi:"
+       ],
+       "desc": [
+        "STR_GI_MINESWEEPER_P3_R3D",
+        "Nếu lỡ đạp trúng bom, bạn có thể hồi sinh để quay lại ô ngay trước đó và thử hướng khác."
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_MINESWEEPER_CHIP",
+    "MINESWEEPER MAZE"
+   ]
+  },
+  "sumpath": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_SUMPATH_P1_TITLE",
+      "Bài Toán Cộng Tổng Điểm"
+     ],
+     "section": [
+      "STR_GI_SUMPATH_P1_SECTION",
+      "QUY TẮC CỘNG TỔNG CƠ BẢN"
+     ],
+     "cta": [
+      "STR_GI_SUMPATH_P1_CTA",
+      "TIẾP THEO: TOÁN TỬ & Ô 1 LẦN (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_SUMPATH_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào cộng điểm ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_SUMPATH_P1_TAB1",
+       "CỘNG TỔNG & MỤC TIÊU"
+      ],
+      [
+       "STR_GI_SUMPATH_P1_TAB2",
+       "TOÁN TỬ & Ô 1 LẦN"
+      ],
+      [
+       "STR_GI_SUMPATH_P1_TAB3",
+       "BÍ QUYẾT TÍNH & UNDO"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_SUMPATH_P1_R1T",
+        "Con Số Là Điểm Số Của Ô (1 đến 9):"
+       ],
+       "desc": [
+        "STR_GI_SUMPATH_P1_R1D",
+        "Không có tường chắn, không có bom ẩn. Mỗi ô trên bàn cờ đóng vai trò là một điểm số."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_SUMPATH_P1_R2T",
+        "Cộng Dồn Liên Tục Vào Tổng Điểm:"
+       ],
+       "desc": [
+        "STR_GI_SUMPATH_P1_R2D",
+        "Mỗi khi nét vẽ kéo sang ô mới, điểm ô đó sẽ lập tức được cộng dồn vào thẻ Tổng Hiện Tại."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_SUMPATH_P1_R3T",
+        "Chạm Đích Khớp Đúng Mục Tiêu:"
+       ],
+       "desc": [
+        "STR_GI_SUMPATH_P1_R3D",
+        "Chỉ chiến thắng khi bạn chạm Hố Thang Đích F với Tổng Điểm thỏa mãn đúng phép tính yêu cầu."
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_SUMPATH_P2_TITLE",
+      "Toán Tử & Ô Điểm 1 Lần"
+     ],
+     "section": [
+      "STR_GI_SUMPATH_P2_SECTION",
+      "QUY TẮC MỤC TIÊU & ĐIỂM Ô"
+     ],
+     "cta": [
+      "STR_GI_SUMPATH_P2_CTA",
+      "TIẾP THEO: CHIẾN THUẬT & UNDO (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_SUMPATH_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào cộng điểm ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_SUMPATH_P2_TAB1",
+       "CỘNG TỔNG & MỤC TIÊU"
+      ],
+      [
+       "STR_GI_SUMPATH_P2_TAB2",
+       "TOÁN TỬ & Ô 1 LẦN"
+      ],
+      [
+       "STR_GI_SUMPATH_P2_TAB3",
+       "BÍ QUYẾT TÍNH & UNDO"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_SUMPATH_P2_R1T",
+        "Để Ý Ký Hiệu Toán Tử (=, <, >):"
+       ],
+       "desc": [
+        "STR_GI_SUMPATH_P2_R1D",
+        "Với dấu =, tổng phải khớp tuyệt đối. Với dấu < hoặc >, chỉ cần tổng nằm trong khoảng hợp lệ."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_SUMPATH_P2_R2T",
+        "Mỗi Ô Chỉ Tính Điểm Một Lần:"
+       ],
+       "desc": [
+        "STR_GI_SUMPATH_P2_R2D",
+        "Bạn có thể vẽ đường giao cắt ô cũ để chuyển hướng, nhưng điểm ô đó sẽ không được cộng thêm."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_SUMPATH_P2_R3T",
+        "Về Đích Sai Mục Tiêu = Thất Bại:"
+       ],
+       "desc": [
+        "STR_GI_SUMPATH_P2_R3D",
+        "Dù bạn chạm được hố thang F nhưng tổng điểm không thỏa mãn phép tính thì màn chơi chưa kết thúc!"
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_SUMPATH_P3_TITLE",
+      "Chiến Thuật & Undo Sửa Sai"
+     ],
+     "section": [
+      "STR_GI_SUMPATH_P3_SECTION",
+      "BÍ QUYẾT TÍNH TOÁN"
+     ],
+     "cta": [
+      "STR_GI_SUMPATH_P3_CTA",
+      "ĐÃ HIỂU • BẮT ĐẦU CỘNG ĐIỂM"
+     ],
+     "link": [
+      "STR_GI_SUMPATH_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_SUMPATH_P3_TAB1",
+       "CỘNG TỔNG & MỤC TIÊU"
+      ],
+      [
+       "STR_GI_SUMPATH_P3_TAB2",
+       "TOÁN TỬ & Ô 1 LẦN"
+      ],
+      [
+       "STR_GI_SUMPATH_P3_TAB3",
+       "BÍ QUYẾT TÍNH & UNDO"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_SUMPATH_P3_R1T",
+        "Bản Cờ Luôn Có Ít Nhất 1 Nghiệm Đúng:"
+       ],
+       "desc": [
+        "STR_GI_SUMPATH_P3_R1D",
+        "Mỗi màn đều đảm bảo có ít nhất một đường đi hoàn hảo thỏa mãn đúng toán tử mục tiêu."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_SUMPATH_P3_R2T",
+        "Dùng Undo Để Thu Hồi Điểm Lố:"
+       ],
+       "desc": [
+        "STR_GI_SUMPATH_P3_R2D",
+        "Nếu lỡ bước vào ô số to khiến tổng vượt quá mục tiêu, chỉ cần Undo lùi lại để trừ điểm ra."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_SUMPATH_P3_R3T",
+        "Đua Tốc Độ Phá Giải:"
+       ],
+       "desc": [
+        "STR_GI_SUMPATH_P3_R3D",
+        "Game không giới hạn số bước — người nhẩm tính nhanh và về đích sớm nhất sẽ đạt hạng cao!"
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_SUMPATH_CHIP",
+    "SUM PATH • TOÁN ĐỐ"
+   ]
+  },
+  "countdowncost": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_COUNTDOWNCOST_P1_TITLE",
+      "Ngân Sách & Giá Cước Ô"
+     ],
+     "section": [
+      "STR_GI_COUNTDOWNCOST_P1_SECTION",
+      "QUY TẮC CHI PHÍ BƯỚC"
+     ],
+     "cta": [
+      "STR_GI_COUNTDOWNCOST_P1_CTA",
+      "TIẾP THEO: ĐÂM TƯỜNG TRỪ CƯỚC (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_COUNTDOWNCOST_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào tính cước ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_COUNTDOWNCOST_P1_TAB1",
+       "NGÂN SÁCH & CƯỚC"
+      ],
+      [
+       "STR_GI_COUNTDOWNCOST_P1_TAB2",
+       "ĐÂM TƯỜNG TRỪ BƯỚC"
+      ],
+      [
+       "STR_GI_COUNTDOWNCOST_P1_TAB3",
+       "TỐI ƯU CHI PHÍ"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_COUNTDOWNCOST_P1_R1T",
+        "Con Số Là Chi Phí Bước Của Ô:"
+       ],
+       "desc": [
+        "STR_GI_COUNTDOWNCOST_P1_R1D",
+        "Mỗi khi bạn bước vào ô nào, ngân sách sẽ trừ thẳng bấy nhiêu bước (từ 1 đến 4 bước)."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_COUNTDOWNCOST_P1_R2T",
+        "Ngân Sách Tụt Về 0 Là Thua Ngay:"
+       ],
+       "desc": [
+        "STR_GI_COUNTDOWNCOST_P1_R2D",
+        "Nếu chưa kịp chạm tới hố thang Finish mà đã cạn kiệt ngân sách bước • Game Over!"
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_COUNTDOWNCOST_P1_R3T",
+        "Không Liên Quan Tới Số Tường:"
+       ],
+       "desc": [
+        "STR_GI_COUNTDOWNCOST_P1_R3D",
+        "Con số ở chế độ này hoàn toàn không báo vị trí tường — chỉ biểu thị chi phí bước đi."
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_COUNTDOWNCOST_P2_TITLE",
+      "Đâm Tường & Bẫy Ô Đắt"
+     ],
+     "section": [
+      "STR_GI_COUNTDOWNCOST_P2_SECTION",
+      "QUY TẮC ĐÂM TƯỜNG & CƯỚC PHÍ"
+     ],
+     "cta": [
+      "STR_GI_COUNTDOWNCOST_P2_CTA",
+      "TIẾP THEO: TỐI ƯU CHI PHÍ & UNDO (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_COUNTDOWNCOST_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào tính cước ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_COUNTDOWNCOST_P2_TAB1",
+       "NGÂN SÁCH & CƯỚC"
+      ],
+      [
+       "STR_GI_COUNTDOWNCOST_P2_TAB2",
+       "ĐÂM TƯỜNG TRỪ BƯỚC"
+      ],
+      [
+       "STR_GI_COUNTDOWNCOST_P2_TAB3",
+       "TỐI ƯU CHI PHÍ"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_COUNTDOWNCOST_P2_R1T",
+        "Đâm Tường Vẫn Bị Phạt Cước Bước:"
+       ],
+       "desc": [
+        "STR_GI_COUNTDOWNCOST_P2_R1D",
+        "Đâm vào tường vô hình sẽ văng về S và trừ thẳng chi phí của ô bạn vừa toan bước vào."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_COUNTDOWNCOST_P2_R2T",
+        "Hạn Chế Bước Vào Ô Số 3 & Số 4:"
+       ],
+       "desc": [
+        "STR_GI_COUNTDOWNCOST_P2_R2D",
+        "Chỉ 2-3 ô số to là đủ vét sạch ngân sách của bạn. Hãy ưu tiên các tuyến đường qua ô 1 và 2."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_COUNTDOWNCOST_P2_R3T",
+        "Tường Lộ Ra Để Rút Kinh Nghiệm:"
+       ],
+       "desc": [
+        "STR_GI_COUNTDOWNCOST_P2_R3D",
+        "Bức tường bị đâm sẽ hiện rõ trên bàn cờ. Đừng đâm lại lần thứ hai làm tiêu hao ngân sách!"
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_COUNTDOWNCOST_P3_TITLE",
+      "Tối Ưu Chi Phí & Hoàn Cước"
+     ],
+     "section": [
+      "STR_GI_COUNTDOWNCOST_P3_SECTION",
+      "BÍ QUYẾT PHÁ ĐẢO"
+     ],
+     "cta": [
+      "STR_GI_COUNTDOWNCOST_P3_CTA",
+      "ĐÃ HIỂU • TỐI ƯU NGÂN SÁCH"
+     ],
+     "link": [
+      "STR_GI_COUNTDOWNCOST_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_COUNTDOWNCOST_P3_TAB1",
+       "NGÂN SÁCH & CƯỚC"
+      ],
+      [
+       "STR_GI_COUNTDOWNCOST_P3_TAB2",
+       "ĐÂM TƯỜNG TRỪ BƯỚC"
+      ],
+      [
+       "STR_GI_COUNTDOWNCOST_P3_TAB3",
+       "TỐI ƯU CHI PHÍ"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_COUNTDOWNCOST_P3_R1T",
+        "Tìm Tuyến Đường Rẻ Nhất Trước Khi Vẽ:"
+       ],
+       "desc": [
+        "STR_GI_COUNTDOWNCOST_P3_R1D",
+        "Nhẩm tính tổng số điểm của các ô trên đường đi; chọn nhánh có tổng số nhỏ nhất để tới F."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_COUNTDOWNCOST_P3_R2T",
+        "Tận Dụng Undo Để Thu Hồi Ngân Sách:"
+       ],
+       "desc": [
+        "STR_GI_COUNTDOWNCOST_P3_R2D",
+        "Nếu nhận thấy nhánh đang đi quá tốn bước, hãy Undo lùi lại để nhận lại toàn bộ số bước đã trừ."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_COUNTDOWNCOST_P3_R3T",
+        "Xếp Hạng Dựa Trên Chi Phí Tối Thiểu:"
+       ],
+       "desc": [
+        "STR_GI_COUNTDOWNCOST_P3_R3D",
+        "Người chơi về đích với tổng chi phí bước tiêu tốn càng ít sẽ giành thứ hạng càng cao!"
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_COUNTDOWNCOST_CHIP",
+    "COUNTDOWN COST"
+   ]
+  },
+  "fadingink": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_FADINGINK_P1_TITLE",
+      "Cơ Chế Phai Mực Toàn Bàn"
+     ],
+     "section": [
+      "STR_GI_FADINGINK_P1_SECTION",
+      "QUY TẮC MỰC PHAI CƠ BẢN"
+     ],
+     "cta": [
+      "STR_GI_FADINGINK_P1_CTA",
+      "TIẾP THEO: Ô CẠN KHÓA ĐƯỜNG (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_FADINGINK_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào chơi ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_FADINGINK_P1_TAB1",
+       "MỖI BƯỚC -1 MỰC"
+      ],
+      [
+       "STR_GI_FADINGINK_P1_TAB2",
+       "Ô CẠN KHÓA ĐƯỜNG"
+      ],
+      [
+       "STR_GI_FADINGINK_P1_TAB3",
+       "ĐƯỜNG TỐI ƯU & UNDO"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_FADINGINK_P1_R1T",
+        "Số Trên Ô Thể Hiện Lượng Mực Còn Lại:"
+       ],
+       "desc": [
+        "STR_GI_FADINGINK_P1_R1D",
+        "Mỗi ô có điểm mực riêng. Chỉ được phép bước vào các ô vẫn CÒN mực (> 0)."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FADINGINK_P1_R2T",
+        "Cả Bàn Cờ Cùng Phai Đi Một Nhịp:"
+       ],
+       "desc": [
+        "STR_GI_FADINGINK_P1_R2D",
+        "Mỗi bước bạn di chuyển, TẤT CẢ các ô đều bị trừ 1 mực, bất kể bạn có đi vào ô đó hay không!"
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FADINGINK_P1_R3T",
+        "Hoàn Toàn Không Có Bức Tường Nào:"
+       ],
+       "desc": [
+        "STR_GI_FADINGINK_P1_R3D",
+        "Bàn cờ thông suốt; chướng ngại vật cản đường bạn duy nhất chính là các ô bị cạn sạch mực."
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_FADINGINK_P2_TITLE",
+      "Ô Cạn Khóa Lối & Cảnh Báo"
+     ],
+     "section": [
+      "STR_GI_FADINGINK_P2_SECTION",
+      "QUY TẮC CẠN MỰC & KHÓA ĐƯỜNG"
+     ],
+     "cta": [
+      "STR_GI_FADINGINK_P2_CTA",
+      "TIẾP THEO: ĐƯỜNG NGẮN NHẤT & UNDO (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_FADINGINK_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào chơi ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_FADINGINK_P2_TAB1",
+       "MỖI BƯỚC -1 MỰC"
+      ],
+      [
+       "STR_GI_FADINGINK_P2_TAB2",
+       "Ô CẠN KHÓA ĐƯỜNG"
+      ],
+      [
+       "STR_GI_FADINGINK_P2_TAB3",
+       "ĐƯỜNG TỐI ƯU & UNDO"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_FADINGINK_P2_R1T",
+        "Cảnh Báo Ô Viền Cam (Còn 1 Mực):"
+       ],
+       "desc": [
+        "STR_GI_FADINGINK_P2_R1D",
+        "Ô này chỉ tồn tại thêm đúng 1 lượt đi nữa. Nếu bạn không bước vào ngay, nó sẽ cạn sạch."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FADINGINK_P2_R2T",
+        "Ô Về 0 Biến Thành Khoảng Trống Bị Khóa:"
+       ],
+       "desc": [
+        "STR_GI_FADINGINK_P2_R2D",
+        "Mất hoàn toàn con số và mờ đi. Người chơi bị chặn không thể bước chân vào ô cạn mực."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FADINGINK_P2_R3T",
+        "Thua Cuộc Khi Bị Bít Lối Đi:"
+       ],
+       "desc": [
+        "STR_GI_FADINGINK_P2_R3D",
+        "Nếu các ô xung quanh đều cạn mực và không còn lối nào tới hố thang F • HẾT ĐƯỜNG ĐI!"
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_FADINGINK_P3_TITLE",
+      "Đường Ngắn & Hồi Mực"
+     ],
+     "section": [
+      "STR_GI_FADINGINK_P3_SECTION",
+      "BÍ QUYẾT CHIẾN THẮNG"
+     ],
+     "cta": [
+      "STR_GI_FADINGINK_P3_CTA",
+      "ĐÃ HIỂU • BẮT ĐẦU VẼ ĐƯỜNG"
+     ],
+     "link": [
+      "STR_GI_FADINGINK_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_FADINGINK_P3_TAB1",
+       "MỖI BƯỚC -1 MỰC"
+      ],
+      [
+       "STR_GI_FADINGINK_P3_TAB2",
+       "Ô CẠN KHÓA ĐƯỜNG"
+      ],
+      [
+       "STR_GI_FADINGINK_P3_TAB3",
+       "ĐƯỜNG TỐI ƯU & UNDO"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_FADINGINK_P3_R1T",
+        "Tìm Đường Ngắn Nhất Trước Khi Vẽ:"
+       ],
+       "desc": [
+        "STR_GI_FADINGINK_P3_R1D",
+        "Nhìn bao quát bàn cờ, đếm số bước tới F và chọn tuyến đường ít ô chuyển hướng nhất."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FADINGINK_P3_R2T",
+        "Tận Dụng Undo Để Hồi Phục Đường Đi:"
+       ],
+       "desc": [
+        "STR_GI_FADINGINK_P3_R2D",
+        "Lỡ đi vào ngõ cụt làm ô phía trước biến mất? Undo ngay để cứu lại mực cho các ô đó."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FADINGINK_P3_R3T",
+        "Đồng Hồ Thời Gian Vẫn Tính Điểm:"
+       ],
+       "desc": [
+        "STR_GI_FADINGINK_P3_R3D",
+        "Chế độ này không giới hạn số bước, nhưng hoàn thành càng nhanh thì điểm xếp hạng càng cao!"
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_FADINGINK_CHIP",
+    "FADING INK • MỰC PHAI"
+   ]
+  },
+  "blindmemory": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_BLINDMEMORY_P1_TITLE",
+      "Pha Đếm Ngược Ghi Nhớ"
+     ],
+     "section": [
+      "STR_GI_BLINDMEMORY_P1_SECTION",
+      "QUY TẮC PHA GHI NHỚ"
+     ],
+     "cta": [
+      "STR_GI_BLINDMEMORY_P1_CTA",
+      "TIẾP THEO: TƯỜNG BIẾN MẤT (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_BLINDMEMORY_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào ghi nhớ ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_BLINDMEMORY_P1_TAB1",
+       "ĐẾM NGƯỢC 3 GIÂY"
+      ],
+      [
+       "STR_GI_BLINDMEMORY_P1_TAB2",
+       "TƯỜNG BIẾN MẤT"
+      ],
+      [
+       "STR_GI_BLINDMEMORY_P1_TAB3",
+       "DỰNG TƯỜNG NHÁP"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_BLINDMEMORY_P1_R1T",
+        "Tường Hiển Thị Toàn Bộ Khi Bắt Đầu:"
+       ],
+       "desc": [
+        "STR_GI_BLINDMEMORY_P1_R1D",
+        "Bạn có 3 giây đếm ngược (3.. 2.. 1.. GO!) để nhìn thấy toàn bộ mê cung thật."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_BLINDMEMORY_P1_R2T",
+        "Đồng Hồ Chưa Tính Giờ:"
+       ],
+       "desc": [
+        "STR_GI_BLINDMEMORY_P1_R2D",
+        "Thời gian 3 giây ghi nhớ không bị tính vào thời gian chơi. Tương tác vẽ bị khóa tạm thời."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_BLINDMEMORY_P1_R3T",
+        "Không Có Bất Kỳ Số Manh Mối Nào:"
+       ],
+       "desc": [
+        "STR_GI_BLINDMEMORY_P1_R3D",
+        "Sau khi tường ẩn, các ô sẽ trống trơn — bạn hoàn toàn phải dựa vào bộ nhớ của mình!"
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_BLINDMEMORY_P2_TITLE",
+      "Tường Biến Mất & Đi Bằng Trí Nhớ"
+     ],
+     "section": [
+      "STR_GI_BLINDMEMORY_P2_SECTION",
+      "QUY TẮC ĐI BẰNG TRÍ NHỚ"
+     ],
+     "cta": [
+      "STR_GI_BLINDMEMORY_P2_CTA",
+      "TIẾP THEO: DỰNG TƯỜNG NHÁP (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_BLINDMEMORY_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào ghi nhớ ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_BLINDMEMORY_P2_TAB1",
+       "ĐẾM NGƯỢC 3 GIÂY"
+      ],
+      [
+       "STR_GI_BLINDMEMORY_P2_TAB2",
+       "TƯỜNG BIẾN MẤT"
+      ],
+      [
+       "STR_GI_BLINDMEMORY_P2_TAB3",
+       "DỰNG TƯỜNG NHÁP"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_BLINDMEMORY_P2_R1T",
+        "Mê Cung Ẩn Kín Hoàn Toàn:"
+       ],
+       "desc": [
+        "STR_GI_BLINDMEMORY_P2_R1D",
+        "Mọi bức tường đều biến mất. Bạn chỉ thấy ô Cầu thang Start (S) và Hố thang Finish (F)."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_BLINDMEMORY_P2_R2T",
+        "Hậu Quả Khi Chạm Tường Vô Hình:"
+       ],
+       "desc": [
+        "STR_GI_BLINDMEMORY_P2_R2D",
+        "Ở chế độ Thường bạn sẽ bị đẩy về S và mất thời gian; ở chế độ Hardcore sẽ THUA NGAY LẬP TỨC!"
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_BLINDMEMORY_P2_R3T",
+        "Vẽ Chậm Rãi Từng Bước Một:"
+       ],
+       "desc": [
+        "STR_GI_BLINDMEMORY_P2_R3D",
+        "Đừng vội vàng kéo lướt qua nhiều ô. Hãy vừa đi vừa nhớ lại hình ảnh mê cung lúc nãy."
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_BLINDMEMORY_P3_TITLE",
+      "Dựng Tường Nháp & Gợi Ý"
+     ],
+     "section": [
+      "STR_GI_BLINDMEMORY_P3_SECTION",
+      "BÍ QUYẾT CHIẾN THẮNG"
+     ],
+     "cta": [
+      "STR_GI_BLINDMEMORY_P3_CTA",
+      "ĐÃ HIỂU • THỬ THÁCH TRÍ NHỚ"
+     ],
+     "link": [
+      "STR_GI_BLINDMEMORY_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_BLINDMEMORY_P3_TAB1",
+       "ĐẾM NGƯỢC 3 GIÂY"
+      ],
+      [
+       "STR_GI_BLINDMEMORY_P3_TAB2",
+       "TƯỜNG BIẾN MẤT"
+      ],
+      [
+       "STR_GI_BLINDMEMORY_P3_TAB3",
+       "DỰNG TƯỜNG NHÁP"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_BLINDMEMORY_P3_R1T",
+        "Dựng Tường Nháp Ngay Lập Tức:"
+       ],
+       "desc": [
+        "STR_GI_BLINDMEMORY_P3_R1D",
+        "Nối 2 điểm Anchor để đánh dấu các bức tường quan trọng bạn vừa thấy trước khi bộ nhớ bị phai."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_BLINDMEMORY_P3_R2T",
+        "Tận Dụng Nút Gợi Ý Khi Bị Bí:"
+       ],
+       "desc": [
+        "STR_GI_BLINDMEMORY_P3_R2D",
+        "Nếu quên hẳn khúc giữa, đừng liều đâm bừa; hãy bấm Gợi Ý để soi ra 1 ô an toàn."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_BLINDMEMORY_P3_R3T",
+        "Rèn Luyện Trí Nhớ Mỗi Ngày:"
+       ],
+       "desc": [
+        "STR_GI_BLINDMEMORY_P3_R3D",
+        "Màn chơi càng rộng (4×4 rồi 5×5), số lượng tường càng nhiều, thử thách trí não đỉnh cao!"
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_BLINDMEMORY_CHIP",
+    "BLIND MEMORY MAZE"
+   ]
+  },
+  "fog_of_war": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_FOG_OF_WAR_P1_TITLE",
+      "Màn Sương & Tầm Nhìn 1 Ô"
+     ],
+     "section": [
+      "STR_GI_FOG_OF_WAR_P1_SECTION",
+      "QUY TẮC MÀN SƯƠNG"
+     ],
+     "cta": [
+      "STR_GI_FOG_OF_WAR_P1_CTA",
+      "TIẾP THEO: DÒ ĐƯỜNG TỪNG BƯỚC (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_FOG_OF_WAR_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào dò đường ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_FOG_OF_WAR_P1_TAB1",
+       "TẦM NHÌN BÁN KÍNH 1"
+      ],
+      [
+       "STR_GI_FOG_OF_WAR_P1_TAB2",
+       "DÒ ĐƯỜNG TỪNG BƯỚC"
+      ],
+      [
+       "STR_GI_FOG_OF_WAR_P1_TAB3",
+       "GHI NHỚ & BÍ QUYẾT"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_FOG_OF_WAR_P1_R1T",
+        "Chỉ Thấy Số Trong Bán Kính 1 Ô:"
+       ],
+       "desc": [
+        "STR_GI_FOG_OF_WAR_P1_R1D",
+        "Bạn chỉ có thể đọc được manh mối số của các ô nằm ngay sát cạnh (ngang, dọc, chéo)."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FOG_OF_WAR_P1_R2T",
+        "Các Ô Ở Xa Bị Phủ Mờ Hoàn Toàn:"
+       ],
+       "desc": [
+        "STR_GI_FOG_OF_WAR_P1_R2D",
+        "Màn sương mù ẩn giấu toàn bộ con số của những ô phía xa cho đến khi bạn bước lại gần."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FOG_OF_WAR_P1_R3T",
+        "Tường Vô Hình Vẫn Nằm Ẩn Mình:"
+       ],
+       "desc": [
+        "STR_GI_FOG_OF_WAR_P1_R3D",
+        "Vẫn có các bức tường vô hình giữa các ô — bước bừa vào sương mù là đâm tường ngay!"
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_FOG_OF_WAR_P2_TITLE",
+      "Dò Đường Theo Bước Chân"
+     ],
+     "section": [
+      "STR_GI_FOG_OF_WAR_P2_SECTION",
+      "QUY TẮC DI CHUYỂN TRONG SƯƠNG"
+     ],
+     "cta": [
+      "STR_GI_FOG_OF_WAR_P2_CTA",
+      "TIẾP THEO: GHI NHỚ ANCHOR & BÍ QUYẾT (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_FOG_OF_WAR_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào dò đường ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_FOG_OF_WAR_P2_TAB1",
+       "TẦM NHÌN BÁN KÍNH 1"
+      ],
+      [
+       "STR_GI_FOG_OF_WAR_P2_TAB2",
+       "DÒ ĐƯỜNG TỪNG BƯỚC"
+      ],
+      [
+       "STR_GI_FOG_OF_WAR_P2_TAB3",
+       "GHI NHỚ & BÍ QUYẾT"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_FOG_OF_WAR_P2_R1T",
+        "Tầm Nhìn Di Chuyển Theo Từng Bước:"
+       ],
+       "desc": [
+        "STR_GI_FOG_OF_WAR_P2_R1D",
+        "Đặt chân tới ô mới sẽ lập tức hé lộ con số của những ô tiếp giáp phía trước mặt bạn."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FOG_OF_WAR_P2_R2T",
+        "Ô Cũ Phía Sau Sẽ Bị Che Lại:"
+       ],
+       "desc": [
+        "STR_GI_FOG_OF_WAR_P2_R2D",
+        "Các ô ở xa tầm nhìn sẽ bị sương mù bao phủ trở lại, khiến bạn khó nhìn lại số cũ."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FOG_OF_WAR_P2_R3T",
+        "Nguy Cơ Va Phải Tường Vô Hình:"
+       ],
+       "desc": [
+        "STR_GI_FOG_OF_WAR_P2_R3D",
+        "Nếu bước liều sang ô chưa sáng, bạn có thể đâm trúng tường ẩn và bị phạt văng về điểm S!"
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_FOG_OF_WAR_P3_TITLE",
+      "Ghi Nhớ Anchor & Bí Quyết"
+     ],
+     "section": [
+      "STR_GI_FOG_OF_WAR_P3_SECTION",
+      "BÍ QUYẾT CHIẾN THẮNG"
+     ],
+     "cta": [
+      "STR_GI_FOG_OF_WAR_P3_CTA",
+      "ĐÃ HIỂU • VƯỢT MÀN SƯƠNG"
+     ],
+     "link": [
+      "STR_GI_FOG_OF_WAR_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_FOG_OF_WAR_P3_TAB1",
+       "TẦM NHÌN BÁN KÍNH 1"
+      ],
+      [
+       "STR_GI_FOG_OF_WAR_P3_TAB2",
+       "DÒ ĐƯỜNG TỪNG BƯỚC"
+      ],
+      [
+       "STR_GI_FOG_OF_WAR_P3_TAB3",
+       "GHI NHỚ & BÍ QUYẾT"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_FOG_OF_WAR_P3_R1T",
+        "Dựng Tường Nháp Ngay Khi Quầng Sáng Soi Thấy:"
+       ],
+       "desc": [
+        "STR_GI_FOG_OF_WAR_P3_R1D",
+        "Đừng để sương mù che khuất manh mối. Nối 2 Anchor để đánh dấu tường cam bảo vệ bản thân."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FOG_OF_WAR_P3_R2T",
+        "Bật Đèn Bằng Nút Gợi Ý:"
+       ],
+       "desc": [
+        "STR_GI_FOG_OF_WAR_P3_R2D",
+        "Khi rơi vào ngõ cụt và không đoán được bước tiếp theo, hãy dùng Gợi Ý để soi ra 1 ô đúng."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_FOG_OF_WAR_P3_R3T",
+        "Tiến Lên Từng Ô Một Cách Chắc Chắn:"
+       ],
+       "desc": [
+        "STR_GI_FOG_OF_WAR_P3_R3D",
+        "Chế độ này không giới hạn số bước. Cứ bình tĩnh suy luận từng ô để đưa lối thoát về hố thang F!"
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_FOG_OF_WAR_CHIP",
+    "FOG OF WAR • SƯƠNG MÙ"
+   ]
+  },
+  "time_attack": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_TIME_ATTACK_P1_TITLE",
+      "Đồng Hồ Đếm Ngược"
+     ],
+     "section": [
+      "STR_GI_TIME_ATTACK_P1_SECTION",
+      "QUY TẮC ĐUA THỜI GIAN"
+     ],
+     "cta": [
+      "STR_GI_TIME_ATTACK_P1_CTA",
+      "TIẾP THEO: ĐÂM TƯỜNG MẤT GIỜ (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_TIME_ATTACK_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào đua giờ ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_TIME_ATTACK_P1_TAB1",
+       "ĐỒNG HỒ ĐẾM NGƯỢC"
+      ],
+      [
+       "STR_GI_TIME_ATTACK_P1_TAB2",
+       "ĐÂM TƯỜNG MẤT GIỜ"
+      ],
+      [
+       "STR_GI_TIME_ATTACK_P1_TAB3",
+       "TỐC ĐỘ & GỢI Ý"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_TIME_ATTACK_P1_R1T",
+        "Thời Gian Tổng Đếm Ngược:"
+       ],
+       "desc": [
+        "STR_GI_TIME_ATTACK_P1_R1D",
+        "Màn chơi cấp một quỹ thời gian cố định (60s - 120s). Bạn phải chạm hố thang F trước khi hết giờ."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_TIME_ATTACK_P1_R2T",
+        "Không Giới Hạn Số Bước Chân:"
+       ],
+       "desc": [
+        "STR_GI_TIME_ATTACK_P1_R2D",
+        "Bạn có thể đi vòng, thử nhiều ngã rẽ mà không sợ hết bước — kẻ thù duy nhất là thời gian trôi."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_TIME_ATTACK_P1_R3T",
+        "Quy Luật Tường Vô Hình Như Thường:"
+       ],
+       "desc": [
+        "STR_GI_TIME_ATTACK_P1_R3D",
+        "Con số trên ô vẫn là số tường (0 - 4). Vừa đi nhanh vừa phải suy luận né tường chính xác."
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_TIME_ATTACK_P2_TITLE",
+      "Đâm Tường & Mất Giờ"
+     ],
+     "section": [
+      "STR_GI_TIME_ATTACK_P2_SECTION",
+      "HẬU QUẢ VA CHẠM TƯỜNG"
+     ],
+     "cta": [
+      "STR_GI_TIME_ATTACK_P2_CTA",
+      "TIẾP THEO: TỐC ĐỘ & GỢI Ý (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_TIME_ATTACK_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào đua giờ ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_TIME_ATTACK_P2_TAB1",
+       "ĐỒNG HỒ ĐẾM NGƯỢC"
+      ],
+      [
+       "STR_GI_TIME_ATTACK_P2_TAB2",
+       "ĐÂM TƯỜNG MẤT GIỜ"
+      ],
+      [
+       "STR_GI_TIME_ATTACK_P2_TAB3",
+       "TỐC ĐỘ & GỢI Ý"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_TIME_ATTACK_P2_R1T",
+        "Văng Ngược Về Cầu Thang Start (S):"
+       ],
+       "desc": [
+        "STR_GI_TIME_ATTACK_P2_R1D",
+        "Đâm phải tường vô hình, nhân vật lập tức bị đẩy lùi về điểm S để bắt đầu đường vẽ mới."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_TIME_ATTACK_P2_R2T",
+        "Đồng Hồ Vẫn Tiếp Tục Đếm Ngược:"
+       ],
+       "desc": [
+        "STR_GI_TIME_ATTACK_P2_R2D",
+        "Thời gian không dừng lại. Việc vẽ lại từ đầu khiến bạn mất đứt nhiều giây sinh tử!"
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_TIME_ATTACK_P2_R3T",
+        "Rút Kinh Nghiệm Từ Đoạn Tường Vừa Lộ:"
+       ],
+       "desc": [
+        "STR_GI_TIME_ATTACK_P2_R3D",
+        "Bức tường bị đâm sẽ lộ ra vĩnh viễn. Hãy nhìn thật nhanh và vẽ đường né tránh dứt khoát."
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_TIME_ATTACK_P3_TITLE",
+      "Tốc Độ & Gợi Ý Cứu Nguy"
+     ],
+     "section": [
+      "STR_GI_TIME_ATTACK_P3_SECTION",
+      "BÍ QUYẾT BỨT TỐC"
+     ],
+     "cta": [
+      "STR_GI_TIME_ATTACK_P3_CTA",
+      "ĐÃ HIỂU • ĐUA THỜI GIAN"
+     ],
+     "link": [
+      "STR_GI_TIME_ATTACK_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_TIME_ATTACK_P3_TAB1",
+       "ĐỒNG HỒ ĐẾM NGƯỢC"
+      ],
+      [
+       "STR_GI_TIME_ATTACK_P3_TAB2",
+       "ĐÂM TƯỜNG MẤT GIỜ"
+      ],
+      [
+       "STR_GI_TIME_ATTACK_P3_TAB3",
+       "TỐC ĐỘ & GỢI Ý"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_TIME_ATTACK_P3_R1T",
+        "Tìm Ô Số 0 Để Phóng Nhanh:"
+       ],
+       "desc": [
+        "STR_GI_TIME_ATTACK_P3_R1D",
+        "Quét mắt tìm các ô số 0 trước tiên để vạch nhanh tuyến đường an toàn mà không tốn công nhẩm tính."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_TIME_ATTACK_P3_R2T",
+        "Bấm Gợi Ý Khi Bị Bí Quá 3 Giây:"
+       ],
+       "desc": [
+        "STR_GI_TIME_ATTACK_P3_R2D",
+        "Trong Time Attack, do dự là thất bại. Hãy bấm Gợi Ý để mở khóa nút thắt thay vì để đồng hồ cạn kiệt."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_TIME_ATTACK_P3_R3T",
+        "Dùng Undo Kịp Thời Để Tránh Về S:"
+       ],
+       "desc": [
+        "STR_GI_TIME_ATTACK_P3_R3D",
+        "Nếu cảm giác vừa rẽ nhầm nhánh bế tắc, bấm Undo lùi lại 1 ô sẽ nhanh hơn rất nhiều so với bị phạt về S!"
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_TIME_ATTACK_CHIP",
+    "TIME ATTACK MAZE"
+   ]
+  }
+ },
+ "panel_texts": {
+  "1": "STR_GI_X001",
+  "2": "STR_GI_X002",
+  "3": "STR_GI_X003",
+  "0": "STR_GI_X004",
+  "XUẤT PHÁT": "STR_GI_X005",
+  "Cầu thang rọi sáng": "STR_GI_X006",
+  "HỐ ĐÍCH (F)": "STR_GI_X007",
+  "Thang xuống sâu": "STR_GI_X008",
+  "KÉO NỐI TÂM Ô": "STR_GI_X009",
+  "Bắt đầu từ Cầu Thang Trên Lầu • Đi theo đường an toàn • Xuống Hố Thang Đích": "STR_GI_X010",
+  "Ô SỐ 0 = AN TOÀN": "STR_GI_X011",
+  "KHÔNG CÓ TƯỜNG": "STR_GI_X012",
+  "Tự do đi qua theo mọi hướng": "STR_GI_X013",
+  "Ô SỐ 3 = 3 TƯỜNG": "STR_GI_X014",
+  "BỊ BỊT KÍN 3 MẶT": "STR_GI_X015",
+  "Chỉ có 1 cạnh duy nhất để thoát": "STR_GI_X016",
+  "Suy luận như Dò Mìn: Dùng con số để xác định khe nào có Tường Vô Hình": "STR_GI_X017",
+  "CÔNG CỤ: GHI NHỚ": "STR_GI_X018",
+  "Đánh dấu Tường Nghi Ngờ": "STR_GI_X019",
+  "Kéo giữa 2 dấu cộng (+) ở góc ô để tự dựng": "STR_GI_X020",
+  "tường cam nháp, giúp không bao giờ đâm nhầm!": "STR_GI_X021",
+  "HOÀN TÁC": "STR_GI_X022",
+  "Lùi lại 1 bước": "STR_GI_X023",
+  "Lỡ vẽ sai vào ngõ cụt? Bấm": "STR_GI_X024",
+  "Undo để rút lại nét vẽ an toàn.": "STR_GI_X025",
+  "GỢI Ý": "STR_GI_X026",
+  "Mở 1 bước an toàn": "STR_GI_X027",
+  "Gặp thế cờ quá khó? Soi sáng": "STR_GI_X028",
+  "ngay 1 đoạn đường đúng đắn.": "STR_GI_X029",
+  "Kết hợp linh hoạt Vẽ Đường + Ghi Nhớ Tường để phá đảo mọi câu đố!": "STR_GI_X030",
+  "SỐ BƯỚC CÒN LẠI": "STR_GI_X031",
+  "15": "STR_GI_X032",
+  "BƯỚC": "STR_GI_X033",
+  "TẦNG HIỆN TẠI": "STR_GI_X034",
+  "04": "STR_GI_X035",
+  "THỜI GIAN": "STR_GI_X036",
+  "01:24": "STR_GI_X037",
+  "MỖI BƯỚC ĐI": "STR_GI_X038",
+  "-1 BƯỚC": "STR_GI_X039",
+  "Hết bước = THUA": "STR_GI_X040",
+  "CHẠM HỐ ĐÍCH F": "STR_GI_X041",
+  "+5 BƯỚC!": "STR_GI_X042",
+  "Xuống Tầng 05": "STR_GI_X043",
+  "Đi đường càng ngắn thì bước dư càng nhiều để chinh phục các tầng sâu hơn!": "STR_GI_X044",
+  "TƯỜNG THẬT ĐÃ LỘ!": "STR_GI_X045",
+  "Nét đen đậm": "STR_GI_X046",
+  "Không biến mất": "STR_GI_X047",
+  "HẬU QUẢ VA CHẠM": "STR_GI_X048",
+  "-1 BƯỚC ĐI": "STR_GI_X049",
+  "Văng ngược về S": "STR_GI_X050",
+  "Đừng sợ đâm tường! Đâm tường là cách hy sinh 1 bước để bản đồ lộ ra manh mối thật.": "STR_GI_X051",
+  "TẦNG ĐẦU (TẦNG 1 - 3)": "STR_GI_X052",
+  "CÒN TƯỜNG VẼ SẴN": "STR_GI_X053",
+  "Dễ hình dung lối thoát": "STR_GI_X054",
+  "Tỉ lệ tường lộ: 40% ~ 60%": "STR_GI_X055",
+  "TẦNG SÂU (TẦNG 5 TRỞ ĐI)": "STR_GI_X056",
+  "100% TƯỜNG VÔ HÌNH!": "STR_GI_X057",
+  "Dùng Ghi Nhớ nối Anchor": "STR_GI_X058",
+  "để tự dựng tường nháp trước": "STR_GI_X059",
+  "Càng lên cao tường sẵn càng biến mất — hãy nối Anchor trước khi đặt bút vẽ đường!": "STR_GI_X060",
+  "CON SỐ Ở GIỮA": "STR_GI_X061",
+  "SỐ 1 = 1 BOM": "STR_GI_X062",
+  "Trong 8 ô xung quanh": "STR_GI_X063",
+  "(tính cả góc chéo!)": "STR_GI_X064",
+  "VỊ TRÍ CÓ BOM": "STR_GI_X065",
+  "TRÁNH XA!": "STR_GI_X066",
+  "Đạp trúng bom": "STR_GI_X067",
+  "= THUA NGAY": "STR_GI_X068",
+  "Khác với mê cung thường: Số chỉ bom trong 8 ô lân cận (ngang, dọc VÀ chéo)!": "STR_GI_X069",
+  "ĐẠP PHẢI BOM": "STR_GI_X070",
+  "THUA NGAY TẠI CHỖ!": "STR_GI_X071",
+  "Nhân vật dừng ngay tại ô nổ": "STR_GI_X072",
+  "(Không văng về S như Dungeon)": "STR_GI_X073",
+  "VÙNG Ô SỐ 0": "STR_GI_X074",
+  "CẢ 8 Ô ĐỀU SẠCH BOM!": "STR_GI_X075",
+  "Tự tin bước qua bất kỳ ô nào": "STR_GI_X076",
+  "đang tiếp giáp với ô số 0": "STR_GI_X077",
+  "Hãy tìm các ô số 0 trước tiên — đó là chìa khóa mở toang lối đi an toàn!": "STR_GI_X078",
+  "BOM CÒN LẠI TRÊN BÀN": "STR_GI_X079",
+  "03": "STR_GI_X080",
+  "Đã phát hiện 2 quả • Còn 3 quả ẩn giấu": "STR_GI_X081",
+  "CẮM CỜ KHÓA Ô": "STR_GI_X082",
+  "Chống bấm nhầm": "STR_GI_X083",
+  "Dùng nút Ghi Nhớ để cắm cờ": "STR_GI_X084",
+  "vào ô bạn nghi là có bom.": "STR_GI_X085",
+  "Ô cắm cờ sẽ bị khóa an toàn!": "STR_GI_X086",
+  "Lùi 1 bước an toàn": "STR_GI_X087",
+  "Lỡ bước nhầm ô nguy hiểm?": "STR_GI_X088",
+  "Bấm Undo để lùi lại ngay lập tức": "STR_GI_X089",
+  "trước khi dẫn đến sai lầm.": "STR_GI_X090",
+  "Luôn để mắt tới thẻ HUD Bom để biết mình đã cô lập hết bom trên bàn chưa!": "STR_GI_X091",
+  "TỔNG HIỆN TẠI": "STR_GI_X092",
+  "18": "STR_GI_X093",
+  "(qua 3 ô)": "STR_GI_X094",
+  "=": "STR_GI_X095",
+  "MỤC TIÊU PHẢI ĐẠT": "STR_GI_X096",
+  "50": "STR_GI_X097",
+  "CẦN THÊM +32": "STR_GI_X098",
+  "8": "STR_GI_X099",
+  "4": "STR_GI_X100",
+  "6": "STR_GI_X101",
+  "9": "STR_GI_X102",
+  "7": "STR_GI_X103",
+  "CỘNG DỒN ĐIỂM": "STR_GI_X104",
+  "4 + 6 + 8": "STR_GI_X105",
+  "= 18 ĐIỂM": "STR_GI_X106",
+  "Cộng mỗi bước đi!": "STR_GI_X107",
+  "ĐI TỰ DO": "STR_GI_X108",
+  "Vẽ hướng nào cũng": "STR_GI_X109",
+  "không sợ đâm chết!": "STR_GI_X110",
+  "Kéo qua ô nào, điểm ô đó cộng dồn vào Tổng. Đích đến yêu cầu bạn đạt chính xác = 50!": "STR_GI_X111",
+  "3 DẠNG TOÁN TỬ HUD": "STR_GI_X112",
+  "BẰNG CHÍNH XÁC": "STR_GI_X113",
+  "Ví dụ: Tổng = 50": "STR_GI_X114",
+  "<": "STR_GI_X115",
+  "NHỎ HƠN MỨC TRẦN": "STR_GI_X116",
+  "Ví dụ: Tổng < 35": "STR_GI_X117",
+  ">": "STR_GI_X118",
+  "LỚN HƠN MỨC SÀN": "STR_GI_X119",
+  "Ví dụ: Tổng > 40": "STR_GI_X120",
+  "KIỂM TRA KỸ TOÁN TỬ": "STR_GI_X121",
+  "trên bảng HUD trước khi vẽ!": "STR_GI_X122",
+  "MỖI Ô CHỈ CỘNG 1 LẦN": "STR_GI_X123",
+  "5": "STR_GI_X124",
+  "+0 ĐIỂM": "STR_GI_X125",
+  "KHÔNG THỂ ĐI VÒNG CÀY ĐIỂM": "STR_GI_X126",
+  "Quay lại ô cũ sẽ không cộng thêm.": "STR_GI_X127",
+  "Điểm chỉ tính ở lần bước đầu tiên!": "STR_GI_X128",
+  "Luôn nhìn toán tử trên HUD: Có màn yêu cầu = 50, nhưng có màn chỉ yêu cầu < 30!": "STR_GI_X129",
+  "CHIẾN THUẬT: SỐ LỚN & SỐ NHỎ": "STR_GI_X130",
+  "Ô 7, 8, 9": "STR_GI_X131",
+  "Dồn điểm cực nhanh": "STR_GI_X132",
+  "Ô 1, 2, 3": "STR_GI_X133",
+  "Tinh chỉnh vừa khít": "STR_GI_X134",
+  "50 ĐIỂM": "STR_GI_X135",
+  "HOÀN HẢO": "STR_GI_X136",
+  "Khi mục tiêu còn xa: Ưu tiên gom các ô số to. Khi gần chạm mốc: Rẽ qua ô số nhỏ để chốt hạ!": "STR_GI_X137",
+  "UNDO": "STR_GI_X138",
+  "TRỪ NGƯỢC ĐIỂM SỐ": "STR_GI_X139",
+  "LỠ CỘNG LỐ ĐIỂM? SỬA NGAY!": "STR_GI_X140",
+  "Bấm Undo lùi lại 1 bước, điểm số của ô đó": "STR_GI_X141",
+  "sẽ được trừ ngược ra khỏi Tổng Hiện Tại để bạn chọn nhánh khác.": "STR_GI_X142",
+  "Luôn có ít nhất 1 nghiệm đúng! Hãy tận dụng Undo để thử nghiệm các hướng tính toán.": "STR_GI_X143",
+  "NGÂN SÁCH CÒN:": "STR_GI_X144",
+  "13": "STR_GI_X145",
+  "ĐÃ TIÊU: -3 BƯỚC (QUA 2 Ô)": "STR_GI_X146",
+  "Ô GIÁ RẺ (1 - 2)": "STR_GI_X147",
+  "TIẾT KIỆM": "STR_GI_X148",
+  "Ưu tiên đi qua": "STR_GI_X149",
+  "để giữ ngân sách!": "STR_GI_X150",
+  "Ô GIÁ ĐẮT (3 - 4)": "STR_GI_X151",
+  "TỐN KÉM!": "STR_GI_X152",
+  "Đi 1 ô số 4 bằng": "STR_GI_X153",
+  "4 lần ô số 1!": "STR_GI_X154",
+  "Đã đi qua 2 ô: Ô [1] + Ô [2] • Tổng cước: -3 bước, ngân sách còn 13 bước!": "STR_GI_X155",
+  "HẬU QUẢ ĐÂM TƯỜNG": "STR_GI_X156",
+  "VẪN TRỪ -3 BƯỚC!": "STR_GI_X157",
+  "Bị phạt đúng giá cước": "STR_GI_X158",
+  "của ô bạn vừa đâm!": "STR_GI_X159",
+  "CẨN THẬN BẪY Ô ĐẮT": "STR_GI_X160",
+  "Ô SỐ 3 & SỐ 4": "STR_GI_X161",
+  "Hao hụt ngân sách cực nhanh.": "STR_GI_X162",
+  "Nên tìm đường né tránh!": "STR_GI_X163",
+  "Đâm tường ở Countdown Cost bị phạt kép: vừa văng về S, vừa mất đứt số bước của ô đích!": "STR_GI_X164",
+  "BÍ QUYẾT: ĐƯỜNG RẺ NHẤT": "STR_GI_X165",
+  "S": "STR_GI_X166",
+  "F": "STR_GI_X167",
+  "CƯỚC: 6 BƯỚC • DƯ 10": "STR_GI_X168",
+  "CƯỚC: 17 BƯỚC • THUA": "STR_GI_X169",
+  "Ngân Sách Luôn Đủ Cho Đường Rẻ": "STR_GI_X170",
+  "Mỗi màn đều cấp đủ số bước cho": "STR_GI_X171",
+  "tuyến đường ít tốn kém nhất + dự phòng.": "STR_GI_X172",
+  "Đi lệch qua ô đắt sẽ bị cạn sạch bước!": "STR_GI_X173",
+  "HOÀN TRẢ CƯỚC 100%": "STR_GI_X174",
+  "+HOÀN LẠI SỐ BƯỚC ĐÃ TRỪ!": "STR_GI_X175",
+  "Lỡ bước vào ô đắt đỏ hoặc muốn đổi hướng?": "STR_GI_X176",
+  "Bấm Undo lùi lại, số bước bị trừ sẽ lập tức cộng ngược lại vào ngân sách.": "STR_GI_X177",
+  "Đừng tiếc một lần Undo! Lùi lại để chọn lối đi rẻ hơn sẽ cứu sống cả ván đấu.": "STR_GI_X178",
+  "CÒN 1": "STR_GI_X179",
+  "SỐ TRÊN Ô LÀ": "STR_GI_X180",
+  "ĐIỂM MỰC": "STR_GI_X181",
+  "Không phải số tường!": "STR_GI_X182",
+  "Không phải bom!": "STR_GI_X183",
+  "-1 MỰC": "STR_GI_X184",
+  "Tất cả các ô trên": "STR_GI_X185",
+  "bàn cờ cùng phai!": "STR_GI_X186",
+  "Bạn đi được 3 bước = Toàn bộ các ô trên bàn cờ đều bị phai mất 3 điểm mực!": "STR_GI_X187",
+  "Ô CÒN 1 ĐIỂM MỰC": "STR_GI_X188",
+  "SẮP PHAI": "STR_GI_X189",
+  "CÒN ĐÚNG 1 BƯỚC!": "STR_GI_X190",
+  "Nếu đi thêm 1 bước nữa vào": "STR_GI_X191",
+  "bất kỳ đâu, ô này sẽ biến mất!": "STR_GI_X192",
+  "Ô 0 MỰC: BỊ KHÓA": "STR_GI_X193",
+  "CẠN": "STR_GI_X194",
+  "KHÔNG THỂ BƯỚC VÀO": "STR_GI_X195",
+  "Ô trở thành khoảng trống rỗng.": "STR_GI_X196",
+  "Bị bít hết đường = THUA NGAY!": "STR_GI_X197",
+  "Hãy để ý các ô viền cam! Chúng báo trước những lối đi sắp biến mất vĩnh viễn.": "STR_GI_X198",
+  "BÍ QUYẾT: ĐƯỜNG NGẮN NHẤT": "STR_GI_X199",
+  "4 BƯỚC • THẮNG": "STR_GI_X200",
+  "7 BƯỚC • CẠN MỰC": "STR_GI_X201",
+  "Đường Ngắn Luôn Đủ Mực": "STR_GI_X202",
+  "Mỗi màn đều được thiết kế sao cho": "STR_GI_X203",
+  "đường ngắn nhất có đủ mực để tới F.": "STR_GI_X204",
+  "Đi vòng vèo sẽ tự làm cạn mực bít đường!": "STR_GI_X205",
+  "ĐẶC QUYỀN HỒI MỰC": "STR_GI_X206",
+  "+1 MỰC CHO TOÀN BÀN CỜ!": "STR_GI_X207",
+  "Mỗi lần bấm Undo lùi 1 bước chân, tất cả": "STR_GI_X208",
+  "các ô trên bàn cờ đều được hồi phục lại đúng 1 điểm mực.": "STR_GI_X209",
+  "Đừng ngại Undo! Rút lại bước đi sẽ hồi sinh ngay các ô vừa bị cạn mực.": "STR_GI_X210",
+  "GHI NHỚ TRONG": "STR_GI_X211",
+  "GIÂY": "STR_GI_X212",
+  "TRONG 3 GIÂY ĐẦU": "STR_GI_X213",
+  "TƯỜNG HIỆN": "STR_GI_X214",
+  "100% RÕ RÀNG": "STR_GI_X215",
+  "(Đồng hồ đứng yên)": "STR_GI_X216",
+  "ĐẶC BIỆT CHÚ Ý": "STR_GI_X217",
+  "HOÀN TOÀN": "STR_GI_X218",
+  "KHÔNG CÓ SỐ": "STR_GI_X219",
+  "Chỉ có ô S và F!": "STR_GI_X220",
+  "Tranh thủ 3 giây đếm ngược nhìn bao quát để khắc ghi đường thoát an toàn vào đầu!": "STR_GI_X221",
+  "GO!": "STR_GI_X222",
+  "BÀN CỜ SAU ĐÓ": "STR_GI_X223",
+  "TRỐNG TRƠN": "STR_GI_X224",
+  "100% TƯỜNG ẨN": "STR_GI_X225",
+  "Không còn vết tích!": "STR_GI_X226",
+  "CẨN THẬN ĐÂM TƯỜNG": "STR_GI_X227",
+  "CHẠM TƯỜNG ẨN": "STR_GI_X228",
+  "BỊ PHẠT VỀ S": "STR_GI_X229",
+  "(Hardcore: Thua ngay)": "STR_GI_X230",
+  "Đồng hồ bắt đầu tính giờ! Hãy vẽ chậm rãi và tái hiện lại trí nhớ của bạn.": "STR_GI_X231",
+  "CHIẾN THUẬT: VẼ TƯỜNG NHÁP": "STR_GI_X232",
+  "Nhanh Tay Khóa Khe Nguy Hiểm": "STR_GI_X233",
+  "Vừa hết 3 giây, hãy dùng công cụ Ghi Nhớ": "STR_GI_X234",
+  "nối ngay các Anchor để dựng lại tường bạn nhớ.": "STR_GI_X235",
+  "Giúp bạn không bị đãng trí giữa chừng!": "STR_GI_X236",
+  "GỢI Ý (HINT)": "STR_GI_X237",
+  "Soi lại đường an toàn": "STR_GI_X238",
+  "Lỡ quên sạch đường đi?": "STR_GI_X239",
+  "Bấm Gợi Ý để soi sáng ngay": "STR_GI_X240",
+  "1 đoạn đường đúng đắn tiếp theo.": "STR_GI_X241",
+  "HOÀN TÁC (UNDO)": "STR_GI_X242",
+  "Rút lại bước đi": "STR_GI_X243",
+  "Vừa đặt chân vào ô thấy sai sai?": "STR_GI_X244",
+  "Bấm Undo để lùi lại ô trước": "STR_GI_X245",
+  "trước khi va phải tường ẩn!": "STR_GI_X246",
+  "Kẻ có trí nhớ tốt chưa chắc đã thắng — kẻ biết dùng Anchor dựng tường mới là cao thủ!": "STR_GI_X247",
+  "?": "STR_GI_X248",
+  "VÙNG TẦM NHÌN": "STR_GI_X249",
+  "BÁN KÍNH 1 Ô": "STR_GI_X250",
+  "HIỆN RÕ SỐ": "STR_GI_X251",
+  "Chỉ thấy ô sát cạnh bạn!": "STR_GI_X252",
+  "VÙNG SƯƠNG MÙ": "STR_GI_X253",
+  "Ô Ở XA BẠN": "STR_GI_X254",
+  "ẨN CON SỐ": "STR_GI_X255",
+  "Che khuất manh mối!": "STR_GI_X256",
+  "Bạn đi đến đâu thì quầng sáng mở ra tới đó — ô ở xa sẽ bị sương mù che mất số!": "STR_GI_X257",
+  "Ô ĐÃ BƯỚC QUA": "STR_GI_X258",
+  "MỜ DẦN ĐI": "STR_GI_X259",
+  "ẨN LẠI SỐ": "STR_GI_X260",
+  "Sương mù phủ lại!": "STR_GI_X261",
+  "BẪY TƯỜNG ẨN": "STR_GI_X262",
+  "ĐÂM VÀO TƯỜNG": "STR_GI_X263",
+  "Bước tới đâu sương mù mở tới đó — nhưng tuyệt đối không bước bừa vào ô chưa rõ số!": "STR_GI_X264",
+  "CHIẾN THUẬT: KHÓA TƯỜNG ANCHOR": "STR_GI_X265",
+  "Khóa Tường Trước Khi Sương Mù Che Mất": "STR_GI_X266",
+  "Thấy ô có số 2? Hãy nối ngay 2 Anchor": "STR_GI_X267",
+  "để dựng vách tường cam bảo vệ.": "STR_GI_X268",
+  "Tường bạn tự vẽ KHÔNG bị sương mù xóa!": "STR_GI_X269",
+  "Soi đường trong tối": "STR_GI_X270",
+  "Mất phương hướng trong sương?": "STR_GI_X271",
+  "1 đoạn đường an toàn phía trước.": "STR_GI_X272",
+  "Bước vào hướng thấy nguy hiểm?": "STR_GI_X273",
+  "Bấm Undo để lùi lại ô an toàn": "STR_GI_X274",
+  "trước khi đâm vào tường ẩn!": "STR_GI_X275",
+  "Kẻ mù quáng bước đi sẽ đâm tường — người biết dùng Anchor khóa lối sẽ chiến thắng!": "STR_GI_X276",
+  "THỜI GIAN CÒN LẠI": "STR_GI_X277",
+  "00:45": "STR_GI_X278",
+  "ĐANG GIẢM": "STR_GI_X279",
+  "ÁP LỰC THỜI GIAN": "STR_GI_X280",
+  "ĐẾM NGƯỢC": "STR_GI_X281",
+  "VỀ 00:00": "STR_GI_X282",
+  "Hết giờ = THUA!": "STR_GI_X283",
+  "SỐ BƯỚC CHÂN": "STR_GI_X284",
+  "KHÔNG GIỚI HẠN": "STR_GI_X285",
+  "Đi bao nhiêu ô tùy ý": "STR_GI_X286",
+  "chỉ cần về đích kịp!": "STR_GI_X287",
+  "Bạn chỉ có 60s đến 120s: Hãy vẽ thật dứt khoát trước khi đồng hồ điểm 00:00!": "STR_GI_X288",
+  "BỊ ĐẨY VỀ XUẤT PHÁT": "STR_GI_X289",
+  "VẼ LẠI TỪ S!": "STR_GI_X290",
+  "Tường lộ diện nhưng": "STR_GI_X291",
+  "phải đi lại từ đầu.": "STR_GI_X292",
+  "THỜI GIAN VẪN TRÔI": "STR_GI_X293",
+  "MẤT 5 - 10 GIÂY!": "STR_GI_X294",
+  "Đồng hồ vẫn đếm lùi,": "STR_GI_X295",
+  "quỹ giờ cạn rất nhanh!": "STR_GI_X296",
+  "Đâm tường ở Time Attack không chết ngay, nhưng sẽ cướp đi thời gian quý báu của bạn!": "STR_GI_X297",
+  "CHIẾN THUẬT: PHÓNG QUA Ô 0": "STR_GI_X298",
+  "LƯỚT QUA • SIÊU TỐC": "STR_GI_X299",
+  "Ưu Tiên Ô Số 0 Để Tăng Tốc": "STR_GI_X300",
+  "Ô số 0 hoàn toàn không có tường bao.": "STR_GI_X301",
+  "Hãy phóng thẳng bút qua ô này mà không": "STR_GI_X302",
+  "cần dừng lại suy nghĩ, tiết kiệm tối đa giây!": "STR_GI_X303",
+  "Mở lối khi bí": "STR_GI_X304",
+  "Bí quá 3 giây? Đừng chôn chân!": "STR_GI_X305",
+  "Bấm ngay Gợi Ý để soi đường": "STR_GI_X306",
+  "thay vì đứng nhìn đồng hồ cạn!": "STR_GI_X307",
+  "Rút bước kịp thời": "STR_GI_X308",
+  "Lỡ tay quẹt nhầm hướng?": "STR_GI_X309",
+  "Bấm Undo lùi lại ngay": "STR_GI_X310",
+  "để không bị đâm tường văng về S!": "STR_GI_X311",
+  "Đứng yên là tự sát! Khi phân vân, bấm ngay Gợi Ý để cứu lấy thời gian sống còn.": "STR_GI_X312"
+ }
+}

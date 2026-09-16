@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <pattern id="bgGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.5"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.15"/>
+    </pattern>
+
+    <filter id="paperSlipShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#1A120B" flood-opacity="0.35"/>
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#1A120B" flood-opacity="0.15"/>
+    </filter>
+
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <filter id="clashGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#DC2626" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Gradient ánh sáng của Cầu Thang Xuất Phát Start -->
+    <linearGradient id="dungeonUpperLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBE8" stop-opacity="0.95"/>
+      <stop offset="35%" stop-color="#3C4B59" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#1B2834" stop-opacity="0.75"/>
+    </linearGradient>
+
+    <!-- Cầu thang Start -->
+    <g id="stair-start">
+      <rect width="130" height="130" fill="#FAF5EB"/>
+      <rect x="8" y="8" width="114" height="114" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3"/>
+      <rect x="12" y="12" width="106" height="106" fill="url(#dungeonUpperLight)"/>
+      <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="14" x2="122" y2="14" stroke-width="3"/>
+        <polygon points="42,14 88,14 86,22 44,22" fill="#FFFBE8" stroke-width="1.8"/>
+        <polygon points="44,22 86,22 90,36 40,36" fill="#D5C7B2" stroke-width="2.2"/>
+        <rect x="40" y="36" width="50" height="10" fill="#9C8D78" stroke-width="2.2"/>
+        <polygon points="40,46 90,46 96,62 34,62" fill="#E2D5C0" stroke-width="2.5"/>
+        <rect x="34" y="62" width="62" height="12" fill="#BFAF9B" stroke-width="2.5"/>
+        <polygon points="34,74 96,74 102,90 28,90" fill="#EDE4D4" stroke-width="2.5"/>
+        <rect x="28" y="90" width="74" height="12" fill="#CBBFAA" stroke-width="2.5"/>
+        <polygon points="28,102 102,102 108,116 22,116" fill="#F7F1E6" stroke-width="2.5"/>
+        <rect x="22" y="116" width="86" height="6" fill="#DCD1BF" stroke-width="2.5"/>
+      </g>
+      <rect x="1" y="1" width="128" height="128" rx="8" fill="none" stroke="#2575A7" stroke-width="2.5"/>
+    </g>
+  </defs>
+
+  <!-- NỀN MỜ PHÍA SAU -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#bgGrid)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+  <rect width="1080" height="1920" fill="#1C2D3A" fill-opacity="0.55"/>
+
+  <!-- TỜ GIẤY HƯỚNG DẪN (920 x 1480 px tại x=80, y=200) -->
+  <g transform="translate(80, 200)">
+    <!-- THÂN GIẤY CHÍNH -->
+    <g filter="url(#paperSlipShadow)">
+      <rect width="920" height="1480" rx="26" fill="#FFFDF9"/>
+      <!-- Lỗ bấm sổ còng bên lề trái -->
+      <g fill="#EAE3D2" opacity="0.65">
+        <circle cx="28" cy="120" r="8"/><circle cx="28" cy="240" r="8"/><circle cx="28" cy="360" r="8"/>
+        <circle cx="28" cy="480" r="8"/><circle cx="28" cy="600" r="8"/><circle cx="28" cy="720" r="8"/>
+        <circle cx="28" cy="840" r="8"/><circle cx="28" cy="960" r="8"/><circle cx="28" cy="1080" r="8"/>
+        <circle cx="28" cy="1200" r="8"/><circle cx="28" cy="1320" r="8"/><circle cx="28" cy="1440" r="8"/>
+      </g>
+      <!-- Dòng kẻ ngang mờ -->
+      <g stroke="#8FB9D2" stroke-width="1" opacity="0.35">
+        <line x1="80" y1="210" x2="860" y2="210"/><line x1="80" y1="770" x2="860" y2="770"/>
+        <line x1="80" y1="850" x2="860" y2="850"/><line x1="80" y1="930" x2="860" y2="930"/>
+        <line x1="80" y1="1010" x2="860" y2="1010"/><line x1="80" y1="1090" x2="860" y2="1090"/>
+        <line x1="80" y1="1170" x2="860" y2="1170"/><line x1="80" y1="1250" x2="860" y2="1250"/>
+      </g>
+      <line x1="80" y1="0" x2="80" y2="1480" stroke="#D84444" stroke-width="3" opacity="0.85"/>
+      <rect width="920" height="1480" rx="26" fill="none" stroke="#DC2626" stroke-width="3.5"/>
+    </g>
+
+    <!-- WASHI TAPE -->
+    <g transform="translate(350, -22)">
+      <rect width="220" height="46" rx="4" fill="#E8DFCA" fill-opacity="0.9" stroke="#D1C6AE" stroke-width="1.5"/>
+      <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" stroke="#B5A98F" stroke-width="1.2" opacity="0.4"/>
+    </g>
+
+    <!-- NÚT ĐÓNG NHANH "✕" -->
+    <g transform="translate(830, 24)" style="cursor: pointer;">
+      <circle cx="28" cy="28" r="24" fill="#F4EFE6" stroke="#BACEDC" stroke-width="2"/>
+      <path d="M 18 18 L 38 38 M 38 18 L 18 38" stroke="#224C6D" stroke-width="3.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- HEADER POPUP -->
+    <g transform="translate(110, 48)">
+      <rect width="210" height="30" rx="8" fill="#FEE2E2"/>
+      <text x="105" y="21" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#B91C1C" letter-spacing="1">TIME ATTACK MAZE ⏱️</text>
+      <text x="0" y="70" font-family="'Segoe UI', Roboto, sans-serif" font-size="38" font-weight="950" fill="#224C6D">Đâm Tường &amp; Mất Giờ</text>
+    </g>
+
+    <!-- ================= THANH TAB: TAB 2 ĐANG ACTIVE ================= -->
+    <g transform="translate(105, 142)">
+      <rect x="0" y="0" width="245" height="48" rx="14" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5"/>
+      <text x="122" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#718B9E">① ĐỒNG HỒ ĐẾM NGƯỢC</text>
+
+      <rect x="255" y="0" width="245" height="48" rx="14" fill="#DC2626"/>
+      <text x="377" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">② ĐÂM TƯỜNG MẤT GIỜ</text>
+
+      <rect x="510" y="0" width="245" height="48" rx="14" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5"/>
+      <text x="632" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#718B9E">③ TỐC ĐỘ &amp; GỢI Ý</text>
+    </g>
+
+    <!-- ================= KHUNG HÌNH MINH HỌA ĐÂM TƯỜNG VĂNG VỀ S ================= -->
+    <g transform="translate(105, 210)" filter="url(#uiShadow)">
+      <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#DC2626" stroke-width="3"/>
+
+      <!-- LƯỚI MINI 3x3 DEMO VA CHẠM TƯỜNG -->
+      <g transform="translate(225, 40)">
+        <g fill="#F4F8FA" stroke="#BACEDC" stroke-width="2">
+          <!-- Hàng 0 -->
+          <rect x="0" y="0" width="100" height="100"/>
+          <rect x="100" y="0" width="100" height="100"/>
+          <rect x="200" y="0" width="100" height="100"/>
+
+          <!-- Hàng 1 -->
+          <rect x="0" y="100" width="100" height="100"/>
+          <rect x="100" y="100" width="100" height="100"/>
+          <rect x="200" y="100" width="100" height="100"/>
+
+          <!-- Hàng 2: Start Stairs tại [2,0] -->
+          <g transform="translate(0, 200) scale(0.77)"><use href="#stair-start"/></g>
+          <rect x="100" y="200" width="100" height="100"/>
+          <rect x="200" y="200" width="100" height="100"/>
+        </g>
+
+        <!-- Con số manh mối tường -->
+        <text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#2A4860">1</text>
+        <text x="150" y="50" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#2A4860">2</text>
+        <text x="250" y="50" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#2A4860">1</text>
+        <text x="50" y="150" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#2A4860">2</text>
+        <text x="150" y="150" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#2A4860">2</text>
+        <text x="250" y="150" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#2A4860">2</text>
+        <text x="150" y="250" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#2A4860">1</text>
+        <text x="250" y="250" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#2A4860">0</text>
+
+        <!-- ĐƯỜNG VẼ TỪ S TỚI ĐIỂM VA CHẠM TƯỜNG -->
+        <path d="M 50 250 L 50 150 L 150 150 L 200 150" 
+              fill="none" stroke="#2575A7" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- ĐOẠN TƯỜNG VÔ HÌNH VỪA ĐÂM TRÚNG LỘ DIỆN -->
+        <line x1="200" y1="100" x2="200" y2="200" stroke="#1E283A" stroke-width="12" stroke-linecap="round"/>
+
+        <!-- TIA LỬA VA CHẠM -->
+        <g transform="translate(200, 150)" filter="url(#clashGlow)">
+          <circle cx="0" cy="0" r="14" fill="#EF4444"/>
+          <circle cx="0" cy="0" r="7" fill="#FDE047"/>
+          <path d="M -10 -10 L -5 -5 M 10 -10 L 5 -5 M -10 10 L -5 5 M 10 10 L 5 5" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
+        </g>
+
+        <!-- CUNG TÊN BỊ VĂNG VỀ START S -->
+        <path d="M 195 140 Q 150 80 50 200" 
+              fill="none" stroke="#DC2626" stroke-width="4.5" stroke-dasharray="7 5" stroke-linecap="round"/>
+        <polygon points="50,200 62,190 52,185" fill="#DC2626"/>
+      </g>
+
+      <!-- CALLOUT BÊN TRÁI: VĂNG VỀ S VẼ LẠI TỪ ĐẦU -->
+      <g transform="translate(25, 220)">
+        <rect width="180" height="110" rx="14" fill="#FEF2F2" stroke="#DC2626" stroke-width="2"/>
+        <text x="14" y="26" font-family="sans-serif" font-size="12" font-weight="900" fill="#B91C1C">BỊ ĐẨY VỀ XUẤT PHÁT</text>
+        <text x="14" y="52" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#DC2626">VẼ LẠI TỪ S!</text>
+        <text x="14" y="76" font-family="sans-serif" font-size="12" font-weight="700" fill="#7F1D1D">Tường lộ diện nhưng</text>
+        <text x="14" y="96" font-family="sans-serif" font-size="12" font-weight="900" fill="#DC2626">phải đi lại từ đầu.</text>
+      </g>
+
+      <!-- CALLOUT BÊN PHẢI: ĐỒNG HỒ KHÔNG CHỜ ĐỢI -->
+      <g transform="translate(545, 120)">
+        <rect width="185" height="110" rx="14" fill="#FFF7ED" stroke="#EA580C" stroke-width="2"/>
+        <text x="14" y="26" font-family="sans-serif" font-size="12" font-weight="900" fill="#C2410C">THỜI GIAN VẪN TRÔI</text>
+        <text x="14" y="52" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#9A3412">MẤT 5 - 10 GIÂY!</text>
+        <text x="14" y="76" font-family="sans-serif" font-size="12" font-weight="700" fill="#7C2D12">Đồng hồ vẫn đếm lùi,</text>
+        <text x="14" y="96" font-family="sans-serif" font-size="12" font-weight="800" fill="#C2410C">quỹ giờ cạn rất nhanh!</text>
+      </g>
+
+      <!-- DẢI GHI CHÚ CHÂN HÌNH -->
+      <rect x="20" y="448" width="715" height="44" rx="10" fill="#F4EFE6"/>
+      <text x="377" y="475" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#224C6D">
+        💡 Đâm tường ở Time Attack không chết ngay, nhưng sẽ cướp đi thời gian quý báu của bạn!
+      </text>
+    </g>
+
+    <!-- NỘI DUNG CHI TIẾT DẠNG THẺ -->
+    <g transform="translate(105, 755)">
+      <text x="0" y="24" font-family="sans-serif" font-size="16" font-weight="900" fill="#DC2626" letter-spacing="1.5">HẬU QUẢ VA CHẠM TƯỜNG</text>
+
+      <!-- Ý 1 -->
+      <g transform="translate(0, 42)">
+        <rect width="755" height="76" rx="14" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#DC2626"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">1</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#B91C1C">Văng Ngược Về Cầu Thang Start (S):</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#7F1D1D">Đâm phải tường vô hình, nhân vật lập tức bị đẩy lùi về điểm S để bắt đầu đường vẽ mới.</text>
+      </g>
+
+      <!-- Ý 2 -->
+      <g transform="translate(0, 130)">
+        <rect width="755" height="76" rx="14" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#EA580C"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">2</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#9A3412">Đồng Hồ Vẫn Tiếp Tục Đếm Ngược:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#7C2D12">Thời gian không dừng lại. Việc vẽ lại từ đầu khiến bạn mất đứt nhiều giây sinh tử!</text>
+      </g>
+
+      <!-- Ý 3 -->
+      <g transform="translate(0, 218)">
+        <rect width="755" height="76" rx="14" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#16A34A"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">3</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#15803D">Rút Kinh Nghiệm Từ Đoạn Tường Vừa Lộ:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#166534">Bức tường bị đâm sẽ lộ ra vĩnh viễn. Hãy nhìn thật nhanh và vẽ đường né tránh dứt khoát.</text>
+      </g>
+    </g>
+
+    <!-- ĐIỀU KHIỂN PAGING SLIDE -->
+    <g transform="translate(105, 1100)">
+      <g transform="translate(0, 0)">
+        <!-- Nút lùi: BẬT (về Trang 1) -->
+        <g style="cursor: pointer;">
+          <rect width="52" height="52" rx="14" fill="#FEFDFA" stroke="#DC2626" stroke-width="2.5"/>
+          <path d="M 30 18 L 20 26 L 30 34" fill="none" stroke="#DC2626" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- Dots: Dot 2 active -->
+        <g transform="translate(80, 16)">
+          <circle cx="9" cy="9" r="8" fill="#D1E2ED"/>
+          <rect x="27" y="0" width="38" height="18" rx="9" fill="#DC2626"/>
+          <circle cx="86" cy="9" r="8" fill="#D1E2ED"/>
+        </g>
+
+        <!-- Nút tiến: BẬT (sang Trang 3) -->
+        <g transform="translate(200, 0)" style="cursor: pointer;">
+          <rect width="52" height="52" rx="14" fill="#FEFDFA" stroke="#DC2626" stroke-width="2.5"/>
+          <path d="M 22 18 L 32 26 L 22 34" fill="none" stroke="#DC2626" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <text x="755" y="34" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="900" fill="#DC2626">TRANG 2 / 3</text>
+      </g>
+
+      <!-- Nút hành động chính: TIẾP THEO SANG TRANG 3 -->
+      <g transform="translate(0, 80)" style="cursor: pointer;" filter="url(#uiShadow)">
+        <rect width="755" height="100" rx="22" fill="#DC2626" stroke="#991B1B" stroke-width="3.5"/>
+        <line x1="42" y1="0" x2="42" y2="100" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
+        <text x="397" y="62" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="25" font-weight="950" fill="#FFFFFF" letter-spacing="1">
+          TIẾP THEO: TỐC ĐỘ &amp; GỢI Ý (3/3) ›
+        </text>
+      </g>
+
+      <text x="377" y="222" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E" style="cursor: pointer;">
+        Bỏ qua hướng dẫn &amp; Vào đua giờ ngay
+      </text>
+    </g>
+  </g>
+
+  <rect x="420" y="1875" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
+</svg>

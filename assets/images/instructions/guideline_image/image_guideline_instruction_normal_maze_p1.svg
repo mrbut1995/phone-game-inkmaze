@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="785" height="535">
+  <defs>
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14" />
+    </filter>
+    <filter id="pathGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#2575A7" flood-opacity="0.45" />
+    </filter>
+    <linearGradient id="dungeonDeepVoid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3C4B59" stop-opacity="0.1" />
+      <stop offset="60%" stop-color="#1B2834" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#0A1118" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="dungeonUpperLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBE8" stop-opacity="0.95" />
+      <stop offset="35%" stop-color="#3C4B59" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#1B2834" stop-opacity="0.75" />
+    </linearGradient>
+    <g id="stair-start">
+      <rect width="130" height="130" fill="#FAF5EB" />
+      <rect x="8" y="8" width="114" height="114" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
+      <rect x="12" y="12" width="106" height="106" fill="url(#dungeonUpperLight)" />
+      <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="14" x2="122" y2="14" stroke-width="3" />
+        <polygon points="42,14 88,14 86,22 44,22" fill="#FFFBE8" stroke-width="1.8" />
+        <polygon points="44,22 86,22 90,36 40,36" fill="#D5C7B2" stroke-width="2.2" />
+        <rect x="40" y="36" width="50" height="10" fill="#9C8D78" stroke-width="2.2" />
+        <polygon points="40,46 90,46 96,62 34,62" fill="#E2D5C0" stroke-width="2.5" />
+        <rect x="34" y="62" width="62" height="12" fill="#BFAF9B" stroke-width="2.5" />
+        <polygon points="34,74 96,74 102,90 28,90" fill="#EDE4D4" stroke-width="2.5" />
+        <rect x="28" y="90" width="74" height="12" fill="#CBBFAA" stroke-width="2.5" />
+        <polygon points="28,102 102,102 108,116 22,116" fill="#F7F1E6" stroke-width="2.5" />
+        <rect x="22" y="116" width="86" height="6" fill="#DCD1BF" stroke-width="2.5" />
+      </g>
+      <rect x="1" y="1" width="128" height="128" rx="8" fill="none" stroke="#2575A7" stroke-width="2.5" />
+    </g>
+    <g id="stair-finish">
+      <rect width="130" height="130" fill="#FAF5EB" />
+      <rect x="8" y="8" width="114" height="114" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
+      <rect x="12" y="12" width="106" height="106" fill="url(#dungeonDeepVoid)" />
+      <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="14" x2="122" y2="14" stroke-width="3" />
+        <polygon points="16,14 114,14 106,32 24,32" fill="#F7F1E6" stroke-width="2.5" />
+        <rect x="24" y="32" width="82" height="12" fill="#CBBFAA" stroke-width="2.5" />
+        <polygon points="24,44 106,44 98,60 32,60" fill="#E2D5C0" stroke-width="2.5" />
+        <rect x="32" y="60" width="66" height="12" fill="#A49580" stroke-width="2.5" />
+        <polygon points="32,72 98,72 90,86 40,86" fill="#BFAF9B" stroke-width="2.5" />
+        <rect x="40" y="86" width="50" height="12" fill="#756755" stroke-width="2.5" />
+        <polygon points="40,98 90,98 84,108 46,108" fill="#807260" stroke-width="2.2" />
+        <rect x="46" y="108" width="38" height="8" fill="#42382C" stroke-width="2.2" />
+        <polygon points="46,116 84,116 80,120 50,120" fill="#0A1118" stroke-width="1.5" />
+      </g>
+      <rect x="1" y="1" width="128" height="128" rx="8" fill="none" stroke="#D84444" stroke-width="2.5" />
+    </g>
+  </defs>
+  <g filter="url(#uiShadow)">
+    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3" />
+    <g transform="translate(182, 45)">
+      <g fill="#F4F8FA" stroke="#BACEDC" stroke-width="2">
+        <rect x="0" y="0" width="130" height="130" />
+        <rect x="130" y="0" width="130" height="130" />
+        <g transform="translate(260, 0)">
+          <g>
+            <rect width="130" height="130" fill="#FAF5EB" />
+            <rect x="8" y="8" width="114" height="114" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
+            <rect x="12" y="12" width="106" height="106" fill="url(#dungeonDeepVoid)" />
+            <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="8" y1="14" x2="122" y2="14" stroke-width="3" />
+              <polygon points="16,14 114,14 106,32 24,32" fill="#F7F1E6" stroke-width="2.5" />
+              <rect x="24" y="32" width="82" height="12" fill="#CBBFAA" stroke-width="2.5" />
+              <polygon points="24,44 106,44 98,60 32,60" fill="#E2D5C0" stroke-width="2.5" />
+              <rect x="32" y="60" width="66" height="12" fill="#A49580" stroke-width="2.5" />
+              <polygon points="32,72 98,72 90,86 40,86" fill="#BFAF9B" stroke-width="2.5" />
+              <rect x="40" y="86" width="50" height="12" fill="#756755" stroke-width="2.5" />
+              <polygon points="40,98 90,98 84,108 46,108" fill="#807260" stroke-width="2.2" />
+              <rect x="46" y="108" width="38" height="8" fill="#42382C" stroke-width="2.2" />
+              <polygon points="46,116 84,116 80,120 50,120" fill="#0A1118" stroke-width="1.5" />
+            </g>
+            <rect x="1" y="1" width="128" height="128" rx="8" fill="none" stroke="#D84444" stroke-width="2.5" />
+          </g>
+        </g>
+        <rect x="0" y="130" width="130" height="130" />
+        <rect x="130" y="130" width="130" height="130" />
+        <rect x="260" y="130" width="130" height="130" />
+        <g transform="translate(0, 260)">
+          <g>
+            <rect width="130" height="130" fill="#FAF5EB" />
+            <rect x="8" y="8" width="114" height="114" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
+            <rect x="12" y="12" width="106" height="106" fill="url(#dungeonUpperLight)" />
+            <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="8" y1="14" x2="122" y2="14" stroke-width="3" />
+              <polygon points="42,14 88,14 86,22 44,22" fill="#FFFBE8" stroke-width="1.8" />
+              <polygon points="44,22 86,22 90,36 40,36" fill="#D5C7B2" stroke-width="2.2" />
+              <rect x="40" y="36" width="50" height="10" fill="#9C8D78" stroke-width="2.2" />
+              <polygon points="40,46 90,46 96,62 34,62" fill="#E2D5C0" stroke-width="2.5" />
+              <rect x="34" y="62" width="62" height="12" fill="#BFAF9B" stroke-width="2.5" />
+              <polygon points="34,74 96,74 102,90 28,90" fill="#EDE4D4" stroke-width="2.5" />
+              <rect x="28" y="90" width="74" height="12" fill="#CBBFAA" stroke-width="2.5" />
+              <polygon points="28,102 102,102 108,116 22,116" fill="#F7F1E6" stroke-width="2.5" />
+              <rect x="22" y="116" width="86" height="6" fill="#DCD1BF" stroke-width="2.5" />
+            </g>
+            <rect x="1" y="1" width="128" height="128" rx="8" fill="none" stroke="#2575A7" stroke-width="2.5" />
+          </g>
+        </g>
+        <rect x="130" y="260" width="130" height="130" />
+        <rect x="260" y="260" width="130" height="130" />
+      </g>
+      <g font-family="'Segoe UI', Roboto, sans-serif" font-size="38" font-weight="900" fill="#2A4860" text-anchor="middle" dominant-baseline="central">
+        <g transform="translate(56.241, 78.3)">
+          <path d="M381 740V0H189V500H44V618L65 624Q135 642 178.5 667.5Q222 693 262 733L269 740Z" fill="#2A4860" transform="translate(0, 0) scale(0.038, -0.038)" />
+        </g>
+        <g transform="translate(182.213, 78.3)">
+          <path d="M43 0V131L148 213Q236 282 296.5 329.0Q357 376 388.0 414.0Q419 452 419 495Q419 540 388.5 562.5Q358 585 323 585Q285 585 254.5 559.0Q224 533 224 478H40Q40 547 64.0 598.5Q88 650 129.0 683.5Q170 717 222.0 733.5Q274 750 330 750Q409 750 472.5 720.0Q536 690 573.5 636.0Q611 582 611 509Q611 441 577.5 385.0Q544 329 482.5 276.5Q421 224 335 165H618V0Z" fill="#2A4860" transform="translate(0, 0) scale(0.038, -0.038)" />
+        </g>
+        <g transform="translate(52.213, 208.3)">
+          <path d="M43 0V131L148 213Q236 282 296.5 329.0Q357 376 388.0 414.0Q419 452 419 495Q419 540 388.5 562.5Q358 585 323 585Q285 585 254.5 559.0Q224 533 224 478H40Q40 547 64.0 598.5Q88 650 129.0 683.5Q170 717 222.0 733.5Q274 750 330 750Q409 750 472.5 720.0Q536 690 573.5 636.0Q611 582 611 509Q611 441 577.5 385.0Q544 329 482.5 276.5Q421 224 335 165H618V0Z" fill="#2A4860" transform="translate(0, 0) scale(0.038, -0.038)" />
+        </g>
+        <g transform="translate(186.241, 208.3)">
+          <path d="M381 740V0H189V500H44V618L65 624Q135 642 178.5 667.5Q222 693 262 733L269 740Z" fill="#2A4860" transform="translate(0, 0) scale(0.038, -0.038)" />
+        </g>
+        <g transform="translate(311.814, 208.3)">
+          <path d="M351 -10Q274 -10 221.5 7.5Q169 25 136.5 52.0Q104 79 86.5 110.0Q69 141 62.5 168.0Q56 195 55.0 212.5Q54 230 54 230H235Q235 230 236.5 217.5Q238 205 247.5 188.5Q257 172 280.5 159.5Q304 147 348 147Q396 147 423.5 169.0Q451 191 451 223Q451 253 426.5 276.5Q402 300 351 300H251V447H353Q397 447 419.5 469.5Q442 492 442 520Q442 550 417.0 572.0Q392 594 348 594Q309 594 288.0 580.5Q267 567 257.5 549.0Q248 531 246.5 517.5Q245 504 245 504H68Q68 504 69.0 522.0Q70 540 77.0 568.0Q84 596 100.5 627.0Q117 658 148.0 686.0Q179 714 228.5 732.0Q278 750 350 750Q404 750 454.0 736.0Q504 722 544.0 695.0Q584 668 607.5 628.5Q631 589 631 539Q631 491 610.5 457.5Q590 424 562.0 404.5Q534 385 511 378V371Q544 359 574.5 338.5Q605 318 624.0 287.0Q643 256 643 210Q643 140 602.5 90.5Q562 41 496.0 15.5Q430 -10 351 -10Z" fill="#2A4860" transform="translate(0, 0) scale(0.038, -0.038)" />
+        </g>
+        <g transform="translate(181.396, 338.3)">
+          <path d="M358 -10Q280 -10 219.5 19.5Q159 49 116.5 101.0Q74 153 52.0 222.0Q30 291 30 370Q30 449 52.0 518.0Q74 587 116.5 639.0Q159 691 219.5 720.5Q280 750 358 750Q436 750 496.5 720.5Q557 691 599.5 639.0Q642 587 664.0 518.0Q686 449 686 370Q686 291 664.0 222.0Q642 153 599.5 101.0Q557 49 496.5 19.5Q436 -10 358 -10ZM358 158Q415 158 451.5 211.0Q488 264 488 370Q488 477 451.5 529.0Q415 581 358 581Q301 581 264.5 529.0Q228 477 228 370Q228 264 264.5 211.0Q301 158 358 158Z" fill="#2A4860" transform="translate(0, 0) scale(0.038, -0.038)" />
+        </g>
+        <g transform="translate(312.213, 338.3)">
+          <path d="M43 0V131L148 213Q236 282 296.5 329.0Q357 376 388.0 414.0Q419 452 419 495Q419 540 388.5 562.5Q358 585 323 585Q285 585 254.5 559.0Q224 533 224 478H40Q40 547 64.0 598.5Q88 650 129.0 683.5Q170 717 222.0 733.5Q274 750 330 750Q409 750 472.5 720.0Q536 690 573.5 636.0Q611 582 611 509Q611 441 577.5 385.0Q544 329 482.5 276.5Q421 224 335 165H618V0Z" fill="#2A4860" transform="translate(0, 0) scale(0.038, -0.038)" />
+        </g>
+      </g>
+      <path d="M 65 325 L 65 195 L 195 195" fill="none" stroke="#2575A7" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" filter="url(#pathGlow)" />
+      <path d="M 65 325 L 65 195 L 195 195" fill="none" stroke="#BAE6FD" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="195" cy="195" r="18" fill="#2575A7" />
+      <circle cx="195" cy="195" r="11" fill="#FFFFFF" />
+      <circle cx="195" cy="195" r="5.5" fill="#2575A7" />
+      <path d="M 195 195 L 195 65 L 325 65" fill="none" stroke="#D84444" stroke-width="5" stroke-dasharray="8 6" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <g transform="translate(16, 320)">
+      <rect width="150" height="66" rx="12" fill="#E8F4EC" stroke="#2E7D32" stroke-width="2" />
+      <path d="M 152 33 L 175 33" stroke="#2E7D32" stroke-width="3" stroke-linecap="round" />
+    </g>
+    <g transform="translate(585, 75)">
+      <rect width="150" height="66" rx="12" fill="#FEF2F2" stroke="#D84444" stroke-width="2" />
+      <path d="M 0 33 L -18 33" stroke="#D84444" stroke-width="3" stroke-linecap="round" />
+    </g>
+    <g transform="translate(377, 240)">
+      <circle cx="25" cy="25" r="28" fill="#3D83AE" fill-opacity="0.2" />
+      <circle cx="25" cy="25" r="16" fill="#3D83AE" fill-opacity="0.35" />
+      <path d="M 12 18 L 30 18 L 38 28 L 32 36 L 20 36 Z" fill="#FEFDFA" stroke="#224C6D" stroke-width="2" />
+    </g>
+    <rect x="20" y="450" width="715" height="42" rx="10" fill="#F4EFE6" />
+  </g>
+</svg>
