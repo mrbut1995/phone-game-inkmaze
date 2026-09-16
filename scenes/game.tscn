@@ -20,6 +20,10 @@
 [ext_resource type="Texture2D" uid="uid://spyw1sa7uxc5" path="res://assets/images/game/btn_restart_disabled.svg" id="9_qnb83"]
 [ext_resource type="Texture2D" uid="uid://dp6gsathe7et6" path="res://assets/images/game/btn_undo_pressed.svg" id="10_kvuet"]
 [ext_resource type="Texture2D" uid="uid://comsw702ysh8j" path="res://assets/images/game/btn_restart_focus.svg" id="10_sww3w"]
+[ext_resource type="Texture2D" path="res://assets/images/game/btn_help_normal.svg" id="47_help_n"]
+[ext_resource type="Texture2D" path="res://assets/images/game/btn_help_pressed.svg" id="48_help_p"]
+[ext_resource type="Texture2D" path="res://assets/images/game/btn_help_disabled.svg" id="49_help_d"]
+[ext_resource type="Texture2D" path="res://assets/images/game/btn_help_focus.svg" id="50_help_f"]
 [ext_resource type="Texture2D" uid="uid://dqldqskahkgcx" path="res://assets/images/game/btn_undo_disabled.svg" id="11_trtic"]
 [ext_resource type="Texture2D" uid="uid://ch2kbq4shu53d" path="res://assets/images/game/btn_undo_focus.svg" id="12_ir15t"]
 [ext_resource type="Texture2D" uid="uid://dd61x6fjtobav" path="res://assets/images/game/btn_hint_normal.svg" id="13_trtic"]
@@ -107,7 +111,16 @@ text = "MÀN 01"
 label_settings = ExtResource("7_bhx41")
 horizontal_alignment = 1
 
-[node name="Restart" type="TextureButton" parent="Status" index="2" unique_id=191814284]
+[node name="Instruction" type="TextureButton" parent="Status" index="2" unique_id=1619339572]
+layout_mode = 2
+size_flags_horizontal = 8
+texture_normal = ExtResource("47_help_n")
+texture_pressed = ExtResource("48_help_p")
+texture_hover = ExtResource("47_help_n")
+texture_disabled = ExtResource("49_help_d")
+texture_focused = ExtResource("50_help_f")
+
+[node name="Restart" type="TextureButton" parent="Status" index="3" unique_id=191814284]
 layout_mode = 2
 size_flags_horizontal = 8
 texture_normal = ExtResource("7_pl11u")
@@ -298,6 +311,7 @@ script = ExtResource("42_pr1ej")
 [connection signal="cell_pressed" from="Board" to="Controllers/GridController" method="handle_cell_pressed"]
 [connection signal="drag_updated" from="Board" to="Controllers/GridController" method="handle_drag_updated"]
 [connection signal="pressed" from="Status/Pause" to="Controllers/UIController" method="toggle_settings"]
+[connection signal="pressed" from="Status/Instruction" to="Controllers/GameController" method="open_instruction"]
 [connection signal="pressed" from="Status/Restart" to="Controllers/GameController" method="restart_run"]
 [connection signal="pressed" from="Button/Tool" to="Controllers/ToolController" method="_on_tool_pressed" binds= ["path"]]
 [connection signal="pressed" from="Button/Wall" to="Controllers/ToolController" method="_on_wall_pressed" binds= ["wall"]]

@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <!-- Lưới vở nền gốc phía dưới -->
+    <pattern id="bgGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.5"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.15"/>
+    </pattern>
+
+    <filter id="paperSlipShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#2D2115" flood-opacity="0.28"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#2D2115" flood-opacity="0.12"/>
+    </filter>
+
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <!-- ================= 1. MÀN CHƠI PHÍA DƯỚI (mờ tối nhẹ khi popup mở) ================= -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#bgGrid)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+
+  <!-- Status bar: Pause | tiêu đề | NÚT HƯỚNG DẪN (?) | Restart -->
+  <g transform="translate(50, 85)" filter="url(#uiShadow)">
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <rect x="24" y="22" width="8" height="26" rx="3" fill="#3D83AE"/>
+    <rect x="38" y="22" width="8" height="26" rx="3" fill="#3D83AE"/>
+  </g>
+  <text x="530" y="115" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="800" fill="#D84444">PLAY MODE • CHƯƠNG 1</text>
+  <text x="530" y="150" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#224C6D">MÀN 03</text>
+
+  <!-- NÚT MỚI: HƯỚNG DẪN (?) nằm ngay cạnh nút Restart -->
+  <g transform="translate(894, 85)" filter="url(#uiShadow)">
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <path d="M 25 27 C 25 15.5 45 15.5 45 27 C 45 36 35 35 35 43" fill="none" stroke="#3D83AE" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="35" cy="51" r="2.8" fill="#3D83AE"/>
+  </g>
+  <g transform="translate(968, 85)" filter="url(#uiShadow)">
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <path d="M 50 25 A 15 15 0 1 0 52 42" fill="none" stroke="#3D83AE" stroke-width="4" stroke-linecap="round"/>
+    <polyline points="42,20 52,24 50,34" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Thẻ HUD: thời gian + thử thách -->
+  <g filter="url(#uiShadow)">
+    <rect x="50" y="206" width="250" height="138" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+    <text x="70" y="248" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">THỜI GIAN</text>
+    <text x="70" y="310" font-family="'Segoe UI', sans-serif" font-size="46" font-weight="900" fill="#224C6D">00:12</text>
+    <rect x="321" y="175" width="720" height="246" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+    <text x="346" y="212" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">THỬ THÁCH</text>
+    <text x="1016" y="212" text-anchor="end" font-family="sans-serif" font-size="20" font-weight="900" fill="#2E7D32">1/3 ✓</text>
+    <rect x="346" y="232" width="670" height="52" rx="12" fill="#E8F4EC"/>
+    <rect x="346" y="298" width="670" height="52" rx="12" fill="#F4EFE6"/>
+    <rect x="346" y="364" width="670" height="52" rx="12" fill="#F4EFE6"/>
+  </g>
+
+  <!-- Bàn cờ (đơn giản hoá) -->
+  <g filter="url(#uiShadow)">
+    <rect x="41" y="420" width="998" height="1000" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="5"/>
+    <g stroke="#BACEDC" stroke-width="2" opacity="0.65">
+      <line x1="41" y1="620" x2="1039" y2="620"/><line x1="41" y1="820" x2="1039" y2="820"/>
+      <line x1="41" y1="1020" x2="1039" y2="1020"/><line x1="41" y1="1220" x2="1039" y2="1220"/>
+      <line x1="241" y1="420" x2="241" y2="1420"/><line x1="441" y1="420" x2="441" y2="1420"/>
+      <line x1="641" y1="420" x2="641" y2="1420"/><line x1="841" y1="420" x2="841" y2="1420"/>
+    </g>
+    <path d="M 141 520 L 541 520 L 541 920 L 941 920 L 941 1320" fill="none" stroke="#D84444" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="141" cy="520" r="18" fill="#2E7D32" stroke="#FEFDFA" stroke-width="4"/>
+    <path d="M 941 1320 L 941 1270 M 941 1270 L 976 1286 L 941 1302" fill="none" stroke="#D84444" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Thanh nút dưới + gợi ý luật chơi -->
+  <g filter="url(#uiShadow)">
+    <rect x="120" y="1528" width="160" height="160" rx="28" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+    <rect x="370" y="1528" width="160" height="160" rx="28" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+    <rect x="620" y="1528" width="160" height="160" rx="28" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+    <rect x="870" y="1528" width="160" height="160" rx="28" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+    <rect x="50" y="1424" width="980" height="90" rx="20" fill="#FDF6E3" stroke="#E5C97A" stroke-width="3"/>
+    <text x="80" y="1480" font-family="sans-serif" font-size="24" font-weight="700" fill="#8A6D1F">Gợi ý: vẽ đường tới hố đích F — chạm tường vô hình là thua ngay!</text>
+  </g>
+
+  <!-- Lớp phủ tối nhẹ (popup đang mở) -->
+  <rect width="1080" height="1920" fill="#1C2D3A" fill-opacity="0.32"/>
+
+  <!-- ================= 2. POPUP HƯỚNG DẪN (115, 390) 850x1120 ================= -->
+  <g transform="translate(115, 390)">
+
+    <!-- Tờ giấy trắng ngà nổi trên màn chơi -->
+    <g filter="url(#paperSlipShadow)">
+      <rect width="850" height="1120" rx="18" fill="#FFFDF9"/>
+
+      <!-- Hàng lỗ bấm ghim mép trái -->
+      <g fill="#EAE3D2" opacity="0.6">
+        <circle cx="24" cy="80" r="7"/><circle cx="24" cy="180" r="7"/><circle cx="24" cy="280" r="7"/>
+        <circle cx="24" cy="380" r="7"/><circle cx="24" cy="480" r="7"/><circle cx="24" cy="580" r="7"/>
+        <circle cx="24" cy="680" r="7"/><circle cx="24" cy="780" r="7"/><circle cx="24" cy="880" r="7"/>
+        <circle cx="24" cy="980" r="7"/><circle cx="24" cy="1080" r="7"/>
+      </g>
+
+      <!-- Đường kẻ ngang mờ -->
+      <g stroke="#8FB9D2" stroke-width="1" opacity="0.35">
+        <line x1="60" y1="200" x2="790" y2="200"/><line x1="60" y1="270" x2="790" y2="270"/>
+        <line x1="60" y1="340" x2="790" y2="340"/><line x1="60" y1="410" x2="790" y2="410"/>
+        <line x1="60" y1="480" x2="790" y2="480"/><line x1="60" y1="550" x2="790" y2="550"/>
+        <line x1="60" y1="620" x2="790" y2="620"/><line x1="60" y1="690" x2="790" y2="690"/>
+        <line x1="60" y1="760" x2="790" y2="760"/><line x1="60" y1="830" x2="790" y2="830"/>
+        <line x1="60" y1="900" x2="790" y2="900"/>
+      </g>
+
+      <!-- Hình mờ trang trí: dấu hỏi góc dưới-phải -->
+      <g opacity="0.12" stroke="#3D83AE" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 680 952 C 680 906 768 906 768 952 C 768 990 724 992 724 1026" stroke-width="20"/>
+        <circle cx="724" cy="1058" r="12" fill="#3D83AE" stroke="none"/>
+      </g>
+
+      <!-- Lề đỏ + viền mực xanh -->
+      <line x1="75" y1="0" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" opacity="0.85"/>
+      <rect width="850" height="1120" rx="18" fill="none" stroke="#6EA0C8" stroke-width="3"/>
+    </g>
+
+    <!-- Tiêu đề + phụ đề -->
+    <text x="115" y="86" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="900" fill="#224C6D">HƯỚNG DẪN</text>
+    <text x="115" y="122" font-family="sans-serif" font-size="22" font-weight="700" fill="#718B9E">CHẾ ĐỘ: MÊ CUNG MÌN</text>
+
+    <!-- Khung ảnh minh hoạ 780x460 tại (35, 152) -->
+    <g transform="translate(35, 152)">
+      <rect x="0" y="0" width="780" height="460" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+      <rect x="48" y="76" width="310" height="310" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+      <g stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round">
+        <line x1="110" y1="79" x2="110" y2="383"/><line x1="51" y1="138" x2="355" y2="138"/>
+        <line x1="172" y1="79" x2="172" y2="383"/><line x1="51" y1="200" x2="355" y2="200"/>
+        <line x1="234" y1="79" x2="234" y2="383"/><line x1="51" y1="262" x2="355" y2="262"/>
+        <line x1="296" y1="79" x2="296" y2="383"/><line x1="51" y1="324" x2="355" y2="324"/>
+      </g>
+      <polyline points="48,76 172,76 172,200 296,200 296,324" fill="none" stroke="#D84444" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="79" cy="107" r="15" fill="#2E7D32" stroke="#FEFDFA" stroke-width="3"/>
+      <circle cx="79" cy="107" r="5.7" fill="#FEFDFA"/>
+      <line x1="317.65" y1="372" x2="317.65" y2="338" stroke="#224C6D" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="317.6,338 339.8,347.4 317.6,357.6" fill="#D84444"/>
+      <line x1="88" y1="90" x2="144" y2="90" stroke="#3D83AE" stroke-width="6" stroke-linecap="round"/>
+      <polygon points="144,90 129.6,97 129.6,83" fill="#3D83AE"/>
+      <circle cx="95" cy="123" r="20" fill="none" stroke="#3D83AE" stroke-width="4" stroke-dasharray="7 5"/>
+      <circle cx="95" cy="123" r="6" fill="#3D83AE"/>
+      <rect x="408" y="106" width="112" height="112" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <path d="M 485 147 A 25.5 25.5 0 1 0 494 177" fill="none" stroke="#3D83AE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <polygon points="492.5,133.5 474.5,147 494,160.5" fill="#3D83AE"/>
+      <rect x="408" y="252" width="112" height="112" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <circle cx="464" cy="301.8" r="17.36" fill="#FBBF24" stroke="#D97706" stroke-width="3"/>
+      <rect x="457.28" y="317.76" width="13.44" height="8.4" rx="4" fill="#718B9E"/>
+      <line x1="437.4" y1="282.2" x2="444.4" y2="288.64" stroke="#D97706" stroke-width="3" stroke-linecap="round"/>
+      <line x1="490.6" y1="282.2" x2="483.6" y2="288.64" stroke="#D97706" stroke-width="3" stroke-linecap="round"/>
+    </g>
+
+    <!-- Chữ của trang: tiêu đề mục + nội dung -->
+    <text x="115" y="655" font-family="sans-serif" font-size="16" font-weight="900" fill="#3D83AE" letter-spacing="1">CÁCH CHƠI</text>
+    <text x="115" y="700" font-family="sans-serif" font-size="22" font-weight="700" fill="#224C6D">Kéo từ ô xuất phát tới hố đích F để vẽ nét mực. Chạm tường vô</text>
+    <text x="115" y="732" font-family="sans-serif" font-size="22" font-weight="700" fill="#224C6D">hình là thua ngay — bí quá thì bấm Gợi ý, hoặc Hoàn tác để lùi 1 bước.</text>
+
+    <!-- Điều hướng trang: ◀ ● ○ ○ ▶ + TRANG 1/3 -->
+    <g opacity="0.45">
+      <rect x="291" y="848" width="56" height="56" rx="16" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <path d="M 323 865 L 312 876 L 323 887" fill="none" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <rect x="382" y="864" width="34" height="24" rx="12" fill="#3D83AE"/>
+    <rect x="430" y="864" width="12" height="24" rx="6" fill="#D1E2ED"/>
+    <rect x="456" y="864" width="12" height="24" rx="6" fill="#D1E2ED"/>
+    <rect x="503" y="848" width="56" height="56" rx="16" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <path d="M 527 865 L 538 876 L 527 887" fill="none" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="735" y="886" text-anchor="end" font-family="sans-serif" font-size="20" font-weight="800" fill="#3D83AE">TRANG 1/3</text>
+
+    <!-- Nút ĐÓNG -->
+    <rect x="230" y="962" width="390" height="96" rx="18" fill="#3D83AE" stroke="#256286" stroke-width="3.5"/>
+    <text x="425" y="1025" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="900" fill="#FFFFFF">ĐÓNG</text>
+  </g>
+</svg>

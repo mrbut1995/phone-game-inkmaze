@@ -1,19 +1,19 @@
 [gd_scene format=3 uid="uid://ba36iykveefpu"]
 
-[ext_resource type="Script" path="res://scripts/nodes/daily/calendar.gd" id="1_cal"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/calendar_board.svg" id="2_board"]
-[ext_resource type="PackedScene" path="res://nodes/daily/day.tscn" id="3_day"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/day_btn_prev_normal.svg" id="4_prev_n"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/day_btn_prev_pressed.svg" id="5_prev_p"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/day_btn_prev_disabled.svg" id="6_prev_d"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/day_btn_prev_focus.svg" id="7_prev_f"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/day_btn_next_normal.svg" id="8_next_n"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/day_btn_next_pressed.svg" id="9_next_p"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/day_btn_next_disabled.svg" id="10_next_d"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/day_btn_next_focus.svg" id="11_next_f"]
-[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="12_theme"]
+[ext_resource type="Script" uid="uid://b8u3x0v0x0ol0" path="res://scripts/nodes/daily/calendar.gd" id="1_cal"]
+[ext_resource type="Texture2D" uid="uid://u8qflwwscdl1" path="res://assets/images/calendar/calendar_board.svg" id="2_board"]
+[ext_resource type="PackedScene" uid="uid://cggt0mrkea7fs" path="res://nodes/daily/day.tscn" id="3_day"]
+[ext_resource type="Texture2D" uid="uid://btoscldl6syrd" path="res://assets/images/calendar/day_btn_prev_normal.svg" id="4_prev_n"]
+[ext_resource type="Texture2D" uid="uid://s8rw4dpgpdap" path="res://assets/images/calendar/day_btn_prev_pressed.svg" id="5_prev_p"]
+[ext_resource type="Texture2D" uid="uid://biecmwqjrpvq8" path="res://assets/images/calendar/day_btn_prev_disabled.svg" id="6_prev_d"]
+[ext_resource type="Texture2D" uid="uid://dplf26ftpl61w" path="res://assets/images/calendar/day_btn_prev_focus.svg" id="7_prev_f"]
+[ext_resource type="Texture2D" uid="uid://cmhk3b2oias7f" path="res://assets/images/calendar/day_btn_next_normal.svg" id="8_next_n"]
+[ext_resource type="Texture2D" uid="uid://cdbr77m4yqupo" path="res://assets/images/calendar/day_btn_next_pressed.svg" id="9_next_p"]
+[ext_resource type="Texture2D" uid="uid://cw5gf0usrygw6" path="res://assets/images/calendar/day_btn_next_disabled.svg" id="10_next_d"]
+[ext_resource type="Texture2D" uid="uid://djqiboymxnogp" path="res://assets/images/calendar/day_btn_next_focus.svg" id="11_next_f"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="12_theme"]
 
-[node name="Calendar" type="Control"]
+[node name="Calendar" type="Control" unique_id=1760062952]
 custom_minimum_size = Vector2(1020, 1010)
 layout_mode = 3
 anchors_preset = 0
@@ -22,7 +22,7 @@ offset_bottom = 1010.0
 theme = ExtResource("12_theme")
 script = ExtResource("1_cal")
 
-[node name="Panel" type="TextureRect" parent="."]
+[node name="Panel" type="TextureRect" parent="." unique_id=576018228]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,7 +31,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_board")
 
-[node name="Months" type="HBoxContainer" parent="."]
+[node name="Months" type="HBoxContainer" parent="." unique_id=2039597602]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 80.0
@@ -40,7 +40,7 @@ offset_right = 940.0
 offset_bottom = 96.0
 theme_override_constants/separation = 0
 
-[node name="Previous" type="TextureButton" parent="Months"]
+[node name="Previous" type="TextureButton" parent="Months" unique_id=990753091]
 layout_mode = 2
 size_flags_vertical = 4
 texture_normal = ExtResource("4_prev_n")
@@ -49,7 +49,7 @@ texture_hover = ExtResource("5_prev_p")
 texture_disabled = ExtResource("6_prev_d")
 texture_focused = ExtResource("7_prev_f")
 
-[node name="Label" type="Label" parent="Months"]
+[node name="Label" type="Label" parent="Months" unique_id=1562895281]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyMonth"
@@ -57,7 +57,7 @@ text = "STR_MONTH_SEP"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Next" type="TextureButton" parent="Months"]
+[node name="Next" type="TextureButton" parent="Months" unique_id=1589438727]
 layout_mode = 2
 size_flags_vertical = 4
 texture_normal = ExtResource("8_next_n")
@@ -66,16 +66,16 @@ texture_hover = ExtResource("9_next_p")
 texture_disabled = ExtResource("10_next_d")
 texture_focused = ExtResource("11_next_f")
 
-[node name="DayTitle" type="HBoxContainer" parent="."]
+[node name="DayTitle" type="HBoxContainer" parent="." unique_id=836109917]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 55.0
+offset_left = 76.0
 offset_top = 133.0
-offset_right = 965.0
+offset_right = 1366.0
 offset_bottom = 183.0
 theme_override_constants/separation = 0
 
-[node name="Monday" type="Label" parent="DayTitle"]
+[node name="Monday" type="Label" parent="DayTitle" unique_id=287543008]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyDow"
@@ -83,7 +83,7 @@ text = "STR_DOW_MON"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Tuesday" type="Label" parent="DayTitle"]
+[node name="Tuesday" type="Label" parent="DayTitle" unique_id=1680296222]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyDow"
@@ -91,7 +91,7 @@ text = "STR_DOW_TUE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Wednesday" type="Label" parent="DayTitle"]
+[node name="Wednesday" type="Label" parent="DayTitle" unique_id=1156634934]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyDow"
@@ -99,7 +99,7 @@ text = "STR_DOW_WED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Thursday" type="Label" parent="DayTitle"]
+[node name="Thursday" type="Label" parent="DayTitle" unique_id=457928259]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyDow"
@@ -107,7 +107,7 @@ text = "STR_DOW_THU"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Friday" type="Label" parent="DayTitle"]
+[node name="Friday" type="Label" parent="DayTitle" unique_id=496338754]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyDow"
@@ -115,7 +115,7 @@ text = "STR_DOW_FRI"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Saturday" type="Label" parent="DayTitle"]
+[node name="Saturday" type="Label" parent="DayTitle" unique_id=383582934]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyDow"
@@ -123,7 +123,7 @@ text = "STR_DOW_SAT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sunday" type="Label" parent="DayTitle"]
+[node name="Sunday" type="Label" parent="DayTitle" unique_id=281731615]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyDowSun"
@@ -131,118 +131,118 @@ text = "STR_DOW_SUN"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Days" type="GridContainer" parent="."]
+[node name="Days" type="GridContainer" parent="." unique_id=1650849745]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 55.0
+offset_left = 76.0
 offset_top = 193.0
-offset_right = 965.0
+offset_right = 986.0
 offset_bottom = 943.0
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 7
 
-[node name="Day01" parent="Days" instance=ExtResource("3_day")]
+[node name="Day01" parent="Days" unique_id=70993467 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day02" parent="Days" instance=ExtResource("3_day")]
+[node name="Day02" parent="Days" unique_id=1421843907 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day03" parent="Days" instance=ExtResource("3_day")]
+[node name="Day03" parent="Days" unique_id=60999894 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day04" parent="Days" instance=ExtResource("3_day")]
+[node name="Day04" parent="Days" unique_id=1585123841 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day05" parent="Days" instance=ExtResource("3_day")]
+[node name="Day05" parent="Days" unique_id=522678856 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day06" parent="Days" instance=ExtResource("3_day")]
+[node name="Day06" parent="Days" unique_id=1990514917 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day07" parent="Days" instance=ExtResource("3_day")]
+[node name="Day07" parent="Days" unique_id=470418376 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day08" parent="Days" instance=ExtResource("3_day")]
+[node name="Day08" parent="Days" unique_id=2059872758 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day09" parent="Days" instance=ExtResource("3_day")]
+[node name="Day09" parent="Days" unique_id=1023850233 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day10" parent="Days" instance=ExtResource("3_day")]
+[node name="Day10" parent="Days" unique_id=1338457634 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day11" parent="Days" instance=ExtResource("3_day")]
+[node name="Day11" parent="Days" unique_id=360525893 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day12" parent="Days" instance=ExtResource("3_day")]
+[node name="Day12" parent="Days" unique_id=256499662 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day13" parent="Days" instance=ExtResource("3_day")]
+[node name="Day13" parent="Days" unique_id=755463639 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day14" parent="Days" instance=ExtResource("3_day")]
+[node name="Day14" parent="Days" unique_id=363055135 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day15" parent="Days" instance=ExtResource("3_day")]
+[node name="Day15" parent="Days" unique_id=1706698347 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day16" parent="Days" instance=ExtResource("3_day")]
+[node name="Day16" parent="Days" unique_id=1958212356 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day17" parent="Days" instance=ExtResource("3_day")]
+[node name="Day17" parent="Days" unique_id=1447076589 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day18" parent="Days" instance=ExtResource("3_day")]
+[node name="Day18" parent="Days" unique_id=794658831 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day19" parent="Days" instance=ExtResource("3_day")]
+[node name="Day19" parent="Days" unique_id=1241554984 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day20" parent="Days" instance=ExtResource("3_day")]
+[node name="Day20" parent="Days" unique_id=366527187 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day21" parent="Days" instance=ExtResource("3_day")]
+[node name="Day21" parent="Days" unique_id=1198026685 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day22" parent="Days" instance=ExtResource("3_day")]
+[node name="Day22" parent="Days" unique_id=1759518417 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day23" parent="Days" instance=ExtResource("3_day")]
+[node name="Day23" parent="Days" unique_id=2036095642 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day24" parent="Days" instance=ExtResource("3_day")]
+[node name="Day24" parent="Days" unique_id=392956756 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day25" parent="Days" instance=ExtResource("3_day")]
+[node name="Day25" parent="Days" unique_id=1497244935 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day26" parent="Days" instance=ExtResource("3_day")]
+[node name="Day26" parent="Days" unique_id=1325319102 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day27" parent="Days" instance=ExtResource("3_day")]
+[node name="Day27" parent="Days" unique_id=378735544 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day28" parent="Days" instance=ExtResource("3_day")]
+[node name="Day28" parent="Days" unique_id=262368137 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day29" parent="Days" instance=ExtResource("3_day")]
+[node name="Day29" parent="Days" unique_id=276744149 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day30" parent="Days" instance=ExtResource("3_day")]
+[node name="Day30" parent="Days" unique_id=1144470902 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day31" parent="Days" instance=ExtResource("3_day")]
+[node name="Day31" parent="Days" unique_id=11105099 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day32" parent="Days" instance=ExtResource("3_day")]
+[node name="Day32" parent="Days" unique_id=1592694710 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day33" parent="Days" instance=ExtResource("3_day")]
+[node name="Day33" parent="Days" unique_id=1261598626 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day34" parent="Days" instance=ExtResource("3_day")]
+[node name="Day34" parent="Days" unique_id=86870189 instance=ExtResource("3_day")]
 layout_mode = 2
 
-[node name="Day35" parent="Days" instance=ExtResource("3_day")]
+[node name="Day35" parent="Days" unique_id=752535920 instance=ExtResource("3_day")]
 layout_mode = 2

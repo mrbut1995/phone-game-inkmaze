@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -6 84 87" width="84" height="87">
+  <!-- Nút phẳng, mực nhạt khi bị khoá -->
+  <rect width="70" height="70" rx="18" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="1.5"/>
+  <g opacity="0.6">
+    <path d="M 25 27 C 25 15.5 45 15.5 45 27 C 45 36 35 35 35 43" fill="none" stroke="#BAC7CF"
+          stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="35" cy="51" r="2.8" fill="#BAC7CF"/>
+  </g>
+</svg>

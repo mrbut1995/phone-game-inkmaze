@@ -1,0 +1,152 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://nodes/popups/base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/popups/instruction.gd" id="2_instr"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/paper_slip_guide.svg" id="3_slip"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_guide_arrow_normal.svg" id="4_arr_n"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_guide_arrow_pressed.svg" id="5_arr_p"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_guide_arrow_focus.svg" id="6_arr_f"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_apply_normal.svg" id="7_apply_n"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_apply_pressed.svg" id="8_apply_p"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_apply_focus.svg" id="9_apply_f"]
+
+[node name="Base" instance=ExtResource("1_base")]
+script = ExtResource("2_instr")
+
+[node name="Art" parent="Panel" index="0"]
+texture = ExtResource("3_slip")
+
+[node name="Title" type="Label" parent="Panel/Content" index="0"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 50.0
+offset_right = 735.0
+offset_bottom = 98.0
+theme_type_variation = &"PopupTitle"
+text = "STR_INSTRUCTION_TITLE"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Subtitle" type="Label" parent="Panel/Content" index="1"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 104.0
+offset_right = 735.0
+offset_bottom = 132.0
+theme_type_variation = &"PopupSubtitle"
+text = "STR_INSTRUCTION_MODE"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="PageImage" type="TextureRect" parent="Panel/Content" index="2"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 35.0
+offset_top = 152.0
+offset_right = 815.0
+offset_bottom = 612.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PageTitle" type="Label" parent="Panel/Content" index="3"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 628.0
+offset_right = 735.0
+offset_bottom = 660.0
+theme_type_variation = &"PopupSectionLabel"
+text = "STR_INSTRUCTION_T_CONTROL"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="PageBody" type="Label" parent="Panel/Content" index="4"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 115.0
+offset_top = 670.0
+offset_right = 735.0
+offset_bottom = 828.0
+theme_type_variation = &"PopupRowLabel"
+text = "STR_INSTRUCTION_B_CONTROL"
+autowrap_mode = 3
+vertical_alignment = 0
+
+[node name="PrevBtn" type="TextureButton" parent="Panel/Content" index="5"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 291.0
+offset_top = 848.0
+offset_right = 347.0
+offset_bottom = 904.0
+texture_normal = ExtResource("4_arr_n")
+texture_pressed = ExtResource("5_arr_p")
+texture_hover = ExtResource("4_arr_n")
+texture_disabled = ExtResource("4_arr_n")
+texture_focused = ExtResource("6_arr_f")
+
+[node name="Dots" type="HBoxContainer" parent="Panel/Content" index="6"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 365.0
+offset_top = 852.0
+offset_right = 485.0
+offset_bottom = 900.0
+mouse_filter = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="NextBtn" type="TextureButton" parent="Panel/Content" index="7"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 503.0
+offset_top = 848.0
+offset_right = 559.0
+offset_bottom = 904.0
+flip_h = true
+texture_normal = ExtResource("4_arr_n")
+texture_pressed = ExtResource("5_arr_p")
+texture_hover = ExtResource("4_arr_n")
+texture_disabled = ExtResource("4_arr_n")
+texture_focused = ExtResource("6_arr_f")
+
+[node name="PageIndex" type="Label" parent="Panel/Content" index="8"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 595.0
+offset_top = 856.0
+offset_right = 735.0
+offset_bottom = 896.0
+theme_type_variation = &"PopupSliderValue"
+text = "1 / 3"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CloseBtn" type="TextureButton" parent="Panel/Content" index="9"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 230.0
+offset_top = 962.0
+offset_right = 620.0
+offset_bottom = 1058.0
+texture_normal = ExtResource("7_apply_n")
+texture_pressed = ExtResource("8_apply_p")
+texture_hover = ExtResource("7_apply_n")
+texture_focused = ExtResource("9_apply_f")
+
+[node name="Label" type="Label" parent="Panel/Content/CloseBtn" index="0"]
+layout_mode = 1
+anchors_preset = -1
+offset_top = 32.0
+offset_right = 390.0
+offset_bottom = 64.0
+theme_type_variation = &"PopupBtnPrimarySm"
+text = "STR_BTN_CLOSE"
+horizontal_alignment = 1
+vertical_alignment = 1

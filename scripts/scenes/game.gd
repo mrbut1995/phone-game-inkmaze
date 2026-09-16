@@ -8,6 +8,7 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 @onready var board_view: Control = $Board
 @onready var pause_btn: TextureButton = $Status/Pause
+@onready var instruction_btn: TextureButton = $Status/Instruction
 @onready var restart_btn: TextureButton = $Status/Restart
 @onready var level_label: Label = $Status/Title/LevelLabel
 @onready var subtitle_label: Label = $Status/Title/Subtitle
@@ -47,7 +48,7 @@ const HUD_FADING_INK := preload("res://nodes/hud/fading_ink_hud.tscn")
 
 func _ready() -> void:
 	# Gắn hiệu ứng nảy xúc giác cho các nút trong Game Screen
-	for btn in [pause_btn, restart_btn, tool_path_btn, tool_wall_btn, undo_btn, hint_btn]:
+	for btn in [pause_btn, instruction_btn, restart_btn, tool_path_btn, tool_wall_btn, undo_btn, hint_btn]:
 		if btn != null:
 			UIAnim.attach_press_bounce(btn)
 

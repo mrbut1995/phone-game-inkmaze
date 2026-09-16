@@ -522,6 +522,32 @@ func restart_run() -> void:
 	_on_retry_requested()
 
 
+## Mở popup HƯỚNG DẪN của chế độ đang chơi (nút "?" cạnh nút Restart trên HUD).
+## Đồng hồ đứng trong lúc xem hướng dẫn để không mất thời gian oan — đóng popup thì chạy lại.
+func open_instruction() -> void:
+	# SFX: gõ thẻ giấy cho nút phụ (Hướng dẫn trên HUD)
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	var mode: BaseGameMode = game_mode
+	var mode_id := mode.mode_id if mode != null else "dungeon"
+	var mode_name := mode.mode_name if mode != null else ""
+	var popup := Popups.open(Popups.INSTRUCTION, {"mode_id": mode_id, "mode_name": mode_name})
+	if popup == null:
+		return
+	if not popup.closed.is_connected(_on_instruction_closed):
+		popup.closed.connect(_on_instruction_closed)
+	if timer_controller != null:
+		timer_controller.pause()
+
+
+## Đóng popup HƯỚNG DẪN: chạy đồng hồ lại (nếu vẫn trong ván và không còn popup nào khác)
+func _on_instruction_closed() -> void:
+	if timer_controller == null or not _run_active:
+		return
+	if Popups.has_open():
+		return
+	timer_controller.resume()
+
+
 func undo() -> void:
 	if grid_controller != null and grid_controller.undo_last_move():
 		# SFX: tiếng gôm tẩy quẹt trên giấy

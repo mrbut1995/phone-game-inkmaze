@@ -21,6 +21,8 @@ const PAUSE := "pause"
 const LANGUAGE := "language"
 ## Popup đếm ngược pha GHI NHỚ của Blind Memory (không có nền mờ — vẫn thấy tường)
 const MEMORIZE := "memory_countdown"
+## Popup HƯỚNG DẪN theo chế độ (ảnh minh hoạ + chuyển trang bằng vuốt)
+const INSTRUCTION := "instruction"
 
 
 static func _mgr() -> Node:
