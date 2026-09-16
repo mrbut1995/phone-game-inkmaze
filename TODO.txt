@@ -6,6 +6,50 @@
 # Replace SFX Placeholder to correct sound
 
 # ----------------------------------------------------------------------------
+# VÒNG SỬA 9 (2026-09-18): POPUP HƯỚNG DẪN RIÊNG CHO TỪNG CHẾ ĐỘ (9 SCENE)
+# ----------------------------------------------------------------------------
+# [x] LÀM theo yêu cầu user: bỏ popup hướng dẫn dùng chung, làm 9 popup riêng
+#     theo bộ mockup mới `mockup/instruction/*.svg` + ảnh minh hoạ đã tách sẵn
+#     trong `assets/images/instructions/guideline_image/`.
+#     - Scene riêng: `nodes/popups/instruction/<mode>.tscn` (normal_maze ·
+#       dungeon · minesweeper · sumpath · countdowncost · fadingink ·
+#       blindmemory · fog_of_war · time_attack) — instance `base.tscn`,
+#       nội dung 3 trang nướng thẳng vào scene theo đúng mockup.
+#     - Script hành vi chung `scripts/nodes/popups/instruction_popup.gd`
+#       (class InstructionPopup): vuốt ngang · lăn chuột · phím ←→ · tab ·
+#       dots · Prev/Next (khoá ở trang 1 / trang 3) · CTA (trang cuối = đóng) ·
+#       link (trang cuối = về trang 1, trang trước = bỏ qua) · sfx.
+#     - Ảnh minh hoạ xử lý ThorVG-safe bằng `tools/mockup/prepare_guideline_images.py`:
+#       nhúng `<use>` (cầu thang) + chuyển `<text>` (số grid, ✓, ➔→•) thành path
+#       glyph thật (Be Vietnam Pro Black + fallback Noto Sans JP). Ảnh gốc backup
+#       tại `mockup/instruction/_extracted_source/`.
+#     - Chữ 100% qua khoá `STR_GI_*` (573 câu vi/en + token) trong
+#       `resources/localization/string_extra.csv`; bảng dịch EN:
+#       `tools/content/guide_text_en.py`; sinh key: `tools/content/build_instruction_data.py`;
+#       generator scene: `tools/mockup/gen_instruction_popups.py` (giữ nguyên
+#       uid + unique_id của 8 scene placeholder cũ).
+#     - Nối dây: `GameController.INSTRUCTION_SCENES` → `Popups.open_path`;
+#       gỡ id "instruction" khỏi `PopupManager.POPUPS`; xoá file cũ
+#       `nodes/popups/instruction.tscn`, `scripts/nodes/popups/instruction.gd`,
+#       `scripts/utils/instruction.gd`.
+#     - Test: `scripts/test_case/test_instruction.gd` — 186 check (9 scene ·
+#       tab/nav/CTA/link · đủ bản dịch vi+en · tích hợp nút "?" mở đúng scene).
+#       Full suite 29/29 PASS; render kiểm tra bằng mắt (dungeon, time_attack,
+#       minesweeper, fog of war).
+# [x] TINH CHỈNH theo yêu cầu user (cùng ngày):
+#     - Số/ký hiệu trên grid (1 · 2 · 15 · 04 · 01:24 · = · ? · S · F…) ghi
+#       TRỰC TIẾP vào scene — bỏ 25 khoá dịch token (`is_literal_text()` trong
+#       tools/mockup/instruction_mockup.py); chỉ chữ có nghĩa dùng STR_GI_*.
+#     - Tab · nav ‹ › · dots · nhãn TRANG dùng chung 1 bộ NGOÀI Pages (không lặp
+#       lại mỗi trang); script đổi trạng thái qua `@export` StyleBoxFlat/màu
+#       nướng sẵn trong scene (tab chọn = accent, tab thường = xám; dot chọn =
+#       viên thuốc accent, dot thường = chấm `#D1E2ED`); nav giữ 2 bộ style
+#       thường/khoá — khoá sẵn màu mờ xanh (prev) / mờ xám (next) như mockup.
+#     - CTA · Link VẪN nằm trong từng trang vì mockup vẽ khác nhau mỗi trang.
+#     - test_instruction.gd 285 check (thêm: chrome dùng chung không lặp trong
+#       Page1 · số ghi trực tiếp · bấm dots/Prev/Next). Full suite 29/29 PASS.
+
+# ----------------------------------------------------------------------------
 # VÒNG SỬA 8 (2026-09-15): CHẶN NHẢY CHƯƠNG + POPUP CHỌN CHƯƠNG + BANNER FOCUS
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM theo yêu cầu user (4 điểm):

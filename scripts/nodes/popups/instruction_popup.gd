@@ -4,26 +4,60 @@ extends BasePopup
 ## Popup HƯỚNG DẪN CHƠI theo từng chế độ — 9 scene riêng trong
 ## `nodes/popups/instruction/<mode>.tscn`, mỗi scene 3 trang (Page1..Page3).
 ##
-## Khác bản cũ (popup dùng chung + dữ liệu sinh động):
-##   - Toàn bộ nội dung (tiêu đề, tab, mục, 3 hàng luật, chữ trên khung minh hoạ,
-##     nút CTA, link, chấm trang, mũi tên) được "nướng" thẳng vào scene theo
-##     đúng mockup, mỗi trang là 1 nhóm node riêng (Page1..3).
-##   - Script này chỉ lo HÀNH VI: ẩn/hiện trang, nối nút, vuốt ngang, phím mũi
-##     tên, lăn chuột, phát sfx, đóng popup — không sinh nội dung.
-##   - Chữ dùng khoá dịch STR_GI_* (auto_translate), riêng số trang
-##     "TRANG x / 3" được format lúc chạy.
+## Bố cục scene (instance của base.tscn, Panel override thành tờ giấy 920×1480):
+##
+##   Panel/Guide                      ← khung giấy, DÙNG CHUNG cho cả 3 trang
+##     ├── Washi · Paper · PaperDetail · Close
+##     ├── Chip + ChipText
+##     ├── Tabs/Tab1..3               (tab + vòng số — đổi màu theo trang)
+##     ├── Pages/Page1..3             ← phần NỘI DUNG riêng từng trang
+##     │     └── Img · các Label chữ trên ảnh · Title · Section ·
+##     │         3 hàng luật Row1..3 · Cta · Link
+##     ├── Prev · Next                (‹ › — khoá ở trang đầu/cuối)
+##     ├── Dots/Dot1..3               (script dàn lại vị trí theo trang)
+##     └── Index                      ("TRANG x / 3")
+##
+## Vì sao Cta/Link nằm TRONG từng trang? Vì mockup vẽ chúng khác nhau mỗi
+## trang (trang cuối CTA đậm hơn, link "bỏ qua" khác link "xem lại").
+##
+## Quy ước dữ liệu:
+##   - Số/ký hiệu trên grid (1 · 2 · 15 · 01:24 · = · ? · S · F…) ghi TRỰC TIẾP.
+##   - Chữ có nghĩa dùng khoá dịch STR_GI_* (auto_translate); số trang format
+##     lúc chạy từ STR_GI_PAGE_INDEX.
+##   - Style tab/dot (đang chọn + thường) nướng vào scene qua các @export dưới.
 ##
 ## Mở bằng: Popups.open_path("res://nodes/popups/instruction/dungeon.tscn").
 ## ============================================================================
 
-const DRAG_THRESHOLD := 14.0   ## ngưỡng kéo (px) để tính là VUỐT chứ không phải bấm
-const SWIPE_DISTANCE := 90.0   ## quãng vuốt (px) để lật trang
-const TAB_RING := 26.0         ## đường kính vòng tròn số thứ tự tab
-const TAB_GAP := 6.0           ## khoảng cách vòng số -> chữ tab
+const DRAG_THRESHOLD := 14.0    ## ngưỡng kéo (px) để tính là VUỐT chứ không phải bấm
+const SWIPE_DISTANCE := 90.0    ## quãng vuốt (px) để lật trang
 const FADE_TIME := 0.16
+## Dàn dots: dot đang chọn rộng 38x18 (viên thuốc), dot thường 16x16 (chấm tròn),
+## hàng bắt đầu ở mép trái dot đầu tiên (lấy từ scene) — đúng như mockup.
+const DOT_ON_SIZE := Vector2(38.0, 18.0)
+const DOT_OFF_SIZE := Vector2(16.0, 16.0)
+const DOT_GAP := 12.0
+
+## Style/màu tab do generator nướng sẵn từng scene (xem build_shared_styles)
+@export var tab_on_style: StyleBoxFlat
+@export var tab_off_style: StyleBoxFlat
+@export var tab_on_ring_style: StyleBoxFlat
+@export var tab_off_ring_style: StyleBoxFlat
+@export var tab_on_text_color := Color("#FFFFFF")
+@export var tab_off_text_color := Color("#718B9E")
+## Style dot đang chọn / dot thường
+@export var dot_on_style: StyleBoxFlat
+@export var dot_off_style: StyleBoxFlat
 
 var _pages: Array[Control] = []
 var _page := 0
+var _tabs: Array = []
+var _dots: Array = []
+var _prev: Button = null
+var _next: Button = null
+var _index: Label = null
+var _dots_x0 := 0.0
+var _dots_cy := 0.0
 
 var _drag_active := false
 var _drag_moved := false
@@ -34,17 +68,15 @@ var _drag_start := Vector2.ZERO
 # Vòng đời
 # ---------------------------------------------------------------------------
 func _ready() -> void:
-	_collect_pages()
-	#_center_tabs()
+	_collect_nodes()
 	_connect_buttons()
 	_show_page(_page, false)
 
 
 func _on_open() -> void:
-	_collect_pages()
+	_collect_nodes()
 	_connect_buttons()
 	_page = clampi(int(data.get("page", 0)), 0, maxi(_pages.size() - 1, 0))
-	_refresh_page_index()
 	_show_page(_page, false)
 
 
@@ -76,18 +108,16 @@ func prev_page() -> void:
 	go_to_page(_page - 1)
 
 
-## Số tab của trang đang xem (0 nếu trang không có tab)
+## Số tab của hàng tab dùng chung
 func tab_count() -> int:
-	var tabs := _tabs_of(_page)
-	return tabs.size() if tabs != null else 0
+	return _tabs.size()
 
 
-## Chữ (đã dịch) của tab thứ `index` (0-based) trên trang đang xem
+## Chữ (đã dịch) của tab thứ `index` (0-based)
 func tab_label(index: int) -> String:
-	var tabs := _tabs_of(_page)
-	if tabs == null or index < 0 or index >= tabs.size():
+	if index < 0 or index >= _tabs.size():
 		return ""
-	var node: Node = tabs[index]
+	var node: Node = _tabs[index]
 	if node == null:
 		return ""
 	var lbl := node.get_node_or_null("Label") as Label
@@ -110,8 +140,7 @@ func link_text() -> String:
 
 ## Nhãn "TRANG x / 3" đang hiển thị (đã dịch + format)
 func page_index_text() -> String:
-	var lbl := _child_of(_page, "Index") as Label
-	return lbl.text if lbl != null else ""
+	return _index.text if _index != null else ""
 
 
 ## Tiêu đề (đã dịch) của trang đang xem
@@ -120,16 +149,14 @@ func page_title() -> String:
 	return _resolve(lbl.text) if lbl != null else ""
 
 
-## Nút Previous của trang đang xem có bị khoá không (trang 1 khoá)
+## Nút Previous có bị khoá không (trang đầu khoá)
 func is_prev_locked() -> bool:
-	var btn := _child_of(_page, "Prev") as Button
-	return btn == null or btn.disabled
+	return _prev == null or _prev.disabled
 
 
-## Nút Next của trang đang xem có bị khoá không (trang cuối khoá)
+## Nút Next có bị khoá không (trang cuối khoá)
 func is_next_locked() -> bool:
-	var btn := _child_of(_page, "Next") as Button
-	return btn == null or btn.disabled
+	return _next == null or _next.disabled
 
 
 ## Nút CTA của trang đang xem (để test bấm trực tiếp)
@@ -148,39 +175,53 @@ func close_button() -> Button:
 
 
 # ---------------------------------------------------------------------------
-# Dựng / chuyển trang
+# Thu thập node / nối nút
 # ---------------------------------------------------------------------------
-func _collect_pages() -> void:
-	var root := get_node_or_null("Panel/Guide/Pages")
+func _collect_nodes() -> void:
+	var root := get_node_or_null("Panel/Guide")
+	_pages.clear()
+	_tabs.clear()
+	_dots.clear()
 	if root == null:
-		_pages.clear()
 		return
-	var pages: Array[Control] = []
-	for child in root.get_children():
-		if child is Control:
-			pages.append(child)
-	_pages = pages
+	var pages_root := root.get_node_or_null("Pages")
+	if pages_root != null:
+		for child in pages_root.get_children():
+			if child is Control:
+				_pages.append(child)
+	var tabs_root := root.get_node_or_null("Tabs")
+	if tabs_root != null:
+		for child in tabs_root.get_children():
+			if child is BaseButton:
+				_tabs.append(child)
+	var dots_root := root.get_node_or_null("Dots")
+	if dots_root != null:
+		for child in dots_root.get_children():
+			if child is BaseButton:
+				_dots.append(child)
+		if not _dots.is_empty():
+			var first := _dots[0] as Control
+			_dots_x0 = first.position.x
+			_dots_cy = first.position.y + first.size.y * 0.5
+	_prev = root.get_node_or_null("Prev") as Button
+	_next = root.get_node_or_null("Next") as Button
+	_index = root.get_node_or_null("Index") as Label
 
 
 func _connect_buttons() -> void:
 	var close_btn := close_button()
 	if close_btn != null and not close_btn.pressed.is_connected(_on_close_pressed):
 		close_btn.pressed.connect(_on_close_pressed)
+	_connect(_prev, _on_prev_pressed)
+	_connect(_next, _on_next_pressed)
+	for i in _tabs.size():
+		_connect(_tabs[i], _on_tab_pressed.bind(i))
+	for i in _dots.size():
+		_connect(_dots[i], _on_tab_pressed.bind(i))
+	# Cta/Link nằm trong TỪNG trang (mockup vẽ khác nhau mỗi trang)
 	for i in _pages.size():
-		var page := _pages[i]
-		_connect(page.get_node_or_null("Prev"), _on_prev_pressed)
-		_connect(page.get_node_or_null("Next"), _on_next_pressed)
-		_connect(page.get_node_or_null("Cta"), _on_cta_pressed)
-		_connect(page.get_node_or_null("Link"), _on_link_pressed)
-		var tabs := _tabs_of(i)
-		if tabs != null:
-			for t in tabs.size():
-				_connect(tabs[t], _on_tab_pressed.bind(t))
-		var dots := page.get_node_or_null("Dots") as Control
-		if dots != null:
-			for d in dots.get_child_count():
-				_connect(dots.get_child(d), _on_tab_pressed.bind(d))
-	_refresh_page_index()
+		_connect(_pages[i].get_node_or_null("Cta"), _on_cta_pressed)
+		_connect(_pages[i].get_node_or_null("Link"), _on_link_pressed)
 
 
 func _connect(node: Node, handler: Callable) -> void:
@@ -191,44 +232,9 @@ func _connect(node: Node, handler: Callable) -> void:
 		btn.pressed.connect(handler)
 
 
-### Canh giữa "vòng số + chữ" của tab theo bề rộng chữ thật của font
-#func _center_tabs() -> void:
-	#for i in _pages.size():
-		#var tabs := _tabs_of(i)
-		#if tabs == null:
-			#continue
-		#for tab in tabs:
-			#var node := tab as Control
-			#if node == null:
-				#continue
-			#var lbl := node.get_node_or_null("Label") as Label
-			#var ring := node.get_node_or_null("Ring") as Control
-			#var num := node.get_node_or_null("Num") as Label
-			#if lbl == null or ring == null:
-				#continue
-			#var font: Font = lbl.get_theme_font("font")
-			#var size: int = lbl.get_theme_font_size("font_size")
-			#var w := node.size.x
-			#var text_w := 0.0
-			#if font != null:
-				#text_w = font.get_string_size(lbl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x
-			#var total := TAB_RING + TAB_GAP + text_w
-			#var x := (w - total) * 0.5
-			#ring.position = Vector2(x, (node.size.y - TAB_RING) * 0.5)
-			#lbl.position = Vector2(x + TAB_RING + TAB_GAP, 0.0)
-			#lbl.size = Vector2(text_w + 4.0, node.size.y)
-			#if num != null:
-				#num.position = ring.position
-				#num.size = Vector2(TAB_RING, TAB_RING)
-
-
-func _refresh_page_index() -> void:
-	for i in _pages.size():
-		var lbl := _child_of(i, "Index") as Label
-		if lbl != null:
-			lbl.text = tr("STR_GI_PAGE_INDEX").format([i + 1, _pages.size()])
-
-
+# ---------------------------------------------------------------------------
+# Chuyển trang + cập nhật trạng thái chrome dùng chung
+# ---------------------------------------------------------------------------
 func _show_page(index: int, animate: bool) -> void:
 	if _pages.is_empty():
 		return
@@ -240,6 +246,67 @@ func _show_page(index: int, animate: bool) -> void:
 		if on and animate:
 			var tw := create_tween()
 			tw.tween_property(page, "modulate:a", 1.0, FADE_TIME).from(0.25)
+	_update_tabs()
+	_update_nav()
+	_update_dots()
+	_update_index()
+
+
+## Tab đang chọn đổi sang style/màu "đang chọn" (nướng sẵn trong scene)
+func _update_tabs() -> void:
+	for i in _tabs.size():
+		var tab := _tabs[i] as Button
+		if tab == null:
+			continue
+		var on := i == _page
+		var sb: StyleBox = tab_on_style if on else tab_off_style
+		if sb != null:
+			for state in ["normal", "hover", "pressed"]:
+				tab.add_theme_stylebox_override(state, sb)
+		var ring := tab.get_node_or_null("Ring") as Panel
+		if ring != null:
+			var ring_sb: StyleBox = tab_on_ring_style if on else tab_off_ring_style
+			if ring_sb != null:
+				ring.add_theme_stylebox_override("panel", ring_sb)
+		var color := tab_on_text_color if on else tab_off_text_color
+		var lbl := tab.get_node_or_null("Label") as Label
+		if lbl != null:
+			lbl.add_theme_color_override("font_color", color)
+		var num := tab.get_node_or_null("Num") as Label
+		if num != null:
+			num.add_theme_color_override("font_color", color)
+
+
+## Cuối/đầu danh sách thì nút tương ứng bị khoá (style mờ đã nướng sẵn)
+func _update_nav() -> void:
+	if _prev != null:
+		_prev.disabled = _page <= 0
+	if _next != null:
+		_next.disabled = _page >= _pages.size() - 1
+
+
+## Dot đang chọn phình thành viên thuốc, các dot khác co về chấm tròn;
+## hàng dots canh trái từ mép dot đầu (đúng như mockup ở cả 3 trang).
+func _update_dots() -> void:
+	var x := _dots_x0
+	for i in _dots.size():
+		var dot := _dots[i] as Button
+		if dot == null:
+			continue
+		var on := i == _page
+		var size := DOT_ON_SIZE if on else DOT_OFF_SIZE
+		var sb: StyleBox = dot_on_style if on else dot_off_style
+		if sb != null:
+			for state in ["normal", "hover", "pressed"]:
+				dot.add_theme_stylebox_override(state, sb)
+		dot.size = size
+		dot.position = Vector2(x, _dots_cy - size.y * 0.5)
+		x += size.x + DOT_GAP
+
+
+func _update_index() -> void:
+	if _index != null:
+		_index.text = tr("STR_GI_PAGE_INDEX").format([_page + 1, _pages.size()])
 
 
 # ---------------------------------------------------------------------------
@@ -249,17 +316,6 @@ func _child_of(page_index: int, child_name: String) -> Node:
 	if page_index < 0 or page_index >= _pages.size():
 		return null
 	return _pages[page_index].get_node_or_null(child_name)
-
-
-func _tabs_of(page_index: int) -> Array:
-	var box := _child_of(page_index, "Tabs") as Control
-	if box == null:
-		return []
-	var out: Array = []
-	for child in box.get_children():
-		if child is BaseButton:
-			out.append(child)
-	return out
 
 
 ## Trả về bản dịch của một chuỗi: nếu là khoá STR_* thì dịch, ngược lại giữ nguyên

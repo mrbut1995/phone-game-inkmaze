@@ -55,6 +55,15 @@ PAGES_PER_MODE = 3
 
 TAG = re.compile(r"\{.*\}")
 NUM = re.compile(r"[,\s]+")
+# Chuỗi có chữ cái (Unicode) — dùng để nhận diện chuỗi nào cần khoá dịch
+HAS_LETTER = re.compile(r"[^\W\d_]", re.UNICODE)
+# Token luôn giống nhau ở mọi ngôn ngữ (số trên grid, dấu, S/F...)
+LITERAL_TOKENS = {"S", "F"}
+
+
+def is_literal_text(txt: str) -> bool:
+    """True nếu chuỗi KHÔNG cần dịch (số/ký hiệu/S/F) -> ghi thẳng vào scene."""
+    return not HAS_LETTER.search(txt) or txt in LITERAL_TOKENS
 
 # Ký tự font Be Vietnam Pro KHÔNG vẽ được -> lọc khỏi chuỗi app (số tab vẽ bằng node riêng)
 UNSUPPORTED_RANGES = (

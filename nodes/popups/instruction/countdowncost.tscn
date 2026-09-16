@@ -22,57 +22,24 @@
 
 [ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-SemiBold.ttf" id="11_font_sb"]
 
-[ext_resource type="Texture2D" path="res://assets/images/instructions/guide_chevron_left.svg" id="12_chev_left"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_countdowncost_page2.svg" id="12_img_p2"]
 
-[ext_resource type="Texture2D" path="res://assets/images/instructions/guide_chevron_right.svg" id="13_chev_right"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_countdowncost_page3.svg" id="13_img_p3"]
 
-[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Regular.ttf" id="14_font_reg"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/guide_chevron_left.svg" id="14_chev_left"]
 
-[ext_resource type="Texture2D" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_countdowncost_page2.svg" id="15_img_p2"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/guide_chevron_right.svg" id="15_chev_right"]
 
-[ext_resource type="Texture2D" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_countdowncost_page3.svg" id="16_img_p3"]
+[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Regular.ttf" id="16_font_reg"]
 
 [sub_resource type="StyleBoxFlat" id="sb1"]
-bg_color = Color(1, 0.9922, 0.9765, 1)
-border_width_left = 3.5
-border_width_top = 3.5
-border_width_right = 3.5
-border_width_bottom = 3.5
-border_color = Color(0.7608, 0.2549, 0.0471, 1)
-corner_radius_top_left = 26
-corner_radius_top_right = 26
-corner_radius_bottom_right = 26
-corner_radius_bottom_left = 26
-
-[sub_resource type="StyleBoxFlat" id="sb2"]
-bg_color = Color(1, 0.9294, 0.8353, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxFlat" id="sb3"]
 bg_color = Color(0.7608, 0.2549, 0.0471, 1)
 corner_radius_top_left = 14
 corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
-[sub_resource type="StyleBoxEmpty" id="sb4"]
-
-[sub_resource type="StyleBoxFlat" id="sb5"]
-bg_color = Color(0, 0, 0, 0)
-border_width_left = 2.2
-border_width_top = 2.2
-border_width_right = 2.2
-border_width_bottom = 2.2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 13
-corner_radius_top_right = 13
-corner_radius_bottom_right = 13
-corner_radius_bottom_left = 13
-
-[sub_resource type="StyleBoxFlat" id="sb6"]
+[sub_resource type="StyleBoxFlat" id="sb2"]
 bg_color = Color(0.9412, 0.9686, 0.9843, 1)
 border_width_left = 2.0
 border_width_top = 2.0
@@ -84,7 +51,19 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
-[sub_resource type="StyleBoxFlat" id="sb7"]
+[sub_resource type="StyleBoxFlat" id="sb3"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2.2
+border_width_top = 2.2
+border_width_right = 2.2
+border_width_bottom = 2.2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="sb4"]
 bg_color = Color(0, 0, 0, 0)
 border_width_left = 2.2
 border_width_top = 2.2
@@ -96,7 +75,42 @@ corner_radius_top_right = 13
 corner_radius_bottom_right = 13
 corner_radius_bottom_left = 13
 
+[sub_resource type="StyleBoxFlat" id="sb5"]
+bg_color = Color(0.7608, 0.2549, 0.0471, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="sb6"]
+bg_color = Color(0.8196, 0.8863, 0.9294, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="sb7"]
+bg_color = Color(1, 0.9922, 0.9765, 1)
+border_width_left = 3.5
+border_width_top = 3.5
+border_width_right = 3.5
+border_width_bottom = 3.5
+border_color = Color(0.7608, 0.2549, 0.0471, 1)
+corner_radius_top_left = 26
+corner_radius_top_right = 26
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 26
+
 [sub_resource type="StyleBoxFlat" id="sb8"]
+bg_color = Color(1, 0.9294, 0.8353, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="sb9"]
+
+[sub_resource type="StyleBoxFlat" id="sb10"]
 bg_color = Color(1, 0.9686, 0.9294, 1)
 border_width_left = 2.0
 border_width_top = 2.0
@@ -108,14 +122,14 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
-[sub_resource type="StyleBoxFlat" id="sb9"]
+[sub_resource type="StyleBoxFlat" id="sb11"]
 bg_color = Color(0.7608, 0.2549, 0.0471, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxFlat" id="sb10"]
+[sub_resource type="StyleBoxFlat" id="sb12"]
 bg_color = Color(0.9961, 0.949, 0.949, 1)
 border_width_left = 2.0
 border_width_top = 2.0
@@ -127,14 +141,14 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
-[sub_resource type="StyleBoxFlat" id="sb11"]
+[sub_resource type="StyleBoxFlat" id="sb13"]
 bg_color = Color(0.8627, 0.149, 0.149, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxFlat" id="sb12"]
+[sub_resource type="StyleBoxFlat" id="sb14"]
 bg_color = Color(0.9412, 0.9922, 0.9569, 1)
 border_width_left = 2.0
 border_width_top = 2.0
@@ -146,52 +160,14 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
-[sub_resource type="StyleBoxFlat" id="sb13"]
+[sub_resource type="StyleBoxFlat" id="sb15"]
 bg_color = Color(0.0863, 0.6392, 0.2902, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxFlat" id="sb14"]
-bg_color = Color(1, 0.9922, 0.9765, 1)
-border_width_left = 2.0
-border_width_top = 2.0
-border_width_right = 2.0
-border_width_bottom = 2.0
-border_color = Color(0.4314, 0.6275, 0.7843, 1)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
-
-[sub_resource type="StyleBoxFlat" id="sb15"]
-bg_color = Color(1, 0.9922, 0.9765, 1)
-border_width_left = 2.0
-border_width_top = 2.0
-border_width_right = 2.0
-border_width_bottom = 2.0
-border_color = Color(0.7608, 0.2549, 0.0471, 1)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
-
 [sub_resource type="StyleBoxFlat" id="sb16"]
-bg_color = Color(0.7608, 0.2549, 0.0471, 1)
-corner_radius_top_left = 9.0
-corner_radius_top_right = 9.0
-corner_radius_bottom_right = 9.0
-corner_radius_bottom_left = 9.0
-
-[sub_resource type="StyleBoxFlat" id="sb17"]
-bg_color = Color(0.8196, 0.8863, 0.9294, 1)
-corner_radius_top_left = 8.0
-corner_radius_top_right = 8.0
-corner_radius_bottom_right = 8.0
-corner_radius_bottom_left = 8.0
-
-[sub_resource type="StyleBoxFlat" id="sb18"]
 bg_color = Color(0.7608, 0.2549, 0.0471, 1)
 border_width_left = 3.5
 border_width_top = 3.5
@@ -203,14 +179,14 @@ corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="sb19"]
+[sub_resource type="StyleBoxFlat" id="sb17"]
 bg_color = Color(0.9176, 0.3451, 0.0471, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxFlat" id="sb20"]
+[sub_resource type="StyleBoxFlat" id="sb18"]
 bg_color = Color(0.9412, 0.9686, 0.9843, 1)
 border_width_left = 2.0
 border_width_top = 2.0
@@ -222,12 +198,36 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
-[sub_resource type="StyleBoxFlat" id="sb21"]
+[sub_resource type="StyleBoxFlat" id="sb19"]
 bg_color = Color(0.2392, 0.5137, 0.6824, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="sb20"]
+bg_color = Color(1, 0.9922, 0.9765, 1)
+border_width_left = 2.0
+border_width_top = 2.0
+border_width_right = 2.0
+border_width_bottom = 2.0
+border_color = Color(0.7608, 0.2549, 0.0471, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="sb21"]
+bg_color = Color(1, 0.9922, 0.9765, 1)
+border_width_left = 2.0
+border_width_top = 2.0
+border_width_right = 2.0
+border_width_bottom = 2.0
+border_color = Color(0.4314, 0.6275, 0.7843, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
 
 [sub_resource type="StyleBoxFlat" id="sb22"]
 bg_color = Color(1, 0.9922, 0.9765, 1)
@@ -243,6 +243,14 @@ corner_radius_bottom_left = 14
 
 [node name="Base" unique_id=311576004 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
+tab_on_style = SubResource("sb1")
+tab_off_style = SubResource("sb2")
+tab_on_ring_style = SubResource("sb3")
+tab_off_ring_style = SubResource("sb4")
+tab_on_text_color = Color(1, 1, 1, 1)
+tab_off_text_color = Color(0.4431, 0.5451, 0.6196, 1)
+dot_on_style = SubResource("sb5")
+dot_off_style = SubResource("sb6")
 
 [node name="Panel" parent="." index="1"]
 offset_left = 80.0
@@ -274,7 +282,7 @@ layout_mode = 0
 offset_right = 920
 offset_bottom = 1480
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb1")
+theme_override_styles/panel = SubResource("sb7")
 
 [node name="PaperDetail" type="TextureRect" parent="Panel/Guide"]
 layout_mode = 0
@@ -299,7 +307,7 @@ offset_top = 48
 offset_right = 330
 offset_bottom = 78
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb2")
+theme_override_styles/panel = SubResource("sb8")
 
 [node name="ChipText" type="Label" parent="Panel/Guide"]
 offset_left = 110
@@ -313,6 +321,156 @@ theme_override_colors/font_color = Color(0.7608, 0.2549, 0.0471, 1)
 horizontal_alignment = 1
 vertical_alignment = 1
 text = "STR_GI_COUNTDOWNCOST_CHIP"
+
+[node name="Tabs" type="Control" parent="Panel/Guide"]
+layout_mode = 0
+offset_right = 920
+offset_bottom = 202
+mouse_filter = 2
+
+[node name="Tab1" type="Button" parent="Panel/Guide/Tabs"]
+layout_mode = 0
+offset_left = 105
+offset_top = 142
+offset_right = 350
+offset_bottom = 190
+focus_mode = 0
+text = ""
+theme_override_styles/normal = SubResource("sb2")
+theme_override_styles/hover = SubResource("sb2")
+theme_override_styles/pressed = SubResource("sb2")
+theme_override_styles/focus = SubResource("sb9")
+theme_override_styles/disabled = SubResource("sb9")
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Tabs/Tab1"]
+layout_mode = 0
+offset_left = 26.1
+offset_top = 11
+offset_right = 52.1
+offset_bottom = 37
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb4")
+
+[node name="Num" type="Label" parent="Panel/Guide/Tabs/Tab1"]
+offset_left = 26.1
+offset_top = 11
+offset_right = 52.1
+offset_bottom = 37
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "1"
+
+[node name="Label" type="Label" parent="Panel/Guide/Tabs/Tab1"]
+offset_left = 58.1
+offset_top = 0
+offset_right = 223
+offset_bottom = 48
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+vertical_alignment = 1
+text = "STR_GI_COUNTDOWNCOST_P1_TAB1"
+
+[node name="Tab2" type="Button" parent="Panel/Guide/Tabs"]
+layout_mode = 0
+offset_left = 360
+offset_top = 142
+offset_right = 605
+offset_bottom = 190
+focus_mode = 0
+text = ""
+theme_override_styles/normal = SubResource("sb2")
+theme_override_styles/hover = SubResource("sb2")
+theme_override_styles/pressed = SubResource("sb2")
+theme_override_styles/focus = SubResource("sb9")
+theme_override_styles/disabled = SubResource("sb9")
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Tabs/Tab2"]
+layout_mode = 0
+offset_left = 14.2
+offset_top = 11
+offset_right = 40.2
+offset_bottom = 37
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb4")
+
+[node name="Num" type="Label" parent="Panel/Guide/Tabs/Tab2"]
+offset_left = 14.2
+offset_top = 11
+offset_right = 40.2
+offset_bottom = 37
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "2"
+
+[node name="Label" type="Label" parent="Panel/Guide/Tabs/Tab2"]
+offset_left = 46.2
+offset_top = 0
+offset_right = 234.8
+offset_bottom = 48
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+vertical_alignment = 1
+text = "STR_GI_COUNTDOWNCOST_P1_TAB2"
+
+[node name="Tab3" type="Button" parent="Panel/Guide/Tabs"]
+layout_mode = 0
+offset_left = 615
+offset_top = 142
+offset_right = 860
+offset_bottom = 190
+focus_mode = 0
+text = ""
+theme_override_styles/normal = SubResource("sb2")
+theme_override_styles/hover = SubResource("sb2")
+theme_override_styles/pressed = SubResource("sb2")
+theme_override_styles/focus = SubResource("sb9")
+theme_override_styles/disabled = SubResource("sb9")
+
+[node name="Ring" type="Panel" parent="Panel/Guide/Tabs/Tab3"]
+layout_mode = 0
+offset_left = 49.2
+offset_top = 11
+offset_right = 75.2
+offset_bottom = 37
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb4")
+
+[node name="Num" type="Label" parent="Panel/Guide/Tabs/Tab3"]
+offset_left = 49.2
+offset_top = 11
+offset_right = 75.2
+offset_bottom = 37
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "3"
+
+[node name="Label" type="Label" parent="Panel/Guide/Tabs/Tab3"]
+offset_left = 81.2
+offset_top = 0
+offset_right = 199.8
+offset_bottom = 48
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("7_font_black")
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
+vertical_alignment = 1
+text = "STR_GI_COUNTDOWNCOST_P1_TAB3"
 
 [node name="Pages" type="Control" parent="Panel/Guide"]
 layout_mode = 1
@@ -347,211 +505,211 @@ texture = ExtResource("8_img_p1")
 [node name="PT1" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 160
 offset_top = 259
-offset_right = 261.2
+offset_right = 260.5
 offset_bottom = 278.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.6039, 0.2039, 0.0706, 1)
-text = "STR_GI_X144"
+text = "STR_GI_X124"
 
 [node name="PT2" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 295
 offset_top = 239
-offset_right = 567.1
+offset_right = 340.6
 offset_bottom = 293
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 36
 theme_override_colors/font_color = Color(0.7608, 0.2549, 0.0471, 1)
-text = "STR_GI_X145"
+text = "13"
 
 [node name="PT3" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 599.8
+offset_left = 600.2
 offset_top = 254
-offset_right = 708.2
+offset_right = 707.8
 offset_bottom = 275
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.7059, 0.3255, 0.0353, 1)
-text = "STR_GI_X146"
+text = "STR_GI_X125"
 
 [node name="PT4" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 180.5
+offset_left = 341.4
 offset_top = 350.1
-offset_right = 527.5
+offset_right = 366.6
 offset_bottom = 419.1
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 46
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X001"
+text = "1"
 
 [node name="PT5" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 305.6
+offset_left = 466.5
 offset_top = 350.1
-offset_right = 662.4
+offset_right = 501.5
 offset_bottom = 419.1
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 46
 theme_override_colors/font_color = Color(0.1451, 0.3843, 0.5255, 1)
-text = "STR_GI_X002"
+text = "2"
 
 [node name="PT6" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 188
+offset_left = 341.9
 offset_top = 481.4
-offset_right = 520
+offset_right = 366.1
 offset_bottom = 547.4
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 44
 theme_override_colors/font_color = Color(0.6039, 0.2039, 0.0706, 1)
-text = "STR_GI_X001"
+text = "1"
 
 [node name="PT7" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 313.3
+offset_left = 467.2
 offset_top = 481.4
-offset_right = 654.7
+offset_right = 500.8
 offset_bottom = 547.4
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 44
 theme_override_colors/font_color = Color(0.7608, 0.2549, 0.0471, 1)
-text = "STR_GI_X002"
+text = "2"
 
 [node name="PT8" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 435.2
+offset_left = 596
 offset_top = 480.1
-offset_right = 792.8
+offset_right = 632
 offset_bottom = 549.1
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 46
 theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
-text = "STR_GI_X003"
+text = "3"
 
 [node name="PT9" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 310.5
+offset_left = 471.4
 offset_top = 610.1
-offset_right = 657.5
+offset_right = 496.6
 offset_bottom = 679.1
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 46
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X001"
+text = "1"
 
 [node name="PT10" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 440.5
+offset_left = 595.3
 offset_top = 610.1
-offset_right = 787.5
+offset_right = 632.7
 offset_bottom = 679.1
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 46
 theme_override_colors/font_color = Color(0.6, 0.1059, 0.1059, 1)
-text = "STR_GI_X100"
+text = "4"
 
 [node name="PT11" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 135
 offset_top = 429
-offset_right = 227.2
+offset_right = 227.9
 offset_bottom = 447
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X147"
+text = "STR_GI_X126"
 
 [node name="PT12" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 135
 offset_top = 447
-offset_right = 317.6
+offset_right = 314.1
 offset_bottom = 483
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 24
 theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
-text = "STR_GI_X148"
+text = "STR_GI_X127"
 
 [node name="PT13" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 135
 offset_top = 483
-offset_right = 225.8
+offset_right = 224.8
 offset_bottom = 501
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("9_font_bold")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.0784, 0.3255, 0.1765, 1)
-text = "STR_GI_X149"
+text = "STR_GI_X128"
 
 [node name="PT14" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 135
 offset_top = 501
-offset_right = 225.4
+offset_right = 225.2
 offset_bottom = 519
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("9_font_bold")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.0784, 0.3255, 0.1765, 1)
-text = "STR_GI_X150"
+text = "STR_GI_X129"
 
 [node name="PT15" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 704
 offset_top = 429
-offset_right = 794.2
+offset_right = 797.2
 offset_bottom = 447
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
-text = "STR_GI_X151"
+text = "STR_GI_X130"
 
 [node name="PT16" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 704
 offset_top = 447
-offset_right = 885.4
+offset_right = 880.3
 offset_bottom = 483
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 24
 theme_override_colors/font_color = Color(0.6, 0.1059, 0.1059, 1)
-text = "STR_GI_X152"
+text = "STR_GI_X131"
 
 [node name="PT17" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 704
 offset_top = 483
-offset_right = 794.1
+offset_right = 793.9
 offset_bottom = 501
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("9_font_bold")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.498, 0.1137, 0.1137, 1)
-text = "STR_GI_X153"
+text = "STR_GI_X132"
 
 [node name="PT18" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 704
 offset_top = 501
-offset_right = 797.4
+offset_right = 796.9
 offset_bottom = 519
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.8627, 0.149, 0.149, 1)
-text = "STR_GI_X154"
+text = "STR_GI_X133"
 
 [node name="PT19" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 427.3
+offset_left = 427
 offset_top = 671
-offset_right = 540.7
+offset_right = 541
 offset_bottom = 693.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
-text = "STR_GI_X155"
+text = "STR_GI_X134"
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 110
@@ -563,156 +721,6 @@ theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 38
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
 text = "STR_GI_COUNTDOWNCOST_P1_TITLE"
-
-[node name="Tabs" type="Control" parent="Panel/Guide/Pages/Page1"]
-layout_mode = 0
-offset_right = 920
-offset_bottom = 202
-mouse_filter = 2
-
-[node name="Tab1" type="Button" parent="Panel/Guide/Pages/Page1/Tabs"]
-layout_mode = 0
-offset_left = 105
-offset_top = 142
-offset_right = 350
-offset_bottom = 190
-focus_mode = 0
-text = ""
-theme_override_styles/normal = SubResource("sb3")
-theme_override_styles/hover = SubResource("sb3")
-theme_override_styles/pressed = SubResource("sb3")
-theme_override_styles/focus = SubResource("sb4")
-theme_override_styles/disabled = SubResource("sb4")
-
-[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page1/Tabs/Tab1"]
-layout_mode = 0
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb5")
-
-[node name="Num" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab1"]
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-text = "1"
-
-[node name="Label" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab1"]
-offset_left = 42
-offset_top = 0
-offset_right = 235
-offset_bottom = 48
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-vertical_alignment = 1
-text = "STR_GI_COUNTDOWNCOST_P1_TAB1"
-
-[node name="Tab2" type="Button" parent="Panel/Guide/Pages/Page1/Tabs"]
-layout_mode = 0
-offset_left = 360
-offset_top = 142
-offset_right = 605
-offset_bottom = 190
-focus_mode = 0
-text = ""
-theme_override_styles/normal = SubResource("sb6")
-theme_override_styles/hover = SubResource("sb6")
-theme_override_styles/pressed = SubResource("sb6")
-theme_override_styles/focus = SubResource("sb4")
-theme_override_styles/disabled = SubResource("sb4")
-
-[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page1/Tabs/Tab2"]
-layout_mode = 0
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb7")
-
-[node name="Num" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab2"]
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-text = "2"
-
-[node name="Label" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab2"]
-offset_left = 42
-offset_top = 0
-offset_right = 235
-offset_bottom = 48
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("10_font_xb")
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-vertical_alignment = 1
-text = "STR_GI_COUNTDOWNCOST_P1_TAB2"
-
-[node name="Tab3" type="Button" parent="Panel/Guide/Pages/Page1/Tabs"]
-layout_mode = 0
-offset_left = 615
-offset_top = 142
-offset_right = 860
-offset_bottom = 190
-focus_mode = 0
-text = ""
-theme_override_styles/normal = SubResource("sb6")
-theme_override_styles/hover = SubResource("sb6")
-theme_override_styles/pressed = SubResource("sb6")
-theme_override_styles/focus = SubResource("sb4")
-theme_override_styles/disabled = SubResource("sb4")
-
-[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page1/Tabs/Tab3"]
-layout_mode = 0
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb7")
-
-[node name="Num" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab3"]
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-text = "3"
-
-[node name="Label" type="Label" parent="Panel/Guide/Pages/Page1/Tabs/Tab3"]
-offset_left = 42
-offset_top = 0
-offset_right = 235
-offset_bottom = 48
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("10_font_xb")
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-vertical_alignment = 1
-text = "STR_GI_COUNTDOWNCOST_P1_TAB3"
 
 [node name="Section" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 105
@@ -732,7 +740,7 @@ offset_top = 797
 offset_right = 860
 offset_bottom = 873
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb8")
+theme_override_styles/panel = SubResource("sb10")
 
 [node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page1/Row1"]
 layout_mode = 0
@@ -741,7 +749,7 @@ offset_top = 22
 offset_right = 52
 offset_bottom = 54
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb9")
+theme_override_styles/panel = SubResource("sb11")
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page1/Row1"]
 offset_left = 68
@@ -772,7 +780,7 @@ offset_top = 885
 offset_right = 860
 offset_bottom = 961
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb10")
+theme_override_styles/panel = SubResource("sb12")
 
 [node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page1/Row2"]
 layout_mode = 0
@@ -781,7 +789,7 @@ offset_top = 22
 offset_right = 52
 offset_bottom = 54
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb11")
+theme_override_styles/panel = SubResource("sb13")
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page1/Row2"]
 offset_left = 68
@@ -812,7 +820,7 @@ offset_top = 973
 offset_right = 860
 offset_bottom = 1049
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb12")
+theme_override_styles/panel = SubResource("sb14")
 
 [node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page1/Row3"]
 layout_mode = 0
@@ -821,7 +829,7 @@ offset_top = 22
 offset_right = 52
 offset_bottom = 54
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb13")
+theme_override_styles/panel = SubResource("sb15")
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page1/Row3"]
 offset_left = 68
@@ -845,102 +853,6 @@ theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
 text = "STR_GI_COUNTDOWNCOST_P1_R3D"
 
-[node name="Prev" type="Button" parent="Panel/Guide/Pages/Page1"]
-layout_mode = 0
-offset_left = 105
-offset_top = 1100
-offset_right = 157
-offset_bottom = 1152
-focus_mode = 0
-expand_icon = false
-icon = ExtResource("12_chev_left")
-theme_override_colors/icon_normal_color = Color(0.1333, 0.298, 0.4275, 1)
-theme_override_colors/icon_hover_color = Color(0.1333, 0.298, 0.4275, 1)
-theme_override_colors/icon_pressed_color = Color(0.1333, 0.298, 0.4275, 1)
-theme_override_colors/icon_disabled_color = Color(0.1333, 0.298, 0.4275, 1)
-theme_override_colors/icon_focus_color = Color(0.1333, 0.298, 0.4275, 1)
-theme_override_styles/normal = SubResource("sb14")
-theme_override_styles/hover = SubResource("sb14")
-theme_override_styles/pressed = SubResource("sb14")
-theme_override_styles/disabled = SubResource("sb14")
-theme_override_styles/focus = SubResource("sb4")
-disabled = true
-modulate = Color(1, 1, 1, 0.45)
-
-[node name="Next" type="Button" parent="Panel/Guide/Pages/Page1"]
-layout_mode = 0
-offset_left = 305
-offset_top = 1100
-offset_right = 357
-offset_bottom = 1152
-focus_mode = 0
-expand_icon = false
-icon = ExtResource("13_chev_right")
-theme_override_colors/icon_normal_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_hover_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_pressed_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_disabled_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_focus_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_styles/normal = SubResource("sb15")
-theme_override_styles/hover = SubResource("sb15")
-theme_override_styles/pressed = SubResource("sb15")
-theme_override_styles/disabled = SubResource("sb15")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Dots" type="Control" parent="Panel/Guide/Pages/Page1"]
-layout_mode = 0
-offset_right = 920
-offset_bottom = 1480
-mouse_filter = 2
-
-[node name="Dot1" type="Button" parent="Panel/Guide/Pages/Page1/Dots"]
-layout_mode = 0
-offset_left = 185
-offset_top = 1116
-offset_right = 223
-offset_bottom = 1134
-focus_mode = 0
-theme_override_styles/normal = SubResource("sb16")
-theme_override_styles/hover = SubResource("sb16")
-theme_override_styles/pressed = SubResource("sb16")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Dot2" type="Button" parent="Panel/Guide/Pages/Page1/Dots"]
-layout_mode = 0
-offset_left = 235
-offset_top = 1117
-offset_right = 251
-offset_bottom = 1133
-focus_mode = 0
-theme_override_styles/normal = SubResource("sb17")
-theme_override_styles/hover = SubResource("sb17")
-theme_override_styles/pressed = SubResource("sb17")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Dot3" type="Button" parent="Panel/Guide/Pages/Page1/Dots"]
-layout_mode = 0
-offset_left = 263
-offset_top = 1117
-offset_right = 279
-offset_bottom = 1133
-focus_mode = 0
-theme_override_styles/normal = SubResource("sb17")
-theme_override_styles/hover = SubResource("sb17")
-theme_override_styles/pressed = SubResource("sb17")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Index" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 640
-offset_top = 1114
-offset_right = 860
-offset_bottom = 1144
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("14_font_reg")
-theme_override_font_sizes/font_size = 20
-theme_override_colors/font_color = Color(0.7608, 0.2549, 0.0471, 1)
-horizontal_alignment = 2
-text = "STR_GI_PAGE_INDEX"
-
 [node name="Cta" type="Button" parent="Panel/Guide/Pages/Page1"]
 layout_mode = 0
 offset_left = 105
@@ -953,10 +865,10 @@ theme_override_font_sizes/font_size = 25
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = SubResource("sb18")
-theme_override_styles/hover = SubResource("sb18")
-theme_override_styles/pressed = SubResource("sb18")
-theme_override_styles/focus = SubResource("sb4")
+theme_override_styles/normal = SubResource("sb16")
+theme_override_styles/hover = SubResource("sb16")
+theme_override_styles/pressed = SubResource("sb16")
+theme_override_styles/focus = SubResource("sb9")
 text = "STR_GI_COUNTDOWNCOST_P1_CTA"
 
 [node name="Link" type="Button" parent="Panel/Guide/Pages/Page1"]
@@ -972,10 +884,10 @@ theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
 theme_override_colors/font_hover_color = Color(0.4431, 0.5451, 0.6196, 0.75)
 theme_override_colors/font_pressed_color = Color(0.4431, 0.5451, 0.6196, 0.75)
-theme_override_styles/normal = SubResource("sb4")
-theme_override_styles/hover = SubResource("sb4")
-theme_override_styles/pressed = SubResource("sb4")
-theme_override_styles/focus = SubResource("sb4")
+theme_override_styles/normal = SubResource("sb9")
+theme_override_styles/hover = SubResource("sb9")
+theme_override_styles/pressed = SubResource("sb9")
+theme_override_styles/focus = SubResource("sb9")
 text = "STR_GI_COUNTDOWNCOST_P1_LINK"
 
 [node name="Page2" type="Control" parent="Panel/Guide/Pages"]
@@ -997,172 +909,172 @@ offset_bottom = 735
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 0
-texture = ExtResource("15_img_p2")
+texture = ExtResource("12_img_p2")
 
 [node name="PT1" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 268.2
+offset_left = 373.1
 offset_top = 280.5
-offset_right = 495.8
+offset_right = 390.9
 offset_bottom = 325.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 30
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X001"
+text = "1"
 
 [node name="PT2" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 365
+offset_left = 469.9
 offset_top = 280.5
-offset_right = 599
+offset_right = 494.1
 offset_bottom = 325.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 30
 theme_override_colors/font_color = Color(0.1451, 0.3843, 0.5255, 1)
-text = "STR_GI_X002"
+text = "2"
 
 [node name="PT3" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 468.2
+offset_left = 573.1
 offset_top = 280.5
-offset_right = 695.8
+offset_right = 590.9
 offset_bottom = 325.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 30
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X001"
+text = "1"
 
 [node name="PT4" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 268.2
+offset_left = 373.1
 offset_top = 380.5
-offset_right = 495.8
+offset_right = 390.9
 offset_bottom = 425.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 30
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X001"
+text = "1"
 
 [node name="PT5" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 368.2
+offset_left = 473.1
 offset_top = 380.5
-offset_right = 595.8
+offset_right = 490.9
 offset_bottom = 425.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 30
 theme_override_colors/font_color = Color(0.6039, 0.2039, 0.0706, 1)
-text = "STR_GI_X001"
+text = "1"
 
 [node name="PT6" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 433.9
+offset_left = 566.8
 offset_top = 375.3
-offset_right = 730.1
+offset_right = 597.2
 offset_bottom = 432.3
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 38
 theme_override_colors/font_color = Color(0.8627, 0.149, 0.149, 1)
-text = "STR_GI_X003"
+text = "3"
 
 [node name="PT7" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 365
+offset_left = 469.9
 offset_top = 480.5
-offset_right = 599
+offset_right = 494.1
 offset_bottom = 525.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 30
 theme_override_colors/font_color = Color(0.1451, 0.3843, 0.5255, 1)
-text = "STR_GI_X002"
+text = "2"
 
 [node name="PT8" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 468.2
+offset_left = 569.1
 offset_top = 480.5
-offset_right = 695.8
+offset_right = 594.9
 offset_bottom = 525.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 30
 theme_override_colors/font_color = Color(0.6, 0.1059, 0.1059, 1)
-text = "STR_GI_X100"
+text = "4"
 
 [node name="PT9" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 144
 offset_top = 444
-offset_right = 237.2
+offset_right = 237
 offset_bottom = 462
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
-text = "STR_GI_X156"
+text = "STR_GI_X135"
 
 [node name="PT10" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 144
 offset_top = 464
-offset_right = 279.8
+offset_right = 281.8
 offset_bottom = 491
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.8627, 0.149, 0.149, 1)
-text = "STR_GI_X157"
+text = "STR_GI_X136"
 
 [node name="PT11" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 144
 offset_top = 494
-offset_right = 234
+offset_right = 233.1
 offset_bottom = 512
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("9_font_bold")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.498, 0.1137, 0.1137, 1)
-text = "STR_GI_X158"
+text = "STR_GI_X137"
 
 [node name="PT12" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 144
 offset_top = 514
-offset_right = 237.2
+offset_right = 236.9
 offset_bottom = 532
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.8627, 0.149, 0.149, 1)
-text = "STR_GI_X159"
+text = "STR_GI_X138"
 
 [node name="PT13" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 664
 offset_top = 344
-offset_right = 757.4
+offset_right = 757.2
 offset_bottom = 362
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.7608, 0.2549, 0.0471, 1)
-text = "STR_GI_X160"
+text = "STR_GI_X139"
 
 [node name="PT14" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 664
 offset_top = 364
-offset_right = 797.6
+offset_right = 802.4
 offset_bottom = 391
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.6039, 0.2039, 0.0706, 1)
-text = "STR_GI_X161"
+text = "STR_GI_X140"
 
 [node name="PT15" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 664
 offset_top = 394
-offset_right = 754.2
+offset_right = 751.6
 offset_bottom = 412
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("9_font_bold")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.4863, 0.1765, 0.0706, 1)
-text = "STR_GI_X162"
+text = "STR_GI_X141"
 
 [node name="PT16" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 664
@@ -1173,18 +1085,18 @@ mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.7608, 0.2549, 0.0471, 1)
-text = "STR_GI_X163"
+text = "STR_GI_X142"
 
 [node name="PT17" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 426.9
+offset_left = 427
 offset_top = 670
-offset_right = 541.1
+offset_right = 541
 offset_bottom = 692.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
-text = "STR_GI_X164"
+text = "STR_GI_X143"
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 110
@@ -1196,156 +1108,6 @@ theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 38
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
 text = "STR_GI_COUNTDOWNCOST_P2_TITLE"
-
-[node name="Tabs" type="Control" parent="Panel/Guide/Pages/Page2"]
-layout_mode = 0
-offset_right = 920
-offset_bottom = 202
-mouse_filter = 2
-
-[node name="Tab1" type="Button" parent="Panel/Guide/Pages/Page2/Tabs"]
-layout_mode = 0
-offset_left = 105
-offset_top = 142
-offset_right = 350
-offset_bottom = 190
-focus_mode = 0
-text = ""
-theme_override_styles/normal = SubResource("sb6")
-theme_override_styles/hover = SubResource("sb6")
-theme_override_styles/pressed = SubResource("sb6")
-theme_override_styles/focus = SubResource("sb4")
-theme_override_styles/disabled = SubResource("sb4")
-
-[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page2/Tabs/Tab1"]
-layout_mode = 0
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb7")
-
-[node name="Num" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab1"]
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-text = "1"
-
-[node name="Label" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab1"]
-offset_left = 42
-offset_top = 0
-offset_right = 235
-offset_bottom = 48
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("10_font_xb")
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-vertical_alignment = 1
-text = "STR_GI_COUNTDOWNCOST_P2_TAB1"
-
-[node name="Tab2" type="Button" parent="Panel/Guide/Pages/Page2/Tabs"]
-layout_mode = 0
-offset_left = 360
-offset_top = 142
-offset_right = 605
-offset_bottom = 190
-focus_mode = 0
-text = ""
-theme_override_styles/normal = SubResource("sb3")
-theme_override_styles/hover = SubResource("sb3")
-theme_override_styles/pressed = SubResource("sb3")
-theme_override_styles/focus = SubResource("sb4")
-theme_override_styles/disabled = SubResource("sb4")
-
-[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page2/Tabs/Tab2"]
-layout_mode = 0
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb5")
-
-[node name="Num" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab2"]
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-text = "2"
-
-[node name="Label" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab2"]
-offset_left = 42
-offset_top = 0
-offset_right = 235
-offset_bottom = 48
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-vertical_alignment = 1
-text = "STR_GI_COUNTDOWNCOST_P2_TAB2"
-
-[node name="Tab3" type="Button" parent="Panel/Guide/Pages/Page2/Tabs"]
-layout_mode = 0
-offset_left = 615
-offset_top = 142
-offset_right = 860
-offset_bottom = 190
-focus_mode = 0
-text = ""
-theme_override_styles/normal = SubResource("sb6")
-theme_override_styles/hover = SubResource("sb6")
-theme_override_styles/pressed = SubResource("sb6")
-theme_override_styles/focus = SubResource("sb4")
-theme_override_styles/disabled = SubResource("sb4")
-
-[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page2/Tabs/Tab3"]
-layout_mode = 0
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb7")
-
-[node name="Num" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab3"]
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-text = "3"
-
-[node name="Label" type="Label" parent="Panel/Guide/Pages/Page2/Tabs/Tab3"]
-offset_left = 42
-offset_top = 0
-offset_right = 235
-offset_bottom = 48
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("10_font_xb")
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-vertical_alignment = 1
-text = "STR_GI_COUNTDOWNCOST_P2_TAB3"
 
 [node name="Section" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 105
@@ -1365,7 +1127,7 @@ offset_top = 797
 offset_right = 860
 offset_bottom = 873
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb10")
+theme_override_styles/panel = SubResource("sb12")
 
 [node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page2/Row1"]
 layout_mode = 0
@@ -1374,7 +1136,7 @@ offset_top = 22
 offset_right = 52
 offset_bottom = 54
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb11")
+theme_override_styles/panel = SubResource("sb13")
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page2/Row1"]
 offset_left = 68
@@ -1405,7 +1167,7 @@ offset_top = 885
 offset_right = 860
 offset_bottom = 961
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb8")
+theme_override_styles/panel = SubResource("sb10")
 
 [node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page2/Row2"]
 layout_mode = 0
@@ -1414,7 +1176,7 @@ offset_top = 22
 offset_right = 52
 offset_bottom = 54
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb19")
+theme_override_styles/panel = SubResource("sb17")
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page2/Row2"]
 offset_left = 68
@@ -1445,7 +1207,7 @@ offset_top = 973
 offset_right = 860
 offset_bottom = 1049
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb12")
+theme_override_styles/panel = SubResource("sb14")
 
 [node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page2/Row3"]
 layout_mode = 0
@@ -1454,7 +1216,7 @@ offset_top = 22
 offset_right = 52
 offset_bottom = 54
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb13")
+theme_override_styles/panel = SubResource("sb15")
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page2/Row3"]
 offset_left = 68
@@ -1478,100 +1240,6 @@ theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
 text = "STR_GI_COUNTDOWNCOST_P2_R3D"
 
-[node name="Prev" type="Button" parent="Panel/Guide/Pages/Page2"]
-layout_mode = 0
-offset_left = 105
-offset_top = 1100
-offset_right = 157
-offset_bottom = 1152
-focus_mode = 0
-expand_icon = false
-icon = ExtResource("12_chev_left")
-theme_override_colors/icon_normal_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_hover_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_pressed_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_disabled_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_focus_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_styles/normal = SubResource("sb15")
-theme_override_styles/hover = SubResource("sb15")
-theme_override_styles/pressed = SubResource("sb15")
-theme_override_styles/disabled = SubResource("sb15")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Next" type="Button" parent="Panel/Guide/Pages/Page2"]
-layout_mode = 0
-offset_left = 305
-offset_top = 1100
-offset_right = 357
-offset_bottom = 1152
-focus_mode = 0
-expand_icon = false
-icon = ExtResource("13_chev_right")
-theme_override_colors/icon_normal_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_hover_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_pressed_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_disabled_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_focus_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_styles/normal = SubResource("sb15")
-theme_override_styles/hover = SubResource("sb15")
-theme_override_styles/pressed = SubResource("sb15")
-theme_override_styles/disabled = SubResource("sb15")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Dots" type="Control" parent="Panel/Guide/Pages/Page2"]
-layout_mode = 0
-offset_right = 920
-offset_bottom = 1480
-mouse_filter = 2
-
-[node name="Dot1" type="Button" parent="Panel/Guide/Pages/Page2/Dots"]
-layout_mode = 0
-offset_left = 186
-offset_top = 1117
-offset_right = 202
-offset_bottom = 1133
-focus_mode = 0
-theme_override_styles/normal = SubResource("sb17")
-theme_override_styles/hover = SubResource("sb17")
-theme_override_styles/pressed = SubResource("sb17")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Dot2" type="Button" parent="Panel/Guide/Pages/Page2/Dots"]
-layout_mode = 0
-offset_left = 212
-offset_top = 1116
-offset_right = 250
-offset_bottom = 1134
-focus_mode = 0
-theme_override_styles/normal = SubResource("sb16")
-theme_override_styles/hover = SubResource("sb16")
-theme_override_styles/pressed = SubResource("sb16")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Dot3" type="Button" parent="Panel/Guide/Pages/Page2/Dots"]
-layout_mode = 0
-offset_left = 263
-offset_top = 1117
-offset_right = 279
-offset_bottom = 1133
-focus_mode = 0
-theme_override_styles/normal = SubResource("sb17")
-theme_override_styles/hover = SubResource("sb17")
-theme_override_styles/pressed = SubResource("sb17")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Index" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 640
-offset_top = 1114
-offset_right = 860
-offset_bottom = 1144
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("14_font_reg")
-theme_override_font_sizes/font_size = 20
-theme_override_colors/font_color = Color(0.7608, 0.2549, 0.0471, 1)
-horizontal_alignment = 2
-text = "STR_GI_PAGE_INDEX"
-
 [node name="Cta" type="Button" parent="Panel/Guide/Pages/Page2"]
 layout_mode = 0
 offset_left = 105
@@ -1584,10 +1252,10 @@ theme_override_font_sizes/font_size = 25
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = SubResource("sb18")
-theme_override_styles/hover = SubResource("sb18")
-theme_override_styles/pressed = SubResource("sb18")
-theme_override_styles/focus = SubResource("sb4")
+theme_override_styles/normal = SubResource("sb16")
+theme_override_styles/hover = SubResource("sb16")
+theme_override_styles/pressed = SubResource("sb16")
+theme_override_styles/focus = SubResource("sb9")
 text = "STR_GI_COUNTDOWNCOST_P2_CTA"
 
 [node name="Link" type="Button" parent="Panel/Guide/Pages/Page2"]
@@ -1603,10 +1271,10 @@ theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
 theme_override_colors/font_hover_color = Color(0.4431, 0.5451, 0.6196, 0.75)
 theme_override_colors/font_pressed_color = Color(0.4431, 0.5451, 0.6196, 0.75)
-theme_override_styles/normal = SubResource("sb4")
-theme_override_styles/hover = SubResource("sb4")
-theme_override_styles/pressed = SubResource("sb4")
-theme_override_styles/focus = SubResource("sb4")
+theme_override_styles/normal = SubResource("sb9")
+theme_override_styles/hover = SubResource("sb9")
+theme_override_styles/pressed = SubResource("sb9")
+theme_override_styles/focus = SubResource("sb9")
 text = "STR_GI_COUNTDOWNCOST_P2_LINK"
 
 [node name="Page3" type="Control" parent="Panel/Guide/Pages"]
@@ -1628,172 +1296,172 @@ offset_bottom = 735
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 0
-texture = ExtResource("16_img_p3")
+texture = ExtResource("13_img_p3")
 
 [node name="PT1" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 236.7
+offset_left = 236.4
 offset_top = 262
-offset_right = 337.3
+offset_right = 337.6
 offset_bottom = 281.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X165"
+text = "STR_GI_X144"
 
 [node name="PT2" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 160.4
+offset_left = 214.5
 offset_top = 336
-offset_right = 283.6
+offset_right = 229.5
 offset_bottom = 360
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "STR_GI_X166"
+text = "S"
 
 [node name="PT3" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 381.3
+offset_left = 434.8
 offset_top = 336
-offset_right = 502.7
+offset_right = 449.2
 offset_bottom = 360
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "STR_GI_X167"
+text = "F"
 
 [node name="PT4" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 285.4
+offset_left = 285.3
 offset_top = 319
-offset_right = 378.6
+offset_right = 378.7
 offset_bottom = 337
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X168"
+text = "STR_GI_X145"
 
 [node name="PT5" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 285.3
+offset_left = 285.2
 offset_top = 409
-offset_right = 378.7
+offset_right = 378.8
 offset_bottom = 427
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
-text = "STR_GI_X169"
+text = "STR_GI_X146"
 
 [node name="PT6" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 515
 offset_top = 301
-offset_right = 651.1
+offset_right = 651.3
 offset_bottom = 328
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.0784, 0.3255, 0.1765, 1)
-text = "STR_GI_X170"
+text = "STR_GI_X147"
 
 [node name="PT7" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 515
 offset_top = 333
-offset_right = 613.1
+offset_right = 618.2
 offset_bottom = 354
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_font_sb")
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
-text = "STR_GI_X171"
+text = "STR_GI_X148"
 
 [node name="PT8" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 515
 offset_top = 355
-offset_right = 616.5
+offset_right = 618.7
 offset_bottom = 376
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_font_sb")
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
-text = "STR_GI_X172"
+text = "STR_GI_X149"
 
 [node name="PT9" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 515
 offset_top = 377
-offset_right = 619.9
+offset_right = 621.5
 offset_bottom = 398
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
-text = "STR_GI_X173"
+text = "STR_GI_X150"
 
 [node name="PT10" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 185.7
+offset_left = 187.6
 offset_top = 581
-offset_right = 308.3
+offset_right = 306.4
 offset_bottom = 605
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(1, 0.9294, 0.8353, 1)
-text = "STR_GI_X138"
+text = "STR_GI_X118"
 
 [node name="PT11" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 382.2
+offset_left = 383.3
 offset_top = 497
-offset_right = 481.8
+offset_right = 480.7
 offset_bottom = 516.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X174"
+text = "STR_GI_X151"
 
 [node name="PT12" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 330
 offset_top = 528
-offset_right = 509.7
+offset_right = 511.4
 offset_bottom = 564
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 24
 theme_override_colors/font_color = Color(0.6039, 0.2039, 0.0706, 1)
-text = "STR_GI_X175"
+text = "STR_GI_X152"
 
 [node name="PT13" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 330
 offset_top = 567
-offset_right = 439
+offset_right = 439.9
 offset_bottom = 589.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_font_sb")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.4863, 0.1765, 0.0706, 1)
-text = "STR_GI_X176"
+text = "STR_GI_X153"
 
 [node name="PT14" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 330
 offset_top = 591
-offset_right = 437.5
+offset_right = 440.5
 offset_bottom = 613.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_font_sb")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.4863, 0.1765, 0.0706, 1)
-text = "STR_GI_X177"
+text = "STR_GI_X154"
 
 [node name="PT15" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 428
+offset_left = 427.3
 offset_top = 670
-offset_right = 540
+offset_right = 540.7
 offset_bottom = 692.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
-text = "STR_GI_X178"
+text = "STR_GI_X155"
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 110
@@ -1805,156 +1473,6 @@ theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 38
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
 text = "STR_GI_COUNTDOWNCOST_P3_TITLE"
-
-[node name="Tabs" type="Control" parent="Panel/Guide/Pages/Page3"]
-layout_mode = 0
-offset_right = 920
-offset_bottom = 202
-mouse_filter = 2
-
-[node name="Tab1" type="Button" parent="Panel/Guide/Pages/Page3/Tabs"]
-layout_mode = 0
-offset_left = 105
-offset_top = 142
-offset_right = 350
-offset_bottom = 190
-focus_mode = 0
-text = ""
-theme_override_styles/normal = SubResource("sb6")
-theme_override_styles/hover = SubResource("sb6")
-theme_override_styles/pressed = SubResource("sb6")
-theme_override_styles/focus = SubResource("sb4")
-theme_override_styles/disabled = SubResource("sb4")
-
-[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page3/Tabs/Tab1"]
-layout_mode = 0
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb7")
-
-[node name="Num" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab1"]
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-text = "1"
-
-[node name="Label" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab1"]
-offset_left = 42
-offset_top = 0
-offset_right = 235
-offset_bottom = 48
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("10_font_xb")
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-vertical_alignment = 1
-text = "STR_GI_COUNTDOWNCOST_P3_TAB1"
-
-[node name="Tab2" type="Button" parent="Panel/Guide/Pages/Page3/Tabs"]
-layout_mode = 0
-offset_left = 360
-offset_top = 142
-offset_right = 605
-offset_bottom = 190
-focus_mode = 0
-text = ""
-theme_override_styles/normal = SubResource("sb6")
-theme_override_styles/hover = SubResource("sb6")
-theme_override_styles/pressed = SubResource("sb6")
-theme_override_styles/focus = SubResource("sb4")
-theme_override_styles/disabled = SubResource("sb4")
-
-[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page3/Tabs/Tab2"]
-layout_mode = 0
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb7")
-
-[node name="Num" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab2"]
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-text = "2"
-
-[node name="Label" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab2"]
-offset_left = 42
-offset_top = 0
-offset_right = 235
-offset_bottom = 48
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("10_font_xb")
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(0.4431, 0.5451, 0.6196, 1)
-vertical_alignment = 1
-text = "STR_GI_COUNTDOWNCOST_P3_TAB2"
-
-[node name="Tab3" type="Button" parent="Panel/Guide/Pages/Page3/Tabs"]
-layout_mode = 0
-offset_left = 615
-offset_top = 142
-offset_right = 860
-offset_bottom = 190
-focus_mode = 0
-text = ""
-theme_override_styles/normal = SubResource("sb3")
-theme_override_styles/hover = SubResource("sb3")
-theme_override_styles/pressed = SubResource("sb3")
-theme_override_styles/focus = SubResource("sb4")
-theme_override_styles/disabled = SubResource("sb4")
-
-[node name="Ring" type="Panel" parent="Panel/Guide/Pages/Page3/Tabs/Tab3"]
-layout_mode = 0
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb5")
-
-[node name="Num" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab3"]
-offset_left = 10
-offset_top = 11
-offset_right = 36
-offset_bottom = 37
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-text = "3"
-
-[node name="Label" type="Label" parent="Panel/Guide/Pages/Page3/Tabs/Tab3"]
-offset_left = 42
-offset_top = 0
-offset_right = 235
-offset_bottom = 48
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("7_font_black")
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-vertical_alignment = 1
-text = "STR_GI_COUNTDOWNCOST_P3_TAB3"
 
 [node name="Section" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 105
@@ -1974,7 +1492,7 @@ offset_top = 797
 offset_right = 860
 offset_bottom = 873
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb12")
+theme_override_styles/panel = SubResource("sb14")
 
 [node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page3/Row1"]
 layout_mode = 0
@@ -1983,7 +1501,7 @@ offset_top = 22
 offset_right = 52
 offset_bottom = 54
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb13")
+theme_override_styles/panel = SubResource("sb15")
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page3/Row1"]
 offset_left = 68
@@ -2014,7 +1532,7 @@ offset_top = 885
 offset_right = 860
 offset_bottom = 961
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb8")
+theme_override_styles/panel = SubResource("sb10")
 
 [node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page3/Row2"]
 layout_mode = 0
@@ -2023,7 +1541,7 @@ offset_top = 22
 offset_right = 52
 offset_bottom = 54
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb19")
+theme_override_styles/panel = SubResource("sb17")
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page3/Row2"]
 offset_left = 68
@@ -2054,7 +1572,7 @@ offset_top = 973
 offset_right = 860
 offset_bottom = 1049
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb20")
+theme_override_styles/panel = SubResource("sb18")
 
 [node name="NumCircle" type="Panel" parent="Panel/Guide/Pages/Page3/Row3"]
 layout_mode = 0
@@ -2063,7 +1581,7 @@ offset_top = 22
 offset_right = 52
 offset_bottom = 54
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb21")
+theme_override_styles/panel = SubResource("sb19")
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page3/Row3"]
 offset_left = 68
@@ -2087,102 +1605,6 @@ theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.3529, 0.451, 0.5216, 1)
 text = "STR_GI_COUNTDOWNCOST_P3_R3D"
 
-[node name="Prev" type="Button" parent="Panel/Guide/Pages/Page3"]
-layout_mode = 0
-offset_left = 105
-offset_top = 1100
-offset_right = 157
-offset_bottom = 1152
-focus_mode = 0
-expand_icon = false
-icon = ExtResource("12_chev_left")
-theme_override_colors/icon_normal_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_hover_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_pressed_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_disabled_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_colors/icon_focus_color = Color(0.7608, 0.2549, 0.0471, 1)
-theme_override_styles/normal = SubResource("sb15")
-theme_override_styles/hover = SubResource("sb15")
-theme_override_styles/pressed = SubResource("sb15")
-theme_override_styles/disabled = SubResource("sb15")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Next" type="Button" parent="Panel/Guide/Pages/Page3"]
-layout_mode = 0
-offset_left = 305
-offset_top = 1100
-offset_right = 357
-offset_bottom = 1152
-focus_mode = 0
-expand_icon = false
-icon = ExtResource("13_chev_right")
-theme_override_colors/icon_normal_color = Color(0.4431, 0.5451, 0.6196, 1)
-theme_override_colors/icon_hover_color = Color(0.4431, 0.5451, 0.6196, 1)
-theme_override_colors/icon_pressed_color = Color(0.4431, 0.5451, 0.6196, 1)
-theme_override_colors/icon_disabled_color = Color(0.4431, 0.5451, 0.6196, 1)
-theme_override_colors/icon_focus_color = Color(0.4431, 0.5451, 0.6196, 1)
-theme_override_styles/normal = SubResource("sb22")
-theme_override_styles/hover = SubResource("sb22")
-theme_override_styles/pressed = SubResource("sb22")
-theme_override_styles/disabled = SubResource("sb22")
-theme_override_styles/focus = SubResource("sb4")
-disabled = true
-modulate = Color(1, 1, 1, 0.45)
-
-[node name="Dots" type="Control" parent="Panel/Guide/Pages/Page3"]
-layout_mode = 0
-offset_right = 920
-offset_bottom = 1480
-mouse_filter = 2
-
-[node name="Dot1" type="Button" parent="Panel/Guide/Pages/Page3/Dots"]
-layout_mode = 0
-offset_left = 186
-offset_top = 1117
-offset_right = 202
-offset_bottom = 1133
-focus_mode = 0
-theme_override_styles/normal = SubResource("sb17")
-theme_override_styles/hover = SubResource("sb17")
-theme_override_styles/pressed = SubResource("sb17")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Dot2" type="Button" parent="Panel/Guide/Pages/Page3/Dots"]
-layout_mode = 0
-offset_left = 214
-offset_top = 1117
-offset_right = 230
-offset_bottom = 1133
-focus_mode = 0
-theme_override_styles/normal = SubResource("sb17")
-theme_override_styles/hover = SubResource("sb17")
-theme_override_styles/pressed = SubResource("sb17")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Dot3" type="Button" parent="Panel/Guide/Pages/Page3/Dots"]
-layout_mode = 0
-offset_left = 240
-offset_top = 1116
-offset_right = 278
-offset_bottom = 1134
-focus_mode = 0
-theme_override_styles/normal = SubResource("sb16")
-theme_override_styles/hover = SubResource("sb16")
-theme_override_styles/pressed = SubResource("sb16")
-theme_override_styles/focus = SubResource("sb4")
-
-[node name="Index" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 640
-offset_top = 1114
-offset_right = 860
-offset_bottom = 1144
-mouse_filter = 2
-theme_override_fonts/font = ExtResource("14_font_reg")
-theme_override_font_sizes/font_size = 20
-theme_override_colors/font_color = Color(0.7608, 0.2549, 0.0471, 1)
-horizontal_alignment = 2
-text = "STR_GI_PAGE_INDEX"
-
 [node name="Cta" type="Button" parent="Panel/Guide/Pages/Page3"]
 layout_mode = 0
 offset_left = 105
@@ -2195,10 +1617,10 @@ theme_override_font_sizes/font_size = 28
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = SubResource("sb18")
-theme_override_styles/hover = SubResource("sb18")
-theme_override_styles/pressed = SubResource("sb18")
-theme_override_styles/focus = SubResource("sb4")
+theme_override_styles/normal = SubResource("sb16")
+theme_override_styles/hover = SubResource("sb16")
+theme_override_styles/pressed = SubResource("sb16")
+theme_override_styles/focus = SubResource("sb9")
 text = "STR_GI_COUNTDOWNCOST_P3_CTA"
 
 [node name="Link" type="Button" parent="Panel/Guide/Pages/Page3"]
@@ -2214,8 +1636,103 @@ theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.7608, 0.2549, 0.0471, 1)
 theme_override_colors/font_hover_color = Color(0.7608, 0.2549, 0.0471, 0.75)
 theme_override_colors/font_pressed_color = Color(0.7608, 0.2549, 0.0471, 0.75)
-theme_override_styles/normal = SubResource("sb4")
-theme_override_styles/hover = SubResource("sb4")
-theme_override_styles/pressed = SubResource("sb4")
-theme_override_styles/focus = SubResource("sb4")
+theme_override_styles/normal = SubResource("sb9")
+theme_override_styles/hover = SubResource("sb9")
+theme_override_styles/pressed = SubResource("sb9")
+theme_override_styles/focus = SubResource("sb9")
 text = "STR_GI_COUNTDOWNCOST_P3_LINK"
+
+[node name="Prev" type="Button" parent="Panel/Guide"]
+layout_mode = 0
+offset_left = 105
+offset_top = 1100
+offset_right = 157
+offset_bottom = 1152
+focus_mode = 0
+expand_icon = false
+icon = ExtResource("14_chev_left")
+theme_override_colors/icon_normal_color = Color(0.7608, 0.2549, 0.0471, 1)
+theme_override_colors/icon_hover_color = Color(0.7608, 0.2549, 0.0471, 1)
+theme_override_colors/icon_pressed_color = Color(0.7608, 0.2549, 0.0471, 1)
+theme_override_colors/icon_focus_color = Color(0.7608, 0.2549, 0.0471, 1)
+theme_override_colors/icon_disabled_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_styles/normal = SubResource("sb20")
+theme_override_styles/hover = SubResource("sb20")
+theme_override_styles/pressed = SubResource("sb20")
+theme_override_styles/disabled = SubResource("sb21")
+theme_override_styles/focus = SubResource("sb9")
+disabled = true
+
+[node name="Next" type="Button" parent="Panel/Guide"]
+layout_mode = 0
+offset_left = 305
+offset_top = 1100
+offset_right = 357
+offset_bottom = 1152
+focus_mode = 0
+expand_icon = false
+icon = ExtResource("15_chev_right")
+theme_override_colors/icon_normal_color = Color(0.7608, 0.2549, 0.0471, 1)
+theme_override_colors/icon_hover_color = Color(0.7608, 0.2549, 0.0471, 1)
+theme_override_colors/icon_pressed_color = Color(0.7608, 0.2549, 0.0471, 1)
+theme_override_colors/icon_focus_color = Color(0.7608, 0.2549, 0.0471, 1)
+theme_override_colors/icon_disabled_color = Color(0.4431, 0.5451, 0.6196, 1)
+theme_override_styles/normal = SubResource("sb20")
+theme_override_styles/hover = SubResource("sb20")
+theme_override_styles/pressed = SubResource("sb20")
+theme_override_styles/disabled = SubResource("sb22")
+theme_override_styles/focus = SubResource("sb9")
+
+[node name="Dots" type="Control" parent="Panel/Guide"]
+layout_mode = 0
+offset_right = 920
+offset_bottom = 1480
+mouse_filter = 2
+
+[node name="Dot1" type="Button" parent="Panel/Guide/Dots"]
+layout_mode = 0
+offset_left = 185
+offset_top = 1116
+offset_right = 223
+offset_bottom = 1134
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb5")
+theme_override_styles/hover = SubResource("sb5")
+theme_override_styles/pressed = SubResource("sb5")
+theme_override_styles/focus = SubResource("sb9")
+
+[node name="Dot2" type="Button" parent="Panel/Guide/Dots"]
+layout_mode = 0
+offset_left = 235
+offset_top = 1117
+offset_right = 251
+offset_bottom = 1133
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb6")
+theme_override_styles/hover = SubResource("sb6")
+theme_override_styles/pressed = SubResource("sb6")
+theme_override_styles/focus = SubResource("sb9")
+
+[node name="Dot3" type="Button" parent="Panel/Guide/Dots"]
+layout_mode = 0
+offset_left = 263
+offset_top = 1117
+offset_right = 279
+offset_bottom = 1133
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb6")
+theme_override_styles/hover = SubResource("sb6")
+theme_override_styles/pressed = SubResource("sb6")
+theme_override_styles/focus = SubResource("sb9")
+
+[node name="Index" type="Label" parent="Panel/Guide"]
+offset_left = 640
+offset_top = 1114
+offset_right = 860
+offset_bottom = 1144
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("16_font_reg")
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.7608, 0.2549, 0.0471, 1)
+horizontal_alignment = 2
+text = "STR_GI_PAGE_INDEX"

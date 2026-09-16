@@ -58,6 +58,17 @@ LINK_CENTER_Y = 1316.0
 LINK_H = 56.0
 CLOSE_RECT = {"x": 830.0, "y": 24.0, "w": 56.0, "h": 56.0}
 
+# — chome dùng chung cho cả 3 trang —
+TAB_RING = 26.0        # đường kính vòng số thứ tự tab
+TAB_GAP = 6.0          # khoảng cách vòng số -> chữ tab
+DOTS_X0 = 185.0        # mép trái hàng dots (paper-local, giống mọi mockup)
+DOTS_GAP = 12.0        # khoảng cách giữa các dot
+DOTS_CY = 1125.0       # tâm dọc hàng dots
+# Màu nút ‹ › khi bị khoá — giống nhau ở mọi chế độ theo mockup:
+#   prev: mờ xanh · next: mờ xám
+NAV_OFF_FG = {"prev": "#224C6D", "next": "#718B9E"}
+NAV_OFF_BORDER = {"prev": "#6EA0C8", "next": "#BACEDC"}
+
 FONT_FILES = {
     "black": f"{FONT_DIR}/BeVietnamPro-Black.ttf",
     "xb": f"{FONT_DIR}/BeVietnamPro-ExtraBold.ttf",
@@ -225,6 +236,7 @@ class Builder:
         self.pages = pages
         self.km = keymap["modes"][mode]
         self.metrics = metrics
+        self.styles: dict = {}
 
     # ------------------------------------------------------------------ util
     def key(self, field: str, vi: str) -> str:
@@ -278,10 +290,12 @@ class Builder:
         base_id = sc.ext("base", "PackedScene", BASE_SCENE, BASE_UID)
         script_id = sc.ext("script", "Script", SCRIPT_PATH)
 
-        # --- root (kế thừa base.tscn) ---
+        # --- root (kế thừa base.tscn) + style tab/dot nướng qua @export ---
+        exports = self.build_shared_styles(sc)
         extra = f' unique_id={unique_id}' if unique_id else ""
+        root_props = [f'script = ExtResource("{script_id}")'] + exports
         sc.nodes.append(f'[node name="Base"{extra} instance=ExtResource("{base_id}")]\n'
-                        f'script = ExtResource("{script_id}")')
+                        + "\n".join(root_props))
         sc.nodes.append('[node name="Panel" parent="." index="1"]\n'
                         'offset_left = 80.0\noffset_top = 200.0\n'
                         'offset_right = 1000.0\noffset_bottom = 1680.0')
@@ -322,16 +336,63 @@ class Builder:
                  f'texture_normal = ExtResource("{close_n}")',
                  f'texture_pressed = ExtResource("{close_p}")'])
 
-        self.build_chip_title_tabs(sc)
+        # --- chrome DÙNG CHUNG cho cả 3 trang ---
+        self.build_chip(sc)
+        self.build_tabs(sc)
         sc.node("Pages", "Control", "Panel/Guide",
                 ["layout_mode = 1", "anchors_preset = 15", "anchor_right = 1.0",
                  "anchor_bottom = 1.0", "grow_horizontal = 2", "grow_vertical = 2",
                  "mouse_filter = 2"])
         for p in (1, 2, 3):
             self.build_page(sc, p)
+        self.build_nav(sc)
+        self.build_dots(sc)
+        self.build_index(sc)
         return sc.finish()
 
-    def build_chip_title_tabs(self, sc: Scene) -> None:
+    def build_shared_styles(self, sc: Scene) -> list:
+        """Sub-resource style cho tab/dot + các dòng @export gắn lên root scene.
+
+        Tab/dots là node DÙNG CHUNG — trạng thái chọn đổi theo trang do script
+        gán lại stylebox, nên cả 2 bộ style đều nướng sẵn trong scene.
+        """
+        p1 = self.pages[1]
+        on_tab = next((t for t in p1["tabs_style"] if t["on"]), p1["tabs_style"][0])
+        off_tab = next((t for t in p1["tabs_style"] if not t["on"]), p1["tabs_style"][-1])
+        on_dot = next((d for d in p1["dots"] if d["on"]), p1["dots"][0])
+        off_dot = next((d for d in p1["dots"] if not d["on"]), p1["dots"][1])
+
+        def tab_sb(st):
+            return {"bg": col(st["fill"]), "radius": 14,
+                    "bw": 2.0 if st["stroke"] else 0.0,
+                    "border": col(st["stroke"] or "#00000000")}
+
+        sb_on = sc.sub_stylebox(tab_sb(on_tab))
+        sb_off = sc.sub_stylebox(tab_sb(off_tab))
+        ring_on = sc.sub_stylebox({"bg": col("#00000000"), "radius": 13, "bw": 2.2,
+                                   "border": col(on_tab["text_fill"])})
+        ring_off = sc.sub_stylebox({"bg": col("#00000000"), "radius": 13, "bw": 2.2,
+                                    "border": col(off_tab["text_fill"])})
+        dot_on = sc.sub_stylebox({"bg": col(on_dot.get("fill", "#F59E0B")), "radius": 9})
+        dot_off = sc.sub_stylebox({"bg": col(off_dot.get("fill", "#D1E2ED")), "radius": 8})
+        self.styles = {
+            "tab_on": sb_on, "tab_off": sb_off, "ring_on": ring_on, "ring_off": ring_off,
+            "dot_on": dot_on, "dot_off": dot_off,
+            "on_text": on_tab["text_fill"], "off_text": off_tab["text_fill"],
+            "tab_size": on_tab["text_size"], "tab_weight": "900",
+        }
+        return [
+            f'tab_on_style = SubResource("{sb_on}")',
+            f'tab_off_style = SubResource("{sb_off}")',
+            f'tab_on_ring_style = SubResource("{ring_on}")',
+            f'tab_off_ring_style = SubResource("{ring_off}")',
+            f'tab_on_text_color = {col(on_tab["text_fill"])}',
+            f'tab_off_text_color = {col(off_tab["text_fill"])}',
+            f'dot_on_style = SubResource("{dot_on}")',
+            f'dot_off_style = SubResource("{dot_off}")',
+        ]
+
+    def build_chip(self, sc: Scene) -> None:
         p1 = self.pages[1]
         chip_key, chip_vi = self.km["chip"]
         chip = p1["chip_rect"]
@@ -347,7 +408,54 @@ class Builder:
                    (chip["x"], chip["y"], chip["w"], chip["h"]), chip_key,
                    p1["chip_size"], p1["chip_weight"], p1["chip_fg"], 1, 1)
 
+    def build_tabs(self, sc: Scene) -> None:
+        """Một hàng tab DÙNG CHUNG cho cả 3 trang (script đổi màu theo trang)."""
+        geom = self.pages[1]["tabs_style"]
+        tabs = self.km["pages"]["1"].get("tabs", [])
+        sc.node("Tabs", "Control", "Panel/Guide",
+                ["layout_mode = 0", f"offset_right = {PAPER_W:g}",
+                 f"offset_bottom = {geom[0]['y'] + 60:g}", "mouse_filter = 2"])
+        for i, g in enumerate(geom):
+            self.build_tab(sc, i + 1, g, tabs[i] if i < len(tabs) else None)
+
+    def build_tab(self, sc: Scene, idx: int, g: dict, tab_key) -> None:
+        """Nút tab trạng thái THƯỜNG — style tab đang chọn do script gán theo trang."""
+        name = f"Tab{idx}"
+        parent = "Panel/Guide/Tabs"
+        st = self.styles
+        empty = sc.stylebox_empty()
+        sb_off = st["tab_off"]
+        sc.node(name, "Button", parent,
+                ["layout_mode = 0", f"offset_left = {g['x']:g}", f"offset_top = {g['y']:g}",
+                 f"offset_right = {g['x'] + g['w']:g}",
+                 f"offset_bottom = {g['y'] + g['h']:g}",
+                 "focus_mode = 0", "text = \"\"",
+                 f'theme_override_styles/normal = SubResource("{sb_off}")',
+                 f'theme_override_styles/hover = SubResource("{sb_off}")',
+                 f'theme_override_styles/pressed = SubResource("{sb_off}")',
+                 f'theme_override_styles/focus = SubResource("{empty}")',
+                 f'theme_override_styles/disabled = SubResource("{empty}")'])
+        # vòng số + nhãn canh giữa theo bề rộng chữ tiếng Việt (đo bằng font thật)
+        vi = tab_key[1] if tab_key else ""
+        size = st["tab_size"]
+        weight = st["tab_weight"]
+        text_w = self.metrics.width(vi, weight, size)
+        total = TAB_RING + TAB_GAP + text_w
+        ring_x = round((g["w"] - total) * 0.5, 1)
+        ring_y = round((g["h"] - TAB_RING) * 0.5, 1)
+        sc.node("Ring", "Panel", f"{parent}/{name}",
+                ["layout_mode = 0", f"offset_left = {ring_x:g}", f"offset_top = {ring_y:g}",
+                 f"offset_right = {ring_x + TAB_RING:g}", f"offset_bottom = {ring_y + TAB_RING:g}",
+                 "mouse_filter = 2",
+                 f'theme_override_styles/panel = SubResource("{st["ring_off"]}")'])
+        self.label(sc, "Num", f"{parent}/{name}", (ring_x, ring_y, TAB_RING, TAB_RING), str(idx),
+                   14.0, "900", st["off_text"], 1, 1)
+        self.label(sc, "Label", f"{parent}/{name}",
+                   (ring_x + TAB_RING + TAB_GAP, 0, text_w + 4.0, g["h"]),
+                   tab_key[0] if tab_key else "", size, weight, st["off_text"], 0, 1)
+
     def build_page(self, sc: Scene, p: int) -> None:
+        """Phần NỘI DUNG riêng của một trang (khung giấy/tab/nav/dots là dùng chung)."""
         d = self.pages[p]
         parent = f"Panel/Guide/Pages/Page{p}"
         sc.node(f"Page{p}", "Control", "Panel/Guide/Pages",
@@ -365,27 +473,27 @@ class Builder:
                  "mouse_filter = 2", "expand_mode = 1", "stretch_mode = 0",
                  f'texture = ExtResource("{img_key}")'])
 
-        # chữ trên khung minh hoạ
+        # chữ trên khung minh hoạ:
+        #   - số/ký hiệu trên grid (1, 2, 15, 01:24, =, ?, S, F…) GHI THẲNG
+        #   - chữ có nghĩa dùng khoá dịch STR_GI_X###
         for i, t in enumerate(d["panel_texts"], 1):
-            key = self._panel_keys[t["text"]]
+            txt = t["text"]
+            key = self._panel_keys.get(txt)
+            if key is None:
+                if im.is_literal_text(txt):
+                    key = txt
+                else:
+                    raise SystemExit(f"[LOI] {self.mode} p{p}: thieu khoa dich cho '{txt}'")
             self.baseline_label(
                 sc, f"PT{i}", parent, PANEL["x"] + t["x"], PANEL["y"] + t["y"], key,
                 t["size"], t["weight"], t["fill"], t["anchor"], t["center"])
 
-        # tiêu đề + tab
+        # tiêu đề + mục + 3 hàng luật
         tkey = self.km["pages"][str(p)].get("title")
         ts = d["title_style"]
         if tkey:
             self.baseline_label(sc, "Title", parent, 110.0, 118.0, tkey[0],
                                 ts["size"], ts["weight"], ts["fill"])
-        sc.node("Tabs", "Control", parent,
-                ["layout_mode = 0", f"offset_right = {PAPER_W:g}",
-                 f"offset_bottom = {d['tabs_style'][0]['y'] + 60:g}", "mouse_filter = 2"])
-        tabs = self.km["pages"][str(p)].get("tabs", [])
-        for i, st in enumerate(d["tabs_style"]):
-            self.build_tab(sc, f"{parent}/Tabs", i + 1, st, tabs[i] if i < len(tabs) else None)
-
-        # mục + 3 hàng luật
         skey = self.km["pages"][str(p)].get("section")
         if skey:
             self.baseline_label(sc, "Section", parent, PANEL["x"], SECTION_BASELINE,
@@ -394,71 +502,13 @@ class Builder:
         for i in range(3):
             self.build_row(sc, parent, i, d["rows"][i], rules[i] if i < len(rules) else None)
 
-        # nav + dots + index + cta + link
-        nav = d["nav"]
-        self.build_nav(sc, parent, "Prev", NAV_RECT(F=105.0), "left",
-                       nav["prev_fg"], nav["prev_border"], nav["prev_off"])
-        self.build_nav(sc, parent, "Next", NAV_RECT(F=305.0), "right",
-                       nav["next_fg"], nav["next_border"], nav["next_off"])
-
-        sc.node("Dots", "Control", parent,
-                ["layout_mode = 0", f"offset_right = {PAPER_W:g}",
-                 f"offset_bottom = {PAPER_H:g}", "mouse_filter = 2"])
-        for i, dot in enumerate(d["dots"], 1):
-            if dot["on"]:
-                r, w, h = 9.0, 38.0, 18.0
-            else:
-                r, w, h = 8.0, 16.0, 16.0
-            sb = sc.sub_stylebox({"bg": col(dot.get("fill", "#D1E2ED")), "radius": r})
-            sc.node(f"Dot{i}", "Button", f"{parent}/Dots",
-                    ["layout_mode = 0",
-                     f"offset_left = {dot['cx'] - w / 2:g}", f"offset_top = {dot['cy'] - h / 2:g}",
-                     f"offset_right = {dot['cx'] + w / 2:g}", f"offset_bottom = {dot['cy'] + h / 2:g}",
-                     "focus_mode = 0",
-                     f'theme_override_styles/normal = SubResource("{sb}")',
-                     f'theme_override_styles/hover = SubResource("{sb}")',
-                     f'theme_override_styles/pressed = SubResource("{sb}")',
-                     f'theme_override_styles/focus = SubResource("{sc.stylebox_empty()}")'])
-
-        idx_top = INDEX_BASELINE - self.metrics.ascent("black", d["page_index_size"])
-        self.label(sc, "Index", parent,
-                   (INDEX_RIGHT - 220.0, idx_top, 220.0, d["page_index_size"] * 1.5),
-                   "STR_GI_PAGE_INDEX", d["page_index_size"], "black", d["page_index_fg"], 2)
-
+        # CTA + link: mockup vẽ KHÁC NHAU từng trang (màu/cỡ chữ) -> giữ trong trang
         ckey = self.km["pages"][str(p)].get("cta")
         if ckey:
             self.build_cta(sc, parent, ckey[0], d)
         lkey = self.km["pages"][str(p)].get("link")
         if lkey:
             self.build_link(sc, parent, lkey[0], d)
-
-    def build_tab(self, sc: Scene, parent: str, idx: int, st: dict, tab_key) -> None:
-        name = f"Tab{idx}"
-        sb = sc.sub_stylebox({
-            "bg": col(st["fill"]), "radius": 14,
-            "bw": 2.0 if st["stroke"] else 0.0, "border": col(st["stroke"] or "#00000000")})
-        empty = sc.stylebox_empty()
-        sc.node(name, "Button", parent,
-                ["layout_mode = 0", f"offset_left = {st['x']:g}", f"offset_top = {st['y']:g}",
-                 f"offset_right = {st['x'] + st['w']:g}",
-                 f"offset_bottom = {st['y'] + st['h']:g}",
-                 "focus_mode = 0", "text = \"\"",
-                 f'theme_override_styles/normal = SubResource("{sb}")',
-                 f'theme_override_styles/hover = SubResource("{sb}")',
-                 f'theme_override_styles/pressed = SubResource("{sb}")',
-                 f'theme_override_styles/focus = SubResource("{empty}")',
-                 f'theme_override_styles/disabled = SubResource("{empty}")'])
-        ring_sb = sc.sub_stylebox({"bg": col("#00000000"), "radius": 13, "bw": 2.2,
-                                   "border": col(st["text_fill"])})
-        sc.node("Ring", "Panel", f"{parent}/{name}",
-                ["layout_mode = 0", "offset_left = 10", "offset_top = 11",
-                 "offset_right = 36", "offset_bottom = 37", "mouse_filter = 2",
-                 f'theme_override_styles/panel = SubResource("{ring_sb}")'])
-        self.label(sc, "Num", f"{parent}/{name}", (10, 11, 26, 26), str(idx),
-                   14.0, "900", st["text_fill"], 1, 1)
-        self.label(sc, "Label", f"{parent}/{name}", (42, 0, st["w"] - 52, st["h"]),
-                   tab_key[0] if tab_key else "", st["text_size"], st["text_weight"],
-                   st["text_fill"], 0, 1)
 
     def build_row(self, sc: Scene, parent: str, i: int, row: dict, rule) -> None:
         y = ROW0_Y + ROW_STEP * i
@@ -488,32 +538,81 @@ class Builder:
             self.baseline_label(sc, "Desc", f"{parent}/{name}", 68.0, 58.0,
                                 t[0], 16.0, row.get("dfg_weight", "600"), row["dfg"])
 
-    def build_nav(self, sc: Scene, parent: str, name: str, rect: tuple, side: str,
-                  fg: str, border: str, off: bool) -> None:
-        tex = sc.ext(f"chev_{side}", "Texture2D", f"{CHROME_DIR}/guide_chevron_{side}.svg")
-        sb = sc.sub_stylebox({"bg": col("#FFFDF9"), "radius": 14, "bw": 2.0, "border": col(border)})
-        x, y, w, h = rect
-        props = [
-            "layout_mode = 0",
-            f"offset_left = {x:g}", f"offset_top = {y:g}",
-            f"offset_right = {x + w:g}", f"offset_bottom = {y + h:g}",
-            "focus_mode = 0", "expand_icon = false",
-            f'icon = ExtResource("{tex}")',
-            f'theme_override_colors/icon_normal_color = {col(fg)}',
-            f'theme_override_colors/icon_hover_color = {col(fg)}',
-            f'theme_override_colors/icon_pressed_color = {col(fg)}',
-            f'theme_override_colors/icon_disabled_color = {col(fg)}',
-            f'theme_override_colors/icon_focus_color = {col(fg)}',
-            f'theme_override_styles/normal = SubResource("{sb}")',
-            f'theme_override_styles/hover = SubResource("{sb}")',
-            f'theme_override_styles/pressed = SubResource("{sb}")',
-            f'theme_override_styles/disabled = SubResource("{sb}")',
-            f'theme_override_styles/focus = SubResource("{sc.stylebox_empty()}")',
-        ]
-        if off:
-            props.append("disabled = true")
-            props.append("modulate = Color(1, 1, 1, 0.45)")
-        sc.node(name, "Button", parent, props)
+    def build_nav(self, sc: Scene) -> None:
+        """Cặp nút ‹ › DÙNG CHUNG; trạng thái khoá nướng sẵn (mockup: mờ xanh/mờ xám).
+
+        Script chỉ cần bật/tắt `disabled` theo trang — không đổi màu lúc chạy.
+        """
+        nav = self.pages[2]["nav"]      # trang 2: cả 2 nút đều bật -> màu chuẩn
+        for side, name, key, x in (("left", "Prev", "prev", 105.0),
+                                   ("right", "Next", "next", 305.0)):
+            tex = sc.ext(f"chev_{side}", "Texture2D", f"{CHROME_DIR}/guide_chevron_{side}.svg")
+            on_sb = sc.sub_stylebox({"bg": col("#FFFDF9"), "radius": 14, "bw": 2.0,
+                                     "border": col(nav[f"{key}_border"])})
+            off_sb = sc.sub_stylebox({"bg": col("#FFFDF9"), "radius": 14, "bw": 2.0,
+                                      "border": col(NAV_OFF_BORDER[key])})
+            fg = nav[f"{key}_fg"]
+            off_fg = NAV_OFF_FG[key]
+            props = [
+                "layout_mode = 0",
+                f"offset_left = {x:g}", f"offset_top = {NAV_Y:g}",
+                f"offset_right = {x + NAV_SIZE:g}", f"offset_bottom = {NAV_Y + NAV_SIZE:g}",
+                "focus_mode = 0", "expand_icon = false",
+                f'icon = ExtResource("{tex}")',
+                f"theme_override_colors/icon_normal_color = {col(fg)}",
+                f"theme_override_colors/icon_hover_color = {col(fg)}",
+                f"theme_override_colors/icon_pressed_color = {col(fg)}",
+                f"theme_override_colors/icon_focus_color = {col(fg)}",
+                f"theme_override_colors/icon_disabled_color = {col(off_fg)}",
+                f'theme_override_styles/normal = SubResource("{on_sb}")',
+                f'theme_override_styles/hover = SubResource("{on_sb}")',
+                f'theme_override_styles/pressed = SubResource("{on_sb}")',
+                f'theme_override_styles/disabled = SubResource("{off_sb}")',
+                f'theme_override_styles/focus = SubResource("{sc.stylebox_empty()}")',
+            ]
+            if name == "Prev":
+                props.append("disabled = true")     # mở đầu ở trang 1 -> Prev khoá
+            sc.node(name, "Button", "Panel/Guide", props)
+
+    def build_dots(self, sc: Scene) -> None:
+        """Hàng dots DÙNG CHUNG; script dàn lại vị trí theo trang (dot chọn to hơn)."""
+        st = self.styles
+        sc.node("Dots", "Control", "Panel/Guide",
+                ["layout_mode = 0", f"offset_right = {PAPER_W:g}",
+                 f"offset_bottom = {PAPER_H:g}", "mouse_filter = 2"])
+        x = DOTS_X0
+        for i in range(len(self.pages[1]["dots"])):
+            on = i == 0                     # trang 1: dot đầu đang chọn
+            w, h = (38.0, 18.0) if on else (16.0, 16.0)
+            sb = st["dot_on"] if on else st["dot_off"]
+            sc.node(f"Dot{i + 1}", "Button", "Panel/Guide/Dots",
+                    ["layout_mode = 0",
+                     f"offset_left = {x:g}", f"offset_top = {DOTS_CY - h / 2:g}",
+                     f"offset_right = {x + w:g}", f"offset_bottom = {DOTS_CY + h / 2:g}",
+                     "focus_mode = 0",
+                     f'theme_override_styles/normal = SubResource("{sb}")',
+                     f'theme_override_styles/hover = SubResource("{sb}")',
+                     f'theme_override_styles/pressed = SubResource("{sb}")',
+                     f'theme_override_styles/focus = SubResource("{sc.stylebox_empty()}")'])
+            x += w + DOTS_GAP
+        # kiểm tra công thức dàn dots có khớp mockup ở mọi trang không
+        for p, d in self.pages.items():
+            xs = DOTS_X0
+            for i, dot in enumerate(d["dots"]):
+                w = 38.0 if dot["on"] else 16.0
+                cx = xs + w / 2
+                if abs(cx - dot["cx"]) > 2.5 or abs(DOTS_CY - dot["cy"]) > 2.5:
+                    print(f"[CANH BAO] {self.mode} p{p}: dot{i + 1} lech "
+                          f"({cx:.0f},{DOTS_CY:.0f}) vs mockup ({dot['cx']:.0f},{dot['cy']:.0f})")
+                xs += w + DOTS_GAP
+
+    def build_index(self, sc: Scene) -> None:
+        """Nhãn 'TRANG x / 3' DÙNG CHUNG — script format lại khi đổi trang."""
+        d = self.pages[1]
+        top = INDEX_BASELINE - self.metrics.ascent("black", d["page_index_size"])
+        self.label(sc, "Index", "Panel/Guide",
+                   (INDEX_RIGHT - 220.0, top, 220.0, d["page_index_size"] * 1.5),
+                   "STR_GI_PAGE_INDEX", d["page_index_size"], "black", d["page_index_fg"], 2)
 
     def build_cta(self, sc: Scene, parent: str, key: str, d: dict) -> None:
         sb = sc.sub_stylebox({
@@ -556,10 +655,6 @@ class Builder:
                  f'theme_override_styles/pressed = SubResource("{empty}")',
                  f'theme_override_styles/focus = SubResource("{empty}")',
                  f'text = "{esc(key)}"'])
-
-
-def NAV_RECT(F: float) -> tuple:
-    return (F, NAV_Y, NAV_SIZE, NAV_SIZE)
 
 
 def esc(text: str) -> str:

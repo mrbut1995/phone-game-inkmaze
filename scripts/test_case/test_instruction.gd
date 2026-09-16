@@ -14,10 +14,12 @@ const MODES := ["normal_maze", "dungeon", "minesweeper", "sumpath", "countdownco
 		"fadingink", "blindmemory", "fog_of_war", "time_attack"]
 const MODE_IDS := ["play", "daily_classic", "time_attack", "dungeon", "minesweeper",
 		"sum_path", "countdown_cost", "blind_memory", "fog_of_war", "fading_ink"]
-const SKIP_TEXT_NODES := ["Num", "NumText", "Index"]
+const SKIP_TEXT_NODES := ["Index"]
 
 var _failures := 0
 var _checks := 0
+## Ký tự chữ cái (Unicode) — chuỗi không có chữ cái được phép ghi trực tiếp
+var _letter_re := RegEx.create_from_string("[\\p{L}]")
 
 
 func _init() -> void:
@@ -83,7 +85,7 @@ func _check_keys_locales() -> void:
 	for mode in MODES:
 		var text := FileAccess.get_file_as_string(
 				"res://nodes/popups/instruction/%s.tscn" % mode)
-		for key in _regex(text, 'text = "(STR_[A-Z0-9_]+)"'):
+		for key in _regex(text, '"((STR_[A-Z0-9_]+))"'):
 			keys[key] = true
 	var total := keys.size()
 	var missing := []
@@ -125,9 +127,10 @@ func _check_scene(mode: String) -> void:
 		await process_frame
 		return
 
-	# --- mọi chữ là khoá dịch ---
+	# --- mọi chữ là khoá dịch hoặc số/ký hiệu ghi trực tiếp ---
 	var untranslated := 0
 	var missing := 0
+	var literal := 0
 	for node in _walk(pop.get_node("Panel/Guide")):
 		var text := ""
 		if node is Label:
@@ -135,6 +138,9 @@ func _check_scene(mode: String) -> void:
 		elif node is Button:
 			text = (node as Button).text
 		if text.is_empty() or String(node.name) in SKIP_TEXT_NODES:
+			continue
+		if _is_literal(text):
+			literal += 1
 			continue
 		if not text.begins_with("STR_"):
 			untranslated += 1
@@ -148,6 +154,19 @@ func _check_scene(mode: String) -> void:
 				_fail("%s: thieu ban dich cho '%s'" % [mode, text])
 	_check(untranslated == 0, "%s: moi chu deu la khoa dich" % mode)
 	_check(missing == 0, "%s: khoa dich deu co ban tieng Viet" % mode)
+	_check(literal > 0, "%s: %d chu so/ky hieu ghi truc tiep" % [mode, literal])
+
+	# --- chrome dùng chung: tab/nav/dots chỉ có 1 bộ ngoài Pages ---
+	for shared in ["Tabs/Tab1", "Tabs/Tab2", "Tabs/Tab3", "Prev", "Next", "Dots/Dot1", "Index"]:
+		_check(pop.get_node_or_null("Panel/Guide/%s" % shared) != null,
+				"%s: co node dung chung %s" % [mode, shared])
+	var p1_node := pop.get_node_or_null("Panel/Guide/Pages/Page1")
+	if p1_node != null:
+		var leaked := []
+		for shared in ["Tabs", "Prev", "Next", "Dots", "Index"]:
+			if p1_node.get_node_or_null(shared) != null:
+				leaked.append(shared)
+		_check(leaked.is_empty(), "%s: Page1 khong lap lai %s" % [mode, leaked])
 
 	# --- trang 1 ---
 	_check(pop.tab_count() == 3, "%s: co 3 tab" % mode)
@@ -162,7 +181,7 @@ func _check_scene(mode: String) -> void:
 	_check(pop.page_index_text() != "", "%s: nhan trang = '%s'" % [mode, pop.page_index_text()])
 
 	# --- bấm tab 2 -> sang trang 2 ---
-	var tab2 := pop.get_node_or_null("Panel/Guide/Pages/Page1/Tabs/Tab2") as Button
+	var tab2 := pop.get_node_or_null("Panel/Guide/Tabs/Tab2") as Button
 	if tab2 == null:
 		_fail("%s: khong tim thay Tab2" % mode)
 	else:
@@ -171,8 +190,22 @@ func _check_scene(mode: String) -> void:
 	_check(pop.current_page() == 1 and not pop.is_prev_locked() and not pop.is_next_locked(),
 			"%s: trang 2 mo ca Prev lan Next" % mode)
 
+	# --- bấm dot 3 -> sang trang 3 ---
+	var dot3 := pop.get_node_or_null("Panel/Guide/Dots/Dot3") as Button
+	if dot3 == null:
+		_fail("%s: khong tim thay Dot3" % mode)
+	else:
+		dot3.pressed.emit()
+		_check(pop.current_page() == 2, "%s: bam Dot3 -> trang 3" % mode)
+
+	# --- bấm Prev -> về trang 2 ---
+	var prev_btn := pop.get_node_or_null("Panel/Guide/Prev") as Button
+	if prev_btn != null and not prev_btn.disabled:
+		prev_btn.pressed.emit()
+		_check(pop.current_page() == 1, "%s: Prev -> trang 2" % mode)
+
 	# --- bấm Next (trang 2) -> trang 3 ---
-	var next_btn := pop.get_node_or_null("Panel/Guide/Pages/Page2/Next") as Button
+	var next_btn := pop.get_node_or_null("Panel/Guide/Next") as Button
 	if next_btn == null or next_btn.disabled:
 		_fail("%s: nut Next trang 2 phai bam duoc" % mode)
 	else:
@@ -274,3 +307,10 @@ func _walk(node: Node) -> Array:
 		out.append(child)
 		out.append_array(_walk(child))
 	return out
+
+
+## Số/ký hiệu trên grid (1 · 15 · 01:24 · = · ? · S · F…) được ghi TRỰC TIẾP
+func _is_literal(text: String) -> bool:
+	if text == "S" or text == "F":
+		return true
+	return _letter_re.search(text) == null

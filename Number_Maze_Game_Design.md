@@ -572,6 +572,32 @@ Khung HUD: `Information` = Control tại `(50, 175)` kích thước `980 × 249`
 - Nội dung đổi theo chế độ: `scripts/nodes/game/hint_guide.gd` → `HintGuide.show_mode()` tra khoá `STR_HINT_<MODE_ID>` (9 chế độ, `string_extra.csv`); chế độ chưa có khoá thì fallback `BaseGameMode.mode_description`. `GameScene.switch_mode()` gọi `_refresh_hint_guide()` mỗi lần đổi chế độ.
 - Chuỗi gợi ý phải **vừa đúng 1 dòng** trong 844px — test `scripts/test_case/test_hud_modes.gd` đo bằng **font thật của theme** (không đếm ký tự).
 
+### 10.2d. Popup HƯỚNG DẪN theo từng chế độ (2026-09)
+
+Nút **"?"** trên HUD mở popup hướng dẫn **riêng cho chế độ đang chơi** — 9 scene độc lập dựng đúng theo bộ mockup `mockup/instruction/*.svg`; mỗi popup 3 trang (P1 quy tắc cơ bản · P2 cơ chế phụ · P3 bí quyết).
+
+| Chế độ | Scene (đều là instance của `base.tscn`) |
+|---|---|
+| Play · Daily Classic | `normal_maze.tscn` |
+| Dungeon | `dungeon.tscn` |
+| Minesweeper | `minesweeper.tscn` |
+| Sum Path | `sumpath.tscn` |
+| Countdown Cost | `countdowncost.tscn` |
+| Blind Memory | `blindmemory.tscn` |
+| Fog of War | `fog_of_war.tscn` |
+| Fading Ink | `fadingink.tscn` |
+| Time Attack | `time_attack.tscn` |
+
+- **Bố cục mỗi scene** (toạ độ "paper-local" của tờ giấy 920×1480, Panel override về (80,200)–(1000,1680)): chrome **DÙNG CHUNG cho cả 3 trang** nằm trực tiếp trong `Guide`: `Washi` (350,-22) · `Paper` viền accent 3.5px rx26 · `PaperDetail` (`guide_paper_detail.svg`) · `Close` 56×56 (830,24) · `Chip` 190×30 (110,48) + chữ 13px · `Tabs/Tab1..3` 245×48 (y=142, x=105/360/615) kèm vòng số vẽ bằng node · `Prev`/`Next` ‹ › 52×52 (105/305, y=1100 — trạng thái khoá **nướng sẵn**: prev mờ xanh `#224C6D/#6EA0C8`, next mờ xám `#718B9E/#BACEDC` như mockup) · `Dots/Dot1..3` · `Index` "TRANG x / 3" canh phải x=860. Phần **NỘI DUNG riêng từng trang** nằm trong `Pages/Page1..3`: ảnh minh hoạ `Img` tại (90,200) 785×535 (viewBox `-15 -10 785 535` khớp khung 755×510 tại (105,210)) · các Label chữ trên ảnh · `Title` 38px Black baseline (110,118) · `Mục` 16px baseline 779 · 3 hàng luật `Row1..3` 755×76 (y=797/885/973, vòng số r16, chữ 18/16px) · `Cta` 755×100 (105,1180) · `Link` 18px ~1322. **Cta/Link để trong từng trang** vì mockup vẽ khác nhau mỗi trang (trang cuối CTA đậm hơn, link "bỏ qua" khác "xem lại").
+- **Số/ký hiệu trên grid ghi TRỰC TIẾP** khỏi khoá dịch: chuỗi không có chữ cái (1 · 2 · 15 · 04 · 01:24 · = · ? · < · >) + `S`/`F` nướng thẳng vào Label (`is_literal_text()` trong `tools/mockup/instruction_mockup.py`) — chỉ chữ có nghĩa mới dùng khoá `STR_GI_*`.
+- **Tab & dots dùng chung** đổi trạng thái bằng script qua `@export` (generator nướng 2 bộ StyleBoxFlat + màu chữ vào root scene): tab đang chọn = accent + chữ/vòng trắng, tab thường = `#F0F7FB` viền `#BACEDC` chữ `#718B9E`; dot đang chọn = viên thuốc 38×18 accent, dot thường = chấm tròn 16×16 `#D1E2ED` — hàng dots canh trái từ mép dot đầu (x=185, cách nhau 12px), script dàn lại vị trí theo trang (khớp mockup cả 3 trang, generator tự cảnh báo nếu lệch > 2.5px).
+- **Hành vi** — `scripts/nodes/popups/instruction_popup.gd` (class `InstructionPopup`, chỉ lo logic, KHÔNG sinh nội dung): vuốt ngang (ngưỡng 14px/quãng 90px) · lăn chuột · phím ←→ · bấm tab/dots để nhảy trang · đổi trang thì script cập nhật: style tab đang chọn · `Prev` khoá ở trang 1 & `Next` khoá ở trang 3 · dàn lại dots · format `Index` từ `STR_GI_PAGE_INDEX` · CTA trang cuối = đóng popup · link trang cuối = về trang 1, link các trang trước = bỏ qua (đóng) · sfx `BTN_WOOD_TAP`/`PAGE_TURN`/`BTN_CLICK`.
+- **Ảnh minh hoạ ThorVG-safe**: Godot/ThorVG **không vẽ** `<text>`/`<use>` — `tools/mockup/prepare_guideline_images.py` nhúng cầu thang `<use>` và chuyển số/ký hiệu (✓, ➔→•) thành **path glyph thật** (Be Vietnam Pro Black + fallback Noto Sans JP); ảnh gốc sao lưu ở `mockup/instruction/_extracted_source/`. Chữ ①②③ trên tab thay bằng **vòng số vẽ bằng node** (font game không có các glyph này).
+- **Chuỗi dịch**: chữ có nghĩa dùng khoá `STR_GI_*` (vi = đúng chữ trong mockup, en = `tools/content/guide_text_en.py`): chrome theo trang `STR_GI_<MODE>_P<n>_TITLE/SECTION/CTA/LINK/TAB#/R#T/R#D`, chip `STR_GI_<MODE>_CHIP`, chữ trên ảnh dedupe `STR_GI_X###`, nhãn trang `STR_GI_PAGE_INDEX`. Sinh khoá + ghi CSV: `tools/content/build_instruction_data.py` (kèm `tools/content/_guide_keys.json` cho generator scene) — bỏ qua token số/ký hiệu.
+- **Sinh scene**: `tools/mockup/gen_instruction_popups.py` — đọc mockup qua `tools/mockup/instruction_mockup.py` (toạ độ tuyệt đối + style kế thừa), nướng thẳng mọi Label/Button/StyleBoxFlat vào `.tscn`, giữ nguyên uid + `unique_id` của scene placeholder cũ.
+- **Nối dây**: `GameController.INSTRUCTION_SCENES` (play/daily_classic → `normal_maze`, fallback `normal_maze`) → `Popups.open_path("res://nodes/popups/instruction/<mode>.tscn")`; đồng hồ đứng trong lúc xem hướng dẫn, đóng popup thì chạy lại. Đã gỡ `"instruction"` khỏi `PopupManager.POPUPS` và xoá bộ file cũ (`nodes/popups/instruction.tscn`, `scripts/nodes/popups/instruction.gd`, `scripts/utils/instruction.gd`).
+- **Kiểm thử**: `scripts/test_case/test_instruction.gd` — 285 check: bảng mode→scene · đủ khoá dịch vi+en quét từ file `.tscn` · cấu trúc 3 trang · chrome dùng chung không lặp trong từng trang · số/ký hiệu ghi trực tiếp · tab/dots/nav hoạt động · CTA/link đúng hành vi · tích hợp nút "?" mở đúng scene (dungeon/play/time_attack).
+
 ### 10.3. Sinh lại mockup
 
 ```bash

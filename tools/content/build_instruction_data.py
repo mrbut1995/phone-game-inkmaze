@@ -91,6 +91,8 @@ def build() -> tuple[list[tuple[str, str, str]], dict]:
                 txt = t["text"]
                 if txt in keymap["panel_texts"]:
                     continue
+                if im.is_literal_text(txt):
+                    continue    # số/ký hiệu trên grid -> ghi thẳng, không cần khoá dịch
                 key = f"STR_GI_X{len(keymap['panel_texts']) + 1:03d}"
                 keymap["panel_texts"][txt] = key
 

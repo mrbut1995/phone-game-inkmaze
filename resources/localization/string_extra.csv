@@ -737,315 +737,290 @@ STR_GI_TIME_ATTACK_P3_TAB1,COUNTDOWN CLOCK,ĐỒNG HỒ ĐẾM NGƯỢC
 STR_GI_TIME_ATTACK_P3_TAB2,WALL HITS COST TIME,ĐÂM TƯỜNG MẤT GIỜ
 STR_GI_TIME_ATTACK_P3_TAB3,SPEED & HINTS,TỐC ĐỘ & GỢI Ý
 STR_GI_TIME_ATTACK_P3_TITLE,Speed & Rescue Hints,Tốc Độ & Gợi Ý Cứu Nguy
-STR_GI_X001,1,1
-STR_GI_X002,2,2
-STR_GI_X003,3,3
-STR_GI_X004,0,0
-STR_GI_X005,START,XUẤT PHÁT
-STR_GI_X006,A stair that lights the way,Cầu thang rọi sáng
-STR_GI_X007,FINISH HOLE (F),HỐ ĐÍCH (F)
-STR_GI_X008,The shaft that leads down,Thang xuống sâu
-STR_GI_X009,DRAG BETWEEN CELL CENTERS,KÉO NỐI TÂM Ô
-STR_GI_X010,Start at the Upstairs Stair • Follow the safe path • Down to the Finish Shaft,Bắt đầu từ Cầu Thang Trên Lầu • Đi theo đường an toàn • Xuống Hố Thang Đích
-STR_GI_X011,A 0 CELL = SAFE,Ô SỐ 0 = AN TOÀN
-STR_GI_X012,NO WALLS,KHÔNG CÓ TƯỜNG
-STR_GI_X013,Move through freely in any direction,Tự do đi qua theo mọi hướng
-STR_GI_X014,A 3 CELL = 3 WALLS,Ô SỐ 3 = 3 TƯỜNG
-STR_GI_X015,3 SIDES SEALED,BỊ BỊT KÍN 3 MẶT
-STR_GI_X016,Only 1 side left to escape,Chỉ có 1 cạnh duy nhất để thoát
-STR_GI_X017,Reason like Minesweeper: use the numbers to pinpoint which gaps hide Invisible Walls,Suy luận như Dò Mìn: Dùng con số để xác định khe nào có Tường Vô Hình
-STR_GI_X018,TOOL: MEMORY,CÔNG CỤ: GHI NHỚ
-STR_GI_X019,Mark Suspected Walls,Đánh dấu Tường Nghi Ngờ
-STR_GI_X020,Drag between the 2 plus signs (+) at cell corners to build,Kéo giữa 2 dấu cộng (+) ở góc ô để tự dựng
-STR_GI_X021,a draft orange wall so you never hit the wrong one!,"tường cam nháp, giúp không bao giờ đâm nhầm!"
-STR_GI_X022,UNDO,HOÀN TÁC
-STR_GI_X023,Rewind 1 step,Lùi lại 1 bước
-STR_GI_X024,Drew into a dead end? Tap,Lỡ vẽ sai vào ngõ cụt? Bấm
-STR_GI_X025,Undo to safely pull the line back.,Undo để rút lại nét vẽ an toàn.
-STR_GI_X026,HINT,GỢI Ý
-STR_GI_X027,Reveal 1 safe step,Mở 1 bước an toàn
-STR_GI_X028,Facing a brutal position? Light up,Gặp thế cờ quá khó? Soi sáng
-STR_GI_X029,the next correct stretch right away.,ngay 1 đoạn đường đúng đắn.
-STR_GI_X030,Mix Draw Line + Wall Memory cleverly to crack every puzzle on the island!,Kết hợp linh hoạt Vẽ Đường + Ghi Nhớ Tường để phá đảo mọi câu đố!
-STR_GI_X031,STEPS REMAINING,SỐ BƯỚC CÒN LẠI
-STR_GI_X032,15,15
-STR_GI_X033,STEPS,BƯỚC
-STR_GI_X034,CURRENT FLOOR,TẦNG HIỆN TẠI
-STR_GI_X035,04,04
-STR_GI_X036,TIME,THỜI GIAN
-STR_GI_X037,01:24,01:24
-STR_GI_X038,EVERY MOVE,MỖI BƯỚC ĐI
-STR_GI_X039,-1 STEP,-1 BƯỚC
-STR_GI_X040,Out of steps = LOSS,Hết bước = THUA
-STR_GI_X041,REACH THE F SHAFT,CHẠM HỐ ĐÍCH F
-STR_GI_X042,+5 STEPS!,+5 BƯỚC!
-STR_GI_X043,Descend To Floor 05,Xuống Tầng 05
-STR_GI_X044,Shorter routes leave more spare steps for conquering deeper floors!,Đi đường càng ngắn thì bước dư càng nhiều để chinh phục các tầng sâu hơn!
-STR_GI_X045,A REAL WALL REVEALED!,TƯỜNG THẬT ĐÃ LỘ!
-STR_GI_X046,A bold dark line,Nét đen đậm
-STR_GI_X047,that never fades,Không biến mất
-STR_GI_X048,IMPACT RESULT,HẬU QUẢ VA CHẠM
-STR_GI_X049,-1 STEP,-1 BƯỚC ĐI
-STR_GI_X050,Bounced back to S,Văng ngược về S
-STR_GI_X051,Don't fear wall hits! Trading 1 step is how the map reveals its real clues.,Đừng sợ đâm tường! Đâm tường là cách hy sinh 1 bước để bản đồ lộ ra manh mối thật.
-STR_GI_X052,EARLY FLOORS (1 - 3),TẦNG ĐẦU (TẦNG 1 - 3)
-STR_GI_X053,PRE-DRAWN WALLS REMAIN,CÒN TƯỜNG VẼ SẴN
-STR_GI_X054,Easier to picture the way out,Dễ hình dung lối thoát
-STR_GI_X055,Wall reveal ratio: 40% ~ 60%,Tỉ lệ tường lộ: 40% ~ 60%
-STR_GI_X056,DEEP FLOORS (5 AND BEYOND),TẦNG SÂU (TẦNG 5 TRỞ ĐI)
-STR_GI_X057,100% INVISIBLE WALLS!,100% TƯỜNG VÔ HÌNH!
-STR_GI_X058,Use Memory to link Anchors,Dùng Ghi Nhớ nối Anchor
-STR_GI_X059,and build draft walls first,để tự dựng tường nháp trước
-STR_GI_X060,The deeper you go the fewer free walls you get — link Anchors before you draw!,Càng lên cao tường sẵn càng biến mất — hãy nối Anchor trước khi đặt bút vẽ đường!
-STR_GI_X061,THE NUMBER IN THE CENTER,CON SỐ Ở GIỮA
-STR_GI_X062,A 1 = 1 BOMB,SỐ 1 = 1 BOM
-STR_GI_X063,Among the 8 surrounding cells,Trong 8 ô xung quanh
-STR_GI_X064,(diagonals included!),(tính cả góc chéo!)
-STR_GI_X065,A BOMB IS HERE,VỊ TRÍ CÓ BOM
-STR_GI_X066,STAY AWAY!,TRÁNH XA!
-STR_GI_X067,Stepping on a bomb,Đạp trúng bom
-STR_GI_X068,= INSTANT LOSS,= THUA NGAY
-STR_GI_X069,"Unlike normal mazes: the number counts bombs in the 8 neighboring cells (horizontal, vertical AND diagonal)!","Khác với mê cung thường: Số chỉ bom trong 8 ô lân cận (ngang, dọc VÀ chéo)!"
-STR_GI_X070,STEPPED ON A BOMB,ĐẠP PHẢI BOM
-STR_GI_X071,INSTANT LOSS ON THE SPOT!,THUA NGAY TẠI CHỖ!
-STR_GI_X072,Your piece stops on the blast cell,Nhân vật dừng ngay tại ô nổ
-STR_GI_X073,(no bounce back to S like Dungeon),(Không văng về S như Dungeon)
-STR_GI_X074,THE ZERO ZONE,VÙNG Ô SỐ 0
-STR_GI_X075,ALL 8 CELLS ARE BOMB-FREE!,CẢ 8 Ô ĐỀU SẠCH BOM!
-STR_GI_X076,Confidently step onto any cell,Tự tin bước qua bất kỳ ô nào
-STR_GI_X077,that touches a 0 cell,đang tiếp giáp với ô số 0
-STR_GI_X078,Hunt for 0 cells first — they are the key that flings open a safe path!,Hãy tìm các ô số 0 trước tiên — đó là chìa khóa mở toang lối đi an toàn!
-STR_GI_X079,BOMBS LEFT ON THE BOARD,BOM CÒN LẠI TRÊN BÀN
-STR_GI_X080,03,03
-STR_GI_X081,2 found • 3 still hidden,Đã phát hiện 2 quả • Còn 3 quả ẩn giấu
-STR_GI_X082,FLAG A CELL LOCKED,CẮM CỜ KHÓA Ô
-STR_GI_X083,Guards against mis-taps,Chống bấm nhầm
-STR_GI_X084,Use the Memory button to flag,Dùng nút Ghi Nhớ để cắm cờ
-STR_GI_X085,cells you suspect of hiding bombs.,vào ô bạn nghi là có bom.
-STR_GI_X086,A flagged cell is safely locked!,Ô cắm cờ sẽ bị khóa an toàn!
-STR_GI_X087,Back up 1 step safely,Lùi 1 bước an toàn
-STR_GI_X088,Stepped into a dangerous cell?,Lỡ bước nhầm ô nguy hiểm?
-STR_GI_X089,Tap Undo to instantly back out,Bấm Undo để lùi lại ngay lập tức
-STR_GI_X090,before it turns into a mistake.,trước khi dẫn đến sai lầm.
-STR_GI_X091,Keep an eye on the Bomb HUD card to know when every bomb is isolated!,Luôn để mắt tới thẻ HUD Bom để biết mình đã cô lập hết bom trên bàn chưa!
-STR_GI_X092,CURRENT TOTAL,TỔNG HIỆN TẠI
-STR_GI_X093,18,18
-STR_GI_X094,(over 3 cells),(qua 3 ô)
-STR_GI_X095,=,=
-STR_GI_X096,TARGET TO HIT,MỤC TIÊU PHẢI ĐẠT
-STR_GI_X097,50,50
-STR_GI_X098,NEED +32 MORE,CẦN THÊM +32
-STR_GI_X099,8,8
-STR_GI_X100,4,4
-STR_GI_X101,6,6
-STR_GI_X102,9,9
-STR_GI_X103,7,7
-STR_GI_X104,RUNNING SCORE,CỘNG DỒN ĐIỂM
-STR_GI_X105,4 + 6 + 8,4 + 6 + 8
-STR_GI_X106,= 18 POINTS,= 18 ĐIỂM
-STR_GI_X107,Every step counts!,Cộng mỗi bước đi!
-STR_GI_X108,FREE MOVEMENT,ĐI TỰ DO
-STR_GI_X109,Draw in any direction,Vẽ hướng nào cũng
-STR_GI_X110,with no fear of dying!,không sợ đâm chết!
-STR_GI_X111,Every cell you drag through adds to the Total. The exit demands exactly = 50!,"Kéo qua ô nào, điểm ô đó cộng dồn vào Tổng. Đích đến yêu cầu bạn đạt chính xác = 50!"
-STR_GI_X112,3 HUD OPERATOR TYPES,3 DẠNG TOÁN TỬ HUD
-STR_GI_X113,EXACTLY EQUAL,BẰNG CHÍNH XÁC
-STR_GI_X114,Example: Total = 50,Ví dụ: Tổng = 50
-STR_GI_X115,<,<
-STR_GI_X116,BELOW THE CEILING,NHỎ HƠN MỨC TRẦN
-STR_GI_X117,Example: Total < 35,Ví dụ: Tổng < 35
-STR_GI_X118,>,>
-STR_GI_X119,ABOVE THE FLOOR,LỚN HƠN MỨC SÀN
-STR_GI_X120,Example: Total > 40,Ví dụ: Tổng > 40
-STR_GI_X121,CHECK THE OPERATOR CAREFULLY,KIỂM TRA KỸ TOÁN TỬ
-STR_GI_X122,on the HUD before you draw!,trên bảng HUD trước khi vẽ!
-STR_GI_X123,EACH CELL ADDS ONLY ONCE,MỖI Ô CHỈ CỘNG 1 LẦN
-STR_GI_X124,5,5
-STR_GI_X125,+0 POINTS,+0 ĐIỂM
-STR_GI_X126,NO FARMING BY LOOPING,KHÔNG THỂ ĐI VÒNG CÀY ĐIỂM
-STR_GI_X127,Re-entering an old cell adds nothing.,Quay lại ô cũ sẽ không cộng thêm.
-STR_GI_X128,Points count only on the first visit!,Điểm chỉ tính ở lần bước đầu tiên!
-STR_GI_X129,"Always read the HUD operator: some levels demand = 50, others only < 30!","Luôn nhìn toán tử trên HUD: Có màn yêu cầu = 50, nhưng có màn chỉ yêu cầu < 30!"
-STR_GI_X130,TACTIC: BIG & SMALL NUMBERS,CHIẾN THUẬT: SỐ LỚN & SỐ NHỎ
-STR_GI_X131,"Cells 7, 8, 9","Ô 7, 8, 9"
-STR_GI_X132,Bank points fast,Dồn điểm cực nhanh
-STR_GI_X133,"Cells 1, 2, 3","Ô 1, 2, 3"
-STR_GI_X134,Fine-tune the exact fit,Tinh chỉnh vừa khít
-STR_GI_X135,50 POINTS,50 ĐIỂM
-STR_GI_X136,PERFECT,HOÀN HẢO
-STR_GI_X137,Far from the target: grab big cells. Close to it: swing through small cells to nail the finish!,Khi mục tiêu còn xa: Ưu tiên gom các ô số to. Khi gần chạm mốc: Rẽ qua ô số nhỏ để chốt hạ!
-STR_GI_X138,UNDO,UNDO
-STR_GI_X139,POINTS REFUNDED,TRỪ NGƯỢC ĐIỂM SỐ
-STR_GI_X140,OVERSHOT THE TOTAL? FIX IT NOW!,LỠ CỘNG LỐ ĐIỂM? SỬA NGAY!
-STR_GI_X141,Tap Undo one step and the last cell's points,"Bấm Undo lùi lại 1 bước, điểm số của ô đó"
-STR_GI_X142,are subtracted from the Current Total so you can pick another branch.,sẽ được trừ ngược ra khỏi Tổng Hiện Tại để bạn chọn nhánh khác.
-STR_GI_X143,There is always at least 1 correct solution! Use Undo to test different math routes.,Luôn có ít nhất 1 nghiệm đúng! Hãy tận dụng Undo để thử nghiệm các hướng tính toán.
-STR_GI_X144,BUDGET LEFT:,NGÂN SÁCH CÒN:
-STR_GI_X145,13,13
-STR_GI_X146,SPENT: -3 STEPS (2 CELLS),ĐÃ TIÊU: -3 BƯỚC (QUA 2 Ô)
-STR_GI_X147,CHEAP CELLS (1 - 2),Ô GIÁ RẺ (1 - 2)
-STR_GI_X148,SAVINGS,TIẾT KIỆM
-STR_GI_X149,Route through these,Ưu tiên đi qua
-STR_GI_X150,to protect your budget!,để giữ ngân sách!
-STR_GI_X151,PRICEY CELLS (3 - 4),Ô GIÁ ĐẮT (3 - 4)
-STR_GI_X152,EXPENSIVE!,TỐN KÉM!
-STR_GI_X153,One step into a 4 costs,Đi 1 ô số 4 bằng
-STR_GI_X154,as much as four 1s!,4 lần ô số 1!
-STR_GI_X155,"Walked 2 cells: [1] + [2] • Total toll: -3 steps, leaving 13 steps in the budget!","Đã đi qua 2 ô: Ô [1] + Ô [2] • Tổng cước: -3 bước, ngân sách còn 13 bước!"
-STR_GI_X156,RESULT OF A WALL HIT,HẬU QUẢ ĐÂM TƯỜNG
-STR_GI_X157,STILL -3 STEPS!,VẪN TRỪ -3 BƯỚC!
-STR_GI_X158,You pay the exact toll,Bị phạt đúng giá cước
-STR_GI_X159,of the cell you rammed into!,của ô bạn vừa đâm!
-STR_GI_X160,BEWARE OF PRICEY TRAPS,CẨN THẬN BẪY Ô ĐẮT
-STR_GI_X161,CELLS 3 & 4,Ô SỐ 3 & SỐ 4
-STR_GI_X162,They drain the budget fast.,Hao hụt ngân sách cực nhanh.
-STR_GI_X163,Try to route around them!,Nên tìm đường né tránh!
-STR_GI_X164,"Wall hits in Countdown Cost punish twice: back to S, plus the cost of the target cell!","Đâm tường ở Countdown Cost bị phạt kép: vừa văng về S, vừa mất đứt số bước của ô đích!"
-STR_GI_X165,TACTIC: THE CHEAPEST PATH,BÍ QUYẾT: ĐƯỜNG RẺ NHẤT
-STR_GI_X166,S,S
-STR_GI_X167,F,F
-STR_GI_X168,COST: 6 STEPS • 10 LEFT,CƯỚC: 6 BƯỚC • DƯ 10
-STR_GI_X169,COST: 17 STEPS • LOSS,CƯỚC: 17 BƯỚC • THUA
-STR_GI_X170,The Budget Always Fits The Cheap Route,Ngân Sách Luôn Đủ Cho Đường Rẻ
-STR_GI_X171,Every level grants enough steps for,Mỗi màn đều cấp đủ số bước cho
-STR_GI_X172,the cheapest route plus a buffer.,tuyến đường ít tốn kém nhất + dự phòng.
-STR_GI_X173,Stray into pricey cells and the steps run dry!,Đi lệch qua ô đắt sẽ bị cạn sạch bước!
-STR_GI_X174,100% TOLL REFUND,HOÀN TRẢ CƯỚC 100%
-STR_GI_X175,+EVERY SPENT STEP COMES BACK!,+HOÀN LẠI SỐ BƯỚC ĐÃ TRỪ!
-STR_GI_X176,Stepped into an expensive cell or want to turn around?,Lỡ bước vào ô đắt đỏ hoặc muốn đổi hướng?
-STR_GI_X177,Tap Undo and every charged step is instantly refunded to your budget.,"Bấm Undo lùi lại, số bước bị trừ sẽ lập tức cộng ngược lại vào ngân sách."
-STR_GI_X178,Never regret an Undo! Backing up to a cheaper route can save the whole run.,Đừng tiếc một lần Undo! Lùi lại để chọn lối đi rẻ hơn sẽ cứu sống cả ván đấu.
-STR_GI_X179,1 LEFT,CÒN 1
-STR_GI_X180,THE NUMBER IS,SỐ TRÊN Ô LÀ
-STR_GI_X181,INK POINTS,ĐIỂM MỰC
-STR_GI_X182,Not a wall count!,Không phải số tường!
-STR_GI_X183,Not a bomb count!,Không phải bom!
-STR_GI_X184,-1 INK,-1 MỰC
-STR_GI_X185,Every cell on,Tất cả các ô trên
-STR_GI_X186,the board fades too!,bàn cờ cùng phai!
-STR_GI_X187,Walk 3 steps = every cell on the board loses 3 ink!,Bạn đi được 3 bước = Toàn bộ các ô trên bàn cờ đều bị phai mất 3 điểm mực!
-STR_GI_X188,CELL WITH 1 INK LEFT,Ô CÒN 1 ĐIỂM MỰC
-STR_GI_X189,ALMOST FADED,SẮP PHAI
-STR_GI_X190,EXACTLY 1 MOVE LEFT!,CÒN ĐÚNG 1 BƯỚC!
-STR_GI_X191,Take one more step into,Nếu đi thêm 1 bước nữa vào
-STR_GI_X192,anywhere and this cell vanishes!,"bất kỳ đâu, ô này sẽ biến mất!"
-STR_GI_X193,0-INK CELL: LOCKED,Ô 0 MỰC: BỊ KHÓA
-STR_GI_X194,DRY,CẠN
-STR_GI_X195,CANNOT ENTER,KHÔNG THỂ BƯỚC VÀO
-STR_GI_X196,The cell becomes an empty gap.,Ô trở thành khoảng trống rỗng.
-STR_GI_X197,Every route sealed = INSTANT LOSS!,Bị bít hết đường = THUA NGAY!
-STR_GI_X198,Watch the orange-rimmed cells! They warn about paths that are about to vanish forever.,Hãy để ý các ô viền cam! Chúng báo trước những lối đi sắp biến mất vĩnh viễn.
-STR_GI_X199,TACTIC: SHORTEST PATH,BÍ QUYẾT: ĐƯỜNG NGẮN NHẤT
-STR_GI_X200,4 STEPS • WIN,4 BƯỚC • THẮNG
-STR_GI_X201,7 STEPS • DRY INK,7 BƯỚC • CẠN MỰC
-STR_GI_X202,The Short Route Always Has Enough Ink,Đường Ngắn Luôn Đủ Mực
-STR_GI_X203,Every level is designed so that,Mỗi màn đều được thiết kế sao cho
-STR_GI_X204,the shortest path has enough ink to reach F.,đường ngắn nhất có đủ mực để tới F.
-STR_GI_X205,Wandering around drains the ink and seals your own path!,Đi vòng vèo sẽ tự làm cạn mực bít đường!
-STR_GI_X206,INK RESTORE PERK,ĐẶC QUYỀN HỒI MỰC
-STR_GI_X207,+1 INK FOR THE WHOLE BOARD!,+1 MỰC CHO TOÀN BÀN CỜ!
-STR_GI_X208,"Each Undo rewinds 1 step, and every","Mỗi lần bấm Undo lùi 1 bước chân, tất cả"
-STR_GI_X209,cell on the board regains exactly 1 ink point.,các ô trên bàn cờ đều được hồi phục lại đúng 1 điểm mực.
-STR_GI_X210,Don't hold back on Undo! Rewinding a step instantly revives cells that just ran dry.,Đừng ngại Undo! Rút lại bước đi sẽ hồi sinh ngay các ô vừa bị cạn mực.
-STR_GI_X211,MEMORIZE IN,GHI NHỚ TRONG
-STR_GI_X212,SECONDS,GIÂY
-STR_GI_X213,IN THE FIRST 3 SECONDS,TRONG 3 GIÂY ĐẦU
-STR_GI_X214,WALLS SHOWN,TƯỜNG HIỆN
-STR_GI_X215,100% CLEAR,100% RÕ RÀNG
-STR_GI_X216,(Timer paused),(Đồng hồ đứng yên)
-STR_GI_X217,SPECIAL NOTE,ĐẶC BIỆT CHÚ Ý
-STR_GI_X218,COMPLETELY,HOÀN TOÀN
-STR_GI_X219,NO NUMBERS,KHÔNG CÓ SỐ
-STR_GI_X220,Only the S and F cells remain!,Chỉ có ô S và F!
-STR_GI_X221,Use the 3-second countdown to scan the whole board and burn the safe escape route into your mind!,Tranh thủ 3 giây đếm ngược nhìn bao quát để khắc ghi đường thoát an toàn vào đầu!
-STR_GI_X222,GO!,GO!
-STR_GI_X223,THE BOARD AFTERWARDS,BÀN CỜ SAU ĐÓ
-STR_GI_X224,COMPLETELY BLANK,TRỐNG TRƠN
-STR_GI_X225,100% WALLS HIDDEN,100% TƯỜNG ẨN
-STR_GI_X226,Not a single trace left!,Không còn vết tích!
-STR_GI_X227,CAREFUL OF HIDDEN WALLS,CẨN THẬN ĐÂM TƯỜNG
-STR_GI_X228,TOUCH A HIDDEN WALL,CHẠM TƯỜNG ẨN
-STR_GI_X229,PENALTY: BACK TO S,BỊ PHẠT VỀ S
-STR_GI_X230,(Hardcore: instant loss),(Hardcore: Thua ngay)
-STR_GI_X231,The timer starts now! Draw slowly and reconstruct the maze from memory.,Đồng hồ bắt đầu tính giờ! Hãy vẽ chậm rãi và tái hiện lại trí nhớ của bạn.
-STR_GI_X232,TACTIC: DRAW DRAFT WALLS,CHIẾN THUẬT: VẼ TƯỜNG NHÁP
-STR_GI_X233,Quickly Lock Dangerous Gaps,Nhanh Tay Khóa Khe Nguy Hiểm
-STR_GI_X234,"The moment the 3 seconds end, use the Memory tool","Vừa hết 3 giây, hãy dùng công cụ Ghi Nhớ"
-STR_GI_X235,to reconnect the Anchors and rebuild the walls you remember.,nối ngay các Anchor để dựng lại tường bạn nhớ.
-STR_GI_X236,So you never blank out mid-run!,Giúp bạn không bị đãng trí giữa chừng!
-STR_GI_X237,HINT,GỢI Ý (HINT)
-STR_GI_X238,Reveal the safe route,Soi lại đường an toàn
-STR_GI_X239,Forgot the whole route?,Lỡ quên sạch đường đi?
-STR_GI_X240,Tap Hint to instantly light up,Bấm Gợi Ý để soi sáng ngay
-STR_GI_X241,the next correct stretch of path.,1 đoạn đường đúng đắn tiếp theo.
-STR_GI_X242,UNDO,HOÀN TÁC (UNDO)
-STR_GI_X243,Take back a step,Rút lại bước đi
-STR_GI_X244,Stepped somewhere and got a bad feeling?,Vừa đặt chân vào ô thấy sai sai?
-STR_GI_X245,Tap Undo to back up one cell,Bấm Undo để lùi lại ô trước
-STR_GI_X246,before you hit a hidden wall!,trước khi va phải tường ẩn!
-STR_GI_X247,A great memory alone won't win — the master is whoever rebuilds walls with Anchors!,Kẻ có trí nhớ tốt chưa chắc đã thắng — kẻ biết dùng Anchor dựng tường mới là cao thủ!
-STR_GI_X248,?,?
-STR_GI_X249,VISION ZONE,VÙNG TẦM NHÌN
-STR_GI_X250,RADIUS 1 CELL,BÁN KÍNH 1 Ô
-STR_GI_X251,NUMBERS SHOW,HIỆN RÕ SỐ
-STR_GI_X252,Only cells right beside you!,Chỉ thấy ô sát cạnh bạn!
-STR_GI_X253,FOG ZONE,VÙNG SƯƠNG MÙ
-STR_GI_X254,CELLS FAR AWAY,Ô Ở XA BẠN
-STR_GI_X255,NUMBERS HIDDEN,ẨN CON SỐ
-STR_GI_X256,Clues are masked!,Che khuất manh mối!
-STR_GI_X257,The glow opens up wherever you walk — distant cells keep their numbers hidden in fog!,Bạn đi đến đâu thì quầng sáng mở ra tới đó — ô ở xa sẽ bị sương mù che mất số!
-STR_GI_X258,CELL ALREADY VISITED,Ô ĐÃ BƯỚC QUA
-STR_GI_X259,FADING OUT,MỜ DẦN ĐI
-STR_GI_X260,NUMBER HIDDEN AGAIN,ẨN LẠI SỐ
-STR_GI_X261,The fog rolls back in!,Sương mù phủ lại!
-STR_GI_X262,HIDDEN WALL TRAP,BẪY TƯỜNG ẨN
-STR_GI_X263,WALL HIT,ĐÂM VÀO TƯỜNG
-STR_GI_X264,The fog parts wherever you go — but never step blindly into a cell whose number is unknown!,Bước tới đâu sương mù mở tới đó — nhưng tuyệt đối không bước bừa vào ô chưa rõ số!
-STR_GI_X265,TACTIC: LOCK WALLS WITH ANCHORS,CHIẾN THUẬT: KHÓA TƯỜNG ANCHOR
-STR_GI_X266,Lock Walls Before The Fog Hides Them,Khóa Tường Trước Khi Sương Mù Che Mất
-STR_GI_X267,See a 2? Instantly connect 2 Anchors,Thấy ô có số 2? Hãy nối ngay 2 Anchor
-STR_GI_X268,to raise an orange wall for cover.,để dựng vách tường cam bảo vệ.
-STR_GI_X269,Walls you draw are NEVER erased by fog!,Tường bạn tự vẽ KHÔNG bị sương mù xóa!
-STR_GI_X270,Light the way in the dark,Soi đường trong tối
-STR_GI_X271,Losing your bearings in the fog?,Mất phương hướng trong sương?
-STR_GI_X272,the next safe stretch of path ahead.,1 đoạn đường an toàn phía trước.
-STR_GI_X273,Stepped into a direction that feels wrong?,Bước vào hướng thấy nguy hiểm?
-STR_GI_X274,Tap Undo to retreat to a safe cell,Bấm Undo để lùi lại ô an toàn
-STR_GI_X275,before ramming a hidden wall!,trước khi đâm vào tường ẩn!
-STR_GI_X276,Blind steppers hit walls — whoever locks routes with Anchors wins!,Kẻ mù quáng bước đi sẽ đâm tường — người biết dùng Anchor khóa lối sẽ chiến thắng!
-STR_GI_X277,TIME REMAINING,THỜI GIAN CÒN LẠI
-STR_GI_X278,00:45,00:45
-STR_GI_X279,TICKING DOWN,ĐANG GIẢM
-STR_GI_X280,TIME PRESSURE,ÁP LỰC THỜI GIAN
-STR_GI_X281,COUNTDOWN,ĐẾM NGƯỢC
-STR_GI_X282,TO 00:00,VỀ 00:00
-STR_GI_X283,Time up = LOSS!,Hết giờ = THUA!
-STR_GI_X284,STEP COUNT,SỐ BƯỚC CHÂN
-STR_GI_X285,UNLIMITED,KHÔNG GIỚI HẠN
-STR_GI_X286,Walk as many cells as you like,Đi bao nhiêu ô tùy ý
-STR_GI_X287,just get there in time!,chỉ cần về đích kịp!
-STR_GI_X288,You only have 60s to 120s: draw decisively before the clock hits 00:00!,Bạn chỉ có 60s đến 120s: Hãy vẽ thật dứt khoát trước khi đồng hồ điểm 00:00!
-STR_GI_X289,SHOVED BACK TO START,BỊ ĐẨY VỀ XUẤT PHÁT
-STR_GI_X290,REDRAW FROM S!,VẼ LẠI TỪ S!
-STR_GI_X291,The wall is revealed but,Tường lộ diện nhưng
-STR_GI_X292,you must walk it all again.,phải đi lại từ đầu.
-STR_GI_X293,TIME KEEPS FLOWING,THỜI GIAN VẪN TRÔI
-STR_GI_X294,5 - 10 SECONDS LOST!,MẤT 5 - 10 GIÂY!
-STR_GI_X295,"The clock keeps counting down,","Đồng hồ vẫn đếm lùi,"
-STR_GI_X296,and the budget drains fast!,quỹ giờ cạn rất nhanh!
-STR_GI_X297,Wall hits in Time Attack don't kill you — but they rob you of precious seconds!,"Đâm tường ở Time Attack không chết ngay, nhưng sẽ cướp đi thời gian quý báu của bạn!"
-STR_GI_X298,TACTIC: BLITZ THROUGH 0 CELLS,CHIẾN THUẬT: PHÓNG QUA Ô 0
-STR_GI_X299,SWIPE THROUGH • TURBO,LƯỚT QUA • SIÊU TỐC
-STR_GI_X300,Prioritize 0 Cells To Gain Speed,Ưu Tiên Ô Số 0 Để Tăng Tốc
-STR_GI_X301,A 0 cell has no walls around it.,Ô số 0 hoàn toàn không có tường bao.
-STR_GI_X302,Sprint your pen straight through it without,Hãy phóng thẳng bút qua ô này mà không
-STR_GI_X303,pausing to think — saving every second!,"cần dừng lại suy nghĩ, tiết kiệm tối đa giây!"
-STR_GI_X304,Open the way when stuck,Mở lối khi bí
-STR_GI_X305,Stuck over 3 seconds? Don't freeze!,Bí quá 3 giây? Đừng chôn chân!
-STR_GI_X306,Tap Hint at once to light the route,Bấm ngay Gợi Ý để soi đường
-STR_GI_X307,instead of watching the clock drain!,thay vì đứng nhìn đồng hồ cạn!
-STR_GI_X308,Retreat in time,Rút bước kịp thời
-STR_GI_X309,Swiped the wrong way?,Lỡ tay quẹt nhầm hướng?
-STR_GI_X310,Tap Undo immediately,Bấm Undo lùi lại ngay
-STR_GI_X311,so you don't hit a wall and fly back to S!,để không bị đâm tường văng về S!
-STR_GI_X312,"Standing still is suicide! When in doubt, tap Hint and save your remaining time.","Đứng yên là tự sát! Khi phân vân, bấm ngay Gợi Ý để cứu lấy thời gian sống còn."
+STR_GI_X001,START,XUẤT PHÁT
+STR_GI_X002,A stair that lights the way,Cầu thang rọi sáng
+STR_GI_X003,FINISH HOLE (F),HỐ ĐÍCH (F)
+STR_GI_X004,The shaft that leads down,Thang xuống sâu
+STR_GI_X005,DRAG BETWEEN CELL CENTERS,KÉO NỐI TÂM Ô
+STR_GI_X006,Start at the Upstairs Stair • Follow the safe path • Down to the Finish Shaft,Bắt đầu từ Cầu Thang Trên Lầu • Đi theo đường an toàn • Xuống Hố Thang Đích
+STR_GI_X007,A 0 CELL = SAFE,Ô SỐ 0 = AN TOÀN
+STR_GI_X008,NO WALLS,KHÔNG CÓ TƯỜNG
+STR_GI_X009,Move through freely in any direction,Tự do đi qua theo mọi hướng
+STR_GI_X010,A 3 CELL = 3 WALLS,Ô SỐ 3 = 3 TƯỜNG
+STR_GI_X011,3 SIDES SEALED,BỊ BỊT KÍN 3 MẶT
+STR_GI_X012,Only 1 side left to escape,Chỉ có 1 cạnh duy nhất để thoát
+STR_GI_X013,Reason like Minesweeper: use the numbers to pinpoint which gaps hide Invisible Walls,Suy luận như Dò Mìn: Dùng con số để xác định khe nào có Tường Vô Hình
+STR_GI_X014,TOOL: MEMORY,CÔNG CỤ: GHI NHỚ
+STR_GI_X015,Mark Suspected Walls,Đánh dấu Tường Nghi Ngờ
+STR_GI_X016,Drag between the 2 plus signs (+) at cell corners to build,Kéo giữa 2 dấu cộng (+) ở góc ô để tự dựng
+STR_GI_X017,a draft orange wall so you never hit the wrong one!,"tường cam nháp, giúp không bao giờ đâm nhầm!"
+STR_GI_X018,UNDO,HOÀN TÁC
+STR_GI_X019,Rewind 1 step,Lùi lại 1 bước
+STR_GI_X020,Drew into a dead end? Tap,Lỡ vẽ sai vào ngõ cụt? Bấm
+STR_GI_X021,Undo to safely pull the line back.,Undo để rút lại nét vẽ an toàn.
+STR_GI_X022,HINT,GỢI Ý
+STR_GI_X023,Reveal 1 safe step,Mở 1 bước an toàn
+STR_GI_X024,Facing a brutal position? Light up,Gặp thế cờ quá khó? Soi sáng
+STR_GI_X025,the next correct stretch right away.,ngay 1 đoạn đường đúng đắn.
+STR_GI_X026,Mix Draw Line + Wall Memory cleverly to crack every puzzle on the island!,Kết hợp linh hoạt Vẽ Đường + Ghi Nhớ Tường để phá đảo mọi câu đố!
+STR_GI_X027,STEPS REMAINING,SỐ BƯỚC CÒN LẠI
+STR_GI_X028,STEPS,BƯỚC
+STR_GI_X029,CURRENT FLOOR,TẦNG HIỆN TẠI
+STR_GI_X030,TIME,THỜI GIAN
+STR_GI_X031,EVERY MOVE,MỖI BƯỚC ĐI
+STR_GI_X032,-1 STEP,-1 BƯỚC
+STR_GI_X033,Out of steps = LOSS,Hết bước = THUA
+STR_GI_X034,REACH THE F SHAFT,CHẠM HỐ ĐÍCH F
+STR_GI_X035,+5 STEPS!,+5 BƯỚC!
+STR_GI_X036,Descend To Floor 05,Xuống Tầng 05
+STR_GI_X037,Shorter routes leave more spare steps for conquering deeper floors!,Đi đường càng ngắn thì bước dư càng nhiều để chinh phục các tầng sâu hơn!
+STR_GI_X038,A REAL WALL REVEALED!,TƯỜNG THẬT ĐÃ LỘ!
+STR_GI_X039,A bold dark line,Nét đen đậm
+STR_GI_X040,that never fades,Không biến mất
+STR_GI_X041,IMPACT RESULT,HẬU QUẢ VA CHẠM
+STR_GI_X042,-1 STEP,-1 BƯỚC ĐI
+STR_GI_X043,Bounced back to S,Văng ngược về S
+STR_GI_X044,Don't fear wall hits! Trading 1 step is how the map reveals its real clues.,Đừng sợ đâm tường! Đâm tường là cách hy sinh 1 bước để bản đồ lộ ra manh mối thật.
+STR_GI_X045,EARLY FLOORS (1 - 3),TẦNG ĐẦU (TẦNG 1 - 3)
+STR_GI_X046,PRE-DRAWN WALLS REMAIN,CÒN TƯỜNG VẼ SẴN
+STR_GI_X047,Easier to picture the way out,Dễ hình dung lối thoát
+STR_GI_X048,Wall reveal ratio: 40% ~ 60%,Tỉ lệ tường lộ: 40% ~ 60%
+STR_GI_X049,DEEP FLOORS (5 AND BEYOND),TẦNG SÂU (TẦNG 5 TRỞ ĐI)
+STR_GI_X050,100% INVISIBLE WALLS!,100% TƯỜNG VÔ HÌNH!
+STR_GI_X051,Use Memory to link Anchors,Dùng Ghi Nhớ nối Anchor
+STR_GI_X052,and build draft walls first,để tự dựng tường nháp trước
+STR_GI_X053,The deeper you go the fewer free walls you get — link Anchors before you draw!,Càng lên cao tường sẵn càng biến mất — hãy nối Anchor trước khi đặt bút vẽ đường!
+STR_GI_X054,THE NUMBER IN THE CENTER,CON SỐ Ở GIỮA
+STR_GI_X055,A 1 = 1 BOMB,SỐ 1 = 1 BOM
+STR_GI_X056,Among the 8 surrounding cells,Trong 8 ô xung quanh
+STR_GI_X057,(diagonals included!),(tính cả góc chéo!)
+STR_GI_X058,A BOMB IS HERE,VỊ TRÍ CÓ BOM
+STR_GI_X059,STAY AWAY!,TRÁNH XA!
+STR_GI_X060,Stepping on a bomb,Đạp trúng bom
+STR_GI_X061,= INSTANT LOSS,= THUA NGAY
+STR_GI_X062,"Unlike normal mazes: the number counts bombs in the 8 neighboring cells (horizontal, vertical AND diagonal)!","Khác với mê cung thường: Số chỉ bom trong 8 ô lân cận (ngang, dọc VÀ chéo)!"
+STR_GI_X063,STEPPED ON A BOMB,ĐẠP PHẢI BOM
+STR_GI_X064,INSTANT LOSS ON THE SPOT!,THUA NGAY TẠI CHỖ!
+STR_GI_X065,Your piece stops on the blast cell,Nhân vật dừng ngay tại ô nổ
+STR_GI_X066,(no bounce back to S like Dungeon),(Không văng về S như Dungeon)
+STR_GI_X067,THE ZERO ZONE,VÙNG Ô SỐ 0
+STR_GI_X068,ALL 8 CELLS ARE BOMB-FREE!,CẢ 8 Ô ĐỀU SẠCH BOM!
+STR_GI_X069,Confidently step onto any cell,Tự tin bước qua bất kỳ ô nào
+STR_GI_X070,that touches a 0 cell,đang tiếp giáp với ô số 0
+STR_GI_X071,Hunt for 0 cells first — they are the key that flings open a safe path!,Hãy tìm các ô số 0 trước tiên — đó là chìa khóa mở toang lối đi an toàn!
+STR_GI_X072,BOMBS LEFT ON THE BOARD,BOM CÒN LẠI TRÊN BÀN
+STR_GI_X073,2 found • 3 still hidden,Đã phát hiện 2 quả • Còn 3 quả ẩn giấu
+STR_GI_X074,FLAG A CELL LOCKED,CẮM CỜ KHÓA Ô
+STR_GI_X075,Guards against mis-taps,Chống bấm nhầm
+STR_GI_X076,Use the Memory button to flag,Dùng nút Ghi Nhớ để cắm cờ
+STR_GI_X077,cells you suspect of hiding bombs.,vào ô bạn nghi là có bom.
+STR_GI_X078,A flagged cell is safely locked!,Ô cắm cờ sẽ bị khóa an toàn!
+STR_GI_X079,Back up 1 step safely,Lùi 1 bước an toàn
+STR_GI_X080,Stepped into a dangerous cell?,Lỡ bước nhầm ô nguy hiểm?
+STR_GI_X081,Tap Undo to instantly back out,Bấm Undo để lùi lại ngay lập tức
+STR_GI_X082,before it turns into a mistake.,trước khi dẫn đến sai lầm.
+STR_GI_X083,Keep an eye on the Bomb HUD card to know when every bomb is isolated!,Luôn để mắt tới thẻ HUD Bom để biết mình đã cô lập hết bom trên bàn chưa!
+STR_GI_X084,CURRENT TOTAL,TỔNG HIỆN TẠI
+STR_GI_X085,(over 3 cells),(qua 3 ô)
+STR_GI_X086,TARGET TO HIT,MỤC TIÊU PHẢI ĐẠT
+STR_GI_X087,NEED +32 MORE,CẦN THÊM +32
+STR_GI_X088,RUNNING SCORE,CỘNG DỒN ĐIỂM
+STR_GI_X089,= 18 POINTS,= 18 ĐIỂM
+STR_GI_X090,Every step counts!,Cộng mỗi bước đi!
+STR_GI_X091,FREE MOVEMENT,ĐI TỰ DO
+STR_GI_X092,Draw in any direction,Vẽ hướng nào cũng
+STR_GI_X093,with no fear of dying!,không sợ đâm chết!
+STR_GI_X094,Every cell you drag through adds to the Total. The exit demands exactly = 50!,"Kéo qua ô nào, điểm ô đó cộng dồn vào Tổng. Đích đến yêu cầu bạn đạt chính xác = 50!"
+STR_GI_X095,3 HUD OPERATOR TYPES,3 DẠNG TOÁN TỬ HUD
+STR_GI_X096,EXACTLY EQUAL,BẰNG CHÍNH XÁC
+STR_GI_X097,Example: Total = 50,Ví dụ: Tổng = 50
+STR_GI_X098,BELOW THE CEILING,NHỎ HƠN MỨC TRẦN
+STR_GI_X099,Example: Total < 35,Ví dụ: Tổng < 35
+STR_GI_X100,ABOVE THE FLOOR,LỚN HƠN MỨC SÀN
+STR_GI_X101,Example: Total > 40,Ví dụ: Tổng > 40
+STR_GI_X102,CHECK THE OPERATOR CAREFULLY,KIỂM TRA KỸ TOÁN TỬ
+STR_GI_X103,on the HUD before you draw!,trên bảng HUD trước khi vẽ!
+STR_GI_X104,EACH CELL ADDS ONLY ONCE,MỖI Ô CHỈ CỘNG 1 LẦN
+STR_GI_X105,+0 POINTS,+0 ĐIỂM
+STR_GI_X106,NO FARMING BY LOOPING,KHÔNG THỂ ĐI VÒNG CÀY ĐIỂM
+STR_GI_X107,Re-entering an old cell adds nothing.,Quay lại ô cũ sẽ không cộng thêm.
+STR_GI_X108,Points count only on the first visit!,Điểm chỉ tính ở lần bước đầu tiên!
+STR_GI_X109,"Always read the HUD operator: some levels demand = 50, others only < 30!","Luôn nhìn toán tử trên HUD: Có màn yêu cầu = 50, nhưng có màn chỉ yêu cầu < 30!"
+STR_GI_X110,TACTIC: BIG & SMALL NUMBERS,CHIẾN THUẬT: SỐ LỚN & SỐ NHỎ
+STR_GI_X111,"Cells 7, 8, 9","Ô 7, 8, 9"
+STR_GI_X112,Bank points fast,Dồn điểm cực nhanh
+STR_GI_X113,"Cells 1, 2, 3","Ô 1, 2, 3"
+STR_GI_X114,Fine-tune the exact fit,Tinh chỉnh vừa khít
+STR_GI_X115,50 POINTS,50 ĐIỂM
+STR_GI_X116,PERFECT,HOÀN HẢO
+STR_GI_X117,Far from the target: grab big cells. Close to it: swing through small cells to nail the finish!,Khi mục tiêu còn xa: Ưu tiên gom các ô số to. Khi gần chạm mốc: Rẽ qua ô số nhỏ để chốt hạ!
+STR_GI_X118,UNDO,UNDO
+STR_GI_X119,POINTS REFUNDED,TRỪ NGƯỢC ĐIỂM SỐ
+STR_GI_X120,OVERSHOT THE TOTAL? FIX IT NOW!,LỠ CỘNG LỐ ĐIỂM? SỬA NGAY!
+STR_GI_X121,Tap Undo one step and the last cell's points,"Bấm Undo lùi lại 1 bước, điểm số của ô đó"
+STR_GI_X122,are subtracted from the Current Total so you can pick another branch.,sẽ được trừ ngược ra khỏi Tổng Hiện Tại để bạn chọn nhánh khác.
+STR_GI_X123,There is always at least 1 correct solution! Use Undo to test different math routes.,Luôn có ít nhất 1 nghiệm đúng! Hãy tận dụng Undo để thử nghiệm các hướng tính toán.
+STR_GI_X124,BUDGET LEFT:,NGÂN SÁCH CÒN:
+STR_GI_X125,SPENT: -3 STEPS (2 CELLS),ĐÃ TIÊU: -3 BƯỚC (QUA 2 Ô)
+STR_GI_X126,CHEAP CELLS (1 - 2),Ô GIÁ RẺ (1 - 2)
+STR_GI_X127,SAVINGS,TIẾT KIỆM
+STR_GI_X128,Route through these,Ưu tiên đi qua
+STR_GI_X129,to protect your budget!,để giữ ngân sách!
+STR_GI_X130,PRICEY CELLS (3 - 4),Ô GIÁ ĐẮT (3 - 4)
+STR_GI_X131,EXPENSIVE!,TỐN KÉM!
+STR_GI_X132,One step into a 4 costs,Đi 1 ô số 4 bằng
+STR_GI_X133,as much as four 1s!,4 lần ô số 1!
+STR_GI_X134,"Walked 2 cells: [1] + [2] • Total toll: -3 steps, leaving 13 steps in the budget!","Đã đi qua 2 ô: Ô [1] + Ô [2] • Tổng cước: -3 bước, ngân sách còn 13 bước!"
+STR_GI_X135,RESULT OF A WALL HIT,HẬU QUẢ ĐÂM TƯỜNG
+STR_GI_X136,STILL -3 STEPS!,VẪN TRỪ -3 BƯỚC!
+STR_GI_X137,You pay the exact toll,Bị phạt đúng giá cước
+STR_GI_X138,of the cell you rammed into!,của ô bạn vừa đâm!
+STR_GI_X139,BEWARE OF PRICEY TRAPS,CẨN THẬN BẪY Ô ĐẮT
+STR_GI_X140,CELLS 3 & 4,Ô SỐ 3 & SỐ 4
+STR_GI_X141,They drain the budget fast.,Hao hụt ngân sách cực nhanh.
+STR_GI_X142,Try to route around them!,Nên tìm đường né tránh!
+STR_GI_X143,"Wall hits in Countdown Cost punish twice: back to S, plus the cost of the target cell!","Đâm tường ở Countdown Cost bị phạt kép: vừa văng về S, vừa mất đứt số bước của ô đích!"
+STR_GI_X144,TACTIC: THE CHEAPEST PATH,BÍ QUYẾT: ĐƯỜNG RẺ NHẤT
+STR_GI_X145,COST: 6 STEPS • 10 LEFT,CƯỚC: 6 BƯỚC • DƯ 10
+STR_GI_X146,COST: 17 STEPS • LOSS,CƯỚC: 17 BƯỚC • THUA
+STR_GI_X147,The Budget Always Fits The Cheap Route,Ngân Sách Luôn Đủ Cho Đường Rẻ
+STR_GI_X148,Every level grants enough steps for,Mỗi màn đều cấp đủ số bước cho
+STR_GI_X149,the cheapest route plus a buffer.,tuyến đường ít tốn kém nhất + dự phòng.
+STR_GI_X150,Stray into pricey cells and the steps run dry!,Đi lệch qua ô đắt sẽ bị cạn sạch bước!
+STR_GI_X151,100% TOLL REFUND,HOÀN TRẢ CƯỚC 100%
+STR_GI_X152,+EVERY SPENT STEP COMES BACK!,+HOÀN LẠI SỐ BƯỚC ĐÃ TRỪ!
+STR_GI_X153,Stepped into an expensive cell or want to turn around?,Lỡ bước vào ô đắt đỏ hoặc muốn đổi hướng?
+STR_GI_X154,Tap Undo and every charged step is instantly refunded to your budget.,"Bấm Undo lùi lại, số bước bị trừ sẽ lập tức cộng ngược lại vào ngân sách."
+STR_GI_X155,Never regret an Undo! Backing up to a cheaper route can save the whole run.,Đừng tiếc một lần Undo! Lùi lại để chọn lối đi rẻ hơn sẽ cứu sống cả ván đấu.
+STR_GI_X156,1 LEFT,CÒN 1
+STR_GI_X157,THE NUMBER IS,SỐ TRÊN Ô LÀ
+STR_GI_X158,INK POINTS,ĐIỂM MỰC
+STR_GI_X159,Not a wall count!,Không phải số tường!
+STR_GI_X160,Not a bomb count!,Không phải bom!
+STR_GI_X161,-1 INK,-1 MỰC
+STR_GI_X162,Every cell on,Tất cả các ô trên
+STR_GI_X163,the board fades too!,bàn cờ cùng phai!
+STR_GI_X164,Walk 3 steps = every cell on the board loses 3 ink!,Bạn đi được 3 bước = Toàn bộ các ô trên bàn cờ đều bị phai mất 3 điểm mực!
+STR_GI_X165,CELL WITH 1 INK LEFT,Ô CÒN 1 ĐIỂM MỰC
+STR_GI_X166,ALMOST FADED,SẮP PHAI
+STR_GI_X167,EXACTLY 1 MOVE LEFT!,CÒN ĐÚNG 1 BƯỚC!
+STR_GI_X168,Take one more step into,Nếu đi thêm 1 bước nữa vào
+STR_GI_X169,anywhere and this cell vanishes!,"bất kỳ đâu, ô này sẽ biến mất!"
+STR_GI_X170,0-INK CELL: LOCKED,Ô 0 MỰC: BỊ KHÓA
+STR_GI_X171,DRY,CẠN
+STR_GI_X172,CANNOT ENTER,KHÔNG THỂ BƯỚC VÀO
+STR_GI_X173,The cell becomes an empty gap.,Ô trở thành khoảng trống rỗng.
+STR_GI_X174,Every route sealed = INSTANT LOSS!,Bị bít hết đường = THUA NGAY!
+STR_GI_X175,Watch the orange-rimmed cells! They warn about paths that are about to vanish forever.,Hãy để ý các ô viền cam! Chúng báo trước những lối đi sắp biến mất vĩnh viễn.
+STR_GI_X176,TACTIC: SHORTEST PATH,BÍ QUYẾT: ĐƯỜNG NGẮN NHẤT
+STR_GI_X177,4 STEPS • WIN,4 BƯỚC • THẮNG
+STR_GI_X178,7 STEPS • DRY INK,7 BƯỚC • CẠN MỰC
+STR_GI_X179,The Short Route Always Has Enough Ink,Đường Ngắn Luôn Đủ Mực
+STR_GI_X180,Every level is designed so that,Mỗi màn đều được thiết kế sao cho
+STR_GI_X181,the shortest path has enough ink to reach F.,đường ngắn nhất có đủ mực để tới F.
+STR_GI_X182,Wandering around drains the ink and seals your own path!,Đi vòng vèo sẽ tự làm cạn mực bít đường!
+STR_GI_X183,INK RESTORE PERK,ĐẶC QUYỀN HỒI MỰC
+STR_GI_X184,+1 INK FOR THE WHOLE BOARD!,+1 MỰC CHO TOÀN BÀN CỜ!
+STR_GI_X185,"Each Undo rewinds 1 step, and every","Mỗi lần bấm Undo lùi 1 bước chân, tất cả"
+STR_GI_X186,cell on the board regains exactly 1 ink point.,các ô trên bàn cờ đều được hồi phục lại đúng 1 điểm mực.
+STR_GI_X187,Don't hold back on Undo! Rewinding a step instantly revives cells that just ran dry.,Đừng ngại Undo! Rút lại bước đi sẽ hồi sinh ngay các ô vừa bị cạn mực.
+STR_GI_X188,MEMORIZE IN,GHI NHỚ TRONG
+STR_GI_X189,SECONDS,GIÂY
+STR_GI_X190,IN THE FIRST 3 SECONDS,TRONG 3 GIÂY ĐẦU
+STR_GI_X191,WALLS SHOWN,TƯỜNG HIỆN
+STR_GI_X192,100% CLEAR,100% RÕ RÀNG
+STR_GI_X193,(Timer paused),(Đồng hồ đứng yên)
+STR_GI_X194,SPECIAL NOTE,ĐẶC BIỆT CHÚ Ý
+STR_GI_X195,COMPLETELY,HOÀN TOÀN
+STR_GI_X196,NO NUMBERS,KHÔNG CÓ SỐ
+STR_GI_X197,Only the S and F cells remain!,Chỉ có ô S và F!
+STR_GI_X198,Use the 3-second countdown to scan the whole board and burn the safe escape route into your mind!,Tranh thủ 3 giây đếm ngược nhìn bao quát để khắc ghi đường thoát an toàn vào đầu!
+STR_GI_X199,GO!,GO!
+STR_GI_X200,THE BOARD AFTERWARDS,BÀN CỜ SAU ĐÓ
+STR_GI_X201,COMPLETELY BLANK,TRỐNG TRƠN
+STR_GI_X202,100% WALLS HIDDEN,100% TƯỜNG ẨN
+STR_GI_X203,Not a single trace left!,Không còn vết tích!
+STR_GI_X204,CAREFUL OF HIDDEN WALLS,CẨN THẬN ĐÂM TƯỜNG
+STR_GI_X205,TOUCH A HIDDEN WALL,CHẠM TƯỜNG ẨN
+STR_GI_X206,PENALTY: BACK TO S,BỊ PHẠT VỀ S
+STR_GI_X207,(Hardcore: instant loss),(Hardcore: Thua ngay)
+STR_GI_X208,The timer starts now! Draw slowly and reconstruct the maze from memory.,Đồng hồ bắt đầu tính giờ! Hãy vẽ chậm rãi và tái hiện lại trí nhớ của bạn.
+STR_GI_X209,TACTIC: DRAW DRAFT WALLS,CHIẾN THUẬT: VẼ TƯỜNG NHÁP
+STR_GI_X210,Quickly Lock Dangerous Gaps,Nhanh Tay Khóa Khe Nguy Hiểm
+STR_GI_X211,"The moment the 3 seconds end, use the Memory tool","Vừa hết 3 giây, hãy dùng công cụ Ghi Nhớ"
+STR_GI_X212,to reconnect the Anchors and rebuild the walls you remember.,nối ngay các Anchor để dựng lại tường bạn nhớ.
+STR_GI_X213,So you never blank out mid-run!,Giúp bạn không bị đãng trí giữa chừng!
+STR_GI_X214,HINT,GỢI Ý (HINT)
+STR_GI_X215,Reveal the safe route,Soi lại đường an toàn
+STR_GI_X216,Forgot the whole route?,Lỡ quên sạch đường đi?
+STR_GI_X217,Tap Hint to instantly light up,Bấm Gợi Ý để soi sáng ngay
+STR_GI_X218,the next correct stretch of path.,1 đoạn đường đúng đắn tiếp theo.
+STR_GI_X219,UNDO,HOÀN TÁC (UNDO)
+STR_GI_X220,Take back a step,Rút lại bước đi
+STR_GI_X221,Stepped somewhere and got a bad feeling?,Vừa đặt chân vào ô thấy sai sai?
+STR_GI_X222,Tap Undo to back up one cell,Bấm Undo để lùi lại ô trước
+STR_GI_X223,before you hit a hidden wall!,trước khi va phải tường ẩn!
+STR_GI_X224,A great memory alone won't win — the master is whoever rebuilds walls with Anchors!,Kẻ có trí nhớ tốt chưa chắc đã thắng — kẻ biết dùng Anchor dựng tường mới là cao thủ!
+STR_GI_X225,VISION ZONE,VÙNG TẦM NHÌN
+STR_GI_X226,RADIUS 1 CELL,BÁN KÍNH 1 Ô
+STR_GI_X227,NUMBERS SHOW,HIỆN RÕ SỐ
+STR_GI_X228,Only cells right beside you!,Chỉ thấy ô sát cạnh bạn!
+STR_GI_X229,FOG ZONE,VÙNG SƯƠNG MÙ
+STR_GI_X230,CELLS FAR AWAY,Ô Ở XA BẠN
+STR_GI_X231,NUMBERS HIDDEN,ẨN CON SỐ
+STR_GI_X232,Clues are masked!,Che khuất manh mối!
+STR_GI_X233,The glow opens up wherever you walk — distant cells keep their numbers hidden in fog!,Bạn đi đến đâu thì quầng sáng mở ra tới đó — ô ở xa sẽ bị sương mù che mất số!
+STR_GI_X234,CELL ALREADY VISITED,Ô ĐÃ BƯỚC QUA
+STR_GI_X235,FADING OUT,MỜ DẦN ĐI
+STR_GI_X236,NUMBER HIDDEN AGAIN,ẨN LẠI SỐ
+STR_GI_X237,The fog rolls back in!,Sương mù phủ lại!
+STR_GI_X238,HIDDEN WALL TRAP,BẪY TƯỜNG ẨN
+STR_GI_X239,WALL HIT,ĐÂM VÀO TƯỜNG
+STR_GI_X240,The fog parts wherever you go — but never step blindly into a cell whose number is unknown!,Bước tới đâu sương mù mở tới đó — nhưng tuyệt đối không bước bừa vào ô chưa rõ số!
+STR_GI_X241,TACTIC: LOCK WALLS WITH ANCHORS,CHIẾN THUẬT: KHÓA TƯỜNG ANCHOR
+STR_GI_X242,Lock Walls Before The Fog Hides Them,Khóa Tường Trước Khi Sương Mù Che Mất
+STR_GI_X243,See a 2? Instantly connect 2 Anchors,Thấy ô có số 2? Hãy nối ngay 2 Anchor
+STR_GI_X244,to raise an orange wall for cover.,để dựng vách tường cam bảo vệ.
+STR_GI_X245,Walls you draw are NEVER erased by fog!,Tường bạn tự vẽ KHÔNG bị sương mù xóa!
+STR_GI_X246,Light the way in the dark,Soi đường trong tối
+STR_GI_X247,Losing your bearings in the fog?,Mất phương hướng trong sương?
+STR_GI_X248,the next safe stretch of path ahead.,1 đoạn đường an toàn phía trước.
+STR_GI_X249,Stepped into a direction that feels wrong?,Bước vào hướng thấy nguy hiểm?
+STR_GI_X250,Tap Undo to retreat to a safe cell,Bấm Undo để lùi lại ô an toàn
+STR_GI_X251,before ramming a hidden wall!,trước khi đâm vào tường ẩn!
+STR_GI_X252,Blind steppers hit walls — whoever locks routes with Anchors wins!,Kẻ mù quáng bước đi sẽ đâm tường — người biết dùng Anchor khóa lối sẽ chiến thắng!
+STR_GI_X253,TIME REMAINING,THỜI GIAN CÒN LẠI
+STR_GI_X254,TICKING DOWN,ĐANG GIẢM
+STR_GI_X255,TIME PRESSURE,ÁP LỰC THỜI GIAN
+STR_GI_X256,COUNTDOWN,ĐẾM NGƯỢC
+STR_GI_X257,TO 00:00,VỀ 00:00
+STR_GI_X258,Time up = LOSS!,Hết giờ = THUA!
+STR_GI_X259,STEP COUNT,SỐ BƯỚC CHÂN
+STR_GI_X260,UNLIMITED,KHÔNG GIỚI HẠN
+STR_GI_X261,Walk as many cells as you like,Đi bao nhiêu ô tùy ý
+STR_GI_X262,just get there in time!,chỉ cần về đích kịp!
+STR_GI_X263,You only have 60s to 120s: draw decisively before the clock hits 00:00!,Bạn chỉ có 60s đến 120s: Hãy vẽ thật dứt khoát trước khi đồng hồ điểm 00:00!
+STR_GI_X264,SHOVED BACK TO START,BỊ ĐẨY VỀ XUẤT PHÁT
+STR_GI_X265,REDRAW FROM S!,VẼ LẠI TỪ S!
+STR_GI_X266,The wall is revealed but,Tường lộ diện nhưng
+STR_GI_X267,you must walk it all again.,phải đi lại từ đầu.
+STR_GI_X268,TIME KEEPS FLOWING,THỜI GIAN VẪN TRÔI
+STR_GI_X269,5 - 10 SECONDS LOST!,MẤT 5 - 10 GIÂY!
+STR_GI_X270,"The clock keeps counting down,","Đồng hồ vẫn đếm lùi,"
+STR_GI_X271,and the budget drains fast!,quỹ giờ cạn rất nhanh!
+STR_GI_X272,Wall hits in Time Attack don't kill you — but they rob you of precious seconds!,"Đâm tường ở Time Attack không chết ngay, nhưng sẽ cướp đi thời gian quý báu của bạn!"
+STR_GI_X273,TACTIC: BLITZ THROUGH 0 CELLS,CHIẾN THUẬT: PHÓNG QUA Ô 0
+STR_GI_X274,SWIPE THROUGH • TURBO,LƯỚT QUA • SIÊU TỐC
+STR_GI_X275,Prioritize 0 Cells To Gain Speed,Ưu Tiên Ô Số 0 Để Tăng Tốc
+STR_GI_X276,A 0 cell has no walls around it.,Ô số 0 hoàn toàn không có tường bao.
+STR_GI_X277,Sprint your pen straight through it without,Hãy phóng thẳng bút qua ô này mà không
+STR_GI_X278,pausing to think — saving every second!,"cần dừng lại suy nghĩ, tiết kiệm tối đa giây!"
+STR_GI_X279,Open the way when stuck,Mở lối khi bí
+STR_GI_X280,Stuck over 3 seconds? Don't freeze!,Bí quá 3 giây? Đừng chôn chân!
+STR_GI_X281,Tap Hint at once to light the route,Bấm ngay Gợi Ý để soi đường
+STR_GI_X282,instead of watching the clock drain!,thay vì đứng nhìn đồng hồ cạn!
+STR_GI_X283,Retreat in time,Rút bước kịp thời
+STR_GI_X284,Swiped the wrong way?,Lỡ tay quẹt nhầm hướng?
+STR_GI_X285,Tap Undo immediately,Bấm Undo lùi lại ngay
+STR_GI_X286,so you don't hit a wall and fly back to S!,để không bị đâm tường văng về S!
+STR_GI_X287,"Standing still is suicide! When in doubt, tap Hint and save your remaining time.","Đứng yên là tự sát! Khi phân vân, bấm ngay Gợi Ý để cứu lấy thời gian sống còn."
