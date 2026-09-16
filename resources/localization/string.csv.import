@@ -2,16 +2,18 @@
 
 importer="csv_translation"
 type="Translation"
-uid="uid://ljvxwyappm1g"
-valid=false
+uid="uid://ckrdnpuimio2j"
 
 [deps]
 
+files=["res://resources/localization/string.en.translation", "res://resources/localization/string.vi.translation", "res://resources/localization/string.zh_TW.translation", "res://resources/localization/string.zh_CN.translation", "res://resources/localization/string.es.translation", "res://resources/localization/string.ar.translation", "res://resources/localization/string.de.translation", "res://resources/localization/string.fr.translation", "res://resources/localization/string.hi.translation", "res://resources/localization/string.id.translation", "res://resources/localization/string.it.translation", "res://resources/localization/string.ja.translation", "res://resources/localization/string.ko.translation", "res://resources/localization/string.ms.translation", "res://resources/localization/string.pt.translation", "res://resources/localization/string.pt_BR.translation", "res://resources/localization/string.ru.translation", "res://resources/localization/string.th.translation", "res://resources/localization/string.tr.translation"]
+
 source_file="res://resources/localization/string.csv"
+dest_files=["res://resources/localization/string.en.translation", "res://resources/localization/string.vi.translation", "res://resources/localization/string.zh_TW.translation", "res://resources/localization/string.zh_CN.translation", "res://resources/localization/string.es.translation", "res://resources/localization/string.ar.translation", "res://resources/localization/string.de.translation", "res://resources/localization/string.fr.translation", "res://resources/localization/string.hi.translation", "res://resources/localization/string.id.translation", "res://resources/localization/string.it.translation", "res://resources/localization/string.ja.translation", "res://resources/localization/string.ko.translation", "res://resources/localization/string.ms.translation", "res://resources/localization/string.pt.translation", "res://resources/localization/string.pt_BR.translation", "res://resources/localization/string.ru.translation", "res://resources/localization/string.th.translation", "res://resources/localization/string.tr.translation"]
 
 [params]
 
-compress=1
+compress=0
 delimiter=0
 unescape_keys=false
 unescape_translations=true

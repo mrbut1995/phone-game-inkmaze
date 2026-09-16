@@ -79,6 +79,12 @@ static func count_in_category(category: String) -> int:
 	return int(m.call("count_in_category", category))
 
 
+## Số liệu dùng cho badge ngoài màn chính (vd "dungeon_best_floor", "daily_streak", ...)
+static func stat_value(key: String) -> int:
+	var m := manager()
+	return int(m.call("stat_value", key)) if m != null and m.has_method("stat_value") else 0
+
+
 ## Game báo kết quả 1 màn/tầng (xem ArchivementManager.notify_run_result)
 static func notify_run_result(results: Dictionary) -> void:
 	var m := manager()

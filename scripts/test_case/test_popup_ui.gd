@@ -2,8 +2,8 @@ extends SceneTree
 ## ============================================================================
 ## Test: CÁC LỖI ASSET/POPUP ĐÃ SỬA (2026-09)
 ##
-## 1. Icon nút Restart trên HUD (4 trạng thái) đúng hình mockup/matchup_level.svg
-##    (cung tròn hở + mũi tên tam giác) — trước đây mũi tên là 1 đường gãy nằm lệch.
+## 1. Icon nút Restart trên HUD (4 trạng thái) — thiết kế mới "icon reset" (2026-09-16):
+##    mũi tên góc vuông (M 19 19 v 10 h 10) + cung tròn KHÔNG đè nét mũi tên.
 ## 2. Popup THẮNG MÀN: con dấu có CHỮ (n / m thử thách + số sao) và nút CHƠI LẠI có icon.
 ## 3. Popup THÔNG QUA TẦNG: con dấu hết méo (116×116) + có chữ "ĐÃ QUA" / "TẦNG 0n ✔".
 ## 4. Popup NGÔN NGỮ: hàng nút không tràn ra ngoài + VUỐT DỌC cuộn được danh sách.
@@ -15,8 +15,8 @@ const SCENES := {
 	"next_floor": "res://nodes/popups/next_floor.tscn",
 	"language": "res://nodes/popups/language.tscn",
 }
-const RESTART_ICON := "A 15 15 0 1 0 52 42"
-const RESTART_ARROW := "points=\"42,20 52,24 50,34\""
+const RESTART_ICON := "M 19 29 A 16 16 0 1 1 35 51"
+const RESTART_ARROW := "M 19 19 v 10 h 10"
 ## Art KHÔNG được chứa <text> (ThorVG bỏ qua chữ) — kiểm tra các file vừa sửa
 const NO_TEXT_ART := [
 	"res://assets/images/game/btn_restart_normal.svg",
@@ -64,8 +64,8 @@ func _section_1_restart_icon() -> void:
 	for state in ["normal", "pressed", "focus", "disabled"]:
 		var path := "res://assets/images/game/btn_restart_%s.svg" % state
 		var svg := FileAccess.get_file_as_string(path)
-		_entry(svg.contains(RESTART_ICON), "btn_restart_%s: cung tron dung mockup" % state)
-		_entry(svg.contains(RESTART_ARROW), "btn_restart_%s: mui ten dung mockup" % state)
+		_entry(svg.contains(RESTART_ICON), "btn_restart_%s: cung tron dung thiet ke" % state)
+		_entry(svg.contains(RESTART_ARROW), "btn_restart_%s: mui ten goc vuong" % state)
 		_entry(not svg.contains("L 18.5 22"),
 			"btn_restart_%s: da bo mui ten gay cu (L 18.5 22)" % state)
 

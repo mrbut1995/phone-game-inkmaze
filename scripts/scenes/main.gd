@@ -19,6 +19,9 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @onready var btn_settings: TextureButton = $Panel/Other/Settings
 @onready var btn_archivement: TextureButton = $Panel/Archivement
 @onready var badge_count_label: Label = $Panel/Archivement/Count
+@onready var badge_play: Label = $Panel/GameMode/Play/Badge
+@onready var badge_dungeon: Label = $Panel/GameMode/Dungeon/Badge
+@onready var badge_daily: Label = $Panel/GameMode/DailyChallenge/Badge
 @onready var stamp_panel: Control = $Panel/Stamp
 @onready var stamp_label: Label = $Panel/Stamp/Label
 
@@ -26,6 +29,7 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 func _ready() -> void:
 	_refresh_stamp()
 	_refresh_badge()
+	_refresh_mode_badges()
 	_setup_buttons()
 	_setup_animations()
 
@@ -158,3 +162,25 @@ func _refresh_badge() -> void:
 	if badge_count_label == null:
 		return
 	badge_count_label.text = "%d/%d" % [Archivement.unlocked_count(), Archivement.total_count()]
+
+
+## 3 huy hiệu trên thẻ chế độ: Màn hiện tại · Kỷ lục tầng Dungeon · Chuỗi ngày Daily.
+## Chuỗi dịch chứa "{0}" nên phải điền số lúc chạy (Label chỉ tự dịch phần chữ).
+func _refresh_mode_badges() -> void:
+	var gm := get_node_or_null("/root/GameManager")
+	var level := 1
+	if gm != null:
+		level = maxi(int(gm.get("current_level")), 1)
+	if badge_play != null:
+		badge_play.text = tr("STR_CURRENT_LEVEL_BADGE").format([level])
+
+	if badge_dungeon != null:
+		var floor := Archivement.stat_value("dungeon_best_floor")
+		badge_dungeon.text = tr("STR_RECORD_FLOOR_BADGE").format([floor])
+
+	var dm := get_node_or_null("/root/DailyManager")
+	var streak := 0
+	if dm != null and dm.has_method("get_streak"):
+		streak = int(dm.call("get_streak"))
+	if badge_daily != null:
+		badge_daily.text = tr("STR_STREAK_BADGE").format([streak])

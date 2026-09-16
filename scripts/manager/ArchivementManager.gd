@@ -63,20 +63,32 @@ func _load_catalog() -> void:
 
 	var files := dir.get_files()
 	files.sort()
+	var seen := {}
 	for file_name in files:
-		if not file_name.ends_with(".tres"):
+		# Ban EXPORT chuyen .tres sang binary va dat kem file "<ten>.tres.remap"
+		# -> phai bo duoi .remap moi thay dung ten tai nguyen.
+		var resource_name := _resource_name(file_name)
+		if resource_name.is_empty() or seen.has(resource_name):
 			continue
-		var data := load(DIR + file_name) as ArchivementData
+		seen[resource_name] = true
+		var data := load(DIR + resource_name) as ArchivementData
 		if data == null:
-			push_warning("[ArchivementManager] Bo qua file loi: %s" % file_name)
+			push_warning("[ArchivementManager] Bo qua file loi: %s" % resource_name)
 			continue
 		if not data.is_valid():
-			push_warning("[ArchivementManager] Bo qua danh hieu thieu id/stat/target: %s" % file_name)
+			push_warning("[ArchivementManager] Bo qua danh hieu thieu id/stat/target: %s" % resource_name)
 			continue
 		if _find_index(data.id) >= 0:
-			push_warning("[ArchivementManager] Trung id '%s' (%s) - bo qua" % [data.id, file_name])
+			push_warning("[ArchivementManager] Trung id '%s' (%s) - bo qua" % [data.id, resource_name])
 			continue
 		_defs.append(data)
+
+
+## Ten tai nguyen that cua 1 file trong thu muc danh hieu ("" neu khong phai .tres).
+## Ban EXPORT: file di kem duoi ".remap" (vd "lv_first_step.tres.remap") — xem _load_catalog().
+static func _resource_name(file_name: String) -> String:
+	var base := file_name.trim_suffix(".remap")
+	return base if base.ends_with(".tres") else ""
 
 
 ## Nạp lại danh sách (dùng cho test hoặc khi thêm file .tres lúc chạy)

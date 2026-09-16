@@ -100,6 +100,14 @@ func _section_1_catalog(manager: Node) -> void:
 			% [sample.get("id", ""), sample.get("title", ""),
 			int(sample.get("progress", 0)), int(sample.get("target", 0))])
 
+	# Ban EXPORT doi .tres sang binary + dat kem ".remap" -> ten file phai duoc chuan hoa
+	_entry(str(manager.call("_resource_name", "lv_first_step.tres")) == "lv_first_step.tres",
+		"_resource_name nhan ten .tres thuong")
+	_entry(str(manager.call("_resource_name", "lv_first_step.tres.remap")) == "lv_first_step.tres",
+		"_resource_name bo duoi .remap cua ban export")
+	_entry(str(manager.call("_resource_name", "icon.svg.import")).is_empty(),
+		"_resource_name bo qua file khong phai .tres")
+
 
 # ---------------------------------------------------------------------------
 # 2. Tiến độ + nhận thưởng

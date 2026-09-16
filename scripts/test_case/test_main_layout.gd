@@ -64,6 +64,15 @@ func _init() -> void:
 			assert(absf(button.size.x - 230.0) < 1.0 and absf(button.size.y - 130.0) < 1.0,
 				"Nut %s phai dung kich thuoc art 230x130 (dang %s)" % [child.name, str(button.size)])
 
+	# 3 huy hieu tren the che do phai duoc DIEN SO luc chay (chuoi dich co "{0}")
+	for badge_path in ["Panel/GameMode/Play/Badge", "Panel/GameMode/Dungeon/Badge",
+			"Panel/GameMode/DailyChallenge/Badge"]:
+		var badge := main_scene.get_node_or_null(badge_path) as Label
+		assert(badge != null, "Phai co Label huy hieu tai %s" % badge_path)
+		assert(not badge.text.contains("{0}"),
+			"Huy hieu %s phai duoc dien so (dang '%s')" % [badge_path, badge.text])
+		print("[INFO] %s -> %s" % [badge_path, badge.text])
+
 	print("\n[SUCCESS] Cac button va the tren Main Scene da duoc xep dung vi tri, khong bi de chong len nhau!\n")
 	main_scene.queue_free()
 	await process_frame

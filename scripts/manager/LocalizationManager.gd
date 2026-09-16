@@ -74,12 +74,15 @@ func _load_translations() -> void:
 	for code in tables:
 		TranslationServer.add_translation(tables[code])
 		supported_locales.append(str(code))
+	print("[LocalizationManager] Nap %d ngon ngu" % supported_locales.size())
 
 
 func _load_csv_into(tables: Dictionary, path: String) -> void:
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
-		push_warning("[LocalizationManager] Khong mo duoc %s" % path)
+		# Trong build EXPORT (.apk/.pck) file .csv gốc chỉ có mặt nếu export preset khai
+		# `include_filter`; nếu thiếu thì dùng các file .translation do bộ nhập CSV sinh ra.
+		_load_translation_files(tables, path)
 		return
 	var rows := _parse_csv(file.get_as_text())
 	file.close()
@@ -108,6 +111,41 @@ func _load_csv_into(tables: Dictionary, path: String) -> void:
 			var code := header[col].strip_edges()
 			if tables.has(code) and not row[col].is_empty():
 				tables[code].add_message(key, row[col])
+
+
+## Dự phòng cho BUILD EXPORT: nạp các file "<tên>.<locale>.translation" nằm cạnh CSV
+## (do bộ nhập csv_translation của Godot sinh ra khi import — luôn có trong gói export).
+func _load_translation_files(tables: Dictionary, csv_path: String) -> void:
+	var dir_path := csv_path.get_base_dir()
+	var base := csv_path.get_file().get_basename()
+	var dir := DirAccess.open(dir_path)
+	if dir == null:
+		push_warning("[LocalizationManager] Khong mo duoc thu muc %s" % dir_path)
+		return
+	var loaded := 0
+	for file_name in dir.get_files():
+		if not file_name.begins_with(base + ".") or not file_name.ends_with(".translation"):
+			continue
+		var table: Translation = load(dir_path.path_join(file_name)) as Translation
+		if table == null or table.locale.is_empty():
+			continue
+		var code := str(table.locale)
+		if tables.has(code):
+			_merge_translation(tables[code], table)
+		else:
+			tables[code] = table
+		loaded += 1
+	if loaded > 0:
+		print("[LocalizationManager] %s: dung %d file .translation (ban export)" % [base, loaded])
+	else:
+		push_warning("[LocalizationManager] Thieu %s trong goi export — them 'resources/localization/*.csv' vao include_filter" % csv_path.get_file())
+
+
+## Gộp message từ bảng dự phòng vào bảng đang có (KHÔNG ghi đè key đã có)
+func _merge_translation(target: Translation, source: Translation) -> void:
+	for key in source.get_message_list():
+		if target.get_message(key) == StringName():
+			target.add_message(key, str(source.get_message(key)))
 
 
 ## Doc CSV co ho tro o duoc bao trong ngoac kep "..." (co the chua dau phay, dau ngoac kep doi)
