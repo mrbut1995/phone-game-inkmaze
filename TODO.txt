@@ -1021,3 +1021,45 @@
 #     - Test `test_popup_ui.gd` 52 -> **54 check**: thêm kiểm tra ART của HỦY BỎ / ÁP DỤNG phải khớp 1:1 với nút
 #       (chống tái phát đúng lỗi này). Toàn bộ **26/26 suite PASS**.
 #     - Ghi vào tài liệu §5.11: quy ước "art nút phải khớp 1:1 với node" + bảng art nút popup ngôn ngữ.
+
+# ----------------------------------------------------------------------------
+# HOTFIX 7 LỖI LAYOUT TÌM THẤY KHI TEST TRÊN EMULATOR ĐIỆN THOẠI (Pixel_9_API_35) — 2026-09 (vòng 14)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM (2026-09): sửa theo `hotfix/need_to_fix.txt` + 5 ảnh user gửi.
+#   1. MÀN GAME — popup "Game Over" nháy hiện rồi BIẾN MẤT (Ảnh 1):
+#      · Thủ phạm: `ui_controller.show_game_over()` gọi `Popups.close_all()` rồi MỞ LẠI CÙNG ID khi tween đóng
+#        của popup cũ vẫn đang chạy → callback `_finish_close()` xoá luôn popup vừa mở. Ngoài ra `_game_over()`
+#        bị gọi 2 lần (đâm tường + hết giờ trong cùng khung hình) nên mở 2 popup trùng id.
+#      · Sửa `scripts/nodes/popups/base.gd`: giữ `_tween` + `_kill_tween()` khi bắt đầu hiệu ứng mới;
+#        `close()` chặn đóng trùng (`if _closing: return`); `_finish_close()` chỉ xoá khi VẪN đang đóng
+#        (`if not _closing: return`) → mở lại giữa lúc đang đóng thì popup vẫn sống, không bị "nháy".
+#      · Sửa `scripts/core/controllers/game_controller.gd::_game_over()`: thêm `if not _run_active: return`.
+#      · Kiểm chứng: `dev_popup_repro.gd` thêm 2 ca ("gọi 2 lần liên tiếp" + "mở lại giữa lúc đang đóng")
+#        → 4 PASS · 0 FAIL; trên emulator: đâm tường vô hình → popup "ĐÂM VÀO TƯỜNG VÔ HÌNH!" vẫn hiện lâu dài.
+#   2. MÀN GAME — lưới ô KHÔNG nằm giữa thẻ bàn (Ảnh 2): `BoardView` lưu insets của `card_board.svg` theo PIXEL
+#      nhưng dùng như đơn vị panel-local → panel cao 1288 (màn 1080×2424) thì vùng lưới tính thiếu, lưới đẩy LÊN.
+#      Sửa `scripts/nodes/game/board.gd`: insets đổi sang TỈ LỆ 0..1, `panel_inner_rect()` nhân với `panel.size`.
+#   3. MÀN GAME — HUD lệch lên trên: gốc `Hud` neo offset thiết kế (y=175) nên dính sát status bar trên màn cao.
+#      Sửa `nodes/hud/base.tscn`: `anchor_top/bottom = 0.072` + offset giữ khoảng cách 37px dưới status bar.
+#   4. MÀN GAME — popup không ở giữa: `BasePopup._apply_canvas_layout()` chỉ canh giữa NGANG. Sửa: canh giữa
+#      cả 2 chiều theo canvas (màn 2424 thì thẻ nằm giữa màn hình, không dính lên trên).
+#   5. MÀN GAME — text nút "Vẽ đường"/"Ghi nhớ" dùng STR_ID + thêm dòng phụ: `scenes/game.tscn` chuyển sang
+#      `STR_TOOL_DRAW_PATH` / `STR_TOOL_MARK_WALL`, thêm node `Sub` (`STR_TOOL_DRAW_PATH_DESC` /
+#      `STR_TOOL_MARK_WALL_DESC`) + LabelSettings mới `resources/settings/text/text_game_button_sub.tres`.
+#   6. MÀN DAILY — Mission lệch & đè nhau (Ảnh 4): Calendar bị anchor giãn thành 1275 (đè 350px lên Missions)
+#      và còn 692px trống dưới. Sửa `scenes/daily.tscn` (Calendar cao cố định 1010; Missions `expand_mode = 1`
+#      để không bị ảnh 592px chặn co) + `scripts/scenes/daily.gd::_layout_responsive()`: Missions nằm giữa
+#      Calendar và nút CHƠI neo đáy; co hàng khi màn thấp, giãn nhẹ (≤1.35×) khi màn cao; dời hàng tiến độ theo.
+#   7. MÀN SHOP — khoảng trống dưới (Ảnh 5): neo `Content`/`Pager`/`GiftBanner`/`Footer` vào ĐÁY canvas
+#      (`scenes/shop.tscn`) + `scripts/scenes/shop.gd`: số ô mỗi trang tính từ chiều cao THẬT của khung cuộn
+#      (trừ chiều cao `doodle_pad` khi ở tab BÚT & MỰC) → màn điện thoại 8 ô/trang (2 trang cho 10 bút),
+#      màn ngang 6 ô/trang; đổi hướng màn hình thì phân trang lại và GIỮ trang theo item đang xem
+#      (`_page_first_id`) — nội dung đủ chỗ thì hiển thị luôn trên trang, không sinh trang mới.
+#   8. Test/công cụ: thêm `scripts/test_case/dev_back_probe.gd`; `dev_aspects.gd` nay set `current_scene` khi
+#      thêm scene vào cây (vì `PopupManager.get_host()` tìm host theo `current_scene` → trước đây 10 check
+#      "bấm pause không mở được popup" FAIL oan trong harness). Kết quả: 29/29 suite PASS · tỉ lệ 220/220 PASS.
+#   9. GHI NHẬN CÒN LẠI (chưa sửa, chờ user quyết):
+#      · Nút Back trên Android đang THOÁT APP khi màn chơi đang mở popup (project để mặc định
+#        `quit_on_go_back = true`; kể cả Windows, Esc lần 1 bị nuốt, Esc lần 2 mới đóng popup).
+#      · Màn chính còn khoảng trống dưới thanh điều hướng trên màn dọc cao (nav ở y≈1800 / canvas 2424).
+#      · Còn các `print()` debug của user: `Close Popup …`, `Show Game Over because …`, `GAME_OVER because …`.

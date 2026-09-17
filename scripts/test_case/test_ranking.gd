@@ -218,7 +218,9 @@ func _section_7_scene(manager: Node) -> void:
 	var title := scene.get_node_or_null("TopBar/Title") as Label
 	_entry(title != null and title.text == "STR_RANK_TITLE", "Tieu de dung khoa dich STR_RANK_TITLE")
 	_entry(scene.get_node_or_null("Chip") is TextureRect, "Co chip pham vi goc phai")
-	_entry(scene.get_node_or_null("Sheet") is TextureRect, "Co to giay Sheet")
+	# To giay la NinePatchRect (co gian 9-slice theo man hinh), truoc day la TextureRect.
+	var sheet := scene.get_node_or_null("Sheet")
+	_entry(sheet is NinePatchRect or sheet is TextureRect, "Co to giay Sheet")
 	_entry(scene.get_node_or_null("Sheet/Tape") is TextureRect, "To giay co bang dinh (tape)")
 	_entry(scene.get_node_or_null("Sheet/Scroll/Rows") is VBoxContainer, "Co danh sach cuon Sheet/Scroll/Rows")
 	_entry(scene.get_node_or_null("Sheet/MyRank") is TextureRect, "Co thanh 'hang cua ban' Sheet/MyRank")

@@ -339,6 +339,10 @@ func _check_game_over() -> void:
 ## Kết thúc ván (thua). `reason` = lý do để popup hiện đúng tiêu đề:
 ## "" = thua thường (đâm tường/hết bước/hết giờ) · "dead_end" = hết đường đi (Fading Ink).
 func _game_over(reason := "") -> void:
+	# Nhiều nguồn có thể gọi cùng lúc (hết giờ + đâm tường + hết bước) -> chỉ xử lý 1 lần,
+	# nếu không popup thua bị MỞ LẠI giữa lúc đang mở và bị tween đóng cũ xoá mất.
+	if not _run_active:
+		return
 	_run_active = false
 	if timer_controller != null:
 		timer_controller.stop()

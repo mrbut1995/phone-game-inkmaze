@@ -16,9 +16,20 @@ const ICON_UNLOCK := preload("res://assets/images/shop/icon_coin.svg")
 const CLASSIC_MISSION_COUNT := 3
 ## Chiều cao mỗi hàng nhiệm vụ trong bảng (khớp mockup daily_challenge.svg)
 const ROW_HEIGHT := 110.0
+## Chiều cao THIẾT KẾ của bảng nhiệm vụ (nodes/daily/*.tscn) — dùng để dồn hàng tiến độ xuống đáy
+const MISSION_PANEL_H := 592.0
+## Đỉnh hàng tiến độ trong bảng thiết kế (ProgressLabel/Claim ≈ 528, ProgressBar ≈ 546)
+const MISSION_PROGRESS_Y := 528.0
+## Khe hở giữa lịch - bảng nhiệm vụ - nút chơi
+const GAP_CAL_MISSIONS := 24.0
+## Chiều cao tối thiểu của bảng nhiệm vụ (màn ngang/thấp — hàng nhiệm vụ sẽ co lại)
+const MIN_MISSION_PANEL_H := 520.0
+## Lề dưới cùng (dưới nút CHƠI)
+const BOTTOM_MARGIN := 60.0
 
 @onready var btn_back: TextureButton = $TopBar/Back
 @onready var calendar: DailyCalendar = $Calendar
+@onready var missions: Control = $Missions
 @onready var lbl_streak: Label = $StreakBadge/Streak
 @onready var lbl_date: Label = $Missions/DateTag/Label
 @onready var lbl_mode: Label = $Missions/Mode
@@ -33,6 +44,8 @@ const ROW_HEIGHT := 110.0
 
 var _rows: Array[DailyMissionRow] = []
 var _daily: Node = null
+## Vị trí THIẾT KẾ của hàng tiến độ (node -> y) — tránh cộng dồn khi relayout nhiều lần
+var _progress_base: Dictionary = {}
 ## Ngày đang xem (mặc định hôm nay). Bấm ngày khác trên lịch = xem nhiệm vụ ngày đó.
 var _selected_day := 1
 
@@ -59,6 +72,72 @@ func _ready() -> void:
 
 	_build_rows()
 	_refresh()
+	# Ghi nhớ vị trí THIẾT KẾ của hàng tiến độ (để dồn xuống đáy bảng mà không cộng dồn)
+	for node in [lbl_progress, bar_progress, lbl_claim]:
+		if node != null:
+			_progress_base[node] = (node as Control).position.y
+	_layout_responsive.call_deferred()
+	var vp := get_viewport()
+	if vp != null and not vp.size_changed.is_connected(_layout_responsive):
+		vp.size_changed.connect(_layout_responsive)
+
+
+func _notification(what: int) -> void:
+	super._notification(what)
+	if what == NOTIFICATION_READY or what == NOTIFICATION_RESIZED:
+		_layout_responsive()
+
+
+## Bố cục theo chiều cao màn hình (màn 9:19.5/9:20 cao hơn thiết kế 1920):
+##   · Lịch giữ đúng chiều cao thiết kế
+##   · Nút CHƠI bám đáy màn hình
+##   · Bảng nhiệm vụ nằm GIỮA hai khối trên (không đè lịch), hàng tiến độ dồn xuống đáy bảng
+func _layout_responsive() -> void:
+	if not is_inside_tree() or calendar == null or missions == null or btn_play == null:
+		return
+	var canvas := get_viewport_rect().size
+	if canvas.y <= 0.0:
+		return
+
+	# 1. Nút CHƠI: bám đáy
+	var play_y := canvas.y - BOTTOM_MARGIN - btn_play.size.y
+	if absf(btn_play.position.y - play_y) > 0.5:
+		btn_play.position.y = play_y
+
+	# 2. Bảng nhiệm vụ: nằm giữa lịch và nút CHƠI
+	var top := calendar.position.y + calendar.size.y + GAP_CAL_MISSIONS
+	var bottom := btn_play.position.y - GAP_CAL_MISSIONS
+	var panel_h := maxf(MIN_MISSION_PANEL_H, bottom - top)
+	if absf(missions.position.y - top) > 0.5:
+		missions.position.y = top
+	if absf(missions.size.y - panel_h) > 0.5:
+		missions.size.y = panel_h
+
+	# 3. Dồn hàng tiến độ (label + thanh + nhãn thưởng) xuống ĐÁY bảng
+	var dy := missions.size.y - MISSION_PANEL_H
+	if absf(dy) > 0.5:
+		for node in _progress_base.keys():
+			var c := node as Control
+			if c != null and is_instance_valid(c):
+				c.position.y = float(_progress_base[node]) + dy
+
+	# 4. Hàng nhiệm vụ: vừa khoảng trống giữa tiêu đề bảng và hàng tiến độ
+	#    (màn thấp/ngang -> hàng co lại để không tràn xuống nút CHƠI)
+	if rows_host != null:
+		var count := maxi(_mission_total(), 1)
+		var top_limit := 112.0
+		var bottom_limit := MISSION_PROGRESS_Y + dy
+		var space := maxf(bottom_limit - top_limit, 120.0)
+		# Màn cao -> giãn nhẹ khoảng cách hàng (tối đa 1.35× thiết kế) để lấp khoảng trống;
+		# màn thấp/ngang -> co hàng lại để không tràn xuống nút CHƠI.
+		var row_h := clampf(space / float(count), 0.0, ROW_HEIGHT * 1.35)
+		if row_h <= 0.0:
+			row_h = ROW_HEIGHT
+		for i in _rows.size():
+			var row := _rows[i]
+			if row != null and is_instance_valid(row):
+				row.position = Vector2(0, row_h * i)
+		rows_host.position.y = top_limit + maxf(0.0, (space - row_h * float(count)) * 0.5)
 
 
 ## Dựng 4 hàng nhiệm vụ (3 maze thường + 1 maze đặc biệt) trong bảng Mission

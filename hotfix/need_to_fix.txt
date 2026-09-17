@@ -1,0 +1,14 @@
+Hiện tại có các vấn đề sau trong quá trình test emulator C:\Users\Admin\.android\avd\Pixel_9_API_35.avd
+- Ở Màn hình Game
++ Khi chạy Emulator Android, Lúc trò chơi gameover, do bị đâm vào tường, nháy hiện popup "Game Over" rồi biến mất, nhưng không đóng lại (Ảnh 1)
++ Hiện tại, Các grid trên cell đang không đặt ở giữa trung tâm, mà lệch trên (Ảnh 2)
++ Nên Update lại text trên các button (Vẽ đường và Ghi Nhớ) để sử dụng STR_ID và thêm cả sub text cho nó
++ Đang bị lệch HUD lên trên
++ Popup Không được đặt ra giữa
+- Ở màn hình Daily Challenge
++ Mission Layout Đang bị lệch và không hiển thị đúng vị trí (Ảnh 4)
+- Ở màn Hình Store
++ Hiện tại, Đang có một khoảng trống ở phần dưới (Ảnh 5). Tôi muốn bạn update để sao cho phần nhận xu miễn phí luôn nằm cuối, và kéo dài content ra. 
+Nếu content đủ dài để hiển thị item ở page thì hiển thị vào nó trên page đó mà không cần phải tạo thêm page mới.
+Nếu đang chuyển từ portrait sang landscape, Co lại độ dài content và paging tất cả các page list item phù hợp, current page nên theo item mà người dùng đang xem.
+Tương tự với landscape sang portrait.

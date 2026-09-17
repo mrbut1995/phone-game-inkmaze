@@ -111,6 +111,7 @@ func _run_screen(def: Dictionary, size: Vector2i) -> void:
 		return
 	var scene: Node = packed.instantiate()
 	root.add_child(scene)
+	current_scene = scene      # PopupManager.get_host() tìm host theo current_scene
 	await _frames(20)          # chờ hiệu ứng slide-in/fade mở màn xong mới đo
 	var issues := _check_common(scene as Control)
 	_report(id, issues)
@@ -129,6 +130,7 @@ func _run_game(mode_id: String, size: Vector2i) -> void:
 	var packed := load("res://scenes/game.tscn") as PackedScene
 	var scene: Node = packed.instantiate()
 	root.add_child(scene)
+	current_scene = scene      # PopupManager.get_host() tìm host theo current_scene
 	await _frames(8)
 	var issues := _check_common(scene as Control)
 	issues.append_array(_check_game(scene as Control))
@@ -220,7 +222,11 @@ func _check_pause_popup(scene: Control) -> Array:
 			pop = c
 			break
 	if pop == null:
-		out.append("FAIL bấm pause không mở được popup")
+		var pm := root.get_node_or_null("PopupManager")
+		var host: Node = (pm.get("_host") as Node) if pm != null else null
+		var stack: Array = (pm.get("_stack") as Array) if pm != null else []
+		out.append("FAIL bấm pause không mở được popup | stack=%d host=%s" % [
+			stack.size(), str(host.get_path()) if host != null else "<null>"])
 		return out
 	var canvas := root.get_visible_rect().size
 	var dim := pop.get_node_or_null("Dim") as Control

@@ -87,14 +87,16 @@ vertical_alignment = 1
 [node name="Calendar" parent="." index="3" unique_id=364415579 instance=ExtResource("3_calendar")]
 layout_mode = 1
 anchors_preset = -1
+; Chiều cao GIỮ ĐÚNG THIẾT KẾ (1010) — không kéo giãn theo màn cao,
+; nếu không lịch đè lên bảng nhiệm vụ ở màn 9:19.5/9:20.
 anchor_left = 0.028
 anchor_top = 0.09
 anchor_right = 0.97200006
-anchor_bottom = 0.61600006
+anchor_bottom = 0.09
 offset_left = -0.24000168
 offset_top = -0.80000305
 offset_right = 0.23999023
-offset_bottom = -0.7200928
+offset_bottom = 1009.2
 metadata/_edit_use_anchors_ = true
 
 [node name="Missions" type="TextureRect" parent="." index="4" unique_id=564649675]
@@ -104,6 +106,8 @@ offset_left = 30.0
 offset_top = 1144.0
 offset_right = 1050.0
 offset_bottom = 1736.0
+; Cho phép bảng co/giãn tự do theo màn hình (nếu không, texture ghim cứng cỡ 1020×592)
+expand_mode = 1
 texture = ExtResource("9_panel")
 
 [node name="DateTag" type="TextureRect" parent="Missions" index="0" unique_id=1698417265]

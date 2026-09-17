@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crkkq40o5gql"
-path="res://.godot/imported/tab_active.svg-f54af4e5685202f2a822f330b50f4399.ctex"
+uid="uid://cvl0kmrwe1wr1"
+path="res://.godot/imported/image_1.png-f282c4e3e7307f1a0b213393b534c118.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/shop/tab_active.svg"
-dest_files=["res://.godot/imported/tab_active.svg-f54af4e5685202f2a822f330b50f4399.ctex"]
+source_file="res://hotfix/image_1.png"
+dest_files=["res://.godot/imported/image_1.png-f282c4e3e7307f1a0b213393b534c118.ctex"]
 
 [params]
 
@@ -39,6 +39,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

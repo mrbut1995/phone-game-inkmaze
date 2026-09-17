@@ -1027,4 +1027,63 @@ Hoàn cảnh gây lệch: xoay màn hình bằng **khoá xoay / `settings put us
 
 **Kiểm chứng trên máy ảo:** đặt màn hình dọc rồi mở app ⇒ app tự về dọc (canvas 1200×1920, cột canh giữa 60), mọi màn/popup hiển thị đủ, không còn cắt mép; xoay ngang ⇄ dọc nhiều lần popup vẫn đúng tâm.
 
+### 13.12. Hotfix 7 lỗi layout khi test trên máy ảo ĐIỆN THOẠI 1080×2424 (Pixel_9_API_35) — 2026-09-17
+
+Bối cảnh: các màn được thiết kế cho canvas **1080×1920**; trên máy ảo điện thoại canvas cao **2424** nên mọi khối neo theo OFFSET
+thiết kế bị trôi/lệch, còn khối neo theo TỈ LỆ thì giãn đúng. Danh sách user gửi (`hotfix/need_to_fix.txt` + 5 ảnh):
+
+**1. Popup "Game Over" NHÁY HIỆN RỒI BIẾN MẤT (Ảnh 1)** — thủ phạm là **đua tween + mở trùng id**, không phải lỗi vẽ:
+`UıController.show_game_over()` gọi `Popups.close_all()` rồi mở lại **cùng id** ngay khi tween đóng của popup cũ còn chạy;
+callback `_finish_close()` của tween cũ chạy sau đó và **xoá popup vừa mở**. Ngoài ra `GameController._game_over()` bị gọi
+2 lần trong cùng khung hình (đâm tường + hết giờ). Sửa:
+- `scripts/nodes/popups/base.gd`: giữ `_tween`, thêm `_kill_tween()` huỷ tween cũ trước khi chạy hiệu ứng mới;
+  `close()` chặn đóng trùng (`if _closing: return`); `_finish_close()` chỉ giải phóng khi **vẫn đang đóng**
+  (`if not _closing: return`) ⇒ mở lại giữa lúc đang đóng thì popup mới không bị xoá oan.
+- `scripts/core/controllers/game_controller.gd`: `_game_over()` mở đầu bằng `if not _run_active: return`.
+- Kiểm chứng: `dev_popup_repro.gd` thêm ca *"gọi 2 lần liên tiếp"* + *"mở lại giữa lúc đang đóng"* → **4 PASS · 0 FAIL**;
+  trên emulator: kéo vào tường vô hình ⇒ popup "ĐÂM VÀO TƯỜNG VÔ HÌNH!" vẫn hiện ổn định, bấm được nút.
+
+**2. Lưới ô bị đẩy LÊN, không giữa thẻ bàn (Ảnh 2):** `BoardView._panel_insets` lưu insets của ảnh `card_board.svg`
+theo PIXEL nhưng được dùng như đơn vị panel-local; panel cao 1288 (màn 2424) ⇒ vùng lưới tính thiếu ⇒ tâm lưới lệch lên ~160px.
+Sửa: insets đổi sang **TỈ LỆ 0..1**, `panel_inner_rect()` nhân với `panel.size` ⇒ tâm lưới = tâm panel (đo lại: 623,7 = 623,7).
+
+**3. HUD lệch lên trên:** gốc `Hud` neo offset thiết kế (y=175) nên trên màn cao dính sát status bar.
+Sửa `nodes/hud/base.tscn`: `anchor_top = anchor_bottom = 0.072` + offset giữ **37px** khoảng cách dưới status bar ở mọi tỉ lệ.
+
+**4. Popup không ở giữa:** `BasePopup._apply_canvas_layout()` chỉ canh giữa NGANG (theo cột nội dung), chiều dọc vẫn theo
+offset thiết kế ⇒ màn 2424 thẻ nằm cao hơn tâm 262px. Sửa: canh giữa **cả hai chiều** theo canvas (`Dim` vẫn phủ kín canvas).
+
+**5. Text nút công cụ "Vẽ đường" / "Ghi nhớ" dùng STR_ID + có dòng phụ:** `scenes/game.tscn` chuyển `Button/Tool` →
+`STR_TOOL_DRAW_PATH`, `Button/Wall` → `STR_TOOL_MARK_WALL`, thêm node `Sub` (`STR_TOOL_DRAW_PATH_DESC` /
+`STR_TOOL_MARK_WALL_DESC`, alpha 0.72) + LabelSettings mới `resources/settings/text/text_game_button_sub.tres`
+(BeVietnamPro-Black 22). Nhãn chính canh giữa, dòng phụ nằm dưới.
+
+**6. Màn DAILY: Mission lệch & ĐÈ LÊN NHAU (Ảnh 4):** `Calendar` bị anchor giãn thành 1275px (đè 350px lên `Missions`)
+và để lại 692px trống dưới trên màn dọc. Sửa `scenes/daily.tscn`: Calendar cao **cố định 1010**, `Missions` đặt
+`expand_mode = 1` (ảnh 1020×592 trước đây CHẶN không cho node co nhỏ — đúng bẫy "TextureRect clamp size").
+`scripts/scenes/daily.gd::_layout_responsive()` (chạy khi READY/RESIZED + `size_changed`): nút CHƠI neo đáy 60px;
+`Missions` nằm giữa Calendar và nút CHƠI (cách 24px); hàng nhiệm vụ co lại khi màn thấp, giãn nhẹ (≤1.35×) khi màn cao;
+hàng tiến độ dời theo chiều cao panel. Đo lại: dọc 1080×2424 Missions 1251..2220 (nút CHƠI 2243), ngang 2400×1080 Missions cao 520.
+
+**7. Màn SHOP: khoảng trống dưới + phân trang theo màn (Ảnh 5):**
+- `scenes/shop.tscn`: `Content` (ScrollContainer) kéo tới **đáy canvas**; `Pager`, banner "NHẬN XU MIỄN PHÍ", `Footer`
+  neo vào đáy (banner luôn nằm CUỐI như user yêu cầu).
+- `scripts/scenes/shop.gd`: số ô mỗi trang **tính từ chiều cao thật của khung cuộn** (`_grid_per_page()`:
+  trừ `doodle_pad` khi ở tab BÚT & MỰC, `rows = floor((cao + SEP) / (ô + SEP))`, ×2 cột) ⇒ 10 cây bút vừa **8 ô/trang, 2 trang**
+  trên điện thoại, 6 ô/trang trên màn ngang — không sinh trang thừa.
+  Khi xoay màn hình: `_on_viewport_resized()` → `_refresh_pagination_if_needed()` dựng lại lưới nhưng **giữ trang theo item
+  đang xem** (`_page_first_id`).
+
+**8. Công cụ & kiểm thử:** thêm `scripts/test_case/dev_back_probe.gd` (kiểm tra Back/Esc với popup);
+`dev_aspects.gd` nay gán `current_scene` khi thêm scene vào cây — vì `PopupManager.get_host()` tìm host theo `current_scene`,
+nếu không gán thì popup rơi vào host tạm ngoài scene và 10 check "bấm pause không mở được popup" FAIL **oan**.
+Kết quả sau sửa: **29/29 suite PASS** · harness tỉ lệ **220/220 PASS** · APK debug build lại và xác nhận trên Pixel_9_API_35
+(grid giữa thẻ, HUD đúng, nút có dòng phụ, popup Game Over giữ nguyên, Daily không đè, Shop hết khoảng trống + banner cuối trang).
+
+**9. Ghi nhận còn lại (chưa sửa, chờ quyết định):**
+- Nút **Back trên Android đang thoát app** khi màn chơi đang mở popup (project để mặc định `quit_on_go_back = true`;
+  trên Windows phải bấm Esc **2 lần** mới đóng popup — lần 1 bị xử lý ở chỗ khác). Popup vẫn đóng bình thường bằng nút trên màn hình.
+- Màn chính còn khoảng trống dưới thanh điều hướng trên màn dọc cao (nav ở y≈1800 trong canvas 2424).
+- Còn `print()` debug của user: `Close Popup …`, `Show Game Over because …`, `GAME_OVER because …`.
+
 

@@ -5,8 +5,11 @@
 [node name="Hud" type="Control" unique_id=1383101299]
 layout_mode = 3
 anchors_preset = 0
+; Bám NGAY DƯỚI thanh trạng thái (0.072 = đáy Status) + khe 37px như thiết kế:
+anchor_top = 0.072
+anchor_bottom = 0.072
 offset_left = 50.0
-offset_top = 175.0
+offset_top = 37.0
 offset_right = 1030.0
-offset_bottom = 424.0
+offset_bottom = 286.0
 script = ExtResource("1_cwihr")

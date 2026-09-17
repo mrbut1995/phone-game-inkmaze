@@ -28,6 +28,7 @@
 [ext_resource type="LabelSettings" uid="uid://bwpq01l1whp4t" path="res://resources/settings/text/text_game_button_label.tres" id="18_qnb83"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="28_card_label"]
 [ext_resource type="Script" uid="uid://cxkejvefm60q1" path="res://scripts/core/controllers/anchor_controller.gd" id="32_gxtfn"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_button_sub.tres" id="33_btn_sub"]
 [ext_resource type="Script" uid="uid://dpvjjtn4enoyu" path="res://scripts/core/controllers/hint_controller.gd" id="33_02fa5"]
 [ext_resource type="Script" uid="uid://b60h5vj4wkts5" path="res://scripts/core/controllers/undo_controller.gd" id="33_m4url"]
 [ext_resource type="Script" uid="uid://noqw2uhwrxj5" path="res://scripts/core/controllers/grid_controller.gd" id="33_twgab"]
@@ -137,11 +138,11 @@ texture_focused = ExtResource("10_sww3w")
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.90700006
-anchor_bottom = 0.13000001
+anchor_bottom = 0.072
 offset_left = 55.0
-offset_top = 159.0
+offset_top = 21.0
 offset_right = 55.43994
-offset_bottom = 158.39998
+offset_bottom = 270.0
 
 [node name="Button" type="HBoxContainer" parent="." index="4" unique_id=479699925]
 layout_mode = 1
@@ -168,12 +169,27 @@ modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.31016046
-anchor_top = 0.09375
+anchor_top = 0.03
 anchor_right = 0.9414118
-anchor_bottom = 0.475
+anchor_bottom = 0.4
 offset_right = -0.088012695
-text = "Vẽ Đường"
+vertical_alignment = 1
+text = "STR_TOOL_DRAW_PATH"
 label_settings = ExtResource("18_qnb83")
+metadata/_edit_use_anchors_ = true
+
+[node name="Sub" type="Label" parent="Button/Tool" index="1"]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 0.72)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.31016046
+anchor_top = 0.44
+anchor_right = 0.9414118
+anchor_bottom = 0.76
+offset_right = -0.088012695
+vertical_alignment = 1
+text = "STR_TOOL_DRAW_PATH_DESC"
+label_settings = ExtResource("33_btn_sub")
 metadata/_edit_use_anchors_ = true
 
 [node name="Wall" type="TextureButton" parent="Button" index="1" unique_id=1501999871]
@@ -189,13 +205,29 @@ modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.34759358
-anchor_top = 0.10625
+anchor_top = 0.04
 anchor_right = 0.9224599
-anchor_bottom = 0.4875
+anchor_bottom = 0.41
 grow_horizontal = 2
 grow_vertical = 2
-text = "Ghi Nhớ"
+vertical_alignment = 1
+text = "STR_TOOL_MARK_WALL"
 label_settings = ExtResource("18_qnb83")
+metadata/_edit_use_anchors_ = true
+
+[node name="Sub" type="Label" parent="Button/Wall" index="1"]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 0.72)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.34759358
+anchor_top = 0.45
+anchor_right = 0.9224599
+anchor_bottom = 0.77
+grow_horizontal = 2
+grow_vertical = 2
+vertical_alignment = 1
+text = "STR_TOOL_MARK_WALL_DESC"
+label_settings = ExtResource("33_btn_sub")
 metadata/_edit_use_anchors_ = true
 
 [node name="Undo" type="TextureButton" parent="Button" index="2" unique_id=184996623]

@@ -23,8 +23,15 @@ const DOT_ACTIVE := preload("res://assets/images/level_selector/dot_active.svg")
 const DOT_INACTIVE := preload("res://assets/images/level_selector/dot_inactive.svg")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-## Số món mỗi trang ở lưới 2 cột (2 cột × 3 hàng — đúng mockup/shopping_pencil.svg)
+## Số món mỗi trang ở lưới 2 cột — GIÁ TRỊ THIẾT KẾ (màn 1080×1920).
+## Số thực tế được tính lại theo CHIỀU CAO khung nhìn (`_grid_per_page`): màn thấp /
+## xoay ngang thì ít hàng hơn, màn cao thì nhiều hàng hơn (content giãn hết chỗ trống).
 const TILES_PER_PAGE := 6
+## Lưới ô: 2 cột, khe ngang 30 / khe dọc 24 (khớp `_make_grid`)
+const GRID_COLUMNS := 2
+const GRID_V_SEP := 24.0
+## Khe dọc giữa các khối trong danh sách (khớp `List.theme_override_constants/separation`)
+const LIST_SEP := 20.0
 ## Ngưỡng nhận diện kéo (px) và ngưỡng tính là "vuốt" (px)
 const DRAG_THRESHOLD := 14.0
 const SWIPE_MIN := 70.0
@@ -57,6 +64,14 @@ var _cards: Array[Control] = []
 var _category := "pen"
 var _page := 0
 var _pages := 1
+## id món ĐẦU trang đang xem — dùng để giữ đúng vị trí khi xoay màn hình (phân trang lại)
+var _page_first_id := ""
+## Số món/trang đang áp dụng (để biết có cần phân trang lại khi màn hình đổi cỡ)
+var _last_per_page := 0
+## Cỡ thẻ ô (đọc 1 lần từ item_tile.tscn) — phục vụ tính số hàng vừa khung
+static var _tile_h := 0.0
+## Cỡ bàn nháp thử bút (đọc 1 lần từ doodle_pad.tscn)
+static var _pad_h := 0.0
 ## Bàn nháp thử bút (chỉ tab BÚT & MỰC) + ngòi bút đang xem thử trên đó
 var _doodle_pad: Control = null
 var _preview_pen := ""
@@ -103,6 +118,82 @@ func _ready() -> void:
 	_build_tabs()
 	_refresh_wallet()
 	show_tab(_category)
+	# Xoay màn hình (dọc ⇄ ngang) -> tính lại số món/trang và giữ nguyên món đang xem
+	var vp := get_viewport()
+	if vp != null and not vp.size_changed.is_connected(_on_viewport_resized):
+		vp.size_changed.connect(_on_viewport_resized)
+	# Khung danh sách chỉ có kích thước THẬT sau frame đầu -> tính lại phân trang cho khớp
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_refresh_pagination_if_needed()
+
+
+## Số món mỗi trang theo CHIỀU CAO thật của khung danh sách (đổi khi xoay màn hình)
+func _grid_per_page() -> int:
+	var avail := scroll.size.y if scroll != null else 0.0
+	if avail <= 0.0:
+		return TILES_PER_PAGE
+	# Bàn nháp thử bút (tab BÚT & MỰC) luôn nằm TRÊN lưới -> trừ chỗ của nó
+	# (dùng cỡ THIẾT KẾ để kết quả ổn định cả khi pad chưa được dựng xong)
+	var extra := 0.0
+	if _category == "pen":
+		extra = _doodle_pad_height() + LIST_SEP
+	var grid_avail := maxf(avail - extra, 0.0)
+	var row_h := _tile_height() + GRID_V_SEP
+	var rows := maxi(1, int(floor((grid_avail + GRID_V_SEP) / maxf(row_h, 1.0))))
+	return maxi(GRID_COLUMNS, rows * GRID_COLUMNS)
+
+
+## Chiều cao bàn nháp thử bút: cỡ thật khi đã dựng, nếu chưa thì đọc từ scene gốc
+func _doodle_pad_height() -> float:
+	if _doodle_pad != null and is_instance_valid(_doodle_pad) and _doodle_pad.size.y > 0.0:
+		return _doodle_pad.size.y
+	if _pad_h <= 0.0:
+		var probe := DOODLE_PAD_SCENE.instantiate() as Control
+		if probe != null:
+			_pad_h = maxf(probe.size.y, probe.custom_minimum_size.y)
+			probe.free()
+		if _pad_h <= 0.0:
+			_pad_h = 215.0
+	return _pad_h
+
+
+## Cỡ cao của thẻ ô (đọc từ scene gốc 1 lần — fallback 294 như thiết kế)
+func _tile_height() -> float:
+	if _tile_h <= 0.0:
+		var probe := TILE_SCENE.instantiate() as Control
+		if probe != null:
+			_tile_h = probe.size.y
+			probe.free()
+		if _tile_h <= 0.0:
+			_tile_h = 294.0
+	return _tile_h
+
+
+## Đổi cỡ màn hình: co/giãn số món mỗi trang rồi đặt lại trang sao cho
+## MÓN ĐANG XEM vẫn nằm trong trang hiện tại (không nhảy về trang 1).
+func _on_viewport_resized() -> void:
+	if not GRID_CATEGORIES.has(_category):
+		return
+	await get_tree().process_frame          # chờ khung Content nhận kích thước mới
+	_refresh_pagination_if_needed()
+
+
+## Phân trang lại NẾU số món mỗi trang đã đổi (màn hình đổi cỡ) — giữ món đang xem
+func _refresh_pagination_if_needed() -> void:
+	if not is_inside_tree() or not GRID_CATEGORIES.has(_category):
+		return
+	var per_page := _grid_per_page()
+	if per_page == _last_per_page:
+		return
+	var anchor := _page_first_id
+	if per_page > 0 and not anchor.is_empty():
+		var items := Shop.items(_category)
+		for i in items.size():
+			if str(items[i].get("id", "")) == anchor:
+				_page = i / per_page
+				break
+	_rebuild()
 
 
 # ---------------------------------------------------------------------------
@@ -144,7 +235,7 @@ func wallet_text() -> String:
 
 
 func items_per_page() -> int:
-	return TILES_PER_PAGE if GRID_CATEGORIES.has(_category) else 0
+	return _grid_per_page() if GRID_CATEGORIES.has(_category) else 0
 
 
 ## Có đang khoá bấm nút không (vừa vuốt xong) — dùng cho test
@@ -261,6 +352,7 @@ func _rebuild() -> void:
 func _rebuild_rows(items: Array[Dictionary]) -> void:
 	_pages = 1
 	_page = 0
+	_page_first_id = ""
 	var index := 0
 	for item in items:
 		var card: Control = ROW_SCENE.instantiate()
@@ -274,7 +366,9 @@ func _rebuild_rows(items: Array[Dictionary]) -> void:
 
 
 func _rebuild_grid(items: Array[Dictionary]) -> void:
-	_pages = maxi(1, int(ceil(float(items.size()) / float(TILES_PER_PAGE))))
+	var per_page := _grid_per_page()
+	_last_per_page = per_page
+	_pages = maxi(1, int(ceil(float(items.size()) / float(per_page))))
 	_page = clampi(_page, 0, _pages - 1)
 	# Bàn nháp thử bút nằm TRÊN lưới (chỉ tab BÚT & MỰC — mockup/shopping_pencil.svg)
 	if _category == "pen":
@@ -282,9 +376,10 @@ func _rebuild_grid(items: Array[Dictionary]) -> void:
 	var grid := _make_grid()
 	list_box.add_child(grid)
 
-	var start := _page * TILES_PER_PAGE
+	var start := _page * per_page
+	_page_first_id = str(items[start].get("id", "")) if start < items.size() else ""
 	var index := 0
-	for offset in TILES_PER_PAGE:
+	for offset in per_page:
 		var item_index := start + offset
 		if item_index >= items.size():
 			break
@@ -330,6 +425,7 @@ func _refresh_card_selection() -> void:
 func _rebuild_coin(items: Array[Dictionary]) -> void:
 	_pages = 1
 	_page = 0
+	_page_first_id = ""
 	var no_ads: Dictionary = {}
 	var packs: Array[Dictionary] = []
 	for item in items:

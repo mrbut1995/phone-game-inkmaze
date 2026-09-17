@@ -59,7 +59,10 @@ var _anchor_hit_radius := FALLBACK_ANCHOR_SIZE * 0.75
 ## Tỉ lệ co board cho vừa panel (1.0 = board nhỏ, giữ nguyên cỡ gốc)
 var _fit_scale := 1.0
 ## Vùng GIẤY VẼ THẬT bên trong node Panel (art card_board.svg có lề đổ bóng)
-var _panel_insets := Vector4.ZERO      # left, top, right, bottom (px trong node Panel)
+## Lưu theo TỈ LỆ 0..1 của Panel (left, top, right, bottom) — KHÔNG lưu pixel texture:
+## panel bị kéo giãn theo màn hình (màn 9:20 cao hơn thiết kế) nên insets phải scale
+## theo kích thước panel, nếu không lưới bị lệch LÊN TRÊN so với tâm thẻ giấy.
+var _panel_insets := Vector4.ZERO      # left, top, right, bottom (tỉ lệ 0..1)
 
 var _cell_nodes: Array = []        # MazeCell
 var _cell_rects: Array[Rect2] = []
@@ -316,9 +319,12 @@ func _read_panel_insets() -> void:
 	if max_x < min_x or max_y < min_y:
 		return
 
-	var sx := float(img.get_width()) / float(PROBE)
-	var sy := float(img.get_height()) / float(PROBE)
-	_panel_insets = Vector4(min_x * sx, min_y * sy, max_x * sx, max_y * sy)
+	# Lưu TỈ LỆ 0..1 (không phải pixel texture) — xem chú thích `_panel_insets`.
+	_panel_insets = Vector4(
+		float(min_x) / float(PROBE),
+		float(min_y) / float(PROBE),
+		float(max_x + 1) / float(PROBE),
+		float(max_y + 1) / float(PROBE))
 
 
 ## Vùng giấy vẽ thật (toạ độ cục bộ của Board) - dùng để canh lưới + cho test
@@ -326,8 +332,12 @@ func panel_inner_rect() -> Rect2:
 	var panel: Control = get_node_or_null("Panel") as Control
 	if panel == null:
 		return Rect2(Vector2.ZERO, size)
-	var inner_pos := panel.position + Vector2(_panel_insets.x, _panel_insets.y)
-	var inner_size := Vector2(_panel_insets.z - _panel_insets.x, _panel_insets.w - _panel_insets.y)
+	# Insets là TỈ LỆ -> nhân với kích thước panel THẬT (panel giãn theo màn hình)
+	var inner_pos := panel.position + Vector2(
+		_panel_insets.x * panel.size.x, _panel_insets.y * panel.size.y)
+	var inner_size := Vector2(
+		(_panel_insets.z - _panel_insets.x) * panel.size.x,
+		(_panel_insets.w - _panel_insets.y) * panel.size.y)
 	if inner_size.x <= 0.0 or inner_size.y <= 0.0:
 		return Rect2(panel.position, panel.size)
 	return Rect2(inner_pos, inner_size)
