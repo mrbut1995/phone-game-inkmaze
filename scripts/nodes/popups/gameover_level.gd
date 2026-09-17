@@ -36,6 +36,11 @@ func _on_open() -> void:
 	if subtitle != null:
 		subtitle.text = tr("STR_GAME_OVER_LEVEL_SUBTITLE").format([int(data.get("progress", 0))])
 
+	# Chế độ có LƯỢT THỬ LẠI (Fog of War): nút HỒI SINH cộng thêm 1 lượt thử
+	var revive_desc := piece("Banner/Desc") as Label
+	if revive_desc != null and int(data.get("max_retries", 0)) > 0:
+		revive_desc.text = tr("STR_REVIVE_DESC_RETRY")
+
 	var rows: Array = data.get("challenges", [])
 	var done := 0
 	for i in COUNT:

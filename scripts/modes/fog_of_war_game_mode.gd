@@ -10,19 +10,28 @@ extends BaseGameMode
 var _player_pos: Vector2i = Vector2i.ZERO
 var _explored_cells: Dictionary = {}
 
+## Số LƯỢT THỬ LẠI của một ván: đâm tường 3 lần là hết ván.
+## Hồi sinh (xem quảng cáo) sẽ được cộng thêm 1 lượt.
+const RETRY_LIVES := 3
+
 
 func _init(p_difficulty := "normal") -> void:
 	mode_id = "fog_of_war"
-	mode_name = "Fog of War"
-	mode_description = "Số chỉ hiển thị quanh vị trí hiện tại. Di chuyển để khám phá các con số tiếp theo!"
+	mode_name = "Fog of War Maze"
+	mode_description = "Số chỉ hiển thị quanh vị trí hiện tại. Đâm tường vô hình sẽ bị đưa về S và trừ 1 LƯỢT THỬ LẠI (3 lượt)!"
 	is_endless = false
 	difficulty = p_difficulty
-	instant_game_over_on_hazard = (p_difficulty == "hardcore")
+	# KHÔNG thua ngay khi đâm tường: mỗi lần đâm chỉ mất 1 LƯỢT THỬ LẠI (hết lượt mới thua).
+	instant_game_over_on_hazard = false
+	respawn_on_hazard = true
+	max_retries = RETRY_LIVES
+	reset_retries()
 	initial_steps = 25
 
 
 func setup_floor(_floor_number: int) -> MazeData:
 	_explored_cells.clear()
+	reset_retries()
 	var size := 4 if difficulty == "normal" else 5
 	var maze := MazeData.new()
 	maze.generate(size, size, 0.0)
@@ -60,6 +69,17 @@ func on_player_moved(grid_view: Control, new_pos: Vector2i, maze: MazeData) -> v
 	_update_fog(new_pos, maze.width, maze.height)
 	if grid_view != null and grid_view.has_method("apply_fog_of_war"):
 		grid_view.apply_fog_of_war(new_pos, 1, _explored_cells)
+
+
+## Đâm tường (hoặc hồi sinh): nhân vật về S -> mở sương lại quanh ô xuất phát.
+## Trả về số lượt thử còn lại sau khi trừ (xem `BaseGameMode.register_hazard()`).
+func on_respawned(grid_view: Control, pos: Vector2i, maze: MazeData) -> void:
+	if maze == null:
+		return
+	_player_pos = pos
+	_update_fog(pos, maze.width, maze.height)
+	if grid_view != null and grid_view.has_method("apply_fog_of_war"):
+		grid_view.apply_fog_of_war(pos, 1, _explored_cells)
 
 
 func evaluate_move(from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> Dictionary:

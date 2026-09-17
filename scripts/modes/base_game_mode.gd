@@ -14,6 +14,10 @@ var instant_game_over_on_hazard: bool = false
 ## Đạp vào ô nguy hiểm (tường ẩn / mìn...) thì có bị đưa về ô xuất phát không.
 ## `false` = ở lại ô hiện tại (chỉ trừ bước) — dùng cho Minesweeper.
 var respawn_on_hazard: bool = true
+## Hệ thống LƯỢT THỬ LẠI (Fog of War): tổng số lượt của một ván. 0 = chế độ không dùng hệ thống này.
+var max_retries: int = 0
+## Số LƯỢT THỬ LẠI còn lại (chỉ có ý nghĩa khi `max_retries > 0`)
+var retries_left: int = 0
 ## Số giây đếm ngược pha "ghi nhớ" trước khi vào chơi (Blind Memory). 0 = không có pha này.
 ## Khi > 0: GameController hiện toàn bộ tường + mở popup đếm ngược, đồng hồ đứng yên cho tới khi hết.
 var memorize_countdown_seconds: int = 0
@@ -51,6 +55,40 @@ func get_cell_text(pos: Vector2i, _maze: MazeData) -> String:
 ## Số bước bị trừ khi di chuyển từ from_pos sang to_pos.
 func get_step_cost(_from_pos: Vector2i, _to_pos: Vector2i, _maze: MazeData) -> int:
 	return 1
+
+
+# ---------------------------------------------------------------------------
+# LƯỢT THỬ LẠI (chỉ chế độ khai báo `max_retries > 0` mới dùng — VD Fog of War)
+# ---------------------------------------------------------------------------
+## Chế độ có dùng hệ thống LƯỢT THỬ LẠI không
+func uses_retries() -> bool:
+	return max_retries > 0
+
+
+## Đầu ván mới: nạp đầy lượt thử lại
+func reset_retries() -> void:
+	retries_left = maxi(max_retries, 0)
+
+
+## Ghi nhận 1 lần đâm chướng ngại vật (tường ẩn/mìn).
+## Trả về `true` nếu người chơi ĐÃ HẾT LƯỢT THỬ -> thua luôn (GameController mở popup thua).
+func register_hazard() -> bool:
+	if not uses_retries():
+		return instant_game_over_on_hazard
+	retries_left = maxi(retries_left - 1, 0)
+	return retries_left <= 0
+
+
+## Hồi sinh (xem quảng cáo): chế độ có lượt thử thì nhận thêm 1 lượt để đi tiếp.
+func on_revive() -> void:
+	if uses_retries():
+		retries_left = mini(retries_left + 1, max_retries)
+
+
+## Hook sau khi nhân vật bị đưa về ô xuất phát vì đâm chướng ngại vật (hoặc hồi sinh).
+## Chế độ có trạng thái hiển thị theo vị trí (Fog of War: mở sương quanh ô hiện tại) cập nhật ở đây.
+func on_respawned(_grid_view: Control, _pos: Vector2i, _maze: MazeData) -> void:
+	pass
 
 
 ## Kiểm tra tính hợp lệ của bước di chuyển (from_pos -> to_pos).

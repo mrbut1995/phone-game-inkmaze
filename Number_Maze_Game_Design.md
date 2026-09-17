@@ -1178,5 +1178,22 @@ không được gắn → `$Grid`/`$Column` trả về `null` (test Sổ tay/Ch�
 vào cây → luôn `add_child()` trước rồi mới gọi `setup()`.
 
 
+### 13.16. Fog of War: 3 LƯỢT THỬ LẠI + HUD "BẢNG SƯƠNG MÙ" (2026-09-18)
+
+Luật mới (user yêu cầu): đâm tường vô hình **không** thua ngay — mỗi lần đâm bị đưa về ô S và **trừ 1 LƯỢT THỬ LẠI**;
+hết 3 lượt là thua. **Hồi sinh** (xem quảng cáo) cộng thêm **1 lượt thử** rồi chơi tiếp.
+
+| Nơi | Thay đổi |
+|---|---|
+| `BaseGameMode` | `max_retries` · `retries_left` · `uses_retries()` · `reset_retries()` · `register_hazard()` (true = hết lượt → thua) · `on_revive()` (+1 lượt) · hook `on_respawned()` |
+| `FogOfWarGameMode` | `RETRY_LIVES = 3`; bỏ thua-ngay khi đâm tường; sương mù mở lại quanh ô S sau mỗi lần hồi sinh/đâm tường |
+| `GridController` / `GameController` | gọi `register_hazard()` + `on_respawned()`; dữ liệu popup thua thêm `max_retries`/`retries_left`; nút HỒI SINH đổi mô tả sang `STR_REVIVE_DESC_RETRY` |
+| HUD | `nodes/hud/fog_of_war_hud.tscn` (`FogOfWarHUD`): THỜI GIAN 250×156 + BẢNG SƯƠNG MÙ 690×156 (lượt thử "n/3" · tầm nhìn bán kính 1 ô · 2 dòng cảnh báo) — KHÔNG có thẻ THỬ THÁCH |
+| Nút công cụ | nhãn phụ đổi theo chế độ (`GameScene.TOOL_SUB_KEYS`): Fog of War → "Dò trong sương" / "Cắm cờ mép ô" |
+
+Kiểm chứng: `test_fog_of_war.gd` **28/28** · `test_hud_modes` §4c (HUD fog) · harness tỉ lệ OK ở cả 10 cỡ màn hình
+(ảnh render `tmp_aspect/<size>/game_fog_of_war.png`).
+
+
 
 

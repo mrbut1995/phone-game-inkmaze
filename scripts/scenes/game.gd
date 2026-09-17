@@ -44,6 +44,8 @@ const HUD_SUM_PATH := preload("res://nodes/hud/sum_path_hud.tscn")
 const HUD_BLIND_MEMORY := preload("res://nodes/hud/blind_memory_hud.tscn")
 const HUD_COUNTDOWN := preload("res://nodes/hud/countdown_hud.tscn")
 const HUD_FADING_INK := preload("res://nodes/hud/fading_ink_hud.tscn")
+## Fog of War: THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử lại · tầm nhìn · cảnh báo) — không có thẻ Thử thách
+const HUD_FOG_OF_WAR := preload("res://nodes/hud/fog_of_war_hud.tscn")
 ## Time Attack: CHỈ thẻ THỜI GIAN đặt giữa khung (không có thẻ Thử thách)
 const HUD_TIME_ATTACK := preload("res://nodes/hud/time_attack_hud.tscn")
 
@@ -170,6 +172,8 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 			return HUD_COUNTDOWN
 		"fading_ink":
 			return HUD_FADING_INK
+		"fog_of_war":
+			return HUD_FOG_OF_WAR
 		"time_attack":
 			return HUD_TIME_ATTACK
 		_:
@@ -192,15 +196,36 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return CountdownHUD
 		"fading_ink":
 			return FadingInkHUD
+		"fog_of_war":
+			return FogOfWarHUD
 		"time_attack":
 			return TimeAttackHUD
 		_:
 			return LevelHUD
 
 
+## Nhãn PHỤ của 2 nút công cụ theo CHẾ ĐỘ (mockup matchup_<mode>.svg — vd Fog of War: "Dò trong sương" · "Cắm cờ mép ô")
+const TOOL_SUB_KEYS := {
+	"fog_of_war": ["STR_TOOL_DRAW_PATH_FOG", "STR_TOOL_MARK_WALL_FOG"],
+}
+const TOOL_SUB_DEFAULT := ["STR_TOOL_DRAW_PATH_DESC", "STR_TOOL_MARK_WALL_DESC"]
+
+
+## Đổi nhãn phụ của nút VẼ ĐƯỜNG / GHI NHỚ cho khớp chế độ đang chơi
+func _apply_tool_labels_for_mode(mode_name: String) -> void:
+	var keys: Array = TOOL_SUB_KEYS.get(mode_name.to_lower(), TOOL_SUB_DEFAULT)
+	var draw_sub := tool_path_btn.get_node_or_null("Sub") as Label
+	if draw_sub != null:
+		draw_sub.text = str(keys[0])
+	var wall_sub := tool_wall_btn.get_node_or_null("Sub") as Label
+	if wall_sub != null:
+		wall_sub.text = str(keys[1])
+
+
 ## Thay khung Information bằng HUD của chế độ đang chơi rồi gắn lại cho UIController /
 ## ChallengeController (thẻ Thử thách nằm trong HUD nên phải trỏ lại node mới).
 func _apply_hud_for_mode(mode_name: String) -> void:
+	_apply_tool_labels_for_mode(mode_name)
 	if hud_host == null or not is_inside_tree():
 		return
 	if hud_host.get_script() == _hud_class_for(mode_name):

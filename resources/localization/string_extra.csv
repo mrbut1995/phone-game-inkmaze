@@ -233,7 +233,17 @@ STR_HINT_DUNGEON,Endless tower: clear each floor with as few steps as you can!,T
 STR_HINT_TIME_ATTACK,Race the clock: reach the exit before time runs out!,Đua với đồng hồ: tới hố đích trước khi hết giờ!
 STR_HINT_MINESWEEPER,A cell number = how many walls touch it - stepping on a mine ends the run!,Số trên ô = số tường quanh ô - dẫm vào mìn là thua ngay!
 STR_HINT_BLIND_MEMORY,"Memorize the walls, then walk the hidden maze from memory!",Ghi nhớ tường rồi đi trong mê cung ẩn theo trí nhớ!
-STR_HINT_FOG_OF_WAR,Only nearby walls show up - feel your way to the exit!,Chỉ hiện tường ở gần - dò dẫm từng bước tới hố đích!
+STR_HINT_FOG_OF_WAR,Fog clears 1 cell around you - wall hit: back to S and -1 retry!,Sương tan quanh bạn 1 ô - đâm tường: về S và trừ 1 lượt thử!
+STR_HUD_FOG_TIME_SUB,SCOUTING,ĐANG DÒ ĐƯỜNG
+STR_HUD_FOG_RETRY_HEAD,❤️ RETRY LIVES,❤️ LƯỢT THỬ LẠI
+STR_HUD_FOG_RETRY_NOTE,{0} LIVES LEFT TO RETURN S,CÒN {0} LẦN VỀ S
+STR_HUD_FOG_VISION,👁️ VISION: RADIUS 1 CELL,👁️ TẦM NHÌN: BÁN KÍNH 1 Ô
+STR_HUD_FOG_VISION_CHIP,SURROUNDING,XUNG QUANH
+STR_HUD_FOG_WARN_1,Visited cells get fogged again,Ô đã đi qua sẽ bị sương che phủ lại
+STR_HUD_FOG_WARN_2,⚠️ Wall hit: back to S -1 retry!,"⚠️ Đâm tường: Về lại S, trừ 1 lượt thử!"
+STR_REVIVE_DESC_RETRY,Get +1 Retry to keep scouting,Nhận thêm +1 LƯỢT THỬ để dò tiếp
+STR_TOOL_DRAW_PATH_FOG,Scout through the fog,Dò trong sương
+STR_TOOL_MARK_WALL_FOG,Flag the cell edges,Cắm cờ mép ô
 STR_HINT_SUM_PATH,Each cell is a score - your path total must satisfy the TARGET!,Mỗi ô là một điểm - tổng đường đi phải thỏa điều kiện MỤC TIÊU!
 STR_HINT_COUNTDOWN_COST,Each cell is a toll on your step budget - pick the cheapest path!,Mỗi ô là cước phí trừ quỹ bước - hãy chọn đường rẻ nhất!
 STR_HINT_FADING_INK,Every step drains 1 ink from every cell - dried cells block the way!,Mỗi bước làm mọi ô mất 1 mực - ô cạn mực bị bít lối!

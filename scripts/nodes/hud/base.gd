@@ -9,6 +9,7 @@ extends Control
 ##   dungeon_mode.tscn  (DungeonHUD)   : THỜI GIAN + SỐ BƯỚC + TẦNG — Dungeon (endless)
 ##   minesweep_hud.tscn (MinesweepHUD) : THỜI GIAN + BOMB CÒN LẠI — Minesweeper Maze
 ##   sum_path_hud.tscn  (SumPathHUD)   : THỜI GIAN + TỔNG HIỆN TẠI + MỤC TIÊU — Sum Path
+##   fog_of_war_hud.tscn (FogOfWarHUD) : THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử lại · tầm nhìn) — Fog of War
 ##
 ## UIController KHÔNG tự biết từng thẻ: nó chỉ gọi `update_hud(ctx)`, HUD con tự vẽ.
 ## Mọi HUD đều có thẻ THỜI GIAN tên node "Time/Value" (xem set_time()).

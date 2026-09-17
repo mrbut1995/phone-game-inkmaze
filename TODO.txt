@@ -1175,3 +1175,37 @@
 #
 # CÒN LẠI (chưa làm): `scripts/scenes/debug.gd` (màn DEBUG dev-only) vẫn tạo ~20 node bằng `.new()`
 # (row · chip · label · button · grid…) — chưa chuyển thành scene vì đây là công cụ dev, không phải UI người chơi.
+#
+# ============================================================================
+# FOG OF WAR: 3 LƯỢT THỬ LẠI + HUD "BẢNG SƯƠNG MÙ" THEO MOCKUP MỚI (vòng 18)
+# ============================================================================
+# Yêu cầu user: "update giao diện của Chế độ Fog Of War, và cả thay đổi thêm là được 3 lượt thử, sau khi đâm vào
+# tường 3 lần thì trò chơi kết thúc, khi sử dụng chức năng hồi sinh thì sẽ được thêm 1 lượng thử nữa".
+#
+# 1. LUẬT MỚI — 3 LƯỢT THỬ LẠI:
+#    · `BaseGameMode`: thêm `max_retries`/`retries_left` + `uses_retries()` · `reset_retries()` ·
+#      `register_hazard()` (trả về true nếu HẾT LƯỢT -> thua) · `on_revive()` (hồi sinh +1 lượt) ·
+#      hook `on_respawned()`.
+#    · `FogOfWarGameMode`: `RETRY_LIVES = 3`; `instant_game_over_on_hazard = false` (đâm tường KHÔNG thua ngay);
+#      `setup_floor()` nạp lại 3 lượt; đâm tường -> về ô S + trừ 1 lượt; hết lượt -> GameController mở popup thua.
+#    · `GridController`: sau khi đưa nhân vật về S phải gọi `mode.on_respawned()` (lỗi cũ: sương mù vẫn tính theo
+#      vị trí CŨ sau khi đâm tường/hồi sinh).
+#    · `GameController`: `_on_step_consumed` dùng `register_hazard()`; `revive_run()` gọi `on_revive()` + đồng bộ
+#      hiển thị qua `on_respawned()`; dữ liệu popup thua thêm `max_retries`/`retries_left`.
+#    · `GameOverLevelPopup`: khi `max_retries > 0` -> dòng dưới nút HỒI SINH đổi sang `STR_REVIVE_DESC_RETRY`
+#      ("Nhận thêm +1 LƯỢT THỬ để dò tiếp").
+# 2. HUD MỚI `nodes/hud/fog_of_war_hud.tscn` (+ `FogOfWarHUD`) theo `mockup/matchup_fog_of_war.svg`:
+#    THỜI GIAN 250×156 (chip "ĐANG DÒ ĐƯỜNG") + BẢNG SƯƠNG MÙ 690×156 (❤️ LƯỢT THỬ LẠI "n/3" + "CÒN n LẦN VỀ S" ·
+#    hàng 👁️ TẦM NHÌN + chip XUNG QUANH · 2 dòng cảnh báo luật). KHÔNG có thẻ THỬ THÁCH (`challenge_card() = null`).
+#    Art mới: `card_fog_sheet.svg` 690×156 · `card_fog_row_vision.svg` 425×42 · `card_fog_row_warn.svg` 425×64 ·
+#    `card_fog_chip_blue.svg` 105×26 · `card_fog_chip_time.svg` 135×24. Theme thêm 7 variation `HudFog*`.
+#    `GameScene`: `HUD_FOG_OF_WAR` + map `fog_of_war` -> `FogOfWarHUD`; nhãn PHỤ 2 nút công cụ đổi theo chế độ
+#    (`TOOL_SUB_KEYS` — Fog: "Dò trong sương" / "Cắm cờ mép ô").
+# 3. Chuỗi dịch mới (`string_extra.csv`): STR_HUD_FOG_* · STR_REVIVE_DESC_RETRY · STR_TOOL_*_FOG; cập nhật
+#    STR_HINT_FOG_OF_WAR cho luật mới.
+# 4. Kiểm chứng: `test_fog_of_war.gd` (MỚI, **28/28**: 3 lượt · về S · hết lượt -> popup thua · hồi sinh +1 ·
+#    đâm tiếp lại thua · HUD + nhãn nút) · `test_hud_modes` thêm mục 4c (HUD fog) · harness tỉ lệ OK ở cả 10 cỡ
+#    (ảnh `tmp_aspect/<size>/game_fog_of_war.png`).
+# 5. LƯU Ý: `test_hud_modes` (7 check) + `test_challenge_controller` (3 check) ĐANG FAIL ở HUD **Sum Path** và
+#    **Fading Ink** — do `nodes/hud/sum_path_hud.tscn` + `fading_ink_hud.tscn` đã bị đưa về BẢN CŨ (mất các khối
+#    tách riêng + anchors khác) trong khi test viết theo bản tách khối. CHƯA sửa — chờ quyết định của user.

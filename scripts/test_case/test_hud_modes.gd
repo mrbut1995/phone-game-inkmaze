@@ -20,7 +20,7 @@ extends SceneTree
 const HUD_SCRIPTS := {
 	"play": "res://scripts/nodes/hud/level_hud.gd",
 	"time_attack": "res://scripts/nodes/hud/time_attack_hud.gd",
-	"fog_of_war": "res://scripts/nodes/hud/level_hud.gd",
+	"fog_of_war": "res://scripts/nodes/hud/fog_of_war_hud.gd",
 	"dungeon": "res://scripts/nodes/hud/dungeon_hud.gd",
 	"minesweeper": "res://scripts/nodes/hud/minesweep_hud.gd",
 	"blind_memory": "res://scripts/nodes/hud/blind_memory_hud.gd",
@@ -51,6 +51,7 @@ func _init() -> void:
 	await _section_3_countdown(scene)
 	await _section_4_fading_ink(scene)
 	await _section_4b_time_attack(scene)
+	await _section_4c_fog_of_war(scene)
 	await _section_5_card_sizes()
 	await _section_6_sum_path_replay(scene)
 	await _section_7_countdown_budget_lock(scene)
@@ -270,6 +271,66 @@ func _section_4b_time_attack(scene: GameScene) -> void:
 		scene.game_controller.call("_update_hud")
 		_entry(not value.text.is_empty() and value.text != "00:00",
 			"Gia tri dong ho duoc cap tu timer ('%s')" % value.text)
+
+
+# ---------------------------------------------------------------------------
+# 4c. Fog of War — HUD riêng + LƯỢT THỬ LẠI (2026-09-18)
+# ---------------------------------------------------------------------------
+func _section_4c_fog_of_war(scene: GameScene) -> void:
+	print("[4c] HUD Fog of War (luot thu lai)...")
+	scene.switch_mode("fog_of_war", "normal")
+	await process_frame
+	var hud := scene.ui_controller.hud as FogOfWarHUD
+	_entry(hud != null, "Fog of War dung FogOfWarHUD (khong con dung chung LevelHUD)")
+	if hud == null:
+		return
+	var mode := scene.game_mode_controller.game_mode as FogOfWarGameMode
+	_entry(mode != null, "Lay duoc FogOfWarGameMode")
+	if mode == null:
+		return
+	_entry(mode.max_retries == 3 and mode.retries_left == 3,
+		"Dau van co dung 3 luot thu (max=%d con=%d)" % [mode.max_retries, mode.retries_left])
+
+	hud.update_hud({"mode": mode})
+	var value := hud.get_node_or_null("Sheet/Retry/Value") as Label
+	var max_label := hud.get_node_or_null("Sheet/Retry/Max") as Label
+	var note := hud.get_node_or_null("Sheet/Retry/Note") as Label
+	_entry(value != null and value.text == "3", "HUD hien '3' luot thu ('%s')"
+		% (value.text if value != null else ""))
+	_entry(max_label != null and max_label.text == "/3", "HUD hien mau '/3'")
+	_entry(note != null and note.text == tr("STR_HUD_FOG_RETRY_NOTE").format([3]),
+		"HUD hien dong nhac theo so luot ('%s')" % (note.text if note != null else ""))
+
+	mode.retries_left = 1
+	hud.update_hud({"mode": mode})
+	_entry(value != null and value.text == "1", "Mat luot -> HUD cap nhat ('%s')"
+		% (value.text if value != null else ""))
+	_entry(note != null and note.get_theme_color("font_color") == FogOfWarHUD.COLOR_NOTE_DANGER,
+		"Con 1 luot -> dong nhac chuyen DO")
+
+	_entry(hud.get_node_or_null("Time/Value") != null, "Co the THOI GIAN (Time/Value)")
+	_entry((hud.get_node_or_null("Time/Sub") as Label).text == "STR_HUD_FOG_TIME_SUB",
+		"The THOI GIAN co dong phu rieng cua che do")
+	# Chuỗi dịch của chế độ (đọc theo locale VI để chắc chắn đã re-import CSV)
+	var prev_locale := TranslationServer.get_locale()
+	TranslationServer.set_locale("vi")
+	_entry(tr("STR_HUD_FOG_TIME_SUB") == "ĐANG DÒ ĐƯỜNG",
+		"Chuoi VI dong phu the THOI GIAN ('%s')" % tr("STR_HUD_FOG_TIME_SUB"))
+	_entry(tr("STR_HUD_FOG_VISION_CHIP") == "XUNG QUANH",
+		"Chuoi VI chip TAM NHIN ('%s')" % tr("STR_HUD_FOG_VISION_CHIP"))
+	_entry(tr("STR_REVIVE_DESC_RETRY") != "STR_REVIVE_DESC_RETRY",
+		"Co chuoi cho nut HOI SINH cua che do luot thu")
+	TranslationServer.set_locale(prev_locale)
+	_entry(hud.get_node_or_null("Sheet/RowVision") is TextureRect, "Co hang TAM NHIN (nen rieng)")
+	_entry((hud.get_node_or_null("Sheet/ChipLabel") as Label).text == "STR_HUD_FOG_VISION_CHIP",
+		"Chip 'XUNG QUANH' nam trong hang TAM NHIN")
+	_entry(hud.get_node_or_null("Sheet/Warn2") is Label, "Co dong canh bao luat choi")
+	_entry(hud.challenge_card() == null,
+		"challenge_card() = null (bang Suong Mu chiem cho the THU THACH)")
+	var sheet := hud.get_node_or_null("Sheet") as Control
+	if sheet != null:
+		_entry(absf(sheet.size.x - 690.0) <= 1.0 and absf(sheet.size.y - 156.0) <= 1.0,
+			"Bang Suong Mu 690x156 (%.0fx%.0f)" % [sheet.size.x, sheet.size.y])
 
 
 # ---------------------------------------------------------------------------

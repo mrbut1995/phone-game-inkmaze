@@ -225,7 +225,9 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 		_move_costs.append(cost)
 	if hit_hazard:
 		game_state.record_wall_hit()
-		if game_mode_controller.game_mode != null and game_mode_controller.game_mode.instant_game_over_on_hazard:
+		# Chế độ thua-ngay (Play / Daily Classic / Minesweeper...) -> mở popup thua.
+		# Chế độ có LƯỢT THỬ LẠI (Fog of War): trừ 1 lượt, hết lượt mới thua.
+		if game_mode_controller.game_mode != null and game_mode_controller.game_mode.register_hazard():
 			_game_over.call_deferred()
 			return
 
@@ -368,6 +370,7 @@ func _game_over(reason := "") -> void:
 		stars = challenge_controller.stars()
 	_report_to_archivements(false, floor_time)
 
+	var mode: BaseGameMode = game_mode_controller.game_mode
 	if ui_controller != null:
 		ui_controller.show_game_over({
 			"floor": game_state.floor_number,
@@ -377,6 +380,8 @@ func _game_over(reason := "") -> void:
 			"steps_left": game_state.steps_remaining,
 			"steps_max": game_state.max_steps,
 			"revive_steps": revive_bonus_steps,
+			"max_retries": mode.max_retries if mode != null else 0,
+			"retries_left": mode.retries_left if mode != null else 0,
 			"stars": stars,
 			"challenges": challenge_rows,
 			"time": floor_time,
@@ -477,8 +482,15 @@ func revive_run() -> void:
 		return
 
 	# Level Mode: lùi nhân vật về ô ngay trước bước vừa rồi
+	# Chế độ có LƯỢT THỬ LẠI (Fog of War): hồi sinh cộng thêm 1 lượt thử để đi tiếp
+	if game_mode_controller.game_mode != null:
+		game_mode_controller.game_mode.on_revive()
 	if grid_controller != null and grid_controller.undo_last_move():
 		game_state.refund_step(1)
+	# Đồng bộ hiển thị của mode theo vị trí vừa hồi sinh (Fog of War: mở sương quanh ô hiện tại)
+	if grid_controller != null and grid_view != null and game_mode_controller.game_mode != null:
+		game_mode_controller.game_mode.on_respawned(
+			grid_view, grid_controller.current_pos, grid_controller.maze)
 	# Hoàn lại luôn bước đã mất cho lần đâm tường (sau khi hồi sinh nước đi đó coi như chưa xảy ra)
 	game_state.refund_step(1)
 	# Hiện lại đúng đoạn tường vừa đâm để người chơi thấy rõ chỗ vừa va vào

@@ -119,6 +119,9 @@ func try_move_to(pos: Vector2i) -> void:
 
 		if respawn and board_view.has_method("reset_to_start"):
 			board_view.call("reset_to_start")
+		if respawn:
+			# Mode có trạng thái hiển thị theo vị trí (Fog of War) cập nhật lại quanh ô S
+			game_mode_controller.game_mode.on_respawned(board_view, current_pos, maze)
 	elif eval_result.get("allowed", false):
 		var prev_pos := current_pos
 		_record_edge(current_pos, pos)
