@@ -3,7 +3,7 @@ extends SceneTree
 ## Test Case: BOARD TỰ CO CHO VỪA KHUNG (bug 2026-09: lưới > 5 ô bị tràn ra ngoài)
 ## - Board nhỏ (<= 5x5) giữ nguyên cỡ ô gốc (không đổi gì so với trước).
 ## - Board lớn (8x8, 11x11, 15x15, 20x20) phải co lại nằm GỌN trong khung giấy.
-## - Cỡ chữ số trên ô + bề rộng tường + anchor + cursor đều co theo.
+## - Cỡ chữ số trên ô + chữ phụ SẮP PHAI/CẠN + bề rộng tường + anchor + cursor đều co theo.
 ## - Màn mẫu 11x11 (level_14) khi vào game thật cũng phải vừa khung.
 ## ============================================================================
 
@@ -172,6 +172,17 @@ func _check_fit(board: Node, size: int, label: String) -> int:
 			break
 		var lbl: Label = cell.get_node_or_null("Sprite/Label")
 		if lbl == null or lbl.label_settings == null or lbl.label_settings.font_size != font_size:
+			applied = false
+			break
+		# Chữ phụ của lớp mực phai (SẮP PHAI / CẠN) phải co theo nhưng không nhỏ quá ngưỡng
+		var warn_lbl: Label = cell.get_node_or_null("Sprite/WarnLabel")
+		var faded_lbl: Label = cell.get_node_or_null("Sprite/FadedLabel")
+		if warn_lbl == null or warn_lbl.label_settings == null \
+				or warn_lbl.label_settings.font_size > font_size \
+				or warn_lbl.label_settings.font_size < 8 \
+				or faded_lbl == null or faded_lbl.label_settings == null \
+				or faded_lbl.label_settings.font_size > font_size \
+				or faded_lbl.label_settings.font_size < 10:
 			applied = false
 			break
 	if not applied:

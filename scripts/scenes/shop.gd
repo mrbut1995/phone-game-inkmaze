@@ -364,7 +364,8 @@ func _make_grid() -> GridContainer:
 	grid.name = "Grid"
 	grid.columns = 2
 	grid.add_theme_constant_override("h_separation", 30)
-	grid.add_theme_constant_override("v_separation", 30)
+	# Khe dọc 24 (thay 30): thẻ 294x2 + khe = 612 -> cả lưới vừa khung nhìn, không cần cuộn
+	grid.add_theme_constant_override("v_separation", 24)
 	return grid
 
 

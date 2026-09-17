@@ -131,7 +131,7 @@ scroll_deadzone = 12
 [node name="List" type="VBoxContainer" parent="Content" index="0" unique_id=696334226]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 30
+theme_override_constants/separation = 20
 
 [node name="Pager" type="Control" parent="." index="6" unique_id=2000316292]
 visible = false

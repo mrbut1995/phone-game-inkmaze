@@ -313,7 +313,7 @@ def scene_rects(scene, w=980.0, h=249.0):
 def dump():
     for scene in ("nodes/hud/level_mode.tscn", "nodes/hud/dungeon_mode.tscn",
                   "nodes/hud/minesweep_hud.tscn", "nodes/hud/sum_path_hud.tscn",
-                  "nodes/hud/blind_memory_hud.tscn"):
+                  "nodes/hud/blind_memory_hud.tscn", "nodes/hud/time_attack_hud.tscn"):
         print("== %s" % scene)
         for name, r in scene_rects(scene).items():
             print("  %-14s (%6.0f, %6.0f) - (%6.0f, %6.0f)   %4.0f x %4.0f"
@@ -327,6 +327,17 @@ def card_time(x, y, value="01:24", title="THỜI GIAN"):
     s = slip(x, y, 250, 138, BLUE, 3, 20, ruled=True)
     s += text(x + 32, y + 34, title, 18, INK_SOFT, 800)
     s += text(x + 62, y + 95, value, 46, INK, 950, family="'Segoe UI', monospace")
+    return s
+
+
+def card_time_tall(x, y, value="00:42", title="THỜI GIAN", sub="ĐẾM NGƯỢC"):
+    """Thẻ THỜI GIAN CAO 250x156 (card_time_tall.svg) — dùng cho HUD Time Attack
+    (chỉ 1 thẻ đặt giữa khung) và các HUD 3 thẻ mới (Time + thẻ chế độ 715x156)."""
+    s = slip(x, y, 250, 156, BLUE, 3, 20, ruled=True)
+    s += text(x + 32, y + 42, title, 18, INK_SOFT, 800)
+    s += text(x + 60, y + 108, value, 46, INK, 950, family="'Segoe UI', monospace")
+    if sub:
+        s += text(x + 60, y + 140, sub, 20, INK_SOFT, 700)
     return s
 
 
@@ -440,20 +451,19 @@ HAND_DRAWN = {
 MODES = [
     {
         "id": "time_attack",
-        "comment": "MÀN CHƠI — TIME ATTACK MAZE (HUD mặc định: THỬ THÁCH + THỜI GIAN đếm ngược)",
+        "comment": "MÀN CHƠI — TIME ATTACK MAZE (HUD CHỈ còn THỜI GIAN đặt GIỮA khung)",
         "title": "TIME ATTACK MAZE",
         "subtitle": "DAILY CHALLENGE · MODE time_attack",
-        "hud": "level_mode.tscn (LevelHUD)",
-        "cards": lambda: level_hud_cards("00:42 ↓", DEFAULT_ROWS),
+        "hud": "time_attack_hud.tscn (TimeAttackHUD)",
+        "cards": lambda: [{"draw": lambda: card_time_tall(365, 46, "00:42")}],
         "grid": (4, 4),
         "notes": {(0, 0): "S", (3, 3): "F", (1, 0): "2", (0, 1): "1", (1, 1): "3",
                   (2, 1): "2", (1, 2): "1", (2, 2): "2", (3, 2): "1"},
         "walls": [(1, 1, 1, 2), (3, 0, 3, 1), (2, 2, 3, 2), (0, 2, 1, 2)],
         "path": [(0, 0), (1, 0), (1, 1), (2, 1), (2, 2), (3, 2), (3, 3)],
         "markers": [
-            (1, 175, 275, "Thẻ THỜI GIAN 250×138 (card_time_slip.svg) — đếm ngược, hết giờ = thua"),
-            (2, 681, 214, "Thẻ THỬ THÁCH 720×246 (card_challenge.svg) — 3 dải 490×58"),
-            (3, 540, 700, "Số trên ô = số tường quanh ô (0..4) · tường ẩn vẽ nét đứt"),
+            (1, 540, 258, "Thẻ THỜI GIAN 250×156 (card_time_tall.svg) đặt GIỮA khung HUD — đếm ngược"),
+            (2, 540, 700, "Số trên ô = số tường quanh ô (0..4) · tường ẩn vẽ nét đứt"),
         ],
         "footer": "Luật: đâm tường về S và mất thời gian · thắng khi tới F trước khi hết giờ.",
     },

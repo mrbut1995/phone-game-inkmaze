@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <!-- MOCKUP: MÀN CHƠI — BLIND MEMORY MAZE (HUD: GHI NHỚ VỊ TRÍ TƯỜNG + THỜI GIAN · POPUP ĐẾM NGƯỢC) -->
+  <!-- Toa do lay tu scenes/game.tscn + nodes/hud/*.tscn (khung HUD 980x249 tai (50,175)) -->
+  <defs>
+    <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.6"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.2"/>
+    </pattern>
+    <filter id="boardShadow" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1E1610" flood-opacity="0.25"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E1610" flood-opacity="0.10"/>
+    </filter>
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+    <filter id="heroShadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#1E2830" flood-opacity="0.18"/>
+    </filter>
+    <filter id="pathGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#2575A7" flood-opacity="0.45"/>
+    </filter>
+    <clipPath id="boardClip"><rect width="1020" height="1020" rx="28"/></clipPath>
+  </defs>
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#notebookGrid)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+<g fill="#3D5A73" font-family="sans-serif" font-size="28" font-weight="600"><text x="60" y="55">09:41</text></g>
+  <g transform="translate(50, 85)" filter="url(#uiShadow)"><rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><line x1="26" y1="22" x2="26" y2="48" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round"/><line x1="44" y1="22" x2="44" y2="48" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round"/></g>
+  <g transform="translate(960, 85)" filter="url(#uiShadow)"><rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><path d="M50 25 A 15 15 0 1 0 52 42" fill="none" stroke="#3D83AE" stroke-width="4" stroke-linecap="round"/><polyline points="42,20 52,24 50,34" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <text x="540" y="94" font-family="sans-serif" font-size="26" font-weight="800" fill="#D84444" text-anchor="middle" letter-spacing="1">DAILY CHALLENGE · MODE blind_memory</text>
+  <text x="540" y="128" font-family="sans-serif" font-size="42" font-weight="800" fill="#224C6D" text-anchor="middle" letter-spacing="2">BLIND MEMORY</text>
+  <!-- ===== HUD theo chế độ: khung 980x249 tại (50,175) ===== -->
+  <g transform="translate(50, 175)">
+  <g transform="translate(0, 31)" filter="url(#uiShadow)">
+  <rect width="250" height="138" rx="20" fill="#6EA0C8"/>
+  <rect x="3" y="3" width="244" height="132" rx="16" fill="#FEFDFA"/>
+  <line x1="16" y1="40" x2="242" y2="40" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
+  <line x1="16" y1="80" x2="242" y2="80" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
+  <line x1="16" y1="120" x2="242" y2="120" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
+  <line x1="18" y1="3" x2="18" y2="135" stroke="#6EA0C8" stroke-width="3"/>
+  </g><text x="32" y="65" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">THỜI GIAN</text><text x="62" y="126" font-family="'Segoe UI', monospace" font-size="46" font-weight="950" fill="#224C6D">00:00</text>
+  <g transform="translate(270, 18)" filter="url(#uiShadow)">
+  <rect width="440" height="158" rx="24" fill="#3D83AE"/>
+  <rect x="4" y="4" width="432" height="150" rx="20" fill="#FEFDFA"/>
+  <line x1="24" y1="4" x2="24" y2="154" stroke="#3D83AE" stroke-width="3"/>
+  </g><text x="314" y="62" font-family="sans-serif" font-size="30" font-weight="900" fill="#224C6D" letter-spacing="1">GHI NHỚ VỊ TRÍ TƯỜNG</text><text x="314" y="114" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Nhìn kỹ các bức tường rồi đi bằng trí nhớ</text><text x="314" y="156" font-family="sans-serif" font-size="20" font-weight="800" fill="#D84444">CHẾ ĐỘ: NORMAL</text>
+  </g>
+
+  <!-- ===== Bàn cờ (Board node: 41,420 → 1061,1440) ===== -->
+  <g transform="translate(41, 420)"><g clip-path="url(#boardClip)"><rect width="1020" height="1020" fill="#FEFDFA"/><line x1="42" y1="0" x2="42" y2="1020" stroke="#D84444" stroke-width="3"/></g><rect width="1020" height="1020" rx="28" fill="none" stroke="#6EA0C8" stroke-width="6" filter="url(#boardShadow)"/></g>
+  <rect x="111.0" y="490.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="287.0" y="490.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="463.0" y="490.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="639.0" y="490.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="815.0" y="490.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="111.0" y="666.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="287.0" y="666.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="463.0" y="666.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="639.0" y="666.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="815.0" y="666.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="111.0" y="842.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="287.0" y="842.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="463.0" y="842.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="639.0" y="842.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="815.0" y="842.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="111.0" y="1018.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="287.0" y="1018.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="463.0" y="1018.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="639.0" y="1018.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="815.0" y="1018.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="111.0" y="1194.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="287.0" y="1194.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="463.0" y="1194.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="639.0" y="1194.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <rect x="815.0" y="1194.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
+  <g opacity="1.0"><rect x="160.28" y="539.28" width="77.44" height="77.44" rx="10" fill="#E7F0F7" stroke="#3D83AE" stroke-width="3"/><text x="199.0" y="593.84" font-family="sans-serif" font-size="52.8" font-weight="900" fill="#3D83AE" text-anchor="middle">S</text></g>
+  <g opacity="1.0"><rect x="864.28" y="1243.28" width="77.44" height="77.44" rx="10" fill="#E7F0F7" stroke="#3D83AE" stroke-width="3"/><text x="903.0" y="1297.84" font-family="sans-serif" font-size="52.8" font-weight="900" fill="#3D83AE" text-anchor="middle">F</text></g>
+  <line x1="287.0" y1="666.0" x2="287.0" y2="1018.0" stroke="#224C6D" stroke-width="7" stroke-linecap="round" opacity="0.85"/>
+  <line x1="463.0" y1="490.0" x2="463.0" y2="842.0" stroke="#224C6D" stroke-width="7" stroke-linecap="round" opacity="0.85"/>
+  <line x1="639.0" y1="842.0" x2="815.0" y2="842.0" stroke="#224C6D" stroke-width="7" stroke-linecap="round" opacity="0.85"/>
+  <line x1="111.0" y1="1018.0" x2="463.0" y2="1018.0" stroke="#224C6D" stroke-width="7" stroke-linecap="round" opacity="0.85"/>
+  <line x1="639.0" y1="1018.0" x2="639.0" y2="1194.0" stroke="#224C6D" stroke-width="7" stroke-linecap="round" opacity="0.85"/>
+  <line x1="287.0" y1="1194.0" x2="463.0" y2="1194.0" stroke="#224C6D" stroke-width="7" stroke-linecap="round" opacity="0.85"/>
+  <g transform="translate(220, 150)" filter="url(#uiShadow)"><rect width="640" height="280" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/><rect x="12" y="-24" width="226" height="54" rx="6" fill="#E8D9A8" opacity="0.85" transform="rotate(-3 125 3)"/><text x="320" y="66" font-family="sans-serif" font-size="40" font-weight="900" fill="#D84444" text-anchor="middle">GHI NHỚ!</text><text x="320" y="196" font-family="sans-serif" font-size="132" font-weight="950" fill="#D84444" text-anchor="middle">3</text><text x="320" y="248" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E" text-anchor="middle">Tường sẽ biến mất khi đếm ngược kết thúc</text></g>
+
+  <!-- ===== Thanh nút dưới ===== -->
+  <g transform="translate(73, 1528)" filter="url(#uiShadow)"><rect width="300" height="160" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><path d="M42 34 L74 60 L42 86 Z" fill="#3D83AE"/><text x="96" y="95" font-family="sans-serif" font-size="34" font-weight="800" fill="#224C6D">VẼ ĐƯỜNG</text></g>
+  <g transform="translate(393, 1528)" filter="url(#uiShadow)"><rect width="300" height="160" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><rect x="34" y="42" width="46" height="76" rx="8" fill="none" stroke="#3D83AE" stroke-width="4"/><text x="96" y="95" font-family="sans-serif" font-size="34" font-weight="800" fill="#224C6D">GHI NHỚ</text></g>
+  <g transform="translate(713, 1528)" filter="url(#uiShadow)"><rect width="160" height="160" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><path d="M112.0 41.6 A 32.0 32.0 0 1 1 105.60000000000001 48.0" fill="none" stroke="#3D83AE" stroke-width="6" stroke-linecap="round"/><polyline points="96.0,32.0 115.19999999999999,44.800000000000004 112.0,67.2" fill="none" stroke="#3D83AE" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g transform="translate(893, 1528)" filter="url(#uiShadow)"><rect width="160" height="160" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><circle cx="80.0" cy="67.2" r="32.0" fill="none" stroke="#E0A32A" stroke-width="5"/><line x1="60.8" y1="9.6" x2="99.2" y2="9.6" stroke="#E0A32A" stroke-width="5" stroke-linecap="round"/><line x1="48.0" y1="54.400000000000006" x2="48.0" y2="99.2" stroke="#E0A32A" stroke-width="5" stroke-linecap="round"/><line x1="112.0" y1="54.400000000000006" x2="112.0" y2="99.2" stroke="#E0A32A" stroke-width="5" stroke-linecap="round"/></g>
+
+  <!-- ===== Đánh dấu + bảng chú thích ===== -->
+  <g transform="translate(175, 275)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text></g>
+  <g transform="translate(540, 272)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text></g>
+  <g transform="translate(838, 190)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text></g>
+  <g transform="translate(540, 760)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">4</text></g>
+
+  <g transform="translate(70, 1709)" filter="url(#uiShadow)"><circle r="16" fill="#3D83AE"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text></g>
+  <text x="100" y="1716" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Thẻ THỜI GIAN 250×138 — đồng hồ ĐỨNG YÊN lúc ghi nhớ</text>
+  <g transform="translate(70, 1743)" filter="url(#uiShadow)"><circle r="16" fill="#3D83AE"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text></g>
+  <text x="100" y="1750" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Thẻ GHI NHỚ 440×158 (card_sum.svg) — KHÔNG có thẻ Thử thách</text>
+  <g transform="translate(70, 1777)" filter="url(#uiShadow)"><circle r="16" fill="#3D83AE"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text></g>
+  <text x="100" y="1784" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Popup đếm ngược 3→2→1→GO! (memory_countdown.tscn), không nền mờ</text>
+  <g transform="translate(70, 1811)" filter="url(#uiShadow)"><circle r="16" fill="#3D83AE"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">4</text></g>
+  <text x="100" y="1818" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Tường hiện toàn bộ khi ghi nhớ, sau đó ẩn hết để đi bằng trí nhớ</text>
+
+    <g transform="translate(70, 1852)"><text x="0" y="0" font-family="sans-serif" font-size="24" font-weight="800" fill="#224C6D">MOCKUP HUD · BLIND MEMORY  →  blind_memory_hud.tscn (BlindMemoryHUD)</text><text x="0" y="30" font-family="sans-serif" font-size="19" font-weight="700" fill="#718B9E">mode_id = blind_memory · mockup/matchup_blind_memory.svg · Luật: Thường = về S khi đâm tường, Hardcore = thua ngay.</text></g>
+</svg>

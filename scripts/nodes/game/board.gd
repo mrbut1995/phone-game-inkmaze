@@ -28,7 +28,7 @@ const GLOW_LINE_SHADER := preload("res://shaders/line_glowing_shader.gdshader")
 const FALLBACK_CELL_SIZE := 176.0
 const FALLBACK_ANCHOR_SIZE := 40.0
 const FALLBACK_WALL_WIDTH := 11.0
-const FALLBACK_CURSOR_SIZE := 44.0
+const FALLBACK_CURSOR_SIZE := 132.0
 const FALLBACK_MOVING_LINE_WIDTH := 40.0
 const FALLBACK_FONT_SIZE := 56.0
 
@@ -905,9 +905,13 @@ func hide_all_walls() -> void:
 
 ## Cập nhật lại SỐ trên mọi ô theo GameMode (mode có giá trị đổi theo thời gian — Fading Ink).
 ## `dim_unwalkable` = ô không còn đi vào được thì mờ đi (hết mực thì coi như trống).
+## Mode có `ink_left()` (Fading Ink): thay vì mờ cả ô, ô hiện LỚP cảnh báo riêng
+## (1 mực = nền hổ phách "SẮP PHAI" · 0 mực = lớp gạch + huy hiệu "CẠN") để phần
+## huy hiệu không bị mờ theo ô.
 func refresh_cell_texts(dim_unwalkable: bool = false) -> void:
 	if maze == null or game_mode == null:
 		return
+	var has_ink := game_mode.has_method("ink_left")
 	for y in _height:
 		for x in _width:
 			var pos := Vector2i(x, y)
@@ -916,7 +920,14 @@ func refresh_cell_texts(dim_unwalkable: bool = false) -> void:
 				continue
 			cell_node.set_text(game_mode.get_cell_text(pos, maze))
 			_sync_bomb_marker(cell_node, pos)
-			if dim_unwalkable:
+			if has_ink:
+				# Ô S/F không bao giờ cạn mực -> tắt lớp cảnh báo
+				var ink := -1
+				if pos != maze.get_start() and pos != maze.get_end():
+					ink = int(game_mode.call("ink_left", pos))
+				cell_node.set_ink_left(ink)
+				cell_node.modulate = Color(1, 1, 1, 1)
+			elif dim_unwalkable:
 				var walkable := not game_mode.has_method("is_walkable") \
 					or bool(game_mode.call("is_walkable", pos))
 				cell_node.modulate = Color(1, 1, 1, 1) if walkable else Color(1, 1, 1, 0.4)

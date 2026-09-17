@@ -146,12 +146,13 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 > - **Minesweeper Maze**: thẻ **THỜI GIAN** 250×138 + thẻ **BOM CÒN LẠI** 440×158 — art `card_bomb.svg` (mẩu giấy viền ĐỎ + lề đỏ + dòng kẻ ngang kiểu vở) + **sticker icon_bomb** bên phải, con số `còn/tổng` mực đỏ 72px. Panel MISSION cũ được thay bằng thẻ Bomb.
 > - **Sum Path**: thẻ **THỜI GIAN** 250×138 + thẻ **TỔNG HIỆN TẠI** 440×158 (`card_sum.svg` — viền xanh đậm, mực xanh, dòng kẻ ngang) + **thẻ TOÁN TỬ 112×112** (`card_op.svg`, nằm CHÍNH GIỮA thẻ Tổng và thẻ Mục tiêu, đè lên mép 2 thẻ — dạng `12 = 23`, ký hiệu mực ĐỎ) + thẻ **MỤC TIÊU** 250×138 (chỉ hiện con số). Panel MISSION cũ được thay bằng 3 thẻ này.
 > - **Blind Memory**: thẻ **THỜI GIAN** 250×138 + thẻ **GHI NHỚ VỊ TRÍ TƯỜNG** 440×158 (`card_sum.svg`) — **KHÔNG có thẻ THỬ THÁCH** (`mockup/matchup_blind_memory.svg`).
-> - **4 chế độ dùng chung LevelHUD** — Time Attack (`matchup_time_attack.svg`), Countdown Cost (`matchup_countdown_cost.svg`), Fog of War (`matchup_fog_of_war.svg`), Fading Ink (`matchup_fading_ink.svg`): cùng bố cục **THỜI GIAN + THỬ THÁCH**, mockup khác nhau ở phần bàn cờ minh hoạ + chú thích luật.
+> - **HUD mặc định `LevelHUD`** (THỜI GIAN + THỬ THÁCH) dùng cho **Play Mode** và **Fog of War** (`matchup_fog_of_war.svg`). **Time Attack** (2026-09-19) có HUD riêng `time_attack_hud.tscn` — **CHỈ thẻ THỜI GIAN 250×156 đặt GIỮA khung** (đếm ngược, dòng phụ "ĐẾM NGƯỢC"), **đã bỏ thẻ THỬ THÁCH**. Countdown Cost / Fading Ink / Sum Path / Blind Memory có HUD riêng (mục 10.2b).
 > - **Chất liệu HUD (từ 2026-11):** mọi thẻ là **mẩu giấy trắng trên nền vở kẻ ngang** — viền màu (xanh `#6EA0C8` / xanh đậm `#3D83AE` / đỏ `#D84444`) + lề sổ tay cùng màu + **dòng kẻ ngang** `#9FC0D6` (opacity 0.5) như trang vở. Art dùng cho các HUD mới: `card_time_slip.svg` (250×138), `card_bomb.svg` (440×158), `card_sum.svg` (440×158), `card_op.svg` (112×112).
 > - Tiêu đề game: Dungeon = `DUNGEON MODE` (một dòng, số tầng đã chuyển xuống thẻ TẦNG); Play Mode = dòng phụ đỏ `PLAY MODE · CHƯƠNG n` + dòng lớn `MÀN xx`.
 
 > **Kiến trúc HUD (tách thành scene theo chế độ):** khung **Information** trong `scenes/game.tscn` không còn chứa sẵn mọi thẻ — mỗi chế độ có 1 scene HUD riêng, tất cả đều kế thừa `nodes/hud/base.tscn` (khung 980×249 tại `(50,175)`, script `scripts/nodes/hud/base.gd`):
 > - `nodes/hud/level_mode.tscn` → `LevelHUD` — thẻ **THỬ THÁCH** + **THỜI GIAN** (Play Mode và các bộ luật không có thẻ riêng).
+> - `nodes/hud/time_attack_hud.tscn` → `TimeAttackHUD` — **CHỈ thẻ THỜI GIAN 250×156 đặt GIỮA khung** (`(365,46)`), đếm ngược, dòng phụ `STR_HUD_TIME_COUNTDOWN` (2026-09-19).
 > - `nodes/hud/dungeon_mode.tscn` → `DungeonHUD` — **SỐ BƯỚC** + **THỜI GIAN** + **TẦNG**.
 > - `nodes/hud/minesweep_hud.tscn` → `MinesweepHUD` — **BOM CÒN LẠI** + **THỜI GIAN**.
 > - `nodes/hud/sum_path_hud.tscn` → `SumPathHUD` — **TỔNG HIỆN TẠI** + **TOÁN TỬ** (giữa) + **MỤC TIÊU** + **THỜI GIAN**.
@@ -221,8 +222,8 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Thắng** | Tới F trước khi đồng hồ đếm ngược về 0 |
 | **Thua** | **Hết giờ** |
 | **Hồi sinh** | Quay lại bước trước đó (undo) |
-| **HUD** | `nodes/hud/level_mode.tscn` (`LevelHUD`) · mockup `mockup/matchup_time_attack.svg` |
-| **Chi tiết** | ✨ **⏱ Time Attack Maze** — Giới hạn thời gian tổng (60s/90s/120s) đếm ngược, không giới hạn số bước. Đâm tường về S mất thời gian. Hết giờ = Game Over. |
+| **HUD** | `nodes/hud/time_attack_hud.tscn` (`TimeAttackHUD`) — **CHỈ thẻ THỜI GIAN 250×156 đặt GIỮA khung** (đếm ngược + dòng phụ "ĐẾM NGƯỢC"), **KHÔNG có thẻ THỬ THÁCH** (2026-09-19) · mockup `mockup/matchup_time_attack.svg` (đã sinh lại theo HUD này) |
+| **Chi tiết** | ✨ **⏱ Time Attack Maze** — Giới hạn thời gian tổng (60s/90s/120s) đếm ngược, không giới hạn số bước. Đâm tường về S mất thời gian. Hết giờ = Game Over. HUD chỉ để **đồng hồ đếm ngược ở giữa** cho tập trung; 3 Thử thách vẫn được chấm và hiện đầy đủ ở popup kết quả. |
 
 ### 5.4. 💣 Minesweeper Maze
 
@@ -278,7 +279,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Thắng** | Tới F với tổng điểm thỏa điều kiện `SUM < / > / = Target` (luôn tồn tại ít nhất 1 nghiệm đúng) |
 | **Thua** | Hết đường hợp lệ / hết thời gian (không có hazard) |
 | **HUD** | `nodes/hud/sum_path_hud.tscn` (`SumPathHUD`) — **thiết kế mới 2026-02**: **THỜI GIAN** (250×156) + thẻ **CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI** (715×156) gồm **TỔNG HIỆN TẠI — con dấu TOÁN TỬ — MỤC TIÊU PHẢI ĐẠT** + thanh tiến độ + chip trạng thái (**KHÔNG có thẻ THỬ THÁCH** — thử thách chốt ở popup kết quả) · mockup `mockup/matchup_sum_path.svg` |
-| **Chi tiết** | ✨ **➕ Sum Path** — Không có tường. Số trên ô là điểm (1..9). Thắng khi tới F với tổng điểm thỏa `SUM < / > / = Target`. Mỗi ô chỉ tính điểm 1 lần. Luôn đảm bảo tồn tại ít nhất 1 nghiệm đúng. **HUD hiện 3 thẻ theo đúng thứ tự `TỔNG HIỆN TẠI — TOÁN TỬ — MỤC TIÊU`** (thẻ TOÁN TỬ nhỏ 112×112 nằm chính giữa, đè lên mép 2 thẻ kia; MỤC TIÊU chỉ hiện con số) thay cho panel MISSION cũ. |
+| **Chi tiết** | ✨ **➕ Sum Path** — Không có tường. Số trên ô là điểm (1..9). Thắng khi tới F với tổng điểm thỏa `SUM < / > / = Target`. Mỗi ô chỉ tính điểm 1 lần. Luôn đảm bảo tồn tại ít nhất 1 nghiệm đúng. **HUD hiện 3 thẻ theo đúng thứ tự `TỔNG HIỆN TẠI — TOÁN TỬ — MỤC TIÊU`** (thẻ TOÁN TỬ nhỏ 112×112 nằm chính giữa, đè lên mép 2 thẻ kia; MỤC TIÊU chỉ hiện con số) thay cho panel MISSION cũ. **Không còn thắng được nữa** (tổng đã VƯỢT mục tiêu trong khi điều kiện là `<` hoặc `=` — đi thêm chỉ tăng điểm) → nút **CHƠI LẠI** tự hiện **DƯỚI hai nút Vẽ Đường / Ghi Nhớ** (2026-09-19); người chơi vẫn có thể **Undo** để lùi bước — tổng tính lại theo đường đã đi nên nút tự ẩn khi tổng về dưới mức chết. |
 
 ### 5.8. ⏳ Countdown Cost
 
@@ -291,7 +292,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Thắng** | Tới F trong ngân sách (ngân sách = đường rẻ nhất + dự phòng ⇒ luôn thắng được nếu chọn đường rẻ) |
 | **Thua** | **Hết bước** |
 | **HUD** | `nodes/hud/countdown_hud.tscn` (`CountdownHUD`) — **thiết kế mới 2026-02**: **THỜI GIAN** (250×156) + **SỔ THEO DÕI NGÂN SÁCH BƯỚC CHÂN** (715×156) gồm **NGÂN SÁCH CÒN** (`còn/tổng`) · **ĐÃ TIÊU TỐN** (`-N BƯỚC` + số ô đã đi) · **GIÁ CƯỚC MỖI Ô** (chip RẺ/ĐẮT theo độ khó + dự phòng) + **dải phân đoạn** (mỗi đoạn = 1 bước) — **KHÔNG có thẻ THỬ THÁCH** · mockup `mockup/matchup_countdown_cost.svg` |
-| **Chi tiết** | ✨ **⏳ Countdown Cost** — **Số trên ô = CHI PHÍ BƯỚC khi bước vào ô đó**, hoàn toàn **không liên quan tới số tường quanh ô** (khác Play / Dungeon / Fog of War). Mọi ô trừ S/F đều có số ≥ 1 và luôn hiện số. Bước vào ô nào thì trừ đúng chi phí của ô đó; đâm tường: về S và trừ chi phí của ô đích vừa đâm vào. Ngân sách bước được tính đủ cho **đường đi rẻ nhất + khoảng dự phòng**, nên màn luôn thắng được nếu chọn đúng đường ít tốn kém; đi lệch qua các ô đắt sẽ hết bước. |
+| **Chi tiết** | ✨ **⏳ Countdown Cost** — **Số trên ô = CHI PHÍ BƯỚC khi bước vào ô đó**, hoàn toàn **không liên quan tới số tường quanh ô** (khác Play / Dungeon / Fog of War). Mọi ô trừ S/F đều có số ≥ 1 và luôn hiện số. Bước vào ô nào thì trừ đúng chi phí của ô đó; đâm tường: về S và trừ chi phí của ô đích vừa đâm vào. Ngân sách bước được tính đủ cho **đường đi rẻ nhất + khoảng dự phòng**, nên màn luôn thắng được nếu chọn đúng đường ít tốn kém; đi lệch qua các ô đắt sẽ hết bước. **Hết ngân sách (0 bước còn lại) thì KHOÁ DI CHUYỂN** — người chơi phải bấm **UNDO** (nút được NHẤN MẠNH: ám vàng + nhịp phồng) để hoàn lại **đúng chi phí bước vừa đi** rồi mới đi tiếp (2026-09-19). |
 
   | Độ khó | Lưới | Chi phí mỗi ô | Dự phòng | Ngân sách tối thiểu |
   |---|---|---|---|---|
@@ -308,12 +309,12 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Cổng vào** | Daily Challenge (thay chỗ **Area Maze** — đã BỎ từ 2026-11) · `mode_id = fading_ink` |
 | **Bàn cờ** | Theo độ khó: easy 3×3 · medium 4×4 · hard 5×5 · **không có tường trong** |
 | **Số trên ô** | **MỰC của riêng ô đó** (ban đầu 2..9) — **giảm 1 mỗi bước đi** (mọi ô cùng phai một nhịp) |
-| **Di chuyển** | 4 hướng · **chỉ đi vào ô còn mực**; ô hết mực bị chặn (không mất bước), mất số và **mờ đi** (alpha 0.4) |
+| **Di chuyển** | 4 hướng · **chỉ đi vào ô còn mực**; ô hết mực bị chặn (không mất bước), mất số và hiện **lớp gạch + huy hiệu CẠN**; ô còn đúng **1 mực** hiện **lớp SẮP PHAI** (nền hổ phách + chữ cảnh báo) |
 | **Thắng** | Tới F trước khi mực phai hết — phải đi **đường ngắn nhất** |
 | **Thua** | **Hết lối đi mà chưa tới F** → popup thua tiêu đề riêng `HẾT ĐƯỜNG ĐI!` (`STR_GAME_OVER_NO_PATH`) |
 | **Hồi sinh** | Quay lại bước trước đó — **mực hồi lại** đúng 1 điểm cho mọi ô |
 | **HUD** | `nodes/hud/fading_ink_hud.tscn` (`FadingInkHUD`) — **thiết kế mới 2026-02**: **THỜI GIAN** (250×156) + **TRẠM ĐO ĐỘ PHAI MỰC** (715×156) gồm **BƯỚC ĐÃ ĐI** (`N` + `-N MỰC`) · **QUANG PHỔ ĐẬM NHẠT CỦA MỰC** (4 mức) · cảnh báo **N Ô ĐÃ CẠN MỰC** (ẩn khi chưa có ô nào cạn) — **KHÔNG có thẻ THỬ THÁCH** · mockup `mockup/matchup_fading_ink.svg` |
-| **Chi tiết** | * **💧 Fading Ink (Mực Phai)** — *(thay cho Area Maze — đã BỎ từ 2026-11)* **Không có tường trong bàn.** Con số trên ô **KHÔNG phải số tường** mà là **MỰC của riêng ô đó** (mực ban đầu 2..9). **Người chơi chỉ được đi vào ô còn mực**; ô đã phai hết mực coi như ô trống — không đi vào được (bị chặn, KHÔNG mất bước, ô đó mờ đi và mất số). **MỖI BƯỚC ĐI làm MỌI ô trên bàn nhạt đi đúng 1 điểm mực** (không riêng ô vừa đi), nên phải tìm **đường ngắn nhất** tới F trước khi lối đi biến mất; đi vòng sẽ tự bịt đường của chính mình. Bàn luôn được sinh sao cho **đường ngắn nhất có đủ mực để tới F** (các ô trên đường đi được cấp mực theo số bước cần tới chúng, ô ngoài đường nhận mực thấp làm lối tắt dự phòng). **Đồng hồ đếm thời gian như thường**, không giới hạn số bước. **Hết lối đi mà chưa tới F = THUA** (popup thua hiện tiêu đề riêng `HẾT ĐƯỜNG ĐI!`). Nút **UNDO** lùi 1 bước thì **mực hồi lại** đúng 1 điểm cho mọi ô (trạng thái mực được tính lại từ số bước đã đi, không cần lưu lịch sử). HUD dùng bản **thiết kế mới**: thẻ **THỜI GIAN** + **TRẠM ĐO ĐỘ PHAI MỰC** (số bước đã đi · số mực đã phai · quang phổ đậm nhạt · cảnh báo ô cạn mực) — xem 10.2b. |
+| **Chi tiết** | * **💧 Fading Ink (Mực Phai)** — *(thay cho Area Maze — đã BỎ từ 2026-11)* **Không có tường trong bàn.** Con số trên ô **KHÔNG phải số tường** mà là **MỰC của riêng ô đó** (mực ban đầu 2..9). **Người chơi chỉ được đi vào ô còn mực**; ô đã phai hết mực coi như ô trống — không đi vào được (bị chặn, KHÔNG mất bước, ô đó mất số và hiện **lớp gạch ngang + huy hiệu CẠN**). **MỖI BƯỚC ĐI làm MỌI ô trên bàn nhạt đi đúng 1 điểm mực** (không riêng ô vừa đi), nên phải tìm **đường ngắn nhất** tới F trước khi lối đi biến mất; đi vòng sẽ tự bịt đường của chính mình. Bàn luôn được sinh sao cho **đường ngắn nhất có đủ mực để tới F** (các ô trên đường đi được cấp mực theo số bước cần tới chúng, ô ngoài đường nhận mực thấp làm lối tắt dự phòng). **Đồng hồ đếm thời gian như thường**, không giới hạn số bước. **Hết lối đi mà chưa tới F = THUA** (popup thua hiện tiêu đề riêng `HẾT ĐƯỜNG ĐI!`). Nút **UNDO** lùi 1 bước thì **mực hồi lại** đúng 1 điểm cho mọi ô (trạng thái mực được tính lại từ số bước đã đi, không cần lưu lịch sử). HUD dùng bản **thiết kế mới**: thẻ **THỜI GIAN** + **TRẠM ĐO ĐỘ PHAI MỰC** (số bước đã đi · số mực đã phai · quang phổ đậm nhạt · cảnh báo ô cạn mực) — xem 10.2b. |
 ### 5.10. Popup kết quả & Hồi sinh khi thua (Revive)
 
 | Cổng chơi | Mockup popup thua | Nội dung chính | Con dấu (stamp) | Nút HỒI SINH |
@@ -517,7 +518,7 @@ Cơ chế: `GameManager.prepare_mode_run(mode_id, difficulty, test_run, floor_ov
 |---|---|---|---|---|
 | Play Mode | `play` | `nodes/hud/level_mode.tscn` (LevelHUD) | `mockup/matchup_level.svg` | THỜI GIAN + THỬ THÁCH |
 | Dungeon Mode | `dungeon` | `nodes/hud/dungeon_mode.tscn` (DungeonHUD) | `mockup/matchup_dungeon.svg` | THỜI GIAN + SỐ BƯỚC + TẦNG |
-| Time Attack Maze | `time_attack` | `nodes/hud/level_mode.tscn` | `mockup/matchup_time_attack.svg` | THỜI GIAN (đếm ngược) + THỬ THÁCH |
+| Time Attack Maze | `time_attack` | `nodes/hud/time_attack_hud.tscn` (TimeAttackHUD) | `mockup/matchup_time_attack.svg` | **CHỈ THỜI GIAN** (đếm ngược, đặt giữa khung — 2026-09-19) |
 | Minesweeper Maze | `minesweeper` | `nodes/hud/minesweep_hud.tscn` (MinesweepHUD) | `mockup/matchup_minesweeper.svg` | THỜI GIAN + BOM CÒN LẠI |
 | Blind Memory Maze | `blind_memory` | `nodes/hud/blind_memory_hud.tscn` (BlindMemoryHUD) | `mockup/matchup_blind_memory.svg` | THỜI GIAN + GHI NHỚ VỊ TRÍ TƯỜNG (+ popup đếm ngược) |
 | Fog of War Maze | `fog_of_war` | `nodes/hud/level_mode.tscn` | `mockup/matchup_fog_of_war.svg` | THỜI GIAN + THỬ THÁCH |
@@ -558,7 +559,8 @@ Khung HUD: `Information` = Control tại `(50, 175)` kích thước `980 × 249`
 
 - Cả 3 thẻ đều theo ngôn ngữ **sổ tay**: viền màu theo chế độ (cam `#C2410C` · mực `#1D4E72` · xanh `#3D83AE`), lề dọc, dòng kẻ ô ly mờ; số liệu dùng theme variation `Hud*` trong `theme_text.tres`.
 - **Dải phân đoạn ngân sách**: mỗi bước = 1 phân đoạn (đã dùng = xám `#E2E8F0`, còn lại = cam `#EA580C`); bề rộng phân đoạn **tự co** để cả dải luôn vừa 654px khi ngân sách > 16 bước.
-- 3 chế độ này **không hiện thẻ THỬ THÁCH** trên HUD (thử thách/Sao vẫn tính đủ, hiện ở popup kết quả) — thay hẳn bố cục cũ `THỜI GIAN 250×138 + THỬ THÁCH 720×246`; 6 chế độ còn lại vẫn dùng bảng 10.2.
+- 3 chế độ này **không hiện thẻ THỬ THÁCH** trên HUD (thử thách/Sao vẫn tính đủ, hiện ở popup kết quả) — thay hẳn bố cục cũ `THỜI GIAN 250×138 + THỬ THÁCH 720×246`; các chế độ còn lại vẫn dùng bảng 10.2.
+- **Time Attack (2026-09-19)** — biến thể của khung này: `nodes/hud/time_attack_hud.tscn` (`TimeAttackHUD`) **CHỈ 1 thẻ THỜI GIAN 250×156 đặt GIỮA khung** tại `(365, 46)` (giữa cả ngang lẫn dọc), dòng phụ `STR_HUD_TIME_COUNTDOWN` “Đếm ngược”; không có thẻ Thử thách. Mockup `mockup/matchup_time_attack.svg` sinh lại theo đúng HUD này (bỏ thẻ THỬ THÁCH khỏi mockup).
 
 ### 10.2c. Panel HƯỚNG DẪN LUẬT CHƠI (Hint Guide)
 
@@ -591,12 +593,13 @@ Nút **"?"** trên HUD mở popup hướng dẫn **riêng cho chế độ đang 
 - **Bố cục mỗi scene** (toạ độ "paper-local" của tờ giấy 920×1480, Panel override về (80,200)–(1000,1680)): chrome **DÙNG CHUNG cho cả 3 trang** nằm trực tiếp trong `Guide`: `Washi` (350,-22) · `Paper` viền accent 3.5px rx26 · `PaperDetail` (`guide_paper_detail.svg`) · `Close` 56×56 (830,24) · `Chip` 190×30 (110,48) + chữ 13px · `Tabs/Tab1..3` 245×48 (y=142, x=105/360/615) kèm vòng số vẽ bằng node · `Prev`/`Next` ‹ › 52×52 (105/305, y=1100 — trạng thái khoá **nướng sẵn**: prev mờ xanh `#224C6D/#6EA0C8`, next mờ xám `#718B9E/#BACEDC` như mockup) · `Dots/Dot1..3` · `Index` "TRANG x / 3" canh phải x=860. Phần **NỘI DUNG riêng từng trang** nằm trong `Pages/Page1..3`: ảnh minh hoạ `Img` tại (90,200) 785×535 (viewBox `-15 -10 785 535` khớp khung 755×510 tại (105,210)) · các Label chữ trên ảnh · `Title` 38px Black baseline (110,118) · `Mục` 16px baseline 779 · 3 hàng luật `Row1..3` 755×76 (y=797/885/973, vòng số r16, chữ 18/16px) · `Cta` 755×100 (105,1180) · `Link` 18px ~1322. **Cta/Link để trong từng trang** vì mockup vẽ khác nhau mỗi trang (trang cuối CTA đậm hơn, link "bỏ qua" khác "xem lại").
 - **Số/ký hiệu trên grid ghi TRỰC TIẾP** khỏi khoá dịch: chuỗi không có chữ cái (1 · 2 · 15 · 04 · 01:24 · = · ? · < · >) + `S`/`F` nướng thẳng vào Label (`is_literal_text()` trong `tools/mockup/instruction_mockup.py`) — chỉ chữ có nghĩa mới dùng khoá `STR_GI_*`.
 - **Tab & dots dùng chung** đổi trạng thái bằng script qua `@export` (generator nướng 2 bộ StyleBoxFlat + màu chữ vào root scene): tab đang chọn = accent + chữ/vòng trắng, tab thường = `#F0F7FB` viền `#BACEDC` chữ `#718B9E`; dot đang chọn = viên thuốc 38×18 accent, dot thường = chấm tròn 16×16 `#D1E2ED` — hàng dots canh trái từ mép dot đầu (x=185, cách nhau 12px), script dàn lại vị trí theo trang (khớp mockup cả 3 trang, generator tự cảnh báo nếu lệch > 2.5px).
-- **Hành vi** — `scripts/nodes/popups/instruction_popup.gd` (class `InstructionPopup`, chỉ lo logic, KHÔNG sinh nội dung): vuốt ngang (ngưỡng 14px/quãng 90px) · lăn chuột · phím ←→ · bấm tab/dots để nhảy trang · đổi trang thì script cập nhật: style tab đang chọn · `Prev` khoá ở trang 1 & `Next` khoá ở trang 3 · dàn lại dots · format `Index` từ `STR_GI_PAGE_INDEX` · CTA trang cuối = đóng popup · link trang cuối = về trang 1, link các trang trước = bỏ qua (đóng) · sfx `BTN_WOOD_TAP`/`PAGE_TURN`/`BTN_CLICK`.
+- **Hành vi** — `scripts/nodes/popups/instruction_popup.gd` (class `InstructionPopup`, chỉ lo logic, KHÔNG sinh nội dung): vuốt ngang (ngưỡng 14px/quãng 90px) · lăn chuột · phím ←→ · bấm tab/dots để nhảy trang · đổi trang thì script cập nhật: style tab đang chọn · `Prev` khoá ở trang 1 & `Next` khoá ở trang 3 · dàn lại dots · format `Index` từ `STR_GI_PAGE_INDEX` · **nút X (`Close` 56×56) = đóng popup** · CTA trang cuối = đóng popup · link trang cuối = về trang 1, link các trang trước = bỏ qua (đóng) · sfx `BTN_WOOD_TAP`/`PAGE_TURN`/`BTN_CLICK`.
+  - **GOTCHA đã sửa (2026-09-19):** `Close` là **`TextureButton`** — `TextureButton` kế thừa **`BaseButton`** chứ KHÔNG phải `Button`, nên cast cũ `get_node(...) as Button` trả về **null** → nút X không bao giờ được nối signal (bấm không đóng). Đã đổi `close_button() -> BaseButton`.
 - **Ảnh minh hoạ ThorVG-safe**: Godot/ThorVG **không vẽ** `<text>`/`<use>` — `tools/mockup/prepare_guideline_images.py` nhúng cầu thang `<use>` và chuyển số/ký hiệu (✓, ➔→•) thành **path glyph thật** (Be Vietnam Pro Black + fallback Noto Sans JP); ảnh gốc sao lưu ở `mockup/instruction/_extracted_source/`. Chữ ①②③ trên tab thay bằng **vòng số vẽ bằng node** (font game không có các glyph này).
 - **Chuỗi dịch**: chữ có nghĩa dùng khoá `STR_GI_*` (vi = đúng chữ trong mockup, en = `tools/content/guide_text_en.py`): chrome theo trang `STR_GI_<MODE>_P<n>_TITLE/SECTION/CTA/LINK/TAB#/R#T/R#D`, chip `STR_GI_<MODE>_CHIP`, chữ trên ảnh dedupe `STR_GI_X###`, nhãn trang `STR_GI_PAGE_INDEX`. Sinh khoá + ghi CSV: `tools/content/build_instruction_data.py` (kèm `tools/content/_guide_keys.json` cho generator scene) — bỏ qua token số/ký hiệu.
 - **Sinh scene**: `tools/mockup/gen_instruction_popups.py` — đọc mockup qua `tools/mockup/instruction_mockup.py` (toạ độ tuyệt đối + style kế thừa), nướng thẳng mọi Label/Button/StyleBoxFlat vào `.tscn`, giữ nguyên uid + `unique_id` của scene placeholder cũ.
 - **Nối dây**: `GameController.INSTRUCTION_SCENES` (play/daily_classic → `normal_maze`, fallback `normal_maze`) → `Popups.open_path("res://nodes/popups/instruction/<mode>.tscn")`; đồng hồ đứng trong lúc xem hướng dẫn, đóng popup thì chạy lại. Đã gỡ `"instruction"` khỏi `PopupManager.POPUPS` và xoá bộ file cũ (`nodes/popups/instruction.tscn`, `scripts/nodes/popups/instruction.gd`, `scripts/utils/instruction.gd`).
-- **Kiểm thử**: `scripts/test_case/test_instruction.gd` — 285 check: bảng mode→scene · đủ khoá dịch vi+en quét từ file `.tscn` · cấu trúc 3 trang · chrome dùng chung không lặp trong từng trang · số/ký hiệu ghi trực tiếp · tab/dots/nav hoạt động · CTA/link đúng hành vi · tích hợp nút "?" mở đúng scene (dungeon/play/time_attack).
+- **Kiểm thử**: `scripts/test_case/test_instruction.gd` — 294 check: bảng mode→scene · đủ khoá dịch vi+en quét từ file `.tscn` · cấu trúc 3 trang · chrome dùng chung không lặp trong từng trang · số/ký hiệu ghi trực tiếp · tab/dots/nav hoạt động · **nút X đóng popup** · CTA/link đúng hành vi · tích hợp nút "?" mở đúng scene (dungeon/play/time_attack).
 
 ### 10.3. Sinh lại mockup
 
@@ -607,7 +610,7 @@ python tools/mockup/gen_matchup.py --dump     # in toạ độ node thật của
 ```
 
 - Tool đọc **toạ độ thật** từ `nodes/hud/*.tscn` + `scenes/game.tscn` (Board `(41,420)-(1061,1440)`, thanh nút `(73,1528)-(1031,1688)`, Status `(50,85)`).
-- Hằng `HAND_DRAWN` trong tool liệt kê **5 mockup art tay của user** (`matchup_level` · `matchup_dungeon` · `matchup_sum_path` · `matchup_countdown_cost` · `matchup_fading_ink`) → chạy tool sẽ **BO QUA** 5 file này, chỉ sinh lại 4 mockup còn lại (time_attack · minesweeper · blind_memory · fog_of_war).
+- Hằng `HAND_DRAWN` trong tool liệt kê **5 mockup art tay của user** (`matchup_level` · `matchup_dungeon` · `matchup_sum_path` · `matchup_countdown_cost` · `matchup_fading_ink`) → chạy tool sẽ **BO QUA** 5 file này, chỉ sinh lại 4 mockup còn lại (time_attack · minesweeper · blind_memory · fog_of_war). Riêng **time_attack** sinh theo HUD mới (chỉ thẻ THỜI GIAN đặt giữa — 2026-09-19).
 - Mockup mang **bảng chú thích đánh số**: badge số đặt ngay trên thành phần cần giải thích + danh sách chú thích dưới thanh nút.
 
 ---
@@ -643,11 +646,12 @@ Tờ giấy `rank_sheet.svg` **940×1570 tại (70,185)**, viền `#6EA0C8` 3.5p
 | 3 tab | (95, 52), rộng 240 · 235 · 245, cách 15 | tab đang chọn = nền `#3D83AE` + chữ trắng; tab còn lại = giấy + viền `#8FB9D2` |
 | 2 đường kẻ nét đứt | y = 126 và y = 522, rộng 755 | dùng lại `assets/images/settings/divider_dashed.svg` (STRETCH_TILE) |
 | Bục vinh quang | (95, 140), cao 370 | Gold (255,170) · Silver (20,215) · Bronze (525,240) — toạ độ trong cụm |
-| Danh sách cuộn | (95, 545) 755×770 | `ScrollContainer` ẩn thanh cuộn (`vertical_scroll_mode = 3`), VBox cách 15px |
+| Danh sách cuộn | (95, 545) 755×770 | `ScrollContainer` ẩn thanh cuộn (`vertical_scroll_mode = 3`), VBox cách 15px — **vuốt dọc để cuộn** (2026-09-19) |
 | Thanh "hạng của bạn" | (95, 1330) 755×110 | nền `#3D83AE` viền `#256286`, hạng màu `#FBBF24` |
 | Ghi chú chân trang | y = 1480 / 1516 | 1 dòng nghiêng (làm mới 10 phút) + 1 dòng nhỏ (bảng offline demo) |
 
 - Hàng danh sách: `nodes/ranking/rank_row.tscn` + `scripts/nodes/ranking/rank_row.gd` — `setup(entry, board)`; bố cục `#hạng (x=40) · cờ (x=96) · tên (x=152) · kỷ lục (phải, x=600) · điểm (phải, x=600)`; hàng của người chơi tự đổi sang art `rank_row_you.svg` (nền xanh nhạt).
+- **Vuốt/cuộn danh sách (2026-09-19):** hàng xếp hạng là `Control` (mouse_filter STOP) nên "ăn" hết sự kiện kéo → `ScrollContainer` không tự cuộn được. `ranking.gd` tự xử lý ở `_input` (chạy TRƯỚC GUI): ngưỡng **14px** mới tính là vuốt (trục dọc → `scroll_vertical = int(_drag_scroll − delta.y)`), `set_input_as_handled()` khi cuộn; kéo bắt đầu **ngoài** vùng cuộn thì bỏ qua; đổi tab reset `scroll_vertical = 0`.
 - Theme variations mới: `RankTabLabel` · `RankRowIndex/Name/Record/Points` · `RankPodiumRank{Gold,Silver,Bronze}` · `RankPodiumPoints{Gold,Silver,Bronze}` · `RankPodiumName/Record` · `RankMyRank/Name/Sub/Record/Value` · `RankChip` · `RankFooter` · `RankFooterNote`.
 - Chuỗi dịch mới nằm ở `resources/localization/string_extra.csv` (id,en,vi): `STR_RANK_TITLE`, `STR_RANK_SCOPE`, `STR_RANK_TAB_*`, `STR_RANK_RECORD_*`, `STR_RANK_POINTS`, `STR_RANK_YOU`, `STR_RANK_SUBTITLE`, `STR_RANK_NO_RECORD(_SHORT)`, `STR_RANK_FOOTER`, `STR_RANK_DEMO`.
 
@@ -660,7 +664,7 @@ Tờ giấy `rank_sheet.svg` **940×1570 tại (70,185)**, viền `#6EA0C8` 3.5p
 | `scenes/ranking.tscn` + `scripts/scenes/ranking.gd` | Màn hình (`class_name RankingScene`): 3 tab dựng bằng code · đổ bục · đổ danh sách · thanh hạng của bạn · Back → Main |
 | `nodes/ranking/rank_row.tscn` + `scripts/nodes/ranking/rank_row.gd` | Component 1 hàng 755×90 (`class_name RankRow`, có cache texture cờ) |
 | `assets/images/ranking/*.svg` | `rank_sheet` · `tab_active`/`tab_normal` · `medal_gold`/`silver`/`bronze` · `podium_gold`/`silver`/`bronze` · `rank_row` · `rank_row_you` · `my_rank_bar` · `chip_scope` |
-| `scripts/test_case/test_ranking.gd` | 84 check: API dữ liệu · sắp hạng · người chơi · ổn định seed · cửa sổ làm mới · định dạng · scene (3 tab · bục · danh sách · thanh đáy · đổi tab) |
+| `scripts/test_case/test_ranking.gd` | 95 check: API dữ liệu · sắp hạng · người chơi · ổn định seed · cửa sổ làm mới · định dạng · scene (3 tab · bục · danh sách · thanh đáy · đổi tab · **vuốt dọc cuộn được, kéo ngắn/kéo ngoài vùng không cuộn**) |
 
 **Khác biệt so với mockup (có chủ đích):**
 
@@ -852,9 +856,9 @@ Danh mục (giá tính bằng Xu Mực, trừ ngăn NẠP XU tính bằng VNĐ):
 ### 13.3. Trạng thái thẻ & nút
 
 - **Thẻ dọc** (`nodes/shop/item_row.tscn`, 980×180) dùng cho DỤNG CỤ: Badge · Icon · Tên · Mô tả (**2 dòng**, ellipsis) · dòng phụ · nút 270×75.
-- **Thẻ ô** (`nodes/shop/item_tile.tscn`, **475×315** — đúng mockup `shopping_pencil.svg`) dùng cho BÚT & MỰC + GIẤY VỞ:
+- **Thẻ ô** (`nodes/shop/item_tile.tscn`, **475×294** — rút gọn chiều cao từ **315 → 294** để cả lưới vừa khung nhìn, giữ đúng tỉ lệ mockup `shopping_pencil.svg`) dùng cho BÚT & MỰC + GIẤY VỞ:
   lề trái màu món · **nhãn góc trên-trái** (bề ngang tự co theo chữ) · **vòng icon** (`IconCircle`, alpha 0.16) + icon + **nét mực vẽ thử** (`ink_stroke`) · tên (24) · mô tả · dòng trạng thái · nút **200×46**.
-  Lưới 2 cột × 3 hàng = **6 ô/trang** (10 bút → 2 trang; 8 giấy vở → 2 trang).
+  Lưới 2 cột × 3 hàng = **6 ô/trang** (10 bút → 2 trang; 8 giấy vở → 2 trang). **Khe lưới: ngang 30 (475×2 + 30 = 980 khít khung) · dọc 24** — cố ý chọn để mọi tab **VỪA khung nhìn 1200px, không cần vuốt dọc** (bàn nháp 215 + khe list 20 + lưới 3×294+2×24 = 1165 ≤ 1200).
 - **Thẻ gói nạp** (`nodes/shop/coin_tile.tscn`, **475×240**) dùng cho tab NẠP XU: vòng icon + **icon cấp Xu** (art riêng, không modulate) · tên 24 · mô tả · dòng ưu đãi (hổ phách) · nút giá VNĐ 419×56.
 - **Hàng VIP** (`nodes/shop/noads_row.tscn`, **980×200**) cho gói Xoá quảng cáo: nhãn đỏ `chip_red` · tiêu đề 32 · mô tả 17 · nút đỏ 230×80 (mua rồi → `ĐÃ SỞ HỮU` và khoá nút).
 - Nút đổi theo trạng thái: **giá Xu** (hổ phách + icon Xu; món VIP dùng nút hổ phách đặc chữ trắng) · **SỬ DỤNG** (đã sở hữu, art TRẮNG + `modulate` màu món hàng) · **ĐANG DÙNG ✓** (đang mặc, nút xanh lá, khoá) · **MUA THÊM N** (dụng cụ) · **giá VNĐ** (gói nạp) · chưa đủ Xu → **nút mờ + note "Chưa đủ Xu Mực"**.
@@ -887,7 +891,7 @@ Theo yêu cầu "chuẩn bị sẵn việc Apply Theme và Pen, chưa cần appl
 | Eyebrow + Title | giữa, y ≈ 92/119 | "TIỆM VĂN PHÒNG PHẨM" (đỏ) + "CỬA HÀNG" (`STR_SHOP_*`) |
 | Ví Xu | (775, 85) 255×70 | icon Xu + số + nút **+** |
 | 4 tab nhãn vở | y=185 (tab chọn, 240×65) / y=195 (tab thường, 240×55) | dựng **bằng code** (TextureButton + Label), art `tab_active/tab_inactive`; vạch đáy `TabLine` y=250 |
-| Content (cuộn) | (50, 270) 980×**1200** | lưới 2 cột 6 ô/trang (bút/giấy) · thẻ gói nạp 2 cột + hàng VIP trên cùng (nạp xu) · danh sách thẻ dọc (dụng cụ) |
+| Content (cuộn) | (50, 270) 980×**1200** | lưới 2 cột 6 ô/trang (bút/giấy) · thẻ gói nạp 2 cột + hàng VIP trên cùng (nạp xu) · danh sách thẻ dọc (dụng cụ) — **mọi tab vừa khung nhìn**, không cần cuộn (dụng cụ: 6×180+5×20 = 1180) |
 | Pager | y ≈ 1500 | "TRANG x / y" + chấm + 2 mũi tên (ẩn khi 1 trang) |
 | GiftBanner | (50, 1545) 980×115 | viền đỏ + icon quà + nút `+50 XU` |
 | Footer | y ≈ 1710 | câu đề tựa chân trang |
@@ -895,15 +899,16 @@ Theo yêu cầu "chuẩn bị sẵn việc Apply Theme và Pen, chưa cần appl
 **Vuốt / cuộn** (tự xử lý ở `_input` — nút trên thẻ "ăn" sự kiện kéo nên `ScrollContainer` không tự cuộn được):
 vuốt **ngang** → đổi trang (khi tab có >1 trang) · vuốt **dọc** → cuộn danh sách món · chọn trục theo hướng di chuyển đầu tiên
 (ngưỡng 14px) · vuốt đủ xa (≥70px) mới đổi trang · sau mỗi lần vuốt **KHOÁ bấm nút 0.35s** (`clicks_locked()`) để không mua nhầm.
+**Từ 2026-09-19:** cả 4 tab đều **vừa khung nhìn** nên vuốt dọc không còn cần thiết — handler dọc vẫn giữ làm dự phòng (nội dung ngắn hơn khung thì `scroll_vertical` đứng yên).
 
 Mọi node gốc của scene đều có `index="1".."8"` để node `Popups` của `base.tscn` vẫn nằm TRÊN CÙNG.
 
 ### 13.7. Asset · theme · chuỗi dịch
 
-- `assets/images/shop/` (30 SVG): `tab_active`/`tab_inactive` · `card_row` (980×180) · **`card_tile` (475×315)** · **`card_coin` (475×240)** · **`card_noads` (980×200)** · `chip_price` · `chip_red` (nhãn đỏ no-ads) · `btn_action_{normal,pressed,amber}` · `btn_equipped` · **`btn_tile_{normal,done,price,price_vip}` (200×46)** · **`btn_coin` (419×56)** · **`btn_noads` (230×80)** · `wallet_chip` · `banner_gift` · `btn_plus` · `gift_box` · `icon_box` · **`icon_circle`** · `ink_stroke` · `icon_{pen,ink,paper,coin}` · `icon_tool_{undo,hint,reveal,time,revive,shield}` (art TRẮNG → `modulate`) · **`icon_coin_t1..t5`** (icon cấp Xu: xu đơn · cọc xu · đống xu · túi tiền · rương vàng — lấy từ `mockup/coin_tiers.svg`).
+- `assets/images/shop/` (30 SVG): `tab_active`/`tab_inactive` · `card_row` (980×180) · **`card_tile` (475×294 — thẻ ô)** · **`card_coin` (475×240)** · **`card_noads` (980×200)** · `chip_price` · `chip_red` (nhãn đỏ no-ads) · `btn_action_{normal,pressed,amber}` · `btn_equipped` · **`btn_tile_{normal,done,price,price_vip}` (200×46)** · **`btn_coin` (419×56)** · **`btn_noads` (230×80)** · `wallet_chip` · `banner_gift` · `btn_plus` · `gift_box` · `icon_box` · **`icon_circle`** · `ink_stroke` · `icon_{pen,ink,paper,coin}` · `icon_tool_{undo,hint,reveal,time,revive,shield}` (art TRẮNG → `modulate`) · **`icon_coin_t1..t5`** (icon cấp Xu: xu đơn · cọc xu · đống xu · túi tiền · rương vàng — lấy từ `mockup/coin_tiers.svg`).
 - Theme variations (`theme_text.tres`, nhóm `Shop*`, 27 cái): `ShopTitle` · `ShopEyebrow` · `ShopTabLabel(Active)` · `ShopName(Tile)` · `ShopDesc` · `ShopStock` · `ShopPrice(Amber)` · `ShopBadge(Danger)` · `ShopBonus` · `ShopNoads{Title,Desc,Price}` · `ShopBtnText(Amber/Done)` · `ShopWalletCount/Label` · `ShopBannerTitle/Desc/Btn` · `ShopPageLabel` · `ShopFooter`.
 - Chuỗi mới (`string_extra.csv`): `STR_SHOP_TITLE/EYEBROW` · `STR_SHOP_TAB_{PEN,THEME,TOOL,COIN}` · `STR_SHOP_PAGE_FORMAT` · `STR_SHOP_STOCK_FORMAT` + `STR_SHOP_UNIT_{PACK,TURN,COIN}` · `STR_SHOP_BONUS_TAG` · `STR_SHOP_USE` · `STR_SHOP_BUY_MORE` · `STR_SHOP_EQUIPPED` · `STR_SHOP_OWNED_BTN` · `STR_SHOP_NOT_ENOUGH` · `STR_SHOP_PRICE_FORMAT` · `STR_SHOP_BANNER_*` · 23 nhãn `STR_SHOP_BADGE_*` · 60 khoá tên/mô tả món hàng (`STR_SHOP_ITEM_*`, `STR_SHOP_THEME_*`, `STR_SHOP_TOOL_*`, `STR_SHOP_COIN_*`).
-- Mockup: `mockup/shopping_pencil.svg` · `shopping_tool.svg` · `shopping_coin.svg` (hàng VIP + lưới 5 gói Xu có icon cấp) · `shopping_theme_page_1/2.svg` (**thẻ 475×315, 6 thẻ/trang**) · `coin_tiers.svg` (5 cấp icon, số Xu = 500/2,000/3,500/8,000/20,000 khớp gói nạp thật) — **cùng một bộ khung** (status bar · Back (50,85) · eyebrow + CỬA HÀNG · ví 255×70 tại (775,85) · 4 tab nhãn vở với tab đang chọn nổi lên + vạch đáy y=250 · banner (50,1545) · chân trang y≈1710 · thanh gesture home).
+- Mockup: `mockup/shopping_pencil.svg` · `shopping_tool.svg` · `shopping_coin.svg` (hàng VIP + lưới 5 gói Xu có icon cấp) · `shopping_theme_page_1/2.svg` (**thẻ ô, 6 thẻ/trang**) · `coin_tiers.svg` (5 cấp icon, số Xu = 500/2,000/3,500/8,000/20,000 khớp gói nạp thật) — **cùng một bộ khung** (status bar · Back (50,85) · eyebrow + CỬA HÀNG · ví 255×70 tại (775,85) · 4 tab nhãn vở với tab đang chọn nổi lên + vạch đáy y=250 · banner (50,1545) · chân trang y≈1710 · thanh gesture home).
 
 ### 13.8. File liên quan & kiểm thử
 
@@ -942,6 +947,9 @@ Quầng sáng = Line2D con (`name = "Glow"`, blend CỘNG) nằm dưới nét ch
 `apply_pen(pen_id)` + `set_base_width(w)` + `set_stroke(points)`; `Board.apply_pen_skin()` (gọi trong `setup_maze()` và khi `ThemeManager.skin_changed`)
 đổi icon con trỏ (`PlayerCursor.apply_pen`), nét `moving_line`, vệt bút mờ lịch sử (`InkStroke.style_plain`) và vết bước chân theo màu/icon bút.
 
+**Cỡ con trỏ người chơi (2026-09-19):** `nodes/game/player_cursor.tscn` đặt **132×132** — **gấp 3 lần cỡ cũ 44×44** (bằng 3/4 cỡ ô 176 nên nổi rõ giữa ô).
+`board.gd` đọc cỡ thật từ scene (`_read_scene_size(PLAYER_CURSOR_SCENE, FALLBACK_CURSOR_SIZE)` với `FALLBACK_CURSOR_SIZE = 132`) rồi co theo `_fit_scale` của board (sàn `MIN_CURSOR_SIZE = 18px`), pivot luôn ở tâm để chạy giữa 2 ô đúng vị trí.
+
 **Bàn nháp thử bút** (mockup `shopping_pencil.svg` khu 5): `nodes/shop/doodle_pad.tscn` + `scripts/nodes/shop/doodle_pad.gd` (`class_name ShopDoodlePad`),
 kích thước **980×215**, chỉ hiện ở tab BÚT & MỰC, nằm **TRÊN lưới thẻ**. Vẽ thử bằng ngón tay (mỗi nét là 1 `InkStroke` cùng chất liệu với game),
 có nét mẫu tự vẽ khi đổi ngòi, ngòi bút chạy theo tay, thẻ **ĐANG XEM THỬ** (tên bút + icon con trỏ + con dấu `DÙNG THỬ ✓` / `ĐANG DÙNG ✓`).
@@ -950,9 +958,9 @@ Thẻ bút trong lưới hiện đúng icon con trỏ của chính nó. Art: `as
 Chuỗi mới: `STR_SHOP_TRY_{TITLE,HINT,BADGE,STAMP,USING}`.
 
 **Kiểm thử:** `scripts/test_case/test_pen_skin.gd` (89 check: bảng skin + con trỏ/nét mực thật trong màn chơi theo từng bút) và mục bàn nháp trong `test_shop.gd` (243 check).
-| `scripts/nodes/shop/item_row.gd/.tscn` · `item_tile.gd/.tscn` · `coin_tile.gd/.tscn` · `noads_row.gd/.tscn` | 4 loại thẻ: thẻ dọc (dụng cụ) · thẻ ô 475×315 (bút/giấy vở) · thẻ gói nạp 475×240 · hàng VIP 980×200 |
+| `scripts/nodes/shop/item_row.gd/.tscn` · `item_tile.gd/.tscn` · `coin_tile.gd/.tscn` · `noads_row.gd/.tscn` | 4 loại thẻ: thẻ dọc (dụng cụ) · thẻ ô 475×294 (bút/giấy vở) · thẻ gói nạp 475×240 · hàng VIP 980×200 |
 | `scripts/scenes/shop.gd` + `scenes/shop.tscn` | Màn Cửa hàng: dựng 4 tab bằng code, đổi ngăn, phân trang 6 ô/trang, mua/mặc/dùng, **vuốt ngang đổi trang + vuốt dọc cuộn danh sách** |
 | `scripts/utils/nav.gd` · `scripts/manager/SceneManager.gd` | `SCENE_SHOP` + `goto_shop()` (Debug Console có mục mở Cửa hàng) |
-| `scripts/test_case/test_shop.gd` | **225 check**: catalog (đủ 30 món, giá, icon, khoá dịch) · ví Xu · dụng cụ (cộng dồn lượt) · trang bị bút/chủ đề (`ThemeSkin`) · lưu/tải/xoá · scene (4 tab, thẻ ô 475×315 + nút 200×46, hàng VIP no-ads trên cùng, icon cấp Xu của từng gói, mua thật qua nút thẻ) · **vuốt ngang đổi trang · vuốt dọc cuộn danh sách · không mua nhầm khi vừa vuốt** · nối dây điều hướng |
+| `scripts/test_case/test_shop.gd` | **247 check**: catalog (đủ 30 món, giá, icon, khoá dịch) · ví Xu · dụng cụ (cộng dồn lượt) · trang bị bút/chủ đề (`ThemeSkin`) · lưu/tải/xoá · scene (4 tab, thẻ ô 475×294 + nút 200×46, hàng VIP no-ads trên cùng, icon cấp Xu của từng gói, mua thật qua nút thẻ) · **mọi tab vừa khung nhìn — không cần cuộn · vuốt ngang đổi trang · không mua nhầm khi vừa vuốt** · nối dây điều hướng |
 
 

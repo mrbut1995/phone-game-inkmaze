@@ -11,7 +11,7 @@ extends SceneTree
 ## 5. Bền vững: export/import/reset giữ đúng đồ đã mua + lượt dụng cụ + món đang dùng.
 ## 6. Scene Cửa hàng: 4 tab, lưới 6 ô/trang, thẻ nạp Xu (hàng VIP + lưới 2 cột + icon cấp Xu),
 ##    nút mua thật, ví Xu, banner tiếp sức.
-## 7. Vuốt: vuốt ngang đổi trang · vuốt dọc cuộn danh sách · không mua nhầm khi vừa vuốt.
+## 7. Vuốt: vuốt ngang đổi trang · mọi tab vừa khung nhìn (không cần cuộn) · không mua nhầm khi vừa vuốt.
 ## 8. Nối dây: Nav/SceneManager/menu Main/Debug Console.
 ## ============================================================================
 
@@ -265,10 +265,10 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	_entry(scene.page_count() == 2, "10 mon but -> 2 trang (nhan %d)" % scene.page_count())
 	_entry(scene.items_per_page() == 6, "items_per_page() = 6")
 	var first_id := scene.item_id_at(0)
-	# Thẻ ô dựng đúng mockup: 475×315, có vòng icon + nét mực + nút 200×46
+	# Thẻ ô dựng đúng mockup: 475×294, có vòng icon + nét mực + nút 200×46
 	var tile := scene.card_at(0)
-	_entry(tile != null and tile.size == Vector2(475, 315),
-		"The o dung co 475x315 (nhan %s)" % str(tile.size if tile != null else Vector2.ZERO))
+	_entry(tile != null and tile.size == Vector2(475, 294),
+		"The o dung co 475x294 (nhan %s)" % str(tile.size if tile != null else Vector2.ZERO))
 	if tile != null:
 		_entry(tile.get_node_or_null("IconCircle") is TextureRect, "The o co vong icon (IconCircle)")
 		_entry(tile.get_node_or_null("Stroke") is TextureRect, "The o co net muc ve thu (Stroke)")
@@ -433,23 +433,30 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 	await process_frame
 	_entry(scene.current_page() == 0, "Vuot nguoc khi dang o trang 1 -> dung yen")
 
-	# Vuốt DỌC -> cuộn danh sách (tab DỤNG CỤ dài hơn khung nhìn)
-	scene.set("_click_lock_until", 0.0)
-	scene.show_tab("tool")
-	await process_frame
-	await process_frame
+	# Nội dung MỌI tab phải VỪA khung nhìn — không cần vuốt dọc để xem hết
 	var content := scene.get_node("Content") as ScrollContainer
-	_entry(content != null and content.get_v_scroll_bar().max_value > content.size.y,
-		"Danh sach dung cu dai hon khung nhin (max %.0f > %.0f)" % [
-			content.get_v_scroll_bar().max_value if content != null else 0.0,
-			content.size.y if content != null else 0.0])
-	_entry(content.scroll_vertical == 0, "Dau danh sach o vi tri 0")
-	scene.call("_begin_drag", Vector2(540, 1100))
-	scene.call("_update_drag", Vector2(540, 700))
-	scene.call("_end_drag")
+	_entry(content != null, "Co vung cuon Content")
+	for tab_id in ["pen", "theme", "tool", "coin"]:
+		scene.show_tab(tab_id)
+		await process_frame
+		await process_frame
+		var list := scene.get_node("Content/List") as Control
+		var list_h: float = list.size.y if list != null else INF
+		_entry(list_h <= content.size.y + 1.0,
+			"Tab %s: danh sach vua khung nhin (%.0f <= %.0f)" % [tab_id, list_h, content.size.y])
+	# Trang 2 của BÚT & MỰC (4 thẻ) cũng phải vừa khung nhìn
+	scene.show_tab("pen")
 	await process_frame
-	_entry(content.scroll_vertical > 0,
-		"Vuot doc -> cuon duoc danh sach (scroll_vertical = %d)" % content.scroll_vertical)
+	scene.call("goto_page", 1)
+	await process_frame
+	await process_frame
+	var pen_list := scene.get_node("Content/List") as Control
+	_entry(pen_list.size.y <= content.size.y + 1.0,
+		"Trang 2 tab pen: danh sach vua khung nhin (%.0f <= %.0f)" % [pen_list.size.y, content.size.y])
+	scene.call("goto_page", 0)
+	await process_frame
+	await process_frame
+	_entry(content.scroll_vertical == 0, "Dau danh sach o vi tri 0")
 
 	# Kéo dọc nhưng chưa qua ngưỡng -> coi như bấm thường (không khoá)
 	scene.set("_click_lock_until", 0.0)

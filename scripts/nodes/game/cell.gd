@@ -22,9 +22,20 @@ const TEX_NORMAL := preload("res://assets/images/game/cell_normal.svg")
 const TEX_START := preload("res://assets/images/game/cell_start.svg")
 const TEX_FINISH := preload("res://assets/images/game/cell_finish.svg")
 
+## Mực phai (Fading Ink): tỉ lệ cỡ chữ phụ so với cỡ số trên ô (số gốc 56 -> 11 / 22)
+const WARN_TEXT_RATIO := 11.0 / 56.0
+const FADED_TEXT_RATIO := 22.0 / 56.0
+const WARN_TEXT := "SẮP PHAI"
+const FADED_TEXT := "CẠN"
+
 @onready var _button: TextureButton = $Sprite
 @onready var _label: Label = $Sprite/Label
 @onready var _bomb: TextureRect = $Sprite/Bomb
+@onready var _warn: TextureRect = get_node_or_null("Sprite/Warn")
+@onready var _warn_label: Label = get_node_or_null("Sprite/WarnLabel")
+@onready var _faded: TextureRect = get_node_or_null("Sprite/Faded")
+@onready var _faded_badge: TextureRect = get_node_or_null("Sprite/FadedBadge")
+@onready var _faded_label: Label = get_node_or_null("Sprite/FadedLabel")
 
 
 func _ready() -> void:
@@ -62,15 +73,70 @@ func set_text(text: String) -> void:
 func set_font_size(fs: int) -> void:
 	if _label == null:
 		_label = $Sprite/Label
-	if _label == null:
+	_apply_label_font_size(_label, fs)
+	# Chữ phụ của lớp mực phai co theo cùng tỉ lệ với số trên ô
+	if _warn_label == null:
+		_warn_label = get_node_or_null("Sprite/WarnLabel")
+	_apply_label_font_size(_warn_label, maxi(int(round(fs * WARN_TEXT_RATIO)), 8))
+	if _faded_label == null:
+		_faded_label = get_node_or_null("Sprite/FadedLabel")
+	_apply_label_font_size(_faded_label, maxi(int(round(fs * FADED_TEXT_RATIO)), 10))
+
+
+## Đổi cỡ chữ 1 Label — LƯU Ý: LabelSettings đè theme override nên phải sửa cả hai;
+## các LabelSettings này dùng chung cho mọi ô -> phải duplicate trước khi đổi cỡ chữ.
+func _apply_label_font_size(lbl: Label, fs: int) -> void:
+	if lbl == null:
 		return
-	# LƯU Ý: LabelSettings sẽ đè theme override, nên phải sửa cả LabelSettings.
-	# Resource này dùng chung cho mọi ô -> phải duplicate trước khi đổi cỡ chữ.
-	if _label.label_settings != null and _label.label_settings.font_size != fs:
-		var settings := _label.label_settings.duplicate() as LabelSettings
+	if lbl.label_settings != null and lbl.label_settings.font_size != fs:
+		var settings := lbl.label_settings.duplicate() as LabelSettings
 		settings.font_size = fs
-		_label.label_settings = settings
-	_label.add_theme_font_size_override("font_size", fs)
+		lbl.label_settings = settings
+	lbl.add_theme_font_size_override("font_size", fs)
+
+
+## Fading Ink: mực còn lại trên ô — 1 = SẮP PHAI (nền hổ phách + chữ cảnh báo, vẫn còn số),
+## 0 = CẠN (lớp gạch ngang + huy hiệu CẠN), giá trị khác = ô bình thường.
+## Gọi set_ink_left(-1) để tắt mọi lớp cảnh báo (dùng cho ô S/F).
+func set_ink_left(ink: int) -> void:
+	var warn := ink == 1
+	var faded := ink == 0
+	if _warn == null:
+		_warn = get_node_or_null("Sprite/Warn")
+	if _warn_label == null:
+		_warn_label = get_node_or_null("Sprite/WarnLabel")
+	if _faded == null:
+		_faded = get_node_or_null("Sprite/Faded")
+	if _faded_badge == null:
+		_faded_badge = get_node_or_null("Sprite/FadedBadge")
+	if _faded_label == null:
+		_faded_label = get_node_or_null("Sprite/FadedLabel")
+	if _warn != null:
+		_warn.visible = warn
+	if _warn_label != null:
+		_warn_label.visible = warn
+	if _faded != null:
+		_faded.visible = faded
+	if _faded_badge != null:
+		_faded_badge.visible = faded
+	if _faded_label != null:
+		_faded_label.visible = faded
+
+
+func warn_visible() -> bool:
+	return _warn != null and _warn.visible
+
+
+func faded_visible() -> bool:
+	return _faded != null and _faded.visible
+
+
+func warn_text() -> String:
+	return _warn_label.text if _warn_label != null else ""
+
+
+func faded_text() -> String:
+	return _faded_label.text if _faded_label != null else ""
 
 
 func get_text() -> String:

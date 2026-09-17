@@ -23,6 +23,10 @@ var game_state: GameState = null
 var _pending_bonus := 0
 var _floor_finished := false
 var _run_active := false
+## Chi phí từng bước đã đi (Countdown Cost thu 1..4 bước mỗi ô) — Undo hoàn lại ĐÚNG chi phí
+var _move_costs: Array[int] = []
+## Đang khoá tương tác vì Countdown Cost hết ngân sách (chỉ mở lại khi VỪA lùi bước để có thêm bước)
+var _countdown_locked := false
 ## Đang ở pha GHI NHỚ (Blind Memory): đồng hồ dừng, tường hiện, popup đếm ngược đang chạy
 var _memorize_active := false
 ## Dữ liệu đầu vào để chấm Thử thách (tái dùng, không cấp phát mỗi frame)
@@ -88,6 +92,7 @@ func _start_floor(floor_number: int) -> void:
 		mode.on_grid_setup(grid_view, maze)
 
 	_floor_finished = false
+	_move_costs.clear()
 	if game_state != null:
 		game_state.floor_number = floor_number
 	# Chốt ngưỡng 3 thử thách của màn/tầng mới (số bước thiết kế đã nạp trong setup_floor)
@@ -100,6 +105,7 @@ func _start_floor(floor_number: int) -> void:
 		timer_controller.start_floor()
 	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
 		grid_view.call("set_interaction_enabled", true)
+	_countdown_locked = false
 
 	_update_hud()
 
@@ -158,15 +164,33 @@ func _on_dead_end() -> void:
 func _update_hud() -> void:
 	if ui_controller == null or game_state == null:
 		return
+	var mode: BaseGameMode = game_mode_controller.game_mode if game_mode_controller != null else null
 	var extra_info := game_mode_controller.game_mode.get_hud_extra_info() if game_mode_controller.game_mode != null else ""
 	var title := game_mode_controller.game_mode.get_hud_floor_title(game_state.floor_number) if game_mode_controller.game_mode != null else "TẦNG %d" % game_state.floor_number
 	var subtitle := game_mode_controller.game_mode.get_hud_subtitle(game_state.floor_number) if game_mode_controller.game_mode != null else ""
+	var running := _run_active and not _floor_finished
+	# Countdown Cost: hết ngân sách -> KHOÁ di chuyển (người chơi phải lùi bước mới đi tiếp được).
+	# LƯU Ý: chỉ MỞ LẠI khi vừa hết khoá do ngân sách — KHÔNG bật tuỳ tiện, kẻo ghi đè khoá
+	# của hệ thống khác (VD pha GHI NHỚ của Blind Memory đang khoá tương tác).
+	var countdown_blocked := running and mode != null and mode.mode_id == "countdown_cost" \
+			and game_state.is_out_of_moves()
+	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
+		if countdown_blocked:
+			grid_view.call("set_interaction_enabled", false)
+		elif running and _countdown_locked:
+			grid_view.call("set_interaction_enabled", true)
+	_countdown_locked = countdown_blocked
+	# Sum Path: tổng đã vượt mục tiêu (điều kiện "<" hoặc "=") -> nút CHƠI LẠI dưới thanh nút.
+	var replay_visible := running and mode != null and mode.has_method("is_unwinnable") \
+			and bool(mode.call("is_unwinnable"))
 	if ui_controller != null:
 		ui_controller.set_run_info({
 			"floor": game_state.floor_number,
 			"steps_left": game_state.steps_remaining,
 			"steps_max": game_state.max_steps,
-			"mode_name": game_mode_controller.game_mode.mode_id if game_mode_controller.game_mode != null else "dungeon",
+			"mode_name": mode.mode_id if mode != null else "dungeon",
+			"undo_highlight": countdown_blocked,
+			"replay_visible": replay_visible,
 		})
 	ui_controller.update_hud(
 		title,
@@ -196,6 +220,9 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 	if game_state == null:
 		return
 	game_state.consume_step(cost)
+	# Nhớ chi phí bước ĐI ĐƯỢC để Undo hoàn lại đúng (Countdown Cost: mỗi ô 1..4 bước)
+	if not hit_hazard:
+		_move_costs.append(cost)
 	if hit_hazard:
 		game_state.record_wall_hit()
 		if game_mode_controller.game_mode != null and game_mode_controller.game_mode.instant_game_over_on_hazard:
@@ -570,7 +597,12 @@ func undo() -> void:
 		# SFX: tiếng gôm tẩy quẹt trên giấy
 		Sfx.play(Sfx.UNDO)
 		if game_state != null:
-			game_state.refund_step(1)
+			# Hoàn lại ĐÚNG chi phí bước vừa đi (Countdown Cost thu 1..4 bước mỗi ô,
+			# các chế độ khác luôn là 1 -> giống hành vi cũ)
+			var refund := 1
+			if not _move_costs.is_empty():
+				refund = _move_costs.pop_back()
+			game_state.refund_step(refund)
 			game_state.undos_used += 1     # thử thách "không dùng hoàn tác"
 			_update_hud()
 

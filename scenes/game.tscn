@@ -46,6 +46,10 @@
 [ext_resource type="Texture2D" path="res://assets/images/game/panel_hint_guide.svg" id="44_hintpanel"]
 [ext_resource type="Texture2D" path="res://assets/images/icons/icon_bulb.svg" id="45_bulbicon"]
 [ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="46_hinttheme"]
+[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_normal.svg" id="51_rep_n"]
+[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_pressed.svg" id="52_rep_p"]
+[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_focus.svg" id="53_rep_f"]
+[ext_resource type="Texture2D" path="res://assets/images/popups/icon_replay.svg" id="54_rep_icon"]
 
 [node name="Scene" unique_id=1978794255 node_paths=PackedStringArray("game_controller", "grid_controller", "anchor_controller", "floor_controller", "timer_controller", "ui_controller", "tool_controller", "undo_controller", "hint_controller", "game_mode_controller", "challenge_controller") instance=ExtResource("1_80q71")]
 script = ExtResource("2_qouja")
@@ -255,6 +259,43 @@ text = "STR_HINT_PLAY"
 text_overrun_behavior = 3
 vertical_alignment = 1
 
+[node name="Replay" type="TextureButton" parent="." index="7" unique_id=3370317653]
+visible = false
+layout_mode = 0
+offset_left = 444.0
+offset_top = 1700.0
+offset_right = 636.0
+offset_bottom = 1808.0
+theme = ExtResource("46_hinttheme")
+texture_normal = ExtResource("51_rep_n")
+texture_pressed = ExtResource("52_rep_p")
+texture_hover = ExtResource("51_rep_n")
+texture_disabled = ExtResource("51_rep_n")
+texture_focused = ExtResource("53_rep_f")
+
+[node name="Icon" type="TextureRect" parent="Replay"]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 14.0
+offset_right = 116.0
+offset_bottom = 54.0
+mouse_filter = 2
+texture = ExtResource("54_rep_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Replay"]
+layout_mode = 0
+offset_top = 65.0
+offset_right = 192.0
+offset_bottom = 95.0
+theme_type_variation = &"PopupBtnTextSmall"
+text = "STR_BTN_REPLAY"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
 [node name="Controllers" type="Node" parent="." index="6" unique_id=955863401]
 
 [node name="GameController" type="Node" parent="Controllers" index="0" unique_id=881543567 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "challenge_controller", "grid_view")]
@@ -294,10 +335,12 @@ script = ExtResource("34_02fa5")
 [node name="TimerController" type="Node" parent="Controllers" index="7" unique_id=1851640039]
 script = ExtResource("36_02fa5")
 
-[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=1862639245 node_paths=PackedStringArray("level_label", "subtitle_label")]
+[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=1862639245 node_paths=PackedStringArray("level_label", "subtitle_label", "undo_button", "replay_button")]
 script = ExtResource("38_8ool0")
 level_label = NodePath("../../Status/Title/LevelLabel")
 subtitle_label = NodePath("../../Status/Title/Subtitle")
+undo_button = NodePath("../../Button/Undo")
+replay_button = NodePath("../../Replay")
 
 [node name="ToolController" type="Node" parent="Controllers" index="9" unique_id=1503824 node_paths=PackedStringArray("tool_path_btn", "tool_wall_btn")]
 script = ExtResource("39_pr1ej")
@@ -317,6 +360,7 @@ script = ExtResource("42_pr1ej")
 [connection signal="pressed" from="Button/Wall" to="Controllers/ToolController" method="_on_wall_pressed" binds= ["wall"]]
 [connection signal="pressed" from="Button/Undo" to="Controllers/GameController" method="undo"]
 [connection signal="pressed" from="Button/Hint" to="Controllers/GameController" method="hint"]
+[connection signal="pressed" from="Replay" to="Controllers/GameController" method="restart_run"]
 [connection signal="suspected_wall_toggled" from="Controllers/AnchorController" to="Controllers/GridController" method="_on_suspected_wall_toggled"]
 [connection signal="reached_end" from="Controllers/GridController" to="Controllers/GameController" method="_on_reached_end"]
 [connection signal="dead_end" from="Controllers/GridController" to="Controllers/GameController" method="_on_dead_end"]

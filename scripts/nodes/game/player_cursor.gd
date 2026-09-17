@@ -47,11 +47,12 @@ func start_idle() -> void:
 	# Chu kỳ 1: Nhịp thở phập phồng nhẹ
 	_idle_tween.tween_property(self, "scale", Vector2(1.06, 0.95), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_idle_tween.tween_property(self, "scale", Vector2(0.96, 1.05), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	# Chu kỳ 2: Nhún nhẹ như đang tập trung quan sát mê cung
-	_idle_tween.tween_property(self, "rotation_degrees", 4.5, 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_idle_tween.tween_property(self, "rotation_degrees", -4.5, 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_idle_tween.tween_property(self, "rotation_degrees", 0.0, 0.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_idle_tween.tween_property(self, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	## Chu kỳ 2: Nhún nhẹ như đang tập trung quan sát mê cung
+	#_idle_tween.tween_property(self, "rotation_degrees", 4.5, 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	#_idle_tween.tween_property(self, "rotation_degrees", -4.5, 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	#_idle_tween.tween_property(self, "rotation_degrees", 0.0, 0.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	#_idle_tween.tween_property(self, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
 ## Thực hiện animation chạy từ vị trí hiện tại đến target_pos
@@ -165,16 +166,16 @@ func play_celebration() -> void:
 	# 1. Nhún đà (Pre-jump squash)
 	tw.chain().tween_property(self, "scale", Vector2(1.3, 0.7), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
-	# 2. Nhảy bổng lên xoay 360 độ (Takeoff & Spin)
-	var sub_spin := tw.chain().set_parallel(true)
-	sub_spin.tween_property(self, "position", jump_up, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	sub_spin.tween_property(self, "scale", Vector2(0.9, 1.3), 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	sub_spin.tween_property(self, "rotation_degrees", 360.0, 0.26).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-
-	# 3. Tiếp đất ăn mừng
-	var sub_land := tw.chain().set_parallel(true)
-	sub_land.tween_property(self, "position", base_pos, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	sub_land.tween_property(self, "scale", Vector2(1.35, 0.75), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	## 2. Nhảy bổng lên xoay 360 độ (Takeoff & Spin)
+	#var sub_spin := tw.chain().set_parallel(true)
+	#sub_spin.tween_property(self, "position", jump_up, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	#sub_spin.tween_property(self, "scale", Vector2(0.9, 1.3), 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	#sub_spin.tween_property(self, "rotation_degrees", 360.0, 0.26).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+#
+	## 3. Tiếp đất ăn mừng
+	#var sub_land := tw.chain().set_parallel(true)
+	#sub_land.tween_property(self, "position", base_pos, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	#sub_land.tween_property(self, "scale", Vector2(1.35, 0.75), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 	# 4. Nảy nhẹ phục hồi
 	var sub_settle := tw.chain().set_parallel(true)

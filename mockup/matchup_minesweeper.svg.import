@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://efn7xjrylqyy"
-path="res://.godot/imported/cell_warn_chip.svg-bcda7aef8a453ff335cdf7e2d6b3d6ef.ctex"
+uid="uid://d0ytu33up2sin"
+path="res://.godot/imported/matchup_minesweeper.svg-c0257f61654ce9466a02476fba1a4919.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/game/cell_warn_chip.svg"
-dest_files=["res://.godot/imported/cell_warn_chip.svg-bcda7aef8a453ff335cdf7e2d6b3d6ef.ctex"]
+source_file="res://mockup/matchup_minesweeper.svg"
+dest_files=["res://.godot/imported/matchup_minesweeper.svg-c0257f61654ce9466a02476fba1a4919.ctex"]
 
 [params]
 

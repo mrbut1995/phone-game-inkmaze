@@ -8,6 +8,8 @@ extends Node
 ## (winning/gameover/next_floor/pause) và được nối tại đây.
 ## ============================================================================
 
+const UIAnim := preload("res://scripts/utils/ui_anim.gd")
+
 signal continue_requested
 signal retry_requested
 signal quit_requested
@@ -22,6 +24,10 @@ signal memorize_finished
 @export var level_label: Label = null
 ## Dòng phụ nhỏ dưới tiêu đề (VD "PLAY MODE · CHƯƠNG 1"). Rỗng = ẩn.
 @export var subtitle_label: Label = null
+## Nút UNDO của thanh nút dưới — được NHẤN MẠNH khi Countdown Cost hết ngân sách (phải lùi bước)
+@export var undo_button: TextureButton = null
+## Nút CHƠI LẠI (ẩn sẵn dưới thanh nút) — hiện khi Sum Path không còn thắng được nữa
+@export var replay_button: TextureButton = null
 
 ## HUD của chế độ đang chơi (BaseHUD). GameScene gắn vào qua set_hud() khi đổi chế độ.
 var hud: BaseHUD = null
@@ -29,9 +35,55 @@ var hud: BaseHUD = null
 ## Thông tin ván đang chơi (GameController cập nhật) - dùng cho popup tạm dừng
 var run_info: Dictionary = {}
 
+var _undo_highlight_on := false
+var _replay_shown := false
+var _undo_highlight_tween: Tween = null
+
 
 func set_run_info(info: Dictionary) -> void:
 	run_info = info
+	# Cờ trạng thái đặc biệt của ván (GameController tính trong _update_hud):
+	#  - undo_highlight: Countdown Cost hết ngân sách -> khoá di chuyển, NHẤN MẠNH nút Undo
+	#  - replay_visible: Sum Path không thể thắng nữa -> hiện nút CHƠI LẠI dưới thanh nút
+	set_undo_highlight(bool(info.get("undo_highlight", false)))
+	set_replay_visible(bool(info.get("replay_visible", false)))
+
+
+# ---------------------------------------------------------------------------
+# Cờ trạng thái nút (Countdown Cost hết ngân sách · Sum Path hết đường thắng)
+# ---------------------------------------------------------------------------
+## Nhấn mạnh nút UNDO: ám vàng + nhịp phồng nhẹ để người chơi biết cần lùi bước để tiếp tục
+func set_undo_highlight(on: bool) -> void:
+	_undo_highlight_on = on
+	if undo_button == null:
+		return
+	if _undo_highlight_tween != null and _undo_highlight_tween.is_valid():
+		_undo_highlight_tween.kill()
+		_undo_highlight_tween = null
+	if on:
+		undo_button.modulate = Color(1.25, 1.15, 0.55)
+		_undo_highlight_tween = UIAnim.play_pulse(undo_button, 1.12, 0.7)
+	else:
+		undo_button.modulate = Color.WHITE
+		undo_button.scale = Vector2.ONE
+
+
+func undo_highlighted() -> bool:
+	return _undo_highlight_on
+
+
+## Hiện/ẩn nút CHƠI LẠI nằm DƯỚI hai nút "Vẽ Đường" + "Ghi Nhớ"
+func set_replay_visible(on: bool) -> void:
+	_replay_shown = on
+	if replay_button == null or replay_button.visible == on:
+		return
+	replay_button.visible = on
+	if on and replay_button.is_inside_tree():
+		UIAnim.play_pop_in(replay_button, 0.0, 0.85, 0.22)
+
+
+func replay_shown() -> bool:
+	return _replay_shown
 
 
 ## Gắn HUD của chế độ đang chơi (GameScene gọi trong _apply_hud_for_mode).

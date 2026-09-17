@@ -98,6 +98,18 @@ func evaluate_move(from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> Dict
 func on_player_moved(grid_view: Control, new_pos: Vector2i, maze: MazeData) -> void:
 	var was_visited := _current_path.has(new_pos)
 	_current_path.append(new_pos)
+	_recompute_sum()
+
+	# Hiệu ứng chữ nổi bay lên khi thu thập số ô mới
+	if not was_visited and grid_view != null and grid_view.has_method("spawn_floating_popup"):
+		if maze != null and new_pos != maze.get_start() and new_pos != maze.get_end():
+			var val: int = _cell_scores.get(new_pos, 1)
+			grid_view.call("spawn_floating_popup", "+%d" % val, new_pos, Color(0.133, 0.45, 0.65, 1.0))
+
+
+## Tổng hiện tại = tổng điểm các ô ĐÃ ĐI QUA (mỗi ô tính 1 lần) — tính lại từ `_current_path`
+## nên Undo tự trừ điểm về đúng trạng thái trước đó.
+func _recompute_sum() -> void:
 	var unique_cells := {}
 	current_sum = 0
 	for p: Vector2i in _current_path:
@@ -105,11 +117,19 @@ func on_player_moved(grid_view: Control, new_pos: Vector2i, maze: MazeData) -> v
 			unique_cells[p] = true
 			current_sum += _cell_scores.get(p, 1)
 
-	# Hiệu ứng chữ nổi bay lên khi thu thập số ô mới
-	if not was_visited and grid_view != null and grid_view.has_method("spawn_floating_popup"):
-		if maze != null and new_pos != maze.get_start() and new_pos != maze.get_end():
-			var val: int = _cell_scores.get(new_pos, 1)
-			grid_view.call("spawn_floating_popup", "+%d" % val, new_pos, Color(0.133, 0.45, 0.65, 1.0))
+
+## Undo lùi bước (GridController gọi): bỏ ô vừa đi khỏi đường đi rồi tính lại tổng.
+func on_move_undone(_grid_view: Control, _from_pos: Vector2i, _to_pos: Vector2i, _maze: MazeData) -> void:
+	if _current_path.size() > 1:
+		_current_path.pop_back()
+	_recompute_sum()
+
+
+## KHÔNG THỂ THẮNG NỮA: tổng hiện tại đã VƯỢT mục tiêu trong khi điều kiện cần là "<" hoặc "="
+## (mỗi bước đi chỉ CỘNG thêm điểm nên không bao giờ giảm về được) — GameController dùng cờ này
+## để hiện nút CHƠI LẠI dưới thanh nút (xem scripts/core/controllers/game_controller.gd).
+func is_unwinnable() -> bool:
+	return (operator == "<" or operator == "=") and current_sum > target_val
 
 
 func check_completion(current_pos: Vector2i, maze: MazeData, _anchor_controller: Node) -> bool:

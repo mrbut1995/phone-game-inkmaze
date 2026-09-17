@@ -5,7 +5,7 @@
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
 [ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="4_paper"]
 [ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="5_logo"]
-[ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/calendar/pencil_icon.svg" id="6_pencil"]
+[ext_resource type="Texture2D" uid="uid://vohdi4kjxxxf" path="res://assets/images/game/pen_type/pen_fountain_pen_nib.svg" id="6_hiwto"]
 [ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="7_play_icon"]
 [ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="8_stamp"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="9_stamp_text"]
@@ -26,14 +26,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="LogoContainer" type="Control" parent="Panel" index="0" unique_id=198818976]
 layout_mode = 1
-anchor_left = 0.34
-anchor_top = 0.18
-anchor_right = 0.66
-anchor_bottom = 0.38
-offset_left = 46.664
-offset_top = 73.22159
-offset_right = 46.664
-offset_bottom = 73.22156
+anchor_left = 0.38500002
+anchor_top = 0.223
+anchor_right = 0.70500004
+anchor_bottom = 0.423
+offset_left = -34.70404
+offset_top = 25.696747
+offset_right = -34.70404
+offset_bottom = 25.696716
 
 [node name="Logo" type="TextureRect" parent="Panel/LogoContainer" index="0" unique_id=1293835937]
 layout_mode = 1
@@ -53,7 +53,11 @@ anchor_left = 0.7
 anchor_top = 0.6
 anchor_right = 0.98
 anchor_bottom = 0.95
-texture = ExtResource("6_pencil")
+offset_left = -49.80963
+offset_top = -30.185547
+offset_right = -49.80963
+offset_bottom = -30.185547
+texture = ExtResource("6_hiwto")
 expand_mode = 1
 stretch_mode = 5
 
@@ -65,36 +69,42 @@ anchor_left = 0.15139751
 anchor_top = 0.41
 anchor_right = 0.91809005
 anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = 26.0
+offset_right = -35.0
+offset_bottom = 26.0
 theme_type_variation = &"MainTitle"
 text = "Ink Maze"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Subtitle" type="Label" parent="Panel" index="2" unique_id=512779228]
 modulate = Color(0.35, 0.45, 0.55, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.19895186
-anchor_top = 0.48628518
-anchor_right = 0.8355978
-anchor_bottom = 0.5362851
+anchor_left = 0.19923292
+anchor_top = 0.5
+anchor_right = 0.7983541
+anchor_bottom = 0.551
+offset_left = 4.710388
+offset_top = 2.0599976
+offset_right = 5.3759155
+offset_bottom = 0.3499756
 theme_type_variation = &"MainTagline"
 text = "STR_TITLE_SUBTITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="TapContainer" type="Control" parent="Panel" index="3" unique_id=551840619]
 layout_mode = 1
-anchor_left = 0.136
-anchor_top = 0.541
-anchor_right = 0.943
-anchor_bottom = 0.629
-offset_left = -0.13441467
-offset_top = -0.04510498
-offset_right = 0.33276367
-offset_bottom = -0.51452637
+anchor_left = 0.19502018
+anchor_top = 0.55600005
+anchor_right = 0.90500003
+anchor_bottom = 0.64400005
+offset_left = -41.948807
+offset_top = 0.30664063
+offset_right = -42.512024
+offset_bottom = -0.1628418
 
 [node name="PlayIcon" type="TextureRect" parent="Panel/TapContainer" index="0" unique_id=275797762]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
@@ -142,6 +152,19 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_VERSION"
 label_settings = ExtResource("9_stamp_text")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StudioLabel" type="Label" parent="Panel" index="5" unique_id=1866432788]
+modulate = Color(0.35, 0.45, 0.55, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.18
+anchor_right = 0.9
+anchor_bottom = 0.23
+theme_type_variation = &"MainTagline"
+text = "STR_SPLASH_STUDIO"
 horizontal_alignment = 1
 vertical_alignment = 1
 

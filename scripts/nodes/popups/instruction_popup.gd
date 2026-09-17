@@ -169,9 +169,12 @@ func link_button() -> Button:
 	return _child_of(_page, "Link") as Button
 
 
-## Nút đóng của popup
-func close_button() -> Button:
-	return get_node_or_null("Panel/Guide/Close") as Button
+## Nút đóng của popup.
+## LƯU Ý: node "Panel/Guide/Close" là **TextureButton** — TextureButton kế thừa
+## **BaseButton** chứ KHÔNG phải Button, nên cast `as Button` trả về null và nút X
+## không bao giờ được nối signal (bug cũ: bấm X không đóng popup).
+func close_button() -> BaseButton:
+	return get_node_or_null("Panel/Guide/Close") as BaseButton
 
 
 # ---------------------------------------------------------------------------

@@ -9,12 +9,17 @@ extends SceneTree
 ## 3. CountdownHUD: ngân sách còn/tổng, đã tiêu, dải phân đoạn = đúng số bước + đổi màu,
 ##    chip giá cước theo độ khó (easy ẩn chip đắt, hard hiện "3-4").
 ## 4. FadingInkHUD: bước đã đi, mực đã phai, cảnh báo ô cạn mực hiện/ẩn đúng.
+## 4b. TimeAttackHUD: CHỈ thẻ THỜI GIAN 250×156 đặt GIỮA khung 980×249 (365,46) —
+##     không còn thẻ THỬ THÁCH, đồng hồ đếm ngược cập nhật từ timer.
 ## 5. Kích thước thẻ đúng mockup (Time 250x156 tại (0,3) · thẻ mode 715x156 tại (265,3)).
+## 6. Sum Path: hết đường thắng -> nút CHƠI LẠI hiện DƯỚI thanh nút; Undo lùi bước -> tổng tính lại.
+## 7. Countdown Cost: hết ngân sách -> board khoá tương tác + nút Undo được NHẤN MẠNH;
+##    Undo hoàn ĐÚNG chi phí bước vừa đi rồi mở khoá.
 ## ============================================================================
 
 const HUD_SCRIPTS := {
 	"play": "res://scripts/nodes/hud/level_hud.gd",
-	"time_attack": "res://scripts/nodes/hud/level_hud.gd",
+	"time_attack": "res://scripts/nodes/hud/time_attack_hud.gd",
 	"fog_of_war": "res://scripts/nodes/hud/level_hud.gd",
 	"dungeon": "res://scripts/nodes/hud/dungeon_hud.gd",
 	"minesweeper": "res://scripts/nodes/hud/minesweep_hud.gd",
@@ -45,7 +50,10 @@ func _init() -> void:
 	await _section_2_sum_path(scene)
 	await _section_3_countdown(scene)
 	await _section_4_fading_ink(scene)
+	await _section_4b_time_attack(scene)
 	await _section_5_card_sizes()
+	await _section_6_sum_path_replay(scene)
+	await _section_7_countdown_budget_lock(scene)
 
 	scene.queue_free()
 	await process_frame
@@ -225,6 +233,152 @@ func _section_4_fading_ink(scene: GameScene) -> void:
 	_entry(warn.visible, "Co o can muc -> hien canh bao")
 	_entry(str((hud.get_node("Warn/Label") as Label).text).contains(str(mode.count_exhausted())),
 		"Canh bao hien dung so o can ('%s')" % (hud.get_node("Warn/Label") as Label).text)
+
+
+# ---------------------------------------------------------------------------
+# 4b. Time Attack — HUD CHỈ còn thẻ THỜI GIAN, đặt giữa khung (2026-09-19)
+# ---------------------------------------------------------------------------
+func _section_4b_time_attack(scene: GameScene) -> void:
+	print("[4b] HUD Time Attack (chi con the THOI GIAN dat giua)...")
+	scene.switch_mode("time_attack", "medium")
+	await process_frame
+	var hud := scene.ui_controller.hud as TimeAttackHUD
+	_entry(hud != null, "Time Attack dung TimeAttackHUD (khong con dung chung LevelHUD)")
+	if hud == null:
+		return
+	_entry(hud.get_node_or_null("Challenge") == null, "Khong con the THU THACH trong HUD")
+	_entry(hud.challenge_card() == null, "challenge_card() = null (bo qua he thong the Thu thach)")
+	var time_card := hud.get_node_or_null("Time") as Control
+	_entry(time_card != null and time_card.size == Vector2(250, 156),
+		"The THOI GIAN 250x156 (nhan %s)" % str(time_card.size if time_card != null else Vector2.ZERO))
+	if time_card != null:
+		_entry(time_card.position == Vector2(365, 46),
+			"The THOI GIAN dat GIUA khung 980x249 tai (365,46) — nhan (%.0f,%.0f)" % [
+				time_card.position.x, time_card.position.y])
+		var sub := time_card.get_node_or_null("Sub") as Label
+		_entry(sub != null and sub.text == "STR_HUD_TIME_COUNTDOWN", "Dong phu = DEM NGUOC")
+	# Đồng hồ đếm ngược: giá trị do timer (start_countdown) cấp qua _update_hud
+	var timer := scene.timer_controller
+	_entry(timer != null and bool(timer.get("is_countdown")),
+		"Time Attack chay dong ho DEM NGUOC (is_countdown)")
+	var value := time_card.get_node_or_null("Value") as Label if time_card != null else null
+	if value != null:
+		value.text = ""
+		scene.game_controller.call("_update_hud")
+		_entry(not value.text.is_empty() and value.text != "00:00",
+			"Gia tri dong ho duoc cap tu timer ('%s')" % value.text)
+
+
+# ---------------------------------------------------------------------------
+# 6. Sum Path — không còn thắng được nữa -> nút CHƠI LẠI dưới thanh nút (2026-09-19)
+# ---------------------------------------------------------------------------
+func _section_6_sum_path_replay(scene: GameScene) -> void:
+	print("[6] Sum Path: nut CHOI LAI khi het duong thang...")
+	scene.switch_mode("sum_path", "medium")
+	await process_frame
+	var mode := scene.game_mode_controller.game_mode as SumPathGameMode
+	var replay := scene.get_node_or_null("Replay") as TextureButton
+	_entry(mode != null and replay != null, "Co SumPathGameMode + nut Replay trong game.tscn")
+	if mode == null or replay == null:
+		return
+	_entry(not replay.visible, "Dau van: nut CHOI LAI an")
+	_entry(not mode.is_unwinnable(), "Dau van: is_unwinnable() = false")
+	# Điều kiện "=": tổng đã VƯỢT mục tiêu -> chỉ cộng thêm được -> hết đường thắng
+	mode.operator = "="
+	mode.target_val = 10
+	mode.current_sum = 20
+	scene.game_controller.call("_update_hud")
+	_entry(mode.is_unwinnable(), "is_unwinnable(): '=' + tong 20 > 10")
+	_entry(replay.visible and scene.ui_controller.replay_shown(),
+		"Hien nut CHOI LAI (ui_controller.replay_shown())")
+	var button_bar := scene.get_node("Button") as Control
+	_entry(replay.global_position.y >= button_bar.global_position.y + button_bar.size.y - 20.0,
+		"Nut CHOI LAI nam DUOI thanh nut (y=%.0f vs day thanh %.0f)" % [replay.global_position.y,
+			button_bar.global_position.y + button_bar.size.y])
+	# Điều kiện "<" cũng vậy; điều kiện ">" thì vẫn còn cửa thắng -> ẩn
+	mode.operator = "<"
+	scene.game_controller.call("_update_hud")
+	_entry(replay.visible, "Toan tu '<' + tong vuot muc tieu -> van hien")
+	mode.operator = ">"
+	scene.game_controller.call("_update_hud")
+	_entry(not mode.is_unwinnable() and not replay.visible,
+		"Toan tu '>' -> khong hien nut CHOI LAI")
+	# Bấm CHƠI LẠI -> ván mới, cờ trở về bình thường
+	mode.operator = "="
+	mode.current_sum = 99
+	scene.game_controller.call("_update_hud")
+	_entry(replay.visible, "Chuan bi: nut dang hien truoc khi bam")
+	replay.pressed.emit()
+	await process_frame
+	await process_frame
+	_entry(not replay.visible and not mode.is_unwinnable(),
+		"Bam CHOI LAI -> van moi, nut an lai")
+	# Undo lùi bước -> tổng tính lại (bỏ ô vừa đi khỏi đường)
+	var board := scene.game_controller.grid_view
+	var start_pos: Vector2i = scene.grid_controller.current_pos
+	var target := Vector2i(-1, -1)
+	for d in [Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT, Vector2i.UP]:
+		var nxt: Vector2i = start_pos + d
+		if board.maze.is_in_bounds(nxt) and board.maze.is_cell_active(nxt):
+			target = nxt
+			break
+	if target == Vector2i(-1, -1):
+		_entry(false, "Khong tim duoc o ke de thu Undo")
+		return
+	var sum_before := mode.current_sum
+	scene.grid_controller.try_move_to(target)
+	await process_frame
+	var sum_after := mode.current_sum
+	scene.game_controller.undo()
+	await process_frame
+	_entry(sum_after > sum_before and mode.current_sum == sum_before,
+		"Undo lui buoc -> tong tinh lai (%d -> %d -> %d)" % [sum_before, sum_after, mode.current_sum])
+
+
+# ---------------------------------------------------------------------------
+# 7. Countdown Cost — hết ngân sách: khoá di chuyển + NHẤN MẠNH Undo (2026-09-19)
+# ---------------------------------------------------------------------------
+func _section_7_countdown_budget_lock(scene: GameScene) -> void:
+	print("[7] Countdown Cost: het ngan sach -> khoa di chuyen + nhan manh Undo...")
+	scene.switch_mode("countdown_cost", "medium")
+	await process_frame
+	var mode := scene.game_mode_controller.game_mode as CountdownCostGameMode
+	var board := scene.game_controller.grid_view
+	_entry(mode != null and board != null, "Co CountdownCostGameMode + board")
+	if mode == null or board == null:
+		return
+	var undo_btn := scene.get_node("Button/Undo") as TextureButton
+	_entry(undo_btn != null, "Co nut Undo trong thanh nut")
+	_entry(not scene.ui_controller.undo_highlighted(), "Dau van: nut Undo khong nhan manh")
+	# Đi 1 bước thật để có bước cho Undo + biết đúng chi phí ô
+	var start_pos: Vector2i = scene.grid_controller.current_pos
+	var target := Vector2i(-1, -1)
+	for d in [Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT, Vector2i.UP]:
+		var nxt: Vector2i = start_pos + d
+		if board.maze.is_in_bounds(nxt) and board.maze.is_cell_active(nxt) \
+				and not board.maze.has_wall(start_pos, nxt):
+			target = nxt
+			break
+	if target == Vector2i(-1, -1):
+		_entry(false, "Khong tim duoc o ke khong tuong de di thu")
+		return
+	var cost: int = mode.get_cell_cost(target)
+	scene.grid_controller.try_move_to(target)
+	await process_frame
+	# Ép hết ngân sách -> KHOÁ di chuyển + NHẤN MẠNH Undo
+	scene.game_controller.game_state.steps_remaining = 0
+	scene.game_controller.call("_update_hud")
+	_entry(not bool(board.get("_interaction_enabled")),
+		"Het ngan sach -> board KHOA tuong tac (khong di chuyen duoc)")
+	_entry(scene.ui_controller.undo_highlighted(), "Nut Undo duoc NHAN MANH")
+	_entry(undo_btn != null and undo_btn.modulate != Color.WHITE, "Nut Undo doi mau anh vang")
+	# Bấm Undo -> hoàn ĐÚNG chi phí bước vừa đi -> mở khoá lại
+	scene.game_controller.undo()
+	await process_frame
+	_entry(scene.game_controller.game_state.steps_remaining == cost,
+		"Undo hoan DUNG chi phi buoc vua di (%d buoc)" % cost)
+	_entry(bool(board.get("_interaction_enabled")), "Con ngan sach -> mo lai tuong tac")
+	_entry(not scene.ui_controller.undo_highlighted(), "Bo nhan manh nut Undo")
 
 
 # ---------------------------------------------------------------------------

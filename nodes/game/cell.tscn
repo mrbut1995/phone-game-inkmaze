@@ -6,6 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://dkbn5t5dxj5i0" path="res://assets/images/game/cell_pressed.svg" id="3_cobij"]
 [ext_resource type="Texture2D" uid="uid://b1vsvjb6jjpd0" path="res://assets/images/game/cell_disabled.svg" id="4_lli7j"]
 [ext_resource type="Texture2D" path="res://assets/images/game/icon_bomb.svg" id="5_bomb"]
+[ext_resource type="Texture2D" path="res://assets/images/game/cell_warn_wash.svg" id="6_warn"]
+[ext_resource type="Texture2D" path="res://assets/images/game/cell_faded_overlay.svg" id="7_faded"]
+[ext_resource type="Texture2D" path="res://assets/images/game/cell_depleted_badge.svg" id="8_badge"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_cell_warn.tres" id="9_warnls"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_cell_faded.tres" id="10_fadedls"]
 
 [node name="Cell" type="Control" unique_id=1607724359]
 layout_mode = 3
@@ -46,7 +51,77 @@ texture = ExtResource("5_bomb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Sprite" index="1" unique_id=2091843329]
+[node name="Warn" type="TextureRect" parent="Sprite" index="1"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_warn")
+expand_mode = 1
+
+[node name="WarnLabel" type="Label" parent="Sprite" index="2"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 0.0
+offset_top = 100.0
+offset_right = 176.0
+offset_bottom = 144.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "SẮP PHAI"
+label_settings = ExtResource("9_warnls")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Faded" type="TextureRect" parent="Sprite" index="3"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_faded")
+expand_mode = 1
+
+[node name="FadedBadge" type="TextureRect" parent="Sprite" index="4"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 52.0
+offset_top = 52.0
+offset_right = 124.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_badge")
+expand_mode = 1
+
+[node name="FadedLabel" type="Label" parent="Sprite" index="5"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 52.0
+offset_top = 52.0
+offset_right = 124.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "CẠN"
+label_settings = ExtResource("10_fadedls")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Sprite" index="6" unique_id=2091843329]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

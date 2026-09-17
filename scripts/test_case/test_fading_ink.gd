@@ -5,6 +5,8 @@ extends SceneTree
 ##   - Chỉ đi vào ô CÒN MỰC; mỗi bước đi làm MỌI ô phai 1 điểm; ô về 0 mất số.
 ##   - Đường ngắn nhất luôn đủ mực để tới F (kiểm tra bằng cách đi đúng đường mẫu).
 ##   - Undo lùi bước -> mực hồi lại; hết lối đi -> is_dead_end -> popup thua "HẾT ĐƯỜNG ĐI".
+##   - Ô còn 1 mực: lớp SẮP PHAI (nền hổ phách + chữ cảnh báo, vẫn còn số).
+##     Ô 0 mực: lớp gạch ngang + huy hiệu CẠN (không mờ cả ô để huy hiệu vẫn rõ).
 ## ============================================================================
 
 var _failures := 0
@@ -242,6 +244,27 @@ func _check_scene_integration(gm: Node) -> void:
 			_fail("So tren o phai khop muc cua mode ('%s' vs '%s')" % [
 				cell.get_text(), mode.get_cell_text(target, board.maze)])
 
+	# Ô còn đầy mực (>= 2): không hiện lớp cảnh báo nào
+	if target != Vector2i(-1, -1):
+		var cell_ok := board.call("_cell_node", target) as MazeCell
+		if cell_ok != null and (cell_ok.call("warn_visible") or cell_ok.call("faded_visible")):
+			_fail("O con day muc khong duoc hien lop canh bao")
+
+	# Ô SẮP PHAI (mực = 1): nền hổ phách + chữ cảnh báo, VẪN còn số
+	if target != Vector2i(-1, -1):
+		mode.moves_made = maxi(mode.ink_initial(target) - 1, 0)
+		board.call("refresh_cell_texts", true)
+		var cell_warn := board.call("_cell_node", target) as MazeCell
+		if cell_warn != null:
+			if not cell_warn.call("warn_visible"):
+				_fail("O dung 1 muc phai hien lop SẮP PHAI")
+			if str(cell_warn.call("warn_text")) != "SẮP PHAI":
+				_fail("Chu canh bao phai la 'SẮP PHAI' (nhan '%s')" % str(cell_warn.call("warn_text")))
+			if cell_warn.call("faded_visible"):
+				_fail("O con 1 muc khong duoc hien lop CAN")
+			if cell_warn.get_text() != "1":
+				_fail("O con 1 muc van phai hien so 1 (nhan '%s')" % cell_warn.get_text())
+
 	# Ô hết mực thì không đi vào được
 	mode.moves_made = 999
 	board.call("refresh_cell_texts", true)
@@ -254,8 +277,18 @@ func _check_scene_integration(gm: Node) -> void:
 	if cell_dim != null:
 		if cell_dim.get_text() != "":
 			_fail("O het muc phai khong con so tren ban co")
-		if cell_dim.modulate.a > 0.9:
-			_fail("O het muc phai MO di de nguoi choi thay khong di vao duoc (alpha %.2f)" % cell_dim.modulate.a)
+		if not cell_dim.call("faded_visible"):
+			_fail("O het muc phai hien lop gach + huy hieu CAN")
+		if str(cell_dim.call("faded_text")) != "CẠN":
+			_fail("Huy hieu het muc phai ghi 'CẠN' (nhan '%s')" % str(cell_dim.call("faded_text")))
+		if cell_dim.call("warn_visible"):
+			_fail("O het muc khong con la SẮP PHAI")
+		if cell_dim.modulate.a < 0.99:
+			_fail("Khong duoc mo ca o (lop gach da the hien trang thai; alpha %.2f)" % cell_dim.modulate.a)
+	# Ô S/F không bao giờ cạn mực -> không bao giờ hiện lớp cảnh báo
+	var cell_s := board.call("_cell_node", board.maze.get_start()) as MazeCell
+	if cell_s != null and (cell_s.call("warn_visible") or cell_s.call("faded_visible")):
+		_fail("O xuat phat (S) khong duoc hien lop canh bao muc")
 
 	# Hết đường -> GameController._on_dead_end() mở popup thua
 	scene.game_controller._on_dead_end()

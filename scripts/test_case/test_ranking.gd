@@ -300,6 +300,34 @@ func _section_7_scene(manager: Node) -> void:
 	var back := scene.get_node("TopBar/Back") as TextureButton
 	_entry(back.pressed.get_connections().size() > 0, "Nut Back da duoc noi signal")
 
+	# --- Vuốt dọc để cuộn danh sách (hàng là Control "ăn" sự kiện -> tự xử lý ở _input) ---
+	var scroll := scene.get_node("Sheet/Scroll") as ScrollContainer
+	_entry(scroll != null, "Co vung cuon Sheet/Scroll")
+	if scroll != null:
+		var center := scroll.get_global_rect().get_center()
+		var max_scroll := scroll.get_v_scroll_bar().max_value - scroll.size.y
+		_entry(scroll.scroll_vertical == 0, "Danh sach bat dau o vi tri 0")
+		scene.call("_begin_drag", center)
+		scene.call("_update_drag", center + Vector2(0, -120))
+		scene.call("_end_drag")
+		await process_frame
+		if max_scroll > 1.0:
+			_entry(scroll.scroll_vertical > 0,
+				"Vuot doc -> cuon duoc danh sach (scroll_vertical = %d)" % scroll.scroll_vertical)
+		else:
+			_entry(scroll.scroll_vertical == 0, "Danh sach vua khung -> vuot khong gay loi (scroll = 0)")
+		# Kéo chưa qua ngưỡng -> coi như chạm, không cuộn
+		var pos_before_drag := scroll.scroll_vertical
+		scene.call("_begin_drag", center)
+		scene.call("_update_drag", center + Vector2(0, -5))
+		scene.call("_end_drag")
+		_entry(scroll.scroll_vertical == pos_before_drag, "Keo rat ngan -> khong cuon")
+		# Bắt đầu kéo NGOÀI vùng cuộn (ví dụ trên nút Back) -> không cuộn
+		scene.call("_begin_drag", Vector2(100, 60))
+		scene.call("_update_drag", Vector2(100, 0))
+		scene.call("_end_drag")
+		_entry(scroll.scroll_vertical == pos_before_drag, "Bat dau keo ngoai vung cuon -> khong cuon")
+
 	scene.queue_free()
 	await process_frame
 

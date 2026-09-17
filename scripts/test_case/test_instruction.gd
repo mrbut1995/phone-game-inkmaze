@@ -244,6 +244,18 @@ func _check_scene(mode: String) -> void:
 		pop3.queue_free()
 		await process_frame
 
+	# --- nút X (Close): bấm là ĐÓNG popup (instance riêng) ---
+	var pop4 := await _open(mode)
+	if pop4 != null:
+		var close_btn := pop4.close_button()
+		if close_btn == null:
+			_fail("%s: khong tim thay nut Close (X) — kiem tra cast BaseButton" % mode)
+		else:
+			close_btn.pressed.emit()
+			_check(pop4.is_closing(), "%s: bam nut X dong popup" % mode)
+		pop4.queue_free()
+		await process_frame
+
 
 # ---------------------------------------------------------------------------
 # 4. Tích hợp: nút "?" trên HUD mở đúng scene hướng dẫn của chế độ

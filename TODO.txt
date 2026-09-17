@@ -6,6 +6,71 @@
 # Replace SFX Placeholder to correct sound
 
 # ----------------------------------------------------------------------------
+# VÒNG SỬA 11 (2026-09-19): TIME ATTACK HUD GIỮA · SUM PATH REPLAY · COUNTDOWN KHOÁ · NÚT X POPUP
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo yêu cầu user (4 điểm):
+#     1. Time Attack — HUD chỉ còn THỜI GIAN đặt giữa (đổi cả mockup):
+#        - Scene mới `nodes/hud/time_attack_hud.tscn` (`TimeAttackHUD` extends BaseHUD):
+#          thẻ `card_time_tall.svg` 250×156 tại (365,46) = GIỮA khung 980×249 (giữa cả 2 chiều),
+#          dòng phụ `STR_HUD_TIME_COUNTDOWN` ("Đếm ngược"); KHÔNG còn thẻ THỬ THÁCH
+#          (`challenge_card()` = null — thử thách vẫn chấm và hiện ở popup kết quả).
+#        - `GameScene`: thêm `HUD_TIME_ATTACK` + map `_hud_scene_for/_hud_class_for("time_attack")`.
+#        - Mockup `mockup/matchup_time_attack.svg` sinh lại bằng `tools/mockup/gen_matchup.py`
+#          (thêm helper `card_time_tall` + spec mới; tool vẫn bỏ qua 5 mockup vẽ tay).
+#     2. Sum Path — hết đường thắng thì hiện nút CHƠI LẠI dưới Vẽ Đường/Ghi Nhớ:
+#        - `SumPathGameMode.is_unwinnable()` = (operator "<" hoặc "=") and current_sum > target_val;
+#          thêm `on_move_undone()` + `_recompute_sum()` (undo lùi bước -> tổng tính lại theo đường).
+#        - Nút `Replay` (TextureButton 192×108: art `common/btn_paper_secondary_*` + icon_replay.svg
+#          + nhãn `STR_BTN_REPLAY`) ẩn sẵn trong `scenes/game.tscn` tại (444,1700) — DƯỚI thanh nút;
+#          `pressed` -> `Controllers/GameController.restart_run` (nối trong .tscn).
+#        - `UIController`: `@export replay_button` + `set_replay_visible()/replay_shown()`
+#          (pop-in khi hiện); `GameController._update_hud()` tính cờ `replay_visible`.
+#     3. Countdown Cost — hết ngân sách: KHOÁ di chuyển + NHẤN MẠNH nút Undo:
+#        - `GameController._update_hud()`: mode countdown + `steps_remaining <= 0` ->
+#          `grid_view.set_interaction_enabled(false)` + cờ `undo_highlight`; chỉ MỞ LẠI khi VỪA
+#          hết khoá (`_countdown_locked`) — KHÔNG bật tuỳ tiện kẻo ghi đè khoá của hệ thống khác
+#          (pha GHI NHỚ của Blind Memory — đã dính lỗi này và sửa trong cùng vòng).
+#        - `UIController`: `@export undo_button` + `set_undo_highlight()` (ám vàng + `UIAnim.play_pulse`).
+#        - Undo hoàn ĐÚNG chi phí bước vừa đi: `GameController._move_costs` (append mỗi bước đi được,
+#          pop khi undo) — trước đây refund cứng 1 bước (sai với ô giá 2..4, hết ngân sách sẽ kẹt).
+#     4. Popup Instruction — bấm nút X (Close) để đóng: `Close` là **TextureButton** (kế thừa
+#        BaseButton, KHÔNG phải Button) nên cast cũ `as Button` trả null -> nút X chưa bao giờ được
+#        nối signal; sửa `close_button() -> BaseButton`. test_instruction +9 check (bấm X đóng mỗi chế độ).
+#     - Test cập nhật: test_hud_modes 72 -> 100 check (4b Time Attack HUD · 6 Sum Path replay ·
+#       7 Countdown khoá + undo hoàn đúng chi phí) · test_instruction 285 -> 294 check.
+#       Full suite 29/29 PASS; render SubViewport xác nhận bằng mắt (Time giữa khung · CHƠI LẠI
+#       dưới thanh nút · Undo ám vàng khi hết ngân sách).
+
+# ----------------------------------------------------------------------------
+# VÒNG SỬA 10 (2026-09-19): LỚP MỰC PHAI TRÊN Ô · CON TRỎ ×3 · VUỐT RANKING · SHOP VỪA KHUNG
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo yêu cầu user (4 điểm):
+#     1. Fading Ink — lớp hiển thị theo mực còn lại (theo mockup matchup_fading_ink):
+#        ô mực = 1 hiện nền hổ phách + chữ "SẮP PHAI" (asset mới cell_warn_wash.svg +
+#        text_game_cell_warn.tres), ô mực = 0 hiện lớp gạch + huy hiệu "CẠN"
+#        (cell_faded_overlay.svg + cell_depleted_badge.svg + text_game_cell_faded.tres).
+#        - cell.tscn thêm 5 node Warn/WarnLabel/Faded/FadedBadge/FadedLabel nằm TRƯỚC
+#          Label số (số luôn vẽ trên cùng); bỏ asset không dùng cell_warn_chip.svg.
+#        - cell.gd: set_ink_left(ink) (1=warn · 0=faded · khác=ẩn hết) + warn_visible()/
+#          faded_visible()/warn_text()/faded_text(); chữ phụ co theo set_font_size()
+#          (tỉ lệ 11/56 và 22/56, sàn 8/10px).
+#        - board.gd refresh_cell_texts(): mode có ink_left() -> set_ink_left() thay vì mờ
+#          cả ô bằng modulate alpha 0.4 (để huy hiệu CẠN không bị mờ); ô S/F không gắn lớp.
+#     2. Con trỏ người chơi TO GẤP 3: player_cursor.tscn 44×44 -> 132×132;
+#        FALLBACK_CURSOR_SIZE 44 -> 132 trong board.gd (co theo _fit_scale, sàn 18px).
+#     3. Xếp hạng: hàng RankRow (Control STOP) "ăn" sự kiện kéo nên ScrollContainer không
+#        cuộn được -> ranking.gd tự xử lý _input (ngưỡng 14px · trục dọc
+#        scroll_vertical = _drag_scroll − delta.y · set_input_as_handled · reset 0 khi đổi tab).
+#     4. Cửa hàng VỪA khung nhìn (không cần vuốt dọc): thẻ ô 475×315 -> 475×294 + xếp lại
+#        nội bộ (item_tile.tscn) · List separation 30 -> 20 (shop.tscn) · khe dọc lưới
+#        30 -> 24 (shop.gd _make_grid). Kiểm: pen 215+20+930=1165 · theme 950 · tool 1180
+#        · coin 980 — đều ≤ khung 1200.
+#     - Test cập nhật: test_fading_ink (3 trạng thái ô + ô S/F) · test_board_fit (chữ phụ co)
+#       · test_ranking (+4 check vuốt) · test_shop (tile 294 + mọi tab vừa khung nhìn).
+#       Full suite 29/29 PASS; render kiểm tra bằng mắt (fading ink warn/faded, shop
+#       pen/tool/coin, ranking cuộn 320px).
+
+# ----------------------------------------------------------------------------
 # VÒNG SỬA 9 (2026-09-18): POPUP HƯỚNG DẪN RIÊNG CHO TỪNG CHẾ ĐỘ (9 SCENE)
 # ----------------------------------------------------------------------------
 # [x] LÀM theo yêu cầu user: bỏ popup hướng dẫn dùng chung, làm 9 popup riêng

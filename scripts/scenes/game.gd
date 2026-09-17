@@ -19,6 +19,8 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @onready var tool_wall_btn: TextureButton = $Button/Wall
 @onready var undo_btn: TextureButton = $Button/Undo
 @onready var hint_btn: TextureButton = $Button/Hint
+## Nút CHƠI LẠI ẩn sẵn DƯỚI thanh nút — UIController hiện khi ván không còn thắng được nữa (Sum Path)
+@onready var replay_btn: TextureButton = $Replay
 ## Panel HƯỚNG DẪN LUẬT CHƠI TÓM TẮT dưới bàn cờ (đổi nội dung theo chế độ)
 @onready var hint_guide: HintGuide = $HintGuide
 
@@ -42,13 +44,15 @@ const HUD_SUM_PATH := preload("res://nodes/hud/sum_path_hud.tscn")
 const HUD_BLIND_MEMORY := preload("res://nodes/hud/blind_memory_hud.tscn")
 const HUD_COUNTDOWN := preload("res://nodes/hud/countdown_hud.tscn")
 const HUD_FADING_INK := preload("res://nodes/hud/fading_ink_hud.tscn")
+## Time Attack: CHỈ thẻ THỜI GIAN đặt giữa khung (không có thẻ Thử thách)
+const HUD_TIME_ATTACK := preload("res://nodes/hud/time_attack_hud.tscn")
 
 #@export var game_mode : BaseGameMode
 
 
 func _ready() -> void:
 	# Gắn hiệu ứng nảy xúc giác cho các nút trong Game Screen
-	for btn in [pause_btn, instruction_btn, restart_btn, tool_path_btn, tool_wall_btn, undo_btn, hint_btn]:
+	for btn in [pause_btn, instruction_btn, restart_btn, tool_path_btn, tool_wall_btn, undo_btn, hint_btn, replay_btn]:
 		if btn != null:
 			UIAnim.attach_press_bounce(btn)
 
@@ -166,6 +170,8 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 			return HUD_COUNTDOWN
 		"fading_ink":
 			return HUD_FADING_INK
+		"time_attack":
+			return HUD_TIME_ATTACK
 		_:
 			return HUD_LEVEL
 
@@ -186,6 +192,8 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return CountdownHUD
 		"fading_ink":
 			return FadingInkHUD
+		"time_attack":
+			return TimeAttackHUD
 		_:
 			return LevelHUD
 
