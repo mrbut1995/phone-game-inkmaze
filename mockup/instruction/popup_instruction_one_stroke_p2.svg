@@ -1,0 +1,235 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <pattern id="bgGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.5"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.15"/>
+    </pattern>
+
+    <filter id="paperSlipShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#1A120B" flood-opacity="0.35"/>
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#1A120B" flood-opacity="0.15"/>
+    </filter>
+
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <filter id="deadClashGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#DC2626" flood-opacity="0.75"/>
+    </filter>
+
+    <!-- Họa tiết gạch chéo ô đã đi qua -->
+    <pattern id="visitedHatch" width="12" height="12" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="12" x2="12" y2="0" stroke="#2575A7" stroke-width="1.2" opacity="0.35"/>
+    </pattern>
+  </defs>
+
+  <!-- NỀN MỜ PHÍA SAU -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#bgGrid)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+  <rect width="1080" height="1920" fill="#1C2D3A" fill-opacity="0.55"/>
+
+  <!-- TỜ GIẤY HƯỚNG DẪN (920 x 1480 px tại x=80, y=200) -->
+  <g transform="translate(80, 200)">
+    <!-- THÂN GIẤY CHÍNH -->
+    <g filter="url(#paperSlipShadow)">
+      <rect width="920" height="1480" rx="26" fill="#FFFDF9"/>
+      <!-- Lỗ bấm sổ còng bên lề trái -->
+      <g fill="#EAE3D2" opacity="0.65">
+        <circle cx="28" cy="120" r="8"/><circle cx="28" cy="240" r="8"/><circle cx="28" cy="360" r="8"/>
+        <circle cx="28" cy="480" r="8"/><circle cx="28" cy="600" r="8"/><circle cx="28" cy="720" r="8"/>
+        <circle cx="28" cy="840" r="8"/><circle cx="28" cy="960" r="8"/><circle cx="28" cy="1080" r="8"/>
+        <circle cx="28" cy="1200" r="8"/><circle cx="28" cy="1320" r="8"/><circle cx="28" cy="1440" r="8"/>
+      </g>
+      <!-- Dòng kẻ ngang mờ -->
+      <g stroke="#8FB9D2" stroke-width="1" opacity="0.35">
+        <line x1="80" y1="210" x2="860" y2="210"/><line x1="80" y1="770" x2="860" y2="770"/>
+        <line x1="80" y1="850" x2="860" y2="850"/><line x1="80" y1="930" x2="860" y2="930"/>
+        <line x1="80" y1="1010" x2="860" y2="1010"/><line x1="80" y1="1090" x2="860" y2="1090"/>
+        <line x1="80" y1="1170" x2="860" y2="1170"/><line x1="80" y1="1250" x2="860" y2="1250"/>
+      </g>
+      <line x1="80" y1="0" x2="80" y2="1480" stroke="#D84444" stroke-width="3" opacity="0.85"/>
+      <rect width="920" height="1480" rx="26" fill="none" stroke="#2575A7" stroke-width="3.5"/>
+    </g>
+
+    <!-- WASHI TAPE -->
+    <g transform="translate(350, -22)">
+      <rect width="220" height="46" rx="4" fill="#E8DFCA" fill-opacity="0.9" stroke="#D1C6AE" stroke-width="1.5"/>
+      <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" stroke="#B5A98F" stroke-width="1.2" opacity="0.4"/>
+    </g>
+
+    <!-- NÚT ĐÓNG NHANH "✕" -->
+    <g transform="translate(830, 24)" style="cursor: pointer;">
+      <circle cx="28" cy="28" r="24" fill="#F4EFE6" stroke="#BACEDC" stroke-width="2"/>
+      <path d="M 18 18 L 38 38 M 38 18 L 18 38" stroke="#224C6D" stroke-width="3.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- HEADER POPUP -->
+    <g transform="translate(110, 48)">
+      <rect width="210" height="30" rx="8" fill="#FEE2E2"/>
+      <text x="105" y="21" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#B91C1C" letter-spacing="1">CẢNH BÁO TỬ HUYỆT ⚠️</text>
+      <text x="0" y="70" font-family="'Segoe UI', Roboto, sans-serif" font-size="38" font-weight="950" fill="#224C6D">Cấm Đi Lại Đường Đã Qua</text>
+    </g>
+
+    <!-- ================= THANH TAB: TAB 2 ĐANG ACTIVE ================= -->
+    <g transform="translate(105, 142)">
+      <rect x="0" y="0" width="245" height="48" rx="14" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5"/>
+      <text x="122" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#718B9E">① PHỦ KÍN MỌI Ô</text>
+
+      <rect x="255" y="0" width="245" height="48" rx="14" fill="#2575A7"/>
+      <text x="377" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">② CẤM ĐI LẠI Ô CŨ</text>
+
+      <rect x="510" y="0" width="245" height="48" rx="14" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5"/>
+      <text x="632" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#718B9E">③ CHẠM ĐÍCH F &amp; UNDO</text>
+    </g>
+
+    <!-- ================= KHUNG HÌNH MINH HỌA VI PHẠM & CÔ LẬP Ô ================= -->
+    <g transform="translate(105, 210)" filter="url(#uiShadow)">
+      <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#2575A7" stroke-width="3"/>
+
+      <!-- NỬA TRÁI: ĐI VÀO ĐƯỜNG CŨ = GAME OVER NGAY -->
+      <g transform="translate(45, 30)">
+        <rect width="310" height="395" rx="18" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
+        <rect x="15" y="16" width="185" height="28" rx="8" fill="#FEE2E2"/>
+        <text x="107" y="35" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#B91C1C">💥 ĐI VÀO ĐƯỜNG ĐÃ QUA</text>
+
+        <!-- Lưới mini 2x2 thể hiện việc quay đầu đè nét cũ -->
+        <g transform="translate(65, 65)">
+          <rect width="180" height="180" rx="14" fill="#FFFFFF" stroke="#BACEDC" stroke-width="2"/>
+          <line x1="90" y1="0" x2="90" y2="180" stroke="#BACEDC" stroke-width="1.5"/>
+          <line x1="0" y1="90" x2="180" y2="90" stroke="#BACEDC" stroke-width="1.5"/>
+
+          <!-- Ô [0,0] và [1,0] đã đi -->
+          <rect x="0" y="0" width="90" height="90" fill="#2575A7" fill-opacity="0.15"/>
+          <rect x="0" y="0" width="90" height="90" fill="url(#visitedHatch)"/>
+          <text x="45" y="24" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="900" fill="#2575A7">✓ ĐÃ ĐI</text>
+
+          <!-- Đường vẽ đi từ [0,0] sang [1,0] rồi quay đè lại [0,0] -->
+          <path d="M 45 45 L 135 45" stroke="#2575A7" stroke-width="8" stroke-linecap="round"/>
+          <path d="M 135 45 L 80 45" stroke="#DC2626" stroke-width="8" stroke-linecap="round"/>
+
+          <!-- Điểm va chạm nổ gãy nét -->
+          <g transform="translate(75, 45)" filter="url(#deadClashGlow)">
+            <circle cx="0" cy="0" r="14" fill="#EF4444"/>
+            <circle cx="0" cy="0" r="7" fill="#FDE047"/>
+            <path d="M -10 -10 L 10 10 M 10 -10 L -10 10" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+        </g>
+
+        <text x="155" y="280" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#B91C1C">GAME OVER NGAY!</text>
+        <text x="155" y="308" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#7F1D1D">Cố tình bước đè lên nét vẽ cũ</text>
+        <text x="155" y="328" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#DC2626">sẽ bị xử thua lập tức!</text>
+      </g>
+
+      <!-- NỬA PHẢI: BẪY CÔ LẬP Ô TRỐNG (HẾT ĐƯỜNG ĐI) -->
+      <g transform="translate(400, 30)">
+        <rect width="310" height="395" rx="18" fill="#FFFDF8" stroke="#F59E0B" stroke-width="2"/>
+        <rect x="20" y="16" width="175" height="28" rx="8" fill="#FEF3C7"/>
+        <text x="107" y="35" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#B45309">🚫 BẪY CÔ LẬP Ô TRỐNG</text>
+
+        <!-- Lưới mini thể hiện ô trống bị vây kín -->
+        <g transform="translate(65, 65)">
+          <rect width="180" height="180" rx="14" fill="#FFFFFF" stroke="#BACEDC" stroke-width="2"/>
+          <line x1="90" y1="0" x2="90" y2="180" stroke="#BACEDC" stroke-width="1.5"/>
+          <line x1="0" y1="90" x2="180" y2="90" stroke="#BACEDC" stroke-width="1.5"/>
+
+          <!-- 3 ô xung quanh đã đi và khóa lại -->
+          <rect x="0" y="0" width="90" height="90" fill="#2575A7" fill-opacity="0.15"/>
+          <rect x="0" y="0" width="90" height="90" fill="url(#visitedHatch)"/>
+          <rect x="90" y="0" width="90" height="90" fill="#2575A7" fill-opacity="0.15"/>
+          <rect x="90" y="0" width="90" height="90" fill="url(#visitedHatch)"/>
+          <rect x="90" y="90" width="90" height="90" fill="#2575A7" fill-opacity="0.15"/>
+          <rect x="90" y="90" width="90" height="90" fill="url(#visitedHatch)"/>
+
+          <!-- Ô [0,1] bị cô lập, không ai tới được -->
+          <rect x="4" y="94" width="82" height="82" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="45" y="135" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="950" fill="#DC2626">BỊ KẸT</text>
+        </g>
+
+        <text x="155" y="280" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#B45309">HẾT ĐƯỜNG ĐI!</text>
+        <text x="155" y="308" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#78350F">Vẽ sai nhánh làm cô lập ô trống.</text>
+        <text x="155" y="328" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#B91C1C">Không thể phủ kín 100% ➔ Thua!</text>
+      </g>
+
+      <!-- DẢI GHI CHÚ CHÂN HÌNH -->
+      <rect x="20" y="448" width="715" height="44" rx="10" fill="#F4EFE6"/>
+      <text x="377" y="475" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#224C6D">
+        💡 Tuyệt đối không được bước lùi vào nét vẽ cũ — chạm đường đã đi là Game Over ngay!
+      </text>
+    </g>
+
+    <!-- NỘI DUNG CHI TIẾT DẠNG THẺ -->
+    <g transform="translate(105, 755)">
+      <text x="0" y="24" font-family="sans-serif" font-size="16" font-weight="900" fill="#2575A7" letter-spacing="1.5">QUY TẮC SỐNG CÒN</text>
+
+      <!-- Ý 1 -->
+      <g transform="translate(0, 42)">
+        <rect width="755" height="76" rx="14" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#DC2626"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">1</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#B91C1C">Đi Vào Ô Cũ = Thua Ngay Lập Tức:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#7F1D1D">Ô đã đi qua sẽ bị khóa vĩnh viễn. Cố tình kéo nét vẽ đè vào đường cũ ➔ Game Over ngay!</text>
+      </g>
+
+      <!-- Ý 2 -->
+      <g transform="translate(0, 130)">
+        <rect width="755" height="76" rx="14" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#EA580C"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">2</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#9A3412">Tránh Bẫy Cắt Ngang Làm Cô Lập Ô:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#7C2D12">Đừng đi vắt ngang bàn cờ chia đôi ô trống, vì bạn sẽ không thể quay lại đón các ô bị bỏ lại.</text>
+      </g>
+
+      <!-- Ý 3 -->
+      <g transform="translate(0, 218)">
+        <rect width="755" height="76" rx="14" fill="#F0F7FB" stroke="#D1E2ED" stroke-width="1.5"/>
+        <circle cx="36" cy="38" r="16" fill="#2575A7"/>
+        <text x="36" y="44" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#FFFFFF">3</text>
+        <text x="68" y="32" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#163A58">Dừng Lại Khi Bị Cụt Đường:</text>
+        <text x="68" y="58" font-family="sans-serif" font-size="16" font-weight="600" fill="#5A7385">Nếu nhận ra phía trước là đường cùng, đừng cố đi liều — hãy dùng Undo (xem Trang 3).</text>
+      </g>
+    </g>
+
+    <!-- ĐIỀU KHIỂN PAGING SLIDE -->
+    <g transform="translate(105, 1100)">
+      <g transform="translate(0, 0)">
+        <!-- Nút lùi: BẬT (về Trang 1) -->
+        <g style="cursor: pointer;">
+          <rect width="52" height="52" rx="14" fill="#FEFDFA" stroke="#2575A7" stroke-width="2.5"/>
+          <path d="M 30 18 L 20 26 L 30 34" fill="none" stroke="#2575A7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- Dots: Dot 2 active -->
+        <g transform="translate(80, 16)">
+          <circle cx="9" cy="9" r="8" fill="#D1E2ED"/>
+          <rect x="27" y="0" width="38" height="18" rx="9" fill="#2575A7"/>
+          <circle cx="86" cy="9" r="8" fill="#D1E2ED"/>
+        </g>
+
+        <!-- Nút tiến: BẬT (sang Trang 3) -->
+        <g transform="translate(200, 0)" style="cursor: pointer;">
+          <rect width="52" height="52" rx="14" fill="#FEFDFA" stroke="#2575A7" stroke-width="2.5"/>
+          <path d="M 22 18 L 32 26 L 22 34" fill="none" stroke="#2575A7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <text x="755" y="34" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="900" fill="#2575A7">TRANG 2 / 3</text>
+      </g>
+
+      <!-- Nút hành động chính: TIẾP THEO SANG TRANG 3 -->
+      <g transform="translate(0, 80)" style="cursor: pointer;" filter="url(#uiShadow)">
+        <rect width="755" height="100" rx="22" fill="#2575A7" stroke="#164663" stroke-width="3.5"/>
+        <line x1="42" y1="0" x2="42" y2="100" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
+        <text x="397" y="62" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="25" font-weight="950" fill="#FFFFFF" letter-spacing="1">
+          TIẾP THEO: CHẠM ĐÍCH F &amp; UNDO (3/3) ›
+        </text>
+      </g>
+
+      <text x="377" y="222" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E" style="cursor: pointer;">
+        Bỏ qua hướng dẫn &amp; Vào vẽ một nét ngay
+      </text>
+    </g>
+  </g>
+
+  <rect x="420" y="1875" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
+</svg>

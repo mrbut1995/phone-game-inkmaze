@@ -1,0 +1,326 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <!-- MOCKUP: MÀN CHƠI — WALL BUILDER / XÂY TƯỜNG (GDD §5.13: KHÔNG S/F · HIỆN MỌI SỐ KỂ CẢ 0 · NỐI TƯỜNG THEO SỐ · NÚT GỬI 3 LƯỢT) -->
+  <defs>
+    <!-- Lưới vở học sinh nền 40px -->
+    <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.6"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.2"/>
+    </pattern>
+
+    <!-- Đổ bóng lớn cho Bàn cờ & Thẻ HUD -->
+    <filter id="boardShadow" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1E1610" flood-opacity="0.25"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E1610" flood-opacity="0.10"/>
+    </filter>
+
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <!-- Khuôn bo góc bàn cờ -->
+    <clipPath id="boardClip">
+      <rect width="980" height="980" rx="28"/>
+    </clipPath>
+
+    <!-- TÁI SỬ DỤNG: ANCHOR CROSSHAIR TÂM (0,0) -->
+    <g id="anchor">
+      <g stroke="#1E283A" stroke-width="4.5" stroke-linecap="round">
+        <line x1="0" y1="-18" x2="0" y2="-6"/>
+        <line x1="0" y1="6"   x2="0" y2="18"/>
+        <line x1="-18" y1="0" x2="-6" y2="0"/>
+        <line x1="6"   y1="0" x2="18"  y2="0"/>
+      </g>
+    </g>
+  </defs>
+
+  <!-- ================= 1. NỀN GIẤY VỞ & LỀ ĐỎ ================= -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#notebookGrid)"/>
+  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
+
+  <!-- ================= 2. STATUS BAR ANDROID ================= -->
+  <g fill="#3D5A73" font-family="-apple-system, sans-serif" font-size="28" font-weight="600">
+    <text x="60" y="55">09:41</text>
+    <g transform="translate(940, 34)" stroke="#3D5A73" stroke-width="3" fill="none">
+      <path d="M0 16 A 16 16 0 0 1 24 16" stroke-linecap="round"/>
+      <circle cx="12" cy="24" r="2" fill="#3D5A73"/>
+    </g>
+    <rect x="980" y="36" width="44" height="22" rx="5" fill="none" stroke="#3D5A73" stroke-width="3"/>
+    <rect x="984" y="40" width="28" height="14" rx="2" fill="#3D5A73"/>
+  </g>
+
+  <!-- ================= 3. HEADER GAME ================= -->
+  <!-- Nút Pause -->
+  <g transform="translate(50, 85)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <line x1="26" y1="22" x2="26" y2="48" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="44" y1="22" x2="44" y2="48" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Tiêu đề Chế độ chơi WALL BUILDER / XÂY TƯỜNG -->
+  <g transform="translate(540, 105)" text-anchor="middle">
+    <text y="0" font-family="sans-serif" font-size="18" font-weight="900" fill="#2E7D32" letter-spacing="2">DAILY CHALLENGE · ĐẶC BIỆT</text>
+    <text y="42" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="900" fill="#224C6D">XÂY TƯỜNG (WALL BUILDER) 🧱</text>
+  </g>
+
+  <!-- Nút Restart / Reset -->
+  <g transform="translate(960, 85)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <path d="M50 25 A 15 15 0 1 0 52 42" fill="none" stroke="#3D83AE" stroke-width="4" stroke-linecap="round"/>
+    <polyline points="42,20 52,24 50,34" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- ================= 4. BẢNG CHỈ SỐ HUD WALL BUILDER (§10.2b: TIME TRÁI · TƯỜNG ĐÃ DỰNG PHẢI) ================= -->
+  <g transform="translate(50, 178)" filter="url(#uiShadow)">
+
+    <!-- ================= THẺ 1: TIME PANEL (270 x 156 px) ================= -->
+    <g transform="translate(0, 0)">
+      <rect width="270" height="156" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <line x1="20" y1="0" x2="20" y2="156" stroke="#3D83AE" stroke-width="3"/>
+      <text x="36" y="44" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">⏱️ THỜI GIAN</text>
+      <text x="36" y="102" font-family="'Segoe UI', monospace" font-size="48" font-weight="950" fill="#224C6D">01:15</text>
+      <rect x="36" y="118" width="145" height="24" rx="6" fill="#F0F7FB"/>
+      <text x="108" y="135" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#3D83AE">ĐANG SUY LUẬN</text>
+    </g>
+
+    <!-- ================= THẺ 2: TIẾN ĐỘ XÂY TƯỜNG & LƯỢT GỬI (690 x 156 px) ================= -->
+    <g transform="translate(290, 0)">
+      <rect width="690" height="156" rx="22" fill="#FEFDFA" stroke="#2E7D32" stroke-width="3"/>
+      <line x1="20" y1="0" x2="20" y2="156" stroke="#2E7D32" stroke-width="3"/>
+
+      <!-- KHU VỰC SỐ ĐOẠN TƯỜNG ĐÃ VẼ (x: 36 -> 210) -->
+      <g transform="translate(36, 0)">
+        <text x="0" y="40" font-family="sans-serif" font-size="17" font-weight="900" fill="#2E7D32" letter-spacing="0.5">🧱 ĐÃ DỰNG</text>
+        <text x="0" y="100" font-family="'Segoe UI', sans-serif" font-size="52" font-weight="950" fill="#224C6D">14<tspan font-size="28" fill="#8FA0AC">/18 ĐOẠN</tspan></text>
+        <text x="0" y="132" font-family="sans-serif" font-size="14" font-weight="800" fill="#D84444">CÒN THIẾU 4 ĐOẠN</text>
+      </g>
+
+      <!-- Vạch phân tách dọc -->
+      <line x1="235" y1="14" x2="235" y2="142" stroke="#E2EBF1" stroke-width="2"/>
+
+      <!-- LƯỢT GỬI CÒN LẠI & THANH TIẾN ĐỘ DỰNG TƯỜNG (BÊN PHẢI) -->
+      <g transform="translate(255, 16)">
+        <!-- Dòng 1: Lượt gửi nộp bài (3 lượt) + Chip trạng thái -->
+        <g transform="translate(0, 0)">
+          <rect width="400" height="42" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.2"/>
+          <text x="18" y="27" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#D84444">❤️ LƯỢT GỬI: 3 / 3 LẦN</text>
+          <rect x="260" y="8" width="130" height="26" rx="6" fill="#2E7D32"/>
+          <text x="325" y="25" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#FFFFFF">ĐANG NỐI TƯỜNG</text>
+        </g>
+
+        <!-- Dòng 2: Thanh Slider tiến độ 14/18 đoạn (77%) -->
+        <g transform="translate(0, 54)">
+          <rect width="400" height="14" rx="7" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1"/>
+          <rect width="310" height="14" rx="7" fill="#2E7D32"/>
+          <text x="0" y="44" font-family="sans-serif" font-size="15" font-weight="700" fill="#5A6D7C">Khớp mọi con số rồi bấm GỬI</text>
+          <text x="400" y="44" text-anchor="end" font-family="sans-serif" font-size="14" font-weight="800" fill="#2E7D32">✓ Sai -1 lượt</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= 5. KHUNG BÀN CỜ WALL BUILDER 5x5 (980 x 980 px) ================= -->
+  <!-- KHÔNG CÓ S/F · HIỆN SỐ TRÊN TOÀN BỘ 25 Ô (KỂ CẢ SỐ 0) · NỐI CÁC ĐOẠN TƯỜNG GIỮA ANCHOR -->
+  <g transform="translate(50, 350)">
+    <!-- Bề mặt card board -->
+    <g clip-path="url(#boardClip)">
+      <rect width="980" height="980" fill="#FEFDFA"/>
+      <line x1="42" y1="0" x2="42" y2="980" stroke="#D84444" stroke-width="3"/>
+    </g>
+    <!-- Viền ngoài bàn cờ = TƯỜNG CỐ ĐỊNH VIỀN NGOÀI (không tính vào số ô theo GDD §2 & §5.13) -->
+    <rect width="980" height="980" rx="28" fill="none" stroke="#1E283A" stroke-width="7" filter="url(#boardShadow)"/>
+    <line x1="35" y1="3" x2="945" y2="3" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="5" stroke-linecap="round"/>
+
+    <!-- LƯỚI 5x5 CELL (Padding 50px, mỗi ô 176x176 px) -->
+    <g id="grid-maze" transform="translate(50, 50)">
+
+      <!-- Lớp 1: Nền 25 ô vuông phẳng đồng nhất (Không có ô cầu thang) -->
+      <g fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5">
+        <!-- Hàng 0 -->
+        <rect x="0" y="0" width="176" height="176"/><rect x="176" y="0" width="176" height="176"/><rect x="352" y="0" width="176" height="176"/><rect x="528" y="0" width="176" height="176"/><rect x="704" y="0" width="176" height="176"/>
+        <!-- Hàng 1 -->
+        <rect x="0" y="176" width="176" height="176"/><rect x="176" y="176" width="176" height="176"/><rect x="352" y="176" width="176" height="176"/><rect x="528" y="176" width="176" height="176"/><rect x="704" y="176" width="176" height="176"/>
+        <!-- Hàng 2 -->
+        <rect x="0" y="352" width="176" height="176"/><rect x="176" y="352" width="176" height="176"/><rect x="352" y="352" width="176" height="176"/><rect x="528" y="352" width="176" height="176"/><rect x="704" y="352" width="176" height="176"/>
+        <!-- Hàng 3 -->
+        <rect x="0" y="528" width="176" height="176"/><rect x="176" y="528" width="176" height="176"/><rect x="352" y="528" width="176" height="176"/><rect x="528" y="528" width="176" height="176"/><rect x="704" y="528" width="176" height="176"/>
+        <!-- Hàng 4 -->
+        <rect x="0" y="704" width="176" height="176"/><rect x="176" y="704" width="176" height="176"/><rect x="352" y="704" width="176" height="176"/><rect x="528" y="704" width="176" height="176"/><rect x="704" y="704" width="176" height="176"/>
+      </g>
+
+      <!-- Highlight nhẹ một số ô đã dựng đủ số tường để người chơi dễ quan sát -->
+      <rect x="0"   y="0"   width="176" height="176" fill="#E8F5E9" fill-opacity="0.35"/>
+      <rect x="704" y="352" width="176" height="176" fill="#E8F5E9" fill-opacity="0.35"/>
+      <rect x="352" y="352" width="176" height="176" fill="#FFF8E1" fill-opacity="0.4"/> <!-- Ô đang tập trung suy luận -->
+
+      <!-- ================= CON SỐ Ở GIỮA TOÀN BỘ 25 Ô (HIỆN CẢ SỐ 0 THEO §5.13) ================= -->
+      <!-- Con số biểu thị số cạnh có tường bao quanh bên trong board -->
+      <g font-family="'Segoe UI', sans-serif" font-size="52" font-weight="900" fill="#2A4860" text-anchor="middle" dominant-baseline="central">
+        <!-- Hàng 0 -->
+        <text x="88"  y="88">1</text>
+        <text x="264" y="88">2</text>
+        <text x="440" y="88">1</text>
+        <text x="616" y="88">2</text>
+        <text x="792" y="88">1</text>
+
+        <!-- Hàng 1 -->
+        <text x="88"  y="264">2</text>
+        <text x="264" y="264">3</text>
+        <text x="440" y="264">2</text>
+        <text x="616" y="264">1</text>
+        <text x="792" y="264">2</text>
+
+        <!-- Hàng 2 (Có số 0 rõ ràng) -->
+        <text x="88"  y="440" fill="#718B9E">0</text>
+        <text x="264" y="440">2</text>
+        <text x="440" y="440" fill="#2575A7">1</text>
+        <text x="616" y="440">3</text>
+        <text x="792" y="440">1</text>
+
+        <!-- Hàng 3 -->
+        <text x="88"  y="616">2</text>
+        <text x="264" y="616">1</text>
+        <text x="440" y="616">3</text>
+        <text x="616" y="616">2</text>
+        <text x="792" y="616">2</text>
+
+        <!-- Hàng 4 (Có số 0) -->
+        <text x="88"  y="792">1</text>
+        <text x="264" y="792">2</text>
+        <text x="440" y="792" fill="#718B9E">0</text>
+        <text x="616" y="792">2</text>
+        <text x="792" y="792">1</text>
+      </g>
+
+      <!-- ================= CÁC ĐOẠN TƯỜNG ĐÃ DỰNG (14 ĐOẠN / 18 ĐOẠN CẦN TẠO) ================= -->
+      <!-- Nét mực đen đậm dày 11px chuẩn, nối khít giữa 2 anchor lân cận -->
+      <g stroke="#1E283A" stroke-width="11" stroke-linecap="round">
+        <!-- Đoạn 1: Dọc x=176, y=0..176 -->
+        <line x1="176" y1="8"   x2="176" y2="168"/>
+        <!-- Đoạn 2: Ngang y=176, x=176..352 -->
+        <line x1="184" y1="176" x2="344" y2="176"/>
+        <!-- Đoạn 3: Dọc x=352, y=0..176 -->
+        <line x1="352" y1="8"   x2="352" y2="168"/>
+        <!-- Đoạn 4: Ngang y=176, x=528..704 -->
+        <line x1="536" y1="176" x2="696" y2="176"/>
+        <!-- Đoạn 5: Dọc x=704, y=0..176 -->
+        <line x1="704" y1="8"   x2="704" y2="168"/>
+
+        <!-- Đoạn 6: Dọc x=176, y=176..352 -->
+        <line x1="176" y1="184" x2="176" y2="344"/>
+        <!-- Đoạn 7: Dọc x=352, y=176..352 -->
+        <line x1="352" y1="184" x2="352" y2="344"/>
+        <!-- Đoạn 8: Ngang y=352, x=176..352 -->
+        <line x1="184" y1="352" x2="344" y2="352"/>
+        <!-- Đoạn 9: Ngang y=352, x=528..704 -->
+        <line x1="536" y1="352" x2="696" y2="352"/>
+
+        <!-- Đoạn 10: Dọc x=528, y=352..528 -->
+        <line x1="528" y1="360" x2="528" y2="520"/>
+        <!-- Đoạn 11: Dọc x=704, y=352..528 -->
+        <line x1="704" y1="360" x2="704" y2="520"/>
+
+        <!-- Đoạn 12: Ngang y=528, x=352..528 -->
+        <line x1="360" y1="528" x2="520" y2="528"/>
+        <!-- Đoạn 13: Dọc x=352, y=528..704 -->
+        <line x1="352" y1="536" x2="352" y2="696"/>
+        <!-- Đoạn 14: Ngang y=704, x=528..704 -->
+        <line x1="536" y1="704" x2="696" y2="704"/>
+      </g>
+
+      <!-- ĐOẠN TƯỜNG THỨ 15 ĐANG ĐƯỢC NGƯỜI CHƠI CHẠM KÉO NỐI (ACTIVE INTERACTION) -->
+      <!-- Kéo nối giữa Anchor (528, 528) và (704, 528) với màu cam hổ phách -->
+      <line x1="536" y1="528" x2="696" y2="528" stroke="#C4843A" stroke-width="9" stroke-linecap="round" stroke-dasharray="10 6"/>
+      <circle cx="616" cy="528" r="10" fill="#C4843A"/>
+      <circle cx="616" cy="528" r="4.5" fill="#FFFFFF"/>
+
+      <!-- ================= MA TRẬN 36 ANCHOR (6x6 TẠI CÁC GIAO ĐIỂM) ================= -->
+      <!-- Điểm neo trực tiếp để chạm kéo dựng tường -->
+      <!-- Hàng 0 -->
+      <use href="#anchor" x="0" y="0"/><use href="#anchor" x="176" y="0"/><use href="#anchor" x="352" y="0"/><use href="#anchor" x="528" y="0"/><use href="#anchor" x="704" y="0"/><use href="#anchor" x="880" y="0"/>
+      <!-- Hàng 1 -->
+      <use href="#anchor" x="0" y="176"/><use href="#anchor" x="176" y="176"/><use href="#anchor" x="352" y="176"/><use href="#anchor" x="528" y="176"/><use href="#anchor" x="704" y="176"/><use href="#anchor" x="880" y="176"/>
+      <!-- Hàng 2 -->
+      <use href="#anchor" x="0" y="352"/><use href="#anchor" x="176" y="352"/><use href="#anchor" x="352" y="352"/><use href="#anchor" x="528" y="352"/><use href="#anchor" x="704" y="352"/><use href="#anchor" x="880" y="352"/>
+      <!-- Hàng 3 (Có 2 anchor đang được chạm kéo nổi bật) -->
+      <use href="#anchor" x="0" y="528"/><use href="#anchor" x="176" y="528"/><use href="#anchor" x="352" y="528"/>
+      <!-- Anchor gốc đang nhấn -->
+      <g transform="translate(528, 528)">
+        <circle cx="0" cy="0" r="24" fill="#C4843A" fill-opacity="0.2"/>
+        <use href="#anchor" x="0" y="0"/>
+      </g>
+      <!-- Anchor đích đang đón -->
+      <g transform="translate(704, 528)">
+        <circle cx="0" cy="0" r="24" fill="#C4843A" fill-opacity="0.2"/>
+        <circle cx="0" cy="0" r="24" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3"/>
+        <use href="#anchor" x="0" y="0"/>
+      </g>
+      <use href="#anchor" x="880" y="528"/>
+      <!-- Hàng 4 -->
+      <use href="#anchor" x="0" y="704"/><use href="#anchor" x="176" y="704"/><use href="#anchor" x="352" y="704"/><use href="#anchor" x="528" y="704"/><use href="#anchor" x="704" y="704"/><use href="#anchor" x="880" y="704"/>
+      <!-- Hàng 5 -->
+      <use href="#anchor" x="0" y="880"/><use href="#anchor" x="176" y="880"/><use href="#anchor" x="352" y="880"/><use href="#anchor" x="528" y="880"/><use href="#anchor" x="704" y="880"/><use href="#anchor" x="880" y="880"/>
+    </g>
+  </g>
+
+  <!-- ================= 6. HƯỚNG DẪN LUẬT CHƠI WALL BUILDER ================= -->
+  <g transform="translate(50, 1350)" filter="url(#uiShadow)">
+    <rect width="980" height="90" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
+    <line x1="32" y1="0" x2="32" y2="90" stroke="#2E7D32" stroke-width="3.5"/>
+    <text x="60" y="52" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="700" fill="#244E6E">
+      🧱 Đọc số trên ô để vẽ tường ngăn cách. Đủ và đúng tường quanh mọi ô rồi bấm GỬI!
+    </text>
+  </g>
+
+  <!-- ================= 7. THANH ĐIỀU KHIỂN & CÔNG CỤ (CÓ NÚT GỬI THEO GDD §5.13) ================= -->
+  <!-- Nút VẼ TƯỜNG (Active) + Nút GỬI (Nộp bài) + Nút UNDO + Nút HINT -->
+  <g transform="translate(50, 1465)" filter="url(#uiShadow)">
+    <!-- CÔNG CỤ 1: VẼ TƯỜNG (ACTIVE) -->
+    <g transform="translate(0, 0)" style="cursor: pointer;">
+      <rect width="360" height="140" rx="26" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
+      <line x1="35" y1="0" x2="35" y2="140" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
+      <!-- Icon gạch tường xây dựng -->
+      <g transform="translate(55, 48)" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round">
+        <rect x="0" y="4" width="40" height="32" rx="6" stroke-width="3"/>
+        <line x1="0" y1="20" x2="40" y2="20"/>
+        <line x1="20" y1="4" x2="20" y2="20"/>
+      </g>
+      <text x="145" y="65" font-family="'Segoe UI', sans-serif" font-size="28" font-weight="900" fill="#FFFFFF">VẼ TƯỜNG</text>
+      <text x="145" y="100" font-family="sans-serif" font-size="18" font-weight="700" fill="#BAE6FD">Nối tường theo số</text>
+    </g>
+
+    <!-- CÔNG CỤ 2: NÚT GỬI (SUBMIT — NỔI BẬT MÀU XANH LỤC NỘP BÀI) -->
+    <g transform="translate(390, 0)" style="cursor: pointer;">
+      <rect width="360" height="140" rx="26" fill="#2E7D32" stroke="#1B5E20" stroke-width="4"/>
+      <line x1="35" y1="0" x2="35" y2="140" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
+      <!-- Icon Con dấu / Cờ nộp bài hoàn thành -->
+      <g transform="translate(55, 48)" stroke="#FFFFFF" stroke-width="3.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="20" cy="20" r="18" stroke-width="3"/>
+        <path d="M 12 20 L 17 25 L 28 14"/>
+      </g>
+      <text x="140" y="65" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#FFFFFF" letter-spacing="1">GỬI BÀI</text>
+      <text x="140" y="100" font-family="sans-serif" font-size="18" font-weight="700" fill="#DCFCE7">Kiểm tra kết quả</text>
+    </g>
+
+    <!-- CÔNG CỤ 3: HOÀN TÁC (UNDO — XOÁ ĐOẠN TƯỜNG VỪA NỐI) -->
+    <g transform="translate(780, 0)" style="cursor: pointer;">
+      <rect width="90" height="140" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <g transform="translate(20, 20)">
+        <path d="M 33 22 L 24 30 L 33 38" fill="none" stroke="#3D83AE" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 25 30 H 38 C 47 30 52 35 52 42 C 52 50 46 53 37 53 H 28" fill="none" stroke="#3D83AE" stroke-width="3.8" stroke-linecap="round"/>
+      </g>
+      <text x="45" y="120" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#718B9E">UNDO</text>
+    </g>
+
+    <!-- CÔNG CỤ 4: GỢI Ý (HINT — KHÓA 1 ĐOẠN TƯỜNG ĐÚNG) -->
+    <g transform="translate(890, 0)" style="cursor: pointer;">
+      <rect width="90" height="140" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <path d="M45 45 C35 45 32 55 38 65 L52 65 C58 55 55 45 45 45 Z" fill="none" stroke="#F59E0B" stroke-width="3.5"/>
+      <line x1="40" y1="72" x2="50" y2="72" stroke="#F59E0B" stroke-width="3"/>
+      <text x="45" y="120" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#F59E0B">GỢI Ý</text>
+    </g>
+  </g>
+
+  <!-- ================= 8. ANDROID HOME GESTURE BAR ================= -->
+  <rect x="420" y="1875" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
+</svg>
