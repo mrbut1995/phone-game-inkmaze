@@ -21,7 +21,7 @@ script = ExtResource("2_script")
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.25500003
-anchor_bottom = 0.75450206
+anchor_bottom = 0.84687155
 offset_top = 3.0
 offset_right = 0.099975586
 offset_bottom = -0.11100769
@@ -30,73 +30,93 @@ texture = ExtResource("3_time")
 metadata/_edit_use_anchors_ = true
 
 [node name="Head" type="Label" parent="Time" index="0" unique_id=937397718]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 12.0
-offset_right = 244.0
-offset_bottom = 46.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09200001
+anchor_top = 0.10005431
+anchor_right = 0.94000006
+anchor_bottom = 0.317
+offset_top = -0.027275085
+offset_right = -1.5258789e-05
+offset_bottom = -0.09991455
 theme_type_variation = &"HudTimeHead"
 text = "STR_HUD_TIME"
+horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Value" type="Label" parent="Time" index="1" unique_id=1374290961]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 48.0
-offset_right = 244.0
-offset_bottom = 116.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.124000005
+anchor_top = 0.34100002
+anchor_right = 0.86
+anchor_bottom = 0.66800004
+offset_top = -0.08615875
+offset_bottom = -0.02368164
 theme_type_variation = &"HudTimeValue"
 text = "0:00"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Sub" type="Label" parent="Time" index="2" unique_id=861101356]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 116.0
-offset_right = 246.0
-offset_bottom = 148.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.14800002
+anchor_top = 0.6627363
+anchor_right = 0.892
+anchor_bottom = 0.8167363
+offset_top = 0.06990814
+offset_bottom = 0.07487488
 theme_type_variation = &"HudTimeSub"
 text = "STR_HUD_TIME_FREE"
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Sheet" type="TextureRect" parent="." index="1" unique_id=2103422146]
+[node name="Sheet" type="NinePatchRect" parent="." index="1" unique_id=1635864766]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.27
 anchor_top = 0.012
-anchor_right = 1.0
-anchor_bottom = 0.76655024
+anchor_right = 1.0255102
+anchor_bottom = 0.83482337
 offset_left = 0.3999939
 offset_top = 0.012000084
 offset_bottom = -0.11100769
-mouse_filter = 2
 texture = ExtResource("4_sheet")
+patch_margin_left = 302
+patch_margin_top = 29
+patch_margin_right = 37
+patch_margin_bottom = 13
+axis_stretch_horizontal = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="BlockBottle" type="TextureRect" parent="." index="2" unique_id=248310022]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.305
-anchor_top = 0.165
+anchor_top = 0.27600002
 anchor_right = 0.356
-anchor_bottom = 0.43800002
+anchor_bottom = 0.549
 offset_left = 0.1000061
-offset_top = 27.675007
+offset_top = 0.036003113
 offset_right = 0.11999512
-offset_bottom = 27.698006
+offset_bottom = 0.059005737
 mouse_filter = 2
 texture = ExtResource("7_bottle")
 expand_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="HFlowContainer" type="HFlowContainer" parent="." index="3" unique_id=1523194925]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.57653064
 anchor_top = 0.1877912
-anchor_right = 0.97083676
-anchor_bottom = 0.44905224
-offset_right = -0.42004395
-offset_bottom = -0.054000854
+anchor_right = 1.0040001
+anchor_bottom = 0.52500004
+offset_right = 0.08001709
+offset_bottom = 0.035003662
 metadata/_edit_use_anchors_ = true
 
 [node name="Swatch1" type="TextureRect" parent="HFlowContainer" index="0" unique_id=1755093493]
@@ -106,9 +126,11 @@ texture = ExtResource("8_swatch1")
 
 [node name="ScaleA" type="Label" parent="HFlowContainer/Swatch1" index="0" unique_id=1945365052]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.11851852
+anchor_top = 0.18668985
+anchor_right = 0.88148147
+anchor_bottom = 0.825
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"HudScaleChip"
@@ -116,6 +138,8 @@ text = "STR_HUD_INK_SCALE_A"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
+maximum_font_size = 40
+metadata/_edit_use_anchors_ = true
 
 [node name="Swatch2" type="TextureRect" parent="HFlowContainer" index="1" unique_id=1949652520]
 layout_mode = 2
@@ -124,9 +148,11 @@ texture = ExtResource("9_swatch2")
 
 [node name="ScaleB" type="Label" parent="HFlowContainer/Swatch2" index="0" unique_id=775694406]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.074074075
+anchor_top = 0.1613636
+anchor_right = 0.9259259
+anchor_bottom = 0.825
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"HudScaleChip"
@@ -134,6 +160,8 @@ text = "STR_HUD_INK_SCALE_B"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
+maximum_font_size = 40
+metadata/_edit_use_anchors_ = true
 
 [node name="Swatch3" type="TextureRect" parent="HFlowContainer" index="2" unique_id=1617299689]
 layout_mode = 2
@@ -142,9 +170,13 @@ texture = ExtResource("10_swatch3")
 
 [node name="ScaleC" type="Label" parent="HFlowContainer/Swatch3" index="0" unique_id=369395385]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.052222222
+anchor_top = 0.13700795
+anchor_right = 0.94777775
+anchor_bottom = 0.85
+offset_left = -0.05000019
+offset_right = 0.05000305
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"HudScaleChip"
@@ -152,6 +184,8 @@ text = "STR_HUD_INK_SCALE_C"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
+maximum_font_size = 40
+metadata/_edit_use_anchors_ = true
 
 [node name="Swatch4" type="TextureRect" parent="HFlowContainer" index="3" unique_id=2130288910]
 layout_mode = 2
@@ -160,9 +194,13 @@ texture = ExtResource("11_swatch4")
 
 [node name="ScaleD" type="Label" parent="HFlowContainer/Swatch4" index="0" unique_id=785166112]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.052
+anchor_top = 0.125
+anchor_right = 0.9480001
+anchor_bottom = 0.875
+offset_left = -0.01999998
+offset_right = 0.019989014
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"HudScaleChipOff"
@@ -170,6 +208,8 @@ text = "STR_HUD_INK_SCALE_D"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
+maximum_font_size = 40
+metadata/_edit_use_anchors_ = true
 
 [node name="Steps" type="Control" parent="." index="4" unique_id=1620880745]
 layout_mode = 1
@@ -258,9 +298,9 @@ vertical_alignment = 1
 [node name="Warn" type="Control" parent="." index="6" unique_id=1084244876]
 layout_mode = 1
 anchor_left = 0.5820001
-anchor_top = 0.48050207
+anchor_top = 0.5487752
 anchor_right = 0.96900004
-anchor_bottom = 0.64950204
+anchor_bottom = 0.71777517
 offset_left = -0.3600464
 offset_top = 0.114997864
 offset_right = 0.37994385

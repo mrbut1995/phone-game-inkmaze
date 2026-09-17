@@ -1,111 +1,354 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
-  <!-- MOCKUP: MÀN CHƠI — FOG OF WAR MAZE (HUD mặc định: THỬ THÁCH + THỜI GIAN · sương mù quanh nhân vật) -->
-  <!-- Toa do lay tu scenes/game.tscn + nodes/hud/*.tscn (khung HUD 980x249 tai (50,175)) -->
+  <!-- MOCKUP: MÀN CHƠI — FOG OF WAR (SƯƠNG MÙ CHIẾN TRANH · PANEL ĐẶC DỤNG · LAYER SƯƠNG MÙ TRÊN GRID) -->
   <defs>
+    <!-- Lưới vở học sinh nền 40px -->
     <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.6"/>
       <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.2"/>
     </pattern>
+
+    <!-- Đổ bóng lớn cho Bàn cờ & Thẻ HUD -->
     <filter id="boardShadow" x="-10%" y="-10%" width="125%" height="130%">
       <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1E1610" flood-opacity="0.25"/>
       <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E1610" flood-opacity="0.10"/>
     </filter>
+
     <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
       <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
     </filter>
-    <filter id="heroShadow" x="-15%" y="-15%" width="130%" height="140%">
-      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#1E2830" flood-opacity="0.18"/>
-    </filter>
+
+    <!-- Hào quang phát sáng cho đường đi người chơi -->
     <filter id="pathGlow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#2575A7" flood-opacity="0.45"/>
     </filter>
-    <clipPath id="boardClip"><rect width="1020" height="1020" rx="28"/></clipPath>
+
+    <!-- Gradient hố sâu của cell_finish -->
+    <linearGradient id="dungeonDeepVoid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3C4B59" stop-opacity="0.1"/>
+      <stop offset="60%" stop-color="#1B2834" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#0A1118" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Gradient ánh sáng của cell_start -->
+    <linearGradient id="dungeonUpperLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBE8" stop-opacity="0.95"/>
+      <stop offset="35%" stop-color="#3C4B59" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#1B2834" stop-opacity="0.75"/>
+    </linearGradient>
+
+    <!-- Khuôn bo góc bàn cờ -->
+    <clipPath id="boardClip">
+      <rect width="980" height="980" rx="28"/>
+    </clipPath>
+
+    <!-- TÁI SỬ DỤNG: ANCHOR CROSSHAIR TÂM (0,0) -->
+    <g id="anchor">
+      <g stroke="#1E283A" stroke-width="4.5" stroke-linecap="round">
+        <line x1="0" y1="-18" x2="0" y2="-6"/>
+        <line x1="0" y1="6"   x2="0" y2="18"/>
+        <line x1="-18" y1="0" x2="-6" y2="0"/>
+        <line x1="6"   y1="0" x2="18"  y2="0"/>
+      </g>
+    </g>
+
+    <!-- Pattern chấm sương mù mờ che mắt -->
+    <pattern id="fogNoise" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="5" r="1.5" fill="#7A8F9B" opacity="0.35"/>
+      <circle cx="15" cy="15" r="1.8" fill="#7A8F9B" opacity="0.35"/>
+    </pattern>
   </defs>
+
+  <!-- ================= 1. NỀN GIẤY VỞ & LỀ ĐỎ ================= -->
   <rect width="1080" height="1920" fill="#FAF5EB"/>
   <rect width="1080" height="1920" fill="url(#notebookGrid)"/>
   <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
-<g fill="#3D5A73" font-family="sans-serif" font-size="28" font-weight="600"><text x="60" y="55">09:41</text></g>
-  <g transform="translate(50, 85)" filter="url(#uiShadow)"><rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><line x1="26" y1="22" x2="26" y2="48" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round"/><line x1="44" y1="22" x2="44" y2="48" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round"/></g>
-  <g transform="translate(960, 85)" filter="url(#uiShadow)"><rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><path d="M50 25 A 15 15 0 1 0 52 42" fill="none" stroke="#3D83AE" stroke-width="4" stroke-linecap="round"/><polyline points="42,20 52,24 50,34" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></g>
-  <text x="540" y="94" font-family="sans-serif" font-size="26" font-weight="800" fill="#D84444" text-anchor="middle" letter-spacing="1">DAILY CHALLENGE · MODE fog_of_war</text>
-  <text x="540" y="128" font-family="sans-serif" font-size="42" font-weight="800" fill="#224C6D" text-anchor="middle" letter-spacing="2">FOG OF WAR MAZE</text>
-  <!-- ===== HUD theo chế độ: khung 980x249 tại (50,175) ===== -->
-  <g transform="translate(50, 175)">
-  <g transform="translate(0, 31)" filter="url(#uiShadow)">
-  <rect width="250" height="138" rx="20" fill="#6EA0C8"/>
-  <rect x="3" y="3" width="244" height="132" rx="16" fill="#FEFDFA"/>
-  <line x1="16" y1="40" x2="242" y2="40" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
-  <line x1="16" y1="80" x2="242" y2="80" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
-  <line x1="16" y1="120" x2="242" y2="120" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
-  <line x1="18" y1="3" x2="18" y2="135" stroke="#6EA0C8" stroke-width="3"/>
-  </g><text x="32" y="65" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">THỜI GIAN</text><text x="62" y="126" font-family="'Segoe UI', monospace" font-size="46" font-weight="950" fill="#224C6D">00:51</text>
-  <g transform="translate(271, -29)" filter="url(#uiShadow)">
-  <rect width="720" height="246" rx="24" fill="#6EA0C8"/>
-  <rect x="4" y="4" width="712" height="238" rx="20" fill="#FEFDFA"/>
-  <line x1="24" y1="4" x2="24" y2="242" stroke="#6EA0C8" stroke-width="3"/>
-  </g><text x="303" y="13" font-family="sans-serif" font-size="24" font-weight="900" fill="#D84444" letter-spacing="1">THỬ THÁCH</text><text x="315" y="109" font-family="sans-serif" font-size="62" font-weight="950" fill="#224C6D" text-anchor="middle">1/3 ✓</text><text x="382" y="161" font-family="sans-serif" font-size="24" font-weight="700" fill="#718B9E" text-anchor="middle">1 ĐÃ HOÀN THÀNH</text><line x1="461" y1="-11" x2="461" y2="199" stroke="#E2EBF1" stroke-width="3"/><rect x="476" y="-1" width="490" height="58" rx="12" fill="#FDF3F3" stroke="#F0D5D5" stroke-width="2"/><rect x="490" y="13" width="30" height="30" rx="7" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/><polyline points="497,28 503,35 513,21" fill="none" stroke="#D84444" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><text x="530" y="37" font-family="sans-serif" font-size="22" font-weight="800" fill="#224C6D">Không đâm vào tường</text><text x="936" y="37" font-family="sans-serif" font-size="22" font-weight="800" fill="#D84444" text-anchor="end">✓ ĐẠT</text><rect x="476" y="65" width="490" height="58" rx="12" fill="#F4F9FC" stroke="#DCE8F0" stroke-width="2"/><rect x="490" y="79" width="30" height="30" rx="7" fill="#FEFDFA" stroke="#B9CDDB" stroke-width="3"/><text x="530" y="103" font-family="sans-serif" font-size="22" font-weight="800" fill="#224C6D">Đi không quá 14 bước</text><text x="936" y="103" font-family="sans-serif" font-size="22" font-weight="800" fill="#718B9E" text-anchor="end">0/14 bước</text><rect x="476" y="131" width="490" height="58" rx="12" fill="#F4F9FC" stroke="#DCE8F0" stroke-width="2"/><rect x="490" y="145" width="30" height="30" rx="7" fill="#FEFDFA" stroke="#B9CDDB" stroke-width="3"/><text x="530" y="169" font-family="sans-serif" font-size="22" font-weight="800" fill="#224C6D">Về đích dưới 42 giây</text><text x="936" y="169" font-family="sans-serif" font-size="22" font-weight="800" fill="#718B9E" text-anchor="end">còn 42s</text>
+
+  <!-- ================= 2. STATUS BAR ANDROID ================= -->
+  <g fill="#3D5A73" font-family="-apple-system, sans-serif" font-size="28" font-weight="600">
+    <text x="60" y="55">09:41</text>
+    <g transform="translate(940, 34)" stroke="#3D5A73" stroke-width="3" fill="none">
+      <path d="M0 16 A 16 16 0 0 1 24 16" stroke-linecap="round"/>
+      <circle cx="12" cy="24" r="2" fill="#3D5A73"/>
+    </g>
+    <rect x="980" y="36" width="44" height="22" rx="5" fill="none" stroke="#3D5A73" stroke-width="3"/>
+    <rect x="984" y="40" width="28" height="14" rx="2" fill="#3D5A73"/>
   </g>
 
-  <!-- ===== Bàn cờ (Board node: 41,420 → 1061,1440) ===== -->
-  <g transform="translate(41, 420)"><g clip-path="url(#boardClip)"><rect width="1020" height="1020" fill="#FEFDFA"/><line x1="42" y1="0" x2="42" y2="1020" stroke="#D84444" stroke-width="3"/></g><rect width="1020" height="1020" rx="28" fill="none" stroke="#6EA0C8" stroke-width="6" filter="url(#boardShadow)"/></g>
-  <rect x="111.0" y="490.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="287.0" y="490.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="463.0" y="490.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="639.0" y="490.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="815.0" y="490.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="111.0" y="666.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="287.0" y="666.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="463.0" y="666.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="639.0" y="666.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="815.0" y="666.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="111.0" y="842.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="287.0" y="842.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="463.0" y="842.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="639.0" y="842.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="815.0" y="842.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="111.0" y="1018.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="287.0" y="1018.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="463.0" y="1018.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="639.0" y="1018.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="815.0" y="1018.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="111.0" y="1194.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="287.0" y="1194.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="463.0" y="1194.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="639.0" y="1194.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <rect x="815.0" y="1194.0" width="176" height="176" fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5"/>
-  <g opacity="1.0"><rect x="160.28" y="539.28" width="77.44" height="77.44" rx="10" fill="#E7F0F7" stroke="#3D83AE" stroke-width="3"/><text x="199.0" y="593.84" font-family="sans-serif" font-size="52.8" font-weight="900" fill="#3D83AE" text-anchor="middle">S</text></g>
-  <g opacity="1.0"><rect x="864.28" y="1243.28" width="77.44" height="77.44" rx="10" fill="#E7F0F7" stroke="#3D83AE" stroke-width="3"/><text x="903.0" y="1297.84" font-family="sans-serif" font-size="52.8" font-weight="900" fill="#3D83AE" text-anchor="middle">F</text></g>
-  <text x="375.0" y="613.2" font-family="sans-serif" font-size="59.84" font-weight="900" fill="#224C6D" text-anchor="middle">2</text>
-  <text x="199.0" y="789.2" font-family="sans-serif" font-size="59.84" font-weight="900" fill="#224C6D" text-anchor="middle">1</text>
-  <text x="375.0" y="789.2" font-family="sans-serif" font-size="59.84" font-weight="900" fill="#224C6D" text-anchor="middle">3</text>
-  <text x="551.0" y="789.2" font-family="sans-serif" font-size="59.84" font-weight="900" fill="#224C6D" text-anchor="middle">2</text>
-  <line x1="287.0" y1="666.0" x2="287.0" y2="1018.0" stroke="#224C6D" stroke-width="7" stroke-linecap="round" opacity="0.85" stroke-dasharray="12 8"/>
-  <line x1="463.0" y1="490.0" x2="463.0" y2="842.0" stroke="#224C6D" stroke-width="7" stroke-linecap="round" opacity="0.85" stroke-dasharray="12 8"/>
-  <line x1="639.0" y1="842.0" x2="815.0" y2="842.0" stroke="#224C6D" stroke-width="7" stroke-linecap="round" opacity="0.85" stroke-dasharray="12 8"/>
-  <line x1="111.0" y1="1018.0" x2="463.0" y2="1018.0" stroke="#224C6D" stroke-width="7" stroke-linecap="round" opacity="0.85" stroke-dasharray="12 8"/>
-  <polyline points="199.0,578.0 375.0,578.0 375.0,754.0 551.0,754.0" fill="none" stroke="#2575A7" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" filter="url(#pathGlow)"/>
-  <rect x="41" y="420" width="1020" height="1020" rx="28" fill="#5E7484" opacity="0.42"/>
+  <!-- ================= 3. HEADER GAME ================= -->
+  <!-- Nút Pause -->
+  <g transform="translate(50, 85)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <line x1="26" y1="22" x2="26" y2="48" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="44" y1="22" x2="44" y2="48" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
 
-  <!-- ===== Thanh nút dưới ===== -->
-  <g transform="translate(73, 1528)" filter="url(#uiShadow)"><rect width="300" height="160" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><path d="M42 34 L74 60 L42 86 Z" fill="#3D83AE"/><text x="96" y="95" font-family="sans-serif" font-size="34" font-weight="800" fill="#224C6D">VẼ ĐƯỜNG</text></g>
-  <g transform="translate(393, 1528)" filter="url(#uiShadow)"><rect width="300" height="160" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><rect x="34" y="42" width="46" height="76" rx="8" fill="none" stroke="#3D83AE" stroke-width="4"/><text x="96" y="95" font-family="sans-serif" font-size="34" font-weight="800" fill="#224C6D">GHI NHỚ</text></g>
-  <g transform="translate(713, 1528)" filter="url(#uiShadow)"><rect width="160" height="160" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><path d="M112.0 41.6 A 32.0 32.0 0 1 1 105.60000000000001 48.0" fill="none" stroke="#3D83AE" stroke-width="6" stroke-linecap="round"/><polyline points="96.0,32.0 115.19999999999999,44.800000000000004 112.0,67.2" fill="none" stroke="#3D83AE" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></g>
-  <g transform="translate(893, 1528)" filter="url(#uiShadow)"><rect width="160" height="160" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><circle cx="80.0" cy="67.2" r="32.0" fill="none" stroke="#E0A32A" stroke-width="5"/><line x1="60.8" y1="9.6" x2="99.2" y2="9.6" stroke="#E0A32A" stroke-width="5" stroke-linecap="round"/><line x1="48.0" y1="54.400000000000006" x2="48.0" y2="99.2" stroke="#E0A32A" stroke-width="5" stroke-linecap="round"/><line x1="112.0" y1="54.400000000000006" x2="112.0" y2="99.2" stroke="#E0A32A" stroke-width="5" stroke-linecap="round"/></g>
+  <!-- Tiêu đề Chế độ chơi FOG OF WAR -->
+  <g transform="translate(540, 105)" text-anchor="middle">
+    <text y="0" font-family="sans-serif" font-size="18" font-weight="900" fill="#5A6D7C" letter-spacing="2">DAILY CHALLENGE · ĐẶC BIỆT</text>
+    <text y="42" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="900" fill="#224C6D">FOG OF WAR MAZE 🌫️</text>
+  </g>
 
-  <!-- ===== Đánh dấu + bảng chú thích ===== -->
-  <g transform="translate(175, 275)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text></g>
-  <g transform="translate(681, 214)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text></g>
-  <g transform="translate(540, 700)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text></g>
-  <g transform="translate(540, 980)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">4</text></g>
+  <!-- Nút Restart / Reset -->
+  <g transform="translate(960, 85)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <path d="M50 25 A 15 15 0 1 0 52 42" fill="none" stroke="#3D83AE" stroke-width="4" stroke-linecap="round"/>
+    <polyline points="42,20 52,24 50,34" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 
-  <g transform="translate(70, 1709)" filter="url(#uiShadow)"><circle r="16" fill="#3D83AE"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text></g>
-  <text x="100" y="1716" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Thẻ THỜI GIAN 250×138 (card_time_slip.svg)</text>
-  <g transform="translate(70, 1743)" filter="url(#uiShadow)"><circle r="16" fill="#3D83AE"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text></g>
-  <text x="100" y="1750" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">HUD mặc định (LevelHUD) — THỬ THÁCH + THỜI GIAN</text>
-  <g transform="translate(70, 1777)" filter="url(#uiShadow)"><circle r="16" fill="#3D83AE"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text></g>
-  <text x="100" y="1784" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Chỉ ô trong bán kính 1 quanh nhân vật mới hiện số</text>
-  <g transform="translate(70, 1811)" filter="url(#uiShadow)"><circle r="16" fill="#3D83AE"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">4</text></g>
-  <text x="100" y="1818" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Ô ngoài bán kính bị phủ mờ (alpha 0.4) — tường vẫn ẩn</text>
+  <!-- ================= 4. BẢNG CHỈ SỐ HUD: TIME (TRÁI) & PANEL ĐẶC DỤNG FOG OF WAR (PHẢI) ================= -->
+  <g transform="translate(50, 178)" filter="url(#uiShadow)">
 
-    <g transform="translate(70, 1852)"><text x="0" y="0" font-family="sans-serif" font-size="24" font-weight="800" fill="#224C6D">MOCKUP HUD · FOG OF WAR MAZE  →  level_mode.tscn (LevelHUD)</text><text x="0" y="30" font-family="sans-serif" font-size="19" font-weight="700" fill="#718B9E">mode_id = fog_of_war · mockup/matchup_fog_of_war.svg · Luật: Thường = về S khi đâm tường, Hardcore = thua ngay.</text></g>
+    <!-- ================= THẺ 1: TIME PANEL (270 x 156 px) ================= -->
+    <g transform="translate(0, 0)">
+      <rect width="270" height="156" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <line x1="20" y1="0" x2="20" y2="156" stroke="#3D83AE" stroke-width="3"/>
+      <text x="36" y="44" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">⏱️ THỜI GIAN</text>
+      <text x="36" y="102" font-family="'Segoe UI', monospace" font-size="48" font-weight="950" fill="#224C6D">00:41</text>
+      <rect x="36" y="118" width="135" height="24" rx="6" fill="#F0F7FB"/>
+      <text x="103" y="135" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#3D83AE">ĐANG DÒ ĐƯỜNG</text>
+    </g>
+
+    <!-- ================= THẺ 2: FOG SURVIVAL PANEL ĐẶC DỤNG (690 x 156 px) ================= -->
+    <g transform="translate(290, 0)">
+      <rect width="690" height="156" rx="22" fill="#FEFDFA" stroke="#5A6D7C" stroke-width="3"/>
+      <line x1="20" y1="0" x2="20" y2="156" stroke="#5A6D7C" stroke-width="3"/>
+
+      <!-- KHU VỰC SỐ LẦN THỬ LẠI CÒN LẠI (RETRIES / LIVES GÓC TRÁI) -->
+      <g transform="translate(36, 0)">
+        <text x="0" y="40" font-family="sans-serif" font-size="17" font-weight="900" fill="#D84444" letter-spacing="0.5">❤️ LƯỢT THỬ LẠI</text>
+        <text x="0" y="98" font-family="'Segoe UI', sans-serif" font-size="50" font-weight="950" fill="#D84444">2<tspan font-size="28" fill="#8FA0AC">/3</tspan></text>
+        <text x="0" y="132" font-family="sans-serif" font-size="14" font-weight="800" fill="#2E7D32">CÒN 2 LẦN VỀ S</text>
+      </g>
+
+      <!-- Vạch ngăn cách dọc -->
+      <line x1="210" y1="14" x2="210" y2="142" stroke="#E2EBF1" stroke-width="2"/>
+
+      <!-- KHU VỰC TẦM NHÌN RADAR & TRẠNG THÁI SƯƠNG MÙ (BÊN PHẢI) -->
+      <g transform="translate(230, 16)">
+        <!-- Dòng 1: Tầm nhìn bán kính 1 ô -->
+        <g transform="translate(0, 0)">
+          <rect width="425" height="42" rx="10" fill="#F4F7F9" stroke="#CFD9E0" stroke-width="1.2"/>
+          <text x="18" y="27" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#224C6D">👁️ TẦM NHÌN: BÁN KÍNH 1 Ô</text>
+          <rect x="305" y="8" width="105" height="26" rx="6" fill="#2575A7"/>
+          <text x="357" y="25" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#FFFFFF">XUNG QUANH</text>
+        </g>
+
+        <!-- Dòng 2: Cảnh báo sương mù động -->
+        <g transform="translate(0, 52)">
+          <rect width="425" height="64" rx="10" fill="#FFFDF8" stroke="#E5EDF2" stroke-width="1.2"/>
+          <text x="18" y="26" font-family="sans-serif" font-size="15" font-weight="700" fill="#5A6D7C">Ô đã đi qua sẽ bị sương che phủ lại</text>
+          <text x="18" y="48" font-family="sans-serif" font-size="14" font-weight="800" fill="#D84444">⚠️ Đâm tường: Về lại S, trừ 1 lượt thử!</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= 5. KHUNG BÀN CỜ NUMBER MAZE 5x5 CÓ LAYER SƯƠNG MÙ ================= -->
+  <!-- Kích thước 980x980 tại x=50, y=350. Mỗi cell = 176x176 px -->
+  <g transform="translate(50, 350)">
+    <!-- Bề mặt card board -->
+    <g clip-path="url(#boardClip)">
+      <rect width="980" height="980" fill="#FEFDFA"/>
+      <line x1="42" y1="0" x2="42" y2="980" stroke="#D84444" stroke-width="3"/>
+    </g>
+    <rect width="980" height="980" rx="28" fill="none" stroke="#6EA0C8" stroke-width="6" filter="url(#boardShadow)"/>
+    <line x1="35" y1="3" x2="945" y2="3" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="5" stroke-linecap="round"/>
+
+    <!-- LƯỚI 5x5 CELL (Padding 50px, mỗi ô 176x176 px) -->
+    <g id="grid-maze" transform="translate(50, 50)">
+
+      <!-- Lớp 1: Lưới ô vuông cơ sở mỏng -->
+      <g fill="#CEE0EC" fill-opacity="0.12" stroke="#BACEDC" stroke-width="1.5">
+        <!-- R0 --> <rect x="0" y="0" width="176" height="176"/><rect x="176" y="0" width="176" height="176"/><rect x="352" y="0" width="176" height="176"/><rect x="528" y="0" width="176" height="176"/>
+        <!-- R1 --> <rect x="0" y="176" width="176" height="176"/><rect x="176" y="176" width="176" height="176"/><rect x="352" y="176" width="176" height="176"/><rect x="528" y="176" width="176" height="176"/><rect x="704" y="176" width="176" height="176"/>
+        <!-- R2 --> <rect x="0" y="352" width="176" height="176"/><rect x="176" y="352" width="176" height="176"/><rect x="352" y="352" width="176" height="176"/><rect x="528" y="352" width="176" height="176"/><rect x="704" y="352" width="176" height="176"/>
+        <!-- R3 --> <rect x="0" y="528" width="176" height="176"/><rect x="176" y="528" width="176" height="176"/><rect x="352" y="528" width="176" height="176"/><rect x="528" y="528" width="176" height="176"/><rect x="704" y="528" width="176" height="176"/>
+        <!-- R4 --> <rect x="176" y="704" width="176" height="176"/><rect x="352" y="704" width="176" height="176"/><rect x="528" y="704" width="176" height="176"/><rect x="704" y="704" width="176" height="176"/>
+      </g>
+
+      <!-- CẦU THANG START & FINISH -->
+      <!-- Ô START [4, 0] -->
+      <svg x="0" y="704" width="176" height="176" viewBox="0 0 130 130">
+        <rect width="130" height="130" fill="#FAF5EB"/>
+        <rect x="14" y="14" width="102" height="102" rx="6" fill="#EAE3D2" stroke="#1E283A" stroke-width="3"/>
+        <rect x="18" y="18" width="94" height="94" fill="url(#dungeonUpperLight)"/>
+        <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="14" y1="18" x2="116" y2="18" stroke-width="3.2"/>
+          <polygon points="40,46 90,46 96,59 34,59" fill="#E2D5C0" stroke-width="2.5"/>
+          <polygon points="28,96 102,96 108,110 22,110" fill="#F7F1E6" stroke-width="2.5"/>
+          <line x1="14" y1="118" x2="116" y2="118" stroke-width="3.2"/>
+        </g>
+        <rect x="1" y="1" width="128" height="128" fill="none" stroke="#6285B0" stroke-width="2"/>
+      </svg>
+
+      <!-- Ô FINISH [0, 4] -->
+      <svg x="704" y="0" width="176" height="176" viewBox="0 0 130 130">
+        <rect width="130" height="130" fill="#FAF5EB"/>
+        <rect x="14" y="14" width="102" height="102" rx="6" fill="#EAE3D2" stroke="#1E283A" stroke-width="3"/>
+        <rect x="18" y="18" width="94" height="94" fill="url(#dungeonDeepVoid)"/>
+        <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="18,18 112,18 106,34 24,34" fill="#F7F1E6" stroke-width="2.5"/>
+          <polygon points="36,98 94,98 88,106 42,106" fill="#807260" stroke-width="2.2"/>
+        </g>
+        <rect x="1" y="1" width="128" height="128" fill="none" stroke="#6285B0" stroke-width="2"/>
+      </svg>
+
+      <!-- ĐƯỜNG VẼ CỦA NGƯỜI CHƠI (TỪ S TỚI Ô HIỆN TẠI [2, 2]) -->
+      <path d="M 88 792 L 88 616 L 88 440 L 264 440 L 440 440" 
+            fill="none" stroke="#2575A7" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" filter="url(#pathGlow)"/>
+      <path d="M 88 792 L 88 616 L 88 440 L 264 440 L 440 440" 
+            fill="none" stroke="#E0F2FE" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- ================= CON SỐ MANH MỐI TRONG Ô ================= -->
+      <!-- LƯU Ý FOG OF WAR: Chỉ hiển thị rõ ở các ô nằm trong bán kính 1 quanh người chơi [2, 2] -->
+      <g font-family="'Segoe UI', sans-serif" font-size="52" font-weight="900" fill="#2A4860" text-anchor="middle" dominant-baseline="central">
+        <!-- CÁC Ô TRONG TẦM NHÌN BÁN KÍNH 1 (XUNG QUANH TÂM 440, 440) -->
+        <text x="264" y="264">2</text>
+        <text x="440" y="264">1</text>
+        <text x="616" y="264">2</text>
+
+        <text x="264" y="440" opacity="0.4">1</text>
+        <text x="440" y="440" opacity="0.4">3</text> <!-- Ô người chơi đang đứng -->
+        <text x="616" y="440">2</text>
+
+        <text x="264" y="616">3</text>
+        <text x="440" y="616">0</text>
+        <text x="616" y="616">2</text>
+      </g>
+
+      <!-- Con trỏ vị trí người chơi tại tâm (440, 440) -->
+      <circle cx="440" cy="440" r="22" fill="#2575A7"/>
+      <circle cx="440" cy="440" r="14" fill="#FFFFFF"/>
+      <circle cx="440" cy="440" r="7" fill="#2575A7"/>
+
+      <!-- ================= LAYER SƯƠNG MÙ CHE PHỦ (FOG LAYER TRÊN GRID) ================= -->
+      <!-- Che phủ toàn bộ các ô ngoài bán kính 1 quanh nhân vật, che cả các ô cũ khi đã rời đi -->
+      <g id="fog-layer">
+        <!-- VÙNG SƯƠNG MÙ PHÍA TRÊN & GÓC XA (Che Hàng 0, Hàng 1 xa) -->
+        <rect x="0" y="0" width="880" height="176" fill="#E4EAEF" fill-opacity="0.88"/>
+        <rect x="0" y="0" width="880" height="176" fill="url(#fogNoise)"/>
+        
+        <!-- VÙNG SƯƠNG MÙ CỘT TRÁI NGOÀI BÁN KÍNH (Ô [1,0], [2,0], [3,0]) -->
+        <rect x="0" y="176" width="176" height="528" fill="#E4EAEF" fill-opacity="0.88"/>
+        <rect x="0" y="176" width="176" height="528" fill="url(#fogNoise)"/>
+
+        <!-- VÙNG SƯƠNG MÙ CỘT PHẢI NGOÀI BÁN KÍNH (Ô [1,4], [2,4], [3,4]) -->
+        <rect x="704" y="176" width="176" height="528" fill="#E4EAEF" fill-opacity="0.88"/>
+        <rect x="704" y="176" width="176" height="528" fill="url(#fogNoise)"/>
+
+        <!-- VÙNG SƯƠNG MÙ PHÍA DƯỚI (Hàng 4, trừ ô xuất phát S để định hướng mờ) -->
+        <rect x="176" y="704" width="704" height="176" fill="#E4EAEF" fill-opacity="0.88"/>
+        <rect x="176" y="704" width="704" height="176" fill="url(#fogNoise)"/>
+
+        <!-- Lớp sương mỏng che phủ nhẹ lại thềm ô xuất phát S vì nhân vật đã đi xa -->
+        <rect x="0" y="704" width="176" height="176" fill="#E4EAEF" fill-opacity="0.55"/>
+        <text x="88" y="792" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="900" fill="#5A7385" opacity="0.8">SƯƠNG MÙ</text>
+
+        <!-- Lớp sương mỏng che phủ hố đích F ở xa -->
+        <rect x="704" y="0" width="176" height="176" fill="#E4EAEF" fill-opacity="0.6"/>
+        <text x="792" y="88" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="900" fill="#5A7385" opacity="0.8">ĐÍCH ẨN</text>
+
+        <!-- Ký hiệu dấu hỏi (?) bút chì mờ ảo trên các ô bị sương mù che khuất hoàn toàn -->
+        <g font-family="'Segoe UI', sans-serif" font-size="44" font-weight="900" fill="#9FB3C0" text-anchor="middle" dominant-baseline="central">
+          <text x="88" y="88">?</text>
+          <text x="264" y="88">?</text>
+          <text x="440" y="88">?</text>
+          <text x="616" y="88">?</text>
+          <text x="88" y="264">?</text>
+          <text x="792" y="264">?</text>
+          <text x="88" y="440">?</text>
+          <text x="792" y="440">?</text>
+          <text x="88" y="616">?</text>
+          <text x="792" y="616">?</text>
+          <text x="264" y="792">?</text>
+          <text x="440" y="792">?</text>
+          <text x="616" y="792">?</text>
+          <text x="792" y="792">?</text>
+        </g>
+      </g>
+
+      <!-- ================= TƯỜNG (CHỈ HIỂN THỊ TƯỜNG NẰM TRONG TẦM NHÌN BÁN KÍNH 1) ================= -->
+      <!-- Tường chắn ngang giữa [1,2] và [2,2] trong tầm nhìn người chơi -->
+      <line x1="360" y1="352" x2="520" y2="352" stroke="#1E283A" stroke-width="11" stroke-linecap="round"/>
+      <!-- Tường nghi ngờ do người chơi tự cắm cờ trong tầm mắt -->
+      <line x1="528" y1="360" x2="528" y2="520" stroke="#C4843A" stroke-width="8" stroke-linecap="round" stroke-dasharray="10 7"/>
+
+      <!-- ================= MA TRẬN ANCHOR (CHỈ HIỆN RÕ TRONG VÙNG TẦM NHÌN) ================= -->
+      <!-- Vùng tầm nhìn xung quanh [2,2]: các anchor tại x: 176, 352, 528, 704 và y: 176, 352, 528, 704 -->
+      <g opacity="0.25">
+        <!-- Anchors ở vùng sương mờ xa -->
+        <use href="#anchor" x="0" y="0"/><use href="#anchor" x="176" y="0"/><use href="#anchor" x="352" y="0"/><use href="#anchor" x="528" y="0"/><use href="#anchor" x="704" y="0"/><use href="#anchor" x="880" y="0"/>
+        <use href="#anchor" x="0" y="176"/><use href="#anchor" x="880" y="176"/>
+        <use href="#anchor" x="0" y="352"/><use href="#anchor" x="880" y="352"/>
+        <use href="#anchor" x="0" y="528"/><use href="#anchor" x="880" y="528"/>
+        <use href="#anchor" x="0" y="704"/><use href="#anchor" x="880" y="704"/>
+        <use href="#anchor" x="0" y="880"/><use href="#anchor" x="176" y="880"/><use href="#anchor" x="352" y="880"/><use href="#anchor" x="528" y="880"/><use href="#anchor" x="704" y="880"/><use href="#anchor" x="880" y="880"/>
+      </g>
+      <!-- Anchors sắc nét trong vùng sáng quanh người chơi -->
+      <g opacity="1">
+        <use href="#anchor" x="176" y="176"/><use href="#anchor" x="352" y="176"/><use href="#anchor" x="528" y="176"/><use href="#anchor" x="704" y="176"/>
+        <use href="#anchor" x="176" y="352"/><use href="#anchor" x="352" y="352"/><use href="#anchor" x="528" y="352"/><use href="#anchor" x="704" y="352"/>
+        <use href="#anchor" x="176" y="528"/><use href="#anchor" x="352" y="528"/><use href="#anchor" x="528" y="528"/><use href="#anchor" x="704" y="528"/>
+        <use href="#anchor" x="176" y="704"/><use href="#anchor" x="352" y="704"/><use href="#anchor" x="528" y="704"/><use href="#anchor" x="704" y="704"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= 6. HƯỚNG DẪN LUẬT CHƠI FOG OF WAR ================= -->
+  <g transform="translate(50, 1350)" filter="url(#uiShadow)">
+    <rect width="980" height="90" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
+    <line x1="32" y1="0" x2="32" y2="90" stroke="#5A6D7C" stroke-width="3.5"/>
+    <text x="60" y="52" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="700" fill="#244E6E">
+      🌫️ Sương mù chỉ tan quanh bạn 1 ô. Đâm tường vô hình sẽ bị đưa về S và trừ 1 lượt thử!
+    </text>
+  </g>
+
+  <!-- ================= 7. THANH ĐIỀU KHIỂN & CÔNG CỤ ================= -->
+  <g transform="translate(50, 1465)" filter="url(#uiShadow)">
+    <!-- CÔNG CỤ 1: VẼ ĐƯỜNG ĐI (ACTIVE) -->
+    <g transform="translate(0, 0)" style="cursor: pointer;">
+      <rect width="360" height="140" rx="26" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
+      <line x1="35" y1="0" x2="35" y2="140" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
+      <g transform="translate(55, 45)" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 2L30 22L12 40L2 40L2 30Z"/>
+        <path d="M22 14L28 20"/>
+      </g>
+      <text x="145" y="65" font-family="'Segoe UI', sans-serif" font-size="28" font-weight="900" fill="#FFFFFF">VẼ ĐƯỜNG</text>
+      <text x="145" y="100" font-family="sans-serif" font-size="18" font-weight="700" fill="#BAE6FD">Dò trong sương</text>
+    </g>
+
+    <!-- CÔNG CỤ 2: ĐÁNH DẤU TƯỜNG -->
+    <g transform="translate(390, 0)" style="cursor: pointer;">
+      <rect width="360" height="140" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3.5"/>
+      <line x1="35" y1="0" x2="35" y2="140" stroke="#C4843A" stroke-width="3"/>
+      <g transform="translate(55, 48)" stroke="#C4843A" stroke-width="3.5" fill="none" stroke-linecap="round">
+        <rect x="0" y="4" width="40" height="32" rx="6" stroke-width="3"/>
+        <line x1="0" y1="20" x2="40" y2="20"/>
+        <line x1="20" y1="4" x2="20" y2="20"/>
+      </g>
+      <text x="140" y="65" font-family="'Segoe UI', sans-serif" font-size="28" font-weight="900" fill="#224C6D">GHI NHỚ</text>
+      <text x="140" y="100" font-family="sans-serif" font-size="18" font-weight="700" fill="#718B9E">Cắm cờ mép ô</text>
+    </g>
+
+    <!-- CÔNG CỤ 3: HOÀN TÁC -->
+    <g transform="translate(780, 0)" style="cursor: pointer;">
+      <rect width="90" height="140" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <g transform="translate(20, 20)">
+        <path d="M 33 22 L 24 30 L 33 38" fill="none" stroke="#3D83AE" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 25 30 H 38 C 47 30 52 35 52 42 C 52 50 46 53 37 53 H 28" fill="none" stroke="#3D83AE" stroke-width="3.8" stroke-linecap="round"/>
+      </g>
+      <text x="45" y="120" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#718B9E">UNDO</text>
+    </g>
+
+    <!-- CÔNG CỤ 4: GỢI Ý (HINT) -->
+    <g transform="translate(890, 0)" style="cursor: pointer;">
+      <rect width="90" height="140" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <path d="M45 45 C35 45 32 55 38 65 L52 65 C58 55 55 45 45 45 Z" fill="none" stroke="#F59E0B" stroke-width="3.5"/>
+      <line x1="40" y1="72" x2="50" y2="72" stroke="#F59E0B" stroke-width="3"/>
+      <text x="45" y="120" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#F59E0B">GỢI Ý</text>
+    </g>
+  </g>
+
+  <!-- ================= 8. ANDROID HOME GESTURE BAR ================= -->
+  <rect x="420" y="1875" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
 </svg>

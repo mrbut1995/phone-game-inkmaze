@@ -18,7 +18,7 @@ func _on_update(ctx: Dictionary) -> void:
 	set_label_text(get_node_or_null("Steps/Value"), "%02d" % moves)
 	set_label_text(get_node_or_null("Steps/Delta"), tr("STR_HUD_INK_LOST").format([moves]))
 	var exhausted := mode.count_exhausted()
-	set_label_text(get_node_or_null("Warn/Label"), tr("STR_HUD_INK_WARN").format([exhausted]))
+	set_label_text(get_node_or_null("Warn/Bg/Label"), tr("STR_HUD_INK_WARN").format([exhausted]))
 	var warn := get_node_or_null("Warn") as Control
 	if warn != null:
 		warn.visible = exhausted > 0
