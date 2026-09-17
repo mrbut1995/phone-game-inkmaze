@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://beu82xphg17i6" path="res://scripts/nodes/common/scene_transition.gd" id="1_transition"]
 [ext_resource type="Texture2D" uid="uid://dol12u34jktb3" path="res://icon.svg" id="2_logo"]
+[ext_resource type="Texture2D" uid="uid://dmdfeiqx44vj8" path="res://assets/images/image_loading.svg" id="3_dhqfv"]
 
 [sub_resource type="Gradient" id="GradShadowLeft"]
 colors = PackedColorArray(0.12, 0.1, 0.08, 0.38, 0, 0, 0, 0)
@@ -18,6 +19,44 @@ colors = PackedColorArray(0, 0, 0, 0, 0.12, 0.1, 0.08, 0.38)
 gradient = SubResource("GradShadowRight")
 fill_from = Vector2(0, 0.5)
 fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Animation" id="Animation_101rs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionRoot/PaperPage/Watermark/Loading:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_dhqfv"]
+resource_name = "loading"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionRoot/PaperPage/Watermark/Loading:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 3.141592653589793, 6.283185307179586]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_101rs"]
+_data = {
+&"RESET": SubResource("Animation_101rs"),
+&"loading": SubResource("Animation_dhqfv")
+}
 
 [node name="Loading" type="CanvasLayer" unique_id=1836600101]
 process_mode = 3
@@ -43,7 +82,6 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="PaperPage" type="Control" parent="TransitionRoot" unique_id=9938624]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,20 +125,31 @@ texture = SubResource("TexShadowRight")
 modulate = Color(0.133, 0.298, 0.427, 0.15)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -160.0
-offset_right = 160.0
-offset_bottom = 160.0
+anchor_left = 0.29088894
+anchor_top = 0.38262504
+anchor_right = 0.70911115
+anchor_bottom = 0.617375
+offset_left = -0.16003418
+offset_top = -0.6400757
+offset_right = 0.15997314
+offset_bottom = 0.64001465
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_logo")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Loading" type="TextureRect" parent="TransitionRoot/PaperPage/Watermark" unique_id=1441974846]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_dhqfv")
 
 [node name="InkCircleDrawer" type="Control" parent="TransitionRoot" unique_id=2094697202]
 visible = false
@@ -122,3 +171,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.965, 0.945, 0.915, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1871871165]
+libraries/ = SubResource("AnimationLibrary_101rs")
+autoplay = &"loading"

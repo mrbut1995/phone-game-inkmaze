@@ -1,18 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 704 262" width="704" height="262">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -30 804 310" width="804" height="310">
   <defs>
     <filter id="dgShadow" x="-10%" y="-15%" width="120%" height="135%">
       <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
     </filter>
   </defs>
   <g filter="url(#dgShadow)">
-    <rect width="680" height="230" rx="24" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
-    <line x1="38" y1="0" x2="38" y2="230" stroke="#FAF5EB" stroke-width="3" opacity="0.65"/>
-    <!-- Tag "CHẾ ĐỘ CHÍNH" -->
-    <rect x="55" y="22" width="165" height="32" rx="8" fill="#FBBF24"/>
+    <rect width="780" height="260" rx="24" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
+    <line x1="38" y1="0" x2="38" y2="260" stroke="#FAF5EB" stroke-width="3" opacity="0.65"/>
+    <!-- Tag to hơn, nằm đè chính giữa đường line mép trên trái -->
+    <rect x="55" y="-23" width="210" height="46" rx="10" fill="#FBBF24"/>
     <!-- Icon Lâu đài -->
-    <circle cx="105" cy="125" r="42" fill="#256286"/>
-    <rect x="485" y="172" width="165" height="36" rx="10" fill="#20506E"/>
+    <circle cx="125" cy="140" r="52" fill="#256286"/>
+    <!-- Badge -->
+    <rect x="565" y="172" width="185" height="51" rx="10" fill="#20506E"/>
     <!-- Mũi tên -->
-    <path d="M 625 115 L 640 115 M 633 105 L 643 115 L 633 125" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <g transform="translate(725, 105)">
+      <path d="M 0 0 L 15 0 M 8 -10 L 18 0 L 8 10" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
   </g>
 </svg>

@@ -1,49 +1,75 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://xw2diy2jvia1"]
 
 [ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_base"]
-[ext_resource type="Script" path="res://scripts/nodes/hud/time_attack_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" path="res://assets/images/game/card_time_tall.svg" id="3_time"]
-[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="4_theme"]
+[ext_resource type="Script" uid="uid://c84dvlgj1embi" path="res://scripts/nodes/hud/time_attack_hud.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://bhccsfs2k1hcq" path="res://assets/images/game/card_time_tall.svg" id="3_time"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="4_theme"]
 
-[node name="Hud" instance=ExtResource("1_base")]
+[node name="Hud" unique_id=1427957842 instance=ExtResource("1_base")]
 theme = ExtResource("4_theme")
 script = ExtResource("2_script")
 
-[node name="Time" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 365.0
-offset_top = 46.0
-offset_right = 615.0
-offset_bottom = 202.0
+[node name="Time" type="TextureRect" parent="." index="0" unique_id=935322912]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.372
+anchor_top = 0.0845984
+anchor_right = 0.6688817
+anchor_bottom = 0.9114016
+offset_left = 0.44000244
+offset_top = -0.06500244
+offset_right = -0.44000244
+offset_bottom = 0.06098938
 mouse_filter = 2
 texture = ExtResource("3_time")
+metadata/_edit_use_anchors_ = true
 
-[node name="Head" type="Label" parent="Time"]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 12.0
-offset_right = 244.0
-offset_bottom = 46.0
+[node name="Head" type="Label" parent="Time" index="0" unique_id=2071597233]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.11000001
+anchor_top = 0.058000002
+anchor_right = 0.841
+anchor_bottom = 0.223
+offset_left = 5.092949
+offset_top = 1.052
+offset_right = 5.0560913
+offset_bottom = 1.0620003
 theme_type_variation = &"HudTimeHead"
 text = "STR_HUD_TIME"
+horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Time"]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 48.0
-offset_right = 244.0
-offset_bottom = 116.0
+[node name="Value" type="Label" parent="Time" index="1" unique_id=1879675936]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.20700002
+anchor_top = 0.23300001
+anchor_right = 0.841
+anchor_bottom = 0.64100003
+offset_left = -5.04327
+offset_top = 0.0019989014
+offset_right = 0.05609131
+offset_bottom = -0.04600525
 theme_type_variation = &"HudTimeValue"
 text = "0:00"
+horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+maximum_font_size = 80
 
-[node name="Sub" type="Label" parent="Time"]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 116.0
-offset_right = 246.0
-offset_bottom = 148.0
+[node name="Sub" type="Label" parent="Time" index="2" unique_id=446388929]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.14149725
+anchor_top = 0.70377666
+anchor_right = 0.9304476
+anchor_bottom = 0.85894173
+offset_left = -0.04327011
+offset_top = 0.021995544
+offset_right = 0.110565186
+offset_bottom = 0.057998657
 theme_type_variation = &"HudTimeSub"
 text = "STR_HUD_TIME_COUNTDOWN"
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
