@@ -330,14 +330,15 @@ def card_time(x, y, value="01:24", title="THỜI GIAN"):
     return s
 
 
-def card_time_tall(x, y, value="00:42", title="THỜI GIAN", sub="ĐẾM NGƯỢC"):
-    """Thẻ THỜI GIAN CAO 250x156 (card_time_tall.svg) — dùng cho HUD Time Attack
-    (chỉ 1 thẻ đặt giữa khung) và các HUD 3 thẻ mới (Time + thẻ chế độ 715x156)."""
-    s = slip(x, y, 250, 156, BLUE, 3, 20, ruled=True)
-    s += text(x + 32, y + 42, title, 18, INK_SOFT, 800)
-    s += text(x + 60, y + 108, value, 46, INK, 950, family="'Segoe UI', monospace")
+def card_time_tall(x, y, value="00:42", title="THỜI GIAN", sub="ĐẾM NGƯỢC", w=290, h=206):
+    """Thẻ THỜI GIAN to, canh giữa khung (time_attack_hud.tscn — thẻ dùng anchors tỉ lệ
+    0.372..0.669 × 0.085..0.911 trong khung 980×249 ≈ 290×206 tại (345, 21))."""
+    s = slip(x, y, w, h, BLUE, 3, 24, ruled=True)
+    s += text(x + w * 0.475, y + h * 0.16, title, 20, INK_SOFT, 800, "middle")
+    s += text(x + w * 0.52, y + h * 0.50, value, 56, INK, 950, "middle",
+              family="'Segoe UI', monospace")
     if sub:
-        s += text(x + 60, y + 140, sub, 20, INK_SOFT, 700)
+        s += text(x + w * 0.535, y + h * 0.82, sub, 22, INK_SOFT, 700, "middle")
     return s
 
 
@@ -455,14 +456,14 @@ MODES = [
         "title": "TIME ATTACK MAZE",
         "subtitle": "DAILY CHALLENGE · MODE time_attack",
         "hud": "time_attack_hud.tscn (TimeAttackHUD)",
-        "cards": lambda: [{"draw": lambda: card_time_tall(365, 46, "00:42")}],
+        "cards": lambda: [{"draw": lambda: card_time_tall(345, 21, "00:42")}],
         "grid": (4, 4),
         "notes": {(0, 0): "S", (3, 3): "F", (1, 0): "2", (0, 1): "1", (1, 1): "3",
                   (2, 1): "2", (1, 2): "1", (2, 2): "2", (3, 2): "1"},
         "walls": [(1, 1, 1, 2), (3, 0, 3, 1), (2, 2, 3, 2), (0, 2, 1, 2)],
         "path": [(0, 0), (1, 0), (1, 1), (2, 1), (2, 2), (3, 2), (3, 3)],
         "markers": [
-            (1, 540, 258, "Thẻ THỜI GIAN 250×156 (card_time_tall.svg) đặt GIỮA khung HUD — đếm ngược"),
+            (1, 540, 290, "Thẻ THỜI GIAN ~290×206 GIỮA khung (time_attack_hud.tscn — anchors tỉ lệ)"),
             (2, 540, 700, "Số trên ô = số tường quanh ô (0..4) · tường ẩn vẽ nét đứt"),
         ],
         "footer": "Luật: đâm tường về S và mất thời gian · thắng khi tới F trước khi hết giờ.",

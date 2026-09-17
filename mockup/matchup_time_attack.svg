@@ -31,14 +31,15 @@
   <text x="540" y="128" font-family="sans-serif" font-size="42" font-weight="800" fill="#224C6D" text-anchor="middle" letter-spacing="2">TIME ATTACK MAZE</text>
   <!-- ===== HUD theo chế độ: khung 980x249 tại (50,175) ===== -->
   <g transform="translate(50, 175)">
-  <g transform="translate(365, 46)" filter="url(#uiShadow)">
-  <rect width="250" height="156" rx="20" fill="#6EA0C8"/>
-  <rect x="3" y="3" width="244" height="150" rx="16" fill="#FEFDFA"/>
-  <line x1="16" y1="45" x2="242" y2="45" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
-  <line x1="16" y1="85" x2="242" y2="85" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
-  <line x1="16" y1="125" x2="242" y2="125" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
-  <line x1="18" y1="3" x2="18" y2="153" stroke="#6EA0C8" stroke-width="3"/>
-  </g><text x="397" y="88" font-family="sans-serif" font-size="18" font-weight="800" fill="#718B9E">THỜI GIAN</text><text x="425" y="154" font-family="'Segoe UI', monospace" font-size="46" font-weight="950" fill="#224C6D">00:42</text><text x="425" y="186" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">ĐẾM NGƯỢC</text>
+  <g transform="translate(345, 21)" filter="url(#uiShadow)">
+  <rect width="290" height="206" rx="24" fill="#6EA0C8"/>
+  <rect x="3" y="3" width="284" height="200" rx="20" fill="#FEFDFA"/>
+  <line x1="18" y1="59" x2="282" y2="59" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
+  <line x1="18" y1="99" x2="282" y2="99" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
+  <line x1="18" y1="139" x2="282" y2="139" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
+  <line x1="18" y1="179" x2="282" y2="179" stroke="#9FC0D6" stroke-width="2" opacity="0.5"/>
+  <line x1="24" y1="3" x2="24" y2="203" stroke="#6EA0C8" stroke-width="3"/>
+  </g><text x="482.75" y="53.96" font-family="sans-serif" font-size="20" font-weight="800" fill="#718B9E" text-anchor="middle">THỜI GIAN</text><text x="495.8" y="124.0" font-family="'Segoe UI', monospace" font-size="56" font-weight="950" fill="#224C6D" text-anchor="middle">00:42</text><text x="500.15" y="189.92" font-family="sans-serif" font-size="22" font-weight="700" fill="#718B9E" text-anchor="middle">ĐẾM NGƯỢC</text>
   </g>
 
   <!-- ===== Bàn cờ (Board node: 41,420 → 1061,1440) ===== -->
@@ -81,11 +82,11 @@
   <g transform="translate(893, 1528)" filter="url(#uiShadow)"><rect width="160" height="160" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/><circle cx="80.0" cy="67.2" r="32.0" fill="none" stroke="#E0A32A" stroke-width="5"/><line x1="60.8" y1="9.6" x2="99.2" y2="9.6" stroke="#E0A32A" stroke-width="5" stroke-linecap="round"/><line x1="48.0" y1="54.400000000000006" x2="48.0" y2="99.2" stroke="#E0A32A" stroke-width="5" stroke-linecap="round"/><line x1="112.0" y1="54.400000000000006" x2="112.0" y2="99.2" stroke="#E0A32A" stroke-width="5" stroke-linecap="round"/></g>
 
   <!-- ===== Đánh dấu + bảng chú thích ===== -->
-  <g transform="translate(540, 258)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text></g>
+  <g transform="translate(540, 290)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text></g>
   <g transform="translate(540, 700)" filter="url(#uiShadow)"><circle r="16" fill="#D84444"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text></g>
 
   <g transform="translate(70, 1709)" filter="url(#uiShadow)"><circle r="16" fill="#3D83AE"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text></g>
-  <text x="100" y="1716" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Thẻ THỜI GIAN 250×156 (card_time_tall.svg) đặt GIỮA khung HUD — đếm ngược</text>
+  <text x="100" y="1716" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Thẻ THỜI GIAN ~290×206 GIỮA khung (time_attack_hud.tscn — anchors tỉ lệ)</text>
   <g transform="translate(70, 1743)" filter="url(#uiShadow)"><circle r="16" fill="#3D83AE"/><text x="0" y="7" font-family="sans-serif" font-size="21" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text></g>
   <text x="100" y="1750" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Số trên ô = số tường quanh ô (0..4) · tường ẩn vẽ nét đứt</text>
 

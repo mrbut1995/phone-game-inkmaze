@@ -20,10 +20,6 @@
 [ext_resource type="Texture2D" uid="uid://spyw1sa7uxc5" path="res://assets/images/game/btn_restart_disabled.svg" id="9_qnb83"]
 [ext_resource type="Texture2D" uid="uid://dp6gsathe7et6" path="res://assets/images/game/btn_undo_pressed.svg" id="10_kvuet"]
 [ext_resource type="Texture2D" uid="uid://comsw702ysh8j" path="res://assets/images/game/btn_restart_focus.svg" id="10_sww3w"]
-[ext_resource type="Texture2D" path="res://assets/images/game/btn_help_normal.svg" id="47_help_n"]
-[ext_resource type="Texture2D" path="res://assets/images/game/btn_help_pressed.svg" id="48_help_p"]
-[ext_resource type="Texture2D" path="res://assets/images/game/btn_help_disabled.svg" id="49_help_d"]
-[ext_resource type="Texture2D" path="res://assets/images/game/btn_help_focus.svg" id="50_help_f"]
 [ext_resource type="Texture2D" uid="uid://dqldqskahkgcx" path="res://assets/images/game/btn_undo_disabled.svg" id="11_trtic"]
 [ext_resource type="Texture2D" uid="uid://ch2kbq4shu53d" path="res://assets/images/game/btn_undo_focus.svg" id="12_ir15t"]
 [ext_resource type="Texture2D" uid="uid://dd61x6fjtobav" path="res://assets/images/game/btn_hint_normal.svg" id="13_trtic"]
@@ -42,14 +38,18 @@
 [ext_resource type="Script" uid="uid://bcqi64nve5wp5" path="res://scripts/core/controllers/ui_controller.gd" id="38_8ool0"]
 [ext_resource type="Script" uid="uid://btmprlxpqdg6j" path="res://scripts/core/controllers/tool_controller.gd" id="39_pr1ej"]
 [ext_resource type="Script" uid="uid://csd7cnldm2tu3" path="res://scripts/core/controllers/challenge_controller.gd" id="42_pr1ej"]
-[ext_resource type="Script" path="res://scripts/nodes/game/hint_guide.gd" id="43_hintguide"]
-[ext_resource type="Texture2D" path="res://assets/images/game/panel_hint_guide.svg" id="44_hintpanel"]
-[ext_resource type="Texture2D" path="res://assets/images/icons/icon_bulb.svg" id="45_bulbicon"]
-[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="46_hinttheme"]
-[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_normal.svg" id="51_rep_n"]
-[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_pressed.svg" id="52_rep_p"]
-[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_focus.svg" id="53_rep_f"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/icon_replay.svg" id="54_rep_icon"]
+[ext_resource type="Script" uid="uid://bt8f7hl74mar" path="res://scripts/nodes/game/hint_guide.gd" id="43_hintguide"]
+[ext_resource type="Texture2D" uid="uid://d3xd5wqhlank8" path="res://assets/images/game/panel_hint_guide.svg" id="44_hintpanel"]
+[ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="45_bulbicon"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="46_hinttheme"]
+[ext_resource type="Texture2D" uid="uid://cwg3rpuj0djq3" path="res://assets/images/game/btn_help_normal.svg" id="47_help_n"]
+[ext_resource type="Texture2D" uid="uid://350mhquc4uwi" path="res://assets/images/game/btn_help_pressed.svg" id="48_help_p"]
+[ext_resource type="Texture2D" uid="uid://bghur1ubhq1l8" path="res://assets/images/game/btn_help_disabled.svg" id="49_help_d"]
+[ext_resource type="Texture2D" uid="uid://c3up4f0u6hjjq" path="res://assets/images/game/btn_help_focus.svg" id="50_help_f"]
+[ext_resource type="Texture2D" uid="uid://c4277ksy08pue" path="res://assets/images/common/btn_paper_secondary_normal.svg" id="51_rep_n"]
+[ext_resource type="Texture2D" uid="uid://g6jguuu3mgrt" path="res://assets/images/common/btn_paper_secondary_pressed.svg" id="52_rep_p"]
+[ext_resource type="Texture2D" uid="uid://bgstufvwvogbj" path="res://assets/images/common/btn_paper_secondary_focus.svg" id="53_rep_f"]
+[ext_resource type="Texture2D" uid="uid://n10pv74qr68u" path="res://assets/images/popups/icon_replay.svg" id="54_rep_icon"]
 
 [node name="Scene" unique_id=1978794255 node_paths=PackedStringArray("game_controller", "grid_controller", "anchor_controller", "floor_controller", "timer_controller", "ui_controller", "tool_controller", "undo_controller", "hint_controller", "game_mode_controller", "challenge_controller") instance=ExtResource("1_80q71")]
 script = ExtResource("2_qouja")
@@ -134,11 +134,14 @@ texture_disabled = ExtResource("9_qnb83")
 texture_focused = ExtResource("10_sww3w")
 
 [node name="Information" parent="." index="3" unique_id=1383101299 instance=ExtResource("14_nepv3")]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 175.0
-offset_right = 1030.0
-offset_bottom = 424.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.90700006
+anchor_bottom = 0.13000001
+offset_left = 55.0
+offset_top = 159.0
+offset_right = 55.43994
+offset_bottom = 158.39998
 
 [node name="Button" type="HBoxContainer" parent="." index="4" unique_id=479699925]
 layout_mode = 1
@@ -164,10 +167,10 @@ texture_focused = ExtResource("3_lbhrr")
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.32352942
-anchor_top = 0.225
-anchor_right = 0.95478076
-anchor_bottom = 0.60625
+anchor_left = 0.31016046
+anchor_top = 0.09375
+anchor_right = 0.9414118
+anchor_bottom = 0.475
 offset_right = -0.088012695
 text = "Vẽ Đường"
 label_settings = ExtResource("18_qnb83")
@@ -185,10 +188,10 @@ texture_focused = ExtResource("7_0tnpc")
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.36096257
-anchor_top = 0.2375
-anchor_right = 0.93582886
-anchor_bottom = 0.61875
+anchor_left = 0.34759358
+anchor_top = 0.10625
+anchor_right = 0.9224599
+anchor_bottom = 0.4875
 grow_horizontal = 2
 grow_vertical = 2
 text = "Ghi Nhớ"
@@ -217,84 +220,6 @@ texture_focused = ExtResource("13_trtic")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="HintGuide" type="Control" parent="." index="6"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 1424.0
-offset_right = 1030.0
-offset_bottom = 1514.0
-mouse_filter = 2
-theme = ExtResource("46_hinttheme")
-script = ExtResource("43_hintguide")
-
-[node name="Bg" type="TextureRect" parent="HintGuide"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("44_hintpanel")
-expand_mode = 1
-
-[node name="Icon" type="TextureRect" parent="HintGuide"]
-layout_mode = 0
-offset_left = 46.0
-offset_top = 23.0
-offset_right = 90.0
-offset_bottom = 67.0
-mouse_filter = 2
-texture = ExtResource("45_bulbicon")
-
-[node name="Text" type="Label" parent="HintGuide"]
-layout_mode = 0
-offset_left = 106.0
-offset_top = 0.0
-offset_right = 950.0
-offset_bottom = 90.0
-theme_type_variation = &"HintGuideText"
-text = "STR_HINT_PLAY"
-text_overrun_behavior = 3
-vertical_alignment = 1
-
-[node name="Replay" type="TextureButton" parent="." index="7" unique_id=3370317653]
-visible = false
-layout_mode = 0
-offset_left = 444.0
-offset_top = 1700.0
-offset_right = 636.0
-offset_bottom = 1808.0
-theme = ExtResource("46_hinttheme")
-texture_normal = ExtResource("51_rep_n")
-texture_pressed = ExtResource("52_rep_p")
-texture_hover = ExtResource("51_rep_n")
-texture_disabled = ExtResource("51_rep_n")
-texture_focused = ExtResource("53_rep_f")
-
-[node name="Icon" type="TextureRect" parent="Replay"]
-layout_mode = 0
-offset_left = 76.0
-offset_top = 14.0
-offset_right = 116.0
-offset_bottom = 54.0
-mouse_filter = 2
-texture = ExtResource("54_rep_icon")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="Replay"]
-layout_mode = 0
-offset_top = 65.0
-offset_right = 192.0
-offset_bottom = 95.0
-theme_type_variation = &"PopupBtnTextSmall"
-text = "STR_BTN_REPLAY"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
 
 [node name="Controllers" type="Node" parent="." index="6" unique_id=955863401]
 
@@ -350,6 +275,97 @@ tool_wall_btn = NodePath("../../Button/Wall")
 [node name="ChallengeController" type="Node" parent="Controllers" index="10" unique_id=301448501]
 script = ExtResource("42_pr1ej")
 
+[node name="HintGuide" type="Control" parent="." index="7" unique_id=2049437720]
+layout_mode = 1
+anchor_left = 0.046000004
+anchor_top = 0.74200004
+anchor_right = 0.95400006
+anchor_bottom = 0.78900003
+offset_left = 0.31999588
+offset_top = -0.6401367
+offset_right = -0.32006836
+offset_bottom = -0.88012695
+mouse_filter = 2
+theme = ExtResource("46_hinttheme")
+script = ExtResource("43_hintguide")
+
+[node name="Bg" type="TextureRect" parent="HintGuide" index="0" unique_id=309135779]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("44_hintpanel")
+expand_mode = 1
+
+[node name="Icon" type="TextureRect" parent="HintGuide" index="1" unique_id=637788822]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 23.0
+offset_right = 90.0
+offset_bottom = 67.0
+mouse_filter = 2
+texture = ExtResource("45_bulbicon")
+
+[node name="Text" type="Label" parent="HintGuide" index="2" unique_id=2029088260]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.108
+anchor_right = 0.96900004
+anchor_bottom = 1.0
+offset_left = 0.15999603
+offset_right = 0.37994385
+theme_type_variation = &"HintGuideText"
+text = "STR_HINT_PLAY"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Replay" type="TextureButton" parent="." index="8" unique_id=-924649643]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.411
+anchor_top = 0.88500005
+anchor_right = 0.58900005
+anchor_bottom = 0.94200003
+offset_left = 0.11999512
+offset_top = 0.79992676
+offset_right = -0.12005615
+offset_bottom = -0.64001465
+theme = ExtResource("46_hinttheme")
+texture_normal = ExtResource("51_rep_n")
+texture_pressed = ExtResource("52_rep_p")
+texture_hover = ExtResource("51_rep_n")
+texture_disabled = ExtResource("51_rep_n")
+texture_focused = ExtResource("53_rep_f")
+
+[node name="Icon" type="TextureRect" parent="Replay" index="0" unique_id=1929004021]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 14.0
+offset_right = 116.0
+offset_bottom = 54.0
+mouse_filter = 2
+texture = ExtResource("54_rep_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Replay" index="1" unique_id=1908506147]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.60200006
+anchor_right = 1.0
+anchor_bottom = 0.88000005
+offset_top = -0.01600647
+offset_bottom = -0.040008545
+theme_type_variation = &"PopupBtnTextSmall"
+text = "STR_BTN_REPLAY"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
 [connection signal="anchor_connected" from="Board" to="Controllers/GridController" method="handle_anchor_connected"]
 [connection signal="cell_pressed" from="Board" to="Controllers/GridController" method="handle_cell_pressed"]
 [connection signal="drag_updated" from="Board" to="Controllers/GridController" method="handle_drag_updated"]
@@ -360,19 +376,19 @@ script = ExtResource("42_pr1ej")
 [connection signal="pressed" from="Button/Wall" to="Controllers/ToolController" method="_on_wall_pressed" binds= ["wall"]]
 [connection signal="pressed" from="Button/Undo" to="Controllers/GameController" method="undo"]
 [connection signal="pressed" from="Button/Hint" to="Controllers/GameController" method="hint"]
-[connection signal="pressed" from="Replay" to="Controllers/GameController" method="restart_run"]
 [connection signal="suspected_wall_toggled" from="Controllers/AnchorController" to="Controllers/GridController" method="_on_suspected_wall_toggled"]
-[connection signal="reached_end" from="Controllers/GridController" to="Controllers/GameController" method="_on_reached_end"]
 [connection signal="dead_end" from="Controllers/GridController" to="Controllers/GameController" method="_on_dead_end"]
+[connection signal="reached_end" from="Controllers/GridController" to="Controllers/GameController" method="_on_reached_end"]
 [connection signal="step_consumed" from="Controllers/GridController" to="Controllers/GameController" method="_on_step_consumed"]
 [connection signal="wall_hit" from="Controllers/GridController" to="Controllers/GameController" method="_on_wall_hit"]
 [connection signal="time_updated" from="Controllers/TimerController" to="Controllers/GameController" method="_on_time_updated"]
 [connection signal="timeout" from="Controllers/TimerController" to="Controllers/GameController" method="_on_timer_timeout"]
 [connection signal="continue_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_continue_requested"]
+[connection signal="daily_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_daily_requested"]
 [connection signal="home_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_home_requested"]
+[connection signal="memorize_finished" from="Controllers/UIController" to="Controllers/GameController" method="_on_memorize_finished"]
 [connection signal="pause_toggled" from="Controllers/UIController" to="Controllers/GameController" method="_on_pause_toggled"]
 [connection signal="retry_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_retry_requested"]
-[connection signal="daily_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_daily_requested"]
 [connection signal="revive_requested" from="Controllers/UIController" to="Controllers/GameController" method="_on_revive_requested"]
-[connection signal="memorize_finished" from="Controllers/UIController" to="Controllers/GameController" method="_on_memorize_finished"]
 [connection signal="tool_changed" from="Controllers/ToolController" to="Board" method="set_tool_mode"]
+[connection signal="pressed" from="Replay" to="Controllers/GameController" method="restart_run"]

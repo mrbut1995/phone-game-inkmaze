@@ -30,6 +30,38 @@ var _closing := false
 @onready var content: Control = get_node_or_null("Panel/Content")
 
 
+# --- Bố cục theo tỉ lệ màn hình ---------------------------------------------
+
+func _enter_tree() -> void:
+	# Popup con override `_ready()` nên dùng `_enter_tree` + `_notification` (xem base scene).
+	var vp := get_viewport()
+	if vp != null and not vp.size_changed.is_connected(_apply_canvas_layout):
+		vp.size_changed.connect(_apply_canvas_layout)
+	_apply_canvas_layout()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_READY or what == NOTIFICATION_RESIZED:
+		_apply_canvas_layout()
+
+
+## Nền mờ (Dim) phủ TOÀN màn hình: popup nằm trong CỘT NỘI DUNG 1080px canh giữa
+## (xem scripts/scenes/base.gd) nên màn rộng hơn 9:16 sẽ có 2 bên là nền giấy —
+## dim phải trùm cả hai bên, còn thẻ popup (Panel) vẫn canh giữa theo cột.
+func _apply_canvas_layout() -> void:
+	if not is_inside_tree():
+		return
+	var dim_rect := get_node_or_null("Dim") as Control
+	if dim_rect == null:
+		return
+	var canvas := get_viewport_rect().size
+	var dim_pos := -global_position
+	if dim_rect.position != dim_pos:
+		dim_rect.position = dim_pos
+	if dim_rect.size != canvas:
+		dim_rect.size = canvas
+
+
 # --- Vòng đời ---------------------------------------------------------------
 
 ## Mở popup với dữ liệu kèm theo (được gọi bởi PopupManager)
@@ -61,6 +93,8 @@ func open(p_data: Dictionary = {}) -> void:
 
 ## Đóng popup: chạy hiệu ứng rồi tự xoá khỏi cây scene
 func close() -> void:
+	var utc_time = Time.get_datetime_string_from_system(true)
+	print("Close Popup %s" % utc_time)
 	if _closing:
 		return
 	_closing = true

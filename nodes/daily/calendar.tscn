@@ -71,7 +71,7 @@ layout_mode = 1
 anchors_preset = -1
 offset_left = 76.0
 offset_top = 133.0
-offset_right = 1366.0
+offset_right = 986.0
 offset_bottom = 183.0
 theme_override_constants/separation = 0
 

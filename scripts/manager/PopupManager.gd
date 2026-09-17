@@ -138,8 +138,14 @@ func is_open(id: String) -> bool:
 
 ## Node chứa popup của scene hiện tại (scenes/base.tscn -> "Popups").
 func get_host() -> Control:
+	# Host đã cache chỉ dùng khi nó CÒN thuộc scene hiện tại — nếu scene vừa đổi
+	# (host cũ sắp bị xoá) thì phải tìm lại, nếu không popup sẽ nằm trong scene cũ
+	# và người chơi KHÔNG THẤY popup nào (bug: hết ván mà không có hộp thoại).
 	if _host != null and is_instance_valid(_host):
-		return _host
+		var current := get_tree().current_scene
+		if current == null or current.is_ancestor_of(_host):
+			return _host
+	_host = null
 
 	var scene := get_tree().current_scene
 	if scene == null:

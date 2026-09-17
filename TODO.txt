@@ -6,6 +6,75 @@
 # Replace SFX Placeholder to correct sound
 
 # ----------------------------------------------------------------------------
+# VÒNG SỬA 12 (2026-09-19): HỖ TRỢ MỌI TỈ LỆ MÀN HÌNH (PORTRAIT + LANDSCAPE)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo yêu cầu user (kiểm thử trên Windows trước, emulator tablet sau):
+#     1. CƠ CHẾ 1 CHỖ — mọi màn tự hưởng: `scripts/scenes/base.gd` (root của base.tscn,
+#        12/13 màn instance base). Giữ `canvas_items` + `aspect = expand`; root tự co thành
+#        CỘT NỘI DUNG 1080px CANH GIỮA: `size = (1080, canvas_h)`, `x = (canvas_w − 1080)/2`.
+#        - Màn dọc cao (9:18→9:21): giãn dọc như trước (phần tử neo đáy bám đáy).
+#        - Màn rộng hơn 9:16 (3:4 · 4:3 · 16:9 · 18:9… kể cả NGANG): nội dung gọn trong cột
+#          giữa — không kéo giãn ngang, không lệch vị trí.
+#        - `Background` (index 0 — dưới mọi nội dung) giữ đúng cột + thêm 2 dải `SideL`/`SideR`
+#          (con của Background) tô màu giấy #FAF5EB phủ 2 bên → trang vở trải rộng, KHÔNG letterbox.
+#        - Logic ở `_enter_tree()` + `_notification(READY/RESIZED)` + `viewport.size_changed`
+#          (mọi màn con override `_ready()` không gọi super nên `_ready` của BaseScene không chạy).
+#        - GOTCHA đã dính & sửa: đừng thêm node nền MỚI vào base.tscn — scene con chèn node ở
+#          index 1..N nên node nền mới sẽ bị đẩy LÊN TRÊN nội dung (đã bị: PaperFill che hết UI);
+#          phải nhét dải nền vào TRONG node Background (index 0) để giữ z-order.
+#     2. POPUP: `scripts/nodes/popups/base.gd` — thẻ popup canh giữa theo cột; `Dim` phủ
+#        TOÀN màn hình (kể cả 2 bên cột); tính lại khi mở popup/đổi cỡ.
+#     3. ANDROID: `window/handheld/orientation = 6` (Sensor — xoay tự do 2 chiều).
+#     4. TIME ATTACK (theo bản user tự chỉnh trong editor): thẻ THỜI GIAN dùng anchors tỉ lệ
+#        (0.352..0.648 × 0.085..0.911 ≈ 291×206, canh giữa khung) + số `resize_font_to_fit`;
+#        chỉnh lại về ĐÚNG tâm khung (user để lệch 20px phải); mockup matchup_time_attack.svg
+#        sinh lại theo (helper card_time_tall tham số hoá w/h).
+#     - FIX BUG THẬT (lộ ra khi quét): `nodes/daily/calendar.tscn` hàng thứ DayTitle
+#       offset_right = 1366 (lệch 380px so với lưới Days 986) → nhãn T2..CN lệch cột ngày,
+#       nhãn CN tràn màn hình ở MỌI tỉ lệ. Sửa về 986 (khớp 7 cột × 130px).
+#     5. CÔNG CỤ KIỂM THỬ: `scripts/test_case/dev_aspects.gd` (chạy opengl3, không headless):
+#        quét 10 tỉ lệ (9:16 · 9:18 · 9:19.5 · 9:21 · 3:4×2 · 4:3 · 16:9 · 18:9 · 19.5:9)
+#        × (12 màn + 9 chế độ game + popup pause) = 220 lượt: cột canh giữa · nền giấy phủ kín ·
+#        không node tràn màn hình · board/HUD/thanh nút trong cột · popup Dim phủ canvas.
+#        Option: `--shots=1` (PNG nửa phân giải vào tmp_aspect/), `--only=`, `--sizes=`, `--modes=`.
+#        KẾT QUẢ: **220/220 PASS**; render soi mắt các tỉ lệ tiêu biểu OK.
+#     - Full suite 29/29 PASS (test_hud_modes 100 → 101 check theo thẻ Time mới).
+#     - Docs: Number_Maze_Game_Design.md §13.10 (mới) + §5.3/§10.2b cập nhật.
+#     6. CHẠY THẬT TRÊN MÁY ẢO ANDROID (tablet Medium_Tablet_API_28, 2560×1600 dpi320):
+#        - Build: Godot 4.8 custom — `--headless --path . --export-debug "Android"
+#          build/inkmaze_tablet_debug.apk` (~422MB, ~2 phút; lỗi cuối "EditorSettings not
+#          instantiated yet ... shutdown_adb_on_exit" là vô hại, exit 0).
+#        - LỆNH CHẠY MÁY ẢO ĐÚNG (quan trọng):
+#          emulator -avd Medium_Tablet_API_28 -no-snapshot-load -no-snapshot-save -no-boot-anim
+#                   -gpu host -feature GLESDynamicVersion -memory 4096
+#          · `-gpu swiftshader_indirect` + `-feature GLESDynamicVersion` → app vào được nhưng
+#            **SIGSEGV ngay trong GLThread** (crash render SwiftShader, màn hình xám).
+#          · `-gpu host` (dùng thẳng NVIDIA RTX 3060 — GLES 3.0/4.5 driver + Vulkan 1.3) →
+#            chạy ổn định, KHÔNG crash, render nét.
+#          · Thiếu `-feature GLESDynamicVersion` với swiftshader → chỉ có ES 2.0 → Godot
+#            `eglCreateContext EGL_BAD_CONFIG: no ES 3 support` → crash.
+#        - Ảnh chứng cứ (giữ ngoài project: `d:\godot-phone-game\inkmaze_shots_android\`):
+#          splash · main · game (Play chế độ MÀN 02) · popup Tạm dừng (Dim phủ kín) ·
+#          Cài đặt — mỗi màn chụp ở CẢ landscape 2560×1600 lẫn portrait 1600×2560 → cột 1080
+#          canh giữa + 2 dải giấy #FAF5EB hai bên đúng như thiết kế, xoay máy reflow ngay.
+#        - Ghi chú: `adb shell settings put secure immersive_mode_confirmations confirmed`
+#          trước khi chạy để bỏ overlay "Viewing full screen / GOT IT" của Android.
+#        - FIX nhỏ kèm theo: `base.gd` `_enter_tree()` gọi `set_anchors_preset(PRESET_TOP_LEFT, true)`
+#          để hết cảnh báo "non-equal opposite anchors" (từ đó Root tự quản size/position).
+#     7. FIX LỖI TRÊN MÁY ẢO (user báo): đâm tường không thấy popup Game Over · popup
+#        Dungeon hiển thị sai · màn loading lỗi.
+#        NGUYÊN NHÂN: app giữ cửa sổ NGANG (2560×1600, canvas 3072×1920) trong khi MÀN HÌNH
+#        đã xoay DỌC (1600×2560) — do xoay bằng khoá xoay/adb (cảm biến không đổi) hoặc mở app
+#        lúc máy đang xoay. Hệ quả: mép phải bị cắt, popup canh giữa canvas 3072 nằm ngoài vùng
+#        thấy (tưởng "không hiện") , lớp Dim vẫn chặn input, màn loading vẽ sai vùng.
+#        SỬA: `AppManager.sync_window_orientation()` — watchdog 0,5s, phát hiện window khác hướng
+#        screen thì `window_set_size(screen)` (chỉ trên mobile).
+#        + `PopupManager.get_host()` không tái dùng host đã cache khi host không còn thuộc scene
+#        hiện tại (tránh popup nằm trong scene cũ đã bị xoá ⇒ không thấy popup).
+#        Kiểm chứng: máy ảo tablet — mở app lúc màn hình dọc ⇒ tự về dọc đúng ngay, main/game/
+#        levels/popup Tạm dừng hiển thị đủ; full suite 29/29 PASS; harness tỉ lệ 220/220 PASS.
+
+# ----------------------------------------------------------------------------
 # VÒNG SỬA 11 (2026-09-19): TIME ATTACK HUD GIỮA · SUM PATH REPLAY · COUNTDOWN KHOÁ · NÚT X POPUP
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM theo yêu cầu user (4 điểm):

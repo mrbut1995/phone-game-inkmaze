@@ -152,7 +152,7 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 
 > **Kiến trúc HUD (tách thành scene theo chế độ):** khung **Information** trong `scenes/game.tscn` không còn chứa sẵn mọi thẻ — mỗi chế độ có 1 scene HUD riêng, tất cả đều kế thừa `nodes/hud/base.tscn` (khung 980×249 tại `(50,175)`, script `scripts/nodes/hud/base.gd`):
 > - `nodes/hud/level_mode.tscn` → `LevelHUD` — thẻ **THỬ THÁCH** + **THỜI GIAN** (Play Mode và các bộ luật không có thẻ riêng).
-> - `nodes/hud/time_attack_hud.tscn` → `TimeAttackHUD` — **CHỈ thẻ THỜI GIAN 250×156 đặt GIỮA khung** (`(365,46)`), đếm ngược, dòng phụ `STR_HUD_TIME_COUNTDOWN` (2026-09-19).
+> - `nodes/hud/time_attack_hud.tscn` → `TimeAttackHUD` — **CHỈ thẻ THỜI GIAN phóng to GIỮA khung** (anchors tỉ lệ `0.352..0.648 × 0.085..0.911` của khung 980×249 ≈ 291×206 — số tự co theo thẻ), đếm ngược, dòng phụ `STR_HUD_TIME_COUNTDOWN` (2026-09-19).
 > - `nodes/hud/dungeon_mode.tscn` → `DungeonHUD` — **SỐ BƯỚC** + **THỜI GIAN** + **TẦNG**.
 > - `nodes/hud/minesweep_hud.tscn` → `MinesweepHUD` — **BOM CÒN LẠI** + **THỜI GIAN**.
 > - `nodes/hud/sum_path_hud.tscn` → `SumPathHUD` — **TỔNG HIỆN TẠI** + **TOÁN TỬ** (giữa) + **MỤC TIÊU** + **THỜI GIAN**.
@@ -222,7 +222,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Thắng** | Tới F trước khi đồng hồ đếm ngược về 0 |
 | **Thua** | **Hết giờ** |
 | **Hồi sinh** | Quay lại bước trước đó (undo) |
-| **HUD** | `nodes/hud/time_attack_hud.tscn` (`TimeAttackHUD`) — **CHỈ thẻ THỜI GIAN 250×156 đặt GIỮA khung** (đếm ngược + dòng phụ "ĐẾM NGƯỢC"), **KHÔNG có thẻ THỬ THÁCH** (2026-09-19) · mockup `mockup/matchup_time_attack.svg` (đã sinh lại theo HUD này) |
+| **HUD** | `nodes/hud/time_attack_hud.tscn` (`TimeAttackHUD`) — **CHỈ thẻ THỜI GIAN phóng to GIỮA khung** (anchors tỉ lệ, ≈291×206 — đếm ngược + dòng phụ "ĐẾM NGƯỢC", số tự co), **KHÔNG có thẻ THỬ THÁCH** (2026-09-19) · mockup `mockup/matchup_time_attack.svg` (đã sinh lại theo HUD này) |
 | **Chi tiết** | ✨ **⏱ Time Attack Maze** — Giới hạn thời gian tổng (60s/90s/120s) đếm ngược, không giới hạn số bước. Đâm tường về S mất thời gian. Hết giờ = Game Over. HUD chỉ để **đồng hồ đếm ngược ở giữa** cho tập trung; 3 Thử thách vẫn được chấm và hiện đầy đủ ở popup kết quả. |
 
 ### 5.4. 💣 Minesweeper Maze
@@ -560,7 +560,7 @@ Khung HUD: `Information` = Control tại `(50, 175)` kích thước `980 × 249`
 - Cả 3 thẻ đều theo ngôn ngữ **sổ tay**: viền màu theo chế độ (cam `#C2410C` · mực `#1D4E72` · xanh `#3D83AE`), lề dọc, dòng kẻ ô ly mờ; số liệu dùng theme variation `Hud*` trong `theme_text.tres`.
 - **Dải phân đoạn ngân sách**: mỗi bước = 1 phân đoạn (đã dùng = xám `#E2E8F0`, còn lại = cam `#EA580C`); bề rộng phân đoạn **tự co** để cả dải luôn vừa 654px khi ngân sách > 16 bước.
 - 3 chế độ này **không hiện thẻ THỬ THÁCH** trên HUD (thử thách/Sao vẫn tính đủ, hiện ở popup kết quả) — thay hẳn bố cục cũ `THỜI GIAN 250×138 + THỬ THÁCH 720×246`; các chế độ còn lại vẫn dùng bảng 10.2.
-- **Time Attack (2026-09-19)** — biến thể của khung này: `nodes/hud/time_attack_hud.tscn` (`TimeAttackHUD`) **CHỈ 1 thẻ THỜI GIAN 250×156 đặt GIỮA khung** tại `(365, 46)` (giữa cả ngang lẫn dọc), dòng phụ `STR_HUD_TIME_COUNTDOWN` “Đếm ngược”; không có thẻ Thử thách. Mockup `mockup/matchup_time_attack.svg` sinh lại theo đúng HUD này (bỏ thẻ THỬ THÁCH khỏi mockup).
+- **Time Attack (2026-09-19)** — biến thể của khung này: `nodes/hud/time_attack_hud.tscn` (`TimeAttackHUD`) **CHỈ 1 thẻ THỜI GIAN phóng to đặt GIỮA khung** — thẻ dùng **anchors tỉ lệ** (`0.352..0.648 × 0.085..0.911`) nên ≈291×206 tại tâm khung, số dùng `resize_font_to_fit` tự co; dòng phụ `STR_HUD_TIME_COUNTDOWN` “Đếm ngược”; không có thẻ Thử thách. Mockup `mockup/matchup_time_attack.svg` sinh lại theo đúng HUD này (bỏ thẻ THỬ THÁCH khỏi mockup).
 
 ### 10.2c. Panel HƯỚNG DẪN LUẬT CHƠI (Hint Guide)
 
@@ -962,5 +962,69 @@ Chuỗi mới: `STR_SHOP_TRY_{TITLE,HINT,BADGE,STAMP,USING}`.
 | `scripts/scenes/shop.gd` + `scenes/shop.tscn` | Màn Cửa hàng: dựng 4 tab bằng code, đổi ngăn, phân trang 6 ô/trang, mua/mặc/dùng, **vuốt ngang đổi trang + vuốt dọc cuộn danh sách** |
 | `scripts/utils/nav.gd` · `scripts/manager/SceneManager.gd` | `SCENE_SHOP` + `goto_shop()` (Debug Console có mục mở Cửa hàng) |
 | `scripts/test_case/test_shop.gd` | **247 check**: catalog (đủ 30 món, giá, icon, khoá dịch) · ví Xu · dụng cụ (cộng dồn lượt) · trang bị bút/chủ đề (`ThemeSkin`) · lưu/tải/xoá · scene (4 tab, thẻ ô 475×294 + nút 200×46, hàng VIP no-ads trên cùng, icon cấp Xu của từng gói, mua thật qua nút thẻ) · **mọi tab vừa khung nhìn — không cần cuộn · vuốt ngang đổi trang · không mua nhầm khi vừa vuốt** · nối dây điều hướng |
+
+---
+
+### 13.10. Hỗ trợ MỌI TỈ LỆ MÀN HÌNH — portrait & landscape (2026-09-19)
+
+**Yêu cầu:** app chạy chuẩn ở mọi tỉ lệ điện thoại/máy tính bảng — 9:16 · 9:18 · 9:19.5 · 9:21 · 3:4 · 4:3 · 16:9 · 18:9 · 19.5:9 (CẢ dọc lẫn ngang).
+
+**Cơ chế — 1 chỗ duy nhất, mọi màn tự hưởng** (`scripts/scenes/base.gd`, root của `scenes/base.tscn` — mọi màn hình đều instance base):
+- Giữ `stretch/mode = "canvas_items"` + `stretch/aspect = "expand"` (canvas giãn theo màn hình).
+- Root Control tự co thành **CỘT NỘI DUNG 1080px CANH GIỮA**: `size = (1080, canvas_height)`, `position.x = (canvas_width − 1080) / 2`.
+  · Màn DỌC cao (9:18 → 9:21): cột đúng bề rộng thiết kế, giãn DỌC (phần tử neo đáy bám đáy màn hình).
+  · Màn RỘNG hơn 9:16 (3:4 · 4:3 · 16:9 · 18:9… kể cả LANDSCAPE): nội dung nằm gọn trong cột giữa — **không bị kéo giãn ngang, không lệch vị trí**.
+- `Background` (index 0, nằm DƯỚI mọi nội dung) giữ đúng cột (lề đỏ ở lề cột) + 2 dải `SideL`/`SideR` con của Background tô màu giấy `#FAF5EB` phủ hai bên → nhìn như trang vở trải rộng, **không có thanh đen letterbox**.
+- Đặt trong `_enter_tree()` + `_notification(READY/RESIZED)` + `viewport.size_changed` — vì mọi màn con override `_ready()` (không gọi super) nên `_ready` của BaseScene không chạy.
+- Popup (`scripts/nodes/popups/base.gd`): thẻ popup canh giữa theo cột, `Dim` phủ **toàn màn hình** (cả 2 bên cột); tính lại khi mở popup/đổi cỡ.
+- Android: `display/window/handheld/orientation = 6` (**Sensor** — xoay tự do 2 chiều).
+
+**Đổi cả mockup HUD Time Attack theo tỉ lệ:** thẻ THỜI GIAN của `time_attack_hud.tscn` dùng **anchors tỉ lệ** (0.352..0.648 × 0.085..0.911 của khung 980×249 ≈ 291×206, canh giữa) + số `resize_font_to_fit`; mockup `matchup_time_attack.svg` sinh lại tương ứng.
+
+**Công cụ kiểm thử (Windows/Android, cần render thật):**
+```bash
+godot --path . --rendering-driver opengl3 --script res://scripts/test_case/dev_aspects.gd
+# tuỳ chọn: --shots=1  --only=main,game  --sizes=1920x1080  --modes=play
+```
+- Quét **10 tỉ lệ × (12 màn + 9 chế độ game + popup pause)** = 220 lượt kiểm tra: cột canh giữa · nền giấy phủ kín · KHÔNG node nào tràn màn hình · board/HUD/thanh nút trong cột · popup Dim phủ canvas & thẻ giữa tâm. **Kết quả 220/220 PASS.**
+- `--shots=1` lưu PNG nửa phân giải vào `tmp_aspect/<WxH>/<id>.png` để soi bằng mắt.
+
+**Bug thật phát hiện khi quét (đã sửa):** `nodes/daily/calendar.tscn` — hàng thứ `DayTitle` để `offset_right = 1366` (lệch **380px** so với lưới ngày `Days` 76..986) → 7 nhãn T2..CN bị lệch khỏi cột ngày và nhãn CN **tràn ra ngoài màn hình 1080** ở MỌI tỉ lệ (lỗi có sẵn từ trước). Sửa `offset_right = 986` = khớp đúng 7 cột × 130px của lưới ngày.
+
+**Kiểm chứng trên MÁY ẢO ANDROID THẬT** (tablet `Medium_Tablet_API_28`, 2560×1600 dpi 320 — APK debug ~422MB):
+```bash
+emulator -avd Medium_Tablet_API_28 -no-snapshot-load -no-snapshot-save -no-boot-anim \
+         -gpu host -feature GLESDynamicVersion -memory 4096
+adb install -r -d build/inkmaze_tablet_debug.apk
+adb shell settings put secure immersive_mode_confirmations confirmed   # bỏ overlay "GOT IT"
+adb shell monkey -p com.invisiblegear.inkmaze -c android.intent.category.LAUNCHER 1
+```
+- **`-gpu host` là bắt buộc trên máy này:** `swiftshader_indirect` + `GLESDynamicVersion` cho app khởi động nhưng **SIGSEGV ngay trong GLThread** (crash render của SwiftShader → màn hình xám). Thiếu `GLESDynamicVersion` thì guest chỉ có ES 2.0 → `eglCreateContext EGL_BAD_CONFIG: no ES 3 support`. Dùng `-gpu host` (thẳng NVIDIA RTX 3060, GLES 3.0 trên driver 4.5 + Vulkan 1.3) → chạy ổn định, không crash.
+- Ảnh chụp máy ảo (lưu ngoài project `d:\godot-phone-game\inkmaze_shots_android\`): splash · main · game (Play) · popup Tạm dừng · Cài đặt — **mỗi màn ở CẢ landscape 2560×1600 lẫn portrait 1600×2560**: cột 1080 canh giữa, 2 dải giấy `#FAF5EB` hai bên, xoay máy reflow tức thì, Dim popup phủ kín toàn màn hình.
+
+---
+
+### 13.11. Sửa lỗi LỆCH HƯỚNG CỬA SỔ ↔ MÀN HÌNH trên Android (2026-09-19)
+
+**Triệu chứng user báo (chơi trên máy ảo tablet):**
+- Đâm vào tường → ván kết thúc nhưng **popup Game Over không hiện**, không đi tiếp được (thực chất popup đang nằm NGOÀI vùng nhìn thấy, lớp Dim vẫn chặn input).
+- Popup "Phiếu thông qua tầng" (Dungeon) hiển thị **lệch/trôi**, mép phải giao diện bị cắt.
+- **Màn hình loading bị lỗi** (không phủ đúng).
+
+**Nguyên nhân gốc (đo được bằng log tạm in lên màn hình):** app có thể giữ cửa sổ ở **hướng cũ trong khi màn hình đã xoay hướng khác** —
+`window_get_size()=(2560,1600)` (ngang) nhưng màn hình đang `1600×2560` (dọc) ⇒ canvas = **3072×1920 ngang** trong khi vùng nhìn thấy chỉ là 1600×2560 ⇒
+- nội dung vẽ tràn ra ngoài mép phải (thấy đúng như ảnh user chụp: hộp stats thứ 3 và nút cuối bị cắt),
+- popup canh giữa canvas 3072 ⇒ tâm popup nằm ngoài màn hình ⇒ "không thấy popup",
+- lớp loading (CanvasLayer full-rect) cũng vẽ theo canvas sai ⇒ "màn loading lỗi".
+
+Hoàn cảnh gây lệch: xoay màn hình bằng **khoá xoay / `settings put user_rotation`** (cảm biến không đổi nên app kiểu Sensor không tự xoay theo), hoặc mở app lúc máy đang xoay.
+
+**Cách sửa (tự chữa, không cần người dùng làm gì):**
+- `scripts/manager/AppManager.gd` → `sync_window_orientation()`: watchdog 0,5s — nếu `window_get_size()` **khác hướng** `screen_get_size()` (một bên ngang, một bên dọc) thì gọi `DisplayServer.window_set_size(screen_size)` để cửa sổ khớp màn hình thật.
+  (Chỉ chạy khi `OS.has_feature("mobile")` — desktop không bị ảnh hưởng.)
+- `scripts/manager/PopupManager.gd` → `get_host()` **không dùng lại host đã cache nếu host không còn thuộc scene hiện tại** (scene vừa đổi ⇒ host cũ sắp bị xoá ⇒ popup sẽ nằm trong scene chết và người chơi không thấy gì).
+- `scripts/scenes/base.gd`: `_enter_tree()` gọi `set_anchors_preset(PRESET_TOP_LEFT, true)` để Root tự quản size/position (hết cảnh báo "non-equal opposite anchors").
+
+**Kiểm chứng trên máy ảo:** đặt màn hình dọc rồi mở app ⇒ app tự về dọc (canvas 1200×1920, cột canh giữa 60), mọi màn/popup hiển thị đủ, không còn cắt mép; xoay ngang ⇄ dọc nhiều lần popup vẫn đúng tâm.
 
 

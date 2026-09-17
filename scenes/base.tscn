@@ -20,7 +20,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_3ffsd")
+expand_mode = 1
 metadata/_edit_lock_ = true
+
+[node name="SideL" type="ColorRect" parent="Background"]
+layout_mode = 0
+mouse_filter = 2
+color = Color(0.98039216, 0.9607844, 0.92156863, 1)
+
+[node name="SideR" type="ColorRect" parent="Background"]
+layout_mode = 0
+mouse_filter = 2
+color = Color(0.98039216, 0.9607844, 0.92156863, 1)
 
 [node name="Popups" type="Control" parent="." unique_id=1066741891]
 layout_mode = 1

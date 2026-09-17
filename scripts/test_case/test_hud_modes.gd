@@ -249,12 +249,15 @@ func _section_4b_time_attack(scene: GameScene) -> void:
 	_entry(hud.get_node_or_null("Challenge") == null, "Khong con the THU THACH trong HUD")
 	_entry(hud.challenge_card() == null, "challenge_card() = null (bo qua he thong the Thu thach)")
 	var time_card := hud.get_node_or_null("Time") as Control
-	_entry(time_card != null and time_card.size == Vector2(250, 156),
-		"The THOI GIAN 250x156 (nhan %s)" % str(time_card.size if time_card != null else Vector2.ZERO))
+	_entry(time_card != null, "Co the THOI GIAN (Time)")
 	if time_card != null:
-		_entry(time_card.position == Vector2(365, 46),
-			"The THOI GIAN dat GIUA khung 980x249 tai (365,46) — nhan (%.0f,%.0f)" % [
-				time_card.position.x, time_card.position.y])
+		# Thẻ dùng anchors tỉ lệ trong khung 980×249 → phải CANH GIỮA cả 2 chiều và phủ rộng
+		var cx := time_card.position.x + time_card.size.x * 0.5
+		var cy := time_card.position.y + time_card.size.y * 0.5
+		_entry(absf(cx - 490.0) <= 2.5 and absf(cy - 124.5) <= 2.5,
+			"The THOI GIAN dat GIUA khung 980x249 (tam %.1f,%.1f)" % [cx, cy])
+		_entry(time_card.size.x >= 250.0 and time_card.size.y >= 156.0,
+			"The THOI GIAN phu rong (%.0fx%.0f)" % [time_card.size.x, time_card.size.y])
 		var sub := time_card.get_node_or_null("Sub") as Label
 		_entry(sub != null and sub.text == "STR_HUD_TIME_COUNTDOWN", "Dong phu = DEM NGUOC")
 	# Đồng hồ đếm ngược: giá trị do timer (start_countdown) cấp qua _update_hud

@@ -22,8 +22,17 @@
 [node name="Base" unique_id=1975349716 instance=ExtResource("1_base")]
 script = ExtResource("2_level")
 
-[node name="Art" parent="Panel" index="0"]
+[node name="Art" parent="Panel" parent_id_path=PackedInt32Array(290635111) index="0" unique_id=1533168933]
 texture = ExtResource("3_slip")
+
+[node name="Content" parent="Panel" parent_id_path=PackedInt32Array(290635111) index="1" unique_id=45188561]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 850.0
+offset_bottom = 1120.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Clip" type="TextureRect" parent="Panel/Content" index="0" unique_id=1090087767]
 layout_mode = 1

@@ -12,13 +12,13 @@ script = ExtResource("2_script")
 [node name="Time" type="TextureRect" parent="." index="0" unique_id=935322912]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.372
+anchor_left = 0.35155914
 anchor_top = 0.0845984
-anchor_right = 0.6688817
+anchor_right = 0.6484409
 anchor_bottom = 0.9114016
-offset_left = 0.44000244
+offset_left = 0.0
 offset_top = -0.06500244
-offset_right = -0.44000244
+offset_right = 0.0
 offset_bottom = 0.06098938
 mouse_filter = 2
 texture = ExtResource("3_time")
