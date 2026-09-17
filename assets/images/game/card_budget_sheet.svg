@@ -1,6 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 715 156" width="715" height="156">
   <!-- Thẻ SỔ NGÂN SÁCH BƯỚC (mode Countdown Cost) — 715x156, mockup/matchup_countdown_cost.svg
-       Chỉ vẽ phần TĨNH (khung, lề đỏ, dòng kẻ, 3 khối, vạch ngăn cách); số liệu là Label đè lên. -->
+       CHỈ vẽ phần TĨNH: khung, lề đỏ, dòng kẻ, vạch ngăn cách.
+       3 KHỐI đã tách ra texture node riêng (2026-09-17, xem countdown_hud.tscn):
+         · card_budget_block_budget.svg 217×84 tại sheet-local (34, 33)
+         · card_budget_block_spent.svg  202×84 tại sheet-local (279, 33)
+         · card_budget_block_price.svg  197×84 tại sheet-local (494, 33)
+       Số liệu là Label đè lên; 2 chip giá là node chip_price_cheap/pricey.svg. -->
   <rect width="715" height="156" rx="22" fill="#C2410C"/>
   <rect x="1.5" y="1.5" width="712" height="153" rx="20.5" fill="#FEFDFA"/>
   <!-- Lề đỏ sổ tay -->
@@ -11,12 +16,6 @@
     <line x1="28" y1="90" x2="700" y2="90"/>
     <line x1="28" y1="126" x2="700" y2="126"/>
   </g>
-  <!-- Khối 1: NGÂN SÁCH CÒN -->
-  <rect x="35" y="34" width="215" height="82" rx="14" fill="#FFF7ED" stroke="#FDBA74" stroke-width="1.8"/>
   <!-- Vạch ngăn cách kiểu răng cưa -->
   <line x1="265" y1="36" x2="265" y2="114" stroke="#E2EBF1" stroke-width="2" stroke-dasharray="4 3"/>
-  <!-- Khối 2: ĐÃ TIÊU TỐN -->
-  <rect x="280" y="34" width="200" height="82" rx="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.6"/>
-  <!-- Khối 3: GIÁ CƯỚC MỖI Ô (2 chip giá là node riêng: chip_price_cheap/pricey.svg) -->
-  <rect x="495" y="34" width="195" height="82" rx="14" fill="#FEFDFA" stroke="#E2E8F0" stroke-width="1.6"/>
 </svg>

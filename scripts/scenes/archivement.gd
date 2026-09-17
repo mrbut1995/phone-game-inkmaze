@@ -13,15 +13,15 @@ extends BaseScene
 ## ============================================================================
 
 const CARD_SCENE := preload("res://nodes/archivements/card.tscn")
-const DOT_ACTIVE := preload("res://assets/images/level_selector/dot_active.svg")
-const DOT_INACTIVE := preload("res://assets/images/level_selector/dot_inactive.svg")
+## Node UI của màn này đều là SCENE riêng (không tạo node bằng code)
+const TAB_SCENE := preload("res://nodes/archivements/tab_button.tscn")
+const PAGE_SCENE := preload("res://nodes/archivements/page.tscn")
+const DOT_SCENE := preload("res://nodes/archivements/page_dot.tscn")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
+## Số thẻ danh hiệu mỗi trang (khe giữa các thẻ nằm trong nodes/archivements/page.tscn)
 const CARDS_PER_PAGE := 5
-const CARD_PITCH := 190.0                       # 170 thẻ + 20 khe (đúng mockup)
 const SNAP_TIME := 0.22
-const DOT_SIZE_ACTIVE := Vector2(34, 24)
-const DOT_SIZE_INACTIVE := Vector2(12, 24)
 const DRAG_THRESHOLD := 8.0
 const CLICK_LOCK_TIME := 0.15
 
@@ -167,17 +167,11 @@ func _build_pages() -> void:
 		child.queue_free()
 
 	for page_index in _page_count:
-		var page := Control.new()
+		var page := PAGE_SCENE.instantiate() as AchPage
 		page.name = "Page%d" % (page_index + 1)
-		page.mouse_filter = Control.MOUSE_FILTER_PASS
 		pages_host.add_child(page)
 
-		var column := VBoxContainer.new()
-		column.name = "Column"
-		column.add_theme_constant_override("separation", int(CARD_PITCH - 170.0))
-		column.position = Vector2.ZERO
-		page.add_child(column)
-
+		var column := page.column()
 		for slot in CARDS_PER_PAGE:
 			var list_index := page_index * CARDS_PER_PAGE + slot
 			if list_index >= _entries.size():
@@ -217,27 +211,11 @@ func _build_tabs() -> void:
 		child.queue_free()
 
 	for index in TABS.size():
-		var tab := TextureButton.new()
+		var tab := TAB_SCENE.instantiate() as AchTabButton
 		tab.name = "Tab%d" % index
-		tab.ignore_texture_size = true
-		tab.stretch_mode = TextureButton.STRETCH_SCALE
-		tab.texture_normal = preload("res://assets/images/archivements/tab_active.svg")
-		tab.texture_pressed = preload("res://assets/images/archivements/tab_active.svg")
-		tab.texture_hover = preload("res://assets/images/archivements/tab_active.svg")
-		tab.texture_focused = preload("res://assets/images/archivements/tab_active.svg")
-		tab.custom_minimum_size = Vector2(134, 46)
-		tab.focus_mode = Control.FOCUS_NONE
-		tab.pressed.connect(_on_tab_pressed.bind(TABS[index]))
 		tabs_box.add_child(tab)
-
-		var label := Label.new()
-		label.name = "Label"
-		label.set_anchors_preset(Control.PRESET_FULL_RECT)
-		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		label.theme_type_variation = &"AchTabLabel"
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		tab.add_child(label)
+		tab.setup(TABS[index])
+		tab.pressed.connect(_on_tab_pressed.bind(TABS[index]))
 
 	_update_tabs()
 
@@ -261,19 +239,12 @@ func _update_tabs() -> void:
 		return
 	var tabs := tabs_box.get_children()
 	for index in tabs.size():
-		var tab: TextureButton = tabs[index]
+		var tab := tabs[index] as AchTabButton
+		if tab == null:
+			continue
 		var category: String = TABS[index]
-		var active := category == _category
-		var texture: Texture2D = preload("res://assets/images/archivements/tab_active.svg") if active \
-			else preload("res://assets/images/archivements/tab_inactive.svg")
-		tab.texture_normal = texture
-		tab.texture_pressed = texture
-		tab.texture_hover = texture
-		tab.texture_focused = texture
-		var label := tab.get_node_or_null("Label") as Label
-		if label != null:
-			label.text = _tab_text(category)
-			label.modulate = Color(1, 1, 1, 1) if active else Color(0.44313726, 0.54509807, 0.61960787, 1)
+		tab.set_label_text(_tab_text(category))
+		tab.set_active(category == _category)
 
 
 func _on_tab_pressed(category: String) -> void:
@@ -292,13 +263,10 @@ func _build_dots() -> void:
 		child.queue_free()
 
 	for index in _page_count:
-		var dot := TextureButton.new()
+		var dot := DOT_SCENE.instantiate() as AchPageDot
 		dot.name = "Dot%d" % (index + 1)
-		dot.ignore_texture_size = true
-		dot.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
-		dot.focus_mode = Control.FOCUS_NONE
-		dot.pressed.connect(_on_dot_pressed.bind(index))
 		dots_box.add_child(dot)
+		dot.pressed.connect(_on_dot_pressed.bind(index))
 
 	dots_box.visible = _page_count > 1
 	_update_dots()
@@ -309,10 +277,9 @@ func _update_dots() -> void:
 		return
 	var dots := dots_box.get_children()
 	for index in dots.size():
-		var dot: TextureButton = dots[index]
-		var is_current := index == _page
-		dot.texture_normal = DOT_ACTIVE if is_current else DOT_INACTIVE
-		dot.custom_minimum_size = DOT_SIZE_ACTIVE if is_current else DOT_SIZE_INACTIVE
+		var dot := dots[index] as AchPageDot
+		if dot != null:
+			dot.set_current(index == _page)
 
 
 func _on_dot_pressed(index: int) -> void:

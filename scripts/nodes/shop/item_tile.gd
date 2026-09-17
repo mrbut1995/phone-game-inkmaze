@@ -27,6 +27,14 @@ const ICONS := {
 }
 const VIP_BADGE := "STR_SHOP_BADGE_VIP"
 
+## ============================================================================
+## CỠ & BỐ CỤC CỦA THẺ NẰM TRONG `nodes/shop/item_tile.tscn` (layout là nguồn số thật):
+##   · cỡ thiết kế của thẻ = custom_minimum_size của node gốc (475×294)
+##   · các khối con đều dùng ANCHORS nên tự dàn khi chiều cao thẻ đổi
+##     (script chỉ đặt cỡ thẻ mới — xem `ShopScene.tile_size()`)
+## Muốn chỉnh cỡ/vị trí: sửa trực tiếp file scene (hoặc kéo trong Editor).
+## ============================================================================
+
 var item_id: String = ""
 var item_data: Dictionary = {}
 var _selected := false

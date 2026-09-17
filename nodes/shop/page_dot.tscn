@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/shop/page_dot.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/images/level_selector/dot_inactive.svg" id="2_dot_idle"]
+
+[node name="PageDot" type="TextureRect"]
+custom_minimum_size = Vector2(12, 24)
+offset_right = 12.0
+offset_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource("2_dot_idle")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("1_script")

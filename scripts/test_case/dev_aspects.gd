@@ -238,7 +238,9 @@ func _check_pause_popup(scene: Control) -> Array:
 	if panel != null:
 		var pcx := panel.global_position.x + panel.size.x * 0.5
 		if absf(pcx - canvas.x * 0.5) > 2.0:
-			out.append("FAIL thẻ popup lệch tâm canvas (%.0f vs %.0f)" % [pcx, canvas.x * 0.5])
+			out.append("FAIL thẻ popup lệch tâm canvas (%.2f vs %.2f) | id=%s panel=%s pos=%s gpos=%s scale=%s" % [
+				pcx, canvas.x * 0.5, pop.popup_id, str(panel.size), str(panel.position),
+				str(panel.global_position), str(panel.scale)])
 	Popups.close_all()
 	await _frames(2)
 	return out

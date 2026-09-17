@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/level_selection/page.gd" id="1_script"]
+
+[node name="Page" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 1
+script = ExtResource("1_script")
+
+[node name="Grid" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 10.08
+offset_top = 11.04
+columns = 3
+theme_override_constants/h_separation = 46
+theme_override_constants/v_separation = 24

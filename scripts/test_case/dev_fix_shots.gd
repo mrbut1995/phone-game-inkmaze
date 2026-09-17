@@ -27,6 +27,8 @@ func _init() -> void:
 		await _screen("daily", "res://scenes/daily.tscn", size)
 		await _screen("shop", "res://scenes/shop.tscn", size)
 		await _game_play(size)
+		for mode_id in ["countdown_cost", "fading_ink", "sum_path"]:
+			await _game_mode(mode_id, size)
 	quit(0)
 
 
@@ -71,6 +73,40 @@ func _game_play(size: Vector2i) -> void:
 		await _frames(8)
 	scene.queue_free()
 	await _frames(2)
+
+
+## Một chế độ dùng art sheet HUD -> chụp riêng khung HUD ở độ phân giải 1:1
+func _game_mode(mode_id: String, size: Vector2i) -> void:
+	var gm: Node = root.get_node_or_null("GameManager")
+	if gm != null:
+		gm.set("current_mode", mode_id)
+		gm.set("current_level", 1)
+	var packed := load("res://scenes/game.tscn") as PackedScene
+	var scene: Node = packed.instantiate()
+	root.add_child(scene)
+	await _frames(24)
+	var ui: Node = scene.get("ui_controller")
+	var hud: Control = (ui.get("hud") as Control) if ui != null else null
+	if hud != null:
+		_hud_shot("%dx%d_hud_%s" % [size.x, size.y, mode_id], hud)
+	scene.queue_free()
+	await _frames(2)
+
+
+## Cắt đúng khung HUD (980×249) từ ảnh canvas 1:1 để soi từng pixel
+func _hud_shot(id: String, hud: Control) -> void:
+	var img := root.get_texture().get_image()
+	if img == null:
+		print("   [FAIL] không lấy được ảnh %s" % id)
+		return
+	var full := Rect2i(Vector2i.ZERO, img.get_size())
+	var r := Rect2i(Vector2i(hud.global_position.round()), Vector2i(hud.size.round())).intersection(full)
+	if r.size.x <= 0 or r.size.y <= 0:
+		print("   [FAIL] khung HUD rỗng %s" % id)
+		return
+	var crop := img.get_region(r)
+	crop.save_png("res://tmp_fix/%s.png" % id)
+	print("   [hud] %s %s" % [id, str(r)])
 
 
 func _shot(id: String) -> void:

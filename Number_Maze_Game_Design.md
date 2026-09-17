@@ -559,6 +559,19 @@ Khung HUD: `Information` = Control tại `(50, 175)` kích thước `980 × 249`
 
 - Cả 3 thẻ đều theo ngôn ngữ **sổ tay**: viền màu theo chế độ (cam `#C2410C` · mực `#1D4E72` · xanh `#3D83AE`), lề dọc, dòng kẻ ô ly mờ; số liệu dùng theme variation `Hud*` trong `theme_text.tres`.
 - **Dải phân đoạn ngân sách**: mỗi bước = 1 phân đoạn (đã dùng = xám `#E2E8F0`, còn lại = cam `#EA580C`); bề rộng phân đoạn **tự co** để cả dải luôn vừa 654px khi ngân sách > 16 bước.
+- **Trích KHỐI ra texture node (2026-09-17)**: 3 sheet trên nay **CHỈ vẽ phần tĩnh** (khung · lề · dòng kẻ · vạch chia);
+  các khối bên trong đã tách thành art riêng và đặt bằng NODE trong scene HUD (chèn ngay sau `Sheet` → nằm trên
+  sheet, dưới các Label):
+  · `card_budget_sheet.svg` → `card_budget_block_budget.svg` 217×84 · `card_budget_block_spent.svg` 202×84 ·
+    `card_budget_block_price.svg` 197×84 (node `BlockBudget/BlockSpent/BlockPrice` trong `countdown_hud.tscn`).
+  · `card_ink_meter.svg` → `card_ink_block_bottle.svg` 50×68 (lọ mực + giọt mực) · `card_ink_swatch_1..4.svg`
+    90/90/90/100×28 (4 ô quang phổ) — node `BlockBottle/Swatch1..4` trong `fading_ink_hud.tscn`.
+  · `card_sum_balance.svg` → `card_sum_block_current.svg` 252×76 · `card_sum_emblem.svg` 60×60 ·
+    `card_sum_block_target.svg` 307×76 · `card_sum_chip_need.svg` 155×26 · `card_sum_bar_track.svg` 654×18
+    (node `BlockCurrent/Emblem/BlockTarget/ChipNeed/BarTrack` trong `sum_path_hud.tscn`).
+  MẸO ĐỊNH VỊ: mỗi art viết với `viewBox` = **vùng đã cắt** (giữ NGUYÊN toạ độ gốc trong sheet) nên node chỉ cần
+  đặt tại `sheet-local + (265, 3)` là khớp 1:1; lề 1px quanh hình để nửa ngoài của `stroke` không bị viewBox cắt.
+  Hình render **y hệt bản bake cũ** (soi crop 1:1 khung HUD bằng `dev_fix_shots.gd --hud`).
 - 3 chế độ này **không hiện thẻ THỬ THÁCH** trên HUD (thử thách/Sao vẫn tính đủ, hiện ở popup kết quả) — thay hẳn bố cục cũ `THỜI GIAN 250×138 + THỬ THÁCH 720×246`; các chế độ còn lại vẫn dùng bảng 10.2.
 - **Time Attack (2026-09-19)** — biến thể của khung này: `nodes/hud/time_attack_hud.tscn` (`TimeAttackHUD`) **CHỈ 1 thẻ THỜI GIAN phóng to đặt GIỮA khung** — thẻ dùng **anchors tỉ lệ** (`0.352..0.648 × 0.085..0.911`) nên ≈291×206 tại tâm khung, số dùng `resize_font_to_fit` tự co; dòng phụ `STR_HUD_TIME_COUNTDOWN` “Đếm ngược”; không có thẻ Thử thách. Mockup `mockup/matchup_time_attack.svg` sinh lại theo đúng HUD này (bỏ thẻ THỬ THÁCH khỏi mockup).
 
@@ -1085,5 +1098,85 @@ Kết quả sau sửa: **29/29 suite PASS** · harness tỉ lệ **220/220 PASS*
   trên Windows phải bấm Esc **2 lần** mới đóng popup — lần 1 bị xử lý ở chỗ khác). Popup vẫn đóng bình thường bằng nút trên màn hình.
 - Màn chính còn khoảng trống dưới thanh điều hướng trên màn dọc cao (nav ở y≈1800 trong canvas 2424).
 - Còn `print()` debug của user: `Close Popup …`, `Show Game Over because …`, `GAME_OVER because …`.
+
+### 13.13. Shop: TAB & THẺ Ô cao ×1,5 và TỰ CO GIÃN theo màn hình (2026-09-17)
+
+Yêu cầu user: "Tăng chiều cao của Tab lên 1.5 lần để người dùng dễ chọn, và cho nó tự resize chiều cao dựa vào
+kích cỡ màn hình hiện tại" + (vòng sau) "chỉnh lại Card ... thành 1.25 thôi, và thay vì chỉnh code cứng kích cỡ
+của Card Item vào bên trong script, tôi muốn lấy từ Layout của card item".
+
+**Hệ số co giãn dùng chung** (`ShopScene.screen_scale()`): `clampf(cao_canvas / 1920, 0.85, 1.5)` —
+màn dọc siêu cao (điện thoại 1080×2424 → 1,26) thì tab/thẻ cao hơn, màn ngang thấp thì nhỏ nhất còn 0,85.
+
+**Tab** (`_apply_tab_metrics()`):
+- Art viết lại cao gấp 1,5: `tab_active.svg` **240×98** (65×1,5 — tab đang chọn, nhô lên) và
+  `tab_inactive.svg` **240×83** (55×1,5 — tab chưa chọn). Script **đọc thẳng chiều cao từ art** rồi nhân hệ số
+  màn hình (§13.14) nên muốn đổi cỡ tab chỉ cần sửa file SVG. `stretch_mode = STRETCH_SCALE` để art lấp đầy node
+  (art không còn cùng tỉ lệ với node khi màn hình đổi chiều cao).
+- Hàng tab: đỉnh **172** (trước 185) để hàng cao thêm 30px **không lấn vùng danh sách**; tab đang chọn cao
+  hết hàng (`tab_height()` = 98 × hệ số), tab chưa chọn thấp hơn và canh **ĐÁY** hàng (`SIZE_SHRINK_END`);
+  chữ của MỌI tab cùng một đường ngang (theo tâm tab đang chọn); `TabLine` chạy theo đáy hàng; `Content.offset_top`
+  = đáy hàng + 8. Kết quả: vùng danh sách ở canvas 1920 vẫn cao **1192** → tab DỤNG CỤ (6 hàng = 1180) vẫn vừa khung.
+
+**Thẻ ô Bút & Mực / Giấy vở** (`tile_size()` — cỡ lấy từ LAYOUT của `nodes/shop/item_tile.tscn`):
+- Cao = `cỡ thiết kế (294) × TILE_SCALE (1,25) × hệ số màn hình` → canvas 1920: **368**; điện thoại 1080×2424: **464**;
+  rộng giữ đúng cỡ thiết kế trong scene (475) để 2 cột vẫn vừa cột nội dung 980.
+- Các khối BÊN TRONG thẻ dùng **ANCHORS trong scene** (không dàn bằng code nữa):
+  `Bg` full-rect · `Bar` neo 2 đầu (cách mép trên/dưới 18) · cụm icon neo theo TỈ LỆ chiều cao
+  (IconCircle 29,93% · Icon 29,25% · Stroke 46,94%) · Name/Desc/Note/Action/ActionLabel/CoinIcon **neo ĐÁY**
+  (cách đáy cố định). Nhờ vậy muốn đổi cỡ thẻ hay vị trí khối chỉ cần sửa/ kéo trực tiếp trong Editor.
+- Số món/trang vẫn suy từ chiều cao thật của khung cuộn (`_grid_per_page()`), nên thẻ cao lên thì ít hàng hơn:
+  điện thoại 1080×2424 → **4 thẻ/trang** (10 bút = 3 trang), canvas 1920 → 4 thẻ/trang, màn ngang thấp → 2 thẻ/trang
+  (khi đó lưới được phép cuộn dọc — kiểm tra "vừa khung nhìn" trong test đã nới đúng trường hợp 1 hàng tối thiểu).
+- Xoay màn hình: `_on_viewport_resized()` → `_apply_tab_metrics()` + `_apply_card_metrics()` + phân trang lại,
+  vẫn **giữ trang theo món đang xem** (`_page_first_id`).
+
+### 13.14. Quy ước: CỠ & BỐ CỤC LẤY TỪ LAYOUT (scene/art) — không hard-code trong script (2026-09-17)
+
+Yêu cầu user: *"thay vì chỉnh code cứng kích cỡ ... vào bên trong script, tôi muốn bạn lấy từ Layout ... để tôi có thể
+dễ dàng edit/chỉnh lại size tôi muốn. Làm như thế đối với các node đang sử dụng code cứng làm size mà không sử dụng
+transform"*. Quy ước áp dụng từ đây:
+
+| Nơi | Cỡ lấy từ | Script chỉ làm gì |
+|---|---|---|
+| Tab shop (BÚT & MỰC / GIẤY VỞ / DỤNG CỤ / NẠP XẠ) | **ART**: `tab_active.svg` 240×98 · `tab_inactive.svg` 240×83 | `tab_height()` = cao art × hệ số màn hình; hàng tab/vạch kẻ/khe danh sách đọc từ `shop.tscn` (`_capture_tab_layout`) |
+| Thẻ ô shop | **LAYOUT**: `nodes/shop/item_tile.tscn` (475×294) + anchors của các khối con | `tile_size()` = cỡ scene × `TILE_SCALE` (1,25) × hệ số màn hình; chỉ đặt `custom_minimum_size` cho thẻ |
+| Bàn nháp thử bút | `nodes/shop/doodle_pad.tscn` | đọc cỡ để tính số hàng vừa khung |
+| Bảng nhiệm vụ Daily | `scenes/daily.tscn` (Missions 1020×592 · Rows đầu 112 · ProgressLabel 528 · Play cách đáy 60) + `mission_row.tscn` (110) | `_capture_design()` đọc 1 lần lúc mở màn; script chỉ co/giãn theo màn hình (`MIN_ROW_FACTOR` 0,7 · `MAX_ROW_FACTOR` 1,35 là CHÍNH SÁCH co giãn) |
+| Khối HUD (3 sheet) | art riêng `card_*_block_*.svg` + rect của node trong `*_hud.tscn` (§10.2b) | — (không code) |
+
+Nguyên tắc: **art/scene là nguồn số thật**, script chỉ giữ (a) hệ số phóng to theo màn hình, (b) chính sách khe/độ co
+giãn tối thiểu–tối đa, (c) tính số món mỗi trang. Kiểm thử cũng đọc lại từ scene (`test_shop.gd`:
+`tile_design_size() == (475, 294)` · `tab_height()` = 98 × hệ số · số món/trang động).
+
+
+### 13.15. Quy ước: MỌI NODE UI PHẢI CÓ SCENE + SCRIPT — script chỉ instantiate (2026-09-17)
+
+Yêu cầu user: *"tránh trường hợp tạo ra scene trong quá trình khởi động mà không có tscn/script tương ứng (VD: tạo cell
+trong khởi động là được, nhưng tạo tab mà không có scene, chỉ có đoạn script added node vào bên trong control thì không
+được). Đối với trường hợp đó, bạn hãy tạo ra một scene và script của nó và rồi trong script mới khai khởi tạo nó."*
+Từ đây, node UI nào xuất hiện lúc chạy cũng phải có `.tscn` riêng + script của nó; script màn chỉ làm 3 việc:
+`instantiate()` → `add_child()` → `setup()`.
+
+| Màn / khối | Scene con (mỗi scene 1 script `class_name`) | Script giữ gì |
+|---|---|---|
+| Cửa hàng | `nodes/shop/{tab_button,item_grid,page_dot}.tscn` | `ShopTabButton` (art 240×98 · `apply_row_layout` canh đáy) · `ShopItemGrid` (2 cột · khe 30/24) · `ShopPageDot` (34×24 / 12×24) |
+| Sổ tay | `nodes/archivements/{tab_button,page,page_dot}.tscn` | `AchTabButton` (134×46) · `AchPage` (cột `Column` · khe 20) · `AchPageDot` |
+| Chọn màn | `nodes/level_selection/{page,page_dot}.tscn` | `LevelsPage` (lưới 3 cột · khe 46/24 · gốc 10.08/11.04) · `LevelsPageDot` |
+| Xếp hạng | `nodes/ranking/tab_button.tscn` | `RankTabButton` (cao 52 theo scene · bề rộng riêng từng bảng) |
+| Popup | `nodes/popups/{host,language_row}.tscn` | `PopupHost` (lớp phủ dự phòng) · `LanguageRow` (cờ · tên · phụ đề · dấu tích) |
+| Bàn mê cung | `nodes/game/{board_layers,ink_footstep}.tscn` | `BoardLayers` (5 lớp vẽ Cells→Lines→Walls→Anchors→Markers) · `InkFootstep` (vệt mực bước chân) |
+| HUD đếm ngược | `nodes/hud/countdown_segment.tscn` | `CountdownSegment` (`set_width` · `set_used`) — art xám/cam nằm trong scene |
+
+Nhờ vậy cỡ/khe/art của từng khối nhỏ (tab · chấm trang · hàng ngôn ngữ · vạch ngân sách · lớp vẽ…) sửa được **ngay
+trong scene**, không phải lần theo script. `scripts/test_case/test_ui_scenes.gd` (50 check) kiểm cả hai mặt: dựng từng
+scene để xác nhận cấu trúc con (`Column`/`Grid`/`Label`…) và **quét mã nguồn** `scripts/scenes` + `scripts/nodes` để
+chặn `.new()` cho lớp UI về sau (ngoại lệ duy nhất: `scripts/scenes/debug.gd` — màn debug dev-only).
+
+**Bẫy đã dính khi viết `.tscn` bằng tay**: node con của root phải ghi `parent="."`; thiếu nó scene vẫn *load* nhưng con
+không được gắn → `$Grid`/`$Column` trả về `null` (test Sổ tay/Chọn màn FAIL oan). Và `@onready` chỉ có sau khi node
+vào cây → luôn `add_child()` trước rồi mới gọi `setup()`.
+
+
 
 

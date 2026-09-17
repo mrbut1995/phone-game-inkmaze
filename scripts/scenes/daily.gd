@@ -14,18 +14,24 @@ const ICON_PLAY := preload("res://assets/images/calendar/pencil_icon.svg")
 const ICON_UNLOCK := preload("res://assets/images/shop/icon_coin.svg")
 ## 3 nhiệm vụ đầu thuộc MAZE THƯỜNG (Game Classic), nhiệm vụ thứ 4 thuộc MAZE ĐẶC BIỆT
 const CLASSIC_MISSION_COUNT := 3
-## Chiều cao mỗi hàng nhiệm vụ trong bảng (khớp mockup daily_challenge.svg)
-const ROW_HEIGHT := 110.0
-## Chiều cao THIẾT KẾ của bảng nhiệm vụ (nodes/daily/*.tscn) — dùng để dồn hàng tiến độ xuống đáy
-const MISSION_PANEL_H := 592.0
-## Đỉnh hàng tiến độ trong bảng thiết kế (ProgressLabel/Claim ≈ 528, ProgressBar ≈ 546)
-const MISSION_PROGRESS_Y := 528.0
-## Khe hở giữa lịch - bảng nhiệm vụ - nút chơi
-const GAP_CAL_MISSIONS := 24.0
-## Chiều cao tối thiểu của bảng nhiệm vụ (màn ngang/thấp — hàng nhiệm vụ sẽ co lại)
-const MIN_MISSION_PANEL_H := 520.0
-## Lề dưới cùng (dưới nút CHƠI)
-const BOTTOM_MARGIN := 60.0
+## Mức co tối đa của hàng nhiệm vụ khi màn thấp, và mức giãn tối đa khi màn cao
+## (CỠ hàng vẫn lấy từ `nodes/daily/mission_row.tscn` — đây chỉ là chính sách co giãn)
+const MIN_ROW_FACTOR := 0.7
+const MAX_ROW_FACTOR := 1.35
+
+## ============================================================================
+## BỐ CỤC = LAYOUT CỦA SCENE (`scenes/daily.tscn` + `nodes/daily/mission_row.tscn`),
+## không hard-code số đo trong script. Các biến dưới được `_capture_design()` đọc 1 lần
+## lúc mở màn; muốn đổi cỡ/khe thì sửa trực tiếp trong scene.
+## ============================================================================
+var _row_design_h := 110.0          # chiều cao 1 hàng nhiệm vụ (mission_row.tscn)
+var _panel_design_h := 592.0        # chiều cao bảng nhiệm vụ (daily.tscn > Missions)
+var _rows_top_design := 112.0       # đầu hàng nhiệm vụ trong bảng (daily.tscn > Rows)
+var _progress_design_y := 528.0     # đỉnh hàng tiến độ (daily.tscn > ProgressLabel)
+var _gap_cal_missions := 24.0       # khe lịch → bảng (đo từ scene)
+var _bottom_margin := 60.0          # lề dưới nút CHƠI (đo từ scene + canvas thiết kế)
+var _min_panel_h := 484.0           # bảng tối thiểu = đầu hàng + 4 hàng co + khối tiến độ
+var _design_captured := false
 
 @onready var btn_back: TextureButton = $TopBar/Back
 @onready var calendar: DailyCalendar = $Calendar
@@ -72,10 +78,6 @@ func _ready() -> void:
 
 	_build_rows()
 	_refresh()
-	# Ghi nhớ vị trí THIẾT KẾ của hàng tiến độ (để dồn xuống đáy bảng mà không cộng dồn)
-	for node in [lbl_progress, bar_progress, lbl_claim]:
-		if node != null:
-			_progress_base[node] = (node as Control).position.y
 	_layout_responsive.call_deferred()
 	var vp := get_viewport()
 	if vp != null and not vp.size_changed.is_connected(_layout_responsive):
@@ -98,23 +100,24 @@ func _layout_responsive() -> void:
 	var canvas := get_viewport_rect().size
 	if canvas.y <= 0.0:
 		return
+	_capture_design()
 
 	# 1. Nút CHƠI: bám đáy
-	var play_y := canvas.y - BOTTOM_MARGIN - btn_play.size.y
+	var play_y := canvas.y - _bottom_margin - btn_play.size.y
 	if absf(btn_play.position.y - play_y) > 0.5:
 		btn_play.position.y = play_y
 
 	# 2. Bảng nhiệm vụ: nằm giữa lịch và nút CHƠI
-	var top := calendar.position.y + calendar.size.y + GAP_CAL_MISSIONS
-	var bottom := btn_play.position.y - GAP_CAL_MISSIONS
-	var panel_h := maxf(MIN_MISSION_PANEL_H, bottom - top)
+	var top := calendar.position.y + calendar.size.y + _gap_cal_missions
+	var bottom := btn_play.position.y - _gap_cal_missions
+	var panel_h := maxf(_min_panel_h, bottom - top)
 	if absf(missions.position.y - top) > 0.5:
 		missions.position.y = top
 	if absf(missions.size.y - panel_h) > 0.5:
 		missions.size.y = panel_h
 
 	# 3. Dồn hàng tiến độ (label + thanh + nhãn thưởng) xuống ĐÁY bảng
-	var dy := missions.size.y - MISSION_PANEL_H
+	var dy := missions.size.y - _panel_design_h
 	if absf(dy) > 0.5:
 		for node in _progress_base.keys():
 			var c := node as Control
@@ -125,19 +128,52 @@ func _layout_responsive() -> void:
 	#    (màn thấp/ngang -> hàng co lại để không tràn xuống nút CHƠI)
 	if rows_host != null:
 		var count := maxi(_mission_total(), 1)
-		var top_limit := 112.0
-		var bottom_limit := MISSION_PROGRESS_Y + dy
-		var space := maxf(bottom_limit - top_limit, 120.0)
-		# Màn cao -> giãn nhẹ khoảng cách hàng (tối đa 1.35× thiết kế) để lấp khoảng trống;
+		var top_limit := _rows_top_design
+		var bottom_limit := _progress_design_y + dy
+		var space := maxf(bottom_limit - top_limit, _row_design_h * MIN_ROW_FACTOR)
+		# Màn cao -> giãn nhẹ khoảng cách hàng (tối đa MAX_ROW_FACTOR× thiết kế) để lấp khoảng trống;
 		# màn thấp/ngang -> co hàng lại để không tràn xuống nút CHƠI.
-		var row_h := clampf(space / float(count), 0.0, ROW_HEIGHT * 1.35)
+		var row_h := clampf(space / float(count), 0.0, _row_design_h * MAX_ROW_FACTOR)
 		if row_h <= 0.0:
-			row_h = ROW_HEIGHT
+			row_h = _row_design_h
 		for i in _rows.size():
 			var row := _rows[i]
 			if row != null and is_instance_valid(row):
 				row.position = Vector2(0, row_h * i)
 		rows_host.position.y = top_limit + maxf(0.0, (space - row_h * float(count)) * 0.5)
+
+
+## Đọc số đo THIẾT KẾ từ scene + art (1 lần) — không hard-code trong script
+func _capture_design() -> void:
+	if _design_captured:
+		return
+	_design_captured = true
+	# Vị trí THIẾT KẾ của hàng tiến độ (node -> y) — chốt TRƯỚC khi relayout lần đầu
+	# để dồn xuống đáy bảng mà không cộng dồn theo số lần relayout.
+	for node in [lbl_progress, bar_progress, lbl_claim]:
+		if node != null:
+			_progress_base[node] = (node as Control).position.y
+	var probe := MISSION_ROW.instantiate() as Control
+	if probe != null:
+		_row_design_h = maxf(probe.size.y, probe.custom_minimum_size.y)
+		probe.free()
+	if _row_design_h <= 0.0:
+		_row_design_h = 110.0
+	if missions.size.y > 0.0:
+		_panel_design_h = missions.size.y
+	if rows_host != null:
+		_rows_top_design = rows_host.position.y
+	if lbl_progress != null:
+		_progress_design_y = lbl_progress.position.y
+	var gap := missions.position.y - (calendar.position.y + calendar.size.y)
+	_gap_cal_missions = gap if gap > 0.0 else _gap_cal_missions
+	var design_h := float(ProjectSettings.get_setting("display/window/size/viewport_height", 1920))
+	var margin := design_h - (btn_play.position.y + btn_play.size.y)
+	_bottom_margin = margin if margin > 0.0 else _bottom_margin
+	var progress_block := maxf(_panel_design_h - _progress_design_y, 0.0)
+	_min_panel_h = (_rows_top_design
+		+ _row_design_h * MIN_ROW_FACTOR * float(maxi(_mission_total(), 1))
+		+ progress_block)
 
 
 ## Dựng 4 hàng nhiệm vụ (3 maze thường + 1 maze đặc biệt) trong bảng Mission
@@ -150,7 +186,8 @@ func _build_rows() -> void:
 	for i in _mission_total():
 		var row: DailyMissionRow = MISSION_ROW.instantiate()
 		row.name = "Row%d" % (i + 1)
-		row.position = Vector2(0, ROW_HEIGHT * i)
+		# Cỡ hàng lấy từ scene (`mission_row.tscn`) — `_layout_responsive()` sẽ dàn lại sau
+		row.position = Vector2(0, _row_design_h * i)
 		rows_host.add_child(row)
 		row.action_pressed.connect(_on_row_action_pressed)
 		_rows.append(row)

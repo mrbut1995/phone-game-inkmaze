@@ -9,11 +9,8 @@ extends BaseHUD
 ## Chế độ này KHÔNG hiện thẻ THỬ THÁCH nữa (challenge_card() = null).
 ## ============================================================================
 
-const SEGMENT_ON := preload("res://assets/images/game/budget_segment_on.svg")
-const SEGMENT_OFF := preload("res://assets/images/game/budget_segment_off.svg")
+const SEGMENT_SCENE := preload("res://nodes/hud/countdown_segment.tscn")
 const SEGMENT_FALLBACK_WIDTH := 654.0
-const SEGMENT_MAX_WIDTH := 38.0
-const SEGMENT_HEIGHT := 12.0
 const SEGMENT_GAP := 4.0
 
 ## Số phân đoạn đã dựng (chỉ dựng lại khi ngân sách đổi)
@@ -75,18 +72,14 @@ func _update_segments(total: int, spent: int) -> void:
 			child.queue_free()
 		var track: float = box.size.x if box.size.x > 0.0 else SEGMENT_FALLBACK_WIDTH
 		var width: float = (track - SEGMENT_GAP * float(total - 1)) / float(total)
-		width = clampf(width, 4.0, SEGMENT_MAX_WIDTH)
 		for i in total:
-			var seg := TextureRect.new()
-			seg.custom_minimum_size = Vector2(width, SEGMENT_HEIGHT)
-			seg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			seg.stretch_mode = TextureRect.STRETCH_SCALE
-			seg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			var seg := SEGMENT_SCENE.instantiate() as CountdownSegment
+			seg.set_width(width)
 			box.add_child(seg)
 		_built_segments = total
 	var index := 0
 	for child in box.get_children():
-		var seg := child as TextureRect
+		var seg := child as CountdownSegment
 		if seg != null:
-			seg.texture = SEGMENT_OFF if index < spent else SEGMENT_ON
+			seg.set_used(index < spent)
 		index += 1

@@ -7,6 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://dq6rl1smpx2v4" path="res://assets/images/game/bar_sum_fill.svg" id="5_fill"]
 [ext_resource type="Texture2D" uid="uid://c0iv6cyoi50be" path="res://assets/images/game/bar_sum_ticks.svg" id="6_ticks"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="7_theme"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_sum_block_current.svg" id="8_block_current"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_sum_emblem.svg" id="9_emblem"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_sum_block_target.svg" id="10_block_target"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_sum_chip_need.svg" id="11_chip_need"]
+[ext_resource type="Texture2D" path="res://assets/images/game/card_sum_bar_track.svg" id="12_bar_track"]
 
 [node name="Hud" unique_id=1258939475 instance=ExtResource("1_base")]
 theme = ExtResource("7_theme")
@@ -49,7 +54,58 @@ offset_bottom = 159.0
 mouse_filter = 2
 texture = ExtResource("4_sheet")
 
-[node name="Title" type="Label" parent="." index="2" unique_id=12162753]
+; KHỐI tách từ card_sum_balance.svg (2026-09-17) — sheet-local + (265, 3)
+[node name="BlockCurrent" type="TextureRect" parent="." index="2" unique_id=1002001]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 38.0
+offset_right = 552.0
+offset_bottom = 114.0
+mouse_filter = 2
+texture = ExtResource("8_block_current")
+expand_mode = 1
+
+[node name="Emblem" type="TextureRect" parent="." index="3" unique_id=1002002]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 46.0
+offset_right = 630.0
+offset_bottom = 106.0
+mouse_filter = 2
+texture = ExtResource("9_emblem")
+expand_mode = 1
+
+[node name="BlockTarget" type="TextureRect" parent="." index="4" unique_id=1002003]
+layout_mode = 0
+offset_left = 649.0
+offset_top = 38.0
+offset_right = 956.0
+offset_bottom = 114.0
+mouse_filter = 2
+texture = ExtResource("10_block_target")
+expand_mode = 1
+
+[node name="ChipNeed" type="TextureRect" parent="." index="5" unique_id=1002004]
+layout_mode = 0
+offset_left = 785.0
+offset_top = 77.0
+offset_right = 940.0
+offset_bottom = 103.0
+mouse_filter = 2
+texture = ExtResource("11_chip_need")
+expand_mode = 1
+
+[node name="BarTrack" type="TextureRect" parent="." index="6" unique_id=1002005]
+layout_mode = 0
+offset_left = 301.0
+offset_top = 125.0
+offset_right = 955.0
+offset_bottom = 143.0
+mouse_filter = 2
+texture = ExtResource("12_bar_track")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="." index="7" unique_id=12162753]
 layout_mode = 0
 offset_left = 301.0
 offset_top = 11.0
@@ -59,7 +115,7 @@ theme_type_variation = &"HudSumTitle"
 text = "STR_HUD_SUM_TITLE"
 vertical_alignment = 1
 
-[node name="Sum" type="Control" parent="." index="3" unique_id=47725282]
+[node name="Sum" type="Control" parent="." index="8" unique_id=47725282]
 anchors_preset = 0
 offset_left = 301.0
 offset_top = 39.0
@@ -97,7 +153,7 @@ theme_type_variation = &"HudSumNote"
 text = "STR_HUD_SUM_MOVES"
 vertical_alignment = 1
 
-[node name="Operator" type="Control" parent="." index="4" unique_id=795058384]
+[node name="Operator" type="Control" parent="." index="9" unique_id=795058384]
 anchors_preset = 0
 offset_left = 570.0
 offset_top = 46.0
@@ -117,7 +173,7 @@ text = "="
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Target" type="Control" parent="." index="5" unique_id=901729313]
+[node name="Target" type="Control" parent="." index="10" unique_id=901729313]
 anchors_preset = 0
 offset_left = 650.0
 offset_top = 39.0
@@ -156,7 +212,7 @@ text = "STR_HUD_SUM_NEED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Bar" type="Control" parent="." index="6" unique_id=686989728]
+[node name="Bar" type="Control" parent="." index="11" unique_id=686989728]
 clip_contents = true
 anchors_preset = 0
 offset_left = 301.0

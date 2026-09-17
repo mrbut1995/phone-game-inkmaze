@@ -257,18 +257,42 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	_entry(scene.tabs_box.get_child_count() == 4, "4 tab duoc dung bang code")
 	for category in ["pen", "theme", "tool", "coin"]:
 		_entry(scene.tab_button(category) != null, "Co tab '%s'" % category)
+	# TAB: chiều cao lấy từ ART (`tab_active.svg` 240×98) × hệ số màn hình — không hard-code
+	var tab_h: float = scene.tab_height()
+	_entry(absf(tab_h - 98.0 * scene.screen_scale()) < 0.5,
+		"Chieu cao tab lay tu art tab_active.svg (%.0f)" % tab_h)
+	var tab_on: TextureButton = scene.tab_button("pen")
+	var tab_off: TextureButton = scene.tab_button("theme")
+	_entry(tab_on != null and tab_off != null
+			and absf(tab_on.custom_minimum_size.y - tab_h) < 0.5
+			and tab_off.custom_minimum_size.y < tab_on.custom_minimum_size.y - 1.0,
+		"Tab dang chon cao hon tab chua chon (%.0f vs %.0f)" % [
+			tab_on.custom_minimum_size.y if tab_on != null else -1.0,
+			tab_off.custom_minimum_size.y if tab_off != null else -1.0])
 	_entry(scene.wallet_text() == "1,234", "Vi hien dung dinh dang 1,234 (nhan '%s')" % scene.wallet_text())
 
-	# Tab BÚT & MỰC: lưới 2 cột, 6 món/trang, 10 món -> 2 trang
+	# Tab BÚT & MỰC: lưới 2 cột, số món/trang tính theo CHIỀU CAO màn hình (10 món bút)
 	_entry(scene.current_tab() == "pen", "Tab mac dinh = BÚT & MỰC")
-	_entry(scene.item_count() == 6, "Trang 1 co 6 the mon hang (nhan %d)" % scene.item_count())
-	_entry(scene.page_count() == 2, "10 mon but -> 2 trang (nhan %d)" % scene.page_count())
-	_entry(scene.items_per_page() == 6, "items_per_page() = 6")
+	var per_page := scene.items_per_page()
+	_entry(per_page >= 2 and per_page % 2 == 0,
+		"So mon/trang = so hang vua khung x 2 (nhan %d)" % per_page)
+	_entry(scene.item_count() == mini(per_page, 10),
+		"Trang 1 co %d the mon hang (nhan %d)" % [mini(per_page, 10), scene.item_count()])
+	var expect_pages := int(ceil(10.0 / float(per_page)))
+	_entry(scene.page_count() == expect_pages,
+		"10 mon but -> %d trang (nhan %d)" % [expect_pages, scene.page_count()])
 	var first_id := scene.item_id_at(0)
-	# Thẻ ô dựng đúng mockup: 475×294, có vòng icon + nét mực + nút 200×46
+	# Thẻ ô: cỡ THIẾT KẾ đọc từ LAYOUT của `item_tile.tscn`, cỡ dùng = thiết kế × 1,25 × hệ số màn hình
+	_entry(scene.tile_design_size() == Vector2(475, 294),
+		"Co thiet ke cua the lay tu item_tile.tscn (%s)" % str(scene.tile_design_size()))
 	var tile := scene.card_at(0)
-	_entry(tile != null and tile.size == Vector2(475, 294),
-		"The o dung co 475x294 (nhan %s)" % str(tile.size if tile != null else Vector2.ZERO))
+	var tile_h: float = scene.tile_height()
+	var expect_h: float = 294.0 * 1.25 * scene.screen_scale()
+	_entry(absf(tile_h - expect_h) < 1.0 and tile_h > 294.0,
+		"The o cao = 294 × 1,25 × he so man hinh (%.0f, mong %.0f)" % [tile_h, expect_h])
+	_entry(tile != null and absf(tile.size.x - 475.0) < 1.0 and absf(tile.size.y - tile_h) < 1.0,
+		"The o dung co 475x%.0f (nhan %s)" % [tile_h,
+			str(tile.size if tile != null else Vector2.ZERO)])
 	if tile != null:
 		_entry(tile.get_node_or_null("IconCircle") is TextureRect, "The o co vong icon (IconCircle)")
 		_entry(tile.get_node_or_null("Stroke") is TextureRect, "The o co net muc ve thu (Stroke)")
@@ -276,6 +300,10 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 		var action := tile.get_node_or_null("Action") as TextureButton
 		_entry(action != null and action.size == Vector2(200, 46),
 			"Nut the o dung 200x46 (nhan %s)" % str(action.size if action != null else Vector2.ZERO))
+		# Nút hành động NEO ĐÁY thẻ (thẻ cao lên thì nút đi xuống, không bỏ trống đáy)
+		if action != null:
+			_entry(absf((action.position.y + action.size.y) - (tile.size.y - 16.0)) < 1.0,
+				"Nut the o neo day the (cach day 16, nhan %.0f)" % (tile.size.y - action.position.y - action.size.y))
 		# BÚT & MỰC: thẻ hiện đúng icon CON TRỎ trong game của chính ngòi bút đó
 		var first_icon := tile.get_node_or_null("Icon") as TextureRect
 		_entry(first_icon != null and first_icon.texture == PenSkin.cursor_texture(first_id),
@@ -330,7 +358,8 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 			"Quay lai tab BUT & MUC nho ngòi đang xem thử")
 	scene.goto_page(1)
 	await process_frame
-	_entry(scene.item_count() == 4, "Trang 2 con 4 mon (nhan %d)" % scene.item_count())
+	var page2_count := mini(per_page, maxi(10 - per_page, 0))
+	_entry(scene.item_count() == page2_count, "Trang 2 con %d mon (nhan %d)" % [page2_count, scene.item_count()])
 	_entry(scene.item_id_at(0) != first_id, "Sang trang thi doi danh sach mon")
 	_entry(scene.current_page() == 1, "current_page() = 1")
 
@@ -433,7 +462,8 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 	await process_frame
 	_entry(scene.current_page() == 0, "Vuot nguoc khi dang o trang 1 -> dung yen")
 
-	# Nội dung MỌI tab phải VỪA khung nhìn — không cần vuốt dọc để xem hết
+	# Số hàng mỗi trang khớp chiều cao khung nhìn (màn thấp -> ít hàng hơn).
+	# Nếu chỉ đủ chỗ cho 1 HÀNG (2 món) mà thẻ còn cao hơn khung thì được phép cuộn.
 	var content := scene.get_node("Content") as ScrollContainer
 	_entry(content != null, "Co vung cuon Content")
 	for tab_id in ["pen", "theme", "tool", "coin"]:
@@ -442,16 +472,17 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 		await process_frame
 		var list := scene.get_node("Content/List") as Control
 		var list_h: float = list.size.y if list != null else INF
-		_entry(list_h <= content.size.y + 1.0,
+		var one_row_only: bool = scene.items_per_page() <= 2
+		_entry(list_h <= content.size.y + 1.0 or one_row_only,
 			"Tab %s: danh sach vua khung nhin (%.0f <= %.0f)" % [tab_id, list_h, content.size.y])
-	# Trang 2 của BÚT & MỰC (4 thẻ) cũng phải vừa khung nhìn
+	# Trang 2 của BÚT & MỰC cũng phải vừa khung nhìn (trừ khi chỉ còn 1 hàng)
 	scene.show_tab("pen")
 	await process_frame
 	scene.call("goto_page", 1)
 	await process_frame
 	await process_frame
 	var pen_list := scene.get_node("Content/List") as Control
-	_entry(pen_list.size.y <= content.size.y + 1.0,
+	_entry(pen_list.size.y <= content.size.y + 1.0 or scene.items_per_page() <= 2,
 		"Trang 2 tab pen: danh sach vua khung nhin (%.0f <= %.0f)" % [pen_list.size.y, content.size.y])
 	scene.call("goto_page", 0)
 	await process_frame

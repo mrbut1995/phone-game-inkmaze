@@ -102,10 +102,12 @@ metadata/_edit_use_anchors_ = true
 [node name="Missions" type="TextureRect" parent="." index="4" unique_id=564649675]
 layout_mode = 1
 anchors_preset = -1
+; Bảng nhiệm vụ 1020×592 — nằm NGAY DƯỚI LỊCH (đáy lịch 1182 + khe 24 = 1206).
+; `scripts/scenes/daily.gd` đọc chính các số này (_capture_design) rồi co giãn theo màn hình.
 offset_left = 30.0
-offset_top = 1144.0
+offset_top = 1206.0
 offset_right = 1050.0
-offset_bottom = 1736.0
+offset_bottom = 1798.0
 ; Cho phép bảng co/giãn tự do theo màn hình (nếu không, texture ghim cứng cỡ 1020×592)
 expand_mode = 1
 texture = ExtResource("9_panel")
@@ -177,10 +179,12 @@ vertical_alignment = 1
 
 [node name="Rows" type="Control" parent="Missions" index="3" unique_id=1711770941]
 layout_mode = 1
+; Đầu hàng nhiệm vụ (thiết kế) — script đọc `Rows.offset_top` để dàn hàng;
+; mỗi hàng cao 110 (nodes/daily/mission_row.tscn).
 offset_left = 20.0
-offset_top = 76.0
+offset_top = 112.0
 offset_right = 1000.0
-offset_bottom = 516.0
+offset_bottom = 552.0
 mouse_filter = 2
 
 [node name="ProgressLabel" type="Label" parent="Missions" index="4" unique_id=1214704438]

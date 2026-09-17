@@ -12,21 +12,17 @@ extends BaseScene
 ## ============================================================================
 
 const LEVEL_CARD_SCENE := preload("res://nodes/level_selection/level_card.tscn")
-const DOT_ACTIVE := preload("res://assets/images/level_selector/dot_active.svg")
-const DOT_INACTIVE := preload("res://assets/images/level_selector/dot_inactive.svg")
+## Node UI của màn này đều là SCENE riêng (không tạo node bằng code)
+const PAGE_SCENE := preload("res://nodes/level_selection/page.tscn")
+const DOT_SCENE := preload("res://nodes/level_selection/page_dot.tscn")
 ## Banner chương: bản thường + bản "focus" (có chương đủ Sao để mở)
 const BANNER_NORMAL := preload("res://assets/images/level_selector/chapter_banner.svg")
 const BANNER_FOCUS := preload("res://assets/images/level_selector/chapter_banner_focus.svg")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-const CARDS_PER_PAGE := 9                        # 3 cột x 3 hàng
-const GRID_COLUMNS := 3
-const GRID_ORIGIN := Vector2(10.08, 11.04)       # giữ đúng vị trí lưới trong mockup
-const GRID_H_SEP := 46
-const GRID_V_SEP := 24
+## Số thẻ màn chơi mỗi trang (lưới 3×3 nằm trong nodes/level_selection/page.tscn)
+const CARDS_PER_PAGE := 9
 const SNAP_TIME := 0.22
-const DOT_SIZE_ACTIVE := Vector2(34, 24)
-const DOT_SIZE_INACTIVE := Vector2(12, 24)
 ## Quãng kéo tối thiểu (px) để tính là VUỐT trang (dưới ngưỡng = bấm vào thẻ)
 const DRAG_THRESHOLD := 8.0
 ## Sau khi vuốt, bỏ qua thao tác bấm thẻ trong bao lâu (giây)
@@ -124,18 +120,11 @@ func _build_pages() -> void:
 	var chapter_seen: Dictionary = {}      # chapter -> số màn đã đếm (để hiện 1-1, 1-2...)
 
 	for page_index in _page_count:
-		var page := Control.new()
+		var page := PAGE_SCENE.instantiate() as LevelsPage
 		page.name = "Page%d" % (page_index + 1)
-		page.mouse_filter = Control.MOUSE_FILTER_PASS
 		pages_host.add_child(page)
 
-		var grid := GridContainer.new()
-		grid.name = "Grid"
-		grid.columns = GRID_COLUMNS
-		grid.add_theme_constant_override("h_separation", GRID_H_SEP)
-		grid.add_theme_constant_override("v_separation", GRID_V_SEP)
-		grid.position = GRID_ORIGIN
-		page.add_child(grid)
+		var grid := page.grid()
 
 		for slot in CARDS_PER_PAGE:
 			var list_index := page_index * CARDS_PER_PAGE + slot
@@ -272,13 +261,10 @@ func _build_dots() -> void:
 		child.queue_free()
 
 	for index in _page_count:
-		var dot := TextureButton.new()
+		var dot := DOT_SCENE.instantiate() as LevelsPageDot
 		dot.name = "Dot%d" % (index + 1)
-		dot.ignore_texture_size = true
-		dot.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
-		dot.focus_mode = Control.FOCUS_NONE
-		dot.pressed.connect(_on_dot_pressed.bind(index))
 		dots_box.add_child(dot)
+		dot.pressed.connect(_on_dot_pressed.bind(index))
 
 	dots_box.visible = _page_count > 1
 	_update_dots()
@@ -289,10 +275,9 @@ func _update_dots() -> void:
 		return
 	var dots := dots_box.get_children()
 	for index in dots.size():
-		var dot: TextureButton = dots[index]
-		var is_current := index == _page
-		dot.texture_normal = DOT_ACTIVE if is_current else DOT_INACTIVE
-		dot.custom_minimum_size = DOT_SIZE_ACTIVE if is_current else DOT_SIZE_INACTIVE
+		var dot := dots[index] as LevelsPageDot
+		if dot != null:
+			dot.set_current(index == _page)
 
 
 func _on_dot_pressed(index: int) -> void:

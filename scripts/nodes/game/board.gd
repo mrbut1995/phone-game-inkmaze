@@ -21,6 +21,8 @@ const HISTORY_LINE_SCENE := preload("res://nodes/game/history_line.tscn")
 const PLAYER_CURSOR_SCENE := preload("res://nodes/game/player_cursor.tscn")
 const CRASH_SFX_SCENE := preload("res://nodes/sfx/crash.tscn")
 const MINE_SFX_SCENE := preload("res://nodes/sfx/mine_explosion.tscn")
+const LAYERS_SCENE := preload("res://nodes/game/board_layers.tscn")
+const FOOTSTEP_SCENE := preload("res://nodes/game/ink_footstep.tscn")
 
 const GLOW_LINE_SHADER := preload("res://shaders/line_glowing_shader.gdshader")
 
@@ -140,30 +142,13 @@ func _init_layers() -> void:
 	if _cells_layer != null:
 		return
 
-	_cells_layer = Control.new()
-	_cells_layer.name = "Cells"
-	_cells_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_cells_layer)
-
-	_lines_layer = Control.new()
-	_lines_layer.name = "Lines"
-	_lines_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_lines_layer)
-
-	_walls_layer = Control.new()
-	_walls_layer.name = "Walls"
-	_walls_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_walls_layer)
-
-	_anchors_layer = Control.new()
-	_anchors_layer.name = "Anchors"
-	_anchors_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_anchors_layer)
-
-	_markers_layer = Control.new()
-	_markers_layer.name = "Markers"
-	_markers_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_markers_layer)
+	var layers := LAYERS_SCENE.instantiate() as BoardLayers
+	add_child(layers)
+	_cells_layer = layers.cells()
+	_lines_layer = layers.lines()
+	_walls_layer = layers.walls()
+	_anchors_layer = layers.anchors()
+	_markers_layer = layers.markers()
 
 
 # ============================================================================
@@ -737,24 +722,9 @@ func move_cursor_to(pos: Vector2i) -> void:
 func _spawn_ink_footstep(pos: Vector2) -> void:
 	if _markers_layer == null:
 		return
-	var ripple := Control.new()
-	ripple.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	ripple.position = pos - Vector2(18, 18)
-	ripple.size = Vector2(36, 36)
-	ripple.pivot_offset = Vector2(18, 18)
-
-	var tex_rect := TextureRect.new()
-	tex_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	tex_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	var cursor_tex := PenSkin.cursor_texture(_pen_id)
-	tex_rect.texture = cursor_tex if cursor_tex != null \
-		else preload("res://assets/images/game/player_cursor.svg")
-	var ink := PenSkin.ink_color(_pen_id)
-	tex_rect.modulate = Color(ink.r, ink.g, ink.b, 0.45)
-	tex_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	ripple.add_child(tex_rect)
+	var ripple := FOOTSTEP_SCENE.instantiate() as InkFootstep
 	_markers_layer.add_child(ripple)
+	ripple.setup(pos, PenSkin.cursor_texture(_pen_id), PenSkin.ink_color(_pen_id))
 
 	var tw := create_tween().set_parallel(true)
 	tw.tween_property(ripple, "scale", Vector2(1.9, 1.9), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)

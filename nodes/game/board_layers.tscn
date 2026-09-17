@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/game/board_layers.gd" id="1_script"]
+
+[node name="BoardLayers" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="Cells" type="Control" parent="."]
+layout_mode = 0
+mouse_filter = 2
+
+[node name="Lines" type="Control" parent="."]
+layout_mode = 0
+mouse_filter = 2
+
+[node name="Walls" type="Control" parent="."]
+layout_mode = 0
+mouse_filter = 2
+
+[node name="Anchors" type="Control" parent="."]
+layout_mode = 0
+mouse_filter = 2
+
+[node name="Markers" type="Control" parent="."]
+layout_mode = 0
+mouse_filter = 2

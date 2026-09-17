@@ -17,10 +17,12 @@ const TILE_SCENE := preload("res://nodes/shop/item_tile.tscn")
 const COIN_SCENE := preload("res://nodes/shop/coin_tile.tscn")
 const NOADS_SCENE := preload("res://nodes/shop/noads_row.tscn")
 const DOODLE_PAD_SCENE := preload("res://nodes/shop/doodle_pad.tscn")
+## Node UI của màn này đều là SCENE riêng (không tạo node bằng code)
+const TAB_BUTTON_SCENE := preload("res://nodes/shop/tab_button.tscn")
+const ITEM_GRID_SCENE := preload("res://nodes/shop/item_grid.tscn")
+const PAGE_DOT_SCENE := preload("res://nodes/shop/page_dot.tscn")
 const TAB_ACTIVE := preload("res://assets/images/shop/tab_active.svg")
 const TAB_INACTIVE := preload("res://assets/images/shop/tab_inactive.svg")
-const DOT_ACTIVE := preload("res://assets/images/level_selector/dot_active.svg")
-const DOT_INACTIVE := preload("res://assets/images/level_selector/dot_inactive.svg")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Số món mỗi trang ở lưới 2 cột — GIÁ TRỊ THIẾT KẾ (màn 1080×1920).
@@ -46,6 +48,18 @@ const TAB_KEYS := {
 }
 ## Nhóm hiện dạng lưới ô (2 cột); còn lại hiện dạng thẻ ngang
 const GRID_CATEGORIES := ["pen", "theme"]
+
+# --- Cỡ TAB & THẺ Ô theo màn hình (2026-09-17) -------------------------------
+## MỌI CỠ ĐỀU LẤY TỪ LAYOUT/ART — sửa ở file scene/SVG, script chỉ nhân hệ số:
+##   · TAB  : chiều cao = chiều cao art `tab_active.svg` (tab chưa chọn = art `tab_inactive.svg`)
+##   · THẺ Ô: rộng × cao = `custom_minimum_size` của `nodes/shop/item_tile.tscn`
+## Canvas thiết kế (chiều cao). Hệ số co giãn = cao_canvas / 1920, kẹp trong khoảng dưới.
+const DESIGN_CANVAS_H := 1920.0
+const SCREEN_SCALE_MIN := 0.85      # màn ngang / thấp: nhỏ nhất còn 0,85×
+const SCREEN_SCALE_MAX := 1.5       # màn dọc siêu cao: lớn nhất 1,5×
+## Hệ số phóng to THẺ Ô so với cỡ thiết kế trong `item_tile.tscn`
+## (muốn cỡ khác: sửa số này HOẶC sửa cỡ thiết kế trong scene — không cần sửa gì khác)
+const TILE_SCALE := 1.25
 @onready var btn_back: TextureButton = $TopBar/Back
 @onready var tabs_box: HBoxContainer = $Tabs
 @onready var list_box: VBoxContainer = $Content/List
@@ -59,7 +73,7 @@ const GRID_CATEGORIES := ["pen", "theme"]
 @onready var dots_box: HBoxContainer = $Pager/Dots
 @onready var btn_gift: TextureButton = $GiftBanner/GiftBtn
 
-var _tabs: Dictionary = {}          # category -> TextureButton
+var _tabs: Dictionary = {}          # category -> ShopTabButton (scene nodes/shop/tab_button.tscn)
 var _cards: Array[Control] = []
 var _category := "pen"
 var _page := 0
@@ -68,8 +82,8 @@ var _pages := 1
 var _page_first_id := ""
 ## Số món/trang đang áp dụng (để biết có cần phân trang lại khi màn hình đổi cỡ)
 var _last_per_page := 0
-## Cỡ thẻ ô (đọc 1 lần từ item_tile.tscn) — phục vụ tính số hàng vừa khung
-static var _tile_h := 0.0
+## Cỡ THIẾT KẾ của thẻ ô (đọc 1 lần từ item_tile.tscn) — phục vụ tính số hàng vừa khung
+static var _tile_size := Vector2.ZERO
 ## Cỡ bàn nháp thử bút (đọc 1 lần từ doodle_pad.tscn)
 static var _pad_h := 0.0
 ## Bàn nháp thử bút (chỉ tab BÚT & MỰC) + ngòi bút đang xem thử trên đó
@@ -83,6 +97,13 @@ var _drag_start := Vector2.ZERO
 var _drag_last := Vector2.ZERO
 var _drag_scroll := 0.0
 var _click_lock_until := 0.0
+# Số đo LAYOUT của hàng tab — đọc 1 lần từ shop.tscn lúc mở màn (xem `_capture_tab_layout`)
+var _tabs_top := 0.0
+var _tabs_row_w := 980.0
+var _tabs_sep := 8.0
+var _tab_line_h := 3.5
+var _tabs_content_gap := 8.0
+var _tabs_captured := false
 
 
 func _ready() -> void:
@@ -115,6 +136,7 @@ func _ready() -> void:
 	if gift_banner != null:
 		UIAnim.play_slide_in(gift_banner, Vector2(0, 20), 0.12, 0.25)
 
+	_capture_tab_layout()
 	_build_tabs()
 	_refresh_wallet()
 	show_tab(_category)
@@ -128,6 +150,46 @@ func _ready() -> void:
 	_refresh_pagination_if_needed()
 
 
+## Hệ số co giãn theo CHIỀU CAO màn hình hiện tại (1,0 = canvas thiết kế 1920)
+## Màn dọc cao (điện thoại 1080×2424) -> tab/thẻ cao hơn; màn ngang thấp -> thấp hơn (sàn 0,85).
+func screen_scale() -> float:
+	var canvas_h := get_viewport_rect().size.y if is_inside_tree() else 0.0
+	if canvas_h <= 0.0:
+		return 1.0
+	return clampf(canvas_h / DESIGN_CANVAS_H, SCREEN_SCALE_MIN, SCREEN_SCALE_MAX)
+
+
+## Chiều cao TAB đang dùng = chiều cao ART tab đang chọn (`tab_active.svg`) × hệ số màn hình
+## (muốn đổi cỡ tab: sửa 2 file SVG trong assets/images/shop — không cần sửa script)
+func tab_height() -> float:
+	return ShopTabButton.art_height() * screen_scale()
+
+
+## Cỡ THIẾT KẾ của thẻ ô — đọc từ `nodes/shop/item_tile.tscn` (layout là nguồn số thật)
+func tile_design_size() -> Vector2:
+	if _tile_size == Vector2.ZERO:
+		var probe := TILE_SCENE.instantiate() as Control
+		if probe != null:
+			_tile_size = Vector2(
+				maxf(probe.size.x, probe.custom_minimum_size.x),
+				maxf(probe.size.y, probe.custom_minimum_size.y))
+			probe.free()
+		if _tile_size.x <= 0.0 or _tile_size.y <= 0.0:
+			_tile_size = Vector2(475.0, 294.0)
+	return _tile_size
+
+
+## Cỡ THẺ Ô đang dùng: rộng = cỡ thiết kế · cao = thiết kế × `TILE_SCALE` × hệ số màn hình
+func tile_size() -> Vector2:
+	var design := tile_design_size()
+	return Vector2(design.x, design.y * TILE_SCALE * screen_scale())
+
+
+## Chiều cao THẺ Ô đang dùng (dùng cho tính số hàng vừa khung)
+func tile_height() -> float:
+	return tile_size().y
+
+
 ## Số món mỗi trang theo CHIỀU CAO thật của khung danh sách (đổi khi xoay màn hình)
 func _grid_per_page() -> int:
 	var avail := scroll.size.y if scroll != null else 0.0
@@ -139,7 +201,7 @@ func _grid_per_page() -> int:
 	if _category == "pen":
 		extra = _doodle_pad_height() + LIST_SEP
 	var grid_avail := maxf(avail - extra, 0.0)
-	var row_h := _tile_height() + GRID_V_SEP
+	var row_h := tile_height() + GRID_V_SEP
 	var rows := maxi(1, int(floor((grid_avail + GRID_V_SEP) / maxf(row_h, 1.0))))
 	return maxi(GRID_COLUMNS, rows * GRID_COLUMNS)
 
@@ -158,24 +220,45 @@ func _doodle_pad_height() -> float:
 	return _pad_h
 
 
-## Cỡ cao của thẻ ô (đọc từ scene gốc 1 lần — fallback 294 như thiết kế)
+## Cỡ cao THIẾT KẾ của thẻ ô (đọc từ scene gốc 1 lần — fallback 294 như thiết kế)
 func _tile_height() -> float:
-	if _tile_h <= 0.0:
-		var probe := TILE_SCENE.instantiate() as Control
-		if probe != null:
-			_tile_h = probe.size.y
-			probe.free()
-		if _tile_h <= 0.0:
-			_tile_h = 294.0
-	return _tile_h
+	return tile_design_size().y
+
+
+## Đọc số đo LAYOUT của hàng tab từ `shop.tscn` (đỉnh hàng · bề rộng · khe · vạch kẻ · khe tới danh sách)
+## — không hard-code trong script nữa, sửa scene là đủ.
+func _capture_tab_layout() -> void:
+	if tabs_box == null or _tabs_captured:
+		return
+	_tabs_captured = true
+	_tabs_top = tabs_box.offset_top
+	_tabs_row_w = tabs_box.offset_right - tabs_box.offset_left
+	_tabs_sep = float(tabs_box.get_theme_constant("separation"))
+	var line := get_node_or_null("TabLine") as ColorRect
+	if line != null:
+		_tab_line_h = line.size.y
+	if scroll != null:
+		_tabs_content_gap = scroll.offset_top - tabs_box.offset_bottom
+
+
+## Áp cỡ thẻ ô hiện tại cho mọi thẻ đang hiện (thẻ tự dàn khối bên trong bằng anchors)
+func _apply_card_metrics() -> void:
+	if not GRID_CATEGORIES.has(_category):
+		return
+	var size := tile_size()
+	for card in _cards:
+		if card != null and is_instance_valid(card):
+			card.custom_minimum_size = size
 
 
 ## Đổi cỡ màn hình: co/giãn số món mỗi trang rồi đặt lại trang sao cho
 ## MÓN ĐANG XEM vẫn nằm trong trang hiện tại (không nhảy về trang 1).
 func _on_viewport_resized() -> void:
+	await get_tree().process_frame          # chờ khung Content nhận kích thước mới
+	_apply_tab_metrics()                    # tab & vùng danh sách cao theo màn hình
 	if not GRID_CATEGORIES.has(_category):
 		return
-	await get_tree().process_frame          # chờ khung Content nhận kích thước mới
+	_apply_card_metrics()                   # thẻ ô cao theo màn hình
 	_refresh_pagination_if_needed()
 
 
@@ -272,28 +355,39 @@ func _build_tabs() -> void:
 		child.queue_free()
 	_tabs.clear()
 	for category in TAB_ORDER:
-		var button := TextureButton.new()
+		var button := TAB_BUTTON_SCENE.instantiate() as ShopTabButton
 		button.name = "Tab_%s" % category
-		button.custom_minimum_size = Vector2(240, 65)
-		button.ignore_texture_size = true
-		button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
-		button.focus_mode = Control.FOCUS_NONE
-		button.texture_normal = TAB_INACTIVE
-		button.texture_pressed = TAB_ACTIVE
+		tabs_box.add_child(button)
+		button.setup(category, str(TAB_KEYS.get(category, "")))
 		button.pressed.connect(_on_tab_pressed.bind(category))
 		UIAnim.attach_press_bounce(button, 0.96, 0.1)
-		tabs_box.add_child(button)
-
-		var label := Label.new()
-		label.name = "Label"
-		label.theme_type_variation = &"ShopTabLabel"
-		label.text = TranslationServer.translate(str(TAB_KEYS.get(category, "")))
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		label.set_anchors_preset(Control.PRESET_FULL_RECT)
-		button.add_child(label)
 		_tabs[category] = button
+	_apply_tab_metrics()
+
+
+## Dàn lại hàng tab theo chiều cao màn hình: tab đang chọn cao hết hàng (nhô lên),
+## tab chưa chọn thấp hơn và canh ĐÁY hàng; vạch kẻ + vùng danh sách đi theo.
+## Mọi số đo lấy từ `_capture_tab_layout()` (đọc từ scene) + chiều cao art tab.
+func _apply_tab_metrics() -> void:
+	if tabs_box == null:
+		return
+	_capture_tab_layout()
+	var h := tab_height()
+	tabs_box.offset_top = _tabs_top
+	tabs_box.offset_bottom = _tabs_top + h
+	var count := maxi(TAB_ORDER.size(), 1)
+	var tab_w := (_tabs_row_w - _tabs_sep * float(count - 1)) / float(count)
+	var inactive_h := h * ShopTabButton.inactive_ratio()
+	for key in _tabs.keys():
+		var button := _tabs[key] as ShopTabButton
+		if button != null:
+			button.apply_row_layout(tab_w, h, inactive_h)
+	var line := get_node_or_null("TabLine") as ColorRect
+	if line != null:
+		line.offset_top = _tabs_top + h - _tab_line_h
+		line.offset_bottom = _tabs_top + h
+	if scroll != null:
+		scroll.offset_top = _tabs_top + h + _tabs_content_gap
 
 
 func show_tab(category: String) -> void:
@@ -307,13 +401,11 @@ func show_tab(category: String) -> void:
 
 func _refresh_tab_visuals() -> void:
 	for key in _tabs.keys():
-		var button: TextureButton = _tabs[key]
-		var active: bool = str(key) == _category
-		button.texture_normal = TAB_ACTIVE if active else TAB_INACTIVE
-		button.texture_hover = button.texture_normal
-		var label := button.get_node_or_null("Label") as Label
-		if label != null:
-			label.theme_type_variation = &"ShopTabLabelActive" if active else &"ShopTabLabel"
+		var button := _tabs[key] as ShopTabButton
+		if button != null:
+			button.set_active(str(key) == _category)
+	# Tab đang chọn cao hơn -> cập nhật lại cỡ hàng tab cho khớp
+	_apply_tab_metrics()
 
 
 func _on_tab_pressed(category: String) -> void:
@@ -379,11 +471,13 @@ func _rebuild_grid(items: Array[Dictionary]) -> void:
 	var start := _page * per_page
 	_page_first_id = str(items[start].get("id", "")) if start < items.size() else ""
 	var index := 0
+	var tile_size_now := tile_size()
 	for offset in per_page:
 		var item_index := start + offset
 		if item_index >= items.size():
 			break
 		var card: Control = TILE_SCENE.instantiate()
+		card.custom_minimum_size = tile_size_now
 		grid.add_child(card)
 		card.call("setup", items[item_index])
 		if card.has_signal("action_pressed"):
@@ -456,13 +550,7 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 
 
 func _make_grid() -> GridContainer:
-	var grid := GridContainer.new()
-	grid.name = "Grid"
-	grid.columns = 2
-	grid.add_theme_constant_override("h_separation", 30)
-	# Khe dọc 24 (thay 30): thẻ 294x2 + khe = 612 -> cả lưới vừa khung nhìn, không cần cuộn
-	grid.add_theme_constant_override("v_separation", 24)
-	return grid
+	return ITEM_GRID_SCENE.instantiate() as ShopItemGrid
 
 
 func _refresh_pager() -> void:
@@ -481,14 +569,10 @@ func _refresh_pager() -> void:
 		dots_box.remove_child(child)
 		child.queue_free()
 	for index in _pages:
-		var dot := TextureRect.new()
+		var dot := PAGE_DOT_SCENE.instantiate() as ShopPageDot
 		dot.name = "Dot%d" % (index + 1)
-		dot.texture = DOT_ACTIVE if index == _page else DOT_INACTIVE
-		dot.custom_minimum_size = Vector2(34, 24) if index == _page else Vector2(12, 24)
-		dot.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		dot.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		dots_box.add_child(dot)
+		dot.set_current(index == _page)
 
 
 func goto_page(index: int) -> void:

@@ -14,10 +14,9 @@ extends BaseScene
 ## ============================================================================
 
 const ROW_SCENE := preload("res://nodes/ranking/rank_row.tscn")
-const TAB_ACTIVE_ART := preload("res://assets/images/ranking/tab_active.svg")
-const TAB_NORMAL_ART := preload("res://assets/images/ranking/tab_normal.svg")
+## Node UI của màn này là SCENE riêng (art + cỡ nằm trong scene, không tạo bằng code)
+const TAB_SCENE := preload("res://nodes/ranking/tab_button.tscn")
 
-const TAB_SIZE := Vector2(245, 52)
 ## Bề rộng từng tab đúng mockup (240 · 235 · 245) — khoảng cách 15
 const TAB_WIDTHS := {
 	"dungeon": 240.0,
@@ -32,8 +31,6 @@ const TAB_KEYS := {
 }
 ## Thứ tự bục vinh quang: index 0 = hạng 1
 const PODIUM_GROUPS: Array[String] = ["Gold", "Silver", "Bronze"]
-const TAB_LABEL_ACTIVE_COLOR := Color(1, 1, 1)
-const TAB_LABEL_IDLE_COLOR := Color(0.13333334, 0.29803923, 0.42745098)
 
 ## Ngưỡng kéo tối thiểu (px) trước khi coi là VUỐT/CUỘN thay vì chạm
 const DRAG_THRESHOLD := 14.0
@@ -124,44 +121,27 @@ func _show_board(board: String) -> void:
 
 func _build_tabs() -> void:
 	for child in tabs_box.get_children():
+		tabs_box.remove_child(child)
 		child.queue_free()
 	_tab_buttons.clear()
 	tabs_box.add_theme_constant_override("separation", TAB_SEPARATION)
 	for board in Ranking.board_ids():
 		var id := str(board)
-		var btn := TextureButton.new()
+		var btn := TAB_SCENE.instantiate() as RankTabButton
 		btn.name = "Tab_" + id
-		btn.custom_minimum_size = Vector2(float(TAB_WIDTHS.get(id, 245.0)), TAB_SIZE.y)
-		btn.ignore_texture_size = true
-		btn.stretch_mode = TextureButton.STRETCH_SCALE
-		btn.focus_mode = Control.FOCUS_NONE
-		btn.texture_normal = TAB_NORMAL_ART
-		var label := Label.new()
-		label.name = "Label"
-		label.text = _tab_title(id)
-		label.theme_type_variation = &"RankTabLabel"
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		label.set_anchors_preset(Control.PRESET_FULL_RECT)
-		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		btn.add_child(label)
-		btn.pressed.connect(_on_tab_pressed.bind(id))
 		tabs_box.add_child(btn)
+		btn.setup(id, _tab_title(id), float(TAB_WIDTHS.get(id, 0.0)))
+		btn.pressed.connect(_on_tab_pressed.bind(id))
 		UIAnim.attach_press_bounce(btn)
 		_tab_buttons[id] = btn
+	_update_tabs()
 
 
 func _update_tabs() -> void:
 	for id in _tab_buttons:
-		var btn := _tab_buttons[id] as TextureButton
-		if btn == null:
-			continue
-		var active: bool = str(id) == _board
-		btn.texture_normal = TAB_ACTIVE_ART if active else TAB_NORMAL_ART
-		var label := btn.get_node_or_null("Label") as Label
-		if label != null:
-			label.add_theme_color_override("font_color",
-				TAB_LABEL_ACTIVE_COLOR if active else TAB_LABEL_IDLE_COLOR)
+		var btn := _tab_buttons[id] as RankTabButton
+		if btn != null:
+			btn.set_active(str(id) == _board)
 
 
 func _fill_podium(entries: Array, board: String) -> void:

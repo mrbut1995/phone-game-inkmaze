@@ -226,8 +226,8 @@ func _check_dots(scene: LevelScenes, expected_page: int) -> int:
 		print("[FAIL] Dots phai hien khi co > 1 trang")
 		failures += 1
 	for index in dots.size():
-		var dot: TextureButton = dots[index]
-		var is_active := dot.texture_normal == scene.DOT_ACTIVE
+		var dot := dots[index] as LevelsPageDot
+		var is_active := dot != null and dot.is_current()
 		if is_active != (index == expected_page):
 			print("[FAIL] Dot %d phai %s (trang dang xem = %d)"
 				% [index + 1, "sang" if index == expected_page else "mo", expected_page + 1])

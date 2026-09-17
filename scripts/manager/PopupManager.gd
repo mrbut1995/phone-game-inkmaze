@@ -5,7 +5,7 @@ extends Node
 ## Nguyên tắc:
 ##   - Popup KHÔNG instance sẵn trong scene. Manager TẠO khi mở và XOÁ khi đóng.
 ##   - Popup được gắn vào node "Popups" của scene hiện tại (scenes/base.tscn).
-##     Nếu scene không có node này, manager tự tạo một Control full-screen.
+##     Nếu scene không có node này, manager dùng scene lớp phủ `nodes/popups/host.tscn`.
 ##   - Mở nhiều popup được: popup mở sau nằm trên, đóng theo thứ tự ngược lại.
 ##   - Nút Back (ui_cancel) đóng popup trên cùng thay vì thoát màn hình.
 ## ============================================================================
@@ -26,6 +26,8 @@ const POPUPS := {
 }
 
 const HOST_NAME := "Popups"
+## Lớp phủ chứa popup khi scene không có sẵn node "Popups" (là SCENE, không tạo bằng code)
+const HOST_SCENE := preload("res://nodes/popups/host.tscn")
 
 var _stack: Array[BasePopup] = []
 var _host: Control = null
@@ -153,12 +155,11 @@ func get_host() -> Control:
 
 	_host = scene.find_child(HOST_NAME, true, false) as Control
 	if _host == null:
-		# Scene không có sẵn node Popups -> tự tạo lớp phủ full-screen
-		_host = Control.new()
-		_host.name = HOST_NAME
-		_host.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		_host.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		scene.add_child(_host)
+		# Scene không có sẵn node Popups -> dùng scene lớp phủ full-screen
+		var host := HOST_SCENE.instantiate() as PopupHost
+		host.name = HOST_NAME
+		scene.add_child(host)
+		_host = host
 	return _host
 
 

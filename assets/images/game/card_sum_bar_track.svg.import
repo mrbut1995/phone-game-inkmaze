@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8q3cn65q4ecm"
-path="res://.godot/imported/image_2.png-769048b700586ed14257b1e71cbb27aa.ctex"
+uid="uid://clj1xk45gqpml"
+path="res://.godot/imported/card_sum_bar_track.svg-d15a17bf252e0e32f61cd1b333b5f164.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://hotfix/image_2.png"
-dest_files=["res://.godot/imported/image_2.png-769048b700586ed14257b1e71cbb27aa.ctex"]
+source_file="res://assets/images/game/card_sum_bar_track.svg"
+dest_files=["res://.godot/imported/card_sum_bar_track.svg-d15a17bf252e0e32f61cd1b333b5f164.ctex"]
 
 [params]
 
@@ -39,3 +39,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
