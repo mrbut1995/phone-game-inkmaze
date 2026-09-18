@@ -31,11 +31,11 @@ const TOTAL_LEVELS := 9
 const DIFFICULTIES := ["easy", "medium", "hard"]
 const TEST_FLOORS := [1, 2, 3, 5]
 
-@onready var _btn_back: TextureButton = $TopBar/Back
-@onready var _lbl_title: Label = $TopBar/Title
-@onready var _rows: VBoxContainer = $Panel/Content/Scroll/Rows
-@onready var _lbl_stats: Label = $Panel/Content/Stats
-@onready var _lbl_footer: Label = $Panel/Content/Footer
+var _btn_back: TextureButton = null
+var _lbl_title: Label = null
+var _rows: VBoxContainer = null
+var _lbl_stats: Label = null
+var _lbl_footer: Label = null
 
 # Lựa chọn cho mục SPECIAL MODES (giữ nguyên giữa các lần dựng lại)
 var _test_mode := true
@@ -50,7 +50,17 @@ var _stats_elapsed := 0.0
 var _stats_text := ""
 
 
+## Gắn node của layout đang hiển thị (2 layout giữ CÙNG đường dẫn node)
+func _bind_refs() -> void:
+	_btn_back = ui_path("TopBar/Back") as TextureButton
+	_lbl_title = ui_path("TopBar/Title") as Label
+	_rows = ui_path("Panel/Content/Scroll/Rows") as VBoxContainer
+	_lbl_stats = ui_path("Panel/Content/Stats") as Label
+	_lbl_footer = ui_path("Panel/Content/Footer") as Label
+
+
 func _ready() -> void:
+	_bind_refs()
 	_sync_special_selection()
 	if _btn_back != null:
 		_btn_back.pressed.connect(_on_back_pressed)

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dt0b7kv16svfy"]
 
-[ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_pt42g"]
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="1_pt42g"]
 [ext_resource type="Script" path="res://scripts/nodes/hud/dungeon_hud.gd" id="2_script"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="5_xqca6"]
 [ext_resource type="Texture2D" uid="uid://danmjg3accl5d" path="res://assets/images/game/card_steps.svg" id="10_8kny7"]
@@ -10,6 +10,7 @@
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="14_wy465"]
 [ext_resource type="Texture2D" uid="uid://fhj3yt0effxd" path="res://assets/images/game/card_floor.svg" id="15_l616p"]
 [ext_resource type="LabelSettings" uid="uid://cb662usl7mhkf" path="res://resources/settings/text/text_game_information_value.tres" id="16_hqip1"]
+
 
 [node name="Hud" unique_id=1383101299 instance=ExtResource("1_pt42g")]
 script = ExtResource("2_script")
@@ -118,3 +119,4 @@ text = "01"
 label_settings = ExtResource("16_hqip1")
 horizontal_alignment = 1
 vertical_alignment = 1
+

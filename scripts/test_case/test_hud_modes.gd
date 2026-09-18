@@ -433,8 +433,8 @@ func _section_6_sum_path_replay(scene: GameScene) -> void:
 	scene.switch_mode("sum_path", "medium")
 	await process_frame
 	var mode := scene.game_mode_controller.game_mode as SumPathGameMode
-	var replay := scene.get_node_or_null("Replay") as TextureButton
-	_entry(mode != null and replay != null, "Co SumPathGameMode + nut Replay trong game.tscn")
+	var replay := scene.replay_btn as TextureButton
+	_entry(mode != null and replay != null, "Co SumPathGameMode + nut Replay trong HUD (action_bar)")
 	if mode == null or replay == null:
 		return
 	_entry(not replay.visible, "Dau van: nut CHOI LAI an")
@@ -503,7 +503,7 @@ func _section_7_countdown_budget_lock(scene: GameScene) -> void:
 	_entry(mode != null and board != null, "Co CountdownCostGameMode + board")
 	if mode == null or board == null:
 		return
-	var undo_btn := scene.get_node("Button/Undo") as TextureButton
+	var undo_btn := scene.undo_btn as TextureButton
 	_entry(undo_btn != null, "Co nut Undo trong thanh nut")
 	_entry(not scene.ui_controller.undo_highlighted(), "Dau van: nut Undo khong nhan manh")
 	# Đi 1 bước thật để có bước cho Undo + biết đúng chi phí ô

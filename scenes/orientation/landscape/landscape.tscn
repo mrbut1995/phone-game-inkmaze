@@ -4,11 +4,9 @@
 
 [node name="Landscape" type="Control" unique_id=1388279363]
 layout_mode = 3
-anchor_right = 1.7780001
-anchor_bottom = 0.56200004
-offset_right = -0.2401123
-offset_bottom = 0.95996094
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_d458u")
-metadata/_edit_use_anchors_ = true

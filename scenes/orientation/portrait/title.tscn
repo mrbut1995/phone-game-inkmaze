@@ -1,0 +1,192 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://d08w7ys60m1vk" path="res://scripts/scenes/title.gd" id="2_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
+[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="4_paper"]
+[ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="5_logo"]
+[ext_resource type="Texture2D" uid="uid://vohdi4kjxxxf" path="res://assets/images/game/pen_type/pen_fountain_pen_nib.svg" id="6_hiwto"]
+[ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="7_play_icon"]
+[ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="8_stamp"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="9_stamp_text"]
+
+[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/portrait.tscn" id="1_parent"]
+
+[node name="Portrait" instance=ExtResource("1_parent")]
+
+[node name="Panel" type="TextureRect" parent="." index="1" unique_id=1052516246]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025925925
+anchor_top = 0.0734375
+anchor_right = 0.98
+anchor_bottom = 0.964
+texture = ExtResource("4_paper")
+metadata/_edit_use_anchors_ = true
+
+[node name="LogoContainer" type="Control" parent="Panel" index="0" unique_id=198818976]
+layout_mode = 1
+anchor_left = 0.38500002
+anchor_top = 0.223
+anchor_right = 0.70500004
+anchor_bottom = 0.423
+offset_left = -34.70404
+offset_top = 25.696747
+offset_right = -34.70404
+offset_bottom = 25.696716
+
+[node name="Logo" type="TextureRect" parent="Panel/LogoContainer" index="0" unique_id=1293835937]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Pencil" type="TextureRect" parent="Panel/LogoContainer" index="1" unique_id=1525035922]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 0.6
+anchor_right = 0.98
+anchor_bottom = 0.95
+offset_left = -49.80963
+offset_top = -30.185547
+offset_right = -49.80963
+offset_bottom = -30.185547
+texture = ExtResource("6_hiwto")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Panel" index="1" unique_id=352020136]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.13349845
+anchor_top = 0.41
+anchor_right = 0.88400006
+anchor_bottom = 0.51500005
+offset_left = 0.44319153
+offset_top = 26.0
+offset_right = 0.12634277
+offset_bottom = 0.3517456
+theme_type_variation = &"MainTitle"
+text = "Ink Maze"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Subtitle" type="Label" parent="Panel" index="2" unique_id=512779228]
+modulate = Color(0.35, 0.45, 0.55, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2060264
+anchor_top = 0.5
+anchor_right = 0.7983541
+anchor_bottom = 0.551
+offset_left = 4.710388
+offset_top = 2.0599976
+offset_right = 5.3759155
+offset_bottom = 0.3499756
+theme_type_variation = &"MainTagline"
+text = "STR_TITLE_SUBTITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TapContainer" type="Control" parent="Panel" index="3" unique_id=551840619]
+layout_mode = 1
+anchor_left = 0.17243946
+anchor_top = 0.55600005
+anchor_right = 0.82323915
+anchor_bottom = 0.64692426
+offset_left = 0.31837463
+offset_top = 0.30664063
+offset_right = -0.265625
+offset_bottom = -0.1628418
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayIcon" type="TextureRect" parent="Panel/TapContainer" index="0" unique_id=275797762]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.25
+anchor_right = 0.18
+anchor_bottom = 0.75
+texture = ExtResource("7_play_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TapLabel" type="Label" parent="Panel/TapContainer" index="1" unique_id=17935693]
+modulate = Color(0.18, 0.38, 0.54, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.1
+anchor_right = 1.011
+anchor_bottom = 0.90000004
+offset_right = -0.15203857
+offset_bottom = -1.5258789e-05
+theme_type_variation = &"MainTitle"
+text = "STR_TITLE_TAP_TO_START"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Stamp" type="TextureRect" parent="Panel" index="4" unique_id=1281241587]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.659
+anchor_top = 0.852
+anchor_right = 0.917
+anchor_bottom = 0.93
+texture = ExtResource("8_stamp")
+
+[node name="Label" type="Label" parent="Panel/Stamp" index="0" unique_id=2031280285]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "STR_SETTINGS_VERSION"
+label_settings = ExtResource("9_stamp_text")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StudioLabel" type="Label" parent="Panel" index="5" unique_id=1866432788]
+modulate = Color(0.35, 0.45, 0.55, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.18
+anchor_right = 0.9
+anchor_bottom = 0.23
+theme_type_variation = &"MainTagline"
+text = "STR_SPLASH_STUDIO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TouchButton" type="TextureButton" parent="." index="2" unique_id=1187568033]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FadeOverlay" type="ColorRect" parent="." index="3" unique_id=1309005935]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.964706, 0.945098, 0.913725, 1)

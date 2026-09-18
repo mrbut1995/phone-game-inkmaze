@@ -1,0 +1,81 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_lgrwq"]
+[ext_resource type="Script" uid="uid://cu0pk85hl650m" path="res://scripts/scenes/debug.gd" id="2_debug"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="4_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="5_back_p"]
+[ext_resource type="Texture2D" uid="uid://nwnmgpgwvc7y" path="res://assets/images/settings/settings_panel.svg" id="6_panel"]
+
+[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/portrait.tscn" id="1_parent"]
+
+[node name="Portrait" instance=ExtResource("1_parent")]
+
+[node name="TopBar" type="HBoxContainer" parent="." index="1" unique_id=745231913]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 50.0
+offset_top = 85.0
+offset_right = 1030.0
+offset_bottom = 155.0
+theme_override_constants/separation = 20
+
+[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=1421303287]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("4_back_n")
+texture_pressed = ExtResource("5_back_p")
+texture_hover = ExtResource("5_back_p")
+texture_disabled = ExtResource("4_back_n")
+texture_focused = ExtResource("4_back_n")
+
+[node name="Title" type="Label" parent="TopBar" index="1" unique_id=908399871]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LevelsTitle"
+text = "DEBUG CONSOLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="TextureRect" parent="." index="2" unique_id=240094345]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 72.0
+offset_top = 182.0
+offset_right = 1008.0
+offset_bottom = 1748.0
+texture = ExtResource("6_panel")
+
+[node name="Content" type="VBoxContainer" parent="Panel" index="0" unique_id=642686664]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 118.0
+offset_top = 56.0
+offset_right = -88.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Stats" type="Label" parent="Panel/Content" index="0" unique_id=1986746990]
+layout_mode = 2
+theme_type_variation = &"PopupStatValueSm"
+text = "FPS - · MEM - · Locale -"
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/Content" index="1" unique_id=1196092497]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Rows" type="VBoxContainer" parent="Panel/Content/Scroll" index="0" unique_id=765161744]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Footer" type="Label" parent="Panel/Content" index="2" unique_id=8925694]
+layout_mode = 2
+theme_type_variation = &"PopupQuote"
+text = "~ F9 để đóng · chỉ hiển thị trong bản debug ~"
+horizontal_alignment = 1

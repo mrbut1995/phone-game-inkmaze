@@ -119,7 +119,8 @@ func _run(scene: GameScene) -> void:
 	_entry(scene.tool_wall_btn.visible
 			and (scene.tool_wall_btn.get_node_or_null("Label") as Label).text == "STR_TOOL_SUBMIT",
 		"Nut 2 doi thanh GUI BAI (khong bi an)")
-	var submit_tex := scene.tool_wall_btn.texture_normal
+	var wall_btn := scene.tool_wall_btn as TextureButton
+	var submit_tex: Texture2D = wall_btn.texture_normal if wall_btn != null else null
 	_entry(submit_tex != null and submit_tex.resource_path.contains("btn_tool_submit"),
 		"Nut GUI BAI dung art xanh rieng cua che do (%s)"
 			% (submit_tex.resource_path if submit_tex != null else "(null)"))

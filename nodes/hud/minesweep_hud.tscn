@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://xmhigo8albro"]
 
-[ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/hud/minesweep_hud.gd" id="2_script"]
 [ext_resource type="Texture2D" path="res://assets/images/game/card_time_slip.svg" id="3_time"]
 [ext_resource type="Texture2D" path="res://assets/images/game/card_bomb.svg" id="4_bomb"]
@@ -9,6 +9,7 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_information_subvalue.tres" id="6_time_value"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="7_bomb_label"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="8_bomb_value"]
+
 
 [node name="Hud" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
@@ -91,3 +92,4 @@ offset_bottom = 122.0
 text = "0:00"
 label_settings = ExtResource("6_time_value")
 vertical_alignment = 1
+

@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3]
 
-[ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/hud/wall_builder_hud.gd" id="2_script"]
 [ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="3_theme"]
 [ext_resource type="Texture2D" path="res://assets/images/game/card_time_tall.svg" id="4_time"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" path="res://assets/images/game/card_wall_chip.svg" id="8_chip"]
 [ext_resource type="Texture2D" path="res://assets/images/game/card_wall_slider_track.svg" id="9_track"]
 [ext_resource type="Texture2D" path="res://assets/images/game/card_wall_slider_fill.svg" id="10_fill"]
+
 
 [node name="Hud" instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")
@@ -227,3 +228,4 @@ text = "STR_HUD_WB_ROW_TIP"
 horizontal_alignment = 2
 vertical_alignment = 1
 clip_text = true
+
