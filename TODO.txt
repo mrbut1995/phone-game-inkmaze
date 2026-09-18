@@ -1342,6 +1342,30 @@
 
 
 # ============================================================================================
+# VÒNG 27: TÁCH LAYOUT NGANG CHO CÁC MÀN CÒN LẠI — MÀN CHƯƠNG ĐẦU TIÊN (mẫu) — 33 suite: 31 xanh · harness chapters+main 10/10
+# ============================================================================================
+# 1. TOOL MỚI `tools/ui/split_screen_layouts.py <màn> [...]`: tách 1 màn thành
+#    `scenes/orientation/portrait/<màn>.tscn` (bản dọc giữ NGUYÊN bố cục, root KẾ THỪA scaffold portrait.tscn)
+#    + `scenes/<màn>.tscn` chỉ còn root + `Portrait` (+ `Landscape` nếu bản ngang đã tồn tại). Bỏ `uid`/`unique_id` khi copy.
+# 2. BASE: thêm `BaseScene.ui_path("A/B")` (tra node theo đường dẫn tương đối trong layout ĐANG hiển thị) —
+#    2 layout PHẢI đặt trùng tên node; KHÔNG dùng được %UniqueName.
+# 3. MÀN CHƯƠNG (mẫu): `scenes/orientation/landscape/chapters.tscn` — cột TRÁI (TopBar · Ví Sao · Banner hướng dẫn ·
+#    CTA chân trang) + cột PHẢI lưới thẻ chương **GridContainer 2–3 cột**; `chapters.gd` → `_bind_refs()` dùng `ui_path`
+#    + nối `orientation_changed` → bind lại khi xoay + `_apply_grid_columns()` (số cột = `int(bề rộng List / 1040)`).
+# 4. 9-SLICE: `tools/ui/menu_buttons_9slice.py` thêm bộ `cta_*` (art ở `assets/images/common`) + nút `ContinueButton` +
+#    chống chạy lại (idempotent) + sửa lỗi console Windows (reconfigure UTF-8) — 18 StyleBoxTexture trong
+#    `resources/settings/styles/menu/`; nút CTA ở layout ngang = `Button` (không phải TextureButton nữa).
+# 5. QUY TẮC ART (user chốt): art KHÔNG 9-slice được cho layout ngang → vẽ SVG mới trong `assets/images-landscape/`
+#    (giữ cấu trúc thư mục con như `assets/images/`). Ví dụ sẽ cần: thẻ màn chơi (level card), bục xếp hạng, thẻ cửa hàng…
+# 6. TEST: mọi lookup trong test phải đi qua layout (`scene.ui_path("TopBar/Back")`) — test_chapters **243/243 PASS** ·
+#    harness `dev_aspects.gd -- --only=chapters,main --shots=1` **10/10 OK** (16:9 lưới 2 cột · 19.5:9 3 cột · 4:3 1 cột).
+# [ ] CÒN LẠI (thứ tự đề xuất): levels (số thẻ/trang + lưới động) → settings (2 cột) → daily → shop → ranking →
+#     archivement → splash/title/credit/debug → game (màn chơi). Mỗi màn: tạo layout ngang → chạy tool tách →
+#     refactor script sang `ui_path`/`ui()` + `orientation_changed` → bổ sung 9-slice hoặc art `images-landscape/` →
+#     sửa test + chạy harness 10 tỉ lệ.
+
+
+# ============================================================================================
 # VÒNG 25: NỀN TẢNG ĐA TỈ LỆ THEO guide/GUIDE.MD + MAIN SCENE 2 LAYOUT (2026-02) — 33 suite: 31 xanh
 # ============================================================================================
 # 1. BASE (scripts/scenes/base.gd): 2 layout con cùng cấp `Portrait`/`Landscape` (instance

@@ -255,7 +255,7 @@ func _check_pause_popup(scene: Control) -> Array:
 	return out
 
 
-## Quét mọi Control hiển thị xem có node nào vượt ra ngoài canvas không.
+## Quét mọi Control ĐANG HIỆN (kể cả tổ tiên đều hiện) xem có node nào vượt ra ngoài canvas không.
 ## Bỏ qua nội dung bên trong ScrollContainer (được phép dài hơn khung nhìn — nó cuộn).
 func _scan_overflow(node: Node, allowed: Rect2, out: Array, depth: int) -> void:
 	if depth > 12 or out.size() > 24:
@@ -264,10 +264,11 @@ func _scan_overflow(node: Node, allowed: Rect2, out: Array, depth: int) -> void:
 		if child.name == "Popups" or child is ScrollContainer:
 			continue
 		var c := child as Control
-		if c != null and c.visible and c.size.x > 0.0 and c.size.y > 0.0:
+		if c != null and c.is_visible_in_tree() and c.size.x > 0.0 and c.size.y > 0.0:
 			var rect := Rect2(c.global_position, c.size)
 			if not allowed.encloses(rect):
-				out.append("%s%s" % [c.get_path().get_concatenated_names().substr(0, 40), str(rect.position.round())])
+				out.append("%s%s" % [c.get_path().get_concatenated_names().substr(0, 40),
+					str(rect).substr(0, 60)])
 		_scan_overflow(child, allowed, out, depth + 1)
 
 

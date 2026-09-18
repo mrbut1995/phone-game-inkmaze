@@ -1,0 +1,159 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://dbbunsu78eokx" path="res://scripts/scenes/chapters.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="Texture2D" uid="uid://dwt0twcawg3ti" path="res://assets/images/chapters/wallet_chip.svg" id="5_wallet"]
+[ext_resource type="Texture2D" uid="uid://c66v5bmdvegnd" path="res://assets/images/common/star_highlight.svg" id="6_star"]
+[ext_resource type="Texture2D" uid="uid://cjkjkjl76yinx" path="res://assets/images/chapters/banner_rule.svg" id="7_banner"]
+[ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="8_bulb"]
+[ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="9_cta_n"]
+[ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="10_cta_p"]
+[ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cta_f"]
+[ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
+
+[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/portrait.tscn" id="1_parent"]
+
+[node name="Portrait" instance=ExtResource("1_parent")]
+
+[node name="TopBar" type="HBoxContainer" parent="." index="1" unique_id=510724449]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.033770833
+anchor_right = 0.961
+anchor_bottom = 0.07877084
+offset_left = 0.27999878
+offset_top = -0.84000015
+offset_right = 0.11999512
+offset_bottom = -0.2400055
+metadata/_edit_use_anchors_ = true
+
+[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=1652974881]
+layout_mode = 2
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+texture_hover = ExtResource("3_back_n")
+texture_disabled = ExtResource("3_back_n")
+texture_focused = ExtResource("3_back_n")
+
+[node name="Title" type="Label" parent="TopBar" index="1" unique_id=440791515]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LevelsTitle"
+text = "STR_CHAPTER_SCREEN_TITLE"
+horizontal_alignment = 1
+
+[node name="Wallet" type="TextureRect" parent="." index="2" unique_id=1740014496]
+layout_mode = 0
+offset_left = 775.0
+offset_top = 90.0
+offset_right = 1025.0
+offset_bottom = 160.0
+mouse_filter = 2
+texture = ExtResource("5_wallet")
+
+[node name="Star" type="TextureRect" parent="Wallet" index="0" unique_id=734155314]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 11.0
+offset_right = 74.0
+offset_bottom = 59.0
+mouse_filter = 2
+texture = ExtResource("6_star")
+
+[node name="Count" type="Label" parent="Wallet" index="1" unique_id=1826229850]
+layout_mode = 0
+offset_left = 72.0
+offset_right = 140.0
+offset_bottom = 70.0
+theme_type_variation = &"ChapterWalletCount"
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Wallet" index="2" unique_id=320823089]
+layout_mode = 0
+offset_left = 140.0
+offset_right = 244.0
+offset_bottom = 70.0
+theme_type_variation = &"ChapterWalletLabel"
+text = "STR_CHAPTER_STARS_HELD"
+vertical_alignment = 1
+
+[node name="Banner" type="TextureRect" parent="." index="3" unique_id=1654390418]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 185.0
+offset_right = 1025.0
+offset_bottom = 257.0
+mouse_filter = 2
+texture = ExtResource("7_banner")
+
+[node name="Icon" type="TextureRect" parent="Banner" index="0" unique_id=796916675]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 18.0
+offset_right = 81.0
+offset_bottom = 54.0
+mouse_filter = 2
+texture = ExtResource("8_bulb")
+
+[node name="Text" type="Label" parent="Banner" index="1" unique_id=1271196744]
+layout_mode = 0
+offset_left = 98.0
+offset_right = 950.0
+offset_bottom = 72.0
+theme_type_variation = &"ChapterBannerText"
+text = "STR_CHAPTER_BANNER"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="List" type="ScrollContainer" parent="." index="4" unique_id=1994307684]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 280.0
+offset_right = 1025.0
+offset_bottom = 1590.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+scroll_deadzone = 12
+
+[node name="Cards" type="VBoxContainer" parent="List" index="0" unique_id=1423121987]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 30
+
+[node name="ContinueButton" type="TextureButton" parent="." index="5" unique_id=765631908]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 1610.0
+offset_right = 940.0
+offset_bottom = 1730.0
+focus_mode = 0
+texture_normal = ExtResource("9_cta_n")
+texture_pressed = ExtResource("10_cta_p")
+texture_hover = ExtResource("9_cta_n")
+texture_disabled = ExtResource("9_cta_n")
+texture_focused = ExtResource("11_cta_f")
+
+[node name="Label" type="Label" parent="ContinueButton" index="0" unique_id=42182018]
+layout_mode = 0
+offset_left = 60.0
+offset_right = 780.0
+offset_bottom = 120.0
+theme_type_variation = &"LevelsContinue"
+text = "STR_CHAPTER_CONTINUE_FORMAT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="ContinueButton" index="1" unique_id=629946451]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 42.0
+offset_right = 135.0
+offset_bottom = 78.0
+mouse_filter = 2
+texture = ExtResource("12_play_icon")

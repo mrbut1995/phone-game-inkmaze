@@ -48,6 +48,8 @@
 [ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_level_normal.tres" id="S_card_level_normal"]
 [ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_level_pressed.tres" id="S_card_level_pressed"]
 
+
+
 [node name="Landscape" instance=ExtResource("1_parent")]
 anchors_preset = 15
 anchor_right = 1.0

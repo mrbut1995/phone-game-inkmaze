@@ -20,25 +20,33 @@ const BANNER_NORMAL := preload("res://assets/images/level_selector/chapter_banne
 const BANNER_FOCUS := preload("res://assets/images/level_selector/chapter_banner_focus.svg")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-## Số thẻ màn chơi mỗi trang (lưới 3×3 nằm trong nodes/level_selection/page.tscn)
+## Số thẻ màn chơi mỗi trang bản DỌC (lưới 3×3 nằm trong nodes/level_selection/page.tscn)
 const CARDS_PER_PAGE := 9
+## Bản NGANG giữ 3 hàng nhưng nở số CỘT theo bề rộng vùng cuộn (⇒ nhiều thẻ/trang hơn)
+const ROWS_PER_PAGE := 3
+const GRID_COLUMNS_PORTRAIT := 3
+## Cỡ 1 thẻ + khe lưới (đọc theo scene nodes/level_selection/page.tscn — dùng để suy số cột)
+const CARD_SIZE := Vector2(297.0, 355.0)
+const GRID_SEP := Vector2(46.0, 24.0)
 const SNAP_TIME := 0.22
 ## Quãng kéo tối thiểu (px) để tính là VUỐT trang (dưới ngưỡng = bấm vào thẻ)
 const DRAG_THRESHOLD := 8.0
 ## Sau khi vuốt, bỏ qua thao tác bấm thẻ trong bao lâu (giây)
 const CLICK_LOCK_TIME := 0.15
 
-@onready var btn_back: TextureButton = $TopBar/Back
-@onready var btn_continue: TextureButton = $ContinueButton
-@onready var lbl_continue: Label = $ContinueButton/Label
-@onready var lbl_stars: Label = $StarsCounter/Count
-@onready var lbl_chapter: Label = $ChapterBanner/TitleContainer/Title
-@onready var lbl_change_chapter: Label = $ChapterBanner/TitleContainer/ChangeChapter
-@onready var banner: TextureRect = $ChapterBanner
-@onready var scroll: ScrollContainer = $CardArea/Scroll
-@onready var pages_host: HBoxContainer = $CardArea/Scroll/Pages
-@onready var dots_box: HBoxContainer = $PaginationDots
+## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout dùng CÙNG tên node)
+var btn_back: BaseButton = null
+var btn_continue: BaseButton = null
+var lbl_continue: Label = null
+var lbl_stars: Label = null
+var lbl_chapter: Label = null
+var lbl_change_chapter: Label = null
+var banner: Control = null
+var scroll: ScrollContainer = null
+var pages_host: HBoxContainer = null
+var dots_box: HBoxContainer = null
 
+var _current_columns := GRID_COLUMNS_PORTRAIT
 var _level_ids: Array[int] = []
 var _level_data: Dictionary = {}        # level_id -> LevelData (chỉ các file có thật)
 var _banner_focus := false
@@ -55,20 +63,10 @@ var _drag_start_scroll := 0.0
 
 
 func _ready() -> void:
-	if btn_back != null:
-		btn_back.pressed.connect(_on_back_pressed)
-		UIAnim.attach_press_bounce(btn_back)
-	if btn_continue != null:
-		btn_continue.pressed.connect(_on_continue_pressed)
-		UIAnim.attach_press_bounce(btn_continue)
-		UIAnim.play_pulse(btn_continue, 1.03, 1.8)
-	if lbl_change_chapter != null:
-		# Nhãn chỉ để trang trí: bấm Ở ĐÂU trên banner cũng chuyển sang màn Chọn Chương
-		lbl_change_chapter.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	if banner != null:
-		banner.mouse_filter = Control.MOUSE_FILTER_STOP
-		banner.gui_input.connect(_on_banner_input)
+	_bind_refs()
+	_wire_buttons()
 	resized.connect(_apply_layout)
+	orientation_changed.connect(_on_orientation_changed)
 
 	_build_pages()
 	_build_dots()
@@ -76,6 +74,75 @@ func _ready() -> void:
 	# Đợi layout xong mới biết bề rộng trang -> căn trang + nhảy tới màn đang chơi
 	call_deferred("_apply_layout")
 	call_deferred("_go_to_page", _page_for_level(chapter_continue_level()), false)
+
+
+## Gắn node theo layout đang hiển thị (bản dọc và bản ngang lồng node khác nhau)
+func _bind_refs() -> void:
+	btn_back = ui_path("TopBar/Back") as BaseButton
+	btn_continue = ui_path("ContinueButton") as BaseButton
+	lbl_continue = ui_path("ContinueButton/Label") as Label
+	lbl_stars = ui("Count") as Label
+	lbl_chapter = ui_path("ChapterBanner/TitleContainer/Title") as Label
+	lbl_change_chapter = ui_path("ChapterBanner/TitleContainer/ChangeChapter") as Label
+	banner = ui_path("ChapterBanner") as Control
+	scroll = ui_path("CardArea/Scroll") as ScrollContainer
+	pages_host = ui_path("CardArea/Scroll/Pages") as HBoxContainer
+	dots_box = ui("PaginationDots") as HBoxContainer
+
+
+## Nối signal + hiệu ứng (gọi lại được khi xoay màn hình, không nhân đôi connection)
+func _wire_buttons() -> void:
+	if btn_back != null:
+		if not btn_back.pressed.is_connected(_on_back_pressed):
+			btn_back.pressed.connect(_on_back_pressed)
+		if not btn_back.has_meta("bounce_attached"):
+			btn_back.set_meta("bounce_attached", true)
+			UIAnim.attach_press_bounce(btn_back)
+	if btn_continue != null:
+		if not btn_continue.pressed.is_connected(_on_continue_pressed):
+			btn_continue.pressed.connect(_on_continue_pressed)
+		if not btn_continue.has_meta("bounce_attached"):
+			btn_continue.set_meta("bounce_attached", true)
+			UIAnim.attach_press_bounce(btn_continue)
+			UIAnim.play_pulse(btn_continue, 1.03, 1.8)
+	# Nhãn "ĐỔI CHƯƠNG" chỉ để trang trí: bấm Ở ĐÂU trên banner cũng mở màn Chọn Chương
+	if lbl_change_chapter != null:
+		lbl_change_chapter.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if banner != null:
+		banner.mouse_filter = Control.MOUSE_FILTER_STOP
+		if not banner.gui_input.is_connected(_on_banner_input):
+			banner.gui_input.connect(_on_banner_input)
+
+
+## Số thẻ mỗi trang: bản DỌC giữ 3×3 = 9; bản NGANG nở số cột theo bề rộng vùng cuộn
+func _cards_per_page() -> int:
+	return _columns_per_page() * ROWS_PER_PAGE
+
+
+func _columns_per_page() -> int:
+	if not is_landscape:
+		return GRID_COLUMNS_PORTRAIT
+	var width := scroll.size.x if scroll != null else 0.0
+	if width <= 0.0:
+		return GRID_COLUMNS_PORTRAIT
+	var columns := int((width + GRID_SEP.x * 0.5) / (CARD_SIZE.x + GRID_SEP.x))
+	return clampi(columns, GRID_COLUMNS_PORTRAIT, 8)
+
+
+## Xoay màn hình: gắn lại node của layout mới rồi dựng lại trang + nạp lại header
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
+func _rebind_after_orientation() -> void:
+	_bind_refs()
+	_wire_buttons()
+	_current_columns = _columns_per_page()
+	_build_pages()
+	_build_dots()
+	_refresh_header()
+	_apply_layout()
+	_go_to_page(_page_for_level(chapter_continue_level()), false)
 
 
 # ---------------------------------------------------------------------------
@@ -113,7 +180,7 @@ func _build_pages() -> void:
 		child.queue_free()
 
 	_load_level_ids()
-	_page_count = maxi(1, int(ceil(float(_level_ids.size()) / float(CARDS_PER_PAGE))))
+	_page_count = maxi(1, int(ceil(float(_level_ids.size()) / float(_cards_per_page()))))
 
 	var unlocked := _unlocked_level()
 	var stars_dict := _stars_dict()
@@ -125,9 +192,10 @@ func _build_pages() -> void:
 		pages_host.add_child(page)
 
 		var grid := page.grid()
+		grid.columns = _columns_per_page()
 
-		for slot in CARDS_PER_PAGE:
-			var list_index := page_index * CARDS_PER_PAGE + slot
+		for slot in _cards_per_page():
+			var list_index := page_index * _cards_per_page() + slot
 			if list_index >= _level_ids.size():
 				break
 			var level_id := _level_ids[list_index]
@@ -291,6 +359,14 @@ func _on_dot_pressed(index: int) -> void:
 func _apply_layout() -> void:
 	if scroll == null or pages_host == null:
 		return
+	var columns := _columns_per_page()
+	if columns != _current_columns:
+		# Bề rộng vùng cuộn đổi (xoay màn hình) -> chia lại trang theo số cột mới
+		_current_columns = columns
+		_build_pages()
+		_build_dots()
+		_refresh_header()
+	_page = clampi(_page, 0, maxi(_page_count - 1, 0))
 	_page_width = maxf(scroll.size.x, 1.0)
 	for page in pages_host.get_children():
 		page.custom_minimum_size = Vector2(_page_width, scroll.size.y)
@@ -331,7 +407,7 @@ func _page_for_level(level_id: int) -> int:
 	var list_index := _level_ids.find(level_id)
 	if list_index < 0:
 		return 0
-	return clampi(list_index / CARDS_PER_PAGE, 0, maxi(_page_count - 1, 0))
+	return clampi(list_index / _cards_per_page(), 0, maxi(_page_count - 1, 0))
 
 
 # ---------------------------------------------------------------------------

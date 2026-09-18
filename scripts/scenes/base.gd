@@ -93,6 +93,16 @@ func _apply_responsive_layout() -> void:
 		portrait_layout.visible = not use_landscape
 	if landscape_layout != null:
 		landscape_layout.visible = use_landscape
+	# Neo 2 layout phụ kín khung nội dung: layout đang ẨN vẫn phải co theo cột,
+	# nếu không các node con giữ kích thước của lần NGANG trước đó (bị báo "tràn màn hình").
+	var portrait_ctrl: Control = portrait_layout as Control
+	var landscape_ctrl: Control = landscape_layout as Control
+	for ctrl: Control in [portrait_ctrl, landscape_ctrl]:
+		if ctrl == null:
+			continue
+		if ctrl.anchor_right != 1.0 or ctrl.anchor_bottom != 1.0 \
+				or ctrl.offset_right != 0.0 or ctrl.offset_bottom != 0.0:
+			ctrl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 	if use_landscape:
 		# Bố cục NGANG tự dàn bằng anchors/container tỉ lệ 0..1 → root phủ KÍN canvas
@@ -147,6 +157,18 @@ func ui_child(parent_name: String, child_name: String) -> Node:
 	if parent == null:
 		return null
 	return parent.get_node_or_null(child_name)
+
+
+## Lấy node theo ĐƯỜNG DẪN trong layout đang hiển thị.
+## Dùng khi 2 layout giữ CÙNG cấu trúc đường dẫn (VD `TopBar/Back`, `List/Cards`) —
+## nhờ vậy script chỉ cần đổi `$A/B` → `ui_path("A/B")` là chạy được ở cả 2 hướng.
+func ui_path(path: String) -> Node:
+	var holder := active_layout()
+	if holder != self:
+		var found := holder.get_node_or_null(NodePath(path))
+		if found != null:
+			return found
+	return get_node_or_null(NodePath(path))
 
 
 ## Hai bên cột (màn rộng hơn 9:16) tô tiếp màu giấy bằng 2 ColorRect con của

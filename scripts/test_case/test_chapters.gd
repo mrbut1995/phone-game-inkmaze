@@ -430,18 +430,18 @@ func _section_6_scene(lm: Node) -> void:
 	await process_frame
 	await process_frame
 
-	_entry(scene.get_node_or_null("TopBar/Back") is TextureButton, "Co nut Back o TopBar")
-	var title := scene.get_node_or_null("TopBar/Title") as Label
+	_entry(scene.ui_path("TopBar/Back") is TextureButton, "Co nut Back o TopBar")
+	var title := scene.ui_path("TopBar/Title") as Label
 	_entry(title != null and title.text == "STR_CHAPTER_SCREEN_TITLE",
 		"Tieu de man dung khoa dich STR_CHAPTER_SCREEN_TITLE")
-	_entry(scene.get_node_or_null("Wallet") is TextureRect, "Co vi Sao goc phai")
-	_entry(scene.get_node_or_null("Wallet/Star") is TextureRect, "Vi Sao co icon ngoi sao")
-	_entry(scene.get_node_or_null("Banner/Text") is Label, "Co bang huong dan Banner/Text")
-	_entry((scene.get_node("Banner/Text") as Label).text == "STR_CHAPTER_BANNER",
+	_entry(scene.ui_path("Wallet") is TextureRect, "Co vi Sao goc phai")
+	_entry(scene.ui_path("Wallet/Star") is TextureRect, "Vi Sao co icon ngoi sao")
+	_entry(scene.ui_path("Banner/Text") is Label, "Co bang huong dan Banner/Text")
+	_entry((scene.ui_path("Banner/Text") as Label).text == "STR_CHAPTER_BANNER",
 		"Bang huong dan dung khoa dich STR_CHAPTER_BANNER")
-	_entry(scene.get_node_or_null("List/Cards") is VBoxContainer, "Co danh sach the List/Cards")
-	_entry(scene.get_node_or_null("ContinueButton") is TextureButton, "Co nut CTA chan trang")
-	_entry(scene.get_node("List").get_node("Cards").get_child_count()
+	_entry(scene.ui_path("List/Cards") is VBoxContainer, "Co danh sach the List/Cards")
+	_entry(scene.ui_path("ContinueButton") is TextureButton, "Co nut CTA chan trang")
+	_entry((scene.ui_path("List/Cards") as Node).get_child_count()
 		== int(lm.call("chapter_count")),
 		"Danh sach co dung %d the chuong" % lm.call("chapter_count"))
 	_entry(scene.card_count() == int(lm.call("chapter_count")),
@@ -490,14 +490,14 @@ func _section_6_scene(lm: Node) -> void:
 			playable += 1
 	_entry(playable == 2, "Dung 2 the bam duoc (chuong 1 dang choi + chuong 2 da mo) — nhan %d" % playable)
 
-	var wallet_count := scene.get_node("Wallet/Count") as Label
+	var wallet_count := scene.ui_path("Wallet/Count") as Label
 	_entry(wallet_count.text == str(int(gm.call("total_stars"))),
 		"Vi Sao hien tong sao hien co (%s)" % wallet_count.text)
-	var cta := scene.get_node("ContinueButton/Label") as Label
+	var cta := scene.ui_path("ContinueButton/Label") as Label
 	_entry(cta.text.contains(str(playing)), "Nhan CTA nhac toi chuong dang choi (%s)" % cta.text)
-	_entry((scene.get_node("ContinueButton/Icon") as TextureRect).texture != null,
+	_entry((scene.ui_path("ContinueButton/Icon") as TextureRect).texture != null,
 		"CTA co icon tam giac")
-	_entry((scene.get_node("List/Cards") as VBoxContainer).get_theme_constant("separation") == 30,
+	_entry((scene.ui_path("List/Cards") as VBoxContainer).get_theme_constant("separation") == 30,
 		"Khoang cach giua cac the = 30px")
 	# Mọi thẻ đều nối tín hiệu tới màn
 	var connected := true
@@ -541,12 +541,12 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 		"Man tiep theo TRONG chuong 2 = man chua dat sao dau tien (11) — nhan %d"
 			% scene.chapter_continue_level())
 	_entry(not scene.chapter_cleared(), "Chuong 2 chua hoan thanh het")
-	_entry(scene.get_node_or_null("ChapterBanner/TitleContainer/ChangeChapter") is Label,
+	_entry(scene.ui_path("ChapterBanner/TitleContainer/ChangeChapter") is Label,
 		"Banner co dong 'DOI CHUONG'")
-	var banner_node := scene.get_node_or_null("ChapterBanner")
+	var banner_node := scene.ui_path("ChapterBanner")
 	_entry(banner_node != null and banner_node.gui_input.get_connections().size() >= 1,
 		"Bam CA PANEL banner -> sang man Chon Chuong (co noi gui_input)")
-	_entry(scene.get_node_or_null("TopBar/Back") is TextureButton, "Man chon man co nut Back")
+	_entry(scene.ui_path("TopBar/Back") is TextureButton, "Man chon man co nut Back")
 
 	# --- Số Sao hiển thị phải là CỦA CHƯƠNG đang xem (không cộng Sao chương khác) ---
 	gm.call("reset_progress")
@@ -561,20 +561,20 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 	root.add_child(scene2)
 	await process_frame
 	await process_frame
-	var count := scene2.get_node("StarsCounter/Count") as Label
+	var count := scene2.ui("Count") as Label
 	_entry(count.text == "24/27",
 		"So Sao theo CHUONG 1 = 24/27 (loi cu: cong ca chuong khac) — nhan '%s'" % count.text)
 	_entry(scene2.chapter_continue_level() == 3,
 		"Man tiep theo TRONG chuong 1 = man CHUA dat sao dau tien (3) — nhan %d"
 			% scene2.chapter_continue_level())
 	_entry(not scene2.chapter_cleared(), "Chuong 1 chua hoan thanh (con man 3)")
-	_entry((scene2.get_node("ChapterBanner") as TextureRect).texture
+	_entry(_banner_texture(scene2)
 		== load("res://assets/images/level_selector/chapter_banner_focus.svg"),
 		"Banner doi sang art FOCUS khi co chuong du Sao de mo")
-	_entry((scene2.get_node("ChapterBanner/TitleContainer/ChangeChapter") as Label).text
+	_entry((scene2.ui_path("ChapterBanner/TitleContainer/ChangeChapter") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_UNLOCKABLE"),
 		"Dong tren banner bao 'co Chuong moi co the mo khoa'")
-	_entry(scene2.get_node("ChapterBanner").modulate == Color.WHITE,
+	_entry((scene2.ui_path("ChapterBanner") as Control).modulate == Color.WHITE,
 		"Banner focus giu nguyen mau (chi doi art + nhap nhay)")
 	scene2.queue_free()
 	await process_frame
@@ -587,9 +587,9 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 	await process_frame
 	await process_frame
 	_entry(scene3.chapter_cleared(), "Chuong 1 da hoan thanh het man")
-	_entry((scene3.get_node("StarsCounter/Count") as Label).text == "27/27",
+	_entry((scene3.ui("Count") as Label).text == "27/27",
 		"Chuong 1 xong: 27/27 Sao")
-	_entry((scene3.get_node("ContinueButton/Label") as Label).text
+	_entry((scene3.ui_path("ContinueButton/Label") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE"),
 		"Nut chan trang doi thanh CHON CHUONG khi xong het chuong")
 	scene3.queue_free()
@@ -601,10 +601,10 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 	root.add_child(scene4)
 	await process_frame
 	await process_frame
-	_entry((scene4.get_node("ChapterBanner") as TextureRect).texture
+	_entry(_banner_texture(scene4)
 		== load("res://assets/images/level_selector/chapter_banner.svg"),
 		"Mo chuong roi -> banner ve art thuong")
-	_entry((scene4.get_node("ChapterBanner/TitleContainer/ChangeChapter") as Label).text
+	_entry((scene4.ui_path("ChapterBanner/TitleContainer/ChangeChapter") as Label).text
 		== TranslationServer.translate("STR_CHANGE_CHAPTER"), "Dong banner ve 'DOI CHUONG'")
 	scene4.queue_free()
 	await process_frame
@@ -697,6 +697,15 @@ func _section_9_wiring() -> void:
 # ---------------------------------------------------------------------------
 # Harness
 # ---------------------------------------------------------------------------
+## Banner chương là TextureRect (bản dọc) hoặc NinePatchRect (bản ngang đã 9-slice)
+## ⇒ đọc texture qua `get()` thay vì ép kiểu, để test chạy được ở CẢ 2 layout.
+func _banner_texture(scene: Node) -> Texture2D:
+	var banner: Control = scene.call("ui_path", "ChapterBanner") as Control
+	if banner == null:
+		return null
+	return banner.get("texture") as Texture2D
+
+
 func _entry(condition: bool, label: String) -> void:
 	_checks += 1
 	if condition:

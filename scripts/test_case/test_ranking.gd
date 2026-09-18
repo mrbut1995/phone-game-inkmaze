@@ -214,24 +214,24 @@ func _section_7_scene(manager: Node) -> void:
 	await process_frame
 
 	# --- Cấu trúc tĩnh trong .tscn ---
-	_entry(scene.get_node_or_null("TopBar/Back") is TextureButton, "TopBar co nut Back")
-	var title := scene.get_node_or_null("TopBar/Title") as Label
+	_entry(_ui(scene, "TopBar/Back") is TextureButton, "TopBar co nut Back")
+	var title := _ui(scene, "TopBar/Title") as Label
 	_entry(title != null and title.text == "STR_RANK_TITLE", "Tieu de dung khoa dich STR_RANK_TITLE")
-	_entry(scene.get_node_or_null("Chip") is TextureRect, "Co chip pham vi goc phai")
+	_entry(_ui(scene, "Chip") is TextureRect, "Co chip pham vi goc phai")
 	# To giay la NinePatchRect (co gian 9-slice theo man hinh), truoc day la TextureRect.
-	var sheet := scene.get_node_or_null("Sheet")
+	var sheet := _ui(scene, "Sheet")
 	_entry(sheet is NinePatchRect or sheet is TextureRect, "Co to giay Sheet")
-	_entry(scene.get_node_or_null("Sheet/Tape") is TextureRect, "To giay co bang dinh (tape)")
-	_entry(scene.get_node_or_null("Sheet/Scroll/Rows") is VBoxContainer, "Co danh sach cuon Sheet/Scroll/Rows")
-	_entry(scene.get_node_or_null("Sheet/MyRank") is TextureRect, "Co thanh 'hang cua ban' Sheet/MyRank")
-	_entry(scene.get_node_or_null("Sheet/Footer") is Label, "Co ghi chu chan trang")
+	_entry(_ui(scene, "Sheet/Tape") is TextureRect, "To giay co bang dinh (tape)")
+	_entry(_ui(scene, "Sheet/Scroll/Rows") is VBoxContainer, "Co danh sach cuon Sheet/Scroll/Rows")
+	_entry(_ui(scene, "Sheet/MyRank") is TextureRect, "Co thanh 'hang cua ban' Sheet/MyRank")
+	_entry(_ui(scene, "Sheet/Footer") is Label, "Co ghi chu chan trang")
 	for group_name in ["Gold", "Silver", "Bronze"]:
-		_entry(scene.get_node_or_null("Sheet/Podium/" + group_name) != null,
+		_entry(_ui(scene, "Sheet/Podium/" + group_name) != null,
 			"Buc vinh quang co nhom %s" % group_name)
 
 	# --- Tab dựng bằng code ---
 	_entry(scene.tab_count() == 3, "3 tab duoc dung tu board_ids() (nhan %d)" % scene.tab_count())
-	var tabs := scene.get_node("Sheet/Tabs") as HBoxContainer
+	var tabs := _ui(scene, "Sheet/Tabs") as HBoxContainer
 	_entry(tabs != null and tabs.get_child_count() == 3, "HBox Tabs co 3 nut")
 	var tab_active_art: Texture2D = load("res://assets/images/ranking/tab_active.svg")
 	var tab_normal_art: Texture2D = load("res://assets/images/ranking/tab_normal.svg")
@@ -242,7 +242,7 @@ func _section_7_scene(manager: Node) -> void:
 	_entry(scene.board() == "dungeon", "Bang mac dinh = dungeon")
 	_entry(scene.row_count() == RIVAL_COUNT + 1 - 3,
 		"Danh sach cuon co %d hang (hang 4..%d) — nhan %d" % [RIVAL_COUNT - 2, RIVAL_COUNT + 1, scene.row_count()])
-	var gold := scene.get_node("Sheet/Podium/Gold")
+	var gold := _ui(scene, "Sheet/Podium/Gold")
 	var gold_record := (gold.get_node("Record") as Label).text
 	_entry((gold.get_node("Name") as Label).text != "", "Buc hang 1 co ten doi thu")
 	_entry(gold_record == Ranking.record_text("dungeon", manager.call("podium", "dungeon")[0]),
@@ -250,7 +250,7 @@ func _section_7_scene(manager: Node) -> void:
 	_entry((gold.get_node("Block/Rank") as Label).text == "1", "Buc vang hien so hang 1")
 
 	# Hàng đầu danh sách = hạng 4, khớp dữ liệu manager
-	var rows_host := scene.get_node("Sheet/Scroll/Rows") as VBoxContainer
+	var rows_host := _ui(scene, "Sheet/Scroll/Rows") as VBoxContainer
 	var rest: Array = manager.call("rest", "dungeon")
 	var first_entry: Dictionary = rest[0]
 	var first_row := rows_host.get_child(0) as RankRow
@@ -276,10 +276,10 @@ func _section_7_scene(manager: Node) -> void:
 		_entry(false, "Nguoi choi phai co mat trong danh sach cuon")
 
 	# Thanh dán đáy
-	var my_rank_label := scene.get_node("Sheet/MyRank/Rank") as Label
+	var my_rank_label := _ui(scene, "Sheet/MyRank/Rank") as Label
 	_entry(my_rank_label.text == Ranking.rank_text(Ranking.my_rank("dungeon")),
 		"Thanh dan day hien dung hang cua ban (nhan '%s')" % my_rank_label.text)
-	_entry((scene.get_node("Sheet/MyRank/Name") as Label).text == Ranking.display_name(Ranking.my_entry("dungeon")),
+	_entry((_ui(scene, "Sheet/MyRank/Name") as Label).text == Ranking.display_name(Ranking.my_entry("dungeon")),
 		"Thanh dan day hien dung ten nguoi choi")
 
 	# --- Đổi tab bằng API ---
@@ -299,11 +299,11 @@ func _section_7_scene(manager: Node) -> void:
 	_entry(scene.row_count() == RIVAL_COUNT - 2, "Bang play cung co %d hang" % (RIVAL_COUNT - 2))
 
 	# --- Nút Back đã nối signal (không bấm để tránh đổi scene) ---
-	var back := scene.get_node("TopBar/Back") as TextureButton
+	var back := _ui(scene, "TopBar/Back") as TextureButton
 	_entry(back.pressed.get_connections().size() > 0, "Nut Back da duoc noi signal")
 
 	# --- Vuốt dọc để cuộn danh sách (hàng là Control "ăn" sự kiện -> tự xử lý ở _input) ---
-	var scroll := scene.get_node("Sheet/Scroll") as ScrollContainer
+	var scroll := _ui(scene, "Sheet/Scroll") as ScrollContainer
 	_entry(scroll != null, "Co vung cuon Sheet/Scroll")
 	if scroll != null:
 		var center := scroll.get_global_rect().get_center()
@@ -356,6 +356,11 @@ func _section_8_wiring() -> void:
 # ---------------------------------------------------------------------------
 # Helper
 # ---------------------------------------------------------------------------
+## Màn đã tách 2 layout ⇒ node nằm trong layout đang hiển thị (dọc/ngang)
+func _ui(scene: Node, path: String) -> Node:
+	return scene.call("ui_path", path)
+
+
 func _entry(condition: bool, label: String) -> void:
 	_checks += 1
 	if condition:

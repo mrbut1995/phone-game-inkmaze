@@ -33,20 +33,21 @@ var _bottom_margin := 60.0          # lề dưới nút CHƠI (đo từ scene + 
 var _min_panel_h := 484.0           # bảng tối thiểu = đầu hàng + 4 hàng co + khối tiến độ
 var _design_captured := false
 
-@onready var btn_back: TextureButton = $TopBar/Back
-@onready var calendar: DailyCalendar = $Calendar
-@onready var missions: Control = $Missions
-@onready var lbl_streak: Label = $StreakBadge/Streak
-@onready var lbl_date: Label = $Missions/DateTag/Label
-@onready var lbl_mode: Label = $Missions/Mode
-@onready var lbl_reward: Label = $Missions/Reward/Label
-@onready var rows_host: Control = $Missions/Rows
-@onready var lbl_progress: Label = $Missions/ProgressLabel
-@onready var bar_progress: TextureProgressBar = $Missions/ProgressBar
-@onready var lbl_claim: Label = $Missions/Claim
-@onready var btn_play: TextureButton = $Play
-@onready var lbl_play: Label = $Play/Label
-@onready var icon_play: TextureRect = $Play/Icon
+## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout dùng CÙNG tên node)
+var btn_back: BaseButton = null
+var calendar: DailyCalendar = null
+var missions: Control = null
+var lbl_streak: Label = null
+var lbl_date: Label = null
+var lbl_mode: Label = null
+var lbl_reward: Label = null
+var rows_host: Control = null
+var lbl_progress: Label = null
+var bar_progress: TextureProgressBar = null
+var lbl_claim: Label = null
+var btn_play: BaseButton = null
+var lbl_play: Label = null
+var icon_play: TextureRect = null
 
 var _rows: Array[DailyMissionRow] = []
 var _daily: Node = null
@@ -60,19 +61,11 @@ func _ready() -> void:
 	_daily = get_node_or_null("/root/DailyManager")
 	_selected_day = _today()
 
-	if btn_back != null:
-		btn_back.pressed.connect(_on_back_pressed)
-		UIAnim.attach_press_bounce(btn_back)
-	if btn_play != null:
-		btn_play.pressed.connect(_on_play_pressed)
-		UIAnim.attach_press_bounce(btn_play)
-		UIAnim.play_pulse(btn_play, 1.03, 1.8)
-	if calendar != null:
-		calendar.day_selected.connect(_on_day_selected)
-	if _daily != null and _daily.has_signal("daily_changed"):
-		_daily.connect("daily_changed", _refresh)
+	_bind_refs()
+	_wire_buttons()
+	orientation_changed.connect(_on_orientation_changed)
 
-	var streak_badge := get_node_or_null("StreakBadge") as Control
+	var streak_badge := ui("StreakBadge") as Control
 	if streak_badge != null:
 		UIAnim.play_pop_in(streak_badge, 0.08, 0.8, 0.25)
 
@@ -82,6 +75,59 @@ func _ready() -> void:
 	var vp := get_viewport()
 	if vp != null and not vp.size_changed.is_connected(_layout_responsive):
 		vp.size_changed.connect(_layout_responsive)
+
+
+## Gắn node của layout đang hiển thị (bản ngang đổi cấu trúc cột nên tra theo TÊN)
+func _bind_refs() -> void:
+	btn_back = ui_path("TopBar/Back") as BaseButton
+	calendar = ui("Calendar") as DailyCalendar
+	missions = ui("Missions") as Control
+	lbl_streak = ui_child("StreakBadge", "Streak") as Label
+	lbl_date = ui_child("DateTag", "Label") as Label
+	lbl_mode = ui("Mode") as Label
+	lbl_reward = ui_child("Reward", "Label") as Label
+	rows_host = ui("Rows") as Control
+	lbl_progress = ui("ProgressLabel") as Label
+	bar_progress = ui("ProgressBar") as TextureProgressBar
+	lbl_claim = ui("Claim") as Label
+	btn_play = ui("Play") as BaseButton
+	lbl_play = ui_child("Play", "Label") as Label
+	icon_play = ui_child("Play", "Icon") as TextureRect
+
+
+## Nối signal + hiệu ứng (mỗi NODE chỉ nối 1 lần)
+func _wire_buttons() -> void:
+	if btn_back != null and not btn_back.has_meta("wired"):
+		btn_back.set_meta("wired", true)
+		btn_back.pressed.connect(_on_back_pressed)
+		UIAnim.attach_press_bounce(btn_back)
+	if btn_play != null and not btn_play.has_meta("wired"):
+		btn_play.set_meta("wired", true)
+		btn_play.pressed.connect(_on_play_pressed)
+		UIAnim.attach_press_bounce(btn_play)
+		UIAnim.play_pulse(btn_play, 1.03, 1.8)
+	if calendar != null and not calendar.has_meta("wired"):
+		calendar.set_meta("wired", true)
+		calendar.day_selected.connect(_on_day_selected)
+	if _daily != null and _daily.has_signal("daily_changed") \
+			and not _daily.is_connected("daily_changed", _refresh):
+		_daily.connect("daily_changed", _refresh)
+
+
+## Xoay màn hình: số đo "thiết kế" đổi theo layout ⇒ đo lại rồi dàn lại hàng + nạp lại dữ liệu
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
+func _rebind_after_orientation() -> void:
+	_bind_refs()
+	_wire_buttons()
+	_design_captured = false
+	_progress_base.clear()
+	_capture_design()
+	_build_rows()
+	_refresh()
+	_layout_responsive()
 
 
 func _notification(what: int) -> void:
@@ -102,6 +148,11 @@ func _layout_responsive() -> void:
 		return
 	_capture_design()
 
+	if is_landscape:
+		# Bố cục NGANG: lịch + bảng nhiệm vụ + nút CHƠI do ANCHORS dàn sẵn — chỉ dàn hàng bên trong bảng
+		_layout_rows_in_panel()
+		return
+
 	# 1. Nút CHƠI: bám đáy
 	var play_y := canvas.y - _bottom_margin - btn_play.size.y
 	if absf(btn_play.position.y - play_y) > 0.5:
@@ -116,7 +167,15 @@ func _layout_responsive() -> void:
 	if absf(missions.size.y - panel_h) > 0.5:
 		missions.size.y = panel_h
 
-	# 3. Dồn hàng tiến độ (label + thanh + nhãn thưởng) xuống ĐÁY bảng
+	_layout_rows_in_panel()
+
+
+## Dàn 4 hàng nhiệm vụ + khối tiến độ bên trong BẢNG (dùng chung cho cả 2 hướng)
+##   · khối tiến độ dồn xuống ĐÁY bảng
+##   · hàng co/giãn vừa khoảng trống còn lại (màn thấp/ngang -> co lại để không tràn)
+func _layout_rows_in_panel() -> void:
+	if missions == null:
+		return
 	var dy := missions.size.y - _panel_design_h
 	if absf(dy) > 0.5:
 		for node in _progress_base.keys():
@@ -124,23 +183,22 @@ func _layout_responsive() -> void:
 			if c != null and is_instance_valid(c):
 				c.position.y = float(_progress_base[node]) + dy
 
-	# 4. Hàng nhiệm vụ: vừa khoảng trống giữa tiêu đề bảng và hàng tiến độ
-	#    (màn thấp/ngang -> hàng co lại để không tràn xuống nút CHƠI)
-	if rows_host != null:
-		var count := maxi(_mission_total(), 1)
-		var top_limit := _rows_top_design
-		var bottom_limit := _progress_design_y + dy
-		var space := maxf(bottom_limit - top_limit, _row_design_h * MIN_ROW_FACTOR)
-		# Màn cao -> giãn nhẹ khoảng cách hàng (tối đa MAX_ROW_FACTOR× thiết kế) để lấp khoảng trống;
-		# màn thấp/ngang -> co hàng lại để không tràn xuống nút CHƠI.
-		var row_h := clampf(space / float(count), 0.0, _row_design_h * MAX_ROW_FACTOR)
-		if row_h <= 0.0:
-			row_h = _row_design_h
-		for i in _rows.size():
-			var row := _rows[i]
-			if row != null and is_instance_valid(row):
-				row.position = Vector2(0, row_h * i)
-		rows_host.position.y = top_limit + maxf(0.0, (space - row_h * float(count)) * 0.5)
+	if rows_host == null:
+		return
+	var count := maxi(_mission_total(), 1)
+	var top_limit := _rows_top_design
+	var bottom_limit := _progress_design_y + dy
+	var space := maxf(bottom_limit - top_limit, _row_design_h * MIN_ROW_FACTOR)
+	# Màn cao -> giãn nhẹ khoảng cách hàng (tối đa MAX_ROW_FACTOR× thiết kế) để lấp khoảng trống;
+	# màn thấp/ngang -> co hàng lại để không tràn xuống nút CHƠI.
+	var row_h := clampf(space / float(count), 0.0, _row_design_h * MAX_ROW_FACTOR)
+	if row_h <= 0.0:
+		row_h = _row_design_h
+	for i in _rows.size():
+		var row := _rows[i]
+		if row != null and is_instance_valid(row):
+			row.position = Vector2(0, row_h * i)
+	rows_host.position.y = top_limit + maxf(0.0, (space - row_h * float(count)) * 0.5)
 
 
 ## Đọc số đo THIẾT KẾ từ scene + art (1 lần) — không hard-code trong script
@@ -159,7 +217,13 @@ func _capture_design() -> void:
 		probe.free()
 	if _row_design_h <= 0.0:
 		_row_design_h = 110.0
-	if missions.size.y > 0.0:
+	# Chiều cao THIẾT KẾ của bảng nhiệm vụ: lấy từ ART (không đổi theo layout) — nếu lấy `size.y` thì ở
+	# bản NGANG (bảng bị kéo cao hơn art) khối tiến độ sẽ không tụt xuống đúng đáy bảng.
+	var panel_art := missions as TextureRect
+	var art_h := float(panel_art.texture.get_height()) if panel_art != null and panel_art.texture != null else 0.0
+	if art_h > 0.0:
+		_panel_design_h = art_h
+	elif missions.size.y > 0.0:
 		_panel_design_h = missions.size.y
 	if rows_host != null:
 		_rows_top_design = rows_host.position.y

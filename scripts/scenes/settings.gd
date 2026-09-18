@@ -16,21 +16,23 @@ signal guide_requested
 const PLAYER_ID_PLACEHOLDER := "#NM-8924-VN"
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-@onready var btn_back: TextureButton = $TopBar/Back
-@onready var bgm_slider: HSlider = $Panel/Content/Audio/BgmRow/Slider
-@onready var bgm_value: Label = $Panel/Content/Audio/BgmRow/Value
-@onready var sfx_slider: HSlider = $Panel/Content/Audio/SfxRow/Slider
-@onready var sfx_value: Label = $Panel/Content/Audio/SfxRow/Value
-@onready var chk_haptic: TextureButton = $Panel/Content/Board/HapticRow/Check
-@onready var chk_auto_mark: TextureButton = $Panel/Content/Board/AutoMarkRow/Check
-@onready var chk_glow: TextureButton = $Panel/Content/Board/GlowRow/Check
-@onready var btn_language: TextureButton = $Panel/Content/Language/LangRow/LangButton
-@onready var lbl_language: Label = $Panel/Content/Language/LangRow/LangButton/LangValue
-@onready var lbl_player_id: Label = $Panel/Content/Language/PlayerRow/PlayerIdValue
-@onready var btn_guide: TextureButton = $Panel/Content/Actions/Guide
-@onready var btn_credits: TextureButton = $Panel/Content/Actions/Credits
-@onready var btn_reset: TextureButton = $Panel/Content/Actions/Reset
-@onready var lbl_version: Label = $Panel/Content/Footer/Stamp/Label
+## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout dùng CÙNG tên node — bản ngang gom Âm thanh/Bàn cờ
+## vào cột trái, Hệ thống/Thao tác vào cột phải nên ĐƯỜNG DẪN khác nhau ⇒ tra theo TÊN)
+var btn_back: TextureButton = null
+var bgm_slider: HSlider = null
+var bgm_value: Label = null
+var sfx_slider: HSlider = null
+var sfx_value: Label = null
+var chk_haptic: TextureButton = null
+var chk_auto_mark: TextureButton = null
+var chk_glow: TextureButton = null
+var btn_language: TextureButton = null
+var lbl_language: Label = null
+var lbl_player_id: Label = null
+var btn_guide: TextureButton = null
+var btn_credits: TextureButton = null
+var btn_reset: TextureButton = null
+var lbl_version: Label = null
 
 ## Chặn ghi ngược khi đang đồng bộ UI từ SettingManager
 var _syncing := false
@@ -40,13 +42,53 @@ var _stamp_taps := 0
 
 
 func _ready() -> void:
-	if btn_back != null:
+	_bind_refs()
+	_wire_buttons()
+	orientation_changed.connect(_on_orientation_changed)
+
+	var content_node := ui("Content") as Control
+	if content_node != null:
+		UIAnim.play_slide_in(content_node, Vector2(0, 25), 0.05, 0.25)
+
+	_setup_debug_stamp_taps()
+	_sync_from_settings()
+
+
+## Gắn node của layout đang hiển thị
+func _bind_refs() -> void:
+	btn_back = ui_path("TopBar/Back") as TextureButton
+	bgm_slider = ui_child("BgmRow", "Slider") as HSlider
+	bgm_value = ui_child("BgmRow", "Value") as Label
+	sfx_slider = ui_child("SfxRow", "Slider") as HSlider
+	sfx_value = ui_child("SfxRow", "Value") as Label
+	chk_haptic = ui_child("HapticRow", "Check") as TextureButton
+	chk_auto_mark = ui_child("AutoMarkRow", "Check") as TextureButton
+	chk_glow = ui_child("GlowRow", "Check") as TextureButton
+	btn_language = ui_child("LangRow", "LangButton") as TextureButton
+	lbl_language = ui_child("LangButton", "LangValue") as Label
+	lbl_player_id = ui_child("PlayerRow", "PlayerIdValue") as Label
+	btn_guide = ui("Guide") as TextureButton
+	btn_credits = ui("Credits") as TextureButton
+	btn_reset = ui("Reset") as TextureButton
+	lbl_version = ui_child("Stamp", "Label") as Label
+
+
+## Nối signal + hiệu ứng (mỗi NODE chỉ nối 1 lần — xoay màn hình không nhân đôi)
+func _wire_once(node: Node) -> bool:
+	if node == null or node.has_meta("wired"):
+		return false
+	node.set_meta("wired", true)
+	return true
+
+
+func _wire_buttons() -> void:
+	if _wire_once(btn_back):
 		btn_back.pressed.connect(_on_back_pressed)
 		UIAnim.attach_press_bounce(btn_back)
 
-	if bgm_slider != null:
+	if _wire_once(bgm_slider):
 		bgm_slider.value_changed.connect(_on_volume_changed.bind("music", bgm_value))
-	if sfx_slider != null:
+	if _wire_once(sfx_slider):
 		sfx_slider.value_changed.connect(_on_volume_changed.bind("sfx", sfx_value))
 
 	# TextureButton toggle: toggled(toggled_on) + bind khoá cài đặt tương ứng
@@ -56,27 +98,32 @@ func _ready() -> void:
 		[chk_glow, "glow_path"],
 	]:
 		var check: TextureButton = pair[0]
-		if check != null:
+		if _wire_once(check):
 			check.toggled.connect(_on_toggle_changed.bind(str(pair[1])))
 			UIAnim.attach_press_bounce(check)
 
-	if btn_language != null:
+	if _wire_once(btn_language):
 		btn_language.pressed.connect(_on_language_pressed)
 		UIAnim.attach_press_bounce(btn_language)
-	if btn_guide != null:
+	if _wire_once(btn_guide):
 		btn_guide.pressed.connect(_on_guide_pressed)
 		UIAnim.attach_press_bounce(btn_guide)
-	if btn_credits != null:
+	if _wire_once(btn_credits):
 		btn_credits.pressed.connect(_on_credits_pressed)
 		UIAnim.attach_press_bounce(btn_credits)
-	if btn_reset != null:
+	if _wire_once(btn_reset):
 		btn_reset.pressed.connect(_on_reset_pressed)
 		UIAnim.attach_press_bounce(btn_reset)
 
-	var content_node := get_node_or_null("Panel/Content") as Control
-	if content_node != null:
-		UIAnim.play_slide_in(content_node, Vector2(0, 25), 0.05, 0.25)
 
+## Xoay màn hình: gắn lại node của layout mới rồi nạp lại giá trị cài đặt lên widget mới
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
+func _rebind_after_orientation() -> void:
+	_bind_refs()
+	_wire_buttons()
 	_setup_debug_stamp_taps()
 	_sync_from_settings()
 
@@ -92,7 +139,8 @@ func _setup_debug_stamp_taps() -> void:
 	for child in stamp.get_children():
 		if child is Control:
 			(child as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
-	stamp.gui_input.connect(_on_stamp_gui_input)
+	if not stamp.gui_input.is_connected(_on_stamp_gui_input):
+		stamp.gui_input.connect(_on_stamp_gui_input)
 
 
 func _on_stamp_gui_input(event: InputEvent) -> void:

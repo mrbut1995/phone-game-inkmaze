@@ -47,6 +47,10 @@
 [ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_level_normal.tres" id="S_card_level_normal"]
 [ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_level_pressed.tres" id="S_card_level_pressed"]
 
+
+
+
+
 [node name="Portrait" instance=ExtResource("1_parent")]
 
 [node name="Panel" type="TextureRect" parent="." index="0" unique_id=76192589]
