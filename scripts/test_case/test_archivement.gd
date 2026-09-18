@@ -228,7 +228,7 @@ func _section_5_scene(manager: Node) -> void:
 		"Trang dau co dung %d the (mockup)" % CARDS_PER_PAGE)
 	_entry(full_pages >= pages - 1, "Cac trang deu day the (tru trang cuoi)")
 
-	var dots := scene.get_node_or_null("Sheet/Dots")
+	var dots := scene.ui_path("Sheet/Dots")
 	_entry(dots != null, "Co cum dots phan trang")
 	if dots != null:
 		_entry(dots.get_child_count() == pages, "So dots = so trang (%d)" % pages)
@@ -248,7 +248,7 @@ func _section_5_scene(manager: Node) -> void:
 		"Tab DUNGEON co %d danh hieu" % dungeon_count)
 	_entry(scene.page_count() == int(ceil(float(dungeon_count) / float(CARDS_PER_PAGE))),
 		"So trang cua tab DUNGEON dung theo so luong")
-	var tab_label := scene.get_node_or_null("Sheet/Tabs/Tab2/Label") as Label
+	var tab_label := scene.ui_path("Sheet/Tabs/Tab2/Label") as Label
 	_entry(tab_label != null and not tab_label.text.is_empty(),
 		"Tab thu 3 (DUNGEON) co nhan chu")
 

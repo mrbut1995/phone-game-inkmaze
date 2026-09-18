@@ -12,13 +12,24 @@
 >   Khung nội dung: màn DỌC = cột `clamp(canvas.x, 1080, 1440)` canh giữa · màn NGANG có layout ngang = phủ kín canvas ·
 >   màn chưa tách layout = giữ nguyên cột 1080 như cũ.
 > - **Helper ĐÃ XONG:** `scripts/utils/auto_fit_label.gd` (AutoFitLabel) cho chữ tự co vừa khung.
-> - **Màn đã chuyển sang 2 layout:** Main Screen (`nodes/layout/main_{portrait,landscape}.tscn`).
+> - **Màn đã chuyển sang 2 layout:** Main Screen (`scenes/orientation/{portrait,landscape}/main.tscn`) ·
+>   **Chọn Chương / Chapters** (`scenes/orientation/{portrait,landscape}/chapters.tscn` — layout ngang 2 cột:
+>   trái TopBar + Ví Sao + Banner + CTA, phải lưới thẻ chương **2–3 cột** tự tính theo bề rộng khung).
+> - **CÔNG CỤ TÁCH MÀN:** `python tools/ui/split_screen_layouts.py <màn> [...]` — tách scene màn thành
+>   `scenes/orientation/portrait/<màn>.tscn` (bản dọc giữ nguyên bố cục) + `scenes/<màn>.tscn` chỉ còn
+>   root + `Portrait` (+ `Landscape` nếu bản ngang đã tồn tại). Tra node theo layout: `BaseScene.ui_path("A/B")`.
+> - **9-SLICE CHO ART DỌC DÙNG LẠI Ở NGANG:** `python tools/ui/menu_buttons_9slice.py` sinh `StyleBoxTexture`
+>   trong `resources/settings/styles/menu/` (thẻ chế độ · nút công cụ · CTA) và đổi `TextureButton` → `Button`.
+> - **QUY TẮC ART ĐƯỢC USER CHỐT:** art nào mà 9-slice KHÔNG dùng được cho layout ngang (nút/thẻ có nội dung
+>   bake sẵn trong SVG, phải vẽ lại theo tỉ lệ ngang) → tạo SVG MỚI trong `assets/images-landscape/`
+>   (giữ nguyên cấu trúc thư mục con tương ứng của `assets/images/`).
 > - **ĐO CANVAS THẬT** (quan trọng khi đọc bảng spec — spec ghi px theo màn hình thật, còn layout chạy theo canvas):
 >   `9:16→1080×1920 · 9:18→1080×2160 · 9:19.5→1080×2340 · 9:21→1080×2520 · 3:4 (1080×1440 & 1200×1600)→1440×1920 ·
 >   4:3→2560×1920 · 16:9→3413×1920 · 18:9→3840×1920 · 19.5:9→4160×1920`.
 >   ⇒ Màn NGANG canvas CAO ĐÚNG **1920** nên cỡ chữ/khung trong layout ngang phải lấy **× 1.778** so với số px trong spec.
-> - **CÒN LẠI:** các màn khác (splash/title/levels/chapters/daily/settings/shop/ranking/archivement/game…) chưa tách layout ngang;
->   art thẻ chế độ ở Main bị kéo ngang khi thẻ ngang (cần art ngang hoặc StyleBoxTexture 9-slice); chưa áp safe-area tai thỏ.
+> - **CÒN LẠI:** tách layout ngang cho các màn còn lại (splash/title/levels/daily/settings/shop/ranking/
+>   archivement/debug/game…) — xem §6; art nào không 9-slice được thì vẽ thêm vào `assets/images-landscape/`;
+>   chưa áp safe-area tai thỏ. (2 suite đỏ CŨ không liên quan: Sum Path/Fading Ink HUD.)
 
 ---
 

@@ -35,12 +35,13 @@ const PODIUM_GROUPS: Array[String] = ["Gold", "Silver", "Bronze"]
 ## Ngưỡng kéo tối thiểu (px) trước khi coi là VUỐT/CUỘN thay vì chạm
 const DRAG_THRESHOLD := 14.0
 
-@onready var btn_back: TextureButton = $TopBar/Back
-@onready var tabs_box: HBoxContainer = $Sheet/Tabs
-@onready var podium: Control = $Sheet/Podium
-@onready var scroll: ScrollContainer = $Sheet/Scroll
-@onready var rows_box: VBoxContainer = $Sheet/Scroll/Rows
-@onready var my_rank_bar: TextureRect = $Sheet/MyRank
+## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout giữ CÙNG đường dẫn node)
+var btn_back: BaseButton = null
+var tabs_box: HBoxContainer = null
+var podium: Control = null
+var scroll: ScrollContainer = null
+var rows_box: VBoxContainer = null
+var my_rank_bar: TextureRect = null
 
 var _board := "dungeon"
 var _tab_buttons: Dictionary = {}
@@ -54,12 +55,37 @@ var _drag_scroll := 0.0
 
 
 func _ready() -> void:
-	btn_back.pressed.connect(_on_back_pressed)
-	UIAnim.attach_press_bounce(btn_back)
+	_bind_refs()
+	if btn_back != null:
+		btn_back.pressed.connect(_on_back_pressed)
+		UIAnim.attach_press_bounce(btn_back)
+	orientation_changed.connect(_on_orientation_changed)
 	_build_tabs()
 	_connect_manager()
 	# Làm mới theo khung 10 phút (chỉ dựng lại khi đã sang khung mới)
 	Ranking.refresh()
+	_show_board(_board)
+
+
+## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
+func _bind_refs() -> void:
+	btn_back = ui_path("TopBar/Back") as BaseButton
+	tabs_box = ui_path("Sheet/Tabs") as HBoxContainer
+	podium = ui_path("Sheet/Podium") as Control
+	scroll = ui_path("Sheet/Scroll") as ScrollContainer
+	rows_box = ui_path("Sheet/Scroll/Rows") as VBoxContainer
+	my_rank_bar = ui_path("Sheet/MyRank") as TextureRect
+
+
+## Xoay màn hình: gắn lại node + dựng lại tab của layout mới rồi nạp lại bảng đang xem
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
+func _rebind_after_orientation() -> void:
+	_bind_refs()
+	_tab_buttons.clear()
+	_build_tabs()
 	_show_board(_board)
 
 

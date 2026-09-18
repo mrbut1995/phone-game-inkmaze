@@ -13,44 +13,99 @@ extends BaseScene
 const CARD_SCENE := preload("res://nodes/chapters/chapter_card.tscn")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-@onready var btn_back: TextureButton = $TopBar/Back
-@onready var cards_box: VBoxContainer = $List/Cards
-@onready var lbl_wallet: Label = $Wallet/Count
-@onready var btn_continue: TextureButton = $ContinueButton
-@onready var lbl_continue: Label = $ContinueButton/Label
+## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (Portrait / Landscape giữ CÙNG đường dẫn node)
+var btn_back: BaseButton = null
+var cards_box: Container = null
+var lbl_wallet: Label = null
+var btn_continue: BaseButton = null
+var lbl_continue: Label = null
 
 var _cards: Array[ChapterCard] = []
 
 
-func _ready() -> void:
-	if btn_back != null:
-		btn_back.pressed.connect(_on_back_pressed)
-		UIAnim.attach_press_bounce(btn_back)
-	if btn_continue != null:
-		btn_continue.pressed.connect(_on_continue_pressed)
-		UIAnim.attach_press_bounce(btn_continue)
-		UIAnim.play_pulse(btn_continue, 1.035, 1.6)
+## Gắn node theo layout đang hiển thị rồi tính lại số cột lưới thẻ.
+## Dùng TÊN node (không dùng đường dẫn) vì 2 layout lồng khác nhau: bản dọc để TopBar/Wallet/CTA ngay dưới root,
+## bản ngang gom chúng vào cột `Left` (VBoxContainer) — tên node thì GIỐNG NHAU.
+func _bind_refs() -> void:
+	btn_back = ui("Back") as BaseButton
+	cards_box = ui("Cards") as Container
+	lbl_wallet = ui_child("Wallet", "Count") as Label
+	btn_continue = ui("ContinueButton") as BaseButton
+	lbl_continue = ui_child("ContinueButton", "Label") as Label
+	_apply_grid_columns()
 
-	var top_bar := get_node_or_null("TopBar") as Control
+
+## Layout NGANG: lưới thẻ tự tăng số cột theo bề ngang vùng cuộn (2 cột ở 16:9, 1 ở 4:3, 3 ở 19.5:9)
+func _apply_grid_columns() -> void:
+	var grid := cards_box as GridContainer
+	if grid == null:
+		return
+	var list := ui("List") as Control
+	var width := list.size.x if list != null else 0.0
+	grid.columns = maxi(1, int(width / 1040.0)) if width > 0.0 else grid.columns
+
+
+## Nối signal + hiệu ứng bấm cho nút của layout đang dùng (gọi lại được khi xoay màn hình)
+func _wire_buttons() -> void:
+	if btn_back != null:
+		if not btn_back.pressed.is_connected(_on_back_pressed):
+			btn_back.pressed.connect(_on_back_pressed)
+		if not btn_back.has_meta("bounce_attached"):
+			btn_back.set_meta("bounce_attached", true)
+			UIAnim.attach_press_bounce(btn_back)
+	if btn_continue != null:
+		if not btn_continue.pressed.is_connected(_on_continue_pressed):
+			btn_continue.pressed.connect(_on_continue_pressed)
+		if not btn_continue.has_meta("bounce_attached"):
+			btn_continue.set_meta("bounce_attached", true)
+			UIAnim.attach_press_bounce(btn_continue)
+			UIAnim.play_pulse(btn_continue, 1.035, 1.6)
+
+
+func _ready() -> void:
+	_bind_refs()
+	_wire_buttons()
+
+	var top_bar := ui("TopBar") as Control
 	if top_bar != null:
 		UIAnim.play_slide_in(top_bar, Vector2(0, -22), 0.0, 0.25)
-	var wallet_bar := get_node_or_null("Wallet") as Control
+	var wallet_bar := ui("Wallet") as Control
 	if wallet_bar != null:
 		UIAnim.play_slide_in(wallet_bar, Vector2(0, -22), 0.04, 0.25)
-	var banner := get_node_or_null("Banner") as Control
+	var banner := ui("Banner") as Control
 	if banner != null:
 		UIAnim.play_slide_in(banner, Vector2(0, -15), 0.08, 0.25)
 	if btn_continue != null:
 		UIAnim.play_slide_in(btn_continue, Vector2(0, 25), 0.15, 0.28)
 
 	# Chương đã mở hết thì tự ẩn nút "TIẾP TỤC CHƯƠNG n" dưới chân trang
-	if lbl_continue != null:
-		lbl_continue.theme_type_variation = &"LevelsContinue"
+	_prepare_continue_label()
 	_build_cards()
 	_refresh_header()
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("chapter_unlocked"):
 		gm.connect("chapter_unlocked", _on_chapter_unlocked)
+	orientation_changed.connect(_on_orientation_changed)
+	resized.connect(_apply_grid_columns)
+
+
+## Xoay màn hình: gắn lại node của layout mới RỒI nạp lại dữ liệu lên nhãn/ví (nếu không, nhãn của layout mới
+## vẫn giữ chuỗi khoá thô trong .tscn)
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
+func _rebind_after_orientation() -> void:
+	_bind_refs()
+	_wire_buttons()
+	_prepare_continue_label()
+	_refresh_header()
+
+
+## Kiểu chữ của nút CTA chân trang (đặt ở cả 2 layout)
+func _prepare_continue_label() -> void:
+	if lbl_continue != null:
+		lbl_continue.theme_type_variation = &"LevelsContinue"
 
 
 # ---------------------------------------------------------------------------

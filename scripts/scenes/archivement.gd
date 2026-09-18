@@ -19,8 +19,12 @@ const PAGE_SCENE := preload("res://nodes/archivements/page.tscn")
 const DOT_SCENE := preload("res://nodes/archivements/page_dot.tscn")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-## Số thẻ danh hiệu mỗi trang (khe giữa các thẻ nằm trong nodes/archivements/page.tscn)
+## Số thẻ danh hiệu mỗi trang ở bản DỌC (1 cột × 5 hàng — khe nằm trong nodes/archivements/page.tscn)
 const CARDS_PER_PAGE := 5
+## Bản NGANG: lưới nhiều cột (thẻ 710px) × số hàng vừa khung cuộn
+const PORTRAIT_COLUMNS := 1
+const CARD_SIZE := Vector2(710.0, 170.0)
+const GRID_SEP := Vector2(20.0, 20.0)
 const SNAP_TIME := 0.22
 const DRAG_THRESHOLD := 8.0
 const CLICK_LOCK_TIME := 0.15
@@ -28,18 +32,21 @@ const CLICK_LOCK_TIME := 0.15
 ## Tab = "" (TẤT CẢ) + các category của ArchivementManager
 const TABS := ["", "levels", "dungeon", "daily", "special"]
 
-@onready var btn_back: TextureButton = $TopBar/Back
-@onready var overview_bar: Control = $Sheet/Overview/Bar
-@onready var overview_fill: TextureRect = $Sheet/Overview/Bar/Fill
-@onready var overview_pct: Label = $Sheet/Overview/Percent
-@onready var overview_summary: Label = $Sheet/Overview/Summary
-@onready var tabs_box: HBoxContainer = $Sheet/Tabs
-@onready var card_area: Control = $Sheet/CardArea
-@onready var scroll: ScrollContainer = $Sheet/CardArea/Scroll
-@onready var pages_host: HBoxContainer = $Sheet/CardArea/Scroll/Pages
-@onready var dots_box: HBoxContainer = $Sheet/Dots
-@onready var empty_label: Label = $Sheet/EmptyLabel
-@onready var stamp_label: Label = $Sheet/Footer/Stamp/Label
+## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout giữ CÙNG đường dẫn node)
+var btn_back: BaseButton = null
+var overview_bar: Control = null
+var overview_fill: TextureRect = null
+var overview_pct: Label = null
+var overview_summary: Label = null
+var tabs_box: HBoxContainer = null
+var card_area: Control = null
+var scroll: ScrollContainer = null
+var pages_host: HBoxContainer = null
+var dots_box: HBoxContainer = null
+var empty_label: Label = null
+var stamp_label: Label = null
+
+var _current_columns := PORTRAIT_COLUMNS
 
 var _category := ""
 var _entries: Array = []
@@ -55,10 +62,12 @@ var _drag_start_scroll := 0.0
 
 
 func _ready() -> void:
+	_bind_refs()
 	if btn_back != null:
 		btn_back.pressed.connect(_on_back_pressed)
 		UIAnim.attach_press_bounce(btn_back)
 	_connect_manager()
+	orientation_changed.connect(_on_orientation_changed)
 
 	Archivement.refresh()
 	_build_tabs()
@@ -66,6 +75,60 @@ func _ready() -> void:
 	_reload(true)
 	call_deferred("_apply_layout")
 	call_deferred("_go_to_page", _page_for_first_claimable(), false)
+
+
+## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
+func _bind_refs() -> void:
+	btn_back = ui_path("TopBar/Back") as BaseButton
+	overview_bar = ui_path("Sheet/Overview/Bar") as Control
+	overview_fill = ui_path("Sheet/Overview/Bar/Fill") as TextureRect
+	overview_pct = ui_path("Sheet/Overview/Percent") as Label
+	overview_summary = ui_path("Sheet/Overview/Summary") as Label
+	tabs_box = ui_path("Sheet/Tabs") as HBoxContainer
+	card_area = ui_path("Sheet/CardArea") as Control
+	scroll = ui_path("Sheet/CardArea/Scroll") as ScrollContainer
+	pages_host = ui_path("Sheet/CardArea/Scroll/Pages") as HBoxContainer
+	dots_box = ui_path("Sheet/Dots") as HBoxContainer
+	empty_label = ui_path("Sheet/EmptyLabel") as Label
+	stamp_label = ui_path("Sheet/Footer/Stamp/Label") as Label
+
+
+## Số thẻ mỗi trang: bản DỌC = 5 (1 cột × 5 hàng); bản NGANG = lưới nhiều cột × số hàng vừa khung
+func _cards_per_page() -> int:
+	return _columns_per_page() * _rows_per_page()
+
+
+func _columns_per_page() -> int:
+	if not is_landscape:
+		return PORTRAIT_COLUMNS
+	var width := scroll.size.x if scroll != null else 0.0
+	if width <= 0.0:
+		return PORTRAIT_COLUMNS
+	var columns := int((width + GRID_SEP.x * 0.5) / (CARD_SIZE.x + GRID_SEP.x))
+	return clampi(columns, 1, 5)
+
+
+func _rows_per_page() -> int:
+	if not is_landscape:
+		return CARDS_PER_PAGE
+	var height := scroll.size.y if scroll != null else 0.0
+	if height <= 0.0:
+		return 3
+	var rows := int((height + GRID_SEP.y * 0.5) / (CARD_SIZE.y + GRID_SEP.y))
+	return clampi(rows, 2, 6)
+
+
+## Xoay màn hình: gắn lại node của layout mới rồi chia lại trang theo số cột mới
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
+func _rebind_after_orientation() -> void:
+	_bind_refs()
+	_current_columns = _columns_per_page()
+	_reload(true)
+	_apply_layout()
+	_go_to_page(_page_for_first_claimable(), false)
 
 
 # ---------------------------------------------------------------------------
@@ -100,7 +163,6 @@ func cards_on_page(page_index: int) -> int:
 		return 0
 	return page.get_child(0).get_child_count() if page.get_child_count() > 0 else 0
 
-
 func go_to_page(index: int, animate := true) -> void:
 	_go_to_page(index, animate)
 
@@ -132,7 +194,7 @@ func _refresh_all() -> void:
 
 func _reload(keep_page: bool) -> void:
 	_entries = Archivement.entries(_category)
-	_page_count = maxi(1, int(ceil(float(_entries.size()) / float(CARDS_PER_PAGE))))
+	_page_count = maxi(1, int(ceil(float(_entries.size()) / float(_cards_per_page()))))
 	if not keep_page:
 		_page = 0
 	_page = clampi(_page, 0, _page_count - 1)
@@ -293,6 +355,12 @@ func _on_dot_pressed(index: int) -> void:
 func _apply_layout() -> void:
 	if scroll == null or pages_host == null:
 		return
+	var columns := _columns_per_page()
+	if columns != _current_columns:
+		# Khung cuộn đổi bề rộng (xoay màn hình) -> chia lại trang theo số cột mới
+		_current_columns = columns
+		_reload(true)
+	_page = clampi(_page, 0, maxi(_page_count - 1, 0))
 	_page_width = maxf(scroll.size.x, 1.0)
 	for page in pages_host.get_children():
 		page.custom_minimum_size = Vector2(_page_width, scroll.size.y)
@@ -330,9 +398,10 @@ func _nearest_page() -> int:
 
 ## Trang chứa danh hiệu đầu tiên đang chờ nhận thưởng (mở Sổ tay là thấy ngay)
 func _page_for_first_claimable() -> int:
+	var per_page := maxi(_cards_per_page(), 1)
 	for index in _entries.size():
 		if bool((_entries[index] as Dictionary).get("claimable", false)):
-			return clampi(index / CARDS_PER_PAGE, 0, maxi(_page_count - 1, 0))
+			return clampi(index / per_page, 0, maxi(_page_count - 1, 0))
 	return 0
 
 

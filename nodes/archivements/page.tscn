@@ -8,7 +8,9 @@ anchors_preset = 0
 mouse_filter = 1
 script = ExtResource("1_script")
 
-[node name="Column" type="VBoxContainer" parent="."]
+[node name="Column" type="GridContainer" parent="."]
 layout_mode = 0
 mouse_filter = 2
-theme_override_constants/separation = 20
+columns = 1
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20

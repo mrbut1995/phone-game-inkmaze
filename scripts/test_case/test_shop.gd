@@ -26,6 +26,11 @@ var _failed := 0
 var _checks := 0
 
 
+## Màn đã tách 2 layout ⇒ node nằm trong layout đang hiển thị (dọc/ngang)
+func _ui(scene: Node, path: String) -> Node:
+	return scene.call("ui_path", path)
+
+
 func _init() -> void:
 	print("\n========================================================")
 	print("  TEST: %s" % TITLE)
@@ -249,11 +254,11 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	await process_frame
 	await process_frame
 
-	_entry(scene.get_node_or_null("TopBar/Back") is TextureButton, "Co nut Back")
-	_entry(scene.get_node_or_null("Tabs") is HBoxContainer, "Co hang tab")
-	_entry(scene.get_node_or_null("Wallet/Count") is Label, "Co vi Xu")
-	_entry(scene.get_node_or_null("Content/List") is VBoxContainer, "Co danh sach mon hang")
-	_entry(scene.get_node_or_null("GiftBanner/GiftBtn") is TextureButton, "Co nut o banner tiep suc")
+	_entry(_ui(scene, "TopBar/Back") is TextureButton, "Co nut Back")
+	_entry(_ui(scene, "Tabs") is HBoxContainer, "Co hang tab")
+	_entry(_ui(scene, "Wallet/Count") is Label, "Co vi Xu")
+	_entry(_ui(scene, "Content/List") is VBoxContainer, "Co danh sach mon hang")
+	_entry(_ui(scene, "GiftBanner/GiftBtn") is TextureButton, "Co nut o banner tiep suc")
 	_entry(scene.tabs_box.get_child_count() == 4, "4 tab duoc dung bang code")
 	for category in ["pen", "theme", "tool", "coin"]:
 		_entry(scene.tab_button(category) != null, "Co tab '%s'" % category)
@@ -313,7 +318,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	var pad: Control = scene.doodle_pad()
 	_entry(pad != null, "Tab BUT & MUC co Ban nhap thu but")
 	if pad != null:
-		_entry(scene.get_node("Content/List").get_child(0) == pad,
+		_entry(_ui(scene, "Content/List").get_child(0) == pad,
 			"Ban nhap nam TREN luoi mon hang")
 		_entry(pad.size.x >= 960.0 and absf(pad.size.y - 215.0) < 2.0,
 			"Ban nhap dung co 980x215 (nhan %s)" % str(pad.size))
@@ -370,7 +375,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	_entry(scene.doodle_pad() == null, "Tab DUNG CU khong co ban nhap thu but")
 	_entry(scene.item_count() == 6, "Tab dung cu hien 6 mon (nhan %d)" % scene.item_count())
 	_entry(scene.page_count() == 1, "Tab dung cu khong phan trang")
-	_entry(not scene.get_node("Pager").visible, "An thanh phan trang khi 1 trang")
+	_entry(not _ui(scene, "Pager").visible, "An thanh phan trang khi 1 trang")
 
 	# Tab NẠP XU: hàng VIP no-ads TRÊN CÙNG (1 hàng) + lưới 2 cột các gói Xu
 	scene.show_tab("coin")
@@ -451,7 +456,7 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 	# Hết thời gian khoá -> nút mũi tên lại hoạt động
 	scene.set("_click_lock_until", 0.0)
 	_entry(not scene.clicks_locked(), "Het thoi gian khoa -> mo khoa lai")
-	(scene.get_node("Pager/Prev") as TextureButton).pressed.emit()
+	(_ui(scene, "Pager/Prev") as TextureButton).pressed.emit()
 	await process_frame
 	_entry(scene.current_page() == 0, "Nut lui trang chay lai binh thuong")
 
@@ -464,13 +469,13 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 
 	# Số hàng mỗi trang khớp chiều cao khung nhìn (màn thấp -> ít hàng hơn).
 	# Nếu chỉ đủ chỗ cho 1 HÀNG (2 món) mà thẻ còn cao hơn khung thì được phép cuộn.
-	var content := scene.get_node("Content") as ScrollContainer
+	var content := _ui(scene, "Content") as ScrollContainer
 	_entry(content != null, "Co vung cuon Content")
 	for tab_id in ["pen", "theme", "tool", "coin"]:
 		scene.show_tab(tab_id)
 		await process_frame
 		await process_frame
-		var list := scene.get_node("Content/List") as Control
+		var list := _ui(scene, "Content/List") as Control
 		var list_h: float = list.size.y if list != null else INF
 		var one_row_only: bool = scene.items_per_page() <= 2
 		_entry(list_h <= content.size.y + 1.0 or one_row_only,
@@ -481,7 +486,7 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 	scene.call("goto_page", 1)
 	await process_frame
 	await process_frame
-	var pen_list := scene.get_node("Content/List") as Control
+	var pen_list := _ui(scene, "Content/List") as Control
 	_entry(pen_list.size.y <= content.size.y + 1.0 or scene.items_per_page() <= 2,
 		"Trang 2 tab pen: danh sach vua khung nhin (%.0f <= %.0f)" % [pen_list.size.y, content.size.y])
 	scene.call("goto_page", 0)

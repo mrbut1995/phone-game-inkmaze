@@ -9,6 +9,6 @@ extends Control
 ## ============================================================================
 
 
-## Cột dọc chứa các thẻ danh hiệu của trang
-func column() -> VBoxContainer:
+## Cột/lưới chứa các thẻ danh hiệu của trang (GridContainer: bản dọc 1 cột, bản NGANG nhiều cột)
+func column() -> Container:
 	return $Column

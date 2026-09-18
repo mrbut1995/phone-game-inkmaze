@@ -16,6 +16,12 @@ from __future__ import annotations
 
 import pathlib
 import re
+import sys
+
+# Console Windows hay dùng cp1252 → in tiếng Việt bị UnicodeEncodeError
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 STYLE_DIR = ROOT / "resources" / "settings" / "styles" / "menu"
@@ -23,9 +29,20 @@ ART_DIR = "res://assets/images/main"
 
 CARD_MARGINS = (277, 60, 227, 60)  # trái · trên · phải · dưới (px trong texture 804×310)
 UTIL_MARGINS = (40, 40, 40, 40)  # texture 230×130
+CTA_MARGINS = (48, 48, 48, 48)  # texture 800×120 (btn_paper_cta_*)
+
+# art -> thư mục chứa art (mặc định assets/images/main)
+ART_DIRS = {
+    "btn_paper_cta_normal": "res://assets/images/common",
+    "btn_paper_cta_pressed": "res://assets/images/common",
+    "btn_paper_cta_focus": "res://assets/images/common",
+}
 
 # art -> (tên file stylebox, patch margins)
 STYLEBOXES: dict[str, tuple[str, tuple[int, int, int, int]]] = {
+    "btn_paper_cta_normal": ("cta_normal", CTA_MARGINS),
+    "btn_paper_cta_pressed": ("cta_pressed", CTA_MARGINS),
+    "btn_paper_cta_focus": ("cta_focus", CTA_MARGINS),
     "card_mode_level_normal": ("card_level_normal", CARD_MARGINS),
     "card_mode_level_pressed": ("card_level_pressed", CARD_MARGINS),
     "card_mode_level_focus": ("card_level_focus", CARD_MARGINS),
@@ -75,6 +92,12 @@ BUTTONS: dict[str, dict[str, str]] = {
         "pressed": "btn_menu_settings", "focus": "btn_menu_settings",
         "disabled": "btn_menu_settings",
     },
+    # Nút CTA lớn (Chọn Chương / Chọn Màn / Daily…) — bản NGANG không co art được nên dùng 9-slice
+    "ContinueButton": {
+        "normal": "btn_paper_cta_normal", "hover": "btn_paper_cta_normal",
+        "pressed": "btn_paper_cta_pressed", "focus": "btn_paper_cta_focus",
+        "disabled": "btn_paper_cta_normal",
+    },
 }
 
 CARD_NAMES = {"Play", "Dungeon", "DailyChallenge"}
@@ -83,15 +106,17 @@ UTIL_NAMES = {"Leaderboard", "Shop", "Settings"}
 SCENES = [
     ROOT / "scenes" / "orientation" / "portrait" / "main.tscn",
     ROOT / "scenes" / "orientation" / "landscape" / "main.tscn",
+    ROOT / "scenes" / "orientation" / "landscape" / "chapters.tscn",
 ]
 
 
 def write_styleboxes() -> None:
     STYLE_DIR.mkdir(parents=True, exist_ok=True)
     for art, (name, margins) in STYLEBOXES.items():
+        art_dir = ART_DIRS.get(art, ART_DIR)
         text = (
             '[gd_resource type="StyleBoxTexture" format=3]\n\n'
-            f'[ext_resource type="Texture2D" path="{ART_DIR}/{art}.svg" id="1_tex"]\n\n'
+            f'[ext_resource type="Texture2D" path="{art_dir}/{art}.svg" id="1_tex"]\n\n'
             "[resource]\n"
             'texture = ExtResource("1_tex")\n'
             f"texture_margin_left = {float(margins[0])}\n"
@@ -119,6 +144,8 @@ def _ensure_ext_resources(header: str, arts: set[str]) -> str:
 
 
 def _convert_button(block: str, name: str) -> str:
+    if "theme_override_styles/normal" in block:
+        return block  # đã chuyển rồi (chạy lại tool không nhân đôi)
     lines = block.splitlines(keepends=True)
     out: list[str] = []
     for line in lines:

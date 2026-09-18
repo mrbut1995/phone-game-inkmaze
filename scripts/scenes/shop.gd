@@ -29,8 +29,10 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 ## Số thực tế được tính lại theo CHIỀU CAO khung nhìn (`_grid_per_page`): màn thấp /
 ## xoay ngang thì ít hàng hơn, màn cao thì nhiều hàng hơn (content giãn hết chỗ trống).
 const TILES_PER_PAGE := 6
-## Lưới ô: 2 cột, khe ngang 30 / khe dọc 24 (khớp `_make_grid`)
+## Lưới ô: bản DỌC 2 cột (khe ngang 30 / khe dọc 24 — khớp `_make_grid`); bản NGANG nở tối đa 4 cột
 const GRID_COLUMNS := 2
+const GRID_COLUMNS_MAX := 4
+const GRID_H_SEP := 30.0
 const GRID_V_SEP := 24.0
 ## Khe dọc giữa các khối trong danh sách (khớp `List.theme_override_constants/separation`)
 const LIST_SEP := 20.0
@@ -60,18 +62,19 @@ const SCREEN_SCALE_MAX := 1.5       # màn dọc siêu cao: lớn nhất 1,5×
 ## Hệ số phóng to THẺ Ô so với cỡ thiết kế trong `item_tile.tscn`
 ## (muốn cỡ khác: sửa số này HOẶC sửa cỡ thiết kế trong scene — không cần sửa gì khác)
 const TILE_SCALE := 1.25
-@onready var btn_back: TextureButton = $TopBar/Back
-@onready var tabs_box: HBoxContainer = $Tabs
-@onready var list_box: VBoxContainer = $Content/List
-@onready var scroll: ScrollContainer = $Content
-@onready var wallet_count: Label = $Wallet/Count
-@onready var wallet_plus: TextureButton = $Wallet/Plus
-@onready var pager: Control = $Pager
-@onready var page_label: Label = $Pager/PageLabel
-@onready var btn_prev: TextureButton = $Pager/Prev
-@onready var btn_next: TextureButton = $Pager/Next
-@onready var dots_box: HBoxContainer = $Pager/Dots
-@onready var btn_gift: TextureButton = $GiftBanner/GiftBtn
+## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout giữ CÙNG đường dẫn node)
+var btn_back: BaseButton = null
+var tabs_box: HBoxContainer = null
+var list_box: VBoxContainer = null
+var scroll: ScrollContainer = null
+var wallet_count: Label = null
+var wallet_plus: BaseButton = null
+var pager: Control = null
+var page_label: Label = null
+var btn_prev: BaseButton = null
+var btn_next: BaseButton = null
+var dots_box: HBoxContainer = null
+var btn_gift: BaseButton = null
 
 var _tabs: Dictionary = {}          # category -> ShopTabButton (scene nodes/shop/tab_button.tscn)
 var _cards: Array[Control] = []
@@ -107,32 +110,19 @@ var _tabs_captured := false
 
 
 func _ready() -> void:
-	if btn_back != null:
-		btn_back.pressed.connect(_on_back_pressed)
-		UIAnim.attach_press_bounce(btn_back)
-	if wallet_plus != null:
-		wallet_plus.pressed.connect(_on_wallet_plus_pressed)
-		UIAnim.attach_press_bounce(wallet_plus)
-	if btn_prev != null:
-		btn_prev.pressed.connect(_on_prev_page)
-		UIAnim.attach_press_bounce(btn_prev)
-	if btn_next != null:
-		btn_next.pressed.connect(_on_next_page)
-		UIAnim.attach_press_bounce(btn_next)
-	if btn_gift != null:
-		btn_gift.pressed.connect(_on_gift_pressed)
-		UIAnim.attach_press_bounce(btn_gift)
-		UIAnim.play_pulse(btn_gift, 1.04, 1.8)
+	_bind_refs()
+	_wire_buttons()
+	orientation_changed.connect(_on_orientation_changed)
 
-	var top_bar := get_node_or_null("TopBar") as Control
+	var top_bar := ui("TopBar") as Control
 	if top_bar != null:
 		UIAnim.play_slide_in(top_bar, Vector2(0, -22), 0.0, 0.25)
-	var wallet_bar := get_node_or_null("Wallet") as Control
+	var wallet_bar := ui("Wallet") as Control
 	if wallet_bar != null:
 		UIAnim.play_slide_in(wallet_bar, Vector2(0, -22), 0.04, 0.25)
 	if tabs_box != null:
 		UIAnim.play_slide_in(tabs_box, Vector2(0, -12), 0.08, 0.25)
-	var gift_banner := get_node_or_null("GiftBanner") as Control
+	var gift_banner := ui("GiftBanner") as Control
 	if gift_banner != null:
 		UIAnim.play_slide_in(gift_banner, Vector2(0, 20), 0.12, 0.25)
 
@@ -147,6 +137,65 @@ func _ready() -> void:
 	# Khung danh sách chỉ có kích thước THẬT sau frame đầu -> tính lại phân trang cho khớp
 	await get_tree().process_frame
 	await get_tree().process_frame
+	_refresh_pagination_if_needed()
+
+
+## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
+func _bind_refs() -> void:
+	btn_back = ui_path("TopBar/Back") as BaseButton
+	tabs_box = ui_path("Tabs") as HBoxContainer
+	list_box = ui_path("Content/List") as VBoxContainer
+	scroll = ui_path("Content") as ScrollContainer
+	wallet_count = ui_child("Wallet", "Count") as Label
+	wallet_plus = ui_child("Wallet", "Plus") as BaseButton
+	pager = ui("Pager") as Control
+	page_label = ui_child("Pager", "PageLabel") as Label
+	btn_prev = ui_child("Pager", "Prev") as BaseButton
+	btn_next = ui_child("Pager", "Next") as BaseButton
+	dots_box = ui_child("Pager", "Dots") as HBoxContainer
+	btn_gift = ui_child("GiftBanner", "GiftBtn") as BaseButton
+
+
+## Mỗi NODE chỉ nối signal 1 lần (xoay màn hình không nhân đôi connection/hiệu ứng)
+func _wire_once(node: Node) -> bool:
+	if node == null or node.has_meta("wired"):
+		return false
+	node.set_meta("wired", true)
+	return true
+
+
+func _wire_buttons() -> void:
+	if _wire_once(btn_back):
+		btn_back.pressed.connect(_on_back_pressed)
+		UIAnim.attach_press_bounce(btn_back)
+	if _wire_once(wallet_plus):
+		wallet_plus.pressed.connect(_on_wallet_plus_pressed)
+		UIAnim.attach_press_bounce(wallet_plus)
+	if _wire_once(btn_prev):
+		btn_prev.pressed.connect(_on_prev_page)
+		UIAnim.attach_press_bounce(btn_prev)
+	if _wire_once(btn_next):
+		btn_next.pressed.connect(_on_next_page)
+		UIAnim.attach_press_bounce(btn_next)
+	if _wire_once(btn_gift):
+		btn_gift.pressed.connect(_on_gift_pressed)
+		UIAnim.attach_press_bounce(btn_gift)
+		UIAnim.play_pulse(btn_gift, 1.04, 1.8)
+
+
+## Xoay màn hình: gắn lại node + dựng lại tab/trang của layout mới
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
+func _rebind_after_orientation() -> void:
+	_bind_refs()
+	_wire_buttons()
+	_tabs_captured = false
+	_tabs.clear()
+	_capture_tab_layout()
+	_build_tabs()
+	_refresh_wallet()
 	_refresh_pagination_if_needed()
 
 
@@ -190,6 +239,18 @@ func tile_height() -> float:
 	return tile_size().y
 
 
+## Số CỘT của lưới ô: bản DỌC = 2; bản NGANG nở theo bề rộng khung danh sách (tối đa 4)
+func grid_columns() -> int:
+	if not is_landscape:
+		return GRID_COLUMNS
+	var width := scroll.size.x if scroll != null else 0.0
+	var tile_w := tile_size().x
+	if width <= 0.0 or tile_w <= 0.0:
+		return GRID_COLUMNS
+	var columns := int((width + GRID_H_SEP * 0.5) / (tile_w + GRID_H_SEP))
+	return clampi(columns, GRID_COLUMNS, GRID_COLUMNS_MAX)
+
+
 ## Số món mỗi trang theo CHIỀU CAO thật của khung danh sách (đổi khi xoay màn hình)
 func _grid_per_page() -> int:
 	var avail := scroll.size.y if scroll != null else 0.0
@@ -201,9 +262,10 @@ func _grid_per_page() -> int:
 	if _category == "pen":
 		extra = _doodle_pad_height() + LIST_SEP
 	var grid_avail := maxf(avail - extra, 0.0)
+	var columns := grid_columns()
 	var row_h := tile_height() + GRID_V_SEP
 	var rows := maxi(1, int(floor((grid_avail + GRID_V_SEP) / maxf(row_h, 1.0))))
-	return maxi(GRID_COLUMNS, rows * GRID_COLUMNS)
+	return maxi(columns, rows * columns)
 
 
 ## Chiều cao bàn nháp thử bút: cỡ thật khi đã dựng, nếu chưa thì đọc từ scene gốc
@@ -373,15 +435,22 @@ func _apply_tab_metrics() -> void:
 		return
 	_capture_tab_layout()
 	var h := tab_height()
-	tabs_box.offset_top = _tabs_top
-	tabs_box.offset_bottom = _tabs_top + h
+	var landscape := is_landscape
+	if not landscape:
+		# Bản dọc: khối tab/vạch kẻ/danh sách đặt bằng OFFSET (toạ độ tuyệt đối) như trước giờ
+		tabs_box.offset_top = _tabs_top
+		tabs_box.offset_bottom = _tabs_top + h
 	var count := maxi(TAB_ORDER.size(), 1)
-	var tab_w := (_tabs_row_w - _tabs_sep * float(count - 1)) / float(count)
+	var row_w := maxf(tabs_box.size.x, 1.0) if landscape else _tabs_row_w
+	var tab_w := (row_w - _tabs_sep * float(count - 1)) / float(count)
 	var inactive_h := h * ShopTabButton.inactive_ratio()
 	for key in _tabs.keys():
 		var button := _tabs[key] as ShopTabButton
 		if button != null:
 			button.apply_row_layout(tab_w, h, inactive_h)
+	if landscape:
+		# Bản ngang: hàng tab/vạch kẻ/danh sách do ANCHORS của scene dàn sẵn — không ghi đè offset
+		return
 	var line := get_node_or_null("TabLine") as ColorRect
 	if line != null:
 		line.offset_top = _tabs_top + h - _tab_line_h
@@ -550,7 +619,11 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 
 
 func _make_grid() -> GridContainer:
-	return ITEM_GRID_SCENE.instantiate() as ShopItemGrid
+	var grid := ITEM_GRID_SCENE.instantiate() as ShopItemGrid
+	if grid != null:
+		# Số cột theo hướng màn hình (scene chỉ là mặc định 2 cột cho bản dọc)
+		grid.columns = grid_columns()
+	return grid
 
 
 func _refresh_pager() -> void:

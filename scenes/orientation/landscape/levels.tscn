@@ -1,0 +1,196 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="Texture2D" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
+[ext_resource type="Texture2D" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="Texture2D" path="res://assets/images/level_selector/chapter_banner.svg" id="6_banner"]
+[ext_resource type="Texture2D" path="res://assets/images/level_selector/badge_stars_counter.svg" id="7_stars"]
+[ext_resource type="Texture2D" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
+[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/cta_normal.tres" id="S_cta_normal"]
+[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/cta_pressed.tres" id="S_cta_pressed"]
+[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/cta_focus.tres" id="S_cta_focus"]
+
+
+[node name="Landscape" instance=ExtResource("1_parent")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="TopBar" type="HBoxContainer" parent="." index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.024
+anchor_top = 0.03
+anchor_right = 0.976
+anchor_bottom = 0.115
+theme_override_constants/separation = 34
+
+[node name="Back" type="TextureButton" parent="TopBar" index="0"]
+custom_minimum_size = Vector2(133, 133)
+layout_mode = 2
+size_flags_vertical = 4
+ignore_texture_size = true
+stretch_mode = 0
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+texture_hover = ExtResource("3_back_n")
+texture_disabled = ExtResource("3_back_n")
+texture_focused = ExtResource("3_back_n")
+
+[node name="Title" type="Label" parent="TopBar" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"LevelsTitle"
+theme_override_font_sizes/font_size = 71
+text = "STR_SELECT_LEVEL_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StarsCounter" type="NinePatchRect" parent="TopBar" index="2"]
+custom_minimum_size = Vector2(374, 151)
+layout_mode = 2
+size_flags_vertical = 4
+patch_margin_left = 30
+patch_margin_top = 30
+patch_margin_right = 30
+patch_margin_bottom = 30
+texture = ExtResource("7_stars")
+
+[node name="Count" type="Label" parent="TopBar/StarsCounter" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"LevelsStarCount"
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChapterBanner" type="NinePatchRect" parent="." index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.024
+anchor_top = 0.135
+anchor_right = 0.976
+anchor_bottom = 0.24
+patch_margin_left = 44
+patch_margin_top = 44
+patch_margin_right = 44
+patch_margin_bottom = 44
+texture = ExtResource("6_banner")
+
+[node name="TitleContainer" type="VBoxContainer" parent="ChapterBanner" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16
+anchor_top = 0.12
+anchor_right = 0.84
+anchor_bottom = 0.88
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="ChapterBanner/TitleContainer" index="0"]
+layout_mode = 2
+size_flags_vertical = 2
+theme_type_variation = &"LevelsBannerTitle"
+theme_override_font_sizes/font_size = 46
+text = "STR_CHAPTER_1_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChangeChapter" type="Label" parent="ChapterBanner/TitleContainer" index="1"]
+layout_mode = 2
+size_flags_vertical = 10
+mouse_filter = 2
+theme_type_variation = &"LevelsChangeChapter"
+theme_override_font_sizes/font_size = 40
+text = "STR_CHANGE_CHAPTER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CardArea" type="Control" parent="." index="2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.024
+anchor_top = 0.265
+anchor_right = 0.976
+anchor_bottom = 0.80
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scroll" type="ScrollContainer" parent="CardArea" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+scroll_deadzone = 12
+
+[node name="Pages" type="HBoxContainer" parent="CardArea/Scroll" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PaginationDots" type="HBoxContainer" parent="." index="3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.815
+anchor_right = 0.6
+anchor_bottom = 0.845
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ContinueButton" type="Button" parent="." index="4"]
+custom_minimum_size = Vector2(0, 190)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.34
+anchor_top = 0.855
+anchor_right = 0.66
+anchor_bottom = 0.965
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("S_cta_normal")
+theme_override_styles/hover = ExtResource("S_cta_normal")
+theme_override_styles/pressed = ExtResource("S_cta_pressed")
+theme_override_styles/focus = ExtResource("S_cta_focus")
+theme_override_styles/disabled = ExtResource("S_cta_normal")
+
+[node name="Label" type="Label" parent="ContinueButton" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_right = 0.98
+anchor_bottom = 1.0
+theme_type_variation = &"LevelsContinue"
+theme_override_font_sizes/font_size = 57
+text = "STR_BTN_CONTINUE_LEVEL"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Icon" type="TextureRect" parent="ContinueButton" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.055
+anchor_top = 0.33
+anchor_right = 0.088
+anchor_bottom = 0.67
+mouse_filter = 2
+texture = ExtResource("12_play_icon")
+expand_mode = 1
+stretch_mode = 5
