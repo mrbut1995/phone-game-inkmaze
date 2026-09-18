@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Tài liệu** | Number Maze — Game Design Document (InkMaze) |
-| **Phiên bản** | v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze khỏi game**: mode · HUD · popup hướng dẫn · asset · vòng xoay Daily → §13.21) · v2.4 — 2026-09-19 (gắn **2 mode mới vào vòng xoay Daily 9 ngày** + thử thách `no_wrong_submit` + ô "đã khớp số" + art nút công cụ theo mockup → §13.20) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
+| **Phiên bản** | v2.6 — 2026-02 (**Nền tảng đa tỉ lệ mới** theo `guide/GUIDE.MD`: mỗi màn 2 layout Dọc/Ngang + BaseScene nhận diện hướng; **Main Scene đã xong 2 layout** → §13.23) · v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze khỏi game**: mode · HUD · popup hướng dẫn · asset · vòng xoay Daily → §13.21) · v2.4 — 2026-09-19 (gắn **2 mode mới vào vòng xoay Daily 9 ngày** + thử thách `no_wrong_submit` + ô "đã khớp số" + art nút công cụ theo mockup → §13.20) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
 | **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
 | **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
 | **Quy ước mode** | 1 bộ luật = 1 `class_name` kế thừa `BaseGameMode`; mỗi mode có `mode_id` (khoá xoay vòng Daily + tra chuỗi `STR_MODE_<ID>`), luật riêng, và **1 mockup matchup** ở mục 10 |
@@ -1478,6 +1478,38 @@ chưa tô nền xanh nhạt cho ô đã khớp số (mockup có gợi ý trực 
 
 **Kiểm chứng:** `test_instruction` 326 PASS · `test_hud_modes` **7/146 FAIL — vẫn đúng 7 lỗi CŨ của Sum Path/Fading Ink** (không phát sinh lỗi mới) ·
 `test_debug_modes` 46/46 · `test_daily` 87/87 · `test_all_game_modes` 14/14 · `test_game_scene_integration` PASS · **toàn bộ 33 suite: 31 xanh**.
+
+
+### 13.23. NỀN TẢNG ĐA TỈ LỆ THEO `guide/GUIDE.MD` + MAIN SCENE 2 LAYOUT (2026-02)
+
+**Yêu cầu (user):** bỏ hướng “tạo riêng 1 game scene cho landscape”; làm theo guide mới — aspect ratio cho TỪNG scene,
+ưu tiên container/anchors/9-slice/AutoFit, hạn chế hard-code trong script; **Main Scene làm trước để kiểm thử**.
+
+**1. Cơ chế chung (`scripts/scenes/base.gd`):** mỗi màn = root (BaseScene) + 2 layout con CÙNG CẤP:
+`Portrait` (KẾ THỪA `scenes/orientation/portrait/portrait.tscn`) và `Landscape` (KẾ THỪA `scenes/orientation/landscape/landscape.tscn`).
+BaseScene tự bật/tắt theo hướng canvas + phát `orientation_changed(is_landscape)`. Khung nội dung:
+· màn **DỌC** = cột `clamp(canvas.x, 1080, 1440)` canh giữa (tablet 3:4 dùng hết bề ngang, thay cột 1080 cứng trước đây)
+· màn **NGANG có layout ngang** → root phủ kín canvas · màn **chưa tách layout** → giữ nguyên cột 1080 (tương thích ngược).
+Màn con lấy node bằng **`ui("Tên")` / `ui_child("Cha","Con")`** (2 layout dùng cùng tên node nên KHÔNG dùng được `%UniqueName`).
+Helper mới: `scripts/utils/auto_fit_label.gd` (`class_name AutoFitLabel`).
+
+**2. ĐO CANVAS THẬT** (`scripts/test_case/dev_size_probe.gd` — phải chạy opengl3 mới đổi được cửa sổ):
+`9:16→1080×1920 · 9:18→1080×2160 · 9:19.5→1080×2340 · 9:21→1080×2520 · 3:4 (1080×1440 và 1200×1600)→1440×1920 ·
+4:3→2560×1920 · 16:9→3413×1920 · 18:9→3840×1920 · 19.5:9→4160×1920`.
+⇒ Màn NGANG có canvas CAO ĐÚNG **1920** → cỡ chữ/khung trong layout ngang lấy **× 1.778** so với số px trong spec.
+
+**3. Main Screen ngang** (theo `mockup/aspect/scene/mainscreen_layout_spect.md`): tờ giấy `NinePatchRect`
+(patch 115/96/64/64 đọc từ `main_menu_paper.svg`) neo 0.026→0.974 × 0.046→0.954 · **2 cột**: `Hero`
+(logo + tag + slogan + nút DANH HIỆU + con dấu) và `Menu` (3 thẻ chế độ `VBoxContainer` + hàng 3 nút công cụ `HBoxContainer`).
+Bản dọc giữ NGUYÊN bố cục cũ, nay nằm ở `scenes/orientation/portrait/main.tscn` (bản ngang: `scenes/orientation/landscape/main.tscn`,
+cả hai KẾ THỪA scaffold `portrait.tscn` / `landscape.tscn` trong cùng thư mục);
+`main.gd` gắn lại node mỗi lần đổi hướng.
+
+**4. Kiểm chứng:** `test_main_layout` (đã cập nhật theo 2 layout) PASS · harness `dev_aspects.gd -- --only=main`
+**10/10 tỉ lệ OK** (ảnh chứng cứ `tmp_aspect/<WxH>/main.png`) · toàn bộ **33 suite: 31 xanh** — 2 suite đỏ vẫn là lỗi CŨ (Sum Path/Fading Ink HUD).
+
+**5. CÒN LẠI:** art thẻ chế độ bị KÉO NGANG ở layout ngang (thẻ 1848×414 so với art 804×310) → cần **art thẻ bản NGANG**
+hoặc chuyển thẻ sang `StyleBoxTexture` 9-slice · các màn khác chưa tách layout ngang · chưa áp safe-area (tai thỏ).
 
 
 

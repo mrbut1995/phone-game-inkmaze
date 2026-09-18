@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bgvg0glkfli2b"]
+
+[ext_resource type="Script" uid="uid://bsvvrqxukl444" path="res://scripts/orientation/landscape.gd" id="1_d458u"]
+
+[node name="Landscape" type="Control" unique_id=1388279363]
+layout_mode = 3
+anchor_right = 1.7780001
+anchor_bottom = 0.56200004
+offset_right = -0.2401123
+offset_bottom = 0.95996094
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d458u")
+metadata/_edit_use_anchors_ = true

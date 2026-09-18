@@ -9,24 +9,57 @@ extends BaseScene
 ## ============================================================================
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-@onready var logo: TextureRect = $Panel/Logo
-@onready var btn_play: TextureButton = $Panel/GameMode/Play
-@onready var btn_dungeon: TextureButton = $Panel/GameMode/Dungeon
-@onready var btn_daily: TextureButton = $Panel/GameMode/DailyChallenge
+## Node UI được gắn lại mỗi lần ĐỔI HƯỚNG (xem `_bind_layout`) — Portrait / Landscape dùng
+## CÙNG tên node nên tra qua `ui()` / `ui_child()` của BaseScene, không dùng `$Đường/Dẫn`.
+var logo: TextureRect = null
+var btn_play: BaseButton = null
+var btn_dungeon: BaseButton = null
+var btn_daily: BaseButton = null
 
-@onready var btn_leaderboard: TextureButton = $Panel/Other/Leaderboard
-@onready var btn_shop: TextureButton = $Panel/Other/Shop
-@onready var btn_settings: TextureButton = $Panel/Other/Settings
-@onready var btn_archivement: TextureButton = $Panel/Archivement
-@onready var badge_count_label: Label = $Panel/Archivement/Count
-@onready var badge_play: Label = $Panel/GameMode/Play/Badge
-@onready var badge_dungeon: Label = $Panel/GameMode/Dungeon/Badge
-@onready var badge_daily: Label = $Panel/GameMode/DailyChallenge/Badge
-@onready var stamp_panel: Control = $Panel/Stamp
-@onready var stamp_label: Label = $Panel/Stamp/Label
+var btn_leaderboard: BaseButton = null
+var btn_shop: BaseButton = null
+var btn_settings: BaseButton = null
+var btn_archivement: BaseButton = null
+var badge_count_label: Label = null
+var badge_play: Label = null
+var badge_dungeon: Label = null
+var badge_daily: Label = null
+var stamp_panel: Control = null
+var stamp_label: Label = null
 
 
 func _ready() -> void:
+	_bind_layout()
+	_refresh_stamp()
+	_refresh_badge()
+	_refresh_mode_badges()
+	_setup_buttons()
+	_setup_animations()
+	orientation_changed.connect(_on_orientation_changed)
+
+
+## Gắn lại toàn bộ node UI theo layout ĐANG HIỂN THỊ (dọc ⇄ ngang)
+func _bind_layout() -> void:
+	logo = ui("Logo") as TextureRect
+	btn_play = ui("Play") as BaseButton
+	btn_dungeon = ui("Dungeon") as BaseButton
+	btn_daily = ui("DailyChallenge") as BaseButton
+
+	btn_leaderboard = ui("Leaderboard") as BaseButton
+	btn_shop = ui("Shop") as BaseButton
+	btn_settings = ui("Settings") as BaseButton
+	btn_archivement = ui("Archivement") as BaseButton
+	badge_count_label = ui_child("Archivement", "Count") as Label
+	badge_play = ui_child("Play", "Badge") as Label
+	badge_dungeon = ui_child("Dungeon", "Badge") as Label
+	badge_daily = ui_child("DailyChallenge", "Badge") as Label
+	stamp_panel = ui("Stamp") as Control
+	stamp_label = ui_child("Stamp", "Label") as Label
+
+
+## Xoay màn hình: gắn lại node của layout mới rồi chạy lại hiệu ứng
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_bind_layout()
 	_refresh_stamp()
 	_refresh_badge()
 	_refresh_mode_badges()
@@ -34,29 +67,24 @@ func _ready() -> void:
 	_setup_animations()
 
 
-func _setup_buttons() -> void:
-	if btn_play != null:
-		btn_play.pressed.connect(_on_play_pressed)
-		UIAnim.attach_press_bounce(btn_play)
-	if btn_dungeon != null:
-		btn_dungeon.pressed.connect(_on_dungeon_pressed)
-		UIAnim.attach_press_bounce(btn_dungeon)
-	if btn_daily != null:
-		btn_daily.pressed.connect(_on_daily_pressed)
-		UIAnim.attach_press_bounce(btn_daily)
+## Nối signal 1 lần duy nhất (mỗi lần xoay màn hình sẽ gắn lại node của layout mới,
+## còn node của layout cũ vẫn giữ kết nối cũ ⇒ phải guard kẻo "already connected").
+func _connect_pressed(button: BaseButton, handler: Callable) -> void:
+	if button == null:
+		return
+	if not button.pressed.is_connected(handler):
+		button.pressed.connect(handler)
+	UIAnim.attach_press_bounce(button)
 
-	if btn_leaderboard != null:
-		btn_leaderboard.pressed.connect(_on_leaderboard_pressed)
-		UIAnim.attach_press_bounce(btn_leaderboard)
-	if btn_shop != null:
-		btn_shop.pressed.connect(_on_shop_pressed)
-		UIAnim.attach_press_bounce(btn_shop)
-	if btn_settings != null:
-		btn_settings.pressed.connect(_on_settings_pressed)
-		UIAnim.attach_press_bounce(btn_settings)
-	if btn_archivement != null:
-		btn_archivement.pressed.connect(_on_archivement_pressed)
-		UIAnim.attach_press_bounce(btn_archivement)
+
+func _setup_buttons() -> void:
+	_connect_pressed(btn_play, _on_play_pressed)
+	_connect_pressed(btn_dungeon, _on_dungeon_pressed)
+	_connect_pressed(btn_daily, _on_daily_pressed)
+	_connect_pressed(btn_leaderboard, _on_leaderboard_pressed)
+	_connect_pressed(btn_shop, _on_shop_pressed)
+	_connect_pressed(btn_settings, _on_settings_pressed)
+	_connect_pressed(btn_archivement, _on_archivement_pressed)
 
 
 func _setup_animations() -> void:
@@ -64,10 +92,12 @@ func _setup_animations() -> void:
 	if logo != null:
 		UIAnim.play_float_idle(logo, 5.0, 2.6)
 
-	# 2. Khung GameMode trượt nhẹ từ dưới lên + các thẻ con fade-in so le
-	var game_mode_box := get_node_or_null("Panel/GameMode") as Control
+	# 2. Khung GameMode (dọc) / Menu (ngang) trượt nhẹ từ dưới lên + các thẻ con fade-in so le
+	var game_mode_box := ui("GameMode")
+	if game_mode_box == null:
+		game_mode_box = ui("Menu")
 	if game_mode_box != null:
-		UIAnim.play_slide_in(game_mode_box, Vector2(0, 25), 0.0, 0.28)
+		UIAnim.play_slide_in(game_mode_box as Control, Vector2(0, 25), 0.0, 0.28)
 
 	var cards: Array[Control] = []
 	if btn_play != null: cards.append(btn_play)
@@ -77,10 +107,12 @@ func _setup_animations() -> void:
 	for i in cards.size():
 		UIAnim.play_fade_in(cards[i], 0.06 * i, 0.24)
 
-	# 3. Khung nút chức năng Other trượt nhẹ từ dưới lên + các nút con fade-in so le
-	var other_box := get_node_or_null("Panel/Other") as Control
+	# 3. Khung nút chức năng Other (dọc) / Utils (ngang) trượt nhẹ + các nút con fade-in so le
+	var other_box := ui("Other")
+	if other_box == null:
+		other_box = ui("Utils")
 	if other_box != null:
-		UIAnim.play_slide_in(other_box, Vector2(0, 18), 0.12, 0.25)
+		UIAnim.play_slide_in(other_box as Control, Vector2(0, 18), 0.12, 0.25)
 
 	var others: Array[Control] = []
 	if btn_leaderboard != null: others.append(btn_leaderboard)

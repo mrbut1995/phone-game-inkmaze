@@ -50,6 +50,8 @@ const GAME_MODES := ["play", "dungeon", "minesweeper", "sum_path",
 		"countdown_cost", "blind_memory", "fog_of_war", "fading_ink", "one_stroke", "wall_builder"]
 
 const DESIGN_WIDTH := 1080.0
+## Bề rộng cột nội dung tối đa ở màn DỌC (khớp `BaseScene.MAX_CONTENT_WIDTH`)
+const MAX_CONTENT_WIDTH := 1440.0
 
 var _shots := false
 var _only: PackedStringArray = []
@@ -152,11 +154,18 @@ func _run_game(mode_id: String, size: Vector2i) -> void:
 func _check_common(scene: Control) -> Array:
 	var out: Array = []
 	var canvas := root.get_visible_rect().size
-	# 1. Cột nội dung: rộng đúng 1080, canh giữa ngang
-	var expect_x := floorf((canvas.x - DESIGN_WIDTH) * 0.5)
-	if absf(scene.position.x - expect_x) > 1.5 or absf(scene.size.x - DESIGN_WIDTH) > 1.5:
-		out.append("FAIL cột nội dung sai (pos.x=%.0f mong %.0f · size.x=%.0f)" % [
-			scene.position.x, expect_x, scene.size.x])
+	# 1. Cột nội dung: màn DỌC = clamp(canvas.x, 1080, 1440) canh giữa (base.gd);
+	#    màn đã có layout NGANG thì ở hướng ngang root PHỦ KÍN canvas.
+	var has_landscape_layout := scene.get_node_or_null("Landscape") != null
+	var expect_x := 0.0
+	var expect_w := canvas.x
+	if not (has_landscape_layout and canvas.x > canvas.y):
+		var column := clampf(canvas.x, DESIGN_WIDTH, MAX_CONTENT_WIDTH) if has_landscape_layout else DESIGN_WIDTH
+		expect_x = floorf((canvas.x - column) * 0.5)
+		expect_w = column
+	if absf(scene.position.x - expect_x) > 1.5 or absf(scene.size.x - expect_w) > 1.5:
+		out.append("FAIL cột nội dung sai (pos.x=%.0f mong %.0f · size.x=%.0f mong %.0f)" % [
+			scene.position.x, expect_x, scene.size.x, expect_w])
 	if absf(scene.size.y - canvas.y) > 1.5:
 		out.append("WARN chiều cao cột %.0f ≠ canvas %.0f" % [scene.size.y, canvas.y])
 	# 2. Nền giấy phủ kín canvas (Background trong cột + 2 dải SideL/SideR hai bên)
@@ -166,13 +175,13 @@ func _check_common(scene: Control) -> Array:
 	if bg == null:
 		out.append("FAIL thiếu node Background")
 	else:
-		var col_rect := Rect2(scene.position, Vector2(DESIGN_WIDTH, canvas.y))
+		var col_rect := Rect2(scene.position, Vector2(expect_w, canvas.y))
 		if not col_rect.grow(2.0).encloses(Rect2(bg.global_position, bg.size)):
 			out.append("WARN Background không khớp cột nội dung")
 		var side_l := bg.get_node_or_null("SideL") as Control
 		var side_r := bg.get_node_or_null("SideR") as Control
 		var need_l := Rect2(0, 0, col_left, canvas.y)
-		var need_r := Rect2(col_left + DESIGN_WIDTH, 0, maxf(canvas.x - col_left - DESIGN_WIDTH, 0.0), canvas.y)
+		var need_r := Rect2(col_left + expect_w, 0, maxf(canvas.x - col_left - expect_w, 0.0), canvas.y)
 		if side_l == null or not need_l.grow(2.0).encloses(Rect2(side_l.global_position, side_l.size)):
 			out.append("FAIL SideL không phủ hết mép trái (%s cần %s)" % [
 				str(Rect2(side_l.global_position, side_l.size) if side_l != null else Rect2()), str(need_l)])

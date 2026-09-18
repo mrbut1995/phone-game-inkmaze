@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9400 1500" width="100%" height="100%" style="background-color: #0B1120;">
+  <defs>
+    <style>
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 42px; font-weight: 800; fill: #F8FAFC; text-anchor: middle; }
+      .ratio-spec { font-family: monospace; font-size: 28px; font-weight: 600; fill: #38BDF8; text-anchor: middle; }
+      
+      .box-screen { fill: #090D16; stroke: #475569; stroke-width: 5; rx: 32px; }
+      .box-header { fill: #1E293B; stroke: #64748B; stroke-width: 3; rx: 16px; }
+      .box-hud-time { fill: #131E32; stroke: #6EA0C8; stroke-width: 3; rx: 18px; }
+      .box-hud-cost { fill: #131E32; stroke: #C2410C; stroke-width: 3; rx: 20px; }
+      .box-board { fill: #1E293B; stroke: #F43F5E; stroke-width: 4; stroke-dasharray: 14 10; rx: 24px; }
+      .box-tip { fill: #1E293B; stroke: #F59E0B; stroke-width: 3; rx: 16px; }
+      .box-action { fill: #C2410C; stroke: #FDBA74; stroke-width: 3; rx: 20px; }
+      .box-action-sub { fill: #1E293B; stroke: #64748B; stroke-width: 3; rx: 20px; }
+
+      .wire-label { font-family: system-ui, sans-serif; font-weight: 800; fill: #FFFFFF; text-anchor: middle; dominant-baseline: central; }
+      .font-spec { font-family: monospace; font-weight: 700; fill: #FDE047; text-anchor: middle; dominant-baseline: central; }
+      .dim-spec { font-family: monospace; font-size: 20px; font-weight: 600; fill: #94A3B8; text-anchor: middle; dominant-baseline: central; }
+      .tag-cost { font-family: system-ui, sans-serif; font-weight: 900; fill: #EA580C; text-anchor: middle; dominant-baseline: central; }
+      .tag-green { font-family: system-ui, sans-serif; font-weight: 900; fill: #22C55E; text-anchor: middle; dominant-baseline: central; }
+    </style>
+  </defs>
+
+  <!-- ========================================================================= -->
+  <!-- 7. TỈ LỆ 4:3 · 1600 x 1200 (NGANG - TABLET / IPAD)                        -->
+  <!-- ========================================================================= -->
+  <g transform="translate(80, 120)">
+    <text x="800" y="-55" class="title">7. Tỉ lệ 4:3 (Ngang - Tablet)</text>
+    <text x="800" y="-18" class="ratio-spec">1600 × 1200 px · Board Trái (1040×1040) · Cột Phải (420px)</text>
+    <rect width="1600" height="1200" class="box-screen"/>
+
+    <!-- Bên Trái: Board 1040x1040 -->
+    <rect x="60" y="80" width="1040" height="1040" class="box-board"/>
+    <text x="580" y="580" class="wire-label" font-size="42" fill="#F43F5E">BÀN CỜ TRÁI (1040 × 1040)</text>
+    <text x="580" y="640" class="font-spec" font-size="34">Con số cước phí ô: 56px</text>
+
+    <!-- Cột Phải: Rộng 420px -->
+    <!-- Header -->
+    <rect x="1120" y="80" width="420" height="90" class="box-header"/>
+    <text x="1330" y="112" class="font-spec" font-size="16">DAILY CHALLENGE (16px)</text>
+    <text x="1330" y="142" class="wire-label" font-size="24">⏳ COUNTDOWN COST (28px)</text>
+
+    <!-- HUD Row: Timer & Ngân Sách Còn/Đã Tiêu -->
+    <rect x="1120" y="185" width="180" height="115" class="box-hud-time"/>
+    <text x="1210" y="215" class="wire-label" font-size="16">⏱ THỜI GIAN (16px)</text>
+    <text x="1210" y="260" class="font-spec" font-size="40">00:36 (40px)</text>
+
+    <rect x="1315" y="185" width="225" height="115" class="box-hud-cost"/>
+    <text x="1427" y="215" class="tag-cost" font-size="14">CÒN / ĐÃ TIÊU</text>
+    <text x="1427" y="260" class="font-spec" font-size="36">08/16 <tspan font-size="22" fill="#94A3B8">(-08)</tspan></text>
+
+    <!-- Thẻ Chi Tiết Sổ Thu Chi & Giá Cước Ô -->
+    <rect x="1120" y="315" width="420" height="175" class="box-hud-cost"/>
+    <text x="1330" y="345" class="tag-cost" font-size="15">🧾 SỔ THEO DÕI NGÂN SÁCH (14px)</text>
+    <text x="1330" y="380" class="font-spec" font-size="14">1-2: RẺ | 3-4: ĐẮT (12px)</text>
+    <rect x="1135" y="415" width="390" height="50" rx="10" fill="#1E293B" stroke="#EA580C" stroke-width="1.5"/>
+    <text x="1330" y="440" class="wire-label" font-size="13">Thanh 16 phân đoạn ngân sách (Cao: 12px)</text>
+
+    <!-- Tip Banner -->
+    <rect x="1120" y="505" width="420" height="90" class="box-tip"/>
+    <text x="1330" y="550" class="font-spec" font-size="18">💡 Chọn đường cước rẻ để không cạn ngân sách (18px)</text>
+
+    <!-- Action Tools -->
+    <rect x="1120" y="610" width="420" height="185" class="box-action"/>
+    <text x="1330" y="680" class="wire-label" font-size="34">VẼ ĐƯỜNG</text>
+    <text x="1330" y="735" class="font-spec" font-size="20">Title: 32px · Sub: 18px</text>
+
+    <rect x="1120" y="810" width="420" height="135" class="box-action-sub"/>
+    <text x="1330" y="865" class="wire-label" font-size="28">GHI NHỚ</text>
+    <text x="1330" y="910" class="font-spec" font-size="18">Title: 26px · Sub: 16px</text>
+
+    <rect x="1120" y="960" width="200" height="90" class="box-action-sub"/>
+    <text x="1220" y="995" class="wire-label" font-size="18">UNDO (16px)</text>
+    <text x="1220" y="1025" class="tag-green" font-size="13">+HOÀN (13px)</text>
+
+    <rect x="1340" y="960" width="200" height="90" class="box-action-sub"/>
+    <text x="1440" y="1005" class="wire-label" font-size="20">HINT (18px)</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 8. TỈ LỆ 16:9 · 1920 x 1080 (NGANG CHUẨN - BASE)                          -->
+  <!-- ========================================================================= -->
+  <g transform="translate(1820, 120)">
+    <text x="960" y="-55" class="title">8. Tỉ lệ 16:9 (Ngang Chuẩn - Base)</text>
+    <text x="960" y="-18" class="ratio-spec">1920 × 1080 px · Board Trái (960×960) · Sidebar Phải (810px)</text>
+    <rect width="1920" height="1080" class="box-screen" stroke="#38BDF8"/>
+
+    <!-- Board 960x960 -->
+    <rect x="60" y="60" width="960" height="960" class="box-board"/>
+    <text x="540" y="520" class="wire-label" font-size="40" fill="#F43F5E">BÀN CỜ TRÁI (960 × 960)</text>
+    <text x="540" y="575" class="font-spec" font-size="32">Con số cước phí ô: 52px</text>
+
+    <!-- Header -->
+    <rect x="1050" y="60" width="810" height="75" class="box-header"/>
+    <text x="1455" y="87" class="font-spec" font-size="16">DAILY CHALLENGE (16px)</text>
+    <text x="1455" y="115" class="wire-label" font-size="26">⏳ COUNTDOWN COST (34px)</text>
+
+    <!-- HUD: Time Trái (220) & Phiếu Ngân Sách Phải (570) -->
+    <rect x="1050" y="150" width="220" height="195" class="box-hud-time"/>
+    <text x="1160" y="195" class="wire-label" font-size="18">⏱ THỜI GIAN (18px)</text>
+    <text x="1160" y="260" class="font-spec" font-size="48">00:36 (48px)</text>
+    <text x="1160" y="305" class="dim-spec" font-size="14">Phụ trợ xếp hạng</text>
+
+    <rect x="1290" y="150" width="570" height="195" class="box-hud-cost"/>
+    <!-- Cụm Ngân sách & Tiêu tốn -->
+    <text x="1410" y="185" class="tag-cost" font-size="14">NGÂN SÁCH CÒN</text>
+    <text x="1410" y="235" class="font-spec" font-size="42">08 / 16 (44px)</text>
+    <line x1="1510" y1="165" x2="1510" y2="285" stroke="#334155" stroke-width="2"/>
+    <text x="1680" y="185" class="dim-spec" font-size="14">ĐÃ TIÊU: -08 BƯỚC</text>
+    <text x="1680" y="215" class="font-spec" font-size="13">1-2 RẺ | 3-4 ĐẮT</text>
+    <!-- Phân đoạn Segment Bar -->
+    <rect x="1310" y="300" width="530" height="22" rx="4" fill="#1E293B" stroke="#EA580C" stroke-width="1.2"/>
+    <text x="1575" y="311" class="wire-label" font-size="13">Thanh 16 phân đoạn ngân sách (Cao: 12px)</text>
+
+    <!-- Tip Banner -->
+    <rect x="1050" y="360" width="810" height="75" class="box-tip"/>
+    <text x="1455" y="397" class="font-spec" font-size="22">💡 Mỗi ô là cước phí trừ vào quỹ bước — chọn đường rẻ nhất! (22px)</text>
+
+    <!-- Action Tools -->
+    <rect x="1050" y="455" width="810" height="235" class="box-action"/>
+    <text x="1455" y="550" class="wire-label" font-size="40">VẼ ĐƯỜNG (CHÍNH)</text>
+    <text x="1455" y="615" class="font-spec" font-size="22">Title: 34px · Sub: 20px</text>
+
+    <!-- Hàng nút phụ -->
+    <rect x="1050" y="715" width="460" height="165" class="box-action-sub"/>
+    <text x="1280" y="780" class="wire-label" font-size="30">GHI NHỚ</text>
+    <text x="1280" y="825" class="font-spec" font-size="20">Title: 28px · Sub: 18px</text>
+
+    <rect x="1530" y="715" width="155" height="165" class="box-action-sub"/>
+    <text x="1607" y="775" class="wire-label" font-size="22">UNDO (18px)</text>
+    <text x="1607" y="815" class="tag-green" font-size="14">+HOÀN (14px)</text>
+
+    <rect x="1705" y="715" width="155" height="165" class="box-action-sub"/>
+    <text x="1782" y="795" class="wire-label" font-size="22">HINT (18px)</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 9. TỈ LỆ 18:9 · 2160 x 1080 (NGANG DÀI 2:1)                               -->
+  <!-- ========================================================================= -->
+  <g transform="translate(3880, 120)">
+    <text x="1080" y="-55" class="title">9. Tỉ lệ 18:9 (Ngang Dài 2:1)</text>
+    <text x="1080" y="-18" class="ratio-spec">2160 × 1080 px · Sidebar rộng 980px</text>
+    <rect width="2160" height="1080" class="box-screen"/>
+
+    <!-- Board 960x960 -->
+    <rect x="80" y="60" width="960" height="960" class="box-board"/>
+    <text x="560" y="520" class="wire-label" font-size="40" fill="#F43F5E">BÀN CỜ TRÁI (960 × 960)</text>
+    <text x="560" y="575" class="font-spec" font-size="32">Con số cước phí ô: 52px</text>
+
+    <!-- Header -->
+    <rect x="1100" y="60" width="980" height="80" class="box-header"/>
+    <text x="1590" y="88" class="font-spec" font-size="18">DAILY CHALLENGE (18px)</text>
+    <text x="1590" y="118" class="wire-label" font-size="28">⏳ COUNTDOWN COST (38px)</text>
+
+    <!-- HUD: Timer & Sổ Ngân Sách Song Song Rộng Rãi -->
+    <rect x="1100" y="155" width="250" height="200" class="box-hud-time"/>
+    <text x="1225" y="205" class="wire-label" font-size="20">⏱ THỜI GIAN (20px)</text>
+    <text x="1225" y="275" class="font-spec" font-size="52">00:36 (52px)</text>
+    <text x="1225" y="320" class="dim-spec" font-size="15">Phụ trợ xếp hạng</text>
+
+    <rect x="1370" y="155" width="710" height="200" class="box-hud-cost"/>
+    <!-- Cụm Ngân sách & Tiêu tốn -->
+    <text x="1500" y="195" class="tag-cost" font-size="15">NGÂN SÁCH CÒN</text>
+    <text x="1500" y="250" class="font-spec" font-size="46">08 / 16 (48px)</text>
+    <line x1="1620" y1="175" x2="1620" y2="295" stroke="#334155" stroke-width="2"/>
+    <text x="1840" y="195" class="dim-spec" font-size="15">ĐÃ TIÊU: -08 BƯỚC</text>
+    <text x="1840" y="225" class="font-spec" font-size="14">CƯỚC: 1-2 RẺ | 3-4 ĐẮT</text>
+    <!-- Phân đoạn Segment Bar -->
+    <rect x="1390" y="315" width="670" height="24" rx="4" fill="#1E293B" stroke="#EA580C" stroke-width="1.2"/>
+    <text x="1725" y="327" class="wire-label" font-size="14">Thanh 16 phân đoạn ngân sách (Cao: 12px)</text>
+
+    <!-- Tip Banner -->
+    <rect x="1100" y="375" width="980" height="80" class="box-tip"/>
+    <text x="1590" y="415" class="font-spec" font-size="24">💡 Tip Banner: 24px (Thoáng rộng)</text>
+
+    <!-- Action Tools -->
+    <rect x="1100" y="480" width="475" height="250" class="box-action"/>
+    <text x="1337" y="580" class="wire-label" font-size="40">VẼ ĐƯỜNG</text>
+    <text x="1337" y="640" class="font-spec" font-size="24">Title: 36px · Sub: 22px</text>
+
+    <rect x="1605" y="480" width="475" height="250" class="box-action-sub"/>
+    <text x="1842" y="580" class="wire-label" font-size="40">GHI NHỚ</text>
+    <text x="1842" y="640" class="font-spec" font-size="24">Title: 36px · Sub: 22px</text>
+
+    <rect x="1100" y="755" width="475" height="145" class="box-action-sub"/>
+    <text x="1337" y="810" class="wire-label" font-size="26">HOÀN TÁC (UNDO: 24px)</text>
+    <text x="1337" y="848" class="tag-green" font-size="16">+HOÀN (16px)</text>
+
+    <rect x="1605" y="755" width="475" height="145" class="box-action-sub"/>
+    <text x="1842" y="827" class="wire-label" font-size="28">GỢI Ý (HINT: 26px)</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 10. TỈ LỆ 19.5:9 · 2340 x 1080 (NGANG SIÊU RỘNG)                          -->
+  <!-- ========================================================================= -->
+  <g transform="translate(6180, 120)">
+    <text x="1170" y="-55" class="title">10. Tỉ lệ 19.5:9 (Ngang Siêu Rộng)</text>
+    <text x="1170" y="-18" class="ratio-spec">2340 × 1080 px · Sidebar 1120px · Safe Area Lùi Tránh Notch</text>
+    <rect width="2340" height="1080" class="box-screen" stroke="#38BDF8"/>
+    <circle cx="40" cy="540" r="16" fill="#334155"/>
+
+    <!-- Board 960x960 (Lùi 100px tránh Camera Notch) -->
+    <rect x="100" y="60" width="960" height="960" class="box-board"/>
+    <text x="580" y="520" class="wire-label" font-size="40" fill="#F43F5E">BÀN CỜ TRÁI (960 × 960)</text>
+    <text x="580" y="575" class="font-spec" font-size="32">Con số cước phí ô: 52px</text>
+
+    <!-- Header -->
+    <rect x="1120" y="60" width="1120" height="85" class="box-header"/>
+    <text x="1680" y="90" class="font-spec" font-size="18">DAILY CHALLENGE (18px)</text>
+    <text x="1680" y="120" class="wire-label" font-size="30">⏳ COUNTDOWN COST (40px)</text>
+
+    <!-- HUD -->
+    <rect x="1120" y="165" width="280" height="210" class="box-hud-time"/>
+    <text x="1260" y="215" class="wire-label" font-size="22">⏱ THỜI GIAN (22px)</text>
+    <text x="1260" y="290" class="font-spec" font-size="56">00:36 (56px)</text>
+    <text x="1260" y="335" class="dim-spec" font-size="16">Phụ trợ xếp hạng</text>
+
+    <rect x="1425" y="165" width="815" height="210" class="box-hud-cost"/>
+    <!-- Cụm Ngân sách & Tiêu tốn -->
+    <text x="1580" y="205" class="tag-cost" font-size="16">NGÂN SÁCH CÒN</text>
+    <text x="1580" y="265" class="font-spec" font-size="48">08 / 16 (50px)</text>
+    <line x1="1720" y1="185" x2="1720" y2="315" stroke="#334155" stroke-width="2"/>
+    <text x="1960" y="205" class="dim-spec" font-size="16">ĐÃ TIÊU: -08 BƯỚC</text>
+    <text x="1960" y="235" class="font-spec" font-size="14">CƯỚC: 1-2 RẺ | 3-4 ĐẮT</text>
+    <!-- Phân đoạn Segment Bar -->
+    <rect x="1445" y="330" width="775" height="26" rx="4" fill="#1E293B" stroke="#EA580C" stroke-width="1.2"/>
+    <text x="1832" y="343" class="wire-label" font-size="14">Thanh 16 phân đoạn ngân sách (Cao: 12px)</text>
+
+    <!-- Tip Banner -->
+    <rect x="1120" y="395" width="1120" height="85" class="box-tip"/>
+    <text x="1680" y="437" class="font-spec" font-size="24">💡 Tip Banner: 24px (Cực thoáng, không che ô)</text>
+
+    <!-- Action Tools -->
+    <rect x="1120" y="505" width="540" height="255" class="box-action"/>
+    <text x="1390" y="610" class="wire-label" font-size="42">VẼ ĐƯỜNG</text>
+    <text x="1390" y="675" class="font-spec" font-size="26">Title: 38px · Sub: 24px</text>
+
+    <rect x="1685" y="505" width="555" height="255" class="box-action-sub"/>
+    <text x="1962" y="610" class="wire-label" font-size="42">GHI NHỚ</text>
+    <text x="1962" y="675" class="font-spec" font-size="26">Title: 38px · Sub: 24px</text>
+
+    <rect x="1120" y="785" width="540" height="150" class="box-action-sub"/>
+    <text x="1390" y="845" class="wire-label" font-size="28">HOÀN TÁC (UNDO: 26px)</text>
+    <text x="1390" y="885" class="tag-green" font-size="18">+HOÀN (18px)</text>
+
+    <rect x="1685" y="785" width="555" height="150" class="box-action-sub"/>
+    <text x="1962" y="860" class="wire-label" font-size="30">GỢI Ý (HINT: 28px)</text>
+  </g>
+</svg>

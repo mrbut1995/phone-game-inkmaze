@@ -51,27 +51,34 @@ func _init() -> void:
 		"Nút thành tựu phải có đủ trạng thái normal / pressed / focus")
 
 	# Hàng Other phải còn đúng 3 nút: Xếp hạng · Cửa hàng · Cài đặt
-	var other_box := main_scene.get_node_or_null("Panel/Other") as Control
-	assert(other_box != null, "Phai co hang nut Other")
+	var other_box := main_scene.ui("Other") as Control
+	assert(other_box != null, "Phai co hang nut Other (layout doc)")
 	if other_box != null:
 		assert(other_box.get_child_count() == 3,
 			"Hang Other phai co dung 3 nut, dang %d" % other_box.get_child_count())
 		assert(other_box.get_node_or_null("Archivement") == null,
 			"Nut thanh tuu KHONG con nam trong hang Other")
 		for child in other_box.get_children():
-			var button := child as TextureButton
+			var button := child as BaseButton
 			assert(button != null and button.size.x > 0.0, "Nut %s phai co kich thuoc" % child.name)
 			assert(absf(button.size.x - 230.0) < 1.0 and absf(button.size.y - 130.0) < 1.0,
 				"Nut %s phai dung kich thuoc art 230x130 (dang %s)" % [child.name, str(button.size)])
 
+	# 2 LAYOUT theo hướng màn hình phải cùng tồn tại, đúng layout được bật
+	assert(main_scene.get_node_or_null("Portrait") != null, "Phai co layout Portrait")
+	assert(main_scene.get_node_or_null("Landscape") != null, "Phai co layout Landscape")
+	assert(main_scene.ui("Paper") != null, "Layout NGANG phai co to giay Paper")
+	var landscape_layout := main_scene.get_node_or_null("Landscape") as Control
+	assert(landscape_layout != null and not landscape_layout.visible,
+		"Man hinh DỌC thi layout ngang phai ẩn")
+
 	# 3 huy hieu tren the che do phai duoc DIEN SO luc chay (chuoi dich co "{0}")
-	for badge_path in ["Panel/GameMode/Play/Badge", "Panel/GameMode/Dungeon/Badge",
-			"Panel/GameMode/DailyChallenge/Badge"]:
-		var badge := main_scene.get_node_or_null(badge_path) as Label
-		assert(badge != null, "Phai co Label huy hieu tai %s" % badge_path)
+	for pair in [["Play", "Badge"], ["Dungeon", "Badge"], ["DailyChallenge", "Badge"]]:
+		var badge := main_scene.ui_child(str(pair[0]), str(pair[1])) as Label
+		assert(badge != null, "Phai co Label huy hieu tai %s/Badge" % str(pair[0]))
 		assert(not badge.text.contains("{0}"),
-			"Huy hieu %s phai duoc dien so (dang '%s')" % [badge_path, badge.text])
-		print("[INFO] %s -> %s" % [badge_path, badge.text])
+			"Huy hieu %s phai duoc dien so (dang '%s')" % [str(pair[0]), badge.text])
+		print("[INFO] %s/Badge -> %s" % [str(pair[0]), badge.text])
 
 	print("\n[SUCCESS] Cac button va the tren Main Scene da duoc xep dung vi tri, khong bi de chong len nhau!\n")
 	main_scene.queue_free()
