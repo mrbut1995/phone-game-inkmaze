@@ -29,7 +29,6 @@ var debug_run: bool = false
 var start_floor_override: int = 0        # 0 = tự động (mode tự quyết định)
 
 const DAILY_MODES: Array[String] = [
-	"time_attack",
 	"minesweeper",
 	"sum_path",
 	"countdown_cost",
@@ -98,7 +97,7 @@ func prepare_daily_run(day: int, variant := "special") -> String:
 	return current_mode
 
 
-## Danh sách id của 9 chế độ SPECIAL (chỉ chơi được qua Daily Challenge)
+## Danh sách id của 8 chế độ SPECIAL (chỉ chơi được qua Daily Challenge)
 func special_mode_ids() -> Array[String]:
 	return DAILY_MODES.duplicate()
 

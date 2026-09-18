@@ -313,7 +313,7 @@ def scene_rects(scene, w=980.0, h=249.0):
 def dump():
     for scene in ("nodes/hud/level_mode.tscn", "nodes/hud/dungeon_mode.tscn",
                   "nodes/hud/minesweep_hud.tscn", "nodes/hud/sum_path_hud.tscn",
-                  "nodes/hud/blind_memory_hud.tscn", "nodes/hud/time_attack_hud.tscn"):
+                  "nodes/hud/blind_memory_hud.tscn"):
         print("== %s" % scene)
         for name, r in scene_rects(scene).items():
             print("  %-14s (%6.0f, %6.0f) - (%6.0f, %6.0f)   %4.0f x %4.0f"
@@ -453,24 +453,6 @@ HAND_DRAWN = {
 }
 
 MODES = [
-    {
-        "id": "time_attack",
-        "comment": "MÀN CHƠI — TIME ATTACK MAZE (HUD CHỈ còn THỜI GIAN đặt GIỮA khung)",
-        "title": "TIME ATTACK MAZE",
-        "subtitle": "DAILY CHALLENGE · MODE time_attack",
-        "hud": "time_attack_hud.tscn (TimeAttackHUD)",
-        "cards": lambda: [{"draw": lambda: card_time_tall(345, 21, "00:42")}],
-        "grid": (4, 4),
-        "notes": {(0, 0): "S", (3, 3): "F", (1, 0): "2", (0, 1): "1", (1, 1): "3",
-                  (2, 1): "2", (1, 2): "1", (2, 2): "2", (3, 2): "1"},
-        "walls": [(1, 1, 1, 2), (3, 0, 3, 1), (2, 2, 3, 2), (0, 2, 1, 2)],
-        "path": [(0, 0), (1, 0), (1, 1), (2, 1), (2, 2), (3, 2), (3, 3)],
-        "markers": [
-            (1, 540, 290, "Thẻ THỜI GIAN ~290×206 GIỮA khung (time_attack_hud.tscn — anchors tỉ lệ)"),
-            (2, 540, 700, "Số trên ô = số tường quanh ô (0..4) · tường ẩn vẽ nét đứt"),
-        ],
-        "footer": "Luật: đâm tường về S và mất thời gian · thắng khi tới F trước khi hết giờ.",
-    },
     {
         "id": "minesweeper",
         "comment": "MÀN CHƠI — MINESWEEPER MAZE (HUD: BOM CÒN LẠI + THỜI GIAN)",

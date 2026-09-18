@@ -11,7 +11,6 @@ extends Control
 const HINT_KEYS := {
 	"play": "STR_HINT_PLAY",
 	"dungeon": "STR_HINT_DUNGEON",
-	"time_attack": "STR_HINT_TIME_ATTACK",
 	"minesweeper": "STR_HINT_MINESWEEPER",
 	"blind_memory": "STR_HINT_BLIND_MEMORY",
 	"fog_of_war": "STR_HINT_FOG_OF_WAR",

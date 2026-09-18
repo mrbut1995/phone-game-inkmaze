@@ -1,9 +1,9 @@
 extends SceneTree
 ## ============================================================================
-## Test Case: DEBUG CONSOLE — TEST 9 CHẾ ĐỘ SPECIAL (2026-02)
+## Test Case: DEBUG CONSOLE — TEST 8 CHẾ ĐỘ SPECIAL (2026-02)
 ##
 ## 1. GameManager: prepare_mode_run() đặt đúng mode · độ khó · cờ ván test · tầng ép.
-## 2. GameModeController: 9 id Special map đúng sang class mode (mode_id khớp).
+## 2. GameModeController: 8 id Special map đúng sang class mode (mode_id khớp).
 ## 3. DebugScene: có mục "SPECIAL MODES" + 1 hàng lệnh cho mỗi chế độ + toggle test mode.
 ## 4. Ván TEST không ghi tiến trình (không đánh dấu Daily, không báo danh hiệu).
 ## 5. Tầng ép: minesweeper ở tầng 3 -> bàn 5x5 (2 + tầng), tầng 1 -> 3x3.
@@ -18,7 +18,7 @@ var _checks := 0
 
 func _init() -> void:
 	print("\n========================================================")
-	print("  TEST: DEBUG CONSOLE — 9 CHE DO SPECIAL")
+	print("  TEST: DEBUG CONSOLE — 8 CHE DO SPECIAL")
 	print("========================================================\n")
 
 	await process_frame
@@ -76,7 +76,7 @@ func _init() -> void:
 func _section_1_game_manager(gm: Node) -> void:
 	print("--- 1. GAMEMANAGER: CO VAN TEST + TANG EP ---")
 	var ids: Array = gm.call("special_mode_ids")
-	_check(ids.size() == 9, "Liet ke dung 9 che do Special (dang %d)" % ids.size())
+	_check(ids.size() == 8, "Liet ke dung 8 che do Special (dang %d)" % ids.size())
 
 	for mode_id in ids:
 		gm.call("prepare_mode_run", str(mode_id), "hard", true, 3)
@@ -103,7 +103,7 @@ func _section_2_mode_mapping(gm: Node) -> void:
 		var ok := mode != null and mode.mode_id == str(mode_id) and not mode.mode_name.is_empty()
 		_check(ok, "set_mode_by_name('%s') -> %s" % [mode_id, mode.mode_name if mode != null else "null"])
 		count += 1
-	_check(count == 9, "Ca 9 id Special deu map duoc sang mode class")
+	_check(count == 8, "Ca 8 id Special deu map duoc sang mode class")
 	_check(controller.set_mode_by_name("play", "medium").mode_id == "play", "map 'play' -> StandardGameMode")
 	_check(controller.set_mode_by_name("dungeon", "medium").mode_id == "dungeon", "map 'dungeon' -> DungeonGameMode")
 	controller.free()
@@ -158,7 +158,7 @@ func _section_3_debug_scene(gm: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_4_no_progress(gm: Node, dm: Node, today: int, mask_before: int, arch: Node) -> void:
 	print("\n--- 4. VAN TEST KHONG GHI TIEN TRINH ---")
-	gm.call("prepare_mode_run", "time_attack", "medium", true, 1)
+	gm.call("prepare_mode_run", "minesweeper", "medium", true, 1)
 	var game_scene: Node = (load("res://scenes/game.tscn") as PackedScene).instantiate()
 	root.add_child(game_scene)
 	await process_frame
@@ -168,8 +168,8 @@ func _section_4_no_progress(gm: Node, dm: Node, today: int, mask_before: int, ar
 	_check(controller != null, "Game scene nap duoc GameController")
 	if controller != null:
 		_check(bool(controller.call("_is_debug_run")), "Controller nhan biet day la van TEST")
-		_check(controller.game_state.mode_id == "time_attack",
-			"Van dang choi che do time_attack (dang %s)" % controller.game_state.mode_id)
+		_check(controller.game_state.mode_id == "minesweeper",
+			"Van dang choi che do minesweeper (dang %s)" % controller.game_state.mode_id)
 
 		# Ván TEST: kể cả khi đang là ván DAILY thì cũng KHÔNG chốt nhiệm vụ ngày
 		var mask_before_call := int(dm.call("get_day_mission_mask", today))
@@ -188,7 +188,7 @@ func _section_4_no_progress(gm: Node, dm: Node, today: int, mask_before: int, ar
 			controller.call("_report_to_archivements", true, 12.0)
 			_check(int(arch.call("stat_value", "play_seconds")) == seconds_before,
 				"Van TEST: khong ghi so lieu vao So tay thanh tuu")
-			_check(str(gm.get("current_mode")) == "time_attack", "Mode trong GameManager khong bi doi")
+			_check(str(gm.get("current_mode")) == "minesweeper", "Mode trong GameManager khong bi doi")
 
 	game_scene.queue_free()
 	await process_frame

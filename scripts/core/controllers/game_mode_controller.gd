@@ -31,8 +31,6 @@ func set_mode_by_name(mode_name: String, difficulty: String = "medium") -> BaseG
 			new_mode = DailyClassicGameMode.new(difficulty)
 		"dungeon":
 			new_mode = DungeonGameMode.new()
-		"time_attack":
-			new_mode = TimeAttackGameMode.new(difficulty)
 		"minesweeper":
 			new_mode = MinesweeperPathGameMode.new()
 		"sum_path":

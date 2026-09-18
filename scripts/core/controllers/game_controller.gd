@@ -62,10 +62,7 @@ func start_new_run(start_floor := 1) -> void:
 		# HUD theo chế độ do GameScene quyết định (xem GameScene._apply_hud_for_mode)
 
 	if timer_controller != null:
-		if mode is TimeAttackGameMode:
-			timer_controller.start_countdown((mode as TimeAttackGameMode).time_limit)
-		else:
-			timer_controller.start_new_run()
+		timer_controller.start_new_run()
 
 	# Nạp màn trước để GameMode cập nhật `initial_steps` theo LevelData
 	_start_floor(start_floor)
@@ -582,7 +579,6 @@ func restart_run() -> void:
 const INSTRUCTION_SCENES := {
 	"play": "normal_maze",
 	"daily_classic": "normal_maze",
-	"time_attack": "time_attack",
 	"dungeon": "dungeon",
 	"minesweeper": "minesweeper",
 	"sum_path": "sumpath",

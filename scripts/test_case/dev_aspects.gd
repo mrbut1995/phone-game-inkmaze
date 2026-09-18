@@ -46,7 +46,7 @@ const SCREENS := [
 	{"id": "debug", "path": "res://scenes/debug.tscn"},
 ]
 
-const GAME_MODES := ["play", "dungeon", "time_attack", "minesweeper", "sum_path",
+const GAME_MODES := ["play", "dungeon", "minesweeper", "sum_path",
 		"countdown_cost", "blind_memory", "fog_of_war", "fading_ink", "one_stroke", "wall_builder"]
 
 const DESIGN_WIDTH := 1080.0

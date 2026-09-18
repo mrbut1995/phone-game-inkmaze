@@ -786,46 +786,6 @@ STR_GI_SUMPATH_P3_TAB1,SUMS & TARGETS,CỘNG TỔNG & MỤC TIÊU
 STR_GI_SUMPATH_P3_TAB2,OPERATORS & ONE-TIME CELLS,TOÁN TỬ & Ô 1 LẦN
 STR_GI_SUMPATH_P3_TAB3,MATH TIPS & UNDO,BÍ QUYẾT TÍNH & UNDO
 STR_GI_SUMPATH_P3_TITLE,Tactics & Undo Fixes,Chiến Thuật & Undo Sửa Sai
-STR_GI_TIME_ATTACK_CHIP,TIME ATTACK MAZE,TIME ATTACK MAZE
-STR_GI_TIME_ATTACK_P1_CTA,NEXT: WALL HITS COST TIME (2/3) ›,TIẾP THEO: ĐÂM TƯỜNG MẤT GIỜ (2/3) ›
-STR_GI_TIME_ATTACK_P1_LINK,Skip guide & start the race now,Bỏ qua hướng dẫn & Vào đua giờ ngay
-STR_GI_TIME_ATTACK_P1_R1D,Each level grants a fixed time budget (60s - 120s). You must touch the F shaft before time runs out.,Màn chơi cấp một quỹ thời gian cố định (60s - 120s). Bạn phải chạm hố thang F trước khi hết giờ.
-STR_GI_TIME_ATTACK_P1_R1T,The Total Time Counts Down:,Thời Gian Tổng Đếm Ngược:
-STR_GI_TIME_ATTACK_P1_R2D,Loop around and try branches freely — the only enemy is the ticking clock.,"Bạn có thể đi vòng, thử nhiều ngã rẽ mà không sợ hết bước — kẻ thù duy nhất là thời gian trôi."
-STR_GI_TIME_ATTACK_P1_R2T,No Step Limit:,Không Giới Hạn Số Bước Chân:
-STR_GI_TIME_ATTACK_P1_R3D,Cell numbers still count walls (0 - 4). Sprint while reasoning precisely to dodge them.,Con số trên ô vẫn là số tường (0 - 4). Vừa đi nhanh vừa phải suy luận né tường chính xác.
-STR_GI_TIME_ATTACK_P1_R3T,Invisible Walls Work As Usual:,Quy Luật Tường Vô Hình Như Thường:
-STR_GI_TIME_ATTACK_P1_SECTION,TIME RACE RULES,QUY TẮC ĐUA THỜI GIAN
-STR_GI_TIME_ATTACK_P1_TAB1,COUNTDOWN CLOCK,ĐỒNG HỒ ĐẾM NGƯỢC
-STR_GI_TIME_ATTACK_P1_TAB2,WALL HITS COST TIME,ĐÂM TƯỜNG MẤT GIỜ
-STR_GI_TIME_ATTACK_P1_TAB3,SPEED & HINTS,TỐC ĐỘ & GỢI Ý
-STR_GI_TIME_ATTACK_P1_TITLE,The Countdown Clock,Đồng Hồ Đếm Ngược
-STR_GI_TIME_ATTACK_P2_CTA,NEXT: SPEED & HINTS (3/3) ›,TIẾP THEO: TỐC ĐỘ & GỢI Ý (3/3) ›
-STR_GI_TIME_ATTACK_P2_LINK,Skip guide & start the race now,Bỏ qua hướng dẫn & Vào đua giờ ngay
-STR_GI_TIME_ATTACK_P2_R1D,Hit an invisible wall and your piece is shoved back to S to begin a new line.,"Đâm phải tường vô hình, nhân vật lập tức bị đẩy lùi về điểm S để bắt đầu đường vẽ mới."
-STR_GI_TIME_ATTACK_P2_R1T,Bounced Back To The Start Stair (S):,Văng Ngược Về Cầu Thang Start (S):
-STR_GI_TIME_ATTACK_P2_R2D,Time never stops. Redrawing from scratch burns precious seconds!,Thời gian không dừng lại. Việc vẽ lại từ đầu khiến bạn mất đứt nhiều giây sinh tử!
-STR_GI_TIME_ATTACK_P2_R2T,The Clock Keeps Counting:,Đồng Hồ Vẫn Tiếp Tục Đếm Ngược:
-STR_GI_TIME_ATTACK_P2_R3D,The wall you hit stays revealed forever. Glance fast and draw a decisive detour.,Bức tường bị đâm sẽ lộ ra vĩnh viễn. Hãy nhìn thật nhanh và vẽ đường né tránh dứt khoát.
-STR_GI_TIME_ATTACK_P2_R3T,Learn From The Wall You Just Revealed:,Rút Kinh Nghiệm Từ Đoạn Tường Vừa Lộ:
-STR_GI_TIME_ATTACK_P2_SECTION,WALL IMPACT RESULTS,HẬU QUẢ VA CHẠM TƯỜNG
-STR_GI_TIME_ATTACK_P2_TAB1,COUNTDOWN CLOCK,ĐỒNG HỒ ĐẾM NGƯỢC
-STR_GI_TIME_ATTACK_P2_TAB2,WALL HITS COST TIME,ĐÂM TƯỜNG MẤT GIỜ
-STR_GI_TIME_ATTACK_P2_TAB3,SPEED & HINTS,TỐC ĐỘ & GỢI Ý
-STR_GI_TIME_ATTACK_P2_TITLE,Wall Hits & Lost Time,Đâm Tường & Mất Giờ
-STR_GI_TIME_ATTACK_P3_CTA,UNDERSTOOD • RACE THE CLOCK,ĐÃ HIỂU • ĐUA THỜI GIAN
-STR_GI_TIME_ATTACK_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
-STR_GI_TIME_ATTACK_P3_R1D,Scan for 0 cells first to sketch a safe route fast without mental math.,Quét mắt tìm các ô số 0 trước tiên để vạch nhanh tuyến đường an toàn mà không tốn công nhẩm tính.
-STR_GI_TIME_ATTACK_P3_R1T,Find 0 Cells To Sprint:,Tìm Ô Số 0 Để Phóng Nhanh:
-STR_GI_TIME_ATTACK_P3_R2D,"In Time Attack, hesitation is defeat. Tap Hint to break the knot instead of burning the clock.","Trong Time Attack, do dự là thất bại. Hãy bấm Gợi Ý để mở khóa nút thắt thay vì để đồng hồ cạn kiệt."
-STR_GI_TIME_ATTACK_P3_R2T,Hit Hint After 3 Seconds Of Being Stuck:,Bấm Gợi Ý Khi Bị Bí Quá 3 Giây:
-STR_GI_TIME_ATTACK_P3_R3D,"If a branch feels like a dead end, Undo one cell — far faster than the penalty back to S!","Nếu cảm giác vừa rẽ nhầm nhánh bế tắc, bấm Undo lùi lại 1 ô sẽ nhanh hơn rất nhiều so với bị phạt về S!"
-STR_GI_TIME_ATTACK_P3_R3T,Use Undo In Time To Avoid Going Back To S:,Dùng Undo Kịp Thời Để Tránh Về S:
-STR_GI_TIME_ATTACK_P3_SECTION,BURST-SPEED SECRETS,BÍ QUYẾT BỨT TỐC
-STR_GI_TIME_ATTACK_P3_TAB1,COUNTDOWN CLOCK,ĐỒNG HỒ ĐẾM NGƯỢC
-STR_GI_TIME_ATTACK_P3_TAB2,WALL HITS COST TIME,ĐÂM TƯỜNG MẤT GIỜ
-STR_GI_TIME_ATTACK_P3_TAB3,SPEED & HINTS,TỐC ĐỘ & GỢI Ý
-STR_GI_TIME_ATTACK_P3_TITLE,Speed & Rescue Hints,Tốc Độ & Gợi Ý Cứu Nguy
 STR_GI_WALL_BUILDER_CHIP,WALL BUILDER • BUILD THE MAZE,WALL BUILDER • XÂY TƯỜNG
 STR_GI_WALL_BUILDER_P1_CTA,NEXT: SUBMIT & 3 TRIES (2/3) ›,TIẾP THEO: NÚT GỬI & 3 LƯỢT (2/3) ›
 STR_GI_WALL_BUILDER_P1_LINK,Skip the guide & start building now,Bỏ qua hướng dẫn & Vào xây tường ngay
@@ -1118,115 +1078,80 @@ STR_GI_X249,Stepped into a direction that feels wrong?,Bước vào hướng th�
 STR_GI_X250,Tap Undo to retreat to a safe cell,Bấm Undo để lùi lại ô an toàn
 STR_GI_X251,before ramming a hidden wall!,trước khi đâm vào tường ẩn!
 STR_GI_X252,Blind steppers hit walls — whoever locks routes with Anchors wins!,Kẻ mù quáng bước đi sẽ đâm tường — người biết dùng Anchor khóa lối sẽ chiến thắng!
-STR_GI_X253,TIME REMAINING,THỜI GIAN CÒN LẠI
-STR_GI_X254,TICKING DOWN,ĐANG GIẢM
-STR_GI_X255,TIME PRESSURE,ÁP LỰC THỜI GIAN
-STR_GI_X256,COUNTDOWN,ĐẾM NGƯỢC
-STR_GI_X257,TO 00:00,VỀ 00:00
-STR_GI_X258,Time up = LOSS!,Hết giờ = THUA!
-STR_GI_X259,STEP COUNT,SỐ BƯỚC CHÂN
-STR_GI_X260,UNLIMITED,KHÔNG GIỚI HẠN
-STR_GI_X261,Walk as many cells as you like,Đi bao nhiêu ô tùy ý
-STR_GI_X262,just get there in time!,chỉ cần về đích kịp!
-STR_GI_X263,You only have 60s to 120s: draw decisively before the clock hits 00:00!,Bạn chỉ có 60s đến 120s: Hãy vẽ thật dứt khoát trước khi đồng hồ điểm 00:00!
-STR_GI_X264,SHOVED BACK TO START,BỊ ĐẨY VỀ XUẤT PHÁT
-STR_GI_X265,REDRAW FROM S!,VẼ LẠI TỪ S!
-STR_GI_X266,The wall is revealed but,Tường lộ diện nhưng
-STR_GI_X267,you must walk it all again.,phải đi lại từ đầu.
-STR_GI_X268,TIME KEEPS FLOWING,THỜI GIAN VẪN TRÔI
-STR_GI_X269,5 - 10 SECONDS LOST!,MẤT 5 - 10 GIÂY!
-STR_GI_X270,"The clock keeps counting down,","Đồng hồ vẫn đếm lùi,"
-STR_GI_X271,and the budget drains fast!,quỹ giờ cạn rất nhanh!
-STR_GI_X272,Wall hits in Time Attack don't kill you — but they rob you of precious seconds!,"Đâm tường ở Time Attack không chết ngay, nhưng sẽ cướp đi thời gian quý báu của bạn!"
-STR_GI_X273,TACTIC: BLITZ THROUGH 0 CELLS,CHIẾN THUẬT: PHÓNG QUA Ô 0
-STR_GI_X274,SWIPE THROUGH • TURBO,LƯỚT QUA • SIÊU TỐC
-STR_GI_X275,Prioritize 0 Cells To Gain Speed,Ưu Tiên Ô Số 0 Để Tăng Tốc
-STR_GI_X276,A 0 cell has no walls around it.,Ô số 0 hoàn toàn không có tường bao.
-STR_GI_X277,Sprint your pen straight through it without,Hãy phóng thẳng bút qua ô này mà không
-STR_GI_X278,pausing to think — saving every second!,"cần dừng lại suy nghĩ, tiết kiệm tối đa giây!"
-STR_GI_X279,Open the way when stuck,Mở lối khi bí
-STR_GI_X280,Stuck over 3 seconds? Don't freeze!,Bí quá 3 giây? Đừng chôn chân!
-STR_GI_X281,Tap Hint at once to light the route,Bấm ngay Gợi Ý để soi đường
-STR_GI_X282,instead of watching the clock drain!,thay vì đứng nhìn đồng hồ cạn!
-STR_GI_X283,Retreat in time,Rút bước kịp thời
-STR_GI_X284,Swiped the wrong way?,Lỡ tay quẹt nhầm hướng?
-STR_GI_X285,Tap Undo immediately,Bấm Undo lùi lại ngay
-STR_GI_X286,so you don't hit a wall and fly back to S!,để không bị đâm tường văng về S!
-STR_GI_X287,"Standing still is suicide! When in doubt, tap Hint and save your remaining time.","Đứng yên là tự sát! Khi phân vân, bấm ngay Gợi Ý để cứu lấy thời gian sống còn."
-STR_GI_X288,TIẾN ĐỘ PHỦ KÍN:,TIẾN ĐỘ PHỦ KÍN:
-STR_GI_X289,MỘT NÉT KHÔNG NHẤC BÚT,MỘT NÉT KHÔNG NHẤC BÚT
-STR_GI_X290,ĐẶC TRƯNG BÀN CỜ,ĐẶC TRƯNG BÀN CỜ
-STR_GI_X291,TƯỜNG THẤY RÕ,TƯỜNG THẤY RÕ
-STR_GI_X292,100% HIỆN SẴN,100% HIỆN SẴN
-STR_GI_X293,Không có số trên ô!,Không có số trên ô!
-STR_GI_X294,MỤC TIÊU DUY NHẤT,MỤC TIÊU DUY NHẤT
-STR_GI_X295,PHỦ KÍN 100%,PHỦ KÍN 100%
-STR_GI_X296,MỌI Ô CỜ,MỌI Ô CỜ
-STR_GI_X297,rồi mới về đích F!,rồi mới về đích F!
-STR_GI_X298,Đã đi 6 ô • Đi tiếp qua 3 ô còn lại để phủ kín 9/9 ô rồi chạm hố thang F!,Đã đi 6 ô • Đi tiếp qua 3 ô còn lại để phủ kín 9/9 ô rồi chạm hố thang F!
-STR_GI_X299,ĐI VÀO ĐƯỜNG ĐÃ QUA,ĐI VÀO ĐƯỜNG ĐÃ QUA
-STR_GI_X300,ĐÃ ĐI,ĐÃ ĐI
-STR_GI_X301,GAME OVER NGAY!,GAME OVER NGAY!
-STR_GI_X302,Cố tình bước đè lên nét vẽ cũ,Cố tình bước đè lên nét vẽ cũ
-STR_GI_X303,sẽ bị xử thua lập tức!,sẽ bị xử thua lập tức!
-STR_GI_X304,BẪY CÔ LẬP Ô TRỐNG,BẪY CÔ LẬP Ô TRỐNG
-STR_GI_X305,BỊ KẸT,BỊ KẸT
-STR_GI_X306,HẾT ĐƯỜNG ĐI!,HẾT ĐƯỜNG ĐI!
-STR_GI_X307,Vẽ sai nhánh làm cô lập ô trống.,Vẽ sai nhánh làm cô lập ô trống.
-STR_GI_X308,Không thể phủ kín 100% • Thua!,Không thể phủ kín 100% • Thua!
-STR_GI_X309,Tuyệt đối không được bước lùi vào nét vẽ cũ — chạm đường đã đi là Game Over ngay!,Tuyệt đối không được bước lùi vào nét vẽ cũ — chạm đường đã đi là Game Over ngay!
-STR_GI_X310,ĐÍCH ĐẾN CUỐI CÙNG: F,ĐÍCH ĐẾN CUỐI CÙNG: F
-STR_GI_X311,ĐÃ PHỦ KÍN,ĐÃ PHỦ KÍN
-STR_GI_X312,100% SỐ Ô,100% SỐ Ô
-STR_GI_X313,F Là Điểm Chốt Hạ Cuối Cùng,F Là Điểm Chốt Hạ Cuối Cùng
-STR_GI_X314,Chỉ được chạm vào hố thang F sau khi,Chỉ được chạm vào hố thang F sau khi
-STR_GI_X315,đã phủ kín mọi ô khác trên bàn cờ.,đã phủ kín mọi ô khác trên bàn cờ.
-STR_GI_X316,Chạm F sớm sẽ bị chặn lại!,Chạm F sớm sẽ bị chặn lại!
-STR_GI_X317,CỨU CÁNH SINH TỬ,CỨU CÁNH SINH TỬ
-STR_GI_X318,MỞ LẠI Ô VỪA ĐI QUA!,MỞ LẠI Ô VỪA ĐI QUA!
-STR_GI_X319,Thấy đi nhầm nhánh kẹt? Bấm Undo ngay,Thấy đi nhầm nhánh kẹt? Bấm Undo ngay
-STR_GI_X320,"để rút nét vẽ và mở lại ô, tránh bị Game Over do đi lại đường cũ.","để rút nét vẽ và mở lại ô, tránh bị Game Over do đi lại đường cũ."
-STR_GI_X321,Đừng cố đi tiếp khi nhận ra bị kẹt — hãy dùng Undo để mở lại ô và thử hướng khác!,Đừng cố đi tiếp khi nhận ra bị kẹt — hãy dùng Undo để mở lại ô và thử hướng khác!
-STR_GI_X322,TỔNG TƯỜNG CẦN DỰNG:,TỔNG TƯỜNG CẦN DỰNG:
-STR_GI_X323,KÉO NỐI 2 ĐIỂM NEO (+),KÉO NỐI 2 ĐIỂM NEO (+)
-STR_GI_X324,VAI TRÒ MỚI,VAI TRÒ MỚI
-STR_GI_X325,THỢ XÂY MÊ CUNG,THỢ XÂY MÊ CUNG
-STR_GI_X326,KHÔNG CÓ S/F,KHÔNG CÓ S/F
-STR_GI_X327,Không có di chuyển!,Không có di chuyển!
-STR_GI_X328,THAO TÁC CHÍNH,THAO TÁC CHÍNH
-STR_GI_X329,NỐI 2 ANCHOR,NỐI 2 ANCHOR
-STR_GI_X330,BẬT / TẮT TƯỜNG,BẬT / TẮT TƯỜNG
-STR_GI_X331,Kéo để dựng vách!,Kéo để dựng vách!
-STR_GI_X332,Ô giữa mang số 2 • Bạn cần kéo nối đúng 2 đoạn tường ở các cạnh của nó!,Ô giữa mang số 2 • Bạn cần kéo nối đúng 2 đoạn tường ở các cạnh của nó!
-STR_GI_X333,DỰNG ĐỦ • BẤM GỬI,DỰNG ĐỦ • BẤM GỬI
-STR_GI_X334,TIẾN ĐỘ TƯỜNG,TIẾN ĐỘ TƯỜNG
-STR_GI_X335,18 / 18 ĐOẠN,18 / 18 ĐOẠN
-STR_GI_X336,ĐÃ ĐỦ,ĐÃ ĐỦ
-STR_GI_X337,GỬI BÀI,GỬI BÀI
-STR_GI_X338,Kiểm tra kết quả,Kiểm tra kết quả
-STR_GI_X339,KHỚP MỌI SỐ = THẮNG!,KHỚP MỌI SỐ = THẮNG!
-STR_GI_X340,Cấu hình tường thỏa mãn,Cấu hình tường thỏa mãn
-STR_GI_X341,toàn bộ con số là hoàn thành.,toàn bộ con số là hoàn thành.
-STR_GI_X342,CHỈ CÓ 3 LƯỢT NỘP,CHỈ CÓ 3 LƯỢT NỘP
-STR_GI_X343,CHƯA KHỚP 2 ĐOẠN!,CHƯA KHỚP 2 ĐOẠN!
-STR_GI_X344,BỊ TRỪ -1 LƯỢT GỬI,BỊ TRỪ -1 LƯỢT GỬI
-STR_GI_X345,(Còn lại 2/3 lượt),(Còn lại 2/3 lượt)
-STR_GI_X346,HẾT 3 LƯỢT = THUA!,HẾT 3 LƯỢT = THUA!
-STR_GI_X347,"Game chỉ báo số đoạn bị sai,","Game chỉ báo số đoạn bị sai,"
-STR_GI_X348,KHÔNG chỉ ra vị trí sai!,KHÔNG chỉ ra vị trí sai!
-STR_GI_X349,"Bạn chỉ có 3 lượt gửi bài: Đừng bấm Gửi cầu may, hãy rà soát thật kỹ từng ô!","Bạn chỉ có 3 lượt gửi bài: Đừng bấm Gửi cầu may, hãy rà soát thật kỹ từng ô!"
-STR_GI_X350,BÍ QUYẾT: LOẠI TRỪ TỪ Ô SỐ 0,BÍ QUYẾT: LOẠI TRỪ TỪ Ô SỐ 0
-STR_GI_X351,CẤM VẼ,CẤM VẼ
-STR_GI_X352,Ô Số 0 Tuyệt Đối Sạch Tường,Ô Số 0 Tuyệt Đối Sạch Tường
-STR_GI_X353,Bốn cạnh xung quanh ô số 0 không bao giờ,Bốn cạnh xung quanh ô số 0 không bao giờ
-STR_GI_X354,có tường. Loại trừ các khe này trước tiên,có tường. Loại trừ các khe này trước tiên
-STR_GI_X355,sẽ giúp suy luận ra tường của các ô bên cạnh!,sẽ giúp suy luận ra tường của các ô bên cạnh!
-STR_GI_X356,Khóa 1 tường đúng,Khóa 1 tường đúng
-STR_GI_X357,Bí tắc không biết dựng ở đâu?,Bí tắc không biết dựng ở đâu?
-STR_GI_X358,Bấm Gợi Ý để hiện và KHÓA,Bấm Gợi Ý để hiện và KHÓA
-STR_GI_X359,cố định 1 đoạn tường chuẩn 100%.,cố định 1 đoạn tường chuẩn 100%.
-STR_GI_X360,Xóa đoạn vừa nối,Xóa đoạn vừa nối
-STR_GI_X361,Lỡ tay nối nhầm khe tường?,Lỡ tay nối nhầm khe tường?
-STR_GI_X362,Bấm Undo để gỡ bỏ ngay lập tức,Bấm Undo để gỡ bỏ ngay lập tức
-STR_GI_X363,mà không cần kéo lại lần nữa.,mà không cần kéo lại lần nữa.
-STR_GI_X364,Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!,Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!
+STR_GI_X253,TIẾN ĐỘ PHỦ KÍN:,TIẾN ĐỘ PHỦ KÍN:
+STR_GI_X254,MỘT NÉT KHÔNG NHẤC BÚT,MỘT NÉT KHÔNG NHẤC BÚT
+STR_GI_X255,ĐẶC TRƯNG BÀN CỜ,ĐẶC TRƯNG BÀN CỜ
+STR_GI_X256,TƯỜNG THẤY RÕ,TƯỜNG THẤY RÕ
+STR_GI_X257,100% HIỆN SẴN,100% HIỆN SẴN
+STR_GI_X258,Không có số trên ô!,Không có số trên ô!
+STR_GI_X259,MỤC TIÊU DUY NHẤT,MỤC TIÊU DUY NHẤT
+STR_GI_X260,PHỦ KÍN 100%,PHỦ KÍN 100%
+STR_GI_X261,MỌI Ô CỜ,MỌI Ô CỜ
+STR_GI_X262,rồi mới về đích F!,rồi mới về đích F!
+STR_GI_X263,Đã đi 6 ô • Đi tiếp qua 3 ô còn lại để phủ kín 9/9 ô rồi chạm hố thang F!,Đã đi 6 ô • Đi tiếp qua 3 ô còn lại để phủ kín 9/9 ô rồi chạm hố thang F!
+STR_GI_X264,ĐI VÀO ĐƯỜNG ĐÃ QUA,ĐI VÀO ĐƯỜNG ĐÃ QUA
+STR_GI_X265,ĐÃ ĐI,ĐÃ ĐI
+STR_GI_X266,GAME OVER NGAY!,GAME OVER NGAY!
+STR_GI_X267,Cố tình bước đè lên nét vẽ cũ,Cố tình bước đè lên nét vẽ cũ
+STR_GI_X268,sẽ bị xử thua lập tức!,sẽ bị xử thua lập tức!
+STR_GI_X269,BẪY CÔ LẬP Ô TRỐNG,BẪY CÔ LẬP Ô TRỐNG
+STR_GI_X270,BỊ KẸT,BỊ KẸT
+STR_GI_X271,HẾT ĐƯỜNG ĐI!,HẾT ĐƯỜNG ĐI!
+STR_GI_X272,Vẽ sai nhánh làm cô lập ô trống.,Vẽ sai nhánh làm cô lập ô trống.
+STR_GI_X273,Không thể phủ kín 100% • Thua!,Không thể phủ kín 100% • Thua!
+STR_GI_X274,Tuyệt đối không được bước lùi vào nét vẽ cũ — chạm đường đã đi là Game Over ngay!,Tuyệt đối không được bước lùi vào nét vẽ cũ — chạm đường đã đi là Game Over ngay!
+STR_GI_X275,ĐÍCH ĐẾN CUỐI CÙNG: F,ĐÍCH ĐẾN CUỐI CÙNG: F
+STR_GI_X276,ĐÃ PHỦ KÍN,ĐÃ PHỦ KÍN
+STR_GI_X277,100% SỐ Ô,100% SỐ Ô
+STR_GI_X278,F Là Điểm Chốt Hạ Cuối Cùng,F Là Điểm Chốt Hạ Cuối Cùng
+STR_GI_X279,Chỉ được chạm vào hố thang F sau khi,Chỉ được chạm vào hố thang F sau khi
+STR_GI_X280,đã phủ kín mọi ô khác trên bàn cờ.,đã phủ kín mọi ô khác trên bàn cờ.
+STR_GI_X281,Chạm F sớm sẽ bị chặn lại!,Chạm F sớm sẽ bị chặn lại!
+STR_GI_X282,CỨU CÁNH SINH TỬ,CỨU CÁNH SINH TỬ
+STR_GI_X283,MỞ LẠI Ô VỪA ĐI QUA!,MỞ LẠI Ô VỪA ĐI QUA!
+STR_GI_X284,Thấy đi nhầm nhánh kẹt? Bấm Undo ngay,Thấy đi nhầm nhánh kẹt? Bấm Undo ngay
+STR_GI_X285,"để rút nét vẽ và mở lại ô, tránh bị Game Over do đi lại đường cũ.","để rút nét vẽ và mở lại ô, tránh bị Game Over do đi lại đường cũ."
+STR_GI_X286,Đừng cố đi tiếp khi nhận ra bị kẹt — hãy dùng Undo để mở lại ô và thử hướng khác!,Đừng cố đi tiếp khi nhận ra bị kẹt — hãy dùng Undo để mở lại ô và thử hướng khác!
+STR_GI_X287,TỔNG TƯỜNG CẦN DỰNG:,TỔNG TƯỜNG CẦN DỰNG:
+STR_GI_X288,KÉO NỐI 2 ĐIỂM NEO (+),KÉO NỐI 2 ĐIỂM NEO (+)
+STR_GI_X289,VAI TRÒ MỚI,VAI TRÒ MỚI
+STR_GI_X290,THỢ XÂY MÊ CUNG,THỢ XÂY MÊ CUNG
+STR_GI_X291,KHÔNG CÓ S/F,KHÔNG CÓ S/F
+STR_GI_X292,Không có di chuyển!,Không có di chuyển!
+STR_GI_X293,THAO TÁC CHÍNH,THAO TÁC CHÍNH
+STR_GI_X294,NỐI 2 ANCHOR,NỐI 2 ANCHOR
+STR_GI_X295,BẬT / TẮT TƯỜNG,BẬT / TẮT TƯỜNG
+STR_GI_X296,Kéo để dựng vách!,Kéo để dựng vách!
+STR_GI_X297,Ô giữa mang số 2 • Bạn cần kéo nối đúng 2 đoạn tường ở các cạnh của nó!,Ô giữa mang số 2 • Bạn cần kéo nối đúng 2 đoạn tường ở các cạnh của nó!
+STR_GI_X298,DỰNG ĐỦ • BẤM GỬI,DỰNG ĐỦ • BẤM GỬI
+STR_GI_X299,TIẾN ĐỘ TƯỜNG,TIẾN ĐỘ TƯỜNG
+STR_GI_X300,18 / 18 ĐOẠN,18 / 18 ĐOẠN
+STR_GI_X301,ĐÃ ĐỦ,ĐÃ ĐỦ
+STR_GI_X302,GỬI BÀI,GỬI BÀI
+STR_GI_X303,Kiểm tra kết quả,Kiểm tra kết quả
+STR_GI_X304,KHỚP MỌI SỐ = THẮNG!,KHỚP MỌI SỐ = THẮNG!
+STR_GI_X305,Cấu hình tường thỏa mãn,Cấu hình tường thỏa mãn
+STR_GI_X306,toàn bộ con số là hoàn thành.,toàn bộ con số là hoàn thành.
+STR_GI_X307,CHỈ CÓ 3 LƯỢT NỘP,CHỈ CÓ 3 LƯỢT NỘP
+STR_GI_X308,CHƯA KHỚP 2 ĐOẠN!,CHƯA KHỚP 2 ĐOẠN!
+STR_GI_X309,BỊ TRỪ -1 LƯỢT GỬI,BỊ TRỪ -1 LƯỢT GỬI
+STR_GI_X310,(Còn lại 2/3 lượt),(Còn lại 2/3 lượt)
+STR_GI_X311,HẾT 3 LƯỢT = THUA!,HẾT 3 LƯỢT = THUA!
+STR_GI_X312,"Game chỉ báo số đoạn bị sai,","Game chỉ báo số đoạn bị sai,"
+STR_GI_X313,KHÔNG chỉ ra vị trí sai!,KHÔNG chỉ ra vị trí sai!
+STR_GI_X314,"Bạn chỉ có 3 lượt gửi bài: Đừng bấm Gửi cầu may, hãy rà soát thật kỹ từng ô!","Bạn chỉ có 3 lượt gửi bài: Đừng bấm Gửi cầu may, hãy rà soát thật kỹ từng ô!"
+STR_GI_X315,BÍ QUYẾT: LOẠI TRỪ TỪ Ô SỐ 0,BÍ QUYẾT: LOẠI TRỪ TỪ Ô SỐ 0
+STR_GI_X316,CẤM VẼ,CẤM VẼ
+STR_GI_X317,Ô Số 0 Tuyệt Đối Sạch Tường,Ô Số 0 Tuyệt Đối Sạch Tường
+STR_GI_X318,Bốn cạnh xung quanh ô số 0 không bao giờ,Bốn cạnh xung quanh ô số 0 không bao giờ
+STR_GI_X319,có tường. Loại trừ các khe này trước tiên,có tường. Loại trừ các khe này trước tiên
+STR_GI_X320,sẽ giúp suy luận ra tường của các ô bên cạnh!,sẽ giúp suy luận ra tường của các ô bên cạnh!
+STR_GI_X321,Khóa 1 tường đúng,Khóa 1 tường đúng
+STR_GI_X322,Bí tắc không biết dựng ở đâu?,Bí tắc không biết dựng ở đâu?
+STR_GI_X323,Bấm Gợi Ý để hiện và KHÓA,Bấm Gợi Ý để hiện và KHÓA
+STR_GI_X324,cố định 1 đoạn tường chuẩn 100%.,cố định 1 đoạn tường chuẩn 100%.
+STR_GI_X325,Xóa đoạn vừa nối,Xóa đoạn vừa nối
+STR_GI_X326,Lỡ tay nối nhầm khe tường?,Lỡ tay nối nhầm khe tường?
+STR_GI_X327,Bấm Undo để gỡ bỏ ngay lập tức,Bấm Undo để gỡ bỏ ngay lập tức
+STR_GI_X328,mà không cần kéo lại lần nữa.,mà không cần kéo lại lần nữa.
+STR_GI_X329,Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!,Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!

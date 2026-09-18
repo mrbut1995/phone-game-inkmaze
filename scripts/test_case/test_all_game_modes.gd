@@ -38,11 +38,10 @@ func _init() -> void:
 	if test_undo_and_hint():
 		passed += 1
 
-	# 2. Test 9 Game Modes
+	# 2. Test 8 Game Modes
 	var modes: Array[BaseGameMode] = [
 		StandardGameMode.new("medium"),
 		DungeonGameMode.new(),
-		TimeAttackGameMode.new("medium"),
 		MinesweeperPathGameMode.new(),
 		SumPathGameMode.new("medium", "="),
 		CountdownCostGameMode.new("medium"),

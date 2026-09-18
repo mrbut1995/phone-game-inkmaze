@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Tài liệu** | Number Maze — Game Design Document (InkMaze) |
-| **Phiên bản** | v2.4 — 2026-09-19 (gắn **2 mode mới vào vòng xoay Daily 9 ngày** + thử thách `no_wrong_submit` + ô "đã khớp số" + art nút công cụ theo mockup → §13.20) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
+| **Phiên bản** | v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze khỏi game**: mode · HUD · popup hướng dẫn · asset · vòng xoay Daily → §13.21) · v2.4 — 2026-09-19 (gắn **2 mode mới vào vòng xoay Daily 9 ngày** + thử thách `no_wrong_submit` + ô "đã khớp số" + art nút công cụ theo mockup → §13.20) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
 | **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
 | **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
 | **Quy ước mode** | 1 bộ luật = 1 `class_name` kế thừa `BaseGameMode`; mỗi mode có `mode_id` (khoá xoay vòng Daily + tra chuỗi `STR_MODE_<ID>`), luật riêng, và **1 mockup matchup** ở mục 10 |
@@ -32,7 +32,7 @@
 **Thể loại:** Puzzle / Logic, chơi trên di động
 **Ý tưởng cốt lõi:** Kết hợp lối suy luận kiểu Minesweeper (dùng số để đoán vị trí "tường vô hình") với việc vẽ đường đi trong mê cung, dưới áp lực số bước di chuyển hoặc thời gian có hạn.
 
-Game có **11 bộ luật chơi** (9 bộ luật cũ + **One Stroke** & **Wall Builder** — bổ sung 2026-09-18, đặc tả ở §5.12–5.13) dùng chung 1 bộ khung Grid / S-F / vẽ đường (mục 2–3), nhưng được tổ chức lại thành **3 cổng vào chính** trên Main Screen thay vì liệt kê cả 11 luật ngang hàng — xem mục 4.
+Game có **10 bộ luật chơi** (9 bộ luật cũ + **One Stroke** & **Wall Builder** — bổ sung 2026-09-18, đặc tả ở §5.12–5.13; **Time Attack Maze đã BỎ 2026-09-19**) dùng chung 1 bộ khung Grid / S-F / vẽ đường (mục 2–3), nhưng được tổ chức lại thành **3 cổng vào chính** trên Main Screen thay vì liệt kê cả 10 luật ngang hàng — xem mục 4.
 
 Phần thưởng **Sao (Star)** của **mọi match-up** nay do **3 Thử thách (Challenge)** quyết định: hoàn thành 1 Thử thách = 1 Sao (tối đa 3 Sao), **KHÔNG còn tính theo thời gian còn lại** — xem mục 3.1.
 
@@ -105,9 +105,9 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 |---|---|---|
 | **PLAY · CHỌN MÀN** | Play Mode (Level Selection) | Luôn mở, chơi tự do theo Chương/Màn |
 | **DUNGEON MODE** | Dungeon Mode | Luôn mở, chơi endless không giới hạn |
-| **DAILY CHALLENGE** | 9 bộ luật còn lại (luân phiên theo ngày) | Chỉ chơi được đúng bộ luật của ngày hôm đó |
+| **DAILY CHALLENGE** | 8 bộ luật còn lại (luân phiên theo ngày) | Chỉ chơi được đúng bộ luật của ngày hôm đó |
 
-**Nguyên tắc quan trọng:** Chỉ có **Play Mode** và **Dungeon Mode** là 2 chế độ "thường trực" người chơi có thể vào chơi bất cứ lúc nào. **9 bộ luật còn lại** (Time Attack Maze, Minesweeper Maze, **Fading Ink**, Sum Path, Countdown Cost, Blind Memory Maze, Fog of War Maze, **One Stroke**, **Wall Builder**) **không tồn tại như mục chọn riêng** trên Main Screen — chúng chỉ xuất hiện **lần lượt, mỗi ngày 1 bộ luật**, thông qua màn hình Daily Challenge (mục 6).
+**Nguyên tắc quan trọng:** Chỉ có **Play Mode** và **Dungeon Mode** là 2 chế độ "thường trực" người chơi có thể vào chơi bất cứ lúc nào. **8 bộ luật còn lại** (Minesweeper Maze, **Fading Ink**, Sum Path, Countdown Cost, Blind Memory Maze, Fog of War Maze, **One Stroke**, **Wall Builder**) **không tồn tại như mục chọn riêng** trên Main Screen — chúng chỉ xuất hiện **lần lượt, mỗi ngày 1 bộ luật**, thông qua màn hình Daily Challenge (mục 6).
 
 ### 4.1. Các nút truy cập khác trên Main Screen
 
@@ -130,7 +130,6 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 |---|---|---|---|---|
 | **Play Mode** | Play · Chọn màn | Số tường quanh ô (0..4) | **Game Over ngay** (hồi sinh: quay lại bước trước đó) | Đến F an toàn, xếp hạng theo thời gian nhanh nhất |
 | **Dungeon Mode** | Dungeon | Số tường quanh ô (0..4) | Về lại S, trừ 1 bước | Vượt qua càng nhiều Floor càng tốt (chế độ DUY NHẤT có bộ đếm bước còn lại) |
-| Time Attack Maze | Daily Challenge | Số tường quanh ô (0..4) | Về lại S, mất thời gian | Đến F trước khi đồng hồ đếm ngược về 0 |
 | Minesweeper Maze | Daily Challenge | Số mìn quanh ô (0..8) | Đạp mìn: **THUA NGAY** (nổ, đứng nguyên tại ô, hiện biểu tượng Bomb, giữ nguyên số) | Tránh các ô mìn ẩn, đến đích F an toàn |
 | Fading Ink | Daily Challenge | **MỰC của ô** (giá trị riêng, KHÔNG liên quan tường) — giảm 1 mỗi bước đi | Không có tường; ô hết mực = không đi vào được (không mất bước) | Đến F trước khi mực phai hết; hết lối đi = THUA |
 | Sum Path | Daily Challenge | Điểm số của ô (1..9) | Không có tường | Đến F với tổng điểm thỏa `SUM < / > / = Target` |
@@ -151,13 +150,13 @@ Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ ch
 > - **Minesweeper Maze**: thẻ **THỜI GIAN** 250×138 + thẻ **BOM CÒN LẠI** 440×158 — art `card_bomb.svg` (mẩu giấy viền ĐỎ + lề đỏ + dòng kẻ ngang kiểu vở) + **sticker icon_bomb** bên phải, con số `còn/tổng` mực đỏ 72px. Panel MISSION cũ được thay bằng thẻ Bomb.
 > - **Sum Path**: thẻ **THỜI GIAN** 250×138 + thẻ **TỔNG HIỆN TẠI** 440×158 (`card_sum.svg` — viền xanh đậm, mực xanh, dòng kẻ ngang) + **thẻ TOÁN TỬ 112×112** (`card_op.svg`, nằm CHÍNH GIỮA thẻ Tổng và thẻ Mục tiêu, đè lên mép 2 thẻ — dạng `12 = 23`, ký hiệu mực ĐỎ) + thẻ **MỤC TIÊU** 250×138 (chỉ hiện con số). Panel MISSION cũ được thay bằng 3 thẻ này.
 > - **Blind Memory**: thẻ **THỜI GIAN** 250×138 + thẻ **GHI NHỚ VỊ TRÍ TƯỜNG** 440×158 (`card_sum.svg`) — **KHÔNG có thẻ THỬ THÁCH** (`mockup/matchup_blind_memory.svg`).
-> - **HUD mặc định `LevelHUD`** (THỜI GIAN + THỬ THÁCH) dùng cho **Play Mode** và **Fog of War** (`matchup_fog_of_war.svg`). **Time Attack** (2026-09-19) có HUD riêng `time_attack_hud.tscn` — **CHỈ thẻ THỜI GIAN 250×156 đặt GIỮA khung** (đếm ngược, dòng phụ "ĐẾM NGƯỢC"), **đã bỏ thẻ THỬ THÁCH**. Countdown Cost / Fading Ink / Sum Path / Blind Memory có HUD riêng (mục 10.2b).
+> - **HUD mặc định `LevelHUD`** (THỜI GIAN + THỬ THÁCH) dùng cho **Play Mode**. Countdown Cost / Fading Ink / Sum Path / Blind Memory / One Stroke / Wall Builder / Fog of War có HUD riêng (mục 10.2b).
 > - **Chất liệu HUD (từ 2026-11):** mọi thẻ là **mẩu giấy trắng trên nền vở kẻ ngang** — viền màu (xanh `#6EA0C8` / xanh đậm `#3D83AE` / đỏ `#D84444`) + lề sổ tay cùng màu + **dòng kẻ ngang** `#9FC0D6` (opacity 0.5) như trang vở. Art dùng cho các HUD mới: `card_time_slip.svg` (250×138), `card_bomb.svg` (440×158), `card_sum.svg` (440×158), `card_op.svg` (112×112).
 > - Tiêu đề game: Dungeon = `DUNGEON MODE` (một dòng, số tầng đã chuyển xuống thẻ TẦNG); Play Mode = dòng phụ đỏ `PLAY MODE · CHƯƠNG n` + dòng lớn `MÀN xx`.
 
 > **Kiến trúc HUD (tách thành scene theo chế độ):** khung **Information** trong `scenes/game.tscn` không còn chứa sẵn mọi thẻ — mỗi chế độ có 1 scene HUD riêng, tất cả đều kế thừa `nodes/hud/base.tscn` (khung 980×249 tại `(50,175)`, script `scripts/nodes/hud/base.gd`):
 > - `nodes/hud/level_mode.tscn` → `LevelHUD` — thẻ **THỬ THÁCH** + **THỜI GIAN** (Play Mode và các bộ luật không có thẻ riêng).
-> - `nodes/hud/time_attack_hud.tscn` → `TimeAttackHUD` — **CHỈ thẻ THỜI GIAN phóng to GIỮA khung** (anchors tỉ lệ `0.352..0.648 × 0.085..0.911` của khung 980×249 ≈ 291×206 — số tự co theo thẻ), đếm ngược, dòng phụ `STR_HUD_TIME_COUNTDOWN` (2026-09-19).
+> - **One Stroke / Wall Builder / Fog of War** có HUD riêng (mục 10.2b).
 > - `nodes/hud/dungeon_mode.tscn` → `DungeonHUD` — **SỐ BƯỚC** + **THỜI GIAN** + **TẦNG**.
 > - `nodes/hud/minesweep_hud.tscn` → `MinesweepHUD` — **BOM CÒN LẠI** + **THỜI GIAN**.
 > - `nodes/hud/sum_path_hud.tscn` → `SumPathHUD` — **TỔNG HIỆN TẠI** + **TOÁN TỬ** (giữa) + **MỤC TIÊU** + **THỜI GIAN**.
@@ -218,7 +217,13 @@ Nội dung luật của từng bộ **giữ nguyên như bản thiết kế trư
 
 Mỗi bộ luật dưới đây được đặc tả theo **cùng một template**: Cổng vào · Bàn cờ · Số trên ô · Di chuyển · Thắng · Thua · Hồi sinh · HUD & mockup · Chi tiết.
 
-### 5.3. ⏱ Time Attack Maze
+### 5.3. ⏱ Time Attack Maze — ❌ ĐÃ BỎ (2026-09-19)
+
+> Chế độ này **đã được xoá khỏi game** theo yêu cầu (2026-09-19): xoá mode + HUD + popup hướng dẫn + asset + vòng xoay Daily.
+> Phần đặc tả cũ được giữ trong lịch sử ở §13.20 và các mục §13.x trước đó. Danh mục mode hiện tại xem bảng đầu mục 5.
+> *(Khoá dịch `STR_MODE_TIME_ATTACK` / `STR_HINT_TIME_ATTACK` vẫn giữ trong `string_extra.csv` để save cũ không hiện khoá thô.)*
+
+<details><summary><b>Đặc tả CŨ (giữ để tham khảo lịch sử — KHÔNG còn hiệu lực)</b></summary>
 
 | Trường | Nội dung |
 |---|---|
@@ -231,6 +236,8 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Hồi sinh** | Quay lại bước trước đó (undo) |
 | **HUD** | `nodes/hud/time_attack_hud.tscn` (`TimeAttackHUD`) — **CHỈ thẻ THỜI GIAN phóng to GIỮA khung** (anchors tỉ lệ, ≈291×206 — đếm ngược + dòng phụ "ĐẾM NGƯỢC", số tự co), **KHÔNG có thẻ THỬ THÁCH** (2026-09-19) · mockup `mockup/matchup_time_attack.svg` (đã sinh lại theo HUD này) |
 | **Chi tiết** | ✨ **⏱ Time Attack Maze** — Giới hạn thời gian tổng (60s/90s/120s) đếm ngược, không giới hạn số bước. Đâm tường về S mất thời gian. Hết giờ = Game Over. HUD chỉ để **đồng hồ đếm ngược ở giữa** cho tập trung; 3 Thử thách vẫn được chấm và hiện đầy đủ ở popup kết quả. |
+
+</details>
 
 ### 5.4. 💣 Minesweeper Maze
 
@@ -445,16 +452,17 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 ## 6. Hệ thống Daily Challenge
 
-Theo mockup `daily_challenge.svg`, đây là màn hình quản lý toàn bộ **9 bộ luật** ở mục 5.3–5.9 · 5.12–5.13:
+Theo mockup `daily_challenge.svg`, đây là màn hình quản lý toàn bộ **8 bộ luật** ở mục 5.3–5.9 · 5.12–5.13 (Time Attack đã bỏ 2026-09-19):
 
 - **Lịch dạng calendar theo tháng**, mỗi ngày là 1 ô có thể bấm vào (nếu đã đến/đã qua ngày đó) hoặc khóa (nếu là ngày tương lai — hiển thị "CHƯA MỞ").
 - Mỗi ngày trong quá khứ/hiện tại hiển thị **số sao đã đạt** (ví dụ "3/3 SAO", "2/3 SAO") hoặc trạng thái đang dở dang ("2/3 XONG").
 - **Streak** (chuỗi ngày chơi liên tiếp) hiển thị nổi bật trên Main Screen (ví dụ "🔥 STREAK: 7 NGÀY") và trên chính màn Daily Challenge.
-- Mỗi ngày, hệ thống chọn **1 trong 9 bộ luật** ở mục 5.3–5.9 · 5.12–5.13 làm nội dung thử thách, kèm theo **3 Challenge** (đúng hệ thống Thử thách & Sao ở mục 3.1 — mỗi Challenge hoàn thành = 1 Sao, tối đa 3 Sao) liên quan đến cách chơi bộ luật hôm đó (đi càng ít bước, vẽ đủ tường, phủ kín bàn, không đâm tường lần nào...). Cụ thể từng Challenge nên được thiết kế riêng theo đặc thù mỗi bộ luật, không dùng chung 1 khuôn cho cả 9.
+- Mỗi ngày, hệ thống chọn **1 trong 8 bộ luật** ở mục 5.3–5.9 · 5.12–5.13 làm nội dung thử thách, kèm theo **3 Challenge** (đúng hệ thống Thử thách & Sao ở mục 3.1 — mỗi Challenge hoàn thành = 1 Sao, tối đa 3 Sao) liên quan đến cách chơi bộ luật hôm đó (đi càng ít bước, vẽ đủ tường, phủ kín bàn, không đâm tường lần nào...). Cụ thể từng Challenge nên được thiết kế riêng theo đặc thù mỗi bộ luật, không dùng chung 1 khuôn cho cả 8.
 - Vì mỗi ngày chỉ có 1 bộ luật cố định (không chọn được), người chơi không thể "chọn lại" chơi bộ luật khác trong cùng ngày — muốn chơi Minesweeper Maze lần nữa phải đợi đến lượt xoay vòng kế tiếp của bộ luật đó.
 
-**Cơ chế xoay vòng (ĐÃ LẬP TRÌNH 2026-09-19 — khớp `GameManager.DAILY_MODES`):** thứ tự **CỐ ĐỊNH**, lặp mỗi **9 ngày**:
-`DAILY_MODES = [time_attack, minesweeper, sum_path, countdown_cost, blind_memory, fog_of_war, fading_ink, one_stroke, wall_builder]` — ngày *N* chơi `DAILY_MODES[(N-1) % 9]`.
+**Cơ chế xoay vòng (ĐÃ LẬP TRÌNH 2026-09-19 — khớp `GameManager.DAILY_MODES`):** thứ tự **CỐ ĐỊNH**, lặp mỗi **8 ngày**:
+`DAILY_MODES = [minesweeper, sum_path, countdown_cost, blind_memory, fog_of_war, fading_ink, one_stroke, wall_builder]` — ngày *N* chơi `DAILY_MODES[(N-1) % 8]`.
+*(Time Attack từng đứng đầu vòng xoay — đã bỏ 2026-09-19 nên các ngày dịch lên 1 bậc.)*
 
 - **Thử thách riêng theo chế độ (ĐÃ LẬP TRÌNH):** màn/tầng do nhà thiết kế khai báo luôn được ưu tiên; nếu không khai báo thì chế độ dùng **bộ mặc định của mình** qua `BaseGameMode.default_challenges()` — **One Stroke**: `time_max · no_hint · no_undo` (§5.12) · **Wall Builder**: `no_wrong_submit · time_max · no_hint` (§5.13) — các chế độ còn lại vẫn dùng bộ chung `no_wall · steps_max · time_max`.
 
@@ -467,7 +475,7 @@ Theo mockup `daily_challenge.svg`, đây là màn hình quản lý toàn bộ **
 - **Sao (Star) — áp dụng MỌI chế độ:** 1 match-up có **3 Challenge**, hoàn thành 1 Challenge = **1 Sao** (xem 3.1). Sao **KHÔNG** còn phụ thuộc thời gian còn lại.
 - **Play Mode:** Xếp hạng theo **Thời gian hoàn thành nhanh nhất** cho từng Màn (không xếp theo số bước — Play Mode không giới hạn bước).
 - **Dungeon Mode:** Xếp hạng theo **Floor cao nhất đạt được** và tổng điểm tích lũy (chế độ duy nhất có bộ đếm bước còn lại).
-- **Time Attack Maze / Blind Memory Maze / Fog of War Maze:** Xếp hạng theo **Thời gian hoàn thành nhanh nhất** cho ngày Daily Challenge tương ứng.
+- **Blind Memory Maze / Fog of War Maze:** Xếp hạng theo **Thời gian hoàn thành nhanh nhất** cho ngày Daily Challenge tương ứng.
 - **Countdown Cost:** Xếp hạng theo **tổng chi phí bước đã dùng** (càng ít càng tốt, đúng tinh thần "tối ưu chi phí"), sau đó mới tới thời gian — hoặc theo cách server tổ chức ngày hôm đó.
 - **Sum Path / Fading Ink:** Xếp hạng theo **Điểm độ chính xác và thời gian**.
 - Ngoài xếp hạng riêng từng bộ luật, Daily Challenge còn có **bảng xếp hạng theo tổng số sao tích lũy trong tháng** và **độ dài Streak**.
@@ -565,7 +573,7 @@ Mở bằng **F9** (hoặc bấm 5 lần vào con dấu phiên bản ở màn Se
 Daily Challenge chỉ cho chơi **1 luật/ngày** (`(ngày-1) % 9`), nên Debug Console cho vào thẳng từng luật để test:
 
 - **Test mode (mặc định BẬT):** ván mở từ đây **không ghi tiến trình** — không đánh dấu ngày Daily (`_mark_daily_completed_if_needed` bỏ qua) và không tính vào Sổ tay thành tựu (`_report_to_archivements` bỏ qua). Tắt toggle nếu muốn ghi như chơi thật.
-- **Độ khó:** easy · medium · hard (áp dụng cho các luật có tham số độ khó: `time_attack`, `sum_path`, `countdown_cost`, `blind_memory`, `fog_of_war`, **`one_stroke`**, **`wall_builder`**).
+- **Độ khó:** easy · medium · hard (áp dụng cho các luật có tham số độ khó: `sum_path`, `countdown_cost`, `blind_memory`, `fog_of_war`, **`one_stroke`**, **`wall_builder`**).
 - **Tầng bắt đầu:** 1 · 2 · 3 · 5 — một số luật sinh bàn theo tầng (`minesweeper`: `2 + tầng`, tối đa 5×5) nên chọn tầng cao để test bàn to.
 - **Mỗi chế độ 1 hàng lệnh:** tiêu đề ghi `Tên mode [id] · Daily ngày N, N+7, N+14…`; dòng mô tả lấy trực tiếp từ `BaseGameMode.mode_description` của chính mode đó (không chép lại chữ).
 - Thêm **“Chế độ kế tiếp”** (xoay vòng 9 luật) và **“Chế độ ngẫu nhiên”** để test nhanh nhiều luật liên tiếp.
@@ -641,7 +649,7 @@ Khung HUD: `Information` = Control tại `(50, 175)` kích thước `980 × 249`
   đặt tại `sheet-local + (265, 3)` là khớp 1:1; lề 1px quanh hình để nửa ngoài của `stroke` không bị viewBox cắt.
   Hình render **y hệt bản bake cũ** (soi crop 1:1 khung HUD bằng `dev_fix_shots.gd --hud`).
 - 3 chế độ này **không hiện thẻ THỬ THÁCH** trên HUD (thử thách/Sao vẫn tính đủ, hiện ở popup kết quả) — thay hẳn bố cục cũ `THỜI GIAN 250×138 + THỬ THÁCH 720×246`; các chế độ còn lại vẫn dùng bảng 10.2.
-- **Time Attack (2026-09-19)** — biến thể của khung này: `nodes/hud/time_attack_hud.tscn` (`TimeAttackHUD`) **CHỈ 1 thẻ THỜI GIAN phóng to đặt GIỮA khung** — thẻ dùng **anchors tỉ lệ** (`0.352..0.648 × 0.085..0.911`) nên ≈291×206 tại tâm khung, số dùng `resize_font_to_fit` tự co; dòng phụ `STR_HUD_TIME_COUNTDOWN` “Đếm ngược”; không có thẻ Thử thách. Mockup `mockup/matchup_time_attack.svg` sinh lại theo đúng HUD này (bỏ thẻ THỬ THÁCH khỏi mockup).
+- **One Stroke / Wall Builder (2026-09-19)** — biến thể của khung này: `nodes/hud/one_stroke_hud.tscn` (`OneStrokeHUD`) và `nodes/hud/wall_builder_hud.tscn` (`WallBuilderHUD`) — xem §5.12–5.13.
 
 ### 10.2c. Panel HƯỚNG DẪN LUẬT CHƠI (Hint Guide)
 
@@ -657,7 +665,7 @@ Khung HUD: `Information` = Control tại `(50, 175)` kích thước `980 × 249`
 
 ### 10.2d. Popup HƯỚNG DẪN theo từng chế độ (2026-09)
 
-Nút **"?"** trên HUD mở popup hướng dẫn **riêng cho chế độ đang chơi** — **11 scene đã dựng đủ** (9 scene gốc + **One Stroke** 2026-09-19 + **Wall Builder** 2026-09-19) theo bộ mockup `mockup/instruction/*.svg`; mỗi popup 3 trang (P1 quy tắc cơ bản · P2 cơ chế phụ · P3 bí quyết).
+Nút **"?"** trên HUD mở popup hướng dẫn **riêng cho chế độ đang chơi** — **10 scene đã dựng đủ** (9 scene gốc − Time Attack đã bỏ + **One Stroke** 2026-09-19 + **Wall Builder** 2026-09-19) theo bộ mockup `mockup/instruction/*.svg`; mỗi popup 3 trang (P1 quy tắc cơ bản · P2 cơ chế phụ · P3 bí quyết).
 
 | Chế độ | Scene (đều là instance của `base.tscn`) |
 |---|---|
@@ -669,7 +677,6 @@ Nút **"?"** trên HUD mở popup hướng dẫn **riêng cho chế độ đang 
 | Blind Memory | `blindmemory.tscn` |
 | Fog of War | `fog_of_war.tscn` |
 | Fading Ink | `fadingink.tscn` |
-| Time Attack | `time_attack.tscn` |
 | One Stroke | `one_stroke.tscn` |
 | Wall Builder | `wall_builder.tscn` |
 
@@ -682,7 +689,7 @@ Nút **"?"** trên HUD mở popup hướng dẫn **riêng cho chế độ đang 
 - **Chuỗi dịch**: chữ có nghĩa dùng khoá `STR_GI_*` (vi = đúng chữ trong mockup, en = `tools/content/guide_text_en.py`): chrome theo trang `STR_GI_<MODE>_P<n>_TITLE/SECTION/CTA/LINK/TAB#/R#T/R#D`, chip `STR_GI_<MODE>_CHIP`, chữ trên ảnh dedupe `STR_GI_X###`, nhãn trang `STR_GI_PAGE_INDEX`. Sinh khoá + ghi CSV: `tools/content/build_instruction_data.py` (kèm `tools/content/_guide_keys.json` cho generator scene) — bỏ qua token số/ký hiệu.
 - **Sinh scene**: `tools/mockup/gen_instruction_popups.py` — đọc mockup qua `tools/mockup/instruction_mockup.py` (toạ độ tuyệt đối + style kế thừa), nướng thẳng mọi Label/Button/StyleBoxFlat vào `.tscn`, giữ nguyên uid + `unique_id` của scene placeholder cũ.
 - **Nối dây**: `GameController.INSTRUCTION_SCENES` (play/daily_classic → `normal_maze`, fallback `normal_maze`) → `Popups.open_path("res://nodes/popups/instruction/<mode>.tscn")`; đồng hồ đứng trong lúc xem hướng dẫn, đóng popup thì chạy lại. Đã gỡ `"instruction"` khỏi `PopupManager.POPUPS` và xoá bộ file cũ (`nodes/popups/instruction.tscn`, `scripts/nodes/popups/instruction.gd`, `scripts/utils/instruction.gd`).
-- **Kiểm thử**: `scripts/test_case/test_instruction.gd` — **358 check** (11 popup): bảng mode→scene · đủ khoá dịch vi+en quét từ file `.tscn` · cấu trúc 3 trang · chrome dùng chung không lặp trong từng trang · số/ký hiệu ghi trực tiếp · tab/dots/nav hoạt động · **nút X đóng popup** · CTA/link đúng hành vi · tích hợp nút "?" mở đúng scene (dungeon/play/time_attack/one_stroke/wall_builder).
+- **Kiểm thử**: `scripts/test_case/test_instruction.gd` — **326 check** (10 popup): bảng mode→scene · đủ khoá dịch vi+en quét từ file `.tscn` · cấu trúc 3 trang · chrome dùng chung không lặp trong từng trang · số/ký hiệu ghi trực tiếp · tab/dots/nav hoạt động · **nút X đóng popup** · CTA/link đúng hành vi · tích hợp nút "?" mở đúng scene (dungeon/play/minesweeper/one_stroke/wall_builder).
 
 ### 10.3. Sinh lại mockup
 
@@ -693,7 +700,7 @@ python tools/mockup/gen_matchup.py --dump     # in toạ độ node thật của
 ```
 
 - Tool đọc **toạ độ thật** từ `nodes/hud/*.tscn` + `scenes/game.tscn` (Board `(41,420)-(1061,1440)`, thanh nút `(73,1528)-(1031,1688)`, Status `(50,85)`).
-- Hằng `HAND_DRAWN` trong tool liệt kê **5 mockup art tay của user** (`matchup_level` · `matchup_dungeon` · `matchup_sum_path` · `matchup_countdown_cost` · `matchup_fading_ink`) → chạy tool sẽ **BO QUA** 5 file này, chỉ sinh lại 4 mockup còn lại (time_attack · minesweeper · blind_memory · fog_of_war). Riêng **time_attack** sinh theo HUD mới (chỉ thẻ THỜI GIAN đặt giữa — 2026-09-19).
+- Hằng `HAND_DRAWN` trong tool liệt kê **7 mockup art tay của user** (`matchup_level` · `matchup_dungeon` · `matchup_sum_path` · `matchup_countdown_cost` · `matchup_fading_ink` · `matchup_one_stroke` · `matchup_wall_builder`) → chạy tool sẽ **BO QUA** 7 file này, chỉ sinh lại các mockup còn lại (minesweeper · blind_memory · fog_of_war).
 - **Đã có mockup cho cả 2 chế độ mới:** `matchup_one_stroke.svg` + `matchup_wall_builder.svg` (user vẽ tay 2026-09-19) → thêm cả 2 vào `HAND_DRAWN` của `tools/mockup/gen_matchup.py` nếu muốn tool bỏ qua khi sinh lại.
 - **Pipeline popup hướng dẫn** (dùng cho cả 2 mode mới): thêm 1 dòng vào `MODES` của `tools/mockup/instruction_mockup.py` → `python tools/mockup/prepare_guideline_images.py` (ảnh guideline ThorVG-safe) → thêm bản EN vào `tools/content/guide_text_en.py` → `python tools/content/build_instruction_data.py` (sinh `STR_GI_*` + CSV) → `python tools/mockup/gen_instruction_popups.py` (sinh `nodes/popups/instruction/<mode>.tscn`). **GOTCHA:** file `assets/images/instructions/guideline_image/*.svg` mới tải về có thể còn `.import` cũ **thiếu `path=`** → Godot báo `Failed loading resource` khi chạy popup; cách sửa: **xoá `.import` cũ rồi chạy lại `--editor --quit`** để import sinh `.ctex` mới.
 - Mockup mang **bảng chú thích đánh số**: badge số đặt ngay trên thành phần cần giải thích + danh sách chú thích dưới thanh nút.
@@ -1391,7 +1398,7 @@ nút VẼ ĐƯỜNG chưa có art bản bè ngang 680px như mockup (đang giữ
 7. **Kiểm thử:** suite mới `scripts/test_case/test_wall_builder.gd` **47/47 PASS** (mọi ô hiện số 0..4 · không nhân vật +
    không di chuyển · `y = Σ/2` = số tường thật · kéo Anchor tạo đoạn kiểu `built` · viền ngoài không vẽ được ·
    Gợi ý khoá đoạn tường thật · Undo chỉ xoá đoạn không khoá · GỬI sai 3 lần ⇒ popup `HẾT LƯỢT GỬI!` + dòng HỒI SINH `+1 LƯỢT GỬI` ·
-   Hồi sinh +1 lượt · dựng đúng mê cung ⇒ THẮNG · HUD + nhãn thanh công cụ); `test_instruction` 358 check (11 popup) ·
+   Hồi sinh +1 lượt · dựng đúng mê cung ⇒ THẮNG · HUD + nhãn thanh công cụ); `test_instruction` 358 check (11 popup — *nay 326 check / 10 popup sau khi bỏ Time Attack*) ·
    `test_hud_modes` thêm mục **[4e]** · `test_game_scene_integration`/`test_all_game_modes` phủ mode mới.
    Toàn bộ **33 suite: 31 xanh**, 2 đỏ là lỗi **có từ trước** (`test_challenge_controller` 3 check · `test_hud_modes` 7 check).
 
@@ -1410,6 +1417,7 @@ chưa tô nền xanh nhạt cho ô đã khớp số (mockup có gợi ý trực 
 
 1. **Vòng xoay Daily 9 ngày ĐÃ CHẠY THẬT:** `GameManager.DAILY_MODES` thêm `one_stroke` + `wall_builder`
    (`[time_attack, minesweeper, sum_path, countdown_cost, blind_memory, fog_of_war, fading_ink, one_stroke, wall_builder]`)
+   *(Cập nhật 2026-09-19: Time Attack đã bỏ khỏi game → vòng xoay còn 8 ngày, xem §6.)*
    → ngày *N* = `DAILY_MODES[(N-1) % 9]`; màn Daily đọc tên luật qua `tr("STR_MODE_<ID>")` nên 2 tên mới đã có sẵn.
    **Lưu ý hồi quy:** bản đồ ngày → luật đổi so với bộ 7 cũ (VD ngày 13 trước là SƯƠNG MÙ, nay là CHI PHÍ ĐẾM NGƯỢC);
    `test_daily` dùng công thức động nên vẫn xanh.
@@ -1438,6 +1446,39 @@ chưa tô nền xanh nhạt cho ô đã khớp số (mockup có gợi ý trực 
 
 **Còn lại:** chỉ còn **test trên máy ảo + build APK** (user yêu cầu để sau) và vài việc nhỏ không bắt buộc
 (nút VẼ ĐƯỜNG của One Stroke có thể tinh chỉnh vị trí chữ cho khớp mockup, Wall Builder chưa có bảng xếp hạng riêng).
+
+---
+
+### 13.21. BỎ hẳn chế độ Time Attack Maze (2026-09-19)
+
+**Bối cảnh:** user yêu cầu *"Hiện tại, tôi có thay đổi — Hãy xóa Time Attack Mode ra khỏi game"*.
+
+**Đã xoá (khỏi game, không còn đường vào):**
+
+1. **Code:** `scripts/modes/time_attack_game_mode.gd` (cả file) · `scripts/nodes/hud/time_attack_hud.gd` (cả file) ·
+   `nodes/hud/time_attack_hud.tscn` · `nodes/popups/instruction/time_attack.tscn` (popup hướng dẫn).
+2. **Asset:** `assets/images/instructions/mode_time_attack.svg` (icon mode) +
+   `assets/images/instructions/guideline_image/image_instruction_time_attack_page{1,2,3}.svg` (ảnh guideline — chỉ popup này dùng).
+3. **Nối dây:** `GameModeController.set_mode_by_name()` (case `time_attack`) · `GameScene` (`HUD_TIME_ATTACK` + 2 map HUD) ·
+   `HintGuide` (`STR_HINT_TIME_ATTACK`) · `GameController.INSTRUCTION_SCENES` (`time_attack`) ·
+   nhánh `if mode is TimeAttackGameMode` trong `start_new_run()` (**đồng hồ giờ LUÔN chạy đếm lên** — `TimerController.start_countdown()` thành API không còn ai gọi, giữ lại phòng khi cần).
+4. **Vòng xoay Daily:** `GameManager.DAILY_MODES` còn **8 chế độ** —
+   `[minesweeper, sum_path, countdown_cost, blind_memory, fog_of_war, fading_ink, one_stroke, wall_builder]` → ngày *N* = `DAILY_MODES[(N-1) % 8]`.
+   **Lưu ý hồi quy:** mọi ngày dịch lên 1 bậc so với bộ 9 (VD ngày 1 trước là TIME ATTACK, nay là MINESWEEPER); tiến trình đã lưu **không hỏng**.
+5. **Tool:** bỏ entry `time_attack` khỏi `tools/mockup/gen_matchup.py` (MODES + danh sách scene của `dump()`),
+   `tools/mockup/instruction_mockup.py` (MODES), `tools/level_designer/app/config.py` (MODE_IDS) → chạy lại
+   `build_instruction_data.py` + `gen_instruction_popups.py`: CSV còn **730 dòng STR_GI_*** (bỏ 75 khoá `STR_GI_TIME_ATTACK_*`) và
+   generator sinh **10 popup** (không sinh lại `time_attack.tscn`).
+6. **Test:** `test_hud_modes` (bỏ mục **[4b]** Time Attack + map script) · `test_instruction` (bỏ khỏi MODES/MODE_IDS + case tích hợp
+   → **326 check / 10 popup**) · `test_all_game_modes` (**8 Game Modes**) · `test_debug_modes` (**8 chế độ Special**, ván test đổi sang
+   `minesweeper`) · `test_game_scene_integration` + `dev_aspects.GAME_MODES` (bỏ `time_attack`).
+7. **Giữ lại có chủ ý:** mockup thiết kế trong `mockup/` (`matchup_time_attack.svg` · `popup_instruction_time_attack_page*.svg` ·
+   ảnh trong `mockup/instruction/_extracted_source/`) và bản dịch trong `tools/content/guide_text_en.py` — chỉ là tài liệu lịch sử, **không nằm trong build UI**;
+   khoá `STR_MODE_TIME_ATTACK` / `STR_HINT_TIME_ATTACK` vẫn giữ trong `string_extra.csv` để **save cũ không hiện khoá thô**.
+
+**Kiểm chứng:** `test_instruction` 326 PASS · `test_hud_modes` **7/146 FAIL — vẫn đúng 7 lỗi CŨ của Sum Path/Fading Ink** (không phát sinh lỗi mới) ·
+`test_debug_modes` 46/46 · `test_daily` 87/87 · `test_all_game_modes` 14/14 · `test_game_scene_integration` PASS · **toàn bộ 33 suite: 31 xanh**.
+
 
 
 

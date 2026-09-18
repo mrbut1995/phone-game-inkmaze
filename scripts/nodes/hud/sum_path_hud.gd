@@ -14,12 +14,12 @@ func _on_update(ctx: Dictionary) -> void:
 	var mode := ctx.get("mode", null) as SumPathGameMode
 	if mode == null:
 		return
-	set_label_text(get_node_or_null("Sheet/Sum/Value"), str(mode.current_sum))
-	set_label_text(get_node_or_null("Sheet/Operator/Value"), mode.operator)
-	set_label_text(get_node_or_null("Sheet/Target/Value"), str(mode.target_val))
-	set_label_text(get_node_or_null("Sheet/Sum/Note"),
+	set_label_text(get_node_or_null("Sheet/BlockCurrent/Sum/Value"), str(mode.current_sum))
+	set_label_text(get_node_or_null("Sheet/Emblem/Operator/Value"), mode.operator)
+	set_label_text(get_node_or_null("Sheet/BlockTarget/Target/Value"), str(mode.target_val))
+	set_label_text(get_node_or_null("Sheet/BlockCurrent/Sum/Note"),
 		tr("STR_HUD_SUM_MOVES").format([int(ctx.get("moves", 0))]))
-	set_label_text(get_node_or_null("Sheet/Target/Need"), _need_text(mode))
+	set_label_text(get_node_or_null("Sheet/BlockTarget/Target/ChipNeed/Need"), _need_text(mode))
 	_update_progress(mode)
 
 

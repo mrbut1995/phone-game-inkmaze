@@ -1314,3 +1314,29 @@
 # [ ] CÒN LẠI (user để sau): TEST TRÊN MÁY ẢO + BUILD APK cho 2 mode mới; tuỳ chọn: tinh chỉnh vị trí chữ trên nút
 #     VẼ ĐƯỜNG ĐI bè ngang cho khớp mockup, bảng xếp hạng riêng cho 2 chế độ.
 
+# ----------------------------------------------------------------------------
+# BỎ HẲN CHẾ ĐỘ TIME ATTACK MAZE (vòng 22 — 2026-09-19)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo yêu cầu user ("Hãy xóa Time Attack Mode ra khỏi game"):
+# 1. XOÁ FILE: `scripts/modes/time_attack_game_mode.gd` (+.uid) · `scripts/nodes/hud/time_attack_hud.gd` (+.uid) ·
+#    `nodes/hud/time_attack_hud.tscn` · `nodes/popups/instruction/time_attack.tscn` ·
+#    `assets/images/instructions/mode_time_attack.svg` (+import) ·
+#    `assets/images/instructions/guideline_image/image_instruction_time_attack_page{1,2,3}.svg` (+import).
+# 2. NỐI DÂY: `GameModeController` (case time_attack) · `GameScene` (HUD_TIME_ATTACK + 2 map) · `HintGuide` ·
+#    `GameController.INSTRUCTION_SCENES` + NHÁNH `if mode is TimeAttackGameMode` trong `start_new_run()` → đồng hồ giờ luôn
+#    đếm lên (`TimerController.start_countdown()` thành API mồ côi — giữ lại phòng khi cần đếm ngược ở chế độ khác).
+# 3. VÒNG XOAY DAILY còn 8 chế độ: [minesweeper, sum_path, countdown_cost, blind_memory, fog_of_war, fading_ink,
+#    one_stroke, wall_builder] → ngày N = DAILY_MODES[(N-1) % 8]. LƯU Ý: mọi ngày DỊCH LÊN 1 BẬC (ngày 1 trước là
+#    TIME ATTACK, nay là MINESWEEPER); save cũ không hỏng.
+# 4. TOOL: bỏ entry time_attack khỏi gen_matchup.py (MODES + dump) · instruction_mockup.py (MODES) ·
+#    level_designer/app/config.py (MODE_IDS) → chạy lại pipeline: CSV còn 730 dòng STR_GI_* (bỏ 75 khoá
+#    STR_GI_TIME_ATTACK_*), generator sinh 10 popup (không sinh lại time_attack.tscn).
+# 5. TEST: test_hud_modes (bỏ mục [4b]) · test_instruction (326 check / 10 popup) · test_all_game_modes (8 modes) ·
+#    test_debug_modes (8 chế độ Special — ván test đổi sang minesweeper) · test_game_scene_integration · dev_aspects.
+# 6. GIỮ LẠI CÓ CHỦ Ý: mockup trong `mockup/` + bản dịch trong `guide_text_en.py` (tài liệu lịch sử, không vào build) ·
+#    khoá STR_MODE_TIME_ATTACK / STR_HINT_TIME_ATTACK trong CSV (để save cũ không hiện khoá thô).
+# 7. Kiểm chứng: test_hud_modes 7/146 FAIL — VẪN ĐÚNG 7 lỗi CŨ (Sum Path/Fading Ink HUD), không phát sinh lỗi mới ·
+#    test_instruction 326 PASS · test_debug_modes 46/46 · test_daily 87/87 · test_all_game_modes 14/14 · **33 suite: 31 xanh**.
+# [ ] CÒN LẠI: test máy ảo + build APK (user để sau) · quyết định có xoá luôn mockup/lịch sử Time Attack không · 2 chế độ
+#     mới cần thêm vào `tools/level_designer/app/config.py` nếu tool cần dùng.
+

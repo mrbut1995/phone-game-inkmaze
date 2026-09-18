@@ -517,13 +517,13 @@ texture = ExtResource("8_img_p1")
 [node name="PT1" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 160
 offset_top = 255
-offset_right = 263
+offset_right = 263.1
 offset_bottom = 274.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.1451, 0.4588, 0.6549, 1)
-text = "STR_GI_X288"
+text = "STR_GI_X253"
 
 [node name="PT2" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 295
@@ -537,103 +537,103 @@ theme_override_colors/font_color = Color(0.0863, 0.2275, 0.3451, 1)
 text = "06"
 
 [node name="PT3" type="Label" parent="Panel/Guide/Pages/Page1"]
-offset_left = 632.3
+offset_left = 632.2
 offset_top = 253
-offset_right = 735.7
+offset_right = 735.8
 offset_bottom = 272.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X289"
+text = "STR_GI_X254"
 
 [node name="PT4" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 135
 offset_top = 429
-offset_right = 231
+offset_right = 230.5
 offset_bottom = 447
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.1451, 0.3843, 0.5255, 1)
-text = "STR_GI_X290"
+text = "STR_GI_X255"
 
 [node name="PT5" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 135
 offset_top = 450
-offset_right = 265
+offset_right = 269
 offset_bottom = 475.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 17
 theme_override_colors/font_color = Color(0.0863, 0.2275, 0.3451, 1)
-text = "STR_GI_X291"
+text = "STR_GI_X256"
 
 [node name="PT6" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 135
 offset_top = 473
-offset_right = 261
+offset_right = 259.5
 offset_bottom = 497
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.1451, 0.4588, 0.6549, 1)
-text = "STR_GI_X292"
+text = "STR_GI_X257"
 
 [node name="PT7" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 135
 offset_top = 500
-offset_right = 220.7
+offset_right = 220.4
 offset_bottom = 516.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("9_font_bold")
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.3529, 0.451, 0.5216, 1)
-text = "STR_GI_X293"
+text = "STR_GI_X258"
 
 [node name="PT8" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 704
 offset_top = 429
-offset_right = 800.1
+offset_right = 799.7
 offset_bottom = 447
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X294"
+text = "STR_GI_X259"
 
 [node name="PT9" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 704
 offset_top = 450
-offset_right = 838
+offset_right = 838.3
 offset_bottom = 475.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 17
 theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
-text = "STR_GI_X295"
+text = "STR_GI_X260"
 
 [node name="PT10" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 704
 offset_top = 472
-offset_right = 838.3
+offset_right = 834
 offset_bottom = 497.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 17
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X296"
+text = "STR_GI_X261"
 
 [node name="PT11" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 704
 offset_top = 500
-offset_right = 789.9
+offset_right = 790.7
 offset_bottom = 516.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X297"
+text = "STR_GI_X262"
 
 [node name="PT12" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 425.5
@@ -644,7 +644,7 @@ mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
-text = "STR_GI_X298"
+text = "STR_GI_X263"
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page1"]
 offset_left = 110
@@ -847,7 +847,7 @@ stretch_mode = 0
 texture = ExtResource("12_img_p2")
 
 [node name="PT1" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 211
+offset_left = 210.9
 offset_top = 263
 offset_right = 307
 offset_bottom = 281
@@ -855,117 +855,117 @@ mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
-text = "STR_GI_X299"
+text = "STR_GI_X264"
 
 [node name="PT2" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 221.6
+offset_left = 221.8
 offset_top = 319
-offset_right = 302.4
+offset_right = 302.2
 offset_bottom = 334
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 10
 theme_override_colors/font_color = Color(0.1451, 0.4588, 0.6549, 1)
-text = "STR_GI_X300"
+text = "STR_GI_X265"
 
 [node name="PT3" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 238.1
+offset_left = 236
 offset_top = 502
-offset_right = 375.9
+offset_right = 378
 offset_bottom = 529
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
-text = "STR_GI_X301"
+text = "STR_GI_X266"
 
 [node name="PT4" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 256.7
+offset_left = 257.2
 offset_top = 535
-offset_right = 357.3
+offset_right = 356.8
 offset_bottom = 554.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("9_font_bold")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.498, 0.1137, 0.1137, 1)
-text = "STR_GI_X302"
+text = "STR_GI_X267"
 
 [node name="PT5" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 255.2
+offset_left = 255.3
 offset_top = 555
-offset_right = 358.8
+offset_right = 358.7
 offset_bottom = 574.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.8627, 0.149, 0.149, 1)
-text = "STR_GI_X303"
+text = "STR_GI_X268"
 
 [node name="PT6" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 565.8
+offset_left = 566
 offset_top = 263
-offset_right = 662.2
+offset_right = 662
 offset_bottom = 281
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.7059, 0.3255, 0.0353, 1)
-text = "STR_GI_X304"
+text = "STR_GI_X269"
 
 [node name="PT7" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 557.5
+offset_left = 558.4
 offset_top = 425
-offset_right = 676.5
+offset_right = 675.6
 offset_bottom = 447.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.8627, 0.149, 0.149, 1)
-text = "STR_GI_X305"
+text = "STR_GI_X270"
 
 [node name="PT8" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 590.8
+offset_left = 594.3
 offset_top = 502
-offset_right = 733.2
+offset_right = 729.7
 offset_bottom = 529
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.7059, 0.3255, 0.0353, 1)
-text = "STR_GI_X306"
+text = "STR_GI_X271"
 
 [node name="PT9" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 612.8
+offset_left = 613.1
 offset_top = 535
-offset_right = 711.2
+offset_right = 710.9
 offset_bottom = 554.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_font_sb")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.4706, 0.2078, 0.0588, 1)
-text = "STR_GI_X307"
+text = "STR_GI_X272"
 
 [node name="PT10" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 610.9
+offset_left = 611.7
 offset_top = 555
-offset_right = 713.1
+offset_right = 712.3
 offset_bottom = 574.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
-text = "STR_GI_X308"
+text = "STR_GI_X273"
 
 [node name="PT11" type="Label" parent="Panel/Guide/Pages/Page2"]
-offset_left = 425.2
+offset_left = 426
 offset_top = 670
-offset_right = 542.8
+offset_right = 542
 offset_bottom = 692.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
-text = "STR_GI_X309"
+text = "STR_GI_X274"
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page2"]
 offset_left = 110
@@ -1168,81 +1168,81 @@ stretch_mode = 0
 texture = ExtResource("13_img_p3")
 
 [node name="PT1" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 246.7
+offset_left = 246
 offset_top = 262
-offset_right = 347.3
+offset_right = 348
 offset_bottom = 281.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X310"
+text = "STR_GI_X275"
 
 [node name="PT2" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 202.6
+offset_left = 199.6
 offset_top = 329
-offset_right = 321.4
+offset_right = 324.4
 offset_bottom = 353
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.1451, 0.4588, 0.6549, 1)
-text = "STR_GI_X311"
+text = "STR_GI_X276"
 
 [node name="PT3" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 215.7
+offset_left = 215.4
 offset_top = 356
-offset_right = 308.3
+offset_right = 308.6
 offset_bottom = 374
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X312"
+text = "STR_GI_X277"
 
 [node name="PT4" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 505
 offset_top = 301
-offset_right = 642.4
+offset_right = 644.5
 offset_bottom = 328
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.0784, 0.3255, 0.1765, 1)
-text = "STR_GI_X313"
+text = "STR_GI_X278"
 
 [node name="PT5" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 505
 offset_top = 333
-offset_right = 608.4
+offset_right = 610.4
 offset_bottom = 354
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_font_sb")
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
-text = "STR_GI_X314"
+text = "STR_GI_X279"
 
 [node name="PT6" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 505
 offset_top = 355
-offset_right = 607.8
+offset_right = 611.3
 offset_bottom = 376
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_font_sb")
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.0863, 0.3961, 0.2039, 1)
-text = "STR_GI_X315"
+text = "STR_GI_X280"
 
 [node name="PT7" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 505
 offset_top = 377
-offset_right = 611.4
+offset_right = 610.8
 offset_bottom = 398
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X316"
+text = "STR_GI_X281"
 
 [node name="PT8" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 187.6
@@ -1256,59 +1256,59 @@ theme_override_colors/font_color = Color(0.7294, 0.902, 0.9922, 1)
 text = "STR_GI_X118"
 
 [node name="PT9" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 387.4
+offset_left = 385.6
 offset_top = 497
-offset_right = 486.6
+offset_right = 488.4
 offset_bottom = 516.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.0824, 0.502, 0.2392, 1)
-text = "STR_GI_X317"
+text = "STR_GI_X282"
 
 [node name="PT10" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 330
 offset_top = 528
-offset_right = 511.8
+offset_right = 516.9
 offset_bottom = 564
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_font_black")
 theme_override_font_sizes/font_size = 24
 theme_override_colors/font_color = Color(0.0863, 0.2275, 0.3451, 1)
-text = "STR_GI_X318"
+text = "STR_GI_X283"
 
 [node name="PT11" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 330
 offset_top = 567
-offset_right = 440.2
+offset_right = 443.9
 offset_bottom = 589.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_font_sb")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.3529, 0.451, 0.5216, 1)
-text = "STR_GI_X319"
+text = "STR_GI_X284"
 
 [node name="PT12" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 330
 offset_top = 591
-offset_right = 443.8
+offset_right = 443.3
 offset_bottom = 613.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_font_sb")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.3529, 0.451, 0.5216, 1)
-text = "STR_GI_X320"
+text = "STR_GI_X285"
 
 [node name="PT13" type="Label" parent="Panel/Guide/Pages/Page3"]
-offset_left = 427.4
+offset_left = 425.5
 offset_top = 670
-offset_right = 540.6
+offset_right = 542.5
 offset_bottom = 692.5
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("10_font_xb")
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
-text = "STR_GI_X321"
+text = "STR_GI_X286"
 
 [node name="Title" type="Label" parent="Panel/Guide/Pages/Page3"]
 offset_left = 110

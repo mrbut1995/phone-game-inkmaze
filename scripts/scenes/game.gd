@@ -50,8 +50,6 @@ const HUD_FOG_OF_WAR := preload("res://nodes/hud/fog_of_war_hud.tscn")
 const HUD_ONE_STROKE := preload("res://nodes/hud/one_stroke_hud.tscn")
 ## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Thử thách
 const HUD_WALL_BUILDER := preload("res://nodes/hud/wall_builder_hud.tscn")
-## Time Attack: CHỈ thẻ THỜI GIAN đặt giữa khung (không có thẻ Thử thách)
-const HUD_TIME_ATTACK := preload("res://nodes/hud/time_attack_hud.tscn")
 #@export var game_mode : BaseGameMode
 
 
@@ -194,8 +192,6 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 			return HUD_ONE_STROKE
 		"wall_builder":
 			return HUD_WALL_BUILDER
-		"time_attack":
-			return HUD_TIME_ATTACK
 		_:
 			return HUD_LEVEL
 
@@ -222,8 +218,6 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return OneStrokeHUD
 		"wall_builder":
 			return WallBuilderHUD
-		"time_attack":
-			return TimeAttackHUD
 		_:
 			return LevelHUD
 

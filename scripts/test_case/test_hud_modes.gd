@@ -2,15 +2,13 @@ extends SceneTree
 ## ============================================================================
 ## Test Case: HUD THEO CHẾ ĐỘ (thiết kế mới) + PANEL HINT GUIDE — 2026-02
 ##
-## 1. Hint Guide: có trong scenes/game.tscn, đổi nội dung theo 9 chế độ,
+## 1. Hint Guide: có trong scenes/game.tscn, đổi nội dung theo chế độ,
 ##    không rỗng và VỪA 1 DÒNG (đo bằng font thật của theme).
 ## 2. SumPathHUD: đủ node mới (Time/Sum/Operator/Target/Bar), thanh tiến độ đúng tỉ lệ,
 ##    chip "CẦN THÊM / CÒN ĐƯỢC / ĐẠT VƯỢT / ĐÃ ĐỦ" theo toán tử.
 ## 3. CountdownHUD: ngân sách còn/tổng, đã tiêu, dải phân đoạn = đúng số bước + đổi màu,
 ##    chip giá cước theo độ khó (easy ẩn chip đắt, hard hiện "3-4").
 ## 4. FadingInkHUD: bước đã đi, mực đã phai, cảnh báo ô cạn mực hiện/ẩn đúng.
-## 4b. TimeAttackHUD: CHỈ thẻ THỜI GIAN 250×156 đặt GIỮA khung 980×249 (365,46) —
-##     không còn thẻ THỬ THÁCH, đồng hồ đếm ngược cập nhật từ timer.
 ## 5. Kích thước thẻ đúng mockup (Time 250x156 tại (0,3) · thẻ mode 715x156 tại (265,3)).
 ## 6. Sum Path: hết đường thắng -> nút CHƠI LẠI hiện DƯỚI thanh nút; Undo lùi bước -> tổng tính lại.
 ## 7. Countdown Cost: hết ngân sách -> board khoá tương tác + nút Undo được NHẤN MẠNH;
@@ -19,7 +17,6 @@ extends SceneTree
 
 const HUD_SCRIPTS := {
 	"play": "res://scripts/nodes/hud/level_hud.gd",
-	"time_attack": "res://scripts/nodes/hud/time_attack_hud.gd",
 	"fog_of_war": "res://scripts/nodes/hud/fog_of_war_hud.gd",
 	"dungeon": "res://scripts/nodes/hud/dungeon_hud.gd",
 	"minesweeper": "res://scripts/nodes/hud/minesweep_hud.gd",
@@ -52,7 +49,6 @@ func _init() -> void:
 	await _section_2_sum_path(scene)
 	await _section_3_countdown(scene)
 	await _section_4_fading_ink(scene)
-	await _section_4b_time_attack(scene)
 	await _section_4c_fog_of_war(scene)
 	await _section_4d_one_stroke(scene)
 	await _section_4e_wall_builder(scene)
@@ -238,43 +234,6 @@ func _section_4_fading_ink(scene: GameScene) -> void:
 	_entry(warn.visible, "Co o can muc -> hien canh bao")
 	_entry(str((hud.get_node("Warn/Label") as Label).text).contains(str(mode.count_exhausted())),
 		"Canh bao hien dung so o can ('%s')" % (hud.get_node("Warn/Label") as Label).text)
-
-
-# ---------------------------------------------------------------------------
-# 4b. Time Attack — HUD CHỈ còn thẻ THỜI GIAN, đặt giữa khung (2026-09-19)
-# ---------------------------------------------------------------------------
-func _section_4b_time_attack(scene: GameScene) -> void:
-	print("[4b] HUD Time Attack (chi con the THOI GIAN dat giua)...")
-	scene.switch_mode("time_attack", "medium")
-	await process_frame
-	var hud := scene.ui_controller.hud as TimeAttackHUD
-	_entry(hud != null, "Time Attack dung TimeAttackHUD (khong con dung chung LevelHUD)")
-	if hud == null:
-		return
-	_entry(hud.get_node_or_null("Challenge") == null, "Khong con the THU THACH trong HUD")
-	_entry(hud.challenge_card() == null, "challenge_card() = null (bo qua he thong the Thu thach)")
-	var time_card := hud.get_node_or_null("Time") as Control
-	_entry(time_card != null, "Co the THOI GIAN (Time)")
-	if time_card != null:
-		# Thẻ dùng anchors tỉ lệ trong khung 980×249 → phải CANH GIỮA cả 2 chiều và phủ rộng
-		var cx := time_card.position.x + time_card.size.x * 0.5
-		var cy := time_card.position.y + time_card.size.y * 0.5
-		_entry(absf(cx - 490.0) <= 2.5 and absf(cy - 124.5) <= 2.5,
-			"The THOI GIAN dat GIUA khung 980x249 (tam %.1f,%.1f)" % [cx, cy])
-		_entry(time_card.size.x >= 250.0 and time_card.size.y >= 156.0,
-			"The THOI GIAN phu rong (%.0fx%.0f)" % [time_card.size.x, time_card.size.y])
-		var sub := time_card.get_node_or_null("Sub") as Label
-		_entry(sub != null and sub.text == "STR_HUD_TIME_COUNTDOWN", "Dong phu = DEM NGUOC")
-	# Đồng hồ đếm ngược: giá trị do timer (start_countdown) cấp qua _update_hud
-	var timer := scene.timer_controller
-	_entry(timer != null and bool(timer.get("is_countdown")),
-		"Time Attack chay dong ho DEM NGUOC (is_countdown)")
-	var value := time_card.get_node_or_null("Value") as Label if time_card != null else null
-	if value != null:
-		value.text = ""
-		scene.game_controller.call("_update_hud")
-		_entry(not value.text.is_empty() and value.text != "00:00",
-			"Gia tri dong ho duoc cap tu timer ('%s')" % value.text)
 
 
 # ---------------------------------------------------------------------------

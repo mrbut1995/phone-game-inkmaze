@@ -1600,206 +1600,6 @@
     "FOG OF WAR • SƯƠNG MÙ"
    ]
   },
-  "time_attack": {
-   "pages": {
-    "1": {
-     "title": [
-      "STR_GI_TIME_ATTACK_P1_TITLE",
-      "Đồng Hồ Đếm Ngược"
-     ],
-     "section": [
-      "STR_GI_TIME_ATTACK_P1_SECTION",
-      "QUY TẮC ĐUA THỜI GIAN"
-     ],
-     "cta": [
-      "STR_GI_TIME_ATTACK_P1_CTA",
-      "TIẾP THEO: ĐÂM TƯỜNG MẤT GIỜ (2/3) ›"
-     ],
-     "link": [
-      "STR_GI_TIME_ATTACK_P1_LINK",
-      "Bỏ qua hướng dẫn & Vào đua giờ ngay"
-     ],
-     "tabs": [
-      [
-       "STR_GI_TIME_ATTACK_P1_TAB1",
-       "ĐỒNG HỒ ĐẾM NGƯỢC"
-      ],
-      [
-       "STR_GI_TIME_ATTACK_P1_TAB2",
-       "ĐÂM TƯỜNG MẤT GIỜ"
-      ],
-      [
-       "STR_GI_TIME_ATTACK_P1_TAB3",
-       "TỐC ĐỘ & GỢI Ý"
-      ]
-     ],
-     "rules": [
-      {
-       "title": [
-        "STR_GI_TIME_ATTACK_P1_R1T",
-        "Thời Gian Tổng Đếm Ngược:"
-       ],
-       "desc": [
-        "STR_GI_TIME_ATTACK_P1_R1D",
-        "Màn chơi cấp một quỹ thời gian cố định (60s - 120s). Bạn phải chạm hố thang F trước khi hết giờ."
-       ]
-      },
-      {
-       "title": [
-        "STR_GI_TIME_ATTACK_P1_R2T",
-        "Không Giới Hạn Số Bước Chân:"
-       ],
-       "desc": [
-        "STR_GI_TIME_ATTACK_P1_R2D",
-        "Bạn có thể đi vòng, thử nhiều ngã rẽ mà không sợ hết bước — kẻ thù duy nhất là thời gian trôi."
-       ]
-      },
-      {
-       "title": [
-        "STR_GI_TIME_ATTACK_P1_R3T",
-        "Quy Luật Tường Vô Hình Như Thường:"
-       ],
-       "desc": [
-        "STR_GI_TIME_ATTACK_P1_R3D",
-        "Con số trên ô vẫn là số tường (0 - 4). Vừa đi nhanh vừa phải suy luận né tường chính xác."
-       ]
-      }
-     ]
-    },
-    "2": {
-     "title": [
-      "STR_GI_TIME_ATTACK_P2_TITLE",
-      "Đâm Tường & Mất Giờ"
-     ],
-     "section": [
-      "STR_GI_TIME_ATTACK_P2_SECTION",
-      "HẬU QUẢ VA CHẠM TƯỜNG"
-     ],
-     "cta": [
-      "STR_GI_TIME_ATTACK_P2_CTA",
-      "TIẾP THEO: TỐC ĐỘ & GỢI Ý (3/3) ›"
-     ],
-     "link": [
-      "STR_GI_TIME_ATTACK_P2_LINK",
-      "Bỏ qua hướng dẫn & Vào đua giờ ngay"
-     ],
-     "tabs": [
-      [
-       "STR_GI_TIME_ATTACK_P2_TAB1",
-       "ĐỒNG HỒ ĐẾM NGƯỢC"
-      ],
-      [
-       "STR_GI_TIME_ATTACK_P2_TAB2",
-       "ĐÂM TƯỜNG MẤT GIỜ"
-      ],
-      [
-       "STR_GI_TIME_ATTACK_P2_TAB3",
-       "TỐC ĐỘ & GỢI Ý"
-      ]
-     ],
-     "rules": [
-      {
-       "title": [
-        "STR_GI_TIME_ATTACK_P2_R1T",
-        "Văng Ngược Về Cầu Thang Start (S):"
-       ],
-       "desc": [
-        "STR_GI_TIME_ATTACK_P2_R1D",
-        "Đâm phải tường vô hình, nhân vật lập tức bị đẩy lùi về điểm S để bắt đầu đường vẽ mới."
-       ]
-      },
-      {
-       "title": [
-        "STR_GI_TIME_ATTACK_P2_R2T",
-        "Đồng Hồ Vẫn Tiếp Tục Đếm Ngược:"
-       ],
-       "desc": [
-        "STR_GI_TIME_ATTACK_P2_R2D",
-        "Thời gian không dừng lại. Việc vẽ lại từ đầu khiến bạn mất đứt nhiều giây sinh tử!"
-       ]
-      },
-      {
-       "title": [
-        "STR_GI_TIME_ATTACK_P2_R3T",
-        "Rút Kinh Nghiệm Từ Đoạn Tường Vừa Lộ:"
-       ],
-       "desc": [
-        "STR_GI_TIME_ATTACK_P2_R3D",
-        "Bức tường bị đâm sẽ lộ ra vĩnh viễn. Hãy nhìn thật nhanh và vẽ đường né tránh dứt khoát."
-       ]
-      }
-     ]
-    },
-    "3": {
-     "title": [
-      "STR_GI_TIME_ATTACK_P3_TITLE",
-      "Tốc Độ & Gợi Ý Cứu Nguy"
-     ],
-     "section": [
-      "STR_GI_TIME_ATTACK_P3_SECTION",
-      "BÍ QUYẾT BỨT TỐC"
-     ],
-     "cta": [
-      "STR_GI_TIME_ATTACK_P3_CTA",
-      "ĐÃ HIỂU • ĐUA THỜI GIAN"
-     ],
-     "link": [
-      "STR_GI_TIME_ATTACK_P3_LINK",
-      "Xem lại từ đầu (Trang 1)"
-     ],
-     "tabs": [
-      [
-       "STR_GI_TIME_ATTACK_P3_TAB1",
-       "ĐỒNG HỒ ĐẾM NGƯỢC"
-      ],
-      [
-       "STR_GI_TIME_ATTACK_P3_TAB2",
-       "ĐÂM TƯỜNG MẤT GIỜ"
-      ],
-      [
-       "STR_GI_TIME_ATTACK_P3_TAB3",
-       "TỐC ĐỘ & GỢI Ý"
-      ]
-     ],
-     "rules": [
-      {
-       "title": [
-        "STR_GI_TIME_ATTACK_P3_R1T",
-        "Tìm Ô Số 0 Để Phóng Nhanh:"
-       ],
-       "desc": [
-        "STR_GI_TIME_ATTACK_P3_R1D",
-        "Quét mắt tìm các ô số 0 trước tiên để vạch nhanh tuyến đường an toàn mà không tốn công nhẩm tính."
-       ]
-      },
-      {
-       "title": [
-        "STR_GI_TIME_ATTACK_P3_R2T",
-        "Bấm Gợi Ý Khi Bị Bí Quá 3 Giây:"
-       ],
-       "desc": [
-        "STR_GI_TIME_ATTACK_P3_R2D",
-        "Trong Time Attack, do dự là thất bại. Hãy bấm Gợi Ý để mở khóa nút thắt thay vì để đồng hồ cạn kiệt."
-       ]
-      },
-      {
-       "title": [
-        "STR_GI_TIME_ATTACK_P3_R3T",
-        "Dùng Undo Kịp Thời Để Tránh Về S:"
-       ],
-       "desc": [
-        "STR_GI_TIME_ATTACK_P3_R3D",
-        "Nếu cảm giác vừa rẽ nhầm nhánh bế tắc, bấm Undo lùi lại 1 ô sẽ nhanh hơn rất nhiều so với bị phạt về S!"
-       ]
-      }
-     ]
-    }
-   },
-   "chip": [
-    "STR_GI_TIME_ATTACK_CHIP",
-    "TIME ATTACK MAZE"
-   ]
-  },
   "one_stroke": {
    "pages": {
     "1": {
@@ -2454,117 +2254,82 @@
   "Bấm Undo để lùi lại ô an toàn": "STR_GI_X250",
   "trước khi đâm vào tường ẩn!": "STR_GI_X251",
   "Kẻ mù quáng bước đi sẽ đâm tường — người biết dùng Anchor khóa lối sẽ chiến thắng!": "STR_GI_X252",
-  "THỜI GIAN CÒN LẠI": "STR_GI_X253",
-  "ĐANG GIẢM": "STR_GI_X254",
-  "ÁP LỰC THỜI GIAN": "STR_GI_X255",
-  "ĐẾM NGƯỢC": "STR_GI_X256",
-  "VỀ 00:00": "STR_GI_X257",
-  "Hết giờ = THUA!": "STR_GI_X258",
-  "SỐ BƯỚC CHÂN": "STR_GI_X259",
-  "KHÔNG GIỚI HẠN": "STR_GI_X260",
-  "Đi bao nhiêu ô tùy ý": "STR_GI_X261",
-  "chỉ cần về đích kịp!": "STR_GI_X262",
-  "Bạn chỉ có 60s đến 120s: Hãy vẽ thật dứt khoát trước khi đồng hồ điểm 00:00!": "STR_GI_X263",
-  "BỊ ĐẨY VỀ XUẤT PHÁT": "STR_GI_X264",
-  "VẼ LẠI TỪ S!": "STR_GI_X265",
-  "Tường lộ diện nhưng": "STR_GI_X266",
-  "phải đi lại từ đầu.": "STR_GI_X267",
-  "THỜI GIAN VẪN TRÔI": "STR_GI_X268",
-  "MẤT 5 - 10 GIÂY!": "STR_GI_X269",
-  "Đồng hồ vẫn đếm lùi,": "STR_GI_X270",
-  "quỹ giờ cạn rất nhanh!": "STR_GI_X271",
-  "Đâm tường ở Time Attack không chết ngay, nhưng sẽ cướp đi thời gian quý báu của bạn!": "STR_GI_X272",
-  "CHIẾN THUẬT: PHÓNG QUA Ô 0": "STR_GI_X273",
-  "LƯỚT QUA • SIÊU TỐC": "STR_GI_X274",
-  "Ưu Tiên Ô Số 0 Để Tăng Tốc": "STR_GI_X275",
-  "Ô số 0 hoàn toàn không có tường bao.": "STR_GI_X276",
-  "Hãy phóng thẳng bút qua ô này mà không": "STR_GI_X277",
-  "cần dừng lại suy nghĩ, tiết kiệm tối đa giây!": "STR_GI_X278",
-  "Mở lối khi bí": "STR_GI_X279",
-  "Bí quá 3 giây? Đừng chôn chân!": "STR_GI_X280",
-  "Bấm ngay Gợi Ý để soi đường": "STR_GI_X281",
-  "thay vì đứng nhìn đồng hồ cạn!": "STR_GI_X282",
-  "Rút bước kịp thời": "STR_GI_X283",
-  "Lỡ tay quẹt nhầm hướng?": "STR_GI_X284",
-  "Bấm Undo lùi lại ngay": "STR_GI_X285",
-  "để không bị đâm tường văng về S!": "STR_GI_X286",
-  "Đứng yên là tự sát! Khi phân vân, bấm ngay Gợi Ý để cứu lấy thời gian sống còn.": "STR_GI_X287",
-  "TIẾN ĐỘ PHỦ KÍN:": "STR_GI_X288",
-  "MỘT NÉT KHÔNG NHẤC BÚT": "STR_GI_X289",
-  "ĐẶC TRƯNG BÀN CỜ": "STR_GI_X290",
-  "TƯỜNG THẤY RÕ": "STR_GI_X291",
-  "100% HIỆN SẴN": "STR_GI_X292",
-  "Không có số trên ô!": "STR_GI_X293",
-  "MỤC TIÊU DUY NHẤT": "STR_GI_X294",
-  "PHỦ KÍN 100%": "STR_GI_X295",
-  "MỌI Ô CỜ": "STR_GI_X296",
-  "rồi mới về đích F!": "STR_GI_X297",
-  "Đã đi 6 ô • Đi tiếp qua 3 ô còn lại để phủ kín 9/9 ô rồi chạm hố thang F!": "STR_GI_X298",
-  "ĐI VÀO ĐƯỜNG ĐÃ QUA": "STR_GI_X299",
-  "ĐÃ ĐI": "STR_GI_X300",
-  "GAME OVER NGAY!": "STR_GI_X301",
-  "Cố tình bước đè lên nét vẽ cũ": "STR_GI_X302",
-  "sẽ bị xử thua lập tức!": "STR_GI_X303",
-  "BẪY CÔ LẬP Ô TRỐNG": "STR_GI_X304",
-  "BỊ KẸT": "STR_GI_X305",
-  "HẾT ĐƯỜNG ĐI!": "STR_GI_X306",
-  "Vẽ sai nhánh làm cô lập ô trống.": "STR_GI_X307",
-  "Không thể phủ kín 100% • Thua!": "STR_GI_X308",
-  "Tuyệt đối không được bước lùi vào nét vẽ cũ — chạm đường đã đi là Game Over ngay!": "STR_GI_X309",
-  "ĐÍCH ĐẾN CUỐI CÙNG: F": "STR_GI_X310",
-  "ĐÃ PHỦ KÍN": "STR_GI_X311",
-  "100% SỐ Ô": "STR_GI_X312",
-  "F Là Điểm Chốt Hạ Cuối Cùng": "STR_GI_X313",
-  "Chỉ được chạm vào hố thang F sau khi": "STR_GI_X314",
-  "đã phủ kín mọi ô khác trên bàn cờ.": "STR_GI_X315",
-  "Chạm F sớm sẽ bị chặn lại!": "STR_GI_X316",
-  "CỨU CÁNH SINH TỬ": "STR_GI_X317",
-  "MỞ LẠI Ô VỪA ĐI QUA!": "STR_GI_X318",
-  "Thấy đi nhầm nhánh kẹt? Bấm Undo ngay": "STR_GI_X319",
-  "để rút nét vẽ và mở lại ô, tránh bị Game Over do đi lại đường cũ.": "STR_GI_X320",
-  "Đừng cố đi tiếp khi nhận ra bị kẹt — hãy dùng Undo để mở lại ô và thử hướng khác!": "STR_GI_X321",
-  "TỔNG TƯỜNG CẦN DỰNG:": "STR_GI_X322",
-  "KÉO NỐI 2 ĐIỂM NEO (+)": "STR_GI_X323",
-  "VAI TRÒ MỚI": "STR_GI_X324",
-  "THỢ XÂY MÊ CUNG": "STR_GI_X325",
-  "KHÔNG CÓ S/F": "STR_GI_X326",
-  "Không có di chuyển!": "STR_GI_X327",
-  "THAO TÁC CHÍNH": "STR_GI_X328",
-  "NỐI 2 ANCHOR": "STR_GI_X329",
-  "BẬT / TẮT TƯỜNG": "STR_GI_X330",
-  "Kéo để dựng vách!": "STR_GI_X331",
-  "Ô giữa mang số 2 • Bạn cần kéo nối đúng 2 đoạn tường ở các cạnh của nó!": "STR_GI_X332",
-  "DỰNG ĐỦ • BẤM GỬI": "STR_GI_X333",
-  "TIẾN ĐỘ TƯỜNG": "STR_GI_X334",
-  "18 / 18 ĐOẠN": "STR_GI_X335",
-  "ĐÃ ĐỦ": "STR_GI_X336",
-  "GỬI BÀI": "STR_GI_X337",
-  "Kiểm tra kết quả": "STR_GI_X338",
-  "KHỚP MỌI SỐ = THẮNG!": "STR_GI_X339",
-  "Cấu hình tường thỏa mãn": "STR_GI_X340",
-  "toàn bộ con số là hoàn thành.": "STR_GI_X341",
-  "CHỈ CÓ 3 LƯỢT NỘP": "STR_GI_X342",
-  "CHƯA KHỚP 2 ĐOẠN!": "STR_GI_X343",
-  "BỊ TRỪ -1 LƯỢT GỬI": "STR_GI_X344",
-  "(Còn lại 2/3 lượt)": "STR_GI_X345",
-  "HẾT 3 LƯỢT = THUA!": "STR_GI_X346",
-  "Game chỉ báo số đoạn bị sai,": "STR_GI_X347",
-  "KHÔNG chỉ ra vị trí sai!": "STR_GI_X348",
-  "Bạn chỉ có 3 lượt gửi bài: Đừng bấm Gửi cầu may, hãy rà soát thật kỹ từng ô!": "STR_GI_X349",
-  "BÍ QUYẾT: LOẠI TRỪ TỪ Ô SỐ 0": "STR_GI_X350",
-  "CẤM VẼ": "STR_GI_X351",
-  "Ô Số 0 Tuyệt Đối Sạch Tường": "STR_GI_X352",
-  "Bốn cạnh xung quanh ô số 0 không bao giờ": "STR_GI_X353",
-  "có tường. Loại trừ các khe này trước tiên": "STR_GI_X354",
-  "sẽ giúp suy luận ra tường của các ô bên cạnh!": "STR_GI_X355",
-  "Khóa 1 tường đúng": "STR_GI_X356",
-  "Bí tắc không biết dựng ở đâu?": "STR_GI_X357",
-  "Bấm Gợi Ý để hiện và KHÓA": "STR_GI_X358",
-  "cố định 1 đoạn tường chuẩn 100%.": "STR_GI_X359",
-  "Xóa đoạn vừa nối": "STR_GI_X360",
-  "Lỡ tay nối nhầm khe tường?": "STR_GI_X361",
-  "Bấm Undo để gỡ bỏ ngay lập tức": "STR_GI_X362",
-  "mà không cần kéo lại lần nữa.": "STR_GI_X363",
-  "Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!": "STR_GI_X364"
+  "TIẾN ĐỘ PHỦ KÍN:": "STR_GI_X253",
+  "MỘT NÉT KHÔNG NHẤC BÚT": "STR_GI_X254",
+  "ĐẶC TRƯNG BÀN CỜ": "STR_GI_X255",
+  "TƯỜNG THẤY RÕ": "STR_GI_X256",
+  "100% HIỆN SẴN": "STR_GI_X257",
+  "Không có số trên ô!": "STR_GI_X258",
+  "MỤC TIÊU DUY NHẤT": "STR_GI_X259",
+  "PHỦ KÍN 100%": "STR_GI_X260",
+  "MỌI Ô CỜ": "STR_GI_X261",
+  "rồi mới về đích F!": "STR_GI_X262",
+  "Đã đi 6 ô • Đi tiếp qua 3 ô còn lại để phủ kín 9/9 ô rồi chạm hố thang F!": "STR_GI_X263",
+  "ĐI VÀO ĐƯỜNG ĐÃ QUA": "STR_GI_X264",
+  "ĐÃ ĐI": "STR_GI_X265",
+  "GAME OVER NGAY!": "STR_GI_X266",
+  "Cố tình bước đè lên nét vẽ cũ": "STR_GI_X267",
+  "sẽ bị xử thua lập tức!": "STR_GI_X268",
+  "BẪY CÔ LẬP Ô TRỐNG": "STR_GI_X269",
+  "BỊ KẸT": "STR_GI_X270",
+  "HẾT ĐƯỜNG ĐI!": "STR_GI_X271",
+  "Vẽ sai nhánh làm cô lập ô trống.": "STR_GI_X272",
+  "Không thể phủ kín 100% • Thua!": "STR_GI_X273",
+  "Tuyệt đối không được bước lùi vào nét vẽ cũ — chạm đường đã đi là Game Over ngay!": "STR_GI_X274",
+  "ĐÍCH ĐẾN CUỐI CÙNG: F": "STR_GI_X275",
+  "ĐÃ PHỦ KÍN": "STR_GI_X276",
+  "100% SỐ Ô": "STR_GI_X277",
+  "F Là Điểm Chốt Hạ Cuối Cùng": "STR_GI_X278",
+  "Chỉ được chạm vào hố thang F sau khi": "STR_GI_X279",
+  "đã phủ kín mọi ô khác trên bàn cờ.": "STR_GI_X280",
+  "Chạm F sớm sẽ bị chặn lại!": "STR_GI_X281",
+  "CỨU CÁNH SINH TỬ": "STR_GI_X282",
+  "MỞ LẠI Ô VỪA ĐI QUA!": "STR_GI_X283",
+  "Thấy đi nhầm nhánh kẹt? Bấm Undo ngay": "STR_GI_X284",
+  "để rút nét vẽ và mở lại ô, tránh bị Game Over do đi lại đường cũ.": "STR_GI_X285",
+  "Đừng cố đi tiếp khi nhận ra bị kẹt — hãy dùng Undo để mở lại ô và thử hướng khác!": "STR_GI_X286",
+  "TỔNG TƯỜNG CẦN DỰNG:": "STR_GI_X287",
+  "KÉO NỐI 2 ĐIỂM NEO (+)": "STR_GI_X288",
+  "VAI TRÒ MỚI": "STR_GI_X289",
+  "THỢ XÂY MÊ CUNG": "STR_GI_X290",
+  "KHÔNG CÓ S/F": "STR_GI_X291",
+  "Không có di chuyển!": "STR_GI_X292",
+  "THAO TÁC CHÍNH": "STR_GI_X293",
+  "NỐI 2 ANCHOR": "STR_GI_X294",
+  "BẬT / TẮT TƯỜNG": "STR_GI_X295",
+  "Kéo để dựng vách!": "STR_GI_X296",
+  "Ô giữa mang số 2 • Bạn cần kéo nối đúng 2 đoạn tường ở các cạnh của nó!": "STR_GI_X297",
+  "DỰNG ĐỦ • BẤM GỬI": "STR_GI_X298",
+  "TIẾN ĐỘ TƯỜNG": "STR_GI_X299",
+  "18 / 18 ĐOẠN": "STR_GI_X300",
+  "ĐÃ ĐỦ": "STR_GI_X301",
+  "GỬI BÀI": "STR_GI_X302",
+  "Kiểm tra kết quả": "STR_GI_X303",
+  "KHỚP MỌI SỐ = THẮNG!": "STR_GI_X304",
+  "Cấu hình tường thỏa mãn": "STR_GI_X305",
+  "toàn bộ con số là hoàn thành.": "STR_GI_X306",
+  "CHỈ CÓ 3 LƯỢT NỘP": "STR_GI_X307",
+  "CHƯA KHỚP 2 ĐOẠN!": "STR_GI_X308",
+  "BỊ TRỪ -1 LƯỢT GỬI": "STR_GI_X309",
+  "(Còn lại 2/3 lượt)": "STR_GI_X310",
+  "HẾT 3 LƯỢT = THUA!": "STR_GI_X311",
+  "Game chỉ báo số đoạn bị sai,": "STR_GI_X312",
+  "KHÔNG chỉ ra vị trí sai!": "STR_GI_X313",
+  "Bạn chỉ có 3 lượt gửi bài: Đừng bấm Gửi cầu may, hãy rà soát thật kỹ từng ô!": "STR_GI_X314",
+  "BÍ QUYẾT: LOẠI TRỪ TỪ Ô SỐ 0": "STR_GI_X315",
+  "CẤM VẼ": "STR_GI_X316",
+  "Ô Số 0 Tuyệt Đối Sạch Tường": "STR_GI_X317",
+  "Bốn cạnh xung quanh ô số 0 không bao giờ": "STR_GI_X318",
+  "có tường. Loại trừ các khe này trước tiên": "STR_GI_X319",
+  "sẽ giúp suy luận ra tường của các ô bên cạnh!": "STR_GI_X320",
+  "Khóa 1 tường đúng": "STR_GI_X321",
+  "Bí tắc không biết dựng ở đâu?": "STR_GI_X322",
+  "Bấm Gợi Ý để hiện và KHÓA": "STR_GI_X323",
+  "cố định 1 đoạn tường chuẩn 100%.": "STR_GI_X324",
+  "Xóa đoạn vừa nối": "STR_GI_X325",
+  "Lỡ tay nối nhầm khe tường?": "STR_GI_X326",
+  "Bấm Undo để gỡ bỏ ngay lập tức": "STR_GI_X327",
+  "mà không cần kéo lại lần nữa.": "STR_GI_X328",
+  "Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!": "STR_GI_X329"
  }
 }

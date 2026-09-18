@@ -80,13 +80,14 @@ DIFFICULTIES = ("easy", "medium", "hard")
 MODE_IDS = (
     "play",
     "dungeon",
-    "time_attack",
     "minesweeper",
     "sum_path",
     "countdown_cost",
     "blind_memory",
     "fog_of_war",
     "fading_ink",
+    "one_stroke",
+    "wall_builder",
 )
 
 # --- Màu sắc (đồng bộ với theme sổ ô ly của game) --------------------------

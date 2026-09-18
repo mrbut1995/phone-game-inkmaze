@@ -1,6 +1,6 @@
 extends SceneTree
 ## ============================================================================
-## Test: 11 popup HƯỚNG DẪN theo từng chế độ (nodes/popups/instruction/*.tscn).
+## Test: 10 popup HƯỚNG DẪN theo từng chế độ (nodes/popups/instruction/*.tscn).
 ##   - Mỗi chế độ 1 scene riêng: 3 trang, 3 tab, nav/CTA/link hoạt động.
 ##   - Trang 1: Prev khoá · trang 3: Next khoá (đúng như mockup).
 ##   - CTA trang cuối đóng popup · link trang cuối quay về trang 1 ·
@@ -11,8 +11,8 @@ extends SceneTree
 ## ============================================================================
 
 const MODES := ["normal_maze", "dungeon", "minesweeper", "sumpath", "countdowncost",
-		"fadingink", "blindmemory", "fog_of_war", "time_attack", "one_stroke", "wall_builder"]
-const MODE_IDS := ["play", "daily_classic", "time_attack", "dungeon", "minesweeper",
+		"fadingink", "blindmemory", "fog_of_war", "one_stroke", "wall_builder"]
+const MODE_IDS := ["play", "daily_classic", "dungeon", "minesweeper",
 		"sum_path", "countdown_cost", "blind_memory", "fog_of_war", "fading_ink", "one_stroke",
 		"wall_builder"]
 const SKIP_TEXT_NODES := ["Index"]
@@ -25,7 +25,7 @@ var _letter_re := RegEx.create_from_string("[\\p{L}]")
 
 func _init() -> void:
 	print("\n========================================================")
-	print("  TEST: 11 POPUP HUONG DAN THEO CHE DO")
+	print("  TEST: 10 POPUP HUONG DAN THEO CHE DO")
 	print("========================================================\n")
 
 	await process_frame
@@ -39,7 +39,7 @@ func _init() -> void:
 	await _check_integration()
 
 	if _failures == 0:
-		print("\n[SUCCESS] %d check PASS — 11 popup huong dan chay dung, du chu 2 ngon ngu." % _checks)
+		print("\n[SUCCESS] %d check PASS — 10 popup huong dan chay dung, du chu 2 ngon ngu." % _checks)
 	else:
 		print("\n[FAILED] %d/%d check loi ve popup huong dan." % [_failures, _checks])
 	quit(0)
@@ -269,7 +269,7 @@ func _check_integration() -> void:
 		return
 	var cases := [["dungeon", "STR_GI_DUNGEON_CHIP"],
 			["play", "STR_GI_NORMAL_MAZE_CHIP"],
-			["time_attack", "STR_GI_TIME_ATTACK_CHIP"]]
+			["minesweeper", "STR_GI_MINESWEEPER_CHIP"]]
 	for c in cases:
 		gm.set("current_mode", c[0])
 		gm.set("current_level", 1)
