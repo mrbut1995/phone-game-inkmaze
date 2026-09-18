@@ -1,0 +1,354 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7800 2700" width="100%" height="100%" style="background-color: #0B1120;">
+  <defs>
+    <style>
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 40px; font-weight: 800; fill: #F8FAFC; text-anchor: middle; }
+      .ratio-spec { font-family: monospace; font-size: 26px; font-weight: 600; fill: #38BDF8; text-anchor: middle; }
+      
+      .box-screen { fill: #090D16; stroke: #475569; stroke-width: 4; rx: 32px; }
+      .box-header { fill: #1E293B; stroke: #64748B; stroke-width: 3; rx: 16px; }
+      .box-hud-time { fill: #131E32; stroke: #6EA0C8; stroke-width: 3; rx: 20px; }
+      .box-hud-fog { fill: #131E32; stroke: #5A6D7C; stroke-width: 3; rx: 20px; }
+      .box-board { fill: #1E293B; stroke: #F43F5E; stroke-width: 4; stroke-dasharray: 14 10; rx: 24px; }
+      .box-tip { fill: #1E293B; stroke: #F59E0B; stroke-width: 3; rx: 16px; }
+      .box-action { fill: #3D83AE; stroke: #235A7D; stroke-width: 3; rx: 20px; }
+      .box-action-sub { fill: #1E293B; stroke: #64748B; stroke-width: 3; rx: 18px; }
+
+      .wire-label { font-family: system-ui, sans-serif; font-weight: 800; fill: #FFFFFF; text-anchor: middle; dominant-baseline: central; }
+      .font-spec { font-family: monospace; font-weight: 700; fill: #FDE047; text-anchor: middle; dominant-baseline: central; }
+      .dim-spec { font-family: monospace; font-size: 20px; font-weight: 600; fill: #94A3B8; text-anchor: middle; dominant-baseline: central; }
+      .tag-heart { font-family: system-ui, sans-serif; font-weight: 900; fill: #EF4444; text-anchor: middle; dominant-baseline: central; }
+    </style>
+  </defs>
+
+  <!-- ========================================================================= -->
+  <!-- 1. TỈ LỆ 9:16 · 1080 x 1920 (CHUẨN CƠ BẢN BASE)                           -->
+  <!-- ========================================================================= -->
+  <g transform="translate(80, 100)">
+    <text x="540" y="-50" class="title">1. Tỉ lệ 9:16 (Dọc Cơ Bản - Base)</text>
+    <text x="540" y="-15" class="ratio-spec">1080 × 1920 px · Board 980×980 · HUD Fog Survival</text>
+    <rect width="1080" height="1920" class="box-screen" stroke="#38BDF8"/>
+
+    <!-- Header -->
+    <rect x="50" y="70" width="980" height="85" class="box-header"/>
+    <text x="540" y="98" class="font-spec" font-size="18">DAILY CHALLENGE · ĐẶC BIỆT (18px)</text>
+    <text x="540" y="128" class="wire-label" font-size="28">FOG OF WAR MAZE 🌫️ (38px)</text>
+
+    <!-- HUD Row: Time Trái (270) & Fog Survival Panel Phải (690) -->
+    <rect x="50" y="175" width="270" height="156" class="box-hud-time"/>
+    <text x="185" y="212" class="wire-label" font-size="18">⏱ THỜI GIAN (18px)</text>
+    <text x="185" y="265" class="font-spec" font-size="48">00:41 (48px)</text>
+    <text x="185" y="305" class="dim-spec" font-size="13">ĐANG DÒ ĐƯỜNG (13px)</text>
+
+    <rect x="340" y="175" width="690" height="156" class="box-hud-fog"/>
+    <!-- Cột 1: Lượt thử lại -->
+    <text x="440" y="210" class="tag-heart" font-size="17">❤️ LƯỢT THỬ LẠI (17px)</text>
+    <text x="440" y="260" class="tag-heart" font-size="46">2 <tspan font-size="26" fill="#94A3B8">/ 3 (50px / 28px)</tspan></text>
+    <text x="440" y="302" class="font-spec" font-size="14">CÒN 2 LẦN VỀ S (14px)</text>
+    <line x1="550" y1="190" x2="550" y2="315" stroke="#334155" stroke-width="2"/>
+    <!-- Cột 2: Tầm nhìn & Cảnh báo -->
+    <text x="785" y="212" class="wire-label" font-size="16">👁️ TẦM NHÌN: BÁN KÍNH 1 Ô (16px)</text>
+    <text x="785" y="255" class="dim-spec" font-size="15">Ô đã đi qua sẽ bị sương che lại (15px)</text>
+    <text x="785" y="295" class="tag-heart" font-size="14">⚠️ Đâm tường: Về S, trừ 1 lượt! (14px)</text>
+
+    <!-- Board 980x980 -->
+    <rect x="50" y="350" width="980" height="980" class="box-board"/>
+    <text x="540" y="810" class="wire-label" font-size="38" fill="#F43F5E">KHU VỰC BÀN CỜ (980 × 980)</text>
+    <text x="540" y="860" class="font-spec" font-size="32">Manh mối trong tầm mắt: 52px</text>
+    <text x="540" y="905" class="dim-spec">Dấu hỏi sương mù "?": 44px | Nhãn sương: 16px</text>
+
+    <!-- Tip Banner -->
+    <rect x="50" y="1350" width="980" height="90" class="box-tip"/>
+    <text x="540" y="1395" class="font-spec" font-size="22">🌫️ Sương mù chỉ tan quanh bạn 1 ô — đâm tường về lại S! (22px)</text>
+
+    <!-- Action Tools -->
+    <rect x="50" y="1465" width="360" height="140" class="box-action"/>
+    <text x="230" y="1520" class="wire-label" font-size="28">VẼ ĐƯỜNG</text>
+    <text x="230" y="1565" class="font-spec" font-size="18">Title: 28px · Sub: 18px</text>
+
+    <rect x="430" y="1465" width="360" height="140" class="box-action-sub"/>
+    <text x="610" y="1520" class="wire-label" font-size="28">GHI NHỚ</text>
+    <text x="610" y="1565" class="font-spec" font-size="18">Title: 28px · Sub: 18px</text>
+
+    <rect x="810" y="1465" width="105" height="140" class="box-action-sub"/>
+    <text x="862" y="1535" class="wire-label" font-size="20">UNDO (15px)</text>
+
+    <rect x="925" y="1465" width="105" height="140" class="box-action-sub"/>
+    <text x="977" y="1535" class="wire-label" font-size="20">HINT (15px)</text>
+
+    <!-- Gesture Bar -->
+    <rect x="440" y="1885" width="200" height="8" rx="4" fill="#64748B"/>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 2. TỈ LỆ 9:18 · 1080 x 2160 (DỌC DÀI 2:1)                                -->
+  <!-- ========================================================================= -->
+  <g transform="translate(1330, 100)">
+    <text x="540" y="-50" class="title">2. Tỉ lệ 9:18 (Dọc Dài 2:1)</text>
+    <text x="540" y="-15" class="ratio-spec">1080 × 2160 px · Thêm +240px độ cao</text>
+    <rect width="1080" height="2160" class="box-screen"/>
+
+    <!-- Header -->
+    <rect x="50" y="90" width="980" height="85" class="box-header"/>
+    <text x="540" y="118" class="font-spec" font-size="18">DAILY CHALLENGE · ĐẶC BIỆT (18px)</text>
+    <text x="540" y="148" class="wire-label" font-size="28">FOG OF WAR MAZE 🌫️ (40px)</text>
+
+    <!-- HUD Row -->
+    <rect x="50" y="200" width="270" height="165" class="box-hud-time"/>
+    <text x="185" y="240" class="wire-label" font-size="20">⏱ THỜI GIAN (18px)</text>
+    <text x="185" y="295" class="font-spec" font-size="50">00:41 (50px)</text>
+    <text x="185" y="340" class="dim-spec" font-size="14">ĐANG DÒ ĐƯỜNG</text>
+
+    <rect x="340" y="200" width="690" height="165" class="box-hud-fog"/>
+    <text x="440" y="240" class="tag-heart" font-size="17">❤️ LƯỢT THỬ LẠI</text>
+    <text x="440" y="295" class="tag-heart" font-size="48">2 / 3 (52px / 28px)</text>
+    <line x1="550" y1="215" x2="550" y2="350" stroke="#334155" stroke-width="2"/>
+    <text x="785" y="240" class="wire-label" font-size="16">👁️ TẦM NHÌN: BÁN KÍNH 1 Ô (16px)</text>
+    <text x="785" y="285" class="dim-spec" font-size="15">Sương mù che lại khi di chuyển</text>
+    <text x="785" y="330" class="tag-heart" font-size="15">⚠️ Đâm tường: Về S, trừ 1 lượt! (15px)</text>
+
+    <!-- Board 980x980 -->
+    <rect x="50" y="440" width="980" height="980" class="box-board"/>
+    <text x="540" y="910" class="wire-label" font-size="38" fill="#F43F5E">KHU VỰC BÀN CỜ (980 × 980)</text>
+    <text x="540" y="960" class="font-spec" font-size="32">Manh mối trong tầm mắt: 52px</text>
+
+    <!-- Tip Banner -->
+    <rect x="50" y="1490" width="980" height="90" class="box-tip"/>
+    <text x="540" y="1535" class="font-spec" font-size="24">💡 Tip Banner: 24px</text>
+
+    <!-- Action Tools -->
+    <rect x="50" y="1630" width="360" height="150" class="box-action"/>
+    <text x="230" y="1690" class="wire-label" font-size="30">VẼ ĐƯỜNG</text>
+    <text x="230" y="1735" class="font-spec" font-size="18">Title: 28px · Sub: 18px</text>
+
+    <rect x="430" y="1630" width="360" height="150" class="box-action-sub"/>
+    <text x="610" y="1690" class="wire-label" font-size="30">GHI NHỚ</text>
+    <text x="610" y="1735" class="font-spec" font-size="18">Title: 28px · Sub: 18px</text>
+
+    <rect x="810" y="1630" width="105" height="150" class="box-action-sub"/>
+    <text x="862" y="1705" class="wire-label" font-size="22">UNDO (16px)</text>
+
+    <rect x="925" y="1630" width="105" height="150" class="box-action-sub"/>
+    <text x="977" y="1705" class="wire-label" font-size="22">HINT (16px)</text>
+
+    <!-- Gesture Bar -->
+    <rect x="440" y="2120" width="200" height="8" rx="4" fill="#64748B"/>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 3. TỈ LỆ 9:19.5 · 1080 x 2340 (CHUẨN DỌC HIỆN ĐẠI / NOTCH)                -->
+  <!-- ========================================================================= -->
+  <g transform="translate(2580, 100)">
+    <text x="540" y="-50" class="title">3. Tỉ lệ 9:19.5 (Chuẩn Hiện Đại)</text>
+    <text x="540" y="-15" class="ratio-spec">1080 × 2340 px · Safe Area &amp; Fog Panel 170px</text>
+    <rect width="1080" height="2340" class="box-screen" stroke="#38BDF8"/>
+    <circle cx="540" cy="35" r="14" fill="#1E293B"/>
+
+    <!-- Header -->
+    <rect x="50" y="110" width="980" height="90" class="box-header"/>
+    <text x="540" y="138" class="font-spec" font-size="18">DAILY CHALLENGE · ĐẶC BIỆT (18px)</text>
+    <text x="540" y="170" class="wire-label" font-size="30">FOG OF WAR MAZE 🌫️ (40px)</text>
+
+    <!-- HUD Row -->
+    <rect x="50" y="225" width="270" height="170" class="box-hud-time"/>
+    <text x="185" y="268" class="wire-label" font-size="22">⏱ THỜI GIAN (20px)</text>
+    <text x="185" y="328" class="font-spec" font-size="52">00:41 (52px)</text>
+    <text x="185" y="368" class="dim-spec" font-size="15">ĐANG DÒ ĐƯỜNG</text>
+
+    <rect x="340" y="225" width="690" height="170" class="box-hud-fog"/>
+    <text x="440" y="268" class="tag-heart" font-size="18">❤️ LƯỢT THỬ LẠI</text>
+    <text x="440" y="325" class="tag-heart" font-size="50">2 / 3 (54px / 30px)</text>
+    <line x1="550" y1="240" x2="550" y2="380" stroke="#334155" stroke-width="2"/>
+    <text x="785" y="265" class="wire-label" font-size="17">👁️ TẦM NHÌN: BÁN KÍNH 1 Ô (17px)</text>
+    <text x="785" y="310" class="dim-spec" font-size="15">Sương che lại ô đã đi qua</text>
+    <text x="785" y="355" class="tag-heart" font-size="15">⚠️ Đâm tường: Về S, trừ 1 lượt! (15px)</text>
+
+    <!-- Board 980x980 -->
+    <rect x="50" y="510" width="980" height="980" class="box-board"/>
+    <text x="540" y="980" class="wire-label" font-size="38" fill="#F43F5E">KHU VỰC BÀN CỜ (980 × 980)</text>
+    <text x="540" y="1030" class="font-spec" font-size="32">Manh mối trong tầm mắt: 52px</text>
+
+    <!-- Tip Banner -->
+    <rect x="50" y="1590" width="980" height="100" class="box-tip"/>
+    <text x="540" y="1640" class="font-spec" font-size="24">💡 Tip Banner: 24px (Thoáng đãng)</text>
+
+    <!-- Action Tools -->
+    <rect x="50" y="1750" width="360" height="165" class="box-action"/>
+    <text x="230" y="1815" class="wire-label" font-size="32">VẼ ĐƯỜNG</text>
+    <text x="230" y="1865" class="font-spec" font-size="20">Title: 30px · Sub: 18px</text>
+
+    <rect x="430" y="1750" width="360" height="165" class="box-action-sub"/>
+    <text x="610" y="1815" class="wire-label" font-size="32">GHI NHỚ</text>
+    <text x="610" y="1865" class="font-spec" font-size="20">Title: 30px · Sub: 18px</text>
+
+    <rect x="810" y="1750" width="105" height="165" class="box-action-sub"/>
+    <text x="862" y="1825" class="wire-label" font-size="22">UNDO (16px)</text>
+
+    <rect x="925" y="1750" width="105" height="165" class="box-action-sub"/>
+    <text x="977" y="1825" class="wire-label" font-size="22">HINT (16px)</text>
+
+    <!-- Home Indicator -->
+    <rect x="420" y="2280" width="240" height="10" rx="5" fill="#64748B"/>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 4. TỈ LỆ 9:21 · 1080 x 2520 (DỌC SIÊU DÀI)                               -->
+  <!-- ========================================================================= -->
+  <g transform="translate(3830, 100)">
+    <text x="540" y="-50" class="title">4. Tỉ lệ 9:21 (Dọc Siêu Dài)</text>
+    <text x="540" y="-15" class="ratio-spec">1080 × 2520 px · Thừa trục dọc tối đa</text>
+    <rect width="1080" height="2520" class="box-screen"/>
+
+    <!-- Header -->
+    <rect x="50" y="130" width="980" height="95" class="box-header"/>
+    <text x="540" y="160" class="font-spec" font-size="18">DAILY CHALLENGE · ĐẶC BIỆT (18px)</text>
+    <text x="540" y="192" class="wire-label" font-size="30">FOG OF WAR MAZE 🌫️ (42px)</text>
+
+    <!-- HUD Row -->
+    <rect x="50" y="255" width="270" height="175" class="box-hud-time"/>
+    <text x="185" y="300" class="wire-label" font-size="22">⏱ THỜI GIAN (20px)</text>
+    <text x="185" y="360" class="font-spec" font-size="54">00:41 (54px)</text>
+    <text x="185" y="405" class="dim-spec" font-size="15">ĐANG DÒ ĐƯỜNG</text>
+
+    <rect x="340" y="255" width="690" height="175" class="box-hud-fog"/>
+    <text x="440" y="300" class="tag-heart" font-size="18">❤️ LƯỢT THỬ LẠI</text>
+    <text x="440" y="358" class="tag-heart" font-size="52">2 / 3 (54px / 30px)</text>
+    <line x1="550" y1="270" x2="550" y2="415" stroke="#334155" stroke-width="2"/>
+    <text x="785" y="295" class="wire-label" font-size="17">👁️ TẦM NHÌN: BÁN KÍNH 1 Ô (17px)</text>
+    <text x="785" y="340" class="dim-spec" font-size="15">Sương mù che lại khi rời đi</text>
+    <text x="785" y="385" class="tag-heart" font-size="15">⚠️ Đâm tường: Về S, trừ 1 lượt! (15px)</text>
+
+    <!-- Board 980x980 -->
+    <rect x="50" y="580" width="980" height="980" class="box-board"/>
+    <text x="540" y="1050" class="wire-label" font-size="38" fill="#F43F5E">KHU VỰC BÀN CỜ (980 × 980)</text>
+    <text x="540" y="1100" class="font-spec" font-size="32">Manh mối trong tầm mắt: 52px</text>
+
+    <!-- Tip Banner -->
+    <rect x="50" y="1720" width="980" height="110" class="box-tip"/>
+    <text x="540" y="1775" class="font-spec" font-size="24">💡 Tip Banner: 24px (Rộng thoáng)</text>
+
+    <!-- Action Tools -->
+    <rect x="50" y="1910" width="360" height="175" class="box-action"/>
+    <text x="230" y="1980" class="wire-label" font-size="32">VẼ ĐƯỜNG</text>
+    <text x="230" y="2035" class="font-spec" font-size="20">Title: 30px · Sub: 18px</text>
+
+    <rect x="430" y="1910" width="360" height="175" class="box-action-sub"/>
+    <text x="610" y="1980" class="wire-label" font-size="32">GHI NHỚ</text>
+    <text x="610" y="2035" class="font-spec" font-size="20">Title: 30px · Sub: 18px</text>
+
+    <rect x="810" y="1910" width="105" height="175" class="box-action-sub"/>
+    <text x="862" y="1990" class="wire-label" font-size="22">UNDO (16px)</text>
+
+    <rect x="925" y="1910" width="105" height="175" class="box-action-sub"/>
+    <text x="977" y="1990" class="wire-label" font-size="22">HINT (16px)</text>
+
+    <!-- Home Indicator -->
+    <rect x="420" y="2440" width="240" height="10" rx="5" fill="#64748B"/>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 5. TỈ LỆ 3:4 · 1080 x 1440 (DỌC LÙN / TABLET NHỎ)                         -->
+  <!-- ========================================================================= -->
+  <g transform="translate(5080, 100)">
+    <text x="540" y="-50" class="title">5. Tỉ lệ 3:4 (Dọc Lùn - Nhỏ)</text>
+    <text x="540" y="-15" class="ratio-spec">1080 × 1440 px · Board co lại 800×800</text>
+    <rect width="1080" height="1440" class="box-screen"/>
+
+    <!-- Header -->
+    <rect x="40" y="35" width="1000" height="65" class="box-header"/>
+    <text x="540" y="68" class="wire-label" font-size="26">FOG OF WAR MAZE 🌫️ (32px)</text>
+
+    <!-- HUD Row (Co gọn chiều cao 125px) -->
+    <rect x="40" y="115" width="260" height="125" class="box-hud-time"/>
+    <text x="170" y="145" class="wire-label" font-size="16">⏱ THỜI GIAN (15px)</text>
+    <text x="170" y="190" class="font-spec" font-size="40">00:41 (40px)</text>
+
+    <rect x="315" y="115" width="725" height="125" class="box-hud-fog"/>
+    <text x="415" y="145" class="tag-heart" font-size="14">❤️ THỬ LẠI: 2/3</text>
+    <text x="415" y="190" class="tag-heart" font-size="38">2 / 3 (40px)</text>
+    <line x1="510" y1="125" x2="510" y2="230" stroke="#334155" stroke-width="2"/>
+    <text x="760" y="145" class="wire-label" font-size="14">👁️ TẦM NHÌN: BÁN KÍNH 1 Ô (14px)</text>
+    <text x="760" y="175" class="dim-spec" font-size="13">Sương mù che lại ô đã đi qua (13px)</text>
+    <text x="760" y="205" class="tag-heart" font-size="13">⚠️ Đâm tường: Về S, trừ 1 lượt! (13px)</text>
+
+    <!-- Board 800x800 -->
+    <rect x="140" y="255" width="800" height="800" class="box-board"/>
+    <text x="540" y="630" class="wire-label" font-size="34" fill="#F43F5E">BÀN CỜ THU GỌN (800 × 800)</text>
+    <text x="540" y="680" class="font-spec" font-size="28">Manh mối trong tầm mắt: 44px</text>
+
+    <!-- Tip Banner -->
+    <rect x="40" y="1070" width="1000" height="65" class="box-tip"/>
+    <text x="540" y="1105" class="font-spec" font-size="20">💡 Tip Banner: 20px (Gọn gàng)</text>
+
+    <!-- Action Tools -->
+    <rect x="40" y="1155" width="360" height="135" class="box-action"/>
+    <text x="220" y="1210" class="wire-label" font-size="28">VẼ ĐƯỜNG</text>
+    <text x="220" y="1250" class="font-spec" font-size="16">Title: 26px · Sub: 16px</text>
+
+    <rect x="420" y="1155" width="360" height="135" class="box-action-sub"/>
+    <text x="600" y="1210" class="wire-label" font-size="28">GHI NHỚ</text>
+    <text x="600" y="1250" class="font-spec" font-size="16">Title: 26px · Sub: 16px</text>
+
+    <rect x="800" y="1155" width="110" height="135" class="box-action-sub"/>
+    <text x="855" y="1225" class="wire-label" font-size="18">UNDO (14px)</text>
+
+    <rect x="930" y="1155" width="110" height="135" class="box-action-sub"/>
+    <text x="985" y="1225" class="wire-label" font-size="18">HINT (14px)</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 6. TỈ LỆ 3:4 · 1200 x 1600 (DỌC RỘNG / TABLET LỚN)                        -->
+  <!-- ========================================================================= -->
+  <g transform="translate(6330, 100)">
+    <text x="600" y="-50" class="title">6. Tỉ lệ 3:4 (Dọc Rộng - Tablet Lớn)</text>
+    <text x="600" y="-15" class="ratio-spec">1200 × 1600 px · Board 920×920 · Fog Panel Rộng</text>
+    <rect width="1200" height="1600" class="box-screen"/>
+
+    <!-- Header -->
+    <rect x="60" y="45" width="1080" height="85" class="box-header"/>
+    <text x="600" y="75" class="font-spec" font-size="18">DAILY CHALLENGE · ĐẶC BIỆT (18px)</text>
+    <text x="600" y="105" class="wire-label" font-size="30">FOG OF WAR MAZE 🌫️ (38px)</text>
+
+    <!-- HUD Row: Time Trái (290) & Fog Survival Panel Phải (770) -->
+    <rect x="60" y="145" width="290" height="145" class="box-hud-time"/>
+    <text x="205" y="185" class="wire-label" font-size="20">⏱ THỜI GIAN (18px)</text>
+    <text x="205" y="240" class="font-spec" font-size="46">00:41 (46px)</text>
+    <text x="205" y="275" class="dim-spec" font-size="14">ĐANG DÒ ĐƯỜNG</text>
+
+    <rect x="370" y="145" width="770" height="145" class="box-hud-fog"/>
+    <text x="475" y="185" class="tag-heart" font-size="17">❤️ LƯỢT THỬ LẠI</text>
+    <text x="475" y="235" class="tag-heart" font-size="44">2 / 3 (48px / 28px)</text>
+    <line x1="590" y1="160" x2="590" y2="275" stroke="#334155" stroke-width="2"/>
+    <text x="860" y="180" class="wire-label" font-size="16">👁️ TẦM NHÌN: BÁN KÍNH 1 Ô (16px)</text>
+    <text x="860" y="215" class="dim-spec" font-size="14">Sương mù che lại ô đã đi qua</text>
+    <text x="860" y="255" class="tag-heart" font-size="14">⚠️ Đâm tường: Về S, trừ 1 lượt! (14px)</text>
+
+    <!-- Board 920x920 -->
+    <rect x="140" y="305" width="920" height="920" class="box-board"/>
+    <text x="600" y="740" class="wire-label" font-size="38" fill="#F43F5E">KHU VỰC BÀN CỜ (920 × 920)</text>
+    <text x="600" y="795" class="font-spec" font-size="32">Manh mối trong tầm mắt: 50px</text>
+
+    <!-- Tip Banner -->
+    <rect x="60" y="1245" width="1080" height="80" class="box-tip"/>
+    <text x="600" y="1285" class="font-spec" font-size="24">💡 Tip Banner: 24px (Thoáng rộng)</text>
+
+    <!-- Action Tools -->
+    <rect x="60" y="1345" width="395" height="160" class="box-action"/>
+    <text x="257" y="1405" class="wire-label" font-size="32">VẼ ĐƯỜNG</text>
+    <text x="257" y="1455" class="font-spec" font-size="20">Title: 30px · Sub: 18px</text>
+
+    <rect x="475" y="1345" width="395" height="160" class="box-action-sub"/>
+    <text x="672" y="1405" class="wire-label" font-size="32">GHI NHỚ</text>
+    <text x="672" y="1455" class="font-spec" font-size="20">Title: 30px · Sub: 18px</text>
+
+    <rect x="890" y="1345" width="115" height="160" class="box-action-sub"/>
+    <text x="947" y="1425" class="wire-label" font-size="22">UNDO (16px)</text>
+
+    <rect x="1025" y="1345" width="115" height="160" class="box-action-sub"/>
+    <text x="1082" y="1425" class="wire-label" font-size="22">HINT (16px)</text>
+  </g>
+</svg>

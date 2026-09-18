@@ -1340,3 +1340,26 @@
 # [ ] CÒN LẠI: test máy ảo + build APK (user để sau) · quyết định có xoá luôn mockup/lịch sử Time Attack không · 2 chế độ
 #     mới cần thêm vào `tools/level_designer/app/config.py` nếu tool cần dùng.
 
+
+# ============================================================================================
+# VÒNG 25: NỀN TẢNG ĐA TỈ LỆ THEO guide/GUIDE.MD + MAIN SCENE 2 LAYOUT (2026-02) — 33 suite: 31 xanh
+# ============================================================================================
+# 1. BASE (scripts/scenes/base.gd): 2 layout con cùng cấp `Portrait`/`Landscape` (instance
+#    scenes/orientation/<hướng>/<màn>.tscn — KẾ THỪA scaffold <hướng>/portrait|landscape.tscn) — tự bật/tắt theo hướng canvas + signal
+#    `orientation_changed(is_landscape)`. Khung nội dung: dọc = clamp(canvas.x,1080,1440) canh giữa ·
+#    ngang (có layout ngang) = PHỦ KÍN canvas · màn chưa tách layout = giữ cột 1080 như cũ.
+#    Thêm `ui(tên)` / `ui_child(cha, con)` — KHÔNG dùng được %Unique vì 2 layout trùng tên node.
+# 2. HELPER: `scripts/utils/auto_fit_label.gd` (AutoFitLabel) — chữ tự co vừa khung.
+# 3. MAIN SCENE: `scenes/orientation/portrait/main.tscn` (giữ nguyên bố cục dọc) +
+#    `scenes/orientation/landscape/main.tscn` (tờ giấy NinePatchRect + 2 cột Hero/Menu) ·
+#    thẻ chế độ + nút công cụ chuyển sang `Button` + StyleBoxTexture 9-slice (`tools/ui/menu_buttons_9slice.py`)
+#    · scenes/main.tscn chỉ còn root + 2 layout con.
+# 4. SỐ ĐO QUAN TRỌNG: màn NGANG có canvas CAO ĐÚNG 1920 → cỡ chữ/khung layout ngang = spec × 1.778
+#    (16:9 → canvas 3413×1920 · 4:3 → 2560×1920 · 19.5:9 → 4160×1920; 3:4 dọc → 1440×1920). In lại bằng
+#    `--rendering-driver opengl3 --script res://scripts/test_case/dev_size_probe.gd`.
+# 5. TEST: `test_main_layout` cập nhật theo 2 layout · `dev_aspects.gd -- --only=main --shots=1` 10/10 OK
+#    (ảnh: `tmp_aspect/<WxH>/main.png`) · full 33 suite: 31 xanh (2 đỏ CŨ: Sum Path/Fading Ink HUD).
+# [ ] CÒN LẠI: art thẻ chế độ bị KÉO NGANG ở layout ngang (1848×414 vs art 804×310) → cần art ngang riêng hoặc
+#     StyleBoxTexture 9-slice · các màn khác chưa tách layout ngang (xem GUIDE §6) · chưa áp safe-area tai thỏ ·
+#     test máy ảo/APK.
+
