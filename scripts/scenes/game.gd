@@ -46,9 +46,12 @@ const HUD_COUNTDOWN := preload("res://nodes/hud/countdown_hud.tscn")
 const HUD_FADING_INK := preload("res://nodes/hud/fading_ink_hud.tscn")
 ## Fog of War: THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử lại · tầm nhìn · cảnh báo) — không có thẻ Thử thách
 const HUD_FOG_OF_WAR := preload("res://nodes/hud/fog_of_war_hud.tscn")
+## One Stroke: THỜI GIAN + BẢNG TIẾN ĐỘ PHỦ KÍN (số ô đã đi · thanh tiến độ) — không có thẻ Thử thách
+const HUD_ONE_STROKE := preload("res://nodes/hud/one_stroke_hud.tscn")
+## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Thử thách
+const HUD_WALL_BUILDER := preload("res://nodes/hud/wall_builder_hud.tscn")
 ## Time Attack: CHỈ thẻ THỜI GIAN đặt giữa khung (không có thẻ Thử thách)
 const HUD_TIME_ATTACK := preload("res://nodes/hud/time_attack_hud.tscn")
-
 #@export var game_mode : BaseGameMode
 
 
@@ -67,6 +70,10 @@ func _ready() -> void:
 	var button_bar := get_node_or_null("Button") as Control
 	if button_bar != null:
 		UIAnim.play_slide_in(button_bar, Vector2(0, 30), 0.08, 0.25)
+
+	# Wall Builder: nút thứ 2 trên thanh công cụ được đổi công dụng thành GỬI BÀI
+	if tool_wall_btn != null and not tool_wall_btn.pressed.is_connected(_on_secondary_tool_pressed):
+		tool_wall_btn.pressed.connect(_on_secondary_tool_pressed)
 
 	# Khởi động ván chơi dựa trên GameManager hoặc mặc định
 	var gm: Node = get_node_or_null("/root/GameManager")
@@ -100,6 +107,15 @@ func _on_undo_pressed() -> void:
 func _on_hint_pressed() -> void:
 	if game_controller != null:
 		game_controller.hint()
+
+
+## Nút công cụ thứ 2: bình thường là GHI NHỚ, riêng Wall Builder là GỬI BÀI
+func _on_secondary_tool_pressed() -> void:
+	var mode: BaseGameMode = null
+	if game_mode_controller != null:
+		mode = game_mode_controller.game_mode
+	if mode != null and mode.mode_id == "wall_builder" and game_controller != null:
+		game_controller.submit_build()
 
 
 ## API chuyển đổi chế độ chơi linh hoạt từ bên ngoài
@@ -174,6 +190,10 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 			return HUD_FADING_INK
 		"fog_of_war":
 			return HUD_FOG_OF_WAR
+		"one_stroke":
+			return HUD_ONE_STROKE
+		"wall_builder":
+			return HUD_WALL_BUILDER
 		"time_attack":
 			return HUD_TIME_ATTACK
 		_:
@@ -198,6 +218,10 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return FadingInkHUD
 		"fog_of_war":
 			return FogOfWarHUD
+		"one_stroke":
+			return OneStrokeHUD
+		"wall_builder":
+			return WallBuilderHUD
 		"time_attack":
 			return TimeAttackHUD
 		_:
@@ -207,19 +231,71 @@ func _hud_class_for(mode_name: String) -> GDScript:
 ## Nhãn PHỤ của 2 nút công cụ theo CHẾ ĐỘ (mockup matchup_<mode>.svg — vd Fog of War: "Dò trong sương" · "Cắm cờ mép ô")
 const TOOL_SUB_KEYS := {
 	"fog_of_war": ["STR_TOOL_DRAW_PATH_FOG", "STR_TOOL_MARK_WALL_FOG"],
+	"one_stroke": ["STR_TOOL_DRAW_PATH_STROKE", "STR_TOOL_MARK_WALL_STROKE"],
 }
 const TOOL_SUB_DEFAULT := ["STR_TOOL_DRAW_PATH_DESC", "STR_TOOL_MARK_WALL_DESC"]
+const TOOL_TITLE_DEFAULT := ["STR_TOOL_DRAW_PATH", "STR_TOOL_MARK_WALL"]
+## Chế độ đổi HẲN công dụng 2 nút công cụ (Wall Builder: VẼ TƯỜNG + GỬI BÀI)
+const TOOL_FULL_KEYS := {
+	"wall_builder": [
+		["STR_TOOL_DRAW_WALL", "STR_TOOL_DRAW_WALL_DESC"],
+		["STR_TOOL_SUBMIT", "STR_TOOL_SUBMIT_DESC"],
+	],
+}
+const TOOL_TEX_STROKE_PATH := preload("res://assets/images/game/btn_tool_path_stroke_active.svg")
+const TOOL_TEX_SUBMIT := preload("res://assets/images/game/btn_tool_submit_normal.svg")
+const TOOL_TEX_SUBMIT_PRESSED := preload("res://assets/images/game/btn_tool_submit_pressed.svg")
+## Chế độ ẩn hẳn nút GHI NHỚ (tường hiện rõ 100% nên không cần đánh dấu) — mockup
+## matchup_one_stroke.svg: "ẨN NÚT GHI NHỚ THEO §5.12", thanh công cụ chỉ còn VẼ ĐƯỜNG ĐI + UNDO + GỢI Ý.
+const TOOL_HIDE_WALL_MODES := ["one_stroke"]
 
 
-## Đổi nhãn phụ của nút VẼ ĐƯỜNG / GHI NHỚ cho khớp chế độ đang chơi
+## Đổi nhãn 2 nút công cụ cho khớp chế độ đang chơi (VẼ ĐƯỜNG/GHI NHỚ ↔ VẼ TƯỜNG/GỬI BÀI)
 func _apply_tool_labels_for_mode(mode_name: String) -> void:
-	var keys: Array = TOOL_SUB_KEYS.get(mode_name.to_lower(), TOOL_SUB_DEFAULT)
-	var draw_sub := tool_path_btn.get_node_or_null("Sub") as Label
-	if draw_sub != null:
-		draw_sub.text = str(keys[0])
-	var wall_sub := tool_wall_btn.get_node_or_null("Sub") as Label
-	if wall_sub != null:
-		wall_sub.text = str(keys[1])
+	var id := mode_name.to_lower()
+	var full: Array = TOOL_FULL_KEYS.get(id, [])
+	if not full.is_empty():
+		var path_keys: Array = full[0]
+		var wall_keys: Array = full[1]
+		_set_tool_label(tool_path_btn, str(path_keys[0]), str(path_keys[1]))
+		_set_tool_label(tool_wall_btn, str(wall_keys[0]), str(wall_keys[1]))
+	else:
+		var subs: Array = TOOL_SUB_KEYS.get(id, TOOL_SUB_DEFAULT)
+		_set_tool_label(tool_path_btn, TOOL_TITLE_DEFAULT[0], str(subs[0]))
+		_set_tool_label(tool_wall_btn, TOOL_TITLE_DEFAULT[1], str(subs[1]))
+	# Ẩn nút GHI NHỚ ở chế độ không có tường ẩn (One Stroke). Nút VẼ ĐƯỜNG ĐI giữ
+	# nguyên kích thước gốc (SHRINK) để icon không bị kéo giãn theo bề ngang còn lại.
+	var hide_wall: bool = TOOL_HIDE_WALL_MODES.has(id)
+	tool_wall_btn.visible = not hide_wall
+	tool_path_btn.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN if hide_wall else Control.SIZE_FILL
+	_apply_tool_textures_for_mode(id)
+
+
+## Art 2 nút công cụ theo chế độ (mockup): One Stroke có nút VẼ ĐƯỜNG ĐI bè ngang 680px,
+## Wall Builder có nút GỬI BÀI xanh ở vị trí nút GHI NHỚ.
+func _apply_tool_textures_for_mode(mode_id: String) -> void:
+	if tool_controller == null:
+		return
+	match mode_id:
+		"one_stroke":
+			tool_controller.set_mode_textures(TOOL_TEX_STROKE_PATH, TOOL_TEX_STROKE_PATH,
+				TOOL_TEX_STROKE_PATH, null, null, null)
+		"wall_builder":
+			tool_controller.set_mode_textures(null, null, null,
+				TOOL_TEX_SUBMIT, TOOL_TEX_SUBMIT_PRESSED, TOOL_TEX_SUBMIT)
+		_:
+			tool_controller.set_mode_textures(null, null, null, null, null, null)
+
+
+func _set_tool_label(btn: TextureButton, title_key: String, sub_key: String) -> void:
+	if btn == null:
+		return
+	var title := btn.get_node_or_null("Label") as Label
+	if title != null:
+		title.text = title_key
+	var sub := btn.get_node_or_null("Sub") as Label
+	if sub != null:
+		sub.text = sub_key
 
 
 ## Thay khung Information bằng HUD của chế độ đang chơi rồi gắn lại cho UIController /

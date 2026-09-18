@@ -26,20 +26,33 @@ const VAR_STATUS_FAIL := &"PopupStatValueBad"
 
 
 func _on_open() -> void:
-	# Hết đường đi (Fading Ink) — đổi tiêu đề cho đúng lý do thua
-	if str(data.get("reason", "")) == "dead_end":
+	# Tiêu đề riêng theo LÝ DO thua: hết đường (Fading Ink / One Stroke) · đi lại ô cũ
+	# (One Stroke) · hết LƯỢT GỬI (Wall Builder)
+	var reason := str(data.get("reason", ""))
+	if reason == "dead_end" or reason == "revisit" or reason == "out_of_submits":
 		var title_node := piece("Title") as Label
 		if title_node != null:
-			title_node.text = "STR_GAME_OVER_NO_PATH"
+			match reason:
+				"dead_end":
+					title_node.text = "STR_GAME_OVER_NO_PATH"
+				"revisit":
+					title_node.text = "STR_GAME_OVER_REVISIT"
+				_:
+					title_node.text = "STR_GAME_OVER_OUT_OF_SUBMITS"
 
 	var subtitle := piece("Subtitle") as Label
 	if subtitle != null:
 		subtitle.text = tr("STR_GAME_OVER_LEVEL_SUBTITLE").format([int(data.get("progress", 0))])
 
-	# Chế độ có LƯỢT THỬ LẠI (Fog of War): nút HỒI SINH cộng thêm 1 lượt thử
+	# Chế độ có LƯỢT THỬ LẠI (Fog of War) hoặc LƯỢT GỬI (Wall Builder): nút HỒI SINH
+	# cộng thêm 1 lượt — dòng mô tả lấy theo khoá riêng của chế độ nếu có.
 	var revive_desc := piece("Banner/Desc") as Label
-	if revive_desc != null and int(data.get("max_retries", 0)) > 0:
-		revive_desc.text = tr("STR_REVIVE_DESC_RETRY")
+	if revive_desc != null:
+		var desc_key := str(data.get("revive_desc", ""))
+		if not desc_key.is_empty():
+			revive_desc.text = tr(desc_key)
+		elif int(data.get("max_retries", 0)) > 0:
+			revive_desc.text = tr("STR_REVIVE_DESC_RETRY")
 
 	var rows: Array = data.get("challenges", [])
 	var done := 0

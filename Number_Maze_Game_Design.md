@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Tài liệu** | Number Maze — Game Design Document (InkMaze) |
-| **Phiên bản** | v2.1 — 2026-09-18 (bổ sung **2 bộ luật mới** One Stroke & Wall Builder → tổng **11 bộ luật**; đặc tả §5.12–5.13 + changelog §13.17) · trước đó v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bổ sung bộ mockup matchup cho 9 chế độ) |
+| **Phiên bản** | v2.4 — 2026-09-19 (gắn **2 mode mới vào vòng xoay Daily 9 ngày** + thử thách `no_wrong_submit` + ô "đã khớp số" + art nút công cụ theo mockup → §13.20) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
 | **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
 | **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
 | **Quy ước mode** | 1 bộ luật = 1 `class_name` kế thừa `BaseGameMode`; mỗi mode có `mode_id` (khoá xoay vòng Daily + tra chuỗi `STR_MODE_<ID>`), luật riêng, và **1 mockup matchup** ở mục 10 |
@@ -90,7 +90,7 @@ Phần thưởng **Sao (Star)** của **mọi match-up** nay do **3 Thử thách
 | `sum_lt` · `sum_le` · `sum_gt` · `sum_ge` | Tổng số hiện trên các ô đã đi **<** / **≤** / **>** / **≥** N | N |
 | `no_hint` | Không dùng nút Gợi ý lần nào | – |
 | `no_undo` | Không dùng nút Hoàn tác lần nào | – |
-| `no_wrong_submit` | **Gửi bàn tường đúng ngay lần GỬI đầu tiên** (chỉ dùng cho Wall Builder) | – |
+| `no_wrong_submit` | **Gửi bàn tường đúng ngay lần GỬI đầu tiên** (chỉ dùng cho Wall Builder) — ĐÃ LẬP TRÌNH 2026-09-19 | – |
 
 > Ô **"có số"** = ô mà chế độ chơi đang hiện số (Play/Dungeon/Fog: số tường quanh ô > 0 · **Wall Builder: số tường quanh ô ≥ 0** · Minesweeper: số mìn · Sum Path / Countdown Cost: giá trị riêng). S và F **không** tính là ô có số — riêng **Wall Builder không có S/F**.
 > **Level Designer kiểm tra trước khi lưu:** mâu thuẫn `only_numbered` + `avoid_numbered`, `steps_max` nhỏ hơn đường đi ngắn nhất, `len_max_percent` nhỏ hơn độ dài đường ngắn nhất, `visit_all` khi có ô không tới được, `sum_gt/ge` lớn hơn tổng số tối đa của board… và cảnh báo khi màn không có ô nào hiện số.
@@ -395,20 +395,22 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | Trường | Nội dung |
 |---|---|
 | **Cổng vào** | Daily Challenge · `mode_id = one_stroke` · tên gọi: EN **ONE STROKE** · VI **MỘT NÉT** *(phương án khác: Full Page / KÍN TRANG · Cover All / PHỦ KÍN)* |
-| **Bàn cờ** | Theo độ khó: easy **3×3** · medium **4×4** · hard **5×5** · **tường NHÌN THẤY RÕ** (mọi vách giữa 2 ô + viền ngoài board đều vẽ ra) |
+| **Bàn cờ** | Theo độ khó — **luôn là bàn VUÔNG LẺ ô** để bảo đảm tồn tại đường Hamilton S→F: easy **3×3** · medium **5×5** · hard **7×7** · **tường NHÌN THẤY RÕ 100%** (mọi vách giữa 2 ô + viền ngoài board đều vẽ ra) |
 | **Số trên ô** | **KHÔNG hiện số** — bàn chỉ có tường + S/F. Không phải suy luận tường: toàn bộ độ khó nằm ở **thứ tự đi** |
-| **Di chuyển** | 4 hướng · kéo từ tâm ô · **KHÔNG được bước vào ô đã đi** — ô đã đi bị **chặn** và hiện **lớp gạch chéo + huy hiệu ĐÃ ĐI** (cùng ngôn ngữ với ô cạn mực của Fading Ink); kéo vào đó **không mất bước**, chỉ bị từ chối |
+| **Di chuyển** | 4 hướng · kéo từ tâm ô · **ô đã đi qua bị KHOÁ VĨNH VIỄN** (hiện lớp tô xanh + gạch chéo + nhãn `ĐÃ ĐI`); kéo nét đè lên ô cũ ⇒ **THUA NGAY** (chất hazard `revisit`, xem mục *Thua*) |
 | **Mục tiêu** | Đi qua **TẤT CẢ các ô thuộc board, mỗi ô ĐÚNG 1 LẦN**, và **ô cuối cùng phải là F** ⇒ đường đi chính là một **đường Hamilton** từ S tới F (*"vẽ một nét kín trang rồi mới chạm đích"*) |
 | **Thắng** | Chạm F **sau khi đã phủ kín mọi ô** (còn ô chưa đi mà chạm F ⇒ nước đi bị chặn, màn chưa kết thúc) |
-| **Thua** | **Hết lối đi khi vẫn còn ô chưa đi** → popup thua tiêu đề riêng `HẾT ĐƯỜNG ĐI!` (`STR_GAME_OVER_NO_PATH`, dùng chung với Fading Ink) · **hết giờ** |
+| **Thua** | **(a) Đi đè lên ô đã đi ⇒ THUA NGAY** → popup thua tiêu đề riêng `ĐI LẠI Ô CŨ!` (`STR_GAME_OVER_REVISIT`) · **(b) Hết lối đi khi vẫn còn ô chưa đi** → `HẾT ĐƯỜNG ĐI!` (`STR_GAME_OVER_NO_PATH`, dùng chung với Fading Ink) · **(c) hết giờ** |
 | **Hồi sinh** | **Quay lại bước trước đó** (undo 1 bước — ô vừa rời được **mở lại**) |
-| **HUD** | `nodes/hud/one_stroke_hud.tscn` (`OneStrokeHUD`) — theo layout mục 10.2b: **THỜI GIAN** (250×156) + **TIẾN ĐỘ TÔ KÍN** (715×156): `đã đi x / y ô` · `còn lại n ô` · chip trạng thái (`ĐANG VẼ` / `SẮP KÍN` / `CÒN 1 NƯỚC`) · cảnh báo `⚠️ n Ô CÒN LẠI KHÔNG KỀ NHAU` (hiện khi các ô chưa đi không còn liền kề — dấu hiệu sắp kẹt) — **KHÔNG có thẻ THỬ THÁCH** · mockup `mockup/matchup_one_stroke.svg` *(cần vẽ)* |
-| **Thanh công cụ** | **VẼ ĐƯỜNG** (nhãn phụ *"Một nét kín trang"*) + **UNDO** + **GỢI Ý**; **ẩn nút GHI NHỚ** (tường đã hiện sẵn nên đánh dấu là vô nghĩa) |
+| **HUD** | `nodes/hud/one_stroke_hud.tscn` (`OneStrokeHUD`) — theo mockup `mockup/matchup_one_stroke.svg`: **THỜI GIAN** (270×156, chip `ĐANG TÍNH GIỜ`) + **BẢNG TIẾN ĐỘ PHỦ KÍN** (690×156, viền xanh `#2575A7`): cột trái `📐 ĐÃ PHỦ KÍN` · `13/25 Ô` · `CÒN LẠI 12 Ô` (đỏ); cột phải hàng `✍️ MỘT NÉT KHÔNG LẶP` + chip `52% KÍN` + **thanh tiến độ** (tô theo số ô đã đi) + 2 dòng nhắc luật (`Phải đi hết mọi ô mới được chạm đích F` · `✓ Không lùi ô`) — **KHÔNG có thẻ THỬ THÁCH** |
+| **Thanh công cụ** | **VẼ ĐƯỜNG** (nhãn phụ *"Một nét kín trang • Không nhấc bút"*) + **UNDO** + **GỢI Ý**; **ẩn hẳn nút GHI NHỚ** (`GameScene.TOOL_HIDE_WALL_MODES`) vì tường đã hiện sẵn |
+| **Popup hướng dẫn** | `nodes/popups/instruction/one_stroke.tscn` (3 trang, sinh bằng tool — xem §10.2d) · chip `ONE STROKE • MỘT NÉT` |
 | **Chi tiết** | Xem bên dưới |
 
-- **Sinh bàn (bắt buộc có nghiệm):** bàn **luôn** được sinh sao cho tồn tại đường Hamilton S→F. Khuyến nghị: dựng **đường rắn bò (snake)** phủ kín board rồi **mở thêm vài vách ngẫu nhiên nhưng KHÔNG phá tính Hamilton** (chỉ mở vách giữa 2 ô kề nhau trên **cùng một hàng của đường rắn**); nếu muốn bàn "tự nhiên" hơn thì sinh mê cung DFS rồi **kiểm tra bằng backtracking** (lưới ≤ 5×5 chạy vài ms) và **sinh lại nếu không đạt** (giới hạn 20 lần).
-- **Ràng buộc chẵn/lẻ khi đặt S/F (bắt buộc):** tô lưới 2 màu như bàn cờ — đường Hamilton chỉ tồn tại khi **S và F KHÁC màu**. Board **lẻ ô** (3×3 · 5×5) chỉ có 2 góc **cùng màu đa số** thoả mãn ⇒ **S/F phải là 2 góc chéo cùng màu đó**; board **chẵn ô** (4×4) thì mọi cặp ô khác màu đều được.
-- **GỢI Ý:** soi **1 ô đúng kế tiếp**. Nếu người chơi đã đi vào thế **không còn nghiệm**, Gợi ý báo `NƯỚC ĐI NÀY ĐÃ HẾT ĐƯỜNG` để biết cần **Undo** (thay vì chỉ sáng 1 ô vô nghĩa).
+- **Sinh bàn (bắt buộc có nghiệm — ĐÃ LẬP TRÌNH):** `OneStrokeGameMode.setup_floor()` dựng **đường rắn bò (snake)** phủ kín board từ S=(0,0) tới F=(n-1,n-1) **trước**, rồi mới đặt tường ngẫu nhiên (mật độ 18% / 34% / 50% theo độ khó) **CHỈ trên các cạnh KHÔNG thuộc đường mẫu** ⇒ đường mẫu luôn còn nguyên ⇒ bàn luôn có ít nhất 1 lời giải phủ kín. Mọi vách đặt thêm đều được `maze.reveal_wall()` cho **hiện rõ 100%**.
+- **Ràng buộc chẵn/lẻ khi đặt S/F (bắt buộc):** tô lưới 2 màu như bàn cờ — đường Hamilton chỉ tồn tại khi **S và F KHÁC màu**. Vì S=(0,0) và F=(n-1,n-1) trên bàn **n lẻ** có **cùng màu đa số** nên chế độ **chỉ dùng bàn n lẻ** (3×3 · 5×5 · 7×7); board chẵn (4×4) bị loại vì cặp góc chéo đó cùng màu ⇒ vô nghiệm.
+- **GỢI Ý:** soi **1 ô đúng kế tiếp** — nếu người chơi còn đi đúng **đường mẫu** thì trả về ô kế tiếp của đường đó (tức thời); nếu đã đi lệch thì **tự giải lại** bài toán phủ kín bằng DFS cắt tỉa (bỏ F khỏi vùng đi xuyên, ưu tiên ô ít lối thoát kiểu Warnsdorff, ngân sách 60.000 nút) và trả về nước đi đầu của lời giải. Khi bế tắc hoàn toàn, hàm trả về ô hiện tại *(chưa có dòng chữ cảnh báo riêng)*.
+- **is_dead_end (HẾT ĐƯỜNG ĐI!):** coi **F như tường** khi xét vùng ô trống (vì F chỉ được là ô cuối) — nếu phần ô trống còn lại bị **cắt rời** (hoặc không còn chạm tới được, kể cả trường hợp chỉ còn F mà không kề) thì thua ngay với lý do `dead_end`.
 - **Thử thách mặc định** khi màn không khai báo gì: `time_max` · `no_hint` · `no_undo` — **không** dùng `visit_all`/`no_revisit` làm thử thách vì đó là **luật cứng của chế độ**.
 - **Không có hazard:** bàn không có tường vô hình ⇒ **không có "đâm tường"** và **không có LƯỢT THỬ**; mọi va chạm chỉ là nước đi bị từ chối (không mất bước).
 
@@ -425,8 +427,9 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 | **Thắng** | Cấu hình tường thoả **mọi con số trên bàn** (không bắt buộc trùng đúng mê cung gốc — xem "Vì sao" bên dưới) |
 | **Thua** | **Hết 3 lượt gửi** · **hết giờ** |
 | **Hồi sinh** | **+1 LƯỢT GỬI** (đồng bộ cơ chế LƯỢT THỬ của Fog of War §13.16) — popup thua hiện dòng mô tả riêng `STR_REVIVE_DESC_SUBMIT` (*"Nhận thêm +1 LƯỢT GỬI để nộp lại"*) |
-| **HUD** | `nodes/hud/wall_builder_hud.tscn` (`WallBuilderHUD`) — theo layout mục 10.2b: **THỜI GIAN** (250×156) + **TƯỜNG ĐÃ VẼ** (715×156): `x / y đoạn` · `còn thiếu n đoạn` · **❤️ LƯỢT GỬI `n/3`** · chip trạng thái (`ĐANG NỐI TƯỜNG` / `ĐỦ TƯỜNG` / `SẴN SÀNG GỬI`) — **KHÔNG có thẻ THỬ THÁCH** · mockup `mockup/matchup_wall_builder.svg` *(cần vẽ)* |
-| **Thanh công cụ** | **VẼ TƯỜNG** (nhãn phụ *"Nối tường theo số"*) + **GỬI** (nút lớn, thay chỗ nút GHI NHỚ) + **UNDO** (xoá đoạn vừa vẽ) + **GỢI Ý** |
+| **HUD** | `nodes/hud/wall_builder_hud.tscn` (`WallBuilderHUD`) — theo mockup `mockup/matchup_wall_builder.svg`: **THỜI GIAN** (270×156, chip `ĐANG SUY LUẬN`) + **BẢNG TƯỜNG ĐÃ VẼ** (690×156, viền XANH LÁ `#2E7D32`): cột trái `🧱 ĐÃ DỰNG` · `14/18 ĐOẠN` · `CÒN THIẾU 4 ĐOẠN` (đỏ); cột phải hàng `❤️ LƯỢT GỬI: 3 / 3 LẦN` + chip trạng thái (`ĐANG NỐI TƯỜNG` · `ĐỦ TƯỜNG` · `SẴN SÀNG GỬI`) + **thanh tiến độ dựng tường** + 2 dòng nhắc luật (`Khớp mọi con số rồi bấm GỬI` · `✓ Sai -1 lượt`) — **KHÔNG có thẻ THỬ THÁCH** |
+| **Thanh công cụ** | **VẼ TƯỜNG** (nhãn phụ *"Nối tường theo số"*) + **GỬI BÀI** (nhãn phụ *"Kiểm tra kết quả"* — nút thứ 2 của thanh công cụ được **đổi hẳn công dụng**, `GameScene.TOOL_FULL_KEYS`) + **UNDO** (xoá đoạn vừa nối) + **GỢI Ý** (mở + khoá 1 đoạn tường thật) |
+| **Popup hướng dẫn** | `nodes/popups/instruction/wall_builder.tscn` (3 trang, sinh bằng tool — xem §10.2d) · chip `WALL BUILDER • XÂY TƯỜNG` |
 | **Chi tiết** | Xem bên dưới |
 
 - **Vì sao thắng = "khớp mọi con số" mà không phải "trùng mê cung gốc":** một bộ con số có thể có **nhiều cấu hình tường** thoả mãn; nếu bắt khớp mê cung gốc thì người chơi vẽ ra cấu hình **đúng logic** vẫn bị báo sai (bất công). Vì vậy **nghiệm = MỌI cấu hình thoả số**. Điểm hay: **tổng số đoạn tường của mọi nghiệm là như nhau** (`Σ số / 2`) nên câu *"cần tạo bao nhiêu tường"* luôn xác định ngay từ đầu.
@@ -434,7 +437,8 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 - **Sinh bàn & độ khó:** lưới theo độ khó; **mật độ tường ~45..60%**; loại bỏ bàn quá dễ (quá nhiều ô 0 hoặc 4) và ưu tiên bàn có **≥ 2 nghiệm** để phải suy luận thật (đếm nghiệm bằng solver nhỏ — lưới ≤ 5×5 chạy được).
 - **GỢI Ý:** hiện + **khoá** 1 đoạn tường **thuộc mê cung gốc** (luôn là một nghiệm hợp lệ); đoạn đã gợi ý **không xoá được** và tính vào thử thách `no_hint` như mọi chế độ.
 - **Thử thách mặc định:** `no_wrong_submit` (gửi đúng ngay lần đầu) · `time_max` · `no_hint`.
-- **Không có S/F:** bàn không vẽ hố thang; nếu vì lý do kỹ thuật `MazeData` vẫn sinh S/F thì **ẩn hoàn toàn** khỏi bàn chơi (không tính vào số tường).
+- **Không có S/F — ĐÃ LẬP TRÌNH:** `get_cell_text()` trả SỐ TƯỜNG cho **mọi** ô (kể cả S/F ẩn danh), nên bàn chỉ hiện số; `shows_player() = false` → board ẩn hẳn nhân vật và `evaluate_move()` luôn từ chối (không di chuyển, không mất bước).
+- **Chi tiết đã lập trình:** `WallBuilderGameMode` — `required_segments = Σ(số mọi ô)/2` (đếm bằng `count_true_segments()`); khe chỉ vẽ được khi có **2 ô thuộc board** kề nó (`can_draw_wall()`), đoạn vẽ ra hiện kiểu **`built`** (xanh lá, `wall_segment.gd`); `evaluate_submit()` trả `số đoạn CÒN LỆCH = Σ|chênh lệch từng ô| / 2` (khớp mọi con số ⇒ 0) — **nghiệm không bắt buộc trùng mê cung gốc**; GỬI sai ⇒ `register_failed_submit()` trừ 1 LƯỢT GỬI + `board.shake_board()` + chữ nổi `CÒN LỆCH n ĐOẠN!`; hết lượt ⇒ `GameController._game_over("out_of_submits")` → tiêu đề `HẾT LƯỢT GỬI!` (`STR_GAME_OVER_OUT_OF_SUBMITS`) + popup thua nói `STR_REVIVE_DESC_SUBMIT`; GỢI Ý ⇒ `hint_wall()` mở + **khoá** 1 đoạn tường thật (xoá không được, `is_wall_locked()`), UNDO ⇒ `undo_drawn_wall()` bỏ qua đoạn đã khoá; độ khó 3×3 / 4×4 / 5×5 và **loại bàn quá dễ** (quá nhiều ô 0/4 — sinh lại tối đa 12 lần).
 - **Khoá dịch đề xuất:** `STR_MODE_ONE_STROKE` · `STR_MODE_WALL_BUILDER` · `STR_HINT_ONE_STROKE` · `STR_HINT_WALL_BUILDER` · `STR_REVIVE_DESC_SUBMIT` · `STR_HUD_ONE_STROKE_*` · `STR_HUD_WALL_*` · `STR_GAME_OVER_NO_PATH` (dùng lại) · `STR_CHALLENGE_NO_WRONG_SUBMIT`.
 
 ---
@@ -449,8 +453,10 @@ Theo mockup `daily_challenge.svg`, đây là màn hình quản lý toàn bộ **
 - Mỗi ngày, hệ thống chọn **1 trong 9 bộ luật** ở mục 5.3–5.9 · 5.12–5.13 làm nội dung thử thách, kèm theo **3 Challenge** (đúng hệ thống Thử thách & Sao ở mục 3.1 — mỗi Challenge hoàn thành = 1 Sao, tối đa 3 Sao) liên quan đến cách chơi bộ luật hôm đó (đi càng ít bước, vẽ đủ tường, phủ kín bàn, không đâm tường lần nào...). Cụ thể từng Challenge nên được thiết kế riêng theo đặc thù mỗi bộ luật, không dùng chung 1 khuôn cho cả 9.
 - Vì mỗi ngày chỉ có 1 bộ luật cố định (không chọn được), người chơi không thể "chọn lại" chơi bộ luật khác trong cùng ngày — muốn chơi Minesweeper Maze lần nữa phải đợi đến lượt xoay vòng kế tiếp của bộ luật đó.
 
-**Cơ chế xoay vòng (đã chốt — khớp `GameManager.DAILY_MODES`):** thứ tự **CỐ ĐỊNH**, lặp mỗi **9 ngày**:
+**Cơ chế xoay vòng (ĐÃ LẬP TRÌNH 2026-09-19 — khớp `GameManager.DAILY_MODES`):** thứ tự **CỐ ĐỊNH**, lặp mỗi **9 ngày**:
 `DAILY_MODES = [time_attack, minesweeper, sum_path, countdown_cost, blind_memory, fog_of_war, fading_ink, one_stroke, wall_builder]` — ngày *N* chơi `DAILY_MODES[(N-1) % 9]`.
+
+- **Thử thách riêng theo chế độ (ĐÃ LẬP TRÌNH):** màn/tầng do nhà thiết kế khai báo luôn được ưu tiên; nếu không khai báo thì chế độ dùng **bộ mặc định của mình** qua `BaseGameMode.default_challenges()` — **One Stroke**: `time_max · no_hint · no_undo` (§5.12) · **Wall Builder**: `no_wrong_submit · time_max · no_hint` (§5.13) — các chế độ còn lại vẫn dùng bộ chung `no_wall · steps_max · time_max`.
 
 > **Lưu ý hồi quy:** thêm 2 luật mới làm **bản đồ ngày → luật thay đổi** so với bộ 7 cũ (ví dụ ngày 13 trước là **SƯƠNG MÙ** thì nay là **CHI PHÍ ĐẾM NGƯỢC**). Tiến trình đã lưu của người chơi **không hỏng** (mỗi ngày chỉ lưu trạng thái nhiệm vụ, không lưu luật), nhưng mọi bảng/ảnh chụp "ngày nào luật nào" theo bộ 7 cũ cần bỏ.
 
@@ -582,8 +588,8 @@ Cơ chế: `GameManager.prepare_mode_run(mode_id, difficulty, test_run, floor_ov
 | Minesweeper Maze | `minesweeper` | `nodes/hud/minesweep_hud.tscn` (MinesweepHUD) | `mockup/matchup_minesweeper.svg` | THỜI GIAN + BOM CÒN LẠI |
 | Blind Memory Maze | `blind_memory` | `nodes/hud/blind_memory_hud.tscn` (BlindMemoryHUD) | `mockup/matchup_blind_memory.svg` | THỜI GIAN + GHI NHỚ VỊ TRÍ TƯỜNG (+ popup đếm ngược) |
 | Fog of War Maze | `fog_of_war` | `nodes/hud/fog_of_war_hud.tscn` (FogOfWarHUD) | `mockup/matchup_fog_of_war.svg` | THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử · tầm nhìn · cảnh báo) — **2026-09-18** |
-| One Stroke *(mới)* | `one_stroke` | `nodes/hud/one_stroke_hud.tscn` (OneStrokeHUD) | `mockup/matchup_one_stroke.svg` *(cần vẽ)* | THỜI GIAN + TIẾN ĐỘ TÔ KÍN |
-| Wall Builder *(mới)* | `wall_builder` | `nodes/hud/wall_builder_hud.tscn` (WallBuilderHUD) | `mockup/matchup_wall_builder.svg` *(cần vẽ)* | THỜI GIAN + TƯỜNG ĐÃ VẼ (đoạn · lượt gửi) |
+| One Stroke | `one_stroke` | `nodes/hud/one_stroke_hud.tscn` (OneStrokeHUD) | `mockup/matchup_one_stroke.svg` | THỜI GIAN + BẢNG TIẾN ĐỘ PHỦ KÍN |
+| Wall Builder | `wall_builder` | `nodes/hud/wall_builder_hud.tscn` (WallBuilderHUD) | `mockup/matchup_wall_builder.svg` | THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn · lượt gửi) |
 | Sum Path | `sum_path` | `nodes/hud/sum_path_hud.tscn` (SumPathHUD) | `mockup/matchup_sum_path.svg` | THỜI GIAN + CÂN BẰNG TỔNG ĐIỂM (TỔNG — TOÁN TỬ — MỤC TIÊU + tiến độ) |
 | Countdown Cost | `countdown_cost` | `nodes/hud/countdown_hud.tscn` (CountdownHUD) | `mockup/matchup_countdown_cost.svg` | THỜI GIAN + SỔ NGÂN SÁCH BƯỚC CHÂN |
 | Fading Ink | `fading_ink` | `nodes/hud/fading_ink_hud.tscn` (FadingInkHUD) | `mockup/matchup_fading_ink.svg` | THỜI GIAN + TRẠM ĐO ĐỘ PHAI MỰC |
@@ -651,7 +657,7 @@ Khung HUD: `Information` = Control tại `(50, 175)` kích thước `980 × 249`
 
 ### 10.2d. Popup HƯỚNG DẪN theo từng chế độ (2026-09)
 
-Nút **"?"** trên HUD mở popup hướng dẫn **riêng cho chế độ đang chơi** — **11 scene** (9 scene đã dựng + 2 scene mới cần dựng cho §5.12–5.13) theo bộ mockup `mockup/instruction/*.svg`; mỗi popup 3 trang (P1 quy tắc cơ bản · P2 cơ chế phụ · P3 bí quyết).
+Nút **"?"** trên HUD mở popup hướng dẫn **riêng cho chế độ đang chơi** — **11 scene đã dựng đủ** (9 scene gốc + **One Stroke** 2026-09-19 + **Wall Builder** 2026-09-19) theo bộ mockup `mockup/instruction/*.svg`; mỗi popup 3 trang (P1 quy tắc cơ bản · P2 cơ chế phụ · P3 bí quyết).
 
 | Chế độ | Scene (đều là instance của `base.tscn`) |
 |---|---|
@@ -664,8 +670,8 @@ Nút **"?"** trên HUD mở popup hướng dẫn **riêng cho chế độ đang 
 | Fog of War | `fog_of_war.tscn` |
 | Fading Ink | `fadingink.tscn` |
 | Time Attack | `time_attack.tscn` |
-| One Stroke *(mới — chưa dựng)* | `onestroke.tscn` |
-| Wall Builder *(mới — chưa dựng)* | `wallbuilder.tscn` |
+| One Stroke | `one_stroke.tscn` |
+| Wall Builder | `wall_builder.tscn` |
 
 - **Bố cục mỗi scene** (toạ độ "paper-local" của tờ giấy 920×1480, Panel override về (80,200)–(1000,1680)): chrome **DÙNG CHUNG cho cả 3 trang** nằm trực tiếp trong `Guide`: `Washi` (350,-22) · `Paper` viền accent 3.5px rx26 · `PaperDetail` (`guide_paper_detail.svg`) · `Close` 56×56 (830,24) · `Chip` 190×30 (110,48) + chữ 13px · `Tabs/Tab1..3` 245×48 (y=142, x=105/360/615) kèm vòng số vẽ bằng node · `Prev`/`Next` ‹ › 52×52 (105/305, y=1100 — trạng thái khoá **nướng sẵn**: prev mờ xanh `#224C6D/#6EA0C8`, next mờ xám `#718B9E/#BACEDC` như mockup) · `Dots/Dot1..3` · `Index` "TRANG x / 3" canh phải x=860. Phần **NỘI DUNG riêng từng trang** nằm trong `Pages/Page1..3`: ảnh minh hoạ `Img` tại (90,200) 785×535 (viewBox `-15 -10 785 535` khớp khung 755×510 tại (105,210)) · các Label chữ trên ảnh · `Title` 38px Black baseline (110,118) · `Mục` 16px baseline 779 · 3 hàng luật `Row1..3` 755×76 (y=797/885/973, vòng số r16, chữ 18/16px) · `Cta` 755×100 (105,1180) · `Link` 18px ~1322. **Cta/Link để trong từng trang** vì mockup vẽ khác nhau mỗi trang (trang cuối CTA đậm hơn, link "bỏ qua" khác "xem lại").
 - **Số/ký hiệu trên grid ghi TRỰC TIẾP** khỏi khoá dịch: chuỗi không có chữ cái (1 · 2 · 15 · 04 · 01:24 · = · ? · < · >) + `S`/`F` nướng thẳng vào Label (`is_literal_text()` trong `tools/mockup/instruction_mockup.py`) — chỉ chữ có nghĩa mới dùng khoá `STR_GI_*`.
@@ -676,7 +682,7 @@ Nút **"?"** trên HUD mở popup hướng dẫn **riêng cho chế độ đang 
 - **Chuỗi dịch**: chữ có nghĩa dùng khoá `STR_GI_*` (vi = đúng chữ trong mockup, en = `tools/content/guide_text_en.py`): chrome theo trang `STR_GI_<MODE>_P<n>_TITLE/SECTION/CTA/LINK/TAB#/R#T/R#D`, chip `STR_GI_<MODE>_CHIP`, chữ trên ảnh dedupe `STR_GI_X###`, nhãn trang `STR_GI_PAGE_INDEX`. Sinh khoá + ghi CSV: `tools/content/build_instruction_data.py` (kèm `tools/content/_guide_keys.json` cho generator scene) — bỏ qua token số/ký hiệu.
 - **Sinh scene**: `tools/mockup/gen_instruction_popups.py` — đọc mockup qua `tools/mockup/instruction_mockup.py` (toạ độ tuyệt đối + style kế thừa), nướng thẳng mọi Label/Button/StyleBoxFlat vào `.tscn`, giữ nguyên uid + `unique_id` của scene placeholder cũ.
 - **Nối dây**: `GameController.INSTRUCTION_SCENES` (play/daily_classic → `normal_maze`, fallback `normal_maze`) → `Popups.open_path("res://nodes/popups/instruction/<mode>.tscn")`; đồng hồ đứng trong lúc xem hướng dẫn, đóng popup thì chạy lại. Đã gỡ `"instruction"` khỏi `PopupManager.POPUPS` và xoá bộ file cũ (`nodes/popups/instruction.tscn`, `scripts/nodes/popups/instruction.gd`, `scripts/utils/instruction.gd`).
-- **Kiểm thử**: `scripts/test_case/test_instruction.gd` — 294 check: bảng mode→scene · đủ khoá dịch vi+en quét từ file `.tscn` · cấu trúc 3 trang · chrome dùng chung không lặp trong từng trang · số/ký hiệu ghi trực tiếp · tab/dots/nav hoạt động · **nút X đóng popup** · CTA/link đúng hành vi · tích hợp nút "?" mở đúng scene (dungeon/play/time_attack).
+- **Kiểm thử**: `scripts/test_case/test_instruction.gd` — **358 check** (11 popup): bảng mode→scene · đủ khoá dịch vi+en quét từ file `.tscn` · cấu trúc 3 trang · chrome dùng chung không lặp trong từng trang · số/ký hiệu ghi trực tiếp · tab/dots/nav hoạt động · **nút X đóng popup** · CTA/link đúng hành vi · tích hợp nút "?" mở đúng scene (dungeon/play/time_attack/one_stroke/wall_builder).
 
 ### 10.3. Sinh lại mockup
 
@@ -688,7 +694,8 @@ python tools/mockup/gen_matchup.py --dump     # in toạ độ node thật của
 
 - Tool đọc **toạ độ thật** từ `nodes/hud/*.tscn` + `scenes/game.tscn` (Board `(41,420)-(1061,1440)`, thanh nút `(73,1528)-(1031,1688)`, Status `(50,85)`).
 - Hằng `HAND_DRAWN` trong tool liệt kê **5 mockup art tay của user** (`matchup_level` · `matchup_dungeon` · `matchup_sum_path` · `matchup_countdown_cost` · `matchup_fading_ink`) → chạy tool sẽ **BO QUA** 5 file này, chỉ sinh lại 4 mockup còn lại (time_attack · minesweeper · blind_memory · fog_of_war). Riêng **time_attack** sinh theo HUD mới (chỉ thẻ THỜI GIAN đặt giữa — 2026-09-19).
-- **Chưa có trong tool:** 2 chế độ mới **One Stroke** & **Wall Builder** — cần thêm vào danh sách mode của `tools/mockup/gen_matchup.py` và **vẽ tay** `mockup/matchup_one_stroke.svg` + `mockup/matchup_wall_builder.svg` (thêm vào `HAND_DRAWN`) **sau khi chốt HUD scene**.
+- **Đã có mockup cho cả 2 chế độ mới:** `matchup_one_stroke.svg` + `matchup_wall_builder.svg` (user vẽ tay 2026-09-19) → thêm cả 2 vào `HAND_DRAWN` của `tools/mockup/gen_matchup.py` nếu muốn tool bỏ qua khi sinh lại.
+- **Pipeline popup hướng dẫn** (dùng cho cả 2 mode mới): thêm 1 dòng vào `MODES` của `tools/mockup/instruction_mockup.py` → `python tools/mockup/prepare_guideline_images.py` (ảnh guideline ThorVG-safe) → thêm bản EN vào `tools/content/guide_text_en.py` → `python tools/content/build_instruction_data.py` (sinh `STR_GI_*` + CSV) → `python tools/mockup/gen_instruction_popups.py` (sinh `nodes/popups/instruction/<mode>.tscn`). **GOTCHA:** file `assets/images/instructions/guideline_image/*.svg` mới tải về có thể còn `.import` cũ **thiếu `path=`** → Godot báo `Failed loading resource` khi chạy popup; cách sửa: **xoá `.import` cũ rồi chạy lại `--editor --quit`** để import sinh `.ctex` mới.
 - Mockup mang **bảng chú thích đánh số**: badge số đặt ngay trên thành phần cần giải thích + danh sách chú thích dưới thanh nút.
 
 ---
@@ -1284,14 +1291,156 @@ Yêu cầu user:
 
 **Chưa lập trình (việc cần làm khi triển khai):**
 
-1. `scripts/modes/one_stroke_game_mode.gd` + `wall_builder_game_mode.gd` (kế thừa `BaseGameMode`; Wall Builder dùng lại
-   cơ chế **LƯỢT THỬ** đã có ở `BaseGameMode.register_hazard()/on_revive()` — §13.16).
-2. Bộ sinh bàn: **Hamilton checker/ generator** cho One Stroke (ràng buộc chẵn–lẻ ở §5.12) và **solver đếm nghiệm** cho Wall Builder.
-3. HUD: `nodes/hud/one_stroke_hud.tscn` + `nodes/hud/wall_builder_hud.tscn` (khung 10.2b) + art `card_*_sheet.svg` tương ứng.
-4. Thanh công cụ: nhãn phụ theo chế độ (`GameScene.TOOL_SUB_KEYS`) + nút **GỬI** cho Wall Builder (thay nút GHI NHỚ).
-5. Localization: các khoá `STR_MODE_*` · `STR_HINT_*` · `STR_HUD_*` · `STR_REVIVE_DESC_SUBMIT` · `STR_CHALLENGE_NO_WRONG_SUBMIT`.
-6. Mockup `matchup_one_stroke.svg` · `matchup_wall_builder.svg` + 2 popup hướng dẫn 3 trang (`onestroke.tscn` · `wallbuilder.tscn`).
+1. ~~`scripts/modes/one_stroke_game_mode.gd`~~ **XONG 2026-09-19 (§13.18)** · ~~`wall_builder_game_mode.gd`~~ **XONG 2026-09-19 (§13.19)**.
+2. Bộ sinh bàn: ~~**Hamilton generator** cho One Stroke~~ **XONG**; ~~mode Wall Builder~~ **XONG** (bàn tường ẩn + loại bàn quá dễ);
+   còn **solver đếm nghiệm** để ưu tiên bàn ≥ 2 nghiệm.
+3. HUD: ~~`nodes/hud/one_stroke_hud.tscn` + `nodes/hud/wall_builder_hud.tscn`~~ **XONG 2026-09-19** (kèm art `card_stroke_*.svg` / `card_wall_*.svg`).
+4. Thanh công cụ: ~~nhãn phụ theo chế độ + ẩn nút GHI NHỚ cho One Stroke~~ **XONG**; ~~nút GỬI cho Wall Builder~~ **XONG**
+   (`GameScene.TOOL_FULL_KEYS` + `_on_secondary_tool_pressed`).
+5. Localization: ~~`STR_MODE_ONE_STROKE` · `STR_HINT_ONE_STROKE` · `STR_HUD_OS_*` · `STR_GAME_OVER_REVISIT`~~ **XONG**;
+   ~~`STR_REVIVE_DESC_SUBMIT` · `STR_HUD_WB_*` · `STR_GAME_OVER_OUT_OF_SUBMITS`~~ **XONG**; còn `STR_CHALLENGE_NO_WRONG_SUBMIT`
+   (chỉ cần khi gắn thử thách riêng cho Wall Builder).
+6. Mockup: ~~`matchup_one_stroke.svg` · `nodes/popups/instruction/one_stroke.tscn`~~ **XONG**;
+   ~~`matchup_wall_builder.svg` + `wallbuilder.tscn`~~ **XONG 2026-09-19** (`wall_builder.tscn`).
 7. `GameManager.DAILY_MODES` thêm 2 id (**nhớ cập nhật test ngày→luật** — bộ 7 cũ đổi nghĩa, xem §6).
+   *Cả 2 mode hiện vào được qua Debug Console (SPECIAL MODES) / `GameScene.switch_mode(...)`; chưa gắn vào vòng xoay Daily.*
+
+---
+
+### 13.18. One Stroke đã lập trình xong (2026-09-19) — mode + HUD + popup hướng dẫn
+
+**Bối cảnh:** user gửi 7 SVG (1 mockup mode `matchup_one_stroke.svg` + 3 mockup popup hướng dẫn + 3 ảnh guideline) và yêu cầu
+*"apply One Stroke và Instruction của nó"*. Đối chiếu mockup cho thấy **2 luật của bản đặc tả §5.12 cũ chưa đúng** nên đã sửa lại (xem dưới).
+
+**Luật đã chốt lại theo mockup (khác §13.17):**
+
+| Điểm | Bản cũ (§13.17) | Bản chốt theo mockup |
+|---|---|---|
+| Bước vào ô đã đi | bị **chặn**, không mất bước | **THUA NGAY** (`GAME OVER`) — ô cũ là tử huyệt |
+| Bàn cờ | 3×3 / 4×4 / 5×5 | **3×3 / 5×5 / 7×7** (chỉ bàn **lẻ ô** để có đường Hamilton S=(0,0)→F=(n-1,n-1)) |
+| Chạm F sớm | bị chặn | vẫn **bị chặn** (không thua) + hiện chữ nổi `CÒN n Ô CHƯA ĐI!` |
+| Hết đường | popup `HẾT ĐƯỜNG ĐI!` | giữ nguyên (`is_dead_end`, coi F như tường) |
+| Tiêu đề thua mới | — | `ĐI LẠI Ô CŨ!` (`STR_GAME_OVER_REVISIT`, lý do `revisit`) |
+
+**Đã làm:**
+
+1. **Mode** `scripts/modes/one_stroke_game_mode.gd` (`OneStrokeGameMode`): sinh bàn **đường rắn phủ kín** rồi rải tường ngẫu nhiên
+   **không cắt đường mẫu** (18/34/50% theo độ khó) + `reveal_wall()` cho hiện rõ 100%; `get_cell_text()` không số; `evaluate_move()`
+   chặn F sớm / hazard `revisit`; `is_dead_end()` (bỏ F khỏi vùng ô trống rồi kiểm tra liên thông); `on_move_undone()` mở lại ô;
+   `hint_next_cell()` (đường mẫu, hoặc DFS cắt tỉa 60k nút); `on_move_blocked()` hiện cảnh báo F bị chặn.
+2. **Hạ tầng dùng chung:** `BaseGameMode.on_move_blocked()` + `hint_next_cell()` (mặc định `(-1,-1)`); `GridController`
+   ưu tiên hint của mode, **không vẽ đoạn tường gãy** khi hazard là `revisit`, báo mode khi nước đi bị luật chặn;
+   `GameController._hazard_game_over_reason()` → popup thua mở đúng tiêu đề; `gameover_level.gd` nhận thêm lý do `revisit`.
+3. **HUD** `nodes/hud/one_stroke_hud.tscn` + `scripts/nodes/hud/one_stroke_hud.gd` (`OneStrokeHUD`): THỜI GIAN 270×156 (chip
+   `ĐANG TÍNH GIỜ`) + BẢNG TIẾN ĐỘ 690×156 (`📐 ĐÃ PHỦ KÍN` · `x/y Ô` · `CÒN LẠI n Ô` · `✍️ MỘT NÉT KHÔNG LẶP` · chip `p% KÍN` ·
+   thanh tiến độ cắt bằng `clip_contents` · 2 dòng nhắc luật) + `challenge_card() = null`; art mới `card_stroke_sheet/row/chip/
+   slider_track/slider_fill/time_chip.svg`; theme thêm 7 variation `HudStroke*`; tool bar **ẩn nút GHI NHỚ** (`TOOL_HIDE_WALL_MODES`)
+   + nhãn phụ `STR_TOOL_DRAW_PATH_STROKE`.
+4. **Board:** `MazeCell` thêm lớp `Visited`/`VisitedLabel` (`cell_visited_hatch.svg` + LabelSettings `text_game_cell_visited.tres`,
+   nhãn `ĐÃ ĐI` co theo cỡ ô) · `BoardView.refresh_cell_texts()` tự vẽ lớp này khi mode có `is_cell_visited()` (ô S/F giữ nguyên art).
+5. **Nối dây:** `GameModeController` (`one_stroke`), `GameScene` (HUD preload/map + tool bar), `HintGuide` (`STR_HINT_ONE_STROKE`),
+   `GameController.INSTRUCTION_SCENES` (`one_stroke` → `one_stroke.tscn`).
+6. **Popup hướng dẫn 3 trang:** sinh bằng pipeline tool (thêm `one_stroke` vào `MODES` của `instruction_mockup.py`, thêm bản EN vào
+   `guide_text_en.py`, chạy `prepare_guideline_images.py` + `build_instruction_data.py` + `gen_instruction_popups.py`) → `one_stroke.tscn`
+   (121 node) + 74 khoá `STR_GI_ONE_STROKE_*`; **3 ảnh guideline phải import lại** (xoá `.import` cũ thiếu `path=`) nếu không popup
+   báo `Failed loading resource`.
+7. **Kiểm thử:** suite mới `scripts/test_case/test_one_stroke.gd` **34/34 PASS** (không số trên ô · tường hiện 100% · 20 lần sinh bàn
+   đều có đường phủ kín · F bị chặn sớm · đi theo Gợi ý là **thắng** · đi lại ô cũ → popup `ĐI LẠI Ô CŨ!` · Undo mở lại ô + tắt lớp
+   `ĐÃ ĐI` · cắt ngang → `is_dead_end` · HUD đủ chỉ số + thanh tiến độ + nhãn phụ nút); `test_instruction` **326 PASS** (10 popup),
+   `test_hud_modes` thêm mục **[4d]** (7 check đỏ còn lại là lỗi cũ Sum Path/Fading Ink), `test_game_scene_integration` thêm mode.
+   Toàn bộ 32 suite: **30 xanh**, 2 đỏ là lỗi **có từ trước** (`test_challenge_controller` 3 check · `test_hud_modes` 7 check).
+
+**Còn lại của One Stroke (chưa làm):** gắn vào `GameManager.DAILY_MODES` (§6) · mockup matchup chưa thêm vào `HAND_DRAWN` ·
+nút VẼ ĐƯỜNG chưa có art bản bè ngang 680px như mockup (đang giữ nguyên art 360px + ẩn nút GHI NHỚ).
+
+---
+
+### 13.19. Wall Builder đã lập trình xong (2026-09-19) — mode + nút GỬI BÀI + HUD + popup hướng dẫn
+
+**Bối cảnh:** user yêu cầu *"làm tiếp cho tôi Wall Builder"* sau khi One Stroke xong. Bộ art đã có sẵn từ trước:
+`mockup/matchup_wall_builder.svg` · `mockup/instruction/popup_instruction_wallbuilder_page{1,2,3}.svg` ·
+`assets/images/instructions/guideline_image/image_guideline_instruction_wall_builder_page{1,2,3}.svg`.
+
+**Đã làm:**
+
+1. **Mode** `scripts/modes/wall_builder_game_mode.gd` (`WallBuilderGameMode`): bàn tường **ẩn hoàn toàn** (`generate(size, size, 0.0)`),
+   **loại bàn quá dễ** (quá nhiều ô 0/4 — thử tối đa 12 lần); hiện số tường trên **MỌI ô** (không S/F) · **không nhân vật, không di chuyển**;
+   `required_segments = Σ(số)/2`; `evaluate_submit()` trả `{solved, wrong}` với `wrong = Σ|chênh lệch từng ô| / 2`;
+   `can_draw_wall()` (chỉ khe giữa 2 ô thuộc board) · `is_wall_locked()` + `hint_wall()` (mở + khoá 1 đoạn tường thật) ·
+   `undo_drawn_wall()` (bỏ qua đoạn đã khoá) · `wall_draw_state() = "built"` · `revive_desc_key() = STR_REVIVE_DESC_SUBMIT`.
+2. **Hạ tầng dùng chung:** `BaseGameMode` thêm `register_failed_submit()` (hết LƯỢT GỬI ⇒ thua) · `can_draw_wall()` ·
+   `is_wall_locked()` · `on_wall_toggled()` · `undo_drawn_wall()` · `hint_wall()` · `shows_player()` · `revive_desc_key()`;
+   `GridController.handle_anchor_connected()` kiểm tra luật mode trước khi đổi trạng thái + báo mode sau khi đổi;
+   `GameController` thêm **`submit_build()`** (đúng ⇒ `_on_reached_end()` · sai ⇒ trừ lượt + `shake_board()` + chữ nổi
+   `CÒN LỆCH n ĐOẠN!` · hết lượt ⇒ `_game_over("out_of_submits")`) và định tuyến `undo()`/`hint()` sang hành vi kiểu tường;
+   `GameOverLevelPopup` nhận `revive_desc` + lý do `out_of_submits`; `WallSegment` thêm trạng thái **`built`** (xanh lá);
+   `BoardView` thêm `set_player_visible()` (ẩn nhân vật) + `shake_board()` + dùng `wall_draw_state()` của mode khi nối tường.
+3. **HUD** `nodes/hud/wall_builder_hud.tscn` + `WallBuilderHUD`: THỜI GIAN 270×156 (chip `ĐANG SUY LUẬN`) + BẢNG TƯỜNG ĐÃ VẼ
+   690×156 (viền xanh lá): `🧱 ĐÃ DỰNG` · `x/y ĐOẠN` · `CÒN THIẾU n ĐOẠN` · `❤️ LƯỢT GỬI: n / 3 LẦN` · chip trạng thái
+   (`ĐANG NỐI TƯỜNG` / `ĐỦ TƯỜNG` / `SẴN SÀNG GỬI`) · thanh tiến độ + 2 dòng nhắc luật; `challenge_card() = null`.
+   Art mới `card_wall_{sheet,row,chip,slider_track,slider_fill}.svg`; theme thêm `HudWallCoverHead` + `HudWallSubmitRow`.
+4. **Thanh công cụ đổi công dụng:** `GameScene.TOOL_FULL_KEYS["wall_builder"]` đổi **cả nhãn chính + nhãn phụ** của 2 nút
+   thành **VẼ TƯỜNG** (*"Nối tường theo số"*) và **GỬI BÀI** (*"Kiểm tra kết quả"*); nút thứ 2 được nối thêm vào
+   `GameScene._on_secondary_tool_pressed()` → `GameController.submit_build()` khi đang ở chế độ này.
+5. **Nối dây:** `GameModeController` (`wall_builder`) · `GameScene` (HUD preload/map) · `HintGuide` (`STR_HINT_WALL_BUILDER`) ·
+   `GameController.INSTRUCTION_SCENES` (`wall_builder` → `wall_builder.tscn`) · Debug Console (SPECIAL MODES thêm cả
+   `one_stroke` + `wall_builder`) · `dev_aspects.GAME_MODES` · `dev_fix_shots` (ảnh HUD).
+6. **Popup hướng dẫn 3 trang:** `nodes/popups/instruction/wall_builder.tscn` (142 node) sinh bằng pipeline tool
+   (thêm `wall_builder` vào `MODES` + ~35 bản EN vào `guide_text_en.py` + build/gen) → 83 khoá `STR_GI_WALL_BUILDER_*`;
+   3 ảnh guideline ThorVG-safe (đã xử lý ở vòng One Stroke).
+7. **Kiểm thử:** suite mới `scripts/test_case/test_wall_builder.gd` **47/47 PASS** (mọi ô hiện số 0..4 · không nhân vật +
+   không di chuyển · `y = Σ/2` = số tường thật · kéo Anchor tạo đoạn kiểu `built` · viền ngoài không vẽ được ·
+   Gợi ý khoá đoạn tường thật · Undo chỉ xoá đoạn không khoá · GỬI sai 3 lần ⇒ popup `HẾT LƯỢT GỬI!` + dòng HỒI SINH `+1 LƯỢT GỬI` ·
+   Hồi sinh +1 lượt · dựng đúng mê cung ⇒ THẮNG · HUD + nhãn thanh công cụ); `test_instruction` 358 check (11 popup) ·
+   `test_hud_modes` thêm mục **[4e]** · `test_game_scene_integration`/`test_all_game_modes` phủ mode mới.
+   Toàn bộ **33 suite: 31 xanh**, 2 đỏ là lỗi **có từ trước** (`test_challenge_controller` 3 check · `test_hud_modes` 7 check).
+
+**Còn lại của Wall Builder (chưa làm):** gắn vào `GameManager.DAILY_MODES` (§6) · mockup chưa thêm vào `HAND_DRAWN` ·
+chưa tô nền xanh nhạt cho ô đã khớp số (mockup có gợi ý trực quan này — chỉ là trang trí) · chưa có solver đếm nghiệm
+để ưu tiên bàn ≥ 2 nghiệm (hiện chỉ loại bàn quá dễ).
+
+---
+
+### 13.20. Gắn 2 chế độ mới vào Daily + thử thách riêng + polish art (2026-09-19)
+
+**Bối cảnh:** user yêu cầu *"trừ test trên máy ảo và APK, làm tiếp"* — tức làm nốt các việc còn lại của 2 chế độ mới
+(One Stroke & Wall Builder) đã ghi ở §13.18–13.19.
+
+**Đã làm (6 việc):**
+
+1. **Vòng xoay Daily 9 ngày ĐÃ CHẠY THẬT:** `GameManager.DAILY_MODES` thêm `one_stroke` + `wall_builder`
+   (`[time_attack, minesweeper, sum_path, countdown_cost, blind_memory, fog_of_war, fading_ink, one_stroke, wall_builder]`)
+   → ngày *N* = `DAILY_MODES[(N-1) % 9]`; màn Daily đọc tên luật qua `tr("STR_MODE_<ID>")` nên 2 tên mới đã có sẵn.
+   **Lưu ý hồi quy:** bản đồ ngày → luật đổi so với bộ 7 cũ (VD ngày 13 trước là SƯƠNG MÙ, nay là CHI PHÍ ĐẾM NGƯỢC);
+   `test_daily` dùng công thức động nên vẫn xanh.
+2. **Mockup art tay:** thêm `matchup_one_stroke` + `matchup_wall_builder` vào `HAND_DRAWN` của `tools/mockup/gen_matchup.py`
+   (chạy tool sẽ không ghi đè 2 bản này nữa).
+3. **Thử thách `no_wrong_submit` (loại thứ 17):** `ChallengeTypes` + nhánh chấm trong `ChallengeController`
+   (đếm `submit_misses` của mode) + chuỗi `STR_CHALLENGE_NO_WRONG_SUBMIT` / `STR_CHALLENGE_ST_SUBMIT_MISSED`;
+   thêm cơ chế **bộ thử thách mặc định riêng của chế độ** — `BaseGameMode.default_challenges()` +
+   `ChallengeController.setup_for_floor(..., mode)` (One Stroke: `time_max · no_hint · no_undo`;
+   Wall Builder: `no_wrong_submit · time_max · no_hint`).
+4. **Wall Builder — ô "ĐÃ KHỚP SỐ":** `WallBuilderGameMode.is_cell_satisfied()` + art `cell_satisfied_wash.svg` +
+   node `Satisfied` trong `nodes/game/cell.tscn` + `MazeCell.set_satisfied()`; `BoardView.refresh_cell_texts()` tự vẽ lớp này
+   và `GridController.handle_anchor_connected()` vẽ lại sau mỗi đoạn tường được nối (đúng gợi ý trực quan của mockup).
+5. **Wall Builder — solver ĐẾM NGHIỆM:** `count_solutions(maze, cap)` (backtracking theo từng khe + cắt tỉa
+   `counts ≤ clue ≤ counts + khe còn lại`, ngân sách 80.000 nút) → bộ sinh bàn **loại bàn quá dễ**
+   (số đoạn tường < cạnh bàn, quá nhiều ô 0/4) và **ưu tiên bàn ≥ 2 nghiệm** (phải suy luận thật, đúng §5.13).
+   *Đã dính bug:* bản đầu chỉ lọc "≥ 2 nghiệm" nên sinh ra bàn 3×3 **chỉ 2 đoạn tường** → test báo "bàn đã đúng sẵn";
+   đã sửa bằng cách chấm điểm bàn (ưu tiên nhiều ô phải suy luận) + sàn số đoạn tường.
+6. **Art nút công cụ theo mockup:** `ToolController.set_mode_textures()` (ghi đè art 2 nút theo chế độ) +
+   `btn_tool_path_stroke_active.svg` (nút **VẼ ĐƯỜNG ĐI bè ngang 680px** cho One Stroke — khớp luôn bề ngang còn lại
+   của thanh công cụ) + `btn_tool_submit_normal/pressed.svg` (nút **GỬI BÀI xanh lá** cho Wall Builder).
+
+**Kiểm chứng:** `test_wall_builder` **53/53** (thêm check solver đếm nghiệm + ô đã khớp số + thử thách mặc định + art nút) ·
+`test_one_stroke` **35/35** (thêm check nút bè ngang) · `test_challenge_types` **17 loại** · `test_debug_modes` **48 check**
+(SPECIAL MODES giờ 9 chế độ) · `test_daily` 87/87 · **33 suite: 31 xanh** (2 đỏ là lỗi cũ).
+
+**Còn lại:** chỉ còn **test trên máy ảo + build APK** (user yêu cầu để sau) và vài việc nhỏ không bắt buộc
+(nút VẼ ĐƯỜNG của One Stroke có thể tinh chỉnh vị trí chữ cho khớp mockup, Wall Builder chưa có bảng xếp hạng riêng).
+
+
+
 
 
 

@@ -2,18 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b87omuxbxdnln"
-valid=false
+uid="uid://1i6nrk0wchgc"
+path="res://.godot/imported/image_guideline_instruction_one_stroke_page3.svg-23c41557b849f60decea11b39afce561.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/images/instructions/guideline_image/image_guideline_instruction_one_stroke_page3.svg"
+dest_files=["res://.godot/imported/image_guideline_instruction_one_stroke_page3.svg-23c41557b849f60decea11b39afce561.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
-compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

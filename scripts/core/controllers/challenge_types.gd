@@ -17,6 +17,8 @@ extends RefCounted
 ##        sum_lt · sum_le · sum_gt · sum_ge
 ##   E. Cách chơi (công cụ):
 ##        no_hint · no_undo
+##   F. Riêng Wall Builder:
+##        no_wrong_submit (gửi đúng ngay lần GỬI đầu tiên)
 ##
 ## Xem Number_Maze_Game_Design.md (mục 3.1) và docs của tool Level Designer.
 ## ============================================================================
@@ -39,6 +41,7 @@ const SUM_GT := "sum_gt"
 const SUM_GE := "sum_ge"
 const NO_HINT := "no_hint"
 const NO_UNDO := "no_undo"
+const NO_WRONG_SUBMIT := "no_wrong_submit"
 
 ## 3 thử thách mặc định (màn cũ / màn chưa chọn gì)
 const DEFAULTS := [NO_WALL, STEPS_MAX, TIME_MAX]
@@ -68,6 +71,7 @@ const ORDER := [
 	SUM_GE,
 	NO_HINT,
 	NO_UNDO,
+	NO_WRONG_SUBMIT,
 ]
 
 ## id -> { key: khoá chuỗi hiển thị · param: đơn vị tham số · unit: nhãn đơn vị }
@@ -88,6 +92,7 @@ const INFO := {
 	SUM_GE: {"key": "STR_CHALLENGE_SUM_GE", "param": PARAM_SUM, "unit": ""},
 	NO_HINT: {"key": "STR_CHALLENGE_NO_HINT", "param": PARAM_NONE, "unit": ""},
 	NO_UNDO: {"key": "STR_CHALLENGE_NO_UNDO", "param": PARAM_NONE, "unit": ""},
+	NO_WRONG_SUBMIT: {"key": "STR_CHALLENGE_NO_WRONG_SUBMIT", "param": PARAM_NONE, "unit": ""},
 }
 
 ## Thử thách chưa cần tham số
@@ -100,6 +105,7 @@ const NO_PARAM_TYPES := [
 	VISIT_ALL_NUMBERED,
 	NO_HINT,
 	NO_UNDO,
+	NO_WRONG_SUBMIT,
 ]
 
 ## Giá trị tham số mặc định khi tool/game tự sinh

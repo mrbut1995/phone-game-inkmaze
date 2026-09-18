@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 374 155" width="374" height="155">
+  <!-- Nút GỬI BÀI của mode Wall Builder (đứng ở vị trí nút GHI NHỚ) — 360x140, tông XANH LÁ
+       khớp bảng Tiến Độ Xây Tường (mockup/matchup_wall_builder.svg). -->
+  <rect width="360" height="140" rx="26" fill="#2E7D32" stroke="#1B5E20" stroke-width="4"/>
+  <line x1="35" y1="0" x2="35" y2="140" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
+  <!-- Icon mũi tên nộp bài -->
+  <g transform="translate(52, 45)" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 38 H38"/>
+    <path d="M20 38 V8"/>
+    <path d="M8 20 L20 7 L32 20"/>
+  </g>
+</svg>

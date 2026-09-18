@@ -1,4 +1,42 @@
 id,en,vi
+STR_MODE_ONE_STROKE,ONE STROKE,MỘT NÉT
+STR_MODE_ONE_STROKE_NAME,ONE STROKE,MỘT NÉT
+STR_HINT_ONE_STROKE,✍️ Draw one stroke covering every cell - no re-entering, F must be last!,✍️ Vẽ 1 nét phủ kín mọi ô, không đi lại ô cũ. Ô cuối phải là F!
+STR_TOOL_DRAW_PATH_STROKE,One closed stroke • never lift the pen,Một nét kín trang • Không nhấc bút
+STR_TOOL_MARK_WALL_STROKE,Not used in One Stroke,Không dùng trong Một Nét
+STR_HUD_OS_TIME_SUB,NOW TIMING,ĐANG TÍNH GIỜ
+STR_HUD_OS_COVER_HEAD,📐 COVERED,📐 ĐÃ PHỦ KÍN
+STR_HUD_OS_COVER_MAX,/{0} CELLS,/{0} Ô
+STR_HUD_OS_COVER_NOTE,{0} CELLS LEFT,CÒN LẠI {0} Ô
+STR_HUD_OS_ROW_TITLE,"✍️ ONE STROKE, NO REPEAT",✍️ MỘT NÉT KHÔNG LẶP
+STR_HUD_OS_CHIP,{0}% DONE,{0}% KÍN
+STR_HUD_OS_ROW_NOTE,Touch F only after every cell is covered,Phải đi hết mọi ô mới được chạm đích F
+STR_HUD_OS_ROW_TIP,✓ No re-entry,✓ Không lùi ô
+STR_OS_FINISH_LOCKED,{0} CELLS LEFT!,CÒN {0} Ô CHƯA ĐI!
+STR_OS_CELL_VISITED,VISITED,ĐÃ ĐI
+STR_GAME_OVER_REVISIT,STEPPED ON AN OLD CELL!,ĐI LẠI Ô CŨ!
+STR_GAME_OVER_OUT_OF_SUBMITS,OUT OF SUBMITS!,HẾT LƯỢT GỬI!
+STR_MODE_WALL_BUILDER,WALL BUILDER,XÂY TƯỜNG
+STR_MODE_WALL_BUILDER_NAME,WALL BUILDER,XÂY TƯỜNG
+STR_HINT_WALL_BUILDER,Read every number then connect enough walls and press SUBMIT!,Đọc số trên mỗi ô rồi nối đủ tường, bấm GỬI BÀI để kiểm tra!
+STR_TOOL_DRAW_WALL,DRAW WALLS,VẼ TƯỜNG
+STR_TOOL_DRAW_WALL_DESC,Connect walls by the numbers,Nối tường theo số
+STR_TOOL_SUBMIT,SUBMIT,GỬI BÀI
+STR_TOOL_SUBMIT_DESC,Check the result,Kiểm tra kết quả
+STR_HUD_WB_TIME_SUB,THINKING,ĐANG SUY LUẬN
+STR_HUD_WB_COVER_HEAD,🧱 BUILT,🧱 ĐÃ DỰNG
+STR_HUD_WB_COVER_MAX,/{0} WALLS,/{0} ĐOẠN
+STR_HUD_WB_COVER_NOTE,{0} WALLS LEFT,CÒN THIẾU {0} ĐOẠN
+STR_HUD_WB_SUBMIT,❤️ SUBMITS: {0} / {1},❤️ LƯỢT GỬI: {0} / {1} LẦN
+STR_HUD_WB_CHIP_BUILDING,CONNECTING WALLS,ĐANG NỐI TƯỜNG
+STR_HUD_WB_CHIP_ENOUGH,ENOUGH WALLS,ĐỦ TƯỜNG
+STR_HUD_WB_CHIP_READY,READY TO SUBMIT,SẴN SÀNG GỬI
+STR_HUD_WB_ROW_NOTE,Match every number then press SUBMIT,Khớp mọi con số rồi bấm GỬI
+STR_HUD_WB_ROW_TIP,✓ Wrong = -1 submit,✓ Sai -1 lượt
+STR_WB_WRONG_COUNT,{0} WALLS STILL OFF!,CÒN LỆCH {0} ĐOẠN!
+STR_REVIVE_DESC_SUBMIT,Get +1 SUBMIT to hand it in again,Nhận thêm +1 LƯỢT GỬI để nộp lại
+STR_CHALLENGE_NO_WRONG_SUBMIT,Submit right on the first try,Gửi đúng ngay lần đầu
+STR_CHALLENGE_ST_SUBMIT_MISSED,{0} wrong submits,Đã gửi sai {0} lần
 STR_SETTINGS_SUBTITLE_TITLE,EXPERIENCE SETUP,THIẾT LẬP TRẢI NGHIỆM
 STR_SETTINGS_SUBTITLE_DESC,"Adjust sound, controls and storage","Điều chỉnh âm thanh, điều khiển và lưu trữ"
 STR_SETTINGS_LANGUAGE_SECTION,LANGUAGE & STORAGE,NGÔN NGỮ & LƯU TRỮ
@@ -462,7 +500,7 @@ STR_GI_COUNTDOWNCOST_P3_R2D,"If a branch turns out too costly, Undo back and rec
 STR_GI_COUNTDOWNCOST_P3_R2T,Use Undo To Reclaim Budget:,Tận Dụng Undo Để Thu Hồi Ngân Sách:
 STR_GI_COUNTDOWNCOST_P3_R3D,"The fewer steps you burn on the way to the exit, the higher you rank!",Người chơi về đích với tổng chi phí bước tiêu tốn càng ít sẽ giành thứ hạng càng cao!
 STR_GI_COUNTDOWNCOST_P3_R3T,Ranking Rewards Minimum Cost:,Xếp Hạng Dựa Trên Chi Phí Tối Thiểu:
-STR_GI_COUNTDOWNCOST_P3_SECTION,ISLAND-CLEARING SECRETS,BÍ QUYẾT PHÁ ĐẢO
+STR_GI_COUNTDOWNCOST_P3_SECTION,MASTER TIPS,BÍ QUYẾT PHÁ ĐẢO
 STR_GI_COUNTDOWNCOST_P3_TAB1,BUDGET & TOLLS,NGÂN SÁCH & CƯỚC
 STR_GI_COUNTDOWNCOST_P3_TAB2,WALL HITS COST STEPS,ĐÂM TƯỜNG TRỪ BƯỚC
 STR_GI_COUNTDOWNCOST_P3_TAB3,OPTIMIZE COST,TỐI ƯU CHI PHÍ
@@ -622,7 +660,7 @@ STR_GI_MINESWEEPER_P3_R2D,Cross-check your flags against the HUD's remaining bom
 STR_GI_MINESWEEPER_P3_R2T,Check The Bomb Total On The HUD:,Kiểm Tra Tổng Số Bom Trên HUD:
 STR_GI_MINESWEEPER_P3_R3D,"If you step on a bomb, revive to return to the previous cell and try another direction.","Nếu lỡ đạp trúng bom, bạn có thể hồi sinh để quay lại ô ngay trước đó và thử hướng khác."
 STR_GI_MINESWEEPER_P3_R3T,Revive To Take Back The Bad Step:,Hồi Sinh Rút Lại Bước Lỗi:
-STR_GI_MINESWEEPER_P3_SECTION,ISLAND-CLEARING SECRETS,BÍ QUYẾT PHÁ ĐẢO
+STR_GI_MINESWEEPER_P3_SECTION,MASTER TIPS,BÍ QUYẾT PHÁ ĐẢO
 STR_GI_MINESWEEPER_P3_TAB1,8-NEIGHBOR BOMB RULE,LUẬT 8 Ô BOM
 STR_GI_MINESWEEPER_P3_TAB2,BOMBS & ZERO ZONES,ĐẠP BOM & VÙNG 0
 STR_GI_MINESWEEPER_P3_TAB3,BOMB-SWEEPING TOOLS,CÔNG CỤ DÒ BOM
@@ -667,6 +705,46 @@ STR_GI_NORMAL_MAZE_P3_TAB1,START & FINISH,BẮT ĐẦU & ĐÍCH
 STR_GI_NORMAL_MAZE_P3_TAB2,NUMBER CLUES,MANH MỐI SỐ
 STR_GI_NORMAL_MAZE_P3_TAB3,TOOLS,CÔNG CỤ
 STR_GI_NORMAL_MAZE_P3_TITLE,Helper Tools,Công Cụ Trợ Giúp
+STR_GI_ONE_STROKE_CHIP,ONE STROKE • ONE LINE,ONE STROKE • MỘT NÉT
+STR_GI_ONE_STROKE_P1_CTA,NEXT: NO RE-ENTERING OLD CELLS (2/3) ›,TIẾP THEO: CẤM ĐI LẠI Ô CŨ (2/3) ›
+STR_GI_ONE_STROKE_P1_LINK,Skip the guide & start drawing now,Bỏ qua hướng dẫn & Vào vẽ một nét ngay
+STR_GI_ONE_STROKE_P1_R1D,Every wall shows up front — the whole challenge is the order of your steps to cover the board.,Mọi vách ngăn đều hiện sẵn. Toàn bộ thử thách là tìm thứ tự đi bao phủ trọn vẹn bàn cờ.
+STR_GI_ONE_STROKE_P1_R1T,"Walls Are Visible, No Numbers At All:","Tường Nhìn Thấy Rõ, Hoàn Toàn Không Có Số:"
+STR_GI_ONE_STROKE_P1_R2D,The stroke must fill 100% of the board — no cell may be left empty before you finish.,"Nét vẽ phải lấp đầy 100% diện tích, không được bỏ trống bất kỳ một ô nào trước khi về đích."
+STR_GI_ONE_STROKE_P1_R2T,You Must Visit Every Cell On The Board:,Phải Đi Hết Tất Cả Các Ô Thuộc Bàn Cờ:
+STR_GI_ONE_STROKE_P1_R3D,Touching F while empty cells remain is blocked — F must be the very last cell of your stroke!,Chạm vào F khi vẫn còn ô trống chưa đi sẽ bị chặn lại — F phải là ô cuối cùng của nét vẽ!
+STR_GI_ONE_STROKE_P1_R3T,The Finish Hole (F) Is The Last Stop:,Hố Thang Finish (F) Là Điểm Dừng Chân Cuối:
+STR_GI_ONE_STROKE_P1_SECTION,ONE-STROKE RULES,QUY TẮC MỘT NÉT KÍN TRANG
+STR_GI_ONE_STROKE_P1_TAB1,COVER EVERY CELL,PHỦ KÍN MỌI Ô
+STR_GI_ONE_STROKE_P1_TAB2,NO RE-ENTERING OLD CELLS,CẤM ĐI LẠI Ô CŨ
+STR_GI_ONE_STROKE_P1_TAB3,REACH F & UNDO,CHẠM ĐÍCH F & UNDO
+STR_GI_ONE_STROKE_P1_TITLE,Draw One Stroke Covering Every Cell,Vẽ 1 Nét Phủ Kín Mọi Ô
+STR_GI_ONE_STROKE_P2_CTA,NEXT: REACHING F & UNDO (3/3) ›,TIẾP THEO: CHẠM ĐÍCH F & UNDO (3/3) ›
+STR_GI_ONE_STROKE_P2_LINK,Skip the guide & start drawing now,Bỏ qua hướng dẫn & Vào vẽ một nét ngay
+STR_GI_ONE_STROKE_P2_R1D,A visited cell locks forever. Drawing back over your own trail • Game Over instantly!,Ô đã đi qua sẽ bị khóa vĩnh viễn. Cố tình kéo nét vẽ đè vào đường cũ • Game Over ngay!
+STR_GI_ONE_STROKE_P2_R1T,Stepping On An Old Cell = Instant Loss:,Đi Vào Ô Cũ = Thua Ngay Lập Tức:
+STR_GI_ONE_STROKE_P2_R2D,Don't slice the board in half across empty cells — you can never come back for the ones left behind.,"Đừng đi vắt ngang bàn cờ chia đôi ô trống, vì bạn sẽ không thể quay lại đón các ô bị bỏ lại."
+STR_GI_ONE_STROKE_P2_R2T,Avoid Cut-Off Traps That Isolate Cells:,Tránh Bẫy Cắt Ngang Làm Cô Lập Ô:
+STR_GI_ONE_STROKE_P2_R3D,"If the way ahead is a dead end, don't force it — use Undo instead (see Page 3).","Nếu nhận ra phía trước là đường cùng, đừng cố đi liều — hãy dùng Undo (xem Trang 3)."
+STR_GI_ONE_STROKE_P2_R3T,Stop When The Path Runs Dead:,Dừng Lại Khi Bị Cụt Đường:
+STR_GI_ONE_STROKE_P2_SECTION,SURVIVAL RULES,QUY TẮC SỐNG CÒN
+STR_GI_ONE_STROKE_P2_TAB1,COVER EVERY CELL,PHỦ KÍN MỌI Ô
+STR_GI_ONE_STROKE_P2_TAB2,NO RE-ENTERING OLD CELLS,CẤM ĐI LẠI Ô CŨ
+STR_GI_ONE_STROKE_P2_TAB3,REACH F & UNDO,CHẠM ĐÍCH F & UNDO
+STR_GI_ONE_STROKE_P2_TITLE,Never Re-Enter A Cell,Cấm Đi Lại Đường Đã Qua
+STR_GI_ONE_STROKE_P3_CTA,GOT IT • START THE ONE STROKE,ĐÃ HIỂU • BẮT ĐẦU VẼ MỘT NÉT
+STR_GI_ONE_STROKE_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_ONE_STROKE_P3_R1D,Watch the HUD progress bar: only at 100% coverage may you lead the stroke into the finish hole F.,Kiểm tra thanh tiến độ trên HUD: Phải đạt 100% số ô rồi mới được dẫn nét vẽ vào hố thang F.
+STR_GI_ONE_STROKE_P3_R1T,Step Into F Only On Your Final Move:,Chỉ Bước Vào F Ở Nước Đi Cuối Cùng:
+STR_GI_ONE_STROKE_P3_R2D,Took a wrong branch? Tap Undo to step back and reopen the cells you just crossed — with no risk of a Game Over.,Lỡ đi sai nhánh? Bấm Undo để lùi bước và mở lại các ô vừa đi mà không lo bị Game Over.
+STR_GI_ONE_STROKE_P3_R2T,Use Undo In Time To Reopen Cells:,Dùng Undo Kịp Thời Để Mở Lại Ô:
+STR_GI_ONE_STROKE_P3_R3D,"The Hint button points out the next correct cell, or warns you when the branch you are on is completely dead.","Nút Gợi Ý sẽ chỉ ra 1 ô đúng kế tiếp, hoặc cảnh báo nếu nhánh bạn đang đi đã hoàn toàn bế tắc."
+STR_GI_ONE_STROKE_P3_R3T,Use Hint When You Lose Your Way:,Dùng Gợi Ý (Hint) Khi Mất Hướng:
+STR_GI_ONE_STROKE_P3_SECTION,MASTER TIPS,BÍ QUYẾT PHÁ ĐẢO
+STR_GI_ONE_STROKE_P3_TAB1,COVER EVERY CELL,PHỦ KÍN MỌI Ô
+STR_GI_ONE_STROKE_P3_TAB2,NO RE-ENTERING OLD CELLS,CẤM ĐI LẠI Ô CŨ
+STR_GI_ONE_STROKE_P3_TAB3,REACH F & UNDO,CHẠM ĐÍCH F & UNDO
+STR_GI_ONE_STROKE_P3_TITLE,Reach F & Use Undo,Chạm Đích F & Dùng Undo
 STR_GI_PAGE_INDEX,PAGE {0} / {1},TRANG {0} / {1}
 STR_GI_SUMPATH_CHIP,SUM PATH,SUM PATH • TOÁN ĐỐ
 STR_GI_SUMPATH_P1_CTA,NEXT: OPERATORS & ONE-TIME CELLS (2/3) ›,TIẾP THEO: TOÁN TỬ & Ô 1 LẦN (2/3) ›
@@ -748,6 +826,46 @@ STR_GI_TIME_ATTACK_P3_TAB1,COUNTDOWN CLOCK,ĐỒNG HỒ ĐẾM NGƯỢC
 STR_GI_TIME_ATTACK_P3_TAB2,WALL HITS COST TIME,ĐÂM TƯỜNG MẤT GIỜ
 STR_GI_TIME_ATTACK_P3_TAB3,SPEED & HINTS,TỐC ĐỘ & GỢI Ý
 STR_GI_TIME_ATTACK_P3_TITLE,Speed & Rescue Hints,Tốc Độ & Gợi Ý Cứu Nguy
+STR_GI_WALL_BUILDER_CHIP,WALL BUILDER • BUILD THE MAZE,WALL BUILDER • XÂY TƯỜNG
+STR_GI_WALL_BUILDER_P1_CTA,NEXT: SUBMIT & 3 TRIES (2/3) ›,TIẾP THEO: NÚT GỬI & 3 LƯỢT (2/3) ›
+STR_GI_WALL_BUILDER_P1_LINK,Skip the guide & start building now,Bỏ qua hướng dẫn & Vào xây tường ngay
+STR_GI_WALL_BUILDER_P1_R1D,"No character to move, no S and no F — you are the one who rebuilds the maze.","Không có nhân vật di chuyển, không có S và F. Bạn chính là người phục dựng lại mê cung."
+STR_GI_WALL_BUILDER_P1_R1T,The Only Mode Where You Build The Walls:,Chế Độ Duy Nhất Tự Xây Tường:
+STR_GI_WALL_BUILDER_P1_R2D,Touch and drag from one plus (+) to the next one to toggle a single wall segment on or off.,Chạm và kéo từ dấu cộng (+) này sang dấu cộng kề bên để bật hoặc tắt 1 đoạn tường.
+STR_GI_WALL_BUILDER_P1_R2T,Drag Between Two Anchors To Place A Wall:,Kéo Giữa 2 Điểm Neo (Anchor) Để Tạo Tường:
+STR_GI_WALL_BUILDER_P1_R3D,Only edges inside the board count — the outer border is a fixed wall you cannot draw and it is never counted.,"Chỉ đếm các cạnh bên trong board (viền ngoài board là tường cố định, không vẽ được và không tính)."
+STR_GI_WALL_BUILDER_P1_R3T,The Number Shows How Many Walls Touch That Cell:,Số Trên Ô Là Số Tường Quanh Ô:
+STR_GI_WALL_BUILDER_P1_SECTION,WALL BUILDING BASICS,QUY TẮC XÂY TƯỜNG CƠ BẢN
+STR_GI_WALL_BUILDER_P1_TAB1,CONNECT WALLS BY THE NUMBERS,NỐI TƯỜNG THEO SỐ
+STR_GI_WALL_BUILDER_P1_TAB2,SUBMIT & 3 TRIES,NÚT GỬI & 3 LƯỢT
+STR_GI_WALL_BUILDER_P1_TAB3,TIPS & HINTS,BÍ QUYẾT & GỢI Ý
+STR_GI_WALL_BUILDER_P1_TITLE,Become The Maze Builder,Đóng Vai Thợ Xây Mê Cung
+STR_GI_WALL_BUILDER_P2_CTA,NEXT: ZERO-CELL TRICKS & HINTS (3/3) ›,TIẾP THEO: BÍ QUYẾT Ô SỐ 0 & GỢI Ý (3/3) ›
+STR_GI_WALL_BUILDER_P2_LINK,Skip the guide & start building now,Bỏ qua hướng dẫn & Vào xây tường ngay
+STR_GI_WALL_BUILDER_P2_R1D,"Watch the counter on the HUD — once you have as many segments as required, the Submit button is ready.","Theo dõi thanh đếm trên HUD. Khi đạt đủ số đoạn tường quy định, nút Gửi sẽ sẵn sàng."
+STR_GI_WALL_BUILDER_P2_R1T,Build Exactly The Required Number Of Walls:,Dựng Đủ Số Đoạn Tường Trước Khi Nộp:
+STR_GI_WALL_BUILDER_P2_R2D,Every submit that does not match the numbers costs 1 try and shakes the board.,"Mỗi lần nộp mà cấu hình tường chưa khớp với số ô, bạn sẽ bị trừ 1 lượt chơi và rung bàn cờ."
+STR_GI_WALL_BUILDER_P2_R2T,You Only Get 3 Submits ( 3/3):,Chỉ Có 3 Lần Gửi Bài ( 3/3):
+STR_GI_WALL_BUILDER_P2_R3D,"If all 3 submits are gone and the answer is still wrong, watch the Revive ad to gain +1 more try.","Nếu cạn cả 3 lượt gửi mà vẫn chưa đúng, bạn phải xem quảng cáo Hồi Sinh để nhận thêm +1 lượt."
+STR_GI_WALL_BUILDER_P2_R3T,Out Of Submits = Defeat:,Hết 3 Lượt Gửi = Thua Cuộc:
+STR_GI_WALL_BUILDER_P2_SECTION,SCORING & SUBMIT RULES,QUY TẮC CHẤM ĐIỂM & LƯỢT GỬI
+STR_GI_WALL_BUILDER_P2_TAB1,CONNECT WALLS BY THE NUMBERS,NỐI TƯỜNG THEO SỐ
+STR_GI_WALL_BUILDER_P2_TAB2,SUBMIT & 3 TRIES,NÚT GỬI & 3 LƯỢT
+STR_GI_WALL_BUILDER_P2_TAB3,TIPS & HINTS,BÍ QUYẾT & GỢI Ý
+STR_GI_WALL_BUILDER_P2_TITLE,The Submit Button & 3 Tries,Nút Gửi Bài & 3 Lượt Nộp
+STR_GI_WALL_BUILDER_P3_CTA,GOT IT • START BUILDING,ĐÃ HIỂU • BẮT ĐẦU XÂY TƯỜNG
+STR_GI_WALL_BUILDER_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
+STR_GI_WALL_BUILDER_P3_R1D,A 0 cell has no walls at all — all four of its edges must stay open.,Ô số 0 không thể có tường. Bạn biết chắc 4 cạnh quanh nó phải để trống thông suốt.
+STR_GI_WALL_BUILDER_P3_R1T,Eliminate Every Gap Around A 0 Cell:,Loại Trừ Các Khe Quanh Ô Số 0:
+STR_GI_WALL_BUILDER_P3_R2D,"A 2 on an edge has only 3 inner sides, and a 3 in the middle has very few layouts • deduce those first.",Ô số 2 ở cạnh chỉ có 3 cạnh trong; ô số 3 ở giữa rất ít phương án đặt tường • Dễ suy ra trước.
+STR_GI_WALL_BUILDER_P3_R2T,Lock Down Corner Cells And High Numbers:,Xác Định Ô Góc & Cạnh Có Số Lớn:
+STR_GI_WALL_BUILDER_P3_R3D,"When stuck, tap Hint to reveal one true wall from the original solution — it unlocks the whole board.","Khi bế tắc, bấm Gợi Ý để hiện 1 đoạn tường đúng của nghiệm gốc, giúp mở khóa toàn bộ bàn cờ."
+STR_GI_WALL_BUILDER_P3_R3T,Pin One Wall With The Hint Button:,Khóa Chết 1 Tường Nhờ Nút Gợi Ý:
+STR_GI_WALL_BUILDER_P3_SECTION,BUILD-IT-RIGHT TIPS,BÍ QUYẾT XÂY TƯỜNG CHUẨN XÁC
+STR_GI_WALL_BUILDER_P3_TAB1,CONNECT WALLS BY THE NUMBERS,NỐI TƯỜNG THEO SỐ
+STR_GI_WALL_BUILDER_P3_TAB2,SUBMIT & 3 TRIES,NÚT GỬI & 3 LƯỢT
+STR_GI_WALL_BUILDER_P3_TAB3,TIPS & HINTS,BÍ QUYẾT & GỢI Ý
+STR_GI_WALL_BUILDER_P3_TITLE,Zero-Cell Tricks & Hints,Bí Quyết Ô Số 0 & Gợi Ý
 STR_GI_X001,START,XUẤT PHÁT
 STR_GI_X002,A stair that lights the way,Cầu thang rọi sáng
 STR_GI_X003,FINISH HOLE (F),HỐ ĐÍCH (F)
@@ -1035,3 +1153,80 @@ STR_GI_X284,Swiped the wrong way?,Lỡ tay quẹt nhầm hướng?
 STR_GI_X285,Tap Undo immediately,Bấm Undo lùi lại ngay
 STR_GI_X286,so you don't hit a wall and fly back to S!,để không bị đâm tường văng về S!
 STR_GI_X287,"Standing still is suicide! When in doubt, tap Hint and save your remaining time.","Đứng yên là tự sát! Khi phân vân, bấm ngay Gợi Ý để cứu lấy thời gian sống còn."
+STR_GI_X288,TIẾN ĐỘ PHỦ KÍN:,TIẾN ĐỘ PHỦ KÍN:
+STR_GI_X289,MỘT NÉT KHÔNG NHẤC BÚT,MỘT NÉT KHÔNG NHẤC BÚT
+STR_GI_X290,ĐẶC TRƯNG BÀN CỜ,ĐẶC TRƯNG BÀN CỜ
+STR_GI_X291,TƯỜNG THẤY RÕ,TƯỜNG THẤY RÕ
+STR_GI_X292,100% HIỆN SẴN,100% HIỆN SẴN
+STR_GI_X293,Không có số trên ô!,Không có số trên ô!
+STR_GI_X294,MỤC TIÊU DUY NHẤT,MỤC TIÊU DUY NHẤT
+STR_GI_X295,PHỦ KÍN 100%,PHỦ KÍN 100%
+STR_GI_X296,MỌI Ô CỜ,MỌI Ô CỜ
+STR_GI_X297,rồi mới về đích F!,rồi mới về đích F!
+STR_GI_X298,Đã đi 6 ô • Đi tiếp qua 3 ô còn lại để phủ kín 9/9 ô rồi chạm hố thang F!,Đã đi 6 ô • Đi tiếp qua 3 ô còn lại để phủ kín 9/9 ô rồi chạm hố thang F!
+STR_GI_X299,ĐI VÀO ĐƯỜNG ĐÃ QUA,ĐI VÀO ĐƯỜNG ĐÃ QUA
+STR_GI_X300,ĐÃ ĐI,ĐÃ ĐI
+STR_GI_X301,GAME OVER NGAY!,GAME OVER NGAY!
+STR_GI_X302,Cố tình bước đè lên nét vẽ cũ,Cố tình bước đè lên nét vẽ cũ
+STR_GI_X303,sẽ bị xử thua lập tức!,sẽ bị xử thua lập tức!
+STR_GI_X304,BẪY CÔ LẬP Ô TRỐNG,BẪY CÔ LẬP Ô TRỐNG
+STR_GI_X305,BỊ KẸT,BỊ KẸT
+STR_GI_X306,HẾT ĐƯỜNG ĐI!,HẾT ĐƯỜNG ĐI!
+STR_GI_X307,Vẽ sai nhánh làm cô lập ô trống.,Vẽ sai nhánh làm cô lập ô trống.
+STR_GI_X308,Không thể phủ kín 100% • Thua!,Không thể phủ kín 100% • Thua!
+STR_GI_X309,Tuyệt đối không được bước lùi vào nét vẽ cũ — chạm đường đã đi là Game Over ngay!,Tuyệt đối không được bước lùi vào nét vẽ cũ — chạm đường đã đi là Game Over ngay!
+STR_GI_X310,ĐÍCH ĐẾN CUỐI CÙNG: F,ĐÍCH ĐẾN CUỐI CÙNG: F
+STR_GI_X311,ĐÃ PHỦ KÍN,ĐÃ PHỦ KÍN
+STR_GI_X312,100% SỐ Ô,100% SỐ Ô
+STR_GI_X313,F Là Điểm Chốt Hạ Cuối Cùng,F Là Điểm Chốt Hạ Cuối Cùng
+STR_GI_X314,Chỉ được chạm vào hố thang F sau khi,Chỉ được chạm vào hố thang F sau khi
+STR_GI_X315,đã phủ kín mọi ô khác trên bàn cờ.,đã phủ kín mọi ô khác trên bàn cờ.
+STR_GI_X316,Chạm F sớm sẽ bị chặn lại!,Chạm F sớm sẽ bị chặn lại!
+STR_GI_X317,CỨU CÁNH SINH TỬ,CỨU CÁNH SINH TỬ
+STR_GI_X318,MỞ LẠI Ô VỪA ĐI QUA!,MỞ LẠI Ô VỪA ĐI QUA!
+STR_GI_X319,Thấy đi nhầm nhánh kẹt? Bấm Undo ngay,Thấy đi nhầm nhánh kẹt? Bấm Undo ngay
+STR_GI_X320,"để rút nét vẽ và mở lại ô, tránh bị Game Over do đi lại đường cũ.","để rút nét vẽ và mở lại ô, tránh bị Game Over do đi lại đường cũ."
+STR_GI_X321,Đừng cố đi tiếp khi nhận ra bị kẹt — hãy dùng Undo để mở lại ô và thử hướng khác!,Đừng cố đi tiếp khi nhận ra bị kẹt — hãy dùng Undo để mở lại ô và thử hướng khác!
+STR_GI_X322,TỔNG TƯỜNG CẦN DỰNG:,TỔNG TƯỜNG CẦN DỰNG:
+STR_GI_X323,KÉO NỐI 2 ĐIỂM NEO (+),KÉO NỐI 2 ĐIỂM NEO (+)
+STR_GI_X324,VAI TRÒ MỚI,VAI TRÒ MỚI
+STR_GI_X325,THỢ XÂY MÊ CUNG,THỢ XÂY MÊ CUNG
+STR_GI_X326,KHÔNG CÓ S/F,KHÔNG CÓ S/F
+STR_GI_X327,Không có di chuyển!,Không có di chuyển!
+STR_GI_X328,THAO TÁC CHÍNH,THAO TÁC CHÍNH
+STR_GI_X329,NỐI 2 ANCHOR,NỐI 2 ANCHOR
+STR_GI_X330,BẬT / TẮT TƯỜNG,BẬT / TẮT TƯỜNG
+STR_GI_X331,Kéo để dựng vách!,Kéo để dựng vách!
+STR_GI_X332,Ô giữa mang số 2 • Bạn cần kéo nối đúng 2 đoạn tường ở các cạnh của nó!,Ô giữa mang số 2 • Bạn cần kéo nối đúng 2 đoạn tường ở các cạnh của nó!
+STR_GI_X333,DỰNG ĐỦ • BẤM GỬI,DỰNG ĐỦ • BẤM GỬI
+STR_GI_X334,TIẾN ĐỘ TƯỜNG,TIẾN ĐỘ TƯỜNG
+STR_GI_X335,18 / 18 ĐOẠN,18 / 18 ĐOẠN
+STR_GI_X336,ĐÃ ĐỦ,ĐÃ ĐỦ
+STR_GI_X337,GỬI BÀI,GỬI BÀI
+STR_GI_X338,Kiểm tra kết quả,Kiểm tra kết quả
+STR_GI_X339,KHỚP MỌI SỐ = THẮNG!,KHỚP MỌI SỐ = THẮNG!
+STR_GI_X340,Cấu hình tường thỏa mãn,Cấu hình tường thỏa mãn
+STR_GI_X341,toàn bộ con số là hoàn thành.,toàn bộ con số là hoàn thành.
+STR_GI_X342,CHỈ CÓ 3 LƯỢT NỘP,CHỈ CÓ 3 LƯỢT NỘP
+STR_GI_X343,CHƯA KHỚP 2 ĐOẠN!,CHƯA KHỚP 2 ĐOẠN!
+STR_GI_X344,BỊ TRỪ -1 LƯỢT GỬI,BỊ TRỪ -1 LƯỢT GỬI
+STR_GI_X345,(Còn lại 2/3 lượt),(Còn lại 2/3 lượt)
+STR_GI_X346,HẾT 3 LƯỢT = THUA!,HẾT 3 LƯỢT = THUA!
+STR_GI_X347,"Game chỉ báo số đoạn bị sai,","Game chỉ báo số đoạn bị sai,"
+STR_GI_X348,KHÔNG chỉ ra vị trí sai!,KHÔNG chỉ ra vị trí sai!
+STR_GI_X349,"Bạn chỉ có 3 lượt gửi bài: Đừng bấm Gửi cầu may, hãy rà soát thật kỹ từng ô!","Bạn chỉ có 3 lượt gửi bài: Đừng bấm Gửi cầu may, hãy rà soát thật kỹ từng ô!"
+STR_GI_X350,BÍ QUYẾT: LOẠI TRỪ TỪ Ô SỐ 0,BÍ QUYẾT: LOẠI TRỪ TỪ Ô SỐ 0
+STR_GI_X351,CẤM VẼ,CẤM VẼ
+STR_GI_X352,Ô Số 0 Tuyệt Đối Sạch Tường,Ô Số 0 Tuyệt Đối Sạch Tường
+STR_GI_X353,Bốn cạnh xung quanh ô số 0 không bao giờ,Bốn cạnh xung quanh ô số 0 không bao giờ
+STR_GI_X354,có tường. Loại trừ các khe này trước tiên,có tường. Loại trừ các khe này trước tiên
+STR_GI_X355,sẽ giúp suy luận ra tường của các ô bên cạnh!,sẽ giúp suy luận ra tường của các ô bên cạnh!
+STR_GI_X356,Khóa 1 tường đúng,Khóa 1 tường đúng
+STR_GI_X357,Bí tắc không biết dựng ở đâu?,Bí tắc không biết dựng ở đâu?
+STR_GI_X358,Bấm Gợi Ý để hiện và KHÓA,Bấm Gợi Ý để hiện và KHÓA
+STR_GI_X359,cố định 1 đoạn tường chuẩn 100%.,cố định 1 đoạn tường chuẩn 100%.
+STR_GI_X360,Xóa đoạn vừa nối,Xóa đoạn vừa nối
+STR_GI_X361,Lỡ tay nối nhầm khe tường?,Lỡ tay nối nhầm khe tường?
+STR_GI_X362,Bấm Undo để gỡ bỏ ngay lập tức,Bấm Undo để gỡ bỏ ngay lập tức
+STR_GI_X363,mà không cần kéo lại lần nữa.,mà không cần kéo lại lần nữa.
+STR_GI_X364,Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!,Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!

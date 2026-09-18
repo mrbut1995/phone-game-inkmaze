@@ -27,7 +27,7 @@ func _init() -> void:
 		await _screen("daily", "res://scenes/daily.tscn", size)
 		await _screen("shop", "res://scenes/shop.tscn", size)
 		await _game_play(size)
-		for mode_id in ["countdown_cost", "fading_ink", "sum_path", "fog_of_war"]:
+		for mode_id in ["countdown_cost", "fading_ink", "sum_path", "fog_of_war", "one_stroke", "wall_builder"]:
 			await _game_mode(mode_id, size)
 	quit(0)
 

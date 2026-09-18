@@ -80,6 +80,8 @@ var _history_lines: Dictionary = {}     # cell-edge key -> history Line2D
 var _moving_line: Line2D = null
 var _drag_guide_line: Line2D = null
 var _cursor: Control = null
+## Wall Builder: ẩn hẳn nhân vật trên bàn (xem set_player_visible)
+var _player_hidden: bool = false
 ## Ngòi bút đang dùng (PenSkin) — quyết định icon con trỏ + màu/chất liệu nét mực
 var _pen_id := PenSkin.DEFAULT_PEN
 
@@ -658,7 +660,7 @@ func _place_cursor_at_start() -> void:
 	_cursor.pivot_offset = _cursor.size * 0.5
 	var target_pos := _cell_center(maze.get_start()) - _cursor.size * 0.5
 	_cursor.position = target_pos
-	_cursor.visible = true
+	_cursor.visible = not _player_hidden
 	_player_current_cell = maze.get_start()
 	# SFX: bước vào ô xuất phát S khi bắt đầu mỗi floor
 	Sfx.play(Sfx.STAIRS_ENTER)
@@ -892,6 +894,10 @@ func refresh_cell_texts(dim_unwalkable: bool = false) -> void:
 	if maze == null or game_mode == null:
 		return
 	var has_ink := game_mode.has_method("ink_left")
+	# One Stroke: ô đã đi qua bị KHOÁ -> tô mực xanh + gạch chéo + nhãn "ĐÃ ĐI"
+	var has_visited := game_mode.has_method("is_cell_visited")
+	# Wall Builder: ô đã KHỚP SỐ (đủ tường quanh ô) -> nền xanh lá nhạt
+	var has_satisfied := game_mode.has_method("is_cell_satisfied")
 	for y in _height:
 		for x in _width:
 			var pos := Vector2i(x, y)
@@ -906,6 +912,16 @@ func refresh_cell_texts(dim_unwalkable: bool = false) -> void:
 				if pos != maze.get_start() and pos != maze.get_end():
 					ink = int(game_mode.call("ink_left", pos))
 				cell_node.set_ink_left(ink)
+				cell_node.modulate = Color(1, 1, 1, 1)
+			elif has_visited:
+				# Ô S/F giữ nguyên art xuất phát/đích (mockup không gạch chéo 2 ô này)
+				var seen := false
+				if pos != maze.get_start() and pos != maze.get_end():
+					seen = bool(game_mode.call("is_cell_visited", pos))
+				cell_node.set_visited_own(seen)
+				cell_node.modulate = Color(1, 1, 1, 1)
+			elif has_satisfied:
+				cell_node.set_satisfied(bool(game_mode.call("is_cell_satisfied", pos)))
 				cell_node.modulate = Color(1, 1, 1, 1)
 			elif dim_unwalkable:
 				var walkable := not game_mode.has_method("is_walkable") \
@@ -954,6 +970,12 @@ func set_suspected_wall(is_h: bool, lattice: Vector2i, active: bool) -> void:
 	# Cạnh ngoài board (giữa 2 ô trống) thì không có gì để đánh dấu
 	if not _edge_touches_board(is_h, lattice):
 		return
+	# Chế độ có thể đổi kiểu hiển thị đoạn người chơi nối (Wall Builder: "built")
+	var draw_state := "suspected"
+	if game_mode != null and game_mode.has_method("wall_draw_state"):
+		var custom := str(game_mode.call("wall_draw_state"))
+		if not custom.is_empty():
+			draw_state = custom
 	var key := _lattice_key(is_h, lattice)
 	var seg: WallSegment = null
 	if _wall_segments.has(key):
@@ -961,17 +983,29 @@ func set_suspected_wall(is_h: bool, lattice: Vector2i, active: bool) -> void:
 	elif _suspected_lines.has(key):
 		seg = _suspected_lines[key]
 	else:
-		seg = _create_wall_segment(is_h, lattice, "suspected")
+		seg = _create_wall_segment(is_h, lattice, draw_state)
 		_suspected_lines[key] = seg
 
 	if active:
-		seg.set_state("suspected")
+		seg.set_state(draw_state)
 		seg.animate_appear()
 	else:
 		if _wall_segments.has(key):
 			seg.set_state(seg.get_meta("base_state", "invisible"))
 		else:
 			seg.visible = false
+
+
+## Wall Builder: bàn chơi KHÔNG có nhân vật -> ẩn cursor (nhớ trạng thái cho lần tạo lại)
+func set_player_visible(on: bool) -> void:
+	_player_hidden = not on
+	if _cursor != null:
+		_cursor.visible = on
+
+
+## Rung bàn cờ (Wall Builder: GỬI SAI) — bản public của hiệu ứng rung lưới
+func shake_board() -> void:
+	_play_grid_shake()
 
 
 func set_interaction_enabled(enabled: bool) -> void:

@@ -18,6 +18,8 @@ const HINT_KEYS := {
 	"sum_path": "STR_HINT_SUM_PATH",
 	"countdown_cost": "STR_HINT_COUNTDOWN_COST",
 	"fading_ink": "STR_HINT_FADING_INK",
+	"one_stroke": "STR_HINT_ONE_STROKE",
+	"wall_builder": "STR_HINT_WALL_BUILDER",
 }
 
 

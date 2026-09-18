@@ -45,6 +45,10 @@ func set_mode_by_name(mode_name: String, difficulty: String = "medium") -> BaseG
 			new_mode = FogOfWarGameMode.new(difficulty)
 		"fading_ink":
 			new_mode = FadingInkGameMode.new(difficulty)
+		"one_stroke":
+			new_mode = OneStrokeGameMode.new(difficulty)
+		"wall_builder":
+			new_mode = WallBuilderGameMode.new(difficulty)
 		_:
 			new_mode = DungeonGameMode.new()
 

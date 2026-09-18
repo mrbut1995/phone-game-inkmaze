@@ -1799,6 +1799,406 @@
     "STR_GI_TIME_ATTACK_CHIP",
     "TIME ATTACK MAZE"
    ]
+  },
+  "one_stroke": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_ONE_STROKE_P1_TITLE",
+      "Vẽ 1 Nét Phủ Kín Mọi Ô"
+     ],
+     "section": [
+      "STR_GI_ONE_STROKE_P1_SECTION",
+      "QUY TẮC MỘT NÉT KÍN TRANG"
+     ],
+     "cta": [
+      "STR_GI_ONE_STROKE_P1_CTA",
+      "TIẾP THEO: CẤM ĐI LẠI Ô CŨ (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_ONE_STROKE_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào vẽ một nét ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_ONE_STROKE_P1_TAB1",
+       "PHỦ KÍN MỌI Ô"
+      ],
+      [
+       "STR_GI_ONE_STROKE_P1_TAB2",
+       "CẤM ĐI LẠI Ô CŨ"
+      ],
+      [
+       "STR_GI_ONE_STROKE_P1_TAB3",
+       "CHẠM ĐÍCH F & UNDO"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_ONE_STROKE_P1_R1T",
+        "Tường Nhìn Thấy Rõ, Hoàn Toàn Không Có Số:"
+       ],
+       "desc": [
+        "STR_GI_ONE_STROKE_P1_R1D",
+        "Mọi vách ngăn đều hiện sẵn. Toàn bộ thử thách là tìm thứ tự đi bao phủ trọn vẹn bàn cờ."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_ONE_STROKE_P1_R2T",
+        "Phải Đi Hết Tất Cả Các Ô Thuộc Bàn Cờ:"
+       ],
+       "desc": [
+        "STR_GI_ONE_STROKE_P1_R2D",
+        "Nét vẽ phải lấp đầy 100% diện tích, không được bỏ trống bất kỳ một ô nào trước khi về đích."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_ONE_STROKE_P1_R3T",
+        "Hố Thang Finish (F) Là Điểm Dừng Chân Cuối:"
+       ],
+       "desc": [
+        "STR_GI_ONE_STROKE_P1_R3D",
+        "Chạm vào F khi vẫn còn ô trống chưa đi sẽ bị chặn lại — F phải là ô cuối cùng của nét vẽ!"
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_ONE_STROKE_P2_TITLE",
+      "Cấm Đi Lại Đường Đã Qua"
+     ],
+     "section": [
+      "STR_GI_ONE_STROKE_P2_SECTION",
+      "QUY TẮC SỐNG CÒN"
+     ],
+     "cta": [
+      "STR_GI_ONE_STROKE_P2_CTA",
+      "TIẾP THEO: CHẠM ĐÍCH F & UNDO (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_ONE_STROKE_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào vẽ một nét ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_ONE_STROKE_P2_TAB1",
+       "PHỦ KÍN MỌI Ô"
+      ],
+      [
+       "STR_GI_ONE_STROKE_P2_TAB2",
+       "CẤM ĐI LẠI Ô CŨ"
+      ],
+      [
+       "STR_GI_ONE_STROKE_P2_TAB3",
+       "CHẠM ĐÍCH F & UNDO"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_ONE_STROKE_P2_R1T",
+        "Đi Vào Ô Cũ = Thua Ngay Lập Tức:"
+       ],
+       "desc": [
+        "STR_GI_ONE_STROKE_P2_R1D",
+        "Ô đã đi qua sẽ bị khóa vĩnh viễn. Cố tình kéo nét vẽ đè vào đường cũ • Game Over ngay!"
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_ONE_STROKE_P2_R2T",
+        "Tránh Bẫy Cắt Ngang Làm Cô Lập Ô:"
+       ],
+       "desc": [
+        "STR_GI_ONE_STROKE_P2_R2D",
+        "Đừng đi vắt ngang bàn cờ chia đôi ô trống, vì bạn sẽ không thể quay lại đón các ô bị bỏ lại."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_ONE_STROKE_P2_R3T",
+        "Dừng Lại Khi Bị Cụt Đường:"
+       ],
+       "desc": [
+        "STR_GI_ONE_STROKE_P2_R3D",
+        "Nếu nhận ra phía trước là đường cùng, đừng cố đi liều — hãy dùng Undo (xem Trang 3)."
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_ONE_STROKE_P3_TITLE",
+      "Chạm Đích F & Dùng Undo"
+     ],
+     "section": [
+      "STR_GI_ONE_STROKE_P3_SECTION",
+      "BÍ QUYẾT PHÁ ĐẢO"
+     ],
+     "cta": [
+      "STR_GI_ONE_STROKE_P3_CTA",
+      "ĐÃ HIỂU • BẮT ĐẦU VẼ MỘT NÉT"
+     ],
+     "link": [
+      "STR_GI_ONE_STROKE_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_ONE_STROKE_P3_TAB1",
+       "PHỦ KÍN MỌI Ô"
+      ],
+      [
+       "STR_GI_ONE_STROKE_P3_TAB2",
+       "CẤM ĐI LẠI Ô CŨ"
+      ],
+      [
+       "STR_GI_ONE_STROKE_P3_TAB3",
+       "CHẠM ĐÍCH F & UNDO"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_ONE_STROKE_P3_R1T",
+        "Chỉ Bước Vào F Ở Nước Đi Cuối Cùng:"
+       ],
+       "desc": [
+        "STR_GI_ONE_STROKE_P3_R1D",
+        "Kiểm tra thanh tiến độ trên HUD: Phải đạt 100% số ô rồi mới được dẫn nét vẽ vào hố thang F."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_ONE_STROKE_P3_R2T",
+        "Dùng Undo Kịp Thời Để Mở Lại Ô:"
+       ],
+       "desc": [
+        "STR_GI_ONE_STROKE_P3_R2D",
+        "Lỡ đi sai nhánh? Bấm Undo để lùi bước và mở lại các ô vừa đi mà không lo bị Game Over."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_ONE_STROKE_P3_R3T",
+        "Dùng Gợi Ý (Hint) Khi Mất Hướng:"
+       ],
+       "desc": [
+        "STR_GI_ONE_STROKE_P3_R3D",
+        "Nút Gợi Ý sẽ chỉ ra 1 ô đúng kế tiếp, hoặc cảnh báo nếu nhánh bạn đang đi đã hoàn toàn bế tắc."
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_ONE_STROKE_CHIP",
+    "ONE STROKE • MỘT NÉT"
+   ]
+  },
+  "wall_builder": {
+   "pages": {
+    "1": {
+     "title": [
+      "STR_GI_WALL_BUILDER_P1_TITLE",
+      "Đóng Vai Thợ Xây Mê Cung"
+     ],
+     "section": [
+      "STR_GI_WALL_BUILDER_P1_SECTION",
+      "QUY TẮC XÂY TƯỜNG CƠ BẢN"
+     ],
+     "cta": [
+      "STR_GI_WALL_BUILDER_P1_CTA",
+      "TIẾP THEO: NÚT GỬI & 3 LƯỢT (2/3) ›"
+     ],
+     "link": [
+      "STR_GI_WALL_BUILDER_P1_LINK",
+      "Bỏ qua hướng dẫn & Vào xây tường ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_WALL_BUILDER_P1_TAB1",
+       "NỐI TƯỜNG THEO SỐ"
+      ],
+      [
+       "STR_GI_WALL_BUILDER_P1_TAB2",
+       "NÚT GỬI & 3 LƯỢT"
+      ],
+      [
+       "STR_GI_WALL_BUILDER_P1_TAB3",
+       "BÍ QUYẾT & GỢI Ý"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_WALL_BUILDER_P1_R1T",
+        "Chế Độ Duy Nhất Tự Xây Tường:"
+       ],
+       "desc": [
+        "STR_GI_WALL_BUILDER_P1_R1D",
+        "Không có nhân vật di chuyển, không có S và F. Bạn chính là người phục dựng lại mê cung."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_WALL_BUILDER_P1_R2T",
+        "Kéo Giữa 2 Điểm Neo (Anchor) Để Tạo Tường:"
+       ],
+       "desc": [
+        "STR_GI_WALL_BUILDER_P1_R2D",
+        "Chạm và kéo từ dấu cộng (+) này sang dấu cộng kề bên để bật hoặc tắt 1 đoạn tường."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_WALL_BUILDER_P1_R3T",
+        "Số Trên Ô Là Số Tường Quanh Ô:"
+       ],
+       "desc": [
+        "STR_GI_WALL_BUILDER_P1_R3D",
+        "Chỉ đếm các cạnh bên trong board (viền ngoài board là tường cố định, không vẽ được và không tính)."
+       ]
+      }
+     ]
+    },
+    "2": {
+     "title": [
+      "STR_GI_WALL_BUILDER_P2_TITLE",
+      "Nút Gửi Bài & 3 Lượt Nộp"
+     ],
+     "section": [
+      "STR_GI_WALL_BUILDER_P2_SECTION",
+      "QUY TẮC CHẤM ĐIỂM & LƯỢT GỬI"
+     ],
+     "cta": [
+      "STR_GI_WALL_BUILDER_P2_CTA",
+      "TIẾP THEO: BÍ QUYẾT Ô SỐ 0 & GỢI Ý (3/3) ›"
+     ],
+     "link": [
+      "STR_GI_WALL_BUILDER_P2_LINK",
+      "Bỏ qua hướng dẫn & Vào xây tường ngay"
+     ],
+     "tabs": [
+      [
+       "STR_GI_WALL_BUILDER_P2_TAB1",
+       "NỐI TƯỜNG THEO SỐ"
+      ],
+      [
+       "STR_GI_WALL_BUILDER_P2_TAB2",
+       "NÚT GỬI & 3 LƯỢT"
+      ],
+      [
+       "STR_GI_WALL_BUILDER_P2_TAB3",
+       "BÍ QUYẾT & GỢI Ý"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_WALL_BUILDER_P2_R1T",
+        "Dựng Đủ Số Đoạn Tường Trước Khi Nộp:"
+       ],
+       "desc": [
+        "STR_GI_WALL_BUILDER_P2_R1D",
+        "Theo dõi thanh đếm trên HUD. Khi đạt đủ số đoạn tường quy định, nút Gửi sẽ sẵn sàng."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_WALL_BUILDER_P2_R2T",
+        "Chỉ Có 3 Lần Gửi Bài ( 3/3):"
+       ],
+       "desc": [
+        "STR_GI_WALL_BUILDER_P2_R2D",
+        "Mỗi lần nộp mà cấu hình tường chưa khớp với số ô, bạn sẽ bị trừ 1 lượt chơi và rung bàn cờ."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_WALL_BUILDER_P2_R3T",
+        "Hết 3 Lượt Gửi = Thua Cuộc:"
+       ],
+       "desc": [
+        "STR_GI_WALL_BUILDER_P2_R3D",
+        "Nếu cạn cả 3 lượt gửi mà vẫn chưa đúng, bạn phải xem quảng cáo Hồi Sinh để nhận thêm +1 lượt."
+       ]
+      }
+     ]
+    },
+    "3": {
+     "title": [
+      "STR_GI_WALL_BUILDER_P3_TITLE",
+      "Bí Quyết Ô Số 0 & Gợi Ý"
+     ],
+     "section": [
+      "STR_GI_WALL_BUILDER_P3_SECTION",
+      "BÍ QUYẾT XÂY TƯỜNG CHUẨN XÁC"
+     ],
+     "cta": [
+      "STR_GI_WALL_BUILDER_P3_CTA",
+      "ĐÃ HIỂU • BẮT ĐẦU XÂY TƯỜNG"
+     ],
+     "link": [
+      "STR_GI_WALL_BUILDER_P3_LINK",
+      "Xem lại từ đầu (Trang 1)"
+     ],
+     "tabs": [
+      [
+       "STR_GI_WALL_BUILDER_P3_TAB1",
+       "NỐI TƯỜNG THEO SỐ"
+      ],
+      [
+       "STR_GI_WALL_BUILDER_P3_TAB2",
+       "NÚT GỬI & 3 LƯỢT"
+      ],
+      [
+       "STR_GI_WALL_BUILDER_P3_TAB3",
+       "BÍ QUYẾT & GỢI Ý"
+      ]
+     ],
+     "rules": [
+      {
+       "title": [
+        "STR_GI_WALL_BUILDER_P3_R1T",
+        "Loại Trừ Các Khe Quanh Ô Số 0:"
+       ],
+       "desc": [
+        "STR_GI_WALL_BUILDER_P3_R1D",
+        "Ô số 0 không thể có tường. Bạn biết chắc 4 cạnh quanh nó phải để trống thông suốt."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_WALL_BUILDER_P3_R2T",
+        "Xác Định Ô Góc & Cạnh Có Số Lớn:"
+       ],
+       "desc": [
+        "STR_GI_WALL_BUILDER_P3_R2D",
+        "Ô số 2 ở cạnh chỉ có 3 cạnh trong; ô số 3 ở giữa rất ít phương án đặt tường • Dễ suy ra trước."
+       ]
+      },
+      {
+       "title": [
+        "STR_GI_WALL_BUILDER_P3_R3T",
+        "Khóa Chết 1 Tường Nhờ Nút Gợi Ý:"
+       ],
+       "desc": [
+        "STR_GI_WALL_BUILDER_P3_R3D",
+        "Khi bế tắc, bấm Gợi Ý để hiện 1 đoạn tường đúng của nghiệm gốc, giúp mở khóa toàn bộ bàn cờ."
+       ]
+      }
+     ]
+    }
+   },
+   "chip": [
+    "STR_GI_WALL_BUILDER_CHIP",
+    "WALL BUILDER • XÂY TƯỜNG"
+   ]
   }
  },
  "panel_texts": {
@@ -2088,6 +2488,83 @@
   "Lỡ tay quẹt nhầm hướng?": "STR_GI_X284",
   "Bấm Undo lùi lại ngay": "STR_GI_X285",
   "để không bị đâm tường văng về S!": "STR_GI_X286",
-  "Đứng yên là tự sát! Khi phân vân, bấm ngay Gợi Ý để cứu lấy thời gian sống còn.": "STR_GI_X287"
+  "Đứng yên là tự sát! Khi phân vân, bấm ngay Gợi Ý để cứu lấy thời gian sống còn.": "STR_GI_X287",
+  "TIẾN ĐỘ PHỦ KÍN:": "STR_GI_X288",
+  "MỘT NÉT KHÔNG NHẤC BÚT": "STR_GI_X289",
+  "ĐẶC TRƯNG BÀN CỜ": "STR_GI_X290",
+  "TƯỜNG THẤY RÕ": "STR_GI_X291",
+  "100% HIỆN SẴN": "STR_GI_X292",
+  "Không có số trên ô!": "STR_GI_X293",
+  "MỤC TIÊU DUY NHẤT": "STR_GI_X294",
+  "PHỦ KÍN 100%": "STR_GI_X295",
+  "MỌI Ô CỜ": "STR_GI_X296",
+  "rồi mới về đích F!": "STR_GI_X297",
+  "Đã đi 6 ô • Đi tiếp qua 3 ô còn lại để phủ kín 9/9 ô rồi chạm hố thang F!": "STR_GI_X298",
+  "ĐI VÀO ĐƯỜNG ĐÃ QUA": "STR_GI_X299",
+  "ĐÃ ĐI": "STR_GI_X300",
+  "GAME OVER NGAY!": "STR_GI_X301",
+  "Cố tình bước đè lên nét vẽ cũ": "STR_GI_X302",
+  "sẽ bị xử thua lập tức!": "STR_GI_X303",
+  "BẪY CÔ LẬP Ô TRỐNG": "STR_GI_X304",
+  "BỊ KẸT": "STR_GI_X305",
+  "HẾT ĐƯỜNG ĐI!": "STR_GI_X306",
+  "Vẽ sai nhánh làm cô lập ô trống.": "STR_GI_X307",
+  "Không thể phủ kín 100% • Thua!": "STR_GI_X308",
+  "Tuyệt đối không được bước lùi vào nét vẽ cũ — chạm đường đã đi là Game Over ngay!": "STR_GI_X309",
+  "ĐÍCH ĐẾN CUỐI CÙNG: F": "STR_GI_X310",
+  "ĐÃ PHỦ KÍN": "STR_GI_X311",
+  "100% SỐ Ô": "STR_GI_X312",
+  "F Là Điểm Chốt Hạ Cuối Cùng": "STR_GI_X313",
+  "Chỉ được chạm vào hố thang F sau khi": "STR_GI_X314",
+  "đã phủ kín mọi ô khác trên bàn cờ.": "STR_GI_X315",
+  "Chạm F sớm sẽ bị chặn lại!": "STR_GI_X316",
+  "CỨU CÁNH SINH TỬ": "STR_GI_X317",
+  "MỞ LẠI Ô VỪA ĐI QUA!": "STR_GI_X318",
+  "Thấy đi nhầm nhánh kẹt? Bấm Undo ngay": "STR_GI_X319",
+  "để rút nét vẽ và mở lại ô, tránh bị Game Over do đi lại đường cũ.": "STR_GI_X320",
+  "Đừng cố đi tiếp khi nhận ra bị kẹt — hãy dùng Undo để mở lại ô và thử hướng khác!": "STR_GI_X321",
+  "TỔNG TƯỜNG CẦN DỰNG:": "STR_GI_X322",
+  "KÉO NỐI 2 ĐIỂM NEO (+)": "STR_GI_X323",
+  "VAI TRÒ MỚI": "STR_GI_X324",
+  "THỢ XÂY MÊ CUNG": "STR_GI_X325",
+  "KHÔNG CÓ S/F": "STR_GI_X326",
+  "Không có di chuyển!": "STR_GI_X327",
+  "THAO TÁC CHÍNH": "STR_GI_X328",
+  "NỐI 2 ANCHOR": "STR_GI_X329",
+  "BẬT / TẮT TƯỜNG": "STR_GI_X330",
+  "Kéo để dựng vách!": "STR_GI_X331",
+  "Ô giữa mang số 2 • Bạn cần kéo nối đúng 2 đoạn tường ở các cạnh của nó!": "STR_GI_X332",
+  "DỰNG ĐỦ • BẤM GỬI": "STR_GI_X333",
+  "TIẾN ĐỘ TƯỜNG": "STR_GI_X334",
+  "18 / 18 ĐOẠN": "STR_GI_X335",
+  "ĐÃ ĐỦ": "STR_GI_X336",
+  "GỬI BÀI": "STR_GI_X337",
+  "Kiểm tra kết quả": "STR_GI_X338",
+  "KHỚP MỌI SỐ = THẮNG!": "STR_GI_X339",
+  "Cấu hình tường thỏa mãn": "STR_GI_X340",
+  "toàn bộ con số là hoàn thành.": "STR_GI_X341",
+  "CHỈ CÓ 3 LƯỢT NỘP": "STR_GI_X342",
+  "CHƯA KHỚP 2 ĐOẠN!": "STR_GI_X343",
+  "BỊ TRỪ -1 LƯỢT GỬI": "STR_GI_X344",
+  "(Còn lại 2/3 lượt)": "STR_GI_X345",
+  "HẾT 3 LƯỢT = THUA!": "STR_GI_X346",
+  "Game chỉ báo số đoạn bị sai,": "STR_GI_X347",
+  "KHÔNG chỉ ra vị trí sai!": "STR_GI_X348",
+  "Bạn chỉ có 3 lượt gửi bài: Đừng bấm Gửi cầu may, hãy rà soát thật kỹ từng ô!": "STR_GI_X349",
+  "BÍ QUYẾT: LOẠI TRỪ TỪ Ô SỐ 0": "STR_GI_X350",
+  "CẤM VẼ": "STR_GI_X351",
+  "Ô Số 0 Tuyệt Đối Sạch Tường": "STR_GI_X352",
+  "Bốn cạnh xung quanh ô số 0 không bao giờ": "STR_GI_X353",
+  "có tường. Loại trừ các khe này trước tiên": "STR_GI_X354",
+  "sẽ giúp suy luận ra tường của các ô bên cạnh!": "STR_GI_X355",
+  "Khóa 1 tường đúng": "STR_GI_X356",
+  "Bí tắc không biết dựng ở đâu?": "STR_GI_X357",
+  "Bấm Gợi Ý để hiện và KHÓA": "STR_GI_X358",
+  "cố định 1 đoạn tường chuẩn 100%.": "STR_GI_X359",
+  "Xóa đoạn vừa nối": "STR_GI_X360",
+  "Lỡ tay nối nhầm khe tường?": "STR_GI_X361",
+  "Bấm Undo để gỡ bỏ ngay lập tức": "STR_GI_X362",
+  "mà không cần kéo lại lần nữa.": "STR_GI_X363",
+  "Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!": "STR_GI_X364"
  }
 }

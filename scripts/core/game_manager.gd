@@ -35,7 +35,9 @@ const DAILY_MODES: Array[String] = [
 	"countdown_cost",
 	"blind_memory",
 	"fog_of_war",
-	"fading_ink"
+	"fading_ink",
+	"one_stroke",
+	"wall_builder"
 ]
 
 
@@ -96,7 +98,7 @@ func prepare_daily_run(day: int, variant := "special") -> String:
 	return current_mode
 
 
-## Danh sách id của 7 chế độ SPECIAL (chỉ chơi được qua Daily Challenge)
+## Danh sách id của 9 chế độ SPECIAL (chỉ chơi được qua Daily Challenge)
 func special_mode_ids() -> Array[String]:
 	return DAILY_MODES.duplicate()
 

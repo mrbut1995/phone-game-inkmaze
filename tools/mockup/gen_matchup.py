@@ -447,6 +447,9 @@ HAND_DRAWN = {
     "matchup_sum_path",
     "matchup_countdown_cost",
     "matchup_fading_ink",
+    # 2 chế độ mới 2026-09-19 (user vẽ tay cùng bộ popup hướng dẫn)
+    "matchup_one_stroke",
+    "matchup_wall_builder",
 }
 
 MODES = [

@@ -99,7 +99,8 @@ func _start_floor(floor_number: int) -> void:
 	if challenge_controller != null:
 		challenge_controller.setup_for_floor(
 			game_mode_controller.game_mode.initial_steps,
-			game_mode_controller.game_mode.current_level_data
+			game_mode_controller.game_mode.current_level_data,
+			game_mode_controller.game_mode
 		)
 	if timer_controller != null:
 		timer_controller.start_floor()
@@ -228,7 +229,7 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 		# Chế độ thua-ngay (Play / Daily Classic / Minesweeper...) -> mở popup thua.
 		# Chế độ có LƯỢT THỬ LẠI (Fog of War): trừ 1 lượt, hết lượt mới thua.
 		if game_mode_controller.game_mode != null and game_mode_controller.game_mode.register_hazard():
-			_game_over.call_deferred()
+			_game_over.call_deferred(_hazard_game_over_reason())
 			return
 
 	_update_hud()
@@ -241,6 +242,14 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 
 func _on_wall_hit() -> void:
 	pass
+
+
+## Lý do thua khi vừa đâm chướng ngại vật (đi kèm popup thua):
+## One Stroke đạp lên Ô ĐÃ ĐI = chất hazard "revisit" -> tiêu đề riêng "ĐI LẠI Ô CŨ!".
+func _hazard_game_over_reason() -> String:
+	if grid_controller != null and grid_controller.last_hazard_type == "revisit":
+		return "revisit"
+	return ""
 
 
 func _on_reached_end() -> void:
@@ -382,6 +391,7 @@ func _game_over(reason := "") -> void:
 			"revive_steps": revive_bonus_steps,
 			"max_retries": mode.max_retries if mode != null else 0,
 			"retries_left": mode.retries_left if mode != null else 0,
+			"revive_desc": mode.revive_desc_key() if mode != null else "",
 			"stars": stars,
 			"challenges": challenge_rows,
 			"time": floor_time,
@@ -580,6 +590,8 @@ const INSTRUCTION_SCENES := {
 	"blind_memory": "blindmemory",
 	"fog_of_war": "fog_of_war",
 	"fading_ink": "fadingink",
+	"one_stroke": "one_stroke",
+	"wall_builder": "wall_builder",
 }
 const INSTRUCTION_FALLBACK := "normal_maze"
 
@@ -610,6 +622,15 @@ func _on_instruction_closed() -> void:
 
 
 func undo() -> void:
+	# Wall Builder: Undo xoá ĐOẠN TƯỜNG vừa nối (chế độ không có nước đi để lùi)
+	if grid_controller != null and game_mode_controller != null \
+			and game_mode_controller.game_mode != null \
+			and game_mode_controller.game_mode.undo_drawn_wall(grid_controller.anchor_controller):
+		Sfx.play(Sfx.UNDO)
+		if game_state != null:
+			game_state.undos_used += 1     # thử thách "không dùng hoàn tác"
+		_update_hud()
+		return
 	if grid_controller != null and grid_controller.undo_last_move():
 		# SFX: tiếng gôm tẩy quẹt trên giấy
 		Sfx.play(Sfx.UNDO)
@@ -625,12 +646,60 @@ func undo() -> void:
 
 
 func hint() -> void:
-	if grid_controller != null:
-		# SFX: chuông gió khi bấm Gợi ý
-		Sfx.play(Sfx.HINT)
-		grid_controller.give_hint()
+	if grid_controller == null:
+		return
+	# SFX: chuông gió khi bấm Gợi ý
+	Sfx.play(Sfx.HINT)
+	# Wall Builder: Gợi ý mở + KHOÁ 1 ĐOẠN TƯỜNG thật (không phải ô để đi)
+	if game_mode_controller != null and game_mode_controller.game_mode != null \
+			and game_mode_controller.game_mode.hint_wall(grid_controller.anchor_controller, grid_controller.maze):
 		if game_state != null:
 			game_state.hints_used += 1     # thử thách "không dùng gợi ý"
+		_update_hud()
+		return
+	grid_controller.give_hint()
+	if game_state != null:
+		game_state.hints_used += 1     # thử thách "không dùng gợi ý"
+
+
+## Wall Builder: người chơi bấm GỬI — đối chiếu bản dựng với MỌI con số trên bàn.
+## Đúng ⇒ THẮNG. Sai ⇒ mất 1 LƯỢT GỬI (rung bàn + báo số đoạn còn lệch); hết lượt ⇒ THUA.
+func submit_build() -> void:
+	if not _run_active or game_mode_controller == null or game_mode_controller.game_mode == null:
+		return
+	var mode := game_mode_controller.game_mode
+	if not mode.has_method("evaluate_submit"):
+		return
+	var result: Dictionary = mode.call("evaluate_submit")
+	if bool(result.get("solved", false)):
+		mode.call("mark_solved")
+		_on_reached_end()
+		return
+
+	var wrong := int(result.get("wrong", 0))
+	mode.set("submit_misses", int(mode.get("submit_misses")) + 1)
+	if mode.register_failed_submit():
+		_game_over("out_of_submits")
+		return
+
+	# Còn lượt: rung bàn cờ + chữ nổi báo SỐ ĐOẠN CÒN LỆCH (chỉ số lượng, không chỉ vị trí)
+	Sfx.play(Sfx.WALL_HIT)
+	if grid_view != null:
+		if grid_view.has_method("shake_board"):
+			grid_view.call("shake_board")
+		if grid_view.has_method("spawn_floating_popup"):
+			grid_view.call("spawn_floating_popup",
+				tr("STR_WB_WRONG_COUNT").format([wrong]),
+				_board_center_cell(), Color(0.847, 0.267, 0.267, 1.0))
+	_update_hud()
+
+
+## Ô giữa bàn (để đặt chữ nổi/ cảnh báo khi chế độ không có nhân vật)
+func _board_center_cell() -> Vector2i:
+	var maze: MazeData = grid_controller.maze if grid_controller != null else null
+	if maze == null:
+		return Vector2i.ZERO
+	return Vector2i(maze.width / 2, maze.height / 2)
 
 
 func _on_pause_toggled(is_paused: bool) -> void:

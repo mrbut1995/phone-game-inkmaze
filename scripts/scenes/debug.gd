@@ -352,9 +352,16 @@ func _choice_text(prefix: String, value: String, selected: bool) -> String:
 
 func _special_mode_ids() -> Array[String]:
 	var gm := _game_manager()
+	var ids: Array[String] = []
 	if gm != null and gm.has_method("special_mode_ids"):
-		return gm.call("special_mode_ids")
-	return []
+		ids.assign(gm.call("special_mode_ids"))
+	# One Stroke MỚI (2026-09-19): chưa gắn vào vòng xoay DAILY_MODES (chờ quyết định §6) nhưng
+	# vẫn cho vào thẳng từ Debug Console để chơi thử / kiểm thử trên máy thật.
+	if not ids.has("one_stroke"):
+		ids.append("one_stroke")
+	if not ids.has("wall_builder"):
+		ids.append("wall_builder")
+	return ids
 
 
 func _set_test_mode(on: bool) -> void:

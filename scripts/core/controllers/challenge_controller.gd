@@ -9,7 +9,9 @@ extends Node
 ##   - Màn chưa chọn thử thách (màn cũ) -> dùng 3 thử thách mặc định:
 ##        no_wall · steps_max (N = max_steps) · time_max (T = N × 3, kẹp 30..240s)
 ##
-## 16 loại thử thách: xem ChallengeTypes (id · nhãn · loại tham số).
+## 17 loại thử thách: xem ChallengeTypes (id · nhãn · loại tham số). Riêng chế độ có thể khai báo
+## bộ 3 thử thách MẶC ĐỊNH của mình qua `BaseGameMode.default_challenges()` (VD Wall Builder:
+## no_wrong_submit · time_max · no_hint — §5.13).
 ## Thử thách do LevelData khai báo qua `challenge_types` + `challenge_params` (mảng song song).
 ##
 ## HUD: panel "THỬ THÁCH" nằm trong HUD của chế độ (node Challenge của
@@ -40,6 +42,8 @@ const COLOR_NAME := Color(0.13333334, 0.29803923, 0.42745098, 1)
 ## Ngưỡng mặc định của màn/tầng đang chơi
 var step_limit := 0
 var time_limit := 0.0
+## Chế độ đang chơi — để lấy BỘ THỬ THÁCH MẶC ĐỊNH riêng của chế độ (xem default_challenges)
+var _mode: BaseGameMode = null
 
 ## Thử thách của màn hiện tại: [{ type, param }]
 var _entries: Array[Dictionary] = []
@@ -59,9 +63,11 @@ func _ready() -> void:
 
 
 ## Gọi khi bắt đầu màn/tầng. `level_data = null` -> dùng 3 thử thách mặc định.
-func setup_for_floor(design_steps: int, level_data: LevelData = null) -> void:
+func setup_for_floor(design_steps: int, level_data: LevelData = null,
+		mode: BaseGameMode = null) -> void:
 	step_limit = maxi(design_steps, 1)
 	time_limit = clampf(float(step_limit) * SECONDS_PER_STEP, MIN_TIME_LIMIT, MAX_TIME_LIMIT)
+	_mode = mode
 	_entries = _resolve_entries(level_data)
 	_board_cells = 0
 	_build_rows()
@@ -84,13 +90,14 @@ func refresh(ctx: ChallengeContext) -> void:
 
 	var metrics := _collect_metrics(ctx)
 	# Khoá trạng thái: chỉ tính lại khi số liệu đổi (refresh được gọi mỗi frame)
-	var key := "%d|%d|%d|%d|%d|%d|%d|%d|%s|%s" % [
+	var key := "%d|%d|%d|%d|%d|%d|%d|%d|%d|%s|%s" % [
 		ctx.state.floor_wall_hits,
 		ctx.state.floor_moves,
 		int(metrics["visited"]),
 		int(metrics["revisits"]),
 		int(metrics["sum"]),
 		int(metrics["numbered_on_path"]),
+		int(metrics["submit_misses"]),
 		ctx.state.hints_used,
 		ctx.state.undos_used,
 		str(int(ctx.elapsed)),
@@ -148,8 +155,28 @@ func _resolve_entries(level_data: LevelData) -> Array[Dictionary]:
 				param = _default_param(type_id)
 			out.append({"type": type_id, "param": param})
 	if out.is_empty():
+		out = _mode_defaults()
+	if out.is_empty():
 		for entry in ChallengeTypes.defaults_for(step_limit, time_limit):
 			out.append(entry)
+	return out
+
+
+## Bộ thử thách mặc định RIÊNG của chế độ (VD Wall Builder: no_wrong_submit · time_max · no_hint).
+## Rỗng = chế độ không khai báo gì -> ChallengeController dùng bộ chung.
+func _mode_defaults() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if _mode == null:
+		return out
+	for type_id in _mode.default_challenges():
+		if out.size() >= ChallengeTypes.MAX_PER_LEVEL:
+			break
+		if not ChallengeTypes.is_valid(type_id):
+			continue
+		var param := 0
+		if ChallengeTypes.has_param(type_id):
+			param = _default_param(type_id)
+		out.append({"type": type_id, "param": param})
 	return out
 
 
@@ -239,7 +266,16 @@ func _collect_metrics(ctx: ChallengeContext) -> Dictionary:
 		"numbered_on_path": numbered_on_path,
 		"board_numbered": board_numbered,
 		"board_cells": _board_cells,
+		"submit_misses": _submit_miss_count(ctx),
 	}
+
+
+## Số lần GỬI SAI (Wall Builder) — chế độ khác không có thuộc tính này nên trả 0
+func _submit_miss_count(ctx: ChallengeContext) -> int:
+	if ctx.mode == null:
+		return 0
+	var raw: Variant = ctx.mode.get("submit_misses")
+	return int(raw) if raw != null else 0
 
 
 ## Số hiển thị trên ô (-1 = ô không có số; S/F trả về "S"/"F" nên cũng là -1)
@@ -357,6 +393,15 @@ func _evaluate(entry: Dictionary, ctx: ChallengeContext, m: Dictionary, is_final
 			var used := state.undos_used
 			var ok := used == 0
 			return _verdict(ok, _pass_fail(ok) if ok else tr("STR_CHALLENGE_ST_UNDO_USED").format([used]))
+
+		ChallengeTypes.NO_WRONG_SUBMIT:
+			# Wall Builder: GỬI ĐÚNG NGAY Ở LẦN GỬI ĐẦU TIÊN (không được nộp sai lần nào)
+			var misses := int(m["submit_misses"])
+			if misses > 0:
+				return _verdict(false, tr("STR_CHALLENGE_ST_SUBMIT_MISSED").format([misses]))
+			if is_final:
+				return _verdict(true, _pass_fail(true))
+			return _pending(tr("STR_CHALLENGE_ST_OK"), true)
 
 		_:
 			return _verdict(false, tr("STR_CHALLENGE_NOT_DONE"))

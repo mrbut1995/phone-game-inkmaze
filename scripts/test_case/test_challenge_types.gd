@@ -1,6 +1,6 @@
 extends SceneTree
 ## ============================================================================
-## Test Case: 16 LOẠI THỬ THÁCH (ChallengeTypes) + giới hạn 3 thử thách / màn.
+## Test Case: 17 LOẠI THỬ THÁCH (ChallengeTypes) + giới hạn 3 thử thách / màn.
 ##
 ## Vì ChallengeController chấm dựa trên `ctx.path` (danh sách ô đã đi), test có thể
 ## dựng đường đi tuỳ ý nên kiểm tra được từng loại một cách xác định (không phụ thuộc random).
@@ -18,7 +18,7 @@ var _blank: Array[Vector2i] = []
 
 func _init() -> void:
 	print("\n========================================================")
-	print("  TEST: 16 LOAI THU THACH (CHALLENGE TYPES)")
+	print("  TEST: 17 LOAI THU THACH (CHALLENGE TYPES)")
 	print("========================================================\n")
 	await process_frame
 
@@ -277,7 +277,7 @@ func _fail(message: String) -> void:
 
 func _finish() -> void:
 	if _failures == 0:
-		print("[SUCCESS] 16 loai thu thach + gioi han 3/man hoat dong dung!")
+		print("[SUCCESS] 17 loai thu thach + gioi han 3/man hoat dong dung!")
 	else:
 		print("[FAILED] %d loi ve he thong thu thach." % _failures)
 	quit(0)

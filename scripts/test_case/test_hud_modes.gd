@@ -27,6 +27,8 @@ const HUD_SCRIPTS := {
 	"sum_path": "res://scripts/nodes/hud/sum_path_hud.gd",
 	"countdown_cost": "res://scripts/nodes/hud/countdown_hud.gd",
 	"fading_ink": "res://scripts/nodes/hud/fading_ink_hud.gd",
+	"one_stroke": "res://scripts/nodes/hud/one_stroke_hud.gd",
+	"wall_builder": "res://scripts/nodes/hud/wall_builder_hud.gd",
 }
 
 var _failed := 0
@@ -52,6 +54,8 @@ func _init() -> void:
 	await _section_4_fading_ink(scene)
 	await _section_4b_time_attack(scene)
 	await _section_4c_fog_of_war(scene)
+	await _section_4d_one_stroke(scene)
+	await _section_4e_wall_builder(scene)
 	await _section_5_card_sizes()
 	await _section_6_sum_path_replay(scene)
 	await _section_7_countdown_budget_lock(scene)
@@ -331,6 +335,135 @@ func _section_4c_fog_of_war(scene: GameScene) -> void:
 	if sheet != null:
 		_entry(absf(sheet.size.x - 690.0) <= 1.0 and absf(sheet.size.y - 156.0) <= 1.0,
 			"Bang Suong Mu 690x156 (%.0fx%.0f)" % [sheet.size.x, sheet.size.y])
+
+
+# ---------------------------------------------------------------------------
+# 4d. One Stroke — HUD riêng + bảng TIẾN ĐỘ PHỦ KÍN (2026-09-19)
+# ---------------------------------------------------------------------------
+func _section_4d_one_stroke(scene: GameScene) -> void:
+	print("[4d] HUD One Stroke (tien do phu kin)...")
+	scene.switch_mode("one_stroke", "easy")
+	await process_frame
+	var hud := scene.ui_controller.hud as OneStrokeHUD
+	_entry(hud != null, "One Stroke dung OneStrokeHUD (khong dung chung LevelHUD)")
+	if hud == null:
+		return
+	var mode := scene.game_mode_controller.game_mode as OneStrokeGameMode
+	_entry(mode != null, "Lay duoc OneStrokeGameMode")
+	if mode == null:
+		return
+	_entry(mode.total_cells() == 9 and mode.visited_count() == 1,
+		"Ban easy 3x3 = 9 o, chi o S da di (%d/%d)" % [mode.visited_count(), mode.total_cells()])
+
+	hud.update_hud({"mode": mode})
+	var value := hud.get_node_or_null("Sheet/Cover/CoverValue") as Label
+	var max_label := hud.get_node_or_null("Sheet/Cover/CoverMax") as Label
+	var note := hud.get_node_or_null("Sheet/Cover/CoverNote") as Label
+	var chip := hud.get_node_or_null("Sheet/Row1/ChipLabel") as Label
+	_entry(value != null and value.text == "1", "HUD hien '1' o da phu ('%s')"
+		% (value.text if value != null else ""))
+	_entry(max_label != null and max_label.text == tr("STR_HUD_OS_COVER_MAX").format([9]),
+		"HUD hien tong so o ('%s')" % (max_label.text if max_label != null else ""))
+	_entry(note != null and note.text == tr("STR_HUD_OS_COVER_NOTE").format([8]),
+		"HUD hien so o con lai ('%s')" % (note.text if note != null else ""))
+	_entry(chip != null and chip.text == tr("STR_HUD_OS_CHIP").format([11]),
+		"HUD hien chip phan tram kin ('%s')" % (chip.text if chip != null else ""))
+
+	_entry(hud.get_node_or_null("Time/Value") != null, "Co the THOI GIAN (Time/Value)")
+	_entry((hud.get_node_or_null("Time/Sub") as Label).text == "STR_HUD_OS_TIME_SUB",
+		"The THOI GIAN co dong phu rieng cua che do")
+	_entry(hud.get_node_or_null("Sheet/Row1/Chip") is TextureRect, "Co row luat MỘT NÉT + chip")
+	_entry(hud.get_node_or_null("Sheet/Row2/SliderTrack") is TextureRect, "Co thanh tien do phu kin")
+	_entry(hud.get_node_or_null("Sheet/Row2/SliderFillClip/Fill") is TextureRect,
+		"Thanh tien do co lop FILL bi cat theo so o da di")
+	_entry(hud.challenge_card() == null,
+		"challenge_card() = null (bang Tien Do chiem cho the THU THACH)")
+	var sheet := hud.get_node_or_null("Sheet") as Control
+	if sheet != null:
+		_entry(absf(sheet.size.x - 690.0) <= 1.0 and absf(sheet.size.y - 156.0) <= 1.0,
+			"Bang Tien Do 690x156 (%.0fx%.0f)" % [sheet.size.x, sheet.size.y])
+
+	# Chuỗi dịch của chế độ (đọc theo locale VI để chắc chắn đã re-import CSV)
+	var prev_locale := TranslationServer.get_locale()
+	TranslationServer.set_locale("vi")
+	_entry(tr("STR_HUD_OS_TIME_SUB") == "ĐANG TÍNH GIỜ",
+		"Chuoi VI dong phu the THOI GIAN ('%s')" % tr("STR_HUD_OS_TIME_SUB"))
+	_entry(tr("STR_HUD_OS_ROW_TITLE") != "STR_HUD_OS_ROW_TITLE",
+		"Co chuoi VI cho hang luat MỘT NÉT")
+	_entry(tr("STR_GAME_OVER_REVISIT") != "STR_GAME_OVER_REVISIT",
+		"Co chuoi cho tieu de thua 'DI LAI O CU!'")
+	_entry(tr("STR_HINT_ONE_STROKE") != "STR_HINT_ONE_STROKE",
+		"Co chuoi huong dan luat choi (HintGuide)")
+	TranslationServer.set_locale(prev_locale)
+
+
+# ---------------------------------------------------------------------------
+# 4e. Wall Builder — HUD riêng + bảng TIẾN ĐỘ XÂY TƯỜNG (2026-09-19)
+# ---------------------------------------------------------------------------
+func _section_4e_wall_builder(scene: GameScene) -> void:
+	print("[4e] HUD Wall Builder (tien do xay tuong)...")
+	scene.switch_mode("wall_builder", "easy")
+	await process_frame
+	var hud := scene.ui_controller.hud as WallBuilderHUD
+	_entry(hud != null, "Wall Builder dung WallBuilderHUD (khong dung chung LevelHUD)")
+	if hud == null:
+		return
+	var mode := scene.game_mode_controller.game_mode as WallBuilderGameMode
+	_entry(mode != null, "Lay duoc WallBuilderGameMode")
+	if mode == null:
+		return
+	_entry(mode.required_segments > 0 and mode.built_count() == 0,
+		"Can dung %d doan tuong, moi dau van chua dung doan nao" % mode.required_segments)
+	_entry(mode.retries_left == 3 and mode.max_retries == 3, "Dau van co dung 3 LUOT GUI")
+
+	hud.update_hud({"mode": mode})
+	var value := hud.get_node_or_null("Sheet/Cover/CoverValue") as Label
+	var max_label := hud.get_node_or_null("Sheet/Cover/CoverMax") as Label
+	var note := hud.get_node_or_null("Sheet/Cover/CoverNote") as Label
+	var submit := hud.get_node_or_null("Sheet/Row1/Submit") as Label
+	var chip := hud.get_node_or_null("Sheet/Row1/ChipLabel") as Label
+	_entry(value != null and value.text == "0", "HUD hien '0' doan da dung ('%s')"
+		% (value.text if value != null else ""))
+	_entry(max_label != null and max_label.text == tr("STR_HUD_WB_COVER_MAX").format([mode.required_segments]),
+		"HUD hien tong so doan ('%s')" % (max_label.text if max_label != null else ""))
+	_entry(note != null and note.text == tr("STR_HUD_WB_COVER_NOTE").format([mode.required_segments]),
+		"HUD hien so doan con thieu ('%s')" % (note.text if note != null else ""))
+	_entry(submit != null and submit.text == tr("STR_HUD_WB_SUBMIT").format([3, 3]),
+		"HUD hien dong LUOT GUI ('%s')" % (submit.text if submit != null else ""))
+	_entry(chip != null and chip.text == tr("STR_HUD_WB_CHIP_BUILDING"),
+		"HUD hien chip trang thai ('%s')" % (chip.text if chip != null else ""))
+
+	_entry(hud.get_node_or_null("Time/Value") != null, "Co the THOI GIAN (Time/Value)")
+	_entry((hud.get_node_or_null("Time/Sub") as Label).text == "STR_HUD_WB_TIME_SUB",
+		"The THOI GIAN co dong phu rieng cua che do")
+	_entry(hud.get_node_or_null("Sheet/Row2/SliderTrack") is TextureRect, "Co thanh tien do xay tuong")
+	_entry(hud.get_node_or_null("Sheet/Row2/SliderFillClip/Fill") is TextureRect,
+		"Thanh tien do co lop FILL bi cat theo so doan da dung")
+	_entry(hud.challenge_card() == null, "challenge_card() = null (bang Tuong Da Ve chiem cho the THU THACH)")
+	var sheet := hud.get_node_or_null("Sheet") as Control
+	if sheet != null:
+		_entry(absf(sheet.size.x - 690.0) <= 1.0 and absf(sheet.size.y - 156.0) <= 1.0,
+			"Bang Tuong Da Ve 690x156 (%.0fx%.0f)" % [sheet.size.x, sheet.size.y])
+
+	# Thanh công cụ đổi HẲN công dụng 2 nút (VẼ TƯỜNG · GỬI BÀI)
+	_entry((scene.tool_path_btn.get_node_or_null("Label") as Label).text == "STR_TOOL_DRAW_WALL",
+		"Nut 1 doi thanh VE TUONG")
+	_entry(scene.tool_wall_btn.visible
+			and (scene.tool_wall_btn.get_node_or_null("Label") as Label).text == "STR_TOOL_SUBMIT",
+		"Nut 2 doi thanh GUI BAI")
+
+	# Chuỗi dịch của chế độ (đọc theo locale VI để chắc chắn đã re-import CSV)
+	var prev_locale := TranslationServer.get_locale()
+	TranslationServer.set_locale("vi")
+	_entry(tr("STR_HUD_WB_TIME_SUB") == "ĐANG SUY LUẬN",
+		"Chuoi VI dong phu the THOI GIAN ('%s')" % tr("STR_HUD_WB_TIME_SUB"))
+	_entry(tr("STR_REVIVE_DESC_SUBMIT") != "STR_REVIVE_DESC_SUBMIT",
+		"Co chuoi cho dong HOI SINH '+1 LUOT GUI'")
+	_entry(tr("STR_GAME_OVER_OUT_OF_SUBMITS") != "STR_GAME_OVER_OUT_OF_SUBMITS",
+		"Co chuoi cho tieu de thua 'HET LUOT GUI!'")
+	_entry(tr("STR_HINT_WALL_BUILDER") != "STR_HINT_WALL_BUILDER",
+		"Co chuoi huong dan luat choi (HintGuide)")
+	TranslationServer.set_locale(prev_locale)
 
 
 # ---------------------------------------------------------------------------

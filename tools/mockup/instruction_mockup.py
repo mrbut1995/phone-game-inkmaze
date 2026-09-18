@@ -49,6 +49,8 @@ MODES = {
     "blindmemory":   ("popup_instruction_blindmemory_page{n}.svg", "image_guideline_instruction_blindmemory_page{n}.svg"),
     "fog_of_war":    ("popup_instruction_fog_of_war_page{n}.svg", "image_guideline_instruction_fog_of_war_page{n}.svg"),
     "time_attack":   ("popup_instruction_time_attack_page{n}.svg", "image_instruction_time_attack_page{n}.svg"),
+    "one_stroke":    ("popup_instruction_one_stroke_p{n}.svg", "image_guideline_instruction_one_stroke_page{n}.svg"),
+    "wall_builder":  ("popup_instruction_wallbuilder_page{n}.svg", "image_guideline_instruction_wall_builder_page{n}.svg"),
 }
 
 PAGES_PER_MODE = 3

@@ -27,6 +27,8 @@ const WARN_TEXT_RATIO := 11.0 / 56.0
 const FADED_TEXT_RATIO := 22.0 / 56.0
 const WARN_TEXT := "SẮP PHAI"
 const FADED_TEXT := "CẠN"
+## One Stroke: tỉ lệ cỡ chữ nhãn "ĐÃ ĐI" (số gốc 56 -> 12)
+const VISITED_TEXT_RATIO := 12.0 / 56.0
 
 @onready var _button: TextureButton = $Sprite
 @onready var _label: Label = $Sprite/Label
@@ -36,6 +38,9 @@ const FADED_TEXT := "CẠN"
 @onready var _faded: TextureRect = get_node_or_null("Sprite/Faded")
 @onready var _faded_badge: TextureRect = get_node_or_null("Sprite/FadedBadge")
 @onready var _faded_label: Label = get_node_or_null("Sprite/FadedLabel")
+@onready var _visited: TextureRect = get_node_or_null("Sprite/Visited")
+@onready var _visited_label: Label = get_node_or_null("Sprite/VisitedLabel")
+@onready var _satisfied: TextureRect = get_node_or_null("Sprite/Satisfied")
 
 
 func _ready() -> void:
@@ -81,6 +86,10 @@ func set_font_size(fs: int) -> void:
 	if _faded_label == null:
 		_faded_label = get_node_or_null("Sprite/FadedLabel")
 	_apply_label_font_size(_faded_label, maxi(int(round(fs * FADED_TEXT_RATIO)), 10))
+	# Nhãn "ĐÃ ĐI" của mode One Stroke co theo cùng tỉ lệ với số trên ô
+	if _visited_label == null:
+		_visited_label = get_node_or_null("Sprite/VisitedLabel")
+	_apply_label_font_size(_visited_label, maxi(int(round(fs * VISITED_TEXT_RATIO)), 9))
 
 
 ## Đổi cỡ chữ 1 Label — LƯU Ý: LabelSettings đè theme override nên phải sửa cả hai;
@@ -125,6 +134,42 @@ func set_ink_left(ink: int) -> void:
 
 func warn_visible() -> bool:
 	return _warn != null and _warn.visible
+
+
+## One Stroke: ô ĐÃ ĐI QUA (bị khoá vĩnh viễn, đi lại là thua) — tô mực xanh + gạch chéo
+## + nhãn "ĐÃ ĐI" ở mép trên. Ô S/F không bao giờ bật lớp này (mockup giữ nguyên art S/F).
+func set_visited_own(on: bool) -> void:
+	if _visited == null:
+		_visited = get_node_or_null("Sprite/Visited")
+	if _visited_label == null:
+		_visited_label = get_node_or_null("Sprite/VisitedLabel")
+	if _visited != null:
+		_visited.visible = on
+	if _visited_label != null:
+		_visited_label.visible = on
+		if on:
+			_visited_label.text = tr("STR_OS_CELL_VISITED")
+
+
+func visited_visible() -> bool:
+	return _visited != null and _visited.visible
+
+
+## Wall Builder: ô ĐÃ KHỚP SỐ (số tường quanh ô bằng đúng các đoạn đã nối) — nền xanh lá nhạt.
+## Chỉ là gợi ý trực quan của chế độ, không ảnh hưởng luật.
+func set_satisfied(on: bool) -> void:
+	if _satisfied == null:
+		_satisfied = get_node_or_null("Sprite/Satisfied")
+	if _satisfied != null:
+		_satisfied.visible = on
+
+
+func satisfied_visible() -> bool:
+	return _satisfied != null and _satisfied.visible
+
+
+func visited_text() -> String:
+	return _visited_label.text if _visited_label != null else ""
 
 
 func faded_visible() -> bool:

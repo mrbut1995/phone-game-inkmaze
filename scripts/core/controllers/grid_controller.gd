@@ -60,10 +60,31 @@ func handle_drag_updated(pos: Vector2i) -> void:
 
 
 func handle_anchor_connected(corner_a: Vector2i, corner_b: Vector2i) -> void:
-	if anchor_controller != null:
-		anchor_controller.handle_anchor_connection(corner_a, corner_b)
-		if game_mode_controller.game_mode != null and game_mode_controller.game_mode.check_completion(current_pos, maze, anchor_controller):
-			reached_end.emit()
+	if anchor_controller == null:
+		return
+	var mode: BaseGameMode = game_mode_controller.game_mode if game_mode_controller != null else null
+	var edge := AnchorController.get_edge_between(corner_a, corner_b)
+	# Luật của chế độ: đoạn đã KHOÁ (Wall Builder — đoạn do Gợi ý mở) hoặc khe không cho vẽ
+	# (viền ngoài board) thì bỏ qua, không đổi trạng thái.
+	if not edge.is_empty() and mode != null:
+		var blocked_h := bool(edge[0])
+		var blocked_lattice: Vector2i = edge[1]
+		if mode.is_wall_locked(blocked_h, blocked_lattice) \
+				or not mode.can_draw_wall(blocked_h, blocked_lattice, maze):
+			return
+	if not anchor_controller.handle_anchor_connection(corner_a, corner_b):
+		return
+	if not edge.is_empty() and mode != null:
+		var toggled_h := bool(edge[0])
+		var toggled_lattice: Vector2i = edge[1]
+		mode.on_wall_toggled(toggled_h, toggled_lattice,
+			anchor_controller.is_suspected(toggled_h, toggled_lattice))
+		# Chế độ có phản hồi theo SỐ TRÊN Ô (Wall Builder: ô đủ tường sáng nền xanh) -> vẽ lại
+		if mode.has_method("is_cell_satisfied") and board_view != null \
+				and board_view.has_method("refresh_cell_texts"):
+			board_view.call("refresh_cell_texts")
+	if mode != null and mode.check_completion(current_pos, maze, anchor_controller):
+		reached_end.emit()
 
 
 func _on_suspected_wall_toggled(is_h: bool, lattice: Vector2i, active: bool) -> void:
@@ -113,6 +134,10 @@ func try_move_to(pos: Vector2i) -> void:
 			var mine_pos: Vector2i = eval_result.get("pos", pos)
 			if board_view.has_method("show_mine_hit"):
 				board_view.call("show_mine_hit", mine_pos)
+		elif hazard_type == "revisit":
+			# One Stroke: đạp lên ô ĐÃ ĐI = thua ngay, KHÔNG vẽ thêm đoạn tường gãy
+			if board_view.has_method("pulse_cell"):
+				board_view.call("pulse_cell", pos)
 		else:
 			if board_view.has_method("show_wall_hit"):
 				board_view.call("show_wall_hit", from_cell, pos)
@@ -143,6 +168,11 @@ func try_move_to(pos: Vector2i) -> void:
 			reached_end.emit()
 		elif game_mode_controller.game_mode.is_dead_end(current_pos, maze):
 			dead_end.emit()
+	else:
+		# Nước đi hợp lệ về hình học nhưng bị LUẬT của mode chặn (VD One Stroke còn ô trống
+		# nên chưa được chạm F) -> mode tự phản hồi (hiện chữ nổi cảnh báo...)
+		game_mode_controller.game_mode.on_move_blocked(
+			board_view, current_pos, pos, str(eval_result.get("reason", "")))
 
 
 # ---------------------------------------------------------------------------
@@ -187,7 +217,13 @@ func reveal_last_hazard_wall() -> bool:
 func give_hint() -> void:
 	if hint_controller == null or maze == null or board_view == null:
 		return
-	var next_cell := hint_controller.get_next_step_hint(maze, current_pos)
+	# Mode có luật riêng cho hint (One Stroke: phải là bước của MỘT lời giải phủ kín)
+	var mode: BaseGameMode = game_mode_controller.game_mode if game_mode_controller != null else null
+	var next_cell := Vector2i(-1, -1)
+	if mode != null:
+		next_cell = mode.hint_next_cell(maze, current_pos)
+	if next_cell == Vector2i(-1, -1):
+		next_cell = hint_controller.get_next_step_hint(maze, current_pos)
 	if next_cell != current_pos:
 		if board_view.has_method("pulse_cell"):
 			board_view.call("pulse_cell", next_cell)

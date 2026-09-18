@@ -1,9 +1,9 @@
 extends SceneTree
 ## ============================================================================
-## Test Case: DEBUG CONSOLE — TEST 7 CHẾ ĐỘ SPECIAL (2026-02)
+## Test Case: DEBUG CONSOLE — TEST 9 CHẾ ĐỘ SPECIAL (2026-02)
 ##
 ## 1. GameManager: prepare_mode_run() đặt đúng mode · độ khó · cờ ván test · tầng ép.
-## 2. GameModeController: 7 id Special map đúng sang class mode (mode_id khớp).
+## 2. GameModeController: 9 id Special map đúng sang class mode (mode_id khớp).
 ## 3. DebugScene: có mục "SPECIAL MODES" + 1 hàng lệnh cho mỗi chế độ + toggle test mode.
 ## 4. Ván TEST không ghi tiến trình (không đánh dấu Daily, không báo danh hiệu).
 ## 5. Tầng ép: minesweeper ở tầng 3 -> bàn 5x5 (2 + tầng), tầng 1 -> 3x3.
@@ -18,7 +18,7 @@ var _checks := 0
 
 func _init() -> void:
 	print("\n========================================================")
-	print("  TEST: DEBUG CONSOLE — 7 CHE DO SPECIAL")
+	print("  TEST: DEBUG CONSOLE — 9 CHE DO SPECIAL")
 	print("========================================================\n")
 
 	await process_frame
@@ -76,7 +76,7 @@ func _init() -> void:
 func _section_1_game_manager(gm: Node) -> void:
 	print("--- 1. GAMEMANAGER: CO VAN TEST + TANG EP ---")
 	var ids: Array = gm.call("special_mode_ids")
-	_check(ids.size() == 7, "Liet ke dung 7 che do Special (dang %d)" % ids.size())
+	_check(ids.size() == 9, "Liet ke dung 9 che do Special (dang %d)" % ids.size())
 
 	for mode_id in ids:
 		gm.call("prepare_mode_run", str(mode_id), "hard", true, 3)
@@ -103,7 +103,7 @@ func _section_2_mode_mapping(gm: Node) -> void:
 		var ok := mode != null and mode.mode_id == str(mode_id) and not mode.mode_name.is_empty()
 		_check(ok, "set_mode_by_name('%s') -> %s" % [mode_id, mode.mode_name if mode != null else "null"])
 		count += 1
-	_check(count == 7, "Ca 7 id Special deu map duoc sang mode class")
+	_check(count == 9, "Ca 9 id Special deu map duoc sang mode class")
 	_check(controller.set_mode_by_name("play", "medium").mode_id == "play", "map 'play' -> StandardGameMode")
 	_check(controller.set_mode_by_name("dungeon", "medium").mode_id == "dungeon", "map 'dungeon' -> DungeonGameMode")
 	controller.free()
