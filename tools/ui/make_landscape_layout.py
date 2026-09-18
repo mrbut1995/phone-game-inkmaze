@@ -36,8 +36,16 @@ ROOT_PROPS = [
 # ---------------------------------------------------------------------------
 # SPEC từng màn (thêm dần khi chuyển màn mới)
 # ---------------------------------------------------------------------------
-SPECS: dict[str, list[tuple]] = {
-    # §6.2 — Header trên cùng, thân chia 2 cột: trái (Âm thanh + Bàn cờ), phải (Hệ thống + Thao tác)
+# Sửa `@export NodePath` trỏ tới node ĐÃ ĐỔI CHA ở bản ngang (màn game: Controllers trỏ tới UI của màn)
+PATH_REWRITES: dict[str, list[tuple[str, str]]] = {
+    "game": [
+        ("../../Status/", "../../Side/Status/"),
+        ("../../Button/", "../../Side/Button/"),
+        ("../../Replay\"", "../../Side/Replay\""),
+    ],
+}
+
+SPECS: dict[str, list[tuple]] = {    # §6.2 — Header trên cùng, thân chia 2 cột: trái (Âm thanh + Bàn cờ), phải (Hệ thống + Thao tác)
     "settings": [
         ("keep", "TopBar", ".", {}),
         ("new", "Panel", ".", {
@@ -338,6 +346,200 @@ SPECS: dict[str, list[tuple]] = {
                     "anchor_right": "0.94", "anchor_bottom": "0.985"},
         }),
     ],
+    # §7.1 — MÀN CHƠI NGANG: cột TRÁI = bàn cờ; cột PHẢI = Status (header) · HUD · Tip · thanh nút
+    # (giữ NGUYÊN tên + đường dẫn node như bản dọc: các `@export NodePath` của Controllers trỏ
+    #  `../../Board`, `../../Status/...`, `../../Button/...` nên KHÔNG được đổi cấu trúc)
+    "game": [
+        ("keep", "Controllers", ".", {}),
+        # Bàn cờ: cột TRÁI — phải bỏ min 1020 của board.tscn, nếu không bàn cờ đè lên sidebar ở canvas hẹp
+        ("keep", "Board", ".", {
+            "set": {"anchor_left": "0.03", "anchor_top": "0.055",
+                    "anchor_right": "0.53", "anchor_bottom": "0.94",
+                    "custom_minimum_size": "Vector2(0, 0)"},
+        }),
+        # Sidebar PHẢI: 1 VBoxContainer theo TỈ LỆ (0.56→0.985) — KHÔNG dùng bề rộng cứng, tránh đè bàn cờ
+        ("new", "Side", ".", {
+            "type": "VBoxContainer",
+            "props": [
+                "layout_mode = 1",
+                "anchors_preset = -1",
+                "anchor_left = 0.56",
+                "anchor_top = 0.055",
+                "anchor_right = 0.985",
+                "anchor_bottom = 0.945",
+                "theme_override_constants/separation = 26",
+            ],
+        }),
+        ("keep", "Status", "Side", {
+            "set": {"layout_mode": "2", "size_flags_vertical": "0",
+                    "custom_minimum_size": "Vector2(0, 140)"},
+        }),
+        ("patch", "Status/Pause", "", {
+            "set": {"custom_minimum_size": "Vector2(124, 124)",
+                    "ignore_texture_size": "true", "stretch_mode": "0"},
+        }),
+        ("patch", "Status/Instruction", "", {
+            "set": {"custom_minimum_size": "Vector2(124, 124)",
+                    "ignore_texture_size": "true", "stretch_mode": "0"},
+        }),
+        ("patch", "Status/Restart", "", {
+            "set": {"custom_minimum_size": "Vector2(124, 124)",
+                    "ignore_texture_size": "true", "stretch_mode": "0"},
+        }),
+        # Khung HUD: rộng bằng sidebar; `game.gd` tự thu nhỏ (scale) nếu sidebar hẹp hơn 980
+        ("keep", "Information", "Side", {
+            "set": {"layout_mode": "2", "size_flags_horizontal": "3", "size_flags_vertical": "0",
+                    "custom_minimum_size": "Vector2(0, 260)"},
+        }),
+        ("keep", "HintGuide", "Side", {
+            "set": {"layout_mode": "2", "size_flags_vertical": "0",
+                    "custom_minimum_size": "Vector2(0, 140)"},
+        }),
+        ("keep", "Button", "Side", {
+            "set": {"layout_mode": "2", "size_flags_vertical": "0",
+                    "custom_minimum_size": "Vector2(0, 240)"},
+        }),
+        ("patch", "Button/Undo", "", {
+            "set": {"custom_minimum_size": "Vector2(130, 180)",
+                    "ignore_texture_size": "true", "stretch_mode": "0"},
+        }),
+        ("patch", "Button/Hint", "", {
+            "set": {"custom_minimum_size": "Vector2(130, 180)",
+                    "ignore_texture_size": "true", "stretch_mode": "0"},
+        }),
+        ("patch", "Button/Tool", "", {
+            "set": {"custom_minimum_size": "Vector2(0, 180)",
+                    "ignore_texture_size": "true", "stretch_mode": "0",
+                    "size_flags_horizontal": "3"},
+        }),
+        ("patch", "Button/Wall", "", {
+            "set": {"custom_minimum_size": "Vector2(0, 180)",
+                    "ignore_texture_size": "true", "stretch_mode": "0"},
+        }),
+        ("keep", "Replay", "Side", {
+            "set": {"layout_mode": "2", "size_flags_vertical": "3",
+                    "custom_minimum_size": "Vector2(0, 170)",
+                    "ignore_texture_size": "true", "stretch_mode": "0"},
+        }),
+    ],
+    # Splash / Title: tờ giấy phủ kín canvas, khối nội dung CANH GIỮA (anchors), con dấu góc dưới-phải
+    "splash": [
+        ("keep", "Panel", ".", {
+            "set": {"anchor_left": "0.0", "anchor_top": "0.0",
+                    "anchor_right": "1.0", "anchor_bottom": "1.0",
+                    "expand_mode": "1", "stretch_mode": "0"},
+        }),
+        ("patch", "Panel/StudioLabel", "", {
+            "set": {"anchor_left": "0.5", "anchor_top": "0.06", "anchor_right": "0.5",
+                    "anchor_bottom": "0.12", "offset_left": "-600.0", "offset_right": "600.0"},
+        }),
+        ("patch", "Panel/LogoContainer", "", {
+            "set": {"anchor_left": "0.5", "anchor_top": "0.28", "anchor_right": "0.5",
+                    "anchor_bottom": "0.52", "offset_left": "-420.0", "offset_right": "420.0"},
+        }),
+        ("patch", "Panel/Title", "", {
+            "set": {"anchor_left": "0.5", "anchor_top": "0.56", "anchor_right": "0.5",
+                    "anchor_bottom": "0.66", "offset_left": "-700.0", "offset_right": "700.0"},
+        }),
+        ("patch", "Panel/Tagline", "", {
+            "set": {"anchor_left": "0.5", "anchor_top": "0.67", "anchor_right": "0.5",
+                    "anchor_bottom": "0.74", "offset_left": "-700.0", "offset_right": "700.0"},
+        }),
+        ("patch", "Panel/HintTap", "", {
+            "set": {"anchor_left": "0.5", "anchor_top": "0.84", "anchor_right": "0.5",
+                    "anchor_bottom": "0.90", "offset_left": "-500.0", "offset_right": "500.0"},
+        }),
+        ("patch", "Panel/Stamp", "", {
+            "set": {"anchor_left": "1.0", "anchor_top": "1.0", "anchor_right": "1.0",
+                    "anchor_bottom": "1.0", "offset_left": "-460.0", "offset_top": "-250.0",
+                    "offset_right": "-120.0", "offset_bottom": "-80.0"},
+        }),
+        ("keep", "TouchButton", ".", {
+            "set": {"anchor_left": "0.0", "anchor_top": "0.0",
+                    "anchor_right": "1.0", "anchor_bottom": "1.0"},
+        }),
+    ],
+    "title": [
+        ("keep", "Panel", ".", {
+            "set": {"anchor_left": "0.0", "anchor_top": "0.0",
+                    "anchor_right": "1.0", "anchor_bottom": "1.0",
+                    "expand_mode": "1", "stretch_mode": "0"},
+        }),
+        ("patch", "Panel/LogoContainer", "", {
+            "set": {"anchor_left": "0.5", "anchor_top": "0.20", "anchor_right": "0.5",
+                    "anchor_bottom": "0.46", "offset_left": "-420.0", "offset_right": "420.0"},
+        }),
+        ("patch", "Panel/Title", "", {
+            "set": {"anchor_left": "0.5", "anchor_top": "0.50", "anchor_right": "0.5",
+                    "anchor_bottom": "0.62", "offset_left": "-700.0", "offset_right": "700.0"},
+        }),
+        ("patch", "Panel/Subtitle", "", {
+            "set": {"anchor_left": "0.5", "anchor_top": "0.63", "anchor_right": "0.5",
+                    "anchor_bottom": "0.70", "offset_left": "-700.0", "offset_right": "700.0"},
+        }),
+        ("patch", "Panel/TapContainer", "", {
+            "set": {"anchor_left": "0.5", "anchor_top": "0.78", "anchor_right": "0.5",
+                    "anchor_bottom": "0.88", "offset_left": "-420.0", "offset_right": "420.0"},
+        }),
+        ("patch", "Panel/Stamp", "", {
+            "set": {"anchor_left": "1.0", "anchor_top": "1.0", "anchor_right": "1.0",
+                    "anchor_bottom": "1.0", "offset_left": "-460.0", "offset_top": "-250.0",
+                    "offset_right": "-120.0", "offset_bottom": "-80.0"},
+        }),
+    ],
+    # Credit / Debug: tờ giấy phủ kín canvas + khung nội dung trải rộng (danh sách chữ tự dàn)
+    "credit": [
+        ("keep", "TopBar", ".", {
+            "set": {"anchor_left": "0.03", "anchor_top": "0.03",
+                    "anchor_right": "0.97", "anchor_bottom": "0.115"},
+        }),
+        ("patch", "TopBar/Back", "", {
+            "set": {"custom_minimum_size": "Vector2(133, 133)",
+                    "ignore_texture_size": "true", "stretch_mode": "0"},
+        }),
+        ("patch", "TopBar/Title", "", {
+            "set": {"theme_override_font_sizes/font_size": "71"},
+        }),
+        ("keep", "Panel", ".", {
+            "set": {"anchor_left": "0.06", "anchor_top": "0.14",
+                    "anchor_right": "0.94", "anchor_bottom": "0.98",
+                    "expand_mode": "1", "stretch_mode": "0"},
+        }),
+        ("patch", "Panel/Content", "", {
+            "set": {"anchor_left": "0.03", "anchor_top": "0.03",
+                    "anchor_right": "0.97", "anchor_bottom": "0.97"},
+        }),
+        ("patch", "Panel/Washi", "", {
+            "set": {"anchor_left": "0.08", "anchor_top": "0.0", "anchor_right": "0.28",
+                    "anchor_bottom": "0.03"},
+        }),
+        ("patch", "Panel/Clip", "", {
+            "set": {"anchor_left": "0.9", "anchor_top": "0.0", "anchor_right": "0.97",
+                    "anchor_bottom": "0.06"},
+        }),
+    ],
+    "debug": [
+        ("keep", "TopBar", ".", {
+            "set": {"anchor_left": "0.03", "anchor_top": "0.03",
+                    "anchor_right": "0.97", "anchor_bottom": "0.115"},
+        }),
+        ("patch", "TopBar/Back", "", {
+            "set": {"custom_minimum_size": "Vector2(133, 133)",
+                    "ignore_texture_size": "true", "stretch_mode": "0"},
+        }),
+        ("patch", "TopBar/Title", "", {
+            "set": {"theme_override_font_sizes/font_size": "71"},
+        }),
+        ("keep", "Panel", ".", {
+            "set": {"anchor_left": "0.06", "anchor_top": "0.14",
+                    "anchor_right": "0.94", "anchor_bottom": "0.98",
+                    "expand_mode": "1", "stretch_mode": "0"},
+        }),
+        ("patch", "Panel/Content", "", {
+            "set": {"anchor_left": "0.03", "anchor_top": "0.03",
+                    "anchor_right": "0.97", "anchor_bottom": "0.97"},
+        }),
+    ],
 }
 
 
@@ -405,6 +607,7 @@ def patch_props(block: str, changes: dict[str, str]) -> str:
 
 
 def build(screen: str) -> None:
+    """Dựng layout ngang cho 1 màn từ bản dọc (theo SPEC + bảng PATH_REWRITES)."""
     spec = SPECS.get(screen)
     if spec is None:
         print(f"  !! chưa có SPEC cho '{screen}'")
@@ -475,8 +678,11 @@ def build(screen: str) -> None:
 
     root_block = ('[node name="Landscape" instance=ExtResource("1_parent")]\n'
                   + "\n".join(ROOT_PROPS) + "\n\n")
+    text_out = header_out + root_block + "".join(out)
+    for old, new in PATH_REWRITES.get(screen, []):
+        text_out = text_out.replace(old, new)
     dst = ROOT / "scenes" / "orientation" / "landscape" / f"{screen}.tscn"
-    dst.write_text(header_out + root_block + "".join(out), encoding="utf-8")
+    dst.write_text(text_out, encoding="utf-8")
     print(f"  OK {screen}: {len(out)} node → {dst.relative_to(ROOT)}")
 
 

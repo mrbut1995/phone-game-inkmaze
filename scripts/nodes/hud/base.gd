@@ -50,3 +50,44 @@ func set_label_text(node: Node, text: String) -> void:
 static func format_time(seconds: float) -> String:
 	var total := maxi(int(seconds), 0)
 	return "%d:%02d" % [total / 60, total % 60]
+
+
+## ---------------------------------------------------------------------------
+## THANH NÚT HÀNH ĐỘNG (phương án A): mỗi HUD đều instance `nodes/hud/action_bar.tscn`
+## ngay trong scene của mình ⇒ nút VẼ ĐƯỜNG/GHI NHỚ/UNDO/HINT/REPLAY nằm TRONG HUD,
+## màn chơi chỉ việc lấy ra để nối tín hiệu (không còn nút nào trong game.tscn).
+## ---------------------------------------------------------------------------
+func action_bar() -> ActionBar:
+	return get_node_or_null("ActionBar") as ActionBar
+
+
+## Bật bố cục NGANG cho thanh nút (hàng trên: Vẽ đường · Ghi nhớ — hàng dưới: Undo · Hint)
+func set_landscape(on: bool) -> void:
+	var bar := action_bar()
+	if bar != null:
+		bar.set_landscape(on)
+
+
+func tool_path_btn() -> BaseButton:
+	var bar := action_bar()
+	return bar.tool_path_btn() if bar != null else null
+
+
+func tool_wall_btn() -> BaseButton:
+	var bar := action_bar()
+	return bar.tool_wall_btn() if bar != null else null
+
+
+func undo_btn() -> BaseButton:
+	var bar := action_bar()
+	return bar.undo_btn() if bar != null else null
+
+
+func hint_btn() -> BaseButton:
+	var bar := action_bar()
+	return bar.hint_btn() if bar != null else null
+
+
+func replay_btn() -> BaseButton:
+	var bar := action_bar()
+	return bar.replay_btn() if bar != null else null

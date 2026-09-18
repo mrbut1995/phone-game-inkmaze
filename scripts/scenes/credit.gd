@@ -8,13 +8,22 @@ extends BaseScene
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-@onready var btn_back: TextureButton = $TopBar/Back
-@onready var theme_value: Label = $Panel/Content/VBox/MusicSection/ThemeRow/Value
-@onready var track_value: Label = $Panel/Content/VBox/MusicSection/TrackRow/Value
-@onready var version_label: Label = $Panel/Content/VBox/Footer/Stamp/VersionLabel
+var btn_back: TextureButton = null
+var theme_value: Label = null
+var track_value: Label = null
+var version_label: Label = null
+
+
+## Gắn node của layout đang hiển thị (2 layout giữ CÙNG đường dẫn node)
+func _bind_refs() -> void:
+	btn_back = ui_path("TopBar/Back") as TextureButton
+	theme_value = ui_path("Panel/Content/VBox/MusicSection/ThemeRow/Value") as Label
+	track_value = ui_path("Panel/Content/VBox/MusicSection/TrackRow/Value") as Label
+	version_label = ui_path("Panel/Content/VBox/Footer/Stamp/VersionLabel") as Label
 
 
 func _ready() -> void:
+	_bind_refs()
 	if btn_back != null:
 		btn_back.pressed.connect(_on_back_pressed)
 		UIAnim.attach_press_bounce(btn_back)

@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://c4im82wcq86l8"]
 
-[ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://c7v12qmn3er7o" path="res://scripts/nodes/hud/countdown_hud.gd" id="2_script"]
 [ext_resource type="Texture2D" uid="uid://bhccsfs2k1hcq" path="res://assets/images/game/card_time_tall.svg" id="3_time"]
 [ext_resource type="Texture2D" uid="uid://02p5c7y33ffl" path="res://assets/images/game/card_budget_sheet.svg" id="4_sheet"]
 [ext_resource type="Texture2D" uid="uid://c4yghxsna7rw5" path="res://assets/images/game/chip_price_cheap.svg" id="5_cheap"]
 [ext_resource type="Texture2D" uid="uid://c1ni0c233oxs3" path="res://assets/images/game/chip_price_pricey.svg" id="6_pricey"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="7_theme"]
+
 
 [node name="Hud" unique_id=1464339223 instance=ExtResource("1_base")]
 theme = ExtResource("7_theme")
@@ -252,3 +253,4 @@ offset_top = 131.0
 offset_right = 954.0
 offset_bottom = 143.0
 theme_override_constants/separation = 4
+

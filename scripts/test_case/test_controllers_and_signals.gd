@@ -86,12 +86,12 @@ func _init() -> void:
 	print("[SUCCESS] Settings Popup (Pause/Resume/Home) hoat dong dong bo voi TimerController!")
 
 	# 5. Kiem tra ToolController chuyen tool
-	var tool_wall_btn: TextureButton = game_scene.get_node("Button/Wall")
+	var tool_wall_btn: TextureButton = game_scene.tool_wall_btn as TextureButton
 	tool_wall_btn.emit_signal("pressed")
 	assert(tool_ctrl.current_tool == ToolController.ToolMode.WALL, "Wall button phai chuyen tool sang WALL")
 	assert(game_scene.board_view.get("tool_mode") == "wall", "Board tool_mode phai cap nhat sang wall qua signal tool_changed")
 
-	var tool_path_btn: TextureButton = game_scene.get_node("Button/Tool")
+	var tool_path_btn: TextureButton = game_scene.tool_path_btn as TextureButton
 	tool_path_btn.emit_signal("pressed")
 	assert(tool_ctrl.current_tool == ToolController.ToolMode.PATH, "Path button phai chuyen tool sang PATH")
 	assert(game_scene.board_view.get("tool_mode") == "path", "Board tool_mode phai cap nhat sang path")

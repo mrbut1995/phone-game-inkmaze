@@ -134,6 +134,18 @@ func _run_game(mode_id: String, size: Vector2i) -> void:
 	root.add_child(scene)
 	current_scene = scene      # PopupManager.get_host() tìm host theo current_scene
 	await _frames(8)
+	# Cửa sổ đổi cỡ có thể tới MUỘN 1 nhịp so với lúc tạo scene ⇒ chờ tới khi scene nhận
+	# đúng hướng của cỡ đang kiểm tra, tránh báo lỗi oan bằng toạ độ của cỡ trước đó.
+	var want_landscape: bool = size.x > size.y
+	# Cỡ cửa sổ có thể đổi SAU khi scene vào cây (không phát RESIZED) ⇒ gọi lại bố cục
+	# theo hướng để scene bắt đúng hướng của cỡ đang kiểm tra.
+	scene.call("_apply_responsive_layout")
+	for _i in 30:
+		if bool(scene.get("is_landscape")) == want_landscape:
+			break
+		scene.call("_apply_responsive_layout")
+		await process_frame
+	await _frames(2)
 	var issues := _check_common(scene as Control)
 	issues.append_array(_check_game(scene as Control))
 	_report("game/" + mode_id, issues)
@@ -200,11 +212,11 @@ func _check_common(scene: Control) -> Array:
 func _check_game(scene: Control) -> Array:
 	var out: Array = []
 	var col := Rect2(scene.global_position, scene.size).grow(2.0)
-	for path in ["Board", "Button", "HintGuide"]:
-		var node := scene.get_node_or_null(path) as Control
+	for path in ["Board", "Information", "HintGuide"]:
+		var node := scene.call("ui", path) as Control
 		if node == null:
 			out.append("FAIL thiếu node %s" % path)
-		elif not col.encloses(Rect2(node.global_position, node.size)):
+		elif not col.encloses(Rect2(node.global_position, node.size * node.scale)):
 			out.append("FAIL %s vượt khỏi cột nội dung %s" % [path, str(Rect2(node.global_position, node.size))])
 	# HUD trong khung Information (đã bị thay bằng HUD riêng của chế độ lúc chạy)
 	var ui := scene.get("ui_controller") as Node
@@ -265,7 +277,7 @@ func _scan_overflow(node: Node, allowed: Rect2, out: Array, depth: int) -> void:
 			continue
 		var c := child as Control
 		if c != null and c.is_visible_in_tree() and c.size.x > 0.0 and c.size.y > 0.0:
-			var rect := Rect2(c.global_position, c.size)
+			var rect := Rect2(c.global_position, c.size * c.scale)
 			if not allowed.encloses(rect):
 				out.append("%s%s" % [c.get_path().get_concatenated_names().substr(0, 40),
 					str(rect).substr(0, 60)])

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://v06ebu4vrxhm"]
 
-[ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_fvytb"]
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="1_fvytb"]
 [ext_resource type="Script" path="res://scripts/nodes/hud/level_hud.gd" id="2_script"]
 [ext_resource type="Texture2D" uid="uid://bqooopacxspei" path="res://assets/images/game/card_challenge.svg" id="2_7ctd7"]
 [ext_resource type="LabelSettings" uid="uid://bdxo0371yh7yr" path="res://resources/settings/text/text_game_challenge_row.tres" id="3_usuie"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://d2u23v5xlibqv" path="res://assets/images/game/card_time.svg" id="12_rc0tc"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="13_y1kt2"]
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="14_53j1i"]
+
 
 [node name="Hud" unique_id=1383101299 instance=ExtResource("1_fvytb")]
 script = ExtResource("2_script")
@@ -313,3 +314,4 @@ offset_bottom = 120.0
 text = "0:00"
 label_settings = ExtResource("14_53j1i")
 vertical_alignment = 1
+

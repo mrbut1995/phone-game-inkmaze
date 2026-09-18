@@ -4,8 +4,6 @@
 
 [node name="Hud" type="Control" unique_id=1383101299]
 layout_mode = 3
-anchors_preset = 0
-; Bám NGAY DƯỚI thanh trạng thái (0.072 = đáy Status) + khe 37px như thiết kế:
 anchor_top = 0.072
 anchor_bottom = 0.072
 offset_left = 50.0

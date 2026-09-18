@@ -10,21 +10,35 @@ extends BaseScene
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const SCENE_TITLE := "res://scenes/title.tscn"
 
-@onready var studio_label: Label = $Panel/StudioLabel
-@onready var logo_container: Control = $Panel/LogoContainer
-@onready var logo: TextureRect = $Panel/LogoContainer/Logo
-@onready var pencil: TextureRect = $Panel/LogoContainer/Pencil
-@onready var title_label: Label = $Panel/Title
-@onready var tagline_label: Label = $Panel/Tagline
-@onready var stamp_label: Label = $Panel/Stamp/Label
-@onready var touch_button: TextureButton = $TouchButton
-@onready var fade_overlay: ColorRect = $FadeOverlay
+var studio_label: Label = null
+var logo_container: Control = null
+var logo: TextureRect = null
+var pencil: TextureRect = null
+var title_label: Label = null
+var tagline_label: Label = null
+var stamp_label: Label = null
+var touch_button: TextureButton = null
+var fade_overlay: ColorRect = null
 
 var _pencil_tween: Tween = null
 var _transitioning: bool = false
 
 
+## Gắn node của layout đang hiển thị (2 layout giữ CÙNG đường dẫn node)
+func _bind_refs() -> void:
+	studio_label = ui_path("Panel/StudioLabel") as Label
+	logo_container = ui_path("Panel/LogoContainer") as Control
+	logo = ui_path("Panel/LogoContainer/Logo") as TextureRect
+	pencil = ui_path("Panel/LogoContainer/Pencil") as TextureRect
+	title_label = ui_path("Panel/Title") as Label
+	tagline_label = ui_path("Panel/Tagline") as Label
+	stamp_label = ui_path("Panel/Stamp/Label") as Label
+	touch_button = ui_path("TouchButton") as TextureButton
+	fade_overlay = ui_path("FadeOverlay") as ColorRect
+
+
 func _ready() -> void:
+	_bind_refs()
 	_refresh_stamp()
 	if touch_button != null:
 		touch_button.pressed.connect(_on_touch_pressed)

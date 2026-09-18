@@ -1,71 +1,49 @@
 [gd_scene format=3 uid="uid://b1ur8k7vpgte1"]
 
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/orientation/landscape/landscape.tscn" id="1_parent"]
 [ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="3_sugp2"]
 [ext_resource type="Texture2D" uid="uid://cgbp27e1ip682" path="res://assets/images/main/panel_genre_container.svg" id="5_0ld40"]
-[ext_resource type="Texture2D" uid="uid://bn800jpgxtk1v" path="res://assets/images/main/card_mode_dungeon_pressed.svg" id="5_o6xl0"]
-[ext_resource type="Texture2D" uid="uid://chgvp6vq7npl3" path="res://assets/images/main/card_mode_level_normal.svg" id="5_ya4ey"]
-[ext_resource type="Texture2D" uid="uid://b44veo021gjvc" path="res://assets/images/main/card_mode_level_disabled.svg" id="6_trceg"]
-[ext_resource type="Texture2D" uid="uid://ceqpyii58q5ue" path="res://assets/images/main/card_mode_dungeon_normal.svg" id="6_ya4ey"]
-[ext_resource type="Texture2D" uid="uid://dv3upy3xmn4w" path="res://assets/images/main/card_mode_level_focus.svg" id="7_a8y0u"]
-[ext_resource type="Texture2D" uid="uid://dlg2c12rsejkc" path="res://assets/images/main/card_mode_daily_normal.svg" id="7_ya4ey"]
-[ext_resource type="Texture2D" uid="uid://dihgfo2w73ydi" path="res://assets/images/main/btn_menu_leaderboard.svg" id="8_choun"]
 [ext_resource type="Texture2D" uid="uid://bue8as2pv2ov2" path="res://assets/images/icons/icon_shop.svg" id="9_icon_shop"]
-[ext_resource type="Texture2D" uid="uid://cgddw6scnxi63" path="res://assets/images/main/btn_menu_settings.svg" id="10_eb6dy"]
-[ext_resource type="Texture2D" uid="uid://bouakghotecup" path="res://assets/images/main/card_mode_dungeon_focus.svg" id="11_0ld40"]
 [ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="11_ya4ey"]
-[ext_resource type="Texture2D" uid="uid://u7s4jqx5jo2r" path="res://assets/images/main/card_mode_daily_pressed.svg" id="13_gqmmt"]
-[ext_resource type="Texture2D" uid="uid://cnfdg6korh6gn" path="res://assets/images/main/card_mode_disabled.svg" id="14_yc10j"]
 [ext_resource type="Texture2D" uid="uid://b6jamoc7rkb8a" path="res://assets/images/icons/icon_play.svg" id="15_icon_play"]
 [ext_resource type="Texture2D" uid="uid://dfen0100lldvp" path="res://assets/images/icons/icon_castle.svg" id="16_icon_castle"]
 [ext_resource type="Texture2D" uid="uid://cbau2otllid1" path="res://assets/images/icons/icon_calendar.svg" id="17_icon_calendar"]
 [ext_resource type="Texture2D" uid="uid://iurtsy651xdc" path="res://assets/images/icons/icon_trophy.svg" id="18_icon_trophy"]
 [ext_resource type="Texture2D" uid="uid://21i38jchhg60" path="res://assets/images/icons/icon_gear.svg" id="20_icon_gear"]
-[ext_resource type="Texture2D" uid="uid://bmqwtnugyrxk1" path="res://assets/images/main/btn_menu_utility_normal.svg" id="21_btn_utility"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version_lg.tres" id="21_stamp_text_lg"]
-[ext_resource type="Texture2D" uid="uid://b4pg318yk67lq" path="res://assets/images/main/btn_menu_utility_pressed.svg" id="22_btn_utility_p"]
-[ext_resource type="Texture2D" uid="uid://b86vfwu1mw6xj" path="res://assets/images/main/btn_menu_utility_focus.svg" id="23_btn_utility_f"]
 [ext_resource type="Texture2D" uid="uid://1rqvlr6mxk7i" path="res://assets/images/main/btn_menu_badge_normal.svg" id="24_badge_normal"]
 [ext_resource type="Texture2D" uid="uid://cbedwjjj8aba0" path="res://assets/images/main/btn_menu_badge_pressed.svg" id="25_badge_pressed"]
 [ext_resource type="Texture2D" uid="uid://s2egoesghjer" path="res://assets/images/main/btn_menu_badge_focus.svg" id="26_badge_focus"]
 [ext_resource type="Texture2D" uid="uid://ce4bov5qet800" path="res://assets/images/main/btn_menu_badge_disabled.svg" id="27_badge_disabled"]
 [ext_resource type="Script" uid="uid://ch70ffv2x7sd4" path="res://scripts/utils/auto_fit_label.gd" id="L_autofit"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/card_daily_normal.tres" id="S_card_daily_normal"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/card_daily_pressed.tres" id="S_card_daily_pressed"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/card_disabled.tres" id="S_card_disabled"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/card_dungeon_focus.tres" id="S_card_dungeon_focus"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/card_dungeon_normal.tres" id="S_card_dungeon_normal"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/card_dungeon_pressed.tres" id="S_card_dungeon_pressed"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/card_level_disabled.tres" id="S_card_level_disabled"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/card_level_focus.tres" id="S_card_level_focus"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/card_level_normal.tres" id="S_card_level_normal"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/card_level_pressed.tres" id="S_card_level_pressed"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_focus.tres" id="S_util_focus"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_leaderboard.tres" id="S_util_leaderboard"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_normal.tres" id="S_util_normal"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_pressed.tres" id="S_util_pressed"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_settings.tres" id="S_util_settings"]
 
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/util_leaderboard.tres" id="S_util_leaderboard"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/util_settings.tres" id="S_util_settings"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/util_focus.tres" id="S_util_focus"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/util_normal.tres" id="S_util_normal"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/util_pressed.tres" id="S_util_pressed"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_daily_normal.tres" id="S_card_daily_normal"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_daily_pressed.tres" id="S_card_daily_pressed"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_disabled.tres" id="S_card_disabled"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_dungeon_focus.tres" id="S_card_dungeon_focus"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_dungeon_normal.tres" id="S_card_dungeon_normal"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_dungeon_pressed.tres" id="S_card_dungeon_pressed"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_level_disabled.tres" id="S_card_level_disabled"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_level_focus.tres" id="S_card_level_focus"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_level_normal.tres" id="S_card_level_normal"]
-[ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/card_level_pressed.tres" id="S_card_level_pressed"]
-
-
-
-[node name="Landscape" instance=ExtResource("1_parent")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
+[node name="Landscape" unique_id=781667487 instance=ExtResource("1_parent")]
 
 [node name="Paper" type="NinePatchRect" parent="." index="0" unique_id=1454574636]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.026
-anchor_top = 0.046
-anchor_right = 0.974
-anchor_bottom = 0.954
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_0wfyh")
-patch_margin_left = 115
+patch_margin_left = 211
 patch_margin_top = 96
 patch_margin_right = 64
 patch_margin_bottom = 64
@@ -76,14 +54,15 @@ anchors_preset = -1
 anchor_left = 0.022
 anchor_top = 0.0357
 anchor_right = 0.379
-anchor_bottom = 0.9643
-theme_override_constants/separation = 40
+anchor_bottom = 0.86300004
+offset_bottom = -0.4840088
+theme_override_constants/separation = 20
 
 [node name="LogoArea" type="VBoxContainer" parent="Paper/Hero" index="0" unique_id=328949317]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 2
 size_flags_stretch_ratio = 2.24
-theme_override_constants/separation = 12
+theme_override_constants/separation = 5
 alignment = 1
 
 [node name="Logo" type="TextureRect" parent="Paper/Hero/LogoArea" index="0" unique_id=412603202]
@@ -103,14 +82,23 @@ text = "Ink Maze"
 horizontal_alignment = 1
 resize_font_to_fit = true
 
-[node name="Tag" type="TextureRect" parent="Paper/Hero/LogoArea" index="2" unique_id=2109957902]
-custom_minimum_size = Vector2(516, 78)
+[node name="Title2" type="VBoxContainer" parent="Paper/Hero/LogoArea" index="2" unique_id=360240322]
 layout_mode = 2
-size_flags_horizontal = 4
-texture = ExtResource("5_0ld40")
-expand_mode = 1
 
-[node name="Genre" type="Label" parent="Paper/Hero/LogoArea/Tag" index="0" unique_id=423729746]
+[node name="Title" type="Label" parent="Paper/Hero/LogoArea/Title2" index="0" unique_id=194347152]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 2
+theme_type_variation = &"MainTitle"
+text = "Ink Maze"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Container" type="TextureRect" parent="Paper/Hero/LogoArea/Title2" index="1" unique_id=1220539371]
+layout_mode = 2
+texture = ExtResource("5_0ld40")
+
+[node name="Genre" type="Label" parent="Paper/Hero/LogoArea/Title2/Container" index="0" unique_id=1046490378]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,36 +106,35 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MainGenre"
-theme_override_font_sizes/font_size = 32
 text = "STR_GENRE_SUBTITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
-resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
 
-[node name="SubTitle" type="Label" parent="Paper/Hero/LogoArea" index="3" unique_id=222429801]
+[node name="SubTitle" type="Label" parent="Paper/Hero/LogoArea/Title2" index="2" unique_id=1724027459]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 theme_type_variation = &"MainTagline"
-theme_override_font_sizes/font_size = 36
 text = "STR_GAME_TAGLINE"
 horizontal_alignment = 1
-resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
 
-[node name="BadgeRow" type="CenterContainer" parent="Paper/Hero" index="1" unique_id=523074730]
+[node name="CenterContainer" type="CenterContainer" parent="Paper/Hero" index="1" unique_id=1626576441]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Archivement" type="TextureButton" parent="Paper/Hero/BadgeRow" index="0" unique_id=160161149]
-custom_minimum_size = Vector2(373, 373)
+[node name="Archivement" type="TextureButton" parent="Paper/Hero/CenterContainer" index="0" unique_id=160161149]
+custom_minimum_size = Vector2(336, 336)
 layout_mode = 2
 texture_normal = ExtResource("24_badge_normal")
 texture_pressed = ExtResource("25_badge_pressed")
 texture_hover = ExtResource("24_badge_normal")
 texture_disabled = ExtResource("27_badge_disabled")
 texture_focused = ExtResource("26_badge_focus")
-ignore_texture_size = true
 stretch_mode = 0
+metadata/_edit_use_anchors_ = true
 
-[node name="Count" type="Label" parent="Paper/Hero/BadgeRow/Archivement" index="0" unique_id=1512590681]
+[node name="Count" type="Label" parent="Paper/Hero/CenterContainer/Archivement" index="0" unique_id=1512590681]
 modulate = Color(0.5411765, 0.3529412, 0.10980392, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -155,85 +142,178 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -76.0
-offset_top = -22.0
+offset_left = -76.23999
+offset_top = -53.55603
 offset_right = 76.0
-offset_bottom = 34.0
+offset_bottom = 67.44397
 theme_type_variation = &"MainBadgeCount"
 theme_override_font_sizes/font_size = 71
 text = "0/0"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
+maximum_font_size = 25
 
-[node name="Label" type="Label" parent="Paper/Hero/BadgeRow/Archivement" index="1" unique_id=1366224451]
+[node name="Label" type="Label" parent="Paper/Hero/CenterContainer/Archivement" index="1" unique_id=1366224451]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 1.08
 anchor_bottom = 1.179
-offset_top = 4.0
+offset_top = -32.55603
+offset_bottom = -36.55603
 theme_type_variation = &"OtherLabel"
 theme_override_font_sizes/font_size = 43
 text = "STR_BTN_ARCHIVEMENT"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
 
-[node name="StampRow" type="CenterContainer" parent="Paper/Hero" index="2" unique_id=894897639]
+[node name="Utils" type="HBoxContainer" parent="Paper/Hero" index="2" unique_id=127081098]
 layout_mode = 2
+size_flags_vertical = 10
+size_flags_stretch_ratio = 1.4
+theme_override_constants/separation = 59
 
-[node name="Stamp" type="TextureRect" parent="Paper/Hero/StampRow" index="0" unique_id=1186388364]
-custom_minimum_size = Vector2(249, 123)
+[node name="Leaderboard" type="Button" parent="Paper/Hero/Utils" index="0" unique_id=496806865]
 layout_mode = 2
-texture = ExtResource("11_ya4ey")
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("S_util_leaderboard")
+theme_override_styles/pressed = ExtResource("S_util_leaderboard")
+theme_override_styles/hover = ExtResource("S_util_leaderboard")
+theme_override_styles/disabled = ExtResource("S_util_leaderboard")
+theme_override_styles/focus = ExtResource("S_util_leaderboard")
+
+[node name="Icon" type="TextureRect" parent="Paper/Hero/Utils/Leaderboard" index="0" unique_id=387527074]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35191306
+anchor_top = 0.13092309
+anchor_right = 0.62200004
+anchor_bottom = 0.60800004
+texture = ExtResource("18_icon_trophy")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Paper/Hero/StampRow/Stamp" index="0" unique_id=913298419]
+[node name="Label" type="Label" parent="Paper/Hero/Utils/Leaderboard" index="1" unique_id=6002238]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -12.0
-offset_top = 41.0
-offset_right = -12.0
-offset_bottom = 41.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -0.1770214
-text = "STR_SETTINGS_VERSION"
-label_settings = ExtResource("21_stamp_text_lg")
+anchors_preset = -1
+anchor_left = 0.09095658
+anchor_top = 0.6465536
+anchor_right = 0.91300005
+anchor_bottom = 0.823
+theme_type_variation = &"OtherLabel"
+theme_override_font_sizes/font_size = 39
+text = "STR_BTN_LEADERBOARD"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+
+[node name="Shop" type="Button" parent="Paper/Hero/Utils" index="1" unique_id=1292934563]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("S_util_normal")
+theme_override_styles/pressed = ExtResource("S_util_pressed")
+theme_override_styles/hover = ExtResource("S_util_normal")
+theme_override_styles/disabled = ExtResource("S_util_normal")
+theme_override_styles/focus = ExtResource("S_util_focus")
+
+[node name="Icon" type="TextureRect" parent="Paper/Hero/Utils/Shop" index="0" unique_id=266744997]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35191306
+anchor_top = 0.13092309
+anchor_right = 0.62200004
+anchor_bottom = 0.60800004
+texture = ExtResource("9_icon_shop")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Paper/Hero/Utils/Shop" index="1" unique_id=1600266566]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09095658
+anchor_top = 0.6465536
+anchor_right = 0.91300005
+anchor_bottom = 0.823
+theme_type_variation = &"OtherLabel"
+theme_override_font_sizes/font_size = 39
+text = "STR_BTN_SHOP"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+
+[node name="Settings" type="Button" parent="Paper/Hero/Utils" index="2" unique_id=255713455]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("S_util_settings")
+theme_override_styles/pressed = ExtResource("S_util_settings")
+theme_override_styles/hover = ExtResource("S_util_settings")
+theme_override_styles/disabled = ExtResource("S_util_settings")
+theme_override_styles/focus = ExtResource("S_util_settings")
+
+[node name="Icon" type="TextureRect" parent="Paper/Hero/Utils/Settings" index="0" unique_id=362221051]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35191306
+anchor_top = 0.13092309
+anchor_right = 0.62200004
+anchor_bottom = 0.60800004
+texture = ExtResource("20_icon_gear")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Paper/Hero/Utils/Settings" index="1" unique_id=1920785910]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09095658
+anchor_top = 0.6465536
+anchor_right = 0.91300005
+anchor_bottom = 0.823
+theme_type_variation = &"OtherLabel"
+theme_override_font_sizes/font_size = 39
+text = "STR_BTN_SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
 
 [node name="Menu" type="VBoxContainer" parent="Paper" index="1" unique_id=1865196585]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4011
+anchor_left = 0.42604166
 anchor_top = 0.0357
-anchor_right = 0.9725
-anchor_bottom = 0.9643
-theme_override_constants/separation = 44
+anchor_right = 0.9687292
+anchor_bottom = 0.8270705
+offset_right = -0.960083
+offset_bottom = -7.236084
+theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="Play" type="Button" parent="Paper/Menu" index="0" unique_id=1705148098]
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.05
-
-custom_minimum_size = Vector2(0, 310)
 theme_override_styles/normal = ExtResource("S_card_level_normal")
-theme_override_styles/hover = ExtResource("S_card_level_normal")
 theme_override_styles/pressed = ExtResource("S_card_level_pressed")
-theme_override_styles/focus = ExtResource("S_card_level_focus")
+theme_override_styles/hover = ExtResource("S_card_level_normal")
 theme_override_styles/disabled = ExtResource("S_card_level_disabled")
+theme_override_styles/focus = ExtResource("S_card_level_focus")
+
 [node name="Tag" type="Label" parent="Paper/Menu/Play" index="0" unique_id=1699793305]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.083
+anchor_left = 0.074
 anchor_top = 0.023
-anchor_right = 0.345
-anchor_bottom = 0.17
+anchor_right = 0.23700002
+anchor_bottom = 0.16900001
+offset_left = -0.2899704
+offset_right = -0.100982666
+offset_bottom = 0.05399704
 theme_type_variation = &"CardTagPlay"
 theme_override_font_sizes/font_size = 25
 text = "STR_TAG_MAIN_MODE"
@@ -244,24 +324,35 @@ resize_font_to_fit = true
 [node name="Title" type="Label" parent="Paper/Menu/Play" index="1" unique_id=1390641746]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.24
-anchor_right = 0.78
-anchor_bottom = 0.6
+anchor_left = 0.21000001
+anchor_top = 0.14974193
+anchor_right = 0.6703465
+anchor_bottom = 0.442
+offset_left = 0.51797485
+offset_top = -7.9760017
+offset_right = 0.51782227
+offset_bottom = -7.975998
 theme_type_variation = &"CardTitlePlay"
 theme_override_font_sizes/font_size = 68
 text = "STR_MODE_PLAY_TITLE"
 vertical_alignment = 1
+resize_font_to_fit = true
 script = ExtResource("L_autofit")
+metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Paper/Menu/Play" index="2" unique_id=1457985100]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.62
-anchor_right = 0.72
-anchor_bottom = 0.94
+anchor_left = 0.21562986
+anchor_top = 0.4462881
+anchor_right = 0.71629
+anchor_bottom = 0.7999651
+offset_left = 0.34199524
+offset_top = 0.05000305
+offset_right = 0.34204102
+offset_bottom = 0.13000488
 theme_override_constants/separation = 8
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayDesc1" type="Label" parent="Paper/Menu/Play/VBoxContainer" index="0" unique_id=1210655063]
 layout_mode = 2
@@ -279,7 +370,7 @@ text_overrun_behavior = 3
 [node name="Badge" type="Label" parent="Paper/Menu/Play" index="3" unique_id=2086512064]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.72
+anchor_left = 0.79232925
 anchor_top = 0.655
 anchor_right = 0.95
 anchor_bottom = 0.81
@@ -289,68 +380,81 @@ text = "STR_CURRENT_LEVEL_BADGE"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
 
 [node name="ModeIcon" type="TextureRect" parent="Paper/Menu/Play" index="4" unique_id=1124094877]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.025
-anchor_top = 0.25
-anchor_right = 0.1
-anchor_bottom = 0.9
+anchor_left = 0.08741598
+anchor_top = 0.38178363
+anchor_right = 0.17626101
+anchor_bottom = 0.71386105
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("15_icon_play")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="Dungeon" type="Button" parent="Paper/Menu" index="1" unique_id=1603437797]
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.95
-
-custom_minimum_size = Vector2(0, 310)
 theme_override_styles/normal = ExtResource("S_card_dungeon_normal")
-theme_override_styles/hover = ExtResource("S_card_dungeon_normal")
 theme_override_styles/pressed = ExtResource("S_card_dungeon_pressed")
-theme_override_styles/focus = ExtResource("S_card_dungeon_focus")
+theme_override_styles/hover = ExtResource("S_card_dungeon_normal")
 theme_override_styles/disabled = ExtResource("S_card_disabled")
+theme_override_styles/focus = ExtResource("S_card_dungeon_focus")
+
 [node name="Tag" type="Label" parent="Paper/Menu/Dungeon" index="0" unique_id=924940316]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.083
-anchor_top = 0.023
-anchor_right = 0.345
-anchor_bottom = 0.17
+anchor_left = 0.07684916
+anchor_top = 0.05650862
+anchor_right = 0.23599637
+anchor_bottom = 0.15616497
 theme_type_variation = &"CardTagDungeon"
 theme_override_font_sizes/font_size = 25
 text = "STR_TAG_ENDLESS_MODE"
 vertical_alignment = 1
 resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="Paper/Menu/Dungeon" index="1" unique_id=285401397]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.24
-anchor_right = 0.78
-anchor_bottom = 0.6
+anchor_left = 0.21400002
+anchor_top = 0.185
+anchor_right = 0.694
+anchor_bottom = 0.545
+offset_left = 0.3420105
+offset_top = -7.9500046
+offset_right = 0.34191895
+offset_bottom = -7.950012
 theme_type_variation = &"CardTitle"
 theme_override_font_sizes/font_size = 64
 text = "STR_MODE_DUNGEON_TITLE"
 vertical_alignment = 1
+resize_font_to_fit = true
 script = ExtResource("L_autofit")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Paper/Menu/Dungeon" index="2" unique_id=1685928543]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.62
-anchor_right = 0.72
-anchor_bottom = 0.94
+anchor_left = 0.21000001
+anchor_top = 0.5044461
+anchor_right = 0.68617684
+anchor_bottom = 0.89687055
+offset_left = -0.30999756
+offset_top = -0.12200928
+offset_right = -0.3100586
+offset_bottom = -6.2160034
 theme_override_constants/separation = 8
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayDesc1" type="Label" parent="Paper/Menu/Dungeon/VBoxContainer" index="0" unique_id=1971834988]
 layout_mode = 2
@@ -370,7 +474,7 @@ text_overrun_behavior = 3
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.72
+anchor_left = 0.7998129
 anchor_top = 0.655
 anchor_right = 0.95
 anchor_bottom = 0.81
@@ -380,68 +484,84 @@ text = "STR_RECORD_FLOOR_BADGE"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
 
 [node name="ModeIcon" type="TextureRect" parent="Paper/Menu/Dungeon" index="4" unique_id=1117373994]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.025
-anchor_top = 0.25
-anchor_right = 0.1
-anchor_bottom = 0.9
+anchor_left = 0.08837658
+anchor_top = 0.35204127
+anchor_right = 0.1694568
+anchor_bottom = 0.69678956
+offset_right = 0.055023193
+offset_bottom = 0.12800598
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("16_icon_castle")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="DailyChallenge" type="Button" parent="Paper/Menu" index="2" unique_id=1448898934]
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.95
-
-custom_minimum_size = Vector2(0, 310)
 theme_override_styles/normal = ExtResource("S_card_daily_normal")
-theme_override_styles/hover = ExtResource("S_card_daily_normal")
 theme_override_styles/pressed = ExtResource("S_card_daily_pressed")
-theme_override_styles/focus = ExtResource("S_card_dungeon_focus")
+theme_override_styles/hover = ExtResource("S_card_daily_normal")
 theme_override_styles/disabled = ExtResource("S_card_disabled")
+theme_override_styles/focus = ExtResource("S_card_dungeon_focus")
+
 [node name="Tag" type="Label" parent="Paper/Menu/DailyChallenge" index="0" unique_id=2037718859]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.083
-anchor_top = 0.023
-anchor_right = 0.345
-anchor_bottom = 0.17
+anchor_left = 0.07684919
+anchor_top = 0.049465638
+anchor_right = 0.24511215
+anchor_bottom = 0.1487807
 theme_type_variation = &"CardTagDaily"
 theme_override_font_sizes/font_size = 25
 text = "STR_TAG_DAILY_MODE"
 vertical_alignment = 1
 resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="Paper/Menu/DailyChallenge" index="1" unique_id=815390613]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.24
-anchor_right = 0.78
-anchor_bottom = 0.6
+anchor_left = 0.21400002
+anchor_top = 0.185
+anchor_right = 0.694
+anchor_bottom = 0.545
+offset_left = 0.3420105
+offset_top = -7.9499893
+offset_right = 0.34191895
+offset_bottom = -7.949997
 theme_type_variation = &"CardTitle"
 theme_override_font_sizes/font_size = 64
 text = "STR_MODE_DAILY_TITLE"
 vertical_alignment = 1
+resize_font_to_fit = true
 script = ExtResource("L_autofit")
+metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Paper/Menu/DailyChallenge" index="2" unique_id=830595915]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.62
-anchor_right = 0.72
-anchor_bottom = 0.94
+anchor_left = 0.21000001
+anchor_top = 0.504446
+anchor_right = 0.6977042
+anchor_bottom = 0.89594233
+offset_left = -0.30999756
+offset_top = -0.06399536
+offset_right = -0.3100586
+offset_bottom = -5.8999634
 theme_override_constants/separation = 8
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayDesc1" type="Label" parent="Paper/Menu/DailyChallenge/VBoxContainer" index="0" unique_id=731660892]
 layout_mode = 2
@@ -461,7 +581,7 @@ text_overrun_behavior = 3
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.72
+anchor_left = 0.79232925
 anchor_top = 0.655
 anchor_right = 0.95
 anchor_bottom = 0.81
@@ -471,127 +591,53 @@ text = "STR_STREAK_BADGE"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
 
 [node name="ModeIcon" type="TextureRect" parent="Paper/Menu/DailyChallenge" index="4" unique_id=326650869]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.025
-anchor_top = 0.25
-anchor_right = 0.1
-anchor_bottom = 0.9
+anchor_left = 0.089337155
+anchor_top = 0.3474109
+anchor_right = 0.17502539
+anchor_bottom = 0.7248302
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("17_icon_calendar")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
-[node name="Utils" type="HBoxContainer" parent="Paper/Menu" index="3" unique_id=127081098]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 1.4
-theme_override_constants/separation = 59
-
-[node name="Leaderboard" type="Button" parent="Paper/Menu/Utils" index="0" unique_id=496806865]
-layout_mode = 2
-size_flags_horizontal = 3
-
-theme_override_styles/normal = ExtResource("S_util_leaderboard")
-theme_override_styles/hover = ExtResource("S_util_leaderboard")
-theme_override_styles/pressed = ExtResource("S_util_leaderboard")
-theme_override_styles/focus = ExtResource("S_util_leaderboard")
-theme_override_styles/disabled = ExtResource("S_util_leaderboard")
-[node name="Icon" type="TextureRect" parent="Paper/Menu/Utils/Leaderboard" index="0" unique_id=387527074]
+[node name="Stamp" type="TextureRect" parent="Paper" index="2" unique_id=1186388364]
+custom_minimum_size = Vector2(249, 123)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.35191306
-anchor_top = 0.13092309
-anchor_right = 0.62200004
-anchor_bottom = 0.60800004
-texture = ExtResource("18_icon_trophy")
+anchor_left = 0.8484375
+anchor_top = 0.8185185
+anchor_right = 0.97843754
+anchor_bottom = 0.93251854
+offset_right = -0.6000366
+offset_bottom = -0.120010376
+texture = ExtResource("11_ya4ey")
 expand_mode = 1
-stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Paper/Menu/Utils/Leaderboard" index="1" unique_id=6002238]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+[node name="Label" type="Label" parent="Paper/Stamp" index="0" unique_id=913298419]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.09095658
-anchor_top = 0.6465536
-anchor_right = 0.91300005
-anchor_bottom = 0.823
-theme_type_variation = &"OtherLabel"
-theme_override_font_sizes/font_size = 39
-text = "STR_BTN_LEADERBOARD"
+anchor_left = 0.13835865
+anchor_top = 0.0013110153
+anchor_right = 0.94469506
+anchor_bottom = 1.0488576
+offset_left = -16.061405
+offset_top = 41.740627
+offset_right = -12.0
+offset_bottom = 1.6187897
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.1770214
+text = "STR_SETTINGS_VERSION"
+label_settings = ExtResource("21_stamp_text_lg")
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
-
-[node name="Shop" type="Button" parent="Paper/Menu/Utils" index="1" unique_id=1292934563]
-layout_mode = 2
-size_flags_horizontal = 3
-
-theme_override_styles/normal = ExtResource("S_util_normal")
-theme_override_styles/hover = ExtResource("S_util_normal")
-theme_override_styles/pressed = ExtResource("S_util_pressed")
-theme_override_styles/focus = ExtResource("S_util_focus")
-theme_override_styles/disabled = ExtResource("S_util_normal")
-[node name="Icon" type="TextureRect" parent="Paper/Menu/Utils/Shop" index="0" unique_id=266744997]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.35191306
-anchor_top = 0.13092309
-anchor_right = 0.62200004
-anchor_bottom = 0.60800004
-texture = ExtResource("9_icon_shop")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="Paper/Menu/Utils/Shop" index="1" unique_id=1600266566]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.09095658
-anchor_top = 0.6465536
-anchor_right = 0.91300005
-anchor_bottom = 0.823
-theme_type_variation = &"OtherLabel"
-theme_override_font_sizes/font_size = 39
-text = "STR_BTN_SHOP"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-
-[node name="Settings" type="Button" parent="Paper/Menu/Utils" index="2" unique_id=255713455]
-layout_mode = 2
-size_flags_horizontal = 3
-
-theme_override_styles/normal = ExtResource("S_util_settings")
-theme_override_styles/hover = ExtResource("S_util_settings")
-theme_override_styles/pressed = ExtResource("S_util_settings")
-theme_override_styles/focus = ExtResource("S_util_settings")
-theme_override_styles/disabled = ExtResource("S_util_settings")
-[node name="Icon" type="TextureRect" parent="Paper/Menu/Utils/Settings" index="0" unique_id=362221051]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.35191306
-anchor_top = 0.13092309
-anchor_right = 0.62200004
-anchor_bottom = 0.60800004
-texture = ExtResource("20_icon_gear")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="Paper/Menu/Utils/Settings" index="1" unique_id=1920785910]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.09095658
-anchor_top = 0.6465536
-anchor_right = 0.91300005
-anchor_bottom = 0.823
-theme_type_variation = &"OtherLabel"
-theme_override_font_sizes/font_size = 39
-text = "STR_BTN_SETTINGS"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true

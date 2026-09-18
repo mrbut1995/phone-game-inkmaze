@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3]
 
-[ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/hud/fog_of_war_hud.gd" id="2_script"]
 [ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="3_theme"]
 [ext_resource type="Texture2D" path="res://assets/images/game/card_time_tall.svg" id="4_time"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" path="res://assets/images/game/card_fog_row_vision.svg" id="7_row_vision"]
 [ext_resource type="Texture2D" path="res://assets/images/game/card_fog_chip_blue.svg" id="8_chip_blue"]
 [ext_resource type="Texture2D" path="res://assets/images/game/card_fog_row_warn.svg" id="9_row_warn"]
+
 
 [node name="Hud" instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")
@@ -205,3 +206,4 @@ theme_type_variation = &"HudFogRetryNote"
 text = "STR_HUD_FOG_RETRY_NOTE"
 vertical_alignment = 1
 clip_text = true
+

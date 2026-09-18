@@ -3,6 +3,11 @@ extends SceneTree
 ## Test: Kiểm tra Splash, Title, Shop, Credit, Chapters & music wiring
 ## ============================================================================
 
+## Màn đã tách 2 layout ⇒ node nằm trong layout đang hiển thị (dọc/ngang)
+func _has(scene: Node, path: String) -> bool:
+	return scene.call("ui_path", path) != null
+
+
 func _init() -> void:
 	print("\n========================================================")
 	print("  TEST: SPLASH, TITLE, SHOP, CREDIT, CHAPTERS + MUSIC")
@@ -31,12 +36,12 @@ func _init() -> void:
 	await process_frame
 	await process_frame
 
-	assert(splash_inst.has_node("Panel/LogoContainer/Logo"), "Splash phai co Panel/LogoContainer/Logo")
-	assert(splash_inst.has_node("Panel/LogoContainer/Pencil"), "Splash phai co Panel/LogoContainer/Pencil")
-	assert(splash_inst.has_node("Panel/Title"), "Splash phai co Panel/Title")
-	assert(splash_inst.has_node("Panel/Tagline"), "Splash phai co Panel/Tagline")
-	assert(splash_inst.has_node("Panel/Stamp"), "Splash phai co Panel/Stamp")
-	assert(splash_inst.has_node("FadeOverlay"), "Splash phai co FadeOverlay")
+	assert(_has(splash_inst, "Panel/LogoContainer/Logo"), "Splash phai co Panel/LogoContainer/Logo")
+	assert(_has(splash_inst, "Panel/LogoContainer/Pencil"), "Splash phai co Panel/LogoContainer/Pencil")
+	assert(_has(splash_inst, "Panel/Title"), "Splash phai co Panel/Title")
+	assert(_has(splash_inst, "Panel/Tagline"), "Splash phai co Panel/Tagline")
+	assert(_has(splash_inst, "Panel/Stamp"), "Splash phai co Panel/Stamp")
+	assert(_has(splash_inst, "FadeOverlay"), "Splash phai co FadeOverlay")
 	print("[CHECK] SplashScene load va chua day du cac node giao dien truc quan.")
 
 	splash_inst.queue_free()
@@ -51,14 +56,14 @@ func _init() -> void:
 	await process_frame
 	await process_frame
 
-	assert(title_inst.has_node("Panel/LogoContainer/Logo"), "Title phai co Panel/LogoContainer/Logo")
-	assert(title_inst.has_node("Panel/LogoContainer/Pencil"), "Title phai co Panel/LogoContainer/Pencil")
-	assert(title_inst.has_node("Panel/Title"), "Title phai co Panel/Title")
-	assert(title_inst.has_node("Panel/Subtitle"), "Title phai co Panel/Subtitle")
-	assert(title_inst.has_node("Panel/TapContainer/TapLabel"), "Title phai co Panel/TapContainer/TapLabel")
-	assert(title_inst.has_node("Panel/TapContainer/PlayIcon"), "Title phai co Panel/TapContainer/PlayIcon")
-	assert(title_inst.has_node("Panel/Stamp"), "Title phai co Panel/Stamp")
-	assert(title_inst.has_node("FadeOverlay"), "Title phai co FadeOverlay")
+	assert(_has(title_inst, "Panel/LogoContainer/Logo"), "Title phai co Panel/LogoContainer/Logo")
+	assert(_has(title_inst, "Panel/LogoContainer/Pencil"), "Title phai co Panel/LogoContainer/Pencil")
+	assert(_has(title_inst, "Panel/Title"), "Title phai co Panel/Title")
+	assert(_has(title_inst, "Panel/Subtitle"), "Title phai co Panel/Subtitle")
+	assert(_has(title_inst, "Panel/TapContainer/TapLabel"), "Title phai co Panel/TapContainer/TapLabel")
+	assert(_has(title_inst, "Panel/TapContainer/PlayIcon"), "Title phai co Panel/TapContainer/PlayIcon")
+	assert(_has(title_inst, "Panel/Stamp"), "Title phai co Panel/Stamp")
+	assert(_has(title_inst, "FadeOverlay"), "Title phai co FadeOverlay")
 	print("[CHECK] TitleScene load va chua day du cac node giao dien truc quan.")
 
 	title_inst.queue_free()
@@ -73,10 +78,10 @@ func _init() -> void:
 	await process_frame
 	await process_frame
 
-	assert(shop_inst.has_node("TopBar"), "Shop phai co TopBar")
-	assert(shop_inst.has_node("Wallet"), "Shop phai co Wallet")
-	assert(shop_inst.has_node("Tabs"), "Shop phai co Tabs")
-	assert(shop_inst.has_node("GiftBanner"), "Shop phai co GiftBanner")
+	assert(_has(shop_inst, "TopBar"), "Shop phai co TopBar")
+	assert(_has(shop_inst, "Wallet"), "Shop phai co Wallet")
+	assert(_has(shop_inst, "Tabs"), "Shop phai co Tabs")
+	assert(_has(shop_inst, "GiftBanner"), "Shop phai co GiftBanner")
 	print("[CHECK] ShopScene load va khoi chay cac animation thanh cong.")
 
 	shop_inst.queue_free()
@@ -91,12 +96,12 @@ func _init() -> void:
 	await process_frame
 	await process_frame
 
-	assert(credit_inst.has_node("TopBar/Back"), "Credit phai co nut Back")
-	assert(credit_inst.has_node("Panel/Content/VBox/MusicSection/ThemeRow/Value"),
+	assert(_has(credit_inst, "TopBar/Back"), "Credit phai co nut Back")
+	assert(_has(credit_inst, "Panel/Content/VBox/MusicSection/ThemeRow/Value"),
 		"Credit phai hien theme dang dung")
-	assert(credit_inst.has_node("Panel/Content/VBox/MusicSection/TrackRow/Value"),
+	assert(_has(credit_inst, "Panel/Content/VBox/MusicSection/TrackRow/Value"),
 		"Credit phai hien track dang phat")
-	assert(credit_inst.has_node("Panel/Content/VBox/Footer/Stamp/VersionLabel"),
+	assert(_has(credit_inst, "Panel/Content/VBox/Footer/Stamp/VersionLabel"),
 		"Credit phai co con dau version")
 	print("[CHECK] CreditScene load va co day du thong tin soundtrack/attribution.")
 
@@ -112,10 +117,10 @@ func _init() -> void:
 	await process_frame
 	await process_frame
 
-	assert(chapters_inst.has_node("TopBar"), "Chapters phai co TopBar")
-	assert(chapters_inst.has_node("Wallet"), "Chapters phai co Wallet")
-	assert(chapters_inst.has_node("Banner"), "Chapters phai co Banner")
-	assert(chapters_inst.has_node("ContinueButton"), "Chapters phai co ContinueButton")
+	assert(_has(chapters_inst, "TopBar"), "Chapters phai co TopBar")
+	assert(_has(chapters_inst, "Wallet"), "Chapters phai co Wallet")
+	assert(_has(chapters_inst, "Banner"), "Chapters phai co Banner")
+	assert(_has(chapters_inst, "ContinueButton"), "Chapters phai co ContinueButton")
 	print("[CHECK] ChaptersScene load va khoi chay cac animation thanh cong.")
 
 	chapters_inst.queue_free()
