@@ -74,17 +74,13 @@ script = ExtResource("34_02fa5")
 [node name="TimerController" type="Node" parent="Controllers" index="7" unique_id=1851640039]
 script = ExtResource("36_02fa5")
 
-[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=1862639245 node_paths=PackedStringArray("level_label", "subtitle_label", "undo_button", "replay_button")]
+[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=1862639245 node_paths=PackedStringArray("level_label", "subtitle_label")]
 script = ExtResource("38_8ool0")
 level_label = NodePath("../../Side/Status/Title/LevelLabel")
 subtitle_label = NodePath("../../Side/Status/Title/Subtitle")
-undo_button = NodePath("")
-replay_button = NodePath("")
 
-[node name="ToolController" type="Node" parent="Controllers" index="9" unique_id=1503824 node_paths=PackedStringArray("tool_path_btn", "tool_wall_btn")]
+[node name="ToolController" type="Node" parent="Controllers" index="9" unique_id=1503824]
 script = ExtResource("39_pr1ej")
-tool_path_btn = NodePath("")
-tool_wall_btn = NodePath("")
 
 [node name="ChallengeController" type="Node" parent="Controllers" index="10" unique_id=301448501]
 script = ExtResource("42_pr1ej")
@@ -168,7 +164,6 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Information" parent="Side" index="1" unique_id=1383101299 instance=ExtResource("14_nepv3")]
-custom_minimum_size = Vector2(0, 760)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -213,4 +208,3 @@ theme_type_variation = &"HintGuideText"
 text = "STR_HINT_PLAY"
 vertical_alignment = 1
 text_overrun_behavior = 3
-

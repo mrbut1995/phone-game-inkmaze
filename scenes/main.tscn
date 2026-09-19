@@ -15,3 +15,4 @@ layout_mode = 1
 
 [node name="Landscape" parent="." index="2" unique_id=2059472326 instance=ExtResource("L_main_landscape")]
 layout_mode = 1
+anchors_preset = -1

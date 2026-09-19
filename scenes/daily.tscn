@@ -2,32 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cxb1slgndopaa" path="res://scripts/scenes/daily.gd" id="2_daily"]
-[ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="4_theme"]
-[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="5_back_n"]
-[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="6_back_p"]
-[ext_resource type="Texture2D" uid="uid://cvt2b5v5oe1n8" path="res://assets/images/calendar/streak_badge.svg" id="7_streak"]
-[ext_resource type="Texture2D" uid="uid://coklyxxvrunu2" path="res://assets/images/calendar/fire_icon.svg" id="8_fire"]
-[ext_resource type="Texture2D" uid="uid://cpiryq18o3y70" path="res://assets/images/calendar/panel_daily_mission.svg" id="9_panel"]
-[ext_resource type="Texture2D" uid="uid://cwkukl6emlhmk" path="res://assets/images/calendar/tag_day.svg" id="10_tag_day"]
-[ext_resource type="Texture2D" uid="uid://balhmyit838gg" path="res://assets/images/calendar/tag_reward.svg" id="11_tag_reward"]
-[ext_resource type="Texture2D" uid="uid://1u1eht4ctsov" path="res://assets/images/shop/icon_coin.svg" id="12_coin"]
-[ext_resource type="Texture2D" uid="uid://88bsbnhxa7wf" path="res://assets/images/calendar/progress_bar_bg.svg" id="22_bar_bg"]
-[ext_resource type="Texture2D" uid="uid://31yj72v8vldh" path="res://assets/images/calendar/progress_bar_fill.svg" id="23_bar_fill"]
-[ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="24_play_n"]
-[ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="25_play_p"]
-[ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="26_play_f"]
-[ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/calendar/pencil_icon.svg" id="27_pencil"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/daily.tscn" id="L_Portrait"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/daily.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://ka36asr06er2" path="res://scenes/orientation/landscape/daily.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://ddx6na0robdma" path="res://scenes/orientation/portrait/daily.tscn" id="L_Portrait"]
 
 [node name="Control" unique_id=1222391855 instance=ExtResource("1_base")]
 theme = ExtResource("4_theme")
 script = ExtResource("2_daily")
 
+[node name="Portrait" parent="." index="1" unique_id=1504128517 instance=ExtResource("L_Portrait")]
+layout_mode = 1
 
-[node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
-
-[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]
+[node name="Landscape" parent="." index="2" unique_id=1986560234 instance=ExtResource("L_Landscape")]
+layout_mode = 1
