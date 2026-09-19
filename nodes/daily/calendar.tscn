@@ -34,10 +34,14 @@ texture = ExtResource("2_board")
 [node name="Months" type="HBoxContainer" parent="." unique_id=2039597602]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 80.0
-offset_top = 46.0
-offset_right = 940.0
-offset_bottom = 96.0
+anchor_left = 0.5
+anchor_top = 0.074
+anchor_right = 0.5
+anchor_bottom = 0.074
+offset_left = -430.0
+offset_top = -28.739998
+offset_right = 430.0
+offset_bottom = 21.260002
 theme_override_constants/separation = 0
 
 [node name="Previous" type="TextureButton" parent="Months" unique_id=990753091]
@@ -69,10 +73,14 @@ texture_focused = ExtResource("11_next_f")
 [node name="DayTitle" type="HBoxContainer" parent="." unique_id=836109917]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 76.0
-offset_top = 133.0
-offset_right = 986.0
-offset_bottom = 183.0
+anchor_left = 0.5
+anchor_top = 0.156
+anchor_right = 0.5
+anchor_bottom = 0.156
+offset_left = -434.0
+offset_top = -24.559998
+offset_right = 476.0
+offset_bottom = 25.440002
 theme_override_constants/separation = 0
 
 [node name="Monday" type="Label" parent="DayTitle" unique_id=287543008]
@@ -134,10 +142,14 @@ vertical_alignment = 1
 [node name="Days" type="GridContainer" parent="." unique_id=1650849745]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 76.0
-offset_top = 193.0
-offset_right = 986.0
-offset_bottom = 943.0
+anchor_left = 0.521
+anchor_top = 0.5
+anchor_right = 0.521
+anchor_bottom = 0.5
+offset_left = -455.42004
+offset_top = -312.0
+offset_right = 454.57996
+offset_bottom = 438.0
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 7

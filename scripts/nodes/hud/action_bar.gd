@@ -26,27 +26,21 @@ func set_landscape(on: bool) -> void:
 func is_landscape() -> bool:
 	return _landscape
 
-
 ## Nút theo tên — tìm SÂU trong thanh (nút nằm trong Row/MainRow/SubRow của từng hướng)
 func button(name: String) -> BaseButton:
 	return find_child(name, true, false) as BaseButton
 
-
 func tool_path_btn() -> BaseButton:
 	return button("Tool")
-
 
 func tool_wall_btn() -> BaseButton:
 	return button("Wall")
 
-
 func undo_btn() -> BaseButton:
 	return button("Undo")
 
-
 func hint_btn() -> BaseButton:
 	return button("Hint")
-
 
 func replay_btn() -> BaseButton:
 	return button("Replay")

@@ -23,12 +23,12 @@ texture = ExtResource("1_3ffsd")
 expand_mode = 1
 metadata/_edit_lock_ = true
 
-[node name="SideL" type="ColorRect" parent="Background"]
+[node name="SideL" type="ColorRect" parent="Background" unique_id=154183801]
 layout_mode = 0
 mouse_filter = 2
 color = Color(0.98039216, 0.9607844, 0.92156863, 1)
 
-[node name="SideR" type="ColorRect" parent="Background"]
+[node name="SideR" type="ColorRect" parent="Background" unique_id=1333467610]
 layout_mode = 0
 mouse_filter = 2
 color = Color(0.98039216, 0.9607844, 0.92156863, 1)

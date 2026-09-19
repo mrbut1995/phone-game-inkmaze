@@ -1,10 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://ka36asr06er2"]
 
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/landscape.tscn" id="1_parent"]
-[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://cxb1slgndopaa" path="res://scripts/scenes/daily.gd" id="2_daily"]
+[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/orientation/landscape/landscape.tscn" id="1_parent"]
 [ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="4_theme"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="5_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="6_back_p"]
 [ext_resource type="Texture2D" uid="uid://cvt2b5v5oe1n8" path="res://assets/images/calendar/streak_badge.svg" id="7_streak"]
@@ -13,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cwkukl6emlhmk" path="res://assets/images/calendar/tag_day.svg" id="10_tag_day"]
 [ext_resource type="Texture2D" uid="uid://balhmyit838gg" path="res://assets/images/calendar/tag_reward.svg" id="11_tag_reward"]
 [ext_resource type="Texture2D" uid="uid://1u1eht4ctsov" path="res://assets/images/shop/icon_coin.svg" id="12_coin"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/NinePatchButton.gd" id="16_aqjlc"]
 [ext_resource type="Texture2D" uid="uid://88bsbnhxa7wf" path="res://assets/images/calendar/progress_bar_bg.svg" id="22_bar_bg"]
 [ext_resource type="Texture2D" uid="uid://31yj72v8vldh" path="res://assets/images/calendar/progress_bar_fill.svg" id="23_bar_fill"]
 [ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="24_play_n"]
@@ -20,30 +18,73 @@
 [ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="26_play_f"]
 [ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/calendar/pencil_icon.svg" id="27_pencil"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uaalm"]
+content_margin_left = 106.0
+content_margin_top = 32.0
+content_margin_right = 65.0
+content_margin_bottom = 34.0
+texture = ExtResource("24_play_n")
+texture_margin_left = 106.0
+texture_margin_top = 32.0
+texture_margin_right = 65.0
+texture_margin_bottom = 34.0
 
-[node name="Landscape" instance=ExtResource("1_parent")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4ahgp"]
+content_margin_left = 106.0
+content_margin_top = 32.0
+content_margin_right = 65.0
+content_margin_bottom = 34.0
+texture = ExtResource("25_play_p")
+texture_margin_left = 106.0
+texture_margin_top = 32.0
+texture_margin_right = 65.0
+texture_margin_bottom = 34.0
 
-[node name="TopBar" type="HBoxContainer" parent="." unique_id=501371577]
-anchor_bottom = 0.115
-anchor_right = 0.97
-anchor_top = 0.028
-anchor_left = 0.03
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1lf86"]
+content_margin_left = 106.0
+content_margin_top = 32.0
+content_margin_right = 65.0
+content_margin_bottom = 34.0
+texture = ExtResource("25_play_p")
+texture_margin_left = 106.0
+texture_margin_top = 32.0
+texture_margin_right = 65.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7lagm"]
+content_margin_left = 106.0
+content_margin_top = 32.0
+content_margin_right = 65.0
+content_margin_bottom = 34.0
+texture = ExtResource("24_play_n")
+texture_margin_left = 106.0
+texture_margin_top = 32.0
+texture_margin_right = 65.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mgsun"]
+content_margin_left = 106.0
+content_margin_top = 32.0
+content_margin_right = 65.0
+content_margin_bottom = 34.0
+texture = ExtResource("26_play_f")
+texture_margin_left = 106.0
+texture_margin_top = 32.0
+texture_margin_right = 65.0
+texture_margin_bottom = 34.0
+
+[node name="Landscape" unique_id=82504288 instance=ExtResource("1_parent")]
+
+[node name="TopBar" type="HBoxContainer" parent="." index="0" unique_id=501371577]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+anchor_left = 0.03
+anchor_top = 0.028
+anchor_right = 0.97
+anchor_bottom = 0.115
 theme_override_constants/separation = 20
 
 [node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=1019985210]
-stretch_mode = 0
-ignore_texture_size = true
 custom_minimum_size = Vector2(133, 133)
 layout_mode = 2
 size_flags_vertical = 4
@@ -52,12 +93,14 @@ texture_pressed = ExtResource("6_back_p")
 texture_hover = ExtResource("6_back_p")
 texture_disabled = ExtResource("5_back_n")
 texture_focused = ExtResource("5_back_n")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="Title" type="Label" parent="TopBar" index="1" unique_id=613672660]
-theme_override_font_sizes/font_size = 71
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyTitle"
+theme_override_font_sizes/font_size = 71
 text = "STR_DAILY_CHALLENGE_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -67,47 +110,33 @@ custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="CalBox" type="AspectRatioContainer" parent="."]
+[node name="CalBox" type="AspectRatioContainer" parent="." index="1" unique_id=667923659]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.025
-anchor_top = 0.135
-anchor_right = 1.0
-anchor_bottom = 0.965
-offset_right = -1090.0
-ratio = 1.0
+anchor_left = 0.017
+anchor_top = 0.08800001
+anchor_right = 0.54800004
+anchor_bottom = 1.023
+offset_left = 0.3599968
+offset_top = -0.040008545
+offset_right = 0.8399658
+offset_bottom = 0.16003418
 
-[node name="Calendar" parent="CalBox" unique_id=364415579 instance=ExtResource("3_calendar")]
-size_flags_vertical = 3
-size_flags_horizontal = 3
+[node name="Calendar" parent="CalBox" index="0" unique_id=364415579 instance=ExtResource("3_calendar")]
 layout_mode = 2
-anchors_preset = -1
-; Chiều cao GIỮ ĐÚNG THIẾT KẾ (1010) — không kéo giãn theo màn cao,
-; nếu không lịch đè lên bảng nhiệm vụ ở màn 9:19.5/9:20.
-anchor_left = 0.028
-anchor_top = 0.09
-anchor_right = 0.97200006
-anchor_bottom = 0.09
-offset_left = -0.24000168
-offset_top = -0.80000305
-offset_right = 0.23999023
-offset_bottom = 1009.2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="StreakBadge" type="TextureRect" parent="." unique_id=1847053838]
-stretch_mode = 0
-expand_mode = 1
-anchor_bottom = 0.113
-anchor_right = 0.97
-anchor_top = 0.03
-anchor_left = 0.862
+[node name="StreakBadge" type="TextureRect" parent="." index="2" unique_id=1847053838]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+anchor_left = 0.862
+anchor_top = 0.03
+anchor_right = 0.97
+anchor_bottom = 0.113
 texture = ExtResource("7_streak")
+expand_mode = 1
 
 [node name="Fire" type="TextureRect" parent="StreakBadge" index="0" unique_id=293082184]
 layout_mode = 1
@@ -130,26 +159,24 @@ text = "7"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Right" type="VBoxContainer" parent="."]
+[node name="Right" type="VBoxContainer" parent="." index="3" unique_id=899992581]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 0.135
-anchor_right = 1.0
-anchor_bottom = 0.90
-offset_left = -1050.0
-offset_right = -30.0
+anchor_left = 0.54200006
+anchor_top = 0.102000006
+anchor_right = 0.984
+anchor_bottom = 0.90000004
+offset_left = 0.35986328
+offset_top = -0.16000366
+offset_right = 0.7199707
+offset_bottom = -6.1035156e-05
 theme_override_constants/separation = 34
 
-[node name="Missions" type="TextureRect" parent="Right" unique_id=564649675]
-stretch_mode = 0
-size_flags_vertical = 3
+[node name="Missions" type="TextureRect" parent="Right" index="0" unique_id=564649675]
 layout_mode = 2
-; Bảng nhiệm vụ 1020×592 — nằm NGAY DƯỚI LỊCH (đáy lịch 1182 + khe 24 = 1206).
-; `scripts/scenes/daily.gd` đọc chính các số này (_capture_design) rồi co giãn theo màn hình.
-; Cho phép bảng co/giãn tự do theo màn hình (nếu không, texture ghim cứng cỡ 1020×592)
-expand_mode = 1
+size_flags_vertical = 3
 texture = ExtResource("9_panel")
+expand_mode = 1
 
 [node name="DateTag" type="TextureRect" parent="Right/Missions" index="0" unique_id=1698417265]
 layout_mode = 1
@@ -185,14 +212,22 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Reward" type="TextureRect" parent="Right/Missions" index="2" unique_id=1700693757]
+[node name="Reward" type="NinePatchRect" parent="Right/Missions" index="2" unique_id=710087459]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 860.0
-offset_top = 32.0
-offset_right = 975.0
-offset_bottom = 70.0
+anchor_left = 1.0
+anchor_top = 0.036000002
+anchor_right = 1.0
+anchor_bottom = 0.036000002
+offset_left = -152.0
+offset_top = 0.095998764
+offset_right = -37.0
+offset_bottom = 34.096
 texture = ExtResource("11_tag_reward")
+patch_margin_left = 17
+patch_margin_top = 11
+patch_margin_right = 24
+patch_margin_bottom = 15
 
 [node name="CoinIcon" type="TextureRect" parent="Right/Missions/Reward" index="0" unique_id=2135901154]
 layout_mode = 1
@@ -218,76 +253,97 @@ vertical_alignment = 1
 
 [node name="Rows" type="Control" parent="Right/Missions" index="3" unique_id=1711770941]
 layout_mode = 1
-; Đầu hàng nhiệm vụ (thiết kế) — script đọc `Rows.offset_top` để dàn hàng;
-; mỗi hàng cao 110 (nodes/daily/mission_row.tscn).
-offset_left = 20.0
-offset_top = 112.0
-offset_right = 1000.0
-offset_bottom = 552.0
+anchors_preset = 0
+offset_left = 23.0
+offset_top = 55.0
+offset_right = 824.0
+offset_bottom = 361.0
 mouse_filter = 2
 
 [node name="ProgressLabel" type="Label" parent="Right/Missions" index="4" unique_id=1214704438]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 45.0
-offset_top = 528.0
-offset_right = 405.0
-offset_bottom = 556.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -44.0
+offset_right = 236.0
+offset_bottom = -16.0
 theme_type_variation = &"DailyProgressLabel"
 text = "STR_DAILY_TOTAL_PROGRESS"
 vertical_alignment = 1
+resize_font_to_fit = true
 
 [node name="ProgressBar" type="TextureProgressBar" parent="Right/Missions" index="5" unique_id=1143325296]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 370.0
-offset_top = 546.0
-offset_right = 740.0
-offset_bottom = 560.0
+offset_left = 204.0
+offset_top = 374.0
+offset_right = 574.0
+offset_bottom = 388.0
 texture_under = ExtResource("22_bar_bg")
 texture_progress = ExtResource("23_bar_fill")
 
 [node name="Claim" type="Label" parent="Right/Missions" index="6" unique_id=1945106779]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 745.0
-offset_top = 528.0
-offset_right = 1000.0
-offset_bottom = 556.0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -259.0
+offset_top = -49.0
+offset_right = -28.0
+offset_bottom = -21.0
 theme_type_variation = &"DailyProgressClaim"
 text = "STR_DAILY_CLAIMED_REWARD"
 vertical_alignment = 1
+resize_font_to_fit = true
 
-[node name="Play" type="TextureButton" parent="Right" unique_id=753022490]
-custom_minimum_size = Vector2(0, 165)
-stretch_mode = 0
-ignore_texture_size = true
-size_flags_vertical = 2
+[node name="Play" type="Button" parent="Right" index="1" unique_id=741572511]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+size_flags_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_uaalm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_4ahgp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1lf86")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_7lagm")
+theme_override_styles/focus = SubResource("StyleBoxTexture_mgsun")
+script = ExtResource("16_aqjlc")
 texture_normal = ExtResource("24_play_n")
-texture_pressed = ExtResource("25_play_p")
 texture_hover = ExtResource("25_play_p")
+texture_pressed = ExtResource("25_play_p")
 texture_disabled = ExtResource("24_play_n")
-texture_focused = ExtResource("26_play_f")
+texture_focus = ExtResource("26_play_f")
+patch_margin_left = 106.0
+patch_margin_top = 32.0
+patch_margin_right = 65.0
+patch_margin_bottom = 34.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Icon" type="TextureRect" parent="Right/Play" index="0" unique_id=186845186]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 95.0
-offset_top = 42.0
+offset_left = 91.0
+offset_top = 12.0
 offset_right = 123.0
-offset_bottom = 70.0
+offset_bottom = 44.0
 texture = ExtResource("27_pencil")
 
 [node name="Label" type="Label" parent="Right/Play" index="1" unique_id=1786849018]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = -0.003533569
+anchor_top = 0.10606061
+anchor_right = -0.003533569
+anchor_bottom = 0.10606061
 offset_left = 100.0
 offset_right = 760.0
-offset_bottom = 120.0
+offset_bottom = 48.0
 theme_type_variation = &"DailyCta"
 text = "STR_BTN_PLAY_DAILY_MODE"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
+metadata/_edit_use_anchors_ = true

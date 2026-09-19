@@ -1,21 +1,23 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://1cx6388j3q2r"]
 
-[ext_resource type="Script" path="res://scripts/nodes/daily/mission_row.gd" id="1_row"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/box_task_todo.svg" id="2_box"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/tag_special_mode.svg" id="3_tag"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/btn_primary_normal.svg" id="4_btn_n"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/btn_primary_pressed.svg" id="5_btn_p"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/btn_primary_focus.svg" id="6_btn_f"]
+[ext_resource type="Script" uid="uid://5v3d5j1xa8df" path="res://scripts/nodes/daily/mission_row.gd" id="1_row"]
+[ext_resource type="Texture2D" uid="uid://ci6507aw7lbrj" path="res://assets/images/calendar/box_task_todo.svg" id="2_box"]
+[ext_resource type="Texture2D" uid="uid://cuvuerlccui1t" path="res://assets/images/calendar/tag_special_mode.svg" id="3_tag"]
+[ext_resource type="Texture2D" uid="uid://w4j0aghcuoi4" path="res://assets/images/calendar/btn_primary_normal.svg" id="4_btn_n"]
+[ext_resource type="Texture2D" uid="uid://ds51lwxfj5857" path="res://assets/images/calendar/btn_primary_pressed.svg" id="5_btn_p"]
+[ext_resource type="Texture2D" uid="uid://cjx5vllc8vgfs" path="res://assets/images/calendar/btn_primary_focus.svg" id="6_btn_f"]
 
-[node name="MissionRow" type="Control"]
+[node name="MissionRow" type="Control" unique_id=245762476]
 custom_minimum_size = Vector2(980, 110)
-layout_mode = 0
-offset_right = 980.0
-offset_bottom = 110.0
+layout_mode = 3
+anchor_right = 0.51000005
+anchor_bottom = 0.102000006
+offset_right = 0.79992676
+offset_bottom = -0.16000366
 mouse_filter = 2
 script = ExtResource("1_row")
 
-[node name="Box" type="TextureRect" parent="."]
+[node name="Box" type="TextureRect" parent="." unique_id=1210011332]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 16.0
@@ -24,7 +26,7 @@ offset_bottom = 52.0
 mouse_filter = 2
 texture = ExtResource("2_box")
 
-[node name="Status" type="Label" parent="."]
+[node name="Status" type="Label" parent="." unique_id=1895697198]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 58.0
@@ -35,7 +37,7 @@ text = "0/1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Reward" type="Label" parent="."]
+[node name="Reward" type="Label" parent="." unique_id=1214629740]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 78.0
@@ -46,7 +48,7 @@ text = "+10 XU"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Tag" type="TextureRect" parent="."]
+[node name="Tag" type="TextureRect" parent="." unique_id=138464727]
 visible = false
 layout_mode = 0
 offset_left = 150.0
@@ -56,7 +58,7 @@ offset_bottom = 38.0
 mouse_filter = 2
 texture = ExtResource("3_tag")
 
-[node name="Label" type="Label" parent="Tag"]
+[node name="Label" type="Label" parent="Tag" unique_id=1589285459]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -68,7 +70,7 @@ text = "STR_TAG_SPECIAL_MODE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=926266794]
 layout_mode = 0
 offset_left = 150.0
 offset_top = 27.0
@@ -80,7 +82,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Desc" type="Label" parent="."]
+[node name="Desc" type="Label" parent="." unique_id=991696763]
 layout_mode = 0
 offset_left = 150.0
 offset_top = 55.0
@@ -92,7 +94,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Progress" type="Label" parent="."]
+[node name="Progress" type="Label" parent="." unique_id=1255076877]
 layout_mode = 0
 offset_left = 150.0
 offset_top = 77.0
@@ -104,7 +106,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Action" type="TextureButton" parent="."]
+[node name="Action" type="TextureButton" parent="." unique_id=712238914]
 layout_mode = 0
 offset_left = 800.0
 offset_top = 32.0
@@ -116,7 +118,7 @@ texture_hover = ExtResource("5_btn_p")
 texture_disabled = ExtResource("4_btn_n")
 texture_focused = ExtResource("6_btn_f")
 
-[node name="Label" type="Label" parent="Action"]
+[node name="Label" type="Label" parent="Action" unique_id=1754912829]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -2,75 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_80q71"]
 [ext_resource type="Script" uid="uid://cu1rrxvldpqii" path="res://scripts/scenes/game.gd" id="2_qouja"]
-[ext_resource type="PackedScene" uid="uid://chbg12rc46dp" path="res://nodes/game/board.tscn" id="2_yqjtg"]
-[ext_resource type="Texture2D" uid="uid://dbsevqd2c7qp6" path="res://assets/images/game/btn_pause_normal.svg" id="3_5newe"]
-[ext_resource type="Texture2D" uid="uid://f0vfhexgx4p4" path="res://assets/images/game/btn_tool_path_inactive.svg" id="3_gee14"]
-[ext_resource type="Texture2D" uid="uid://c1vianainqgc4" path="res://assets/images/game/btn_tool_path_active.svg" id="3_lbhrr"]
-[ext_resource type="Texture2D" uid="uid://b1ae0apyceyvp" path="res://assets/images/game/btn_pause_pressed.svg" id="4_37s47"]
-[ext_resource type="Texture2D" uid="uid://bjchvkdyxi45g" path="res://assets/images/game/btn_tool_path_pressed.svg" id="4_iywne"]
-[ext_resource type="Texture2D" uid="uid://c0trdh54ejc8i" path="res://assets/images/game/btn_pause_disabled.svg" id="5_bt5mj"]
-[ext_resource type="Texture2D" uid="uid://cakuvp3hoy31u" path="res://assets/images/game/btn_tool_wall_inactive.svg" id="5_u5sy4"]
-[ext_resource type="Texture2D" uid="uid://btfb86ck2yqqn" path="res://assets/images/game/btn_pause_focus.svg" id="6_e1j6l"]
-[ext_resource type="Texture2D" uid="uid://bqu7qe1u0b70x" path="res://assets/images/game/btn_tool_wall_pressed.svg" id="6_gee14"]
-[ext_resource type="Texture2D" uid="uid://ci3w7tihpl13t" path="res://assets/images/game/btn_tool_wall_active.svg" id="7_0tnpc"]
-[ext_resource type="LabelSettings" uid="uid://bonmr0e8ujeq3" path="res://resources/settings/text/text_game_title.tres" id="7_bhx41"]
-[ext_resource type="Texture2D" uid="uid://bh5dumnnf028q" path="res://assets/images/game/btn_restart_normal.svg" id="7_pl11u"]
-[ext_resource type="Texture2D" uid="uid://b7gfhxvtp5tup" path="res://assets/images/game/btn_restart_pressed.svg" id="8_bhx41"]
-[ext_resource type="Texture2D" uid="uid://cte1ue0xq3002" path="res://assets/images/game/btn_undo_normal.svg" id="9_dinhu"]
-[ext_resource type="Texture2D" uid="uid://spyw1sa7uxc5" path="res://assets/images/game/btn_restart_disabled.svg" id="9_qnb83"]
-[ext_resource type="Texture2D" uid="uid://dp6gsathe7et6" path="res://assets/images/game/btn_undo_pressed.svg" id="10_kvuet"]
-[ext_resource type="Texture2D" uid="uid://comsw702ysh8j" path="res://assets/images/game/btn_restart_focus.svg" id="10_sww3w"]
-[ext_resource type="Texture2D" uid="uid://dqldqskahkgcx" path="res://assets/images/game/btn_undo_disabled.svg" id="11_trtic"]
-[ext_resource type="Texture2D" uid="uid://ch2kbq4shu53d" path="res://assets/images/game/btn_undo_focus.svg" id="12_ir15t"]
-[ext_resource type="Texture2D" uid="uid://dd61x6fjtobav" path="res://assets/images/game/btn_hint_normal.svg" id="13_trtic"]
-[ext_resource type="Texture2D" uid="uid://c864ne3ni7vvn" path="res://assets/images/game/btn_hint_pressed.svg" id="14_ir15t"]
-[ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="14_nepv3"]
-[ext_resource type="LabelSettings" uid="uid://bwpq01l1whp4t" path="res://resources/settings/text/text_game_button_label.tres" id="18_qnb83"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="28_card_label"]
-[ext_resource type="Script" uid="uid://cxkejvefm60q1" path="res://scripts/core/controllers/anchor_controller.gd" id="32_gxtfn"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_button_sub.tres" id="33_btn_sub"]
-[ext_resource type="Script" uid="uid://dpvjjtn4enoyu" path="res://scripts/core/controllers/hint_controller.gd" id="33_02fa5"]
-[ext_resource type="Script" uid="uid://b60h5vj4wkts5" path="res://scripts/core/controllers/undo_controller.gd" id="33_m4url"]
-[ext_resource type="Script" uid="uid://noqw2uhwrxj5" path="res://scripts/core/controllers/grid_controller.gd" id="33_twgab"]
-[ext_resource type="Script" uid="uid://bhoypxp82uf61" path="res://scripts/core/controllers/floor_controller.gd" id="34_02fa5"]
-[ext_resource type="Script" uid="uid://4m1fycwf44gm" path="res://scripts/core/controllers/game_mode_controller.gd" id="35_8ool0"]
-[ext_resource type="Script" uid="uid://cka6sxqao71wc" path="res://scripts/core/controllers/game_controller.gd" id="35_nepv3"]
-[ext_resource type="Script" uid="uid://baibccmdx3g5u" path="res://scripts/core/controllers/timer_controller.gd" id="36_02fa5"]
-[ext_resource type="Script" uid="uid://bcqi64nve5wp5" path="res://scripts/core/controllers/ui_controller.gd" id="38_8ool0"]
-[ext_resource type="Script" uid="uid://btmprlxpqdg6j" path="res://scripts/core/controllers/tool_controller.gd" id="39_pr1ej"]
-[ext_resource type="Script" uid="uid://csd7cnldm2tu3" path="res://scripts/core/controllers/challenge_controller.gd" id="42_pr1ej"]
-[ext_resource type="Script" uid="uid://bt8f7hl74mar" path="res://scripts/nodes/game/hint_guide.gd" id="43_hintguide"]
-[ext_resource type="Texture2D" uid="uid://d3xd5wqhlank8" path="res://assets/images/game/panel_hint_guide.svg" id="44_hintpanel"]
-[ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="45_bulbicon"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="46_hinttheme"]
-[ext_resource type="Texture2D" uid="uid://cwg3rpuj0djq3" path="res://assets/images/game/btn_help_normal.svg" id="47_help_n"]
-[ext_resource type="Texture2D" uid="uid://350mhquc4uwi" path="res://assets/images/game/btn_help_pressed.svg" id="48_help_p"]
-[ext_resource type="Texture2D" uid="uid://bghur1ubhq1l8" path="res://assets/images/game/btn_help_disabled.svg" id="49_help_d"]
-[ext_resource type="Texture2D" uid="uid://c3up4f0u6hjjq" path="res://assets/images/game/btn_help_focus.svg" id="50_help_f"]
-[ext_resource type="Texture2D" uid="uid://c4277ksy08pue" path="res://assets/images/common/btn_paper_secondary_normal.svg" id="51_rep_n"]
-[ext_resource type="Texture2D" uid="uid://g6jguuu3mgrt" path="res://assets/images/common/btn_paper_secondary_pressed.svg" id="52_rep_p"]
-[ext_resource type="Texture2D" uid="uid://bgstufvwvogbj" path="res://assets/images/common/btn_paper_secondary_focus.svg" id="53_rep_f"]
-[ext_resource type="Texture2D" uid="uid://n10pv74qr68u" path="res://assets/images/popups/icon_replay.svg" id="54_rep_icon"]
-
+[ext_resource type="PackedScene" uid="uid://du7mme5oa6tt6" path="res://scenes/orientation/landscape/game.tscn" id="L_Landscape"]
 [ext_resource type="PackedScene" path="res://scenes/orientation/portrait/game.tscn" id="L_Portrait"]
 
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/game.tscn" id="L_Landscape"]
-
-[node name="Scene" unique_id=1978794255 node_paths=PackedStringArray("game_controller", "grid_controller", "anchor_controller", "floor_controller", "timer_controller", "ui_controller", "tool_controller", "undo_controller", "hint_controller", "game_mode_controller", "challenge_controller") instance=ExtResource("1_80q71")]
+[node name="Scene" unique_id=1978794255 instance=ExtResource("1_80q71")]
 script = ExtResource("2_qouja")
-game_controller = NodePath("Controllers/GameController")
-grid_controller = NodePath("Controllers/GridController")
-anchor_controller = NodePath("Controllers/AnchorController")
-floor_controller = NodePath("Controllers/FloorController")
-timer_controller = NodePath("Controllers/TimerController")
-ui_controller = NodePath("Controllers/UIController")
-tool_controller = NodePath("Controllers/ToolController")
-undo_controller = NodePath("Controllers/UndoController")
-hint_controller = NodePath("Controllers/HintController")
-game_mode_controller = NodePath("Controllers/GameModeController")
-challenge_controller = NodePath("Controllers/ChallengeController")
 
+[node name="Portrait" parent="." index="1" unique_id=1629983650 instance=ExtResource("L_Portrait")]
+layout_mode = 1
 
-[node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
-
-[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]
+[node name="Landscape" parent="." index="2" unique_id=16571943 instance=ExtResource("L_Landscape")]
+layout_mode = 1
