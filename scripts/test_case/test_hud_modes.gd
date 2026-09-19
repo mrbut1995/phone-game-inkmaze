@@ -83,9 +83,10 @@ func _section_1_hint_guide(scene: GameScene) -> void:
 	_entry(label != null, "Hint Guide co Label noi dung")
 	if label == null:
 		return
-	# Nằm dưới bàn cờ, trên thanh nút
-	var board := scene.get_node_or_null("Board") as Control
-	var button := scene.get_node_or_null("Button") as Control
+	# Nằm dưới bàn cờ, trên thanh nút (bàn cờ + thanh nút nay là node DÙNG CHUNG / trong HUD)
+	var board := scene.get("board_view") as Control
+	var path_btn := scene.get("tool_path_btn") as Control
+	var button := path_btn.get_parent() as Control if path_btn != null else null
 	if board != null and button != null:
 		_entry(guide.global_position.y >= board.global_position.y + board.size.y - 20.0
 			and guide.global_position.y + guide.size.y <= button.global_position.y,

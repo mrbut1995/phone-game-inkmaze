@@ -6,6 +6,56 @@
 # Replace SFX Placeholder to correct sound
 
 # ----------------------------------------------------------------------------
+# VÒNG SỬA 13 (2026-09-19): MÀN CHƠI — CONTROLLERS + BOARD DÙNG CHUNG (BỎ BỘ ĐÔI THEO HƯỚNG)
+# ----------------------------------------------------------------------------
+# [x] ĐÃ LÀM theo yêu cầu user ("tránh dùng 2 Controller và 2 Grid riêng biệt"):
+#     1. `scenes/game.tscn` (scene gốc) nay chứa: 2 layout (`Portrait`, `Landscape`) + **`Board`**
+#        (instance nodes/game/board.tscn) + **`Controllers`** (11 controller). Các `@export`
+#        (game_controller, grid_controller, …) được gán bằng NodePath NGAY TRONG SCENE nên
+#        mở scene là thấy liên kết, không phải tra bằng code.
+#        · `GameController.grid_view` = `../../Board` · `GridController.board_view` = `../../Board`.
+#        · `UIController.level_label/subtitle_label` GỠ khỏi scene (2 hướng đặt node khác chỗ:
+#          dọc `Status/Title/…`, ngang `Side/Status/Title/…`) → GameScene tự gán mỗi lần đổi hướng.
+#     2. `scenes/orientation/{portrait,landscape}/game.tscn` nay CHỈ còn UI: Status · Information
+#        (HUD) · HintGuide · `TextureRect` và **`BoardSlot`** (Control `mouse_filter = 2`) — nơi
+#        dành sẵn cho bàn cờ; anchors/offset của slot = đúng khung bàn cờ cũ (dọc 1020×1020 tại
+#        (41,420) · ngang anchors 0.03/0.055/0.53/0.94). Đã xoá toàn bộ ext_resource controller.
+#     3. Script bố cục `scripts/orientation/{portrait,landscape}/game.gd` thêm `board_slot()`.
+#     4. `scripts/scenes/game.gd`:
+#        · `_bind_refs()` — controllers/board tra 1 lần ở scene gốc (`get_node_or_null("Controllers/…")`,
+#          `get_node_or_null("Board")`); UI thì tra theo bố cục đang hiển thị (ui/ui_child).
+#        · `_mount_board()` — chuyển Board vào `BoardSlot` của bố cục đang active + `PRESET_FULL_RECT`.
+#        · `_rebind_after_orientation()` gọn lại: chỉ `_bind_refs()` + gắn lại nút + `_apply_hud_for_mode()`;
+#          **XOÁ** `_stop_quietly()` / `_restore_run()` (và biến `_difficulty`) — không còn ván thứ hai
+#          để dựng lại. => XOAY MÀN HÌNH KHÔNG MẤT VÁN: mê cung, đường đã vẽ, đồng hồ, vị trí con trỏ
+#          giữ nguyên (trước đây xoay là trắng bàn cờ và Replay nhảy sang Dungeon).
+#        · `_ready()` dùng `ui("Status")` / `ui("Information")` (2 node này nằm trong bố cục).
+#     - KIỂM CHỨNG `scripts/test_case/dev_probe_rotate_run.gd`: ngang kéo được `path=[(0,1),(1,1)]`
+#       → xoay dọc vẫn `path=[(0,1),(1,1)]` + `mode=play`, board.parent=BoardSlot, rect dọc
+#       (41,420) 1020×1020 · ngang (102.39,105.6) 1706.5×1699.2 (khớp thiết kế).
+#     - GHI CHÚ: Board nằm NGOÀI layout nhưng khi chạy được chuyển VÀO `BoardSlot` để z-order
+#       đúng (bàn cờ dưới Status/HUD). Đừng "tối ưu" bằng cách để Board là con trực tiếp của scene
+#       — sẽ vẽ ĐÈ lên thanh trạng thái ở bố cục dọc.
+# [x] VÒNG 13b — FIX "xoay sang DỌC thì lưới bàn cờ nằm sai chỗ, phải kéo cửa sổ mới về đúng":
+#     · NGUYÊN NHÂN: bố cục BÊN TRONG bàn cờ (ô · tường · con trỏ) tính theo khung GIẤY của `Panel`,
+#       nhưng khi Board được ĐỔI CHỖ, `NOTIFICATION_RESIZED` của bàn cờ chạy khi Panel còn cỡ CŨ
+#       (hàng dọc 1646 của bố cục ngang) ⇒ lưới bị căn theo số cũ rồi KHÔNG tính lại (resize mới fix).
+#     · SỬA 2 LỚP: `board.gd` nối thêm `Panel.resized → _update_layout_positions()` + thêm API
+#       `relayout()`; bố cục gọi `board.call_deferred("relayout")` sau khi gắn (frame kế tiếp, mọi
+#       kích thước đã ổn định). Kiểm chứng: probe in "ô đầu tiên" = (375.0, 738.06) ở bố cục dọc
+#       (đúng tâm giấy 988×988) — trước khi sửa là (135.0, 1067.05).
+#     · PROBE: `scripts/test_case/dev_probe_rotate_shot.gd` (ngang → xoay dọc → in số đo + chụp ảnh
+#       vào `tmp_aspect/rotate/`).
+# [x] VÒNG 13c — DỒN TOÀN BỘ KHÁC BIỆT DỌC/NGANG VÀO 2 SCRIPT BỐ CỤC (`game.gd` hết `if is_landscape`):
+#     API chung (mỗi hướng tự cài trong `scripts/orientation/<hướng>/game.gd`):
+#       · `is_landscape_layout()` · `hud_variant(P, L)` — chọn scene HUD của hướng mình
+#       · `board_slot()` · `mount_board(board)` — gắn bàn cờ dùng chung + relayout
+#       · `fit_hud(hud)` — dọc giữ 980, ngang co theo bề rộng sidebar
+#       · `configure_tool_path_button(btn, hide_wall)` — dọc ghim nút VẼ ĐƯỜNG, ngang để action_bar lo
+#     `scripts/scenes/game.gd` gọi qua `_layout_call(...)` / `_layout_is_landscape()` / `_hud_variant(...)`
+#     ⇒ màn chơi không còn biết gì về dọc-ngang (thêm hướng mới chỉ cần 1 script bố cục).
+
+# ----------------------------------------------------------------------------
 # VÒNG SỬA 12 (2026-09-19): HỖ TRỢ MỌI TỈ LỆ MÀN HÌNH (PORTRAIT + LANDSCAPE)
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM theo yêu cầu user (kiểm thử trên Windows trước, emulator tablet sau):
