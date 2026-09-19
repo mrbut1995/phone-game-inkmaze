@@ -1,6 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://wwrw355dsr83"]
 
-[ext_resource type="PackedScene" uid="uid://chbg12rc46dp" path="res://nodes/game/board.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/orientation/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="Script" uid="uid://hw0s8tromsjw" path="res://scripts/orientation/portrait/game.gd" id="2_bgd8i"]
 [ext_resource type="Texture2D" uid="uid://dbsevqd2c7qp6" path="res://assets/images/game/btn_pause_normal.svg" id="3_5newe"]
 [ext_resource type="Texture2D" uid="uid://b1ae0apyceyvp" path="res://assets/images/game/btn_pause_pressed.svg" id="4_37s47"]
 [ext_resource type="Texture2D" uid="uid://c0trdh54ejc8i" path="res://assets/images/game/btn_pause_disabled.svg" id="5_bt5mj"]
@@ -12,17 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://comsw702ysh8j" path="res://assets/images/game/btn_restart_focus.svg" id="10_sww3w"]
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="14_nepv3"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="28_card_label"]
-[ext_resource type="Script" uid="uid://cxkejvefm60q1" path="res://scripts/core/controllers/anchor_controller.gd" id="32_gxtfn"]
-[ext_resource type="Script" uid="uid://dpvjjtn4enoyu" path="res://scripts/core/controllers/hint_controller.gd" id="33_02fa5"]
-[ext_resource type="Script" uid="uid://b60h5vj4wkts5" path="res://scripts/core/controllers/undo_controller.gd" id="33_m4url"]
-[ext_resource type="Script" uid="uid://noqw2uhwrxj5" path="res://scripts/core/controllers/grid_controller.gd" id="33_twgab"]
-[ext_resource type="Script" uid="uid://bhoypxp82uf61" path="res://scripts/core/controllers/floor_controller.gd" id="34_02fa5"]
-[ext_resource type="Script" uid="uid://4m1fycwf44gm" path="res://scripts/core/controllers/game_mode_controller.gd" id="35_8ool0"]
-[ext_resource type="Script" uid="uid://cka6sxqao71wc" path="res://scripts/core/controllers/game_controller.gd" id="35_nepv3"]
-[ext_resource type="Script" uid="uid://baibccmdx3g5u" path="res://scripts/core/controllers/timer_controller.gd" id="36_02fa5"]
-[ext_resource type="Script" uid="uid://bcqi64nve5wp5" path="res://scripts/core/controllers/ui_controller.gd" id="38_8ool0"]
-[ext_resource type="Script" uid="uid://btmprlxpqdg6j" path="res://scripts/core/controllers/tool_controller.gd" id="39_pr1ej"]
-[ext_resource type="Script" uid="uid://csd7cnldm2tu3" path="res://scripts/core/controllers/challenge_controller.gd" id="42_pr1ej"]
 [ext_resource type="Script" uid="uid://bt8f7hl74mar" path="res://scripts/nodes/game/hint_guide.gd" id="43_hintguide"]
 [ext_resource type="Texture2D" uid="uid://d3xd5wqhlank8" path="res://assets/images/game/panel_hint_guide.svg" id="44_hintpanel"]
 [ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="45_bulbicon"]
@@ -32,12 +22,12 @@
 [ext_resource type="Texture2D" uid="uid://bghur1ubhq1l8" path="res://assets/images/game/btn_help_disabled.svg" id="49_help_d"]
 [ext_resource type="Texture2D" uid="uid://c3up4f0u6hjjq" path="res://assets/images/game/btn_help_focus.svg" id="50_help_f"]
 
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/portrait.tscn" id="1_parent"]
+[node name="Portrait" unique_id=1240041642 instance=ExtResource("1_parent")]
+script = ExtResource("2_bgd8i")
 
-[node name="Portrait" instance=ExtResource("1_parent")]
-
-[node name="Board" parent="." index="0" unique_id=181012636 instance=ExtResource("2_yqjtg")]
+[node name="BoardSlot" type="Control" parent="." index="0" unique_id=181012636]
 layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.037777815
 anchor_top = 0.21864584
 anchor_right = 0.9827778
@@ -46,6 +36,7 @@ offset_left = 0.1999588
 offset_top = 0.19998169
 offset_right = -0.4000244
 offset_bottom = 0.67993164
+mouse_filter = 2
 
 [node name="Status" type="HBoxContainer" parent="." index="1" unique_id=806159538]
 layout_mode = 1
@@ -106,9 +97,7 @@ texture_focused = ExtResource("10_sww3w")
 
 [node name="Information" parent="." index="2" unique_id=1383101299 instance=ExtResource("14_nepv3")]
 layout_mode = 1
-anchors_preset = -1
 anchor_right = 0.90700006
-anchor_bottom = 0.072
 offset_left = 55.0
 offset_top = 21.0
 offset_right = 55.43994
@@ -119,61 +108,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Controllers" type="Node" parent="." index="4" unique_id=955863401]
-
-[node name="GameController" type="Node" parent="Controllers" index="0" unique_id=881543567 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "challenge_controller", "grid_view")]
-script = ExtResource("35_nepv3")
-floor_controller = NodePath("../FloorController")
-timer_controller = NodePath("../TimerController")
-grid_controller = NodePath("../GridController")
-ui_controller = NodePath("../UIController")
-tool_controller = NodePath("../ToolController")
-game_mode_controller = NodePath("../GameModeController")
-challenge_controller = NodePath("../ChallengeController")
-grid_view = NodePath("../../Board")
-
-[node name="AnchorController" type="Node" parent="Controllers" index="1" unique_id=1130337566]
-script = ExtResource("32_gxtfn")
-
-[node name="UndoController" type="Node" parent="Controllers" index="2" unique_id=1595138216]
-script = ExtResource("33_m4url")
-
-[node name="HintController" type="Node" parent="Controllers" index="3" unique_id=1371592110]
-script = ExtResource("33_02fa5")
-
-[node name="GameModeController" type="Node" parent="Controllers" index="4" unique_id=1920860723]
-script = ExtResource("35_8ool0")
-
-[node name="GridController" type="Node" parent="Controllers" index="5" unique_id=295667286 node_paths=PackedStringArray("board_view", "anchor_controller", "undo_controller", "hint_controller", "game_mode_controller")]
-script = ExtResource("33_twgab")
-board_view = NodePath("../../Board")
-anchor_controller = NodePath("../AnchorController")
-undo_controller = NodePath("../UndoController")
-hint_controller = NodePath("../HintController")
-game_mode_controller = NodePath("../GameModeController")
-
-[node name="FloorController" type="Node" parent="Controllers" index="6" unique_id=480494204]
-script = ExtResource("34_02fa5")
-
-[node name="TimerController" type="Node" parent="Controllers" index="7" unique_id=1851640039]
-script = ExtResource("36_02fa5")
-
-[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=1862639245 node_paths=PackedStringArray("level_label", "subtitle_label", "undo_button", "replay_button")]
-script = ExtResource("38_8ool0")
-level_label = NodePath("../../Status/Title/LevelLabel")
-subtitle_label = NodePath("../../Status/Title/Subtitle")
-undo_button = NodePath("")
-replay_button = NodePath("")
-
-[node name="ToolController" type="Node" parent="Controllers" index="9" unique_id=1503824 node_paths=PackedStringArray("tool_path_btn", "tool_wall_btn")]
-script = ExtResource("39_pr1ej")
-tool_path_btn = NodePath("")
-tool_wall_btn = NodePath("")
-
-[node name="ChallengeController" type="Node" parent="Controllers" index="10" unique_id=301448501]
-script = ExtResource("42_pr1ej")
-
-[node name="HintGuide" type="Control" parent="." index="5" unique_id=2049437720]
+[node name="HintGuide" type="Control" parent="." index="4" unique_id=2049437720]
 layout_mode = 1
 anchor_left = 0.046000004
 anchor_top = 0.74200004
@@ -219,4 +154,3 @@ theme_type_variation = &"HintGuideText"
 text = "STR_HINT_PLAY"
 vertical_alignment = 1
 text_overrun_behavior = 3
-

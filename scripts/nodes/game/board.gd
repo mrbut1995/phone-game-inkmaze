@@ -119,6 +119,20 @@ var _markers_layer: Control = null
 func _ready() -> void:
 	_init_layers()
 	_connect_skin_signal()
+	# Bố cục bên trong (ô · tường · con trỏ) tính theo khung GIẤY của `Panel`. Khi bàn cờ đổi chỗ
+	# (xoay màn hình) thì `NOTIFICATION_RESIZED` của bàn cờ có thể chạy khi Panel còn cỡ CŨ ⇒
+	# nối thêm tín hiệu `resized` của Panel để luôn tính lại bằng con số đã ổn định.
+	var panel := get_node_or_null("Panel") as Control
+	if panel != null and not panel.resized.is_connected(_update_layout_positions):
+		panel.resized.connect(_update_layout_positions)
+
+
+## Tính lại toàn bộ vị trí theo khung hiện tại. GameScene gọi sau khi ĐỔI CHỖ bàn cờ
+## (lúc vừa reparent, khung giấy chưa cập nhật xong nên phải gọi ở frame kế tiếp).
+func relayout() -> void:
+	if _cell_nodes.is_empty():
+		return
+	_update_layout_positions()
 
 
 ## Người chơi đổi bút ở Cửa hàng -> đổi luôn con trỏ + nét mực đang hiển thị

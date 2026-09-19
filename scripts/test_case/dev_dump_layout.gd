@@ -43,9 +43,9 @@ func _dump_game() -> void:
 	await _frames(20)
 	var canvas := root.get_visible_rect().size
 	print("  scene    %s" % _r(scene as Control))
-	for path in ["Status", "Board", "Information", "Button", "HintGuide"]:
-		print("  %-11s %s" % [path, _r(scene.get_node_or_null(path) as Control)])
-	var board: Node = scene.get_node_or_null("Board")
+	for path in ["Status", "BoardSlot", "Information", "HintGuide"]:
+		print("  %-11s %s" % [path, _r(scene.call("ui", path) as Control)])
+	var board: Node = scene.get("board_view")
 	if board != null:
 		print("  board  panel_inner=%s  step=%.1f fit=%.2f" % [
 			str(board.call("panel_inner_rect")), float(board.get("_step")), float(board.get("_fit_scale"))])
