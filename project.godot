@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="InkMaze"
-run/main_scene="uid://bipfa7yko86fv"
+run/main_scene="uid://jvn38aocsdwl"
 config/features=PackedStringArray("4.8", "Mobile")
 config/icon="res://icon.svg"
 
@@ -39,8 +39,8 @@ ThemeManager="*uid://bg3pxd8vw2vrw"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_width=1080
+window/size/viewport_height=1920
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/handheld/orientation=6

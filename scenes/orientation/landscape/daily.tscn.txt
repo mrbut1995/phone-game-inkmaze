@@ -159,7 +159,6 @@ metadata/_edit_use_anchors_ = true
 [node name="CalBox" type="AspectRatioContainer" parent="Content" index="0" unique_id=667923659]
 layout_mode = 2
 size_flags_horizontal = 3
-alignment_vertical = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="Calendar" parent="Content/CalBox" index="0" unique_id=364415579 instance=ExtResource("3_calendar")]
@@ -175,7 +174,9 @@ theme_override_constants/separation = 34
 
 [node name="Missions" type="TextureRect" parent="Content/Right" index="0" unique_id=564649675]
 layout_mode = 2
+size_flags_vertical = 3
 texture = ExtResource("9_panel")
+expand_mode = 1
 
 [node name="DateTag" type="TextureRect" parent="Content/Right/Missions" index="0" unique_id=1698417265]
 layout_mode = 1
@@ -258,52 +259,42 @@ vertical_alignment = 1
 
 [node name="Rows" type="Control" parent="Content/Right/Missions" index="3" unique_id=1711770941]
 layout_mode = 1
-anchor_left = 0.149
-anchor_top = 0.5
-anchor_right = 0.97900003
-anchor_bottom = 0.505
-offset_left = -130.98001
-offset_top = -210.33337
-offset_right = 0.4199829
-offset_bottom = 213.70663
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_left = 34.0
+offset_top = 55.0
+offset_right = 937.0
+offset_bottom = 398.0
 mouse_filter = 2
 
 [node name="Slot1" type="Control" parent="Content/Right/Missions/Rows" index="0" unique_id=1219159334]
 layout_mode = 1
-anchor_right = 0.961
-anchor_bottom = 0.18900001
-offset_top = -5.0
-offset_right = 0.14196777
-offset_bottom = -0.04849243
+offset_top = 7.0
+offset_right = 792.0
+offset_bottom = 64.0
 
 [node name="Slot2" type="Control" parent="Content/Right/Missions/Rows" index="1" unique_id=400914126]
 layout_mode = 1
 anchor_top = 0.261
-anchor_right = 0.961
-anchor_bottom = 0.455
-offset_top = -0.22357178
-offset_right = 0.14196777
-offset_bottom = -0.17358398
+anchor_bottom = 0.275
+offset_top = 4.133995
+offset_right = 792.0
+offset_bottom = 57.85
 
 [node name="Slot3" type="Control" parent="Content/Right/Missions/Rows" index="2" unique_id=1869644021]
 layout_mode = 1
-anchor_top = 0.54300004
-anchor_right = 0.961
-anchor_bottom = 0.73700005
-offset_top = -5.645752
-offset_right = 0.14196777
-offset_bottom = -0.06271362
+anchor_top = 0.523
+anchor_bottom = 0.523
+offset_top = 1.9620056
+offset_right = 792.0
+offset_bottom = 55.962006
 
 [node name="Slot4" type="Control" parent="Content/Right/Missions/Rows" index="3" unique_id=938335154]
 layout_mode = 1
-anchor_top = 0.80700004
-anchor_right = 0.961
-anchor_bottom = 1.0
-offset_top = 0.20410156
-offset_right = 0.14196777
-offset_bottom = 3.5859375
+anchor_top = 0.771
+anchor_bottom = 0.771
+offset_top = 0.07398987
+offset_right = 792.0
+offset_bottom = 56.07399
 
 [node name="ProgressLabel" type="Label" parent="Content/Right/Missions" index="4" unique_id=1214704438]
 layout_mode = 1
@@ -322,10 +313,10 @@ resize_font_to_fit = true
 [node name="ProgressBar" type="TextureProgressBar" parent="Content/Right/Missions" index="5" unique_id=1143325296]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 310.0
-offset_top = 542.6666
-offset_right = 680.0
-offset_bottom = 556.6666
+offset_left = 255.0
+offset_top = 413.0
+offset_right = 625.0
+offset_bottom = 427.0
 texture_under = ExtResource("22_bar_bg")
 texture_progress = ExtResource("23_bar_fill")
 

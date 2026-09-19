@@ -14,7 +14,6 @@
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="12_theme"]
 
 [node name="Calendar" type="Control" unique_id=1760062952]
-custom_minimum_size = Vector2(1020, 1010)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1020.0
@@ -22,7 +21,7 @@ offset_bottom = 1010.0
 theme = ExtResource("12_theme")
 script = ExtResource("1_cal")
 
-[node name="Panel" type="TextureRect" parent="." unique_id=576018228]
+[node name="Panel" type="NinePatchRect" parent="." unique_id=732625991]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,18 +29,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_board")
+region_rect = Rect2(0, 0, 1020, 1010)
+patch_margin_left = 121
+patch_margin_top = 163
+patch_margin_right = 159
+patch_margin_bottom = 174
+metadata/_edit_use_anchors_ = true
 
 [node name="Months" type="HBoxContainer" parent="." unique_id=2039597602]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.074
-anchor_right = 0.5
-anchor_bottom = 0.074
-offset_left = -430.0
-offset_top = -28.739998
-offset_right = 430.0
-offset_bottom = 21.260002
+anchor_left = 0.078
+anchor_top = 0.046000004
+anchor_right = 0.92200005
+anchor_bottom = 0.102000006
+offset_left = 0.4399948
+offset_top = -0.4600029
+offset_right = -0.44006348
+offset_bottom = -7.0200043
 theme_override_constants/separation = 0
 
 [node name="Previous" type="TextureButton" parent="Months" unique_id=990753091]
@@ -73,188 +78,279 @@ texture_focused = ExtResource("11_next_f")
 [node name="DayTitle" type="HBoxContainer" parent="." unique_id=836109917]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.156
-anchor_right = 0.5
-anchor_bottom = 0.156
-offset_left = -434.0
-offset_top = -24.559998
-offset_right = 476.0
-offset_bottom = 25.440002
+anchor_left = 0.075
+anchor_top = 0.132
+anchor_right = 0.96700007
+anchor_bottom = 0.18100001
+offset_left = -0.5
+offset_top = -0.31999207
+offset_right = -0.3400879
+offset_bottom = 0.18998718
 theme_override_constants/separation = 0
 
 [node name="Monday" type="Label" parent="DayTitle" unique_id=287543008]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.14
 theme_type_variation = &"DailyDow"
 text = "STR_DOW_MON"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 30
 
 [node name="Tuesday" type="Label" parent="DayTitle" unique_id=1680296222]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.14
 theme_type_variation = &"DailyDow"
 text = "STR_DOW_TUE"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 30
 
 [node name="Wednesday" type="Label" parent="DayTitle" unique_id=1156634934]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.14
 theme_type_variation = &"DailyDow"
 text = "STR_DOW_WED"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 30
 
 [node name="Thursday" type="Label" parent="DayTitle" unique_id=457928259]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.14
 theme_type_variation = &"DailyDow"
 text = "STR_DOW_THU"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 30
 
 [node name="Friday" type="Label" parent="DayTitle" unique_id=496338754]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.14
 theme_type_variation = &"DailyDow"
 text = "STR_DOW_FRI"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 30
 
 [node name="Saturday" type="Label" parent="DayTitle" unique_id=383582934]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.14
 theme_type_variation = &"DailyDow"
 text = "STR_DOW_SAT"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 30
 
 [node name="Sunday" type="Label" parent="DayTitle" unique_id=281731615]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.14
 theme_type_variation = &"DailyDowSun"
 text = "STR_DOW_SUN"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 30
 
 [node name="Days" type="GridContainer" parent="." unique_id=1650849745]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.521
-anchor_top = 0.5
-anchor_right = 0.521
-anchor_bottom = 0.5
-offset_left = -455.42004
-offset_top = -312.0
-offset_right = 454.57996
-offset_bottom = 438.0
+anchor_left = 0.075
+anchor_top = 0.19100001
+anchor_right = 0.96700007
+anchor_bottom = 0.934
+offset_left = -0.5
+offset_top = 0.08998108
+offset_right = -0.3400879
+offset_bottom = -0.34002686
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 7
 
 [node name="Day01" parent="Days" unique_id=70993467 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day02" parent="Days" unique_id=1421843907 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day03" parent="Days" unique_id=60999894 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day04" parent="Days" unique_id=1585123841 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day05" parent="Days" unique_id=522678856 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day06" parent="Days" unique_id=1990514917 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day07" parent="Days" unique_id=470418376 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day08" parent="Days" unique_id=2059872758 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day09" parent="Days" unique_id=1023850233 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day10" parent="Days" unique_id=1338457634 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day11" parent="Days" unique_id=360525893 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day12" parent="Days" unique_id=256499662 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day13" parent="Days" unique_id=755463639 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day14" parent="Days" unique_id=363055135 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day15" parent="Days" unique_id=1706698347 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day16" parent="Days" unique_id=1958212356 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day17" parent="Days" unique_id=1447076589 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day18" parent="Days" unique_id=794658831 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day19" parent="Days" unique_id=1241554984 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day20" parent="Days" unique_id=366527187 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day21" parent="Days" unique_id=1198026685 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day22" parent="Days" unique_id=1759518417 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day23" parent="Days" unique_id=2036095642 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day24" parent="Days" unique_id=392956756 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day25" parent="Days" unique_id=1497244935 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day26" parent="Days" unique_id=1325319102 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day27" parent="Days" unique_id=378735544 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day28" parent="Days" unique_id=262368137 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day29" parent="Days" unique_id=276744149 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day30" parent="Days" unique_id=1144470902 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day31" parent="Days" unique_id=11105099 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day32" parent="Days" unique_id=1592694710 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day33" parent="Days" unique_id=1261598626 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day34" parent="Days" unique_id=86870189 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Day35" parent="Days" unique_id=752535920 instance=ExtResource("3_day")]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

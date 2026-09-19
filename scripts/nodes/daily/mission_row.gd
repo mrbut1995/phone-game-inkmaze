@@ -21,20 +21,21 @@ const BTN_PLAY_NORMAL := preload("res://assets/images/calendar/btn_primary_norma
 const BTN_PLAY_PRESSED := preload("res://assets/images/calendar/btn_primary_pressed.svg")
 const BTN_PLAY_FOCUS := preload("res://assets/images/calendar/btn_primary_focus.svg")
 
-## Tiêu đề lùi sang phải khi hàng có badge SPECIAL MODE phía trước
-const TITLE_LEFT_PLAIN := 150.0
-const TITLE_LEFT_BADGE := 295.0
+## Lề trái của tiêu đề: bản KHÔNG badge đọc từ scene (`Title.offset_left`), bản CÓ badge đọc từ
+## metadata `title_left` của node `Tag` — chỉnh trong Inspector, script không hard-code toạ độ.
+var _title_left_plain := 0.0
+var _title_left_badge := 0.0
 
-@onready var box: TextureRect = $Box
-@onready var status_label: Label = $Status
-@onready var reward_label: Label = $Reward
-@onready var tag: TextureRect = $Tag
-@onready var tag_label: Label = $Tag/Label
-@onready var title_label: Label = $Title
-@onready var desc_label: Label = $Desc
-@onready var progress_label: Label = $Progress
-@onready var action_button: TextureButton = $Action
-@onready var action_label: Label = $Action/Label
+@onready var box: TextureRect = $Item/Check/Box
+@onready var status_label: Label = $Item/Check/Status
+@onready var reward_label: Label = $Item/Check/Reward
+@onready var tag: TextureRect = $Item/Text/TitleContainer/Tag
+@onready var tag_label: Label = $Item/Text/TitleContainer/Tag/Label
+@onready var title_label: Label = $Item/Text/TitleContainer/Title
+@onready var desc_label: Label = $Item/Text/Desc
+@onready var progress_label: Label = $Item/Text/Progress
+@onready var action_button: TextureButton = $Item/Action
+@onready var action_label: Label = $Item/Action/Label
 
 ## Vị trí nhiệm vụ trong ngày (0..3)
 var index: int = 0
@@ -43,11 +44,21 @@ var _has_pending := false
 
 
 func _ready() -> void:
+	if title_label != null:
+		_title_left_plain = title_label.offset_left
+	_title_left_badge = _read_badge_title_left()
 	if action_button != null:
 		action_button.pressed.connect(_on_action_pressed)
 	if _has_pending:
 		_has_pending = false
 		_apply(_pending)
+
+
+## Lề trái của tiêu đề khi hàng có badge SPECIAL MODE — lấy từ scene (Inspector > Tag > Metadata)
+func _read_badge_title_left() -> float:
+	if tag == null:
+		return _title_left_plain
+	return float(tag.get_meta("title_left", _title_left_plain))
 
 
 ## Nạp nội dung 1 nhiệm vụ.
@@ -83,7 +94,7 @@ func _apply(info: Dictionary) -> void:
 	tag.visible = special
 	if special:
 		tag_label.text = tr("STR_TAG_SPECIAL_MODE")
-	title_label.offset_left = TITLE_LEFT_BADGE if special else TITLE_LEFT_PLAIN
+	title_label.offset_left = _title_left_badge if special else _title_left_plain
 
 	# Nút hành động: đã xong -> "HOÀN THÀNH" (vẫn bấm để chơi lại), chưa xong -> "VÀO CHƠI"
 	if done:
