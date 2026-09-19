@@ -1,21 +1,21 @@
 [gd_scene format=3 uid="uid://cggt0mrkea7fs"]
 
-[ext_resource type="Script" path="res://scripts/nodes/daily/day.gd" id="1_day"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/completed_icon.svg" id="2_check"]
-[ext_resource type="Texture2D" path="res://assets/images/common/star_highlight.svg" id="3_star"]
-[ext_resource type="Texture2D" path="res://assets/images/calendar/tag_day.svg" id="4_tag"]
-[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="5_theme"]
+[ext_resource type="Script" uid="uid://c0jpbwfj0dbrw" path="res://scripts/nodes/daily/day.gd" id="1_day"]
+[ext_resource type="Texture2D" uid="uid://bdc7bixy0i0u0" path="res://assets/images/calendar/completed_icon.svg" id="2_check"]
+[ext_resource type="Texture2D" uid="uid://c66v5bmdvegnd" path="res://assets/images/common/star_highlight.svg" id="3_star"]
+[ext_resource type="Texture2D" uid="uid://cwkukl6emlhmk" path="res://assets/images/calendar/tag_day.svg" id="4_tag"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="5_theme"]
 
-[node name="Day" type="Control"]
-custom_minimum_size = Vector2(130, 150)
+[node name="Day" type="Control" unique_id=2128801110]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 130.0
-offset_bottom = 150.0
+anchor_right = 0.068
+anchor_bottom = 0.13900001
+offset_right = -0.5600128
+offset_bottom = -0.120010376
 theme = ExtResource("5_theme")
 script = ExtResource("1_day")
 
-[node name="Button" type="TextureButton" parent="."]
+[node name="Button" type="TextureButton" parent="." unique_id=142223511]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,7 +25,7 @@ grow_vertical = 2
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Number" type="Label" parent="Button"]
+[node name="Number" type="Label" parent="Button" unique_id=265045023]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 14.0
@@ -36,7 +36,7 @@ theme_type_variation = &"DailyDayNum"
 text = "01"
 vertical_alignment = 1
 
-[node name="CheckIcon" type="TextureRect" parent="Button"]
+[node name="CheckIcon" type="TextureRect" parent="Button" unique_id=1336019975]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -46,7 +46,7 @@ offset_right = 98.0
 offset_bottom = 41.0
 texture = ExtResource("2_check")
 
-[node name="StarIcon" type="TextureRect" parent="Button"]
+[node name="StarIcon" type="TextureRect" parent="Button" unique_id=754873809]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -57,7 +57,7 @@ offset_bottom = 46.0
 texture = ExtResource("3_star")
 expand_mode = 1
 
-[node name="StatusPill" type="TextureRect" parent="Button"]
+[node name="StatusPill" type="TextureRect" parent="Button" unique_id=798544517]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -66,7 +66,7 @@ offset_top = 98.0
 offset_right = 117.0
 offset_bottom = 134.0
 
-[node name="StatusLabel" type="Label" parent="Button/StatusPill"]
+[node name="StatusLabel" type="Label" parent="Button/StatusPill" unique_id=1356295277]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,7 +78,7 @@ text = "3/3 SAO"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TodayTag" type="TextureRect" parent="Button"]
+[node name="TodayTag" type="TextureRect" parent="Button" unique_id=1614266182]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -88,7 +88,7 @@ offset_right = 115.0
 offset_bottom = 13.0
 texture = ExtResource("4_tag")
 
-[node name="TodayLabel" type="Label" parent="Button/TodayTag"]
+[node name="TodayLabel" type="Label" parent="Button/TodayTag" unique_id=2106916228]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -7,125 +7,154 @@
 [ext_resource type="Texture2D" uid="uid://ds51lwxfj5857" path="res://assets/images/calendar/btn_primary_pressed.svg" id="5_btn_p"]
 [ext_resource type="Texture2D" uid="uid://cjx5vllc8vgfs" path="res://assets/images/calendar/btn_primary_focus.svg" id="6_btn_f"]
 
-[node name="MissionRow" type="Control" unique_id=245762476]
-custom_minimum_size = Vector2(980, 110)
+[node name="Control" type="Control" unique_id=245762476]
 layout_mode = 3
-anchor_right = 0.51000005
-anchor_bottom = 0.102000006
-offset_right = 0.79992676
-offset_bottom = -0.16000366
+anchor_right = 1.0
+anchor_bottom = 0.046354163
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_row")
+metadata/_edit_use_anchors_ = true
 
-[node name="Box" type="TextureRect" parent="." unique_id=1210011332]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 16.0
-offset_right = 61.0
-offset_bottom = 52.0
+[node name="Item" type="HBoxContainer" parent="." unique_id=1279971278]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0004814819
+anchor_right = 1.0
+anchor_bottom = 0.989
+offset_left = -0.52000046
+offset_bottom = -0.020996094
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+metadata/_edit_use_anchors_ = true
+
+[node name="Check" type="VBoxContainer" parent="Item" unique_id=201372748]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="Box" type="TextureRect" parent="Item/Check" unique_id=1210011332]
+layout_mode = 2
+size_flags_horizontal = 4
 mouse_filter = 2
 texture = ExtResource("2_box")
+stretch_mode = 2
 
-[node name="Status" type="Label" parent="." unique_id=1895697198]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 58.0
-offset_right = 105.0
-offset_bottom = 76.0
+[node name="Status" type="Label" parent="Item/Check" unique_id=1895697198]
+layout_mode = 2
+size_flags_vertical = 3
 theme_type_variation = &"DailyTaskStatusTodo"
 text = "0/1"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
 
-[node name="Reward" type="Label" parent="." unique_id=1214629740]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 78.0
-offset_right = 105.0
-offset_bottom = 96.0
+[node name="Reward" type="Label" parent="Item/Check" unique_id=1214629740]
+layout_mode = 2
+size_flags_vertical = 3
 theme_type_variation = &"DailyTaskReward"
 text = "+10 XU"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
 
-[node name="Tag" type="TextureRect" parent="." unique_id=138464727]
-visible = false
-layout_mode = 0
-offset_left = 150.0
-offset_top = 14.0
-offset_right = 285.0
-offset_bottom = 38.0
+[node name="Text" type="VBoxContainer" parent="Item" unique_id=1711762940]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleContainer" type="HBoxContainer" parent="Item/Text" unique_id=1776966037]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Tag" type="TextureRect" parent="Item/Text/TitleContainer" unique_id=138464727]
+custom_minimum_size = Vector2(120, 22)
+layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("3_tag")
+expand_mode = 1
+metadata/title_left = 295.0
 
-[node name="Label" type="Label" parent="Tag" unique_id=1589285459]
+[node name="Label" type="Label" parent="Item/Text/TitleContainer/Tag" unique_id=1589285459]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.05925926
+anchor_top = 0.20833333
+anchor_right = 0.91851854
+anchor_bottom = 0.7916667
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"SpecialModeTag"
 text = "STR_TAG_SPECIAL_MODE"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
 
-[node name="Title" type="Label" parent="." unique_id=926266794]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 27.0
-offset_right = 790.0
-offset_bottom = 55.0
+[node name="Title" type="Label" parent="Item/Text/TitleContainer" unique_id=926266794]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 theme_type_variation = &"DailyTaskTitle"
 text = "..."
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
+resize_font_to_fit = true
+minimum_font_size = 22
 
-[node name="Desc" type="Label" parent="." unique_id=991696763]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 55.0
-offset_right = 790.0
-offset_bottom = 77.0
+[node name="Desc" type="Label" parent="Item/Text" unique_id=991696763]
+layout_mode = 2
+size_flags_vertical = 3
 theme_type_variation = &"DailyTaskDesc"
 text = "..."
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
+resize_font_to_fit = true
+minimum_font_size = 18
+maximum_font_size = 50
 
-[node name="Progress" type="Label" parent="." unique_id=1255076877]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 77.0
-offset_right = 790.0
-offset_bottom = 97.0
+[node name="Progress" type="Label" parent="Item/Text" unique_id=1255076877]
+layout_mode = 2
+size_flags_vertical = 3
 theme_type_variation = &"DailyTaskProgressTodo"
 text = "..."
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
+resize_font_to_fit = true
+minimum_font_size = 16
+maximum_font_size = 50
 
-[node name="Action" type="TextureButton" parent="." unique_id=712238914]
-layout_mode = 0
-offset_left = 800.0
-offset_top = 32.0
-offset_right = 950.0
-offset_bottom = 78.0
+[node name="Action" type="TextureButton" parent="Item" unique_id=712238914]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
 texture_normal = ExtResource("4_btn_n")
 texture_pressed = ExtResource("5_btn_p")
 texture_hover = ExtResource("5_btn_p")
 texture_disabled = ExtResource("4_btn_n")
 texture_focused = ExtResource("6_btn_f")
 
-[node name="Label" type="Label" parent="Action" unique_id=1754912829]
+[node name="Label" type="Label" parent="Item/Action" unique_id=1754912829]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.23913041
+anchor_right = 0.887
+anchor_bottom = 0.76052177
+offset_left = 3.0517578e-05
+offset_right = -0.049972534
+offset_bottom = 0.01599884
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"DailyActionPrimary"
 text = "STR_BTN_PLAY_NOW"
 horizontal_alignment = 1
 vertical_alignment = 1
+resize_font_to_fit = true
+maximum_font_size = 20
+metadata/_edit_use_anchors_ = true
