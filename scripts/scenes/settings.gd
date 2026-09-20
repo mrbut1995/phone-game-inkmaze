@@ -44,7 +44,6 @@ var _stamp_taps := 0
 func _ready() -> void:
 	_bind_refs()
 	_wire_buttons()
-	orientation_changed.connect(_on_orientation_changed)
 
 	var content_node := ui("Content") as Control
 	if content_node != null:
@@ -117,10 +116,6 @@ func _wire_buttons() -> void:
 
 
 ## Xoay màn hình: gắn lại node của layout mới rồi nạp lại giá trị cài đặt lên widget mới
-func _on_orientation_changed(_is_landscape_now: bool) -> void:
-	_rebind_after_orientation.call_deferred()
-
-
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()

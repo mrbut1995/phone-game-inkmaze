@@ -59,7 +59,6 @@ func _ready() -> void:
 
 	_bind_refs()
 	_wire_buttons()
-	orientation_changed.connect(_on_orientation_changed)
 
 	var streak_badge := ui("StreakBadge") as Control
 	if streak_badge != null:
@@ -111,10 +110,6 @@ func _wire_buttons() -> void:
 
 
 ## Xoay màn hình: số đo "thiết kế" đổi theo layout ⇒ đo lại rồi dàn lại hàng + nạp lại dữ liệu
-func _on_orientation_changed(_is_landscape_now: bool) -> void:
-	_rebind_after_orientation.call_deferred()
-
-
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()

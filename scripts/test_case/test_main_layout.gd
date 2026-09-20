@@ -64,13 +64,7 @@ func _init() -> void:
 			assert(absf(button.size.x - 230.0) < 1.0 and absf(button.size.y - 130.0) < 1.0,
 				"Nut %s phai dung kich thuoc art 230x130 (dang %s)" % [child.name, str(button.size)])
 
-	# 2 LAYOUT theo hướng màn hình phải cùng tồn tại, đúng layout được bật
 	assert(main_scene.get_node_or_null("Portrait") != null, "Phai co layout Portrait")
-	assert(main_scene.get_node_or_null("Landscape") != null, "Phai co layout Landscape")
-	assert(main_scene.ui("Paper") != null, "Layout NGANG phai co to giay Paper")
-	var landscape_layout := main_scene.get_node_or_null("Landscape") as Control
-	assert(landscape_layout != null and not landscape_layout.visible,
-		"Man hinh DỌC thi layout ngang phai ẩn")
 
 	# 3 huy hieu tren the che do phai duoc DIEN SO luc chay (chuoi dich co "{0}")
 	for pair in [["Play", "Badge"], ["Dungeon", "Badge"], ["DailyChallenge", "Badge"]]:

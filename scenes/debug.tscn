@@ -3,13 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_lgrwq"]
 [ext_resource type="Script" uid="uid://cu0pk85hl650m" path="res://scripts/scenes/debug.gd" id="2_debug"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="4_back_n"]
-[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="5_back_p"]
-[ext_resource type="Texture2D" uid="uid://nwnmgpgwvc7y" path="res://assets/images/settings/settings_panel.svg" id="6_panel"]
 
 [ext_resource type="PackedScene" path="res://scenes/orientation/portrait/debug.tscn" id="L_Portrait"]
 
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/debug.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_lgrwq")]
 theme = ExtResource("3_theme")
@@ -18,4 +14,3 @@ script = ExtResource("2_debug")
 
 [node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
 
-[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]

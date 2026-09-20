@@ -35,7 +35,6 @@ func _ready() -> void:
 	_refresh_mode_badges()
 	_setup_buttons()
 	_setup_animations()
-	orientation_changed.connect(_on_orientation_changed)
 
 
 ## Gắn lại toàn bộ node UI theo layout ĐANG HIỂN THỊ (dọc ⇄ ngang)
@@ -58,17 +57,6 @@ func _bind_layout() -> void:
 
 
 ## Xoay màn hình: gắn lại node của layout mới rồi chạy lại hiệu ứng
-func _on_orientation_changed(_is_landscape_now: bool) -> void:
-	_bind_layout()
-	_refresh_stamp()
-	_refresh_badge()
-	_refresh_mode_badges()
-	_setup_buttons()
-	_setup_animations()
-
-
-## Nối signal 1 lần duy nhất (mỗi lần xoay màn hình sẽ gắn lại node của layout mới,
-## còn node của layout cũ vẫn giữ kết nối cũ ⇒ phải guard kẻo "already connected").
 func _connect_pressed(button: BaseButton, handler: Callable) -> void:
 	if button == null:
 		return

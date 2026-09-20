@@ -112,7 +112,6 @@ var _tabs_captured := false
 func _ready() -> void:
 	_bind_refs()
 	_wire_buttons()
-	orientation_changed.connect(_on_orientation_changed)
 
 	var top_bar := ui("TopBar") as Control
 	if top_bar != null:
@@ -184,10 +183,6 @@ func _wire_buttons() -> void:
 
 
 ## Xoay màn hình: gắn lại node + dựng lại tab/trang của layout mới
-func _on_orientation_changed(_is_landscape_now: bool) -> void:
-	_rebind_after_orientation.call_deferred()
-
-
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()

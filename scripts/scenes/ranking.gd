@@ -59,7 +59,6 @@ func _ready() -> void:
 	if btn_back != null:
 		btn_back.pressed.connect(_on_back_pressed)
 		UIAnim.attach_press_bounce(btn_back)
-	orientation_changed.connect(_on_orientation_changed)
 	_build_tabs()
 	_connect_manager()
 	# Làm mới theo khung 10 phút (chỉ dựng lại khi đã sang khung mới)
@@ -78,10 +77,6 @@ func _bind_refs() -> void:
 
 
 ## Xoay màn hình: gắn lại node + dựng lại tab của layout mới rồi nạp lại bảng đang xem
-func _on_orientation_changed(_is_landscape_now: bool) -> void:
-	_rebind_after_orientation.call_deferred()
-
-
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_tab_buttons.clear()

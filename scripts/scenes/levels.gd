@@ -66,7 +66,6 @@ func _ready() -> void:
 	_bind_refs()
 	_wire_buttons()
 	resized.connect(_apply_layout)
-	orientation_changed.connect(_on_orientation_changed)
 
 	_build_pages()
 	_build_dots()
@@ -130,10 +129,6 @@ func _columns_per_page() -> int:
 
 
 ## Xoay màn hình: gắn lại node của layout mới rồi dựng lại trang + nạp lại header
-func _on_orientation_changed(_is_landscape_now: bool) -> void:
-	_rebind_after_orientation.call_deferred()
-
-
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()
