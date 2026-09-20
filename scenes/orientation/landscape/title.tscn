@@ -1,9 +1,6 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b5lcevw0i071e"]
 
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/landscape.tscn" id="1_parent"]
-[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://d08w7ys60m1vk" path="res://scripts/scenes/title.gd" id="2_script"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
+[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/orientation/landscape/landscape.tscn" id="1_parent"]
 [ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="4_paper"]
 [ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="5_logo"]
 [ext_resource type="Texture2D" uid="uid://vohdi4kjxxxf" path="res://assets/images/game/pen_type/pen_fountain_pen_nib.svg" id="6_hiwto"]
@@ -11,41 +8,25 @@
 [ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="8_stamp"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="9_stamp_text"]
 
+[node name="Landscape" unique_id=1764957602 instance=ExtResource("1_parent")]
 
-[node name="Landscape" instance=ExtResource("1_parent")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-
-[node name="Panel" type="TextureRect" parent="." unique_id=1052516246]
-offset_bottom = 0.0
-offset_right = 0.0
-offset_top = 0.0
-offset_left = 0.0
-stretch_mode = 0
-expand_mode = 1
+[node name="Panel" type="TextureRect" parent="." index="0" unique_id=1052516246]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource("4_paper")
+expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="LogoContainer" type="Control" parent="Panel" index="0" unique_id=198818976]
-anchors_preset = -1
 layout_mode = 1
 anchor_left = 0.5
-anchor_top = 0.20
+anchor_top = 0.2
 anchor_right = 0.5
 anchor_bottom = 0.46
 offset_left = -420.0
-offset_top = 0.0
 offset_right = 420.0
-offset_bottom = 0.0
 
 [node name="Logo" type="TextureRect" parent="Panel/LogoContainer" index="0" unique_id=1293835937]
 layout_mode = 1
@@ -78,13 +59,11 @@ modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.50
+anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.62
 offset_left = -700.0
-offset_top = 0.0
 offset_right = 700.0
-offset_bottom = 0.0
 theme_type_variation = &"MainTitle"
 text = "Ink Maze"
 horizontal_alignment = 1
@@ -98,11 +77,9 @@ anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.63
 anchor_right = 0.5
-anchor_bottom = 0.70
+anchor_bottom = 0.7
 offset_left = -700.0
-offset_top = 0.0
 offset_right = 700.0
-offset_bottom = 0.0
 theme_type_variation = &"MainTagline"
 text = "STR_TITLE_SUBTITLE"
 horizontal_alignment = 1
@@ -110,16 +87,13 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="TapContainer" type="Control" parent="Panel" index="3" unique_id=551840619]
-anchors_preset = -1
 layout_mode = 1
 anchor_left = 0.5
 anchor_top = 0.78
 anchor_right = 0.5
 anchor_bottom = 0.88
 offset_left = -420.0
-offset_top = 0.0
 offset_right = 420.0
-offset_bottom = 0.0
 metadata/_edit_use_anchors_ = true
 
 [node name="PlayIcon" type="TextureRect" parent="Panel/TapContainer" index="0" unique_id=275797762]
@@ -152,16 +126,16 @@ resize_font_to_fit = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Stamp" type="TextureRect" parent="Panel" index="4" unique_id=1281241587]
-offset_bottom = -80.0
-offset_right = -120.0
-offset_top = -250.0
-offset_left = -460.0
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -460.0
+offset_top = -250.0
+offset_right = -120.0
+offset_bottom = -80.0
 texture = ExtResource("8_stamp")
 
 [node name="Label" type="Label" parent="Panel/Stamp" index="0" unique_id=2031280285]
@@ -188,4 +162,3 @@ theme_type_variation = &"MainTagline"
 text = "STR_SPLASH_STUDIO"
 horizontal_alignment = 1
 vertical_alignment = 1
-

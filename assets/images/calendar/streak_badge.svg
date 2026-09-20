@@ -1,12 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 214 85" width="214" height="85">
-  <defs>
-    <filter id="strkCleanShadow" x="-15%" y="-15%" width="130%" height="135%">
-      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14"/>
-    </filter>
-  </defs>
-  <g filter="url(#strkCleanShadow)">
-    <rect width="200" height="70" rx="18" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/>
-    <!-- Vạch lề nhỏ đồng điệu -->
-    <line x1="22" y1="0" x2="22" y2="70" stroke="#FAF5EB" stroke-width="2"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 70" width="200" height="70">
+  <rect x="1.5" y="1.5" width="197" height="67" rx="18" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/>
+  <!-- Vạch lề nhỏ đồng điệu -->
+  <line x1="22" y1="1.5" x2="22" y2="68.5" stroke="#FAF5EB" stroke-width="2"/>
 </svg>

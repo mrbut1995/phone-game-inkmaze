@@ -26,16 +26,17 @@ const BTN_PLAY_FOCUS := preload("res://assets/images/calendar/btn_primary_focus.
 var _title_left_plain := 0.0
 var _title_left_badge := 0.0
 
-@onready var box: TextureRect = $Item/Check/Box
-@onready var status_label: Label = $Item/Check/Status
-@onready var reward_label: Label = $Item/Check/Reward
-@onready var tag: TextureRect = $Item/Text/TitleContainer/Tag
+@onready var box: TextureRect = $Item/Centering/Check/Box
+@onready var status_label: Label = $Item/Centering/Check/Text/Status
+@onready var reward_label: Label = $Item/Centering/Check/Text/Reward
+@onready var tag: NinePatchRect = $Item/Text/TitleContainer/Tag
 @onready var tag_label: Label = $Item/Text/TitleContainer/Tag/Label
 @onready var title_label: Label = $Item/Text/TitleContainer/Title
 @onready var desc_label: Label = $Item/Text/Desc
 @onready var progress_label: Label = $Item/Text/Progress
 @onready var action_button: TextureButton = $Item/Action
 @onready var action_label: Label = $Item/Action/Label
+@onready var special_section: NinePatchRect = $SpecialSection
 
 ## Vị trí nhiệm vụ trong ngày (0..3)
 var index: int = 0
@@ -92,6 +93,7 @@ func _apply(info: Dictionary) -> void:
 
 	# Badge SPECIAL MODE (chỉ hàng nhiệm vụ của maze đặc biệt)
 	tag.visible = special
+	special_section.visible = special
 	if special:
 		tag_label.text = tr("STR_TAG_SPECIAL_MODE")
 	title_label.offset_left = _title_left_badge if special else _title_left_plain

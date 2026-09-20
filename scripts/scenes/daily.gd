@@ -75,10 +75,10 @@ func _ready() -> void:
 
 ## Gắn node của layout đang hiển thị (bản ngang đổi cấu trúc cột nên tra theo TÊN)
 func _bind_refs() -> void:
-	btn_back = ui_path("TopBar/Back") as BaseButton
+	btn_back = ui_path("Panel/HUD/Content/Information/TopBar/Back") as BaseButton
 	calendar = ui("Calendar") as DailyCalendar
 	missions = ui("Missions") as Control
-	lbl_streak = ui_path("TopBar/StreakBadge/StreakContainer/Streak") as Label
+	lbl_streak = ui_path("Panel/HUD/Content/Information/TopBar/StreakBadge/StreakContainer/Streak") as Label
 	lbl_date = ui_child("DateTag", "Label") as Label
 	lbl_mode = ui("Mode") as Label
 	lbl_reward = ui_child("Reward", "Label") as Label

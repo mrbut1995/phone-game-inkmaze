@@ -8,10 +8,13 @@
 
 [node name="Day" type="Control" unique_id=2128801110]
 layout_mode = 3
-anchor_right = 0.068
-anchor_bottom = 0.13900001
-offset_right = -0.5600128
-offset_bottom = -0.120010376
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("5_theme")
 script = ExtResource("1_day")
 
@@ -28,43 +31,65 @@ stretch_mode = 0
 [node name="Number" type="Label" parent="Button" unique_id=265045023]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 14.0
-offset_top = 6.0
-offset_right = 98.0
-offset_bottom = 58.0
+anchor_left = 0.1
+anchor_top = 0.06
+anchor_right = 0.55
+anchor_bottom = 0.4
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 theme_type_variation = &"DailyDayNum"
 text = "01"
 vertical_alignment = 1
+clip_text = true
 
 [node name="CheckIcon" type="TextureRect" parent="Button" unique_id=1336019975]
 visible = false
 layout_mode = 1
 anchors_preset = -1
-offset_left = 64.0
-offset_top = 12.0
-offset_right = 98.0
-offset_bottom = 41.0
+anchor_left = 0.55
+anchor_top = 0.08
+anchor_right = 0.88
+anchor_bottom = 0.35
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 texture = ExtResource("2_check")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="StarIcon" type="TextureRect" parent="Button" unique_id=754873809]
 visible = false
 layout_mode = 1
 anchors_preset = -1
-offset_left = 66.0
-offset_top = 16.0
-offset_right = 96.0
-offset_bottom = 46.0
+anchor_left = 0.58
+anchor_top = 0.1
+anchor_right = 0.88
+anchor_bottom = 0.36
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 texture = ExtResource("3_star")
 expand_mode = 1
+stretch_mode = 5
 
 [node name="StatusPill" type="TextureRect" parent="Button" unique_id=798544517]
 visible = false
 layout_mode = 1
 anchors_preset = -1
-offset_left = 13.0
-offset_top = 98.0
-offset_right = 117.0
-offset_bottom = 134.0
+anchor_left = 0.1
+anchor_top = 0.65
+anchor_right = 0.9
+anchor_bottom = 0.92
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+expand_mode = 1
+stretch_mode = 0
 
 [node name="StatusLabel" type="Label" parent="Button/StatusPill" unique_id=1356295277]
 layout_mode = 1
@@ -77,16 +102,23 @@ theme_type_variation = &"DailyDayStatusDone"
 text = "3/3 SAO"
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
 
 [node name="TodayTag" type="TextureRect" parent="Button" unique_id=1614266182]
 visible = false
 layout_mode = 1
 anchors_preset = -1
-offset_left = 15.0
-offset_top = -13.0
-offset_right = 115.0
-offset_bottom = 13.0
+anchor_left = 0.12
+anchor_top = -0.1
+anchor_right = 0.88
+anchor_bottom = 0.1
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 texture = ExtResource("4_tag")
+expand_mode = 1
+stretch_mode = 0
 
 [node name="TodayLabel" type="Label" parent="Button/TodayTag" unique_id=2106916228]
 layout_mode = 1
@@ -99,3 +131,4 @@ theme_type_variation = &"DailyTodayTag"
 text = "STR_TODAY"
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
