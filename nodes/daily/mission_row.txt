@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bl66ggy340i00" path="res://assets/images/calendar/row_seperator.svg" id="4_n7nb6"]
 [ext_resource type="Texture2D" uid="uid://ds51lwxfj5857" path="res://assets/images/calendar/btn_primary_pressed.svg" id="5_btn_p"]
 [ext_resource type="Texture2D" uid="uid://cjx5vllc8vgfs" path="res://assets/images/calendar/btn_primary_focus.svg" id="6_btn_f"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="6_ndntr"]
 [ext_resource type="Texture2D" uid="uid://di0oi2j4fh3kq" path="res://assets/images/calendar/panel_daily_seperator.svg" id="7_ou8uo"]
 [ext_resource type="Texture2D" uid="uid://ckkk71mthlb3q" path="res://assets/images/calendar/red_section.svg" id="8_pixy8"]
 
@@ -32,14 +33,12 @@ grow_vertical = 2
 texture = ExtResource("8_pixy8")
 
 [node name="AreaSeperator" type="NinePatchRect" parent="." unique_id=873943491]
-custom_minimum_size = Vector2(6, 0)
+custom_minimum_size = Vector2(3, 0)
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 108.0
-offset_top = -7.0
-offset_right = 114.0125
-offset_bottom = 4.0
+offset_right = 111.0
 grow_vertical = 2
 texture = ExtResource("4_n7nb6")
 patch_margin_left = 1
@@ -67,7 +66,7 @@ theme_override_constants/separation = 4
 alignment = 1
 
 [node name="Box" type="TextureRect" parent="Item/Centering/Check" unique_id=1210011332]
-custom_minimum_size = Vector2(38, 38)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 2
@@ -89,7 +88,7 @@ vertical_alignment = 1
 clip_text = true
 resize_font_to_fit = true
 minimum_font_size = 11
-maximum_font_size = 15
+maximum_font_size = 14
 
 [node name="Reward" type="Label" parent="Item/Centering/Check/Text" unique_id=1214629740]
 layout_mode = 2
@@ -100,7 +99,7 @@ vertical_alignment = 1
 clip_text = true
 resize_font_to_fit = true
 minimum_font_size = 11
-maximum_font_size = 15
+maximum_font_size = 14
 
 [node name="Text" type="VBoxContainer" parent="Item" unique_id=1711762940]
 layout_mode = 2
@@ -109,12 +108,11 @@ size_flags_vertical = 4
 theme_override_constants/separation = 4
 
 [node name="TitleContainer" type="HBoxContainer" parent="Item/Text" unique_id=1776966037]
-custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="Tag" type="NinePatchRect" parent="Item/Text/TitleContainer" unique_id=1864771490]
-custom_minimum_size = Vector2(130, 26)
+custom_minimum_size = Vector2(116, 22)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -130,10 +128,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 6.0
-offset_top = 1.0
-offset_right = -6.0
-offset_bottom = -1.0
+offset_left = 9.0
+offset_top = 6.0
+offset_right = -7.0
+offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"SpecialModeTag"
@@ -142,53 +140,48 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 resize_font_to_fit = true
-maximum_font_size = 13
+minimum_font_size = 18
+maximum_font_size = 96
 
 [node name="Title" type="Label" parent="Item/Text/TitleContainer" unique_id=926266794]
-modulate = Color(0.11372549, 0.29411766, 0.43137255, 1)
-custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("6_ndntr")
 theme_type_variation = &"DailyTaskTitle"
-theme_override_font_sizes/font_size = 28
 text = "..."
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 resize_font_to_fit = true
-minimum_font_size = 18
-maximum_font_size = 30
+minimum_font_size = 28
+maximum_font_size = 116
 
 [node name="Desc" type="Label" parent="Item/Text" unique_id=991696763]
-custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyTaskDesc"
-theme_override_font_sizes/font_size = 20
 text = "..."
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 resize_font_to_fit = true
-minimum_font_size = 14
-maximum_font_size = 22
+minimum_font_size = 24
+maximum_font_size = 90
 
 [node name="Progress" type="Label" parent="Item/Text" unique_id=1255076877]
-custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyTaskProgressTodo"
-theme_override_font_sizes/font_size = 20
 text = "..."
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 resize_font_to_fit = true
-minimum_font_size = 14
-maximum_font_size = 22
+minimum_font_size = 24
+maximum_font_size = 96
 
 [node name="Action" type="TextureButton" parent="Item" unique_id=712238914]
-custom_minimum_size = Vector2(144, 46)
+custom_minimum_size = Vector2(140, 42)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -208,14 +201,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"DailyActionPrimary"
-theme_override_font_sizes/font_size = 16
 text = "STR_BTN_PLAY_NOW"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 resize_font_to_fit = true
-minimum_font_size = 13
-maximum_font_size = 17
+minimum_font_size = 12
+maximum_font_size = 15
 
 [node name="Seperator" type="NinePatchRect" parent="." unique_id=204588404]
 layout_mode = 1

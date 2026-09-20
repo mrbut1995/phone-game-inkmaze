@@ -1,5 +1,5 @@
 class_name RankTabButton
-extends TextureButton
+extends NinePatchButton
 ## ============================================================================
 ## Nút TAB bảng xếp hạng (nodes/ranking/tab_button.tscn)
 ## Trước đây tab được tạo bằng code (`TextureButton.new()` + tự thêm Label) —
@@ -40,7 +40,7 @@ func set_active(on: bool) -> void:
 	texture_normal = art
 	texture_pressed = art
 	texture_hover = art
-	texture_focused = art
+	texture_focus = art
 	texture_disabled = art
 	if label != null:
 		label.add_theme_color_override("font_color",

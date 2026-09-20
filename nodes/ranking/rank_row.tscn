@@ -1,25 +1,29 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://r8ouqyt4ph05"]
 
-[ext_resource type="Script" path="res://scripts/nodes/ranking/rank_row.gd" id="1_row"]
-[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="Script" uid="uid://c45w07472jvgh" path="res://scripts/nodes/ranking/rank_row.gd" id="1_row"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
 
-[node name="RankRow" type="Control"]
+[node name="RankRow" type="Control" unique_id=2119227117]
 custom_minimum_size = Vector2(755, 90)
 layout_mode = 3
-anchors_preset = 0
-offset_right = 755.0
-offset_bottom = 90.0
+anchor_right = 1.0
+anchor_bottom = 0.047000002
+offset_right = -3.0
+offset_bottom = -0.2400055
 theme = ExtResource("2_theme")
 script = ExtResource("1_row")
 
-[node name="Bg" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 755.0
-offset_bottom = 90.0
+[node name="Bg" type="TextureRect" parent="." unique_id=669903944]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 expand_mode = 1
 
-[node name="Rank" type="Label" parent="."]
+[node name="Rank" type="Label" parent="." unique_id=1377323667]
 layout_mode = 0
 offset_right = 80.0
 offset_bottom = 90.0
@@ -28,7 +32,7 @@ text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Flag" type="TextureRect" parent="."]
+[node name="Flag" type="TextureRect" parent="." unique_id=1524705675]
 layout_mode = 0
 offset_left = 96.0
 offset_top = 31.0
@@ -36,32 +40,43 @@ offset_right = 134.0
 offset_bottom = 59.0
 mouse_filter = 2
 
-[node name="Name" type="Label" parent="."]
-layout_mode = 0
-offset_left = 152.0
-offset_right = 410.0
+[node name="Name" type="Label" parent="." unique_id=1578347483]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.201
+anchor_right = 0.201
+offset_left = 0.24499512
+offset_right = 258.245
 offset_bottom = 90.0
 theme_type_variation = &"RankRowName"
 text = "Alex_Maze"
 vertical_alignment = 1
 text_overrun_behavior = 3
 
-[node name="Record" type="Label" parent="."]
-layout_mode = 0
-offset_left = 415.0
+[node name="Record" type="Label" parent="." unique_id=743804609]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.55
+anchor_right = 0.55
+offset_left = -0.25
 offset_top = 12.0
-offset_right = 600.0
+offset_right = 474.75006
 offset_bottom = 46.0
 theme_type_variation = &"RankRowRecord"
 text = "TẦNG 23"
-horizontal_alignment = 2
+horizontal_alignment = 1
 
-[node name="Points" type="Label" parent="."]
-layout_mode = 0
-offset_left = 415.0
-offset_top = 48.0
-offset_right = 600.0
-offset_bottom = 82.0
+[node name="Points" type="Label" parent="." unique_id=709965624]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.55
+anchor_top = 0.53300005
+anchor_right = 0.55
+anchor_bottom = 0.53300005
+offset_left = -0.25
+offset_top = 0.029994965
+offset_right = 474.75006
+offset_bottom = 34.029995
 theme_type_variation = &"RankRowPoints"
 text = "13,920 PTS"
-horizontal_alignment = 2
+horizontal_alignment = 1
