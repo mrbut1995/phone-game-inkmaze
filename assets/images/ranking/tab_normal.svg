@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 52" width="120" height="26">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 52" width="240" height="52">
   <!-- Tab chưa chọn 240x52 (mockup/ranking.svg) -->
-  <rect width="120" height="26" rx="14" fill="#8FB9D2"/>
-  <rect x="1.8" y="1.8" width="118.2" height="24.2" rx="12.2" fill="#FEFDFA"/>
+  <rect width="240" height="52" rx="14" fill="#8FB9D2"/>
+  <rect x="1.8" y="1.8" width="236.4" height="48.4" rx="12.2" fill="#FEFDFA"/>
 </svg>

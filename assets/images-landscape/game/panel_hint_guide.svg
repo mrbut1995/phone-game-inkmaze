@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 80" width="405" height="40">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 80" width="810" height="80">
   <defs>
     <clipPath id="tipClip">
-      <rect width="405" height="40" rx="18"/>
+      <rect width="810" height="80" rx="18"/>
     </clipPath>
   </defs>
-  <rect width="405" height="40" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
+  <rect width="810" height="80" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
   <g clip-path="url(#tipClip)">
     <line x1="20" y1="0" x2="20" y2="80" stroke="#F59E0B" stroke-width="3.5"/>
   </g>

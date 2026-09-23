@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -6 84 87" width="42" height="43.5">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -6 84 87" width="84" height="87">
   <!-- Vòng focus ring ngoài -->
-  <rect x="-3" y="-3" width="38" height="38" rx="21" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3"/>
-  <rect width="35" height="35" rx="18" fill="#FFFDF8" stroke="#C4843A" stroke-width="2.8"/>
+  <rect x="-3" y="-3" width="76" height="76" rx="21" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect width="70" height="70" rx="18" fill="#FFFDF8" stroke="#C4843A" stroke-width="2.8"/>
   <!-- Icon khởi động lại -->
   <path d="M 19 19 v 10 h 10" fill="none" stroke="#C4843A" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M 19 29 A 16 16 0 1 1 35 51 A 16 16 0 0 1 21.5 43" fill="none" stroke="#C4843A" stroke-width="3.8" stroke-linecap="round"/>

@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="176" height="176">
   <!-- Lớp Ô ĐÃ ĐI QUA (mode One Stroke): tô mực xanh mờ + gạch chéo chéo báo "ô đã khoá,
        không được quay lại" (mockup/matchup_one_stroke.svg — lớp visitedHatch).
        Lớp này phủ lên ô nhưng KHÔNG che số/ô S/F: ô đã đi luôn là ô trống (mode không có số).
        Các đường chéo vẽ thẳng (không dùng <pattern>) để ThorVG render đúng. -->
-  <rect x="0" y="0" width="88" height="88" rx="14" fill="#2575A7" fill-opacity="0.16"/>
+  <rect x="0" y="0" width="176" height="176" rx="14" fill="#2575A7" fill-opacity="0.16"/>
   <line x1="0.0" y1="86.0" x2="90.0" y2="90.0" stroke="#3D83AE" stroke-width="2.4" opacity="0.4"/>
   <line x1="0.0" y1="71.0" x2="105.0" y2="105.0" stroke="#3D83AE" stroke-width="2.4" opacity="0.4"/>
   <line x1="0.0" y1="56.0" x2="120.0" y2="120.0" stroke="#3D83AE" stroke-width="2.4" opacity="0.4"/>
@@ -22,5 +22,5 @@
   <line x1="139.0" y1="0.0" x2="176.0" y2="176.0" stroke="#3D83AE" stroke-width="2.4" opacity="0.4"/>
   <line x1="154.0" y1="0.0" x2="176.0" y2="176.0" stroke="#3D83AE" stroke-width="2.4" opacity="0.4"/>
   <line x1="169.0" y1="0.0" x2="176.0" y2="176.0" stroke="#3D83AE" stroke-width="2.4" opacity="0.4"/>
-  <rect x="5" y="5" width="83" height="83" rx="11" fill="none" stroke="#3D83AE" stroke-width="2.5" opacity="0.55" stroke-dasharray="8 6"/>
+  <rect x="5" y="5" width="166" height="166" rx="11" fill="none" stroke="#3D83AE" stroke-width="2.5" opacity="0.55" stroke-dasharray="8 6"/>
 </svg>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="392.5" height="267.5">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="785" height="535">
   <defs>
     <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
       <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14" />
@@ -14,12 +14,12 @@
     </g>
   </defs>
   <g filter="url(#uiShadow)">
-    <rect width="377.5" height="255" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3" />
+    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3" />
     <g transform="translate(45, 35)">
-      <rect width="332.5" height="107.5" rx="18" fill="#FFFDF8" stroke="#F59E0B" stroke-width="2" />
-      <rect x="25" y="16" width="92.5" height="14" rx="8" fill="#FEF3C7" />
+      <rect width="665" height="215" rx="18" fill="#FFFDF8" stroke="#F59E0B" stroke-width="2" />
+      <rect x="25" y="16" width="185" height="28" rx="8" fill="#FEF3C7" />
       <g transform="translate(60, 65)">
-        <rect width="65" height="55" rx="12" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5" />
+        <rect width="130" height="110" rx="12" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5" />
         <g transform="translate(53.559, 55)">
           <path d="M43 0V131L148 213Q236 282 296.5 329.0Q357 376 388.0 414.0Q419 452 419 495Q419 540 388.5 562.5Q358 585 323 585Q285 585 254.5 559.0Q224 533 224 478H40Q40 547 64.0 598.5Q88 650 129.0 683.5Q170 717 222.0 733.5Q274 750 330 750Q409 750 472.5 720.0Q536 690 573.5 636.0Q611 582 611 509Q611 441 577.5 385.0Q544 329 482.5 276.5Q421 224 335 165H618V0Z" fill="#718B9E" transform="translate(0, 0) scale(0.034, -0.034)" />
         </g>
@@ -48,18 +48,18 @@
     </g>
     <g transform="translate(45, 270)">
       <g transform="translate(0, 0)">
-        <rect width="160" height="77.5" rx="18" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="2" />
-        <rect x="25" y="18" width="25" height="25" rx="14" fill="#FEFDFA" stroke="#3D83AE" stroke-width="2.5" />
+        <rect width="320" height="155" rx="18" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="2" />
+        <rect x="25" y="18" width="50" height="50" rx="14" fill="#FEFDFA" stroke="#3D83AE" stroke-width="2.5" />
         <path d="M 46 36 L 38 43 L 46 50" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M 39 43 H 50 C 56 43 60 47 60 52 C 60 58 55 60 48 60 H 42" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" />
       </g>
       <g transform="translate(345, 0)">
-        <rect width="160" height="77.5" rx="18" fill="#FEFCE8" stroke="#FEF08A" stroke-width="2" />
-        <rect x="25" y="18" width="25" height="25" rx="14" fill="#FEFDFA" stroke="#F59E0B" stroke-width="2.5" />
+        <rect width="320" height="155" rx="18" fill="#FEFCE8" stroke="#FEF08A" stroke-width="2" />
+        <rect x="25" y="18" width="50" height="50" rx="14" fill="#FEFDFA" stroke="#F59E0B" stroke-width="2.5" />
         <path d="M 50 35 C 44 35 41 40 45 47 L 55 47 C 59 40 56 35 50 35 Z" fill="none" stroke="#F59E0B" stroke-width="2.8" />
         <line x1="47" y1="52" x2="53" y2="52" stroke="#F59E0B" stroke-width="2.5" />
       </g>
     </g>
-    <rect x="20" y="448" width="357.5" height="21" rx="10" fill="#F4EFE6" />
+    <rect x="20" y="448" width="715" height="42" rx="10" fill="#F4EFE6" />
   </g>
 </svg>

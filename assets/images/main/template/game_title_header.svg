@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 612 292" width="306" height="146">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 612 292" width="612" height="292">
   <!-- 1. Doodle 3x3 -->
   <g transform="translate(240, 0)">
-    <rect x="0" y="0" width="60" height="60" rx="14" fill="#F4F8FA" stroke="#3D83AE" stroke-width="3"/>
+    <rect x="0" y="0" width="120" height="120" rx="14" fill="#F4F8FA" stroke="#3D83AE" stroke-width="3"/>
     <line x1="40" y1="0" x2="40" y2="120" stroke="#3D83AE" stroke-width="1.5" opacity="0.5"/>
     <line x1="80" y1="0" x2="80" y2="120" stroke="#3D83AE" stroke-width="1.5" opacity="0.5"/>
     <line x1="0" y1="40" x2="120" y2="40" stroke="#3D83AE" stroke-width="1.5" opacity="0.5"/>
@@ -13,7 +13,7 @@
 
   <!-- 2. Tag thể loại -->
   <g transform="translate(300, 135)" text-anchor="middle">
-    <rect x="-140" y="0" width="140" height="17" rx="8" fill="#F4EFE6" stroke="#D1E2ED" stroke-width="1.5"/>
+    <rect x="-140" y="0" width="280" height="34" rx="8" fill="#F4EFE6" stroke="#D1E2ED" stroke-width="1.5"/>
     <text y="24" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="800" fill="#3D83AE" letter-spacing="3">LOGIC &amp; PUZZLE</text>
   </g>
 

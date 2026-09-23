@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -6 104 157" width="52" height="78.5">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -6 104 157" width="104" height="157">
   <!-- Vòng focus ring ngoài (hào quang mực hổ phách) -->
-  <rect x="-3" y="-3" width="48" height="73" rx="25" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3"/>
-  <rect width="45" height="70" rx="22" fill="#FFFDF8" stroke="#C4843A" stroke-width="2.8"/>
+  <rect x="-3" y="-3" width="96" height="146" rx="25" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect width="90" height="140" rx="22" fill="#FFFDF8" stroke="#C4843A" stroke-width="2.8"/>
   <!-- Icon căn giữa thân nút (nút đã bỏ text nên dịch vào giữa) -->
   <g transform="translate(7, 32.5)">
     <path d="M 33 22 L 24 30 L 33 38" fill="none" stroke="#C4843A" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>

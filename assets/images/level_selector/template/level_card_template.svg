@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -4 340 406" width="170" height="203">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -4 340 406" width="340" height="406">
   <defs>
     <!-- Đổ bóng giấy dày của Card Board -->
     <filter id="levelCardShadow" x="-15%" y="-15%" width="135%" height="135%">
@@ -6,14 +6,14 @@
       <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1E1610" flood-opacity="0.08"/>
     </filter>
     <clipPath id="levelCardClip">
-      <rect x="15" y="15" width="95" height="135" rx="24" />
+      <rect x="15" y="15" width="190" height="270" rx="24" />
     </clipPath>
   </defs>
 
   <g filter="url(#levelCardShadow)">
     <g clip-path="url(#levelCardClip)">
       <!-- 1. Mặt giấy trắng ngà (cùng chất liệu card_board) -->
-      <rect x="15" y="15" width="95" height="135" fill="#FEFDFA"/>
+      <rect x="15" y="15" width="190" height="270" fill="#FEFDFA"/>
       <!-- 2. Lưới ô ly mờ phần thân -->
       <path d="M 15 80 L 205 80 M 15 130 L 205 130 M 15 180 L 205 180 M 15 230 L 205 230" stroke="#8FB9D2" stroke-width="1" opacity="0.35"/>
       <!-- 3. Đường lề đỏ vở học sinh bên trái -->
@@ -21,7 +21,7 @@
     </g>
 
     <!-- Viền khung mực xanh bo góc -->
-    <rect x="15" y="15" width="95" height="135" rx="24" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
+    <rect x="15" y="15" width="190" height="270" rx="24" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
     <!-- Highlight sáng nổi mép trên -->
     <line x1="38" y1="17" x2="182" y2="17" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round"/>
   </g>

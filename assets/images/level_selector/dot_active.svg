@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 12" width="17" height="6">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 12" width="34" height="12">
   <!-- Dot đang chọn (dạng viên thuốc) - mockup level_selection.svg -->
-  <rect x="0" y="0" width="17" height="6" rx="6" fill="#3D83AE"/>
+  <rect x="0" y="0" width="34" height="12" rx="6" fill="#3D83AE"/>
 </svg>

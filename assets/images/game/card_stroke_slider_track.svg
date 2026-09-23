@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 14" width="205" height="7">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 14" width="410" height="14">
   <!-- Rãnh thanh tiến độ phủ kín (mode One Stroke) — 410x14
        Nằm trong nodes/hud/one_stroke_hud.tscn tại sheet-local (245, 70). -->
-  <rect width="205" height="7" rx="7" fill="#EAE4D5"/>
+  <rect width="410" height="14" rx="7" fill="#EAE4D5"/>
 </svg>

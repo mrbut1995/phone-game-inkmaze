@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="5 13 1010 1016" width="505" height="508">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="5 13 1010 1016" width="1010" height="1016">
   <defs>
     <!-- Đổ bóng lớn cho bàn cờ -->
     <filter id="boardShadow" x="-10%" y="-10%" width="125%" height="130%">
@@ -8,19 +8,19 @@
 
     <!-- Khuôn bo góc bàn cờ -->
     <clipPath id="boardClip">
-      <rect x="20" y="20" width="490" height="490" rx="28"/>
+      <rect x="20" y="20" width="980" height="980" rx="28"/>
     </clipPath>
   </defs>
 
   <!-- Mặt bàn cờ 980x980 đúng size mockup (chừa 20px lề cho đổ bóng) -->
   <g clip-path="url(#boardClip)">
-    <rect x="20" y="20" width="490" height="490" fill="#FEFDFA"/>
+    <rect x="20" y="20" width="980" height="980" fill="#FEFDFA"/>
     <!-- Lề đỏ vở học sinh -->
     <line x1="62" y1="20" x2="62" y2="1000" stroke="#D84444" stroke-width="3"/>
   </g>
 
   <!-- Viền mực xanh bo góc -->
-  <rect x="20" y="20" width="490" height="490" rx="28" fill="none" stroke="#6EA0C8" stroke-width="6" filter="url(#boardShadow)"/>
+  <rect x="20" y="20" width="980" height="980" rx="28" fill="none" stroke="#6EA0C8" stroke-width="6" filter="url(#boardShadow)"/>
 
   <!-- Highlight mỏng cạnh trên -->
   <line x1="55" y1="23" x2="965" y2="23" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="5" stroke-linecap="round"/>

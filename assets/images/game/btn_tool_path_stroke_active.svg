@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 694 155" width="347" height="77.5">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 694 155" width="694" height="155">
   <!-- Nút VẼ ĐƯỜNG ĐI bản BÈ NGANG của mode One Stroke — nút 680x140 đúng mockup
        (mockup/matchup_one_stroke.svg: thanh công cụ chỉ còn VẼ ĐƯỜNG ĐI + UNDO + GỢI Ý nên
        nút này chiếm trọn bề ngang còn lại). Giữ đúng 20px lề cho đổ bóng như bản 360x140. -->
-  <rect width="340" height="70" rx="26" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
+  <rect width="680" height="140" rx="26" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
   <line x1="35" y1="0" x2="35" y2="140" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
   <!-- Icon bút chì -->
   <g transform="translate(65, 45)" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">

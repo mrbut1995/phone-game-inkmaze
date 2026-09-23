@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 374 155" width="187" height="77.5">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 374 155" width="374" height="155">
   <!-- Nút lún xuống 2px, thân tối màu tạo cảm giác bị nén -->
   <g transform="translate(0, 2)">
-    <rect width="180" height="69" rx="26" fill="#8A561D" stroke="#5E3A11" stroke-width="4"/>
+    <rect width="360" height="138" rx="26" fill="#8A561D" stroke="#5E3A11" stroke-width="4"/>
     <line x1="35" y1="0" x2="35" y2="138" stroke="#FAF5EB" stroke-width="3" opacity="0.4"/>
     <!-- Icon tường gạch -->
     <g transform="translate(55, 48)" stroke="#FEF3C7" stroke-width="3.5" fill="none" stroke-linecap="round">
-      <rect x="0" y="4" width="20" height="16" rx="6" stroke-width="3"/>
+      <rect x="0" y="4" width="40" height="32" rx="6" stroke-width="3"/>
       <line x1="0" y1="20" x2="40" y2="20"/>
       <line x1="20" y1="4" x2="20" y2="20"/>
     </g>
