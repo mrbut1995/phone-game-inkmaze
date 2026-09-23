@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 215" width="810" height="215">
+  <defs>
+    <clipPath id="heroClip">
+      <rect width="810" height="215" rx="26"/>
+    </clipPath>
+  </defs>
+  <rect width="810" height="215" rx="26" fill="#2B6B91" stroke="#173E59" stroke-width="4"/>
+  <g clip-path="url(#heroClip)">
+    <line x1="36" y1="0" x2="36" y2="215" stroke="#FAF5EB" stroke-width="3.5" opacity="0.65"/>
+  </g>
+
+  <!-- Biểu tượng cây bút vẽ đường -->
+  <g transform="translate(65, 68)" stroke="#E0F2FE" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 20 5 L 60 45 L 24 80 L 5 80 L 5 61 Z"/>
+    <path d="M 45 30 L 55 40"/>
+    <line x1="5" y1="80" x2="24" y2="80"/>
+    <path d="M 70 80 Q 95 80 110 55" stroke-width="4" stroke-dasharray="6 5"/>
+  </g>
+
+  <!-- Tag Trạng thái BẬT -->
+  <rect x="670" y="80" width="95" height="55" rx="16" fill="#0369A1" stroke="#BAE6FD" stroke-width="2"/>
+  <text x="717.5" y="115" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="900" fill="#FFFFFF">BẬT</text>
+</svg>

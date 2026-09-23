@@ -17,8 +17,8 @@ var subtitle_label: Label = null
 ## Khung chứa HUD của chế độ đang chơi (HUD được đổi bằng code — xem _apply_hud_for_mode)
 var hud_host: Control = null
 
-var tool_path_btn: BaseButton = null
-var tool_wall_btn: BaseButton = null
+var tool_path_btn: NinePatchButton = null
+var tool_wall_btn: NinePatchButton = null
 var undo_btn: BaseButton = null
 var hint_btn: BaseButton = null
 ## Nút CHƠI LẠI ẩn sẵn DƯỚI thanh nút — UIController hiện khi ván không còn thắng được nữa (Sum Path)
@@ -418,6 +418,11 @@ const TOOL_FULL_KEYS := {
 const TOOL_TEX_STROKE_PATH := preload("res://assets/images/game/btn_tool_path_stroke_active.svg")
 const TOOL_TEX_SUBMIT := preload("res://assets/images/game/btn_tool_submit_normal.svg")
 const TOOL_TEX_SUBMIT_PRESSED := preload("res://assets/images/game/btn_tool_submit_pressed.svg")
+const TOOL_LAND_PATH_ACTIVE := preload("res://assets/images-landscape/game/btn_tool_path_hero_active.svg")
+const TOOL_LAND_PATH_INACTIVE := preload("res://assets/images-landscape/game/btn_tool_path_hero_inactive.svg")
+const TOOL_LAND_PATH_PRESSED := preload("res://assets/images-landscape/game/btn_tool_path_hero_pressed.svg")
+const TOOL_LAND_WALL_NORMAL := preload("res://assets/images-landscape/game/btn_tool_wall_land_normal.svg")
+const TOOL_LAND_WALL_PRESSED := preload("res://assets/images-landscape/game/btn_tool_wall_land_pressed.svg")
 ## Chế độ ẩn hẳn nút GHI NHỚ (tường hiện rõ 100% nên không cần đánh dấu) — mockup
 ## matchup_one_stroke.svg: "ẨN NÚT GHI NHỚ THEO §5.12", thanh công cụ chỉ còn VẼ ĐƯỜNG ĐI + UNDO + GỢI Ý.
 const TOOL_HIDE_WALL_MODES := ["one_stroke"]
@@ -453,6 +458,18 @@ func _apply_tool_labels_for_mode(mode_name: String) -> void:
 func _apply_tool_textures_for_mode(mode_id: String) -> void:
 	if tool_controller == null:
 		return
+	if _layout_is_landscape():
+		match mode_id:
+			"one_stroke":
+				tool_controller.set_mode_textures(TOOL_LAND_PATH_ACTIVE, TOOL_LAND_PATH_PRESSED,
+					TOOL_LAND_PATH_ACTIVE, null, null, null)
+			"wall_builder":
+				tool_controller.set_mode_textures(TOOL_LAND_PATH_ACTIVE, TOOL_LAND_PATH_PRESSED,
+					TOOL_LAND_PATH_INACTIVE, TOOL_TEX_SUBMIT, TOOL_TEX_SUBMIT_PRESSED, TOOL_TEX_SUBMIT)
+			_:
+				tool_controller.set_mode_textures(TOOL_LAND_PATH_ACTIVE, TOOL_LAND_PATH_PRESSED,
+					TOOL_LAND_PATH_INACTIVE, TOOL_LAND_WALL_NORMAL, TOOL_LAND_WALL_PRESSED, TOOL_LAND_WALL_NORMAL)
+		return
 	match mode_id:
 		"one_stroke":
 			tool_controller.set_mode_textures(TOOL_TEX_STROKE_PATH, TOOL_TEX_STROKE_PATH,
@@ -464,7 +481,7 @@ func _apply_tool_textures_for_mode(mode_id: String) -> void:
 			tool_controller.set_mode_textures(null, null, null, null, null, null)
 
 
-func _set_tool_label(btn: TextureButton, title_key: String, sub_key: String) -> void:
+func _set_tool_label(btn: NinePatchButton, title_key: String, sub_key: String) -> void:
 	if btn == null:
 		return
 	var title := btn.get_node_or_null("Label") as Label
@@ -523,6 +540,9 @@ func _copy_layout_from(src: Control, dst: Control) -> void:
 	dst.offset_bottom = src.offset_bottom
 	dst.grow_horizontal = src.grow_horizontal
 	dst.grow_vertical = src.grow_vertical
+	dst.size_flags_horizontal = src.size_flags_horizontal
+	dst.size_flags_vertical = src.size_flags_vertical
+	dst.custom_minimum_size = src.custom_minimum_size
 
 
 ## Gắn HUD hiện tại cho UIController (vẽ nội dung) và ChallengeController (thẻ Thử thách).
@@ -544,6 +564,8 @@ func _bind_hud_nodes() -> void:
 		ui_controller.set_hud(hud)
 	if challenge_controller != null:
 		challenge_controller.card = hud.challenge_card()
+	hint_guide = ui("HintGuide") as HintGuide
+	_refresh_hint_guide()
 	_fit_hud_scale.call_deferred()
 
 

@@ -1,21 +1,133 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dxpf4nu3wy753"]
 
-[ext_resource type="Texture2D" uid="uid://btgio4y75ub5n" path="res://assets/images/game/btn_hint_disabled.svg" id="bar_hint_d"]
-[ext_resource type="Texture2D" uid="uid://dd61x6fjtobav" path="res://assets/images/game/btn_hint_normal.svg" id="bar_hint_n"]
-[ext_resource type="Texture2D" uid="uid://c864ne3ni7vvn" path="res://assets/images/game/btn_hint_pressed.svg" id="bar_hint_p"]
+[ext_resource type="Texture2D" uid="uid://da5y6n286ue05" path="res://assets/images-landscape/game/btn_tool_path_hero_inactive.svg" id="4_io3xg"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/NinePatchButton.gd" id="4_tfbqo"]
+[ext_resource type="Texture2D" uid="uid://uu47mfixupk2" path="res://assets/images-landscape/game/btn_hint_land_disabled.svg" id="bar_hint_d"]
+[ext_resource type="Texture2D" uid="uid://56khrtx12adb" path="res://assets/images-landscape/game/btn_hint_land_normal.svg" id="bar_hint_n"]
+[ext_resource type="Texture2D" uid="uid://dw50rlyk1y3b3" path="res://assets/images-landscape/game/btn_hint_land_pressed.svg" id="bar_hint_p"]
 [ext_resource type="LabelSettings" uid="uid://bwpq01l1whp4t" path="res://resources/settings/text/text_game_button_label.tres" id="bar_lbl"]
 [ext_resource type="Texture2D" uid="uid://n10pv74qr68u" path="res://assets/images/popups/icon_replay.svg" id="bar_replay"]
 [ext_resource type="Script" uid="uid://bbq8fo18vt532" path="res://scripts/nodes/hud/action_bar.gd" id="bar_script"]
 [ext_resource type="LabelSettings" uid="uid://dg2subtoolbtn" path="res://resources/settings/text/text_game_button_sub.tres" id="bar_sub"]
-[ext_resource type="Texture2D" uid="uid://f0vfhexgx4p4" path="res://assets/images/game/btn_tool_path_inactive.svg" id="bar_tool_n"]
-[ext_resource type="Texture2D" uid="uid://bjchvkdyxi45g" path="res://assets/images/game/btn_tool_path_pressed.svg" id="bar_tool_p"]
-[ext_resource type="Texture2D" uid="uid://dqldqskahkgcx" path="res://assets/images/game/btn_undo_disabled.svg" id="bar_undo_d"]
-[ext_resource type="Texture2D" uid="uid://cte1ue0xq3002" path="res://assets/images/game/btn_undo_normal.svg" id="bar_undo_n"]
-[ext_resource type="Texture2D" uid="uid://dp6gsathe7et6" path="res://assets/images/game/btn_undo_pressed.svg" id="bar_undo_p"]
-[ext_resource type="Texture2D" uid="uid://cakuvp3hoy31u" path="res://assets/images/game/btn_tool_wall_inactive.svg" id="bar_wall_n"]
-[ext_resource type="Texture2D" uid="uid://bqu7qe1u0b70x" path="res://assets/images/game/btn_tool_wall_pressed.svg" id="bar_wall_p"]
+[ext_resource type="Texture2D" uid="uid://dj77636g50lkp" path="res://assets/images-landscape/game/btn_tool_path_hero_active.svg" id="bar_tool_n"]
+[ext_resource type="Texture2D" uid="uid://dku48vdnv0gj5" path="res://assets/images-landscape/game/btn_tool_path_hero_pressed.svg" id="bar_tool_p"]
+[ext_resource type="Texture2D" uid="uid://0wytxtqdhtmc" path="res://assets/images-landscape/game/btn_undo_land_disabled.svg" id="bar_undo_d"]
+[ext_resource type="Texture2D" uid="uid://5nkw36ljop8f" path="res://assets/images-landscape/game/btn_undo_land_normal.svg" id="bar_undo_n"]
+[ext_resource type="Texture2D" uid="uid://cfsmf3ifiyk4i" path="res://assets/images-landscape/game/btn_undo_land_pressed.svg" id="bar_undo_p"]
+[ext_resource type="Texture2D" uid="uid://mhrgq443xrfm" path="res://assets/images-landscape/game/btn_tool_wall_land_normal.svg" id="bar_wall_n"]
+[ext_resource type="Texture2D" uid="uid://bptu38mnf2s0j" path="res://assets/images-landscape/game/btn_tool_wall_land_pressed.svg" id="bar_wall_p"]
 
-[node name="ActionBar" type="Control"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_io3xg"]
+content_margin_left = 201.0
+content_margin_top = 33.0
+content_margin_right = 180.0
+content_margin_bottom = 37.0
+texture = ExtResource("bar_tool_n")
+texture_margin_left = 201.0
+texture_margin_top = 33.0
+texture_margin_right = 180.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pkg1f"]
+content_margin_left = 201.0
+content_margin_top = 33.0
+content_margin_right = 180.0
+content_margin_bottom = 37.0
+texture = ExtResource("bar_tool_p")
+texture_margin_left = 201.0
+texture_margin_top = 33.0
+texture_margin_right = 180.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gxs4y"]
+content_margin_left = 201.0
+content_margin_top = 33.0
+content_margin_right = 180.0
+content_margin_bottom = 37.0
+texture = ExtResource("bar_tool_n")
+texture_margin_left = 201.0
+texture_margin_top = 33.0
+texture_margin_right = 180.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pltj4"]
+content_margin_left = 201.0
+content_margin_top = 33.0
+content_margin_right = 180.0
+content_margin_bottom = 37.0
+texture = ExtResource("4_io3xg")
+texture_margin_left = 201.0
+texture_margin_top = 33.0
+texture_margin_right = 180.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0urif"]
+content_margin_left = 201.0
+content_margin_top = 33.0
+content_margin_right = 180.0
+content_margin_bottom = 37.0
+texture = ExtResource("bar_tool_n")
+texture_margin_left = 201.0
+texture_margin_top = 33.0
+texture_margin_right = 180.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xma4f"]
+content_margin_left = 115.0
+content_margin_top = 26.0
+content_margin_right = 84.0
+content_margin_bottom = 32.0
+texture = ExtResource("bar_wall_n")
+texture_margin_left = 115.0
+texture_margin_top = 26.0
+texture_margin_right = 84.0
+texture_margin_bottom = 32.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j5n52"]
+content_margin_left = 115.0
+content_margin_top = 26.0
+content_margin_right = 84.0
+content_margin_bottom = 32.0
+texture = ExtResource("bar_wall_p")
+texture_margin_left = 115.0
+texture_margin_top = 26.0
+texture_margin_right = 84.0
+texture_margin_bottom = 32.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j0swc"]
+content_margin_left = 115.0
+content_margin_top = 26.0
+content_margin_right = 84.0
+content_margin_bottom = 32.0
+texture = ExtResource("bar_wall_n")
+texture_margin_left = 115.0
+texture_margin_top = 26.0
+texture_margin_right = 84.0
+texture_margin_bottom = 32.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nn7xa"]
+content_margin_left = 115.0
+content_margin_top = 26.0
+content_margin_right = 84.0
+content_margin_bottom = 32.0
+texture = ExtResource("bar_wall_n")
+texture_margin_left = 115.0
+texture_margin_top = 26.0
+texture_margin_right = 84.0
+texture_margin_bottom = 32.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_prai4"]
+content_margin_left = 115.0
+content_margin_top = 26.0
+content_margin_right = 84.0
+content_margin_bottom = 32.0
+texture = ExtResource("bar_wall_n")
+texture_margin_left = 115.0
+texture_margin_top = 26.0
+texture_margin_right = 84.0
+texture_margin_bottom = 32.0
+
+[node name="ActionBar" type="Control" unique_id=2115460442]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,95 +137,117 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("bar_script")
 
-[node name="MainRow" type="HBoxContainer" parent="."]
+[node name="Tool" type="Button" parent="." unique_id=822923896]
+custom_minimum_size = Vector2(810, 215)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-offset_top = 400.0
-offset_bottom = 562.0
-theme_override_constants/separation = 18
-alignment = 1
-
-[node name="Tool" type="TextureButton" parent="MainRow"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
+offset_bottom = 215.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_io3xg")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pkg1f")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gxs4y")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_pltj4")
+theme_override_styles/focus = SubResource("StyleBoxTexture_0urif")
+script = ExtResource("4_tfbqo")
 texture_normal = ExtResource("bar_tool_n")
+texture_hover = ExtResource("bar_tool_n")
 texture_pressed = ExtResource("bar_tool_p")
-stretch_mode = 5
+texture_disabled = ExtResource("4_io3xg")
+texture_focus = ExtResource("bar_tool_n")
+patch_margin_left = 201.0
+patch_margin_top = 33.0
+patch_margin_right = 180.0
+patch_margin_bottom = 37.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="Label" type="Label" parent="MainRow/Tool"]
+[node name="Label" type="Label" parent="Tool" unique_id=673922787]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -40.0
+anchors_preset = -1
+anchor_left = 0.255
+anchor_top = 0.22
+anchor_right = 0.81
+anchor_bottom = 0.56
 grow_horizontal = 2
 grow_vertical = 2
-text = "STR_TOOL_DRAW_PATH"
+text = "CHẾ ĐỘ: VẼ ĐƯỜNG ĐI"
 label_settings = ExtResource("bar_lbl")
-horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sub" type="Label" parent="MainRow/Tool"]
+[node name="Sub" type="Label" parent="Tool" unique_id=1814525187]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -46.0
+anchors_preset = -1
+anchor_left = 0.255
+anchor_top = 0.58
+anchor_right = 0.81
+anchor_bottom = 0.86
 grow_horizontal = 2
 grow_vertical = 0
-text = "STR_TOOL_DRAW_PATH_DESC"
+text = "Đang kích hoạt • Chạm giữ và lướt qua tâm các ô liền kề"
 label_settings = ExtResource("bar_sub")
-horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Wall" type="TextureButton" parent="MainRow"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-texture_normal = ExtResource("bar_wall_n")
-texture_pressed = ExtResource("bar_wall_p")
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="MainRow/Wall"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -40.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_TOOL_MARK_WALL"
-label_settings = ExtResource("bar_lbl")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sub" type="Label" parent="MainRow/Wall"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -46.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "STR_TOOL_MARK_WALL_DESC"
-label_settings = ExtResource("bar_sub")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SubRow" type="HBoxContainer" parent="."]
+[node name="SubRow" type="HBoxContainer" parent="." unique_id=1864078791]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-offset_top = 574.0
-offset_bottom = 736.0
-theme_override_constants/separation = 18
-alignment = 1
+offset_top = 235.0
+offset_bottom = 385.0
+theme_override_constants/separation = 20
 
-[node name="Undo" type="TextureButton" parent="SubRow"]
+[node name="Wall" type="Button" parent="SubRow" unique_id=1458595949]
+custom_minimum_size = Vector2(460, 150)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxTexture_xma4f")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_j5n52")
+theme_override_styles/hover = SubResource("StyleBoxTexture_j0swc")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_nn7xa")
+theme_override_styles/focus = SubResource("StyleBoxTexture_prai4")
+script = ExtResource("4_tfbqo")
+texture_normal = ExtResource("bar_wall_n")
+texture_hover = ExtResource("bar_wall_n")
+texture_pressed = ExtResource("bar_wall_p")
+texture_disabled = ExtResource("bar_wall_n")
+texture_focus = ExtResource("bar_wall_n")
+patch_margin_left = 115.0
+patch_margin_top = 26.0
+patch_margin_right = 84.0
+patch_margin_bottom = 32.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+
+[node name="Label" type="Label" parent="SubRow/Wall" unique_id=95066269]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.18
+anchor_right = 0.9500001
+anchor_bottom = 0.55
+offset_left = 143.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GHI NHỚ TƯỜNG"
+label_settings = ExtResource("bar_lbl")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Sub" type="Label" parent="SubRow/Wall" unique_id=742243654]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.58
+anchor_right = 0.95
+anchor_bottom = 0.86
+offset_left = 154.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Nối 2 dấu cộng (+) Anchor"
+label_settings = ExtResource("bar_sub")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Undo" type="TextureButton" parent="SubRow" unique_id=293478108]
+custom_minimum_size = Vector2(155, 150)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -121,8 +255,10 @@ tooltip_text = "UNDO"
 texture_normal = ExtResource("bar_undo_n")
 texture_pressed = ExtResource("bar_undo_p")
 texture_disabled = ExtResource("bar_undo_d")
+stretch_mode = 0
 
-[node name="Hint" type="TextureButton" parent="SubRow"]
+[node name="Hint" type="TextureButton" parent="SubRow" unique_id=1015673811]
+custom_minimum_size = Vector2(155, 150)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -130,10 +266,11 @@ tooltip_text = "HINT"
 texture_normal = ExtResource("bar_hint_n")
 texture_pressed = ExtResource("bar_hint_p")
 texture_disabled = ExtResource("bar_hint_d")
+stretch_mode = 0
 
-[node name="Replay" type="TextureButton" parent="SubRow"]
+[node name="Replay" type="TextureButton" parent="SubRow" unique_id=1476857671]
 visible = false
-custom_minimum_size = Vector2(192, 108)
+custom_minimum_size = Vector2(155, 150)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -141,7 +278,7 @@ texture_normal = ExtResource("bar_replay")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="SubRow/Replay"]
+[node name="Label" type="Label" parent="SubRow/Replay" unique_id=1504247394]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0

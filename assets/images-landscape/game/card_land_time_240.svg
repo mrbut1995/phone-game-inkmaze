@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 230" width="240" height="230">
+  <defs>
+    <clipPath id="time240Clip">
+      <rect width="240" height="230" rx="22"/>
+    </clipPath>
+  </defs>
+  <rect width="240" height="230" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+  <g clip-path="url(#time240Clip)">
+    <line x1="18" y1="0" x2="18" y2="230" stroke="#3D83AE" stroke-width="2.5"/>
+  </g>
+</svg>

@@ -12,8 +12,8 @@ extends BaseLandscapeOrientation
 ##   · `fit_hud()`                  · `configure_tool_path_button()`
 ## ============================================================================
 
-## Bề rộng HUD thiết kế (bản dọc 980) — bản ngang co lại cho vừa sidebar
-const HUD_DESIGN_WIDTH := 980.0
+## Bề rộng HUD thiết kế (bản ngang 810 theo mockup 16:9)
+const HUD_DESIGN_WIDTH := 810.0
 
 func is_landscape_layout() -> bool:
 	return true

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cb348h6q1r8lf"]
 
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="1_w6pjg"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/NinePatchButton.gd" id="5_l0kg0"]
 [ext_resource type="Texture2D" uid="uid://btgio4y75ub5n" path="res://assets/images/game/btn_hint_disabled.svg" id="bar_hint_d"]
 [ext_resource type="Texture2D" uid="uid://dd61x6fjtobav" path="res://assets/images/game/btn_hint_normal.svg" id="bar_hint_n"]
 [ext_resource type="Texture2D" uid="uid://c864ne3ni7vvn" path="res://assets/images/game/btn_hint_pressed.svg" id="bar_hint_p"]
@@ -16,6 +17,76 @@
 [ext_resource type="Texture2D" uid="uid://cakuvp3hoy31u" path="res://assets/images/game/btn_tool_wall_inactive.svg" id="bar_wall_n"]
 [ext_resource type="Texture2D" uid="uid://bqu7qe1u0b70x" path="res://assets/images/game/btn_tool_wall_pressed.svg" id="bar_wall_p"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3631"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("bar_tool_n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t8ne6"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("bar_tool_p")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ucm8u"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("bar_tool_n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g1ek8"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("bar_tool_n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bj6ab"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("bar_tool_n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l0kg0"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("bar_wall_n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vsmft"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("bar_wall_p")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vvx5a"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("bar_wall_n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_48wkn"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("bar_wall_n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qql67"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("bar_wall_n")
+
 [node name="ActionBar" type="Control" unique_id=1405900313]
 layout_mode = 3
 anchors_preset = 15
@@ -30,29 +101,36 @@ script = ExtResource("bar_script")
 
 [node name="Portrait" type="Control" parent="." unique_id=519792365]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 mouse_filter = 2
 
 [node name="Row" type="HBoxContainer" parent="Portrait" unique_id=1921036029]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 6.0
+offset_left = 4.0
 offset_top = 2.0
-offset_right = 992.0
+offset_right = 1075.0
 offset_bottom = 164.0
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Tool" type="TextureButton" parent="Portrait/Row" unique_id=670440399]
+[node name="Tool" type="Button" parent="Portrait/Row" unique_id=455131590]
+custom_minimum_size = Vector2(374, 155)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxTexture_x3631")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_t8ne6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ucm8u")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_g1ek8")
+theme_override_styles/focus = SubResource("StyleBoxTexture_bj6ab")
+script = ExtResource("5_l0kg0")
 texture_normal = ExtResource("bar_tool_n")
+texture_hover = ExtResource("bar_tool_n")
 texture_pressed = ExtResource("bar_tool_p")
+texture_disabled = ExtResource("bar_tool_n")
+texture_focus = ExtResource("bar_tool_n")
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Label" type="Label" parent="Portrait/Row/Tool" unique_id=605887093]
 self_modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
@@ -94,12 +172,23 @@ resize_font_to_fit = true
 maximum_font_size = 30
 metadata/_edit_use_anchors_ = true
 
-[node name="Wall" type="TextureButton" parent="Portrait/Row" unique_id=839493067]
+[node name="Wall" type="Button" parent="Portrait/Row" unique_id=1602934804]
+custom_minimum_size = Vector2(374, 155)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxTexture_l0kg0")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vsmft")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vvx5a")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_48wkn")
+theme_override_styles/focus = SubResource("StyleBoxTexture_qql67")
+script = ExtResource("5_l0kg0")
 texture_normal = ExtResource("bar_wall_n")
+texture_hover = ExtResource("bar_wall_n")
 texture_pressed = ExtResource("bar_wall_p")
+texture_disabled = ExtResource("bar_wall_n")
+texture_focus = ExtResource("bar_wall_n")
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Label" type="Label" parent="Portrait/Row/Wall" unique_id=458534332]
 modulate = Color(0.76862746, 0.5176471, 0.22745098, 1)
