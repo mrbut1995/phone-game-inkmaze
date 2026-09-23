@@ -15,6 +15,7 @@ extends Control
 ## Mọi HUD đều có thẻ THỜI GIAN tên node "Time/Value" (xem set_time()).
 ## ============================================================================
 
+@export var time_value_node : Label = get_node_or_null("Time/Value")
 
 ## Gọi mỗi khi HUD cần vẽ lại (GameController._update_hud). ctx gồm:
 ##   title:String · subtitle:String · steps_remaining:int · elapsed_time:float
@@ -37,8 +38,11 @@ func challenge_card() -> Control:
 
 ## Đồng hồ của ván: giây -> "m:ss"
 func set_time(seconds: float) -> void:
-	set_label_text(get_node_or_null("Time/Value"), format_time(seconds))
+	set_label_text(get_time_node().get_node_or_null("Value"), format_time(seconds))
 
+
+func get_time_node() -> Control :
+	return get_node_or_null("Content/ModeInformation/Time")
 
 ## Gán text cho Label (bỏ qua nếu trùng -> không redraw mỗi frame)
 func set_label_text(node: Node, text: String) -> void:
@@ -58,7 +62,7 @@ static func format_time(seconds: float) -> String:
 ## màn chơi chỉ việc lấy ra để nối tín hiệu (không còn nút nào trong game.tscn).
 ## ---------------------------------------------------------------------------
 func action_bar() -> ActionBar:
-	return get_node_or_null("ActionBar") as ActionBar
+	return get_node_or_null("Content/ActionBar") as ActionBar
 
 
 ## Bật bố cục NGANG cho thanh nút (hàng trên: Vẽ đường · Ghi nhớ — hàng dưới: Undo · Hint)

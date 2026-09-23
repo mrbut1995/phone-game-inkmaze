@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://cchuuwsep7gyy"]
+
+[ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_3jer6"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_2xpgc"]
+[ext_resource type="Script" uid="uid://bt8f7hl74mar" path="res://scripts/nodes/game/hint_guide.gd" id="3_knb8l"]
+[ext_resource type="Texture2D" uid="uid://qaygenosff2s" path="res://assets/images-landscape/game/panel_hint_guide.svg" id="4_vxho0"]
+[ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="5_jkgcm"]
+[ext_resource type="PackedScene" uid="uid://dxpf4nu3wy753" path="res://nodes/hud/landscape/action_bar.tscn" id="6_k75i2"]
+
+[node name="Hud" unique_id=1383101299 instance=ExtResource("1_3jer6")]
+custom_minimum_size = Vector2(405, 380)
+anchors_preset = 15
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Content" type="VBoxContainer" parent="." index="0" unique_id=159019822]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ModeInformation" type="HBoxContainer" parent="Content" index="0" unique_id=1591333926]
+layout_mode = 2
+
+[node name="HintGuide" type="Control" parent="Content" index="1" unique_id=2049437720]
+custom_minimum_size = Vector2(405, 40)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme = ExtResource("2_2xpgc")
+script = ExtResource("3_knb8l")
+metadata/_edit_use_anchors_ = true
+
+[node name="Bg" type="NinePatchRect" parent="Content/HintGuide" index="0" unique_id=1214394522]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_vxho0")
+patch_margin_left = 37
+patch_margin_top = 9
+patch_margin_right = 40
+patch_margin_bottom = 11
+
+[node name="Icon" type="TextureRect" parent="Content/HintGuide" index="1" unique_id=1230886291]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 9.5
+offset_right = 54.0
+offset_bottom = 27.5
+mouse_filter = 2
+texture = ExtResource("5_jkgcm")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Text" type="Label" parent="Content/HintGuide" index="2" unique_id=1481669796]
+modulate = Color(0.14117648, 0.30588236, 0.43137255, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.095
+anchor_right = 0.98
+anchor_bottom = 1.0
+theme_type_variation = &"HintGuideText"
+text = "STR_HINT_PLAY"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="ActionBar" parent="Content" index="2" unique_id=546417524 instance=ExtResource("6_k75i2")]
+layout_mode = 2
+size_flags_vertical = 2
