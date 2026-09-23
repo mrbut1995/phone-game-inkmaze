@@ -26,7 +26,7 @@ func hud_variant(_portrait_scene: PackedScene, landscape_scene: PackedScene) -> 
 
 ## Control dành sẵn cho bàn cờ (khai trong scenes/orientation/landscape/game.tscn)
 func board_slot() -> Control:
-	return get_node_or_null("BoardSlot") as Control
+	return get_node_or_null("Content/BoardSlot") as Control
 
 
 ## Gắn bàn cờ DÙNG CHUNG vào chỗ của bố cục này rồi chốt lại kích thước

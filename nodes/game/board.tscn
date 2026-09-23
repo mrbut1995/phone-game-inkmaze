@@ -4,18 +4,17 @@
 [ext_resource type="Script" uid="uid://ctapikig1gy5k" path="res://scripts/nodes/game/board.gd" id="1_v7f7a"]
 
 [node name="Board" type="Control" unique_id=181012636]
-custom_minimum_size =  Vector2(510, 510)
+custom_minimum_size = Vector2(510, 510)
 layout_mode = 3
-anchor_right = 0.94400007
-anchor_bottom = 0.531
-offset_right =  0.23996
-offset_bottom =  0.23999
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_v7f7a")
 metadata/_edit_use_anchors_ = true
 
-[node name="Panel" type="TextureRect" parent="." unique_id=1799900499]
+[node name="Panel" type="NinePatchRect" parent="." unique_id=1792955065]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,4 +22,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_pr7sl")
+patch_margin_left = 56
+patch_margin_top = 42
+patch_margin_right = 91
+patch_margin_bottom = 75
 metadata/_edit_use_anchors_ = true

@@ -11,40 +11,40 @@
 [ext_resource type="Texture2D" uid="uid://byydf0aicvf48" path="res://assets/images-landscape/game/btn_header_help_pressed.svg" id="9_help_p"]
 [ext_resource type="Texture2D" uid="uid://b8qlxe2lu0c2u" path="res://assets/images-landscape/game/btn_header_restart_normal.svg" id="10_rest_n"]
 [ext_resource type="Texture2D" uid="uid://8fek80g30ew0" path="res://assets/images-landscape/game/btn_header_restart_pressed.svg" id="11_rest_p"]
-[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape.tscn" id="12_landhud"]
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape_hud.tscn" id="12_landhud"]
 
 [node name="Landscape" unique_id=949375316 instance=ExtResource("1_parent")]
 script = ExtResource("2_mqnje")
 
-[node name="BoardSlot" type="Control" parent="." index="0" unique_id=181012636]
-custom_minimum_size = Vector2(960, 960)
+[node name="Content" type="HBoxContainer" parent="." index="0" unique_id=1503357712]
 layout_mode = 1
-anchor_left = 0.03125
-anchor_top = 0.056
-anchor_right = 0.531
-anchor_bottom = 0.94400007
-offset_top = -0.85248566
-offset_right = -25.77002
-offset_bottom = 0.47943115
+anchors_preset = -1
+anchor_right = 0.99600005
+anchor_bottom = 0.998
+offset_right = -0.16003418
+offset_bottom = 0.079956055
+metadata/_edit_use_anchors_ = true
+
+[node name="BoardSlot" type="Control" parent="Content" index="0" unique_id=366138384]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Side" type="VBoxContainer" parent="." index="1" unique_id=2091197472]
-custom_minimum_size = Vector2(810, 960)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.546875
-anchor_top = 0.055556
-anchor_right = 0.96875
-anchor_bottom = 0.944444
-theme_override_constants/separation = 20
+[node name="Side" type="VBoxContainer" parent="Content" index="1" unique_id=2091197472]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_constants/separation = 4
+metadata/_edit_use_anchors_ = true
 
-[node name="Status" type="Control" parent="Side" index="0" unique_id=806159538]
-custom_minimum_size = Vector2(810, 80)
+[node name="Status" type="Control" parent="Content/Side" index="0" unique_id=806159538]
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Bg" type="TextureRect" parent="Side/Status" index="0" unique_id=372573994]
+[node name="Bg" type="TextureRect" parent="Content/Side/Status" index="0" unique_id=372573994]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,39 +53,36 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("3_head_bg")
-expand_mode = 1
 
-[node name="Bar" type="HBoxContainer" parent="Side/Status" index="1" unique_id=17020371]
+[node name="Bar" type="HBoxContainer" parent="Content/Side/Status" index="1" unique_id=17020371]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = 14.0
-offset_right = -32.0
-offset_bottom = -14.0
+offset_left = 24.0
+offset_top = 3.5
+offset_right = -17.0
+offset_bottom = -3.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 4
 alignment = 1
 
-[node name="Pause" type="TextureButton" parent="Side/Status/Bar" index="0" unique_id=1819656562]
-custom_minimum_size = Vector2(52, 52)
+[node name="Pause" type="TextureButton" parent="Content/Side/Status/Bar" index="0" unique_id=1819656562]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture_normal = ExtResource("4_pause_n")
 texture_pressed = ExtResource("5_pause_p")
-stretch_mode = 0
 
-[node name="Title" type="VBoxContainer" parent="Side/Status/Bar" index="1" unique_id=759259273]
+[node name="Title" type="VBoxContainer" parent="Content/Side/Status/Bar" index="1" unique_id=759259273]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_constants/separation = -2
 alignment = 1
 
-[node name="Subtitle" type="Label" parent="Side/Status/Bar/Title" index="0" unique_id=1420793601]
+[node name="Subtitle" type="Label" parent="Content/Side/Status/Bar/Title" index="0" unique_id=1420793601]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
@@ -93,7 +90,7 @@ text = "PLAY MODE · CHƯƠNG 1"
 label_settings = ExtResource("6_sub_lbl")
 horizontal_alignment = 1
 
-[node name="LevelLabel" type="Label" parent="Side/Status/Bar/Title" index="1" unique_id=1375018799]
+[node name="LevelLabel" type="Label" parent="Content/Side/Status/Bar/Title" index="1" unique_id=1375018799]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 34
@@ -101,8 +98,7 @@ text = "MÀN 01"
 label_settings = ExtResource("7_bhx41")
 horizontal_alignment = 1
 
-[node name="Instruction" type="TextureButton" parent="Side/Status/Bar" index="2" unique_id=1619339572]
-custom_minimum_size = Vector2(52, 52)
+[node name="Instruction" type="TextureButton" parent="Content/Side/Status/Bar" index="2" unique_id=1619339572]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -110,8 +106,7 @@ texture_normal = ExtResource("8_help_n")
 texture_pressed = ExtResource("9_help_p")
 stretch_mode = 0
 
-[node name="Restart" type="TextureButton" parent="Side/Status/Bar" index="3" unique_id=191814284]
-custom_minimum_size = Vector2(52, 52)
+[node name="Restart" type="TextureButton" parent="Content/Side/Status/Bar" index="3" unique_id=191814284]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -119,8 +114,8 @@ texture_normal = ExtResource("10_rest_n")
 texture_pressed = ExtResource("11_rest_p")
 stretch_mode = 0
 
-[node name="Information" parent="Side" index="1" unique_id=1383101299 instance=ExtResource("12_landhud")]
-custom_minimum_size = Vector2(810, 850)
+[node name="Information" parent="Content/Side" index="1" unique_id=1383101299 instance=ExtResource("12_landhud")]
+custom_minimum_size = Vector2(0, 380)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -1,172 +1,163 @@
 [gd_scene format=3 uid="uid://issxgiaa2yq4"]
 
-[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape.tscn" id="1_fvytb"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_challenge.svg" id="2_chal_bg"]
-[ext_resource type="Script" path="res://scripts/nodes/hud/level_hud.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape_hud.tscn" id="1_fvytb"]
+[ext_resource type="Texture2D" uid="uid://dbay7lxac310s" path="res://assets/images-landscape/game/card_challenge.svg" id="2_chal_bg"]
+[ext_resource type="Script" uid="uid://64aali4bsomk" path="res://scripts/nodes/hud/level_hud.gd" id="2_script"]
 [ext_resource type="LabelSettings" uid="uid://bdxo0371yh7yr" path="res://resources/settings/text/text_game_challenge_row.tres" id="3_usuie"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count.tres" id="4_o5ksj"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="5_28e8v"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_small.tres" id="6_b1fjd"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/chal_row_pending.svg" id="7_row_p"]
+[ext_resource type="Texture2D" uid="uid://cj7hbo4ebt60d" path="res://assets/images-landscape/game/chal_row_pending.svg" id="7_row_p"]
 [ext_resource type="Texture2D" uid="uid://bnm0qlvagjmny" path="res://assets/images/game/chal_check_pending.svg" id="8_87s4f"]
 [ext_resource type="Texture2D" uid="uid://ceyf7g6ququr4" path="res://assets/images/game/chal_badge_done.svg" id="9_bhaoo"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_time.svg" id="10_time_bg"]
+[ext_resource type="Texture2D" uid="uid://deifmw0a2fh2o" path="res://assets/images-landscape/game/card_time.svg" id="10_time_bg"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="11_card_lbl"]
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="12_time_val"]
 
-[node name="Hud" unique_id=1383101299 instance=ExtResource("1_fvytb")]
-custom_minimum_size =  Vector2(405, 380)
+[node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_fvytb")]
 script = ExtResource("2_script")
+time_value_node = NodePath("Content/ModeInformation/Time/Value")
 
-[node name="Time" type="TextureRect" parent="." index="0" unique_id=1536876838]
-custom_minimum_size =  Vector2(135, 115)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left =  0
-offset_top =  0
-offset_right =  135
-offset_bottom =  115
+[node name="Time" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=691638499]
+custom_minimum_size = Vector2(135, 115)
+layout_mode = 2
 texture = ExtResource("10_time_bg")
+patch_margin_left = 24
+patch_margin_top = 22
+patch_margin_right = 19
+patch_margin_bottom = 29
 
-[node name="Label" type="Label" parent="Time" index="0" unique_id=2090303184]
+[node name="Label" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=2090303184]
 modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
 layout_mode = 0
-offset_left =  18
-offset_top =  11
-offset_right =  120
-offset_bottom =  25
+offset_left = 18.0
+offset_top = 11.0
+offset_right = 120.0
+offset_bottom = 25.0
 text = "STR_HUD_TIME"
 label_settings = ExtResource("11_card_lbl")
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Time" index="1" unique_id=1493128100]
+[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1493128100]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
-offset_left =  15
-offset_top =  35
-offset_right =  120
-offset_bottom =  75
+offset_left = 15.0
+offset_top = 35.0
+offset_right = 120.0
+offset_bottom = 75.0
 text = "0:00"
 label_settings = ExtResource("12_time_val")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SpeedPill" type="Label" parent="Time" index="2"]
+[node name="SpeedPill" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=182189762]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 0
-offset_left =  21
-offset_top =  84
-offset_right =  114
-offset_bottom =  101
-theme_override_font_sizes/font_size =  7
+offset_left = 21.0
+offset_top = 84.0
+offset_right = 114.0
+offset_bottom = 101.0
+theme_override_font_sizes/font_size = 7
 text = "TỐC ĐỘ: TIÊU CHUẨN"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Challenge" type="TextureRect" parent="." index="1" unique_id=1313050070]
-custom_minimum_size =  Vector2(260, 115)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left =  145
-offset_top =  0
-offset_right =  405
-offset_bottom =  115
+[node name="Challenge" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=425721682]
+custom_minimum_size = Vector2(260, 115)
+layout_mode = 2
+size_flags_horizontal = 3
 texture = ExtResource("2_chal_bg")
+patch_margin_left = 30
+patch_margin_top = 27
+patch_margin_right = 71
+patch_margin_bottom = 33
 
-[node name="Label" type="Label" parent="Challenge" index="0" unique_id=210070889]
+[node name="Label" type="Label" parent="Content/ModeInformation/Challenge" index="0" unique_id=210070889]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
-offset_left =  18
-offset_top =  8
-offset_right =  130
-offset_bottom =  22
+offset_left = 18.0
+offset_top = 8.0
+offset_right = 130.0
+offset_bottom = 22.0
 text = "STR_HUD_CHALLENGE"
 label_settings = ExtResource("3_usuie")
 vertical_alignment = 1
 
-[node name="CountRow" type="HBoxContainer" parent="Challenge" index="1" unique_id=84238654]
+[node name="CountRow" type="HBoxContainer" parent="Content/ModeInformation/Challenge" index="1" unique_id=84238654]
 layout_mode = 0
-offset_left =  190
-offset_top =  7
-offset_right =  243
-offset_bottom =  22
-theme_override_constants/separation =  2
+offset_left = 253.0
+offset_top = 42.0
+offset_right = 318.0
+offset_bottom = 82.0
+theme_override_constants/separation = 2
 alignment = 2
 
-[node name="Count" type="Label" parent="Challenge/CountRow" index="0" unique_id=481836862]
+[node name="Count" type="Label" parent="Content/ModeInformation/Challenge/CountRow" index="0" unique_id=481836862]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 2
 size_flags_vertical = 8
 text = "0"
 label_settings = ExtResource("4_o5ksj")
 
-[node name="CountMax" type="Label" parent="Challenge/CountRow" index="1" unique_id=2064627635]
+[node name="CountMax" type="Label" parent="Content/ModeInformation/Challenge/CountRow" index="1" unique_id=2064627635]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 2
 size_flags_vertical = 8
 text = "/3 ✓"
 label_settings = ExtResource("5_28e8v")
 
-[node name="Note" type="Label" parent="Challenge" index="2" unique_id=1737751744]
+[node name="Note" type="Label" parent="Content/ModeInformation/Challenge" index="2" unique_id=1737751744]
 visible = false
 layout_mode = 0
-offset_left =  18
-offset_top =  8
-offset_right =  93
-offset_bottom =  20
+offset_left = 18.0
+offset_top = 8.0
+offset_right = 93.0
+offset_bottom = 20.0
 text = "0 ĐÃ HOÀN THÀNH"
 label_settings = ExtResource("6_b1fjd")
 
-[node name="Row1" type="Control" parent="Challenge" index="3" unique_id=1640784124]
+[node name="Row1" type="Control" parent="Content/ModeInformation/Challenge" index="3" unique_id=1640784124]
 anchors_preset = 0
-offset_left =  18
-offset_top =  26
-offset_right =  243
-offset_bottom =  50
+offset_left = 18.0
+offset_top = 26.0
+offset_right = 243.0
+offset_bottom = 50.0
 
-[node name="Bg" type="TextureRect" parent="Challenge/Row1" index="0" unique_id=1705940842]
+[node name="Bg" type="TextureRect" parent="Content/ModeInformation/Challenge/Row1" index="0" unique_id=1705940842]
 layout_mode = 0
-offset_right =  225
-offset_bottom =  24
+offset_right = 225.0
+offset_bottom = 24.0
 texture = ExtResource("7_row_p")
 
-[node name="Check" type="TextureRect" parent="Challenge/Row1" index="1" unique_id=1903541227]
+[node name="Check" type="TextureRect" parent="Content/ModeInformation/Challenge/Row1" index="1" unique_id=1903541227]
 layout_mode = 0
-offset_left =  6
-offset_top =  6
-offset_right =  18
-offset_bottom =  18
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 18.0
+offset_bottom = 18.0
 mouse_filter = 2
 texture = ExtResource("8_87s4f")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="Challenge/Row1" index="2" unique_id=1643328000]
+[node name="Name" type="Label" parent="Content/ModeInformation/Challenge/Row1" index="2" unique_id=1643328000]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
-offset_left =  22
-offset_right =  165
-offset_bottom =  24
+offset_left = 22.0
+offset_right = 165.0
+offset_bottom = 24.0
 text = "Không đâm vào tường"
 label_settings = ExtResource("3_usuie")
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Status" type="Label" parent="Challenge/Row1" index="3" unique_id=2025283367]
+[node name="Status" type="Label" parent="Content/ModeInformation/Challenge/Row1" index="3" unique_id=2025283367]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
-offset_left =  160
-offset_right =  219
-offset_bottom =  24
+offset_left = 160.0
+offset_right = 219.0
+offset_bottom = 24.0
 text = "CHƯA ĐẠT"
 label_settings = ExtResource("3_usuie")
 horizontal_alignment = 2
@@ -174,19 +165,19 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Badge" type="TextureRect" parent="Challenge/Row1" index="4" unique_id=750003895]
+[node name="Badge" type="TextureRect" parent="Content/ModeInformation/Challenge/Row1" index="4" unique_id=750003895]
 visible = false
 layout_mode = 0
-offset_left =  181
-offset_top =  5.5
-offset_right =  219
-offset_bottom =  18.5
+offset_left = 181.0
+offset_top = 5.5
+offset_right = 219.0
+offset_bottom = 18.5
 mouse_filter = 2
 texture = ExtResource("9_bhaoo")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BadgeLabel" type="Label" parent="Challenge/Row1/Badge" index="0" unique_id=676781717]
+[node name="BadgeLabel" type="Label" parent="Content/ModeInformation/Challenge/Row1/Badge" index="0" unique_id=676781717]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -198,48 +189,48 @@ label_settings = ExtResource("6_b1fjd")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Row2" type="Control" parent="Challenge" index="4" unique_id=1798952281]
+[node name="Row2" type="Control" parent="Content/ModeInformation/Challenge" index="4" unique_id=1798952281]
 anchors_preset = 0
-offset_left =  18
-offset_top =  54
-offset_right =  243
-offset_bottom =  78
+offset_left = 18.0
+offset_top = 54.0
+offset_right = 243.0
+offset_bottom = 78.0
 
-[node name="Bg" type="TextureRect" parent="Challenge/Row2" index="0" unique_id=1432278808]
+[node name="Bg" type="TextureRect" parent="Content/ModeInformation/Challenge/Row2" index="0" unique_id=1432278808]
 layout_mode = 0
-offset_right =  225
-offset_bottom =  24
+offset_right = 225.0
+offset_bottom = 24.0
 texture = ExtResource("7_row_p")
 
-[node name="Check" type="TextureRect" parent="Challenge/Row2" index="1" unique_id=1923414203]
+[node name="Check" type="TextureRect" parent="Content/ModeInformation/Challenge/Row2" index="1" unique_id=1923414203]
 layout_mode = 0
-offset_left =  6
-offset_top =  6
-offset_right =  18
-offset_bottom =  18
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 18.0
+offset_bottom = 18.0
 mouse_filter = 2
 texture = ExtResource("8_87s4f")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="Challenge/Row2" index="2" unique_id=782351674]
+[node name="Name" type="Label" parent="Content/ModeInformation/Challenge/Row2" index="2" unique_id=782351674]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
-offset_left =  22
-offset_right =  165
-offset_bottom =  24
+offset_left = 22.0
+offset_right = 165.0
+offset_bottom = 24.0
 text = "Đi không quá 15 bước"
 label_settings = ExtResource("3_usuie")
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Status" type="Label" parent="Challenge/Row2" index="3" unique_id=1380174990]
+[node name="Status" type="Label" parent="Content/ModeInformation/Challenge/Row2" index="3" unique_id=1380174990]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
-offset_left =  160
-offset_right =  219
-offset_bottom =  24
+offset_left = 160.0
+offset_right = 219.0
+offset_bottom = 24.0
 text = "0 / 15 bước"
 label_settings = ExtResource("3_usuie")
 horizontal_alignment = 2
@@ -247,19 +238,19 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Badge" type="TextureRect" parent="Challenge/Row2" index="4" unique_id=957275816]
+[node name="Badge" type="TextureRect" parent="Content/ModeInformation/Challenge/Row2" index="4" unique_id=957275816]
 visible = false
 layout_mode = 0
-offset_left =  181
-offset_top =  5.5
-offset_right =  219
-offset_bottom =  18.5
+offset_left = 181.0
+offset_top = 5.5
+offset_right = 219.0
+offset_bottom = 18.5
 mouse_filter = 2
 texture = ExtResource("9_bhaoo")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BadgeLabel" type="Label" parent="Challenge/Row2/Badge" index="0" unique_id=1233538514]
+[node name="BadgeLabel" type="Label" parent="Content/ModeInformation/Challenge/Row2/Badge" index="0" unique_id=1233538514]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -271,48 +262,48 @@ label_settings = ExtResource("6_b1fjd")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Row3" type="Control" parent="Challenge" index="5" unique_id=1991302100]
+[node name="Row3" type="Control" parent="Content/ModeInformation/Challenge" index="5" unique_id=1991302100]
 anchors_preset = 0
-offset_left =  18
-offset_top =  82
-offset_right =  243
-offset_bottom =  106
+offset_left = 18.0
+offset_top = 82.0
+offset_right = 243.0
+offset_bottom = 106.0
 
-[node name="Bg" type="TextureRect" parent="Challenge/Row3" index="0" unique_id=96239505]
+[node name="Bg" type="TextureRect" parent="Content/ModeInformation/Challenge/Row3" index="0" unique_id=96239505]
 layout_mode = 0
-offset_right =  225
-offset_bottom =  24
+offset_right = 225.0
+offset_bottom = 24.0
 texture = ExtResource("7_row_p")
 
-[node name="Check" type="TextureRect" parent="Challenge/Row3" index="1" unique_id=326195460]
+[node name="Check" type="TextureRect" parent="Content/ModeInformation/Challenge/Row3" index="1" unique_id=326195460]
 layout_mode = 0
-offset_left =  6
-offset_top =  6
-offset_right =  18
-offset_bottom =  18
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 18.0
+offset_bottom = 18.0
 mouse_filter = 2
 texture = ExtResource("8_87s4f")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="Challenge/Row3" index="2" unique_id=243219215]
+[node name="Name" type="Label" parent="Content/ModeInformation/Challenge/Row3" index="2" unique_id=243219215]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
-offset_left =  22
-offset_right =  165
-offset_bottom =  24
+offset_left = 22.0
+offset_right = 165.0
+offset_bottom = 24.0
 text = "Về đích dưới 45 giây"
 label_settings = ExtResource("3_usuie")
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Status" type="Label" parent="Challenge/Row3" index="3" unique_id=1453634570]
+[node name="Status" type="Label" parent="Content/ModeInformation/Challenge/Row3" index="3" unique_id=1453634570]
 modulate = Color(0.56078434, 0.627451, 0.6745098, 1)
 layout_mode = 0
-offset_left =  160
-offset_right =  219
-offset_bottom =  24
+offset_left = 160.0
+offset_right = 219.0
+offset_bottom = 24.0
 text = "còn 45s"
 label_settings = ExtResource("3_usuie")
 horizontal_alignment = 2
@@ -320,19 +311,19 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Badge" type="TextureRect" parent="Challenge/Row3" index="4" unique_id=1234756348]
+[node name="Badge" type="TextureRect" parent="Content/ModeInformation/Challenge/Row3" index="4" unique_id=1234756348]
 visible = false
 layout_mode = 0
-offset_left =  181
-offset_top =  5.5
-offset_right =  219
-offset_bottom =  18.5
+offset_left = 181.0
+offset_top = 5.5
+offset_right = 219.0
+offset_bottom = 18.5
 mouse_filter = 2
 texture = ExtResource("9_bhaoo")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BadgeLabel" type="Label" parent="Challenge/Row3/Badge" index="0" unique_id=457632074]
+[node name="BadgeLabel" type="Label" parent="Content/ModeInformation/Challenge/Row3/Badge" index="0" unique_id=457632074]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

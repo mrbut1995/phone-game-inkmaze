@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dp64m8wyg56y1"]
 
-[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cclmsulcmjhmy" path="res://scripts/nodes/hud/fading_ink_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_land_time_240.svg" id="4_time"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_fading_ink.svg" id="5_sheet"]
+[ext_resource type="Texture2D" uid="uid://ciclopy7n6bxa" path="res://assets/images-landscape/game/card_land_time_240.svg" id="4_time"]
+[ext_resource type="Texture2D" uid="uid://dd6o8lrr2gx0p" path="res://assets/images-landscape/game/card_fading_ink.svg" id="5_sheet"]
 [ext_resource type="Texture2D" uid="uid://u3ajpolrdm8p" path="res://assets/images/game/card_ink_block_bottle.svg" id="6_bottle"]
 [ext_resource type="Texture2D" uid="uid://cgm1np8r3rape" path="res://assets/images/game/card_ink_swatch_1.svg" id="7_swatch1"]
 [ext_resource type="Texture2D" uid="uid://cqt853aqbmr5n" path="res://assets/images/game/card_ink_swatch_2.svg" id="8_swatch2"]
@@ -13,133 +13,129 @@
 [ext_resource type="Texture2D" uid="uid://bedihbv86gc5v" path="res://assets/images/game/bar_ink_warning.svg" id="11_warn"]
 
 [node name="Hud" unique_id=505225000 instance=ExtResource("1_base")]
-custom_minimum_size =  Vector2(405, 380)
 theme = ExtResource("3_theme")
 script = ExtResource("2_script")
 
 [node name="Time" type="TextureRect" parent="." index="0" unique_id=1036036466]
-custom_minimum_size =  Vector2(120, 115)
+custom_minimum_size = Vector2(120, 115)
 layout_mode = 0
-offset_left =  0
-offset_top =  0
-offset_right =  120
-offset_bottom =  115
+offset_right = 120.0
+offset_bottom = 115.0
 mouse_filter = 2
 texture = ExtResource("4_time")
 
 [node name="Head" type="Label" parent="Time" index="0" unique_id=937397718]
 layout_mode = 0
-offset_left =  16
-offset_top =  10
-offset_right =  110
-offset_bottom =  24
+offset_left = 16.0
+offset_top = 10.0
+offset_right = 110.0
+offset_bottom = 24.0
 theme_type_variation = &"HudTimeHead"
 text = "STR_HUD_TIME"
 vertical_alignment = 1
 
 [node name="Value" type="Label" parent="Time" index="1" unique_id=1374290961]
 layout_mode = 0
-offset_left =  10
-offset_top =  33
-offset_right =  110
-offset_bottom =  75
-text = "0:00"
+offset_left = 10.0
+offset_top = 33.0
+offset_right = 110.0
+offset_bottom = 75.0
 theme_type_variation = &"HudTimeValue"
+text = "0:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Sub" type="Label" parent="Time" index="2" unique_id=861101356]
 layout_mode = 0
-offset_left =  10
-offset_top =  84
-offset_right =  110
-offset_bottom =  99
+offset_left = 10.0
+offset_top = 84.0
+offset_right = 110.0
+offset_bottom = 99.0
 theme_type_variation = &"HudTimeSub"
 text = "STR_HUD_TIME_FREE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Sheet" type="TextureRect" parent="." index="1" unique_id=1635864766]
-custom_minimum_size =  Vector2(275, 115)
+custom_minimum_size = Vector2(275, 115)
 layout_mode = 0
-offset_left =  130
-offset_top =  0
-offset_right =  405
-offset_bottom =  115
+offset_left = 130.0
+offset_right = 405.0
+offset_bottom = 115.0
 mouse_filter = 2
 texture = ExtResource("5_sheet")
 
 [node name="BlockBottle" type="TextureRect" parent="." index="2" unique_id=248310022]
 layout_mode = 0
-offset_left =  146
-offset_top =  24
-offset_right =  168
-offset_bottom =  50
+offset_left = 146.0
+offset_top = 24.0
+offset_right = 168.0
+offset_bottom = 50.0
 mouse_filter = 2
 texture = ExtResource("6_bottle")
 expand_mode = 1
 
 [node name="Steps" type="Control" parent="." index="3" unique_id=1620880745]
-layout_mode = 0
-offset_left =  173
-offset_top =  12
-offset_right =  257.5
-offset_bottom =  72.5
+anchors_preset = 0
+offset_left = 173.0
+offset_top = 12.0
+offset_right = 257.5
+offset_bottom = 72.5
 mouse_filter = 2
 
 [node name="Label" type="Label" parent="Steps" index="0" unique_id=289023605]
 layout_mode = 0
-offset_right =  82.5
-offset_bottom =  13
+offset_right = 82.5
+offset_bottom = 13.0
 theme_type_variation = &"HudInkLabel"
 text = "STR_HUD_INK_STEPS"
 vertical_alignment = 1
 
 [node name="Value" type="Label" parent="Steps" index="1" unique_id=99819683]
 layout_mode = 0
-offset_top =  15
-offset_right =  37.5
-offset_bottom =  45
+offset_top = 15.0
+offset_right = 37.5
+offset_bottom = 45.0
 theme_type_variation = &"HudInkValue"
 text = "00"
 vertical_alignment = 1
 
 [node name="Delta" type="Label" parent="Steps" index="2" unique_id=1231681781]
 layout_mode = 0
-offset_left =  40
-offset_top =  23
-offset_right =  82.5
-offset_bottom =  43
+offset_left = 40.0
+offset_top = 23.0
+offset_right = 82.5
+offset_bottom = 43.0
 theme_type_variation = &"HudInkDelta"
 text = "(-0)"
 vertical_alignment = 1
 
 [node name="Note" type="Label" parent="Steps" index="3" unique_id=1531024198]
 layout_mode = 0
-offset_top =  46
-offset_right =  82.5
-offset_bottom =  59
+offset_top = 46.0
+offset_right = 82.5
+offset_bottom = 59.0
 theme_type_variation = &"HudInkNote"
 text = "STR_HUD_INK_NOTE"
 vertical_alignment = 1
 
 [node name="ScaleTitle" type="Label" parent="." index="4" unique_id=1012926989]
 layout_mode = 0
-offset_left =  262.5
-offset_top =  9
-offset_right =  395
-offset_bottom =  22
+offset_left = 262.5
+offset_top = 9.0
+offset_right = 395.0
+offset_bottom = 22.0
 theme_type_variation = &"HudInkScaleTitle"
 text = "STR_HUD_INK_SCALE_TITLE"
 vertical_alignment = 1
 
 [node name="HFlowContainer" type="HFlowContainer" parent="." index="5" unique_id=1523194925]
 layout_mode = 0
-offset_left =  262.5
-offset_top =  24
-offset_right =  395
-offset_bottom =  45
-theme_override_constants/h_separation =  3
+offset_left = 262.5
+offset_top = 24.0
+offset_right = 395.0
+offset_bottom = 45.0
+theme_override_constants/h_separation = 3
 
 [node name="Swatch1" type="TextureRect" parent="HFlowContainer" index="0" unique_id=1755093493]
 layout_mode = 2
@@ -211,11 +207,11 @@ vertical_alignment = 1
 
 [node name="Warn" type="Control" parent="." index="6" unique_id=1084244876]
 visible = false
-layout_mode = 0
-offset_left =  262.5
-offset_top =  50
-offset_right =  395
-offset_bottom =  72
+anchors_preset = 0
+offset_left = 262.5
+offset_top = 50.0
+offset_right = 395.0
+offset_bottom = 72.0
 mouse_filter = 2
 
 [node name="Bg" type="TextureRect" parent="Warn" index="0" unique_id=729374638]
@@ -234,8 +230,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left =  6
-offset_right =  -6
+offset_left = 6.0
+offset_right = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"HudInkWarn"
@@ -243,14 +239,14 @@ text = "STR_HUD_INK_WARN"
 vertical_alignment = 1
 clip_text = true
 
-[node name="BottomNote" type="Label" parent="." index="7"]
+[node name="BottomNote" type="Label" parent="." index="7" unique_id=816099616]
 modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
 layout_mode = 0
-offset_left =  146
-offset_top =  94
-offset_right =  395
-offset_bottom =  107
-theme_override_font_sizes/font_size =  6.5
+offset_left = 146.0
+offset_top = 94.0
+offset_right = 395.0
+offset_bottom = 107.0
+theme_override_font_sizes/font_size = 6
 text = "Ô cạn mực sẽ bị bít lối hoàn toàn"
 horizontal_alignment = 2
 vertical_alignment = 1
