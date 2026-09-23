@@ -1,9 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="3 3 54 54" width="54" height="54">
-  <!-- Disabled: nét mảnh, nhạt màu, thu nhỏ vùng phủ -->
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="3 3 54 54" width="27" height="27">
+  
   <g stroke="#B0AB9F" stroke-width="3" stroke-linecap="round">
-    <line x1="30" y1="13" x2="30" y2="24"/>
-    <line x1="30" y1="36" x2="30" y2="47"/>
-    <line x1="13" y1="30" x2="24" y2="30"/>
-    <line x1="36" y1="30" x2="47" y2="30"/>
+    <line x1="30" y1="13" x2="30" y2="24" />
+    <line x1="30" y1="36" x2="30" y2="47" />
+    <line x1="13" y1="30" x2="24" y2="30" />
+    <line x1="36" y1="30" x2="47" y2="30" />
   </g>
 </svg>

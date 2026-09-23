@@ -1,43 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 1570" width="940" height="1570">
-  <!-- Tờ giấy bảng xếp hạng 940x1570 (mockup/ranking.svg) — viền vẽ bằng FILL lồng nhau để không bị cắt nét -->
-  <rect width="940" height="1570" rx="24" fill="#6EA0C8"/>
-  <rect x="1.8" y="1.8" width="936.4" height="1566.4" rx="22.2" fill="#FFFDF8"/>
-  <!-- Dòng kẻ ô ly mờ (mỗi 80px, giống mockup) -->
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 1570" width="470" height="785">
+  
+  <rect width="940" height="1570" rx="24" fill="#6EA0C8" />
+  <rect x="1.8" y="1.8" width="936.4" height="1566.4" rx="22.2" fill="#FFFDF8" />
+  
   <g stroke="#3D83AE" stroke-width="2" opacity="0.18">
-    <line x1="8" y1="180" x2="932" y2="180"/>
-    <line x1="8" y1="260" x2="932" y2="260"/>
-    <line x1="8" y1="340" x2="932" y2="340"/>
-    <line x1="8" y1="420" x2="932" y2="420"/>
-    <line x1="8" y1="500" x2="932" y2="500"/>
-    <line x1="8" y1="580" x2="932" y2="580"/>
-    <line x1="8" y1="660" x2="932" y2="660"/>
-    <line x1="8" y1="740" x2="932" y2="740"/>
-    <line x1="8" y1="820" x2="932" y2="820"/>
-    <line x1="8" y1="900" x2="932" y2="900"/>
-    <line x1="8" y1="980" x2="932" y2="980"/>
-    <line x1="8" y1="1060" x2="932" y2="1060"/>
-    <line x1="8" y1="1140" x2="932" y2="1140"/>
-    <line x1="8" y1="1220" x2="932" y2="1220"/>
-    <line x1="8" y1="1300" x2="932" y2="1300"/>
-    <line x1="8" y1="1380" x2="932" y2="1380"/>
-    <line x1="8" y1="1460" x2="932" y2="1460"/>
-    <line x1="8" y1="1540" x2="932" y2="1540"/>
+    <line x1="8" y1="180" x2="932" y2="180" />
+    <line x1="8" y1="260" x2="932" y2="260" />
+    <line x1="8" y1="340" x2="932" y2="340" />
+    <line x1="8" y1="420" x2="932" y2="420" />
+    <line x1="8" y1="500" x2="932" y2="500" />
+    <line x1="8" y1="580" x2="932" y2="580" />
+    <line x1="8" y1="660" x2="932" y2="660" />
+    <line x1="8" y1="740" x2="932" y2="740" />
+    <line x1="8" y1="820" x2="932" y2="820" />
+    <line x1="8" y1="900" x2="932" y2="900" />
+    <line x1="8" y1="980" x2="932" y2="980" />
+    <line x1="8" y1="1060" x2="932" y2="1060" />
+    <line x1="8" y1="1140" x2="932" y2="1140" />
+    <line x1="8" y1="1220" x2="932" y2="1220" />
+    <line x1="8" y1="1300" x2="932" y2="1300" />
+    <line x1="8" y1="1380" x2="932" y2="1380" />
+    <line x1="8" y1="1460" x2="932" y2="1460" />
+    <line x1="8" y1="1540" x2="932" y2="1540" />
   </g>
-  <!-- Lề đỏ bên trái -->
-  <line x1="75" y1="20" x2="75" y2="1550" stroke="#D84444" stroke-width="2.2" opacity="0.5"/>
-  <!-- Lỗ bấm giấy (mỗi 120px, giống mockup) -->
+  
+  <line x1="75" y1="20" x2="75" y2="1550" stroke="#D84444" stroke-width="2.2" opacity="0.5" />
+  
   <g fill="#F1E9DC" stroke="#D9CCB9" stroke-width="2">
-    <circle cx="26" cy="100" r="8"/>
-    <circle cx="26" cy="220" r="8"/>
-    <circle cx="26" cy="340" r="8"/>
-    <circle cx="26" cy="460" r="8"/>
-    <circle cx="26" cy="580" r="8"/>
-    <circle cx="26" cy="700" r="8"/>
-    <circle cx="26" cy="820" r="8"/>
-    <circle cx="26" cy="940" r="8"/>
-    <circle cx="26" cy="1060" r="8"/>
-    <circle cx="26" cy="1180" r="8"/>
-    <circle cx="26" cy="1300" r="8"/>
-    <circle cx="26" cy="1420" r="8"/>
+    <circle cx="26" cy="100" r="8" />
+    <circle cx="26" cy="220" r="8" />
+    <circle cx="26" cy="340" r="8" />
+    <circle cx="26" cy="460" r="8" />
+    <circle cx="26" cy="580" r="8" />
+    <circle cx="26" cy="700" r="8" />
+    <circle cx="26" cy="820" r="8" />
+    <circle cx="26" cy="940" r="8" />
+    <circle cx="26" cy="1060" r="8" />
+    <circle cx="26" cy="1180" r="8" />
+    <circle cx="26" cy="1300" r="8" />
+    <circle cx="26" cy="1420" r="8" />
   </g>
 </svg>

@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 5 46 81" width="46" height="81">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 5 46 81" width="23" height="40.5">
   <defs>
     <filter id="clipShadow" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.25"/>
+      <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.25" />
     </filter>
   </defs>
-  <path d="M 12 70 L 12 20 A 10 10 0 0 1 32 20 L 32 60 A 16 16 0 0 1 0 60 L 0 15" 
-        fill="none" stroke="#6F828F" stroke-width="4.5" stroke-linecap="round" filter="url(#clipShadow)"/>
+  <path d="M 12 70 L 12 20 A 10 10 0 0 1 32 20 L 32 60 A 16 16 0 0 1 0 60 L 0 15" fill="none" stroke="#6F828F" stroke-width="4.5" stroke-linecap="round" filter="url(#clipShadow)" />
 </svg>

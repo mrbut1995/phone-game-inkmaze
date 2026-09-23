@@ -17,6 +17,7 @@ dest_files=["res://.godot/imported/card_row.svg-21b5d0a5bcaa50b3100f9585f79ca6b5
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

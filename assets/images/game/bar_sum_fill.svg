@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 654 18" width="654" height="18">
-  <!-- Phần đã đạt của thanh tiến độ Sum Path (bị cắt bởi Control clip_contents) -->
-  <rect width="654" height="18" rx="9" fill="#3D83AE"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 654 18" width="327" height="9">
+  
+  <rect width="654" height="18" rx="9" fill="#3D83AE" />
 </svg>

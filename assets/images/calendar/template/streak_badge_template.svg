@@ -1,11 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 70" width="200" height="70">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 70" width="100" height="35">
   <defs>
     <filter id="strkShadow" x="-15%" y="-15%" width="130%" height="135%">
-      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14" />
     </filter>
   </defs>
   <g filter="url(#strkShadow)">
-    <rect width="200" height="70" rx="18" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/>
+    <rect width="200" height="70" rx="18" fill="#FEFDFA" stroke="#D84444" stroke-width="3" />
     <text x="35" y="46" font-size="28">🔥</text>
     <text x="120" y="46" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="900" fill="#D84444">7 NGÀY</text>
   </g>

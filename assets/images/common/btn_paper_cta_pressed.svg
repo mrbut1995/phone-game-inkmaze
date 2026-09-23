@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="800" height="120">
-  <!-- Trạng thái nhấn: lún 3px, xanh đậm hơn -->
-  <rect y="3" width="800" height="117" rx="28" fill="#34709A" stroke="#1F4C6B" stroke-width="4"/>
-  <line x1="60" y1="7" x2="60" y2="116" stroke="#FAF5EB" stroke-width="3.5" opacity="0.4"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="400" height="60">
+  
+  <rect y="3" width="800" height="117" rx="28" fill="#34709A" stroke="#1F4C6B" stroke-width="4" />
+  <line x1="60" y1="7" x2="60" y2="116" stroke="#FAF5EB" stroke-width="3.5" opacity="0.4" />
 </svg>

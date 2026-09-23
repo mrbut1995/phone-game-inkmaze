@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 16" width="24" height="16">
-  <!-- Icon mũi tên tam giác chỉ xuống ▾ -->
-  <path d="M 2 2 L 10 10 L 18 2" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 16" width="12" height="8">
+  
+  <path d="M 2 2 L 10 10 L 18 2" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
 </svg>

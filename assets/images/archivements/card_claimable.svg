@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 170" width="710" height="170">
-  <!-- Thẻ danh hiệu 710x170 (có thể nhận) — mockup/archivement_scene.svg.
-       Viền + lề trái vẽ bằng hình FILL/line để không bị cắt nét. -->
-  <rect width="710" height="170" rx="18" fill="#F59E0B"/>
-  <rect x="3" y="3" width="704" height="164" rx="15" fill="#FFFDF8"/>
-  <line x1="22" y1="0" x2="22" y2="170" stroke="#F59E0B" stroke-width="3"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 170" width="355" height="85">
+  
+  <rect width="710" height="170" rx="18" fill="#F59E0B" />
+  <rect x="3" y="3" width="704" height="164" rx="15" fill="#FFFDF8" />
+  <line x1="22" y1="0" x2="22" y2="170" stroke="#F59E0B" stroke-width="3" />
 </svg>

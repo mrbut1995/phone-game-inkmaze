@@ -17,6 +17,7 @@ dest_files=["res://.godot/imported/rank_row_you.svg-a2d793ba081884f61b2c4773d993
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

@@ -1,20 +1,21 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="17 14 896 1185" width="896" height="1185">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="17 14 896 1185" width="448" height="592.5">
   <defs>
     <filter id="failSlipShadow" x="-10%" y="-10%" width="125%" height="130%">
-      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#301A1A" flood-opacity="0.28"/>
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#301A1A" flood-opacity="0.28" />
     </filter>
   </defs>
   <g transform="translate(40, 40)" filter="url(#failSlipShadow)">
-    <rect width="850" height="1120" rx="18" fill="#FDFBF7"/>
-    <!-- Lưới ngang xám mờ -->
+    <rect width="850" height="1120" rx="18" fill="#FDFBF7" />
+    
     <g stroke="#BAC7CF" stroke-width="1" opacity="0.4">
-      <line x1="60" y1="200" x2="790" y2="200"/><line x1="60" y1="270" x2="790" y2="270"/>
-      <line x1="60" y1="340" x2="790" y2="340"/><line x1="60" y1="410" x2="790" y2="410"/>
-      <line x1="60" y1="480" x2="790" y2="480"/><line x1="60" y1="550" x2="790" y2="550"/>
-      <line x1="60" y1="620" x2="790" y2="620"/><line x1="60" y1="690" x2="790" y2="690"/>
+      <line x1="60" y1="200" x2="790" y2="200" /><line x1="60" y1="270" x2="790" y2="270" />
+      <line x1="60" y1="340" x2="790" y2="340" /><line x1="60" y1="410" x2="790" y2="410" />
+      <line x1="60" y1="480" x2="790" y2="480" /><line x1="60" y1="550" x2="790" y2="550" />
+      <line x1="60" y1="620" x2="790" y2="620" /><line x1="60" y1="690" x2="790" y2="690" />
     </g>
-    <!-- Lề đỏ nét đứt -->
-    <line x1="75" y1="0" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" stroke-dasharray="6 4"/>
-    <rect width="850" height="1120" rx="18" fill="none" stroke="#D84444" stroke-width="3"/>
+    
+    <line x1="75" y1="0" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" stroke-dasharray="6 4" />
+    <rect width="850" height="1120" rx="18" fill="none" stroke="#D84444" stroke-width="3" />
   </g>
 </svg>

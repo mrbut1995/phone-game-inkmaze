@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 158" width="440" height="158">
-  <!-- Thẻ SỐ BƯỚC 440x158 - thẻ TO ở giữa HUD Dungeon (mockup/matchup_dungeon.svg).
-       Viền ĐỎ dày 4px, bo góc 24 - vẽ bằng 2 hình FILL lồng nhau để không bị cắt nét. -->
-  <rect width="440" height="158" rx="24" fill="#D84444"/>
-  <rect x="4" y="4" width="432" height="150" rx="20" fill="#FEFDFA"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 158" width="220" height="79">
+  
+  <rect width="440" height="158" rx="24" fill="#D84444" />
+  <rect x="4" y="4" width="432" height="150" rx="20" fill="#FEFDFA" />
 
-  <!-- Lề đỏ sổ tay nổi bật -->
-  <line x1="24" y1="0" x2="24" y2="158" stroke="#D84444" stroke-width="3"/>
+  
+  <line x1="24" y1="0" x2="24" y2="158" stroke="#D84444" stroke-width="3" />
 </svg>

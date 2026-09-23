@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="176" height="176">
-  <!-- Ô khuất bóng 176x176 -->
-  <rect x="1.35" y="1.35" width="173.3" height="173.3" fill="#D9D6CE" fill-opacity="0.30"/>
-  <rect x="1.35" y="1.35" width="173.3" height="173.3" fill="none" stroke="#B0AB9F" stroke-width="2.7"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  
+  <rect x="1.35" y="1.35" width="173.3" height="173.3" fill="#D9D6CE" fill-opacity="0.30" />
+  <rect x="1.35" y="1.35" width="173.3" height="173.3" fill="none" stroke="#B0AB9F" stroke-width="2.7" />
 </svg>

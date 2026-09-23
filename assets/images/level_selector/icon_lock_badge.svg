@@ -1,22 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 1 66 67" width="66" height="67">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 1 66 67" width="33" height="33.5">
   <defs>
     <filter id="badgeShadow" x="-15%" y="-15%" width="130%" height="135%">
-      <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" flood-color="#1E2830" flood-opacity="0.15"/>
+      <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" flood-color="#1E2830" flood-opacity="0.15" />
     </filter>
   </defs>
 
   <g filter="url(#badgeShadow)">
-    <!-- Vòng tròn giấy ngà -->
-    <circle cx="32" cy="32" r="28" fill="#FAF5EB" stroke="#8FB9D2" stroke-width="2"/>
-    <!-- Vòng chỉ nét đứt trang trí bên trong -->
-    <circle cx="32" cy="32" r="24" fill="none" stroke="#D1CBD0" stroke-width="1.2" stroke-dasharray="4 2.5"/>
-
-    <!-- Ổ khóa ở tâm -->
-    <path d="M 24 30 L 24 22 A 8 8 0 0 1 40 22 L 40 30" 
-          fill="none" stroke="#6F8594" stroke-width="3.5" stroke-linecap="round"/>
-    <rect x="17" y="29" width="30" height="24" rx="6" fill="#FEFDFA" stroke="#6F8594" stroke-width="3"/>
     
-    <circle cx="32" cy="38" r="2.8" fill="#6F8594"/>
-    <line x1="32" y1="40" x2="32" y2="46" stroke="#6F8594" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="28" fill="#FAF5EB" stroke="#8FB9D2" stroke-width="2" />
+    
+    <circle cx="32" cy="32" r="24" fill="none" stroke="#D1CBD0" stroke-width="1.2" stroke-dasharray="4 2.5" />
+
+    
+    <path d="M 24 30 L 24 22 A 8 8 0 0 1 40 22 L 40 30" fill="none" stroke="#6F8594" stroke-width="3.5" stroke-linecap="round" />
+    <rect x="17" y="29" width="30" height="24" rx="6" fill="#FEFDFA" stroke="#6F8594" stroke-width="3" />
+    
+    <circle cx="32" cy="38" r="2.8" fill="#6F8594" />
+    <line x1="32" y1="40" x2="32" y2="46" stroke="#6F8594" stroke-width="2.5" stroke-linecap="round" />
   </g>
 </svg>

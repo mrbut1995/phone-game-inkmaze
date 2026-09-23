@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 70" width="255" height="70">
-  <!-- Ví Xu Mực của người chơi (viền hổ phách + lề đỏ) -->
-  <rect width="255" height="70" rx="18" fill="#FEFDFA"/>
-  <rect x="1.5" y="1.5" width="252" height="67" rx="16.5" fill="none" stroke="#F59E0B" stroke-width="3"/>
-  <line x1="16" y1="0" x2="16" y2="70" stroke="#F59E0B" stroke-width="2.5"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255 70" width="127.5" height="35">
+  
+  <rect width="255" height="70" rx="18" fill="#FEFDFA" />
+  <rect x="1.5" y="1.5" width="252" height="67" rx="16.5" fill="none" stroke="#F59E0B" stroke-width="3" />
+  <line x1="16" y1="0" x2="16" y2="70" stroke="#F59E0B" stroke-width="2.5" />
 </svg>

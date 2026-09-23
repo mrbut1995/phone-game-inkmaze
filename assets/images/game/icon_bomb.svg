@@ -1,35 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <!-- Bóng đổ mặt đất giúp quả bom đứng vững -->
-  <ellipse cx="40" cy="85" rx="20" ry="4" fill="#1E283A" opacity="0.2"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="48" height="48" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  
+  <ellipse cx="40" cy="85" rx="20" ry="4" fill="#1E283A" opacity="0.2" />
 
-  <!-- Thân quả bom tròn kim loại -->
-  <circle cx="40" cy="55" r="27" fill="#2B3646" stroke="#1E283A" stroke-width="4"/>
+  
+  <circle cx="40" cy="55" r="27" fill="#2B3646" stroke="#1E283A" stroke-width="4" />
 
-  <!-- Vết bóng sáng cong tạo khối cầu 3D -->
-  <path d="M 25 43 A 20 20 0 0 1 44 31" stroke="#7C92A8" stroke-width="3.5"/>
-  <circle cx="23" cy="48" r="2" fill="#7C92A8"/>
+  
+  <path d="M 25 43 A 20 20 0 0 1 44 31" stroke="#7C92A8" stroke-width="3.5" />
+  <circle cx="23" cy="48" r="2" fill="#7C92A8" />
 
-  <!-- Nét gạch bóng chì tạo chiều sâu phần đáy -->
+  
   <g stroke="#1E283A" stroke-width="2" opacity="0.6">
-    <line x1="45" y1="71" x2="52" y2="76"/>
-    <line x1="51" y1="65" x2="58" y2="70"/>
-    <line x1="56" y1="58" x2="62" y2="63"/>
+    <line x1="45" y1="71" x2="52" y2="76" />
+    <line x1="51" y1="65" x2="58" y2="70" />
+    <line x1="56" y1="58" x2="62" y2="63" />
   </g>
 
-  <!-- Cổ bom kim loại nghiêng 45 độ gắn chặt vào thân -->
-  <rect x="54" y="32" width="13" height="7" rx="2.5" transform="rotate(45 60.5 35.5)" fill="#3E4E63" stroke="#1E283A" stroke-width="3.2"/>
+  
+  <rect x="54" y="32" width="13" height="7" rx="2.5" transform="rotate(45 60.5 35.5)" fill="#3E4E63" stroke="#1E283A" stroke-width="3.2" />
 
-  <!-- Dây cháy mềm mại vươn lên từ cổ bom -->
-  <path d="M 64 32 C 70 26, 70 17, 76 15" stroke="#94A3B8" stroke-width="3.5"/>
+  
+  <path d="M 64 32 C 70 26, 70 17, 76 15" stroke="#94A3B8" stroke-width="3.5" />
 
-  <!-- Tia lửa ngòi nổ đa tầng (Spark bốc cháy rực rỡ) -->
-  <!-- 1. Ngôi sao tia lửa chính -->
-  <path d="M 76 5 L 78.5 12 L 85.5 11 L 81 16 L 86 20 L 79.5 20.5 L 79 27 L 75 21 L 69 23 L 72 17 L 66 14 L 73 13 Z" fill="#F59E0B" stroke="#D97706" stroke-width="1.2"/>
-  <!-- 2. Lõi lửa sáng trắng -->
-  <circle cx="76" cy="16" r="2.5" fill="#FFFDF0"/>
-  <!-- 3. Các hạt tia lửa lách tách bay ra -->
-  <circle cx="89" cy="11" r="1.5" fill="#EF4444"/>
-  <circle cx="84" cy="27" r="1.2" fill="#F59E0B"/>
-  <circle cx="68" cy="8" r="1.2" fill="#FBBF24"/>
-  <line x1="76" y1="3" x2="76" y2="0.5" stroke="#F59E0B" stroke-width="2.5"/>
+  
+  
+  <path d="M 76 5 L 78.5 12 L 85.5 11 L 81 16 L 86 20 L 79.5 20.5 L 79 27 L 75 21 L 69 23 L 72 17 L 66 14 L 73 13 Z" fill="#F59E0B" stroke="#D97706" stroke-width="1.2" />
+  
+  <circle cx="76" cy="16" r="2.5" fill="#FFFDF0" />
+  
+  <circle cx="89" cy="11" r="1.5" fill="#EF4444" />
+  <circle cx="84" cy="27" r="1.2" fill="#F59E0B" />
+  <circle cx="68" cy="8" r="1.2" fill="#FBBF24" />
+  <line x1="76" y1="3" x2="76" y2="0.5" stroke="#F59E0B" stroke-width="2.5" />
 </svg>

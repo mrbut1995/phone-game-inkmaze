@@ -1,68 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <!-- 1. BÓNG ĐỔ MẶT ĐẤT -->
-  <ellipse cx="58" cy="95" rx="50" ry="12" fill="#2D2115" opacity="0.22"/>
-  <ellipse cx="44" cy="94" rx="26" ry="7" fill="#2D2115" opacity="0.18"/>
-  <ellipse cx="86" cy="93" rx="20" ry="6" fill="#2D2115" opacity="0.18"/>
-
-  <!-- 2. CỌC XU VÀNG BÊN PHẢI -->
-  <!-- Xu S1 -->
-  <path d="M 66 86 A 20 10 0 0 0 106 86 L 106 80 A 20 10 0 0 1 66 80 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
-  <ellipse cx="86" cy="80" rx="20" ry="10" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
-  <!-- Xu S2 -->
-  <ellipse cx="86" cy="80" rx="18" ry="8" fill="#78350F" opacity="0.3"/>
-  <path d="M 66 77 A 20 10 0 0 0 106 77 L 106 71 A 20 10 0 0 1 66 71 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
-  <ellipse cx="86" cy="71" rx="20" ry="10" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
-  <!-- Xu S3 (Vương miện) -->
-  <ellipse cx="86" cy="71" rx="18" ry="8" fill="#78350F" opacity="0.3"/>
-  <path d="M 66 68 A 20 10 0 0 0 106 68 L 106 62 A 20 10 0 0 1 66 62 Z" fill="#D97706" stroke="#78350F" stroke-width="2"/>
-  <ellipse cx="86" cy="62" rx="20" ry="10" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
-  <ellipse cx="86" cy="62" rx="17" ry="8.5" fill="#FBBF24" stroke="#D97706" stroke-width="1.3"/>
-  <ellipse cx="86" cy="62" rx="14.5" ry="7" stroke="#B45309" stroke-width="1.2" stroke-dasharray="1.5 2.5"/>
-  <path d="M 80 65 L 79 59 L 83 61 L 86 57 L 89 61 L 93 59 L 92 65 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1.2"/>
-  <circle cx="79" cy="59" r="0.9" fill="#D84444"/>
-  <circle cx="86" cy="57" r="1.1" fill="#3D83AE"/>
-  <circle cx="93" cy="59" r="0.9" fill="#D84444"/>
-  <path d="M 70 60 A 17 8.5 0 0 1 95 55" stroke="#FFFFFF" stroke-width="1.5" opacity="0.8"/>
-
-  <!-- 3. TÚI NHUNG ĐỎ HOÀNG GIA (ROYAL RED VELVET SACK) -->
-  <path d="M 33 48 C 14 54 13 88 24 92 C 34 96 54 96 64 92 C 75 88 74 54 55 48 Z" fill="#DC2626" stroke="#781010" stroke-width="2.6"/>
-  <path d="M 24 92 C 34 96 54 96 64 92 C 58 87 30 87 24 92 Z" fill="#991B1B"/>
-  <!-- Nếp bóng sáng nhung lụa -->
-  <path d="M 22 62 C 18 72 20 83 26 88" stroke="#F87171" stroke-width="2.5" opacity="0.6"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="60" height="60" fill="none" stroke-linecap="round" stroke-linejoin="round">
   
-  <!-- Miệng túi đỏ sẫm -->
-  <path d="M 33 48 C 26 44 26 36 32 35 C 36 32 40 37 44 33 C 48 37 52 32 56 35 C 62 36 62 44 55 48 Z" fill="#B91C1C" stroke="#781010" stroke-width="2.2"/>
+  <ellipse cx="58" cy="95" rx="50" ry="12" fill="#2D2115" opacity="0.22" />
+  <ellipse cx="44" cy="94" rx="26" ry="7" fill="#2D2115" opacity="0.18" />
+  <ellipse cx="86" cy="93" rx="20" ry="6" fill="#2D2115" opacity="0.18" />
 
-  <!-- Dây rút vàng kim -->
-  <path d="M 31 48 Q 44 51 57 48" stroke="#FBBF24" stroke-width="3.5"/>
-  <circle cx="44" cy="49" r="3.2" fill="#FBBF24" stroke="#78350F" stroke-width="1"/>
-  <path d="M 43 51 Q 38 58 35 64" stroke="#FBBF24" stroke-width="2.2"/>
-  <circle cx="35" cy="64" r="2.2" fill="#D84444" stroke="#78350F" stroke-width="0.8"/>
-  <path d="M 45 51 Q 48 57 47 66" stroke="#FBBF24" stroke-width="2.2"/>
-  <circle cx="47" cy="66" r="2.2" fill="#D84444" stroke="#78350F" stroke-width="0.8"/>
+  
+  
+  <path d="M 66 86 A 20 10 0 0 0 106 86 L 106 80 A 20 10 0 0 1 66 80 Z" fill="#D97706" stroke="#78350F" stroke-width="2" />
+  <ellipse cx="86" cy="80" rx="20" ry="10" fill="#F59E0B" stroke="#78350F" stroke-width="2" />
+  
+  <ellipse cx="86" cy="80" rx="18" ry="8" fill="#78350F" opacity="0.3" />
+  <path d="M 66 77 A 20 10 0 0 0 106 77 L 106 71 A 20 10 0 0 1 66 71 Z" fill="#D97706" stroke="#78350F" stroke-width="2" />
+  <ellipse cx="86" cy="71" rx="20" ry="10" fill="#F59E0B" stroke="#78350F" stroke-width="2" />
+  
+  <ellipse cx="86" cy="71" rx="18" ry="8" fill="#78350F" opacity="0.3" />
+  <path d="M 66 68 A 20 10 0 0 0 106 68 L 106 62 A 20 10 0 0 1 66 62 Z" fill="#D97706" stroke="#78350F" stroke-width="2" />
+  <ellipse cx="86" cy="62" rx="20" ry="10" fill="#F59E0B" stroke="#78350F" stroke-width="2" />
+  <ellipse cx="86" cy="62" rx="17" ry="8.5" fill="#FBBF24" stroke="#D97706" stroke-width="1.3" />
+  <ellipse cx="86" cy="62" rx="14.5" ry="7" stroke="#B45309" stroke-width="1.2" stroke-dasharray="1.5 2.5" />
+  <path d="M 80 65 L 79 59 L 83 61 L 86 57 L 89 61 L 93 59 L 92 65 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1.2" />
+  <circle cx="79" cy="59" r="0.9" fill="#D84444" />
+  <circle cx="86" cy="57" r="1.1" fill="#3D83AE" />
+  <circle cx="93" cy="59" r="0.9" fill="#D84444" />
+  <path d="M 70 60 A 17 8.5 0 0 1 95 55" stroke="#FFFFFF" stroke-width="1.5" opacity="0.8" />
 
-  <!-- Huy hiệu vương miện thêu vàng trên nền nhung đỏ -->
-  <ellipse cx="44" cy="74" rx="14" ry="12" fill="#FEF3C7" stroke="#78350F" stroke-width="1.6"/>
-  <path d="M 36 78 L 35 70 L 39 73 L 44 67 L 49 73 L 53 70 L 52 78 Z" fill="#FBBF24" stroke="#78350F" stroke-width="1.4"/>
-  <circle cx="35" cy="70" r="1.1" fill="#D84444"/>
-  <circle cx="44" cy="67" r="1.3" fill="#3D83AE"/>
-  <circle cx="53" cy="70" r="1.1" fill="#D84444"/>
+  
+  <path d="M 33 48 C 14 54 13 88 24 92 C 34 96 54 96 64 92 C 75 88 74 54 55 48 Z" fill="#DC2626" stroke="#781010" stroke-width="2.6" />
+  <path d="M 24 92 C 34 96 54 96 64 92 C 58 87 30 87 24 92 Z" fill="#991B1B" />
+  
+  <path d="M 22 62 C 18 72 20 83 26 88" stroke="#F87171" stroke-width="2.5" opacity="0.6" />
+  
+  
+  <path d="M 33 48 C 26 44 26 36 32 35 C 36 32 40 37 44 33 C 48 37 52 32 56 35 C 62 36 62 44 55 48 Z" fill="#B91C1C" stroke="#781010" stroke-width="2.2" />
 
-  <!-- 4. ĐỒNG XU RƠI NGHIÊNG TIỀN CẢNH -->
+  
+  <path d="M 31 48 Q 44 51 57 48" stroke="#FBBF24" stroke-width="3.5" />
+  <circle cx="44" cy="49" r="3.2" fill="#FBBF24" stroke="#78350F" stroke-width="1" />
+  <path d="M 43 51 Q 38 58 35 64" stroke="#FBBF24" stroke-width="2.2" />
+  <circle cx="35" cy="64" r="2.2" fill="#D84444" stroke="#78350F" stroke-width="0.8" />
+  <path d="M 45 51 Q 48 57 47 66" stroke="#FBBF24" stroke-width="2.2" />
+  <circle cx="47" cy="66" r="2.2" fill="#D84444" stroke="#78350F" stroke-width="0.8" />
+
+  
+  <ellipse cx="44" cy="74" rx="14" ry="12" fill="#FEF3C7" stroke="#78350F" stroke-width="1.6" />
+  <path d="M 36 78 L 35 70 L 39 73 L 44 67 L 49 73 L 53 70 L 52 78 Z" fill="#FBBF24" stroke="#78350F" stroke-width="1.4" />
+  <circle cx="35" cy="70" r="1.1" fill="#D84444" />
+  <circle cx="44" cy="67" r="1.3" fill="#3D83AE" />
+  <circle cx="53" cy="70" r="1.1" fill="#D84444" />
+
+  
   <g transform="translate(62, 88) rotate(-12)">
-    <path d="M -18 6 A 18 9 0 0 0 18 6 L 18 0 A 18 9 0 0 1 -18 0 Z" fill="#D97706" stroke="#78350F" stroke-width="1.8"/>
-    <ellipse cx="0" cy="0" rx="18" ry="9" fill="#F59E0B" stroke="#78350F" stroke-width="1.8"/>
-    <ellipse cx="0" cy="0" rx="15" ry="7.5" fill="#FBBF24" stroke="#D97706" stroke-width="1.2"/>
-    <path d="M -6 3 L -7 -2 L -3 0 L 0 -4 L 3 0 L 7 -2 L 6 3 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1"/>
-    <circle cx="-7" cy="-2" r="0.8" fill="#D84444"/>
-    <circle cx="0" cy="-4" r="1" fill="#3D83AE"/>
-    <circle cx="7" cy="-2" r="0.8" fill="#D84444"/>
-    <path d="M -14 -1 A 15 7.5 0 0 1 6 -7" stroke="#FFFFFF" stroke-width="1.5" opacity="0.8"/>
+    <path d="M -18 6 A 18 9 0 0 0 18 6 L 18 0 A 18 9 0 0 1 -18 0 Z" fill="#D97706" stroke="#78350F" stroke-width="1.8" />
+    <ellipse cx="0" cy="0" rx="18" ry="9" fill="#F59E0B" stroke="#78350F" stroke-width="1.8" />
+    <ellipse cx="0" cy="0" rx="15" ry="7.5" fill="#FBBF24" stroke="#D97706" stroke-width="1.2" />
+    <path d="M -6 3 L -7 -2 L -3 0 L 0 -4 L 3 0 L 7 -2 L 6 3 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1" />
+    <circle cx="-7" cy="-2" r="0.8" fill="#D84444" />
+    <circle cx="0" cy="-4" r="1" fill="#3D83AE" />
+    <circle cx="7" cy="-2" r="0.8" fill="#D84444" />
+    <path d="M -14 -1 A 15 7.5 0 0 1 6 -7" stroke="#FFFFFF" stroke-width="1.5" opacity="0.8" />
   </g>
 
-  <!-- 5. LẤP LÁNH KHO BÁU -->
-  <path d="M 26 23 Q 26 29 32 29 Q 26 29 26 35 Q 26 29 20 29 Q 26 29 26 23 Z" fill="#FFFFFF"/>
-  <circle cx="26" cy="29" r="1.3" fill="#FEF08A"/>
-  <path d="M 98 48 Q 98 53 103 53 Q 98 53 98 58 Q 98 53 93 53 Q 98 53 98 48 Z" fill="#FFFFFF"/>
-  <circle cx="98" cy="53" r="1.1" fill="#FEF08A"/>
+  
+  <path d="M 26 23 Q 26 29 32 29 Q 26 29 26 35 Q 26 29 20 29 Q 26 29 26 23 Z" fill="#FFFFFF" />
+  <circle cx="26" cy="29" r="1.3" fill="#FEF08A" />
+  <path d="M 98 48 Q 98 53 103 53 Q 98 53 98 58 Q 98 53 93 53 Q 98 53 98 48 Z" fill="#FFFFFF" />
+  <circle cx="98" cy="53" r="1.1" fill="#FEF08A" />
 </svg>

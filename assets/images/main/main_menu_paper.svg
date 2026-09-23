@@ -1,59 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="48 30 934 1632" width="934" height="1632">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="48 30 934 1632" width="467" height="816">
   <defs>
     <filter id="mainSheetCleanShadow" x="-10%" y="-10%" width="125%" height="130%">
-      <feDropShadow dx="0" dy="20" stdDeviation="20" flood-color="#2D2115" flood-opacity="0.25"/>
-      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#2D2115" flood-opacity="0.10"/>
+      <feDropShadow dx="0" dy="20" stdDeviation="20" flood-color="#2D2115" flood-opacity="0.25" />
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#2D2115" flood-opacity="0.10" />
     </filter>
     <filter id="clipShadowClean" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.25"/>
+      <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.25" />
     </filter>
   </defs>
 
-  <!-- 1. THÂN TỜ GIẤY LỚN (x: 75, y: 55) -->
+  
   <g transform="translate(75, 55)" filter="url(#mainSheetCleanShadow)">
-    <rect width="880" height="1560" rx="22" fill="#FFFDF8"/>
+    <rect width="880" height="1560" rx="22" fill="#FFFDF8" />
 
-    <!-- Lỗ bấm ghim sổ tay mép trái -->
-    <g fill="#EAE3D2" opacity="0.65">
-      <circle cx="26" cy="100" r="8"/><circle cx="26" cy="220" r="8"/><circle cx="26" cy="340" r="8"/>
-      <circle cx="26" cy="460" r="8"/><circle cx="26" cy="580" r="8"/><circle cx="26" cy="700" r="8"/>
-      <circle cx="26" cy="820" r="8"/><circle cx="26" cy="940" r="8"/><circle cx="26" cy="1060" r="8"/>
-      <circle cx="26" cy="1180" r="8"/><circle cx="26" cy="1300" r="8"/><circle cx="26" cy="1420" r="8"/>
-    </g>
-
-    <!-- Dòng kẻ ngang mờ -->
-    <g stroke="#8FB9D2" stroke-width="1" opacity="0.32">
-      <line x1="65" y1="180" x2="815" y2="180"/><line x1="65" y1="260" x2="815" y2="260"/>
-      <line x1="65" y1="340" x2="815" y2="340"/><line x1="65" y1="420" x2="815" y2="420"/>
-      <line x1="65" y1="500" x2="815" y2="500"/><line x1="65" y1="580" x2="815" y2="580"/>
-      <line x1="65" y1="660" x2="815" y2="660"/><line x1="65" y1="740" x2="815" y2="740"/>
-      <line x1="65" y1="820" x2="815" y2="820"/><line x1="65" y1="900" x2="815" y2="900"/>
-      <line x1="65" y1="980" x2="815" y2="980"/><line x1="65" y1="1060" x2="815" y2="1060"/>
-      <line x1="65" y1="1140" x2="815" y2="1140"/><line x1="65" y1="1220" x2="815" y2="1220"/>
-      <line x1="65" y1="1300" x2="815" y2="1300"/><line x1="65" y1="1380" x2="815" y2="1380"/>
-      <line x1="65" y1="1460" x2="815" y2="1460"/>
-    </g>
-
-    <!-- Lề đỏ -->
-    <line x1="80" y1="0" x2="80" y2="1560" stroke="#D84444" stroke-width="2.5" opacity="0.85"/>
-    <rect width="880" height="1560" rx="22" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
     
-    <!-- Vạch ngăn cách Header & Footer -->
-    <line x1="100" y1="340" x2="780" y2="340" stroke="#3D83AE" stroke-width="2"/>
-    <line x1="100" y1="345" x2="780" y2="345" stroke="#8FB9D2" stroke-width="1"/>
-    <line x1="100" y1="1130" x2="780" y2="1130" stroke="#8FB9D2" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.6"/>
+    <g fill="#EAE3D2" opacity="0.65">
+      <circle cx="26" cy="100" r="8" /><circle cx="26" cy="220" r="8" /><circle cx="26" cy="340" r="8" />
+      <circle cx="26" cy="460" r="8" /><circle cx="26" cy="580" r="8" /><circle cx="26" cy="700" r="8" />
+      <circle cx="26" cy="820" r="8" /><circle cx="26" cy="940" r="8" /><circle cx="26" cy="1060" r="8" />
+      <circle cx="26" cy="1180" r="8" /><circle cx="26" cy="1300" r="8" /><circle cx="26" cy="1420" r="8" />
+    </g>
+
+    
+    <g stroke="#8FB9D2" stroke-width="1" opacity="0.32">
+      <line x1="65" y1="180" x2="815" y2="180" /><line x1="65" y1="260" x2="815" y2="260" />
+      <line x1="65" y1="340" x2="815" y2="340" /><line x1="65" y1="420" x2="815" y2="420" />
+      <line x1="65" y1="500" x2="815" y2="500" /><line x1="65" y1="580" x2="815" y2="580" />
+      <line x1="65" y1="660" x2="815" y2="660" /><line x1="65" y1="740" x2="815" y2="740" />
+      <line x1="65" y1="820" x2="815" y2="820" /><line x1="65" y1="900" x2="815" y2="900" />
+      <line x1="65" y1="980" x2="815" y2="980" /><line x1="65" y1="1060" x2="815" y2="1060" />
+      <line x1="65" y1="1140" x2="815" y2="1140" /><line x1="65" y1="1220" x2="815" y2="1220" />
+      <line x1="65" y1="1300" x2="815" y2="1300" /><line x1="65" y1="1380" x2="815" y2="1380" />
+      <line x1="65" y1="1460" x2="815" y2="1460" />
+    </g>
+
+    
+    <line x1="80" y1="0" x2="80" y2="1560" stroke="#D84444" stroke-width="2.5" opacity="0.85" />
+    <rect width="880" height="1560" rx="22" fill="none" stroke="#6EA0C8" stroke-width="3.5" />
+    
+    
+    <line x1="100" y1="340" x2="780" y2="340" stroke="#3D83AE" stroke-width="2" />
+    <line x1="100" y1="345" x2="780" y2="345" stroke="#8FB9D2" stroke-width="1" />
+    <line x1="100" y1="1130" x2="780" y2="1130" stroke="#8FB9D2" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.6" />
   </g>
 
-  <!-- 2. BĂNG DÍNH WASHI TAPE TRÊN ĐỈNH -->
+  
   <g transform="translate(405, 33)">
-    <rect width="220" height="48" rx="4" fill="#E8DFCA" fill-opacity="0.85" stroke="#D1C6AE" stroke-width="1.5"/>
-    <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" 
-          stroke="#B5A98F" stroke-width="1.2" opacity="0.35"/>
+    <rect width="220" height="48" rx="4" fill="#E8DFCA" fill-opacity="0.85" stroke="#D1C6AE" stroke-width="1.5" />
+    <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" stroke="#B5A98F" stroke-width="1.2" opacity="0.35" />
   </g>
 
-  <!-- 3. GHIM KẸP GIẤY GÓC TRÊN TRÁI -->
+  
   <g transform="translate(185, 37)" filter="url(#clipShadowClean)">
-    <path d="M 0 50 L 0 12 A 12 12 0 0 1 24 12 L 24 60 A 18 18 0 0 1 -12 60 L -12 18" 
-          fill="none" stroke="#7A8F9B" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 0 50 L 0 12 A 12 12 0 0 1 24 12 L 24 60 A 18 18 0 0 1 -12 60 L -12 18" fill="none" stroke="#7A8F9B" stroke-width="5" stroke-linecap="round" />
   </g>
 </svg>

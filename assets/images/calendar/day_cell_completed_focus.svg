@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" width="130" height="150">
-  <!-- Trạng thái focus: nền xanh giấy + vòng nét đứt màu hổ phách -->
-  <rect width="130" height="150" fill="#F0F7FB"/>
-  <rect x="2" y="2" width="126" height="146" rx="8" fill="none" stroke="#C4843A" stroke-width="2.5" stroke-dasharray="5 3"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" width="65" height="75">
+  
+  <rect width="130" height="150" fill="#F0F7FB" />
+  <rect x="2" y="2" width="126" height="146" rx="8" fill="none" stroke="#C4843A" stroke-width="2.5" stroke-dasharray="5 3" />
 </svg>
