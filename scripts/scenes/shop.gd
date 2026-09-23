@@ -28,7 +28,7 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 ## Số món mỗi trang ở lưới 2 cột — GIÁ TRỊ THIẾT KẾ (màn 1080×1920).
 ## Số thực tế được tính lại theo CHIỀU CAO khung nhìn (`_grid_per_page`): màn thấp /
 ## xoay ngang thì ít hàng hơn, màn cao thì nhiều hàng hơn (content giãn hết chỗ trống).
-const TILES_PER_PAGE := 6
+const TILES_PER_PAGE := 3
 ## Lưới ô: bản DỌC 2 cột (khe ngang 30 / khe dọc 24 — khớp `_make_grid`); bản NGANG nở tối đa 4 cột
 const GRID_COLUMNS := 2
 const GRID_COLUMNS_MAX := 4

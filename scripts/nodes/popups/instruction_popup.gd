@@ -36,7 +36,7 @@ const FADE_TIME := 0.16
 ## hàng bắt đầu ở mép trái dot đầu tiên (lấy từ scene) — đúng như mockup.
 const DOT_ON_SIZE := Vector2(38.0, 18.0)
 const DOT_OFF_SIZE := Vector2(16.0, 16.0)
-const DOT_GAP := 12.0
+const DOT_GAP := 6
 
 ## Style/màu tab do generator nướng sẵn từng scene (xem build_shared_styles)
 @export var tab_on_style: StyleBoxFlat

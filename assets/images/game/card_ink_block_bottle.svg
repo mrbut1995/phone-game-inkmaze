@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="34 38 50 68" width="50" height="68">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="34 38 50 68" width="25" height="34">
   <!-- Khối LỌ MỰC + giọt mực (trích từ card_ink_meter.svg — 2026-09-17)
        Node đặt tại sheet-local (34, 38). -->
-  <rect x="36" y="50" width="46" height="54" rx="8" fill="#E8F1F7" stroke="#1D4E72" stroke-width="2.5"/>
-  <rect x="44" y="40" width="30" height="10" rx="3" fill="#D2E3EF" stroke="#1D4E72" stroke-width="2"/>
-  <rect x="40" y="70" width="38" height="30" rx="5" fill="#256286"/>
+  <rect x="36" y="50" width="23" height="27" rx="8" fill="#E8F1F7" stroke="#1D4E72" stroke-width="2.5"/>
+  <rect x="44" y="40" width="15" height="5" rx="3" fill="#D2E3EF" stroke="#1D4E72" stroke-width="2"/>
+  <rect x="40" y="70" width="19" height="15" rx="5" fill="#256286"/>
   <path d="M 59 58 C 55 63 54 67 59 69 C 64 67 63 63 59 58 Z" fill="#D84444"/>
 </svg>

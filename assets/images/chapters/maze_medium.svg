@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="90" height="90">
   <!-- Doodle mê cung 7x7 (icon chương) — art TRẮNG theo độ mờ, màu đổi bằng modulate -->
-  <rect x="1.5" y="1.5" width="177" height="177" rx="16" fill="#FFFFFF" fill-opacity="0.12"
+  <rect x="1.5" y="1.5" width="88.5" height="88.5" rx="16" fill="#FFFFFF" fill-opacity="0.12"
         stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="2.5"/>
   <g stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1">
     <line x1="25.7" y1="2" x2="25.7" y2="178"/><line x1="51.4" y1="2" x2="51.4" y2="178"/>

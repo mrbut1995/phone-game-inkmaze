@@ -32,42 +32,42 @@ grow_vertical = 2
 texture = ExtResource("8_pixy8")
 
 [node name="AreaSeperator" type="NinePatchRect" parent="." unique_id=873943491]
-custom_minimum_size = Vector2(6, 0)
+custom_minimum_size =  Vector2(3, 0)
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_left = 108.0
-offset_top = -7.0
-offset_right = 114.0125
-offset_bottom = 4.0
+offset_left =  54
+offset_top =  -3.5
+offset_right =  57.0063
+offset_bottom =  2
 grow_vertical = 2
 texture = ExtResource("4_n7nb6")
-patch_margin_left = 1
-patch_margin_top = 14
-patch_margin_right = 2
-patch_margin_bottom = 27
+patch_margin_left =  0.5
+patch_margin_top =  7
+patch_margin_right =  1
+patch_margin_bottom =  13.5
 
 [node name="Item" type="HBoxContainer" parent="." unique_id=1279971278]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -16.0
+offset_right =  -8
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation =  8
 
 [node name="Centering" type="CenterContainer" parent="Item" unique_id=1944770209]
-custom_minimum_size = Vector2(108, 0)
+custom_minimum_size =  Vector2(54, 0)
 layout_mode = 2
 
 [node name="Check" type="VBoxContainer" parent="Item/Centering" unique_id=201372748]
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation =  2
 alignment = 1
 
 [node name="Box" type="TextureRect" parent="Item/Centering/Check" unique_id=1210011332]
-custom_minimum_size = Vector2(38, 38)
+custom_minimum_size =  Vector2(19, 19)
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 2
@@ -78,7 +78,7 @@ stretch_mode = 5
 [node name="Text" type="VBoxContainer" parent="Item/Centering/Check" unique_id=1400213302]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 2
+theme_override_constants/separation =  1
 
 [node name="Status" type="Label" parent="Item/Centering/Check/Text" unique_id=1895697198]
 layout_mode = 2
@@ -106,34 +106,34 @@ maximum_font_size = 15
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_constants/separation = 4
+theme_override_constants/separation =  2
 
 [node name="TitleContainer" type="HBoxContainer" parent="Item/Text" unique_id=1776966037]
-custom_minimum_size = Vector2(0, 34)
+custom_minimum_size =  Vector2(0, 17)
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation =  5
 
 [node name="Tag" type="NinePatchRect" parent="Item/Text/TitleContainer" unique_id=1864771490]
-custom_minimum_size = Vector2(130, 26)
+custom_minimum_size =  Vector2(65, 13)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("3_tag")
-region_rect = Rect2(0, 0, 135, 24)
-patch_margin_left = 15
-patch_margin_top = 6
-patch_margin_right = 24
-patch_margin_bottom = 6
+region_rect = Rect2(0, 0, 67.5, 12)
+patch_margin_left =  7.5
+patch_margin_top =  3
+patch_margin_right =  12
+patch_margin_bottom =  3
 
 [node name="Label" type="Label" parent="Item/Text/TitleContainer/Tag" unique_id=1589285459]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 6.0
-offset_top = 1.0
-offset_right = -6.0
-offset_bottom = -1.0
+offset_left =  3
+offset_top =  0.5
+offset_right =  -3
+offset_bottom =  -0.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"SpecialModeTag"
@@ -146,11 +146,11 @@ maximum_font_size = 13
 
 [node name="Title" type="Label" parent="Item/Text/TitleContainer" unique_id=926266794]
 modulate = Color(0.11372549, 0.29411766, 0.43137255, 1)
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size =  Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyTaskTitle"
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size =  14
 text = "..."
 vertical_alignment = 1
 clip_text = true
@@ -160,11 +160,11 @@ minimum_font_size = 18
 maximum_font_size = 30
 
 [node name="Desc" type="Label" parent="Item/Text" unique_id=991696763]
-custom_minimum_size = Vector2(0, 26)
+custom_minimum_size =  Vector2(0, 13)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyTaskDesc"
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size =  10
 text = "..."
 vertical_alignment = 1
 clip_text = true
@@ -174,11 +174,11 @@ minimum_font_size = 14
 maximum_font_size = 22
 
 [node name="Progress" type="Label" parent="Item/Text" unique_id=1255076877]
-custom_minimum_size = Vector2(0, 26)
+custom_minimum_size =  Vector2(0, 13)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyTaskProgressTodo"
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size =  10
 text = "..."
 vertical_alignment = 1
 clip_text = true
@@ -188,7 +188,7 @@ minimum_font_size = 14
 maximum_font_size = 22
 
 [node name="Action" type="TextureButton" parent="Item" unique_id=712238914]
-custom_minimum_size = Vector2(144, 46)
+custom_minimum_size =  Vector2(72, 23)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -208,7 +208,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"DailyActionPrimary"
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size =  8
 text = "STR_BTN_PLAY_NOW"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -223,9 +223,9 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -2.0
+offset_top =  -1
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("7_ou8uo")
-region_rect = Rect2(0, 0, 980, 4)
-patch_margin_left = 96
+region_rect = Rect2(0, 0, 490, 2)
+patch_margin_left =  48

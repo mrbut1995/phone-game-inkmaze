@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 158" width="440" height="158">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 158" width="220" height="79">
   <!-- Thẻ BOMB CÒN LẠI 440x158 (HUD Minesweeper): giấy trắng viền ĐỎ + lề đỏ + dòng kẻ ngang.
        Viền vẽ bằng 2 hình FILL lồng nhau -> không bị cắt nét ở mép viewBox. -->
-  <rect width="440" height="158" rx="24" fill="#D84444"/>
-  <rect x="4" y="4" width="432" height="150" rx="20" fill="#FEFDFA"/>
+  <rect width="220" height="79" rx="24" fill="#D84444"/>
+  <rect x="4" y="4" width="216" height="75" rx="20" fill="#FEFDFA"/>
 
   <!-- Dòng kẻ ngang kiểu vở học sinh -->
   <g stroke="#9FC0D6" stroke-width="2" opacity="0.5">

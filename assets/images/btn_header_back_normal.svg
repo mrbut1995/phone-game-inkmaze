@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 80 85" width="80" height="85">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 80 85" width="40" height="42.5">
   <defs>
     <filter id="backShadow" x="-10%" y="-15%" width="125%" height="140%">
       <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14"/>
     </filter>
   </defs>
   <g transform="translate(5, 3)" filter="url(#backShadow)">
-    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <rect width="35" height="35" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
     <path d="M42 23 L26 35 L42 47" fill="none" stroke="#3D83AE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 </svg>

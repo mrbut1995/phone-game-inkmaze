@@ -35,39 +35,39 @@ color = Color(0.09411765, 0.14117648, 0.18039216, 0.6392157)
 [node name="Panel" type="Control" parent="." unique_id=1621539942]
 layout_mode = 1
 anchors_preset = 0
-offset_left = 150.0
-offset_top = 400.0
-offset_right = 930.0
-offset_bottom = 1520.0
+offset_left =  75
+offset_top =  200
+offset_right =  465
+offset_bottom =  760
 mouse_filter = 2
 
 [node name="Art" type="TextureRect" parent="Panel" unique_id=848801197]
 layout_mode = 1
 anchors_preset = -1
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 788.0
-offset_bottom = 1128.0
+offset_left =  -4
+offset_top =  -4
+offset_right =  394
+offset_bottom =  564
 mouse_filter = 2
 texture = ExtResource("3_panel")
 
 [node name="Washi" type="TextureRect" parent="Panel" unique_id=1925565409]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 288.0
-offset_top = -17.0
-offset_right = 514.0
-offset_bottom = 37.0
+offset_left =  144
+offset_top =  -8.5
+offset_right =  257
+offset_bottom =  18.5
 mouse_filter = 2
 texture = ExtResource("4_washi")
 
 [node name="Clip" type="TextureRect" parent="Panel" unique_id=1468092271]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 97.0
-offset_top = -15.0
-offset_right = 143.0
-offset_bottom = 66.0
+offset_left =  48.5
+offset_top =  -7.5
+offset_right =  71.5
+offset_bottom =  33
 mouse_filter = 2
 texture = ExtResource("5_clip")
 
@@ -76,13 +76,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 110.0
-offset_top = 68.0
-offset_right = -70.0
-offset_bottom = -68.0
+offset_left =  55
+offset_top =  34
+offset_right =  -35
+offset_bottom =  -34
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation =  6
 
 [node name="Title" type="Label" parent="Panel/Content" unique_id=649000259]
 layout_mode = 2
@@ -95,7 +95,7 @@ theme_type_variation = &"PopupSubtitle"
 text = "STR_LANGUAGE_SUBTITLE"
 
 [node name="Divider" type="TextureRect" parent="Panel/Content" unique_id=775125674]
-custom_minimum_size = Vector2(0, 4)
+custom_minimum_size =  Vector2(0, 2)
 layout_mode = 2
 texture = ExtResource("6_divider")
 expand_mode = 1
@@ -109,14 +109,14 @@ horizontal_scroll_mode = 0
 [node name="List" type="VBoxContainer" parent="Panel/Content/Scroll" unique_id=1727273265]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 20
+theme_override_constants/separation =  10
 
 [node name="Buttons" type="HBoxContainer" parent="Panel/Content" unique_id=935925410]
 layout_mode = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation =  15
 
 [node name="Cancel" type="TextureButton" parent="Panel/Content/Buttons" unique_id=577269955]
-custom_minimum_size = Vector2(180, 96)
+custom_minimum_size =  Vector2(90, 48)
 layout_mode = 2
 texture_normal = ExtResource("7_sec_n")
 texture_pressed = ExtResource("8_sec_p")
@@ -137,7 +137,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Apply" type="TextureButton" parent="Panel/Content/Buttons" unique_id=1975684081]
-custom_minimum_size = Vector2(390, 96)
+custom_minimum_size =  Vector2(195, 48)
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = ExtResource("10_pri_n")

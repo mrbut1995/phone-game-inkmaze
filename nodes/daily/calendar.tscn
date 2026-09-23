@@ -13,92 +13,92 @@
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="12_theme"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ut84u"]
-content_margin_left = 15.0
-content_margin_top = 14.0
-content_margin_right = 15.0
-content_margin_bottom = 17.0
+content_margin_left =  7.5
+content_margin_top =  7
+content_margin_right =  7.5
+content_margin_bottom =  8.5
 texture = ExtResource("4_prev_n")
-texture_margin_left = 15.0
-texture_margin_top = 14.0
-texture_margin_right = 15.0
-texture_margin_bottom = 17.0
+texture_margin_left =  7.5
+texture_margin_top =  7
+texture_margin_right =  7.5
+texture_margin_bottom =  8.5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g7v8n"]
-content_margin_left = 15.0
-content_margin_top = 14.0
-content_margin_right = 15.0
-content_margin_bottom = 17.0
+content_margin_left =  7.5
+content_margin_top =  7
+content_margin_right =  7.5
+content_margin_bottom =  8.5
 texture = ExtResource("5_prev_p")
-texture_margin_left = 15.0
-texture_margin_top = 14.0
-texture_margin_right = 15.0
-texture_margin_bottom = 17.0
+texture_margin_left =  7.5
+texture_margin_top =  7
+texture_margin_right =  7.5
+texture_margin_bottom =  8.5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w5v05"]
-content_margin_left = 15.0
-content_margin_top = 14.0
-content_margin_right = 15.0
-content_margin_bottom = 17.0
+content_margin_left =  7.5
+content_margin_top =  7
+content_margin_right =  7.5
+content_margin_bottom =  8.5
 texture = ExtResource("5_prev_p")
-texture_margin_left = 15.0
-texture_margin_top = 14.0
-texture_margin_right = 15.0
-texture_margin_bottom = 17.0
+texture_margin_left =  7.5
+texture_margin_top =  7
+texture_margin_right =  7.5
+texture_margin_bottom =  8.5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fe7dn"]
-content_margin_left = 15.0
-content_margin_top = 14.0
-content_margin_right = 15.0
-content_margin_bottom = 17.0
+content_margin_left =  7.5
+content_margin_top =  7
+content_margin_right =  7.5
+content_margin_bottom =  8.5
 texture = ExtResource("6_prev_d")
-texture_margin_left = 15.0
-texture_margin_top = 14.0
-texture_margin_right = 15.0
-texture_margin_bottom = 17.0
+texture_margin_left =  7.5
+texture_margin_top =  7
+texture_margin_right =  7.5
+texture_margin_bottom =  8.5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8lf86"]
-content_margin_left = 16.0
-content_margin_top = 14.0
-content_margin_right = 15.0
-content_margin_bottom = 18.0
+content_margin_left =  8
+content_margin_top =  7
+content_margin_right =  7.5
+content_margin_bottom =  9
 texture = ExtResource("8_next_n")
-texture_margin_left = 16.0
-texture_margin_top = 14.0
-texture_margin_right = 15.0
-texture_margin_bottom = 18.0
+texture_margin_left =  8
+texture_margin_top =  7
+texture_margin_right =  7.5
+texture_margin_bottom =  9
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v5uxq"]
-content_margin_left = 16.0
-content_margin_top = 14.0
-content_margin_right = 15.0
-content_margin_bottom = 18.0
+content_margin_left =  8
+content_margin_top =  7
+content_margin_right =  7.5
+content_margin_bottom =  9
 texture = ExtResource("9_next_p")
-texture_margin_left = 16.0
-texture_margin_top = 14.0
-texture_margin_right = 15.0
-texture_margin_bottom = 18.0
+texture_margin_left =  8
+texture_margin_top =  7
+texture_margin_right =  7.5
+texture_margin_bottom =  9
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jmps4"]
-content_margin_left = 16.0
-content_margin_top = 14.0
-content_margin_right = 15.0
-content_margin_bottom = 18.0
+content_margin_left =  8
+content_margin_top =  7
+content_margin_right =  7.5
+content_margin_bottom =  9
 texture = ExtResource("9_next_p")
-texture_margin_left = 16.0
-texture_margin_top = 14.0
-texture_margin_right = 15.0
-texture_margin_bottom = 18.0
+texture_margin_left =  8
+texture_margin_top =  7
+texture_margin_right =  7.5
+texture_margin_bottom =  9
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5mqyr"]
-content_margin_left = 16.0
-content_margin_top = 14.0
-content_margin_right = 15.0
-content_margin_bottom = 18.0
+content_margin_left =  8
+content_margin_top =  7
+content_margin_right =  7.5
+content_margin_bottom =  9
 texture = ExtResource("10_next_d")
-texture_margin_left = 16.0
-texture_margin_top = 14.0
-texture_margin_right = 15.0
-texture_margin_bottom = 18.0
+texture_margin_left =  8
+texture_margin_top =  7
+texture_margin_right =  7.5
+texture_margin_bottom =  9
 
 [node name="Calendar" type="AspectRatioContainer" unique_id=1505487923]
 clip_contents = true
@@ -114,20 +114,20 @@ script = ExtResource("1_cal")
 [node name="Panel" type="NinePatchRect" parent="." unique_id=732625991]
 layout_mode = 2
 texture = ExtResource("2_board")
-region_rect = Rect2(0, 0, 1020, 1010)
-patch_margin_left = 121
-patch_margin_top = 163
-patch_margin_right = 111
-patch_margin_bottom = 174
+region_rect = Rect2(0, 0, 510, 505)
+patch_margin_left =  60.5
+patch_margin_top =  81.5
+patch_margin_right =  55.5
+patch_margin_bottom =  87
 
 [node name="Months" type="HBoxContainer" parent="Panel" unique_id=2039597602]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.080000006
 anchor_right = 0.92
-offset_top = 41.471992
-offset_bottom = 108.863976
-theme_override_constants/separation = 0
+offset_top =  20.736
+offset_bottom =  54.432
+theme_override_constants/separation =  0
 
 [node name="Previous" type="AspectRatioContainer" parent="Panel/Months" unique_id=1252037088]
 layout_mode = 2
@@ -147,10 +147,10 @@ texture_normal = ExtResource("4_prev_n")
 texture_hover = ExtResource("5_prev_p")
 texture_pressed = ExtResource("5_prev_p")
 texture_disabled = ExtResource("6_prev_d")
-patch_margin_left = 15.0
-patch_margin_top = 14.0
-patch_margin_right = 15.0
-patch_margin_bottom = 17.0
+patch_margin_left =  7.5
+patch_margin_top =  7
+patch_margin_right =  7.5
+patch_margin_bottom =  8.5
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Label" type="Label" parent="Panel/Months" unique_id=1562895281]
@@ -178,10 +178,10 @@ texture_normal = ExtResource("8_next_n")
 texture_hover = ExtResource("9_next_p")
 texture_pressed = ExtResource("9_next_p")
 texture_disabled = ExtResource("10_next_d")
-patch_margin_left = 16.0
-patch_margin_top = 14.0
-patch_margin_right = 15.0
-patch_margin_bottom = 18.0
+patch_margin_left =  8
+patch_margin_top =  7
+patch_margin_right =  7.5
+patch_margin_bottom =  9
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Content" type="VBoxContainer" parent="Panel" unique_id=82228673]
@@ -189,17 +189,17 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 58.0
-offset_top = 119.39996
-offset_right = -36.0
-offset_bottom = -45.39984
+offset_left =  29
+offset_top =  59.7
+offset_right =  -18
+offset_bottom =  -22.6999
 metadata/_edit_use_anchors_ = true
 
 [node name="DayTitle" type="HBoxContainer" parent="Panel/Content" unique_id=836109917]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size =  Vector2(0, 35)
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_constants/separation = 0
+theme_override_constants/separation =  0
 
 [node name="Monday" type="Label" parent="Panel/Content/DayTitle" unique_id=287543008]
 layout_mode = 2
@@ -281,8 +281,8 @@ resize_font_to_fit = true
 [node name="Days" type="GridContainer" parent="Panel/Content" unique_id=1650849745]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/h_separation = 0
-theme_override_constants/v_separation = 0
+theme_override_constants/h_separation =  0
+theme_override_constants/v_separation =  0
 columns = 7
 
 [node name="Day01" parent="Panel/Content/Days" unique_id=70993467 instance=ExtResource("3_day")]

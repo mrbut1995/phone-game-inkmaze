@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 616 106" width="616" height="106">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 616 106" width="308" height="53">
   <!-- Hàng ngôn ngữ khi nhấn: lún 2px, mực xanh đậm -->
   <g transform="translate(0, 2)">
-    <rect width="600" height="90" rx="16" fill="#EDE6D8" stroke="#256286" stroke-width="2.5"/>
+    <rect width="300" height="45" rx="16" fill="#EDE6D8" stroke="#256286" stroke-width="2.5"/>
   </g>
 </svg>

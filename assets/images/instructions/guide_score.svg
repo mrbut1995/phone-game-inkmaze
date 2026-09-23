@@ -1,19 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 460" width="780" height="460">
-  <rect x="0" y="0" width="780" height="460" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 460" width="390" height="230">
+  <rect x="0" y="0" width="390" height="230" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
   <circle cx="128" cy="96" r="26" fill="#E8F4EC" stroke="#2E7D32" stroke-width="4"/>
   <polyline points="114,97.4 124.5,107.2 142,85.5" fill="none" stroke="#2E7D32" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="176" y="84" width="320" height="24" rx="12" fill="#BACEDC"/>
-  <rect x="176" y="84" width="320" height="24" rx="12" fill="#2E7D32"/>
+  <rect x="176" y="84" width="160" height="12" rx="12" fill="#BACEDC"/>
+  <rect x="176" y="84" width="160" height="12" rx="12" fill="#2E7D32"/>
   <circle cx="128" cy="186" r="26" fill="#E8F4EC" stroke="#2E7D32" stroke-width="4"/>
   <polyline points="114,187.4 124.5,197.2 142,175.5" fill="none" stroke="#2E7D32" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="176" y="174" width="320" height="24" rx="12" fill="#BACEDC"/>
-  <rect x="176" y="174" width="320" height="24" rx="12" fill="#2E7D32"/>
+  <rect x="176" y="174" width="160" height="12" rx="12" fill="#BACEDC"/>
+  <rect x="176" y="174" width="160" height="12" rx="12" fill="#2E7D32"/>
   <circle cx="128" cy="276" r="26" fill="#FEFDFA" stroke="#718B9E" stroke-width="4" stroke-dasharray="7 6"/>
-  <rect x="176" y="264" width="320" height="24" rx="12" fill="#BACEDC"/>
-  <rect x="176" y="264" width="168" height="24" rx="12" fill="none" stroke="#718B9E" stroke-width="3" stroke-dasharray="8 6"/>
+  <rect x="176" y="264" width="160" height="12" rx="12" fill="#BACEDC"/>
+  <rect x="176" y="264" width="84" height="12" rx="12" fill="none" stroke="#718B9E" stroke-width="3" stroke-dasharray="8 6"/>
   <polygon points="544.0,86.0 553.0,107.6 576.3,109.5 558.6,124.7 564.0,147.5 544.0,135.3 524.0,147.5 529.4,124.7 511.7,109.5 535.0,107.6" fill="#FBBF24" stroke="#D97706" stroke-width="4"/>
   <polygon points="544.0,172.0 553.0,193.6 576.3,195.5 558.6,210.7 564.0,233.5 544.0,221.3 524.0,233.5 529.4,210.7 511.7,195.5 535.0,193.6" fill="none" stroke="#D97706" stroke-width="4"/>
-  <rect x="408" y="288" width="240" height="96" rx="20" fill="#FEFDFA" stroke="#D97706" stroke-width="3"/>
+  <rect x="408" y="288" width="120" height="48" rx="20" fill="#FEFDFA" stroke="#D97706" stroke-width="3"/>
   <circle cx="470" cy="336" r="28" fill="#FBBF24" stroke="#D97706" stroke-width="3"/>
   <circle cx="470" cy="336" r="15.400000000000002" fill="none" stroke="#F59E0B" stroke-width="2.4" stroke-dasharray="5 4"/>
   <path d="M 461.6 324.24 A 10 10 0 0 0 461.6 347.76" fill="none" stroke="#78350F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>

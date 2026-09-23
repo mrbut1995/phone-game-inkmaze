@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 40 40" width="40" height="40">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 40 40" width="20" height="20">
   <!-- Núm trượt khi bị khoá (HSlider icon "grabber_disabled") -->
   <circle cx="0" cy="0" r="14" fill="#E9E7E2" stroke="#B7C4CC" stroke-width="2.2"/>
   <circle cx="0" cy="0" r="4" fill="#C3CDD3"/>

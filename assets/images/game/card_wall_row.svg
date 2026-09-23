@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 42" width="400" height="42">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 42" width="200" height="21">
   <!-- Nền HÀNG "❤️ LƯỢT GỬI" của bảng Tiến Độ Xây Tường (mode Wall Builder) — 400x42
        Nằm trong nodes/hud/wall_builder_hud.tscn tại sheet-local (255, 16). -->
-  <rect x="0.6" y="0.6" width="398.8" height="40.8" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.2"/>
+  <rect x="0.6" y="0.6" width="199.4" height="20.4" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.2"/>
 </svg>

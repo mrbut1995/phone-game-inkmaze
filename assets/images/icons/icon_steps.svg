@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="#FEFDFA" stroke="#3D83AE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24" fill="#FEFDFA" stroke="#3D83AE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
   <!-- Chiếc chân trái (bước trước, bên trên) -->
   <g transform="rotate(-12 16 19)">
     <!-- Đệm mũi chân (thon gọn, có eo) -->
     <path d="M12 19 C10 13 13 9 17 9 C21 9 22 13 19 20 C17.5 22 13.5 22 12 19 Z"/>
     <!-- Gót giày -->
-    <rect x="12" y="24" width="7" height="6" rx="3"/>
+    <rect x="12" y="24" width="3.5" height="3" rx="3"/>
   </g>
 
   <!-- Chiếc chân phải (bước sau, bên dưới) -->
@@ -12,6 +12,6 @@
     <!-- Đệm mũi chân (thon gọn, có eo) -->
     <path d="M29 29 C27 23 30 19 34 19 C38 19 39 23 36 30 C34.5 32 30.5 32 29 29 Z"/>
     <!-- Gót giày -->
-    <rect x="29" y="34" width="7" height="6" rx="3"/>
+    <rect x="29" y="34" width="3.5" height="3" rx="3"/>
   </g>
 </svg>

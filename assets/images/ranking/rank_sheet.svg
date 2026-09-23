@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 1570" width="940" height="1570">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 1570" width="470" height="785">
   <!-- Tờ giấy bảng xếp hạng 940x1570 (mockup/ranking.svg) — viền vẽ bằng FILL lồng nhau để không bị cắt nét -->
-  <rect width="940" height="1570" rx="24" fill="#6EA0C8"/>
-  <rect x="1.8" y="1.8" width="936.4" height="1566.4" rx="22.2" fill="#FFFDF8"/>
+  <rect width="470" height="785" rx="24" fill="#6EA0C8"/>
+  <rect x="1.8" y="1.8" width="468.2" height="783.2" rx="22.2" fill="#FFFDF8"/>
   <!-- Dòng kẻ ô ly mờ (mỗi 80px, giống mockup) -->
   <g stroke="#3D83AE" stroke-width="2" opacity="0.18">
     <line x1="8" y1="180" x2="932" y2="180"/>

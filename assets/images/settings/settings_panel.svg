@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 936 1566" width="936" height="1566">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 936 1566" width="468" height="783">
   <!-- Tờ giấy cài đặt 920x1550: lỗ bấm ghim + dòng kẻ ô ly + lề đỏ.
        Washi tape & ghim kẹp đặt riêng bằng washi_tape.svg / paper_clip.svg -->
-  <rect width="920" height="1550" rx="24" fill="#FFFDF8"/>
+  <rect width="460" height="775" rx="24" fill="#FFFDF8"/>
 
   <!-- Hàng lỗ bấm ghim mép trái -->
   <g fill="#EAE3D2" opacity="0.65">
@@ -27,5 +27,5 @@
   <!-- Lề đỏ của mảnh giấy -->
   <line x1="75" y1="0" x2="75" y2="1550" stroke="#D84444" stroke-width="2.5" opacity="0.85"/>
   <!-- Viền mực xanh -->
-  <rect width="920" height="1550" rx="24" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
+  <rect width="460" height="775" rx="24" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
 </svg>

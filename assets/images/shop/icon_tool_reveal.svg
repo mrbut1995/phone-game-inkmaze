@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32">
   <!-- Icon BÚT XOÁ TƯỜNG MỜ (hiện tường ẩn) -->
   <path d="M 6 34 C 14 20 26 12 32 12 C 38 12 50 20 58 34 C 50 48 38 56 32 56 C 26 56 14 48 6 34 Z"
         fill="none" stroke="#FFFFFF" stroke-width="5"/>

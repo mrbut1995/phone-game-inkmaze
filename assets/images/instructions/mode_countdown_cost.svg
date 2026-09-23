@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 460" width="780" height="460">
-  <rect x="0" y="0" width="780" height="460" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
-  <rect x="48" y="76" width="310" height="310" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 460" width="390" height="230">
+  <rect x="0" y="0" width="390" height="230" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
+  <rect x="48" y="76" width="155" height="155" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
   <line x1="110" y1="79" x2="110" y2="383" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
   <line x1="51" y1="138" x2="355" y2="138" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
   <line x1="172" y1="79" x2="172" y2="383" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
@@ -42,18 +42,18 @@
   <circle cx="60.0" cy="88.0" r="3.8" fill="#FEFDFA"/>
   <line x1="328.95" y1="374.0" x2="328.95" y2="352.0" stroke="#224C6D" stroke-width="3" stroke-linecap="round"/>
   <polygon points="328.9,352.0 343.2,358.1 328.9,364.6" fill="#D84444"/>
-  <rect x="408" y="96" width="112" height="112" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+  <rect x="408" y="96" width="56" height="56" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
   <polygon points="446.1,129.0 481.9,129.0 464,152" fill="#3D83AE"/>
   <polygon points="446.1,175.0 481.9,175.0 464,152" fill="#FBBF24"/>
   <line x1="442.06" y1="129.0" x2="485.94" y2="129.0" stroke="#224C6D" stroke-width="4" stroke-linecap="round"/>
   <line x1="442.06" y1="175.0" x2="485.94" y2="175.0" stroke="#224C6D" stroke-width="4" stroke-linecap="round"/>
-  <rect x="408" y="262" width="16" height="26" rx="5" fill="#3D83AE"/>
-  <rect x="429" y="262" width="16" height="26" rx="5" fill="#3D83AE"/>
-  <rect x="450" y="262" width="16" height="26" rx="5" fill="#3D83AE"/>
-  <rect x="471" y="262" width="16" height="26" rx="5" fill="#3D83AE"/>
-  <rect x="492" y="262" width="16" height="26" rx="5" fill="#3D83AE"/>
-  <rect x="513" y="262" width="16" height="26" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
-  <rect x="534" y="262" width="16" height="26" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
-  <rect x="555" y="262" width="16" height="26" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
-  <rect x="408" y="312" width="168" height="12" rx="6" fill="#BACEDC"/>
+  <rect x="408" y="262" width="8" height="13" rx="5" fill="#3D83AE"/>
+  <rect x="429" y="262" width="8" height="13" rx="5" fill="#3D83AE"/>
+  <rect x="450" y="262" width="8" height="13" rx="5" fill="#3D83AE"/>
+  <rect x="471" y="262" width="8" height="13" rx="5" fill="#3D83AE"/>
+  <rect x="492" y="262" width="8" height="13" rx="5" fill="#3D83AE"/>
+  <rect x="513" y="262" width="8" height="13" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
+  <rect x="534" y="262" width="8" height="13" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
+  <rect x="555" y="262" width="8" height="13" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
+  <rect x="408" y="312" width="84" height="6" rx="6" fill="#BACEDC"/>
 </svg>

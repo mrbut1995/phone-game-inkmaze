@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 374 155" width="374" height="155">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 374 155" width="187" height="77.5">
   <defs>
     <filter id="toolWallShadowOff" x="-15%" y="-15%" width="130%" height="140%">
       <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14"/>
@@ -7,11 +7,11 @@
 
   <!-- Nút 360x140 đúng size mockup (chừa 20px lề cho đổ bóng) -->
   <g filter="url(#toolWallShadowOff)">
-    <rect width="360" height="140" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3.5"/>
+    <rect width="180" height="70" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3.5"/>
     <line x1="35" y1="0" x2="35" y2="140" stroke="#C4843A" stroke-width="3"/>
     <!-- Icon tường gạch -->
     <g transform="translate(55, 48)" stroke="#C4843A" stroke-width="3.5" fill="none" stroke-linecap="round">
-      <rect x="0" y="4" width="40" height="32" rx="6" stroke-width="3"/>
+      <rect x="0" y="4" width="20" height="16" rx="6" stroke-width="3"/>
       <line x1="0" y1="20" x2="40" y2="20"/>
       <line x1="20" y1="4" x2="20" y2="20"/>
     </g>

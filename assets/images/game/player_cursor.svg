@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="28" height="28">
   <defs>
     <filter id="cursorGlow" x="-30%" y="-30%" width="160%" height="160%">
       <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#FACC15" flood-opacity="0.5"/>
@@ -8,7 +8,7 @@
     <g transform="translate(30, 30) rotate(-45)">
       <!-- Thân bút dạ quang dẹt to bản -->
       <path d="M -9 -5 L -10 -20 L 10 -20 L 9 -5 Z" fill="#2575A7" stroke="#1E283A" stroke-width="1.8" stroke-linejoin="round"/>
-      <rect x="-8" y="-18" width="16" height="3" fill="#FACC15" opacity="0.8"/>
+      <rect x="-8" y="-18" width="8" height="1.5" fill="#FACC15" opacity="0.8"/>
 
       <!-- Cổ bút chuyển tiếp nón dẹt -->
       <path d="M -6 6 L -8 -5 L 8 -5 L 6 6 Z" fill="#1E283A" stroke="#1E283A" stroke-width="1.6"/>

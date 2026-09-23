@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 138" width="250" height="138">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 138" width="125" height="69">
   <!-- Thẻ THỜI GIAN 250x138 (mockup/matchup_level.svg + matchup_dungeon.svg).
        Viền vẽ bằng 2 hình FILL lồng nhau (không dùng stroke) để ThorVG không cắt mất
        nửa nét ở mép viewBox -> kích thước file = đúng khung thẻ trong mockup. -->
-  <rect width="250" height="138" rx="20" fill="#6EA0C8"/>
-  <rect x="3" y="3" width="244" height="132" rx="17" fill="#FEFDFA"/>
+  <rect width="125" height="69" rx="20" fill="#6EA0C8"/>
+  <rect x="3" y="3" width="122" height="66" rx="17" fill="#FEFDFA"/>
 
   <!-- Lề xanh sổ tay -->
   <line x1="18" y1="0" x2="18" y2="138" stroke="#3D83AE" stroke-width="2.5"/>

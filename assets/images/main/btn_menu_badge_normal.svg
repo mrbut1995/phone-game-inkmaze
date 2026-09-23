@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 224 224" width="224" height="224">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 224 224" width="112" height="112">
   <!-- Nút "Sổ tay thành tựu" trên Main Screen: sticker huy chương vẽ tay dán trên giấy ô ly -->
   <g transform="rotate(-8 60 26)">
-    <rect x="20" y="14" width="80" height="26" rx="4" fill="#F0DCBB" opacity="0.95"/>
+    <rect x="20" y="14" width="40" height="13" rx="4" fill="#F0DCBB" opacity="0.95"/>
     <path d="M32 18 v18 M44 18 v18 M56 18 v18 M68 18 v18 M80 18 v18 M92 18 v18" stroke="#DFC79C" stroke-width="2.4"/>
   </g>
-  <rect x="14" y="24" width="172" height="162" rx="26" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.4"/>
-  <rect x="21" y="31" width="158" height="148" rx="21" fill="none" stroke="#8FB9D2" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <rect x="14" y="24" width="86" height="81" rx="26" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.4"/>
+  <rect x="21" y="31" width="79" height="74" rx="21" fill="none" stroke="#8FB9D2" stroke-width="1.6" stroke-dasharray="6 4"/>
   <!-- ruy băng huy chương -->
   <path d="M84 118 L72 172 L100 154 L128 172 L116 118 Z" fill="#E8B24B" stroke="#8A5A21" stroke-width="3" stroke-linejoin="round"/>
   <!-- huy chương (ô giữa để scene ghi số danh hiệu đã mở) -->

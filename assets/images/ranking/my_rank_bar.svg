@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 755 110" width="755" height="110">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 755 110" width="377.5" height="55">
   <!-- Thanh "hạng của bạn" dán đáy 755x110 (mockup/ranking.svg) -->
-  <rect width="755" height="110" rx="22" fill="#256286"/>
-  <rect x="1.8" y="1.8" width="751.4" height="106.4" rx="20.2" fill="#3D83AE"/>
+  <rect width="377.5" height="55" rx="22" fill="#256286"/>
+  <rect x="1.8" y="1.8" width="375.7" height="53.2" rx="20.2" fill="#3D83AE"/>
 </svg>

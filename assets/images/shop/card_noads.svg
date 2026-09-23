@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 200" width="980" height="200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 200" width="490" height="100">
   <!-- Thẻ VIP "GÓI XOÁ QUẢNG CÁO" — một hàng riêng, viền đỏ (mockup/shopping_coin.svg) -->
-  <rect width="980" height="200" rx="26" fill="#FFFDF8"/>
-  <rect x="1.75" y="1.75" width="976.5" height="196.5" rx="24.25" fill="none" stroke="#D84444" stroke-width="3.5"/>
+  <rect width="490" height="100" rx="26" fill="#FFFDF8"/>
+  <rect x="1.75" y="1.75" width="488.25" height="98.25" rx="24.25" fill="none" stroke="#D84444" stroke-width="3.5"/>
 </svg>

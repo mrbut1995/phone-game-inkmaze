@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 165 52" width="165" height="52">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 165 52" width="82.5" height="26">
   <!-- Nút NHẬN thưởng 165x52 (normal) — mockup/archivement_scene.svg -->
-  <rect width="165" height="52" rx="14" fill="#256286"/>
-  <rect x="2.5" y="2.5" width="160" height="47" rx="11.5" fill="#3D83AE"/>
+  <rect width="82.5" height="26" rx="14" fill="#256286"/>
+  <rect x="2.5" y="2.5" width="80" height="23.5" rx="11.5" fill="#3D83AE"/>
   <line x1="16" y1="4" x2="16" y2="48" stroke="#FAF5EB" stroke-width="2" opacity="0.5"/>
 </svg>

@@ -60,7 +60,7 @@ const LIBRARY := {
 }
 
 const SOUND_DIR := "res://assets/sfx/"
-const DEFAULT_PITCH_JITTER := 0.08
+const DEFAULT_PITCH_JITTER := 0.04
 
 
 # ---------------------------------------------------------------------------

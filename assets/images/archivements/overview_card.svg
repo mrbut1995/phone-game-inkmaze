@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 120" width="710" height="120">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 120" width="355" height="60">
   <!-- Thẻ tổng kết tiến độ 710x120 (mockup/archivement_scene.svg) -->
-  <rect width="710" height="120" rx="18" fill="#6EA0C8"/>
-  <rect x="2.5" y="2.5" width="705" height="115" rx="15.5" fill="#FEFDFA"/>
+  <rect width="355" height="60" rx="18" fill="#6EA0C8"/>
+  <rect x="2.5" y="2.5" width="352.5" height="57.5" rx="15.5" fill="#FEFDFA"/>
   <line x1="24" y1="0" x2="24" y2="120" stroke="#D84444" stroke-width="2.5"/>
 </svg>

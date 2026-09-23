@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 755 90" width="755" height="90">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 755 90" width="377.5" height="45">
   <!-- Hàng danh sách xếp hạng 755x90 (mockup/ranking.svg) -->
-  <rect width="755" height="90" rx="16" fill="#D1E2ED"/>
-  <rect x="2" y="2" width="751" height="86" rx="14" fill="#FEFDFA"/>
+  <rect width="377.5" height="45" rx="16" fill="#D1E2ED"/>
+  <rect x="2" y="2" width="375.5" height="43" rx="14" fill="#FEFDFA"/>
 </svg>

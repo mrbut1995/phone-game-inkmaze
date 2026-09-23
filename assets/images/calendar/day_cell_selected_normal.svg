@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" width="130" height="150">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" width="65" height="75">
   <!-- Ô ngày HÔM NAY: nền giấy sáng, viền hổ phách đậm -->
-  <rect x="2" y="2" width="126" height="146" rx="14" fill="#FFFDF8"/>
-  <rect x="2" y="2" width="126" height="146" rx="14" fill="none" stroke="#C4843A" stroke-width="4"/>
+  <rect x="2" y="2" width="63" height="73" rx="14" fill="#FFFDF8"/>
+  <rect x="2" y="2" width="63" height="73" rx="14" fill="none" stroke="#C4843A" stroke-width="4"/>
 </svg>

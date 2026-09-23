@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 755 510" width="755" height="510" style="overflow: visible;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 755 510" width="377.5" height="255" style="overflow: visible;">
   <defs>
     <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
       <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14" />
@@ -9,12 +9,12 @@
     </filter>
   </defs>
   <g filter="url(#uiShadow)">
-    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#2E7D32" stroke-width="3" />
+    <rect width="377.5" height="255" rx="22" fill="#FEFDFA" stroke="#2E7D32" stroke-width="3" />
     <g transform="translate(45, 30)">
-      <rect width="665" height="195" rx="18" fill="#F0FDF4" stroke="#86EFAC" stroke-width="2" />
-      <rect x="25" y="16" width="230" height="28" rx="8" fill="#DCFCE7" />
+      <rect width="332.5" height="97.5" rx="18" fill="#F0FDF4" stroke="#86EFAC" stroke-width="2" />
+      <rect x="25" y="16" width="115" height="14" rx="8" fill="#DCFCE7" />
       <g transform="translate(45, 60)">
-        <rect width="180" height="110" rx="10" fill="#FFFFFF" stroke="#BACEDC" stroke-width="2" />
+        <rect width="90" height="55" rx="10" fill="#FFFFFF" stroke="#BACEDC" stroke-width="2" />
         <line x1="90" y1="0" x2="90" y2="110" stroke="#BACEDC" stroke-width="1.5" />
         <g transform="translate(29.248, 70.4)">
           <path d="M358 -10Q280 -10 219.5 19.5Q159 49 116.5 101.0Q74 153 52.0 222.0Q30 291 30 370Q30 449 52.0 518.0Q74 587 116.5 639.0Q159 691 219.5 720.5Q280 750 358 750Q436 750 496.5 720.5Q557 691 599.5 639.0Q642 587 664.0 518.0Q686 449 686 370Q686 291 664.0 222.0Q642 153 599.5 101.0Q557 49 496.5 19.5Q436 -10 358 -10ZM358 158Q415 158 451.5 211.0Q488 264 488 370Q488 477 451.5 529.0Q415 581 358 581Q301 581 264.5 529.0Q228 477 228 370Q228 264 264.5 211.0Q301 158 358 158Z" fill="#15803D" transform="translate(0, 0) scale(0.044, -0.044)" />
@@ -24,27 +24,27 @@
         </g>
         <line x1="80" y1="45" x2="100" y2="65" stroke="#DC2626" stroke-width="3.5" stroke-linecap="round" />
         <line x1="100" y1="45" x2="80" y2="65" stroke="#DC2626" stroke-width="3.5" stroke-linecap="round" />
-        <rect x="62" y="18" width="56" height="20" rx="4" fill="#FEE2E2" />
+        <rect x="62" y="18" width="28" height="10" rx="4" fill="#FEE2E2" />
       </g>
     </g>
     <g transform="translate(45, 245)">
       <g transform="translate(0, 0)">
-        <rect width="320" height="180" rx="18" fill="#FEFCE8" stroke="#FEF08A" stroke-width="2" />
+        <rect width="160" height="90" rx="18" fill="#FEFCE8" stroke="#FEF08A" stroke-width="2" />
         <g transform="translate(25, 20)" filter="url(#hintGlow)">
-          <rect width="48" height="48" rx="12" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2" />
+          <rect width="24" height="24" rx="12" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2" />
           <path d="M 24 12 C 18 12 15 17 19 24 L 29 24 C 33 17 30 12 24 12 Z" fill="none" stroke="#F59E0B" stroke-width="2.5" />
           <line x1="21" y1="29" x2="27" y2="29" stroke="#F59E0B" stroke-width="2.2" />
         </g>
       </g>
       <g transform="translate(345, 0)">
-        <rect width="320" height="180" rx="18" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="2" />
+        <rect width="160" height="90" rx="18" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="2" />
         <g transform="translate(25, 20)">
-          <rect width="48" height="48" rx="12" fill="#FFFFFF" stroke="#3D83AE" stroke-width="2" />
+          <rect width="24" height="24" rx="12" fill="#FFFFFF" stroke="#3D83AE" stroke-width="2" />
           <path d="M 30 18 L 20 25 L 30 32" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M 22 25 H 32 C 37 25 40 28 40 33 C 40 38 36 40 30 40 H 26" fill="none" stroke="#3D83AE" stroke-width="3.5" stroke-linecap="round" />
         </g>
       </g>
     </g>
-    <rect x="20" y="448" width="715" height="44" rx="10" fill="#F4EFE6" />
+    <rect x="20" y="448" width="357.5" height="22" rx="10" fill="#F4EFE6" />
   </g>
 </svg>

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="304 45 135 40" width="135" height="40">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="304 45 135 40" width="67.5" height="20">
   <!-- Ô quang phổ mực 1/4 — đậm nhất (trích từ card_ink_meter.svg — 2026-09-17)
        Node đặt tại sheet-local (304, 45). -->
-  <rect x="305" y="46" width="133" height="38" rx="6" fill="#1C3B5E"/>
+  <rect x="305" y="46" width="66.5" height="19" rx="6" fill="#1C3B5E"/>
 </svg>

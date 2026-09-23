@@ -19,9 +19,9 @@ signal sfx_played(sfx_name: String)
 
 ## Danh mục tên SFX + file tương ứng nằm trong class helper `Sfx`
 ## (res://scripts/utils/sfx.gd) để mọi script gọi an toàn: Sfx.play(Sfx.BTN_CLICK)
-const POOL_SIZE := 12
+const POOL_SIZE := 6
 ## ±8% => pitch 0.92..1.08 (đúng gợi ý trong sfx_suggestion.txt)
-const DEFAULT_PITCH_JITTER := 0.08
+const DEFAULT_PITCH_JITTER := 0.04
 ## Khoảng lặp tối thiểu (giây) để 1 SFX không bị phát dồn dập chói tai
 const MIN_REPEAT_INTERVAL := 0.04
 ## Quãng 3 nốt Đồ - Mi - Son cho 3 ngôi sao

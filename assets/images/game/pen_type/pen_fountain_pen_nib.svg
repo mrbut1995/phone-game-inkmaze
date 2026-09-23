@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="28" height="28">
   <defs>
     <filter id="cursorGlow" x="-30%" y="-30%" width="160%" height="160%">
       <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#2575A7" flood-opacity="0.45"/>
@@ -11,7 +11,7 @@
       <!-- 1. Cổ bút màu xanh thương hiệu (Grip Section) -->
       <path d="M -7 -10 L -9 -20 L 9 -20 L 7 -10 Z" fill="#2575A7" stroke="#1E283A" stroke-width="1.8" stroke-linejoin="round"/>
       <!-- Đai vàng nối cổ bút -->
-      <rect x="-8" y="-12" width="16" height="3" rx="1" fill="#FBBF24" stroke="#78350F" stroke-width="0.8"/>
+      <rect x="-8" y="-12" width="8" height="1.5" rx="1" fill="#FBBF24" stroke="#78350F" stroke-width="0.8"/>
 
       <!-- 2. Lá ngòi kim loại 2 mảng sáng/tối tạo khối 3D -->
       <!-- Mảng tối bên trái -->

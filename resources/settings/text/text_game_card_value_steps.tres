@@ -4,4 +4,4 @@
 
 [resource]
 font = ExtResource("1_card_value_steps")
-font_size = 72
+font_size =  36

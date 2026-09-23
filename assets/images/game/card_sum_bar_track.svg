@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="36 122 654 18" width="654" height="18">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="36 122 654 18" width="327" height="9">
   <!-- Rãnh thanh tiến độ (trích từ card_sum_balance.svg — 2026-09-17)
        Phần đã đạt (bar_sum_fill) và vạch chia (bar_sum_ticks) là art riêng đè lên.
        Node đặt tại sheet-local (36, 122). -->
-  <rect x="36" y="122" width="654" height="18" rx="9" fill="#EAE3D2" opacity="0.6"/>
+  <rect x="36" y="122" width="327" height="9" rx="9" fill="#EAE3D2" opacity="0.6"/>
 </svg>

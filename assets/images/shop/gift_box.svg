@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 55" width="55" height="55">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 55" width="27.5" height="27.5">
   <!-- Icon hộp quà của banner "GÓC TIẾP SỨC" -->
-  <rect width="55" height="55" rx="14" fill="#FEE2E2"/>
-  <rect x="12" y="22" width="31" height="22" rx="4" fill="#D84444"/>
-  <rect x="9" y="15" width="37" height="9" rx="3" fill="#B91C1C"/>
-  <rect x="24" y="15" width="7" height="29" fill="#FEFDFA"/>
+  <rect width="27.5" height="27.5" rx="14" fill="#FEE2E2"/>
+  <rect x="12" y="22" width="15.5" height="11" rx="4" fill="#D84444"/>
+  <rect x="9" y="15" width="18.5" height="4.5" rx="3" fill="#B91C1C"/>
+  <rect x="24" y="15" width="3.5" height="14.5" fill="#FEFDFA"/>
   <path d="M 27.5 15 C 20 6 12 10 15 15 Z" fill="#B91C1C"/>
   <path d="M 27.5 15 C 35 6 43 10 40 15 Z" fill="#B91C1C"/>
 </svg>

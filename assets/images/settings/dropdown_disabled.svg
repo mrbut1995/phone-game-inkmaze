@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 326 70" width="326" height="70">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 326 70" width="163" height="35">
   <!-- Dropdown disabled: phẳng, mực nhạt -->
-  <rect width="310" height="54" rx="14" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="2.2"/>
+  <rect width="155" height="27" rx="14" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="2.2"/>
   <line x1="20" y1="0" x2="20" y2="54" stroke="#C9D2D8" stroke-width="1.8" opacity="0.6"/>
   <path d="M 270 23 L 280 33 L 290 23" fill="none" stroke="#BAC7CF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -4,40 +4,40 @@
 [ext_resource type="Script" uid="uid://icpf5ojff2kn" path="res://scripts/nodes/ranking/tab_button.gd" id="1_script"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j82or"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("1_buoix")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_buoix"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("1_buoix")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c7npt"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("1_buoix")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_elaoc"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("1_buoix")
 
 [node name="TabButton" type="Button" unique_id=1909777310]
-custom_minimum_size = Vector2(245, 52)
+custom_minimum_size =  Vector2(122.5, 26)
 anchors_preset = -1
 anchor_right = 0.22700001
 anchor_bottom = 0.027
-offset_right = -0.16001892
-offset_bottom = 0.15999985
+offset_right =  -0.0800095
+offset_bottom =  0.0799999
 focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_j82or")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_buoix")
@@ -49,10 +49,10 @@ texture_hover = ExtResource("1_buoix")
 texture_pressed = ExtResource("1_buoix")
 texture_disabled = ExtResource("1_buoix")
 texture_focus = ExtResource("1_buoix")
-patch_margin_left = 48.0
-patch_margin_top = 12.0
-patch_margin_right = 48.0
-patch_margin_bottom = 12.0
+patch_margin_left =  24
+patch_margin_top =  6
+patch_margin_right =  24
+patch_margin_bottom =  6
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Label" type="Label" parent="." unique_id=487053315]

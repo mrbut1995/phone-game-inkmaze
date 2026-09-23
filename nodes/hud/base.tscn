@@ -6,8 +6,8 @@
 layout_mode = 3
 anchor_top = 0.072
 anchor_bottom = 0.072
-offset_left = 50.0
-offset_top = 37.0
-offset_right = 1030.0
-offset_bottom = 286.0
+offset_left =  25
+offset_top =  18.5
+offset_right =  515
+offset_bottom =  143
 script = ExtResource("1_cwihr")

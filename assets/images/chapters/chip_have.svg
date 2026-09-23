@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 40" width="300" height="40">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 40" width="150" height="20">
   <!-- Chip "✓ ĐÃ ĐỦ: n / m SAO" của thẻ chương đủ điều kiện -->
-  <rect width="300" height="40" rx="10" fill="#DCFCE7"/>
-  <rect x="1" y="1" width="298" height="38" rx="9" fill="none" stroke="#86EFAC" stroke-width="2"/>
+  <rect width="150" height="20" rx="10" fill="#DCFCE7"/>
+  <rect x="1" y="1" width="149" height="19" rx="9" fill="none" stroke="#86EFAC" stroke-width="2"/>
 </svg>

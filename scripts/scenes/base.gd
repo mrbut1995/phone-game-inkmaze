@@ -22,7 +22,7 @@ extends Control
 ## ============================================================================
 
 ## Bề rộng thiết kế của cột nội dung (khớp `display/window/size/viewport_width`)
-const DESIGN_WIDTH := 1080.0
+const DESIGN_WIDTH := 540
 ## Bề rộng TỐI ĐA của cột nội dung ở màn DỌC: máy tính bảng 3:4 (canvas 1440×1920) nở ra
 ## dùng trọn bề ngang màn hình; màn nào hẹp hơn thì cột đúng bằng bề ngang canvas.
 const MAX_CONTENT_WIDTH := 1440.0

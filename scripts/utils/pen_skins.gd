@@ -14,7 +14,7 @@ const DEFAULT_PEN := "pen_blue"
 const CURSOR_DIR := "res://assets/images/game/player_cursor/"
 const ICON_DIR := "res://assets/images/game/pen_type/"
 ## Bề rộng texture nét đứt mặc định (px)
-const DASH_TEX_WIDTH := 32.0
+const DASH_TEX_WIDTH := 16
 
 ## id món hàng -> { cursor: icon con trỏ · icon: hình ngòi bút · ink: màu mực · style: chất liệu }
 const SKINS := {

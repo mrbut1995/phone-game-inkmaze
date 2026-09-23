@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32">
   <!-- Icon GÔM TẨY (gói hoàn tác) -->
   <path d="M 14 44 L 36 22 L 54 40 L 34 60 Z" fill="#FFFFFF"/>
   <path d="M 36 22 L 44 14 A 6 6 0 0 1 53 14 L 62 23 L 54 40 Z" fill="#FFFFFF" fill-opacity="0.6"/>

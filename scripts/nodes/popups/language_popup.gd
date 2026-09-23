@@ -12,7 +12,7 @@ signal locale_applied(code: String)
 const ROW_SCENE := preload("res://nodes/popups/language_row.tscn")
 const FLAG_FALLBACK := preload("res://assets/images/icons/flags/flag_generic.svg")
 
-const ROW_HEIGHT := 103.0
+const ROW_HEIGHT := 51.5
 ## Ngưỡng nhận diện kéo (px) + thời gian khoá bấm hàng sau khi vuốt (giây)
 const DRAG_THRESHOLD := 14.0
 const CLICK_LOCK_TIME := 0.35

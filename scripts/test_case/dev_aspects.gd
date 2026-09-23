@@ -49,7 +49,7 @@ const SCREENS := [
 const GAME_MODES := ["play", "dungeon", "minesweeper", "sum_path",
 		"countdown_cost", "blind_memory", "fog_of_war", "fading_ink", "one_stroke", "wall_builder"]
 
-const DESIGN_WIDTH := 1080.0
+const DESIGN_WIDTH := 540
 ## Bề rộng cột nội dung tối đa ở màn DỌC (khớp `BaseScene.MAX_CONTENT_WIDTH`)
 const MAX_CONTENT_WIDTH := 1440.0
 

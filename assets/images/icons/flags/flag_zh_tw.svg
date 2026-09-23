@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 28" width="38" height="28">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 28" width="19" height="14">
   <!-- Cờ Đài Loan (giản lược: nền đỏ + góc xanh + mặt trời trắng) -->
-  <rect x="1.5" y="1.5" width="35" height="25" rx="3" fill="#FE0000" stroke="#224C6D" stroke-width="1.8"/>
+  <rect x="1.5" y="1.5" width="17.5" height="12.5" rx="3" fill="#FE0000" stroke="#224C6D" stroke-width="1.8"/>
   <path d="M1.5 4.5 a3 3 0 0 1 3 -3 H19 V14 H1.5 Z" fill="#000095"/>
   <circle cx="10.2" cy="7.7" r="3.4" fill="#FFFFFF"/>
   <path d="M10.2 2.6 v2 M10.2 10.8 v2 M5.1 7.7 h2 M13.3 7.7 h2 M6.6 4.1 l1.5 1.5 M12.3 9.8 l1.5 1.5 M13.8 4.1 l-1.5 1.5 M8.1 9.8 l-1.5 1.5"

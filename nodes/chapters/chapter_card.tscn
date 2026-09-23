@@ -15,65 +15,65 @@
 [ext_resource type="Texture2D" uid="uid://ccwikst7p5v6d" path="res://assets/images/chapters/maze_small.svg" id="13_maze"]
 
 [node name="ChapterCard" type="Control" unique_id=2037063166]
-custom_minimum_size = Vector2(970, 285)
+custom_minimum_size =  Vector2(485, 142.5)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 970.0
-offset_bottom = 285.0
+offset_right =  485
+offset_bottom =  142.5
 theme = ExtResource("2_theme")
 script = ExtResource("1_card")
 
 [node name="Halo" type="TextureRect" parent="." unique_id=1522376547]
 visible = false
 layout_mode = 0
-offset_left = -6.0
-offset_top = -6.0
-offset_right = 976.0
-offset_bottom = 291.0
+offset_left =  -3
+offset_top =  -3
+offset_right =  488
+offset_bottom =  145.5
 mouse_filter = 2
 texture = ExtResource("4_halo")
 
 [node name="Bg" type="TextureRect" parent="." unique_id=2055230155]
 layout_mode = 0
-offset_right = 970.0
-offset_bottom = 285.0
+offset_right =  485
+offset_bottom =  142.5
 mouse_filter = 2
 texture = ExtResource("3_card")
 expand_mode = 1
 
 [node name="Doodle" type="TextureRect" parent="." unique_id=1236952187]
 layout_mode = 0
-offset_left = 51.0
-offset_top = 48.0
-offset_right = 231.0
-offset_bottom = 228.0
+offset_left =  25.5
+offset_top =  24
+offset_right =  115.5
+offset_bottom =  114
 mouse_filter = 2
 texture = ExtResource("13_maze")
 
 [node name="Lock" type="TextureRect" parent="." unique_id=1671124533]
 visible = false
 layout_mode = 0
-offset_left = 105.0
-offset_top = 91.0
-offset_right = 177.0
-offset_bottom = 163.0
+offset_left =  52.5
+offset_top =  45.5
+offset_right =  88.5
+offset_bottom =  81.5
 mouse_filter = 2
 texture = ExtResource("12_lock")
 
 [node name="Ribbon" type="TextureRect" parent="." unique_id=54159697]
 layout_mode = 0
-offset_left = 780.0
-offset_right = 970.0
-offset_bottom = 48.0
+offset_left =  390
+offset_right =  485
+offset_bottom =  24
 mouse_filter = 2
 texture = ExtResource("5_ribbon")
 
 [node name="RibbonLabel" type="Label" parent="." unique_id=1786610814]
 layout_mode = 0
-offset_left = 800.0
-offset_top = 2.0
-offset_right = 964.0
-offset_bottom = 44.0
+offset_left =  400
+offset_top =  1
+offset_right =  482
+offset_bottom =  22
 theme_type_variation = &"ChapterRibbon"
 text = "ĐANG CHƠI"
 horizontal_alignment = 1
@@ -81,19 +81,19 @@ vertical_alignment = 1
 
 [node name="Chip" type="TextureRect" parent="." unique_id=2072703360]
 layout_mode = 0
-offset_left = 280.0
-offset_top = 44.0
-offset_right = 540.0
-offset_bottom = 78.0
+offset_left =  140
+offset_top =  22
+offset_right =  270
+offset_bottom =  39
 mouse_filter = 2
 texture = ExtResource("6_chip")
 
 [node name="ChipLabel" type="Label" parent="." unique_id=1044839075]
 layout_mode = 0
-offset_left = 280.0
-offset_top = 44.0
-offset_right = 540.0
-offset_bottom = 78.0
+offset_left =  140
+offset_top =  22
+offset_right =  270
+offset_bottom =  39
 theme_type_variation = &"ChapterChipSize"
 text = "KÍCH THƯỚC"
 horizontal_alignment = 1
@@ -101,10 +101,10 @@ vertical_alignment = 1
 
 [node name="Title" type="Label" parent="." unique_id=330343107]
 layout_mode = 0
-offset_left = 280.0
-offset_top = 80.0
-offset_right = 690.0
-offset_bottom = 131.0
+offset_left =  140
+offset_top =  40
+offset_right =  345
+offset_bottom =  65.5
 theme_type_variation = &"ChapterCardTitle"
 text = "CHƯƠNG 1"
 vertical_alignment = 1
@@ -113,10 +113,10 @@ resize_font_to_fit = true
 
 [node name="Subtitle" type="Label" parent="." unique_id=84376013]
 layout_mode = 0
-offset_left = 280.0
-offset_top = 128.0
-offset_right = 701.0
-offset_bottom = 158.79999
+offset_left =  140
+offset_top =  64
+offset_right =  350.5
+offset_bottom =  79.4
 theme_type_variation = &"ChapterCardSubtitle"
 text = "..."
 vertical_alignment = 1
@@ -125,43 +125,43 @@ text_overrun_behavior = 3
 [node name="Bar" type="Control" parent="." unique_id=1011661792]
 clip_contents = true
 anchors_preset = 0
-offset_left = 280.0
-offset_top = 174.0
-offset_right = 660.0
-offset_bottom = 188.0
+offset_left =  140
+offset_top =  87
+offset_right =  330
+offset_bottom =  94
 mouse_filter = 2
 
 [node name="Track" type="TextureRect" parent="Bar" unique_id=2116522289]
 layout_mode = 0
-offset_right = 380.0
-offset_bottom = 14.0
+offset_right =  190
+offset_bottom =  7
 mouse_filter = 2
 texture = ExtResource("7_track")
 
 [node name="Fill" type="TextureRect" parent="Bar" unique_id=2113885124]
 layout_mode = 0
-offset_right = 380.0
-offset_bottom = 14.0
+offset_right =  190
+offset_bottom =  7
 mouse_filter = 2
 texture = ExtResource("9_fill")
 expand_mode = 1
 
 [node name="Stars" type="Label" parent="." unique_id=337808427]
 layout_mode = 0
-offset_left = 280.0
-offset_top = 192.0
-offset_right = 640.0
-offset_bottom = 226.0
+offset_left =  140
+offset_top =  96
+offset_right =  320
+offset_bottom =  113
 theme_type_variation = &"ChapterStars"
 text = "0 / 0 SAO"
 vertical_alignment = 1
 
 [node name="StarsSub" type="Label" parent="." unique_id=1634893469]
 layout_mode = 0
-offset_left = 450.0
-offset_top = 196.0
-offset_right = 700.0
-offset_bottom = 228.0
+offset_left =  225
+offset_top =  98
+offset_right =  350
+offset_bottom =  114
 theme_type_variation = &"ChapterStarsSub"
 text = "(0/0 màn)"
 vertical_alignment = 1
@@ -169,19 +169,19 @@ vertical_alignment = 1
 [node name="NeedChip" type="TextureRect" parent="." unique_id=620297523]
 visible = false
 layout_mode = 0
-offset_left = 700.0
-offset_top = 214.0
-offset_right = 895.0
-offset_bottom = 246.0
+offset_left =  350
+offset_top =  107
+offset_right =  447.5
+offset_bottom =  123
 mouse_filter = 2
 texture = ExtResource("8_need")
 
 [node name="NeedLabel" type="Label" parent="." unique_id=46546071]
 layout_mode = 0
-offset_left = 700.0
-offset_top = 214.0
-offset_right = 895.0
-offset_bottom = 246.0
+offset_left =  350
+offset_top =  107
+offset_right =  447.5
+offset_bottom =  123
 theme_type_variation = &"ChapterNeedChip"
 text = "CÒN THIẾU"
 horizontal_alignment = 1
@@ -190,35 +190,35 @@ vertical_alignment = 1
 [node name="HaveChip" type="TextureRect" parent="." unique_id=1334234839]
 visible = false
 layout_mode = 0
-offset_left = 280.0
-offset_top = 174.0
-offset_right = 580.0
-offset_bottom = 214.0
+offset_left =  140
+offset_top =  87
+offset_right =  290
+offset_bottom =  107
 mouse_filter = 2
 texture = ExtResource("10_have")
 
 [node name="HaveLabel" type="Label" parent="." unique_id=344569581]
 layout_mode = 0
-offset_left = 292.0
-offset_top = 174.0
-offset_right = 568.0
-offset_bottom = 214.0
+offset_left =  146
+offset_top =  87
+offset_right =  284
+offset_bottom =  107
 theme_type_variation = &"ChapterHaveChip"
 text = "ĐÃ ĐỦ"
 vertical_alignment = 1
 
 [node name="Action" type="Control" parent="." unique_id=1449986150]
 anchors_preset = 0
-offset_left = 700.0
-offset_top = 88.0
-offset_right = 950.0
-offset_bottom = 188.0
+offset_left =  350
+offset_top =  44
+offset_right =  475
+offset_bottom =  94
 mouse_filter = 2
 
 [node name="Btn" type="TextureButton" parent="Action" unique_id=1533517246]
 layout_mode = 0
-offset_right = 250.0
-offset_bottom = 100.0
+offset_right =  125
+offset_bottom =  50
 focus_mode = 0
 ignore_texture_size = true
 stretch_mode = 5
@@ -226,10 +226,10 @@ stretch_mode = 5
 [node name="Icon" type="TextureRect" parent="Action" unique_id=1716327212]
 visible = false
 layout_mode = 0
-offset_left = 20.0
-offset_top = 32.0
-offset_right = 56.0
-offset_bottom = 68.0
+offset_left =  10
+offset_top =  16
+offset_right =  28
+offset_bottom =  34
 mouse_filter = 2
 texture = ExtResource("11_star")
 expand_mode = 1
@@ -238,10 +238,10 @@ stretch_mode = 5
 [node name="LockIcon" type="TextureRect" parent="Action" unique_id=1732227354]
 visible = false
 layout_mode = 0
-offset_left = 20.0
-offset_top = 32.0
-offset_right = 56.0
-offset_bottom = 68.0
+offset_left =  10
+offset_top =  16
+offset_right =  28
+offset_bottom =  34
 mouse_filter = 2
 texture = ExtResource("12_lock")
 expand_mode = 1
@@ -249,10 +249,10 @@ stretch_mode = 5
 
 [node name="Title" type="Label" parent="Action" unique_id=743969444]
 layout_mode = 0
-offset_left = 66.0
-offset_top = 10.0
-offset_right = 244.0
-offset_bottom = 52.0
+offset_left =  33
+offset_top =  5
+offset_right =  122
+offset_bottom =  26
 theme_type_variation = &"ChapterAction"
 text = "VÀO CHƠI"
 horizontal_alignment = 1
@@ -260,10 +260,10 @@ vertical_alignment = 1
 
 [node name="Sub" type="Label" parent="Action" unique_id=847799387]
 layout_mode = 0
-offset_left = 66.0
-offset_top = 52.0
-offset_right = 244.0
-offset_bottom = 88.0
+offset_left =  33
+offset_top =  26
+offset_right =  122
+offset_bottom =  44
 theme_type_variation = &"ChapterActionSub"
 horizontal_alignment = 1
 vertical_alignment = 1

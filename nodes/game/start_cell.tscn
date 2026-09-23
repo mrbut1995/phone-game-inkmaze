@@ -6,8 +6,8 @@
 anchors_preset = -1
 anchor_right = 0.163
 anchor_bottom = 0.09200001
-offset_right = -0.040008545
-offset_bottom = -0.64001465
+offset_right =  -0.0200043
+offset_bottom =  -0.320007
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true

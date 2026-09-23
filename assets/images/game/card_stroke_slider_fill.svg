@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 14" width="410" height="14">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 14" width="205" height="7">
   <!-- Phần đã phủ kín của thanh tiến độ (mode One Stroke) — 410x14
        Bị CẮT BỞI node cha SliderFillClip (clip_contents) nên chỉ thấy phần đã đi;
        xem scripts/nodes/hud/one_stroke_hud.gd. -->
-  <rect width="410" height="14" rx="7" fill="#2575A7"/>
+  <rect width="205" height="7" rx="7" fill="#2575A7"/>
 </svg>

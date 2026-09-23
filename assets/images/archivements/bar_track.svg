@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 14" width="440" height="14">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 14" width="220" height="7">
   <!-- Thanh tiến độ 440x14 (thẻ tổng kết) -->
-  <rect x="0.5" y="0.5" width="439" height="13" rx="7.0" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1"/>
+  <rect x="0.5" y="0.5" width="219.5" height="6.5" rx="7.0" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1"/>
 </svg>

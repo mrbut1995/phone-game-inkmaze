@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="6 3 308 77" width="308" height="77">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6 3 308 77" width="154" height="38.5">
   <defs>
     <!-- Bóng dẹt khi bị ấn sát mặt giấy -->
     <filter id="shadow-pressed" x="-10%" y="-15%" width="125%" height="150%">
       <feDropShadow dx="0" dy="1.2" stdDeviation="1.5" flood-color="#22394A" flood-opacity="0.18" />
     </filter>
 
-    <pattern id="grid-pressed" width="16" height="16" patternUnits="userSpaceOnUse">
+    <pattern id="grid-pressed" width="8" height="8" patternUnits="userSpaceOnUse">
       <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#84AEC5" stroke-width="0.9" opacity="0.65" />
     </pattern>
 
     <clipPath id="clip-pressed">
-      <rect x="15" y="15" width="290" height="56" rx="12" />
+      <rect x="15" y="15" width="145" height="28" rx="12" />
     </clipPath>
   </defs>
 
@@ -18,12 +18,12 @@
   <g filter="url(#shadow-pressed)">
     <g clip-path="url(#clip-pressed)">
       <!-- Màu nền giấy tối hơn 1 tông do đổ bóng tay -->
-      <rect x="15" y="15" width="290" height="56" fill="#EDE6D8" />
-      <rect x="15" y="15" width="290" height="56" fill="url(#grid-pressed)" />
+      <rect x="15" y="15" width="145" height="28" fill="#EDE6D8" />
+      <rect x="15" y="15" width="145" height="28" fill="url(#grid-pressed)" />
       <line x1="55" y1="15" x2="55" y2="71" stroke="#C53D3D" stroke-width="2.5" />
     </g>
 
     <!-- Viền đậm màu hơn khi nhấn -->
-    <rect x="15" y="15" width="290" height="56" rx="12" fill="none" stroke="#29658A" stroke-width="2" />
+    <rect x="15" y="15" width="145" height="28" rx="12" fill="none" stroke="#29658A" stroke-width="2" />
   </g>
 </svg>

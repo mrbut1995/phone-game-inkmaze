@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 14" width="400" height="14">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 14" width="200" height="7">
   <!-- Phần ĐÃ DỰNG của thanh tiến độ (mode Wall Builder) — 400x14
        Bị CẮT BỞI node cha SliderFillClip (clip_contents) nên chỉ thấy phần đã nối;
        xem scripts/nodes/hud/wall_builder_hud.gd. -->
-  <rect width="400" height="14" rx="7" fill="#2E7D32"/>
+  <rect width="200" height="7" rx="7" fill="#2E7D32"/>
 </svg>

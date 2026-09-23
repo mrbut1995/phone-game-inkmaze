@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 46" width="150" height="46">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 46" width="75" height="23">
   <g transform="translate(0, 1.5)">
-    <rect width="150" height="44.5" rx="12" fill="#C8E6C9" stroke="#1B5E20" stroke-width="2.2"/>
+    <rect width="75" height="22.25" rx="12" fill="#C8E6C9" stroke="#1B5E20" stroke-width="2.2"/>
     <!-- <text x="75" y="28" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#1B5E20" letter-spacing="0.5">CHƠI LẠI ›</text> -->
   </g>
 </svg>

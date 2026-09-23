@@ -13,7 +13,7 @@ extends BaseLandscapeOrientation
 ## ============================================================================
 
 ## Bề rộng HUD thiết kế (bản ngang 810 theo mockup 16:9)
-const HUD_DESIGN_WIDTH := 810.0
+const HUD_DESIGN_WIDTH := 405
 
 func is_landscape_layout() -> bool:
 	return true

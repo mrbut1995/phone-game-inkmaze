@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32">
   <!-- Icon TỜ GIẤY VỞ (art TRẮNG -> tô màu bằng modulate) -->
-  <rect x="10" y="4" width="44" height="56" rx="6" fill="#FFFFFF"/>
+  <rect x="10" y="4" width="22" height="28" rx="6" fill="#FFFFFF"/>
   <g stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3">
     <line x1="14" y1="18" x2="50" y2="18"/><line x1="14" y1="30" x2="50" y2="30"/>
     <line x1="14" y1="42" x2="50" y2="42"/>

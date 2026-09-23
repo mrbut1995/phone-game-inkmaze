@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 75" width="270" height="75">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 75" width="135" height="37.5">
   <!-- Nút hành động của thẻ (MUA / SỬ DỤNG) -->
-  <rect width="270" height="75" rx="20" fill="#235A7D"/>
-  <rect x="1.8" y="1.8" width="266.4" height="71.4" rx="18.2" fill="#3D83AE"/>
+  <rect width="135" height="37.5" rx="20" fill="#235A7D"/>
+  <rect x="1.8" y="1.8" width="133.2" height="35.7" rx="18.2" fill="#3D83AE"/>
 </svg>

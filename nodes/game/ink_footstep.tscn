@@ -6,8 +6,8 @@
 [node name="InkFootstep" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 36.0
-offset_bottom = 36.0
+offset_right =  18
+offset_bottom =  18
 mouse_filter = 2
 script = ExtResource("1_script")
 

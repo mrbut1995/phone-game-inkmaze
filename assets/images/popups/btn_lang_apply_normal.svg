@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 96" width="390" height="96">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 96" width="195" height="48">
   <!-- Nút ÁP DỤNG của popup chọn ngôn ngữ (390x96 — đúng mockup popup_language.svg) -->
-  <rect x="1.75" y="1.75" width="386.5" height="92.5" rx="18" fill="#3D83AE" stroke="#256286" stroke-width="3.5"/>
+  <rect x="1.75" y="1.75" width="193.25" height="46.25" rx="18" fill="#3D83AE" stroke="#256286" stroke-width="3.5"/>
 </svg>

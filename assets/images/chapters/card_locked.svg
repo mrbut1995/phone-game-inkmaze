@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 970 285" width="970" height="285">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 970 285" width="485" height="142.5">
   <!-- Thẻ CHƯƠNG — trạng thái ĐANG KHÓA (giấy xám, lề nét đứt) -->
-  <rect width="970" height="285" rx="24" fill="#A7B9C3"/>
-  <rect x="1.4" y="1.4" width="967.2" height="282.2" rx="22.6" fill="#EFECE6"/>
+  <rect width="485" height="142.5" rx="24" fill="#A7B9C3"/>
+  <rect x="1.4" y="1.4" width="483.6" height="141.1" rx="22.6" fill="#EFECE6"/>
   <g stroke="#8FB9D2" stroke-width="1" opacity="0.2">
     <line x1="2" y1="70" x2="968" y2="70"/>
     <line x1="2" y1="140" x2="968" y2="140"/>

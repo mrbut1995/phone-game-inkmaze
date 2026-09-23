@@ -9,70 +9,70 @@
 [ext_resource type="Texture2D" path="res://assets/images/shop/btn_action_pressed.svg" id="7_btn_p"]
 
 [node name="ItemRow" type="Control"]
-custom_minimum_size = Vector2(980, 180)
+custom_minimum_size =  Vector2(490, 90)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 980.0
-offset_bottom = 180.0
+offset_right =  490
+offset_bottom =  90
 theme = ExtResource("2_theme")
 script = ExtResource("1_row")
 
 [node name="Bg" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 980.0
-offset_bottom = 180.0
+offset_right =  490
+offset_bottom =  90
 mouse_filter = 2
 texture = ExtResource("3_card")
 expand_mode = 1
 
 [node name="Bar" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 15.0
-offset_right = 20.0
-offset_bottom = 165.0
+offset_left =  7
+offset_top =  7.5
+offset_right =  10
+offset_bottom =  82.5
 mouse_filter = 2
 color = Color(0.23921569, 0.5137255, 0.68235296, 1)
 
 [node name="IconBox" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 60.0
-offset_top = 35.0
-offset_right = 170.0
-offset_bottom = 145.0
+offset_left =  30
+offset_top =  17.5
+offset_right =  85
+offset_bottom =  72.5
 mouse_filter = 2
 texture = ExtResource("4_box")
 expand_mode = 1
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 83.0
-offset_top = 58.0
-offset_right = 147.0
-offset_bottom = 122.0
+offset_left =  41.5
+offset_top =  29
+offset_right =  73.5
+offset_bottom =  61
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Badge" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_left = 200.0
-offset_top = 18.0
-offset_right = 380.0
-offset_bottom = 48.0
+offset_left =  100
+offset_top =  9
+offset_right =  190
+offset_bottom =  24
 mouse_filter = 2
 texture = ExtResource("5_chip")
-patch_margin_left = 8
-patch_margin_top = 8
-patch_margin_right = 8
-patch_margin_bottom = 8
+patch_margin_left =  4
+patch_margin_top =  4
+patch_margin_right =  4
+patch_margin_bottom =  4
 
 [node name="BadgeLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 200.0
-offset_top = 18.0
-offset_right = 380.0
-offset_bottom = 48.0
+offset_left =  100
+offset_top =  9
+offset_right =  190
+offset_bottom =  24
 theme_type_variation = &"ShopBadge"
 text = "CƠ BẢN"
 horizontal_alignment = 1
@@ -80,10 +80,10 @@ vertical_alignment = 1
 
 [node name="Name" type="Label" parent="."]
 layout_mode = 0
-offset_left = 200.0
-offset_top = 44.0
-offset_right = 670.0
-offset_bottom = 82.0
+offset_left =  100
+offset_top =  22
+offset_right =  335
+offset_bottom =  41
 theme_type_variation = &"ShopName"
 text = "Tên món hàng"
 vertical_alignment = 1
@@ -91,10 +91,10 @@ text_overrun_behavior = 3
 
 [node name="Desc" type="Label" parent="."]
 layout_mode = 0
-offset_left = 200.0
-offset_top = 84.0
-offset_right = 670.0
-offset_bottom = 136.0
+offset_left =  100
+offset_top =  42
+offset_right =  335
+offset_bottom =  68
 theme_type_variation = &"ShopDesc"
 text = "Mô tả"
 vertical_alignment = 1
@@ -104,10 +104,10 @@ text_overrun_behavior = 4
 
 [node name="Stock" type="Label" parent="."]
 layout_mode = 0
-offset_left = 200.0
-offset_top = 138.0
-offset_right = 670.0
-offset_bottom = 164.0
+offset_left =  100
+offset_top =  69
+offset_right =  335
+offset_bottom =  82
 theme_type_variation = &"ShopStock"
 text = ""
 vertical_alignment = 1
@@ -115,10 +115,10 @@ text_overrun_behavior = 3
 
 [node name="Action" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 680.0
-offset_top = 52.0
-offset_right = 950.0
-offset_bottom = 127.0
+offset_left =  340
+offset_top =  26
+offset_right =  475
+offset_bottom =  63.5
 focus_mode = 0
 texture_normal = ExtResource("6_btn")
 texture_pressed = ExtResource("7_btn_p")
@@ -129,10 +129,10 @@ stretch_mode = 5
 
 [node name="ActionLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 680.0
-offset_top = 52.0
-offset_right = 950.0
-offset_bottom = 127.0
+offset_left =  340
+offset_top =  26
+offset_right =  475
+offset_bottom =  63.5
 theme_type_variation = &"ShopBtnText"
 text = "150 XU"
 horizontal_alignment = 1
