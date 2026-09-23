@@ -42,19 +42,19 @@ var _mode_id := "level"
 
 ## HUD theo chế độ chơi — mỗi chế độ có 2 scene HUD: bản DỌC (nodes/hud/<mode>.tscn, kế thừa
 ## portrait/portrait.tscn) và bản NGANG (nodes/hud/landscape/<mode>.tscn). Xem scripts/nodes/hud/base.gd
-const HUD_LEVEL := preload("res://nodes/hud/level_mode.tscn")
-const HUD_DUNGEON := preload("res://nodes/hud/dungeon_mode.tscn")
-const HUD_MINESWEEP := preload("res://nodes/hud/minesweep_hud.tscn")
-const HUD_SUM_PATH := preload("res://nodes/hud/sum_path_hud.tscn")
-const HUD_BLIND_MEMORY := preload("res://nodes/hud/blind_memory_hud.tscn")
-const HUD_COUNTDOWN := preload("res://nodes/hud/countdown_hud.tscn")
-const HUD_FADING_INK := preload("res://nodes/hud/fading_ink_hud.tscn")
+const HUD_LEVEL := preload("res://nodes/hud/portrait/level_mode.tscn")
+const HUD_DUNGEON := preload("res://nodes/hud/portrait/dungeon_mode.tscn")
+const HUD_MINESWEEP := preload("res://nodes/hud/portrait/minesweep_hud.tscn")
+const HUD_SUM_PATH := preload("res://nodes/hud/portrait/sum_path_hud.tscn")
+const HUD_BLIND_MEMORY := preload("res://nodes/hud/portrait/blind_memory_hud.tscn")
+const HUD_COUNTDOWN := preload("res://nodes/hud/portrait/countdown_hud.tscn")
+const HUD_FADING_INK := preload("res://nodes/hud/portrait/fading_ink_hud.tscn")
 ## Fog of War: THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử lại · tầm nhìn · cảnh báo) — không có thẻ Thử thách
-const HUD_FOG_OF_WAR := preload("res://nodes/hud/fog_of_war_hud.tscn")
+const HUD_FOG_OF_WAR := preload("res://nodes/hud/portrait/fog_of_war_hud.tscn")
 ## One Stroke: THỜI GIAN + BẢNG TIẾN ĐỘ PHỦ KÍN (số ô đã đi · thanh tiến độ) — không có thẻ Thử thách
-const HUD_ONE_STROKE := preload("res://nodes/hud/one_stroke_hud.tscn")
+const HUD_ONE_STROKE := preload("res://nodes/hud/portrait/one_stroke_hud.tscn")
 ## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Thử thách
-const HUD_WALL_BUILDER := preload("res://nodes/hud/wall_builder_hud.tscn")
+const HUD_WALL_BUILDER := preload("res://nodes/hud/portrait/wall_builder_hud.tscn")
 
 ## Bản NGANG của từng chế độ (thẻ nằm trên · action bar 2 hàng nằm dưới, trong cùng HUD)
 const HUD_LAND_LEVEL := preload("res://nodes/hud/landscape/level_mode.tscn")
@@ -552,11 +552,22 @@ func _bind_hud_nodes() -> void:
 	var hud := hud_host as BaseHUD
 	if hud == null:
 		return
+	# HUD được bao phủ toàn khung (để dễ căn vị trí) nên nó nằm TRÊN bàn cờ. Control mặc định
+	# `mouse_filter = STOP` ⇒ sẽ NUỐT hết chạm/kéo khiến BoardSlot phía sau không nhận input.
+	# Đặt IGNORE cho khung HUD + khối `Content`: bản thân khung không nhận input nữa nhưng
+	# các NÚT BÊN TRONG (ActionBar, Status…) vẫn nhận bình thường.
+	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var hud_content := hud.get_node_or_null("Content") as Control
+	if hud_content != null:
+		hud_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tool_path_btn = hud.tool_path_btn()
 	tool_wall_btn = hud.tool_wall_btn()
 	undo_btn = hud.undo_btn()
 	hint_btn = hud.hint_btn()
 	replay_btn = hud.replay_btn()
+	# HintGuide nằm TRONG HUD (đầu `ActionBar/Portrait`) ⇒ HUD nào gắn sau cùng thì gắn lại,
+	# nếu không `hint_guide` sẽ trỏ vào node đã bị free khi đổi chế độ.
+	hint_guide = ui("HintGuide") as HintGuide
 	_wire_action_bar()
 	_apply_tool_labels_for_mode(_mode_id)
 	hud.set_landscape(_layout_is_landscape())

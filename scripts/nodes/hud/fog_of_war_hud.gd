@@ -23,9 +23,9 @@ func _on_update(ctx: Dictionary) -> void:
 	if mode == null:
 		return
 	var left := mode.retries_left
-	set_label_text(get_node_or_null("Sheet/Retry/Value"), str(left))
-	set_label_text(get_node_or_null("Sheet/Retry/Max"), "/%d" % maxi(mode.max_retries, 0))
-	var note := get_node_or_null("Sheet/Retry/Note") as Label
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Retry/Value"), str(left))
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Retry/Max"), "/%d" % maxi(mode.max_retries, 0))
+	var note := get_node_or_null("Content/ModeInformation/Sheet/Retry/Note") as Label
 	if note != null:
 		note.text = tr("STR_HUD_FOG_RETRY_NOTE").format([left])
 		note.add_theme_color_override("font_color",

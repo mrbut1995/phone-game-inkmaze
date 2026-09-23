@@ -11,140 +11,144 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="9_step_val"]
 [ext_resource type="LabelSettings" uid="uid://cb662usl7mhkf" path="res://resources/settings/text/text_game_information_value.tres" id="10_floor_val"]
 
-
 [node name="Hud" unique_id=1383101299 instance=ExtResource("1_pt42g")]
-custom_minimum_size =  Vector2(405, 380)
 script = ExtResource("2_script")
 
-[node name="Time" type="TextureRect" parent="." index="0" unique_id=1595620832]
-custom_minimum_size =  Vector2(105, 115)
-layout_mode = 0
-offset_left =  0
-offset_top =  0
-offset_right =  105
-offset_bottom =  115
+[node name="Time" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=1449224478]
+custom_minimum_size = Vector2(105, 115)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.15
 texture = ExtResource("3_time_bg")
+patch_margin_left = 21
+patch_margin_top = 33
+patch_margin_right = 16
+patch_margin_bottom = 30
 
-[node name="Label" type="Label" parent="Time" index="0" unique_id=1777410261]
+[node name="Label" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=1777410261]
 modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
 layout_mode = 0
-offset_left =  14
-offset_top =  10
-offset_right =  98
-offset_bottom =  24
+offset_left = 14.0
+offset_top = 10.0
+offset_right = 98.0
+offset_bottom = 24.0
 text = "STR_HUD_TIME"
 label_settings = ExtResource("6_card_lbl")
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Time" index="1" unique_id=1991474715]
+[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1991474715]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
-offset_left =  12
-offset_top =  32
-offset_right =  98
-offset_bottom =  72
+offset_left = 12.0
+offset_top = 32.0
+offset_right = 98.0
+offset_bottom = 72.0
 text = "0:00"
 label_settings = ExtResource("7_time_val")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sub" type="Label" parent="Time" index="2"]
+[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=1651695880]
 modulate = Color(0.56078434, 0.627451, 0.6745098, 1)
 layout_mode = 0
-offset_left =  12
-offset_top =  83
-offset_right =  98
-offset_bottom =  99
-theme_override_font_sizes/font_size =  6.5
+offset_left = 12.0
+offset_top = 83.0
+offset_right = 98.0
+offset_bottom = 99.0
+theme_override_font_sizes/font_size = 6
 text = "VÔ TẬN"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Step" type="TextureRect" parent="." index="1" unique_id=77572978]
-custom_minimum_size =  Vector2(175, 115)
-layout_mode = 0
-offset_left =  115
-offset_top =  0
-offset_right =  290
-offset_bottom =  115
+[node name="Step" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1164255317]
+custom_minimum_size = Vector2(175, 115)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
 texture = ExtResource("4_step_bg")
+patch_margin_left = 24
+patch_margin_top = 20
+patch_margin_right = 33
+patch_margin_bottom = 30
 
-[node name="Label" type="Label" parent="Step" index="0" unique_id=471438194]
+[node name="Label" type="Label" parent="Content/ModeInformation/Step" index="0" unique_id=471438194]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
-offset_left =  16
-offset_top =  8
-offset_right =  165
-offset_bottom =  25
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 165.0
+offset_bottom = 25.0
 text = "STR_HUD_STEPS"
 label_settings = ExtResource("8_step_lbl")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Step" index="1" unique_id=1154026121]
+[node name="Value" type="Label" parent="Content/ModeInformation/Step" index="1" unique_id=1154026121]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
-offset_left =  16
-offset_top =  27
-offset_right =  165
-offset_bottom =  83
+offset_left = 16.0
+offset_top = 27.0
+offset_right = 165.0
+offset_bottom = 83.0
 text = "0"
 label_settings = ExtResource("9_step_val")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sub" type="Label" parent="Step" index="2"]
+[node name="Sub" type="Label" parent="Content/ModeInformation/Step" index="2" unique_id=507734211]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 0.8)
 layout_mode = 0
-offset_left =  16
-offset_top =  86
-offset_right =  165
-offset_bottom =  101
-theme_override_font_sizes/font_size =  7
+offset_left = 16.0
+offset_top = 86.0
+offset_right = 165.0
+offset_bottom = 101.0
+theme_override_font_sizes/font_size = 7
 text = "BƯỚC CÒN LẠI"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Floor" type="TextureRect" parent="." index="2" unique_id=94590017]
-custom_minimum_size =  Vector2(105, 115)
-layout_mode = 0
-offset_left =  300
-offset_top =  0
-offset_right =  405
-offset_bottom =  115
+[node name="Floor" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="2" unique_id=1038410122]
+custom_minimum_size = Vector2(105, 115)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.15
 texture = ExtResource("5_floor_bg")
+patch_margin_left = 24
+patch_margin_top = 23
+patch_margin_right = 23
+patch_margin_bottom = 24
 
-[node name="Label" type="Label" parent="Floor" index="0" unique_id=163492087]
+[node name="Label" type="Label" parent="Content/ModeInformation/Floor" index="0" unique_id=163492087]
 modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
 layout_mode = 0
-offset_left =  14
-offset_top =  10
-offset_right =  98
-offset_bottom =  24
+offset_left = 14.0
+offset_top = 10.0
+offset_right = 98.0
+offset_bottom = 24.0
 text = "STR_HUD_FLOOR"
 label_settings = ExtResource("6_card_lbl")
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Floor" index="1" unique_id=1239213361]
+[node name="Value" type="Label" parent="Content/ModeInformation/Floor" index="1" unique_id=1239213361]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
-offset_left =  12
-offset_top =  29
-offset_right =  98
-offset_bottom =  75
+offset_left = 12.0
+offset_top = 29.0
+offset_right = 98.0
+offset_bottom = 75.0
 text = "01"
 label_settings = ExtResource("10_floor_val")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sub" type="Label" parent="Floor" index="2"]
+[node name="Sub" type="Label" parent="Content/ModeInformation/Floor" index="2" unique_id=1032434402]
 modulate = Color(0.56078434, 0.627451, 0.6745098, 1)
 layout_mode = 0
-offset_left =  12
-offset_top =  83
-offset_right =  98
-offset_bottom =  99
-theme_override_font_sizes/font_size =  6.5
+offset_left = 12.0
+offset_top = 83.0
+offset_right = 98.0
+offset_bottom = 99.0
+theme_override_font_sizes/font_size = 6
 text = "HẦM NGỤC"
 horizontal_alignment = 1
 vertical_alignment = 1

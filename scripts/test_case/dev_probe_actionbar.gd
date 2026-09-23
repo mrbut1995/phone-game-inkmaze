@@ -44,7 +44,7 @@ func _dump(scene: Node, size: Vector2i) -> void:
 		return
 	print("   HUD  %s  rect=%s  min=%s" % [_path(hud), str(hud.get_global_rect()),
 		str(hud.custom_minimum_size)])
-	var bar := hud.get_node_or_null("ActionBar") as Control
+	var bar := hud.get_node_or_null("Content/ActionBar") as Control
 	if bar == null:
 		print("   !! HUD không có ActionBar")
 		return

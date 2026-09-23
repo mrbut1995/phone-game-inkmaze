@@ -50,11 +50,15 @@ text = "NGÂN SÁCH"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sheet" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1156059562]
+[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=2099594021]
 custom_minimum_size = Vector2(275, 115)
 layout_mode = 2
-mouse_filter = 2
+size_flags_horizontal = 3
 texture = ExtResource("7_sheet")
+patch_margin_left = 23
+patch_margin_top = 22
+patch_margin_right = 40
+patch_margin_bottom = 30
 
 [node name="Title" type="Label" parent="Content/ModeInformation/Sheet" index="0" unique_id=33508719]
 layout_mode = 0

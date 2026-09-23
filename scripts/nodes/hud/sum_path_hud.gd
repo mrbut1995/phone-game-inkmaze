@@ -14,12 +14,12 @@ func _on_update(ctx: Dictionary) -> void:
 	var mode := ctx.get("mode", null) as SumPathGameMode
 	if mode == null:
 		return
-	set_label_text(get_node_or_null("Sheet/BlockCurrent/Sum/Value"), str(mode.current_sum))
-	set_label_text(get_node_or_null("Sheet/Emblem/Operator/Value"), mode.operator)
-	set_label_text(get_node_or_null("Sheet/BlockTarget/Target/Value"), str(mode.target_val))
-	set_label_text(get_node_or_null("Sheet/BlockCurrent/Sum/Note"),
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/BlockCurrent/Sum/Value"), str(mode.current_sum))
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Emblem/Operator/Value"), mode.operator)
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/BlockTarget/Target/Value"), str(mode.target_val))
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/BlockCurrent/Sum/Note"),
 		tr("STR_HUD_SUM_MOVES").format([int(ctx.get("moves", 0))]))
-	set_label_text(get_node_or_null("Sheet/BlockTarget/Target/ChipNeed/Need"), _need_text(mode))
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/BlockTarget/Target/ChipNeed/Need"), _need_text(mode))
 	_update_progress(mode)
 
 
@@ -48,8 +48,8 @@ func _need_text(mode: SumPathGameMode) -> String:
 
 ## Thanh tiến độ = tổng hiện tại / mục tiêu (kẹp 0..1); phần đã đạt bị cắt bởi "Bar".
 func _update_progress(mode: SumPathGameMode) -> void:
-	var bar := get_node_or_null("Sheet/Bar") as Control
-	var fill := get_node_or_null("Sheet/Bar/Fill") as Control
+	var bar := get_node_or_null("Content/ModeInformation/Sheet/Bar") as Control
+	var fill := get_node_or_null("Content/ModeInformation/Sheet/Bar/Fill") as Control
 	if bar == null or fill == null:
 		return
 	var ratio := 0.0

@@ -40,7 +40,6 @@ func challenge_card() -> Control:
 func set_time(seconds: float) -> void:
 	set_label_text(get_time_node().get_node_or_null("Value"), format_time(seconds))
 
-
 func get_time_node() -> Control :
 	return get_node_or_null("Content/ModeInformation/Time")
 

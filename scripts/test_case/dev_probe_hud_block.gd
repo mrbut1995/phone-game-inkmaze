@@ -47,7 +47,7 @@ func _dump(scene: Node, mode: String) -> void:
 	print("   HUD scene = %s   rect=%s" % [hud.scene_file_path, str(hud.get_global_rect())])
 	var board := scene.get("board_view") as Control
 	var board_rect := board.get_global_rect() if board != null else Rect2()
-	var bar := hud.get_node_or_null("ActionBar") as Control
+	var bar := hud.get_node_or_null("Content/ActionBar") as Control
 	if bar == null:
 		print("   !! HUD không có ActionBar")
 		return

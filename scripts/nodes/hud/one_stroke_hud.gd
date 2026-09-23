@@ -25,21 +25,21 @@ func _on_update(ctx: Dictionary) -> void:
 	var total := maxi(mode.total_cells(), 1)
 	var done := mode.visited_count()
 
-	set_label_text(get_node_or_null("Sheet/Cover/CoverValue"), str(done))
-	set_label_text(get_node_or_null("Sheet/Cover/CoverMax"),
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Cover/CoverValue"), str(done))
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Cover/CoverMax"),
 		tr("STR_HUD_OS_COVER_MAX").format([total]))
 
-	var note := get_node_or_null("Sheet/Cover/CoverNote") as Label
+	var note := get_node_or_null("Content/ModeInformation/Sheet/Cover/CoverNote") as Label
 	if note != null:
 		note.text = tr("STR_HUD_OS_COVER_NOTE").format([maxi(total - done, 0)])
 
-	var chip := get_node_or_null("Sheet/Row1/ChipLabel") as Label
+	var chip := get_node_or_null("Content/ModeInformation/Sheet/Row1/ChipLabel") as Label
 	if chip != null:
 		var percent := int(round(100.0 * float(done) / float(total)))
 		chip.text = tr("STR_HUD_OS_CHIP").format([percent])
 
 	# Thanh tiến độ: node cha cắt bớt phần đã phủ (không co giãn texture)
-	var fill_clip := get_node_or_null("Sheet/Row2/SliderFillClip") as Control
+	var fill_clip := get_node_or_null("Content/ModeInformation/Sheet/Row2/SliderFillClip") as Control
 	if fill_clip != null:
 		var ratio := clampf(float(done) / float(total), 0.0, 1.0)
 		fill_clip.size = Vector2(SLIDER_WIDTH * ratio, fill_clip.size.y)

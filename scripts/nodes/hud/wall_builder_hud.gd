@@ -25,18 +25,18 @@ func _on_update(ctx: Dictionary) -> void:
 	var required := maxi(mode.required_segments, 0)
 	var built := mode.built_count()
 
-	set_label_text(get_node_or_null("Sheet/Cover/CoverValue"), str(built))
-	set_label_text(get_node_or_null("Sheet/Cover/CoverMax"),
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Cover/CoverValue"), str(built))
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Cover/CoverMax"),
 		tr("STR_HUD_WB_COVER_MAX").format([required]))
-	set_label_text(get_node_or_null("Sheet/Cover/CoverNote"),
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Cover/CoverNote"),
 		tr("STR_HUD_WB_COVER_NOTE").format([mode.missing_count()]))
-	set_label_text(get_node_or_null("Sheet/Row1/Submit"),
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Row1/Submit"),
 		tr("STR_HUD_WB_SUBMIT").format([mode.retries_left, maxi(mode.max_retries, 0)]))
-	set_label_text(get_node_or_null("Sheet/Row1/ChipLabel"),
+	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Row1/ChipLabel"),
 		tr("STR_HUD_WB_CHIP_%s" % mode.build_state().to_upper()))
 
 	# Thanh tiến độ: node cha cắt bớt phần đã dựng (không co giãn texture)
-	var fill_clip := get_node_or_null("Sheet/Row2/SliderFillClip") as Control
+	var fill_clip := get_node_or_null("Content/ModeInformation/Sheet/Row2/SliderFillClip") as Control
 	if fill_clip != null:
 		var ratio := 0.0 if required <= 0 else clampf(float(built) / float(required), 0.0, 1.0)
 		fill_clip.size = Vector2(SLIDER_WIDTH * ratio, fill_clip.size.y)
