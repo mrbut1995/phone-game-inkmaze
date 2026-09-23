@@ -15,7 +15,7 @@ const NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
 const FOCUS_MODULATE := Color(0.85, 0.95, 1.0, 1.0)
 
 ## Số trên ô vẽ ĐÈ LÊN icon Bomb (nền mìn đậm) -> thêm viền màu giấy cho số để vẫn đọc được.
-const BOMB_TEXT_OUTLINE_SIZE := 8
+const BOMB_TEXT_OUTLINE_SIZE := 4
 const BOMB_TEXT_OUTLINE_COLOR := Color(0.996078, 0.992157, 0.980392, 1.0)   # #FEFDFA
 
 const TEX_NORMAL := preload("res://assets/images/game/cell_normal.svg")

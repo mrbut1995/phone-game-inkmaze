@@ -9,37 +9,37 @@
 [ext_resource type="Texture2D" path="res://assets/images/shop/icon_coin_t1.svg" id="7_icon"]
 
 [node name="CoinTile" type="Control"]
-custom_minimum_size = Vector2(475, 240)
+custom_minimum_size =  Vector2(237.5, 120)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 475.0
-offset_bottom = 240.0
+offset_right =  237.5
+offset_bottom =  120
 theme = ExtResource("2_theme")
 script = ExtResource("1_coin")
 
 [node name="Bg" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 475.0
-offset_bottom = 240.0
+offset_right =  237.5
+offset_bottom =  120
 mouse_filter = 2
 texture = ExtResource("3_card")
 expand_mode = 1
 
 [node name="Bar" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 18.0
-offset_right = 27.0
-offset_bottom = 222.0
+offset_left =  12
+offset_top =  9
+offset_right =  13.5
+offset_bottom =  111
 mouse_filter = 2
 color = Color(0.9607843, 0.61960787, 0.043137256, 1)
 
 [node name="IconCircle" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 64.0
-offset_right = 124.0
-offset_bottom = 160.0
+offset_left =  14
+offset_top =  32
+offset_right =  62
+offset_bottom =  80
 mouse_filter = 2
 texture = ExtResource("4_circle")
 expand_mode = 1
@@ -47,10 +47,10 @@ stretch_mode = 5
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 70.0
-offset_right = 118.0
-offset_bottom = 154.0
+offset_left =  17
+offset_top =  35
+offset_right =  59
+offset_bottom =  77
 mouse_filter = 2
 texture = ExtResource("7_icon")
 expand_mode = 1
@@ -58,23 +58,23 @@ stretch_mode = 5
 
 [node name="Badge" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 16.0
-offset_right = 208.0
-offset_bottom = 42.0
+offset_left =  14
+offset_top =  8
+offset_right =  104
+offset_bottom =  21
 mouse_filter = 2
 texture = ExtResource("5_chip")
-patch_margin_left = 8
-patch_margin_top = 8
-patch_margin_right = 8
-patch_margin_bottom = 8
+patch_margin_left =  4
+patch_margin_top =  4
+patch_margin_right =  4
+patch_margin_bottom =  4
 
 [node name="BadgeLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 16.0
-offset_right = 208.0
-offset_bottom = 42.0
+offset_left =  14
+offset_top =  8
+offset_right =  104
+offset_bottom =  21
 theme_type_variation = &"ShopBadge"
 text = "KHUYÊN DÙNG"
 horizontal_alignment = 1
@@ -82,10 +82,10 @@ vertical_alignment = 1
 
 [node name="Name" type="Label" parent="."]
 layout_mode = 0
-offset_left = 140.0
-offset_top = 44.0
-offset_right = 447.0
-offset_bottom = 80.0
+offset_left =  70
+offset_top =  22
+offset_right =  223.5
+offset_bottom =  40
 theme_type_variation = &"ShopNameTile"
 text = "Túi Xu 500"
 vertical_alignment = 1
@@ -93,10 +93,10 @@ text_overrun_behavior = 3
 
 [node name="Desc" type="Label" parent="."]
 layout_mode = 0
-offset_left = 140.0
-offset_top = 80.0
-offset_right = 447.0
-offset_bottom = 106.0
+offset_left =  70
+offset_top =  40
+offset_right =  223.5
+offset_bottom =  53
 theme_type_variation = &"ShopDesc"
 text = "Túi xu cơ bản"
 vertical_alignment = 1
@@ -104,10 +104,10 @@ text_overrun_behavior = 3
 
 [node name="Bonus" type="Label" parent="."]
 layout_mode = 0
-offset_left = 140.0
-offset_top = 106.0
-offset_right = 447.0
-offset_bottom = 132.0
+offset_left =  70
+offset_top =  53
+offset_right =  223.5
+offset_bottom =  66
 theme_type_variation = &"ShopBonus"
 text = ""
 vertical_alignment = 1
@@ -115,10 +115,10 @@ text_overrun_behavior = 3
 
 [node name="Action" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 168.0
-offset_right = 447.0
-offset_bottom = 224.0
+offset_left =  14
+offset_top =  84
+offset_right =  223.5
+offset_bottom =  112
 focus_mode = 0
 texture_normal = ExtResource("6_btn")
 texture_pressed = ExtResource("6_btn")
@@ -129,10 +129,10 @@ stretch_mode = 5
 
 [node name="ActionLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 168.0
-offset_right = 447.0
-offset_bottom = 224.0
+offset_left =  14
+offset_top =  84
+offset_right =  223.5
+offset_bottom =  112
 theme_type_variation = &"ShopPrice"
 text = "19.000 VNĐ"
 horizontal_alignment = 1

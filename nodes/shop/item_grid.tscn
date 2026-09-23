@@ -4,6 +4,6 @@
 
 [node name="ItemGrid" type="GridContainer"]
 columns = 2
-theme_override_constants/h_separation = 30
-theme_override_constants/v_separation = 24
+theme_override_constants/h_separation =  15
+theme_override_constants/v_separation =  12
 script = ExtResource("1_script")

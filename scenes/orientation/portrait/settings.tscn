@@ -59,8 +59,8 @@ anchor_left = 0.034
 anchor_top = 0.033770833
 anchor_right = 0.961
 anchor_bottom = 0.07877084
-offset_top = -0.84
-offset_bottom = -0.24
+offset_top =  -0.42
+offset_bottom =  -0.12
 metadata/_edit_use_anchors_ = true
 
 [node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=305592045]
@@ -92,18 +92,18 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Washi" type="TextureRect" parent="Panel" index="0" unique_id=1260349670]
 layout_mode = 0
-offset_left = 358.0
-offset_top = -14.0
-offset_right = 584.0
-offset_bottom = 40.0
+offset_left =  179
+offset_top =  -7
+offset_right =  292
+offset_bottom =  20
 texture = ExtResource("8_washi")
 
 [node name="Clip" type="TextureRect" parent="Panel" index="1" unique_id=1260349671]
 layout_mode = 0
-offset_left = 103.0
-offset_top = -10.0
-offset_right = 149.0
-offset_bottom = 71.0
+offset_left =  51.5
+offset_top =  -5
+offset_right =  74.5
+offset_bottom =  35.5
 texture = ExtResource("9_clip")
 
 [node name="Content" type="VBoxContainer" parent="Panel" index="2" unique_id=1210858816]
@@ -111,17 +111,17 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 118.0
-offset_top = 56.0
-offset_right = -88.0
-offset_bottom = -208.0
+offset_left =  59
+offset_top =  28
+offset_right =  -44
+offset_bottom =  -104
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation =  8
 
 [node name="Header" type="VBoxContainer" parent="Panel/Content" index="0" unique_id=1210858817]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation =  0
 
 [node name="Title" type="Label" parent="Panel/Content/Header" index="0" unique_id=1210858818]
 layout_mode = 2
@@ -135,10 +135,10 @@ label_settings = ExtResource("33_sub_subtitle")
 
 [node name="Audio" type="VBoxContainer" parent="Panel/Content" index="1" unique_id=126270710]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation =  5
 
 [node name="SectionChip" type="TextureRect" parent="Panel/Content/Audio" index="0" unique_id=1392439238]
-custom_minimum_size = Vector2(140, 28)
+custom_minimum_size =  Vector2(70, 14)
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("4_chip")
@@ -157,25 +157,25 @@ vertical_alignment = 1
 
 [node name="BgmRow" type="HBoxContainer" parent="Panel/Content/Audio" index="1" unique_id=2043596894]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation =  5
 
 [node name="Icon" type="TextureRect" parent="Panel/Content/Audio/BgmRow" index="0" unique_id=361251387]
-custom_minimum_size = Vector2(34, 34)
+custom_minimum_size =  Vector2(17, 17)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("43_icon_music")
 
 [node name="Slider" type="HSlider" parent="Panel/Content/Audio/BgmRow" index="1" unique_id=2043596895]
-custom_minimum_size = Vector2(360, 40)
+custom_minimum_size =  Vector2(180, 20)
 layout_mode = 2
 theme = ExtResource("15_slider_theme")
-theme_override_constants/center_grabber = 1
+theme_override_constants/center_grabber =  0.5
 max_value = 1.0
 step = 0.05
 
 [node name="Value" type="Label" parent="Panel/Content/Audio/BgmRow" index="2" unique_id=2043596896]
-custom_minimum_size = Vector2(90, 0)
+custom_minimum_size =  Vector2(45, 0)
 layout_mode = 2
 text = "100%"
 label_settings = ExtResource("38_value")
@@ -191,25 +191,25 @@ vertical_alignment = 1
 
 [node name="SfxRow" type="HBoxContainer" parent="Panel/Content/Audio" index="2" unique_id=2043596897]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation =  5
 
 [node name="Icon" type="TextureRect" parent="Panel/Content/Audio/SfxRow" index="0" unique_id=648278852]
-custom_minimum_size = Vector2(34, 34)
+custom_minimum_size =  Vector2(17, 17)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("44_icon_bell")
 
 [node name="Slider" type="HSlider" parent="Panel/Content/Audio/SfxRow" index="1" unique_id=2043596898]
-custom_minimum_size = Vector2(360, 40)
+custom_minimum_size =  Vector2(180, 20)
 layout_mode = 2
 theme = ExtResource("15_slider_theme")
-theme_override_constants/center_grabber = 1
+theme_override_constants/center_grabber =  0.5
 max_value = 1.0
 step = 0.05
 
 [node name="Value" type="Label" parent="Panel/Content/Audio/SfxRow" index="2" unique_id=2043596899]
-custom_minimum_size = Vector2(90, 0)
+custom_minimum_size =  Vector2(45, 0)
 layout_mode = 2
 text = "100%"
 label_settings = ExtResource("38_value")
@@ -224,7 +224,7 @@ label_settings = ExtResource("35_row")
 vertical_alignment = 1
 
 [node name="Divider1" type="TextureRect" parent="Panel/Content" index="2" unique_id=1260349672]
-custom_minimum_size = Vector2(0, 4)
+custom_minimum_size =  Vector2(0, 2)
 layout_mode = 2
 texture = ExtResource("5_divider")
 expand_mode = 1
@@ -232,10 +232,10 @@ stretch_mode = 1
 
 [node name="Board" type="VBoxContainer" parent="Panel/Content" index="3" unique_id=2006969508]
 layout_mode = 2
-theme_override_constants/separation = 22
+theme_override_constants/separation =  11
 
 [node name="SectionChip" type="TextureRect" parent="Panel/Content/Board" index="0" unique_id=1881797316]
-custom_minimum_size = Vector2(200, 28)
+custom_minimum_size =  Vector2(100, 14)
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("4_chip")
@@ -254,10 +254,10 @@ vertical_alignment = 1
 
 [node name="HapticRow" type="HBoxContainer" parent="Panel/Content/Board" index="1" unique_id=2006969509]
 layout_mode = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation =  3
 
 [node name="Check" type="TextureButton" parent="Panel/Content/Board/HapticRow" index="0" unique_id=2006969510]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size =  Vector2(25, 25)
 layout_mode = 2
 size_flags_vertical = 0
 toggle_mode = true
@@ -269,7 +269,7 @@ ignore_texture_size = true
 
 [node name="Text" type="VBoxContainer" parent="Panel/Content/Board/HapticRow" index="1" unique_id=2006969511]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation =  0
 
 [node name="Title" type="Label" parent="Panel/Content/Board/HapticRow/Text" index="0" unique_id=2006969512]
 layout_mode = 2
@@ -283,10 +283,10 @@ label_settings = ExtResource("37_desc")
 
 [node name="AutoMarkRow" type="HBoxContainer" parent="Panel/Content/Board" index="2" unique_id=2006969514]
 layout_mode = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation =  3
 
 [node name="Check" type="TextureButton" parent="Panel/Content/Board/AutoMarkRow" index="0" unique_id=2006969515]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size =  Vector2(25, 25)
 layout_mode = 2
 size_flags_vertical = 0
 toggle_mode = true
@@ -298,7 +298,7 @@ ignore_texture_size = true
 
 [node name="Text" type="VBoxContainer" parent="Panel/Content/Board/AutoMarkRow" index="1" unique_id=2006969516]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation =  0
 
 [node name="Title" type="Label" parent="Panel/Content/Board/AutoMarkRow/Text" index="0" unique_id=2006969517]
 layout_mode = 2
@@ -312,10 +312,10 @@ label_settings = ExtResource("37_desc")
 
 [node name="GlowRow" type="HBoxContainer" parent="Panel/Content/Board" index="3" unique_id=2006969519]
 layout_mode = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation =  3
 
 [node name="Check" type="TextureButton" parent="Panel/Content/Board/GlowRow" index="0" unique_id=2006969520]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size =  Vector2(25, 25)
 layout_mode = 2
 size_flags_vertical = 0
 toggle_mode = true
@@ -327,7 +327,7 @@ ignore_texture_size = true
 
 [node name="Text" type="VBoxContainer" parent="Panel/Content/Board/GlowRow" index="1" unique_id=2006969521]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation =  0
 
 [node name="Title" type="Label" parent="Panel/Content/Board/GlowRow/Text" index="0" unique_id=2006969522]
 layout_mode = 2
@@ -340,7 +340,7 @@ text = "STR_SETTINGS_GLOW_DESC"
 label_settings = ExtResource("37_desc")
 
 [node name="Divider2" type="TextureRect" parent="Panel/Content" index="4" unique_id=1260349673]
-custom_minimum_size = Vector2(0, 4)
+custom_minimum_size =  Vector2(0, 2)
 layout_mode = 2
 texture = ExtResource("5_divider")
 expand_mode = 1
@@ -348,10 +348,10 @@ stretch_mode = 1
 
 [node name="Language" type="VBoxContainer" parent="Panel/Content" index="5" unique_id=1918901383]
 layout_mode = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation =  20
 
 [node name="SectionChip" type="TextureRect" parent="Panel/Content/Language" index="0" unique_id=1371078982]
-custom_minimum_size = Vector2(180, 28)
+custom_minimum_size =  Vector2(90, 14)
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("4_chip")
@@ -370,17 +370,17 @@ vertical_alignment = 1
 
 [node name="LangRow" type="HBoxContainer" parent="Panel/Content/Language" index="1" unique_id=1918901384]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation =  5
 
 [node name="Icon" type="TextureRect" parent="Panel/Content/Language/LangRow" index="0" unique_id=680426215]
-custom_minimum_size = Vector2(34, 34)
+custom_minimum_size =  Vector2(17, 17)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("45_icon_globe")
 
 [node name="LangButton" type="TextureButton" parent="Panel/Content/Language/LangRow" index="1" unique_id=1918901386]
-custom_minimum_size = Vector2(310, 54)
+custom_minimum_size =  Vector2(155, 27)
 layout_mode = 2
 size_flags_horizontal = 0
 texture_normal = ExtResource("19_dd_n")
@@ -395,8 +395,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 35.0
-offset_right = -45.0
+offset_left =  17.5
+offset_right =  -22.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Tiếng Việt (VN)"
@@ -412,17 +412,17 @@ vertical_alignment = 1
 
 [node name="CloudRow" type="HBoxContainer" parent="Panel/Content/Language" index="2" unique_id=1918901388]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation =  5
 
 [node name="Icon" type="TextureRect" parent="Panel/Content/Language/CloudRow" index="0" unique_id=605047393]
-custom_minimum_size = Vector2(34, 34)
+custom_minimum_size =  Vector2(17, 17)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("46_icon_cloud")
 
 [node name="Chip" type="TextureRect" parent="Panel/Content/Language/CloudRow" index="1" unique_id=1918901392]
-custom_minimum_size = Vector2(160, 42)
+custom_minimum_size =  Vector2(80, 21)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -443,7 +443,7 @@ vertical_alignment = 1
 [node name="Text" type="VBoxContainer" parent="Panel/Content/Language/CloudRow" index="2" unique_id=1918901389]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 0
+theme_override_constants/separation =  0
 
 [node name="Title" type="Label" parent="Panel/Content/Language/CloudRow/Text" index="0" unique_id=1918901390]
 layout_mode = 2
@@ -472,7 +472,7 @@ label_settings = ExtResource("38_value")
 horizontal_alignment = 2
 
 [node name="Divider3" type="TextureRect" parent="Panel/Content" index="6" unique_id=1260349674]
-custom_minimum_size = Vector2(0, 4)
+custom_minimum_size =  Vector2(0, 2)
 layout_mode = 2
 texture = ExtResource("5_divider")
 expand_mode = 1
@@ -480,10 +480,10 @@ stretch_mode = 1
 
 [node name="Actions" type="VBoxContainer" parent="Panel/Content" index="7" unique_id=1617146451]
 layout_mode = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation =  20
 
 [node name="Guide" type="TextureButton" parent="Panel/Content/Actions" index="0" unique_id=1617146452]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size =  Vector2(0, 40)
 layout_mode = 2
 texture_normal = ExtResource("23_row_n")
 texture_pressed = ExtResource("24_row_p")
@@ -497,10 +497,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 40.0
-offset_top = -17.0
-offset_right = 74.0
-offset_bottom = 17.0
+offset_left =  20
+offset_top =  -8.5
+offset_right =  37
+offset_bottom =  8.5
 grow_vertical = 2
 texture = ExtResource("47_icon_book")
 
@@ -511,10 +511,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -14.0
-offset_right = -32.0
-offset_bottom = 14.0
+offset_left =  -25
+offset_top =  -7
+offset_right =  -16
+offset_bottom =  7
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("6_chevron")
@@ -524,8 +524,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 85.0
-offset_right = -60.0
+offset_left =  42.5
+offset_right =  -30
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_GUIDE"
@@ -533,7 +533,7 @@ label_settings = ExtResource("35_row")
 vertical_alignment = 1
 
 [node name="Credits" type="TextureButton" parent="Panel/Content/Actions" index="1" unique_id=1106923312]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size =  Vector2(0, 40)
 layout_mode = 2
 texture_normal = ExtResource("23_row_n")
 texture_pressed = ExtResource("24_row_p")
@@ -547,10 +547,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 40.0
-offset_top = -17.0
-offset_right = 74.0
-offset_bottom = 17.0
+offset_left =  20
+offset_top =  -8.5
+offset_right =  37
+offset_bottom =  8.5
 grow_vertical = 2
 texture = ExtResource("43_icon_music")
 
@@ -561,10 +561,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -14.0
-offset_right = -32.0
-offset_bottom = 14.0
+offset_left =  -25
+offset_top =  -7
+offset_right =  -16
+offset_bottom =  7
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("6_chevron")
@@ -574,8 +574,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 85.0
-offset_right = -60.0
+offset_left =  42.5
+offset_right =  -30
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_CREDITS"
@@ -583,7 +583,7 @@ label_settings = ExtResource("35_row")
 vertical_alignment = 1
 
 [node name="Reset" type="TextureButton" parent="Panel/Content/Actions" index="2" unique_id=1617146455]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size =  Vector2(0, 40)
 layout_mode = 2
 texture_normal = ExtResource("27_dan_n")
 texture_pressed = ExtResource("28_dan_p")
@@ -597,10 +597,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 40.0
-offset_top = -17.0
-offset_right = 74.0
-offset_bottom = 17.0
+offset_left =  20
+offset_top =  -8.5
+offset_right =  37
+offset_bottom =  8.5
 grow_vertical = 2
 texture = ExtResource("48_icon_reset")
 
@@ -611,10 +611,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -14.0
-offset_right = -32.0
-offset_bottom = 14.0
+offset_left =  -25
+offset_top =  -7
+offset_right =  -16
+offset_bottom =  7
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("7_chevron_danger")
@@ -624,8 +624,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 85.0
-offset_right = -60.0
+offset_left =  42.5
+offset_right =  -30
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_RESET"
@@ -633,7 +633,7 @@ label_settings = ExtResource("36_row_danger")
 vertical_alignment = 1
 
 [node name="Footer" type="HBoxContainer" parent="Panel/Content" index="8" unique_id=1617146458]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size =  Vector2(0, 40)
 layout_mode = 2
 
 [node name="Quote" type="Label" parent="Panel/Content/Footer" index="0" unique_id=1617146459]
@@ -644,7 +644,7 @@ label_settings = ExtResource("37_desc")
 vertical_alignment = 1
 
 [node name="Stamp" type="Control" parent="Panel/Content/Footer" index="1" unique_id=1617146460]
-custom_minimum_size = Vector2(160, 74)
+custom_minimum_size =  Vector2(80, 37)
 layout_mode = 2
 size_flags_horizontal = 8
 
@@ -662,8 +662,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -3.0
-offset_bottom = -3.0
+offset_top =  -1.5
+offset_bottom =  -1.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "VER 1.0.0"

@@ -10,7 +10,7 @@ extends TextureRect
 
 const OFF := preload("res://assets/images/game/budget_segment_off.svg")
 const ON := preload("res://assets/images/game/budget_segment_on.svg")
-const HEIGHT := 12.0
+const HEIGHT := 6
 const MIN_WIDTH := 4.0
 const MAX_WIDTH := 38.0
 

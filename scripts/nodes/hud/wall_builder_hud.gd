@@ -15,7 +15,7 @@ extends BaseHUD
 ## ============================================================================
 
 ## Bề rộng gốc của thanh tiến độ (khớp card_wall_slider_track.svg 400×14)
-const SLIDER_WIDTH := 400.0
+const SLIDER_WIDTH := 200
 
 
 func _on_update(ctx: Dictionary) -> void:

@@ -33,7 +33,7 @@ anchor_left = 0.092
 anchor_top = 0.100054
 anchor_right = 0.94
 anchor_bottom = 0.317
-offset_right = -1.5258789e-05
+offset_right =  -1.5258789e-2.5
 theme_type_variation = &"HudTimeHead"
 text = "STR_HUD_TIME"
 horizontal_alignment = 1
@@ -55,19 +55,19 @@ vertical_alignment = 1
 
 [node name="SubChip" type="TextureRect" parent="Time" index="2"]
 layout_mode = 0
-offset_left = 40.0
-offset_top = 118.0
-offset_right = 175.0
-offset_bottom = 142.0
+offset_left =  20
+offset_top =  59
+offset_right =  87.5
+offset_bottom =  71
 mouse_filter = 2
 texture = ExtResource("5_chip_time")
 
 [node name="Sub" type="Label" parent="Time" index="3"]
 layout_mode = 0
-offset_left = 40.0
-offset_top = 118.0
-offset_right = 175.0
-offset_bottom = 142.0
+offset_left =  20
+offset_top =  59
+offset_right =  87.5
+offset_bottom =  71
 theme_type_variation = &"HudTimeSub"
 text = "STR_HUD_OS_TIME_SUB"
 horizontal_alignment = 1
@@ -82,26 +82,26 @@ anchor_top = 0.0120482
 anchor_right = 1.0
 anchor_bottom = 0.6385542
 texture = ExtResource("6_sheet")
-patch_margin_left = 220
-patch_margin_top = 24
-patch_margin_right = 24
-patch_margin_bottom = 24
+patch_margin_left =  110
+patch_margin_top =  12
+patch_margin_right =  12
+patch_margin_bottom =  12
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Cover" type="Control" parent="Sheet" index="0"]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 14.0
-offset_right = 240.0
-offset_bottom = 144.0
+offset_left =  15
+offset_top =  7
+offset_right =  120
+offset_bottom =  72
 mouse_filter = 2
 
 [node name="CoverHead" type="Label" parent="Sheet/Cover" index="0"]
 layout_mode = 0
-offset_right = 210.0
-offset_bottom = 28.0
+offset_right =  105
+offset_bottom =  14
 theme_type_variation = &"HudStrokeCoverHead"
 text = "STR_HUD_OS_COVER_HEAD"
 vertical_alignment = 1
@@ -109,19 +109,19 @@ clip_text = true
 
 [node name="CoverValue" type="Label" parent="Sheet/Cover" index="1"]
 layout_mode = 0
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 92.0
+offset_top =  15
+offset_right =  50
+offset_bottom =  46
 theme_type_variation = &"HudStrokeCoverValue"
 text = "0"
 vertical_alignment = 1
 
 [node name="CoverMax" type="Label" parent="Sheet/Cover" index="2"]
 layout_mode = 0
-offset_left = 92.0
-offset_top = 58.0
-offset_right = 210.0
-offset_bottom = 92.0
+offset_left =  46
+offset_top =  29
+offset_right =  105
+offset_bottom =  46
 theme_type_variation = &"HudStrokeCoverMax"
 text = "/25 Ô"
 vertical_alignment = 1
@@ -129,9 +129,9 @@ clip_text = true
 
 [node name="CoverNote" type="Label" parent="Sheet/Cover" index="3"]
 layout_mode = 0
-offset_top = 96.0
-offset_right = 210.0
-offset_bottom = 122.0
+offset_top =  48
+offset_right =  105
+offset_bottom =  61
 theme_type_variation = &"HudStrokeCoverNote"
 text = "STR_HUD_OS_COVER_NOTE"
 vertical_alignment = 1
@@ -139,19 +139,19 @@ clip_text = true
 
 [node name="Row1" type="TextureRect" parent="Sheet" index="1"]
 layout_mode = 0
-offset_left = 245.0
-offset_top = 16.0
-offset_right = 655.0
-offset_bottom = 58.0
+offset_left =  122.5
+offset_top =  8
+offset_right =  327.5
+offset_bottom =  29
 mouse_filter = 2
 texture = ExtResource("7_row")
 
 [node name="RowTitle" type="Label" parent="Sheet/Row1" index="0"]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 6.0
-offset_right = 300.0
-offset_bottom = 36.0
+offset_left =  9
+offset_top =  3
+offset_right =  150
+offset_bottom =  18
 theme_type_variation = &"HudStrokeRowTitle"
 text = "STR_HUD_OS_ROW_TITLE"
 vertical_alignment = 1
@@ -159,19 +159,19 @@ clip_text = true
 
 [node name="Chip" type="TextureRect" parent="Sheet/Row1" index="1"]
 layout_mode = 0
-offset_left = 290.0
-offset_top = 8.0
-offset_right = 400.0
-offset_bottom = 34.0
+offset_left =  145
+offset_top =  4
+offset_right =  200
+offset_bottom =  17
 mouse_filter = 2
 texture = ExtResource("8_chip")
 
 [node name="ChipLabel" type="Label" parent="Sheet/Row1" index="2"]
 layout_mode = 0
-offset_left = 290.0
-offset_top = 8.0
-offset_right = 400.0
-offset_bottom = 34.0
+offset_left =  145
+offset_top =  4
+offset_right =  200
+offset_bottom =  17
 theme_type_variation = &"HudScaleChip"
 text = "STR_HUD_OS_CHIP"
 horizontal_alignment = 1
@@ -180,38 +180,38 @@ resize_font_to_fit = true
 
 [node name="Row2" type="Control" parent="Sheet" index="2"]
 layout_mode = 0
-offset_left = 245.0
-offset_top = 70.0
-offset_right = 655.0
-offset_bottom = 142.0
+offset_left =  122.5
+offset_top =  35
+offset_right =  327.5
+offset_bottom =  71
 mouse_filter = 2
 
 [node name="SliderTrack" type="TextureRect" parent="Sheet/Row2" index="0"]
 layout_mode = 0
-offset_right = 410.0
-offset_bottom = 14.0
+offset_right =  205
+offset_bottom =  7
 mouse_filter = 2
 texture = ExtResource("9_track")
 
 [node name="SliderFillClip" type="Control" parent="Sheet/Row2" index="1"]
 clip_contents = true
 layout_mode = 0
-offset_right = 410.0
-offset_bottom = 14.0
+offset_right =  205
+offset_bottom =  7
 mouse_filter = 2
 
 [node name="Fill" type="TextureRect" parent="Sheet/Row2/SliderFillClip" index="0"]
 layout_mode = 0
-offset_right = 410.0
-offset_bottom = 14.0
+offset_right =  205
+offset_bottom =  7
 mouse_filter = 2
 texture = ExtResource("10_fill")
 
 [node name="RowNote" type="Label" parent="Sheet/Row2" index="2"]
 layout_mode = 0
-offset_top = 26.0
-offset_right = 320.0
-offset_bottom = 56.0
+offset_top =  13
+offset_right =  160
+offset_bottom =  28
 theme_type_variation = &"HudStrokeRowNote"
 text = "STR_HUD_OS_ROW_NOTE"
 vertical_alignment = 1
@@ -219,10 +219,10 @@ clip_text = true
 
 [node name="RowTip" type="Label" parent="Sheet/Row2" index="3"]
 layout_mode = 0
-offset_left = 240.0
-offset_top = 26.0
-offset_right = 410.0
-offset_bottom = 56.0
+offset_left =  120
+offset_top =  13
+offset_right =  205
+offset_bottom =  28
 theme_type_variation = &"HudStrokeRowTip"
 text = "STR_HUD_OS_ROW_TIP"
 horizontal_alignment = 2

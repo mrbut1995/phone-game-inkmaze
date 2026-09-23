@@ -9,7 +9,7 @@ extends StandardGameMode
 ##   chính là 3 nhiệm vụ đầu của ngày Daily (xem DailyManager).
 ## ============================================================================
 
-const MAZE_SIZE := 5
+const MAZE_SIZE := 2.5
 const WALL_VISIBLE_RATIO := 0.5
 ## Số bước thiết kế / giới hạn thời gian của maze thường (màn Daily hiển thị trước 2 số này)
 const DESIGN_STEPS := 20

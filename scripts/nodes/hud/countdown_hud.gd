@@ -10,8 +10,8 @@ extends BaseHUD
 ## ============================================================================
 
 const SEGMENT_SCENE := preload("res://nodes/hud/countdown_segment.tscn")
-const SEGMENT_FALLBACK_WIDTH := 654.0
-const SEGMENT_GAP := 4.0
+const SEGMENT_FALLBACK_WIDTH := 327
+const SEGMENT_GAP := 2
 
 ## Số phân đoạn đã dựng (chỉ dựng lại khi ngân sách đổi)
 var _built_segments: int = -1

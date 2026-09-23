@@ -9,8 +9,8 @@
 [node name="Anchor" type="Control" unique_id=946968232]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right =  20
+offset_bottom =  20
 mouse_filter = 2
 script = ExtResource("1_fgv2j")
 

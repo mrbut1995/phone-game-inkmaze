@@ -17,7 +17,7 @@ signal pen_changed(pen_id: String)
 const STAMP_TRY := preload("res://assets/images/shop/btn_tile_normal.svg")
 const STAMP_USING := preload("res://assets/images/shop/btn_equipped.svg")
 
-const STROKE_WIDTH := 14.0        ## bề rộng nét vẽ thử (px) trước khi nhân chất liệu
+const STROKE_WIDTH := 7        ## bề rộng nét vẽ thử (px) trước khi nhân chất liệu
 const MIN_POINT_DIST := 2.5       ## khoảng cách tối thiểu để ghi thêm điểm (px)
 const MAX_POINTS := 800           ## chặn nét quá dài (bỏ điểm cũ nhất)
 const MAX_STROKES := 16           ## số nét tối đa giữ trên bàn nháp

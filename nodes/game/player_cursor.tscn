@@ -6,8 +6,8 @@
 [node name="PlayerCursor" type="Control" unique_id=759599067]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 132.0
-offset_bottom = 132.0
+offset_right =  66
+offset_bottom =  66
 mouse_filter = 2
 script = ExtResource("1_script")
 

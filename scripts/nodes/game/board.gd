@@ -27,22 +27,22 @@ const FOOTSTEP_SCENE := preload("res://nodes/game/ink_footstep.tscn")
 const GLOW_LINE_SHADER := preload("res://shaders/line_glowing_shader.gdshader")
 
 ## Fallback an toàn khi không đọc được scene gốc (giá trị thật nằm trong .tscn)
-const FALLBACK_CELL_SIZE := 176.0
-const FALLBACK_ANCHOR_SIZE := 40.0
-const FALLBACK_WALL_WIDTH := 11.0
-const FALLBACK_CURSOR_SIZE := 132.0
-const FALLBACK_MOVING_LINE_WIDTH := 40.0
-const FALLBACK_FONT_SIZE := 56.0
+const FALLBACK_CELL_SIZE := 88
+const FALLBACK_ANCHOR_SIZE := 20
+const FALLBACK_WALL_WIDTH := 5.5
+const FALLBACK_CURSOR_SIZE := 66
+const FALLBACK_MOVING_LINE_WIDTH := 20
+const FALLBACK_FONT_SIZE := 28
 
 ## Mép chừa thêm bên trong phần GIẤY VẼ THẬT (px) - để ô không chạm viền giấy
-const BOARD_PADDING := 12.0
+const BOARD_PADDING := 6
 ## Nhỏ nhất có thể co (0.24 * 176 ≈ 42px) -> board 20x20 vẫn nằm gọn
 const MIN_FIT_SCALE := 0.24
 ## Kích thước tối thiểu để còn nhìn thấy rõ
-const MIN_WALL_WIDTH := 3.0
-const MIN_ANCHOR_SIZE := 14.0
-const MIN_CURSOR_SIZE := 18.0
-const MIN_FONT_SIZE := 12
+const MIN_WALL_WIDTH := 1.5
+const MIN_ANCHOR_SIZE := 7.0
+const MIN_CURSOR_SIZE := 9.0
+const MIN_FONT_SIZE := 6
 
 var maze: MazeData = null
 var game_mode: BaseGameMode = null
