@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 226 54" width="113" height="27">
-  <rect width="110" height="24" rx="4" fill="#E8DFCA" fill-opacity="0.85" stroke="#D1C6AE" stroke-width="1.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 226 54" width="226" height="54">
+  <rect width="220" height="48" rx="4" fill="#E8DFCA" fill-opacity="0.85" stroke="#D1C6AE" stroke-width="1.5"/>
   <!-- Họa tiết caro trên băng dính -->
   <path d="M 20 0 L 0 20 M 60 0 L 12 48 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" 
         stroke="#B5A98F" stroke-width="1.2" opacity="0.35"/>

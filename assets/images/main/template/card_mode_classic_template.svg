@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 720 250" width="360" height="125">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 720 250" width="720" height="250">
   <defs>
     <filter id="clShadow" x="-10%" y="-15%" width="120%" height="135%">
       <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.12" />
     </filter>
   </defs>
   <g filter="url(#clShadow)">
-    <rect width="340" height="105" rx="24" fill="#FEFDFA" stroke="#F59E0B" stroke-width="3.5"/>
+    <rect width="680" height="210" rx="24" fill="#FEFDFA" stroke="#F59E0B" stroke-width="3.5"/>
     <line x1="38" y1="0" x2="38" y2="210" stroke="#F59E0B" stroke-width="3"/>
     <!-- Tag -->
-    <rect x="55" y="20" width="82.5" height="15" rx="8" fill="#FEF3C7"/>
+    <rect x="55" y="20" width="165" height="30" rx="8" fill="#FEF3C7"/>
     <text x="137" y="41" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#B45309" letter-spacing="1">THỬ THÁCH TỐC ĐỘ</text>
     
     <circle cx="105" cy="120" r="42" fill="#FFFBEB" stroke="#FDE68A" stroke-width="2" />
@@ -18,7 +18,7 @@
     <text x="175" y="132" font-family="sans-serif" font-size="20" font-weight="600" fill="#718B9E">1 Tầng duy nhất • Đâm tường = Thua ngay</text>
     <text x="175" y="162" font-family="sans-serif" font-size="18" font-weight="600" fill="#9CA3AF">Đua thời gian giải nhanh nhất</text>
     <!-- Badge -->
-    <rect x="485" y="152" width="82.5" height="18" rx="10" fill="#FEF3C7"/>
+    <rect x="485" y="152" width="165" height="36" rx="10" fill="#FEF3C7"/>
     <text x="567" y="176" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#D97706">NHANH NHẤT: 32s</text>
     <path d="M 625 105 L 640 105 M 633 95 L 643 105 L 633 115" stroke="#F59E0B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
   </g>

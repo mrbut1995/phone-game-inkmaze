@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 100" width="125" height="50">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 100" width="250" height="100">
   <!-- Nút "VÀO CHƠI" của thẻ chương (normal) -->
-  <rect width="125" height="50" rx="24" fill="#235A7D"/>
-  <rect x="1.8" y="1.8" width="123.2" height="48.2" rx="22.2" fill="#3D83AE"/>
+  <rect width="250" height="100" rx="24" fill="#235A7D"/>
+  <rect x="1.8" y="1.8" width="246.4" height="96.4" rx="22.2" fill="#3D83AE"/>
 </svg>

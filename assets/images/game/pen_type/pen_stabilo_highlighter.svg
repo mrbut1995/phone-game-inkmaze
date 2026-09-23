@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="28" height="28">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
   <defs>
     
     <filter id="highlighterGlow" x="-30%" y="-30%" width="160%" height="160%">
@@ -10,7 +10,7 @@
     <g transform="translate(30, 30) rotate(-45)">
       
       <!-- Nẹp tem / Vạch trang trí dẹt trên thân -->
-      <rect x="-8.5" y="-19" width="8.5" height="2" rx="1.5" fill="#FACC15" opacity="0.9"/>
+      <rect x="-8.5" y="-19" width="17" height="4" rx="1.5" fill="#FACC15" opacity="0.9"/>
       <line x1="-5" y1="-5" x2="-5" y2="-13" stroke="#FFFFFF" stroke-width="1.2" opacity="0.4"/>
 
       

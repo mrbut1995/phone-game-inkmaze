@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 796 1136" width="398" height="568">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 796 1136" width="796" height="1136">
   <!-- Mảnh giấy popup chọn ngôn ngữ 780x1120: lỗ bấm ghim + lề đỏ.
        Washi tape & ghim kẹp đặt riêng bằng washi_tape.svg / paper_clip.svg -->
-  <rect width="390" height="560" rx="22" fill="#FFFDF8"/>
+  <rect width="780" height="1120" rx="22" fill="#FFFDF8"/>
 
   
   <g fill="#EAE3D2" opacity="0.65">
@@ -14,5 +14,5 @@
   <!-- Đường kẻ lề đỏ -->
   <line x1="75" y1="0" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" opacity="0.85"/>
   <!-- Viền mực xanh -->
-  <rect width="390" height="560" rx="22" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
+  <rect width="780" height="1120" rx="22" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
 </svg>

@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" width="36" height="36">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" width="72" height="72">
   <!-- Ổ khóa lớn đè lên doodle của chương bị khóa -->
   <g stroke="#7A8F9B" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path d="M 24 30 L 24 20 A 12 12 0 0 1 48 20 L 48 30" stroke-width="4"/>
-    <rect x="16" y="30" width="20" height="17" rx="7" fill="#DFDCD5" stroke-width="3.5"/>
+    <rect x="16" y="30" width="40" height="34" rx="7" fill="#DFDCD5" stroke-width="3.5"/>
     <circle cx="36" cy="45" r="3" fill="#7A8F9B"/>
     <line x1="36" y1="48" x2="36" y2="56" stroke-width="2.5"/>
   </g>

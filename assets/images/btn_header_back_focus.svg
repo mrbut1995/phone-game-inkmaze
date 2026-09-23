@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 80 85" width="40" height="42.5">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 80 85" width="80" height="85">
   <g transform="translate(5, 3)">
     <!-- Vòng focus ring ngoài -->
-    <rect x="-2" y="-2" width="37" height="37" rx="20" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3"/>
-    <rect width="35" height="35" rx="18" fill="#FFFDF8" stroke="#C4843A" stroke-width="3"/>
+    <rect x="-2" y="-2" width="74" height="74" rx="20" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3"/>
+    <rect width="70" height="70" rx="18" fill="#FFFDF8" stroke="#C4843A" stroke-width="3"/>
     <path d="M42 23 L26 35 L42 47" fill="none" stroke="#C4843A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 </svg>

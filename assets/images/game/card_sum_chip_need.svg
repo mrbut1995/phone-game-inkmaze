@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="520 74 155 26" width="77.5" height="13">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="520 74 155 26" width="155" height="26">
   <!-- Chip CẦN THÊM nằm trong khối MỤC TIÊU (trích từ card_sum_balance.svg — 2026-09-17)
        Node đặt tại sheet-local (520, 74). -->
-  <rect x="520" y="74" width="77.5" height="13" rx="6" fill="#FEE2E2"/>
+  <rect x="520" y="74" width="155" height="26" rx="6" fill="#FEE2E2"/>
 </svg>

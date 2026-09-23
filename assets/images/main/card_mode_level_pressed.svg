@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -30 804 310" width="402" height="155">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -30 804 310" width="804" height="310">
   <!-- Pressed: thẻ lún 3px, xanh mực tối hơn, bỏ đổ bóng -->
   <g transform="translate(0, 3)">
-    <rect width="390" height="130" rx="24" fill="#22587A" stroke="#173D54" stroke-width="4"/>
+    <rect width="780" height="260" rx="24" fill="#22587A" stroke="#173D54" stroke-width="4"/>
     <line x1="38" y1="0" x2="38" y2="260" stroke="#FAF5EB" stroke-width="3" opacity="0.45"/>
     <!-- Tag to hơn, nằm đè chính giữa đường line mép trên trái -->
-    <rect x="55" y="-23" width="105" height="23" rx="10" fill="#DD9F16"/>
+    <rect x="55" y="-23" width="210" height="46" rx="10" fill="#DD9F16"/>
     <!-- Icon Lâu đài -->
     <circle cx="125" cy="140" r="52" fill="#1D4C6A"/>
     <!-- Badge -->
-    <rect x="565" y="172" width="92.5" height="25.5" rx="10" fill="#173E58"/>
+    <rect x="565" y="172" width="185" height="51" rx="10" fill="#173E58"/>
     <!-- Mũi tên -->
     <g transform="translate(725, 105)">
       <path d="M 0 0 L 15 0 M 8 -10 L 18 0 L 8 10" stroke="#F2F7FA" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />

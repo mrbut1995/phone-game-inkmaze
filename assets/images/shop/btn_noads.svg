@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 80" width="115" height="40">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 80" width="230" height="80">
   <!-- Nút giá tiền thật của gói VIP (đỏ) -->
-  <rect x="1.5" y="1.5" width="113.5" height="38.5" rx="20" fill="#D84444"/>
-  <rect x="1.5" y="1.5" width="113.5" height="38.5" rx="20" fill="none" stroke="#991B1B" stroke-width="3"/>
+  <rect x="1.5" y="1.5" width="227" height="77" rx="20" fill="#D84444"/>
+  <rect x="1.5" y="1.5" width="227" height="77" rx="20" fill="none" stroke="#991B1B" stroke-width="3"/>
 </svg>

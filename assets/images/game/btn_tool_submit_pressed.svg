@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 374 155" width="187" height="77.5">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 374 155" width="374" height="155">
   <!-- Nút GỬI BÀI (mode Wall Builder) — trạng thái ĐANG NHẤN (đậm hơn) -->
-  <rect width="180" height="70" rx="26" fill="#25702A" stroke="#14491A" stroke-width="4"/>
+  <rect width="360" height="140" rx="26" fill="#25702A" stroke="#14491A" stroke-width="4"/>
   <line x1="35" y1="0" x2="35" y2="140" stroke="#FAF5EB" stroke-width="3" opacity="0.45"/>
   <g transform="translate(52, 45)" stroke="#EAF6EA" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path d="M2 38 H38" />

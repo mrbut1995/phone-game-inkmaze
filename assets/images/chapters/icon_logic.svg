@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="90" height="90">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
   <!-- Icon chuong 2 · SUY LUAN: luoi 5x5 + duong di zigzag nhieu khuuyu -->
-  <rect x="1.5" y="1.5" width="88.5" height="88.5" rx="16" fill="#FFFFFF" fill-opacity="0.12"
+  <rect x="1.5" y="1.5" width="177" height="177" rx="16" fill="#FFFFFF" fill-opacity="0.12"
         stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="2.5"/>
   <g stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1">
     <line x1="36.9" y1="2" x2="36.9" y2="178" /><line x1="72.3" y1="2" x2="72.3" y2="178" />

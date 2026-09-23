@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 138" width="125" height="69">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 138" width="250" height="138">
   <!-- Thẻ giấy 250x138 cho HUD Minesweeper / Sum Path: giấy trắng + viền xanh + lề xanh + dòng kẻ ngang.
        Viền vẽ bằng 2 hình FILL lồng nhau -> không bị cắt nét ở mép viewBox. -->
-  <rect width="125" height="69" rx="20" fill="#6EA0C8"/>
-  <rect x="3" y="3" width="122" height="66" rx="17" fill="#FEFDFA"/>
+  <rect width="250" height="138" rx="20" fill="#6EA0C8"/>
+  <rect x="3" y="3" width="244" height="132" rx="17" fill="#FEFDFA"/>
 
   
   <g stroke="#9FC0D6" stroke-width="2" opacity="0.5">

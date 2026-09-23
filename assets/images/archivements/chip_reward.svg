@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 42" width="67.5" height="21">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 42" width="135" height="42">
   <!-- Chip phần thưởng 135x42 (normal) — mockup/archivement_scene.svg -->
-  <rect width="67.5" height="21" rx="10" fill="#8FB9D2"/>
-  <rect x="1.5" y="1.5" width="66" height="19.5" rx="8.5" fill="#FAF5EB"/>
+  <rect width="135" height="42" rx="10" fill="#8FB9D2"/>
+  <rect x="1.5" y="1.5" width="132" height="39" rx="8.5" fill="#FAF5EB"/>
 </svg>

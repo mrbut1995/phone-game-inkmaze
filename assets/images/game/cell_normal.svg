@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="176" height="176">
   <!-- Ô chuẩn 176x176 (mockup: lưới 5x5, mỗi ô 176px) - khép góc 90 độ -->
-  <rect x="1.35" y="1.35" width="86.65" height="86.65" fill="#CEE0EC" fill-opacity="0.22"/>
-  <rect x="1.35" y="1.35" width="86.65" height="86.65" fill="none" stroke="#6285B0" stroke-width="2.7"/>
+  <rect x="1.35" y="1.35" width="173.3" height="173.3" fill="#CEE0EC" fill-opacity="0.22"/>
+  <rect x="1.35" y="1.35" width="173.3" height="173.3" fill="none" stroke="#6285B0" stroke-width="2.7"/>
 </svg>

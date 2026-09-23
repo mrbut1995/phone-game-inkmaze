@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 28" width="19" height="14">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 28" width="38" height="28">
   <!-- Cờ Bồ Đào Nha (lục - đỏ + huy hiệu vàng) -->
-  <rect x="1.5" y="1.5" width="17.5" height="12.5" rx="3" fill="#FEFDFA" stroke="#224C6D" stroke-width="1.8"/>
+  <rect x="1.5" y="1.5" width="35" height="25" rx="3" fill="#FEFDFA" stroke="#224C6D" stroke-width="1.8"/>
   <path d="M1.5 4.5 a3 3 0 0 1 3 -3 H15.5 v25 H4.5 a3 3 0 0 1 -3 -3 z" fill="#046A38"/>
   <path d="M15.5 1.5 h18 a3 3 0 0 1 3 3 v19 a3 3 0 0 1 -3 3 h-18 z" fill="#DA291C"/>
   <circle cx="15.5" cy="14" r="4.6" fill="#FFE900" stroke="#C8A200" stroke-width="1"/>

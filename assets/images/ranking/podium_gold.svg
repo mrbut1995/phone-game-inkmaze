@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" width="120" height="100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" width="240" height="200">
   <!-- Bục hạng nhất 240x200 (mockup/ranking.svg) -->
-  <rect width="120" height="100" rx="16" fill="#F59E0B"/>
-  <rect x="2" y="2" width="118" height="98" rx="14" fill="#FEF3C7"/>
+  <rect width="240" height="200" rx="16" fill="#F59E0B"/>
+  <rect x="2" y="2" width="236" height="196" rx="14" fill="#FEF3C7"/>
 </svg>

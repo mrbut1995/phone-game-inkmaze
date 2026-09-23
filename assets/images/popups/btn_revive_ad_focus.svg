@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145 52" width="72.5" height="26">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145 52" width="145" height="52">
   <!-- Nút HỒI SINH - trạng thái focus: vòng nét đứt hổ phách -->
-  <rect width="72.5" height="26" rx="12" fill="#F59E0B" stroke="#C4843A" stroke-width="2"/>
-  <rect x="3" y="3" width="69.5" height="23" rx="9" fill="none" stroke="#FFFBEB" stroke-width="1.6" stroke-dasharray="4 3"/>
+  <rect width="145" height="52" rx="12" fill="#F59E0B" stroke="#C4843A" stroke-width="2"/>
+  <rect x="3" y="3" width="139" height="46" rx="9" fill="none" stroke="#FFFBEB" stroke-width="1.6" stroke-dasharray="4 3"/>
 </svg>

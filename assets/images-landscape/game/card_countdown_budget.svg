@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 230" width="275" height="115">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 230" width="550" height="230">
   <defs>
     <clipPath id="budgetClip">
-      <rect width="275" height="115" rx="22"/>
+      <rect width="550" height="230" rx="22"/>
     </clipPath>
   </defs>
-  <rect width="275" height="115" rx="22" fill="#FEFDFA" stroke="#C2410C" stroke-width="3"/>
+  <rect width="550" height="230" rx="22" fill="#FEFDFA" stroke="#C2410C" stroke-width="3"/>
   <g clip-path="url(#budgetClip)">
     <line x1="20" y1="0" x2="20" y2="230" stroke="#D84444" stroke-width="3"/>
   </g>

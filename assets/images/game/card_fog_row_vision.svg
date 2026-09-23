@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425 42" width="212.5" height="21">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425 42" width="425" height="42">
   <!-- Nền HÀNG TẦM NHÌN của bảng Sương Mù (mode Fog of War) — 425x42
        Nằm trong nodes/hud/fog_of_war_hud.tscn tại sheet-local (230, 16). -->
-  <rect x="0.6" y="0.6" width="211.9" height="20.4" rx="10" fill="#F4F7F9" stroke="#CFD9E0" stroke-width="1.2"/>
+  <rect x="0.6" y="0.6" width="423.8" height="40.8" rx="10" fill="#F4F7F9" stroke="#CFD9E0" stroke-width="1.2"/>
 </svg>

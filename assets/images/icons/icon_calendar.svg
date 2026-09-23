@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
   <!-- Tờ lịch (Daily Challenge) - nét chì vẽ tay -->
-  <rect x="10" y="14" width="14" height="13" rx="5" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2"/>
+  <rect x="10" y="14" width="28" height="26" rx="5" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2"/>
   <path d="M10 22 h28" stroke="#224C6D" stroke-width="2.8"/>
   <path d="M17 9 v8 M31 9 v8" stroke="#224C6D" stroke-width="3.2" stroke-linecap="round"/>
-  <rect x="21" y="26" width="4" height="4" rx="2" fill="#D84444"/>
+  <rect x="21" y="26" width="8" height="8" rx="2" fill="#D84444"/>
 </svg>

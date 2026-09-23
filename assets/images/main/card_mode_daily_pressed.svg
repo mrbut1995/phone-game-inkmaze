@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -30 804 310" width="402" height="155">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -30 804 310" width="804" height="310">
   <!-- Pressed: thẻ lún 2px, mực đỏ đậm, bỏ đổ bóng -->
   <g transform="translate(0, 2)">
-    <rect width="390" height="130" rx="24" fill="#F5E9E6" stroke="#B91C1C" stroke-width="3.5"/>
+    <rect width="780" height="260" rx="24" fill="#F5E9E6" stroke="#B91C1C" stroke-width="3.5"/>
     <line x1="38" y1="0" x2="38" y2="260" stroke="#B91C1C" stroke-width="3"/>
     <!-- Tag -->
-    <rect x="55" y="-23" width="105" height="23" rx="10" fill="#FECACA"/>
+    <rect x="55" y="-23" width="210" height="46" rx="10" fill="#FECACA"/>
     <!-- Icon Lịch -->
     <circle cx="125" cy="140" r="52" fill="#FEE2E2" stroke="#F87171" stroke-width="2"/>
     <!-- Badge Streak -->
-    <rect x="565" y="172" width="92.5" height="25.5" rx="10" fill="#FECACA"/>
+    <rect x="565" y="172" width="185" height="51" rx="10" fill="#FECACA"/>
     <g transform="translate(725, 105)">
       <path d="M 0 0 L 15 0 M 8 -10 L 18 0 L 8 10" stroke="#B91C1C" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
     </g>
