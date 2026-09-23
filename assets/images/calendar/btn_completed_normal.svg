@@ -1,11 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 46" width="150" height="46">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 46" width="75" height="23">
   <defs>
     <filter id="cBtnShadow" x="-15%" y="-20%" width="130%" height="150%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#1B4D20" flood-opacity="0.12"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#1B4D20" flood-opacity="0.12" />
     </filter>
   </defs>
   <g filter="url(#cBtnShadow)">
-    <rect width="150" height="46" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
-    <!-- <text x="75" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#2E7D32" letter-spacing="0.5">CHƠI LẠI ›</text> -->
+    <rect width="150" height="46" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" />
+    
   </g>
 </svg>

@@ -17,6 +17,7 @@ dest_files=["res://.godot/imported/card_wall_chip.svg-836b03b9d1299e6c259297cc87
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

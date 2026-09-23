@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 96" width="390" height="96">
-  <!-- Nút ÁP DỤNG — trạng thái nhấn (lún 2px, mực đậm hơn) -->
-  <rect x="1.75" y="3.75" width="386.5" height="90.5" rx="18" fill="#256286" stroke="#1B4560" stroke-width="3.5"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 96" width="195" height="48">
+  
+  <rect x="1.75" y="3.75" width="386.5" height="90.5" rx="18" fill="#256286" stroke="#1B4560" stroke-width="3.5" />
 </svg>

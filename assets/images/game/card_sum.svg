@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 158" width="440" height="158">
-  <!-- Thẻ TỔNG HIỆN TẠI 440x158 (HUD Sum Path): giấy trắng viền XANH ĐẬM + lề xanh + dòng kẻ ngang.
-       Viền vẽ bằng 2 hình FILL lồng nhau -> không bị cắt nét ở mép viewBox. -->
-  <rect width="440" height="158" rx="24" fill="#3D83AE"/>
-  <rect x="4" y="4" width="432" height="150" rx="20" fill="#FEFDFA"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 158" width="220" height="79">
+  
+  <rect width="440" height="158" rx="24" fill="#3D83AE" />
+  <rect x="4" y="4" width="432" height="150" rx="20" fill="#FEFDFA" />
 
-  <!-- Dòng kẻ ngang kiểu vở học sinh -->
+  
   <g stroke="#9FC0D6" stroke-width="2" opacity="0.5">
-    <line x1="32" y1="46" x2="432" y2="46"/>
-    <line x1="32" y1="86" x2="432" y2="86"/>
-    <line x1="32" y1="126" x2="432" y2="126"/>
+    <line x1="32" y1="46" x2="432" y2="46" />
+    <line x1="32" y1="86" x2="432" y2="86" />
+    <line x1="32" y1="126" x2="432" y2="126" />
   </g>
 
-  <!-- Lề xanh sổ tay -->
-  <line x1="24" y1="4" x2="24" y2="154" stroke="#3D83AE" stroke-width="3"/>
+  
+  <line x1="24" y1="4" x2="24" y2="154" stroke="#3D83AE" stroke-width="3" />
 </svg>

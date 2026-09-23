@@ -17,6 +17,7 @@ dest_files=["res://.godot/imported/bar_sum_ticks.svg-a3a7c4788e2d2e85c8054f5361a
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

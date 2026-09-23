@@ -1,15 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#224C6D" stroke-linecap="round" stroke-linejoin="round">
-  <!-- Thân lâu đài cân đối tâm (24, 24) -->
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24" fill="none" stroke="#224C6D" stroke-linecap="round" stroke-linejoin="round">
+  
   <path d="M 9 38 V 15 H 12 V 18 H 15 V 15 H 18 V 23 H 21 V 20 H 27 V 23 H 30 V 15 H 33 V 18 H 36 V 15 H 39 V 38 Z" fill="#FEFDFA" stroke-width="3" />
   
-  <!-- Cổng vòm hầm ngục có chấn song sắt -->
+  
   <path d="M 20 38 V 31 A 4 4 0 0 1 28 31 V 38" stroke-width="2.8" />
   <path d="M 24 27 V 38 M 20 34 H 28" stroke-width="2.2" />
 
-  <!-- Khe bắn tên trên 2 tháp canh -->
+  
   <line x1="13.5" y1="24" x2="13.5" y2="28" stroke-width="2.4" />
   <line x1="34.5" y1="24" x2="34.5" y2="28" stroke-width="2.4" />
 
-  <!-- Đường đất chân thành trải đều 2 bên -->
+  
   <path d="M 6 38 H 42" stroke-width="3" />
 </svg>

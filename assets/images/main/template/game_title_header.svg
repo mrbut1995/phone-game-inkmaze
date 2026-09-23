@@ -1,23 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 612 292" width="612" height="292">
-  <!-- 1. Doodle 3x3 -->
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 612 292" width="306" height="146">
+  
   <g transform="translate(240, 0)">
-    <rect x="0" y="0" width="120" height="120" rx="14" fill="#F4F8FA" stroke="#3D83AE" stroke-width="3"/>
-    <line x1="40" y1="0" x2="40" y2="120" stroke="#3D83AE" stroke-width="1.5" opacity="0.5"/>
-    <line x1="80" y1="0" x2="80" y2="120" stroke="#3D83AE" stroke-width="1.5" opacity="0.5"/>
-    <line x1="0" y1="40" x2="120" y2="40" stroke="#3D83AE" stroke-width="1.5" opacity="0.5"/>
-    <line x1="0" y1="80" x2="120" y2="80" stroke="#3D83AE" stroke-width="1.5" opacity="0.5"/>
-    <path d="M 20 100 L 20 60 L 60 60 L 60 20 L 100 20" fill="none" stroke="#2575A7" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="0" y="0" width="120" height="120" rx="14" fill="#F4F8FA" stroke="#3D83AE" stroke-width="3" />
+    <line x1="40" y1="0" x2="40" y2="120" stroke="#3D83AE" stroke-width="1.5" opacity="0.5" />
+    <line x1="80" y1="0" x2="80" y2="120" stroke="#3D83AE" stroke-width="1.5" opacity="0.5" />
+    <line x1="0" y1="40" x2="120" y2="40" stroke="#3D83AE" stroke-width="1.5" opacity="0.5" />
+    <line x1="0" y1="80" x2="120" y2="80" stroke="#3D83AE" stroke-width="1.5" opacity="0.5" />
+    <path d="M 20 100 L 20 60 L 60 60 L 60 20 L 100 20" fill="none" stroke="#2575A7" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
     <text x="20" y="22" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="900" fill="#2E7D32">S</text>
     <text x="100" y="32" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="900" fill="#D97706">F</text>
   </g>
 
-  <!-- 2. Tag thể loại -->
+  
   <g transform="translate(300, 135)" text-anchor="middle">
-    <rect x="-140" y="0" width="280" height="34" rx="8" fill="#F4EFE6" stroke="#D1E2ED" stroke-width="1.5"/>
+    <rect x="-140" y="0" width="280" height="34" rx="8" fill="#F4EFE6" stroke="#D1E2ED" stroke-width="1.5" />
     <text y="24" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="800" fill="#3D83AE" letter-spacing="3">LOGIC &amp; PUZZLE</text>
   </g>
 
-  <!-- 3. Tên game & Phụ đề -->
+  
   <text x="300" y="225" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="64" font-weight="950" fill="#224C6D" letter-spacing="2">NUMBER MAZE</text>
   <text x="300" y="265" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#718B9E">Mê Cung Suy Luận • Vở Ô Ly</text>
 </svg>

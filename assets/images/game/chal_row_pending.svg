@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 58" width="490" height="58">
-  <!-- Dải thử thách CHƯA ĐẠT 490x58 (mockup/matchup_level.svg, phóng to theo thẻ) - nền giấy ngà, viền nét mảnh -->
-  <rect width="490" height="58" rx="12" fill="#E8E2D5"/>
-  <rect x="1.2" y="1.2" width="487.6" height="55.6" rx="11" fill="#FAF5EB"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 58" width="245" height="29">
+  
+  <rect width="490" height="58" rx="12" fill="#E8E2D5" />
+  <rect x="1.2" y="1.2" width="487.6" height="55.6" rx="11" fill="#FAF5EB" />
 </svg>

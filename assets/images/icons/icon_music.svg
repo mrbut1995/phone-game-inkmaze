@@ -1,16 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <!-- Sóng âm thanh phát ra (dùng màu xanh #8FB9D2) -->
-  <path d="M37 20 C40 22.5 40 26.5 37 29" stroke="#8FB9D2" stroke-width="2.6"/>
-  <path d="M42 16 C46 20.5 46 28.5 42 33" stroke="#8FB9D2" stroke-width="2.6"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M37 20 C40 22.5 40 26.5 37 29" stroke="#8FB9D2" stroke-width="2.6" />
+  <path d="M42 16 C46 20.5 46 28.5 42 33" stroke="#8FB9D2" stroke-width="2.6" />
 
-  <!-- Thanh xà nối 2 nốt (Beam) -->
-  <path d="M16 14.5 L33 9.5 V14.5 L16 19.5 Z" fill="#224C6D" stroke="#224C6D" stroke-width="1"/>
+  
+  <path d="M16 14.5 L33 9.5 V14.5 L16 19.5 Z" fill="#224C6D" stroke="#224C6D" stroke-width="1" />
 
-  <!-- Thân 2 nốt nhạc (Stems) -->
-  <line x1="16" y1="18" x2="16" y2="34" stroke="#224C6D" stroke-width="3.2"/>
-  <line x1="33" y1="13" x2="33" y2="29" stroke="#224C6D" stroke-width="3.2"/>
+  
+  <line x1="16" y1="18" x2="16" y2="34" stroke="#224C6D" stroke-width="3.2" />
+  <line x1="33" y1="13" x2="33" y2="29" stroke="#224C6D" stroke-width="3.2" />
 
-  <!-- 2 đầu nốt nhạc đặc ruột, nghiêng góc tự nhiên -->
-  <ellipse cx="12" cy="34" rx="5.5" ry="4" transform="rotate(-20 12 34)" fill="#224C6D" stroke="#224C6D" stroke-width="1.5"/>
-  <ellipse cx="29" cy="29" rx="5.5" ry="4" transform="rotate(-20 29 29)" fill="#224C6D" stroke="#224C6D" stroke-width="1.5"/>
+  
+  <ellipse cx="12" cy="34" rx="5.5" ry="4" transform="rotate(-20 12 34)" fill="#224C6D" stroke="#224C6D" stroke-width="1.5" />
+  <ellipse cx="29" cy="29" rx="5.5" ry="4" transform="rotate(-20 29 29)" fill="#224C6D" stroke="#224C6D" stroke-width="1.5" />
 </svg>

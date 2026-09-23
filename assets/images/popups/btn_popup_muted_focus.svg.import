@@ -17,6 +17,7 @@ dest_files=["res://.godot/imported/btn_popup_muted_focus.svg-e038ade981f6a3c752a
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

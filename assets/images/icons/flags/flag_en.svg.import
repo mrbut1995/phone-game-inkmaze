@@ -17,6 +17,7 @@ dest_files=["res://.godot/imported/flag_en.svg-343df7061bf7981ceb4591ca1f07b311.
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

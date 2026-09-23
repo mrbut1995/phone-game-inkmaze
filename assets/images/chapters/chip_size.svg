@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 34" width="260" height="34">
-  <!-- Chip "KÍCH THƯỚC x×x" — art TRẮNG, màu đổi bằng modulate theo trạng thái -->
-  <rect width="260" height="34" rx="9" fill="#FFFFFF"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 34" width="130" height="17">
+  
+  <rect width="260" height="34" rx="9" fill="#FFFFFF" />
 </svg>

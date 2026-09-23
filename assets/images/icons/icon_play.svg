@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-  <!-- Nút phát (thẻ Play / Chọn màn) - nét sáng trên nền mực xanh -->
-  <path d="M18 14 L34 24 L18 34 z" fill="#FAF5EB" stroke="#FAF5EB" stroke-width="3" stroke-linejoin="round"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24">
+  
+  <path d="M18 14 L34 24 L18 34 z" fill="#FAF5EB" stroke="#FAF5EB" stroke-width="3" stroke-linejoin="round" />
 </svg>

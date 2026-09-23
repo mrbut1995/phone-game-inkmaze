@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Icon BÚT CHÌ (art TRẮNG -> tô màu bằng modulate) -->
-  <path d="M 8 56 L 14 38 L 44 8 L 56 20 L 26 50 Z" fill="#FFFFFF"/>
-  <path d="M 14 38 L 26 50 L 8 56 Z" fill="#FFFFFF" fill-opacity="0.55"/>
-  <rect x="40" y="6" width="16" height="8" rx="3" fill="#FFFFFF" fill-opacity="0.8"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32">
+  
+  <path d="M 8 56 L 14 38 L 44 8 L 56 20 L 26 50 Z" fill="#FFFFFF" />
+  <path d="M 14 38 L 26 50 L 8 56 Z" fill="#FFFFFF" fill-opacity="0.55" />
+  <rect x="40" y="6" width="16" height="8" rx="3" fill="#FFFFFF" fill-opacity="0.8" />
 </svg>

@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 46" width="150" height="46">
-  <!-- Vòng focus nét đứt vẽ lọt trong khung -->
-  <rect width="150" height="46" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
-  <rect x="3" y="3" width="144" height="40" rx="9" fill="none" stroke="#2E7D32" stroke-width="1.6" stroke-dasharray="4 3"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 46" width="75" height="23">
+  
+  <rect width="150" height="46" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" />
+  <rect x="3" y="3" width="144" height="40" rx="9" fill="none" stroke="#2E7D32" stroke-width="1.6" stroke-dasharray="4 3" />
 </svg>

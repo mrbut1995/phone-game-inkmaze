@@ -1,15 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 136 136" width="136" height="136">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 136 136" width="68" height="68">
   <g stroke="#3D83AE" stroke-linecap="round">
-    <rect x="0" y="0" width="120" height="120" rx="14" fill="#F4F8FA" stroke-width="3"/>
-    <line x1="40" y1="0" x2="40" y2="120" stroke-width="1.5" opacity="0.5"/>
-    <line x1="80" y1="0" x2="80" y2="120" stroke-width="1.5" opacity="0.5"/>
-    <line x1="0" y1="40" x2="120" y2="40" stroke-width="1.5" opacity="0.5"/>
-    <line x1="0" y1="80" x2="120" y2="80" stroke-width="1.5" opacity="0.5"/>
+    <rect x="0" y="0" width="120" height="120" rx="14" fill="#F4F8FA" stroke-width="3" />
+    <line x1="40" y1="0" x2="40" y2="120" stroke-width="1.5" opacity="0.5" />
+    <line x1="80" y1="0" x2="80" y2="120" stroke-width="1.5" opacity="0.5" />
+    <line x1="0" y1="40" x2="120" y2="40" stroke-width="1.5" opacity="0.5" />
+    <line x1="0" y1="80" x2="120" y2="80" stroke-width="1.5" opacity="0.5" />
     
-    <!-- Đường vẽ nối từ S lên F -->
-    <path d="M 20 100 L 20 60 L 60 60 L 60 20 L 100 20" fill="none" stroke="#2575A7" stroke-width="6" stroke-linejoin="round"/>
-    <!-- Chữ S (điểm bắt đầu) và F (đích) VẼ BẰNG PATH — ThorVG không render <text> -->
-    <path d="M 24 7 H 18 A 3.5 3.5 0 0 0 18 14 H 22 A 3.5 3.5 0 0 1 22 21 H 16" fill="none" stroke="#2E7D32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M 96 6 V 22 M 96 6 H 104 M 96 14 H 102" fill="none" stroke="#D97706" stroke-width="3" stroke-linecap="round"/>
+    
+    <path d="M 20 100 L 20 60 L 60 60 L 60 20 L 100 20" fill="none" stroke="#2575A7" stroke-width="6" stroke-linejoin="round" />
+    
+    <path d="M 24 7 H 18 A 3.5 3.5 0 0 0 18 14 H 22 A 3.5 3.5 0 0 1 22 21 H 16" fill="none" stroke="#2E7D32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 96 6 V 22 M 96 6 H 104 M 96 14 H 102" fill="none" stroke="#D97706" stroke-width="3" stroke-linecap="round" />
   </g>
 </svg>

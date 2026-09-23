@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 24" width="135" height="24">
-  <!-- Chip trạng thái "ĐANG TÍNH GIỜ" của thẻ THỜI GIAN (mode One Stroke) — 135x24
-       Nằm trong nodes/hud/one_stroke_hud.tscn tại Time-local (40, 118). -->
-  <rect width="135" height="24" rx="6" fill="#F0F7FB"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 24" width="67.5" height="12">
+  
+  <rect width="135" height="24" rx="6" fill="#F0F7FB" />
 </svg>

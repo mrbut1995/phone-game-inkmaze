@@ -1,21 +1,21 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="17 14 896 1185" width="896" height="1185">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="17 14 896 1185" width="448" height="592.5">
   <defs>
     <filter id="dunSlipShadow" x="-10%" y="-10%" width="125%" height="130%">
-      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#1B2834" flood-opacity="0.28"/>
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#1B2834" flood-opacity="0.28" />
     </filter>
   </defs>
   <g transform="translate(40, 40)" filter="url(#dunSlipShadow)">
-    <rect width="850" height="1120" rx="18" fill="#FFFDF8"/>
-    <!-- Mép răng cưa xé sổ tay ở đỉnh (Perforated Edge) -->
-    <path d="M 0 18 C 15 18 15 0 30 0 C 45 0 45 18 60 18 C 75 18 75 0 90 0 C 105 0 105 18 120 18 C 135 18 135 0 150 0 C 165 0 165 18 180 18 C 195 18 195 0 210 0 C 225 0 225 18 240 18 C 255 0 255 0 270 0 C 285 0 285 18 300 18 C 315 18 315 0 330 0 C 345 0 345 18 360 18 C 375 18 375 0 390 0 C 405 0 405 18 420 18 C 435 18 435 0 450 0 C 465 0 465 18 480 18 C 495 18 495 0 510 0 C 525 0 525 18 540 18 C 555 18 555 0 570 0 C 585 0 585 18 600 18 C 615 18 615 0 630 0 C 645 0 645 18 660 18 C 675 18 675 0 690 0 C 705 0 705 18 720 18 C 735 18 735 0 750 0 C 765 0 765 18 780 18 C 795 18 795 0 810 0 C 825 0 825 18 850 18" 
-          fill="#FAF5EB" opacity="0.9"/>
+    <rect width="850" height="1120" rx="18" fill="#FFFDF8" />
+    
+    <path d="M 0 18 C 15 18 15 0 30 0 C 45 0 45 18 60 18 C 75 18 75 0 90 0 C 105 0 105 18 120 18 C 135 18 135 0 150 0 C 165 0 165 18 180 18 C 195 18 195 0 210 0 C 225 0 225 18 240 18 C 255 0 255 0 270 0 C 285 0 285 18 300 18 C 315 18 315 0 330 0 C 345 0 345 18 360 18 C 375 18 375 0 390 0 C 405 0 405 18 420 18 C 435 18 435 0 450 0 C 465 0 465 18 480 18 C 495 18 495 0 510 0 C 525 0 525 18 540 18 C 555 18 555 0 570 0 C 585 0 585 18 600 18 C 615 18 615 0 630 0 C 645 0 645 18 660 18 C 675 18 675 0 690 0 C 705 0 705 18 720 18 C 735 18 735 0 750 0 C 765 0 765 18 780 18 C 795 18 795 0 810 0 C 825 0 825 18 850 18" fill="#FAF5EB" opacity="0.9" />
     <g stroke="#8FB9D2" stroke-width="1" opacity="0.35">
-      <line x1="60" y1="200" x2="790" y2="200"/><line x1="60" y1="270" x2="790" y2="270"/>
-      <line x1="60" y1="340" x2="790" y2="340"/><line x1="60" y1="410" x2="790" y2="410"/>
-      <line x1="60" y1="480" x2="790" y2="480"/><line x1="60" y1="550" x2="790" y2="550"/>
-      <line x1="60" y1="620" x2="790" y2="620"/><line x1="60" y1="690" x2="790" y2="690"/>
+      <line x1="60" y1="200" x2="790" y2="200" /><line x1="60" y1="270" x2="790" y2="270" />
+      <line x1="60" y1="340" x2="790" y2="340" /><line x1="60" y1="410" x2="790" y2="410" />
+      <line x1="60" y1="480" x2="790" y2="480" /><line x1="60" y1="550" x2="790" y2="550" />
+      <line x1="60" y1="620" x2="790" y2="620" /><line x1="60" y1="690" x2="790" y2="690" />
     </g>
-    <line x1="75" y1="20" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5"/>
-    <rect width="850" height="1120" rx="18" fill="none" stroke="#3D83AE" stroke-width="3"/>
+    <line x1="75" y1="20" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" />
+    <rect width="850" height="1120" rx="18" fill="none" stroke="#3D83AE" stroke-width="3" />
   </g>
 </svg>
