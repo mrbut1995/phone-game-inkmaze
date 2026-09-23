@@ -1,14 +1,15 @@
 [gd_scene format=3 uid="uid://c7g3jeoi543mn"]
 
-[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://c1l6u146747qm" path="res://scripts/nodes/hud/minesweep_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_land_time_240.svg" id="3_time"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_minesweeper_bomb.svg" id="4_bomb"]
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape_hud.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://bdgf5rpilmx26" path="res://scripts/nodes/hud/minesweep_hud.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://ciclopy7n6bxa" path="res://assets/images-landscape/game/card_land_time_240.svg" id="3_time"]
+[ext_resource type="Texture2D" uid="uid://c2l534qjrwmmf" path="res://assets/images-landscape/game/card_minesweeper_bomb.svg" id="4_bomb"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="5_card_label"]
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="6_time_value"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="7_bomb_label"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="8_bomb_value"]
-[ext_resource type="Texture2D" uid="uid://df7w81t235iil" path="res://assets/images/game/icon_bomb.svg" id="9_bomb_icon"]
+[ext_resource type="Texture2D" uid="uid://cpd6oe44j6om3" path="res://assets/images/game/icon_bomb.svg" id="9_bomb_icon"]
+
 
 [node name="Hud" instance=ExtResource("1_base")]
 custom_minimum_size =  Vector2(405, 380)

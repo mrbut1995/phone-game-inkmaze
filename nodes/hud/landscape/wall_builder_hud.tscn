@@ -1,15 +1,16 @@
 [gd_scene format=3 uid="uid://dpsk2l6kox52m"]
 
-[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://7d4834o2e6l2" path="res://scripts/nodes/hud/wall_builder_hud.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape_hud.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://bkhumwx0cgwps" path="res://scripts/nodes/hud/wall_builder_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_land_time_240.svg" id="4_time"]
-[ext_resource type="Texture2D" uid="uid://c6v2r8p0e82c5" path="res://assets/images/game/card_stroke_time_chip.svg" id="5_chip_time"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_wall_builder.svg" id="6_sheet"]
-[ext_resource type="Texture2D" uid="uid://c41cydp51o1l3" path="res://assets/images/game/card_wall_row.svg" id="7_row"]
-[ext_resource type="Texture2D" uid="uid://cys2y47yv81a6" path="res://assets/images/game/card_wall_chip.svg" id="8_chip"]
-[ext_resource type="Texture2D" uid="uid://814t2poyx4d6" path="res://assets/images/game/card_wall_slider_track.svg" id="9_track"]
-[ext_resource type="Texture2D" uid="uid://doh6s330e7lha" path="res://assets/images/game/card_wall_slider_fill.svg" id="10_fill"]
+[ext_resource type="Texture2D" uid="uid://ciclopy7n6bxa" path="res://assets/images-landscape/game/card_land_time_240.svg" id="4_time"]
+[ext_resource type="Texture2D" uid="uid://dtbkkqe0wcqkl" path="res://assets/images/game/card_stroke_time_chip.svg" id="5_chip_time"]
+[ext_resource type="Texture2D" uid="uid://ie42ru72uaqc" path="res://assets/images-landscape/game/card_wall_builder.svg" id="6_sheet"]
+[ext_resource type="Texture2D" uid="uid://b3x0emsmmjpkj" path="res://assets/images/game/card_wall_row.svg" id="7_row"]
+[ext_resource type="Texture2D" uid="uid://ctkjjiugjhdus" path="res://assets/images/game/card_wall_chip.svg" id="8_chip"]
+[ext_resource type="Texture2D" uid="uid://c77k5yki6vr8h" path="res://assets/images/game/card_wall_slider_track.svg" id="9_track"]
+[ext_resource type="Texture2D" uid="uid://vtpnecntdwub" path="res://assets/images/game/card_wall_slider_fill.svg" id="10_fill"]
+
 
 [node name="Hud" instance=ExtResource("1_base")]
 custom_minimum_size =  Vector2(405, 380)

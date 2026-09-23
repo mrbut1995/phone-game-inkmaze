@@ -6,4 +6,4 @@ extends BaseHUD
 
 
 func challenge_card() -> Control:
-	return get_node_or_null("Challenge") as Control
+	return get_node_or_null("Content/ModeInformation/Challenge") as Control

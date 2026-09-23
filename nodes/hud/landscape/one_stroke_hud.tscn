@@ -1,15 +1,16 @@
 [gd_scene format=3 uid="uid://bmvx2v2n4f78q"]
 
-[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://caxckk586b61p" path="res://scripts/nodes/hud/one_stroke_hud.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape_hud.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://du0w6dt2wwbtl" path="res://scripts/nodes/hud/one_stroke_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_time.svg" id="4_time"]
-[ext_resource type="Texture2D" uid="uid://c6v2r8p0e82c5" path="res://assets/images/game/card_stroke_time_chip.svg" id="5_chip_time"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_one_stroke.svg" id="6_sheet"]
-[ext_resource type="Texture2D" uid="uid://c8b74x1e0e5a8" path="res://assets/images/game/card_stroke_row.svg" id="7_row"]
-[ext_resource type="Texture2D" uid="uid://br6g0i6b4m0g1" path="res://assets/images/game/card_stroke_chip.svg" id="8_chip"]
-[ext_resource type="Texture2D" uid="uid://bfm523u2a2mty" path="res://assets/images/game/card_stroke_slider_track.svg" id="9_track"]
-[ext_resource type="Texture2D" uid="uid://dd8d3a0k3mquw" path="res://assets/images/game/card_stroke_slider_fill.svg" id="10_fill"]
+[ext_resource type="Texture2D" uid="uid://deifmw0a2fh2o" path="res://assets/images-landscape/game/card_time.svg" id="4_time"]
+[ext_resource type="Texture2D" uid="uid://dtbkkqe0wcqkl" path="res://assets/images/game/card_stroke_time_chip.svg" id="5_chip_time"]
+[ext_resource type="Texture2D" uid="uid://bnxy2nsf7cqke" path="res://assets/images-landscape/game/card_one_stroke.svg" id="6_sheet"]
+[ext_resource type="Texture2D" uid="uid://cbyh6jubl8thl" path="res://assets/images/game/card_stroke_row.svg" id="7_row"]
+[ext_resource type="Texture2D" uid="uid://dj7pkowhi2ygi" path="res://assets/images/game/card_stroke_chip.svg" id="8_chip"]
+[ext_resource type="Texture2D" uid="uid://sj4637skkohg" path="res://assets/images/game/card_stroke_slider_track.svg" id="9_track"]
+[ext_resource type="Texture2D" uid="uid://c3as1kg3a7syq" path="res://assets/images/game/card_stroke_slider_fill.svg" id="10_fill"]
+
 
 [node name="Hud" instance=ExtResource("1_base")]
 custom_minimum_size =  Vector2(405, 380)

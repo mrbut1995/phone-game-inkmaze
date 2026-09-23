@@ -38,13 +38,13 @@ layout_mode = 1
 layout_mode = 1
 
 [node name="Board" parent="." index="3" unique_id=181012636 instance=ExtResource("3_board")]
-custom_minimum_size =  Vector2(0, 0)
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right =  0
-offset_bottom =  0
+offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="Controllers" type="Node" parent="." index="4" unique_id=1749084702]
 

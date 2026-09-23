@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://c6lkgqerjx7yq"]
 
-[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://4bgj8itq83wv" path="res://scripts/nodes/hud/sum_path_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_land_time_240.svg" id="4_time"]
+[ext_resource type="Texture2D" uid="uid://ciclopy7n6bxa" path="res://assets/images-landscape/game/card_land_time_240.svg" id="4_time"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="5_card_lbl"]
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="6_time_val"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_sum_path.svg" id="7_sheet"]
+[ext_resource type="Texture2D" uid="uid://de5t6gcvvnnl" path="res://assets/images-landscape/game/card_sum_path.svg" id="7_sheet"]
 [ext_resource type="Texture2D" uid="uid://bxsmxk7ttkpmy" path="res://assets/images/game/card_sum_block_current.svg" id="8_block_current"]
 [ext_resource type="Texture2D" uid="uid://cj7ylm7dmsn2c" path="res://assets/images/game/card_sum_emblem.svg" id="9_emblem"]
 [ext_resource type="Texture2D" uid="uid://cc0fu04piyseb" path="res://assets/images/game/card_sum_block_target.svg" id="10_block_target"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://clj1xk45gqpml" path="res://assets/images/game/card_sum_bar_track.svg" id="12_bar_track"]
 [ext_resource type="Texture2D" uid="uid://dq6rl1smpx2v4" path="res://assets/images/game/bar_sum_fill.svg" id="13_fill"]
 [ext_resource type="Texture2D" uid="uid://c0iv6cyoi50be" path="res://assets/images/game/bar_sum_ticks.svg" id="14_ticks"]
+
 
 [node name="Hud" instance=ExtResource("1_base")]
 custom_minimum_size =  Vector2(405, 380)

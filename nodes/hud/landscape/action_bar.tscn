@@ -18,131 +18,128 @@
 [ext_resource type="Texture2D" uid="uid://bptu38mnf2s0j" path="res://assets/images-landscape/game/btn_tool_wall_land_pressed.svg" id="bar_wall_p"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_io3xg"]
-content_margin_left =  100.5
-content_margin_top =  16.5
-content_margin_right =  90
-content_margin_bottom =  18.5
+content_margin_left = 100.5
+content_margin_top = 16.5
+content_margin_right = 90.0
+content_margin_bottom = 18.5
 texture = ExtResource("bar_tool_n")
-texture_margin_left =  100.5
-texture_margin_top =  16.5
-texture_margin_right =  90
-texture_margin_bottom =  18.5
+texture_margin_left = 100.5
+texture_margin_top = 16.5
+texture_margin_right = 90.0
+texture_margin_bottom = 18.5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pkg1f"]
-content_margin_left =  100.5
-content_margin_top =  16.5
-content_margin_right =  90
-content_margin_bottom =  18.5
+content_margin_left = 100.5
+content_margin_top = 16.5
+content_margin_right = 90.0
+content_margin_bottom = 18.5
 texture = ExtResource("bar_tool_p")
-texture_margin_left =  100.5
-texture_margin_top =  16.5
-texture_margin_right =  90
-texture_margin_bottom =  18.5
+texture_margin_left = 100.5
+texture_margin_top = 16.5
+texture_margin_right = 90.0
+texture_margin_bottom = 18.5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gxs4y"]
-content_margin_left =  100.5
-content_margin_top =  16.5
-content_margin_right =  90
-content_margin_bottom =  18.5
+content_margin_left = 100.5
+content_margin_top = 16.5
+content_margin_right = 90.0
+content_margin_bottom = 18.5
 texture = ExtResource("bar_tool_n")
-texture_margin_left =  100.5
-texture_margin_top =  16.5
-texture_margin_right =  90
-texture_margin_bottom =  18.5
+texture_margin_left = 100.5
+texture_margin_top = 16.5
+texture_margin_right = 90.0
+texture_margin_bottom = 18.5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pltj4"]
-content_margin_left =  100.5
-content_margin_top =  16.5
-content_margin_right =  90
-content_margin_bottom =  18.5
+content_margin_left = 100.5
+content_margin_top = 16.5
+content_margin_right = 90.0
+content_margin_bottom = 18.5
 texture = ExtResource("4_io3xg")
-texture_margin_left =  100.5
-texture_margin_top =  16.5
-texture_margin_right =  90
-texture_margin_bottom =  18.5
+texture_margin_left = 100.5
+texture_margin_top = 16.5
+texture_margin_right = 90.0
+texture_margin_bottom = 18.5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0urif"]
-content_margin_left =  100.5
-content_margin_top =  16.5
-content_margin_right =  90
-content_margin_bottom =  18.5
+content_margin_left = 100.5
+content_margin_top = 16.5
+content_margin_right = 90.0
+content_margin_bottom = 18.5
 texture = ExtResource("bar_tool_n")
-texture_margin_left =  100.5
-texture_margin_top =  16.5
-texture_margin_right =  90
-texture_margin_bottom =  18.5
+texture_margin_left = 100.5
+texture_margin_top = 16.5
+texture_margin_right = 90.0
+texture_margin_bottom = 18.5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xma4f"]
-content_margin_left =  57.5
-content_margin_top =  13
-content_margin_right =  42
-content_margin_bottom =  16
+content_margin_left = 57.5
+content_margin_top = 13.0
+content_margin_right = 42.0
+content_margin_bottom = 16.0
 texture = ExtResource("bar_wall_n")
-texture_margin_left =  57.5
-texture_margin_top =  13
-texture_margin_right =  42
-texture_margin_bottom =  16
+texture_margin_left = 57.5
+texture_margin_top = 13.0
+texture_margin_right = 42.0
+texture_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j5n52"]
-content_margin_left =  57.5
-content_margin_top =  13
-content_margin_right =  42
-content_margin_bottom =  16
+content_margin_left = 57.5
+content_margin_top = 13.0
+content_margin_right = 42.0
+content_margin_bottom = 16.0
 texture = ExtResource("bar_wall_p")
-texture_margin_left =  57.5
-texture_margin_top =  13
-texture_margin_right =  42
-texture_margin_bottom =  16
+texture_margin_left = 57.5
+texture_margin_top = 13.0
+texture_margin_right = 42.0
+texture_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j0swc"]
-content_margin_left =  57.5
-content_margin_top =  13
-content_margin_right =  42
-content_margin_bottom =  16
+content_margin_left = 57.5
+content_margin_top = 13.0
+content_margin_right = 42.0
+content_margin_bottom = 16.0
 texture = ExtResource("bar_wall_n")
-texture_margin_left =  57.5
-texture_margin_top =  13
-texture_margin_right =  42
-texture_margin_bottom =  16
+texture_margin_left = 57.5
+texture_margin_top = 13.0
+texture_margin_right = 42.0
+texture_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nn7xa"]
-content_margin_left =  57.5
-content_margin_top =  13
-content_margin_right =  42
-content_margin_bottom =  16
+content_margin_left = 57.5
+content_margin_top = 13.0
+content_margin_right = 42.0
+content_margin_bottom = 16.0
 texture = ExtResource("bar_wall_n")
-texture_margin_left =  57.5
-texture_margin_top =  13
-texture_margin_right =  42
-texture_margin_bottom =  16
+texture_margin_left = 57.5
+texture_margin_top = 13.0
+texture_margin_right = 42.0
+texture_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_prai4"]
-content_margin_left =  57.5
-content_margin_top =  13
-content_margin_right =  42
-content_margin_bottom =  16
+content_margin_left = 57.5
+content_margin_top = 13.0
+content_margin_right = 42.0
+content_margin_bottom = 16.0
 texture = ExtResource("bar_wall_n")
-texture_margin_left =  57.5
-texture_margin_top =  13
-texture_margin_right =  42
-texture_margin_bottom =  16
+texture_margin_left = 57.5
+texture_margin_top = 13.0
+texture_margin_right = 42.0
+texture_margin_bottom = 16.0
 
-[node name="ActionBar" type="Control" unique_id=2115460442]
-layout_mode = 3
-anchors_preset = 15
+[node name="ActionBar" type="VBoxContainer" unique_id=834062236]
+anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.34600002
+offset_bottom = 0.1599884
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("bar_script")
 
 [node name="Tool" type="Button" parent="." unique_id=822923896]
-custom_minimum_size =  Vector2(405, 107.5)
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-offset_bottom =  107.5
+custom_minimum_size = Vector2(405, 107.5)
+layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_io3xg")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_pkg1f")
 theme_override_styles/hover = SubResource("StyleBoxTexture_gxs4y")
@@ -154,10 +151,10 @@ texture_hover = ExtResource("bar_tool_n")
 texture_pressed = ExtResource("bar_tool_p")
 texture_disabled = ExtResource("4_io3xg")
 texture_focus = ExtResource("bar_tool_n")
-patch_margin_left =  100.5
-patch_margin_top =  16.5
-patch_margin_right =  90
-patch_margin_bottom =  18.5
+patch_margin_left = 100.5
+patch_margin_top = 16.5
+patch_margin_right = 90.0
+patch_margin_bottom = 18.5
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Label" type="Label" parent="Tool" unique_id=673922787]
@@ -187,15 +184,11 @@ label_settings = ExtResource("bar_sub")
 vertical_alignment = 1
 
 [node name="SubRow" type="HBoxContainer" parent="." unique_id=1864078791]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-offset_top =  117.5
-offset_bottom =  192.5
-theme_override_constants/separation =  10
+layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="Wall" type="Button" parent="SubRow" unique_id=1458595949]
-custom_minimum_size =  Vector2(230, 75)
+custom_minimum_size = Vector2(230, 75)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -210,10 +203,10 @@ texture_hover = ExtResource("bar_wall_n")
 texture_pressed = ExtResource("bar_wall_p")
 texture_disabled = ExtResource("bar_wall_n")
 texture_focus = ExtResource("bar_wall_n")
-patch_margin_left =  57.5
-patch_margin_top =  13
-patch_margin_right =  42
-patch_margin_bottom =  16
+patch_margin_left = 57.5
+patch_margin_top = 13.0
+patch_margin_right = 42.0
+patch_margin_bottom = 16.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Label" type="Label" parent="SubRow/Wall" unique_id=95066269]
@@ -223,7 +216,7 @@ anchors_preset = -1
 anchor_top = 0.18
 anchor_right = 0.9500001
 anchor_bottom = 0.55
-offset_left =  71.5
+offset_left = 71.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "GHI NHỚ TƯỜNG"
@@ -238,7 +231,7 @@ anchors_preset = -1
 anchor_top = 0.58
 anchor_right = 0.95
 anchor_bottom = 0.86
-offset_left =  77
+offset_left = 77.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Nối 2 dấu cộng (+) Anchor"
@@ -247,7 +240,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Undo" type="TextureButton" parent="SubRow" unique_id=293478108]
-custom_minimum_size =  Vector2(77.5, 75)
+custom_minimum_size = Vector2(77.5, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -258,7 +251,7 @@ texture_disabled = ExtResource("bar_undo_d")
 stretch_mode = 0
 
 [node name="Hint" type="TextureButton" parent="SubRow" unique_id=1015673811]
-custom_minimum_size =  Vector2(77.5, 75)
+custom_minimum_size = Vector2(77.5, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -270,7 +263,7 @@ stretch_mode = 0
 
 [node name="Replay" type="TextureButton" parent="SubRow" unique_id=1476857671]
 visible = false
-custom_minimum_size =  Vector2(77.5, 75)
+custom_minimum_size = Vector2(77.5, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -284,7 +277,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top =  -17
+offset_top = -17.0
 grow_horizontal = 2
 grow_vertical = 0
 label_settings = ExtResource("bar_sub")

@@ -1,15 +1,16 @@
 [gd_scene format=3 uid="uid://myb3gav3mm8h"]
 
-[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape.tscn" id="1_pt42g"]
-[ext_resource type="Script" uid="uid://dngu3n8hud01" path="res://scripts/nodes/hud/dungeon_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_dungeon_time.svg" id="3_time_bg"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_dungeon_step.svg" id="4_step_bg"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_dungeon_floor.svg" id="5_floor_bg"]
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape_hud.tscn" id="1_pt42g"]
+[ext_resource type="Script" uid="uid://jtc5actxn551" path="res://scripts/nodes/hud/dungeon_hud.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://d3x6jl7cw8ahf" path="res://assets/images-landscape/game/card_dungeon_time.svg" id="3_time_bg"]
+[ext_resource type="Texture2D" uid="uid://d0e2070eomp11" path="res://assets/images-landscape/game/card_dungeon_step.svg" id="4_step_bg"]
+[ext_resource type="Texture2D" uid="uid://cymbk5vuj1kh5" path="res://assets/images-landscape/game/card_dungeon_floor.svg" id="5_floor_bg"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="6_card_lbl"]
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="7_time_val"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="8_step_lbl"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="9_step_val"]
 [ext_resource type="LabelSettings" uid="uid://cb662usl7mhkf" path="res://resources/settings/text/text_game_information_value.tres" id="10_floor_val"]
+
 
 [node name="Hud" unique_id=1383101299 instance=ExtResource("1_pt42g")]
 custom_minimum_size =  Vector2(405, 380)
