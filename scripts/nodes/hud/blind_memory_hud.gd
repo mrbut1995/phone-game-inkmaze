@@ -9,4 +9,4 @@ extends BaseHUD
 
 func _on_update(ctx: Dictionary) -> void:
 	# Dòng nhỏ cuối thẻ ghi nhớ: chế độ đang chơi (CHẾ ĐỘ: NORMAL / HARDCORE)
-	set_label_text(get_node_or_null("Note/Phase"), str(ctx.get("extra", "")))
+	set_label_text(get_node_or_null("Content/ModeInformation/Note/Phase"), str(ctx.get("extra", "")))

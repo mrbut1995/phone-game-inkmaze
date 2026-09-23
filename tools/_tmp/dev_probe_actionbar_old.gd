@@ -26,7 +26,7 @@ func _run() -> void:
 		if info != null:
 			print("   Information: %s  pos=%s size=%s scale=%s" % [_path_of(info),
 				str(info.global_position), str(info.size), str(info.scale)])
-			var bar: Node = info.get_node_or_null("ActionBar")
+			var bar: Node = info.get_node_or_null("Content/ActionBar")
 			print("   ActionBar: %s" % ("OK" if bar != null else "THIẾU"))
 			if bar != null:
 				for n in ["Tool", "Wall", "Undo", "Hint", "Replay"]:

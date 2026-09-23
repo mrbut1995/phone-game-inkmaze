@@ -13,10 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://comsw702ysh8j" path="res://assets/images/game/btn_restart_focus.svg" id="10_sww3w"]
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="14_nepv3"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="28_card_label"]
-[ext_resource type="Script" uid="uid://bt8f7hl74mar" path="res://scripts/nodes/game/hint_guide.gd" id="43_hintguide"]
-[ext_resource type="Texture2D" uid="uid://d3xd5wqhlank8" path="res://assets/images/game/panel_hint_guide.svg" id="44_hintpanel"]
-[ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="45_bulbicon"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="46_hinttheme"]
 [ext_resource type="Texture2D" uid="uid://cwg3rpuj0djq3" path="res://assets/images/game/btn_help_normal.svg" id="47_help_n"]
 [ext_resource type="Texture2D" uid="uid://350mhquc4uwi" path="res://assets/images/game/btn_help_pressed.svg" id="48_help_p"]
 [ext_resource type="Texture2D" uid="uid://bghur1ubhq1l8" path="res://assets/images/game/btn_help_disabled.svg" id="49_help_d"]
@@ -27,15 +23,14 @@ script = ExtResource("2_bgd8i")
 
 [node name="BoardSlot" type="Control" parent="." index="0" unique_id=181012636]
 layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.037777815
 anchor_top = 0.21864584
 anchor_right = 0.9827778
 anchor_bottom = 0.7496459
-offset_left =  0.0999794
-offset_top =  0.0999908
-offset_right =  -0.200012
-offset_bottom =  0.339966
+offset_left = 0.0999794
+offset_top = 0.0999908
+offset_right = -0.200012
+offset_bottom = 0.339966
 mouse_filter = 2
 
 [node name="Status" type="HBoxContainer" parent="." index="1" unique_id=806159538]
@@ -45,10 +40,10 @@ anchor_left = 0.034
 anchor_top = 0.027
 anchor_right = 0.961
 anchor_bottom = 0.072000004
-offset_left =  0.139999
-offset_top =  -0.42
-offset_right =  0.0599976
-offset_bottom =  -0.120003
+offset_left = 0.139999
+offset_top = -0.42
+offset_right = 0.0599976
+offset_bottom = -0.120003
 metadata/_edit_use_anchors_ = true
 
 [node name="Pause" type="TextureButton" parent="Status" index="0" unique_id=1819656562]
@@ -62,7 +57,7 @@ texture_focused = ExtResource("6_e1j6l")
 [node name="Title" type="VBoxContainer" parent="Status" index="1" unique_id=759259273]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation =  0
+theme_override_constants/separation = 0
 alignment = 1
 
 [node name="Subtitle" type="Label" parent="Status/Title" index="0" unique_id=1420793601]
@@ -97,60 +92,8 @@ texture_focused = ExtResource("10_sww3w")
 
 [node name="Information" parent="." index="2" unique_id=1383101299 instance=ExtResource("14_nepv3")]
 layout_mode = 1
-anchor_right = 0.90700006
-offset_left =  27.5
-offset_top =  10.5
-offset_right =  27.72
-offset_bottom =  135
 
 [node name="TextureRect" type="TextureRect" parent="." index="3" unique_id=1660297945]
 layout_mode = 0
-offset_right =  20
-offset_bottom =  20
-
-[node name="HintGuide" type="Control" parent="." index="4" unique_id=2049437720]
-layout_mode = 1
-anchor_left = 0.046000004
-anchor_top = 0.74200004
-anchor_right = 0.95400006
-anchor_bottom = 0.78900003
-offset_left =  0.159998
-offset_top =  -0.320068
-offset_right =  -0.160034
-offset_bottom =  -0.440063
-mouse_filter = 2
-theme = ExtResource("46_hinttheme")
-script = ExtResource("43_hintguide")
-
-[node name="Bg" type="TextureRect" parent="HintGuide" index="0" unique_id=309135779]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("44_hintpanel")
-expand_mode = 1
-
-[node name="Icon" type="TextureRect" parent="HintGuide" index="1" unique_id=637788822]
-layout_mode = 0
-offset_left =  23
-offset_top =  11.5
-offset_right =  45
-offset_bottom =  33.5
-mouse_filter = 2
-texture = ExtResource("45_bulbicon")
-
-[node name="Text" type="Label" parent="HintGuide" index="2" unique_id=2029088260]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.108
-anchor_right = 0.96900004
-anchor_bottom = 1.0
-offset_left =  0.079998
-offset_right =  0.189972
-theme_type_variation = &"HintGuideText"
-text = "STR_HINT_PLAY"
-vertical_alignment = 1
-text_overrun_behavior = 3
+offset_right = 20.0
+offset_bottom = 20.0
