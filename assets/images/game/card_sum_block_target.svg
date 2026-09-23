@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="384 35 307 76" width="307" height="76">
-  <!-- Khối MỤC TIÊU CẦN ĐẠT (trích từ card_sum_balance.svg — 2026-09-17)
-       Node đặt tại sheet-local (384, 35). -->
-  <rect x="385" y="36" width="305" height="74" rx="14" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.8"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="384 35 307 76" width="153.5" height="38">
+  
+  <rect x="385" y="36" width="305" height="74" rx="14" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.8" />
 </svg>

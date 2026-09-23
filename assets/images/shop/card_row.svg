@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 180" width="980" height="180">
-  <!-- Thẻ hàng (dụng cụ · gói nạp): giấy + viền xanh; thanh màu bên trái vẽ bằng code -->
-  <rect width="980" height="180" rx="24" fill="#FEFDFA"/>
-  <rect x="1.5" y="1.5" width="977" height="177" rx="22.5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 180" width="490" height="90">
+  
+  <rect width="980" height="180" rx="24" fill="#FEFDFA" />
+  <rect x="1.5" y="1.5" width="977" height="177" rx="22.5" fill="none" stroke="#6EA0C8" stroke-width="3" />
 </svg>

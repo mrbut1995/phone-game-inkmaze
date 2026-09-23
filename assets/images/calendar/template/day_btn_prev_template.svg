@@ -1,12 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44" height="44">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="22" height="22">
   <defs>
     <filter id="dayBtnShadow" x="-15%" y="-15%" width="130%" height="135%">
       <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" flood-color="#1E2830" flood-opacity="0.12" />
     </filter>
   </defs>
   <g filter="url(#dayBtnShadow)">
-    <rect width="44" height="44" rx="10" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/>
-    <!-- Mũi tên lùi ngày nét mực xanh học sinh -->
-    <path d="M26 13 L16 22 L26 31" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect width="44" height="44" rx="10" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2" />
+    
+    <path d="M26 13 L16 22 L26 31" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
   </g>
 </svg>

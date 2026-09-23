@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <!-- Bóng đổ -->
-  <ellipse cx="60" cy="91" rx="40" ry="10" fill="#2D2115" opacity="0.18"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="60" height="60" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  
+  <ellipse cx="60" cy="91" rx="40" ry="10" fill="#2D2115" opacity="0.18" />
 
   
   <path d="M 22 63 A 38 20 0 0 0 98 63 L 98 51 A 38 20 0 0 1 22 51 Z" fill="#D97706" stroke="#78350F" stroke-width="2.4" />

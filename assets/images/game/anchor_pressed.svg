@@ -1,7 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="3 3 54 54" width="54" height="54">
-  <!-- Vòng bung lực chạm ngón tay -->
-  <circle cx="30" cy="30" r="22" fill="#0F172A" fill-opacity="0.16"/>
-  <!-- Crosshair bành to, nét dày khi nhấn -->
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="3 3 54 54" width="27" height="27">
+  
+  <circle cx="30" cy="30" r="22" fill="#0F172A" fill-opacity="0.16" />
+  
   <g stroke="#0F172A" stroke-width="6.5" stroke-linecap="round">
     <line x1="30" y1="9" x2="30" y2="22" />
     <line x1="30" y1="38" x2="30" y2="51" />

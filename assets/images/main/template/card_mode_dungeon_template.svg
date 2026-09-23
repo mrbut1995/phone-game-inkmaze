@@ -1,14 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 720 270" width="720" height="270">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 720 270" width="360" height="135">
   <defs>
     <filter id="dgShadow" x="-10%" y="-15%" width="120%" height="135%">
       <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14" />
     </filter>
   </defs>
   <g filter="url(#dgShadow)">
-    <rect width="680" height="230" rx="24" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
-    <line x1="38" y1="0" x2="38" y2="230" stroke="#FAF5EB" stroke-width="3" opacity="0.65"/>
-    <!-- Tag "CHẾ ĐỘ CHÍNH" -->
-    <rect x="55" y="22" width="165" height="32" rx="8" fill="#FBBF24"/>
+    <rect width="680" height="230" rx="24" fill="#3D83AE" stroke="#235A7D" stroke-width="4" />
+    <line x1="38" y1="0" x2="38" y2="230" stroke="#FAF5EB" stroke-width="3" opacity="0.65" />
+    
+    <rect x="55" y="22" width="165" height="32" rx="8" fill="#FBBF24" />
     <text x="137" y="44" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="900" fill="#78350F" letter-spacing="1">CHẾ ĐỘ CHÍNH</text>
     
     <circle cx="105" cy="125" r="42" fill="#256286" />
@@ -17,8 +18,8 @@
     <text x="175" y="105" font-family="'Segoe UI', sans-serif" font-size="36" font-weight="950" fill="#FFFFFF" letter-spacing="1">DUNGEON MODE</text>
     <text x="175" y="142" font-family="sans-serif" font-size="20" font-weight="600" fill="#BAE6FD">Vượt tầng vô tận • Tường ẩn tăng dần</text>
     <text x="175" y="172" font-family="sans-serif" font-size="18" font-weight="600" fill="#BAE6FD">Bảo toàn số bước để tiến sâu nhất</text>
-    <!-- Badge Kỷ lục -->
-    <rect x="485" y="172" width="165" height="36" rx="10" fill="#20506E"/>
+    
+    <rect x="485" y="172" width="165" height="36" rx="10" fill="#20506E" />
     <text x="567" y="196" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="800" fill="#FDE68A">KỶ LỤC: TẦNG 18</text>
     
     <path d="M 625 115 L 640 115 M 633 105 L 643 115 L 633 125" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />

@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -6 84 87" width="84" height="87">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -6 84 87" width="42" height="43.5">
   <defs>
     <filter id="helpShadowNorm" x="-25%" y="-25%" width="150%" height="150%">
       <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14" />
@@ -7,10 +8,9 @@
 
   
   <g filter="url(#helpShadowNorm)">
-    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
-    <!-- Dấu hỏi: nét móc + chấm -->
-    <path d="M 25 27 C 25 15.5 45 15.5 45 27 C 45 36 35 35 35 43" fill="none" stroke="#3D83AE"
-          stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="35" cy="51" r="2.8" fill="#3D83AE"/>
+    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3" />
+    
+    <path d="M 25 27 C 25 15.5 45 15.5 45 27 C 45 36 35 35 35 43" fill="none" stroke="#3D83AE" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="35" cy="51" r="2.8" fill="#3D83AE" />
   </g>
 </svg>

@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 75" width="270" height="75">
-  <!-- Nút hành động màu hổ phách (gói nạp tiền thật) -->
-  <rect width="270" height="75" rx="20" fill="#B45309"/>
-  <rect x="1.8" y="1.8" width="266.4" height="71.4" rx="18.2" fill="#F59E0B"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 75" width="135" height="37.5">
+  
+  <rect width="270" height="75" rx="20" fill="#B45309" />
+  <rect x="1.8" y="1.8" width="266.4" height="71.4" rx="18.2" fill="#F59E0B" />
 </svg>

@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
-  <!-- Vòng tròn sau icon trong thẻ ô (art TRẮNG -> modulate màu món hàng, alpha nhẹ) -->
-  <circle cx="48" cy="48" r="46" fill="#FFFFFF"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="48" height="48">
+  
+  <circle cx="48" cy="48" r="46" fill="#FFFFFF" />
 </svg>

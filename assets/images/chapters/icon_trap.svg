@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
-  <!-- Icon chuong 3 · BAY AN: luoi 7x7 + duong di + 2 dau X net dut (bay) -->
-  <rect x="1.5" y="1.5" width="177" height="177" rx="16" fill="#FFFFFF" fill-opacity="0.12"
-        stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="2.5"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="90" height="90">
+  
+  <rect x="1.5" y="1.5" width="177" height="177" rx="16" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="2.5" />
   <g stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1">
     <line x1="26.8" y1="2" x2="26.8" y2="178" /><line x1="52.1" y1="2" x2="52.1" y2="178" />
     <line x1="77.4" y1="2" x2="77.4" y2="178" /><line x1="102.6" y1="2" x2="102.6" y2="178" />

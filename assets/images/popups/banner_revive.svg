@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -8 648 100" width="648" height="100">
-  <!-- Banner "nhận thêm bước": nền giấy vàng + băng keo dán góc (nút HỒI SINH đặt riêng) -->
-  <rect width="640" height="88" rx="14" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2.5"/>
-  <rect x="20" y="-8" width="50" height="18" fill="#E6DFCC" opacity="0.85"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -8 648 100" width="324" height="50">
+  
+  <rect width="640" height="88" rx="14" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2.5" />
+  <rect x="20" y="-8" width="50" height="18" fill="#E6DFCC" opacity="0.85" />
 </svg>

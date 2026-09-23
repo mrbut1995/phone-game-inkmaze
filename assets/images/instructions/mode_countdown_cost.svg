@@ -1,59 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 460" width="780" height="460">
-  <rect x="0" y="0" width="780" height="460" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
-  <rect x="48" y="76" width="310" height="310" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4"/>
-  <line x1="110" y1="79" x2="110" y2="383" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
-  <line x1="51" y1="138" x2="355" y2="138" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
-  <line x1="172" y1="79" x2="172" y2="383" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
-  <line x1="51" y1="200" x2="355" y2="200" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
-  <line x1="234" y1="79" x2="234" y2="383" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
-  <line x1="51" y1="262" x2="355" y2="262" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
-  <line x1="296" y1="79" x2="296" y2="383" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
-  <line x1="51" y1="324" x2="355" y2="324" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round"/>
-  <line x1="86.02" y1="96.86" x2="86.02" y2="105.96000000000001" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="86.02" y1="108.04" x2="86.02" y2="117.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="196.5" y1="95.82" x2="208.98" y2="95.82" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="210.01999999999998" y1="96.86" x2="210.01999999999998" y2="105.96000000000001" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="196.5" y1="107.0" x2="208.98" y2="107.0" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="195.46" y1="108.04" x2="195.46" y2="117.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="196.5" y1="118.18" x2="208.98" y2="118.18" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="210.01999999999998" y1="220.86" x2="210.01999999999998" y2="229.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="210.01999999999998" y1="232.04" x2="210.01999999999998" y2="241.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="320.5" y1="219.82" x2="332.98" y2="219.82" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="334.02" y1="220.86" x2="334.02" y2="229.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="320.5" y1="231.0" x2="332.98" y2="231.0" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="334.02" y1="232.04" x2="334.02" y2="241.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="320.5" y1="242.18" x2="332.98" y2="242.18" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="320.5" y1="343.82" x2="332.98" y2="343.82" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="334.02" y1="344.86" x2="334.02" y2="353.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="320.5" y1="355.0" x2="332.98" y2="355.0" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="319.46" y1="356.04" x2="319.46" y2="365.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="320.5" y1="366.18" x2="332.98" y2="366.18" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="133.46" y1="344.86" x2="133.46" y2="353.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="134.5" y1="355.0" x2="146.98" y2="355.0" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="148.01999999999998" y1="344.86" x2="148.01999999999998" y2="353.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="148.01999999999998" y1="356.04" x2="148.01999999999998" y2="365.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="258.5" y1="157.82" x2="270.98" y2="157.82" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="272.02" y1="158.86" x2="272.02" y2="167.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="258.5" y1="169.0" x2="270.98" y2="169.0" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="272.02" y1="170.04" x2="272.02" y2="179.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <line x1="258.5" y1="180.18" x2="270.98" y2="180.18" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round"/>
-  <polyline points="48,76 172,76 172,200 296,200 296,324" fill="none" stroke="#D84444" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="60.0" cy="88.0" r="10" fill="#2E7D32" stroke="#FEFDFA" stroke-width="3"/>
-  <circle cx="60.0" cy="88.0" r="3.8" fill="#FEFDFA"/>
-  <line x1="328.95" y1="374.0" x2="328.95" y2="352.0" stroke="#224C6D" stroke-width="3" stroke-linecap="round"/>
-  <polygon points="328.9,352.0 343.2,358.1 328.9,364.6" fill="#D84444"/>
-  <rect x="408" y="96" width="112" height="112" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
-  <polygon points="446.1,129.0 481.9,129.0 464,152" fill="#3D83AE"/>
-  <polygon points="446.1,175.0 481.9,175.0 464,152" fill="#FBBF24"/>
-  <line x1="442.06" y1="129.0" x2="485.94" y2="129.0" stroke="#224C6D" stroke-width="4" stroke-linecap="round"/>
-  <line x1="442.06" y1="175.0" x2="485.94" y2="175.0" stroke="#224C6D" stroke-width="4" stroke-linecap="round"/>
-  <rect x="408" y="262" width="16" height="26" rx="5" fill="#3D83AE"/>
-  <rect x="429" y="262" width="16" height="26" rx="5" fill="#3D83AE"/>
-  <rect x="450" y="262" width="16" height="26" rx="5" fill="#3D83AE"/>
-  <rect x="471" y="262" width="16" height="26" rx="5" fill="#3D83AE"/>
-  <rect x="492" y="262" width="16" height="26" rx="5" fill="#3D83AE"/>
-  <rect x="513" y="262" width="16" height="26" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
-  <rect x="534" y="262" width="16" height="26" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
-  <rect x="555" y="262" width="16" height="26" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3"/>
-  <rect x="408" y="312" width="168" height="12" rx="6" fill="#BACEDC"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 460" width="390" height="230">
+  <rect x="0" y="0" width="780" height="460" rx="26" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4" />
+  <rect x="48" y="76" width="310" height="310" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="4" />
+  <line x1="110" y1="79" x2="110" y2="383" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round" />
+  <line x1="51" y1="138" x2="355" y2="138" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round" />
+  <line x1="172" y1="79" x2="172" y2="383" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round" />
+  <line x1="51" y1="200" x2="355" y2="200" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round" />
+  <line x1="234" y1="79" x2="234" y2="383" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round" />
+  <line x1="51" y1="262" x2="355" y2="262" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round" />
+  <line x1="296" y1="79" x2="296" y2="383" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round" />
+  <line x1="51" y1="324" x2="355" y2="324" stroke="#BACEDC" stroke-width="1.6" stroke-linecap="round" />
+  <line x1="86.02" y1="96.86" x2="86.02" y2="105.96000000000001" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="86.02" y1="108.04" x2="86.02" y2="117.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="196.5" y1="95.82" x2="208.98" y2="95.82" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="210.01999999999998" y1="96.86" x2="210.01999999999998" y2="105.96000000000001" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="196.5" y1="107.0" x2="208.98" y2="107.0" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="195.46" y1="108.04" x2="195.46" y2="117.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="196.5" y1="118.18" x2="208.98" y2="118.18" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="210.01999999999998" y1="220.86" x2="210.01999999999998" y2="229.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="210.01999999999998" y1="232.04" x2="210.01999999999998" y2="241.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="320.5" y1="219.82" x2="332.98" y2="219.82" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="334.02" y1="220.86" x2="334.02" y2="229.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="320.5" y1="231.0" x2="332.98" y2="231.0" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="334.02" y1="232.04" x2="334.02" y2="241.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="320.5" y1="242.18" x2="332.98" y2="242.18" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="320.5" y1="343.82" x2="332.98" y2="343.82" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="334.02" y1="344.86" x2="334.02" y2="353.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="320.5" y1="355.0" x2="332.98" y2="355.0" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="319.46" y1="356.04" x2="319.46" y2="365.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="320.5" y1="366.18" x2="332.98" y2="366.18" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="133.46" y1="344.86" x2="133.46" y2="353.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="134.5" y1="355.0" x2="146.98" y2="355.0" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="148.01999999999998" y1="344.86" x2="148.01999999999998" y2="353.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="148.01999999999998" y1="356.04" x2="148.01999999999998" y2="365.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="258.5" y1="157.82" x2="270.98" y2="157.82" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="272.02" y1="158.86" x2="272.02" y2="167.96" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="258.5" y1="169.0" x2="270.98" y2="169.0" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="272.02" y1="170.04" x2="272.02" y2="179.14" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <line x1="258.5" y1="180.18" x2="270.98" y2="180.18" stroke="#224C6D" stroke-width="3.9" stroke-linecap="round" />
+  <polyline points="48,76 172,76 172,200 296,200 296,324" fill="none" stroke="#D84444" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="60.0" cy="88.0" r="10" fill="#2E7D32" stroke="#FEFDFA" stroke-width="3" />
+  <circle cx="60.0" cy="88.0" r="3.8" fill="#FEFDFA" />
+  <line x1="328.95" y1="374.0" x2="328.95" y2="352.0" stroke="#224C6D" stroke-width="3" stroke-linecap="round" />
+  <polygon points="328.9,352.0 343.2,358.1 328.9,364.6" fill="#D84444" />
+  <rect x="408" y="96" width="112" height="112" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3" />
+  <polygon points="446.1,129.0 481.9,129.0 464,152" fill="#3D83AE" />
+  <polygon points="446.1,175.0 481.9,175.0 464,152" fill="#FBBF24" />
+  <line x1="442.06" y1="129.0" x2="485.94" y2="129.0" stroke="#224C6D" stroke-width="4" stroke-linecap="round" />
+  <line x1="442.06" y1="175.0" x2="485.94" y2="175.0" stroke="#224C6D" stroke-width="4" stroke-linecap="round" />
+  <rect x="408" y="262" width="16" height="26" rx="5" fill="#3D83AE" />
+  <rect x="429" y="262" width="16" height="26" rx="5" fill="#3D83AE" />
+  <rect x="450" y="262" width="16" height="26" rx="5" fill="#3D83AE" />
+  <rect x="471" y="262" width="16" height="26" rx="5" fill="#3D83AE" />
+  <rect x="492" y="262" width="16" height="26" rx="5" fill="#3D83AE" />
+  <rect x="513" y="262" width="16" height="26" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3" />
+  <rect x="534" y="262" width="16" height="26" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3" />
+  <rect x="555" y="262" width="16" height="26" rx="5" fill="none" stroke="#6EA0C8" stroke-width="3" />
+  <rect x="408" y="312" width="168" height="12" rx="6" fill="#BACEDC" />
 </svg>

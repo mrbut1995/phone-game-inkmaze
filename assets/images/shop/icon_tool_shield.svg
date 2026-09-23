@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Icon BĂNG DÍNH VÁ GIẤY (chặn 1 lần đâm tường) -->
-  <path d="M 32 6 L 54 14 L 54 34 C 54 46 44 55 32 60 C 20 55 10 46 10 34 L 10 14 Z"
-        fill="#FFFFFF"/>
-  <path d="M 24 34 L 30 40 L 42 26" fill="none" stroke="#FFFFFF" stroke-opacity="0.45"
-        stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32">
+  
+  <path d="M 32 6 L 54 14 L 54 34 C 54 46 44 55 32 60 C 20 55 10 46 10 34 L 10 14 Z" fill="#FFFFFF" />
+  <path d="M 24 34 L 30 40 L 42 26" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
 </svg>

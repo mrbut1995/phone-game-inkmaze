@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 212 40" width="212" height="40">
-  <!-- Chip tiêu đề mục (9-patch: margin 8) - co giãn ngang cho mọi độ dài chữ -->
-  <rect width="200" height="28" rx="6" fill="#F4EFE6" stroke="#D1E2ED" stroke-width="1.2"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 212 40" width="106" height="20">
+  
+  <rect width="200" height="28" rx="6" fill="#F4EFE6" stroke="#D1E2ED" stroke-width="1.2" />
 </svg>

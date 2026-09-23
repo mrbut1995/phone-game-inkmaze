@@ -1,16 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 690 156" width="690" height="156">
-  <!-- Thẻ TIẾN ĐỘ XÂY TƯỜNG (mode Wall Builder) — 690x156, mockup/matchup_wall_builder.svg
-       CHỈ vẽ phần TĨNH: khung (viền XANH LÁ #2E7D32), lề trái đậm, vạch chia dọc.
-       Các KHỐI động nằm ở node riêng trong nodes/hud/wall_builder_hud.tscn:
-         · khối 🧱 ĐÃ DỰNG (x/y ĐOẠN + còn thiếu) ở cột trái  (30..240)
-         · hàng ❤️ LƯỢT GỬI 400×42 (card_wall_row.svg)  tại sheet-local (255, 16)
-         · chip trạng thái 130×26  (card_wall_chip.svg) tại row-local (260, 8)
-         · thanh tiến độ 400×14    (card_wall_slider_*.svg) tại sheet-local (255, 70)
-       Viền vẽ bằng 2 hình FILL lồng nhau để ThorVG không cắt nửa nét ở mép viewBox. -->
-  <rect width="690" height="156" rx="22" fill="#2E7D32"/>
-  <rect x="1.5" y="1.5" width="687" height="153" rx="20.5" fill="#FEFDFA"/>
-  <!-- Lề trái đậm (khối ĐÃ DỰNG nằm trong phần này) -->
-  <line x1="20" y1="4" x2="20" y2="152" stroke="#2E7D32" stroke-width="3"/>
-  <!-- Vạch chia dọc giữa khối số đoạn và khối lượt gửi / tiến độ -->
-  <line x1="235" y1="14" x2="235" y2="142" stroke="#E2EBF1" stroke-width="2"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 690 156" width="345" height="78">
+  
+  <rect width="690" height="156" rx="22" fill="#2E7D32" />
+  <rect x="1.5" y="1.5" width="687" height="153" rx="20.5" fill="#FEFDFA" />
+  
+  <line x1="20" y1="4" x2="20" y2="152" stroke="#2E7D32" stroke-width="3" />
+  
+  <line x1="235" y1="14" x2="235" y2="142" stroke="#E2EBF1" stroke-width="2" />
 </svg>

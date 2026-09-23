@@ -1,7 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <!-- 1. Bóng đổ mặt đất -->
-  <ellipse cx="60" cy="95" rx="42" ry="10" fill="#2D2115" opacity="0.2"/>
-  <ellipse cx="60" cy="94" rx="34" ry="7" fill="#2D2115" opacity="0.15"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="60" height="60" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  
+  <ellipse cx="60" cy="95" rx="42" ry="10" fill="#2D2115" opacity="0.2" />
+  <ellipse cx="60" cy="94" rx="34" ry="7" fill="#2D2115" opacity="0.15" />
 
   
   

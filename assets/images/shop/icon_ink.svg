@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Icon GIỌT MỰC (art TRẮNG -> tô màu bằng modulate) -->
-  <path d="M 32 4 C 32 4 52 28 52 40 A 20 20 0 0 1 12 40 C 12 28 32 4 32 4 Z" fill="#FFFFFF"/>
-  <circle cx="25" cy="41" r="6" fill="#FFFFFF" fill-opacity="0.5"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32">
+  
+  <path d="M 32 4 C 32 4 52 28 52 40 A 20 20 0 0 1 12 40 C 12 28 32 4 32 4 Z" fill="#FFFFFF" />
+  <circle cx="25" cy="41" r="6" fill="#FFFFFF" fill-opacity="0.5" />
 </svg>

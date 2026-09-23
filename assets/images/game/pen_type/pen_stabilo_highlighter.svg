@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="28" height="28">
   <defs>
     
     <filter id="highlighterGlow" x="-30%" y="-30%" width="160%" height="160%">
@@ -9,9 +10,11 @@
   <g filter="url(#highlighterGlow)">
     <g transform="translate(30, 30) rotate(-45)">
       
-      <!-- Nẹp tem / Vạch trang trí dẹt trên thân -->
-      <rect x="-8.5" y="-19" width="17" height="4" rx="1.5" fill="#FACC15" opacity="0.9"/>
-      <line x1="-5" y1="-5" x2="-5" y2="-13" stroke="#FFFFFF" stroke-width="1.2" opacity="0.4"/>
+      <path d="M -10 -5 L -10 -21 C -10 -22 -8 -23 0 -23 C 8 -23 10 -22 10 -21 L 10 -5 Z" fill="#2575A7" stroke="#1E283A" stroke-width="1.8" stroke-linejoin="round" />
+      
+      
+      <rect x="-8.5" y="-19" width="17" height="4" rx="1.5" fill="#FACC15" opacity="0.9" />
+      <line x1="-5" y1="-5" x2="-5" y2="-13" stroke="#FFFFFF" stroke-width="1.2" opacity="0.4" />
 
       
       <path d="M -7 5 L -10 -5 L 10 -5 L 7 5 Z" fill="#1E283A" stroke="#1E283A" stroke-width="1.5" stroke-linejoin="round" />

@@ -1,14 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -30 804 310" width="804" height="310">
-  <!-- Pressed: thẻ lún 2px, mực hổ phách đậm, bỏ đổ bóng -->
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -30 804 310" width="402" height="155">
+  
   <g transform="translate(0, 2)">
-    <rect width="780" height="260" rx="24" fill="#F4EDE0" stroke="#B45309" stroke-width="3.5"/>
-    <line x1="38" y1="0" x2="38" y2="260" stroke="#B45309" stroke-width="3"/>
-    <!-- Tag -->
-    <rect x="55" y="-23" width="210" height="46" rx="10" fill="#FDE68A"/>
-    <!-- Icon Tia chớp -->
-    <circle cx="125" cy="140" r="52" fill="#FEF3C7" stroke="#FBBF24" stroke-width="2"/>
-    <!-- Badge -->
-    <rect x="565" y="172" width="185" height="51" rx="10" fill="#FDE68A"/>
+    <rect width="780" height="260" rx="24" fill="#F4EDE0" stroke="#B45309" stroke-width="3.5" />
+    <line x1="38" y1="0" x2="38" y2="260" stroke="#B45309" stroke-width="3" />
+    
+    <rect x="55" y="-23" width="210" height="46" rx="10" fill="#FDE68A" />
+    
+    <circle cx="125" cy="140" r="52" fill="#FEF3C7" stroke="#FBBF24" stroke-width="2" />
+    
+    <rect x="565" y="172" width="185" height="51" rx="10" fill="#FDE68A" />
     <g transform="translate(725, 105)">
       <path d="M 0 0 L 15 0 M 8 -10 L 18 0 L 8 10" stroke="#B45309" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
     </g>

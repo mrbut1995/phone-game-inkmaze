@@ -1,16 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 690 156" width="690" height="156">
-  <!-- Thẻ TIẾN ĐỘ PHỦ KÍN (mode One Stroke) — 690x156, mockup/matchup_one_stroke.svg
-       CHỈ vẽ phần TĨNH: khung, lề trái đậm, vạch chia dọc.
-       Các KHỐI động nằm ở node riêng trong nodes/hud/one_stroke_hud.tscn:
-         · khối ĐÃ PHỦ KÍN (số ô + dòng còn lại) ở cột trái  (30..240)
-         · hàng MỘT NÉT KHÔNG LẶP 410×42 (card_stroke_row.svg)   tại sheet-local (245, 16)
-         · chip % KÍN 110×26        (card_stroke_chip.svg)        tại sheet-local (535, 24)
-         · thanh tiến độ 410×14     (card_stroke_slider_*.svg)    tại sheet-local (245, 70)
-       Viền vẽ bằng 2 hình FILL lồng nhau để ThorVG không cắt nửa nét ở mép viewBox. -->
-  <rect width="690" height="156" rx="22" fill="#2575A7"/>
-  <rect x="1.5" y="1.5" width="687" height="153" rx="20.5" fill="#FEFDFA"/>
-  <!-- Lề trái đậm (khối ĐÃ PHỦ KÍN nằm trong phần này) -->
-  <line x1="18" y1="4" x2="18" y2="152" stroke="#2575A7" stroke-width="3"/>
-  <!-- Vạch chia dọc giữa khối tiến độ và khối luật -->
-  <line x1="225" y1="14" x2="225" y2="142" stroke="#E2EBF1" stroke-width="2"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 690 156" width="345" height="78">
+  
+  <rect width="690" height="156" rx="22" fill="#2575A7" />
+  <rect x="1.5" y="1.5" width="687" height="153" rx="20.5" fill="#FEFDFA" />
+  
+  <line x1="18" y1="4" x2="18" y2="152" stroke="#2575A7" stroke-width="3" />
+  
+  <line x1="225" y1="14" x2="225" y2="142" stroke="#E2EBF1" stroke-width="2" />
 </svg>

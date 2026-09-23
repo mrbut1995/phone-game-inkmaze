@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="48 30 934 1632" width="934" height="1632">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="48 30 934 1632" width="467" height="816">
   <defs>
     <filter id="mainSheetCleanShadow" x="-10%" y="-10%" width="125%" height="130%">
       <feDropShadow dx="0" dy="20" stdDeviation="20" flood-color="#2D2115" flood-opacity="0.25" />
@@ -11,32 +12,8 @@
 
   
   <g transform="translate(75, 55)" filter="url(#mainSheetCleanShadow)">
-    <rect width="880" height="1560" rx="22" fill="#FFFDF8"/>
+    <rect width="880" height="1560" rx="22" fill="#FFFDF8" />
 
-    <!-- Lỗ bấm ghim sổ tay mép trái -->
-    <g fill="#EAE3D2" opacity="0.65">
-      <circle cx="26" cy="100" r="8"/><circle cx="26" cy="220" r="8"/><circle cx="26" cy="340" r="8"/>
-      <circle cx="26" cy="460" r="8"/><circle cx="26" cy="580" r="8"/><circle cx="26" cy="700" r="8"/>
-      <circle cx="26" cy="820" r="8"/><circle cx="26" cy="940" r="8"/><circle cx="26" cy="1060" r="8"/>
-      <circle cx="26" cy="1180" r="8"/><circle cx="26" cy="1300" r="8"/><circle cx="26" cy="1420" r="8"/>
-    </g>
-
-    <!-- Dòng kẻ ngang mờ -->
-    <g stroke="#8FB9D2" stroke-width="1" opacity="0.32">
-      <line x1="65" y1="180" x2="815" y2="180"/><line x1="65" y1="260" x2="815" y2="260"/>
-      <line x1="65" y1="340" x2="815" y2="340"/><line x1="65" y1="420" x2="815" y2="420"/>
-      <line x1="65" y1="500" x2="815" y2="500"/><line x1="65" y1="580" x2="815" y2="580"/>
-      <line x1="65" y1="660" x2="815" y2="660"/><line x1="65" y1="740" x2="815" y2="740"/>
-      <line x1="65" y1="820" x2="815" y2="820"/><line x1="65" y1="900" x2="815" y2="900"/>
-      <line x1="65" y1="980" x2="815" y2="980"/><line x1="65" y1="1060" x2="815" y2="1060"/>
-      <line x1="65" y1="1140" x2="815" y2="1140"/><line x1="65" y1="1220" x2="815" y2="1220"/>
-      <line x1="65" y1="1300" x2="815" y2="1300"/><line x1="65" y1="1380" x2="815" y2="1380"/>
-      <line x1="65" y1="1460" x2="815" y2="1460"/>
-    </g>
-
-    <!-- Lề đỏ -->
-    <line x1="80" y1="0" x2="80" y2="1560" stroke="#D84444" stroke-width="2.5" opacity="0.85"/>
-    <rect width="880" height="1560" rx="22" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
     
     <g fill="#EAE3D2" opacity="0.65">
       <circle cx="26" cy="100" r="8" /><circle cx="26" cy="220" r="8" /><circle cx="26" cy="340" r="8" />
@@ -70,9 +47,8 @@
 
   
   <g transform="translate(405, 33)">
-    <rect width="220" height="48" rx="4" fill="#E8DFCA" fill-opacity="0.85" stroke="#D1C6AE" stroke-width="1.5"/>
-    <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" 
-          stroke="#B5A98F" stroke-width="1.2" opacity="0.35"/>
+    <rect width="220" height="48" rx="4" fill="#E8DFCA" fill-opacity="0.85" stroke="#D1C6AE" stroke-width="1.5" />
+    <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" stroke="#B5A98F" stroke-width="1.2" opacity="0.35" />
   </g>
 
   

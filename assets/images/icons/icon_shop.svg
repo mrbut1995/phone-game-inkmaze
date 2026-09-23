@@ -1,9 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-  <!-- Cửa hàng (Shop) - nét chì vẽ tay -->
-  <path d="M7 19 L11 9 H37 L41 19 Z" fill="#E8B24B" stroke="#224C6D" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M16.5 10 L14.5 18 M24 9.6 V18 M31.5 10 L33.5 18" stroke="#224C6D" stroke-width="2.2" stroke-linecap="round"/>
-  <path d="M10 19 v20 a3 3 0 0 0 3 3 h22 a3 3 0 0 0 3 -3 v-20" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2" stroke-linejoin="round"/>
-  <rect x="19.5" y="29" width="9" height="13" rx="1.5" fill="#DCEBF5" stroke="#224C6D" stroke-width="2.4"/>
-  <circle cx="24" cy="24" r="3.2" fill="#F3D98B" stroke="#8A5A21" stroke-width="2"/>
-  <path d="M14 24 h6 M28 24 h6" stroke="#8FB9D2" stroke-width="2" stroke-linecap="round"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24">
+  
+  <path d="M7 19 L11 9 H37 L41 19 Z" fill="#E8B24B" stroke="#224C6D" stroke-width="3" stroke-linejoin="round" />
+  <path d="M16.5 10 L14.5 18 M24 9.6 V18 M31.5 10 L33.5 18" stroke="#224C6D" stroke-width="2.2" stroke-linecap="round" />
+  <path d="M10 19 v20 a3 3 0 0 0 3 3 h22 a3 3 0 0 0 3 -3 v-20" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2" stroke-linejoin="round" />
+  <rect x="19.5" y="29" width="9" height="13" rx="1.5" fill="#DCEBF5" stroke="#224C6D" stroke-width="2.4" />
+  <circle cx="24" cy="24" r="3.2" fill="#F3D98B" stroke="#8A5A21" stroke-width="2" />
+  <path d="M14 24 h6 M28 24 h6" stroke="#8FB9D2" stroke-width="2" stroke-linecap="round" />
 </svg>

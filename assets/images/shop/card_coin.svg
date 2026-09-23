@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 475 240" width="475" height="240">
-  <!-- Thẻ GÓI NẠP XU (lưới 2 cột) — theo mockup/shopping_coin.svg -->
-  <rect width="475" height="240" rx="22" fill="#FEFDFA"/>
-  <rect x="1.25" y="1.25" width="472.5" height="237.5" rx="20.75" fill="none" stroke="#F59E0B" stroke-width="2.5"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 475 240" width="237.5" height="120">
+  
+  <rect width="475" height="240" rx="22" fill="#FEFDFA" />
+  <rect x="1.25" y="1.25" width="472.5" height="237.5" rx="20.75" fill="none" stroke="#F59E0B" stroke-width="2.5" />
 </svg>

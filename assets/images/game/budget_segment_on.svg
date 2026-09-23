@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 12" width="38" height="12">
-  <!-- Phân đoạn ngân sách CÒN LẠI (Countdown Cost) -->
-  <rect width="38" height="12" rx="3" fill="#EA580C"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 12" width="19" height="6">
+  
+  <rect width="38" height="12" rx="3" fill="#EA580C" />
 </svg>

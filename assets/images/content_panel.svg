@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="7 12 626 429" width="626" height="429">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="7 12 626 429" width="313" height="214.5">
   <defs>
     
     <filter id="panel-shadow" x="-10%" y="-10%" width="125%" height="130%">
@@ -6,7 +7,7 @@
       <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#1E384D" flood-opacity="0.08" />
     </filter>
 
-    <!-- Họa tiết lưới ô ly chuẩn tỉ lệ -->
+    
     <pattern id="panel-grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
       <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#90BBD4" stroke-width="0.85" opacity="0.65" />
     </pattern>
@@ -20,13 +21,13 @@
   <g filter="url(#panel-shadow)">
     
     <g clip-path="url(#panel-clip)">
-      <!-- 1. Nền giấy ngà -->
+      
       <rect x="20" y="16" width="600" height="400" fill="#FAF5EB" />
 
-      <!-- 2. Lưới ô ly toàn bộ mặt panel -->
+      
       <rect x="20" y="16" width="600" height="400" fill="url(#panel-grid-pattern)" />
 
-      <!-- 3. Khu vực Header (nền giấy sáng hơn một chút để tách lớp) -->
+      
       <rect x="20" y="16" width="600" height="60" fill="#FFFDF8" opacity="0.85" />
 
       
@@ -37,7 +38,7 @@
       <line x1="100" y1="78" x2="100" y2="416" stroke="#D84444" stroke-width="2.5" />
     </g>
 
-    <!-- Viền khung mực xanh bên ngoài -->
+    
     <rect x="20" y="16" width="600" height="400" rx="16" fill="none" stroke="#3D83AE" stroke-width="2.2" />
   </g>
 </svg>

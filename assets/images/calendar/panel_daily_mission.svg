@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" width="980" height="560">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" width="490" height="280">
   <defs>
-    <!-- Mẫu lưới ô ly tập vở -->
+    
     <pattern id="dlgCleanGrid" width="20" height="20" patternUnits="userSpaceOnUse">
       <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#90BBD4" stroke-width="0.85" opacity="0.6" />
     </pattern>
@@ -12,21 +13,21 @@
   </defs>
 
   <g clip-path="url(#dlgCleanClip)">
-    <!-- 1. Nền giấy chính -->
+    
     <rect x="0" y="0" width="980" height="560" fill="#FAF5EB" />
 
-    <!-- 2. Lưới ô ly Body (y: 60 -> 500) -->
+    
     <rect x="0" y="60" width="980" height="440" fill="url(#dlgCleanGrid)" />
 
-    <!-- 3. Header Section (y: 0 -> 60) -->
+    
     <rect x="0" y="0" width="980" height="60" fill="#F4EEDF" />
     <line x1="0" y1="60" x2="980" y2="60" stroke="#3D83AE" stroke-width="2.5" />
 
-    <!-- 4. Footer / Bottom Section (y: 500 -> 560) -->
+    
     <rect x="0" y="500" width="980" height="60" fill="#F4EEDF" />
     <line x1="0" y1="500" x2="980" y2="500" stroke="#3D83AE" stroke-width="2" stroke-dasharray="7 4" />
   </g>
 
-  <!-- Viền khung ngoài (thụt lùi 1.5px để stroke 3px không bị lẹm viền mép) -->
+  
   <rect x="1.5" y="1.5" width="977" height="557" rx="21" fill="none" stroke="#3D83AE" stroke-width="3" />
 </svg>

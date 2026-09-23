@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 50" width="80" height="50">
-  <path d="M 0 0 L 60 0 A 20 20 0 0 1 80 20 L 80 50 Z" fill="#D84444"/>
-  <!-- <text x="45" y="26" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="900" fill="#FFFFFF">NEW</text> -->
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 50" width="40" height="25">
+  <path d="M 0 0 L 60 0 A 20 20 0 0 1 80 20 L 80 50 Z" fill="#D84444" />
+  
 </svg>

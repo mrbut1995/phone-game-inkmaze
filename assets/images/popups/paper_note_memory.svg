@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300" width="660" height="300">
-  <!-- Mẩu giấy GHI NHỚ cho popup đếm ngược (Blind Memory): giấy trắng + viền xanh + dòng kẻ ngang + lề đỏ.
-       Viền vẽ bằng 2 hình FILL lồng nhau -> không bị cắt nét ở mép viewBox. -->
-  <rect width="660" height="300" rx="26" fill="#6EA0C8"/>
-  <rect x="4" y="4" width="652" height="292" rx="22" fill="#FEFDFA"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300" width="330" height="150">
+  
+  <rect width="660" height="300" rx="26" fill="#6EA0C8" />
+  <rect x="4" y="4" width="652" height="292" rx="22" fill="#FEFDFA" />
 
   
   <g stroke="#9FC0D6" stroke-width="2" opacity="0.5">

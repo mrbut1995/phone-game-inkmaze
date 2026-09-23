@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="56" height="56">
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="28" height="28">
   <defs>
     <filter id="glowRed" x="-30%" y="-30%" width="160%" height="160%">
       <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#DC2626" flood-opacity="0.6" />
@@ -6,17 +7,17 @@
   </defs>
   <g filter="url(#glowRed)">
     <g transform="translate(30, 30) rotate(-45)">
-      <!-- Cổ bút đỏ tươi giáo viên -->
-      <path d="M -7 -10 L -9 -20 L 9 -20 L 7 -10 Z" fill="#DC2626" stroke="#7F1D1D" stroke-width="1.8" stroke-linejoin="round"/>
-      <rect x="-8" y="-12" width="16" height="3" rx="1" fill="#FBBF24" stroke="#78350F" stroke-width="0.8"/>
-      <!-- Ngòi bút mạ vàng sang trọng -->
-      <path d="M 0 19 L -1.5 19 C -4 13.5 -10 9 -10 3 C -10 -2 -8 -6 -7 -10 L 0 -10 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1.8" stroke-linejoin="round"/>
-      <path d="M 0 19 L 1.5 19 C 4 13.5 10 9 10 3 C 10 -2 8 -6 7 -10 L 0 -10 Z" fill="#FEF08A" stroke="#78350F" stroke-width="1.8" stroke-linejoin="round"/>
-      <!-- Khe dẫn mực đỏ tươi -->
-      <circle cx="0" cy="5" r="2.2" fill="#DC2626" stroke="#78350F" stroke-width="1.2"/>
-      <line x1="0" y1="7.2" x2="0" y2="19.5" stroke="#DC2626" stroke-width="1.6" stroke-linecap="round"/>
-      <!-- Giọt mực đỏ giáo viên phát sáng -->
-      <circle cx="0" cy="22" r="1.5" fill="#EF4444"/>
+      
+      <path d="M -7 -10 L -9 -20 L 9 -20 L 7 -10 Z" fill="#DC2626" stroke="#7F1D1D" stroke-width="1.8" stroke-linejoin="round" />
+      <rect x="-8" y="-12" width="16" height="3" rx="1" fill="#FBBF24" stroke="#78350F" stroke-width="0.8" />
+      
+      <path d="M 0 19 L -1.5 19 C -4 13.5 -10 9 -10 3 C -10 -2 -8 -6 -7 -10 L 0 -10 Z" fill="#FDE68A" stroke="#78350F" stroke-width="1.8" stroke-linejoin="round" />
+      <path d="M 0 19 L 1.5 19 C 4 13.5 10 9 10 3 C 10 -2 8 -6 7 -10 L 0 -10 Z" fill="#FEF08A" stroke="#78350F" stroke-width="1.8" stroke-linejoin="round" />
+      
+      <circle cx="0" cy="5" r="2.2" fill="#DC2626" stroke="#78350F" stroke-width="1.2" />
+      <line x1="0" y1="7.2" x2="0" y2="19.5" stroke="#DC2626" stroke-width="1.6" stroke-linecap="round" />
+      
+      <circle cx="0" cy="22" r="1.5" fill="#EF4444" />
     </g>
   </g>
 </svg>

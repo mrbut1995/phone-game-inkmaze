@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 4" width="20" height="4">
-  <!-- Duong ke net dut (tile ngang bang TextureRect STRETCH_TILE) -->
-  <line x1="0" y1="2" x2="20" y2="2" stroke="#8FB9D2" stroke-width="1.6" stroke-dasharray="6 4"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 4" width="10" height="2">
+  
+  <line x1="0" y1="2" x2="20" y2="2" stroke="#8FB9D2" stroke-width="1.6" stroke-dasharray="6 4" />
 </svg>

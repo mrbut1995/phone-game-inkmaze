@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" width="22" height="22">
-  <!-- Đồng xu thưởng 22x22 (thay cho emoji 💵 trong mockup) -->
-  <circle cx="11" cy="11" r="10.5" fill="#D97706"/>
-  <circle cx="11" cy="11" r="8.5" fill="#FBBF24"/>
-  <path d="M 11 5.6 L 12.7 9.3 L 16.6 9.8 L 13.7 12.6 L 14.4 16.5 L 11 14.5 L 7.6 16.5 L 8.3 12.6 L 5.4 9.8 L 9.3 9.3 Z"
-        fill="#B45309"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" width="11" height="11">
+  
+  <circle cx="11" cy="11" r="10.5" fill="#D97706" />
+  <circle cx="11" cy="11" r="8.5" fill="#FBBF24" />
+  <path d="M 11 5.6 L 12.7 9.3 L 16.6 9.8 L 13.7 12.6 L 14.4 16.5 L 11 14.5 L 7.6 16.5 L 8.3 12.6 L 5.4 9.8 L 9.3 9.3 Z" fill="#B45309" />
 </svg>
