@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="392.5" height="267.5">
   <defs>
     <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
@@ -18,111 +18,111 @@
       <stop offset="100%" stop-color="#1B2834" stop-opacity="0.75" />
     </linearGradient>
     <g id="stair-start">
-      <rect width="130" height="130" fill="#FAF5EB" />
-      <rect x="8" y="8" width="114" height="114" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
-      <rect x="12" y="12" width="106" height="106" fill="url(#dungeonUpperLight)" />
+      <rect width="65" height="65" fill="#FAF5EB" />
+      <rect x="8" y="8" width="57" height="57" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
+      <rect x="12" y="12" width="53" height="53" fill="url(#dungeonUpperLight)" />
       <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
         <line x1="8" y1="14" x2="122" y2="14" stroke-width="3" />
         <polygon points="42,14 88,14 86,22 44,22" fill="#FFFBE8" stroke-width="1.8" />
         <polygon points="44,22 86,22 90,36 40,36" fill="#D5C7B2" stroke-width="2.2" />
-        <rect x="40" y="36" width="50" height="10" fill="#9C8D78" stroke-width="2.2" />
+        <rect x="40" y="36" width="25" height="5" fill="#9C8D78" stroke-width="2.2" />
         <polygon points="40,46 90,46 96,62 34,62" fill="#E2D5C0" stroke-width="2.5" />
-        <rect x="34" y="62" width="62" height="12" fill="#BFAF9B" stroke-width="2.5" />
+        <rect x="34" y="62" width="31" height="6" fill="#BFAF9B" stroke-width="2.5" />
         <polygon points="34,74 96,74 102,90 28,90" fill="#EDE4D4" stroke-width="2.5" />
-        <rect x="28" y="90" width="74" height="12" fill="#CBBFAA" stroke-width="2.5" />
+        <rect x="28" y="90" width="37" height="6" fill="#CBBFAA" stroke-width="2.5" />
         <polygon points="28,102 102,102 108,116 22,116" fill="#F7F1E6" stroke-width="2.5" />
-        <rect x="22" y="116" width="86" height="6" fill="#DCD1BF" stroke-width="2.5" />
+        <rect x="22" y="116" width="43" height="3" fill="#DCD1BF" stroke-width="2.5" />
       </g>
-      <rect x="1" y="1" width="128" height="128" rx="8" fill="none" stroke="#2575A7" stroke-width="2.5" />
+      <rect x="1" y="1" width="64" height="64" rx="8" fill="none" stroke="#2575A7" stroke-width="2.5" />
     </g>
     <g id="stair-finish">
-      <rect width="130" height="130" fill="#FAF5EB" />
-      <rect x="8" y="8" width="114" height="114" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
-      <rect x="12" y="12" width="106" height="106" fill="url(#dungeonDeepVoid)" />
+      <rect width="65" height="65" fill="#FAF5EB" />
+      <rect x="8" y="8" width="57" height="57" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
+      <rect x="12" y="12" width="53" height="53" fill="url(#dungeonDeepVoid)" />
       <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
         <line x1="8" y1="14" x2="122" y2="14" stroke-width="3" />
         <polygon points="16,14 114,14 106,32 24,32" fill="#F7F1E6" stroke-width="2.5" />
-        <rect x="24" y="32" width="82" height="12" fill="#CBBFAA" stroke-width="2.5" />
+        <rect x="24" y="32" width="41" height="6" fill="#CBBFAA" stroke-width="2.5" />
         <polygon points="24,44 106,44 98,60 32,60" fill="#E2D5C0" stroke-width="2.5" />
-        <rect x="32" y="60" width="66" height="12" fill="#A49580" stroke-width="2.5" />
+        <rect x="32" y="60" width="33" height="6" fill="#A49580" stroke-width="2.5" />
         <polygon points="32,72 98,72 90,86 40,86" fill="#BFAF9B" stroke-width="2.5" />
-        <rect x="40" y="86" width="50" height="12" fill="#756755" stroke-width="2.5" />
+        <rect x="40" y="86" width="25" height="6" fill="#756755" stroke-width="2.5" />
         <polygon points="40,98 90,98 84,108 46,108" fill="#807260" stroke-width="2.2" />
-        <rect x="46" y="108" width="38" height="8" fill="#42382C" stroke-width="2.2" />
+        <rect x="46" y="108" width="19" height="4" fill="#42382C" stroke-width="2.2" />
         <polygon points="46,116 84,116 80,120 50,120" fill="#0A1118" stroke-width="1.5" />
       </g>
-      <rect x="1" y="1" width="128" height="128" rx="8" fill="none" stroke="#D84444" stroke-width="2.5" />
+      <rect x="1" y="1" width="64" height="64" rx="8" fill="none" stroke="#D84444" stroke-width="2.5" />
     </g>
   </defs>
   <g filter="url(#uiShadow)">
-    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#334155" stroke-width="3" />
+    <rect width="377.5" height="255" rx="22" fill="#FEFDFA" stroke="#334155" stroke-width="3" />
     <g transform="translate(182, 35)">
       <g stroke="#BACEDC" stroke-width="2">
-        <rect x="0" y="0" width="130" height="130" fill="#CBD5E1" fill-opacity="0.45" />
+        <rect x="0" y="0" width="65" height="65" fill="#CBD5E1" fill-opacity="0.45" />
         <g transform="translate(53.899, 76.9)">
           <path d="M233 233V264Q233 307 250.5 337.5Q268 368 293.5 391.0Q319 414 344.0 433.0Q369 452 386.5 472.5Q404 493 404 518Q404 546 382.0 566.0Q360 586 323 586Q288 586 262.0 563.0Q236 540 236 490H54Q54 579 93.5 636.5Q133 694 196.0 722.0Q259 750 330 750Q404 750 464.5 721.5Q525 693 561.0 642.0Q597 591 597 523Q597 474 579.5 440.0Q562 406 536.0 382.0Q510 358 483.5 339.5Q457 321 439.5 303.5Q422 286 422 264V233ZM327 -10Q285 -10 259.0 17.5Q233 45 233 84Q233 123 259.0 150.5Q285 178 327 178Q367 178 394.0 150.5Q421 123 421 84Q421 45 394.0 17.5Q367 -10 327 -10Z" fill="#94A3B8" transform="translate(0, 0) scale(0.034, -0.034)" />
         </g>
-        <rect x="130" y="0" width="130" height="130" fill="#FFFFFF" />
+        <rect x="130" y="0" width="65" height="65" fill="#FFFFFF" />
         <g transform="translate(180.194, 80.4)">
           <path d="M43 0V131L148 213Q236 282 296.5 329.0Q357 376 388.0 414.0Q419 452 419 495Q419 540 388.5 562.5Q358 585 323 585Q285 585 254.5 559.0Q224 533 224 478H40Q40 547 64.0 598.5Q88 650 129.0 683.5Q170 717 222.0 733.5Q274 750 330 750Q409 750 472.5 720.0Q536 690 573.5 636.0Q611 582 611 509Q611 441 577.5 385.0Q544 329 482.5 276.5Q421 224 335 165H618V0Z" fill="#1E293B" transform="translate(0, 0) scale(0.044, -0.044)" />
         </g>
         <g transform="translate(260, 0)" opacity="0.45">
           <g>
-            <rect width="130" height="130" fill="#FAF5EB" />
-            <rect x="8" y="8" width="114" height="114" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
-            <rect x="12" y="12" width="106" height="106" fill="url(#dungeonDeepVoid)" />
+            <rect width="65" height="65" fill="#FAF5EB" />
+            <rect x="8" y="8" width="57" height="57" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
+            <rect x="12" y="12" width="53" height="53" fill="url(#dungeonDeepVoid)" />
             <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
               <line x1="8" y1="14" x2="122" y2="14" stroke-width="3" />
               <polygon points="16,14 114,14 106,32 24,32" fill="#F7F1E6" stroke-width="2.5" />
-              <rect x="24" y="32" width="82" height="12" fill="#CBBFAA" stroke-width="2.5" />
+              <rect x="24" y="32" width="41" height="6" fill="#CBBFAA" stroke-width="2.5" />
               <polygon points="24,44 106,44 98,60 32,60" fill="#E2D5C0" stroke-width="2.5" />
-              <rect x="32" y="60" width="66" height="12" fill="#A49580" stroke-width="2.5" />
+              <rect x="32" y="60" width="33" height="6" fill="#A49580" stroke-width="2.5" />
               <polygon points="32,72 98,72 90,86 40,86" fill="#BFAF9B" stroke-width="2.5" />
-              <rect x="40" y="86" width="50" height="12" fill="#756755" stroke-width="2.5" />
+              <rect x="40" y="86" width="25" height="6" fill="#756755" stroke-width="2.5" />
               <polygon points="40,98 90,98 84,108 46,108" fill="#807260" stroke-width="2.2" />
-              <rect x="46" y="108" width="38" height="8" fill="#42382C" stroke-width="2.2" />
+              <rect x="46" y="108" width="19" height="4" fill="#42382C" stroke-width="2.2" />
               <polygon points="46,116 84,116 80,120 50,120" fill="#0A1118" stroke-width="1.5" />
             </g>
-            <rect x="1" y="1" width="128" height="128" rx="8" fill="none" stroke="#D84444" stroke-width="2.5" />
+            <rect x="1" y="1" width="64" height="64" rx="8" fill="none" stroke="#D84444" stroke-width="2.5" />
           </g>
         </g>
-        <rect x="0" y="130" width="130" height="130" fill="#FFFFFF" />
+        <rect x="0" y="130" width="65" height="65" fill="#FFFFFF" />
         <g transform="translate(54.858, 210.4)">
           <path d="M381 740V0H189V500H44V618L65 624Q135 642 178.5 667.5Q222 693 262 733L269 740Z" fill="#1E293B" transform="translate(0, 0) scale(0.044, -0.044)" />
         </g>
-        <rect x="130" y="130" width="130" height="130" fill="#F0F9FF" stroke="#38BDF8" stroke-width="2.5" />
+        <rect x="130" y="130" width="65" height="65" fill="#F0F9FF" stroke="#38BDF8" stroke-width="2.5" />
         <g transform="translate(179.248, 210.4)">
           <path d="M358 -10Q280 -10 219.5 19.5Q159 49 116.5 101.0Q74 153 52.0 222.0Q30 291 30 370Q30 449 52.0 518.0Q74 587 116.5 639.0Q159 691 219.5 720.5Q280 750 358 750Q436 750 496.5 720.5Q557 691 599.5 639.0Q642 587 664.0 518.0Q686 449 686 370Q686 291 664.0 222.0Q642 153 599.5 101.0Q557 49 496.5 19.5Q436 -10 358 -10ZM358 158Q415 158 451.5 211.0Q488 264 488 370Q488 477 451.5 529.0Q415 581 358 581Q301 581 264.5 529.0Q228 477 228 370Q228 264 264.5 211.0Q301 158 358 158Z" fill="#0369A1" transform="translate(0, 0) scale(0.044, -0.044)" />
         </g>
-        <rect x="260" y="130" width="130" height="130" fill="#FFFFFF" />
+        <rect x="260" y="130" width="65" height="65" fill="#FFFFFF" />
         <g transform="translate(314.858, 210.4)">
           <path d="M381 740V0H189V500H44V618L65 624Q135 642 178.5 667.5Q222 693 262 733L269 740Z" fill="#1E293B" transform="translate(0, 0) scale(0.044, -0.044)" />
         </g>
         <g transform="translate(0, 260)">
           <g>
-            <rect width="130" height="130" fill="#FAF5EB" />
-            <rect x="8" y="8" width="114" height="114" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
-            <rect x="12" y="12" width="106" height="106" fill="url(#dungeonUpperLight)" />
+            <rect width="65" height="65" fill="#FAF5EB" />
+            <rect x="8" y="8" width="57" height="57" rx="8" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
+            <rect x="12" y="12" width="53" height="53" fill="url(#dungeonUpperLight)" />
             <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
               <line x1="8" y1="14" x2="122" y2="14" stroke-width="3" />
               <polygon points="42,14 88,14 86,22 44,22" fill="#FFFBE8" stroke-width="1.8" />
               <polygon points="44,22 86,22 90,36 40,36" fill="#D5C7B2" stroke-width="2.2" />
-              <rect x="40" y="36" width="50" height="10" fill="#9C8D78" stroke-width="2.2" />
+              <rect x="40" y="36" width="25" height="5" fill="#9C8D78" stroke-width="2.2" />
               <polygon points="40,46 90,46 96,62 34,62" fill="#E2D5C0" stroke-width="2.5" />
-              <rect x="34" y="62" width="62" height="12" fill="#BFAF9B" stroke-width="2.5" />
+              <rect x="34" y="62" width="31" height="6" fill="#BFAF9B" stroke-width="2.5" />
               <polygon points="34,74 96,74 102,90 28,90" fill="#EDE4D4" stroke-width="2.5" />
-              <rect x="28" y="90" width="74" height="12" fill="#CBBFAA" stroke-width="2.5" />
+              <rect x="28" y="90" width="37" height="6" fill="#CBBFAA" stroke-width="2.5" />
               <polygon points="28,102 102,102 108,116 22,116" fill="#F7F1E6" stroke-width="2.5" />
-              <rect x="22" y="116" width="86" height="6" fill="#DCD1BF" stroke-width="2.5" />
+              <rect x="22" y="116" width="43" height="3" fill="#DCD1BF" stroke-width="2.5" />
             </g>
-            <rect x="1" y="1" width="128" height="128" rx="8" fill="none" stroke="#2575A7" stroke-width="2.5" />
+            <rect x="1" y="1" width="64" height="64" rx="8" fill="none" stroke="#2575A7" stroke-width="2.5" />
           </g>
         </g>
-        <rect x="130" y="260" width="130" height="130" fill="#FFFFFF" />
+        <rect x="130" y="260" width="65" height="65" fill="#FFFFFF" />
         <g transform="translate(180.194, 340.4)">
           <path d="M43 0V131L148 213Q236 282 296.5 329.0Q357 376 388.0 414.0Q419 452 419 495Q419 540 388.5 562.5Q358 585 323 585Q285 585 254.5 559.0Q224 533 224 478H40Q40 547 64.0 598.5Q88 650 129.0 683.5Q170 717 222.0 733.5Q274 750 330 750Q409 750 472.5 720.0Q536 690 573.5 636.0Q611 582 611 509Q611 441 577.5 385.0Q544 329 482.5 276.5Q421 224 335 165H618V0Z" fill="#1E293B" transform="translate(0, 0) scale(0.044, -0.044)" />
         </g>
-        <rect x="260" y="260" width="130" height="130" fill="#CBD5E1" fill-opacity="0.45" />
+        <rect x="260" y="260" width="65" height="65" fill="#CBD5E1" fill-opacity="0.45" />
         <g transform="translate(313.899, 336.9)">
           <path d="M233 233V264Q233 307 250.5 337.5Q268 368 293.5 391.0Q319 414 344.0 433.0Q369 452 386.5 472.5Q404 493 404 518Q404 546 382.0 566.0Q360 586 323 586Q288 586 262.0 563.0Q236 540 236 490H54Q54 579 93.5 636.5Q133 694 196.0 722.0Q259 750 330 750Q404 750 464.5 721.5Q525 693 561.0 642.0Q597 591 597 523Q597 474 579.5 440.0Q562 406 536.0 382.0Q510 358 483.5 339.5Q457 321 439.5 303.5Q422 286 422 264V233ZM327 -10Q285 -10 259.0 17.5Q233 45 233 84Q233 123 259.0 150.5Q285 178 327 178Q367 178 394.0 150.5Q421 123 421 84Q421 45 394.0 17.5Q367 -10 327 -10Z" fill="#94A3B8" transform="translate(0, 0) scale(0.034, -0.034)" />
         </g>
@@ -132,8 +132,8 @@
       <circle cx="195" cy="195" r="16" fill="#0284C7" />
       <circle cx="195" cy="195" r="7" fill="#FFFFFF" />
     </g>
-    <rect x="16" y="175" width="155" height="110" rx="14" fill="#F0F9FF" stroke="#38BDF8" stroke-width="2" />
-    <rect x="585" y="175" width="155" height="110" rx="14" fill="#F1F5F9" stroke="#64748B" stroke-width="2" />
-    <rect x="20" y="448" width="715" height="44" rx="10" fill="#F4EFE6" />
+    <rect x="16" y="175" width="77.5" height="55" rx="14" fill="#F0F9FF" stroke="#38BDF8" stroke-width="2" />
+    <rect x="585" y="175" width="77.5" height="55" rx="14" fill="#F1F5F9" stroke="#64748B" stroke-width="2" />
+    <rect x="20" y="448" width="357.5" height="22" rx="10" fill="#F4EFE6" />
   </g>
 </svg>

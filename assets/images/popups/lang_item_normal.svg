@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 616 106" width="308" height="53">
-  
-  <rect width="600" height="90" rx="16" fill="#FEFDFA" stroke="#D1E2ED" stroke-width="2" />
+  <!-- Hàng ngôn ngữ normal 600x90 (cờ + chữ đặt bằng node Label riêng) -->
+  <rect width="300" height="45" rx="16" fill="#FEFDFA" stroke="#D1E2ED" stroke-width="2"/>
 </svg>

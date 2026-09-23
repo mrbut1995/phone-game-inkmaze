@@ -1,7 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 50 50" width="25" height="25">
-  
+  <!-- Checkbox pressed: ô lún xuống, mực xanh đậm (nét tích hiện khi nhả) -->
   <g transform="translate(0, 1.5)">
-    <rect width="38" height="38" rx="8" fill="#F1EBDF" stroke="#256286" stroke-width="2.2" />
+    <rect width="19" height="19" rx="8" fill="#F1EBDF" stroke="#256286" stroke-width="2.2"/>
   </g>
 </svg>

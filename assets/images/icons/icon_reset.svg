@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24" fill="none" stroke="#D84444" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-  
+  <!-- Đầu mũi tên chỉ ngược về quá khứ -->
   <path d="M8 8v10h10" />
   
   <path d="M8 18 A 16 16 0 1 1 24 40 A 16 16 0 0 1 10.5 32" />

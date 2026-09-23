@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 755 90" width="377.5" height="45">
-  
-  <rect width="755" height="90" rx="16" fill="#256286" />
-  <rect x="1.8" y="1.8" width="751.4" height="86.4" rx="14.2" fill="#EAF4FB" />
+  <!-- Hàng danh sách xếp hạng 755x90 — biến thể "chính bạn" (viền xanh đậm hơn) -->
+  <rect width="377.5" height="45" rx="16" fill="#256286"/>
+  <rect x="1.8" y="1.8" width="375.7" height="43.2" rx="14.2" fill="#EAF4FB"/>
 </svg>

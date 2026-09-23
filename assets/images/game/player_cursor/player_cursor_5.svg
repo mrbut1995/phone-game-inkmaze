@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="28" height="28">
   <defs>
     <filter id="glowDraft" x="-30%" y="-30%" width="160%" height="160%">
@@ -7,18 +6,18 @@
   </defs>
   <g filter="url(#glowDraft)">
     <g transform="translate(30, 30) rotate(-45)">
-      
-      <path d="M -6 -5 L -6 -20 L 6 -20 L 6 -5 Z" fill="#1E293B" stroke="#0F172A" stroke-width="1.6" stroke-linejoin="round" />
-      
-      <path d="M -6 5 L -6 -5 L 6 -5 L 6 5 Z" fill="#475569" stroke="#0F172A" stroke-width="1.6" />
-      <line x1="-6" y1="-1" x2="6" y2="-1" stroke="#0F172A" stroke-width="1" opacity="0.4" />
-      <line x1="-6" y1="2" x2="6" y2="2" stroke="#0F172A" stroke-width="1" opacity="0.4" />
-      
-      <path d="M -5 5 L -1.8 13 L 1.8 13 L 5 5 Z" fill="#94A3B8" stroke="#0F172A" stroke-width="1.6" stroke-linejoin="round" />
-      
-      <rect x="-0.9" y="13" width="1.8" height="5.5" fill="#CBD5E1" stroke="#0F172A" stroke-width="1" />
-      
-      <line x1="0" y1="18.5" x2="0" y2="23" stroke="#0F172A" stroke-width="1.6" stroke-linecap="round" />
+      <!-- Thân bút kỹ thuật kim loại màu đen matte 4B -->
+      <path d="M -6 -5 L -6 -20 L 6 -20 L 6 -5 Z" fill="#1E293B" stroke="#0F172A" stroke-width="1.6" stroke-linejoin="round"/>
+      <!-- Cổ bút nhám kim loại (Knurled Grip) -->
+      <path d="M -6 5 L -6 -5 L 6 -5 L 6 5 Z" fill="#475569" stroke="#0F172A" stroke-width="1.6"/>
+      <line x1="-6" y1="-1" x2="6" y2="-1" stroke="#0F172A" stroke-width="1" opacity="0.4"/>
+      <line x1="-6" y1="2" x2="6" y2="2" stroke="#0F172A" stroke-width="1" opacity="0.4"/>
+      <!-- Mũi côn giật cấp -->
+      <path d="M -5 5 L -1.8 13 L 1.8 13 L 5 5 Z" fill="#94A3B8" stroke="#0F172A" stroke-width="1.6" stroke-linejoin="round"/>
+      <!-- Ống dẫn ngòi kim loại (Lead Pipe) -->
+      <rect x="-0.9" y="13" width="0.9" height="2.75" fill="#CBD5E1" stroke="#0F172A" stroke-width="1"/>
+      <!-- Ngòi chì 4B đen đậm cực sắc -->
+      <line x1="0" y1="18.5" x2="0" y2="23" stroke="#0F172A" stroke-width="1.6" stroke-linecap="round"/>
     </g>
   </g>
 </svg>

@@ -1,8 +1,8 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 112" width="56" height="56">
-  
-  <rect width="112" height="112" rx="18" fill="#6EA0C8" />
-  <rect x="3" y="3" width="106" height="106" rx="15" fill="#FEFDFA" />
+  <!-- Thẻ TOÁN TỬ 112x112 (HUD Sum Path): mẩu giấy nhỏ nằm GIỮA thẻ TỔNG và thẻ MỤC TIÊU.
+       Giấy trắng + viền xanh + lề ĐỎ + dòng kẻ ngang (đồng bộ với 2 thẻ lớn). -->
+  <rect width="56" height="56" rx="18" fill="#6EA0C8"/>
+  <rect x="3" y="3" width="53" height="53" rx="15" fill="#FEFDFA"/>
 
   
   <g stroke="#9FC0D6" stroke-width="2" opacity="0.5">

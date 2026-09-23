@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 70" width="100" height="35">
-  <rect x="1.5" y="1.5" width="197" height="67" rx="18" fill="#FEFDFA" stroke="#D84444" stroke-width="3" />
-  
-  <line x1="22" y1="1.5" x2="22" y2="68.5" stroke="#FAF5EB" stroke-width="2" />
+  <rect x="1.5" y="1.5" width="98.5" height="33.5" rx="18" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/>
+  <!-- Vạch lề nhỏ đồng điệu -->
+  <line x1="22" y1="1.5" x2="22" y2="68.5" stroke="#FAF5EB" stroke-width="2"/>
 </svg>

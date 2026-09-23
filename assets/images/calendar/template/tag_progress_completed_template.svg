@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 36" width="52" height="18">
-  <rect width="104" height="36" rx="8" fill="#E8F4EC" stroke="#C8E6C9" stroke-width="1" />
+  <rect width="52" height="18" rx="8" fill="#E8F4EC" stroke="#C8E6C9" stroke-width="1"/>
   <text x="52" y="24" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#2E7D32">3/3 SAO</text>
 </svg>

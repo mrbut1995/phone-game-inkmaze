@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 46" width="75" height="23">
-  
-  <rect x="1.4" y="1.4" width="147.2" height="43.2" rx="9" fill="#D84444" fill-opacity="0.08" stroke="#D84444" stroke-width="2.8" stroke-dasharray="6 3" />
+  <!-- Dấu mộc đỏ nét đứt 150x46 (x/y BADGES) — chữ do Label trong scene vẽ -->
+  <rect x="1.4" y="1.4" width="73.6" height="21.6" rx="9" fill="#D84444" fill-opacity="0.08"
+        stroke="#D84444" stroke-width="2.8" stroke-dasharray="6 3"/>
 </svg>

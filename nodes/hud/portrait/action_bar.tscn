@@ -18,73 +18,73 @@
 [ext_resource type="Texture2D" uid="uid://bqu7qe1u0b70x" path="res://assets/images/game/btn_tool_wall_pressed.svg" id="bar_wall_p"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3631"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("bar_tool_n")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t8ne6"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("bar_tool_p")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ucm8u"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("bar_tool_n")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g1ek8"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("bar_tool_n")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bj6ab"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("bar_tool_n")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l0kg0"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("bar_wall_n")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vsmft"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("bar_wall_p")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vvx5a"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("bar_wall_n")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_48wkn"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("bar_wall_n")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qql67"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
+content_margin_left =  0
+content_margin_top =  0
+content_margin_right =  0
+content_margin_bottom =  0
 texture = ExtResource("bar_wall_n")
 
 [node name="ActionBar" type="Control" unique_id=1405900313]
@@ -92,8 +92,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1080.0
-offset_bottom = -1920.0
+offset_right =  -540
+offset_bottom =  -960
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_w6pjg")
@@ -107,15 +107,15 @@ mouse_filter = 2
 [node name="Row" type="HBoxContainer" parent="Portrait" unique_id=1921036029]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 4.0
-offset_top = 2.0
-offset_right = 1075.0
-offset_bottom = 164.0
-theme_override_constants/separation = 10
+offset_left =  2
+offset_top =  1
+offset_right =  537.5
+offset_bottom =  82
+theme_override_constants/separation =  5
 alignment = 1
 
 [node name="Tool" type="Button" parent="Portrait/Row" unique_id=455131590]
-custom_minimum_size = Vector2(374, 155)
+custom_minimum_size =  Vector2(187, 77.5)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -140,9 +140,9 @@ anchor_left = 0.34188768
 anchor_top = 0.19354838
 anchor_right = 0.9140214
 anchor_bottom = 0.5679032
-offset_left = 0.13399506
-offset_right = 0.15600586
-offset_bottom = -0.025001526
+offset_left =  0.0669975
+offset_right =  0.0780029
+offset_bottom =  -0.0125008
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_TOOL_DRAW_PATH"
@@ -161,7 +161,7 @@ anchor_left = 0.35828876
 anchor_top = 0.59332263
 anchor_right = 0.9037433
 anchor_bottom = 0.82580644
-offset_top = 0.034996033
+offset_top =  0.017498
 grow_horizontal = 2
 grow_vertical = 0
 text = "STR_TOOL_DRAW_PATH_DESC"
@@ -173,7 +173,7 @@ maximum_font_size = 30
 metadata/_edit_use_anchors_ = true
 
 [node name="Wall" type="Button" parent="Portrait/Row" unique_id=1602934804]
-custom_minimum_size = Vector2(374, 155)
+custom_minimum_size =  Vector2(187, 77.5)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -198,9 +198,9 @@ anchor_left = 0.37717116
 anchor_top = 0.2
 anchor_right = 0.9193263
 anchor_bottom = 0.593613
-offset_left = -0.06201172
-offset_right = 0.17196655
-offset_bottom = -0.010009766
+offset_left =  -0.0310059
+offset_right =  0.0859833
+offset_bottom =  -0.00500488
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_TOOL_MARK_WALL"
@@ -219,10 +219,10 @@ anchor_left = 0.3900695
 anchor_top = 0.6255807
 anchor_right = 0.9414813
 anchor_bottom = 0.8067422
-offset_left = 0.11400032
-offset_top = 0.034996033
-offset_right = -0.11401367
-offset_bottom = -0.045013428
+offset_left =  0.0570002
+offset_top =  0.017498
+offset_right =  -0.0570068
+offset_bottom =  -0.0225067
 grow_horizontal = 2
 grow_vertical = 0
 text = "STR_TOOL_MARK_WALL_DESC"
@@ -266,11 +266,11 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -490.0
-offset_top = 18.0
-offset_right = 490.0
-offset_bottom = 180.0
-theme_override_constants/separation = 18
+offset_left =  -245
+offset_top =  9
+offset_right =  245
+offset_bottom =  90
+theme_override_constants/separation =  9
 alignment = 1
 
 [node name="SubRow" type="HBoxContainer" parent="Landscape" unique_id=1935336811]
@@ -278,22 +278,22 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -490.0
-offset_top = 190.0
-offset_right = 490.0
-offset_bottom = 352.0
-theme_override_constants/separation = 18
+offset_left =  -245
+offset_top =  95
+offset_right =  245
+offset_bottom =  176
+theme_override_constants/separation =  9
 alignment = 1
 
 [node name="Replay" type="TextureButton" parent="." unique_id=505849876]
 visible = false
-custom_minimum_size = Vector2(192, 108)
+custom_minimum_size =  Vector2(96, 54)
 layout_mode = 1
 anchors_preset = -1
-offset_left = 444.0
-offset_top = 1583.0
-offset_right = 636.0
-offset_bottom = 1691.0
+offset_left =  222
+offset_top =  791.5
+offset_right =  318
+offset_bottom =  845.5
 texture_normal = ExtResource("bar_replay")
 ignore_texture_size = true
 stretch_mode = 5
@@ -305,7 +305,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -34.0
+offset_top =  -17
 grow_horizontal = 2
 grow_vertical = 0
 label_settings = ExtResource("bar_sub")

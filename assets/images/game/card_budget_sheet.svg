@@ -1,11 +1,16 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 715 156" width="357.5" height="78">
-  
-  <rect width="715" height="156" rx="22" fill="#C2410C" />
-  <rect x="1.5" y="1.5" width="712" height="153" rx="20.5" fill="#FEFDFA" />
-  
-  <line x1="18" y1="4" x2="18" y2="152" stroke="#D84444" stroke-width="3" />
-  
+  <!-- Thẻ SỔ NGÂN SÁCH BƯỚC (mode Countdown Cost) — 715x156, mockup/matchup_countdown_cost.svg
+       CHỈ vẽ phần TĨNH: khung, lề đỏ, dòng kẻ, vạch ngăn cách.
+       3 KHỐI đã tách ra texture node riêng (2026-09-17, xem countdown_hud.tscn):
+         · card_budget_block_budget.svg 217×84 tại sheet-local (34, 33)
+         · card_budget_block_spent.svg  202×84 tại sheet-local (279, 33)
+         · card_budget_block_price.svg  197×84 tại sheet-local (494, 33)
+       Số liệu là Label đè lên; 2 chip giá là node chip_price_cheap/pricey.svg. -->
+  <rect width="357.5" height="78" rx="22" fill="#C2410C"/>
+  <rect x="1.5" y="1.5" width="356" height="76.5" rx="20.5" fill="#FEFDFA"/>
+  <!-- Lề đỏ sổ tay -->
+  <line x1="18" y1="4" x2="18" y2="152" stroke="#D84444" stroke-width="3"/>
+  <!-- Dòng kẻ ô ly mờ -->
   <g stroke="#9FC0D6" stroke-width="1" opacity="0.3">
     <line x1="28" y1="42" x2="700" y2="42" />
     <line x1="28" y1="90" x2="700" y2="90" />

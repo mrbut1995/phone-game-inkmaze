@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 40 40" width="20" height="20">
-  
-  <circle cx="0" cy="0" r="14" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.5" />
-  <circle cx="0" cy="0" r="4" fill="#D84444" />
+  <!-- Núm trượt normal (HSlider icon "grabber") -->
+  <circle cx="0" cy="0" r="14" fill="#FAF5EB" stroke="#3D83AE" stroke-width="2.5"/>
+  <circle cx="0" cy="0" r="4" fill="#D84444"/>
 </svg>

@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 372 24" width="186" height="12">
-  
-  <rect width="360" height="12" rx="6" fill="#3D83AE" />
+  <!-- Phần ray đã trượt (HSlider stylebox "grabber_area") - cùng kích thước slider_track.svg -->
+  <rect width="180" height="6" rx="6" fill="#3D83AE"/>
 </svg>

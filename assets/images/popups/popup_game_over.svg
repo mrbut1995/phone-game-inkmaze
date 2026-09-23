@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="17 14 896 1185" width="448" height="592.5">
   <defs>
     <filter id="failAssetShadow" x="-10%" y="-10%" width="125%" height="130%">
@@ -13,7 +12,7 @@
 
   
   <g transform="translate(40, 40)" filter="url(#failAssetShadow)">
-    <rect width="850" height="1120" rx="18" fill="#FDFBF7" />
+    <rect width="425" height="560" rx="18" fill="#FDFBF7"/>
 
     
     <g stroke="#BAC7CF" stroke-width="1" opacity="0.4">
@@ -25,10 +24,10 @@
       <line x1="60" y1="900" x2="790" y2="900" /><line x1="60" y1="970" x2="790" y2="970" />
     </g>
 
-    
-    <line x1="75" y1="0" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" stroke-dasharray="6 4" />
-    
-    <rect width="850" height="1120" rx="18" fill="none" stroke="#D84444" stroke-width="3" />
+    <!-- Lề đỏ nét đứt -->
+    <line x1="75" y1="0" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" stroke-dasharray="6 4"/>
+    <!-- Viền đỏ quanh mép giấy -->
+    <rect width="425" height="560" rx="18" fill="none" stroke="#D84444" stroke-width="3"/>
   </g>
 
   

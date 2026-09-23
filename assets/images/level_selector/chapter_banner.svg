@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="7 6 986 157" width="493" height="78.5">
   <defs>
     <filter id="chpCleanShadow" x="-10%" y="-15%" width="125%" height="140%">
@@ -7,7 +6,7 @@
   </defs>
 
   <g transform="translate(15, 10)" filter="url(#chpCleanShadow)">
-    <rect width="970" height="140" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3" />
-    <line x1="36" y1="0" x2="36" y2="140" stroke="#D84444" stroke-width="3" />
+    <rect width="485" height="70" rx="22" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+    <line x1="36" y1="0" x2="36" y2="140" stroke="#D84444" stroke-width="3"/>
   </g>
 </svg>

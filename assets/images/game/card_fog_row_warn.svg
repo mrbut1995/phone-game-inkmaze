@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425 64" width="212.5" height="32">
-  
-  <rect x="0.6" y="0.6" width="423.8" height="62.8" rx="10" fill="#FFFDF8" stroke="#E5EDF2" stroke-width="1.2" />
+  <!-- Nền HÀNG CẢNH BÁO của bảng Sương Mù (mode Fog of War) — 425x64
+       Nằm trong nodes/hud/fog_of_war_hud.tscn tại sheet-local (230, 68). -->
+  <rect x="0.6" y="0.6" width="211.9" height="31.4" rx="10" fill="#FFFDF8" stroke="#E5EDF2" stroke-width="1.2"/>
 </svg>

@@ -1,7 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24">
-  
-  <path d="M24 15 c -5 -3 -11 -3.5 -16 -2 v20 c 5 -1.5 11 -1 16 2 c 5 -3 11 -3.5 16 -2 v-20 c -5 -1.5 -11 -1 -16 2 z" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2" stroke-linejoin="round" />
-  <path d="M24 15 v20" stroke="#224C6D" stroke-width="2.6" />
-  <path d="M13 21 h6 M13 27 h6 M29 21 h6 M29 27 h6" stroke="#8FB9D2" stroke-width="2.2" stroke-linecap="round" />
+  <!-- Quyển vở mở (hướng dẫn & luật chơi) - nét chì vẽ tay -->
+  <path d="M24 15 c -5 -3 -11 -3.5 -16 -2 v20 c 5 -1.5 11 -1 16 2 c 5 -3 11 -3.5 16 -2 v-20 c -5 -1.5 -11 -1 -16 2 z" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M24 15 v20" stroke="#224C6D" stroke-width="2.6"/>
+  <path d="M13 21 h6 M13 27 h6 M29 21 h6 M29 27 h6" stroke="#8FB9D2" stroke-width="2.2" stroke-linecap="round"/>
 </svg>

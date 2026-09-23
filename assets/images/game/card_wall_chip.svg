@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 26" width="65" height="13">
-  
-  <rect width="130" height="26" rx="6" fill="#2E7D32" />
+  <!-- Chip TRẠNG THÁI dựng tường (mode Wall Builder) — 130x26
+       Đang nối tường / Đủ tường / Sẵn sàng gửi. Nằm trong nodes/hud/wall_builder_hud.tscn. -->
+  <rect width="65" height="13" rx="6" fill="#2E7D32"/>
 </svg>

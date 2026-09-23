@@ -1,10 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 690 156" width="345" height="78">
-  
-  <rect width="690" height="156" rx="22" fill="#5A6D7C" />
-  <rect x="1.5" y="1.5" width="687" height="153" rx="20.5" fill="#FEFDFA" />
-  
-  <line x1="18" y1="4" x2="18" y2="152" stroke="#5A6D7C" stroke-width="3" />
-  
-  <line x1="210" y1="14" x2="210" y2="142" stroke="#E2EBF1" stroke-width="2" />
+  <!-- Thẻ BẢNG SƯƠNG MÙ (mode Fog of War) — 690x156, mockup/matchup_fog_of_war.svg
+       CHỈ vẽ phần TĨNH: khung, lề trái đậm, vạch chia dọc.
+       Các KHỐI động nằm ở node riêng trong nodes/hud/fog_of_war_hud.tscn:
+         · hàng TẦM NHÌN 425×42 (card_fog_row_vision.svg)  tại sheet-local (230, 16)
+         · hàng CẢNH BÁO 425×64 (card_fog_row_warn.svg)    tại sheet-local (230, 68)
+         · chip XUNG QUANH 105×26 (card_fog_chip_blue.svg) tại sheet-local (535, 24)
+       Viền vẽ bằng 2 hình FILL lồng nhau để ThorVG không cắt nửa nét ở mép viewBox. -->
+  <rect width="345" height="78" rx="22" fill="#5A6D7C"/>
+  <rect x="1.5" y="1.5" width="343.5" height="76.5" rx="20.5" fill="#FEFDFA"/>
+  <!-- Lề trái đậm (khối LƯỢT THỬ LẠI nằm trong phần này) -->
+  <line x1="18" y1="4" x2="18" y2="152" stroke="#5A6D7C" stroke-width="3"/>
+  <!-- Vạch chia dọc giữa khối lượt thử và khối tầm nhìn -->
+  <line x1="210" y1="14" x2="210" y2="142" stroke="#E2EBF1" stroke-width="2"/>
 </svg>

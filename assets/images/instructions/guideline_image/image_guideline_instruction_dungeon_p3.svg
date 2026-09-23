@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="392.5" height="267.5">
   <defs>
     <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
@@ -14,12 +14,12 @@
     </g>
   </defs>
   <g filter="url(#uiShadow)">
-    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#F59E0B" stroke-width="3" />
+    <rect width="377.5" height="255" rx="22" fill="#FEFDFA" stroke="#F59E0B" stroke-width="3" />
     <g transform="translate(45, 35)">
-      <rect width="310" height="395" rx="18" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="2" />
-      <rect x="20" y="16" width="165" height="28" rx="8" fill="#EBF3F8" />
+      <rect width="155" height="197.5" rx="18" fill="#F0F7FB" stroke="#B8D7EA" stroke-width="2" />
+      <rect x="20" y="16" width="82.5" height="14" rx="8" fill="#EBF3F8" />
       <g transform="translate(65, 65)">
-        <rect width="180" height="180" rx="12" fill="#FFFFFF" stroke="#BACEDC" stroke-width="2" />
+        <rect width="90" height="90" rx="12" fill="#FFFFFF" stroke="#BACEDC" stroke-width="2" />
         <line x1="90" y1="0" x2="90" y2="180" stroke="#BACEDC" stroke-width="1.5" />
         <line x1="0" y1="90" x2="180" y2="90" stroke="#BACEDC" stroke-width="1.5" />
         <line x1="90" y1="0" x2="90" y2="90" stroke="#1E283A" stroke-width="10" stroke-linecap="round" />
@@ -41,10 +41,10 @@
       </g>
     </g>
     <g transform="translate(400, 35)">
-      <rect width="310" height="395" rx="18" fill="#FFFDF8" stroke="#F59E0B" stroke-width="2.5" />
-      <rect x="20" y="16" width="165" height="28" rx="8" fill="#FEF3C7" />
+      <rect width="155" height="197.5" rx="18" fill="#FFFDF8" stroke="#F59E0B" stroke-width="2.5" />
+      <rect x="20" y="16" width="82.5" height="14" rx="8" fill="#FEF3C7" />
       <g transform="translate(65, 65)">
-        <rect width="180" height="180" rx="12" fill="#FFFFFF" stroke="#BACEDC" stroke-width="2" />
+        <rect width="90" height="90" rx="12" fill="#FFFFFF" stroke="#BACEDC" stroke-width="2" />
         <line x1="90" y1="0" x2="90" y2="180" stroke="#BACEDC" stroke-width="1.5" />
         <line x1="0" y1="90" x2="180" y2="90" stroke="#BACEDC" stroke-width="1.5" />
         <g>
@@ -88,6 +88,6 @@
         </g>
       </g>
     </g>
-    <rect x="20" y="448" width="715" height="44" rx="10" fill="#F4EFE6" />
+    <rect x="20" y="448" width="357.5" height="22" rx="10" fill="#F4EFE6" />
   </g>
 </svg>

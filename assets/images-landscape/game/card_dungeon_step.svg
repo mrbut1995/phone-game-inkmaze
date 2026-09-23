@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 230" width="350" height="230">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 230" width="175" height="115">
   <defs>
     <clipPath id="stepClip">
-      <rect width="350" height="230" rx="24"/>
+      <rect width="175" height="115" rx="24"/>
     </clipPath>
   </defs>
-  <rect width="350" height="230" rx="24" fill="#FEFDFA" stroke="#D84444" stroke-width="4"/>
+  <rect width="175" height="115" rx="24" fill="#FEFDFA" stroke="#D84444" stroke-width="4"/>
   <g clip-path="url(#stepClip)">
     <line x1="22" y1="0" x2="22" y2="230" stroke="#D84444" stroke-width="3.5"/>
   </g>

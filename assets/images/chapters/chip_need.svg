@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 195 32" width="97.5" height="16">
-  
-  <rect width="195" height="32" rx="8" fill="#FEE2E2" />
+  <!-- Chip "CÒN THIẾU n SAO" của thẻ chương bị khóa -->
+  <rect width="97.5" height="16" rx="8" fill="#FEE2E2"/>
 </svg>

@@ -1,0 +1,256 @@
+[gd_scene format=3 uid="uid://c4im82wcq86l8"]
+
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://c7v12qmn3er7o" path="res://scripts/nodes/hud/countdown_hud.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://bhccsfs2k1hcq" path="res://assets/images/game/card_time_tall.svg" id="3_time"]
+[ext_resource type="Texture2D" uid="uid://02p5c7y33ffl" path="res://assets/images/game/card_budget_sheet.svg" id="4_sheet"]
+[ext_resource type="Texture2D" uid="uid://c4yghxsna7rw5" path="res://assets/images/game/chip_price_cheap.svg" id="5_cheap"]
+[ext_resource type="Texture2D" uid="uid://c1ni0c233oxs3" path="res://assets/images/game/chip_price_pricey.svg" id="6_pricey"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="7_theme"]
+
+
+[node name="Hud" unique_id=1464339223 instance=ExtResource("1_base")]
+theme = ExtResource("7_theme")
+script = ExtResource("2_script")
+
+[node name="Time" type="TextureRect" parent="." index="0" unique_id=1191594554]
+layout_mode = 0
+offset_top =  1.5
+offset_right =  125
+offset_bottom =  79.5
+mouse_filter = 2
+texture = ExtResource("3_time")
+
+[node name="Head" type="Label" parent="Time" index="0" unique_id=522972995]
+layout_mode = 0
+offset_left =  16
+offset_top =  6
+offset_right =  122
+offset_bottom =  23
+theme_type_variation = &"HudTimeHead"
+text = "STR_HUD_TIME"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Time" index="1" unique_id=1399616227]
+layout_mode = 0
+offset_left =  30
+offset_top =  24
+offset_right =  122
+offset_bottom =  58
+theme_type_variation = &"HudTimeValue"
+text = "0:00"
+vertical_alignment = 1
+
+[node name="Sub" type="Label" parent="Time" index="2" unique_id=2026934623]
+layout_mode = 0
+offset_left =  30
+offset_top =  58
+offset_right =  123
+offset_bottom =  74
+theme_type_variation = &"HudTimeSub"
+text = "STR_HUD_TIME_SUPPORT"
+vertical_alignment = 1
+
+[node name="Sheet" type="TextureRect" parent="." index="1" unique_id=1156059562]
+layout_mode = 0
+offset_left =  132.5
+offset_top =  1.5
+offset_right =  490
+offset_bottom =  79.5
+mouse_filter = 2
+texture = ExtResource("4_sheet")
+
+[node name="Title" type="Label" parent="." index="2" unique_id=33508719]
+layout_mode = 0
+offset_left =  150
+offset_top =  4
+offset_right =  382.5
+offset_bottom =  16
+theme_type_variation = &"HudBudgetTitle"
+text = "STR_HUD_BUDGET_TITLE"
+vertical_alignment = 1
+
+[node name="Budget" type="Control" parent="." index="3" unique_id=769029512]
+anchors_preset = 0
+offset_left =  150
+offset_top =  18.5
+offset_right =  257.5
+offset_bottom =  59.5
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Budget" index="0" unique_id=1434569326]
+layout_mode = 0
+offset_left =  7
+offset_top =  4
+offset_right =  101
+offset_bottom =  16
+theme_type_variation = &"HudBudgetLabel"
+text = "STR_HUD_BUDGET_LEFT"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Budget" index="1" unique_id=1019842324]
+layout_mode = 0
+offset_left =  7
+offset_top =  15
+offset_right =  50
+offset_bottom =  39
+theme_type_variation = &"HudBudgetValue"
+text = "0"
+vertical_alignment = 1
+
+[node name="Max" type="Label" parent="Budget" index="2" unique_id=2021856909]
+layout_mode = 0
+offset_left =  46
+offset_top =  18
+offset_right =  103
+offset_bottom =  39
+theme_type_variation = &"HudBudgetSuffix"
+text = "/ 0"
+vertical_alignment = 1
+
+[node name="Spent" type="Control" parent="." index="4" unique_id=466147962]
+anchors_preset = 0
+offset_left =  272.5
+offset_top =  18.5
+offset_right =  372.5
+offset_bottom =  59.5
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Spent" index="0" unique_id=1694147993]
+layout_mode = 0
+offset_left =  7
+offset_top =  4
+offset_right =  93
+offset_bottom =  16
+theme_type_variation = &"HudSpentLabel"
+text = "STR_HUD_BUDGET_SPENT"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Spent" index="1" unique_id=1789669123]
+layout_mode = 0
+offset_left =  7
+offset_top =  15
+offset_right =  62
+offset_bottom =  39
+theme_type_variation = &"HudSpentValue"
+text = "-0"
+vertical_alignment = 1
+
+[node name="Unit" type="Label" parent="Spent" index="2" unique_id=2135033343]
+layout_mode = 0
+offset_left =  50
+offset_top =  15
+offset_right =  95
+offset_bottom =  27
+theme_type_variation = &"HudSpentUnit"
+text = "STR_HUD_BUDGET_SPENT_UNIT"
+vertical_alignment = 1
+
+[node name="Note" type="Label" parent="Spent" index="3" unique_id=1928826021]
+layout_mode = 0
+offset_left =  50
+offset_top =  26
+offset_right =  95
+offset_bottom =  37
+theme_type_variation = &"HudSpentNote"
+text = "STR_HUD_BUDGET_CELLS"
+vertical_alignment = 1
+
+[node name="Price" type="Control" parent="." index="5" unique_id=743883396]
+anchors_preset = 0
+offset_left =  380
+offset_top =  18.5
+offset_right =  477.5
+offset_bottom =  59.5
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Price" index="0" unique_id=1960517729]
+layout_mode = 0
+offset_left =  7
+offset_top =  4
+offset_right =  93
+offset_bottom =  16
+theme_type_variation = &"HudPriceLabel"
+text = "STR_HUD_BUDGET_PRICE"
+vertical_alignment = 1
+
+[node name="ChipCheap" type="Control" parent="Price" index="1" unique_id=2077065820]
+anchors_preset = 0
+offset_left =  7
+offset_top =  17
+offset_right =  46
+offset_bottom =  28
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Price/ChipCheap" index="0" unique_id=288766749]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_cheap")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Price/ChipCheap" index="1" unique_id=2063471630]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"HudChipCheap"
+text = "STR_HUD_PRICE_CHEAP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChipPricey" type="Control" parent="Price" index="2" unique_id=110189782]
+anchors_preset = 0
+offset_left =  50
+offset_top =  17
+offset_right =  89
+offset_bottom =  28
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Price/ChipPricey" index="0" unique_id=668428669]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_pricey")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Price/ChipPricey" index="1" unique_id=618846461]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"HudChipPricey"
+text = "STR_HUD_PRICE_PRICEY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Reserve" type="Label" parent="Price" index="3" unique_id=223018410]
+layout_mode = 0
+offset_left =  7
+offset_top =  31
+offset_right =  95
+offset_bottom =  41
+theme_type_variation = &"HudReserveNote"
+text = "STR_HUD_BUDGET_RESERVE"
+vertical_alignment = 1
+
+[node name="Segments" type="HBoxContainer" parent="." index="6" unique_id=455832380]
+layout_mode = 0
+offset_left =  150
+offset_top =  65.5
+offset_right =  477
+offset_bottom =  71.5
+theme_override_constants/separation =  2
+

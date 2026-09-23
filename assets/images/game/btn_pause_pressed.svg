@@ -1,9 +1,8 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -6 84 87" width="42" height="43.5">
-  
+  <!-- Lún xuống 2px, mực đậm hơn -->
   <g transform="translate(0, 2)">
-    <rect x="0.5" y="0.5" width="69" height="68" rx="18" fill="#EDE6D8" stroke="#256286" stroke-width="2.6" />
-    <line x1="26" y1="22" x2="26" y2="48" stroke="#256286" stroke-width="4.5" stroke-linecap="round" />
-    <line x1="44" y1="22" x2="44" y2="48" stroke="#256286" stroke-width="4.5" stroke-linecap="round" />
+    <rect x="0.5" y="0.5" width="34.5" height="34" rx="18" fill="#EDE6D8" stroke="#256286" stroke-width="2.6"/>
+    <line x1="26" y1="22" x2="26" y2="48" stroke="#256286" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="44" y1="22" x2="44" y2="48" stroke="#256286" stroke-width="4.5" stroke-linecap="round"/>
   </g>
 </svg>

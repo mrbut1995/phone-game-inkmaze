@@ -1,8 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24">
-  
-  <path d="M15 12 h18 v8 a9 9 0 0 1 -18 0 z" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2" stroke-linejoin="round" />
-  <path d="M15 15 h-5 a5 5 0 0 0 5 9 M33 15 h5 a5 5 0 0 1 -5 9" fill="none" stroke="#224C6D" stroke-width="2.8" />
-  <path d="M24 29 v6 M18 39 h12" stroke="#224C6D" stroke-width="3.2" stroke-linecap="round" />
-  <path d="M19 12 v8 a5 5 0 0 0 10 0 v-8" fill="none" stroke="#F59E0B" stroke-width="2.4" />
+  <!-- Cúp (xếp hạng) - nét chì vẽ tay -->
+  <path d="M15 12 h18 v8 a9 9 0 0 1 -18 0 z" fill="#FEFDFA" stroke="#224C6D" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M15 15 h-5 a5 5 0 0 0 5 9 M33 15 h5 a5 5 0 0 1 -5 9" fill="none" stroke="#224C6D" stroke-width="2.8"/>
+  <path d="M24 29 v6 M18 39 h12" stroke="#224C6D" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M19 12 v8 a5 5 0 0 0 10 0 v-8" fill="none" stroke="#F59E0B" stroke-width="2.4"/>
 </svg>

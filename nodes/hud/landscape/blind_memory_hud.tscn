@@ -9,25 +9,25 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="7_note_title"]
 
 [node name="Hud" instance=ExtResource("1_base")]
-custom_minimum_size = Vector2(810, 760)
+custom_minimum_size =  Vector2(405, 380)
 script = ExtResource("2_script")
 
 [node name="Time" type="TextureRect" parent="." index="0" unique_id=1299858556]
-custom_minimum_size = Vector2(270, 230)
+custom_minimum_size =  Vector2(135, 115)
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 270.0
-offset_bottom = 230.0
+offset_left =  0
+offset_top =  0
+offset_right =  135
+offset_bottom =  115
 texture = ExtResource("3_time_bg")
 
 [node name="Label" type="Label" parent="Time" index="0" unique_id=954222728]
 modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
 layout_mode = 0
-offset_left = 36.0
-offset_top = 22.0
-offset_right = 240.0
-offset_bottom = 50.0
+offset_left =  18
+offset_top =  11
+offset_right =  120
+offset_bottom =  25
 text = "STR_HUD_TIME"
 label_settings = ExtResource("5_card_label")
 vertical_alignment = 1
@@ -35,10 +35,10 @@ vertical_alignment = 1
 [node name="Value" type="Label" parent="Time" index="1" unique_id=1818299325]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
-offset_left = 30.0
-offset_top = 70.0
-offset_right = 240.0
-offset_bottom = 150.0
+offset_left =  15
+offset_top =  35
+offset_right =  120
+offset_bottom =  75
 text = "00:00"
 label_settings = ExtResource("6_time_value")
 horizontal_alignment = 1
@@ -47,31 +47,31 @@ vertical_alignment = 1
 [node name="Sub" type="Label" parent="Time" index="2"]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
-offset_left = 36.0
-offset_top = 168.0
-offset_right = 234.0
-offset_bottom = 200.0
-theme_override_font_sizes/font_size = 13
+offset_left =  18
+offset_top =  84
+offset_right =  117
+offset_bottom =  100
+theme_override_font_sizes/font_size =  6.5
 text = "⏸ ĐỒNG HỒ ĐỨNG YÊN"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Note" type="TextureRect" parent="." index="1" unique_id=1551752392]
-custom_minimum_size = Vector2(520, 230)
+custom_minimum_size =  Vector2(260, 115)
 layout_mode = 0
-offset_left = 290.0
-offset_top = 0.0
-offset_right = 810.0
-offset_bottom = 230.0
+offset_left =  145
+offset_top =  0
+offset_right =  405
+offset_bottom =  115
 texture = ExtResource("4_note_bg")
 
 [node name="Title" type="Label" parent="Note" index="0" unique_id=1043611871]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
-offset_left = 38.0
-offset_top = 18.0
-offset_right = 485.0
-offset_bottom = 54.0
+offset_left =  19
+offset_top =  9
+offset_right =  242.5
+offset_bottom =  27
 text = "STR_HUD_BLIND_TITLE"
 label_settings = ExtResource("7_note_title")
 vertical_alignment = 1
@@ -79,10 +79,10 @@ vertical_alignment = 1
 [node name="Hint" type="Label" parent="Note" index="1" unique_id=1641798745]
 modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
 layout_mode = 0
-offset_left = 38.0
-offset_top = 58.0
-offset_right = 485.0
-offset_bottom = 98.0
+offset_left =  19
+offset_top =  29
+offset_right =  242.5
+offset_bottom =  49
 text = "STR_HUD_BLIND_HINT"
 label_settings = ExtResource("5_card_label")
 autowrap_mode = 3
@@ -90,18 +90,18 @@ vertical_alignment = 1
 
 [node name="PhaseBox" type="Panel" parent="Note" index="2"]
 layout_mode = 0
-offset_left = 38.0
-offset_top = 108.0
-offset_right = 485.0
-offset_bottom = 158.0
+offset_left =  19
+offset_top =  54
+offset_right =  242.5
+offset_bottom =  79
 
 [node name="Phase" type="Label" parent="Note" index="3" unique_id=94590019]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
-offset_left = 52.0
-offset_top = 114.0
-offset_right = 475.0
-offset_bottom = 152.0
+offset_left =  26
+offset_top =  57
+offset_right =  237.5
+offset_bottom =  76
 text = "CHẾ ĐỘ: NORMAL"
 label_settings = ExtResource("7_note_title")
 vertical_alignment = 1
@@ -109,10 +109,10 @@ vertical_alignment = 1
 [node name="NoteLabel" type="Label" parent="Note" index="4"]
 modulate = Color(0.56078434, 0.627451, 0.6745098, 1)
 layout_mode = 0
-offset_left = 38.0
-offset_top = 176.0
-offset_right = 485.0
-offset_bottom = 206.0
-theme_override_font_sizes/font_size = 14
+offset_left =  19
+offset_top =  88
+offset_right =  242.5
+offset_bottom =  103
+theme_override_font_sizes/font_size =  7
 text = "* Không có thẻ thử thách trong chế độ Blind Memory"
 vertical_alignment = 1

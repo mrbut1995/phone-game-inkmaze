@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 115 38" width="57.5" height="19">
-  
-  <rect x="0.75" y="0.75" width="113.5" height="36.5" rx="10" fill="#FAF5EB" stroke="#D97706" stroke-width="1.5" />
+  <!-- Chip phần thưởng sao của nhiệm vụ ngày -->
+  <rect x="0.75" y="0.75" width="56.75" height="18.25" rx="10" fill="#FAF5EB" stroke="#D97706" stroke-width="1.5"/>
 </svg>

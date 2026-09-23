@@ -1,8 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  
-  <path d="M37 20 C40 22.5 40 26.5 37 29" stroke="#8FB9D2" stroke-width="2.6" />
-  <path d="M42 16 C46 20.5 46 28.5 42 33" stroke="#8FB9D2" stroke-width="2.6" />
+  <!-- Sóng âm thanh phát ra (dùng màu xanh #8FB9D2) -->
+  <path d="M37 20 C40 22.5 40 26.5 37 29" stroke="#8FB9D2" stroke-width="2.6"/>
+  <path d="M42 16 C46 20.5 46 28.5 42 33" stroke="#8FB9D2" stroke-width="2.6"/>
 
   
   <path d="M16 14.5 L33 9.5 V14.5 L16 19.5 Z" fill="#224C6D" stroke="#224C6D" stroke-width="1" />

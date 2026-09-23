@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 165 30" width="82.5" height="15">
-  
-  <rect width="165" height="30" rx="8" fill="#FEE2E2" />
+  <!-- Nhãn 9-patch màu ĐỎ NHẠT (badge của hàng VIP no-ads) -->
+  <rect width="82.5" height="15" rx="8" fill="#FEE2E2"/>
 </svg>

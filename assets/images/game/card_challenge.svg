@@ -1,8 +1,9 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 226" width="360" height="113">
-  
-  <rect width="720" height="226" rx="22" fill="#D84444" />
-  <rect x="3" y="3" width="714" height="220" rx="19" fill="#FEFDFA" />
+  <!-- Thẻ THỬ THÁCH 720x246 (mockup/matchup_level.svg - ĐÃ PHÓNG TO: đáy thẻ dừng đúng MÉP TRÊN vạch xanh của bàn cờ).
+       Gồm cột tổng kết (số thử thách đã đạt) + vạch ngăn + 3 dải thử thách (Label/TextureRect trong scene vẽ).
+       Viền ĐỎ 3px bo góc 22 - vẽ bằng 2 hình FILL lồng nhau để ThorVG không cắt mất nửa nét ở mép viewBox. -->
+  <rect width="360" height="113" rx="22" fill="#D84444"/>
+  <rect x="3" y="3" width="357" height="110" rx="19" fill="#FEFDFA"/>
 
   
   <line x1="20" y1="0" x2="20" y2="226" stroke="#D84444" stroke-width="3" />

@@ -1,24 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -8 1020 1010" width="510" height="505">
   <defs>
     <filter id="calShadowClean" x="-10%" y="-10%" width="125%" height="130%">
       <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#1E1610" flood-opacity="0.22" />
     </filter>
-    <clipPath id="calClipClean"><rect width="980" height="970" rx="28" /></clipPath>
+    <clipPath id="calClipClean"><rect width="490" height="485" rx="28" /></clipPath>
   </defs>
 
   <g filter="url(#calShadowClean)">
     <g clip-path="url(#calClipClean)">
-      <rect width="980" height="970" fill="#FEFDFA" />
-      
-      <line x1="38" y1="0" x2="38" y2="970" stroke="#D84444" stroke-width="3" />
+      <rect width="490" height="485" fill="#FEFDFA"/>
+      <!-- Lề đỏ -->
+      <line x1="38" y1="0" x2="38" y2="970" stroke="#D84444" stroke-width="3"/>
     </g>
-    
-    <rect width="980" height="970" rx="28" fill="none" stroke="#6EA0C8" stroke-width="5" />
-    <line x1="35" y1="3" x2="945" y2="3" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="5" stroke-linecap="round" />
-    
-    <line x1="45" y1="110" x2="945" y2="110" stroke="#8FB9D2" stroke-width="1.8" opacity="0.6" />
-    
-    <line x1="45" y1="180" x2="945" y2="180" stroke="#8FB9D2" stroke-width="1.2" opacity="0.4" />
+    <!-- Viền xanh dày -->
+    <rect width="490" height="485" rx="28" fill="none" stroke="#6EA0C8" stroke-width="5"/>
+    <line x1="35" y1="3" x2="945" y2="3" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="5" stroke-linecap="round"/>
+    <!-- Vạch phân tách Header tháng -->
+    <line x1="45" y1="110" x2="945" y2="110" stroke="#8FB9D2" stroke-width="1.8" opacity="0.6"/>
+    <!-- Vạch phân tách hàng thứ -->
+    <line x1="45" y1="180" x2="945" y2="180" stroke="#8FB9D2" stroke-width="1.2" opacity="0.4"/>
   </g>
 </svg>

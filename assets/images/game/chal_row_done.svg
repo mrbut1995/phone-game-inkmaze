@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 58" width="245" height="29">
-  
-  <rect width="490" height="58" rx="12" fill="#FECACA" />
-  <rect x="1.2" y="1.2" width="487.6" height="55.6" rx="11" fill="#FEF2F2" />
+  <!-- Dải thử thách ĐÃ ĐẠT 490x58 (mockup/matchup_level.svg, phóng to theo thẻ) - nền hồng nhạt, viền hồng đậm 1.2px -->
+  <rect width="245" height="29" rx="12" fill="#FECACA"/>
+  <rect x="1.2" y="1.2" width="243.8" height="27.8" rx="11" fill="#FEF2F2"/>
 </svg>

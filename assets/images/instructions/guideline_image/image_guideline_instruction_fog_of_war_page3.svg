@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 785 535" width="392.5" height="267.5">
   <defs>
     <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
@@ -14,12 +14,12 @@
     </g>
   </defs>
   <g filter="url(#uiShadow)">
-    <rect width="755" height="510" rx="22" fill="#FEFDFA" stroke="#334155" stroke-width="3" />
+    <rect width="377.5" height="255" rx="22" fill="#FEFDFA" stroke="#334155" stroke-width="3" />
     <g transform="translate(45, 30)">
-      <rect width="665" height="195" rx="18" fill="#FFFDF8" stroke="#F59E0B" stroke-width="2.2" />
-      <rect x="25" y="16" width="240" height="28" rx="8" fill="#FEF3C7" />
+      <rect width="332.5" height="97.5" rx="18" fill="#FFFDF8" stroke="#F59E0B" stroke-width="2.2" />
+      <rect x="25" y="16" width="120" height="14" rx="8" fill="#FEF3C7" />
       <g transform="translate(55, 60)">
-        <rect width="130" height="110" rx="12" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5" />
+        <rect width="65" height="55" rx="12" fill="#F0F7FB" stroke="#BACEDC" stroke-width="1.5" />
         <g transform="translate(53.559, 66.9)">
           <path d="M43 0V131L148 213Q236 282 296.5 329.0Q357 376 388.0 414.0Q419 452 419 495Q419 540 388.5 562.5Q358 585 323 585Q285 585 254.5 559.0Q224 533 224 478H40Q40 547 64.0 598.5Q88 650 129.0 683.5Q170 717 222.0 733.5Q274 750 330 750Q409 750 472.5 720.0Q536 690 573.5 636.0Q611 582 611 509Q611 441 577.5 385.0Q544 329 482.5 276.5Q421 224 335 165H618V0Z" fill="#0C4A6E" transform="translate(0, 0) scale(0.034, -0.034)" />
         </g>
@@ -48,22 +48,22 @@
     </g>
     <g transform="translate(45, 245)">
       <g transform="translate(0, 0)">
-        <rect width="320" height="180" rx="18" fill="#FEFCE8" stroke="#FEF08A" stroke-width="2" />
+        <rect width="160" height="90" rx="18" fill="#FEFCE8" stroke="#FEF08A" stroke-width="2" />
         <g transform="translate(25, 20)">
-          <rect width="48" height="48" rx="12" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2" />
+          <rect width="24" height="24" rx="12" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2" />
           <path d="M 24 12 C 18 12 15 17 19 24 L 29 24 C 33 17 30 12 24 12 Z" fill="none" stroke="#F59E0B" stroke-width="2.5" />
           <line x1="21" y1="29" x2="27" y2="29" stroke="#F59E0B" stroke-width="2.2" />
         </g>
       </g>
       <g transform="translate(345, 0)">
-        <rect width="320" height="180" rx="18" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2" />
+        <rect width="160" height="90" rx="18" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2" />
         <g transform="translate(25, 20)">
-          <rect width="48" height="48" rx="12" fill="#FFFFFF" stroke="#334155" stroke-width="2" />
+          <rect width="24" height="24" rx="12" fill="#FFFFFF" stroke="#334155" stroke-width="2" />
           <path d="M 30 18 L 20 25 L 30 32" fill="none" stroke="#334155" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M 22 25 H 32 C 37 25 40 28 40 33 C 40 38 36 40 30 40 H 26" fill="none" stroke="#334155" stroke-width="3.5" stroke-linecap="round" />
         </g>
       </g>
     </g>
-    <rect x="20" y="448" width="715" height="44" rx="10" fill="#F4EFE6" />
+    <rect x="20" y="448" width="357.5" height="22" rx="10" fill="#F4EFE6" />
   </g>
 </svg>

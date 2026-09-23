@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 88" width="150" height="44">
-  
-  <rect x="1.25" y="1.25" width="297.5" height="85.5" rx="16" fill="#FEFDFA" stroke="#BAC7CF" stroke-width="2.5" />
+  <!-- Nút phụ mờ (VỀ MENU): viền xám -->
+  <rect x="1.25" y="1.25" width="148.75" height="42.75" rx="16" fill="#FEFDFA" stroke="#BAC7CF" stroke-width="2.5"/>
 </svg>

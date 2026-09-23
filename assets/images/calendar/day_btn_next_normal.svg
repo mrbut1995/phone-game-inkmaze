@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 54 57" width="27" height="28.5">
   <defs>
     <filter id="nextNormShadow" x="-20%" y="-20%" width="140%" height="145%">
@@ -6,8 +5,8 @@
     </filter>
   </defs>
   <g filter="url(#nextNormShadow)">
-    <rect width="44" height="44" rx="10" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2" />
-    
-    <path d="M18 13 L28 22 L18 31" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <rect width="22" height="22" rx="10" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/>
+    <!-- Mũi tên tiến mực xanh -->
+    <path d="M18 13 L28 22 L18 31" fill="none" stroke="#3D83AE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 </svg>

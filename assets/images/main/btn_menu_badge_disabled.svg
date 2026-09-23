@@ -1,16 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 224 224" width="112" height="112">
-  
+  <!-- Trạng thái KHOÁ: bạc màu (chưa mở danh hiệu nào) -->
   <g transform="rotate(-8 60 26)">
-    <rect x="20" y="14" width="80" height="26" rx="4" fill="#EDE7DC" opacity="0.95" />
-    <path d="M32 18 v18 M44 18 v18 M56 18 v18 M68 18 v18 M80 18 v18 M92 18 v18" stroke="#DCD4C6" stroke-width="2.4" />
+    <rect x="20" y="14" width="40" height="13" rx="4" fill="#EDE7DC" opacity="0.95"/>
+    <path d="M32 18 v18 M44 18 v18 M56 18 v18 M68 18 v18 M80 18 v18 M92 18 v18" stroke="#DCD4C6" stroke-width="2.4"/>
   </g>
-  <rect x="14" y="24" width="172" height="162" rx="26" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="3.4" />
-  <rect x="21" y="31" width="158" height="148" rx="21" fill="none" stroke="#C6CFD6" stroke-width="1.6" stroke-dasharray="6 4" />
-  <path d="M84 118 L72 172 L100 154 L128 172 L116 118 Z" fill="#D7CBB6" stroke="#B9C2C8" stroke-width="3" stroke-linejoin="round" />
-  <circle cx="100" cy="104" r="44" fill="#EFE9DE" stroke="#C6CFD6" stroke-width="3.6" />
-  <circle cx="100" cy="104" r="34" fill="none" stroke="#CFD6DB" stroke-width="2" stroke-dasharray="6 4" />
-  <path d="M186 46 l2.4 6 6 2.4 -6 2.4 -2.4 6 -2.4 -6 -6 -2.4 6 -2.4 Z" fill="#C6CFD6" />
-  <path d="M26 158 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" fill="#C6CFD6" />
-  <path d="M32 54 h15 M39.5 46.5 v15" stroke="#C6CFD6" stroke-width="2.4" stroke-linecap="round" />
+  <rect x="14" y="24" width="86" height="81" rx="26" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="3.4"/>
+  <rect x="21" y="31" width="79" height="74" rx="21" fill="none" stroke="#C6CFD6" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <path d="M84 118 L72 172 L100 154 L128 172 L116 118 Z" fill="#D7CBB6" stroke="#B9C2C8" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="100" cy="104" r="44" fill="#EFE9DE" stroke="#C6CFD6" stroke-width="3.6"/>
+  <circle cx="100" cy="104" r="34" fill="none" stroke="#CFD6DB" stroke-width="2" stroke-dasharray="6 4"/>
+  <path d="M186 46 l2.4 6 6 2.4 -6 2.4 -2.4 6 -2.4 -6 -6 -2.4 6 -2.4 Z" fill="#C6CFD6"/>
+  <path d="M26 158 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" fill="#C6CFD6"/>
+  <path d="M32 54 h15 M39.5 46.5 v15" stroke="#C6CFD6" stroke-width="2.4" stroke-linecap="round"/>
 </svg>

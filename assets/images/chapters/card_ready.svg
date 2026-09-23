@@ -1,8 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 970 285" width="485" height="142.5">
-  
-  <rect width="970" height="285" rx="24" fill="#C4843A" />
-  <rect x="2" y="2" width="966" height="281" rx="22" fill="#FFFDF8" />
+  <!-- Thẻ CHƯƠNG — trạng thái ĐÃ ĐỦ ĐIỀU KIỆN (viền hổ phách đậm) -->
+  <rect width="485" height="142.5" rx="24" fill="#C4843A"/>
+  <rect x="2" y="2" width="483" height="140.5" rx="22" fill="#FFFDF8"/>
   <g stroke="#8FB9D2" stroke-width="1" opacity="0.4">
     <line x1="2" y1="70" x2="968" y2="70" />
     <line x1="2" y1="140" x2="968" y2="140" />

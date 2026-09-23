@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 192 108" width="96" height="54">
   <g transform="translate(0, 2)">
-    <rect width="180" height="94" rx="16" fill="#EDE6D8" stroke="#256286" stroke-width="3" />
+    <rect width="90" height="47" rx="16" fill="#EDE6D8" stroke="#256286" stroke-width="3"/>
   </g>
 </svg>

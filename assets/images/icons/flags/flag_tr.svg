@@ -1,8 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 28" width="19" height="14">
-  
-  <rect x="1.5" y="1.5" width="35" height="25" rx="3" fill="#E30A17" stroke="#224C6D" stroke-width="1.8" />
-  <circle cx="15.5" cy="14" r="5.6" fill="#FFFFFF" />
-  <circle cx="17.6" cy="14" r="4.5" fill="#E30A17" />
-  <path d="M24 11.4 L24.6 13.2 L26.5 13.2 L25 14.3 L25.6 16.1 L24 15 L22.4 16.1 L23 14.3 L21.5 13.2 L23.4 13.2 Z" fill="#FFFFFF" />
+  <!-- Cờ Thổ Nhĩ Kỳ (đỏ + trăng sao trắng) -->
+  <rect x="1.5" y="1.5" width="17.5" height="12.5" rx="3" fill="#E30A17" stroke="#224C6D" stroke-width="1.8"/>
+  <circle cx="15.5" cy="14" r="5.6" fill="#FFFFFF"/>
+  <circle cx="17.6" cy="14" r="4.5" fill="#E30A17"/>
+  <path d="M24 11.4 L24.6 13.2 L26.5 13.2 L25 14.3 L25.6 16.1 L24 15 L22.4 16.1 L23 14.3 L21.5 13.2 L23.4 13.2 Z" fill="#FFFFFF"/>
 </svg>

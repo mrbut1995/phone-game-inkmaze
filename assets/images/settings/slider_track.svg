@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 372 24" width="186" height="12">
-  
-  <rect width="360" height="12" rx="6" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1" />
+  <!-- Ray trượt (HSlider stylebox "slider") - 360x12, dùng kéo giãn ngang -->
+  <rect width="180" height="6" rx="6" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1"/>
 </svg>

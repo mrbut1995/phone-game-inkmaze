@@ -1,7 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 40 40" width="20" height="20">
-  
-  <circle cx="0" cy="0" r="16.5" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3" />
-  <circle cx="0" cy="0" r="13.5" fill="#FFFDF8" stroke="#C4843A" stroke-width="2.5" />
-  <circle cx="0" cy="0" r="4" fill="#D84444" />
+  <!-- Núm trượt khi focus (HSlider icon "grabber_highlight") -->
+  <circle cx="0" cy="0" r="16.5" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3"/>
+  <circle cx="0" cy="0" r="13.5" fill="#FFFDF8" stroke="#C4843A" stroke-width="2.5"/>
+  <circle cx="0" cy="0" r="4" fill="#D84444"/>
 </svg>

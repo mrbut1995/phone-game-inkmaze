@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 56 56" width="28" height="28">
   <defs>
     <filter id="cursorGlow" x="-30%" y="-30%" width="160%" height="160%">
@@ -8,7 +7,16 @@
   <g filter="url(#cursorGlow)">
     <g transform="translate(30, 30) rotate(-45)">
       
-      <path d="M -6 -7 L -6 -20 L 6 -20 L 6 -7 Z" fill="#2575A7" stroke="#1E283A" stroke-width="1.6" />
+      <!-- Đệm cao su mềm (Soft cushion) -->
+      <path d="M -6 4 L -6 -7 L 6 -7 L 6 4 Z" fill="#38BDF8" stroke="#1E283A" stroke-width="1.6"/>
+
+      <!-- Cổ nón nhựa trong suốt (Clear cone) -->
+      <path d="M -4.5 4 L -1.5 12 L 1.5 12 L 4.5 4 Z" fill="#E0F2FE" stroke="#1E283A" stroke-width="1.5"/>
+      <!-- Lõi dẫn mực nước bên trong -->
+      <line x1="0" y1="4" x2="0" y2="12" stroke="#2575A7" stroke-width="2"/>
+
+      <!-- Ngòi kim loại dạng kim (Needle-point) -->
+      <rect x="-0.8" y="12" width="0.8" height="3.5" fill="#E2E8F0" stroke="#1E283A" stroke-width="1"/>
       
       
       <path d="M -6 4 L -6 -7 L 6 -7 L 6 4 Z" fill="#38BDF8" stroke="#1E283A" stroke-width="1.6" />

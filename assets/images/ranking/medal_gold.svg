@@ -1,7 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="35" height="35">
-  
-  <circle cx="35" cy="35" r="32" fill="#D97706" />
-  <circle cx="35" cy="35" r="30.5" fill="#FBBF24" />
-  <circle cx="35" cy="35" r="25" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5" stroke-dasharray="4 2" />
+  <!-- Huy chương vàng 70x70 (mockup/ranking.svg): vòng tròn đôi, viền trong nét đứt -->
+  <circle cx="35" cy="35" r="32" fill="#D97706"/>
+  <circle cx="35" cy="35" r="30.5" fill="#FBBF24"/>
+  <circle cx="35" cy="35" r="25" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5" stroke-dasharray="4 2"/>
 </svg>

@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 156" width="125" height="78">
-  
-  <rect width="250" height="156" rx="22" fill="#6EA0C8" />
-  <rect x="1.5" y="1.5" width="247" height="153" rx="20.5" fill="#FEFDFA" />
-  <line x1="18" y1="4" x2="18" y2="152" stroke="#3D83AE" stroke-width="2.5" />
+  <!-- Thẻ THỜI GIAN cao 156 (mockup matchup_countdown_cost/fading_ink/sum_path.svg)
+       Viền + lề vẽ bằng FILL/line để không bị cắt nét (ThorVG clips stroke ở mép viewBox) -->
+  <rect width="125" height="78" rx="22" fill="#6EA0C8"/>
+  <rect x="1.5" y="1.5" width="123.5" height="76.5" rx="20.5" fill="#FEFDFA"/>
+  <line x1="18" y1="4" x2="18" y2="152" stroke="#3D83AE" stroke-width="2.5"/>
 </svg>

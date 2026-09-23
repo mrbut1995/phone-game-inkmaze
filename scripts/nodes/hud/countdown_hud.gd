@@ -9,7 +9,7 @@ extends BaseHUD
 ## Chế độ này KHÔNG hiện thẻ THỬ THÁCH nữa (challenge_card() = null).
 ## ============================================================================
 
-const SEGMENT_SCENE := preload("res://nodes/hud/portrait/countdown_segment.tscn")
+const SEGMENT_SCENE := preload("res://nodes/hud/countdown_segment.tscn")
 const SEGMENT_FALLBACK_WIDTH := 327
 const SEGMENT_GAP := 2
 

@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 14" width="200" height="7">
-  
-  <rect x="0.5" y="0.5" width="399" height="13" rx="6.5" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1" />
+  <!-- Rãnh thanh tiến độ dựng tường (mode Wall Builder) — 400x14
+       Nằm trong nodes/hud/wall_builder_hud.tscn tại sheet-local (255, 70). -->
+  <rect x="0.5" y="0.5" width="199.5" height="6.5" rx="6.5" fill="#EAE4D5" stroke="#90BBD4" stroke-width="1"/>
 </svg>

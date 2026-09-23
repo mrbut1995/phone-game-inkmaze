@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 32" width="48" height="16">
-  
-  <rect width="96" height="32" rx="8" fill="#D84444" />
+  <!-- Nhãn "ĐẠT" 96x32 của dải thử thách đã hoàn thành (mockup/matchup_level.svg, phóng to theo dải 490x58).
+       Chữ "✓ ĐẠT" do Label trắng trong scene vẽ lên trên. -->
+  <rect width="48" height="16" rx="8" fill="#D84444"/>
 </svg>

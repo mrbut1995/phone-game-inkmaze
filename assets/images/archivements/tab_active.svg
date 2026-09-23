@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 46" width="67" height="23">
-  
-  <rect width="134" height="46" rx="12" fill="#256286" />
-  <rect x="2" y="2" width="130" height="42" rx="10" fill="#3D83AE" />
+  <!-- Tab phân loại 134x46 (active) — 5 tab vừa 710px (mockup/archivement_scene.svg) -->
+  <rect width="67" height="23" rx="12" fill="#256286"/>
+  <rect x="2" y="2" width="65" height="21" rx="10" fill="#3D83AE"/>
 </svg>

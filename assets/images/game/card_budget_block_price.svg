@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="494 33 197 84" width="98.5" height="42">
-  
-  <rect x="495" y="34" width="195" height="82" rx="14" fill="#FEFDFA" stroke="#E2E8F0" stroke-width="1.6" />
+  <!-- Khối GIÁ CƯỚC MỖI Ô (trích từ card_budget_sheet.svg — 2026-09-17)
+       Node đặt tại sheet-local (494, 33). -->
+  <rect x="495" y="34" width="97.5" height="41" rx="14" fill="#FEFDFA" stroke="#E2E8F0" stroke-width="1.6"/>
 </svg>

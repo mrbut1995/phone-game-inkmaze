@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -4 374 155" width="187" height="77.5">
   <defs>
     <filter id="toolPathShadow" x="-15%" y="-15%" width="130%" height="140%">
@@ -8,9 +7,9 @@
 
   
   <g filter="url(#toolPathShadow)">
-    <rect width="360" height="140" rx="26" fill="#3D83AE" stroke="#235A7D" stroke-width="4" />
-    <line x1="35" y1="0" x2="35" y2="140" stroke="#FAF5EB" stroke-width="3" opacity="0.6" />
-    
+    <rect width="180" height="70" rx="26" fill="#3D83AE" stroke="#235A7D" stroke-width="4"/>
+    <line x1="35" y1="0" x2="35" y2="140" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
+    <!-- Icon bút chì -->
     <g transform="translate(55, 45)" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path d="M10 2L30 22L12 40L2 40L2 30Z" />
       <path d="M22 14L28 20" />

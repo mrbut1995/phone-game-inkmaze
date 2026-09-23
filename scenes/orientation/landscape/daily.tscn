@@ -1,0 +1,437 @@
+[gd_scene format=3 uid="uid://ka36asr06er2"]
+
+[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/orientation/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="5_back_n"]
+[ext_resource type="Texture2D" uid="uid://cfcm0w8fn3nnp" path="res://assets/images/common/panel_information.svg" id="5_uaalm"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="6_back_p"]
+[ext_resource type="Texture2D" uid="uid://cvt2b5v5oe1n8" path="res://assets/images/calendar/streak_badge.svg" id="7_streak"]
+[ext_resource type="Texture2D" uid="uid://coklyxxvrunu2" path="res://assets/images/calendar/fire_icon.svg" id="8_fire"]
+[ext_resource type="Texture2D" uid="uid://cpiryq18o3y70" path="res://assets/images/calendar/panel_daily_mission.svg" id="9_panel"]
+[ext_resource type="Texture2D" uid="uid://cwkukl6emlhmk" path="res://assets/images/calendar/tag_day.svg" id="10_tag_day"]
+[ext_resource type="Texture2D" uid="uid://balhmyit838gg" path="res://assets/images/calendar/tag_reward.svg" id="11_tag_reward"]
+[ext_resource type="Texture2D" uid="uid://1u1eht4ctsov" path="res://assets/images/shop/icon_coin.svg" id="12_coin"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/NinePatchButton.gd" id="16_aqjlc"]
+[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="19_4ahgp"]
+[ext_resource type="Texture2D" uid="uid://88bsbnhxa7wf" path="res://assets/images/calendar/progress_bar_bg.svg" id="22_bar_bg"]
+[ext_resource type="Texture2D" uid="uid://31yj72v8vldh" path="res://assets/images/calendar/progress_bar_fill.svg" id="23_bar_fill"]
+[ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="24_play_n"]
+[ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="25_play_p"]
+[ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="26_play_f"]
+[ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/calendar/pencil_icon.svg" id="27_pencil"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4ahgp"]
+content_margin_left = 106.0
+content_margin_top = 32.0
+content_margin_right = 65.0
+content_margin_bottom = 34.0
+texture = ExtResource("24_play_n")
+texture_margin_left = 106.0
+texture_margin_top = 32.0
+texture_margin_right = 65.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1lf86"]
+content_margin_left = 106.0
+content_margin_top = 32.0
+content_margin_right = 65.0
+content_margin_bottom = 34.0
+texture = ExtResource("25_play_p")
+texture_margin_left = 106.0
+texture_margin_top = 32.0
+texture_margin_right = 65.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7lagm"]
+content_margin_left = 106.0
+content_margin_top = 32.0
+content_margin_right = 65.0
+content_margin_bottom = 34.0
+texture = ExtResource("25_play_p")
+texture_margin_left = 106.0
+texture_margin_top = 32.0
+texture_margin_right = 65.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mgsun"]
+content_margin_left = 106.0
+content_margin_top = 32.0
+content_margin_right = 65.0
+content_margin_bottom = 34.0
+texture = ExtResource("24_play_n")
+texture_margin_left = 106.0
+texture_margin_top = 32.0
+texture_margin_right = 65.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fiyst"]
+content_margin_left = 106.0
+content_margin_top = 32.0
+content_margin_right = 65.0
+content_margin_bottom = 34.0
+texture = ExtResource("26_play_f")
+texture_margin_left = 106.0
+texture_margin_top = 32.0
+texture_margin_right = 65.0
+texture_margin_bottom = 34.0
+
+[node name="Landscape" unique_id=82504288 instance=ExtResource("1_parent")]
+
+[node name="Panel" type="NinePatchRect" parent="." index="0" unique_id=1594258020]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 197.0
+offset_bottom = -197.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("19_4ahgp")
+region_rect = Rect2(0, 0, 467, 816)
+patch_margin_left = 176
+patch_margin_right = 106
+
+[node name="HUD" type="AspectRatioContainer" parent="Panel" index="0" unique_id=1500000000]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.279053
+offset_top = 23.0
+offset_right = -60.279053
+offset_bottom = -23.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.875
+
+[node name="Content" type="HBoxContainer" parent="Panel/HUD" index="0" unique_id=1377575313]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Calendar" parent="Panel/HUD/Content" index="0" unique_id=364415579 instance=ExtResource("3_calendar")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.3
+
+[node name="Information" type="VBoxContainer" parent="Panel/HUD/Content" index="1" unique_id=899992581]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="TopBar" type="HBoxContainer" parent="Panel/HUD/Content/Information" index="0" unique_id=501371577]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 16
+
+[node name="Back" type="TextureButton" parent="Panel/HUD/Content/Information/TopBar" index="0" unique_id=1019985210]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture_normal = ExtResource("5_back_n")
+texture_pressed = ExtResource("6_back_p")
+texture_hover = ExtResource("6_back_p")
+texture_disabled = ExtResource("5_back_n")
+texture_focused = ExtResource("5_back_n")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TitlePanel" type="NinePatchRect" parent="Panel/HUD/Content/Information/TopBar" index="1" unique_id=110493894]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_uaalm")
+patch_margin_left = 48
+patch_margin_top = 32
+patch_margin_right = 64
+patch_margin_bottom = 46
+
+[node name="Title" type="Label" parent="Panel/HUD/Content/Information/TopBar/TitlePanel" index="0" unique_id=195501]
+modulate = Color(0.14163879, 0.45273864, 0.7033491, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"DailyTitle"
+text = "STR_DAILY_CHALLENGE_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+maximum_font_size = 25
+
+[node name="StreakBadge" type="NinePatchRect" parent="Panel/HUD/Content/Information/TopBar" index="2" unique_id=997253483]
+custom_minimum_size = Vector2(190, 75)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+texture = ExtResource("7_streak")
+patch_margin_left = 38
+patch_margin_top = 20
+patch_margin_right = 55
+patch_margin_bottom = 30
+
+[node name="StreakContainer" type="HBoxContainer" parent="Panel/HUD/Content/Information/TopBar/StreakBadge" index="0" unique_id=1872203298]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Fire" type="TextureRect" parent="Panel/HUD/Content/Information/TopBar/StreakBadge/StreakContainer" index="0" unique_id=293082184]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("8_fire")
+stretch_mode = 3
+
+[node name="Streak" type="Label" parent="Panel/HUD/Content/Information/TopBar/StreakBadge/StreakContainer" index="1" unique_id=1272696477]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DailyStreak"
+text = "7"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+maximum_font_size = 24
+
+[node name="Missions" type="NinePatchRect" parent="Panel/HUD/Content/Information" index="1" unique_id=90219679]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("9_panel")
+patch_margin_left = 109
+patch_margin_top = 120
+patch_margin_right = 175
+patch_margin_bottom = 132
+
+[node name="DateTag" type="TextureRect" parent="Panel/HUD/Content/Information/Missions" index="0" unique_id=1698417265]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 20.0
+offset_top = 14.0
+offset_right = 145.0
+offset_bottom = 46.0
+texture = ExtResource("10_tag_day")
+
+[node name="Label" type="Label" parent="Panel/HUD/Content/Information/Missions/DateTag" index="0" unique_id=535679775]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"DailyTodayTag"
+text = "STR_DAILY_DATE_BADGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+maximum_font_size = 15
+
+[node name="Mode" type="Label" parent="Panel/HUD/Content/Information/Missions" index="1" unique_id=2093370042]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 160.0
+offset_top = 14.0
+offset_right = -135.0
+offset_bottom = 46.0
+theme_type_variation = &"DailyTaskTitle"
+text = "STR_DAILY_TODAY_MODE"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+resize_font_to_fit = true
+minimum_font_size = 14
+maximum_font_size = 21
+
+[node name="Reward" type="NinePatchRect" parent="Panel/HUD/Content/Information/Missions" index="2" unique_id=710087459]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -125.0
+offset_top = 11.0
+offset_right = -20.0
+offset_bottom = 49.0
+grow_horizontal = 0
+texture = ExtResource("11_tag_reward")
+patch_margin_left = 17
+patch_margin_top = 11
+patch_margin_right = 24
+patch_margin_bottom = 15
+
+[node name="CoinIcon" type="TextureRect" parent="Panel/HUD/Content/Information/Missions/Reward" index="0" unique_id=2135901154]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 30.0
+offset_bottom = 29.0
+texture = ExtResource("12_coin")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Panel/HUD/Content/Information/Missions/Reward" index="1" unique_id=1390468146]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 32.0
+offset_top = 8.0
+offset_right = 98.0
+offset_bottom = 30.0
+theme_type_variation = &"DailyTaskReward"
+text = "+50 XU"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 13
+maximum_font_size = 18
+
+[node name="Rows" type="VBoxContainer" parent="Panel/HUD/Content/Information/Missions" index="3" unique_id=383859837]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 60.0
+offset_bottom = -61.148804
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Slot1" type="Control" parent="Panel/HUD/Content/Information/Missions/Rows" index="0" unique_id=1219159334]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Slot2" type="Control" parent="Panel/HUD/Content/Information/Missions/Rows" index="1" unique_id=400914126]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Slot3" type="Control" parent="Panel/HUD/Content/Information/Missions/Rows" index="2" unique_id=1869644021]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Slot4" type="Control" parent="Panel/HUD/Content/Information/Missions/Rows" index="3" unique_id=938335154]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ProgressLabel" type="Label" parent="Panel/HUD/Content/Information/Missions" index="4" unique_id=1214704438]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = -52.0
+offset_right = 285.0
+offset_bottom = -22.0
+grow_vertical = 0
+theme_type_variation = &"DailyProgressLabel"
+text = "STR_DAILY_TOTAL_PROGRESS"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+resize_font_to_fit = true
+minimum_font_size = 13
+maximum_font_size = 18
+
+[node name="ProgressBar" type="TextureProgressBar" parent="Panel/HUD/Content/Information/Missions" index="5" unique_id=1143325296]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.38
+anchor_top = 1.0
+anchor_right = 0.78
+anchor_bottom = 1.0
+offset_top = -46.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+nine_patch_stretch = true
+texture_under = ExtResource("22_bar_bg")
+texture_progress = ExtResource("23_bar_fill")
+
+[node name="Claim" type="Label" parent="Panel/HUD/Content/Information/Missions" index="6" unique_id=1945106779]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -145.0
+offset_top = -52.0
+offset_right = -25.0
+offset_bottom = -22.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_type_variation = &"DailyProgressClaim"
+text = "STR_DAILY_CLAIMED_REWARD"
+horizontal_alignment = 2
+vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 13
+maximum_font_size = 17
+
+[node name="Play" type="Button" parent="Panel/HUD/Content/Information" index="2" unique_id=741572511]
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxTexture_4ahgp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1lf86")
+theme_override_styles/hover = SubResource("StyleBoxTexture_7lagm")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_mgsun")
+theme_override_styles/focus = SubResource("StyleBoxTexture_fiyst")
+script = ExtResource("16_aqjlc")
+texture_normal = ExtResource("24_play_n")
+texture_hover = ExtResource("25_play_p")
+texture_pressed = ExtResource("25_play_p")
+texture_disabled = ExtResource("24_play_n")
+texture_focus = ExtResource("26_play_f")
+patch_margin_left = 106.0
+patch_margin_top = 32.0
+patch_margin_right = 65.0
+patch_margin_bottom = 34.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+
+[node name="Icon" type="TextureRect" parent="Panel/HUD/Content/Information/Play" index="0" unique_id=186845186]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 50.0
+offset_top = -30.0
+offset_right = 110.0
+offset_bottom = 30.0
+grow_vertical = 2
+texture = ExtResource("27_pencil")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/HUD/Content/Information/Play" index="1" unique_id=1786849018]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 130.0
+offset_top = 10.0
+offset_right = -50.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"DailyCta"
+text = "STR_BTN_PLAY_DAILY_MODE"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+resize_font_to_fit = true
+minimum_font_size = 18
+maximum_font_size = 28

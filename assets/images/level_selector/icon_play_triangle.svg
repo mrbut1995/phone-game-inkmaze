@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 36" width="15" height="18">
-  
-  <polygon points="0,0 0,36 30,18" fill="#FAF5EB" />
+  <!-- Icon play (tam giác) đặt bên trái chữ trên nút CTA - mockup level_selection.svg -->
+  <polygon points="0,0 0,36 30,18" fill="#FAF5EB"/>
 </svg>

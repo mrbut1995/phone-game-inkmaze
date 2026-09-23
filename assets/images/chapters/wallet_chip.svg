@@ -1,7 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 70" width="125" height="35">
-  
-  <rect width="250" height="70" rx="18" fill="#D84444" />
-  <rect x="1.8" y="1.8" width="246.4" height="66.4" rx="16.2" fill="#FEFDFA" />
-  <line x1="16" y1="5" x2="16" y2="65" stroke="#D84444" stroke-width="2.5" />
+  <!-- Huy hiệu VÍ SAO trên header màn Chọn Chương -->
+  <rect width="125" height="35" rx="18" fill="#D84444"/>
+  <rect x="1.8" y="1.8" width="123.2" height="33.2" rx="16.2" fill="#FEFDFA"/>
+  <line x1="16" y1="5" x2="16" y2="65" stroke="#D84444" stroke-width="2.5"/>
 </svg>
