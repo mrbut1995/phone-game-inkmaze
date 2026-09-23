@@ -1,103 +1,100 @@
-[gd_scene format=3 uid="uid://bu7hccn663n2w"]
+[gd_scene format=3 uid="uid://c6lkgqerjx7yq"]
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://4bgj8itq83wv" path="res://scripts/nodes/hud/sum_path_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" uid="uid://d2u23v5xlibqv" path="res://assets/images/game/card_time.svg" id="4_1xeky"]
-[ext_resource type="Texture2D" uid="uid://ciljsovgfkwkx" path="res://assets/images/game/card_sum_balance.svg" id="4_sheet"]
-[ext_resource type="Texture2D" uid="uid://dq6rl1smpx2v4" path="res://assets/images/game/bar_sum_fill.svg" id="5_fill"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="5_mw13q"]
-[ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="6_42tkx"]
-[ext_resource type="Texture2D" uid="uid://c0iv6cyoi50be" path="res://assets/images/game/bar_sum_ticks.svg" id="6_ticks"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="7_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_land_time_240.svg" id="4_time"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="5_card_lbl"]
+[ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="6_time_val"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_sum_path.svg" id="7_sheet"]
 [ext_resource type="Texture2D" uid="uid://bxsmxk7ttkpmy" path="res://assets/images/game/card_sum_block_current.svg" id="8_block_current"]
 [ext_resource type="Texture2D" uid="uid://cj7ylm7dmsn2c" path="res://assets/images/game/card_sum_emblem.svg" id="9_emblem"]
 [ext_resource type="Texture2D" uid="uid://cc0fu04piyseb" path="res://assets/images/game/card_sum_block_target.svg" id="10_block_target"]
 [ext_resource type="Texture2D" uid="uid://bnk6otp0l6swg" path="res://assets/images/game/card_sum_chip_need.svg" id="11_chip_need"]
 [ext_resource type="Texture2D" uid="uid://clj1xk45gqpml" path="res://assets/images/game/card_sum_bar_track.svg" id="12_bar_track"]
+[ext_resource type="Texture2D" uid="uid://dq6rl1smpx2v4" path="res://assets/images/game/bar_sum_fill.svg" id="13_fill"]
+[ext_resource type="Texture2D" uid="uid://c0iv6cyoi50be" path="res://assets/images/game/bar_sum_ticks.svg" id="14_ticks"]
 
-
-[node name="Hud" unique_id=1258939475 instance=ExtResource("1_base")]
-anchors_preset = -1
-anchor_left = 0.046000004
-anchor_top = 0.091000006
-anchor_right = 0.95400006
-anchor_bottom = 0.22100002
-offset_left =  0.159998
-offset_top =  0.259987
-offset_right =  -0.160034
-offset_bottom =  -0.0400238
-theme = ExtResource("7_theme")
+[node name="Hud" instance=ExtResource("1_base")]
+custom_minimum_size = Vector2(810, 760)
+theme = ExtResource("3_theme")
 script = ExtResource("2_script")
 
 [node name="Time" type="TextureRect" parent="." index="0" unique_id=817490655]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.124000005
-anchor_right = 0.25500003
-anchor_bottom = 0.679
-offset_top =  0.0619993
-offset_right =  0.0499878
-offset_bottom =  -0.0354996
-texture = ExtResource("4_1xeky")
+custom_minimum_size = Vector2(240, 230)
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 240.0
+offset_bottom = 230.0
+texture = ExtResource("4_time")
 
 [node name="Label" type="Label" parent="Time" index="0" unique_id=612068110]
 modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
 layout_mode = 0
-offset_left =  16
-offset_top =  10
-offset_right =  120
-offset_bottom =  23
+offset_left = 32.0
+offset_top = 20.0
+offset_right = 220.0
+offset_bottom = 48.0
 text = "STR_HUD_TIME"
-label_settings = ExtResource("5_mw13q")
+label_settings = ExtResource("5_card_lbl")
 vertical_alignment = 1
 
 [node name="Value" type="Label" parent="Time" index="1" unique_id=1153918549]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
-offset_left =  31
-offset_top =  27
-offset_right =  120
-offset_bottom =  60
+offset_left = 20.0
+offset_top = 66.0
+offset_right = 220.0
+offset_bottom = 150.0
 text = "0:00"
-label_settings = ExtResource("6_42tkx")
+label_settings = ExtResource("6_time_val")
+horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sheet" type="NinePatchRect" parent="." index="1" unique_id=1319479814]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.27
-anchor_right = 0.26999998
-anchor_bottom = 0.04819277
-offset_left =  0.199997
-offset_right =  357.7
-offset_bottom =  116.88
-grow_horizontal = 0
-grow_vertical = 2
-texture = ExtResource("4_sheet")
-region_rect = Rect2(0, 0, 357.5, 78)
-patch_margin_left =  27
-patch_margin_top =  28
-patch_margin_right =  24.5
-patch_margin_bottom =  26
-axis_stretch_vertical = 1
-metadata/_edit_use_anchors_ = true
+[node name="Sub" type="Label" parent="Time" index="2"]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 0
+offset_left = 20.0
+offset_top = 168.0
+offset_right = 220.0
+offset_bottom = 198.0
+theme_override_font_sizes/font_size = 13
+text = "TỔNG ĐIỂM"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="BlockCurrent" type="NinePatchRect" parent="Sheet" index="0" unique_id=1408930610]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.048
-anchor_top = 0.47143754
-anchor_right = 0.4
-anchor_bottom = 0.47143754
-offset_left =  -0.16
-offset_top =  -30.4302
-offset_bottom =  26.5698
+[node name="Sheet" type="TextureRect" parent="." index="1" unique_id=1319479814]
+custom_minimum_size = Vector2(550, 230)
+layout_mode = 0
+offset_left = 260.0
+offset_top = 0.0
+offset_right = 810.0
+offset_bottom = 230.0
+mouse_filter = 2
+texture = ExtResource("7_sheet")
+
+[node name="Title" type="Label" parent="Sheet" index="0" unique_id=12162753]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 10.0
+offset_right = 520.0
+offset_bottom = 36.0
+theme_type_variation = &"HudSumTitle"
+text = "STR_HUD_SUM_TITLE"
+vertical_alignment = 1
+
+[node name="BlockCurrent" type="NinePatchRect" parent="Sheet" index="1" unique_id=1408930610]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 40.0
+offset_right = 212.0
+offset_bottom = 142.0
 texture = ExtResource("8_block_current")
-patch_margin_left =  11
-patch_margin_top =  8
-patch_margin_right =  13.5
-patch_margin_bottom =  7.5
-metadata/_edit_use_anchors_ = true
+patch_margin_left = 22
+patch_margin_top = 16
+patch_margin_right = 27
+patch_margin_bottom = 15
 
 [node name="Sum" type="Control" parent="Sheet/BlockCurrent" index="0" unique_id=47725282]
 layout_mode = 1
@@ -106,84 +103,54 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Sheet/BlockCurrent/Sum" index="0" unique_id=1006096875]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.064
-anchor_top = 0.037162304
-anchor_right = 0.93700004
-anchor_bottom = 0.26000002
-offset_left =  -0.0640001
-offset_top =  -0.0762923
-offset_right =  -0.0620041
-offset_bottom =  -0.0264416
+layout_mode = 0
+offset_left = 12.0
+offset_top = 6.0
+offset_right = 168.0
+offset_bottom = 30.0
 theme_type_variation = &"HudSumLabel"
 text = "STR_HUD_SUM"
 vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
 
 [node name="Value" type="Label" parent="Sheet/BlockCurrent/Sum" index="1" unique_id=293590492]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.107142895
-anchor_top = 0.22346145
-anchor_right = 0.34523812
-anchor_bottom = 0.89919317
-offset_top =  0.0149984
-offset_bottom =  0.125992
+layout_mode = 0
+offset_left = 12.0
+offset_top = 34.0
+offset_right = 85.0
+offset_bottom = 94.0
 theme_type_variation = &"HudSumValue"
 text = "0"
-horizontal_alignment = 1
 vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
 
 [node name="Note" type="Label" parent="Sheet/BlockCurrent/Sum" index="2" unique_id=1819947076]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.3730159
-anchor_top = 0.5342333
-anchor_right = 0.8731111
-anchor_bottom = 0.8850001
-offset_top =  -1.5
-offset_right =  -0.012001
-offset_bottom =  -0.00896072
+layout_mode = 0
+offset_left = 85.0
+offset_top = 56.0
+offset_right = 172.0
+offset_bottom = 88.0
 theme_type_variation = &"HudSumNote"
 text = "STR_HUD_SUM_MOVES"
 vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
 
-[node name="Emblem" type="TextureRect" parent="Sheet" index="1" unique_id=1002002]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4303986
-anchor_top = 0.2795298
-anchor_right = 0.54796505
-anchor_bottom = 0.61494714
-offset_left =  0.132492
-offset_top =  0.0255032
-offset_right =  0.102493
-offset_bottom =  0.00213623
+[node name="Emblem" type="TextureRect" parent="Sheet" index="2" unique_id=1002002]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 58.0
+offset_right = 286.0
+offset_bottom = 124.0
 mouse_filter = 2
 texture = ExtResource("9_emblem")
 expand_mode = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Operator" type="Control" parent="Sheet/Emblem" index="0" unique_id=795058384]
 layout_mode = 1
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top =  -20.5964
-offset_bottom =  20.5964
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 
 [node name="Value" type="Label" parent="Sheet/Emblem/Operator" index="0" unique_id=685831271]
 layout_mode = 1
@@ -196,140 +163,79 @@ theme_type_variation = &"HudOperator"
 text = "="
 horizontal_alignment = 1
 vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
-metadata/_edit_lock_ = true
 
-[node name="BlockTarget" type="NinePatchRect" parent="Sheet" index="2" unique_id=1243368685]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.59400004
-anchor_top = 0.448
-anchor_right = 0.966
-anchor_bottom = 0.45600003
-offset_left =  0.144989
-offset_top =  -27.5502
-offset_right =  0.154999
-offset_bottom =  28.4667
+[node name="BlockTarget" type="NinePatchRect" parent="Sheet" index="3" unique_id=1243368685]
+layout_mode = 0
+offset_left = 296.0
+offset_top = 40.0
+offset_right = 522.0
+offset_bottom = 142.0
 texture = ExtResource("10_block_target")
-patch_margin_left =  12
-patch_margin_top =  7
-patch_margin_right =  14
-patch_margin_bottom =  8.5
-metadata/_edit_use_anchors_ = true
+patch_margin_left = 24
+patch_margin_top = 14
+patch_margin_right = 28
+patch_margin_bottom = 17
 
 [node name="Target" type="Control" parent="Sheet/BlockTarget" index="0" unique_id=901729313]
 layout_mode = 1
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top =  -23.5
-offset_bottom =  23.5
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="Sheet/BlockTarget/Target" index="0" unique_id=1749693657]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.060000002
-anchor_top = 0.036000002
-anchor_right = 0.887
-anchor_bottom = 0.26200002
-offset_left =  0.0199995
-offset_top =  0.00631976
-offset_right =  0.0289993
-offset_bottom =  -0.00956249
+layout_mode = 0
+offset_left = 14.0
+offset_top = 6.0
+offset_right = 210.0
+offset_bottom = 30.0
 theme_type_variation = &"HudTargetLabel"
 text = "STR_HUD_TARGET"
 vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
 
 [node name="Value" type="Label" parent="Sheet/BlockTarget/Target" index="1" unique_id=187751877]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.102000006
-anchor_top = 0.22600001
-anchor_right = 0.32340604
-anchor_bottom = 0.94402516
-offset_left =  -0.0660009
-offset_top =  -0.0158815
-offset_right =  -0.0130043
-offset_bottom =  0.0108147
+layout_mode = 0
+offset_left = 14.0
+offset_top = 34.0
+offset_right = 90.0
+offset_bottom = 94.0
 theme_type_variation = &"HudTargetValue"
 text = "0"
-horizontal_alignment = 1
 vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
 
 [node name="ChipNeed" type="NinePatchRect" parent="Sheet/BlockTarget/Target" index="2" unique_id=1871898265]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.38700002
-anchor_top = 0.5216163
-anchor_right = 0.9700377
-anchor_bottom = 0.94482696
-offset_left =  0.0289955
-offset_top =  -0.0159664
-offset_right =  -0.0150146
-offset_bottom =  -0.0268631
+layout_mode = 0
+offset_left = 94.0
+offset_top = 50.0
+offset_right = 214.0
+offset_bottom = 86.0
 texture = ExtResource("11_chip_need")
-patch_margin_left =  4
-patch_margin_top =  4.5
-patch_margin_right =  6
-patch_margin_bottom =  5
-metadata/_edit_use_anchors_ = true
+patch_margin_left = 8
+patch_margin_top = 9
+patch_margin_right = 12
+patch_margin_bottom = 10
 
 [node name="Need" type="Label" parent="Sheet/BlockTarget/Target/ChipNeed" index="0" unique_id=1401610555]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.052980136
-anchor_top = 0.20833333
-anchor_right = 0.99369097
-anchor_bottom = 0.8506663
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"HudNeedChip"
 text = "STR_HUD_SUM_NEED"
 horizontal_alignment = 1
 vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Title" type="Label" parent="Sheet" index="3" unique_id=12162753]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.047202796
-anchor_top = 0.0069473013
-anchor_right = 0.46542662
-anchor_bottom = 0.22682247
-offset_left =  0.125
-offset_top =  0.0263195
-offset_right =  0.109985
-offset_bottom =  0.00805855
-theme_type_variation = &"HudSumTitle"
-text = "STR_HUD_SUM_TITLE"
-vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
 
 [node name="Bar" type="Control" parent="Sheet" index="4" unique_id=686989728]
 clip_contents = true
-layout_mode = 1
-anchor_left = 0.05
-anchor_top = 0.79247695
-anchor_right = 0.96500003
-anchor_bottom = 0.8644769
-offset_left =  0.125
-offset_top =  -0.0123978
-offset_right =  0.0124817
-offset_bottom =  0.0235977
+layout_mode = 0
+offset_left = 32.0
+offset_top = 156.0
+offset_right = 522.0
+offset_bottom = 180.0
 mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="BarTrack" type="TextureRect" parent="Sheet/Bar" index="0" unique_id=1002005]
 layout_mode = 1
@@ -338,18 +244,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("12_bar_track")
 expand_mode = 1
 
 [node name="Fill" type="TextureRect" parent="Sheet/Bar" index="1" unique_id=282964108]
 layout_mode = 0
-offset_right =  327
-offset_bottom =  9
-mouse_filter = 2
-texture = ExtResource("5_fill")
+offset_right = 490.0
+offset_bottom = 24.0
+texture = ExtResource("13_fill")
 expand_mode = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Ticks" type="TextureRect" parent="Sheet/Bar" index="2" unique_id=489488047]
 layout_mode = 1
@@ -358,8 +261,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("6_ticks")
+texture = ExtResource("14_ticks")
 expand_mode = 1
-metadata/_edit_use_anchors_ = true
 
+[node name="SubNote" type="Label" parent="Sheet" index="5"]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 0
+offset_left = 32.0
+offset_top = 190.0
+offset_right = 522.0
+offset_bottom = 216.0
+theme_override_font_sizes/font_size = 13
+text = "Đạt chính xác điểm mục tiêu tại ô F"
+horizontal_alignment = 2
+vertical_alignment = 1

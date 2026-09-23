@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://chvknk1x1s2p"]
+
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://duw871c8s536v" path="res://scripts/nodes/hud/blind_memory_hud.gd" id="2_script"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_time.svg" id="3_time_bg"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape/game/card_blind_memory.svg" id="4_note_bg"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="5_card_label"]
+[ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="6_time_value"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="7_note_title"]
+
+[node name="Hud" instance=ExtResource("1_base")]
+custom_minimum_size = Vector2(810, 760)
+script = ExtResource("2_script")
+
+[node name="Time" type="TextureRect" parent="." index="0" unique_id=1299858556]
+custom_minimum_size = Vector2(270, 230)
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 270.0
+offset_bottom = 230.0
+texture = ExtResource("3_time_bg")
+
+[node name="Label" type="Label" parent="Time" index="0" unique_id=954222728]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 0
+offset_left = 36.0
+offset_top = 22.0
+offset_right = 240.0
+offset_bottom = 50.0
+text = "STR_HUD_TIME"
+label_settings = ExtResource("5_card_label")
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Time" index="1" unique_id=1818299325]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 0
+offset_left = 30.0
+offset_top = 70.0
+offset_right = 240.0
+offset_bottom = 150.0
+text = "00:00"
+label_settings = ExtResource("6_time_value")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sub" type="Label" parent="Time" index="2"]
+modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+layout_mode = 0
+offset_left = 36.0
+offset_top = 168.0
+offset_right = 234.0
+offset_bottom = 200.0
+theme_override_font_sizes/font_size = 13
+text = "⏸ ĐỒNG HỒ ĐỨNG YÊN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Note" type="TextureRect" parent="." index="1" unique_id=1551752392]
+custom_minimum_size = Vector2(520, 230)
+layout_mode = 0
+offset_left = 290.0
+offset_top = 0.0
+offset_right = 810.0
+offset_bottom = 230.0
+texture = ExtResource("4_note_bg")
+
+[node name="Title" type="Label" parent="Note" index="0" unique_id=1043611871]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 0
+offset_left = 38.0
+offset_top = 18.0
+offset_right = 485.0
+offset_bottom = 54.0
+text = "STR_HUD_BLIND_TITLE"
+label_settings = ExtResource("7_note_title")
+vertical_alignment = 1
+
+[node name="Hint" type="Label" parent="Note" index="1" unique_id=1641798745]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 0
+offset_left = 38.0
+offset_top = 58.0
+offset_right = 485.0
+offset_bottom = 98.0
+text = "STR_HUD_BLIND_HINT"
+label_settings = ExtResource("5_card_label")
+autowrap_mode = 3
+vertical_alignment = 1
+
+[node name="PhaseBox" type="Panel" parent="Note" index="2"]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 108.0
+offset_right = 485.0
+offset_bottom = 158.0
+
+[node name="Phase" type="Label" parent="Note" index="3" unique_id=94590019]
+modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+layout_mode = 0
+offset_left = 52.0
+offset_top = 114.0
+offset_right = 475.0
+offset_bottom = 152.0
+text = "CHẾ ĐỘ: NORMAL"
+label_settings = ExtResource("7_note_title")
+vertical_alignment = 1
+
+[node name="NoteLabel" type="Label" parent="Note" index="4"]
+modulate = Color(0.56078434, 0.627451, 0.6745098, 1)
+layout_mode = 0
+offset_left = 38.0
+offset_top = 176.0
+offset_right = 485.0
+offset_bottom = 206.0
+theme_override_font_sizes/font_size = 14
+text = "* Không có thẻ thử thách trong chế độ Blind Memory"
+vertical_alignment = 1
