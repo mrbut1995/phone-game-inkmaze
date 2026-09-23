@@ -17,11 +17,26 @@ grow_vertical = 2
 
 [node name="Content" type="Control" parent="." index="0" unique_id=1685873785]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = -3.3550003
-anchor_right = 0.0
-anchor_bottom = -3.3550003
-offset_left =  -5.5
-offset_top =  1099.58
-offset_right =  -5.5
-offset_bottom =  1099.58
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ModeInformation" type="Control" parent="Content" index="0" unique_id=366839706]
+layout_mode = 1
+anchor_right = 1.0
+offset_left = 22.0
+offset_top = 108.0
+offset_right = -518.0
+offset_bottom = 108.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ActionBar" parent="Content" index="1" unique_id=1405900313 instance=ExtResource("2_6ami7")]
+layout_mode = 1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 26.5
+offset_top = -231.0
+offset_right = -20.5
+offset_bottom = -103.0

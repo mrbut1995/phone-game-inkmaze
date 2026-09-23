@@ -43,9 +43,6 @@ func set_time(seconds: float) -> void:
 func get_time_node() -> Control :
 	return get_node_or_null("Content/ModeInformation/Time")
 
-func get_time_node() -> Control :
-	return get_node_or_null("Content/ModeInformation/Time")
-
 ## Gán text cho Label (bỏ qua nếu trùng -> không redraw mỗi frame)
 func set_label_text(node: Node, text: String) -> void:
 	var label := node as Label

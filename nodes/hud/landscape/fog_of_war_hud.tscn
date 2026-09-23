@@ -14,7 +14,7 @@
 theme = ExtResource("3_theme")
 script = ExtResource("2_script")
 
-[node name="Time" type="NinePatchRect" parent="Content" parent_id_path=PackedInt32Array(159019822) index="0" unique_id=1522551048]
+[node name="Time" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=1522551048]
 custom_minimum_size = Vector2(120, 115)
 layout_mode = 2
 texture = ExtResource("4_time")
@@ -23,7 +23,7 @@ patch_margin_top = 28
 patch_margin_right = 20
 patch_margin_bottom = 28
 
-[node name="Head" type="Label" parent="Content/Time" index="0" unique_id=723109481]
+[node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=723109481]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 10.0
@@ -33,7 +33,7 @@ theme_type_variation = &"HudTimeHead"
 text = "STR_HUD_TIME"
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Content/Time" index="1" unique_id=2123261514]
+[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=2123261514]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 33.0
@@ -44,7 +44,7 @@ text = "0:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SubChip" type="TextureRect" parent="Content/Time" index="2" unique_id=649744624]
+[node name="SubChip" type="TextureRect" parent="Content/ModeInformation/Time" index="2" unique_id=649744624]
 layout_mode = 0
 offset_left = 20.0
 offset_top = 84.0
@@ -54,7 +54,7 @@ mouse_filter = 2
 texture = ExtResource("5_chip_time")
 expand_mode = 1
 
-[node name="Sub" type="Label" parent="Content/Time" index="3" unique_id=339811843]
+[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="3" unique_id=339811843]
 layout_mode = 0
 offset_left = 20.0
 offset_top = 84.0
@@ -65,16 +65,17 @@ text = "STR_HUD_FOG_TIME_SUB"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sheet" type="NinePatchRect" parent="Content" parent_id_path=PackedInt32Array(159019822) index="1" unique_id=1181006136]
+[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1181006136]
 custom_minimum_size = Vector2(275, 115)
 layout_mode = 2
+size_flags_horizontal = 3
 texture = ExtResource("6_sheet")
 patch_margin_left = 42
 patch_margin_top = 35
 patch_margin_right = 40
 patch_margin_bottom = 22
 
-[node name="Retry" type="Control" parent="Content/Sheet" index="0" unique_id=1535181236]
+[node name="Retry" type="Control" parent="Content/ModeInformation/Sheet" index="0" unique_id=1535181236]
 anchors_preset = 0
 offset_left = 18.0
 offset_top = 9.0
@@ -82,7 +83,7 @@ offset_right = 110.0
 offset_bottom = 105.0
 mouse_filter = 2
 
-[node name="Head" type="Label" parent="Content/Sheet/Retry" index="0" unique_id=433391816]
+[node name="Head" type="Label" parent="Content/ModeInformation/Sheet/Retry" index="0" unique_id=433391816]
 layout_mode = 0
 offset_right = 90.0
 offset_bottom = 14.0
@@ -91,7 +92,7 @@ text = "STR_HUD_FOG_RETRY_HEAD"
 vertical_alignment = 1
 clip_text = true
 
-[node name="Value" type="Label" parent="Content/Sheet/Retry" index="1" unique_id=1068475261]
+[node name="Value" type="Label" parent="Content/ModeInformation/Sheet/Retry" index="1" unique_id=1068475261]
 layout_mode = 0
 offset_top = 17.0
 offset_right = 32.5
@@ -100,7 +101,7 @@ theme_type_variation = &"HudFogRetryValue"
 text = "3"
 vertical_alignment = 1
 
-[node name="Max" type="Label" parent="Content/Sheet/Retry" index="2" unique_id=1869614740]
+[node name="Max" type="Label" parent="Content/ModeInformation/Sheet/Retry" index="2" unique_id=1869614740]
 layout_mode = 0
 offset_left = 32.5
 offset_top = 29.0
@@ -111,7 +112,7 @@ text = "/3"
 vertical_alignment = 1
 clip_text = true
 
-[node name="Note" type="Label" parent="Content/Sheet/Retry" index="3" unique_id=759945354]
+[node name="Note" type="Label" parent="Content/ModeInformation/Sheet/Retry" index="3" unique_id=759945354]
 layout_mode = 0
 offset_top = 60.0
 offset_right = 90.0
@@ -121,7 +122,7 @@ text = "STR_HUD_FOG_RETRY_NOTE"
 vertical_alignment = 1
 clip_text = true
 
-[node name="RowVision" type="TextureRect" parent="Content/Sheet" index="1" unique_id=1986597908]
+[node name="RowVision" type="TextureRect" parent="Content/ModeInformation/Sheet" index="1" unique_id=1986597908]
 layout_mode = 0
 offset_left = 117.5
 offset_top = 9.0
@@ -131,7 +132,7 @@ mouse_filter = 2
 texture = ExtResource("7_row_vision")
 expand_mode = 1
 
-[node name="VisionTitle" type="Label" parent="Content/Sheet" index="2" unique_id=626989630]
+[node name="VisionTitle" type="Label" parent="Content/ModeInformation/Sheet" index="2" unique_id=626989630]
 layout_mode = 0
 offset_left = 124.0
 offset_top = 11.0
@@ -142,7 +143,7 @@ text = "STR_HUD_FOG_VISION"
 vertical_alignment = 1
 clip_text = true
 
-[node name="Chip" type="TextureRect" parent="Content/Sheet" index="3" unique_id=1253652996]
+[node name="Chip" type="TextureRect" parent="Content/ModeInformation/Sheet" index="3" unique_id=1253652996]
 layout_mode = 0
 offset_left = 217.5
 offset_top = 12.0
@@ -152,7 +153,7 @@ mouse_filter = 2
 texture = ExtResource("8_chip_blue")
 expand_mode = 1
 
-[node name="ChipLabel" type="Label" parent="Content/Sheet" index="4" unique_id=1521059943]
+[node name="ChipLabel" type="Label" parent="Content/ModeInformation/Sheet" index="4" unique_id=1521059943]
 layout_mode = 0
 offset_left = 217.5
 offset_top = 12.0
@@ -164,7 +165,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
 
-[node name="VisionDesc" type="Label" parent="Content/Sheet" index="5" unique_id=559940943]
+[node name="VisionDesc" type="Label" parent="Content/ModeInformation/Sheet" index="5" unique_id=559940943]
 modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
 layout_mode = 0
 offset_left = 120.0
@@ -175,7 +176,7 @@ theme_override_font_sizes/font_size = 6
 text = "Sương mù che lại ô đã đi qua"
 vertical_alignment = 1
 
-[node name="RowWarn" type="TextureRect" parent="Content/Sheet" index="6" unique_id=313523210]
+[node name="RowWarn" type="TextureRect" parent="Content/ModeInformation/Sheet" index="6" unique_id=313523210]
 layout_mode = 0
 offset_left = 117.5
 offset_top = 48.0
@@ -185,7 +186,7 @@ mouse_filter = 2
 texture = ExtResource("9_row_warn")
 expand_mode = 1
 
-[node name="Warn1" type="Label" parent="Content/Sheet" index="7" unique_id=657570088]
+[node name="Warn1" type="Label" parent="Content/ModeInformation/Sheet" index="7" unique_id=657570088]
 layout_mode = 0
 offset_left = 124.0
 offset_top = 52.0
@@ -196,7 +197,7 @@ text = "STR_HUD_FOG_WARN_1"
 vertical_alignment = 1
 clip_text = true
 
-[node name="Warn2" type="Label" parent="Content/Sheet" index="8" unique_id=1316467213]
+[node name="Warn2" type="Label" parent="Content/ModeInformation/Sheet" index="8" unique_id=1316467213]
 layout_mode = 0
 offset_left = 124.0
 offset_top = 66.0
@@ -207,7 +208,7 @@ text = "STR_HUD_FOG_WARN_2"
 vertical_alignment = 1
 clip_text = true
 
-[node name="SubNote" type="Label" parent="Content/Sheet" index="9" unique_id=2022363626]
+[node name="SubNote" type="Label" parent="Content/ModeInformation/Sheet" index="9" unique_id=2022363626]
 modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
 layout_mode = 0
 offset_left = 117.5

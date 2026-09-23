@@ -16,15 +16,13 @@
 theme = ExtResource("3_theme")
 script = ExtResource("2_script")
 
-[node name="Time" type="TextureRect" parent="." index="0" unique_id=1036036466]
+[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=1036036466]
 custom_minimum_size = Vector2(120, 115)
-layout_mode = 0
-offset_right = 120.0
-offset_bottom = 115.0
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("4_time")
 
-[node name="Head" type="Label" parent="Time" index="0" unique_id=937397718]
+[node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=937397718]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 10.0
@@ -34,7 +32,7 @@ theme_type_variation = &"HudTimeHead"
 text = "STR_HUD_TIME"
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Time" index="1" unique_id=1374290961]
+[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1374290961]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 33.0
@@ -45,7 +43,7 @@ text = "0:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sub" type="Label" parent="Time" index="2" unique_id=861101356]
+[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=861101356]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 84.0
@@ -56,34 +54,36 @@ text = "STR_HUD_TIME_FREE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sheet" type="TextureRect" parent="." index="1" unique_id=1635864766]
+[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=2135849088]
 custom_minimum_size = Vector2(275, 115)
-layout_mode = 0
-offset_left = 130.0
-offset_right = 405.0
-offset_bottom = 115.0
-mouse_filter = 2
+layout_mode = 2
+size_flags_horizontal = 3
 texture = ExtResource("5_sheet")
+region_rect = Rect2(0, 0, 275, 115)
+patch_margin_left = 28
+patch_margin_top = 22
+patch_margin_right = 33
+patch_margin_bottom = 25
 
-[node name="BlockBottle" type="TextureRect" parent="." index="2" unique_id=248310022]
+[node name="BlockBottle" type="TextureRect" parent="Content/ModeInformation/Sheet" index="0" unique_id=248310022]
 layout_mode = 0
-offset_left = 146.0
+offset_left = 16.0
 offset_top = 24.0
-offset_right = 168.0
+offset_right = 38.0
 offset_bottom = 50.0
 mouse_filter = 2
 texture = ExtResource("6_bottle")
 expand_mode = 1
 
-[node name="Steps" type="Control" parent="." index="3" unique_id=1620880745]
+[node name="Steps" type="Control" parent="Content/ModeInformation/Sheet" index="1" unique_id=1620880745]
 anchors_preset = 0
-offset_left = 173.0
+offset_left = 43.0
 offset_top = 12.0
-offset_right = 257.5
+offset_right = 127.5
 offset_bottom = 72.5
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="Steps" index="0" unique_id=289023605]
+[node name="Label" type="Label" parent="Content/ModeInformation/Sheet/Steps" index="0" unique_id=289023605]
 layout_mode = 0
 offset_right = 82.5
 offset_bottom = 13.0
@@ -91,7 +91,7 @@ theme_type_variation = &"HudInkLabel"
 text = "STR_HUD_INK_STEPS"
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Steps" index="1" unique_id=99819683]
+[node name="Value" type="Label" parent="Content/ModeInformation/Sheet/Steps" index="1" unique_id=99819683]
 layout_mode = 0
 offset_top = 15.0
 offset_right = 37.5
@@ -100,7 +100,7 @@ theme_type_variation = &"HudInkValue"
 text = "00"
 vertical_alignment = 1
 
-[node name="Delta" type="Label" parent="Steps" index="2" unique_id=1231681781]
+[node name="Delta" type="Label" parent="Content/ModeInformation/Sheet/Steps" index="2" unique_id=1231681781]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 23.0
@@ -110,7 +110,7 @@ theme_type_variation = &"HudInkDelta"
 text = "(-0)"
 vertical_alignment = 1
 
-[node name="Note" type="Label" parent="Steps" index="3" unique_id=1531024198]
+[node name="Note" type="Label" parent="Content/ModeInformation/Sheet/Steps" index="3" unique_id=1531024198]
 layout_mode = 0
 offset_top = 46.0
 offset_right = 82.5
@@ -119,30 +119,30 @@ theme_type_variation = &"HudInkNote"
 text = "STR_HUD_INK_NOTE"
 vertical_alignment = 1
 
-[node name="ScaleTitle" type="Label" parent="." index="4" unique_id=1012926989]
+[node name="ScaleTitle" type="Label" parent="Content/ModeInformation/Sheet" index="2" unique_id=1012926989]
 layout_mode = 0
-offset_left = 262.5
+offset_left = 132.5
 offset_top = 9.0
-offset_right = 395.0
+offset_right = 265.0
 offset_bottom = 22.0
 theme_type_variation = &"HudInkScaleTitle"
 text = "STR_HUD_INK_SCALE_TITLE"
 vertical_alignment = 1
 
-[node name="HFlowContainer" type="HFlowContainer" parent="." index="5" unique_id=1523194925]
+[node name="HFlowContainer" type="HFlowContainer" parent="Content/ModeInformation/Sheet" index="3" unique_id=1523194925]
 layout_mode = 0
-offset_left = 262.5
+offset_left = 132.5
 offset_top = 24.0
-offset_right = 395.0
-offset_bottom = 45.0
+offset_right = 827.0
+offset_bottom = 116.0
 theme_override_constants/h_separation = 3
 
-[node name="Swatch1" type="TextureRect" parent="HFlowContainer" index="0" unique_id=1755093493]
+[node name="Swatch1" type="TextureRect" parent="Content/ModeInformation/Sheet/HFlowContainer" index="0" unique_id=1755093493]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("7_swatch1")
 
-[node name="ScaleA" type="Label" parent="HFlowContainer/Swatch1" index="0" unique_id=1945365052]
+[node name="ScaleA" type="Label" parent="Content/ModeInformation/Sheet/HFlowContainer/Swatch1" index="0" unique_id=1945365052]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,12 +154,12 @@ text = "STR_HUD_INK_SCALE_A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Swatch2" type="TextureRect" parent="HFlowContainer" index="1" unique_id=1949652520]
+[node name="Swatch2" type="TextureRect" parent="Content/ModeInformation/Sheet/HFlowContainer" index="1" unique_id=1949652520]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("8_swatch2")
 
-[node name="ScaleB" type="Label" parent="HFlowContainer/Swatch2" index="0" unique_id=775694406]
+[node name="ScaleB" type="Label" parent="Content/ModeInformation/Sheet/HFlowContainer/Swatch2" index="0" unique_id=775694406]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -171,12 +171,12 @@ text = "STR_HUD_INK_SCALE_B"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Swatch3" type="TextureRect" parent="HFlowContainer" index="2" unique_id=1617299689]
+[node name="Swatch3" type="TextureRect" parent="Content/ModeInformation/Sheet/HFlowContainer" index="2" unique_id=1617299689]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("9_swatch3")
 
-[node name="ScaleC" type="Label" parent="HFlowContainer/Swatch3" index="0" unique_id=369395385]
+[node name="ScaleC" type="Label" parent="Content/ModeInformation/Sheet/HFlowContainer/Swatch3" index="0" unique_id=369395385]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -188,12 +188,12 @@ text = "STR_HUD_INK_SCALE_C"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Swatch4" type="TextureRect" parent="HFlowContainer" index="3" unique_id=2130288910]
+[node name="Swatch4" type="TextureRect" parent="Content/ModeInformation/Sheet/HFlowContainer" index="3" unique_id=2130288910]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("10_swatch4")
 
-[node name="ScaleD" type="Label" parent="HFlowContainer/Swatch4" index="0" unique_id=785166112]
+[node name="ScaleD" type="Label" parent="Content/ModeInformation/Sheet/HFlowContainer/Swatch4" index="0" unique_id=785166112]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -205,16 +205,16 @@ text = "STR_HUD_INK_SCALE_D"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Warn" type="Control" parent="." index="6" unique_id=1084244876]
+[node name="Warn" type="Control" parent="Content/ModeInformation/Sheet" index="4" unique_id=1084244876]
 visible = false
 anchors_preset = 0
-offset_left = 262.5
+offset_left = 132.5
 offset_top = 50.0
-offset_right = 395.0
+offset_right = 265.0
 offset_bottom = 72.0
 mouse_filter = 2
 
-[node name="Bg" type="TextureRect" parent="Warn" index="0" unique_id=729374638]
+[node name="Bg" type="TextureRect" parent="Content/ModeInformation/Sheet/Warn" index="0" unique_id=729374638]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -225,7 +225,7 @@ mouse_filter = 2
 texture = ExtResource("11_warn")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="Warn/Bg" index="0" unique_id=82183647]
+[node name="Label" type="Label" parent="Content/ModeInformation/Sheet/Warn/Bg" index="0" unique_id=82183647]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -239,12 +239,12 @@ text = "STR_HUD_INK_WARN"
 vertical_alignment = 1
 clip_text = true
 
-[node name="BottomNote" type="Label" parent="." index="7" unique_id=816099616]
+[node name="BottomNote" type="Label" parent="Content/ModeInformation/Sheet" index="5" unique_id=816099616]
 modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
 layout_mode = 0
-offset_left = 146.0
+offset_left = 16.0
 offset_top = 94.0
-offset_right = 395.0
+offset_right = 265.0
 offset_bottom = 107.0
 theme_override_font_sizes/font_size = 6
 text = "Ô cạn mực sẽ bị bít lối hoàn toàn"
