@@ -86,7 +86,7 @@ func _init() -> void:
 	failures += _expect_page(levels_scene, 0, "vuot ngan phai snap ve trang cu")
 
 	# --- Bấm dot để nhảy trang ---
-	var dots := levels_scene.dots_box.get_children()
+	var dots := levels_scene.layout.dots_box.get_children()
 	if dots.size() >= 2:
 		(dots[0] as TextureButton).pressed.emit()
 		await create_timer(0.5).timeout
@@ -112,7 +112,7 @@ func _init() -> void:
 		print("[FAIL] Chuong 1 (%d man) phai co %d trang (dang %d)"
 			% [chapter_ids.size(), expected_pages, real_scene.page_count()])
 		failures += 1
-	elif real_scene.dots_box.visible != (expected_pages > 1):
+	elif real_scene.layout.dots_box.visible != (expected_pages > 1):
 		print("[FAIL] Dots phai %s khi co %d trang"
 			% ["hien" if expected_pages > 1 else "an", expected_pages])
 		failures += 1
@@ -172,7 +172,7 @@ func _check_pages(scene: LevelScenes) -> int:
 		print("[FAIL] Phai chia 2 trang cho 12 man (dang %d)" % scene.page_count())
 		failures += 1
 
-	var pages := scene.pages_host.get_children()
+	var pages := scene.layout.pages_host.get_children()
 	if pages.size() != 2:
 		print("[FAIL] Phai co 2 node trang (dang %d)" % pages.size())
 		return failures + 1
@@ -218,11 +218,11 @@ func _check_pages(scene: LevelScenes) -> int:
 
 func _check_dots(scene: LevelScenes, expected_page: int) -> int:
 	var failures := 0
-	var dots := scene.dots_box.get_children()
+	var dots := scene.layout.dots_box.get_children()
 	if dots.size() != scene.page_count():
 		print("[FAIL] So dot phai bang so trang (%d dot / %d trang)" % [dots.size(), scene.page_count()])
 		failures += 1
-	if not scene.dots_box.visible:
+	if not scene.layout.dots_box.visible:
 		print("[FAIL] Dots phai hien khi co > 1 trang")
 		failures += 1
 	for index in dots.size():
@@ -242,8 +242,8 @@ func _expect_page(scene: LevelScenes, expected: int, label: String) -> int:
 	if actual != expected:
 		print("[FAIL] %s: phai o trang %d (dang %d)" % [label, expected + 1, actual + 1])
 		return 1
-	var width := int(round(float(scene.scroll.size.x)))
-	var scroll_x := scene.scroll.scroll_horizontal
+	var width := int(round(float(scene.layout.scroll.size.x)))
+	var scroll_x := scene.layout.scroll.scroll_horizontal
 	if absi(scroll_x - expected * width) > 4:
 		print("[FAIL] %s: vi tri truot phai la %d (dang %d)" % [label, expected * width, scroll_x])
 		return 1

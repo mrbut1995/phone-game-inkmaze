@@ -8,7 +8,7 @@ extends Control
 ## Bàn chỉ việc: `footstep.setup(tâm_ô, texture_ngòi_bút, màu_mực)` rồi tween.
 ## ============================================================================
 
-const SIZE := Vector2(36, 36)
+const SIZE := Vector2(18, 18)
 const ALPHA := 0.45
 
 @onready var mark: TextureRect = $Mark

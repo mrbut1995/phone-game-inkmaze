@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/layout/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://db64genkvkbkt" path="res://scripts/scenes/credit.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
@@ -24,9 +24,16 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_desc.tres" id="21_desc"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_value.tres" id="22_value"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="23_version"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/credit_layout.gd" id="2_layout"]
 
 
-[node name="Landscape" instance=ExtResource("1_parent")]
+[node name="Landscape" node_paths=PackedStringArray("btn_back", "theme_value", "track_value", "version_label", "content_root") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+theme_value = NodePath("Panel/Content/VBox/MusicSection/ThemeRow/Value")
+track_value = NodePath("Panel/Content/VBox/MusicSection/TrackRow/Value")
+version_label = NodePath("Panel/Content/VBox/Footer/Stamp/VersionLabel")
+content_root = NodePath("Panel/Content")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dk7hw8k4h4rom"]
 
-[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/layout/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
 [ext_resource type="Texture2D" uid="uid://dw7fdybdrqkc5" path="res://assets/images/ranking/rank_sheet.svg" id="5_sheet"]
@@ -16,8 +16,16 @@
 [ext_resource type="Texture2D" uid="uid://0psdvx3i3rs2" path="res://assets/images/ranking/podium_silver.svg" id="15_podium_s"]
 [ext_resource type="Texture2D" uid="uid://d2327daxklpoj" path="res://assets/images/ranking/podium_bronze.svg" id="16_podium_b"]
 [ext_resource type="Texture2D" uid="uid://c5wka1cl37y6e" path="res://assets/images/ranking/my_rank_bar.svg" id="17_mybar"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/ranking_layout.gd" id="2_layout"]
 
-[node name="Landscape" unique_id=1480176392 instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=1480176392 node_paths=PackedStringArray("btn_back", "tabs_box", "podium", "scroll", "rows_box", "my_rank_bar") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+tabs_box = NodePath("Sheet/Tabs")
+podium = NodePath("Sheet/Podium")
+scroll = NodePath("Sheet/Scroll")
+rows_box = NodePath("Sheet/Scroll/Rows")
+my_rank_bar = NodePath("Sheet/MyRank")
 
 [node name="TopBar" type="HBoxContainer" parent="." index="0" unique_id=1793113191]
 layout_mode = 1

@@ -259,12 +259,12 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	_entry(_ui(scene, "Wallet/Count") is Label, "Co vi Xu")
 	_entry(_ui(scene, "Content/List") is VBoxContainer, "Co danh sach mon hang")
 	_entry(_ui(scene, "GiftBanner/GiftBtn") is TextureButton, "Co nut o banner tiep suc")
-	_entry(scene.tabs_box.get_child_count() == 4, "4 tab duoc dung bang code")
+	_entry(scene.layout.tabs_box.get_child_count() == 4, "4 tab duoc dung bang code")
 	for category in ["pen", "theme", "tool", "coin"]:
 		_entry(scene.tab_button(category) != null, "Co tab '%s'" % category)
 	# TAB: chiều cao lấy từ ART (`tab_active.svg` 240×98) × hệ số màn hình — không hard-code
 	var tab_h: float = scene.tab_height()
-	_entry(absf(tab_h - 98.0 * scene.screen_scale()) < 0.5,
+	_entry(absf(tab_h - 49.0 * scene.screen_scale()) < 0.5,
 		"Chieu cao tab lay tu art tab_active.svg (%.0f)" % tab_h)
 	var tab_on: TextureButton = scene.tab_button("pen")
 	var tab_off: TextureButton = scene.tab_button("theme")
@@ -288,27 +288,27 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 		"10 mon but -> %d trang (nhan %d)" % [expect_pages, scene.page_count()])
 	var first_id := scene.item_id_at(0)
 	# Thẻ ô: cỡ THIẾT KẾ đọc từ LAYOUT của `item_tile.tscn`, cỡ dùng = thiết kế × 1,25 × hệ số màn hình
-	_entry(scene.tile_design_size() == Vector2(475, 294),
+	_entry(scene.tile_design_size() == Vector2(237.5, 147),
 		"Co thiet ke cua the lay tu item_tile.tscn (%s)" % str(scene.tile_design_size()))
 	var tile := scene.card_at(0)
 	var tile_h: float = scene.tile_height()
-	var expect_h: float = 294.0 * 1.25 * scene.screen_scale()
-	_entry(absf(tile_h - expect_h) < 1.0 and tile_h > 294.0,
-		"The o cao = 294 × 1,25 × he so man hinh (%.0f, mong %.0f)" % [tile_h, expect_h])
-	_entry(tile != null and absf(tile.size.x - 475.0) < 1.0 and absf(tile.size.y - tile_h) < 1.0,
-		"The o dung co 475x%.0f (nhan %s)" % [tile_h,
+	var expect_h: float = 147.0 * 1.25 * scene.screen_scale()
+	_entry(absf(tile_h - expect_h) < 1.0 and tile_h > 147.0,
+		"The o cao = 147 × 1,25 × he so man hinh (%.0f, mong %.0f)" % [tile_h, expect_h])
+	_entry(tile != null and absf(tile.size.x - 237.5) < 1.0 and absf(tile.size.y - tile_h) < 1.0,
+		"The o dung co 237.5x%.0f (nhan %s)" % [tile_h,
 			str(tile.size if tile != null else Vector2.ZERO)])
 	if tile != null:
 		_entry(tile.get_node_or_null("IconCircle") is TextureRect, "The o co vong icon (IconCircle)")
 		_entry(tile.get_node_or_null("Stroke") is TextureRect, "The o co net muc ve thu (Stroke)")
 		_entry(tile.get_node_or_null("BadgeLabel") is Label, "The o co nhan goc (Badge)")
 		var action := tile.get_node_or_null("Action") as TextureButton
-		_entry(action != null and action.size == Vector2(200, 46),
-			"Nut the o dung 200x46 (nhan %s)" % str(action.size if action != null else Vector2.ZERO))
+		_entry(action != null and action.size == Vector2(100, 23),
+			"Nut the o dung 100x23 (nhan %s)" % str(action.size if action != null else Vector2.ZERO))
 		# Nút hành động NEO ĐÁY thẻ (thẻ cao lên thì nút đi xuống, không bỏ trống đáy)
 		if action != null:
-			_entry(absf((action.position.y + action.size.y) - (tile.size.y - 16.0)) < 1.0,
-				"Nut the o neo day the (cach day 16, nhan %.0f)" % (tile.size.y - action.position.y - action.size.y))
+			_entry(absf((action.position.y + action.size.y) - (tile.size.y - 8.0)) < 1.0,
+				"Nut the o neo day the (cach day 8, nhan %.0f)" % (tile.size.y - action.position.y - action.size.y))
 		# BÚT & MỰC: thẻ hiện đúng icon CON TRỎ trong game của chính ngòi bút đó
 		var first_icon := tile.get_node_or_null("Icon") as TextureRect
 		_entry(first_icon != null and first_icon.texture == PenSkin.cursor_texture(first_id),
@@ -320,8 +320,8 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	if pad != null:
 		_entry(_ui(scene, "Content/List").get_child(0) == pad,
 			"Ban nhap nam TREN luoi mon hang")
-		_entry(pad.size.x >= 960.0 and absf(pad.size.y - 215.0) < 2.0,
-			"Ban nhap dung co 980x215 (nhan %s)" % str(pad.size))
+		_entry(pad.size.x >= 480.0 and absf(pad.size.y - 107.5) < 2.0,
+			"Ban nhap dung co 490x107.5 (nhan %s)" % str(pad.size))
 		_entry(str(pad.call("pen_id")) == Shop.equipped_pen(),
 			"Ban nhap mo dau voi but dang dung (%s)" % str(pad.call("pen_id")))
 		_entry(str(pad.call("stamp_text")) == TranslationServer.translate("STR_SHOP_TRY_USING"),
@@ -361,12 +361,22 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 		var pad_back: Control = scene.doodle_pad()
 		_entry(pad_back != null and str(pad_back.call("pen_id")) == "pen_purple",
 			"Quay lai tab BUT & MUC nho ngòi đang xem thử")
+	# Màn đủ chỗ cả 10 món thì chỉ 1 trang ⇒ THU NHỎ khung để chắc chắn có >= 2 trang rồi kiểm tra
+	if scene.page_count() < 2:
+		root.size = Vector2i(1080, 900)
+		await process_frame
+		await process_frame
+	_entry(scene.page_count() >= 2, "Khung thap -> chia >= 2 trang (nhan %d)" % scene.page_count())
+	var per_page_small := scene.items_per_page()
 	scene.goto_page(1)
 	await process_frame
-	var page2_count := mini(per_page, maxi(10 - per_page, 0))
+	var page2_count := mini(per_page_small, maxi(10 - per_page_small, 0))
 	_entry(scene.item_count() == page2_count, "Trang 2 con %d mon (nhan %d)" % [page2_count, scene.item_count()])
 	_entry(scene.item_id_at(0) != first_id, "Sang trang thi doi danh sach mon")
 	_entry(scene.current_page() == 1, "current_page() = 1")
+	root.size = Vector2i(1080, 1920)
+	await process_frame
+	await process_frame
 
 	# Tab DỤNG CỤ: danh sách thẻ ngang, không phân trang
 	scene.show_tab("tool")
@@ -387,13 +397,13 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 		"The dau tien la hang VIP xoa quang cao (ShopNoadsRow)")
 	if noads != null:
 		_entry(str(noads.get("item_id")) == "coin_no_ads", "Hang dau la coin_no_ads")
-		_entry(noads.size == Vector2(980, 200), "Hang VIP cao 200 va rong 980 (bao trum 1 hang)")
+		_entry(noads.size == Vector2(490, 100), "Hang VIP cao 100 va rong 490 (bao trum 1 hang)")
 	var pack_tile := scene.card_at(1)
 	_entry(pack_tile != null and pack_tile.get_script() == preload("res://scripts/nodes/shop/coin_tile.gd"),
 		"Cac the sau la goi nap (ShopCoinTile)")
 	if pack_tile != null:
 		_entry(str(pack_tile.get("item_id")) == "coin_500", "The goi dau tien la coin_500")
-		_entry(pack_tile.size == Vector2(475, 240), "The goi nap dung 475x240 (nhan %s)" % str(pack_tile.size))
+		_entry(pack_tile.size == Vector2(237.5, 120), "The goi nap dung 237.5x120 (nhan %s)" % str(pack_tile.size))
 		var icon: Texture2D = pack_tile.call("icon_texture")
 		_entry(icon != null and icon.resource_path.ends_with("icon_coin_t1.svg"),
 			"Goi 500 Xu dung icon cap 1 (%s)" % str(icon.resource_path if icon != null else ""))
@@ -440,8 +450,16 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 	await process_frame
 	_entry(scene.current_page() == 0, "Bat dau o trang 1")
 	_entry(not scene.clicks_locked(), "Chua vuot thi chua khoa bam nut")
-	scene.call("_begin_drag", Vector2(700, 800))
-	scene.call("_update_drag", Vector2(300, 806))
+	# Màn đủ chỗ cả 10 món thì chỉ 1 trang ⇒ thu nhỏ khung để CHẮC CHẮN vuốt được sang trang 2
+	if scene.page_count() < 2:
+		root.size = Vector2i(1080, 900)
+		await process_frame
+		await process_frame
+	_entry(scene.page_count() >= 2, "Khung thap -> co >= 2 trang de kiem tra vuot (nhan %d)" % scene.page_count())
+	# Vuốt NGANG sang trái -> sang trang sau (dùng TÂM vùng cuộn để không phụ thuộc cỡ khung)
+	var drag_mid := (_ui(scene, "Content") as ScrollContainer).get_global_rect().get_center()
+	scene.call("_begin_drag", drag_mid)
+	scene.call("_update_drag", drag_mid + Vector2(-400, 6))
 	scene.call("_end_drag")
 	await process_frame
 	_entry(scene.current_page() == 1, "Vuot ngang sang trai -> sang trang 2 (nhan %d)" % scene.current_page())
@@ -452,6 +470,10 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 	scene.call("_on_item_action", "pen_green_tea")
 	await process_frame
 	_entry(int(shop.call("coins")) == before_coins, "Dang khoa bam -> bam the KHONG mua")
+	# Trả khung về cỡ chuẩn cho các mục kiểm tra còn lại
+	root.size = Vector2i(1080, 1920)
+	await process_frame
+	await process_frame
 
 	# Hết thời gian khoá -> nút mũi tên lại hoạt động
 	scene.set("_click_lock_until", 0.0)
@@ -461,8 +483,8 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 	_entry(scene.current_page() == 0, "Nut lui trang chay lai binh thuong")
 
 	# Vuốt NGANG sang phải khi đang ở trang 1 -> không vượt biên
-	scene.call("_begin_drag", Vector2(300, 800))
-	scene.call("_update_drag", Vector2(700, 800))
+	scene.call("_begin_drag", drag_mid)
+	scene.call("_update_drag", drag_mid + Vector2(400, 0))
 	scene.call("_end_drag")
 	await process_frame
 	_entry(scene.current_page() == 0, "Vuot nguoc khi dang o trang 1 -> dung yen")

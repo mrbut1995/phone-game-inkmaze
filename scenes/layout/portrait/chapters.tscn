@@ -13,9 +13,20 @@
 [ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cta_f"]
 [ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
-[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/chapters_layout.gd" id="2_layout"]
 
-[node name="Portrait" instance=ExtResource("1_parent")]
+[node name="Portrait" node_paths=PackedStringArray("btn_back", "cards_box", "lbl_wallet", "btn_continue", "lbl_continue", "list", "top_bar", "wallet_bar", "banner") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+cards_box = NodePath("List/Cards")
+lbl_wallet = NodePath("Wallet/Count")
+btn_continue = NodePath("ContinueButton")
+lbl_continue = NodePath("ContinueButton/Label")
+list = NodePath("List")
+top_bar = NodePath("TopBar")
+wallet_bar = NodePath("Wallet")
+banner = NodePath("Banner")
 
 [node name="TopBar" type="HBoxContainer" parent="." index="1" unique_id=510724449]
 layout_mode = 1

@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_hcnff"]
 [ext_resource type="Script" uid="uid://byfef235y6820" path="res://scripts/scenes/levels.gd" id="2_5ekxl"]
-[ext_resource type="Script" uid="uid://bsvvrqxukl444" path="res://scripts/layout/landscape/landscape.gd" id="6_byla0"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="14_theme_text"]
 [ext_resource type="PackedScene" uid="uid://hng3ln6muswr" path="res://scenes/layout/landscape/levels.tscn" id="L_Landscape"]
 [ext_resource type="PackedScene" uid="uid://vs5xiygkv5e" path="res://scenes/layout/portrait/levels.tscn" id="L_Portrait"]
@@ -16,4 +15,3 @@ layout_mode = 1
 
 [node name="Landscape" parent="." index="2" unique_id=1096027511 instance=ExtResource("L_Landscape")]
 layout_mode = 1
-script = ExtResource("6_byla0")

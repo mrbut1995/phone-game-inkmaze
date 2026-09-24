@@ -267,7 +267,7 @@ func _section_5_scene(manager: Node) -> void:
 	await process_frame
 	var pressed := false
 	for page_index in scene.page_count():
-		var page: Control = (scene.get("pages_host") as Node).get_child(page_index) as Control
+		var page: Control = (scene.layout.pages_host as Node).get_child(page_index) as Control
 		var column: Control = page.get_child(0) as Control
 		for card in column.get_children():
 			var raw_entry: Variant = card.get("_entry")
@@ -284,7 +284,7 @@ func _section_5_scene(manager: Node) -> void:
 	_entry(pressed, "Tim thay the dang cho NHAN trong scene")
 	if not pressed:
 		for page_index in scene.page_count():
-			var page: Control = (scene.get("pages_host") as Node).get_child(page_index) as Control
+			var page: Control = (scene.layout.pages_host as Node).get_child(page_index) as Control
 			var column := page.get_child(0) as Control
 			print("[INFO] Trang %d | Page=%s | Column=%s | %d con"
 				% [page_index, page.name, column.name, column.get_child_count()])

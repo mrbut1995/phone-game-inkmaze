@@ -13,12 +13,10 @@ extends BaseScene
 const CARD_SCENE := preload("res://nodes/chapters/chapter_card.tscn")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (Portrait / Landscape giữ CÙNG đường dẫn node)
-var btn_back: BaseButton = null
-var cards_box: Container = null
-var lbl_wallet: Label = null
-var btn_continue: BaseButton = null
-var lbl_continue: Label = null
+## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
+## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/chapters.tscn`
+## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
+var layout: ChaptersLayout = null
 
 var _cards: Array[ChapterCard] = []
 
@@ -27,56 +25,49 @@ var _cards: Array[ChapterCard] = []
 ## Dùng TÊN node (không dùng đường dẫn) vì 2 layout lồng khác nhau: bản dọc để TopBar/Wallet/CTA ngay dưới root,
 ## bản ngang gom chúng vào cột `Left` (VBoxContainer) — tên node thì GIỐNG NHAU.
 func _bind_refs() -> void:
-	btn_back = ui("Back") as BaseButton
-	cards_box = ui("Cards") as Container
-	lbl_wallet = ui_child("Wallet", "Count") as Label
-	btn_continue = ui("ContinueButton") as BaseButton
-	lbl_continue = ui_child("ContinueButton", "Label") as Label
-	_apply_grid_columns()
+	layout = active_layout() as ChaptersLayout
+	if layout == null:
+		push_warning("chapters: bố cục chưa gắn ChaptersLayout — thiếu binding trong scenes/layout/<hướng>/chapters.tscn")
 
 
 ## Layout NGANG: lưới thẻ tự tăng số cột theo bề ngang vùng cuộn (2 cột ở 16:9, 1 ở 4:3, 3 ở 19.5:9)
 func _apply_grid_columns() -> void:
-	var grid := cards_box as GridContainer
+	var grid := layout.cards_box as GridContainer
 	if grid == null:
 		return
-	var list := ui("List") as Control
-	var width := list.size.x if list != null else 0.0
+	var width := layout.list.size.x if layout.list != null else 0.0
 	grid.columns = maxi(1, int(width / 1040.0)) if width > 0.0 else grid.columns
 
 
 ## Nối signal + hiệu ứng bấm cho nút của layout đang dùng (gọi lại được khi xoay màn hình)
 func _wire_buttons() -> void:
-	if btn_back != null:
-		if not btn_back.pressed.is_connected(_on_back_pressed):
-			btn_back.pressed.connect(_on_back_pressed)
-		if not btn_back.has_meta("bounce_attached"):
-			btn_back.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(btn_back)
-	if btn_continue != null:
-		if not btn_continue.pressed.is_connected(_on_continue_pressed):
-			btn_continue.pressed.connect(_on_continue_pressed)
-		if not btn_continue.has_meta("bounce_attached"):
-			btn_continue.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(btn_continue)
-			UIAnim.play_pulse(btn_continue, 1.035, 1.6)
+	if layout.btn_back != null:
+		if not layout.btn_back.pressed.is_connected(_on_back_pressed):
+			layout.btn_back.pressed.connect(_on_back_pressed)
+		if not layout.btn_back.has_meta("bounce_attached"):
+			layout.btn_back.set_meta("bounce_attached", true)
+			UIAnim.attach_press_bounce(layout.btn_back)
+	if layout.btn_continue != null:
+		if not layout.btn_continue.pressed.is_connected(_on_continue_pressed):
+			layout.btn_continue.pressed.connect(_on_continue_pressed)
+		if not layout.btn_continue.has_meta("bounce_attached"):
+			layout.btn_continue.set_meta("bounce_attached", true)
+			UIAnim.attach_press_bounce(layout.btn_continue)
+			UIAnim.play_pulse(layout.btn_continue, 1.035, 1.6)
 
 
 func _ready() -> void:
 	_bind_refs()
 	_wire_buttons()
 
-	var top_bar := ui("TopBar") as Control
-	if top_bar != null:
-		UIAnim.play_slide_in(top_bar, Vector2(0, -22), 0.0, 0.25)
-	var wallet_bar := ui("Wallet") as Control
-	if wallet_bar != null:
-		UIAnim.play_slide_in(wallet_bar, Vector2(0, -22), 0.04, 0.25)
-	var banner := ui("Banner") as Control
-	if banner != null:
-		UIAnim.play_slide_in(banner, Vector2(0, -15), 0.08, 0.25)
-	if btn_continue != null:
-		UIAnim.play_slide_in(btn_continue, Vector2(0, 25), 0.15, 0.28)
+	if layout.top_bar != null:
+		UIAnim.play_slide_in(layout.top_bar, Vector2(0, -22), 0.0, 0.25)
+	if layout.wallet_bar != null:
+		UIAnim.play_slide_in(layout.wallet_bar, Vector2(0, -22), 0.04, 0.25)
+	if layout.banner != null:
+		UIAnim.play_slide_in(layout.banner, Vector2(0, -15), 0.08, 0.25)
+	if layout.btn_continue != null:
+		UIAnim.play_slide_in(layout.btn_continue, Vector2(0, 25), 0.15, 0.28)
 
 	# Chương đã mở hết thì tự ẩn nút "TIẾP TỤC CHƯƠNG n" dưới chân trang
 	_prepare_continue_label()
@@ -99,8 +90,8 @@ func _rebind_after_orientation() -> void:
 
 ## Kiểu chữ của nút CTA chân trang (đặt ở cả 2 layout)
 func _prepare_continue_label() -> void:
-	if lbl_continue != null:
-		lbl_continue.theme_type_variation = &"LevelsContinue"
+	if layout.lbl_continue != null:
+		layout.lbl_continue.theme_type_variation = &"LevelsContinue"
 
 
 # ---------------------------------------------------------------------------
@@ -133,10 +124,10 @@ func playing_chapter_id() -> int:
 # Dựng danh sách chương
 # ---------------------------------------------------------------------------
 func _build_cards() -> void:
-	if cards_box == null:
+	if layout.cards_box == null:
 		return
-	for child in cards_box.get_children():
-		cards_box.remove_child(child)
+	for child in layout.cards_box.get_children():
+		layout.cards_box.remove_child(child)
 		child.queue_free()
 	_cards.clear()
 
@@ -148,7 +139,7 @@ func _build_cards() -> void:
 	var index := 0
 	for chapter in chapters:
 		var card: ChapterCard = CARD_SCENE.instantiate()
-		cards_box.add_child(card)
+		layout.cards_box.add_child(card)
 		card.setup(chapter, _card_info(chapter, playing))
 		card.selected.connect(_on_card_selected)
 		card.unlock_requested.connect(_on_unlock_requested)
@@ -221,13 +212,13 @@ func _size_tier(levels: Array) -> String:
 func _refresh_header() -> void:
 	var gm := _game_manager()
 	var stars := int(gm.call("total_stars")) if gm != null and gm.has_method("total_stars") else 0
-	if lbl_wallet != null:
-		lbl_wallet.text = str(stars)
+	if layout.lbl_wallet != null:
+		layout.lbl_wallet.text = str(stars)
 	# Nút chân trang: nhảy tới chương đang chơi
-	if btn_continue != null:
+	if layout.btn_continue != null:
 		var playing := playing_chapter_id()
-		if lbl_continue != null:
-			lbl_continue.text = TranslationServer.translate("STR_CHAPTER_CONTINUE_FORMAT").format([
+		if layout.lbl_continue != null:
+			layout.lbl_continue.text = TranslationServer.translate("STR_CHAPTER_CONTINUE_FORMAT").format([
 				playing, _next_level_of(_levels_of(playing))])
 
 
@@ -256,11 +247,11 @@ func _on_unlock_requested(chapter_id: int) -> void:
 		Sfx.play(Sfx.ACHIEVEMENT)
 		_build_cards()
 		_refresh_header()
-		if lbl_wallet != null and DisplayServer.get_name() != "headless":
-			lbl_wallet.pivot_offset = lbl_wallet.size * 0.5
-			var tw := lbl_wallet.create_tween()
-			tw.tween_property(lbl_wallet, "scale", Vector2(1.3, 1.3), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			tw.tween_property(lbl_wallet, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		if layout.lbl_wallet != null and DisplayServer.get_name() != "headless":
+			layout.lbl_wallet.pivot_offset = layout.lbl_wallet.size * 0.5
+			var tw := layout.lbl_wallet.create_tween()
+			tw.tween_property(layout.lbl_wallet, "scale", Vector2(1.3, 1.3), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tw.tween_property(layout.lbl_wallet, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	else:
 		Sfx.play(Sfx.BTN_CLICK)
 

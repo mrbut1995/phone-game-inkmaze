@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b1ur8k7vpgte1"]
 
-[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/layout/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="3_sugp2"]
 [ext_resource type="Texture2D" uid="uid://cgbp27e1ip682" path="res://assets/images/main/panel_genre_container.svg" id="5_0ld40"]
@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://dlg2c12rsejkc" path="res://assets/images/main/card_mode_daily_normal.svg" id="28_q4smm"]
 [ext_resource type="Texture2D" uid="uid://u7s4jqx5jo2r" path="res://assets/images/main/card_mode_daily_pressed.svg" id="29_b0x5b"]
 [ext_resource type="Texture2D" uid="uid://xhjccjuom0v8" path="res://assets/images/main/card_mode_daily_focus.svg" id="30_1wgx8"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/main_layout.gd" id="2_layout"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qk8x1"]
 content_margin_left = 40.0
@@ -362,7 +363,24 @@ texture_margin_top = 128.0
 texture_margin_right = 144.0
 texture_margin_bottom = 18.0
 
-[node name="Landscape" unique_id=781667487 instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=781667487 node_paths=PackedStringArray("logo", "btn_play", "btn_dungeon", "btn_daily", "btn_leaderboard", "btn_shop", "btn_settings", "btn_archivement", "badge_count_label", "badge_play", "badge_dungeon", "badge_daily", "stamp_panel", "stamp_label", "game_mode_box", "other_box") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+logo = NodePath("Paper/Hero/LogoArea/Logo")
+btn_play = NodePath("Paper/Menu/Play")
+btn_dungeon = NodePath("Paper/Menu/Dungeon")
+btn_daily = NodePath("Paper/Menu/DailyChallenge")
+btn_leaderboard = NodePath("Paper/Hero/Utils/Leaderboard")
+btn_shop = NodePath("Paper/Hero/Utils/Shop")
+btn_settings = NodePath("Paper/Hero/Utils/Settings")
+btn_archivement = NodePath("Paper/Hero/CenterContainer/Archivement")
+badge_count_label = NodePath("Paper/Hero/CenterContainer/Archivement/Count")
+badge_play = NodePath("Paper/Menu/Play/Badge")
+badge_dungeon = NodePath("Paper/Menu/Dungeon/Badge")
+badge_daily = NodePath("Paper/Menu/DailyChallenge/Badge")
+stamp_panel = NodePath("Paper/Stamp")
+stamp_label = NodePath("Paper/Stamp/Label")
+game_mode_box = NodePath("Paper/Menu")
+other_box = NodePath("Paper/Hero/Utils")
 
 [node name="Paper" type="NinePatchRect" parent="." index="0" unique_id=1454574636]
 layout_mode = 1

@@ -1,15 +1,11 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dxowd5rifxa47"]
 
-[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/layout/landscape/landscape.tscn" id="1_parent"]
-[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://b2tlnr58h4d6u" path="res://scripts/scenes/settings.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" uid="uid://blu4gqnjmvqys" path="res://scripts/scenes/layout/settings_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://nwnmgpgwvc7y" path="res://assets/images/settings/settings_panel.svg" id="3_panel"]
 [ext_resource type="Texture2D" uid="uid://cviihr4gbxev4" path="res://assets/images/settings/section_chip.svg" id="4_chip"]
-[ext_resource type="Texture2D" uid="uid://b32mi2b0tw8ao" path="res://assets/images/settings/divider_dashed.svg" id="5_divider"]
 [ext_resource type="Texture2D" uid="uid://bmf36n80377wm" path="res://assets/images/settings/icon_chevron_right.svg" id="6_chevron"]
 [ext_resource type="Texture2D" uid="uid://cgy4nlmd8mtxa" path="res://assets/images/settings/icon_chevron_right_danger.svg" id="7_chevron_danger"]
-[ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="8_washi"]
-[ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="9_clip"]
 [ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="10_stamp"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="11_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="12_back_p"]
@@ -49,15 +45,26 @@
 [ext_resource type="Texture2D" uid="uid://i60mj1vk7shb" path="res://assets/images/icons/icon_book.svg" id="47_icon_book"]
 [ext_resource type="Texture2D" uid="uid://cct547hsvxktf" path="res://assets/images/icons/icon_reset.svg" id="48_icon_reset"]
 
+[node name="Landscape" unique_id=284512550 node_paths=PackedStringArray("btn_back", "content_root", "bgm_slider", "bgm_value", "sfx_slider", "sfx_value", "chk_haptic", "chk_auto_mark", "chk_glow", "btn_language", "lbl_language", "lbl_player_id", "btn_guide", "btn_credits", "btn_reset", "lbl_version") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+content_root = NodePath("Panel/Content")
+bgm_slider = NodePath("Panel/Content/Body/ColLeft/Audio/BgmRow/Slider")
+bgm_value = NodePath("Panel/Content/Body/ColLeft/Audio/BgmRow/Value")
+sfx_slider = NodePath("Panel/Content/Body/ColLeft/Audio/SfxRow/Slider")
+sfx_value = NodePath("Panel/Content/Body/ColLeft/Audio/SfxRow/Value")
+chk_haptic = NodePath("Panel/Content/Body/ColLeft/Board/HapticRow/Check")
+chk_auto_mark = NodePath("Panel/Content/Body/ColLeft/Board/AutoMarkRow/Check")
+chk_glow = NodePath("Panel/Content/Body/ColLeft/Board/GlowRow/Check")
+btn_language = NodePath("Panel/Content/Body/ColRight/Language/LangRow/LangButton")
+lbl_language = NodePath("Panel/Content/Body/ColRight/Language/LangRow/LangButton/LangValue")
+lbl_player_id = NodePath("Panel/Content/Body/ColRight/Language/PlayerRow/PlayerIdValue")
+btn_guide = NodePath("Panel/Content/Body/ColRight/Actions/Guide")
+btn_credits = NodePath("Panel/Content/Body/ColRight/Actions/Credits")
+btn_reset = NodePath("Panel/Content/Body/ColRight/Actions/Reset")
+lbl_version = NodePath("Panel/Content/Footer/Stamp/Label")
 
-[node name="Landscape" instance=ExtResource("1_parent")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-
-[node name="TopBar" type="HBoxContainer" parent="." unique_id=1720649669]
+[node name="TopBar" type="HBoxContainer" parent="." index="0" unique_id=1720649669]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.034
@@ -83,20 +90,20 @@ text = "STR_BTN_SETTINGS"
 label_settings = ExtResource("31_title")
 horizontal_alignment = 1
 
-[node name="Panel" type="NinePatchRect" parent="."]
+[node name="Panel" type="NinePatchRect" parent="." index="1" unique_id=299897848]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.045
 anchor_top = 0.145
 anchor_right = 0.955
 anchor_bottom = 0.975
+texture = ExtResource("3_panel")
 patch_margin_left = 70
 patch_margin_top = 70
 patch_margin_right = 70
 patch_margin_bottom = 70
-texture = ExtResource("3_panel")
 
-[node name="Content" type="VBoxContainer" parent="Panel"]
+[node name="Content" type="VBoxContainer" parent="Panel" index="0" unique_id=1527728859]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.035
@@ -105,7 +112,7 @@ anchor_right = 0.965
 anchor_bottom = 0.96
 theme_override_constants/separation = 34
 
-[node name="Header" type="VBoxContainer" parent="Panel/Content" unique_id=1210858817]
+[node name="Header" type="VBoxContainer" parent="Panel/Content" index="0" unique_id=1210858817]
 layout_mode = 2
 theme_override_constants/separation = 0
 
@@ -119,17 +126,17 @@ layout_mode = 2
 text = "STR_SETTINGS_SUBTITLE_DESC"
 label_settings = ExtResource("33_sub_subtitle")
 
-[node name="Body" type="HBoxContainer" parent="Panel/Content"]
+[node name="Body" type="HBoxContainer" parent="Panel/Content" index="1" unique_id=542083345]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 80
 
-[node name="ColLeft" type="VBoxContainer" parent="Panel/Content/Body"]
+[node name="ColLeft" type="VBoxContainer" parent="Panel/Content/Body" index="0" unique_id=1840839290]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 34
 
-[node name="Audio" type="VBoxContainer" parent="Panel/Content/Body/ColLeft" unique_id=126270710]
+[node name="Audio" type="VBoxContainer" parent="Panel/Content/Body/ColLeft" index="0" unique_id=126270710]
 layout_mode = 2
 theme_override_constants/separation = 10
 
@@ -219,7 +226,7 @@ text = "STR_SETTINGS_SFX"
 label_settings = ExtResource("35_row")
 vertical_alignment = 1
 
-[node name="Board" type="VBoxContainer" parent="Panel/Content/Body/ColLeft" unique_id=2006969508]
+[node name="Board" type="VBoxContainer" parent="Panel/Content/Body/ColLeft" index="1" unique_id=2006969508]
 layout_mode = 2
 theme_override_constants/separation = 22
 
@@ -328,12 +335,12 @@ layout_mode = 2
 text = "STR_SETTINGS_GLOW_DESC"
 label_settings = ExtResource("37_desc")
 
-[node name="ColRight" type="VBoxContainer" parent="Panel/Content/Body"]
+[node name="ColRight" type="VBoxContainer" parent="Panel/Content/Body" index="1" unique_id=981240112]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 34
 
-[node name="Language" type="VBoxContainer" parent="Panel/Content/Body/ColRight" unique_id=1918901383]
+[node name="Language" type="VBoxContainer" parent="Panel/Content/Body/ColRight" index="0" unique_id=1918901383]
 layout_mode = 2
 theme_override_constants/separation = 40
 
@@ -458,7 +465,7 @@ text = "#NM-8924-VN"
 label_settings = ExtResource("38_value")
 horizontal_alignment = 2
 
-[node name="Actions" type="VBoxContainer" parent="Panel/Content/Body/ColRight" unique_id=1617146451]
+[node name="Actions" type="VBoxContainer" parent="Panel/Content/Body/ColRight" index="1" unique_id=1617146451]
 layout_mode = 2
 theme_override_constants/separation = 40
 
@@ -612,7 +619,7 @@ text = "STR_SETTINGS_RESET"
 label_settings = ExtResource("36_row_danger")
 vertical_alignment = 1
 
-[node name="Footer" type="HBoxContainer" parent="Panel/Content" unique_id=1617146458]
+[node name="Footer" type="HBoxContainer" parent="Panel/Content" index="2" unique_id=1617146458]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 

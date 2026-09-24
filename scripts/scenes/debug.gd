@@ -31,11 +31,10 @@ const TOTAL_LEVELS := 9
 const DIFFICULTIES := ["easy", "medium", "hard"]
 const TEST_FLOORS := [1, 2, 3, 5]
 
-var _btn_back: TextureButton = null
-var _lbl_title: Label = null
-var _rows: VBoxContainer = null
-var _lbl_stats: Label = null
-var _lbl_footer: Label = null
+## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
+## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/debug.tscn`
+## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
+var layout: DebugLayout = null
 
 # Lựa chọn cho mục SPECIAL MODES (giữ nguyên giữa các lần dựng lại)
 var _test_mode := true
@@ -52,27 +51,25 @@ var _stats_text := ""
 
 ## Gắn node của layout đang hiển thị (2 layout giữ CÙNG đường dẫn node)
 func _bind_refs() -> void:
-	_btn_back = ui_path("TopBar/Back") as TextureButton
-	_lbl_title = ui_path("TopBar/Title") as Label
-	_rows = ui_path("Panel/Content/Scroll/Rows") as VBoxContainer
-	_lbl_stats = ui_path("Panel/Content/Stats") as Label
-	_lbl_footer = ui_path("Panel/Content/Footer") as Label
+	layout = active_layout() as DebugLayout
+	if layout == null:
+		push_warning("debug: bố cục chưa gắn DebugLayout — thiếu binding trong scenes/layout/<hướng>/debug.tscn")
 
 
 func _ready() -> void:
 	_bind_refs()
 	_sync_special_selection()
-	if _btn_back != null:
-		_btn_back.pressed.connect(_on_back_pressed)
-	if _lbl_title != null:
-		_lbl_title.text = "DEBUG CONSOLE"
-	if _lbl_footer != null:
-		_lbl_footer.text = "~ F9 để đóng · chỉ hiển thị trong bản debug ~"
+	if layout.btn_back != null:
+		layout.btn_back.pressed.connect(_on_back_pressed)
+	if layout.lbl_title != null:
+		layout.lbl_title.text = "DEBUG CONSOLE"
+	if layout.lbl_footer != null:
+		layout.lbl_footer.text = "~ F9 để đóng · chỉ hiển thị trong bản debug ~"
 	_build()
 
 
 func _process(delta: float) -> void:
-	if _lbl_stats == null:
+	if layout.lbl_stats == null:
 		return
 	_stats_elapsed += delta
 	if _stats_elapsed < STATS_REFRESH_SEC:
@@ -88,23 +85,23 @@ func _process(delta: float) -> void:
 	]
 	if text != _stats_text:
 		_stats_text = text
-		_lbl_stats.text = text
+		layout.lbl_stats.text = text
 
 
 # ---------------------------------------------------------------------------
 # Dựng nội dung
 # ---------------------------------------------------------------------------
 func _build() -> void:
-	if _rows == null:
+	if layout.rows_box == null:
 		return
 	# Bỏ row cũ NGAY trong frame này: chỉ queue_free sẽ để row cũ + row mới
 	# cùng tồn tại 1 frame -> danh sách nhảy/nháy. Đồng thời giữ vị trí cuộn.
-	var scroll := _rows.get_parent() as ScrollContainer
+	var scroll := layout.rows_box.get_parent() as ScrollContainer
 	var keep_scroll := 0
 	if scroll != null:
 		keep_scroll = scroll.scroll_vertical
-	for child in _rows.get_children():
-		_rows.remove_child(child)
+	for child in layout.rows_box.get_children():
+		layout.rows_box.remove_child(child)
 		child.queue_free()
 
 	_build_state()
@@ -433,8 +430,8 @@ func _open_popup(id: String, data: Dictionary) -> void:
 
 func _rebuild_after_action(message: String) -> void:
 	Sfx.play(Sfx.CHECKBOX)
-	if _lbl_footer != null:
-		_lbl_footer.text = "~ %s ~" % message
+	if layout.lbl_footer != null:
+		layout.lbl_footer.text = "~ %s ~" % message
 	_build()
 
 
@@ -469,7 +466,7 @@ func _pause_data() -> Dictionary:
 func _add_section(title: String) -> void:
 	var row := HBoxContainer.new()
 	row.custom_minimum_size = Vector2(0, 58)
-	_rows.add_child(row)
+	layout.rows_box.add_child(row)
 
 	var chip := TextureRect.new()
 	chip.texture = CHIP
@@ -494,7 +491,7 @@ func _add_section(title: String) -> void:
 	divider.custom_minimum_size = Vector2(0, 6)
 	divider.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	divider.stretch_mode = TextureRect.STRETCH_TILE
-	_rows.add_child(divider)
+	layout.rows_box.add_child(divider)
 
 
 func _add_label(text: String, variation: StringName) -> void:
@@ -502,14 +499,14 @@ func _add_label(text: String, variation: StringName) -> void:
 	label.theme_type_variation = variation
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_rows.add_child(label)
+	layout.rows_box.add_child(label)
 
 
 ## Hàng chỉ để xem thông tin: tên bên trái, giá trị bên phải
 func _add_value(name: String, value: String) -> void:
 	var row := HBoxContainer.new()
 	row.custom_minimum_size = Vector2(0, 42)
-	_rows.add_child(row)
+	layout.rows_box.add_child(row)
 
 	var key := Label.new()
 	key.theme_type_variation = &"PopupRowLabel"
@@ -543,7 +540,7 @@ func _add_action(text: String, desc: String, handler: Callable, danger := false)
 		button.texture_hover = ROW_PRESSED
 		button.texture_focused = ROW_FOCUS
 	button.pressed.connect(handler)
-	_rows.add_child(button)
+	layout.rows_box.add_child(button)
 
 	var title := Label.new()
 	title.theme_type_variation = &"PopupBtnTextMuted" if danger else &"PopupBtnText"
@@ -570,7 +567,7 @@ func _add_toggle(text: String, desc: String, value: bool, handler: Callable) -> 
 	var row := HBoxContainer.new()
 	row.custom_minimum_size = Vector2(0, 74)
 	row.add_theme_constant_override("separation", 16)
-	_rows.add_child(row)
+	layout.rows_box.add_child(row)
 
 	var text_box := VBoxContainer.new()
 	text_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -611,7 +608,7 @@ func _add_level_grid() -> void:
 	grid.columns = TOTAL_LEVELS
 	grid.add_theme_constant_override("h_separation", 10)
 	grid.add_theme_constant_override("v_separation", 10)
-	_rows.add_child(grid)
+	layout.rows_box.add_child(grid)
 
 	for id in range(1, TOTAL_LEVELS + 1):
 		var level_id := id
@@ -652,7 +649,7 @@ func _add_blob_dump() -> void:
 	label.theme_type_variation = &"LangSub"
 	label.text = dump
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_rows.add_child(label)
+	layout.rows_box.add_child(label)
 
 
 # ---------------------------------------------------------------------------

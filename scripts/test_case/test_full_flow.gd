@@ -16,9 +16,9 @@ func _init() -> void:
 	print("[CHECK] MainScene instantiated.")
 	await process_frame
 	await process_frame
-	assert(main_scene.btn_play != null, "MainScene phai co btn_play")
-	assert(main_scene.btn_dungeon != null, "MainScene phai co btn_dungeon")
-	assert(main_scene.btn_daily != null, "MainScene phai co btn_daily")
+	assert(main_scene.layout.btn_play != null, "MainScene phai co btn_play")
+	assert(main_scene.layout.btn_dungeon != null, "MainScene phai co btn_dungeon")
+	assert(main_scene.layout.btn_daily != null, "MainScene phai co btn_daily")
 	main_scene.queue_free()
 	await process_frame
 
@@ -30,19 +30,19 @@ func _init() -> void:
 	print("[CHECK] LevelScenes instantiated.")
 	await process_frame
 	await process_frame
-	assert(levels_scene.btn_back != null, "LevelScenes phai co btn_back")
-	assert(levels_scene.scroll != null, "LevelScenes phai co ScrollContainer de phan trang")
-	assert(levels_scene.pages_host != null, "LevelScenes phai co Pages")
+	assert(levels_scene.layout.btn_back != null, "LevelScenes phai co btn_back")
+	assert(levels_scene.layout.scroll != null, "LevelScenes phai co ScrollContainer de phan trang")
+	assert(levels_scene.layout.pages_host != null, "LevelScenes phai co Pages")
 	assert(levels_scene.page_count() >= 1, "LevelScenes phai co it nhat 1 trang")
 	var levels_card_count := 0
-	for page in levels_scene.pages_host.get_children():
+	for page in levels_scene.layout.pages_host.get_children():
 		levels_card_count += (page.get_child(0) as GridContainer).get_child_count()
 	assert(levels_card_count == maxi(levels_scene.level_ids().size(), 1),
 		"So the man phai bang so level (dang %d the / %d man)"
 			% [levels_card_count, levels_scene.level_ids().size()])
 	print("[CHECK] LevelScenes: %d man / %d trang, dots = %d."
 		% [levels_scene.level_ids().size(), levels_scene.page_count(),
-			levels_scene.dots_box.get_child_count()])
+			levels_scene.layout.dots_box.get_child_count()])
 	levels_scene.queue_free()
 	await process_frame
 
@@ -54,9 +54,9 @@ func _init() -> void:
 	print("[CHECK] DailyScene instantiated.")
 	await process_frame
 	await process_frame
-	assert(daily_scene.btn_back != null, "DailyScene phai co btn_back")
+	assert(daily_scene.layout.btn_back != null, "DailyScene phai co btn_back")
 	# Lich thang duoc dung lai theo thang hien tai (nodes/daily/calendar.tscn)
-	var days_grid: GridContainer = daily_scene.get_node_or_null("Calendar/Days")
+	var days_grid: GridContainer = daily_scene.layout.calendar.get_node_or_null("Panel/Content/Days")
 	assert(days_grid != null, "DailyScene phai co Calendar/Days")
 	assert(days_grid.get_child_count() == 35, "Lich phai co 35 o ngay (7x5)")
 	assert((days_grid.get_child(0) as DailyDayCell) != null, "O lich phai la DailyDayCell")
@@ -82,7 +82,7 @@ func _init() -> void:
 	root.add_child(debug_scene)
 	await process_frame
 	await process_frame
-	var debug_rows: Node = debug_scene.get_node_or_null("Panel/Content/Scroll/Rows")
+	var debug_rows: Node = debug_scene.layout.rows_box
 	assert(debug_rows != null, "Debug scene phai co vung Rows")
 	assert(debug_rows.get_child_count() > 0, "Debug scene phai dung duoc cac hang lenh")
 	print("[CHECK] DebugScene instantiated (%d hang lenh)." % debug_rows.get_child_count())

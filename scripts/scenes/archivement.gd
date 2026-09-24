@@ -32,19 +32,10 @@ const CLICK_LOCK_TIME := 0.15
 ## Tab = "" (TẤT CẢ) + các category của ArchivementManager
 const TABS := ["", "levels", "dungeon", "daily", "special"]
 
-## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout giữ CÙNG đường dẫn node)
-var btn_back: BaseButton = null
-var overview_bar: Control = null
-var overview_fill: TextureRect = null
-var overview_pct: Label = null
-var overview_summary: Label = null
-var tabs_box: HBoxContainer = null
-var card_area: Control = null
-var scroll: ScrollContainer = null
-var pages_host: HBoxContainer = null
-var dots_box: HBoxContainer = null
-var empty_label: Label = null
-var stamp_label: Label = null
+## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
+## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/archivement.tscn`
+## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
+var layout: ArchivementLayout = null
 
 var _current_columns := PORTRAIT_COLUMNS
 
@@ -63,9 +54,9 @@ var _drag_start_scroll := 0.0
 
 func _ready() -> void:
 	_bind_refs()
-	if btn_back != null:
-		btn_back.pressed.connect(_on_back_pressed)
-		UIAnim.attach_press_bounce(btn_back)
+	if layout.btn_back != null:
+		layout.btn_back.pressed.connect(_on_back_pressed)
+		UIAnim.attach_press_bounce(layout.btn_back)
 	_connect_manager()
 
 	Archivement.refresh()
@@ -78,18 +69,9 @@ func _ready() -> void:
 
 ## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
 func _bind_refs() -> void:
-	btn_back = ui_path("TopBar/Back") as BaseButton
-	overview_bar = ui_path("Sheet/Overview/Bar") as Control
-	overview_fill = ui_path("Sheet/Overview/Bar/Fill") as TextureRect
-	overview_pct = ui_path("Sheet/Overview/Percent") as Label
-	overview_summary = ui_path("Sheet/Overview/Summary") as Label
-	tabs_box = ui_path("Sheet/Tabs") as HBoxContainer
-	card_area = ui_path("Sheet/CardArea") as Control
-	scroll = ui_path("Sheet/CardArea/Scroll") as ScrollContainer
-	pages_host = ui_path("Sheet/CardArea/Scroll/Pages") as HBoxContainer
-	dots_box = ui_path("Sheet/Dots") as HBoxContainer
-	empty_label = ui_path("Sheet/EmptyLabel") as Label
-	stamp_label = ui_path("Sheet/Footer/Stamp/Label") as Label
+	layout = active_layout() as ArchivementLayout
+	if layout == null:
+		push_warning("archivement: bố cục chưa gắn ArchivementLayout — thiếu binding trong scenes/layout/<hướng>/archivement.tscn")
 
 
 ## Số thẻ mỗi trang: bản DỌC = 5 (1 cột × 5 hàng); bản NGANG = lưới nhiều cột × số hàng vừa khung
@@ -100,7 +82,7 @@ func _cards_per_page() -> int:
 func _columns_per_page() -> int:
 	if not is_landscape:
 		return PORTRAIT_COLUMNS
-	var width := scroll.size.x if scroll != null else 0.0
+	var width := layout.scroll.size.x if layout.scroll != null else 0.0
 	if width <= 0.0:
 		return PORTRAIT_COLUMNS
 	var columns := int((width + GRID_SEP.x * 0.5) / (CARD_SIZE.x + GRID_SEP.x))
@@ -110,7 +92,7 @@ func _columns_per_page() -> int:
 func _rows_per_page() -> int:
 	if not is_landscape:
 		return CARDS_PER_PAGE
-	var height := scroll.size.y if scroll != null else 0.0
+	var height := layout.scroll.size.y if layout.scroll != null else 0.0
 	if height <= 0.0:
 		return 3
 	var rows := int((height + GRID_SEP.y * 0.5) / (CARD_SIZE.y + GRID_SEP.y))
@@ -163,7 +145,7 @@ func go_to_page(index: int, animate := true) -> void:
 
 
 func overview_text() -> String:
-	return overview_summary.text if overview_summary != null else ""
+	return layout.overview_summary.text if layout.overview_summary != null else ""
 
 
 # ---------------------------------------------------------------------------
@@ -205,28 +187,28 @@ func _refresh_overview() -> void:
 	var unlocked := Archivement.unlocked_count()
 	var percent := Archivement.unlocked_percent()
 
-	if overview_summary != null:
-		overview_summary.text = tr("STR_ACH_OVERVIEW_FORMAT").format([
+	if layout.overview_summary != null:
+		layout.overview_summary.text = tr("STR_ACH_OVERVIEW_FORMAT").format([
 			unlocked, total, Archivement.points()])
-	if overview_pct != null:
-		overview_pct.text = tr("STR_ACH_PERCENT").format([percent])
-	if overview_fill != null and overview_bar != null:
-		overview_fill.size.x = maxf((overview_bar.size.x - 2.0) * float(percent) / 100.0, 0.0)
-	if stamp_label != null:
-		stamp_label.text = tr("STR_ACH_BADGES_FORMAT").format([unlocked, total])
+	if layout.overview_pct != null:
+		layout.overview_pct.text = tr("STR_ACH_PERCENT").format([percent])
+	if layout.overview_fill != null and layout.overview_bar != null:
+		layout.overview_fill.size.x = maxf((layout.overview_bar.size.x - 2.0) * float(percent) / 100.0, 0.0)
+	if layout.stamp_label != null:
+		layout.stamp_label.text = tr("STR_ACH_BADGES_FORMAT").format([unlocked, total])
 
 
 func _build_pages() -> void:
-	if pages_host == null:
+	if layout.pages_host == null:
 		return
-	for child in pages_host.get_children():
-		pages_host.remove_child(child)
+	for child in layout.pages_host.get_children():
+		layout.pages_host.remove_child(child)
 		child.queue_free()
 
 	for page_index in _page_count:
 		var page := PAGE_SCENE.instantiate() as AchPage
 		page.name = "Page%d" % (page_index + 1)
-		pages_host.add_child(page)
+		layout.pages_host.add_child(page)
 
 		var column := page.column()
 		for slot in CARDS_PER_PAGE:
@@ -241,14 +223,14 @@ func _build_pages() -> void:
 				card.connect("claim_requested", _on_claim_requested)
 			UIAnim.play_pop_in(card, 0.02 * slot, 0.9, 0.18)
 
-	if empty_label != null:
-		empty_label.visible = _entries.is_empty()
+	if layout.empty_label != null:
+		layout.empty_label.visible = _entries.is_empty()
 
 
 func _page_node(index: int) -> Control:
-	if pages_host == null or index < 0 or index >= pages_host.get_child_count():
+	if layout.pages_host == null or index < 0 or index >= layout.pages_host.get_child_count():
 		return null
-	return pages_host.get_child(index) as Control
+	return layout.pages_host.get_child(index) as Control
 
 
 func _on_claim_requested(id: String) -> void:
@@ -261,16 +243,16 @@ func _on_claim_requested(id: String) -> void:
 # Tab phân loại
 # ---------------------------------------------------------------------------
 func _build_tabs() -> void:
-	if tabs_box == null:
+	if layout.tabs_box == null:
 		return
-	for child in tabs_box.get_children():
-		tabs_box.remove_child(child)
+	for child in layout.tabs_box.get_children():
+		layout.tabs_box.remove_child(child)
 		child.queue_free()
 
 	for index in TABS.size():
 		var tab := TAB_SCENE.instantiate() as AchTabButton
 		tab.name = "Tab%d" % index
-		tabs_box.add_child(tab)
+		layout.tabs_box.add_child(tab)
 		tab.setup(TABS[index])
 		tab.pressed.connect(_on_tab_pressed.bind(TABS[index]))
 
@@ -292,9 +274,9 @@ func _tab_text(category: String) -> String:
 
 
 func _update_tabs() -> void:
-	if tabs_box == null:
+	if layout.tabs_box == null:
 		return
-	var tabs := tabs_box.get_children()
+	var tabs := layout.tabs_box.get_children()
 	for index in tabs.size():
 		var tab := tabs[index] as AchTabButton
 		if tab == null:
@@ -313,26 +295,26 @@ func _on_tab_pressed(category: String) -> void:
 # Chỉ số trang (dots)
 # ---------------------------------------------------------------------------
 func _build_dots() -> void:
-	if dots_box == null:
+	if layout.dots_box == null:
 		return
-	for child in dots_box.get_children():
-		dots_box.remove_child(child)
+	for child in layout.dots_box.get_children():
+		layout.dots_box.remove_child(child)
 		child.queue_free()
 
 	for index in _page_count:
 		var dot := DOT_SCENE.instantiate() as AchPageDot
 		dot.name = "Dot%d" % (index + 1)
-		dots_box.add_child(dot)
+		layout.dots_box.add_child(dot)
 		dot.pressed.connect(_on_dot_pressed.bind(index))
 
-	dots_box.visible = _page_count > 1
+	layout.dots_box.visible = _page_count > 1
 	_update_dots()
 
 
 func _update_dots() -> void:
-	if dots_box == null:
+	if layout.dots_box == null:
 		return
-	var dots := dots_box.get_children()
+	var dots := layout.dots_box.get_children()
 	for index in dots.size():
 		var dot := dots[index] as AchPageDot
 		if dot != null:
@@ -348,7 +330,7 @@ func _on_dot_pressed(index: int) -> void:
 # Điều hướng trang (giống màn Chọn màn: trang rộng bằng khung + vuốt ngang)
 # ---------------------------------------------------------------------------
 func _apply_layout() -> void:
-	if scroll == null or pages_host == null:
+	if layout.scroll == null or layout.pages_host == null:
 		return
 	var columns := _columns_per_page()
 	if columns != _current_columns:
@@ -356,27 +338,27 @@ func _apply_layout() -> void:
 		_current_columns = columns
 		_reload(true)
 	_page = clampi(_page, 0, maxi(_page_count - 1, 0))
-	_page_width = maxf(scroll.size.x, 1.0)
-	for page in pages_host.get_children():
-		page.custom_minimum_size = Vector2(_page_width, scroll.size.y)
+	_page_width = maxf(layout.scroll.size.x, 1.0)
+	for page in layout.pages_host.get_children():
+		page.custom_minimum_size = Vector2(_page_width, layout.scroll.size.y)
 	_stop_tween()
-	scroll.scroll_horizontal = int(float(_page) * _page_width)
+	layout.scroll.scroll_horizontal = int(float(_page) * _page_width)
 
 
 func _go_to_page(index: int, animate := true) -> void:
 	_page = clampi(index, 0, maxi(_page_count - 1, 0))
 	_update_dots()
-	if scroll == null or _page_width <= 0.0:
+	if layout.scroll == null or _page_width <= 0.0:
 		return
 
 	var target := int(float(_page) * _page_width)
 	_stop_tween()
 	if not animate:
-		scroll.scroll_horizontal = target
+		layout.scroll.scroll_horizontal = target
 		return
 	_scroll_tween = create_tween()
 	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	_scroll_tween.tween_property(scroll, "scroll_horizontal", target, SNAP_TIME)
+	_scroll_tween.tween_property(layout.scroll, "scroll_horizontal", target, SNAP_TIME)
 
 
 func _stop_tween() -> void:
@@ -388,7 +370,7 @@ func _stop_tween() -> void:
 func _nearest_page() -> int:
 	if _page_width <= 0.0:
 		return 0
-	return clampi(int(round(float(scroll.scroll_horizontal) / _page_width)), 0, maxi(_page_count - 1, 0))
+	return clampi(int(round(float(layout.scroll.scroll_horizontal) / _page_width)), 0, maxi(_page_count - 1, 0))
 
 
 ## Trang chứa danh hiệu đầu tiên đang chờ nhận thưởng (mở Sổ tay là thấy ngay)
@@ -426,15 +408,15 @@ func _input(event: InputEvent) -> void:
 
 
 func _begin_drag(pos: Vector2) -> void:
-	if scroll == null or _page_count <= 1:
+	if layout.scroll == null or _page_count <= 1:
 		return
-	if not scroll.get_global_rect().has_point(pos):
+	if not layout.scroll.get_global_rect().has_point(pos):
 		return
 	_stop_tween()
 	_drag_active = true
 	_drag_moved = false
 	_drag_start_x = pos.x
-	_drag_start_scroll = float(scroll.scroll_horizontal)
+	_drag_start_scroll = float(layout.scroll.scroll_horizontal)
 
 
 func _update_drag(pos: Vector2) -> void:
@@ -446,7 +428,7 @@ func _update_drag(pos: Vector2) -> void:
 		_lock_clicks()
 	if not _drag_moved:
 		return
-	scroll.scroll_horizontal = int(_drag_start_scroll - delta_x)
+	layout.scroll.scroll_horizontal = int(_drag_start_scroll - delta_x)
 	_lock_clicks()
 	var index := _nearest_page()
 	if index != _page:

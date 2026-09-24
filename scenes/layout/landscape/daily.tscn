@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ka36asr06er2"]
 
-[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/layout/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="5_back_n"]
 [ext_resource type="Texture2D" uid="uid://cfcm0w8fn3nnp" path="res://assets/images/common/panel_information.svg" id="5_uaalm"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="25_play_p"]
 [ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="26_play_f"]
 [ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/calendar/pencil_icon.svg" id="27_pencil"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/daily_layout.gd" id="2_layout"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uaalm"]
 content_margin_left = 106.0
@@ -74,7 +75,23 @@ texture_margin_top = 32.0
 texture_margin_right = 65.0
 texture_margin_bottom = 34.0
 
-[node name="Landscape" unique_id=82504288 instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=82504288 node_paths=PackedStringArray("btn_back", "calendar", "missions", "lbl_streak", "lbl_date", "lbl_mode", "lbl_reward", "rows_host", "lbl_progress", "bar_progress", "lbl_claim", "btn_play", "lbl_play", "icon_play", "streak_badge") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("Panel/HUD/Content/Information/TopBar/Back")
+calendar = NodePath("Panel/HUD/Content/Calendar")
+missions = NodePath("Panel/HUD/Content/Information/Missions")
+lbl_streak = NodePath("Panel/HUD/Content/Information/TopBar/StreakBadge/StreakContainer/Streak")
+lbl_date = NodePath("Panel/HUD/Content/Information/Missions/DateTag/Label")
+lbl_mode = NodePath("Panel/HUD/Content/Information/Missions/Mode")
+lbl_reward = NodePath("Panel/HUD/Content/Information/Missions/Reward/Label")
+rows_host = NodePath("Panel/HUD/Content/Information/Missions/Rows")
+lbl_progress = NodePath("Panel/HUD/Content/Information/Missions/ProgressLabel")
+bar_progress = NodePath("Panel/HUD/Content/Information/Missions/ProgressBar")
+lbl_claim = NodePath("Panel/HUD/Content/Information/Missions/Claim")
+btn_play = NodePath("Panel/HUD/Content/Information/Play")
+lbl_play = NodePath("Panel/HUD/Content/Information/Play/Label")
+icon_play = NodePath("Panel/HUD/Content/Information/Play/Icon")
+streak_badge = NodePath("Panel/HUD/Content/Information/TopBar/StreakBadge")
 
 [node name="Panel" type="Control" parent="." index="0" unique_id=184042917]
 layout_mode = 1

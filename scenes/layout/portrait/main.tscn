@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://csymwcf8hd7mx"]
 
-[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="3_sugp2"]
 [ext_resource type="Texture2D" uid="uid://cgbp27e1ip682" path="res://assets/images/main/panel_genre_container.svg" id="5_0ld40"]
@@ -33,6 +33,7 @@
 [ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_normal.tres" id="S_util_normal"]
 [ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_pressed.tres" id="S_util_pressed"]
 [ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_settings.tres" id="S_util_settings"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/main_layout.gd" id="2_layout"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yevyv"]
 content_margin_left = 146.0
@@ -199,7 +200,24 @@ texture_margin_top = 50.5
 texture_margin_right = 121.0
 texture_margin_bottom = 24.0
 
-[node name="Portrait" unique_id=2117874828 instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=2117874828 node_paths=PackedStringArray("logo", "btn_play", "btn_dungeon", "btn_daily", "btn_leaderboard", "btn_shop", "btn_settings", "btn_archivement", "badge_count_label", "badge_play", "badge_dungeon", "badge_daily", "stamp_panel", "stamp_label", "game_mode_box", "other_box") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+logo = NodePath("Panel/Logo")
+btn_play = NodePath("Panel/GameMode/Play")
+btn_dungeon = NodePath("Panel/GameMode/Dungeon")
+btn_daily = NodePath("Panel/GameMode/DailyChallenge")
+btn_leaderboard = NodePath("Panel/Other/Leaderboard")
+btn_shop = NodePath("Panel/Other/Shop")
+btn_settings = NodePath("Panel/Other/Settings")
+btn_archivement = NodePath("Panel/Archivement")
+badge_count_label = NodePath("Panel/Archivement/Count")
+badge_play = NodePath("Panel/GameMode/Play/Badge")
+badge_dungeon = NodePath("Panel/GameMode/Dungeon/Badge")
+badge_daily = NodePath("Panel/GameMode/DailyChallenge/Badge")
+stamp_panel = NodePath("Panel/Stamp")
+stamp_label = NodePath("Panel/Stamp/Label")
+game_mode_box = NodePath("Panel/GameMode")
+other_box = NodePath("Panel/Other")
 
 [node name="Panel" type="TextureRect" parent="." index="0" unique_id=76192589]
 layout_mode = 1

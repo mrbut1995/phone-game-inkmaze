@@ -35,16 +35,9 @@ const DRAG_THRESHOLD := 8.0
 const CLICK_LOCK_TIME := 0.15
 
 ## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout dùng CÙNG tên node)
-var btn_back: BaseButton = null
-var btn_continue: BaseButton = null
-var lbl_continue: Label = null
-var lbl_stars: Label = null
-var lbl_chapter: Label = null
-var lbl_change_chapter: Label = null
-var banner: Control = null
-var scroll: ScrollContainer = null
-var pages_host: HBoxContainer = null
-var dots_box: HBoxContainer = null
+## Bố cục đang hiển thị = script `LevelsLayout` gắn trong `scenes/layout/<hướng>/levels.tscn`.
+## Node UI được BIND SẴN bằng `@export` ngay trong .tscn nên code không tra đường dẫn nữa.
+var layout: LevelsLayout = null
 
 var _current_columns := GRID_COLUMNS_PORTRAIT
 var _level_ids: Array[int] = []
@@ -75,42 +68,37 @@ func _ready() -> void:
 	call_deferred("_go_to_page", _page_for_level(chapter_continue_level()), false)
 
 
-## Gắn node theo layout đang hiển thị (bản dọc và bản ngang lồng node khác nhau)
+## Gắn node UI từ BỐ CỤC đang hiển thị (bản dọc / bản ngang là 2 scene riêng nhưng CÙNG script
+## `LevelsLayout`) — mọi node đã bind bằng `@export` trong .tscn, thêm/đổi node chỉ cần sửa
+## scene + export, KHÔNG phải sửa script màn.
 func _bind_refs() -> void:
-	btn_back = ui_path("Content/InformationArea/TopBar/Back") as BaseButton
-	btn_continue = ui_path("Content/InformationArea/ContinueButton") as BaseButton
-	lbl_continue = ui_path("Content/InformationArea/ContinueButton/Label") as Label
-	lbl_stars = ui_path("Content/InformationArea/Count") as Label
-	lbl_chapter = ui_path("Content/InformationArea/ChapterBanner/TitleContainer/Title") as Label
-	lbl_change_chapter = ui_path("Content/InformationArea/ChapterBanner/TitleContainer/ChangeChapter") as Label
-	banner = ui_path("Content/InformationArea/ChapterBanner") as Control
-	scroll = ui_path("Content/CardArea/Scroll") as ScrollContainer
-	pages_host = ui_path("Content/CardArea/Scroll/Pages") as HBoxContainer
-	dots_box = ui_path("Content/InformationArea/PaginationDots") as HBoxContainer
+	layout = active_layout() as LevelsLayout
+	if layout == null:
+		push_warning("LevelScenes: bố cục chưa gắn LevelsLayout — thiếu binding trong scenes/layout/<hướng>/levels.tscn")
 
 
 ## Nối signal + hiệu ứng (gọi lại được khi xoay màn hình, không nhân đôi connection)
 func _wire_buttons() -> void:
-	if btn_back != null:
-		if not btn_back.pressed.is_connected(_on_back_pressed):
-			btn_back.pressed.connect(_on_back_pressed)
-		if not btn_back.has_meta("bounce_attached"):
-			btn_back.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(btn_back)
-	if btn_continue != null:
-		if not btn_continue.pressed.is_connected(_on_continue_pressed):
-			btn_continue.pressed.connect(_on_continue_pressed)
-		if not btn_continue.has_meta("bounce_attached"):
-			btn_continue.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(btn_continue)
-			UIAnim.play_pulse(btn_continue, 1.03, 1.8)
+	if layout.btn_back != null:
+		if not layout.btn_back.pressed.is_connected(_on_back_pressed):
+			layout.btn_back.pressed.connect(_on_back_pressed)
+		if not layout.btn_back.has_meta("bounce_attached"):
+			layout.btn_back.set_meta("bounce_attached", true)
+			UIAnim.attach_press_bounce(layout.btn_back)
+	if layout.btn_continue != null:
+		if not layout.btn_continue.pressed.is_connected(_on_continue_pressed):
+			layout.btn_continue.pressed.connect(_on_continue_pressed)
+		if not layout.btn_continue.has_meta("bounce_attached"):
+			layout.btn_continue.set_meta("bounce_attached", true)
+			UIAnim.attach_press_bounce(layout.btn_continue)
+			UIAnim.play_pulse(layout.btn_continue, 1.03, 1.8)
 	# Nhãn "ĐỔI CHƯƠNG" chỉ để trang trí: bấm Ở ĐÂU trên banner cũng mở màn Chọn Chương
-	if lbl_change_chapter != null:
-		lbl_change_chapter.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	if banner != null:
-		banner.mouse_filter = Control.MOUSE_FILTER_STOP
-		if not banner.gui_input.is_connected(_on_banner_input):
-			banner.gui_input.connect(_on_banner_input)
+	if layout.lbl_change_chapter != null:
+		layout.lbl_change_chapter.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if layout.banner != null:
+		layout.banner.mouse_filter = Control.MOUSE_FILTER_STOP
+		if not layout.banner.gui_input.is_connected(_on_banner_input):
+			layout.banner.gui_input.connect(_on_banner_input)
 
 
 ## Số thẻ mỗi trang: bản DỌC giữ 3×3 = 9; bản NGANG nở số cột theo bề rộng vùng cuộn
@@ -121,7 +109,7 @@ func _cards_per_page() -> int:
 func _columns_per_page() -> int:
 	if not is_landscape:
 		return GRID_COLUMNS_PORTRAIT
-	var width := scroll.size.x if scroll != null else 0.0
+	var width := layout.scroll.size.x if layout.scroll != null else 0.0
 	if width <= 0.0:
 		return GRID_COLUMNS_PORTRAIT
 	var columns := int((width + GRID_SEP.x * 0.5) / (CARD_SIZE.x + GRID_SEP.x))
@@ -167,11 +155,11 @@ func go_to_page(index: int, animate := true) -> void:
 # Dựng danh sách màn + các trang
 # ---------------------------------------------------------------------------
 func _build_pages() -> void:
-	if pages_host == null:
+	if layout.pages_host == null:
 		return
 
-	for child in pages_host.get_children():
-		pages_host.remove_child(child)
+	for child in layout.pages_host.get_children():
+		layout.pages_host.remove_child(child)
 		child.queue_free()
 
 	_load_level_ids()
@@ -184,7 +172,7 @@ func _build_pages() -> void:
 	for page_index in _page_count:
 		var page := PAGE_SCENE.instantiate() as LevelsPage
 		page.name = "Page%d" % (page_index + 1)
-		pages_host.add_child(page)
+		layout.pages_host.add_child(page)
 
 		var grid := page.grid()
 		grid.columns = _columns_per_page()
@@ -317,26 +305,26 @@ func _game_manager() -> Node:
 # Chỉ số trang (dots) - dựng động theo số trang
 # ---------------------------------------------------------------------------
 func _build_dots() -> void:
-	if dots_box == null:
+	if layout.dots_box == null:
 		return
-	for child in dots_box.get_children():
-		dots_box.remove_child(child)
+	for child in layout.dots_box.get_children():
+		layout.dots_box.remove_child(child)
 		child.queue_free()
 
 	for index in _page_count:
 		var dot := DOT_SCENE.instantiate() as LevelsPageDot
 		dot.name = "Dot%d" % (index + 1)
-		dots_box.add_child(dot)
+		layout.dots_box.add_child(dot)
 		dot.pressed.connect(_on_dot_pressed.bind(index))
 
-	dots_box.visible = _page_count > 1
+	layout.dots_box.visible = _page_count > 1
 	_update_dots()
 
 
 func _update_dots() -> void:
-	if dots_box == null:
+	if layout.dots_box == null:
 		return
-	var dots := dots_box.get_children()
+	var dots := layout.dots_box.get_children()
 	for index in dots.size():
 		var dot := dots[index] as LevelsPageDot
 		if dot != null:
@@ -352,7 +340,7 @@ func _on_dot_pressed(index: int) -> void:
 # Điều hướng trang
 # ---------------------------------------------------------------------------
 func _apply_layout() -> void:
-	if scroll == null or pages_host == null:
+	if layout.scroll == null or layout.pages_host == null:
 		return
 	var columns := _columns_per_page()
 	if columns != _current_columns:
@@ -362,27 +350,27 @@ func _apply_layout() -> void:
 		_build_dots()
 		_refresh_header()
 	_page = clampi(_page, 0, maxi(_page_count - 1, 0))
-	_page_width = maxf(scroll.size.x, 1.0)
-	for page in pages_host.get_children():
-		page.custom_minimum_size = Vector2(_page_width, scroll.size.y)
+	_page_width = maxf(layout.scroll.size.x, 1.0)
+	for page in layout.pages_host.get_children():
+		page.custom_minimum_size = Vector2(_page_width, layout.scroll.size.y)
 	_stop_tween()
-	scroll.scroll_horizontal = int(float(_page) * _page_width)
+	layout.scroll.scroll_horizontal = int(float(_page) * _page_width)
 
 
 func _go_to_page(index: int, animate := true) -> void:
 	_page = clampi(index, 0, maxi(_page_count - 1, 0))
 	_update_dots()
-	if scroll == null or _page_width <= 0.0:
+	if layout.scroll == null or _page_width <= 0.0:
 		return
 
 	var target := int(float(_page) * _page_width)
 	_stop_tween()
 	if not animate:
-		scroll.scroll_horizontal = target
+		layout.scroll.scroll_horizontal = target
 		return
 	_scroll_tween = create_tween()
 	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	_scroll_tween.tween_property(scroll, "scroll_horizontal", target, SNAP_TIME)
+	_scroll_tween.tween_property(layout.scroll, "scroll_horizontal", target, SNAP_TIME)
 
 
 func _stop_tween() -> void:
@@ -394,7 +382,7 @@ func _stop_tween() -> void:
 func _nearest_page() -> int:
 	if _page_width <= 0.0:
 		return 0
-	var raw := float(scroll.scroll_horizontal) / _page_width
+	var raw := float(layout.scroll.scroll_horizontal) / _page_width
 	return clampi(int(round(raw)), 0, maxi(_page_count - 1, 0))
 
 
@@ -433,16 +421,16 @@ func _input(event: InputEvent) -> void:
 
 
 func _begin_drag(pos: Vector2) -> void:
-	if scroll == null or _page_count <= 1:
+	if layout.scroll == null or _page_count <= 1:
 		return
 	# Chỉ bắt đầu vuốt khi ngón tay/chuột bắt đầu trong vùng thẻ màn
-	if not scroll.get_global_rect().has_point(pos):
+	if not layout.scroll.get_global_rect().has_point(pos):
 		return
 	_stop_tween()
 	_drag_active = true
 	_drag_moved = false
 	_drag_start_x = pos.x
-	_drag_start_scroll = float(scroll.scroll_horizontal)
+	_drag_start_scroll = float(layout.scroll.scroll_horizontal)
 
 
 func _update_drag(pos: Vector2) -> void:
@@ -455,7 +443,7 @@ func _update_drag(pos: Vector2) -> void:
 	if not _drag_moved:
 		return
 	# Kéo nội dung theo tay (kéo sang trái -> xem trang sau)
-	scroll.scroll_horizontal = int(_drag_start_scroll - delta_x)
+	layout.scroll.scroll_horizontal = int(_drag_start_scroll - delta_x)
 	_lock_clicks()
 	var index := _nearest_page()
 	if index != _page:
@@ -508,15 +496,15 @@ func _refresh_header() -> void:
 		for value in _stars_dict().values():
 			own += int(value)
 
-	if lbl_stars != null:
-		lbl_stars.text = "%d/%d" % [own, total]
-	if lbl_chapter != null:
+	if layout.lbl_stars != null:
+		layout.lbl_stars.text = "%d/%d" % [own, total]
+	if layout.lbl_chapter != null:
 		var title := chapter_title()
 		if not title.is_empty():
-			lbl_chapter.text = title
+			layout.lbl_chapter.text = title
 	_refresh_chapter_banner()
-	if lbl_continue != null:
-		lbl_continue.text = TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE") if chapter_cleared() \
+	if layout.lbl_continue != null:
+		layout.lbl_continue.text = TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE") if chapter_cleared() \
 			else tr("STR_BTN_CONTINUE_LEVEL").format([chapter_continue_level()])
 
 
@@ -527,15 +515,15 @@ func _refresh_chapter_banner() -> void:
 		and bool(gm.call("has_unlockable_chapter"))
 	if unlockable != _banner_focus:
 		_banner_focus = unlockable
-		if banner != null:
-			banner.texture = BANNER_FOCUS if unlockable else BANNER_NORMAL
-		if lbl_change_chapter != null:
-			lbl_change_chapter.theme_type_variation = &"LevelsChangeChapterFocus" if unlockable \
+		if layout.banner != null:
+			layout.banner.texture = BANNER_FOCUS if unlockable else BANNER_NORMAL
+		if layout.lbl_change_chapter != null:
+			layout.lbl_change_chapter.theme_type_variation = &"LevelsChangeChapterFocus" if unlockable \
 				else &"LevelsChangeChapter"
-		if unlockable and banner != null:
-			UIAnim.play_pulse(banner, 1.02, 1.6)
-	if lbl_change_chapter != null:
-		lbl_change_chapter.text = TranslationServer.translate(
+		if unlockable and layout.banner != null:
+			UIAnim.play_pulse(layout.banner, 1.02, 1.6)
+	if layout.lbl_change_chapter != null:
+		layout.lbl_change_chapter.text = TranslationServer.translate(
 			"STR_CHAPTER_UNLOCKABLE" if unlockable else "STR_CHANGE_CHAPTER")
 
 

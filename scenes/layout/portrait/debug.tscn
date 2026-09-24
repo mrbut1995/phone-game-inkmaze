@@ -6,9 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="4_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="5_back_p"]
 [ext_resource type="Texture2D" uid="uid://nwnmgpgwvc7y" path="res://assets/images/settings/settings_panel.svg" id="6_panel"]
-[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/debug_layout.gd" id="2_layout"]
 
-[node name="Portrait" instance=ExtResource("1_parent")]
+[node name="Portrait" node_paths=PackedStringArray("btn_back", "lbl_title", "rows_box", "lbl_stats", "lbl_footer") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+lbl_title = NodePath("TopBar/Title")
+rows_box = NodePath("Panel/Content/Scroll/Rows")
+lbl_stats = NodePath("Panel/Content/Stats")
+lbl_footer = NodePath("Panel/Content/Footer")
 
 [node name="TopBar" type="HBoxContainer" parent="." index="1" unique_id=745231913]
 layout_mode = 1

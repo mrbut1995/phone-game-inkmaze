@@ -47,9 +47,27 @@
 [ext_resource type="Texture2D" uid="uid://cwys2l4jdlkj1" path="res://assets/images/icons/icon_cloud.svg" id="46_icon_cloud"]
 [ext_resource type="Texture2D" uid="uid://i60mj1vk7shb" path="res://assets/images/icons/icon_book.svg" id="47_icon_book"]
 [ext_resource type="Texture2D" uid="uid://cct547hsvxktf" path="res://assets/images/icons/icon_reset.svg" id="48_icon_reset"]
-[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/settings_layout.gd" id="2_layout"]
 
-[node name="Portrait" instance=ExtResource("1_parent")]
+[node name="Portrait" node_paths=PackedStringArray("btn_back", "content_root", "bgm_slider", "bgm_value", "sfx_slider", "sfx_value", "chk_haptic", "chk_auto_mark", "chk_glow", "btn_language", "lbl_language", "lbl_player_id", "btn_guide", "btn_credits", "btn_reset", "lbl_version") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+content_root = NodePath("Panel/Content")
+bgm_slider = NodePath("Panel/Content/Audio/BgmRow/Slider")
+bgm_value = NodePath("Panel/Content/Audio/BgmRow/Value")
+sfx_slider = NodePath("Panel/Content/Audio/SfxRow/Slider")
+sfx_value = NodePath("Panel/Content/Audio/SfxRow/Value")
+chk_haptic = NodePath("Panel/Content/Board/HapticRow/Check")
+chk_auto_mark = NodePath("Panel/Content/Board/AutoMarkRow/Check")
+chk_glow = NodePath("Panel/Content/Board/GlowRow/Check")
+btn_language = NodePath("Panel/Content/Language/LangRow/LangButton")
+lbl_language = NodePath("Panel/Content/Language/LangRow/LangButton/LangValue")
+lbl_player_id = NodePath("Panel/Content/Language/PlayerRow/PlayerIdValue")
+btn_guide = NodePath("Panel/Content/Actions/Guide")
+btn_credits = NodePath("Panel/Content/Actions/Credits")
+btn_reset = NodePath("Panel/Content/Actions/Reset")
+lbl_version = NodePath("Panel/Content/Footer/Stamp/Label")
 
 [node name="TopBar" type="HBoxContainer" parent="." index="1" unique_id=1720649669]
 layout_mode = 1

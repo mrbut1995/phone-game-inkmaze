@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://vs5xiygkv5e"]
 
-[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://bbivg47hraoh6" path="res://scripts/scenes/layout/levels_layout.gd" id="2_h3psh"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
@@ -11,8 +11,18 @@
 [ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cont_f"]
 [ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
 
-[node name="Portrait" unique_id=589500212 instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=589500212 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_stars", "lbl_chapter", "lbl_change_chapter", "banner", "scroll", "pages_host", "dots_box") instance=ExtResource("1_parent")]
 script = ExtResource("2_h3psh")
+btn_back = NodePath("Content/InformationArea/TopBar/Back")
+btn_continue = NodePath("Content/InformationArea/ContinueButton")
+lbl_continue = NodePath("Content/InformationArea/ContinueButton/Label")
+lbl_stars = NodePath("Content/InformationArea/StarsCounter/Count")
+lbl_chapter = NodePath("Content/InformationArea/ChapterBanner/TitleContainer/Title")
+lbl_change_chapter = NodePath("Content/InformationArea/ChapterBanner/TitleContainer/ChangeChapter")
+banner = NodePath("Content/InformationArea/ChapterBanner")
+scroll = NodePath("Content/CardArea/Scroll")
+pages_host = NodePath("Content/CardArea/Scroll/Pages")
+dots_box = NodePath("Content/InformationArea/PaginationDots")
 
 [node name="Content" type="Control" parent="." index="0" unique_id=1439289897]
 layout_mode = 1

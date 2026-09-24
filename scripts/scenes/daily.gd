@@ -31,21 +31,10 @@ var _gap_cal_missions := 24.0       # khe lịch → bảng (đo từ scene)
 var _bottom_margin := 60.0          # lề dưới nút CHƠI (đo từ scene + canvas thiết kế)
 var _design_captured := false
 
-## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout dùng CÙNG tên node)
-var btn_back: BaseButton = null
-var calendar: DailyCalendar = null
-var missions: Control = null
-var lbl_streak: Label = null
-var lbl_date: Label = null
-var lbl_mode: Label = null
-var lbl_reward: Label = null
-var rows_host: Control = null
-var lbl_progress: Label = null
-var bar_progress: TextureProgressBar = null
-var lbl_claim: Label = null
-var btn_play: BaseButton = null
-var lbl_play: Label = null
-var icon_play: TextureRect = null
+## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
+## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/daily.tscn`
+## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
+var layout: DailyLayout = null
 
 var _rows: Array[DailyMissionRow] = []
 var _daily: Node = null
@@ -60,9 +49,8 @@ func _ready() -> void:
 	_bind_refs()
 	_wire_buttons()
 
-	var streak_badge := ui("StreakBadge") as Control
-	if streak_badge != null:
-		UIAnim.play_pop_in(streak_badge, 0.08, 0.8, 0.25)
+	if layout.streak_badge != null:
+		UIAnim.play_pop_in(layout.streak_badge, 0.08, 0.8, 0.25)
 
 	_build_rows()
 	_refresh()
@@ -74,36 +62,25 @@ func _ready() -> void:
 
 ## Gắn node của layout đang hiển thị (bản ngang đổi cấu trúc cột nên tra theo TÊN)
 func _bind_refs() -> void:
-	btn_back = ui_path("Panel/HUD/Content/Information/TopBar/Back") as BaseButton
-	calendar = ui("Calendar") as DailyCalendar
-	missions = ui("Missions") as Control
-	lbl_streak = ui_path("Panel/HUD/Content/Information/TopBar/StreakBadge/StreakContainer/Streak") as Label
-	lbl_date = ui_child("DateTag", "Label") as Label
-	lbl_mode = ui("Mode") as Label
-	lbl_reward = ui_child("Reward", "Label") as Label
-	rows_host = ui("Rows") as Control
-	lbl_progress = ui("ProgressLabel") as Label
-	bar_progress = ui("ProgressBar") as TextureProgressBar
-	lbl_claim = ui("Claim") as Label
-	btn_play = ui("Play") as BaseButton
-	lbl_play = ui_child("Play", "Label") as Label
-	icon_play = ui_child("Play", "Icon") as TextureRect
+	layout = active_layout() as DailyLayout
+	if layout == null:
+		push_warning("daily: bố cục chưa gắn DailyLayout — thiếu binding trong scenes/layout/<hướng>/daily.tscn")
 
 
 ## Nối signal + hiệu ứng (mỗi NODE chỉ nối 1 lần)
 func _wire_buttons() -> void:
-	if btn_back != null and not btn_back.has_meta("wired"):
-		btn_back.set_meta("wired", true)
-		btn_back.pressed.connect(_on_back_pressed)
-		UIAnim.attach_press_bounce(btn_back)
-	if btn_play != null and not btn_play.has_meta("wired"):
-		btn_play.set_meta("wired", true)
-		btn_play.pressed.connect(_on_play_pressed)
-		UIAnim.attach_press_bounce(btn_play)
-		UIAnim.play_pulse(btn_play, 1.03, 1.8)
-	if calendar != null and not calendar.has_meta("wired"):
-		calendar.set_meta("wired", true)
-		calendar.day_selected.connect(_on_day_selected)
+	if layout.btn_back != null and not layout.btn_back.has_meta("wired"):
+		layout.btn_back.set_meta("wired", true)
+		layout.btn_back.pressed.connect(_on_back_pressed)
+		UIAnim.attach_press_bounce(layout.btn_back)
+	if layout.btn_play != null and not layout.btn_play.has_meta("wired"):
+		layout.btn_play.set_meta("wired", true)
+		layout.btn_play.pressed.connect(_on_play_pressed)
+		UIAnim.attach_press_bounce(layout.btn_play)
+		UIAnim.play_pulse(layout.btn_play, 1.03, 1.8)
+	if layout.calendar != null and not layout.calendar.has_meta("wired"):
+		layout.calendar.set_meta("wired", true)
+		layout.calendar.day_selected.connect(_on_day_selected)
 	if _daily != null and _daily.has_signal("daily_changed") \
 			and not _daily.is_connected("daily_changed", _refresh):
 		_daily.connect("daily_changed", _refresh)
@@ -132,7 +109,8 @@ func _notification(what: int) -> void:
 ##   · Bảng nhiệm vụ nằm GIỮA hai khối trên (không đè lịch)
 ## Màn CAO BẰNG/HƠN thiết kế: KHÔNG can thiệp — bố cục do SCENE quyết định (anchors + slot).
 func _layout_responsive() -> void:
-	if not is_inside_tree() or calendar == null or missions == null or btn_play == null:
+	if layout == null or not is_inside_tree() \
+			or layout.calendar == null or layout.missions == null or layout.btn_play == null:
 		return
 	var canvas := get_viewport_rect().size
 	if canvas.y <= 0.0:
@@ -146,18 +124,18 @@ func _layout_responsive() -> void:
 		return
 
 	# 1. Nút CHƠI: bám đáy
-	var play_y := canvas.y - _bottom_margin - btn_play.size.y
-	if absf(btn_play.position.y - play_y) > 0.5:
-		btn_play.position.y = play_y
+	var play_y := canvas.y - _bottom_margin - layout.btn_play.size.y
+	if absf(layout.btn_play.position.y - play_y) > 0.5:
+		layout.btn_play.position.y = play_y
 
 	# 2. Bảng nhiệm vụ: nằm giữa lịch và nút CHƠI
-	var top := calendar.position.y + calendar.size.y + _gap_cal_missions
-	var bottom := btn_play.position.y - _gap_cal_missions
+	var top := layout.calendar.position.y + layout.calendar.size.y + _gap_cal_missions
+	var bottom := layout.btn_play.position.y - _gap_cal_missions
 	var panel_h := maxf(_min_panel_height(), bottom - top)
-	if absf(missions.position.y - top) > 0.5:
-		missions.position.y = top
-	if absf(missions.size.y - panel_h) > 0.5:
-		missions.size.y = panel_h
+	if absf(layout.missions.position.y - top) > 0.5:
+		layout.missions.position.y = top
+	if absf(layout.missions.size.y - panel_h) > 0.5:
+		layout.missions.size.y = panel_h
 
 
 ## Chiều cao TỐI THIỂU của bảng nhiệm vụ = đáy slot CUỐI (scene khai) + khối tiến độ.
@@ -177,9 +155,9 @@ func _min_panel_height() -> float:
 
 ## Slot thứ i của bảng nhiệm vụ — node `Slot{i+1}` do SCENE khai báo trong `Rows`
 func _slot_for(index: int) -> Control:
-	if rows_host == null:
+	if layout.rows_host == null:
 		return null
-	return rows_host.get_node_or_null("%s%d" % [SLOT_PREFIX, index + 1]) as Control
+	return layout.rows_host.get_node_or_null("%s%d" % [SLOT_PREFIX, index + 1]) as Control
 
 
 ## Đọc số đo THIẾT KẾ từ scene + art (1 lần) — không hard-code trong script
@@ -195,26 +173,26 @@ func _capture_design() -> void:
 		_row_design_h = 110.0
 	# Chiều cao THIẾT KẾ của bảng nhiệm vụ: lấy từ ART (không đổi theo layout) — nếu lấy `size.y` thì ở
 	# bản NGANG (bảng bị kéo cao hơn art) khối tiến độ sẽ không tụt xuống đúng đáy bảng.
-	var panel_art := missions as TextureRect
+	var panel_art := layout.missions as TextureRect
 	var art_h := float(panel_art.texture.get_height()) if panel_art != null and panel_art.texture != null else 0.0
 	if art_h > 0.0:
 		_panel_design_h = art_h
-	elif missions.size.y > 0.0:
-		_panel_design_h = missions.size.y
-	if rows_host != null:
-		_rows_top_design = rows_host.position.y
-	if lbl_progress != null:
-		_progress_design_y = lbl_progress.position.y
-	var gap := missions.position.y - (calendar.position.y + calendar.size.y)
+	elif layout.missions.size.y > 0.0:
+		_panel_design_h = layout.missions.size.y
+	if layout.rows_host != null:
+		_rows_top_design = layout.rows_host.position.y
+	if layout.lbl_progress != null:
+		_progress_design_y = layout.lbl_progress.position.y
+	var gap := layout.missions.position.y - (layout.calendar.position.y + layout.calendar.size.y)
 	_gap_cal_missions = gap if gap > 0.0 else _gap_cal_missions
 	var design_h := float(ProjectSettings.get_setting("display/window/size/viewport_height", 1920))
-	var margin := design_h - (btn_play.position.y + btn_play.size.y)
+	var margin := design_h - (layout.btn_play.position.y + layout.btn_play.size.y)
 	_bottom_margin = margin if margin > 0.0 else _bottom_margin
 
 
 ## Dựng 4 hàng nhiệm vụ (3 maze thường + 1 maze đặc biệt), mỗi hàng đặt vào SLOT của scene
 func _build_rows() -> void:
-	if rows_host == null:
+	if layout.rows_host == null:
 		return
 	_clear_rows()
 	for i in _mission_total():
@@ -222,7 +200,7 @@ func _build_rows() -> void:
 		row.name = "Row%d" % (i + 1)
 		# ĐẶT HÀNG VÀO SLOT: slot quyết định vị trí + kích thước (kéo slot trong editor là hàng theo ngay)
 		var slot := _slot_for(i)
-		var host: Control = slot if slot != null else rows_host
+		var host: Control = slot if slot != null else layout.rows_host
 		host.add_child(row)
 		if slot != null:
 			row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -280,32 +258,32 @@ func _refresh() -> void:
 	var done := _missions_done(day)
 	var total := _mission_total()
 
-	lbl_streak.text = tr("STR_DAILY_STREAK_UNIT").format([_streak()])
-	lbl_mode.text = tr("STR_DAILY_SPECIAL_LABEL").format([mode_name])
-	lbl_date.text = tr("STR_DAILY_DATE_BADGE").format([
+	layout.lbl_streak.text = tr("STR_DAILY_STREAK_UNIT").format([_streak()])
+	layout.lbl_mode.text = tr("STR_DAILY_SPECIAL_LABEL").format([mode_name])
+	layout.lbl_date.text = tr("STR_DAILY_DATE_BADGE").format([
 		day,
 		DailyCalendar.days_in_month(_current_year(), _current_month()),
 	])
-	lbl_reward.text = tr("STR_DAILY_REWARD_STARS").format([_day_reward_max()])
+	layout.lbl_reward.text = tr("STR_DAILY_REWARD_STARS").format([_day_reward_max()])
 
 	# Nút CTA: ngày bỏ lỡ đang khoá -> hiện yêu cầu trả Xu để mở khoá
 	var unlockable := _can_unlock_day(day)
 	if unlockable:
-		lbl_play.text = tr("STR_DAILY_UNLOCK_COST").format([_unlock_cost()])
+		layout.lbl_play.text = tr("STR_DAILY_UNLOCK_COST").format([_unlock_cost()])
 	else:
-		lbl_play.text = tr("STR_DAILY_PLAY_MODE").format([mode_name])
-	if icon_play != null:
-		icon_play.texture = ICON_UNLOCK if unlockable else ICON_PLAY
-	if btn_play != null:
+		layout.lbl_play.text = tr("STR_DAILY_PLAY_MODE").format([mode_name])
+	if layout.icon_play != null:
+		layout.icon_play.texture = ICON_UNLOCK if unlockable else ICON_PLAY
+	if layout.btn_play != null:
 		# Ngày tương lai (chưa mở) thì nút khoá hẳn; ngày bỏ lỡ vẫn bấm được để MỞ KHOÁ
-		btn_play.disabled = not _is_day_playable(day) and not unlockable
+		layout.btn_play.disabled = not _is_day_playable(day) and not unlockable
 
 	_refresh_rows(day, mode_name)
 	_refresh_footer(day, done, total)
 
 	# Ô ngày trên lịch đổi viện trạng thái ("ĐÃ MỞ") sau khi trả Xu mở khoá
-	if calendar != null:
-		calendar.rebuild()
+	if layout.calendar != null:
+		layout.calendar.rebuild()
 
 
 ## 4 hàng nhiệm vụ: 3 nhiệm vụ maze thường (0..2) + 1 nhiệm vụ maze đặc biệt (3)
@@ -353,11 +331,11 @@ func _mission_desc(index: int) -> String:
 ## Thanh tiến độ ngày (x/4 nhiệm vụ) + Xu đã nhận trong ngày
 func _refresh_footer(day: int, done: int, total: int) -> void:
 	var percent := int(round(100.0 * float(done) / float(maxi(total, 1))))
-	lbl_progress.text = tr("STR_DAILY_TOTAL_PROGRESS").format([percent, "%d/%d" % [done, total]])
-	if bar_progress != null:
-		bar_progress.value = percent
-	if lbl_claim != null:
-		lbl_claim.text = tr("STR_DAILY_CLAIMED_REWARD").format([
+	layout.lbl_progress.text = tr("STR_DAILY_TOTAL_PROGRESS").format([percent, "%d/%d" % [done, total]])
+	if layout.bar_progress != null:
+		layout.bar_progress.value = percent
+	if layout.lbl_claim != null:
+		layout.lbl_claim.text = tr("STR_DAILY_CLAIMED_REWARD").format([
 			_day_coins_earned(day),
 			_day_reward_max(),
 		])

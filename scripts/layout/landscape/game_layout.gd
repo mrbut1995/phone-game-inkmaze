@@ -1,7 +1,10 @@
 class_name GameLayout
-extends BaseLayout
+extends GameSceneLayout
 ## ============================================================================
-## BỐ CỤC NGANG của MÀN CHƠI (root của `scenes/orientation/landscape/game.tscn`).
+## BỐ CỤC NGANG của MÀN CHƠI (root của `scenes/layout/landscape/game.tscn`).
+##
+## Kế thừa `GameSceneLayout`: node UI (thanh trạng thái · khung HUD · BoardSlot · nút · nhãn)
+## BIND SẴN bằng `@export` trong .tscn — GameScene đọc `layout.<tên>`.
 ##
 ## Kiến trúc: **Controllers + Board là DÙNG CHUNG** cho cả 2 hướng, nằm NGOÀI layout
 ## (`scenes/game.tscn`). Bố cục chỉ khai UI: cột `Side` (thanh trạng thái · HUD · HintGuide) — và
@@ -25,9 +28,9 @@ func hud_variant(_portrait_scene: PackedScene, landscape_scene: PackedScene) -> 
 	return landscape_scene
 
 
-## Control dành sẵn cho bàn cờ (khai trong scenes/orientation/landscape/game.tscn)
+## Control dành sẵn cho bàn cờ — BIND SẴN trong `scenes/layout/landscape/game.tscn` (`board_holder`)
 func board_slot() -> Control:
-	return get_node_or_null("Content/BoardSlot") as Control
+	return board_holder
 
 
 ## Gắn bàn cờ DÙNG CHUNG vào chỗ của bố cục này rồi chốt lại kích thước

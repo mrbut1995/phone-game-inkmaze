@@ -67,7 +67,7 @@ func _init() -> void:
 	print("[SUCCESS] LevelManager & LevelData Resource nạp dữ liệu chuẩn xác!")
 
 	# 4. Kiem tra Settings Popup (Pause) do PopupManager tao ra khi bam Pause
-	var pause_btn: TextureButton = game_scene.get_node("Status/Pause")
+	var pause_btn: TextureButton = game_scene.layout.pause_btn
 	pause_btn.emit_signal("pressed")
 	await process_frame
 	var pause_popup := Popups.get_popup(Popups.PAUSE)
@@ -86,12 +86,12 @@ func _init() -> void:
 	print("[SUCCESS] Settings Popup (Pause/Resume/Home) hoat dong dong bo voi TimerController!")
 
 	# 5. Kiem tra ToolController chuyen tool
-	var tool_wall_btn: TextureButton = game_scene.tool_wall_btn as TextureButton
+	var tool_wall_btn: NinePatchButton = game_scene.tool_wall_btn
 	tool_wall_btn.emit_signal("pressed")
 	assert(tool_ctrl.current_tool == ToolController.ToolMode.WALL, "Wall button phai chuyen tool sang WALL")
 	assert(game_scene.board_view.get("tool_mode") == "wall", "Board tool_mode phai cap nhat sang wall qua signal tool_changed")
 
-	var tool_path_btn: TextureButton = game_scene.tool_path_btn as TextureButton
+	var tool_path_btn: NinePatchButton = game_scene.tool_path_btn
 	tool_path_btn.emit_signal("pressed")
 	assert(tool_ctrl.current_tool == ToolController.ToolMode.PATH, "Path button phai chuyen tool sang PATH")
 	assert(game_scene.board_view.get("tool_mode") == "path", "Board tool_mode phai cap nhat sang path")

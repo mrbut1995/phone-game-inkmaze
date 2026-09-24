@@ -8,9 +8,20 @@
 [ext_resource type="Texture2D" uid="uid://vohdi4kjxxxf" path="res://assets/images/game/pen_type/pen_fountain_pen_nib.svg" id="6_651hb"]
 [ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="7_stamp"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="8_stamp_text"]
-[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/splash_layout.gd" id="2_layout"]
 
-[node name="Portrait" instance=ExtResource("1_parent")]
+[node name="Portrait" node_paths=PackedStringArray("studio_label", "logo_container", "logo", "pencil", "title_label", "tagline_label", "stamp_label", "touch_button", "fade_overlay") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+studio_label = NodePath("Panel/StudioLabel")
+logo_container = NodePath("Panel/LogoContainer")
+logo = NodePath("Panel/LogoContainer/Logo")
+pencil = NodePath("Panel/LogoContainer/Pencil")
+title_label = NodePath("Panel/Title")
+tagline_label = NodePath("Panel/Tagline")
+stamp_label = NodePath("Panel/Stamp/Label")
+touch_button = NodePath("TouchButton")
+fade_overlay = NodePath("FadeOverlay")
 
 [node name="Panel" type="TextureRect" parent="." index="1" unique_id=125026115]
 layout_mode = 1

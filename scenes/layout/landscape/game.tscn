@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://du7mme5oa6tt6"]
 
-[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/layout/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://bxr5a1ltiv2i8" path="res://scripts/layout/landscape/game_layout.gd" id="2_mqnje"]
 [ext_resource type="Texture2D" uid="uid://ddbe0dmjs5l76" path="res://assets/images-landscape/game/header_card.svg" id="3_head_bg"]
 [ext_resource type="Texture2D" uid="uid://chj1v3xgy7qt1" path="res://assets/images-landscape/game/btn_header_pause_normal.svg" id="4_pause_n"]
@@ -13,8 +13,16 @@
 [ext_resource type="Texture2D" uid="uid://8fek80g30ew0" path="res://assets/images-landscape/game/btn_header_restart_pressed.svg" id="11_rest_p"]
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="12_landhud"]
 
-[node name="Landscape" unique_id=949375316 instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=949375316 node_paths=PackedStringArray("status_bar", "hud_slot", "board_holder", "pause_btn", "instruction_btn", "restart_btn", "level_label", "subtitle_label") instance=ExtResource("1_parent")]
 script = ExtResource("2_mqnje")
+status_bar = NodePath("Content/Side/Status")
+hud_slot = NodePath("Content/Side/Information")
+board_holder = NodePath("Content/BoardSlot")
+pause_btn = NodePath("Content/Side/Status/Bar/Pause")
+instruction_btn = NodePath("Content/Side/Status/Bar/Instruction")
+restart_btn = NodePath("Content/Side/Status/Bar/Restart")
+level_label = NodePath("Content/Side/Status/Bar/Title/LevelLabel")
+subtitle_label = NodePath("Content/Side/Status/Bar/Title/Subtitle")
 
 [node name="Content" type="HBoxContainer" parent="." index="0" unique_id=1503357712]
 layout_mode = 1

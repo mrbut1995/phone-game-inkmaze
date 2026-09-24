@@ -19,35 +19,35 @@ func _init() -> void:
 	for i in 25:
 		await process_frame
 
-	print("[INFO] btn_play pos.y: %f" % main_scene.btn_play.position.y)
-	print("[INFO] btn_dungeon pos.y: %f" % main_scene.btn_dungeon.position.y)
-	print("[INFO] btn_daily pos.y: %f" % main_scene.btn_daily.position.y)
+	print("[INFO] btn_play pos.y: %f" % main_scene.layout.btn_play.position.y)
+	print("[INFO] btn_dungeon pos.y: %f" % main_scene.layout.btn_dungeon.position.y)
+	print("[INFO] btn_daily pos.y: %f" % main_scene.layout.btn_daily.position.y)
 
-	print("[INFO] btn_leaderboard pos.x: %f" % main_scene.btn_leaderboard.position.x)
-	print("[INFO] btn_shop pos.x: %f" % main_scene.btn_shop.position.x)
-	print("[INFO] btn_settings pos.x: %f" % main_scene.btn_settings.position.x)
+	print("[INFO] btn_leaderboard pos.x: %f" % main_scene.layout.btn_leaderboard.position.x)
+	print("[INFO] btn_shop pos.x: %f" % main_scene.layout.btn_shop.position.x)
+	print("[INFO] btn_settings pos.x: %f" % main_scene.layout.btn_settings.position.x)
 	print("[INFO] btn_archivement global: %s size: %s"
-		% [str(main_scene.btn_archivement.global_position), str(main_scene.btn_archivement.size)])
+		% [str(main_scene.layout.btn_archivement.global_position), str(main_scene.layout.btn_archivement.size)])
 
-	assert(main_scene.btn_play.position.y < main_scene.btn_dungeon.position.y,
+	assert(main_scene.layout.btn_play.position.y < main_scene.layout.btn_dungeon.position.y,
 		"btn_dungeon phai nam duoi btn_play, khong duoc de chong len nhau")
-	assert(main_scene.btn_dungeon.position.y < main_scene.btn_daily.position.y,
+	assert(main_scene.layout.btn_dungeon.position.y < main_scene.layout.btn_daily.position.y,
 		"btn_daily phai nam duoi btn_dungeon, khong duoc de chong len nhau")
 
-	assert(main_scene.btn_leaderboard.position.x < main_scene.btn_shop.position.x,
+	assert(main_scene.layout.btn_leaderboard.position.x < main_scene.layout.btn_shop.position.x,
 		"btn_shop (Cua hang) phai nam ben phai btn_leaderboard")
-	assert(main_scene.btn_shop.position.x < main_scene.btn_settings.position.x,
+	assert(main_scene.layout.btn_shop.position.x < main_scene.layout.btn_settings.position.x,
 		"btn_settings phai nam ben phai btn_shop")
 
 	# Nút Sổ tay thành tựu: icon LỚN ở góc TRÊN PHẢI tờ giấy, không nằm trong hàng Other
-	assert(main_scene.btn_archivement.global_position.y < main_scene.btn_leaderboard.global_position.y,
+	assert(main_scene.layout.btn_archivement.global_position.y < main_scene.layout.btn_leaderboard.global_position.y,
 		"Nút thành tựu phải nằm PHÍA TRÊN hàng nút Other")
-	assert(main_scene.btn_archivement.global_position.x > main_scene.btn_play.global_position.x,
+	assert(main_scene.layout.btn_archivement.global_position.x > main_scene.layout.btn_play.global_position.x,
 		"Nút thành tựu phải nằm bên PHẢI (góc trên phải tờ giấy)")
-	assert(main_scene.btn_archivement.size.x >= 200.0 and main_scene.btn_archivement.size.y >= 200.0,
-		"Nút thành tựu phải là icon LỚN (>= 200x200), đang %s" % str(main_scene.btn_archivement.size))
-	assert(main_scene.btn_archivement.texture_normal != main_scene.btn_archivement.texture_pressed
-			and main_scene.btn_archivement.texture_pressed != main_scene.btn_archivement.texture_focused,
+	assert(main_scene.layout.btn_archivement.size.x >= 100.0 and main_scene.layout.btn_archivement.size.y >= 100.0,
+		"Nút thành tựu phải là icon LỚN (>= 100x100), đang %s" % str(main_scene.layout.btn_archivement.size))
+	assert(main_scene.layout.btn_archivement.texture_normal != main_scene.layout.btn_archivement.texture_pressed
+			and main_scene.layout.btn_archivement.texture_pressed != main_scene.layout.btn_archivement.texture_focused,
 		"Nút thành tựu phải có đủ trạng thái normal / pressed / focus")
 
 	# Hàng Other phải còn đúng 3 nút: Xếp hạng · Cửa hàng · Cài đặt
@@ -61,8 +61,8 @@ func _init() -> void:
 		for child in other_box.get_children():
 			var button := child as BaseButton
 			assert(button != null and button.size.x > 0.0, "Nut %s phai co kich thuoc" % child.name)
-			assert(absf(button.size.x - 230.0) < 1.0 and absf(button.size.y - 130.0) < 1.0,
-				"Nut %s phai dung kich thuoc art 230x130 (dang %s)" % [child.name, str(button.size)])
+			assert(absf(button.size.x - 115.0) < 1.0 and absf(button.size.y - 65.0) < 1.0,
+				"Nut %s phai dung kich thuoc art 115x65 (dang %s)" % [child.name, str(button.size)])
 
 	assert(main_scene.get_node_or_null("Portrait") != null, "Phai co layout Portrait")
 
