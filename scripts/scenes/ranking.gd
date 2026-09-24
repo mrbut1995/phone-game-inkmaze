@@ -35,13 +35,10 @@ const PODIUM_GROUPS: Array[String] = ["Gold", "Silver", "Bronze"]
 ## Ngưỡng kéo tối thiểu (px) trước khi coi là VUỐT/CUỘN thay vì chạm
 const DRAG_THRESHOLD := 14.0
 
-## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout giữ CÙNG đường dẫn node)
-var btn_back: BaseButton = null
-var tabs_box: HBoxContainer = null
-var podium: Control = null
-var scroll: ScrollContainer = null
-var rows_box: VBoxContainer = null
-var my_rank_bar: TextureRect = null
+## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
+## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/ranking.tscn`
+## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
+var layout: RankingLayout = null
 
 var _board := "dungeon"
 var _tab_buttons: Dictionary = {}
@@ -56,9 +53,9 @@ var _drag_scroll := 0.0
 
 func _ready() -> void:
 	_bind_refs()
-	if btn_back != null:
-		btn_back.pressed.connect(_on_back_pressed)
-		UIAnim.attach_press_bounce(btn_back)
+	if layout.btn_back != null:
+		layout.btn_back.pressed.connect(_on_back_pressed)
+		UIAnim.attach_press_bounce(layout.btn_back)
 	orientation_changed.connect(_on_orientation_changed)
 	_build_tabs()
 	_connect_manager()
@@ -69,12 +66,9 @@ func _ready() -> void:
 
 ## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
 func _bind_refs() -> void:
-	btn_back = ui_path("TopBar/Back") as BaseButton
-	tabs_box = ui_path("Sheet/Tabs") as HBoxContainer
-	podium = ui_path("Sheet/Podium") as Control
-	scroll = ui_path("Sheet/Scroll") as ScrollContainer
-	rows_box = ui_path("Sheet/Scroll/Rows") as VBoxContainer
-	my_rank_bar = ui_path("Sheet/MyRank") as TextureRect
+	layout = active_layout() as RankingLayout
+	if layout == null:
+		push_warning("ranking: bố cục chưa gắn RankingLayout — thiếu binding trong scenes/layout/<hướng>/ranking.tscn")
 
 
 ## Xoay màn hình: gắn lại node + dựng lại tab của layout mới rồi nạp lại bảng đang xem
@@ -141,21 +135,21 @@ func _show_board(board: String) -> void:
 	_fill_podium(Ranking.podium(board), board)
 	_fill_rows(Ranking.rest(board), board)
 	_fill_my_rank(board)
-	if scroll != null:
-		scroll.scroll_vertical = 0
+	if layout.scroll != null:
+		layout.scroll.scroll_vertical = 0
 
 
 func _build_tabs() -> void:
-	for child in tabs_box.get_children():
-		tabs_box.remove_child(child)
+	for child in layout.tabs_box.get_children():
+		layout.tabs_box.remove_child(child)
 		child.queue_free()
 	_tab_buttons.clear()
-	tabs_box.add_theme_constant_override("separation", TAB_SEPARATION)
+	layout.tabs_box.add_theme_constant_override("separation", TAB_SEPARATION)
 	for board in Ranking.board_ids():
 		var id := str(board)
 		var btn := TAB_SCENE.instantiate() as RankTabButton
 		btn.name = "Tab_" + id
-		tabs_box.add_child(btn)
+		layout.tabs_box.add_child(btn)
 		btn.setup(id, _tab_title(id), float(TAB_WIDTHS.get(id, 0.0)))
 		btn.pressed.connect(_on_tab_pressed.bind(id))
 		UIAnim.attach_press_bounce(btn)
@@ -172,7 +166,7 @@ func _update_tabs() -> void:
 
 func _fill_podium(entries: Array, board: String) -> void:
 	for i in PODIUM_GROUPS.size():
-		var group := podium.get_node_or_null(PODIUM_GROUPS[i]) as Control
+		var group := layout.podium.get_node_or_null(PODIUM_GROUPS[i]) as Control
 		if group == null:
 			continue
 		var has_entry := i < entries.size()
@@ -193,7 +187,7 @@ func _fill_rows(entries: Array, board: String) -> void:
 	_rows.clear()
 	for entry in entries:
 		var row: RankRow = ROW_SCENE.instantiate()
-		rows_box.add_child(row)
+		layout.rows_box.add_child(row)
 		row.setup(entry, board)
 		_rows.append(row)
 
@@ -203,15 +197,15 @@ func _fill_my_rank(board: String) -> void:
 	if entry.is_empty():
 		return
 	var has_record := bool(entry.get("has_record", false))
-	_set_label(my_rank_bar, "Rank", Ranking.rank_text(int(entry.get("rank", 0))))
-	_set_label(my_rank_bar, "Name", Ranking.display_name(entry))
+	_set_label(layout.my_rank_bar, "Rank", Ranking.rank_text(int(entry.get("rank", 0))))
+	_set_label(layout.my_rank_bar, "Name", Ranking.display_name(entry))
 	# Có kỷ lục: "KỶ LỤC CÁ NHÂN • <tên bảng>"; chưa có: lời nhắc ngắn gọn
 	var sub: String = TranslationServer.translate("STR_RANK_NO_RECORD") if not has_record \
 		else "%s • %s" % [TranslationServer.translate("STR_RANK_SUBTITLE"), _tab_title(_board)]
-	_set_label(my_rank_bar, "Sub", sub)
-	_set_label(my_rank_bar, "Record", Ranking.record_text(board, entry))
-	_set_label(my_rank_bar, "Points", Ranking.points_text(entry))
-	var flag := my_rank_bar.get_node_or_null("Flag") as TextureRect
+	_set_label(layout.my_rank_bar, "Sub", sub)
+	_set_label(layout.my_rank_bar, "Record", Ranking.record_text(board, entry))
+	_set_label(layout.my_rank_bar, "Points", Ranking.points_text(entry))
+	var flag := layout.my_rank_bar.get_node_or_null("Flag") as TextureRect
 	if flag != null:
 		flag.texture = RankRow.flag_texture(str(entry.get("flag", "generic")))
 
@@ -228,7 +222,7 @@ func _set_label(root: Node, path: String, text: String) -> void:
 # không tự nhận được thao tác kéo; handler ở đây chạy TRƯỚC GUI nên kéo được)
 # ---------------------------------------------------------------------------
 func _input(event: InputEvent) -> void:
-	if scroll == null or not is_visible_in_tree():
+	if layout.scroll == null or not is_visible_in_tree():
 		return
 	if event is InputEventScreenTouch and event.index == 0:
 		if event.pressed:
@@ -248,12 +242,12 @@ func _input(event: InputEvent) -> void:
 
 
 func _begin_drag(pos: Vector2) -> void:
-	if scroll == null or not scroll.get_global_rect().has_point(pos):
+	if layout.scroll == null or not layout.scroll.get_global_rect().has_point(pos):
 		return
 	_drag_active = true
 	_drag_axis = 0
 	_drag_start = pos
-	_drag_scroll = float(scroll.scroll_vertical)
+	_drag_scroll = float(layout.scroll.scroll_vertical)
 
 
 func _update_drag(pos: Vector2) -> void:
@@ -266,7 +260,7 @@ func _update_drag(pos: Vector2) -> void:
 		_drag_axis = 1 if absf(delta.x) > absf(delta.y) else 2
 	# Dọc: kéo nội dung theo tay (kéo lên -> xem phần dưới)
 	if _drag_axis == 2:
-		scroll.scroll_vertical = int(_drag_scroll - delta.y)
+		layout.scroll.scroll_vertical = int(_drag_scroll - delta.y)
 	if is_inside_tree():
 		get_viewport().set_input_as_handled()
 

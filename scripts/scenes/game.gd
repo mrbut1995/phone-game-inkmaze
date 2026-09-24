@@ -6,15 +6,14 @@ extends BaseScene
 ## ============================================================================
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (2 layout giữ CÙNG đường dẫn node — các `@export NodePath`
-## của Controllers vẫn trỏ đúng vì cấu trúc cây không đổi)
+## Bố cục đang hiển thị (Portrait / Landscape). Node UI của màn chơi (nút thanh trạng thái ·
+## nhãn Tên màn/Phụ đề · khung HUD · BoardSlot) đã BIND SẴN bằng `@export` trong
+## `scenes/layout/<hướng>/game.tscn` ⇒ code đọc `layout.<tên>`, KHÔNG tra đường dẫn.
+var layout: GameSceneLayout = null
+## Bàn cờ — node DÙNG CHUNG nằm NGOÀI layout (trong `scenes/game.tscn`)
 var board_view: Control = null
-var pause_btn: BaseButton = null
-var instruction_btn: BaseButton = null
-var restart_btn: BaseButton = null
-var level_label: Label = null
-var subtitle_label: Label = null
-## Khung chứa HUD của chế độ đang chơi (HUD được đổi bằng code — xem _apply_hud_for_mode)
+## Khung chứa HUD của chế độ đang chơi: ban đầu = `layout.hud_slot`, thay bằng code khi đổi chế độ
+## hoặc đổi hướng màn hình (xem `_apply_hud_for_mode`)
 var hud_host: Control = null
 
 var tool_path_btn: NinePatchButton = null
@@ -100,13 +99,12 @@ func _bind_refs() -> void:
 		challenge_controller = get_node_or_null("Controllers/ChallengeController") as ChallengeController
 	if board_view == null:
 		board_view = get_node_or_null("Board") as Control
-	# UI của bố cục đang hiển thị (Portrait/Landscape là 2 instance riêng)
-	pause_btn = ui("Pause") as BaseButton
-	instruction_btn = ui("Instruction") as BaseButton
-	restart_btn = ui("Restart") as BaseButton
-	level_label = ui_child("Title", "LevelLabel") as Label
-	subtitle_label = ui_child("Title", "Subtitle") as Label
-	hud_host = ui("Information") as Control
+	# UI của bố cục đang hiển thị — đã BIND SẴN trong scenes/layout/<hướng>/game.tscn
+	layout = active_layout() as GameSceneLayout
+	if layout == null:
+		push_warning("GameScene: bố cục chưa gắn GameSceneLayout — thiếu binding trong scenes/layout/<hướng>/game.tscn")
+	hud_host = layout.hud_slot if layout != null else null
+	# HintGuide nằm TRONG HUD (HUD bị thay bằng code khi đổi chế độ) nên vẫn tra theo TÊN
 	hint_guide = ui("HintGuide") as HintGuide
 	# Bàn cờ + nhãn Status là node RIÊNG của bố cục ⇒ gắn lại vào bộ controller dùng chung
 	if board_view != null:
@@ -114,9 +112,9 @@ func _bind_refs() -> void:
 			game_controller.grid_view = board_view
 		if grid_controller != null:
 			grid_controller.board_view = board_view
-	if ui_controller != null:
-		ui_controller.level_label = level_label
-		ui_controller.subtitle_label = subtitle_label
+	if ui_controller != null and layout != null:
+		ui_controller.level_label = layout.level_label
+		ui_controller.subtitle_label = layout.subtitle_label
 	_wire_controllers()
 	_mount_board()
 
@@ -138,6 +136,8 @@ func _wire_controllers() -> void:
 	_connect_once(grid_controller, "wall_hit", game_controller, "_on_wall_hit")
 	_connect_once(grid_controller, "reached_end", game_controller, "_on_reached_end")
 	_connect_once(grid_controller, "dead_end", game_controller, "_on_dead_end")
+	# ToolController → Board (đổi công cụ VẼ ĐƯỜNG ⇄ VẼ TƯỜNG)
+	_connect_once(tool_controller, "tool_changed", board_view, "set_tool_mode")
 	# Đồng hồ → GameController
 	_connect_once(timer_controller, "time_updated", game_controller, "_on_time_updated")
 	_connect_once(timer_controller, "timeout", game_controller, "_on_timer_timeout")
@@ -150,15 +150,26 @@ func _wire_controllers() -> void:
 	_connect_once(ui_controller, "pause_toggled", game_controller, "_on_pause_toggled")
 	_connect_once(ui_controller, "memorize_finished", game_controller, "_on_memorize_finished")
 	# Nút trên thanh Status
-	if pause_btn != null and not pause_btn.has_meta("wired"):
-		pause_btn.set_meta("wired", true)
-		pause_btn.pressed.connect(_on_pause_pressed)
-	if restart_btn != null and not restart_btn.has_meta("wired"):
-		restart_btn.set_meta("wired", true)
-		restart_btn.pressed.connect(_on_restart_pressed)
-	if instruction_btn != null and game_controller != null and not instruction_btn.has_meta("wired"):
-		instruction_btn.set_meta("wired", true)
-		instruction_btn.pressed.connect(game_controller.open_instruction)
+	if layout != null and layout.pause_btn != null and not layout.pause_btn.has_meta("wired"):
+		layout.pause_btn.set_meta("wired", true)
+		layout.pause_btn.pressed.connect(_on_pause_pressed)
+	if layout != null and layout.restart_btn != null and not layout.restart_btn.has_meta("wired"):
+		layout.restart_btn.set_meta("wired", true)
+		layout.restart_btn.pressed.connect(_on_restart_pressed)
+	if layout != null and layout.instruction_btn != null and game_controller != null \
+			and not layout.instruction_btn.has_meta("wired"):
+		layout.instruction_btn.set_meta("wired", true)
+		layout.instruction_btn.pressed.connect(game_controller.open_instruction)
+
+
+## Mọi nút của màn chơi: 3 nút trên THANH TRẠNG THÁI (layout) + 5 nút trong THANH HÀNH ĐỘNG (HUD)
+func _all_buttons() -> Array:
+	return [
+		layout.pause_btn if layout != null else null,
+		layout.instruction_btn if layout != null else null,
+		layout.restart_btn if layout != null else null,
+		tool_path_btn, tool_wall_btn, undo_btn, hint_btn, replay_btn,
+	]
 
 
 ## Nối `source.signal_name` → `target.method` đúng 1 lần (bỏ qua nếu thiếu node/tín hiệu)
@@ -180,7 +191,7 @@ func _on_orientation_changed(_is_landscape_now: bool) -> void:
 
 func _rebind_after_orientation() -> void:
 	_bind_refs()
-	for btn in [pause_btn, instruction_btn, restart_btn, tool_path_btn, tool_wall_btn, undo_btn, hint_btn, replay_btn]:
+	for btn in _all_buttons():
 		if btn != null and not btn.has_meta("bounce_attached"):
 			btn.set_meta("bounce_attached", true)
 			UIAnim.attach_press_bounce(btn)
@@ -232,16 +243,14 @@ func _ready() -> void:
 	orientation_changed.connect(_on_orientation_changed)
 	resized.connect(_fit_hud_scale)
 	# Gắn hiệu ứng nảy xúc giác cho các nút trong Game Screen
-	for btn in [pause_btn, instruction_btn, restart_btn, tool_path_btn, tool_wall_btn, undo_btn, hint_btn, replay_btn]:
+	for btn in _all_buttons():
 		if btn != null:
 			UIAnim.attach_press_bounce(btn)
 
-	var status_bar := ui("Status") as Control
-	if status_bar != null:
-		UIAnim.play_slide_in(status_bar, Vector2(0, -25), 0.0, 0.25)
-	var info_bar := ui("Information") as Control
-	if info_bar != null:
-		UIAnim.play_slide_in(info_bar, Vector2(0, -15), 0.04, 0.25)
+	if layout != null and layout.status_bar != null:
+		UIAnim.play_slide_in(layout.status_bar, Vector2(0, -25), 0.0, 0.25)
+	if layout != null and layout.hud_slot != null:
+		UIAnim.play_slide_in(layout.hud_slot, Vector2(0, -15), 0.04, 0.25)
 	var button_bar := tool_path_btn.get_parent() as Control if tool_path_btn != null else null
 	if button_bar != null:
 		UIAnim.play_slide_in(button_bar, Vector2(0, 30), 0.08, 0.25)
@@ -582,7 +591,7 @@ func _bind_hud_nodes() -> void:
 
 ## Nối tín hiệu cho các nút của thanh hành động (thay cho [connection] trong game.tscn)
 func _wire_action_bar() -> void:
-	for btn in [pause_btn, instruction_btn, restart_btn, tool_path_btn, tool_wall_btn, undo_btn, hint_btn, replay_btn]:
+	for btn in _all_buttons():
 		if btn != null and not btn.has_meta("bounce_attached"):
 			btn.set_meta("bounce_attached", true)
 			UIAnim.attach_press_bounce(btn)

@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/layout/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
 [ext_resource type="Texture2D" uid="uid://dwt0twcawg3ti" path="res://assets/images/chapters/wallet_chip.svg" id="5_wallet"]
@@ -11,10 +11,21 @@
 [ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/cta_normal.tres" id="S_cta_normal"]
 [ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/cta_pressed.tres" id="S_cta_pressed"]
 [ext_resource type="StyleBoxTexture" path="res://resources/settings/styles/menu/cta_focus.tres" id="S_cta_focus"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/chapters_layout.gd" id="2_layout"]
 
 
 
-[node name="Landscape" instance=ExtResource("1_parent")]
+[node name="Landscape" node_paths=PackedStringArray("btn_back", "cards_box", "lbl_wallet", "btn_continue", "lbl_continue", "list", "top_bar", "wallet_bar", "banner") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("Left/TopBar/Back")
+cards_box = NodePath("List/Cards")
+lbl_wallet = NodePath("Left/Wallet/Count")
+btn_continue = NodePath("Left/ContinueButton")
+lbl_continue = NodePath("Left/ContinueButton/Label")
+list = NodePath("List")
+top_bar = NodePath("Left/TopBar")
+wallet_bar = NodePath("Left/Wallet")
+banner = NodePath("Left/Banner")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

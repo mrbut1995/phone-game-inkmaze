@@ -1,6 +1,9 @@
-extends Control
+extends GameSceneLayout
 ## ============================================================================
-## BỐ CỤC DỌC của MÀN CHƠI (root của `scenes/orientation/portrait/game.tscn`).
+## BỐ CỤC DỌC của MÀN CHƠI (root của `scenes/layout/portrait/game.tscn`).
+##
+## Kế thừa `GameSceneLayout` — các node UI (thanh trạng thái · khung HUD · BoardSlot · nút · nhãn)
+## đã BIND SẴN bằng `@export` trong .tscn; GameScene đọc `layout.<tên>`.
 ##
 ## Kiến trúc: **Controllers + Board là DÙNG CHUNG** cho cả 2 hướng, nằm NGOÀI layout
 ## (`scenes/game.tscn`). Bố cục chỉ khai UI: thanh trạng thái · HUD · HintGuide — và 1 Control
@@ -20,9 +23,9 @@ func hud_variant(portrait_scene: PackedScene, _landscape_scene: PackedScene) -> 
 	return portrait_scene
 
 
-## Control dành sẵn cho bàn cờ (khai trong scenes/orientation/portrait/game.tscn)
+## Control dành sẵn cho bàn cờ — BIND SẴN trong `scenes/layout/portrait/game.tscn` (`board_holder`)
 func board_slot() -> Control:
-	return get_node_or_null("BoardSlot") as Control
+	return board_holder
 
 
 ## Gắn bàn cờ DÙNG CHUNG vào chỗ của bố cục này rồi chốt lại kích thước

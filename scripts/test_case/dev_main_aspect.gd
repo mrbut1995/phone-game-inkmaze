@@ -33,7 +33,7 @@ func _rotate_test() -> void:
 	await _frames(6)
 	var portrait := scene.get_node_or_null("Portrait") as Control
 	var landscape := scene.get_node_or_null("Landscape") as Control
-	var first_play := scene.btn_play
+	var first_play := scene.layout.btn_play
 	print("  dọc:  is_landscape=%s P=%s L=%s · btn_play ở x=%.0f" % [str(scene.is_landscape),
 		str(portrait.visible), str(landscape.visible), first_play.global_position.x])
 
@@ -43,14 +43,14 @@ func _rotate_test() -> void:
 	print("  ngang: is_landscape=%s P=%s L=%s" % [str(scene.is_landscape),
 		str(portrait.visible), str(landscape.visible)])
 	print("     · btn_play ĐỔI sang node layout ngang: %s (x=%.0f · canvas=%.0f)" % [
-		str(scene.btn_play != first_play), scene.btn_play.global_position.x, canvas.x])
-	print("     · nút mới bấm được: %s" % str(scene.btn_play.pressed.get_connections().size() > 0))
+		str(scene.layout.btn_play != first_play), scene.layout.btn_play.global_position.x, canvas.x])
+	print("     · nút mới bấm được: %s" % str(scene.layout.btn_play.pressed.get_connections().size() > 0))
 
 	DisplayServer.window_set_size(Vector2i(1080, 1920))
 	await _frames(8)
 	print("  quay lại dọc: is_landscape=%s P=%s L=%s · btn_play về node cũ: %s" % [
 		str(scene.is_landscape), str(portrait.visible), str(landscape.visible),
-		str(scene.btn_play == first_play)])
+		str(scene.layout.btn_play == first_play)])
 	scene.queue_free()
 	await _frames(2)
 

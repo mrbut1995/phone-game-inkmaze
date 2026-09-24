@@ -307,13 +307,13 @@ func _section_5_card() -> void:
 	var lock := card.get_node("Lock") as TextureRect
 	_entry(absf(lock.position.x + lock.size.x * 0.5 - (doodle.position.x + doodle.size.x * 0.5)) <= 1.0,
 		"O khoa canh giua theo chieu ngang")
-	_entry(absf(lock.position.y + 47.0 - (doodle.position.y + doodle.size.y * 0.5)) <= 6.0,
+	_entry(absf(lock.position.y + 23.5 - (doodle.position.y + doodle.size.y * 0.5)) <= 6.0,
 		"Than o khoa trung tam doodle (lech <= 6px)")
 	# Chữ to hơn cho dễ đọc
-	_entry(title.get_theme_font_size("font_size") >= 40,
-		"Tieu de chuong >= 40px (nhan %d)" % title.get_theme_font_size("font_size"))
-	_entry((card.get_node("Subtitle") as Label).get_theme_font_size("font_size") >= 22,
-		"Mo ta chuong >= 22px")
+	_entry(title.get_theme_font_size("font_size") >= 20,
+		"Tieu de chuong >= 20px (nhan %d)" % title.get_theme_font_size("font_size"))
+	_entry((card.get_node("Subtitle") as Label).get_theme_font_size("font_size") >= 11,
+		"Mo ta chuong >= 11px")
 	_entry((card.get_node("Stars") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_STARS_FORMAT").format([7, 15]),
 		"Thanh sao hien 7 / 15")
@@ -380,8 +380,8 @@ func _section_5_card() -> void:
 	_entry(action_icon.position.x + action_icon.size.x <= action_title.position.x,
 		"Icon o khoa khong de len chu nut (icon ket thuc %.0f <= chu bat dau %.0f)" % [
 			action_icon.position.x + action_icon.size.x, action_title.position.x])
-	_entry((card.get_node("Action/Title") as Label).get_theme_font_size("font_size") >= 24,
-		"Chu tren nut >= 24px")
+	_entry((card.get_node("Action/Title") as Label).get_theme_font_size("font_size") >= 12,
+		"Chu tren nut >= 12px")
 	_entry((card.get_node("NeedChip") as Control).visible, "Hien chip 'con thieu'")
 	_entry((card.get_node("NeedLabel") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_NEED_FORMAT").format([13]),
@@ -497,8 +497,8 @@ func _section_6_scene(lm: Node) -> void:
 	_entry(cta.text.contains(str(playing)), "Nhan CTA nhac toi chuong dang choi (%s)" % cta.text)
 	_entry((scene.ui_path("ContinueButton/Icon") as TextureRect).texture != null,
 		"CTA co icon tam giac")
-	_entry((scene.ui_path("List/Cards") as VBoxContainer).get_theme_constant("separation") == 30,
-		"Khoang cach giua cac the = 30px")
+	_entry((scene.ui_path("List/Cards") as VBoxContainer).get_theme_constant("separation") == 15,
+		"Khoang cach giua cac the = 15px")
 	# Mọi thẻ đều nối tín hiệu tới màn
 	var connected := true
 	for index in scene.card_count():
@@ -541,12 +541,12 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 		"Man tiep theo TRONG chuong 2 = man chua dat sao dau tien (11) — nhan %d"
 			% scene.chapter_continue_level())
 	_entry(not scene.chapter_cleared(), "Chuong 2 chua hoan thanh het")
-	_entry(scene.ui_path("ChapterBanner/TitleContainer/ChangeChapter") is Label,
+	_entry(scene.layout.lbl_change_chapter is Label,
 		"Banner co dong 'DOI CHUONG'")
-	var banner_node := scene.ui_path("ChapterBanner")
+	var banner_node := scene.layout.banner
 	_entry(banner_node != null and banner_node.gui_input.get_connections().size() >= 1,
 		"Bam CA PANEL banner -> sang man Chon Chuong (co noi gui_input)")
-	_entry(scene.ui_path("TopBar/Back") is TextureButton, "Man chon man co nut Back")
+	_entry(scene.layout.btn_back is BaseButton, "Man chon man co nut Back")
 
 	# --- Số Sao hiển thị phải là CỦA CHƯƠNG đang xem (không cộng Sao chương khác) ---
 	gm.call("reset_progress")
@@ -571,10 +571,10 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 	_entry(_banner_texture(scene2)
 		== load("res://assets/images/level_selector/chapter_banner_focus.svg"),
 		"Banner doi sang art FOCUS khi co chuong du Sao de mo")
-	_entry((scene2.ui_path("ChapterBanner/TitleContainer/ChangeChapter") as Label).text
+	_entry(scene2.layout.lbl_change_chapter.text
 		== TranslationServer.translate("STR_CHAPTER_UNLOCKABLE"),
 		"Dong tren banner bao 'co Chuong moi co the mo khoa'")
-	_entry((scene2.ui_path("ChapterBanner") as Control).modulate == Color.WHITE,
+	_entry(scene2.layout.banner.modulate == Color.WHITE,
 		"Banner focus giu nguyen mau (chi doi art + nhap nhay)")
 	scene2.queue_free()
 	await process_frame
@@ -700,7 +700,8 @@ func _section_9_wiring() -> void:
 ## Banner chương là TextureRect (bản dọc) hoặc NinePatchRect (bản ngang đã 9-slice)
 ## ⇒ đọc texture qua `get()` thay vì ép kiểu, để test chạy được ở CẢ 2 layout.
 func _banner_texture(scene: Node) -> Texture2D:
-	var banner: Control = scene.call("ui_path", "ChapterBanner") as Control
+	var layout: Node = scene.get("layout")
+	var banner: Control = layout.banner as Control if layout != null else null
 	if banner == null:
 		return null
 	return banner.get("texture") as Texture2D

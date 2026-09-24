@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://tlhro2tkyc4u"]
 
-[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/layout/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
 [ext_resource type="Texture2D" uid="uid://dl66u1sdji243" path="res://assets/images/archivements/sheet.svg" id="5_sheet"]
@@ -11,8 +11,22 @@
 [ext_resource type="Texture2D" uid="uid://c8u6tfuomo7wl" path="res://assets/images/archivements/bar_track.svg" id="10_track"]
 [ext_resource type="Texture2D" uid="uid://cxb0b14b811tj" path="res://assets/images/archivements/bar_fill.svg" id="11_fill"]
 [ext_resource type="Texture2D" uid="uid://bdij82xftp6k8" path="res://assets/images/archivements/stamp_badges.svg" id="12_stamp"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/archivement_layout.gd" id="2_layout"]
 
-[node name="Landscape" unique_id=1597886665 instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=1597886665 node_paths=PackedStringArray("btn_back", "overview_bar", "overview_fill", "overview_pct", "overview_summary", "tabs_box", "card_area", "scroll", "pages_host", "dots_box", "empty_label", "stamp_label") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+overview_bar = NodePath("Sheet/Overview/Bar")
+overview_fill = NodePath("Sheet/Overview/Bar/Fill")
+overview_pct = NodePath("Sheet/Overview/Percent")
+overview_summary = NodePath("Sheet/Overview/Summary")
+tabs_box = NodePath("Sheet/Tabs")
+card_area = NodePath("Sheet/CardArea")
+scroll = NodePath("Sheet/CardArea/Scroll")
+pages_host = NodePath("Sheet/CardArea/Scroll/Pages")
+dots_box = NodePath("Sheet/Dots")
+empty_label = NodePath("Sheet/EmptyLabel")
+stamp_label = NodePath("Sheet/Footer/Stamp/Label")
 
 [node name="TopBar" type="HBoxContainer" parent="." index="0" unique_id=1782657395]
 layout_mode = 1

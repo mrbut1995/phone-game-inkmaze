@@ -1,15 +1,22 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/layout/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_lgrwq"]
 [ext_resource type="Script" uid="uid://cu0pk85hl650m" path="res://scripts/scenes/debug.gd" id="2_debug"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="4_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="5_back_p"]
 [ext_resource type="Texture2D" uid="uid://nwnmgpgwvc7y" path="res://assets/images/settings/settings_panel.svg" id="6_panel"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/debug_layout.gd" id="2_layout"]
 
 
-[node name="Landscape" instance=ExtResource("1_parent")]
+[node name="Landscape" node_paths=PackedStringArray("btn_back", "lbl_title", "rows_box", "lbl_stats", "lbl_footer") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+lbl_title = NodePath("TopBar/Title")
+rows_box = NodePath("Panel/Content/Scroll/Rows")
+lbl_stats = NodePath("Panel/Content/Stats")
+lbl_footer = NodePath("Panel/Content/Footer")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -9,23 +9,10 @@ extends BaseScene
 ## ============================================================================
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-## Node UI được gắn lại mỗi lần ĐỔI HƯỚNG (xem `_bind_layout`) — Portrait / Landscape dùng
-## CÙNG tên node nên tra qua `ui()` / `ui_child()` của BaseScene, không dùng `$Đường/Dẫn`.
-var logo: TextureRect = null
-var btn_play: BaseButton = null
-var btn_dungeon: BaseButton = null
-var btn_daily: BaseButton = null
-
-var btn_leaderboard: BaseButton = null
-var btn_shop: BaseButton = null
-var btn_settings: BaseButton = null
-var btn_archivement: BaseButton = null
-var badge_count_label: Label = null
-var badge_play: Label = null
-var badge_dungeon: Label = null
-var badge_daily: Label = null
-var stamp_panel: Control = null
-var stamp_label: Label = null
+## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
+## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/main.tscn`
+## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
+var layout: MainLayout = null
 
 
 func _ready() -> void:
@@ -40,21 +27,9 @@ func _ready() -> void:
 
 ## Gắn lại toàn bộ node UI theo layout ĐANG HIỂN THỊ (dọc ⇄ ngang)
 func _bind_layout() -> void:
-	logo = ui("Logo") as TextureRect
-	btn_play = ui("Play") as BaseButton
-	btn_dungeon = ui("Dungeon") as BaseButton
-	btn_daily = ui("DailyChallenge") as BaseButton
-
-	btn_leaderboard = ui("Leaderboard") as BaseButton
-	btn_shop = ui("Shop") as BaseButton
-	btn_settings = ui("Settings") as BaseButton
-	btn_archivement = ui("Archivement") as BaseButton
-	badge_count_label = ui_child("Archivement", "Count") as Label
-	badge_play = ui_child("Play", "Badge") as Label
-	badge_dungeon = ui_child("Dungeon", "Badge") as Label
-	badge_daily = ui_child("DailyChallenge", "Badge") as Label
-	stamp_panel = ui("Stamp") as Control
-	stamp_label = ui_child("Stamp", "Label") as Label
+	layout = active_layout() as MainLayout
+	if layout == null:
+		push_warning("main: bố cục chưa gắn MainLayout — thiếu binding trong scenes/layout/<hướng>/main.tscn")
 
 
 ## Xoay màn hình: gắn lại node của layout mới rồi chạy lại hiệu ứng
@@ -78,57 +53,51 @@ func _connect_pressed(button: BaseButton, handler: Callable) -> void:
 
 
 func _setup_buttons() -> void:
-	_connect_pressed(btn_play, _on_play_pressed)
-	_connect_pressed(btn_dungeon, _on_dungeon_pressed)
-	_connect_pressed(btn_daily, _on_daily_pressed)
-	_connect_pressed(btn_leaderboard, _on_leaderboard_pressed)
-	_connect_pressed(btn_shop, _on_shop_pressed)
-	_connect_pressed(btn_settings, _on_settings_pressed)
-	_connect_pressed(btn_archivement, _on_archivement_pressed)
+	_connect_pressed(layout.btn_play, _on_play_pressed)
+	_connect_pressed(layout.btn_dungeon, _on_dungeon_pressed)
+	_connect_pressed(layout.btn_daily, _on_daily_pressed)
+	_connect_pressed(layout.btn_leaderboard, _on_leaderboard_pressed)
+	_connect_pressed(layout.btn_shop, _on_shop_pressed)
+	_connect_pressed(layout.btn_settings, _on_settings_pressed)
+	_connect_pressed(layout.btn_archivement, _on_archivement_pressed)
 
 
 func _setup_animations() -> void:
 	# 1. Logo bồng bềnh nhẹ
-	if logo != null:
-		UIAnim.play_float_idle(logo, 5.0, 2.6)
+	if layout.logo != null:
+		UIAnim.play_float_idle(layout.logo, 5.0, 2.6)
 
 	# 2. Khung GameMode (dọc) / Menu (ngang) trượt nhẹ từ dưới lên + các thẻ con fade-in so le
-	var game_mode_box := ui("GameMode")
-	if game_mode_box == null:
-		game_mode_box = ui("Menu")
-	if game_mode_box != null:
-		UIAnim.play_slide_in(game_mode_box as Control, Vector2(0, 25), 0.0, 0.28)
+	if layout.game_mode_box != null:
+		UIAnim.play_slide_in(layout.game_mode_box, Vector2(0, 25), 0.0, 0.28)
 
 	var cards: Array[Control] = []
-	if btn_play != null: cards.append(btn_play)
-	if btn_dungeon != null: cards.append(btn_dungeon)
-	if btn_daily != null: cards.append(btn_daily)
+	if layout.btn_play != null: cards.append(layout.btn_play)
+	if layout.btn_dungeon != null: cards.append(layout.btn_dungeon)
+	if layout.btn_daily != null: cards.append(layout.btn_daily)
 
 	for i in cards.size():
 		UIAnim.play_fade_in(cards[i], 0.06 * i, 0.24)
 
 	# 3. Khung nút chức năng Other (dọc) / Utils (ngang) trượt nhẹ + các nút con fade-in so le
-	var other_box := ui("Other")
-	if other_box == null:
-		other_box = ui("Utils")
-	if other_box != null:
-		UIAnim.play_slide_in(other_box as Control, Vector2(0, 18), 0.12, 0.25)
+	if layout.other_box != null:
+		UIAnim.play_slide_in(layout.other_box, Vector2(0, 18), 0.12, 0.25)
 
 	var others: Array[Control] = []
-	if btn_leaderboard != null: others.append(btn_leaderboard)
-	if btn_shop != null: others.append(btn_shop)
-	if btn_settings != null: others.append(btn_settings)
+	if layout.btn_leaderboard != null: others.append(layout.btn_leaderboard)
+	if layout.btn_shop != null: others.append(layout.btn_shop)
+	if layout.btn_settings != null: others.append(layout.btn_settings)
 
 	for i in others.size():
 		UIAnim.play_fade_in(others[i], 0.14 + 0.05 * i, 0.22)
 
 	# 3b. Nút Sổ tay thành tựu ở góc trên phải tờ giấy: nảy nhẹ khi mở màn
-	if btn_archivement != null:
-		UIAnim.play_pop_in(btn_archivement, 0.08, 0.9, 0.28)
+	if layout.btn_archivement != null:
+		UIAnim.play_pop_in(layout.btn_archivement, 0.08, 0.9, 0.28)
 
 	# 4. Con dấu phiên bản nảy nhẹ
-	if stamp_panel != null:
-		UIAnim.play_pop_in(stamp_panel, 0.2, 0.85, 0.25)
+	if layout.stamp_panel != null:
+		UIAnim.play_pop_in(layout.stamp_panel, 0.2, 0.85, 0.25)
 
 
 func _on_play_pressed() -> void:
@@ -180,20 +149,20 @@ func _on_shop_pressed() -> void:
 
 
 func _refresh_stamp() -> void:
-	if stamp_label == null:
+	if layout.stamp_label == null:
 		return
 	var app := get_node_or_null("/root/AppManager")
 	var version := "1.0.0"
 	if app != null:
 		version = str(app.call("get_version"))
-	stamp_label.text = tr("STR_SETTINGS_VERSION").format([version])
+	layout.stamp_label.text = tr("STR_SETTINGS_VERSION").format([version])
 
 
 ## Số danh hiệu đã đạt / tổng số danh hiệu — in ngay trên huy chương
 func _refresh_badge() -> void:
-	if badge_count_label == null:
+	if layout.badge_count_label == null:
 		return
-	badge_count_label.text = "%d/%d" % [Archivement.unlocked_count(), Archivement.total_count()]
+	layout.badge_count_label.text = "%d/%d" % [Archivement.unlocked_count(), Archivement.total_count()]
 
 
 ## 3 huy hiệu trên thẻ chế độ: Màn hiện tại · Kỷ lục tầng Dungeon · Chuỗi ngày Daily.
@@ -203,16 +172,16 @@ func _refresh_mode_badges() -> void:
 	var level := 1
 	if gm != null:
 		level = maxi(int(gm.get("current_level")), 1)
-	if badge_play != null:
-		badge_play.text = tr("STR_CURRENT_LEVEL_BADGE").format([level])
+	if layout.badge_play != null:
+		layout.badge_play.text = tr("STR_CURRENT_LEVEL_BADGE").format([level])
 
-	if badge_dungeon != null:
+	if layout.badge_dungeon != null:
 		var floor := Archivement.stat_value("dungeon_best_floor")
-		badge_dungeon.text = tr("STR_RECORD_FLOOR_BADGE").format([floor])
+		layout.badge_dungeon.text = tr("STR_RECORD_FLOOR_BADGE").format([floor])
 
 	var dm := get_node_or_null("/root/DailyManager")
 	var streak := 0
 	if dm != null and dm.has_method("get_streak"):
 		streak = int(dm.call("get_streak"))
-	if badge_daily != null:
-		badge_daily.text = tr("STR_STREAK_BADGE").format([streak])
+	if layout.badge_daily != null:
+		layout.badge_daily.text = tr("STR_STREAK_BADGE").format([streak])

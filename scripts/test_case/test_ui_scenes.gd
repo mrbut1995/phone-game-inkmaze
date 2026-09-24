@@ -57,8 +57,8 @@ func _section_1_shop() -> void:
 	_entry(tab.get_node_or_null("Label") != null,
 		"tab_button.tscn co node con 'Label' (parent=\".\")")
 	_entry(tab.get_child_count() == 1, "tab chi co 1 node con (nhan)")
-	_entry(is_equal_approx(ShopTabButton.art_height(), 98.0),
-		"chieu cao tab lay tu art = 98 (dang %.0f)" % ShopTabButton.art_height())
+	_entry(is_equal_approx(ShopTabButton.art_height(), 49.0),
+		"chieu cao tab lay tu art = 49 (dang %.0f)" % ShopTabButton.art_height())
 	_entry(ShopTabButton.inactive_ratio() > 0.0 and ShopTabButton.inactive_ratio() < 1.0,
 		"tab chua chon thap hon tab dang chon")
 
@@ -72,12 +72,12 @@ func _section_1_shop() -> void:
 		"set_active() doi art giua 2 trang thai")
 
 	tab.set_active(true)
-	tab.apply_row_layout(200.0, 98.0, 83.0)
-	_entry(tab.custom_minimum_size == Vector2(200, 98), "tab dang chon: 200x98")
+	tab.apply_row_layout(100.0, 49.0, 41.5)
+	_entry(tab.custom_minimum_size == Vector2(100, 49), "tab dang chon: 100x49")
 	tab.set_active(false)
-	tab.apply_row_layout(200.0, 98.0, 83.0)
-	_entry(tab.custom_minimum_size == Vector2(200, 83), "tab chua chon: 200x83")
-	_entry(is_equal_approx(tab.label.position.y, -15.0),
+	tab.apply_row_layout(100.0, 49.0, 41.5)
+	_entry(tab.custom_minimum_size == Vector2(100, 41.5), "tab chua chon: 100x41.5")
+	_entry(is_equal_approx(tab.label.position.y, -7.5),
 		"nhan tab chua chon duoc nang len cho thang hang (%.0f)" % tab.label.position.y)
 	_entry(tab.size_flags_vertical == Control.SIZE_SHRINK_END, "tab canh DAY hang")
 	tab.queue_free()
@@ -86,8 +86,8 @@ func _section_1_shop() -> void:
 	_entry(grid != null, "item_grid.tscn instantiate ra ShopItemGrid")
 	if grid != null:
 		_entry(grid.columns == 2, "luoi the: 2 cot")
-		_entry(grid.get_theme_constant("h_separation") == 30, "khe ngang 30 (tu scene)")
-		_entry(grid.get_theme_constant("v_separation") == 24, "khe doc 24 (tu scene)")
+		_entry(grid.get_theme_constant("h_separation") == 15, "khe ngang 15 (tu scene)")
+		_entry(grid.get_theme_constant("v_separation") == 12, "khe doc 12 (tu scene)")
 		grid.queue_free()
 
 	var dot := _spawn("res://nodes/shop/page_dot.tscn") as ShopPageDot
@@ -126,8 +126,9 @@ func _section_2_archivement() -> void:
 			"trang co node con 'Column' (parent=\".\")")
 		_entry(page.column() != null and page.column().get_parent() == page,
 			"column() tra ve cot that su cua trang")
-		_entry(page.column().get_theme_constant("separation") == 20,
-			"khe giua cac the = 20 (tu scene)")
+		_entry(page.column().get_theme_constant("h_separation") == 10
+				and page.column().get_theme_constant("v_separation") == 10,
+			"khe giua cac the = 10 (tu scene)")
 		page.column().add_child(Label.new())
 		_entry(page.column().get_child_count() == 1, "them the vao cot = vao dung trang")
 		page.queue_free()
@@ -155,8 +156,8 @@ func _section_3_levels() -> void:
 		_entry(page.grid() != null and page.grid().get_parent() == page,
 			"grid() tra ve luoi that su cua trang")
 		_entry(page.grid().columns == 3, "luoi 3 cot (tu scene)")
-		_entry(page.grid().get_theme_constant("h_separation") == 46, "khe ngang 46")
-		_entry(page.grid().get_theme_constant("v_separation") == 24, "khe doc 24")
+		_entry(page.grid().get_theme_constant("h_separation") == 23, "khe ngang 23")
+		_entry(page.grid().get_theme_constant("v_separation") == 12, "khe doc 12")
 		page.grid().add_child(Control.new())
 		_entry(page.grid().get_child_count() == 1, "them the man vao luoi = vao dung trang")
 		page.queue_free()
@@ -180,9 +181,9 @@ func _section_4_ranking() -> void:
 	if tab == null:
 		return
 	_entry(tab.get_node_or_null("Label") != null, "tab Xếp hạng co nhan tu scene")
-	tab.setup("play", "THU THACH", 235.0)
-	_entry(tab.custom_minimum_size == Vector2(235, 52),
-		"tab nhan be rong rieng, cao theo scene (235x52)")
+	tab.setup("play", "THU THACH", 117.5)
+	_entry(tab.custom_minimum_size == Vector2(117.5, 26),
+		"tab nhan be rong rieng, cao theo scene (117.5x26)")
 	_entry(tab.label.text == "THU THACH", "setup() gan tieu de")
 	tab.set_active(true)
 	var art_active: Texture2D = tab.texture_normal
@@ -269,17 +270,17 @@ func _section_7_board_hud_popup() -> void:
 	if footstep != null:
 		_entry(footstep.mark != null, "vệt mực có node con 'Mark' (parent=\".\")")
 		footstep.setup(Vector2(50, 100), null, Color(0.2, 0.3, 0.9))
-		_entry(footstep.size == Vector2(36, 36) and footstep.position == Vector2(82, 182),
-			"setup() đặt vệt mực đúng TÂM ô (36×36)")
+		_entry(footstep.size == Vector2(18, 18) and footstep.position == Vector2(41, 91),
+			"setup() đặt vệt mực đúng TÂM ô (18×18)")
 		_entry(is_equal_approx(footstep.mark.modulate.a, 0.45), "độ mờ vệt mực 0.45")
 		footstep.queue_free()
 
-	var segment: CountdownSegment = _spawn("res://nodes/hud/countdown_segment.tscn") as CountdownSegment
+	var segment: CountdownSegment = _spawn("res://nodes/hud/portrait/game/countdown_segment.tscn") as CountdownSegment
 	_entry(segment != null, "countdown_segment.tscn instantiate ra CountdownSegment")
 	if segment != null:
 		segment.set_width(20.0)
-		_entry(segment.custom_minimum_size == Vector2(20, 12),
-			"vạch rộng 20 · cao 12 (cao lấy từ scene)")
+		_entry(segment.custom_minimum_size == Vector2(20, 6),
+			"vạch rộng 20 · cao 6 (cao lấy từ scene)")
 		segment.set_width(999.0)
 		_entry(segment.custom_minimum_size.x == 38.0, "vạch tự kẹp bề rộng tối đa 38")
 		segment.set_used(true)

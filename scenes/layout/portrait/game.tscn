@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://wwrw355dsr83"]
 
-[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://hw0s8tromsjw" path="res://scripts/layout/portrait/game.gd" id="2_bgd8i"]
 [ext_resource type="Texture2D" uid="uid://dbsevqd2c7qp6" path="res://assets/images/game/btn_pause_normal.svg" id="3_5newe"]
 [ext_resource type="Texture2D" uid="uid://b1ae0apyceyvp" path="res://assets/images/game/btn_pause_pressed.svg" id="4_37s47"]
@@ -18,8 +18,16 @@
 [ext_resource type="Texture2D" uid="uid://bghur1ubhq1l8" path="res://assets/images/game/btn_help_disabled.svg" id="49_help_d"]
 [ext_resource type="Texture2D" uid="uid://c3up4f0u6hjjq" path="res://assets/images/game/btn_help_focus.svg" id="50_help_f"]
 
-[node name="Portrait" unique_id=1240041642 instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=1240041642 node_paths=PackedStringArray("status_bar", "hud_slot", "board_holder", "pause_btn", "instruction_btn", "restart_btn", "level_label", "subtitle_label") instance=ExtResource("1_parent")]
 script = ExtResource("2_bgd8i")
+status_bar = NodePath("Status")
+hud_slot = NodePath("Information")
+board_holder = NodePath("BoardSlot")
+pause_btn = NodePath("Status/Pause")
+instruction_btn = NodePath("Status/Instruction")
+restart_btn = NodePath("Status/Restart")
+level_label = NodePath("Status/Title/LevelLabel")
+subtitle_label = NodePath("Status/Title/Subtitle")
 
 [node name="BoardSlot" type="Control" parent="." index="0" unique_id=181012636]
 layout_mode = 1

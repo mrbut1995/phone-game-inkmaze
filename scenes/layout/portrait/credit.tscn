@@ -23,9 +23,16 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_desc.tres" id="21_desc"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_value.tres" id="22_value"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="23_version"]
-[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/credit_layout.gd" id="2_layout"]
 
-[node name="Portrait" instance=ExtResource("1_parent")]
+[node name="Portrait" node_paths=PackedStringArray("btn_back", "theme_value", "track_value", "version_label", "content_root") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+theme_value = NodePath("Panel/Content/VBox/MusicSection/ThemeRow/Value")
+track_value = NodePath("Panel/Content/VBox/MusicSection/TrackRow/Value")
+version_label = NodePath("Panel/Content/VBox/Footer/Stamp/VersionLabel")
+content_root = NodePath("Panel/Content")
 
 [node name="TopBar" type="HBoxContainer" parent="." index="1"]
 layout_mode = 1

@@ -8,28 +8,26 @@ extends BaseScene
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-var btn_back: TextureButton = null
-var theme_value: Label = null
-var track_value: Label = null
-var version_label: Label = null
+## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
+## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/credit.tscn`
+## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
+var layout: CreditLayout = null
 
 
 ## Gắn node của layout đang hiển thị (2 layout giữ CÙNG đường dẫn node)
 func _bind_refs() -> void:
-	btn_back = ui_path("TopBar/Back") as TextureButton
-	theme_value = ui_path("Panel/Content/VBox/MusicSection/ThemeRow/Value") as Label
-	track_value = ui_path("Panel/Content/VBox/MusicSection/TrackRow/Value") as Label
-	version_label = ui_path("Panel/Content/VBox/Footer/Stamp/VersionLabel") as Label
+	layout = active_layout() as CreditLayout
+	if layout == null:
+		push_warning("credit: bố cục chưa gắn CreditLayout — thiếu binding trong scenes/layout/<hướng>/credit.tscn")
 
 
 func _ready() -> void:
 	_bind_refs()
-	if btn_back != null:
-		btn_back.pressed.connect(_on_back_pressed)
-		UIAnim.attach_press_bounce(btn_back)
-	var content_node := get_node_or_null("Panel/Content") as Control
-	if content_node != null:
-		UIAnim.play_slide_in(content_node, Vector2(0, 24), 0.04, 0.24)
+	if layout.btn_back != null:
+		layout.btn_back.pressed.connect(_on_back_pressed)
+		UIAnim.attach_press_bounce(layout.btn_back)
+	if layout.content_root != null:
+		UIAnim.play_slide_in(layout.content_root, Vector2(0, 24), 0.04, 0.24)
 	_apply_credit_context()
 	_bind_theme_signal()
 	_bind_music_signal()
@@ -67,23 +65,23 @@ func _refresh_all() -> void:
 
 
 func _refresh_theme_name() -> void:
-	if theme_value == null:
+	if layout.theme_value == null:
 		return
 	var fallback := tr("STR_SHOP_THEME_4LY_NAME")
 	var shop: Variant = get_node_or_null("/root/ShopManager")
 	if shop == null or not shop.has_method("item"):
-		theme_value.text = fallback
+		layout.theme_value.text = fallback
 		return
 	var theme_id := str(shop.get("equipped_theme"))
 	var data: Variant = shop.call("item", theme_id)
 	if data is Dictionary and data.has("name_key"):
-		theme_value.text = tr(str(data.get("name_key")))
+		layout.theme_value.text = tr(str(data.get("name_key")))
 		return
-	theme_value.text = fallback
+	layout.theme_value.text = fallback
 
 
 func _refresh_track_name() -> void:
-	if track_value == null:
+	if layout.track_value == null:
 		return
 	var music := _music_manager()
 	var track_name := "Wallpaper"
@@ -91,17 +89,17 @@ func _refresh_track_name() -> void:
 		var value := str(music.call("current_track_name"))
 		if not value.is_empty():
 			track_name = value
-	track_value.text = track_name
+	layout.track_value.text = track_name
 
 
 func _refresh_version() -> void:
-	if version_label == null:
+	if layout.version_label == null:
 		return
 	var app := get_node_or_null("/root/AppManager")
 	var version := "1.0.0"
 	if app != null:
 		version = str(app.call("get_version"))
-	version_label.text = tr("STR_SETTINGS_VERSION").format([version])
+	layout.version_label.text = tr("STR_SETTINGS_VERSION").format([version])
 
 
 func _music_manager() -> Node:

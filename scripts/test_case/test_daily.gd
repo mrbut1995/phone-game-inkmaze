@@ -225,7 +225,7 @@ func _section_3_scene(gm: Node, dm: Node, arch: Node) -> void:
 	await process_frame
 	_check(scene.selected_day() == other, "select_day doi ngay dang xem -> %d" % other)
 	_check(str(gm.get("current_mode")) == mode_before, "Chon ngay KHONG doi mode GameManager (khong nhay man)")
-	var date_label := scene.get_node("Missions/DateTag/Label") as Label
+	var date_label := scene.layout.lbl_date as Label
 	_check(date_label.text == tr("STR_DAILY_DATE_BADGE").format([other, days]),
 		"Nhan ngay tren bang doi theo ngay chon (nhan '%s')" % date_label.text)
 
@@ -252,18 +252,18 @@ func _section_3_scene(gm: Node, dm: Node, arch: Node) -> void:
 			"Nut nhiem vu chua xong = 'VAO CHOI' (nhan '%s')" % row3.action_label.text)
 
 	# Footer: tien do 2/4 + Xu da nhan
-	var progress := scene.get_node("Missions/ProgressLabel") as Label
+	var progress := scene.layout.lbl_progress as Label
 	_check(progress.text == tr("STR_DAILY_TOTAL_PROGRESS").format([50, "2/4"]),
 		"Footer tien do = 50%% (2/4) (nhan '%s')" % progress.text)
-	var claim := scene.get_node("Missions/Claim") as Label
+	var claim := scene.layout.lbl_claim as Label
 	var expect_today_coins := coins_today_before + awarded_today
 	_check(claim.text == tr("STR_DAILY_CLAIMED_REWARD").format([expect_today_coins, 50]),
 		"Footer Xu = +%d/50 (nhan '%s')" % [expect_today_coins, claim.text])
-	var reward := scene.get_node("Missions/Reward/Label") as Label
+	var reward := scene.layout.lbl_reward as Label
 	_check(reward.text == "+50", "Tag thuong ngay = +50 Xu (nhan '%s')" % reward.text)
 
 	# Header: ngày đang xem = hôm nay
-	_check((scene.get_node("Missions/DateTag/Label") as Label).text
+	_check((scene.layout.lbl_date as Label).text
 		== tr("STR_DAILY_DATE_BADGE").format([today, days]),
 		"Header hien dung ngay dang chon")
 
@@ -274,8 +274,8 @@ func _section_3_scene(gm: Node, dm: Node, arch: Node) -> void:
 		dm.call("set_day_unlocked", missed, false)
 		scene.select_day(missed)
 		await process_frame
-		var play_btn := scene.get_node("Play") as TextureButton
-		var play_label := scene.get_node("Play/Label") as Label
+		var play_btn := scene.layout.btn_play as TextureButton
+		var play_label := scene.layout.lbl_play as Label
 		var cost := int(dm.call("unlock_cost"))
 		_check(play_label.text == tr("STR_DAILY_UNLOCK_COST").format([cost]),
 			"Ngay bo lo: CTA = 'MO KHOA: 50 XU' (nhan '%s')" % play_label.text)
@@ -341,7 +341,7 @@ func _mode_label(dm: Node, day: int) -> String:
 
 ## Ô ngày trên lịch theo số ngày (chỉ tính ô của tháng đang xem, bỏ ô đệm/tháng trước)
 func _cell_for(scene: DailyScene, day: int) -> DailyDayCell:
-	var grid := scene.get_node_or_null("Calendar/Days")
+	var grid := scene.layout.calendar.get_node_or_null("Days")
 	if grid == null:
 		return null
 	for child in grid.get_children():

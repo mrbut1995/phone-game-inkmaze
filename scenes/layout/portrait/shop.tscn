@@ -13,9 +13,27 @@
 [ext_resource type="Texture2D" uid="uid://6gq24f7mmebm" path="res://assets/images/shop/banner_gift.svg" id="11_gift"]
 [ext_resource type="Texture2D" uid="uid://b4h7w6mxyr4tw" path="res://assets/images/shop/gift_box.svg" id="12_gift_box"]
 [ext_resource type="Texture2D" uid="uid://cpmf46xk6bok5" path="res://assets/images/shop/btn_action_amber.svg" id="13_btn_amber"]
-[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/shop_layout.gd" id="2_layout"]
 
-[node name="Portrait" instance=ExtResource("1_parent")]
+[node name="Portrait" node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+tabs_box = NodePath("Tabs")
+list_box = NodePath("Content/List")
+scroll = NodePath("Content")
+wallet_count = NodePath("Wallet/Count")
+wallet_plus = NodePath("Wallet/Plus")
+pager = NodePath("Pager")
+page_label = NodePath("Pager/PageLabel")
+btn_prev = NodePath("Pager/Prev")
+btn_next = NodePath("Pager/Next")
+dots_box = NodePath("Pager/Dots")
+btn_gift = NodePath("GiftBanner/GiftBtn")
+top_bar = NodePath("TopBar")
+wallet_bar = NodePath("Wallet")
+gift_banner = NodePath("GiftBanner")
+tab_line = NodePath("TabLine")
 
 [node name="TopBar" type="Control" parent="." index="1" unique_id=1562446976]
 anchors_preset = 0
