@@ -89,57 +89,70 @@ patch_margin_top = 25.0
 patch_margin_right = 22.0
 patch_margin_bottom = 24.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+metadata/_edit_use_anchors_ = true
 
-[node name="Rating" type="Control" parent="Panel" unique_id=1004137755]
+[node name="Rating" type="Control" parent="Panel" unique_id=580549950]
 layout_mode = 1
-anchor_left = 0.14310977
-anchor_top = 0.7473545
-anchor_right = 0.83811665
-anchor_bottom = 0.90259886
-offset_right = 0.0789795
-offset_bottom = -0.268005
+anchor_left = 0.16350378
+anchor_top = 0.67221737
+anchor_right = 0.8347556
+anchor_bottom = 0.8867827
+offset_left = 0.19999695
+offset_top = -0.44000244
+offset_right = -0.26004028
+offset_bottom = 0.2828369
 metadata/_edit_use_anchors_ = true
 
 [node name="RatingStar1" type="TextureRect" parent="Panel/Rating" unique_id=2015601869]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.11152545
-anchor_top = 0.10650168
-anchor_right = 0.4162597
-anchor_bottom = 1.1366292
-offset_left = -0.0875001
-offset_top = 0.952389
-offset_right = 0.0368538
-offset_bottom = 0.0032959
+anchor_top = 0.43300003
+anchor_right = 0.291
+anchor_bottom = 1.0
+offset_top = 0.006767273
+offset_right = 0.1499939
+offset_bottom = -0.122924805
+size_flags_horizontal = 3
+size_flags_vertical = 8
+size_flags_stretch_ratio = 0.3
 texture = ExtResource("3_h4clh")
+expand_mode = 2
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="RatingStar2" type="TextureRect" parent="Panel/Rating" unique_id=1688868453]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.29489642
-anchor_top = -0.2003997
-anchor_right = 0.6851071
-anchor_bottom = 1.0332844
-offset_left = 2.09622
-offset_top = -0.372673
-offset_right = -0.0132294
-offset_bottom = 0.00785828
+anchor_left = 0.25584355
+anchor_top = 0.024957513
+anchor_right = 0.7441565
+anchor_bottom = 0.97504246
+offset_left = -0.111465454
+offset_right = 0.111450195
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.4
 texture = ExtResource("3_h4clh")
+expand_mode = 2
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="RatingStar3" type="TextureRect" parent="Panel/Rating" unique_id=1373259721]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.57566136
-anchor_top = 0.10650168
-anchor_right = 0.9040264
-anchor_bottom = 1.1039841
-offset_left = 0.0859985
-offset_top = 0.952389
-offset_right = -0.0741577
-offset_bottom = 0.952393
+anchor_left = 0.70600003
+anchor_top = 0.42700002
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.1000061
+offset_top = 0.087509155
+offset_bottom = -0.122924805
+size_flags_horizontal = 3
+size_flags_vertical = 8
+size_flags_stretch_ratio = 0.3
 texture = ExtResource("3_h4clh")
+expand_mode = 2
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="Level" type="Label" parent="Panel" unique_id=2125002911]
@@ -195,10 +208,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Stamp" type="TextureRect" parent="." unique_id=1370524902]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.6461751
-anchor_top = -0.020575564
-anchor_right = 1.0471382
-anchor_bottom = 0.30737904
+anchor_left = 0.6462167
+anchor_top = 0.04222591
+anchor_right = 0.9713379
+anchor_bottom = 0.19982298
 offset_left = 0.0429993
 offset_top = 0.152163
 offset_right = -1.5

@@ -232,11 +232,15 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Stamp" type="Control" parent="Sheet/Footer" index="1" unique_id=751884363]
-anchors_preset = 0
-offset_left = 280.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
 offset_top = 62.5
-offset_right = 355.0
+offset_right = 37.5
 offset_bottom = 85.5
+grow_horizontal = 2
 rotation = -0.10471976
 pivot_offset = Vector2(37.5, 11.5)
 mouse_filter = 2

@@ -254,12 +254,12 @@ func _section_7_scene(manager: Node) -> void:
 	var rest: Array = manager.call("rest", "dungeon")
 	var first_entry: Dictionary = rest[0]
 	var first_row := rows_host.get_child(0) as RankRow
-	_entry((first_row.get_node("Rank") as Label).text == "#4",
-		"Hang dau danh sach = #4 (nhan '%s')" % (first_row.get_node("Rank") as Label).text)
-	_entry((first_row.get_node("Name") as Label).text == Ranking.display_name(first_entry),
-		"Ten hang #4 khop du lieu ('%s')" % (first_row.get_node("Name") as Label).text)
-	_entry((first_row.get_node("Points") as Label).text == Ranking.points_text(first_entry),
-		"Diem hang #4 khop du lieu ('%s')" % (first_row.get_node("Points") as Label).text)
+	_entry((first_row.get_node("Body/Rank") as Label).text == "#4",
+		"Hang dau danh sach = #4 (nhan '%s')" % (first_row.get_node("Body/Rank") as Label).text)
+	_entry((first_row.get_node("Body/Name") as Label).text == Ranking.display_name(first_entry),
+		"Ten hang #4 khop du lieu ('%s')" % (first_row.get_node("Body/Name") as Label).text)
+	_entry((first_row.get_node("Body/Stats/Points") as Label).text == Ranking.points_text(first_entry),
+		"Diem hang #4 khop du lieu ('%s')" % (first_row.get_node("Body/Stats/Points") as Label).text)
 
 	# Hàng của người chơi dùng art riêng
 	var player_index := -1
@@ -270,8 +270,8 @@ func _section_7_scene(manager: Node) -> void:
 		var player_row := rows_host.get_child(player_index) as RankRow
 		_entry((player_row.get_node("Bg") as TextureRect).texture == load("res://assets/images/ranking/rank_row_you.svg"),
 			"Hang cua nguoi choi dung art rieng (rank_row_you.svg)")
-		_entry((player_row.get_node("Name") as Label).text == Ranking.display_name(rest[player_index]),
-			"Hang cua nguoi choi hien dung ten ('%s')" % (player_row.get_node("Name") as Label).text)
+		_entry((player_row.get_node("Body/Name") as Label).text == Ranking.display_name(rest[player_index]),
+			"Hang cua nguoi choi hien dung ten ('%s')" % (player_row.get_node("Body/Name") as Label).text)
 	else:
 		_entry(false, "Nguoi choi phai co mat trong danh sach cuon")
 

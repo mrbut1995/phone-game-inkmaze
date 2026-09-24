@@ -3,7 +3,8 @@ extends BaseLayout
 
 @export var btn_back: BaseButton = null
 @export var overview_bar: Control = null
-@export var overview_fill: TextureRect = null
+## Bản DỌC dùng TextureRect, bản NGANG dùng NinePatchRect ⇒ khai kiểu chung `Control`
+@export var overview_fill: Control = null
 @export var overview_pct: Label = null
 @export var overview_summary: Label = null
 @export var tabs_box: Container = null

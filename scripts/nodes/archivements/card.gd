@@ -25,24 +25,27 @@ const COLOR_LOCKED := Color(0.47843137, 0.56078434, 0.60784316, 1)     # #7A8F9B
 const COLOR_DESC := Color(0.44313726, 0.54509807, 0.61960787, 1)
 const COLOR_DESC_LOCKED := Color(0.6313726, 0.69411767, 0.7372549, 1)
 
-@onready var bg: TextureRect = $Bg
-@onready var icon_ring: TextureRect = $IconRing
-@onready var icon: TextureRect = $IconRing/Icon
-@onready var title_label: Label = $Title
-@onready var desc_label: Label = $Desc
-@onready var bar: Control = $Bar
-@onready var bar_track: TextureRect = $Bar/Track
-@onready var bar_fill: TextureRect = $Bar/Fill
-@onready var progress_label: Label = $Progress
-@onready var stamp: Control = $Stamp
-@onready var stamp_state: Label = $Stamp/State
-@onready var stamp_reward: Label = $Stamp/Reward
-@onready var claim_btn: TextureButton = $ClaimButton
-@onready var claim_label: Label = $ClaimButton/Label
-@onready var chip: TextureRect = $Chip
-@onready var chip_label: Label = $Chip/Label
+## Node UI nằm trong CẤU TRÚC: `Panel` (nền thẻ) → `Body` (HBox) → IconRing · Info (VBox) · Side (Stamp/ClaimButton/Chip)
+## Mọi thành phần nằm TRONG `Panel` để nền và nội dung luôn khớp nhau khi co giãn.
+@onready var bg: NinePatchRect = $Panel
+@onready var icon_ring: TextureRect = $Panel/Body/IconRing
+@onready var icon: TextureRect = $Panel/Body/IconRing/Icon
+@onready var title_label: Label = $Panel/Body/Info/Title
+@onready var desc_label: Label = $Panel/Body/Info/Desc
+@onready var bar: Control = $Panel/Body/Info/Bar
+@onready var bar_track: TextureRect = $Panel/Body/Info/Bar/Track
+@onready var bar_fill: TextureRect = $Panel/Body/Info/Bar/Fill
+@onready var progress_label: Label = $Panel/Body/Info/Progress
+@onready var stamp: Control = $Panel/Body/Side/Stamp
+@onready var stamp_state: Label = $Panel/Body/Side/Stamp/State
+@onready var stamp_reward: Label = $Panel/Body/Side/Stamp/Reward
+@onready var claim_btn: TextureButton = $Panel/Body/Side/ClaimButton
+@onready var claim_label: Label = $Panel/Body/Side/ClaimButton/Label
+@onready var chip: TextureRect = $Panel/Body/Side/Chip
+@onready var chip_label: Label = $Panel/Body/Side/Chip/Label
 
 var _entry: Dictionary = {}
+var _pct := 0
 
 
 func _ready() -> void:
@@ -52,6 +55,19 @@ func _ready() -> void:
 		stamp_state.text = tr("STR_ACH_STATE_CLAIMED")
 	if chip_label != null:
 		chip_label.text = tr("STR_ACH_STATE_LOCKED")
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED:
+		_apply_bar_fill()
+
+
+## Vạch tiến độ: đo lại mỗi khi thẻ đổi cỡ — thẻ nằm trong CONTAINER nên lúc `setup()`
+## bề rộng thanh có thể còn 0 (bố cục chưa dàn xong).
+func _apply_bar_fill() -> void:
+	if bar == null or bar_fill == null:
+		return
+	bar_fill.size.x = maxf((bar.size.x - 2.0) * float(_pct) / 100.0, 0.0)
 
 
 ## Vẽ thẻ theo dữ liệu đã tính sẵn của ArchivementManager
@@ -94,9 +110,10 @@ func setup(entry: Dictionary) -> void:
 		title_label.modulate = Color(1, 1, 1, 1)
 		desc_label.modulate = COLOR_DESC
 
-	# Thanh tiến độ
+	# Thanh tiến độ (bề rộng đo lại trong `_apply_bar_fill()` — xem `_notification`)
+	_pct = pct
+	_apply_bar_fill()
 	if bar_fill != null:
-		bar_fill.size.x = maxf((bar.size.x - 2.0) * float(pct) / 100.0, 0.0)
 		bar_fill.modulate = state_color
 	if bar_track != null:
 		bar_track.modulate = Color(1, 1, 1, 0.55) if hidden else Color(1, 1, 1, 1)

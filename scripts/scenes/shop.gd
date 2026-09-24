@@ -4,9 +4,10 @@ extends BaseScene
 ## Màn CỬA HÀNG (mockup/shopping_*.svg) — 4 tab:
 ##   BÚT & MỰC (pen) · GIẤY VỞ (theme) · DỤNG CỤ (tool) · NẠP XU (coin)
 ##
-## - Tab BÚT & MỰC / GIẤY VỞ: lưới 2 cột, 6 món/trang (có phân trang, VUỐT NGANG đổi trang)
+## - Tab BÚT & MỰC / GIẤY VỞ: lưới ô TỰ CHIA CỘT theo bề rộng khung (màn thiết kế: 2 cột,
+##   6 món/trang) — kéo dãn ngang đủ chỗ là THÊM cột, thu nhỏ là BỎ cột (có phân trang, VUỐT NGANG đổi trang)
 ## - Tab DỤNG CỤ: danh sách thẻ ngang 980×180 (cuộn dọc)
-## - Tab NẠP XU: hàng VIP "Xoá quảng cáo" 980×200 nằm TRÊN CÙNG + lưới 2 cột các gói Xu
+## - Tab NẠP XU: hàng VIP "Xoá quảng cáo" 980×200 nằm TRÊN CÙNG + lưới các gói Xu (tự chia cột như lưới ô)
 ## - Mua bằng Xu Mực (ví dùng chung với Sổ tay thành tựu) hoặc gói nạp tiền thật (STUB IAP)
 ## - Bút / chủ đề sau khi mua có nút SỬ DỤNG -> ThemeSkin.apply_* (ĐÃ CHUẨN BỊ, chưa đổi giao diện)
 ## - VUỐT DỌC để cuộn danh sách (tự xử lý ở `_input` vì nút trên thẻ "ăn" sự kiện kéo)
@@ -29,13 +30,13 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 ## Số thực tế được tính lại theo CHIỀU CAO khung nhìn (`_grid_per_page`): màn thấp /
 ## xoay ngang thì ít hàng hơn, màn cao thì nhiều hàng hơn (content giãn hết chỗ trống).
 const TILES_PER_PAGE := 3
-## Lưới ô: bản DỌC 2 cột (khe ngang 30 / khe dọc 24 — khớp `_make_grid`); bản NGANG nở tối đa 4 cột
+## Lưới ô: số cột TỰ CHIA theo bề rộng khung (cả 2 hướng) — `GRID_COLUMNS` là mức tối thiểu,
+## `GRID_COLUMNS_MAX` là mức tối đa; khe ngang 30 / khe dọc 24 — khớp `_make_grid`.
 const GRID_COLUMNS := 2
 const GRID_COLUMNS_MAX := 4
 ## Bề rộng TỐI THIỂU của 1 thẻ ô ở bản NGANG — cơ sở để chia số cột (thẻ tự nở đầy ô)
 const TILE_MIN_W := 130.0
-## Lưới GÓI NẠP XU luôn 2 cột (thẻ nở đầy ô) — giữ được cả khi khung hẹp (bố cục ngang 2 cột)
-const COIN_COLUMNS := 2
+## Lưới GÓI NẠP XU dùng chung cách chia cột với lưới ô (xem `grid_columns`)
 const GRID_H_SEP := 30.0
 const GRID_V_SEP := 24.0
 ## Khe dọc giữa các khối trong danh sách (khớp `List.theme_override_constants/separation`)
@@ -80,6 +81,7 @@ var _pages := 1
 var _page_first_id := ""
 ## Số món/trang đang áp dụng (để biết có cần phân trang lại khi màn hình đổi cỡ)
 var _last_per_page := 0
+var _last_columns := 0
 ## Cỡ THIẾT KẾ của thẻ ô (đọc 1 lần từ item_tile.tscn) — phục vụ tính số hàng vừa khung
 static var _tile_size := Vector2.ZERO
 ## Cỡ thiết kế thẻ GÓI NẠP (đọc 1 lần từ `nodes/shop/coin_tile.tscn`)
@@ -97,12 +99,10 @@ var _drag_start := Vector2.ZERO
 var _drag_last := Vector2.ZERO
 var _drag_scroll := 0.0
 var _click_lock_until := 0.0
-# Số đo LAYOUT của hàng tab — đọc 1 lần từ shop.tscn lúc mở màn (xem `_capture_tab_layout`)
-var _tabs_top := 0.0
-var _tabs_row_w := 980.0
+# Số đo LAYOUT của hàng tab — đọc 1 lần từ shop.tscn lúc mở màn (xem `_capture_tab_layout`).
+# Vị trí + kích thước hàng do ANCHORS trong scene quyết định ⇒ script KHÔNG giữ offset nữa
+# (nhờ vậy kéo giãn cửa sổ là hàng tab tự co giãn theo).
 var _tabs_sep := 8.0
-var _tab_line_h := 3.5
-var _tabs_content_gap := 8.0
 var _tabs_captured := false
 
 
@@ -217,14 +217,14 @@ func tile_design_size() -> Vector2:
 	return _tile_size
 
 
-## Cỡ THẺ Ô đang dùng: cao = thiết kế × `TILE_SCALE` × hệ số màn hình.
-## Bản NGANG: rộng = bề rộng Ô LƯỚI (bố cục 2 cột) để lưới luôn vừa khung, không tràn cột.
+## Cỡ THẺ Ô đang dùng: cao = thiết kế × `TILE_SCALE` × hệ số màn hình; rộng = bề rộng Ô LƯỚI
+## theo số cột hiện tại ⇒ lưới luôn vừa khung, kéo dãn ngang là thẻ nở theo (sàn `TILE_MIN_W`).
 func tile_size() -> Vector2:
 	var design := tile_design_size()
 	var height := design.y * TILE_SCALE * screen_scale()
-	if not is_landscape:
+	var width := layout.scroll.size.x if layout.scroll != null else 0.0
+	if width <= 0.0:
 		return Vector2(design.x, height)
-	var width := layout.scroll.size.x if layout.scroll != null else design.x
 	var columns := grid_columns()
 	var cell := (width - GRID_H_SEP * float(columns - 1)) / float(columns)
 	return Vector2(maxf(cell, TILE_MIN_W), height)
@@ -235,16 +235,27 @@ func tile_height() -> float:
 	return tile_size().y
 
 
-## Số CỘT của lưới ô: bản DỌC = 2; bản NGANG chia theo BỀ RỘNG khung danh sách với
-## bề rộng thẻ TỐI THIỂU (thẻ nở đầy ô). Lưới GÓI NẠP luôn 2 cột (xem `COIN_COLUMNS`).
+## Số CỘT của lưới ô theo BỀ RỘNG THẬT của khung danh sách (cả 2 hướng):
+##  · Bản NGANG: chia theo bề rộng thẻ TỐI THIỂU (`TILE_MIN_W`) — như trước giờ.
+##  · Bản DỌC : lấy cỡ THIẾT KẾ của thẻ làm mốc rồi làm tròn tới cột gần nhất ⇒ kéo dãn
+##    ngang đủ chỗ là TỰ THÊM một cột, thu nhỏ không đủ chỗ là BỎ cột đó đi.
+## Không bao giờ hẹp hơn `TILE_MIN_W` và không quá `GRID_COLUMNS_MAX`.
 func grid_columns() -> int:
-	if not is_landscape or _category == "coin":
-		return GRID_COLUMNS
 	var width := layout.scroll.size.x if layout.scroll != null else 0.0
 	if width <= 0.0:
 		return GRID_COLUMNS
-	var columns := int((width + GRID_H_SEP * 0.5) / (TILE_MIN_W + GRID_H_SEP))
-	return clampi(columns, GRID_COLUMNS, GRID_COLUMNS_MAX)
+	if is_landscape:
+		return clampi(int((width + GRID_H_SEP * 0.5) / (TILE_MIN_W + GRID_H_SEP)),
+			GRID_COLUMNS, GRID_COLUMNS_MAX)
+	var design_w: float = (coin_design_size() if _category == "coin" else tile_design_size()).x
+	# Số cột xếp ĐẦY theo cỡ thiết kế, rồi thêm 1 cột nếu chỗ còn thừa ≥ NỬA cột
+	# (thu nhỏ tới mức không đủ nửa cột thì tự bỏ cột đó đi).
+	var by_design := int((width + GRID_H_SEP) / (design_w + GRID_H_SEP))
+	var used := float(by_design) * design_w + float(maxi(by_design - 1, 0)) * GRID_H_SEP
+	if width - used >= design_w * 0.5:
+		by_design += 1
+	var by_min := int((width + GRID_H_SEP) / (TILE_MIN_W + GRID_H_SEP))
+	return clampi(by_design, 1, clampi(by_min, 1, GRID_COLUMNS_MAX))
 
 
 ## Cỡ THIẾT KẾ của thẻ GÓI NẠP (đọc từ `nodes/shop/coin_tile.tscn`)
@@ -261,14 +272,15 @@ func coin_design_size() -> Vector2:
 	return _coin_size
 
 
-## Cỡ THẺ GÓI NẠP đang dùng: bản DỌC giữ cỡ thiết kế (2 cột vừa khung),
-## bản NGANG cho thẻ NỞ ĐẦY Ô để lưới không bao giờ tràn ra ngoài khung cuộn.
+## Cỡ THẺ GÓI NẠP đang dùng: thẻ NỞ ĐẦY Ô theo số cột hiện tại (cao giữ cỡ thiết kế)
+## ⇒ lưới không bao giờ tràn ra ngoài khung cuộn, kéo dãn ngang là thêm cột.
 func coin_tile_size() -> Vector2:
 	var design := coin_design_size()
-	if not is_landscape:
+	var width := layout.scroll.size.x if layout.scroll != null else 0.0
+	if width <= 0.0:
 		return design
-	var width := layout.scroll.size.x if layout.scroll != null else design.x
-	var cell := (width - GRID_H_SEP * float(COIN_COLUMNS - 1)) / float(COIN_COLUMNS)
+	var columns := grid_columns()
+	var cell := (width - GRID_H_SEP * float(columns - 1)) / float(columns)
 	return Vector2(maxf(cell, TILE_MIN_W), design.y)
 
 
@@ -308,30 +320,28 @@ func _tile_height() -> float:
 	return tile_design_size().y
 
 
-## Đọc số đo LAYOUT của hàng tab từ `shop.tscn` (đỉnh hàng · bề rộng · khe · vạch kẻ · khe tới danh sách)
-## — không hard-code trong script nữa, sửa scene là đủ.
+## Đọc số đo LAYOUT của hàng tab từ `shop.tscn` (khe giữa các tab).
+## Vị trí/kích thước hàng tab + vạch kẻ + vùng danh sách do ANCHORS của scene lo.
 func _capture_tab_layout() -> void:
 	if layout.tabs_box == null or _tabs_captured:
 		return
 	_tabs_captured = true
-	_tabs_top = layout.tabs_box.offset_top
-	_tabs_row_w = layout.tabs_box.offset_right - layout.tabs_box.offset_left
 	_tabs_sep = float(layout.tabs_box.get_theme_constant("separation"))
-	var line := layout.tab_line
-	if line != null:
-		_tab_line_h = line.size.y
-	if layout.scroll != null:
-		_tabs_content_gap = layout.scroll.offset_top - layout.tabs_box.offset_bottom
 
 
-## Áp cỡ thẻ ô hiện tại cho mọi thẻ đang hiện (thẻ tự dàn khối bên trong bằng anchors)
+## Áp cỡ thẻ ô hiện tại cho mọi thẻ đang hiện (thẻ tự dàn khối bên trong bằng anchors).
+## Tab NẠP XU: chỉ thẻ GÓI XU nở theo cột — hàng VIP "Xoá quảng cáo" giữ cỡ của scene.
 func _apply_card_metrics() -> void:
-	if not GRID_CATEGORIES.has(_category):
+	var is_coin := _category == "coin"
+	if not GRID_CATEGORIES.has(_category) and not is_coin:
 		return
-	var size := tile_size()
+	var size: Vector2 = coin_tile_size() if is_coin else tile_size()
 	for card in _cards:
-		if card != null and is_instance_valid(card):
-			card.custom_minimum_size = size
+		if card == null or not is_instance_valid(card):
+			continue
+		if is_coin and not card.has_method("icon_texture"):
+			continue
+		card.custom_minimum_size = size
 
 
 ## Đổi cỡ màn hình: co/giãn số món mỗi trang rồi đặt lại trang sao cho
@@ -339,9 +349,13 @@ func _apply_card_metrics() -> void:
 func _on_viewport_resized() -> void:
 	await get_tree().process_frame          # chờ khung Content nhận kích thước mới
 	_apply_tab_metrics()                    # tab & vùng danh sách cao theo màn hình
-	if not GRID_CATEGORIES.has(_category):
+	if not GRID_CATEGORIES.has(_category) and _category != "coin":
 		return
 	_apply_card_metrics()                   # thẻ ô cao theo màn hình
+	# Kéo dãn / thu nhỏ NGANG: số CỘT có thể đổi ⇒ phải dựng lại lưới cho khớp
+	if grid_columns() != _last_columns:
+		_rebuild()
+		return
 	_refresh_pagination_if_needed()
 
 
@@ -448,36 +462,22 @@ func _build_tabs() -> void:
 	_apply_tab_metrics()
 
 
-## Dàn lại hàng tab theo chiều cao màn hình: tab đang chọn cao hết hàng (nhô lên),
-## tab chưa chọn thấp hơn và canh ĐÁY hàng; vạch kẻ + vùng danh sách đi theo.
-## Mọi số đo lấy từ `_capture_tab_layout()` (đọc từ scene) + chiều cao art tab.
+## Dàn lại hàng tab: tab đang chọn cao hết hàng (nhô lên), tab chưa chọn thấp hơn & canh ĐÁY hàng,
+## bề rộng chia đều theo BỀ RỘNG THẬT của hàng tab (do ANCHORS trong scene dàn — kéo giãn cửa sổ
+## là hàng tab tự co giãn). KHÔNG ghi offset cho hàng tab / vạch kẻ / vùng danh sách nữa.
 func _apply_tab_metrics() -> void:
 	if layout.tabs_box == null:
 		return
 	_capture_tab_layout()
 	var h := tab_height()
-	var landscape := is_landscape
-	if not landscape:
-		# Bản dọc: khối tab/vạch kẻ/danh sách đặt bằng OFFSET (toạ độ tuyệt đối) như trước giờ
-		layout.tabs_box.offset_top = _tabs_top
-		layout.tabs_box.offset_bottom = _tabs_top + h
 	var count := maxi(TAB_ORDER.size(), 1)
-	var row_w := maxf(layout.tabs_box.size.x, 1.0) if landscape else _tabs_row_w
+	var row_w := layout.tabs_box.size.x
 	var tab_w := (row_w - _tabs_sep * float(count - 1)) / float(count)
 	var inactive_h := h * ShopTabButton.inactive_ratio()
 	for key in _tabs.keys():
 		var button := _tabs[key] as ShopTabButton
 		if button != null:
-			button.apply_row_layout(tab_w, h, inactive_h)
-	if landscape:
-		# Bản ngang: hàng tab/vạch kẻ/danh sách do ANCHORS của scene dàn sẵn — không ghi đè offset
-		return
-	var line := layout.tab_line
-	if line != null:
-		line.offset_top = _tabs_top + h - _tab_line_h
-		line.offset_bottom = _tabs_top + h
-	if layout.scroll != null:
-		layout.scroll.offset_top = _tabs_top + h + _tabs_content_gap
+			button.apply_row_layout(maxf(tab_w, 1.0), h, inactive_h)
 
 
 func show_tab(category: String) -> void:
@@ -531,6 +531,7 @@ func _rebuild() -> void:
 		_rebuild_grid(items)
 	else:
 		_rebuild_rows(items)
+	_last_columns = grid_columns()
 	_refresh_pager()
 	if layout.scroll != null:
 		layout.scroll.scroll_vertical = 0
@@ -614,7 +615,7 @@ func _refresh_card_selection() -> void:
 
 
 ## Tab NẠP XU: hàng VIP "Xoá quảng cáo" chiếm TRỌN MỘT HÀNG trên cùng,
-## các gói Xu còn lại xếp lưới 2 cột (mockup/shopping_coin.svg)
+## các gói Xu còn lại xếp lưới ô (số cột chia theo bề rộng khung — mockup/shopping_coin.svg)
 func _rebuild_coin(items: Array[Dictionary]) -> void:
 	_pages = 1
 	_page = 0
@@ -653,7 +654,7 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 func _make_grid() -> GridContainer:
 	var grid := ITEM_GRID_SCENE.instantiate() as ShopItemGrid
 	if grid != null:
-		# Số cột theo hướng màn hình (scene chỉ là mặc định 2 cột cho bản dọc)
+		# Số cột theo BỀ RỘNG khung (scene chỉ là mặc định cho lúc chưa có số đo)
 		grid.columns = grid_columns()
 	return grid
 

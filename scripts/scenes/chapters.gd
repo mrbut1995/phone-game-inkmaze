@@ -81,7 +81,8 @@ func _ready() -> void:
 
 
 ## Xoay màn hình: gắn lại node của layout mới RỒI nạp lại dữ liệu lên nhãn/ví (nếu không, nhãn của layout mới
-## vẫn giữ chuỗi khoá thô trong .tscn)
+## vẫn giữ chuỗi khoá thô trong .tscn) và DỰNG LẠI THẺ vào lưới CỦA LAYOUT MỚI — nếu không, danh sách
+## chương bên layout ngang sẽ TRỐNG vì thẻ vẫn nằm trong lưới của layout dọc.
 func _on_orientation_changed(_is_landscape_now: bool) -> void:
 	_rebind_after_orientation.call_deferred()
 
@@ -91,6 +92,8 @@ func _rebind_after_orientation() -> void:
 	_wire_buttons()
 	_prepare_continue_label()
 	_refresh_header()
+	_build_cards(false)
+	_apply_grid_columns()
 
 
 ## Kiểu chữ của nút CTA chân trang (đặt ở cả 2 layout)
@@ -128,7 +131,8 @@ func playing_chapter_id() -> int:
 # ---------------------------------------------------------------------------
 # Dựng danh sách chương
 # ---------------------------------------------------------------------------
-func _build_cards() -> void:
+## `animate = false` khi chỉ ĐỔI HƯỚNG (đổi layout) — tránh nháy lại hiệu ứng pop-in
+func _build_cards(animate := true) -> void:
 	if layout.cards_box == null:
 		return
 	for child in layout.cards_box.get_children():
@@ -149,7 +153,8 @@ func _build_cards() -> void:
 		card.selected.connect(_on_card_selected)
 		card.unlock_requested.connect(_on_unlock_requested)
 		_cards.append(card)
-		UIAnim.play_pop_in(card, 0.03 * index, 0.9, 0.22)
+		if animate:
+			UIAnim.play_pop_in(card, 0.03 * index, 0.9, 0.22)
 		index += 1
 
 
@@ -219,12 +224,12 @@ func _refresh_header() -> void:
 	var stars := int(gm.call("total_stars")) if gm != null and gm.has_method("total_stars") else 0
 	if layout.lbl_wallet != null:
 		layout.lbl_wallet.text = str(stars)
-	# Nút chân trang: nhảy tới chương đang chơi
-	if layout.btn_continue != null:
+	# Nhãn nút chân trang: nhảy tới chương đang chơi.
+	# Cập nhật nhãn ĐỘC LẬP với binding của nút — nút của 2 layout khác loại node nhau.
+	if layout.lbl_continue != null:
 		var playing := playing_chapter_id()
-		if layout.lbl_continue != null:
-			layout.lbl_continue.text = TranslationServer.translate("STR_CHAPTER_CONTINUE_FORMAT").format([
-				playing, _next_level_of(_levels_of(playing))])
+		layout.lbl_continue.text = TranslationServer.translate("STR_CHAPTER_CONTINUE_FORMAT").format([
+			playing, _next_level_of(_levels_of(playing))])
 
 
 func _levels_of(chapter_id: int) -> Array:
