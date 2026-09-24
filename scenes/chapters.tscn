@@ -13,9 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cta_f"]
 [ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/chapters.tscn" id="L_Portrait"]
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/chapters.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" path="res://scenes/layout/portrait/chapters.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" path="res://scenes/layout/landscape/chapters.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=189523808 instance=ExtResource("1_base")]
 theme = ExtResource("13_theme")

@@ -1,5 +1,5 @@
 class_name SumPathHUD
-extends BaseHUD
+extends GameHUD
 ## ============================================================================
 ## HUD Sum Path — mockup/matchup_sum_path.svg
 ##

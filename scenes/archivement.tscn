@@ -13,10 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://cxb0b14b811tj" path="res://assets/images/archivements/bar_fill.svg" id="11_fill"]
 [ext_resource type="Texture2D" uid="uid://bdij82xftp6k8" path="res://assets/images/archivements/stamp_badges.svg" id="12_stamp"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/archivement.tscn" id="L_Portrait"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/archivement.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" path="res://scenes/layout/portrait/archivement.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" uid="uid://tlhro2tkyc4u" path="res://scenes/layout/landscape/archivement.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=991169314 instance=ExtResource("1_base")]
 theme = ExtResource("13_theme")

@@ -1,0 +1,255 @@
+[gd_scene format=3 uid="uid://tlhro2tkyc4u"]
+
+[ext_resource type="PackedScene" uid="uid://bgvg0glkfli2b" path="res://scenes/layout/landscape/landscape.tscn" id="1_parent"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="Texture2D" uid="uid://dl66u1sdji243" path="res://assets/images/archivements/sheet.svg" id="5_sheet"]
+[ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="6_tape"]
+[ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="7_clip"]
+[ext_resource type="Texture2D" uid="uid://b4pnl48vyjqdv" path="res://assets/images/archivements/overview_card.svg" id="8_overview"]
+[ext_resource type="Texture2D" uid="uid://iurtsy651xdc" path="res://assets/images/icons/icon_trophy.svg" id="9_trophy"]
+[ext_resource type="Texture2D" uid="uid://c8u6tfuomo7wl" path="res://assets/images/archivements/bar_track.svg" id="10_track"]
+[ext_resource type="Texture2D" uid="uid://cxb0b14b811tj" path="res://assets/images/archivements/bar_fill.svg" id="11_fill"]
+[ext_resource type="Texture2D" uid="uid://bdij82xftp6k8" path="res://assets/images/archivements/stamp_badges.svg" id="12_stamp"]
+
+[node name="Landscape" unique_id=1597886665 instance=ExtResource("1_parent")]
+
+[node name="TopBar" type="HBoxContainer" parent="." index="0" unique_id=1782657395]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.03
+anchor_right = 0.95
+anchor_bottom = 0.1
+metadata/_edit_use_anchors_ = true
+
+[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=244459228]
+custom_minimum_size = Vector2(133, 133)
+layout_mode = 2
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+texture_hover = ExtResource("3_back_n")
+texture_disabled = ExtResource("3_back_n")
+texture_focused = ExtResource("3_back_n")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Title" type="Label" parent="TopBar" index="1" unique_id=2053878608]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LevelsTitle"
+theme_override_font_sizes/font_size = 71
+text = "STR_ACH_TITLE"
+horizontal_alignment = 1
+
+[node name="Sheet" type="TextureRect" parent="." index="1" unique_id=1757512586]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.125
+anchor_right = 0.95
+anchor_bottom = 0.985
+mouse_filter = 2
+texture = ExtResource("5_sheet")
+expand_mode = 1
+
+[node name="Tape" type="TextureRect" parent="Sheet" index="0" unique_id=1969744156]
+layout_mode = 0
+offset_left = 347.0
+offset_top = -25.0
+offset_right = 573.0
+offset_bottom = 29.0
+mouse_filter = 2
+texture = ExtResource("6_tape")
+
+[node name="Clip" type="TextureRect" parent="Sheet" index="1" unique_id=2032879212]
+layout_mode = 0
+offset_left = 103.0
+offset_top = -20.0
+offset_right = 149.0
+offset_bottom = 61.0
+mouse_filter = 2
+texture = ExtResource("7_clip")
+
+[node name="Overview" type="TextureRect" parent="Sheet" index="2" unique_id=178331372]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.030000001
+anchor_top = 0.015
+anchor_right = 0.97
+anchor_bottom = 0.14400001
+offset_bottom = -20.433601
+mouse_filter = 2
+texture = ExtResource("8_overview")
+
+[node name="Icon" type="TextureRect" parent="Sheet/Overview" index="0" unique_id=1109172625]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.14
+anchor_right = 0.075
+anchor_bottom = 0.86
+mouse_filter = 2
+texture = ExtResource("9_trophy")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Sheet/Overview" index="1" unique_id=789103868]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09
+anchor_top = 0.08
+anchor_right = 0.7
+anchor_bottom = 0.5
+theme_type_variation = &"AchOverviewTitle"
+text = "STR_ACH_OVERVIEW_TITLE"
+vertical_alignment = 1
+
+[node name="Bar" type="Control" parent="Sheet/Overview" index="2" unique_id=1879238096]
+clip_contents = true
+layout_mode = 1
+anchor_left = 0.05
+anchor_top = 0.52
+anchor_right = 0.62
+anchor_bottom = 0.86
+mouse_filter = 2
+
+[node name="Track" type="TextureRect" parent="Sheet/Overview/Bar" index="0" unique_id=1188268661]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+mouse_filter = 2
+texture = ExtResource("10_track")
+
+[node name="Fill" type="TextureRect" parent="Sheet/Overview/Bar" index="1" unique_id=1821990491]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 13.0
+mouse_filter = 2
+texture = ExtResource("11_fill")
+
+[node name="Percent" type="Label" parent="Sheet/Overview" index="3" unique_id=1761473630]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.66
+anchor_top = 0.05
+anchor_right = 0.8
+anchor_bottom = 0.5
+theme_type_variation = &"AchOverviewPct"
+text = "0%"
+vertical_alignment = 1
+
+[node name="Summary" type="Label" parent="Sheet/Overview" index="4" unique_id=194683711]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.66
+anchor_top = 0.52
+anchor_right = 0.98
+anchor_bottom = 0.95
+theme_type_variation = &"AchOverviewSummary"
+text = "Đã mở: 0 / 0 Danh hiệu • Điểm: 0 AP"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Tabs" type="HBoxContainer" parent="Sheet" index="3" unique_id=583791881]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.115
+anchor_right = 0.8
+anchor_bottom = 0.175
+theme_override_constants/separation = 10
+
+[node name="CardArea" type="Control" parent="Sheet" index="4" unique_id=573368042]
+layout_mode = 1
+anchor_left = 0.03
+anchor_top = 0.19
+anchor_right = 0.97
+anchor_bottom = 0.86
+mouse_filter = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Sheet/CardArea" index="0" unique_id=1323615310]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+scroll_deadzone = 12
+
+[node name="Pages" type="HBoxContainer" parent="Sheet/CardArea/Scroll" index="0" unique_id=2093441984]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="EmptyLabel" type="Label" parent="Sheet" index="5" unique_id=330636771]
+visible = false
+layout_mode = 0
+offset_left = 110.0
+offset_top = 760.0
+offset_right = 820.0
+offset_bottom = 800.0
+theme_type_variation = &"AchEmpty"
+text = "STR_ACH_EMPTY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Dots" type="HBoxContainer" parent="Sheet" index="6" unique_id=616256028]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.875
+anchor_right = 0.6
+anchor_bottom = 0.91
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Footer" type="Control" parent="Sheet" index="7" unique_id=217962887]
+layout_mode = 1
+anchor_left = 0.03
+anchor_top = 0.915
+anchor_right = 0.97
+anchor_bottom = 0.985
+mouse_filter = 2
+
+[node name="Quote" type="Label" parent="Sheet/Footer" index="0" unique_id=617506191]
+layout_mode = 0
+offset_left = 8.080002
+offset_top = -0.4260254
+offset_right = 718.08
+offset_bottom = 29.573975
+theme_type_variation = &"AchQuote"
+text = "STR_ACH_QUOTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Stamp" type="Control" parent="Sheet/Footer" index="1" unique_id=751884363]
+layout_mode = 1
+anchor_left = 0.88
+anchor_top = 0.05
+anchor_right = 0.995
+anchor_bottom = 0.95
+rotation = -0.10471976
+pivot_offset = Vector2(75, 23)
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Sheet/Footer/Stamp" index="0" unique_id=576444892]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 46.0
+mouse_filter = 2
+texture = ExtResource("12_stamp")
+
+[node name="Label" type="Label" parent="Sheet/Footer/Stamp" index="1" unique_id=678964568]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 46.0
+theme_type_variation = &"AchBadgesStamp"
+text = "0/0 BADGES"
+horizontal_alignment = 1
+vertical_alignment = 1

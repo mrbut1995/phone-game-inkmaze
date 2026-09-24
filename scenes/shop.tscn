@@ -13,10 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://6gq24f7mmebm" path="res://assets/images/shop/banner_gift.svg" id="11_gift"]
 [ext_resource type="Texture2D" uid="uid://b4h7w6mxyr4tw" path="res://assets/images/shop/gift_box.svg" id="12_gift_box"]
 [ext_resource type="Texture2D" uid="uid://cpmf46xk6bok5" path="res://assets/images/shop/btn_action_amber.svg" id="13_btn_amber"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/shop.tscn" id="L_Portrait"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/shop.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" path="res://scenes/layout/portrait/shop.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" path="res://scenes/layout/landscape/shop.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=1284806110 instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")

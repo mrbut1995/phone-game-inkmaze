@@ -14,8 +14,8 @@
 [ext_resource type="Script" uid="uid://bcqi64nve5wp5" path="res://scripts/core/controllers/ui_controller.gd" id="12_ui"]
 [ext_resource type="Script" uid="uid://btmprlxpqdg6j" path="res://scripts/core/controllers/tool_controller.gd" id="13_tool"]
 [ext_resource type="Script" uid="uid://csd7cnldm2tu3" path="res://scripts/core/controllers/challenge_controller.gd" id="14_chal"]
-[ext_resource type="PackedScene" uid="uid://du7mme5oa6tt6" path="res://scenes/orientation/landscape/game.tscn" id="L_Landscape"]
-[ext_resource type="PackedScene" uid="uid://wwrw355dsr83" path="res://scenes/orientation/portrait/game.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" uid="uid://du7mme5oa6tt6" path="res://scenes/layout/landscape/game.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://wwrw355dsr83" path="res://scenes/layout/portrait/game.tscn" id="L_Portrait"]
 
 [node name="Scene" unique_id=1978794255 instance=ExtResource("1_80q71")]
 script = ExtResource("2_qouja")
@@ -40,11 +40,6 @@ layout_mode = 1
 [node name="Board" parent="." index="3" unique_id=181012636 instance=ExtResource("3_board")]
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
 
 [node name="Controllers" type="Node" parent="." index="4" unique_id=1749084702]
 

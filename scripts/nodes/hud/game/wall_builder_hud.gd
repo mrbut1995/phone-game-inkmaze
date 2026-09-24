@@ -1,5 +1,5 @@
 class_name WallBuilderHUD
-extends BaseHUD
+extends GameHUD
 ## ============================================================================
 ## HUD Wall Builder — mockup/matchup_wall_builder.svg
 ##

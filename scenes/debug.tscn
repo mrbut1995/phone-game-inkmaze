@@ -6,10 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="4_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="5_back_p"]
 [ext_resource type="Texture2D" uid="uid://nwnmgpgwvc7y" path="res://assets/images/settings/settings_panel.svg" id="6_panel"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/debug.tscn" id="L_Portrait"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/debug.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" path="res://scenes/layout/portrait/debug.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" path="res://scenes/layout/landscape/debug.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_lgrwq")]
 theme = ExtResource("3_theme")

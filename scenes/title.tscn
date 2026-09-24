@@ -9,10 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="7_play_icon"]
 [ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="8_stamp"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="9_stamp_text"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/title.tscn" id="L_Portrait"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/title.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" path="res://scenes/layout/portrait/title.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" uid="uid://b5lcevw0i071e" path="res://scenes/layout/landscape/title.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=199638475 instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")

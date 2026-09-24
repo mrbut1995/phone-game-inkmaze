@@ -47,9 +47,8 @@
 [ext_resource type="Texture2D" uid="uid://cwys2l4jdlkj1" path="res://assets/images/icons/icon_cloud.svg" id="46_icon_cloud"]
 [ext_resource type="Texture2D" uid="uid://i60mj1vk7shb" path="res://assets/images/icons/icon_book.svg" id="47_icon_book"]
 [ext_resource type="Texture2D" uid="uid://cct547hsvxktf" path="res://assets/images/icons/icon_reset.svg" id="48_icon_reset"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/settings.tscn" id="L_Portrait"]
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/settings.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" path="res://scenes/layout/portrait/settings.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" path="res://scenes/layout/landscape/settings.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_base")]
 script = ExtResource("2_script")

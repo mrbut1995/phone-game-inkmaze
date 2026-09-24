@@ -1,5 +1,5 @@
-class_name BaseHUD
-extends Control
+class_name GameHUD
+extends BaseHUD
 ## ============================================================================
 ## Base: HUD thẻ thông tin của màn chơi — khung "Information" trong scenes/game.tscn
 ## được thay bằng scene HUD ứng với từng chế độ (GameScene._apply_hud_for_mode).

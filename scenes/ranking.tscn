@@ -18,10 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://d2327daxklpoj" path="res://assets/images/ranking/podium_bronze.svg" id="16_podium_b"]
 [ext_resource type="Texture2D" uid="uid://c5wka1cl37y6e" path="res://assets/images/ranking/my_rank_bar.svg" id="17_mybar"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="18_theme"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/ranking.tscn" id="L_Portrait"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/ranking.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://blqmr7o13tvys" path="res://scenes/layout/portrait/ranking.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" uid="uid://dk7hw8k4h4rom" path="res://scenes/layout/landscape/ranking.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=1469732799 instance=ExtResource("1_base")]
 theme = ExtResource("18_theme")

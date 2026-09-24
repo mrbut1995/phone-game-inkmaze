@@ -1,5 +1,5 @@
 class_name BlindMemoryHUD
-extends BaseHUD
+extends GameHUD
 ## ============================================================================
 ## HUD Blind Memory: KHÔNG có thẻ THỬ THÁCH — chỉ THỜI GIAN + thẻ nhắc GHI NHỚ.
 ## Pha ghi nhớ (hiện tường + đếm ngược 3-2-1-GO!) do popup lo:
