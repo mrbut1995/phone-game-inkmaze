@@ -1,5 +1,5 @@
 class_name OneStrokeHUD
-extends BaseHUD
+extends GameHUD
 ## ============================================================================
 ## HUD One Stroke — mockup/matchup_one_stroke.svg
 ##

@@ -1,5 +1,5 @@
 class_name MinesweepHUD
-extends BaseHUD
+extends GameHUD
 ## HUD Minesweeper Maze: THỜI GIAN + BOMB CÒN LẠI (thay cho thẻ THỬ THÁCH).
 ## Số bomb còn lại = tổng số bomb chưa nổ; mỗi quả chỉ nổ đúng 1 lần.
 

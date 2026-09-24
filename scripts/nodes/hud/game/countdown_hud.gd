@@ -1,5 +1,5 @@
 class_name CountdownHUD
-extends BaseHUD
+extends GameHUD
 ## ============================================================================
 ## HUD Countdown Cost — mockup/matchup_countdown_cost.svg
 ##

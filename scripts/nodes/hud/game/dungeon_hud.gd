@@ -1,5 +1,5 @@
 class_name DungeonHUD
-extends BaseHUD
+extends GameHUD
 ## HUD Dungeon Mode (endless): THỜI GIAN + SỐ BƯỚC + TẦNG.
 ## Đây là chế độ DUY NHẤT có bộ đếm bước còn lại (xem Design.md — quy ước "Số bước").
 

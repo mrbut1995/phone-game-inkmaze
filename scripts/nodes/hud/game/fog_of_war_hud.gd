@@ -1,5 +1,5 @@
 class_name FogOfWarHUD
-extends BaseHUD
+extends GameHUD
 ## ============================================================================
 ## HUD Fog of War — mockup/matchup_fog_of_war.svg
 ##

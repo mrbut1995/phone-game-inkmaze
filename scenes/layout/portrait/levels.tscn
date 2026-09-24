@@ -1,0 +1,212 @@
+[gd_scene format=3 uid="uid://vs5xiygkv5e"]
+
+[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="Script" uid="uid://bbivg47hraoh6" path="res://scripts/scenes/layout/levels_layout.gd" id="2_h3psh"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="Texture2D" uid="uid://c21vwj05ijcrc" path="res://assets/images/level_selector/chapter_banner.svg" id="6_banner"]
+[ext_resource type="Texture2D" uid="uid://bciclj5c0layi" path="res://assets/images/level_selector/badge_stars_counter.svg" id="7_stars"]
+[ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="9_cont_n"]
+[ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="10_cont_p"]
+[ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cont_f"]
+[ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
+
+[node name="Portrait" unique_id=589500212 instance=ExtResource("1_parent")]
+script = ExtResource("2_h3psh")
+
+[node name="Content" type="Control" parent="." index="0" unique_id=1439289897]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardArea" type="Control" parent="Content" index="0" unique_id=783028615]
+layout_mode = 1
+anchor_left = 0.051777776
+anchor_top = 0.191125
+anchor_right = 0.98077774
+anchor_bottom = 0.7824375
+offset_bottom = -3.0517578e-05
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Content/CardArea" index="0" unique_id=1202015660]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+scroll_deadzone = 12
+
+[node name="Pages" type="HBoxContainer" parent="Content/CardArea/Scroll" index="0" unique_id=1717521052]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="InformationArea" type="Control" parent="Content" index="1" unique_id=1451754610]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="HBoxContainer" parent="Content/InformationArea" index="0" unique_id=1720649669]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.033770833
+anchor_right = 0.961
+anchor_bottom = 0.07877084
+offset_left = 0.13999939
+offset_top = -0.42000008
+offset_right = 196.06
+offset_bottom = 40.780003
+
+[node name="Back" type="TextureButton" parent="Content/InformationArea/TopBar" index="0" unique_id=305592045]
+layout_mode = 2
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+texture_hover = ExtResource("3_back_n")
+texture_disabled = ExtResource("3_back_n")
+texture_focused = ExtResource("3_back_n")
+
+[node name="Title" type="Label" parent="Content/InformationArea/TopBar" index="1" unique_id=27927468]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LevelsTitle"
+text = "STR_SELECT_LEVEL_TITLE"
+horizontal_alignment = 1
+
+[node name="StarsCounter" type="TextureRect" parent="Content/InformationArea" index="1" unique_id=1234238601]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7592593
+anchor_top = 0.042968735
+anchor_right = 0.9537037
+anchor_bottom = 0.08723957
+offset_top = -9.546875
+offset_right = 97.22229
+offset_bottom = 31.682297
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_stars")
+
+[node name="Count" type="Label" parent="Content/InformationArea/StarsCounter" index="0" unique_id=1688571106]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"LevelsStarCount"
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ChapterBanner" type="TextureRect" parent="Content/InformationArea" index="2" unique_id=1348293648]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.044000003
+anchor_top = 0.08400001
+anchor_right = 0.9490741
+anchor_bottom = 0.16600001
+offset_left = 3.7400017
+offset_top = -17.61
+offset_right = 460.53705
+offset_bottom = 58.109993
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_banner")
+
+[node name="TitleContainer" type="VBoxContainer" parent="Content/InformationArea/ChapterBanner" index="0" unique_id=95982347]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16
+anchor_top = 0.2611529
+anchor_right = 0.84
+anchor_bottom = 0.73884714
+offset_left = 0.0669861
+offset_top = -0.000501633
+offset_right = -0.0670166
+offset_bottom = 0.000499725
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="0" unique_id=361920077]
+layout_mode = 2
+size_flags_vertical = 2
+theme_type_variation = &"LevelsBannerTitle"
+text = "STR_CHAPTER_1_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChangeChapter" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="1" unique_id=2002940200]
+layout_mode = 2
+size_flags_vertical = 10
+theme_type_variation = &"LevelsChangeChapter"
+text = "STR_CHANGE_CHAPTER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContinueButton" type="TextureButton" parent="Content/InformationArea" index="3" unique_id=2102539585]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.12962963
+anchor_top = 0.8385417
+anchor_right = 0.8703704
+anchor_bottom = 0.9010417
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("9_cont_n")
+texture_pressed = ExtResource("10_cont_p")
+texture_hover = ExtResource("9_cont_n")
+texture_focused = ExtResource("11_cont_f")
+ignore_texture_size = true
+
+[node name="Label" type="Label" parent="Content/InformationArea/ContinueButton" index="0" unique_id=1526103947]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"LevelsContinue"
+text = "STR_BTN_CONTINUE_LEVEL"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Icon" type="TextureRect" parent="Content/InformationArea/ContinueButton" index="1" unique_id=1579838738]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 52.5
+offset_top = 21.0
+offset_right = 67.5
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_play_icon")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="PaginationDots" type="HBoxContainer" parent="Content/InformationArea" index="4" unique_id=1503847340]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.8088542
+anchor_right = 0.7
+anchor_bottom = 0.8213542
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1

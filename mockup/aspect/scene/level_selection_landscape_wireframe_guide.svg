@@ -1,0 +1,335 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9400 1500" width="100%" height="100%" style="background-color: #0B1120;">
+  <defs>
+    <style>
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 42px; font-weight: 800; fill: #F8FAFC; text-anchor: middle; }
+      .ratio-spec { font-family: monospace; font-size: 28px; font-weight: 600; fill: #38BDF8; text-anchor: middle; }
+      
+      .box-screen { fill: #090D16; stroke: #475569; stroke-width: 5; rx: 32px; }
+      .box-header { fill: #1E293B; stroke: #64748B; stroke-width: 3; rx: 16px; }
+      .box-star-wallet { fill: #1E293B; stroke: #38BDF8; stroke-width: 3; rx: 18px; }
+      .box-chapter-banner { fill: #131E32; stroke: #38BDF8; stroke-width: 3; rx: 20px; }
+      .box-card-done { fill: #1E293B; stroke: #6EA0C8; stroke-width: 2.8; rx: 20px; }
+      .box-card-focus { fill: #1E293B; stroke: #F59E0B; stroke-width: 3.5; rx: 20px; }
+      .box-card-locked { fill: #0F172A; stroke: #475569; stroke-width: 2; rx: 20px; }
+      .box-slider-bg { fill: #0F172A; stroke: #475569; stroke-width: 1.2; rx: 6px; }
+      .box-slider-fill { fill: #0284C7; rx: 6px; }
+      .box-pagination { fill: #38BDF8; rx: 6px; }
+      .box-bottom-btn { fill: #0284C7; stroke: #38BDF8; stroke-width: 3.5; rx: 24px; }
+
+      .wire-label { font-family: system-ui, sans-serif; font-weight: 800; fill: #FFFFFF; text-anchor: middle; dominant-baseline: central; }
+      .font-spec { font-family: monospace; font-weight: 700; fill: #FDE047; text-anchor: middle; dominant-baseline: central; }
+      .dim-spec { font-family: monospace; font-size: 20px; font-weight: 600; fill: #94A3B8; text-anchor: middle; dominant-baseline: central; }
+    </style>
+  </defs>
+
+  <!-- ========================================================================= -->
+  <!-- 7. TỈ LỆ 4:3 · 1600 x 1200 (NGANG - TABLET / IPAD)                        -->
+  <!-- ========================================================================= -->
+  <g transform="translate(80, 120)">
+    <text x="800" y="-55" class="title">7. Tỉ lệ 4:3 (Ngang - Tablet)</text>
+    <text x="800" y="-18" class="ratio-spec">1600 × 1200 px · Sidebar Trái (500px) · Lưới Phải 3x3 (980px)</text>
+    <rect width="1600" height="1200" class="box-screen"/>
+
+    <!-- CỘT TRÁI (W: 500px): Header + Banner Chương + Nút Chơi Tiếp -->
+    <rect x="50" y="50" width="70" height="70" class="box-header"/>
+    <text x="85" y="85" class="wire-label" font-size="24">&lt;</text>
+    <rect x="135" y="50" width="375" height="70" class="box-header"/>
+    <text x="322" y="85" class="wire-label" font-size="24">CHỌN MÀN CHƠI (28px)</text>
+
+    <!-- Thẻ Tổng Sao (500 x 110 px) -->
+    <rect x="50" y="145" width="460" height="100" class="box-star-wallet"/>
+    <text x="280" y="195" class="font-spec" font-size="26">⭐ 28 / 45 SAO (28px)</text>
+
+    <!-- Khung Chương (460 x 240 px) -->
+    <rect x="50" y="270" width="460" height="240" class="box-chapter-banner"/>
+    <text x="280" y="320" class="wire-label" font-size="22">CHƯƠNG 1: NHẬP MÔN (22px)</text>
+    <text x="280" y="355" class="dim-spec">Bàn cờ 7×7 • Độ khó: Dễ (16px)</text>
+    <!-- Slider -->
+    <rect x="80" y="385" width="400" height="14" class="box-slider-bg"/>
+    <rect x="80" y="385" width="260" height="14" class="box-slider-fill"/>
+    <text x="280" y="425" class="font-spec" font-size="18">Tiến độ: 65%</text>
+    <rect x="180" y="450" width="200" height="42" class="box-header"/>
+    <text x="280" y="471" class="wire-label" font-size="16">ĐỔI CHƯƠNG › (16px)</text>
+
+    <!-- Nút Tiếp Tục Màn 07 Cố Định Ở Đáy (460 x 160 px) -->
+    <rect x="50" y="960" width="460" height="160" class="box-bottom-btn"/>
+    <text x="280" y="1025" class="wire-label" font-size="28">TIẾP TỤC CHƠI</text>
+    <text x="280" y="1070" class="font-spec" font-size="22">MÀN 07 (CHƯƠNG 1) (22px)</text>
+
+    <!-- CỘT PHẢI (W: 980px): Lưới 3 Cột x 3 Hàng (Mỗi thẻ: 300 x 300 px) -->
+    <!-- Row 1 -->
+    <rect x="570" y="50" width="300" height="300" class="box-card-done"/>
+    <text x="720" y="170" class="wire-label" font-size="64">01 (72px)</text>
+    <text x="720" y="290" class="font-spec" font-size="20">⭐⭐⭐</text>
+
+    <rect x="900" y="50" width="300" height="300" class="box-card-done"/>
+    <text x="1050" y="170" class="wire-label" font-size="64">02</text>
+    <text x="1050" y="290" class="font-spec" font-size="20">⭐⭐⭐</text>
+
+    <rect x="1230" y="50" width="300" height="300" class="box-card-done"/>
+    <text x="1380" y="170" class="wire-label" font-size="64">03</text>
+    <text x="1380" y="290" class="font-spec" font-size="20">⭐⭐⭐</text>
+
+    <!-- Row 2 -->
+    <rect x="570" y="375" width="300" height="300" class="box-card-done"/>
+    <text x="720" y="495" class="wire-label" font-size="64">04</text>
+    <text x="720" y="615" class="font-spec" font-size="20">⭐⭐☆</text>
+
+    <rect x="900" y="375" width="300" height="300" class="box-card-done"/>
+    <text x="1050" y="495" class="wire-label" font-size="64">05</text>
+    <text x="1050" y="615" class="font-spec" font-size="20">⭐⭐⭐</text>
+
+    <rect x="1230" y="375" width="300" height="300" class="box-card-done"/>
+    <text x="1380" y="495" class="wire-label" font-size="64">06</text>
+    <text x="1380" y="615" class="font-spec" font-size="20">⭐⭐☆</text>
+
+    <!-- Row 3 -->
+    <rect x="570" y="700" width="300" height="300" class="box-card-focus"/>
+    <text x="720" y="820" class="font-spec" font-size="70">07 (76px)</text>
+    <text x="720" y="940" class="wire-label" font-size="18">☆☆☆ (NEW)</text>
+
+    <rect x="900" y="700" width="300" height="300" class="box-card-locked"/>
+    <text x="1050" y="840" class="wire-label" font-size="26">🔒 08 (52px)</text>
+
+    <rect x="1230" y="700" width="300" height="300" class="box-card-locked"/>
+    <text x="1380" y="840" class="wire-label" font-size="26">🔒 09 (52px)</text>
+
+    <!-- Dots Pagination -->
+    <rect x="1000" y="1040" width="34" height="12" class="box-pagination"/>
+    <circle cx="1056" cy="1046" r="6" fill="#64748B"/>
+    <circle cx="1084" cy="1046" r="6" fill="#64748B"/>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 8. TỈ LỆ 16:9 · 1920 x 1080 (NGANG CHUẨN - BASE)                          -->
+  <!-- ========================================================================= -->
+  <g transform="translate(1820, 120)">
+    <text x="960" y="-55" class="title">8. Tỉ lệ 16:9 (Ngang Chuẩn - Base)</text>
+    <text x="960" y="-18" class="ratio-spec">1920 × 1080 px · Sidebar Trái (580px) · Lưới Phải 3x3 (1200px)</text>
+    <rect width="1920" height="1080" class="box-screen" stroke="#38BDF8"/>
+
+    <!-- CỘT TRÁI (W: 580px) -->
+    <!-- Header Top Left -->
+    <rect x="60" y="50" width="75" height="75" class="box-header"/>
+    <text x="97" y="87" class="wire-label" font-size="26">&lt;</text>
+    <rect x="150" y="50" width="470" height="75" class="box-header"/>
+    <text x="385" y="87" class="wire-label" font-size="28">CHỌN MÀN CHƠI (32px)</text>
+
+    <!-- Thẻ Tổng Sao -->
+    <rect x="60" y="145" width="560" height="95" class="box-star-wallet"/>
+    <text x="340" y="195" class="font-spec" font-size="28">⭐ 28 / 45 SAO (30px)</text>
+
+    <!-- Khung Chương (560 x 230 px) -->
+    <rect x="60" y="260" width="560" height="230" class="box-chapter-banner"/>
+    <text x="340" y="305" class="wire-label" font-size="24">CHƯƠNG 1: NHẬP MÔN (24px)</text>
+    <text x="340" y="340" class="dim-spec">Bàn cờ 7×7 • 65% hoàn thành (16px)</text>
+    <rect x="90" y="365" width="500" height="14" class="box-slider-bg"/>
+    <rect x="90" y="365" width="325" height="14" class="box-slider-fill"/>
+    <rect x="240" y="415" width="200" height="46" class="box-header"/>
+    <text x="340" y="438" class="wire-label" font-size="16">ĐỔI CHƯƠNG › (18px)</text>
+
+    <!-- Nút Tiếp Tục Màn 07 Cột Trái -->
+    <rect x="60" y="840" width="560" height="150" class="box-bottom-btn"/>
+    <text x="340" y="900" class="wire-label" font-size="30">TIẾP TỤC MÀN 07 (32px)</text>
+    <text x="340" y="945" class="font-spec" font-size="22">CHƯƠNG 1: NHẬP MÔN (20px)</text>
+
+    <!-- CỘT PHẢI (W: 1200px): Lưới 3 Cột x 3 Hàng (Mỗi thẻ: 360 x 265 px) -->
+    <!-- Row 1 -->
+    <rect x="680" y="50" width="360" height="265" class="box-card-done"/>
+    <text x="860" y="150" class="wire-label" font-size="64">01 (76px)</text>
+    <text x="860" y="250" class="font-spec" font-size="22">⭐⭐⭐</text>
+
+    <rect x="1070" y="50" width="360" height="265" class="box-card-done"/>
+    <text x="1250" y="150" class="wire-label" font-size="64">02</text>
+    <text x="1250" y="250" class="font-spec" font-size="22">⭐⭐⭐</text>
+
+    <rect x="1460" y="50" width="360" height="265" class="box-card-done"/>
+    <text x="1640" y="150" class="wire-label" font-size="64">03</text>
+    <text x="1640" y="250" class="font-spec" font-size="22">⭐⭐⭐</text>
+
+    <!-- Row 2 -->
+    <rect x="680" y="345" width="360" height="265" class="box-card-done"/>
+    <text x="860" y="445" class="wire-label" font-size="64">04</text>
+    <text x="860" y="545" class="font-spec" font-size="22">⭐⭐☆</text>
+
+    <rect x="1070" y="345" width="360" height="265" class="box-card-done"/>
+    <text x="1250" y="445" class="wire-label" font-size="64">05</text>
+    <text x="1250" y="545" class="font-spec" font-size="22">⭐⭐⭐</text>
+
+    <rect x="1460" y="345" width="360" height="265" class="box-card-done"/>
+    <text x="1640" y="445" class="wire-label" font-size="64">06</text>
+    <text x="1640" y="545" class="font-spec" font-size="22">⭐⭐☆</text>
+
+    <!-- Row 3 -->
+    <rect x="680" y="640" width="360" height="265" class="box-card-focus"/>
+    <text x="860" y="740" class="font-spec" font-size="72">07 (82px)</text>
+    <text x="860" y="840" class="wire-label" font-size="20">☆☆☆ (NEW: 18px)</text>
+
+    <rect x="1070" y="640" width="360" height="265" class="box-card-locked"/>
+    <text x="1250" y="760" class="wire-label" font-size="28">🔒 08 (56px)</text>
+
+    <rect x="1460" y="640" width="360" height="265" class="box-card-locked"/>
+    <text x="1640" y="760" class="wire-label" font-size="28">🔒 09 (56px)</text>
+
+    <!-- Dots Pagination -->
+    <rect x="1220" y="940" width="36" height="12" class="box-pagination"/>
+    <circle cx="1278" cy="946" r="6" fill="#64748B"/>
+    <circle cx="1306" cy="946" r="6" fill="#64748B"/>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 9. TỈ LỆ 18:9 · 2160 x 1080 (NGANG DÀI 2:1)                               -->
+  <!-- ========================================================================= -->
+  <g transform="translate(3880, 120)">
+    <text x="1080" y="-55" class="title">9. Tỉ lệ 18:9 (Ngang Dài 2:1)</text>
+    <text x="1080" y="-18" class="ratio-spec">2160 × 1080 px · Sidebar Trái (640px) · Lưới Phải 3x3 (1340px)</text>
+    <rect width="2160" height="1080" class="box-screen"/>
+
+    <!-- CỘT TRÁI (W: 640px) -->
+    <rect x="70" y="50" width="80" height="80" class="box-header"/>
+    <text x="110" y="90" class="wire-label" font-size="28">&lt;</text>
+    <rect x="170" y="50" width="510" height="80" class="box-header"/>
+    <text x="425" y="90" class="wire-label" font-size="30">CHỌN MÀN CHƠI (34px)</text>
+
+    <!-- Thẻ Tổng Sao -->
+    <rect x="70" y="150" width="610" height="100" class="box-star-wallet"/>
+    <text x="375" y="200" class="font-spec" font-size="30">⭐ 28 / 45 SAO (32px)</text>
+
+    <!-- Khung Chương (610 x 240 px) -->
+    <rect x="70" y="270" width="610" height="240" class="box-chapter-banner"/>
+    <text x="375" y="320" class="wire-label" font-size="26">CHƯƠNG 1: NHẬP MÔN (26px)</text>
+    <text x="375" y="355" class="dim-spec">Bàn cờ 7×7 • 65% hoàn thành (16px)</text>
+    <rect x="105" y="380" width="540" height="14" class="box-slider-bg"/>
+    <rect x="105" y="380" width="351" height="14" class="box-slider-fill"/>
+    <rect x="275" y="430" width="200" height="48" class="box-header"/>
+    <text x="375" y="454" class="wire-label" font-size="17">ĐỔI CHƯƠNG ›</text>
+
+    <!-- Nút Tiếp Tục Màn 07 Cột Trái -->
+    <rect x="70" y="830" width="610" height="160" class="box-bottom-btn"/>
+    <text x="375" y="895" class="wire-label" font-size="32">TIẾP TỤC MÀN 07 (34px)</text>
+    <text x="375" y="945" class="font-spec" font-size="22">CHƯƠNG 1: NHẬP MÔN (22px)</text>
+
+    <!-- CỘT PHẢI (W: 1340px): Lưới 3 Cột x 3 Hàng (Mỗi thẻ: 410 x 265 px) -->
+    <!-- Row 1 -->
+    <rect x="750" y="50" width="410" height="265" class="box-card-done"/>
+    <text x="955" y="150" class="wire-label" font-size="68">01 (78px)</text>
+    <text x="955" y="250" class="font-spec" font-size="22">⭐⭐⭐</text>
+
+    <rect x="1195" y="50" width="410" height="265" class="box-card-done"/>
+    <text x="1400" y="150" class="wire-label" font-size="68">02</text>
+    <text x="1400" y="250" class="font-spec" font-size="22">⭐⭐⭐</text>
+
+    <rect x="1640" y="50" width="410" height="265" class="box-card-done"/>
+    <text x="1845" y="150" class="wire-label" font-size="68">03</text>
+    <text x="1845" y="250" class="font-spec" font-size="22">⭐⭐⭐</text>
+
+    <!-- Row 2 -->
+    <rect x="750" y="345" width="410" height="265" class="box-card-done"/>
+    <text x="955" y="445" class="wire-label" font-size="68">04</text>
+    <text x="955" y="545" class="font-spec" font-size="22">⭐⭐☆</text>
+
+    <rect x="1195" y="345" width="410" height="265" class="box-card-done"/>
+    <text x="1400" y="445" class="wire-label" font-size="68">05</text>
+    <text x="1400" y="545" class="font-spec" font-size="22">⭐⭐⭐</text>
+
+    <rect x="1640" y="345" width="410" height="265" class="box-card-done"/>
+    <text x="1845" y="445" class="wire-label" font-size="68">06</text>
+    <text x="1845" y="545" class="font-spec" font-size="22">⭐⭐☆</text>
+
+    <!-- Row 3 -->
+    <rect x="750" y="640" width="410" height="265" class="box-card-focus"/>
+    <text x="955" y="740" class="font-spec" font-size="74">07 (84px)</text>
+    <text x="955" y="840" class="wire-label" font-size="20">☆☆☆ (NEW)</text>
+
+    <rect x="1195" y="640" width="410" height="265" class="box-card-locked"/>
+    <text x="1400" y="760" class="wire-label" font-size="28">🔒 08 (58px)</text>
+
+    <rect x="1640" y="640" width="410" height="265" class="box-card-locked"/>
+    <text x="1845" y="760" class="wire-label" font-size="28">🔒 09 (58px)</text>
+
+    <!-- Dots -->
+    <rect x="1360" y="940" width="36" height="12" class="box-pagination"/>
+    <circle cx="1418" cy="946" r="6" fill="#64748B"/>
+    <circle cx="1446" cy="946" r="6" fill="#64748B"/>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 10. TỈ LỆ 19.5:9 · 2340 x 1080 (NGANG SIÊU RỘNG - NOTCH/CAMERA)          -->
+  <!-- ========================================================================= -->
+  <g transform="translate(6180, 120)">
+    <text x="1170" y="-55" class="title">10. Tỉ lệ 19.5:9 (Ngang Siêu Rộng)</text>
+    <text x="1170" y="-18" class="ratio-spec">2340 × 1080 px · Safe Left 100px · Sidebar (660px) · Lưới Phải (1400px)</text>
+    <rect width="2340" height="1080" class="box-screen" stroke="#38BDF8"/>
+    <circle cx="40" cy="540" r="16" fill="#334155"/>
+
+    <!-- CỘT TRÁI (W: 660px, x=120 tránh tai thỏ) -->
+    <rect x="120" y="50" width="85" height="85" class="box-header"/>
+    <text x="162" y="92" class="wire-label" font-size="28">&lt;</text>
+    <rect x="225" y="50" width="520" height="85" class="box-header"/>
+    <text x="485" y="92" class="wire-label" font-size="32">CHỌN MÀN CHƠI (36px)</text>
+
+    <!-- Thẻ Tổng Sao -->
+    <rect x="120" y="155" width="625" height="105" class="box-star-wallet"/>
+    <text x="432" y="208" class="font-spec" font-size="32">⭐ 28 / 45 SAO (34px)</text>
+
+    <!-- Khung Chương (625 x 245 px) -->
+    <rect x="120" y="280" width="625" height="245" class="box-chapter-banner"/>
+    <text x="432" y="330" class="wire-label" font-size="28">CHƯƠNG 1: NHẬP MÔN (28px)</text>
+    <text x="432" y="365" class="dim-spec">Bàn cờ 7×7 • 65% hoàn thành (18px)</text>
+    <rect x="160" y="395" width="545" height="16" class="box-slider-bg"/>
+    <rect x="160" y="395" width="354" height="16" class="box-slider-fill"/>
+    <rect x="332" y="445" width="200" height="48" class="box-header"/>
+    <text x="432" y="469" class="wire-label" font-size="18">ĐỔI CHƯƠNG ›</text>
+
+    <!-- Nút Tiếp Tục Màn 07 Cột Trái -->
+    <rect x="120" y="825" width="625" height="165" class="box-bottom-btn"/>
+    <text x="432" y="890" class="wire-label" font-size="34">TIẾP TỤC MÀN 07 (36px)</text>
+    <text x="432" y="945" class="font-spec" font-size="24">CHƯƠNG 1: NHẬP MÔN (22px)</text>
+
+    <!-- CỘT PHẢI (W: 1400px): Lưới 3 Cột x 3 Hàng (Mỗi thẻ: 430 x 265 px) -->
+    <!-- Row 1 -->
+    <rect x="820" y="50" width="430" height="265" class="box-card-done"/>
+    <text x="1035" y="150" class="wire-label" font-size="70">01 (80px)</text>
+    <text x="1035" y="250" class="font-spec" font-size="24">⭐⭐⭐</text>
+
+    <rect x="1285" y="50" width="430" height="265" class="box-card-done"/>
+    <text x="1500" y="150" class="wire-label" font-size="70">02</text>
+    <text x="1500" y="250" class="font-spec" font-size="24">⭐⭐⭐</text>
+
+    <rect x="1750" y="50" width="430" height="265" class="box-card-done"/>
+    <text x="1965" y="150" class="wire-label" font-size="70">03</text>
+    <text x="1965" y="250" class="font-spec" font-size="24">⭐⭐⭐</text>
+
+    <!-- Row 2 -->
+    <rect x="820" y="345" width="430" height="265" class="box-card-done"/>
+    <text x="1035" y="445" class="wire-label" font-size="70">04</text>
+    <text x="1035" y="545" class="font-spec" font-size="24">⭐⭐☆</text>
+
+    <rect x="1285" y="345" width="430" height="265" class="box-card-done"/>
+    <text x="1500" y="445" class="wire-label" font-size="70">05</text>
+    <text x="1500" y="545" class="font-spec" font-size="24">⭐⭐⭐</text>
+
+    <rect x="1750" y="345" width="430" height="265" class="box-card-done"/>
+    <text x="1965" y="445" class="wire-label" font-size="70">06</text>
+    <text x="1965" y="545" class="font-spec" font-size="24">⭐⭐☆</text>
+
+    <!-- Row 3 -->
+    <rect x="820" y="640" width="430" height="265" class="box-card-focus"/>
+    <text x="1035" y="740" class="font-spec" font-size="76">07 (86px)</text>
+    <text x="1035" y="840" class="wire-label" font-size="22">☆☆☆ (NEW)</text>
+
+    <rect x="1285" y="640" width="430" height="265" class="box-card-locked"/>
+    <text x="1500" y="760" class="wire-label" font-size="30">🔒 08 (60px)</text>
+
+    <rect x="1750" y="640" width="430" height="265" class="box-card-locked"/>
+    <text x="1965" y="760" class="wire-label" font-size="30">🔒 09 (60px)</text>
+
+    <!-- Dots -->
+    <rect x="1460" y="940" width="36" height="12" class="box-pagination"/>
+    <circle cx="1518" cy="946" r="6" fill="#64748B"/>
+    <circle cx="1546" cy="946" r="6" fill="#64748B"/>
+  </g>
+</svg>

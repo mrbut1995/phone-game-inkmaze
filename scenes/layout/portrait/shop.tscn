@@ -1,0 +1,273 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://cjab7f0ksog8i" path="res://scripts/scenes/shop.gd" id="2_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="4_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="5_back_p"]
+[ext_resource type="Texture2D" uid="uid://dyce7yam3arwp" path="res://assets/images/shop/wallet_chip.svg" id="6_wallet"]
+[ext_resource type="Texture2D" uid="uid://1u1eht4ctsov" path="res://assets/images/shop/icon_coin.svg" id="7_coin"]
+[ext_resource type="Texture2D" uid="uid://iqlsipno706o" path="res://assets/images/shop/btn_plus.svg" id="8_plus"]
+[ext_resource type="Texture2D" uid="uid://btoscldl6syrd" path="res://assets/images/calendar/day_btn_prev_normal.svg" id="9_prev"]
+[ext_resource type="Texture2D" uid="uid://cmhk3b2oias7f" path="res://assets/images/calendar/day_btn_next_normal.svg" id="10_next"]
+[ext_resource type="Texture2D" uid="uid://6gq24f7mmebm" path="res://assets/images/shop/banner_gift.svg" id="11_gift"]
+[ext_resource type="Texture2D" uid="uid://b4h7w6mxyr4tw" path="res://assets/images/shop/gift_box.svg" id="12_gift_box"]
+[ext_resource type="Texture2D" uid="uid://cpmf46xk6bok5" path="res://assets/images/shop/btn_action_amber.svg" id="13_btn_amber"]
+[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+
+[node name="Portrait" instance=ExtResource("1_parent")]
+
+[node name="TopBar" type="Control" parent="." index="1" unique_id=1562446976]
+anchors_preset = 0
+offset_right =  540
+offset_bottom =  87.5
+mouse_filter = 2
+
+[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=1169383300]
+layout_mode = 0
+offset_left =  25
+offset_top =  42.5
+offset_right =  60
+offset_bottom =  77.5
+texture_normal = ExtResource("4_back_n")
+texture_pressed = ExtResource("5_back_p")
+texture_hover = ExtResource("4_back_n")
+texture_disabled = ExtResource("4_back_n")
+texture_focused = ExtResource("4_back_n")
+
+[node name="Eyebrow" type="Label" parent="TopBar" index="1" unique_id=1586477588]
+layout_mode = 0
+offset_left =  100
+offset_top =  46
+offset_right =  380
+offset_bottom =  59.5
+theme_type_variation = &"ShopEyebrow"
+text = "STR_SHOP_EYEBROW"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title" type="Label" parent="TopBar" index="2" unique_id=1896483052]
+layout_mode = 0
+offset_left =  100
+offset_top =  59.5
+offset_right =  380
+offset_bottom =  84
+theme_type_variation = &"ShopTitle"
+text = "STR_SHOP_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Wallet" type="TextureRect" parent="." index="2" unique_id=1251557220]
+layout_mode = 0
+offset_left =  387.5
+offset_top =  42.5
+offset_right =  515
+offset_bottom =  77.5
+mouse_filter = 2
+texture = ExtResource("6_wallet")
+
+[node name="CoinIcon" type="TextureRect" parent="Wallet" index="0" unique_id=288390001]
+layout_mode = 0
+offset_left =  12
+offset_top =  8.5
+offset_right =  30
+offset_bottom =  26.5
+mouse_filter = 2
+texture = ExtResource("7_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="Wallet" index="1" unique_id=488216143]
+layout_mode = 0
+offset_left =  31
+offset_right =  98
+offset_bottom =  35
+theme_type_variation = &"ShopWalletCount"
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Plus" type="TextureButton" parent="Wallet" index="2" unique_id=1063766735]
+layout_mode = 0
+offset_left =  100
+offset_top =  4.5
+offset_right =  126
+offset_bottom =  30.5
+focus_mode = 0
+texture_normal = ExtResource("8_plus")
+texture_pressed = ExtResource("8_plus")
+texture_hover = ExtResource("8_plus")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Tabs" type="HBoxContainer" parent="." index="3" unique_id=1748476601]
+layout_mode = 0
+; Hàng tab: script `_apply_tab_metrics()` dàn lại theo chiều cao màn hình
+; (tab đang chọn cao 98 = 65×1,5 · tab chưa chọn 83 · vạch kẻ đi theo đáy)
+offset_left =  25
+offset_top =  86
+offset_right =  515
+offset_bottom =  135
+theme_override_constants/separation =  4
+
+[node name="TabLine" type="ColorRect" parent="." index="4" unique_id=2061983417]
+layout_mode = 0
+offset_left =  25
+offset_top =  133.25
+offset_right =  515
+offset_bottom =  135
+mouse_filter = 2
+color = Color(0.23921569, 0.5137255, 0.68235296, 1)
+
+[node name="Content" type="ScrollContainer" parent="." index="5" unique_id=651984919]
+layout_mode = 0
+; Đáy bám theo khối dưới (Pager) -> content giãn hết chỗ trống, không hụt đáy
+; Đỉnh do `_apply_tab_metrics()` đặt lại: đáy hàng tab + 8
+anchor_bottom = 1.0
+offset_left =  25
+offset_top =  139
+offset_right =  515
+offset_bottom =  -225
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+scroll_deadzone = 12
+
+[node name="List" type="VBoxContainer" parent="Content" index="0" unique_id=696334226]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation =  10
+
+[node name="Pager" type="Control" parent="." index="6" unique_id=2000316292]
+visible = false
+anchors_preset = 0
+; Neo ĐÁY màn hình (cách đáy 356px như thiết kế 1920)
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left =  160
+offset_top =  -210
+offset_right =  380
+offset_bottom =  -178
+mouse_filter = 2
+
+[node name="Prev" type="TextureButton" parent="Pager" index="0" unique_id=1132602761]
+layout_mode = 0
+offset_top =  1
+offset_right =  30
+offset_bottom =  31
+focus_mode = 0
+texture_normal = ExtResource("9_prev")
+texture_pressed = ExtResource("9_prev")
+texture_hover = ExtResource("9_prev")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Next" type="TextureButton" parent="Pager" index="1" unique_id=695487616]
+layout_mode = 0
+offset_left =  190
+offset_top =  1
+offset_right =  220
+offset_bottom =  31
+focus_mode = 0
+texture_normal = ExtResource("10_next")
+texture_pressed = ExtResource("10_next")
+texture_hover = ExtResource("10_next")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="PageLabel" type="Label" parent="Pager" index="2" unique_id=71839614]
+layout_mode = 0
+offset_left =  35
+offset_right =  185
+offset_bottom =  14
+theme_type_variation = &"ShopPageLabel"
+text = "TRANG 1 / 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Dots" type="HBoxContainer" parent="Pager" index="3" unique_id=1536223205]
+layout_mode = 0
+offset_left =  75
+offset_top =  17
+offset_right =  145
+offset_bottom =  29
+theme_override_constants/separation =  8
+alignment = 1
+
+[node name="GiftBanner" type="TextureRect" parent="." index="7" unique_id=1183014227]
+layout_mode = 0
+; Banner NHẬN XU MIỄN PHÍ luôn nằm CUỐI màn hình (neo đáy)
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left =  25
+offset_top =  -172.5
+offset_right =  515
+offset_bottom =  -115
+mouse_filter = 2
+texture = ExtResource("11_gift")
+
+[node name="GiftIcon" type="TextureRect" parent="GiftBanner" index="0" unique_id=578668435]
+layout_mode = 0
+offset_left =  32.5
+offset_top =  15
+offset_right =  60
+offset_bottom =  42.5
+mouse_filter = 2
+texture = ExtResource("12_gift_box")
+
+[node name="GiftTitle" type="Label" parent="GiftBanner" index="1" unique_id=448380499]
+layout_mode = 0
+offset_left =  72.5
+offset_top =  12
+offset_right =  380
+offset_bottom =  28
+theme_type_variation = &"ShopBannerTitle"
+text = "STR_SHOP_BANNER_TITLE"
+vertical_alignment = 1
+
+[node name="GiftDesc" type="Label" parent="GiftBanner" index="2" unique_id=326107323]
+layout_mode = 0
+offset_left =  72.5
+offset_top =  29
+offset_right =  380
+offset_bottom =  45
+theme_type_variation = &"ShopBannerDesc"
+text = "STR_SHOP_BANNER_DESC"
+vertical_alignment = 1
+
+[node name="GiftBtn" type="TextureButton" parent="GiftBanner" index="3" unique_id=2073492906]
+layout_mode = 0
+offset_left =  385
+offset_top =  13
+offset_right =  475
+offset_bottom =  44
+focus_mode = 0
+texture_normal = ExtResource("13_btn_amber")
+texture_pressed = ExtResource("13_btn_amber")
+texture_hover = ExtResource("13_btn_amber")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="GiftBtnLabel" type="Label" parent="GiftBanner" index="4" unique_id=2032303212]
+layout_mode = 0
+offset_left =  385
+offset_top =  13
+offset_right =  475
+offset_bottom =  44
+theme_type_variation = &"ShopBannerBtn"
+text = "STR_SHOP_BANNER_BTN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Footer" type="Label" parent="." index="8" unique_id=466609682]
+layout_mode = 0
+; Dòng ghi chú cuối: neo đáy (cách đáy 188px như thiết kế)
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left =  50
+offset_top =  -110
+offset_right =  490
+offset_bottom =  -94
+theme_type_variation = &"ShopFooter"
+text = "STR_SHOP_FOOTER"
+horizontal_alignment = 1
+vertical_alignment = 1

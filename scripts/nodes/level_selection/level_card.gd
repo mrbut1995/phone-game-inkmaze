@@ -19,7 +19,7 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @export var chapter: int = 1
 @export var index_in_chapter: int = 0
 
-@onready var panel_btn: TextureButton = $Panel
+@onready var panel_btn: NinePatchButton = $Panel
 @onready var level_lbl: Label = $Panel/Level
 @onready var lock_icon: TextureRect = $Panel/Lock
 @onready var stamp_done: TextureRect = $Stamp

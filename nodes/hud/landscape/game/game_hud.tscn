@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_8cncu"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_823u4"]
+[ext_resource type="Script" uid="uid://c2quqdplg0rcb" path="res://scripts/nodes/hud/game/game_hud.gd" id="2_adk6y"]
 [ext_resource type="Script" uid="uid://bt8f7hl74mar" path="res://scripts/nodes/game/hint_guide.gd" id="3_0xwuy"]
 [ext_resource type="Texture2D" uid="uid://qaygenosff2s" path="res://assets/images-landscape/game/panel_hint_guide.svg" id="4_lxg6n"]
 [ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="5_i7rhb"]
@@ -19,6 +20,7 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_adk6y")
 metadata/_edit_use_anchors_ = true
 
 [node name="Content" type="VBoxContainer" parent="." index="0" unique_id=159019822]

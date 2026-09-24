@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.6"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.2"/>
+    </pattern>
+
+    <filter id="cardShadow" x="-10%" y="-15%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#1E1610" flood-opacity="0.18"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#1E1610" flood-opacity="0.08"/>
+    </filter>
+
+    <filter id="focusShadow" x="-15%" y="-20%" width="130%" height="145%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#C4843A" flood-opacity="0.32"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E1610" flood-opacity="0.10"/>
+    </filter>
+
+    <filter id="uiShadow" x="-10%" y="-15%" width="125%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <clipPath id="chCardClip"><rect width="1180" height="215" rx="24"/></clipPath>
+
+    <!-- Ngôi sao vàng -->
+    <g id="star-full">
+      <path d="M 24 4 L 29.8 16.3 L 43 17.9 L 33.3 26.9 L 35.8 40 L 24 33.4 L 12.2 40 L 14.7 26.9 L 5 17.9 L 18.2 16.3 Z" 
+            fill="#FBBF24" stroke="#D97706" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M 24 8 L 28 16.5 L 37 17.8" fill="none" stroke="#FEF3C7" stroke-width="2" stroke-linecap="round" opacity="0.85"/>
+    </g>
+
+    <!-- Ổ khóa -->
+    <g id="lock-icon">
+      <g stroke="#7A8F9B" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M -14 -4 L -14 -18 A 14 14 0 0 1 14 -18 L 14 -4" stroke-width="4"/>
+        <rect x="-20" y="-4" width="40" height="32" rx="7" fill="#DFDCD5" stroke-width="3.5"/>
+        <circle cx="0" cy="9" r="3" fill="#7A8F9B"/>
+        <line x1="0" y1="12" x2="0" y2="18" stroke-width="2.5"/>
+      </g>
+    </g>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#FAF5EB"/>
+  <rect width="1920" height="1080" fill="url(#notebookGrid)"/>
+  <line x1="80" y1="0" x2="80" y2="1080" stroke="#D84444" stroke-width="3" opacity="0.85"/>
+
+  <!-- ================= CỘT TRÁI (W: 580px, x: 60) ================= -->
+  <!-- 1. Header Back & Tiêu đề -->
+  <g transform="translate(60, 50)">
+    <g filter="url(#uiShadow)" style="cursor: pointer;">
+      <rect width="75" height="75" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
+      <path d="M45 25 L27 37 L45 50" fill="none" stroke="#3D83AE" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="360" y="52" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="950" fill="#244E6E">CHỌN CHƯƠNG</text>
+  </g>
+
+  <!-- 2. Thẻ Ví Sao Hiện Có (560 x 160 px) -->
+  <g transform="translate(60, 150)" filter="url(#uiShadow)">
+    <rect width="560" height="160" rx="22" fill="#FEFDFA" stroke="#D84444" stroke-width="3.5"/>
+    <line x1="24" y1="0" x2="24" y2="160" stroke="#D84444" stroke-width="3"/>
+
+    <g transform="translate(50, 48) scale(1.3)"><use href="#star-full"/></g>
+    <g transform="translate(130, 42)">
+      <text x="0" y="24" font-family="sans-serif" font-size="18" font-weight="900" fill="#718B9E">VÍ SAO HIỆN CÓ</text>
+      <text x="0" y="74" font-family="'Segoe UI', monospace" font-size="54" font-weight="950" fill="#D84444">28 <tspan font-size="24" fill="#718B9E">SAO</tspan></text>
+    </g>
+  </g>
+
+  <!-- 3. Hướng dẫn luật mở khóa (560 x 200 px) -->
+  <g transform="translate(60, 335)" filter="url(#uiShadow)">
+    <rect width="560" height="200" rx="22" fill="#FFFDF8" stroke="#6EA0C8" stroke-width="2.5"/>
+    <line x1="24" y1="0" x2="24" y2="200" stroke="#F59E0B" stroke-width="3"/>
+
+    <g transform="translate(45, 30)">
+      <text x="0" y="18" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="900" fill="#244E6E">💡 MẸO MỞ KHÓA CHƯƠNG</text>
+      <text x="0" y="54" font-family="-apple-system, sans-serif" font-size="17" font-weight="700" fill="#5A6D7C">
+        • Tích lũy đủ Sao để mở khóa các Chương mới.
+      </text>
+      <text x="0" y="84" font-family="-apple-system, sans-serif" font-size="17" font-weight="700" fill="#5A6D7C">
+        • Mỗi màn chơi hoàn thành tối đa 3 ⭐ thử thách.
+      </text>
+      <text x="0" y="114" font-family="-apple-system, sans-serif" font-size="17" font-weight="700" fill="#2E7D32">
+        ✓ Mở khóa xong được chơi vĩnh viễn mọi màn.
+      </text>
+    </g>
+  </g>
+
+  <!-- 4. Nút Tiếp Tục Màn Chơi (560 x 170 px) -->
+  <g transform="translate(60, 820)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <rect width="560" height="170" rx="26" fill="#3D83AE" stroke="#215477" stroke-width="4"/>
+    <line x1="32" y1="0" x2="32" y2="170" stroke="#FAF5EB" stroke-width="3" opacity="0.6"/>
+    <polygon points="65,70 65,100 90,85" fill="#FAF5EB"/>
+
+    <g transform="translate(115, 60)">
+      <text x="0" y="24" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#FFFFFF">TIẾP TỤC CHƯƠNG 1</text>
+      <text x="0" y="58" font-family="sans-serif" font-size="20" font-weight="800" fill="#BAE6FD">MÀN 07 ›</text>
+    </g>
+  </g>
+
+  <!-- ================= CỘT PHẢI: 4 THẺ CHƯƠNG (W: 1180px, x: 670) ================= -->
+  <!-- CHƯƠNG 1: NHẬP MÔN (ĐANG CHƠI) -->
+  <g transform="translate(670, 50)" filter="url(#cardShadow)">
+    <g clip-path="url(#chCardClip)">
+      <rect width="1180" height="215" fill="#FEFDFA"/>
+      <line x1="42" y1="0" x2="42" y2="215" stroke="#D84444" stroke-width="3"/>
+    </g>
+    <rect width="1180" height="215" rx="24" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
+
+    <path d="M 1040 0 L 1155 0 A 24 24 0 0 1 1180 24 L 1180 44 L 1020 44 Z" fill="#3D83AE"/>
+    <text x="1100" y="28" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#FFFFFF">ĐANG CHƠI</text>
+
+    <!-- Doodle 5x5 -->
+    <g transform="translate(65, 25)" stroke="#3D83AE" stroke-linecap="round">
+      <rect width="165" height="165" rx="16" fill="#F0F7FB" stroke-width="2.5"/>
+      <path d="M 16 148 L 16 82 L 82 82 L 82 16 L 148 16" fill="none" stroke="#2575A7" stroke-width="6.5"/>
+      <text x="16" y="153" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#2E7D32" stroke="none">S</text>
+      <text x="148" y="22" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#D97706" stroke="none">F</text>
+    </g>
+
+    <g transform="translate(260, 40)">
+      <rect width="125" height="26" rx="6" fill="#EBF3F8"/>
+      <text x="62" y="18" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#256286">KÍCH THƯỚC 5×5</text>
+      <text x="0" y="58" font-family="'Segoe UI', sans-serif" font-size="32" font-weight="950" fill="#224C6D">CHƯƠNG 1: NHẬP MÔN</text>
+      <text x="0" y="90" font-family="sans-serif" font-size="17" font-weight="600" fill="#718B9E">Làm quen với các quy luật bước &amp; tường ẩn</text>
+
+      <g transform="translate(0, 115)">
+        <rect width="360" height="12" rx="6" fill="#EAE4D5"/>
+        <rect width="336" height="12" rx="6" fill="#3D83AE"/>
+        <text x="0" y="32" font-family="'Segoe UI', sans-serif" font-size="17" font-weight="900" fill="#224C6D">
+          ⭐ 28 / 30 Sao <tspan font-weight="600" fill="#718B9E">(9/10 Màn)</tspan>
+        </text>
+      </g>
+    </g>
+
+    <!-- Nút Vào Chơi -->
+    <g transform="translate(930, 65)" filter="url(#uiShadow)" style="cursor: pointer;">
+      <rect width="210" height="85" rx="20" fill="#3D83AE" stroke="#235A7D" stroke-width="3"/>
+      <text x="105" y="44" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="950" fill="#FFFFFF">VÀO CHƠI</text>
+      <text x="105" y="66" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="700" fill="#BAE6FD">Màn 07 ›</text>
+    </g>
+  </g>
+
+  <!-- CHƯƠNG 2: SUY LUẬN (ĐÃ ĐỦ SAO - FOCUS HIGHLIGHT) -->
+  <g transform="translate(670, 290)" filter="url(#focusShadow)">
+    <g clip-path="url(#chCardClip)">
+      <rect width="1180" height="215" fill="#FFFDF8"/>
+      <line x1="42" y1="0" x2="42" y2="215" stroke="#D84444" stroke-width="3.5"/>
+    </g>
+    <rect width="1180" height="215" rx="24" fill="none" stroke="#C4843A" stroke-width="4"/>
+
+    <path d="M 1010 0 L 1155 0 A 24 24 0 0 1 1180 24 L 1180 44 L 990 44 Z" fill="#D97706"/>
+    <text x="1085" y="28" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#FFFFFF">ĐÃ ĐỦ ĐIỀU KIỆN</text>
+
+    <!-- Doodle 7x7 -->
+    <g transform="translate(65, 25)" stroke="#C4843A" stroke-linecap="round">
+      <rect width="165" height="165" rx="16" fill="#FEF3C7" fill-opacity="0.3" stroke-width="2.5"/>
+      <path d="M 12 153 L 12 107 L 60 107 L 60 60 L 107 60 L 107 12 L 153 12" fill="none" stroke="#D97706" stroke-width="6"/>
+      <text x="12" y="158" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#2E7D32" stroke="none">S</text>
+      <text x="153" y="17" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#D84444" stroke="none">F</text>
+    </g>
+
+    <g transform="translate(260, 40)">
+      <rect width="125" height="26" rx="6" fill="#FEF3C7"/>
+      <text x="62" y="18" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#92400E">KÍCH THƯỚC 7×7</text>
+      <text x="0" y="58" font-family="'Segoe UI', sans-serif" font-size="32" font-weight="950" fill="#224C6D">CHƯƠNG 2: SUY LUẬN</text>
+      <text x="0" y="90" font-family="sans-serif" font-size="17" font-weight="600" fill="#718B9E">Mê cung rộng hơn với mật độ tường tăng cao</text>
+
+      <g transform="translate(0, 115)">
+        <rect width="230" height="32" rx="8" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1.5"/>
+        <text x="12" y="22" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="900" fill="#15803D">
+          ✓ ĐÃ ĐỦ: 28 / 25 SAO
+        </text>
+      </g>
+    </g>
+
+    <!-- Nút Mở Khóa -->
+    <g transform="translate(920, 60)" filter="url(#uiShadow)" style="cursor: pointer;">
+      <rect width="230" height="95" rx="22" fill="#D97706" stroke="#92400E" stroke-width="3.5"/>
+      <g transform="translate(24, 28) scale(0.9)"><use href="#star-full"/></g>
+      <text x="140" y="44" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="950" fill="#FFFFFF">MỞ KHÓA</text>
+      <text x="140" y="70" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="17" font-weight="900" fill="#FEF3C7">CẦN 25 ⭐</text>
+    </g>
+  </g>
+
+  <!-- CHƯƠNG 3: BẪY ẨN (BỊ KHÓA) -->
+  <g transform="translate(670, 530)" opacity="0.92">
+    <g clip-path="url(#chCardClip)">
+      <rect width="1180" height="215" fill="#EFECE6"/>
+      <line x1="42" y1="0" x2="42" y2="215" stroke="#C5A8A8" stroke-width="2.5" stroke-dasharray="6 4"/>
+    </g>
+    <rect width="1180" height="215" rx="24" fill="none" stroke="#A7B9C3" stroke-width="2.8"/>
+
+    <path d="M 1040 0 L 1155 0 A 24 24 0 0 1 1180 24 L 1180 44 L 1020 44 Z" fill="#7A8F9B"/>
+    <text x="1100" y="28" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#FFFFFF">ĐANG KHÓA</text>
+
+    <g transform="translate(65, 25)">
+      <rect width="165" height="165" rx="16" fill="#E4E0D7" stroke="#A7B9C3" stroke-width="2"/>
+      <g transform="translate(82, 85) scale(1.2)"><use href="#lock-icon"/></g>
+    </g>
+
+    <g transform="translate(260, 40)">
+      <rect width="125" height="26" rx="6" fill="#E2DDD5"/>
+      <text x="62" y="18" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#718B9E">KÍCH THƯỚC 8×8</text>
+      <text x="0" y="58" font-family="'Segoe UI', sans-serif" font-size="32" font-weight="950" fill="#718B9E">CHƯƠNG 3: BẪY ẨN</text>
+      <text x="0" y="90" font-family="sans-serif" font-size="17" font-weight="600" fill="#8C9CA8">Thử thách trí nhớ và khả năng suy luận tường</text>
+
+      <g transform="translate(0, 115)">
+        <rect width="360" height="12" rx="6" fill="#DFDCD5"/>
+        <rect width="224" height="12" rx="6" fill="#D97706"/>
+        <text x="0" y="32" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#718B9E">
+          ⭐ 28 / 45 Sao <tspan fill="#B91C1C">(CÒN THIẾU 17 ⭐)</tspan>
+        </text>
+      </g>
+    </g>
+
+    <g transform="translate(930, 65)">
+      <rect width="210" height="85" rx="20" fill="#DFDCD5" stroke="#A7B9C3" stroke-width="2.5"/>
+      <g transform="translate(45, 42) scale(0.9)"><use href="#lock-icon"/></g>
+      <text x="130" y="44" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="900" fill="#718B9E">CẦN 45 ⭐</text>
+      <text x="130" y="66" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#8C9CA8">Chưa đủ sao</text>
+    </g>
+  </g>
+
+  <!-- CHƯƠNG 4: BẬC THẦY (KHÓA SÂU) -->
+  <g transform="translate(670, 770)" opacity="0.75">
+    <g clip-path="url(#chCardClip)">
+      <rect width="1180" height="215" fill="#EFECE6"/>
+      <line x1="42" y1="0" x2="42" y2="215" stroke="#C5A8A8" stroke-width="2.5" stroke-dasharray="6 4"/>
+    </g>
+    <rect width="1180" height="215" rx="24" fill="none" stroke="#A7B9C3" stroke-width="2.5"/>
+
+    <g transform="translate(65, 25)">
+      <rect width="165" height="165" rx="16" fill="#E4E0D7" stroke="#A7B9C3" stroke-width="2"/>
+      <g transform="translate(82, 85) scale(1.2)"><use href="#lock-icon"/></g>
+    </g>
+
+    <g transform="translate(260, 40)">
+      <rect width="125" height="26" rx="6" fill="#E2DDD5"/>
+      <text x="62" y="18" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#718B9E">KÍCH THƯỚC 9×9</text>
+      <text x="0" y="58" font-family="'Segoe UI', sans-serif" font-size="32" font-weight="950" fill="#718B9E">CHƯƠNG 4: BẬC THẦY</text>
+      <text x="0" y="90" font-family="sans-serif" font-size="17" font-weight="600" fill="#8C9CA8">Mê cung khổng lồ dành cho cao thủ logic</text>
+
+      <g transform="translate(0, 115)">
+        <rect width="360" height="12" rx="6" fill="#DFDCD5"/>
+        <rect width="144" height="12" rx="6" fill="#8FB9D2"/>
+        <text x="0" y="32" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#718B9E">
+          ⭐ 28 / 70 Sao <tspan font-size="14" fill="#A7B9C3">• Mở sau Chương 3</tspan>
+        </text>
+      </g>
+    </g>
+
+    <g transform="translate(930, 65)">
+      <rect width="210" height="85" rx="20" fill="#DFDCD5" stroke="#A7B9C3" stroke-width="2"/>
+      <g transform="translate(45, 42) scale(0.9)"><use href="#lock-icon"/></g>
+      <text x="130" y="44" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="900" fill="#718B9E">CẦN 70 ⭐</text>
+      <text x="130" y="66" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#8C9CA8">Khóa sâu</text>
+    </g>
+  </g>
+
+  <rect x="840" y="1062" width="240" height="6" rx="3" fill="#1E2830" opacity="0.3"/>
+</svg>

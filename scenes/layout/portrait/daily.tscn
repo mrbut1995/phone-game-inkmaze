@@ -1,0 +1,341 @@
+[gd_scene format=3 uid="uid://ddx6na0robdma"]
+
+[ext_resource type="PackedScene" uid="uid://35ou6w6aift" path="res://scenes/layout/portrait/portrait.tscn" id="1_parent"]
+[ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="5_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="6_back_p"]
+[ext_resource type="Texture2D" uid="uid://cvt2b5v5oe1n8" path="res://assets/images/calendar/streak_badge.svg" id="7_streak"]
+[ext_resource type="Texture2D" uid="uid://coklyxxvrunu2" path="res://assets/images/calendar/fire_icon.svg" id="8_fire"]
+[ext_resource type="Texture2D" uid="uid://cpiryq18o3y70" path="res://assets/images/calendar/panel_daily_mission.svg" id="9_panel"]
+[ext_resource type="Texture2D" uid="uid://cwkukl6emlhmk" path="res://assets/images/calendar/tag_day.svg" id="10_tag_day"]
+[ext_resource type="Texture2D" uid="uid://balhmyit838gg" path="res://assets/images/calendar/tag_reward.svg" id="11_tag_reward"]
+[ext_resource type="Texture2D" uid="uid://1u1eht4ctsov" path="res://assets/images/shop/icon_coin.svg" id="12_coin"]
+[ext_resource type="Texture2D" uid="uid://cfcm0w8fn3nnp" path="res://assets/images/common/panel_information.svg" id="15_kuh0v"]
+[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="18_imq2u"]
+[ext_resource type="Texture2D" uid="uid://88bsbnhxa7wf" path="res://assets/images/calendar/progress_bar_bg.svg" id="22_bar_bg"]
+[ext_resource type="Texture2D" uid="uid://31yj72v8vldh" path="res://assets/images/calendar/progress_bar_fill.svg" id="23_bar_fill"]
+[ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="24_play_n"]
+[ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="25_play_p"]
+[ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="26_play_f"]
+[ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/calendar/pencil_icon.svg" id="27_pencil"]
+
+[node name="Portrait" unique_id=1204800091 instance=ExtResource("1_parent")]
+
+[node name="Panel" type="NinePatchRect" parent="." index="0" unique_id=520728652]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top =  9.5
+offset_bottom =  -2.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_imq2u")
+region_rect = Rect2(0, 0, 467, 816)
+patch_margin_left =  88
+patch_margin_right =  53
+
+[node name="HUD" type="Control" parent="Panel" index="0" unique_id=653766467]
+layout_mode = 1
+anchor_right = 0.99700004
+offset_top =  -9.5
+offset_right =  0.119995
+offset_bottom =  42.5
+
+[node name="Content" type="Control" parent="Panel/HUD" index="0" unique_id=137350295]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Information" type="Control" parent="Panel/HUD/Content" index="0" unique_id=1343253896]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="HBoxContainer" parent="Panel/HUD/Content/Information" index="0" unique_id=501371577]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.712
+anchor_right = 0.96000004
+anchor_bottom = 1.529
+offset_left =  0.0749989
+offset_top =  -0.0240021
+offset_right =  0.039978
+offset_bottom =  -0.00800323
+theme_override_constants/separation =  10
+
+[node name="Back" type="TextureButton" parent="Panel/HUD/Content/Information/TopBar" index="0" unique_id=1019985210]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("5_back_n")
+texture_pressed = ExtResource("6_back_p")
+texture_hover = ExtResource("6_back_p")
+texture_disabled = ExtResource("5_back_n")
+texture_focused = ExtResource("5_back_n")
+
+[node name="TitlePanel" type="NinePatchRect" parent="Panel/HUD/Content/Information/TopBar" index="1" unique_id=1019321842]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("15_kuh0v")
+patch_margin_left =  24
+patch_margin_top =  16
+patch_margin_right =  32
+patch_margin_bottom =  23
+
+[node name="Title" type="Label" parent="Panel/HUD/Content/Information/TopBar/TitlePanel" index="0" unique_id=613672660]
+modulate = Color(0.14163879, 0.45273864, 0.7033491, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.037096772
+anchor_top = 0.23529412
+anchor_right = 0.9741936
+anchor_bottom = 0.8235294
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DailyTitle"
+text = "STR_DAILY_CHALLENGE_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
+
+[node name="StreakBadge" type="NinePatchRect" parent="Panel/HUD/Content/Information/TopBar" index="2" unique_id=1491378003]
+custom_minimum_size =  Vector2(120, 38)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+texture = ExtResource("7_streak")
+patch_margin_left =  19
+patch_margin_top =  10
+patch_margin_right =  27.5
+patch_margin_bottom =  15
+
+[node name="StreakContainer" type="HBoxContainer" parent="Panel/HUD/Content/Information/TopBar/StreakBadge" index="0" unique_id=890837703]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15416667
+anchor_top = 0.19736843
+anchor_right = 0.917
+anchor_bottom = 0.7496842
+offset_right =  -0.0400009
+offset_bottom =  0.0119991
+metadata/_edit_use_anchors_ = true
+
+[node name="Fire" type="TextureRect" parent="Panel/HUD/Content/Information/TopBar/StreakBadge/StreakContainer" index="0" unique_id=219296112]
+layout_mode = 2
+texture = ExtResource("8_fire")
+stretch_mode = 2
+
+[node name="Streak" type="Label" parent="Panel/HUD/Content/Information/TopBar/StreakBadge/StreakContainer" index="1" unique_id=477856414]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_type_variation = &"DailyStreak"
+text = "7"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Calendar" parent="Panel" index="1" unique_id=364415579 instance=ExtResource("3_calendar")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.028
+anchor_top = 0.09
+anchor_right = 0.97200006
+anchor_bottom = 0.09
+offset_left =  -0.120001
+offset_top =  -8.82
+offset_right =  0.119995
+offset_bottom =  496.18
+
+[node name="Missions" type="NinePatchRect" parent="Panel" index="2" unique_id=1074224783]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.1
+anchor_right = 0.50100005
+anchor_bottom = 0.1
+offset_left =  -247.5
+offset_top =  482.7
+offset_right =  252.46
+offset_bottom =  741.044
+texture = ExtResource("9_panel")
+patch_margin_left =  106
+patch_margin_top =  42.5
+patch_margin_right =  91.5
+patch_margin_bottom =  41.5
+
+[node name="DateTag" type="TextureRect" parent="Panel/Missions" index="0" unique_id=1698417265]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  22.5
+offset_top =  12
+offset_right =  86
+offset_bottom =  31
+texture = ExtResource("10_tag_day")
+
+[node name="Label" type="Label" parent="Panel/Missions/DateTag" index="0" unique_id=535679775]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.031496063
+anchor_top = 0.18421052
+anchor_right = 0.92913383
+anchor_bottom = 0.81578946
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"DailyTodayTag"
+text = "STR_DAILY_DATE_BADGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Mode" type="Label" parent="Panel/Missions" index="1" unique_id=2093370042]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  97
+offset_top =  12.5
+offset_right =  408.5
+offset_bottom =  30.5
+theme_type_variation = &"DailyTaskTitle"
+text = "STR_DAILY_TODAY_MODE"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+resize_font_to_fit = true
+
+[node name="Reward" type="TextureRect" parent="Panel/Missions" index="2" unique_id=1700693757]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  430.5
+offset_top =  10.5
+offset_right =  488
+offset_bottom =  29.5
+texture = ExtResource("11_tag_reward")
+
+[node name="CoinIcon" type="TextureRect" parent="Panel/Missions/Reward" index="0" unique_id=2135901154]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  5
+offset_top =  4
+offset_right =  15
+offset_bottom =  14
+texture = ExtResource("12_coin")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Panel/Missions/Reward" index="1" unique_id=1390468146]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  17
+offset_top =  4
+offset_right =  54
+offset_bottom =  15
+theme_type_variation = &"DailyTaskReward"
+text = "+35"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressLabel" type="Label" parent="Panel/Missions" index="3" unique_id=1214704438]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  18
+offset_top =  226.5
+offset_right =  180
+offset_bottom =  240.5
+theme_type_variation = &"DailyProgressLabel"
+text = "STR_DAILY_TOTAL_PROGRESS"
+vertical_alignment = 1
+
+[node name="ProgressBar" type="TextureProgressBar" parent="Panel/Missions" index="4" unique_id=1143325296]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  169
+offset_top =  229.5
+offset_right =  354
+offset_bottom =  236.5
+texture_under = ExtResource("22_bar_bg")
+texture_progress = ExtResource("23_bar_fill")
+
+[node name="Claim" type="Label" parent="Panel/Missions" index="5" unique_id=1945106779]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  358.5
+offset_top =  226
+offset_right =  486
+offset_bottom =  240
+theme_type_variation = &"DailyProgressClaim"
+text = "STR_DAILY_CLAIMED_REWARD"
+vertical_alignment = 1
+
+[node name="Rows" type="VBoxContainer" parent="Panel/Missions" index="6" unique_id=1194034629]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top =  30
+offset_bottom =  -37.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation =  0
+
+[node name="Slot1" type="Control" parent="Panel/Missions/Rows" index="0" unique_id=1683577933]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Slot2" type="Control" parent="Panel/Missions/Rows" index="1" unique_id=21502823]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Slot3" type="Control" parent="Panel/Missions/Rows" index="2" unique_id=441897830]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Slot4" type="Control" parent="Panel/Missions/Rows" index="3" unique_id=1209313162]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Play" type="TextureButton" parent="Panel" index="3" unique_id=753022490]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.50200003
+anchor_right = 0.50200003
+offset_left =  -200.08
+offset_top =  847.5
+offset_right =  199.92
+offset_bottom =  907.5
+texture_normal = ExtResource("24_play_n")
+texture_pressed = ExtResource("25_play_p")
+texture_hover = ExtResource("25_play_p")
+texture_disabled = ExtResource("24_play_n")
+texture_focused = ExtResource("26_play_f")
+
+[node name="Icon" type="TextureRect" parent="Panel/Play" index="0" unique_id=186845186]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  47.5
+offset_top =  21
+offset_right =  61.5
+offset_bottom =  35
+texture = ExtResource("27_pencil")
+
+[node name="Label" type="Label" parent="Panel/Play" index="1" unique_id=1786849018]
+layout_mode = 1
+anchors_preset = -1
+offset_left =  50
+offset_right =  380
+offset_bottom =  60
+theme_type_variation = &"DailyCta"
+text = "STR_BTN_PLAY_DAILY_MODE"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+metadata/_edit_use_anchors_ = true

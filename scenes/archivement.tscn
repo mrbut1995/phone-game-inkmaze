@@ -3,9 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://d0utnvo7ghx3f" path="res://scripts/scenes/archivement.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/archivement.tscn" id="L_Portrait"]
-
+[ext_resource type="PackedScene" path="res://scenes/layout/portrait/archivement.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" uid="uid://tlhro2tkyc4u" path="res://scenes/layout/landscape/archivement.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=991169314 instance=ExtResource("1_base")]
 theme = ExtResource("13_theme")

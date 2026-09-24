@@ -1,5 +1,5 @@
 class_name FadingInkHUD
-extends BaseHUD
+extends GameHUD
 ## ============================================================================
 ## HUD Fading Ink — mockup/matchup_fading_ink.svg
 ##

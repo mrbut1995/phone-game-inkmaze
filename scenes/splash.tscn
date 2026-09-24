@@ -3,9 +3,13 @@
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cfyy2h4gv0pnb" path="res://scripts/scenes/splash.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/splash.tscn" id="L_Portrait"]
-
+[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="4_paper"]
+[ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="5_logo"]
+[ext_resource type="Texture2D" uid="uid://vohdi4kjxxxf" path="res://assets/images/game/pen_type/pen_fountain_pen_nib.svg" id="6_651hb"]
+[ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="7_stamp"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="8_stamp_text"]
+[ext_resource type="PackedScene" path="res://scenes/layout/portrait/splash.tscn" id="L_Portrait"]
+[ext_resource type="PackedScene" path="res://scenes/layout/landscape/splash.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=1419240075 instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")
