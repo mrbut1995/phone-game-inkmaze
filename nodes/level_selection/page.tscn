@@ -9,9 +9,12 @@ mouse_filter = 1
 script = ExtResource("1_script")
 
 [node name="Grid" type="GridContainer" parent="."]
-layout_mode = 0
-offset_left =  5.04
-offset_top =  5.52
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 columns = 3
-theme_override_constants/h_separation =  23
-theme_override_constants/v_separation =  12
+theme_override_constants/h_separation = 23
+theme_override_constants/v_separation = 12

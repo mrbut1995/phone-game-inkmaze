@@ -56,13 +56,15 @@ texture_margin_right = 22.0
 texture_margin_bottom = 24.0
 
 [node name="Level" type="Control" unique_id=212139280]
-custom_minimum_size = Vector2(148.5, 177.5)
+custom_minimum_size = Vector2(90, 110)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("9_theme_text")
 script = ExtResource("1_066fa")
 

@@ -20,14 +20,11 @@ const BANNER_NORMAL := preload("res://assets/images/level_selector/chapter_banne
 const BANNER_FOCUS := preload("res://assets/images/level_selector/chapter_banner_focus.svg")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-## Số thẻ màn chơi mỗi trang bản DỌC (lưới 3×3 nằm trong nodes/level_selection/page.tscn)
+## Số thẻ màn chơi mỗi trang: lưới 3×3 (khớp `nodes/level_selection/page.tscn` và mockup
+## `mockup/level_selection_landscape.svg` — 2 hướng dùng CÙNG 3 cột, thẻ tự co giãn theo ô)
 const CARDS_PER_PAGE := 9
-## Bản NGANG giữ 3 hàng nhưng nở số CỘT theo bề rộng vùng cuộn (⇒ nhiều thẻ/trang hơn)
 const ROWS_PER_PAGE := 3
 const GRID_COLUMNS_PORTRAIT := 3
-## Cỡ 1 thẻ + khe lưới (đọc theo scene nodes/level_selection/page.tscn — dùng để suy số cột)
-const CARD_SIZE := Vector2(297.0, 355.0)
-const GRID_SEP := Vector2(46.0, 24.0)
 const SNAP_TIME := 0.22
 ## Quãng kéo tối thiểu (px) để tính là VUỐT trang (dưới ngưỡng = bấm vào thẻ)
 const DRAG_THRESHOLD := 8.0
@@ -102,19 +99,13 @@ func _wire_buttons() -> void:
 			layout.banner.gui_input.connect(_on_banner_input)
 
 
-## Số thẻ mỗi trang: bản DỌC giữ 3×3 = 9; bản NGANG nở số cột theo bề rộng vùng cuộn
+## Số thẻ mỗi trang: 3 cột × 3 hàng ở CẢ 2 hướng (lưới phủ kín vùng cuộn, thẻ nở theo ô)
 func _cards_per_page() -> int:
 	return _columns_per_page() * ROWS_PER_PAGE
 
 
 func _columns_per_page() -> int:
-	if not is_landscape:
-		return GRID_COLUMNS_PORTRAIT
-	var width := layout.scroll.size.x if layout.scroll != null else 0.0
-	if width <= 0.0:
-		return GRID_COLUMNS_PORTRAIT
-	var columns := int((width + GRID_SEP.x * 0.5) / (CARD_SIZE.x + GRID_SEP.x))
-	return clampi(columns, GRID_COLUMNS_PORTRAIT, 8)
+	return GRID_COLUMNS_PORTRAIT
 
 
 ## Xoay màn hình: gắn lại node của layout mới rồi dựng lại trang + nạp lại header

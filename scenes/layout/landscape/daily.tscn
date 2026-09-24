@@ -143,9 +143,8 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
 [node name="Back" type="TextureButton" parent="Panel/HUD/Content/Information/TopBar" index="0" unique_id=1019985210]
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-size_flags_horizontal = 2
-size_flags_stretch_ratio = 0.2
 texture_normal = ExtResource("5_back_n")
 texture_pressed = ExtResource("6_back_p")
 texture_hover = ExtResource("6_back_p")

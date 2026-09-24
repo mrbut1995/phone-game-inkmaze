@@ -17,3 +17,6 @@ extends BaseLayout
 @export var wallet_bar: Control = null
 @export var gift_banner: Control = null
 @export var tab_line: ColorRect = null
+## Khung riêng cho BÀN NHÁP THỬ BÚT (bố cục NGANG đặt nó ở cột trái như mockup;
+## để trống ⇒ bàn nháp nằm trong danh sách như bố cục DỌC)
+@export var pad_slot: Control = null

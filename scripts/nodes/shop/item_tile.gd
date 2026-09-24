@@ -54,29 +54,29 @@ func _refresh() -> void:
 
 
 func _refresh_preview(color: Color) -> void:
-	var margin := get_node_or_null("Bar") as ColorRect
+	var margin := get_node_or_null("Panel/Bar") as ColorRect
 	if margin != null:
 		margin.color = color
-	var circle := get_node_or_null("IconCircle") as TextureRect
+	var circle := get_node_or_null("Panel/IconCircle") as TextureRect
 	if circle != null:
 		circle.texture = CIRCLE
-		circle.modulate = Color(color.r, color.g, color.b, 0.30 if _selected else 0.16)
-	var icon := get_node_or_null("Icon") as TextureRect
+		circle.self_modulate = Color(color.r, color.g, color.b, 0.30 if _selected else 0.16)
+	var icon := get_node_or_null("Panel/IconCircle/Icon") as TextureRect
 	if icon != null:
 		icon.visible = true
 		var cursor_tex := PenSkin.cursor_texture(item_id) if _is_pen() else null
 		if cursor_tex != null:
 			# BÚT & MỰC: hiện đúng icon con trỏ sẽ dùng trong game của ngòi bút này
 			icon.texture = cursor_tex
-			icon.modulate = Color.WHITE
+			icon.self_modulate = Color.WHITE
 		else:
 			icon.texture = ICONS.get(str(item_data.get("icon", "pen")), ICONS["pen"])
-			icon.modulate = color
-	var stroke := get_node_or_null("Stroke") as TextureRect
+			icon.self_modulate = color
+	var stroke := get_node_or_null("Panel/Stroke") as TextureRect
 	if stroke != null:
 		stroke.texture = STROKE
 		# Nét mực mẫu: màu mực thật của ngòi bút (trùng màu nét vẽ trong game)
-		stroke.modulate = PenSkin.ink_color(item_id) if _is_pen() else color
+		stroke.self_modulate = PenSkin.ink_color(item_id) if _is_pen() else color
 
 
 func _is_pen() -> bool:
@@ -89,9 +89,9 @@ func set_selected(on: bool) -> void:
 		return
 	_selected = on
 	var color := Color(str(item_data.get("color", "#3D83AE")))
-	var circle := get_node_or_null("IconCircle") as TextureRect
+	var circle := get_node_or_null("Panel/IconCircle") as TextureRect
 	if circle != null:
-		circle.modulate = Color(color.r, color.g, color.b, 0.30 if _selected else 0.16)
+		circle.self_modulate = Color(color.r, color.g, color.b, 0.30 if _selected else 0.16)
 
 
 ## Chạm thân thẻ (vùng không bị nút hành động "ăn") = chọn xem thử
@@ -107,16 +107,16 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func _set_texts() -> void:
-	_set_label("Name", TranslationServer.translate(str(item_data.get("name_key", ""))))
-	_set_label("Desc", TranslationServer.translate(str(item_data.get("desc_key", ""))))
-	_set_label("Note", _note_text())
+	_set_label("Panel/Description/Name", TranslationServer.translate(str(item_data.get("name_key", ""))))
+	_set_label("Panel/Description/Desc", TranslationServer.translate(str(item_data.get("desc_key", ""))))
+	_set_label("Panel/Description/Note", _note_text())
 	_refresh_badge()
 
 
 ## Nhãn góc: bề ngang co theo chữ (mockup: chip ở góc trên-trái, không tràn thẻ)
 func _refresh_badge() -> void:
-	var badge := get_node_or_null("Badge") as NinePatchRect
-	var badge_label := get_node_or_null("BadgeLabel") as Label
+	var badge := get_node_or_null("Panel/Badge") as NinePatchRect
+	var badge_label := get_node_or_null("Panel/Badge/BadgeLabel") as Label
 	var badge_key := str(item_data.get("badge_key", ""))
 	if badge == null or badge_label == null:
 		return
@@ -127,11 +127,6 @@ func _refresh_badge() -> void:
 	badge.visible = true
 	badge_label.visible = true
 	badge_label.text = TranslationServer.translate(badge_key)
-	var width := maxf(badge_label.get_minimum_size().x + 34.0, 88.0)
-	badge.position = Vector2(42, 20)
-	badge.size = Vector2(width, 26)
-	badge_label.position = badge.position
-	badge_label.size = badge.size
 
 
 func _note_text() -> String:
@@ -145,12 +140,12 @@ func _note_text() -> String:
 
 
 func _set_button(color: Color) -> void:
-	var btn := get_node_or_null("Action") as TextureButton
-	var label := get_node_or_null("ActionLabel") as Label
-	var coin := get_node_or_null("CoinIcon") as TextureRect
+	var btn := get_node_or_null("Panel/Action") as NinePatchButton
+	var label := get_node_or_null("Panel/Action/Container/ActionLabel") as Label
+	var coin := get_node_or_null("Panel/Action/Container/CoinIcon") as TextureRect
 	if btn == null or label == null:
 		return
-	btn.modulate = Color.WHITE
+	btn.self_modulate = Color.WHITE
 	btn.disabled = false
 	# Đang dùng -> con dấu xanh lá (khoá bấm)
 	if Shop.is_equipped(item_id):
@@ -161,19 +156,24 @@ func _set_button(color: Color) -> void:
 		btn.disabled = true
 		label.theme_type_variation = &"ShopBtnTextDone"
 		label.text = TranslationServer.translate("STR_SHOP_EQUIPPED")
-		_set_coin_icon(coin, false, label)
+		if coin != null:
+			coin.visible = false
 		return
+		
 	# Đã sở hữu -> nút "SỬ DỤNG" tô màu món hàng (art TRẮNG + modulate)
 	if Shop.is_owned(item_id):
+		print("OWNED")
 		btn.texture_normal = BTN_NORMAL
 		btn.texture_pressed = BTN_NORMAL
 		btn.texture_hover = BTN_NORMAL
 		btn.texture_disabled = BTN_NORMAL
-		btn.modulate = color
+		btn.self_modulate = color
 		label.theme_type_variation = &"ShopBtnText"
 		label.text = TranslationServer.translate("STR_SHOP_USE")
-		_set_coin_icon(coin, false, label)
+		if coin != null:
+			coin.visible = false
 		return
+		
 	# Chưa sở hữu -> nút giá Xu (món VIP dùng nút hổ phách đặc, chữ trắng)
 	var vip := str(item_data.get("badge_key", "")) == VIP_BADGE
 	btn.texture_normal = BTN_PRICE_VIP if vip else BTN_PRICE
@@ -184,23 +184,13 @@ func _set_button(color: Color) -> void:
 	label.theme_type_variation = &"ShopBtnText" if vip else &"ShopPrice"
 	label.text = TranslationServer.translate("STR_SHOP_PRICE_FORMAT").format([
 		Shop.thousands(int(item_data.get("price", 0)))])
-	_set_coin_icon(coin, not vip, label)
-
-
-## Icon Xu trong nút giá; bật thì đẩy chữ sang phải cho khỏi đè lên icon
-func _set_coin_icon(coin: TextureRect, visible_now: bool, label: Label) -> void:
-	var shift := 24.0 if visible_now else 0.0
 	if coin != null:
-		coin.visible = visible_now
-	label.offset_left = 137.0 + shift
-	label.offset_right = 337.0 + shift
-
+		coin.visible = not vip
 
 func _set_label(path: String, text: String) -> void:
 	var label := get_node_or_null(path) as Label
 	if label != null:
 		label.text = text
-
 
 func _on_action_pressed() -> void:
 	action_pressed.emit(item_id)
