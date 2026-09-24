@@ -23,7 +23,7 @@ const NO_TEXT_ART := [
 	"res://assets/images/game/btn_restart_pressed.svg",
 	"res://assets/images/game/btn_restart_focus.svg",
 	"res://assets/images/game/btn_restart_disabled.svg",
-	"res://assets/images/popups/stamp_excellent.svg",
+	"res://assets/images/popups/stamp_done.svg",
 	"res://assets/images/popups/stamp_passed.svg",
 	"res://assets/images/main/logo_doodle_maze.svg",
 ]
@@ -82,10 +82,10 @@ func _section_2_winning() -> void:
 	})
 	if popup == null:
 		return
-	var stamp := popup.get_node_or_null("Panel/Content/Stamp") as TextureRect
+	var stamp := popup.get_node_or_null("Panel/Content/Stamp") as NinePatchRect
 	_entry(stamp != null, "Co node con dau (Stamp)")
 	if stamp != null:
-		_entry(stamp.texture != null, "Con dau co art (stamp_excellent.svg)")
+		_entry(stamp.texture != null, "Con dau co art (stamp_done.svg)")
 		_entry(absf(stamp.size.x - 156.0) < 3.0 and absf(stamp.size.y - 90.0) < 3.0,
 			"Con dau dung co 156x90 (nhan %s)" % str(stamp.size))
 		var title := stamp.get_node_or_null("StampTitle") as Label
@@ -179,17 +179,26 @@ func _section_4_language() -> void:
 	_entry(buttons.get_combined_minimum_size().x <= content.size.x + 1.0,
 		"Hang nut KHONG tran ra ngoai (nut %.0f <= khung %.0f)" % [
 			buttons.get_combined_minimum_size().x, content.size.x])
-	# Art phải khớp 1:1 với nút: TextureButton mặc định stretch_mode = KEEP nên art vẽ ĐÚNG size gốc
+	# Nút AP DỤNG: TextureButton (stretch KEEP) -> art phải khớp 1:1 với nút
 	# (từng bị tràn vì nút 390x96 nhưng art `btn_popup_wide` 630x96)
-	for btn_name in ["Cancel", "Apply"]:
-		var btn := buttons.get_node_or_null(btn_name) as TextureButton
-		var art_size := "?"
-		var ok_art := false
-		if btn != null and btn.texture_normal != null:
-			art_size = str(btn.texture_normal.get_size())
-			ok_art = btn.texture_normal.get_size() == btn.size
-		_entry(ok_art, "Art nut %s khop 1:1 voi nut %s (art %s)" % [
-			btn_name, str(btn.size) if btn != null else "?", art_size])
+	var apply_btn := buttons.get_node_or_null("Apply") as TextureButton
+	var art_size := "?"
+	var ok_art := false
+	if apply_btn != null and apply_btn.texture_normal != null:
+		art_size = str(apply_btn.texture_normal.get_size())
+		ok_art = apply_btn.texture_normal.get_size() == apply_btn.size
+	_entry(ok_art, "Art nut Apply khop 1:1 voi nut %s (art %s)" % [
+		str(apply_btn.size) if apply_btn != null else "?", art_size])
+	# Nút HỦY BỎ nay là Button + StyleBoxTexture (9-slice) -> không còn phụ thuộc cỡ art
+	var cancel_btn := buttons.get_node_or_null("Cancel") as Button
+	var cancel_style: StyleBox = null
+	if cancel_btn != null:
+		cancel_style = cancel_btn.get_theme_stylebox("normal")
+	var cancel_tex: Texture2D = null
+	if cancel_style is StyleBoxTexture:
+		cancel_tex = (cancel_style as StyleBoxTexture).texture
+	_entry(cancel_tex != null, "Nut Cancel 9-slice (art %s)" % [
+		cancel_tex.resource_path if cancel_tex != null else "?"])
 	_entry(scroll.get_v_scroll_bar().max_value > scroll.size.y,
 		"Danh sach dai hon khung nhin (%.0f > %.0f)" % [
 			scroll.get_v_scroll_bar().max_value, scroll.size.y])

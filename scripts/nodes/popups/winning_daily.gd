@@ -66,7 +66,7 @@ func _on_open() -> void:
 	bind_button("Panel/Content/ReplayBtn", _on_replay_pressed)
 	bind_button("Panel/Content/DailyBtn", _on_daily_pressed)
 	# Gán chữ cho nút bằng code (rõ ràng hơn auto_translate, test đọc được chuỗi đã dịch)
-	var daily_btn := piece("DailyBtn") as TextureButton
+	var daily_btn := piece("DailyBtn") as BaseButton
 	if daily_btn != null:
 		var daily_label := daily_btn.get_node_or_null("Label") as Label
 		if daily_label != null:

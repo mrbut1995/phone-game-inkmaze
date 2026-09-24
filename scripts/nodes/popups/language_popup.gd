@@ -79,7 +79,7 @@ func _update_selection() -> void:
 # Tương tác
 # ---------------------------------------------------------------------------
 # VUỐT DỌC ĐỂ CUỘN DANH SÁCH
-# Hàng ngôn ngữ là TextureButton nên "ăn" sự kiện kéo -> ScrollContainer không tự cuộn.
+# Hàng ngôn ngữ là Button nên "ăn" sự kiện kéo -> ScrollContainer không tự cuộn.
 # Tự xử lý ở `_input` (nhận sự kiện trước GUI) rồi `set_input_as_handled()`.
 # ---------------------------------------------------------------------------
 func _input(event: InputEvent) -> void:

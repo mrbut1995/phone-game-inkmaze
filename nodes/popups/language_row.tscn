@@ -2,23 +2,49 @@
 
 [ext_resource type="Script" path="res://scripts/nodes/popups/language_row.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/images/popups/lang_item_normal.svg" id="2_art_normal"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/lang_item_selected.svg" id="3_art_pressed"]
+[ext_resource type="Texture2D" uid="uid://l5fo0b8wovke" path="res://assets/images/popups/box_dungeon_bonus.svg" id="3_art_pressed"]
 [ext_resource type="Texture2D" path="res://assets/images/popups/lang_item_pressed.svg" id="4_art_hover"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/lang_item_focus.svg" id="5_art_focus"]
+[ext_resource type="Texture2D" uid="uid://deio833hbtfq4" path="res://assets/images/settings/row_button_focus.svg" id="5_art_focus"]
 [ext_resource type="Texture2D" path="res://assets/images/popups/icon_check_red.svg" id="6_art_check"]
 
-[node name="LanguageRow" type="TextureButton"]
+[sub_resource type="StyleBoxTexture" id="Sb_row_n"]
+texture = ExtResource("2_art_normal")
+texture_margin_left = 24
+texture_margin_top = 12
+texture_margin_right = 24
+texture_margin_bottom = 12
+
+[sub_resource type="StyleBoxTexture" id="Sb_row_h"]
+texture = ExtResource("4_art_hover")
+texture_margin_left = 24
+texture_margin_top = 12
+texture_margin_right = 24
+texture_margin_bottom = 12
+
+[sub_resource type="StyleBoxTexture" id="Sb_row_p"]
+texture = ExtResource("3_art_pressed")
+texture_margin_left = 20
+texture_margin_top = 14
+texture_margin_right = 20
+texture_margin_bottom = 14
+
+[sub_resource type="StyleBoxTexture" id="Sb_row_f"]
+texture = ExtResource("5_art_focus")
+texture_margin_left = 20
+texture_margin_top = 14
+texture_margin_right = 20
+texture_margin_bottom = 14
+
+[node name="LanguageRow" type="Button"]
 custom_minimum_size =  Vector2(0, 51.5)
 offset_right =  320
 offset_bottom =  51.5
 focus_mode = 0
 toggle_mode = true
-texture_normal = ExtResource("2_art_normal")
-texture_pressed = ExtResource("3_art_pressed")
-texture_hover = ExtResource("4_art_hover")
-texture_focused = ExtResource("5_art_focus")
-ignore_texture_size = true
-stretch_mode = 0
+theme_override_styles/normal = SubResource("Sb_row_n")
+theme_override_styles/hover = SubResource("Sb_row_h")
+theme_override_styles/pressed = SubResource("Sb_row_p")
+theme_override_styles/focus = SubResource("Sb_row_f")
 script = ExtResource("1_script")
 
 [node name="Flag" type="TextureRect" parent="."]

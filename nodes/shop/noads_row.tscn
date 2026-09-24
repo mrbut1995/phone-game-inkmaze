@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/nodes/shop/noads_row.gd" id="1_row"]
 [ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="2_theme"]
 [ext_resource type="Texture2D" path="res://assets/images/shop/card_noads.svg" id="3_card"]
-[ext_resource type="Texture2D" path="res://assets/images/shop/chip_red.svg" id="4_chip"]
+[ext_resource type="Texture2D" uid="uid://dofgrbef5s2ut" path="res://assets/images/chapters/chip_need.svg" id="4_chip"]
 [ext_resource type="Texture2D" path="res://assets/images/shop/btn_noads.svg" id="5_btn"]
 
 [node name="NoadsRow" type="Control"]
@@ -62,10 +62,10 @@ layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("4_chip")
-patch_margin_left = 4
-patch_margin_top = 4
-patch_margin_right = 4
-patch_margin_bottom = 4
+patch_margin_left = 8
+patch_margin_top = 5
+patch_margin_right = 8
+patch_margin_bottom = 5
 
 [node name="BadgeLabel" type="Label" parent="Body/Info/Badge"]
 layout_mode = 1

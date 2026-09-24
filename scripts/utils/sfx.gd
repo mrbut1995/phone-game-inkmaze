@@ -38,7 +38,9 @@ const ACHIEVEMENT := "achievement"      # Thành tích (ví dụ: floor hoàn h�
 ## sfx_name -> tên file trong res://assets/sfx/
 const LIBRARY := {
 	"path_draw": "sfx_path_draw.wav",
-	"cell_step": "sfx_cell_step.wav",
+	# sfx_cell_step.wav TRÙNG KHÍT sfx_path_draw.wav ⇒ dùng chung 1 file
+	# (bản gốc đã chuyển sang res://optimizing_clean/duplicate/assets/sfx/)
+	"cell_step": "sfx_path_draw.wav",
 	"anchor_snap": "sfx_anchor_snap.wav",
 	"wall_mark": "sfx_wall_mark.wav",
 	"wall_hit": "sfx_wall_hit.wav",

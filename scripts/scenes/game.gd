@@ -103,7 +103,11 @@ func _bind_refs() -> void:
 	layout = active_layout() as GameSceneLayout
 	if layout == null:
 		push_warning("GameScene: bố cục chưa gắn GameSceneLayout — thiếu binding trong scenes/layout/<hướng>/game.tscn")
-	hud_host = layout.hud_slot if layout != null else null
+	# HUD hiện tại là instance do code tạo (đổi theo chế độ/biến thể) ⇒ GIỮ NGUYÊN nếu còn hợp lệ.
+	# Chỉ khi chưa có (hoặc node đã bị xoá) mới lấy khung gốc của layout — khung này KHÔNG bị xoá
+	# nữa (xem `_apply_hud_for_mode`) nên `layout.hud_slot` luôn còn dùng được sau nhiều lần xoay.
+	if hud_host == null or not is_instance_valid(hud_host):
+		hud_host = layout.hud_slot if layout != null else null
 	# HintGuide nằm TRONG HUD (HUD bị thay bằng code khi đổi chế độ) nên vẫn tra theo TÊN
 	hint_guide = ui("HintGuide") as HintGuide
 	# Bàn cờ + nhãn Status là node RIÊNG của bố cục ⇒ gắn lại vào bộ controller dùng chung
@@ -232,6 +236,10 @@ func _hud_variant(portrait_scene: PackedScene, landscape_scene: PackedScene) -> 
 ## Cỡ HUD do BỐ CỤC quyết định — dọc giữ nguyên 980 thiết kế, ngang co theo bề rộng sidebar
 ## (xem `scripts/orientation/<hướng>/game.gd::fit_hud`).
 func _fit_hud_scale() -> void:
+	# HUD có thể đã bị thay/xoá (đổi chế độ hoặc xoay màn hình) ⇒ kiểm tra TRƯỚC khi cast,
+	# nếu không sẽ lỗi "Trying to cast a freed object" mỗi lần resize.
+	if hud_host == null or not is_instance_valid(hud_host):
+		return
 	var hud := hud_host as Control
 	if hud == null:
 		return
@@ -505,31 +513,41 @@ func _set_tool_label(btn: NinePatchButton, title_key: String, sub_key: String) -
 ## ChallengeController (thẻ Thử thách nằm trong HUD nên phải trỏ lại node mới).
 func _apply_hud_for_mode(mode_name: String) -> void:
 	_mode_id = mode_name
-	if hud_host == null or not is_inside_tree():
+	if not is_inside_tree():
 		return
-	# Đủ chỗ khi HUD hiện tại ĐÚNG chế độ VÀ đúng biến thể (bản dọc ↔ bản ngang)
-	if hud_host.get_script() == _hud_class_for(mode_name) \
-			and _hud_variant_landscape == _layout_is_landscape():
+	var slot: Control = layout.hud_slot if layout != null and is_instance_valid(layout) else null
+	if slot == null or not is_instance_valid(slot):
+		return
+	var want_landscape := _layout_is_landscape()
+	# Đủ chỗ khi HUD hiện tại THUỘC layout đang hiển thị, ĐÚNG chế độ VÀ đúng biến thể (dọc ↔ ngang)
+	if hud_host != null and is_instance_valid(hud_host) \
+			and layout.is_ancestor_of(hud_host) \
+			and hud_host.get_script() == _hud_class_for(mode_name) \
+			and _hud_variant_landscape == want_landscape:
 		_bind_hud_nodes()
 		return
 	var scene := _hud_scene_for(mode_name)
 	if scene == null:
 		return
-	var parent := hud_host.get_parent()
+	var parent := slot.get_parent()
 	if parent == null:
 		return
-	var old_hud := hud_host
 	var new_hud := scene.instantiate() as BaseHUD
 	if new_hud == null:
 		return
 	parent.add_child(new_hud)
-	parent.move_child(new_hud, old_hud.get_index())
+	parent.move_child(new_hud, slot.get_index())
 	# HUD scene chỉ khai khung theo thiết kế (bản dọc 980×249 ở mốc (50,175) — bản ngang là khung
-	# trong sidebar do layout dàn) ⇒ chép khung của HUD cũ sang HUD mới, nếu không HUD sẽ nhảy
+	# trong sidebar do layout dàn) ⇒ chép khung của KHUNG GỐC sang HUD mới, nếu không HUD sẽ nhảy
 	# về góc trái canvas.
-	_copy_layout_from(old_hud, new_hud)
-	_hud_variant_landscape = _layout_is_landscape()
-	old_hud.queue_free()
+	_copy_layout_from(slot, new_hud)
+	_hud_variant_landscape = want_landscape
+	# ⚠️ KHÔNG xoá khung gốc (`layout.hud_slot`): mỗi lần xoay màn hình `_bind_refs()` cần nó làm
+	# mốc để đặt HUD mới. Trước đây xoá nó ⇒ `layout.hud_slot` thành node đã free ⇒ xoay/resize
+	# tiếp theo là lỗi "Trying to cast a freed object" (tái hiện: xoay dọc→ngang ở mode Minesweeper).
+	if hud_host != null and is_instance_valid(hud_host) and hud_host != slot:
+		hud_host.queue_free()
+	slot.visible = false
 	hud_host = new_hud
 	UIAnim.play_slide_in(new_hud, Vector2(0, -15), 0.0, 0.25)
 	_bind_hud_nodes()
@@ -558,6 +576,8 @@ func _copy_layout_from(src: Control, dst: Control) -> void:
 ## Đồng thời lấy thanh nút hành động NẰM TRONG HUD (phương án A) rồi nối lại tín hiệu — nhờ vậy
 ## mỗi HUD/chế độ tự bày nút theo bố cục dọc-ngang của mình, màn chơi không giữ nút nào.
 func _bind_hud_nodes() -> void:
+	if hud_host == null or not is_instance_valid(hud_host):
+		return
 	var hud := hud_host as BaseHUD
 	if hud == null:
 		return

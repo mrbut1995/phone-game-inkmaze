@@ -12,8 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://balhmyit838gg" path="res://assets/images/calendar/tag_reward.svg" id="11_tag_reward"]
 [ext_resource type="Texture2D" uid="uid://1u1eht4ctsov" path="res://assets/images/shop/icon_coin.svg" id="12_coin"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="16_aqjlc"]
-[ext_resource type="Texture2D" uid="uid://88bsbnhxa7wf" path="res://assets/images/calendar/progress_bar_bg.svg" id="22_bar_bg"]
-[ext_resource type="Texture2D" uid="uid://31yj72v8vldh" path="res://assets/images/calendar/progress_bar_fill.svg" id="23_bar_fill"]
+[ext_resource type="Texture2D" uid="uid://c77k5yki6vr8h" path="res://assets/images/game/card_wall_slider_track.svg" id="22_bar_bg"]
+[ext_resource type="Texture2D" uid="uid://vtpnecntdwub" path="res://assets/images/game/card_wall_slider_fill.svg" id="23_bar_fill"]
 [ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="24_play_n"]
 [ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="25_play_p"]
 [ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="26_play_f"]
@@ -371,7 +371,12 @@ grow_horizontal = 2
 grow_vertical = 0
 nine_patch_stretch = true
 texture_under = ExtResource("22_bar_bg")
-texture_progress = ExtResource("23_bar_fill")
+	texture_progress = ExtResource("23_bar_fill")
+	nine_patch_stretch = true
+	stretch_margin_left = 4
+	stretch_margin_top = 2
+	stretch_margin_right = 4
+	stretch_margin_bottom = 2
 
 [node name="Claim" type="Label" parent="Panel/HUD/Content/Information/Missions" index="6" unique_id=1945106779]
 layout_mode = 1

@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://iurtsy651xdc" path="res://assets/images/icons/icon_trophy.svg" id="9_trophy"]
 [ext_resource type="Texture2D" uid="uid://c8u6tfuomo7wl" path="res://assets/images/archivements/bar_track.svg" id="10_track"]
 [ext_resource type="Texture2D" uid="uid://cxb0b14b811tj" path="res://assets/images/archivements/bar_fill.svg" id="11_fill"]
-[ext_resource type="Texture2D" uid="uid://bdij82xftp6k8" path="res://assets/images/archivements/stamp_badges.svg" id="12_stamp"]
+[ext_resource type="Texture2D" uid="uid://d3ujne6a5npe3" path="res://assets/images/archivements/stamp_claimed.svg" id="12_stamp"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
 [ext_resource type="PackedScene" path="res://scenes/layout/portrait/archivement.tscn" id="L_Portrait"]
 [ext_resource type="PackedScene" uid="uid://tlhro2tkyc4u" path="res://scenes/layout/landscape/archivement.tscn" id="L_Landscape"]
