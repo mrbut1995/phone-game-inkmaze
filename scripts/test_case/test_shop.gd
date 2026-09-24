@@ -457,7 +457,7 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 		await process_frame
 	_entry(scene.page_count() >= 2, "Khung thap -> co >= 2 trang de kiem tra vuot (nhan %d)" % scene.page_count())
 	# Vuốt NGANG sang trái -> sang trang sau (dùng TÂM vùng cuộn để không phụ thuộc cỡ khung)
-	var drag_mid := (_ui(scene, "Content") as ScrollContainer).get_global_rect().get_center()
+	var drag_mid: Vector2 = (scene.layout.scroll as Control).get_global_rect().get_center()
 	scene.call("_begin_drag", drag_mid)
 	scene.call("_update_drag", drag_mid + Vector2(-400, 6))
 	scene.call("_end_drag")
@@ -478,7 +478,7 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 	# Hết thời gian khoá -> nút mũi tên lại hoạt động
 	scene.set("_click_lock_until", 0.0)
 	_entry(not scene.clicks_locked(), "Het thoi gian khoa -> mo khoa lai")
-	(_ui(scene, "Pager/Prev") as TextureButton).pressed.emit()
+	(scene.layout.btn_prev as TextureButton).pressed.emit()
 	await process_frame
 	_entry(scene.current_page() == 0, "Nut lui trang chay lai binh thuong")
 
@@ -491,13 +491,13 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 
 	# Số hàng mỗi trang khớp chiều cao khung nhìn (màn thấp -> ít hàng hơn).
 	# Nếu chỉ đủ chỗ cho 1 HÀNG (2 món) mà thẻ còn cao hơn khung thì được phép cuộn.
-	var content := _ui(scene, "Content") as ScrollContainer
+	var content := scene.layout.scroll as ScrollContainer
 	_entry(content != null, "Co vung cuon Content")
 	for tab_id in ["pen", "theme", "tool", "coin"]:
 		scene.show_tab(tab_id)
 		await process_frame
 		await process_frame
-		var list := _ui(scene, "Content/List") as Control
+		var list := scene.layout.list_box as Control
 		var list_h: float = list.size.y if list != null else INF
 		var one_row_only: bool = scene.items_per_page() <= 2
 		_entry(list_h <= content.size.y + 1.0 or one_row_only,
@@ -508,7 +508,7 @@ func _section_7_gestures(shop: Node, wallet: Node) -> void:
 	scene.call("goto_page", 1)
 	await process_frame
 	await process_frame
-	var pen_list := _ui(scene, "Content/List") as Control
+	var pen_list := scene.layout.list_box as Control
 	_entry(pen_list.size.y <= content.size.y + 1.0 or scene.items_per_page() <= 2,
 		"Trang 2 tab pen: danh sach vua khung nhin (%.0f <= %.0f)" % [pen_list.size.y, content.size.y])
 	scene.call("goto_page", 0)

@@ -44,23 +44,23 @@ func _refresh() -> void:
 
 
 func _set_icon(color: Color) -> void:
-	var box := get_node_or_null("IconBox") as TextureRect
+	var box := get_node_or_null("Panel/IconBox") as TextureRect
 	if box != null:
 		box.texture = ICON_BOX
-		box.modulate = Color(color.r, color.g, color.b, 1.0).lerp(Color.WHITE, 0.78)
-	var icon := get_node_or_null("Icon") as TextureRect
+		box.self_modulate = Color(color.r, color.g, color.b, 1.0).lerp(Color.WHITE, 0.78)
+	var icon := get_node_or_null("Panel/IconBox/Icon") as TextureRect
 	if icon != null:
 		icon.texture = ICONS.get(str(item_data.get("icon", "pen")), ICONS["pen"])
-		icon.modulate = color
+		icon.self_modulate = color
 
 
 func _set_texts() -> void:
-	_set_label("Name", TranslationServer.translate(str(item_data.get("name_key", ""))))
-	_set_label("Desc", TranslationServer.translate(str(item_data.get("desc_key", ""))))
-	_set_label("Stock", str(_stock_text()))
+	_set_label("Panel/Description/Name", TranslationServer.translate(str(item_data.get("name_key", ""))))
+	_set_label("Panel/Description/Desc", TranslationServer.translate(str(item_data.get("desc_key", ""))))
+	_set_label("Panel/Description/Stock", str(_stock_text()))
 	var badge_key := str(item_data.get("badge_key", ""))
-	var badge := get_node_or_null("Badge") as NinePatchRect
-	var badge_label := get_node_or_null("BadgeLabel") as Label
+	var badge := get_node_or_null("Panel/Badge") as NinePatchRect
+	var badge_label := get_node_or_null("Panel/Badge/BadgeLabel") as Label
 	if badge != null:
 		badge.visible = not badge_key.is_empty()
 	if badge_label != null:
@@ -85,8 +85,8 @@ func _stock_text() -> String:
 
 
 func _set_button(color: Color) -> void:
-	var btn := get_node_or_null("Action") as TextureButton
-	var label := get_node_or_null("ActionLabel") as Label
+	var btn := get_node_or_null("Panel/Action") as TextureButton
+	var label := get_node_or_null("Panel/Action/ActionLabel") as Label
 	if btn == null or label == null:
 		return
 	btn.texture_hover = null

@@ -32,6 +32,8 @@ const TILES_PER_PAGE := 3
 ## Lưới ô: bản DỌC 2 cột (khe ngang 30 / khe dọc 24 — khớp `_make_grid`); bản NGANG nở tối đa 4 cột
 const GRID_COLUMNS := 2
 const GRID_COLUMNS_MAX := 4
+## Bề rộng TỐI THIỂU của 1 thẻ ô ở bản NGANG — cơ sở để chia số cột (thẻ tự nở đầy ô)
+const TILE_MIN_W := 130.0
 const GRID_H_SEP := 30.0
 const GRID_V_SEP := 24.0
 ## Khe dọc giữa các khối trong danh sách (khớp `List.theme_override_constants/separation`)
@@ -124,6 +126,10 @@ func _ready() -> void:
 	# Khung danh sách chỉ có kích thước THẬT sau frame đầu -> tính lại phân trang cho khớp
 	await get_tree().process_frame
 	await get_tree().process_frame
+	# Bố cục dùng CONTAINER (HBox/VBox): hàng tab chỉ biết bề rộng thật sau khi dàn xong frame đầu
+	# ⇒ dàn lại tab/thẻ ở đây, nếu không tab sẽ dựng với bề rộng 0 (vô hình).
+	_apply_tab_metrics()
+	_apply_card_metrics()
 	_refresh_pagination_if_needed()
 
 
@@ -202,10 +208,17 @@ func tile_design_size() -> Vector2:
 	return _tile_size
 
 
-## Cỡ THẺ Ô đang dùng: rộng = cỡ thiết kế · cao = thiết kế × `TILE_SCALE` × hệ số màn hình
+## Cỡ THẺ Ô đang dùng: cao = thiết kế × `TILE_SCALE` × hệ số màn hình.
+## Bản NGANG: rộng = bề rộng Ô LƯỚI (bố cục 2 cột) để lưới luôn vừa khung, không tràn cột.
 func tile_size() -> Vector2:
 	var design := tile_design_size()
-	return Vector2(design.x, design.y * TILE_SCALE * screen_scale())
+	var height := design.y * TILE_SCALE * screen_scale()
+	if not is_landscape:
+		return Vector2(design.x, height)
+	var width := layout.scroll.size.x if layout.scroll != null else design.x
+	var columns := grid_columns()
+	var cell := (width - GRID_H_SEP * float(columns - 1)) / float(columns)
+	return Vector2(maxf(cell, TILE_MIN_W), height)
 
 
 ## Chiều cao THẺ Ô đang dùng (dùng cho tính số hàng vừa khung)
@@ -213,15 +226,15 @@ func tile_height() -> float:
 	return tile_size().y
 
 
-## Số CỘT của lưới ô: bản DỌC = 2; bản NGANG nở theo bề rộng khung danh sách (tối đa 4)
+## Số CỘT của lưới ô: bản DỌC = 2; bản NGANG chia theo BỀ RỘNG khung danh sách với
+## bề rộng thẻ TỐI THIỂU (thẻ nở đầy ô) — bố cục ngang 2 cột nên khung hẹp hơn trước.
 func grid_columns() -> int:
 	if not is_landscape:
 		return GRID_COLUMNS
 	var width := layout.scroll.size.x if layout.scroll != null else 0.0
-	var tile_w := tile_size().x
-	if width <= 0.0 or tile_w <= 0.0:
+	if width <= 0.0:
 		return GRID_COLUMNS
-	var columns := int((width + GRID_H_SEP * 0.5) / (tile_w + GRID_H_SEP))
+	var columns := int((width + GRID_H_SEP * 0.5) / (TILE_MIN_W + GRID_H_SEP))
 	return clampi(columns, GRID_COLUMNS, GRID_COLUMNS_MAX)
 
 
@@ -230,10 +243,10 @@ func _grid_per_page() -> int:
 	var avail := layout.scroll.size.y if layout.scroll != null else 0.0
 	if avail <= 0.0:
 		return TILES_PER_PAGE
-	# Bàn nháp thử bút (tab BÚT & MỰC) luôn nằm TRÊN lưới -> trừ chỗ của nó
-	# (dùng cỡ THIẾT KẾ để kết quả ổn định cả khi pad chưa được dựng xong)
+	# Bàn nháp thử bút (tab BÚT & MỰC) nếu nằm TRONG danh sách thì chiếm mất một khoảng dọc
+	# (bố cục NGANG đặt bàn nháp sang cột trái ⇒ không trừ)
 	var extra := 0.0
-	if _category == "pen":
+	if _category == "pen" and layout.pad_slot == null:
 		extra = _doodle_pad_height() + LIST_SEP
 	var grid_avail := maxf(avail - extra, 0.0)
 	var columns := grid_columns()
@@ -469,6 +482,11 @@ func _rebuild() -> void:
 	for child in layout.list_box.get_children():
 		layout.list_box.remove_child(child)
 		child.queue_free()
+	# Khung bàn nháp (bố cục NGANG) cũng phải dọn để tab khác không còn bàn nháp
+	if layout.pad_slot != null:
+		for child in layout.pad_slot.get_children():
+			layout.pad_slot.remove_child(child)
+			child.queue_free()
 	_cards.clear()
 	_doodle_pad = null
 
@@ -538,7 +556,11 @@ func _build_doodle_pad() -> void:
 	if _preview_pen.is_empty() or not PenSkin.has_pen(_preview_pen):
 		_preview_pen = Shop.equipped_pen()
 	_doodle_pad = DOODLE_PAD_SCENE.instantiate()
-	layout.list_box.add_child(_doodle_pad)
+	# Bố cục NGANG có khung riêng ở cột trái (mockup shopping_landscape.svg); bản DỌC để trong danh sách
+	var host: Control = layout.pad_slot if layout.pad_slot != null else layout.list_box
+	if host == null:
+		host = layout.list_box
+	host.add_child(_doodle_pad)
 	_doodle_pad.call("setup", _preview_pen)
 	if _doodle_pad.has_signal("pen_changed"):
 		_doodle_pad.connect("pen_changed", _on_pad_pen_changed)

@@ -32,11 +32,14 @@ const SCREENS := {
 ## Node được phép THIẾU ở 1 hướng (bố cục ngang chưa dựng node đó) — khoá "<màn>|<hướng>"
 ## `hud_slot` của màn chơi: HUD bị THAY bằng code ngay khi vào màn (đổi theo chế độ chơi) nên
 ## node Information ban đầu bị free — binding cũ trỏ vào node đã free là chuyện bình thường.
+## `pad_slot` của shop: CHỈ bố cục NGANG có khung riêng cho Bàn nháp (cột trái như mockup);
+## bản DỌC vẫn để bàn nháp trong danh sách nên không khai node này.
 const OPTIONAL := {
 	"splash|landscape": ["fade_overlay"],
 	"title|landscape": ["touch_button", "fade_overlay"],
 	"game|portrait": ["hud_slot"],
 	"game|landscape": ["hud_slot"],
+	"shop|portrait": ["pad_slot"],
 }
 
 var _failed := 0

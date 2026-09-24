@@ -191,17 +191,25 @@ func play_celebration() -> void:
 
 
 ## Hoạt ảnh Rơi nhẹ từ trên xuống (Spawn Drop) khi bắt đầu ván mới tại ô S
-func play_spawn_drop(target_pos: Vector2) -> void:
+##
+## LƯU Ý: CHỈ thả ICON con rơi — KHÔNG tween `position` của node gốc. Lúc mới vào màn, bàn cờ
+## còn đang được gắn vào bố cục (khung giấy đổi vài frame) nên nếu tween vị trí gốc theo một
+## mốc tính sớm thì con trỏ bị kéo lệch/ra NGOÀI giấy. Node gốc luôn do Board đặt theo bố cục.
+func play_spawn_drop(_target_pos: Vector2) -> void:
 	if _idle_tween != null and _idle_tween.is_valid():
 		_idle_tween.kill()
 
-	position = target_pos - Vector2(0, 42.0)
+	var icon := get_node_or_null("Icon") as Control
+	if icon == null:
+		return
+
+	icon.position = Vector2(0.0, -42.0)
 	scale = Vector2(0.7, 1.35)
 	modulate.a = 0.0
 
 	var tw := create_tween().set_parallel(false)
 	var sub1 := tw.chain().set_parallel(true)
-	sub1.tween_property(self, "position", target_pos, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	sub1.tween_property(icon, "position", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	sub1.tween_property(self, "modulate:a", 1.0, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	sub1.tween_property(self, "scale", Vector2(1.3, 0.75), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
@@ -209,6 +217,7 @@ func play_spawn_drop(target_pos: Vector2) -> void:
 	sub2.tween_property(self, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 	tw.chain().tween_callback(func() -> void:
+		icon.position = Vector2.ZERO
 		scale = Vector2.ONE
 		rotation = 0.0
 		start_idle()
