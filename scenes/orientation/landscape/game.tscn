@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://byydf0aicvf48" path="res://assets/images-landscape/game/btn_header_help_pressed.svg" id="9_help_p"]
 [ext_resource type="Texture2D" uid="uid://b8qlxe2lu0c2u" path="res://assets/images-landscape/game/btn_header_restart_normal.svg" id="10_rest_n"]
 [ext_resource type="Texture2D" uid="uid://8fek80g30ew0" path="res://assets/images-landscape/game/btn_header_restart_pressed.svg" id="11_rest_p"]
-[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/landscape_hud.tscn" id="12_landhud"]
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="12_landhud"]
 
 [node name="Landscape" unique_id=949375316 instance=ExtResource("1_parent")]
 script = ExtResource("2_mqnje")

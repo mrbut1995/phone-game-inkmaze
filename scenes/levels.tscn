@@ -2,24 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_hcnff"]
 [ext_resource type="Script" uid="uid://byfef235y6820" path="res://scripts/scenes/levels.gd" id="2_5ekxl"]
-[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
-[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
-[ext_resource type="Texture2D" uid="uid://c21vwj05ijcrc" path="res://assets/images/level_selector/chapter_banner.svg" id="6_banner"]
-[ext_resource type="Texture2D" uid="uid://bciclj5c0layi" path="res://assets/images/level_selector/badge_stars_counter.svg" id="7_stars"]
-[ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="9_cont_n"]
-[ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="10_cont_p"]
-[ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cont_f"]
-[ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
+[ext_resource type="Script" uid="uid://bsvvrqxukl444" path="res://scripts/orientation/landscape/landscape.gd" id="6_byla0"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="14_theme_text"]
-
-[ext_resource type="PackedScene" path="res://scenes/orientation/portrait/levels.tscn" id="L_Portrait"]
-[ext_resource type="PackedScene" path="res://scenes/orientation/landscape/levels.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://hng3ln6muswr" path="res://scenes/orientation/landscape/levels.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://vs5xiygkv5e" path="res://scenes/orientation/portrait/levels.tscn" id="L_Portrait"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_hcnff")]
 theme = ExtResource("14_theme_text")
 script = ExtResource("2_5ekxl")
 
+[node name="Portrait" parent="." index="1" unique_id=948131174 instance=ExtResource("L_Portrait")]
+layout_mode = 1
 
-[node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
-
-[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]
+[node name="Landscape" parent="." index="2" unique_id=1096027511 instance=ExtResource("L_Landscape")]
+layout_mode = 1
+script = ExtResource("6_byla0")

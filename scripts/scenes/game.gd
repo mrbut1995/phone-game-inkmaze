@@ -41,32 +41,32 @@ var _mode_id := "level"
 @export var challenge_controller : ChallengeController = null
 
 ## HUD theo chế độ chơi — mỗi chế độ có 2 scene HUD: bản DỌC (nodes/hud/<mode>.tscn, kế thừa
-## portrait/portrait.tscn) và bản NGANG (nodes/hud/landscape/<mode>.tscn). Xem scripts/nodes/hud/base.gd
-const HUD_LEVEL := preload("res://nodes/hud/portrait/level_mode.tscn")
-const HUD_DUNGEON := preload("res://nodes/hud/portrait/dungeon_mode.tscn")
-const HUD_MINESWEEP := preload("res://nodes/hud/portrait/minesweep_hud.tscn")
-const HUD_SUM_PATH := preload("res://nodes/hud/portrait/sum_path_hud.tscn")
-const HUD_BLIND_MEMORY := preload("res://nodes/hud/portrait/blind_memory_hud.tscn")
-const HUD_COUNTDOWN := preload("res://nodes/hud/portrait/countdown_hud.tscn")
-const HUD_FADING_INK := preload("res://nodes/hud/portrait/fading_ink_hud.tscn")
+## portrait/portrait.tscn) và bản NGANG (nodes/hud/landscape/game/<mode>.tscn). Xem scripts/nodes/hud/base.gd
+const HUD_LEVEL := preload("res://nodes/hud/portrait/game/level_mode.tscn")
+const HUD_DUNGEON := preload("res://nodes/hud/portrait/game/dungeon_mode.tscn")
+const HUD_MINESWEEP := preload("res://nodes/hud/portrait/game/minesweep_hud.tscn")
+const HUD_SUM_PATH := preload("res://nodes/hud/portrait/game/sum_path_hud.tscn")
+const HUD_BLIND_MEMORY := preload("res://nodes/hud/portrait/game/blind_memory_hud.tscn")
+const HUD_COUNTDOWN := preload("res://nodes/hud/portrait/game/countdown_hud.tscn")
+const HUD_FADING_INK := preload("res://nodes/hud/portrait/game/fading_ink_hud.tscn")
 ## Fog of War: THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử lại · tầm nhìn · cảnh báo) — không có thẻ Thử thách
-const HUD_FOG_OF_WAR := preload("res://nodes/hud/portrait/fog_of_war_hud.tscn")
+const HUD_FOG_OF_WAR := preload("res://nodes/hud/portrait/game/fog_of_war_hud.tscn")
 ## One Stroke: THỜI GIAN + BẢNG TIẾN ĐỘ PHỦ KÍN (số ô đã đi · thanh tiến độ) — không có thẻ Thử thách
-const HUD_ONE_STROKE := preload("res://nodes/hud/portrait/one_stroke_hud.tscn")
+const HUD_ONE_STROKE := preload("res://nodes/hud/portrait/game/one_stroke_hud.tscn")
 ## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Thử thách
-const HUD_WALL_BUILDER := preload("res://nodes/hud/portrait/wall_builder_hud.tscn")
+const HUD_WALL_BUILDER := preload("res://nodes/hud/portrait/game/wall_builder_hud.tscn")
 
 ## Bản NGANG của từng chế độ (thẻ nằm trên · action bar 2 hàng nằm dưới, trong cùng HUD)
-const HUD_LAND_LEVEL := preload("res://nodes/hud/landscape/level_mode.tscn")
-const HUD_LAND_DUNGEON := preload("res://nodes/hud/landscape/dungeon_mode.tscn")
-const HUD_LAND_MINESWEEP := preload("res://nodes/hud/landscape/minesweep_hud.tscn")
-const HUD_LAND_SUM_PATH := preload("res://nodes/hud/landscape/sum_path_hud.tscn")
-const HUD_LAND_BLIND_MEMORY := preload("res://nodes/hud/landscape/blind_memory_hud.tscn")
-const HUD_LAND_COUNTDOWN := preload("res://nodes/hud/landscape/countdown_hud.tscn")
-const HUD_LAND_FADING_INK := preload("res://nodes/hud/landscape/fading_ink_hud.tscn")
-const HUD_LAND_FOG_OF_WAR := preload("res://nodes/hud/landscape/fog_of_war_hud.tscn")
-const HUD_LAND_ONE_STROKE := preload("res://nodes/hud/landscape/one_stroke_hud.tscn")
-const HUD_LAND_WALL_BUILDER := preload("res://nodes/hud/landscape/wall_builder_hud.tscn")
+const HUD_LAND_LEVEL := preload("res://nodes/hud/landscape/game/level_mode.tscn")
+const HUD_LAND_DUNGEON := preload("res://nodes/hud/landscape/game/dungeon_mode.tscn")
+const HUD_LAND_MINESWEEP := preload("res://nodes/hud/landscape/game/minesweep_hud.tscn")
+const HUD_LAND_SUM_PATH := preload("res://nodes/hud/landscape/game/sum_path_hud.tscn")
+const HUD_LAND_BLIND_MEMORY := preload("res://nodes/hud/landscape/game/blind_memory_hud.tscn")
+const HUD_LAND_COUNTDOWN := preload("res://nodes/hud/landscape/game/countdown_hud.tscn")
+const HUD_LAND_FADING_INK := preload("res://nodes/hud/landscape/game/fading_ink_hud.tscn")
+const HUD_LAND_FOG_OF_WAR := preload("res://nodes/hud/landscape/game/fog_of_war_hud.tscn")
+const HUD_LAND_ONE_STROKE := preload("res://nodes/hud/landscape/game/one_stroke_hud.tscn")
+const HUD_LAND_WALL_BUILDER := preload("res://nodes/hud/landscape/game/wall_builder_hud.tscn")
 #@export var game_mode : BaseGameMode
 ## HUD đang gắn thuộc bản NGANG hay bản DỌC (đổi hướng màn hình là phải đổi cả biến thể HUD)
 var _hud_variant_landscape := false
@@ -348,7 +348,7 @@ func _start_floor_for(mode_name: String) -> int:
 # HUD theo chế độ chơi
 # ---------------------------------------------------------------------------
 ## Scene HUD ứng với từng chế độ — biến thể (dọc/ngang) do BỐ CỤC quyết định qua `hud_variant()`
-## (xem nodes/hud/*.tscn + nodes/hud/landscape/*.tscn + scripts/orientation/*/game.gd)
+## (xem nodes/hud/*.tscn + nodes/hud/landscape/game/*.tscn + scripts/orientation/*/game.gd)
 func _hud_scene_for(mode_name: String) -> PackedScene:
 	match mode_name.to_lower():
 		"dungeon":

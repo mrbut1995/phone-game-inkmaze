@@ -1,4 +1,4 @@
-extends BaseLandscapeOrientation
+extends Control
 ## ============================================================================
 ## BỐ CỤC NGANG của MÀN CHƠI (root của `scenes/orientation/landscape/game.tscn`).
 ##

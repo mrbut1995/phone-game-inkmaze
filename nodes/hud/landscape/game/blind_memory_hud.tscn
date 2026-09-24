@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://chvknk1x1s2p"]
+
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://de5k2iuaudflb" path="res://scripts/nodes/hud/game/blind_memory_hud.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://deifmw0a2fh2o" path="res://assets/images-landscape/game/card_time.svg" id="3_time_bg"]
+[ext_resource type="Texture2D" uid="uid://ds40dufygrrya" path="res://assets/images-landscape/game/card_blind_memory.svg" id="4_note_bg"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="5_card_label"]
+[ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="6_time_value"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="7_note_title"]
+
+[node name="Hud" unique_id=878113461 instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+
+[node name="Time" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=470167089]
+custom_minimum_size = Vector2(135, 115)
+layout_mode = 2
+texture = ExtResource("3_time_bg")
+region_rect = Rect2(0, 0, 135, 115)
+patch_margin_left = 22
+patch_margin_top = 21
+patch_margin_right = 32
+patch_margin_bottom = 17
+
+[node name="Label" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=954222728]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 0
+offset_left = 18.0
+offset_top = 11.0
+offset_right = 120.0
+offset_bottom = 25.0
+text = "STR_HUD_TIME"
+label_settings = ExtResource("5_card_label")
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1818299325]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 0
+offset_left = 15.0
+offset_top = 35.0
+offset_right = 120.0
+offset_bottom = 75.0
+text = "00:00"
+label_settings = ExtResource("6_time_value")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=744473695]
+modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+layout_mode = 0
+offset_left = 18.0
+offset_top = 84.0
+offset_right = 117.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 6
+text = "⏸ ĐỒNG HỒ ĐỨNG YÊN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Note" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1506696406]
+custom_minimum_size = Vector2(260, 115)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_note_bg")
+patch_margin_left = 35
+patch_margin_top = 20
+patch_margin_right = 42
+patch_margin_bottom = 35
+
+[node name="Title" type="Label" parent="Content/ModeInformation/Note" index="0" unique_id=1043611871]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 0
+offset_left = 19.0
+offset_top = 9.0
+offset_right = 242.5
+offset_bottom = 27.0
+text = "STR_HUD_BLIND_TITLE"
+label_settings = ExtResource("7_note_title")
+vertical_alignment = 1
+
+[node name="Hint" type="Label" parent="Content/ModeInformation/Note" index="1" unique_id=1641798745]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 0
+offset_left = 19.0
+offset_top = 29.0
+offset_right = 242.5
+offset_bottom = 49.0
+text = "STR_HUD_BLIND_HINT"
+label_settings = ExtResource("5_card_label")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="PhaseBox" type="Panel" parent="Content/ModeInformation/Note" index="2" unique_id=2001530898]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 54.0
+offset_right = 242.5
+offset_bottom = 79.0
+
+[node name="Phase" type="Label" parent="Content/ModeInformation/Note" index="3" unique_id=94590019]
+modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+layout_mode = 0
+offset_left = 26.0
+offset_top = 57.0
+offset_right = 237.5
+offset_bottom = 76.0
+text = "CHẾ ĐỘ: NORMAL"
+label_settings = ExtResource("7_note_title")
+vertical_alignment = 1
+
+[node name="NoteLabel" type="Label" parent="Content/ModeInformation/Note" index="4" unique_id=490112737]
+modulate = Color(0.56078434, 0.627451, 0.6745098, 1)
+layout_mode = 0
+offset_left = 19.0
+offset_top = 88.0
+offset_right = 242.5
+offset_bottom = 103.0
+theme_override_font_sizes/font_size = 7
+text = "* Không có thẻ thử thách trong chế độ Blind Memory"
+vertical_alignment = 1

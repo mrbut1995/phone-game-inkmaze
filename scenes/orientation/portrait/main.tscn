@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="3_sugp2"]
 [ext_resource type="Texture2D" uid="uid://cgbp27e1ip682" path="res://assets/images/main/panel_genre_container.svg" id="5_0ld40"]
-[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/NinePatchButton.gd" id="5_p4rsb"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="5_p4rsb"]
 [ext_resource type="Texture2D" uid="uid://chgvp6vq7npl3" path="res://assets/images/main/card_mode_level_normal.svg" id="5_yevyv"]
 [ext_resource type="Texture2D" uid="uid://48yxwobs88y0" path="res://assets/images/main/card_mode_level_pressed.svg" id="6_vutaq"]
 [ext_resource type="Texture2D" uid="uid://ceqpyii58q5ue" path="res://assets/images/main/card_mode_dungeon_normal.svg" id="7_a2lrt"]
