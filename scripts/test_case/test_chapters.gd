@@ -270,12 +270,22 @@ func _section_5_card() -> void:
 	root.add_child(card)
 	await process_frame
 
-	for path in ["Bg", "Halo", "Doodle", "Lock", "Ribbon", "RibbonLabel", "Chip", "ChipLabel",
-			"Title", "Subtitle", "Bar", "Bar/Fill", "Stars", "StarsSub", "NeedChip", "NeedLabel",
-			"HaveChip", "HaveLabel", "Action", "Action/Btn", "Action/Title", "Action/Sub",
-			"Action/Icon", "Action/LockIcon"]:
+	# Mọi node (trừ Halo) nằm TRONG Panel (nền thẻ); khối doodle + chữ nằm trong Content/Display
+	for path in ["Halo", "Panel", "Panel/Content", "Panel/Content/Display",
+			"Panel/Content/Display/Doodle", "Panel/Content/Display/Doodle/Lock",
+			"Panel/Ribbon", "Panel/Ribbon/RibbonLabel",
+			"Panel/Content/Display/Info", "Panel/Content/Display/Info/Chip",
+			"Panel/Content/Display/Info/Chip/ChipLabel", "Panel/Content/Display/Info/Title",
+			"Panel/Content/Display/Info/Subtitle", "Panel/Content/Display/Info/Bar",
+			"Panel/Content/Display/Info/Bar/Fill", "Panel/Content/Display/Info/Stats",
+			"Panel/Content/Display/Info/Stats/Stars", "Panel/Content/Display/Info/Stats/StarsSub",
+			"Panel/Content/Display/Info/HaveChip", "Panel/Content/Display/Info/HaveChip/HaveLabel",
+			"Panel/Content/Action", "Panel/Content/Action/Btn", "Panel/Content/Action/Btn/Title",
+			"Panel/Content/Action/Btn/Sub", "Panel/Content/Action/Btn/Icon",
+			"Panel/Content/Action/Btn/LockIcon", "Panel/Content/Action/NeedChip",
+			"Panel/Content/Action/NeedChip/NeedLabel"]:
 		_entry(card.get_node_or_null(path) != null, "The co node '%s'" % path)
-	_entry((card.get_node("Action/Btn") as TextureButton).pressed.get_connections().size() >= 1,
+	_entry((card.get_node("Panel/Content/Action/Btn") as TextureButton).pressed.get_connections().size() >= 1,
 		"Nut hanh dong da noi tin hieu pressed trong .tscn")
 
 	var lm: Node = root.get_node_or_null("LevelManager")
@@ -288,52 +298,52 @@ func _section_5_card() -> void:
 	card.setup(chapter, info)
 	_entry(card.chapter_id == 2, "setup() luu chapter_id = 2")
 	_entry(card.state == ChapterCard.State.PLAYING, "Trang thai DANG CHOI")
-	_entry((card.get_node("Bg") as TextureRect).texture != null, "The dang choi co nen rieng")
+	_entry((card.get_node("Panel") as TextureRect).texture != null, "The dang choi co nen rieng")
 	_entry(not (card.get_node("Halo") as Control).visible, "Dang choi -> khong co hao quang")
-	_entry(not (card.get_node("Lock") as Control).visible, "Dang choi -> khong hien o khoa")
-	var title := card.get_node("Title") as Label
+	_entry(not (card.get_node("Panel/Content/Display/Doodle/Lock") as Control).visible, "Dang choi -> khong hien o khoa")
+	var title := card.get_node("Panel/Content/Display/Info/Title") as Label
 	_entry(title.text == TranslationServer.translate("STR_CHAPTER_TITLE_FORMAT").format(
 		[chapter.chapter_id, chapter.title]), "Tieu de theo dinh dang 'CHUONG n: Ten'")
-	_entry((card.get_node("Subtitle") as Label).text == chapter.subtitle, "Mo ta lay tu du lieu chuong")
-	_entry((card.get_node("RibbonLabel") as Label).text
+	_entry((card.get_node("Panel/Content/Display/Info/Subtitle") as Label).text == chapter.subtitle, "Mo ta lay tu du lieu chuong")
+	_entry((card.get_node("Panel/Ribbon/RibbonLabel") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_RIBBON_PLAYING"), "Ruy bang = DANG CHOI")
 	# Nút chương MỞ: chỗ trống bên trái nút được đặt ICON PLAY
-	var play_icon := card.get_node("Action/Icon") as TextureRect
+	var play_icon := card.get_node("Panel/Content/Action/Btn/Icon") as TextureRect
 	_entry(play_icon.visible, "Nut VÀO CHƠI co icon play (khong de trong)")
 	_entry(play_icon.texture == load("res://assets/images/level_selector/icon_play_triangle.svg"),
 		"Icon do dung la hinh tam giac play")
 	# Ổ khóa lớn phải canh giữa theo doodle (thân khóa nằm trong art 72x72 tai y 30..64)
-	var doodle := card.get_node("Doodle") as TextureRect
-	var lock := card.get_node("Lock") as TextureRect
-	_entry(absf(lock.position.x + lock.size.x * 0.5 - (doodle.position.x + doodle.size.x * 0.5)) <= 1.0,
+	var doodle := card.get_node("Panel/Content/Display/Doodle") as TextureRect
+	var lock := card.get_node("Panel/Content/Display/Doodle/Lock") as TextureRect
+	_entry(absf(lock.position.x + lock.size.x * 0.5 - doodle.size.x * 0.5) <= 1.0,
 		"O khoa canh giua theo chieu ngang")
-	_entry(absf(lock.position.y + 23.5 - (doodle.position.y + doodle.size.y * 0.5)) <= 6.0,
+	_entry(absf(lock.position.y + 23.5 - doodle.size.y * 0.5) <= 6.0,
 		"Than o khoa trung tam doodle (lech <= 6px)")
 	# Chữ to hơn cho dễ đọc
 	_entry(title.get_theme_font_size("font_size") >= 20,
 		"Tieu de chuong >= 20px (nhan %d)" % title.get_theme_font_size("font_size"))
-	_entry((card.get_node("Subtitle") as Label).get_theme_font_size("font_size") >= 11,
+	_entry((card.get_node("Panel/Content/Display/Info/Subtitle") as Label).get_theme_font_size("font_size") >= 11,
 		"Mo ta chuong >= 11px")
-	_entry((card.get_node("Stars") as Label).text
+	_entry((card.get_node("Panel/Content/Display/Info/Stats/Stars") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_STARS_FORMAT").format([7, 15]),
 		"Thanh sao hien 7 / 15")
-	var fill := card.get_node("Bar/Fill") as TextureRect
-	var bar := card.get_node("Bar") as Control
+	var fill := card.get_node("Panel/Content/Display/Info/Bar/Fill") as TextureRect
+	var bar := card.get_node("Panel/Content/Display/Info/Bar") as Control
 	_entry(is_equal_approx(fill.size.x, bar.size.x * 7.0 / 15.0),
 		"Thanh sao do dung ti le 7/15 (%.1f/%d)" % [fill.size.x, bar.size.x])
-	_entry((card.get_node("Action/Title") as Label).text
+	_entry((card.get_node("Panel/Content/Action/Btn/Title") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_PLAY"), "Nut = VAO CHOI")
-	_entry((card.get_node("Action/Sub") as Label).text
+	_entry((card.get_node("Panel/Content/Action/Btn/Sub") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_PLAY_SUB").format([12]),
 		"Nhan phu = 'Man 12 >'")
-	_entry(not (card.get_node("Action/Btn") as TextureButton).disabled, "Nut bam duoc")
-	_entry(not (card.get_node("HaveChip") as Control).visible, "Dang choi -> an chip 'da du'")
-	_entry(not (card.get_node("NeedChip") as Control).visible, "Dang choi -> an chip 'con thieu'")
+	_entry(not (card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled, "Nut bam duoc")
+	_entry(not (card.get_node("Panel/Content/Display/Info/HaveChip") as Control).visible, "Dang choi -> an chip 'da du'")
+	_entry(not (card.get_node("Panel/Content/Action/NeedChip") as Control).visible, "Dang choi -> an chip 'con thieu'")
 
 	# Bấm nút -> phát selected(chapter_id)
 	var picked: Array = []
 	card.selected.connect(func(id: int) -> void: picked.append(id))
-	(card.get_node("Action/Btn") as TextureButton).pressed.emit()
+	(card.get_node("Panel/Content/Action/Btn") as TextureButton).pressed.emit()
 	_entry(picked.size() == 1 and int(picked[0]) == 2, "Bam nut the DANG CHOI -> selected(2)")
 
 	# --- ĐỦ ĐIỀU KIỆN (chờ bấm mở khóa) ---
@@ -344,23 +354,23 @@ func _section_5_card() -> void:
 	card.setup(chapter, ready)
 	_entry(card.state == ChapterCard.State.READY, "Trang thai DU DIEU KIEN")
 	_entry((card.get_node("Halo") as Control).visible, "Du dieu kien -> hien hao quang net dut")
-	_entry((card.get_node("HaveChip") as Control).visible, "Du dieu kien -> hien chip 'DA DU: 30 / 25 SAO'")
-	_entry((card.get_node("HaveLabel") as Label).text
+	_entry((card.get_node("Panel/Content/Display/Info/HaveChip") as Control).visible, "Du dieu kien -> hien chip 'DA DU: 30 / 25 SAO'")
+	_entry((card.get_node("Panel/Content/Display/Info/HaveChip/HaveLabel") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_HAVE_FORMAT").format([30, 25]),
 		"Noi dung chip 'da du' dung dinh dang")
-	_entry((card.get_node("Action/Title") as Label).text
+	_entry((card.get_node("Panel/Content/Action/Btn/Title") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_UNLOCK"), "Nut = MO KHOA")
-	_entry((card.get_node("Action/Icon") as Control).visible, "Nut mo khoa co icon ngoi sao")
-	_entry((card.get_node("Action/Icon") as TextureRect).texture
+	_entry((card.get_node("Panel/Content/Action/Btn/Icon") as Control).visible, "Nut mo khoa co icon ngoi sao")
+	_entry((card.get_node("Panel/Content/Action/Btn/Icon") as TextureRect).texture
 		== load("res://assets/images/chapters/icon_star_white.svg"),
 		"Icon nut MO KHOA la ngoi sao TRANG (khong bi chim mau)")
-	_entry(not (card.get_node("Action/LockIcon") as Control).visible,
+	_entry(not (card.get_node("Panel/Content/Action/Btn/LockIcon") as Control).visible,
 		"The du dieu kien khong hien o khoa trong nut")
-	_entry(not (card.get_node("Bar") as Control).visible, "Du dieu kien -> an thanh tien do")
-	_entry(not (card.get_node("Action/Btn") as TextureButton).disabled, "Nut mo khoa bam duoc")
+	_entry(not (card.get_node("Panel/Content/Display/Info/Bar") as Control).visible, "Du dieu kien -> an thanh tien do")
+	_entry(not (card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled, "Nut mo khoa bam duoc")
 	var unlocks: Array = []
 	card.unlock_requested.connect(func(id: int) -> void: unlocks.append(id))
-	(card.get_node("Action/Btn") as TextureButton).pressed.emit()
+	(card.get_node("Panel/Content/Action/Btn") as TextureButton).pressed.emit()
 	_entry(unlocks.size() == 1 and int(unlocks[0]) == 2, "Bam nut the DU DIEU KIEN -> unlock_requested(2)")
 
 	# --- ĐANG KHÓA ---
@@ -369,27 +379,27 @@ func _section_5_card() -> void:
 	locked["total_stars"] = 12
 	card.setup(chapter, locked)
 	_entry(card.state == ChapterCard.State.LOCKED, "Trang thai DANG KHOA")
-	_entry((card.get_node("Lock") as Control).visible, "Dang khoa -> hien o khoa tren doodle")
-	_entry((card.get_node("Bg") as TextureRect).texture
+	_entry((card.get_node("Panel/Content/Display/Doodle/Lock") as Control).visible, "Dang khoa -> hien o khoa tren doodle")
+	_entry((card.get_node("Panel") as TextureRect).texture
 		== load("res://assets/images/chapters/card_locked.svg"), "Dang khoa -> nen giay xam")
-	_entry((card.get_node("Action/Btn") as TextureButton).disabled, "Nut bi khoa")
+	_entry((card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled, "Nut bi khoa")
 	# Ổ khóa trong nút KHÔNG được đè lên chữ (lỗi cũ: chữ bị cắt "CẦN 45")
-	var action_title := card.get_node("Action/Title") as Label
-	var action_icon := card.get_node("Action/LockIcon") as Control
+	var action_title := card.get_node("Panel/Content/Action/Btn/Title") as Label
+	var action_icon := card.get_node("Panel/Content/Action/Btn/LockIcon") as Control
 	_entry(action_icon.visible, "Nut bi khoa co icon o khoa ben trai")
 	_entry(action_icon.position.x + action_icon.size.x <= action_title.position.x,
 		"Icon o khoa khong de len chu nut (icon ket thuc %.0f <= chu bat dau %.0f)" % [
 			action_icon.position.x + action_icon.size.x, action_title.position.x])
-	_entry((card.get_node("Action/Title") as Label).get_theme_font_size("font_size") >= 12,
+	_entry((card.get_node("Panel/Content/Action/Btn/Title") as Label).get_theme_font_size("font_size") >= 12,
 		"Chu tren nut >= 12px")
-	_entry((card.get_node("NeedChip") as Control).visible, "Hien chip 'con thieu'")
-	_entry((card.get_node("NeedLabel") as Label).text
+	_entry((card.get_node("Panel/Content/Action/NeedChip") as Control).visible, "Hien chip 'con thieu'")
+	_entry((card.get_node("Panel/Content/Action/NeedChip/NeedLabel") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_NEED_FORMAT").format([13]),
 		"Chip bao con thieu 13 sao (25 - 12)")
-	_entry((card.get_node("Stars") as Label).text
+	_entry((card.get_node("Panel/Content/Display/Info/Stats/Stars") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_STARS_FORMAT").format([12, 25]),
 		"Thanh tien do mo khoa: 12 / 25 sao")
-	_entry((card.get_node("RibbonLabel") as Label).text
+	_entry((card.get_node("Panel/Ribbon/RibbonLabel") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_RIBBON_LOCKED"), "Ruy bang = DANG KHOA")
 
 	# --- SẮP RA MẮT ---
@@ -398,8 +408,8 @@ func _section_5_card() -> void:
 	coming["levels_total"] = 0
 	card.setup(chapter, coming)
 	_entry(card.state == ChapterCard.State.COMING, "Trang thai SAP RA MAT")
-	_entry((card.get_node("Action/Btn") as TextureButton).disabled, "Sap ra mat -> nut bi khoa")
-	_entry((card.get_node("Action/Title") as Label).text
+	_entry((card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled, "Sap ra mat -> nut bi khoa")
+	_entry((card.get_node("Panel/Content/Action/Btn/Title") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_RIBBON_COMING"), "Nut = SAP RA MAT")
 	card.queue_free()
 	await process_frame
@@ -434,13 +444,13 @@ func _section_6_scene(lm: Node) -> void:
 	var title := scene.ui_path("TopBar/Title") as Label
 	_entry(title != null and title.text == "STR_CHAPTER_SCREEN_TITLE",
 		"Tieu de man dung khoa dich STR_CHAPTER_SCREEN_TITLE")
-	_entry(scene.ui_path("Wallet") is TextureRect, "Co vi Sao goc phai")
-	_entry(scene.ui_path("Wallet/Star") is TextureRect, "Vi Sao co icon ngoi sao")
+	_entry(scene.layout.wallet_bar is TextureRect, "Co vi Sao goc phai")
+	_entry(scene.ui_child("Wallet", "Star") is TextureRect, "Vi Sao co icon ngoi sao")
 	_entry(scene.ui_path("Banner/Text") is Label, "Co bang huong dan Banner/Text")
 	_entry((scene.ui_path("Banner/Text") as Label).text == "STR_CHAPTER_BANNER",
 		"Bang huong dan dung khoa dich STR_CHAPTER_BANNER")
 	_entry(scene.ui_path("List/Cards") is VBoxContainer, "Co danh sach the List/Cards")
-	_entry(scene.ui_path("ContinueButton") is TextureButton, "Co nut CTA chan trang")
+	_entry(scene.layout.btn_continue is BaseButton, "Co nut CTA chan trang")
 	_entry((scene.ui_path("List/Cards") as Node).get_child_count()
 		== int(lm.call("chapter_count")),
 		"Danh sach co dung %d the chuong" % lm.call("chapter_count"))
@@ -456,32 +466,32 @@ func _section_6_scene(lm: Node) -> void:
 	var card := scene.card_for(playing)
 	_entry(card != null and card.state == ChapterCard.State.PLAYING,
 		"The cua chuong dang choi o trang thai DANG CHOI")
-	_entry(card != null and (card.get_node("RibbonLabel") as Label).text
+	_entry(card != null and (card.get_node("Panel/Ribbon/RibbonLabel") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_RIBBON_PLAYING"),
 		"Ruy bang chuong dang choi = DANG CHOI")
 	var opened := scene.card_for(2)
 	_entry(opened != null and opened.state == ChapterCard.State.PLAYING,
 		"Chuong 2 da mo -> the van bam duoc")
 	# Mỗi chương 1 ICON khác nhau (dễ nhận biết)
-	var icon_1 := (scene.card_for(1).get_node("Doodle") as TextureRect).texture
-	var icon_2 := (opened.get_node("Doodle") as TextureRect).texture
-	var icon_3 := (scene.card_for(3).get_node("Doodle") as TextureRect).texture
+	var icon_1 := (scene.card_for(1).get_node("Panel/Content/Display/Doodle") as TextureRect).texture
+	var icon_2 := (opened.get_node("Panel/Content/Display/Doodle") as TextureRect).texture
+	var icon_3 := (scene.card_for(3).get_node("Panel/Content/Display/Doodle") as TextureRect).texture
 	_entry(icon_1 != icon_2 and icon_2 != icon_3 and icon_1 != icon_3,
 		"Icon 3 chuong khac nhau")
 	_entry(icon_1 == load("res://assets/images/chapters/icon_intro.svg"),
 		"Chuong 1 dung icon 'intro'")
 	_entry(icon_2 == load("res://assets/images/chapters/icon_logic.svg"),
 		"Chuong 2 dung icon 'logic'")
-	_entry(opened != null and (opened.get_node("RibbonLabel") as Label).text
+	_entry(opened != null and (opened.get_node("Panel/Ribbon/RibbonLabel") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_RIBBON_OPEN"),
 		"Ruy bang chuong 2 (da mo, khong phai dang choi) = DA MO")
-	_entry(opened != null and (opened.get_node("Action/Title") as Label).text
+	_entry(opened != null and (opened.get_node("Panel/Content/Action/Btn/Title") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_PLAY"), "Chuong 2 co nut VAO CHOI")
 	for locked_id in [3, 4]:
 		var locked_card := scene.card_for(locked_id)
 		_entry(locked_card != null and locked_card.state == ChapterCard.State.LOCKED,
 			"Chuong %d thieu sao -> the DANG KHOA" % locked_id)
-		_entry(locked_card != null and (locked_card.get_node("Action/Btn") as TextureButton).disabled,
+		_entry(locked_card != null and (locked_card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled,
 			"Chuong %d: nut bi khoa, khong bam duoc" % locked_id)
 	var playable := 0
 	for index in scene.card_count():
@@ -490,13 +500,14 @@ func _section_6_scene(lm: Node) -> void:
 			playable += 1
 	_entry(playable == 2, "Dung 2 the bam duoc (chuong 1 dang choi + chuong 2 da mo) — nhan %d" % playable)
 
-	var wallet_count := scene.ui_path("Wallet/Count") as Label
-	_entry(wallet_count.text == str(int(gm.call("total_stars"))),
-		"Vi Sao hien tong sao hien co (%s)" % wallet_count.text)
-	var cta := scene.ui_path("ContinueButton/Label") as Label
-	_entry(cta.text.contains(str(playing)), "Nhan CTA nhac toi chuong dang choi (%s)" % cta.text)
-	_entry((scene.ui_path("ContinueButton/Icon") as TextureRect).texture != null,
-		"CTA co icon tam giac")
+	var wallet_count := scene.ui_child("Wallet", "Count") as Label
+	_entry(wallet_count != null and wallet_count.text == str(int(gm.call("total_stars"))),
+		"Vi Sao hien tong sao hien co (%s)" % (wallet_count.text if wallet_count != null else "<null>"))
+	var cta := scene.ui_child("ContinueButton", "Label") as Label
+	_entry(cta != null and cta.text.contains(str(playing)),
+		"Nhan CTA nhac toi chuong dang choi (%s)" % (cta.text if cta != null else "<null>"))
+	var cta_icon := scene.ui_child("ContinueButton", "Icon") as TextureRect
+	_entry(cta_icon != null and cta_icon.texture != null, "CTA co icon tam giac")
 	_entry((scene.ui_path("List/Cards") as VBoxContainer).get_theme_constant("separation") == 15,
 		"Khoang cach giua cac the = 15px")
 	# Mọi thẻ đều nối tín hiệu tới màn
@@ -589,8 +600,8 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 	_entry(scene3.chapter_cleared(), "Chuong 1 da hoan thanh het man")
 	_entry((scene3.ui("Count") as Label).text == "27/27",
 		"Chuong 1 xong: 27/27 Sao")
-	_entry((scene3.ui_path("ContinueButton/Label") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE"),
+	var cta3 := scene3.ui_child("ContinueButton", "Label") as Label
+	_entry(cta3 != null and cta3.text == TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE"),
 		"Nut chan trang doi thanh CHON CHUONG khi xong het chuong")
 	scene3.queue_free()
 	await process_frame

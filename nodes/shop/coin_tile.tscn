@@ -11,9 +11,9 @@
 [node name="CoinTile" type="Control" unique_id=1313759138]
 custom_minimum_size = Vector2(237.5, 120)
 layout_mode = 3
-anchor_right = 0.25800002
+anchor_right = 0.44000003
 anchor_bottom = 0.22200002
-offset_right = 0.13999939
+offset_right = -98.140015
 offset_bottom = 0.11997986
 theme = ExtResource("2_theme")
 script = ExtResource("1_coin")

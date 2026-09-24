@@ -62,6 +62,7 @@ const CHIP_BG_LOCKED := Color(0.8862745, 0.8666667, 0.8352941)
 
 var chapter_id: int = 1
 var state: State = State.PLAYING
+var _ratio := 0.0
 
 
 ## info: { state, stars_own, stars_total, levels_cleared, levels_total,
@@ -76,18 +77,33 @@ func setup(chapter: ChapterData, info: Dictionary) -> void:
 	_apply_action(chapter, info)
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED:
+		_apply_bar_fill()
+
+
+## Thanh Sao: đo lại mỗi khi thẻ đổi cỡ — thẻ nằm trong CONTAINER nên lúc `setup()`
+## bề rộng thanh có thể còn 0 (bố cục chưa dàn xong).
+func _apply_bar_fill() -> void:
+	var bar := get_node_or_null("Panel/Content/Display/Info/Bar") as Control
+	var fill := get_node_or_null("Panel/Content/Display/Info/Bar/Fill") as Control
+	if bar == null or fill == null:
+		return
+	fill.size = Vector2(bar.size.x * _ratio, bar.size.y)
+
+
 # ---------------------------------------------------------------------------
 # Hình thức theo trạng thái
 # ---------------------------------------------------------------------------
 func _apply_state_art(info: Dictionary) -> void:
-	var bg := get_node_or_null("Bg") as TextureRect
+	var bg := get_node_or_null("Panel") as TextureRect
 	var halo := get_node_or_null("Halo") as Control
-	var ribbon := get_node_or_null("Ribbon") as TextureRect
-	var ribbon_label := get_node_or_null("RibbonLabel") as Label
-	var chip := get_node_or_null("Chip") as TextureRect
-	var chip_label := get_node_or_null("ChipLabel") as Label
-	var doodle := get_node_or_null("Doodle") as TextureRect
-	var lock := get_node_or_null("Lock") as Control
+	var ribbon := get_node_or_null("Panel/Ribbon") as TextureRect
+	var ribbon_label := get_node_or_null("Panel/Ribbon/RibbonLabel") as Label
+	var chip := get_node_or_null("Panel/Content/Display/Info/Chip") as TextureRect
+	var chip_label := get_node_or_null("Panel/Content/Display/Info/Chip/ChipLabel") as Label
+	var doodle := get_node_or_null("Panel/Content/Display/Doodle") as TextureRect
+	var lock := get_node_or_null("Panel/Content/Display/Doodle/Lock") as Control
 
 	var color := COLOR_PLAYING
 	var ribbon_key := "STR_CHAPTER_RIBBON_PLAYING"
@@ -117,15 +133,15 @@ func _apply_state_art(info: Dictionary) -> void:
 	if halo != null:
 		halo.visible = state == State.READY
 	if doodle != null:
-		doodle.modulate = color
+		doodle.self_modulate = color
 	if lock != null:
 		lock.visible = state == State.LOCKED
 	if ribbon != null:
-		ribbon.modulate = color
+		ribbon.self_modulate = color
 	if ribbon_label != null:
 		ribbon_label.text = TranslationServer.translate(ribbon_key)
 	if chip != null:
-		chip.modulate = chip_color
+		chip.self_modulate = chip_color
 	if chip_label != null:
 		chip_label.theme_type_variation = _chip_variation()
 
@@ -141,23 +157,23 @@ func _chip_variation() -> StringName:
 
 
 func _apply_texts(chapter: ChapterData, info: Dictionary) -> void:
-	_set_label("Title", TranslationServer.translate("STR_CHAPTER_TITLE_FORMAT").format([
+	_set_label("Panel/Content/Display/Info/Title", TranslationServer.translate("STR_CHAPTER_TITLE_FORMAT").format([
 		chapter.chapter_id, chapter.title]))
-	_set_label("Subtitle", chapter.subtitle)
-	var chip := get_node_or_null("Chip") as Control
+	_set_label("Panel/Content/Display/Info/Subtitle", chapter.subtitle)
+	var chip := get_node_or_null("Panel/Content/Display/Info/Chip") as Control
 	if chip != null:
 		var size_text := chapter.display_size()
 		chip.visible = not size_text.is_empty()
-		_set_label("ChipLabel", TranslationServer.translate("STR_CHAPTER_SIZE_FORMAT").format([size_text]))
+		_set_label("Panel/Content/Display/Info/Chip/ChipLabel", TranslationServer.translate("STR_CHAPTER_SIZE_FORMAT").format([size_text]))
 	# Doodle theo chương (icon riêng) — suy từ dữ liệu chương / cỡ bàn lớn nhất
-	var doodle := get_node_or_null("Doodle") as TextureRect
+	var doodle := get_node_or_null("Panel/Content/Display/Doodle") as TextureRect
 	if doodle != null:
 		doodle.texture = _icon_for(chapter, info)
 	var locked_title := state == State.LOCKED
-	var title := get_node_or_null("Title") as Label
+	var title := get_node_or_null("Panel/Content/Display/Info/Title") as Label
 	if title != null:
 		title.theme_type_variation = &"ChapterCardTitleLocked" if locked_title else &"ChapterCardTitle"
-	var subtitle := get_node_or_null("Subtitle") as Label
+	var subtitle := get_node_or_null("Panel/Content/Display/Info/Subtitle") as Label
 	if subtitle != null:
 		subtitle.theme_type_variation = &"ChapterCardSubtitleLocked" if locked_title else &"ChapterCardSubtitle"
 
@@ -177,14 +193,14 @@ func _icon_for(chapter: ChapterData, info: Dictionary) -> Texture2D:
 # Số liệu: thanh Sao / chip trạng thái
 # ---------------------------------------------------------------------------
 func _apply_stats(_chapter: ChapterData, info: Dictionary) -> void:
-	var bar := get_node_or_null("Bar") as Control
-	var fill := get_node_or_null("Bar/Fill") as Control
-	var stars := get_node_or_null("Stars") as Label
-	var stars_sub := get_node_or_null("StarsSub") as Label
-	var need := get_node_or_null("NeedChip") as Control
-	var have := get_node_or_null("HaveChip") as Control
-	var need_label := get_node_or_null("NeedLabel") as Label
-	var have_label := get_node_or_null("HaveLabel") as Label
+	var bar := get_node_or_null("Panel/Content/Display/Info/Bar") as Control
+	var fill := get_node_or_null("Panel/Content/Display/Info/Bar/Fill") as Control
+	var stars := get_node_or_null("Panel/Content/Display/Info/Stats/Stars") as Label
+	var stars_sub := get_node_or_null("Panel/Content/Display/Info/Stats/StarsSub") as Label
+	var need := get_node_or_null("Panel/Content/Action/NeedChip") as Control
+	var have := get_node_or_null("Panel/Content/Display/Info/HaveChip") as Control
+	var need_label := get_node_or_null("Panel/Content/Action/NeedChip/NeedLabel") as Label
+	var have_label := get_node_or_null("Panel/Content/Display/Info/HaveChip/HaveLabel") as Label
 
 	var stars_total: int = maxi(int(info.get("stars_total", 0)), 0)
 	var stars_own: int = int(info.get("stars_own", 0))
@@ -200,9 +216,10 @@ func _apply_stats(_chapter: ChapterData, info: Dictionary) -> void:
 
 	if bar != null:
 		bar.visible = not state == State.READY
+	_ratio = ratio
+	_apply_bar_fill()
 	if fill != null:
-		fill.size = Vector2(bar.size.x * ratio, bar.size.y) if bar != null else Vector2.ZERO
-		fill.modulate = COLOR_LOCKED if locked else (COLOR_READY if shown < target else COLOR_PLAYING)
+		fill.self_modulate = COLOR_LOCKED if locked else (COLOR_READY if shown < target else COLOR_PLAYING)
 	if stars != null:
 		stars.visible = not state == State.READY
 		stars.text = TranslationServer.translate("STR_CHAPTER_STARS_FORMAT").format([shown, target])
@@ -213,12 +230,12 @@ func _apply_stats(_chapter: ChapterData, info: Dictionary) -> void:
 			int(info.get("levels_cleared", 0)), int(info.get("levels_total", 0))])
 	if have != null:
 		have.visible = state == State.READY
-		_set_label("HaveLabel", TranslationServer.translate("STR_CHAPTER_HAVE_FORMAT").format([total_stars, cost]))
+		_set_label("Panel/Content/Display/Info/HaveChip/HaveLabel", TranslationServer.translate("STR_CHAPTER_HAVE_FORMAT").format([total_stars, cost]))
 	if have_label != null:
 		have_label.visible = state == State.READY
 	if need != null:
 		need.visible = locked and cost > total_stars
-		_set_label("NeedLabel", TranslationServer.translate("STR_CHAPTER_NEED_FORMAT").format([
+		_set_label("Panel/Content/Action/NeedChip/NeedLabel", TranslationServer.translate("STR_CHAPTER_NEED_FORMAT").format([
 			maxi(cost - total_stars, 0)]))
 	if need_label != null:
 		need_label.visible = locked and cost > total_stars
@@ -228,11 +245,11 @@ func _apply_stats(_chapter: ChapterData, info: Dictionary) -> void:
 # Nút hành động
 # ---------------------------------------------------------------------------
 func _apply_action(_chapter: ChapterData, info: Dictionary) -> void:
-	var btn := get_node_or_null("Action/Btn") as TextureButton
-	var title := get_node_or_null("Action/Title") as Label
-	var sub := get_node_or_null("Action/Sub") as Label
-	var star := get_node_or_null("Action/Icon") as Control
-	var lock := get_node_or_null("Action/LockIcon") as Control
+	var btn := get_node_or_null("Panel/Content/Action/Btn") as TextureButton
+	var title := get_node_or_null("Panel/Content/Action/Btn/Title") as Label
+	var sub := get_node_or_null("Panel/Content/Action/Btn/Sub") as Label
+	var star := get_node_or_null("Panel/Content/Action/Btn/Icon") as Control
+	var lock := get_node_or_null("Panel/Content/Action/Btn/LockIcon") as Control
 	if btn == null:
 		return
 	if star != null:
@@ -244,8 +261,8 @@ func _apply_action(_chapter: ChapterData, info: Dictionary) -> void:
 			btn.texture_normal = BTN_UNLOCK_NORMAL
 			btn.texture_pressed = BTN_UNLOCK_PRESSED
 			btn.disabled = false
-			_set_label("Action/Title", TranslationServer.translate("STR_CHAPTER_UNLOCK"))
-			_set_label("Action/Sub", TranslationServer.translate("STR_CHAPTER_REQUIRE_FORMAT").format([
+			_set_label("Panel/Content/Action/Btn/Title", TranslationServer.translate("STR_CHAPTER_UNLOCK"))
+			_set_label("Panel/Content/Action/Btn/Sub", TranslationServer.translate("STR_CHAPTER_REQUIRE_FORMAT").format([
 				maxi(int(info.get("star_cost", 0)), 0)]))
 			title.theme_type_variation = &"ChapterAction"
 			sub.theme_type_variation = &"ChapterActionSubAmber"
@@ -256,9 +273,9 @@ func _apply_action(_chapter: ChapterData, info: Dictionary) -> void:
 			btn.texture_normal = BTN_LOCKED_ART
 			btn.texture_pressed = BTN_LOCKED_ART
 			btn.disabled = true
-			_set_label("Action/Title", TranslationServer.translate("STR_CHAPTER_REQUIRE_FORMAT").format([
+			_set_label("Panel/Content/Action/Btn/Title", TranslationServer.translate("STR_CHAPTER_REQUIRE_FORMAT").format([
 				maxi(int(info.get("star_cost", 0)), 0)]))
-			_set_label("Action/Sub", TranslationServer.translate("STR_CHAPTER_NOT_ENOUGH"))
+			_set_label("Panel/Content/Action/Btn/Sub", TranslationServer.translate("STR_CHAPTER_NOT_ENOUGH"))
 			title.theme_type_variation = &"ChapterActionLocked"
 			sub.theme_type_variation = &"ChapterActionLockedSub"
 			if lock != null:
@@ -267,15 +284,15 @@ func _apply_action(_chapter: ChapterData, info: Dictionary) -> void:
 			btn.texture_normal = BTN_LOCKED_ART
 			btn.texture_pressed = BTN_LOCKED_ART
 			btn.disabled = true
-			_set_label("Action/Title", TranslationServer.translate("STR_CHAPTER_RIBBON_COMING"))
-			_set_label("Action/Sub", "")
+			_set_label("Panel/Content/Action/Btn/Title", TranslationServer.translate("STR_CHAPTER_RIBBON_COMING"))
+			_set_label("Panel/Content/Action/Btn/Sub", "")
 			title.theme_type_variation = &"ChapterActionLocked"
 		_:
 			btn.texture_normal = BTN_PLAY_NORMAL
 			btn.texture_pressed = BTN_PLAY_PRESSED
 			btn.disabled = false
-			_set_label("Action/Title", TranslationServer.translate("STR_CHAPTER_PLAY"))
-			_set_label("Action/Sub", TranslationServer.translate("STR_CHAPTER_PLAY_SUB").format([
+			_set_label("Panel/Content/Action/Btn/Title", TranslationServer.translate("STR_CHAPTER_PLAY"))
+			_set_label("Panel/Content/Action/Btn/Sub", TranslationServer.translate("STR_CHAPTER_PLAY_SUB").format([
 				int(info.get("next_level", 1))]))
 			title.theme_type_variation = &"ChapterAction"
 			sub.theme_type_variation = &"ChapterActionSub"
@@ -286,6 +303,7 @@ func _apply_action(_chapter: ChapterData, info: Dictionary) -> void:
 
 
 func _set_label(path: String, text: String) -> void:
+	# Đường dẫn ghi đủ `Panel/...`: mọi UI của thẻ (trừ `Halo`) nằm trong `Panel` = nền thẻ
 	var label := get_node_or_null(path) as Label
 	if label != null and label.text != text:
 		label.text = text

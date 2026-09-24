@@ -1,7 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dv3lpdjsiq6e0"]
 
-[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://dbbunsu78eokx" path="res://scripts/scenes/chapters.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" uid="uid://v1gveqcmtee6" path="res://scripts/scenes/layout/chapters_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
 [ext_resource type="Texture2D" uid="uid://dwt0twcawg3ti" path="res://assets/images/chapters/wallet_chip.svg" id="5_wallet"]
@@ -11,34 +11,87 @@
 [ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="9_cta_n"]
 [ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="10_cta_p"]
 [ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cta_f"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="11_xj2ga"]
 [ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
-[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" path="res://scripts/scenes/layout/chapters_layout.gd" id="2_layout"]
 
-[node name="Portrait" node_paths=PackedStringArray("btn_back", "cards_box", "lbl_wallet", "btn_continue", "lbl_continue", "list", "top_bar", "wallet_bar", "banner") instance=ExtResource("1_parent")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bf55c"]
+content_margin_left = 41.0
+content_margin_top = 12.0
+content_margin_right = 37.0
+content_margin_bottom = 13.0
+texture = ExtResource("9_cta_n")
+texture_margin_left = 41.0
+texture_margin_top = 12.0
+texture_margin_right = 37.0
+texture_margin_bottom = 13.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fugg5"]
+content_margin_left = 41.0
+content_margin_top = 12.0
+content_margin_right = 37.0
+content_margin_bottom = 13.0
+texture = ExtResource("10_cta_p")
+texture_margin_left = 41.0
+texture_margin_top = 12.0
+texture_margin_right = 37.0
+texture_margin_bottom = 13.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d86vn"]
+content_margin_left = 41.0
+content_margin_top = 12.0
+content_margin_right = 37.0
+content_margin_bottom = 13.0
+texture = ExtResource("9_cta_n")
+texture_margin_left = 41.0
+texture_margin_top = 12.0
+texture_margin_right = 37.0
+texture_margin_bottom = 13.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ll08a"]
+content_margin_left = 41.0
+content_margin_top = 12.0
+content_margin_right = 37.0
+content_margin_bottom = 13.0
+texture = ExtResource("9_cta_n")
+texture_margin_left = 41.0
+texture_margin_top = 12.0
+texture_margin_right = 37.0
+texture_margin_bottom = 13.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gocok"]
+content_margin_left = 41.0
+content_margin_top = 12.0
+content_margin_right = 37.0
+content_margin_bottom = 13.0
+texture = ExtResource("11_cta_f")
+texture_margin_left = 41.0
+texture_margin_top = 12.0
+texture_margin_right = 37.0
+texture_margin_bottom = 13.0
+
+[node name="Portrait" unique_id=653927328 node_paths=PackedStringArray("btn_back", "cards_box", "lbl_wallet", "btn_continue", "lbl_continue", "list", "top_bar", "wallet_bar", "banner") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/Back")
 cards_box = NodePath("List/Cards")
-lbl_wallet = NodePath("Wallet/Count")
+lbl_wallet = NodePath("TopBar/Wallet/Count")
 btn_continue = NodePath("ContinueButton")
 lbl_continue = NodePath("ContinueButton/Label")
 list = NodePath("List")
 top_bar = NodePath("TopBar")
-wallet_bar = NodePath("Wallet")
+wallet_bar = NodePath("TopBar/Wallet")
 banner = NodePath("Banner")
 
-[node name="TopBar" type="HBoxContainer" parent="." index="1" unique_id=510724449]
+[node name="TopBar" type="HBoxContainer" parent="." index="0" unique_id=510724449]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.034
 anchor_top = 0.033770833
-anchor_right = 0.961
-anchor_bottom = 0.07877084
-offset_left =  0.139999
-offset_top =  -0.42
-offset_right =  0.0599976
-offset_bottom =  -0.120003
+anchor_right = 0.9758148
+anchor_bottom = 0.080183886
+offset_left = 0.139999
+offset_top = -0.42
+offset_right = 0.0599976
+offset_bottom = -0.120003
 metadata/_edit_use_anchors_ = true
 
 [node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=1652974881]
@@ -56,104 +109,132 @@ theme_type_variation = &"LevelsTitle"
 text = "STR_CHAPTER_SCREEN_TITLE"
 horizontal_alignment = 1
 
-[node name="Wallet" type="TextureRect" parent="." index="2" unique_id=1740014496]
-layout_mode = 0
-offset_left =  387.5
-offset_top =  45
-offset_right =  512.5
-offset_bottom =  80
+[node name="Wallet" type="TextureRect" parent="TopBar" index="2" unique_id=1740014496]
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("5_wallet")
 
-[node name="Star" type="TextureRect" parent="Wallet" index="0" unique_id=734155314]
+[node name="Star" type="TextureRect" parent="TopBar/Wallet" index="0" unique_id=734155314]
 layout_mode = 0
-offset_left =  13
-offset_top =  5.5
-offset_right =  37
-offset_bottom =  29.5
+offset_left = 13.0
+offset_top = 5.5
+offset_right = 37.0
+offset_bottom = 29.5
 mouse_filter = 2
 texture = ExtResource("6_star")
 
-[node name="Count" type="Label" parent="Wallet" index="1" unique_id=1826229850]
+[node name="Count" type="Label" parent="TopBar/Wallet" index="1" unique_id=1826229850]
 layout_mode = 0
-offset_left =  36
-offset_right =  70
-offset_bottom =  35
+offset_left = 36.0
+offset_right = 70.0
+offset_bottom = 35.0
 theme_type_variation = &"ChapterWalletCount"
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="Wallet" index="2" unique_id=320823089]
+[node name="Label" type="Label" parent="TopBar/Wallet" index="2" unique_id=320823089]
 layout_mode = 0
-offset_left =  70
-offset_right =  122
-offset_bottom =  35
+offset_left = 70.0
+offset_right = 122.0
+offset_bottom = 35.0
 theme_type_variation = &"ChapterWalletLabel"
 text = "STR_CHAPTER_STARS_HELD"
 vertical_alignment = 1
 
-[node name="Banner" type="TextureRect" parent="." index="3" unique_id=1654390418]
-layout_mode = 0
-offset_left =  27.5
-offset_top =  92.5
-offset_right =  512.5
-offset_bottom =  128.5
+[node name="Banner" type="TextureRect" parent="." index="1" unique_id=1654390418]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.051000003
+anchor_top = 0.101
+anchor_right = 0.94900006
+anchor_bottom = 0.14
+offset_left = -0.040000916
+offset_top = -0.4200058
+offset_right = 0.039978027
+offset_bottom = -0.30000305
 mouse_filter = 2
 texture = ExtResource("7_banner")
 
 [node name="Icon" type="TextureRect" parent="Banner" index="0" unique_id=796916675]
 layout_mode = 0
-offset_left =  22.5
-offset_top =  9
-offset_right =  40.5
-offset_bottom =  27
+offset_left = 22.5
+offset_top = 9.0
+offset_right = 40.5
+offset_bottom = 27.0
 mouse_filter = 2
 texture = ExtResource("8_bulb")
 
 [node name="Text" type="Label" parent="Banner" index="1" unique_id=1271196744]
-layout_mode = 0
-offset_left =  49
-offset_right =  475
-offset_bottom =  36
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.101
+anchor_right = 0.97900003
+anchor_bottom = 1.0
+offset_left = 0.01499939
+offset_right = 0.18499756
 theme_type_variation = &"ChapterBannerText"
 text = "STR_CHAPTER_BANNER"
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="List" type="ScrollContainer" parent="." index="4" unique_id=1994307684]
-layout_mode = 0
-offset_left =  27.5
-offset_top =  140
-offset_right =  512.5
-offset_bottom =  795
+[node name="List" type="ScrollContainer" parent="." index="2" unique_id=1994307684]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.051000003
+anchor_top = 0.15200001
+anchor_right = 0.94900006
+anchor_bottom = 0.864
+offset_left = -0.040000916
+offset_top = 0.1599884
+offset_right = 0.039978027
+offset_bottom = 0.11999512
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 scroll_deadzone = 12
+metadata/_edit_use_anchors_ = true
 
 [node name="Cards" type="VBoxContainer" parent="List" index="0" unique_id=1423121987]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation =  15
+theme_override_constants/separation = 15
 
-[node name="ContinueButton" type="TextureButton" parent="." index="5" unique_id=765631908]
-layout_mode = 0
-offset_left =  70
-offset_top =  805
-offset_right =  470
-offset_bottom =  865
+[node name="ContinueButton" type="Button" parent="." index="3" unique_id=884745100]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.13000001
+anchor_top = 0.87500006
+anchor_right = 0.87000006
+anchor_bottom = 0.94000006
+offset_left = -0.20000458
+offset_top = -6.1035156e-05
+offset_right = 0.19995117
+offset_bottom = 0.19995117
 focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_bf55c")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_fugg5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_d86vn")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_ll08a")
+theme_override_styles/focus = SubResource("StyleBoxTexture_gocok")
+script = ExtResource("11_xj2ga")
 texture_normal = ExtResource("9_cta_n")
-texture_pressed = ExtResource("10_cta_p")
 texture_hover = ExtResource("9_cta_n")
+texture_pressed = ExtResource("10_cta_p")
 texture_disabled = ExtResource("9_cta_n")
-texture_focused = ExtResource("11_cta_f")
+texture_focus = ExtResource("11_cta_f")
+patch_margin_left = 41.0
+patch_margin_top = 12.0
+patch_margin_right = 37.0
+patch_margin_bottom = 13.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Label" type="Label" parent="ContinueButton" index="0" unique_id=42182018]
-layout_mode = 0
-offset_left =  30
-offset_right =  390
-offset_bottom =  60
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.075
+anchor_right = 0.975
+anchor_bottom = 1.1830001
+offset_bottom = -10.980003
 theme_type_variation = &"LevelsContinue"
 text = "STR_CHAPTER_CONTINUE_FORMAT"
 horizontal_alignment = 1
@@ -161,9 +242,9 @@ vertical_alignment = 1
 
 [node name="Icon" type="TextureRect" parent="ContinueButton" index="1" unique_id=629946451]
 layout_mode = 0
-offset_left =  52.5
-offset_top =  21
-offset_right =  67.5
-offset_bottom =  39
+offset_left = 52.5
+offset_top = 21.0
+offset_right = 67.5
+offset_bottom = 39.0
 mouse_filter = 2
 texture = ExtResource("12_play_icon")

@@ -22,28 +22,25 @@ func setup(data: Dictionary) -> void:
 
 
 func _refresh() -> void:
-	_set_label("Title", TranslationServer.translate(str(item_data.get("name_key", ""))))
-	_set_label("Desc", TranslationServer.translate(str(item_data.get("desc_key", ""))))
-	var badge_label := get_node_or_null("BadgeLabel") as Label
+	_set_label("Body/Info/Title", TranslationServer.translate(str(item_data.get("name_key", ""))))
+	_set_label("Body/Info/Desc", TranslationServer.translate(str(item_data.get("desc_key", ""))))
+	var badge_label := get_node_or_null("Body/Info/Badge/BadgeLabel") as Label
 	if badge_label != null:
 		var badge_key := str(item_data.get("badge_key", ""))
 		badge_label.visible = not badge_key.is_empty()
 		if not badge_key.is_empty():
 			badge_label.text = TranslationServer.translate(badge_key)
-		var badge := get_node_or_null("Badge") as NinePatchRect
+		var badge := get_node_or_null("Body/Info/Badge") as NinePatchRect
 		if badge != null:
 			badge.visible = badge_label.visible
-			var width := maxf(badge_label.get_minimum_size().x + 34.0, 150.0)
-			badge.position = Vector2(52, 20)
-			badge.size = Vector2(width, 30)
-			badge_label.position = badge.position
-			badge_label.size = badge.size
+			# chip ÔM NHÃN: chỉ đặt bề rộng TỐI THIỂU theo bề rộng chữ (vị trí do VBoxContainer dàn)
+			badge.custom_minimum_size.x = badge_label.get_minimum_size().x + 12.0
 	_set_button()
 
 
 func _set_button() -> void:
-	var btn := get_node_or_null("Action") as TextureButton
-	var label := get_node_or_null("ActionLabel") as Label
+	var btn := get_node_or_null("Body/Action") as TextureButton
+	var label := get_node_or_null("Body/Action/ActionLabel") as Label
 	if btn == null or label == null:
 		return
 	if Shop.is_owned(item_id):		# đã mua gói xoá quảng cáo -> khoá nút

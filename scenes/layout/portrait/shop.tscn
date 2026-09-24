@@ -19,23 +19,24 @@ btn_back = NodePath("TopBar/Back")
 tabs_box = NodePath("Tabs")
 list_box = NodePath("Content/List")
 scroll = NodePath("Content")
-wallet_count = NodePath("Wallet/Count")
-wallet_plus = NodePath("Wallet/Plus")
+wallet_count = NodePath("TopBar/Wallet/Count")
+wallet_plus = NodePath("TopBar/Wallet/Plus")
 pager = NodePath("Pager")
-page_label = NodePath("Pager/PageLabel")
-btn_prev = NodePath("Pager/Prev")
-btn_next = NodePath("Pager/Next")
+page_label = NodePath("Pager/ChangePage/PageLabel")
+btn_prev = NodePath("Pager/ChangePage/Prev")
+btn_next = NodePath("Pager/ChangePage/Next")
 dots_box = NodePath("Pager/Dots")
 btn_gift = NodePath("GiftBanner/GiftBtn")
 top_bar = NodePath("TopBar")
-wallet_bar = NodePath("Wallet")
+wallet_bar = NodePath("TopBar/Wallet")
 gift_banner = NodePath("GiftBanner")
 tab_line = NodePath("TabLine")
 
 [node name="TopBar" type="Control" parent="." index="0" unique_id=1562446976]
-anchors_preset = 0
-offset_right = 540.0
-offset_bottom = 87.5
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.095000006
+offset_bottom = 0.099990845
 mouse_filter = 2
 
 [node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=1169383300]
@@ -51,37 +52,49 @@ texture_disabled = ExtResource("4_back_n")
 texture_focused = ExtResource("4_back_n")
 
 [node name="Eyebrow" type="Label" parent="TopBar" index="1" unique_id=1586477588]
-layout_mode = 0
-offset_left = 100.0
-offset_top = 46.0
-offset_right = 380.0
-offset_bottom = 59.5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.185
+anchor_top = 0.5
+anchor_right = 0.70400006
+anchor_bottom = 0.78900003
+offset_left = 0.099998474
+offset_top = 2.25
+offset_right = -0.16003418
+offset_bottom = -9.537506
 theme_type_variation = &"ShopEyebrow"
 text = "STR_SHOP_EYEBROW"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Title" type="Label" parent="TopBar" index="2" unique_id=1896483052]
-layout_mode = 0
-offset_left = 100.0
-offset_top = 59.5
-offset_right = 380.0
-offset_bottom = 84.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.185
+anchor_top = 0.68
+anchor_right = 0.70400006
+anchor_bottom = 0.96000004
+offset_left = 0.099998474
+offset_right = -0.16003418
 theme_type_variation = &"ShopTitle"
 text = "STR_SHOP_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Wallet" type="TextureRect" parent="." index="1" unique_id=1251557220]
-layout_mode = 0
-offset_left = 387.5
+[node name="Wallet" type="TextureRect" parent="TopBar" index="3" unique_id=1251557220]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -152.5
 offset_top = 42.5
-offset_right = 515.0
+offset_right = -24.5
 offset_bottom = 77.5
+grow_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("6_wallet")
 
-[node name="CoinIcon" type="TextureRect" parent="Wallet" index="0" unique_id=288390001]
+[node name="CoinIcon" type="TextureRect" parent="TopBar/Wallet" index="0" unique_id=288390001]
 layout_mode = 0
 offset_left = 12.0
 offset_top = 8.5
@@ -92,7 +105,7 @@ texture = ExtResource("7_coin")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Count" type="Label" parent="Wallet" index="1" unique_id=488216143]
+[node name="Count" type="Label" parent="TopBar/Wallet" index="1" unique_id=488216143]
 layout_mode = 0
 offset_left = 31.0
 offset_right = 98.0
@@ -102,7 +115,7 @@ text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Plus" type="TextureButton" parent="Wallet" index="2" unique_id=1063766735]
+[node name="Plus" type="TextureButton" parent="TopBar/Wallet" index="2" unique_id=1063766735]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 4.5
@@ -115,16 +128,20 @@ texture_hover = ExtResource("8_plus")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Tabs" type="HBoxContainer" parent="." index="2" unique_id=1748476601]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 86.0
-offset_right = 515.0
-offset_bottom = 135.0
+[node name="Tabs" type="HBoxContainer" parent="." index="1" unique_id=1748476601]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.046000004
+anchor_top = 0.093
+anchor_right = 0.95400006
+anchor_bottom = 0.147
+offset_left = 0.15999794
+offset_top = 0.4399948
+offset_right = -0.16003418
+offset_bottom = -0.2400055
 theme_override_constants/separation = 4
 
-[node name="TabLine" type="ColorRect" parent="." index="3" unique_id=2061983417]
-visible = false
+[node name="TabLine" type="ColorRect" parent="." index="2" unique_id=2061983417]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 157.25
@@ -133,14 +150,16 @@ offset_bottom = 159.0
 mouse_filter = 2
 color = Color(0.23921569, 0.5137255, 0.68235296, 1)
 
-[node name="Content" type="ScrollContainer" parent="." index="4" unique_id=651984919]
+[node name="Content" type="ScrollContainer" parent="." index="3" unique_id=651984919]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 25.0
 offset_top = 163.0
-offset_right = 515.0
+offset_right = -25.0
 offset_bottom = -201.0
+grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
@@ -151,71 +170,78 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Pager" type="Control" parent="." index="5" unique_id=2000316292]
-visible = false
-anchors_preset = 0
+[node name="Pager" type="VBoxContainer" parent="." index="4" unique_id=469403228]
+layout_mode = 1
+anchors_preset = 12
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 160.0
-offset_top = -210.0
-offset_right = 380.0
-offset_bottom = -178.0
+offset_left = 144.0
+offset_top = -240.0
+offset_right = -140.0
+offset_bottom = -179.0
+grow_horizontal = 2
+grow_vertical = 0
 mouse_filter = 2
 
-[node name="Prev" type="TextureButton" parent="Pager" index="0" unique_id=1132602761]
-layout_mode = 0
-offset_top = 1.0
-offset_right = 30.0
-offset_bottom = 31.0
+[node name="Dots" type="HBoxContainer" parent="Pager" index="0" unique_id=1536223205]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="ChangePage" type="HBoxContainer" parent="Pager" index="1" unique_id=846751052]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Prev" type="TextureButton" parent="Pager/ChangePage" index="0" unique_id=1132602761]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
 focus_mode = 0
 texture_normal = ExtResource("9_prev")
 texture_pressed = ExtResource("9_prev")
 texture_hover = ExtResource("9_prev")
 ignore_texture_size = true
-stretch_mode = 5
 
-[node name="Next" type="TextureButton" parent="Pager" index="1" unique_id=695487616]
-layout_mode = 0
-offset_left = 190.0
-offset_top = 1.0
-offset_right = 220.0
-offset_bottom = 31.0
+[node name="PageLabel" type="Label" parent="Pager/ChangePage" index="1" unique_id=71839614]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.8
+theme_type_variation = &"ShopPageLabel"
+theme_override_font_sizes/font_size = 10
+text = "TRANG 1 / 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Next" type="TextureButton" parent="Pager/ChangePage" index="2" unique_id=695487616]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
 focus_mode = 0
 texture_normal = ExtResource("10_next")
 texture_pressed = ExtResource("10_next")
 texture_hover = ExtResource("10_next")
 ignore_texture_size = true
-stretch_mode = 5
 
-[node name="PageLabel" type="Label" parent="Pager" index="2" unique_id=71839614]
-layout_mode = 0
-offset_left = 35.0
-offset_right = 185.0
-offset_bottom = 14.0
-theme_type_variation = &"ShopPageLabel"
-text = "TRANG 1 / 2"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Dots" type="HBoxContainer" parent="Pager" index="3" unique_id=1536223205]
-layout_mode = 0
-offset_left = 75.0
-offset_top = 17.0
-offset_right = 145.0
-offset_bottom = 29.0
-theme_override_constants/separation = 8
-alignment = 1
-
-[node name="GiftBanner" type="TextureRect" parent="." index="6" unique_id=1183014227]
-layout_mode = 0
+[node name="GiftBanner" type="NinePatchRect" parent="." index="5" unique_id=1022285972]
+layout_mode = 1
+anchors_preset = 12
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 25.0
-offset_top = -172.5
-offset_right = 515.0
+offset_top = -173.0
+offset_right = -25.0
 offset_bottom = -115.0
-mouse_filter = 2
+grow_horizontal = 2
+grow_vertical = 0
 texture = ExtResource("11_gift")
+patch_margin_left = 35
+patch_margin_top = 14
+patch_margin_right = 36
+patch_margin_bottom = 13
 
 [node name="GiftIcon" type="TextureRect" parent="GiftBanner" index="0" unique_id=578668435]
 layout_mode = 0
@@ -227,30 +253,42 @@ mouse_filter = 2
 texture = ExtResource("12_gift_box")
 
 [node name="GiftTitle" type="Label" parent="GiftBanner" index="1" unique_id=448380499]
-layout_mode = 0
-offset_left = 72.5
-offset_top = 12.0
-offset_right = 380.0
-offset_bottom = 28.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.148
+anchor_top = 0.20700002
+anchor_right = 0.776
+anchor_bottom = 0.20700002
+offset_left = -0.020004272
+offset_top = -0.006000519
+offset_right = -0.24002075
+offset_bottom = 15.9939995
 theme_type_variation = &"ShopBannerTitle"
 text = "STR_SHOP_BANNER_TITLE"
 vertical_alignment = 1
 
 [node name="GiftDesc" type="Label" parent="GiftBanner" index="2" unique_id=326107323]
-layout_mode = 0
-offset_left = 72.5
-offset_top = 29.0
-offset_right = 380.0
-offset_bottom = 45.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.148
+anchor_top = 0.5
+anchor_right = 0.776
+anchor_bottom = 0.5
+offset_left = -0.020004272
+offset_right = -0.24002075
+offset_bottom = 16.0
 theme_type_variation = &"ShopBannerDesc"
 text = "STR_SHOP_BANNER_DESC"
 vertical_alignment = 1
 
 [node name="GiftBtn" type="TextureButton" parent="GiftBanner" index="3" unique_id=2073492906]
-layout_mode = 0
-offset_left = 385.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -105.0
 offset_top = 13.0
-offset_right = 475.0
+offset_right = -15.0
 offset_bottom = 44.0
 focus_mode = 0
 texture_normal = ExtResource("13_btn_amber")
@@ -259,18 +297,20 @@ texture_hover = ExtResource("13_btn_amber")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="GiftBtnLabel" type="Label" parent="GiftBanner" index="4" unique_id=2032303212]
-layout_mode = 0
-offset_left = 385.0
-offset_top = 13.0
-offset_right = 475.0
-offset_bottom = 44.0
+[node name="GiftBtnLabel" type="Label" parent="GiftBanner/GiftBtn" index="0" unique_id=2032303212]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.1555556
+anchor_right = 0.9554445
+anchor_bottom = 1.0
+offset_right = 0.009994507
 theme_type_variation = &"ShopBannerBtn"
 text = "STR_SHOP_BANNER_BTN"
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Footer" type="Label" parent="." index="7" unique_id=466609682]
+[node name="Footer" type="Label" parent="." index="6" unique_id=466609682]
 layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0

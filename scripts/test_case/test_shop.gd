@@ -256,7 +256,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 
 	_entry(_ui(scene, "TopBar/Back") is TextureButton, "Co nut Back")
 	_entry(_ui(scene, "Tabs") is HBoxContainer, "Co hang tab")
-	_entry(_ui(scene, "Wallet/Count") is Label, "Co vi Xu")
+	_entry(scene.layout.wallet_bar != null and scene.layout.wallet_count is Label, "Co vi Xu")
 	_entry(_ui(scene, "Content/List") is VBoxContainer, "Co danh sach mon hang")
 	_entry(_ui(scene, "GiftBanner/GiftBtn") is TextureButton, "Co nut o banner tiep suc")
 	_entry(scene.layout.tabs_box.get_child_count() == 4, "4 tab duoc dung bang code")
@@ -295,8 +295,9 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	var expect_h: float = 147.0 * 1.25 * scene.screen_scale()
 	_entry(absf(tile_h - expect_h) < 1.0 and tile_h > 147.0,
 		"The o cao = 147 × 1,25 × he so man hinh (%.0f, mong %.0f)" % [tile_h, expect_h])
-	_entry(tile != null and absf(tile.size.x - 237.5) < 1.0 and absf(tile.size.y - tile_h) < 1.0,
-		"The o dung co 237.5x%.0f (nhan %s)" % [tile_h,
+	var tile_expect_w: float = scene.tile_size().x
+	_entry(tile != null and absf(tile.size.x - tile_expect_w) < 1.0 and absf(tile.size.y - tile_h) < 1.0,
+		"The o dung co tile_size() = %.1fx%.0f (nhan %s)" % [tile_expect_w, tile_h,
 			str(tile.size if tile != null else Vector2.ZERO)])
 	if tile != null:
 		_entry(tile.get_node_or_null("Panel/IconCircle") is TextureRect, "The o co vong icon (IconCircle)")
@@ -397,13 +398,19 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 		"The dau tien la hang VIP xoa quang cao (ShopNoadsRow)")
 	if noads != null:
 		_entry(str(noads.get("item_id")) == "coin_no_ads", "Hang dau la coin_no_ads")
-		_entry(noads.size == Vector2(490, 100), "Hang VIP cao 100 va rong 490 (bao trum 1 hang)")
+		# Hàng VIP cao theo thiết kế (100) và RỘNG BẰNG KHUNG DANH SÁCH — không ghim số cứng,
+		# vì khung rộng theo cỡ màn hình (con số 490 cũ chỉ đúng ở canvas dọc 540).
+		var row_box := noads.get_parent() as Control
+		_entry(noads.size.y == 100.0 and row_box != null
+				and is_equal_approx(noads.size.x, row_box.size.x),
+			"Hang VIP cao 100 va rong bang khung danh sach (%.0f) — bao trum 1 hang" % noads.size.x)
 	var pack_tile := scene.card_at(1)
 	_entry(pack_tile != null and pack_tile.get_script() == preload("res://scripts/nodes/shop/coin_tile.gd"),
 		"Cac the sau la goi nap (ShopCoinTile)")
 	if pack_tile != null:
 		_entry(str(pack_tile.get("item_id")) == "coin_500", "The goi dau tien la coin_500")
-		_entry(pack_tile.size == Vector2(237.5, 120), "The goi nap dung 237.5x120 (nhan %s)" % str(pack_tile.size))
+		_entry(pack_tile.size.is_equal_approx(scene.coin_tile_size()),
+			"The goi nap dung coin_tile_size() = %s (nhan %s)" % [str(scene.coin_tile_size()), str(pack_tile.size)])
 		var icon: Texture2D = pack_tile.call("icon_texture")
 		_entry(icon != null and icon.resource_path.ends_with("icon_coin_t1.svg"),
 			"Goi 500 Xu dung icon cap 1 (%s)" % str(icon.resource_path if icon != null else ""))

@@ -69,9 +69,9 @@ texture_margin_bottom = 6.0
 custom_minimum_size = Vector2(237.5, 147)
 layout_mode = 3
 anchor_right = 0.44000003
-anchor_bottom = 0.272
+anchor_bottom = 0.202
 offset_right = -0.1000061
-offset_bottom = -64.14001
+offset_bottom = 0.2599945
 theme = ExtResource("2_theme")
 script = ExtResource("1_tile")
 

@@ -4,6 +4,8 @@ extends BaseLayout
 @export var btn_back: BaseButton = null
 @export var cards_box: Container = null
 @export var lbl_wallet: Label = null
+## Nút CTA chân trang: bản DỌC dùng `NinePatchButton`, bản NGANG dùng `TextureButton`
+## ⇒ khai kiểu chung `BaseButton` (nếu khai NinePatchButton thì binding bản ngang bị loại).
 @export var btn_continue: BaseButton = null
 @export var lbl_continue: Label = null
 @export var list: Control = null

@@ -39,6 +39,10 @@ const TABS := ["", "levels", "dungeon", "daily", "special"]
 var layout: ArchivementLayout = null
 
 var _current_columns := PORTRAIT_COLUMNS
+## Số thẻ mỗi trang ĐANG ÁP — khung đổi cỡ ⇒ chia lại trang cho vừa khung (xem `_apply_layout`)
+var _current_per_page := CARDS_PER_PAGE
+## Tăng mỗi lần hẹn áp layout — để bỏ qua các lần hẹn CŨ khi người dùng kéo cửa sổ liên tục
+var _layout_apply_id := 0
 
 var _category := ""
 var _entries: Array = []
@@ -63,7 +67,8 @@ func _ready() -> void:
 
 	Archivement.refresh()
 	_build_tabs()
-	resized.connect(_apply_layout)
+	# Kéo cửa sổ: `resized` báo TRƯỚC khi container dàn lại ⇒ phải hẹn áp ở frame sau
+	resized.connect(_schedule_apply_layout)
 	_reload(true)
 	call_deferred("_apply_layout")
 	call_deferred("_go_to_page", _page_for_first_claimable(), false)
@@ -98,14 +103,11 @@ func _cards_per_page() -> int:
 	return _columns_per_page() * _rows_per_page()
 
 
+## Số CỘT thẻ mỗi trang: cột của trang (`nodes/archivements/page.tscn`) là **VBoxContainer** ⇒ LUÔN 1 cột.
+## (Trước đây bản NGANG tự chia 2–3 cột theo bề rộng, nhưng cột thẻ chỉ xếp được 1 cột
+##  ⇒ trang nhận gấp đôi số thẻ và đẩy thẻ cuối tràn ra ngoài đáy trang.)
 func _columns_per_page() -> int:
-	if not is_landscape:
-		return PORTRAIT_COLUMNS
-	var width := _viewport_size().x
-	if width <= 0.0:
-		return PORTRAIT_COLUMNS
-	var columns := int((width + GRID_SEP.x * 0.5) / (CARD_SIZE.x + GRID_SEP.x))
-	return clampi(columns, 1, 5)
+	return PORTRAIT_COLUMNS
 
 
 func _rows_per_page() -> int:
@@ -126,8 +128,12 @@ func _on_orientation_changed(_is_landscape_now: bool) -> void:
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_current_columns = _columns_per_page()
+	_current_per_page = _cards_per_page()
+	# Tab nằm trong layout ⇒ phải dựng lại vào khay của layout MỚI (không thì bản ngang trống tab)
+	_build_tabs()
 	_reload(true)
-	_apply_layout()
+	# Cỡ khung của layout mới chỉ có sau vài frame ⇒ hẹn áp lại rồi mới nhảy tới trang cần xem
+	_schedule_apply_layout()
 	_go_to_page(_page_for_first_claimable(), false)
 
 
@@ -228,14 +234,20 @@ func _build_pages() -> void:
 		layout.pages_host.remove_child(child)
 		child.queue_free()
 
+	# Số thẻ mỗi trang = số Ô VỪA KHUNG (cột × hàng). Dùng ĐÚNG con số này khi chia trang —
+	# nếu ghim cứng CARDS_PER_PAGE thì ở bản NGANG (khung thấp hơn) thẻ cuối sẽ tràn ra ngoài và bị cắt.
+	var per_page := maxi(_cards_per_page(), 1)
 	for page_index in _page_count:
 		var page := PAGE_SCENE.instantiate() as AchPage
 		page.name = "Page%d" % (page_index + 1)
 		layout.pages_host.add_child(page)
 
 		var column := page.column()
-		for slot in CARDS_PER_PAGE:
-			var list_index := page_index * CARDS_PER_PAGE + slot
+		var grid := column as GridContainer
+		if grid != null:
+			grid.columns = maxi(_columns_per_page(), 1)
+		for slot in per_page:
+			var list_index := page_index * per_page + slot
 			if list_index >= _entries.size():
 				break
 			var card: Control = CARD_SCENE.instantiate()
@@ -359,9 +371,11 @@ func _apply_layout() -> void:
 	if view_now.x <= 0.0 or view_now.y <= 0.0:
 		return          # khung chưa dàn xong — sẽ được áp lại ở frame sau
 	var columns := _columns_per_page()
-	if columns != _current_columns:
-		# Khung cuộn đổi bề rộng (xoay màn hình) -> chia lại trang theo số cột mới
+	var per_page := _cards_per_page()
+	if columns != _current_columns or per_page != _current_per_page:
+		# Khung cuộn đổi cỡ (xoay màn hình / kéo cửa sổ) -> chia lại trang cho VỪA KHUNG
 		_current_columns = columns
+		_current_per_page = per_page
 		_reload(true)
 	_page = clampi(_page, 0, maxi(_page_count - 1, 0))
 	var view := _viewport_size()
@@ -370,6 +384,23 @@ func _apply_layout() -> void:
 		page.custom_minimum_size = Vector2(_page_width, view.y)
 	_stop_tween()
 	layout.scroll.scroll_horizontal = int(float(_page) * _page_width)
+	# Khung còn đổi cỡ tiếp ở frame sau (container dàn lại) ⇒ hẹn áp lại cho khớp số mới
+	if not _viewport_size().is_equal_approx(view):
+		_schedule_apply_layout()
+
+
+## Hẹn áp lại layout SAU khi container dàn xong.
+## `resized`/đổi hướng báo trước lúc `card_area` nhận cỡ mới ⇒ áp NGAY sẽ dùng số CŨ
+## (page rộng sai ⇒ trang sau lộ vào khung nhìn, hoặc trang hiện tại bị cắt nửa chừng).
+## Kéo cửa sổ liên tục: chỉ lần hẹn CUỐI được áp (id tăng dần, lần cũ tự bỏ).
+func _schedule_apply_layout() -> void:
+	_layout_apply_id += 1
+	var id := _layout_apply_id
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if id != _layout_apply_id or not is_inside_tree():
+		return
+	_apply_layout()
 
 
 func _go_to_page(index: int, animate := true) -> void:

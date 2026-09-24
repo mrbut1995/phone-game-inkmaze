@@ -15,257 +15,300 @@
 [ext_resource type="Texture2D" uid="uid://ccwikst7p5v6d" path="res://assets/images/chapters/maze_small.svg" id="13_maze"]
 
 [node name="ChapterCard" type="Control" unique_id=2037063166]
-custom_minimum_size =  Vector2(485, 142.5)
+custom_minimum_size = Vector2(485, 142.5)
 layout_mode = 3
 anchors_preset = 0
-offset_right =  485
-offset_bottom =  142.5
+offset_right = 485.0
+offset_bottom = 142.5
 theme = ExtResource("2_theme")
 script = ExtResource("1_card")
 
 [node name="Halo" type="TextureRect" parent="." unique_id=1522376547]
 visible = false
-layout_mode = 0
-offset_left =  -3
-offset_top =  -3
-offset_right =  488
-offset_bottom =  145.5
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("4_halo")
+metadata/_edit_use_anchors_ = true
 
-[node name="Bg" type="TextureRect" parent="." unique_id=2055230155]
-layout_mode = 0
-offset_right =  485
-offset_bottom =  142.5
+[node name="Panel" type="TextureRect" parent="." unique_id=2055230155]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("3_card")
 expand_mode = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Doodle" type="TextureRect" parent="." unique_id=1236952187]
-layout_mode = 0
-offset_left =  25.5
-offset_top =  24
-offset_right =  115.5
-offset_bottom =  114
+[node name="Content" type="HBoxContainer" parent="Panel" unique_id=1428171382]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0526
+anchor_top = 0.22454035
+anchor_right = 0.9794
+anchor_bottom = 0.8561404
+offset_left = -1.7509918
+offset_right = 1.7510071
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 24
+metadata/_edit_use_anchors_ = true
+
+[node name="Display" type="HBoxContainer" parent="Panel/Content" unique_id=1776040296]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.9
+
+[node name="Doodle" type="TextureRect" parent="Panel/Content/Display" unique_id=1236952187]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("13_maze")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Lock" type="TextureRect" parent="." unique_id=1671124533]
+[node name="Lock" type="TextureRect" parent="Panel/Content/Display/Doodle" unique_id=1671124533]
 visible = false
-layout_mode = 0
-offset_left =  52.5
-offset_top =  45.5
-offset_right =  88.5
-offset_bottom =  81.5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.2389
+anchor_right = 0.7
+anchor_bottom = 0.6389
 mouse_filter = 2
 texture = ExtResource("12_lock")
 
-[node name="Ribbon" type="TextureRect" parent="." unique_id=54159697]
-layout_mode = 0
-offset_left =  390
-offset_right =  485
-offset_bottom =  24
+[node name="Info" type="VBoxContainer" parent="Panel/Content/Display" unique_id=1248458716]
+layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 2
-texture = ExtResource("5_ribbon")
+theme_override_constants/separation = 2
 
-[node name="RibbonLabel" type="Label" parent="." unique_id=1786610814]
-layout_mode = 0
-offset_left =  400
-offset_top =  1
-offset_right =  482
-offset_bottom =  22
-theme_type_variation = &"ChapterRibbon"
-text = "ĐANG CHƠI"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Chip" type="TextureRect" parent="." unique_id=2072703360]
-layout_mode = 0
-offset_left =  140
-offset_top =  22
-offset_right =  270
-offset_bottom =  39
+[node name="Chip" type="TextureRect" parent="Panel/Content/Display/Info" unique_id=2072703360]
+custom_minimum_size = Vector2(130, 17)
+layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("6_chip")
 
-[node name="ChipLabel" type="Label" parent="." unique_id=1044839075]
-layout_mode = 0
-offset_left =  140
-offset_top =  22
-offset_right =  270
-offset_bottom =  39
+[node name="ChipLabel" type="Label" parent="Panel/Content/Display/Info/Chip" unique_id=1044839075]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_type_variation = &"ChapterChipSize"
 text = "KÍCH THƯỚC"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Title" type="Label" parent="." unique_id=330343107]
-layout_mode = 0
-offset_left =  140
-offset_top =  40
-offset_right =  345
-offset_bottom =  65.5
+[node name="Title" type="Label" parent="Panel/Content/Display/Info" unique_id=330343107]
+custom_minimum_size = Vector2(0, 25.5)
+layout_mode = 2
 theme_type_variation = &"ChapterCardTitle"
 text = "CHƯƠNG 1"
 vertical_alignment = 1
 text_overrun_behavior = 3
 resize_font_to_fit = true
 
-[node name="Subtitle" type="Label" parent="." unique_id=84376013]
-layout_mode = 0
-offset_left =  140
-offset_top =  64
-offset_right =  350.5
-offset_bottom =  79.4
+[node name="Subtitle" type="Label" parent="Panel/Content/Display/Info" unique_id=84376013]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
 theme_type_variation = &"ChapterCardSubtitle"
 text = "..."
 vertical_alignment = 1
 text_overrun_behavior = 3
 
-[node name="Bar" type="Control" parent="." unique_id=1011661792]
+[node name="Bar" type="Control" parent="Panel/Content/Display/Info" unique_id=1011661792]
+custom_minimum_size = Vector2(0, 7)
 clip_contents = true
-anchors_preset = 0
-offset_left =  140
-offset_top =  87
-offset_right =  330
-offset_bottom =  94
+layout_mode = 2
 mouse_filter = 2
 
-[node name="Track" type="TextureRect" parent="Bar" unique_id=2116522289]
-layout_mode = 0
-offset_right =  190
-offset_bottom =  7
+[node name="Track" type="TextureRect" parent="Panel/Content/Display/Info/Bar" unique_id=2116522289]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("7_track")
 
-[node name="Fill" type="TextureRect" parent="Bar" unique_id=2113885124]
-layout_mode = 0
-offset_right =  190
-offset_bottom =  7
+[node name="Fill" type="TextureRect" parent="Panel/Content/Display/Info/Bar" unique_id=2113885124]
+layout_mode = 1
+anchors_preset = -1
+offset_right = 190.0
+offset_bottom = 7.0
 mouse_filter = 2
 texture = ExtResource("9_fill")
 expand_mode = 1
 
-[node name="Stars" type="Label" parent="." unique_id=337808427]
-layout_mode = 0
-offset_left =  140
-offset_top =  96
-offset_right =  320
-offset_bottom =  113
+[node name="Stats" type="HBoxContainer" parent="Panel/Content/Display/Info" unique_id=1684403784]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Stars" type="Label" parent="Panel/Content/Display/Info/Stats" unique_id=337808427]
+custom_minimum_size = Vector2(85, 17)
+layout_mode = 2
 theme_type_variation = &"ChapterStars"
 text = "0 / 0 SAO"
 vertical_alignment = 1
 
-[node name="StarsSub" type="Label" parent="." unique_id=1634893469]
-layout_mode = 0
-offset_left =  225
-offset_top =  98
-offset_right =  350
-offset_bottom =  114
+[node name="StarsSub" type="Label" parent="Panel/Content/Display/Info/Stats" unique_id=1634893469]
+custom_minimum_size = Vector2(125, 16)
+layout_mode = 2
+size_flags_horizontal = 3
 theme_type_variation = &"ChapterStarsSub"
 text = "(0/0 màn)"
 vertical_alignment = 1
 
-[node name="NeedChip" type="TextureRect" parent="." unique_id=620297523]
+[node name="HaveChip" type="TextureRect" parent="Panel/Content/Display/Info" unique_id=1334234839]
 visible = false
-layout_mode = 0
-offset_left =  350
-offset_top =  107
-offset_right =  447.5
-offset_bottom =  123
-mouse_filter = 2
-texture = ExtResource("8_need")
-
-[node name="NeedLabel" type="Label" parent="." unique_id=46546071]
-layout_mode = 0
-offset_left =  350
-offset_top =  107
-offset_right =  447.5
-offset_bottom =  123
-theme_type_variation = &"ChapterNeedChip"
-text = "CÒN THIẾU"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HaveChip" type="TextureRect" parent="." unique_id=1334234839]
-visible = false
-layout_mode = 0
-offset_left =  140
-offset_top =  87
-offset_right =  290
-offset_bottom =  107
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("10_have")
 
-[node name="HaveLabel" type="Label" parent="." unique_id=344569581]
-layout_mode = 0
-offset_left =  146
-offset_top =  87
-offset_right =  284
-offset_bottom =  107
+[node name="HaveLabel" type="Label" parent="Panel/Content/Display/Info/HaveChip" unique_id=344569581]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_right = 0.96
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_type_variation = &"ChapterHaveChip"
 text = "ĐÃ ĐỦ"
 vertical_alignment = 1
 
-[node name="Action" type="Control" parent="." unique_id=1449986150]
-anchors_preset = 0
-offset_left =  350
-offset_top =  44
-offset_right =  475
-offset_bottom =  94
+[node name="Action" type="VBoxContainer" parent="Panel/Content" unique_id=1912319193]
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+size_flags_horizontal = 8
 mouse_filter = 2
+theme_override_constants/separation = 13
 
-[node name="Btn" type="TextureButton" parent="Action" unique_id=1533517246]
-layout_mode = 0
-offset_right =  125
-offset_bottom =  50
+[node name="Btn" type="TextureButton" parent="Panel/Content/Action" unique_id=1533517246]
+custom_minimum_size = Vector2(125, 50)
+layout_mode = 2
+size_flags_vertical = 0
 focus_mode = 0
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="Action" unique_id=1716327212]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Action/Btn" unique_id=1716327212]
 visible = false
-layout_mode = 0
-offset_left =  10
-offset_top =  16
-offset_right =  28
-offset_bottom =  34
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08
+anchor_top = 0.32
+anchor_right = 0.224
+anchor_bottom = 0.68
 mouse_filter = 2
 texture = ExtResource("11_star")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LockIcon" type="TextureRect" parent="Action" unique_id=1732227354]
+[node name="LockIcon" type="TextureRect" parent="Panel/Content/Action/Btn" unique_id=1732227354]
 visible = false
-layout_mode = 0
-offset_left =  10
-offset_top =  16
-offset_right =  28
-offset_bottom =  34
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08
+anchor_top = 0.32
+anchor_right = 0.224
+anchor_bottom = 0.68
 mouse_filter = 2
 texture = ExtResource("12_lock")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="Action" unique_id=743969444]
-layout_mode = 0
-offset_left =  33
-offset_top =  5
-offset_right =  122
-offset_bottom =  26
+[node name="Title" type="Label" parent="Panel/Content/Action/Btn" unique_id=743969444]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.264
+anchor_top = 0.1
+anchor_right = 0.976
+anchor_bottom = 0.52
+grow_horizontal = 2
+grow_vertical = 2
 theme_type_variation = &"ChapterAction"
 text = "VÀO CHƠI"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sub" type="Label" parent="Action" unique_id=847799387]
-layout_mode = 0
-offset_left =  33
-offset_top =  26
-offset_right =  122
-offset_bottom =  44
+[node name="Sub" type="Label" parent="Panel/Content/Action/Btn" unique_id=847799387]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.264
+anchor_top = 0.52
+anchor_right = 0.976
+anchor_bottom = 0.88
+grow_horizontal = 2
+grow_vertical = 2
 theme_type_variation = &"ChapterActionSub"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="Action/Btn" to="." method="_on_btn_pressed"]
+[node name="NeedChip" type="TextureRect" parent="Panel/Content/Action" unique_id=620297523]
+visible = false
+custom_minimum_size = Vector2(97.5, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+mouse_filter = 2
+texture = ExtResource("8_need")
+
+[node name="NeedLabel" type="Label" parent="Panel/Content/Action/NeedChip" unique_id=46546071]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ChapterNeedChip"
+text = "CÒN THIẾU"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Ribbon" type="TextureRect" parent="Panel" unique_id=54159697]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8041
+anchor_right = 1.0
+anchor_bottom = 0.1684
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("5_ribbon")
+
+[node name="RibbonLabel" type="Label" parent="Panel/Ribbon" unique_id=1786610814]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.042
+anchor_right = 0.968
+anchor_bottom = 0.917
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ChapterRibbon"
+text = "ĐANG CHƠI"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Panel/Content/Action/Btn" to="." method="_on_btn_pressed"]

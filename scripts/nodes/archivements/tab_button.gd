@@ -1,9 +1,13 @@
+@tool
 class_name AchTabButton
-extends TextureButton
+extends NinePatchButton
 ## ============================================================================
 ## Nút TAB phân loại của Sổ tay thành tựu (nodes/archivements/tab_button.tscn)
 ## Trước đây tab được tạo bằng code (`TextureButton.new()` + tự thêm Label) —
 ## nay là SCENE riêng: cỡ 134×46 và nhãn sửa được ngay trong scene.
+##
+## Dùng `NinePatchButton` (cắt 9 khúc art) + `size_flags_horizontal = EXPAND` ⇒ tab GIÃN KÍN ô
+## của khay (khay dọc = HBox 5 tab · khay ngang = GridContainer 2 cột) mà không méo góc bo.
 ## ============================================================================
 
 const TAB_ACTIVE := preload("res://assets/images/archivements/tab_active.svg")
@@ -34,6 +38,6 @@ func set_active(on: bool) -> void:
 	texture_normal = art
 	texture_pressed = art
 	texture_hover = art
-	texture_focused = art
+	texture_focus = art
 	if label != null:
 		label.modulate = LABEL_ACTIVE_COLOR if on else LABEL_IDLE_COLOR
