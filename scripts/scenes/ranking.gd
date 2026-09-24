@@ -17,11 +17,12 @@ const ROW_SCENE := preload("res://nodes/ranking/rank_row.tscn")
 ## Node UI của màn này là SCENE riêng (art + cỡ nằm trong scene, không tạo bằng code)
 const TAB_SCENE := preload("res://nodes/ranking/tab_button.tscn")
 
-## Bề rộng từng tab đúng mockup (240 · 235 · 245) — khoảng cách 15
+## Bề rộng từng tab theo MOCKUP (mockup vẽ 2× nên chia đôi: 240 · 235 · 245 → dưới đây).
+## Hàng tab vẫn được dàn đều theo bề rộng thật ở `_fit_tab_widths()` — đây là cỡ để trống ban đầu.
 const TAB_WIDTHS := {
-	"dungeon": 240.0,
-	"play": 235.0,
-	"daily": 245.0,
+	"dungeon": 120.0,
+	"play": 117.5,
+	"daily": 122.5,
 }
 const TAB_SEPARATION := 15
 const TAB_KEYS := {
@@ -62,6 +63,35 @@ func _ready() -> void:
 	# Làm mới theo khung 10 phút (chỉ dựng lại khi đã sang khung mới)
 	Ranking.refresh()
 	_show_board(_board)
+	# Bố cục dùng CONTAINER ⇒ hàng tab chỉ biết bề rộng thật sau frame đầu → dàn lại cho vừa
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_fit_tab_widths()
+
+
+## Chia đều bề rộng tab theo bề rộng THẬT của hàng (3 tab luôn nằm gọn trong khung).
+## Gọi ở frame sau (lúc dựng tab, hàng chưa được container dàn).
+func _fit_tab_widths() -> void:
+	if layout.tabs_box == null or _tab_buttons.is_empty():
+		return
+	var count := _tab_buttons.size()
+	# Bề rộng HÀNG THẬT: bố cục NGANG để container dàn (anchors = 0 ⇒ dùng size);
+	# bố cục DỌC dùng anchors trên tờ giấy ⇒ HBox có thể đã "phình" theo min size của nút
+	# nên phải tính lại từ anchors, nếu không tab sẽ tràn ra ngoài tờ giấy.
+	var row_w := layout.tabs_box.size.x
+	var parent := layout.tabs_box.get_parent() as Control
+	if parent != null and parent.size.x > 0.0:
+		var anchored := (layout.tabs_box.anchor_right - layout.tabs_box.anchor_left) * parent.size.x
+		if anchored > 1.0:
+			row_w = anchored
+	var row := row_w - TAB_SEPARATION * float(count - 1)
+	if row <= 0.0:
+		return
+	var width := row / float(count)
+	for id in _tab_buttons:
+		var btn := _tab_buttons[id] as RankTabButton
+		if btn != null:
+			btn.custom_minimum_size = Vector2(width, btn.custom_minimum_size.y)
 
 
 ## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
@@ -76,6 +106,9 @@ func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_tab_buttons.clear()
 	_build_tabs()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_fit_tab_widths()
 	_show_board(_board)
 
 

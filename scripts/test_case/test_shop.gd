@@ -299,10 +299,10 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 		"The o dung co 237.5x%.0f (nhan %s)" % [tile_h,
 			str(tile.size if tile != null else Vector2.ZERO)])
 	if tile != null:
-		_entry(tile.get_node_or_null("IconCircle") is TextureRect, "The o co vong icon (IconCircle)")
-		_entry(tile.get_node_or_null("Stroke") is TextureRect, "The o co net muc ve thu (Stroke)")
-		_entry(tile.get_node_or_null("BadgeLabel") is Label, "The o co nhan goc (Badge)")
-		var action := tile.get_node_or_null("Action") as TextureButton
+		_entry(tile.get_node_or_null("Panel/IconCircle") is TextureRect, "The o co vong icon (IconCircle)")
+		_entry(tile.get_node_or_null("Panel/Stroke") is TextureRect, "The o co net muc ve thu (Stroke)")
+		_entry(tile.get_node_or_null("Panel/Badge/BadgeLabel") is Label, "The o co nhan goc (Badge)")
+		var action := tile.get_node_or_null("Panel/Action") as BaseButton
 		_entry(action != null and action.size == Vector2(100, 23),
 			"Nut the o dung 100x23 (nhan %s)" % str(action.size if action != null else Vector2.ZERO))
 		# Nút hành động NEO ĐÁY thẻ (thẻ cao lên thì nút đi xuống, không bỏ trống đáy)
@@ -310,7 +310,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 			_entry(absf((action.position.y + action.size.y) - (tile.size.y - 8.0)) < 1.0,
 				"Nut the o neo day the (cach day 8, nhan %.0f)" % (tile.size.y - action.position.y - action.size.y))
 		# BÚT & MỰC: thẻ hiện đúng icon CON TRỎ trong game của chính ngòi bút đó
-		var first_icon := tile.get_node_or_null("Icon") as TextureRect
+		var first_icon := tile.get_node_or_null("Panel/IconCircle/Icon") as TextureRect
 		_entry(first_icon != null and first_icon.texture == PenSkin.cursor_texture(first_id),
 			"The but dau tien dung icon con tro cua chinh no (%s)" % first_id)
 
@@ -422,7 +422,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	# Mua thật qua nút trên thẻ: mua gói 500 Xu rồi ví phải tăng
 	if pack_tile != null:
 		var before_coins := int(shop.call("coins"))
-		(pack_tile.get_node("Action") as TextureButton).pressed.emit()
+		(pack_tile.get_node("Panel/Action") as TextureButton).pressed.emit()
 		await process_frame
 		await process_frame
 		_entry(int(shop.call("coins")) == before_coins + 500,

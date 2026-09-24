@@ -34,6 +34,8 @@ const GRID_COLUMNS := 2
 const GRID_COLUMNS_MAX := 4
 ## Bề rộng TỐI THIỂU của 1 thẻ ô ở bản NGANG — cơ sở để chia số cột (thẻ tự nở đầy ô)
 const TILE_MIN_W := 130.0
+## Lưới GÓI NẠP XU luôn 2 cột (thẻ nở đầy ô) — giữ được cả khi khung hẹp (bố cục ngang 2 cột)
+const COIN_COLUMNS := 2
 const GRID_H_SEP := 30.0
 const GRID_V_SEP := 24.0
 ## Khe dọc giữa các khối trong danh sách (khớp `List.theme_override_constants/separation`)
@@ -80,6 +82,8 @@ var _page_first_id := ""
 var _last_per_page := 0
 ## Cỡ THIẾT KẾ của thẻ ô (đọc 1 lần từ item_tile.tscn) — phục vụ tính số hàng vừa khung
 static var _tile_size := Vector2.ZERO
+## Cỡ thiết kế thẻ GÓI NẠP (đọc 1 lần từ `nodes/shop/coin_tile.tscn`)
+var _coin_size := Vector2.ZERO
 ## Cỡ bàn nháp thử bút (đọc 1 lần từ doodle_pad.tscn)
 static var _pad_h := 0.0
 ## Bàn nháp thử bút (chỉ tab BÚT & MỰC) + ngòi bút đang xem thử trên đó
@@ -227,15 +231,40 @@ func tile_height() -> float:
 
 
 ## Số CỘT của lưới ô: bản DỌC = 2; bản NGANG chia theo BỀ RỘNG khung danh sách với
-## bề rộng thẻ TỐI THIỂU (thẻ nở đầy ô) — bố cục ngang 2 cột nên khung hẹp hơn trước.
+## bề rộng thẻ TỐI THIỂU (thẻ nở đầy ô). Lưới GÓI NẠP luôn 2 cột (xem `COIN_COLUMNS`).
 func grid_columns() -> int:
-	if not is_landscape:
+	if not is_landscape or _category == "coin":
 		return GRID_COLUMNS
 	var width := layout.scroll.size.x if layout.scroll != null else 0.0
 	if width <= 0.0:
 		return GRID_COLUMNS
 	var columns := int((width + GRID_H_SEP * 0.5) / (TILE_MIN_W + GRID_H_SEP))
 	return clampi(columns, GRID_COLUMNS, GRID_COLUMNS_MAX)
+
+
+## Cỡ THIẾT KẾ của thẻ GÓI NẠP (đọc từ `nodes/shop/coin_tile.tscn`)
+func coin_design_size() -> Vector2:
+	if _coin_size == Vector2.ZERO:
+		var probe := COIN_SCENE.instantiate() as Control
+		if probe != null:
+			_coin_size = Vector2(
+				maxf(probe.size.x, probe.custom_minimum_size.x),
+				maxf(probe.size.y, probe.custom_minimum_size.y))
+			probe.free()
+		if _coin_size.x <= 0.0 or _coin_size.y <= 0.0:
+			_coin_size = Vector2(237.5, 120.0)
+	return _coin_size
+
+
+## Cỡ THẺ GÓI NẠP đang dùng: bản DỌC giữ cỡ thiết kế (2 cột vừa khung),
+## bản NGANG cho thẻ NỞ ĐẦY Ô để lưới không bao giờ tràn ra ngoài khung cuộn.
+func coin_tile_size() -> Vector2:
+	var design := coin_design_size()
+	if not is_landscape:
+		return design
+	var width := layout.scroll.size.x if layout.scroll != null else design.x
+	var cell := (width - GRID_H_SEP * float(COIN_COLUMNS - 1)) / float(COIN_COLUMNS)
+	return Vector2(maxf(cell, TILE_MIN_W), design.y)
 
 
 ## Số món mỗi trang theo CHIỀU CAO thật của khung danh sách (đổi khi xoay màn hình)
@@ -603,8 +632,10 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 	var grid := _make_grid()
 	layout.list_box.add_child(grid)
 	var index := 0
+	var coin_size_now := coin_tile_size()
 	for item in packs:
 		var card: Control = COIN_SCENE.instantiate()
+		card.custom_minimum_size = coin_size_now
 		grid.add_child(card)
 		card.call("setup", item)
 		if card.has_signal("action_pressed"):

@@ -30,7 +30,7 @@ dots_box = NodePath("Body/RightCol/Pager/Mid/Dots")
 btn_gift = NodePath("Body/LeftCol/GiftBanner/GiftBtn")
 top_bar = NodePath("Body/LeftCol/HeaderRow/TopBar")
 wallet_bar = NodePath("Body/LeftCol/HeaderRow/Wallet")
-gift_banner = NodePath("")
+gift_banner = NodePath("Body/LeftCol/GiftBanner")
 tab_line = NodePath("Body/RightCol/TabLine")
 pad_slot = NodePath("Body/LeftCol/PadSlot")
 
