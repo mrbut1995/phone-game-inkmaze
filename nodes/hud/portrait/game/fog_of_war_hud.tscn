@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://brkqre7amkosw" path="res://scripts/nodes/hud/game/fog_of_war_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
 [ext_resource type="Texture2D" uid="uid://bhccsfs2k1hcq" path="res://assets/images/game/card_time_tall.svg" id="4_time"]
-[ext_resource type="Texture2D" uid="uid://db6j1gii6jin0" path="res://assets/images/game/card_fog_chip_time.svg" id="5_chip_time"]
+[ext_resource type="Texture2D" uid="uid://dtbkkqe0wcqkl" path="res://assets/images/game/card_stroke_time_chip.svg" id="5_chip_time"]
 [ext_resource type="Texture2D" uid="uid://cx3emdj8ihqap" path="res://assets/images/game/card_fog_sheet.svg" id="6_sheet"]
 [ext_resource type="Texture2D" uid="uid://d161agbxbf3bj" path="res://assets/images/game/card_fog_row_vision.svg" id="7_row_vision"]
 [ext_resource type="Texture2D" uid="uid://c6cbnblq7irx6" path="res://assets/images/game/card_fog_chip_blue.svg" id="8_chip_blue"]

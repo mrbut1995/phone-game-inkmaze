@@ -59,7 +59,7 @@ func _init() -> void:
 
 	var popup := Popups.get_popup(Popups.WIN)
 	assert(popup != null, "Thang man phai mo popup win (Play mode)")
-	var next_btn: TextureButton = popup.find_child("NextBtn", true, false)
+	var next_btn: BaseButton = popup.find_child("NextBtn", true, false)
 	assert(next_btn != null, "Popup win phai co nut Man ke tiep")
 	next_btn.pressed.emit()
 	await create_timer(0.4).timeout

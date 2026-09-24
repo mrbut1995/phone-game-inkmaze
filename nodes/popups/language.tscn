@@ -6,12 +6,33 @@
 [ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="4_washi"]
 [ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="5_clip"]
 [ext_resource type="Texture2D" uid="uid://b32mi2b0tw8ao" path="res://assets/images/settings/divider_dashed.svg" id="6_divider"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_cancel_normal.svg" id="7_sec_n"]
+[ext_resource type="Texture2D" uid="uid://bva6sfwg1f8ha" path="res://assets/images/popups/btn_popup_muted_normal.svg" id="7_sec_n"]
 [ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_cancel_pressed.svg" id="8_sec_p"]
 [ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_cancel_focus.svg" id="9_sec_f"]
 [ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_apply_normal.svg" id="10_pri_n"]
 [ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_apply_pressed.svg" id="11_pri_p"]
 [ext_resource type="Texture2D" path="res://assets/images/popups/btn_lang_apply_focus.svg" id="12_pri_f"]
+
+[sub_resource type="StyleBoxTexture" id="Sb_sec_n"]
+texture = ExtResource("7_sec_n")
+texture_margin_left = 16
+texture_margin_top = 12
+texture_margin_right = 16
+texture_margin_bottom = 12
+
+[sub_resource type="StyleBoxTexture" id="Sb_sec_p"]
+texture = ExtResource("8_sec_p")
+texture_margin_left = 16
+texture_margin_top = 12
+texture_margin_right = 16
+texture_margin_bottom = 12
+
+[sub_resource type="StyleBoxTexture" id="Sb_sec_f"]
+texture = ExtResource("9_sec_f")
+texture_margin_left = 16
+texture_margin_top = 12
+texture_margin_right = 16
+texture_margin_bottom = 12
 
 [node name="Base" type="Control" unique_id=1015568792]
 layout_mode = 3
@@ -115,14 +136,13 @@ theme_override_constants/separation =  10
 layout_mode = 2
 theme_override_constants/separation =  15
 
-[node name="Cancel" type="TextureButton" parent="Panel/Content/Buttons" unique_id=577269955]
+[node name="Cancel" type="Button" parent="Panel/Content/Buttons" unique_id=577269955]
 custom_minimum_size =  Vector2(90, 48)
 layout_mode = 2
-texture_normal = ExtResource("7_sec_n")
-texture_pressed = ExtResource("8_sec_p")
-texture_hover = ExtResource("7_sec_n")
-texture_focused = ExtResource("9_sec_f")
-ignore_texture_size = true
+theme_override_styles/normal = SubResource("Sb_sec_n")
+theme_override_styles/hover = SubResource("Sb_sec_n")
+theme_override_styles/pressed = SubResource("Sb_sec_p")
+theme_override_styles/focus = SubResource("Sb_sec_f")
 
 [node name="Label" type="Label" parent="Panel/Content/Buttons/Cancel" unique_id=1419882142]
 layout_mode = 1

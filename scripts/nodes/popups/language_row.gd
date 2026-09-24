@@ -1,5 +1,5 @@
 class_name LanguageRow
-extends TextureButton
+extends Button
 ## ============================================================================
 ## Một HÀNG ngôn ngữ trong popup Chọn ngôn ngữ (nodes/popups/language_row.tscn)
 ##
@@ -23,7 +23,7 @@ func setup(info: Dictionary, flag_tex: Texture2D) -> void:
 	flag.texture = flag_tex if flag_tex != null else FALLBACK_FLAG
 
 
-## Trạng thái đang chọn: nền sáng (texture_pressed) + dấu tích đỏ
+## Trạng thái đang chọn: nền sáng (StyleBox `pressed`) + dấu tích đỏ
 func set_selected(on: bool) -> void:
 	button_pressed = on
 	if check != null:

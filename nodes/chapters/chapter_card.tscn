@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d7axlwujkc2q" path="res://assets/images/chapters/halo_ready.svg" id="4_halo"]
 [ext_resource type="Texture2D" uid="uid://b8641lodni8ao" path="res://assets/images/chapters/ribbon.svg" id="5_ribbon"]
 [ext_resource type="Texture2D" uid="uid://cblgd2w5oal7n" path="res://assets/images/chapters/chip_size.svg" id="6_chip"]
-[ext_resource type="Texture2D" uid="uid://dqf24srahnepo" path="res://assets/images/chapters/bar_track.svg" id="7_track"]
+[ext_resource type="Texture2D" uid="uid://sj4637skkohg" path="res://assets/images/game/card_stroke_slider_track.svg" id="7_track"]
 [ext_resource type="Texture2D" uid="uid://dofgrbef5s2ut" path="res://assets/images/chapters/chip_need.svg" id="8_need"]
 [ext_resource type="Texture2D" uid="uid://bq3nphgm5twr7" path="res://assets/images/chapters/bar_fill.svg" id="9_fill"]
 [ext_resource type="Texture2D" uid="uid://cksv3j4fribw6" path="res://assets/images/chapters/chip_have.svg" id="10_have"]
@@ -139,7 +139,7 @@ clip_contents = true
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Track" type="TextureRect" parent="Panel/Content/Display/Info/Bar" unique_id=2116522289]
+[node name="Track" type="NinePatchRect" parent="Panel/Content/Display/Info/Bar" unique_id=2116522289]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -148,6 +148,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("7_track")
+patch_margin_left = 4
+patch_margin_top = 2
+patch_margin_right = 4
+patch_margin_bottom = 2
 
 [node name="Fill" type="TextureRect" parent="Panel/Content/Display/Info/Bar" unique_id=2113885124]
 layout_mode = 1

@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://d2u23v5xlibqv" path="res://assets/images/game/card_time.svg" id="12_0qn3a"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="13_r5anl"]
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="14_wy465"]
-[ext_resource type="Texture2D" uid="uid://fhj3yt0effxd" path="res://assets/images/game/card_floor.svg" id="15_l616p"]
+[ext_resource type="Texture2D" uid="uid://d2u23v5xlibqv" path="res://assets/images/game/card_time.svg" id="15_l616p"]
 [ext_resource type="LabelSettings" uid="uid://cb662usl7mhkf" path="res://resources/settings/text/text_game_information_value.tres" id="16_hqip1"]
 
 [node name="Hud" unique_id=1383101299 instance=ExtResource("1_pt42g")]

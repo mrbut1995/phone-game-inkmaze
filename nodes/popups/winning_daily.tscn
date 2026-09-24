@@ -2,20 +2,41 @@
 
 [ext_resource type="PackedScene" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/popups/winning_daily.gd" id="2_dailywin"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/stamp_excellent.svg" id="3_stamp"]
+[ext_resource type="Texture2D" uid="uid://bgcla6wb8btb7" path="res://assets/images/popups/stamp_done.svg" id="3_stamp"]
 [ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_normal.svg" id="6_sec_n"]
 [ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_pressed.svg" id="7_sec_p"]
 [ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_secondary_focus.svg" id="8_sec_f"]
-[ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_primary_normal.svg" id="9_pri_n"]
+[ext_resource type="Texture2D" uid="uid://70kk5gh3n1y" path="res://assets/images/popups/btn_popup_wide_normal.svg" id="9_pri_n"]
 [ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_primary_pressed.svg" id="10_pri_p"]
 [ext_resource type="Texture2D" path="res://assets/images/common/btn_paper_primary_focus.svg" id="11_pri_f"]
 [ext_resource type="Texture2D" path="res://assets/images/popups/icon_replay.svg" id="12_replay"]
 [ext_resource type="Texture2D" path="res://assets/images/shop/icon_coin_t1.svg" id="13_coin"]
 
+[sub_resource type="StyleBoxTexture" id="Sb_pri_n"]
+texture = ExtResource("9_pri_n")
+texture_margin_left = 18
+texture_margin_top = 12
+texture_margin_right = 18
+texture_margin_bottom = 12
+
+[sub_resource type="StyleBoxTexture" id="Sb_pri_p"]
+texture = ExtResource("10_pri_p")
+texture_margin_left = 18
+texture_margin_top = 12
+texture_margin_right = 18
+texture_margin_bottom = 12
+
+[sub_resource type="StyleBoxTexture" id="Sb_pri_f"]
+texture = ExtResource("11_pri_f")
+texture_margin_left = 18
+texture_margin_top = 12
+texture_margin_right = 18
+texture_margin_bottom = 12
+
 [node name="Base" instance=ExtResource("1_base")]
 script = ExtResource("2_dailywin")
 
-[node name="Stamp" type="TextureRect" parent="Panel/Content" index="0"]
+[node name="Stamp" type="NinePatchRect" parent="Panel/Content" index="0"]
 layout_mode = 1
 anchors_preset = -1
 offset_left =  311
@@ -24,6 +45,10 @@ offset_right =  389
 offset_bottom =  89
 mouse_filter = 2
 texture = ExtResource("3_stamp")
+patch_margin_left = 10
+patch_margin_top = 8
+patch_margin_right = 10
+patch_margin_bottom = 8
 
 [node name="StampTitle" type="Label" parent="Panel/Content/Stamp"]
 layout_mode = 1
@@ -245,17 +270,17 @@ texture = ExtResource("12_replay")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="DailyBtn" type="TextureButton" parent="Panel/Content" index="14"]
+[node name="DailyBtn" type="Button" parent="Panel/Content" index="14"]
 layout_mode = 1
 anchors_preset = -1
 offset_left =  162
 offset_top =  432
 offset_right =  380.5
 offset_bottom =  486
-texture_normal = ExtResource("9_pri_n")
-texture_pressed = ExtResource("10_pri_p")
-texture_hover = ExtResource("9_pri_n")
-texture_focused = ExtResource("11_pri_f")
+theme_override_styles/normal = SubResource("Sb_pri_n")
+theme_override_styles/hover = SubResource("Sb_pri_n")
+theme_override_styles/pressed = SubResource("Sb_pri_p")
+theme_override_styles/focus = SubResource("Sb_pri_f")
 
 [node name="Label" type="Label" parent="Panel/Content/DailyBtn" index="0"]
 layout_mode = 1

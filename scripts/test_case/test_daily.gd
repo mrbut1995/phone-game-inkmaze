@@ -382,7 +382,7 @@ func _section_4_popup(dm: Node) -> void:
 	_check(popup != null, "Mo duoc popup win_daily")
 	if popup != null:
 		_check(popup is WinningDailyPopup, "Popup dung class WinningDailyPopup")
-		var daily_btn := popup.get_node_or_null("Panel/Content/DailyBtn") as TextureButton
+		var daily_btn := popup.get_node_or_null("Panel/Content/DailyBtn") as BaseButton
 		var next_btn := popup.get_node_or_null("Panel/Content/NextBtn")
 		_check(daily_btn != null, "Popup co nut 'VE DAILY'")
 		_check(next_btn == null, "Popup KHONG con nut 'MAN KE TIEP'")

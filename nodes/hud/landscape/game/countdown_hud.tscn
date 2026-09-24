@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ciclopy7n6bxa" path="res://assets/images-landscape/game/card_land_time_240.svg" id="4_time"]
 [ext_resource type="Texture2D" uid="uid://c2c1tho1ce7h8" path="res://assets/images-landscape/game/card_countdown_budget.svg" id="7_sheet"]
 [ext_resource type="Texture2D" uid="uid://c4yghxsna7rw5" path="res://assets/images/game/chip_price_cheap.svg" id="8_cheap"]
-[ext_resource type="Texture2D" uid="uid://c1ni0c233oxs3" path="res://assets/images/game/chip_price_pricey.svg" id="9_pricey"]
+[ext_resource type="Texture2D" uid="uid://cuvuerlccui1t" path="res://assets/images/calendar/tag_special_mode.svg" id="9_pricey"]
 
 [node name="Hud" unique_id=1464339223 instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")
@@ -212,7 +212,7 @@ offset_right = 80.0
 offset_bottom = 30.0
 mouse_filter = 2
 
-[node name="Bg" type="TextureRect" parent="Content/ModeInformation/Sheet/Price/ChipPricey" index="0" unique_id=668428669]
+[node name="Bg" type="NinePatchRect" parent="Content/ModeInformation/Sheet/Price/ChipPricey" index="0" unique_id=668428669]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,7 +220,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("9_pricey")
-expand_mode = 1
+patch_margin_left = 8
+patch_margin_top = 4
+patch_margin_right = 8
+patch_margin_bottom = 4
 
 [node name="Label" type="Label" parent="Content/ModeInformation/Sheet/Price/ChipPricey" index="1" unique_id=618846461]
 layout_mode = 1

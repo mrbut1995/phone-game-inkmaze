@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dtbkkqe0wcqkl" path="res://assets/images/game/card_stroke_time_chip.svg" id="5_chip_time"]
 [ext_resource type="Texture2D" uid="uid://bev142p650jyr" path="res://assets/images/game/card_stroke_sheet.svg" id="6_sheet"]
 [ext_resource type="Texture2D" uid="uid://cbyh6jubl8thl" path="res://assets/images/game/card_stroke_row.svg" id="7_row"]
-[ext_resource type="Texture2D" uid="uid://dj7pkowhi2ygi" path="res://assets/images/game/card_stroke_chip.svg" id="8_chip"]
+[ext_resource type="Texture2D" uid="uid://c3as1kg3a7syq" path="res://assets/images/game/card_stroke_slider_fill.svg" id="8_chip"]
 [ext_resource type="Texture2D" uid="uid://sj4637skkohg" path="res://assets/images/game/card_stroke_slider_track.svg" id="9_track"]
 [ext_resource type="Texture2D" uid="uid://c3as1kg3a7syq" path="res://assets/images/game/card_stroke_slider_fill.svg" id="10_fill"]
 
@@ -154,7 +154,7 @@ text = "STR_HUD_OS_ROW_TITLE"
 vertical_alignment = 1
 clip_text = true
 
-[node name="Chip" type="TextureRect" parent="Content/ModeInformation/Sheet/Row1" index="1" unique_id=1797134110]
+[node name="Chip" type="NinePatchRect" parent="Content/ModeInformation/Sheet/Row1" index="1" unique_id=1797134110]
 layout_mode = 0
 offset_left = 145.0
 offset_top = 4.0
@@ -162,6 +162,10 @@ offset_right = 200.0
 offset_bottom = 17.0
 mouse_filter = 2
 texture = ExtResource("8_chip")
+patch_margin_left = 4
+patch_margin_top = 2
+patch_margin_right = 4
+patch_margin_bottom = 2
 
 [node name="ChipLabel" type="Label" parent="Content/ModeInformation/Sheet/Row1" index="2" unique_id=1599907922]
 layout_mode = 0

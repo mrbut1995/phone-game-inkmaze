@@ -13,7 +13,7 @@ const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
 
 @onready var stars_row: Control = piece("Stars")
 @onready var label_subtitle: Label = piece("Subtitle")
-@onready var btn_next: TextureButton = piece("NextBtn")
+@onready var btn_next: BaseButton = piece("NextBtn")
 @onready var value_time: Label = piece("StatValue1")
 @onready var value_steps: Label = piece("StatValue2")
 @onready var value_walls: Label = piece("StatValue3")
