@@ -1,0 +1,215 @@
+[gd_scene format=3 uid="uid://bmvx2v2n4f78q"]
+
+[ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://du0w6dt2wwbtl" path="res://scripts/nodes/hud/game/one_stroke_hud.gd" id="2_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
+[ext_resource type="Texture2D" uid="uid://deifmw0a2fh2o" path="res://assets/images-landscape/game/card_time.svg" id="4_time"]
+[ext_resource type="Texture2D" uid="uid://dtbkkqe0wcqkl" path="res://assets/images/game/card_stroke_time_chip.svg" id="5_chip_time"]
+[ext_resource type="Texture2D" uid="uid://bnxy2nsf7cqke" path="res://assets/images-landscape/game/card_one_stroke.svg" id="6_sheet"]
+[ext_resource type="Texture2D" uid="uid://cbyh6jubl8thl" path="res://assets/images/game/card_stroke_row.svg" id="7_row"]
+[ext_resource type="Texture2D" uid="uid://dj7pkowhi2ygi" path="res://assets/images/game/card_stroke_chip.svg" id="8_chip"]
+[ext_resource type="Texture2D" uid="uid://sj4637skkohg" path="res://assets/images/game/card_stroke_slider_track.svg" id="9_track"]
+[ext_resource type="Texture2D" uid="uid://c3as1kg3a7syq" path="res://assets/images/game/card_stroke_slider_fill.svg" id="10_fill"]
+
+[node name="Hud" unique_id=1332575792 instance=ExtResource("1_base")]
+theme = ExtResource("3_theme")
+script = ExtResource("2_script")
+
+[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=1299858557]
+custom_minimum_size = Vector2(135, 115)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_time")
+
+[node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=1688070]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 10.0
+offset_right = 120.0
+offset_bottom = 24.0
+theme_type_variation = &"HudTimeHead"
+text = "STR_HUD_TIME"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1180855958]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 33.0
+offset_right = 120.0
+offset_bottom = 75.0
+theme_type_variation = &"HudTimeValue"
+text = "0:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubChip" type="TextureRect" parent="Content/ModeInformation/Time" index="2" unique_id=1736322692]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 84.0
+offset_right = 107.5
+offset_bottom = 98.0
+mouse_filter = 2
+texture = ExtResource("5_chip_time")
+expand_mode = 1
+
+[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="3" unique_id=359071088]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 84.0
+offset_right = 107.5
+offset_bottom = 98.0
+theme_type_variation = &"HudTimeSub"
+text = "STR_HUD_OS_TIME_SUB"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=381796682]
+custom_minimum_size = Vector2(260, 115)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_sheet")
+patch_margin_left = 24
+patch_margin_top = 20
+patch_margin_right = 36
+patch_margin_bottom = 30
+
+[node name="Cover" type="Control" parent="Content/ModeInformation/Sheet" index="0" unique_id=2133740734]
+anchors_preset = 0
+offset_left = 17.0
+offset_top = 9.0
+offset_right = 107.0
+offset_bottom = 105.0
+mouse_filter = 2
+
+[node name="CoverHead" type="Label" parent="Content/ModeInformation/Sheet/Cover" index="0" unique_id=784679057]
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 14.0
+theme_type_variation = &"HudStrokeCoverHead"
+text = "STR_HUD_OS_COVER_HEAD"
+vertical_alignment = 1
+clip_text = true
+
+[node name="CoverValue" type="Label" parent="Content/ModeInformation/Sheet/Cover" index="1" unique_id=1384981531]
+layout_mode = 0
+offset_top = 17.0
+offset_right = 40.0
+offset_bottom = 55.0
+theme_type_variation = &"HudStrokeCoverValue"
+text = "0"
+vertical_alignment = 1
+
+[node name="CoverMax" type="Label" parent="Content/ModeInformation/Sheet/Cover" index="2" unique_id=1529854095]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 31.0
+offset_right = 90.0
+offset_bottom = 53.0
+theme_type_variation = &"HudStrokeCoverMax"
+text = "/25 Ô"
+vertical_alignment = 1
+clip_text = true
+
+[node name="CoverNote" type="Label" parent="Content/ModeInformation/Sheet/Cover" index="3" unique_id=1325855194]
+layout_mode = 0
+offset_top = 60.0
+offset_right = 90.0
+offset_bottom = 76.0
+theme_type_variation = &"HudStrokeCoverNote"
+text = "STR_HUD_OS_COVER_NOTE"
+vertical_alignment = 1
+clip_text = true
+
+[node name="Row1" type="TextureRect" parent="Content/ModeInformation/Sheet" index="1" unique_id=1340947794]
+layout_mode = 0
+offset_left = 112.5
+offset_top = 9.0
+offset_right = 247.5
+offset_bottom = 28.0
+mouse_filter = 2
+texture = ExtResource("7_row")
+expand_mode = 1
+
+[node name="RowTitle" type="Label" parent="Content/ModeInformation/Sheet/Row1" index="0" unique_id=332791951]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 2.0
+offset_right = 90.0
+offset_bottom = 16.0
+theme_type_variation = &"HudStrokeRowTitle"
+text = "STR_HUD_OS_ROW_TITLE"
+vertical_alignment = 1
+clip_text = true
+
+[node name="Chip" type="TextureRect" parent="Content/ModeInformation/Sheet/Row1" index="1" unique_id=1098370274]
+layout_mode = 0
+offset_left = 87.5
+offset_top = 2.5
+offset_right = 130.0
+offset_bottom = 15.5
+mouse_filter = 2
+texture = ExtResource("8_chip")
+expand_mode = 1
+
+[node name="ChipLabel" type="Label" parent="Content/ModeInformation/Sheet/Row1" index="2" unique_id=1770284484]
+layout_mode = 0
+offset_left = 87.5
+offset_top = 2.5
+offset_right = 130.0
+offset_bottom = 15.5
+theme_type_variation = &"HudScaleChip"
+text = "STR_HUD_OS_CHIP"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+
+[node name="Row2" type="Control" parent="Content/ModeInformation/Sheet" index="2" unique_id=1840500993]
+anchors_preset = 0
+offset_left = 112.5
+offset_top = 34.0
+offset_right = 247.5
+offset_bottom = 105.0
+mouse_filter = 2
+
+[node name="SliderTrack" type="TextureRect" parent="Content/ModeInformation/Sheet/Row2" index="0" unique_id=1904494473]
+layout_mode = 0
+offset_right = 132.5
+offset_bottom = 7.0
+mouse_filter = 2
+texture = ExtResource("9_track")
+expand_mode = 1
+
+[node name="SliderFillClip" type="Control" parent="Content/ModeInformation/Sheet/Row2" index="1" unique_id=1499816327]
+clip_contents = true
+anchors_preset = 0
+offset_right = 132.5
+offset_bottom = 7.0
+mouse_filter = 2
+
+[node name="Fill" type="TextureRect" parent="Content/ModeInformation/Sheet/Row2/SliderFillClip" index="0" unique_id=1089820373]
+layout_mode = 0
+offset_right = 132.5
+offset_bottom = 7.0
+mouse_filter = 2
+texture = ExtResource("10_fill")
+expand_mode = 1
+
+[node name="RowNote" type="Label" parent="Content/ModeInformation/Sheet/Row2" index="2" unique_id=1325257555]
+layout_mode = 0
+offset_top = 14.0
+offset_right = 132.5
+offset_bottom = 28.0
+theme_type_variation = &"HudStrokeRowNote"
+text = "STR_HUD_OS_ROW_NOTE"
+vertical_alignment = 1
+clip_text = true
+
+[node name="RowTip" type="Label" parent="Content/ModeInformation/Sheet/Row2" index="3" unique_id=1296119541]
+layout_mode = 0
+offset_top = 28.0
+offset_right = 132.5
+offset_bottom = 43.0
+theme_type_variation = &"HudStrokeRowTip"
+text = "STR_HUD_OS_ROW_TIP"
+vertical_alignment = 1
+clip_text = true

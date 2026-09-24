@@ -77,16 +77,16 @@ func _ready() -> void:
 
 ## Gắn node theo layout đang hiển thị (bản dọc và bản ngang lồng node khác nhau)
 func _bind_refs() -> void:
-	btn_back = ui_path("TopBar/Back") as BaseButton
-	btn_continue = ui_path("ContinueButton") as BaseButton
-	lbl_continue = ui_path("ContinueButton/Label") as Label
-	lbl_stars = ui("Count") as Label
-	lbl_chapter = ui_path("ChapterBanner/TitleContainer/Title") as Label
-	lbl_change_chapter = ui_path("ChapterBanner/TitleContainer/ChangeChapter") as Label
-	banner = ui_path("ChapterBanner") as Control
-	scroll = ui_path("CardArea/Scroll") as ScrollContainer
-	pages_host = ui_path("CardArea/Scroll/Pages") as HBoxContainer
-	dots_box = ui("PaginationDots") as HBoxContainer
+	btn_back = ui_path("Content/InformationArea/TopBar/Back") as BaseButton
+	btn_continue = ui_path("Content/InformationArea/ContinueButton") as BaseButton
+	lbl_continue = ui_path("Content/InformationArea/ContinueButton/Label") as Label
+	lbl_stars = ui_path("Content/InformationArea/Count") as Label
+	lbl_chapter = ui_path("Content/InformationArea/ChapterBanner/TitleContainer/Title") as Label
+	lbl_change_chapter = ui_path("Content/InformationArea/ChapterBanner/TitleContainer/ChangeChapter") as Label
+	banner = ui_path("Content/InformationArea/ChapterBanner") as Control
+	scroll = ui_path("Content/CardArea/Scroll") as ScrollContainer
+	pages_host = ui_path("Content/CardArea/Scroll/Pages") as HBoxContainer
+	dots_box = ui_path("Content/InformationArea/PaginationDots") as HBoxContainer
 
 
 ## Nối signal + hiệu ứng (gọi lại được khi xoay màn hình, không nhân đôi connection)

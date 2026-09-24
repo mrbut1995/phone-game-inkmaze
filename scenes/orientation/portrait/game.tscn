@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b7gfhxvtp5tup" path="res://assets/images/game/btn_restart_pressed.svg" id="8_bhx41"]
 [ext_resource type="Texture2D" uid="uid://spyw1sa7uxc5" path="res://assets/images/game/btn_restart_disabled.svg" id="9_qnb83"]
 [ext_resource type="Texture2D" uid="uid://comsw702ysh8j" path="res://assets/images/game/btn_restart_focus.svg" id="10_sww3w"]
-[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/portrait.tscn" id="14_nepv3"]
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="14_nepv3"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="28_card_label"]
 [ext_resource type="Texture2D" uid="uid://cwg3rpuj0djq3" path="res://assets/images/game/btn_help_normal.svg" id="47_help_n"]
 [ext_resource type="Texture2D" uid="uid://350mhquc4uwi" path="res://assets/images/game/btn_help_pressed.svg" id="48_help_p"]

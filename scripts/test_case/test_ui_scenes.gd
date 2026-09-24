@@ -268,7 +268,7 @@ func _section_7_board_hud_popup() -> void:
 	_entry(footstep != null, "ink_footstep.tscn instantiate ra InkFootstep")
 	if footstep != null:
 		_entry(footstep.mark != null, "vệt mực có node con 'Mark' (parent=\".\")")
-		footstep.setup(Vector2(100, 200), null, Color(0.2, 0.3, 0.9))
+		footstep.setup(Vector2(50, 100), null, Color(0.2, 0.3, 0.9))
 		_entry(footstep.size == Vector2(36, 36) and footstep.position == Vector2(82, 182),
 			"setup() đặt vệt mực đúng TÂM ô (36×36)")
 		_entry(is_equal_approx(footstep.mark.modulate.a, 0.45), "độ mờ vệt mực 0.45")

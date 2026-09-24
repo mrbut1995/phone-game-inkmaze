@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/nodes/game/ink_stroke.gd" id="1_ink"]
 
 [node name="Line2D" type="Line2D" unique_id=1359281917]
-points = PackedVector2Array(0, 0, 0, 180)
-width = 40.0
+points = PackedVector2Array(0, 0, 0, 90)
+width = 20.0
 default_color = Color(0.95, 0.228, 0.44460016, 0.57254905)
 joint_mode = 2
 begin_cap_mode = 2

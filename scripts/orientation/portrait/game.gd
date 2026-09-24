@@ -1,4 +1,4 @@
-extends BasePortraitLayout
+extends Control
 ## ============================================================================
 ## BỐ CỤC DỌC của MÀN CHƠI (root của `scenes/orientation/portrait/game.tscn`).
 ##
