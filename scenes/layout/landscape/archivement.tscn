@@ -16,177 +16,252 @@
 [node name="Landscape" unique_id=1597886665 node_paths=PackedStringArray("btn_back", "overview_bar", "overview_fill", "overview_pct", "overview_summary", "tabs_box", "card_area", "scroll", "pages_host", "dots_box", "empty_label", "stamp_label") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/Back")
-overview_bar = NodePath("Sheet/Overview/Bar")
-overview_fill = NodePath("Sheet/Overview/Bar/Fill")
-overview_pct = NodePath("Sheet/Overview/Percent")
-overview_summary = NodePath("Sheet/Overview/Summary")
-tabs_box = NodePath("Sheet/Tabs")
-card_area = NodePath("Sheet/CardArea")
-scroll = NodePath("Sheet/CardArea/Scroll")
-pages_host = NodePath("Sheet/CardArea/Scroll/Pages")
-dots_box = NodePath("Sheet/Dots")
-empty_label = NodePath("Sheet/EmptyLabel")
-stamp_label = NodePath("Sheet/Footer/Stamp/Label")
+overview_bar = NodePath("Sheet/Body/LeftCol/Overview/Bar")
+overview_fill = NodePath("Sheet/Body/LeftCol/Overview/Bar/Fill")
+overview_pct = NodePath("Sheet/Body/LeftCol/Overview/Percent")
+overview_summary = NodePath("Sheet/Body/LeftCol/Overview/Summary")
+tabs_box = NodePath("Sheet/Body/LeftCol/Tabs")
+card_area = NodePath("Sheet/Body/RightCol/CardArea")
+scroll = NodePath("Sheet/Body/RightCol/CardArea/Scroll")
+pages_host = NodePath("Sheet/Body/RightCol/CardArea/Scroll/Pages")
+dots_box = NodePath("Sheet/Body/RightCol/Dots")
+empty_label = NodePath("Sheet/Body/RightCol/CardArea/EmptyLabel")
+stamp_label = NodePath("Sheet/Body/LeftCol/Footer/Stamp/Label")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="TopBar" type="HBoxContainer" parent="." index="0" unique_id=1782657395]
+[node name="TopBar" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.03
-anchor_right = 0.95
-anchor_bottom = 0.1
-metadata/_edit_use_anchors_ = true
+anchor_left = 0.03125
+anchor_top = 0.024
+anchor_right = 0.96875
+anchor_bottom = 0.104
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
 
-[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=244459228]
-custom_minimum_size = Vector2(133, 133)
+[node name="Back" type="TextureButton" parent="TopBar"]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
 texture_normal = ExtResource("3_back_n")
 texture_pressed = ExtResource("4_back_p")
 texture_hover = ExtResource("3_back_n")
 texture_disabled = ExtResource("3_back_n")
 texture_focused = ExtResource("3_back_n")
 ignore_texture_size = true
-stretch_mode = 0
+stretch_mode = 5
 
-[node name="Title" type="Label" parent="TopBar" index="1" unique_id=2053878608]
+[node name="Title" type="Label" parent="TopBar"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LevelsTitle"
-theme_override_font_sizes/font_size = 71
 text = "STR_ACH_TITLE"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Sheet" type="TextureRect" parent="." index="1" unique_id=1757512586]
+[node name="Sheet" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.125
-anchor_right = 0.95
-anchor_bottom = 0.985
+anchor_left = 0.03125
+anchor_top = 0.115
+anchor_right = 0.96875
+anchor_bottom = 0.963
 mouse_filter = 2
 texture = ExtResource("5_sheet")
 expand_mode = 1
 
-[node name="Tape" type="TextureRect" parent="Sheet" index="0" unique_id=1969744156]
-layout_mode = 0
-offset_left = 347.0
-offset_top = -25.0
-offset_right = 573.0
-offset_bottom = 29.0
+[node name="Tape" type="TextureRect" parent="Sheet"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = -0.03
+anchor_right = 0.62
+anchor_bottom = 0.028
 mouse_filter = 2
 texture = ExtResource("6_tape")
+expand_mode = 1
 
-[node name="Clip" type="TextureRect" parent="Sheet" index="1" unique_id=2032879212]
-layout_mode = 0
-offset_left = 103.0
-offset_top = -20.0
-offset_right = 149.0
-offset_bottom = 61.0
+[node name="Clip" type="TextureRect" parent="Sheet"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = -0.024
+anchor_right = 0.165
+anchor_bottom = 0.06
 mouse_filter = 2
 texture = ExtResource("7_clip")
+expand_mode = 1
 
-[node name="Overview" type="TextureRect" parent="Sheet" index="2" unique_id=178331372]
+[node name="Body" type="HBoxContainer" parent="Sheet"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.030000001
-anchor_top = 0.015
-anchor_right = 0.97
-anchor_bottom = 0.14400001
-offset_bottom = -20.433601
+anchor_left = 0.035
+anchor_top = 0.05
+anchor_right = 0.975
+anchor_bottom = 0.96
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="LeftCol" type="VBoxContainer" parent="Sheet/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.38
+theme_override_constants/separation = 10
+
+[node name="Overview" type="TextureRect" parent="Sheet/Body/LeftCol"]
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
 mouse_filter = 2
+expand_mode = 1
 texture = ExtResource("8_overview")
 
-[node name="Icon" type="TextureRect" parent="Sheet/Overview" index="0" unique_id=1109172625]
+[node name="Icon" type="TextureRect" parent="Sheet/Body/LeftCol/Overview"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.14
-anchor_right = 0.075
-anchor_bottom = 0.86
+anchor_left = 0.035
+anchor_top = 0.1
+anchor_right = 0.17
+anchor_bottom = 0.6
 mouse_filter = 2
 texture = ExtResource("9_trophy")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="Sheet/Overview" index="1" unique_id=789103868]
+[node name="Title" type="Label" parent="Sheet/Body/LeftCol/Overview"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.09
-anchor_top = 0.08
-anchor_right = 0.7
-anchor_bottom = 0.5
+anchor_left = 0.2
+anchor_top = 0.06
+anchor_right = 0.97
+anchor_bottom = 0.44
 theme_type_variation = &"AchOverviewTitle"
 text = "STR_ACH_OVERVIEW_TITLE"
 vertical_alignment = 1
-
-[node name="Bar" type="Control" parent="Sheet/Overview" index="2" unique_id=1879238096]
-clip_contents = true
-layout_mode = 1
-anchor_left = 0.05
-anchor_top = 0.52
-anchor_right = 0.62
-anchor_bottom = 0.86
+text_overrun_behavior = 3
 mouse_filter = 2
 
-[node name="Track" type="TextureRect" parent="Sheet/Overview/Bar" index="0" unique_id=1188268661]
+[node name="Bar" type="Control" parent="Sheet/Body/LeftCol/Overview"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.5
+anchor_right = 0.72
+anchor_bottom = 0.78
+mouse_filter = 2
+
+[node name="Track" type="TextureRect" parent="Sheet/Body/LeftCol/Overview/Bar"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 mouse_filter = 2
 texture = ExtResource("10_track")
 
-[node name="Fill" type="TextureRect" parent="Sheet/Overview/Bar" index="1" unique_id=1821990491]
+[node name="Fill" type="TextureRect" parent="Sheet/Body/LeftCol/Overview/Bar"]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
 offset_left = 1.0
 offset_top = 1.0
 offset_right = 1.0
-offset_bottom = 13.0
+offset_bottom = -1.0
 mouse_filter = 2
 texture = ExtResource("11_fill")
 
-[node name="Percent" type="Label" parent="Sheet/Overview" index="3" unique_id=1761473630]
+[node name="Percent" type="Label" parent="Sheet/Body/LeftCol/Overview"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.66
-anchor_top = 0.05
-anchor_right = 0.8
-anchor_bottom = 0.5
+anchor_left = 0.74
+anchor_top = 0.42
+anchor_right = 0.98
+anchor_bottom = 0.86
 theme_type_variation = &"AchOverviewPct"
 text = "0%"
+horizontal_alignment = 2
 vertical_alignment = 1
+mouse_filter = 2
 
-[node name="Summary" type="Label" parent="Sheet/Overview" index="4" unique_id=194683711]
+[node name="Summary" type="Label" parent="Sheet/Body/LeftCol/Overview"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.66
-anchor_top = 0.52
-anchor_right = 0.98
-anchor_bottom = 0.95
+anchor_left = 0.04
+anchor_top = 0.82
+anchor_right = 0.97
+anchor_bottom = 1.0
 theme_type_variation = &"AchOverviewSummary"
 text = "Đã mở: 0 / 0 Danh hiệu • Điểm: 0 AP"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
-
-[node name="Tabs" type="HBoxContainer" parent="Sheet" index="3" unique_id=583791881]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.2
-anchor_top = 0.115
-anchor_right = 0.8
-anchor_bottom = 0.175
-theme_override_constants/separation = 10
-
-[node name="CardArea" type="Control" parent="Sheet" index="4" unique_id=573368042]
-layout_mode = 1
-anchor_left = 0.03
-anchor_top = 0.19
-anchor_right = 0.97
-anchor_bottom = 0.86
 mouse_filter = 2
 
-[node name="Scroll" type="ScrollContainer" parent="Sheet/CardArea" index="0" unique_id=1323615310]
+[node name="Tabs" type="GridContainer" parent="Sheet/Body/LeftCol"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="Spacer" type="Control" parent="Sheet/Body/LeftCol"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Footer" type="VBoxContainer" parent="Sheet/Body/LeftCol"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Quote" type="Label" parent="Sheet/Body/LeftCol/Footer"]
+layout_mode = 2
+theme_type_variation = &"AchQuote"
+text = "STR_ACH_QUOTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+mouse_filter = 2
+
+[node name="Stamp" type="Control" parent="Sheet/Body/LeftCol/Footer"]
+custom_minimum_size = Vector2(150, 46)
+layout_mode = 2
+size_flags_horizontal = 4
+rotation = -0.10471976
+pivot_offset = Vector2(75, 23)
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Sheet/Body/LeftCol/Footer/Stamp"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 46.0
+mouse_filter = 2
+texture = ExtResource("12_stamp")
+
+[node name="Label" type="Label" parent="Sheet/Body/LeftCol/Footer/Stamp"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 46.0
+theme_type_variation = &"AchBadgesStamp"
+text = "0/0 BADGES"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="RightCol" type="VBoxContainer" parent="Sheet/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.62
+theme_override_constants/separation = 6
+
+[node name="CardArea" type="Control" parent="Sheet/Body/RightCol"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Sheet/Body/RightCol/CardArea"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -197,73 +272,26 @@ horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 scroll_deadzone = 12
 
-[node name="Pages" type="HBoxContainer" parent="Sheet/CardArea/Scroll" index="0" unique_id=2093441984]
+[node name="Pages" type="HBoxContainer" parent="Sheet/Body/RightCol/CardArea/Scroll"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="EmptyLabel" type="Label" parent="Sheet" index="5" unique_id=330636771]
+[node name="EmptyLabel" type="Label" parent="Sheet/Body/RightCol/CardArea"]
 visible = false
-layout_mode = 0
-offset_left = 110.0
-offset_top = 760.0
-offset_right = 820.0
-offset_bottom = 800.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_type_variation = &"AchEmpty"
 text = "STR_ACH_EMPTY"
 horizontal_alignment = 1
 vertical_alignment = 1
+mouse_filter = 2
 
-[node name="Dots" type="HBoxContainer" parent="Sheet" index="6" unique_id=616256028]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4
-anchor_top = 0.875
-anchor_right = 0.6
-anchor_bottom = 0.91
+[node name="Dots" type="HBoxContainer" parent="Sheet/Body/RightCol"]
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
-
-[node name="Footer" type="Control" parent="Sheet" index="7" unique_id=217962887]
-layout_mode = 1
-anchor_left = 0.03
-anchor_top = 0.915
-anchor_right = 0.97
-anchor_bottom = 0.985
-mouse_filter = 2
-
-[node name="Quote" type="Label" parent="Sheet/Footer" index="0" unique_id=617506191]
-layout_mode = 0
-offset_left = 8.080002
-offset_top = -0.4260254
-offset_right = 718.08
-offset_bottom = 29.573975
-theme_type_variation = &"AchQuote"
-text = "STR_ACH_QUOTE"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Stamp" type="Control" parent="Sheet/Footer" index="1" unique_id=751884363]
-layout_mode = 1
-anchor_left = 0.88
-anchor_top = 0.05
-anchor_right = 0.995
-anchor_bottom = 0.95
-rotation = -0.10471976
-pivot_offset = Vector2(75, 23)
-mouse_filter = 2
-
-[node name="Bg" type="TextureRect" parent="Sheet/Footer/Stamp" index="0" unique_id=576444892]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 46.0
-mouse_filter = 2
-texture = ExtResource("12_stamp")
-
-[node name="Label" type="Label" parent="Sheet/Footer/Stamp" index="1" unique_id=678964568]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 46.0
-theme_type_variation = &"AchBadgesStamp"
-text = "0/0 BADGES"
-horizontal_alignment = 1
-vertical_alignment = 1

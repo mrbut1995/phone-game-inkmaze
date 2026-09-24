@@ -1,53 +1,19 @@
 [gd_scene format=3 uid="uid://dydi6np3xsxp0"]
 
-[ext_resource type="Texture2D" uid="uid://d31ke2edecxsf" path="res://assets/images/archivements/tab_inactive.svg" id="1_buoix"]
+[ext_resource type="Texture2D" uid="uid://c58bm3cc0tiuc" path="res://assets/images/ranking/tab_normal.svg" id="1_art"]
 [ext_resource type="Script" uid="uid://icpf5ojff2kn" path="res://scripts/nodes/ranking/tab_button.gd" id="1_script"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j82or"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("1_buoix")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_buoix"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("1_buoix")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c7npt"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("1_buoix")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_elaoc"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("1_buoix")
-
 [node name="TabButton" type="Button" unique_id=850703946]
-anchors_preset = -1
-anchor_right = 0.22700001
-anchor_bottom = 0.027
-offset_right = -0.08000946
-offset_bottom = 1.1599998
+custom_minimum_size = Vector2(120, 26)
+offset_right = 120.0
+offset_bottom = 26.0
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_j82or")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_buoix")
-theme_override_styles/hover = SubResource("StyleBoxTexture_c7npt")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_elaoc")
 script = ExtResource("1_script")
-texture_normal = ExtResource("1_buoix")
-texture_hover = ExtResource("1_buoix")
-texture_pressed = ExtResource("1_buoix")
-texture_disabled = ExtResource("1_buoix")
-texture_focus = ExtResource("1_buoix")
+texture_normal = ExtResource("1_art")
+texture_hover = ExtResource("1_art")
+texture_pressed = ExtResource("1_art")
+texture_disabled = ExtResource("1_art")
+texture_focus = ExtResource("1_art")
 patch_margin_left = 12.0
 patch_margin_right = 12.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"

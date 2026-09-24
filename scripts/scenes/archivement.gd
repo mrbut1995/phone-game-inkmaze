@@ -23,8 +23,9 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const CARDS_PER_PAGE := 5
 ## Bản NGANG: lưới nhiều cột (thẻ 710px) × số hàng vừa khung cuộn
 const PORTRAIT_COLUMNS := 1
-const CARD_SIZE := Vector2(710.0, 170.0)
-const GRID_SEP := Vector2(20.0, 20.0)
+## Cỡ 1 thẻ danh hiệu + khe (đọc theo `nodes/archivements/card.tscn`: 355×85 · khe 10)
+const CARD_SIZE := Vector2(355.0, 85.0)
+const GRID_SEP := Vector2(10.0, 10.0)
 const SNAP_TIME := 0.22
 const DRAG_THRESHOLD := 8.0
 const CLICK_LOCK_TIME := 0.15
@@ -66,6 +67,10 @@ func _ready() -> void:
 	_reload(true)
 	call_deferred("_apply_layout")
 	call_deferred("_go_to_page", _page_for_first_claimable(), false)
+	# Bố cục dùng CONTAINER ⇒ khung thẻ chỉ có cỡ thật sau frame đầu → áp lại layout lần nữa
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_apply_layout()
 
 
 ## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
@@ -73,6 +78,19 @@ func _bind_refs() -> void:
 	layout = active_layout() as ArchivementLayout
 	if layout == null:
 		push_warning("archivement: bố cục chưa gắn ArchivementLayout — thiếu binding trong scenes/layout/<hướng>/archivement.tscn")
+
+
+## Cỡ KHUNG NHÌN thật của vùng thẻ.
+## Dùng `card_area` (khung cha do container dàn — ổn định) thay vì `scroll.size`: mỗi trang được đặt
+## `custom_minimum_size.y = khung` nên đọc từ scroll sẽ khiến min-size của trang đẩy scroll cao lên
+## (vòng lặp) ngay khi bố cục chuyển sang dùng container.
+func _viewport_size() -> Vector2:
+	var area := layout.card_area as Control
+	if area != null and area.size.x > 0.0 and area.size.y > 0.0:
+		return area.size
+	if layout.scroll != null and layout.scroll.size.y < 1200.0:
+		return layout.scroll.size
+	return Vector2.ZERO
 
 
 ## Số thẻ mỗi trang: bản DỌC = 5 (1 cột × 5 hàng); bản NGANG = lưới nhiều cột × số hàng vừa khung
@@ -83,7 +101,7 @@ func _cards_per_page() -> int:
 func _columns_per_page() -> int:
 	if not is_landscape:
 		return PORTRAIT_COLUMNS
-	var width := layout.scroll.size.x if layout.scroll != null else 0.0
+	var width := _viewport_size().x
 	if width <= 0.0:
 		return PORTRAIT_COLUMNS
 	var columns := int((width + GRID_SEP.x * 0.5) / (CARD_SIZE.x + GRID_SEP.x))
@@ -93,7 +111,7 @@ func _columns_per_page() -> int:
 func _rows_per_page() -> int:
 	if not is_landscape:
 		return CARDS_PER_PAGE
-	var height := layout.scroll.size.y if layout.scroll != null else 0.0
+	var height := _viewport_size().y
 	if height <= 0.0:
 		return 3
 	var rows := int((height + GRID_SEP.y * 0.5) / (CARD_SIZE.y + GRID_SEP.y))
@@ -337,15 +355,19 @@ func _on_dot_pressed(index: int) -> void:
 func _apply_layout() -> void:
 	if layout.scroll == null or layout.pages_host == null:
 		return
+	var view_now := _viewport_size()
+	if view_now.x <= 0.0 or view_now.y <= 0.0:
+		return          # khung chưa dàn xong — sẽ được áp lại ở frame sau
 	var columns := _columns_per_page()
 	if columns != _current_columns:
 		# Khung cuộn đổi bề rộng (xoay màn hình) -> chia lại trang theo số cột mới
 		_current_columns = columns
 		_reload(true)
 	_page = clampi(_page, 0, maxi(_page_count - 1, 0))
-	_page_width = maxf(layout.scroll.size.x, 1.0)
+	var view := _viewport_size()
+	_page_width = maxf(view.x, 1.0)
 	for page in layout.pages_host.get_children():
-		page.custom_minimum_size = Vector2(_page_width, layout.scroll.size.y)
+		page.custom_minimum_size = Vector2(_page_width, view.y)
 	_stop_tween()
 	layout.scroll.scroll_horizontal = int(float(_page) * _page_width)
 
