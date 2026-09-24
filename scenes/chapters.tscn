@@ -2,6 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://dbbunsu78eokx" path="res://scripts/scenes/chapters.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="Texture2D" uid="uid://dwt0twcawg3ti" path="res://assets/images/chapters/wallet_chip.svg" id="5_wallet"]
+[ext_resource type="Texture2D" uid="uid://c66v5bmdvegnd" path="res://assets/images/common/star_highlight.svg" id="6_star"]
+[ext_resource type="Texture2D" uid="uid://cjkjkjl76yinx" path="res://assets/images/chapters/banner_rule.svg" id="7_banner"]
+[ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="8_bulb"]
+[ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="9_cta_n"]
+[ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="10_cta_p"]
+[ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="11_cta_f"]
+[ext_resource type="Texture2D" uid="uid://cusujyhrv8npo" path="res://assets/images/level_selector/icon_play_triangle.svg" id="12_play_icon"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
 [ext_resource type="PackedScene" path="res://scenes/layout/portrait/chapters.tscn" id="L_Portrait"]
 [ext_resource type="PackedScene" path="res://scenes/layout/landscape/chapters.tscn" id="L_Landscape"]
@@ -13,3 +23,4 @@ script = ExtResource("2_script")
 
 [node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
 
+[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]

@@ -13,5 +13,6 @@ script = ExtResource("2_eb6dy")
 [node name="Portrait" parent="." index="1" unique_id=1425168834 instance=ExtResource("L_main_portrait")]
 layout_mode = 1
 
+[node name="Landscape" parent="." index="2" unique_id=2059472326 instance=ExtResource("L_main_landscape")]
 layout_mode = 1
 anchors_preset = -1

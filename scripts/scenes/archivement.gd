@@ -59,6 +59,7 @@ func _ready() -> void:
 		layout.btn_back.pressed.connect(_on_back_pressed)
 		UIAnim.attach_press_bounce(layout.btn_back)
 	_connect_manager()
+	orientation_changed.connect(_on_orientation_changed)
 
 	Archivement.refresh()
 	_build_tabs()
@@ -118,6 +119,10 @@ func _rows_per_page() -> int:
 
 
 ## Xoay màn hình: gắn lại node của layout mới rồi chia lại trang theo số cột mới
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_current_columns = _columns_per_page()

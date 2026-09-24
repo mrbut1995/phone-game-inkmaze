@@ -27,10 +27,14 @@ const DESIGN_WIDTH := 540
 ## dùng trọn bề ngang màn hình; màn nào hẹp hơn thì cột đúng bằng bề ngang canvas.
 const MAX_CONTENT_WIDTH := 1440.0
 
-## Game chỉ chạy DỌC (portrait) — giữ hằng số này để các màn cũ không phải sửa.
-const is_landscape := false
+## Phát khi màn hình ĐỔI HƯỚNG (dọc ⇄ ngang) để màn con đổi layout Portrait ⇄ Landscape.
+signal orientation_changed(is_landscape: bool)
+
+## Màn hình đang là NGANG hay không (canvas rộng hơn cao)
+var is_landscape := false
 
 var _responsive_ready := false
+var _orientation_ready := false
 
 
 func _enter_tree() -> void:
@@ -80,30 +84,59 @@ func _apply_responsive_layout() -> void:
 	if canvas.x <= 0.0 or canvas.y <= 0.0:
 		return
 
-	# Màn chỉ có 1 bố cục DỌC: neo phủ kín cột nội dung
-	var portrait_ctrl := get_node_or_null("Portrait") as Control
-	if portrait_ctrl != null:
-		portrait_ctrl.visible = true
-		if portrait_ctrl.anchor_right != 1.0 or portrait_ctrl.anchor_bottom != 1.0 \
-				or portrait_ctrl.offset_right != 0.0 or portrait_ctrl.offset_bottom != 0.0:
-			portrait_ctrl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var landscape_layout := get_node_or_null("Landscape") as CanvasItem
+	var portrait_layout := get_node_or_null("Portrait") as CanvasItem
+	var landscape_now := canvas.x > canvas.y
+	var use_landscape := landscape_now and landscape_layout != null
 
-	# Cột nội dung canh giữa (tablet 3:4 nở tối đa 1440, còn lại đúng 1080 thiết kế)
-	var column := clampf(canvas.x, DESIGN_WIDTH, MAX_CONTENT_WIDTH)
-	var target_pos := Vector2(floorf((canvas.x - column) * 0.5), 0.0)
-	var target_size := Vector2(column, canvas.y)
-	if position != target_pos:
-		position = target_pos
-	if size != target_size:
-		size = target_size
+	if portrait_layout != null:
+		portrait_layout.visible = not use_landscape
+	if landscape_layout != null:
+		landscape_layout.visible = use_landscape
+	# Neo 2 layout phụ kín khung nội dung: layout đang ẨN vẫn phải co theo cột,
+	# nếu không các node con giữ kích thước của lần NGANG trước đó (bị báo "tràn màn hình").
+	var portrait_ctrl: Control = portrait_layout as Control
+	var landscape_ctrl: Control = landscape_layout as Control
+	for ctrl: Control in [portrait_ctrl, landscape_ctrl]:
+		if ctrl == null:
+			continue
+		if ctrl.anchor_right != 1.0 or ctrl.anchor_bottom != 1.0 \
+				or ctrl.offset_right != 0.0 or ctrl.offset_bottom != 0.0:
+			ctrl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+
+	if use_landscape:
+		# Bố cục NGANG tự dàn bằng anchors/container tỉ lệ 0..1 → root phủ KÍN canvas
+		if position != Vector2.ZERO:
+			position = Vector2.ZERO
+		if size != canvas:
+			size = canvas
+	else:
+		var column := DESIGN_WIDTH
+		if landscape_layout != null:
+			# Màn đã có layout ngang → màn dọc nở tối đa 1440 (dùng hết bề ngang tablet 3:4)
+			column = clampf(canvas.x, DESIGN_WIDTH, MAX_CONTENT_WIDTH)
+		var target_pos := Vector2(floorf((canvas.x - column) * 0.5), 0.0)
+		var target_size := Vector2(column, canvas.y)
+		if position != target_pos:
+			position = target_pos
+		if size != target_size:
+			size = target_size
 	_apply_background_sides(canvas)
 
+	if not _orientation_ready or landscape_now != is_landscape:
+		_orientation_ready = true
+		is_landscape = landscape_now
+		orientation_changed.emit(is_landscape)
 
-## Layout đang hiển thị — bản PORTRAIT thuần: màn nào có layout `Portrait` thì trả về nó,
-## màn chưa tách layout thì trả về chính root.
+
+## Layout đang hiển thị (Portrait / Landscape) — nơi chứa toàn bộ UI của màn hình.
+## Màn chưa tách layout thì trả về chính root.
 func active_layout() -> Node:
+	var landscape_layout := get_node_or_null("Landscape")
+	if landscape_layout != null and is_landscape:
+		return landscape_layout
 	var portrait_layout := get_node_or_null("Portrait")
-	if portrait_layout != null:
+	if portrait_layout != null and landscape_layout != null:
 		return portrait_layout
 	return self
 

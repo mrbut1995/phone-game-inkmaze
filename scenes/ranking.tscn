@@ -2,6 +2,21 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://brqfldyq6omr" path="res://scripts/scenes/ranking.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="Texture2D" uid="uid://dw7fdybdrqkc5" path="res://assets/images/ranking/rank_sheet.svg" id="5_sheet"]
+[ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="6_tape"]
+[ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="7_clip"]
+[ext_resource type="Texture2D" uid="uid://iurtsy651xdc" path="res://assets/images/icons/icon_trophy.svg" id="8_trophy"]
+[ext_resource type="Texture2D" uid="uid://cf0f2d1fggwao" path="res://assets/images/ranking/chip_scope.svg" id="9_chip"]
+[ext_resource type="Texture2D" uid="uid://b32mi2b0tw8ao" path="res://assets/images/settings/divider_dashed.svg" id="10_divider"]
+[ext_resource type="Texture2D" uid="uid://cner7shdkpnki" path="res://assets/images/ranking/medal_gold.svg" id="11_medal_g"]
+[ext_resource type="Texture2D" uid="uid://1p2jx8njb2ip" path="res://assets/images/ranking/medal_silver.svg" id="12_medal_s"]
+[ext_resource type="Texture2D" uid="uid://cjff0gd3yjgtm" path="res://assets/images/ranking/medal_bronze.svg" id="13_medal_b"]
+[ext_resource type="Texture2D" uid="uid://gc3clkcslgus" path="res://assets/images/ranking/podium_gold.svg" id="14_podium_g"]
+[ext_resource type="Texture2D" uid="uid://0psdvx3i3rs2" path="res://assets/images/ranking/podium_silver.svg" id="15_podium_s"]
+[ext_resource type="Texture2D" uid="uid://d2327daxklpoj" path="res://assets/images/ranking/podium_bronze.svg" id="16_podium_b"]
+[ext_resource type="Texture2D" uid="uid://c5wka1cl37y6e" path="res://assets/images/ranking/my_rank_bar.svg" id="17_mybar"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="18_theme"]
 [ext_resource type="PackedScene" uid="uid://blqmr7o13tvys" path="res://scenes/layout/portrait/ranking.tscn" id="L_Portrait"]
 [ext_resource type="PackedScene" uid="uid://dk7hw8k4h4rom" path="res://scenes/layout/landscape/ranking.tscn" id="L_Landscape"]
@@ -13,3 +28,4 @@ script = ExtResource("2_script")
 
 [node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
 
+[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]

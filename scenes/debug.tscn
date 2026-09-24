@@ -16,3 +16,4 @@ script = ExtResource("2_debug")
 
 [node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
 
+[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]

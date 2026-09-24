@@ -1,0 +1,413 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9400 1500" width="100%" height="100%" style="background-color: #0B1120;">
+  <defs>
+    <style>
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 42px; font-weight: 800; fill: #F8FAFC; text-anchor: middle; }
+      .ratio-spec { font-family: monospace; font-size: 28px; font-weight: 600; fill: #38BDF8; text-anchor: middle; }
+      
+      .box-screen { fill: #090D16; stroke: #475569; stroke-width: 5; rx: 32px; }
+      .box-sheet { fill: #131E32; stroke: #38BDF8; stroke-width: 3.5; rx: 28px; }
+      .box-header { fill: #1E293B; stroke: #64748B; stroke-width: 3; rx: 16px; }
+      .box-streak { fill: #1E293B; stroke: #EF4444; stroke-width: 3; rx: 18px; }
+      .box-tab-main { fill: #1E293B; stroke: #64748B; stroke-width: 2.5; rx: 14px; }
+      .box-tab-active { fill: #EF4444; stroke: #F87171; stroke-width: 2.5; rx: 14px; }
+      .box-subtabs { fill: #0F172A; stroke: #475569; stroke-width: 2; rx: 12px; }
+      .box-podium-1 { fill: #1E293B; stroke: #F59E0B; stroke-width: 3; rx: 16px; }
+      .box-podium-2 { fill: #1E293B; stroke: #94A3B8; stroke-width: 2.5; rx: 14px; }
+      .box-podium-3 { fill: #1E293B; stroke: #D97706; stroke-width: 2.5; rx: 14px; }
+      .box-rank-row { fill: #1E293B; stroke: #475569; stroke-width: 2; rx: 16px; }
+      .box-user-sticky { fill: #EF4444; stroke: #F87171; stroke-width: 3; rx: 20px; }
+
+      .wire-label { font-family: system-ui, sans-serif; font-weight: 800; fill: #FFFFFF; text-anchor: middle; dominant-baseline: central; }
+      .font-spec { font-family: monospace; font-weight: 700; fill: #FDE047; text-anchor: middle; dominant-baseline: central; }
+      .dim-spec { font-family: monospace; font-size: 20px; font-weight: 600; fill: #94A3B8; text-anchor: middle; dominant-baseline: central; }
+    </style>
+  </defs>
+
+  <!-- ========================================================================= -->
+  <!-- 7. TỈ LỆ 4:3 · 1600 x 1200 (NGANG - TABLET / IPAD)                        -->
+  <!-- ========================================================================= -->
+  <g transform="translate(80, 120)">
+    <text x="800" y="-55" class="title">7. Tỉ lệ 4:3 (Ngang - Tablet)</text>
+    <text x="800" y="-18" class="ratio-spec">1600 × 1200 px · Sheet 1500×1100 px (Podium Trái · List Phải)</text>
+    <rect width="1600" height="1200" class="box-screen"/>
+
+    <rect x="50" y="50" width="1500" height="1100" class="box-sheet"/>
+
+    <!-- CỘT TRÁI (W: 680px): Header + Podium Top 1-2-3 + Sticky Rank Bạn -->
+    <rect x="90" y="90" width="70" height="70" class="box-header"/>
+    <text x="125" y="125" class="wire-label" font-size="24">&lt;</text>
+    <rect x="175" y="90" width="370" height="70" class="box-header"/>
+    <text x="360" y="125" class="wire-label" font-size="24">BẢNG XẾP HẠNG (26px)</text>
+    <rect x="560" y="90" width="200" height="70" class="box-streak"/>
+    <text x="660" y="125" class="font-spec" font-size="20">🔥 DAILY TOP (19px)</text>
+
+    <!-- Bục Podium Top 1-2-3 -->
+    <!-- Top 2 -->
+    <rect x="100" y="380" width="190" height="230" class="box-podium-2"/>
+    <text x="195" y="325" class="wire-label" font-size="18">Linh_Speed (18px)</text>
+    <text x="195" y="355" class="font-spec" font-size="15">🔥 24 NGÀY</text>
+    <text x="195" y="460" class="wire-label" font-size="44" fill="#94A3B8">#2 (44px)</text>
+    <text x="195" y="540" class="font-spec" font-size="16">⭐ 72 SAO (16px)</text>
+
+    <!-- Top 1 -->
+    <rect x="310" y="310" width="230" height="300" class="box-podium-1"/>
+    <text x="425" y="250" class="wire-label" font-size="22">Master_King 👑 (24px)</text>
+    <text x="425" y="285" class="font-spec" font-size="16">🔥 30 NGÀY (MAX)</text>
+    <text x="425" y="420" class="wire-label" font-size="56" fill="#F59E0B">#1 (58px)</text>
+    <text x="425" y="530" class="font-spec" font-size="19">⭐ 90/90 SAO (19px)</text>
+
+    <!-- Top 3 -->
+    <rect x="560" y="415" width="190" height="195" class="box-podium-3"/>
+    <text x="655" y="360" class="wire-label" font-size="18">Viet_Pro (18px)</text>
+    <text x="655" y="390" class="font-spec" font-size="15">🔥 21 NGÀY</text>
+    <text x="655" y="480" class="wire-label" font-size="40" fill="#D97706">#3 (40px)</text>
+    <text x="655" y="550" class="font-spec" font-size="16">⭐ 63 SAO (16px)</text>
+
+    <!-- Sticky Rank Của Bạn Ở Đáy Cột Trái -->
+    <rect x="90" y="930" width="670" height="150" class="box-user-sticky"/>
+    <text x="175" y="1005" class="wire-label" font-size="34">#18 (34px)</text>
+    <text x="380" y="985" class="wire-label" font-size="24">BẠN (Người chơi) (24px)</text>
+    <text x="380" y="1025" class="font-spec" font-size="16">Thành tích Daily • Tháng 09 (15px)</text>
+    <text x="670" y="985" class="font-spec" font-size="24">🔥 7 NGÀY (24px)</text>
+    <text x="670" y="1025" class="font-spec" font-size="16">⭐ 28 SAO (16px)</text>
+
+    <!-- CỘT PHẢI (W: 730px): Tabs + List Top 4..Top 8 -->
+    <!-- 2 Tab Chính -->
+    <rect x="800" y="90" width="345" height="50" class="box-tab-main"/>
+    <text x="972" y="115" class="wire-label" font-size="18">🏰 DUNGEON</text>
+    <rect x="1160" y="90" width="345" height="50" class="box-tab-active"/>
+    <text x="1332" y="115" class="wire-label" font-size="18">📅 DAILY CHALLENGE</text>
+
+    <!-- 3 Sub-tabs -->
+    <rect x="800" y="155" width="705" height="46" class="box-subtabs"/>
+    <text x="917" y="178" class="font-spec" font-size="16">HÔM NAY (16px)</text>
+    <text x="1152" y="178" class="wire-label" font-size="15" fill="#94A3B8">TUẦN NÀY (15px)</text>
+    <text x="1387" y="178" class="wire-label" font-size="15" fill="#94A3B8">THÁNG 09 (15px)</text>
+
+    <!-- Rows #4 .. #8 (Cao 90px/thẻ) -->
+    <rect x="800" y="225" width="705" height="90" class="box-rank-row"/>
+    <text x="850" y="270" class="wire-label" font-size="22">#4</text>
+    <text x="990" y="270" class="wire-label" font-size="20">🇻🇳 Sao_Bang (20px)</text>
+    <text x="1460" y="260" class="font-spec" font-size="18">🔥 19 NGÀY (18px)</text>
+    <text x="1460" y="285" class="font-spec" font-size="15">⭐ 57 SAO (14px)</text>
+
+    <rect x="800" y="330" width="705" height="90" class="box-rank-row"/>
+    <text x="850" y="375" class="wire-label" font-size="22">#5</text>
+    <text x="990" y="375" class="wire-label" font-size="20">🇯🇵 Hana_Sakura</text>
+    <text x="1460" y="365" class="font-spec" font-size="18">🔥 16 NGÀY</text>
+    <text x="1460" y="390" class="font-spec" font-size="15">⭐ 48 SAO</text>
+
+    <rect x="800" y="435" width="705" height="90" class="box-rank-row"/>
+    <text x="850" y="480" class="wire-label" font-size="22">#6</text>
+    <text x="990" y="480" class="wire-label" font-size="20">🇰🇷 Busan_Hero</text>
+    <text x="1460" y="470" class="font-spec" font-size="18">🔥 14 NGÀY</text>
+    <text x="1460" y="495" class="font-spec" font-size="15">⭐ 42 SAO</text>
+
+    <rect x="800" y="540" width="705" height="90" class="box-rank-row"/>
+    <text x="850" y="585" class="wire-label" font-size="22">#7</text>
+    <text x="990" y="585" class="wire-label" font-size="20">🇺🇸 John_Walker</text>
+    <text x="1460" y="575" class="font-spec" font-size="18">🔥 12 NGÀY</text>
+    <text x="1460" y="600" class="font-spec" font-size="15">⭐ 36 SAO</text>
+
+    <rect x="800" y="645" width="705" height="90" class="box-rank-row"/>
+    <text x="850" y="690" class="wire-label" font-size="22">#8</text>
+    <text x="990" y="690" class="wire-label" font-size="20">🇩🇪 Klaus_M</text>
+    <text x="1460" y="680" class="font-spec" font-size="18">🔥 11 NGÀY</text>
+    <text x="1460" y="705" class="font-spec" font-size="15">⭐ 33 SAO</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 8. TỈ LỆ 16:9 · 1920 x 1080 (NGANG CHUẨN - BASE)                          -->
+  <!-- ========================================================================= -->
+  <g transform="translate(1820, 120)">
+    <text x="960" y="-55" class="title">8. Tỉ lệ 16:9 (Ngang Chuẩn - Base)</text>
+    <text x="960" y="-18" class="ratio-spec">1920 × 1080 px · Sheet 1820×980 px</text>
+    <rect width="1920" height="1080" class="box-screen" stroke="#38BDF8"/>
+
+    <rect x="50" y="50" width="1820" height="980" class="box-sheet"/>
+
+    <!-- CỘT TRÁI (W: 780px): Header + Podium + Sticky Rank Bạn -->
+    <rect x="80" y="80" width="75" height="75" class="box-header"/>
+    <text x="117" y="117" class="wire-label" font-size="26">&lt;</text>
+    <rect x="170" y="80" width="440" height="75" class="box-header"/>
+    <text x="390" y="117" class="wire-label" font-size="26">BẢNG XẾP HẠNG (28px)</text>
+    <rect x="625" y="80" width="220" height="75" class="box-streak"/>
+    <text x="735" y="117" class="font-spec" font-size="22">🔥 DAILY TOP (20px)</text>
+
+    <!-- Podium -->
+    <!-- Top 2 -->
+    <rect x="85" y="325" width="215" height="210" class="box-podium-2"/>
+    <text x="192" y="275" class="wire-label" font-size="20">Linh_Speed (20px)</text>
+    <text x="192" y="305" class="font-spec" font-size="15">🔥 24 NGÀY</text>
+    <text x="192" y="405" class="wire-label" font-size="44" fill="#94A3B8">#2 (44px)</text>
+    <text x="192" y="480" class="font-spec" font-size="16">⭐ 72 SAO</text>
+
+    <!-- Top 1 -->
+    <rect x="320" y="260" width="260" height="275" class="box-podium-1"/>
+    <text x="450" y="205" class="wire-label" font-size="24">Master_King 👑 (24px)</text>
+    <text x="450" y="235" class="font-spec" font-size="16">🔥 30 NGÀY (MAX)</text>
+    <text x="450" y="360" class="wire-label" font-size="58" fill="#F59E0B">#1 (58px)</text>
+    <text x="450" y="470" class="font-spec" font-size="19">⭐ 90/90 SAO</text>
+
+    <!-- Top 3 -->
+    <rect x="600" y="355" width="215" height="180" class="box-podium-3"/>
+    <text x="707" y="305" class="wire-label" font-size="20">Viet_Pro (20px)</text>
+    <text x="707" y="335" class="font-spec" font-size="15">🔥 21 NGÀY</text>
+    <text x="707" y="420" class="wire-label" font-size="40" fill="#D97706">#3 (40px)</text>
+    <text x="707" y="490" class="font-spec" font-size="16">⭐ 63 SAO</text>
+
+    <!-- Sticky Rank Bạn -->
+    <rect x="80" y="825" width="765" height="145" class="box-user-sticky"/>
+    <text x="175" y="897" class="wire-label" font-size="34">#18 (34px)</text>
+    <text x="400" y="880" class="wire-label" font-size="26">BẠN (Người chơi) (26px)</text>
+    <text x="400" y="920" class="font-spec" font-size="16">Thành tích Daily • Tháng 09 (16px)</text>
+    <text x="750" y="880" class="font-spec" font-size="26">🔥 7 NGÀY (26px)</text>
+    <text x="750" y="920" class="font-spec" font-size="16">⭐ 28 SAO (16px)</text>
+
+    <!-- CỘT PHẢI (W: 960px): Tabs + List Rows -->
+    <!-- 2 Tab Chính -->
+    <rect x="880" y="80" width="460" height="52" class="box-tab-main"/>
+    <text x="1110" y="106" class="wire-label" font-size="18">🏰 DUNGEON</text>
+    <rect x="1360" y="80" width="460" height="52" class="box-tab-active"/>
+    <text x="1590" y="106" class="wire-label" font-size="18">📅 DAILY CHALLENGE</text>
+
+    <!-- 3 Sub-tabs -->
+    <rect x="880" y="145" width="940" height="46" class="box-subtabs"/>
+    <text x="1036" y="168" class="font-spec" font-size="16">HÔM NAY (16px)</text>
+    <text x="1350" y="168" class="wire-label" font-size="15" fill="#94A3B8">TUẦN NÀY</text>
+    <text x="1663" y="168" class="wire-label" font-size="15" fill="#94A3B8">THÁNG 09</text>
+
+    <!-- Rows #4 .. #9 (Cao 82px) -->
+    <rect x="880" y="210" width="940" height="82" class="box-rank-row"/>
+    <text x="940" y="251" class="wire-label" font-size="22">#4</text>
+    <text x="1120" y="251" class="wire-label" font-size="20">🇻🇳 Sao_Bang (22px)</text>
+    <text x="1750" y="240" class="font-spec" font-size="18">🔥 19 NGÀY</text>
+    <text x="1750" y="265" class="font-spec" font-size="14">⭐ 57 SAO</text>
+
+    <rect x="880" y="305" width="940" height="82" class="box-rank-row"/>
+    <text x="940" y="346" class="wire-label" font-size="22">#5</text>
+    <text x="1120" y="346" class="wire-label" font-size="20">🇯🇵 Hana_Sakura</text>
+    <text x="1750" y="335" class="font-spec" font-size="18">🔥 16 NGÀY</text>
+    <text x="1750" y="360" class="font-spec" font-size="14">⭐ 48 SAO</text>
+
+    <rect x="880" y="400" width="940" height="82" class="box-rank-row"/>
+    <text x="940" y="441" class="wire-label" font-size="22">#6</text>
+    <text x="1120" y="441" class="wire-label" font-size="20">🇰🇷 Busan_Hero</text>
+    <text x="1750" y="430" class="font-spec" font-size="18">🔥 14 NGÀY</text>
+    <text x="1750" y="455" class="font-spec" font-size="14">⭐ 42 SAO</text>
+
+    <rect x="880" y="495" width="940" height="82" class="box-rank-row"/>
+    <text x="940" y="536" class="wire-label" font-size="22">#7</text>
+    <text x="1120" y="536" class="wire-label" font-size="20">🇺🇸 John_Walker</text>
+    <text x="1750" y="525" class="font-spec" font-size="18">🔥 12 NGÀY</text>
+    <text x="1750" y="550" class="font-spec" font-size="14">⭐ 36 SAO</text>
+
+    <rect x="880" y="590" width="940" height="82" class="box-rank-row"/>
+    <text x="940" y="631" class="wire-label" font-size="22">#8</text>
+    <text x="1120" y="631" class="wire-label" font-size="20">🇩🇪 Klaus_M</text>
+    <text x="1750" y="620" class="font-spec" font-size="18">🔥 11 NGÀY</text>
+    <text x="1750" y="645" class="font-spec" font-size="14">⭐ 33 SAO</text>
+
+    <rect x="880" y="685" width="940" height="82" class="box-rank-row"/>
+    <text x="940" y="726" class="wire-label" font-size="22">#9</text>
+    <text x="1120" y="726" class="wire-label" font-size="20">🇬🇧 Arthur_P</text>
+    <text x="1750" y="715" class="font-spec" font-size="18">🔥 10 NGÀY</text>
+    <text x="1750" y="740" class="font-spec" font-size="14">⭐ 30 SAO</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 9. TỈ LỆ 18:9 · 2160 x 1080 (NGANG DÀI 2:1)                               -->
+  <!-- ========================================================================= -->
+  <g transform="translate(3880, 120)">
+    <text x="1080" y="-55" class="title">9. Tỉ lệ 18:9 (Ngang Dài 2:1)</text>
+    <text x="1080" y="-18" class="ratio-spec">2160 × 1080 px · Sheet 2040×980 px</text>
+    <rect width="2160" height="1080" class="box-screen"/>
+
+    <rect x="60" y="50" width="2040" height="980" class="box-sheet"/>
+
+    <!-- CỘT TRÁI (W: 860px) -->
+    <rect x="90" y="80" width="80" height="80" class="box-header"/>
+    <text x="130" y="120" class="wire-label" font-size="28">&lt;</text>
+    <rect x="185" y="80" width="490" height="80" class="box-header"/>
+    <text x="430" y="120" class="wire-label" font-size="28">BẢNG XẾP HẠNG (30px)</text>
+    <rect x="690" y="80" width="230" height="80" class="box-streak"/>
+    <text x="805" y="120" class="font-spec" font-size="22">🔥 DAILY TOP (20px)</text>
+
+    <!-- Podium -->
+    <rect x="95" y="325" width="235" height="210" class="box-podium-2"/>
+    <text x="212" y="275" class="wire-label" font-size="20">Linh_Speed (20px)</text>
+    <text x="212" y="305" class="font-spec" font-size="15">🔥 24 NGÀY</text>
+    <text x="212" y="405" class="wire-label" font-size="44" fill="#94A3B8">#2 (44px)</text>
+    <text x="212" y="480" class="font-spec" font-size="16">⭐ 72 SAO</text>
+
+    <rect x="350" y="260" width="280" height="275" class="box-podium-1"/>
+    <text x="490" y="205" class="wire-label" font-size="24">Master_King 👑 (24px)</text>
+    <text x="490" y="235" class="font-spec" font-size="16">🔥 30 NGÀY (MAX)</text>
+    <text x="490" y="360" class="wire-label" font-size="58" fill="#F59E0B">#1 (58px)</text>
+    <text x="490" y="470" class="font-spec" font-size="19">⭐ 90/90 SAO</text>
+
+    <rect x="650" y="355" width="235" height="180" class="box-podium-3"/>
+    <text x="767" y="305" class="wire-label" font-size="20">Viet_Pro (20px)</text>
+    <text x="767" y="335" class="font-spec" font-size="15">🔥 21 NGÀY</text>
+    <text x="767" y="420" class="wire-label" font-size="40" fill="#D97706">#3 (40px)</text>
+    <text x="767" y="490" class="font-spec" font-size="16">⭐ 63 SAO</text>
+
+    <!-- Sticky Rank Bạn -->
+    <rect x="90" y="825" width="830" height="145" class="box-user-sticky"/>
+    <text x="185" y="897" class="wire-label" font-size="34">#18 (34px)</text>
+    <text x="430" y="880" class="wire-label" font-size="26">BẠN (Người chơi) (26px)</text>
+    <text x="430" y="920" class="font-spec" font-size="16">Thành tích Daily • Tháng 09 (16px)</text>
+    <text x="830" y="880" class="font-spec" font-size="26">🔥 7 NGÀY (26px)</text>
+    <text x="830" y="920" class="font-spec" font-size="16">⭐ 28 SAO (16px)</text>
+
+    <!-- CỘT PHẢI (W: 1090px) -->
+    <!-- 2 Tab Chính -->
+    <rect x="960" y="80" width="530" height="54" class="box-tab-main"/>
+    <text x="1225" y="107" class="wire-label" font-size="20">🏰 DUNGEON</text>
+    <rect x="1510" y="80" width="530" height="54" class="box-tab-active"/>
+    <text x="1775" y="107" class="wire-label" font-size="20">📅 DAILY CHALLENGE</text>
+
+    <!-- 3 Sub-tabs -->
+    <rect x="960" y="145" width="1080" height="48" class="box-subtabs"/>
+    <text x="1140" y="169" class="font-spec" font-size="16">HÔM NAY (16px)</text>
+    <text x="1500" y="169" class="wire-label" font-size="15" fill="#94A3B8">TUẦN NÀY</text>
+    <text x="1860" y="169" class="wire-label" font-size="15" fill="#94A3B8">THÁNG 09</text>
+
+    <!-- Rows #4 .. #9 (Cao 85px) -->
+    <rect x="960" y="210" width="1080" height="85" class="box-rank-row"/>
+    <text x="1020" y="252" class="wire-label" font-size="24">#4</text>
+    <text x="1220" y="252" class="wire-label" font-size="22">🇻🇳 Sao_Bang (22px)</text>
+    <text x="1950" y="240" class="font-spec" font-size="20">🔥 19 NGÀY</text>
+    <text x="1950" y="267" class="font-spec" font-size="15">⭐ 57 SAO</text>
+
+    <rect x="960" y="310" width="1080" height="85" class="box-rank-row"/>
+    <text x="1020" y="352" class="wire-label" font-size="24">#5</text>
+    <text x="1220" y="352" class="wire-label" font-size="22">🇯🇵 Hana_Sakura</text>
+    <text x="1950" y="340" class="font-spec" font-size="20">🔥 16 NGÀY</text>
+    <text x="1950" y="367" class="font-spec" font-size="15">⭐ 48 SAO</text>
+
+    <rect x="960" y="410" width="1080" height="85" class="box-rank-row"/>
+    <text x="1020" y="452" class="wire-label" font-size="24">#6</text>
+    <text x="1220" y="452" class="wire-label" font-size="22">🇰🇷 Busan_Hero</text>
+    <text x="1950" y="440" class="font-spec" font-size="20">🔥 14 NGÀY</text>
+    <text x="1950" y="467" class="font-spec" font-size="15">⭐ 42 SAO</text>
+
+    <rect x="960" y="510" width="1080" height="85" class="box-rank-row"/>
+    <text x="1020" y="552" class="wire-label" font-size="24">#7</text>
+    <text x="1220" y="552" class="wire-label" font-size="22">🇺🇸 John_Walker</text>
+    <text x="1950" y="540" class="font-spec" font-size="20">🔥 12 NGÀY</text>
+    <text x="1950" y="567" class="font-spec" font-size="15">⭐ 36 SAO</text>
+
+    <rect x="960" y="610" width="1080" height="85" class="box-rank-row"/>
+    <text x="1020" y="652" class="wire-label" font-size="24">#8</text>
+    <text x="1220" y="652" class="wire-label" font-size="22">🇩🇪 Klaus_M</text>
+    <text x="1950" y="640" class="font-spec" font-size="20">🔥 11 NGÀY</text>
+    <text x="1950" y="667" class="font-spec" font-size="15">⭐ 33 SAO</text>
+
+    <rect x="960" y="710" width="1080" height="85" class="box-rank-row"/>
+    <text x="1020" y="752" class="wire-label" font-size="24">#9</text>
+    <text x="1220" y="752" class="wire-label" font-size="22">🇬🇧 Arthur_P</text>
+    <text x="1950" y="740" class="font-spec" font-size="20">🔥 10 NGÀY</text>
+    <text x="1950" y="767" class="font-spec" font-size="15">⭐ 30 SAO</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 10. TỈ LỆ 19.5:9 · 2340 x 1080 (NGANG SIÊU RỘNG - NOTCH/CAMERA)          -->
+  <!-- ========================================================================= -->
+  <g transform="translate(6180, 120)">
+    <text x="1170" y="-55" class="title">10. Tỉ lệ 19.5:9 (Ngang Siêu Rộng)</text>
+    <text x="1170" y="-18" class="ratio-spec">2340 × 1080 px · Safe Left 100px · Sheet 2140×980 px</text>
+    <rect width="2340" height="1080" class="box-screen" stroke="#38BDF8"/>
+    <circle cx="40" cy="540" r="16" fill="#334155"/>
+
+    <rect x="100" y="50" width="2140" height="980" class="box-sheet"/>
+
+    <!-- CỘT TRÁI (W: 900px, x=130 tránh tai thỏ) -->
+    <rect x="130" y="80" width="85" height="85" class="box-header"/>
+    <text x="172" y="122" class="wire-label" font-size="28">&lt;</text>
+    <rect x="230" y="80" width="510" height="85" class="box-header"/>
+    <text x="485" y="122" class="wire-label" font-size="30">BẢNG XẾP HẠNG (32px)</text>
+    <rect x="755" y="80" width="240" height="85" class="box-streak"/>
+    <text x="875" y="122" class="font-spec" font-size="22">🔥 DAILY TOP (20px)</text>
+
+    <!-- Podium -->
+    <rect x="135" y="325" width="245" height="210" class="box-podium-2"/>
+    <text x="257" y="275" class="wire-label" font-size="22">Linh_Speed (22px)</text>
+    <text x="257" y="305" class="font-spec" font-size="16">🔥 24 NGÀY</text>
+    <text x="257" y="405" class="wire-label" font-size="46" fill="#94A3B8">#2 (46px)</text>
+    <text x="257" y="480" class="font-spec" font-size="17">⭐ 72 SAO</text>
+
+    <rect x="400" y="260" width="295" height="275" class="box-podium-1"/>
+    <text x="547" y="205" class="wire-label" font-size="26">Master_King 👑 (26px)</text>
+    <text x="547" y="235" class="font-spec" font-size="17">🔥 30 NGÀY (MAX)</text>
+    <text x="547" y="360" class="wire-label" font-size="60" fill="#F59E0B">#1 (60px)</text>
+    <text x="547" y="470" class="font-spec" font-size="20">⭐ 90/90 SAO</text>
+
+    <rect x="715" y="355" width="245" height="180" class="box-podium-3"/>
+    <text x="837" y="305" class="wire-label" font-size="22">Viet_Pro (22px)</text>
+    <text x="837" y="335" class="font-spec" font-size="16">🔥 21 NGÀY</text>
+    <text x="837" y="420" class="wire-label" font-size="42" fill="#D97706">#3 (42px)</text>
+    <text x="837" y="490" class="font-spec" font-size="17">⭐ 63 SAO</text>
+
+    <!-- Sticky Rank Bạn -->
+    <rect x="130" y="825" width="870" height="145" class="box-user-sticky"/>
+    <text x="230" y="897" class="wire-label" font-size="36">#18 (36px)</text>
+    <text x="490" y="880" class="wire-label" font-size="28">BẠN (Người chơi) (28px)</text>
+    <text x="490" y="920" class="font-spec" font-size="17">Thành tích Daily • Tháng 09 (16px)</text>
+    <text x="910" y="880" class="font-spec" font-size="28">🔥 7 NGÀY (28px)</text>
+    <text x="910" y="920" class="font-spec" font-size="17">⭐ 28 SAO (16px)</text>
+
+    <!-- CỘT PHẢI (W: 1140px) -->
+    <!-- 2 Tab Chính -->
+    <rect x="1050" y="80" width="560" height="54" class="box-tab-main"/>
+    <text x="1330" y="107" class="wire-label" font-size="20">🏰 DUNGEON</text>
+    <rect x="1630" y="80" width="560" height="54" class="box-tab-active"/>
+    <text x="1910" y="107" class="wire-label" font-size="20">📅 DAILY CHALLENGE</text>
+
+    <!-- 3 Sub-tabs -->
+    <rect x="1050" y="145" width="1140" height="48" class="box-subtabs"/>
+    <text x="1240" y="169" class="font-spec" font-size="16">HÔM NAY (16px)</text>
+    <text x="1620" y="169" class="wire-label" font-size="15" fill="#94A3B8">TUẦN NÀY</text>
+    <text x="2000" y="169" class="wire-label" font-size="15" fill="#94A3B8">THÁNG 09</text>
+
+    <!-- Rows #4 .. #9 (Cao 85px) -->
+    <rect x="1050" y="210" width="1140" height="85" class="box-rank-row"/>
+    <text x="1115" y="252" class="wire-label" font-size="24">#4</text>
+    <text x="1330" y="252" class="wire-label" font-size="22">🇻🇳 Sao_Bang (22px)</text>
+    <text x="2080" y="240" class="font-spec" font-size="20">🔥 19 NGÀY</text>
+    <text x="2080" y="267" class="font-spec" font-size="15">⭐ 57 SAO</text>
+
+    <rect x="1050" y="310" width="1140" height="85" class="box-rank-row"/>
+    <text x="1115" y="352" class="wire-label" font-size="24">#5</text>
+    <text x="1330" y="352" class="wire-label" font-size="22">🇯🇵 Hana_Sakura</text>
+    <text x="2080" y="340" class="font-spec" font-size="20">🔥 16 NGÀY</text>
+    <text x="2080" y="367" class="font-spec" font-size="15">⭐ 48 SAO</text>
+
+    <rect x="1050" y="410" width="1140" height="85" class="box-rank-row"/>
+    <text x="1115" y="452" class="wire-label" font-size="24">#6</text>
+    <text x="1330" y="452" class="wire-label" font-size="22">🇰🇷 Busan_Hero</text>
+    <text x="2080" y="440" class="font-spec" font-size="20">🔥 14 NGÀY</text>
+    <text x="2080" y="467" class="font-spec" font-size="15">⭐ 42 SAO</text>
+
+    <rect x="1050" y="510" width="1140" height="85" class="box-rank-row"/>
+    <text x="1115" y="552" class="wire-label" font-size="24">#7</text>
+    <text x="1330" y="552" class="wire-label" font-size="22">🇺🇸 John_Walker</text>
+    <text x="2080" y="540" class="font-spec" font-size="20">🔥 12 NGÀY</text>
+    <text x="2080" y="567" class="font-spec" font-size="15">⭐ 36 SAO</text>
+
+    <rect x="1050" y="610" width="1140" height="85" class="box-rank-row"/>
+    <text x="1115" y="652" class="wire-label" font-size="24">#8</text>
+    <text x="1330" y="652" class="wire-label" font-size="22">🇩🇪 Klaus_M</text>
+    <text x="2080" y="640" class="font-spec" font-size="20">🔥 11 NGÀY</text>
+    <text x="2080" y="667" class="font-spec" font-size="15">⭐ 33 SAO</text>
+
+    <rect x="1050" y="710" width="1140" height="85" class="box-rank-row"/>
+    <text x="1115" y="752" class="wire-label" font-size="24">#9</text>
+    <text x="1330" y="752" class="wire-label" font-size="22">🇬🇧 Arthur_P</text>
+    <text x="2080" y="740" class="font-spec" font-size="20">🔥 10 NGÀY</text>
+    <text x="2080" y="767" class="font-spec" font-size="15">⭐ 30 SAO</text>
+  </g>
+</svg>

@@ -67,6 +67,8 @@ const HUD_LAND_FOG_OF_WAR := preload("res://nodes/hud/landscape/game/fog_of_war_
 const HUD_LAND_ONE_STROKE := preload("res://nodes/hud/landscape/game/one_stroke_hud.tscn")
 const HUD_LAND_WALL_BUILDER := preload("res://nodes/hud/landscape/game/wall_builder_hud.tscn")
 #@export var game_mode : BaseGameMode
+## HUD đang gắn thuộc bản NGANG hay bản DỌC (đổi hướng màn hình là phải đổi cả biến thể HUD)
+var _hud_variant_landscape := false
 
 
 ## Gắn node UI của BỐ CỤC ĐANG HIỂN THỊ.
@@ -183,6 +185,10 @@ func _connect_once(source: Object, signal_name: String, target: Object, method: 
 
 ## Xoay màn hình: chuyển bàn cờ sang `BoardSlot` của bố cục mới rồi gắn lại HUD + thanh nút.
 ## Controllers + Board DÙNG CHUNG (ngoài layout) nên ván đang chơi KHÔNG bị mất khi xoay.
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	for btn in _all_buttons():
@@ -194,34 +200,47 @@ func _rebind_after_orientation() -> void:
 	_apply_hud_for_mode(_mode_id)
 
 
-## Gắn bàn cờ vào `BoardSlot` của bố cục dọc (màn chơi chỉ có 1 bố cục — xem scenes/game.tscn)
+## Gắn bàn cờ (instance DÙNG CHUNG) vào chỗ mà BỐ CỤC ĐANG HIỂN THỊ dành cho nó. Việc đổi chỗ +
+## chốt lại bố cục bên trong do CHÍNH SCRIPT BỐ CỤC làm (`scripts/orientation/<hướng>/game.gd`).
 func _mount_board() -> void:
 	if board_view == null:
 		return
+	_layout_call("mount_board", [board_view])
+
+
+## Gọi hàm của SCRIPT BỐ CỤC đang hiển thị — mỗi hướng tự lo phần khác biệt của mình
+## (gắn bàn cờ · cỡ HUD · nút công cụ · chọn biến thể HUD: xem scripts/orientation/*/game.gd).
+func _layout_call(method: String, args: Array = []) -> Variant:
 	var holder: Node = active_layout()
-	var slot: Control = holder.get_node_or_null("BoardSlot") as Control if holder != null else null
-	if slot == null:
-		return
-	if board_view.get_parent() != slot:
-		var old_parent := board_view.get_parent()
-		if old_parent != null:
-			old_parent.remove_child(board_view)
-		slot.add_child(board_view)
-	board_view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	# Bố cục bên trong bàn cờ tính theo khung giấy ⇒ tính lại ở frame kế tiếp
-	if board_view.has_method("relayout"):
-		board_view.call_deferred("relayout")
+	if holder == null or not holder.has_method(method):
+		return null
+	return holder.callv(method, args)
 
 
-## HUD thiết kế đúng khung 980×249 của bố cục dọc ⇒ giữ nguyên cỡ
+## Bố cục đang hiển thị có phải bản NGANG không (do chính script bố cục trả lời)
+func _layout_is_landscape() -> bool:
+	var answer: Variant = _layout_call("is_landscape_layout")
+	return bool(answer) if answer != null else is_landscape
+
+
+## Chọn biến thể HUD (dọc/ngang) theo bố cục đang hiển thị
+func _hud_variant(portrait_scene: PackedScene, landscape_scene: PackedScene) -> PackedScene:
+	var picked: Variant = _layout_call("hud_variant", [portrait_scene, landscape_scene])
+	return picked as PackedScene if picked != null else portrait_scene
+
+
+## Cỡ HUD do BỐ CỤC quyết định — dọc giữ nguyên 980 thiết kế, ngang co theo bề rộng sidebar
+## (xem `scripts/orientation/<hướng>/game.gd::fit_hud`).
 func _fit_hud_scale() -> void:
 	var hud := hud_host as Control
-	if hud != null:
-		hud.scale = Vector2.ONE
+	if hud == null:
+		return
+	_layout_call("fit_hud", [hud])
 
 
 func _ready() -> void:
 	_bind_refs()
+	orientation_changed.connect(_on_orientation_changed)
 	resized.connect(_fit_hud_scale)
 	# Gắn hiệu ứng nảy xúc giác cho các nút trong Game Screen
 	for btn in _all_buttons():
@@ -342,27 +361,27 @@ func _start_floor_for(mode_name: String) -> int:
 func _hud_scene_for(mode_name: String) -> PackedScene:
 	match mode_name.to_lower():
 		"dungeon":
-			return HUD_DUNGEON
+			return _hud_variant(HUD_DUNGEON, HUD_LAND_DUNGEON)
 		"daily_classic":
-			return HUD_LEVEL
+			return _hud_variant(HUD_LEVEL, HUD_LAND_LEVEL)
 		"minesweeper":
-			return HUD_MINESWEEP
+			return _hud_variant(HUD_MINESWEEP, HUD_LAND_MINESWEEP)
 		"sum_path":
-			return HUD_SUM_PATH
+			return _hud_variant(HUD_SUM_PATH, HUD_LAND_SUM_PATH)
 		"blind_memory":
-			return HUD_BLIND_MEMORY
+			return _hud_variant(HUD_BLIND_MEMORY, HUD_LAND_BLIND_MEMORY)
 		"countdown_cost":
-			return HUD_COUNTDOWN
+			return _hud_variant(HUD_COUNTDOWN, HUD_LAND_COUNTDOWN)
 		"fading_ink":
-			return HUD_FADING_INK
+			return _hud_variant(HUD_FADING_INK, HUD_LAND_FADING_INK)
 		"fog_of_war":
-			return HUD_FOG_OF_WAR
+			return _hud_variant(HUD_FOG_OF_WAR, HUD_LAND_FOG_OF_WAR)
 		"one_stroke":
-			return HUD_ONE_STROKE
+			return _hud_variant(HUD_ONE_STROKE, HUD_LAND_ONE_STROKE)
 		"wall_builder":
-			return HUD_WALL_BUILDER
+			return _hud_variant(HUD_WALL_BUILDER, HUD_LAND_WALL_BUILDER)
 		_:
-			return HUD_LEVEL
+			return _hud_variant(HUD_LEVEL, HUD_LAND_LEVEL)
 
 
 func _hud_class_for(mode_name: String) -> GDScript:
@@ -438,8 +457,8 @@ func _apply_tool_labels_for_mode(mode_name: String) -> void:
 	# nguyên kích thước gốc (SHRINK) để icon không bị kéo giãn theo bề ngang còn lại.
 	var hide_wall: bool = TOOL_HIDE_WALL_MODES.has(id)
 	tool_wall_btn.visible = not hide_wall
-	# Nút VẼ ĐƯỜNG ghim về đầu hàng khi nút GHI NHỚ bị ẩn (One Stroke) để icon không bị kéo giãn
-	tool_path_btn.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN if hide_wall else Control.SIZE_FILL
+	# Mỗi bố cục tự quyết định (dọc: ghim nút VẼ ĐƯỜNG khi ẩn nút GHI NHỚ · ngang: action_bar tự dàn)
+	_layout_call("configure_tool_path_button", [tool_path_btn, hide_wall])
 	_apply_tool_textures_for_mode(id)
 
 
@@ -488,8 +507,9 @@ func _apply_hud_for_mode(mode_name: String) -> void:
 	_mode_id = mode_name
 	if hud_host == null or not is_inside_tree():
 		return
-	# Đủ chỗ khi HUD hiện tại ĐÚNG chế độ
-	if hud_host.get_script() == _hud_class_for(mode_name):
+	# Đủ chỗ khi HUD hiện tại ĐÚNG chế độ VÀ đúng biến thể (bản dọc ↔ bản ngang)
+	if hud_host.get_script() == _hud_class_for(mode_name) \
+			and _hud_variant_landscape == _layout_is_landscape():
 		_bind_hud_nodes()
 		return
 	var scene := _hud_scene_for(mode_name)
@@ -508,6 +528,7 @@ func _apply_hud_for_mode(mode_name: String) -> void:
 	# trong sidebar do layout dàn) ⇒ chép khung của HUD cũ sang HUD mới, nếu không HUD sẽ nhảy
 	# về góc trái canvas.
 	_copy_layout_from(old_hud, new_hud)
+	_hud_variant_landscape = _layout_is_landscape()
 	old_hud.queue_free()
 	hud_host = new_hud
 	UIAnim.play_slide_in(new_hud, Vector2(0, -15), 0.0, 0.25)
@@ -558,7 +579,7 @@ func _bind_hud_nodes() -> void:
 	hint_guide = ui("HintGuide") as HintGuide
 	_wire_action_bar()
 	_apply_tool_labels_for_mode(_mode_id)
-	hud.set_landscape(false)
+	hud.set_landscape(_layout_is_landscape())
 	if ui_controller != null:
 		ui_controller.set_hud(hud)
 	if challenge_controller != null:

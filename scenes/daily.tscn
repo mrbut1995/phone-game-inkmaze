@@ -13,5 +13,6 @@ script = ExtResource("2_daily")
 [node name="Portrait" parent="." index="1" unique_id=1504128517 instance=ExtResource("L_Portrait")]
 layout_mode = 1
 
+[node name="Landscape" parent="." index="2" unique_id=1986560234 instance=ExtResource("L_Landscape")]
 layout_mode = 1
 metadata/_edit_use_anchors_ = true

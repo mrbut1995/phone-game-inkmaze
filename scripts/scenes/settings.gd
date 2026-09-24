@@ -31,6 +31,7 @@ var _stamp_taps := 0
 func _ready() -> void:
 	_bind_refs()
 	_wire_buttons()
+	orientation_changed.connect(_on_orientation_changed)
 
 	if layout.content_root != null:
 		UIAnim.play_slide_in(layout.content_root, Vector2(0, 25), 0.05, 0.25)
@@ -90,6 +91,10 @@ func _wire_buttons() -> void:
 
 
 ## Xoay màn hình: gắn lại node của layout mới rồi nạp lại giá trị cài đặt lên widget mới
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()

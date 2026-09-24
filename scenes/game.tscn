@@ -34,6 +34,7 @@ challenge_controller = NodePath("Controllers/ChallengeController")
 [node name="Portrait" parent="." index="1" unique_id=1629983650 instance=ExtResource("L_Portrait")]
 layout_mode = 1
 
+[node name="Landscape" parent="." index="2" unique_id=16571943 instance=ExtResource("L_Landscape")]
 layout_mode = 1
 
 [node name="Board" parent="." index="3" unique_id=181012636 instance=ExtResource("3_board")]
@@ -42,7 +43,7 @@ layout_mode = 1
 
 [node name="Controllers" type="Node" parent="." index="4" unique_id=1749084702]
 
-[node name="GameController" type="Node" parent="Controllers" index="0" unique_id=414807406 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "challenge_controller", "grid_view") index="0"]
+[node name="GameController" type="Node" parent="Controllers" index="0" unique_id=414807406 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "challenge_controller", "grid_view")]
 script = ExtResource("10_game")
 floor_controller = NodePath("../FloorController")
 timer_controller = NodePath("../TimerController")
@@ -53,19 +54,19 @@ game_mode_controller = NodePath("../GameModeController")
 challenge_controller = NodePath("../ChallengeController")
 grid_view = NodePath("../../Board")
 
-[node name="AnchorController" type="Node" parent="Controllers" index="1" unique_id=2040105369 index="1"]
+[node name="AnchorController" type="Node" parent="Controllers" index="1" unique_id=2040105369]
 script = ExtResource("4_anchor")
 
-[node name="UndoController" type="Node" parent="Controllers" index="2" unique_id=969661874 index="2"]
+[node name="UndoController" type="Node" parent="Controllers" index="2" unique_id=969661874]
 script = ExtResource("6_undo")
 
-[node name="HintController" type="Node" parent="Controllers" index="3" unique_id=882770787 index="3"]
+[node name="HintController" type="Node" parent="Controllers" index="3" unique_id=882770787]
 script = ExtResource("5_hint")
 
-[node name="GameModeController" type="Node" parent="Controllers" index="4" unique_id=1321981031 index="4"]
+[node name="GameModeController" type="Node" parent="Controllers" index="4" unique_id=1321981031]
 script = ExtResource("9_mode")
 
-[node name="GridController" type="Node" parent="Controllers" index="5" unique_id=2130990274 node_paths=PackedStringArray("board_view", "anchor_controller", "undo_controller", "hint_controller", "game_mode_controller") index="5"]
+[node name="GridController" type="Node" parent="Controllers" index="5" unique_id=2130990274 node_paths=PackedStringArray("board_view", "anchor_controller", "undo_controller", "hint_controller", "game_mode_controller")]
 script = ExtResource("7_grid")
 board_view = NodePath("../../Board")
 anchor_controller = NodePath("../AnchorController")
@@ -73,17 +74,17 @@ undo_controller = NodePath("../UndoController")
 hint_controller = NodePath("../HintController")
 game_mode_controller = NodePath("../GameModeController")
 
-[node name="FloorController" type="Node" parent="Controllers" index="6" unique_id=1511925957 index="6"]
+[node name="FloorController" type="Node" parent="Controllers" index="6" unique_id=1511925957]
 script = ExtResource("8_floor")
 
-[node name="TimerController" type="Node" parent="Controllers" index="7" unique_id=1839160157 index="7"]
+[node name="TimerController" type="Node" parent="Controllers" index="7" unique_id=1839160157]
 script = ExtResource("11_timer")
 
-[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=992769908 index="8"]
+[node name="UIController" type="Node" parent="Controllers" index="8" unique_id=992769908]
 script = ExtResource("12_ui")
 
-[node name="ToolController" type="Node" parent="Controllers" index="9" unique_id=1949838204 index="9"]
+[node name="ToolController" type="Node" parent="Controllers" index="9" unique_id=1949838204]
 script = ExtResource("13_tool")
 
-[node name="ChallengeController" type="Node" parent="Controllers" index="10" unique_id=2100727352 index="10"]
+[node name="ChallengeController" type="Node" parent="Controllers" index="10" unique_id=2100727352]
 script = ExtResource("14_chal")

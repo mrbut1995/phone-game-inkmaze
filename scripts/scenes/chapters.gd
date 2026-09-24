@@ -76,11 +76,16 @@ func _ready() -> void:
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("chapter_unlocked"):
 		gm.connect("chapter_unlocked", _on_chapter_unlocked)
+	orientation_changed.connect(_on_orientation_changed)
 	resized.connect(_apply_grid_columns)
 
 
 ## Xoay màn hình: gắn lại node của layout mới RỒI nạp lại dữ liệu lên nhãn/ví (nếu không, nhãn của layout mới
 ## vẫn giữ chuỗi khoá thô trong .tscn)
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()

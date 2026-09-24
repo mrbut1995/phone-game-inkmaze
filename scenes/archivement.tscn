@@ -2,6 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://d0utnvo7ghx3f" path="res://scripts/scenes/archivement.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="Texture2D" uid="uid://dl66u1sdji243" path="res://assets/images/archivements/sheet.svg" id="5_sheet"]
+[ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="6_tape"]
+[ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="7_clip"]
+[ext_resource type="Texture2D" uid="uid://b4pnl48vyjqdv" path="res://assets/images/archivements/overview_card.svg" id="8_overview"]
+[ext_resource type="Texture2D" uid="uid://iurtsy651xdc" path="res://assets/images/icons/icon_trophy.svg" id="9_trophy"]
+[ext_resource type="Texture2D" uid="uid://c8u6tfuomo7wl" path="res://assets/images/archivements/bar_track.svg" id="10_track"]
+[ext_resource type="Texture2D" uid="uid://cxb0b14b811tj" path="res://assets/images/archivements/bar_fill.svg" id="11_fill"]
+[ext_resource type="Texture2D" uid="uid://bdij82xftp6k8" path="res://assets/images/archivements/stamp_badges.svg" id="12_stamp"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
 [ext_resource type="PackedScene" path="res://scenes/layout/portrait/archivement.tscn" id="L_Portrait"]
 [ext_resource type="PackedScene" uid="uid://tlhro2tkyc4u" path="res://scenes/layout/landscape/archivement.tscn" id="L_Landscape"]
@@ -13,3 +23,4 @@ script = ExtResource("2_script")
 
 [node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
 
+[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]

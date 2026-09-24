@@ -109,6 +109,7 @@ var _tabs_captured := false
 func _ready() -> void:
 	_bind_refs()
 	_wire_buttons()
+	orientation_changed.connect(_on_orientation_changed)
 
 	if layout.top_bar != null:
 		UIAnim.play_slide_in(layout.top_bar, Vector2(0, -22), 0.0, 0.25)
@@ -172,6 +173,10 @@ func _wire_buttons() -> void:
 
 
 ## Xoay màn hình: gắn lại node + dựng lại tab/trang của layout mới
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()

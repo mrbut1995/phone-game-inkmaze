@@ -1,0 +1,254 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9400 1500" width="100%" height="100%" style="background-color: #0B1120;">
+  <defs>
+    <style>
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 42px; font-weight: 800; fill: #F8FAFC; text-anchor: middle; }
+      .ratio-spec { font-family: monospace; font-size: 28px; font-weight: 600; fill: #38BDF8; text-anchor: middle; }
+      
+      .box-screen { fill: #090D16; stroke: #475569; stroke-width: 5; rx: 32px; }
+      .box-sheet { fill: #131E32; stroke: #38BDF8; stroke-width: 3.5; rx: 28px; }
+      .box-logo { fill: #1E293B; stroke: #64748B; stroke-width: 3; rx: 22px; }
+      .box-badge { fill: #1E293B; stroke: #F59E0B; stroke-width: 3; rx: 20px; }
+      .box-card-main { fill: #0284C7; stroke: #38BDF8; stroke-width: 3.5; rx: 22px; }
+      .box-card-sub { fill: #1E293B; stroke: #F59E0B; stroke-width: 3; rx: 22px; }
+      .box-card-daily { fill: #1E293B; stroke: #EF4444; stroke-width: 3; rx: 22px; }
+      .box-tool { fill: #1E293B; stroke: #64748B; stroke-width: 2.5; rx: 18px; }
+      .box-ver { fill: none; stroke: #EF4444; stroke-width: 2.5; stroke-dasharray: 6 4; rx: 10px; }
+
+      .wire-label { font-family: system-ui, sans-serif; font-weight: 800; fill: #FFFFFF; text-anchor: middle; dominant-baseline: central; }
+      .font-spec { font-family: monospace; font-weight: 700; fill: #FDE047; text-anchor: middle; dominant-baseline: central; }
+      .dim-spec { font-family: monospace; font-size: 20px; font-weight: 600; fill: #94A3B8; text-anchor: middle; dominant-baseline: central; }
+    </style>
+  </defs>
+
+  <!-- ========================================================================= -->
+  <!-- 7. TỈ LỆ 4:3 · 1600 x 1200 (NGANG - TABLET / IPAD)                        -->
+  <!-- ========================================================================= -->
+  <g transform="translate(80, 120)">
+    <text x="800" y="-55" class="title">7. Tỉ lệ 4:3 (Ngang - Tablet)</text>
+    <text x="800" y="-18" class="ratio-spec">1600 × 1200 px · Sheet 1500×1100 px (2 Cột)</text>
+    <rect width="1600" height="1200" class="box-screen"/>
+
+    <!-- Tờ giấy Menu Sheet ngang -->
+    <rect x="50" y="50" width="1500" height="1100" class="box-sheet"/>
+
+    <!-- CỘT TRÁI (W: 550px): Logo Hero + Nút Danh Hiệu + Version -->
+    <rect x="90" y="90" width="530" height="520" class="box-logo"/>
+    <text x="355" y="240" class="wire-label" font-size="52">Ink Maze</text>
+    <text x="355" y="300" class="font-spec" font-size="28">Logo Title: 72px</text>
+    <text x="355" y="350" class="font-spec" font-size="20">LOGIC &amp; PUZZLE: 18px</text>
+    <text x="355" y="400" class="wire-label" font-size="20">Mê Cung Suy Luận • Vở Ô Ly: 20px</text>
+
+    <!-- Nút Danh hiệu bên cột trái -->
+    <rect x="90" y="640" width="530" height="230" class="box-badge"/>
+    <text x="355" y="730" class="wire-label" font-size="34">DANH HIỆU (22px)</text>
+    <text x="355" y="790" class="font-spec" font-size="40">1/28 (Font: 36px)</text>
+
+    <!-- Version Stamp -->
+    <rect x="250" y="910" width="210" height="65" class="box-ver"/>
+    <text x="355" y="945" class="wire-label" font-size="22" fill="#EF4444">VER 1.0.0 (22px)</text>
+
+    <!-- CỘT PHẢI (W: 850px): 3 Thẻ Game & Nút Tools -->
+    <!-- Thẻ 1: Play -->
+    <rect x="660" y="90" width="840" height="210" class="box-card-main"/>
+    <text x="1080" y="150" class="wire-label" font-size="34">PLAY • CHỌN MÀN (36px)</text>
+    <text x="1080" y="195" class="font-spec" font-size="20">Mô tả: 18px / 18px</text>
+    <text x="1080" y="245" class="wire-label" font-size="18">MÀN HIỆN TẠI (14px)</text>
+
+    <!-- Thẻ 2: Dungeon Mode -->
+    <rect x="660" y="325" width="840" height="195" class="box-card-sub"/>
+    <text x="1080" y="380" class="wire-label" font-size="32">DUNGEON MODE (34px)</text>
+    <text x="1080" y="425" class="font-spec" font-size="20">Mô tả: 18px / 16px</text>
+    <text x="1080" y="470" class="wire-label" font-size="18">KỶ LỤC TẦNG (14px)</text>
+
+    <!-- Thẻ 3: Daily Challenge -->
+    <rect x="660" y="545" width="840" height="195" class="box-card-daily"/>
+    <text x="1080" y="600" class="wire-label" font-size="32">DAILY CHALLENGE (34px)</text>
+    <text x="1080" y="645" class="font-spec" font-size="20">Mô tả: 18px / 16px</text>
+    <text x="1080" y="690" class="wire-label" font-size="18">STREAK NGÀY (14px)</text>
+
+    <!-- 3 Nút Công Cụ -->
+    <rect x="660" y="770" width="260" height="130" class="box-tool"/>
+    <text x="790" y="835" class="wire-label" font-size="22">XẾP HẠNG (20px)</text>
+
+    <rect x="950" y="770" width="260" height="130" class="box-tool"/>
+    <text x="1080" y="835" class="wire-label" font-size="22">CỬA HÀNG (20px)</text>
+
+    <rect x="1240" y="770" width="260" height="130" class="box-tool"/>
+    <text x="1370" y="835" class="wire-label" font-size="22">CÀI ĐẶT (20px)</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 8. TỈ LỆ 16:9 · 1920 x 1080 (NGANG CHUẨN - BASE)                          -->
+  <!-- ========================================================================= -->
+  <g transform="translate(1820, 120)">
+    <text x="960" y="-55" class="title">8. Tỉ lệ 16:9 (Ngang Chuẩn - Base)</text>
+    <text x="960" y="-18" class="ratio-spec">1920 × 1080 px · Sheet 1820×980 px</text>
+    <rect width="1920" height="1080" class="box-screen" stroke="#38BDF8"/>
+
+    <!-- Tờ giấy Sheet -->
+    <rect x="50" y="50" width="1820" height="980" class="box-sheet"/>
+
+    <!-- CỘT TRÁI (W: 680px) -->
+    <rect x="90" y="85" width="650" height="470" class="box-logo"/>
+    <text x="415" y="240" class="wire-label" font-size="56">Ink Maze</text>
+    <text x="415" y="305" class="font-spec" font-size="30">Title: 76px</text>
+    <text x="415" y="360" class="font-spec" font-size="22">LOGIC &amp; PUZZLE: 18px</text>
+    <text x="415" y="415" class="wire-label" font-size="22">Mê Cung Suy Luận • Vở Ô Ly: 20px</text>
+
+    <!-- Nút Danh hiệu -->
+    <rect x="90" y="585" width="650" height="210" class="box-badge"/>
+    <text x="415" y="660" class="wire-label" font-size="32">DANH HIỆU (24px)</text>
+    <text x="415" y="725" class="font-spec" font-size="44">1/28 (Font: 40px)</text>
+
+    <!-- Version Stamp -->
+    <rect x="310" y="830" width="210" height="65" class="box-ver"/>
+    <text x="415" y="865" class="wire-label" font-size="22" fill="#EF4444">VER 1.0.0 (22px)</text>
+
+    <!-- CỘT PHẢI (W: 1020px) -->
+    <!-- Thẻ 1: Play -->
+    <rect x="780" y="85" width="1040" height="205" class="box-card-main"/>
+    <text x="1300" y="145" class="wire-label" font-size="36">PLAY • CHỌN MÀN (38px)</text>
+    <text x="1300" y="190" class="font-spec" font-size="22">Mô tả: 20px / 18px</text>
+    <text x="1300" y="240" class="wire-label" font-size="18">MÀN HIỆN TẠI (14px)</text>
+
+    <!-- Thẻ 2: Dungeon Mode -->
+    <rect x="780" y="315" width="1040" height="195" class="box-card-sub"/>
+    <text x="1300" y="375" class="wire-label" font-size="34">DUNGEON MODE (36px)</text>
+    <text x="1300" y="420" class="font-spec" font-size="22">Mô tả: 20px / 18px</text>
+    <text x="1300" y="465" class="wire-label" font-size="18">KỶ LỤC TẦNG (14px)</text>
+
+    <!-- Thẻ 3: Daily Challenge -->
+    <rect x="780" y="535" width="1040" height="195" class="box-card-daily"/>
+    <text x="1300" y="595" class="wire-label" font-size="34">DAILY CHALLENGE (36px)</text>
+    <text x="1300" y="640" class="font-spec" font-size="22">Mô tả: 20px / 18px</text>
+    <text x="1300" y="685" class="wire-label" font-size="18">STREAK NGÀY (14px)</text>
+
+    <!-- 3 Nút Công Cụ -->
+    <rect x="780" y="760" width="325" height="140" class="box-tool"/>
+    <text x="942" y="830" class="wire-label" font-size="24">XẾP HẠNG (22px)</text>
+
+    <rect x="1138" y="760" width="325" height="140" class="box-tool"/>
+    <text x="1300" y="830" class="wire-label" font-size="24">CỬA HÀNG (22px)</text>
+
+    <rect x="1495" y="760" width="325" height="140" class="box-tool"/>
+    <text x="1657" y="830" class="wire-label" font-size="24">CÀI ĐẶT (22px)</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 9. TỈ LỆ 18:9 · 2160 x 1080 (NGANG DÀI 2:1)                               -->
+  <!-- ========================================================================= -->
+  <g transform="translate(3880, 120)">
+    <text x="1080" y="-55" class="title">9. Tỉ lệ 18:9 (Ngang Dài 2:1)</text>
+    <text x="1080" y="-18" class="ratio-spec">2160 × 1080 px · Sheet 2040×980 px</text>
+    <rect width="2160" height="1080" class="box-screen"/>
+
+    <!-- Tờ giấy Sheet -->
+    <rect x="60" y="50" width="2040" height="980" class="box-sheet"/>
+
+    <!-- CỘT TRÁI (W: 780px) -->
+    <rect x="110" y="85" width="750" height="470" class="box-logo"/>
+    <text x="485" y="240" class="wire-label" font-size="60">Ink Maze</text>
+    <text x="485" y="305" class="font-spec" font-size="30">Title: 80px</text>
+    <text x="485" y="360" class="font-spec" font-size="22">LOGIC &amp; PUZZLE: 18px</text>
+    <text x="485" y="415" class="wire-label" font-size="22">Mê Cung Suy Luận • Vở Ô Ly: 20px</text>
+
+    <!-- Nút Danh hiệu -->
+    <rect x="110" y="585" width="750" height="210" class="box-badge"/>
+    <text x="485" y="660" class="wire-label" font-size="34">DANH HIỆU (24px)</text>
+    <text x="485" y="725" class="font-spec" font-size="46">1/28 (Font: 44px)</text>
+
+    <!-- Version Stamp -->
+    <rect x="380" y="830" width="210" height="65" class="box-ver"/>
+    <text x="485" y="865" class="wire-label" font-size="22" fill="#EF4444">VER 1.0.0 (22px)</text>
+
+    <!-- CỘT PHẢI (W: 1180px) -->
+    <!-- Thẻ 1: Play -->
+    <rect x="910" y="85" width="1140" height="205" class="box-card-main"/>
+    <text x="1480" y="145" class="wire-label" font-size="38">PLAY • CHỌN MÀN (40px)</text>
+    <text x="1480" y="190" class="font-spec" font-size="22">Mô tả: 20px / 18px</text>
+    <text x="1480" y="240" class="wire-label" font-size="18">MÀN HIỆN TẠI (14px)</text>
+
+    <!-- Thẻ 2: Dungeon Mode -->
+    <rect x="910" y="315" width="1140" height="195" class="box-card-sub"/>
+    <text x="1480" y="375" class="wire-label" font-size="36">DUNGEON MODE (38px)</text>
+    <text x="1480" y="420" class="font-spec" font-size="22">Mô tả: 20px / 18px</text>
+    <text x="1480" y="465" class="wire-label" font-size="18">KỶ LỤC TẦNG (14px)</text>
+
+    <!-- Thẻ 3: Daily Challenge -->
+    <rect x="910" y="535" width="1140" height="195" class="box-card-daily"/>
+    <text x="1480" y="595" class="wire-label" font-size="36">DAILY CHALLENGE (38px)</text>
+    <text x="1480" y="640" class="font-spec" font-size="22">Mô tả: 20px / 18px</text>
+    <text x="1480" y="685" class="wire-label" font-size="18">STREAK NGÀY (14px)</text>
+
+    <!-- 3 Nút Công Cụ -->
+    <rect x="910" y="760" width="360" height="140" class="box-tool"/>
+    <text x="1090" y="830" class="wire-label" font-size="24">XẾP HẠNG (22px)</text>
+
+    <rect x="1300" y="760" width="360" height="140" class="box-tool"/>
+    <text x="1480" y="830" class="wire-label" font-size="24">CỬA HÀNG (22px)</text>
+
+    <rect x="1690" y="760" width="360" height="140" class="box-tool"/>
+    <text x="1870" y="830" class="wire-label" font-size="24">CÀI ĐẶT (22px)</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 10. TỈ LỆ 19.5:9 · 2340 x 1080 (NGANG SIÊU RỘNG - NOTCH/CAMERA)          -->
+  <!-- ========================================================================= -->
+  <g transform="translate(6180, 120)">
+    <text x="1170" y="-55" class="title">10. Tỉ lệ 19.5:9 (Ngang Siêu Rộng)</text>
+    <text x="1170" y="-18" class="ratio-spec">2340 × 1080 px · Safe Left/Right 100px · Sheet 2140×980 px</text>
+    <rect width="2340" height="1080" class="box-screen" stroke="#38BDF8"/>
+    <circle cx="40" cy="540" r="16" fill="#334155"/>
+
+    <!-- Tờ giấy Sheet thụt lề 100px tránh Camera Cutout -->
+    <rect x="100" y="50" width="2140" height="980" class="box-sheet"/>
+
+    <!-- CỘT TRÁI (W: 820px) -->
+    <rect x="150" y="85" width="800" height="470" class="box-logo"/>
+    <text x="550" y="240" class="wire-label" font-size="62">Ink Maze</text>
+    <text x="550" y="305" class="font-spec" font-size="32">Title: 84px</text>
+    <text x="550" y="360" class="font-spec" font-size="24">LOGIC &amp; PUZZLE: 20px</text>
+    <text x="550" y="415" class="wire-label" font-size="24">Mê Cung Suy Luận • Vở Ô Ly: 22px</text>
+
+    <!-- Nút Danh hiệu -->
+    <rect x="150" y="585" width="800" height="210" class="box-badge"/>
+    <text x="550" y="660" class="wire-label" font-size="36">DANH HIỆU (26px)</text>
+    <text x="550" y="725" class="font-spec" font-size="48">1/28 (Font: 48px)</text>
+
+    <!-- Version Stamp -->
+    <rect x="445" y="830" width="210" height="65" class="box-ver"/>
+    <text x="550" y="865" class="wire-label" font-size="22" fill="#EF4444">VER 1.0.0 (22px)</text>
+
+    <!-- CỘT PHẢI (W: 1220px) -->
+    <!-- Thẻ 1: Play -->
+    <rect x="1000" y="85" width="1180" height="205" class="box-card-main"/>
+    <text x="1590" y="145" class="wire-label" font-size="40">PLAY • CHỌN MÀN (42px)</text>
+    <text x="1590" y="190" class="font-spec" font-size="24">Mô tả: 22px / 20px</text>
+    <text x="1590" y="240" class="wire-label" font-size="18">MÀN HIỆN TẠI (15px)</text>
+
+    <!-- Thẻ 2: Dungeon Mode -->
+    <rect x="1000" y="315" width="1180" height="195" class="box-card-sub"/>
+    <text x="1590" y="375" class="wire-label" font-size="38">DUNGEON MODE (40px)</text>
+    <text x="1590" y="420" class="font-spec" font-size="24">Mô tả: 22px / 20px</text>
+    <text x="1590" y="465" class="wire-label" font-size="18">KỶ LỤC TẦNG (15px)</text>
+
+    <!-- Thẻ 3: Daily Challenge -->
+    <rect x="1000" y="535" width="1180" height="195" class="box-card-daily"/>
+    <text x="1590" y="595" class="wire-label" font-size="38">DAILY CHALLENGE (40px)</text>
+    <text x="1590" y="640" class="font-spec" font-size="24">Mô tả: 22px / 20px</text>
+    <text x="1590" y="685" class="wire-label" font-size="18">STREAK NGÀY (15px)</text>
+
+    <!-- 3 Nút Công Cụ -->
+    <rect x="1000" y="760" width="375" height="140" class="box-tool"/>
+    <text x="1187" y="830" class="wire-label" font-size="26">XẾP HẠNG (24px)</text>
+
+    <rect x="1402" y="760" width="375" height="140" class="box-tool"/>
+    <text x="1590" y="830" class="wire-label" font-size="26">CỬA HÀNG (24px)</text>
+
+    <rect x="1805" y="760" width="375" height="140" class="box-tool"/>
+    <text x="1992" y="830" class="wire-label" font-size="26">CÀI ĐẶT (24px)</text>
+  </g>
+</svg>
