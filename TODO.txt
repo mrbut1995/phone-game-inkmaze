@@ -6,6 +6,80 @@
 # Replace SFX Placeholder to correct sound
 
 # ----------------------------------------------------------------------------
+# VÒNG SỬA 14 (2026-02): TÁCH HỆ HƯỚNG DẪN — PAGE · CONTENT · POPUP DÙNG CHUNG + NHÚNG HUD NGANG
+# ----------------------------------------------------------------------------
+# [x] LÀM theo yêu cầu user ("Tách các popup instruction ra, gộp lại thành popup_instruction
+#     và content instruction") — 6 bước:
+#     1. `nodes/popups/instruction/page.tscn` + `scripts/nodes/popups/instruction/page.gd`
+#        (class `InstructionPage`): 1 TRANG gồm `Image` (label chữ-trên-ảnh PT# là CON của Image,
+#        neo tỉ lệ) · `Title` · `Section` · `Instruction` (VBoxContainer các hàng luật) · `Cta`/`Link`.
+#        Trang tự dàn 2 kiểu: khung RỘNG → ảnh trái + cột chữ phải; khung CAO → ảnh trên + stack dọc.
+#     2. `nodes/popups/instruction/content_instruction.tscn` + `content_instruction.gd`
+#        (class `InstructionContent`): Chip · Tabs · Pages · Prev/Next · Dots · Index + toàn bộ
+#        hành vi lật trang (vuốt/lăn/phím/tab/dots), `set_embedded()`, signal `close_requested`.
+#     3. 10 scene chế độ `nodes/popups/instruction/<mode>.tscn` GIỜ KẾ THỪA `content_instruction.tscn`
+#        và dùng `Page1..3` là instance `page.tscn` (không còn kế thừa `base.tscn`/popup riêng).
+#     4. `nodes/popups/popup_instruction.tscn` + `popup_instruction.gd` (class `PopupInstruction`):
+#        POPUP dùng chung DUY NHẤT — nạp `<mode>.tscn` vào `Panel/Content` theo `{"mode_id": …}`,
+#        tô giấy theo accent chế độ; thay toàn bộ 10 popup riêng cũ.
+#     5. Nút "?" bố cục DỌC vẫn mở popup; HUD NGANG nhúng nội dung vào `Panel/GuideHost`
+#        (`GameHUD.show_instruction_for` — full-rect, TRÀN kín khung; khung < 300×220 thì hiện nút
+#        "XEM HƯỚNG DẪN" phát `instruction_requested` cho `GameScene` mở popup).
+#     6. Generator `tools/mockup/gen_instruction_popups.py` ghi scene nửa cỡ (S=0.5), giữ uid +
+#        unique_id, thêm `[editable]` cho 3 trang; hàng luật min 240×38 + label Title/Desc NEO PHẢI
+#        để co được theo cột chữ khi nhúng vừa khung hẹp (trước đó hàng 377.5 cứng → tràn 66px).
+#     - GameController: `INSTRUCTION_POPUP = res://nodes/popups/popup_instruction.tscn`;
+#       `open_instruction()` → `Popups.open_path(INSTRUCTION_POPUP, {"mode_id": …})`;
+#       `instruction_scene_path()` vẫn trả scene NỘI DUNG (dùng chung cho popup + HUD).
+#     - XOÁ `scripts/nodes/popups/instruction_popup.gd` (class `InstructionPopup` cũ); `base.gd`
+#       trả về nguyên trạng (bỏ phần `embedded` thử nghiệm); cập nhật comment `scripts/utils/popups.gd`.
+#     - Test `scripts/test_case/test_instruction.gd` viết lại — **286 check** (page/content/popup/HUD);
+#       full suite 13/13 + test_instruction PASS.
+#     - KIỂM CHỨNG render bằng probe (ảnh ở `tmp_shot/instruction/`, đã dọn sau khi xem):
+#       HUD ngang 1920×1080 nhúng dungeon TRÀN khung 812×493 · popup ngang + popup dọc (minesweeper)
+#       đủ chip/tabs/hàng luật/CTA/link/dots/TRANG 1 / 3.
+# [x] VÒNG 14b (2026-09-26) — GIAO DIỆN THEO MOCKUP `matchup_dungeon_landscape_with_instruction.svg`:
+#     · CHỈ POPUP mới hiện Cta/Link (+Chip/Tabs/Title); bản NHÚNG ẩn hết và dời cụm
+#       ‹ dots › TRANG vào hàng tiêu đề “LUẬT CHƠI” (trang cấp chỗ qua `nav_slot_rect()`);
+#       `Pages` phủ KÍN khung khi nhúng (trước chỉ chiếm 772×319 vì còn băng tabs/nav cũ).
+#     · Chữ trong KHUNG CHÚ THÍCH của mockup (comment CALLOUT / CHÚ THÍCH / DẢI) KHÔNG viết lên ảnh nữa:
+#       generator thay bằng BADGE SỐ (`Point#`, màu theo chữ đầu của khung) + giữ chuỗi gốc trong
+#       Label ẨN (`metadata/point` + `point_order`); `content_instruction.gd` đọc & đổ xuống khối mới
+#       `Points/List/PointRow#` (NumCircle + Title = chữ ĐẦU + Desc = các chữ SAU nối “ · ”, autowrap).
+#       Mockup nào cần đánh dấu điểm mới: viết comment `<!-- CALLOUT … -->` trước nhóm chữ đó.
+#     · Bố cục trang theo mockup: NHÚNG = [ẢNH | ĐIỂM] hàng trên, hàng “LUẬT CHƠI” + điều hướng + luật ở dưới;
+#       POPUP = ảnh (tự co theo chỗ còn lại) → Title → ĐIỂM → LUẬT CHƠI → Cta/Link.
+#     · Chữ-trên-ảnh + badge TỰ CO theo cỡ ảnh thật (`metadata/base_font/base_size`) — hết tràn chữ.
+#     · `test_instruction` **410 check** · full suite 13/13 · ảnh kiểm chứng ở `D:\godot-phone-game\tmp_shot_inkmaze\`
+#       (`A_land_embed.png` · `B_land_popup_p1.png` · `C_port_popup_minesweeper.png`).
+
+# [x] VÒNG 14c (2026-09-26) — SỬA LỖI THEO TỈ LỆ KHUNG: bố cục CỐ ĐỊNH bằng HBox/VBox
+#     (user báo: “có aspect tỉ lệ như trên ảnh thì mảng chi tiết nằm dưới image → section trồi ra, paging lỗi”):
+#     · NGUYÊN NHÂN: `page.gd` rẽ 2 nhánh theo `w >= h × 1.15` (khung RỘNG → [Ảnh|Điểm]; khung CAO → ảnh trên ·
+#       ĐIỂM dưới) → ở tỉ lệ GẦN VUÔNG (khung Hướng dẫn của HUD ngang khi cửa sổ hẹp) rơi vào nhánh CAO ⇒ khối
+#       ĐIỂM tụt xuống dưới ảnh, tràn khung + điều hướng (chỉ có công thức cho nhánh rộng) đặt lệch.
+#     · SỬA GỐC: `page.tscn` cấu trúc CỐ ĐỊNH mọi trang — `Page → Title · Body (VBoxContainer)
+#       { Top (HBoxContainer) { Image · Points } · Section · Instruction (VBox) }` + `Cta`/`Link`;
+#       XOÁ hẳn nhánh wide/tall trong `page.gd` (chỉ còn 1 `_apply_layout()`).
+#     · `page.gd` chỉ còn TÍNH: cỡ ẢNH theo tỉ lệ (`row_h = 48% bề cao Body`, kẹp 120–340;
+#       `img_w = min(row_h × tỉ lệ, 52% bề ngang khối)` — tính từ bề cao VỪA ĐẶT của Body, không đọc `body.size`
+#       vì lúc đó container chưa xếp xong); khối ĐIỂM nở lấp phần ngang còn lại + cấp min cao `26+min(List)+8`;
+#       `Title` ẩn khi nhúng; `Cta/Link` dàn đáy — chừa chỗ CHỈ khi ở POPUP (theo cờ `embedded`, không dò `visible`).
+#     · ĐIỀU HƯỚNG NHÚNG: `nav_slot_rect()` nay lấy y từ VỊ TRÍ THẬT của `Section`; trang phát lại `resized` SAU khi
+#       container xếp xong (frame sau; CHỐNG LẶP bằng so cỡ) để `content_instruction.gd` đặt lại cụm ‹ dots › TRANG.
+#     · ĐƯỜNG DẪN NODE ĐỔI (mọi nơi tra node phải theo cấu trúc mới): generator `gen_instruction_popups.py`
+#       (`{ppath}/Body/Top`, `…/Body/Top/Image` cho PT#/badge, `…/Body/Top/Points/List`, `…/Body/Instruction`,
+#       Title idx 0 · Cta idx 2 · Link idx 3) + `content_instruction.gd` (`Body/Top/Image`, `Body/Top/Points/List`)
+#       + sinh lại 10 scene chế độ; `POINT_TEXT_MIN_W` 500 → **250** (cột ĐIỂM ở popup chỉ ~162 nên đặt min lớn hơn
+#       sẽ đẩy tràn ngang).
+#     · TEST: `test_instruction` **425 check** — thêm check CẤU TRÚC (`Body` VBox chứa `Top` HBox với Ảnh+Điểm) +
+#       BẤT BIẾN qua 5 tỉ lệ khung (994×800 · 560×560 · 620×700 · 700×620 · 500×640: [Ảnh|Điểm] cùng hàng, khối ĐIỂM
+#       gọn trong khung, `Section` ở dưới, điều hướng nằm hàng LUẬT CHƠI không tràn mép) · full suite 13/13.
+#     · Ảnh kiểm chứng mới (cùng thư mục trên): `A_embed_1920x1080.png` · `B_embed_1440x1100.png` ·
+#       `C_embed_1152x960.png` (tỉ lệ hẹp/gần vuông) · `D_popup_minesweeper_p1.png` · `E_popup_dungeon_p1.png` ·
+#       `F_popup_minesweeper_p3_portrait.png`.
+
+# ----------------------------------------------------------------------------
 # VÒNG SỬA 13 (2026-09-19): MÀN CHƠI — CONTROLLERS + BOARD DÙNG CHUNG (BỎ BỘ ĐÔI THEO HƯỚNG)
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM theo yêu cầu user ("tránh dùng 2 Controller và 2 Grid riêng biệt"):

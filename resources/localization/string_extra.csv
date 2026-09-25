@@ -1,4 +1,6 @@
 id,en,vi
+STR_HUD_INSTRUCTION_OPEN,VIEW INSTRUCTION,XEM HƯỚNG DẪN
+STR_HUD_INSTRUCTION_OPEN_SUB,Tap to open the mode guide,Chạm để xem cách chơi
 STR_MODE_ONE_STROKE,ONE STROKE,MỘT NÉT
 STR_MODE_ONE_STROKE_NAME,ONE STROKE,MỘT NÉT
 STR_HINT_ONE_STROKE,✍️ Draw one stroke covering every cell - no re-entering, F must be last!,✍️ Vẽ 1 nét phủ kín mọi ô, không đi lại ô cũ. Ô cuối phải là F!
@@ -746,6 +748,7 @@ STR_GI_ONE_STROKE_P3_TAB2,NO RE-ENTERING OLD CELLS,CẤM ĐI LẠI Ô CŨ
 STR_GI_ONE_STROKE_P3_TAB3,REACH F & UNDO,CHẠM ĐÍCH F & UNDO
 STR_GI_ONE_STROKE_P3_TITLE,Reach F & Use Undo,Chạm Đích F & Dùng Undo
 STR_GI_PAGE_INDEX,PAGE {0} / {1},TRANG {0} / {1}
+STR_GI_POINTS_HEAD,IMAGE GUIDE DETAILS,CHI TIẾT CHỈ DẪN TRÊN ẢNH
 STR_GI_SUMPATH_CHIP,SUM PATH,SUM PATH • TOÁN ĐỐ
 STR_GI_SUMPATH_P1_CTA,NEXT: OPERATORS & ONE-TIME CELLS (2/3) ›,TIẾP THEO: TOÁN TỬ & Ô 1 LẦN (2/3) ›
 STR_GI_SUMPATH_P1_LINK,Skip guide & start scoring now,Bỏ qua hướng dẫn & Vào cộng điểm ngay

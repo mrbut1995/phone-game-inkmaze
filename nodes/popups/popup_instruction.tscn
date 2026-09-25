@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/popups/popup_instruction.gd" id="2_script"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/guide_washi.svg" id="3_washi"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/guide_paper_detail.svg" id="4_detail"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/btn_guide_close_normal.svg" id="5_close_n"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/btn_guide_close_pressed.svg" id="6_close_p"]
+
+[sub_resource type="StyleBoxFlat" id="sb_paper"]
+bg_color = Color(1, 0.99215686, 0.97647059, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.43137255, 0.62745098, 0.78431374, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[node name="PopupInstruction" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+
+[node name="Panel" parent="." index="1"]
+offset_left = 40.0
+offset_top = 100.0
+offset_right = 500.0
+offset_bottom = 840.0
+
+[node name="Art" parent="Panel" index="0"]
+visible = false
+
+[node name="Washi" type="TextureRect" parent="Panel" index="1"]
+layout_mode = 0
+offset_left = 175.0
+offset_top = -11.0
+offset_right = 285.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture = ExtResource("3_washi")
+
+[node name="Paper" type="Panel" parent="Panel" index="2"]
+layout_mode = 0
+offset_right = 460.0
+offset_bottom = 740.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_paper")
+
+[node name="PaperDetail" type="TextureRect" parent="Panel" index="3"]
+layout_mode = 0
+offset_right = 460.0
+offset_bottom = 740.0
+mouse_filter = 2
+texture = ExtResource("4_detail")
+
+[node name="Content" type="Control" parent="Panel" index="4"]
+layout_mode = 0
+offset_right = 460.0
+offset_bottom = 740.0
+mouse_filter = 2
+
+[node name="Close" type="TextureButton" parent="Panel" index="5"]
+layout_mode = 0
+offset_left = 415.0
+offset_top = 12.0
+offset_right = 443.0
+offset_bottom = 40.0
+texture_normal = ExtResource("5_close_n")
+texture_pressed = ExtResource("6_close_p")

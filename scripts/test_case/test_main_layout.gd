@@ -72,6 +72,7 @@ func _init() -> void:
 		"Layout Portrait phai duoc hien")
 
 	# 2b. Mỗi thẻ chế độ phải được tách 3 phần: CircleIcon / TopBadge / BottomLabel
+	# (theo cấu trúc mới: CircleIcon nằm trong HBox `ButtonDescription` — cùng Title của thẻ)
 	for card_name in ["Play", "Dungeon", "DailyChallenge"]:
 		var card := main_scene.ui(card_name) as Control
 		assert(card != null, "Phai co the %s" % card_name)
