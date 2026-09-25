@@ -23,8 +23,6 @@ const MAX_POINTS := 800           ## chặn nét quá dài (bỏ điểm cũ nh�
 const MAX_STROKES := 16           ## số nét tối đa giữ trên bàn nháp
 const DEFAULT_AREA := Vector2(616.0, 150.0)
 
-@onready var _title: Label = $Title
-@onready var _hint: Label = $Hint
 @onready var _draw_area: Control = $DrawArea
 @onready var _strokes_layer: Control = $DrawArea/Strokes
 @onready var _pen_tip: TextureRect = $DrawArea/PenTip
@@ -42,14 +40,8 @@ var _last_point := Vector2.ZERO
 
 
 func _ready() -> void:
-	if _title != null:
-		_title.text = tr("STR_SHOP_TRY_TITLE")
-	if _hint != null:
-		_hint.text = tr("STR_SHOP_TRY_HINT")
-	if _draw_area != null:
-		_draw_area.gui_input.connect(_on_draw_input)
-	if _pen_tip != null:
-		_pen_tip.visible = false
+	# Chữ tiêu đề / gợi ý · PenTip ẩn · dây `gui_input` của DrawArea đều đã khai trong
+	# `doodle_pad.tscn` (auto_translate lo phần dịch) ⇒ ở đây chỉ còn cập nhật con dấu.
 	_refresh_badge()
 
 

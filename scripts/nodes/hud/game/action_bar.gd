@@ -13,8 +13,6 @@ extends Control
 ## chế độ tự bày nút theo bố cục của hướng màn hình tương ứng.
 ## ============================================================================
 
-const BUTTON_NAMES: Array[String] = ["Tool", "Wall", "Undo", "Hint", "Replay"]
-
 var _landscape := false
 
 

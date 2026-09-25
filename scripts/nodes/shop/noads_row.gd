@@ -7,7 +7,6 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const CARD_ART := preload("res://assets/images/shop/card_noads.svg")
 const BTN := preload("res://assets/images/shop/btn_noads.svg")
 const OWNED_BTN := preload("res://assets/images/shop/btn_equipped.svg")
 
@@ -49,12 +48,10 @@ func _set_button() -> void:
 		btn.texture_hover = OWNED_BTN
 		btn.texture_disabled = OWNED_BTN
 		btn.disabled = true
-		btn.modulate = Color.WHITE
 		label.theme_type_variation = &"ShopBtnTextDone"
 		label.text = TranslationServer.translate("STR_SHOP_OWNED_BTN")
 		return
 	btn.disabled = false
-	btn.modulate = Color.WHITE
 	btn.texture_normal = BTN
 	btn.texture_pressed = BTN
 	btn.texture_hover = BTN

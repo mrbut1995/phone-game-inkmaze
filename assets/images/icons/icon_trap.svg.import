@@ -2,21 +2,22 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qcifcwdvredf"
-path="res://.godot/imported/tmp_tablet.png-9ce7a0f2b40b3539e7231d74c5fae2ad.ctex"
+uid="uid://dke1reenxr27d"
+path="res://.godot/imported/icon_trap.svg-e1111e9926ff0e81d40d1b8b97e9c51f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tmp_tablet.png"
-dest_files=["res://.godot/imported/tmp_tablet.png-9ce7a0f2b40b3539e7231d74c5fae2ad.ctex"]
+source_file="res://assets/images/icons/icon_trap.svg"
+dest_files=["res://.godot/imported/icon_trap.svg-e1111e9926ff0e81d40d1b8b97e9c51f.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
@@ -38,3 +39,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

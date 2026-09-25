@@ -18,7 +18,7 @@ extends Resource
 ## Số SAO cần có để mở khóa chương (0 = mở sẵn, không cần điều kiện)
 @export var star_cost: int = 0
 ## Tên icon riêng của chương (intro/logic/trap/master — rỗng = tự suy theo số chương)
-## Icon thật nằm ở assets/images/chapters/icon_<tên>.svg (xem ChapterCard.ICON_KEYS)
+## Icon thật nằm ở assets/images/icons/icon_<tên>.svg (xem ChapterCard.ICON_KEYS)
 @export var icon: String = ""
 
 

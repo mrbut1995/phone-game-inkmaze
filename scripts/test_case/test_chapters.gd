@@ -362,7 +362,7 @@ func _section_5_card() -> void:
 		== TranslationServer.translate("STR_CHAPTER_UNLOCK"), "Nut = MO KHOA")
 	_entry((card.get_node("Panel/Content/Action/Btn/Icon") as Control).visible, "Nut mo khoa co icon ngoi sao")
 	_entry((card.get_node("Panel/Content/Action/Btn/Icon") as TextureRect).texture
-		== load("res://assets/images/chapters/icon_star_white.svg"),
+		== load("res://assets/images/icons/icon_star_white.svg"),
 		"Icon nut MO KHOA la ngoi sao TRANG (khong bi chim mau)")
 	_entry(not (card.get_node("Panel/Content/Action/Btn/LockIcon") as Control).visible,
 		"The du dieu kien khong hien o khoa trong nut")
@@ -478,9 +478,9 @@ func _section_6_scene(lm: Node) -> void:
 	var icon_3 := (scene.card_for(3).get_node("Panel/Content/Display/Doodle") as TextureRect).texture
 	_entry(icon_1 != icon_2 and icon_2 != icon_3 and icon_1 != icon_3,
 		"Icon 3 chuong khac nhau")
-	_entry(icon_1 == load("res://assets/images/chapters/icon_intro.svg"),
+	_entry(icon_1 == load("res://assets/images/icons/icon_intro.svg"),
 		"Chuong 1 dung icon 'intro'")
-	_entry(icon_2 == load("res://assets/images/chapters/icon_logic.svg"),
+	_entry(icon_2 == load("res://assets/images/icons/icon_logic.svg"),
 		"Chuong 2 dung icon 'logic'")
 	_entry(opened != null and (opened.get_node("Panel/Ribbon/RibbonLabel") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_RIBBON_OPEN"),

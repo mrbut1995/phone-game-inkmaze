@@ -158,7 +158,6 @@ static func spawn_floating_text(parent: Node, text: String, world_pos: Vector2, 
 static func animate_counter(label: Label, from_val: int, to_val: int, duration := 0.45, prefix := "", suffix := "") -> Tween:
 	if label == null or not is_instance_valid(label):
 		return null
-	var proxy := {"val": float(from_val)}
 	var tw := label.create_tween()
 	tw.tween_method(func(v: float) -> void:
 		if is_instance_valid(label):

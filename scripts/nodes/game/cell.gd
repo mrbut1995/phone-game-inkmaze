@@ -25,8 +25,6 @@ const TEX_FINISH := preload("res://assets/images/game/cell_finish.svg")
 ## Mực phai (Fading Ink): tỉ lệ cỡ chữ phụ so với cỡ số trên ô (số gốc 56 -> 11 / 22)
 const WARN_TEXT_RATIO := 11.0 / 56.0
 const FADED_TEXT_RATIO := 22.0 / 56.0
-const WARN_TEXT := "SẮP PHAI"
-const FADED_TEXT := "CẠN"
 ## One Stroke: tỉ lệ cỡ chữ nhãn "ĐÃ ĐI" (số gốc 56 -> 12)
 const VISITED_TEXT_RATIO := 12.0 / 56.0
 

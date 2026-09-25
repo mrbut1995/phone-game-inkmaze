@@ -8,22 +8,22 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const ICON_BOX := preload("res://assets/images/shop/icon_box.svg")
+const ICON_BOX := preload("res://assets/images/icons/icon_box.svg")
 const BTN_NORMAL := preload("res://assets/images/shop/btn_action_normal.svg")
 const BTN_PRESSED := preload("res://assets/images/shop/btn_action_pressed.svg")
 const BTN_AMBER := preload("res://assets/images/shop/btn_action_amber.svg")
 const BTN_DONE := preload("res://assets/images/shop/btn_equipped.svg")
 const ICONS := {
-	"pen": preload("res://assets/images/shop/icon_pen.svg"),
-	"ink": preload("res://assets/images/shop/icon_ink.svg"),
-	"paper": preload("res://assets/images/shop/icon_paper.svg"),
-	"coin": preload("res://assets/images/shop/icon_coin.svg"),
-	"tool_undo": preload("res://assets/images/shop/icon_tool_undo.svg"),
-	"tool_hint": preload("res://assets/images/shop/icon_tool_hint.svg"),
-	"tool_reveal": preload("res://assets/images/shop/icon_tool_reveal.svg"),
-	"tool_time": preload("res://assets/images/shop/icon_tool_time.svg"),
-	"tool_revive": preload("res://assets/images/shop/icon_tool_revive.svg"),
-	"tool_shield": preload("res://assets/images/shop/icon_tool_shield.svg"),
+	"pen": preload("res://assets/images/icons/icon_pen.svg"),
+	"ink": preload("res://assets/images/icons/icon_ink.svg"),
+	"paper": preload("res://assets/images/icons/icon_paper.svg"),
+	"coin": preload("res://assets/images/icons/icon_coin.svg"),
+	"tool_undo": preload("res://assets/images/icons/icon_tool_undo.svg"),
+	"tool_hint": preload("res://assets/images/icons/icon_tool_hint.svg"),
+	"tool_reveal": preload("res://assets/images/icons/icon_tool_reveal.svg"),
+	"tool_time": preload("res://assets/images/icons/icon_tool_time.svg"),
+	"tool_revive": preload("res://assets/images/icons/icon_tool_revive.svg"),
+	"tool_shield": preload("res://assets/images/icons/icon_tool_shield.svg"),
 }
 
 var item_id: String = ""
@@ -89,7 +89,6 @@ func _set_button(color: Color) -> void:
 	var label := get_node_or_null("Panel/Action/ActionLabel") as Label
 	if btn == null or label == null:
 		return
-	btn.texture_hover = null
 	btn.disabled = false
 	var category: String = str(Shop.category_of(item_id))
 	var price := int(Shop.item(item_id).get("price", 0))

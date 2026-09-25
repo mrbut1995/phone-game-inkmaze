@@ -24,8 +24,6 @@ const MINE_SFX_SCENE := preload("res://nodes/sfx/mine_explosion.tscn")
 const LAYERS_SCENE := preload("res://nodes/game/board_layers.tscn")
 const FOOTSTEP_SCENE := preload("res://nodes/game/ink_footstep.tscn")
 
-const GLOW_LINE_SHADER := preload("res://shaders/line_glowing_shader.gdshader")
-
 ## Fallback an toàn khi không đọc được scene gốc (giá trị thật nằm trong .tscn)
 const FALLBACK_CELL_SIZE := 88
 const FALLBACK_ANCHOR_SIZE := 20

@@ -24,8 +24,6 @@ const CHECK_ON := preload("res://assets/images/common/checkbox_checked.svg")
 const CHECK_OFF := preload("res://assets/images/common/checkbox_normal.svg")
 const CHECK_PRESS := preload("res://assets/images/common/checkbox_pressed.svg")
 const CHECK_FOCUS := preload("res://assets/images/common/checkbox_focus.svg")
-const BACK_NORMAL := preload("res://assets/images/btn_header_back_normal.svg")
-const BACK_PRESSED := preload("res://assets/images/btn_header_back_pressed.svg")
 
 const TOTAL_LEVELS := 9
 const DIFFICULTIES := ["easy", "medium", "hard"]
