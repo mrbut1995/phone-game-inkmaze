@@ -60,7 +60,7 @@ func _run() -> void:
 	print("   Controllers dùng chung: GameModeController.game_mode=%s · GridController.maze_null=%s" % [
 		str(gmc.get("game_mode")) if gmc else "<none>",
 		str(grid.get("maze") == null) if grid != null else "-"])
-	for layout_name in ["Portrait", "Landscape"]:
+	for layout_name in ["Portrait"]:
 		var holder := scene.get_node_or_null(layout_name)
 		var slot: Node = holder.get_node_or_null("BoardSlot") if holder else null
 		print("   %-9s: visible=%s · BoardSlot=%s" % [

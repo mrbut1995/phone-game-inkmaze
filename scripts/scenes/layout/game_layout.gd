@@ -10,7 +10,6 @@ extends BaseLayout
 ## GameScene đọc `layout.<tên>` — KHÔNG tra đường dẫn. Phần KHÁC NHAU giữa 2 hướng vẫn nằm ở
 ## script riêng của từng hướng, cả hai đều kế thừa class này:
 ##   · `scripts/layout/portrait/game.gd`          (kế thừa, không đặt class_name)
-##   · `scripts/layout/landscape/game_layout.gd`  (class_name `GameLayout`)
 ## gồm: `is_landscape_layout()` · `hud_variant()` · `mount_board()` · `fit_hud()` ·
 ## `configure_tool_path_button()` · `board_slot()`.
 ## ============================================================================

@@ -64,19 +64,18 @@ func _init() -> void:
 			assert(absf(button.size.x - 115.0) < 1.0 and absf(button.size.y - 65.0) < 1.0,
 				"Nut %s phai dung kich thuoc art 115x65 (dang %s)" % [child.name, str(button.size)])
 
-	# 2 LAYOUT theo hướng màn hình phải cùng tồn tại, đúng layout được bật
+	# Bản portrait-only: chỉ layout Portrait, luôn hiển thị
 	assert(main_scene.get_node_or_null("Portrait") != null, "Phai co layout Portrait")
-	assert(main_scene.get_node_or_null("Landscape") != null, "Phai co layout Landscape")
-	assert(main_scene.ui("Paper") != null, "Layout NGANG phai co to giay Paper")
-	var landscape_layout := main_scene.get_node_or_null("Landscape") as Control
-	assert(landscape_layout != null and not landscape_layout.visible,
-		"Man hinh DỌC thi layout ngang phai ẩn")
+	assert(main_scene.get_node_or_null("Landscape") == null, "Ban portrait-only KHONG con layout Landscape")
+	var portrait_layout := main_scene.get_node_or_null("Portrait") as Control
+	assert(portrait_layout != null and portrait_layout.visible,
+		"Layout Portrait phai duoc hien")
 
 	# 2b. Mỗi thẻ chế độ phải được tách 3 phần: CircleIcon / TopBadge / BottomLabel
 	for card_name in ["Play", "Dungeon", "DailyChallenge"]:
 		var card := main_scene.ui(card_name) as Control
 		assert(card != null, "Phai co the %s" % card_name)
-		var circle := card.get_node_or_null("CircleIcon")
+		var circle := card.get_node_or_null("ButtonDescription/CircleIcon")
 		var top_badge := card.get_node_or_null("TopBadge")
 		var bottom := card.get_node_or_null("BottomLabel")
 		assert(circle != null and top_badge != null and bottom != null,

@@ -24,7 +24,6 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_value.tres" id="22_value"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="23_version"]
 [ext_resource type="PackedScene" path="res://scenes/layout/portrait/credit.tscn" id="L_Portrait"]
-[ext_resource type="PackedScene" path="res://scenes/layout/landscape/credit.tscn" id="L_Landscape"]
 
 [node name="Control" instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")
@@ -32,5 +31,3 @@ script = ExtResource("2_script")
 
 
 [node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
-
-[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]

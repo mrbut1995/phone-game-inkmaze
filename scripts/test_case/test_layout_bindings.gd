@@ -1,15 +1,15 @@
 extends SceneTree
 ## ============================================================================
-## Test Case: BINDING NODE CỦA MÀN ⇄ SCENE LAYOUT (Portrait / Landscape)
+## Test Case: BINDING NODE CỦA MÀN ⇄ SCENE LAYOUT (Portrait)
 ##
-## Mỗi màn tách 2 bố cục `scenes/layout/{portrait,landscape}/<màn>.tscn`; script layout
+## Mỗi màn tách bố cục `scenes/layout/portrait/<màn>.tscn`; script layout
 ## (`scripts/scenes/layout/<màn>_layout.gd`) khai `@export` node và .tscn BIND SẴN bằng
 ## `NodePath` — script màn chỉ đọc `layout.<tên>`.
 ##
-## Test này mở từng màn, soi CẢ 2 bố cục và đòi:
+## Test này mở từng màn, soi bố cục Portrait và đòi:
 ##   1. Node layout gắn ĐÚNG script layout của màn (class_name khớp).
 ##   2. Mọi `@export` (kiểu Object) đều trỏ tới node THẬT — trừ node nằm trong OPTIONAL
-##      (bố cục ngang của splash/title chưa có node đó — thiếu có sẵn từ trước).
+##      (node bị code thay thế lúc chạy, VD `hud_slot` của màn chơi).
 ## ============================================================================
 
 ## Màn ⇄ class_name script layout + scene gốc
@@ -29,16 +29,12 @@ const SCREENS := {
 	## Màn chơi: mỗi hướng 1 script riêng, đều kế thừa `GameSceneLayout`
 	"game": "GameSceneLayout|GameLayout",
 }
-## Node được phép THIẾU ở 1 hướng (bố cục ngang chưa dựng node đó) — khoá "<màn>|<hướng>"
+## Node được phép THIẾU — khoá "<màn>|portrait"
 ## `hud_slot` của màn chơi: HUD bị THAY bằng code ngay khi vào màn (đổi theo chế độ chơi) nên
 ## node Information ban đầu bị free — binding cũ trỏ vào node đã free là chuyện bình thường.
-## `pad_slot` của shop: CHỈ bố cục NGANG có khung riêng cho Bàn nháp (cột trái như mockup);
-## bản DỌC vẫn để bàn nháp trong danh sách nên không khai node này.
+## `pad_slot` của shop: bản DỌC để bàn nháp trong danh sách nên không khai node này.
 const OPTIONAL := {
-	"splash|landscape": ["fade_overlay"],
-	"title|landscape": ["touch_button", "fade_overlay"],
 	"game|portrait": ["hud_slot"],
-	"game|landscape": ["hud_slot"],
 	"shop|portrait": ["pad_slot"],
 }
 
@@ -76,7 +72,7 @@ func _check_screen(screen: String, layout_class: String) -> void:
 	await process_frame
 	await process_frame
 
-	for holder_name in ["Portrait", "Landscape"]:
+	for holder_name in ["Portrait"]:
 		var holder: Node = scene.get_node_or_null(holder_name)
 		if holder == null:
 			continue
@@ -113,7 +109,7 @@ func _check_exports(scene: Node, holder: Node, screen: String, holder_name: Stri
 	_entry(missing.is_empty(), "%s/%s: mọi export trỏ tới node thật%s"
 		% [screen, holder_name, "" if missing.is_empty() else " — thiếu: " + ", ".join(missing)])
 
-	# script màn phải lấy được layout (2 bố cục dùng CÙNG class nên `active_layout()` trả về được)
+	# script màn phải lấy được layout (node `Portrait` — `active_layout()` trả về được)
 	if holder_name == "Portrait" and scene.get("layout") == null:
 		_entry(false, "%s: scene.layout chưa được gán sau _ready()" % screen)
 

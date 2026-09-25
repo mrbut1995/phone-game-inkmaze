@@ -22,7 +22,7 @@ func _initialize() -> void:
 		await process_frame
 	var canvas := root.get_visible_rect().size
 	print("canvas=", canvas, " root rect=", Rect2(scene.position, scene.size))
-	for layout_name in ["Portrait", "Landscape"]:
+	for layout_name in ["Portrait"]:
 		var lay := scene.get_node_or_null(layout_name) as Control
 		if lay == null:
 			continue

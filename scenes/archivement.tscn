@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://d3ujne6a5npe3" path="res://assets/images/archivements/stamp_claimed.svg" id="12_stamp"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
 [ext_resource type="PackedScene" path="res://scenes/layout/portrait/archivement.tscn" id="L_Portrait"]
-[ext_resource type="PackedScene" uid="uid://tlhro2tkyc4u" path="res://scenes/layout/landscape/archivement.tscn" id="L_Landscape"]
 
 [node name="Control" unique_id=991169314 instance=ExtResource("1_base")]
 theme = ExtResource("13_theme")
@@ -22,5 +21,3 @@ script = ExtResource("2_script")
 
 
 [node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
-
-[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]

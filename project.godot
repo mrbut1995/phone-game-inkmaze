@@ -43,7 +43,7 @@ window/size/viewport_width=540
 window/size/viewport_height=920
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
-window/handheld/orientation=6
+window/handheld/orientation=1
 
 [input_devices]
 

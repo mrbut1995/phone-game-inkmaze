@@ -3,16 +3,15 @@ extends Control
 ## ============================================================================
 ## Scene gốc dùng chung cho MỌI màn hình (instance của `scenes/base.tscn`).
 ##
-## HỖ TRỢ MỌI TỈ LỆ MÀN HÌNH — portrait & landscape (4:3 · 16:9 · 9:16 · 18:9 · 9:18 · 9:21…):
+## BẢN PORTRAIT-ONLY — mọi tỉ lệ màn hình DỌC (9:16 · 9:18 · 9:19.5 · 9:21 · tablet 3:4…):
 ##
-## Toàn bộ UI được thiết kế trên khung 1080×1920. Khi màn hình rộng hơn tỉ lệ 9:16,
-## root Control tự co thành **CỘT NỘI DUNG 1080px CANH GIỮA** thay vì để nội dung
-## dính mép trái:
-##   · Bề rộng = đúng 1080 (bằng bản thiết kế) → mọi mốc canh phải/trái giữ nguyên.
+## Toàn bộ UI được thiết kế trên khung 540×920. Khi màn hình rộng hơn tỉ lệ 9:16
+## (tablet 3:4…), root Control tự co thành **CỘT NỘI DUNG CANH GIỮA** thay vì để
+## nội dung dính mép trái:
+##   · Bề rộng = clamp(bề ngang canvas, 540, 1440) → mọi mốc canh phải/trái giữ nguyên.
 ##   · Chiều cao = chiều cao canvas → màn cao (9:18 · 9:19.5 · 9:21) giãn dọc như trước.
-##   · Canh giữa ngang → màn 4:3 / 16:9 / 18:9 (kể cả landscape) nội dung nằm giữa,
-##     hai bên là nền giấy — 2 dải `SideL`/`SideR` (con của `Background`) tô tiếp
-##     màu giấy ra hết mép màn hình nên nhìn như trang vở trải rộng.
+##   · Canh giữa ngang → hai bên là nền giấy — 2 dải `SideL`/`SideR` (con của
+##     `Background`) tô tiếp màu giấy ra hết mép màn hình nên nhìn như trang vở trải rộng.
 ##
 ## Nhờ vậy giao diện KHÔNG bị kéo giãn ngang, không lệch vị trí ở mọi tỉ lệ, và các
 ## màn con không cần sửa layout riêng.
@@ -27,10 +26,11 @@ const DESIGN_WIDTH := 540
 ## dùng trọn bề ngang màn hình; màn nào hẹp hơn thì cột đúng bằng bề ngang canvas.
 const MAX_CONTENT_WIDTH := 1440.0
 
-## Phát khi màn hình ĐỔI HƯỚNG (dọc ⇄ ngang) để màn con đổi layout Portrait ⇄ Landscape.
+## (PORTRAIT-ONLY) Giữ để tương thích API: phát ĐÚNG 1 LẦN lúc khởi động (`false`) để
+## các handler `_on_orientation_changed` của màn con chạy bước dàn UI theo layout.
 signal orientation_changed(is_landscape: bool)
 
-## Màn hình đang là NGANG hay không (canvas rộng hơn cao)
+## (PORTRAIT-ONLY) Luôn `false` — không còn chế độ ngang.
 var is_landscape := false
 
 var _responsive_ready := false
@@ -61,22 +61,12 @@ func _connect_viewport() -> void:
 
 
 ## ============================================================================
-## BỐ CỤC THEO HƯỚNG MÀN HÌNH (2026-02 — theo `guide/GUIDE.MD`)
+## BỐ CỤC MÀN HÌNH (bản PORTRAIT-ONLY)
 ##
-## Mỗi màn hình có thể khai 2 layout con CÙNG CẤP, CÙNG TÊN NODE bên trong:
-##   · `Portrait`  — bố cục 1 cột (thiết kế 1080×1920) — KẾ THỪA `scenes/orientation/portrait/portrait.tscn`
-##   · `Landscape` — bố cục 2 cột (thiết kế 1920×1080) — KẾ THỪA `scenes/orientation/landscape/landscape.tscn`
-## BaseScene tự bật/tắt đúng layout theo hướng canvas — màn con KHÔNG cần code gì.
-##
-## Khung nội dung (root Control):
-##   · Màn DỌC  → cột canh giữa: rộng `clamp(canvas.x, 1080, 1440)` × cao canvas.
-##   · Màn NGANG có `Landscape` → root PHỦ KÍN canvas (bố cục ngang tự lo bằng anchors).
-##   · Màn NGANG chưa tách layout → giữ nguyên hành vi cũ (cột 1080 canh giữa).
-##
-## LƯU Ý: 2 layout không thể dùng unique-name `%Tên` vì trùng tên — màn con lấy node bằng
-## `ui("Tên")` (tìm trong layout đang hiển thị, tên node phải giống nhau ở cả 2 layout).
+## Mỗi màn khai 1 layout con tên `Portrait` (kế thừa `scenes/layout/portrait/base_layout.tscn`).
+## Khung nội dung (root Control): cột canh giữa — rộng `clamp(canvas.x, 540, 1440)` × cao canvas.
 ## ============================================================================
-## Cột nội dung (canh giữa ngang) + nền giấy phủ toàn canvas + bật layout theo hướng
+## Cột nội dung (canh giữa ngang) + nền giấy phủ toàn canvas
 func _apply_responsive_layout() -> void:
 	if not _responsive_ready or not is_inside_tree():
 		return
@@ -84,64 +74,41 @@ func _apply_responsive_layout() -> void:
 	if canvas.x <= 0.0 or canvas.y <= 0.0:
 		return
 
-	var landscape_layout := get_node_or_null("Landscape") as CanvasItem
 	var portrait_layout := get_node_or_null("Portrait") as CanvasItem
-	var landscape_now := canvas.x > canvas.y
-	var use_landscape := landscape_now and landscape_layout != null
-
 	if portrait_layout != null:
-		portrait_layout.visible = not use_landscape
-	if landscape_layout != null:
-		landscape_layout.visible = use_landscape
-	# Neo 2 layout phụ kín khung nội dung: layout đang ẨN vẫn phải co theo cột,
-	# nếu không các node con giữ kích thước của lần NGANG trước đó (bị báo "tràn màn hình").
-	var portrait_ctrl: Control = portrait_layout as Control
-	var landscape_ctrl: Control = landscape_layout as Control
-	for ctrl: Control in [portrait_ctrl, landscape_ctrl]:
-		if ctrl == null:
-			continue
-		if ctrl.anchor_right != 1.0 or ctrl.anchor_bottom != 1.0 \
-				or ctrl.offset_right != 0.0 or ctrl.offset_bottom != 0.0:
-			ctrl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		portrait_layout.visible = true
+		# Neo layout phụ kín khung nội dung để node con luôn co đúng theo cột.
+		var portrait_ctrl: Control = portrait_layout as Control
+		if portrait_ctrl.anchor_right != 1.0 or portrait_ctrl.anchor_bottom != 1.0 \
+				or portrait_ctrl.offset_right != 0.0 or portrait_ctrl.offset_bottom != 0.0:
+			portrait_ctrl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-	if use_landscape:
-		# Bố cục NGANG tự dàn bằng anchors/container tỉ lệ 0..1 → root phủ KÍN canvas
-		if position != Vector2.ZERO:
-			position = Vector2.ZERO
-		if size != canvas:
-			size = canvas
-	else:
-		var column := DESIGN_WIDTH
-		if landscape_layout != null:
-			# Màn đã có layout ngang → màn dọc nở tối đa 1440 (dùng hết bề ngang tablet 3:4)
-			column = clampf(canvas.x, DESIGN_WIDTH, MAX_CONTENT_WIDTH)
-		var target_pos := Vector2(floorf((canvas.x - column) * 0.5), 0.0)
-		var target_size := Vector2(column, canvas.y)
-		if position != target_pos:
-			position = target_pos
-		if size != target_size:
-			size = target_size
+	var column := clampf(canvas.x, DESIGN_WIDTH, MAX_CONTENT_WIDTH)
+	var target_pos := Vector2(floorf((canvas.x - column) * 0.5), 0.0)
+	var target_size := Vector2(column, canvas.y)
+	if position != target_pos:
+		position = target_pos
+	if size != target_size:
+		size = target_size
 	_apply_background_sides(canvas)
 
-	if not _orientation_ready or landscape_now != is_landscape:
+	# Portrait-only: hướng luôn DỌC — vẫn phát 1 lần lúc khởi động để màn con dàn UI.
+	if not _orientation_ready:
 		_orientation_ready = true
-		is_landscape = landscape_now
-		orientation_changed.emit(is_landscape)
+		is_landscape = false
+		orientation_changed.emit(false)
 
 
-## Layout đang hiển thị (Portrait / Landscape) — nơi chứa toàn bộ UI của màn hình.
+## Layout đang hiển thị — nơi chứa toàn bộ UI của màn hình (portrait-only: node `Portrait`).
 ## Màn chưa tách layout thì trả về chính root.
 func active_layout() -> Node:
-	var landscape_layout := get_node_or_null("Landscape")
-	if landscape_layout != null and is_landscape:
-		return landscape_layout
 	var portrait_layout := get_node_or_null("Portrait")
-	if portrait_layout != null and landscape_layout != null:
+	if portrait_layout != null:
 		return portrait_layout
 	return self
 
 
-## Tìm node UI theo TÊN trong layout đang hiển thị (2 layout dùng CÙNG tên node).
+## Tìm node UI theo TÊN trong layout đang hiển thị (node `Portrait`).
 func ui(node_name: String) -> Node:
 	var holder := active_layout()
 	if holder != self:
@@ -159,9 +126,8 @@ func ui_child(parent_name: String, child_name: String) -> Node:
 	return parent.get_node_or_null(child_name)
 
 
-## Lấy node theo ĐƯỜNG DẪN trong layout đang hiển thị.
-## Dùng khi 2 layout giữ CÙNG cấu trúc đường dẫn (VD `TopBar/Back`, `List/Cards`) —
-## nhờ vậy script chỉ cần đổi `$A/B` → `ui_path("A/B")` là chạy được ở cả 2 hướng.
+## Lấy node theo ĐƯỜNG DẪN trong layout đang hiển thị (node `Portrait`).
+## Nhờ vậy script màn chỉ cần dùng `ui_path("A/B")` là tìm đúng node trong layout.
 func ui_path(path: String) -> Node:
 	var holder := active_layout()
 	if holder != self:

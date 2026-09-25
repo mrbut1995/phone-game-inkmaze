@@ -4,11 +4,9 @@ extends Control
 ## Thanh nút hành động của màn chơi (Tool · Wall · Undo · Hint · Replay) — nằm TRONG HUD
 ## của mỗi chế độ. MỖI HƯỚNG MÀN HÌNH CÓ 1 SCENE RIÊNG (không di chuyển node lúc chạy):
 ##   · `nodes/hud/portrait/game/action_bar.tscn`  — 1 hàng ngang: Portrait/Row
-##   · `nodes/hud/landscape/game/action_bar.tscn` — 2 hàng: MainRow (VẼ ĐƯỜNG · GHI NHỚ)
 ##                                             + SubRow (UNDO · HINT · CHƠI LẠI)
 ##
 ## HUD bản dọc = `nodes/hud/<mode>.tscn` (kế thừa `portrait/portrait.tscn`)
-## HUD bản ngang = `nodes/hud/landscape/game/<mode>.tscn` (kế thừa `landscape/landscape.tscn`)
 ## GameScene chỉ lấy nút ra từ HUD đang chơi (xem GameScene._bind_hud_nodes) — nhờ vậy mỗi
 ## chế độ tự bày nút theo bố cục của hướng màn hình tương ứng.
 ## ============================================================================

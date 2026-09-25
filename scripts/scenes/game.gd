@@ -39,8 +39,8 @@ var _mode_id := "level"
 @export var game_mode_controller : GameModeController = null
 @export var challenge_controller : ChallengeController = null
 
-## HUD theo chế độ chơi — mỗi chế độ có 2 scene HUD: bản DỌC (nodes/hud/<mode>.tscn, kế thừa
-## portrait/portrait.tscn) và bản NGANG (nodes/hud/landscape/game/<mode>.tscn). Xem scripts/nodes/hud/base.gd
+## HUD theo chế độ chơi — mỗi chế độ có 1 scene HUD DỌC (nodes/hud/portrait/game/<mode>.tscn,
+## kế thừa portrait/portrait.tscn). Xem scripts/nodes/hud/base.gd
 const HUD_LEVEL := preload("res://nodes/hud/portrait/game/level_mode.tscn")
 const HUD_DUNGEON := preload("res://nodes/hud/portrait/game/dungeon_mode.tscn")
 const HUD_MINESWEEP := preload("res://nodes/hud/portrait/game/minesweep_hud.tscn")
@@ -55,20 +55,7 @@ const HUD_ONE_STROKE := preload("res://nodes/hud/portrait/game/one_stroke_hud.ts
 ## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Thử thách
 const HUD_WALL_BUILDER := preload("res://nodes/hud/portrait/game/wall_builder_hud.tscn")
 
-## Bản NGANG của từng chế độ (thẻ nằm trên · action bar 2 hàng nằm dưới, trong cùng HUD)
-const HUD_LAND_LEVEL := preload("res://nodes/hud/landscape/game/level_mode.tscn")
-const HUD_LAND_DUNGEON := preload("res://nodes/hud/landscape/game/dungeon_mode.tscn")
-const HUD_LAND_MINESWEEP := preload("res://nodes/hud/landscape/game/minesweep_hud.tscn")
-const HUD_LAND_SUM_PATH := preload("res://nodes/hud/landscape/game/sum_path_hud.tscn")
-const HUD_LAND_BLIND_MEMORY := preload("res://nodes/hud/landscape/game/blind_memory_hud.tscn")
-const HUD_LAND_COUNTDOWN := preload("res://nodes/hud/landscape/game/countdown_hud.tscn")
-const HUD_LAND_FADING_INK := preload("res://nodes/hud/landscape/game/fading_ink_hud.tscn")
-const HUD_LAND_FOG_OF_WAR := preload("res://nodes/hud/landscape/game/fog_of_war_hud.tscn")
-const HUD_LAND_ONE_STROKE := preload("res://nodes/hud/landscape/game/one_stroke_hud.tscn")
-const HUD_LAND_WALL_BUILDER := preload("res://nodes/hud/landscape/game/wall_builder_hud.tscn")
 #@export var game_mode : BaseGameMode
-## HUD đang gắn thuộc bản NGANG hay bản DỌC (đổi hướng màn hình là phải đổi cả biến thể HUD)
-var _hud_variant_landscape := false
 
 
 ## Gắn node UI của BỐ CỤC ĐANG HIỂN THỊ.
@@ -187,8 +174,7 @@ func _connect_once(source: Object, signal_name: String, target: Object, method: 
 		source.connect(signal_name, cb)
 
 
-## Xoay màn hình: chuyển bàn cờ sang `BoardSlot` của bố cục mới rồi gắn lại HUD + thanh nút.
-## Controllers + Board DÙNG CHUNG (ngoài layout) nên ván đang chơi KHÔNG bị mất khi xoay.
+## Khởi động (và đổi bố cục nếu có): gắn lại refs rồi gắn lại HUD + thanh nút.
 func _on_orientation_changed(_is_landscape_now: bool) -> void:
 	_rebind_after_orientation.call_deferred()
 
@@ -212,8 +198,8 @@ func _mount_board() -> void:
 	_layout_call("mount_board", [board_view])
 
 
-## Gọi hàm của SCRIPT BỐ CỤC đang hiển thị — mỗi hướng tự lo phần khác biệt của mình
-## (gắn bàn cờ · cỡ HUD · nút công cụ · chọn biến thể HUD: xem scripts/orientation/*/game.gd).
+## Gọi hàm của SCRIPT BỐ CỤC đang hiển thị (gắn bàn cờ · cỡ HUD · nút công cụ —
+## xem `scripts/layout/portrait/game.gd`).
 func _layout_call(method: String, args: Array = []) -> Variant:
 	var holder: Node = active_layout()
 	if holder == null or not holder.has_method(method):
@@ -221,16 +207,9 @@ func _layout_call(method: String, args: Array = []) -> Variant:
 	return holder.callv(method, args)
 
 
-## Bố cục đang hiển thị có phải bản NGANG không (do chính script bố cục trả lời)
+## (PORTRAIT-ONLY) Giữ hàm cho tương thích — không còn bố cục ngang.
 func _layout_is_landscape() -> bool:
-	var answer: Variant = _layout_call("is_landscape_layout")
-	return bool(answer) if answer != null else is_landscape
-
-
-## Chọn biến thể HUD (dọc/ngang) theo bố cục đang hiển thị
-func _hud_variant(portrait_scene: PackedScene, landscape_scene: PackedScene) -> PackedScene:
-	var picked: Variant = _layout_call("hud_variant", [portrait_scene, landscape_scene])
-	return picked as PackedScene if picked != null else portrait_scene
+	return false
 
 
 ## Cỡ HUD do BỐ CỤC quyết định — dọc giữ nguyên 980 thiết kế, ngang co theo bề rộng sidebar
@@ -364,32 +343,31 @@ func _start_floor_for(mode_name: String) -> int:
 # ---------------------------------------------------------------------------
 # HUD theo chế độ chơi
 # ---------------------------------------------------------------------------
-## Scene HUD ứng với từng chế độ — biến thể (dọc/ngang) do BỐ CỤC quyết định qua `hud_variant()`
-## (xem nodes/hud/*.tscn + nodes/hud/landscape/game/*.tscn + scripts/orientation/*/game.gd)
+## Scene HUD ứng với từng chế độ (bản portrait-only: dùng thẳng scene HUD dọc)
 func _hud_scene_for(mode_name: String) -> PackedScene:
 	match mode_name.to_lower():
 		"dungeon":
-			return _hud_variant(HUD_DUNGEON, HUD_LAND_DUNGEON)
+			return HUD_DUNGEON
 		"daily_classic":
-			return _hud_variant(HUD_LEVEL, HUD_LAND_LEVEL)
+			return HUD_LEVEL
 		"minesweeper":
-			return _hud_variant(HUD_MINESWEEP, HUD_LAND_MINESWEEP)
+			return HUD_MINESWEEP
 		"sum_path":
-			return _hud_variant(HUD_SUM_PATH, HUD_LAND_SUM_PATH)
+			return HUD_SUM_PATH
 		"blind_memory":
-			return _hud_variant(HUD_BLIND_MEMORY, HUD_LAND_BLIND_MEMORY)
+			return HUD_BLIND_MEMORY
 		"countdown_cost":
-			return _hud_variant(HUD_COUNTDOWN, HUD_LAND_COUNTDOWN)
+			return HUD_COUNTDOWN
 		"fading_ink":
-			return _hud_variant(HUD_FADING_INK, HUD_LAND_FADING_INK)
+			return HUD_FADING_INK
 		"fog_of_war":
-			return _hud_variant(HUD_FOG_OF_WAR, HUD_LAND_FOG_OF_WAR)
+			return HUD_FOG_OF_WAR
 		"one_stroke":
-			return _hud_variant(HUD_ONE_STROKE, HUD_LAND_ONE_STROKE)
+			return HUD_ONE_STROKE
 		"wall_builder":
-			return _hud_variant(HUD_WALL_BUILDER, HUD_LAND_WALL_BUILDER)
+			return HUD_WALL_BUILDER
 		_:
-			return _hud_variant(HUD_LEVEL, HUD_LAND_LEVEL)
+			return HUD_LEVEL
 
 
 func _hud_class_for(mode_name: String) -> GDScript:
@@ -435,11 +413,6 @@ const TOOL_FULL_KEYS := {
 const TOOL_TEX_STROKE_PATH := preload("res://assets/images/game/btn_tool_path_stroke_active.svg")
 const TOOL_TEX_SUBMIT := preload("res://assets/images/game/btn_tool_submit_normal.svg")
 const TOOL_TEX_SUBMIT_PRESSED := preload("res://assets/images/game/btn_tool_submit_pressed.svg")
-const TOOL_LAND_PATH_ACTIVE := preload("res://assets/images-landscape/game/btn_tool_path_hero_active.svg")
-const TOOL_LAND_PATH_INACTIVE := preload("res://assets/images-landscape/game/btn_tool_path_hero_inactive.svg")
-const TOOL_LAND_PATH_PRESSED := preload("res://assets/images-landscape/game/btn_tool_path_hero_pressed.svg")
-const TOOL_LAND_WALL_NORMAL := preload("res://assets/images-landscape/game/btn_tool_wall_land_normal.svg")
-const TOOL_LAND_WALL_PRESSED := preload("res://assets/images-landscape/game/btn_tool_wall_land_pressed.svg")
 ## Chế độ ẩn hẳn nút GHI NHỚ (tường hiện rõ 100% nên không cần đánh dấu) — mockup
 ## matchup_one_stroke.svg: "ẨN NÚT GHI NHỚ THEO §5.12", thanh công cụ chỉ còn VẼ ĐƯỜNG ĐI + UNDO + GỢI Ý.
 const TOOL_HIDE_WALL_MODES := ["one_stroke"]
@@ -475,18 +448,6 @@ func _apply_tool_labels_for_mode(mode_name: String) -> void:
 func _apply_tool_textures_for_mode(mode_id: String) -> void:
 	if tool_controller == null:
 		return
-	if _layout_is_landscape():
-		match mode_id:
-			"one_stroke":
-				tool_controller.set_mode_textures(TOOL_LAND_PATH_ACTIVE, TOOL_LAND_PATH_PRESSED,
-					TOOL_LAND_PATH_ACTIVE, null, null, null)
-			"wall_builder":
-				tool_controller.set_mode_textures(TOOL_LAND_PATH_ACTIVE, TOOL_LAND_PATH_PRESSED,
-					TOOL_LAND_PATH_INACTIVE, TOOL_TEX_SUBMIT, TOOL_TEX_SUBMIT_PRESSED, TOOL_TEX_SUBMIT)
-			_:
-				tool_controller.set_mode_textures(TOOL_LAND_PATH_ACTIVE, TOOL_LAND_PATH_PRESSED,
-					TOOL_LAND_PATH_INACTIVE, TOOL_LAND_WALL_NORMAL, TOOL_LAND_WALL_PRESSED, TOOL_LAND_WALL_NORMAL)
-		return
 	match mode_id:
 		"one_stroke":
 			tool_controller.set_mode_textures(TOOL_TEX_STROKE_PATH, TOOL_TEX_STROKE_PATH,
@@ -518,12 +479,10 @@ func _apply_hud_for_mode(mode_name: String) -> void:
 	var slot: Control = layout.hud_slot if layout != null and is_instance_valid(layout) else null
 	if slot == null or not is_instance_valid(slot):
 		return
-	var want_landscape := _layout_is_landscape()
-	# Đủ chỗ khi HUD hiện tại THUỘC layout đang hiển thị, ĐÚNG chế độ VÀ đúng biến thể (dọc ↔ ngang)
+	# Đủ chỗ khi HUD hiện tại THUỘC layout đang hiển thị và ĐÚNG chế độ
 	if hud_host != null and is_instance_valid(hud_host) \
 			and layout.is_ancestor_of(hud_host) \
-			and hud_host.get_script() == _hud_class_for(mode_name) \
-			and _hud_variant_landscape == want_landscape:
+			and hud_host.get_script() == _hud_class_for(mode_name):
 		_bind_hud_nodes()
 		return
 	var scene := _hud_scene_for(mode_name)
@@ -541,7 +500,6 @@ func _apply_hud_for_mode(mode_name: String) -> void:
 	# trong sidebar do layout dàn) ⇒ chép khung của KHUNG GỐC sang HUD mới, nếu không HUD sẽ nhảy
 	# về góc trái canvas.
 	_copy_layout_from(slot, new_hud)
-	_hud_variant_landscape = want_landscape
 	# ⚠️ KHÔNG xoá khung gốc (`layout.hud_slot`): mỗi lần xoay màn hình `_bind_refs()` cần nó làm
 	# mốc để đặt HUD mới. Trước đây xoá nó ⇒ `layout.hud_slot` thành node đã free ⇒ xoay/resize
 	# tiếp theo là lỗi "Trying to cast a freed object" (tái hiện: xoay dọc→ngang ở mode Minesweeper).
