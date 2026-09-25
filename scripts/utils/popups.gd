@@ -21,8 +21,9 @@ const PAUSE := "pause"
 const LANGUAGE := "language"
 ## Popup đếm ngược pha GHI NHỚ của Blind Memory (không có nền mờ — vẫn thấy tường)
 const MEMORIZE := "memory_countdown"
-## Popup HƯỚNG DẪN có 9 scene riêng theo chế độ (nodes/popups/instruction/) — mở bằng
-## `Popups.open_path(...)` chứ không qua id; xem GameController.INSTRUCTION_SCENES.
+## Popup HƯỚNG DẪN dùng CHUNG `nodes/popups/popup_instruction.tscn` — tự nạp scene nội dung
+## của chế độ (`nodes/popups/instruction/<mode>.tscn`) theo `mode_id`; mở bằng
+## `Popups.open_path(...)` chứ không qua id.
 
 
 static func _mgr() -> Node:

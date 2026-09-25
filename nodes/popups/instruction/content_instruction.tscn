@@ -1,0 +1,435 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/popups/instruction/content_instruction.gd" id="1_ct"]
+[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Black.ttf" id="2_black"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/guide_chevron_left.svg" id="3_chev_l"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/guide_chevron_right.svg" id="4_chev_r"]
+
+[sub_resource type="StyleBoxFlat" id="sb_chip"]
+bg_color = Color(0.99607843, 0.8862745, 0.8862745, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="sb_tab_on"]
+bg_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="sb_tab_off"]
+bg_color = Color(0.94117647, 0.96862745, 0.98431373, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72941178, 0.80784315, 0.86274511, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="sb_ring_on"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1.1
+border_width_top = 1.1
+border_width_right = 1.1
+border_width_bottom = 1.1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6.5
+corner_radius_top_right = 6.5
+corner_radius_bottom_right = 6.5
+corner_radius_bottom_left = 6.5
+
+[sub_resource type="StyleBoxFlat" id="sb_ring_off"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1.1
+border_width_top = 1.1
+border_width_right = 1.1
+border_width_bottom = 1.1
+border_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
+corner_radius_top_left = 6.5
+corner_radius_top_right = 6.5
+corner_radius_bottom_right = 6.5
+corner_radius_bottom_left = 6.5
+
+[sub_resource type="StyleBoxFlat" id="sb_dot_on"]
+bg_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+corner_radius_top_left = 4.5
+corner_radius_top_right = 4.5
+corner_radius_bottom_right = 4.5
+corner_radius_bottom_left = 4.5
+
+[sub_resource type="StyleBoxFlat" id="sb_dot_off"]
+bg_color = Color(0.81960785, 0.88627452, 0.92941177, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="sb_nav_on"]
+bg_color = Color(1, 0.99215686, 0.97647059, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="sb_nav_prev_off"]
+bg_color = Color(1, 0.99215686, 0.97647059, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.43137255, 0.62745098, 0.78431374, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="sb_nav_next_off"]
+bg_color = Color(1, 0.99215686, 0.97647059, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72941178, 0.80784315, 0.86274511, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxEmpty" id="sb_empty"]
+
+[node name="ContentInstruction" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_ct")
+
+[node name="Chip" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 24.0
+offset_right = 145.0
+offset_bottom = 39.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_chip")
+
+[node name="ChipText" type="Label" parent="Chip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_black")
+theme_override_font_sizes/font_size = 7
+theme_override_colors/font_color = Color(0.7254902, 0.10980392, 0.10980392, 1)
+text = "HƯỚNG DẪN CHƠI"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tabs" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 58.0
+offset_bottom = 82.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Tab1" type="Button" parent="Tabs"]
+custom_minimum_size = Vector2(122.5, 24)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb_tab_off")
+theme_override_styles/hover = SubResource("sb_tab_off")
+theme_override_styles/pressed = SubResource("sb_tab_off")
+theme_override_styles/focus = SubResource("sb_empty")
+
+[node name="Row" type="HBoxContainer" parent="Tabs/Tab1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="Ring" type="Panel" parent="Tabs/Tab1/Row"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_ring_off")
+
+[node name="Num" type="Label" parent="Tabs/Tab1/Row/Ring"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_black")
+theme_override_font_sizes/font_size = 7
+theme_override_colors/font_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Tabs/Tab1/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_black")
+theme_override_font_sizes/font_size = 8
+theme_override_colors/font_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
+text = "TAB 1"
+
+[node name="Tab2" type="Button" parent="Tabs"]
+custom_minimum_size = Vector2(122.5, 24)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb_tab_off")
+theme_override_styles/hover = SubResource("sb_tab_off")
+theme_override_styles/pressed = SubResource("sb_tab_off")
+theme_override_styles/focus = SubResource("sb_empty")
+
+[node name="Row" type="HBoxContainer" parent="Tabs/Tab2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="Ring" type="Panel" parent="Tabs/Tab2/Row"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_ring_off")
+
+[node name="Num" type="Label" parent="Tabs/Tab2/Row/Ring"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_black")
+theme_override_font_sizes/font_size = 7
+theme_override_colors/font_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Tabs/Tab2/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_black")
+theme_override_font_sizes/font_size = 8
+theme_override_colors/font_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
+text = "TAB 2"
+
+[node name="Tab3" type="Button" parent="Tabs"]
+custom_minimum_size = Vector2(122.5, 24)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb_tab_off")
+theme_override_styles/hover = SubResource("sb_tab_off")
+theme_override_styles/pressed = SubResource("sb_tab_off")
+theme_override_styles/focus = SubResource("sb_empty")
+
+[node name="Row" type="HBoxContainer" parent="Tabs/Tab3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="Ring" type="Panel" parent="Tabs/Tab3/Row"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_ring_off")
+
+[node name="Num" type="Label" parent="Tabs/Tab3/Row/Ring"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_black")
+theme_override_font_sizes/font_size = 7
+theme_override_colors/font_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Tabs/Tab3/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_black")
+theme_override_font_sizes/font_size = 8
+theme_override_colors/font_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
+text = "TAB 3"
+
+[node name="Pages" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 100.0
+offset_right = -20.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Prev" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.113
+anchor_top = 1.0
+anchor_right = 0.113
+anchor_bottom = 1.0
+offset_top = -58.0
+offset_right = 26.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+disabled = true
+expand_icon = false
+icon = ExtResource("3_chev_l")
+theme_override_colors/icon_normal_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+theme_override_colors/icon_hover_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+theme_override_colors/icon_pressed_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+theme_override_colors/icon_focus_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+theme_override_colors/icon_disabled_color = Color(0.13333334, 0.29803923, 0.42745098, 1)
+theme_override_styles/normal = SubResource("sb_nav_on")
+theme_override_styles/hover = SubResource("sb_nav_on")
+theme_override_styles/pressed = SubResource("sb_nav_on")
+theme_override_styles/disabled = SubResource("sb_nav_prev_off")
+theme_override_styles/focus = SubResource("sb_empty")
+
+[node name="Next" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33
+anchor_top = 1.0
+anchor_right = 0.33
+anchor_bottom = 1.0
+offset_top = -58.0
+offset_right = 26.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+expand_icon = false
+icon = ExtResource("4_chev_r")
+theme_override_colors/icon_normal_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+theme_override_colors/icon_hover_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+theme_override_colors/icon_pressed_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+theme_override_colors/icon_focus_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+theme_override_colors/icon_disabled_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
+theme_override_styles/normal = SubResource("sb_nav_on")
+theme_override_styles/hover = SubResource("sb_nav_on")
+theme_override_styles/pressed = SubResource("sb_nav_on")
+theme_override_styles/disabled = SubResource("sb_nav_next_off")
+theme_override_styles/focus = SubResource("sb_empty")
+
+[node name="Dots" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 1.0
+anchor_right = 0.2
+anchor_bottom = 1.0
+offset_top = -64.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Dot1" type="Button" parent="Dots"]
+layout_mode = 0
+offset_right = 19.0
+offset_bottom = 9.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb_dot_on")
+theme_override_styles/hover = SubResource("sb_dot_on")
+theme_override_styles/pressed = SubResource("sb_dot_on")
+theme_override_styles/focus = SubResource("sb_empty")
+
+[node name="Dot2" type="Button" parent="Dots"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 0.5
+offset_right = 30.0
+offset_bottom = 8.5
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb_dot_off")
+theme_override_styles/hover = SubResource("sb_dot_off")
+theme_override_styles/pressed = SubResource("sb_dot_off")
+theme_override_styles/focus = SubResource("sb_empty")
+
+[node name="Dot3" type="Button" parent="Dots"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 0.5
+offset_right = 41.0
+offset_bottom = 8.5
+focus_mode = 0
+theme_override_styles/normal = SubResource("sb_dot_off")
+theme_override_styles/hover = SubResource("sb_dot_off")
+theme_override_styles/pressed = SubResource("sb_dot_off")
+theme_override_styles/focus = SubResource("sb_empty")
+
+[node name="Index" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6
+anchor_top = 1.0
+anchor_right = 0.935
+anchor_bottom = 1.0
+offset_top = -56.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.23921569, 0.51372552, 0.68235296, 1)
+text = "STR_GI_PAGE_INDEX"
+horizontal_alignment = 2
+vertical_alignment = 1

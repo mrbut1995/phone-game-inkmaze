@@ -594,6 +594,11 @@ func _bind_hud_nodes() -> void:
 	undo_btn = hud.undo_btn()
 	hint_btn = hud.hint_btn()
 	replay_btn = hud.replay_btn()
+	# Bản NGANG: nút dự phòng trong khung Hướng dẫn (khi khung quá nhỏ để nhúng) mở popup
+	var game_hud := hud as GameHUD
+	if game_hud != null and game_controller != null \
+			and not game_hud.instruction_requested.is_connected(game_controller.open_instruction):
+		game_hud.instruction_requested.connect(game_controller.open_instruction)
 	# HintGuide nằm TRONG HUD (đầu `ActionBar/Portrait`) ⇒ HUD nào gắn sau cùng thì gắn lại,
 	# nếu không `hint_guide` sẽ trỏ vào node đã bị free khi đổi chế độ.
 	hint_guide = ui("HintGuide") as HintGuide

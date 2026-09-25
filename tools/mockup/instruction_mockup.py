@@ -4,7 +4,7 @@
 Dùng chung cho:
   - tools/mockup/prepare_guideline_images.py  (ảnh -> bản ThorVG-safe)
   - tools/content/build_instruction_data.py   (sinh khoá dịch STR_GI_*)
-  - tools/mockup/gen_instruction_popups.py    (sinh 9 scene popup)
+  - tools/mockup/gen_instruction_popups.py    (sinh 10 scene NỘI DUNG hướng dẫn theo chế độ)
 
 Mỗi file mockup = 1 trang của 1 chế độ. Khung chuẩn (đo từ mockup):
   - Popup:  tờ giấy 920x1480 tại (80,200)
@@ -127,7 +127,12 @@ def _inherit(style: dict, elem) -> dict:
 
 
 class Walker:
-    """Duyệt SVG: ghi text/rect/circle/path với toạ độ ABSOLUTE + style kế thừa."""
+    """Duyệt SVG: ghi text/rect/circle/path với toạ độ ABSOLUTE + style kế thừa.
+
+    COMMENT của SVG (`<!-- CALLOUT BÊN TRÁI: ... -->`) được GIỮ LẠI và gắn vào các
+    phần tử theo sau nó — generator dựa vào đó để biết khung nào là CHÚ THÍCH
+    (chuyển thành “điểm” đánh số) và khung nào là minh hoạ (giữ chữ trên ảnh).
+    """
 
     def __init__(self):
         self.texts: list[dict] = []
@@ -135,10 +140,17 @@ class Walker:
         self.circles: list[dict] = []
         self.paths: list[dict] = []
 
-    def walk(self, elem, tx=0.0, ty=0.0, sx=1.0, sy=1.0, style=None, opacity=1.0):
+    def walk(self, elem, tx=0.0, ty=0.0, sx=1.0, sy=1.0, style=None, opacity=1.0,
+             comment: str = ""):
         style = style or {"size": "0", "weight": "", "fill": "", "anchor": "start",
                           "baseline": "", "family": ""}
+        cur_comment = comment
         for child in elem:
+            if not isinstance(child.tag, str):
+                # node COMMENT -> ghi nhớ để các phần tử sau biết mình thuộc khung nào
+                if child.text and child.text.strip():
+                    cur_comment = " ".join(child.text.split())
+                continue
             t = strip_tag(child.tag)
             ctx, cty, csx, csy = tx, ty, sx, sy
             cop = opacity
@@ -147,7 +159,7 @@ class Walker:
             if t == "g":
                 dx, dy, dsx, dsy = parse_transform(child.get("transform", ""))
                 self.walk(child, tx + dx * sx, ty + dy * sy, sx * dsx, sy * dsy,
-                          _inherit(style, child), cop)
+                          _inherit(style, child), cop, cur_comment)
                 continue
             if t == "text":
                 cs = _inherit(style, child)
@@ -161,6 +173,7 @@ class Walker:
                         "fill": child.get("fill", cs.get("fill", "")),
                         "anchor": cs.get("anchor", "start") or "start",
                         "baseline": cs.get("baseline", ""),
+                        "comment": cur_comment,
                         "text": txt,
                     })
             elif t == "rect":
@@ -204,8 +217,25 @@ def _find(rects, w, h, y=None, x=None, rx=None, tol=1.0):
 def image_texts(img_path: Path) -> list[dict]:
     """Các chữ còn lại trong ảnh guideline (giữ số trên grid...) — KHÔNG đặt lại bằng Label."""
     walker = Walker()
-    walker.walk(ET.parse(img_path).getroot())
+    walker.walk(_parse_svg(img_path).getroot())
     return walker.texts
+
+
+def _parse_svg(path: Path):
+    """Parse SVG GIỮ LẠI COMMENT (cần cho việc nhận diện khung chú thích)."""
+    parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True))
+    return ET.parse(str(path), parser=parser)
+
+
+## Comment báo “khung chú thích ngoài ảnh” (mỗi khung = 1 ĐIỂM đánh số + chữ dời xuống section):
+## “CALLOUT …” · “CHÚ THÍCH …” · “DẢI GHI CHÚ / DẢI CHÂN HÌNH …”
+_POINT_MARKERS = ("CALLOUT", "CHÚ THÍCH", "DẢI GHI CHÚ", "DẢI CHÂN HÌNH")
+
+
+def is_point_comment(comment: str) -> bool:
+    """Comment này có đánh dấu một KHUNG CHÚ THÍCH (điểm) không?"""
+    upper = (comment or "").upper()
+    return any(marker in upper for marker in _POINT_MARKERS)
 
 
 def parse_page(mode_id: str, page: int) -> dict:
@@ -213,7 +243,7 @@ def parse_page(mode_id: str, page: int) -> dict:
     mock_path = MOCK_DIR / mock_name.format(n=page)
     img_path = IMG_DIR / img_name.format(n=page)
     walker = Walker()
-    walker.walk(ET.parse(mock_path).getroot())
+    walker.walk(_parse_svg(mock_path).getroot())
 
     data: dict = {"mode_id": mode_id, "page": page, "mock": mock_name.format(n=page),
                   "img": img_name.format(n=page)}
@@ -346,6 +376,8 @@ def parse_page(mode_id: str, page: int) -> dict:
             "fill": t["fill"],
             "anchor": t["anchor"],
             "center": "central" in (t["baseline"] or ""),
+            "comment": t.get("comment", ""),
+            "point": is_point_comment(t.get("comment", "")),
             "text": txt,
         })
     data["panel_texts"] = panel_texts

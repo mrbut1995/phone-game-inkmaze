@@ -7,9 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://qaygenosff2s" path="res://assets/images-landscape/game/panel_hint_guide.svg" id="4_lxg6n"]
 [ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="5_i7rhb"]
 [ext_resource type="PackedScene" uid="uid://dxpf4nu3wy753" path="res://nodes/hud/landscape/game/action_bar.tscn" id="6_00xfy"]
+[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="7_w5h2v"]
+[ext_resource type="LabelSettings" uid="uid://bwpq01l1whp4t" path="res://resources/settings/text/text_game_button_label.tres" id="8_lbl"]
+[ext_resource type="LabelSettings" uid="uid://dg2subtoolbtn" path="res://resources/settings/text/text_game_button_sub.tres" id="9_sub"]
 
 [node name="Hud" unique_id=1383101299 instance=ExtResource("1_8cncu")]
-custom_minimum_size = Vector2(405, 380)
 anchors_preset = 15
 anchor_top = 0.0
 anchor_right = 1.0
@@ -21,7 +23,6 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_adk6y")
-metadata/_edit_use_anchors_ = true
 
 [node name="Content" type="VBoxContainer" parent="." index="0" unique_id=159019822]
 layout_mode = 1
@@ -30,7 +31,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="ModeInformation" type="HBoxContainer" parent="Content" index="0" unique_id=1591333926]
 layout_mode = 2
@@ -80,6 +80,82 @@ text = "STR_HINT_PLAY"
 vertical_alignment = 1
 text_overrun_behavior = 3
 
-[node name="ActionBar" parent="Content" index="2" unique_id=546417524 instance=ExtResource("6_00xfy")]
+[node name="InstructionSection" type="Control" parent="Content" index="2" unique_id=1355135687]
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="NinePatchRect" parent="Content/InstructionSection" index="0" unique_id=1283041353]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_w5h2v")
+patch_margin_left = 72
+patch_margin_top = 58
+patch_margin_right = 59
+patch_margin_bottom = 69
+
+[node name="GuideHost" type="Control" parent="Content/InstructionSection/Panel" index="0" unique_id=1387111911]
+layout_mode = 1
+anchor_left = 0.10925926
+anchor_top = 0.06697108
+anchor_right = 0.95
+anchor_bottom = 0.92085236
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Fallback" type="Button" parent="Content/InstructionSection/Panel" index="1" unique_id=902439547]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="Center" type="VBoxContainer" parent="Content/InstructionSection/Panel/Fallback" index="0" unique_id=1493035706]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Content/InstructionSection/Panel/Fallback/Center" index="0" unique_id=598127078]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = ExtResource("5_i7rhb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Content/InstructionSection/Panel/Fallback/Center" index="1" unique_id=59568303]
+modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
+layout_mode = 2
+text = "STR_HUD_INSTRUCTION_OPEN"
+label_settings = ExtResource("8_lbl")
+horizontal_alignment = 1
+
+[node name="Sub" type="Label" parent="Content/InstructionSection/Panel/Fallback/Center" index="2" unique_id=1780387367]
+modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
+layout_mode = 2
+text = "STR_HUD_INSTRUCTION_OPEN_SUB"
+label_settings = ExtResource("9_sub")
+horizontal_alignment = 1
+
+[node name="ActionBar" parent="Content" index="3" unique_id=546417524 instance=ExtResource("6_00xfy")]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Content" index="4" unique_id=1409029357]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.03

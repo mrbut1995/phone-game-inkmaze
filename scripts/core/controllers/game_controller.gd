@@ -572,7 +572,10 @@ func restart_run() -> void:
 
 
 ## Mở popup HƯỚNG DẪN của chế độ đang chơi (nút "?" cạnh nút Restart trên HUD).
-## Mỗi chế độ có scene hướng dẫn riêng trong nodes/popups/instruction/ (3 trang).
+## Popup hướng dẫn DÙNG CHUNG — tự nạp NỘI DUNG của chế độ vào Panel/Content (xem popup_instruction.gd).
+const INSTRUCTION_POPUP := "res://nodes/popups/popup_instruction.tscn"
+## Mỗi chế độ có scene NỘI DUNG hướng dẫn riêng trong nodes/popups/instruction/ (3 trang, kế thừa
+## content_instruction.tscn) — dùng cho CẢ popup lẫn khung hướng dẫn NHÚNG trong HUD màn chơi.
 ## Đồng hồ đứng trong lúc xem hướng dẫn để không mất thời gian oan — đóng popup thì chạy lại.
 const INSTRUCTION_SCENES := {
 	"play": "normal_maze",
@@ -590,14 +593,19 @@ const INSTRUCTION_SCENES := {
 const INSTRUCTION_FALLBACK := "normal_maze"
 
 
+## Đường dẫn scene NỘI DUNG hướng dẫn của chế độ — dùng CHUNG cho popup (bên dưới) và khung
+## hướng dẫn NHÚNG trong HUD màn chơi (xem `scripts/nodes/hud/game/game_hud.gd`).
+static func instruction_scene_path(mode_id: String) -> String:
+	var scene_name: String = INSTRUCTION_SCENES.get(mode_id, INSTRUCTION_FALLBACK)
+	return "res://nodes/popups/instruction/%s.tscn" % scene_name
+
+
 func open_instruction() -> void:
-	# SFX: gõ thẻ giấy cho nút phụ (Hướng dẫn trên HUD)
+	# SFX: gõ thẻ giấy cho nút mở hướng dẫn
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	var mode: BaseGameMode = game_mode
 	var mode_id := mode.mode_id if mode != null else ""
-	var scene_name: String = INSTRUCTION_SCENES.get(mode_id, INSTRUCTION_FALLBACK)
-	var popup := Popups.open_path("res://nodes/popups/instruction/%s.tscn" % scene_name,
-			{"mode_id": mode_id})
+	var popup := Popups.open_path(INSTRUCTION_POPUP, {"mode_id": mode_id})
 	if popup == null:
 		return
 	if not popup.closed.is_connected(_on_instruction_closed):
