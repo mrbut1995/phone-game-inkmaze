@@ -41,7 +41,7 @@ ThemeManager="*uid://bg3pxd8vw2vrw"
 
 window/size/viewport_width=540
 window/size/viewport_height=920
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/handheld/orientation=6
 

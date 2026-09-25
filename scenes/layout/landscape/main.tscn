@@ -6,12 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://ccvjj4234cnvi" path="res://assets/images/main/logo_doodle_maze.svg" id="3_sugp2"]
 [ext_resource type="Texture2D" uid="uid://cgbp27e1ip682" path="res://assets/images/main/panel_genre_container.svg" id="5_0ld40"]
 [ext_resource type="Texture2D" uid="uid://bue8as2pv2ov2" path="res://assets/images/icons/icon_shop.svg" id="9_icon_shop"]
-[ext_resource type="Texture2D" uid="uid://bmqwtnugyrxk1" path="res://assets/images/main/btn_menu_utility_normal.svg" id="9_q4smm"]
-[ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="11_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://b86vfwu1mw6xj" path="res://assets/images/main/btn_menu_utility_focus.svg" id="13_qk8x1"]
 [ext_resource type="Texture2D" uid="uid://b6jamoc7rkb8a" path="res://assets/images/icons/icon_play.svg" id="15_icon_play"]
 [ext_resource type="Texture2D" uid="uid://dfen0100lldvp" path="res://assets/images/icons/icon_castle.svg" id="16_icon_castle"]
 [ext_resource type="Texture2D" uid="uid://bmqwtnugyrxk1" path="res://assets/images/main/btn_menu_utility_normal.svg" id="16_q4smm"]
+[ext_resource type="Texture2D" uid="uid://d3ujne6a5npe3" path="res://assets/images/archivements/stamp_claimed.svg" id="16_wvcw1"]
 [ext_resource type="Texture2D" uid="uid://cbau2otllid1" path="res://assets/images/icons/icon_calendar.svg" id="17_icon_calendar"]
 [ext_resource type="Texture2D" uid="uid://chgvp6vq7npl3" path="res://assets/images/main/card_mode_level_normal.svg" id="17_nakxj"]
 [ext_resource type="Texture2D" uid="uid://iurtsy651xdc" path="res://assets/images/icons/icon_trophy.svg" id="18_icon_trophy"]
@@ -32,63 +31,284 @@
 [ext_resource type="Texture2D" uid="uid://dlg2c12rsejkc" path="res://assets/images/main/card_mode_daily_normal.svg" id="28_q4smm"]
 [ext_resource type="Texture2D" uid="uid://u7s4jqx5jo2r" path="res://assets/images/main/card_mode_daily_pressed.svg" id="29_b0x5b"]
 [ext_resource type="Texture2D" uid="uid://xhjccjuom0v8" path="res://assets/images/main/card_mode_daily_focus.svg" id="30_1wgx8"]
+[ext_resource type="Texture2D" uid="uid://bhkawxv1hy7ih" path="res://assets/images/main/btn_menu_badge_normal_icon.svg" id="p_icon_1"]
+[ext_resource type="Texture2D" uid="uid://d3nsskbj7wnsd" path="res://assets/images/main/btn_menu_badge_pressed_icon.svg" id="p_icon_2"]
+[ext_resource type="Texture2D" uid="uid://djrmygke64ox2" path="res://assets/images/main/btn_menu_badge_focus_icon.svg" id="p_icon_3"]
+[ext_resource type="Texture2D" uid="uid://oad7ci1nrsk8" path="res://assets/images/main/btn_menu_badge_disabled_icon.svg" id="p_icon_4"]
+[ext_resource type="Texture2D" uid="uid://b14hkwtacvtpq" path="res://assets/images/main/card_mode_level_normal_circle_icon.svg" id="p_tex_1"]
+[ext_resource type="Texture2D" uid="uid://c6s53ekyq3d4d" path="res://assets/images/main/card_mode_level_pressed_circle_icon.svg" id="p_tex_2"]
+[ext_resource type="Texture2D" uid="uid://pdleqdio220k" path="res://assets/images/main/card_mode_level_disabled_circle_icon.svg" id="p_tex_3"]
+[ext_resource type="Texture2D" uid="uid://cyalj8ls6bsy4" path="res://assets/images/main/card_mode_level_normal_top_badge.svg" id="p_tex_4"]
+[ext_resource type="Texture2D" uid="uid://ot3aetavvmdo" path="res://assets/images/main/card_mode_level_pressed_top_badge.svg" id="p_tex_5"]
+[ext_resource type="Texture2D" uid="uid://dsv4t6voxv64u" path="res://assets/images/main/card_mode_level_disabled_top_badge.svg" id="p_tex_6"]
+[ext_resource type="Texture2D" uid="uid://bjwyvc0xws5rh" path="res://assets/images/main/card_mode_level_normal_bottom_label.svg" id="p_tex_7"]
+[ext_resource type="Texture2D" uid="uid://u2h7q1wc1fv" path="res://assets/images/main/card_mode_level_pressed_bottom_label.svg" id="p_tex_8"]
+[ext_resource type="Texture2D" uid="uid://b5oruiilokfbf" path="res://assets/images/main/card_mode_level_disabled_bottom_label.svg" id="p_tex_9"]
+[ext_resource type="Texture2D" uid="uid://dju43egjdwu1d" path="res://assets/images/main/card_mode_dungeon_normal_circle_icon.svg" id="p_tex_10"]
+[ext_resource type="Texture2D" uid="uid://c1b7piwa1gtbx" path="res://assets/images/main/card_mode_dungeon_pressed_circle_icon.svg" id="p_tex_11"]
+[ext_resource type="Texture2D" uid="uid://c1aq3booua4ma" path="res://assets/images/main/card_mode_disabled_circle_icon.svg" id="p_tex_12"]
+[ext_resource type="Texture2D" uid="uid://dvxg56chvx6pd" path="res://assets/images/main/card_mode_dungeon_normal_top_badge.svg" id="p_tex_13"]
+[ext_resource type="Texture2D" uid="uid://c4xhwqdgbxufn" path="res://assets/images/main/card_mode_dungeon_pressed_top_badge.svg" id="p_tex_14"]
+[ext_resource type="Texture2D" uid="uid://dxubsrby2kcax" path="res://assets/images/main/card_mode_disabled_top_badge.svg" id="p_tex_15"]
+[ext_resource type="Texture2D" uid="uid://cq3ouevrvn5fd" path="res://assets/images/main/card_mode_dungeon_normal_bottom_label.svg" id="p_tex_16"]
+[ext_resource type="Texture2D" uid="uid://lwkkwdqdo08v" path="res://assets/images/main/card_mode_dungeon_pressed_bottom_label.svg" id="p_tex_17"]
+[ext_resource type="Texture2D" uid="uid://dn0pbmys5kmwt" path="res://assets/images/main/card_mode_disabled_bottom_label.svg" id="p_tex_18"]
+[ext_resource type="Texture2D" uid="uid://ba1pmah7pte47" path="res://assets/images/main/card_mode_daily_normal_circle_icon.svg" id="p_tex_19"]
+[ext_resource type="Texture2D" uid="uid://cghgpppen8wip" path="res://assets/images/main/card_mode_daily_pressed_circle_icon.svg" id="p_tex_20"]
+[ext_resource type="Texture2D" uid="uid://djpdw6642wlah" path="res://assets/images/main/card_mode_daily_normal_top_badge.svg" id="p_tex_21"]
+[ext_resource type="Texture2D" uid="uid://b1bjg4rfut4ed" path="res://assets/images/main/card_mode_daily_pressed_top_badge.svg" id="p_tex_22"]
+[ext_resource type="Texture2D" uid="uid://b6lljwanrei1u" path="res://assets/images/main/card_mode_daily_normal_bottom_label.svg" id="p_tex_23"]
+[ext_resource type="Texture2D" uid="uid://d3y82p22l1eid" path="res://assets/images/main/card_mode_daily_pressed_bottom_label.svg" id="p_tex_24"]
+[ext_resource type="Texture2D" uid="uid://dcvj5j5lbx0ju" path="res://assets/images/main/card_mode_level_focus_circle_icon.svg" id="p_tex_25"]
+[ext_resource type="Texture2D" uid="uid://6xex1yxjs400" path="res://assets/images/main/card_mode_level_focus_top_badge.svg" id="p_tex_26"]
+[ext_resource type="Texture2D" uid="uid://catvai0hjs7dy" path="res://assets/images/main/card_mode_level_focus_bottom_label.svg" id="p_tex_27"]
+[ext_resource type="Texture2D" uid="uid://c1j2p7yydvslx" path="res://assets/images/main/card_mode_dungeon_focus_circle_icon.svg" id="p_tex_28"]
+[ext_resource type="Texture2D" uid="uid://dlbm1g4qfkcu6" path="res://assets/images/main/card_mode_dungeon_focus_top_badge.svg" id="p_tex_29"]
+[ext_resource type="Texture2D" uid="uid://c16isge6fyaqc" path="res://assets/images/main/card_mode_dungeon_focus_bottom_label.svg" id="p_tex_30"]
+[ext_resource type="Texture2D" uid="uid://b3k6y5ibifcwx" path="res://assets/images/main/card_mode_daily_focus_circle_icon.svg" id="p_tex_31"]
+[ext_resource type="Texture2D" uid="uid://bkklcbd8asr6s" path="res://assets/images/main/card_mode_daily_focus_top_badge.svg" id="p_tex_32"]
+[ext_resource type="Texture2D" uid="uid://er737mp63rf8" path="res://assets/images/main/card_mode_daily_focus_bottom_label.svg" id="p_tex_33"]
+[ext_resource type="Script" uid="uid://blpdwtvxerh8h" path="res://scripts/tool/nine_patch/NinePatchStateTexture.gd" id="sc_npstate"]
+[ext_resource type="Script" uid="uid://bbrwe45fwv4mb" path="res://scripts/tool/StateTexture.gd" id="sc_state"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dnx64"]
-content_margin_left = 40.0
-content_margin_top = 35.0
-content_margin_right = 40.0
-content_margin_bottom = 35.0
-texture = ExtResource("9_q4smm")
-texture_margin_left = 40.0
-texture_margin_top = 35.0
-texture_margin_right = 40.0
-texture_margin_bottom = 35.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_heropanel"]
+bg_color = Color(0.99607843, 0.99215686, 0.98039216, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.43137255, 0.627451, 0.78431374, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_txlar"]
-content_margin_left = 40.0
-content_margin_top = 35.0
-content_margin_right = 40.0
-content_margin_bottom = 35.0
-texture = ExtResource("9_q4smm")
-texture_margin_left = 40.0
-texture_margin_top = 35.0
-texture_margin_right = 40.0
-texture_margin_bottom = 35.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wvcw1"]
+content_margin_left = 59.0
+content_margin_top = 32.0
+content_margin_right = 24.0
+content_margin_bottom = 34.0
+texture = ExtResource("24_badge_normal")
+texture_margin_left = 59.0
+texture_margin_top = 32.0
+texture_margin_right = 24.0
+texture_margin_bottom = 34.0
+axis_stretch_horizontal = 2
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f4qyh"]
-content_margin_left = 40.0
-content_margin_top = 35.0
-content_margin_right = 40.0
-content_margin_bottom = 35.0
-texture = ExtResource("9_q4smm")
-texture_margin_left = 40.0
-texture_margin_top = 35.0
-texture_margin_right = 40.0
-texture_margin_bottom = 35.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0u4nb"]
+content_margin_left = 59.0
+content_margin_top = 32.0
+content_margin_right = 24.0
+content_margin_bottom = 34.0
+texture = ExtResource("25_badge_pressed")
+texture_margin_left = 59.0
+texture_margin_top = 32.0
+texture_margin_right = 24.0
+texture_margin_bottom = 34.0
+axis_stretch_horizontal = 2
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_avc2c"]
-content_margin_left = 40.0
-content_margin_top = 35.0
-content_margin_right = 40.0
-content_margin_bottom = 35.0
-texture = ExtResource("9_q4smm")
-texture_margin_left = 40.0
-texture_margin_top = 35.0
-texture_margin_right = 40.0
-texture_margin_bottom = 35.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_asu54"]
+content_margin_left = 59.0
+content_margin_top = 32.0
+content_margin_right = 24.0
+content_margin_bottom = 34.0
+texture = ExtResource("24_badge_normal")
+texture_margin_left = 59.0
+texture_margin_top = 32.0
+texture_margin_right = 24.0
+texture_margin_bottom = 34.0
+axis_stretch_horizontal = 2
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ev5u4"]
-content_margin_left = 40.0
-content_margin_top = 35.0
-content_margin_right = 40.0
-content_margin_bottom = 35.0
-texture = ExtResource("9_q4smm")
-texture_margin_left = 40.0
-texture_margin_top = 35.0
-texture_margin_right = 40.0
-texture_margin_bottom = 35.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y456h"]
+content_margin_left = 59.0
+content_margin_top = 32.0
+content_margin_right = 24.0
+content_margin_bottom = 34.0
+texture = ExtResource("27_badge_disabled")
+texture_margin_left = 59.0
+texture_margin_top = 32.0
+texture_margin_right = 24.0
+texture_margin_bottom = 34.0
+axis_stretch_horizontal = 2
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3bbvj"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_06u8n"]
+content_margin_left = 59.0
+content_margin_top = 32.0
+content_margin_right = 24.0
+content_margin_bottom = 34.0
+texture = ExtResource("26_badge_focus")
+texture_margin_left = 59.0
+texture_margin_top = 32.0
+texture_margin_right = 24.0
+texture_margin_bottom = 34.0
+axis_stretch_horizontal = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mei2x"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("17_nakxj")
+texture_margin_left = 141.0
+texture_margin_top = 41.0
+texture_margin_right = 116.0
+texture_margin_bottom = 33.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k1oop"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("18_q4smm")
+texture_margin_left = 141.0
+texture_margin_top = 41.0
+texture_margin_right = 116.0
+texture_margin_bottom = 33.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtpxm"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("17_nakxj")
+texture_margin_left = 141.0
+texture_margin_top = 41.0
+texture_margin_right = 116.0
+texture_margin_bottom = 33.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r310m"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("19_b0x5b")
+texture_margin_left = 141.0
+texture_margin_top = 41.0
+texture_margin_right = 116.0
+texture_margin_bottom = 33.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6v3ij"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("20_1wgx8")
+texture_margin_left = 141.0
+texture_margin_top = 41.0
+texture_margin_right = 116.0
+texture_margin_bottom = 33.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mjfva"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("23_b0x5b")
+texture_margin_left = 148.0
+texture_margin_top = 48.0
+texture_margin_right = 112.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y3wuy"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("24_1wgx8")
+texture_margin_left = 148.0
+texture_margin_top = 48.0
+texture_margin_right = 112.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bwfoc"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("23_b0x5b")
+texture_margin_left = 148.0
+texture_margin_top = 48.0
+texture_margin_right = 112.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m7v2e"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("25_umqxe")
+texture_margin_left = 148.0
+texture_margin_top = 48.0
+texture_margin_right = 112.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hksmy"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("26_f5bcp")
+texture_margin_left = 148.0
+texture_margin_top = 48.0
+texture_margin_right = 112.0
+texture_margin_bottom = 34.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_usq5l"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("28_q4smm")
+texture_margin_left = 143.0
+texture_margin_top = 43.0
+texture_margin_right = 121.0
+texture_margin_bottom = 39.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d71o1"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("29_b0x5b")
+texture_margin_left = 143.0
+texture_margin_top = 43.0
+texture_margin_right = 121.0
+texture_margin_bottom = 39.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6rj8f"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("28_q4smm")
+texture_margin_left = 143.0
+texture_margin_top = 43.0
+texture_margin_right = 121.0
+texture_margin_bottom = 39.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x4mmg"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("25_umqxe")
+texture_margin_left = 143.0
+texture_margin_top = 43.0
+texture_margin_right = 121.0
+texture_margin_bottom = 39.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vxskp"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("30_1wgx8")
+texture_margin_left = 143.0
+texture_margin_top = 43.0
+texture_margin_right = 121.0
+texture_margin_bottom = 39.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1cndw"]
 content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
@@ -99,7 +319,7 @@ texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cu4hr"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_56t3x"]
 content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
@@ -110,7 +330,7 @@ texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k8e7r"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w5q8h"]
 content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
@@ -121,7 +341,7 @@ texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_66mli"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qw4pd"]
 content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
@@ -132,7 +352,62 @@ texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8276y"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bc8r3"]
+content_margin_left = 40.0
+content_margin_top = 35.0
+content_margin_right = 40.0
+content_margin_bottom = 35.0
+texture = ExtResource("16_q4smm")
+texture_margin_left = 40.0
+texture_margin_top = 35.0
+texture_margin_right = 40.0
+texture_margin_bottom = 35.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nivqn"]
+content_margin_left = 40.0
+content_margin_top = 35.0
+content_margin_right = 40.0
+content_margin_bottom = 35.0
+texture = ExtResource("16_q4smm")
+texture_margin_left = 40.0
+texture_margin_top = 35.0
+texture_margin_right = 40.0
+texture_margin_bottom = 35.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gemtn"]
+content_margin_left = 40.0
+content_margin_top = 35.0
+content_margin_right = 40.0
+content_margin_bottom = 35.0
+texture = ExtResource("16_q4smm")
+texture_margin_left = 40.0
+texture_margin_top = 35.0
+texture_margin_right = 40.0
+texture_margin_bottom = 35.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_elw3w"]
+content_margin_left = 40.0
+content_margin_top = 35.0
+content_margin_right = 40.0
+content_margin_bottom = 35.0
+texture = ExtResource("16_q4smm")
+texture_margin_left = 40.0
+texture_margin_top = 35.0
+texture_margin_right = 40.0
+texture_margin_bottom = 35.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mpsj4"]
+content_margin_left = 40.0
+content_margin_top = 35.0
+content_margin_right = 40.0
+content_margin_bottom = 35.0
+texture = ExtResource("16_q4smm")
+texture_margin_left = 40.0
+texture_margin_top = 35.0
+texture_margin_right = 40.0
+texture_margin_bottom = 35.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gkumo"]
 content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
@@ -143,7 +418,7 @@ texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_loioc"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qrd76"]
 content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
@@ -154,7 +429,7 @@ texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ttpg5"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5lxp8"]
 content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
@@ -165,7 +440,7 @@ texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ut7v8"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_63ddw"]
 content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
@@ -176,7 +451,7 @@ texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h5bts"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eyhiq"]
 content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
@@ -187,7 +462,7 @@ texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cfilw"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qa1qo"]
 content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
@@ -197,190 +472,25 @@ texture_margin_left = 40.0
 texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_43odm"]
-content_margin_left = 141.0
-content_margin_top = 128.0
-content_margin_right = 116.0
-content_margin_bottom = 18.0
-texture = ExtResource("17_nakxj")
-texture_margin_left = 141.0
-texture_margin_top = 128.0
-texture_margin_right = 116.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_je5uo"]
-content_margin_left = 141.0
-content_margin_top = 128.0
-content_margin_right = 116.0
-content_margin_bottom = 18.0
-texture = ExtResource("18_q4smm")
-texture_margin_left = 141.0
-texture_margin_top = 128.0
-texture_margin_right = 116.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qtw0m"]
-content_margin_left = 141.0
-content_margin_top = 128.0
-content_margin_right = 116.0
-content_margin_bottom = 18.0
-texture = ExtResource("17_nakxj")
-texture_margin_left = 141.0
-texture_margin_top = 128.0
-texture_margin_right = 116.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lc2xq"]
-content_margin_left = 141.0
-content_margin_top = 128.0
-content_margin_right = 116.0
-content_margin_bottom = 18.0
-texture = ExtResource("19_b0x5b")
-texture_margin_left = 141.0
-texture_margin_top = 128.0
-texture_margin_right = 116.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u1gml"]
-content_margin_left = 141.0
-content_margin_top = 128.0
-content_margin_right = 116.0
-content_margin_bottom = 18.0
-texture = ExtResource("20_1wgx8")
-texture_margin_left = 141.0
-texture_margin_top = 128.0
-texture_margin_right = 116.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p5ruj"]
-content_margin_left = 148.0
-content_margin_top = 128.0
-content_margin_right = 112.0
-content_margin_bottom = 18.0
-texture = ExtResource("23_b0x5b")
-texture_margin_left = 148.0
-texture_margin_top = 128.0
-texture_margin_right = 112.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qhfnl"]
-content_margin_left = 148.0
-content_margin_top = 128.0
-content_margin_right = 112.0
-content_margin_bottom = 18.0
-texture = ExtResource("24_1wgx8")
-texture_margin_left = 148.0
-texture_margin_top = 128.0
-texture_margin_right = 112.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8ei2q"]
-content_margin_left = 148.0
-content_margin_top = 128.0
-content_margin_right = 112.0
-content_margin_bottom = 18.0
-texture = ExtResource("23_b0x5b")
-texture_margin_left = 148.0
-texture_margin_top = 128.0
-texture_margin_right = 112.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j41ff"]
-content_margin_left = 148.0
-content_margin_top = 128.0
-content_margin_right = 112.0
-content_margin_bottom = 18.0
-texture = ExtResource("25_umqxe")
-texture_margin_left = 148.0
-texture_margin_top = 128.0
-texture_margin_right = 112.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rl133"]
-content_margin_left = 148.0
-content_margin_top = 128.0
-content_margin_right = 112.0
-content_margin_bottom = 18.0
-texture = ExtResource("26_f5bcp")
-texture_margin_left = 148.0
-texture_margin_top = 128.0
-texture_margin_right = 112.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hglya"]
-content_margin_left = 143.0
-content_margin_top = 128.0
-content_margin_right = 121.0
-content_margin_bottom = 18.0
-texture = ExtResource("28_q4smm")
-texture_margin_left = 143.0
-texture_margin_top = 128.0
-texture_margin_right = 121.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_utwg8"]
-content_margin_left = 143.0
-content_margin_top = 128.0
-content_margin_right = 121.0
-content_margin_bottom = 18.0
-texture = ExtResource("29_b0x5b")
-texture_margin_left = 143.0
-texture_margin_top = 128.0
-texture_margin_right = 121.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2idqi"]
-content_margin_left = 143.0
-content_margin_top = 128.0
-content_margin_right = 121.0
-content_margin_bottom = 18.0
-texture = ExtResource("28_q4smm")
-texture_margin_left = 143.0
-texture_margin_top = 128.0
-texture_margin_right = 121.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vgas4"]
-content_margin_left = 143.0
-content_margin_top = 128.0
-content_margin_right = 121.0
-content_margin_bottom = 18.0
-texture = ExtResource("25_umqxe")
-texture_margin_left = 143.0
-texture_margin_top = 128.0
-texture_margin_right = 121.0
-texture_margin_bottom = 18.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gpaeh"]
-content_margin_left = 143.0
-content_margin_top = 128.0
-content_margin_right = 121.0
-content_margin_bottom = 18.0
-texture = ExtResource("30_1wgx8")
-texture_margin_left = 143.0
-texture_margin_top = 128.0
-texture_margin_right = 121.0
-texture_margin_bottom = 18.0
 
 [node name="Landscape" unique_id=781667487 node_paths=PackedStringArray("logo", "btn_play", "btn_dungeon", "btn_daily", "btn_leaderboard", "btn_shop", "btn_settings", "btn_archivement", "badge_count_label", "badge_play", "badge_dungeon", "badge_daily", "stamp_panel", "stamp_label", "game_mode_box", "other_box") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
-logo = NodePath("Paper/Hero/LogoArea/Logo")
+logo = NodePath("Paper/Hero/LogoPanel/LogoArea/Logo")
 btn_play = NodePath("Paper/Menu/Play")
 btn_dungeon = NodePath("Paper/Menu/Dungeon")
 btn_daily = NodePath("Paper/Menu/DailyChallenge")
-btn_leaderboard = NodePath("Paper/Hero/Utils/Leaderboard")
-btn_shop = NodePath("Paper/Hero/Utils/Shop")
-btn_settings = NodePath("Paper/Hero/Utils/Settings")
-btn_archivement = NodePath("Paper/Hero/CenterContainer/Archivement")
-badge_count_label = NodePath("Paper/Hero/CenterContainer/Archivement/Count")
-badge_play = NodePath("Paper/Menu/Play/Badge")
-badge_dungeon = NodePath("Paper/Menu/Dungeon/Badge")
-badge_daily = NodePath("Paper/Menu/DailyChallenge/Badge")
-stamp_panel = NodePath("Paper/Stamp")
-stamp_label = NodePath("Paper/Stamp/Label")
+btn_leaderboard = NodePath("Paper/Menu/Utils/Leaderboard")
+btn_shop = NodePath("Paper/Menu/Utils/Shop")
+btn_settings = NodePath("Paper/Menu/Utils/Settings")
+btn_archivement = NodePath("Paper/Hero/Archivement")
+badge_count_label = NodePath("Paper/Hero/Archivement/ArchivementText/Count")
+badge_play = NodePath("Paper/Menu/Play/BottomLabel/Badge")
+badge_dungeon = NodePath("Paper/Menu/Dungeon/BottomLabel/Badge")
+badge_daily = NodePath("Paper/Menu/DailyChallenge/BottomLabel/Badge")
+stamp_panel = NodePath("Paper/Hero/StampArea/Control/Stamp")
+stamp_label = NodePath("Paper/Hero/StampArea/Control/Stamp/Label")
 game_mode_box = NodePath("Paper/Menu")
-other_box = NodePath("Paper/Hero/Utils")
+other_box = NodePath("Paper/Menu/Utils")
 
 [node name="Paper" type="NinePatchRect" parent="." index="0" unique_id=1454574636]
 layout_mode = 1
@@ -393,7 +503,7 @@ offset_bottom = 0.47998047
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_0wfyh")
-patch_margin_left = 211
+patch_margin_left = 131
 patch_margin_top = 96
 patch_margin_right = 64
 patch_margin_bottom = 64
@@ -403,52 +513,69 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.038000003
-anchor_top = 0.036000002
-anchor_right = 0.379
-anchor_bottom = 0.86300004
+anchor_top = 0.098000005
+anchor_right = 0.38900003
+anchor_bottom = 0.818
 offset_left = 0.19999695
-offset_top = -0.3240013
-offset_right = 8.839996
-offset_bottom = 2.069336
-theme_override_constants/separation = 20
+offset_right = 9.119965
+theme_override_constants/separation = 12
 
-[node name="LogoArea" type="VBoxContainer" parent="Paper/Hero" index="0" unique_id=328949317]
+[node name="LogoPanel" type="Panel" parent="Paper/Hero" index="0" unique_id=2890456]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.8
+theme_override_styles/panel = SubResource("StyleBoxFlat_heropanel")
+
+[node name="LogoArea" type="VBoxContainer" parent="Paper/Hero/LogoPanel" index="0" unique_id=328949317]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.104
+anchor_top = 0.104
+anchor_right = 0.896
+anchor_bottom = 0.896
+offset_left = 0.055187225
+offset_top = 0.03999901
+offset_right = -0.0552063
+offset_bottom = -0.040008545
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="Logo" type="TextureRect" parent="Paper/Hero/LogoArea" index="0" unique_id=412603202]
+[node name="Logo" type="TextureRect" parent="Paper/Hero/LogoPanel/LogoArea" index="0" unique_id=412603202]
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 3
 texture = ExtResource("3_sugp2")
-stretch_mode = 2
+stretch_mode = 5
 
-[node name="Title" type="Label" parent="Paper/Hero/LogoArea" index="1" unique_id=270037304]
+[node name="Title" type="Label" parent="Paper/Hero/LogoPanel/LogoArea" index="1" unique_id=270037304]
 layout_mode = 2
 theme_type_variation = &"MainTitle"
-theme_override_font_sizes/font_size = 135
+theme_override_font_sizes/font_size = 60
 text = "Ink Maze"
 horizontal_alignment = 1
 resize_font_to_fit = true
 
-[node name="Title2" type="VBoxContainer" parent="Paper/Hero/LogoArea" index="2" unique_id=360240322]
+[node name="Title2" type="VBoxContainer" parent="Paper/Hero/LogoPanel/LogoArea" index="2" unique_id=360240322]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Paper/Hero/LogoArea/Title2" index="0" unique_id=194347152]
+[node name="Title" type="Label" parent="Paper/Hero/LogoPanel/LogoArea/Title2" index="0" unique_id=194347152]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 theme_type_variation = &"MainTitle"
+theme_override_font_sizes/font_size = 34
 text = "Ink Maze"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Container" type="TextureRect" parent="Paper/Hero/LogoArea/Title2" index="1" unique_id=1220539371]
+[node name="Container" type="TextureRect" parent="Paper/Hero/LogoPanel/LogoArea/Title2" index="1" unique_id=1220539371]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
 texture = ExtResource("5_0ld40")
 
-[node name="Genre" type="Label" parent="Paper/Hero/LogoArea/Title2/Container" index="0" unique_id=1046490378]
+[node name="Genre" type="Label" parent="Paper/Hero/LogoPanel/LogoArea/Title2/Container" index="0" unique_id=1046490378]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -457,13 +584,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MainGenre"
+theme_override_font_sizes/font_size = 11
 text = "STR_GENRE_SUBTITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="SubTitle" type="Label" parent="Paper/Hero/LogoArea/Title2" index="2" unique_id=1724027459]
+[node name="SubTitle" type="Label" parent="Paper/Hero/LogoPanel/LogoArea/Title2" index="2" unique_id=1724027459]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 theme_type_variation = &"MainTagline"
@@ -471,83 +599,723 @@ text = "STR_GAME_TAGLINE"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="CenterContainer" type="CenterContainer" parent="Paper/Hero" index="1" unique_id=1626576441]
+[node name="Archivement" type="Button" parent="Paper/Hero" index="1" unique_id=160161149]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 10
-
-[node name="Archivement" type="TextureButton" parent="Paper/Hero/CenterContainer" index="0" unique_id=160161149]
-layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.2
+theme_override_styles/normal = SubResource("StyleBoxTexture_wvcw1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0u4nb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_asu54")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_y456h")
+theme_override_styles/focus = SubResource("StyleBoxTexture_06u8n")
+script = ExtResource("21_umqxe")
 texture_normal = ExtResource("24_badge_normal")
-texture_pressed = ExtResource("25_badge_pressed")
 texture_hover = ExtResource("24_badge_normal")
+texture_pressed = ExtResource("25_badge_pressed")
 texture_disabled = ExtResource("27_badge_disabled")
-texture_focused = ExtResource("26_badge_focus")
+texture_focus = ExtResource("26_badge_focus")
+patch_margin_left = 59.0
+patch_margin_top = 32.0
+patch_margin_right = 24.0
+patch_margin_bottom = 34.0
+axis_stretch_horizontal = 2
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+
+[node name="Icon" type="Control" parent="Paper/Hero/Archivement" index="0" unique_id=1356135115]
+layout_mode = 1
+anchor_left = 0.05389728
+anchor_top = 0.17592593
+anchor_right = 0.27697882
+anchor_bottom = 0.8518519
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("sc_state")
+texture_normal = ExtResource("p_icon_1")
+texture_hover = ExtResource("p_icon_1")
+texture_pressed = ExtResource("p_icon_2")
+texture_disabled = ExtResource("p_icon_4")
+texture_focused = ExtResource("p_icon_3")
+metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
 metadata/_edit_use_anchors_ = true
 
-[node name="Count" type="Label" parent="Paper/Hero/CenterContainer/Archivement" index="0" unique_id=1512590681]
+[node name="ArchivementText" type="VBoxContainer" parent="Paper/Hero/Archivement" index="1" unique_id=2018427346]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.284
+anchor_top = 0.3335065
+anchor_right = 0.85973734
+anchor_bottom = 0.75000006
+offset_left = 0.048000336
+offset_top = 0.072128296
+offset_right = 0.051994324
+offset_bottom = -0.06787872
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Paper/Hero/Archivement/ArchivementText" index="0" unique_id=1366224451]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 2
+theme_type_variation = &"OtherLabel"
+theme_override_font_sizes/font_size = 22
+text = "STR_BTN_ARCHIVEMENT"
+vertical_alignment = 1
+text_overrun_behavior = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Count" type="Label" parent="Paper/Hero/Archivement/ArchivementText" index="1" unique_id=1512590681]
 modulate = Color(0.5411765, 0.3529412, 0.10980392, 1)
+layout_mode = 2
+theme_type_variation = &"MainBadgeCount"
+theme_override_font_sizes/font_size = 20
+text = "0/0"
+vertical_alignment = 1
+maximum_font_size = 25
+metadata/_edit_use_anchors_ = true
+
+[node name="StampArea" type="CenterContainer" parent="Paper/Hero" index="2" unique_id=87380593]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="Paper/Hero/StampArea" index="0" unique_id=1915974163]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="Stamp" type="NinePatchRect" parent="Paper/Hero/StampArea/Control" index="0" unique_id=358661511]
+custom_minimum_size = Vector2(92, 36)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -49.967773
+offset_top = 97.42832
+offset_right = 67.92586
+offset_bottom = 56.796417
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.4763623
+texture = ExtResource("16_wvcw1")
+patch_margin_left = 13
+patch_margin_top = 9
+patch_margin_right = 12
+patch_margin_bottom = 11
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Label" type="Label" parent="Paper/Hero/StampArea/Control/Stamp" index="0" unique_id=913298419]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "STR_SETTINGS_VERSION"
+label_settings = ExtResource("21_stamp_text_lg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Menu" type="VBoxContainer" parent="Paper" index="1" unique_id=1865196585]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.42600003
+anchor_top = 0.036000002
+anchor_right = 0.96300006
+anchor_bottom = 0.868
+offset_left = 0.079956055
+offset_top = -0.3240013
+offset_right = 0.039916992
+offset_bottom = 0.39996338
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 1
+
+[node name="Play" type="Button" parent="Paper/Menu" index="0" unique_id=1714166398]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.05
+theme_override_styles/normal = SubResource("StyleBoxTexture_mei2x")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_k1oop")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rtpxm")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_r310m")
+theme_override_styles/focus = SubResource("StyleBoxTexture_6v3ij")
+script = ExtResource("21_umqxe")
+texture_normal = ExtResource("17_nakxj")
+texture_hover = ExtResource("17_nakxj")
+texture_pressed = ExtResource("18_q4smm")
+texture_disabled = ExtResource("19_b0x5b")
+texture_focus = ExtResource("20_1wgx8")
+patch_margin_left = 141.0
+patch_margin_top = 41.0
+patch_margin_right = 116.0
+patch_margin_bottom = 33.0
+use_custom_content_margin = true
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+
+[node name="ButtonDescription" type="HBoxContainer" parent="Paper/Menu/Play" index="0" unique_id=80485742]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 35.690002
+offset_top = 58.0
+offset_right = -16.309998
+offset_bottom = -58.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="CircleIcon" type="Control" parent="Paper/Menu/Play/ButtonDescription" index="0" unique_id=1601753090]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+script = ExtResource("sc_state")
+texture_normal = ExtResource("p_tex_1")
+texture_hover = ExtResource("p_tex_1")
+texture_pressed = ExtResource("p_tex_2")
+texture_disabled = ExtResource("p_tex_3")
+texture_focused = ExtResource("p_tex_25")
+expand_mode = 2
+stretch_mode = 5
+metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
+
+[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/Play/ButtonDescription/CircleIcon" index="0" unique_id=411001665]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -76.23999
-offset_top = -53.55603
-offset_right = 76.0
-offset_bottom = 67.44397
-theme_type_variation = &"MainBadgeCount"
-theme_override_font_sizes/font_size = 71
-text = "0/0"
+offset_left = -20.25
+offset_top = -20.046
+offset_right = 20.25
+offset_bottom = 20.046
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_icon_play")
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer" type="Control" parent="Paper/Menu/Play/ButtonDescription" index="1" unique_id=982552609]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="TitleContainer" type="VBoxContainer" parent="Paper/Menu/Play/ButtonDescription" index="2" unique_id=1869724018]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Paper/Menu/Play/ButtonDescription/TitleContainer" index="0" unique_id=470221238]
+layout_mode = 2
+theme_type_variation = &"CardTitlePlay"
+theme_override_font_sizes/font_size = 22
+text = "STR_MODE_PLAY_TITLE"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="PlayDesc1" type="Label" parent="Paper/Menu/Play/ButtonDescription/TitleContainer" index="1" unique_id=2036590052]
+layout_mode = 2
+theme_type_variation = &"CardDescPlay"
+theme_override_font_sizes/font_size = 16
+text = "STR_MODE_PLAY_DESC_1"
+text_overrun_behavior = 3
+
+[node name="PlayDesc2" type="Label" parent="Paper/Menu/Play/ButtonDescription/TitleContainer" index="2" unique_id=1595535361]
+layout_mode = 2
+theme_type_variation = &"CardDescPlay"
+theme_override_font_sizes/font_size = 14
+text = "STR_MODE_PLAY_DESC_2"
+text_overrun_behavior = 3
+
+[node name="TopBadge" type="Control" parent="Paper/Menu/Play" index="1" unique_id=1033934598]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 33.5
+offset_top = 3.5
+offset_right = 138.5
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("sc_npstate")
+patch_margin_left = 5.0
+patch_margin_top = 5.0
+patch_margin_right = 5.0
+patch_margin_bottom = 5.0
+texture_normal = ExtResource("p_tex_4")
+texture_hover = ExtResource("p_tex_4")
+texture_pressed = ExtResource("p_tex_5")
+texture_disabled = ExtResource("p_tex_6")
+texture_focused = ExtResource("p_tex_26")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Tag" type="Label" parent="Paper/Menu/Play/TopBadge" index="0" unique_id=1699793305]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"CardTagPlay"
+theme_override_font_sizes/font_size = 25
+text = "STR_TAG_MAIN_MODE"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
-maximum_font_size = 25
+minimum_font_size = 6
 
-[node name="Label" type="Label" parent="Paper/Hero/CenterContainer/Archivement" index="1" unique_id=1366224451]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+[node name="BottomLabel" type="Control" parent="Paper/Menu/Play" index="2" unique_id=321833421]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -113.5
+offset_top = -54.0
+offset_right = -21.0
+offset_bottom = -28.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("sc_npstate")
+patch_margin_left = 5.0
+patch_margin_top = 5.0
+patch_margin_right = 5.0
+patch_margin_bottom = 5.0
+texture_normal = ExtResource("p_tex_7")
+texture_hover = ExtResource("p_tex_7")
+texture_pressed = ExtResource("p_tex_8")
+texture_disabled = ExtResource("p_tex_9")
+texture_focused = ExtResource("p_tex_27")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Badge" type="Label" parent="Paper/Menu/Play/BottomLabel" index="0" unique_id=2086512064]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 6.3239975
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"CardBadgePlay"
+theme_override_font_sizes/font_size = 16
+text = "STR_CURRENT_LEVEL_BADGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 8
+
+[node name="Dungeon" type="Button" parent="Paper/Menu" index="1" unique_id=921633189]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.95
+theme_override_styles/normal = SubResource("StyleBoxTexture_mjfva")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y3wuy")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bwfoc")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_m7v2e")
+theme_override_styles/focus = SubResource("StyleBoxTexture_hksmy")
+script = ExtResource("21_umqxe")
+texture_normal = ExtResource("23_b0x5b")
+texture_hover = ExtResource("23_b0x5b")
+texture_pressed = ExtResource("24_1wgx8")
+texture_disabled = ExtResource("25_umqxe")
+texture_focus = ExtResource("26_f5bcp")
+patch_margin_left = 148.0
+patch_margin_top = 48.0
+patch_margin_right = 112.0
+patch_margin_bottom = 34.0
+use_custom_content_margin = true
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+
+[node name="ButtonDescription" type="HBoxContainer" parent="Paper/Menu/Dungeon" index="0" unique_id=207380134]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 29.690002
+offset_top = 53.5
+offset_right = -22.309998
+offset_bottom = -53.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="CircleIcon" type="Control" parent="Paper/Menu/Dungeon/ButtonDescription" index="0" unique_id=1720332464]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+script = ExtResource("sc_state")
+texture_normal = ExtResource("p_tex_10")
+texture_hover = ExtResource("p_tex_10")
+texture_pressed = ExtResource("p_tex_11")
+texture_disabled = ExtResource("p_tex_12")
+texture_focused = ExtResource("p_tex_28")
+expand_mode = 2
+stretch_mode = 5
+metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
+
+[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/Dungeon/ButtonDescription/CircleIcon" index="0" unique_id=888373399]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.70900005
-anchor_right = 1.08
-anchor_bottom = 0.85300004
-offset_top = 31.916
-offset_bottom = 31.836006
-theme_type_variation = &"OtherLabel"
-theme_override_font_sizes/font_size = 43
-text = "STR_BTN_ARCHIVEMENT"
+anchor_left = 0.49981818
+anchor_top = 0.5
+anchor_right = 0.49981818
+anchor_bottom = 0.5
+offset_left = -19.49
+offset_top = -20.366285
+offset_right = 19.51
+offset_bottom = 20.36628
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_icon_castle")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer" type="Control" parent="Paper/Menu/Dungeon/ButtonDescription" index="1" unique_id=1540083204]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="TitleContainer" type="VBoxContainer" parent="Paper/Menu/Dungeon/ButtonDescription" index="2" unique_id=142108829]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Paper/Menu/Dungeon/ButtonDescription/TitleContainer" index="0" unique_id=782731605]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 2
+theme_type_variation = &"CardTitle"
+theme_override_font_sizes/font_size = 22
+text = "STR_MODE_DUNGEON_TITLE"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="PlayDesc1" type="Label" parent="Paper/Menu/Dungeon/ButtonDescription/TitleContainer" index="1" unique_id=1891854862]
+layout_mode = 2
+theme_type_variation = &"CardDesc"
+theme_override_font_sizes/font_size = 16
+text = "STR_MODE_DUNGEON_DESC_1"
+text_overrun_behavior = 3
+
+[node name="PlayDesc2" type="Label" parent="Paper/Menu/Dungeon/ButtonDescription/TitleContainer" index="2" unique_id=807800314]
+layout_mode = 2
+theme_type_variation = &"CardDesc2"
+theme_override_font_sizes/font_size = 14
+text = "STR_MODE_DUNGEON_DESC_2"
+text_overrun_behavior = 3
+
+[node name="TopBadge" type="Control" parent="Paper/Menu/Dungeon" index="1" unique_id=1803963586]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 33.5
+offset_top = 3.5
+offset_right = 138.5
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("sc_npstate")
+patch_margin_left = 5.0
+patch_margin_top = 5.0
+patch_margin_right = 5.0
+patch_margin_bottom = 5.0
+texture_normal = ExtResource("p_tex_13")
+texture_hover = ExtResource("p_tex_13")
+texture_pressed = ExtResource("p_tex_14")
+texture_disabled = ExtResource("p_tex_15")
+texture_focused = ExtResource("p_tex_29")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Tag" type="Label" parent="Paper/Menu/Dungeon/TopBadge" index="0" unique_id=924940316]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"CardTagDungeon"
+theme_override_font_sizes/font_size = 25
+text = "STR_TAG_ENDLESS_MODE"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
+minimum_font_size = 6
 
-[node name="Utils" type="HBoxContainer" parent="Paper/Hero" index="2" unique_id=127081098]
+[node name="BottomLabel" type="Control" parent="Paper/Menu/Dungeon" index="2" unique_id=1688049159]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -113.5
+offset_top = -54.0
+offset_right = -21.0
+offset_bottom = -28.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("sc_npstate")
+patch_margin_left = 5.0
+patch_margin_top = 5.0
+patch_margin_right = 5.0
+patch_margin_bottom = 5.0
+texture_normal = ExtResource("p_tex_16")
+texture_hover = ExtResource("p_tex_16")
+texture_pressed = ExtResource("p_tex_17")
+texture_disabled = ExtResource("p_tex_18")
+texture_focused = ExtResource("p_tex_30")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Badge" type="Label" parent="Paper/Menu/Dungeon/BottomLabel" index="0" unique_id=28689801]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 6.324005
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"CardBadgeDungeon"
+theme_override_font_sizes/font_size = 25
+text = "STR_RECORD_FLOOR_BADGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+resize_font_to_fit = true
+minimum_font_size = 8
+
+[node name="DailyChallenge" type="Button" parent="Paper/Menu" index="2" unique_id=1942849630]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.95
+theme_override_styles/normal = SubResource("StyleBoxTexture_usq5l")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_d71o1")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6rj8f")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_x4mmg")
+theme_override_styles/focus = SubResource("StyleBoxTexture_vxskp")
+script = ExtResource("21_umqxe")
+texture_normal = ExtResource("28_q4smm")
+texture_hover = ExtResource("28_q4smm")
+texture_pressed = ExtResource("29_b0x5b")
+texture_disabled = ExtResource("25_umqxe")
+texture_focus = ExtResource("30_1wgx8")
+patch_margin_left = 143.0
+patch_margin_top = 43.0
+patch_margin_right = 121.0
+patch_margin_bottom = 39.0
+use_custom_content_margin = true
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+
+[node name="ButtonDescription" type="HBoxContainer" parent="Paper/Menu/DailyChallenge" index="0" unique_id=76692436]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 37.690002
+offset_top = 53.5
+offset_right = -14.309998
+offset_bottom = -53.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="CircleIcon" type="Control" parent="Paper/Menu/DailyChallenge/ButtonDescription" index="0" unique_id=1389532240]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+script = ExtResource("sc_state")
+texture_normal = ExtResource("p_tex_19")
+texture_hover = ExtResource("p_tex_19")
+texture_pressed = ExtResource("p_tex_20")
+texture_disabled = ExtResource("p_tex_12")
+texture_focused = ExtResource("p_tex_31")
+expand_mode = 2
+stretch_mode = 5
+metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
+
+[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/DailyChallenge/ButtonDescription/CircleIcon" index="0" unique_id=1471516198]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.499996
+offset_top = -21.472921
+offset_right = 18.5
+offset_bottom = 19.472923
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_icon_calendar")
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer" type="Control" parent="Paper/Menu/DailyChallenge/ButtonDescription" index="1" unique_id=686306888]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="TitleContainer" type="VBoxContainer" parent="Paper/Menu/DailyChallenge/ButtonDescription" index="2" unique_id=1797866109]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Paper/Menu/DailyChallenge/ButtonDescription/TitleContainer" index="0" unique_id=125060707]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 2
+size_flags_stretch_ratio = 0.7
+theme_type_variation = &"CardTitle"
+theme_override_font_sizes/font_size = 22
+text = "STR_MODE_DAILY_TITLE"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="PlayDesc1" type="Label" parent="Paper/Menu/DailyChallenge/ButtonDescription/TitleContainer" index="1" unique_id=1227877399]
+layout_mode = 2
+theme_type_variation = &"CardDesc"
+theme_override_font_sizes/font_size = 16
+text = "STR_MODE_DAILY_DESC_1"
+text_overrun_behavior = 3
+
+[node name="PlayDesc2" type="Label" parent="Paper/Menu/DailyChallenge/ButtonDescription/TitleContainer" index="2" unique_id=2121665094]
+layout_mode = 2
+theme_type_variation = &"CardDesc2"
+theme_override_font_sizes/font_size = 14
+text = "STR_MODE_DAILY_DESC_2"
+text_overrun_behavior = 3
+
+[node name="TopBadge" type="Control" parent="Paper/Menu/DailyChallenge" index="1" unique_id=193033958]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 33.5
+offset_top = 3.5
+offset_right = 138.5
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("sc_npstate")
+patch_margin_left = 5.0
+patch_margin_top = 5.0
+patch_margin_right = 5.0
+patch_margin_bottom = 5.0
+texture_normal = ExtResource("p_tex_21")
+texture_hover = ExtResource("p_tex_21")
+texture_pressed = ExtResource("p_tex_22")
+texture_disabled = ExtResource("p_tex_15")
+texture_focused = ExtResource("p_tex_32")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Tag" type="Label" parent="Paper/Menu/DailyChallenge/TopBadge" index="0" unique_id=2037718859]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"CardTagDaily"
+theme_override_font_sizes/font_size = 25
+text = "STR_TAG_DAILY_MODE"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 6
+
+[node name="BottomLabel" type="Control" parent="Paper/Menu/DailyChallenge" index="2" unique_id=11304712]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -113.5
+offset_top = -54.0
+offset_right = -21.0
+offset_bottom = -28.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("sc_npstate")
+patch_margin_left = 5.0
+patch_margin_top = 5.0
+patch_margin_right = 5.0
+patch_margin_bottom = 5.0
+texture_normal = ExtResource("p_tex_23")
+texture_hover = ExtResource("p_tex_23")
+texture_pressed = ExtResource("p_tex_24")
+texture_disabled = ExtResource("p_tex_18")
+texture_focused = ExtResource("p_tex_33")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Badge" type="Label" parent="Paper/Menu/DailyChallenge/BottomLabel" index="0" unique_id=71718738]
+modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 5.324005
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"CardBadgeDaily"
+theme_override_font_sizes/font_size = 25
+text = "STR_STREAK_BADGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+resize_font_to_fit = true
+minimum_font_size = 8
+
+[node name="Utils" type="HBoxContainer" parent="Paper/Menu" index="3" unique_id=127081098]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.4
+theme_override_constants/separation = 12
 
-[node name="Leaderboard" type="Button" parent="Paper/Hero/Utils" index="0" unique_id=206592949]
+[node name="Leaderboard" type="Button" parent="Paper/Menu/Utils" index="0" unique_id=206592949]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
-theme_override_styles/normal = SubResource("StyleBoxTexture_dnx64")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_txlar")
-theme_override_styles/hover = SubResource("StyleBoxTexture_f4qyh")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_avc2c")
-theme_override_styles/focus = SubResource("StyleBoxTexture_ev5u4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_1cndw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_56t3x")
+theme_override_styles/hover = SubResource("StyleBoxTexture_w5q8h")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_qw4pd")
+theme_override_styles/focus = SubResource("StyleBoxTexture_bc8r3")
 script = ExtResource("21_umqxe")
-texture_normal = ExtResource("9_q4smm")
-texture_hover = ExtResource("9_q4smm")
-texture_pressed = ExtResource("9_q4smm")
-texture_disabled = ExtResource("9_q4smm")
-texture_focus = ExtResource("9_q4smm")
+texture_normal = ExtResource("16_q4smm")
+texture_hover = ExtResource("16_q4smm")
+texture_pressed = ExtResource("16_q4smm")
+texture_disabled = ExtResource("16_q4smm")
+texture_focus = ExtResource("16_q4smm")
 patch_margin_left = 40.0
 patch_margin_top = 35.0
 patch_margin_right = 40.0
 patch_margin_bottom = 35.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="Icon" type="TextureRect" parent="Paper/Hero/Utils/Leaderboard" index="0" unique_id=387527074]
+[node name="Icon" type="TextureRect" parent="Paper/Menu/Utils/Leaderboard" index="0" unique_id=387527074]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35191306
@@ -558,7 +1326,7 @@ texture = ExtResource("18_icon_trophy")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Paper/Hero/Utils/Leaderboard" index="1" unique_id=6002238]
+[node name="Label" type="Label" parent="Paper/Menu/Utils/Leaderboard" index="1" unique_id=6002238]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -574,15 +1342,15 @@ vertical_alignment = 1
 resize_font_to_fit = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Shop" type="Button" parent="Paper/Hero/Utils" index="1" unique_id=377010777]
+[node name="Shop" type="Button" parent="Paper/Menu/Utils" index="1" unique_id=377010777]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
-theme_override_styles/normal = SubResource("StyleBoxTexture_3bbvj")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_cu4hr")
-theme_override_styles/hover = SubResource("StyleBoxTexture_k8e7r")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_66mli")
-theme_override_styles/focus = SubResource("StyleBoxTexture_8276y")
+theme_override_styles/normal = SubResource("StyleBoxTexture_nivqn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_gemtn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_elw3w")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_mpsj4")
+theme_override_styles/focus = SubResource("StyleBoxTexture_gkumo")
 script = ExtResource("21_umqxe")
 texture_normal = ExtResource("16_q4smm")
 texture_hover = ExtResource("16_q4smm")
@@ -595,7 +1363,7 @@ patch_margin_right = 40.0
 patch_margin_bottom = 35.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="Icon" type="TextureRect" parent="Paper/Hero/Utils/Shop" index="0" unique_id=266744997]
+[node name="Icon" type="TextureRect" parent="Paper/Menu/Utils/Shop" index="0" unique_id=266744997]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35191306
@@ -606,7 +1374,7 @@ texture = ExtResource("9_icon_shop")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Paper/Hero/Utils/Shop" index="1" unique_id=1600266566]
+[node name="Label" type="Label" parent="Paper/Menu/Utils/Shop" index="1" unique_id=1600266566]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -622,15 +1390,15 @@ vertical_alignment = 1
 resize_font_to_fit = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Settings" type="Button" parent="Paper/Hero/Utils" index="2" unique_id=1310555117]
+[node name="Settings" type="Button" parent="Paper/Menu/Utils" index="2" unique_id=1310555117]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
-theme_override_styles/normal = SubResource("StyleBoxTexture_loioc")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_ttpg5")
-theme_override_styles/hover = SubResource("StyleBoxTexture_ut7v8")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_h5bts")
-theme_override_styles/focus = SubResource("StyleBoxTexture_cfilw")
+theme_override_styles/normal = SubResource("StyleBoxTexture_qrd76")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5lxp8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_63ddw")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_eyhiq")
+theme_override_styles/focus = SubResource("StyleBoxTexture_qa1qo")
 script = ExtResource("21_umqxe")
 texture_normal = ExtResource("16_q4smm")
 texture_hover = ExtResource("16_q4smm")
@@ -643,7 +1411,7 @@ patch_margin_right = 40.0
 patch_margin_bottom = 35.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="Icon" type="TextureRect" parent="Paper/Hero/Utils/Settings" index="0" unique_id=362221051]
+[node name="Icon" type="TextureRect" parent="Paper/Menu/Utils/Settings" index="0" unique_id=362221051]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35191306
@@ -654,7 +1422,7 @@ texture = ExtResource("20_icon_gear")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Paper/Hero/Utils/Settings" index="1" unique_id=1920785910]
+[node name="Label" type="Label" parent="Paper/Menu/Utils/Settings" index="1" unique_id=1920785910]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -665,398 +1433,6 @@ anchor_bottom = 0.84655356
 theme_type_variation = &"OtherLabel"
 theme_override_font_sizes/font_size = 39
 text = "STR_BTN_SETTINGS"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Menu" type="VBoxContainer" parent="Paper" index="1" unique_id=1865196585]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.42600003
-anchor_top = 0.036000002
-anchor_right = 0.96300006
-anchor_bottom = 0.82000005
-offset_left = 0.079956055
-offset_top = -0.3240013
-offset_right = 0.039916992
-offset_bottom = 0.39996338
-theme_override_constants/separation = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="Play" type="Button" parent="Paper/Menu" index="0" unique_id=1714166398]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.05
-theme_override_styles/normal = SubResource("StyleBoxTexture_43odm")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_je5uo")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qtw0m")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_lc2xq")
-theme_override_styles/focus = SubResource("StyleBoxTexture_u1gml")
-script = ExtResource("21_umqxe")
-texture_normal = ExtResource("17_nakxj")
-texture_hover = ExtResource("17_nakxj")
-texture_pressed = ExtResource("18_q4smm")
-texture_disabled = ExtResource("19_b0x5b")
-texture_focus = ExtResource("20_1wgx8")
-patch_margin_left = 141.0
-patch_margin_top = 128.0
-patch_margin_right = 116.0
-patch_margin_bottom = 18.0
-metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
-
-[node name="Tag" type="Label" parent="Paper/Menu/Play" index="0" unique_id=1699793305]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.074
-anchor_top = 0.023
-anchor_right = 0.074
-anchor_bottom = 0.16900001
-offset_left = -0.2899704
-offset_right = 89.71004
-offset_bottom = 0.05399704
-theme_type_variation = &"CardTagPlay"
-theme_override_font_sizes/font_size = 25
-text = "STR_TAG_MAIN_MODE"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-minimum_font_size = 6
-
-[node name="Title" type="Label" parent="Paper/Menu/Play" index="1" unique_id=542734689]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.215
-anchor_top = 0.25500003
-anchor_right = 0.215
-anchor_bottom = 0.25500003
-offset_left = -0.23700714
-offset_top = -23.449135
-offset_right = 359.763
-offset_bottom = 23.477802
-theme_type_variation = &"CardTitlePlay"
-theme_override_font_sizes/font_size = 18
-text = "STR_MODE_PLAY_TITLE"
-vertical_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Paper/Menu/Play" index="2" unique_id=1457985100]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.21562986
-anchor_top = 0.44700003
-anchor_right = 0.716
-anchor_bottom = 0.77500004
-offset_left = 0.34199524
-offset_top = -0.05393219
-offset_right = 0.14199829
-offset_bottom = 0.05806732
-theme_override_constants/separation = 8
-metadata/_edit_use_anchors_ = true
-
-[node name="PlayDesc1" type="Label" parent="Paper/Menu/Play/VBoxContainer" index="0" unique_id=1210655063]
-layout_mode = 2
-theme_type_variation = &"CardDescPlay"
-theme_override_font_sizes/font_size = 14
-text = "STR_MODE_PLAY_DESC_1"
-
-[node name="PlayDesc2" type="Label" parent="Paper/Menu/Play/VBoxContainer" index="1" unique_id=1532931162]
-layout_mode = 2
-theme_type_variation = &"CardDescPlay"
-theme_override_font_sizes/font_size = 14
-text = "STR_MODE_PLAY_DESC_2"
-text_overrun_behavior = 3
-
-[node name="Badge" type="Label" parent="Paper/Menu/Play" index="3" unique_id=2086512064]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -111.03998
-offset_top = 101.324
-offset_right = -20.039978
-offset_bottom = 124.324
-theme_type_variation = &"CardBadgePlay"
-theme_override_font_sizes/font_size = 16
-text = "STR_CURRENT_LEVEL_BADGE"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-minimum_font_size = 8
-
-[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/Play" index="4" unique_id=1124094877]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.079
-anchor_top = 0.43400002
-anchor_right = 0.079
-anchor_bottom = 0.43400002
-offset_left = -0.06798935
-offset_top = -0.0399971
-offset_right = 52.93201
-offset_bottom = 45.960003
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("15_icon_play")
-metadata/_edit_use_anchors_ = true
-
-[node name="Dungeon" type="Button" parent="Paper/Menu" index="1" unique_id=921633189]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 1.95
-theme_override_styles/normal = SubResource("StyleBoxTexture_p5ruj")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_qhfnl")
-theme_override_styles/hover = SubResource("StyleBoxTexture_8ei2q")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_j41ff")
-theme_override_styles/focus = SubResource("StyleBoxTexture_rl133")
-script = ExtResource("21_umqxe")
-texture_normal = ExtResource("23_b0x5b")
-texture_hover = ExtResource("23_b0x5b")
-texture_pressed = ExtResource("24_1wgx8")
-texture_disabled = ExtResource("25_umqxe")
-texture_focus = ExtResource("26_f5bcp")
-patch_margin_left = 148.0
-patch_margin_top = 128.0
-patch_margin_right = 112.0
-patch_margin_bottom = 18.0
-metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
-
-[node name="Tag" type="Label" parent="Paper/Menu/Dungeon" index="0" unique_id=924940316]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.07684916
-anchor_top = 0.05650862
-anchor_right = 0.07700001
-anchor_bottom = 0.156
-offset_right = 89.919754
-offset_bottom = 0.045864105
-theme_type_variation = &"CardTagDungeon"
-theme_override_font_sizes/font_size = 25
-text = "STR_TAG_ENDLESS_MODE"
-vertical_alignment = 1
-resize_font_to_fit = true
-minimum_font_size = 6
-
-[node name="Title" type="Label" parent="Paper/Menu/Dungeon" index="1" unique_id=285401397]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.215
-anchor_top = 0.33900002
-anchor_right = 0.215
-anchor_bottom = 0.33900002
-offset_left = -0.18998718
-offset_top = -26.24001
-offset_right = 359.81
-offset_bottom = 26.273994
-theme_type_variation = &"CardTitle"
-theme_override_font_sizes/font_size = 18
-text = "STR_MODE_DUNGEON_TITLE"
-vertical_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Paper/Menu/Dungeon" index="2" unique_id=1685928543]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.21000001
-anchor_top = 0.5044461
-anchor_right = 0.68600005
-anchor_bottom = 0.832
-offset_left = -0.30999756
-offset_top = -0.12200928
-offset_right = -0.12780762
-offset_bottom = 0.055122375
-theme_override_constants/separation = 8
-metadata/_edit_use_anchors_ = true
-
-[node name="PlayDesc1" type="Label" parent="Paper/Menu/Dungeon/VBoxContainer" index="0" unique_id=1971834988]
-layout_mode = 2
-theme_type_variation = &"CardDesc"
-theme_override_font_sizes/font_size = 14
-text = "STR_MODE_DUNGEON_DESC_1"
-text_overrun_behavior = 3
-
-[node name="PlayDesc2" type="Label" parent="Paper/Menu/Dungeon/VBoxContainer" index="1" unique_id=2132837750]
-layout_mode = 2
-theme_type_variation = &"CardDesc2"
-theme_override_font_sizes/font_size = 14
-text = "STR_MODE_DUNGEON_DESC_2"
-text_overrun_behavior = 3
-
-[node name="Badge" type="Label" parent="Paper/Menu/Dungeon" index="3" unique_id=28689801]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -110.03998
-offset_top = 108.32399
-offset_right = -22.755554
-offset_bottom = 122.32399
-theme_type_variation = &"CardBadgeDungeon"
-theme_override_font_sizes/font_size = 25
-text = "STR_RECORD_FLOOR_BADGE"
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 3
-resize_font_to_fit = true
-minimum_font_size = 8
-
-[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/Dungeon" index="4" unique_id=1117373994]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 39.960007
-offset_top = 54.32402
-offset_right = 93.96001
-offset_bottom = 108.324005
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("16_icon_castle")
-metadata/_edit_use_anchors_ = true
-
-[node name="DailyChallenge" type="Button" parent="Paper/Menu" index="2" unique_id=1942849630]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 1.95
-theme_override_styles/normal = SubResource("StyleBoxTexture_hglya")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_utwg8")
-theme_override_styles/hover = SubResource("StyleBoxTexture_2idqi")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_vgas4")
-theme_override_styles/focus = SubResource("StyleBoxTexture_gpaeh")
-script = ExtResource("21_umqxe")
-texture_normal = ExtResource("28_q4smm")
-texture_hover = ExtResource("28_q4smm")
-texture_pressed = ExtResource("29_b0x5b")
-texture_disabled = ExtResource("25_umqxe")
-texture_focus = ExtResource("30_1wgx8")
-patch_margin_left = 143.0
-patch_margin_top = 128.0
-patch_margin_right = 121.0
-patch_margin_bottom = 18.0
-metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
-
-[node name="Tag" type="Label" parent="Paper/Menu/DailyChallenge" index="0" unique_id=2037718859]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.07684919
-anchor_top = 0.049465638
-anchor_right = 0.07700001
-anchor_bottom = 0.149
-offset_right = 89.91977
-offset_bottom = -0.06096649
-theme_type_variation = &"CardTagDaily"
-theme_override_font_sizes/font_size = 25
-text = "STR_TAG_DAILY_MODE"
-vertical_alignment = 1
-resize_font_to_fit = true
-minimum_font_size = 6
-
-[node name="Title" type="Label" parent="Paper/Menu/DailyChallenge" index="1" unique_id=815390613]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.215
-anchor_top = 0.33800003
-anchor_right = 0.215
-anchor_bottom = 0.33800003
-offset_left = -0.23698425
-offset_top = -24.413996
-offset_right = 359.763
-offset_bottom = 24.373486
-theme_type_variation = &"CardTitle"
-theme_override_font_sizes/font_size = 18
-text = "STR_MODE_DAILY_TITLE"
-vertical_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Paper/Menu/DailyChallenge" index="2" unique_id=830595915]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.21000001
-anchor_top = 0.504
-anchor_right = 0.698
-anchor_bottom = 0.83300006
-offset_left = -0.30999756
-offset_top = 0.0011291504
-offset_right = -0.11608887
-offset_bottom = -0.03288269
-theme_override_constants/separation = 8
-metadata/_edit_use_anchors_ = true
-
-[node name="PlayDesc1" type="Label" parent="Paper/Menu/DailyChallenge/VBoxContainer" index="0" unique_id=731660892]
-layout_mode = 2
-theme_type_variation = &"CardDesc"
-theme_override_font_sizes/font_size = 14
-text = "STR_MODE_DAILY_DESC_1"
-text_overrun_behavior = 3
-
-[node name="PlayDesc2" type="Label" parent="Paper/Menu/DailyChallenge/VBoxContainer" index="1" unique_id=1795686916]
-layout_mode = 2
-theme_type_variation = &"CardDesc2"
-theme_override_font_sizes/font_size = 14
-text = "STR_MODE_DAILY_DESC_2"
-text_overrun_behavior = 3
-
-[node name="Badge" type="Label" parent="Paper/Menu/DailyChallenge" index="3" unique_id=71718738]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -110.03998
-offset_top = 107.32399
-offset_right = -18.039978
-offset_bottom = 122.56825
-theme_type_variation = &"CardBadgeDaily"
-theme_override_font_sizes/font_size = 25
-text = "STR_STREAK_BADGE"
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 3
-resize_font_to_fit = true
-minimum_font_size = 8
-
-[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/DailyChallenge" index="4" unique_id=326650869]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 40.96003
-offset_top = 61.324005
-offset_right = 94.96004
-offset_bottom = 108.32399
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("17_icon_calendar")
-metadata/_edit_use_anchors_ = true
-
-[node name="Stamp" type="TextureRect" parent="Paper" index="2" unique_id=1186388364]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.29270834
-anchor_top = 0.084
-anchor_right = 0.39627588
-anchor_bottom = 0.18170151
-offset_right = -0.18005371
-offset_bottom = -0.022491455
-texture = ExtResource("11_ya4ey")
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Paper/Stamp" index="0" unique_id=913298419]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.24400002
-anchor_top = -0.089
-anchor_right = 1.008
-anchor_bottom = 0.99700004
-offset_left = -14.21574
-offset_top = 27.34571
-offset_right = -5.952675
-offset_bottom = -12.681782
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -0.1770214
-text = "STR_SETTINGS_VERSION"
-label_settings = ExtResource("21_stamp_text_lg")
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true

@@ -72,10 +72,23 @@ func _init() -> void:
 	assert(landscape_layout != null and not landscape_layout.visible,
 		"Man hinh DỌC thi layout ngang phai ẩn")
 
+	# 2b. Mỗi thẻ chế độ phải được tách 3 phần: CircleIcon / TopBadge / BottomLabel
+	for card_name in ["Play", "Dungeon", "DailyChallenge"]:
+		var card := main_scene.ui(card_name) as Control
+		assert(card != null, "Phai co the %s" % card_name)
+		var circle := card.get_node_or_null("CircleIcon")
+		var top_badge := card.get_node_or_null("TopBadge")
+		var bottom := card.get_node_or_null("BottomLabel")
+		assert(circle != null and top_badge != null and bottom != null,
+			"The %s phai co du 3 node phan CircleIcon/TopBadge/BottomLabel" % card_name)
+		assert(circle.get_node_or_null("ModeIcon") != null, "%s/CircleIcon phai chua ModeIcon" % card_name)
+		assert(top_badge.get_node_or_null("Tag") != null, "%s/TopBadge phai chua Tag" % card_name)
+		assert(bottom.get_node_or_null("Badge") != null, "%s/BottomLabel phai chua Badge" % card_name)
+
 	# 3 huy hieu tren the che do phai duoc DIEN SO luc chay (chuoi dich co "{0}")
 	for pair in [["Play", "Badge"], ["Dungeon", "Badge"], ["DailyChallenge", "Badge"]]:
-		var badge := main_scene.ui_child(str(pair[0]), str(pair[1])) as Label
-		assert(badge != null, "Phai co Label huy hieu tai %s/Badge" % str(pair[0]))
+		var badge := main_scene.ui_child(str(pair[0]), "BottomLabel/%s" % str(pair[1])) as Label
+		assert(badge != null, "Phai co Label huy hieu tai %s/BottomLabel/Badge" % str(pair[0]))
 		assert(not badge.text.contains("{0}"),
 			"Huy hieu %s phai duoc dien so (dang '%s')" % [str(pair[0]), badge.text])
 		print("[INFO] %s/Badge -> %s" % [str(pair[0]), badge.text])

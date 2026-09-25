@@ -34,7 +34,7 @@ signal frame_changed()
 		is_playing = value
 		set_process(is_playing)
 
-# ==================== KÍCH THƯỚC & 9-PATCH ====================
+# ==================== KÍCH THƯỚC & MARGINS ====================
 @export_group("NinePatch Size & Margins")
 @export var size: Vector2 = Vector2(64, 64):
 	set(value):
@@ -61,9 +61,24 @@ signal frame_changed()
 		patch_margin_bottom = maxf(0.0, value)
 		queue_redraw()
 
+# ==================== STRETCH MODES & DRAW CENTER ====================
+@export_group("Stretch & Center")
+## Có vẽ phần trung tâm không (Tắt đi để tạo khung viền hoạt họa rỗng)
 @export var draw_center: bool = true:
 	set(value):
 		draw_center = value
+		queue_redraw()
+
+## Chế độ dãn trục ngang: Stretch (Kéo dãn), Tile (Lặp lại), Tile Fit (Lặp vừa vặn)
+@export var axis_stretch_horizontal: RenderingServer.NinePatchAxisMode = RenderingServer.NINE_PATCH_STRETCH:
+	set(value):
+		axis_stretch_horizontal = value
+		queue_redraw()
+
+## Chế độ dãn trục dọc: Stretch (Kéo dãn), Tile (Lặp lại), Tile Fit (Lặp vừa vặn)
+@export var axis_stretch_vertical: RenderingServer.NinePatchAxisMode = RenderingServer.NINE_PATCH_STRETCH:
+	set(value):
+		axis_stretch_vertical = value
 		queue_redraw()
 
 @export_tool_button("Edit Region (Current Frame)", "Edit")
@@ -141,24 +156,24 @@ func _draw() -> void:
 	if not current_tex:
 		return
 
-	var dest_pos = offset - (size * 0.5 if centered else Vector2.ZERO)
-	var dest_rect = Rect2(dest_pos, size)
 	var src_rect = Rect2(Vector2.ZERO, current_tex.get_size())
 
-	# Xử lý lật
-	var scale_x = -1.0 if flip_h else 1.0
-	var scale_y = -1.0 if flip_v else 1.0
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2(scale_x, scale_y))
+	# Xác định tâm lật (Flip quanh tâm của sprite)
+	var center_point = offset if centered else offset + size * 0.5
+	var scale_vec = Vector2(-1.0 if flip_h else 1.0, -1.0 if flip_v else 1.0)
+	
+	draw_set_transform(center_point, 0.0, scale_vec)
+	var local_rect = Rect2(-size * 0.5, size)
 
 	RenderingServer.canvas_item_add_nine_patch(
 		get_canvas_item(),
-		dest_rect,
+		local_rect,
 		src_rect,
 		current_tex.get_rid(),
 		Vector2(patch_margin_left, patch_margin_top),
 		Vector2(patch_margin_right, patch_margin_bottom),
-		RenderingServer.NINE_PATCH_STRETCH,
-		RenderingServer.NINE_PATCH_STRETCH,
+		axis_stretch_horizontal,
+		axis_stretch_vertical,
 		draw_center
 	)
 

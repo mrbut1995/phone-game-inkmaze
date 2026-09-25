@@ -8,9 +8,6 @@
   </g>
   <rect x="14" y="24" width="172" height="162" rx="26" fill="#FFFDF8" stroke="#C4843A" stroke-width="3.4" />
   <rect x="21" y="31" width="158" height="148" rx="21" fill="none" stroke="#D8A75B" stroke-width="1.6" stroke-dasharray="6 4" />
-  <path d="M84 118 L72 172 L100 154 L128 172 L116 118 Z" fill="#E8B24B" stroke="#8A5A21" stroke-width="3" stroke-linejoin="round" />
-  <circle cx="100" cy="104" r="44" fill="#FFF6E4" stroke="#C4843A" stroke-width="3.6" />
-  <circle cx="100" cy="104" r="34" fill="none" stroke="#D8A75B" stroke-width="2" stroke-dasharray="6 4" />
   <path d="M186 46 l2.4 6 6 2.4 -6 2.4 -2.4 6 -2.4 -6 -6 -2.4 6 -2.4 Z" fill="#D8A75B" />
   <path d="M26 158 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" fill="#D8A75B" />
   <path d="M32 54 h15 M39.5 46.5 v15" stroke="#D8A75B" stroke-width="2.4" stroke-linecap="round" />
