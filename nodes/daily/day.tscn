@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cggt0mrkea7fs"]
 
 [ext_resource type="Script" uid="uid://c0jpbwfj0dbrw" path="res://scripts/nodes/daily/day.gd" id="1_day"]
-[ext_resource type="Texture2D" uid="uid://bdc7bixy0i0u0" path="res://assets/images/calendar/completed_icon.svg" id="2_check"]
+[ext_resource type="Texture2D" uid="uid://bdc7bixy0i0u0" path="res://assets/images/icons/completed_icon.svg" id="2_check"]
 [ext_resource type="Texture2D" uid="uid://c66v5bmdvegnd" path="res://assets/images/common/star_highlight.svg" id="3_star"]
 [ext_resource type="Texture2D" uid="uid://cwkukl6emlhmk" path="res://assets/images/calendar/tag_day.svg" id="4_tag"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="5_theme"]

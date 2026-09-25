@@ -23,7 +23,6 @@ signal transition_started(style: String)
 signal scene_swapped
 signal transition_finished(style: String)
 
-const COLOR_PAPER := Color(0.965, 0.945, 0.915, 1.0)          # Nền giấy ngà
 const COLOR_INK := Color(0.133, 0.298, 0.427, 1.0)            # Lam mực đậm InkMaze
 
 const DURATION_PAGE_IN := 0.22

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3whb6j1ukvy3"
-path="res://.godot/imported/icon_lock.svg-c683b3d9058e3eaeda7b2cb90f11d395.ctex"
+uid="uid://dp24tqode8abx"
+path="res://.godot/imported/icon_coin_t5.svg-a397de751d16f1972b6d92ebdf751766.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/archivements/icon_lock.svg"
-dest_files=["res://.godot/imported/icon_lock.svg-c683b3d9058e3eaeda7b2cb90f11d395.ctex"]
+source_file="res://assets/images/icons/icon_coin_t5.svg"
+dest_files=["res://.godot/imported/icon_coin_t5.svg-a397de751d16f1972b6d92ebdf751766.ctex"]
 
 [params]
 

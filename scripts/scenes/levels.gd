@@ -22,7 +22,6 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Số thẻ màn chơi mỗi trang: lưới 3×3 (khớp `nodes/level_selection/page.tscn` và mockup
 ## `mockup/level_selection_landscape.svg` — 2 hướng dùng CÙNG 3 cột, thẻ tự co giãn theo ô)
-const CARDS_PER_PAGE := 9
 const ROWS_PER_PAGE := 3
 const GRID_COLUMNS_PORTRAIT := 3
 const SNAP_TIME := 0.22

@@ -112,8 +112,6 @@ func close() -> void:
 	# Nếu đã đang đóng thì bỏ qua (tránh chạy 2 tween đóng chồng nhau)
 	if _closing:
 		return
-	var utc_time = Time.get_datetime_string_from_system(true)
-	print("Close Popup %s" % utc_time)
 	_closing = true
 	_on_close()
 

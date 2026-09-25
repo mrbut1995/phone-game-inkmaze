@@ -22,8 +22,6 @@ const DOODLE_PAD_SCENE := preload("res://nodes/shop/doodle_pad.tscn")
 const TAB_BUTTON_SCENE := preload("res://nodes/shop/tab_button.tscn")
 const ITEM_GRID_SCENE := preload("res://nodes/shop/item_grid.tscn")
 const PAGE_DOT_SCENE := preload("res://nodes/shop/page_dot.tscn")
-const TAB_ACTIVE := preload("res://assets/images/shop/tab_active.svg")
-const TAB_INACTIVE := preload("res://assets/images/shop/tab_inactive.svg")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Số món mỗi trang ở lưới 2 cột — GIÁ TRỊ THIẾT KẾ (màn 1080×1920).
@@ -245,7 +243,10 @@ func grid_columns() -> int:
 	if width <= 0.0:
 		return GRID_COLUMNS
 	if is_landscape:
-		return clampi(int((width + GRID_H_SEP * 0.5) / (TILE_MIN_W + GRID_H_SEP)),
+		var tile_min_w := TILE_MIN_W
+		if(current_tab() == "coin"):
+			tile_min_w = coin_design_size().x
+		return clampi(int((width + GRID_H_SEP * 0.5) / (tile_min_w + GRID_H_SEP)),
 			GRID_COLUMNS, GRID_COLUMNS_MAX)
 	var design_w: float = (coin_design_size() if _category == "coin" else tile_design_size()).x
 	# Số cột xếp ĐẦY theo cỡ thiết kế, rồi thêm 1 cột nếu chỗ còn thừa ≥ NỬA cột

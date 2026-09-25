@@ -3,24 +3,15 @@
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cjab7f0ksog8i" path="res://scripts/scenes/shop.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="4_back_n"]
-[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="5_back_p"]
-[ext_resource type="Texture2D" uid="uid://dyce7yam3arwp" path="res://assets/images/shop/wallet_chip.svg" id="6_wallet"]
-[ext_resource type="Texture2D" uid="uid://1u1eht4ctsov" path="res://assets/images/shop/icon_coin.svg" id="7_coin"]
-[ext_resource type="Texture2D" uid="uid://iqlsipno706o" path="res://assets/images/shop/btn_plus.svg" id="8_plus"]
-[ext_resource type="Texture2D" uid="uid://btoscldl6syrd" path="res://assets/images/calendar/day_btn_prev_normal.svg" id="9_prev"]
-[ext_resource type="Texture2D" uid="uid://cmhk3b2oias7f" path="res://assets/images/calendar/day_btn_next_normal.svg" id="10_next"]
-[ext_resource type="Texture2D" uid="uid://6gq24f7mmebm" path="res://assets/images/shop/banner_gift.svg" id="11_gift"]
-[ext_resource type="Texture2D" uid="uid://b4h7w6mxyr4tw" path="res://assets/images/shop/gift_box.svg" id="12_gift_box"]
-[ext_resource type="Texture2D" uid="uid://cpmf46xk6bok5" path="res://assets/images/shop/btn_action_amber.svg" id="13_btn_amber"]
-[ext_resource type="PackedScene" path="res://scenes/layout/portrait/shop.tscn" id="L_Portrait"]
-[ext_resource type="PackedScene" path="res://scenes/layout/landscape/shop.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://djbuylas5mnqj" path="res://scenes/layout/landscape/shop.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://drdanfkglu2nk" path="res://scenes/layout/portrait/shop.tscn" id="L_Portrait"]
 
 [node name="Control" unique_id=1284806110 instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")
 script = ExtResource("2_script")
 
+[node name="Portrait" parent="." index="1" unique_id=380138198 instance=ExtResource("L_Portrait")]
+layout_mode = 1
 
-[node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
-
-[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]
+[node name="Landscape" parent="." index="2" unique_id=1694339658 instance=ExtResource("L_Landscape")]
+layout_mode = 1

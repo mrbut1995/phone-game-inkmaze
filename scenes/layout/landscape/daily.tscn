@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cfcm0w8fn3nnp" path="res://assets/images/common/panel_information.svg" id="5_uaalm"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="6_back_p"]
 [ext_resource type="Texture2D" uid="uid://cvt2b5v5oe1n8" path="res://assets/images/calendar/streak_badge.svg" id="7_streak"]
-[ext_resource type="Texture2D" uid="uid://coklyxxvrunu2" path="res://assets/images/calendar/fire_icon.svg" id="8_fire"]
+[ext_resource type="Texture2D" uid="uid://coklyxxvrunu2" path="res://assets/images/icons/fire_icon.svg" id="8_fire"]
 [ext_resource type="Texture2D" uid="uid://cpiryq18o3y70" path="res://assets/images/calendar/panel_daily_mission.svg" id="9_panel"]
 [ext_resource type="Texture2D" uid="uid://cwkukl6emlhmk" path="res://assets/images/calendar/tag_day.svg" id="10_tag_day"]
 [ext_resource type="Texture2D" uid="uid://balhmyit838gg" path="res://assets/images/calendar/tag_reward.svg" id="11_tag_reward"]
@@ -17,8 +17,9 @@
 [ext_resource type="Texture2D" uid="uid://bbf8sgj8ykc6j" path="res://assets/images/common/btn_paper_cta_normal.svg" id="24_play_n"]
 [ext_resource type="Texture2D" uid="uid://0joitk4s7box" path="res://assets/images/common/btn_paper_cta_pressed.svg" id="25_play_p"]
 [ext_resource type="Texture2D" uid="uid://cug0or7wcq22h" path="res://assets/images/common/btn_paper_cta_focus.svg" id="26_play_f"]
-[ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/calendar/pencil_icon.svg" id="27_pencil"]
-[ext_resource type="Script" path="res://scripts/scenes/layout/daily_layout.gd" id="2_layout"]
+[ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/icons/pencil_icon.svg" id="27_pencil"]
+[ext_resource type="Script" uid="uid://d3tppcudxm1tm" path="res://scripts/scenes/layout/daily_layout.gd" id="2_layout"]
+
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uaalm"]
 content_margin_left = 106.0

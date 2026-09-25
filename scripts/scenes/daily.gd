@@ -10,8 +10,8 @@ extends BaseScene
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const MISSION_ROW := preload("res://nodes/daily/mission_row.tscn")
 ## Icon của nút CTA: bút chì (chơi) / đồng Xu (trả Xu mở khoá ngày bỏ lỡ)
-const ICON_PLAY := preload("res://assets/images/calendar/pencil_icon.svg")
-const ICON_UNLOCK := preload("res://assets/images/shop/icon_coin.svg")
+const ICON_PLAY := preload("res://assets/images/icons/pencil_icon.svg")
+const ICON_UNLOCK := preload("res://assets/images/icons/icon_coin.svg")
 ## 3 nhiệm vụ đầu thuộc MAZE THƯỜNG (Game Classic), nhiệm vụ thứ 4 thuộc MAZE ĐẶC BIỆT
 const CLASSIC_MISSION_COUNT := 3
 ## Tiền tố node SLOT trong scene: `Rows/Slot1..SlotN` — mỗi hàng nhiệm vụ được ĐẶT VÀO đúng slot
@@ -203,15 +203,13 @@ func _build_rows() -> void:
 	for i in _mission_total():
 		var row: DailyMissionRow = MISSION_ROW.instantiate()
 		row.name = "Row%d" % (i + 1)
-		# ĐẶT HÀNG VÀO SLOT: slot quyết định vị trí + kích thước (kéo slot trong editor là hàng theo ngay)
-		var slot := _slot_for(i)
-		var host: Control = slot if slot != null else layout.rows_host
+		# ĐẶT HÀNG VÀO SLOT của scene (`Slot1..Slot4`) — slot quyết định vị trí + kích thước;
+		# `mission_row.tscn` đã khai sẵn anchors FULL RECT nên không cần chỉnh trong code.
+		var host: Control = _slot_for(i)
+		if host == null:
+			host = layout.rows_host
+			push_warning("DailyScene: scene chưa khai Slot%d — hàng sẽ nằm tại gốc Rows" % (i + 1))
 		host.add_child(row)
-		if slot != null:
-			row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		else:
-			# Dự phòng khi scene chưa khai slot: xếp dọc theo chiều cao thiết kế của hàng
-			row.position = Vector2(0, _row_design_h * float(i))
 		row.action_pressed.connect(_on_row_action_pressed)
 		_rows.append(row)
 		UIAnim.play_fade_in(row, 0.04 * i, 0.22)

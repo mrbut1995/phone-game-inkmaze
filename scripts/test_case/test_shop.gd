@@ -99,7 +99,7 @@ func _section_1_catalog(shop: Node) -> void:
 			_entry(shop.call("item", item_id).size() > 0, "Tim thay mon '%s'" % item_id)
 			_entry(int(item.get("price", -1)) >= 0, "Mon %s co gia hop le" % item_id)
 			# Mọi món phải có icon thật trong assets/images/shop
-			var icon_path := "res://assets/images/shop/icon_%s.svg" % str(item.get("icon", ""))
+			var icon_path := "res://assets/images/icons/icon_%s.svg" % str(item.get("icon", ""))
 			_entry(ResourceLoader.exists(icon_path), "Co icon cho %s (%s)" % [item_id, icon_path])
 	_entry(total == 30, "Tong cong 30 mon hang (nhan %d)" % total)
 

@@ -159,8 +159,6 @@ func show_game_over(result: Dictionary) -> void:
 	Popups.close_all()
 	# SFX: tiếng vo tròn tờ giấy nháp ném đi
 	Sfx.play(Sfx.GAME_OVER)
-	var utc_time = Time.get_datetime_string_from_system(true)
-	print("Show Game Over because gameover %s" % utc_time)
 	# Dungeon Mode thua vì HẾT BƯỚC (phiếu giấy + điểm an ủi);
 	# các chế độ khác thua vì ĐÂM TƯỜNG (phiếu nêu 3 thử thách + số Sao đạt được)
 	var id := Popups.GAME_OVER if bool(result.get("endless", true)) else Popups.GAME_OVER_LEVEL

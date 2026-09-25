@@ -356,8 +356,6 @@ func _game_over(reason := "") -> void:
 		timer_controller.stop()
 	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
 		grid_view.call("set_interaction_enabled", false)
-	var utc_time = Time.get_datetime_string_from_system(true)
-	print("GAME_OVER because %s time = %s" % [reason,utc_time])
 	# Chốt 3 thử thách -> popup thua hiển thị trạng thái + số Sao đã đạt
 	var challenge_rows: Array[Dictionary] = []
 	var stars := 0

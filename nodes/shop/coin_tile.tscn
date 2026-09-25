@@ -3,17 +3,73 @@
 [ext_resource type="Script" uid="uid://y78i0wwbasih" path="res://scripts/nodes/shop/coin_tile.gd" id="1_coin"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
 [ext_resource type="Texture2D" uid="uid://o5loox230rha" path="res://assets/images/shop/card_coin.svg" id="3_card"]
-[ext_resource type="Texture2D" uid="uid://n80hdaatt051" path="res://assets/images/shop/icon_circle.svg" id="4_circle"]
+[ext_resource type="Texture2D" uid="uid://n80hdaatt051" path="res://assets/images/icons/icon_circle.svg" id="4_circle"]
 [ext_resource type="Texture2D" uid="uid://cviihr4gbxev4" path="res://assets/images/settings/section_chip.svg" id="5_chip"]
 [ext_resource type="Texture2D" uid="uid://31hfl18dqhjo" path="res://assets/images/shop/btn_coin.svg" id="6_btn"]
-[ext_resource type="Texture2D" uid="uid://p403jppao78" path="res://assets/images/shop/icon_coin_t1.svg" id="7_icon"]
+[ext_resource type="Texture2D" uid="uid://p403jppao78" path="res://assets/images/icons/icon_coin_t1.svg" id="7_icon"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="8_dxbsk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dxbsk"]
+content_margin_left = 10.0
+content_margin_top = 7.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_btn")
+texture_margin_left = 10.0
+texture_margin_top = 7.0
+texture_margin_right = 10.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2hqit"]
+content_margin_left = 10.0
+content_margin_top = 7.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_btn")
+texture_margin_left = 10.0
+texture_margin_top = 7.0
+texture_margin_right = 10.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l744w"]
+content_margin_left = 10.0
+content_margin_top = 7.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_btn")
+texture_margin_left = 10.0
+texture_margin_top = 7.0
+texture_margin_right = 10.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_imoxk"]
+content_margin_left = 10.0
+content_margin_top = 7.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_btn")
+texture_margin_left = 10.0
+texture_margin_top = 7.0
+texture_margin_right = 10.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mc44f"]
+content_margin_left = 10.0
+content_margin_top = 7.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("6_btn")
+texture_margin_left = 10.0
+texture_margin_top = 7.0
+texture_margin_right = 10.0
+texture_margin_bottom = 8.0
 
 [node name="CoinTile" type="Control" unique_id=1313759138]
 custom_minimum_size = Vector2(237.5, 120)
 layout_mode = 3
-anchor_right = 0.44000003
+anchor_right = 0.333
 anchor_bottom = 0.22200002
-offset_right = -98.140015
+offset_right = 0.2999878
 offset_bottom = 0.11997986
 theme = ExtResource("2_theme")
 script = ExtResource("1_coin")
@@ -42,28 +98,6 @@ offset_right = 13.5
 offset_bottom = 111.0
 mouse_filter = 2
 color = Color(0.9607843, 0.61960787, 0.043137256, 1)
-
-[node name="IconCircle" type="TextureRect" parent="Panel" unique_id=2021822230]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 32.0
-offset_right = 62.0
-offset_bottom = 80.0
-mouse_filter = 2
-texture = ExtResource("4_circle")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="Panel/IconCircle" unique_id=492167749]
-layout_mode = 0
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 45.0
-offset_bottom = 45.0
-mouse_filter = 2
-texture = ExtResource("7_icon")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="Badge" type="NinePatchRect" parent="Panel" unique_id=1286646579]
 layout_mode = 1
@@ -94,59 +128,106 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Description" type="VBoxContainer" parent="Panel" unique_id=1312994653]
+[node name="Action" type="Button" parent="Panel" unique_id=387655369]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.2736842
-anchor_top = 0.26666668
-anchor_right = 0.94689476
-anchor_bottom = 0.5836667
-offset_right = 0.112472534
-offset_bottom = -0.040000916
+anchor_left = 0.062304705
+anchor_top = 0.70000005
+anchor_right = 0.975201
+anchor_bottom = 0.933
+offset_left = -0.10635948
+offset_right = -0.055130005
+offset_bottom = 0.039993286
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_dxbsk")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_2hqit")
+theme_override_styles/hover = SubResource("StyleBoxTexture_l744w")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_imoxk")
+theme_override_styles/focus = SubResource("StyleBoxTexture_mc44f")
+script = ExtResource("8_dxbsk")
+texture_normal = ExtResource("6_btn")
+texture_hover = ExtResource("6_btn")
+texture_pressed = ExtResource("6_btn")
+texture_disabled = ExtResource("6_btn")
+texture_focus = ExtResource("6_btn")
+patch_margin_left = 10.0
+patch_margin_top = 7.0
+patch_margin_right = 10.0
+patch_margin_bottom = 8.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+metadata/_edit_use_anchors_ = true
+
+[node name="ActionLabel" type="Label" parent="Panel/Action" unique_id=424021662]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03157895
+anchor_right = 0.97200006
+anchor_bottom = 1.0
+offset_right = -0.020019531
+theme_type_variation = &"ShopPrice"
+text = "19.000 VNĐ"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Content" type="HBoxContainer" parent="Panel" unique_id=476274022]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.071740694
+anchor_top = 0.24166666
+anchor_right = 0.9256695
+anchor_bottom = 0.59166664
+offset_right = 0.13421631
+metadata/_edit_use_anchors_ = true
+
+[node name="IconCircle" type="TextureRect" parent="Panel/Content" unique_id=2021822230]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+mouse_filter = 2
+texture = ExtResource("4_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="Panel/Content/IconCircle" unique_id=492167749]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Description" type="VBoxContainer" parent="Panel/Content" unique_id=1312994653]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.85
 theme_override_constants/separation = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Name" type="Label" parent="Panel/Description" unique_id=2026218956]
+[node name="Name" type="Label" parent="Panel/Content/Description" unique_id=2026218956]
 layout_mode = 2
 theme_type_variation = &"ShopNameTile"
 text = "Túi Xu 500"
 vertical_alignment = 1
 text_overrun_behavior = 3
 
-[node name="Desc" type="Label" parent="Panel/Description" unique_id=631695112]
+[node name="Desc" type="Label" parent="Panel/Content/Description" unique_id=631695112]
 layout_mode = 2
 theme_type_variation = &"ShopDesc"
 text = "Túi xu cơ bản"
 vertical_alignment = 1
 text_overrun_behavior = 3
 
-[node name="Bonus" type="Label" parent="Panel/Description" unique_id=919873999]
+[node name="Bonus" type="Label" parent="Panel/Content/Description" unique_id=919873999]
 layout_mode = 2
 theme_type_variation = &"ShopBonus"
 vertical_alignment = 1
 text_overrun_behavior = 3
-
-[node name="Action" type="TextureButton" parent="Panel" unique_id=1344248252]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 84.0
-offset_right = 223.5
-offset_bottom = 112.0
-focus_mode = 0
-texture_normal = ExtResource("6_btn")
-texture_pressed = ExtResource("6_btn")
-texture_hover = ExtResource("6_btn")
-texture_disabled = ExtResource("6_btn")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="ActionLabel" type="Label" parent="Panel/Action" unique_id=424021662]
-layout_mode = 0
-offset_right = 209.5
-offset_bottom = 28.0
-theme_type_variation = &"ShopPrice"
-text = "19.000 VNĐ"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [connection signal="pressed" from="Panel/Action" to="." method="_on_action_pressed"]

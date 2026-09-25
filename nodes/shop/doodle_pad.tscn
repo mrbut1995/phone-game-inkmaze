@@ -162,3 +162,5 @@ theme_type_variation = &"ShopBtnText"
 text = "DÙNG THỬ ✓"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="gui_input" from="DrawArea" to="." method="_on_draw_input"]

@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
 [ext_resource type="Texture2D" uid="uid://dlgmdnsas2lel" path="res://assets/images/shop/card_tile.svg" id="3_card"]
 [ext_resource type="Texture2D" uid="uid://cviihr4gbxev4" path="res://assets/images/settings/section_chip.svg" id="4_chip"]
-[ext_resource type="Texture2D" uid="uid://n80hdaatt051" path="res://assets/images/shop/icon_circle.svg" id="5_circle"]
+[ext_resource type="Texture2D" uid="uid://n80hdaatt051" path="res://assets/images/icons/icon_circle.svg" id="5_circle"]
 [ext_resource type="Texture2D" uid="uid://dkbvimfmt8ksc" path="res://assets/images/shop/ink_stroke.svg" id="6_stroke"]
 [ext_resource type="Texture2D" uid="uid://drqah3ldsnb86" path="res://assets/images/shop/btn_tile_price.svg" id="7_btn_price"]
 [ext_resource type="Texture2D" uid="uid://1u1eht4ctsov" path="res://assets/images/shop/icon_coin.svg" id="8_coin"]
@@ -233,9 +233,6 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_dccut")
 theme_override_styles/focus = SubResource("StyleBoxTexture_70pya")
 script = ExtResource("8_wwefb")
 texture_normal = ExtResource("7_btn_price")
-texture_hover = ExtResource("7_btn_price")
-texture_pressed = ExtResource("7_btn_price")
-texture_disabled = ExtResource("7_btn_price")
 texture_focus = ExtResource("7_btn_price")
 patch_margin_left = 7.0
 patch_margin_top = 6.0

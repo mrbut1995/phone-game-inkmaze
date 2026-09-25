@@ -1,2 +1,0 @@
-ERROR: EditorSettings not instantiated yet when getting setting "export/android/shutdown_adb_on_exit".
-   at: _EDITOR_GET (editor\settings\editor_settings.cpp:1698)

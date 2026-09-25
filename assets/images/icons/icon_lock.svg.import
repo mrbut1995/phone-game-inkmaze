@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dke1reenxr27d"
-path="res://.godot/imported/icon_trap.svg-306912669dcbb85956decbf435d26057.ctex"
+uid="uid://d3whb6j1ukvy3"
+path="res://.godot/imported/icon_lock.svg-f50c9cf56b2de94d04e3693496573662.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/chapters/icon_trap.svg"
-dest_files=["res://.godot/imported/icon_trap.svg-306912669dcbb85956decbf435d26057.ctex"]
+source_file="res://assets/images/icons/icon_lock.svg"
+dest_files=["res://.godot/imported/icon_lock.svg-f50c9cf56b2de94d04e3693496573662.ctex"]
 
 [params]
 
