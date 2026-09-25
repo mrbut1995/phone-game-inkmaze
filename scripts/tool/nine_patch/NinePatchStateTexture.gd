@@ -28,50 +28,61 @@ extends StateTexture
 		update_minimum_size()
 		queue_redraw()
 
+# ==================== STRETCH MODES & DRAW CENTER ====================
+@export_group("Stretch & Center")
+## Có vẽ phần trung tâm không (Tắt đi để tạo khung viền rỗng)
 @export var draw_center: bool = true:
 	set(value):
 		draw_center = value
 		queue_redraw()
 
-# ==================== REGION & STRETCH ====================
-@export_group("Region & Stretch")
-@export var region_rect: Rect2 = Rect2():
-	set(value):
-		region_rect = value
-		queue_redraw()
-
+## Chế độ dãn trục ngang: Stretch (Kéo dãn), Tile (Lặp lại), Tile Fit (Lặp vừa vặn)
 @export var axis_stretch_horizontal: RenderingServer.NinePatchAxisMode = RenderingServer.NINE_PATCH_STRETCH:
 	set(value):
 		axis_stretch_horizontal = value
 		queue_redraw()
 
+## Chế độ dãn trục dọc: Stretch (Kéo dãn), Tile (Lặp lại), Tile Fit (Lặp vừa vặn)
 @export var axis_stretch_vertical: RenderingServer.NinePatchAxisMode = RenderingServer.NINE_PATCH_STRETCH:
 	set(value):
 		axis_stretch_vertical = value
+		queue_redraw()
+
+# ==================== REGION ====================
+@export_group("Region")
+@export var region_rect: Rect2 = Rect2():
+	set(value):
+		region_rect = value
 		queue_redraw()
 
 @export_tool_button("Edit Region & Margins", "Edit")
 var _btn_edit = _open_region_editor
 
 
-# ==================== GHI ĐÈ HÀM VẼ (9-SLICE VỚI GPU) ====================
+# ==================== GHI ĐÈ HÀM VẼ (HỖ TRỢ FLIP CHO 9-PATCH) ====================
 func _draw() -> void:
 	var tex = get_active_texture()
 	if not tex:
 		return
 
-	# Nếu không đặt margin nào và không cắt region -> dùng cách vẽ TextureRect thông thường của lớp cha
+	# Nếu không set margin và không cắt region -> dùng vẽ thông thường của StateTexture (đầy đủ Expand & Stretch Mode)
 	var has_margins = (patch_margin_left > 0 or patch_margin_top > 0 or patch_margin_right > 0 or patch_margin_bottom > 0)
 	if not has_margins and region_rect.size == Vector2.ZERO:
 		super._draw()
 		return
 
-	var dest_rect = Rect2(Vector2.ZERO, size)
 	var src_rect = region_rect if region_rect.size != Vector2.ZERO else Rect2(Vector2.ZERO, tex.get_size())
+
+	# Xử lý Flip H và Flip V quanh tâm
+	var center = size * 0.5
+	var scale_vec = Vector2(-1.0 if flip_h else 1.0, -1.0 if flip_v else 1.0)
+	draw_set_transform(center, 0.0, scale_vec)
+
+	var local_dest_rect = Rect2(-size * 0.5, size)
 
 	RenderingServer.canvas_item_add_nine_patch(
 		get_canvas_item(),
-		dest_rect,
+		local_dest_rect,
 		src_rect,
 		tex.get_rid(),
 		Vector2(patch_margin_left, patch_margin_top),
@@ -89,14 +100,14 @@ func _get_minimum_size() -> Vector2:
 	return super._get_minimum_size()
 
 
-# ==================== MỞ CỬA SỔ REGION EDITOR ====================
+# ==================== MỞ REGION DIALOG ====================
 func _open_region_editor() -> void:
 	if not Engine.is_editor_hint():
 		return
 		
 	var tex = get_active_texture()
 	if not tex:
-		printerr("NinePatchStateTexture: Cần gán ít nhất một Texture (Texture Normal)!")
+		printerr("NinePatchStateTexture: Cần gán ít nhất Texture Normal!")
 		return
 
 	NinePatchRegionDialog.open_generic(

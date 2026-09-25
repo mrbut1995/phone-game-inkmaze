@@ -34,16 +34,47 @@ enum State { NORMAL, HOVER, PRESSED, DISABLED, FOCUSED }
 		texture_focused = value
 		queue_redraw()
 
-# ==================== 2. LIÊN KẾT BUTTON CHA & PREVIEW ====================
+# ==================== 2. DISPLAY MODES (EXPAND & STRETCH) ====================
+@export_group("Display Modes")
+## Chế độ tính toán Minimum Size của Control theo kích thước ảnh
+@export var expand_mode: TextureRect.ExpandMode = TextureRect.EXPAND_KEEP_SIZE:
+	set(value):
+		expand_mode = value
+		update_minimum_size()
+		queue_redraw()
+
+## Chế độ căn chỉnh và co giãn ảnh trong khung
+@export var stretch_mode: TextureRect.StretchMode = TextureRect.STRETCH_SCALE:
+	set(value):
+		stretch_mode = value
+		queue_redraw()
+
+# ==================== 3. FLIP (LẬT ẢNH) ====================
+@export_group("Flip")
+@export var flip_h: bool = false:
+	set(value):
+		flip_h = value
+		queue_redraw()
+
+## Lật theo chiều dọc (Vertical / Flip Z)
+@export var flip_v: bool = false:
+	set(value):
+		flip_v = value
+		queue_redraw()
+
+## Alias code: Cho phép bạn dùng .flip_z thay cho .flip_v
+var flip_z: bool:
+	get: return flip_v
+	set(value): flip_v = value
+
+# ==================== 4. ĐỒNG BỘ NÚT CHA & PREVIEW ====================
 @export_group("State Sync & Preview")
-## Tự động đồng bộ trạng thái khi là con của Button / BaseButton
 @export var sync_with_parent_button: bool = true:
 	set(value):
 		sync_with_parent_button = value
 		_update_parent_listeners()
 		_check_and_update_state()
 
-## Menu xem trước trạng thái trực tiếp trong Editor Viewport
 @export var editor_preview_state: State = State.NORMAL:
 	set(value):
 		editor_preview_state = value
@@ -57,7 +88,6 @@ var _cached_parent: BaseButton = null
 
 
 func _init() -> void:
-	# Để MOUSE_FILTER_PASS để click không bị chặn, Button cha vẫn nhận được chuột
 	mouse_filter = Control.MOUSE_FILTER_PASS
 
 
@@ -115,11 +145,9 @@ func _on_parent_changed() -> void:
 
 # ==================== TÍNH TOÁN TRẠNG THÁI ====================
 func get_current_state() -> State:
-	# 1. Preview trên Editor
 	if Engine.is_editor_hint() and editor_preview_state != State.NORMAL:
 		return editor_preview_state
 
-	# 2. Đồng bộ theo nút cha
 	if sync_with_parent_button and _cached_parent:
 		if _cached_parent.disabled:
 			return State.DISABLED
@@ -131,7 +159,6 @@ func get_current_state() -> State:
 			return State.FOCUSED
 		return State.NORMAL
 
-	# 3. Độc lập khi không có nút cha
 	if _self_pressed:
 		return State.PRESSED
 	if _self_hovered:
@@ -183,13 +210,81 @@ func _on_mouse_exited() -> void:
 	_check_and_update_state()
 
 
-# ==================== VẼ CƠ BẢN (NHƯ TEXTURERECT) ====================
+# ==================== VẼ THEO STRETCH MODE & FLIP ====================
 func _draw() -> void:
 	var tex = get_active_texture()
-	if tex:
-		draw_texture_rect(tex, Rect2(Vector2.ZERO, size), false)
+	if not tex:
+		return
+
+	var tex_sz = tex.get_size()
+	var draw_pos = Vector2.ZERO
+	var draw_sz = size
+	var is_tile = false
+
+	# Tính toán vị trí và kích thước vẽ theo StretchMode
+	match stretch_mode:
+		TextureRect.STRETCH_SCALE:
+			draw_pos = Vector2.ZERO
+			draw_sz = size
+		TextureRect.STRETCH_TILE:
+			draw_pos = Vector2.ZERO
+			draw_sz = size
+			is_tile = true
+		TextureRect.STRETCH_KEEP:
+			draw_pos = Vector2.ZERO
+			draw_sz = tex_sz
+		TextureRect.STRETCH_KEEP_CENTERED:
+			draw_pos = (size - tex_sz) * 0.5
+			draw_sz = tex_sz
+		TextureRect.STRETCH_KEEP_ASPECT:
+			var scale_f = minf(size.x / tex_sz.x, size.y / tex_sz.y)
+			draw_sz = tex_sz * scale_f
+			draw_pos = Vector2.ZERO
+		TextureRect.STRETCH_KEEP_ASPECT_CENTERED:
+			var scale_f = minf(size.x / tex_sz.x, size.y / tex_sz.y)
+			draw_sz = tex_sz * scale_f
+			draw_pos = (size - draw_sz) * 0.5
+		TextureRect.STRETCH_KEEP_ASPECT_COVERED:
+			var scale_f = maxf(size.x / tex_sz.x, size.y / tex_sz.y)
+			draw_sz = tex_sz * scale_f
+			draw_pos = (size - draw_sz) * 0.5
+
+	# Xử lý Flip H và Flip V quanh tâm của Control
+	var center = size * 0.5
+	var scale_vec = Vector2(-1.0 if flip_h else 1.0, -1.0 if flip_v else 1.0)
+	draw_set_transform(center, 0.0, scale_vec)
+
+	var local_rect = Rect2(draw_pos - center, draw_sz)
+
+	if is_tile:
+		draw_texture_rect(tex, local_rect, true)
+	else:
+		draw_texture_rect(tex, local_rect, false)
 
 
+# ==================== TÍNH MINIMUM SIZE THEO EXPAND MODE ====================
 func _get_minimum_size() -> Vector2:
 	var tex = get_active_texture()
-	return tex.get_size() if tex else Vector2.ZERO
+	if not tex:
+		return Vector2.ZERO
+
+	var tex_sz = tex.get_size()
+	match expand_mode:
+		TextureRect.EXPAND_KEEP_SIZE:
+			return tex_sz
+		TextureRect.EXPAND_IGNORE_SIZE:
+			return Vector2.ZERO
+		TextureRect.EXPAND_FIT_WIDTH:
+			return Vector2(tex_sz.x, 0.0)
+		TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL:
+			if size.x > 0.0 and tex_sz.x > 0.0:
+				return Vector2(tex_sz.x, tex_sz.y * (size.x / tex_sz.x))
+			return Vector2(tex_sz.x, 0.0)
+		TextureRect.EXPAND_FIT_HEIGHT:
+			return Vector2(0.0, tex_sz.y)
+		TextureRect.EXPAND_FIT_HEIGHT_PROPORTIONAL:
+			if size.y > 0.0 and tex_sz.y > 0.0:
+				return Vector2(tex_sz.x * (size.y / tex_sz.y), tex_sz.y)
+			return Vector2(0.0, tex_sz.y)
+
+	return Vector2.ZERO

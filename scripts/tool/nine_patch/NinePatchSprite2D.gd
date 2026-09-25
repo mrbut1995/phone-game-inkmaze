@@ -11,7 +11,7 @@ extends Node2D
 			size = texture.get_size()
 		queue_redraw()
 
-## Kích thước thực tế của Sprite sau khi co giãn 9 lát cắt
+## Kích thước của Sprite sau khi co giãn 9 lát cắt
 @export var size: Vector2 = Vector2(64, 64):
 	set(value):
 		size = value.max(Vector2.ZERO)
@@ -39,29 +39,33 @@ extends Node2D
 		patch_margin_bottom = maxf(0.0, value)
 		queue_redraw()
 
+# ==================== STRETCH MODES & DRAW CENTER ====================
+@export_group("Stretch & Center")
+## Có vẽ phần trung tâm không (Tắt đi để tạo khung viền rỗng)
 @export var draw_center: bool = true:
 	set(value):
 		draw_center = value
 		queue_redraw()
 
-# ==================== REGION & STRETCH ====================
-@export_group("Region & Stretch")
-@export var region_rect: Rect2 = Rect2():
-	set(value):
-		region_rect = value
-		queue_redraw()
-
+## Chế độ dãn trục ngang: Stretch (Kéo dãn), Tile (Lặp lại), Tile Fit (Lặp vừa vặn)
 @export var axis_stretch_horizontal: RenderingServer.NinePatchAxisMode = RenderingServer.NINE_PATCH_STRETCH:
 	set(value):
 		axis_stretch_horizontal = value
 		queue_redraw()
 
+## Chế độ dãn trục dọc: Stretch (Kéo dãn), Tile (Lặp lại), Tile Fit (Lặp vừa vặn)
 @export var axis_stretch_vertical: RenderingServer.NinePatchAxisMode = RenderingServer.NINE_PATCH_STRETCH:
 	set(value):
 		axis_stretch_vertical = value
 		queue_redraw()
 
-# Nút mở giao diện kéo line trực quan
+# ==================== REGION ====================
+@export_group("Region")
+@export var region_rect: Rect2 = Rect2():
+	set(value):
+		region_rect = value
+		queue_redraw()
+
 @export_tool_button("Edit Region & Margins", "Edit")
 var _open_editor_btn = _open_region_editor
 
@@ -92,21 +96,20 @@ func _draw() -> void:
 	if not texture:
 		return
 
-	var dest_pos = offset - (size * 0.5 if centered else Vector2.ZERO)
-	var dest_rect = Rect2(dest_pos, size)
-	
 	var src_rect = region_rect
 	if src_rect.size == Vector2.ZERO:
 		src_rect = Rect2(Vector2.ZERO, texture.get_size())
 
-	# Xử lý lật ảnh (Flip)
-	var scale_x = -1.0 if flip_h else 1.0
-	var scale_y = -1.0 if flip_v else 1.0
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2(scale_x, scale_y))
+	# Xác định tâm lật (Flip quanh tâm của sprite)
+	var center_point = offset if centered else offset + size * 0.5
+	var scale_vec = Vector2(-1.0 if flip_h else 1.0, -1.0 if flip_v else 1.0)
+	
+	draw_set_transform(center_point, 0.0, scale_vec)
+	var local_rect = Rect2(-size * 0.5, size)
 
 	RenderingServer.canvas_item_add_nine_patch(
 		get_canvas_item(),
-		dest_rect,
+		local_rect,
 		src_rect,
 		texture.get_rid(),
 		Vector2(patch_margin_left, patch_margin_top),
