@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 94" width="91" height="61.1">
+  <rect x="1" y="1" width="138" height="88" rx="21" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="1.5" />
+  
+  <!-- Icon Skip (>|) -->
+  <g opacity="0.6">
+    <path d="M 57 29 L 73 45 L 57 61" 
+          fill="none" stroke="#BAC7CF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 83 29 V 61" 
+          fill="none" stroke="#BAC7CF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

@@ -15,7 +15,6 @@ script = ExtResource("1_v7f7a")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="NinePatchRect" parent="." unique_id=1792955065]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

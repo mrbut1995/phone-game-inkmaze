@@ -12,7 +12,7 @@ extends GameSceneLayout
 ## MỌI KHÁC BIỆT GIỮA 2 HƯỚNG NẰM Ở ĐÂY — GameScene không còn `if is_landscape`:
 ##   · `is_landscape_layout()`      · `hud_variant()`  — chọn scene HUD của hướng này
 ##   · `mount_board()`              — gắn bàn cờ dùng chung vào `BoardSlot`
-##   · `fit_hud()`                  · `configure_tool_path_button()`
+##   · `fit_hud()`
 ## ============================================================================
 
 func is_landscape_layout() -> bool:
@@ -46,12 +46,6 @@ func mount_board(board: Control) -> void:
 func fit_hud(hud: Control) -> void:
 	if hud != null:
 		hud.scale = Vector2.ONE
-
-
-## Bản dọc: ẩn nút GHI NHỚ thì nút VẼ ĐƯỜNG phải GHIM về đầu hàng (icon không bị kéo giãn)
-func configure_tool_path_button(btn: Control, hide_wall: bool) -> void:
-	if btn != null:
-		btn.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN if hide_wall else Control.SIZE_FILL
 
 
 ## Bố cục BÊN TRONG bàn cờ tính theo khung GIẤY: vừa reparent thì khung đó còn là số của bố cục

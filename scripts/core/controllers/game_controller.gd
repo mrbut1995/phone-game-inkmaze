@@ -23,6 +23,15 @@ var game_state: GameState = null
 var _pending_bonus := 0
 var _floor_finished := false
 var _run_active := false
+
+## GIỚI HẠN lượt GỢI Ý / HOÀN TÁC của MỖI MÀN/TẦNG (0 = không giới hạn → HUD ẩn badge PanelLimit).
+## Nạp lại ĐẦY ĐỦ mỗi khi vào màn/tầng mới (xem `_start_floor`) — hàng mới của Dungeon cũng
+## được cấp lại lượt.
+@export var undo_limit := 3
+@export var hint_limit := 3
+## Số lượt CÒN LẠI của màn hiện tại — HUD hiện trên badge `PanelLimit` của 2 nút (xem ActionBar)
+var undo_left := 0
+var hint_left := 0
 ## Chi phí từng bước đã đi (Countdown Cost thu 1..4 bước mỗi ô) — Undo hoàn lại ĐÚNG chi phí
 var _move_costs: Array[int] = []
 ## Đang khoá tương tác vì Countdown Cost hết ngân sách (chỉ mở lại khi VỪA lùi bước để có thêm bước)
@@ -90,6 +99,9 @@ func _start_floor(floor_number: int) -> void:
 
 	_floor_finished = false
 	_move_costs.clear()
+	# Cấp lại lượt Gợi ý/Hoàn tác cho MÀN mới (Dungeon: mỗi tầng một suất mới)
+	undo_left = maxi(undo_limit, 0)
+	hint_left = maxi(hint_limit, 0)
 	if game_state != null:
 		game_state.floor_number = floor_number
 	# Chốt ngưỡng 3 thử thách của màn/tầng mới (số bước thiết kế đã nạp trong setup_floor)
@@ -189,6 +201,10 @@ func _update_hud() -> void:
 			"mode_name": mode.mode_id if mode != null else "dungeon",
 			"undo_highlight": countdown_blocked,
 			"replay_visible": replay_visible,
+			"undo_left": undo_left,
+			"undo_max": maxi(undo_limit, 0),
+			"hint_left": hint_left,
+			"hint_max": maxi(hint_limit, 0),
 		})
 	ui_controller.update_hud(
 		title,
@@ -624,6 +640,9 @@ func _on_instruction_closed() -> void:
 
 
 func undo() -> void:
+	# Hết lượt hoàn tác của màn (nút đã bị khoá ở HUD) → không làm gì
+	if undo_limit > 0 and undo_left <= 0:
+		return
 	# Wall Builder: Undo xoá ĐOẠN TƯỜNG vừa nối (chế độ không có nước đi để lùi)
 	if grid_controller != null and game_mode_controller != null \
 			and game_mode_controller.game_mode != null \
@@ -631,6 +650,7 @@ func undo() -> void:
 		Sfx.play(Sfx.UNDO)
 		if game_state != null:
 			game_state.undos_used += 1     # thử thách "không dùng hoàn tác"
+		undo_left = maxi(undo_left - 1, 0)
 		_update_hud()
 		return
 	if grid_controller != null and grid_controller.undo_last_move():
@@ -644,11 +664,15 @@ func undo() -> void:
 				refund = _move_costs.pop_back()
 			game_state.refund_step(refund)
 			game_state.undos_used += 1     # thử thách "không dùng hoàn tác"
-			_update_hud()
+		undo_left = maxi(undo_left - 1, 0)
+		_update_hud()
 
 
 func hint() -> void:
 	if grid_controller == null:
+		return
+	# Hết lượt gợi ý của màn (nút đã bị khoá ở HUD) → không làm gì
+	if hint_limit > 0 and hint_left <= 0:
 		return
 	# SFX: chuông gió khi bấm Gợi ý
 	Sfx.play(Sfx.HINT)
@@ -657,11 +681,14 @@ func hint() -> void:
 			and game_mode_controller.game_mode.hint_wall(grid_controller.anchor_controller, grid_controller.maze):
 		if game_state != null:
 			game_state.hints_used += 1     # thử thách "không dùng gợi ý"
+		hint_left = maxi(hint_left - 1, 0)
 		_update_hud()
 		return
 	grid_controller.give_hint()
 	if game_state != null:
 		game_state.hints_used += 1     # thử thách "không dùng gợi ý"
+	hint_left = maxi(hint_left - 1, 0)
+	_update_hud()
 
 
 ## Wall Builder: người chơi bấm GỬI — đối chiếu bản dựng với MỌI con số trên bàn.

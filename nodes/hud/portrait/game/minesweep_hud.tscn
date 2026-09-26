@@ -7,9 +7,8 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="8_bomb_value"]
 [ext_resource type="Texture2D" uid="uid://cpd6oe44j6om3" path="res://assets/images/game/icon_bomb.svg" id="9_bomb_icon"]
 
-[node name="Hud" unique_id=213000205 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_base")]
+[node name="Hud" unique_id=213000205 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-time_value_node = NodePath("")
 
 [node name="Bomb" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1570366238]
 layout_mode = 1

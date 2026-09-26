@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 94" width="91" height="61.1">
+  <defs>
+    <filter id="blankShadowNorm" x="0%" y="0%" width="100%" height="110%">
+      <feDropShadow dx="0" dy="3" stdDeviation="1" flood-color="#1E2830" flood-opacity="0.16" />
+    </filter>
+  </defs>
+
+  <g filter="url(#blankShadowNorm)">
+    <rect x="1.5" y="1.5" width="137" height="87" rx="21" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3" />
+  </g>
+</svg>

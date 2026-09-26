@@ -433,7 +433,6 @@ SPECS: dict[str, dict] = {
             ("board_holder", "Control", ["name", "BoardSlot"]),
             ("pause_btn", "BaseButton", ["name", "Pause"]),
             ("instruction_btn", "BaseButton", ["name", "Instruction"]),
-            ("restart_btn", "BaseButton", ["name", "Restart"]),
             ("level_label", "Label", ["child", "Title", "LevelLabel"]),
             ("subtitle_label", "Label", ["child", "Title", "Subtitle"]),
         ],
