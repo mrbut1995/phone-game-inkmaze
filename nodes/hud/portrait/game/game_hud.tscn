@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_hr3we"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_00ya7"]
 [ext_resource type="PackedScene" uid="uid://cb348h6q1r8lf" path="res://nodes/hud/portrait/game/action_bar.tscn" id="2_6vbsf"]
-[ext_resource type="Texture2D" uid="uid://bhccsfs2k1hcq" path="res://assets/images/game/card_time_tall.svg" id="3_nmgut"]
+[ext_resource type="Texture2D" uid="uid://d2u23v5xlibqv" path="res://assets/images/game/card_time.svg" id="3_00ya7"]
 
 [node name="Hud" unique_id=1383101299 instance=ExtResource("1_hr3we")]
 anchors_preset = 15
@@ -42,7 +42,7 @@ anchor_right = 0.25
 anchor_bottom = 1.0
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("3_nmgut")
+texture = ExtResource("3_00ya7")
 
 [node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=494914795]
 layout_mode = 1
@@ -75,6 +75,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=2036591602]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.14800002
@@ -93,6 +94,6 @@ layout_mode = 1
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 26.5
-offset_top = -231.0
+offset_top = -164.00006
 offset_right = -20.5
 offset_bottom = -103.0

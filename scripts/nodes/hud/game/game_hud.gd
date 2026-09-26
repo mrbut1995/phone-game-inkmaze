@@ -20,10 +20,21 @@ extends BaseHUD
 ## Gọi mỗi khi HUD cần vẽ lại (GameController._update_hud). ctx gồm:
 ##   title:String · subtitle:String · steps_remaining:int · elapsed_time:float
 ##   floor_number:int · extra:String · mode:BaseGameMode
+##   undo_left/undo_max · hint_left/hint_max :int — giới hạn lượt Hoàn tác/Gợi ý của màn
 func update_hud(ctx: Dictionary) -> void:
 	set_time(float(ctx.get("elapsed_time", 0.0)))
+	_sync_limits(ctx)
 	_sync_instruction(ctx.get("mode"))
 	_on_update(ctx)
+
+
+## Giới hạn lượt Gợi ý/Hoàn tác (GameController tính) → badge `PanelLimit` + khoá nút khi hết lượt
+func _sync_limits(ctx: Dictionary) -> void:
+	var bar := action_bar()
+	if bar != null:
+		bar.update_limits(
+			int(ctx.get("undo_left", 0)), int(ctx.get("undo_max", 0)),
+			int(ctx.get("hint_left", 0)), int(ctx.get("hint_max", 0)))
 
 
 ## HUD con override để vẽ các thẻ riêng của chế độ mình
@@ -58,28 +69,29 @@ static func format_time(seconds: float) -> String:
 
 ## ---------------------------------------------------------------------------
 ## THANH NÚT HÀNH ĐỘNG (phương án A): mỗi HUD đều instance `nodes/hud/action_bar.tscn`
-## ngay trong scene của mình ⇒ nút VẼ ĐƯỜNG/GHI NHỚ/UNDO/HINT/REPLAY nằm TRONG HUD,
+## ngay trong scene của mình ⇒ nút CHƠI LẠI/GỬI BÀI/UNDO/HINT/REPLAY nằm TRONG HUD,
 ## màn chơi chỉ việc lấy ra để nối tín hiệu (không còn nút nào trong game.tscn).
 ## ---------------------------------------------------------------------------
 func action_bar() -> ActionBar:
 	return get_node_or_null("Content/ActionBar") as ActionBar
 
 
-## Bật bố cục NGANG cho thanh nút (hàng trên: Vẽ đường · Ghi nhớ — hàng dưới: Undo · Hint)
+## Bật bố cục NGANG cho thanh nút (dọc/ngang mỗi hướng 1 scene action_bar riêng)
 func set_landscape(on: bool) -> void:
 	var bar := action_bar()
 	if bar != null:
 		bar.set_landscape(on)
 
 
-func tool_path_btn() -> BaseButton:
+func restart_btn() -> BaseButton:
 	var bar := action_bar()
-	return bar.tool_path_btn() if bar != null else null
+	return bar.restart_btn() if bar != null else null
 
 
-func tool_wall_btn() -> BaseButton:
+## Nút GỬI BÀI của Wall Builder (các chế độ khác ẩn)
+func submit_btn() -> BaseButton:
 	var bar := action_bar()
-	return bar.tool_wall_btn() if bar != null else null
+	return bar.submit_btn() if bar != null else null
 
 
 func undo_btn() -> BaseButton:
@@ -92,9 +104,9 @@ func hint_btn() -> BaseButton:
 	return bar.hint_btn() if bar != null else null
 
 
-func replay_btn() -> BaseButton:
-	var bar := action_bar()
-	return bar.replay_btn() if bar != null else null
+#func replay_btn() -> BaseButton:
+	#var bar := action_bar()
+	#return bar.replay_btn() if bar != null else null
 
 
 ## ---------------------------------------------------------------------------

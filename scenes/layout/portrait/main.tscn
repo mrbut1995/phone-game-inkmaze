@@ -258,7 +258,7 @@ stamp_label = NodePath("Panel/Stamp/Label")
 game_mode_box = NodePath("Panel/Content/GameMode")
 other_box = NodePath("Panel/Content/Other")
 
-[node name="Panel" type="TextureRect" parent="." index="0" unique_id=76192589]
+[node name="Panel" type="NinePatchRect" parent="." index="0" unique_id=1486408109]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -268,6 +268,11 @@ offset_top = 42.0
 offset_right = -11.0
 offset_bottom = -33.059937
 texture = ExtResource("2_0wfyh")
+patch_margin_left = 132
+patch_margin_top = 203
+patch_margin_right = 107
+patch_margin_bottom = 253
+axis_stretch_vertical = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Stamp" type="TextureRect" parent="Panel" index="0" unique_id=1043027324]
@@ -324,6 +329,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Control" parent="Panel/Archivement" index="0" unique_id=245896698]
 layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -384,9 +390,9 @@ metadata/_edit_use_anchors_ = true
 [node name="Content" type="VBoxContainer" parent="Panel" index="2" unique_id=1990826388]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.16893204
+anchor_left = 0.13203883
 anchor_top = 0.060000002
-anchor_right = 0.84700006
+anchor_right = 0.93632036
 anchor_bottom = 0.8978728
 offset_top = 0.25839996
 offset_right = -0.20498657
@@ -668,7 +674,7 @@ metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
 [node name="ModeIcon" type="TextureRect" parent="Panel/Content/GameMode/Dungeon/ButtonDescription/CircleIcon" index="0" unique_id=1267821232]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.518
+anchor_left = 0.49981818
 anchor_top = 0.5
 anchor_right = 0.49981818
 anchor_bottom = 0.5
@@ -844,8 +850,8 @@ metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
 [node name="ModeIcon" type="TextureRect" parent="Panel/Content/GameMode/DailyChallenge/ButtonDescription/CircleIcon" index="0" unique_id=56048713]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.53636366
-anchor_top = 0.5604446
+anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -18.499996

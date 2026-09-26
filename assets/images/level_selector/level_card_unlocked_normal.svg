@@ -13,6 +13,5 @@
     </g>
     <rect width="290" height="350" rx="24" fill="none" stroke="#6EA0C8" stroke-width="3.5" />
     <line x1="36" y1="3" x2="260" y2="3" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="4" stroke-linecap="round" />
-    <line x1="75" y1="215" x2="215" y2="215" stroke="#8FB9D2" stroke-width="1.8" stroke-dasharray="5 4" opacity="0.6" />
   </g>
 </svg>

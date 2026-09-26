@@ -13,7 +13,7 @@ extends GameSceneLayout
 ## MỌI KHÁC BIỆT GIỮA 2 HƯỚNG NẰM Ở ĐÂY — GameScene không còn `if is_landscape`:
 ##   · `is_landscape_layout()`      · `hud_variant()`  — chọn scene HUD của hướng này
 ##   · `mount_board()`              — gắn bàn cờ dùng chung vào `BoardSlot`
-##   · `fit_hud()`                  · `configure_tool_path_button()`
+##   · `fit_hud()`
 ## ============================================================================
 
 ## Bề rộng HUD thiết kế (bản ngang 810 theo mockup 16:9)
@@ -58,11 +58,6 @@ func fit_hud(hud: Control) -> void:
 	hud.pivot_offset = Vector2.ZERO
 	if absf(hud.scale.x - factor) > 0.001:
 		hud.scale = Vector2(factor, factor)
-
-
-## Bản ngang: thanh nút nằm trong HUD (action_bar.gd tự dàn hàng) ⇒ không ghi đè cờ giãn
-func configure_tool_path_button(_btn: Control, _hide_wall: bool) -> void:
-	pass
 
 
 ## Bố cục BÊN TRONG bàn cờ tính theo khung GIẤY: vừa reparent thì khung đó còn là số của bố cục

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 94" width="91" height="61.1">
+  <!-- Dịch xuống 3.5px tạo cảm giác lún nút -->
+  <g transform="translate(0, 3.5)">
+    <rect x="1.5" y="1" width="137" height="87" rx="21" fill="#EDE6D8" stroke="#256286" stroke-width="2.6" />
+    
+    <!-- Icon Skip (>|) -->
+    <g>
+      <path d="M 57 29 L 73 45 L 57 61" 
+            fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 83 29 V 61" 
+            fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+  </g>
+</svg>

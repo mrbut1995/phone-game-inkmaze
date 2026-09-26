@@ -121,6 +121,12 @@ func update_hud(
 			"extra": extra_info,
 			"mode": mode,
 			"moves": moves,
+			# Giới hạn lượt Hoàn tác/Gợi ý của màn (GameController gửi qua set_run_info)
+			# → HUD hiện trên badge PanelLimit + khoá nút khi hết lượt
+			"undo_left": int(run_info.get("undo_left", 0)),
+			"undo_max": int(run_info.get("undo_max", 0)),
+			"hint_left": int(run_info.get("hint_left", 0)),
+			"hint_max": int(run_info.get("hint_max", 0)),
 		})
 
 

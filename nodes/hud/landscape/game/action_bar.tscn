@@ -1,131 +1,74 @@
 [gd_scene format=3 uid="uid://dxpf4nu3wy753"]
 
-[ext_resource type="Texture2D" uid="uid://da5y6n286ue05" path="res://assets/images-landscape/game/btn_tool_path_hero_inactive.svg" id="4_io3xg"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="1_t30dy"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="4_tfbqo"]
-[ext_resource type="Texture2D" uid="uid://uu47mfixupk2" path="res://assets/images-landscape/game/btn_hint_land_disabled.svg" id="bar_hint_d"]
-[ext_resource type="Texture2D" uid="uid://56khrtx12adb" path="res://assets/images-landscape/game/btn_hint_land_normal.svg" id="bar_hint_n"]
-[ext_resource type="Texture2D" uid="uid://dw50rlyk1y3b3" path="res://assets/images-landscape/game/btn_hint_land_pressed.svg" id="bar_hint_p"]
-[ext_resource type="LabelSettings" uid="uid://bwpq01l1whp4t" path="res://resources/settings/text/text_game_button_label.tres" id="bar_lbl"]
+[ext_resource type="Texture2D" uid="uid://cte1ue0xq3002" path="res://assets/images/game/btn_undo_normal.svg" id="10_nytdo"]
+[ext_resource type="Texture2D" uid="uid://dp6gsathe7et6" path="res://assets/images/game/btn_undo_pressed.svg" id="11_t30dy"]
+[ext_resource type="Texture2D" uid="uid://c7wy3qfmdrkw" path="res://assets/images/game/btn_skip_normal.svg" id="11_vyd7l"]
+[ext_resource type="Texture2D" uid="uid://cgnx67hsq6rhk" path="res://assets/images/game/btn_skip_pressed.svg" id="12_jbxlu"]
+[ext_resource type="Texture2D" uid="uid://dqldqskahkgcx" path="res://assets/images/game/btn_undo_disabled.svg" id="12_srfk4"]
+[ext_resource type="Texture2D" uid="uid://dd61x6fjtobav" path="res://assets/images/game/btn_hint_normal.svg" id="13_iyt1b"]
+[ext_resource type="Texture2D" uid="uid://cvntle7sdsk2g" path="res://assets/images/game/btn_skip_disable.svg" id="13_s4ykb"]
+[ext_resource type="Texture2D" uid="uid://c864ne3ni7vvn" path="res://assets/images/game/btn_hint_pressed.svg" id="14_vyd7l"]
+[ext_resource type="Texture2D" uid="uid://btgio4y75ub5n" path="res://assets/images/game/btn_hint_disabled.svg" id="15_nytdo"]
+[ext_resource type="Script" uid="uid://blpdwtvxerh8h" path="res://scripts/tool/nine_patch/NinePatchStateTexture.gd" id="16_jbxlu"]
+[ext_resource type="Texture2D" uid="uid://ccikpt57bxxe1" path="res://assets/images/common/btn_item_normal.svg" id="17_s4ykb"]
+[ext_resource type="Texture2D" uid="uid://dgwk4q0p0i8lb" path="res://assets/images/common/btn_item_pressed.svg" id="18_7hpxb"]
+[ext_resource type="Texture2D" uid="uid://y48vpab5l5u7" path="res://assets/images/common/btn_item_disable.svg" id="19_i0adw"]
 [ext_resource type="Texture2D" uid="uid://n10pv74qr68u" path="res://assets/images/popups/icon_replay.svg" id="bar_replay"]
 [ext_resource type="Script" uid="uid://bbq8fo18vt532" path="res://scripts/nodes/hud/game/action_bar.gd" id="bar_script"]
 [ext_resource type="LabelSettings" uid="uid://dg2subtoolbtn" path="res://resources/settings/text/text_game_button_sub.tres" id="bar_sub"]
-[ext_resource type="Texture2D" uid="uid://dj77636g50lkp" path="res://assets/images-landscape/game/btn_tool_path_hero_active.svg" id="bar_tool_n"]
-[ext_resource type="Texture2D" uid="uid://dku48vdnv0gj5" path="res://assets/images-landscape/game/btn_tool_path_hero_pressed.svg" id="bar_tool_p"]
-[ext_resource type="Texture2D" uid="uid://0wytxtqdhtmc" path="res://assets/images-landscape/game/btn_undo_land_disabled.svg" id="bar_undo_d"]
-[ext_resource type="Texture2D" uid="uid://5nkw36ljop8f" path="res://assets/images-landscape/game/btn_undo_land_normal.svg" id="bar_undo_n"]
-[ext_resource type="Texture2D" uid="uid://cfsmf3ifiyk4i" path="res://assets/images-landscape/game/btn_undo_land_pressed.svg" id="bar_undo_p"]
-[ext_resource type="Texture2D" uid="uid://mhrgq443xrfm" path="res://assets/images-landscape/game/btn_tool_wall_land_normal.svg" id="bar_wall_n"]
-[ext_resource type="Texture2D" uid="uid://bptu38mnf2s0j" path="res://assets/images-landscape/game/btn_tool_wall_land_pressed.svg" id="bar_wall_p"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_334xv"]
-content_margin_left = 100.5
-content_margin_top = 16.5
-content_margin_right = 90.0
-content_margin_bottom = 18.5
-texture = ExtResource("bar_tool_n")
-texture_margin_left = 100.5
-texture_margin_top = 16.5
-texture_margin_right = 90.0
-texture_margin_bottom = 18.5
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k4rlv"]
-content_margin_left = 100.5
-content_margin_top = 16.5
-content_margin_right = 90.0
-content_margin_bottom = 18.5
-texture = ExtResource("bar_tool_p")
-texture_margin_left = 100.5
-texture_margin_top = 16.5
-texture_margin_right = 90.0
-texture_margin_bottom = 18.5
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vhedt"]
-content_margin_left = 100.5
-content_margin_top = 16.5
-content_margin_right = 90.0
-content_margin_bottom = 18.5
-texture = ExtResource("bar_tool_n")
-texture_margin_left = 100.5
-texture_margin_top = 16.5
-texture_margin_right = 90.0
-texture_margin_bottom = 18.5
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q3mlu"]
-content_margin_left = 100.5
-content_margin_top = 16.5
-content_margin_right = 90.0
-content_margin_bottom = 18.5
-texture = ExtResource("4_io3xg")
-texture_margin_left = 100.5
-texture_margin_top = 16.5
-texture_margin_right = 90.0
-texture_margin_bottom = 18.5
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ueg6u"]
-content_margin_left = 100.5
-content_margin_top = 16.5
-content_margin_right = 90.0
-content_margin_bottom = 18.5
-texture = ExtResource("bar_tool_n")
-texture_margin_left = 100.5
-texture_margin_top = 16.5
-texture_margin_right = 90.0
-texture_margin_bottom = 18.5
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nytdo"]
-content_margin_left = 57.5
-content_margin_top = 13.0
-content_margin_right = 42.0
-content_margin_bottom = 16.0
-texture = ExtResource("bar_wall_n")
-texture_margin_left = 57.5
-texture_margin_top = 13.0
-texture_margin_right = 42.0
-texture_margin_bottom = 16.0
+[ext_resource type="Texture2D" uid="uid://spyw1sa7uxc5" path="res://assets/images/game/btn_restart_disabled.svg" id="restart_d"]
+[ext_resource type="Texture2D" uid="uid://comsw702ysh8j" path="res://assets/images/game/btn_restart_focus.svg" id="restart_f"]
+[ext_resource type="Texture2D" uid="uid://bh5dumnnf028q" path="res://assets/images/game/btn_restart_normal.svg" id="restart_n"]
+[ext_resource type="Texture2D" uid="uid://b7gfhxvtp5tup" path="res://assets/images/game/btn_restart_pressed.svg" id="restart_p"]
+[ext_resource type="Texture2D" uid="uid://c22gwndl7wq03" path="res://assets/images/game/btn_submit_disabled.svg" id="submit_d"]
+[ext_resource type="Texture2D" uid="uid://ba05fospe3lgy" path="res://assets/images/game/btn_submit_normal.svg" id="submit_n"]
+[ext_resource type="Texture2D" uid="uid://tqg2gg560yg5" path="res://assets/images/game/btn_submit_pressed.svg" id="submit_p"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t30dy"]
-content_margin_left = 57.5
-content_margin_top = 13.0
-content_margin_right = 42.0
-content_margin_bottom = 16.0
-texture = ExtResource("bar_wall_p")
-texture_margin_left = 57.5
-texture_margin_top = 13.0
-texture_margin_right = 42.0
-texture_margin_bottom = 16.0
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("submit_n")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_srfk4"]
-content_margin_left = 57.5
-content_margin_top = 13.0
-content_margin_right = 42.0
-content_margin_bottom = 16.0
-texture = ExtResource("bar_wall_n")
-texture_margin_left = 57.5
-texture_margin_top = 13.0
-texture_margin_right = 42.0
-texture_margin_bottom = 16.0
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("submit_p")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iyt1b"]
-content_margin_left = 57.5
-content_margin_top = 13.0
-content_margin_right = 42.0
-content_margin_bottom = 16.0
-texture = ExtResource("bar_wall_n")
-texture_margin_left = 57.5
-texture_margin_top = 13.0
-texture_margin_right = 42.0
-texture_margin_bottom = 16.0
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("submit_n")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vyd7l"]
-content_margin_left = 57.5
-content_margin_top = 13.0
-content_margin_right = 42.0
-content_margin_bottom = 16.0
-texture = ExtResource("bar_wall_n")
-texture_margin_left = 57.5
-texture_margin_top = 13.0
-texture_margin_right = 42.0
-texture_margin_bottom = 16.0
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("submit_d")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
 
 [node name="ActionBar" type="VBoxContainer" unique_id=834062236]
 anchors_preset = -1
@@ -135,112 +78,61 @@ offset_bottom = 0.23999023
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_t30dy")
 script = ExtResource("bar_script")
+metadata/_edit_use_anchors_ = true
 
-[node name="Tool" type="Button" parent="." unique_id=1185596431]
-visible = false
-custom_minimum_size = Vector2(405, 107.5)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_334xv")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_k4rlv")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vhedt")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_q3mlu")
-theme_override_styles/focus = SubResource("StyleBoxTexture_ueg6u")
-script = ExtResource("4_tfbqo")
-texture_normal = ExtResource("bar_tool_n")
-texture_hover = ExtResource("bar_tool_n")
-texture_pressed = ExtResource("bar_tool_p")
-texture_disabled = ExtResource("4_io3xg")
-texture_focus = ExtResource("bar_tool_n")
-patch_margin_left = 100.5
-patch_margin_top = 16.5
-patch_margin_right = 90.0
-patch_margin_bottom = 18.5
-metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
-
-[node name="Label" type="Label" parent="Tool" unique_id=673922787]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.255
-anchor_top = 0.22
-anchor_right = 0.81
-anchor_bottom = 0.56
-grow_horizontal = 2
-grow_vertical = 2
-text = "CHẾ ĐỘ: VẼ ĐƯỜNG ĐI"
-label_settings = ExtResource("bar_lbl")
-vertical_alignment = 1
-
-[node name="Sub" type="Label" parent="Tool" unique_id=1814525187]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.255
-anchor_top = 0.58
-anchor_right = 0.81
-anchor_bottom = 0.86
-grow_horizontal = 2
-grow_vertical = 0
-text = "Đang kích hoạt • Chạm giữ và lướt qua tâm các ô liền kề"
-label_settings = ExtResource("bar_sub")
-vertical_alignment = 1
-
-[node name="SubRow" type="HBoxContainer" parent="." unique_id=1864078791]
-layout_mode = 2
-theme_override_constants/separation = 10
-alignment = 1
-
-[node name="Wall" type="Button" parent="SubRow" unique_id=1125061694]
+[node name="Submit" type="Button" parent="." unique_id=832790697]
 visible = false
 custom_minimum_size = Vector2(230, 75)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_styles/normal = SubResource("StyleBoxTexture_nytdo")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_t30dy")
-theme_override_styles/hover = SubResource("StyleBoxTexture_srfk4")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_iyt1b")
-theme_override_styles/focus = SubResource("StyleBoxTexture_vyd7l")
+tooltip_text = "SUBMIT"
+theme_override_styles/normal = SubResource("StyleBoxTexture_t30dy")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_srfk4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_iyt1b")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_vyd7l")
 script = ExtResource("4_tfbqo")
-texture_normal = ExtResource("bar_wall_n")
-texture_hover = ExtResource("bar_wall_n")
-texture_pressed = ExtResource("bar_wall_p")
-texture_disabled = ExtResource("bar_wall_n")
-texture_focus = ExtResource("bar_wall_n")
-patch_margin_left = 57.5
-patch_margin_top = 13.0
-patch_margin_right = 42.0
-patch_margin_bottom = 16.0
+texture_normal = ExtResource("submit_n")
+texture_hover = ExtResource("submit_n")
+texture_pressed = ExtResource("submit_p")
+texture_disabled = ExtResource("submit_d")
+patch_margin_left = 61.0
+patch_margin_top = 18.0
+patch_margin_right = 30.0
+patch_margin_bottom = 20.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="Label" type="Label" parent="SubRow/Wall" unique_id=95066269]
-modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.18
-anchor_right = 0.9500001
-anchor_bottom = 0.55
-offset_left = 71.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "GHI NHỚ TƯỜNG"
-label_settings = ExtResource("bar_lbl")
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="SubRow" type="HBoxContainer" parent="." unique_id=1864078791]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
 
-[node name="Sub" type="Label" parent="SubRow/Wall" unique_id=742243654]
-modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.58
-anchor_right = 0.95
-anchor_bottom = 0.86
-offset_left = 77.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Nối 2 dấu cộng (+) Anchor"
-label_settings = ExtResource("bar_sub")
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="Restart" type="TextureButton" parent="SubRow" unique_id=1496407431]
+custom_minimum_size = Vector2(77.5, 75)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "RESTART"
+texture_normal = ExtResource("restart_n")
+texture_pressed = ExtResource("restart_p")
+texture_hover = ExtResource("restart_n")
+texture_disabled = ExtResource("restart_d")
+texture_focused = ExtResource("restart_f")
+stretch_mode = 0
+
+[node name="Skip" type="TextureButton" parent="SubRow" unique_id=2113501766]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 0.2
+tooltip_text = "UNDO"
+texture_normal = ExtResource("11_vyd7l")
+texture_pressed = ExtResource("12_jbxlu")
+texture_hover = ExtResource("11_vyd7l")
+texture_disabled = ExtResource("13_s4ykb")
+texture_focused = ExtResource("11_vyd7l")
+stretch_mode = 0
 
 [node name="Undo" type="TextureButton" parent="SubRow" unique_id=293478108]
 custom_minimum_size = Vector2(77.5, 75)
@@ -248,10 +140,50 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 tooltip_text = "UNDO"
-texture_normal = ExtResource("bar_undo_n")
-texture_pressed = ExtResource("bar_undo_p")
-texture_disabled = ExtResource("bar_undo_d")
+texture_normal = ExtResource("10_nytdo")
+texture_pressed = ExtResource("11_t30dy")
+texture_hover = ExtResource("10_nytdo")
+texture_disabled = ExtResource("12_srfk4")
+texture_focused = ExtResource("10_nytdo")
 stretch_mode = 0
+
+[node name="PanelLimit" type="Control" parent="SubRow/Undo" unique_id=1634305007]
+layout_mode = 1
+anchor_left = 0.59300005
+anchor_top = -0.279
+anchor_right = 1.088
+anchor_bottom = 0.344
+offset_left = 0.036994934
+offset_top = 0.019001007
+offset_right = -0.008003235
+offset_bottom = 0.01599884
+mouse_filter = 1
+script = ExtResource("16_jbxlu")
+patch_margin_left = 12.0
+patch_margin_top = 11.0
+patch_margin_right = 13.0
+patch_margin_bottom = 14.0
+texture_normal = ExtResource("17_s4ykb")
+texture_hover = ExtResource("17_s4ykb")
+texture_pressed = ExtResource("18_7hpxb")
+texture_disabled = ExtResource("19_i0adw")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Label" type="Label" parent="SubRow/Undo/PanelLimit" unique_id=307457561]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1521739
+anchor_top = 0.12903225
+anchor_right = 0.87000006
+anchor_bottom = 0.74200004
+offset_right = -0.020004272
+offset_bottom = -0.0020008087
+theme_type_variation = &"HintGuideText"
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Hint" type="TextureButton" parent="SubRow" unique_id=1015673811]
 custom_minimum_size = Vector2(77.5, 75)
@@ -259,10 +191,50 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 tooltip_text = "HINT"
-texture_normal = ExtResource("bar_hint_n")
-texture_pressed = ExtResource("bar_hint_p")
-texture_disabled = ExtResource("bar_hint_d")
+texture_normal = ExtResource("13_iyt1b")
+texture_pressed = ExtResource("14_vyd7l")
+texture_hover = ExtResource("13_iyt1b")
+texture_disabled = ExtResource("15_nytdo")
+texture_focused = ExtResource("13_iyt1b")
 stretch_mode = 0
+
+[node name="PanelLimit" type="Control" parent="SubRow/Hint" unique_id=968794150]
+layout_mode = 1
+anchor_left = 0.59300005
+anchor_top = -0.279
+anchor_right = 1.088
+anchor_bottom = 0.344
+offset_left = 0.036994934
+offset_top = 0.019001007
+offset_right = -0.008003235
+offset_bottom = 0.01599884
+mouse_filter = 1
+script = ExtResource("16_jbxlu")
+patch_margin_left = 12.0
+patch_margin_top = 11.0
+patch_margin_right = 13.0
+patch_margin_bottom = 14.0
+texture_normal = ExtResource("17_s4ykb")
+texture_hover = ExtResource("17_s4ykb")
+texture_pressed = ExtResource("18_7hpxb")
+texture_disabled = ExtResource("19_i0adw")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Label" type="Label" parent="SubRow/Hint/PanelLimit" unique_id=1153250952]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1521739
+anchor_top = 0.12903225
+anchor_right = 0.87000006
+anchor_bottom = 0.74200004
+offset_right = -0.020004272
+offset_bottom = -0.0020008087
+theme_type_variation = &"HintGuideText"
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Replay" type="TextureButton" parent="SubRow" unique_id=1476857671]
 visible = false

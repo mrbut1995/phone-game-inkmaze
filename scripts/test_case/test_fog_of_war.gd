@@ -62,13 +62,9 @@ func _run(scene: GameScene) -> void:
 		var value := hud.get_node_or_null("Sheet/Retry/Value") as Label
 		_entry(value != null and value.text == "3", "HUD hien 3 luot thu ('%s')"
 			% (value.text if value != null else ""))
-	# Nhãn phụ 2 nút công cụ đổi theo chế độ (mockup matchup_fog_of_war.svg)
-	var draw_sub := scene.tool_path_btn.get_node_or_null("Sub") as Label
-	var wall_sub := scene.tool_wall_btn.get_node_or_null("Sub") as Label
-	_entry(draw_sub != null and draw_sub.text == "STR_TOOL_DRAW_PATH_FOG",
-		"Nut VE DUONG doi nhan phu theo che do ('%s')" % (draw_sub.text if draw_sub != null else ""))
-	_entry(wall_sub != null and wall_sub.text == "STR_TOOL_MARK_WALL_FOG",
-		"Nut GHI NHO doi nhan phu theo che do ('%s')" % (wall_sub.text if wall_sub != null else ""))
+	# Thanh hanh dong (2026-09-26): 2 nut Tool/Wall cu da BO — nut CHƠI LẠI nam trong thanh nay
+	_entry(scene.restart_btn != null and not (scene.restart_btn as BaseButton).disabled,
+		"Nut CHOI LAI trong thanh hanh dong (khong bi khoa)")
 
 	var start := grid.maze.get_start()
 	var wall_dir := _wall_neighbour(grid.maze, start)

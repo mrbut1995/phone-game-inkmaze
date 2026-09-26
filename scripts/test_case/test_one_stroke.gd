@@ -156,12 +156,11 @@ func _run(scene: GameScene) -> void:
 		_entry(chip != null and chip.text == "11% KÍN", "HUD: chip phan tram kin ('%s')" % _text_of(chip))
 		_entry(clip != null and absf(clip.size.x - 410.0 / 9.0) < 0.6,
 			"HUD: thanh tien do = 1/9 be ngang (%.1f)" % (clip.size.x if clip != null else -1.0))
-	var sub_draw := scene.tool_path_btn.get_node_or_null("Sub") as Label
-	_entry(sub_draw != null and sub_draw.text == "STR_TOOL_DRAW_PATH_STROKE",
-		"Nut VE DUONG doi nhan phu theo che do ('%s')" % _text_of(sub_draw))
-	_entry(not scene.tool_wall_btn.visible, "An nut GHI NHO (tuong hien ro 100%)")
-	_entry(scene.tool_path_btn.size.x >= 600.0,
-		"Nut VE DUONG DI be ngang theo mockup (%.0f px)" % scene.tool_path_btn.size.x)
+	# Thanh hanh dong (2026-09-26): nut Tool/Wall cu da BO — chi con CHƠI LẠI · UNDO · HINT
+	_entry(scene.submit_btn != null and not (scene.submit_btn as BaseButton).visible,
+		"Che do khac Wall Builder thi nut GUI BAI AN")
+	_entry(scene.restart_btn != null and (scene.restart_btn as BaseButton).visible,
+		"Nut CHOI LAI nam trong thanh hanh dong")
 
 	# --- 4. Đi theo GỢI Ý tới khi phủ kín ---
 	var steps := 0

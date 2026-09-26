@@ -112,18 +112,17 @@ func _run(scene: GameScene) -> void:
 		if sheet != null:
 			_entry(absf(sheet.size.x - 690.0) <= 1.0 and absf(sheet.size.y - 156.0) <= 1.0,
 				"Bang Tuong Da Ve 690x156 (%.0fx%.0f)" % [sheet.size.x, sheet.size.y])
-	_entry((scene.tool_path_btn.get_node_or_null("Label") as Label).text == "STR_TOOL_DRAW_WALL",
-		"Nut 1 doi thanh VE TUONG")
-	_entry((scene.tool_path_btn.get_node_or_null("Sub") as Label).text == "STR_TOOL_DRAW_WALL_DESC",
-		"Nhan phu nut VE TUONG ('%s')" % _text_of(scene.tool_path_btn.get_node_or_null("Sub")))
-	_entry(scene.tool_wall_btn.visible
-			and (scene.tool_wall_btn.get_node_or_null("Label") as Label).text == "STR_TOOL_SUBMIT",
-		"Nut 2 doi thanh GUI BAI (khong bi an)")
-	var wall_btn := scene.tool_wall_btn as NinePatchButton
-	var submit_tex: Texture2D = wall_btn.texture_normal if wall_btn != null else null
-	_entry(submit_tex != null and submit_tex.resource_path.contains("btn_tool_submit"),
-		"Nut GUI BAI dung art xanh rieng cua che do (%s)"
-			% (submit_tex.resource_path if submit_tex != null else "(null)"))
+	# Thanh hanh dong: nut GUI BAI (Submit) = nut rieng cua Wall Builder (nut Tool/Wall cu da BO 2026-09-26)
+	var submit_btn := scene.submit_btn as BaseButton
+	_entry(submit_btn != null and submit_btn.visible,
+		"Nut GUI BAI HIEN tren thanh hanh dong (khong bi an)")
+	var art_ok := false
+	if submit_btn is Button:
+		var sb := (submit_btn as Button).get_theme_stylebox("normal") as StyleBoxTexture
+		art_ok = sb != null and sb.texture != null and sb.texture.resource_path.contains("btn_submit")
+	_entry(art_ok, "Nut GUI BAI dung art btn_submit cua che do")
+	_entry(scene.restart_btn != null and (scene.restart_btn as BaseButton).visible,
+		"Nut CHOI LAI nam trong thanh hanh dong (moi che do)")
 
 	# --- 3. Vẽ tường: khe trong bàn OK, viền ngoài bị chặn ---
 	var drawn_edge := _first_true_edge(maze)
@@ -147,7 +146,7 @@ func _run(scene: GameScene) -> void:
 	await process_frame
 	_entry(mode.built_count() == 1, "Goi y mo 1 doan tuong (%d)" % mode.built_count())
 	var locked_key := str(mode.get("locked").keys()[0]) if not mode.get("locked").is_empty() else ""
-	_entry(not locked_key.is_empty(), "Doan goi y duoc KHOА (%s)" % locked_key)
+	_entry(not locked_key.is_empty(), "Doan goi y duoc KHOA (%s)" % locked_key)
 	if not locked_key.is_empty():
 		var parts := locked_key.split(",")
 		var lk_h := parts[0] == "h"

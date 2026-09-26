@@ -16,12 +16,14 @@ var board_view: Control = null
 ## hoặc đổi hướng màn hình (xem `_apply_hud_for_mode`)
 var hud_host: Control = null
 
-var tool_path_btn: NinePatchButton = null
-var tool_wall_btn: NinePatchButton = null
+## Nút CHƠI LẠI (reset) trên THANH HÀNH ĐỘNG của HUD — dời từ thanh trạng thái xuống (2026-09-26)
+var restart_btn: BaseButton = null
+## Nút GỬI BÀI của Wall Builder (các chế độ khác ẩn — xem `_apply_mode_buttons`)
+var submit_btn: BaseButton = null
 var undo_btn: BaseButton = null
 var hint_btn: BaseButton = null
-## Nút CHƠI LẠI ẩn sẵn DƯỚI thanh nút — UIController hiện khi ván không còn thắng được nữa (Sum Path)
-var replay_btn: BaseButton = null
+### Nút CHƠI LẠI ẩn sẵn DƯỚI thanh nút — UIController hiện khi ván không còn thắng được nữa (Sum Path)
+#var replay_btn: BaseButton = null
 ## Panel HƯỚNG DẪN LUẬT CHƠI TÓM TẮT dưới bàn cờ (đổi nội dung theo chế độ)
 var hint_guide: HintGuide = null
 ## Mã chế độ đang chơi (để ghi lại nhãn nút công cụ mỗi khi gắn lại HUD)
@@ -157,22 +159,19 @@ func _wire_controllers() -> void:
 	if layout != null and layout.pause_btn != null and not layout.pause_btn.has_meta("wired"):
 		layout.pause_btn.set_meta("wired", true)
 		layout.pause_btn.pressed.connect(_on_pause_pressed)
-	if layout != null and layout.restart_btn != null and not layout.restart_btn.has_meta("wired"):
-		layout.restart_btn.set_meta("wired", true)
-		layout.restart_btn.pressed.connect(_on_restart_pressed)
 	if layout != null and layout.instruction_btn != null and game_controller != null \
 			and not layout.instruction_btn.has_meta("wired"):
 		layout.instruction_btn.set_meta("wired", true)
 		layout.instruction_btn.pressed.connect(game_controller.open_instruction)
 
 
-## Mọi nút của màn chơi: 3 nút trên THANH TRẠNG THÁI (layout) + 5 nút trong THANH HÀNH ĐỘNG (HUD)
+## Mọi nút của màn chơi: 2 nút trên THANH TRẠNG THÁI (layout) + các nút trong THANH HÀNH ĐỘNG (HUD)
+## (nút CHƠI LẠI giờ nằm trong thanh hành động của HUD — không còn trên thanh trạng thái)
 func _all_buttons() -> Array:
 	return [
 		layout.pause_btn if layout != null else null,
 		layout.instruction_btn if layout != null else null,
-		layout.restart_btn if layout != null else null,
-		tool_path_btn, tool_wall_btn, undo_btn, hint_btn, replay_btn,
+		restart_btn, submit_btn, undo_btn, hint_btn,
 	]
 
 
@@ -259,13 +258,9 @@ func _ready() -> void:
 		UIAnim.play_slide_in(layout.status_bar, Vector2(0, -25), 0.0, 0.25)
 	if layout != null and layout.hud_slot != null:
 		UIAnim.play_slide_in(layout.hud_slot, Vector2(0, -15), 0.04, 0.25)
-	var button_bar := tool_path_btn.get_parent() as Control if tool_path_btn != null else null
+	var button_bar := undo_btn.get_parent() as Control if undo_btn != null else null
 	if button_bar != null:
 		UIAnim.play_slide_in(button_bar, Vector2(0, 30), 0.08, 0.25)
-
-	# Wall Builder: nút thứ 2 trên thanh công cụ được đổi công dụng thành GỬI BÀI
-	if tool_wall_btn != null and not tool_wall_btn.pressed.is_connected(_on_secondary_tool_pressed):
-		tool_wall_btn.pressed.connect(_on_secondary_tool_pressed)
 
 	# Khởi động ván chơi dựa trên GameManager hoặc mặc định
 	var gm: Node = get_node_or_null("/root/GameManager")
@@ -301,13 +296,14 @@ func _on_hint_pressed() -> void:
 		game_controller.hint()
 
 
-## Nút công cụ thứ 2: bình thường là GHI NHỚ, riêng Wall Builder là GỬI BÀI
-func _on_secondary_tool_pressed() -> void:
-	var mode: BaseGameMode = null
-	if game_mode_controller != null:
-		mode = game_mode_controller.game_mode
-	if mode != null and mode.mode_id == "wall_builder" and game_controller != null:
-		game_controller.submit_build()
+## Nút công cụ thứ 2 đã BỎ cùng nút Tool/Wall (2026-09-26) — chức năng GỬI BÀI của Wall Builder
+## nay do nút `Submit` trên thanh hành động đảm nhiệm (xem `_wire_action_bar`).
+
+
+## Bật/tắt nút đặc thù theo CHẾ ĐỘ trên thanh hành động (hiện chỉ có GỬI BÀI của Wall Builder)
+func _apply_mode_buttons(mode_name: String) -> void:
+	if submit_btn != null:
+		submit_btn.visible = mode_name.to_lower() == "wall_builder"
 
 
 ## API chuyển đổi chế độ chơi linh hoạt từ bên ngoài
@@ -418,95 +414,9 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return LevelHUD
 
 
-## Nhãn PHỤ của 2 nút công cụ theo CHẾ ĐỘ (mockup matchup_<mode>.svg — vd Fog of War: "Dò trong sương" · "Cắm cờ mép ô")
-const TOOL_SUB_KEYS := {
-	"fog_of_war": ["STR_TOOL_DRAW_PATH_FOG", "STR_TOOL_MARK_WALL_FOG"],
-	"one_stroke": ["STR_TOOL_DRAW_PATH_STROKE", "STR_TOOL_MARK_WALL_STROKE"],
-}
-const TOOL_SUB_DEFAULT := ["STR_TOOL_DRAW_PATH_DESC", "STR_TOOL_MARK_WALL_DESC"]
-const TOOL_TITLE_DEFAULT := ["STR_TOOL_DRAW_PATH", "STR_TOOL_MARK_WALL"]
-## Chế độ đổi HẲN công dụng 2 nút công cụ (Wall Builder: VẼ TƯỜNG + GỬI BÀI)
-const TOOL_FULL_KEYS := {
-	"wall_builder": [
-		["STR_TOOL_DRAW_WALL", "STR_TOOL_DRAW_WALL_DESC"],
-		["STR_TOOL_SUBMIT", "STR_TOOL_SUBMIT_DESC"],
-	],
-}
-const TOOL_TEX_STROKE_PATH := preload("res://assets/images/game/btn_tool_path_stroke_active.svg")
-const TOOL_TEX_SUBMIT := preload("res://assets/images/game/btn_tool_submit_normal.svg")
-const TOOL_TEX_SUBMIT_PRESSED := preload("res://assets/images/game/btn_tool_submit_pressed.svg")
-const TOOL_LAND_PATH_ACTIVE := preload("res://assets/images-landscape/game/btn_tool_path_hero_active.svg")
-const TOOL_LAND_PATH_INACTIVE := preload("res://assets/images-landscape/game/btn_tool_path_hero_inactive.svg")
-const TOOL_LAND_PATH_PRESSED := preload("res://assets/images-landscape/game/btn_tool_path_hero_pressed.svg")
-const TOOL_LAND_WALL_NORMAL := preload("res://assets/images-landscape/game/btn_tool_wall_land_normal.svg")
-const TOOL_LAND_WALL_PRESSED := preload("res://assets/images-landscape/game/btn_tool_wall_land_pressed.svg")
-## Chế độ ẩn hẳn nút GHI NHỚ (tường hiện rõ 100% nên không cần đánh dấu) — mockup
-## matchup_one_stroke.svg: "ẨN NÚT GHI NHỚ THEO §5.12", thanh công cụ chỉ còn VẼ ĐƯỜNG ĐI + UNDO + GỢI Ý.
-const TOOL_HIDE_WALL_MODES := ["one_stroke"]
-
-
-## Đổi nhãn 2 nút công cụ cho khớp chế độ đang chơi (VẼ ĐƯỜNG/GHI NHỚ ↔ VẼ TƯỜNG/GỬI BÀI)
-func _apply_tool_labels_for_mode(mode_name: String) -> void:
-	var id := mode_name.to_lower()
-	# Nút nằm trong HUD (action_bar) ⇒ chỉ ghi nhãn khi HUD đã gắn xong
-	if tool_path_btn == null or tool_wall_btn == null:
-		return
-	var full: Array = TOOL_FULL_KEYS.get(id, [])
-	if not full.is_empty():
-		var path_keys: Array = full[0]
-		var wall_keys: Array = full[1]
-		_set_tool_label(tool_path_btn, str(path_keys[0]), str(path_keys[1]))
-		_set_tool_label(tool_wall_btn, str(wall_keys[0]), str(wall_keys[1]))
-	else:
-		var subs: Array = TOOL_SUB_KEYS.get(id, TOOL_SUB_DEFAULT)
-		_set_tool_label(tool_path_btn, TOOL_TITLE_DEFAULT[0], str(subs[0]))
-		_set_tool_label(tool_wall_btn, TOOL_TITLE_DEFAULT[1], str(subs[1]))
-	# Ẩn nút GHI NHỚ ở chế độ không có tường ẩn (One Stroke). Nút VẼ ĐƯỜNG ĐI giữ
-	# nguyên kích thước gốc (SHRINK) để icon không bị kéo giãn theo bề ngang còn lại.
-	var hide_wall: bool = TOOL_HIDE_WALL_MODES.has(id)
-	tool_wall_btn.visible = not hide_wall
-	# Mỗi bố cục tự quyết định (dọc: ghim nút VẼ ĐƯỜNG khi ẩn nút GHI NHỚ · ngang: action_bar tự dàn)
-	_layout_call("configure_tool_path_button", [tool_path_btn, hide_wall])
-	_apply_tool_textures_for_mode(id)
-
-
-## Art 2 nút công cụ theo chế độ (mockup): One Stroke có nút VẼ ĐƯỜNG ĐI bè ngang 680px,
-## Wall Builder có nút GỬI BÀI xanh ở vị trí nút GHI NHỚ.
-func _apply_tool_textures_for_mode(mode_id: String) -> void:
-	if tool_controller == null:
-		return
-	if _layout_is_landscape():
-		match mode_id:
-			"one_stroke":
-				tool_controller.set_mode_textures(TOOL_LAND_PATH_ACTIVE, TOOL_LAND_PATH_PRESSED,
-					TOOL_LAND_PATH_ACTIVE, null, null, null)
-			"wall_builder":
-				tool_controller.set_mode_textures(TOOL_LAND_PATH_ACTIVE, TOOL_LAND_PATH_PRESSED,
-					TOOL_LAND_PATH_INACTIVE, TOOL_TEX_SUBMIT, TOOL_TEX_SUBMIT_PRESSED, TOOL_TEX_SUBMIT)
-			_:
-				tool_controller.set_mode_textures(TOOL_LAND_PATH_ACTIVE, TOOL_LAND_PATH_PRESSED,
-					TOOL_LAND_PATH_INACTIVE, TOOL_LAND_WALL_NORMAL, TOOL_LAND_WALL_PRESSED, TOOL_LAND_WALL_NORMAL)
-		return
-	match mode_id:
-		"one_stroke":
-			tool_controller.set_mode_textures(TOOL_TEX_STROKE_PATH, TOOL_TEX_STROKE_PATH,
-				TOOL_TEX_STROKE_PATH, null, null, null)
-		"wall_builder":
-			tool_controller.set_mode_textures(null, null, null,
-				TOOL_TEX_SUBMIT, TOOL_TEX_SUBMIT_PRESSED, TOOL_TEX_SUBMIT)
-		_:
-			tool_controller.set_mode_textures(null, null, null, null, null, null)
-
-
-func _set_tool_label(btn: NinePatchButton, title_key: String, sub_key: String) -> void:
-	if btn == null:
-		return
-	var title := btn.get_node_or_null("Label") as Label
-	if title != null:
-		title.text = title_key
-	var sub := btn.get_node_or_null("Sub") as Label
-	if sub != null:
-		sub.text = sub_key
+## Nhãn/art của 2 nút công cụ (VẼ ĐƯỜNG · GHI NHỚ) đã BỎ cùng nút (2026-09-26): bàn cờ tự nhận
+## cả 2 thao tác (kéo nhân vật đi đường · kéo nối 2 Anchor để đánh dấu tường), GỬI BÀI của Wall
+## Builder nằm ở nút `Submit` trên thanh hành động (xem `_apply_mode_buttons` / `_wire_action_bar`).
 
 
 ## Thay khung Information bằng HUD của chế độ đang chơi rồi gắn lại cho UIController /
@@ -589,11 +499,11 @@ func _bind_hud_nodes() -> void:
 	var hud_content := hud.get_node_or_null("Content") as Control
 	if hud_content != null:
 		hud_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	tool_path_btn = hud.tool_path_btn()
-	tool_wall_btn = hud.tool_wall_btn()
+	restart_btn = hud.restart_btn()
+	submit_btn = hud.submit_btn()
 	undo_btn = hud.undo_btn()
 	hint_btn = hud.hint_btn()
-	replay_btn = hud.replay_btn()
+	#replay_btn = hud.replay_btn()
 	# Bản NGANG: nút dự phòng trong khung Hướng dẫn (khi khung quá nhỏ để nhúng) mở popup
 	var game_hud := hud as GameHUD
 	if game_hud != null and game_controller != null \
@@ -603,7 +513,7 @@ func _bind_hud_nodes() -> void:
 	# nếu không `hint_guide` sẽ trỏ vào node đã bị free khi đổi chế độ.
 	hint_guide = ui("HintGuide") as HintGuide
 	_wire_action_bar()
-	_apply_tool_labels_for_mode(_mode_id)
+	_apply_mode_buttons(_mode_id)
 	hud.set_landscape(_layout_is_landscape())
 	if ui_controller != null:
 		ui_controller.set_hud(hud)
@@ -620,21 +530,17 @@ func _wire_action_bar() -> void:
 		if btn != null and not btn.has_meta("bounce_attached"):
 			btn.set_meta("bounce_attached", true)
 			UIAnim.attach_press_bounce(btn)
-	if tool_controller != null:
-		var ctrl := tool_controller
-		if tool_path_btn != null and not tool_path_btn.pressed.is_connected(ctrl._on_tool_pressed):
-			tool_path_btn.pressed.connect(ctrl._on_tool_pressed.bind("path"))
-		if tool_wall_btn != null and not tool_wall_btn.pressed.is_connected(ctrl._on_wall_pressed):
-			tool_wall_btn.pressed.connect(ctrl._on_wall_pressed.bind("wall"))
-		ctrl.tool_path_btn = tool_path_btn
-		ctrl.tool_wall_btn = tool_wall_btn
 	if game_controller != null:
+		if restart_btn != null and not restart_btn.pressed.is_connected(_on_restart_pressed):
+			restart_btn.pressed.connect(_on_restart_pressed)
+		if submit_btn != null and not submit_btn.pressed.is_connected(game_controller.submit_build):
+			submit_btn.pressed.connect(game_controller.submit_build)
 		if undo_btn != null and not undo_btn.pressed.is_connected(game_controller.undo):
 			undo_btn.pressed.connect(game_controller.undo)
 		if hint_btn != null and not hint_btn.pressed.is_connected(game_controller.hint):
 			hint_btn.pressed.connect(game_controller.hint)
-		if replay_btn != null and not replay_btn.pressed.is_connected(game_controller.restart_run):
-			replay_btn.pressed.connect(game_controller.restart_run)
+		#if replay_btn != null and not replay_btn.pressed.is_connected(game_controller.restart_run):
+			#replay_btn.pressed.connect(game_controller.restart_run)
 	if ui_controller != null:
 		ui_controller.undo_button = undo_btn
-		ui_controller.replay_button = replay_btn
+		#ui_controller.replay_button = replay_btn

@@ -8,65 +8,81 @@
 [ext_resource type="Texture2D" uid="uid://ceu3tnfq77j3j" path="res://assets/images/level_selector/stamp_done_circle.svg" id="6_23rcg"]
 [ext_resource type="Texture2D" uid="uid://blikk0nkl6dow" path="res://assets/images/level_selector/icon_lock_locked.svg" id="6_fwgxh"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="6_ihwf0"]
+[ext_resource type="Texture2D" uid="uid://c7jjffnt56fk4" path="res://assets/images/level_selector/level_card_seperator.svg" id="8_jnyni"]
 [ext_resource type="LabelSettings" uid="uid://ceqbsoy3ipfjh" path="res://resources/settings/text/text_stamp.tres" id="8_xwruh"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="9_theme_text"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihwf0"]
-content_margin_left = 35.0
-content_margin_top = 25.0
-content_margin_right = 22.0
-content_margin_bottom = 24.0
-texture = ExtResource("2_23rcg")
-texture_margin_left = 35.0
-texture_margin_top = 25.0
-texture_margin_right = 22.0
-texture_margin_bottom = 24.0
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jnyni"]
-content_margin_left = 35.0
+content_margin_left = 52.0
 content_margin_top = 25.0
-content_margin_right = 22.0
-content_margin_bottom = 24.0
-texture = ExtResource("5_press")
-texture_margin_left = 35.0
+content_margin_right = 51.0
+content_margin_bottom = 86.0
+texture = ExtResource("2_23rcg")
+texture_margin_left = 52.0
 texture_margin_top = 25.0
-texture_margin_right = 22.0
-texture_margin_bottom = 24.0
+texture_margin_right = 51.0
+texture_margin_bottom = 86.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0qp7t"]
-content_margin_left = 35.0
+content_margin_left = 52.0
 content_margin_top = 25.0
-content_margin_right = 22.0
-content_margin_bottom = 24.0
-texture = ExtResource("2_23rcg")
-texture_margin_left = 35.0
+content_margin_right = 51.0
+content_margin_bottom = 86.0
+texture = ExtResource("5_press")
+texture_margin_left = 52.0
 texture_margin_top = 25.0
-texture_margin_right = 22.0
-texture_margin_bottom = 24.0
+texture_margin_right = 51.0
+texture_margin_bottom = 86.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4wve2"]
-content_margin_left = 35.0
+content_margin_left = 52.0
 content_margin_top = 25.0
-content_margin_right = 22.0
-content_margin_bottom = 24.0
-texture = ExtResource("3_fwgxh")
-texture_margin_left = 35.0
+content_margin_right = 51.0
+content_margin_bottom = 86.0
+texture = ExtResource("2_23rcg")
+texture_margin_left = 52.0
 texture_margin_top = 25.0
-texture_margin_right = 22.0
-texture_margin_bottom = 24.0
+texture_margin_right = 51.0
+texture_margin_bottom = 86.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
-[node name="Level" type="Control" unique_id=212139280]
-custom_minimum_size = Vector2(90, 110)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mx382"]
+content_margin_left = 52.0
+content_margin_top = 25.0
+content_margin_right = 51.0
+content_margin_bottom = 86.0
+texture = ExtResource("3_fwgxh")
+texture_margin_left = 52.0
+texture_margin_top = 25.0
+texture_margin_right = 51.0
+texture_margin_bottom = 86.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Level" type="Control" unique_id=212139280 node_paths=PackedStringArray("panel_btn", "level_lbl", "lock_icon", "stamp_done", "star1", "star2", "star3")]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.60700005
+anchor_bottom = 0.45800003
+offset_right = 0.2199707
+offset_bottom = -0.3600464
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("9_theme_text")
 script = ExtResource("1_066fa")
+panel_btn = NodePath("Panel")
+level_lbl = NodePath("Panel/Content/Level")
+lock_icon = NodePath("Panel/Lock")
+stamp_done = NodePath("Stamp")
+star1 = NodePath("Panel/Content/Rating/RatingStar1")
+star2 = NodePath("Panel/Content/Rating/RatingStar2")
+star3 = NodePath("Panel/Content/Rating/RatingStar3")
 
 [node name="Panel" type="Button" parent="." unique_id=976011487]
 layout_mode = 1
@@ -75,147 +91,138 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_ihwf0")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_jnyni")
-theme_override_styles/hover = SubResource("StyleBoxTexture_0qp7t")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_4wve2")
+theme_override_styles/normal = SubResource("StyleBoxTexture_jnyni")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0qp7t")
+theme_override_styles/hover = SubResource("StyleBoxTexture_4wve2")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_mx382")
 script = ExtResource("6_ihwf0")
 texture_normal = ExtResource("2_23rcg")
 texture_hover = ExtResource("2_23rcg")
 texture_pressed = ExtResource("5_press")
 texture_disabled = ExtResource("3_fwgxh")
-patch_margin_left = 35.0
+patch_margin_left = 52.0
 patch_margin_top = 25.0
-patch_margin_right = 22.0
-patch_margin_bottom = 24.0
+patch_margin_right = 51.0
+patch_margin_bottom = 86.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
-metadata/_edit_use_anchors_ = true
-
-[node name="Rating" type="Control" parent="Panel" unique_id=580549950]
-layout_mode = 1
-anchor_left = 0.16350378
-anchor_top = 0.67221737
-anchor_right = 0.8347556
-anchor_bottom = 0.8867827
-offset_left = 0.19999695
-offset_top = -0.44000244
-offset_right = -0.26004028
-offset_bottom = 0.2828369
-metadata/_edit_use_anchors_ = true
-
-[node name="RatingStar1" type="TextureRect" parent="Panel/Rating" unique_id=2015601869]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.43300003
-anchor_right = 0.291
-anchor_bottom = 1.0
-offset_top = 0.006767273
-offset_right = 0.1499939
-offset_bottom = -0.122924805
-size_flags_horizontal = 3
-size_flags_vertical = 8
-size_flags_stretch_ratio = 0.3
-texture = ExtResource("3_h4clh")
-expand_mode = 2
-stretch_mode = 5
-metadata/_edit_use_anchors_ = true
-
-[node name="RatingStar2" type="TextureRect" parent="Panel/Rating" unique_id=1688868453]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.25584355
-anchor_top = 0.024957513
-anchor_right = 0.7441565
-anchor_bottom = 0.97504246
-offset_left = -0.111465454
-offset_right = 0.111450195
-size_flags_horizontal = 3
-size_flags_vertical = 0
-size_flags_stretch_ratio = 0.4
-texture = ExtResource("3_h4clh")
-expand_mode = 2
-stretch_mode = 5
-metadata/_edit_use_anchors_ = true
-
-[node name="RatingStar3" type="TextureRect" parent="Panel/Rating" unique_id=1373259721]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.70600003
-anchor_top = 0.42700002
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -0.1000061
-offset_top = 0.087509155
-offset_bottom = -0.122924805
-size_flags_horizontal = 3
-size_flags_vertical = 8
-size_flags_stretch_ratio = 0.3
-texture = ExtResource("3_h4clh")
-expand_mode = 2
-stretch_mode = 5
-metadata/_edit_use_anchors_ = true
-
-[node name="Level" type="Label" parent="Panel" unique_id=2125002911]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.24707828
-anchor_top = 0.37433863
-anchor_right = 0.7260724
-anchor_bottom = 0.7191272
-offset_right = 0.0544891
-offset_bottom = 0.0749893
-theme_type_variation = &"LevelCardNumber"
-theme_override_colors/font_color = Color(0.13333334, 0.29803923, 0.42745098, 1)
-text = "1-1"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-maximum_font_size = 120
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Panel" unique_id=948542727]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.31506413
-anchor_top = 0.19061865
-anchor_right = 0.6740948
-anchor_bottom = 0.36335984
-offset_right = 0.0544891
-offset_bottom = 0.0749893
-theme_type_variation = &"LevelCardPrefix"
-text = "STR_LEVEL_PREFIX"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-maximum_font_size = 120
-metadata/_edit_use_anchors_ = true
 
 [node name="Lock" type="TextureRect" parent="Panel" unique_id=1506707115]
 visible = false
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.39100003
-anchor_top = 0.5
-anchor_right = 0.58500004
-anchor_bottom = 0.66400003
-offset_left = -0.015007
-offset_top = -0.0540771
-offset_right = -0.0250015
-offset_bottom = -0.0340881
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 142.0
+offset_top = 202.96951
+offset_right = -142.0
+offset_bottom = -202.96951
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("6_fwgxh")
+
+[node name="Content" type="VBoxContainer" parent="Panel" unique_id=996526487]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16786586
+anchor_top = 0.11100001
+anchor_right = 0.887
+anchor_bottom = 0.887
+offset_left = -0.060001373
+offset_top = 0.029556274
+offset_right = 0.0920105
+offset_bottom = 0.13442993
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/Content" unique_id=948542727]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+theme_type_variation = &"LevelCardPrefix"
+theme_override_font_sizes/font_size = 18
+text = "STR_LEVEL_PREFIX"
+horizontal_alignment = 1
+vertical_alignment = 1
+maximum_font_size = 120
+metadata/_edit_use_anchors_ = true
+
+[node name="Seperator" type="NinePatchRect" parent="Panel/Content" unique_id=591195264]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.03
+texture = ExtResource("8_jnyni")
+patch_margin_left = 39
+patch_margin_right = 44
+
+[node name="Level" type="Label" parent="Panel/Content" unique_id=2125002911]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.3
+theme_type_variation = &"LevelCardNumber"
+theme_override_colors/font_color = Color(0.13333334, 0.29803923, 0.42745098, 1)
+theme_override_font_sizes/font_size = 48
+text = "1-1"
+horizontal_alignment = 1
+vertical_alignment = 1
+maximum_font_size = 120
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer" type="Control" parent="Panel/Content" unique_id=1240678687]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="Rating" type="HBoxContainer" parent="Panel/Content" unique_id=614632757]
+layout_mode = 2
+size_flags_vertical = 10
+metadata/_edit_use_anchors_ = true
+
+[node name="RatingStar1" type="TextureRect" parent="Panel/Content/Rating" unique_id=2015601869]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 9
+size_flags_stretch_ratio = 0.3
+texture = ExtResource("3_h4clh")
+expand_mode = 5
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="RatingStar2" type="TextureRect" parent="Panel/Content/Rating" unique_id=1666103537]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 9
+size_flags_stretch_ratio = 0.4
+texture = ExtResource("3_h4clh")
+expand_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="RatingStar3" type="TextureRect" parent="Panel/Content/Rating" unique_id=1950614852]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 9
+size_flags_stretch_ratio = 0.3
+texture = ExtResource("3_h4clh")
+expand_mode = 5
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="Stamp" type="TextureRect" parent="." unique_id=1370524902]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.6462167
-anchor_top = 0.04222591
-anchor_right = 0.9713379
-anchor_bottom = 0.19982298
-offset_left = 0.0429993
+anchor_left = 0.539805
+anchor_top = -0.0003614323
+anchor_right = 0.9712083
+anchor_bottom = 0.27228224
+offset_left = -0.056030273
 offset_top = 0.152163
-offset_right = -1.5
-offset_bottom = -0.0597801
+offset_right = 0.11569214
+offset_bottom = 0.015991211
 texture = ExtResource("6_23rcg")
 metadata/_edit_use_anchors_ = true
 

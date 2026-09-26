@@ -124,6 +124,34 @@
 #       ảnh sạch chữ) · `embed_sumpath_p2.png` (9 hàng) · `embed_small_sumpath_p2.png` · `popup_dungeon_p1.png` ·
 #       `popup_dungeon_p3.png` · `popup_minesweeper_p1.png` (chữ trên ảnh, không badge/không khối ĐIỂM).
 
+# [x] VÒNG 15 (2026-09-26) — THANH HÀNH ĐỘNG MỚI + GIỚI HẠN LƯỢT UNDO/HINT (theo yêu cầu user: “xóa Button Tool
+#     và Button Wall đi, đưa Reset button từ Status Bar xuống Action bar… tôi đã tạo ra thêm PanelLimit để hiển
+#     thị số lần limit của Hint/Undo”):
+#     · BỎ 2 nút công cụ VẼ ĐƯỜNG/GHI NHỚ khỏi CẢ 2 scene action bar (dọc: `Row/Tool`+`Row/Wall`, ngang: `Tool`+
+#       `SubRow/Wall`) + ext/sub-resource đi kèm. Bàn cờ vốn tự nhận cả 2 thao tác (`Board.tool_mode` không chi
+#       phối input) nên không mất tính năng nào; `ToolController` gọn lại chỉ còn giữ trạng thái + signal; gỡ
+#       `TOOL_*`, `_apply_tool_labels_for_mode`, `_apply_tool_textures_for_mode`, `_set_tool_label`,
+#       `_on_secondary_tool_pressed` khỏi `GameScene` + `configure_tool_path_button()` khỏi 2 script layout.
+#     · NÚT CHƠI LẠI (Restart) DỜI từ thanh trạng thái xuống THANH HÀNH ĐỘNG — dọc: nút `Restart` user đã tạo
+#       trong `Row` (art `btn_restart_*`); NGANG: thêm nút `Restart` mới vào `SubRow` cùng art. Xoá node `Restart`
+#       khỏi 2 layout (`scenes/layout/{portrait,landscape}/game.tscn`) + binding `restart_btn` khỏi
+#       `GameSceneLayout`/`tools/ui/layout_exports.py`; `GameScene` lấy nút từ HUD (`restart_btn`).
+#     · NÚT GỬI BÀI (`Submit`) của Wall Builder: dùng nút `Submit` user đã tạo (dọc) + thêm bản NGANG vào `SubRow`
+#       (art `btn_submit_*` + 4 stylebox 9-patch). `GameScene._apply_mode_buttons()` chỉ bật nút khi `wall_builder`.
+#       (Trước đây GỬI BÀI nằm ở nút công cụ thứ 2 — nay tách nút riêng.)
+#     · GIỚI HẠN LƯỢT HINT/UNDO: `GameController.@export undo_limit/hint_limit := 3` (0 = không giới hạn → ẩn
+#       badge) + bộ đếm `undo_left/hint_left` CẤP LẠI MỖI MÀN/TẦNG (`_start_floor`); hết lượt ⇒ `undo()/hint()`
+#       từ chối + nút bị KHOÁ; lượt chỉ trừ khi hành động thành công. Dòng dữ liệu: `_update_hud()` →
+#       `ui_controller.set_run_info()` → `UIController.update_hud(ctx)` → `GameHUD._sync_limits(ctx)` →
+#       `ActionBar.update_limits()` (badge `PanelLimit` = `NinePatchStateTexture` tự sync trạng thái nút cha).
+#     · TEST: `test_controllers_and_signals` thêm check status-bar hết Restart + nút trong action bar + badge
+#       PanelLimit + hết lượt thì KHOÁ nút/không trừ thêm; cập nhật `test_hud_modes`/`test_wall_builder`/
+#       `test_one_stroke`/`test_fog_of_war` (bỏ tham chiếu `tool_path_btn`/`tool_wall_btn` — 4 test này vốn đã
+#       FAIL sẵn vài check do đường dẫn node HUD cũ, đã đối chiếu HEAD trước khi sửa). Full suite 13/13 PASS.
+#     · Ảnh kiểm chứng (ngoài repo, `D:\godot-phone-game\tmp_shot_inkmaze\`): `hud_portrait_play.png` (badge 3·3) ·
+#       `hud_portrait_after_hint.png` (badge 3·2 sau 1 gợi ý) · `hud_portrait_wall_builder.png` (nút GỬI BÀI ✓) ·
+#       `hud_landscape_dungeon.png` · `hud_landscape_after_actions.png` · `hud_landscape_wall_builder.png`.
+
 # ----------------------------------------------------------------------------
 # VÒNG SỬA 13 (2026-09-19): MÀN CHƠI — CONTROLLERS + BOARD DÙNG CHUNG (BỎ BỘ ĐÔI THEO HƯỚNG)
 # ----------------------------------------------------------------------------

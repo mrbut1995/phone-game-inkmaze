@@ -7,17 +7,14 @@
 [ext_resource type="Texture2D" uid="uid://cmuyo2q1apkvm" path="res://assets/images-landscape/game/btn_header_pause_pressed.svg" id="5_pause_p"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="6_sub_lbl"]
 [ext_resource type="LabelSettings" uid="uid://bonmr0e8ujeq3" path="res://resources/settings/text/text_game_title.tres" id="7_bhx41"]
-[ext_resource type="Texture2D" uid="uid://b8qlxe2lu0c2u" path="res://assets/images-landscape/game/btn_header_restart_normal.svg" id="10_rest_n"]
-[ext_resource type="Texture2D" uid="uid://8fek80g30ew0" path="res://assets/images-landscape/game/btn_header_restart_pressed.svg" id="11_rest_p"]
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="12_landhud"]
 
-[node name="Landscape" unique_id=949375316 node_paths=PackedStringArray("status_bar", "hud_slot", "board_holder", "pause_btn", "restart_btn", "level_label", "subtitle_label") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=949375316 node_paths=PackedStringArray("status_bar", "hud_slot", "board_holder", "pause_btn", "level_label", "subtitle_label") instance=ExtResource("1_parent")]
 script = ExtResource("2_mqnje")
 status_bar = NodePath("Content/Side/Status")
 hud_slot = NodePath("Content/Side/Information")
 board_holder = NodePath("Content/BoardSlot")
 pause_btn = NodePath("Content/Side/Status/Bar/Pause")
-restart_btn = NodePath("Content/Side/Status/Bar/Restart")
 level_label = NodePath("Content/Side/Status/Bar/Title/LevelLabel")
 subtitle_label = NodePath("Content/Side/Status/Bar/Title/Subtitle")
 
@@ -102,14 +99,6 @@ theme_override_font_sizes/font_size = 34
 text = "MÀN 01"
 label_settings = ExtResource("7_bhx41")
 horizontal_alignment = 1
-
-[node name="Restart" type="TextureButton" parent="Content/Side/Status/Bar" index="2" unique_id=191814284]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-texture_normal = ExtResource("10_rest_n")
-texture_pressed = ExtResource("11_rest_p")
-stretch_mode = 0
 
 [node name="Information" parent="Content/Side" index="1" unique_id=1383101299 instance=ExtResource("12_landhud")]
 custom_minimum_size = Vector2(0, 380)

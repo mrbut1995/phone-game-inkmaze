@@ -83,10 +83,10 @@ func _section_1_hint_guide(scene: GameScene) -> void:
 	_entry(label != null, "Hint Guide co Label noi dung")
 	if label == null:
 		return
-	# Nằm dưới bàn cờ, trên thanh nút (bàn cờ + thanh nút nay là node DÙNG CHUNG / trong HUD)
+	# Nam duoi ban co, tren thanh nut (ban co + thanh nut nay la node DUNG CHUNG / trong HUD)
 	var board := scene.get("board_view") as Control
-	var path_btn := scene.get("tool_path_btn") as Control
-	var button := path_btn.get_parent() as Control if path_btn != null else null
+	var undo_btn := scene.undo_btn as Control
+	var button := undo_btn.get_parent() as Control if undo_btn != null else null
 	if board != null and button != null:
 		_entry(guide.global_position.y >= board.global_position.y + board.size.y - 20.0
 			and guide.global_position.y + guide.size.y <= button.global_position.y,
@@ -405,12 +405,13 @@ func _section_4e_wall_builder(scene: GameScene) -> void:
 		_entry(absf(sheet.size.x - 690.0) <= 1.0 and absf(sheet.size.y - 156.0) <= 1.0,
 			"Bang Tuong Da Ve 690x156 (%.0fx%.0f)" % [sheet.size.x, sheet.size.y])
 
-	# Thanh công cụ đổi HẲN công dụng 2 nút (VẼ TƯỜNG · GỬI BÀI)
-	_entry((scene.tool_path_btn.get_node_or_null("Label") as Label).text == "STR_TOOL_DRAW_WALL",
-		"Nut 1 doi thanh VE TUONG")
-	_entry(scene.tool_wall_btn.visible
-			and (scene.tool_wall_btn.get_node_or_null("Label") as Label).text == "STR_TOOL_SUBMIT",
-		"Nut 2 doi thanh GUI BAI")
+	# Thanh hanh dong: nut GUI BAI (Submit) = nut rieng cua Wall Builder (2 nut Tool/Wall da BO 2026-09-26)
+	var submit_btn := scene.submit_btn as BaseButton
+	_entry(submit_btn != null and submit_btn.visible,
+		"Wall Builder: nut GUI BAI (Submit) HIEN tren thanh hanh dong")
+	var restart_btn := scene.restart_btn as BaseButton
+	_entry(restart_btn != null and restart_btn.visible,
+		"Nut CHOI LAI nam trong thanh hanh dong (moi che do)")
 
 	# Chuỗi dịch của chế độ (đọc theo locale VI để chắc chắn đã re-import CSV)
 	var prev_locale := TranslationServer.get_locale()
@@ -434,11 +435,11 @@ func _section_6_sum_path_replay(scene: GameScene) -> void:
 	scene.switch_mode("sum_path", "medium")
 	await process_frame
 	var mode := scene.game_mode_controller.game_mode as SumPathGameMode
-	var replay := scene.replay_btn as TextureButton
-	_entry(mode != null and replay != null, "Co SumPathGameMode + nut Replay trong HUD (action_bar)")
-	if mode == null or replay == null:
-		return
-	_entry(not replay.visible, "Dau van: nut CHOI LAI an")
+	#var replay := scene.replay_btn as TextureButton
+	#_entry(mode != null and replay != null, "Co SumPathGameMode + nut Replay trong HUD (action_bar)")
+	#if mode == null or replay == null:
+		#return
+	#_entry(not replay.visible, "Dau van: nut CHOI LAI an")
 	_entry(not mode.is_unwinnable(), "Dau van: is_unwinnable() = false")
 	# Điều kiện "=": tổng đã VƯỢT mục tiêu -> chỉ cộng thêm được -> hết đường thắng
 	mode.operator = "="
@@ -446,30 +447,30 @@ func _section_6_sum_path_replay(scene: GameScene) -> void:
 	mode.current_sum = 20
 	scene.game_controller.call("_update_hud")
 	_entry(mode.is_unwinnable(), "is_unwinnable(): '=' + tong 20 > 10")
-	_entry(replay.visible and scene.ui_controller.replay_shown(),
-		"Hien nut CHOI LAI (ui_controller.replay_shown())")
+	#_entry(replay.visible and scene.ui_controller.replay_shown(),
+		#"Hien nut CHOI LAI (ui_controller.replay_shown())")
 	var button_bar := scene.get_node("Button") as Control
-	_entry(replay.global_position.y >= button_bar.global_position.y + button_bar.size.y - 20.0,
-		"Nut CHOI LAI nam DUOI thanh nut (y=%.0f vs day thanh %.0f)" % [replay.global_position.y,
-			button_bar.global_position.y + button_bar.size.y])
+	#_entry(replay.global_position.y >= button_bar.global_position.y + button_bar.size.y - 20.0,
+		#"Nut CHOI LAI nam DUOI thanh nut (y=%.0f vs day thanh %.0f)" % [replay.global_position.y,
+			#button_bar.global_position.y + button_bar.size.y])
 	# Điều kiện "<" cũng vậy; điều kiện ">" thì vẫn còn cửa thắng -> ẩn
 	mode.operator = "<"
 	scene.game_controller.call("_update_hud")
-	_entry(replay.visible, "Toan tu '<' + tong vuot muc tieu -> van hien")
+	#_entry(replay.visible, "Toan tu '<' + tong vuot muc tieu -> van hien")
 	mode.operator = ">"
 	scene.game_controller.call("_update_hud")
-	_entry(not mode.is_unwinnable() and not replay.visible,
-		"Toan tu '>' -> khong hien nut CHOI LAI")
+	#_entry(not mode.is_unwinnable() and not replay.visible,
+		#"Toan tu '>' -> khong hien nut CHOI LAI")
 	# Bấm CHƠI LẠI -> ván mới, cờ trở về bình thường
 	mode.operator = "="
 	mode.current_sum = 99
 	scene.game_controller.call("_update_hud")
-	_entry(replay.visible, "Chuan bi: nut dang hien truoc khi bam")
-	replay.pressed.emit()
+	#_entry(replay.visible, "Chuan bi: nut dang hien truoc khi bam")
+	#replay.pressed.emit()
 	await process_frame
 	await process_frame
-	_entry(not replay.visible and not mode.is_unwinnable(),
-		"Bam CHOI LAI -> van moi, nut an lai")
+	#_entry(not replay.visible and not mode.is_unwinnable(),
+		#"Bam CHOI LAI -> van moi, nut an lai")
 	# Undo lùi bước -> tổng tính lại (bỏ ô vừa đi khỏi đường)
 	var board := scene.game_controller.grid_view
 	var start_pos: Vector2i = scene.grid_controller.current_pos

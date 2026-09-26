@@ -85,18 +85,54 @@ func _init() -> void:
 
 	print("[SUCCESS] Settings Popup (Pause/Resume/Home) hoat dong dong bo voi TimerController!")
 
-	# 5. Kiem tra ToolController chuyen tool
-	var tool_wall_btn: NinePatchButton = game_scene.tool_wall_btn
-	tool_wall_btn.emit_signal("pressed")
-	assert(tool_ctrl.current_tool == ToolController.ToolMode.WALL, "Wall button phai chuyen tool sang WALL")
+	# 5. ToolController: đổi công cụ VẼ ĐƯỜNG ⇄ GHI NHỚ (2 nút Tool/Wall đã BỎ 2026-09-26 ⇒ gọi thẳng controller)
+	tool_ctrl.select_tool(ToolController.ToolMode.WALL)
+	assert(tool_ctrl.current_tool == ToolController.ToolMode.WALL, "select_tool(WALL) phai chuyen tool sang WALL")
 	assert(game_scene.board_view.get("tool_mode") == "wall", "Board tool_mode phai cap nhat sang wall qua signal tool_changed")
 
-	var tool_path_btn: NinePatchButton = game_scene.tool_path_btn
-	tool_path_btn.emit_signal("pressed")
-	assert(tool_ctrl.current_tool == ToolController.ToolMode.PATH, "Path button phai chuyen tool sang PATH")
+	tool_ctrl.select_tool(ToolController.ToolMode.PATH)
+	assert(tool_ctrl.current_tool == ToolController.ToolMode.PATH, "select_tool(PATH) phai chuyen tool sang PATH")
 	assert(game_scene.board_view.get("tool_mode") == "path", "Board tool_mode phai cap nhat sang path")
 
-	print("[SUCCESS] ToolController signal binding hoat dong chinh xac giua button va Board!")
+	print("[SUCCESS] ToolController signal binding hoat dong chinh xac giua controller va Board!")
+
+	# 5b. Nút CHƠI LẠI đã DỜI xuống THANH HÀNH ĐỘNG của HUD (thanh trạng thái không còn nút này)
+	var status_bar := game_scene.layout.status_bar
+	assert(status_bar != null and status_bar.find_child("Restart", true, false) == null,
+			"Thanh trang thai phai KHONG con nut Restart")
+	var restart_btn := game_scene.restart_btn as BaseButton
+	assert(restart_btn != null and restart_btn.get_parent() != null,
+			"Nut CHOI LAI phai nam trong thanh hanh dong cua HUD")
+	var submit_btn := game_scene.submit_btn as BaseButton
+	assert(submit_btn != null, "Nut GUI BAI (Submit) phai co trong thanh hanh dong")
+	assert(submit_btn.visible == false, "Nut GUI BAI AN o che do khong phai Wall Builder")
+	var undo_btn := game_scene.undo_btn
+	var hint_btn := game_scene.hint_btn
+	assert(undo_btn != null and hint_btn != null, "Thanh hanh dong phai co nut UNDO + HINT")
+	assert(undo_btn.find_child("PanelLimit", true, false) != null
+			and hint_btn.find_child("PanelLimit", true, false) != null,
+			"Moi nut UNDO/HINT phai co badge PanelLimit")
+	assert(restart_btn.pressed.is_connected(game_scene._on_restart_pressed),
+			"Nut CHOI LAI phai duoc noi toi _on_restart_pressed")
+	assert(submit_btn.pressed.is_connected(gc.submit_build),
+			"Nut GUI BAI phai duoc noi toi GameController.submit_build")
+	print("[SUCCESS] Nut CHOI LAI nam trong thanh hanh dong + 2 badge PanelLimit co mat!")
+
+	# 5c. Giới hạn lượt Hoàn tác/Gợi ý: hết lượt thì CHẶN + khoá nút
+	gc.undo_left = 0
+	gc.hint_left = 1
+	game_scene._on_undo_pressed()
+	assert(gc.undo_left == 0, "Het luot hoan tac thi bam UNDO khong tru them luot")
+	gc._update_hud()
+	assert(undo_btn.disabled == true, "Het luot -> nut UNDO bi KHOA")
+	assert(hint_btn.disabled == false, "Con luot -> nut HINT khong bi khoa")
+	var hint_left_before := gc.hint_left
+	game_scene._on_hint_pressed()
+	assert(gc.hint_left == hint_left_before - 1, "Bam HINT phai tru 1 luot")
+	gc.hint_left = 0
+	gc._update_hud()
+	assert(hint_btn.disabled == true, "Het luot -> nut HINT bi KHOA")
+	print("[SUCCESS] Gioi han luot UNDO/HINT hoat dong (het luot = khoa nut)!")
 
 	# 6. Kiem tra Player Cursor Running Animation
 	var cursor = game_scene.board_view._cursor
