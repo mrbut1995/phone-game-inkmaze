@@ -2,6 +2,13 @@
 
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="1_w6pjg"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="5_l0kg0"]
+[ext_resource type="Texture2D" uid="uid://ba05fospe3lgy" path="res://assets/images/game/btn_submit_normal.svg" id="13_8y1nw"]
+[ext_resource type="Texture2D" uid="uid://bh5dumnnf028q" path="res://assets/images/game/btn_restart_normal.svg" id="13_31yh8"]
+[ext_resource type="Texture2D" uid="uid://tqg2gg560yg5" path="res://assets/images/game/btn_submit_pressed.svg" id="14_7v77u"]
+[ext_resource type="Texture2D" uid="uid://b7gfhxvtp5tup" path="res://assets/images/game/btn_restart_pressed.svg" id="14_irvt4"]
+[ext_resource type="Texture2D" uid="uid://c22gwndl7wq03" path="res://assets/images/game/btn_submit_disabled.svg" id="15_kn0bs"]
+[ext_resource type="Texture2D" uid="uid://spyw1sa7uxc5" path="res://assets/images/game/btn_restart_disabled.svg" id="15_oj83g"]
+[ext_resource type="Texture2D" uid="uid://comsw702ysh8j" path="res://assets/images/game/btn_restart_focus.svg" id="16_5kyg3"]
 [ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="bar_bulbicon"]
 [ext_resource type="Script" uid="uid://bt8f7hl74mar" path="res://scripts/nodes/game/hint_guide.gd" id="bar_hintguide"]
 [ext_resource type="Texture2D" uid="uid://d3xd5wqhlank8" path="res://assets/images/game/panel_hint_guide.svg" id="bar_hintpanel"]
@@ -20,7 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://cakuvp3hoy31u" path="res://assets/images/game/btn_tool_wall_inactive.svg" id="bar_wall_n"]
 [ext_resource type="Texture2D" uid="uid://bqu7qe1u0b70x" path="res://assets/images/game/btn_tool_wall_pressed.svg" id="bar_wall_p"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ucm8u"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fewea"]
 content_margin_left = 54.0
 content_margin_top = 17.0
 content_margin_right = 42.0
@@ -31,7 +38,7 @@ texture_margin_top = 17.0
 texture_margin_right = 42.0
 texture_margin_bottom = 19.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g1ek8"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_31yh8"]
 content_margin_left = 54.0
 content_margin_top = 17.0
 content_margin_right = 42.0
@@ -42,7 +49,7 @@ texture_margin_top = 17.0
 texture_margin_right = 42.0
 texture_margin_bottom = 19.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bj6ab"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5kyg3"]
 content_margin_left = 54.0
 content_margin_top = 17.0
 content_margin_right = 42.0
@@ -53,7 +60,7 @@ texture_margin_top = 17.0
 texture_margin_right = 42.0
 texture_margin_bottom = 19.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vsmft"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_irvt4"]
 content_margin_left = 54.0
 content_margin_top = 17.0
 content_margin_right = 42.0
@@ -64,7 +71,7 @@ texture_margin_top = 17.0
 texture_margin_right = 42.0
 texture_margin_bottom = 19.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vvx5a"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oj83g"]
 content_margin_left = 54.0
 content_margin_top = 17.0
 content_margin_right = 42.0
@@ -75,7 +82,7 @@ texture_margin_top = 17.0
 texture_margin_right = 42.0
 texture_margin_bottom = 19.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_48wkn"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ab78p"]
 content_margin_left = 61.0
 content_margin_top = 19.0
 content_margin_right = 47.0
@@ -86,7 +93,7 @@ texture_margin_top = 19.0
 texture_margin_right = 47.0
 texture_margin_bottom = 25.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qql67"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_65766"]
 content_margin_left = 61.0
 content_margin_top = 19.0
 content_margin_right = 47.0
@@ -97,7 +104,7 @@ texture_margin_top = 19.0
 texture_margin_right = 47.0
 texture_margin_bottom = 25.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qys6v"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8y1nw"]
 content_margin_left = 61.0
 content_margin_top = 19.0
 content_margin_right = 47.0
@@ -108,7 +115,7 @@ texture_margin_top = 19.0
 texture_margin_right = 47.0
 texture_margin_bottom = 25.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_scfq6"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7v77u"]
 content_margin_left = 61.0
 content_margin_top = 19.0
 content_margin_right = 47.0
@@ -119,7 +126,7 @@ texture_margin_top = 19.0
 texture_margin_right = 47.0
 texture_margin_bottom = 25.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rjmho"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kn0bs"]
 content_margin_left = 61.0
 content_margin_top = 19.0
 content_margin_right = 47.0
@@ -129,6 +136,50 @@ texture_margin_left = 61.0
 texture_margin_top = 19.0
 texture_margin_right = 47.0
 texture_margin_bottom = 25.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vjyni"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("13_8y1nw")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_trajn"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("14_7v77u")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kfsk0"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("13_8y1nw")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vvy6r"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("15_kn0bs")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
 
 [node name="ActionBar" type="VBoxContainer" unique_id=647431502]
 anchors_preset = -1
@@ -181,19 +232,20 @@ vertical_alignment = 1
 
 [node name="Row" type="HBoxContainer" parent="." unique_id=1921036029]
 layout_mode = 2
-theme_override_constants/separation = 5
+theme_override_constants/separation = 4
 alignment = 1
 
 [node name="Tool" type="Button" parent="Row" unique_id=455131590]
+visible = false
 custom_minimum_size = Vector2(187, 77.5)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_styles/normal = SubResource("StyleBoxTexture_ucm8u")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_g1ek8")
-theme_override_styles/hover = SubResource("StyleBoxTexture_bj6ab")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_vsmft")
-theme_override_styles/focus = SubResource("StyleBoxTexture_vvx5a")
+theme_override_styles/normal = SubResource("StyleBoxTexture_fewea")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_31yh8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5kyg3")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_irvt4")
+theme_override_styles/focus = SubResource("StyleBoxTexture_oj83g")
 script = ExtResource("5_l0kg0")
 texture_normal = ExtResource("bar_tool_n")
 texture_hover = ExtResource("bar_tool_n")
@@ -247,15 +299,16 @@ maximum_font_size = 30
 metadata/_edit_use_anchors_ = true
 
 [node name="Wall" type="Button" parent="Row" unique_id=1602934804]
+visible = false
 custom_minimum_size = Vector2(187, 77.5)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_styles/normal = SubResource("StyleBoxTexture_48wkn")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_qql67")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qys6v")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_scfq6")
-theme_override_styles/focus = SubResource("StyleBoxTexture_rjmho")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ab78p")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_65766")
+theme_override_styles/hover = SubResource("StyleBoxTexture_8y1nw")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_7v77u")
+theme_override_styles/focus = SubResource("StyleBoxTexture_kn0bs")
 script = ExtResource("5_l0kg0")
 texture_normal = ExtResource("bar_wall_n")
 texture_hover = ExtResource("bar_wall_n")
@@ -311,9 +364,38 @@ resize_font_to_fit = true
 maximum_font_size = 30
 metadata/_edit_use_anchors_ = true
 
+[node name="Submit" type="Button" parent="Row" unique_id=832790697]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "HINT"
+theme_override_styles/normal = SubResource("StyleBoxTexture_vjyni")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_trajn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_kfsk0")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_vvy6r")
+script = ExtResource("5_l0kg0")
+texture_normal = ExtResource("13_8y1nw")
+texture_hover = ExtResource("13_8y1nw")
+texture_pressed = ExtResource("14_7v77u")
+texture_disabled = ExtResource("15_kn0bs")
+patch_margin_left = 61.0
+patch_margin_top = 18.0
+patch_margin_right = 30.0
+patch_margin_bottom = 20.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+
+[node name="Restart" type="TextureButton" parent="Row" unique_id=1496407431]
+layout_mode = 2
+size_flags_horizontal = 12
+tooltip_text = "UNDO"
+texture_normal = ExtResource("13_31yh8")
+texture_pressed = ExtResource("14_irvt4")
+texture_hover = ExtResource("13_31yh8")
+texture_disabled = ExtResource("15_oj83g")
+texture_focused = ExtResource("16_5kyg3")
+
 [node name="Undo" type="TextureButton" parent="Row" unique_id=1686832729]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 12
 size_flags_vertical = 4
 tooltip_text = "UNDO"
 texture_normal = ExtResource("bar_undo_n")
@@ -322,7 +404,7 @@ texture_disabled = ExtResource("bar_undo_d")
 
 [node name="Hint" type="TextureButton" parent="Row" unique_id=801132198]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 12
 size_flags_vertical = 4
 tooltip_text = "HINT"
 texture_normal = ExtResource("bar_hint_n")

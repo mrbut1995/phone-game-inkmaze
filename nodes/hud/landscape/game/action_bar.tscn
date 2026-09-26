@@ -138,6 +138,7 @@ mouse_filter = 2
 script = ExtResource("bar_script")
 
 [node name="Tool" type="Button" parent="." unique_id=1185596431]
+visible = false
 custom_minimum_size = Vector2(405, 107.5)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_334xv")
@@ -186,8 +187,10 @@ vertical_alignment = 1
 [node name="SubRow" type="HBoxContainer" parent="." unique_id=1864078791]
 layout_mode = 2
 theme_override_constants/separation = 10
+alignment = 1
 
 [node name="Wall" type="Button" parent="SubRow" unique_id=1125061694]
+visible = false
 custom_minimum_size = Vector2(230, 75)
 layout_mode = 2
 size_flags_horizontal = 3

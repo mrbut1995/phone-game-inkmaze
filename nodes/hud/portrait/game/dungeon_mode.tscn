@@ -5,14 +5,13 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="5_xqca6"]
 [ext_resource type="Texture2D" uid="uid://danmjg3accl5d" path="res://assets/images/game/card_steps.svg" id="10_8kny7"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="11_p7oui"]
-[ext_resource type="Texture2D" uid="uid://d2u23v5xlibqv" path="res://assets/images/game/card_time.svg" id="12_0qn3a"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="13_r5anl"]
-[ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="14_wy465"]
 [ext_resource type="Texture2D" uid="uid://d2u23v5xlibqv" path="res://assets/images/game/card_time.svg" id="15_l616p"]
 [ext_resource type="LabelSettings" uid="uid://cb662usl7mhkf" path="res://resources/settings/text/text_game_information_value.tres" id="16_hqip1"]
 
-[node name="Hud" unique_id=1383101299 instance=ExtResource("1_pt42g")]
+[node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_pt42g")]
 script = ExtResource("2_script")
+time_value_node = NodePath("")
 
 [node name="Step" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=77572978]
 layout_mode = 1
@@ -48,37 +47,7 @@ label_settings = ExtResource("11_p7oui")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=1595620832]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 125.0
-grow_vertical = 2
-texture = ExtResource("12_0qn3a")
-
-[node name="Label" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=1777410261]
-modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
-layout_mode = 0
-offset_left = 16.0
-offset_top = 10.0
-offset_right = 120.0
-offset_bottom = 23.0
-text = "STR_HUD_TIME"
-label_settings = ExtResource("13_r5anl")
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1991474715]
-modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
-layout_mode = 0
-offset_left = 31.0
-offset_top = 27.0
-offset_right = 120.0
-offset_bottom = 60.0
-text = "0:00"
-label_settings = ExtResource("14_wy465")
-vertical_alignment = 1
-
-[node name="Floor" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="2" unique_id=94590017]
+[node name="Floor" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=94590017]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0

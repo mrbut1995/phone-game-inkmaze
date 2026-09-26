@@ -2,11 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://4bgj8itq83wv" path="res://scripts/nodes/hud/game/sum_path_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" uid="uid://d2u23v5xlibqv" path="res://assets/images/game/card_time.svg" id="4_1xeky"]
 [ext_resource type="Texture2D" uid="uid://ciljsovgfkwkx" path="res://assets/images/game/card_sum_balance.svg" id="4_sheet"]
 [ext_resource type="Texture2D" uid="uid://dq6rl1smpx2v4" path="res://assets/images/game/bar_sum_fill.svg" id="5_fill"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="5_mw13q"]
-[ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="6_42tkx"]
 [ext_resource type="Texture2D" uid="uid://c0iv6cyoi50be" path="res://assets/images/game/bar_sum_ticks.svg" id="6_ticks"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="7_theme"]
 [ext_resource type="Texture2D" uid="uid://bxsmxk7ttkpmy" path="res://assets/images/game/card_sum_block_current.svg" id="8_block_current"]
@@ -15,41 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://bnk6otp0l6swg" path="res://assets/images/game/card_sum_chip_need.svg" id="11_chip_need"]
 [ext_resource type="Texture2D" uid="uid://clj1xk45gqpml" path="res://assets/images/game/card_sum_bar_track.svg" id="12_bar_track"]
 
-[node name="Hud" unique_id=1258939475 instance=ExtResource("1_base")]
+[node name="Hud" unique_id=1258939475 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_base")]
 theme = ExtResource("7_theme")
 script = ExtResource("2_script")
+time_value_node = NodePath("")
 
-[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=817490655]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 125.0
-grow_vertical = 2
-texture = ExtResource("4_1xeky")
-
-[node name="Label" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=612068110]
-modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
-layout_mode = 0
-offset_left = 16.0
-offset_top = 10.0
-offset_right = 120.0
-offset_bottom = 23.0
-text = "STR_HUD_TIME"
-label_settings = ExtResource("5_mw13q")
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1153918549]
-modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
-layout_mode = 0
-offset_left = 31.0
-offset_top = 27.0
-offset_right = 120.0
-offset_bottom = 60.0
-text = "0:00"
-label_settings = ExtResource("6_42tkx")
-vertical_alignment = 1
-
-[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=1319479814]
+[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1319479814]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.26800007

@@ -29,10 +29,12 @@ func button(name: String) -> BaseButton:
 	return find_child(name, true, false) as BaseButton
 
 func tool_path_btn() -> BaseButton:
-	return button("Tool")
+	#return button("Tool")
+	return null
 
 func tool_wall_btn() -> BaseButton:
-	return button("Wall")
+	#return button("Wall")
+	return null
 
 func undo_btn() -> BaseButton:
 	return button("Undo")

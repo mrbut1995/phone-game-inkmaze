@@ -15,7 +15,7 @@ extends BaseHUD
 ## Mọi HUD đều có thẻ THỜI GIAN tên node "Time/Value" (xem set_time()).
 ## ============================================================================
 
-@export var time_value_node : Label = get_node_or_null("Time/Value")
+@export var time_value_node : Label
 
 ## Gọi mỗi khi HUD cần vẽ lại (GameController._update_hud). ctx gồm:
 ##   title:String · subtitle:String · steps_remaining:int · elapsed_time:float
@@ -39,7 +39,7 @@ func challenge_card() -> Control:
 
 ## Đồng hồ của ván: giây -> "m:ss"
 func set_time(seconds: float) -> void:
-	set_label_text(get_time_node().get_node_or_null("Value"), format_time(seconds))
+	set_label_text(time_value_node, format_time(seconds))
 
 func get_time_node() -> Control :
 	return get_node_or_null("Content/ModeInformation/Time")

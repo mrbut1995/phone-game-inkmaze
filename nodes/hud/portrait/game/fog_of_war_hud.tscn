@@ -2,75 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://brkqre7amkosw" path="res://scripts/nodes/hud/game/fog_of_war_hud.gd" id="2_script"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" uid="uid://bhccsfs2k1hcq" path="res://assets/images/game/card_time_tall.svg" id="4_time"]
-[ext_resource type="Texture2D" uid="uid://dtbkkqe0wcqkl" path="res://assets/images/game/card_stroke_time_chip.svg" id="5_chip_time"]
 [ext_resource type="Texture2D" uid="uid://cx3emdj8ihqap" path="res://assets/images/game/card_fog_sheet.svg" id="6_sheet"]
 [ext_resource type="Texture2D" uid="uid://d161agbxbf3bj" path="res://assets/images/game/card_fog_row_vision.svg" id="7_row_vision"]
 [ext_resource type="Texture2D" uid="uid://c6cbnblq7irx6" path="res://assets/images/game/card_fog_chip_blue.svg" id="8_chip_blue"]
 [ext_resource type="Texture2D" uid="uid://cjj5q3q3ohw30" path="res://assets/images/game/card_fog_row_warn.svg" id="9_row_warn"]
 
 [node name="Hud" unique_id=2092734398 instance=ExtResource("1_base")]
-theme = ExtResource("3_theme")
 script = ExtResource("2_script")
 
-[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=2084617310]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.25
-anchor_bottom = 1.0
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("4_time")
-
-[node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=36658632]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.092
-anchor_top = 0.100054
-anchor_right = 0.94
-anchor_bottom = 0.317
-offset_right = -0.015258789
-text = "STR_HUD_TIME"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1325430566]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.124
-anchor_top = 0.341
-anchor_right = 0.86
-anchor_bottom = 0.668
-theme_type_variation = &"HudTimeValue"
-text = "0:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SubChip" type="TextureRect" parent="Content/ModeInformation/Time" index="2" unique_id=432375261]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 59.0
-offset_right = 85.5
-offset_bottom = 71.0
-mouse_filter = 2
-texture = ExtResource("5_chip_time")
-
-[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="3" unique_id=490509598]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 59.0
-offset_right = 85.5
-offset_bottom = 71.0
-theme_type_variation = &"HudTimeSub"
-text = "STR_HUD_FOG_TIME_SUB"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-
-[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=1669845767]
+[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1669845767]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.256

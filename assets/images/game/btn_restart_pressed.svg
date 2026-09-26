@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7 -6 84 87" width="42" height="43.5">
-  
-  <g transform="translate(0, 2)">
-    <rect x="0.5" y="0.5" width="69" height="68" rx="18" fill="#EDE6D8" stroke="#256286" stroke-width="2.6" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 94" width="91" height="61.1">
+  <!-- Dịch xuống 3.5px tạo cảm giác lún nút -->
+  <g transform="translate(0, 3.5)">
+    <rect x="1.5" y="1" width="137" height="87" rx="21" fill="#EDE6D8" stroke="#256286" stroke-width="2.6" />
     
-    <path d="M 19 19 v 10 h 10" fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M 19 29 A 16 16 0 1 1 35 51 A 16 16 0 0 1 21.5 43" fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" />
+    <g transform="translate(49.5, 30.5)">
+      <path d="M 21.2 28.8 L 11.2 28.8 L 4.3 22 C 2.7 20.4 2.7 17.8 4.3 16.2 L 19.7 0.8 C 21.3 -0.8 23.9 -0.8 25.5 0.8 L 34.5 9.8 C 36.1 11.4 36.1 14 34.5 15.6 L 21.2 28.8 Z" 
+            fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 8 12.5 L 22.4 26.9" 
+            fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 26 28.8 H 38" 
+            fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
   </g>
 </svg>

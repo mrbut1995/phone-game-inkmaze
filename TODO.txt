@@ -79,6 +79,51 @@
 #       `C_embed_1152x960.png` (tỉ lệ hẹp/gần vuông) · `D_popup_minesweeper_p1.png` · `E_popup_dungeon_p1.png` ·
 #       `F_popup_minesweeper_p3_portrait.png`.
 
+# [x] VÒNG 14d (2026-09-26) — SỬA 2 LỖI USER BÁO: “paging trôi lên trên khi lật trang” + “vẫn có chữ trên ảnh”:
+#     · PAGING (nguyên nhân: `nav_slot_rect()` bám theo `Section` — trang CHƯA TỪNG hiện thì container chưa dàn
+#       các con (Section nằm ở y≈13) ⇒ trang hiện LẦN ĐẦU đặt cụm điều hướng theo số cũ → NHẢY LÊN TRÊN):
+#       nay điều hướng nằm trong **BĂNG ĐÁY khung** — `page.gd` chừa `NAV_BAND = 26` ở đáy `Body` (chỉ khi NHÚNG)
+#       và `nav_slot_rect()` trả đúng băng đó ⇒ **DƯỚI khối “QUY TẮC …”** và vị trí CHỈ phụ thuộc CỠ TRANG
+#       (lật trang không xê dịch). Lề nhúng `PAD` 14→10, nav `EMBED_NAV_BTN` 28→24, `EMBED_NAV_GAP` 8→6.
+#     · TRÀN ĐÁY do min-size: bề cao tối thiểu của danh sách ĐIỂM (label autowrap) lúc chưa xếp xong có lúc
+#       VỌT LÊN (200px) ⇒ min-size của `Body` vượt khung ⇒ kẹp tối thiểu → luật tràn đáy. SỬA: **TRẦN bề cao
+#       khối ĐIỂM** = `page.gd::_points_budget()` (khung − lề − băng nav/khối hành động − khối luật − tiêu đề
+#       mục); khung quá thấp thì khối ĐIỂM co lại + `clip_contents` trên Panel ĐIỂM cắt gọn.
+#     · CHỮ TRÊN ẢNH: generator ẨN **MỌI chữ mô tả** (tiêu đề thẻ minh hoạ, nhãn công cụ, thẻ HUD giả…) — trước
+#       đây chỉ chữ trong KHUNG CHÚ THÍCH bị ẩn, phần còn lại nhỏ li ti trên ảnh (nhất là P2/P3 của
+#       normal_maze: “Ô SỐ 0 = AN TOÀN”, “BỊ BỊT KÍN 3 MẶT”, “HOÀN TÁC/GỢI Ý”…). Nay ảnh minh hoạ chỉ còn
+#       HÌNH VẼ + SỐ/KÝ HIỆU (`is_literal_text`) + badge số của khối ĐIỂM; chữ nằm ở khối ĐIỂM + hàng luật.
+#       (`build_pt(..., hidden=True)` ghi `visible = false`; số/ký hiệu vẫn vẽ thẳng như cũ.)
+#     · TEST: `test_instruction` **435 check** — thêm “ảnh KHÔNG còn chữ mô tả” (mọi Label hiện trên ảnh đều là
+#       số/ký hiệu) + check “điều hướng DƯỚI khối luật + KHÔNG xê dịch khi lật trang” (đo nav y ở trang 1 vs 2);
+#       full suite 13/13. Ảnh kiểm chứng: `tmp_shot_inkmaze\{page1,page2,page3,popup_minesweeper_p1}.png`.
+
+# [x] VÒNG 14e (2026-09-26) — TÁCH HẲN 2 KIỂU HIỂN THỊ ĐIỂM theo yêu cầu user (“trên scene thì ẩn chữ + hiện
+#     point number + danh sách point row; trên popup thì hiện chữ trên image, KHÔNG point number/point section”):
+#     · GENERATOR (`gen_instruction_popups.py`):
+#       – `collect_points` gom **MỌI chữ mô tả** (không phải số/ký hiệu) thành ĐIỂM, theo comment mockup ĐỨNG
+#         LIỀN TRƯỚC (comment trùng nhưng cách xa nhau vẫn tách nhóm; chữ không comment = mỗi chữ 1 điểm).
+#         ⇒ nhiều điểm hơn trước (dày nhất sum_path P2 = 9; dungeon P1 = 6 — đúng ví dụ user nêu).
+#       – `build_pt` gộp luôn việc gắn `metadata/point` + `point_order` (xoá `build_point_src`); Label chữ **HIỆN
+#         MẶC ĐỊNH** (đúng bản POPUP) và có đủ vị trí/font/màu như mockup; `build_point_badge` thêm
+#         `visible = false` (badge chỉ hiện ở bản NHÚNG).
+#     · `page.tscn`: node `Points` thêm `visible = false` (mặc định = bản POPUP; script bật lên khi nhúng).
+#     · `page.gd`: thêm `_apply_point_mode()` — NHÚNG: ẩn mọi Label có `metadata/point` + hiện badge (`base_size`);
+#       POPUP: ngược lại. `_sync_points_visibility()` ⇒ `box.visible = embedded and có hàng`; khối ĐIỂM **chỉ
+#       thuộc bản nhúng**. `_layout_image()` tách 2 công thức: nhúng giữ `img ≤ 52% bề ngang` (nhường cột ĐIỂM),
+#       **popup ảnh nở HẾT bề ngang** (`img_w = min(usable, chỗ-cao-còn-lại × tỉ lệ)`); tách `_row_budget()`
+#       dùng chung cho cỡ ảnh nhúng + TRẦN khối ĐIỂM (thay vì công thức trần riêng).
+#     · TEST: `test_instruction` **478 check** — mỗi chế độ kiểm cả 2 chiều: POPUP (chữ hiện hết + badge ẨN +
+#       khối ĐIỂM ẨN) → NHÚNG (`content.set_embedded(true)`: chữ ẩn hết MỌI trang + badge HIỆN + khối ĐIỂM HIỆN)
+#       → trả lại POPUP (chữ hiện lại); popup thật + HUD nhúng cũng kiểm đúng chiều tương ứng; full suite 13/13.
+#     · ĐO KHÔNG GIAN (probe tạm, đã xoá): khung GuideHost thật = 1614×598 @1920×1080 · 969×499 @1152×960 ·
+#       836×366 @994×800; MỌI trang fit ở 2 cỡ đầu (dày nhất sum_path P2: cần 230 hàng-điểm ≤ 320 cấp);
+#       khung 994×800 thì khối ĐIỂM kẹp theo trần ⇒ trang ≥7 điểm bị cắt hàng cuối trong panel (clip gọn, luật
+#       vẫn nguyên) — chấp nhận: khung nhỏ ưu tiên LUẬT + ẢNH.
+#     · Ảnh kiểm chứng (ngoài repo, `D:\godot-phone-game\tmp_shot_inkmaze\`): `embed_dungeon_p1.png` (badge + 6 hàng,
+#       ảnh sạch chữ) · `embed_sumpath_p2.png` (9 hàng) · `embed_small_sumpath_p2.png` · `popup_dungeon_p1.png` ·
+#       `popup_dungeon_p3.png` · `popup_minesweeper_p1.png` (chữ trên ảnh, không badge/không khối ĐIỂM).
+
 # ----------------------------------------------------------------------------
 # VÒNG SỬA 13 (2026-09-19): MÀN CHƠI — CONTROLLERS + BOARD DÙNG CHUNG (BỎ BỘ ĐÔI THEO HƯỚNG)
 # ----------------------------------------------------------------------------

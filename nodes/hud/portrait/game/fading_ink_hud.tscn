@@ -2,10 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cclmsulcmjhmy" path="res://scripts/nodes/hud/game/fading_ink_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" uid="uid://bhccsfs2k1hcq" path="res://assets/images/game/card_time_tall.svg" id="3_time"]
 [ext_resource type="Texture2D" uid="uid://dyy3ts8a2q2jt" path="res://assets/images/game/card_ink_meter.svg" id="4_sheet"]
 [ext_resource type="Texture2D" uid="uid://bedihbv86gc5v" path="res://assets/images/game/bar_ink_warning.svg" id="5_warn"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="6_theme"]
 [ext_resource type="Texture2D" uid="uid://u3ajpolrdm8p" path="res://assets/images/game/card_ink_block_bottle.svg" id="7_bottle"]
 [ext_resource type="Texture2D" uid="uid://cgm1np8r3rape" path="res://assets/images/game/card_ink_swatch_1.svg" id="8_swatch1"]
 [ext_resource type="Texture2D" uid="uid://cqt853aqbmr5n" path="res://assets/images/game/card_ink_swatch_2.svg" id="9_swatch2"]
@@ -13,63 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://c03ki665cdw1m" path="res://assets/images/game/card_ink_swatch_4.svg" id="11_swatch4"]
 
 [node name="Hud" unique_id=505225000 instance=ExtResource("1_base")]
-theme = ExtResource("6_theme")
 script = ExtResource("2_script")
 
-[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1036036466]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.25
-anchor_bottom = 1.0
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("3_time")
-
-[node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=937397718]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.09200001
-anchor_top = 0.10005431
-anchor_right = 0.94000006
-anchor_bottom = 0.317
-offset_top = -0.0136375
-offset_right = -0.015258789
-theme_type_variation = &"HudTimeHead"
-text = "STR_HUD_TIME"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1374290961]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.124000005
-anchor_top = 0.34100002
-anchor_right = 0.86
-anchor_bottom = 0.66800004
-offset_top = -0.0430794
-offset_bottom = -0.0118408
-theme_type_variation = &"HudTimeValue"
-text = "0:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=861101356]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.14800002
-anchor_top = 0.6627363
-anchor_right = 0.892
-anchor_bottom = 0.8167363
-offset_top = 0.0349541
-offset_bottom = 0.0374374
-theme_type_variation = &"HudTimeSub"
-text = "STR_HUD_TIME_FREE"
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=1635864766]
+[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1635864766]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.254

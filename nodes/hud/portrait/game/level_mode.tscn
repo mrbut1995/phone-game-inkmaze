@@ -2,9 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_2ygqj"]
 [ext_resource type="Script" uid="uid://64aali4bsomk" path="res://scripts/nodes/hud/game/level_hud.gd" id="2_jkgoi"]
-[ext_resource type="Texture2D" uid="uid://d2u23v5xlibqv" path="res://assets/images/game/card_time.svg" id="3_mii7p"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="4_sxi7s"]
-[ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="5_m00tf"]
 [ext_resource type="Texture2D" uid="uid://bqooopacxspei" path="res://assets/images/game/card_challenge.svg" id="6_b8tsa"]
 [ext_resource type="LabelSettings" uid="uid://bdxo0371yh7yr" path="res://resources/settings/text/text_game_challenge_row.tres" id="7_3kf60"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count.tres" id="8_2ocsu"]
@@ -14,50 +11,27 @@
 [ext_resource type="Texture2D" uid="uid://bnm0qlvagjmny" path="res://assets/images/game/chal_check_pending.svg" id="12_b5uh2"]
 [ext_resource type="Texture2D" uid="uid://ceyf7g6ququr4" path="res://assets/images/game/chal_badge_done.svg" id="13_rfkdx"]
 
-[node name="Hud" unique_id=1383101299 instance=ExtResource("1_2ygqj")]
+[node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_2ygqj")]
 script = ExtResource("2_jkgoi")
+time_value_node = NodePath("Content/ModeInformation/Time/Value")
 
-[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1536876838]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 125.0
-grow_vertical = 2
-texture = ExtResource("3_mii7p")
-
-[node name="Label" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=2090303184]
-modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
-layout_mode = 0
-offset_left = 16.0
-offset_top = 10.0
-offset_right = 120.0
-offset_bottom = 23.0
-text = "STR_HUD_TIME"
-label_settings = ExtResource("4_sxi7s")
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1493128100]
-modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
-layout_mode = 0
-offset_left = 31.0
-offset_top = 27.0
-offset_right = 120.0
-offset_bottom = 60.0
-text = "0:00"
-label_settings = ExtResource("5_m00tf")
-vertical_alignment = 1
-
-[node name="Challenge" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=1313050070]
+[node name="Challenge" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1862988510]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.28
+anchor_top = -0.141
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -10.5
-offset_bottom = 10.5
+anchor_bottom = 1.141
+offset_top = 0.0041513443
+offset_bottom = -0.00415802
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("6_b8tsa")
+patch_margin_left = 19
+patch_margin_top = 14
+patch_margin_right = 15
+patch_margin_bottom = 13
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Content/ModeInformation/Challenge" index="0" unique_id=210070889]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
@@ -125,7 +99,7 @@ offset_right = 245.0
 offset_bottom = 29.0
 texture = ExtResource("11_irpvh")
 
-[node name="Check" type="TextureRect" parent="Content/ModeInformation/Challenge/Row1" index="1" unique_id=1903541227]
+[node name="Check" type="TextureRect" parent="Content/ModeInformation/Challenge/Row1/Bg" index="0" unique_id=1903541227]
 layout_mode = 0
 offset_left = 7.0
 offset_top = 7.0
@@ -134,7 +108,7 @@ offset_bottom = 22.0
 mouse_filter = 2
 texture = ExtResource("12_b5uh2")
 
-[node name="Name" type="Label" parent="Content/ModeInformation/Challenge/Row1" index="2" unique_id=1643328000]
+[node name="Name" type="Label" parent="Content/ModeInformation/Challenge/Row1/Bg" index="1" unique_id=1643328000]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
 offset_left = 27.0
@@ -146,7 +120,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Status" type="Label" parent="Content/ModeInformation/Challenge/Row1" index="3" unique_id=2025283367]
+[node name="Status" type="Label" parent="Content/ModeInformation/Challenge/Row1/Bg" index="2" unique_id=2025283367]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
 offset_left = 165.0
@@ -159,7 +133,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Badge" type="TextureRect" parent="Content/ModeInformation/Challenge/Row1" index="4" unique_id=750003895]
+[node name="Badge" type="TextureRect" parent="Content/ModeInformation/Challenge/Row1/Bg" index="3" unique_id=750003895]
 visible = false
 layout_mode = 0
 offset_left = 187.0
@@ -169,7 +143,7 @@ offset_bottom = 22.5
 mouse_filter = 2
 texture = ExtResource("13_rfkdx")
 
-[node name="BadgeLabel" type="Label" parent="Content/ModeInformation/Challenge/Row1/Badge" index="0" unique_id=676781717]
+[node name="BadgeLabel" type="Label" parent="Content/ModeInformation/Challenge/Row1/Bg/Badge" index="0" unique_id=676781717]
 layout_mode = 0
 offset_right = 48.0
 offset_bottom = 16.0
@@ -191,7 +165,7 @@ offset_right = 245.0
 offset_bottom = 29.0
 texture = ExtResource("11_irpvh")
 
-[node name="Check" type="TextureRect" parent="Content/ModeInformation/Challenge/Row2" index="1" unique_id=1923414203]
+[node name="Check" type="TextureRect" parent="Content/ModeInformation/Challenge/Row2/Bg" index="0" unique_id=1923414203]
 layout_mode = 0
 offset_left = 7.0
 offset_top = 7.0
@@ -200,7 +174,7 @@ offset_bottom = 22.0
 mouse_filter = 2
 texture = ExtResource("12_b5uh2")
 
-[node name="Name" type="Label" parent="Content/ModeInformation/Challenge/Row2" index="2" unique_id=782351674]
+[node name="Name" type="Label" parent="Content/ModeInformation/Challenge/Row2/Bg" index="1" unique_id=782351674]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
 offset_left = 27.0
@@ -212,7 +186,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Status" type="Label" parent="Content/ModeInformation/Challenge/Row2" index="3" unique_id=1380174990]
+[node name="Status" type="Label" parent="Content/ModeInformation/Challenge/Row2/Bg" index="2" unique_id=1380174990]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
 offset_left = 165.0
@@ -225,7 +199,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Badge" type="TextureRect" parent="Content/ModeInformation/Challenge/Row2" index="4" unique_id=957275816]
+[node name="Badge" type="TextureRect" parent="Content/ModeInformation/Challenge/Row2/Bg" index="3" unique_id=957275816]
 visible = false
 layout_mode = 0
 offset_left = 187.0
@@ -235,7 +209,7 @@ offset_bottom = 22.5
 mouse_filter = 2
 texture = ExtResource("13_rfkdx")
 
-[node name="BadgeLabel" type="Label" parent="Content/ModeInformation/Challenge/Row2/Badge" index="0" unique_id=1233538514]
+[node name="BadgeLabel" type="Label" parent="Content/ModeInformation/Challenge/Row2/Bg/Badge" index="0" unique_id=1233538514]
 layout_mode = 0
 offset_right = 48.0
 offset_bottom = 16.0
@@ -257,7 +231,7 @@ offset_right = 245.0
 offset_bottom = 29.0
 texture = ExtResource("11_irpvh")
 
-[node name="Check" type="TextureRect" parent="Content/ModeInformation/Challenge/Row3" index="1" unique_id=326195460]
+[node name="Check" type="TextureRect" parent="Content/ModeInformation/Challenge/Row3/Bg" index="0" unique_id=326195460]
 layout_mode = 0
 offset_left = 7.0
 offset_top = 7.0
@@ -266,7 +240,7 @@ offset_bottom = 22.0
 mouse_filter = 2
 texture = ExtResource("12_b5uh2")
 
-[node name="Name" type="Label" parent="Content/ModeInformation/Challenge/Row3" index="2" unique_id=243219215]
+[node name="Name" type="Label" parent="Content/ModeInformation/Challenge/Row3/Bg" index="1" unique_id=243219215]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 0
 offset_left = 27.0
@@ -278,7 +252,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Status" type="Label" parent="Content/ModeInformation/Challenge/Row3" index="3" unique_id=1453634570]
+[node name="Status" type="Label" parent="Content/ModeInformation/Challenge/Row3/Bg" index="2" unique_id=1453634570]
 modulate = Color(0.56078434, 0.627451, 0.6745098, 1)
 layout_mode = 0
 offset_left = 165.0
@@ -291,7 +265,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Badge" type="TextureRect" parent="Content/ModeInformation/Challenge/Row3" index="4" unique_id=1234756348]
+[node name="Badge" type="TextureRect" parent="Content/ModeInformation/Challenge/Row3/Bg" index="3" unique_id=1234756348]
 visible = false
 layout_mode = 0
 offset_left = 187.0
@@ -301,7 +275,7 @@ offset_bottom = 22.5
 mouse_filter = 2
 texture = ExtResource("13_rfkdx")
 
-[node name="BadgeLabel" type="Label" parent="Content/ModeInformation/Challenge/Row3/Badge" index="0" unique_id=457632074]
+[node name="BadgeLabel" type="Label" parent="Content/ModeInformation/Challenge/Row3/Bg/Badge" index="0" unique_id=457632074]
 layout_mode = 0
 offset_right = 48.0
 offset_bottom = 16.0

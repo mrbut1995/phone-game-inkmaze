@@ -2,56 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://c7v12qmn3er7o" path="res://scripts/nodes/hud/game/countdown_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" uid="uid://bhccsfs2k1hcq" path="res://assets/images/game/card_time_tall.svg" id="3_time"]
 [ext_resource type="Texture2D" uid="uid://02p5c7y33ffl" path="res://assets/images/game/card_budget_sheet.svg" id="4_sheet"]
 [ext_resource type="Texture2D" uid="uid://c4yghxsna7rw5" path="res://assets/images/game/chip_price_cheap.svg" id="5_cheap"]
 [ext_resource type="Texture2D" uid="uid://cuvuerlccui1t" path="res://assets/images/calendar/tag_special_mode.svg" id="6_pricey"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="7_theme"]
 
-[node name="Hud" unique_id=1464339223 instance=ExtResource("1_base")]
+[node name="Hud" unique_id=1464339223 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_base")]
 theme = ExtResource("7_theme")
 script = ExtResource("2_script")
+time_value_node = NodePath("")
 
-[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1191594554]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 125.0
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("3_time")
-
-[node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=522972995]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 6.0
-offset_right = 122.0
-offset_bottom = 23.0
-theme_type_variation = &"HudTimeHead"
-text = "STR_HUD_TIME"
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1399616227]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 24.0
-offset_right = 122.0
-offset_bottom = 58.0
-theme_type_variation = &"HudTimeValue"
-text = "0:00"
-vertical_alignment = 1
-
-[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=2026934623]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 58.0
-offset_right = 123.0
-offset_bottom = 74.0
-theme_type_variation = &"HudTimeSub"
-text = "STR_HUD_TIME_SUPPORT"
-vertical_alignment = 1
-
-[node name="Sheet" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=1156059562]
+[node name="Sheet" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1156059562]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.266
@@ -222,7 +183,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("6_pricey")
 patch_margin_left = 8
 patch_margin_top = 4

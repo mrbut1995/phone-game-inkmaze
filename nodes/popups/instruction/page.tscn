@@ -54,9 +54,11 @@ expand_mode = 1
 stretch_mode = 0
 
 [node name="Points" type="Panel" parent="Body/Top"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
+clip_contents = true
 theme_override_styles/panel = SubResource("sb_points")
 
 [node name="Head" type="Label" parent="Body/Top/Points"]

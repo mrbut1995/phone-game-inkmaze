@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://bkqwhanlspxcs"]
+[gd_scene load_steps=68 format=3 uid="uid://bkqwhanlspxcs"]
 
 [ext_resource type="PackedScene" path="res://nodes/popups/instruction/content_instruction.tscn" id="1_content"]
 
@@ -8,13 +8,15 @@
 
 [ext_resource type="Texture2D" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_fog_of_war_page1.svg" id="4_img_p1"]
 
-[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-SemiBold.ttf" id="5_font_sb"]
+[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Bold.ttf" id="5_font_bold"]
 
 [ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-ExtraBold.ttf" id="6_font_xb"]
 
-[ext_resource type="Texture2D" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_fog_of_war_page2.svg" id="7_img_p2"]
+[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-SemiBold.ttf" id="7_font_sb"]
 
-[ext_resource type="Texture2D" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_fog_of_war_page3.svg" id="8_img_p3"]
+[ext_resource type="Texture2D" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_fog_of_war_page2.svg" id="8_img_p2"]
+
+[ext_resource type="Texture2D" path="res://assets/images/instructions/guideline_image/image_guideline_instruction_fog_of_war_page3.svg" id="9_img_p3"]
 
 [sub_resource type="StyleBoxFlat" id="sb1"]
 bg_color = Color(0.2, 0.2549, 0.3333, 1)
@@ -335,20 +337,76 @@ corner_radius_bottom_left = 11
 [sub_resource type="StyleBoxEmpty" id="sb39"]
 
 [sub_resource type="StyleBoxFlat" id="sb40"]
-bg_color = Color(0.1333, 0.298, 0.4275, 1)
+bg_color = Color(0.7059, 0.3255, 0.0353, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxFlat" id="sb41"]
+bg_color = Color(0.7059, 0.3255, 0.0353, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="sb42"]
+bg_color = Color(0.5216, 0.302, 0.0549, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="sb43"]
+bg_color = Color(0.1176, 0.1608, 0.2314, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="sb44"]
+bg_color = Color(0.1333, 0.298, 0.4275, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="sb45"]
+bg_color = Color(0.7059, 0.3255, 0.0353, 1)
+corner_radius_top_left = 8.5
+corner_radius_top_right = 8.5
+corner_radius_bottom_right = 8.5
+corner_radius_bottom_left = 8.5
+
+[sub_resource type="StyleBoxFlat" id="sb46"]
+bg_color = Color(0.7059, 0.3255, 0.0353, 1)
+corner_radius_top_left = 8.5
+corner_radius_top_right = 8.5
+corner_radius_bottom_right = 8.5
+corner_radius_bottom_left = 8.5
+
+[sub_resource type="StyleBoxFlat" id="sb47"]
+bg_color = Color(0.5216, 0.302, 0.0549, 1)
+corner_radius_top_left = 8.5
+corner_radius_top_right = 8.5
+corner_radius_bottom_right = 8.5
+corner_radius_bottom_left = 8.5
+
+[sub_resource type="StyleBoxFlat" id="sb48"]
+bg_color = Color(0.1176, 0.1608, 0.2314, 1)
+corner_radius_top_left = 8.5
+corner_radius_top_right = 8.5
+corner_radius_bottom_right = 8.5
+corner_radius_bottom_left = 8.5
+
+[sub_resource type="StyleBoxFlat" id="sb49"]
 bg_color = Color(0.1333, 0.298, 0.4275, 1)
 corner_radius_top_left = 8.5
 corner_radius_top_right = 8.5
 corner_radius_bottom_right = 8.5
 corner_radius_bottom_left = 8.5
 
-[sub_resource type="StyleBoxFlat" id="sb42"]
+[sub_resource type="StyleBoxFlat" id="sb50"]
 bg_color = Color(1, 0.9843, 0.9216, 1)
 border_width_left = 1
 border_width_top = 1
@@ -360,14 +418,14 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[sub_resource type="StyleBoxFlat" id="sb43"]
+[sub_resource type="StyleBoxFlat" id="sb51"]
 bg_color = Color(0.851, 0.4667, 0.0235, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="sb44"]
+[sub_resource type="StyleBoxFlat" id="sb52"]
 bg_color = Color(0.9961, 0.9882, 0.9098, 1)
 border_width_left = 1
 border_width_top = 1
@@ -379,14 +437,14 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[sub_resource type="StyleBoxFlat" id="sb45"]
+[sub_resource type="StyleBoxFlat" id="sb53"]
 bg_color = Color(0.9608, 0.6196, 0.0431, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="sb46"]
+[sub_resource type="StyleBoxFlat" id="sb54"]
 bg_color = Color(0.9412, 0.9765, 1, 1)
 border_width_left = 1
 border_width_top = 1
@@ -398,14 +456,14 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[sub_resource type="StyleBoxFlat" id="sb47"]
+[sub_resource type="StyleBoxFlat" id="sb55"]
 bg_color = Color(0.0078, 0.5176, 0.7804, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="sb48"]
+[sub_resource type="StyleBoxFlat" id="sb56"]
 bg_color = Color(0.1176, 0.1608, 0.2314, 1)
 border_width_left = 1.8
 border_width_top = 1.8
@@ -417,9 +475,9 @@ corner_radius_top_right = 11
 corner_radius_bottom_right = 11
 corner_radius_bottom_left = 11
 
-[sub_resource type="StyleBoxEmpty" id="sb49"]
+[sub_resource type="StyleBoxEmpty" id="sb57"]
 
-[sub_resource type="StyleBoxEmpty" id="sb50"]
+[sub_resource type="StyleBoxEmpty" id="sb58"]
 
 [node name="ContentInstruction" unique_id=727893628 instance=ExtResource("1_content")]
 tab_on_style = SubResource("sb1")
@@ -643,78 +701,223 @@ metadata/base_font = 17
 text = "?"
 
 [node name="PT8" type="Label" parent="Pages/Page1/Body/Top/Image" index="7"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 1
 metadata/point_order = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.125
+anchor_top = 0.3888
+anchor_right = 0.125
+anchor_bottom = 0.3888
+offset_left = -26.6
+offset_top = -4.5
+offset_right = 26.6
+offset_bottom = 4.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 6
+theme_override_colors/font_color = Color(0.0118, 0.4118, 0.6314, 1)
+metadata/base_font = 6
 text = "STR_GI_X225"
 
 [node name="PT9" type="Label" parent="Pages/Page1/Body/Top/Image" index="8"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 1
 metadata/point_order = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1381
+anchor_top = 0.4383
+anchor_right = 0.1381
+anchor_bottom = 0.4383
+offset_left = -31.7
+offset_top = -6.8
+offset_right = 31.7
+offset_bottom = 6.8
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.0471, 0.2902, 0.4314, 1)
+metadata/base_font = 9
 text = "STR_GI_X226"
 
 [node name="PT10" type="Label" parent="Pages/Page1/Body/Top/Image" index="9"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 1
 metadata/point_order = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1366
+anchor_top = 0.4785
+anchor_right = 0.1366
+anchor_bottom = 0.4785
+offset_left = -31.1
+offset_top = -7.5
+offset_right = 31.1
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.0078, 0.5176, 0.7804, 1)
+metadata/base_font = 10
 text = "STR_GI_X227"
 
 [node name="PT11" type="Label" parent="Pages/Page1/Body/Top/Image" index="10"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 1
 metadata/point_order = 3
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1454
+anchor_top = 0.5238
+anchor_right = 0.1454
+anchor_bottom = 0.5238
+offset_left = -34.6
+offset_top = -4.1
+offset_right = 34.6
+offset_bottom = 4.1
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("5_font_bold")
+theme_override_font_sizes/font_size = 5.5
+theme_override_colors/font_color = Color(0.0118, 0.4118, 0.6314, 1)
+metadata/base_font = 5.5
 text = "STR_GI_X228"
 
 [node name="PT12" type="Label" parent="Pages/Page1/Body/Top/Image" index="11"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 2
 metadata/point_order = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8536
+anchor_top = 0.3888
+anchor_right = 0.8536
+anchor_bottom = 0.3888
+offset_left = -28
+offset_top = -4.5
+offset_right = 28
+offset_bottom = 4.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 6
+theme_override_colors/font_color = Color(0.2784, 0.3333, 0.4118, 1)
+metadata/base_font = 6
 text = "STR_GI_X229"
 
 [node name="PT13" type="Label" parent="Pages/Page1/Body/Top/Image" index="12"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 2
 metadata/point_order = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8561
+anchor_top = 0.4383
+anchor_right = 0.8561
+anchor_bottom = 0.4383
+offset_left = -29
+offset_top = -6.8
+offset_right = 29
+offset_bottom = 6.8
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.1176, 0.1608, 0.2314, 1)
+metadata/base_font = 9
 text = "STR_GI_X230"
 
 [node name="PT14" type="Label" parent="Pages/Page1/Body/Top/Image" index="13"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 2
 metadata/point_order = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8599
+anchor_top = 0.4785
+anchor_right = 0.8599
+anchor_bottom = 0.4785
+offset_left = -30.5
+offset_top = -7.5
+offset_right = 30.5
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.3922, 0.4549, 0.5451, 1)
+metadata/base_font = 10
 text = "STR_GI_X231"
 
 [node name="PT15" type="Label" parent="Pages/Page1/Body/Top/Image" index="14"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 2
 metadata/point_order = 3
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8586
+anchor_top = 0.5238
+anchor_right = 0.8586
+anchor_bottom = 0.5238
+offset_left = -30
+offset_top = -4.1
+offset_right = 30
+offset_bottom = 4.1
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("5_font_bold")
+theme_override_font_sizes/font_size = 5.5
+theme_override_colors/font_color = Color(0.2784, 0.3333, 0.4118, 1)
+metadata/base_font = 5.5
 text = "STR_GI_X232"
 
 [node name="PT16" type="Label" parent="Pages/Page1/Body/Top/Image" index="15"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 3
 metadata/point_order = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4994
+anchor_top = 0.8995
+anchor_right = 0.4994
+anchor_bottom = 0.8995
+offset_left = -150.4
+offset_top = -5.6
+offset_right = 150.4
+offset_bottom = 5.6
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("6_font_xb")
+theme_override_font_sizes/font_size = 7.5
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+metadata/base_font = 7.5
 text = "STR_GI_X233"
 
 [node name="Point1" type="Panel" parent="Pages/Page1/Body/Top/Image" index="16"]
+visible = false
 layout_mode = 0
 anchors_preset = -1
 anchor_left = 0.1454
@@ -748,6 +951,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "1"
 
 [node name="Point2" type="Panel" parent="Pages/Page1/Body/Top/Image" index="17"]
+visible = false
 layout_mode = 0
 anchors_preset = -1
 anchor_left = 0.8599
@@ -781,6 +985,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "2"
 
 [node name="Point3" type="Panel" parent="Pages/Page1/Body/Top/Image" index="18"]
+visible = false
 layout_mode = 0
 anchors_preset = -1
 anchor_left = 0.4994
@@ -861,7 +1066,7 @@ layout_mode = 2
 mouse_filter = 2
 autowrap_mode = 3
 custom_minimum_size = Vector2(125, 0)
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 9
 theme_override_colors/font_color = Color(0.0118, 0.4118, 0.6314, 0.78)
 
@@ -913,7 +1118,7 @@ layout_mode = 2
 mouse_filter = 2
 autowrap_mode = 3
 custom_minimum_size = Vector2(125, 0)
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 9
 theme_override_colors/font_color = Color(0.2784, 0.3333, 0.4118, 0.78)
 
@@ -965,7 +1170,7 @@ layout_mode = 2
 mouse_filter = 2
 autowrap_mode = 3
 custom_minimum_size = Vector2(125, 0)
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 9
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 0.78)
 
@@ -1006,7 +1211,7 @@ offset_top = 21
 offset_right = -12
 offset_bottom = 33
 mouse_filter = 2
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 8
 theme_override_colors/font_color = Color(0.0118, 0.4118, 0.6314, 1)
 text = "STR_GI_FOG_OF_WAR_P1_R1D"
@@ -1048,7 +1253,7 @@ offset_top = 21
 offset_right = -12
 offset_bottom = 33
 mouse_filter = 2
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 8
 theme_override_colors/font_color = Color(0.2784, 0.3333, 0.4118, 1)
 text = "STR_GI_FOG_OF_WAR_P1_R2D"
@@ -1090,7 +1295,7 @@ offset_top = 21
 offset_right = -12
 offset_bottom = 33
 mouse_filter = 2
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 8
 theme_override_colors/font_color = Color(0.498, 0.1137, 0.1137, 1)
 text = "STR_GI_FOG_OF_WAR_P1_R3D"
@@ -1136,7 +1341,7 @@ text = "STR_GI_FOG_OF_WAR_P1_LINK"
 visible = false
 
 [node name="Image" parent="Pages/Page2/Body/Top" index="0"]
-texture = ExtResource("7_img_p2")
+texture = ExtResource("8_img_p2")
 
 [node name="Title" parent="Pages/Page2" index="0"]
 text = "STR_GI_FOG_OF_WAR_P2_TITLE"
@@ -1259,78 +1464,223 @@ metadata/base_font = 22
 text = "1"
 
 [node name="PT6" type="Label" parent="Pages/Page2/Body/Top/Image" index="5"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 1
 metadata/point_order = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1252
+anchor_top = 0.3888
+anchor_right = 0.1252
+anchor_bottom = 0.3888
+offset_left = -26.6
+offset_top = -4.5
+offset_right = 26.6
+offset_bottom = 4.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 6
+theme_override_colors/font_color = Color(0.2784, 0.3333, 0.4118, 1)
+metadata/base_font = 6
 text = "STR_GI_X234"
 
 [node name="PT7" type="Label" parent="Pages/Page2/Body/Top/Image" index="6"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 1
 metadata/point_order = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1242
+anchor_top = 0.4383
+anchor_right = 0.1242
+anchor_bottom = 0.4383
+offset_left = -26.2
+offset_top = -6.8
+offset_right = 26.2
+offset_bottom = 6.8
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.1176, 0.1608, 0.2314, 1)
+metadata/base_font = 9
 text = "STR_GI_X235"
 
 [node name="PT8" type="Label" parent="Pages/Page2/Body/Top/Image" index="7"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 1
 metadata/point_order = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1205
+anchor_top = 0.4794
+anchor_right = 0.1205
+anchor_bottom = 0.4794
+offset_left = -24.8
+offset_top = -6.8
+offset_right = 24.8
+offset_bottom = 6.8
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.3922, 0.4549, 0.5451, 1)
+metadata/base_font = 9
 text = "STR_GI_X236"
 
 [node name="PT9" type="Label" parent="Pages/Page2/Body/Top/Image" index="8"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 1
 metadata/point_order = 3
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1218
+anchor_top = 0.5238
+anchor_right = 0.1218
+anchor_bottom = 0.5238
+offset_left = -25.3
+offset_top = -4.1
+offset_right = 25.3
+offset_bottom = 4.1
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("5_font_bold")
+theme_override_font_sizes/font_size = 5.5
+theme_override_colors/font_color = Color(0.3922, 0.4549, 0.5451, 1)
+metadata/base_font = 5.5
 text = "STR_GI_X237"
 
 [node name="PT10" type="Label" parent="Pages/Page2/Body/Top/Image" index="9"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 2
 metadata/point_order = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8469
+anchor_top = 0.3888
+anchor_right = 0.8469
+anchor_bottom = 0.3888
+offset_left = -25.4
+offset_top = -4.5
+offset_right = 25.4
+offset_bottom = 4.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 6
+theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
+metadata/base_font = 6
 text = "STR_GI_X238"
 
 [node name="PT11" type="Label" parent="Pages/Page2/Body/Top/Image" index="10"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 2
 metadata/point_order = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8899
+anchor_top = 0.4383
+anchor_right = 0.8899
+anchor_bottom = 0.4383
+offset_left = -42.3
+offset_top = -6.8
+offset_right = 42.3
+offset_bottom = 6.8
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.498, 0.1137, 0.1137, 1)
+metadata/base_font = 9
 text = "STR_GI_X239"
 
 [node name="PT12" type="Label" parent="Pages/Page2/Body/Top/Image" index="11"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 2
 metadata/point_order = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8713
+anchor_top = 0.4785
+anchor_right = 0.8713
+anchor_bottom = 0.4785
+offset_left = -35
+offset_top = -7.5
+offset_right = 35
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.8627, 0.149, 0.149, 1)
+metadata/base_font = 10
 text = "STR_GI_X206"
 
 [node name="PT13" type="Label" parent="Pages/Page2/Body/Top/Image" index="12"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 2
 metadata/point_order = 3
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8658
+anchor_top = 0.5238
+anchor_right = 0.8658
+anchor_bottom = 0.5238
+offset_left = -32.9
+offset_top = -4.1
+offset_right = 32.9
+offset_bottom = 4.1
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("5_font_bold")
+theme_override_font_sizes/font_size = 5.5
+theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 1)
+metadata/base_font = 5.5
 text = "STR_GI_X207"
 
 [node name="PT14" type="Label" parent="Pages/Page2/Body/Top/Image" index="13"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
 metadata/point = 3
 metadata/point_order = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4994
+anchor_top = 0.8995
+anchor_right = 0.4994
+anchor_bottom = 0.8995
+offset_left = -162.3
+offset_top = -5.6
+offset_right = 162.3
+offset_bottom = 5.6
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("6_font_xb")
+theme_override_font_sizes/font_size = 7.5
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+metadata/base_font = 7.5
 text = "STR_GI_X240"
 
 [node name="Point1" type="Panel" parent="Pages/Page2/Body/Top/Image" index="14"]
+visible = false
 layout_mode = 0
 anchors_preset = -1
 anchor_left = 0.1252
@@ -1364,6 +1714,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "1"
 
 [node name="Point2" type="Panel" parent="Pages/Page2/Body/Top/Image" index="15"]
+visible = false
 layout_mode = 0
 anchors_preset = -1
 anchor_left = 0.8899
@@ -1397,6 +1748,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "2"
 
 [node name="Point3" type="Panel" parent="Pages/Page2/Body/Top/Image" index="16"]
+visible = false
 layout_mode = 0
 anchors_preset = -1
 anchor_left = 0.4994
@@ -1477,7 +1829,7 @@ layout_mode = 2
 mouse_filter = 2
 autowrap_mode = 3
 custom_minimum_size = Vector2(125, 0)
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 9
 theme_override_colors/font_color = Color(0.2784, 0.3333, 0.4118, 0.78)
 
@@ -1529,7 +1881,7 @@ layout_mode = 2
 mouse_filter = 2
 autowrap_mode = 3
 custom_minimum_size = Vector2(125, 0)
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 9
 theme_override_colors/font_color = Color(0.7255, 0.1098, 0.1098, 0.78)
 
@@ -1581,7 +1933,7 @@ layout_mode = 2
 mouse_filter = 2
 autowrap_mode = 3
 custom_minimum_size = Vector2(125, 0)
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 9
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 0.78)
 
@@ -1622,7 +1974,7 @@ offset_top = 21
 offset_right = -12
 offset_bottom = 33
 mouse_filter = 2
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 8
 theme_override_colors/font_color = Color(0.0118, 0.4118, 0.6314, 1)
 text = "STR_GI_FOG_OF_WAR_P2_R1D"
@@ -1664,7 +2016,7 @@ offset_top = 21
 offset_right = -12
 offset_bottom = 33
 mouse_filter = 2
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 8
 theme_override_colors/font_color = Color(0.2784, 0.3333, 0.4118, 1)
 text = "STR_GI_FOG_OF_WAR_P2_R2D"
@@ -1706,7 +2058,7 @@ offset_top = 21
 offset_right = -12
 offset_bottom = 33
 mouse_filter = 2
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 8
 theme_override_colors/font_color = Color(0.498, 0.1137, 0.1137, 1)
 text = "STR_GI_FOG_OF_WAR_P2_R3D"
@@ -1752,7 +2104,7 @@ text = "STR_GI_FOG_OF_WAR_P2_LINK"
 visible = false
 
 [node name="Image" parent="Pages/Page3/Body/Top" index="0"]
-texture = ExtResource("8_img_p3")
+texture = ExtResource("9_img_p3")
 
 [node name="Title" parent="Pages/Page3" index="0"]
 text = "STR_GI_FOG_OF_WAR_P3_TITLE"
@@ -1765,6 +2117,8 @@ text = "STR_GI_FOG_OF_WAR_P3_SECTION"
 theme_override_colors/font_color = Color(0.2, 0.2549, 0.3333, 1)
 
 [node name="PT1" type="Label" parent="Pages/Page3/Body/Top/Image" index="0"]
+metadata/point = 1
+metadata/point_order = 0
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2611
@@ -1809,6 +2163,8 @@ metadata/base_font = 17
 text = "2"
 
 [node name="PT3" type="Label" parent="Pages/Page3/Body/Top/Image" index="2"]
+metadata/point = 2
+metadata/point_order = 0
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6528
@@ -1831,6 +2187,8 @@ metadata/base_font = 9
 text = "STR_GI_X242"
 
 [node name="PT4" type="Label" parent="Pages/Page3/Body/Top/Image" index="3"]
+metadata/point = 2
+metadata/point_order = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5821
@@ -1846,13 +2204,15 @@ grow_vertical = 2
 mouse_filter = 2
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 7
 theme_override_colors/font_color = Color(0.4706, 0.2078, 0.0588, 1)
 metadata/base_font = 7
 text = "STR_GI_X243"
 
 [node name="PT5" type="Label" parent="Pages/Page3/Body/Top/Image" index="4"]
+metadata/point = 2
+metadata/point_order = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.555
@@ -1868,13 +2228,15 @@ grow_vertical = 2
 mouse_filter = 2
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 7
 theme_override_colors/font_color = Color(0.4706, 0.2078, 0.0588, 1)
 metadata/base_font = 7
 text = "STR_GI_X244"
 
 [node name="PT6" type="Label" parent="Pages/Page3/Body/Top/Image" index="5"]
+metadata/point = 2
+metadata/point_order = 3
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5976
@@ -1897,6 +2259,8 @@ metadata/base_font = 7
 text = "STR_GI_X245"
 
 [node name="PT7" type="Label" parent="Pages/Page3/Body/Top/Image" index="6"]
+metadata/point = 3
+metadata/point_order = 0
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2752
@@ -1919,6 +2283,8 @@ metadata/base_font = 10
 text = "STR_GI_X214"
 
 [node name="PT8" type="Label" parent="Pages/Page3/Body/Top/Image" index="7"]
+metadata/point = 3
+metadata/point_order = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2721
@@ -1941,6 +2307,8 @@ metadata/base_font = 6.5
 text = "STR_GI_X246"
 
 [node name="PT9" type="Label" parent="Pages/Page3/Body/Top/Image" index="8"]
+metadata/point = 3
+metadata/point_order = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2544
@@ -1956,13 +2324,15 @@ grow_vertical = 2
 mouse_filter = 2
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 7
 theme_override_colors/font_color = Color(0.4431, 0.2471, 0.0706, 1)
 metadata/base_font = 7
 text = "STR_GI_X247"
 
 [node name="PT10" type="Label" parent="Pages/Page3/Body/Top/Image" index="9"]
+metadata/point = 3
+metadata/point_order = 3
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2333
@@ -1978,13 +2348,15 @@ grow_vertical = 2
 mouse_filter = 2
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 7
 theme_override_colors/font_color = Color(0.4431, 0.2471, 0.0706, 1)
 metadata/base_font = 7
 text = "STR_GI_X217"
 
 [node name="PT11" type="Label" parent="Pages/Page3/Body/Top/Image" index="10"]
+metadata/point = 3
+metadata/point_order = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2492
@@ -2007,6 +2379,8 @@ metadata/base_font = 6.5
 text = "STR_GI_X248"
 
 [node name="PT12" type="Label" parent="Pages/Page3/Body/Top/Image" index="11"]
+metadata/point = 4
+metadata/point_order = 0
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.7567
@@ -2029,6 +2403,8 @@ metadata/base_font = 10
 text = "STR_GI_X219"
 
 [node name="PT13" type="Label" parent="Pages/Page3/Body/Top/Image" index="12"]
+metadata/point = 4
+metadata/point_order = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.691
@@ -2051,6 +2427,8 @@ metadata/base_font = 6.5
 text = "STR_GI_X220"
 
 [node name="PT14" type="Label" parent="Pages/Page3/Body/Top/Image" index="13"]
+metadata/point = 4
+metadata/point_order = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6966
@@ -2066,13 +2444,15 @@ grow_vertical = 2
 mouse_filter = 2
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 7
 theme_override_colors/font_color = Color(0.2, 0.2549, 0.3333, 1)
 metadata/base_font = 7
 text = "STR_GI_X249"
 
 [node name="PT15" type="Label" parent="Pages/Page3/Body/Top/Image" index="14"]
+metadata/point = 4
+metadata/point_order = 3
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6788
@@ -2088,13 +2468,15 @@ grow_vertical = 2
 mouse_filter = 2
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 7
 theme_override_colors/font_color = Color(0.2, 0.2549, 0.3333, 1)
 metadata/base_font = 7
 text = "STR_GI_X250"
 
 [node name="PT16" type="Label" parent="Pages/Page3/Body/Top/Image" index="15"]
+metadata/point = 4
+metadata/point_order = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6683
@@ -2117,20 +2499,37 @@ metadata/base_font = 6.5
 text = "STR_GI_X251"
 
 [node name="PT17" type="Label" parent="Pages/Page3/Body/Top/Image" index="16"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
-metadata/point = 1
+metadata/point = 5
 metadata/point_order = 0
-text = "STR_GI_X252"
-
-[node name="Point1" type="Panel" parent="Pages/Page3/Body/Top/Image" index="17"]
-layout_mode = 0
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4994
 anchor_top = 0.8995
 anchor_right = 0.4994
 anchor_bottom = 0.8995
+offset_left = -162.6
+offset_top = -5.6
+offset_right = 162.6
+offset_bottom = 5.6
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("6_font_xb")
+theme_override_font_sizes/font_size = 7.5
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+metadata/base_font = 7.5
+text = "STR_GI_X252"
+
+[node name="Point1" type="Panel" parent="Pages/Page3/Body/Top/Image" index="17"]
+visible = false
+layout_mode = 0
+anchors_preset = -1
+anchor_left = 0.2611
+anchor_top = 0.1341
+anchor_right = 0.2611
+anchor_bottom = 0.1341
 offset_left = -20
 offset_top = -20
 offset_right = 20
@@ -2157,6 +2556,142 @@ theme_override_font_sizes/font_size = 22
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "1"
 
+[node name="Point2" type="Panel" parent="Pages/Page3/Body/Top/Image" index="18"]
+visible = false
+layout_mode = 0
+anchors_preset = -1
+anchor_left = 0.6528
+anchor_top = 0.2888
+anchor_right = 0.6528
+anchor_bottom = 0.2888
+offset_left = -20
+offset_top = -20
+offset_right = 20
+offset_bottom = 20
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/base_size = 40
+metadata/base_font = 22
+theme_override_styles/panel = SubResource("sb41")
+
+[node name="Num" type="Label" parent="Pages/Page3/Body/Top/Image/Point2" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "2"
+
+[node name="Point3" type="Panel" parent="Pages/Page3/Body/Top/Image" index="19"]
+visible = false
+layout_mode = 0
+anchors_preset = -1
+anchor_left = 0.2544
+anchor_top = 0.6491
+anchor_right = 0.2544
+anchor_bottom = 0.6491
+offset_left = -20
+offset_top = -20
+offset_right = 20
+offset_bottom = 20
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/base_size = 40
+metadata/base_font = 22
+theme_override_styles/panel = SubResource("sb42")
+
+[node name="Num" type="Label" parent="Pages/Page3/Body/Top/Image/Point3" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "3"
+
+[node name="Point4" type="Panel" parent="Pages/Page3/Body/Top/Image" index="20"]
+visible = false
+layout_mode = 0
+anchors_preset = -1
+anchor_left = 0.7166
+anchor_top = 0.6491
+anchor_right = 0.7166
+anchor_bottom = 0.6491
+offset_left = -20
+offset_top = -20
+offset_right = 20
+offset_bottom = 20
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/base_size = 40
+metadata/base_font = 22
+theme_override_styles/panel = SubResource("sb43")
+
+[node name="Num" type="Label" parent="Pages/Page3/Body/Top/Image/Point4" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "4"
+
+[node name="Point5" type="Panel" parent="Pages/Page3/Body/Top/Image" index="21"]
+visible = false
+layout_mode = 0
+anchors_preset = -1
+anchor_left = 0.4994
+anchor_top = 0.8995
+anchor_right = 0.4994
+anchor_bottom = 0.8995
+offset_left = -20
+offset_top = -20
+offset_right = 20
+offset_bottom = 20
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/base_size = 40
+metadata/base_font = 22
+theme_override_styles/panel = SubResource("sb44")
+
+[node name="Num" type="Label" parent="Pages/Page3/Body/Top/Image/Point5" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "5"
+
 [node name="PointRow1" type="HBoxContainer" parent="Pages/Page3/Body/Top/Points/List" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2168,7 +2703,7 @@ custom_minimum_size = Vector2(17, 17)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb41")
+theme_override_styles/panel = SubResource("sb45")
 
 [node name="NumText" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow1/NumCircle" index="0"]
 layout_mode = 1
@@ -2196,16 +2731,224 @@ layout_mode = 2
 mouse_filter = 2
 autowrap_mode = 3
 custom_minimum_size = Vector2(125, 0)
-theme_override_fonts/font = ExtResource("6_font_xb")
+theme_override_fonts/font = ExtResource("3_font_black")
 theme_override_font_sizes/font_size = 10
-theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+theme_override_colors/font_color = Color(0.7059, 0.3255, 0.0353, 1)
 
 [node name="Desc" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow1/Body" index="1"]
 layout_mode = 2
 mouse_filter = 2
 autowrap_mode = 3
 custom_minimum_size = Vector2(125, 0)
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.7059, 0.3255, 0.0353, 0.78)
+
+[node name="PointRow2" type="HBoxContainer" parent="Pages/Page3/Body/Top/Points/List" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+mouse_filter = 2
+
+[node name="NumCircle" type="Panel" parent="Pages/Page3/Body/Top/Points/List/PointRow2" index="0"]
+custom_minimum_size = Vector2(17, 17)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb46")
+
+[node name="NumText" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow2/NumCircle" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "2"
+
+[node name="Body" type="VBoxContainer" parent="Pages/Page3/Body/Top/Points/List/PointRow2" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow2/Body" index="0"]
+layout_mode = 2
+mouse_filter = 2
+autowrap_mode = 3
+custom_minimum_size = Vector2(125, 0)
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.7059, 0.3255, 0.0353, 1)
+
+[node name="Desc" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow2/Body" index="1"]
+layout_mode = 2
+mouse_filter = 2
+autowrap_mode = 3
+custom_minimum_size = Vector2(125, 0)
+theme_override_fonts/font = ExtResource("7_font_sb")
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.7059, 0.3255, 0.0353, 0.78)
+
+[node name="PointRow3" type="HBoxContainer" parent="Pages/Page3/Body/Top/Points/List" index="2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+mouse_filter = 2
+
+[node name="NumCircle" type="Panel" parent="Pages/Page3/Body/Top/Points/List/PointRow3" index="0"]
+custom_minimum_size = Vector2(17, 17)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb47")
+
+[node name="NumText" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow3/NumCircle" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "3"
+
+[node name="Body" type="VBoxContainer" parent="Pages/Page3/Body/Top/Points/List/PointRow3" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow3/Body" index="0"]
+layout_mode = 2
+mouse_filter = 2
+autowrap_mode = 3
+custom_minimum_size = Vector2(125, 0)
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.5216, 0.302, 0.0549, 1)
+
+[node name="Desc" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow3/Body" index="1"]
+layout_mode = 2
+mouse_filter = 2
+autowrap_mode = 3
+custom_minimum_size = Vector2(125, 0)
+theme_override_fonts/font = ExtResource("7_font_sb")
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.5216, 0.302, 0.0549, 0.78)
+
+[node name="PointRow4" type="HBoxContainer" parent="Pages/Page3/Body/Top/Points/List" index="3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+mouse_filter = 2
+
+[node name="NumCircle" type="Panel" parent="Pages/Page3/Body/Top/Points/List/PointRow4" index="0"]
+custom_minimum_size = Vector2(17, 17)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb48")
+
+[node name="NumText" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow4/NumCircle" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "4"
+
+[node name="Body" type="VBoxContainer" parent="Pages/Page3/Body/Top/Points/List/PointRow4" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow4/Body" index="0"]
+layout_mode = 2
+mouse_filter = 2
+autowrap_mode = 3
+custom_minimum_size = Vector2(125, 0)
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.1176, 0.1608, 0.2314, 1)
+
+[node name="Desc" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow4/Body" index="1"]
+layout_mode = 2
+mouse_filter = 2
+autowrap_mode = 3
+custom_minimum_size = Vector2(125, 0)
+theme_override_fonts/font = ExtResource("7_font_sb")
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.1176, 0.1608, 0.2314, 0.78)
+
+[node name="PointRow5" type="HBoxContainer" parent="Pages/Page3/Body/Top/Points/List" index="4"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+mouse_filter = 2
+
+[node name="NumCircle" type="Panel" parent="Pages/Page3/Body/Top/Points/List/PointRow5" index="0"]
+custom_minimum_size = Vector2(17, 17)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb49")
+
+[node name="NumText" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow5/NumCircle" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("3_font_black")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "5"
+
+[node name="Body" type="VBoxContainer" parent="Pages/Page3/Body/Top/Points/List/PointRow5" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow5/Body" index="0"]
+layout_mode = 2
+mouse_filter = 2
+autowrap_mode = 3
+custom_minimum_size = Vector2(125, 0)
+theme_override_fonts/font = ExtResource("6_font_xb")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 1)
+
+[node name="Desc" type="Label" parent="Pages/Page3/Body/Top/Points/List/PointRow5/Body" index="1"]
+layout_mode = 2
+mouse_filter = 2
+autowrap_mode = 3
+custom_minimum_size = Vector2(125, 0)
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 9
 theme_override_colors/font_color = Color(0.1333, 0.298, 0.4275, 0.78)
 
@@ -2214,7 +2957,7 @@ custom_minimum_size = Vector2(240, 38)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb42")
+theme_override_styles/panel = SubResource("sb50")
 
 [node name="NumCircle" type="Panel" parent="Pages/Page3/Body/Instruction/Row1" index="0"]
 layout_mode = 0
@@ -2223,7 +2966,7 @@ offset_top = 11
 offset_right = 26
 offset_bottom = 27
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb43")
+theme_override_styles/panel = SubResource("sb51")
 
 [node name="Title" type="Label" parent="Pages/Page3/Body/Instruction/Row1" index="1"]
 layout_mode = 0
@@ -2246,7 +2989,7 @@ offset_top = 21
 offset_right = -12
 offset_bottom = 33
 mouse_filter = 2
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 8
 theme_override_colors/font_color = Color(0.4706, 0.2078, 0.0588, 1)
 text = "STR_GI_FOG_OF_WAR_P3_R1D"
@@ -2256,7 +2999,7 @@ custom_minimum_size = Vector2(240, 38)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb44")
+theme_override_styles/panel = SubResource("sb52")
 
 [node name="NumCircle" type="Panel" parent="Pages/Page3/Body/Instruction/Row2" index="0"]
 layout_mode = 0
@@ -2265,7 +3008,7 @@ offset_top = 11
 offset_right = 26
 offset_bottom = 27
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb45")
+theme_override_styles/panel = SubResource("sb53")
 
 [node name="Title" type="Label" parent="Pages/Page3/Body/Instruction/Row2" index="1"]
 layout_mode = 0
@@ -2288,7 +3031,7 @@ offset_top = 21
 offset_right = -12
 offset_bottom = 33
 mouse_filter = 2
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 8
 theme_override_colors/font_color = Color(0.4431, 0.2471, 0.0706, 1)
 text = "STR_GI_FOG_OF_WAR_P3_R2D"
@@ -2298,7 +3041,7 @@ custom_minimum_size = Vector2(240, 38)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb46")
+theme_override_styles/panel = SubResource("sb54")
 
 [node name="NumCircle" type="Panel" parent="Pages/Page3/Body/Instruction/Row3" index="0"]
 layout_mode = 0
@@ -2307,7 +3050,7 @@ offset_top = 11
 offset_right = 26
 offset_bottom = 27
 mouse_filter = 2
-theme_override_styles/panel = SubResource("sb47")
+theme_override_styles/panel = SubResource("sb55")
 
 [node name="Title" type="Label" parent="Pages/Page3/Body/Instruction/Row3" index="1"]
 layout_mode = 0
@@ -2330,7 +3073,7 @@ offset_top = 21
 offset_right = -12
 offset_bottom = 33
 mouse_filter = 2
-theme_override_fonts/font = ExtResource("5_font_sb")
+theme_override_fonts/font = ExtResource("7_font_sb")
 theme_override_font_sizes/font_size = 8
 theme_override_colors/font_color = Color(0.0118, 0.4118, 0.6314, 1)
 text = "STR_GI_FOG_OF_WAR_P3_R3D"
@@ -2347,10 +3090,10 @@ theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = SubResource("sb48")
-theme_override_styles/hover = SubResource("sb48")
-theme_override_styles/pressed = SubResource("sb48")
-theme_override_styles/focus = SubResource("sb49")
+theme_override_styles/normal = SubResource("sb56")
+theme_override_styles/hover = SubResource("sb56")
+theme_override_styles/pressed = SubResource("sb56")
+theme_override_styles/focus = SubResource("sb57")
 text = "STR_GI_FOG_OF_WAR_P3_CTA"
 
 [node name="Link" type="Button" parent="Pages/Page3" index="3"]
@@ -2366,10 +3109,10 @@ theme_override_font_sizes/font_size = 9
 theme_override_colors/font_color = Color(0.2, 0.2549, 0.3333, 1)
 theme_override_colors/font_hover_color = Color(0.2, 0.2549, 0.3333, 0.75)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2549, 0.3333, 0.75)
-theme_override_styles/normal = SubResource("sb50")
-theme_override_styles/hover = SubResource("sb50")
-theme_override_styles/pressed = SubResource("sb50")
-theme_override_styles/focus = SubResource("sb50")
+theme_override_styles/normal = SubResource("sb58")
+theme_override_styles/hover = SubResource("sb58")
+theme_override_styles/pressed = SubResource("sb58")
+theme_override_styles/focus = SubResource("sb58")
 text = "STR_GI_FOG_OF_WAR_P3_LINK"
 
 [editable path="Pages/Page1"]
