@@ -205,32 +205,25 @@ func _check_content(mode: String) -> void:
 	var p1: Node = pages.get_child(0) if pages != null and pages.get_child_count() > 0 else null
 	var img: Node = p1.get_node_or_null("Body/Top/Image") if p1 != null else null
 	_check(img != null and img.texture != null, "%s: Image co anh minh hoa" % mode)
-	var shown := 0
-	var hidden_points := 0
-	var badges := 0
-	if img != null:
-		for child in img.get_children():
-			if child is Label:
-				if child.has_meta("point"):
-					hidden_points += 1
-				elif child.visible:
-					shown += 1
-			elif child is Panel and child.has_meta("base_size"):
-				badges += 1
-	_check(shown > 0, "%s: %d nhan minh hoa van hien tren anh" % [mode, shown])
-	_check(hidden_points > 0, "%s: %d nhan chu thich -> Label an (diem)" % [mode, hidden_points])
-	# ĐIỂM: badge số trên ảnh + hàng trong section (chữ do script đổ từ PT# ẩn)
+	var pbox: Node = p1.get_node_or_null("Body/Top/Points") if p1 != null else null
+	var plist: Node = p1.get_node_or_null("Body/Top/Points/List") if p1 != null else null
+	# ---------- KIỂU HIỂN THỊ ĐIỂM (a): POPUP — chữ HIỆN trên ảnh như mockup ----------
+	var cp := _count_image_labels(img)
+	_check(cp["words"] > 0 and cp["words_shown"] == cp["words"],
+			"%s: POPUP — %d/%d nhan chu tren anh HIEN (nhu mockup)" % [mode, cp["words_shown"], cp["words"]])
+	_check(cp["literals_shown"] > 0,
+			"%s: POPUP — so/ky hieu tren anh hien (%d)" % [mode, cp["literals_shown"]])
+	_check(cp["badges"] == c.point_count() and cp["badges_shown"] == 0,
+			"%s: POPUP — %d badge so AN het" % [mode, cp["badges"]])
+	_check(pbox != null and not pbox.visible, "%s: POPUP — khoi DIEM an" % mode)
+	# ĐIỂM (dùng chung 2 bản): badge số trên ảnh + hàng trong section (chữ đổ sẵn từ các nhãn đó)
 	_check(c.point_count() >= 1, "%s: co %d diem" % [mode, c.point_count()])
-	_check(badges == c.point_count(), "%s: %d badge so = so diem" % [mode, badges])
 	var pts := c.point_texts()
 	var pts_ok := pts.size() == c.point_count()
 	for s in pts:
 		if s.strip_edges().is_empty():
 			pts_ok = false
-	_check(pts_ok and not pts.is_empty(), "%s: chu giai thich diem doc tu PT# an" % mode)
-	var pbox: Node = p1.get_node_or_null("Body/Top/Points") if p1 != null else null
-	var plist: Node = p1.get_node_or_null("Body/Top/Points/List") if p1 != null else null
-	_check(pbox != null and pbox.visible, "%s: khoi DIEM hien" % mode)
+	_check(pts_ok and not pts.is_empty(), "%s: chu giai thich diem do san vao section" % mode)
 	_check(plist != null and plist.get_child_count() == c.point_count(),
 			"%s: %d hang diem trong Points/List" % [mode, c.point_count()])
 	if plist != null and plist.get_child_count() > 0:
@@ -238,6 +231,36 @@ func _check_content(mode: String) -> void:
 		var ptitle := prow.get_node_or_null("Body/Title") as Label
 		_check(ptitle != null and not ptitle.text.is_empty(),
 				"%s: hang diem 1 duoc do chu" % mode)
+	# ---------- KIỂU HIỂN THỊ ĐIỂM (b): NHÚNG — chữ ẨN hết, badge HIỆN, khối ĐIỂM HIỆN ----------
+	c.set_embedded(true)
+	await process_frame
+	var ce := _count_image_labels(img)
+	_check(ce["words_shown"] == 0, "%s: NHUNG — chu mo ta tren anh AN het" % mode)
+	_check(ce["badges_shown"] == c.point_count(),
+			"%s: NHUNG — %d badge so HIEN" % [mode, ce["badges_shown"]])
+	_check(pbox != null and pbox.visible, "%s: NHUNG — khoi DIEM hien" % mode)
+	# ẢNH MINH HOẠ bản nhúng: MỌI trang không còn CHỮ mô tả — chỉ SỐ/KÝ HIỆU (+ hình vẽ) là hiện
+	var img_words := 0
+	var img_literals := 0
+	if pages != null:
+		for page in pages.get_children():
+			var img_node := page.get_node_or_null("Body/Top/Image")
+			if img_node == null:
+				continue
+			for child in img_node.get_children():
+				if child is Label and child.visible and not child.has_meta("point"):
+					if _is_literal(child.text):
+						img_literals += 1
+					else:
+						img_words += 1
+	_check(img_words == 0, "%s: NHUNG — anh KHONG con chu mo ta (%d chu / %d so-ky hieu hien)" % [mode, img_words, img_literals])
+	# ---------- về lại POPUP: chữ hiện lại, badge + khối ĐIỂM ẩn ----------
+	c.set_embedded(false)
+	await process_frame
+	var cb := _count_image_labels(img)
+	_check(cb["words_shown"] == cb["words"] and cb["badges_shown"] == 0
+			and pbox != null and not pbox.visible,
+			"%s: tra ve POPUP — chu hien lai, badge + khoi DIEM an" % mode)
 	var vbox: Node = p1.get_node_or_null("Body/Instruction") if p1 != null else null
 	_check(vbox is VBoxContainer and vbox.get_child_count() == 3, "%s: 3 hang luat trong VBox" % mode)
 	var row1: Node = vbox.get_child(0) if vbox != null and vbox.get_child_count() > 0 else null
@@ -316,9 +339,13 @@ func _check_popup() -> void:
 		_check(title1 != null and title1.visible, "popup: hien Title cua trang")
 		_check(cta1 != null and cta1.visible and link1 != null and link1.visible,
 				"popup: Cta + Link hien (chi popup moi co)")
-		_check(pbox != null and pbox.visible, "popup: khoi DIEM hien")
+		_check(pbox != null and not pbox.visible, "popup: khoi DIEM an (chu da nam tren anh)")
 		_check(content.point_count() >= 1 and content.point_texts().size() == content.point_count(),
 				"popup: diem duoc do chu")
+		var pimg := content.get_node_or_null("Pages/Page1/Body/Top/Image")
+		var pc := _count_image_labels(pimg)
+		_check(pc["words"] > 0 and pc["words_shown"] == pc["words"] and pc["badges_shown"] == 0,
+				"popup: chu tren anh HIEN + badge so AN")
 	_check(pop.page_count() == 3 and pop.tab_count() == 3, "popup: 3 trang / 3 tab")
 	var paper := pop.get_node_or_null("Panel/Paper") as Panel
 	_check(paper != null and paper.get_theme_stylebox("panel") != null, "popup: to giay duoc to theo che do")
@@ -437,19 +464,31 @@ func _check_hud_embed() -> void:
 		_check(title1 != null and not title1.visible, "ban nhung: an Title")
 		_check(cta1 != null and not cta1.visible, "ban nhung: an Cta (chi popup moi co)")
 		_check(link != null and not link.visible, "ban nhung: an link 'bo qua'")
-		# điều hướng dời lên hàng tiêu đề “LUẬT CHƠI” (theo mockup landscape)
+		# điều hướng nằm trong BĂNG ĐÁY khung — DƯỚI khối “LUẬT CHƠI” (Section + các hàng luật)
 		var sec := view.get_node_or_null("Pages/Page1/Body/Section") as Control
 		var prev_btn := view.get_node_or_null("Prev") as Control
 		var idx := view.get_node_or_null("Index") as Control
-		_check(sec != null and prev_btn != null and idx != null
-				and absf(prev_btn.global_position.y - sec.global_position.y) < 24.0
-				and absf(idx.global_position.y - sec.global_position.y) < 24.0,
-				"ban nhung: dieu huong nam trong hang tieu de LUAT CHOI")
-		# khối ĐIỂM vẫn hiện trong bản nhúng
+		var instr1 := view.get_node_or_null("Pages/Page1/Body/Instruction") as Control
+		_check(sec != null and instr1 != null and prev_btn != null and idx != null
+				and prev_btn.global_position.y >= instr1.global_position.y + instr1.size.y - 1.0
+				and idx.global_position.y >= instr1.global_position.y + instr1.size.y - 1.0
+				and idx.global_position.y + idx.size.y
+						<= view.global_position.y + view.size.y + 1.0,
+				"ban nhung: dieu huong nam DUOI khoi LUAT CHOI, gon trong khung (nav y=%.1f/%.1f instr_bottom=%.1f view_bottom=%.1f)" % [
+					prev_btn.global_position.y if prev_btn != null else -1.0,
+					idx.global_position.y if idx != null else -1.0,
+					instr1.global_position.y + instr1.size.y if instr1 != null else -1.0,
+					view.global_position.y + view.size.y])
+		# khối ĐIỂM hiện + chữ trên ảnh ẩn hết + badge số hiện (bản NHÚNG)
 		var pbox := view.get_node_or_null("Pages/Page1/Body/Top/Points") as Control
 		var img1 := view.get_node_or_null("Pages/Page1/Body/Top/Image") as Control
 		_check(pbox != null and pbox.visible, "ban nhung: khoi DIEM hien")
 		_check(view.point_count() >= 1, "ban nhung: diem co chu")
+		var hc := _count_image_labels(img1)
+		_check(hc["words_shown"] == 0 and hc["words"] > 0,
+				"ban nhung: chu mo ta tren anh AN het (%d nhan)" % hc["words"])
+		_check(hc["badges_shown"] == view.point_count(),
+				"ban nhung: %d badge so HIEN" % hc["badges_shown"])
 		_check(img1 != null and pbox != null
 				and pbox.global_position.x >= img1.global_position.x + img1.size.x - 1.0
 				and img1.global_position.y < pbox.global_position.y + pbox.size.y
@@ -518,14 +557,31 @@ func _check_aspect_invariants() -> void:
 				and sec.global_position.x >= view.global_position.x - 1.0
 		_check(row_ok and inside_ok and below_ok,
 				"khung %s: [ANH|DIEM] cung hang + gon trong khung + LUAT CHOI o duoi" % str(host_size))
-		# điều hướng luôn nằm trong hàng tiêu đề LUẬT CHƠI và không tràn mép phải
+		# ĐIỀU HƯỚNG: nằm trong BĂNG ĐÁY — DƯỚI khối luật của trang đang xem, không tràn mép,
+		# và KHÔNG xê dịch khi lật trang (bug cũ: trang mới hiện lần đầu chưa dàn xong nên
+		# cụm điều hướng bị đặt theo vị trí cũ ⇒ nhảy lên trên).
 		var prev_btn := view.get_node_or_null("Prev") as Control
 		var idx := view.get_node_or_null("Index") as Control
-		var nav_ok: bool = sec != null and prev_btn != null and idx != null \
-				and absf(prev_btn.global_position.y - sec.global_position.y) < 24.0 \
-				and absf(idx.global_position.y - sec.global_position.y) < 24.0 \
-				and idx.global_position.x + idx.size.x <= view.global_position.x + view.size.x + 1.0
-		_check(nav_ok, "khung %s: dieu huong nam trong hang LUAT CHOI, khong tran mep" % str(host_size))
+		var instr := view.get_node_or_null("Pages/Page1/Body/Instruction") as Control
+		var nav_y1 := idx.global_position.y if idx != null else -1.0
+		var nav_ok: bool = prev_btn != null and idx != null and instr != null \
+				and prev_btn.global_position.y >= instr.global_position.y + instr.size.y - 1.0 \
+				and idx.global_position.y >= instr.global_position.y + instr.size.y - 1.0 \
+				and idx.global_position.x + idx.size.x <= view.global_position.x + view.size.x + 1.0 \
+				and idx.global_position.y + idx.size.y <= view.global_position.y + view.size.y + 1.0
+		view.go_to_page(1)
+		await process_frame
+		await process_frame
+		var idx2 := view.get_node_or_null("Index") as Control
+		var instr2 := view.get_node_or_null("Pages/Page2/Body/Instruction") as Control
+		var nav_y2 := idx2.global_position.y if idx2 != null else -2.0
+		var nav2_ok: bool = idx2 != null and instr2 != null \
+				and idx2.global_position.y >= instr2.global_position.y + instr2.size.y - 1.0
+		view.go_to_page(0)
+		await process_frame
+		await process_frame
+		_check(nav_ok and nav2_ok and absf(nav_y1 - nav_y2) < 1.0,
+				"khung %s: dieu huong DUOI khoi luat + KHONG xe dich khi lat trang" % str(host_size))
 	host.queue_free()
 	await process_frame
 
@@ -554,3 +610,24 @@ func _is_literal(text: String) -> bool:
 	if text == "S" or text == "F":
 		return true
 	return _letter_re.search(text) == null
+
+
+## Đếm trên node Image: nhan CHỮ MÔ TẢ (của ĐIỂM, metadata/point), SỐ/KÝ HIỆU, và BADGE số —
+## kèm số đang HIỆN — để test phân biệt bản POPUP (chữ hiện) và bản NHÚNG (badge hiện).
+func _count_image_labels(img: Node) -> Dictionary:
+	var res := {"words": 0, "words_shown": 0, "literals_shown": 0, "badges": 0, "badges_shown": 0}
+	if img == null:
+		return res
+	for child in img.get_children():
+		if child is Label:
+			if child.has_meta("point"):
+				res["words"] += 1
+				if child.visible:
+					res["words_shown"] += 1
+			elif child.visible:
+				res["literals_shown"] += 1
+		elif child is Panel and child.has_meta("base_size"):
+			res["badges"] += 1
+			if child.visible:
+				res["badges_shown"] += 1
+	return res

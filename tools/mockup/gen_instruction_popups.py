@@ -399,10 +399,12 @@ class Builder:
                 f"theme_override_colors/font_color = {col(d['section_fg'])}"])
 
         # chữ trên khung minh hoạ — CON của Image, neo TỈ LỆ theo ảnh.
-        # Chữ nằm trong KHUNG CHÚ THÍCH (comment CALLOUT/CHÚ THÍCH/DẢI của mockup) KHÔNG
-        # viết lên ảnh nữa: ảnh chỉ nhận BADGE SỐ, chuỗi gốc giữ trong Label ẨN
-        # (metadata/point + point_order) cho content_instruction.gd đọc và đổ xuống
-        # section “chi tiết điểm” (Points/List/PointRow…).
+        # · MỌI CHỮ MÔ TẢ (không phải số/ký hiệu) thuộc một ĐIỂM: scene nướng đủ chữ tại đúng chỗ
+        #   (bản POPUP hiện ra như mockup) + `metadata/point` + `point_order` để content_instruction.gd
+        #   đọc và đổ xuống khối ĐIỂM (Points/List/PointRow…).
+        # · Bản NHÚNG do `page.gd` ẩn HẾT chữ của ĐIỂM + hiện BADGE SỐ (ảnh sạch, dễ nhìn);
+        #   bản POPUP thì ngược lại: hiện chữ trên ảnh, ẩn badge + khối ĐIỂM.
+        # · SỐ/KÝ HIỆU (is_literal_text: 1 · 2 · 15 · 04 · 01:24 · S · F · ✓ …) luôn vẽ lên ảnh.
         points = self.collect_points(d)
         point_at = {}
         for pn, grp in enumerate(points, 1):
@@ -412,7 +414,7 @@ class Builder:
         for i, t in enumerate(d["panel_texts"], 1):
             if i in point_at:
                 pn, order = point_at[i]
-                self.build_point_src(sc, ppath, i, child, t, pn, order)
+                self.build_pt(sc, ppath, i, child, t, pn, order)
             else:
                 self.build_pt(sc, ppath, i, child, t)
             child += 1
@@ -464,24 +466,37 @@ class Builder:
         return ax, ay
 
     def collect_points(self, d: dict) -> list:
-        """Gom các chữ trong KHUNG CHÚ THÍCH thành từng ĐIỂM (theo comment mockup)."""
+        """Gom MỌI CHỮ MÔ TẢ thành từng ĐIỂM (theo comment mockup, theo THỨ TỰ tài liệu).
+
+        ĐIỂM = mọi chữ KHÔNG phải số/ký hiệu (xem `im.is_literal_text`), gom theo comment
+        ĐỨNG LIỀN TRƯỚC (comment trùng nhưng cách xa nhau vẫn tách nhóm); chữ không comment
+        thì mỗi chữ một ĐIỂM. Mỗi ĐIỂM = 1 badge số trên ảnh + 1 hàng `PointRow` trong khối
+        “CHI TIẾT” (bản NHÚNG) — bản POPUP thì ngược lại: hiện chữ trên ảnh, ẩn badge + khối ĐIỂM.
+        """
         groups = []
-        seen = {}
+        current = None
         for i, t in enumerate(d["panel_texts"], 1):
-            if not t.get("point"):
+            if im.is_literal_text(t["text"]):
                 continue
             name = t.get("comment", "")
-            if name not in seen:
-                seen[name] = len(groups)
-                groups.append({"comment": name, "texts": []})
-            groups[seen[name]]["texts"].append((i, t))
+            if name == "":
+                groups.append({"comment": name, "texts": [(i, t)]})
+                current = None
+                continue
+            if current is None or current["comment"] != name:
+                current = {"comment": name, "texts": []}
+                groups.append(current)
+            current["texts"].append((i, t))
         return groups
 
-    def build_pt(self, sc: Scene, ppath: str, i: int, index: int, t: dict) -> None:
+    def build_pt(self, sc: Scene, ppath: str, i: int, index: int, t: dict,
+                 point: int = 0, order: int = 0) -> None:
         """Label chữ-trên-ảnh: neo theo TÂM (tỉ lệ trong ảnh) — ảnh co giãn là chữ đi theo.
 
-        `metadata/base_font` = cỡ chữ lúc thiết kế để `page.gd` co lại theo cỡ ảnh thật
-        (tránh chữ tràn khung khi ảnh nhỏ hơn cỡ thiết kế).
+        · POPUP (mặc định): chữ HIỆN đúng vị trí như mockup.
+        · NHÚNG: chữ của `point > 0` bị ẩn (badge số + hàng trong khối ĐIỂM thay thế) — page.gd lo.
+        `metadata/point` + `point_order` (chỉ chữ thuộc một ĐIỂM) để content_instruction.gd đọc
+        và đổ xuống khối ĐIỂM; `metadata/base_font` để page.gd co chữ theo CỠ ẢNH THẬT.
         """
         key = self._text_key(t["text"])
         size, weight = t["size"], t["weight"]
@@ -489,7 +504,7 @@ class Builder:
         w2 = round(rect[2] * S, 1)
         h2 = round(rect[3] * S, 1)
         ax, ay = self.image_anchor(rect[0] + rect[2] * 0.5, rect[1] + rect[3] * 0.5)
-        sc.node(f"PT{i}", "Label", f"{ppath}/Body/Top/Image", index, [
+        props = [
             "layout_mode = 1", "anchors_preset = -1",
             f"anchor_left = {ax}", f"anchor_top = {ay}",
             f"anchor_right = {ax}", f"anchor_bottom = {ay}",
@@ -501,27 +516,19 @@ class Builder:
             f"theme_override_font_sizes/font_size = {n(size)}",
             f"theme_override_colors/font_color = {col(t['fill'])}",
             f"metadata/base_font = {n(size)}",
-            f'text = "{esc(key)}"'])
+            f'text = "{esc(key)}"']
+        if point > 0:
+            props.insert(0, f"metadata/point_order = {int(order)}")
+            props.insert(0, f"metadata/point = {int(point)}")
+        sc.node(f"PT{i}", "Label", f"{ppath}/Body/Top/Image", index, props)
 
     # ----------------------------------------------------------------- điểm
-    def build_point_src(self, sc: Scene, ppath: str, i: int, index: int, t: dict,
-                        point: int, order: int) -> None:
-        """Label ẨN giữ CHUỖI GỐC của chữ trong khung chú thích.
-
-        content_instruction.gd đọc theo `metadata/point` (+ thứ tự `point_order`)
-        rồi đổ xuống section “chi tiết điểm” — nhờ vậy không cần viết chữ lên ảnh.
-        """
-        key = self._text_key(t["text"])
-        sc.node(f"PT{i}", "Label", f"{ppath}/Body/Top/Image", index, [
-            "visible = false",
-            "layout_mode = 0",
-            "mouse_filter = 2",
-            f"metadata/point = {point}",
-            f"metadata/point_order = {order}",
-            f'text = "{esc(key)}"'])
-
     def build_point_badge(self, sc: Scene, ppath: str, index: int, point: int, grp: dict) -> None:
-        """Badge SỐ trên ảnh — đặt tại tâm vùng chữ của khung chú thích (thay chữ cũ)."""
+        """Badge SỐ trên ảnh — đặt tại tâm vùng chữ của khung chú thích (thay chữ cũ).
+
+        Mặc định `visible = false`: bản POPUP hiện CHỮ tại chỗ (như mockup); `page.gd`
+        bật badge lên ở bản NHÚNG và ẩn chữ đi.
+        """
         rects = [self.text_rect(t) for (_i, t) in grp["texts"]]
         x0 = min(r[0] for r in rects)
         y0 = min(r[1] for r in rects)
@@ -532,6 +539,7 @@ class Builder:
         size = POINT_BADGE_D * S
         sb = sc.sub_stylebox({"bg": col(fill), "radius": size * 0.5})
         sc.node(f"Point{point}", "Panel", f"{ppath}/Body/Top/Image", index, [
+            "visible = false",
             "layout_mode = 0", "anchors_preset = -1",
             f"anchor_left = {ax}", f"anchor_top = {ay}",
             f"anchor_right = {ax}", f"anchor_bottom = {ay}",

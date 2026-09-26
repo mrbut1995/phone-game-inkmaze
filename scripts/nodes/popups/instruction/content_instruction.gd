@@ -14,11 +14,16 @@ extends Control
 ##   · popup  — `popup_instruction.tscn` nạp vào `Panel/Content` (tờ giấy 460×740):
 ##              hiện ĐẦY ĐỦ chip/tabs/nav + Cta/Link của từng trang
 ##   · HUD ngang — GameHUD nạp vào `GuideHost` với `set_embedded(true)`: ẨN Chip/Tabs
-##              (+Title do trang tự ẩn) và Cta/Link (popup mới cần), điều hướng dời vào
-##              hàng tiêu đề “LUẬT CHƠI” theo mockup landscape
+##              (+Title do trang tự ẩn) và Cta/Link (popup mới cần), điều hướng dời XUỐNG
+##              BĂNG RIÊNG Ở ĐÁY khung, nằm DƯỚI khối “QUY TẮC …” (trang cấp chỗ qua
+##              `nav_slot_rect()`) — cùng chỗ ở MỌI trang nên lật trang không xê dịch.
 ##
-## Chữ của “ĐIỂM” (khung chú thích trên ảnh): generator giữ chuỗi gốc trong Label ẨN
-## (`metadata/point` + `point_order`) — script đọc rồi đổ xuống `Points/List/PointRow#`.
+## Chữ của “ĐIỂM” (mọi chữ mô tả trên ảnh — số/ký hiệu không tính): generator nướng vào Label
+## của ảnh (`metadata/point` + `point_order`) — script đọc rồi đổ xuống `Points/List/PointRow#`.
+## HAI KIỂU HIỂN THỊ (do `page.gd` lo, xem `_apply_point_mode`):
+##   · POPUP — chữ HIỆN trên ảnh (đúng như mockup), KHÔNG badge số, KHÔNG khối ĐIỂM;
+##   · NHÚNG — chữ trên ảnh ẨN HẾT, BADGE SỐ hiện tại đúng chỗ chữ cũ, khối ĐIỂM cạnh ảnh
+##     liệt kê nội dung từng điểm.
 ##
 ## Mở bằng popup: `Popups.open_path("res://nodes/popups/popup_instruction.tscn", {"mode_id": ...})`.
 ## Nhúng trong HUD: `GameHUD.show_instruction_for(mode_id)`.
@@ -38,10 +43,10 @@ const DOT_GAP := 3.0
 const POINTS_HEAD_KEY := "STR_GI_POINTS_HEAD"
 ## Dấu nối các chữ trong CÙNG một điểm (vd “MỖI BƯỚC ĐI · -1 BƯỚC · Hết bước = THUA”)
 const POINT_TEXT_SEP := " · "
-## Cỡ nút ‹ › khi NHÚNG (điều hướng nằm trong hàng tiêu đề LUẬT CHƠI)
-const EMBED_NAV_BTN := 28.0
+## Cỡ nút ‹ › khi NHÚNG (điều hướng nằm trong băng đáy khung — khung thấp nên nút gọn)
+const EMBED_NAV_BTN := 24.0
 ## Khe giữa ‹ · dots · › khi nhúng (cụm gom SÁT nhau, canh phải trước “TRANG x / 3”)
-const EMBED_NAV_GAP := 8.0
+const EMBED_NAV_GAP := 6.0
 
 ## Style/màu tab + dot do generator nướng sẵn từng chế độ (xem gen_instruction_popups.py)
 @export var tab_on_style: StyleBoxFlat
@@ -172,8 +177,8 @@ func link_button() -> Button:
 	return _child_of(_page, "Link") as Button
 
 
-## Bản NHÚNG (khung Hướng dẫn trong HUD theo mockup): ẩn Chip/Tabs/Title + Cta/Link
-## (chỉ POPUP mới hiện các phần đó), điều hướng dời vào hàng tiêu đề “LUẬT CHƠI”.
+## Bản NHÚNG (khung Hướng dẫn trong HUD): ẩn Chip/Tabs/Title + Cta/Link
+## (chỉ POPUP mới hiện các phần đó), điều hướng dời XUỐNG băng đáy khung (dưới khối luật).
 func set_embedded(on: bool) -> void:
 	embedded = on
 	# Bản nhúng không còn băng chip/tabs trên · điều hướng dưới: cho `Pages` phủ KÍN khung
@@ -265,7 +270,7 @@ func _show_page(index: int, animate: bool) -> void:
 
 
 ## Bản NHÚNG: CHỈ hiện nội dung — ẩn Chip/Tabs (+Title do trang tự ẩn) và Cta/Link
-## (2 thành phần này CHỈ dùng khi mở bằng POPUP), điều hướng dời lên hàng tiêu đề LUẬT CHƠI.
+## (2 thành phần này CHỈ dùng khi mở bằng POPUP), điều hướng dời xuống băng đáy khung.
 func _apply_embedded_chrome() -> void:
 	var chip := get_node_or_null("Chip") as Control
 	if chip != null:
@@ -403,8 +408,8 @@ func _fill_point_row(row: Node, keys) -> void:
 			desc.visible = false
 
 
-## Bản NHÚNG: [‹ · dots · › · TRANG x/3] nằm bên phải hàng tiêu đề “LUẬT CHƠI”
-## (trang cung cấp chỗ qua `nav_slot_rect()` — theo mockup landscape).
+## Bản NHÚNG: [‹ · dots · › · TRANG x/3] nằm trong BĂNG ĐÁY khung — DƯỚI khối “QUY TẮC …”
+## (trang cấp chỗ qua `nav_slot_rect()`, vị trí chỉ phụ thuộc cỡ khung nên lật trang không lệch).
 func _update_embed_nav() -> void:
 	if not embedded or _pages.is_empty():
 		return

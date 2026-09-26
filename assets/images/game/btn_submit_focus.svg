@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 94" width="182" height="61.1">
+  <rect x="1.5" y="1.5" width="277" height="87" rx="21" fill="#FEFDFA" stroke="#3D83AE" stroke-width="3" />
+  <!-- Viền nét đứt focus vẽ phía trong viền nút -->
+  <rect x="5.5" y="5.5" width="269" height="79" rx="17" fill="none" stroke="#3D83AE" stroke-width="2" stroke-dasharray="5 3.5" />
+  
+  <g transform="translate(38, 28)">
+    <path d="M 6 18 L 16 28 L 36 8" 
+          fill="none" stroke="#3D83AE" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

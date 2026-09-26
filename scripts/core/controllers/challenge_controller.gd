@@ -54,6 +54,7 @@ var _last_key := ""
 ## Số ô thuộc board (để tính % độ dài đường đi / đi hết ô)
 var _board_cells := 0
 
+signal challenge_update()
 
 func _ready() -> void:
 	setup_for_floor(0)
@@ -511,11 +512,11 @@ func _refresh_hud() -> void:
 		if bg != null:
 			bg.texture = ROW_DONE if done else ROW_PENDING
 
-		var check := row_node.get_node_or_null("Check") as TextureRect
+		var check := row_node.get_node_or_null("Bg/Check") as TextureRect
 		if check != null:
 			check.texture = CHECK_DONE if done else CHECK_PENDING
 
-		var name_label := row_node.get_node_or_null("Name") as Label
+		var name_label := row_node.get_node_or_null("Bg/Name") as Label
 		if name_label != null:
 			var title_text := str(row.get("title", ""))
 			if name_label.text != title_text:
@@ -523,7 +524,7 @@ func _refresh_hud() -> void:
 			name_label.modulate = COLOR_IDLE if failed else COLOR_NAME
 
 		# Đã đạt -> hiện nhãn "✓ ĐẠT" (góc phải) thay cho dòng trạng thái
-		var status_label := row_node.get_node_or_null("Status") as Label
+		var status_label := row_node.get_node_or_null("Bg/Status") as Label
 		if status_label != null:
 			status_label.visible = not done
 			var status_text := str(row.get("status", ""))
@@ -531,6 +532,6 @@ func _refresh_hud() -> void:
 				status_label.text = status_text
 			status_label.modulate = row.get("status_color", COLOR_IDLE)
 
-		var badge := row_node.get_node_or_null("Badge") as Control
+		var badge := row_node.get_node_or_null("Bg/Badge") as Control
 		if badge != null:
 			badge.visible = done
