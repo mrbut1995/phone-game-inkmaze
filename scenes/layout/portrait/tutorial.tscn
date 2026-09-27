@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://smn1ps0pfgs3"]
+
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_sgfok"]
+
+[node name="BaseLayout" unique_id=1041501532 instance=ExtResource("1_sgfok")]

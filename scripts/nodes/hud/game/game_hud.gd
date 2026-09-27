@@ -38,12 +38,22 @@ static var _guide_scene_cache: Dictionary = {}
 
 var _instruction_mode := ""
 var _instruction_content: InstructionContent = null
-var _instruction_fallback: Button = null
+
+
+## ---------------------------------------------------------------------------
+## NODE CON — SCENE TỰ BIND qua `@export` (script KHÔNG dò đường dẫn "A/B/C")
+## ---------------------------------------------------------------------------
+## Khung hướng dẫn NHÚNG (`Content/InstructionSection`) — CHỈ bản NGANG khai node này
+@export var instruction_section_node : Control
+## Nơi nhúng nội dung hướng dẫn (`…/InstructionSection/Panel/GuideHost`)
+@export var instruction_host : Control
+## Nút dự phòng "XEM HƯỚNG DẪN" (`…/InstructionSection/Panel/Fallback`)
+@export var instruction_fallback_btn : Button
 
 
 ## Khung chứa hướng dẫn — CHỈ bản NGANG có (khung `InstructionSection`); bản dọc trả null.
 func instruction_section() -> Control:
-	return get_node_or_null("Content/InstructionSection") as Control
+	return instruction_section_node
 
 
 ## Nội dung hướng dẫn đang NHÚNG trong khung (null = không nhúng)
@@ -53,7 +63,7 @@ func instruction_view() -> InstructionContent:
 
 ## Nút dự phòng "XEM HƯỚNG DẪN" trong khung
 func instruction_fallback() -> Button:
-	return _instruction_fallback
+	return instruction_fallback_btn
 
 
 ## Ghi đè hook ở `BaseHUD`: đổi chế độ ⇒ nhúng lại nội dung hướng dẫn (bản NGANG mới có khung)
@@ -61,7 +71,7 @@ func _sync_instruction(mode: Variant) -> void:
 	var section := instruction_section()
 	if section == null:
 		return
-	_ensure_instruction_nodes(section)
+	_ensure_instruction_nodes()
 	var mode_id := ""
 	var game_mode := mode as BaseGameMode
 	if game_mode != null:
@@ -76,12 +86,12 @@ func show_instruction_for(mode_id: String) -> void:
 	var section := instruction_section()
 	if section == null:
 		return
-	_ensure_instruction_nodes(section)
+	_ensure_instruction_nodes()
 	_instruction_mode = mode_id
 	if _instruction_content != null and is_instance_valid(_instruction_content):
 		_instruction_content.queue_free()
 	_instruction_content = null
-	var host := section.get_node_or_null("Panel/GuideHost") as Control
+	var host := instruction_host
 	if host != null and not mode_id.is_empty():
 		var packed := _instruction_scene(mode_id)
 		if packed != null:
@@ -95,15 +105,15 @@ func show_instruction_for(mode_id: String) -> void:
 
 
 ## Nút dự phòng + tín hiệu `resized` của khung — nối đúng 1 lần
-func _ensure_instruction_nodes(section: Control) -> void:
-	if _instruction_fallback == null:
-		_instruction_fallback = section.get_node_or_null("Panel/Fallback") as Button
-		if _instruction_fallback != null and not _instruction_fallback.pressed.is_connected(_on_instruction_pressed):
-			_instruction_fallback.pressed.connect(_on_instruction_pressed)
-		if _instruction_fallback != null and not _instruction_fallback.has_meta("bounce_attached"):
-			_instruction_fallback.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(_instruction_fallback)
-	if not section.resized.is_connected(_fit_instruction_view):
+func _ensure_instruction_nodes() -> void:
+	if instruction_fallback_btn != null \
+			and not instruction_fallback_btn.pressed.is_connected(_on_instruction_pressed):
+		instruction_fallback_btn.pressed.connect(_on_instruction_pressed)
+	if instruction_fallback_btn != null and not instruction_fallback_btn.has_meta("bounce_attached"):
+		instruction_fallback_btn.set_meta("bounce_attached", true)
+		UIAnim.attach_press_bounce(instruction_fallback_btn)
+	var section := instruction_section()
+	if section != null and not section.resized.is_connected(_fit_instruction_view):
 		section.resized.connect(_fit_instruction_view)
 
 
@@ -123,8 +133,8 @@ func _fit_instruction_view() -> void:
 		return
 	var fits := _instruction_content != null and is_instance_valid(_instruction_content) \
 			and section.size.x >= GUIDE_MIN_W and section.size.y >= GUIDE_MIN_H
-	if _instruction_fallback != null:
-		_instruction_fallback.visible = not fits
+	if instruction_fallback_btn != null:
+		instruction_fallback_btn.visible = not fits
 	if _instruction_content != null and is_instance_valid(_instruction_content):
 		_instruction_content.visible = fits
 

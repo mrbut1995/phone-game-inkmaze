@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bdaud8s52opsm"]
+
+[ext_resource type="Script" uid="uid://due7yap3gb5o" path="res://scripts/nodes/tutorial/base_tutorial.gd" id="1_7x6e2"]
+
+[node name="BaseTutorial" type="Control" unique_id=1525698188]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7x6e2")

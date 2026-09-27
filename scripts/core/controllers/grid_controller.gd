@@ -50,11 +50,6 @@ func set_maze(p_maze: MazeData) -> void:
 # ---------------------------------------------------------------------------
 # Handlers nhận signal từ View
 # ---------------------------------------------------------------------------
-func handle_cell_pressed(pos: Vector2i) -> void:
-	if board_view != null and board_view.has_method("highlight_real_walls_of_cell"):
-		board_view.call("highlight_real_walls_of_cell", pos)
-
-
 func handle_drag_updated(pos: Vector2i) -> void:
 	try_move_to(pos)
 

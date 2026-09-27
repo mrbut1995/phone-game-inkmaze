@@ -1,9 +1,9 @@
 class_name LevelHUD
 extends GameHUD
-## HUD cho Play Mode và mọi chế độ không có HUD riêng (các luật Daily còn lại):
-## THỜI GIAN (trái) + THỬ THÁCH (phải, do ChallengeController vẽ).
-## Thẻ THỜI GIAN do BaseHUD.set_time() lo, ở đây chỉ trả về thẻ THỬ THÁCH.
-
-
-func challenge_card() -> ChallengeCard:
-	return get_node_or_null("Content/ModeInformation/Challenge") as ChallengeCard
+## ============================================================================
+## HUD Play Mode (và mọi chế độ không có HUD riêng).
+##
+## 2026-09-27 — theo yêu cầu "chỉ hiện thứ cần thiết": HUD này CHỈ hiện **THỜI GIAN**.
+## Thẻ THỬ THÁCH (3 dải nhiệm vụ + số Sao) đã gỡ khỏi HUD; kết quả thử thách/Sao vẫn hiện đầy
+## đủ ở POPUP kết quả ván (`ChallengeController` vẫn tính + đưa vào popup thắng/thua).
+## ============================================================================

@@ -123,7 +123,6 @@ func _bind_refs() -> void:
 ## ============================================================================
 func _wire_controllers() -> void:
 	# Bàn cờ → GridController
-	_connect_once(board_view, "cell_pressed", grid_controller, "handle_cell_pressed")
 	_connect_once(board_view, "drag_updated", grid_controller, "handle_drag_updated")
 	_connect_once(board_view, "anchor_connected", grid_controller, "handle_anchor_connected")
 	# GridController → GameController (đếm bước · đâm tường · tới đích · hết đường)

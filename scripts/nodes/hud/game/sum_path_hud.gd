@@ -1,26 +1,35 @@
 class_name SumPathHUD
 extends GameHUD
 ## ============================================================================
-## HUD Sum Path — mockup/matchup_sum_path.svg
+## HUD Sum Path — thẻ "CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI".
 ##
-## THỜI GIAN (250x156) + thẻ "CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI" (715x156) gồm:
-##   TỔNG HIỆN TẠI — con dấu TOÁN TỬ (< > =) — MỤC TIÊU PHẢI ĐẠT
-##   + thanh tiến độ (tổng / mục tiêu) + chip trạng thái "CẦN THÊM / CÒN ĐƯỢC / ĐANG VƯỢT / ĐÃ ĐỦ".
-## Chế độ này KHÔNG hiện thẻ THỬ THÁCH (challenge_card() = null) — thử thách chốt ở popup kết quả.
+## 2026-09-27 — theo yêu cầu "chỉ hiện thứ cần thiết": HUD này CHỈ hiện **TỔNG hiện tại ·
+## TOÁN TỬ (< = >) · MỤC TIÊU** (+ chip "CẦN THÊM / CÒN ĐƯỢC / ĐANG VƯỢT" nằm trong khối MỤC TIÊU).
+## Đã gỡ khỏi HUD: dòng tiêu đề thẻ · thanh tiến độ (tổng/mục tiêu) · đồng hồ THỜI GIAN
+## (node `Time` của bản DỌC để `visible = false`, bản NGANG đã xoá khỏi scene).
 ## ============================================================================
+
+## TỔNG hiện tại (`…/Sheet/BlockCurrent/Sum/Value`)
+@export var sum_value_node : Label
+## Dòng "n BƯỚC" trong khối TỔNG (`…/Sheet/BlockCurrent/Sum/Note`)
+@export var sum_note_label : Label
+## Toán tử `<` `=` `>` (`…/Sheet/Emblem/Operator/Value`)
+@export var operator_value_label : Label
+## MỤC TIÊU (`…/Sheet/BlockTarget/Target/Value`)
+@export var target_value_node : Label
+## Chip trạng thái trong khối MỤC TIÊU (`…/BlockTarget/Target/ChipNeed/Need`)
+@export var need_label : Label
 
 
 func _on_update(ctx: Dictionary) -> void:
 	var mode := ctx.get("mode", null) as SumPathGameMode
 	if mode == null:
 		return
-	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/BlockCurrent/Sum/Value"), str(mode.current_sum))
-	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Emblem/Operator/Value"), mode.operator)
-	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/BlockTarget/Target/Value"), str(mode.target_val))
-	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/BlockCurrent/Sum/Note"),
-		tr("STR_HUD_SUM_MOVES").format([int(ctx.get("moves", 0))]))
-	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/BlockTarget/Target/ChipNeed/Need"), _need_text(mode))
-	_update_progress(mode)
+	set_label_text(sum_value_node, str(mode.current_sum))
+	set_label_text(operator_value_label, mode.operator)
+	set_label_text(target_value_node, str(mode.target_val))
+	set_label_text(sum_note_label, tr("STR_HUD_SUM_MOVES").format([int(ctx.get("moves", 0))]))
+	set_label_text(need_label, _need_text(mode))
 
 
 ## Chip trạng thái theo toán tử:
@@ -44,15 +53,3 @@ func _need_text(mode: SumPathGameMode) -> String:
 			if delta > 0:
 				return tr("STR_HUD_SUM_NEED").format([delta])
 			return tr("STR_HUD_SUM_OK") if delta == 0 else tr("STR_HUD_SUM_OVER").format([-delta])
-
-
-## Thanh tiến độ = tổng hiện tại / mục tiêu (kẹp 0..1); phần đã đạt bị cắt bởi "Bar".
-func _update_progress(mode: SumPathGameMode) -> void:
-	var bar := get_node_or_null("Content/ModeInformation/Sheet/Bar") as Control
-	var fill := get_node_or_null("Content/ModeInformation/Sheet/Bar/Fill") as Control
-	if bar == null or fill == null:
-		return
-	var ratio := 0.0
-	if mode.target_val > 0:
-		ratio = clampf(float(mode.current_sum) / float(mode.target_val), 0.0, 1.0)
-	fill.size = Vector2(bar.size.x * ratio, bar.size.y)

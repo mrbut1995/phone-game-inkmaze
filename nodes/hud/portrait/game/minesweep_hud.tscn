@@ -2,61 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://bdgf5rpilmx26" path="res://scripts/nodes/hud/game/minesweep_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" uid="uid://dthpt7nppck3l" path="res://assets/images/game/card_bomb.svg" id="4_bomb"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="7_bomb_label"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="8_bomb_value"]
-[ext_resource type="Texture2D" uid="uid://cpd6oe44j6om3" path="res://assets/images/game/icon_bomb.svg" id="9_bomb_icon"]
 
 [node name="Hud" unique_id=213000205 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-
-[node name="Bomb" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1570366238]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.262
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 2
-texture = ExtResource("4_bomb")
-region_rect = Rect2(0, 0, 220, 79)
-patch_margin_left = 25
-patch_margin_top = 33
-patch_margin_right = 31
-patch_margin_bottom = 24
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Content/ModeInformation/Bomb" index="0" unique_id=1043611867]
-modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
-layout_mode = 0
-offset_left = 22.0
-offset_top = 6.0
-offset_right = 165.0
-offset_bottom = 24.0
-text = "STR_HUD_BOMB"
-label_settings = ExtResource("7_bomb_label")
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Bomb" index="1" unique_id=1641798743]
-modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
-layout_mode = 0
-offset_left = 22.0
-offset_top = 23.0
-offset_right = 165.0
-offset_bottom = 76.0
-text = "0/0"
-label_settings = ExtResource("8_bomb_value")
-vertical_alignment = 1
-
-[node name="Icon" type="TextureRect" parent="Content/ModeInformation/Bomb" index="2" unique_id=1551752391]
-layout_mode = 0
-offset_left = 105.0
-offset_top = 27.0
-offset_right = 145.0
-offset_bottom = 67.0
-mouse_filter = 2
-texture = ExtResource("9_bomb_icon")
-expand_mode = 1
-stretch_mode = 5

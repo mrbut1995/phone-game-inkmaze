@@ -15,8 +15,15 @@ extends Control
 ## (hoặc ở `GameHUD`) rồi để HUD tự lấy node con của mình — bên ngoài chỉ gọi method.
 ## ============================================================================
 
-## Label đồng hồ (node "Time/Value") — scene của từng HUD tự bind qua `@export`
+## ---------------------------------------------------------------------------
+## NODE CON — SCENE TỰ BIND qua `@export` (script KHÔNG dò đường dẫn "A/B/C")
+## ---------------------------------------------------------------------------
+## Label đồng hồ ván (`Content/ModeInformation/Time/Value`)
 @export var time_value_node : Label
+## Khối nội dung HUD (`Content`) — cần để NHƯỜNG input cho bàn cờ
+@export var content_root : Control
+## Thanh nút hành động (`Content/ActionBar`) — mỗi HUD instance 1 thanh riêng
+@export var action_bar_node : ActionBar
 
 
 ## Gọi mỗi khi HUD cần vẽ lại (GameController._update_hud). ctx gồm:
@@ -54,10 +61,6 @@ func set_time(seconds: float) -> void:
 	set_label_text(time_value_node, format_time(seconds))
 
 
-func get_time_node() -> Control:
-	return get_node_or_null("Content/ModeInformation/Time")
-
-
 ## Gán text cho Label (bỏ qua nếu trùng -> không redraw mỗi frame)
 func set_label_text(node: Node, text: String) -> void:
 	var label := node as Label
@@ -76,7 +79,7 @@ static func format_time(seconds: float) -> String:
 ## màn chơi chỉ việc lấy ra để nối tín hiệu (không còn nút nào trong game.tscn).
 ## ---------------------------------------------------------------------------
 func action_bar() -> ActionBar:
-	return get_node_or_null("Content/ActionBar") as ActionBar
+	return action_bar_node
 
 
 ## Giới hạn lượt Gợi ý/Hoàn tác (GameController tính) → badge `PanelLimit` + khoá nút khi hết lượt
@@ -129,9 +132,8 @@ func hint_btn() -> BaseButton:
 ## Chỉ khung HUD + khối `Content` là IGNORE — các NÚT BÊN TRONG (ActionBar, Status…) vẫn ăn input.
 func allow_board_input() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var content := get_node_or_null("Content") as Control
-	if content != null:
-		content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if content_root != null:
+		content_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 ## Khung Hướng dẫn (HintGuide) — mỗi hướng khai một chỗ khác nhau (bản NGANG: `Content/HintGuide`;
