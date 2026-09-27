@@ -33,6 +33,7 @@ DEFAULT = [
     "test_splash_title_shop_chapters",
     "test_game_scene_integration",
     "test_controllers_and_signals",
+    "test_level_special_modes",
 ]
 
 

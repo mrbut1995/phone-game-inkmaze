@@ -3,10 +3,10 @@ extends Line2D
 ## ============================================================================
 ## Nét mực "sống" theo NGÒI BÚT đang dùng (PenSkin):
 ##   · Đổi màu · bề rộng · đầu nét · nét đứt theo CHẤT LIỆU của bút.
-##   · Tự thêm 1 nét QUẦNG SÁNG (blend cộng) nằm dưới cho bút có hiệu ứng
+##   · BẬT/TẮT 1 nét QUẦNG SÁNG (blend cộng) khai sẵn trong scene (`Glow`) cho bút có hiệu ứng
 ##     (nhũ vàng, bút gel, dạ quang...).
 ##
-## Dùng thay Line2D ở `moving_line.tscn` và cho nét vẽ ở Bàn nháp thử bút.
+## Dùng thay Line2D ở `moving_line.tscn`.
 ## KHÔNG gọi apply_pen() thì node hành xử y như Line2D thường
 ## (ví dụ đường kẻ chỉ dẫn kéo anchor vẫn tự set width/default_color).
 ## ============================================================================
@@ -41,8 +41,9 @@ func pen_id() -> String:
 ## Cập nhật toàn bộ điểm của nét (đồng bộ luôn quầng sáng)
 func set_stroke(p_points: PackedVector2Array) -> void:
 	points = p_points
-	if _glow != null and is_instance_valid(_glow):
-		_glow.points = p_points
+	var glow_node := _glow_node()
+	if glow_node != null:
+		glow_node.points = p_points
 
 
 ## Áp chất liệu cho 1 Line2D thường (không quầng sáng) — vệt bút mờ, đường phụ...
@@ -57,33 +58,24 @@ func _refresh() -> void:
 	PenSkin.apply_line(self, _pen_id, _base_width, _alpha_scale)
 
 	var glow := PenSkin.glow_of(_pen_id)
-	if glow.is_empty():
-		if _glow != null and is_instance_valid(_glow):
-			# Gỡ ngay khỏi cây (queue_free chưa xoá con ngay trong frame này)
-			remove_child(_glow)
-			_glow.queue_free()
-		_glow = null
+	var glow_node := _glow_node()
+	if glow_node == null:
 		return
-
-	if _glow == null or not is_instance_valid(_glow):
-		_glow = _make_glow()
-	_glow.width = maxf(width * float(glow.get("width_mult", 1.0)), 1.0)
+	if glow.is_empty():
+		# Bút không có quầng sáng -> chỉ ẨN node khai sẵn trong scene (không xoá/tạo lại)
+		glow_node.visible = false
+		return
+	glow_node.width = maxf(width * float(glow.get("width_mult", 1.0)), 1.0)
 	var ink := PenSkin.ink_color(_pen_id)
-	_glow.default_color = Color(ink.r, ink.g, ink.b,
+	glow_node.default_color = Color(ink.r, ink.g, ink.b,
 		clampf(float(glow.get("alpha", 0.0)) * _alpha_scale, 0.0, 1.0))
-	_glow.points = points
+	glow_node.points = points
+	glow_node.visible = true
 
 
-## Quầng sáng = Line2D con (toạ độ trùng cha) + blend CỘNG để mực "phát sáng"
-func _make_glow() -> Line2D:
-	var glow := Line2D.new()
-	glow.name = "Glow"
-	glow.z_index = -1
-	glow.joint_mode = Line2D.LINE_JOINT_ROUND
-	glow.begin_cap_mode = Line2D.LINE_CAP_ROUND
-	glow.end_cap_mode = Line2D.LINE_CAP_ROUND
-	var material := CanvasItemMaterial.new()
-	material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-	glow.material = material
-	add_child(glow)
-	return glow
+## Quầng sáng KHAI SẴN trong scene (`Glow` — Line2D blend CỘNG, z_index = -1;
+## xem nodes/game/moving_line.tscn). Nét nào không khai `Glow` thì bỏ qua phần quầng sáng.
+func _glow_node() -> Line2D:
+	if _glow == null or not is_instance_valid(_glow):
+		_glow = get_node_or_null("Glow") as Line2D
+	return _glow

@@ -14,6 +14,8 @@ const TEST_LEVEL := 3
 
 var _failed := 0
 var _checks := 0
+## Bàn cờ đang test — dùng để gọi thẳng handler nhấn/kéo (xem `_touch` / `_drag`)
+var _board: Control = null
 
 
 func _init() -> void:
@@ -37,6 +39,7 @@ func _init() -> void:
 
 	var board: Control = game_scene.board_view
 	var anchor_ctrl: AnchorController = game_scene.anchor_controller
+	_board = board
 	_check(board != null and anchor_ctrl != null, "Game scene nap duoc Board + AnchorController")
 	if board == null or anchor_ctrl == null:
 		_finish()
@@ -217,15 +220,13 @@ func _board_local(board: Control, screen_pos: Vector2) -> Vector2:
 
 
 func _touch(pos: Vector2, pressed: bool) -> void:
-	var event := InputEventScreenTouch.new()
-	event.index = 0
-	event.position = pos
-	event.pressed = pressed
-	Input.parse_input_event(event)
+	# Gọi THẮNG handler của Board (đã đổi toạ độ màn hình → local). Chạy `--headless` thì
+	# `Input.parse_input_event()` không đi qua `_gui_input` của bàn cờ như khi chơi thật,
+	# nên mô phỏng ở tầng này mới đo được ĐÚNG hành vi kéo nối neo.
+	if _board != null:
+		_board.call("_handle_press_release", pressed, _board_local(_board, pos))
 
 
 func _drag(pos: Vector2) -> void:
-	var event := InputEventScreenDrag.new()
-	event.index = 0
-	event.position = pos
-	Input.parse_input_event(event)
+	if _board != null:
+		_board.call("_handle_drag", _board_local(_board, pos))

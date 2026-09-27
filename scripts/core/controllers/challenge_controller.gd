@@ -25,19 +25,9 @@ const SECONDS_PER_STEP := 3.0
 const MIN_TIME_LIMIT := 30.0
 const MAX_TIME_LIMIT := 240.0
 
-const ROW_DONE := preload("res://assets/images/game/chal_row_done.svg")
-const ROW_PENDING := preload("res://assets/images/game/chal_row_pending.svg")
-const CHECK_DONE := preload("res://assets/images/game/chal_check_done.svg")
-const CHECK_PENDING := preload("res://assets/images/game/chal_check_pending.svg")
-
-const COLOR_DONE := Color(0.18039216, 0.49019608, 0.19607843, 1)
-const COLOR_FAIL := Color(0.84705883, 0.26666668, 0.26666668, 1)
-const COLOR_LIVE := Color(0.70980394, 0.38431373, 0.101960786, 1)
-const COLOR_IDLE := Color(0.44313726, 0.54509807, 0.61960787, 1)
-const COLOR_NAME := Color(0.13333334, 0.29803923, 0.42745098, 1)
-
-## Thẻ THỬ THÁCH trên HUD — GameScene._bind_hud_nodes() gán theo HUD của chế độ đang chơi
-@export var card: Control = null
+## Thẻ THỬ THÁCH trên HUD — `GameScene._bind_hud_nodes()` gán theo HUD của chế độ đang chơi.
+## Controller CHỈ đưa TRẠNG THÁI vào `ChallengeCard.refresh()`; thẻ tự lấy node con + chọn art/màu.
+@export var card: ChallengeCard = null
 
 ## Ngưỡng mặc định của màn/tầng đang chơi
 var step_limit := 0
@@ -47,7 +37,7 @@ var _mode: BaseGameMode = null
 
 ## Thử thách của màn hiện tại: [{ type, param }]
 var _entries: Array[Dictionary] = []
-## Trạng thái hiện tại: [{ type, title, done, status, status_color }]
+## Trạng thái hiện tại: [{ type, title, done, status, on_track }]
 var _rows: Array[Dictionary] = []
 ## Khoá trạng thái lần vẽ trước (tránh format chuỗi lại mỗi frame)
 var _last_key := ""
@@ -110,12 +100,12 @@ func refresh(ctx: ChallengeContext) -> void:
 			var verdict := _evaluate(_entries[i], ctx, metrics, ctx.final)
 			_rows[i]["done"] = verdict["done"]
 			_rows[i]["status"] = verdict["status"]
-			_rows[i]["status_color"] = verdict["color"]
+			_rows[i]["on_track"] = verdict["on_track"]
 		_refresh_hud()
 		updated.emit()
 
 
-## Danh sách thử thách + trạng thái: [{ type, title, done, status, status_color }, ...]
+## Danh sách thử thách + trạng thái: [{ type, title, done, status, on_track }, ...]
 func rows() -> Array[Dictionary]:
 	return _rows
 
@@ -203,7 +193,7 @@ func _build_rows() -> void:
 			"title": _title_for(entry),
 			"done": false,
 			"status": tr("STR_CHALLENGE_NOT_DONE"),
-			"status_color": COLOR_FAIL,
+			"on_track": true,
 		})
 
 
@@ -271,12 +261,9 @@ func _collect_metrics(ctx: ChallengeContext) -> Dictionary:
 	}
 
 
-## Số lần GỬI SAI (Wall Builder) — chế độ khác không có thuộc tính này nên trả 0
+## Số lần GỬI SAI (Wall Builder) — chế độ khác luôn trả 0
 func _submit_miss_count(ctx: ChallengeContext) -> int:
-	if ctx.mode == null:
-		return 0
-	var raw: Variant = ctx.mode.get("submit_misses")
-	return int(raw) if raw != null else 0
+	return ctx.mode.submit_miss_count() if ctx.mode != null else 0
 
 
 ## Số hiển thị trên ô (-1 = ô không có số; S/F trả về "S"/"F" nên cũng là -1)
@@ -459,79 +446,21 @@ func _pass_fail(ok: bool) -> String:
 	return tr("STR_CHALLENGE_DONE") if ok else tr("STR_CHALLENGE_NOT_DONE")
 
 
+## Kết quả CHỐT (cuối màn/tầng): có đạt hay không — chưa đạt thì không còn cơ hội nữa
 func _verdict(done: bool, status: String) -> Dictionary:
-	return {"done": done, "status": status, "color": COLOR_DONE if done else COLOR_FAIL}
+	return {"done": done, "status": status, "on_track": true}
 
 
+## Kết quả TẠM (đang chơi): chưa đạt · `on_track` = còn khả năng đạt (xem ChallengeCard)
 func _pending(status: String, on_track: bool) -> Dictionary:
-	return {"done": false, "status": status, "color": COLOR_LIVE if on_track else COLOR_FAIL}
+	return {"done": false, "status": status, "on_track": on_track}
 
 
-## Vẽ trạng thái các thử thách lên thẻ HUD "THỬ THÁCH" (mockup matchup_level.svg):
-##   cột trái: số đã đạt "x/3 ✓" + dòng "n ĐÃ HOÀN THÀNH" · 3 dải bên phải: ô tích + tên + trạng thái/nhãn ĐẠT
+## Vẽ trạng thái các thử thách lên thẻ HUD "THỬ THÁCH" (mockup matchup_level.svg).
+## Controller chỉ đưa TRẠNG THÁI (đạt · còn cơ hội) — thẻ `ChallengeCard` tự lấy node con,
+## tự chọn art/màu
 func _refresh_hud() -> void:
 	if card == null:
 		return
-
-	var total := maxi(_rows.size(), 1)
-	var done_total := stars()
-
-	var count_label := card.get_node_or_null("CountRow/Count") as Label
-	if count_label != null:
-		var count_text := str(done_total)
-		if count_label.text != count_text:
-			count_label.text = count_text
-
-	var count_max := card.get_node_or_null("CountRow/CountMax") as Label
-	if count_max != null:
-		var max_text := "/%d ✓" % total
-		if count_max.text != max_text:
-			count_max.text = max_text
-
-	var note := card.get_node_or_null("Note") as Label
-	if note != null:
-		var note_text := tr("STR_CHALLENGE_DONE_COUNT").format([done_total])
-		if note.text != note_text:
-			note.text = note_text
-
-	for i in ChallengeTypes.MAX_PER_LEVEL:
-		var row_node := card.get_node_or_null("Row%d" % (i + 1)) as Control
-		if row_node == null:
-			continue
-		# Màn chỉ khai báo 1-2 thử thách -> ẩn các dải còn lại
-		if i >= _rows.size():
-			row_node.visible = false
-			continue
-		row_node.visible = true
-
-		var row := _rows[i]
-		var done := bool(row.get("done", false))
-		var failed: bool = row.get("status_color", COLOR_IDLE) == COLOR_FAIL
-
-		var bg := row_node.get_node_or_null("Bg") as TextureRect
-		if bg != null:
-			bg.texture = ROW_DONE if done else ROW_PENDING
-
-		var check := row_node.get_node_or_null("Bg/Check") as TextureRect
-		if check != null:
-			check.texture = CHECK_DONE if done else CHECK_PENDING
-
-		var name_label := row_node.get_node_or_null("Bg/Name") as Label
-		if name_label != null:
-			var title_text := str(row.get("title", ""))
-			if name_label.text != title_text:
-				name_label.text = title_text
-			name_label.modulate = COLOR_IDLE if failed else COLOR_NAME
-
-		# Đã đạt -> hiện nhãn "✓ ĐẠT" (góc phải) thay cho dòng trạng thái
-		var status_label := row_node.get_node_or_null("Bg/Status") as Label
-		if status_label != null:
-			status_label.visible = not done
-			var status_text := str(row.get("status", ""))
-			if status_label.text != status_text:
-				status_label.text = status_text
-			status_label.modulate = row.get("status_color", COLOR_IDLE)
-
-		var badge := row_node.get_node_or_null("Bg/Badge") as Control
-		if badge != null:
-			badge.visible = done
+	card.refresh(_rows, stars(), maxi(_rows.size(), 1),
+		tr("STR_CHALLENGE_DONE_COUNT").format([stars()]))

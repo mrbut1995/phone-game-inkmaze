@@ -1,113 +1,22 @@
 class_name GameHUD
 extends BaseHUD
 ## ============================================================================
-## Base: HUD thẻ thông tin của màn chơi — khung "Information" trong scenes/game.tscn
-## được thay bằng scene HUD ứng với từng chế độ (GameScene._apply_hud_for_mode).
+## HUD của MÀN CHƠI — mỗi chế độ có 1 HUD riêng (nodes/hud/<hướng>/game/*.tscn) và GameScene
+## tự đổi HUD theo chế độ (`GameScene._apply_hud_for_mode`):
+##   level_mode.tscn     (LevelHUD)      : THỜI GIAN + THỬ THÁCH — Play + mọi mode không có HUD riêng
+##   dungeon_mode.tscn   (DungeonHUD)    : THỜI GIAN + SỐ BƯỚC + TẦNG — Dungeon (endless)
+##   minesweep_hud.tscn  (MinesweepHUD)  : THỜI GIAN + BOMB CÒN LẠI — Minesweeper Maze
+##   sum_path_hud.tscn   (SumPathHUD)    : THỜI GIAN + TỔNG HIỆN TẠI + MỤC TIÊU — Sum Path
+##   fog_of_war_hud.tscn (FogOfWarHUD)   : THỜI GIAN + BẢNG SƯƠNG MÙ — Fog of War
 ##
-## Mỗi chế độ có 1 HUD riêng (nodes/hud/*.tscn) — GameScene tự đổi HUD theo mode:
-##   level_mode.tscn    (LevelHUD)     : THỜI GIAN + THỬ THÁCH   — Play + mọi mode không có HUD riêng
-##   dungeon_mode.tscn  (DungeonHUD)   : THỜI GIAN + SỐ BƯỚC + TẦNG — Dungeon (endless)
-##   minesweep_hud.tscn (MinesweepHUD) : THỜI GIAN + BOMB CÒN LẠI — Minesweeper Maze
-##   sum_path_hud.tscn  (SumPathHUD)   : THỜI GIAN + TỔNG HIỆN TẠI + MỤC TIÊU — Sum Path
-##   fog_of_war_hud.tscn (FogOfWarHUD) : THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử lại · tầm nhìn) — Fog of War
+## PHẦN DÙNG CHUNG nằm ở lớp cơ sở `BaseHUD` (đồng hồ · thanh nút hành động · thẻ THỬ THÁCH ·
+## nhường input cho bàn cờ · khung HintGuide) — ai đang giữ HUD chỉ cần biết `BaseHUD`.
 ##
-## UIController KHÔNG tự biết từng thẻ: nó chỉ gọi `update_hud(ctx)`, HUD con tự vẽ.
-## Mọi HUD đều có thẻ THỜI GIAN tên node "Time/Value" (xem set_time()).
+## Lớp này lo RIÊNG phần của màn chơi: KHUNG HƯỚNG DẪN NHÚNG + hook `_on_update()` để HUD con
+## vẽ các thẻ của chế độ mình (UIController chỉ gọi `update_hud(ctx)`, không biết từng thẻ).
 ## ============================================================================
 
-@export var time_value_node : Label
-
-## Gọi mỗi khi HUD cần vẽ lại (GameController._update_hud). ctx gồm:
-##   title:String · subtitle:String · steps_remaining:int · elapsed_time:float
-##   floor_number:int · extra:String · mode:BaseGameMode
-##   undo_left/undo_max · hint_left/hint_max :int — giới hạn lượt Hoàn tác/Gợi ý của màn
-func update_hud(ctx: Dictionary) -> void:
-	set_time(float(ctx.get("elapsed_time", 0.0)))
-	_sync_limits(ctx)
-	_sync_instruction(ctx.get("mode"))
-	_on_update(ctx)
-
-
-## Giới hạn lượt Gợi ý/Hoàn tác (GameController tính) → badge `PanelLimit` + khoá nút khi hết lượt
-func _sync_limits(ctx: Dictionary) -> void:
-	var bar := action_bar()
-	if bar != null:
-		bar.update_limits(
-			int(ctx.get("undo_left", 0)), int(ctx.get("undo_max", 0)),
-			int(ctx.get("hint_left", 0)), int(ctx.get("hint_max", 0)))
-
-
-## HUD con override để vẽ các thẻ riêng của chế độ mình
-func _on_update(_ctx: Dictionary) -> void:
-	pass
-
-
-## Thẻ THỬ THÁCH nếu HUD có (chỉ HUD của các chế độ dùng hệ thống Thử thách).
-## ChallengeController gọi hàm này để biết thẻ cần vẽ 3 dải thử thách.
-func challenge_card() -> Control:
-	return null
-
-
-## Đồng hồ của ván: giây -> "m:ss"
-func set_time(seconds: float) -> void:
-	set_label_text(time_value_node, format_time(seconds))
-
-func get_time_node() -> Control :
-	return get_node_or_null("Content/ModeInformation/Time")
-
-## Gán text cho Label (bỏ qua nếu trùng -> không redraw mỗi frame)
-func set_label_text(node: Node, text: String) -> void:
-	var label := node as Label
-	if label != null and label.text != text:
-		label.text = text
-
-
-static func format_time(seconds: float) -> String:
-	var total := maxi(int(seconds), 0)
-	return "%d:%02d" % [total / 60, total % 60]
-
-
-## ---------------------------------------------------------------------------
-## THANH NÚT HÀNH ĐỘNG (phương án A): mỗi HUD đều instance `nodes/hud/action_bar.tscn`
-## ngay trong scene của mình ⇒ nút CHƠI LẠI/GỬI BÀI/UNDO/HINT/REPLAY nằm TRONG HUD,
-## màn chơi chỉ việc lấy ra để nối tín hiệu (không còn nút nào trong game.tscn).
-## ---------------------------------------------------------------------------
-func action_bar() -> ActionBar:
-	return get_node_or_null("Content/ActionBar") as ActionBar
-
-
-## Bật bố cục NGANG cho thanh nút (dọc/ngang mỗi hướng 1 scene action_bar riêng)
-func set_landscape(on: bool) -> void:
-	var bar := action_bar()
-	if bar != null:
-		bar.set_landscape(on)
-
-
-func restart_btn() -> BaseButton:
-	var bar := action_bar()
-	return bar.restart_btn() if bar != null else null
-
-
-## Nút GỬI BÀI của Wall Builder (các chế độ khác ẩn)
-func submit_btn() -> BaseButton:
-	var bar := action_bar()
-	return bar.submit_btn() if bar != null else null
-
-
-func undo_btn() -> BaseButton:
-	var bar := action_bar()
-	return bar.undo_btn() if bar != null else null
-
-
-func hint_btn() -> BaseButton:
-	var bar := action_bar()
-	return bar.hint_btn() if bar != null else null
-
-
-#func replay_btn() -> BaseButton:
-	#var bar := action_bar()
-	#return bar.replay_btn() if bar != null else null
-
+const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## ---------------------------------------------------------------------------
 ## KHUNG HƯỚNG DẪN NHÚNG — `Content/InstructionSection` (bản NGANG: giữa HintGuide và ActionBar)
@@ -147,6 +56,7 @@ func instruction_fallback() -> Button:
 	return _instruction_fallback
 
 
+## Ghi đè hook ở `BaseHUD`: đổi chế độ ⇒ nhúng lại nội dung hướng dẫn (bản NGANG mới có khung)
 func _sync_instruction(mode: Variant) -> void:
 	var section := instruction_section()
 	if section == null:

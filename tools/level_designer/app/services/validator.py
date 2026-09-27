@@ -4,7 +4,20 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..config import MAX_ID, MAX_SIZE, MIN_ID, MIN_SIZE
+from ..config import (
+    MAX_ID,
+    MAX_SIZE,
+    MIN_ID,
+    MIN_SIZE,
+    MODE_IDS,
+    MODE_LABELS,
+    MODE_WALL_VISIBILITY_OVERRIDE,
+    MODES_NEEDING_VISIBLE_WALLS,
+    PLAY_MODE_ID,
+    RETIRED_MODE_IDS,
+    TOOL_VALUE_KEY,
+    mode_edit_spec,
+)
 from ..models import challenges as chal
 from ..models.level import LevelModel
 from . import solver
@@ -26,6 +39,172 @@ class Issue:
     def format(self) -> str:
         icon = {"error": "✕", "warning": "!", "info": "·"}.get(self.severity, "·")
         return "%s %s" % (icon, self.message)
+
+
+# ---------------------------------------------------------------------------
+# CHẾ ĐỘ SPECIAL TRÊN MÀN (mode_id khác "play")
+# Bên game (scripts/modes/*.gd): màn khai `mode_id` sẽ được chạy bằng chế độ đó TRÊN ĐÚNG bàn này
+# (tường + hình dạng board), còn phần dữ liệu riêng của chế độ (mìn · điểm ô · chi phí · mực...)
+# do chế độ tự rắc và CỐ ĐỊNH theo level_id (chơi lại y hệt).
+# ---------------------------------------------------------------------------
+def _validate_mode(level: LevelModel, info: dict) -> list[Issue]:
+    """Vấn đề/lưu ý riêng khi màn được gắn 1 chế độ Special."""
+    issues: list[Issue] = []
+    mode = str(level.mode_id or PLAY_MODE_ID).strip().lower()
+
+    if mode not in MODE_IDS:
+        if mode in RETIRED_MODE_IDS:
+            issues.append(Issue(
+                LEVEL_ERROR,
+                "'%s' là chế độ BẤT TẬN — KHÔNG dùng được cho màn (game sẽ chơi như Play). "
+                "Chọn 'play' hoặc một chế độ Special trong danh sách." % mode,
+            ))
+        else:
+            issues.append(Issue(LEVEL_ERROR, "mode_id không tồn tại: '%s' — game sẽ chơi như Play" % mode))
+        return issues
+
+    stats = level.stats()
+    hidden = int(stats["hidden_walls"])
+    visible = int(stats["visible_walls"])
+    issues.append(Issue(LEVEL_INFO, "Màn chạy chế độ SPECIAL: %s" % MODE_LABELS.get(mode, mode)))
+
+    override = MODE_WALL_VISIBILITY_OVERRIDE.get(mode)
+    if override == "visible":
+        issues.append(Issue(LEVEL_INFO, "Chế độ này ÉP HIỆN toàn bộ tường khi chơi (bỏ qua cờ tường ẩn của màn)"))
+    elif override == "hidden":
+        issues.append(Issue(LEVEL_INFO, "Chế độ này ÉP ẨN toàn bộ tường khi chơi — số trên ô mới là dữ kiện để suy luận"))
+
+    if mode in MODES_NEEDING_VISIBLE_WALLS:
+        if hidden > 0:
+            issues.append(Issue(
+                LEVEL_WARNING,
+                "%d đoạn tường đang ẨN — chế độ %s cần THẤY tường để tính đường (chuyển sang 'Tường hiện')"
+                % (hidden, mode),
+            ))
+        if visible == 0:
+            issues.append(Issue(LEVEL_WARNING, "Màn chưa có tường nào — chế độ %s sẽ thành đi thẳng tới F" % mode))
+
+    if mode == "one_stroke":
+        issues.append(Issue(
+            LEVEL_INFO,
+            "One Stroke cần đường đi qua HẾT mọi ô rồi kết thúc ở F — hãy chơi thử; "
+            "bàn không có lời giải sẽ được game thay bằng bàn ngẫu nhiên",
+        ))
+    if mode == "wall_builder" and (hidden + visible) < 2:
+        issues.append(Issue(LEVEL_WARNING, "Wall Builder cần nhiều đoạn tường thì các con số mới đủ dữ kiện suy luận"))
+    if mode == "minesweeper" and int(info.get("blocked_cells", 0)) > 0:
+        issues.append(Issue(
+            LEVEL_INFO,
+            "%d ô thuộc board không tới được sẽ KHÔNG có mìn (mìn chỉ rải trên ô đi tới được)"
+            % int(info["blocked_cells"]),
+        ))
+    if mode == "sum_path":
+        issues.append(Issue(LEVEL_INFO, "Sum Path lấy đường NGẮN NHẤT của màn làm mốc tính mục tiêu tổng điểm"))
+
+    issues.append(Issue(
+        LEVEL_INFO,
+        "Ngân sách bước khi chơi chế độ này = max(max_steps của màn, mặc định của chế độ) — hiện %d bước"
+        % max(1, int(level.max_steps)),
+    ))
+    return issues
+
+
+# ---------------------------------------------------------------------------
+# DỮ LIỆU RIÊNG CỦA CHẾ ĐỘ (custom_cell_values) — KIỂU EDIT theo mode_id
+# Mỗi chế độ có 1 kiểu edit (xem app/config.py MODE_EDITS): "none" = game tự sinh hết,
+# "cell_value" = nhà thiết kế tô từng ô (Ghim mìn · Điểm ô · Chi phí ô).
+# ---------------------------------------------------------------------------
+def _validate_custom_values(level: LevelModel, info: dict) -> list[Issue]:
+    issues: list[Issue] = []
+    spec = mode_edit_spec(level.mode_id)
+    cells = level.custom_cell_values
+    if not cells:
+        if spec["is_cell_value"]:
+            issues.append(Issue(
+                LEVEL_INFO,
+                "Chưa tô %s nào — game tự sinh cho MỌI ô (muốn tự đặt thì dùng công cụ %s)" % (
+                    spec["tool"].lower(), TOOL_VALUE_KEY),
+            ))
+        return issues
+
+    if level.custom_raw_unknown:
+        issues.append(Issue(
+            LEVEL_WARNING,
+            "custom_cell_values có phần tool KHÔNG hiểu — tool giữ nguyên chuỗi gốc khi lưu "
+            "(giá trị tô thêm trong tool sẽ KHÔNG được ghi)",
+        ))
+
+    if not spec["is_cell_value"]:
+        issues.append(Issue(
+            LEVEL_INFO,
+            "%d ô có giá trị riêng nhưng chế độ '%s' không dùng — xoá cho gọn (menu Sửa → Xoá hết giá trị riêng)"
+            % (len(cells), spec["mode_id"]),
+        ))
+        return issues
+
+    low, high = int(spec["min"]), int(spec["max"])
+    out_of_range = [(cell, int(value)) for cell, value in cells.items()
+                    if not low <= int(value) <= high]
+    if out_of_range:
+        cell, value = sorted(out_of_range)[0]
+        issues.append(Issue(
+            LEVEL_WARNING,
+            "%d ô có giá trị NGOÀI khoảng %d..%d của chế độ %s (vd ô %d,%d = %d) — game sẽ kẹp về khoảng"
+            % (len(out_of_range), low, high, spec["mode_id"], cell[0], cell[1], value),
+        ))
+
+    issues.append(Issue(
+        LEVEL_INFO,
+        "Đã tô %s cho %d ô — các ô còn lại game tự sinh." % (spec["tool"].lower(), len(cells)),
+    ))
+
+    # TỔNG THEO ĐƯỜNG ĐI ngắn nhất (chỉ tính các ô ĐÃ TÔ — ô chưa tô sẽ random khi vào game)
+    path = info.get("path") or []
+    if path and spec["has_sum_field"]:
+        step_index = {cell: index for index, cell in enumerate(path)}
+        painted_on_path = [cell for cell in path[1:-1] if level.custom_value(cell) > 0]
+        if painted_on_path:
+            total = sum(level.custom_value(cell) for cell in painted_on_path)
+            if spec["path_fill"] == "step":
+                # FADING INK: tới ô ở bước thứ j thì mực đã phai j điểm ⇒ mực ban đầu phải > j
+                too_low = [cell for cell in painted_on_path
+                           if level.custom_value(cell) < step_index[cell]]
+                if too_low:
+                    issues.append(Issue(
+                        LEVEL_WARNING,
+                        "%d ô trên đường ngắn nhất có MỰC quá thấp (mực < số bước phải đi để tới ô đó, "
+                        "vd ô %d,%d) — người chơi hết mực trước khi qua được"
+                        % (len(too_low), too_low[0][0], too_low[0][1]),
+                    ))
+                issues.append(Issue(
+                    LEVEL_INFO,
+                    "Đã tô mực cho %d ô trên đường ngắn nhất — mực mỗi ô tối thiểu BẰNG bước đi tới ô đó "
+                    "(nên cho dư %d)." % (len(painted_on_path), spec["sum_default"]),
+                ))
+            elif spec["mode_id"] == "sum_path":
+                issues.append(Issue(
+                    LEVEL_INFO,
+                    "Tổng ĐIỂM đường ngắn nhất (chỉ tính %d ô đã tô) = %d — game lấy tổng này làm mốc mục tiêu."
+                    % (len(painted_on_path), total),
+                ))
+            elif spec["mode_id"] == "countdown_cost":
+                issues.append(Issue(
+                    LEVEL_INFO,
+                    "Tổng CHI PHÍ đường ngắn nhất (chỉ tính %d ô đã tô) = %d bước — ngân sách game tính theo "
+                    "đường RẺ NHẤT + dự phòng; nên để max_steps (hiện %d) ≥ tổng này."
+                    % (len(painted_on_path), total, level.max_steps),
+                ))
+
+    # Minesweeper: mìn ghim nằm trên đường ngắn nhất có thể làm màn hết đường (game sẽ tự bỏ mìn ghim)
+    if spec["mode_id"] == "minesweeper" and path:
+        pinned = [cell for cell in path if level.custom_value(cell) > 0]
+        if pinned:
+            issues.append(Issue(
+                LEVEL_WARNING,
+                "%d mìn GHIM nằm ngay trên đường ngắn nhất (vd ô %d,%d) — nếu bàn không còn đường S→F khác, "
+                "game sẽ bỏ qua mìn ghim để màn vẫn thắng được" % (len(pinned), pinned[0][0], pinned[0][1]),
+            ))
+    return issues
 
 
 def validate(level: LevelModel) -> list[Issue]:
@@ -84,8 +263,9 @@ def validate(level: LevelModel) -> list[Issue]:
     stats = level.stats()
     if stats["hidden_walls"] == 0:
         issues.append(Issue(LEVEL_INFO, "Màn chưa có tường ẩn nào (toàn bộ tường đều nhìn thấy)"))
-    if level.mode_id != "play":
-        issues.append(Issue(LEVEL_INFO, "mode_id = '%s' (không phải chế độ Play)" % level.mode_id))
+    if str(level.mode_id or PLAY_MODE_ID).strip().lower() != PLAY_MODE_ID:
+        issues.extend(_validate_mode(level, info))
+    issues.extend(_validate_custom_values(level, info))
     if int(info["empty_cells"]) > 0:
         issues.append(Issue(
             LEVEL_INFO,

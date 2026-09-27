@@ -13,16 +13,15 @@ signal drag_updated(pos: Vector2i)
 signal anchor_tapped(anchor_id: int)
 signal anchor_connected(corner_a: Vector2i, corner_b: Vector2i)
 
-const CELL_SCENE := preload("res://nodes/game/cell.tscn")
-const ANCHOR_SCENE := preload("res://nodes/game/anchor.tscn")
-const WALL_SEGMENT_SCENE := preload("res://nodes/game/wall_segment.tscn")
-const MOVING_LINE_SCENE := preload("res://nodes/game/moving_line.tscn")
-const HISTORY_LINE_SCENE := preload("res://nodes/game/history_line.tscn")
-const PLAYER_CURSOR_SCENE := preload("res://nodes/game/player_cursor.tscn")
 const CRASH_SFX_SCENE := preload("res://nodes/sfx/crash.tscn")
 const MINE_SFX_SCENE := preload("res://nodes/sfx/mine_explosion.tscn")
-const LAYERS_SCENE := preload("res://nodes/game/board_layers.tscn")
 const FOOTSTEP_SCENE := preload("res://nodes/game/ink_footstep.tscn")
+
+## Cỡ THIẾT KẾ đọc 1 LẦN từ scene gốc (dùng cho mọi tầng/bàn — trước đây đọc lại mỗi tầng)
+static var _design_wall_width := 0.0
+static var _design_history_line_width := 0.0
+static var _design_moving_line_width := 0.0
+static var _design_cursor_size := 0.0
 
 ## Fallback an toàn khi không đọc được scene gốc (giá trị thật nằm trong .tscn)
 const FALLBACK_CELL_SIZE := 88
@@ -75,9 +74,9 @@ var _anchor_nodes: Array = []
 var _wall_segments: Dictionary = {}     # lattice key -> wall_segment
 var _suspected_lines: Dictionary = {}   # lattice key -> wall_segment
 var _history_lines: Dictionary = {}     # cell-edge key -> history Line2D
-var _moving_line: Line2D = null
-var _drag_guide_line: Line2D = null
-var _cursor: Control = null
+var _moving_line: InkStroke = null
+var _drag_guide_line: InkStroke = null
+var _cursor: PlayerCursor = null
 ## Wall Builder: ẩn hẳn nhân vật trên bàn (xem set_player_visible)
 var _player_hidden: bool = false
 ## Ngòi bút đang dùng (PenSkin) — quyết định icon con trỏ + màu/chất liệu nét mực
@@ -112,6 +111,15 @@ var _walls_layer: Control = null
 var _anchors_layer: Control = null
 var _lines_layer: Control = null
 var _markers_layer: Control = null
+# Node MẪU khai sẵn trong `Layers` (cell.tscn · wall_segment.tscn · anchor.tscn · history_line.tscn)
+# — board `duplicate()` từ đây chứ KHÔNG `instantiate()` scene lúc chạy
+var _cell_template: MazeCell = null
+var _wall_template: WallSegment = null
+var _anchor_template: MazeAnchor = null
+var _history_template: Line2D = null
+## Node KHAI SẴN trong scene mà `_clear_runtime_layers()` phải GIỮ LẠI (nét mực · chỉ dẫn ·
+## con trỏ · 4 node mẫu) — lấy từ `BoardLayers.fixed_nodes()`
+var _keep_nodes: Array = []
 
 
 func _ready() -> void:
@@ -152,17 +160,41 @@ func _notification(what: int) -> void:
 			_update_layout_positions()
 
 
+## Lớp vẽ + nét mực + con trỏ + node MẪU đều KHAI SẴN trong scene (`Layers` = board_layers.tscn)
+## ⇒ không instantiate lúc chạy: mỗi tầng mới chỉ RESET trạng thái và nhân bản từ node mẫu.
 func _init_layers() -> void:
 	if _cells_layer != null:
 		return
 
-	var layers := LAYERS_SCENE.instantiate() as BoardLayers
-	add_child(layers)
+	var layers := get_node_or_null("Layers") as BoardLayers
+	if layers == null:
+		push_warning("board: thiếu node Layers — khai trong nodes/game/board.tscn")
+		return
 	_cells_layer = layers.cells()
 	_lines_layer = layers.lines()
 	_walls_layer = layers.walls()
 	_anchors_layer = layers.anchors()
 	_markers_layer = layers.markers()
+	_moving_line = layers.moving_line()
+	_drag_guide_line = layers.drag_guide_line()
+	_cursor = layers.cursor()
+	_cell_template = layers.cell_template()
+	_wall_template = layers.wall_template()
+	_anchor_template = layers.anchor_template()
+	_history_template = layers.history_template()
+	_keep_nodes = layers.fixed_nodes()
+	if _cell_template == null or _wall_template == null or _anchor_template == null or _history_template == null:
+		push_warning("board: thiếu node MẪU trong Layers (CellTemplate · WallTemplate · AnchorTemplate · HistoryTemplate) — xem nodes/game/board_layers.tscn")
+	# Cỡ THIẾT KẾ của nét mực · con trỏ · tường · vệt mực cũ: đọc ngay lúc này (còn nguyên số
+	# trong scene, chưa bị co giãn/đổi chất liệu) rồi giữ lại cho mọi tầng sau.
+	if _design_moving_line_width <= 0.0 and _moving_line != null and _moving_line.width > 0.0:
+		_design_moving_line_width = _moving_line.width
+	if _design_cursor_size <= 0.0 and _cursor != null and _cursor.size.x > 0.0:
+		_design_cursor_size = _cursor.size.x
+	if _design_wall_width <= 0.0 and _wall_template != null and _wall_template.width > 0.0:
+		_design_wall_width = _wall_template.width
+	if _design_history_line_width <= 0.0 and _history_template != null and _history_template.width > 0.0:
+		_design_history_line_width = _history_template.width
 
 
 # ============================================================================
@@ -214,10 +246,10 @@ func setup_maze(p_maze: MazeData, p_mode: BaseGameMode = null) -> void:
 ##   · vệt bước chân mực -> đúng icon + màu mực của bút
 func apply_pen_skin() -> void:
 	_pen_id = PenSkin.equipped_id()
-	if _cursor != null and _cursor.has_method("apply_pen"):
-		_cursor.call("apply_pen", _pen_id)
-	if _moving_line != null and _moving_line.has_method("apply_pen"):
-		_moving_line.call("apply_pen", _pen_id)
+	if _cursor != null:
+		_cursor.apply_pen(_pen_id)
+	if _moving_line != null:
+		_moving_line.apply_pen(_pen_id)
 	_apply_wall_width()
 
 
@@ -229,28 +261,14 @@ func _animate_board_entrance() -> void:
 			var cell: MazeCell = _cell_node(Vector2i(x, y))
 			if cell == null:
 				continue
-			cell.pivot_offset = cell.size * 0.5
-			cell.scale = Vector2(0.65, 0.65)
-			cell.modulate.a = 0.0
-			var delay := float(x + y) * 0.015
-			var tw := cell.create_tween().set_parallel(true)
-			if delay > 0.0:
-				tw.tween_interval(delay)
-			tw.tween_property(cell, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			tw.tween_property(cell, "modulate:a", 1.0, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			cell.play_entrance(float(x + y) * 0.015)
 
 	for info in _anchor_nodes:
-		var anchor: Control = info.node
+		var anchor: MazeAnchor = info.node
 		if anchor == null:
 			continue
-		anchor.pivot_offset = anchor.size * 0.5
-		anchor.scale = Vector2.ZERO
 		var corner: Vector2i = info.corner
-		var delay := float(corner.x + corner.y) * 0.015 + 0.04
-		var tw_a := anchor.create_tween()
-		if delay > 0.0:
-			tw_a.tween_interval(delay)
-		tw_a.tween_property(anchor, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		anchor.play_entrance(float(corner.x + corner.y) * 0.015 + 0.04)
 
 
 
@@ -269,9 +287,9 @@ func _read_metrics_from_scenes() -> void:
 		if cell_sz.x > 0.0 and cell_sz.y > 0.0:
 			_cell_size = cell_sz.x
 		# Cỡ chữ số trên ô (LabelSettings của cell) để scale theo từng cỡ board
-		var label: Label = (node as MazeCell).get_node_or_null("Sprite/Label")
-		if label != null and label.label_settings != null and label.label_settings.font_size > 0:
-			_base_font_size = float(label.label_settings.font_size)
+		var font_size := (node as MazeCell).text_font_size()
+		if font_size > 0:
+			_base_font_size = float(font_size)
 		break
 
 	if not _anchor_nodes.is_empty():
@@ -279,10 +297,14 @@ func _read_metrics_from_scenes() -> void:
 		if anchor_sz.x > 0.0:
 			_anchor_size = anchor_sz.x
 
-	_wall_width = _read_scene_line_width(WALL_SEGMENT_SCENE, FALLBACK_WALL_WIDTH)
-	_moving_line_width = _read_scene_line_width(MOVING_LINE_SCENE, FALLBACK_MOVING_LINE_WIDTH)
-	_history_line_width = _read_scene_line_width(HISTORY_LINE_SCENE, FALLBACK_MOVING_LINE_WIDTH)
-	_cursor_size = _read_scene_size(PLAYER_CURSOR_SCENE, FALLBACK_CURSOR_SIZE)
+	_wall_width = _design_wall_width if _design_wall_width > 0.0 else FALLBACK_WALL_WIDTH
+	_design_wall_width = _wall_width
+	_history_line_width = _design_history_line_width if _design_history_line_width > 0.0 \
+		else FALLBACK_MOVING_LINE_WIDTH
+	_design_history_line_width = _history_line_width
+	_moving_line_width = _design_moving_line_width if _design_moving_line_width > 0.0 \
+		else FALLBACK_MOVING_LINE_WIDTH
+	_cursor_size = _design_cursor_size if _design_cursor_size > 0.0 else FALLBACK_CURSOR_SIZE
 
 	_step = _cell_size
 	# Bán kính bắt dính anchor suy ra từ kích thước anchor (không hard-code riêng)
@@ -342,22 +364,23 @@ func panel_inner_rect() -> Rect2:
 	return Rect2(inner_pos, inner_size)
 
 
-func _read_scene_size(scene: PackedScene, fallback: float) -> float:
-	var probe := scene.instantiate() as Control
-	if probe == null:
-		return fallback
-	var side := probe.size.x
-	probe.free()
-	return side if side > 0.0 else fallback
-
-
-func _read_scene_line_width(scene: PackedScene, fallback: float) -> float:
-	var probe := scene.instantiate() as Line2D
-	if probe == null:
-		return fallback
-	var w := probe.width
-	probe.free()
-	return w if w > 0.0 else fallback
+## Nhân bản node MẪU khai sẵn trong scene (thay cho `PackedScene.instantiate()` lúc chạy):
+## bật lại hiển thị + đưa về gốc toạ độ (node mẫu trong scene luôn ẩn).
+func _spawn_template(template: Node) -> Node:
+	if template == null:
+		return null
+	var node := template.duplicate()
+	var item := node as CanvasItem
+	if item != null:
+		item.visible = true
+	var control := node as Control
+	if control != null:
+		control.position = Vector2.ZERO
+	else:
+		var node2d := node as Node2D
+		if node2d != null:
+			node2d.position = Vector2.ZERO
+	return node
 
 
 # ============================================================================
@@ -416,15 +439,13 @@ func _apply_metrics_scale() -> void:
 		if node == null:
 			continue
 		var cell: MazeCell = node
-		cell.size = Vector2(cell_side, cell_side)
-		cell.pivot_offset = cell.size * 0.5
+		cell.set_cell_size(cell_side)          # cỡ ô + tâm xoay (ô tự lo)
 		cell.set_font_size(_scaled_font_size())
 
 	var anchor_side := maxf(_anchor_size * _fit_scale, MIN_ANCHOR_SIZE)
 	for info in _anchor_nodes:
-		var anchor: Control = info.node
-		anchor.size = Vector2(anchor_side, anchor_side)
-		anchor.pivot_offset = anchor.size * 0.5
+		var anchor: MazeAnchor = info.node
+		anchor.set_anchor_size(anchor_side)    # cỡ neo + tâm xoay (neo tự lo)
 	_anchor_hit_radius = maxf(_anchor_size * 0.75 * _fit_scale, anchor_side * 0.5)
 
 	_apply_wall_width()
@@ -455,13 +476,14 @@ func _apply_wall_width() -> void:
 		_drag_guide_line.width = width
 	if _moving_line != null:
 		var line_width := maxf(_moving_line_width * _fit_scale, MIN_WALL_WIDTH)
-		if _moving_line.has_method("set_base_width"):
-			_moving_line.call("set_base_width", line_width)
-		else:
-			_moving_line.width = line_width
+		_moving_line.set_base_width(line_width)
 
 
 func _update_layout_positions() -> void:
+	# Chưa có maze (bàn cờ vừa mở, `Panel.resized` bắn trước `setup_maze`) ⇒ chưa có lưới để tính:
+	# bỏ qua, nếu không `_cell_center` sẽ truy cập mảng rỗng (Out of bounds).
+	if maze == null or _width <= 0 or _height <= 0:
+		return
 	_compute_layout()
 
 	# Cập nhật toạ độ và kích cỡ từng cell (ô ngoài board không có node)
@@ -472,15 +494,13 @@ func _update_layout_positions() -> void:
 			if cell == null or idx < 0 or idx >= _cell_rects.size():
 				continue
 			cell.position = Vector2(_col_edge_x[x], _row_edge_y[y])
-			cell.pivot_offset = cell.size * 0.5
 			_cell_rects[idx] = Rect2(cell.position, cell.size)
 
 	# Cập nhật vị trí các anchor
 	for info in _anchor_nodes:
-		var a: Control = info.node
+		var a: MazeAnchor = info.node
 		var corner: Vector2i = info.corner
 		var pos := Vector2(_col_edge_x[corner.x], _row_edge_y[corner.y])
-		a.pivot_offset = a.size * 0.5
 		a.position = pos - a.size * 0.5
 
 	# Cập nhật toạ độ các wall segments
@@ -510,12 +530,14 @@ func _build_cells() -> void:
 	# Board có thể là polyomino: ô ngoài board KHÔNG có node -> mảng giữ null
 	_cell_nodes.resize(_width * _height)
 	_cell_rects.resize(_width * _height)
+	if _cell_template == null:
+		return
 	for y in _height:
 		for x in _width:
 			var pos := Vector2i(x, y)
 			if maze != null and not maze.is_cell_active(pos):
 				continue
-			var c: MazeCell = CELL_SCENE.instantiate()
+			var c := _spawn_template(_cell_template) as MazeCell
 			c.set_anchors_preset(Control.PRESET_TOP_LEFT)
 			# Không set size: kích thước lấy nguyên từ cell.tscn
 			c.grid_pos = pos
@@ -539,13 +561,11 @@ func _build_cells() -> void:
 			c.set_focused(false)
 
 
-## Đồng bộ biểu tượng Bomb cho ô (mode nào có API has_bomb_marker — xem MinesweeperPathGameMode).
+## Đồng bộ biểu tượng Bomb cho ô (mode nào có mìn đã nổ — xem MinesweeperPathGameMode).
 func _sync_bomb_marker(cell_node: MazeCell, pos: Vector2i) -> void:
 	if cell_node == null:
 		return
-	var marked := game_mode != null \
-		and game_mode.has_method("has_bomb_marker") \
-		and bool(game_mode.call("has_bomb_marker", pos))
+	var marked := game_mode != null and game_mode.has_bomb_marker(pos)
 	cell_node.set_bomb(marked)
 
 
@@ -558,7 +578,8 @@ func _build_walls() -> void:
 			if maze.has_h_wall(ix, iy):
 				var seg := _create_wall_segment(true, Vector2i(ix, iy),
 					"visible" if maze.is_h_wall_visible(ix, iy) else "invisible")
-				_wall_segments[_lattice_key(true, Vector2i(ix, iy))] = seg
+				if seg != null:
+					_wall_segments[_lattice_key(true, Vector2i(ix, iy))] = seg
 	for ix in _width + 1:
 		for iy in _height:
 			if not _edge_touches_board(false, Vector2i(ix, iy)):
@@ -566,11 +587,14 @@ func _build_walls() -> void:
 			if maze.has_v_wall(ix, iy):
 				var seg := _create_wall_segment(false, Vector2i(ix, iy),
 					"visible" if maze.is_v_wall_visible(ix, iy) else "invisible")
-				_wall_segments[_lattice_key(false, Vector2i(ix, iy))] = seg
+				if seg != null:
+					_wall_segments[_lattice_key(false, Vector2i(ix, iy))] = seg
 
 
 func _create_wall_segment(is_h: bool, lattice: Vector2i, state: String) -> WallSegment:
-	var seg: WallSegment = WALL_SEGMENT_SCENE.instantiate()
+	var seg := _spawn_template(_wall_template) as WallSegment
+	if seg == null:
+		return null
 	var pts := _edge_points(is_h, lattice)
 	_walls_layer.add_child(seg)
 	seg.set_wall_points(pts[0], pts[1])
@@ -593,17 +617,19 @@ func _edge_points(is_h: bool, lattice: Vector2i) -> PackedVector2Array:
 
 func _build_anchors() -> void:
 	_anchor_nodes.clear()
+	if _anchor_template == null:
+		return
 	var id := 0
 	for iy in _height + 1:
 		for ix in _width + 1:
 			# Chỉ tạo anchor ở góc có dính ít nhất 1 ô thuộc board
 			if not _corner_touches_board(ix, iy):
 				continue
-			var a: Control = ANCHOR_SCENE.instantiate()
+			var a := _spawn_template(_anchor_template) as MazeAnchor
 			a.set_anchors_preset(Control.PRESET_TOP_LEFT)
 			# Không set size/position: kích thước lấy từ anchor.tscn,
 			# vị trí do _update_layout_positions() căn theo lưới
-			a.set("anchor_id", id)
+			a.anchor_id = id
 			_anchors_layer.add_child(a)
 			_anchor_nodes.append({ "node": a, "corner": Vector2i(ix, iy) })
 			id += 1
@@ -646,28 +672,37 @@ func _corner_touches_board(ix: int, iy: int) -> bool:
 	return false
 
 
+## Nét mực đang vẽ (InkStroke khai sẵn trong `Layers/Lines`) — mỗi tầng chỉ xoá điểm cũ
 func _build_moving_line() -> void:
-	_moving_line = MOVING_LINE_SCENE.instantiate()
-	_lines_layer.add_child(_moving_line)
+	if _moving_line == null:
+		return
 	_moving_line.position = Vector2.ZERO
 	# width/default_color lấy nguyên từ moving_line.tscn
-	_moving_line.points = PackedVector2Array()
+	_set_line_points(_moving_line, PackedVector2Array())
 
 
+## Đường kẻ chỉ dẫn khi KÉO NEO (cùng loại nét với moving_line, ẩn đến khi cần)
 func _build_drag_guide_line() -> void:
-	_drag_guide_line = MOVING_LINE_SCENE.instantiate()
-	_lines_layer.add_child(_drag_guide_line)
+	if _drag_guide_line == null:
+		return
 	_drag_guide_line.position = Vector2.ZERO
 	_drag_guide_line.width = _wall_width
 	_drag_guide_line.default_color = Color(0.77, 0.52, 0.23, 0.75)
 	_drag_guide_line.visible = false
+	_set_line_points(_drag_guide_line, PackedVector2Array())
 
 
+## Ghi điểm cho nét — dùng `set_stroke()` của InkStroke (đồng bộ luôn quầng sáng)
+func _set_line_points(line: InkStroke, points_now: PackedVector2Array) -> void:
+	if line == null:
+		return
+	line.set_stroke(points_now)
+
+
+## Đặt con trỏ về ô xuất phát (con trỏ KHAI SẴN trong `Layers/Markers`)
 func _place_cursor_at_start() -> void:
 	if _cursor == null:
-		_cursor = PLAYER_CURSOR_SCENE.instantiate()
-		_markers_layer.add_child(_cursor)
-		_cursor.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		return
 	# Kích thước cursor lấy nguyên từ player_cursor.tscn
 	_cursor.pivot_offset = _cursor.size * 0.5
 	var target_pos := _cell_center(maze.get_start()) - _cursor.size * 0.5
@@ -676,15 +711,20 @@ func _place_cursor_at_start() -> void:
 	_player_current_cell = maze.get_start()
 	# SFX: bước vào ô xuất phát S khi bắt đầu mỗi floor
 	Sfx.play(Sfx.STAIRS_ENTER)
-	if DisplayServer.get_name() != "headless" and _cursor.has_method("play_spawn_drop"):
-		_cursor.call("play_spawn_drop", target_pos)
+	if DisplayServer.get_name() != "headless":
+		_cursor.play_spawn_drop(target_pos)
 
 
+## Dọn node ĐỘNG của tầng trước (ô · tường · neo · vệt mực · hiệu ứng...).
+## GIỮ LẠI mọi node KHAI SẴN trong scene (nét mực · đường kẻ chỉ dẫn · con trỏ · 4 node MẪU —
+## xem `BoardLayers.fixed_nodes()`).
 func _clear_runtime_layers() -> void:
 	for layer in [_cells_layer, _walls_layer, _anchors_layer, _lines_layer, _markers_layer]:
 		if layer == null:
 			continue
 		for child in layer.get_children():
+			if _keep_nodes.has(child):
+				continue
 			child.queue_free()
 	_cell_nodes.clear()
 	_cell_rects.clear()
@@ -692,9 +732,6 @@ func _clear_runtime_layers() -> void:
 	_wall_segments.clear()
 	_suspected_lines.clear()
 	_history_lines.clear()
-	_moving_line = null
-	_drag_guide_line = null
-	_cursor = null
 
 
 # ============================================================================
@@ -717,15 +754,11 @@ func move_cursor_to(pos: Vector2i) -> void:
 	Sfx.play(Sfx.CELL_STEP)
 	if pos == maze.get_end():
 		Sfx.play(Sfx.STAIRS_ENTER)
-		if _cursor != null and _cursor.has_method("play_celebration"):
-			_cursor.call("play_celebration")
+		if _cursor != null:
+			_cursor.play_celebration()
 
 	# Chạy animation bước nhảy (Hop / Squash & Stretch / Tilt)
-	if _cursor.has_method("run_to"):
-		_cursor.call("run_to", target_pos, move_dir, 0.16)
-	else:
-		var tw := create_tween().set_parallel(true)
-		tw.tween_property(_cursor, "position", target_pos, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_cursor.run_to(target_pos, move_dir, 0.16)
 
 	var c_idx := _cell_index(pos.x, pos.y)
 	if c_idx >= 0 and c_idx < _cell_nodes.size():
@@ -752,10 +785,7 @@ func set_moving_path(path: Array[Vector2i]) -> void:
 	var pts := PackedVector2Array()
 	for p in path:
 		pts.append(_cell_center(p))
-	if _moving_line.has_method("set_stroke"):
-		_moving_line.call("set_stroke", pts)
-	else:
-		_moving_line.points = pts
+	_moving_line.set_stroke(pts)
 	_set_path_focus(path)
 
 
@@ -772,11 +802,10 @@ func reset_to_start() -> void:
 
 func show_history_edge(a: Vector2i, b: Vector2i) -> void:
 	var key := _cell_edge_key(a, b)
-	if _history_lines.has(key):
+	if _history_lines.has(key) or _history_template == null:
 		return
-	var line: Line2D = HISTORY_LINE_SCENE.instantiate()
+	var line := _spawn_template(_history_template) as Line2D
 	_lines_layer.add_child(line)
-	line.position = Vector2.ZERO
 	line.points = PackedVector2Array([_cell_center(a), _cell_center(b)])
 	# Vệt bút mờ cũ: cùng MÀU + chất liệu ngòi bút (mờ hơn nét đang đi)
 	InkStroke.style_plain(line, _pen_id, _scaled_wall_width(), 0.55)
@@ -801,6 +830,8 @@ func show_wall_hit(from_pos: Vector2i, to_pos: Vector2i) -> void:
 		seg.flash_hit_then_stay_visible()
 	else:
 		seg = _create_wall_segment(is_h, lattice, "hit")
+		if seg == null:
+			return
 		_wall_segments[key] = seg
 		seg.flash_hit_then_stay_visible()
 
@@ -820,9 +851,9 @@ func show_wall_hit(from_pos: Vector2i, to_pos: Vector2i) -> void:
 	tw_crash.tween_callback(crash.queue_free)
 
 	# Tác động lực giật nảy lên con trỏ người chơi (Bonk recoil)
-	if _cursor != null and _cursor.has_method("play_bonk_recoil"):
+	if _cursor != null:
 		var recoil_dir := (Vector2(from_pos) - Vector2(to_pos)).normalized()
-		_cursor.call("play_bonk_recoil", recoil_dir)
+		_cursor.play_bonk_recoil(recoil_dir)
 
 	_play_grid_shake()
 
@@ -834,11 +865,10 @@ func show_mine_hit(pos: Vector2i) -> void:
 		if cell_node != null:
 			# Giữ nguyên con số trên ô, chỉ đánh dấu quả mìn đã nổ
 			cell_node.set_bomb(true)
-			if cell_node.has_method("play_shudder"):
-				cell_node.call("play_shudder")
+			cell_node.play_shudder()
 
-	if _cursor != null and _cursor.has_method("play_bonk_recoil"):
-		_cursor.call("play_bonk_recoil", Vector2(0, -1))
+	if _cursor != null:
+		_cursor.play_bonk_recoil(Vector2(0, -1))
 
 	var center := _cell_center(pos)
 	var mine_sfx: Control = MINE_SFX_SCENE.instantiate()
@@ -905,11 +935,11 @@ func hide_all_walls() -> void:
 func refresh_cell_texts(dim_unwalkable: bool = false) -> void:
 	if maze == null or game_mode == null:
 		return
-	var has_ink := game_mode.has_method("ink_left")
+	var has_ink := game_mode.shows_ink_left()
 	# One Stroke: ô đã đi qua bị KHOÁ -> tô mực xanh + gạch chéo + nhãn "ĐÃ ĐI"
-	var has_visited := game_mode.has_method("is_cell_visited")
+	var has_visited := game_mode.tracks_visited_cells()
 	# Wall Builder: ô đã KHỚP SỐ (đủ tường quanh ô) -> nền xanh lá nhạt
-	var has_satisfied := game_mode.has_method("is_cell_satisfied")
+	var has_satisfied := game_mode.tracks_satisfied_cells()
 	for y in _height:
 		for x in _width:
 			var pos := Vector2i(x, y)
@@ -922,22 +952,21 @@ func refresh_cell_texts(dim_unwalkable: bool = false) -> void:
 				# Ô S/F không bao giờ cạn mực -> tắt lớp cảnh báo
 				var ink := -1
 				if pos != maze.get_start() and pos != maze.get_end():
-					ink = int(game_mode.call("ink_left", pos))
+					ink = game_mode.ink_left(pos)
 				cell_node.set_ink_left(ink)
 				cell_node.modulate = Color(1, 1, 1, 1)
 			elif has_visited:
 				# Ô S/F giữ nguyên art xuất phát/đích (mockup không gạch chéo 2 ô này)
 				var seen := false
 				if pos != maze.get_start() and pos != maze.get_end():
-					seen = bool(game_mode.call("is_cell_visited", pos))
+					seen = game_mode.is_cell_visited(pos)
 				cell_node.set_visited_own(seen)
 				cell_node.modulate = Color(1, 1, 1, 1)
 			elif has_satisfied:
-				cell_node.set_satisfied(bool(game_mode.call("is_cell_satisfied", pos)))
+				cell_node.set_satisfied(game_mode.is_cell_satisfied(pos))
 				cell_node.modulate = Color(1, 1, 1, 1)
 			elif dim_unwalkable:
-				var walkable := not game_mode.has_method("is_walkable") \
-					or bool(game_mode.call("is_walkable", pos))
+				var walkable := game_mode.is_walkable(pos)
 				cell_node.modulate = Color(1, 1, 1, 1) if walkable else Color(1, 1, 1, 0.4)
 
 
@@ -984,8 +1013,8 @@ func set_suspected_wall(is_h: bool, lattice: Vector2i, active: bool) -> void:
 		return
 	# Chế độ có thể đổi kiểu hiển thị đoạn người chơi nối (Wall Builder: "built")
 	var draw_state := "suspected"
-	if game_mode != null and game_mode.has_method("wall_draw_state"):
-		var custom := str(game_mode.call("wall_draw_state"))
+	if game_mode != null:
+		var custom := game_mode.wall_draw_state()
 		if not custom.is_empty():
 			draw_state = custom
 	var key := _lattice_key(is_h, lattice)
@@ -1179,13 +1208,12 @@ func _start_anchor_drag(anchor_info: Dictionary) -> void:
 		return
 
 	_is_dragging_anchor = true
-	var node: Control = anchor_info.node
-	_drag_source_anchor_id = node.get("anchor_id")
+	var node: MazeAnchor = anchor_info.node
+	_drag_source_anchor_id = node.anchor_id
 	_drag_source_anchor_corner = anchor_info.corner
 	_hover_target_anchor_id = -1
 
-	if node.has_method("set_selected"):
-		node.call("set_selected", true)
+	node.set_selected(true)
 
 	# SFX: "tách" cơ học khi rê trúng điểm neo
 	Sfx.play(Sfx.ANCHOR_SNAP)
@@ -1203,16 +1231,15 @@ func _update_anchor_drag(local_pos: Vector2) -> void:
 	var hovered_anchor := _hit_anchor_info(local_pos)
 
 	if not hovered_anchor.is_empty() and hovered_anchor.has("node"):
-		var node: Control = hovered_anchor.node
-		if node.get("anchor_id") != _drag_source_anchor_id:
+		var node: MazeAnchor = hovered_anchor.node
+		if node.anchor_id != _drag_source_anchor_id:
 			var edge := _corner_edge(_drag_source_anchor_corner, hovered_anchor.corner)
 			if not edge.is_empty():
-				var target_id: int = node.get("anchor_id")
+				var target_id := node.anchor_id
 				if _hover_target_anchor_id != target_id:
 					_clear_hover_target_highlight()
 					_hover_target_anchor_id = target_id
-					if node.has_method("set_selected"):
-						node.call("set_selected", true)
+					node.set_selected(true)
 
 				var target_pos := _anchor_center_pos(hovered_anchor.corner)
 				_drag_guide_line.points = PackedVector2Array([anchor_a_pos, target_pos])
@@ -1230,9 +1257,9 @@ func _finish_anchor_drag(local_pos: Vector2) -> void:
 	var target_anchor := _hit_anchor_info(local_pos)
 	var target_id := -1
 	if not target_anchor.is_empty() and target_anchor.has("node"):
-		var node: Control = target_anchor.node
-		if node.get("anchor_id") != _drag_source_anchor_id:
-			target_id = node.get("anchor_id")
+		var node: MazeAnchor = target_anchor.node
+		if node.anchor_id != _drag_source_anchor_id:
+			target_id = node.anchor_id
 	elif _hover_target_anchor_id != -1:
 		target_id = _hover_target_anchor_id
 
@@ -1243,11 +1270,11 @@ func _finish_anchor_drag(local_pos: Vector2) -> void:
 		Sfx.play(Sfx.WALL_MARK)
 
 		var src_node := _get_anchor_node(_drag_source_anchor_id)
-		if src_node != null and src_node.has_method("pulse"):
-			src_node.call("pulse")
+		if src_node != null:
+			src_node.pulse()
 		var dst_node := _get_anchor_node(target_id)
-		if dst_node != null and dst_node.has_method("pulse"):
-			dst_node.call("pulse")
+		if dst_node != null:
+			dst_node.pulse()
 
 	_cancel_anchor_drag()
 
@@ -1256,8 +1283,8 @@ func _cancel_anchor_drag() -> void:
 	_clear_hover_target_highlight()
 	if _drag_source_anchor_id != -1:
 		var src_node := _get_anchor_node(_drag_source_anchor_id)
-		if src_node != null and src_node.has_method("set_selected"):
-			src_node.call("set_selected", false)
+		if src_node != null:
+			src_node.set_selected(false)
 
 	if _drag_guide_line != null:
 		_drag_guide_line.visible = false
@@ -1271,14 +1298,14 @@ func _cancel_anchor_drag() -> void:
 func _clear_hover_target_highlight() -> void:
 	if _hover_target_anchor_id != -1:
 		var target_node := _get_anchor_node(_hover_target_anchor_id)
-		if target_node != null and target_node.has_method("set_selected"):
-			target_node.call("set_selected", false)
+		if target_node != null:
+			target_node.set_selected(false)
 
 
-func _get_anchor_node(anchor_id: int) -> Control:
+func _get_anchor_node(anchor_id: int) -> MazeAnchor:
 	for info in _anchor_nodes:
-		var node: Control = info.node
-		if node.get("anchor_id") == anchor_id:
+		var node: MazeAnchor = info.node
+		if node.anchor_id == anchor_id:
 			return node
 	return null
 
@@ -1289,7 +1316,7 @@ func _anchor_center_pos(corner: Vector2i) -> Vector2:
 
 func _hit_anchor_info(local_pos: Vector2) -> Dictionary:
 	for info in _anchor_nodes:
-		var node: Control = info.node
+		var node: MazeAnchor = info.node
 		var center: Vector2 = node.position + node.size * 0.5
 		if center.distance_to(local_pos) <= _anchor_hit_radius:
 			return info
@@ -1314,8 +1341,8 @@ func _is_adjacent(a: Vector2i, b: Vector2i) -> bool:
 
 func _anchor_corner(anchor_id: int) -> Vector2i:
 	for info in _anchor_nodes:
-		var node: Control = info.node
-		if node.get("anchor_id") == anchor_id:
+		var node: MazeAnchor = info.node
+		if node.anchor_id == anchor_id:
 			return info.corner
 	return Vector2i(-1, -1)
 
@@ -1333,8 +1360,14 @@ func _corner_edge(a: Vector2i, b: Vector2i) -> Array:
 # ============================================================================
 # Helpers
 # ============================================================================
+## Tâm của 1 ô (toạ độ lưới → pixel). Chỉ số được KẸP vào trong bảng nên không bao giờ
+## lỗi "Out of bounds" khi con trỏ/điểm vẽ nằm ngoài board (một số chế độ giữ toạ độ đặc biệt).
 func _cell_center(pos: Vector2i) -> Vector2:
-	return Vector2(_col_center_x[pos.x], _row_center_y[pos.y])
+	if _col_center_x.is_empty() or _row_center_y.is_empty():
+		return Vector2.ZERO
+	return Vector2(
+		_col_center_x[clampi(pos.x, 0, _col_center_x.size() - 1)],
+		_row_center_y[clampi(pos.y, 0, _row_center_y.size() - 1)])
 
 
 func _lattice_key(is_h: bool, lattice: Vector2i) -> String:

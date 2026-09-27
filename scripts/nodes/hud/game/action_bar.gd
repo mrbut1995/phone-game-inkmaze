@@ -42,33 +42,28 @@ func restart_btn() -> BaseButton:
 func submit_btn() -> BaseButton:
 	return button("Submit")
 
-func undo_btn() -> BaseButton:
-	return button("Undo")
 
-func hint_btn() -> BaseButton:
-	return button("Hint")
+## Nút SKIP LEVEL — CHỈ hiện khi đang chơi MÀN trong màn Chọn màn (GameScene tự bật/tắt)
+func skip_btn() -> BaseButton:
+	return button("Skip")
+
+func undo_btn() -> LimitedButton:
+	return button("Undo") as LimitedButton
+
+
+func hint_btn() -> LimitedButton:
+	return button("Hint") as LimitedButton
 
 #func replay_btn() -> BaseButton:
 	#return button("Restart")
 
 
-## Cập nhật badge `PanelLimit` + trạng thái KHOÁ của 2 nút theo GIỚI HẠN lượt dùng của màn
-## (`max_uses <= 0` = không giới hạn → ẩn badge, không khoá). Badge là CON của nút và
-## `NinePatchStateTexture` tự đổi texture theo trạng thái nút cha ⇒ chỉ cần set chữ.
+## Cập nhật badge giới hạn + trạng thái KHOÁ của 2 nút — mỗi nút tự lo badge của mình
+## (`LimitedButton.set_limit`), thanh nút không với tay vào node con của nút.
 func update_limits(undo_left: int, undo_max: int, hint_left: int, hint_max: int) -> void:
-	_apply_limit(undo_btn(), undo_left, undo_max)
-	_apply_limit(hint_btn(), hint_left, hint_max)
-
-
-func _apply_limit(btn: BaseButton, left: int, max_uses: int) -> void:
-	if btn == null:
-		return
-	var limited := max_uses > 0
-	btn.disabled = limited and left <= 0
-	var panel := btn.find_child("PanelLimit", true, false) as Control
-	if panel == null:
-		return
-	panel.visible = limited
-	var label := panel.get_node_or_null("Label") as Label
-	if label != null:
-		label.text = str(maxi(left, 0))
+	var undo := undo_btn()
+	if undo != null:
+		undo.set_limit(undo_left, undo_max)
+	var hint := hint_btn()
+	if hint != null:
+		hint.set_limit(hint_left, hint_max)

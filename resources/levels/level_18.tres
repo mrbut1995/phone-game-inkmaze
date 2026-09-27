@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_level"]
+
+[resource]
+script = ExtResource("1_level")
+level_id = 18
+level_title = "Level 2-9 · Fading Ink — mực phai theo bước đi"
+chapter = 2
+mode_id = "fading_ink"
+difficulty = "medium"
+width = 6
+height = 6
+start_pos = Vector2i(0, 0)
+end_pos = Vector2i(5, 5)
+max_steps = 14
+par_time = 42.0
+v_walls = PackedByteArray(1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1)
+cell_mask = PackedByteArray()
+challenge_types = PackedStringArray()
+challenge_params = PackedInt32Array()
+custom_cell_values = {"1,0": 4, "2,0": 5, "3,0": 6, "4,0": 7, "5,0": 8, "5,1": 9, "5,2": 9, "5,3": 9, "5,4": 9}

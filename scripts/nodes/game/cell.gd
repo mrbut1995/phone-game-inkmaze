@@ -73,6 +73,34 @@ func set_text(text: String) -> void:
 			_label.visible = not text.is_empty()
 
 
+## Cỡ chữ SỐ đang dùng trên ô (0 = scene chưa khai LabelSettings) — Board đọc giá trị này
+## để suy cỡ chữ GỐC rồi co theo từng cỡ board, KHÔNG cần biết cấu trúc node con của ô.
+func text_font_size() -> int:
+	if _label == null:
+		_label = $Sprite/Label
+	if _label == null or _label.label_settings == null:
+		return 0
+	return _label.label_settings.font_size
+
+
+## Đặt cỡ ô (Board tính theo số cột/hàng) — ô tự lo phần đi kèm cỡ: TÂM XOAY cho hiệu ứng
+func set_cell_size(side: float) -> void:
+	size = Vector2(side, side)
+	pivot_offset = size * 0.5
+
+
+## Hiệu ứng xuất hiện khi vào màn — Board gọi cho từng ô, `delay` theo (x + y)
+func play_entrance(delay: float) -> void:
+	pivot_offset = size * 0.5
+	scale = Vector2(0.65, 0.65)
+	modulate.a = 0.0
+	var tw := create_tween().set_parallel(true)
+	if delay > 0.0:
+		tw.tween_interval(delay)
+	tw.tween_property(self, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "modulate:a", 1.0, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
 func set_font_size(fs: int) -> void:
 	if _label == null:
 		_label = $Sprite/Label
@@ -254,4 +282,3 @@ func play_pop_text() -> void:
 	var tw := create_tween()
 	tw.tween_property(_label, "scale", Vector2(1.32, 1.32), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.tween_property(_label, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-

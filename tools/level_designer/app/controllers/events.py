@@ -38,3 +38,5 @@ EV_STATUS = "status"                    # thông báo trạng thái (chuỗi)
 EV_DIRTY_CHANGED = "dirty_changed"      # có/không có thay đổi chưa lưu
 EV_LEVELS_CHANGED = "levels_changed"    # danh sách file level thay đổi
 EV_VIEW_OPTIONS_CHANGED = "view_options_changed"
+EV_EDIT_VALUE_CHANGED = "edit_value_changed"   # đổi giá trị đang cầm để tô (công cụ 7)
+EV_PATH_CHANGED = "path_changed"        # nét đường đi vừa vẽ đổi (công cụ 8)    # đổi giá trị đang cầm để tô (công cụ giá trị)

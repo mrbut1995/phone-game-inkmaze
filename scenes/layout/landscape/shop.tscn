@@ -13,8 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://6gq24f7mmebm" path="res://assets/images/shop/banner_gift.svg" id="11_gift"]
 [ext_resource type="Texture2D" uid="uid://b4h7w6mxyr4tw" path="res://assets/images/shop/gift_box.svg" id="12_gift_box"]
 [ext_resource type="Texture2D" uid="uid://cpmf46xk6bok5" path="res://assets/images/shop/btn_action_amber.svg" id="13_btn_amber"]
+[ext_resource type="PackedScene" path="res://nodes/shop/tab_button.tscn" id="20_tab"]
+[ext_resource type="PackedScene" path="res://nodes/shop/item_grid.tscn" id="21_grid"]
+[ext_resource type="PackedScene" uid="uid://deknldvs1yxnu" path="res://nodes/shop/doodle_pad.tscn" id="22_pad"]
+[ext_resource type="PackedScene" path="res://nodes/shop/noads_row.tscn" id="23_noads"]
 
-[node name="Landscape" unique_id=2028930175 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line", "pad_slot") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=2028930175 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line", "pad_slot", "item_grid", "doodle_pad", "noads_row") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("Body/LeftCol/HeaderRow/TopBar/Back")
 tabs_box = NodePath("Body/RightCol/Tabs")
@@ -33,6 +37,9 @@ wallet_bar = NodePath("Body/LeftCol/HeaderRow/Wallet")
 gift_banner = NodePath("Body/LeftCol/GiftBanner")
 tab_line = NodePath("Body/RightCol/TabLine")
 pad_slot = NodePath("Body/LeftCol/PadSlot")
+item_grid = NodePath("Body/RightCol/Content/List/Grid")
+doodle_pad = NodePath("Body/LeftCol/PadSlot/Pad")
+noads_row = NodePath("Body/RightCol/Content/List/NoAds")
 
 [node name="Body" type="HBoxContainer" parent="." index="0" unique_id=854501130]
 layout_mode = 1
@@ -156,6 +163,9 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
+[node name="Pad" parent="Body/LeftCol/PadSlot" index="0" instance=ExtResource("22_pad")]
+visible = false
+
 [node name="Spacer" type="Control" parent="Body/LeftCol" index="2" unique_id=568821146]
 layout_mode = 2
 size_flags_vertical = 3
@@ -257,6 +267,30 @@ theme_override_constants/separation = 6
 layout_mode = 2
 theme_override_constants/separation = 8
 
+[node name="Tab_pen" parent="Body/RightCol/Tabs" index="0" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "pen"
+label_key = "STR_SHOP_TAB_PEN"
+
+[node name="Tab_theme" parent="Body/RightCol/Tabs" index="1" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "theme"
+label_key = "STR_SHOP_TAB_THEME"
+
+[node name="Tab_tool" parent="Body/RightCol/Tabs" index="2" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "tool"
+label_key = "STR_SHOP_TAB_TOOL"
+
+[node name="Tab_coin" parent="Body/RightCol/Tabs" index="3" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "coin"
+label_key = "STR_SHOP_TAB_COIN"
+
 [node name="TabLine" type="ColorRect" parent="Body/RightCol" index="1" unique_id=330569803]
 custom_minimum_size = Vector2(0, 3)
 layout_mode = 2
@@ -274,6 +308,14 @@ scroll_deadzone = 12
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 20
+
+[node name="NoAds" parent="Body/RightCol/Content/List" index="0" instance=ExtResource("23_noads")]
+visible = false
+layout_mode = 2
+
+[node name="Grid" parent="Body/RightCol/Content/List" index="1" instance=ExtResource("21_grid")]
+visible = false
+layout_mode = 2
 
 [node name="Pager" type="HBoxContainer" parent="Body/RightCol" index="3" unique_id=987313937]
 visible = false

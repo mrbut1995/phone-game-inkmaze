@@ -23,6 +23,11 @@ const OFF_PATH_MAX := 6
 ## Số bước của đường ngắn nhất + khoảng dư để chốt ngưỡng thử thách "đi không quá N bước"
 const STEP_SLACK := 4
 
+## Khoảng MỰC mà TOOL cho nhà thiết kế tô (`custom_cell_values`, công cụ 7 / nút "Sinh giá trị trên đường"):
+## mực 1 = ô gần như luôn cạn (tường mềm) · mực 9 = ô rất bền. Ô KHÔNG tô thì game tự cấp.
+const DESIGNED_INK_MIN := 1
+const DESIGNED_INK_MAX := 9
+
 ## Số bước đã đi = số điểm mực đã phai (mọi ô cùng phai một nhịp)
 var moves_made: int = 0
 
@@ -47,6 +52,11 @@ func setup_floor(_floor_number: int) -> MazeData:
 	_ink.clear()
 	moves_made = 0
 
+	# MÀN DO NHÀ THIẾT KẾ VẼ: bàn + mực tính theo ĐƯỜNG NGẮN NHẤT của chính bàn đó
+	var designed := designed_maze()
+	if designed != null:
+		return _setup_on_maze(designed)
+
 	var size := 4
 	match difficulty:
 		"easy":
@@ -58,6 +68,11 @@ func setup_floor(_floor_number: int) -> MazeData:
 
 	var maze := MazeData.new()
 	maze.create_empty(size, size)      # luật đi nằm ở MỰC của từng ô, không phải tường
+	return _setup_on_maze(maze)
+
+
+## Cấp mực + ngưỡng thử thách cho 1 bàn đã có (tự sinh hoặc do nhà thiết kế vẽ)
+func _setup_on_maze(maze: MazeData) -> MazeData:
 	_start_pos = maze.get_start()
 	_end_pos = maze.get_end()
 
@@ -72,6 +87,7 @@ func setup_floor(_floor_number: int) -> MazeData:
 
 ## Cấp mực ban đầu: ô trên đường ngắn nhất LUÔN đủ mực để tới F,
 ## các ô còn lại nhận mực ngẫu nhiên thấp hơn (lối tắt dự phòng).
+## Ô nào NHÀ THIẾT KẾ tô mực trong tool (`custom_cell_values` khoá "x,y") thì giữ ĐÚNG giá trị đó.
 func _assign_ink(maze: MazeData, shortest: Array[Vector2i]) -> void:
 	var step_index := {}
 	for i in shortest.size():
@@ -81,7 +97,10 @@ func _assign_ink(maze: MazeData, shortest: Array[Vector2i]) -> void:
 			var pos := Vector2i(x, y)
 			if not maze.is_cell_active(pos) or pos == _start_pos or pos == _end_pos:
 				continue
-			if step_index.has(pos):
+			var designed := _designed_ink(pos)
+			if designed > 0:
+				_ink[pos] = designed          # mực do nhà thiết kế tô → tôn trọng tuyệt đối
+			elif step_index.has(pos):
 				# Để tới được ô ở bước thứ j thì lúc đó mực còn (j-1) điểm đã phai
 				# -> mực ban đầu phải >= j, cho dư 2..3 điểm.
 				var j: int = int(step_index[pos])
@@ -90,12 +109,29 @@ func _assign_ink(maze: MazeData, shortest: Array[Vector2i]) -> void:
 				_ink[pos] = randi_range(OFF_PATH_MIN, OFF_PATH_MAX)
 
 
+## Mực NHÀ THIẾT KẾ tô cho 1 ô (0 = chưa tô → game tự cấp).
+## Tool ghi vào `custom_cell_values` khoá "x,y" (màn 18 là màn mẫu có tô mực).
+func _designed_ink(pos: Vector2i) -> int:
+	var lvl := designed_level()
+	if lvl == null or lvl.custom_cell_values.is_empty():
+		return 0
+	var key := "%d,%d" % [pos.x, pos.y]
+	if not lvl.custom_cell_values.has(key):
+		return 0
+	return clampi(int(lvl.custom_cell_values[key]), DESIGNED_INK_MIN, DESIGNED_INK_MAX)
+
+
 # ---------------------------------------------------------------------------
 # Mực
 # ---------------------------------------------------------------------------
 ## Mực còn lại của ô ở thời điểm hiện tại (đã trừ số bước đã đi)
 func ink_left(pos: Vector2i) -> int:
 	return maxi(int(_ink.get(pos, 0)) - moves_made, 0)
+
+
+## Bật lớp hiển thị SỐ MỰC trên từng ô (board hỏi cờ này trước khi gọi `ink_left()`).
+func shows_ink_left() -> bool:
+	return true
 
 
 ## Mực BAN ĐẦU của ô (chưa phai) — dùng khi cần phân biệt ô vốn có số

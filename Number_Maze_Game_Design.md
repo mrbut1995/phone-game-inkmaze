@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Tài liệu** | Number Maze — Game Design Document (InkMaze) |
-| **Phiên bản** | v2.12 — 2026-09-26 (**THANH HÀNH ĐỘNG MỚI + GIỚI HẠN LƯỢT**: bỏ hẳn 2 nút công cụ VẼ ĐƯỜNG/GHI NHỚ (bàn cờ tự nhận thao tác), **nút CHƠI LẠI dời từ thanh trạng thái xuống thanh hành động** (cả 2 hướng), thêm nút **GỬI BÀI (`Submit`)** cho Wall Builder, **GIỚI HẠN lượt UNDO/HINT mỗi màn** (mặc định 3) + badge **`PanelLimit`** hiện số lượt còn lại và **khoá nút khi hết lượt** → §10.2e) · v2.11 — 2026-09-26 (**HAI KIỂU HIỂN THỊ ĐIỂM**: bản NHÚNG (HUD ngang) = ảnh SẠCH chữ + badge số + DANH SÁCH điểm đầy đủ bên phải; bản POPUP = ảnh giữ NGUYÊN chữ như mockup, KHÔNG badge + KHÔNG khối ĐIỂM (ảnh nở hết bề ngang) — MỌI chữ mô tả trên ảnh đều thành ĐIỂM có hàng trong danh sách → §10.2d) · v2.10 — 2026-09-26 (**SỬA LỖI LẬT TRANG + ẢNH SẠCH**: cụm điều hướng nhúng về **BĂNG ĐÁY khung**, ẩn mọi chữ mô tả trên ảnh) · v2.9 — 2026-09-26 (**BỐ CỤC CỐ ĐỊNH cho hệ hướng dẫn**) · v2.8 — 2026-09-26 (**HƯỚNG DẪN theo mockup landscape**) · v2.7 — 2026-02 (**TÁCH hệ hướng dẫn**) · v2.6 — 2026-02 (**Nền tảng đa tỉ lệ mới**) · v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze**) · v2.4 — 2026-09-19 (2 mode mới vào vòng xoay Daily 9 ngày) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
+| **Phiên bản** | v2.17 — 2026-09-27 (**TỐI ƯU: UI KHAI TRONG SCENE — TAB TỰ LO**: 3 màn có tab (Cửa hàng · Xếp hạng · Sổ tay thành tựu) **không còn dựng tab bằng code** — tab là node **KHAI SẴN trong scene bố cục** (`Tabs/*`, mỗi hướng 1 bản), mỗi tab tự khai `category`/`board_id` + `label_key`, **tự nối `pressed` → `tab_pressed`** và tự chỉnh cỡ; script màn chỉ `_collect_tabs()` gom lại (hết `_build_tabs()`); lưới ô của Cửa hàng cũng thành node **khai sẵn dùng lại** (không instantiate lại mỗi lần đổi tab/trang); Xếp hạng **dùng lại hàng** khi đổi bảng; dọn code thừa (`TAB_*_SCENE` · `_fit_tab_widths` · `apply_row_layout` · `_capture_tab_layout`) → §10.2g; **BÀN CỜ**: 4 **node MẪU** (ô · tường · neo · vệt mực cũ) khai trong `nodes/game/board_layers.tscn` — board `_spawn_template()` = `duplicate()` thay `instantiate()`, cỡ THIẾT KẾ của tường/vệt mực đọc từ node mẫu (bỏ `_read_scene_line_width()` + 4 `preload()`); **Cửa hàng**: bàn nháp thử bút (`Content/List/Pad` · `PadSlot/Pad`) + hàng VIP *Xoá quảng cáo* (`Content/List/NoAds`) cũng khai sẵn trong 2 scene bố cục; `test_ui_scenes` thêm **mục 8** = hàng rào: script nào còn `preload()/instantiate()` scene ĐÃ khai sẵn thì FAIL) · v2.16 — 2026-09-27 (**TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI + MỰC TÔ TAY**: công cụ 8 giờ biết **TÔ GIÁ TRỊ** thay vì chỉ sinh tường — `countdown_cost` có ô **Tổng chi phí đường đi** (chia 1..4 cho các ô sao cho TỔNG khớp, tự nâng `max_steps`), `sum_path` có ô **Tổng điểm đường đi** (chia 1..9), `fading_ink` thêm công cụ 7 **tô MỰC từng ô** + ô **Mực dư mỗi bước** (mực tăng dần theo bước); GAME: Sum Path **không tính S/F** nữa (tổng khớp đúng số thiết kế), Countdown Cost **tôn trọng `max_steps` của màn**, Fading Ink đọc **mực tô tay** → §10.2f) · v2.15 — 2026-09-27 (**VẼ ĐƯỜNG ĐI TRONG TOOL + MÀN MẪU CHO MỌI CHẾ ĐỘ**: công cụ **8** = kéo chuột vẽ đường S→F rồi `Ctrl+Enter` để sinh tường quanh nó (nét vẽ thành **ĐƯỜNG DUY NHẤT**, tự đặt S/F + `max_steps`); thêm **6 màn mẫu 15–20** phủ nốt mọi chế độ Special (mỗi chế độ 1 màn); **sửa LỖI THẬT của One Stroke** (thuật toán phủ kín luôn từ chối nước cuối bước vào F ⇒ màn thiết kế trước đây luôn âm thầm bị thay bằng bàn tự sinh); Debug Console (F9) nhảy được **mọi** màn + đánh dấu màn ◆ chế độ → §10.2f) · v2.14 — 2026-09-27 (**KIỂU EDIT THEO CHẾ ĐỘ + BỎ `dungeon` KHỎI MÀN**: mỗi chế độ có **1 kiểu edit** riêng trong tool (`custom_cell_values`, công cụ **7**): Minesweeper **GHIM MÌN** · Sum Path **ĐIỂM Ô** 1..9 · Countdown Cost **CHI PHÍ Ô** 1..4 (ô không tô = game tự sinh, cố định theo màn); `dungeon` bị **loại khỏi danh sách chế độ của màn** (validator báo LỖI, game coi như `play`) → §10.2f) · v2.13 — 2026-09-27 (**MÀN CHƠI CHẾ ĐỘ SPECIAL + SKIP LEVEL**: màn khai `mode_id` trong LevelData ⇒ game chạy chế độ Special **TRÊN ĐÚNG BÀN NHÀ THIẾT KẾ VẼ** (tường + cell_mask), "gia vị" của chế độ (mìn · điểm ô · chi phí · mực) **CỐ ĐỊNH theo `level_id`**; thêm **nút SKIP LEVEL** trên thanh hành động (chỉ hiện khi chơi MÀN, bấm ⇒ mở khoá màn kế trong chương mà KHÔNG ghi Sao); tool level_designer báo luật riêng theo chế độ → §10.2f) · v2.12 — 2026-09-26 (**THANH HÀNH ĐỘNG MỚI + GIỚI HẠN LƯỢT**: bỏ hẳn 2 nút công cụ VẼ ĐƯỜNG/GHI NHỚ (bàn cờ tự nhận thao tác), **nút CHƠI LẠI dời từ thanh trạng thái xuống thanh hành động** (cả 2 hướng), thêm nút **GỬI BÀI (`Submit`)** cho Wall Builder, **GIỚI HẠN lượt UNDO/HINT mỗi màn** (mặc định 3) + badge **`PanelLimit`** hiện số lượt còn lại và **khoá nút khi hết lượt** → §10.2e) · v2.11 — 2026-09-26 (**HAI KIỂU HIỂN THỊ ĐIỂM**: bản NHÚNG (HUD ngang) = ảnh SẠCH chữ + badge số + DANH SÁCH điểm đầy đủ bên phải; bản POPUP = ảnh giữ NGUYÊN chữ như mockup, KHÔNG badge + KHÔNG khối ĐIỂM (ảnh nở hết bề ngang) — MỌI chữ mô tả trên ảnh đều thành ĐIỂM có hàng trong danh sách → §10.2d) · v2.10 — 2026-09-26 (**SỬA LỖI LẬT TRANG + ẢNH SẠCH**: cụm điều hướng nhúng về **BĂNG ĐÁY khung**, ẩn mọi chữ mô tả trên ảnh) · v2.9 — 2026-09-26 (**BỐ CỤC CỐ ĐỊNH cho hệ hướng dẫn**) · v2.8 — 2026-09-26 (**HƯỚNG DẪN theo mockup landscape**) · v2.7 — 2026-02 (**TÁCH hệ hướng dẫn**) · v2.6 — 2026-02 (**Nền tảng đa tỉ lệ mới**) · v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze**) · v2.4 — 2026-09-19 (2 mode mới vào vòng xoay Daily 9 ngày) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
 | **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
 | **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
 | **Quy ước mode** | 1 bộ luật = 1 `class_name` kế thừa `BaseGameMode`; mỗi mode có `mode_id` (khoá xoay vòng Daily + tra chuỗi `STR_MODE_<ID>`), luật riêng, và **1 mockup matchup** ở mục 10 |
@@ -243,7 +243,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 | Trường | Nội dung |
 |---|---|
-| **Cổng vào** | Daily Challenge · `mode_id = minesweeper` |
+| **Cổng vào** | Daily Challenge · **MÀN campaign** (màn khai `mode_id = minesweeper` trong LevelData → chơi TRÊN BÀN NHÀ THIẾT KẾ VẼ — §10.2f) |
 | **Bàn cờ** | Vuông **`2 + tầng`, kẹp 3..5** (tầng 1 = 3×3) · **không tường trong** · luôn có đường BFS **không mìn** từ S tới F · mật độ mìn `min(0.18 + tầng×0.03, 0.32)` |
 | **Số trên ô** | Số mìn trong **8 ô lân cận** (0..8) · S/F luôn an toàn |
 | **Di chuyển** | 4 hướng · mỗi bước 1 điểm · hồi sinh = quay lại ô trước đó |
@@ -257,7 +257,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 | Trường | Nội dung |
 |---|---|
-| **Cổng vào** | Daily Challenge · `mode_id = blind_memory` |
+| **Cổng vào** | Daily Challenge · **MÀN campaign** (`mode_id = blind_memory` — §10.2f) |
 | **Bàn cờ** | Thường: 4×4 · Hardcore: 5×5 · tường vô hình, **không hiện số** |
 | **Số trên ô** | **Không có số** (chỉ S/F) — người chơi phải **ghi nhớ** vị trí tường |
 | **Di chuyển** | 4 hướng · bị **khoá tương tác** trong lúc đếm ngược · có UNDO + GỢI Ý |
@@ -272,7 +272,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 | Trường | Nội dung |
 |---|---|
-| **Cổng vào** | Daily Challenge · `mode_id = fog_of_war` |
+| **Cổng vào** | Daily Challenge · **MÀN campaign** (`mode_id = fog_of_war` — §10.2f) |
 | **Bàn cờ** | Sinh theo tầng/độ khó, tường vô hình như Play Mode |
 | **Số trên ô** | Số tường quanh ô — **chỉ hiện ở các ô trong bán kính 1** quanh nhân vật; ô xa bị phủ mờ (modulate `0.6` / alpha `0.4`) |
 | **Di chuyển** | 4 hướng · sương mù cập nhật theo từng bước đi |
@@ -286,7 +286,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 | Trường | Nội dung |
 |---|---|
-| **Cổng vào** | Daily Challenge · `mode_id = sum_path` |
+| **Cổng vào** | Daily Challenge · **MÀN campaign** (`mode_id = sum_path` — §10.2f) |
 | **Bàn cờ** | Theo độ khó: easy 3×3 · medium 4×4 · hard 5×5 · **không có tường** |
 | **Số trên ô** | **Điểm số của ô (1..9)** — không liên quan tường |
 | **Di chuyển** | 4 hướng · mỗi ô **chỉ tính điểm 1 lần** (quay lại ô cũ không cộng thêm) |
@@ -299,7 +299,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 | Trường | Nội dung |
 |---|---|
-| **Cổng vào** | Daily Challenge · `mode_id = countdown_cost` |
+| **Cổng vào** | Daily Challenge · **MÀN campaign** (`mode_id = countdown_cost` — §10.2f) |
 | **Bàn cờ** | Theo độ khó: easy 3×3 · medium 4×4 · hard 5×5 (xem bảng chi phí/ngân sách bên dưới) |
 | **Số trên ô** | **CHI PHÍ BƯỚC** khi bước vào ô đó (mọi ô trừ S/F đều có số ≥ 1) |
 | **Di chuyển** | 4 hướng · bước vào ô nào trừ đúng chi phí ô đó · đâm tường về S và trừ chi phí ô đích |
@@ -320,7 +320,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 | Trường | Nội dung |
 |---|---|
-| **Cổng vào** | Daily Challenge (thay chỗ **Area Maze** — đã BỎ từ 2026-11) · `mode_id = fading_ink` |
+| **Cổng vào** | Daily Challenge (thay chỗ **Area Maze** — đã BỎ từ 2026-11) · **MÀN campaign** (`mode_id = fading_ink` — §10.2f) |
 | **Bàn cờ** | Theo độ khó: easy 3×3 · medium 4×4 · hard 5×5 · **không có tường trong** |
 | **Số trên ô** | **MỰC của riêng ô đó** (ban đầu 2..9) — **giảm 1 mỗi bước đi** (mọi ô cùng phai một nhịp) |
 | **Di chuyển** | 4 hướng · **chỉ đi vào ô còn mực**; ô hết mực bị chặn (không mất bước), mất số và hiện **lớp gạch + huy hiệu CẠN**; ô còn đúng **1 mực** hiện **lớp SẮP PHAI** (nền hổ phách + chữ cảnh báo) |
@@ -401,7 +401,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 | Trường | Nội dung |
 |---|---|
-| **Cổng vào** | Daily Challenge · `mode_id = one_stroke` · tên gọi: EN **ONE STROKE** · VI **MỘT NÉT** *(phương án khác: Full Page / KÍN TRANG · Cover All / PHỦ KÍN)* |
+| **Cổng vào** | Daily Challenge · **MÀN campaign** (`mode_id = one_stroke` — §10.2f) · tên gọi: EN **ONE STROKE** · VI **MỘT NÉT** *(phương án khác: Full Page / KÍN TRANG · Cover All / PHỦ KÍN)* |
 | **Bàn cờ** | Theo độ khó — **luôn là bàn VUÔNG LẺ ô** để bảo đảm tồn tại đường Hamilton S→F: easy **3×3** · medium **5×5** · hard **7×7** · **tường NHÌN THẤY RÕ 100%** (mọi vách giữa 2 ô + viền ngoài board đều vẽ ra) |
 | **Số trên ô** | **KHÔNG hiện số** — bàn chỉ có tường + S/F. Không phải suy luận tường: toàn bộ độ khó nằm ở **thứ tự đi** |
 | **Di chuyển** | 4 hướng · kéo từ tâm ô · **ô đã đi qua bị KHOÁ VĨNH VIỄN** (hiện lớp tô xanh + gạch chéo + nhãn `ĐÃ ĐI`); kéo nét đè lên ô cũ ⇒ **THUA NGAY** (chất hazard `revisit`, xem mục *Thua*) |
@@ -425,7 +425,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 | Trường | Nội dung |
 |---|---|
-| **Cổng vào** | Daily Challenge · `mode_id = wall_builder` · tên gọi: EN **WALL BUILDER** · VI **XÂY TƯỜNG** *(phương án khác: Bricklayer / THỢ XÂY · Draw the Walls / ĐẮP TƯỜNG)* |
+| **Cổng vào** | Daily Challenge · **MÀN campaign** (`mode_id = wall_builder` — §10.2f) · tên gọi: EN **WALL BUILDER** · VI **XÂY TƯỜNG** *(phương án khác: Bricklayer / THỢ XÂY · Draw the Walls / ĐẮP TƯỜNG)* |
 | **Bàn cờ** | Theo độ khó: easy **3×3** · medium **4×4** · hard **5×5** · mê cung sinh sẵn nhưng **tường bị ẩn HOÀN TOÀN**; **KHÔNG có S/F**, **không có nhân vật**, **không di chuyển** |
 | **Số trên ô** | **Số tường quanh ô (0..4)** — hiện **rõ trên MỌI ô** (kể cả số 0); đếm đúng quy ước ở đầu mục 2 (chỉ 4 cạnh giữa 2 ô thuộc board) |
 | **Thao tác chính** | **VẼ TƯỜNG** = kéo nối 2 **Anchor** kề nhau để **bật/tắt 1 đoạn tường** tại khe giữa 2 ô (đúng thao tác "Tường Nghi Ngờ" trước đây — nay là **hành động CHÍNH**, không còn là giấy nháp). **Viền ngoài board là tường cố định**, không vẽ được và không tính vào số |
@@ -724,6 +724,259 @@ Thanh hành động (action bar) nằm TRONG HUD của mỗi chế độ, mỗi 
 - **Dòng dữ liệu**: `GameController._update_hud()` → `ui_controller.set_run_info({undo_left, undo_max, hint_left, hint_max, …})` → `UIController.update_hud()` đưa 4 khoá này vào `ctx` → `GameHUD.update_hud(ctx)` → `_sync_limits(ctx)` → `ActionBar.update_limits()`.
 - **Tài nguyên**: `btn_restart_*.svg` (đã dùng từ trước) · `btn_submit_*.svg` (nút GỬI BÀI, art mới của user) · `btn_item_*.svg` + `panel_sub_infor_item.svg` (khung badge `PanelLimit`).
 - **Kiểm thử**: `test_controllers_and_signals.gd` — thanh trạng thái KHÔNG còn `Restart`, nút CHƠI LẠI nằm trong thanh hành động, mỗi chế độ có `Submit` (ẩn trừ Wall Builder), 2 nút UNDO/HINT có `PanelLimit`, **hết lượt ⇒ nút bị KHOÁ + bấm không trừ thêm lượt**. `test_hud_modes` / `test_wall_builder` / `test_one_stroke` / `test_fog_of_war` kiểm nút `Submit`/`Restart` theo chế độ (4 test này còn vài check cũ đã lệch đường dẫn node HUD từ trước, không liên quan thay đổi này).
+
+### 10.2f. MÀN CHƠI CHẾ ĐỘ SPECIAL + NÚT SKIP LEVEL (2026-09-27)
+
+Ngoài Daily Challenge (bàn TỰ SINH), một **MÀN trong campaign** có thể khai chế độ riêng trong
+`LevelData.mode_id` (tool `level_designer` → ô `mode_id`). Khi đó chế độ Special chạy **TRÊN ĐÚNG BÀN
+NHÀ THIẾT KẾ VẼ** (tường + `cell_mask`) rồi mới "rắc gia vị" của mình lên trên.
+
+**1. Dòng dữ liệu (code là nguồn sự thật)**
+
+| Nơi | Việc |
+|---|---|
+| `GameManager.prepare_level_run(id)` | Nạp `mode_id` (id lạ/rỗng ⇒ `play`) + `difficulty` từ LevelData, bật cờ **`level_run = true`** (Daily/Dungeon/Debug ⇒ `false`), phát `mode_changed`. `start_level()` gọi hàm này rồi mới chuyển scene. |
+| `GameScene._start_floor_for()` | Ván MÀN ⇒ trả về **ID màn** cho MỌI chế độ (ID màn đóng vai "tầng" để chế độ biết mình đang ở đâu). |
+| `BaseGameMode.designed_level()` / `designed_maze()` | Lấy LevelData của màn đang chơi → `to_maze_data()`. `null` với Daily/Dungeon/Debug ⇒ chế độ tự sinh bàn như trước. |
+| `BaseGameMode.designed_steps(default)` | Ngân sách bước = `max(LevelData.max_steps, mặc định của chế độ)` — màn to không bị "hết bước oan". |
+| `GameController._seed_level_run()` | Gieo `seed(level_id * 7919 + 13)` TRƯỚC `setup_floor()` ⇒ phần ngẫu nhiên của chế độ **CỐ ĐỊNH theo màn** (chơi lại y hệt). |
+| `MazeData.set_all_walls_visible(bool)` | Ép cờ hiện/ẩn của MỌI tường (bàn thiết kế đã có mảng hiện/ẩn riêng nên `visible_wall_ratio` không còn tác dụng). |
+
+**2. Mỗi chế độ dùng bàn thiết kế thế nào**
+
+| Chế độ | Tường của màn | "Gia vị" chế độ rắc thêm |
+|---|---|---|
+| `minesweeper` | **ÉP HIỆN** (cần thấy bàn để chọn đường) | Mìn chỉ rải trên ô **ĐI TỚI ĐƯỢC từ S** và **không** thuộc đường S→F ngắn nhất (BFS) ⇒ luôn có đường an toàn; số = mìn trong 8 ô lân cận |
+| `sum_path` | Giữ nguyên thiết kế | Điểm ô 1..9 (hoặc `custom_cell_values["x,y"]` nếu tool khai) + mốc tổng tính theo **đường NGẮN NHẤT** của màn |
+| `countdown_cost` | Giữ nguyên thiết kế | Chi phí ô 1..4 (giá trị tô tay giữ ĐÚNG, ô còn lại theo độ khó) + ngân sách theo đường RẺ NHẤT (Dijkstra trên chính bàn đó) |
+| `blind_memory` | **ÉP ẨN** | Pha GHI NHỚ như cũ (hiện toàn bộ tường → đếm ngược → ẩn lại) |
+| `fog_of_war` | **ÉP ẨN** | Sương mù quanh nhân vật + lượt thử lại |
+| `fading_ink` | Giữ nguyên thiết kế | Mực theo đường ngắn nhất của màn |
+| `one_stroke` | **ÉP HIỆN** | Đường mẫu = lời giải PHỦ KÍN tự dò (DFS cắt tỉa kiểu Warnsdorff). Bàn **không có lời giải** ⇒ `push_warning` + tạm dùng bàn tự sinh để màn vẫn thắng được |
+| `wall_builder` | **ÉP ẨN** (đố suy luận) | Số trên ô suy từ chính tường của màn; `solution_count` đếm từ solver (hết ngân sách = coi như nhiều nghiệm) |
+
+- **HUD**: tiêu đề ván màn hiện `MÀN nn` + phụ đề `TÊN CHẾ ĐỘ · CHƯƠNG n` (giống Play Mode) — xem `BaseGameMode.get_hud_floor_title()/_subtitle()`.
+- **Thử thách**: màn khai `challenge_types/params` thì được ưu tiên; để trống ⇒ bộ mặc định RIÊNG của chế độ (`default_challenges()`, vd One Stroke `time_max · no_hint · no_undo`) rồi mới tới bộ chung.
+
+**2b. KIỂU EDIT RIÊNG THEO CHẾ ĐỘ (`custom_cell_values`)** — v2.14
+
+Mỗi chế độ có **1 kiểu edit**: tool đổi thanh công cụ theo `mode_id` (công cụ **7** + ô giá trị + nút "Xoá giá trị"),
+lưu vào `custom_cell_values` khoá `"x,y"`. **Ô không tô = game tự sinh** (cố định theo màn). Khai báo 1 chỗ:
+`tools/level_designer/app/config.py::MODE_EDITS` (khớp `mode_edit_spec()` dùng chung cho tool + validator).
+
+| Chế độ | `kind` | Tô gì (tool) | Game đọc thế nào |
+|---|---|---|---|
+| `minesweeper` | `cell_value` 1 | **GHIM MÌN** | `_pinned_mines()` giữ đúng ô ghim; đường an toàn S→F được dò TRÁNH mìn ghim; nếu mìn ghim chặn hết đường ⇒ `push_warning` + **bỏ mìn ghim** (màn luôn thắng được) |
+| `sum_path` | `cell_value` 1..9 | **ĐIỂM Ô** | `_designed_score()` ưu tiên giá trị tô (kẹp 1..9), còn lại random — **S/F KHÔNG có điểm** (v2.16) |
+| `countdown_cost` | `cell_value` 1..4 | **CHI PHÍ Ô** | `_designed_cost()` giữ ĐÚNG 1..4 (`DESIGNED_COST_MIN/MAX`) — **không kẹp theo độ khó** để tôn trọng ý đồ thiết kế |
+| `fading_ink` | `cell_value` 1..9 | **MỰC Ô** (v2.16) | `_designed_ink()` đọc MỰC tô tay; ô không tô thì game tự cấp (đủ đi hết đường ngắn nhất + dư 2..3) |
+| `play` · `blind_memory` · `fog_of_war` · `one_stroke` · `wall_builder` | `none` | (không có nút) | Game tự sinh hết; validator in ghi chú riêng của chế độ |
+
+**2b-bis. Ô “TỔNG …” + TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI (v2.16)**
+
+Ba chế độ có giá trị ô ở bảng trên thêm 1 ô nhập **ở BẢNG PHẢI, mục “Lưới & luật chơi”** cùng nút
+**“Tô theo đường đi”**: `countdown_cost` = **Tổng chi phí đường đi** · `sum_path` = **Tổng điểm đường đi** ·
+`fading_ink` = **Mực dư mỗi bước**. Khi có ô này, `Ctrl+Enter` **TÔ GIÁ TRỊ** cho các ô của đường đi
+thay vì dựng tường (xem mục 2c):
+
+| Chế độ | `fill` | Ctrl+Enter làm gì |
+|---|---|---|
+| `countdown_cost` | `sum` | chia chi phí 1..4 cho các ô của đường sao cho **TỔNG = số đã nhập** (mỗi ô random trong khoảng) và tự nâng `max_steps` = tổng + 3 (`budget_from_sum`) |
+| `sum_path` | `sum` | chia điểm 1..9 cho các ô của đường sao cho **TỔNG = số đã nhập** |
+| `fading_ink` | `step` | cấp **MỰC tăng dần theo bước**: ô ở bước thứ j nhận `clamp(j + Mực dư, 1, 9)` ⇒ đi đúng đường thì luôn tới được F |
+
+- TỔNG chỉ tính các ô **GIỮA S và F** (game cũng không tính điểm/chi phí ở S/F) ⇒ con số khớp ĐÚNG.
+- Ô “Tổng …” tự hiện **tổng đang có** trên đường vừa vẽ; nhập số khác rồi `Ctrl+Enter` (hoặc nút *Tô theo
+  đường đi*) để chia lại.
+- **Thanh công cụ của tool có 2 DÒNG** (tránh tràn ngang ở cửa sổ hẹp): dòng 1 = công cụ vẽ · dòng 2 =
+  khối GIÁ TRỊ (công cụ 7) / khối ĐƯỜNG ĐI + tuỳ chọn xem + zoom + Lưu. Hai khối động **không bao giờ hiện
+  cùng lúc** (đang vẽ đường thì khối giá trị ẩn đi). Test GUI đo `winfo_reqwidth` của cả 2 dòng ở cửa sổ
+  1080 px để chặn tràn trong tương lai.
+- **Chưa vẽ gì** ⇒ `Ctrl+Enter` tô theo **đường NGẮN NHẤT** của màn (đúng đường game dùng làm mẫu).
+- Số ngoài khoảng hợp lệ (số ô × min..max) ⇒ tool báo khoảng cho phép và **không tô gì**.
+
+**2b-ter. GAME thay đổi theo (v2.16)**
+
+| Chế độ | Trước | Nay |
+|---|---|---|
+| `sum_path` | tổng tính CẢ S/F (S/F hiện chữ nên coi như số ẩn, mỗi ô 1..9 random) | **S/F = 0 điểm** ⇒ tổng đường đi khớp đúng số nhà thiết kế tô/chia |
+| `countdown_cost` | ngân sách = `max(độ khó, đường RẺ NHẤT + dư)` (bỏ qua `max_steps` của màn) | tôn trọng thêm `max_steps` của màn (`_ensure_budget(maze, designed_steps(...))`) ⇒ nhà thiết kế chốt được ngân sách theo TỔNG chi phí |
+| `fading_ink` | mực 100% do game cấp theo đường ngắn nhất | đọc `custom_cell_values` trước, ô không tô mới tự cấp |
+
+- **Tool**: `models/level.py` thêm `custom_value()/set_custom_value()/clear_custom_values()/prune_custom_values()` (tự bỏ giá trị ngoài lưới khi đổi kích thước/bỏ ô board) · `services/tres_io.py` ghi `{"x,y": v}` (sắp theo `y,x`) và **giữ nguyên chuỗi gốc** nếu file có phần tool không hiểu (`custom_raw_unknown` → validator cảnh báo) · `editor_controller.apply_value_tool()` (click lại = xoá, kéo rê = tô, S/F + ô trống bị bỏ qua, có undo) · `grid_view` vẽ số giá trị TO ĐẬM giữa ô (đè số tường) + chuột phải ưu tiên xoá giá trị · `main_window` khối công cụ giá trị động (nút/ô giá trị/nút xoá + phím `7` + menu Sửa → "Xoá hết giá trị riêng của chế độ").
+- **`dungeon` KHÔNG dùng được cho màn**: bỏ khỏi `MODE_IDS` (còn trong `RETIRED_MODE_IDS` để báo lỗi rõ), validator **LỖI** cho file cũ khai `dungeon`, và `GameManager.mode_id_of_level()` coi màn `dungeon` như `play` (chế độ bất tận chỉ vào từ Main Screen).
+- Màn mẫu: **13** có 2 mìn ghim `{"0,2": 1, "2,3": 1}` · **14** có 3 điểm ô `{"4,8": 5, "2,9": 9, "1,10": 1}` (`make_samples.py` khóa `"custom_values"` ghi lại đúng như vậy).
+
+**2c. TOOL VẼ ĐƯỜNG ĐI (công cụ 8 — v2.15; TÔ GIÁ TRỊ theo đường từ v2.16)**
+
+Nét vẽ là dữ liệu **TẠM** của tool (không ghi vào `.tres`): kéo chuột vẽ 1 nét đường — chỉ nối **ô kề**,
+không nhảy ô, không đi đè, kéo ngược lại = lùi 1 ô — rồi `Ctrl+Enter`. Có **2 kiểu áp dụng** tuỳ chế độ:
+
+| Kiểu | Chế độ | Kết quả |
+|---|---|---|
+| **Sinh tường** (`path_action = walls`) | mọi chế độ còn lại | mọi cạnh **BÊN HÔNG** của đường thành tường hiện; cạnh nối 2 ô LIỀN NHAU được MỞ ⇒ nét vẽ là **ĐƯỜNG DUY NHẤT** S→F |
+| **Tô giá trị** (`path_action = values`) | countdown_cost · sum_path · fading_ink | tô giá trị ô theo ô “Tổng …” ở BẢNG PHẢI (chia theo tổng hoặc mực theo bước) — xem **2b-bis** |
+
+Chung cho cả hai kiểu:
+
+| Việc | Kết quả |
+|---|---|
+| S / F | `S` = ô **ĐẦU** nét vẽ · `F` = ô **CUỐI** nét vẽ |
+| `max_steps` | sinh tường/tô điểm: số bước của nét vẽ + 2 · riêng countdown_cost: `max(số bước + 2, TỔNG + 3)` |
+| Hoàn tác | cả lần áp dụng là **1 bước** `Ctrl+Z` |
+
+- Code: `app/config.py` (`TOOL_PATH`, `TOOL_PATH_KEY = "8"`, `PATH_WALL_EXTRA_STEPS`, `MODE_EDITS[*]["path"]` +
+  `mode_edit_spec()` điền sẵn `path_action`/`path_fill`/`sum_*`/`budget_from_sum`) ·
+  `EditorController.begin_path/extend_path/clear_path_draft/apply_path_walls/apply_path_values` +
+  `path_edge_ref()` (cùng quy ước cạnh với `MazeData.has_wall`) + `app/services/path_values.py`
+  (`distribute_sum` chia tổng theo khoảng · `step_values` mực theo bước · `feasible_range`) ·
+  `GridVew._draw_path_draft()` (nét tím + 2 đầu tròn) · toolbar khối **“Đường đi”** (nút *Sinh tường quanh đường*
+  / *Sinh giá trị trên đường* — đổi theo chế độ — và nút *Xoá nét vẽ*, chỉ hiện khi có nét vẽ) + ô **“Tổng …”**
+  trong khối giá trị · menu **Sửa** (2 lệnh) · phím `8`, `Ctrl+Enter`, `Esc` · chuột phải ở công cụ 8 = xoá nét.
+- Test: `tests/test_path_tool.py` (**25 test**, nét vẽ là ĐƯỜNG DUY NHẤT + mở lại lối đi + undo) ·
+  `tests/test_path_values.py` (**17 test**: khai báo `path` của từng chế độ · chia tổng đúng và trong khoảng ·
+  từ chối tổng ngoài khoảng · mực tăng dần theo bước và luôn ≥ số bước · tô theo đường NGẮN NHẤT khi chưa vẽ ·
+  chế độ thường từ chối tô giá trị) · `test_gui_smoke` kiểm ô “Tổng …” + tô giá trị qua đường.
+- Bấm `P` sau khi áp dụng để xem lại **đường ngắn nhất** — sẽ trùng đúng nét vừa vẽ.
+
+**3. Nút SKIP LEVEL**
+
+| Việc | Chi tiết |
+|---|---|
+| Node | `Skip` (TextureButton) có ở **CẢ 2 thanh hành động**: dọc = `ActionBar/Row`, ngang = `ActionBar/SubRow`; art `btn_skip_normal/pressed/disable.svg`. `ActionBar.skip_btn()` / `GameHUD.skip_btn()` chỉ tìm theo tên nên không phụ thuộc hướng. |
+| Hiện/ẩn | `GameScene._apply_mode_buttons()` → `_is_level_run()`: **CHỈ hiện khi ván này là ván MÀN** (`GameManager.level_run`); ẩn ở Dungeon/Daily/Debug Console. |
+| Hành vi | `GameController.skip_current_level()` → `GameManager.skip_level(id)`: **mở khoá màn KẾ TIẾP trong cùng chương mà KHÔNG ghi Sao/thời gian**, rồi vào luôn màn kế (`start_level`). Hết chương (`next_level_in_chapter() = -1`) ⇒ mở màn **CHỌN CHƯƠNG**. |
+| Dây nối | `GameScene._wire_action_bar()` nối `skip_btn.pressed → _on_skip_pressed()`; nút cũng nằm trong `_all_buttons()` nên được gắn hiệu ứng nhấn. |
+
+**4. Tool `level_designer`**
+
+- `app/config.py`: `MODE_LABELS` (nhãn người đọc cho từng chế độ) · `MODE_EDITS` + `mode_edit_spec()` (**kiểu edit theo chế độ** — §10.2f mục 2b) · `MODE_WALL_VISIBILITY_OVERRIDE` (chế độ nào game ép hiện/ẩn tường) · `MODES_NEEDING_VISIBLE_WALLS` (nhắc nhà thiết kế) · `MODE_IDS` **KHÔNG có `dungeon`** (`RETIRED_MODE_IDS`).
+- `app/services/validator.py`: `_validate_mode()` — LỖI khi `mode_id` không tồn tại / là `dungeon` (chế độ bất tận); CẢNH BÁO khi màn còn **tường ẩn** ở chế độ cần thấy tường / Không có tường nào / Wall Builder quá ít tường; NHẮC luật riêng (One Stroke phủ kín, Minesweeper chỉ rải mìn ở ô tới được, Sum Path mốc = đường ngắn nhất) + ngân sách bước thực tế · `_validate_custom_values()` — giá trị NGOÀI khoảng của chế độ, dữ liệu lạ không hiểu được, mìn ghim nằm trên đường ngắn nhất, và nhắc "đã tô N ô" · **v2.16**: IN TỔNG theo đường ngắn nhất (Tổng điểm / Tổng chi phí / số ô tô mực) + CẢNH BÁO khi mực tô **nhỏ hơn số bước phải đi** để tới ô đó (màn sẽ hết mực trước khi qua).
+- `app/models/repository.py` + `app/views/level_list_view.py`: `LevelSummary.mode_id` + nhãn **`◆ tên_chế_độ`** cuối dòng trong danh sách màn.
+- `app/views/inspector_view.py`: dòng nhắc dưới ô `mode_id` = nghĩa chế độ **+ kiểu edit của chế độ đó** (và hướng dẫn dùng công cụ 7).
+- `make_samples.py`: khóa `"mode"` + khóa `"custom_values"` cho màn mẫu (13 = `minesweeper` + 2 mìn ghim, 14 = `sum_path` + 3 điểm ô).
+- Hướng dẫn Minesweeper (`resources/localization/string_extra.csv`): mục "Không Có Bất Kỳ Vách Tường Nào" → **"Tường: Daily Không Có · Màn Thiết Kế Có Thể Có"** (`STR_GI_MINESWEEPER_P1_R3T/R3D`) vì màn Special có tường thật.
+
+**5. Kiểm thử & màn mẫu**
+
+- `scripts/test_case/test_level_special_modes.gd` (**125 check PASS** — v2.15 mục 6, v2.16 thêm check tổng): mode/độ khó đọc từ LevelData · cờ `level_run` đúng cho màn/Daily/Debug · Minesweeper & Sum Path dùng ĐÚNG tường của màn (so từng đoạn tường) + **chơi lại cho kết quả y hệt** (cùng seed) · Daily vẫn tự sinh bàn · nút Skip có ở 2 action bar, ẩn với ván thường, hiện với ván màn · `skip_level()` mở khoá màn kế KHÔNG ghi Sao, màn cuối chương trả `-1` · **mục 5 (kiểu edit)**: chi phí Countdown Cost = giá trị tô (kể cả 4 trên màn "medium") · điểm Sum Path = giá trị tô · mìn GHIM giữ đúng + luôn còn đường an toàn · mìn ghim **chặn hết đường thì bị bỏ** (bàn hành lang 3×2) · **màn khai `dungeon` bị coi như `play`** (thư mục levels tạm) · 2 mìn ghim trong file màn mẫu 13 có mặt trên bàn · **mục 6 (v2.15)**: MỌI màn mẫu 13..20 — chế độ chạy ĐÚNG bàn nhà thiết kế vẽ, tường giữ nguyên, `design_moves`/chi phí ô/tường ép ẩn đúng luật, One Stroke **phủ kín đủ 24 ô** của màn 19.
+- `tools/level_designer/tests/test_custom_values.py` (**22 test MỚI**): parse/ghi `custom_cell_values` + giữ chuỗi lạ · model (set/get/xoá/prune/snapshot) · controller (tô/xoá/undo/redo, kẹp giá trị theo chế độ, đổi `mode_id` thì đổi công cụ) · config (không còn `dungeon`, mọi chế độ có kiểu edit) · validator (dungeon = LỖI, ngoài khoảng = CẢNH BÁO, mìn ghim trên đường ngắn nhất). Bộ tool: **153 test PASS** (thêm `tests/test_path_tool.py` — 25 test công cụ vẽ đường 8 · `tests/test_path_values.py` — 17 test chia giá trị theo đường).
+- `test_levels_paging.gd`: cập nhật đường dẫn nhãn số màn `Panel/Content/Level` (commit `f0579a7` dời vào `Content` — test cũ vẫn tra `Panel/Level`).
+- **Bộ 14 test mặc định PASS 14/14**. 4 test mode ngoài bộ mặc định (`test_hud_modes` 22/49 · `test_wall_builder` 6/51 · `test_one_stroke` 5/34 · `test_fog_of_war` 2/27) giữ NGUYÊN số lỗi như trước phase (đã đối chiếu bằng `git stash`) — lỗi cũ do đường dẫn node HUD, không liên quan.
+- Màn mẫu trong repo: **13 = Minesweeper** (board chữ U 6×4) · **14 = Sum Path** (11×11). Ảnh chứng cứ: `D:\godot-phone-game\tmp_shot_inkmaze\phaseE_*.png` (màn 13 cả 2 hướng, màn 14, Daily ẩn nút Skip, màn 1 Play hiện nút Skip).
+
+**6. MÀN MẪU CHO MỌI CHẾ ĐỘ (13–20) + SỬA LỖI ONE STROKE (v2.15)**
+
+`make_samples.py` giờ dựng **11 màn mẫu**, phủ **MỌI chế độ** (mỗi chế độ 1 màn, đều ở **chương 2**:
+`10`–`12` polyomino Play · `13` minesweeper (2 mìn ghim) · `14` sum_path (19 ô, **tổng điểm 60**) ·
+`15` countdown_cost (8 ô, **tổng chi phí 30** ⇒ `max_steps` 33) · `16` blind_memory · `17` fog_of_war ·
+`18` fading_ink (9 ô **có mực tô tay**) · `19` one_stroke (bàn trống 6×4) · `20` wall_builder (12 tường ẩn).
+Màn 14/15/18 dùng khóa **`"path_values"`** mới của `make_samples.py` = **tô giá trị theo ĐƯỜNG NGẮN NHẤT**
+(giống hệt nút Ctrl+Enter của tool — xem 2b-bis); màn 15–20 **để trống thử thách** ⇒ game dùng bộ thử
+thách mặc định riêng của từng chế độ.
+
+- **LỖI THẬT ĐÃ SỬA — One Stroke không bao giờ nhận bàn thiết kế**: `_cover_search()` gọi `_region_ok()` cho
+  nước đi CUỐI vào F; lúc đó `rest` đã bỏ F nên hàm luôn trả `false` ⇒ mọi màn one_stroke tự vẽ đều âm thầm rơi
+  về bàn tự sinh (chỉ kèm `push_warning`). Nay nước vào F được xử riêng (“F chỉ được là ô cuối cùng”),
+  và test mục 6 khẳng định One Stroke **phủ kín đủ số ô của màn mẫu** ⇒ không tái phát.
+- **Debug Console (F9)**: lưới “Nhảy tới màn” lấy danh sách **động** từ `LevelManager` (trước đây cứng 9 màn)
+  + nút có **◆** nếu màn chạy chế độ Special; “Unlock all levels”/“Set 3 stars” cũng quét hết màn thật.
+  ⇒ test nhanh 1 chế độ bất kỳ: F9 → *Nhảy tới màn* → bấm số màn (vd **19** = One Stroke).
+- `test_chapters.gd` + `test_level_special_modes.gd` bỏ giả định “màn 14 là màn cuối chương 2” — nay tự lấy
+  màn cuối của chương từ `LevelManager.levels_in_chapter()`.
+
+---
+
+### 10.2g. UI KHAI TRONG SCENE — TAB TỰ LO (v2.17)
+
+**Nguyên tắc**: node UI nào **cố định** (không phụ thuộc dữ liệu) thì **khai trong scene bố cục**, không
+`instantiate()` lúc chạy. Node tự lo hành vi của mình (nối tín hiệu + nhãn + cỡ) rồi **phát 1 tín hiệu
+riêng** cho màn; màn chỉ **gom lại** và điều khiển trạng thái. Chỉ những gì **đếm theo dữ liệu**
+(số thẻ, số trang, số chấm, số hàng) mới được sinh lúc chạy.
+
+| Màn | Trước v2.17 (dựng bằng code) | Sau v2.17 (khai trong scene) |
+|---|---|---|
+| Cửa hàng | `_build_tabs()`: xoá sạch khay rồi `TAB_BUTTON_SCENE.instantiate()` × 4, `setup(category, key)` + nối `pressed` + `attach_press_bounce` + `_apply_tab_metrics()` tự chia bề rộng | `Tabs/Tab_pen · Tab_theme · Tab_tool · Tab_coin` trong `scenes/layout/{portrait,landscape}/shop.tscn`; màn chỉ `_collect_tabs()` |
+| Xếp hạng | `_build_tabs()` + `_fit_tab_widths()` (tự tính lại bề rộng theo anchors vì HBox bị min-size của tab đẩy tràn) | `Sheet/Tabs/Tab_dungeon · Tab_play · Tab_daily` (ĐÚNG thứ tự) trong 2 scene ranking; bề rộng do **HBox chia đều** (`size_flags_horizontal = EXPAND_FILL`) ⇒ hết `_fit_tab_widths()` |
+| Sổ tay thành tựu | `_build_tabs()` × 5 tab (khay dọc = HBox · khay ngang = GridContainer 2 cột) | `Sheet/Tabs/Tab0…Tab4` (category `""` · levels · dungeon · daily · special) trong 2 scene archivement |
+| Cửa hàng (lưới ô) | `_make_grid()` instantiate `item_grid.tscn` mỗi lần dựng danh sách | `Content/List/Grid` khai sẵn trong 2 scene shop; màn **dùng lại** (xoá thẻ cũ + `move_child` xuống cuối) |
+| Cửa hàng (bàn nháp thử bút) | `_build_doodle_pad()` instantiate `doodle_pad.tscn` mỗi lần vào tab BÚT & MỰC (rồi xoá khi rời tab) | `Content/List/Pad` (dọc) · `Body/LeftCol/PadSlot/Pad` (ngang) khai sẵn; màn chỉ `_show_doodle_pad()` (BẬT + nạp ngòi đang xem thử) / ẩn khi rời tab |
+| Cửa hàng (hàng VIP *Xoá quảng cáo*) | `_rebuild_coin()` instantiate `noads_row.tscn` mỗi lần vào tab NẠP XU | `Content/List/NoAds` khai sẵn; màn chỉ hiện + nạp dữ liệu |
+| Xếp hạng (hàng) | `_fill_rows()` xoá hết rồi instantiate lại toàn bộ hàng mỗi lần đổi bảng | `_fill_rows()` **dùng lại** hàng đang có (chỉ tạo thêm/bớt khi số hạng đổi) |
+| Bàn cờ (ô · tường · neo · vệt mực cũ) | `CELL_SCENE` · `WALL_SEGMENT_SCENE` · `ANCHOR_SCENE` · `HISTORY_LINE_SCENE`.instantiate() cho **từng** ô/tường/neo/vệt mực **mỗi tầng mới** | 4 **node MẪU** khai trong `nodes/game/board_layers.tscn` (`Cells/CellTemplate` · `Walls/WallTemplate` · `Anchors/AnchorTemplate` · `Lines/HistoryTemplate` — luôn ẩn); board `_spawn_template()` = `duplicate()` + bật hiện |
+| Bàn cờ (nét mực · chỉ dẫn · con trỏ) | `layers.moving_line()` … tự `instantiate()` trong `BoardView._init_layers()` | `Lines/MovingLine` · `Lines/DragGuide` · `Markers/Cursor` khai sẵn trong `board_layers.tscn`; mỗi tầng chỉ RESET trạng thái |
+
+**Cách 1 tab hoạt động (component tự lo)**
+
+1. Scene bố cục khai instance `tab_button.tscn` + 2 thuộc tính `@export`:
+   `category` (Cửa hàng) / `board_id` (Xếp hạng) / `category` (Sổ tay) và `label_key` (khoá dịch nhãn;
+   Sổ tay để trống vì nhãn kèm **số lượng** nên màn tự đặt qua `set_label_text()`).
+2. `_ready()` của component: dịch nhãn · `UIAnim.attach_press_bounce(self)` · nối `pressed` → phát
+   `tab_pressed(id)` · chỉnh cỡ (`ShopTabButton.apply_metrics()` theo cỡ màn hình; `RankTabButton` giữ
+   chiều cao của scene nhưng **bỏ bề rộng tối thiểu** để HBox chia đều).
+3. Màn `_collect_tabs()`: duyệt `layout.tabs_box.get_children()`, nối `tab_pressed` → handler **1 lần**
+   (`is_connected` chống nối trùng khi xoay màn hình), lưu vào `_tabs`/`_tab_buttons`. Xoay màn hình ⇒
+   gọi lại `_collect_tabs()` cho layout mới (**không** dựng lại node).
+
+- Thêm/bớt/đổi thứ tự tab ⇒ sửa **scene bố cục** (cả 2 hướng) — không phải sửa script màn.
+
+**Node MẪU cho node ĐỘNG (bàn cờ)**
+Ô · tường · neo · vệt mực cũ **đếm theo bàn** nên vẫn phải sinh lúc chạy — nhưng KHÔNG instantiate
+scene nữa: `board_layers.tscn` khai sẵn **1 node mẫu** cho mỗi loại (đang ẩn), board nhân bản bằng
+`BoardView._spawn_template()` (`duplicate()` + bật hiển thị + đưa về gốc toạ độ).
+
+- Cỡ THIẾT KẾ của tường (5.5) + vệt mực cũ (20) đọc **từ node mẫu** ⇒ bỏ hẳn `_read_scene_line_width()`
+  và 4 `preload()` scene trong `board.gd`.
+- `BoardLayers.fixed_nodes()` trả về danh sách **node KHAI SẴN không được xoá** — `_clear_runtime_layers()`
+  chỉ so `_keep_nodes.has(child)` (trước đây so từng node một).
+- Đổi art/cỡ của ô/tường/neo/vệt mực ⇒ sửa **scene GỐC** (`cell.tscn` · `wall_segment.tscn` ·
+  `anchor.tscn` · `history_line.tscn`); đổi **bố cục** ⇒ sửa `board_layers.tscn`. Script không biết gì.
+- **Hàng rào chống tái phát**: `test_ui_scenes` mục **8** quét mã nguồn — script nào còn
+  `preload()/instantiate()` scene ĐÃ khai sẵn trong scene cha thì **FAIL** (đối chiếu bảng `FIXED_SCENES`).
+- ⚠️ **Bẫy `null` mất đi**: node khai sẵn có mặt NGAY từ `_ready()` nên `node == null` KHÔNG còn nghĩa
+  “chưa setup”. Hàm chạy theo SỰ KIỆN KHUNG (`resized` · `size_changed` · `NOTIFICATION_RESIZED`) phải tự
+  kiểm dữ liệu đã đủ chưa — vd `BoardView._update_layout_positions()` phải thoát sớm khi `maze == null`
+  (trước đây dựa vào `_cursor == null` để thoát, mà con trỏ nay khai sẵn ⇒ `Out of bounds` ở
+  `_cell_center` làm bàn cờ không dàn lưới = app như bị treo · sửa ở v2.17, xem TODO VÒNG 21c).
+
+**API qua METHOD của lớp cha — KHÔNG với tay lấy node con (v2.17)**
+
+Luật cho mọi View mới: **bên ngoài chỉ gọi method**; node nào có “phần trình bày” riêng thì **tách script
+gắn gắn thẳng vào node đó** (như `ChallengeCard`), lớp cha giữ API mà caller nhìn thấy.
+
+| Trước (với tay vào node con) | Sau (gọi method) |
+|---|---|
+| `ChallengeController` tự đọc `card.get_node_or_null("Row1/Bg/Check")`… + 9 hằng art/màu trong controller | Thẻ tự lo: `ChallengeCard.refresh(rows, done, total, note)`; controller chỉ tính TRẠNG THÁI (`done` · `on_track`), art/màu nằm trong `challenge_card.gd` |
+| `GameScene`: `hud.get_node_or_null("Content")` để nhường input + `ui("HintGuide")` | `hud.allow_board_input()` · `hud.hint_guide()` (HUD tự tra node con của mình) |
+| API chung của HUD nằm ở `GameHUD` (gọi qua `BaseHUD` chỉ nhờ dynamic dispatch) | API chung đưa lên **`BaseHUD`**: `update_hud` · `set_time` · `action_bar` + 5 nút · `challenge_card` · `hint_guide` · `allow_board_input` + hook `_on_update()`/`_sync_instruction()` |
+| `board.gd` đọc `cell.get_node_or_null("Sprite/Label")` để lấy cỡ chữ gốc | `MazeCell.text_font_size()` |
+| `daily.gd` dò `rows_host.get_node_or_null("Slot1")` · `ranking.gd` dò `my_rank_bar.get_node_or_null("Flag")` | `DailyLayout.mission_slot(i)` · `RankingLayout.my_rank_flag()` |
+| `ActionBar.update_limits()` tự bật `PanelLimit` + ghi số vào `Label` bên trong nút | `LimitedButton.set_limit(left, max)` — script gắn thẳng vào 4 nút `Undo`/`Hint` của 2 bản `action_bar.tscn` |
+| `base.gd` tự lấy `Background/SideL` · `SideR` rồi tự tính lại offset viền theo khung | `SceneBackground.apply_sides(canvas, frame)` — script gắn thẳng vào `Background` của `scenes/base.tscn` |
+| `board.gd` với tay đặt cỡ/pivot/animation cho từng ô và neo (`cell.size`, `pivot_offset`, tween `scale`) | `MazeCell.set_cell_size()` · `play_entrance()` · `MazeAnchor.set_anchor_size()` · `play_entrance()` · `set_selected()` · `pulse()` |
+| `board.gd` gọi con trỏ/nét mực kiểu duck-typing: `_cursor.has_method("run_to")` + `call("run_to", …)` | `BoardLayers` trả **đúng lớp** (`cursor() -> PlayerCursor` · `moving_line() -> InkStroke` · `anchor_template() -> MazeAnchor`) ⇒ gọi thẳng `_cursor.run_to(…)` · `_moving_line.set_stroke(…)` |
+| `board.gd`/`GridController`/`GameController` hỏi `game_mode.has_method("ink_left")` rồi `call()`/`get()`/`set()` | `BaseGameMode` khai sẵn **năng lực tuỳ chọn** (cờ + hàm mặc định): `shows_ink_left()`+`ink_left()` · `tracks_visited_cells()`+`is_cell_visited()` · `tracks_satisfied_cells()`+`is_cell_satisfied()` · `is_walkable()` · `has_bomb_marker()` · `is_unwinnable()` · `evaluate_submit()`+`register_submit_miss()`+`submit_miss_count()`+`mark_solved()` — mode con chỉ override phần của mình |
+| `GridController`/`GameController` hỏi `board_view.has_method("move_cursor_to")` (kiểu đã là `BoardView` ⇒ guard luôn đúng) | Gọi thẳng method của `BoardView` (`setup_maze` · `move_cursor_to` · `set_moving_path` · `show_wall_hit`/`show_mine_hit` · `pulse_cell` · `reset_to_start` · `set_interaction_enabled` · `reveal_all_walls`/`hide_all_walls` · `shake_board` · `spawn_floating_popup`…), chỉ còn guard `!= null` |
+
+- **Chế độ chơi mới (LSP)**: KHÔNG để board/controller “móc túi” mode bằng `has_method()`/`call()`/`get()`.
+  Thêm **1 cặp** vào `BaseGameMode`: *cờ năng lực* (mặc định `false`) + *hàm mặc định* (giá trị trung tính),
+  rồi mode con override; nơi gọi chỉ còn `if mode.shows_ink_left(): … mode.ink_left(pos)`.
+- **Còn lại (chưa làm)**: nhóm **autoload/dịch vụ** vẫn dùng `has_method()` để chịu được “dịch vụ chưa có”
+  (`AdsManager` · `ArchivementManager` · các wrapper `utils/*.gd`) — cùng kiểu “dịch vụ tuỳ chọn”, xử lý sau;
+  và `GridController.handle_cell_pressed()` đang trỏ tới `BoardView.highlight_real_walls_of_cell()` **không tồn tại**
+  (guard luôn `false`) — cần quyết định CÀI hay XOÁ (xem TODO VÒNG 21e).
+
+- Thêm `class_name` mới ⇒ chạy 1 lần `godot --headless --path . --editor --quit` để Godot quét lại danh sách
+  lớp (`.godot/global_script_class_cache.cfg`), nếu không script khác báo “Could not resolve external class member”.
+- Giới hạn đã biết: số tab là **cố định theo thiết kế** (Cửa hàng 4 · Xếp hạng 3 · Sổ tay 5). Tab nào
+  đếm theo dữ liệu thì mới cần sinh lúc chạy.
+- **Kiểm thử**: `test_shop` (252 check) · `test_ranking` (69) · `test_archivement` (57) đều đọc tab qua
+  node của scene (`Sheet/Tabs/TabN`, art active/inactive) — thêm `test_ui_scenes` kiểm tab **tự dịch nhãn
+  từ `label_key`** khi gắn vào cây, 4 node MẪU của bàn cờ + `fixed_nodes()` (7 node);
+  `test_layout_bindings` (78) chốt lại danh sách `@export` buộc đúng node trong 2 bản bố cục
+  (nay thêm `item_grid` · `doodle_pad` · `noads_row`).
+
+---
 
 ### 10.3. Sinh lại mockup
 

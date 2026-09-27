@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://dd61x6fjtobav" path="res://assets/images/game/btn_hint_normal.svg" id="bar_hint_n"]
 [ext_resource type="Texture2D" uid="uid://c864ne3ni7vvn" path="res://assets/images/game/btn_hint_pressed.svg" id="bar_hint_p"]
 [ext_resource type="Script" uid="uid://bbq8fo18vt532" path="res://scripts/nodes/hud/game/action_bar.gd" id="bar_script"]
+[ext_resource type="Script" path="res://scripts/nodes/hud/game/limited_button.gd" id="limit_btn"]
 [ext_resource type="Texture2D" uid="uid://dqldqskahkgcx" path="res://assets/images/game/btn_undo_disabled.svg" id="bar_undo_d"]
 [ext_resource type="Texture2D" uid="uid://cte1ue0xq3002" path="res://assets/images/game/btn_undo_normal.svg" id="bar_undo_n"]
 [ext_resource type="Texture2D" uid="uid://dp6gsathe7et6" path="res://assets/images/game/btn_undo_pressed.svg" id="bar_undo_p"]
@@ -189,6 +190,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.8
 
 [node name="Undo" type="TextureButton" parent="Row" unique_id=1686832729]
+script = ExtResource("limit_btn")
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
@@ -237,6 +239,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Hint" type="TextureButton" parent="Row" unique_id=801132198]
+script = ExtResource("limit_btn")
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4

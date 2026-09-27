@@ -3,8 +3,11 @@ class_name AchTabButton
 extends NinePatchButton
 ## ============================================================================
 ## Nút TAB phân loại của Sổ tay thành tựu (nodes/archivements/tab_button.tscn)
-## Trước đây tab được tạo bằng code (`TextureButton.new()` + tự thêm Label) —
-## nay là SCENE riêng: cỡ 134×46 và nhãn sửa được ngay trong scene.
+## Các tab ("" = TẤT CẢ · levels · dungeon · daily · special) được KHAI SẴN trong scene bố cục
+## (`scenes/layout/<hướng>/archivement.tscn` → `Sheet/Tabs/*`), mỗi tab tự khai `category`
+## ⇒ script màn KHÔNG dựng tab bằng code nữa (chỉ gom lại: `ArchivementScene._collect_tabs`).
+## Nhãn do màn cập nhật (`set_label_text`) vì có kèm SỐ LƯỢNG thành tựu đã đạt.
+## Nút tự nối `pressed` → phát `tab_pressed(category)`.
 ##
 ## Dùng `NinePatchButton` (cắt 9 khúc art) + `size_flags_horizontal = EXPAND` ⇒ tab GIÃN KÍN ô
 ## của khay (khay dọc = HBox 5 tab · khay ngang = GridContainer 2 cột) mà không méo góc bo.
@@ -12,18 +15,32 @@ extends NinePatchButton
 
 const TAB_ACTIVE := preload("res://assets/images/archivements/tab_active.svg")
 const TAB_INACTIVE := preload("res://assets/images/archivements/tab_inactive.svg")
+const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const LABEL_ACTIVE_COLOR := Color(1, 1, 1)
 const LABEL_IDLE_COLOR := Color(0.44313726, 0.54509807, 0.61960787, 1)
 
-## Mã phân loại của tab ("" = TẤT CẢ · levels · dungeon · daily · special)
-var category := ""
+## Báo cho màn Sổ tay biết tab nào vừa được bấm
+signal tab_pressed(category: String)
+
+## Mã phân loại của tab ("" = TẤT CẢ · levels · dungeon · daily · special) — KHAI TRONG SCENE
+@export var category := ""
+## Tab đang được chọn
 var active := false
 
 @onready var label: Label = $Label
 
 
-func setup(p_category: String) -> void:
-	category = p_category
+func _ready() -> void:
+	# @tool: chỉ nối tín hiệu khi CHẠY (trong editor không cần bounce, tránh nhiễu)
+	if Engine.is_editor_hint():
+		return
+	UIAnim.attach_press_bounce(self)
+	if not pressed.is_connected(_emit_tab_pressed):
+		pressed.connect(_emit_tab_pressed)
+
+
+func _emit_tab_pressed() -> void:
+	tab_pressed.emit(category)
 
 
 func set_label_text(text: String) -> void:

@@ -279,7 +279,10 @@ func _section_6_locale_info() -> void:
 
 
 func _has_active_text(path: String) -> bool:
-	return _strip_comments(FileAccess.get_file_as_string(path)).contains("<text")## Bỏ hết chú thích <!-- ... --> để không bắt nhầm chữ đã comment
+	# Bỏ hết chú thích <!-- ... --> để không bắt nhầm chữ đã comment
+	return _strip_comments(FileAccess.get_file_as_string(path)).contains("<text")
+
+
 func _strip_comments(content: String) -> String:
 	var out := content
 	while true:

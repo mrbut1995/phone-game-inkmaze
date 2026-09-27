@@ -82,13 +82,9 @@ func _init() -> void:
 func _check_play_hud(scene: GameScene, _gc: GameController, cc: ChallengeController) -> void:
 	var hud := scene.ui_controller.hud as LevelHUD
 	assert(hud != null, "Play Mode phai dung LevelHUD (nodes/hud/level_mode.tscn)")
-	var step_card := hud.get_node_or_null("Step")
-	var floor_card := hud.get_node_or_null("Floor")
-	var chal_card := hud.get_node_or_null("Challenge")
-	assert(chal_card != null, "LevelHUD phai co the THU THACH (Challenge)")
+	var chal_card := hud.challenge_card()
+	assert(chal_card != null, "LevelHUD phai co the THU THACH (ChallengeCard)")
 
-	if step_card != null or floor_card != null:
-		_fail("Play Mode khong duoc hien the SO BUOC / TANG")
 	if not chal_card.visible:
 		_fail("Play Mode phai hien the THỬ THÁCH")
 

@@ -52,9 +52,13 @@ class LevelModel:
     ## 1 = ô thuộc board, 0 = ô trống ngoài board (không có ô để chơi)
     cell_mask: list[int] = field(default_factory=list)
 
+    ## Dữ liệu riêng của chế độ theo từng ô: {(x, y): giá trị} — game đọc khoá "x,y".
+    ## Vd Sum Path = điểm ô (1..9) · Countdown Cost = chi phí bước (1..4) · Minesweeper = ghim mìn.
     custom_cell_values: dict = field(default_factory=dict)
     ## Chuỗi gốc của `custom_cell_values` trong .tres (giữ nguyên khi ghi lại)
     custom_cell_values_raw: str = "{}"
+    ## True = trong file có phần tool KHÔNG hiểu → giữ nguyên chuỗi gốc, không ghi đè từ dict
+    custom_raw_unknown: bool = False
 
     ## THỬ THÁCH của màn (tối đa 3): danh sách (type_id, param).
     ## Rỗng = game dùng 3 thử thách mặc định (no_wall · steps_max · time_max).
@@ -129,6 +133,45 @@ class LevelModel:
         self.ensure_borders()
         self.start = self.clamp_cell(self.start)
         self.end = self.clamp_cell(self.end)
+        self.prune_custom_values()
+
+    # ------------------------------------------------------------------
+    # DỮ LIỆU RIÊNG CỦA CHẾ ĐỘ (custom_cell_values) — xem app/config.py MODE_EDITS
+    # ------------------------------------------------------------------
+    def custom_value(self, cell: Cell) -> int:
+        """Giá trị riêng đã tô ở 1 ô (0 = chưa tô)."""
+        try:
+            return int(self.custom_cell_values.get(tuple(cell), 0))
+        except (TypeError, ValueError):
+            return 0
+
+    def set_custom_value(self, cell: Cell, value: int) -> bool:
+        """Gán giá trị riêng cho 1 ô (`value <= 0` = xoá). Trả về True nếu có thay đổi."""
+        key = tuple(cell)
+        if value <= 0:
+            return self.custom_cell_values.pop(key, None) is not None
+        value = int(value)
+        if self.custom_cell_values.get(key) == value:
+            return False
+        self.custom_cell_values[key] = value
+        return True
+
+    def custom_value_count(self) -> int:
+        return len(self.custom_cell_values)
+
+    def clear_custom_values(self) -> int:
+        """Xoá HẾT dữ liệu riêng của chế độ; trả về số ô đã xoá."""
+        removed = len(self.custom_cell_values)
+        self.custom_cell_values = {}
+        return removed
+
+    def prune_custom_values(self) -> int:
+        """Bỏ giá trị nằm ngoài lưới / ở ô trống (sau khi đổi kích thước hoặc bỏ ô board)."""
+        drop = [cell for cell in self.custom_cell_values
+                if not self.in_bounds(cell) or not self.is_cell_active(cell)]
+        for cell in drop:
+            self.custom_cell_values.pop(cell, None)
+        return len(drop)
 
     # ------------------------------------------------------------------
     # Truy cập tường

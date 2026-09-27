@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://deifmw0a2fh2o" path="res://assets/images-landscape/game/card_time.svg" id="10_time_bg"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="11_card_lbl"]
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="12_time_val"]
+[ext_resource type="Script" path="res://scripts/nodes/hud/game/challenge_card.gd" id="20_card"]
 
 [node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_fvytb")]
 script = ExtResource("2_script")
@@ -63,6 +64,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Challenge" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=425721682]
+script = ExtResource("20_card")
 custom_minimum_size = Vector2(260, 115)
 layout_mode = 2
 size_flags_horizontal = 3

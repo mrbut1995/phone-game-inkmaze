@@ -5,6 +5,10 @@ extends RefCounted
 ## giao diện (UI) cho phong cách Sổ tay & Mực của InkMaze.
 ## ============================================================================
 
+## Nhãn "chữ nổi" (+5 · BONUS · PERFECT): cỡ · pivot · canh lề KHAI TRONG SCENE,
+## code chỉ đặt nội dung + chạy hiệu ứng (không tạo Label bằng `.new()`).
+const FLOATING_TEXT_SCENE := preload("res://nodes/game/floating_text.tscn")
+
 ## Gắn hiệu ứng nhấn nảy đàn hồi (squash & bounce) cho bất kỳ nút bấm nào
 static func attach_press_bounce(btn: BaseButton, scale_down := 0.94, duration := 0.1) -> void:
 	if btn == null or not is_instance_valid(btn):
@@ -132,15 +136,12 @@ static func _on_btn_resized(control: Control) -> void:
 static func spawn_floating_text(parent: Node, text: String, world_pos: Vector2, color := Color(0.133, 0.298, 0.427, 1.0), duration := 0.65) -> Label:
 	if parent == null or not is_instance_valid(parent):
 		return null
-	var label := Label.new()
+	var label := FLOATING_TEXT_SCENE.instantiate() as Label
+	if label == null:
+		return null
 	label.text = text
 	label.modulate = color
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.position = world_pos - Vector2(60, 20)
-	label.size = Vector2(120, 40)
-	label.pivot_offset = Vector2(60, 20)
 	label.scale = Vector2(0.5, 0.5)
 
 	parent.add_child(label)

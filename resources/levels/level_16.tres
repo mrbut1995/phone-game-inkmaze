@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_level"]
+
+[resource]
+script = ExtResource("1_level")
+level_id = 16
+level_title = "Level 2-7 · Blind Memory — nhớ màn rồi đi"
+chapter = 2
+mode_id = "blind_memory"
+difficulty = "medium"
+width = 6
+height = 6
+start_pos = Vector2i(0, 5)
+end_pos = Vector2i(5, 0)
+max_steps = 14
+par_time = 42.0
+v_walls = PackedByteArray(1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1)
+h_walls_visible = PackedByteArray(1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1)
+cell_mask = PackedByteArray()
+challenge_types = PackedStringArray()
+challenge_params = PackedInt32Array()
+custom_cell_values = {}

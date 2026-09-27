@@ -28,6 +28,11 @@ var current_chapter: int = 1
 var debug_run: bool = false
 var start_floor_override: int = 0        # 0 = tự động (mode tự quyết định)
 
+## Ván đang chơi có phải là MÀN trong mạch màn Chọn màn không (khác Daily / Dungeon / Debug).
+## Dùng để: (1) hiện nút SKIP LEVEL trên thanh hành động, (2) cho chế độ SPECIAL chạy trên
+## BÀN DO NHÀ THIẾT KẾ VẼ của màn thay vì tự sinh bàn (xem BaseGameMode.designed_maze).
+var level_run: bool = false
+
 const DAILY_MODES: Array[String] = [
 	"minesweeper",
 	"sum_path",
@@ -49,22 +54,84 @@ func start_dungeon() -> void:
 	current_mode = "dungeon"
 	current_difficulty = "medium"
 	daily_variant = ""
+	level_run = false
 	debug_run = false
 	start_floor_override = 0
 	mode_changed.emit(current_mode)
 	_change_scene("res://scenes/game.tscn")
 
 
-## Khởi động Level cụ thể trong Classic / Play Mode
+## Khởi động 1 MÀN trong màn Chọn màn.
+## Màn có thể ghi CHẾ ĐỘ riêng trong LevelData (`mode_id`) — vd màn 13 = "minesweeper" —
+## khi đó ván chơi chạy bằng chế độ Special TRÊN BÀN DO NHÀ THIẾT KẾ VẼ (xem BaseGameMode.designed_maze).
+## Màn không khai gì (hoặc khai id lạ) = chế độ Play như trước.
 func start_level(level_id: int) -> void:
-	current_mode = "play"
-	current_level = level_id
-	current_difficulty = "medium"
+	prepare_level_run(level_id)
+	_change_scene("res://scenes/game.tscn")
+
+
+## Nạp cấu hình 1 MÀN nhưng KHÔNG chuyển scene (test gọi được). Trả về mode id sẽ dùng.
+func prepare_level_run(level_id: int) -> String:
+	current_level = maxi(level_id, 1)
+	current_difficulty = difficulty_of_level(current_level)
+	current_mode = mode_id_of_level(current_level)
 	daily_variant = ""
+	level_run = true
 	debug_run = false
 	start_floor_override = 0
 	mode_changed.emit(current_mode)
-	_change_scene("res://scenes/game.tscn")
+	return current_mode
+
+
+## LevelData của màn (null nếu KHÔNG có file).
+## LƯU Ý: `LevelManager.load_level()` tự TẠO file cho id lạ ⇒ phải hỏi `has_level()` trước,
+## không thì chỉ cần hỏi mode của 1 id linh tinh là mọc thêm màn rác trong resources/levels.
+func level_data_of(level_id: int) -> LevelData:
+	var lm := get_node_or_null("/root/LevelManager")
+	if lm == null or not lm.has_method("load_level"):
+		return null
+	if lm.has_method("has_level") and not bool(lm.call("has_level", level_id)):
+		return null
+	return lm.call("load_level", level_id) as LevelData
+
+
+## Chế độ ghi trong màn (`play` nếu không khai hoặc khai id lạ)
+## LƯU Ý: "dungeon" KHÔNG dùng được cho màn (chế độ bất tận, chỉ vào từ Main Screen) ⇒ coi như `play`.
+func mode_id_of_level(level_id: int) -> String:
+	var data := level_data_of(level_id)
+	if data == null:
+		return "play"
+	var mode_id := str(data.mode_id).strip_edges().to_lower()
+	if mode_id.is_empty() or mode_id == "dungeon" or not is_known_mode(mode_id):
+		return "play"
+	return mode_id
+
+
+## Độ khó ghi trong màn (`medium` nếu không khai)
+func difficulty_of_level(level_id: int) -> String:
+	var data := level_data_of(level_id)
+	if data == null or str(data.difficulty).is_empty():
+		return "medium"
+	return str(data.difficulty)
+
+
+## id chế độ có tồn tại không (Play · Dungeon · Daily Classic · 8 chế độ Special)
+func is_known_mode(mode_id: String) -> bool:
+	if mode_id in ["play", "classic", "standard", "dungeon", "daily_classic"]:
+		return true
+	return DAILY_MODES.has(mode_id)
+
+
+## SKIP MÀN: mở khoá màn KẾ TIẾP trong cùng chương nhưng **KHÔNG ghi Sao / thời gian**
+## (người chơi bỏ qua màn đang chơi). Trả về id màn kế tiếp, -1 nếu đây là màn cuối chương.
+func skip_level(level_id: int) -> int:
+	var next_id := next_level_in_chapter(level_id)
+	if next_id <= 0:
+		return -1
+	if next_id > unlocked_levels and is_chapter_unlocked(chapter_of_level(next_id)):
+		unlocked_levels = next_id
+		Save.queue_save()
+	return next_id
 
 
 ## Khởi động Daily Challenge theo ngày — MAZE ĐẶC BIỆT (mode xoay vòng của ngày)
@@ -86,6 +153,7 @@ func prepare_daily_run(day: int, variant := "special") -> String:
 	selected_daily_day = maxi(day, 1)
 	daily_variant = "classic" if variant == "classic" else "special"
 	current_difficulty = "medium"
+	level_run = false
 	debug_run = false
 	start_floor_override = 0
 	if daily_variant == "classic":
@@ -110,6 +178,7 @@ func prepare_mode_run(mode_id: String, difficulty := "medium", test_run := false
 	current_mode = mode_id
 	current_difficulty = difficulty
 	daily_variant = ""
+	level_run = false
 	debug_run = test_run
 	start_floor_override = maxi(floor_override, 0)
 	mode_changed.emit(current_mode)

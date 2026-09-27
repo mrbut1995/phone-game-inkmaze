@@ -14,6 +14,18 @@ const UI_CLASSES := ["Control", "Label", "TextureRect", "TextureButton", "Button
 	"MarginContainer", "PanelContainer", "ScrollContainer", "TextureProgressBar"]
 ## Script ngoại lệ (dev-only, không phải UI người chơi — xem TODO vòng 17)
 const SKIP_SOURCES := ["debug.gd"]
+## Những scene đã KHAI SẴN trong scene cha (node MẪU hoặc node cố định) ⇒ script này KHÔNG được
+## nhắc tới đường dẫn của chúng nữa (không preload, không instantiate) — xem GDD §10.2g.
+const FIXED_SCENES := {
+	"res://scripts/nodes/game/board.gd": [
+		"nodes/game/cell.tscn", "nodes/game/anchor.tscn", "nodes/game/wall_segment.tscn",
+		"nodes/game/history_line.tscn", "nodes/game/moving_line.tscn",
+		"nodes/game/player_cursor.tscn", "nodes/game/board_layers.tscn",
+	],
+	"res://scripts/scenes/shop.gd": ["nodes/shop/tab_button.tscn", "nodes/shop/item_grid.tscn"],
+	"res://scripts/scenes/ranking.gd": ["nodes/ranking/tab_button.tscn"],
+	"res://scripts/scenes/archivement.gd": ["nodes/archivements/tab_button.tscn"],
+}
 
 var _failed := 0
 var _checks := 0
@@ -34,6 +46,7 @@ func _init() -> void:
 	_section_5_host()
 	_section_6_sources()
 	_section_7_board_hud_popup()
+	_section_8_fixed_scenes()
 
 	print("\n--------------------------------------------------------")
 	if _failed == 0:
@@ -62,8 +75,8 @@ func _section_1_shop() -> void:
 	_entry(ShopTabButton.inactive_ratio() > 0.0 and ShopTabButton.inactive_ratio() < 1.0,
 		"tab chua chon thap hon tab dang chon")
 
-	tab.setup("pen", "STR_SHOP_TAB_PEN")
-	_entry(not tab.label.text.is_empty(), "setup() gan nhan: '%s'" % tab.label.text)
+	tab.set_label_text("nhan thu")
+	_entry(tab.label.text == "nhan thu", "set_label_text() doi nhan tab")
 
 	tab.set_active(true)
 	var art_active: Texture2D = tab.texture_normal
@@ -72,15 +85,27 @@ func _section_1_shop() -> void:
 		"set_active() doi art giua 2 trang thai")
 
 	tab.set_active(true)
-	tab.apply_row_layout(100.0, 49.0, 41.5)
-	_entry(tab.custom_minimum_size == Vector2(100, 49), "tab dang chon: 100x49")
+	tab.apply_metrics(49.0)
+	_entry(tab.custom_minimum_size == Vector2(0, 49),
+		"tab dang chon: rong do HBox chia, cao 49 (dang %s)" % tab.custom_minimum_size)
 	tab.set_active(false)
-	tab.apply_row_layout(100.0, 49.0, 41.5)
-	_entry(tab.custom_minimum_size == Vector2(100, 41.5), "tab chua chon: 100x41.5")
-	_entry(is_equal_approx(tab.label.position.y, -7.5),
-		"nhan tab chua chon duoc nang len cho thang hang (%.0f)" % tab.label.position.y)
+	tab.apply_metrics(49.0)
+	_entry(is_equal_approx(tab.custom_minimum_size.y, 49.0 * ShopTabButton.inactive_ratio()),
+		"tab chua chon: cao %.1f" % tab.custom_minimum_size.y)
+	_entry(is_equal_approx(tab.label.position.y, tab.custom_minimum_size.y - 49.0),
+		"nhan tab chua chon duoc nang len cho thang hang (%.1f)" % tab.label.position.y)
 	_entry(tab.size_flags_vertical == Control.SIZE_SHRINK_END, "tab canh DAY hang")
 	tab.queue_free()
+
+	# Tab khai san trong scene: gan `category` + `label_key` TRƯỚC khi vào cây ⇒ `_ready` tự dịch nhãn
+	var packed_tab := load("res://nodes/shop/tab_button.tscn") as PackedScene
+	var scene_tab := packed_tab.instantiate() as ShopTabButton
+	scene_tab.category = "theme"
+	scene_tab.label_key = "STR_SHOP_TAB_THEME"
+	root.add_child(scene_tab)
+	_entry(scene_tab.category == "theme" and not scene_tab.label.text.is_empty(),
+		"tab khai trong scene tu dich nhan ('%s')" % scene_tab.label.text)
+	scene_tab.queue_free()
 
 	var grid := _spawn("res://nodes/shop/item_grid.tscn") as ShopItemGrid
 	_entry(grid != null, "item_grid.tscn instantiate ra ShopItemGrid")
@@ -225,7 +250,7 @@ func _section_6_sources() -> void:
 	comments.compile("#[^\\n]*")
 
 	var sources: Array[String] = []
-	for folder in ["res://scripts/scenes", "res://scripts/nodes"]:
+	for folder in ["res://scripts/scenes", "res://scripts/nodes", "res://scripts/utils"]:
 		_collect_sources(folder, sources)
 
 	var offenders: Array[String] = []
@@ -249,6 +274,38 @@ func _section_6_sources() -> void:
 
 
 # ---------------------------------------------------------------------------
+# 8. Scene đã KHAI SẴN trong scene cha ⇒ script màn không được dựng lại bằng code
+# ---------------------------------------------------------------------------
+func _section_8_fixed_scenes() -> void:
+	print("[8] Scene da khai san — khong duoc instantiate lai...")
+
+	# Bỏ CHÚ THÍCH trước khi quét (tài liệu được phép nhắc tên scene)
+	var comments := RegEx.new()
+	comments.compile("#[^\\n]*")
+
+	var offenders: Array[String] = []
+	for path: String in FIXED_SCENES:
+		if not FileAccess.file_exists(path):
+			offenders.append("%s: khong thay file" % path)
+			continue
+		var cleaned := comments.sub(FileAccess.get_file_as_string(path), "", true)
+		var lines := cleaned.split("\n")
+		for scene_path: String in FIXED_SCENES[path]:
+			for i in lines.size():
+				var line := lines[i]
+				# Chỉ tính là lỗi khi ĐƯỜNG DẪN đó được preload/instantiate (cảnh báo trong
+				# push_warning() nhắc tên scene thì không sao)
+				if line.contains(scene_path) \
+						and (line.contains("instantiate(") or line.contains("preload(")):
+					offenders.append("%s:%d <- %s" % [path.get_file(), i + 1, scene_path])
+
+	_entry(FIXED_SCENES.size() >= 4, "rao duoc %d script (scene da khai trong scene cha)" % FIXED_SCENES.size())
+	_entry(offenders.is_empty(),
+		"khong script nao con preload/instantiate scene DA KHAI SAN%s"
+			% ("" if offenders.is_empty() else " — con: %s" % ", ".join(offenders)))
+
+
+# ---------------------------------------------------------------------------
 # 7. Scene con của Bàn mê cung · HUD đếm ngược · hàng ngôn ngữ
 # ---------------------------------------------------------------------------
 func _section_7_board_hud_popup() -> void:
@@ -263,7 +320,29 @@ func _section_7_board_hud_popup() -> void:
 		_entry(layers.cells().get_parent() == layers, "lớp Cells là con của BoardLayers")
 		_entry(layers.cells().mouse_filter == Control.MOUSE_FILTER_IGNORE,
 			"lớp vẽ không chặn input của bàn")
+		var wall_t := layers.wall_template()
+		var history_t := layers.history_template()
+		_entry(layers.fixed_nodes().size() == 7,
+			"7 node KHAI SẴN không bị dọn khi đổi tầng (%d)" % layers.fixed_nodes().size())
+		_entry(layers.cell_template() != null and not layers.cell_template().visible,
+			"node MẪU ô khai trong scene (Cells/CellTemplate · đang ẩn)")
+		_entry(wall_t != null and not wall_t.visible,
+			"node MẪU tường khai trong scene (Walls/WallTemplate · đang ẩn)")
+		_entry(layers.anchor_template() != null and not layers.anchor_template().visible,
+			"node MẪU neo khai trong scene (Anchors/AnchorTemplate · đang ẩn)")
+		_entry(history_t != null and not history_t.visible,
+			"node MẪU vệt mực cũ khai trong scene (Lines/HistoryTemplate · đang ẩn)")
+		_entry(wall_t != null and history_t != null
+			and is_equal_approx(wall_t.width, 5.5) and is_equal_approx(history_t.width, 20.0),
+			"cỡ THIẾT KẾ đọc từ node mẫu (tường 5.5 · vệt mực 20)")
 		layers.queue_free()
+
+	var board: BoardView = _spawn("res://nodes/game/board.tscn") as BoardView
+	_entry(board != null, "board.tscn instantiate ra BoardView")
+	if board != null:
+		_entry(board.get_node_or_null("Layers") is BoardLayers,
+			"board.tscn khai sẵn node Layers (không instantiate lúc chạy)")
+		board.queue_free()
 
 	var footstep: InkFootstep = _spawn("res://nodes/game/ink_footstep.tscn") as InkFootstep
 	_entry(footstep != null, "ink_footstep.tscn instantiate ra InkFootstep")

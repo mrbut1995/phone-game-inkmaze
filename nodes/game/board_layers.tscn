@@ -1,29 +1,63 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://djsrgljk5e128"]
 
-[ext_resource type="Script" path="res://scripts/nodes/game/board_layers.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://b45wlp7j63qyk" path="res://scripts/nodes/game/board_layers.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://t6jjilrcy6qe" path="res://nodes/game/moving_line.tscn" id="2_line"]
+[ext_resource type="PackedScene" uid="uid://8odi16if8g7o" path="res://nodes/game/player_cursor.tscn" id="3_cursor"]
+[ext_resource type="PackedScene" uid="uid://dby0vymb3wuhs" path="res://nodes/game/cell.tscn" id="4_cell"]
+[ext_resource type="PackedScene" path="res://nodes/game/wall_segment.tscn" id="5_wall"]
+[ext_resource type="PackedScene" uid="uid://dig7mt8e1aqsg" path="res://nodes/game/anchor.tscn" id="6_anchor"]
+[ext_resource type="PackedScene" uid="uid://di2cr3f6qkanu" path="res://nodes/game/history_line.tscn" id="7_history"]
 
-[node name="BoardLayers" type="Control"]
+[node name="BoardLayers" type="Control" unique_id=1857947744]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_script")
 
-[node name="Cells" type="Control" parent="."]
-layout_mode = 0
+[node name="Cells" type="Control" parent="." unique_id=1725005555]
+anchors_preset = 0
 mouse_filter = 2
 
-[node name="Lines" type="Control" parent="."]
+[node name="CellTemplate" parent="Cells" unique_id=1951488477 instance=ExtResource("4_cell")]
+visible = false
 layout_mode = 0
+offset_right = 88.0
+offset_bottom = 88.0
+
+[node name="Lines" type="Control" parent="." unique_id=55465159]
+anchors_preset = 0
 mouse_filter = 2
 
-[node name="Walls" type="Control" parent="."]
-layout_mode = 0
+[node name="MovingLine" parent="Lines" unique_id=167344308 instance=ExtResource("2_line")]
+
+[node name="DragGuide" parent="Lines" unique_id=45229478 instance=ExtResource("2_line")]
+visible = false
+
+[node name="HistoryTemplate" parent="Lines" unique_id=919415545 instance=ExtResource("7_history")]
+visible = false
+
+[node name="Walls" type="Control" parent="." unique_id=216809426]
+anchors_preset = 0
 mouse_filter = 2
 
-[node name="Anchors" type="Control" parent="."]
-layout_mode = 0
+[node name="WallTemplate" parent="Walls" unique_id=1874142160 instance=ExtResource("5_wall")]
+visible = false
+
+[node name="Anchors" type="Control" parent="." unique_id=304786855]
+anchors_preset = 0
 mouse_filter = 2
 
-[node name="Markers" type="Control" parent="."]
+[node name="AnchorTemplate" parent="Anchors" unique_id=1675282692 instance=ExtResource("6_anchor")]
+visible = false
 layout_mode = 0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="Markers" type="Control" parent="." unique_id=1512807518]
+anchors_preset = 0
 mouse_filter = 2
+
+[node name="Cursor" parent="Markers" unique_id=174184105 instance=ExtResource("3_cursor")]
+layout_mode = 0
+offset_right = 66.0
+offset_bottom = 66.0

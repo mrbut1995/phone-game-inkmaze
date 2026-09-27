@@ -172,16 +172,8 @@ func ui_path(path: String) -> Node:
 
 
 ## Hai bên cột (màn rộng hơn 9:16) tô tiếp màu giấy bằng 2 ColorRect con của
-## Background — nằm NGOÀI vùng art nên không che lề đỏ; canvas hẹp thì rộng 0.
+## `Background` — nền (`SceneBackground`) tự lo node con của mình, màn hình chỉ đưa số đo.
 func _apply_background_sides(canvas: Vector2) -> void:
-	var bg := get_node_or_null("Background") as Control
-	if bg == null:
-		return
-	var left := bg.get_node_or_null("SideL") as Control
-	if left != null:
-		left.position = Vector2(-position.x, 0.0)
-		left.size = Vector2(position.x, canvas.y)
-	var right := bg.get_node_or_null("SideR") as Control
-	if right != null:
-		right.position = Vector2(size.x, 0.0)
-		right.size = Vector2(maxf(canvas.x - position.x - size.x, 0.0), canvas.y)
+	var bg := get_node_or_null("Background") as SceneBackground
+	if bg != null:
+		bg.apply_sides(canvas, Rect2(position, size))

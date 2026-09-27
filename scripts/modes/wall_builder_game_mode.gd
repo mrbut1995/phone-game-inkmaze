@@ -70,6 +70,19 @@ func setup_floor(_floor_number: int) -> MazeData:
 	submit_misses = 0
 	reset_retries()
 
+	# MÀN DO NHÀ THIẾT KẾ VẼ: nhận ĐÚNG bàn của màn làm ĐÁP ÁN (số trên ô lấy từ bàn đó).
+	# Tường bị ÉP ẨN HẾT — người chơi phải suy luận lại từ các con số (đúng luật của chế độ).
+	var designed := designed_maze()
+	if designed != null:
+		designed.set_all_walls_visible(false)
+		_size = maxi(designed.width, designed.height)
+		_maze = designed
+		var found := count_solutions(designed, 2)
+		solution_count = 2 if found < 0 else maxi(found, 1)   # < 0 = solver hết ngân sách (bàn khó)
+		required_segments = count_true_segments(_maze)
+		initial_steps = 999
+		return _maze
+
 	_size = _size_for_difficulty()
 	_maze = _pick_maze(_size)
 	required_segments = count_true_segments(_maze)
@@ -282,6 +295,11 @@ func is_cell_satisfied(pos: Vector2i) -> bool:
 	return _drawn_count(pos) == _maze.get_wall_count(pos)
 
 
+## Board tô nền xanh lá cho ô đã khớp số (hỏi cờ này trước khi gọi `is_cell_satisfied()`).
+func tracks_satisfied_cells() -> bool:
+	return true
+
+
 ## Thử thách mặc định của Wall Builder (§5.13): gửi đúng ngay lần đầu · trong thời gian · không gợi ý.
 func default_challenges() -> Array[String]:
 	return [ChallengeTypes.NO_WRONG_SUBMIT, ChallengeTypes.TIME_MAX, ChallengeTypes.NO_HINT]
@@ -382,6 +400,16 @@ func is_configuration_valid() -> bool:
 ## GameController gọi khi người chơi bấm GỬI thành công
 func mark_solved() -> void:
 	_solved = true
+
+
+## Ghi nhận 1 lần GỬI SAI (thống kê/HUD + thử thách "gửi đúng ngay lần đầu")
+func register_submit_miss() -> void:
+	submit_misses += 1
+
+
+## Số lần GỬI SAI trong ván
+func submit_miss_count() -> int:
+	return submit_misses
 
 
 ## Số cạnh CÓ TƯỜNG quanh ô theo bản dựng của người chơi (chỉ tính cạnh giữa 2 ô thuộc board)

@@ -229,8 +229,8 @@ func _section_7_scene(manager: Node) -> void:
 		_entry(_ui(scene, "Sheet/Podium/" + group_name) != null,
 			"Buc vinh quang co nhom %s" % group_name)
 
-	# --- Tab dựng bằng code ---
-	_entry(scene.tab_count() == 3, "3 tab duoc dung tu board_ids() (nhan %d)" % scene.tab_count())
+	# --- Tab khai sẵn trong scene bố cục (Sheet/Tabs/*), màn chỉ gom lại ---
+	_entry(scene.tab_count() == 3, "3 tab khai san trong scene (nhan %d)" % scene.tab_count())
 	var tabs := _ui(scene, "Sheet/Tabs") as HBoxContainer
 	_entry(tabs != null and tabs.get_child_count() == 3, "HBox Tabs co 3 nut")
 	var tab_active_art: Texture2D = load("res://assets/images/ranking/tab_active.svg")

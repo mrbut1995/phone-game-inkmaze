@@ -20,6 +20,8 @@ var hud_host: Control = null
 var restart_btn: BaseButton = null
 ## Nút GỬI BÀI của Wall Builder (các chế độ khác ẩn — xem `_apply_mode_buttons`)
 var submit_btn: BaseButton = null
+## Nút SKIP LEVEL — chỉ hiện khi ván này là ván chơi MÀN trong màn Chọn màn (`_apply_mode_buttons`)
+var skip_btn: BaseButton = null
 var undo_btn: BaseButton = null
 var hint_btn: BaseButton = null
 ### Nút CHƠI LẠI ẩn sẵn DƯỚI thanh nút — UIController hiện khi ván không còn thắng được nữa (Sum Path)
@@ -110,8 +112,8 @@ func _bind_refs() -> void:
 	# nữa (xem `_apply_hud_for_mode`) nên `layout.hud_slot` luôn còn dùng được sau nhiều lần xoay.
 	if hud_host == null or not is_instance_valid(hud_host):
 		hud_host = layout.hud_slot if layout != null else null
-	# HintGuide nằm TRONG HUD (HUD bị thay bằng code khi đổi chế độ) nên vẫn tra theo TÊN
-	hint_guide = ui("HintGuide") as HintGuide
+	# HintGuide nằm TRONG HUD (HUD bị thay bằng code khi đổi chế độ) ⇒ LUÔN hỏi HUD hiện tại
+	hint_guide = _hud_hint_guide()
 	# Bàn cờ + nhãn Status là node RIÊNG của bố cục ⇒ gắn lại vào bộ controller dùng chung
 	if board_view != null:
 		if game_controller != null:
@@ -171,7 +173,7 @@ func _all_buttons() -> Array:
 	return [
 		layout.pause_btn if layout != null else null,
 		layout.instruction_btn if layout != null else null,
-		restart_btn, submit_btn, undo_btn, hint_btn,
+		restart_btn, submit_btn, skip_btn, undo_btn, hint_btn,
 	]
 
 
@@ -281,6 +283,12 @@ func _on_restart_pressed() -> void:
 		game_controller.restart_run()
 
 
+## SKIP LEVEL: bỏ qua màn đang chơi (chỉ có ở ván chơi màn — xem `_apply_mode_buttons`)
+func _on_skip_pressed() -> void:
+	if game_controller != null:
+		game_controller.skip_current_level()
+
+
 func _on_pause_pressed() -> void:
 	if ui_controller != null:
 		ui_controller.toggle_settings()
@@ -300,10 +308,20 @@ func _on_hint_pressed() -> void:
 ## nay do nút `Submit` trên thanh hành động đảm nhiệm (xem `_wire_action_bar`).
 
 
-## Bật/tắt nút đặc thù theo CHẾ ĐỘ trên thanh hành động (hiện chỉ có GỬI BÀI của Wall Builder)
+## Bật/tắt nút đặc thù theo CHẾ ĐỘ trên thanh hành động:
+##   · `Submit` — GỬI BÀI (chỉ Wall Builder)
+##   · `Skip`   — SKIP LEVEL (chỉ khi chơi MÀN trong màn Chọn màn, KHÔNG có ở Dungeon/Daily/Debug)
 func _apply_mode_buttons(mode_name: String) -> void:
 	if submit_btn != null:
 		submit_btn.visible = mode_name.to_lower() == "wall_builder"
+	if skip_btn != null:
+		skip_btn.visible = _is_level_run()
+
+
+## Ván này có phải là ván chơi MÀN (màn Chọn màn) không — đọc cờ từ GameManager
+func _is_level_run() -> bool:
+	var gm: Node = get_node_or_null("/root/GameManager")
+	return gm != null and bool(gm.get("level_run"))
 
 
 ## API chuyển đổi chế độ chơi linh hoạt từ bên ngoài
@@ -336,12 +354,14 @@ func _refresh_hint_guide() -> void:
 
 
 ## Màn/tầng xuất phát của ván mới.
-## Play (Classic) luôn vào đúng màn đang chọn trong GameManager, các mode khác bắt đầu từ 1
-## (trừ khi Debug Console ép tầng bắt đầu qua `start_floor_override`).
+##   · Ván chơi MÀN (màn Chọn màn — kể cả màn chạy chế độ Special): vào ĐÚNG màn đang chọn, và
+##     ID màn cũng là "tầng" để chế độ biết đang ở màn nào (tường/mask nạp từ LevelData).
+##   · Play (Classic): y như trên.
+##   · Các chế độ khác (Dungeon/Daily/Debug): bắt đầu từ 1 (trừ khi Debug Console ép tầng).
 func _start_floor_for(mode_name: String) -> int:
+	var gm: Node = get_node_or_null("/root/GameManager")
 	match mode_name.to_lower():
 		"play", "classic", "standard":
-			var gm: Node = get_node_or_null("/root/GameManager")
 			if gm != null:
 				return maxi(int(gm.get("current_level")), 1)
 			return 1
@@ -349,9 +369,10 @@ func _start_floor_for(mode_name: String) -> int:
 			# Maze thường của Daily luôn bắt đầu ở tầng 1 (mê cung sinh tại chỗ)
 			return 1
 		_:
-			var debug_gm: Node = get_node_or_null("/root/GameManager")
-			if debug_gm != null:
-				var override := int(debug_gm.get("start_floor_override"))
+			if gm != null:
+				if bool(gm.get("level_run")):
+					return maxi(int(gm.get("current_level")), 1)
+				var override := int(gm.get("start_floor_override"))
 				if override > 0:
 					return override
 			return 1
@@ -482,25 +503,29 @@ func _copy_layout_from(src: Control, dst: Control) -> void:
 	dst.custom_minimum_size = src.custom_minimum_size
 
 
+## Khung Hướng dẫn nằm TRONG HUD (HUD đổi theo chế độ) ⇒ hỏi HUD hiện tại, không tự dò node con.
+func _hud_hint_guide() -> HintGuide:
+	var hud := hud_host as BaseHUD
+	return hud.hint_guide() if hud != null else null
+
+
 ## Gắn HUD hiện tại cho UIController (vẽ nội dung) và ChallengeController (thẻ Thử thách).
 ## Đồng thời lấy thanh nút hành động NẰM TRONG HUD (phương án A) rồi nối lại tín hiệu — nhờ vậy
 ## mỗi HUD/chế độ tự bày nút theo bố cục dọc-ngang của mình, màn chơi không giữ nút nào.
+## MỌI thứ thuộc HUD (nút · khung Hướng dẫn · nhường input) đều hỏi qua METHOD của HUD —
+## màn chơi không tự lấy node con của HUD.
 func _bind_hud_nodes() -> void:
 	if hud_host == null or not is_instance_valid(hud_host):
 		return
 	var hud := hud_host as BaseHUD
 	if hud == null:
 		return
-	# HUD được bao phủ toàn khung (để dễ căn vị trí) nên nó nằm TRÊN bàn cờ. Control mặc định
-	# `mouse_filter = STOP` ⇒ sẽ NUỐT hết chạm/kéo khiến BoardSlot phía sau không nhận input.
-	# Đặt IGNORE cho khung HUD + khối `Content`: bản thân khung không nhận input nữa nhưng
-	# các NÚT BÊN TRONG (ActionBar, Status…) vẫn nhận bình thường.
-	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var hud_content := hud.get_node_or_null("Content") as Control
-	if hud_content != null:
-		hud_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# HUD phủ toàn khung nên phải NHƯỜNG chạm/kéo cho bàn cờ phía sau (nút bên trong vẫn ăn)
+	# — HUD tự lo việc này, màn chơi không đụng node con của nó.
+	hud.allow_board_input()
 	restart_btn = hud.restart_btn()
 	submit_btn = hud.submit_btn()
+	skip_btn = hud.skip_btn()
 	undo_btn = hud.undo_btn()
 	hint_btn = hud.hint_btn()
 	#replay_btn = hud.replay_btn()
@@ -509,9 +534,9 @@ func _bind_hud_nodes() -> void:
 	if game_hud != null and game_controller != null \
 			and not game_hud.instruction_requested.is_connected(game_controller.open_instruction):
 		game_hud.instruction_requested.connect(game_controller.open_instruction)
-	# HintGuide nằm TRONG HUD (đầu `ActionBar/Portrait`) ⇒ HUD nào gắn sau cùng thì gắn lại,
+	# HintGuide nằm TRONG HUD (đầu `ActionBar` bản dọc / `Content` bản ngang) ⇒ gắn lại theo HUD mới,
 	# nếu không `hint_guide` sẽ trỏ vào node đã bị free khi đổi chế độ.
-	hint_guide = ui("HintGuide") as HintGuide
+	hint_guide = _hud_hint_guide()
 	_wire_action_bar()
 	_apply_mode_buttons(_mode_id)
 	hud.set_landscape(_layout_is_landscape())
@@ -519,7 +544,7 @@ func _bind_hud_nodes() -> void:
 		ui_controller.set_hud(hud)
 	if challenge_controller != null:
 		challenge_controller.card = hud.challenge_card()
-	hint_guide = ui("HintGuide") as HintGuide
+	hint_guide = _hud_hint_guide()
 	_refresh_hint_guide()
 	_fit_hud_scale.call_deferred()
 
@@ -533,6 +558,8 @@ func _wire_action_bar() -> void:
 	if game_controller != null:
 		if restart_btn != null and not restart_btn.pressed.is_connected(_on_restart_pressed):
 			restart_btn.pressed.connect(_on_restart_pressed)
+		if skip_btn != null and not skip_btn.pressed.is_connected(_on_skip_pressed):
+			skip_btn.pressed.connect(_on_skip_pressed)
 		if submit_btn != null and not submit_btn.pressed.is_connected(game_controller.submit_build):
 			submit_btn.pressed.connect(game_controller.submit_build)
 		if undo_btn != null and not undo_btn.pressed.is_connected(game_controller.undo):

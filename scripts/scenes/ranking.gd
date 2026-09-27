@@ -3,8 +3,8 @@ extends BaseScene
 ## ============================================================================
 ## Màn BẢNG XẾP HẠNG — mockup/ranking.svg
 ##
-## Khung/layout khai báo trong scenes/ranking.tscn; phần ĐỘNG dựng bằng code:
-##  - 3 tab (Dungeon · Play · Daily) theo RankRow nguồn dữ liệu RankingManager
+## Khung/layout khai báo trong scenes/ranking.tscn; phần ĐỘNG nạp bằng code:
+##  - 3 tab (Dungeon · Play · Daily) KHAI SẴN trong scene bố cục (`Sheet/Tabs/*`), màn chỉ gom lại
 ##  - Bục vinh quang 3 hạng (Gold/Silver/Bronze trong .tscn)
 ##  - Danh sách cuộn các hạng còn lại (nodes/ranking/rank_row.tscn) — vuốt dọc để cuộn
 ##    (tự xử lý ở mức `_input` vì hàng xếp hạng là Control "ăn" sự kiện chuột)
@@ -14,17 +14,7 @@ extends BaseScene
 ## ============================================================================
 
 const ROW_SCENE := preload("res://nodes/ranking/rank_row.tscn")
-## Node UI của màn này là SCENE riêng (art + cỡ nằm trong scene, không tạo bằng code)
-const TAB_SCENE := preload("res://nodes/ranking/tab_button.tscn")
 
-## Bề rộng từng tab theo MOCKUP (mockup vẽ 2× nên chia đôi: 240 · 235 · 245 → dưới đây).
-## Hàng tab vẫn được dàn đều theo bề rộng thật ở `_fit_tab_widths()` — đây là cỡ để trống ban đầu.
-const TAB_WIDTHS := {
-	"dungeon": 120.0,
-	"play": 117.5,
-	"daily": 122.5,
-}
-const TAB_SEPARATION := 15
 const TAB_KEYS := {
 	"dungeon": "STR_RANK_TAB_DUNGEON",
 	"play": "STR_RANK_TAB_PLAY",
@@ -58,40 +48,11 @@ func _ready() -> void:
 		layout.btn_back.pressed.connect(_on_back_pressed)
 		UIAnim.attach_press_bounce(layout.btn_back)
 	orientation_changed.connect(_on_orientation_changed)
-	_build_tabs()
+	_collect_tabs()
 	_connect_manager()
 	# Làm mới theo khung 10 phút (chỉ dựng lại khi đã sang khung mới)
 	Ranking.refresh()
 	_show_board(_board)
-	# Bố cục dùng CONTAINER ⇒ hàng tab chỉ biết bề rộng thật sau frame đầu → dàn lại cho vừa
-	await get_tree().process_frame
-	await get_tree().process_frame
-	_fit_tab_widths()
-
-
-## Chia đều bề rộng tab theo bề rộng THẬT của hàng (3 tab luôn nằm gọn trong khung).
-## Gọi ở frame sau (lúc dựng tab, hàng chưa được container dàn).
-func _fit_tab_widths() -> void:
-	if layout.tabs_box == null or _tab_buttons.is_empty():
-		return
-	var count := _tab_buttons.size()
-	# Bề rộng HÀNG THẬT: bố cục NGANG để container dàn (anchors = 0 ⇒ dùng size);
-	# bố cục DỌC dùng anchors trên tờ giấy ⇒ HBox có thể đã "phình" theo min size của nút
-	# nên phải tính lại từ anchors, nếu không tab sẽ tràn ra ngoài tờ giấy.
-	var row_w := layout.tabs_box.size.x
-	var parent := layout.tabs_box.get_parent() as Control
-	if parent != null and parent.size.x > 0.0:
-		var anchored := (layout.tabs_box.anchor_right - layout.tabs_box.anchor_left) * parent.size.x
-		if anchored > 1.0:
-			row_w = anchored
-	var row := row_w - TAB_SEPARATION * float(count - 1)
-	if row <= 0.0:
-		return
-	var width := row / float(count)
-	for id in _tab_buttons:
-		var btn := _tab_buttons[id] as RankTabButton
-		if btn != null:
-			btn.custom_minimum_size = Vector2(width, btn.custom_minimum_size.y)
 
 
 ## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
@@ -101,18 +62,14 @@ func _bind_refs() -> void:
 		push_warning("ranking: bố cục chưa gắn RankingLayout — thiếu binding trong scenes/layout/<hướng>/ranking.tscn")
 
 
-## Xoay màn hình: gắn lại node + dựng lại tab của layout mới rồi nạp lại bảng đang xem
+## Xoay màn hình: gắn lại node + gom lại tab của layout mới rồi nạp lại bảng đang xem
 func _on_orientation_changed(_is_landscape_now: bool) -> void:
 	_rebind_after_orientation.call_deferred()
 
 
 func _rebind_after_orientation() -> void:
 	_bind_refs()
-	_tab_buttons.clear()
-	_build_tabs()
-	await get_tree().process_frame
-	await get_tree().process_frame
-	_fit_tab_widths()
+	_collect_tabs()
 	_show_board(_board)
 
 
@@ -172,21 +129,20 @@ func _show_board(board: String) -> void:
 		layout.scroll.scroll_vertical = 0
 
 
-func _build_tabs() -> void:
-	for child in layout.tabs_box.get_children():
-		layout.tabs_box.remove_child(child)
-		child.queue_free()
+## Gom các tab KHAI SẴN trong scene bố cục (`Sheet/Tabs/*` — dungeon · play · daily, ĐÚNG thứ tự),
+## mỗi tab tự khai `board_id` + `label_key` + tự nối `pressed` → `tab_pressed`.
+## Màn chỉ gom lại + nối 1 lần ⇒ KHÔNG còn dựng tab bằng code; bề rộng do HBox chia đều.
+func _collect_tabs() -> void:
 	_tab_buttons.clear()
-	layout.tabs_box.add_theme_constant_override("separation", TAB_SEPARATION)
-	for board in Ranking.board_ids():
-		var id := str(board)
-		var btn := TAB_SCENE.instantiate() as RankTabButton
-		btn.name = "Tab_" + id
-		layout.tabs_box.add_child(btn)
-		btn.setup(id, _tab_title(id), float(TAB_WIDTHS.get(id, 0.0)))
-		btn.pressed.connect(_on_tab_pressed.bind(id))
-		UIAnim.attach_press_bounce(btn)
-		_tab_buttons[id] = btn
+	if layout == null or layout.tabs_box == null:
+		return
+	for child in layout.tabs_box.get_children():
+		var btn := child as RankTabButton
+		if btn == null:
+			continue
+		if not btn.tab_pressed.is_connected(_on_tab_pressed):
+			btn.tab_pressed.connect(_on_tab_pressed)
+		_tab_buttons[btn.board_id] = btn
 	_update_tabs()
 
 
@@ -213,16 +169,24 @@ func _fill_podium(entries: Array, board: String) -> void:
 		_set_label(group, "Block/Points", Ranking.points_text(entry))
 
 
+## Điền danh sách hạng còn lại. DÙNG LẠI hàng đã có (chỉ thêm/bớt khi số hạng đổi)
+## ⇒ đổi bảng không phải instantiate lại cả danh sách.
 func _fill_rows(entries: Array, board: String) -> void:
-	for row in _rows:
-		if is_instance_valid(row):
-			row.queue_free()
-	_rows.clear()
-	for entry in entries:
-		var row: RankRow = ROW_SCENE.instantiate()
-		layout.rows_box.add_child(row)
-		row.setup(entry, board)
-		_rows.append(row)
+	while _rows.size() > entries.size():
+		var extra: RankRow = _rows.pop_back()
+		if is_instance_valid(extra):
+			layout.rows_box.remove_child(extra)
+			extra.queue_free()
+	for i in entries.size():
+		var row: RankRow = _rows[i] if i < _rows.size() and is_instance_valid(_rows[i]) else null
+		if row == null:
+			row = ROW_SCENE.instantiate()
+			layout.rows_box.add_child(row)
+			if i < _rows.size():
+				_rows[i] = row
+			else:
+				_rows.append(row)
+		row.setup(entries[i], board)
 
 
 func _fill_my_rank(board: String) -> void:
@@ -238,7 +202,7 @@ func _fill_my_rank(board: String) -> void:
 	_set_label(layout.my_rank_bar, "Sub", sub)
 	_set_label(layout.my_rank_bar, "Record", Ranking.record_text(board, entry))
 	_set_label(layout.my_rank_bar, "Points", Ranking.points_text(entry))
-	var flag := layout.my_rank_bar.get_node_or_null("Flag") as TextureRect
+	var flag := layout.my_rank_flag()
 	if flag != null:
 		flag.texture = RankRow.flag_texture(str(entry.get("flag", "generic")))
 

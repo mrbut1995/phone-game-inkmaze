@@ -16,11 +16,6 @@ extends BaseScene
 const ROW_SCENE := preload("res://nodes/shop/item_row.tscn")
 const TILE_SCENE := preload("res://nodes/shop/item_tile.tscn")
 const COIN_SCENE := preload("res://nodes/shop/coin_tile.tscn")
-const NOADS_SCENE := preload("res://nodes/shop/noads_row.tscn")
-const DOODLE_PAD_SCENE := preload("res://nodes/shop/doodle_pad.tscn")
-## Node UI của màn này đều là SCENE riêng (không tạo node bằng code)
-const TAB_BUTTON_SCENE := preload("res://nodes/shop/tab_button.tscn")
-const ITEM_GRID_SCENE := preload("res://nodes/shop/item_grid.tscn")
 const PAGE_DOT_SCENE := preload("res://nodes/shop/page_dot.tscn")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
@@ -29,7 +24,7 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 ## xoay ngang thì ít hàng hơn, màn cao thì nhiều hàng hơn (content giãn hết chỗ trống).
 const TILES_PER_PAGE := 3
 ## Lưới ô: số cột TỰ CHIA theo bề rộng khung (cả 2 hướng) — `GRID_COLUMNS` là mức tối thiểu,
-## `GRID_COLUMNS_MAX` là mức tối đa; khe ngang 30 / khe dọc 24 — khớp `_make_grid`.
+## `GRID_COLUMNS_MAX` là mức tối đa; khe ngang 30 / khe dọc 24 — khai trong `item_grid.tscn`.
 const GRID_COLUMNS := 2
 const GRID_COLUMNS_MAX := 4
 ## Bề rộng TỐI THIỂU của 1 thẻ ô ở bản NGANG — cơ sở để chia số cột (thẻ tự nở đầy ô)
@@ -44,13 +39,9 @@ const DRAG_THRESHOLD := 14.0
 const SWIPE_MIN := 70.0
 ## Khoá bấm nút trong bao lâu sau khi vuốt (tránh vừa vuốt vừa mua nhầm)
 const CLICK_LOCK_TIME := 0.35
+## Thứ tự tab trong hàng — tab THẬT nằm SẴN trong scene bố cục (`Tabs/*`), mỗi tab tự khai
+## `category` + `label_key`; danh sách này chỉ dùng để kiểm tra tên tab hợp lệ.
 const TAB_ORDER := ["pen", "theme", "tool", "coin"]
-const TAB_KEYS := {
-	"pen": "STR_SHOP_TAB_PEN",
-	"theme": "STR_SHOP_TAB_THEME",
-	"tool": "STR_SHOP_TAB_TOOL",
-	"coin": "STR_SHOP_TAB_COIN",
-}
 ## Nhóm hiện dạng lưới ô (2 cột); còn lại hiện dạng thẻ ngang
 const GRID_CATEGORIES := ["pen", "theme"]
 
@@ -84,8 +75,9 @@ var _last_columns := 0
 static var _tile_size := Vector2.ZERO
 ## Cỡ thiết kế thẻ GÓI NẠP (đọc 1 lần từ `nodes/shop/coin_tile.tscn`)
 var _coin_size := Vector2.ZERO
-## Cỡ bàn nháp thử bút (đọc 1 lần từ doodle_pad.tscn)
-static var _pad_h := 0.0
+## Cỡ bàn nháp thử bút khi SCENE không khai `custom_minimum_size` (giá trị thật nằm trong
+## `nodes/shop/doodle_pad.tscn` — node khai sẵn trong bố cục, xem `ShopLayout.doodle_pad`)
+const FALLBACK_PAD_H := 215.0
 ## Bàn nháp thử bút (chỉ tab BÚT & MỰC) + ngòi bút đang xem thử trên đó
 var _doodle_pad: Control = null
 var _preview_pen := ""
@@ -97,11 +89,6 @@ var _drag_start := Vector2.ZERO
 var _drag_last := Vector2.ZERO
 var _drag_scroll := 0.0
 var _click_lock_until := 0.0
-# Số đo LAYOUT của hàng tab — đọc 1 lần từ shop.tscn lúc mở màn (xem `_capture_tab_layout`).
-# Vị trí + kích thước hàng do ANCHORS trong scene quyết định ⇒ script KHÔNG giữ offset nữa
-# (nhờ vậy kéo giãn cửa sổ là hàng tab tự co giãn theo).
-var _tabs_sep := 8.0
-var _tabs_captured := false
 
 
 func _ready() -> void:
@@ -118,8 +105,7 @@ func _ready() -> void:
 	if layout.gift_banner != null:
 		UIAnim.play_slide_in(layout.gift_banner, Vector2(0, 20), 0.12, 0.25)
 
-	_capture_tab_layout()
-	_build_tabs()
+	_collect_tabs()
 	_refresh_wallet()
 	show_tab(_category)
 	# Xoay màn hình (dọc ⇄ ngang) -> tính lại số món/trang và giữ nguyên món đang xem
@@ -129,8 +115,8 @@ func _ready() -> void:
 	# Khung danh sách chỉ có kích thước THẬT sau frame đầu -> tính lại phân trang cho khớp
 	await get_tree().process_frame
 	await get_tree().process_frame
-	# Bố cục dùng CONTAINER (HBox/VBox): hàng tab chỉ biết bề rộng thật sau khi dàn xong frame đầu
-	# ⇒ dàn lại tab/thẻ ở đây, nếu không tab sẽ dựng với bề rộng 0 (vô hình).
+	# Bố cục dùng CONTAINER (HBox/VBox): khung danh sách chỉ có cỡ thật sau khi dàn xong frame đầu
+	# ⇒ áp lại cỡ THẺ + phân trang ở đây (cỡ TAB do `_collect_tabs` lo, bề rộng do HBox chia).
 	_apply_tab_metrics()
 	_apply_card_metrics()
 	_refresh_pagination_if_needed()
@@ -139,6 +125,7 @@ func _ready() -> void:
 ## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
 func _bind_refs() -> void:
 	layout = active_layout() as ShopLayout
+	_doodle_pad = layout.doodle_pad if layout != null else null
 	if layout == null:
 		push_warning("shop: bố cục chưa gắn ShopLayout — thiếu binding trong scenes/layout/<hướng>/shop.tscn")
 
@@ -170,7 +157,7 @@ func _wire_buttons() -> void:
 		UIAnim.play_pulse(layout.btn_gift, 1.04, 1.8)
 
 
-## Xoay màn hình: gắn lại node + dựng lại tab/trang của layout mới
+## Xoay màn hình: gắn lại node + gom lại tab/trang của layout mới
 func _on_orientation_changed(_is_landscape_now: bool) -> void:
 	_rebind_after_orientation.call_deferred()
 
@@ -178,10 +165,7 @@ func _on_orientation_changed(_is_landscape_now: bool) -> void:
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()
-	_tabs_captured = false
-	_tabs.clear()
-	_capture_tab_layout()
-	_build_tabs()
+	_collect_tabs()
 	_refresh_wallet()
 	_refresh_pagination_if_needed()
 
@@ -302,32 +286,12 @@ func _grid_per_page() -> int:
 	return maxi(columns, rows * columns)
 
 
-## Chiều cao bàn nháp thử bút: cỡ thật khi đã dựng, nếu chưa thì đọc từ scene gốc
+## Chiều cao bàn nháp thử bút = cỡ KHAI TRONG SCENE (`custom_minimum_size` của `Content/List/Pad`).
+## KHÔNG đọc `size.y`: pad nằm sẵn trong khung nên lúc ẨN vẫn giãn theo khung (số sẽ sai).
 func _doodle_pad_height() -> float:
-	if _doodle_pad != null and is_instance_valid(_doodle_pad) and _doodle_pad.size.y > 0.0:
-		return _doodle_pad.size.y
-	if _pad_h <= 0.0:
-		var probe := DOODLE_PAD_SCENE.instantiate() as Control
-		if probe != null:
-			_pad_h = maxf(probe.size.y, probe.custom_minimum_size.y)
-			probe.free()
-		if _pad_h <= 0.0:
-			_pad_h = 215.0
-	return _pad_h
-
-
-## Cỡ cao THIẾT KẾ của thẻ ô (đọc từ scene gốc 1 lần — fallback 294 như thiết kế)
-func _tile_height() -> float:
-	return tile_design_size().y
-
-
-## Đọc số đo LAYOUT của hàng tab từ `shop.tscn` (khe giữa các tab).
-## Vị trí/kích thước hàng tab + vạch kẻ + vùng danh sách do ANCHORS của scene lo.
-func _capture_tab_layout() -> void:
-	if layout.tabs_box == null or _tabs_captured:
-		return
-	_tabs_captured = true
-	_tabs_sep = float(layout.tabs_box.get_theme_constant("separation"))
+	if _doodle_pad != null and is_instance_valid(_doodle_pad) and _doodle_pad.custom_minimum_size.y > 0.0:
+		return _doodle_pad.custom_minimum_size.y
+	return FALLBACK_PAD_H
 
 
 ## Áp cỡ thẻ ô hiện tại cho mọi thẻ đang hiện (thẻ tự dàn khối bên trong bằng anchors).
@@ -425,7 +389,10 @@ func clicks_locked() -> bool:
 
 
 func doodle_pad() -> Control:
-	return _doodle_pad if _doodle_pad != null and is_instance_valid(_doodle_pad) else null
+	# Chỉ trả về node khi tab hiện tại ĐANG hiện bàn nháp (tab khác = null như trước đây)
+	if _doodle_pad == null or not is_instance_valid(_doodle_pad) or not _doodle_pad.visible:
+		return null
+	return _doodle_pad
 
 
 func preview_pen_id() -> String:
@@ -445,40 +412,31 @@ func select_pen_for_preview(item_id: String) -> void:
 # ---------------------------------------------------------------------------
 # Tab
 # ---------------------------------------------------------------------------
-func _build_tabs() -> void:
-	if layout.tabs_box == null:
+## Gom các tab KHAI SẴN trong scene bố cục (`Tabs/*` — 4 tab: pen · theme · tool · coin),
+## mỗi tab tự khai `category` + `label_key` + tự nối `pressed` → `tab_pressed`.
+## Màn chỉ gom lại + nối 1 lần ⇒ KHÔNG còn dựng tab bằng code.
+func _collect_tabs() -> void:
+	_tabs.clear()
+	if layout == null or layout.tabs_box == null:
 		return
 	for child in layout.tabs_box.get_children():
-		layout.tabs_box.remove_child(child)
-		child.queue_free()
-	_tabs.clear()
-	for category in TAB_ORDER:
-		var button := TAB_BUTTON_SCENE.instantiate() as ShopTabButton
-		button.name = "Tab_%s" % category
-		layout.tabs_box.add_child(button)
-		button.setup(category, str(TAB_KEYS.get(category, "")))
-		button.pressed.connect(_on_tab_pressed.bind(category))
-		UIAnim.attach_press_bounce(button, 0.96, 0.1)
-		_tabs[category] = button
+		var button := child as ShopTabButton
+		if button == null:
+			continue
+		if not button.tab_pressed.is_connected(_on_tab_pressed):
+			button.tab_pressed.connect(_on_tab_pressed)
+		_tabs[button.category] = button
 	_apply_tab_metrics()
 
 
-## Dàn lại hàng tab: tab đang chọn cao hết hàng (nhô lên), tab chưa chọn thấp hơn & canh ĐÁY hàng,
-## bề rộng chia đều theo BỀ RỘNG THẬT của hàng tab (do ANCHORS trong scene dàn — kéo giãn cửa sổ
-## là hàng tab tự co giãn). KHÔNG ghi offset cho hàng tab / vạch kẻ / vùng danh sách nữa.
+## Tab cao theo cỡ màn hình: tab đang chọn cao hết hàng (nhô lên), tab chưa chọn thấp hơn
+## & canh ĐÁY hàng — bề rộng do HBox chia đều (export + anchors trong scene lo phần dàn hàng).
 func _apply_tab_metrics() -> void:
-	if layout.tabs_box == null:
-		return
-	_capture_tab_layout()
 	var h := tab_height()
-	var count := maxi(TAB_ORDER.size(), 1)
-	var row_w := layout.tabs_box.size.x
-	var tab_w := (row_w - _tabs_sep * float(count - 1)) / float(count)
-	var inactive_h := h * ShopTabButton.inactive_ratio()
 	for key in _tabs.keys():
 		var button := _tabs[key] as ShopTabButton
 		if button != null:
-			button.apply_row_layout(maxf(tab_w, 1.0), h, inactive_h)
+			button.apply_metrics(h)
 
 
 func show_tab(category: String) -> void:
@@ -515,17 +473,27 @@ func _rebuild() -> void:
 	if layout.list_box == null:
 		return
 	for child in layout.list_box.get_children():
+		if child == layout.item_grid or child == layout.doodle_pad or child == layout.noads_row:
+			continue            # node KHAI SẴN trong scene — dùng lại, không xoá
 		layout.list_box.remove_child(child)
 		child.queue_free()
-	# Khung bàn nháp (bố cục NGANG) cũng phải dọn để tab khác không còn bàn nháp
+	# Khung bàn nháp (bố cục NGANG) cũng phải dọn phiếu cũ — riêng bàn nháp khai sẵn thì GIỮ LẠI
 	if layout.pad_slot != null:
 		for child in layout.pad_slot.get_children():
+			if child == layout.doodle_pad:
+				continue
 			layout.pad_slot.remove_child(child)
 			child.queue_free()
 	_cards.clear()
-	_doodle_pad = null
+	if layout.doodle_pad != null:
+		layout.doodle_pad.visible = false
+	if layout.noads_row != null:
+		layout.noads_row.visible = false
 
 	var items := Shop.items(_category)
+	var use_grid := _category == "coin" or GRID_CATEGORIES.has(_category)
+	if layout.item_grid != null:
+		layout.item_grid.visible = use_grid
 	if _category == "coin":
 		_rebuild_coin(items)
 	elif GRID_CATEGORIES.has(_category):
@@ -561,9 +529,11 @@ func _rebuild_grid(items: Array[Dictionary]) -> void:
 	_page = clampi(_page, 0, _pages - 1)
 	# Bàn nháp thử bút nằm TRÊN lưới (chỉ tab BÚT & MỰC — mockup/shopping_pencil.svg)
 	if _category == "pen":
-		_build_doodle_pad()
-	var grid := _make_grid()
-	layout.list_box.add_child(grid)
+		_show_doodle_pad()
+	var grid := _item_grid()
+	if grid == null:
+		return
+	layout.list_box.move_child(grid, layout.list_box.get_child_count() - 1)
 
 	var start := _page * per_page
 	_page_first_id = str(items[start].get("id", "")) if start < items.size() else ""
@@ -587,20 +557,20 @@ func _rebuild_grid(items: Array[Dictionary]) -> void:
 	_refresh_card_selection()
 
 
-## Bàn nháp thử bút: nhớ ngòi đang xem thử giữa các lần dựng lại (mua/đổi trang/tab)
-func _build_doodle_pad() -> void:
+## Bàn nháp thử bút KHAI SẴN trong scene (bản DỌC: `Content/List/Pad` · bản NGANG: `PadSlot/Pad`)
+## — mỗi lần vào tab BÚT & MỰC chỉ HIỆN LẠI + nạp ngòi đang xem thử (không tạo node mới).
+func _show_doodle_pad() -> void:
+	var pad := layout.doodle_pad if layout != null else null
+	if pad == null:
+		return
 	if _preview_pen.is_empty() or not PenSkin.has_pen(_preview_pen):
 		_preview_pen = Shop.equipped_pen()
-	_doodle_pad = DOODLE_PAD_SCENE.instantiate()
-	# Bố cục NGANG có khung riêng ở cột trái (mockup shopping_landscape.svg); bản DỌC để trong danh sách
-	var host: Control = layout.pad_slot if layout.pad_slot != null else layout.list_box
-	if host == null:
-		host = layout.list_box
-	host.add_child(_doodle_pad)
-	_doodle_pad.call("setup", _preview_pen)
-	if _doodle_pad.has_signal("pen_changed"):
-		_doodle_pad.connect("pen_changed", _on_pad_pen_changed)
-	UIAnim.play_pop_in(_doodle_pad, 0.0, 0.96, 0.2)
+	_doodle_pad = pad
+	pad.visible = true
+	pad.call("setup", _preview_pen)
+	if pad.has_signal("pen_changed") and not pad.is_connected("pen_changed", _on_pad_pen_changed):
+		pad.connect("pen_changed", _on_pad_pen_changed)
+	UIAnim.play_pop_in(pad, 0.0, 0.96, 0.2)
 
 
 func _on_pad_pen_changed(pen_id: String) -> void:
@@ -629,15 +599,19 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 		else:
 			packs.append(item)
 	if not no_ads.is_empty():
-		var row: Control = NOADS_SCENE.instantiate()
-		layout.list_box.add_child(row)
-		row.call("setup", no_ads)
-		if row.has_signal("action_pressed"):
-			row.connect("action_pressed", _on_item_action)
-		_cards.append(row)
-		UIAnim.play_pop_in(row, 0.0, 0.94, 0.18)
-	var grid := _make_grid()
-	layout.list_box.add_child(grid)
+		# Hàng VIP khai sẵn trong scene (`Content/List/NoAds`) — chỉ hiện ở tab NẠP XU
+		var row: Control = layout.noads_row
+		if row != null:
+			row.visible = true
+			row.call("setup", no_ads)
+			if row.has_signal("action_pressed") and not row.is_connected("action_pressed", _on_item_action):
+				row.connect("action_pressed", _on_item_action)
+			_cards.append(row)
+			UIAnim.play_pop_in(row, 0.0, 0.94, 0.18)
+	var grid := _item_grid()
+	if grid == null:
+		return
+	layout.list_box.move_child(grid, layout.list_box.get_child_count() - 1)
 	var index := 0
 	var coin_size_now := coin_tile_size()
 	for item in packs:
@@ -652,11 +626,16 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 		index += 1
 
 
-func _make_grid() -> GridContainer:
-	var grid := ITEM_GRID_SCENE.instantiate() as ShopItemGrid
-	if grid != null:
-		# Số cột theo BỀ RỘNG khung (scene chỉ là mặc định cho lúc chưa có số đo)
-		grid.columns = grid_columns()
+## Lưới ô KHAI SẴN trong scene bố cục (`Content/List/Grid`) — dùng lại giữa các lần đổi
+## tab/trang (không instantiate lại), chỉ dọn thẻ cũ + cập nhật số cột theo bề rộng khung.
+func _item_grid() -> ShopItemGrid:
+	var grid := layout.item_grid if layout != null else null
+	if grid == null:
+		return null
+	for child in grid.get_children():
+		grid.remove_child(child)
+		child.queue_free()
+	grid.columns = grid_columns()
 	return grid
 
 

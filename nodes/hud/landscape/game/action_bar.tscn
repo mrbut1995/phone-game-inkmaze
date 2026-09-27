@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://y48vpab5l5u7" path="res://assets/images/common/btn_item_disable.svg" id="19_i0adw"]
 [ext_resource type="Texture2D" uid="uid://n10pv74qr68u" path="res://assets/images/popups/icon_replay.svg" id="bar_replay"]
 [ext_resource type="Script" uid="uid://bbq8fo18vt532" path="res://scripts/nodes/hud/game/action_bar.gd" id="bar_script"]
+[ext_resource type="Script" path="res://scripts/nodes/hud/game/limited_button.gd" id="limit_btn"]
 [ext_resource type="LabelSettings" uid="uid://dg2subtoolbtn" path="res://resources/settings/text/text_game_button_sub.tres" id="bar_sub"]
 [ext_resource type="Texture2D" uid="uid://spyw1sa7uxc5" path="res://assets/images/game/btn_restart_disabled.svg" id="restart_d"]
 [ext_resource type="Texture2D" uid="uid://comsw702ysh8j" path="res://assets/images/game/btn_restart_focus.svg" id="restart_f"]
@@ -135,6 +136,7 @@ texture_focused = ExtResource("11_vyd7l")
 stretch_mode = 0
 
 [node name="Undo" type="TextureButton" parent="SubRow" unique_id=293478108]
+script = ExtResource("limit_btn")
 custom_minimum_size = Vector2(77.5, 75)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -186,6 +188,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Hint" type="TextureButton" parent="SubRow" unique_id=1015673811]
+script = ExtResource("limit_btn")
 custom_minimum_size = Vector2(77.5, 75)
 layout_mode = 2
 size_flags_horizontal = 4

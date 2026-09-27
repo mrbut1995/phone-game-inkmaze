@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://c8u6tfuomo7wl" path="res://assets/images/archivements/bar_track.svg" id="10_track"]
 [ext_resource type="Texture2D" uid="uid://cxb0b14b811tj" path="res://assets/images/archivements/bar_fill.svg" id="11_fill"]
 [ext_resource type="Texture2D" uid="uid://d3ujne6a5npe3" path="res://assets/images/archivements/stamp_claimed.svg" id="12_stamp"]
+[ext_resource type="PackedScene" uid="uid://d1di7hj3ikjhg" path="res://nodes/archivements/tab_button.tscn" id="20_tab"]
 
 [node name="Landscape" unique_id=1597886665 node_paths=PackedStringArray("btn_back", "overview_bar", "overview_fill", "overview_pct", "overview_summary", "tabs_box", "card_area", "scroll", "pages_host", "dots_box", "empty_label", "stamp_label") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
@@ -220,6 +221,26 @@ layout_mode = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 2
+
+[node name="Tab0" parent="Sheet/Body/LeftCol/Tabs" index="0" instance=ExtResource("20_tab")]
+layout_mode = 2
+category = ""
+
+[node name="Tab1" parent="Sheet/Body/LeftCol/Tabs" index="1" instance=ExtResource("20_tab")]
+layout_mode = 2
+category = "levels"
+
+[node name="Tab2" parent="Sheet/Body/LeftCol/Tabs" index="2" instance=ExtResource("20_tab")]
+layout_mode = 2
+category = "dungeon"
+
+[node name="Tab3" parent="Sheet/Body/LeftCol/Tabs" index="3" instance=ExtResource("20_tab")]
+layout_mode = 2
+category = "daily"
+
+[node name="Tab4" parent="Sheet/Body/LeftCol/Tabs" index="4" instance=ExtResource("20_tab")]
+layout_mode = 2
+category = "special"
 
 [node name="Spacer" type="Control" parent="Sheet/Body/LeftCol" index="2" unique_id=240991435]
 layout_mode = 2
