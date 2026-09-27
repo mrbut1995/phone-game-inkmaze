@@ -61,9 +61,43 @@ def dumps(level: LevelModel) -> str:
         "cell_mask = %s" % _gd_mask(level),
         "challenge_types = %s" % _gd_string_array([c[0] for c in level.challenges]),
         "challenge_params = %s" % _gd_int_array([c[1] for c in level.challenges]),
-        "custom_cell_values = %s" % (level.custom_cell_values_raw or "{}"),
+        "custom_cell_values = %s" % _gd_custom_values(level),
     ]
     return "\n".join(lines) + "\n"
+
+
+def _gd_custom_values(level: LevelModel) -> str:
+    """Dữ liệu riêng của chế độ (điểm ô · chi phí · mìn ghim...) thành Dictionary của GDScript.
+
+    - Không có gì → `{}`.
+    - File gốc chứa phần tool KHÔNG hiểu (`custom_raw_unknown`) → giữ nguyên chuỗi gốc.
+    """
+    if level.custom_raw_unknown:
+        return level.custom_cell_values_raw or "{}"
+    if not level.custom_cell_values:
+        return "{}"
+    items = sorted(level.custom_cell_values.items(), key=lambda item: (int(item[0][1]), int(item[0][0])))
+    body = ", ".join('"%d,%d": %d' % (int(cell[0]), int(cell[1]), int(value)) for cell, value in items)
+    return "{%s}" % body
+
+
+## Cặp `"x,y": giá-trị` trong custom_cell_values (đúng định dạng game đọc)
+_CUSTOM_PAIR_RE = re.compile(r'"\s*(-?\d+)\s*,\s*(-?\d+)\s*"\s*:\s*(-?\d+)')
+
+
+def parse_custom_values(text: str) -> tuple[dict, bool]:
+    """Phân tích `custom_cell_values` của .tres -> ({(x, y): giá trị}, còn phần lạ).
+
+    Phần lạ (khoá/giá trị không phải số nguyên) → `unknown = True` để lúc ghi giữ nguyên chuỗi gốc.
+    """
+    raw = (text or "").strip()
+    if raw in ("", "{}"):
+        return {}, False
+    values: dict = {}
+    for match in _CUSTOM_PAIR_RE.finditer(raw):
+        values[(int(match.group(1)), int(match.group(2)))] = int(match.group(3))
+    pairs = raw.count(":")
+    return values, pairs != len(values)
 
 
 def save_file(level: LevelModel, path: Path) -> None:
@@ -131,7 +165,10 @@ def loads(text: str) -> LevelModel:
         elif key == "challenge_params":
             challenge_params = _parse_int_array(value)
         elif key == "custom_cell_values":
+            values, unknown = parse_custom_values(value)
+            level.custom_cell_values = values
             level.custom_cell_values_raw = value or "{}"
+            level.custom_raw_unknown = unknown
 
     level.challenges = []
     for index, type_id in enumerate(challenge_types[: chal.MAX_PER_LEVEL]):
@@ -142,6 +179,7 @@ def loads(text: str) -> LevelModel:
 
     level.normalize_arrays()
     level.ensure_borders()
+    level.prune_custom_values()
     return level
 
 

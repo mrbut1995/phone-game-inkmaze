@@ -77,7 +77,10 @@ class LevelListView(ttk.Frame):
     def _label(summary: LevelSummary) -> str:
         size = "%dx%d" % (summary.width, summary.height) if summary.width else "?"
         title = summary.title or "(không có tiêu đề)"
-        return "#%-3d C%-2d %-7s %s" % (summary.level_id, summary.chapter, size, title)
+        # Màn chạy chế độ Special (khác "play") -> gắn nhãn để nhìn là biết ngay trong danh sách
+        mode = (summary.mode_id or "play").strip().lower()
+        badge = "" if mode in ("", "play") else "  ◆ %s" % mode
+        return "#%-3d C%-2d %-7s %s%s" % (summary.level_id, summary.chapter, size, title, badge)
 
     def highlight_current(self) -> None:
         self._current_id = self.app.editor.level.level_id

@@ -259,7 +259,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	_entry(scene.layout.wallet_bar != null and scene.layout.wallet_count is Label, "Co vi Xu")
 	_entry(_ui(scene, "Content/List") is VBoxContainer, "Co danh sach mon hang")
 	_entry(_ui(scene, "GiftBanner/GiftBtn") is TextureButton, "Co nut o banner tiep suc")
-	_entry(scene.layout.tabs_box.get_child_count() == 4, "4 tab duoc dung bang code")
+	_entry(scene.layout.tabs_box.get_child_count() == 4, "4 tab khai san trong scene bo cuc")
 	for category in ["pen", "theme", "tool", "coin"]:
 		_entry(scene.tab_button(category) != null, "Co tab '%s'" % category)
 	# TAB: chiều cao lấy từ ART (`tab_active.svg` 240×98) × hệ số màn hình — không hard-code

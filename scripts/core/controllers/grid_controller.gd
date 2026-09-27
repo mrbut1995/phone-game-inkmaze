@@ -80,16 +80,15 @@ func handle_anchor_connected(corner_a: Vector2i, corner_b: Vector2i) -> void:
 		mode.on_wall_toggled(toggled_h, toggled_lattice,
 			anchor_controller.is_suspected(toggled_h, toggled_lattice))
 		# Chế độ có phản hồi theo SỐ TRÊN Ô (Wall Builder: ô đủ tường sáng nền xanh) -> vẽ lại
-		if mode.has_method("is_cell_satisfied") and board_view != null \
-				and board_view.has_method("refresh_cell_texts"):
-			board_view.call("refresh_cell_texts")
+		if mode.tracks_satisfied_cells() and board_view != null:
+			board_view.refresh_cell_texts()
 	if mode != null and mode.check_completion(current_pos, maze, anchor_controller):
 		reached_end.emit()
 
 
 func _on_suspected_wall_toggled(is_h: bool, lattice: Vector2i, active: bool) -> void:
-	if board_view != null and board_view.has_method("set_suspected_wall"):
-		board_view.call("set_suspected_wall", is_h, lattice, active)
+	if board_view != null:
+		board_view.set_suspected_wall(is_h, lattice, active)
 
 
 # ---------------------------------------------------------------------------
@@ -132,18 +131,15 @@ func try_move_to(pos: Vector2i) -> void:
 
 		if hazard_type == "mine":
 			var mine_pos: Vector2i = eval_result.get("pos", pos)
-			if board_view.has_method("show_mine_hit"):
-				board_view.call("show_mine_hit", mine_pos)
+			board_view.show_mine_hit(mine_pos)
 		elif hazard_type == "revisit":
 			# One Stroke: đạp lên ô ĐÃ ĐI = thua ngay, KHÔNG vẽ thêm đoạn tường gãy
-			if board_view.has_method("pulse_cell"):
-				board_view.call("pulse_cell", pos)
+			board_view.pulse_cell(pos)
 		else:
-			if board_view.has_method("show_wall_hit"):
-				board_view.call("show_wall_hit", from_cell, pos)
+			board_view.show_wall_hit(from_cell, pos)
 
-		if respawn and board_view.has_method("reset_to_start"):
-			board_view.call("reset_to_start")
+		if respawn:
+			board_view.reset_to_start()
 		if respawn:
 			# Mode có trạng thái hiển thị theo vị trí (Fog of War) cập nhật lại quanh ô S
 			game_mode_controller.game_mode.on_respawned(board_view, current_pos, maze)
@@ -156,10 +152,8 @@ func try_move_to(pos: Vector2i) -> void:
 		if undo_controller != null:
 			undo_controller.record_move(prev_pos, pos, step_cost)
 
-		if board_view.has_method("move_cursor_to"):
-			board_view.call("move_cursor_to", pos)
-		if board_view.has_method("set_moving_path"):
-			board_view.call("set_moving_path", path)
+		board_view.move_cursor_to(pos)
+		board_view.set_moving_path(path)
 
 		game_mode_controller.game_mode.on_player_moved(board_view, pos, maze)
 		step_consumed.emit(step_cost, false)
@@ -190,10 +184,8 @@ func undo_last_move() -> bool:
 		if path.size() > 1:
 			path.pop_back()
 		if board_view != null:
-			if board_view.has_method("move_cursor_to"):
-				board_view.call("move_cursor_to", current_pos)
-			if board_view.has_method("set_moving_path"):
-				board_view.call("set_moving_path", path)
+			board_view.move_cursor_to(current_pos)
+			board_view.set_moving_path(path)
 		# Mode có trạng thái riêng thì lùi theo (VD Fading Ink hồi lại mực đã phai)
 		if game_mode_controller != null and game_mode_controller.game_mode != null:
 			game_mode_controller.game_mode.on_move_undone(board_view, left_pos, target_pos, maze)
@@ -208,9 +200,7 @@ func reveal_last_hazard_wall() -> bool:
 		return false
 	if last_hazard_from == Vector2i(-1, -1) or last_hazard_to == Vector2i(-1, -1):
 		return false
-	if not board_view.has_method("show_wall_hit"):
-		return false
-	board_view.call("show_wall_hit", last_hazard_from, last_hazard_to)
+	board_view.show_wall_hit(last_hazard_from, last_hazard_to)
 	return true
 
 
@@ -225,20 +215,19 @@ func give_hint() -> void:
 	if next_cell == Vector2i(-1, -1):
 		next_cell = hint_controller.get_next_step_hint(maze, current_pos)
 	if next_cell != current_pos:
-		if board_view.has_method("pulse_cell"):
-			board_view.call("pulse_cell", next_cell)
+		board_view.pulse_cell(next_cell)
 	else:
 		var wall_info := hint_controller.reveal_one_invisible_wall(maze)
-		if not wall_info.is_empty() and board_view.has_method("reveal_wall_segment"):
-			board_view.call("reveal_wall_segment", wall_info.is_h, wall_info.lattice)
+		if not wall_info.is_empty():
+			board_view.reveal_wall_segment(wall_info.is_h, wall_info.lattice)
 
 
 func _record_edge(a: Vector2i, b: Vector2i) -> void:
 	var key := _edge_key(a, b)
 	if not _visited_edges.has(key):
 		_visited_edges[key] = true
-		if board_view != null and board_view.has_method("show_history_edge"):
-			board_view.call("show_history_edge", a, b)
+		if board_view != null:
+			board_view.show_history_edge(a, b)
 
 
 func _is_adjacent(a: Vector2i, b: Vector2i) -> bool:

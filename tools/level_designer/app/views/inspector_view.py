@@ -5,10 +5,21 @@ from __future__ import annotations
 import tkinter as tk
 from tkinter import ttk
 
-from ..config import DIFFICULTIES, MAX_ID, MAX_SIZE, MIN_ID, MIN_SIZE, MODE_IDS
+from ..config import (
+    DIFFICULTIES,
+    MAX_ID,
+    MAX_SIZE,
+    MIN_ID,
+    MIN_SIZE,
+    MODE_IDS,
+    MODE_LABELS,
+    PLAY_MODE_ID,
+    TOOL_VALUE_KEY,
+    mode_edit_spec,
+)
 from ..controllers.app_controller import AppController
 from ..controllers.editor_controller import EditorController
-from ..controllers.events import EV_LEVEL_CHANGED, EV_MODEL_UPDATED, EV_STATUS
+from ..controllers.events import EV_LEVEL_CHANGED, EV_MODEL_UPDATED, EV_PATH_CHANGED, EV_STATUS
 from ..models import challenges as chal
 from ..models.level import Cell
 
@@ -30,6 +41,8 @@ class InspectorView(ttk.Frame):
 
         self.editor.events.on(EV_MODEL_UPDATED, lambda *_: self.refresh())
         self.editor.events.on(EV_LEVEL_CHANGED, lambda *_: self.refresh())
+        # Nét đường đi (công cụ 8) đổi → cập nhật ô "Tổng …" (tổng đang có / số ô đã tô)
+        self.editor.events.on(EV_PATH_CHANGED, lambda *_: self._refresh_path_sum())
         self.refresh()
 
     # ------------------------------------------------------------------
@@ -43,6 +56,7 @@ class InspectorView(ttk.Frame):
         self.var_title = tk.StringVar()
         self.var_chapter = tk.IntVar()
         self.var_mode = tk.StringVar()
+        self.var_mode_label = tk.StringVar()
         self.var_difficulty = tk.StringVar()
 
         self._spin_row(frame, 0, "level_id", self.var_id, MIN_ID, MAX_ID, self._on_int("level_id"))
@@ -59,7 +73,27 @@ class InspectorView(ttk.Frame):
         diff.grid(row=4, column=1, sticky="ew", pady=2)
         diff.bind("<<ComboboxSelected>>", lambda _e: self._commit("difficulty", self.var_difficulty.get()))
 
+        # Nhắc nghĩa của chế độ đang chọn: mode khác "play" = MÀN CHẠY CHẾ ĐỘ SPECIAL
+        # (game dùng đúng bàn này làm bàn chơi của chế độ đó — xem README mục 5)
+        ttk.Label(frame, textvariable=self.var_mode_label, wraplength=240, justify="left").grid(
+            row=5, column=0, columnspan=2, sticky="w", pady=(2, 0))
+        self.var_mode.trace_add("write", lambda *_: self._refresh_mode_hint())
+
         frame.columnconfigure(1, weight=1)
+
+    ## Cập nhật dòng nhắc dưới ô chọn chế độ (nghĩa của chế độ + KIỂU EDIT tương ứng)
+    def _refresh_mode_hint(self) -> None:
+        mode = (self.var_mode.get() or PLAY_MODE_ID).strip().lower()
+        spec = mode_edit_spec(mode)
+        if mode == PLAY_MODE_ID:
+            lines = ["Kiểu edit: %s" % spec["note"]]
+        else:
+            lines = ["◆ Màn chạy chế độ SPECIAL — %s" % MODE_LABELS.get(mode, mode),
+                     "Kiểu edit: %s" % spec["note"]]
+        if spec["is_cell_value"]:
+            lines.append("→ dùng công cụ %s để tô %s (%d..%d %s); ô bỏ trống = game tự sinh." % (
+                TOOL_VALUE_KEY, spec["tool"].lower(), spec["min"], spec["max"], spec["unit"]))
+        self.var_mode_label.set("\n".join(lines))
 
     def _build_rules(self) -> None:
         frame = ttk.LabelFrame(self, text="Lưới & luật chơi", padding=(8, 6))
@@ -83,9 +117,30 @@ class InspectorView(ttk.Frame):
         self._spin_row(frame, 6, "max_steps", self.var_steps, 1, 9999, self._on_int("max_steps"))
         self._spin_row(frame, 7, "par_time", self.var_par, 1, 9999, self._on_par, increment=5)
 
+        # Ô "TỔNG …" THEO ĐƯỜNG ĐI (Countdown Cost · Sum Path · Fading Ink) — chỉ hiện khi chế độ có `path`.
+        # (Trước đây nằm trên THANH CÔNG CỤ nhưng làm tràn ngang cửa sổ hẹp ⇒ chuyển vào mục này.)
+        self.var_path_sum = tk.IntVar()
+        self._path_sum_key = ""
+        self._path_sum_box = ttk.Frame(frame)
+        self._path_sum_box.grid(row=8, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        self.lbl_path_sum = ttk.Label(self._path_sum_box, text="")
+        self.lbl_path_sum.pack(side="left")
+        self.spin_path_sum = ttk.Spinbox(self._path_sum_box, textvariable=self.var_path_sum,
+                                         from_=1, to=999, width=6, command=self._on_path_sum)
+        self.spin_path_sum.pack(side="left", padx=(6, 4))
+        self.spin_path_sum.bind("<Return>", lambda _e: self._on_path_sum())
+        self.spin_path_sum.bind("<FocusOut>", lambda _e: self._on_path_sum())
+        self.btn_path_sum = ttk.Button(self._path_sum_box, text="Tô theo đường đi",
+                                       command=self._on_paint_path_sum)
+        self.btn_path_sum.pack(side="left")
+        self.lbl_path_sum_hint = ttk.Label(frame, text="", style="Hint.TLabel",
+                                           wraplength=280, justify="left")
+        self.lbl_path_sum_hint.grid(row=9, column=0, columnspan=2, sticky="w", pady=(2, 0))
+
         hint = ttk.Label(frame, text="y = 0 là hàng TRÊN cùng (giống trong game)", style="Hint.TLabel")
-        hint.grid(row=8, column=0, columnspan=2, sticky="w", pady=(4, 0))
+        hint.grid(row=10, column=0, columnspan=2, sticky="w", pady=(4, 0))
         frame.columnconfigure(1, weight=1)
+        self._refresh_path_sum()
 
     def _build_challenges(self) -> None:
         """Mỗi màn TỐI ĐA 3 thử thách (1 thử thách hoàn thành = 1 Sao).
@@ -175,6 +230,56 @@ class InspectorView(ttk.Frame):
         entry.grid(row=row, column=1, sticky="ew", pady=2)
         entry.bind("<Return>", lambda _e: commit())
         entry.bind("<FocusOut>", lambda _e: commit())
+
+    # ------------------------------------------------------------------
+    # Ô "TỔNG …" theo đường đi (công cụ 8) — Countdown Cost · Sum Path · Fading Ink
+    # ------------------------------------------------------------------
+    ## Giá trị ô "Tổng …" đang nhập (kẹp theo `sum_min..sum_max` của chế độ)
+    def path_sum_value(self) -> int:
+        spec = self.editor.mode_edit_spec()
+        try:
+            value = int(self.var_path_sum.get())
+        except (tk.TclError, ValueError):
+            value = int(spec["sum_default"])
+        return max(int(spec["sum_min"]), min(int(spec["sum_max"]), value))
+
+    def _on_path_sum(self) -> None:
+        """Nhập xong: kẹp số rồi cập nhật dòng ghi chú."""
+        self.var_path_sum.set(self.path_sum_value())
+        self._refresh_path_sum()
+
+    def _on_paint_path_sum(self) -> None:
+        """Nút "Tô theo đường đi" (giống Ctrl+Enter): TÔ GIÁ TRỊ theo nét vẽ / đường ngắn nhất."""
+        self.editor.apply_path_values(self.path_sum_value())
+        self._refresh_path_sum()
+
+    ## Bày/ẩn hàng "Tổng …" theo chế độ đang chọn + hiện TỔNG đang có trên đường
+    def _refresh_path_sum(self) -> None:
+        spec = self.editor.mode_edit_spec()
+        if not (spec["paints_values"] and spec["has_sum_field"]):
+            self._path_sum_box.grid_remove()
+            self.lbl_path_sum_hint.grid_remove()
+            return
+        self._path_sum_box.grid()
+        self.lbl_path_sum_hint.grid()
+        if spec["mode_id"] != self._path_sum_key:
+            self._path_sum_key = spec["mode_id"]
+            self.var_path_sum.set(int(spec["sum_default"]))
+        self.lbl_path_sum.configure(text="%s:" % spec["sum_label"])
+        self.spin_path_sum.configure(from_=spec["sum_min"], to=spec["sum_max"])
+
+        current = self.editor.path_value_sum()
+        if spec["path_fill"] == "sum" and current > 0:
+            self.var_path_sum.set(current)          # hiện ĐÚNG tổng đang có trên đường vừa vẽ
+        if spec["path_fill"] == "sum":
+            text = ("Trên đường đi: %d ô đã tô · tổng = %d · %d ô chưa tô (game tự sinh).\n"
+                    "Chưa vẽ nét nào thì nút \"Tô theo đường đi\" sẽ tô theo ĐƯỜNG NGẮN NHẤT của màn."
+                    % (self.editor.path_value_count(), current,
+                       max(0, len(self.editor.path_paint_cells()) - self.editor.path_value_count())))
+        else:
+            text = ("Ô ở bước thứ j nhận mực = j + số này (kẹp %d..%d); mực mỗi ô phải ≥ số bước đi tới ô đó."
+                    % (spec["min"], spec["max"]))
+        self.lbl_path_sum_hint.configure(text=text)
 
     # ------------------------------------------------------------------
     # Ghi giá trị vào model
@@ -300,6 +405,7 @@ class InspectorView(ttk.Frame):
         finally:
             self._suspend = False
         self._refresh_challenges()
+        self._refresh_path_sum()
         self._refresh_report()
 
     def _refresh_report(self) -> None:

@@ -5,5 +5,5 @@ extends GameHUD
 ## Thẻ THỜI GIAN do BaseHUD.set_time() lo, ở đây chỉ trả về thẻ THỬ THÁCH.
 
 
-func challenge_card() -> Control:
-	return get_node_or_null("Content/ModeInformation/Challenge") as Control
+func challenge_card() -> ChallengeCard:
+	return get_node_or_null("Content/ModeInformation/Challenge") as ChallengeCard

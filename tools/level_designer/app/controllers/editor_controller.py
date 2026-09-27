@@ -13,20 +13,26 @@ from typing import Any, Callable
 from ..config import (
     MAX_SIZE,
     MIN_SIZE,
+    PATH_WALL_EXTRA_STEPS,
     TOOL_CELL,
     TOOL_END,
     TOOL_ERASE,
+    TOOL_PATH,
     TOOL_START,
+    TOOL_VALUE,
     TOOL_WALL_HIDDEN,
     TOOL_WALL_VISIBLE,
+    mode_edit_spec,
 )
 from ..models import challenges as chal
 from ..models.level import Cell, LevelModel, WallRef
-from ..services import solver
+from ..services import path_values, solver
 from .events import (
     EV_DIRTY_CHANGED,
+    EV_EDIT_VALUE_CHANGED,
     EV_LEVEL_CHANGED,
     EV_MODEL_UPDATED,
+    EV_PATH_CHANGED,
     EV_STATUS,
     EV_TOOL_CHANGED,
     EV_VIEW_OPTIONS_CHANGED,
@@ -34,6 +40,23 @@ from .events import (
 )
 
 UNDO_LIMIT = 80
+## 4 hướng đi kề (dùng chung cho vẽ đường đi + sinh tường quanh đường)
+PATH_DIRECTIONS: tuple[tuple[int, int], ...] = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+
+def path_edge_ref(cell: Cell, dx: int, dy: int) -> WallRef:
+    """Cạnh tường nằm giữa ô `cell` và ô kề theo hướng (dx, dy).
+
+    Cùng quy ước với `solver.neighbors`: sang phải chặn bởi tường dọc (x+1, y)...
+    """
+    x, y = cell
+    if dx > 0:
+        return ("v", x + 1, y)
+    if dx < 0:
+        return ("v", x, y)
+    if dy > 0:
+        return ("h", x, y + 1)
+    return ("h", x, y)
 
 
 class EditorController:
@@ -43,11 +66,15 @@ class EditorController:
         self.events = events or EventEmitter()
         self.level: LevelModel = level or LevelModel()
         self.tool: str = TOOL_WALL_VISIBLE
+        ## Giá trị đang cầm để TÔ bằng công cụ giá trị (kiểu edit của chế độ đang chọn)
+        self.edit_value: int = self.mode_edit_spec()["default"]
         self.show_numbers = True
         self.show_path = False
         self.show_hidden = True
         self.show_coords = False
         self.dirty = False
+        ## NÉT ĐƯỜNG ĐI đang vẽ bằng công cụ 8 (danh sách ô liền kề, KHÔNG lưu vào .tres)
+        self.path_draft: list[Cell] = []
 
         self._undo: list[dict] = []
         self._redo: list[dict] = []
@@ -87,6 +114,11 @@ class EditorController:
             self._undo.clear()
             self._redo.clear()
         self._stroke_snapshot = None
+        # Nét đường đi chỉ thuộc về màn đang vẽ → bỏ khi nạp màn khác
+        self.path_draft = []
+        self.events.emit(EV_PATH_CHANGED, self.path_draft)
+        # Chế độ mới có thể có kiểu edit khác → đặt lại giá trị đang cầm + bỏ công cụ giá trị nếu không dùng
+        self._sync_mode_edit()
         self._set_dirty(False)
         self.events.emit(EV_LEVEL_CHANGED, level)
 
@@ -176,6 +208,272 @@ class EditorController:
                 self._commit("Đặt đích F")
 
     # ------------------------------------------------------------------
+    # KIỂU EDIT THEO CHẾ ĐỘ (công cụ giá trị — xem app/config.py MODE_EDITS)
+    # ------------------------------------------------------------------
+    def mode_edit_spec(self) -> dict:
+        """Kiểu edit của chế độ đang chọn (kind · min/max · nhãn công cụ · ghi chú)."""
+        return mode_edit_spec(str(self.level.mode_id))
+
+    def _sync_mode_edit(self) -> None:
+        """Đồng bộ giá trị đang cầm + công cụ mỗi khi chế độ của màn đổi."""
+        spec = self.mode_edit_spec()
+        self.edit_value = int(spec["default"])
+        self.events.emit(EV_EDIT_VALUE_CHANGED, self.edit_value)
+        if not spec["is_cell_value"] and self.tool == TOOL_VALUE:
+            self.set_tool(TOOL_WALL_VISIBLE)
+
+    def set_edit_value(self, value: int) -> None:
+        """Đổi giá trị đang cầm để tô (kẹp theo khoảng của chế độ đang chọn)."""
+        spec = self.mode_edit_spec()
+        if not spec["is_cell_value"]:
+            return
+        try:
+            value = int(value)
+        except (TypeError, ValueError):
+            return
+        value = max(int(spec["min"]), min(int(spec["max"]), value))
+        if value == self.edit_value:
+            return
+        self.edit_value = value
+        self.events.emit(EV_EDIT_VALUE_CHANGED, value)
+
+    def apply_value_tool(self, cell: Cell, toggle: bool = True) -> None:
+        """Tô dữ liệu riêng của chế độ lên 1 ô (click lại đúng giá trị đó = xoá)."""
+        spec = self.mode_edit_spec()
+        if not spec["is_cell_value"]:
+            return
+        if not self.level.is_cell_active(cell):
+            self.events.emit(EV_STATUS, "Ô (%d, %d) là ô TRỐNG (ngoài board) — bật bằng công cụ 6 trước" % cell)
+            return
+        if cell == self.level.start or cell == self.level.end:
+            self.events.emit(EV_STATUS, "Ô S/F không cần tô giá trị (%s tự bỏ qua 2 ô này)" % spec["mode_id"])
+            return
+
+        current = self.level.custom_value(cell)
+        value = 0 if (toggle and current == self.edit_value) else self.edit_value
+        before = self.level.snapshot()
+        if not self.level.set_custom_value(cell, value):
+            return
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        if value <= 0:
+            self.events.emit(EV_STATUS, "Ô (%d, %d): đã xoá %s" % (cell[0], cell[1], spec["tool"].lower()))
+        else:
+            self.events.emit(EV_STATUS, "Ô (%d, %d): %s = %d %s" % (
+                cell[0], cell[1], spec["tool"], value, spec["unit"]))
+
+    def erase_value(self, cell: Cell) -> bool:
+        """Xoá giá trị riêng của 1 ô (chuột phải). Trả về True nếu CÓ xoá được."""
+        if self.level.custom_value(cell) <= 0:
+            return False
+        before = self.level.snapshot()
+        if not self.level.set_custom_value(cell, 0):
+            return False
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS, "Ô (%d, %d): đã xoá %s" % (
+            cell[0], cell[1], self.mode_edit_spec()["tool"].lower()))
+        return True
+
+    def clear_custom_values(self) -> None:
+        """Xoá HẾT dữ liệu riêng của chế độ trong màn (có undo)."""
+        if not self.level.custom_value_count():
+            self.events.emit(EV_STATUS, "Màn chưa có giá trị riêng nào để xoá")
+            return
+        before = self.level.snapshot()
+        removed = self.level.clear_custom_values()
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS, "Đã xoá %d giá trị riêng của chế độ" % removed)
+
+    # ------------------------------------------------------------------
+    # VẼ ĐƯỜNG ĐI (công cụ 8) — xem app/config.py TOOL_PATH
+    # Nét vẽ là dữ liệu TẠM của phiên làm việc (không ghi vào .tres): vẽ xong bấm Ctrl+Enter để
+    # biến nét vẽ thành màn chơi — SINH TƯỜNG quanh đường, hoặc TÔ GIÁ TRỊ lên đường (tuỳ chế độ).
+    # ------------------------------------------------------------------
+    def path_length(self) -> int:
+        """Số ô của nét đường đang vẽ."""
+        return len(self.path_draft)
+
+    def path_paint_cells(self) -> list[Cell]:
+        """Các ô của nét đường sẽ được TÔ GIÁ TRỊ: bỏ 2 ĐẦU (game không tính giá trị ở S/F)."""
+        return list(self.path_draft[1:-1]) if len(self.path_draft) >= 2 else []
+
+    def path_value_sum(self) -> int:
+        """Tổng giá trị đã tô trên nét đường đang vẽ (0 nếu chưa tô gì)."""
+        return sum(self.level.custom_value(cell) for cell in self.path_paint_cells())
+
+    def path_value_count(self) -> int:
+        """Số ô ĐÃ TÔ giá trị trên nét đường đang vẽ."""
+        return sum(1 for cell in self.path_paint_cells() if self.level.custom_value(cell) > 0)
+
+    def resolve_path_for_values(self) -> tuple[list[Cell], str]:
+        """Đường dùng để tô giá trị: NÉT VẼ đang vẽ, hoặc ĐƯỜNG NGẮN NHẤT nếu chưa vẽ gì."""
+        if len(self.path_draft) >= 2:
+            return list(self.path_draft), "nét vẽ"
+        return list(solver.shortest_path(self.level) or []), "đường ngắn nhất của màn"
+
+    def apply_path_values(self, target: int | None = None) -> bool:
+        """TÔ GIÁ TRỊ của chế độ lên ĐƯỜNG ĐI (công cụ 8 — Ctrl+Enter).
+
+        · `fill = "sum"` (Countdown Cost · Sum Path): chia giá trị các ô sao cho TỔNG = `target`.
+        · `fill = "step"` (Fading Ink): cấp MỰC tăng dần theo bước đi = bước j + `target` (mực dư).
+        Ô S/F không tô (game cũng không tính 2 ô này) — xem app/config.py MODE_EDITS[*]["path"].
+        """
+        spec = self.mode_edit_spec()
+        if not spec["paints_values"]:
+            self.events.emit(EV_STATUS,
+                             "Chế độ %s không tô giá trị theo đường — dùng \"Sinh tường quanh đường\""
+                             % spec["mode_id"])
+            return False
+
+        route, source = self.resolve_path_for_values()
+        if not route:
+            self.events.emit(EV_STATUS,
+                             "Màn CHƯA CÓ đường S→F để tô — vẽ nét bằng công cụ 8 hoặc sửa tường trước")
+            return False
+        cells = route[1:-1]
+        if len(cells) < 1:
+            self.events.emit(EV_STATUS,
+                             "Cần đường đi có ÍT NHẤT 3 ô (S … F) — đường hiện tại chỉ có %d ô" % len(route))
+            return False
+
+        lo, hi = int(spec["min"]), int(spec["max"])
+        fill = spec["path_fill"]
+        field = int(target if target is not None else spec["sum_default"])
+        if fill == "sum":
+            min_total, max_total = path_values.feasible_range(len(cells), lo, hi)
+            if field < min_total or field > max_total:
+                self.events.emit(EV_STATUS,
+                                 "Tổng %d ngoài khoảng hợp lệ của %d ô: %d..%d (mỗi ô %d..%d)"
+                                 % (field, len(cells), min_total, max_total, lo, hi))
+                return False
+            numbers = path_values.distribute_sum(field, len(cells), lo, hi) or []
+        else:                                  # "step" — mực tăng dần theo bước đi
+            numbers = path_values.step_values(list(range(1, len(cells) + 1)), field, lo, hi)
+
+        before = self.level.snapshot()
+        for cell, value in zip(cells, numbers):
+            self.level.set_custom_value(cell, int(value))
+        self.level.start, self.level.end = route[0], route[-1]
+        auto_steps = solver.auto_max_steps(self.level, extra=2)
+        if spec.get("budget_from_sum") and fill == "sum":
+            # Chi phí ô chính là SỐ BƯỚC phải bỏ ra ⇒ max_steps phải đủ cho đường vừa chia
+            self.level.max_steps = max(auto_steps, sum(numbers) + 3)
+        else:
+            self.level.max_steps = auto_steps
+
+        if before == self.level.snapshot():
+            self.events.emit(EV_STATUS, "Đường đi đã đúng các giá trị đó rồi (không có gì đổi)")
+            return False
+
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_PATH_CHANGED, self.path_draft)
+        self.events.emit(EV_STATUS,
+                         "Đã tô %s cho %d ô theo %s (tổng = %d%s) · S=(%d, %d) · F=(%d, %d) · max_steps=%d"
+                         % (spec["tool"].lower(), len(cells), source, sum(numbers),
+                            (" · mực dư %d/bước" % field) if fill == "step" else "",
+                            route[0][0], route[0][1], route[-1][0], route[-1][1], self.level.max_steps))
+        return True
+
+    def begin_path(self, cell: Cell) -> None:
+        """Bắt đầu 1 nét đường mới tại `cell` (mouse down của công cụ 8)."""
+        if cell is None or not self.level.is_cell_active(cell):
+            self.events.emit(EV_STATUS, "Ô vẽ đường đi phải là ô THUỘC BOARD")
+            return
+        self.path_draft = [cell]
+        self.events.emit(EV_PATH_CHANGED, self.path_draft)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS,
+                         "Vẽ đường đi từ ô (%d, %d) — kéo chuột tới F; Ctrl+Enter để áp dụng cho đường" % cell)
+
+    def extend_path(self, cell: Cell) -> bool:
+        """Nối thêm ô khi KÉO chuột (chỉ ô kề, không đi đè; kéo ngược về ô trước = lùi 1 ô)."""
+        if not self.path_draft or cell is None:
+            return False
+        if not self.level.is_cell_active(cell):
+            return False
+        last = self.path_draft[-1]
+        if cell == last:
+            return False
+
+        if len(self.path_draft) >= 2 and cell == self.path_draft[-2]:
+            self.path_draft.pop()                      # kéo ngược lại = lùi 1 ô
+        else:
+            if cell in self.path_draft:
+                return False                           # không đi đè lên đường đã vẽ
+            if abs(cell[0] - last[0]) + abs(cell[1] - last[1]) != 1:
+                return False                           # chỉ nối ô KỀ (không nhảy ô)
+            self.path_draft.append(cell)
+
+        self.events.emit(EV_PATH_CHANGED, self.path_draft)
+        self.events.emit(EV_MODEL_UPDATED)
+        if cell == self.level.end:
+            self.events.emit(EV_STATUS, "Đường đã tới đích F (%d ô) — bấm Sinh tường quanh đường (Ctrl+Enter)"
+                             % len(self.path_draft))
+        return True
+
+    def clear_path_draft(self) -> None:
+        """Bỏ nét đường đang vẽ (chuột phải khi đang ở công cụ 8, hoặc Esc)."""
+        if not self.path_draft:
+            self.events.emit(EV_STATUS, "Chưa có nét đường nào để xoá")
+            return
+        count = len(self.path_draft)
+        self.path_draft = []
+        self.events.emit(EV_PATH_CHANGED, self.path_draft)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS, "Đã xoá nét đường đang vẽ (%d ô)" % count)
+
+    def apply_path_walls(self, visible: bool = True, extra: int = PATH_WALL_EXTRA_STEPS) -> bool:
+        """SINH MÀN từ nét đường đang vẽ.
+
+        Mọi cạnh BÊN HÔNG của đường (cạnh không nối 2 ô LIỀN NHAU trên nét vẽ) thành tường,
+        cạnh nối 2 ô liền nhau được mở ⇒ nét vẽ trở thành ĐƯỜNG DUY NHẤT từ S tới F.
+        Đồng thời: S = ô đầu · F = ô cuối · max_steps = số bước + dự phòng.
+        """
+        route = list(self.path_draft)
+        if len(route) < 2:
+            self.events.emit(EV_STATUS, "Hãy KÉO chuột vẽ ít nhất 2 ô rồi mới sinh tường (nét vẽ: %d ô)"
+                             % len(route))
+            return False
+        if not all(self.level.is_cell_active(cell) for cell in route):
+            self.events.emit(EV_STATUS, "Nét vẽ có ô NGOÀI BOARD — bật ô đó bằng công cụ 6 rồi vẽ lại")
+            return False
+
+        before = self.level.snapshot()
+        for index, cell in enumerate(route):
+            for dx, dy in PATH_DIRECTIONS:
+                neighbour = (cell[0] + dx, cell[1] + dy)
+                ref = path_edge_ref(cell, dx, dy)
+                connected = (index > 0 and route[index - 1] == neighbour) \
+                    or (index + 1 < len(route) and route[index + 1] == neighbour)
+                if connected:
+                    if self.level.has_wall(ref):       # mở lối đi của nét vẽ
+                        self.level.set_wall(ref, False)
+                elif self.level.is_cell_active(neighbour):
+                    self.level.set_wall(ref, True, bool(visible))
+
+        self.level.start = route[0]
+        self.level.end = route[-1]
+        self.level.max_steps = solver.auto_max_steps(self.level, extra=max(0, int(extra)))
+
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_PATH_CHANGED, self.path_draft)
+        self.events.emit(EV_STATUS,
+                         "Đã sinh tường quanh đường đi (%d ô): đường đã vẽ giờ là ĐƯỜNG DUY NHẤT · "
+                         "S=(%d, %d) · F=(%d, %d) · max_steps=%d"
+                         % (len(route), route[0][0], route[0][1], route[-1][0], route[-1][1],
+                            self.level.max_steps))
+        return True
+
+    # ------------------------------------------------------------------
     # Thuộc tính màn chơi (inspector gọi)
     # ------------------------------------------------------------------
     def set_property(self, name: str, value: Any) -> bool:
@@ -187,6 +485,8 @@ class EditorController:
         if getattr(self.level, name) == value:
             return False
         setattr(self.level, name, value)
+        if name == "mode_id":
+            self._sync_mode_edit()
         self._commit("Cập nhật %s" % name)
         return True
 

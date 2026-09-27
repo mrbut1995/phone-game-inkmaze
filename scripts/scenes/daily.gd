@@ -14,9 +14,9 @@ const ICON_PLAY := preload("res://assets/images/icons/pencil_icon.svg")
 const ICON_UNLOCK := preload("res://assets/images/icons/icon_coin.svg")
 ## 3 nhiệm vụ đầu thuộc MAZE THƯỜNG (Game Classic), nhiệm vụ thứ 4 thuộc MAZE ĐẶC BIỆT
 const CLASSIC_MISSION_COUNT := 3
-## Tiền tố node SLOT trong scene: `Rows/Slot1..SlotN` — mỗi hàng nhiệm vụ được ĐẶT VÀO đúng slot
-## của nó, nên muốn đổi vị trí/kích thước hàng thì kéo slot trong editor (script không tính).
-const SLOT_PREFIX := "Slot"
+## Quy ước scene: các hàng nhiệm vụ là node `Rows/Slot1..SlotN` KHAI SẴN trong scene —
+## mỗi hàng được ĐẶT VÀO đúng slot của nó, nên muốn đổi vị trí/kích thước hàng thì kéo
+## slot trong editor (script không tính).
 
 ## ============================================================================
 ## BỐ CỤC = LAYOUT CỦA SCENE (`scenes/daily.tscn` + `nodes/daily/mission_row.tscn`),
@@ -148,7 +148,7 @@ func _layout_responsive() -> void:
 func _min_panel_height() -> float:
 	var slot_bottom := 0.0
 	for i in maxi(_mission_total(), 1):
-		var slot := _slot_for(i)
+		var slot := layout.mission_slot(i)
 		if slot != null:
 			slot_bottom = maxf(slot_bottom, slot.position.y + slot.size.y)
 	if slot_bottom <= 0.0:
@@ -156,13 +156,6 @@ func _min_panel_height() -> float:
 		slot_bottom = _row_design_h * float(maxi(_mission_total(), 1))
 	var progress_block := maxf(_panel_design_h - _progress_design_y, 0.0)
 	return _rows_top_design + slot_bottom + progress_block
-
-
-## Slot thứ i của bảng nhiệm vụ — node `Slot{i+1}` do SCENE khai báo trong `Rows`
-func _slot_for(index: int) -> Control:
-	if layout.rows_host == null:
-		return null
-	return layout.rows_host.get_node_or_null("%s%d" % [SLOT_PREFIX, index + 1]) as Control
 
 
 ## Đọc số đo THIẾT KẾ từ scene + art (1 lần) — không hard-code trong script
@@ -205,7 +198,7 @@ func _build_rows() -> void:
 		row.name = "Row%d" % (i + 1)
 		# ĐẶT HÀNG VÀO SLOT của scene (`Slot1..Slot4`) — slot quyết định vị trí + kích thước;
 		# `mission_row.tscn` đã khai sẵn anchors FULL RECT nên không cần chỉnh trong code.
-		var host: Control = _slot_for(i)
+		var host: Control = layout.mission_slot(i)
 		if host == null:
 			host = layout.rows_host
 			push_warning("DailyScene: scene chưa khai Slot%d — hàng sẽ nằm tại gốc Rows" % (i + 1))

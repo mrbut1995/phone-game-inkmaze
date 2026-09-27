@@ -32,40 +32,153 @@ func setup_floor(floor_number: int) -> MazeData:
 	_revealed_mines.clear()
 	_neighbor_counts.clear()
 
+	# MÀN DO NHÀ THIẾT KẾ VẼ (màn Chọn màn chạy chế độ này): dùng ĐÚNG bàn của màn rồi rải mìn lên đó.
+	var designed := designed_maze()
+	if designed != null:
+		return _setup_designed(designed, floor_number)
+
 	var size := clampi(2 + floor_number, 3, 5)
 	var maze := MazeData.new()
 	maze.create_empty(size, size)
 
-	var start_pos := maze.get_start()
-	var end_pos := maze.get_end()
+	var safe_path := _generate_safe_path(size, maze.get_start(), maze.get_end())
+	_scatter_mines(maze, safe_path, minf(0.18 + float(floor_number) * 0.03, 0.32))
+	return maze
 
-	var safe_path := _generate_safe_path(size, start_pos, end_pos)
+
+## Bàn thiết kế: tường của màn là "bản đồ" (cho HIỆN RÕ để chọn đường), mìn là phần ẩn.
+## Mìn của nhà thiết kế TÔ trong tool (mìn GHIM) luôn được giữ; phần còn lại rải trên ô ĐI TỚI ĐƯỢC
+## từ S và KHÔNG thuộc đường S→F (tránh cả mìn ghim) ⇒ màn luôn có đường an toàn.
+func _setup_designed(maze: MazeData, floor_number: int) -> MazeData:
+	maze.set_all_walls_visible(true)
+	var reachable := _reachable_cells(maze)
+	var pinned := _pinned_mines(maze, reachable)
+	var safe_path := _safe_path_avoiding(maze, pinned)
+	if safe_path.is_empty() and not pinned.is_empty():
+		push_warning("Minesweeper: mìn ghim chặn hết đường S→F — tạm bỏ mìn ghim để màn vẫn thắng được")
+		pinned.clear()
+		safe_path = maze.get_shortest_path(maze.get_start(), maze.get_end())
+	var density := minf(0.16 + float(maxi(floor_number, 1)) * 0.02, 0.30)
+	_scatter_mines(maze, safe_path, density, true, pinned)
+	initial_steps = designed_steps(initial_steps)
+	return maze
+
+
+## MÌN GHIM của màn: ô nhà thiết kế tô trong tool (`custom_cell_values` khoá "x,y" > 0),
+## chỉ nhận ô THUỘC board + ĐI TỚI ĐƯỢC từ S và không phải S/F (2 ô này luôn an toàn).
+func _pinned_mines(maze: MazeData, reachable: Dictionary) -> Dictionary:
+	var lvl := designed_level()
+	if lvl == null or lvl.custom_cell_values.is_empty():
+		return {}
+	var start := maze.get_start()
+	var end := maze.get_end()
+	var out := {}
+	for y in maze.height:
+		for x in maze.width:
+			var pos := Vector2i(x, y)
+			if pos == start or pos == end or not maze.is_cell_active(pos) or not reachable.has(pos):
+				continue
+			var key := "%d,%d" % [x, y]
+			if lvl.custom_cell_values.has(key) and int(lvl.custom_cell_values[key]) > 0:
+				out[pos] = true
+	return out
+
+
+## Đường S→F NGẮN NHẤT tránh mọi ô mìn ghim (rỗng = mìn ghim chặn hết đường đi)
+func _safe_path_avoiding(maze: MazeData, mines: Dictionary) -> Array[Vector2i]:
+	if mines.is_empty():
+		return maze.get_shortest_path(maze.get_start(), maze.get_end())
+
+	var start := maze.get_start()
+	var end := maze.get_end()
+	var dist := {start: 0}
+	var prev := {start: start}
+	var queue: Array[Vector2i] = [start]
+	while not queue.is_empty():
+		var cur: Vector2i = queue.pop_front()
+		if cur == end:
+			break
+		for d: Vector2i in [Vector2i.RIGHT, Vector2i.DOWN, Vector2i.UP, Vector2i.LEFT]:
+			var nxt: Vector2i = cur + d
+			if dist.has(nxt) or mines.has(nxt):
+				continue
+			if not maze.is_in_bounds(nxt) or not maze.is_cell_active(nxt) or maze.has_wall(cur, nxt):
+				continue
+			dist[nxt] = int(dist[cur]) + 1
+			prev[nxt] = cur
+			queue.append(nxt)
+
+	var path: Array[Vector2i] = []
+	if not dist.has(end):
+		return path
+	var cursor := end
+	while cursor != start:
+		path.push_front(cursor)
+		cursor = prev[cursor]
+	path.push_front(start)
+	return path
+
+
+## Rải mìn lên các ô không thuộc `safe_path` (xác suất `density`), rồi tính số mìn lân cận từng ô.
+## `only_reachable = true` (bàn thiết kế): bỏ qua ô bị tường bao kín — rải ở đó cũng vô ích.
+## `pinned` = mìn nhà thiết kế ghim sẵn (luôn giữ, không rải random đè lên).
+func _scatter_mines(maze: MazeData, safe_path: Array[Vector2i], density: float,
+		only_reachable := false, pinned: Dictionary = {}) -> void:
 	var safe_cells := {}
 	for p: Vector2i in safe_path:
 		safe_cells[p] = true
+	var reachable := _reachable_cells(maze) if only_reachable else {}
 
-	var mine_density := minf(0.18 + float(floor_number) * 0.03, 0.32)
+	var candidates: Array[Vector2i] = []
 	_total_mines = 0
-	for y in size:
-		for x in size:
+	for pos: Vector2i in pinned:
+		if safe_cells.has(pos) or _mines.has(pos):
+			continue
+		_mines[pos] = true
+		_total_mines += 1
+	for y in maze.height:
+		for x in maze.width:
 			var pos := Vector2i(x, y)
-			if safe_cells.has(pos):
+			if not maze.is_cell_active(pos) or safe_cells.has(pos) or _mines.has(pos):
 				continue
-			if randf() < mine_density:
+			if only_reachable and not reachable.has(pos):
+				continue
+			candidates.append(pos)
+			if randf() < density:
 				_mines[pos] = true
 				_total_mines += 1
 
-	if _total_mines == 0:
-		for y in size:
-			for x in size:
-				var pos := Vector2i(x, y)
-				if not safe_cells.has(pos):
-					_mines[pos] = true
-					_total_mines += 1
-					break
+	# Bàn không có mìn nào thì luật "dò mìn" thành vô nghĩa ⇒ ép 1 ô (nếu còn ô trống để rải)
+	if _total_mines == 0 and not candidates.is_empty():
+		var picked: Vector2i = candidates[randi() % candidates.size()]
+		_mines[picked] = true
+		_total_mines += 1
 
-	for y in size:
-		for x in size:
+	_compute_neighbor_counts(maze)
+
+
+## Các ô ĐI TỚI ĐƯỢC từ S (BFS qua các cạnh không có tường)
+func _reachable_cells(maze: MazeData) -> Dictionary:
+	var seen := {}
+	var queue: Array[Vector2i] = [maze.get_start()]
+	seen[maze.get_start()] = true
+	while not queue.is_empty():
+		var cur: Vector2i = queue.pop_front()
+		for d: Vector2i in [Vector2i.RIGHT, Vector2i.DOWN, Vector2i.UP, Vector2i.LEFT]:
+			var nxt: Vector2i = cur + d
+			if seen.has(nxt) or not maze.is_in_bounds(nxt) or not maze.is_cell_active(nxt):
+				continue
+			if maze.has_wall(cur, nxt):
+				continue
+			seen[nxt] = true
+			queue.append(nxt)
+	return seen
+
+
+## Số mìn trong 8 ô lân cận của MỌI ô (số hiện trên bàn cờ)
+func _compute_neighbor_counts(maze: MazeData) -> void:
+	for y in maze.height:
+		for x in maze.width:
 			var pos := Vector2i(x, y)
 			var count := 0
 			for dy in [-1, 0, 1]:
@@ -76,8 +189,6 @@ func setup_floor(floor_number: int) -> MazeData:
 					if _mines.get(nxt, false):
 						count += 1
 			_neighbor_counts[pos] = count
-
-	return maze
 
 
 func get_cell_text(pos: Vector2i, maze: MazeData) -> String:

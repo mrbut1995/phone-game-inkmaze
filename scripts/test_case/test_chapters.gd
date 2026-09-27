@@ -238,7 +238,10 @@ func _section_4b_chapter_gate(gm: Node, lm: Node) -> void:
 	_entry(int(gm.call("next_level_in_chapter", 9)) == -1,
 		"Man 9 la man CUOI chuong 1 -> -1 (khong co man ke tiep trong chuong)")
 	_entry(int(gm.call("next_level_in_chapter", 10)) == 11, "Man 10 -> man 11 (cung chuong 2)")
-	_entry(int(gm.call("next_level_in_chapter", 14)) == -1, "Man 14 la man cuoi chuong 2 -> -1")
+	var chapter2_ids: Array = lm.call("levels_in_chapter", 2)
+	var last_chapter2 := int(chapter2_ids[chapter2_ids.size() - 1]) if not chapter2_ids.is_empty() else -1
+	_entry(int(gm.call("next_level_in_chapter", last_chapter2)) == -1,
+		"Man %d la man cuoi chuong 2 -> -1" % last_chapter2)
 
 	gm.call("record_level_clear", 9, 3, 12.0)
 	_entry(int(gm.get("unlocked_levels")) == 9,

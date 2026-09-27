@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://0psdvx3i3rs2" path="res://assets/images/ranking/podium_silver.svg" id="15_podium_s"]
 [ext_resource type="Texture2D" uid="uid://d2327daxklpoj" path="res://assets/images/ranking/podium_bronze.svg" id="16_podium_b"]
 [ext_resource type="Texture2D" uid="uid://c5wka1cl37y6e" path="res://assets/images/ranking/my_rank_bar.svg" id="17_mybar"]
+[ext_resource type="PackedScene" path="res://nodes/ranking/tab_button.tscn" id="20_tab"]
 
 [node name="Portrait" unique_id=1574615936 node_paths=PackedStringArray("btn_back", "tabs_box", "podium", "scroll", "rows_box", "my_rank_bar") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
@@ -136,7 +137,25 @@ offset_left = 0.0299988
 offset_top = 0.0949993
 offset_right = 0.119965
 offset_bottom = 26.095
-theme_override_constants/separation = 5
+theme_override_constants/separation = 15
+
+[node name="Tab_dungeon" parent="Sheet/Tabs" index="0" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+board_id = "dungeon"
+label_key = "STR_RANK_TAB_DUNGEON"
+
+[node name="Tab_play" parent="Sheet/Tabs" index="1" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+board_id = "play"
+label_key = "STR_RANK_TAB_PLAY"
+
+[node name="Tab_daily" parent="Sheet/Tabs" index="2" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+board_id = "daily"
+label_key = "STR_RANK_TAB_DAILY"
 
 [node name="Divider1" type="TextureRect" parent="Sheet" index="3" unique_id=833636626]
 layout_mode = 0

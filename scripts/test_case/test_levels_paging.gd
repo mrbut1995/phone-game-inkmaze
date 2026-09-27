@@ -252,7 +252,11 @@ func _expect_page(scene: LevelScenes, expected: int, label: String) -> int:
 
 
 func _expect_card_label(card: Node, expected: String, label: String) -> int:
-	var lbl: Label = card.get_node_or_null("Panel/Level")
+	# Nhãn SỐ MÀN của thẻ: `Panel/Content/Level` (commit f0579a7 dời vào trong `Content`)
+	# — vẫn chấp nhận đường dẫn cũ `Panel/Level` cho bản scene cũ.
+	var lbl: Label = card.get_node_or_null("Panel/Content/Level")
+	if lbl == null:
+		lbl = card.get_node_or_null("Panel/Level")
 	if lbl == null:
 		print("[FAIL] %s: khong tim thay Label so man" % label)
 		return 1

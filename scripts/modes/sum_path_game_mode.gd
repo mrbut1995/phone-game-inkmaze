@@ -13,6 +13,8 @@ var operator: String = "="          # "<", ">", "="
 var current_sum: int = 0
 var _cell_scores: Dictionary = {}   # Vector2i -> int
 var _current_path: Array[Vector2i] = []
+var _start_pos := Vector2i.ZERO
+var _end_pos := Vector2i.ZERO
 
 
 func _init(p_difficulty := "medium", p_operator := "") -> void:
@@ -31,6 +33,11 @@ func setup_floor(_floor_number: int) -> MazeData:
 	_current_path.clear()
 	current_sum = 0
 
+	# MÀN DO NHÀ THIẾT KẾ VẼ: dùng ĐÚNG bàn của màn (tường + hình dạng board) rồi mới gán điểm ô.
+	var maze := designed_maze()
+	if maze != null:
+		return _setup_on_maze(maze)
+
 	var size := 4
 	match difficulty:
 		"easy":
@@ -40,20 +47,35 @@ func setup_floor(_floor_number: int) -> MazeData:
 		_:
 			size = 4
 
-	var maze := MazeData.new()
+	maze = MazeData.new()
 	maze.create_empty(size, size)
+	return _setup_on_maze(maze)
 
+
+## Gán điểm cho từng ô của `maze` rồi chọn điều kiện tổng (</>/=) theo TỔNG của đường S→F.
+## - Bàn tự sinh (Daily): đường mẫu là 1 đường đi hợp lệ ngẫu nhiên như trước.
+## - Bàn thiết kế: đường mẫu = đường NGẮN NHẤT S→F của màn (tôn trọng tường của nhà thiết kế).
+func _setup_on_maze(maze: MazeData) -> MazeData:
 	var start_pos := maze.get_start()
 	var end_pos := maze.get_end()
+	_start_pos = start_pos
+	_end_pos = end_pos
 
-	for y in size:
-		for x in size:
-			_cell_scores[Vector2i(x, y)] = randi_range(1, 9)
+	# Ô nào nhà thiết kế khai điểm riêng (custom_cell_values["x,y"]) thì dùng, còn lại random 1..9.
+	# S/F KHÔNG có điểm (trên ô chỉ hiện chữ S/F) — nhờ vậy tổng đường đi khớp ĐÚNG số nhà thiết kế muốn.
+	for y in maze.height:
+		for x in maze.width:
+			var pos := Vector2i(x, y)
+			if pos == start_pos or pos == end_pos:
+				continue
+			if not maze.is_cell_active(pos):
+				continue
+			_cell_scores[pos] = _designed_score(pos)
 
-	var sample_path := _generate_valid_path(size, start_pos, end_pos)
+	var sample_path := maze.get_shortest_path(start_pos, end_pos)
 	var path_sum := 0
 	for p: Vector2i in sample_path:
-		path_sum += _cell_scores.get(p, 1)
+		path_sum += _cell_score(p)
 
 	if operator.is_empty() or not (operator in ["<", ">", "="]):
 		var ops := ["=", "<", ">"]
@@ -68,9 +90,26 @@ func setup_floor(_floor_number: int) -> MazeData:
 			target_val = maxi(1, path_sum - randi_range(2, 6))
 
 	_current_path = [start_pos]
-	current_sum = _cell_scores.get(start_pos, 1)
-
+	current_sum = 0
+	initial_steps = designed_steps(initial_steps)
 	return maze
+
+
+## Điểm của 1 ô KHI TÍNH TỔNG: S/F = 0 (không có số trên ô) — khớp với cách tool tô giá trị.
+func _cell_score(pos: Vector2i) -> int:
+	if pos == _start_pos or pos == _end_pos:
+		return 0
+	return int(_cell_scores.get(pos, 1))
+
+
+## Điểm của 1 ô: ưu tiên giá trị nhà thiết kế đặt trong `custom_cell_values` (khóa "x,y"), không có thì 1..9
+func _designed_score(pos: Vector2i) -> int:
+	var lvl := designed_level()
+	if lvl != null and not lvl.custom_cell_values.is_empty():
+		var key := "%d,%d" % [pos.x, pos.y]
+		if lvl.custom_cell_values.has(key):
+			return clampi(int(lvl.custom_cell_values[key]), 1, 9)
+	return randi_range(1, 9)
 
 
 func get_cell_text(pos: Vector2i, maze: MazeData) -> String:
@@ -115,7 +154,7 @@ func _recompute_sum() -> void:
 	for p: Vector2i in _current_path:
 		if not unique_cells.has(p):
 			unique_cells[p] = true
-			current_sum += _cell_scores.get(p, 1)
+			current_sum += _cell_score(p)
 
 
 ## Undo lùi bước (GridController gọi): bỏ ô vừa đi khỏi đường đi rồi tính lại tổng.
@@ -154,40 +193,3 @@ func get_hud_extra_info() -> String:
 ## Chuỗi mục tiêu hiển thị trên HUD (VD "= 24", "> 18").
 func get_target_text() -> String:
 	return "%s %d" % [operator, target_val]
-
-
-func _generate_valid_path(size: int, start_pos: Vector2i, end_pos: Vector2i) -> Array[Vector2i]:
-	var current := start_pos
-	var path: Array[Vector2i] = [current]
-	var visited := { current: true }
-
-	while current != end_pos:
-		var neighbors: Array[Vector2i] = []
-		for d: Vector2i in [Vector2i.RIGHT, Vector2i.DOWN, Vector2i.UP, Vector2i.LEFT]:
-			var nxt: Vector2i = current + d
-			if nxt.x >= 0 and nxt.x < size and nxt.y >= 0 and nxt.y < size and not visited.has(nxt):
-				neighbors.append(nxt)
-
-		if neighbors.is_empty():
-			var step := Vector2i.ZERO
-			if current.x < end_pos.x:
-				step = Vector2i.RIGHT
-			elif current.y < end_pos.y:
-				step = Vector2i.DOWN
-			elif current.x > end_pos.x:
-				step = Vector2i.LEFT
-			else:
-				step = Vector2i.UP
-			current += step
-			path.append(current)
-			visited[current] = true
-		else:
-			neighbors.sort_custom(func(a: Vector2i, b: Vector2i) -> bool:
-				return (a - end_pos).length_squared() < (b - end_pos).length_squared()
-			)
-			var next_step: Vector2i = neighbors[0] if randf() < 0.65 else neighbors[randi() % neighbors.size()]
-			current = next_step
-			path.append(current)
-			visited[current] = true
-
-	return path

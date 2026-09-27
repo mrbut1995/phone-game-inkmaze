@@ -10,12 +10,14 @@
 [ext_resource type="Texture2D" uid="uid://mlv0gppu308a" path="res://assets/images/game/chal_row_pending.svg" id="11_irpvh"]
 [ext_resource type="Texture2D" uid="uid://bnm0qlvagjmny" path="res://assets/images/game/chal_check_pending.svg" id="12_b5uh2"]
 [ext_resource type="Texture2D" uid="uid://ceyf7g6ququr4" path="res://assets/images/game/chal_badge_done.svg" id="13_rfkdx"]
+[ext_resource type="Script" path="res://scripts/nodes/hud/game/challenge_card.gd" id="20_card"]
 
 [node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_2ygqj")]
 script = ExtResource("2_jkgoi")
 time_value_node = NodePath("Content/ModeInformation/Time/Value")
 
 [node name="Challenge" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1862988510]
+script = ExtResource("20_card")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.28

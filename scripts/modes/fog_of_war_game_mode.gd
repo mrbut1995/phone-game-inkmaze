@@ -32,8 +32,19 @@ func _init(p_difficulty := "normal") -> void:
 func setup_floor(_floor_number: int) -> MazeData:
 	_explored_cells.clear()
 	reset_retries()
+
+	# MÀN DO NHÀ THIẾT KẾ VẼ: dùng nguyên bàn của màn, tường ÉP ẨN để sương mù mới có ý nghĩa
+	# (`_update_fog` vẫn mở dần từng mảng tường quanh nhân vật như thường)
+	var maze := designed_maze()
+	if maze != null:
+		maze.set_all_walls_visible(false)
+		_player_pos = maze.get_start()
+		_update_fog(_player_pos, maze.width, maze.height)
+		initial_steps = designed_steps(initial_steps)
+		return maze
+
 	var size := 4 if difficulty == "normal" else 5
-	var maze := MazeData.new()
+	maze = MazeData.new()
 	maze.generate(size, size, 0.0)
 
 	_player_pos = maze.get_start()

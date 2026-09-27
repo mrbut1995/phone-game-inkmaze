@@ -66,6 +66,8 @@ Các cờ hữu ích khác (không mở cửa sổ):
 **Hỗ trợ thiết kế**
 - Hiện **số tường** từng ô đúng như trong game (0 thì ẩn, giống `MazeData`).
 - Hiện **đường đi ngắn nhất** bằng BFS để biết màn có lời giải hay không — BFS chỉ đi trong **các ô thuộc board**.
+- **Vẽ đường đi trước rồi sinh tường (công cụ 8)** — kéo chuột vẽ đường S→F, bấm `Ctrl+Enter` là có
+  ngay một màn “đi được tới đích” với đường đã vẽ là **đường duy nhất** ⇒ chi tiết ở **mục 5b**.
 - **Thử thách (tối đa 3 / màn — 1 thử thách hoàn thành = 1 Sao)**: chọn loại ở 3 ô combobox bên phải,
   nhập tham số N (bước / giây / % số ô / tổng số), nút `×` để bỏ. Để trống = game dùng 3 thử thách mặc định
   (không đâm tường · đủ bước · đủ thời gian). Nút **“Ghi 3 mặc định”** để ghi rõ 3 thử thách chuẩn vào màn.
@@ -86,9 +88,11 @@ Các cờ hữu ích khác (không mở cửa sổ):
 |---|---|---|---|
 | `1` `2` `3` | Tường hiện · Tường ẩn · Xoá | `Ctrl+S` | Lưu |
 | `4` `5` `6` | Đặt S · Đặt F · **Sửa ô board** | `Ctrl+Shift+S` | Lưu thành level khác |
-| `Delete` | Xoá tường đang trỏ | `Ctrl+N` | Màn mới |
+| `7` | **Tô dữ liệu riêng của chế độ** (mục 5) | `Ctrl+N` | Màn mới |
+| `8` | **Vẽ đường đi** rồi áp dụng cho đường (mục 5b) | `Ctrl+Enter` | **Sinh tường / TÔ GIÁ TRỊ** quanh đường vừa vẽ |
+| `Delete` | Xoá tường đang trỏ | `Esc` | Xoá nét đường đang vẽ |
 | `Ctrl+Z` / `Ctrl+Y` | Hoàn tác / Làm lại | `Ctrl+0` | Zoom mặc định |
-| `G` `P` `H` | Số tường · đường đi · tường ẩn | `+` `-` / `Ctrl+lăn` | Zoom |
+| `+` `-` / `Ctrl+lăn` | Zoom | `G` `P` `H` | Số tường · đường đi · tường ẩn |
 
 ---
 
@@ -164,7 +168,8 @@ challenge_types = PackedStringArray("no_wall", "steps_max", "len_max_percent")
                                         # THỬ THÁCH của màn — TỐI ĐA 3, hai mảng SONG SONG;
 challenge_params = PackedInt32Array(0, 15, 80)
                                         # rỗng = game dùng 3 thử thách mặc định (màn cũ)
-custom_cell_values = {}                 # giữ nguyên khi sửa (tool không đổi)
+custom_cell_values = {}                 # DỮ LIỆU RIÊNG CỦA CHẾ ĐỘ: {"x,y": giá trị} — xem mục 5
+                                        # (mìn ghim · điểm ô · chi phí bước); {} = game tự sinh hết
 ```
 
 Quy ước toạ độ (khớp `maze_data.gd` / `level_manager.gd`):
@@ -177,18 +182,135 @@ Quy ước toạ độ (khớp `maze_data.gd` / `level_manager.gd`):
 
 ---
 
-## 5. Test & build
+## 5. MÀN CHẠY CHẾ ĐỘ SPECIAL (Minesweeper, Sum Path, One Stroke...)
+
+Từ 2026-09-26, **ngoài Daily Challenge, một MÀN trong campaign cũng chơi được chế độ Special**:
+chọn `Chế độ` ở bảng phải (trường `mode_id` trong file `.tres`) khác `play` là xong.
+
+**Game sẽ làm gì với màn đó**
+
+| Việc | Chi tiết |
+|---|---|
+| Bàn chơi | Dùng **ĐÚNG bàn của màn**: tường + hình dạng board (`cell_mask`) do tool vẽ — KHÔNG tự sinh bàn |
+| Phần dữ liệu riêng của chế độ | Chế độ tự rắc: mìn (Minesweeper) · điểm ô (Sum Path) · chi phí bước (Countdown Cost) · mực (Fading Ink)… nhưng **CỐ ĐỊNH theo `level_id`** nên chơi lại y hệt |
+| Số bước | `max(max_steps của màn, ngân sách mặc định của chế độ)` — màn to không bị hết bước oan |
+| Tiêu đề HUD | Hiện `MÀN nn` + dòng phụ `TÊN CHẾ ĐỘ · CHƯƠNG n` (giống Play Mode) |
+| Nút SKIP | Có ở **mọi màn** (chỉ ẩn khi chơi Dungeon/Daily): bấm là mở khoá màn kế tiếp trong cùng chương mà **KHÔNG ghi Sao**, rồi vào luôn màn đó |
+
+**Tường hiện/ẩn — tool nhắc, game có ép riêng**
+
+| Chế độ | Trạng thái tường |
+|---|---|
+| `minesweeper` · `sum_path` · `countdown_cost` · `fading_ink` | **Cần THẤY tường** để tính đường — validator CẢNH BÁO nếu màn còn tường ẩn (bấm "Tường hiện" cho các đoạn đó) |
+| `one_stroke` | Game **ép HIỆN** toàn bộ tường khi chơi |
+| `blind_memory` · `fog_of_war` · `wall_builder` | Game **ép ẨN** toàn bộ tường khi chơi (màn ghi gì không quan trọng) |
+| `play` | Tôn trọng đúng thiết kế (tường ẩn là luật chơi gốc) |
+
+**KIỂU EDIT RIÊNG THEO CHẾ ĐỘ (công cụ 7 — mới 2026-09-27)**
+
+Mỗi chế độ có **1 kiểu edit** — chọn chế độ ở ô `mode_id` là thanh công cụ tự đổi theo
+(nút + ô giá trị + nút "Xoá giá trị" chỉ hiện khi chế độ có dữ liệu để tô). Giá trị lưu vào
+`custom_cell_values` của file `.tres` (khoá `"x,y"`), **ô nào không tô thì game tự sinh**.
+
+| Chế độ | Kiểu edit | Tô gì |
+|---|---|---|
+| `minesweeper` | Ô giá trị 1 | **GHIM MÌN**: tô ô nào = chắc chắn có mìn ở đó (game giữ đúng, không rắc random đè lên) |
+| `sum_path` | Ô giá trị 1..9 + ô **Tổng điểm đường đi** | **ĐIỂM Ô**: ô nào không tô thì random 1..9; S/F KHÔNG tính điểm |
+| `countdown_cost` | Ô giá trị 1..4 + ô **Tổng chi phí đường đi** | **CHI PHÍ BƯỚC** của ô (giữ đúng 1..4, không kẹp theo độ khó) |
+| `fading_ink` | Ô giá trị 1..9 + ô **Mực dư mỗi bước** | **MỰC BAN ĐẦU** của ô: mỗi bước đi làm mọi ô phai 1 mực, ô hết mực không đi vào được |
+| `play` · `blind_memory` · `fog_of_war` · `one_stroke` · `wall_builder` | Không có | Game tự sinh hết — chỉ vẽ tường/ô board/S/F (validator in ghi chú riêng cho từng chế độ) |
+
+Cách dùng: chọn `mode_id` → bấm nút công cụ **7** (hoặc phím `7`) → chọn giá trị ở ô nhập → tô/kéo
+trên lưới. **Chuột phải** xoá giá trị của ô (ưu tiên hơn xoá tường). Menu **Sửa → Xoá hết giá trị riêng
+của chế độ** để dọn sạch. Mọi thao tác đều hoàn tác được (Ctrl+Z).
+
+**TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI (ô “Tổng …” + Ctrl+Enter) — mới 2026-09-27**
+
+Ba chế độ trên có thêm **1 ô nhập ở BẢNG PHẢI** (mục **Lưới & luật chơi**) + nút **“Tô theo đường đi”**
+ngay cạnh ô đó (giống hệt `Ctrl+Enter` trên thanh công cụ):
+
+| Chế độ | Ô nhập | Bấm Ctrl+Enter sẽ làm gì |
+|---|---|---|
+| `countdown_cost` | **Tổng chi phí đường đi** | Chia chi phí 1..4 cho các ô của đường sao cho **TỔNG = đúng số đó** (và nâng `max_steps` = tổng + 3) |
+| `sum_path` | **Tổng điểm đường đi** | Chia điểm 1..9 cho các ô của đường sao cho **TỔNG = đúng số đó** |
+| `fading_ink` | **Mực dư mỗi bước** | Cấp **MỰC tăng dần theo bước**: ô ở bước thứ j nhận `j + mực dư` (kẹp 1..9) ⇒ đi đúng đường thì luôn tới được F |
+
+- TỔNG chỉ tính các ô **GIỮA S và F** (game cũng không tính điểm/chi phí ở 2 ô S/F).
+**Thanh công cụ có 2 dòng** (dòng 1 = công cụ vẽ · dòng 2 = khối giá trị / khối đường đi + tuỳ chọn xem +
+zoom + Lưu) để cửa sổ hẹp không bị tràn. Khối **ĐƯỜNG ĐI** và khối **GIÁ TRỊ** **không bao giờ hiện cùng lúc**:
+đang có nét vẽ thì hiện khối ĐƯỜNG ĐI, xoá nét xong khối GIÁ TRỊ quay lại.
+
+- Ô “Tổng …” **tự hiện tổng đang có** trên đường bạn vẽ; muốn tổng khác thì sửa số rồi bấm Ctrl+Enter
+  (hoặc nút “Tô theo đường đi” ở bảng phải).
+- **Chưa vẽ đường nào?** Vẫn bấm được — tool tô theo **đường NGẮN NHẤT** của màn
+  (đúng đường mà game dùng làm đường mẫu).
+- Số nằm ngoài khoảng hợp lệ (vd tổng 40 cho 3 ô × 1..4) thì tool báo khoảng cho phép và không tô gì.
+
+> ⚠️ **`dungeon` KHÔNG dùng được cho màn** (chế độ bất tận, chỉ vào từ Main Screen): tool đã bỏ khỏi danh
+> sách chế độ và validator báo **LỖI** nếu file cũ còn khai `dungeon`; game cũng tự coi màn đó là `play`.
+
+**Riêng từng chế độ (validator cũng nhắc)**
+
+- `minesweeper`: mìn chỉ rải trên ô **đi tới được** từ S và **không** thuộc đường S→F (đường này cũng tránh mọi mìn GHIM) ⇒ màn luôn có đường an toàn; nếu mìn ghim chặn hết đường, game **bỏ mìn ghim** để màn vẫn thắng được.
+- `sum_path`: mục tiêu tổng điểm = **tổng điểm của đường NGẮN NHẤT** (S/F không tính); tô điểm ô bằng công cụ 7 hoặc chia theo ô “Tổng điểm đường đi”.
+- `countdown_cost`: chi phí ô tô tay giữ ĐÚNG 1..4; ngân sách game = **đường RẺ NHẤT + dự phòng**, và nếu màn khai `max_steps` lớn hơn thì game tôn trọng (tool tự đặt `max_steps` = tổng chi phí + 3).
+- `fading_ink`: **mực** của ô tô tay được giữ đúng; ô không tô thì game tự cấp (đủ đi hết đường ngắn nhất + dư 2..3). Ô ở bước thứ j cần mực ≥ j mới vào được.
+- `one_stroke`: màn phải có **đường đi qua HẾT mọi ô** và kết thúc ở F. Nếu không, game in cảnh báo và **tạm dùng bàn tự sinh** để màn vẫn thắng được.
+- `wall_builder`: các con số suy ra từ chính tường của màn; màn quá ít tường thì "đố" mất hay (validator cảnh báo).
+- `blind_memory` / `fog_of_war`: màn càng nhiều tường ẩn càng khó — thử chơi để cân lại `par_time`.
+
+Danh sách màn bên trái hiện nhãn `◆ tên_chế_độ` ở cuối dòng để nhìn là biết ngay màn nào đặc biệt.
+**Màn mẫu có sẵn CHO MỌI CHẾ ĐỘ** (chương 2, `make_samples.py` ghi lại được):
+**13** = minesweeper · **14** = sum_path (19 ô, tổng 60) · **15** = countdown_cost (8 ô, tổng 30 bước) ·
+**16** = blind_memory · **17** = fog_of_war · **18** = fading_ink (9 ô có mực tô tay) ·
+**19** = one_stroke (bàn trống 6×4) · **20** = wall_builder (12 tường ẩn).
+
+---
+
+## 5b. VẼ ĐƯỜNG ĐI RỒI SINH TƯỜNG (công cụ 8 — mới 2026-09-27)
+
+Cách nhanh nhất để có một màn “đi được tới đích” mà không phải đoán tường:
+
+1. **Công cụ 6** — bật/tắt các ô muốn chơi (hoặc để nguyên hình chữ nhật đầy đủ).
+2. **Công cụ 8** (phím `8`) — **kéo chuột** trên lưới để vẽ đường đi: bắt đầu ở ô nào cũng được
+   (thường là ô S cũ) và kết thúc ở ô đích. Nét vẽ chỉ nối **ô kề**, không nhảy ô, không đi đè;
+   kéo ngược về ô trước = lùi 1 ô. Nét vẽ hiện **màu tím** đè lên lưới.
+3. **Ctrl + Enter** (hoặc nút **“Sinh tường (Ctrl+Enter)” / “Sinh giá trị (Ctrl+Enter)”** trên thanh công cụ —
+   chỉ hiện khi đang có nét vẽ) → tool sinh màn chơi từ nét vẽ:
+
+| Việc | Kết quả |
+|---|---|
+| S / F | `S` = ô **ĐẦU** nét vẽ · `F` = ô **CUỐI** nét vẽ |
+| Tường | Mọi cạnh **BÊN HÔNG** của nét vẽ thành **tường hiện** ⇒ nét vẽ trở thành **ĐƯỜNG DUY NHẤT** từ S tới F |
+| Lối đi | Cạnh nối 2 ô liền nhau trên nét vẽ được **MỞ** (kể cả trước đó đang có tường) |
+| `max_steps` | Tự tính = số bước của nét vẽ + 2 nhịp thở |
+| Hoàn tác | Cả lần sinh tường là **1 bước** `Ctrl+Z` |
+
+> Ở chế độ CÓ dữ liệu ô (Countdown Cost · Sum Path · Fading Ink) thì nút này đổi thành **“Sinh giá trị
+(Ctrl+Enter)”**: tool **TÔ GIÁ TRỊ** cho các ô của đường thay vì dựng tường — xem chi tiết ở **mục 5**
+>(ô “Tổng …” ở bảng phải + bảng chia giá trị).
+
+- Muốn vài đoạn tường **ẩn** cho đúng chất “mực”? Sinh tường xong, chọn **công cụ 2** rồi bấm/kéo
+  lên đúng đoạn đó để đổi sang tường ẩn.
+- **Chuột phải** khi đang ở công cụ 8 = **xoá nét vẽ** (không đụng tới màn chơi) — hoặc bấm `Esc`.
+- Nét vẽ là dữ liệu **TẠM** của phiên làm việc: **không ghi vào `.tres`**, đổi màn là tự bỏ.
+- Bấm `P` để xem lại **đường ngắn nhất** (BFS): sau khi sinh tường, đường này trùng đúng nét bạn vừa vẽ
+  ⇒ dùng để tự kiểm tra trước khi lưu.
+
+---
+
+## 6. Test & build
 
 ```powershell
 cd tools\level_designer
 
-# chạy test (76 test)
+# chạy test (153 test)
 python -m unittest discover -s tests -t .
 
 # self-test đọc/ghi các màn thật (kể cả màn polyomino) + kiểm tra đường đi
 python main.py --selftest
 
-# tạo lại các MÀN MẪU polyomino (level_10..13) - có sẵn trong repo, chạy lại khi cần
+# tạo lại các MÀN MẪU (level_10..level_20: polyomino + MỌI chế độ Special) - có sẵn trong repo
 python make_samples.py             # thêm --dry-run để chỉ kiểm tra, không ghi file
 
 # build file .exe  ->  dist\LevelDesigner.exe
@@ -215,7 +337,7 @@ Sau khi build, kiểm tra nhanh bản exe:
 
 ---
 
-## 6. Ghi chú
+## 7. Ghi chú
 
 - **Board dạng polyomino**: màn chơi không nhất thiết là lưới chữ nhật — `cell_mask` đánh dấu ô nào
   thuộc board. Màn mẫu có sẵn: `level_10` chữ H · `level_11` thập tự · `level_12` vòng có lỗ ·
@@ -228,6 +350,7 @@ Sau khi build, kiểm tra nhanh bản exe:
 - File `.tres` do tool ghi **giống hệt** định dạng Godot sinh ra (khác duy nhất id nội bộ
   `1_level` của `ext_resource` — Godot không quan tâm giá trị này).
 - Lần đầu mở Godot sau khi thêm màn mới, editor sẽ tự import resource — không cần thao tác gì thêm.
-- Tool **không** sửa `custom_cell_values` (một số mode dùng để lưu giá trị ô đặc biệt).
+- Tool **không** sửa `custom_cell_values` ngoài công cụ 7: nếu file có khoá mà tool không hiểu,
+tool GIỮ NGUYÊN chuỗi gốc khi lưu (validator cảnh báo) — xem mục 5.
 - Nếu muốn thêm loại tường/thuộc tính mới: sửa `app/models/level.py` (dữ liệu) +
   `app/services/tres_io.py` (đọc/ghi). View không cần sửa.

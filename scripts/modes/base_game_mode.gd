@@ -42,6 +42,54 @@ func default_challenges() -> Array[String]:
 	return []
 
 
+# ---------------------------------------------------------------------------
+# MÀN DO NHÀ THIẾT KẾ VẼ (chơi từ màn Chọn màn) — nguồn bàn cờ cho các chế độ SPECIAL
+# (từ 2026-09-26: ngoài Daily, một MÀN trong campaign có thể khai `mode_id` để chạy chế độ Special.
+#  Lúc đó bàn cờ KHÔNG tự sinh nữa mà dùng đúng bàn nhà thiết kế vẽ trong tool level_designer.)
+# ---------------------------------------------------------------------------
+## LevelData của MÀN đang chơi khi ván này là ván màn; null với Daily / Dungeon / Debug Console.
+## Tự nạp 1 lần rồi nhớ lại (LevelManager có cache nên gọi lại cũng rẻ).
+func designed_level() -> LevelData:
+	if current_level_data != null:
+		return current_level_data
+	var gm := _autoload("GameManager")
+	if gm == null or not bool(gm.get("level_run")):
+		return null
+	current_level_data = gm.call("level_data_of", int(gm.get("current_level"))) as LevelData
+	return current_level_data
+
+
+## BÀN CỜ của màn (tường + hình dạng board do nhà thiết kế vẽ) — null khi ván không phải ván màn.
+## Chế độ Special gọi hàm này ở đầu `setup_floor`: CÓ bàn => dùng bàn của màn rồi mới rắc
+## "gia vị" của chế độ (mìn · điểm ô · mực ...); null => tự sinh bàn như khi chơi Daily.
+func designed_maze() -> MazeData:
+	var lvl := designed_level()
+	return lvl.to_maze_data() if lvl != null else null
+
+
+## Ô cờ VÁN CHƠI MÀN — HUD/GameScene dùng để hiện nút SKIP và hiện tiêu đề "MÀN nn".
+func is_level_run() -> bool:
+	return designed_level() != null
+
+
+## Ngân sách bước cho BÀN THIẾT KẾ khi chạy chế độ Special: tôn trọng `max_steps` của màn
+## nhưng KHÔNG BAO GIỜ thấp hơn ngân sách mặc định của chế độ (bàn to mà thiếu bước thì màn
+## thành không thắng được). Ván không phải ván màn -> trả về đúng ngân sách mặc định cũ.
+func designed_steps(default_steps: int) -> int:
+	var lvl := designed_level()
+	if lvl == null:
+		return default_steps
+	return maxi(int(lvl.max_steps), default_steps)
+
+
+## Autoload theo tên (null khi chạy ngoài cây scene — VD unit test thuần)
+static func _autoload(node_name: String) -> Node:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null or tree.root == null:
+		return null
+	return tree.root.get_node_or_null(node_name)
+
+
 ## Sinh dữ liệu mê cung/bàn cờ cho floor_number.
 func setup_floor(_floor_number: int) -> MazeData:
 	return null
@@ -225,14 +273,97 @@ func calculate_score(
 ## Tiêu đề và thông tin phụ hiển thị trên HUD.
 ## Dungeon (endless) không hiện số tầng ở tiêu đề nữa — tầng nằm ở thẻ "TẦNG" trong HUD
 ## (mockup matchup_dungeon.svg), nên tiêu đề chỉ còn tên chế độ.
-func get_hud_floor_title(_floor_number: int) -> String:
+## Tiêu đề trên HUD. MÀN trong màn Chọn màn (ở BẤT KỲ chế độ nào) dùng ĐÚNG cách gọi của
+## Play Mode ("MÀN 03") để người chơi biết mình đang ở màn số mấy; các ván khác (Dungeon ·
+## Daily) vẫn hiện TÊN CHẾ ĐỘ như trước.
+func get_hud_floor_title(floor_number: int) -> String:
+	if is_level_run():
+		return tr("STR_LEVEL_TITLE_FORMAT").format(["%02d" % maxi(floor_number, 1)])
 	return mode_name.to_upper()
 
 
 ## Dòng phụ nhỏ dưới tiêu đề HUD (VD "PLAY MODE · CHƯƠNG 1"). Rỗng = ẩn dòng phụ.
 func get_hud_subtitle(_floor_number: int) -> String:
-	return ""
+	var lvl := designed_level()
+	if lvl == null:
+		return ""
+	return "%s · %s" % [mode_name.to_upper(), tr("STR_CHAPTER_FORMAT").format([maxi(lvl.chapter, 1)])]
 
 
 func get_hud_extra_info() -> String:
 	return ""
+
+
+# ---------------------------------------------------------------------------
+# NĂNG LỰC TUỲ CHỌN của từng chế độ (board/HUD hỏi bằng CỜ rồi gọi hàm — không duck-typing)
+# Mode nào có thì override cả cặp: CỜ trả `true` + hàm mô tả giá trị.
+# ---------------------------------------------------------------------------
+## Ô trên bàn hiện SỐ MỰC còn lại (Fading Ink). Bật thì phải override `ink_left()`.
+func shows_ink_left() -> bool:
+	return false
+
+
+## Số mực còn lại ở ô `pos` (chỉ gọi khi `shows_ink_left()` = true).
+func ink_left(_pos: Vector2i) -> int:
+	return 0
+
+
+## Ô ĐÃ ĐI QUA bị khoá, tô mực xanh + gạch chéo "ĐÃ ĐI" (One Stroke).
+## Bật thì phải override `is_cell_visited()`.
+func tracks_visited_cells() -> bool:
+	return false
+
+
+## Ô `pos` đã đi qua chưa (chỉ gọi khi `tracks_visited_cells()` = true).
+func is_cell_visited(_pos: Vector2i) -> bool:
+	return false
+
+
+## Ô đã KHỚP SỐ (đủ tường quanh ô) thì sáng nền xanh lá (Wall Builder).
+## Bật thì phải override `is_cell_satisfied()`.
+func tracks_satisfied_cells() -> bool:
+	return false
+
+
+## Ô `pos` đã đủ tường quanh ô chưa (chỉ gọi khi `tracks_satisfied_cells()` = true).
+func is_cell_satisfied(_pos: Vector2i) -> bool:
+	return false
+
+
+## Ô `pos` còn ĐI VÀO ĐƯỢC không (Fading Ink: hết mực = cạn). Mặc định: đi được.
+func is_walkable(_pos: Vector2i) -> bool:
+	return true
+
+
+## Ô `pos` có gắn huy hiệu MÌN đã nổ (Minesweeper Path). Mặc định: không.
+func has_bomb_marker(_pos: Vector2i) -> bool:
+	return false
+
+
+## Ván đã CHẮC CHẮN THUA dù chưa đi hết (Sum Path: tổng vượt mục tiêu) — UI hiện nút CHƠI LẠI.
+func is_unwinnable() -> bool:
+	return false
+
+
+# ---------------------------------------------------------------------------
+# Hệ thống GỬI BÀI (Wall Builder) — chế độ khác để nguyên mặc định "không có gì để gửi"
+# ---------------------------------------------------------------------------
+## Đối chiếu bản dựng với bàn. Rỗng = chế độ KHÔNG có hệ thống GỬI.
+## Chế độ có thì trả { "solved": bool, "wrong": int }.
+func evaluate_submit() -> Dictionary:
+	return {}
+
+
+## Ghi nhận 1 lần GỬI SAI (chế độ có hệ thống GỬI mới override).
+func register_submit_miss() -> void:
+	pass
+
+
+## Số lần GỬI SAI trong ván (0 = chế độ không có hệ thống GỬI).
+func submit_miss_count() -> int:
+	return 0
+
+
+## Bản dựng đã ĐÚNG hoàn toàn — GameController gọi ngay sau khi GỬI thành công.
+func mark_solved() -> void:
+	pass

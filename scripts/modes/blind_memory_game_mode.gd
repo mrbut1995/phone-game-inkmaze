@@ -25,6 +25,14 @@ func _init(p_difficulty := "normal") -> void:
 
 
 func setup_floor(_floor_number: int) -> MazeData:
+	# MÀN DO NHÀ THIẾT KẾ VẼ: dùng nguyên bàn của màn (tường ÉP ẨN — pha GHI NHỚ sẽ tự hiện tường
+	# cho người chơi xem, hết đếm ngược mới ẩn lại: xem `on_grid_setup` + GameController._start_memorize_phase)
+	var designed := designed_maze()
+	if designed != null:
+		designed.set_all_walls_visible(false)
+		initial_steps = designed_steps(initial_steps)
+		return designed
+
 	var size := 4 if difficulty == "normal" else 5
 	var maze := MazeData.new()
 	maze.generate(size, size, 0.0)

@@ -634,8 +634,8 @@ STR_GI_MINESWEEPER_P1_R1D,"That includes the 4 orthogonal cells (up, down, left,
 STR_GI_MINESWEEPER_P1_R1T,The Number = Bombs In The 8 Neighbor Cells:,Số Trên Ô = Số Bom Trong 8 Ô Lân Cận:
 STR_GI_MINESWEEPER_P1_R2D,The start cell and the finish shaft are 100% bomb-free. A bomb-free route to the exit always exists!,Ô xuất phát và hố thang đích 100% không có bom. Luôn có đường BFS không bom tới đích!
 STR_GI_MINESWEEPER_P1_R2T,Start Stair (S) & Finish (F) Are Always Safe:,Cầu Thang Start (S) & Finish (F) Luôn An Toàn:
-STR_GI_MINESWEEPER_P1_R3D,"No walls block your steps — move freely, but only into bomb-free cells.",Không có tường cản bước — bạn có thể đi tự do nhưng chỉ được bước vào ô sạch bom.
-STR_GI_MINESWEEPER_P1_R3T,There Are No Walls At All:,Không Có Bất Kỳ Vách Tường Nào:
+STR_GI_MINESWEEPER_P1_R3D,"Daily boards have no walls — move freely, but only into bomb-free cells. On a designer LEVEL the maze may have walls: they block steps while bombs stay hidden.","Bàn Daily không có tường — đi tự do nhưng chỉ được bước vào ô sạch bom. Ở MÀN do nhà thiết kế vẽ, mê cung CÓ THỂ có tường: tường chặn bước còn bom vẫn ẩn như cũ."
+STR_GI_MINESWEEPER_P1_R3T,Walls: None In Daily · Possible In Levels:,Tường: Daily Không Có · Màn Thiết Kế Có Thể Có:
 STR_GI_MINESWEEPER_P1_SECTION,BASIC MINESWEEPER RULES,QUY TẮC DÒ MÌN CƠ BẢN
 STR_GI_MINESWEEPER_P1_TAB1,8-NEIGHBOR BOMB RULE,LUẬT 8 Ô BOM
 STR_GI_MINESWEEPER_P1_TAB2,BOMBS & ZERO ZONES,ĐẠP BOM & VÙNG 0

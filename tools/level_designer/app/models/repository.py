@@ -18,6 +18,8 @@ class LevelSummary:
     width: int
     height: int
     chapter: int = 1
+    ## Chế độ chơi của màn ("play" = mê cung thường; id khác = màn chạy chế độ Special)
+    mode_id: str = "play"
 
 
 class LevelRepository:
@@ -52,18 +54,20 @@ class LevelRepository:
         title = ""
         width = height = 0
         chapter = 1
+        mode_id = "play"
         try:
             model = tres_io.load_file(path)
             level_id = model.level_id
             title = model.level_title
             width, height = model.width, model.height
             chapter = max(1, int(model.chapter))
+            mode_id = str(getattr(model, "mode_id", "play") or "play").strip().lower()
         except Exception:  # noqa: BLE001 - file hỏng vẫn phải hiện trong danh sách
             pass
         if level_id is None:
             return None
         return LevelSummary(level_id=level_id, title=title or path.stem, path=path,
-                            width=width, height=height, chapter=chapter)
+                            width=width, height=height, chapter=chapter, mode_id=mode_id)
 
     # ------------------------------------------------------------------
     # Nạp / lưu / xoá

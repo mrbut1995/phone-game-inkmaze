@@ -35,6 +35,11 @@ const BUDGET_FLOOR := {
 ## Chi phí từng ô: Vector2i -> int (ô S/F không có chi phí)
 var _costs: Dictionary = {}
 
+## Khoảng chi phí mà TOOL cho nhà thiết kế tô (app/config.py MODE_EDITS.countdown_cost) —
+## giá trị tô tay được giữ đúng khoảng này, không phụ thuộc độ khó đang chơi.
+const DESIGNED_COST_MIN := 1
+const DESIGNED_COST_MAX := 4
+
 
 func _init(p_difficulty := "medium") -> void:
 	mode_id = "countdown_cost"
@@ -58,6 +63,17 @@ func _apply_difficulty() -> void:
 
 
 func setup_floor(_floor_number: int) -> MazeData:
+	# MÀN DO NHÀ THIẾT KẾ VẼ: giữ nguyên bàn của màn, chỉ rắc chi phí lên các ô rồi chốt ngân sách
+	# theo đường RẺ NHẤT của chính bàn đó (Dijkstra chạy được với mọi bàn có tường).
+	var designed := designed_maze()
+	if designed != null:
+		_generate_costs(designed)
+		# MÀN khai `max_steps` thì TÔN TRỌNG: nhà thiết kế chốt ngân sách theo TỔNG CHI PHÍ đường đi
+		# (tool: nút "Sinh giá trị trên đường" đặt max_steps = tổng + 3) — nhưng KHÔNG bao giờ thấp
+		# hơn chi phí đường RẺ NHẤT + dự phòng, để màn luôn thắng được.
+		_ensure_budget(designed, designed_steps(initial_steps))
+		return designed
+
 	var size := 4
 	var ratio := 0.35
 	match difficulty:
@@ -87,15 +103,30 @@ func _generate_costs(maze: MazeData) -> void:
 			var pos := Vector2i(x, y)
 			if pos == maze.get_start() or pos == maze.get_end():
 				continue
-			_costs[pos] = randi_range(cost_range.x, cost_range.y)
+			if not maze.is_cell_active(pos):
+				continue
+			_costs[pos] = _designed_cost(pos, cost_range)
 
 
-# --- Bảo đảm ngân sách đủ cho đường đi rẻ nhất ---
-func _ensure_budget(maze: MazeData) -> void:
+## Chi phí 1 ô: ưu tiên giá trị NHÀ THIẾT KẾ tô trong tool (`custom_cell_values` khoá "x,y"),
+## không có thì random trong khoảng của độ khó.
+## Giá trị tô tay dùng ĐÚNG khoảng của tool (1..4) — KHÔNG kẹp theo độ khó, để ý đồ nhà thiết kế
+## (vd màn "medium" vẫn có thể có ô đắt 4 bước) được giữ nguyên.
+func _designed_cost(pos: Vector2i, cost_range: Vector2i) -> int:
+	var lvl := designed_level()
+	if lvl != null and not lvl.custom_cell_values.is_empty():
+		var key := "%d,%d" % [pos.x, pos.y]
+		if lvl.custom_cell_values.has(key):
+			return clampi(int(lvl.custom_cell_values[key]), DESIGNED_COST_MIN, DESIGNED_COST_MAX)
+	return randi_range(cost_range.x, cost_range.y)
+
+
+# --- Bảo đảm ngân sách đủ cho đường đi rẻ nhất (+ ngân sách nhà thiết kế muốn nếu có) ---
+func _ensure_budget(maze: MazeData, min_steps: int = 0) -> void:
 	var cheapest := cheapest_path_cost(maze)
 	var slack: int = BUDGET_SLACK.get(difficulty, 4)
 	var floor_steps: int = BUDGET_FLOOR.get(difficulty, 14)
-	initial_steps = maxi(floor_steps, cheapest + slack)
+	initial_steps = maxi(maxi(floor_steps, cheapest + slack), min_steps)
 
 
 ## Khoảng chi phí ô của độ khó hiện tại (HUD hiện chip "1-2: RẺ" / "3-4: ĐẮT")

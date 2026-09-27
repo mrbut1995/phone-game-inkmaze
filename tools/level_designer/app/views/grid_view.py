@@ -23,19 +23,23 @@ from ..config import (
     COLOR_MARGIN,
     COLOR_PAPER,
     COLOR_PATH,
+    COLOR_PATH_DRAFT,
     COLOR_SELECT,
     COLOR_START,
     COLOR_WALL_HIDDEN,
     COLOR_WALL_VISIBLE,
     TOOL_CELL,
     TOOL_END,
+    TOOL_PATH,
     TOOL_START,
+    TOOL_VALUE,
 )
 from ..controllers.editor_controller import EditorController
 from ..controllers.events import (
     EV_DIRTY_CHANGED,
     EV_LEVEL_CHANGED,
     EV_MODEL_UPDATED,
+    EV_PATH_CHANGED,
     EV_STATUS,
     EV_TOOL_CHANGED,
     EV_VIEW_OPTIONS_CHANGED,
@@ -82,7 +86,8 @@ class GridView(tk.Frame):
     # Đăng ký sự kiện controller -> vẽ lại
     # ------------------------------------------------------------------
     def _subscribe(self) -> None:
-        for event in (EV_MODEL_UPDATED, EV_LEVEL_CHANGED, EV_VIEW_OPTIONS_CHANGED, EV_TOOL_CHANGED):
+        for event in (EV_MODEL_UPDATED, EV_LEVEL_CHANGED, EV_VIEW_OPTIONS_CHANGED, EV_TOOL_CHANGED,
+                      EV_PATH_CHANGED):
             self.editor.events.on(event, lambda *_: self.redraw())
         self.editor.events.on(EV_DIRTY_CHANGED, lambda *_: self.redraw())
 
@@ -222,6 +227,18 @@ class GridView(tk.Frame):
 
     def _apply_at(self, px: float, py: float, toggle: bool) -> None:
         cell, ref, _ = self._locate(px, py)
+        if self.editor.tool == TOOL_PATH:
+            # Công cụ 8: bấm = bắt đầu nét vẽ mới · kéo = nối thêm ô kề
+            if cell is not None:
+                if toggle:
+                    self.editor.begin_path(cell)
+                else:
+                    self.editor.extend_path(cell)
+            return
+        if self.editor.tool == TOOL_VALUE:
+            if cell is not None:
+                self.editor.apply_value_tool(cell, toggle=toggle)
+            return
         if self.editor.tool == TOOL_CELL:
             if cell is not None:
                 self.editor.apply_cell_tool(cell)
@@ -238,7 +255,15 @@ class GridView(tk.Frame):
         self.editor.apply_wall_tool(ref, toggle=toggle)
 
     def _erase_at(self, px: float, py: float) -> None:
-        _, ref, _ = self._locate(px, py)
+        cell, ref, _ = self._locate(px, py)
+        # Công cụ 8: chuột phải = xoá nét đường đang vẽ
+        if self.editor.tool == TOOL_PATH:
+            self.editor.clear_path_draft()
+            return
+        # Chế độ có dữ liệu riêng: chuột phải ưu tiên xoá GIÁ TRỊ của ô trước, rồi mới xoá tường
+        if cell is not None and self.editor.mode_edit_spec()["is_cell_value"] \
+                and self.editor.erase_value(cell):
+            return
         if ref is None or ref == self._last_painted:
             return
         self._last_painted = ref
@@ -253,6 +278,20 @@ class GridView(tk.Frame):
                 parts.append("Ô (%d, %d) · %d tường" % (cell[0], cell[1], level.wall_count(cell)))
             else:
                 parts.append("Ô (%d, %d) · TRỐNG (ngoài board)" % cell)
+            spec = self.editor.mode_edit_spec()
+            if spec["is_cell_value"] and level.is_cell_active(cell):
+                value = level.custom_value(cell)
+                parts.append("%s: %s" % (
+                    spec["tool"],
+                    ("%d %s" % (value, spec["unit"])) if value > 0 else "chưa tô (game tự sinh)",
+                ))
+        if self.editor.tool == TOOL_PATH:
+            draft = self.editor.path_draft
+            if draft:
+                parts.append("Nét đường: %d ô (cuối = %s) — bấm Sinh tường để chốt"
+                             % (len(draft), draft[-1]))
+            else:
+                parts.append("Kéo chuột từ ô bắt đầu tới ĐÍCH F để vẽ đường đi")
         if self.hover_ref is not None and not level.is_outline(self.hover_ref):
             kind, ix, iy = self.hover_ref
             name = "dọc" if kind == "v" else "ngang"
@@ -284,6 +323,7 @@ class GridView(tk.Frame):
         if self.editor.show_path:
             self._draw_path()
         self._draw_walls()
+        self._draw_path_draft()
         self._draw_hover()
         self._draw_coords()
 
@@ -306,6 +346,17 @@ class GridView(tk.Frame):
                     continue
 
                 canvas.create_rectangle(left, top, right, bottom, outline=COLOR_GRID, width=1)
+
+                # DỮ LIỆU RIÊNG CỦA CHẾ ĐỘ (điểm ô · chi phí · mìn ghim...): số TO ĐẬM giữa ô
+                spec = self.editor.mode_edit_spec()
+                value = level.custom_value(cell) if spec["is_cell_value"] else 0
+                if value > 0:
+                    canvas.create_text(
+                        (left + right) / 2, (top + bottom) / 2,
+                        text=str(value), fill=COLOR_END,
+                        font=(None, max(9, int(self.cell_size * 0.44)), "bold"),
+                    )
+                    continue
 
                 if self.editor.show_numbers:
                     count = level.wall_count(cell)
@@ -340,6 +391,26 @@ class GridView(tk.Frame):
             points.extend((cx, cy))
         self.canvas.create_line(*points, fill=COLOR_PATH, width=max(3, int(self.cell_size * 0.08)),
                                 capstyle="round", joinstyle="round")
+
+    def _draw_path_draft(self) -> None:
+        """Nét đường ĐANG VẼ bằng công cụ 8: nét tím đậm + 2 đầu tròn (đầu cuối = đích)."""
+        draft = self.editor.path_draft
+        if not draft:
+            return
+        canvas = self.canvas
+        if len(draft) >= 2:
+            points: list[float] = []
+            for cell in draft:
+                cx, cy = self._cell_center(cell)
+                points.extend((cx, cy))
+            canvas.create_line(*points, fill=COLOR_PATH_DRAFT,
+                               width=max(4, int(self.cell_size * 0.16)),
+                               capstyle="round", joinstyle="round")
+        for cell, color in ((draft[0], COLOR_PATH_DRAFT), (draft[-1], COLOR_END)):
+            cx, cy = self._cell_center(cell)
+            radius = self.cell_size * 0.17
+            canvas.create_oval(cx - radius, cy - radius, cx + radius, cy + radius,
+                               fill=color, outline=COLOR_PAPER, width=2)
 
     def _draw_walls(self) -> None:
         level = self.editor.level

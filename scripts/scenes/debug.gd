@@ -25,7 +25,7 @@ const CHECK_OFF := preload("res://assets/images/common/checkbox_normal.svg")
 const CHECK_PRESS := preload("res://assets/images/common/checkbox_pressed.svg")
 const CHECK_FOCUS := preload("res://assets/images/common/checkbox_focus.svg")
 
-const TOTAL_LEVELS := 9
+const FALLBACK_TOTAL_LEVELS := 9
 const DIFFICULTIES := ["easy", "medium", "hard"]
 const TEST_FLOORS := [1, 2, 3, 5]
 
@@ -145,9 +145,9 @@ func _build_navigate() -> void:
 
 func _build_progress() -> void:
 	_add_section("PROGRESS")
-	_add_label("Nhảy tới màn (Play mode):", &"PopupSubtitle")
+	_add_label("Nhảy tới màn (màn có ◆ = chạy CHẾ ĐỘ SPECIAL ghi trong màn):", &"PopupSubtitle")
 	_add_level_grid()
-	_add_action("Unlock all levels", "Mở khoá 1..%d và lưu lại" % TOTAL_LEVELS, _unlock_all_levels)
+	_add_action("Unlock all levels", "Mở khoá 1..%d và lưu lại" % _top_level_id(), _unlock_all_levels)
 	_add_action("Set 3 stars (màn đã mở)", "Ghi 3 sao cho mọi màn đang mở khoá", _set_all_stars)
 	_add_action("Reset progress", "Xoá màn đã mở + sao (không xoá Daily)", _reset_progress, true)
 
@@ -253,14 +253,15 @@ func _unlock_all_levels() -> void:
 	var gm := _game_manager()
 	if gm == null:
 		return
-	gm.set("unlocked_levels", TOTAL_LEVELS)
-	for id in range(1, TOTAL_LEVELS + 1):
-		var stars: Dictionary = gm.get("level_stars")
+	var ids := _level_ids()
+	gm.set("unlocked_levels", _top_level_id())
+	var stars: Dictionary = gm.get("level_stars")
+	for id in ids:
 		if not stars.has(id):
 			stars[id] = 0
-	gm.set("level_stars", gm.get("level_stars"))
+	gm.set("level_stars", stars)
 	Save.queue_save()
-	_rebuild_after_action("Đã mở khoá %d màn" % TOTAL_LEVELS)
+	_rebuild_after_action("Đã mở khoá %d màn" % ids.size())
 
 
 func _set_all_stars() -> void:
@@ -600,17 +601,46 @@ func _add_toggle(text: String, desc: String, value: bool, handler: Callable) -> 
 	row.add_child(check)
 
 
-## Lưới nút nhảy nhanh tới từng màn
+## Danh sách level_id THẬT của dự án (LevelManager quét resources/levels/level_*.tres)
+func _level_ids() -> Array[int]:
+	var ids: Array[int] = []
+	var lm := get_node_or_null("/root/LevelManager")
+	if lm != null and lm.has_method("get_level_ids"):
+		for value in lm.call("get_level_ids"):
+			ids.append(int(value))
+	if ids.is_empty():
+		for id in range(1, FALLBACK_TOTAL_LEVELS + 1):
+			ids.append(id)
+	return ids
+
+
+## id màn lớn nhất đang có (dùng cho "Unlock all levels")
+func _top_level_id() -> int:
+	var ids := _level_ids()
+	return ids[ids.size() - 1] if not ids.is_empty() else FALLBACK_TOTAL_LEVELS
+
+
+## Chế độ riêng ghi trong màn ("" = màn thường) — hiện bằng dấu ◆ trên nút nhảy nhanh
+func _level_mode(level_id: int) -> String:
+	var gm := _game_manager()
+	if gm == null or not gm.has_method("mode_id_of_level"):
+		return ""
+	var mode_id := str(gm.call("mode_id_of_level", level_id))
+	return "" if mode_id == "play" else mode_id
+
+
+## Lưới nút nhảy nhanh tới từng màn (màn chạy chế độ Special có thêm dấu ◆)
 func _add_level_grid() -> void:
+	var ids := _level_ids()
 	var grid := GridContainer.new()
-	grid.columns = TOTAL_LEVELS
+	grid.columns = mini(maxi(ids.size(), 1), 10)
 	grid.add_theme_constant_override("h_separation", 10)
 	grid.add_theme_constant_override("v_separation", 10)
 	layout.rows_box.add_child(grid)
 
-	for id in range(1, TOTAL_LEVELS + 1):
-		var level_id := id
+	for level_id in ids:
 		var unlocked := level_id <= int(_gm_value("unlocked_levels", 1))
+		var is_special := not _level_mode(level_id).is_empty()
 		var btn := TextureButton.new()
 		btn.custom_minimum_size = Vector2(0, 74)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -628,7 +658,7 @@ func _add_level_grid() -> void:
 
 		var num := Label.new()
 		num.theme_type_variation = &"PopupTotalLabelSm"
-		num.text = str(level_id)
+		num.text = str(level_id) if not is_special else "%d\n◆" % level_id
 		num.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		num.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

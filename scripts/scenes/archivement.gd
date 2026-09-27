@@ -13,8 +13,6 @@ extends BaseScene
 ## ============================================================================
 
 const CARD_SCENE := preload("res://nodes/archivements/card.tscn")
-## Node UI của màn này đều là SCENE riêng (không tạo node bằng code)
-const TAB_SCENE := preload("res://nodes/archivements/tab_button.tscn")
 const PAGE_SCENE := preload("res://nodes/archivements/page.tscn")
 const DOT_SCENE := preload("res://nodes/archivements/page_dot.tscn")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
@@ -66,7 +64,7 @@ func _ready() -> void:
 	orientation_changed.connect(_on_orientation_changed)
 
 	Archivement.refresh()
-	_build_tabs()
+	_collect_tabs()
 	# Kéo cửa sổ: `resized` báo TRƯỚC khi container dàn lại ⇒ phải hẹn áp ở frame sau
 	resized.connect(_schedule_apply_layout)
 	_reload(true)
@@ -129,8 +127,8 @@ func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_current_columns = _columns_per_page()
 	_current_per_page = _cards_per_page()
-	# Tab nằm trong layout ⇒ phải dựng lại vào khay của layout MỚI (không thì bản ngang trống tab)
-	_build_tabs()
+	# Tab nằm trong layout ⇒ phải gom lại từ khay của layout MỚI (không thì bản ngang trống tab)
+	_collect_tabs()
 	_reload(true)
 	# Cỡ khung của layout mới chỉ có sau vài frame ⇒ hẹn áp lại rồi mới nhảy tới trang cần xem
 	_schedule_apply_layout()
@@ -277,20 +275,18 @@ func _on_claim_requested(id: String) -> void:
 # ---------------------------------------------------------------------------
 # Tab phân loại
 # ---------------------------------------------------------------------------
-func _build_tabs() -> void:
-	if layout.tabs_box == null:
+## Gom các tab KHAI SẴN trong scene bố cục (`Sheet/Tabs/*` — "" · levels · dungeon · daily ·
+## special), mỗi tab tự khai `category` + tự nối `pressed` → `tab_pressed`.
+## Màn chỉ gom lại + nối 1 lần ⇒ KHÔNG còn dựng tab bằng code.
+func _collect_tabs() -> void:
+	if layout == null or layout.tabs_box == null:
 		return
 	for child in layout.tabs_box.get_children():
-		layout.tabs_box.remove_child(child)
-		child.queue_free()
-
-	for index in TABS.size():
-		var tab := TAB_SCENE.instantiate() as AchTabButton
-		tab.name = "Tab%d" % index
-		layout.tabs_box.add_child(tab)
-		tab.setup(TABS[index])
-		tab.pressed.connect(_on_tab_pressed.bind(TABS[index]))
-
+		var tab := child as AchTabButton
+		if tab == null:
+			continue
+		if not tab.tab_pressed.is_connected(_on_tab_pressed):
+			tab.tab_pressed.connect(_on_tab_pressed)
 	_update_tabs()
 
 
@@ -309,16 +305,14 @@ func _tab_text(category: String) -> String:
 
 
 func _update_tabs() -> void:
-	if layout.tabs_box == null:
+	if layout == null or layout.tabs_box == null:
 		return
-	var tabs := layout.tabs_box.get_children()
-	for index in tabs.size():
-		var tab := tabs[index] as AchTabButton
+	for child in layout.tabs_box.get_children():
+		var tab := child as AchTabButton
 		if tab == null:
 			continue
-		var category: String = TABS[index]
-		tab.set_label_text(_tab_text(category))
-		tab.set_active(category == _category)
+		tab.set_label_text(_tab_text(tab.category))
+		tab.set_active(tab.category == _category)
 
 
 func _on_tab_pressed(category: String) -> void:

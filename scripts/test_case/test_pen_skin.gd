@@ -137,7 +137,7 @@ func _section_2_game(shop: Node) -> void:
 		"Bút chì 2B vẽ nét ĐỨT (texture lặp)")
 	_entry(line.texture_repeat == CanvasItem.TEXTURE_REPEAT_ENABLED,
 		"Nét đứt bật texture_repeat (nếu không Line2D sẽ kẹp mép -> vô hình)")
-	_entry(line.get_node_or_null("Glow") == null, "Bút chì không có quầng sáng")
+	_entry(_glow_hidden(line), "Bút chì không có quầng sáng (node Glow ẩn)")
 
 	await _check_pen(shop, board, cursor, line, "pen_gold_ink")
 	var glow := line.get_node_or_null("Glow") as Line2D
@@ -157,6 +157,13 @@ func _section_2_game(shop: Node) -> void:
 	await process_frame
 	gm.set("current_level", backup_level)
 	gm.set("current_mode", backup_mode)
+
+
+## Quầng sáng là node KHAI SẴN trong `moving_line.tscn` (xem `Glow`) — ngòi bút không có quầng
+## sáng thì node đó bị ẨN, không bị xoá khỏi scene nữa.
+func _glow_hidden(line: Line2D) -> bool:
+	var glow := line.get_node_or_null("Glow") as Line2D
+	return glow == null or not glow.visible
 
 
 ## Đổi bút đang dùng -> kiểm tra con trỏ + nét mực; trả về bề rộng nét thực tế

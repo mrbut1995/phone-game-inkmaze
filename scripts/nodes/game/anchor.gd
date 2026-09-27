@@ -1,7 +1,11 @@
+class_name MazeAnchor
 extends Control
 ## ============================================================================
 ## View: Điểm neo góc (Anchor) tại giao điểm lưới.
 ## Người chơi kéo nối 2 Anchor kề nhau để tạo/bật/tắt "Tường Nghi Ngờ".
+##
+## Board chỉ gọi method (`set_anchor_size` · `play_entrance` · `set_selected` · `pulse`) —
+## neo tự lo phần trình bày (tâm xoay · hiệu ứng) nên bên ngoài KHÔNG cần chạm node con.
 ## ============================================================================
 
 signal anchor_tapped(anchor_id: int)
@@ -12,6 +16,22 @@ const SELECTED_MODULATE := Color(1.8, 1.4, 0.4, 1.0)
 const NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
 
 @onready var _button: TextureButton = $TextureButton
+
+
+## Đặt cỡ neo (Board tính theo số ô) — neo tự lo TÂM XOAY cho hiệu ứng
+func set_anchor_size(side: float) -> void:
+	size = Vector2(side, side)
+	pivot_offset = size * 0.5
+
+
+## Hiệu ứng xuất hiện khi vào màn — Board gọi cho từng neo, `delay` theo toạ độ góc
+func play_entrance(delay: float) -> void:
+	pivot_offset = size * 0.5
+	scale = Vector2.ZERO
+	var tw := create_tween()
+	if delay > 0.0:
+		tw.tween_interval(delay)
+	tw.tween_property(self, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 func _ready() -> void:

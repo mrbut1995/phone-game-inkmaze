@@ -12,8 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://6gq24f7mmebm" path="res://assets/images/shop/banner_gift.svg" id="11_gift"]
 [ext_resource type="Texture2D" uid="uid://b4h7w6mxyr4tw" path="res://assets/images/shop/gift_box.svg" id="12_gift_box"]
 [ext_resource type="Texture2D" uid="uid://cpmf46xk6bok5" path="res://assets/images/shop/btn_action_amber.svg" id="13_btn_amber"]
+[ext_resource type="PackedScene" path="res://nodes/shop/tab_button.tscn" id="20_tab"]
+[ext_resource type="PackedScene" path="res://nodes/shop/item_grid.tscn" id="21_grid"]
+[ext_resource type="PackedScene" uid="uid://deknldvs1yxnu" path="res://nodes/shop/doodle_pad.tscn" id="22_pad"]
+[ext_resource type="PackedScene" path="res://nodes/shop/noads_row.tscn" id="23_noads"]
 
-[node name="Portrait" unique_id=816747492 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=816747492 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line", "item_grid", "doodle_pad", "noads_row") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/Back")
 tabs_box = NodePath("Tabs")
@@ -31,6 +35,9 @@ top_bar = NodePath("TopBar")
 wallet_bar = NodePath("TopBar/Wallet")
 gift_banner = NodePath("GiftBanner")
 tab_line = NodePath("TabLine")
+item_grid = NodePath("Content/List/Grid")
+doodle_pad = NodePath("Content/List/Pad")
+noads_row = NodePath("Content/List/NoAds")
 
 [node name="TopBar" type="Control" parent="." index="0" unique_id=1562446976]
 layout_mode = 1
@@ -141,6 +148,30 @@ offset_right = -0.16003418
 offset_bottom = -0.2400055
 theme_override_constants/separation = 4
 
+[node name="Tab_pen" parent="Tabs" index="0" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "pen"
+label_key = "STR_SHOP_TAB_PEN"
+
+[node name="Tab_theme" parent="Tabs" index="1" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "theme"
+label_key = "STR_SHOP_TAB_THEME"
+
+[node name="Tab_tool" parent="Tabs" index="2" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "tool"
+label_key = "STR_SHOP_TAB_TOOL"
+
+[node name="Tab_coin" parent="Tabs" index="3" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "coin"
+label_key = "STR_SHOP_TAB_COIN"
+
 [node name="TabLine" type="ColorRect" parent="." index="2" unique_id=2061983417]
 layout_mode = 0
 offset_left = 25.0
@@ -169,6 +200,18 @@ scroll_deadzone = 12
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
+
+[node name="Pad" parent="Content/List" index="0" instance=ExtResource("22_pad")]
+visible = false
+layout_mode = 2
+
+[node name="NoAds" parent="Content/List" index="1" instance=ExtResource("23_noads")]
+visible = false
+layout_mode = 2
+
+[node name="Grid" parent="Content/List" index="2" instance=ExtResource("21_grid")]
+visible = false
+layout_mode = 2
 
 [node name="Pager" type="VBoxContainer" parent="." index="4" unique_id=469403228]
 layout_mode = 1

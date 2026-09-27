@@ -319,6 +319,20 @@ func reveal_wall(from_pos: Vector2i, to_pos: Vector2i) -> void:
 			_v_visible[ix][from_pos.y] = 1
 
 
+## Ép cờ HIỆN của MỌI tường đang có về `visible` (bỏ qua thiết kế của màn).
+## Dùng cho MÀN DO NHÀ THIẾT KẾ VẼ chạy ở chế độ Special — lúc đó `visible_wall_ratio`
+## KHÔNG còn tác dụng (bàn đã có sẵn mảng hiện/ẩn trong file .tres):
+##   · One Stroke / Sum Path...  cần thấy tường để tính toán  -> `true`
+##   · Wall Builder              cần GIẤU SẠCH tường (đố số)  -> `false`
+func set_all_walls_visible(visible: bool) -> void:
+	for ix in width + 1:
+		for iy in height:
+			_v_visible[ix][iy] = 1 if (visible and _v_walls[ix][iy] == 1) else 0
+	for ix in width:
+		for iy in height + 1:
+			_h_visible[ix][iy] = 1 if (visible and _h_walls[ix][iy] == 1) else 0
+
+
 func get_start() -> Vector2i:
 	return start
 

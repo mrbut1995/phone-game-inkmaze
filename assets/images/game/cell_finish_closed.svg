@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88">
+  
+  <g transform="scale(1.3538461538)">
+  <defs>
+    <!-- Gradient hố sâu cầu thang -->
+    <linearGradient id="dungeonDeepVoid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3C4B59" stop-opacity="0.1" />
+      <stop offset="60%" stop-color="#1B2834" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#0A1118" stop-opacity="0.95" />
+    </linearGradient>
+
+    <!-- Gradient thép cho song sắt -->
+    <linearGradient id="ironBarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#323F4D" />
+      <stop offset="45%" stop-color="#586A7C" />
+      <stop offset="100%" stop-color="#242E39" />
+    </linearGradient>
+
+    <!-- Gradient quai khóa thép -->
+    <linearGradient id="shackleSteel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D9E3EC" />
+      <stop offset="50%" stop-color="#93A5B7" />
+      <stop offset="100%" stop-color="#576879" />
+    </linearGradient>
+
+    <!-- Gradient thân ổ khóa vàng -->
+    <linearGradient id="lockGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE57F" />
+      <stop offset="40%" stop-color="#F5B025" />
+      <stop offset="100%" stop-color="#B8740D" />
+    </linearGradient>
+  </defs>
+
+  <!-- Nền gạch ngoài -->
+  <rect width="130" height="130" fill="#FAF5EB" />
+
+  <!-- Khung đá hầm -->
+  <rect x="14" y="14" width="102" height="102" rx="6" fill="#EAE3D2" stroke="#1E283A" stroke-width="3" />
+  
+  <!-- Hố tối cầu thang -->
+  <rect x="18" y="18" width="94" height="94" fill="url(#dungeonDeepVoid)" />
+
+  <!-- BẬC THANG ĐI XUỐNG (kế thừa từ cell_finish) -->
+  <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="14" y1="18" x2="116" y2="18" stroke-width="3.2" />
+
+    <polygon points="18,18 112,18 106,34 24,34" fill="#F7F1E6" stroke-width="2.5" />
+    <rect x="24" y="34" width="82" height="12" fill="#CBBFAA" stroke-width="2.5" />
+    <line x1="36" y1="34" x2="36" y2="46" stroke-width="1.5" opacity="0.6" />
+    <line x1="52" y1="34" x2="52" y2="46" stroke-width="1.5" opacity="0.6" />
+    <line x1="66" y1="34" x2="66" y2="46" stroke-width="1.5" opacity="0.6" />
+    <line x1="80" y1="34" x2="80" y2="46" stroke-width="1.5" opacity="0.6" />
+    <line x1="94" y1="34" x2="94" y2="46" stroke-width="1.5" opacity="0.6" />
+
+    <polygon points="24,46 106,46 100,60 30,60" fill="#E2D5C0" stroke-width="2.5" />
+    <rect x="30" y="60" width="70" height="13" fill="#A49580" stroke-width="2.5" />
+    <line x1="42" y1="60" x2="42" y2="73" stroke-width="1.6" opacity="0.6" />
+    <line x1="56" y1="60" x2="56" y2="73" stroke-width="1.6" opacity="0.6" />
+    <line x1="70" y1="60" x2="70" y2="73" stroke-width="1.6" opacity="0.6" />
+    <line x1="84" y1="60" x2="84" y2="73" stroke-width="1.6" opacity="0.6" />
+
+    <polygon points="30,73 100,73 94,85 36,85" fill="#BFAF9B" stroke-width="2.5" />
+    <rect x="36" y="85" width="58" height="13" fill="#756755" stroke-width="2.5" />
+    <line x1="48" y1="85" x2="48" y2="98" stroke-width="1.6" opacity="0.7" />
+    <line x1="64" y1="85" x2="64" y2="98" stroke-width="1.6" opacity="0.7" />
+    <line x1="78" y1="85" x2="78" y2="98" stroke-width="1.6" opacity="0.7" />
+
+    <polygon points="36,98 94,98 88,106 42,106" fill="#807260" stroke-width="2.2" />
+    <rect x="42" y="106" width="46" height="8" fill="#42382C" stroke-width="2.2" />
+
+    <polygon points="42,114 88,114 84,118 46,118" fill="#130E09" stroke-width="1.5" />
+  </g>
+
+  <!-- Nét gạch bóng hai bên vách đá -->
+  <g stroke="#1E283A" stroke-width="1.4" opacity="0.55">
+    <line x1="16" y1="25" x2="24" y2="35" />
+    <line x1="16" y1="45" x2="26" y2="55" />
+    <line x1="16" y1="65" x2="28" y2="77" />
+    <line x1="16" y1="85" x2="32" y2="101" />
+
+    <line x1="114" y1="25" x2="106" y2="35" />
+    <line x1="114" y1="45" x2="104" y2="55" />
+    <line x1="114" y1="65" x2="102" y2="77" />
+    <line x1="114" y1="85" x2="98" y2="101" />
+  </g>
+
+  <!-- LỚP PHỦ TỐI NHẸ LÀM NỔI BẬT CỬA SẮT BÊN TRÊN -->
+  <rect x="18" y="18" width="94" height="94" fill="#0B131B" opacity="0.28" />
+
+  <!-- BÓNG ĐỔ CỦA SONG SẮT LÊN CẦU THANG -->
+  <g fill="#090E14" opacity="0.35">
+    <rect x="36" y="19" width="3" height="93" />
+    <rect x="54" y="19" width="3" height="93" />
+    <rect x="73" y="19" width="3" height="93" />
+    <rect x="91" y="19" width="3" height="93" />
+    <rect x="19" y="42" width="93" height="3" />
+    <rect x="19" y="88" width="93" height="3" />
+  </g>
+
+  <!-- HỆ THỐNG CỬA SONG SẮT (IRON PORTCULLIS / GRATE) -->
+  <g stroke="#1E283A" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Khung viền sắt ôm miệng hầm -->
+    <rect x="18" y="18" width="94" height="94" rx="2" fill="none" stroke="#25303D" stroke-width="4.5" />
+    <rect x="18" y="18" width="94" height="94" rx="2" fill="none" stroke="#1E283A" stroke-width="2" />
+
+    <!-- 4 song sắt dọc -->
+    <rect x="33" y="18" width="6" height="94" fill="url(#ironBarGrad)" stroke-width="2" />
+    <rect x="51" y="18" width="6" height="94" fill="url(#ironBarGrad)" stroke-width="2" />
+    <rect x="73" y="18" width="6" height="94" fill="url(#ironBarGrad)" stroke-width="2" />
+    <rect x="91" y="18" width="6" height="94" fill="url(#ironBarGrad)" stroke-width="2" />
+
+    <!-- Đường ánh sáng trên từng song dọc -->
+    <line x1="35" y1="19" x2="35" y2="111" stroke="#8496A8" stroke-width="1.2" opacity="0.75" />
+    <line x1="53" y1="19" x2="53" y2="111" stroke="#8496A8" stroke-width="1.2" opacity="0.75" />
+    <line x1="75" y1="19" x2="75" y2="111" stroke="#8496A8" stroke-width="1.2" opacity="0.75" />
+    <line x1="93" y1="19" x2="93" y2="111" stroke="#8496A8" stroke-width="1.2" opacity="0.75" />
+
+    <!-- 2 thanh giằng ngang kiên cố -->
+    <rect x="18" y="39" width="94" height="7" rx="1.5" fill="url(#ironBarGrad)" stroke-width="2.2" />
+    <rect x="18" y="85" width="94" height="7" rx="1.5" fill="url(#ironBarGrad)" stroke-width="2.2" />
+
+    <!-- Ánh sáng thanh ngang -->
+    <line x1="19" y1="41" x2="111" y2="41" stroke="#8496A8" stroke-width="1" opacity="0.7" />
+    <line x1="19" y1="87" x2="111" y2="87" stroke="#8496A8" stroke-width="1" opacity="0.7" />
+
+    <!-- Đinh tán tán tròn tại các giao điểm -->
+    <g fill="#A7B7C7" stroke="#1E283A" stroke-width="1.2">
+      <circle cx="36" cy="42.5" r="2.2" />
+      <circle cx="54" cy="42.5" r="2.2" />
+      <circle cx="76" cy="42.5" r="2.2" />
+      <circle cx="94" cy="42.5" r="2.2" />
+
+      <circle cx="36" cy="88.5" r="2.2" />
+      <circle cx="54" cy="88.5" r="2.2" />
+      <circle cx="76" cy="88.5" r="2.2" />
+      <circle cx="94" cy="88.5" r="2.2" />
+    </g>
+
+    <!-- BẢN LỀ VÀ THEN KHÓA GÀI VẮT NGANG TÂM -->
+    <!-- Đế then sắt -->
+    <rect x="47" y="61" width="10" height="12" rx="2" fill="#2E3A47" stroke-width="2" />
+    <rect x="73" y="61" width="10" height="12" rx="2" fill="#2E3A47" stroke-width="2" />
+    <!-- Thanh then gài ngang -->
+    <rect x="49" y="63" width="32" height="8" rx="2" fill="#4B5A6B" stroke-width="2" />
+    <!-- Vòng móc khóa giữa (eyelet) -->
+    <path d="M 62 67 C 62 61 68 61 68 67" fill="none" stroke="#25303D" stroke-width="3" />
+  </g>
+
+  <!-- BÓNG ĐỔ CỦA Ổ KHÓA -->
+  <ellipse cx="66" cy="88" rx="14" ry="4.5" fill="#0A1118" opacity="0.6" />
+
+  <!-- Ổ KHÓA CỬA TRUNG TÂM (PADLOCK) -->
+  <!-- Quai khóa thép hình chữ U -->
+  <path d="M 58 66 V 53 C 58 45 72 45 72 53 V 66" 
+        fill="none" stroke="#1E283A" stroke-width="6.5" stroke-linecap="round" />
+  <path d="M 58 66 V 53 C 58 45 72 45 72 53 V 66" 
+        fill="none" stroke="url(#shackleSteel)" stroke-width="3.8" stroke-linecap="round" />
+
+  <!-- Thân ổ khóa vàng -->
+  <g stroke="#1E283A" stroke-linejoin="round">
+    <rect x="52" y="63" width="26" height="23" rx="4.5" 
+          fill="url(#lockGold)" stroke-width="2.6" />
+
+    <!-- Vệt sáng phản chiếu mép trên ổ khóa -->
+    <line x1="56" y1="66" x2="74" y2="66" 
+          stroke="#FFF2A8" stroke-width="1.5" stroke-linecap="round" />
+
+    <!-- Lỗ khóa (Keyhole) -->
+    <circle cx="65" cy="72" r="2.8" fill="#1E283A" stroke="none" />
+    <polygon points="63.4,72 66.6,72 67.8,79 62.2,79" fill="#1E283A" stroke="none" />
+
+    <!-- 2 đinh tán góc dưới ổ khóa -->
+    <circle cx="56.5" cy="80.5" r="1.3" fill="#784B08" stroke="#1E283A" stroke-width="0.8" />
+    <circle cx="73.5" cy="80.5" r="1.3" fill="#784B08" stroke="#1E283A" stroke-width="0.8" />
+  </g>
+
+  <!-- Viền định vị xanh ngoài cùng đồng bộ hệ thống cell -->
+  <rect x="1" y="1" width="128" height="128" fill="none" stroke="#6285B0" stroke-width="2" />
+  </g>
+</svg>

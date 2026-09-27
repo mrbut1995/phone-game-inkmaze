@@ -37,6 +37,11 @@ const DIRS: Array[Vector2i] = [Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT, Vec
 
 ## Ô ĐÃ ĐI QUA (khoá vĩnh viễn) — có cả ô xuất phát S
 var _visited: Dictionary = {}
+## Bàn đang chơi (bàn tự sinh hoặc bàn do nhà thiết kế vẽ) — dùng để bỏ qua Ô TRỐNG của polyomino
+var _maze: MazeData = null
+## Kích thước lưới đang chơi (bàn thiết kế có thể KHÔNG vuông — khác bàn tự sinh N×N)
+var _cols: int = 0
+var _rows: int = 0
 ## Tổng số ô phải phủ kín + cạnh bàn cờ (bàn vuông N×N)
 var _total_cells: int = 0
 var _size: int = 0
@@ -62,11 +67,21 @@ func _init(p_difficulty := "medium") -> void:
 func setup_floor(_floor_number: int) -> MazeData:
 	_visited.clear()
 	_model_cells.clear()
+	_maze = null
+
+	# MÀN DO NHÀ THIẾT KẾ VẼ: dùng ĐÚNG bàn của màn — đường mẫu = lời giải phủ kín của chính bàn đó.
+	# Bàn không có lời giải (hoặc hết ngân sách dò) => cảnh báo rồi quay về bàn tự sinh.
+	var designed := designed_maze()
+	if designed != null and _setup_designed(designed):
+		return designed
 
 	var size := _size_for_difficulty()
 	var maze := MazeData.new()
 	maze.create_empty(size, size)
 	_size = size
+	_cols = size
+	_rows = size
+	_maze = maze
 	_total_cells = size * size
 
 	# 1) Đường mẫu phủ kín bàn (con rắn) — luôn kết thúc ở F = (size-1, size-1)
@@ -82,6 +97,85 @@ func setup_floor(_floor_number: int) -> MazeData:
 	# Mode không giới hạn bước thực chất — cấp dư để không bao giờ thua vì "hết bước"
 	initial_steps = _total_cells * 3
 	return maze
+
+
+## Nhận BÀN THIẾT KẾ làm bàn chơi (tường ép HIỆN RÕ). Trả về false khi bàn không có đường
+## phủ kín từ S kết thúc ở F — lúc đó mode quay về tự sinh bàn để màn vẫn thắng được.
+func _setup_designed(maze: MazeData) -> bool:
+	maze.set_all_walls_visible(true)
+	_cols = maze.width
+	_rows = maze.height
+	_size = maxi(_cols, _rows)
+	_maze = maze
+	_total_cells = 0
+	for y in _rows:
+		for x in _cols:
+			if maze.is_cell_active(Vector2i(x, y)):
+				_total_cells += 1
+
+	_model_cells = _solve_cover_path(maze)
+	if _model_cells.size() < _total_cells:
+		push_warning("OneStroke: bàn của màn không có đường phủ kín S->F — tạm dùng bàn tự sinh")
+		_model_cells.clear()
+		_maze = null
+		return false
+
+	_visited[maze.get_start()] = true
+	initial_steps = _total_cells * 3
+	return true
+
+
+## Đường đi từ S phủ kín MỌI ô của bàn và kết thúc đúng ở F — rỗng nếu bàn vô nghiệm
+func _solve_cover_path(maze: MazeData) -> Array[Vector2i]:
+	var start := maze.get_start()
+	var unvisited := {}
+	for y in _rows:
+		for x in _cols:
+			var pos := Vector2i(x, y)
+			if pos != start and maze.is_cell_active(pos):
+				unvisited[pos] = true
+	var path: Array[Vector2i] = [start]
+	_hint_nodes = 0
+	if _cover_search(maze, start, unvisited, path):
+		return path
+	return []
+
+
+## DFS phủ kín có cắt tỉa (như `_dfs_cover`) nhưng GHI LẠI đường đi để làm đường mẫu của màn
+func _cover_search(maze: MazeData, cur: Vector2i, unvisited: Dictionary,
+		path: Array[Vector2i]) -> bool:
+	if _hint_nodes > HINT_NODE_BUDGET:
+		return false
+	_hint_nodes += 1
+	if unvisited.is_empty():
+		return cur == maze.get_end()
+	var options: Array[Vector2i] = []
+	for d: Vector2i in DIRS:
+		var nxt: Vector2i = cur + d
+		if unvisited.has(nxt) and _can_step(maze, cur, nxt):
+			options.append(nxt)
+	if options.is_empty():
+		return false
+	# Ưu tiên ô ít lối thoát (kiểu Warnsdorff) để ít nhánh chết
+	var end_pos := maze.get_end()
+	options.sort_custom(func(a: Vector2i, b: Vector2i) -> bool:
+		return _open_neighbour_count(maze, a, unvisited) < _open_neighbour_count(maze, b, unvisited)
+	)
+	for nxt: Vector2i in options:
+		var rest := unvisited.duplicate()
+		rest.erase(nxt)
+		if nxt == end_pos:
+			# F CHỈ được là ô CUỐI CÙNG: vào F khi còn ô khác = nhánh chết.
+			# (Đừng gọi `_region_ok` cho nước này: lúc đó `rest` đã bỏ F nên hàm luôn trả về false.)
+			if not rest.is_empty():
+				continue
+		elif not _region_ok(maze, nxt, rest):
+			continue
+		path.append(nxt)
+		if _cover_search(maze, nxt, rest, path):
+			return true
+		path.pop_back()
+	return false
 
 
 func _size_for_difficulty() -> int:
@@ -162,8 +256,14 @@ func coverage_ratio() -> float:
 	return clampf(float(_visited.size()) / float(_total_cells), 0.0, 1.0)
 
 
+## Ô đã đi qua chưa (board hỏi cờ `tracks_visited_cells()` trước khi gọi).
 func is_cell_visited(pos: Vector2i) -> bool:
 	return _visited.has(pos)
+
+
+## Ô đã đi qua bị KHOÁ -> tô mực xanh + gạch chéo + nhãn "ĐÃ ĐI" trên bàn.
+func tracks_visited_cells() -> bool:
+	return true
 
 
 # ---------------------------------------------------------------------------
@@ -327,9 +427,12 @@ func default_challenges() -> Array[String]:
 # ---------------------------------------------------------------------------
 func _unvisited_cells() -> Dictionary:
 	var out := {}
-	for y in _size:
-		for x in _size:
+	for y in _rows:
+		for x in _cols:
 			var pos := Vector2i(x, y)
+			# Ô TRỐNG của board polyomino (màn do nhà thiết kế vẽ) không bao giờ phải phủ
+			if _maze != null and not _maze.is_cell_active(pos):
+				continue
 			if not _visited.has(pos):
 				out[pos] = true
 	return out

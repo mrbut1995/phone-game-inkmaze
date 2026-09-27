@@ -87,10 +87,11 @@ func start_new_run(start_floor := 1) -> void:
 
 func _start_floor(floor_number: int) -> void:
 	var mode := game_mode_controller.game_mode
+	_seed_level_run(floor_number)
 	var maze := floor_controller.setup_floor(floor_number, mode)
 	grid_controller.set_maze(maze)
-	if grid_view != null and grid_view.has_method("setup_maze"):
-		grid_view.call("setup_maze", maze, mode)
+	if grid_view != null:
+		grid_view.setup_maze(maze, mode)
 
 	# Mode cần can thiệp lên board (Blind Memory hiện tường, Fog of War mở sương) phải chạy SAU khi
 	# board đã dựng lại theo maze mới — chạy trước sẽ bị setup_maze() ghi đè (lỗi cũ của Blind Memory).
@@ -113,8 +114,8 @@ func _start_floor(floor_number: int) -> void:
 		)
 	if timer_controller != null:
 		timer_controller.start_floor()
-	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
-		grid_view.call("set_interaction_enabled", true)
+	if grid_view != null:
+		grid_view.set_interaction_enabled(true)
 	_countdown_locked = false
 
 	_update_hud()
@@ -130,8 +131,8 @@ func _start_memorize_phase(seconds: int) -> void:
 	_memorize_active = true
 	if timer_controller != null:
 		timer_controller.pause()
-	if grid_view != null and grid_view.has_method("reveal_all_walls"):
-		grid_view.call("reveal_all_walls")
+	if grid_view != null:
+		grid_view.reveal_all_walls()
 	if ui_controller != null:
 		ui_controller.show_memorize_countdown(seconds)
 	else:
@@ -143,8 +144,8 @@ func _on_memorize_finished() -> void:
 	if not _memorize_active:
 		return
 	_memorize_active = false
-	if grid_view != null and grid_view.has_method("hide_all_walls"):
-		grid_view.call("hide_all_walls")
+	if grid_view != null:
+		grid_view.hide_all_walls()
 	if timer_controller != null:
 		timer_controller.resume()
 	_update_hud()
@@ -184,15 +185,14 @@ func _update_hud() -> void:
 	# của hệ thống khác (VD pha GHI NHỚ của Blind Memory đang khoá tương tác).
 	var countdown_blocked := running and mode != null and mode.mode_id == "countdown_cost" \
 			and game_state.is_out_of_moves()
-	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
+	if grid_view != null:
 		if countdown_blocked:
-			grid_view.call("set_interaction_enabled", false)
+			grid_view.set_interaction_enabled(false)
 		elif running and _countdown_locked:
-			grid_view.call("set_interaction_enabled", true)
+			grid_view.set_interaction_enabled(true)
 	_countdown_locked = countdown_blocked
 	# Sum Path: tổng đã vượt mục tiêu (điều kiện "<" hoặc "=") -> nút CHƠI LẠI dưới thanh nút.
-	var replay_visible := running and mode != null and mode.has_method("is_unwinnable") \
-			and bool(mode.call("is_unwinnable"))
+	var replay_visible := running and mode != null and mode.is_unwinnable()
 	if ui_controller != null:
 		ui_controller.set_run_info({
 			"floor": game_state.floor_number,
@@ -275,8 +275,8 @@ func _on_reached_end() -> void:
 func _complete_floor() -> void:
 	if timer_controller != null:
 		timer_controller.pause()
-	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
-		grid_view.call("set_interaction_enabled", false)
+	if grid_view != null:
+		grid_view.set_interaction_enabled(false)
 
 	var floor_time: float = timer_controller.floor_elapsed if timer_controller != null else 0.0
 	var score_data := game_mode_controller.game_mode.calculate_score(
@@ -370,8 +370,8 @@ func _game_over(reason := "") -> void:
 	_run_active = false
 	if timer_controller != null:
 		timer_controller.stop()
-	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
-		grid_view.call("set_interaction_enabled", false)
+	if grid_view != null:
+		grid_view.set_interaction_enabled(false)
 	# Chốt 3 thử thách -> popup thua hiển thị trạng thái + số Sao đã đạt
 	var challenge_rows: Array[Dictionary] = []
 	var stars := 0
@@ -467,6 +467,33 @@ func current_floor() -> int:
 	return 1
 
 
+## Ván MÀN (chơi từ màn Chọn màn): gieo hạt giống RNG theo ID màn để phần "gia vị" mà chế độ
+## Special rắc lên bàn thiết kế (mìn · chi phí ô · điểm ô · mực...) GIỐNG HỆT nhau ở mọi lần
+## chơi lại — màn đã thiết kế thì kết quả phải cố định (Dungeon/Daily vẫn ngẫu nhiên như cũ).
+func _seed_level_run(floor_number: int) -> void:
+	var gm: Node = get_node_or_null("/root/GameManager")
+	if gm == null or not bool(gm.get("level_run")):
+		return
+	seed(maxi(floor_number, 1) * 7919 + 13)
+
+
+## Nút SKIP LEVEL (chỉ hiện khi chơi màn): BỎ QUA màn đang chơi — mở khoá màn KẾ TIẾP trong
+## cùng chương nhưng **KHÔNG ghi Sao / thời gian**, rồi vào luôn màn đó.
+## Hết chương (không còn màn kế) -> mở màn Chọn Chương. Trả về false nếu ván này không phải ván màn.
+func skip_current_level() -> bool:
+	var gm: Node = get_node_or_null("/root/GameManager")
+	if gm == null or not bool(gm.get("level_run")):
+		return false
+	if ui_controller != null:
+		ui_controller.hide_overlays()
+	var next_id := int(gm.call("skip_level", current_floor()))
+	if next_id > 0:
+		gm.call("start_level", next_id)
+	else:
+		gm.call("go_to_chapters")
+	return true
+
+
 ## Xem quảng cáo để hồi sinh.
 ## - Dungeon Mode: thua vì hết bước -> cộng thêm bước rồi chơi tiếp Tầng hiện tại.
 ## - Play/Level Mode: thua vì đâm tường -> QUAY LẠI BƯỚC TRƯỚC ĐÓ (undo bước vừa đi),
@@ -495,8 +522,8 @@ func revive_run() -> void:
 		game_state.add_bonus_steps(revive_bonus_steps)
 		if timer_controller != null:
 			timer_controller.resume()
-		if grid_view != null and grid_view.has_method("set_interaction_enabled"):
-			grid_view.call("set_interaction_enabled", true)
+		if grid_view != null:
+			grid_view.set_interaction_enabled(true)
 		_run_active = true
 		_floor_finished = false
 		_update_hud()
@@ -519,8 +546,8 @@ func revive_run() -> void:
 		grid_controller.reveal_last_hazard_wall()
 	if timer_controller != null:
 		timer_controller.resume()
-	if grid_view != null and grid_view.has_method("set_interaction_enabled"):
-		grid_view.call("set_interaction_enabled", true)
+	if grid_view != null:
+		grid_view.set_interaction_enabled(true)
 	_run_active = true
 	_floor_finished = false
 	_update_hud()
@@ -697,16 +724,16 @@ func submit_build() -> void:
 	if not _run_active or game_mode_controller == null or game_mode_controller.game_mode == null:
 		return
 	var mode := game_mode_controller.game_mode
-	if not mode.has_method("evaluate_submit"):
-		return
-	var result: Dictionary = mode.call("evaluate_submit")
+	var result: Dictionary = mode.evaluate_submit()
+	if result.is_empty():
+		return      # chế độ không có hệ thống GỬI -> không có gì để chấm
 	if bool(result.get("solved", false)):
-		mode.call("mark_solved")
+		mode.mark_solved()
 		_on_reached_end()
 		return
 
 	var wrong := int(result.get("wrong", 0))
-	mode.set("submit_misses", int(mode.get("submit_misses")) + 1)
+	mode.register_submit_miss()
 	if mode.register_failed_submit():
 		_game_over("out_of_submits")
 		return
@@ -714,12 +741,10 @@ func submit_build() -> void:
 	# Còn lượt: rung bàn cờ + chữ nổi báo SỐ ĐOẠN CÒN LỆCH (chỉ số lượng, không chỉ vị trí)
 	Sfx.play(Sfx.WALL_HIT)
 	if grid_view != null:
-		if grid_view.has_method("shake_board"):
-			grid_view.call("shake_board")
-		if grid_view.has_method("spawn_floating_popup"):
-			grid_view.call("spawn_floating_popup",
-				tr("STR_WB_WRONG_COUNT").format([wrong]),
-				_board_center_cell(), Color(0.847, 0.267, 0.267, 1.0))
+		grid_view.shake_board()
+		grid_view.spawn_floating_popup(
+			tr("STR_WB_WRONG_COUNT").format([wrong]),
+			_board_center_cell(), Color(0.847, 0.267, 0.267, 1.0))
 	_update_hud()
 
 
