@@ -172,7 +172,7 @@ func _check_common(scene: Control) -> Array:
 	var expect_x := 0.0
 	var expect_w := canvas.x
 	if not (has_landscape_layout and canvas.x > canvas.y):
-		var column := clampf(canvas.x, DESIGN_WIDTH, MAX_CONTENT_WIDTH) if has_landscape_layout else DESIGN_WIDTH
+		var column: float = clampf(canvas.x, DESIGN_WIDTH, MAX_CONTENT_WIDTH) if has_landscape_layout else DESIGN_WIDTH
 		expect_x = floorf((canvas.x - column) * 0.5)
 		expect_w = column
 	if absf(scene.position.x - expect_x) > 1.5 or absf(scene.size.x - expect_w) > 1.5:

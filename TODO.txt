@@ -446,6 +446,78 @@
 #       · `test_debug_modes` (1 check “Debug scene co vung Rows”) lệch thiết kế CŨ (debug nay dùng
 #       `layout.rows_box`) — thêm vào nhóm test cũ cần cập nhật.
 
+# [x] VÒNG 21f (2026-09-27) — HUD: NODE CON BIND QUA `@export` TRONG SCENE (bỏ hẳn dò đường dẫn) + XOÁ HOOK CHẾT
+#     (theo yêu cầu user: “1. Hãy xóa đi · 2. chưa cài đặt nên tạm bỏ qua · 3. một số đoạn kết nối tới node ở
+#     trong script (VD `get_node_or_null("Content/ModeInformation/Sheet/Retry/Value")`) — thay bằng export của
+#     node đó và từ trong scene bind node tương ứng”):
+#     · XOÁ hook chết: `GridController.handle_cell_pressed()` → `BoardView.highlight_real_walls_of_cell()`
+#       (hàm KHÔNG tồn tại, guard `has_method` luôn false) + cả dây `signal cell_pressed` (`BoardView._on_release`
+#       phát ra · `MazeCell` khai mà không ai phát/nghe · dây nối trong `game.gd`) — chạm ô vốn không có phản hồi.
+#     · HUD 10 CHẾ ĐỘ: mỗi script khai `@export` cho node con rồi SCENE bind (`NodePath`) — Level (challenge_node) ·
+#       Dungeon (step/floor) · Minesweeper (bomb) · Blind Memory (phase) · Fading Ink (steps/Delta/Warn) ·
+#       Fog (Retry Value/Max/Note) · One Stroke (Cover x3 · chip · SliderFillClip) · Wall Builder (Cover x3 ·
+#       Submit · chip · clip) · Sum Path (Sum/Note · Operator · Target · Need · Bar/Fill) · Countdown (Budget x2 ·
+#       Spent x2 · Price Reserve + 2 chip + nhãn chip · Segments) → **170 export node** bind trong **25 scene** (2 hướng).
+#     · `BaseHUD`: `time_value_node` · `content_root` · `action_bar_node` (bind ở `game_hud.tscn` 2 hướng);
+#       bỏ `get_time_node()` (chết) và 3 lần `get_node_or_null("Content…")`.
+#     · `GameHUD`: `instruction_section_node` · `instruction_host` · `instruction_fallback_btn` (chỉ bản NGANG;
+#       `_ensure_instruction_nodes()` không cần tham số nữa).
+#     · ✅ SỬA LUÔN LỖI ẨN: đồng hồ của 8 HUD chế độ để `time_value_node = NodePath("")` ⇒ `set_time()` không ghi
+#       gì (đồng hồ đứng im) — nay bind đủ `Content/ModeInformation/Time/Value` ở mọi scene HUD (cả 2 hướng).
+#     · HÀNG RÀO MỚI (`test_ui_scenes` mục 9): instantiate 25 scene HUD — mọi `@export` kiểu NODE phải KHÁC null
+#       (bỏ qua 3 `instruction_*` ở bản DỌC + scene trừu tượng `game_hud.tscn`); quét mã nguồn `scripts/nodes/hud`
+#       không còn `get_node_or_null("Content/…")`. Test: **69/69 PASS** (trước 64).
+#     · KIỂM CHỨNG — FULL SUITE **14/14 PASS**; quét 17 test ngoài suite: y baseline (fading_ink · all_game_modes ·
+#       instruction 478 · countdown_cost · retry_floor · level_progression · hint_line 20/20 · pen_skin 89/89 PASS).
+#       Thêm probe DEV `scripts/test_case/dev_probe_hud_bind.gd` (in export nào còn null).
+#     · ⚠️ GHI NHẬN: `test_challenge_controller` 23 → **24** lỗi — lỗi MỚI là check “Play Mode phải hiện thẻ
+#       THỬ THÁCH”: scene `nodes/hud/portrait/game/level_mode.tscn` đang khai `Challenge.visible = false`
+#       (do thao tác sửa scene của user phiên này) nên thẻ bị ẩn — KHÔNG liên quan refactor (script chỉ trả node).
+#       Cần user xác nhận: thẻ THỬ THÁCH có chủ ý ẩn ở bản DỌC không?
+#     · [ ] CÒN LẠI: nhóm AUTOLOAD/DỊCH VỤ vẫn duck-typing (`AdsManager.has_method("show_rewarded")`, `utils/*.gd`)
+#       — user chốt “tạm bỏ qua” vòng này. `challenge_card.gd`/`limited_button.gd` vẫn tự tra node con CỦA CHÍNH NÓ
+#       (component tự lo phần trình bày — giữ nguyên).
+
+# [x] VÒNG 21g (2026-09-27) — HUD “CHỈ HIỆN THỨ CẦN THIẾT” (theo yêu cầu user: “update lại UI để chỉ hiển thị
+#     những thứ cần thiết, không cần hiện các thứ khác và panel — Dungeon chỉ Step+Floor · Countdown chỉ Budget
+#     Left · Fog chỉ Lượt Thử Lại · SumPath Tổng+Toán tử+Mục tiêu · các mode còn lại chỉ Time; chỉnh cho đẹp ·
+#     làm cả Landscape”. User chốt: **Play mode cũng CHỈ Time** + **XOÁ HẲN node khỏi scene** (không ẩn)):
+#     · TOOL MỚI `tools/ui/hud_trim.py` — bảng `CONFIG` = nguồn sự thật của thiết kế HUD mới: xoá cả CÂY node
+#       khỏi `.tscn`, chỉnh cỡ/neo panel, dọn `@export` trên node gốc cho khớp; chạy lại an toàn (idempotent)
+#       + khôi phục `[ext_resource]` bị thiếu từ git HEAD. ⚠️ BÀI HỌC: regex đọc `id="…"` của `[ext_resource]`
+#       phải là `(?:^|\s)id="…"` — nếu không sẽ khớp nhầm `uid="…"` (chuỗi `uid="` CHỨA `id="`) ⇒ dọn sạch
+#       ext_resource ⇒ scene báo “Resource file not found: res://1_base” + “Unexpected end of file”.
+#       Ngoài ra: GIỮ NGUYÊN kiểu xuống dòng (CRLF) khi ghi lại để diff không nhiễu.
+#     · XOÁ HẲN khỏi scene (cả 2 hướng): thẻ Challenge (Play) · Bomb (Minesweeper) · Note (Blind Memory) ·
+#       Sheet đo mực (Fading Ink) · Sheet phủ kín (One Stroke) · Sheet tường (Wall Builder) · Title/Spent/Price/
+#       Segments (Countdown) · RowVision+Chip+Warn… (Fog) · Title/Bar/SubNote (Sum Path) · Time
+#       (Dungeon/Countdown/Fog/Sum Path bản NGANG).
+#     · GIỮ LẠI + THU GỌN: Dungeon = SỐ BƯỚC + TẦNG · Countdown = Sheet (187px dọc / 190px ngang) chỉ còn
+#       `Budget` · Fog = Sheet (136/170) chỉ còn `Retry` · Sum Path = Sheet (477/320) chỉ còn `BlockCurrent` ·
+#       `Emblem` · `BlockTarget` · các mode khác chỉ THỜI GIAN.
+#     · ⚠️ Node `Time` của bản DỌC là node KẾ THỪA (`game_hud.tscn`) ⇒ KHÔNG xoá được, chỉ ẩn được
+#       (`visible = false`); bản NGANG khai `Time` trong từng HUD chế độ nên xoá được thật. Bản NGANG của
+#       Fading Ink bị xoá nhầm `Time` ⇒ đã CHÈN LẠI (tool hỗ trợ `add_nodes`) + bind lại `time_value_node`.
+#     · SCRIPT gọn theo: 6 HUD thành LỚP RỖNG (`LevelHUD` · `MinesweepHUD` · `BlindMemoryHUD` · `FadingInkHUD`
+#       · `OneStrokeHUD` · `WallBuilderHUD` — giữ lớp để `GameScene._apply_hud_for_mode()` chọn scene + test
+#       nhận diện), `CountdownHUD` chỉ còn 2 export + `_on_update` 6 dòng, `SumPathHUD` bỏ thanh tiến độ
+#       (xoá `_update_progress`). `ChallengeController.card` nay luôn null ở HUD Play (vẫn tính đủ Sao cho popup).
+#     · HÀNG RÀO MỚI (`test_ui_scenes` mục 10): chốt tập node CON CÒN LẠI của `Content/ModeInformation`
+#       (node bị ẩn coi như không hiện) + ruột thẻ `Sheet` cho CẢ 2 hướng → **71/71 PASS**; mục 9 thêm bảng
+#       `HUD_EXPORT_OPTIONAL` ghi rõ export cố ý trống vì node đã xoá.
+#     · CẬP NHẬT TEST CŨ: `test_challenge_controller` viết lại 4 hàm kiểm HUD theo thiết kế mới (Play chỉ Time ·
+#       Dungeon Step/Floor không đồng hồ · Minesweeper chỉ Time · Sum Path 3 khối, toán tử ở giữa) → **24 lỗi cũ
+#       → PASS** ✓ (trước đây `assert` thẻ Thử thách làm test ABORT giữa chừng nên mất cả phần kiểm hồi sinh).
+#     · KIỂM CHỨNG — FULL SUITE **14/14 PASS**; 17 test ngoài suite giữ nguyên số lỗi như cũ (test_hud_modes 22/49 ·
+#       fog 2 · one_stroke 5 · wall_builder 6 · blind 2 · fading_ink PASS · countdown PASS · all_game_modes PASS ·
+#       instruction 478 · hint_line 20/20 · pen_skin 89/89). Render kiểm bằng mắt: `dev_aspects.gd -- --shots
+#       --only=game --sizes=1080x1920,1920x1080 --modes=…` → `tmp_aspect/<cỡ>/game_<mode>.png` (DỌC: Fog chỉ còn
+#       1 thẻ gọn bên phải · Dungeon 2 thẻ · Countdown “14/14” ✓). Sửa 1 lỗi parse của chính harness
+#       (`var column:` suy kiểu Variant ⇒ warning-as-error).
+#     · [ ] GHI NHẬN (không do vòng này): harness báo DỌC “HUD vượt khỏi cột nội dung” (HUD nhô lên ~30px theo
+#       khung `Information` của bố cục; bản NGANG không bị) — quyết định sau: chỉnh slot hoặc nới ngưỡng kiểm.
+
+
 # ----------------------------------------------------------------------------
 # VÒNG SỬA 13 (2026-09-19): MÀN CHƠI — CONTROLLERS + BOARD DÙNG CHUNG (BỎ BỘ ĐÔI THEO HƯỚNG)
 # ----------------------------------------------------------------------------

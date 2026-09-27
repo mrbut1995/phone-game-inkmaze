@@ -8,7 +8,6 @@ extends Control
 ##   - Các ô liền sát nhau 100% không có khe hở.
 ## ============================================================================
 
-signal cell_pressed(pos: Vector2i)
 signal drag_updated(pos: Vector2i)
 signal anchor_tapped(anchor_id: int)
 signal anchor_connected(corner_a: Vector2i, corner_b: Vector2i)
@@ -1190,11 +1189,6 @@ func _on_release(local_pos: Vector2) -> void:
 
 	if _dragging_player:
 		_dragging_player = false
-
-	if not _has_dragged and _pressed_cell != Vector2i(-1, -1):
-		var release_cell := _hit_cell(local_pos)
-		if release_cell == _pressed_cell:
-			cell_pressed.emit(_pressed_cell)
 
 	_pressed_cell = Vector2i(-1, -1)
 	_has_dragged = false

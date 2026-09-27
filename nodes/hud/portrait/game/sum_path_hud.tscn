@@ -2,31 +2,23 @@
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://4bgj8itq83wv" path="res://scripts/nodes/hud/game/sum_path_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" uid="uid://ciljsovgfkwkx" path="res://assets/images/game/card_sum_balance.svg" id="4_sheet"]
-[ext_resource type="Texture2D" uid="uid://dq6rl1smpx2v4" path="res://assets/images/game/bar_sum_fill.svg" id="5_fill"]
-[ext_resource type="Texture2D" uid="uid://c0iv6cyoi50be" path="res://assets/images/game/bar_sum_ticks.svg" id="6_ticks"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="7_theme"]
-[ext_resource type="Texture2D" uid="uid://bxsmxk7ttkpmy" path="res://assets/images/game/card_sum_block_current.svg" id="8_block_current"]
-[ext_resource type="Texture2D" uid="uid://cj7ylm7dmsn2c" path="res://assets/images/game/card_sum_emblem.svg" id="9_emblem"]
-[ext_resource type="Texture2D" uid="uid://cc0fu04piyseb" path="res://assets/images/game/card_sum_block_target.svg" id="10_block_target"]
-[ext_resource type="Texture2D" uid="uid://bnk6otp0l6swg" path="res://assets/images/game/card_sum_chip_need.svg" id="11_chip_need"]
-[ext_resource type="Texture2D" uid="uid://clj1xk45gqpml" path="res://assets/images/game/card_sum_bar_track.svg" id="12_bar_track"]
 
-[node name="Hud" unique_id=1258939475 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_base")]
-theme = ExtResource("7_theme")
+[node name="Hud" unique_id=1258939475 node_paths=PackedStringArray("sum_value_node", "sum_note_label", "operator_value_label", "target_value_node", "need_label") instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-time_value_node = NodePath("")
+sum_value_node = NodePath("Content/ModeInformation/Sheet/HBoxContainer/BlockCurrent/Sum/Value")
+sum_note_label = NodePath("Content/ModeInformation/Sheet/HBoxContainer/BlockCurrent/Sum/Note")
+operator_value_label = NodePath("Content/ModeInformation/Sheet/HBoxContainer/Emblem/Operator/Value")
+target_value_node = NodePath("Content/ModeInformation/Sheet/HBoxContainer/BlockTarget/Target/Value")
+need_label = NodePath("Content/ModeInformation/Sheet/HBoxContainer/BlockTarget/Target/ChipNeed/Need")
 
 [node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1319479814]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.26800007
-anchor_right = 1.0
+anchor_left = 0.188
+anchor_right = 0.868
 anchor_bottom = 1.0
-offset_left = -3.0517578e-05
 grow_horizontal = 0
 grow_vertical = 2
-texture = ExtResource("4_sheet")
 region_rect = Rect2(0, 0, 357.5, 78)
 patch_margin_left = 27
 patch_margin_top = 28
@@ -35,24 +27,78 @@ patch_margin_bottom = 26
 axis_stretch_vertical = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="BlockCurrent" type="NinePatchRect" parent="Content/ModeInformation/Sheet" index="0" unique_id=1408930610]
+[node name="HBoxContainer" type="HBoxContainer" parent="Content/ModeInformation/Sheet" index="0" unique_id=167334726]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.048
-anchor_top = 0.47143754
-anchor_right = 0.4
-anchor_bottom = 0.47143754
-offset_left = -0.16
-offset_top = -30.4302
-offset_bottom = 26.5698
-texture = ExtResource("8_block_current")
+anchor_right = 0.757
+anchor_bottom = 0.45400003
+offset_right = 0.039993286
+offset_bottom = -0.020103455
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BlockCurrent" type="NinePatchRect" parent="Content/ModeInformation/Sheet/HBoxContainer" index="0" unique_id=1408930610]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.45
 patch_margin_left = 11
 patch_margin_top = 8
 patch_margin_right = 13
 patch_margin_bottom = 7
 metadata/_edit_use_anchors_ = true
 
-[node name="Sum" type="Control" parent="Content/ModeInformation/Sheet/BlockCurrent" index="0" unique_id=47725282]
+[node name="Sum" type="VBoxContainer" parent="Content/ModeInformation/Sheet/HBoxContainer/BlockCurrent" index="0" unique_id=237637753]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.929
+anchor_top = -0.512
+anchor_right = 1.9290001
+anchor_bottom = 1.5130001
+offset_left = 84.539
+offset_top = 20.480001
+offset_right = -84.53902
+offset_bottom = -20.520004
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Content/ModeInformation/Sheet/HBoxContainer/BlockCurrent/Sum" index="0" unique_id=1006096875]
+layout_mode = 2
+theme_type_variation = &"HudSumLabel"
+theme_override_font_sizes/font_size = 26
+text = "Tổng số"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Content/ModeInformation/Sheet/HBoxContainer/BlockCurrent/Sum" index="1" unique_id=293590492]
+layout_mode = 2
+theme_type_variation = &"HudSumValue"
+theme_override_font_sizes/font_size = 42
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Note" type="Label" parent="Content/ModeInformation/Sheet/HBoxContainer/BlockCurrent/Sum" index="2" unique_id=1819947076]
+visible = false
+layout_mode = 2
+theme_type_variation = &"HudSumNote"
+text = "STR_HUD_SUM_MOVES"
+vertical_alignment = 1
+resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Emblem" type="TextureRect" parent="Content/ModeInformation/Sheet/HBoxContainer" index="1" unique_id=1002002]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+size_flags_stretch_ratio = 0.1
+mouse_filter = 2
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Operator" type="Control" parent="Content/ModeInformation/Sheet/HBoxContainer/Emblem" index="0" unique_id=795058384]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,86 +106,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Content/ModeInformation/Sheet/BlockCurrent/Sum" index="0" unique_id=1006096875]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.064
-anchor_top = 0.037162304
-anchor_right = 0.93700004
-anchor_bottom = 0.26000002
-offset_left = -0.0640001
-offset_top = -0.0762923
-offset_right = -0.0620041
-offset_bottom = -0.0264416
-theme_type_variation = &"HudSumLabel"
-text = "STR_HUD_SUM"
-vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Sheet/BlockCurrent/Sum" index="1" unique_id=293590492]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.107142895
-anchor_top = 0.22346145
-anchor_right = 0.34523812
-anchor_bottom = 0.89919317
-offset_top = 0.0149984
-offset_bottom = 0.125992
-theme_type_variation = &"HudSumValue"
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Note" type="Label" parent="Content/ModeInformation/Sheet/BlockCurrent/Sum" index="2" unique_id=1819947076]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.3730159
-anchor_top = 0.5342333
-anchor_right = 0.8731111
-anchor_bottom = 0.8850001
-offset_top = -1.5
-offset_right = -0.012001
-offset_bottom = -0.00896072
-theme_type_variation = &"HudSumNote"
-text = "STR_HUD_SUM_MOVES"
-vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Emblem" type="TextureRect" parent="Content/ModeInformation/Sheet" index="1" unique_id=1002002]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4303986
-anchor_top = 0.2795298
-anchor_right = 0.54796505
-anchor_bottom = 0.61494714
-offset_left = 0.132492
-offset_top = 0.0255032
-offset_right = 0.102493
-offset_bottom = 0.00213623
-mouse_filter = 2
-texture = ExtResource("9_emblem")
-expand_mode = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Operator" type="Control" parent="Content/ModeInformation/Sheet/Emblem" index="0" unique_id=795058384]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -20.5964
-offset_bottom = 20.5964
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Sheet/Emblem/Operator" index="0" unique_id=685831271]
+[node name="Value" type="Label" parent="Content/ModeInformation/Sheet/HBoxContainer/Emblem/Operator" index="0" unique_id=685831271]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -147,99 +115,68 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"HudOperator"
+theme_override_font_sizes/font_size = 32
 text = "="
 horizontal_alignment = 1
 vertical_alignment = 1
-resize_font_to_fit = true
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="BlockTarget" type="NinePatchRect" parent="Content/ModeInformation/Sheet" index="2" unique_id=1243368685]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.59400004
-anchor_top = 0.448
-anchor_right = 0.966
-anchor_bottom = 0.45600003
-offset_left = 0.144989
-offset_top = -27.5502
-offset_right = 0.154999
-offset_bottom = 28.4667
-texture = ExtResource("10_block_target")
+[node name="BlockTarget" type="NinePatchRect" parent="Content/ModeInformation/Sheet/HBoxContainer" index="2" unique_id=1243368685]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.45
 patch_margin_left = 12
 patch_margin_top = 7
 patch_margin_right = 14
 patch_margin_bottom = 8
 metadata/_edit_use_anchors_ = true
 
-[node name="Target" type="Control" parent="Content/ModeInformation/Sheet/BlockTarget" index="0" unique_id=901729313]
+[node name="Target" type="VBoxContainer" parent="Content/ModeInformation/Sheet/HBoxContainer/BlockTarget" index="0" unique_id=809431141]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -23.5
-offset_bottom = 23.5
+offset_left = -108.41499
+offset_top = -29.0
+offset_right = 108.41499
+offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="Content/ModeInformation/Sheet/BlockTarget/Target" index="0" unique_id=1749693657]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.060000002
-anchor_top = 0.036000002
-anchor_right = 0.887
-anchor_bottom = 0.26200002
-offset_left = 0.0199995
-offset_top = 0.00631976
-offset_right = 0.0289993
-offset_bottom = -0.00956249
+[node name="Label" type="Label" parent="Content/ModeInformation/Sheet/HBoxContainer/BlockTarget/Target" index="0" unique_id=1749693657]
+layout_mode = 2
 theme_type_variation = &"HudTargetLabel"
-text = "STR_HUD_TARGET"
+theme_override_font_sizes/font_size = 26
+text = "Mục Tiêu"
+horizontal_alignment = 1
 vertical_alignment = 1
-resize_font_to_fit = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Value" type="Label" parent="Content/ModeInformation/Sheet/BlockTarget/Target" index="1" unique_id=187751877]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.102000006
-anchor_top = 0.22600001
-anchor_right = 0.32340604
-anchor_bottom = 0.94402516
-offset_left = -0.0660009
-offset_top = -0.0158815
-offset_right = -0.0130043
-offset_bottom = 0.0108147
+[node name="Value" type="Label" parent="Content/ModeInformation/Sheet/HBoxContainer/BlockTarget/Target" index="1" unique_id=187751877]
+layout_mode = 2
 theme_type_variation = &"HudTargetValue"
+theme_override_font_sizes/font_size = 32
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
-resize_font_to_fit = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ChipNeed" type="NinePatchRect" parent="Content/ModeInformation/Sheet/BlockTarget/Target" index="2" unique_id=1871898265]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.38700002
-anchor_top = 0.5216163
-anchor_right = 0.9700377
-anchor_bottom = 0.94482696
-offset_left = 0.0289955
-offset_top = -0.0159664
-offset_right = -0.0150146
-offset_bottom = -0.0268631
-texture = ExtResource("11_chip_need")
+[node name="ChipNeed" type="NinePatchRect" parent="Content/ModeInformation/Sheet/HBoxContainer/BlockTarget/Target" index="2" unique_id=1871898265]
+visible = false
+layout_mode = 2
 patch_margin_left = 4
 patch_margin_top = 4
 patch_margin_right = 6
 patch_margin_bottom = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Need" type="Label" parent="Content/ModeInformation/Sheet/BlockTarget/Target/ChipNeed" index="0" unique_id=1401610555]
+[node name="Need" type="Label" parent="Content/ModeInformation/Sheet/HBoxContainer/BlockTarget/Target/ChipNeed" index="0" unique_id=1401610555]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.052980136
@@ -255,65 +192,5 @@ vertical_alignment = 1
 resize_font_to_fit = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Title" type="Label" parent="Content/ModeInformation/Sheet" index="3" unique_id=12162753]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.047202796
-anchor_top = 0.0069473013
-anchor_right = 0.46542662
-anchor_bottom = 0.22682247
-offset_left = 0.125
-offset_top = 0.0263195
-offset_right = 0.109985
-offset_bottom = 0.00805855
-theme_type_variation = &"HudSumTitle"
-text = "STR_HUD_SUM_TITLE"
-vertical_alignment = 1
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Bar" type="Control" parent="Content/ModeInformation/Sheet" index="4" unique_id=686989728]
-clip_contents = true
-layout_mode = 1
-anchor_left = 0.05
-anchor_top = 0.79247695
-anchor_right = 0.96500003
-anchor_bottom = 0.8644769
-offset_left = 0.125
-offset_top = -0.0123978
-offset_right = 0.0124817
-offset_bottom = 0.0235977
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="BarTrack" type="TextureRect" parent="Content/ModeInformation/Sheet/Bar" index="0" unique_id=1002005]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("12_bar_track")
-expand_mode = 1
-
-[node name="Fill" type="TextureRect" parent="Content/ModeInformation/Sheet/Bar" index="1" unique_id=282964108]
-layout_mode = 0
-offset_right = 327.0
-offset_bottom = 9.0
-mouse_filter = 2
-texture = ExtResource("5_fill")
-expand_mode = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Ticks" type="TextureRect" parent="Content/ModeInformation/Sheet/Bar" index="2" unique_id=489488047]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("6_ticks")
-expand_mode = 1
-metadata/_edit_use_anchors_ = true
+[node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=212466531]
+visible = false

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://b8fj3r5c715mg"]
+
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_dymst"]
+
+[node name="BaseLayout" unique_id=1041501532 instance=ExtResource("1_dymst")]

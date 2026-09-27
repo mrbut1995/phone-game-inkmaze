@@ -47,6 +47,8 @@ func _init() -> void:
 	_section_6_sources()
 	_section_7_board_hud_popup()
 	_section_8_fixed_scenes()
+	_section_9_hud_bindings()
+	_section_10_hud_minimal()
 
 	print("\n--------------------------------------------------------")
 	if _failed == 0:
@@ -380,6 +382,174 @@ func _section_7_board_hud_popup() -> void:
 		row.set_selected(false)
 		_entry(not row.check.visible, "bỏ chọn thì ẩn dấu tích")
 		row.queue_free()
+
+
+# ---------------------------------------------------------------------------
+# 9. HUD: node con của scene phải được BIND vào `@export` — script KHÔNG dò đường dẫn
+#    ("Content/ModeInformation/...") nữa; xem GDD §10.2g.
+# ---------------------------------------------------------------------------
+const HUD_FOLDERS := [
+	"res://nodes/hud/portrait/game",
+	"res://nodes/hud/landscape/game",
+]
+## Export CHỈ có ở HUD NGANG (khung Hướng dẫn nhúng `InstructionSection`) — HUD DỌC để trống là
+## ĐÚNG thiết kế (xem `GameHUD.instruction_section()`).
+const HUD_PORTRAIT_OPTIONAL := [
+	"instruction_section_node", "instruction_host", "instruction_fallback_btn",
+]
+## Scene HUD TRƯU TƯỢNG (chưa có `Time` riêng của bản NGANG ⇒ node do từng HUD chế độ khai).
+## Bỏ qua scene này khi kiểm export: mọi HUD CHẾ ĐỘ đều được kiểm riêng.
+const HUD_ABSTRACT_SCENES := ["game_hud.tscn"]
+## Export CỐ Ý để trống vì node đã XOÁ khỏi scene (2026-09-27 — “chỉ hiện thứ cần thiết”):
+## bản NGANG khai `Time` trong từng HUD chế độ nên xoá được; bản DỌC dùng node KẾ THỪA
+## (`game_hud.tscn`) nên chỉ ẩn được — vì vậy bảng này theo TÊN FILE (áp cho cả 2 hướng).
+const HUD_EXPORT_OPTIONAL := {
+	"dungeon_mode.tscn": ["time_value_node"],       # Dungeon: chỉ SỐ BƯỚC + TẦNG
+	"countdown_hud.tscn": ["time_value_node"],      # Countdown: chỉ NGÂN SÁCH CÒN
+	"fog_of_war_hud.tscn": ["time_value_node"],     # Fog of War: chỉ LƯỢT THỬ LẠI
+	"sum_path_hud.tscn": ["time_value_node"],       # Sum Path: chỉ TỔNG · TOÁN TỬ · MỤC TIÊU
+	"fading_ink_hud.tscn": ["time_value_node"],     # bản NGANG xoá `Time`, bản DỌC vẫn có (kế thừa)
+}
+
+
+func _section_9_hud_bindings() -> void:
+	print("[9] HUD: node con bind qua @export...")
+
+	var scenes: Array[String] = []
+	for folder in HUD_FOLDERS:
+		var dir := DirAccess.open(folder)
+		if dir == null:
+			continue
+		for name in dir.get_files():
+			if name.ends_with(".tscn"):
+				scenes.append("%s/%s" % [folder, name])
+
+	var missing: Array[String] = []
+	var exports := 0
+	for path in scenes:
+		var packed := load(path) as PackedScene
+		if packed == null:
+			missing.append("%s: khong load duoc" % path.get_file())
+			continue
+		var node := packed.instantiate()
+		var script: Script = node.get_script()
+		if script != null and not HUD_ABSTRACT_SCENES.has(path.get_file()):
+			for prop in script.get_script_property_list():
+				if prop.hint != PROPERTY_HINT_NODE_TYPE:
+					continue
+				if HUD_PORTRAIT_OPTIONAL.has(prop.name) and path.contains("/portrait/"):
+					continue
+				if (HUD_EXPORT_OPTIONAL.get(path.get_file(), []) as Array).has(prop.name):
+					continue
+				exports += 1
+				if node.get(prop.name) == null:
+					missing.append("%s: %s" % [path.get_file(), prop.name])
+		node.free()
+
+	_entry(scenes.size() >= 18, "quet duoc %d scene HUD (2 huong)" % scenes.size())
+	_entry(exports >= 30, "HUD co %d export NODE can bind" % exports)
+	_entry(missing.is_empty(),
+		"moi export node cua HUD deu duoc BIND trong scene%s"
+			% ("" if missing.is_empty() else " — thieu: %s" % ", ".join(missing)))
+
+	# Hàng rào: script HUD KHÔNG được dò node con bằng đường dẫn nữa
+	var comments := RegEx.new()
+	comments.compile("#[^\\n]*")
+	var offenders: Array[String] = []
+	var sources: Array[String] = []
+	_collect_sources("res://scripts/nodes/hud", sources)
+	for path in sources:
+		if not FileAccess.file_exists(path):
+			continue
+		var cleaned := comments.sub(FileAccess.get_file_as_string(path), "", true)
+		var lines := cleaned.split("\n")
+		for i in lines.size():
+			var line := lines[i]
+			if line.contains("get_node_or_null(\"Content/") or line.contains("get_node(\"Content/"):
+				offenders.append("%s:%d" % [path.get_file(), i + 1])
+
+	_entry(not sources.is_empty(), "quet duoc %d script HUD" % sources.size())
+	_entry(offenders.is_empty(),
+		"khong script HUD nao con do node con bang duong dan%s"
+			% ("" if offenders.is_empty() else " — con: %s" % ", ".join(offenders)))
+
+
+# ---------------------------------------------------------------------------
+# 10. HUD “CHỈ HIỆN THỨ CẦN THIẾT” (2026-09-27) — đúng danh sách node CÒN LẠI của mỗi chế độ
+# ---------------------------------------------------------------------------
+## Node CON HIỆN của `Content/ModeInformation` (node vừa xoá thì không còn; node kế thừa bị ẩn
+## `visible = false` thì coi như không hiện) — mỗi HUD 2 HƯỚNG phải giống nhau.
+const HUD_VISIBLE_CARDS := {
+	"level_mode.tscn": ["Time"],                     # Play: CHỈ THỜI GIAN (thử thách ở popup)
+	"minesweep_hud.tscn": ["Time"],                  # Minesweeper: CHỈ THỜI GIAN
+	"blind_memory_hud.tscn": ["Time"],               # Blind Memory: CHỈ THỜI GIAN
+	"fading_ink_hud.tscn": ["Time"],                 # Fading Ink: CHỈ THỜI GIAN
+	"one_stroke_hud.tscn": ["Time"],                 # One Stroke: CHỈ THỜI GIAN
+	"wall_builder_hud.tscn": ["Time"],               # Wall Builder: CHỈ THỜI GIAN
+	"dungeon_mode.tscn": ["Step", "Floor"],         # Dungeon: SỐ BƯỚC + TẦNG
+	"countdown_hud.tscn": ["Sheet"],                 # Countdown: NGÂN SÁCH CÒN
+	"fog_of_war_hud.tscn": ["Sheet"],                # Fog of War: LƯỢT THỬ LẠI
+	"sum_path_hud.tscn": ["Sheet"],                  # Sum Path: TỔNG · TOÁN TỬ · MỤC TIÊU
+}
+## Bên trong thẻ `Sheet` chỉ còn đúng những node này
+const HUD_SHEET_ROWS := {
+	"countdown_hud.tscn": ["Budget"],
+	"fog_of_war_hud.tscn": ["Retry"],
+	"sum_path_hud.tscn": ["BlockCurrent", "Emblem", "BlockTarget"],
+}
+
+
+func _section_10_hud_minimal() -> void:
+	print("[10] HUD chi hien thu can thiet...")
+
+	var bad: Array[String] = []
+	var checked := 0
+	for folder in HUD_FOLDERS:
+		var dir := DirAccess.open(folder)
+		if dir == null:
+			continue
+		for name in dir.get_files():
+			var file_name := name.get_file()
+			if not name.ends_with(".tscn") or not HUD_VISIBLE_CARDS.has(file_name):
+				continue
+			var node := (load("%s/%s" % [folder, name]) as PackedScene).instantiate()
+			var info := node.get_node_or_null("Content/ModeInformation")
+			var shown: Array[String] = []
+			if info != null:
+				for child in info.get_children():
+					var c := child as Control
+					if c != null and c.visible:
+						shown.append(String(c.name))
+			var want: Array = HUD_VISIBLE_CARDS[file_name]
+			shown.sort()
+			var want_sorted := want.duplicate()
+			want_sorted.sort()
+			checked += 1
+			if shown != want_sorted:
+				bad.append("%s (%s): hien [%s] — can [%s]" % [folder.contains("landscape") and "NGANG" or "DỌC",
+					file_name, ", ".join(shown), ", ".join(want_sorted)])
+			# bên trong Sheet
+			if HUD_SHEET_ROWS.has(file_name):
+				var sheet := node.get_node_or_null("Content/ModeInformation/Sheet")
+				var rows: Array[String] = []
+				if sheet != null:
+					for child in sheet.get_children():
+						rows.append(String(child.name))
+				rows.sort()
+				var want_rows: Array = (HUD_SHEET_ROWS[file_name] as Array).duplicate()
+				want_rows.sort()
+				var shape_ok := sheet != null and rows == want_rows
+				checked += 1
+				if not shape_ok:
+					bad.append("%s %s Sheet: con [%s] — can [%s]" % [
+						folder.contains("landscape") and "NGANG" or "DỌC",
+						file_name, ", ".join(rows), ", ".join(want_rows)])
+			node.free()
+
+	_entry(checked >= 20, "kiem %d luot (scene HUD x 2 huong + the Sheet)" % checked)
+	_entry(bad.is_empty(),
+		"moi HUD chi hien dung thu can thiet%s"
+			% ("" if bad.is_empty() else " — sai: %s" % "; ".join(bad)))
 
 
 # ---------------------------------------------------------------------------

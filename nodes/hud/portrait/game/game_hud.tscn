@@ -3,9 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_hr3we"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_00ya7"]
 [ext_resource type="PackedScene" uid="uid://cb348h6q1r8lf" path="res://nodes/hud/portrait/game/action_bar.tscn" id="2_6vbsf"]
-[ext_resource type="Texture2D" uid="uid://d2u23v5xlibqv" path="res://assets/images/game/card_time.svg" id="3_00ya7"]
 
-[node name="Hud" unique_id=1383101299 instance=ExtResource("1_hr3we")]
+[node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node", "content_root", "action_bar_node") instance=ExtResource("1_hr3we")]
 anchors_preset = 15
 anchor_top = 0.0
 anchor_right = 1.0
@@ -17,6 +16,9 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_00ya7")
+time_value_node = NodePath("Content/ModeInformation/Time/Value")
+content_root = NodePath("Content")
+action_bar_node = NodePath("Content/ActionBar")
 
 [node name="Content" type="Control" parent="." index="0" unique_id=1685873785]
 layout_mode = 1
@@ -38,41 +40,46 @@ metadata/_edit_use_anchors_ = true
 [node name="Time" type="TextureRect" parent="Content/ModeInformation" index="0" unique_id=212466531]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.25
-anchor_bottom = 1.0
+anchor_left = 0.30304822
+anchor_top = 0.03875966
+anchor_right = 0.6429518
+anchor_bottom = 1.1618453
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("3_00ya7")
+metadata/_edit_use_anchors_ = true
 
 [node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=494914795]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.09200001
-anchor_top = 0.10005431
-anchor_right = 0.94000006
-anchor_bottom = 0.317
+anchor_left = -0.19725655
+anchor_top = -0.042856574
+anchor_right = 1.3800001
+anchor_bottom = 0.29900002
 offset_top = -0.0136375
-offset_right = -0.015258789
+offset_right = -0.05760193
+offset_bottom = 0.014850616
 theme_type_variation = &"HudTimeHead"
+theme_override_font_sizes/font_size = 28
 text = "STR_HUD_TIME"
 horizontal_alignment = 1
 vertical_alignment = 1
-resize_font_to_fit = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1109199695]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.124000005
-anchor_top = 0.34100002
-anchor_right = 0.86
-anchor_bottom = 0.66800004
+anchor_left = 0.17760628
+anchor_top = 0.38477495
+anchor_right = 0.9052674
+anchor_bottom = 0.7080672
 offset_top = -0.0430794
 offset_bottom = -0.0118408
 theme_type_variation = &"HudTimeValue"
+theme_override_font_sizes/font_size = 23
 text = "0:00"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=2036591602]
 visible = false

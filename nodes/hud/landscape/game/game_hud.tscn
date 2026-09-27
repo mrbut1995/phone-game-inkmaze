@@ -11,7 +11,7 @@
 [ext_resource type="LabelSettings" uid="uid://bwpq01l1whp4t" path="res://resources/settings/text/text_game_button_label.tres" id="8_lbl"]
 [ext_resource type="LabelSettings" uid="uid://dg2subtoolbtn" path="res://resources/settings/text/text_game_button_sub.tres" id="9_sub"]
 
-[node name="Hud" unique_id=1383101299 instance=ExtResource("1_8cncu")]
+[node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("content_root", "action_bar_node", "instruction_section_node", "instruction_host", "instruction_fallback_btn") instance=ExtResource("1_8cncu")]
 anchors_preset = 15
 anchor_top = 0.0
 anchor_right = 1.0
@@ -23,6 +23,11 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_adk6y")
+content_root = NodePath("Content")
+action_bar_node = NodePath("Content/ActionBar")
+instruction_section_node = NodePath("Content/InstructionSection")
+instruction_host = NodePath("Content/InstructionSection/Panel/GuideHost")
+instruction_fallback_btn = NodePath("Content/InstructionSection/Panel/Fallback")
 
 [node name="Content" type="VBoxContainer" parent="." index="0" unique_id=159019822]
 layout_mode = 1

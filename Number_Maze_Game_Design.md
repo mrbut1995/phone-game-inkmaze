@@ -590,17 +590,32 @@ Cơ chế: `GameManager.prepare_mode_run(mode_id, difficulty, test_run, floor_ov
 
 | Chế độ | `mode_id` | HUD scene | Mockup matchup | Thẻ trên HUD |
 |---|---|---|---|---|
-| Play Mode | `play` | `nodes/hud/level_mode.tscn` (LevelHUD) | `mockup/matchup_level.svg` | THỜI GIAN + THỬ THÁCH |
-| Dungeon Mode | `dungeon` | `nodes/hud/dungeon_mode.tscn` (DungeonHUD) | `mockup/matchup_dungeon.svg` | THỜI GIAN + SỐ BƯỚC + TẦNG |
+| Play Mode | `play` | `nodes/hud/level_mode.tscn` (LevelHUD) | `mockup/matchup_level.svg` | **CHỈ THỜI GIAN** (thẻ THỬ THÁCH gỡ 2026-09-27 — kết quả + Sao ở popup kết ván) |
+| Dungeon Mode | `dungeon` | `nodes/hud/dungeon_mode.tscn` (DungeonHUD) | `mockup/matchup_dungeon.svg` | **SỐ BƯỚC + TẦNG** (bỏ đồng hồ — 2026-09-27) |
 | Time Attack Maze | `time_attack` | `nodes/hud/time_attack_hud.tscn` (TimeAttackHUD) | `mockup/matchup_time_attack.svg` | **CHỈ THỜI GIAN** (đếm ngược, đặt giữa khung — 2026-09-19) |
-| Minesweeper Maze | `minesweeper` | `nodes/hud/minesweep_hud.tscn` (MinesweepHUD) | `mockup/matchup_minesweeper.svg` | THỜI GIAN + BOM CÒN LẠI |
-| Blind Memory Maze | `blind_memory` | `nodes/hud/blind_memory_hud.tscn` (BlindMemoryHUD) | `mockup/matchup_blind_memory.svg` | THỜI GIAN + GHI NHỚ VỊ TRÍ TƯỜNG (+ popup đếm ngược) |
-| Fog of War Maze | `fog_of_war` | `nodes/hud/fog_of_war_hud.tscn` (FogOfWarHUD) | `mockup/matchup_fog_of_war.svg` | THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử · tầm nhìn · cảnh báo) — **2026-09-18** |
-| One Stroke | `one_stroke` | `nodes/hud/one_stroke_hud.tscn` (OneStrokeHUD) | `mockup/matchup_one_stroke.svg` | THỜI GIAN + BẢNG TIẾN ĐỘ PHỦ KÍN |
-| Wall Builder | `wall_builder` | `nodes/hud/wall_builder_hud.tscn` (WallBuilderHUD) | `mockup/matchup_wall_builder.svg` | THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn · lượt gửi) |
-| Sum Path | `sum_path` | `nodes/hud/sum_path_hud.tscn` (SumPathHUD) | `mockup/matchup_sum_path.svg` | THỜI GIAN + CÂN BẰNG TỔNG ĐIỂM (TỔNG — TOÁN TỬ — MỤC TIÊU + tiến độ) |
-| Countdown Cost | `countdown_cost` | `nodes/hud/countdown_hud.tscn` (CountdownHUD) | `mockup/matchup_countdown_cost.svg` | THỜI GIAN + SỔ NGÂN SÁCH BƯỚC CHÂN |
-| Fading Ink | `fading_ink` | `nodes/hud/fading_ink_hud.tscn` (FadingInkHUD) | `mockup/matchup_fading_ink.svg` | THỜI GIAN + TRẠM ĐO ĐỘ PHAI MỰC |
+| Minesweeper Maze | `minesweeper` | `nodes/hud/minesweep_hud.tscn` (MinesweepHUD) | `mockup/matchup_minesweeper.svg` | **CHỈ THỜI GIAN** (bỏ thẻ BOM CÒN LẠI — 2026-09-27) |
+| Blind Memory Maze | `blind_memory` | `nodes/hud/blind_memory_hud.tscn` (BlindMemoryHUD) | `mockup/matchup_blind_memory.svg` | **CHỈ THỜI GIAN** (bỏ thẻ GHI NHỚ; popup đếm ngược giữ nguyên — 2026-09-27) |
+| Fog of War Maze | `fog_of_war` | `nodes/hud/fog_of_war_hud.tscn` (FogOfWarHUD) | `mockup/matchup_fog_of_war.svg` | **CHỈ LƯỢT THỬ LẠI** (bỏ đồng hồ · tầm nhìn · cảnh báo — 2026-09-27) |
+| One Stroke | `one_stroke` | `nodes/hud/one_stroke_hud.tscn` (OneStrokeHUD) | `mockup/matchup_one_stroke.svg` | **CHỈ THỜI GIAN** (bỏ BẢNG TIẾN ĐỘ PHỦ KÍN — 2026-09-27) |
+| Wall Builder | `wall_builder` | `nodes/hud/wall_builder_hud.tscn` (WallBuilderHUD) | `mockup/matchup_wall_builder.svg` | **CHỈ THỜI GIAN** (bỏ BẢNG TƯỜNG ĐÃ VẼ — 2026-09-27) |
+| Sum Path | `sum_path` | `nodes/hud/sum_path_hud.tscn` (SumPathHUD) | `mockup/matchup_sum_path.svg` | **TỔNG — TOÁN TỬ — MỤC TIÊU** (bỏ đồng hồ + thanh tiến độ + dòng tiêu đề — 2026-09-27) |
+| Countdown Cost | `countdown_cost` | `nodes/hud/countdown_hud.tscn` (CountdownHUD) | `mockup/matchup_countdown_cost.svg` | **CHỈ NGÂN SÁCH CÒN** (bỏ đồng hồ · tiêu tốn · giá cước · dải phân đoạn — 2026-09-27) |
+| Fading Ink | `fading_ink` | `nodes/hud/fading_ink_hud.tscn` (FadingInkHUD) | `mockup/matchup_fading_ink.svg` | **CHỈ THỜI GIAN** (bỏ TRẠM ĐO ĐỘ PHAI MỰC — 2026-09-27) |
+
+> **v2.18 (2026-09-27) — HUD “chỉ hiện thứ cần thiết” (theo yêu cầu user)**: mỗi HUD CHỈ còn đúng thẻ
+> cần cho luật chơi; các node thừa đã **XOÁ HẲN khỏi scene** bằng tool `tools/ui/hud_trim.py`
+> (bảng `CONFIG` trong tool là nguồn sự thật: xoá node + chỉnh cỡ/neo panel + dọn `@export` cho khớp).
+> ⚠️ Node `Time` của bản DỌC là node **KẾ THỪA** (`game_hud.tscn`) ⇒ KHÔNG xoá được, chỉ ẩn được
+> (`visible = false`); bản NGANG khai `Time` trong từng HUD chế độ nên xoá được thật.
+> **Hàng rào**: `test_ui_scenes` mục **10** chốt tập node CON CÒN LẠI của `Content/ModeInformation`
+> (node bị ẩn coi như không hiện) + ruột thẻ `Sheet` (Countdown = `Budget` · Fog = `Retry` ·
+> Sum Path = `BlockCurrent`+`Emblem`+`BlockTarget`) cho **cả 2 hướng**; mục **9** vẫn kiểm mọi `@export`
+> node phải được bind (bảng `HUD_EXPORT_OPTIONAL` ghi rõ export cố ý trống vì node đã xoá).
+> **Hệ quả kèm theo**: `ChallengeController` không còn nhận thẻ (`card` = null ⇒ bỏ qua vẽ), popup
+> thắng/thua vẫn hiện đủ 3 thử thách + Sao; `MinesweepHUD`/`BlindMemoryHUD`/`FadingInkHUD`/
+> `OneStrokeHUD`/`WallBuilderHUD`/`LevelHUD` nay là lớp RỖNG (chỉ để `GameScene` chọn đúng scene HUD +
+> cho test nhận diện lớp). Kiểm chứng: `test_ui_scenes` **71/71** · `test_challenge_controller`
+> **PASS** (trước 24 check lệch) · full suite **14/14**.
 
 > Hiện **mọi chế độ Special đều có HUD scene riêng** (không dùng chung `LevelHUD` nữa); `matchup_level.svg` (Play) vẫn là mockup gốc cho layout `LevelHUD`. Các chế độ dùng **khung HUD mới (mục 10.2b)** và **KHÔNG hiện thẻ THỬ THÁCH trên HUD**: `sum_path` · `countdown_cost` · `fading_ink` (2026-02) · `fog_of_war` (2026-09-18) · `one_stroke` · `wall_builder` (2 chế độ mới — §5.12–5.13, chưa lập trình). Thử thách/Sao vẫn được tính đủ và hiện ở popup thắng/thua.
 
@@ -962,9 +977,32 @@ gắn gắn thẳng vào node đó** (như `ChallengeCard`), lớp cha giữ API
   Thêm **1 cặp** vào `BaseGameMode`: *cờ năng lực* (mặc định `false`) + *hàm mặc định* (giá trị trung tính),
   rồi mode con override; nơi gọi chỉ còn `if mode.shows_ink_left(): … mode.ink_left(pos)`.
 - **Còn lại (chưa làm)**: nhóm **autoload/dịch vụ** vẫn dùng `has_method()` để chịu được “dịch vụ chưa có”
-  (`AdsManager` · `ArchivementManager` · các wrapper `utils/*.gd`) — cùng kiểu “dịch vụ tuỳ chọn”, xử lý sau;
-  và `GridController.handle_cell_pressed()` đang trỏ tới `BoardView.highlight_real_walls_of_cell()` **không tồn tại**
-  (guard luôn `false`) — cần quyết định CÀI hay XOÁ (xem TODO VÒNG 21e).
+  (`AdsManager` · `ArchivementManager` · các wrapper `utils/*.gd`) — cùng kiểu “dịch vụ tuỳ chọn”, xử lý sau.
+- Đã XOÁ hook chết (v2.18): `GridController.handle_cell_pressed()` trỏ tới `BoardView.highlight_real_walls_of_cell()`
+  **không tồn tại** (guard `has_method` luôn `false`) + cả dây `signal cell_pressed` (`BoardView` · `MazeCell`)
+  vì không nơi nào nghe — chạm ô không có phản hồi nào cả, thêm lại thì phải viết cả View lẫn Controller.
+
+**Node con của scene ⇒ `@export` bind TRONG SCENE, KHÔNG dò đường dẫn (v2.18)**
+
+Trước: script tự `get_node_or_null("Content/ModeInformation/Sheet/Retry/Value")`. Sau: khai **1 `@export`**
+trỏ node rồi **bind trong `.tscn`**; đổi node/bố cục ⇒ sửa scene, script không đổi.
+
+| Trước (dò đường dẫn trong script) | Sau (bind trong scene) |
+|---|---|
+| `FogOfWarHUD._on_update()` gọi `get_node_or_null("Content/ModeInformation/Sheet/Retry/Value")` | `@export var retry_value_node : Label` + `nodes/hud/<hướng>/game/fog_of_war_hud.tscn` ghi `retry_value_node = NodePath("Content/ModeInformation/Sheet/Retry/Value")` |
+| 10 HUD chế độ (Level · Dungeon · Minesweeper · Blind Memory · Fading Ink · Fog of War · One Stroke · Wall Builder · Sum Path · Countdown) tự dò `Content/ModeInformation/…` | mỗi HUD 1–11 export (`step_value_node` · `cover_note_label` · `chip_pricey_label` · `fill_clip` · `segments_box` · `challenge_node`…), bind trong **cả 2 hướng** |
+| `BaseHUD`: `get_node_or_null("Content")` · `("Content/ActionBar")` · `("Content/ModeInformation/Time")` + `get_time_node()` | `content_root` · `action_bar_node` · `time_value_node` (bind ở `game_hud.tscn` 2 hướng; scene bản NGANG bind thêm `time_value_node` vì `Time` do từng HUD khai) |
+| `GameHUD`: `get_node_or_null("Content/InstructionSection")` rồi `Panel/GuideHost` + `Panel/Fallback` (bản DỌC không có khung nên luôn `null` — che mất lỗi) | `instruction_section_node` / `instruction_host` / `instruction_fallback_btn` — chỉ HUD NGANG bind, HUD DỌC để trống là **đúng thiết kế** |
+
+- `.tscn` ghi 2 phần: dòng `[node name="Hud" … node_paths=PackedStringArray("a", "b") instance=…]` +
+  các dòng `a = NodePath("Đường/Dẫn")` trong khối node đó (Godot tự sinh khi kéo node vào ô export).
+- Hệ quả ĐÃ SỬA kèm: đồng hồ của các HUD chế độ (Fog · One Stroke · Sum Path · Wall Builder…) trước đây
+  để `time_value_node = NodePath("")` ⇒ `set_time()` không ghi gì (đồng hồ đứng im); nay bind đủ 2 hướng.
+- **Hàng rào** (`test_ui_scenes` mục 9): instantiate **25 scene HUD** (2 hướng) — mọi `@export` kiểu NODE phải
+  KHÁC `null` (bỏ qua 3 export `instruction_*` ở HUD DỌC + scene TRỪU TƯỢNG `game_hud.tscn`); và quét mã nguồn
+  `scripts/nodes/hud`: không còn `get_node_or_null("Content/…")`.
+- ⚠️ Scene TRƯU TƯỢNG (`game_hud.tscn`) không có node riêng của bản ngang (`Time` để từng HUD chế độ khai)
+  ⇒ đừng bind ở đó rồi tưởng mode scene thừa hưởng; export bind trong scene CHA chỉ ăn khi node có thật.
 
 - Thêm `class_name` mới ⇒ chạy 1 lần `godot --headless --path . --editor --quit` để Godot quét lại danh sách
   lớp (`.godot/global_script_class_cache.cfg`), nếu không script khác báo “Could not resolve external class member”.

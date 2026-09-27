@@ -82,61 +82,19 @@ func _init() -> void:
 func _check_play_hud(scene: GameScene, _gc: GameController, cc: ChallengeController) -> void:
 	var hud := scene.ui_controller.hud as LevelHUD
 	assert(hud != null, "Play Mode phai dung LevelHUD (nodes/hud/level_mode.tscn)")
-	var chal_card := hud.challenge_card()
-	assert(chal_card != null, "LevelHUD phai co the THU THACH (ChallengeCard)")
-
-	if not chal_card.visible:
-		_fail("Play Mode phai hien the THỬ THÁCH")
-
-	# Cột tổng kết: "x" + "/3 ✓" + dòng "n ĐÃ HOÀN THÀNH"
-	var count_label := chal_card.get_node_or_null("CountRow/Count") as Label
-	var count_max := chal_card.get_node_or_null("CountRow/CountMax") as Label
-	var note := chal_card.get_node_or_null("Note") as Label
-	if count_label == null or count_label.text.is_empty():
-		_fail("The THU THACH thieu nhan dem so da dat (Count)")
-	if count_max == null or not count_max.text.begins_with("/"):
-		_fail("Nhan dem phai co phan tong dang '/3', dang la '%s'" % (count_max.text if count_max != null else "<null>"))
-	if note == null or note.text.is_empty():
-		_fail("The THU THACH thieu dong 'n DA HOAN THANH' (Note)")
-
-	# Thẻ THỬ THÁCH phải đủ cao (đáy chạm mép trên vạch xanh của bàn cờ, KHÔNG đè lên bàn cờ) và chứa
-	# đủ 3 dải thử thách bên trong. Lưu ý: trong --headless viewport không phải 1080x1920 nên KHÔNG so
-	# toạ độ tuyệt đối với bàn cờ (đã kiểm bằng render 1:1: đáy thẻ y=424 = mép trên vạch xanh).
-	var chal_h := (chal_card as Control).size.y
-	var last_row := chal_card.get_node_or_null("Row3") as Control
-	if chal_h < 240.0:
-		_fail("The THU THACH phai cao >= 240px (dang la %.0f)" % chal_h)
-	if last_row == null or last_row.size.y < 50.0:
-		_fail("Dai thu thach phai cao >= 50px (dang la %.0f)" % (last_row.size.y if last_row != null else -1.0))
-	elif last_row.position.y + last_row.size.y > chal_h - 20.0:
-		_fail("Dai thu thach cuoi bi tran ra ngoai the THU THACH")
-	print("[CHECK] The THU THACH cao %.0fpx, 3 dai thu thach cao %.0fpx nam gon ben trong" % [chal_h, last_row.size.y if last_row != null else 0.0])
-
-	# 3 dải thử thách: nền (Bg) + ô tích (Check) + tên + (trạng thái HOẶC nhãn ĐẠT)
-	for i in ChallengeTypes.MAX_PER_LEVEL:
-		var row := chal_card.get_node_or_null("Row%d" % (i + 1)) as Control
-		if row == null:
-			_fail("Thieu dai thu thach Row%d tren HUD" % (i + 1))
-			continue
-		var bg := row.get_node_or_null("Bg") as TextureRect
-		var check := row.get_node_or_null("Check") as TextureRect
-		var title := row.get_node_or_null("Name") as Label
-		var status := row.get_node_or_null("Status") as Label
-		var badge := row.get_node_or_null("Badge") as TextureRect
-		if bg == null or bg.texture == null:
-			_fail("Row%d thieu nen dai thu thach (Bg)" % (i + 1))
-		if check == null or check.texture == null:
-			_fail("Row%d thieu o tich (Check)" % (i + 1))
-		if title == null or title.text.is_empty():
-			_fail("Row%d thieu ten thu thach" % (i + 1))
-		if status == null:
-			_fail("Row%d thieu nhan trang thai" % (i + 1))
-		if badge == null or badge.texture == null:
-			_fail("Row%d thieu nhan 'DAT' (Badge)" % (i + 1))
-		elif status != null and status.visible == badge.visible:
-			_fail("Row%d phai hien dung 1 trong 2: trang thai hoac nhan DAT" % (i + 1))
-
-	print("[CHECK] Play Mode HUD: the THU THACH (%s%s) + THOI GIAN, an the SO BUOC / TANG" % [count_label.text, count_max.text])
+	# 2026-09-27 — HUD Play CHỈ hiện THỜI GIAN: thẻ Thử thách đã gỡ khỏi HUD (kết quả 3 thử thách +
+	# Sao hiện ở POPUP kết thúc ván) nên `challenge_card()` phải trả null và controller không giữ thẻ.
+	if hud.challenge_card() != null:
+		_fail("HUD Play da go the THU THACH (chi con THOI GIAN)")
+	if cc.card != null:
+		_fail("ChallengeController khong duoc tro vao the thu thach o HUD nua")
+	var time_val := hud.get_node_or_null("Content/ModeInformation/Time/Value") as Label
+	if time_val == null or time_val.text.is_empty():
+		_fail("HUD Play thieu gia tri THOI GIAN")
+	if hud.get_node_or_null("Content/ModeInformation/Challenge") != null:
+		_fail("HUD Play con node Challenge (phai go khoi scene)")
+	print("[CHECK] Play Mode HUD: CHI THOI GIAN (%s) — the thu thach o popup ket qua"
+		% (time_val.text if time_val != null else "-"))
 
 
 ## Dungeon Mode (endless) vẫn phải đưa nhân vật về điểm S khi đâm tường — khác Level Mode
@@ -163,14 +121,18 @@ func _check_dungeon_hazard(scene: GameScene) -> void:
 func _check_dungeon_hud(scene: GameScene, cc: ChallengeController) -> void:
 	var hud := scene.ui_controller.hud as DungeonHUD
 	assert(hud != null, "Dungeon Mode phai dung DungeonHUD (nodes/hud/dungeon_mode.tscn)")
-	var step_card := hud.get_node_or_null("Step")
-	var floor_card := hud.get_node_or_null("Floor")
-	var step_val := hud.get_node_or_null("Step/Value") as Label
-	var floor_val := hud.get_node_or_null("Floor/Value") as Label
+	# 2026-09-27: Dungeon CHỈ hiện SỐ BƯỚC + TẦNG (đồng hồ đã gỡ/ẩn)
+	var step_card := hud.get_node_or_null("Content/ModeInformation/Step")
+	var floor_card := hud.get_node_or_null("Content/ModeInformation/Floor")
+	var step_val := hud.get_node_or_null("Content/ModeInformation/Step/Value") as Label
+	var floor_val := hud.get_node_or_null("Content/ModeInformation/Floor/Value") as Label
 	if step_card == null or not step_card.visible:
 		_fail("Dungeon Mode phai hien the SO BUOC")
 	if floor_card == null or not floor_card.visible:
 		_fail("Dungeon Mode phai hien the TANG")
+	var time_card := hud.get_node_or_null("Content/ModeInformation/Time") as Control
+	if time_card != null and time_card.visible:
+		_fail("Dungeon HUD khong hien THOI GIAN nua (chi SO BUOC + TANG)")
 	if hud.challenge_card() != null:
 		_fail("Dungeon HUD khong duoc co the THU THACH")
 	if cc.card != null:
@@ -179,42 +141,46 @@ func _check_dungeon_hud(scene: GameScene, cc: ChallengeController) -> void:
 		_fail("Dungeon HUD thieu gia tri SO BUOC CON LAI")
 	if floor_val == null or floor_val.text.length() < 2:
 		_fail("Dungeon HUD thieu gia tri TANG dang '%02d'")
-	print("[CHECK] Dungeon Mode HUD: SO BUOC (%s) + TANG (%s) + THOI GIAN, an the thu thach" % [
+	print("[CHECK] Dungeon Mode HUD: SO BUOC (%s) + TANG (%s), khong dong ho" % [
 		step_val.text if step_val != null else "-", floor_val.text if floor_val != null else "-"])
 
 
-## Minesweeper: HUD hiện số Bomb còn lại/tổng + thời gian
+## Minesweeper: HUD CHỈ hiện THỜI GIAN (thẻ BOMB đã gỡ 2026-09-27)
 func _check_minesweep_hud(scene: GameScene) -> void:
 	var hud := scene.ui_controller.hud as MinesweepHUD
 	assert(hud != null, "Minesweeper phai dung MinesweepHUD (nodes/hud/minesweep_hud.tscn)")
-	var bomb_val := hud.get_node_or_null("Bomb/Value") as Label
-	var time_val := hud.get_node_or_null("Time/Value") as Label
-	if bomb_val == null or not bomb_val.text.contains("/"):
-		_fail("HUD Minesweeper phai hien so Bomb dang 'con/tong', dang la '%s'" % (bomb_val.text if bomb_val != null else "<null>"))
+	var time_val := hud.get_node_or_null("Content/ModeInformation/Time/Value") as Label
 	if time_val == null or time_val.text.is_empty():
 		_fail("HUD Minesweeper thieu gia tri THOI GIAN")
+	if hud.get_node_or_null("Content/ModeInformation/Bomb") != null:
+		_fail("HUD Minesweeper da go the BOMB (chi con THOI GIAN)")
 	if hud.challenge_card() != null:
 		_fail("HUD Minesweeper khong duoc co the THU THACH")
-	print("[CHECK] Minesweeper HUD: BOMB %s + THOI GIAN %s" % [
-		bomb_val.text if bomb_val != null else "-", time_val.text if time_val != null else "-"])
+	print("[CHECK] Minesweeper HUD: CHI THOI GIAN (%s)" % (time_val.text if time_val != null else "-"))
 
 
-## Sum Path: HUD hiện TỔNG hiện tại · TOÁN TỬ (<, >, =) nằm GIỮA · MỤC TIÊU (con số)
+## Sum Path: HUD CHỈ hiện TỔNG hiện tại · TOÁN TỬ (<, >, =) nằm GIỮA · MỤC TIÊU (con số)
 func _check_sum_path_hud(scene: GameScene) -> void:
 	var hud := scene.ui_controller.hud as SumPathHUD
 	assert(hud != null, "Sum Path phai dung SumPathHUD (nodes/hud/sum_path_hud.tscn)")
-	var sum_card := hud.get_node_or_null("Sum") as Control
-	var op_card := hud.get_node_or_null("Operator") as Control
-	var target_card := hud.get_node_or_null("Target") as Control
-	var sum_val := hud.get_node_or_null("Sum/Value") as Label
-	var op_val := hud.get_node_or_null("Operator/Value") as Label
-	var target_val := hud.get_node_or_null("Target/Value") as Label
+	var sheet := "Content/ModeInformation/Sheet"
+	var sum_card := hud.get_node_or_null(sheet + "/BlockCurrent") as Control
+	var op_card := hud.get_node_or_null(sheet + "/Emblem") as Control
+	var target_card := hud.get_node_or_null(sheet + "/BlockTarget") as Control
+	var sum_val := hud.get_node_or_null(sheet + "/BlockCurrent/Sum/Value") as Label
+	var op_val := hud.get_node_or_null(sheet + "/Emblem/Operator/Value") as Label
+	var target_val := hud.get_node_or_null(sheet + "/BlockTarget/Target/Value") as Label
 	if sum_val == null or sum_val.text.is_empty():
 		_fail("HUD Sum Path thieu gia tri TONG hien tai")
 	if target_val == null or target_val.text.strip_edges().is_empty():
 		_fail("HUD Sum Path thieu gia tri MUC TIEU")
 	if op_card == null or op_val == null:
 		_fail("HUD Sum Path thieu panel TOAN TU (giua TONG va MUC TIEU)")
+	# 2026-09-27: thẻ chỉ còn 3 khối này — dòng tiêu đề + thanh tiến độ đã gỡ khỏi scene
+	if hud.get_node_or_null(sheet + "/Bar") != null:
+		_fail("HUD Sum Path da go thanh tien do (Bar)")
+	if hud.get_node_or_null(sheet + "/Title") != null:
+		_fail("HUD Sum Path da go dong tieu de the (Title)")
 	# Panel TOÁN TỬ phải nằm giữa panel TỔNG và panel MỤC TIÊU
 	if sum_card != null and op_card != null and target_card != null:
 		var sum_cx := sum_card.position.x + sum_card.size.x * 0.5

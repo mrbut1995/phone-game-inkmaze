@@ -1,24 +1,10 @@
 class_name FadingInkHUD
 extends GameHUD
 ## ============================================================================
-## HUD Fading Ink — mockup/matchup_fading_ink.svg
+## HUD Fading Ink.
 ##
-## THỜI GIAN (250x156) + "TRẠM ĐO ĐỘ PHAI MỰC" (715x156):
-##   BƯỚC ĐÃ ĐI (+ số mực đã phai) · QUANG PHỔ ĐẬM NHẠT CỦA MỰC (4 mức, tĩnh) ·
-##   cảnh báo "N Ô ĐÃ CẠN MỰC" (ẩn khi chưa có ô nào cạn).
-## Chế độ này KHÔNG hiện thẻ THỬ THÁCH (challenge_card() = null).
+## 2026-09-27 — theo yêu cầu "chỉ hiện thứ cần thiết": HUD này CHỈ hiện **THỜI GIAN**.
+## Bảng "TRẠM ĐO ĐỘ PHAI MỰC" (bước đã đi · quang phổ 4 mức · cảnh báo cạn mực) đã gỡ:
+## số mực hiện NGAY TRÊN TỪNG Ô của bàn cờ (lớp cảnh báo "SẮP PHAI/CẠN" do `MazeCell` vẽ), nên
+## HUD không cần lặp lại.
 ## ============================================================================
-
-
-func _on_update(ctx: Dictionary) -> void:
-	var mode := ctx.get("mode", null) as FadingInkGameMode
-	if mode == null:
-		return
-	var moves := mode.moves_made
-	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Steps/Value"), "%02d" % moves)
-	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Steps/Delta"), tr("STR_HUD_INK_LOST").format([moves]))
-	var exhausted := mode.count_exhausted()
-	set_label_text(get_node_or_null("Content/ModeInformation/Sheet/Warn/Bg/Label"), tr("STR_HUD_INK_WARN").format([exhausted]))
-	var warn := get_node_or_null("Content/ModeInformation/Sheet/Warn") as Control
-	if warn != null:
-		warn.visible = exhausted > 0

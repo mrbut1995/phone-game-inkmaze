@@ -1,12 +1,9 @@
 class_name MinesweepHUD
 extends GameHUD
-## HUD Minesweeper Maze: THỜI GIAN + BOMB CÒN LẠI (thay cho thẻ THỬ THÁCH).
-## Số bomb còn lại = tổng số bomb chưa nổ; mỗi quả chỉ nổ đúng 1 lần.
-
-
-func _on_update(ctx: Dictionary) -> void:
-	var mode := ctx.get("mode", null) as MinesweeperPathGameMode
-	if mode == null:
-		return
-	set_label_text(get_node_or_null("Content/ModeInformation/Bomb/Value"),
-		"%d/%d" % [mode.get_mines_left(), mode.get_total_mines()])
+## ============================================================================
+## HUD Minesweeper Maze.
+##
+## 2026-09-27 — theo yêu cầu "chỉ hiện thứ cần thiết": HUD này CHỈ hiện **THỜI GIAN**.
+## Thẻ BOMB đã gỡ khỏi HUD; số mìn chưa nổ vẫn nằm trong `MinesweeperPathGameMode` (dùng cho
+## luật chơi + kết quả ván), luật chơi đọc ở khung Hướng dẫn.
+## ============================================================================

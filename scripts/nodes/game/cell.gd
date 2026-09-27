@@ -7,8 +7,6 @@ extends Control
 ## nên co lại vẫn khớp nhau; số trên ô co theo qua set_font_size().
 ## ============================================================================
 
-signal cell_pressed(grid_pos: Vector2i)
-
 @export var grid_pos: Vector2i = Vector2i.ZERO
 
 const NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
