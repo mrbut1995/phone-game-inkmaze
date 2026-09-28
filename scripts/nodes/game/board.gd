@@ -1040,7 +1040,49 @@ func set_suspected_wall(is_h: bool, lattice: Vector2i, active: bool) -> void:
 func set_player_visible(on: bool) -> void:
 	_player_hidden = not on
 	if _cursor != null:
-		_cursor.visible = on
+		_cursor.set_cursor_visible(on)
+
+
+## Đổi hiển thị con trỏ người chơi
+func set_cursor_visible(on: bool) -> void:
+	set_player_visible(on)
+
+
+## Lấy instance PlayerCursor trong bàn
+func get_cursor() -> PlayerCursor:
+	return _cursor
+
+
+## Trình diễn kéo con trỏ từ ô from_cell sang to_cell (dùng cho hướng dẫn)
+func animate_cursor_drag(from_cell: Vector2i, to_cell: Vector2i, duration: float = 0.6) -> void:
+	if _cursor == null:
+		return
+	_player_hidden = false
+	_cursor.visible = true
+	var p1 := _cell_center(from_cell) - _cursor.size * 0.5
+	var p2 := _cell_center(to_cell) - _cursor.size * 0.5
+	_cursor.play_demo_drag(p1, p2, duration)
+
+
+## Trình diễn chạm/nhấp con trỏ tại ô
+func animate_cursor_tap(cell: Vector2i) -> void:
+	if _cursor == null:
+		return
+	_player_hidden = false
+	_cursor.visible = true
+	var p := _cell_center(cell) - _cursor.size * 0.5
+	_cursor.play_demo_tap(p)
+
+
+## Dừng hoạt ảnh trình diễn của con trỏ và đưa về tâm ô người chơi hiện tại
+func stop_cursor_animation() -> void:
+	if _cursor == null:
+		return
+	_cursor.stop_demo()
+	if maze != null:
+		_cursor.position = _cell_center(_player_current_cell) - _cursor.size * 0.5
+	if _player_hidden:
+		_cursor.visible = false
 
 
 ## Rung bàn cờ (Wall Builder: GỬI SAI) — bản public của hiệu ứng rung lưới

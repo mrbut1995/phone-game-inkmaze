@@ -589,15 +589,19 @@ const TUTORIAL_SCENES := [
 	"res://nodes/tutorials/how_to_play_sum_path.tscn",
 	"res://nodes/tutorials/how_to_play_wall_builder.tscn",
 ]
-## Số phần tử mong đợi của export MẢNG (`Array[TutorialCell]` · `Array[TutorialWallToggle]`)
+## Số phần tử mong đợi của export MẢNG (`Array[TutorialCell]` — ô XEM TRƯỚC của bài mở đầu)
 const TUTORIAL_EXPECTED_ARRAYS := {
 	"first_time.tscn": {"preview_cells": 3},
-	"how_to_play_move.tscn": {"cells": 3},
-	"how_to_play_checking_wall.tscn": {"cells": 4},
-	"how_to_play_minesweeper.tscn": {"cells": 9},
-	"how_to_play_one_stroke.tscn": {"cells": 9},
-	"how_to_play_sum_path.tscn": {"cells": 9},
-	"how_to_play_wall_builder.tscn": {"wall_toggles": 2},
+}
+## Số Ô mong đợi của BÀN MINI dựng LÚC CHẠY bằng component chung `BoardTutorial`
+## (kế thừa BoardView thật — scene chỉ giữ export `board_tutorial`, không khai ô trong .tscn)
+const TUTORIAL_EXPECTED_BOARD_CELLS := {
+	"how_to_play_move.tscn": 3,
+	"how_to_play_checking_wall.tscn": 4,
+	"how_to_play_minesweeper.tscn": 9,
+	"how_to_play_one_stroke.tscn": 9,
+	"how_to_play_sum_path.tscn": 9,
+	"how_to_play_wall_builder.tscn": 4,
 }
 ## Vẽ bằng code là CẤM: art nằm trong `assets/images/tutorial/*.svg` (TextureRect/NinePatchRect)
 const TUTORIAL_DRAW_CALLS := [
@@ -613,6 +617,7 @@ func _section_11_tutorials() -> void:
 	var bad_conn: Array[String] = []
 	var exports := 0
 	var arrays := 0
+	var boards := 0
 	var cells_total := 0
 	var steps_total := 0
 	var effects_checked := 0
@@ -636,7 +641,7 @@ func _section_11_tutorials() -> void:
 			if node.get(prop.name) == null:
 				unbound.append("%s: %s" % [file_name, prop.name])
 
-		# (2) Export MẢNG (ô bàn mini · nút tường) phải bind đúng số phần tử
+		# (2) Export MẢNG (ô XEM TRƯỚC của bài mở đầu) phải bind đúng số phần tử
 		var expected: Dictionary = TUTORIAL_EXPECTED_ARRAYS.get(file_name, {})
 		for prop_name: String in expected:
 			var want := int(expected[prop_name])
@@ -648,10 +653,25 @@ func _section_11_tutorials() -> void:
 			if got != want:
 				bad.append("%s: %s = %d (can %d)" % [file_name, prop_name, got, want])
 
-		# (3) Ô bàn mini: mỗi ô 1 `grid_pos`, không trùng
+		# (2b) Bàn mini dùng CHUNG component `BoardTutorial` (kế thừa BoardView thật):
+		#      export `board_tutorial` trỏ đúng node, số ô DỰNG LÚC CHẠY khớp thiết kế
+		var want_cells := int(TUTORIAL_EXPECTED_BOARD_CELLS.get(file_name, 0))
+		if want_cells > 0:
+			boards += 1
+			var board := node.get_node_or_null("BoardHost/BoardTutorial") as BoardTutorial
+			if board == null:
+				bad.append("%s: thieu node BoardHost/BoardTutorial" % file_name)
+			elif node.get("board_tutorial") != board:
+				bad.append("%s: export board_tutorial chua tro toi BoardHost/BoardTutorial" % file_name)
+			else:
+				var built := board.get_all_cells().size()
+				cells_total += built
+				if built != want_cells:
+					bad.append("%s: ban mini dung %d o (can %d)" % [file_name, built, want_cells])
+
+		# (3) Ô xem trước (nếu có): mỗi ô 1 `grid_pos`, không trùng
 		var seen: Array[Vector2i] = []
 		for cell in _tutorial_cells(node):
-			cells_total += 1
 			if seen.has(cell.grid_pos):
 				bad.append("%s: trung grid_pos %s" % [file_name, str(cell.grid_pos)])
 			seen.append(cell.grid_pos)
@@ -700,8 +720,9 @@ func _section_11_tutorials() -> void:
 	_entry(unbound.is_empty(),
 		"moi export NODE cua tutorial deu duoc BIND trong .tscn%s"
 			% ("" if unbound.is_empty() else " — thieu: %s" % ", ".join(unbound)))
-	_entry(arrays >= 7, "co %d export MANG (o ban mini · nut tuong) bind trong scene" % arrays)
-	_entry(cells_total >= 30, "tong so o ban mini khai trong .tscn: %d" % cells_total)
+	_entry(arrays >= 1, "co %d export MANG (o xem truoc) bind trong scene" % arrays)
+	_entry(boards >= 6, "co %d bai dung ban mini CHUNG (BoardTutorial) bind qua export" % boards)
+	_entry(cells_total >= 30, "tong so o ban mini dung luc chay: %d" % cells_total)
 	_entry(steps_total >= 30, "tong so buoc nap tu 7 bai: %d" % steps_total)
 	_entry(effects_checked >= 7, "hieu ung (mo bai · phao giay · toast · chu noi) chay duoc tren %d bai" % effects_checked)
 	_entry(bad.is_empty(),

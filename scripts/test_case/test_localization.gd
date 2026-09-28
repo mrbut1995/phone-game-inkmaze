@@ -246,13 +246,21 @@ func _section_7_translation_files() -> void:
 	print("[7] File .translation (du phong build export) khop CSV...")
 	var absent: Array[String] = []
 	var stale := 0
-	for path in [CSV_MAIN, CSV_EXTRA]:
+	for path: String in [CSV_MAIN, CSV_EXTRA]:
 		var base := path.get_file().get_basename()
-		var values := {}
-		for row in _csv_rows(path):
-			if row.size() > 2 and row[0] != "id":
-				values[row[0]] = row[2]
+		var rows := _csv_rows(path)
+		var header: PackedStringArray = rows[0]
 		for locale in ["vi", "en"]:
+			# Tra cot theo HANG TIEU DE (string.csv co 20 cot) — khong ghim row[2] cho ca 2 locale
+			var col := header.find(locale)
+			if col < 0:
+				_entry(false, "%s thieu cot '%s'" % [path.get_file(), locale])
+				continue
+			var values := {}
+			for index in range(1, rows.size()):
+				var row: PackedStringArray = rows[index]
+				if row.size() > col and row[0] != "id":
+					values[row[0]] = row[col]
 			var file_path := "%s/%s.%s.translation" % [path.get_base_dir(), base, locale]
 			if not ResourceLoader.exists(file_path):
 				absent.append(file_path.get_file())
@@ -309,31 +317,46 @@ func _control_hits(text: String) -> int:
 
 
 func _csv_rows(path: String) -> Array:
+	return _parse_csv(FileAccess.get_file_as_string(path))
+
+
+## Parser CSV dang STATE MACHINE: hieu o boc nhay kep (ke ca "" escape), dau phay trong o,
+## va o NHIEU DONG — khong cat ngay tho theo dong nhu ban cu (gay lech cot khi o xuong dong).
+func _parse_csv(text: String) -> Array:
 	var rows: Array = []
-	for line in _read_text(path).split("\n"):
-		var clean := line.strip_edges()
-		if clean.is_empty():
-			continue
-		rows.append(_split_csv(clean))
-	return rows
-
-
-func _split_csv(line: String) -> PackedStringArray:
-	var cells := PackedStringArray()
-	var current := ""
+	var row := PackedStringArray()
+	var cell := ""
 	var in_quotes := false
-	for index in line.length():
-		var char := line[index]
-		if char == "\"":
-			in_quotes = not in_quotes
-			continue
-		if char == "," and not in_quotes:
-			cells.append(current)
-			current = ""
-			continue
-		current += char
-	cells.append(current)
-	return cells
+	var index := 0
+	while index < text.length():
+		var ch := text[index]
+		if in_quotes:
+			if ch == "\"":
+				if index + 1 < text.length() and text[index + 1] == "\"":
+					cell += "\""
+					index += 1
+				else:
+					in_quotes = false
+			else:
+				cell += ch
+		elif ch == "\"":
+			in_quotes = true
+		elif ch == ",":
+			row.append(cell)
+			cell = ""
+		elif ch == "\n":
+			row.append(cell)
+			cell = ""
+			if row.size() > 1 or not row[0].is_empty():
+				rows.append(row)
+			row = PackedStringArray()
+		elif ch != "\r":
+			cell += ch
+		index += 1
+	if not cell.is_empty() or row.size() > 0:
+		row.append(cell)
+		rows.append(row)
+	return rows
 
 
 func _files() -> Array[String]:

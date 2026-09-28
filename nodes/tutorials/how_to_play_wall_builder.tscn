@@ -1,10 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwallbuilder001"]
+[gd_scene load_steps=7 format=3 uid="uid://bwallbuilder001"]
 
 [ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/tutorial/how_to_play_wall_builder.gd" id="2_script"]
-[ext_resource type="PackedScene" uid="uid://btutcell000001" path="res://nodes/tutorials/tutorial_cell.tscn" id="3_cell"]
-[ext_resource type="Texture2D" uid="uid://dge7154ysfskj" path="res://assets/images/tutorial/tutorial_wall.svg" id="4_wall"]
-[ext_resource type="Script" path="res://scripts/nodes/tutorial/tutorial_wall_toggle.gd" id="5_toggle"]
+[ext_resource type="PackedScene" uid="uid://btutorialboard01" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
 
 [sub_resource type="StyleBoxFlat" id="hud_pill"]
 content_margin_left = 16.0
@@ -42,16 +40,22 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[node name="HowToPlayWallBuilder" instance=ExtResource("1_base") node_paths=PackedStringArray("wall_toggles", "lbl_hud_counter")]
+[node name="HowToPlayWallBuilder" node_paths=PackedStringArray("board_tutorial", "lbl_hud_counter", "btn_submit") instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-wall_toggles = [NodePath("BoardHost/WallToggle1"), NodePath("BoardHost/WallToggle2")]
+board_tutorial = NodePath("BoardHost/BoardTutorial")
 lbl_hud_counter = NodePath("BoardHost/HudPanel/CountLabel")
+btn_submit = NodePath("BoardHost/BtnSubmit")
 
 [node name="HudPanel" type="PanelContainer" parent="BoardHost" index="0"]
-offset_left = 110.0
-offset_top = 76.0
-offset_right = 304.0
-offset_bottom = 110.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -97.0
+offset_top = 10.0
+offset_right = 97.0
+offset_bottom = 44.0
+grow_horizontal = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("hud_pill")
 
@@ -59,113 +63,42 @@ theme_override_styles/panel = SubResource("hud_pill")
 layout_mode = 2
 theme_override_colors/font_color = Color(0.18, 0.22, 0.26, 1)
 theme_override_font_sizes/font_size = 15
-text = ""
+text = "Đã vẽ: 0 / 2 đoạn"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Cell1" instance=ExtResource("3_cell") parent="BoardHost" index="1"]
-offset_left = 110.0
-offset_top = 120.0
-offset_right = 202.0
-offset_bottom = 212.0
-grid_pos = Vector2i(0, 0)
-cell_text = "1"
-text_color = Color(0.18, 0.22, 0.26, 1)
-text_size = 26
-
-[node name="Cell2" instance=ExtResource("3_cell") parent="BoardHost" index="2"]
-offset_left = 212.0
-offset_top = 120.0
-offset_right = 304.0
-offset_bottom = 212.0
-grid_pos = Vector2i(1, 0)
-cell_text = "1"
-text_color = Color(0.18, 0.22, 0.26, 1)
-text_size = 26
-
-[node name="Cell3" instance=ExtResource("3_cell") parent="BoardHost" index="3"]
-offset_left = 110.0
-offset_top = 222.0
-offset_right = 202.0
-offset_bottom = 314.0
-grid_pos = Vector2i(0, 1)
-cell_text = "1"
-text_color = Color(0.18, 0.22, 0.26, 1)
-text_size = 26
-
-[node name="Cell4" instance=ExtResource("3_cell") parent="BoardHost" index="4"]
-offset_left = 212.0
-offset_top = 222.0
-offset_right = 304.0
-offset_bottom = 314.0
-grid_pos = Vector2i(1, 1)
-cell_text = "1"
-text_color = Color(0.18, 0.22, 0.26, 1)
-text_size = 26
-
-[node name="WallToggle1" type="Button" parent="BoardHost" index="5" node_paths=PackedStringArray("wall_visual")]
-offset_left = 110.0
-offset_top = 212.0
-offset_right = 202.0
-offset_bottom = 222.0
-flat = true
-script = ExtResource("5_toggle")
-wall_id = "0,1-1,1"
-wall_visual = NodePath("Wall")
-
-[node name="Wall" type="NinePatchRect" parent="BoardHost/WallToggle1" index="0"]
-visible = false
-modulate = Color(0.360784, 0.721569, 0.360784, 1)
+[node name="BoardTutorial" parent="BoardHost" index="1" instance=ExtResource("3_board")]
 layout_mode = 1
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -145.0
+offset_right = 160.0
+offset_bottom = 155.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("4_wall")
-patch_margin_left = 16
-patch_margin_top = 5
-patch_margin_right = 16
-patch_margin_bottom = 5
 
-[node name="WallToggle2" type="Button" parent="BoardHost" index="6" node_paths=PackedStringArray("wall_visual")]
-offset_left = 212.0
-offset_top = 212.0
-offset_right = 304.0
-offset_bottom = 222.0
-flat = true
-script = ExtResource("5_toggle")
-wall_id = "1,1-2,1"
-wall_visual = NodePath("Wall")
-
-[node name="Wall" type="NinePatchRect" parent="BoardHost/WallToggle2" index="0"]
-visible = false
-modulate = Color(0.360784, 0.721569, 0.360784, 1)
+[node name="BtnSubmit" type="Button" parent="BoardHost" index="2"]
 layout_mode = 1
-anchor_right = 1.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -48.0
+offset_right = 60.0
+offset_bottom = -10.0
 grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("4_wall")
-patch_margin_left = 16
-patch_margin_top = 5
-patch_margin_right = 16
-patch_margin_bottom = 5
-
-[node name="BtnSubmit" type="Button" parent="BoardHost" index="7"]
-offset_left = 150.0
-offset_top = 336.0
-offset_right = 264.0
-offset_bottom = 376.0
+grow_vertical = 0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("submit_pill")
 theme_override_styles/hover = SubResource("submit_pill_hover")
 text = "STR_TOOL_SUBMIT"
 
-[connection signal="pressed" from="BoardHost/WallToggle1" to="BoardHost/WallToggle1" method="_on_pressed"]
-[connection signal="wall_toggled" from="BoardHost/WallToggle1" to="." method="_on_wall_toggled"]
-[connection signal="pressed" from="BoardHost/WallToggle2" to="BoardHost/WallToggle2" method="_on_pressed"]
-[connection signal="wall_toggled" from="BoardHost/WallToggle2" to="." method="_on_wall_toggled"]
 [connection signal="pressed" from="BoardHost/BtnSubmit" to="." method="_on_submit_pressed"]

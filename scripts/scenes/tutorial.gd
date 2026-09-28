@@ -83,6 +83,7 @@ func _wire_buttons() -> void:
 
 
 func _on_select_tutorial(tid: String) -> void:
+	_stay_after_finish = true
 	if tutorial_controller != null:
 		tutorial_controller.play_single_tutorial(tid)
 

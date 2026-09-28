@@ -30,7 +30,6 @@ var is_active: bool = false
 @export var backdrop: ColorRect = null
 @export var spotlight: NinePatchRect = null
 @export var board_host: Control = null
-@export var hand_pointer: TextureRect = null
 @export var dialog_bubble: Control = null
 @export var lbl_title: Label = null
 @export var dots_container: HBoxContainer = null
@@ -41,9 +40,10 @@ var is_active: bool = false
 @export var btn_next: BaseButton = null
 @export var toast_label: Label = null
 
-var _pointer_tween: Tween = null
 var _auto_timer: SceneTreeTimer = null
 var _spotlight_rect: Rect2 = Rect2()
+var _spotlight_cell: Vector2i = Vector2i(-1, -1)
+var _spotlight_node: Control = null
 var _has_spotlight: bool = false
 
 ## --- HIỆU ỨNG (animation) ---------------------------------------------------
@@ -61,6 +61,21 @@ func _ready() -> void:
 	_init_tutorial()
 	_wire_button_effects()
 	play_entrance()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED:
+		_refresh_overlay_positions.call_deferred()
+
+
+func _refresh_overlay_positions() -> void:
+	if not is_inside_tree():
+		return
+	if _has_spotlight:
+		_apply_spotlight()
+	if steps_data.size() > 0 and current_step_index < steps_data.size():
+		var data: Dictionary = steps_data[current_step_index]
+		_update_cursor_demonstration(data)
 
 
 ## Override trong scene con để nạp steps riêng
@@ -91,19 +106,40 @@ func play_entrance() -> void:
 	for cell in board_cells():
 		cell.play_entrance(0.12 + delay)
 		delay += CELL_ENTER_STAGGER
-	if hand_pointer != null:
-		hand_pointer.pivot_offset = hand_pointer.size * 0.5
 	_entrance_played = true
 
 
 ## Danh sách ô bàn mini của bài này (dùng cho hiệu ứng so le) — con của BoardHost
-func board_cells() -> Array[TutorialCell]:
-	var out: Array[TutorialCell] = []
+func board_cells() -> Array[MazeCell]:
+	var out: Array[MazeCell] = []
 	if board_host == null:
 		return out
-	for child in board_host.find_children("*", "TutorialCell", true, false):
-		out.append(child as TutorialCell)
+	for child in board_host.find_children("*", "MazeCell", true, false):
+		out.append(child as MazeCell)
 	return out
+
+
+func get_board_tutorial() -> BoardTutorial:
+	if board_host == null:
+		return null
+	return board_host.find_child("BoardTutorial", true, false) as BoardTutorial
+
+
+func get_board_cell(coord: Vector2i) -> MazeCell:
+	var bt := get_board_tutorial()
+	if bt != null:
+		return bt.get_cell(coord)
+	for cell in board_cells():
+		if cell.grid_pos == coord:
+			return cell
+	return null
+
+
+func _cell_to_board_pos(coord: Vector2i) -> Vector2:
+	var cell := get_board_cell(coord)
+	if cell != null and board_host != null:
+		return cell.get_global_rect().get_center() - board_host.global_position
+	return Vector2.ZERO
 
 
 ## Pháo giấy nhỏ khi thắng bài: từng ô sáng lên so le
@@ -192,24 +228,28 @@ func show_step(index: int) -> void:
 	btn_next.visible = (advance_mode == "MANUAL" or is_last)
 	btn_next.text = tr("STR_TUT_COMMON_FINISH") if is_last else tr("STR_TUT_COMMON_NEXT")
 
-	# Spotlight: trượt sang mục tiêu mới rồi "thở" nhẹ (toạ độ ghi theo BoardHost)
-	if data.has("spotlight_rect"):
+	# Spotlight: trượt sang mục tiêu mới rồi "thở" nhẹ
+	if data.has("spotlight_cell"):
+		_has_spotlight = true
+		_spotlight_cell = data["spotlight_cell"]
+		_spotlight_node = null
+	elif data.has("spotlight_node"):
+		_has_spotlight = true
+		_spotlight_node = data["spotlight_node"]
+		_spotlight_cell = Vector2i(-1, -1)
+	elif data.has("spotlight_rect"):
 		_has_spotlight = true
 		_spotlight_rect = data["spotlight_rect"]
+		_spotlight_cell = Vector2i(-1, -1)
+		_spotlight_node = null
 	else:
 		_has_spotlight = false
+		_spotlight_cell = Vector2i(-1, -1)
+		_spotlight_node = null
 	_apply_spotlight()
 
-	# HandPointer animation
-	_stop_pointer()
-	if data.has("pointer_drag"):
-		var drag_info: Dictionary = data["pointer_drag"]
-		var from_pos: Vector2 = drag_info.get("from", Vector2.ZERO)
-		var to_pos: Vector2 = drag_info.get("to", Vector2.ZERO)
-		var dur: float = drag_info.get("duration", 0.6)
-		_play_pointer_drag(from_pos, to_pos, dur)
-	elif data.has("pointer_tap"):
-		_play_pointer_tap(data["pointer_tap"])
+	# Cursor demo animation via BoardTutorial
+	_update_cursor_demonstration(data)
 
 	# Auto advance if requested
 	if data.has("auto_delay") and advance_mode == "AUTO":
@@ -241,17 +281,17 @@ func prev_step() -> void:
 
 
 func complete_tutorial() -> void:
-	_stop_pointer()
+	stop_cursor_animation()
 	tutorial_completed.emit(tutorial_id)
 
 
 func skip_tutorial() -> void:
-	_stop_pointer()
+	stop_cursor_animation()
 	tutorial_skipped.emit(tutorial_id, false)
 
 
 func skip_all_tutorials() -> void:
-	_stop_pointer()
+	stop_cursor_animation()
 	tutorial_skipped.emit(tutorial_id, true)
 
 
@@ -306,19 +346,42 @@ func shake_node(target: Node, duration: float = 0.25, amplitude: float = 8.0) ->
 
 
 ## Toạ độ ghi trong dữ liệu step là toạ độ TRONG BoardHost; lớp phủ (Spotlight/HandPointer)
-## là con của node gốc → cộng thêm vị trí BoardHost. Nhờ vậy BỎ luôn lệch toạ độ cũ.
+## là con của node gốc (BaseTutorial Control) → cần cộng vị trí THỰC của BoardHost so với gốc.
+## Dùng global_position để đúng bất kể anchor/layout_mode của BoardHost.
 func _board_to_overlay(p: Vector2) -> Vector2:
-	return board_host.position + p if board_host != null else p
+	if board_host == null:
+		return p
+	# Lấy top-left thực của BoardHost theo toạ độ GLOBAL, rồi chuyển về toạ độ LOCAL của BaseTutorial
+	var board_global_tl := board_host.global_position
+	var self_global_tl  := global_position
+	var board_local_tl  := board_global_tl - self_global_tl
+	return board_local_tl + p
 
 
-## Đặt vòng sáng theo `spotlight_rect`: hiện dần nếu mới bật, TRƯỢT sang mục tiêu mới nếu đã có
+## Đặt vòng sáng theo `spotlight_cell`, `spotlight_node` hoặc `spotlight_rect`
 func _apply_spotlight() -> void:
 	if spotlight == null:
 		return
 	if not _has_spotlight:
 		_hide_spotlight()
 		return
-	var target := Rect2(_board_to_overlay(_spotlight_rect.position), _spotlight_rect.size)
+
+	var target: Rect2
+	if _spotlight_cell != Vector2i(-1, -1):
+		var cell := get_board_cell(_spotlight_cell)
+		if cell != null:
+			var grect := cell.get_global_rect()
+			var lpos := grect.position - global_position
+			target = Rect2(lpos - Vector2(4, 4), grect.size + Vector2(8, 8))
+		else:
+			target = Rect2(_board_to_overlay(_spotlight_rect.position), _spotlight_rect.size)
+	elif _spotlight_node != null and is_instance_valid(_spotlight_node):
+		var grect := _spotlight_node.get_global_rect()
+		var lpos := grect.position - global_position
+		target = Rect2(lpos - Vector2(4, 4), grect.size + Vector2(8, 8))
+	else:
+		target = Rect2(_board_to_overlay(_spotlight_rect.position), _spotlight_rect.size)
+
 	var was_visible := spotlight.visible
 	spotlight.visible = true
 	spotlight.scale = Vector2.ONE
@@ -362,47 +425,30 @@ func _on_spotlight_resized() -> void:
 		spotlight.pivot_offset = spotlight.size * 0.5
 
 
-func _play_pointer_drag(from: Vector2, to: Vector2, duration: float) -> void:
-	_stop_pointer()
-	if hand_pointer == null:
+func _update_cursor_demonstration(data: Dictionary) -> void:
+	var bt := get_board_tutorial()
+	if bt == null:
 		return
-	var from_pos := _board_to_overlay(from)
-	var to_pos := _board_to_overlay(to)
-	hand_pointer.position = from_pos
-	hand_pointer.visible = true
-	hand_pointer.modulate.a = 1.0
-
-	_pointer_tween = create_tween().set_loops()
-	_pointer_tween.tween_property(hand_pointer, "position", from_pos, 0.05)
-	_pointer_tween.tween_property(hand_pointer, "modulate:a", 1.0, 0.15)
-	_pointer_tween.tween_property(hand_pointer, "position", to_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_pointer_tween.tween_interval(0.2)
-	_pointer_tween.tween_property(hand_pointer, "modulate:a", 0.0, 0.2)
-	_pointer_tween.tween_interval(0.3)
-
-
-func _play_pointer_tap(pos: Vector2) -> void:
-	_stop_pointer()
-	if hand_pointer == null:
-		return
-	hand_pointer.position = _board_to_overlay(pos)
-	hand_pointer.visible = true
-	hand_pointer.modulate.a = 1.0
-
-	_pointer_tween = create_tween().set_loops()
-	_pointer_tween.tween_property(hand_pointer, "scale", Vector2(0.85, 0.85), 0.25)
-	_pointer_tween.tween_property(hand_pointer, "scale", Vector2(1.0, 1.0), 0.25)
-	# Lắc nhẹ như gõ ngón tay
-	_pointer_tween.tween_property(hand_pointer, "rotation_degrees", 7.0, 0.16).set_trans(Tween.TRANS_SINE)
-	_pointer_tween.tween_property(hand_pointer, "rotation_degrees", -5.0, 0.2).set_trans(Tween.TRANS_SINE)
-	_pointer_tween.tween_property(hand_pointer, "rotation_degrees", 0.0, 0.16).set_trans(Tween.TRANS_SINE)
-	_pointer_tween.tween_interval(0.25)
+	if data.has("pointer_drag"):
+		var drag_info: Dictionary = data["pointer_drag"]
+		var from_cell: Vector2i = drag_info.get("from_cell", Vector2i(-1, -1))
+		var to_cell: Vector2i = drag_info.get("to_cell", Vector2i(-1, -1))
+		var dur: float = float(drag_info.get("duration", 0.6))
+		if from_cell != Vector2i(-1, -1) and to_cell != Vector2i(-1, -1):
+			bt.animate_cursor_drag(from_cell, to_cell, dur)
+		else:
+			bt.stop_cursor_animation()
+	elif data.has("pointer_tap"):
+		var tap_info = data["pointer_tap"]
+		if tap_info is Vector2i:
+			bt.animate_cursor_tap(tap_info)
+		else:
+			bt.stop_cursor_animation()
+	else:
+		bt.stop_cursor_animation()
 
 
-func _stop_pointer() -> void:
-	if _pointer_tween != null and _pointer_tween.is_valid():
-		_pointer_tween.kill()
-		_pointer_tween = null
-	if hand_pointer != null:
-		hand_pointer.visible = false
-		hand_pointer.rotation_degrees = 0.0
+func stop_cursor_animation() -> void:
+	var bt := get_board_tutorial()
+	if bt != null:
+		bt.stop_cursor_animation()

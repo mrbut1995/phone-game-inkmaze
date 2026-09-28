@@ -19,8 +19,10 @@ signal celebration_finished()
 
 var _move_tween: Tween = null
 var _idle_tween: Tween = null
+var _demo_tween: Tween = null
 var _is_running: bool = false
 var _is_celebrating: bool = false
+var _is_demoing: bool = false
 
 
 func _ready() -> void:
@@ -36,9 +38,102 @@ func apply_pen(pen_id: String) -> void:
 		icon.texture = tex
 
 
+## Hiện hoặc ẩn con trỏ (khi ẩn sẽ tạm dừng các tween)
+func set_cursor_visible(on: bool) -> void:
+	visible = on
+	if not on:
+		stop_demo()
+		if _idle_tween != null and _idle_tween.is_valid():
+			_idle_tween.kill()
+	else:
+		if not _is_running and not _is_celebrating and not _is_demoing:
+			start_idle()
+
+
+## Hoạt ảnh trình diễn kéo từ from_pos sang to_pos (lặp lại, dùng cho tutorial)
+func play_demo_drag(from_pos: Vector2, to_pos: Vector2, duration: float = 0.6) -> void:
+	if _idle_tween != null and _idle_tween.is_valid():
+		_idle_tween.kill()
+	if _move_tween != null and _move_tween.is_valid():
+		_move_tween.kill()
+	if _demo_tween != null and _demo_tween.is_valid():
+		_demo_tween.kill()
+
+	_is_demoing = true
+	visible = true
+	position = from_pos
+	modulate.a = 1.0
+	rotation = 0.0
+	scale = Vector2.ONE
+
+	var move_dir := (to_pos - from_pos).normalized()
+	var tilt_angle := 0.0
+	if move_dir.x > 0.1:
+		tilt_angle = deg_to_rad(14.0)
+	elif move_dir.x < -0.1:
+		tilt_angle = deg_to_rad(-14.0)
+
+	# Giai đoạn 1: Nhảy lên trước khi di chuyển (sequential)
+	_demo_tween = create_tween().set_loops()
+	_demo_tween.tween_property(self, "position", from_pos, 0.05)
+	_demo_tween.tween_property(self, "modulate:a", 1.0, 0.1)
+	_demo_tween.tween_property(self, "scale", Vector2(1.15, 0.85), 0.12)
+
+	# Giai đoạn 2: Di chuyển song song (vị trí + scale + xoay cùng lúc)
+	# Dùng .parallel() trên từng tweener — KHÔNG dùng set_parallel(true) toàn cục
+	_demo_tween.tween_property(self, "position", to_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_demo_tween.parallel().tween_property(self, "scale", Vector2.ONE, duration * 0.5)
+	_demo_tween.parallel().tween_property(self, "rotation", tilt_angle, duration * 0.4)
+
+	# Giai đoạn 3: Đổ xuống khi chạm đích (song song)
+	_demo_tween.tween_property(self, "scale", Vector2(1.18, 0.82), 0.1)
+	_demo_tween.parallel().tween_property(self, "rotation", 0.0, 0.1)
+
+	# Giai đoạn 4: Fade out và nghỉ
+	_demo_tween.tween_interval(0.2)
+	_demo_tween.tween_property(self, "modulate:a", 0.0, 0.18)
+	_demo_tween.tween_interval(0.25)
+
+
+## Hoạt ảnh trình diễn chạm / gõ (tap) tại vị trí
+func play_demo_tap(target_pos: Vector2 = Vector2.ZERO) -> void:
+	if _idle_tween != null and _idle_tween.is_valid():
+		_idle_tween.kill()
+	if _move_tween != null and _move_tween.is_valid():
+		_move_tween.kill()
+	if _demo_tween != null and _demo_tween.is_valid():
+		_demo_tween.kill()
+
+	_is_demoing = true
+	visible = true
+	if target_pos != Vector2.ZERO:
+		position = target_pos
+	modulate.a = 1.0
+
+	_demo_tween = create_tween().set_loops()
+	_demo_tween.tween_property(self, "scale", Vector2(0.82, 0.82), 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_demo_tween.tween_property(self, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	_demo_tween.tween_property(self, "rotation_degrees", 8.0, 0.15)
+	_demo_tween.tween_property(self, "rotation_degrees", -6.0, 0.18)
+	_demo_tween.tween_property(self, "rotation_degrees", 0.0, 0.15)
+	_demo_tween.tween_interval(0.3)
+
+
+## Dừng hoạt ảnh demo và đưa về trạng thái bình thường
+func stop_demo() -> void:
+	if _demo_tween != null and _demo_tween.is_valid():
+		_demo_tween.kill()
+		_demo_tween = null
+	_is_demoing = false
+	rotation = 0.0
+	scale = Vector2.ONE
+	modulate.a = 1.0
+	start_idle()
+
+
 ## Hoạt ảnh thở nhẹ kết hợp cựa quậy tự nhiên khi đứng yên
 func start_idle() -> void:
-	if _is_running or _is_celebrating:
+	if _is_running or _is_celebrating or _is_demoing:
 		return
 	if _idle_tween != null and _idle_tween.is_valid():
 		_idle_tween.kill()
@@ -47,12 +142,6 @@ func start_idle() -> void:
 	# Chu kỳ 1: Nhịp thở phập phồng nhẹ
 	_idle_tween.tween_property(self, "scale", Vector2(1.06, 0.95), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_idle_tween.tween_property(self, "scale", Vector2(0.96, 1.05), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	
-	## Chu kỳ 2: Nhún nhẹ như đang tập trung quan sát mê cung
-	#_idle_tween.tween_property(self, "rotation_degrees", 4.5, 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	#_idle_tween.tween_property(self, "rotation_degrees", -4.5, 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	#_idle_tween.tween_property(self, "rotation_degrees", 0.0, 0.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	#_idle_tween.tween_property(self, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
 ## Thực hiện animation chạy từ vị trí hiện tại đến target_pos

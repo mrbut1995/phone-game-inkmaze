@@ -260,14 +260,23 @@ func pulse() -> void:
 	tw.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
+var _shudder_tween: Tween = null
+var _fail_tween: Tween = null
+
+
 ## Hiệu ứng rung lắc ô khi xảy ra va chạm nguy hiểm (nổ mìn, đâm gai)
 func play_shudder() -> void:
-	var base_pos := position
-	var tw := create_tween()
-	tw.tween_property(self, "position", base_pos + Vector2(-5, 3), 0.035)
-	tw.tween_property(self, "position", base_pos + Vector2(5, -3), 0.035)
-	tw.tween_property(self, "position", base_pos + Vector2(-3, 2), 0.035)
-	tw.tween_property(self, "position", base_pos, 0.04)
+	if _shudder_tween != null and _shudder_tween.is_valid():
+		_shudder_tween.kill()
+	var sprite := get_node_or_null("Sprite") as Control
+	if sprite == null:
+		return
+	sprite.position = Vector2.ZERO
+	_shudder_tween = create_tween()
+	_shudder_tween.tween_property(sprite, "position", Vector2(-6, 4), 0.035)
+	_shudder_tween.tween_property(sprite, "position", Vector2(6, -4), 0.035)
+	_shudder_tween.tween_property(sprite, "position", Vector2(-3, 2), 0.035)
+	_shudder_tween.tween_property(sprite, "position", Vector2.ZERO, 0.04)
 
 
 ## Hiệu ứng nảy số trên ô khi giá trị được cập nhật (Fading Ink / Sum Path)
@@ -280,3 +289,32 @@ func play_pop_text() -> void:
 	var tw := create_tween()
 	tw.tween_property(_label, "scale", Vector2(1.32, 1.32), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.tween_property(_label, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+## Hiệu ứng chúc mừng thắng màn / bài hướng dẫn: nảy nhẹ so le
+func play_win(delay: float = 0.0) -> void:
+	pivot_offset = size * 0.5
+	var tw := create_tween()
+	if delay > 0.0:
+		tw.tween_interval(delay)
+	tw.tween_property(self, "scale", Vector2(1.15, 1.15), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+## Hiệu ứng khi được chọn / đi qua trong tutorial
+func play_step() -> void:
+	pulse()
+	var flash := create_tween()
+	modulate = Color(1.18, 1.18, 1.12, 1.0)
+	flash.tween_property(self, "modulate", Color.WHITE, 0.3)
+
+
+## Hiệu ứng khi thao tác sai: rung giật và nháy đỏ nhẹ
+func play_fail() -> void:
+	play_shudder()
+	if _fail_tween != null and _fail_tween.is_valid():
+		_fail_tween.kill()
+	var old_mod := Color.WHITE
+	modulate = Color(1.0, 0.45, 0.42, 1.0)
+	_fail_tween = create_tween()
+	_fail_tween.tween_property(self, "modulate", old_mod, 0.35)

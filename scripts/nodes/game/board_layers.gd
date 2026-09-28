@@ -84,3 +84,15 @@ func anchors() -> Control:
 ## Lớp trang trí + nhân vật (con trỏ, vệt mực, hiệu ứng, chữ nổi)
 func markers() -> Control:
 	return $Markers
+
+
+## Hiện/ẩn toàn bộ lớp trang trí + nhân vật
+func set_markers_visible(on: bool) -> void:
+	$Markers.visible = on
+
+
+## Hiện/ẩn riêng con trỏ
+func set_cursor_visible(on: bool) -> void:
+	var cur := cursor()
+	if cur != null:
+		cur.set_cursor_visible(on)

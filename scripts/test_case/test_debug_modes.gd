@@ -276,6 +276,8 @@ func _section_6_tutorials(gm: Node, saved: Dictionary) -> void:
 	_check(opened == "how_to_play_move", "Vao man Tutorial mo thang bai duoc yeu cau (dang '%s')" % opened)
 
 	# Test mode BẬT: học xong KHÔNG ghi tiến trình
+	# (xoá cờ trước khi thử — save thật có thể đã bật sẵn, để nguyên sẽ fail OAN)
+	gm.call("set_tutorial_completed", "how_to_play_move", false)
 	var active: Node = controller.get("active_tutorial_node") if controller != null else null
 	if active != null:
 		active.call("complete_tutorial")
@@ -297,6 +299,7 @@ func _section_6_tutorials(gm: Node, saved: Dictionary) -> void:
 	var first_id := str(active2.get("tutorial_id")) if active2 != null else "<null>"
 	_check(first_id == "first_time", "Khong co yeu cau -> chay chuoi CORE (dang '%s')" % first_id)
 	if active2 != null:
+		gm.call("set_tutorial_completed", "first_time", false)  # xoá cờ trước để phép thử có nghĩa
 		active2.call("complete_tutorial")
 		await process_frame
 	_check(bool((gm.get("tutorial_progress") as Dictionary).get("first_time", false)),

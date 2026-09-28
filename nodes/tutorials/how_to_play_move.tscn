@@ -1,46 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmove000001"]
+[gd_scene format=3 uid="uid://bmove000001"]
 
 [ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
-[ext_resource type="Script" path="res://scripts/nodes/tutorial/how_to_play_move.gd" id="2_script"]
-[ext_resource type="PackedScene" uid="uid://btutcell000001" path="res://nodes/tutorials/tutorial_cell.tscn" id="3_cell"]
+[ext_resource type="Script" uid="uid://btkihhxc1tvde" path="res://scripts/nodes/tutorial/how_to_play_move.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://btutorialboard01" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
 
-[node name="HowToPlayMove" instance=ExtResource("1_base") node_paths=PackedStringArray("cells", "path_line")]
+[node name="HowToPlayMove" node_paths=PackedStringArray("board_tutorial") instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-cells = [NodePath("BoardHost/Cell1"), NodePath("BoardHost/Cell2"), NodePath("BoardHost/Cell3")]
-path_line = NodePath("BoardHost/PathLine")
+board_tutorial = NodePath("BoardHost/BoardTutorial")
 
-[node name="Cell1" instance=ExtResource("3_cell") parent="BoardHost" index="0"]
-offset_left = 70.0
-offset_top = 160.0
-offset_right = 166.0
-offset_bottom = 256.0
-grid_pos = Vector2i(0, 0)
-cell_text = "S"
-text_color = Color(0.18, 0.44, 0.68, 1)
-text_size = 32
-
-[node name="Cell2" instance=ExtResource("3_cell") parent="BoardHost" index="1"]
-offset_left = 180.0
-offset_top = 160.0
-offset_right = 276.0
-offset_bottom = 256.0
-grid_pos = Vector2i(1, 0)
-cell_text = ""
-text_size = 32
-
-[node name="Cell3" instance=ExtResource("3_cell") parent="BoardHost" index="2"]
-offset_left = 290.0
-offset_top = 160.0
-offset_right = 386.0
-offset_bottom = 256.0
-grid_pos = Vector2i(2, 0)
-cell_text = "F"
-text_color = Color(0.86, 0.32, 0.3, 1)
-text_size = 32
-
-[node name="PathLine" type="Line2D" parent="BoardHost" index="3"]
-width = 12.0
-default_color = Color(0.165, 0.22, 0.28, 1)
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
+[node name="BoardTutorial" parent="BoardHost" index="0" instance=ExtResource("3_board")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -140.0
+offset_right = 190.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
