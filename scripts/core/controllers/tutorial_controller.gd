@@ -37,7 +37,14 @@ var container_node: Control = null
 
 
 func set_container(container: Control) -> void:
+	if container_node == container:
+		return
 	container_node = container
+	if active_tutorial_node != null and is_instance_valid(active_tutorial_node):
+		if active_tutorial_node.get_parent() != null:
+			active_tutorial_node.get_parent().remove_child(active_tutorial_node)
+		if container_node != null:
+			container_node.add_child(active_tutorial_node)
 
 
 func start_sequence(sequence: Array = []) -> void:
@@ -108,6 +115,9 @@ func _on_tutorial_completed(tutorial_id: String) -> void:
 	if not sequence_queue.is_empty():
 		_play_next_in_queue()
 	else:
+		if active_tutorial_node != null and is_instance_valid(active_tutorial_node):
+			active_tutorial_node.queue_free()
+			active_tutorial_node = null
 		sequence_finished.emit()
 
 
@@ -115,6 +125,9 @@ func _on_tutorial_skipped(tutorial_id: String, all: bool) -> void:
 	if all:
 		sequence_queue.clear()
 		_save_core_completed()
+		if active_tutorial_node != null and is_instance_valid(active_tutorial_node):
+			active_tutorial_node.queue_free()
+			active_tutorial_node = null
 		sequence_finished.emit()
 	else:
 		_save_progress(tutorial_id)
@@ -122,6 +135,9 @@ func _on_tutorial_skipped(tutorial_id: String, all: bool) -> void:
 		if not sequence_queue.is_empty():
 			_play_next_in_queue()
 		else:
+			if active_tutorial_node != null and is_instance_valid(active_tutorial_node):
+				active_tutorial_node.queue_free()
+				active_tutorial_node = null
 			sequence_finished.emit()
 
 

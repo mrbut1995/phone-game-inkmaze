@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bdaud8s52opsm"]
 
 [ext_resource type="Script" uid="uid://due7yap3gb5o" path="res://scripts/nodes/tutorial/base_tutorial.gd" id="1_7x6e2"]
-[ext_resource type="Texture2D" uid="uid://d4j4w8ppmldd0" path="res://assets/images/tutorial/tutorial_pointer.svg" id="2_pointer"]
 [ext_resource type="Texture2D" uid="uid://dnk0ylbkxo26p" path="res://assets/images/tutorial/tutorial_spotlight.svg" id="3_spotlight"]
 
 [sub_resource type="StyleBoxFlat" id="btn_primary"]
@@ -26,7 +25,7 @@ corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[node name="BaseTutorial" type="Control" unique_id=1525698188 node_paths=PackedStringArray("backdrop", "spotlight", "board_host", "hand_pointer", "dialog_bubble", "lbl_title", "dots_container", "lbl_message", "nav_bar", "btn_skip_all", "btn_skip", "btn_next", "toast_label")]
+[node name="BaseTutorial" type="Control" unique_id=1525698188 node_paths=PackedStringArray("backdrop", "spotlight", "board_host", "dialog_bubble", "lbl_title", "dots_container", "lbl_message", "nav_bar", "btn_skip_all", "btn_skip", "btn_next", "toast_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +36,6 @@ script = ExtResource("1_7x6e2")
 backdrop = NodePath("Backdrop")
 spotlight = NodePath("Spotlight")
 board_host = NodePath("BoardHost")
-hand_pointer = NodePath("HandPointer")
 dialog_bubble = NodePath("DialogBubble")
 lbl_title = NodePath("Header/Title")
 dots_container = NodePath("Dots")
@@ -61,31 +59,29 @@ color = Color(0.969, 0.957, 0.937, 1)
 [node name="Spotlight" type="NinePatchRect" parent="." unique_id=393074664]
 visible = false
 layout_mode = 0
-offset_right = 192.0
-offset_bottom = 192.0
+offset_right = 64.0
+offset_bottom = 64.0
+mouse_filter = 2
 texture = ExtResource("3_spotlight")
-patch_margin_left = 48
-patch_margin_top = 48
-patch_margin_right = 48
-patch_margin_bottom = 48
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
 
 [node name="BoardHost" type="Control" parent="." unique_id=1982948136]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 220.0
-offset_right = 500.0
-offset_bottom = 640.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -240.0
+offset_right = 230.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-
-[node name="HandPointer" type="TextureRect" parent="." unique_id=1128375995]
-visible = false
-layout_mode = 0
-offset_right = 48.0
-offset_bottom = 48.0
-mouse_filter = 2
-texture = ExtResource("2_pointer")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="Header" type="Control" parent="." unique_id=601935572]
 layout_mode = 1
@@ -130,11 +126,12 @@ text = "✕"
 
 [node name="DialogBubble" type="Control" parent="." unique_id=2017602598]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 36.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -234.0
 offset_top = 116.0
-offset_right = -36.0
+offset_right = 234.0
 offset_bottom = 206.0
 grow_horizontal = 2
 mouse_filter = 2

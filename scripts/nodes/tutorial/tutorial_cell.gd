@@ -1,49 +1,77 @@
 class_name TutorialCell
-extends PanelContainer
+extends Control
 ## ============================================================================
 ## Ô của BÀN MINI trong tutorial — scene `nodes/tutorials/tutorial_cell.tscn`.
 ##
-## Toàn bộ HÌNH DÁNG nằm trong scene (2 StyleBox nền + Label con); script chỉ giữ API để
-## tutorial điều khiển. Mỗi tutorial scene INSTANCE ô này rồi ghi đè chữ/màu/cỡ + `grid_pos`
-## NGAY TRONG `.tscn` — không còn `PanelContainer.new()` / `StyleBoxFlat.new()` trong code.
+## Cấu trúc giống `cell.tscn` của game thật: Control > TextureButton (Sprite) + Label + Highlight.
+## S → cell_start.svg, F → cell_finish.svg, số → cell_normal.svg + Label hiển thị số.
+## Mỗi tutorial scene INSTANCE ô này rồi ghi đè cell_text/text_color/text_size + grid_pos.
 ## ============================================================================
+
+const TEX_NORMAL  := preload("res://assets/images/game/cell_normal.svg")
+const TEX_START   := preload("res://assets/images/game/cell_start.svg")
+const TEX_FINISH  := preload("res://assets/images/game/cell_finish.svg")
+const TEX_FINISH_CLOSED := preload("res://assets/images/game/cell_finish_closed.svg")
 
 ## Toạ độ ô trong bàn mini (tutorial tra ô theo `grid_pos`, không theo thứ tự con)
 @export var grid_pos: Vector2i = Vector2i.ZERO
-## Nền "đã đi qua" (One Stroke) — bind trong chính scene của ô
-@export var style_visited: StyleBox = null
 ## Chữ hiện trên ô ("S", "F", con số…) — ghi đè trong .tscn của từng bài
 @export var cell_text: String = ""
 ## Màu chữ — ghi đè trong .tscn
 @export var text_color: Color = Color(0.18, 0.22, 0.26, 1)
 ## Cỡ chữ — ghi đè trong .tscn
-@export var text_size: int = 24
+@export var text_size: int = 0  # 0 = dùng font size từ LabelSettings gốc
 
-var _style_normal: StyleBox = null
 var _fx: Tween = null
 var _home_pos := Vector2.ZERO
 
-@onready var _label: Label = $Label
+@onready var _sprite: TextureButton = $Sprite
+@onready var _label: Label = $Sprite/Label
+@onready var _highlight: Panel = $Highlight
 
 
 func _ready() -> void:
-	_style_normal = get_theme_stylebox("panel")
 	_home_pos = position
-	_apply_label()
+	_apply_cell_text(cell_text)
 
 
-func _apply_label() -> void:
-	if _label == null:
+func _apply_cell_text(text: String) -> void:
+	if _sprite == null or _label == null:
 		return
-	_label.text = cell_text
-	_label.add_theme_color_override("font_color", text_color)
-	_label.add_theme_font_size_override("font_size", text_size)
+	match text:
+		"S":
+			_sprite.texture_normal = TEX_START
+			_sprite.texture_hover  = TEX_START
+			_sprite.texture_focused = TEX_START
+			_label.text    = ""
+			_label.visible = false
+		"F":
+			_sprite.texture_normal = TEX_FINISH
+			_sprite.texture_hover  = TEX_FINISH
+			_sprite.texture_focused = TEX_FINISH
+			_label.text    = ""
+			_label.visible = false
+		"F_CLOSED":
+			_sprite.texture_normal = TEX_FINISH_CLOSED
+			_sprite.texture_hover  = TEX_FINISH_CLOSED
+			_sprite.texture_focused = TEX_FINISH_CLOSED
+			_label.text    = ""
+			_label.visible = false
+		_:
+			_sprite.texture_normal = TEX_NORMAL
+			_sprite.texture_hover  = TEX_NORMAL
+			_sprite.texture_focused = TEX_NORMAL
+			_label.text    = text
+			_label.visible = not text.is_empty()
+			# Áp màu chữ và cỡ chữ tùy chỉnh nếu có
+			_label.add_theme_color_override("font_color", text_color)
+			if text_size > 0:
+				_label.add_theme_font_size_override("font_size", text_size)
 
 
 func set_text(text: String) -> void:
 	cell_text = text
-	if _label != null:
-		_label.text = text
+	_apply_cell_text(text)
 
 
 func text() -> String:
@@ -62,11 +90,27 @@ func set_text_size(px: int) -> void:
 		_label.add_theme_font_size_override("font_size", px)
 
 
-## Ô đã đi qua (One Stroke: tô nền xanh nhạt) — đổi nền sang `style_visited`
+## Tô sáng ô (dùng cho Minesweeper / SumPath spotlight trên ô cụ thể)
+func set_highlight(on: bool) -> void:
+	if _highlight != null:
+		_highlight.visible = on
+
+
+## Đánh dấu đã đi qua (One Stroke): dùng overlay Highlight màu xanh nhạt
 func set_visited(on: bool) -> void:
-	var style := style_visited if on else _style_normal
-	if style != null:
-		add_theme_stylebox_override("panel", style)
+	if _highlight == null:
+		return
+	if on:
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color(0.5, 0.82, 0.95, 0.38)
+		style.corner_radius_top_left    = 14
+		style.corner_radius_top_right   = 14
+		style.corner_radius_bottom_right = 14
+		style.corner_radius_bottom_left  = 14
+		_highlight.add_theme_stylebox_override("panel", style)
+		_highlight.visible = true
+	else:
+		_highlight.visible = false
 
 
 ## Nhún nhẹ khi thao tác đúng ("pháo giấy nhỏ" của tutorial)

@@ -3,36 +3,48 @@ extends BaseTutorial
 
 ## ============================================================================
 ## HowToPlayMinesweeperTutorial: Chế độ Mìn (Planning.md §3.5)
-## Bàn mini 3×3: Mìn cố định tại (1,0) và (0,2).
-## Số trên ô = số mìn trong 8 ô lân cận (khai sẵn trong `.tscn`), S tại (0,0), F tại (2,2).
+## Dùng BoardTutorial: bàn 3×3, S (0,0), F (2,2), Mìn tại (1,0) và (0,2).
 ## ============================================================================
 
-## 9 ô của bàn 3×3 (tra theo `grid_pos`) — bind trong .tscn
-@export var cells: Array[TutorialCell] = []
-## Nét đường đi (child của BoardHost) — bind trong .tscn
-@export var path_line: Line2D = null
+@export var board_tutorial: BoardTutorial = null
 
-## Vị trí mìn của bàn mini (dùng cho luật thua khi đạp mìn)
 const MINES: Array[Vector2i] = [Vector2i(1, 0), Vector2i(0, 2)]
 
 var _current_cell: Vector2i = Vector2i(0, 0)
-var _is_dragging: bool = false
 var _visited_cells: Array[Vector2i] = []
-
-const CELL_SIZE := 76.0
-const CELL_GAP := 8.0
-const BOARD_ORIGIN := Vector2(85, 120)
 
 
 func _init_tutorial() -> void:
 	tutorial_id = "how_to_play_minesweeper"
+	if board_tutorial != null:
+		board_tutorial.setup_tutorial(
+			3, 3,
+			{
+				Vector2i(0, 0): "S",
+				Vector2i(1, 0): "0",
+				Vector2i(2, 0): "1",
+				Vector2i(0, 1): "2",
+				Vector2i(1, 1): "2",
+				Vector2i(2, 1): "1",
+				Vector2i(0, 2): "0",
+				Vector2i(1, 2): "1",
+				Vector2i(2, 2): "F"
+			},
+			[],
+			true,
+			Vector2i(0, 0),
+			Vector2i(2, 2)
+		)
+		if not board_tutorial.cell_step_attempted.is_connected(_on_cell_step_attempted):
+			board_tutorial.cell_step_attempted.connect(_on_cell_step_attempted)
+	_reset_path()
 
 	var steps: Array = [
 		{
 			"message_key": "STR_TUT_MINE_01",
 			"fallback_text": "Ở chế độ này, con số là SỐ MÌN trong 8 ô xung quanh!",
 			"advance_mode": "MANUAL",
-			"spotlight_rect": Rect2(BOARD_ORIGIN + Vector2(CELL_SIZE + CELL_GAP, 0), Vector2(CELL_SIZE, CELL_SIZE))
+			"spotlight_cell": Vector2i(0, 1)
 		},
 		{
 			"message_key": "STR_TUT_MINE_02",
@@ -62,29 +74,13 @@ func _init_tutorial() -> void:
 func _reset_path() -> void:
 	_visited_cells = [Vector2i(0, 0)]
 	_current_cell = Vector2i(0, 0)
-	_refresh_path_line()
-
-
-func _refresh_path_line() -> void:
-	if path_line == null:
-		return
-	path_line.clear_points()
-	for cell_pos in _visited_cells:
-		path_line.add_point(_cell_center(cell_pos))
-
-
-func _cell_center(coord: Vector2i) -> Vector2:
-	for c in cells:
-		if c.grid_pos == coord:
-			return c.position + c.size * 0.5
-	return Vector2.ZERO
-
-
-func _cell_node(coord: Vector2i) -> TutorialCell:
-	for c in cells:
-		if c.grid_pos == coord:
-			return c
-	return null
+	if board_tutorial != null:
+		board_tutorial.set_path(_visited_cells)
+		board_tutorial.set_player_cell(Vector2i(0, 0), false)
+		for m in MINES:
+			var cell := board_tutorial.get_cell(m)
+			if cell != null:
+				cell.set_bomb(false)
 
 
 func _on_step_entered(index: int, _data: Dictionary) -> void:
@@ -92,31 +88,10 @@ func _on_step_entered(index: int, _data: Dictionary) -> void:
 		_reset_path()
 
 
-func _gui_input(event: InputEvent) -> void:
+func _on_cell_step_attempted(next: Vector2i) -> void:
 	if current_step_index != 2:
 		return
-
-	if event is InputEventMouseButton:
-		var mb := event as InputEventMouseButton
-		if mb.button_index == MOUSE_BUTTON_LEFT:
-			if mb.pressed:
-				if _cell_at(mb.global_position) == _current_cell:
-					_is_dragging = true
-			else:
-				_is_dragging = false
-	elif event is InputEventMouseMotion and _is_dragging:
-		var mm := event as InputEventMouseMotion
-		var next := _cell_at(mm.global_position)
-		if next != Vector2i(-1, -1) and next != _current_cell:
-			_try_step_to(next)
-
-
-## Tra ô theo toạ độ TOÀN CỤC (BoardHost nằm ở đâu cũng đúng)
-func _cell_at(global_pos: Vector2) -> Vector2i:
-	for c in cells:
-		if c.get_global_rect().has_point(global_pos):
-			return c.grid_pos
-	return Vector2i(-1, -1)
+	_try_step_to(next)
 
 
 func _try_step_to(next: Vector2i) -> void:
@@ -128,28 +103,26 @@ func _try_step_to(next: Vector2i) -> void:
 	# Kiểm tra đạp mìn
 	if MINES.has(next):
 		show_fail_feedback("STR_TUT_MINE_FAIL_01", "Đây là ô có mìn rồi! Hãy nhìn lại các số lân cận.")
-		var mine_cell := _cell_node(next)
-		if mine_cell != null:
-			mine_cell.play_fail()
-		spawn_board_text("!", _cell_center(next), Color(0.85, 0.33, 0.31))
+		if board_tutorial != null:
+			var mine_cell := board_tutorial.get_cell(next)
+			if mine_cell != null:
+				mine_cell.set_bomb(true)
+				mine_cell.play_fail()
+			spawn_board_text("!", board_tutorial.get_cell_center(next), Color(0.85, 0.33, 0.31))
 		return
 
 	_current_cell = next
 	_visited_cells.append(next)
-	_refresh_path_line()
-	_mark_cell(next)
+	if board_tutorial != null:
+		board_tutorial.set_path(_visited_cells)
+		board_tutorial.set_player_cell(next, true)
+		var c := board_tutorial.get_cell(next)
+		if c != null:
+			c.play_step()
 
 	if next == Vector2i(2, 2):
-		_is_dragging = false
 		play_cells_win()
-		spawn_board_text("✓", _cell_center(next))
+		if board_tutorial != null:
+			spawn_board_text("✓", board_tutorial.get_cell_center(next))
 		show_success_feedback("STR_TUT_MINE_04", "Chuẩn luôn! Bạn né được hết mìn.")
 		show_step(3)
-
-
-## Ô vừa được đi qua: nhún + tiếng chấm bút
-func _mark_cell(coord: Vector2i) -> void:
-	var cell := _cell_node(coord)
-	if cell != null:
-		cell.play_step()
-	Sfx.play(Sfx.CELL_STEP)

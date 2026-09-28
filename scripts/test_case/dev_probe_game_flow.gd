@@ -109,37 +109,34 @@ func _sweep_canvas() -> void:
 ## hướng nào không có tường thì nhân vật phải đi được.
 func _swipe_test(scene: Node, label: String) -> void:
 	var board := scene.get("board_view") as Control
-	var gc: Node = scene.get("game_controller")
-	if board == null or gc == null:
-		return
-	var state: Object = gc.get("game_state")
-	if state == null:
+	var grid: Node = scene.get("grid_controller")
+	if board == null or grid == null:
 		return
 	var cursor := board.get("_cursor") as Control
 	var start: Vector2 = cursor.get_global_rect().get_center() if cursor != null \
 		else board.get_global_rect().get_center()
 	var cell: float = cursor.get_global_rect().size.x if cursor != null else 60.0
-	var before: int = state.get("path").size()
+	var before: int = (grid.get("path") as Array).size()
 	var moved := ""
 	for dir in [Vector2(cell, 0), Vector2(0, cell), Vector2(-cell, 0), Vector2(0, -cell)]:
 		var target: Vector2 = start + dir
 		var hit := InputEventScreenTouch.new()
 		hit.position = start
 		hit.pressed = true
-		root.push_input(hit)
+		root.push_input(hit, true)
 		var drag := InputEventScreenDrag.new()
 		drag.position = target
-		root.push_input(drag)
+		root.push_input(drag, true)
 		var release := InputEventScreenTouch.new()
 		release.position = target
 		release.pressed = false
-		root.push_input(release)
+		root.push_input(release, true)
 		await _frames(3)
-		if state.get("path").size() > before:
+		if (grid.get("path") as Array).size() > before:
 			moved = "hướng %s" % str(dir)
 			break
 	print("   SWIPE (%s) từ (%.0f,%.0f) ô=%.0f: path %d → %d  %s" % [label, start.x, start.y, cell,
-		before, state.get("path").size(),
+		before, (grid.get("path") as Array).size(),
 		("OK (" + moved + ")") if moved != "" else "⚠ KHÔNG DI CHUYỂN ĐƯỢC"])
 
 

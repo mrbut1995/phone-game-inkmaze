@@ -1,45 +1,471 @@
 [gd_scene format=3 uid="uid://smn1ps0pfgs3"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="2_paper"]
 [ext_resource type="Script" path="res://scripts/scenes/layout/tutorial_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
 [ext_resource type="LabelSettings" uid="uid://bonmr0e8ujeq3" path="res://resources/settings/text/text_game_title.tres" id="5_title_settings"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/cta_normal.tres" id="6_cta_n"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/cta_pressed.tres" id="7_cta_p"]
+[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/cta_focus.tres" id="8_cta_f"]
+[ext_resource type="Texture2D" uid="uid://tkx1snji0emg" path="res://assets/images/icons/icon_intro.svg" id="9_ic_intro"]
+[ext_resource type="Texture2D" uid="uid://bmk3xd7h0vimt" path="res://assets/images/icons/icon_steps.svg" id="10_ic_steps"]
+[ext_resource type="Texture2D" uid="uid://or2ce0tg8sgj" path="res://assets/images/icons/icon_logic.svg" id="11_ic_logic"]
+[ext_resource type="Texture2D" uid="uid://d18is15l8ct7i" path="res://assets/images/icons/icon_bomb.svg" id="12_ic_bomb"]
+[ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/icons/pencil_icon.svg" id="13_ic_pencil"]
+[ext_resource type="Texture2D" uid="uid://n80hdaatt051" path="res://assets/images/icons/icon_circle.svg" id="14_ic_circle"]
+[ext_resource type="Texture2D" uid="uid://dfen0100lldvp" path="res://assets/images/icons/icon_castle.svg" id="15_ic_castle"]
 
-[node name="Portrait" node_paths=PackedStringArray("btn_back", "lbl_title", "tutorial_container", "mode_list") instance=ExtResource("1_parent")]
+[node name="Portrait" node_paths=PackedStringArray("btn_back", "lbl_title", "tutorial_container", "mode_list", "btn_first_time", "btn_move", "btn_checking_wall", "btn_minesweeper", "btn_one_stroke", "btn_sum_path", "btn_wall_builder") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
-btn_back = NodePath("TopBar/Back")
-lbl_title = NodePath("TopBar/Title")
+btn_back = NodePath("Paper/TopBar/Back")
+lbl_title = NodePath("Paper/TopBar/Title")
 tutorial_container = NodePath("TutorialContainer")
-mode_list = NodePath("TopBar/ModeScroll/ModeList")
+mode_list = NodePath("Paper/ModeScroll/ModeList")
+btn_first_time = NodePath("Paper/ModeScroll/ModeList/BtnFirstTime")
+btn_move = NodePath("Paper/ModeScroll/ModeList/BtnMove")
+btn_checking_wall = NodePath("Paper/ModeScroll/ModeList/BtnCheckingWall")
+btn_minesweeper = NodePath("Paper/ModeScroll/ModeList/BtnMinesweeper")
+btn_one_stroke = NodePath("Paper/ModeScroll/ModeList/BtnOneStroke")
+btn_sum_path = NodePath("Paper/ModeScroll/ModeList/BtnSumPath")
+btn_wall_builder = NodePath("Paper/ModeScroll/ModeList/BtnWallBuilder")
 
-[node name="TopBar" type="HBoxContainer" parent="." index="0"]
+[node name="Paper" type="NinePatchRect" parent="." index="0"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.04
-anchor_top = 0.03
-anchor_right = 0.96
-anchor_bottom = 0.08
-offset_bottom = -0.12
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 42.0
+offset_right = -11.0
+offset_bottom = -33.0
+texture = ExtResource("2_paper")
+patch_margin_left = 132
+patch_margin_top = 203
+patch_margin_right = 107
+patch_margin_bottom = 253
+axis_stretch_vertical = 1
+
+[node name="TopBar" type="HBoxContainer" parent="Paper" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.038
+anchor_right = 0.94
+anchor_bottom = 0.09
+theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Back" type="TextureButton" parent="TopBar" index="0"]
+[node name="Back" type="TextureButton" parent="Paper/TopBar" index="0"]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
 texture_normal = ExtResource("3_back_n")
 texture_pressed = ExtResource("4_back_p")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="Title" type="Label" parent="TopBar" index="1"]
+[node name="Title" type="Label" parent="Paper/TopBar" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "STR_TUT_COMMON_TITLE"
 label_settings = ExtResource("5_title_settings")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ModeScroll" type="ScrollContainer" parent="Paper" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.105
+anchor_right = 0.94
+anchor_bottom = 0.94
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="ModeList" type="VBoxContainer" parent="Paper/ModeScroll" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="BtnFirstTime" type="Button" parent="Paper/ModeScroll/ModeList" index="0"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/ModeScroll/ModeList/BtnFirstTime" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/ModeScroll/ModeList/BtnFirstTime/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("9_ic_intro")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/ModeScroll/ModeList/BtnFirstTime/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/ModeScroll/ModeList/BtnFirstTime/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "1. Nhập môn & Luật chơi"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/ModeScroll/ModeList/BtnFirstTime/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Làm quen bàn cờ ô ly và 3 ô S • ? • F"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnMove" type="Button" parent="Paper/ModeScroll/ModeList" index="1"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/ModeScroll/ModeList/BtnMove" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/ModeScroll/ModeList/BtnMove/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("10_ic_steps")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/ModeScroll/ModeList/BtnMove/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/ModeScroll/ModeList/BtnMove/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "2. Di chuyển cơ bản"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/ModeScroll/ModeList/BtnMove/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Kéo vuốt tìm đường liên tục từ S đến F"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnCheckingWall" type="Button" parent="Paper/ModeScroll/ModeList" index="2"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/ModeScroll/ModeList/BtnCheckingWall" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/ModeScroll/ModeList/BtnCheckingWall/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("11_ic_logic")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/ModeScroll/ModeList/BtnCheckingWall/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/ModeScroll/ModeList/BtnCheckingWall/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "3. Dò đoán tường ẩn"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/ModeScroll/ModeList/BtnCheckingWall/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Suy luận vị trí tường từ con số trên các ô"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnMinesweeper" type="Button" parent="Paper/ModeScroll/ModeList" index="3"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/ModeScroll/ModeList/BtnMinesweeper" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/ModeScroll/ModeList/BtnMinesweeper/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("12_ic_bomb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/ModeScroll/ModeList/BtnMinesweeper/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/ModeScroll/ModeList/BtnMinesweeper/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "4. Né mìn theo số"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/ModeScroll/ModeList/BtnMinesweeper/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Dò tìm ô an toàn và tránh xa bẫy mìn"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnOneStroke" type="Button" parent="Paper/ModeScroll/ModeList" index="4"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/ModeScroll/ModeList/BtnOneStroke" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/ModeScroll/ModeList/BtnOneStroke/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("13_ic_pencil")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/ModeScroll/ModeList/BtnOneStroke/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/ModeScroll/ModeList/BtnOneStroke/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "5. Vẽ đường một nét"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/ModeScroll/ModeList/BtnOneStroke/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Đi qua toàn bộ mọi ô trong bàn đúng 1 lần"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnSumPath" type="Button" parent="Paper/ModeScroll/ModeList" index="5"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/ModeScroll/ModeList/BtnSumPath" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/ModeScroll/ModeList/BtnSumPath/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("14_ic_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/ModeScroll/ModeList/BtnSumPath/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/ModeScroll/ModeList/BtnSumPath/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "6. Khớp tổng điểm"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/ModeScroll/ModeList/BtnSumPath/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Đi qua các ô sao cho tổng khớp mục tiêu"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnWallBuilder" type="Button" parent="Paper/ModeScroll/ModeList" index="6"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/ModeScroll/ModeList/BtnWallBuilder" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/ModeScroll/ModeList/BtnWallBuilder/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("15_ic_castle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/ModeScroll/ModeList/BtnWallBuilder/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/ModeScroll/ModeList/BtnWallBuilder/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "7. Tự xây dựng tường"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/ModeScroll/ModeList/BtnWallBuilder/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Vẽ các đoạn tường ngăn theo chỉ số rồi Gửi bài"
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="TutorialContainer" type="Control" parent="." index="1"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 80.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
