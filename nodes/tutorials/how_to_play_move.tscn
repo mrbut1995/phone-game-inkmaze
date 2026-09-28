@@ -1,5 +1,46 @@
-[gd_scene format=3 uid="uid://c1useiqirldk4"]
+[gd_scene load_steps=4 format=3 uid="uid://bmove000001"]
 
-[ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_uva23"]
+[ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/tutorial/how_to_play_move.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://btutcell000001" path="res://nodes/tutorials/tutorial_cell.tscn" id="3_cell"]
 
-[node name="BaseTutorial" unique_id=1525698188 instance=ExtResource("1_uva23")]
+[node name="HowToPlayMove" instance=ExtResource("1_base") node_paths=PackedStringArray("cells", "path_line")]
+script = ExtResource("2_script")
+cells = [NodePath("BoardHost/Cell1"), NodePath("BoardHost/Cell2"), NodePath("BoardHost/Cell3")]
+path_line = NodePath("BoardHost/PathLine")
+
+[node name="Cell1" instance=ExtResource("3_cell") parent="BoardHost" index="0"]
+offset_left = 70.0
+offset_top = 160.0
+offset_right = 166.0
+offset_bottom = 256.0
+grid_pos = Vector2i(0, 0)
+cell_text = "S"
+text_color = Color(0.18, 0.44, 0.68, 1)
+text_size = 32
+
+[node name="Cell2" instance=ExtResource("3_cell") parent="BoardHost" index="1"]
+offset_left = 180.0
+offset_top = 160.0
+offset_right = 276.0
+offset_bottom = 256.0
+grid_pos = Vector2i(1, 0)
+cell_text = ""
+text_size = 32
+
+[node name="Cell3" instance=ExtResource("3_cell") parent="BoardHost" index="2"]
+offset_left = 290.0
+offset_top = 160.0
+offset_right = 386.0
+offset_bottom = 256.0
+grid_pos = Vector2i(2, 0)
+cell_text = "F"
+text_color = Color(0.86, 0.32, 0.3, 1)
+text_size = 32
+
+[node name="PathLine" type="Line2D" parent="BoardHost" index="3"]
+width = 12.0
+default_color = Color(0.165, 0.22, 0.28, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

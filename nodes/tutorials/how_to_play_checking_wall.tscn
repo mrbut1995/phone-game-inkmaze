@@ -1,5 +1,73 @@
-[gd_scene format=3 uid="uid://b0dbrfvrovox2"]
+[gd_scene load_steps=5 format=3 uid="uid://08v80nisjogs"]
 
-[ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_xk31o"]
+[ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://lnm53g6tkcmx" path="res://scripts/nodes/tutorial/how_to_play_checking_wall.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://btutcell000001" path="res://nodes/tutorials/tutorial_cell.tscn" id="3_cell"]
+[ext_resource type="Texture2D" uid="uid://dge7154ysfskj" path="res://assets/images/tutorial/tutorial_wall.svg" id="5_wall"]
 
-[node name="BaseTutorial" unique_id=1525698188 instance=ExtResource("1_xk31o")]
+[node name="HowToPlayCheckingWall" instance=ExtResource("1_base") node_paths=PackedStringArray("cells", "wall_top", "path_line")]
+script = ExtResource("2_script")
+cells = [NodePath("BoardHost/Cell1"), NodePath("BoardHost/Cell2"), NodePath("BoardHost/Cell3"), NodePath("BoardHost/Cell4")]
+wall_top = NodePath("BoardHost/WallTop")
+path_line = NodePath("BoardHost/PathLine")
+
+[node name="Cell1" instance=ExtResource("3_cell") parent="BoardHost" index="0"]
+offset_left = 120.0
+offset_top = 130.0
+offset_right = 212.0
+offset_bottom = 222.0
+cell_text = "S (2)"
+text_color = Color(0.18, 0.44, 0.68, 1)
+text_size = 22
+
+[node name="Cell2" instance=ExtResource("3_cell") parent="BoardHost" index="1"]
+offset_left = 222.0
+offset_top = 130.0
+offset_right = 314.0
+offset_bottom = 222.0
+grid_pos = Vector2i(1, 0)
+cell_text = "1"
+text_color = Color(0.18, 0.22, 0.26, 1)
+text_size = 22
+
+[node name="Cell3" instance=ExtResource("3_cell") parent="BoardHost" index="2"]
+offset_left = 120.0
+offset_top = 232.0
+offset_right = 212.0
+offset_bottom = 324.0
+grid_pos = Vector2i(0, 1)
+cell_text = "1"
+text_color = Color(0.18, 0.22, 0.26, 1)
+text_size = 22
+
+[node name="Cell4" instance=ExtResource("3_cell") parent="BoardHost" index="3"]
+offset_left = 222.0
+offset_top = 232.0
+offset_right = 314.0
+offset_bottom = 324.0
+grid_pos = Vector2i(1, 1)
+cell_text = "F"
+text_color = Color(0.86, 0.32, 0.3, 1)
+text_size = 26
+
+[node name="PathLine" type="Line2D" parent="BoardHost" index="4"]
+width = 10.0
+default_color = Color(0.165, 0.22, 0.28, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="WallTop" type="NinePatchRect" parent="BoardHost" index="5"]
+visible = false
+modulate = Color(0.86, 0.32, 0.3, 1)
+offset_left = 180.2
+offset_top = 169.0
+offset_right = 253.8
+offset_bottom = 183.0
+rotation = 1.570796
+pivot_offset = Vector2(36.8, 7)
+texture = ExtResource("5_wall")
+patch_margin_left = 16
+patch_margin_top = 6
+patch_margin_right = 16
+patch_margin_bottom = 6

@@ -1,5 +1,45 @@
 [gd_scene format=3 uid="uid://smn1ps0pfgs3"]
 
-[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_sgfok"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/tutorial_layout.gd" id="2_layout"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="LabelSettings" uid="uid://bonmr0e8ujeq3" path="res://resources/settings/text/text_game_title.tres" id="5_title_settings"]
 
-[node name="BaseLayout" unique_id=1041501532 instance=ExtResource("1_sgfok")]
+[node name="Portrait" node_paths=PackedStringArray("btn_back", "lbl_title", "tutorial_container", "mode_list") instance=ExtResource("1_parent")]
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+lbl_title = NodePath("TopBar/Title")
+tutorial_container = NodePath("TutorialContainer")
+mode_list = NodePath("TopBar/ModeScroll/ModeList")
+
+[node name="TopBar" type="HBoxContainer" parent="." index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.03
+anchor_right = 0.96
+anchor_bottom = 0.08
+offset_bottom = -0.12
+alignment = 1
+
+[node name="Back" type="TextureButton" parent="TopBar" index="0"]
+layout_mode = 2
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+
+[node name="Title" type="Label" parent="TopBar" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "STR_TUT_COMMON_TITLE"
+label_settings = ExtResource("5_title_settings")
+
+[node name="TutorialContainer" type="Control" parent="." index="1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1

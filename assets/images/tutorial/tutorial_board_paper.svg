@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Thẻ giấy "bàn cờ mini" của tutorial (NinePatchRect, patch 22): thay cho StyleBoxFlat
+       dựng bằng code — cùng chất liệu giấy ô ly với HUD. -->
+  <rect x="2" y="2" width="116" height="116" rx="12" fill="#FBF8F0" stroke="#7F9CB0" stroke-width="3" />
+  <rect x="8" y="8" width="104" height="104" rx="9" fill="none" stroke="#C9D8E4" stroke-width="1.2"
+        stroke-dasharray="6 5" />
+</svg>

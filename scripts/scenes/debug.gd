@@ -107,6 +107,7 @@ func _build() -> void:
 	_build_progress()
 	_build_daily()
 	_build_special_modes()
+	_build_tutorials()
 	_build_save()
 	_build_popups()
 	_build_debug_flags()
@@ -138,6 +139,7 @@ func _build_navigate() -> void:
 	_add_action("Daily Challenge", "scenes/daily.tscn", func() -> void: Nav.goto_daily())
 	_add_action("Settings", "scenes/settings.tscn", func() -> void: Nav.goto_settings())
 	_add_action("Credits", "scenes/credit.tscn", func() -> void: Nav.goto_credit())
+	_add_action("Tutorial (menu)", "scenes/tutorial.tscn", func() -> void: Nav.goto_tutorial())
 	_add_action("Badge Book", "scenes/archivement.tscn", func() -> void: Nav.goto_archivement())
 	_add_action("Leaderboard", "scenes/ranking.tscn", func() -> void: Nav.goto_ranking())
 	_add_action("Dungeon run", "DungeonGameMode - tầng 1", func() -> void: _gm_call("start_dungeon"))
@@ -205,6 +207,104 @@ func _build_special_modes() -> void:
 
 	_add_action("Chế độ kế tiếp", "Xoay vòng qua 7 chế độ Special", _start_next_special_mode)
 	_add_action("Chế độ ngẫu nhiên", "Random 1 trong 7 chế độ Special", _start_random_special_mode)
+
+
+# ---------------------------------------------------------------------------
+# TUTORIAL: vào thẳng từng bài + chạy lại chuỗi onboarding (không cần qua menu)
+# ---------------------------------------------------------------------------
+## Mô tả ngắn từng bài (chữ dev, không dịch) — khoá = id bài trong `TutorialController`
+const TUTORIAL_LABELS := {
+	"first_time": "Chào mừng + hoạt cảnh 3 ô S · ? · F",
+	"how_to_play_move": "Bàn 1×3 — giữ & kéo đường S → F",
+	"how_to_play_checking_wall": "Bàn 2×2 — đoán tường vô hình từ con số",
+	"how_to_play_minesweeper": "Bàn 3×3 — né mìn theo số quanh ô",
+	"how_to_play_one_stroke": "Bàn 3×3 — đi hết mọi ô đúng 1 lần",
+	"how_to_play_sum_path": "Bàn 3×3 — tổng điểm khớp mục tiêu",
+	"how_to_play_wall_builder": "Bàn 2×2 — tự vẽ tường rồi GỬI BÀI",
+}
+
+
+func _build_tutorials() -> void:
+	_add_section("TUTORIAL (TEST)")
+	_add_label("Vào thẳng từng bài học tương tác — bật “Test mode” nếu KHÔNG muốn ghi tiến trình:",
+		&"PopupSubtitle")
+	var ids := _tutorial_ids()
+	_add_value("Đã hoàn thành", "%d / %d bài" % [_tutorial_done_count(), ids.size()])
+	_add_toggle("Test mode (không ghi tiến trình)",
+		"Bài chạy từ đây sẽ không đánh dấu là đã học xong", _test_mode, _set_test_mode)
+	for id in ids:
+		var mark := "●" if _tutorial_flag(id) else "○"
+		_add_action("%s  %s" % [mark, id], str(TUTORIAL_LABELS.get(id, "")),
+			_request_tutorial.bind(id))
+	_add_action("Chạy chuỗi CORE (3 bài onboarding)", "first_time → move → checking wall",
+		_request_core_sequence)
+	_add_action("Đánh dấu xong hết", "Ghi cờ hoàn thành cho cả %d bài" % ids.size(),
+		_mark_tutorials_done)
+	_add_action("Xoá tiến trình tutorial", "Chạy lại onboarding từ đầu (không xoá màn chơi)",
+		_reset_tutorials, true)
+
+
+func _tutorial_ids() -> Array[String]:
+	var ids: Array[String] = []
+	for id in TutorialController.TUTORIAL_SCENES:
+		ids.append(str(id))
+	return ids
+
+
+func _tutorial_progress() -> Dictionary:
+	var gm := _game_manager()
+	if gm == null:
+		return {}
+	var progress: Variant = gm.get("tutorial_progress")
+	return progress if progress is Dictionary else {}
+
+
+func _tutorial_flag(tutorial_id: String) -> bool:
+	return bool(_tutorial_progress().get(tutorial_id, false))
+
+
+func _tutorial_done_count() -> int:
+	var done := 0
+	for id in _tutorial_ids():
+		if _tutorial_flag(id):
+			done += 1
+	return done
+
+
+## Đặt yêu cầu mở THẲNG 1 bài rồi sang màn Tutorial (GameManager giữ yêu cầu qua scene change)
+func _request_tutorial(tutorial_id: String) -> void:
+	var gm := _game_manager()
+	if gm != null and gm.has_method("request_tutorial"):
+		gm.call("request_tutorial", tutorial_id)
+	Sfx.play(Sfx.BTN_CLICK)
+	Nav.goto_tutorial()
+
+
+func _request_core_sequence() -> void:
+	_request_tutorial(TutorialController.REQUEST_CORE)
+
+
+func _mark_tutorials_done() -> void:
+	var gm := _game_manager()
+	if gm == null:
+		return
+	if gm.has_method("mark_core_tutorials_completed"):
+		gm.call("mark_core_tutorials_completed")
+	if gm.has_method("set_tutorial_completed"):
+		for id in _tutorial_ids():
+			gm.call("set_tutorial_completed", id, true)
+	Save.queue_save()
+	_rebuild_after_action("Đã đánh dấu xong %d bài tutorial" % _tutorial_ids().size())
+
+
+func _reset_tutorials() -> void:
+	var gm := _game_manager()
+	if gm == null:
+		return
+	if gm.has_method("reset_tutorial_progress"):
+		gm.call("reset_tutorial_progress")
+	Save.queue_save()
+	_rebuild_after_action("Đã xoá tiến trình tutorial")
 
 
 func _build_save() -> void:

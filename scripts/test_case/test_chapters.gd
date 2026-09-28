@@ -306,8 +306,9 @@ func _section_5_card() -> void:
 	_entry(not (card.get_node("Panel/Content/Display/Doodle/Lock") as Control).visible, "Dang choi -> khong hien o khoa")
 	var title := card.get_node("Panel/Content/Display/Info/Title") as Label
 	_entry(title.text == TranslationServer.translate("STR_CHAPTER_TITLE_FORMAT").format(
-		[chapter.chapter_id, chapter.title]), "Tieu de theo dinh dang 'CHUONG n: Ten'")
-	_entry((card.get_node("Panel/Content/Display/Info/Subtitle") as Label).text == chapter.subtitle, "Mo ta lay tu du lieu chuong")
+		[chapter.chapter_id, chapter.display_title()]), "Tieu de theo dinh dang 'CHUONG n: Ten' (da dich)")
+	_entry((card.get_node("Panel/Content/Display/Info/Subtitle") as Label).text
+		== chapter.display_subtitle(), "Mo ta lay tu du lieu chuong (da dich)")
 	_entry((card.get_node("Panel/Ribbon/RibbonLabel") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_RIBBON_PLAYING"), "Ruy bang = DANG CHOI")
 	# Nút chương MỞ: chỗ trống bên trái nút được đặt ICON PLAY

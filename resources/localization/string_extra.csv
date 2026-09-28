@@ -3,38 +3,26 @@ STR_HUD_INSTRUCTION_OPEN,VIEW INSTRUCTION,XEM HƯỚNG DẪN
 STR_HUD_INSTRUCTION_OPEN_SUB,Tap to open the mode guide,Chạm để xem cách chơi
 STR_MODE_ONE_STROKE,ONE STROKE,MỘT NÉT
 STR_MODE_ONE_STROKE_NAME,ONE STROKE,MỘT NÉT
-STR_HINT_ONE_STROKE,✍️ Draw one stroke covering every cell - no re-entering, F must be last!,✍️ Vẽ 1 nét phủ kín mọi ô, không đi lại ô cũ. Ô cuối phải là F!
-STR_TOOL_DRAW_PATH_STROKE,One closed stroke • never lift the pen,Một nét kín trang • Không nhấc bút
-STR_TOOL_MARK_WALL_STROKE,Not used in One Stroke,Không dùng trong Một Nét
+STR_HINT_ONE_STROKE,"✍️ Draw one stroke covering every cell - no re-entering, F must be last!","✍️ Vẽ 1 nét phủ kín mọi ô, không đi lại ô cũ. Ô cuối phải là F!"
 STR_HUD_OS_TIME_SUB,NOW TIMING,ĐANG TÍNH GIỜ
-STR_HUD_OS_COVER_HEAD,📐 COVERED,📐 ĐÃ PHỦ KÍN
 STR_HUD_OS_COVER_MAX,/{0} CELLS,/{0} Ô
 STR_HUD_OS_COVER_NOTE,{0} CELLS LEFT,CÒN LẠI {0} Ô
 STR_HUD_OS_ROW_TITLE,"✍️ ONE STROKE, NO REPEAT",✍️ MỘT NÉT KHÔNG LẶP
 STR_HUD_OS_CHIP,{0}% DONE,{0}% KÍN
-STR_HUD_OS_ROW_NOTE,Touch F only after every cell is covered,Phải đi hết mọi ô mới được chạm đích F
-STR_HUD_OS_ROW_TIP,✓ No re-entry,✓ Không lùi ô
 STR_OS_FINISH_LOCKED,{0} CELLS LEFT!,CÒN {0} Ô CHƯA ĐI!
 STR_OS_CELL_VISITED,VISITED,ĐÃ ĐI
 STR_GAME_OVER_REVISIT,STEPPED ON AN OLD CELL!,ĐI LẠI Ô CŨ!
 STR_GAME_OVER_OUT_OF_SUBMITS,OUT OF SUBMITS!,HẾT LƯỢT GỬI!
 STR_MODE_WALL_BUILDER,WALL BUILDER,XÂY TƯỜNG
 STR_MODE_WALL_BUILDER_NAME,WALL BUILDER,XÂY TƯỜNG
-STR_HINT_WALL_BUILDER,Read every number then connect enough walls and press SUBMIT!,Đọc số trên mỗi ô rồi nối đủ tường, bấm GỬI BÀI để kiểm tra!
-STR_TOOL_DRAW_WALL,DRAW WALLS,VẼ TƯỜNG
-STR_TOOL_DRAW_WALL_DESC,Connect walls by the numbers,Nối tường theo số
+STR_HINT_WALL_BUILDER,"Read every number then connect enough walls and press SUBMIT!","Đọc số trên mỗi ô rồi nối đủ tường, bấm GỬI BÀI để kiểm tra!"
 STR_TOOL_SUBMIT,SUBMIT,GỬI BÀI
-STR_TOOL_SUBMIT_DESC,Check the result,Kiểm tra kết quả
 STR_HUD_WB_TIME_SUB,THINKING,ĐANG SUY LUẬN
-STR_HUD_WB_COVER_HEAD,🧱 BUILT,🧱 ĐÃ DỰNG
 STR_HUD_WB_COVER_MAX,/{0} WALLS,/{0} ĐOẠN
 STR_HUD_WB_COVER_NOTE,{0} WALLS LEFT,CÒN THIẾU {0} ĐOẠN
 STR_HUD_WB_SUBMIT,❤️ SUBMITS: {0} / {1},❤️ LƯỢT GỬI: {0} / {1} LẦN
 STR_HUD_WB_CHIP_BUILDING,CONNECTING WALLS,ĐANG NỐI TƯỜNG
-STR_HUD_WB_CHIP_ENOUGH,ENOUGH WALLS,ĐỦ TƯỜNG
 STR_HUD_WB_CHIP_READY,READY TO SUBMIT,SẴN SÀNG GỬI
-STR_HUD_WB_ROW_NOTE,Match every number then press SUBMIT,Khớp mọi con số rồi bấm GỬI
-STR_HUD_WB_ROW_TIP,✓ Wrong = -1 submit,✓ Sai -1 lượt
 STR_WB_WRONG_COUNT,{0} WALLS STILL OFF!,CÒN LỆCH {0} ĐOẠN!
 STR_REVIVE_DESC_SUBMIT,Get +1 SUBMIT to hand it in again,Nhận thêm +1 LƯỢT GỬI để nộp lại
 STR_CHALLENGE_NO_WRONG_SUBMIT,Submit right on the first try,Gửi đúng ngay lần đầu
@@ -86,7 +74,6 @@ STR_MODE_FADING_INK,FADING INK,MỰC PHAI
 STR_DAILY_TODAY_MODE,TODAY'S MODE: {0},CHẾ ĐỘ HÔM NAY: {0}
 STR_DAILY_SPECIAL_LABEL,SPECIAL MODE: {0},CHẾ ĐỘ ĐẶC BIỆT: {0}
 STR_DAILY_DATE_BADGE,DAY {0}/{1},NGÀY {0}/{1}
-STR_DAILY_STARS_FORMAT,{0}/{1} DONE,{0}/{1} XONG
 STR_DAILY_DONE_FORMAT,{0}/{1} DONE,{0}/{1} XONG
 STR_DAILY_LOCKED,LOCKED,CHƯA MỞ
 STR_DAILY_MISSED,MISSED,BỎ LỠ
@@ -120,7 +107,6 @@ STR_DAILY_WIN_TOTAL_TODAY,COINS TODAY,XU HÔM NAY
 STR_DAILY_COINS_TOTAL,+{0}/{1} XU,+{0}/{1} XU
 STR_DAILY_WIN_QUOTE,~ Back to Daily for your other maze ~,~ Quay lại Daily để chinh phục maze còn lại ~
 STR_DAILY_WIN_CLASSIC,CLASSIC MAZE,MAZE THƯỜNG
-STR_HINT_DAILY_CLASSIC,"Classic maze of the day — draw a safe path to F, a hidden wall ends the run.","Maze thường của ngày — vẽ đường tới F an toàn, chạm tường ẩn là thua."
 STR_MONTH_01,January,Tháng 1
 STR_MONTH_02,February,Tháng 2
 STR_MONTH_03,March,Tháng 3
@@ -142,22 +128,16 @@ STR_GAMEOVER_WALLS_FORMAT,{0} times (-{1} steps),{0} lần (-{1} bước)
 STR_BONUS_STEPS_GAINED,+{0} steps,+{0} bước
 STR_NEXT_FLOOR_STEPS_BONUS,EXTRA STEPS FOR THE NEXT FLOOR:,THƯỞNG THÊM BƯỚC CHO TẦNG KẾ:
 STR_NEXT_FLOOR_STEPS_DESC,Leftover steps are stored in your bag,Số bước dư được tích lũy vào kho hành trang
-STR_RESULT_STAMP_EXCELLENT,EXCELLENT,XUẤT SẮC
 STR_RESULT_STAMP_PASSED,PASSED,ĐÃ QUA
 STR_RESULT_STAMP_FLOOR,FLOOR {0} ✔,TẦNG {0} ✔
 STR_GAME_OVER_LEVEL_TITLE,HIDDEN WALL HIT!,ĐÂM VÀO TƯỜNG VÔ HÌNH!
 STR_GAME_OVER_LEVEL_SUBTITLE,One wall hit ends the run — {0}% of the maze cleared,Chạm tường là hết màn — đã đi được {0}% mê cung
 STR_REVIVE_DESC_STEPS,Get +{0} more Steps to continue,Nhận thêm +{0} Bước để đi tiếp
 STR_REVIVE_DESC_UNDO,Return to the previous step,Quay lại bước trước đó
-STR_HUD_TIME,TIME,THỜI GIAN
 STR_HUD_STEPS,STEPS,SỐ BƯỚC
 STR_HUD_FLOOR,FLOOR,TẦNG
-STR_HUD_CHALLENGE,CHALLENGES,THỬ THÁCH
-STR_HUD_BOMB,BOMBS LEFT,BOMB CÒN LẠI
 STR_HUD_SUM,CURRENT SUM,TỔNG HIỆN TẠI
 STR_HUD_TARGET,TARGET,MỤC TIÊU
-STR_HUD_BLIND_TITLE,MEMORIZE THE WALLS,GHI NHỚ VỊ TRÍ TƯỜNG
-STR_HUD_BLIND_HINT,"Watch the walls, then walk from memory",Nhìn kỹ các bức tường rồi đi bằng trí nhớ
 STR_MEMORIZE_TITLE,MEMORIZE!,GHI NHỚ!
 STR_MEMORIZE_HINT,The walls will vanish when the countdown ends,Tường sẽ biến mất khi đếm ngược kết thúc
 STR_GAME_OVER_NO_PATH,NO PATH LEFT!,HẾT ĐƯỜNG ĐI!
@@ -165,7 +145,6 @@ STR_RESULT_SUBTITLE,Level {0} • {1} Grid,Màn {0} • Bàn cờ {1}
 STR_WIN_STAMP_TITLE,{0} / {1} CHALLENGES,{0} / {1} THỬ THÁCH
 STR_WIN_STAMP_SUB,★ {0} STARS EARNED ★,★ ĐẠT {0} SAO ★
 STR_CHALLENGE_DONE_COUNT,{0} COMPLETED,{0} ĐÃ HOÀN THÀNH
-STR_CHALLENGE_BADGE_DONE,✓ DONE,✓ ĐẠT
 STR_CHAPTER_FORMAT,CHAPTER {0},CHƯƠNG {0}
 STR_LEVEL_TITLE_FORMAT,LEVEL {0},MÀN {0}
 STR_BTN_ARCHIVEMENT,BADGES,DANH HIỆU
@@ -240,54 +219,29 @@ STR_RANK_NO_RECORD_SHORT,NO RECORD,CHƯA CÓ
 STR_RANK_NO_RECORD,No record yet - play a run!,Chưa có kỷ lục - hãy chơi một ván!
 STR_RANK_FOOTER,Leaderboard refreshes every 10 minutes - climb to the top!,Bảng xếp hạng tự làm mới mỗi 10 phút - chúc bạn sớm leo Top!
 STR_RANK_DEMO,Offline board (demo) - rivals are simulated.,Bảng ngoại tuyến (demo) - đối thủ là dữ liệu mô phỏng.
-STR_HUD_SUM_TITLE,BALANCE THE PATH TOTAL,CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI
 STR_HUD_SUM_MOVES,({0} cells),({0} ô)
 STR_HUD_SUM_NEED,NEED +{0},CẦN THÊM +{0}
 STR_HUD_SUM_LEFT,CAN ADD +{0},CÒN ĐƯỢC +{0}
 STR_HUD_SUM_OVER,OVER BY {0},ĐANG VƯỢT {0}
 STR_HUD_SUM_OK,ENOUGH!,ĐÃ ĐỦ!
-STR_HUD_TIME_SUPPORT,Ranking helper,Phụ trợ xếp hạng
 STR_HUD_TIME_FREE,No limit,Không giới hạn
-STR_HUD_TIME_COUNTDOWN,Countdown,Đếm ngược
-STR_HUD_BUDGET_TITLE,STEP BUDGET LEDGER,SỔ THEO DÕI NGÂN SÁCH BƯỚC CHÂN
 STR_HUD_BUDGET_LEFT,BUDGET LEFT,NGÂN SÁCH CÒN
-STR_HUD_BUDGET_SPENT,SPENT,ĐÃ TIÊU TỐN
-STR_HUD_BUDGET_SPENT_UNIT,STEPS,BƯỚC
-STR_HUD_BUDGET_CELLS,({0} cells walked),({0} ô đã đi)
-STR_HUD_BUDGET_PRICE,COST PER CELL,GIÁ CƯỚC MỖI Ô
 STR_HUD_PRICE_CHEAP,{0}-{1}: CHEAP,{0}-{1}: RẺ
 STR_HUD_PRICE_PRICEY,{0}-{1}: PRICEY,{0}-{1}: ĐẮT
-STR_HUD_PRICE_PRICEY_ONE,{0}: PRICEY,{0}: ĐẮT
-STR_HUD_BUDGET_RESERVE,Reserve: +{0} steps,Dự phòng: +{0} bước
-STR_HUD_INK_STEPS,STEPS WALKED,BƯỚC ĐÃ ĐI
 STR_HUD_INK_LOST,(-{0} INK),(-{0} MỰC)
-STR_HUD_INK_NOTE,Each step: -1 ink on the whole board,Mỗi bước: -1 mực toàn bàn
-STR_HUD_INK_SCALE_TITLE,INK DARKNESS SCALE,QUANG PHỔ ĐẬM NHẠT CỦA MỰC
-STR_HUD_INK_SCALE_A,≥ 3 DARK,≥ 3 ĐẬM
-STR_HUD_INK_SCALE_B,2 CLEAR,2 RÕ
-STR_HUD_INK_SCALE_C,1 CRITICAL,1 NGUY CẤP
-STR_HUD_INK_SCALE_D,0 LOCKED,0 CẠN KHÓA
-STR_HUD_INK_WARN,HAVE {0} DRIED CELLS (FULLY BLOCKED),HIỆN CÓ: {0} Ô ĐÃ CẠN MỰC (BỊ CHẶN HOÀN TOÀN)
 STR_HINT_PLAY,Draw a path to the exit - touching an invisible wall is a loss!,Vẽ đường tới hố đích - chạm tường vô hình là thua ngay!
 STR_HINT_DUNGEON,Endless tower: clear each floor with as few steps as you can!,Tháp vô tận: qua mỗi tầng với ít bước nhất có thể!
-STR_HINT_TIME_ATTACK,Race the clock: reach the exit before time runs out!,Đua với đồng hồ: tới hố đích trước khi hết giờ!
 STR_HINT_MINESWEEPER,A cell number = how many walls touch it - stepping on a mine ends the run!,Số trên ô = số tường quanh ô - dẫm vào mìn là thua ngay!
 STR_HINT_BLIND_MEMORY,"Memorize the walls, then walk the hidden maze from memory!",Ghi nhớ tường rồi đi trong mê cung ẩn theo trí nhớ!
 STR_HINT_FOG_OF_WAR,Fog clears 1 cell around you - wall hit: back to S and -1 retry!,Sương tan quanh bạn 1 ô - đâm tường: về S và trừ 1 lượt thử!
 STR_HUD_FOG_TIME_SUB,SCOUTING,ĐANG DÒ ĐƯỜNG
 STR_HUD_FOG_RETRY_HEAD,❤️ RETRY LIVES,❤️ LƯỢT THỬ LẠI
 STR_HUD_FOG_RETRY_NOTE,{0} LIVES LEFT TO RETURN S,CÒN {0} LẦN VỀ S
-STR_HUD_FOG_VISION,👁️ VISION: RADIUS 1 CELL,👁️ TẦM NHÌN: BÁN KÍNH 1 Ô
 STR_HUD_FOG_VISION_CHIP,SURROUNDING,XUNG QUANH
-STR_HUD_FOG_WARN_1,Visited cells get fogged again,Ô đã đi qua sẽ bị sương che phủ lại
-STR_HUD_FOG_WARN_2,⚠️ Wall hit: back to S -1 retry!,"⚠️ Đâm tường: Về lại S, trừ 1 lượt thử!"
 STR_REVIVE_DESC_RETRY,Get +1 Retry to keep scouting,Nhận thêm +1 LƯỢT THỬ để dò tiếp
-STR_TOOL_DRAW_PATH_FOG,Scout through the fog,Dò trong sương
-STR_TOOL_MARK_WALL_FOG,Flag the cell edges,Cắm cờ mép ô
 STR_HINT_SUM_PATH,Each cell is a score - your path total must satisfy the TARGET!,Mỗi ô là một điểm - tổng đường đi phải thỏa điều kiện MỤC TIÊU!
 STR_HINT_COUNTDOWN_COST,Each cell is a toll on your step budget - pick the cheapest path!,Mỗi ô là cước phí trừ quỹ bước - hãy chọn đường rẻ nhất!
 STR_HINT_FADING_INK,Every step drains 1 ink from every cell - dried cells block the way!,Mỗi bước làm mọi ô mất 1 mực - ô cạn mực bị bít lối!
-STR_BTN_CLOSE,CLOSE,ĐÓNG
 STR_MODE_PLAY_NAME,PLAY MODE,CHẾ ĐỘ PLAY
 STR_MODE_DUNGEON_NAME,DUNGEON MODE,CHẾ ĐỘ DUNGEON
 STR_MODE_DAILY_CLASSIC_NAME,CLASSIC MAZE,MAZE THƯỜNG
@@ -319,7 +273,6 @@ STR_SHOP_TAB_TOOL,TOOLS,🎒 DỤNG CỤ
 STR_SHOP_TAB_COIN,TOP UP,🪙 NẠP XU
 STR_SHOP_PAGE_FORMAT,PAGE {0} / {1},TRANG {0} / {1}
 STR_SHOP_STOCK_FORMAT,In your bag: {0} {1},Đang có: {0} {1}
-STR_SHOP_UNIT_PACK,packs,gói
 STR_SHOP_UNIT_TURN,turns,lượt
 STR_SHOP_UNIT_COIN,ink coins,xu mực
 STR_SHOP_BONUS_TAG,Bonus,Tặng thêm
@@ -460,7 +413,7 @@ STR_GI_BLINDMEMORY_P3_R1D,Connect 2 Anchors to mark the important walls you just
 STR_GI_BLINDMEMORY_P3_R1T,Place Draft Walls Immediately:,Dựng Tường Nháp Ngay Lập Tức:
 STR_GI_BLINDMEMORY_P3_R2D,"If a middle section slips away, don't gamble — tap Hint to reveal 1 safe cell.","Nếu quên hẳn khúc giữa, đừng liều đâm bừa; hãy bấm Gợi Ý để soi ra 1 ô an toàn."
 STR_GI_BLINDMEMORY_P3_R2T,Use The Hint Button When Stuck:,Tận Dụng Nút Gợi Ý Khi Bị Bí:
-STR_GI_BLINDMEMORY_P3_R3D,Bigger boards (4×4 then 5×5) pack more walls for a top-tier brain challenge!,"Màn chơi càng rộng (4×4 rồi 5×5), số lượng tường càng nhiều, thử thách trí não đỉnh cao!"
+STR_GI_BLINDMEMORY_P3_R3D,"Bigger boards (4×4 then 5×5) pack more walls for a top-tier brain challenge!","Màn chơi càng rộng (4×4 rồi 5×5), số lượng tường càng nhiều, thử thách trí não đỉnh cao!"
 STR_GI_BLINDMEMORY_P3_R3T,Train Your Memory Daily:,Rèn Luyện Trí Nhớ Mỗi Ngày:
 STR_GI_BLINDMEMORY_P3_SECTION,WINNING SECRETS,BÍ QUYẾT CHIẾN THẮNG
 STR_GI_BLINDMEMORY_P3_TAB1,3-SECOND COUNTDOWN,ĐẾM NGƯỢC 3 GIÂY
@@ -1158,3 +1111,123 @@ STR_GI_X326,Lỡ tay nối nhầm khe tường?,Lỡ tay nối nhầm khe tườ
 STR_GI_X327,Bấm Undo để gỡ bỏ ngay lập tức,Bấm Undo để gỡ bỏ ngay lập tức
 STR_GI_X328,mà không cần kéo lại lần nữa.,mà không cần kéo lại lần nữa.
 STR_GI_X329,Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!,Kẻ thợ xây thông minh luôn bắt đầu từ ô số 0 và các ô số lớn ở góc cạnh!
+STR_TUT_COMMON_TITLE,TUTORIAL,HƯỚNG DẪN
+STR_TUT_COMMON_NEXT,Next,Tiếp tục
+STR_TUT_COMMON_SKIP,Skip,Bỏ qua
+STR_TUT_COMMON_SKIP_ALL,Skip All,Bỏ qua tất cả
+STR_TUT_COMMON_FINISH,Finish,Hoàn thành
+STR_TUT_FIRST_TIME_01,Welcome to Number Maze!,Chào mừng bạn đến với Number Maze!
+STR_TUT_FIRST_TIME_02,"Draw a path from START (S) to FINISH (F).","Vẽ một đường đi từ điểm BẮT ĐẦU (S) tới điểm KẾT THÚC (F)."
+STR_TUT_FIRST_TIME_03,The numbers on each cell help you deduce invisible walls.,Những con số trên mỗi ô sẽ giúp bạn đoán ra đâu là tường vô hình.
+STR_TUT_FIRST_TIME_04,"Before playing for real, let's practice 3 basic skills!","Trước khi chơi thật, hãy cùng luyện 3 kỹ năng cơ bản nhé!"
+STR_TUT_FIRST_TIME_START,Start,Bắt Đầu
+STR_TUT_MOVE_01,"This is the START (S). Press and drag to the adjacent cell.","Đây là điểm BẮT ĐẦU (S). Hãy giữ và kéo sang ô bên cạnh."
+STR_TUT_MOVE_02,Now keep dragging to F to complete the path.,Giờ kéo tiếp tới F để hoàn thành đường đi.
+STR_TUT_MOVE_03,Awesome! You just drew your first path.,Tuyệt vời! Bạn vừa vẽ xong đường đi đầu tiên.
+STR_TUT_MOVE_FAIL_01,"You can only move to ADJACENT cells — up, down, left, or right.","Chỉ đi được sang ô NGAY BÊN CẠNH — trên, dưới, trái hoặc phải thôi nhé."
+STR_TUT_WALL_01,The number shows HOW MANY edges around that cell are invisible walls.,Con số trên mỗi ô cho biết có BAO NHIÊU cạnh quanh ô đó là tường vô hình.
+STR_TUT_WALL_02,Invisible walls BLOCK your path — you cannot draw across them.,Tường vô hình sẽ CHẶN đường đi — kéo ngang qua đó đường sẽ không vẽ được.
+STR_TUT_WALL_03,Now navigate from S to F — remember to deduce walls from numbers!,Giờ bạn hãy tự đi từ S tới F — nhớ dùng con số để đoán tường nhé!
+STR_TUT_WALL_04,Correct! You used numbers to deduce the walls.,Chính xác! Bạn đã dùng con số để đoán đúng tường.
+STR_TUT_WALL_05,Note: different modes may use numbers with different rules.,Lưu ý: không phải chế độ nào cũng dùng số kiểu này. Cùng khám phá tiếp nhé!
+STR_TUT_WALL_FAIL_01,"Oops, that's a wall! Try another direction.","Ối, đó là tường rồi! Thử hướng khác xem."
+STR_TUT_MINE_01,"In this mode, numbers represent MINES in the 8 adjacent cells!","Ở chế độ này, con số KHÔNG còn là số tường nữa — mà là SỐ MÌN trong 8 ô xung quanh!"
+STR_TUT_MINE_02,Stepping on a hidden mine causes INSTANT DEFEAT.,Đạp trúng ô có mìn ẩn là THUA NGAY LẬP TỨC.
+STR_TUT_MINE_03,Now lead the path from S to F — deduce safe cells to avoid mines!,Giờ hãy dẫn đường từ S tới F — nhớ suy luận từ số để né mìn nhé!
+STR_TUT_MINE_04,Spot on! You avoided all mines.,Chuẩn luôn! Bạn né được hết mìn.
+STR_TUT_MINE_05,Every Minesweeper board has at least 1 safe path — deduce logically.,Bàn Minesweeper thật luôn có ít nhất 1 đường an toàn — hãy suy luận từ số!
+STR_TUT_MINE_FAIL_01,That's a mine! Look closely at the numbers around it.,Đây là ô có mìn rồi! Hãy nhìn lại các số quanh đây xem sao.
+STR_TUT_ONE_01,This mode has NO numbers — all walls are clearly visible.,Chế độ này KHÔNG có số — tường đã hiện rõ sẵn trên bàn.
+STR_TUT_ONE_02,Rule: visit EVERY cell EXACTLY ONCE before ending at F.,"Luật đặc biệt: bạn phải đi qua TẤT CẢ các ô, mỗi ô ĐÚNG 1 LẦN, rồi mới được dừng ở F."
+STR_TUT_ONE_03,Revisiting an already passed cell is forbidden.,"Đi đè lên ô đã đi qua là THUA NGAY, nên đi tới đâu chắc tới đó nhé."
+STR_TUT_ONE_04,Your turn — visit all 9 cells and finish at F!,Giờ đến lượt bạn — đi hết cả 9 ô rồi kết thúc ở F nhé!
+STR_TUT_ONE_05,You just completed your first one-stroke path!,Bạn vừa hoàn thành một nét đầu tiên rồi đó!
+STR_TUT_ONE_FAIL_01,Cell already visited! Choose another path.,Ô này đi qua rồi! Chọn ô khác thử xem.
+STR_TUT_ONE_FAIL_02,Cells remaining — F only unlocks once all cells are visited!,Còn ô chưa đi kìa — F chỉ mở khi bạn đã đi hết cả bàn!
+STR_TUT_SUM_01,Here numbers are cell POINTS — unrelated to walls.,Ở đây con số là ĐIỂM của ô — không liên quan gì tới tường cả.
+STR_TUT_SUM_02,Your total path sum must match this exact condition.,Tổng điểm đường đi của bạn phải khớp đúng điều kiện này.
+STR_TUT_SUM_03,Each cell is scored only ONCE along your path.,Mỗi ô chỉ tính điểm 1 LẦN dù bạn có đi qua lại nhiều lần.
+STR_TUT_SUM_04,Now find a path so the sum matches the target condition!,Giờ bạn hãy tìm đường sao cho tổng điểm khớp đúng mục tiêu nhé!
+STR_TUT_SUM_05,Perfect match!,Chuẩn không cần chỉnh!
+STR_TUT_SUM_FAIL_01,Sum does not match — try undoing and picking another route!,Tổng chưa đúng rồi — hãy thử lại!
+STR_TUT_WB_01,No movement here — DRAW WALLS to match the numbers.,Chế độ này không di chuyển đâu — bạn sẽ TỰ VẼ TƯỜNG để khớp với các con số.
+STR_TUT_WB_02,Each number is the required walls around that cell — from 0 to 4.,Mỗi con số là số tường cần có quanh ô đó — từ 0 tới 4.
+STR_TUT_WB_03,Connect adjacent anchors to toggle a wall segment.,Kéo nối 2 điểm neo kề nhau để bật một đoạn tường.
+STR_TUT_WB_04,This counter shows how many wall segments to build.,Khung đếm phía trên cho biết bạn cần vẽ bao nhiêu đoạn tường.
+STR_TUT_WB_05,Now build all walls and press SUBMIT!,Hãy bật đủ 2 đoạn tường ngang rồi bấm GỬI nhé!
+STR_TUT_WB_06,Correct! All numbers match perfectly.,Chính xác! Mọi con số đã khớp hết rồi.
+STR_TUT_WB_FAIL_01,Not matching yet — check cells that still need walls.,Chưa khớp hết — hãy kiểm tra lại các ô!
+STR_HUD_DUNGEON_SUB,DUNGEON,HẦM NGỤC
+STR_HUD_SPEED_STANDARD,SPEED: STANDARD,TỐC ĐỘ: TIÊU CHUẨN
+STR_HUD_MINE_TIME_SUB,SCANNING MINES,ĐANG DÒ MÌN
+STR_HUD_BLIND_TIME_PAUSED,⏸ TIMER PAUSED,⏸ ĐỒNG HỒ ĐỨNG YÊN
+STR_CELL_ALMOST_FADED,ALMOST FADED,SẮP PHAI
+STR_CELL_DRY,DRY,CẠN
+STR_TOOL_RESTART,RESTART,CHƠI LẠI
+STR_TUT_SUM_HUD_FORMAT,Sum: {0}  |  Target: = {1},Tổng: {0}  |  Mục tiêu: = {1}
+STR_TUT_WB_COUNTER_FORMAT,Drawn: {0} / {1} segments,Đã vẽ: {0} / {1} đoạn
+STR_ACH_DL_DAYS_30_TITLE,A Month of Discipline,Một Tháng Kiên Trì
+STR_ACH_DL_DAYS_30_DESC,Complete 30 days of Daily Challenge,Hoàn thành 30 ngày Daily Challenge
+STR_ACH_DL_DAYS_7_TITLE,Diligent Week,Tuần Lễ Chăm Chỉ
+STR_ACH_DL_DAYS_7_DESC,Complete 7 days of Daily Challenge,Hoàn thành 7 ngày Daily Challenge
+STR_ACH_DL_FIRST_DAY_TITLE,First Day,Ngày Đầu Tiên
+STR_ACH_DL_FIRST_DAY_DESC,Complete your first Daily Challenge day,Hoàn thành ngày Daily Challenge đầu tiên
+STR_ACH_DL_STARS_30_TITLE,Daily Star Vault,Kho Sao Daily
+STR_ACH_DL_STARS_30_DESC,Collect 30 stars from Daily Challenge days,Thu thập 30 sao từ các ngày Daily Challenge
+STR_ACH_DL_STREAK_14_TITLE,14-Day Streak,Chuỗi 14 Ngày
+STR_ACH_DL_STREAK_14_DESC,Keep a 14-day streak,Duy trì chuỗi 14 ngày liên tiếp
+STR_ACH_DL_STREAK_3_TITLE,Disciplined Streak,Chuỗi Ngày Kỷ Luật
+STR_ACH_DL_STREAK_3_DESC,Keep a 3-day streak,Duy trì chuỗi 3 ngày liên tiếp
+STR_ACH_DL_STREAK_7_TITLE,7-Day Streak,Chuỗi 7 Ngày
+STR_ACH_DL_STREAK_7_DESC,Keep a 7-day streak,Duy trì chuỗi 7 ngày liên tiếp
+STR_ACH_DN_FLOOR_15_TITLE,Lord of the Dungeon,Chúa Tể Ngục Tối
+STR_ACH_DN_FLOOR_15_DESC,Reach Floor 15 in Dungeon Mode,Tiến sâu tới Tầng 15 trong Dungeon Mode
+STR_ACH_DN_FLOOR_30_TITLE,Bottomless Abyss,Vực Sâu Không Đáy
+STR_ACH_DN_FLOOR_30_DESC,Reach Floor 30 in Dungeon Mode,Tiến sâu tới Tầng 30 trong Dungeon Mode
+STR_ACH_DN_FLOOR_5_TITLE,Dungeon Conqueror,Kẻ Chinh Phục Ngục Tối
+STR_ACH_DN_FLOOR_5_DESC,Reach Floor 5 in Dungeon Mode,Tiến sâu tới Tầng 5 trong Dungeon Mode
+STR_ACH_DN_FLOORS_100_TITLE,Dungeon Bulldozer,Máy Ủi Ngục Tối
+STR_ACH_DN_FLOORS_100_DESC,Clear 100 floors total in Dungeon Mode,Vượt qua tổng cộng 100 Tầng ở Dungeon Mode
+STR_ACH_DN_FLOORS_25_TITLE,Floor Sweeper,Người Dọn Tầng
+STR_ACH_DN_FLOORS_25_DESC,Clear 25 floors total in Dungeon Mode,Vượt qua tổng cộng 25 Tầng ở Dungeon Mode
+STR_ACH_DN_SCORE_20000_TITLE,Dungeon Legend,Huyền Thoại Dungeon
+STR_ACH_DN_SCORE_20000_DESC,"Score 20,000 in a single Dungeon run","Đạt 20.000 điểm trong một ván Dungeon"
+STR_ACH_DN_SCORE_5000_TITLE,Point Hunter,Thợ Săn Điểm
+STR_ACH_DN_SCORE_5000_DESC,"Score 5,000 in a single Dungeon run","Đạt 5.000 điểm trong một ván Dungeon"
+STR_ACH_LV_CLEAR_10_TITLE,Path Drawer,Người Vẽ Đường
+STR_ACH_LV_CLEAR_10_DESC,Clear 10 levels,Vượt qua 10 màn chơi
+STR_ACH_LV_CLEAR_25_TITLE,Maze Master,Bậc Thầy Mê Cung
+STR_ACH_LV_CLEAR_25_DESC,Clear 25 levels,Vượt qua 25 màn chơi
+STR_ACH_LV_FIRST_STEP_TITLE,Rookie Explorer,Nhà Thám Hiểm Tập Sự
+STR_ACH_LV_FIRST_STEP_DESC,Clear your first level in Play Mode,Vượt qua màn chơi đầu tiên ở Play Mode
+STR_ACH_LV_PERFECT_10_TITLE,Flawless Ten,Không Một Lỗi
+STR_ACH_LV_PERFECT_10_DESC,Earn 3 stars in 10 levels,Đạt 3 sao ở 10 màn chơi
+STR_ACH_LV_PERFECT_3_TITLE,Perfect Thrice,Hoàn Hảo Ba Lần
+STR_ACH_LV_PERFECT_3_DESC,Earn 3 stars in 3 levels,Đạt 3 sao ở 3 màn chơi
+STR_ACH_LV_STARS_15_TITLE,Star Collection,Bộ Sưu Tập Sao
+STR_ACH_LV_STARS_15_DESC,Collect 15 stars from levels,Thu thập 15 ngôi sao từ các màn chơi
+STR_ACH_LV_STARS_45_TITLE,Starry Sky,Bầu Trời Sao
+STR_ACH_LV_STARS_45_DESC,Collect 45 stars from levels,Thu thập 45 ngôi sao từ các màn chơi
+STR_ACH_SP_CLAIMED_10_TITLE,Badge Collector,Nhà Sưu Tầm Danh Hiệu
+STR_ACH_SP_CLAIMED_10_DESC,Claim 10 achievements,Nhận thưởng 10 danh hiệu
+STR_ACH_SP_HARDCORE_3_TITLE,Daredevil,Kẻ Liều Lĩnh
+STR_ACH_SP_HARDCORE_3_DESC,Win 3 levels in Hardcore modes (Blind / Fog of War),Thắng 3 màn ở chế độ Hardcore (Blind / Fog of War)
+STR_ACH_SP_NO_HINT_5_TITLE,Self-Reliant,Tự Lực Cánh Sinh
+STR_ACH_SP_NO_HINT_5_DESC,Win 5 levels/floors without using hints,Thắng 5 màn/tầng mà KHÔNG dùng gợi ý
+STR_ACH_SP_NO_UNDO_10_TITLE,No Turning Back,Đi Không Quay Lại
+STR_ACH_SP_NO_UNDO_10_DESC,Win 10 levels/floors without undo,Thắng 10 màn/tầng mà KHÔNG dùng hoàn tác
+STR_ACH_SP_SECRET_DUNGEON_50_TITLE,Secret • Oath of the Dungeon,Thành Tựu Ẩn • Lời Thề Ngục Tối
+STR_ACH_SP_SECRET_DUNGEON_50_DESC,Clear 50 floors total in Dungeon Mode,Vượt qua tổng cộng 50 Tầng ở Dungeon Mode
+STR_ACH_SP_SECRET_STAR_60_TITLE,Secret • Sky Keeper,Thành Tựu Ẩn • Người Giữ Bầu Trời
+STR_ACH_SP_SECRET_STAR_60_DESC,Collect 60 stars across all modes,Thu thập 60 sao từ tất cả các chế độ
+STR_ACH_SP_WINS_50_TITLE,Veteran,Lão Luyện
+STR_ACH_SP_WINS_50_DESC,Win 50 levels/floors across all modes,Thắng tổng cộng 50 màn/tầng ở mọi chế độ
+STR_CHAPTER_1_NAME,INTRO,NHẬP MÔN
+STR_CHAPTER_1_SUB,Get familiar with step & wall rules,Làm quen với các quy luật bước & tường
+STR_CHAPTER_2_NAME,DEDUCTION,SUY LUẬN
+STR_CHAPTER_2_SUB,Bigger mazes with denser walls,Mê cung rộng hơn với mật độ tường tăng cao
+STR_CHAPTER_3_NAME,HIDDEN TRAPS,BẪY ẨN
+STR_CHAPTER_3_SUB,Test your memory and wall-free drawing,Thử thách trí nhớ và khả năng vẽ không chạm tường
+STR_CHAPTER_4_NAME,GRANDMASTER,BẬC THẦY
+STR_CHAPTER_4_SUB,Huge mazes for deduction masters,Mê cung khổng lồ dành cho cao thủ suy luận
+STR_TOOL_SKIP,SKIP,BỎ QUA

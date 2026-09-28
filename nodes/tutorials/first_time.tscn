@@ -1,5 +1,57 @@
-[gd_scene format=3 uid="uid://dyw00nd1elbh4"]
+[gd_scene load_steps=4 format=3 uid="uid://dfirsttime00001"]
 
-[ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_u2rp1"]
+[ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/tutorial/first_time.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://btutcell000001" path="res://nodes/tutorials/tutorial_cell.tscn" id="3_cell"]
 
-[node name="BaseTutorial" unique_id=1525698188 instance=ExtResource("1_u2rp1")]
+[node name="FirstTime" instance=ExtResource("1_base") node_paths=PackedStringArray("preview_cells", "preview_line")]
+script = ExtResource("2_script")
+preview_cells = [NodePath("BoardHost/AnimContainer/Cell1"), NodePath("BoardHost/AnimContainer/Cell2"), NodePath("BoardHost/AnimContainer/Cell3")]
+preview_line = NodePath("BoardHost/AnimContainer/PreviewLine")
+
+[node name="AnimContainer" type="Control" parent="BoardHost" index="0"]
+offset_left = 45.0
+offset_top = 100.0
+offset_right = 415.0
+offset_bottom = 300.0
+mouse_filter = 2
+
+[node name="Cell1" instance=ExtResource("3_cell") parent="BoardHost/AnimContainer" index="0"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 50.0
+offset_right = 130.0
+offset_bottom = 140.0
+grid_pos = Vector2i(0, 0)
+cell_text = "S"
+text_color = Color(0.18, 0.44, 0.68, 1)
+text_size = 28
+
+[node name="Cell2" instance=ExtResource("3_cell") parent="BoardHost/AnimContainer" index="1"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 50.0
+offset_right = 230.0
+offset_bottom = 140.0
+grid_pos = Vector2i(1, 0)
+cell_text = ""
+text_color = Color(0.18, 0.22, 0.26, 1)
+text_size = 24
+
+[node name="Cell3" instance=ExtResource("3_cell") parent="BoardHost/AnimContainer" index="2"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 50.0
+offset_right = 330.0
+offset_bottom = 140.0
+grid_pos = Vector2i(2, 0)
+cell_text = "F"
+text_color = Color(0.86, 0.32, 0.3, 1)
+text_size = 28
+
+[node name="PreviewLine" type="Line2D" parent="BoardHost/AnimContainer" index="3"]
+width = 8.0
+default_color = Color(0.165, 0.22, 0.28, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

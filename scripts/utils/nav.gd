@@ -23,6 +23,8 @@ const SCENE_CHAPTERS := "res://scenes/chapters.tscn"
 const SCENE_SHOP := "res://scenes/shop.tscn"
 ## Màn CREDIT — soundtrack + ghi công
 const SCENE_CREDIT := "res://scenes/credit.tscn"
+## Màn TUTORIAL — hướng dẫn tương tác
+const SCENE_TUTORIAL := "res://scenes/tutorial.tscn"
 
 
 static func change_scene(path: String) -> void:
@@ -83,6 +85,11 @@ static func goto_credit() -> void:
 ## Màn hình debug (chỉ dùng khi phát triển)
 static func goto_debug() -> void:
 	change_scene(SCENE_DEBUG)
+
+
+## Màn TUTORIAL (hướng dẫn chơi tương tác)
+static func goto_tutorial() -> void:
+	change_scene(SCENE_TUTORIAL)
 
 
 static func _manager() -> Node:

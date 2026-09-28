@@ -49,6 +49,7 @@ func _init() -> void:
 	_section_8_fixed_scenes()
 	_section_9_hud_bindings()
 	_section_10_hud_minimal()
+	_section_11_tutorials()
 
 	print("\n--------------------------------------------------------")
 	if _failed == 0:
@@ -137,8 +138,7 @@ func _section_2_archivement() -> void:
 	_entry(tab != null, "tab_button.tscn instantiate ra AchTabButton")
 	if tab != null:
 		_entry(tab.get_node_or_null("Label") != null, "tab Sổ tay co nhan tu scene")
-		tab.setup("all")
-		_entry(not tab.label.text.is_empty(), "setup() gan nhan: '%s'" % tab.label.text)
+		_entry(not tab.label.text.is_empty(), "nhan tab So tay khai trong scene: '%s'" % tab.label.text)
 		tab.set_active(true)
 		var on_color := tab.label.modulate
 		tab.set_active(false)
@@ -208,10 +208,25 @@ func _section_4_ranking() -> void:
 	if tab == null:
 		return
 	_entry(tab.get_node_or_null("Label") != null, "tab Xếp hạng co nhan tu scene")
-	tab.setup("play", "THU THACH", 117.5)
-	_entry(tab.custom_minimum_size == Vector2(117.5, 26),
-		"tab nhan be rong rieng, cao theo scene (117.5x26)")
-	_entry(tab.label.text == "THU THACH", "setup() gan tieu de")
+	_entry(is_equal_approx(tab.custom_minimum_size.x, 0.0)
+			and is_equal_approx(tab.custom_minimum_size.y, 26.0),
+		"tab giu CHIEU CAO 26, be rong do HBox chia (%.0fx%.0f)"
+			% [tab.custom_minimum_size.x, tab.custom_minimum_size.y])
+
+	# Tab khai trong scene bo cuc: gan `board_id` + `label_key` TRUOC khi vao cay ⇒ `_ready` tu dich nhan
+	var packed_rank_tab := load("res://nodes/ranking/tab_button.tscn") as PackedScene
+	var scene_tab := packed_rank_tab.instantiate() as RankTabButton
+	scene_tab.board_id = "play"
+	scene_tab.label_key = "STR_RANK_TAB_PLAY"
+	root.add_child(scene_tab)
+	_entry(scene_tab.board_id == "play" and not scene_tab.label.text.is_empty(),
+		"tab Xep hang khai trong scene tu dich nhan ('%s')" % scene_tab.label.text)
+	var emitted: Array[String] = []
+	scene_tab.tab_pressed.connect(func(id: String) -> void: emitted.append(id))
+	scene_tab.pressed.emit()
+	_entry(emitted.size() == 1 and emitted[0] == "play",
+		"tab Xep hang tu noi `pressed` → phat `tab_pressed('play')`")
+	scene_tab.queue_free()
 	tab.set_active(true)
 	var art_active: Texture2D = tab.texture_normal
 	_entry(art_active != null, "tab dang chon co art")
@@ -406,7 +421,9 @@ const HUD_ABSTRACT_SCENES := ["game_hud.tscn"]
 const HUD_EXPORT_OPTIONAL := {
 	"dungeon_mode.tscn": ["time_value_node"],       # Dungeon: chỉ SỐ BƯỚC + TẦNG
 	"countdown_hud.tscn": ["time_value_node"],      # Countdown: chỉ NGÂN SÁCH CÒN
-	"fog_of_war_hud.tscn": ["time_value_node"],     # Fog of War: chỉ LƯỢT THỬ LẠI
+	"fog_of_war_hud.tscn": ["time_value_node", "retry_note_label"],
+		# Fog of War: bản DỌC chỉ còn LƯỢT THỬ LẠI (Value · Max trong `Retry/Control`) — node
+		# `Note` đã xoá nên export để trống; bản NGANG vẫn giữ `Note` (script tự bỏ qua khi null).
 	"sum_path_hud.tscn": ["time_value_node"],       # Sum Path: chỉ TỔNG · TOÁN TỬ · MỤC TIÊU
 	"fading_ink_hud.tscn": ["time_value_node"],     # bản NGANG xoá `Time`, bản DỌC vẫn có (kế thừa)
 }
@@ -525,31 +542,245 @@ func _section_10_hud_minimal() -> void:
 			var want_sorted := want.duplicate()
 			want_sorted.sort()
 			checked += 1
+			var huong := "NGANG" if folder.contains("landscape") else "DỌC"
 			if shown != want_sorted:
-				bad.append("%s (%s): hien [%s] — can [%s]" % [folder.contains("landscape") and "NGANG" or "DỌC",
+				bad.append("%s (%s): hien [%s] — can [%s]" % [huong,
 					file_name, ", ".join(shown), ", ".join(want_sorted)])
 			# bên trong Sheet
 			if HUD_SHEET_ROWS.has(file_name):
 				var sheet := node.get_node_or_null("Content/ModeInformation/Sheet")
 				var rows: Array[String] = []
+				var wrapped: Array[String] = []
 				if sheet != null:
 					for child in sheet.get_children():
 						rows.append(String(child.name))
+					# Bản DỌC có thể gom các khối vào 1 BoxContainer — chấp nhận cả 2 dạng
+					if sheet.get_child_count() == 1 and sheet.get_child(0) is BoxContainer:
+						for child in sheet.get_child(0).get_children():
+							wrapped.append(String(child.name))
 				rows.sort()
+				wrapped.sort()
 				var want_rows: Array = (HUD_SHEET_ROWS[file_name] as Array).duplicate()
 				want_rows.sort()
-				var shape_ok := sheet != null and rows == want_rows
+				var shape_ok := sheet != null and (rows == want_rows or wrapped == want_rows)
 				checked += 1
 				if not shape_ok:
 					bad.append("%s %s Sheet: con [%s] — can [%s]" % [
-						folder.contains("landscape") and "NGANG" or "DỌC",
-						file_name, ", ".join(rows), ", ".join(want_rows)])
+						huong, file_name, ", ".join(rows), ", ".join(want_rows)])
 			node.free()
 
 	_entry(checked >= 20, "kiem %d luot (scene HUD x 2 huong + the Sheet)" % checked)
 	_entry(bad.is_empty(),
 		"moi HUD chi hien dung thu can thiet%s"
 			% ("" if bad.is_empty() else " — sai: %s" % "; ".join(bad)))
+
+
+# ---------------------------------------------------------------------------
+# 11. TUTORIAL (2026-09-27): node · dây tín hiệu · art đều KHAI TRONG .tscn
+#     — script chỉ giữ luật + bind qua `@export`; xem GDD §10.2g.
+# ---------------------------------------------------------------------------
+const TUTORIAL_SCENES := [
+	"res://nodes/tutorials/base_tutorial.tscn",
+	"res://nodes/tutorials/first_time.tscn",
+	"res://nodes/tutorials/how_to_play_move.tscn",
+	"res://nodes/tutorials/how_to_play_checking_wall.tscn",
+	"res://nodes/tutorials/how_to_play_minesweeper.tscn",
+	"res://nodes/tutorials/how_to_play_one_stroke.tscn",
+	"res://nodes/tutorials/how_to_play_sum_path.tscn",
+	"res://nodes/tutorials/how_to_play_wall_builder.tscn",
+]
+## Số phần tử mong đợi của export MẢNG (`Array[TutorialCell]` · `Array[TutorialWallToggle]`)
+const TUTORIAL_EXPECTED_ARRAYS := {
+	"first_time.tscn": {"preview_cells": 3},
+	"how_to_play_move.tscn": {"cells": 3},
+	"how_to_play_checking_wall.tscn": {"cells": 4},
+	"how_to_play_minesweeper.tscn": {"cells": 9},
+	"how_to_play_one_stroke.tscn": {"cells": 9},
+	"how_to_play_sum_path.tscn": {"cells": 9},
+	"how_to_play_wall_builder.tscn": {"wall_toggles": 2},
+}
+## Vẽ bằng code là CẤM: art nằm trong `assets/images/tutorial/*.svg` (TextureRect/NinePatchRect)
+const TUTORIAL_DRAW_CALLS := [
+	"draw_rect(", "draw_line(", "draw_polyline(", "draw_circle(", "draw_colored_polygon(",
+]
+
+
+func _section_11_tutorials() -> void:
+	print("[11] Tutorial: node · signal · export deu nam trong .tscn...")
+
+	var unbound: Array[String] = []
+	var bad: Array[String] = []
+	var bad_conn: Array[String] = []
+	var exports := 0
+	var arrays := 0
+	var cells_total := 0
+	var steps_total := 0
+	var effects_checked := 0
+
+	for path: String in TUTORIAL_SCENES:
+		var file_name := path.get_file()
+		var packed := load(path) as PackedScene
+		if packed == null:
+			_entry(false, "%s: load duoc" % file_name)
+			continue
+		var node := packed.instantiate()
+		root.add_child(node)
+		_entry(node.get_script() != null, "%s: nap duoc + co script rieng" % file_name)
+
+		# (1) Mọi export kiểu NODE phải được bind NGAY TRONG .tscn
+		var script: Script = node.get_script()
+		for prop in script.get_script_property_list():
+			if prop.hint != PROPERTY_HINT_NODE_TYPE:
+				continue
+			exports += 1
+			if node.get(prop.name) == null:
+				unbound.append("%s: %s" % [file_name, prop.name])
+
+		# (2) Export MẢNG (ô bàn mini · nút tường) phải bind đúng số phần tử
+		var expected: Dictionary = TUTORIAL_EXPECTED_ARRAYS.get(file_name, {})
+		for prop_name: String in expected:
+			var want := int(expected[prop_name])
+			var value: Variant = node.get(prop_name)
+			var got := -1
+			if value is Array:
+				got = (value as Array).size()
+			arrays += 1
+			if got != want:
+				bad.append("%s: %s = %d (can %d)" % [file_name, prop_name, got, want])
+
+		# (3) Ô bàn mini: mỗi ô 1 `grid_pos`, không trùng
+		var seen: Array[Vector2i] = []
+		for cell in _tutorial_cells(node):
+			cells_total += 1
+			if seen.has(cell.grid_pos):
+				bad.append("%s: trung grid_pos %s" % [file_name, str(cell.grid_pos)])
+			seen.append(cell.grid_pos)
+
+		# (4) BoardHost phải NHƯỜNG chuột (ô bàn cũng vậy) để tutorial nhận thao tác kéo ở root
+		var board := node.get_node_or_null("BoardHost")
+		if board is Control and (board as Control).mouse_filter != Control.MOUSE_FILTER_IGNORE:
+			bad.append("%s: BoardHost phai MOUSE_FILTER_IGNORE" % file_name)
+
+		# (5) [connection] khai trong .tscn phải trỏ tới node + hàm có thật
+		_check_tutorial_connections(path, node, bad_conn)
+
+		# (6) Bài học phải nạp được danh sách bước
+		if file_name != "base_tutorial.tscn":
+			var steps: Variant = node.get("steps_data")
+			if not (steps is Array) or (steps as Array).size() == 0:
+				bad.append("%s: chua nap step nao" % file_name)
+			else:
+				steps_total += (steps as Array).size()
+				# (7) Đi hết các bước: bước cuối → phát `tutorial_completed` ĐÚNG id (1 lần)
+				var completed: Array[String] = []
+				node.connect("tutorial_completed",
+					func(id: String) -> void: completed.append(id))
+				for _i in (steps as Array).size():
+					node.call("next_step")
+				var expected_id := str(node.get("tutorial_id"))
+				if completed.size() != 1 or completed[0] != expected_id:
+					bad.append("%s: di het buoc chua phat tutorial_completed dung id ('%s' × %d)"
+						% [file_name, expected_id, completed.size()])
+				# (8) Hiệu ứng không vỡ: mở bài · pháo giấy · phản hồi · chữ nổi · nháy lỗi
+				node.call("play_entrance")
+				node.call("play_cells_win")
+				node.call("show_fail_feedback", "STR_TUT_KHONG_CO", "sai thu")
+				node.call("show_success_feedback", "", "✓ thu")
+				var toast := node.get("toast_label") as Label
+				if toast == null or toast.text.is_empty():
+					bad.append("%s: toast phan hoi khong duoc ghi" % file_name)
+				if node.get("board_host") != null:
+					node.call("spawn_board_text", "+1", Vector2(80, 80))
+					node.call("flash_fail", node.get("board_host"))
+				effects_checked += 1
+		node.queue_free()
+
+	_entry(TUTORIAL_SCENES.size() >= 8, "quet duoc %d scene tutorial" % TUTORIAL_SCENES.size())
+	_entry(exports >= 20, "tutorial co %d export NODE can bind" % exports)
+	_entry(unbound.is_empty(),
+		"moi export NODE cua tutorial deu duoc BIND trong .tscn%s"
+			% ("" if unbound.is_empty() else " — thieu: %s" % ", ".join(unbound)))
+	_entry(arrays >= 7, "co %d export MANG (o ban mini · nut tuong) bind trong scene" % arrays)
+	_entry(cells_total >= 30, "tong so o ban mini khai trong .tscn: %d" % cells_total)
+	_entry(steps_total >= 30, "tong so buoc nap tu 7 bai: %d" % steps_total)
+	_entry(effects_checked >= 7, "hieu ung (mo bai · phao giay · toast · chu noi) chay duoc tren %d bai" % effects_checked)
+	_entry(bad.is_empty(),
+		"ban co mini · step · BoardHost dung chuan%s"
+			% ("" if bad.is_empty() else " — sai: %s" % "; ".join(bad)))
+	_entry(bad_conn.is_empty(),
+		"moi [connection] trong .tscn tro dung node + ham%s"
+			% ("" if bad_conn.is_empty() else " — sai: %s" % "; ".join(bad_conn)))
+
+	# Script tutorial KHÔNG được vẽ bằng code nữa (art đã chuyển thành SVG)
+	var comments := RegEx.new()
+	comments.compile("#[^\\n]*")
+	var offenders: Array[String] = []
+	var sources: Array[String] = []
+	_collect_sources("res://scripts/nodes/tutorial", sources)
+	for path in sources:
+		if not FileAccess.file_exists(path):
+			continue
+		var cleaned := comments.sub(FileAccess.get_file_as_string(path), "", true)
+		for call in TUTORIAL_DRAW_CALLS:
+			if cleaned.contains(call):
+				offenders.append("%s: %s" % [path.get_file(), call])
+	_entry(sources.size() >= 9, "quet duoc %d script tutorial" % sources.size())
+	_entry(offenders.is_empty(),
+		"khong script tutorial nao con ve bang draw_*%s"
+			% ("" if offenders.is_empty() else " — con: %s" % ", ".join(offenders)))
+
+	# Bảng scene của TutorialController phải trỏ tới scene CÓ THẬT
+	var controller := FileAccess.get_file_as_string("res://scripts/core/controllers/tutorial_controller.gd")
+	var route_re := RegEx.new()
+	route_re.compile("\"res://nodes/tutorials/([a-z_]+\\.tscn)\"")
+	var routes := route_re.search_all(controller)
+	var bad_paths: Array[String] = []
+	for m in routes:
+		if not FileAccess.file_exists("res://nodes/tutorials/%s" % m.get_string(1)):
+			bad_paths.append(m.get_string(1))
+	_entry(routes.size() >= 7, "TutorialController tro toi %d bai hoc" % routes.size())
+	_entry(bad_paths.is_empty(),
+		"moi bai trong TutorialController deu co scene%s"
+			% ("" if bad_paths.is_empty() else " — thieu: %s" % ", ".join(bad_paths)))
+
+
+func _tutorial_cells(from_node: Node) -> Array[TutorialCell]:
+	var out: Array[TutorialCell] = []
+	for child in from_node.find_children("*", "TutorialCell", true, false):
+		out.append(child as TutorialCell)
+	return out
+
+
+## Đọc từng dòng `[connection …]` trong .tscn: `from` phải là node có thật, `to`.`method` phải có hàm
+func _check_tutorial_connections(scene_path: String, node: Node, out: Array[String]) -> void:
+	var file_name := scene_path.get_file()
+	var from_re := RegEx.new()
+	from_re.compile("from=\"([^\"]+)\"")
+	var to_re := RegEx.new()
+	to_re.compile("to=\"([^\"]+)\"")
+	var method_re := RegEx.new()
+	method_re.compile("method=\"([^\"]+)\"")
+	for line in FileAccess.get_file_as_string(scene_path).split("\n"):
+		if not line.begins_with("[connection "):
+			continue
+		var from_match := from_re.search(line)
+		var to_match := to_re.search(line)
+		var method_match := method_re.search(line)
+		if from_match == null or to_match == null or method_match == null:
+			out.append("%s: dong [connection] khong doc duoc" % file_name)
+			continue
+		var from_path := from_match.get_string(1)
+		if node.get_node_or_null(from_path) == null:
+			out.append("%s: thieu node nguon '%s'" % [file_name, from_path])
+			continue
+		var to_path := to_match.get_string(1)
+		var target: Node = node if to_path == "." else node.get_node_or_null(to_path)
+		if target == null:
+			out.append("%s: thieu node nhan '%s'" % [file_name, to_path])
+			continue
+		var method_name := method_match.get_string(1)
+		if not target.has_method(method_name):
+			out.append("%s: '%s' khong co ham %s()" % [file_name, target.name, method_name])
 
 
 # ---------------------------------------------------------------------------

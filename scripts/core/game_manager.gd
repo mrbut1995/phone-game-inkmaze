@@ -44,6 +44,60 @@ const DAILY_MODES: Array[String] = [
 	"wall_builder"
 ]
 
+var tutorial_progress: Dictionary = {
+	"first_time": false,
+	"how_to_play_move": false,
+	"how_to_play_checking_wall": false,
+	"how_to_play_writting_hint": false,
+	"core_completed": false,
+	"how_to_play_minesweeper": false,
+	"how_to_play_one_stroke": false,
+	"how_to_play_sum_path": false,
+	"how_to_play_wall_builder": false,
+}
+
+
+func is_tutorial_completed(tutorial_id: String) -> bool:
+	return bool(tutorial_progress.get(tutorial_id, false))
+
+
+func set_tutorial_completed(tutorial_id: String, completed := true) -> void:
+	tutorial_progress[tutorial_id] = completed
+	if tutorial_progress.get("first_time", false) and \
+		tutorial_progress.get("how_to_play_move", false) and \
+		tutorial_progress.get("how_to_play_checking_wall", false):
+		tutorial_progress["core_completed"] = true
+
+
+func mark_core_tutorials_completed() -> void:
+	tutorial_progress["first_time"] = true
+	tutorial_progress["how_to_play_move"] = true
+	tutorial_progress["how_to_play_checking_wall"] = true
+	tutorial_progress["how_to_play_writting_hint"] = true
+	tutorial_progress["core_completed"] = true
+
+
+## Yêu cầu MỞ THẲNG 1 bài khi vào màn Tutorial (Debug Console đặt rồi đổi scene).
+## Giá trị: "" = chạy chuỗi mặc định · id bài · `TutorialController.REQUEST_CORE` = chuỗi CORE.
+var pending_tutorial: String = ""
+
+
+func request_tutorial(tutorial_id: String) -> void:
+	pending_tutorial = tutorial_id.strip_edges()
+
+
+## Màn Tutorial đọc 1 lần rồi xoá yêu cầu (không giữ lại cho lần sau)
+func take_tutorial_request() -> String:
+	var requested := pending_tutorial
+	pending_tutorial = ""
+	return requested
+
+
+## Xoá tiến trình tutorial (Debug Console) — KHÔNG đụng tới tiến trình màn chơi
+func reset_tutorial_progress() -> void:
+	for key in tutorial_progress:
+		tutorial_progress[key] = false
+
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -359,6 +413,7 @@ func export_progress() -> Dictionary:
 		"current_level": current_level,
 		"unlocked_chapters": unlocked_chapters.duplicate(),
 		"current_chapter": current_chapter,
+		"tutorial_progress": tutorial_progress.duplicate(),
 	}
 
 
@@ -376,6 +431,9 @@ func import_progress(data: Dictionary) -> void:
 	elif not unlocked_chapters.has(1):
 		unlocked_chapters.append(1)
 	current_chapter = maxi(int(data.get("current_chapter", current_chapter)), 1)
+	if data.has("tutorial_progress") and data["tutorial_progress"] is Dictionary:
+		for k in (data["tutorial_progress"] as Dictionary):
+			tutorial_progress[k] = bool(data["tutorial_progress"][k])
 
 
 func reset_progress() -> void:
@@ -387,6 +445,8 @@ func reset_progress() -> void:
 	current_level = 1
 	unlocked_chapters = [1]
 	current_chapter = 1
+	for k in tutorial_progress:
+		tutorial_progress[k] = false
 
 
 ## Chuyển Dictionary từ JSON về đúng kiểu khoá int (JSON biến khoá số thành chuỗi)

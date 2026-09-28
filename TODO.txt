@@ -518,6 +518,125 @@
 #       khung `Information` của bố cục; bản NGANG không bị) — quyết định sau: chỉnh slot hoặc nới ngưỡng kiểm.
 
 
+# [x] VÒNG 21h (2026-09-27) — TUTORIAL: ĐƯA TOÀN BỘ NODE · DÂY TÍN HIỆU · ART VÀO SCENE (theo yêu cầu user:
+#     “việc tạo ra/init node/connecting signal/vẽ bên trong script rất khó maintain ⇒ đưa tất cả vào .tscn tương
+#     ứng; chỗ nào VẼ thì tạo SVG rồi load bằng TextureRect/NinePatchRect; gọi node trong code thì `@export` và
+#     binding trực tiếp trong .tscn”):
+#     · COMPONENT MỚI: `TutorialCell` (`nodes/tutorials/tutorial_cell.tscn` — PanelContainer + Label; export
+#       `grid_pos` · `style_visited` · `cell_text` · `text_color` · `text_size`; API `set_text` · `set_text_color` ·
+#       `set_text_size` · `set_visited` · `pulse`) + `TutorialWallToggle` (`signal wall_toggled(wall_id, active)`,
+#       export `wall_id`/`wall_visual`).
+#     · `base_tutorial.tscn` khai 13 node (Backdrop · Spotlight NinePatchRect · BoardHost · HandPointer TextureRect ·
+#       DialogBubble PanelContainer + VBox/Header/Title/Dots/Message/NavBar + BtnSkipAll/BtnSkip/BtnNext ·
+#       ToastLabel) + 6 chấm `Dot1…Dot6` + 5 StyleBoxFlat; 3 nút điều hướng nối bằng `[connection]`.
+#     · 7 scene bài học (`nodes/tutorials/<bài>.tscn`) khai bàn mini: `BoardPanel` (NinePatchRect giấy) ·
+#       `Cell1…CellN` (instance `tutorial_cell.tscn`, ghi đè chữ/màu/cỡ + `grid_pos` ngay trên node gốc) ·
+#       `PathLine` (Line2D) · `HudPanel`/nhãn đếm · 2 nút tường + `BtnSubmit` (Wall Builder) · `AnimContainer`
+#       (First Time); dây tín hiệu nút tường → tutorial + nút GỬI → `_on_submit_pressed` đều trong `.tscn`.
+#     · ART SVG MỚI (`assets/images/tutorial/`): `tutorial_pointer.svg` · `tutorial_spotlight.svg` (NinePatch) ·
+#       `tutorial_wall.svg` (NinePatch, `modulate` xanh/đỏ) · `tutorial_board_paper.svg` (NinePatch) ⇒ script
+#       KHÔNG còn `draw_rect/draw_polyline/draw_circle/draw_colored_polygon`.
+#     · SỬA 3 LỖI THẬT (tutorial trước đây gần như chỉ thấy khung thoại): (1) `BoardHost` neo CENTER +
+#       `position = (40,200)` ⇒ bàn mini bị đẩy RA NGOÀI màn hình trong không gian thiết kế 540×920 → nay neo
+#       trên-trái (40,200) cỡ 460×420 (đáy 620 < thẻ thoại 740); (2) `BoardHost` (STOP) nuốt chuột ⇒ **kéo đường
+#       không bao giờ ăn** → nay `BoardHost`/`BoardPanel`/ô `mouse_filter = IGNORE` (nút tường/GỬI vẫn STOP);
+#       (3) code cũ so `event.position` (toạ độ root) với `cell.position` (toạ độ trong BoardHost) ⇒ lệch
+#       40/200px → nay `cell.get_global_rect().has_point(event.global_position)`; `spotlight_rect` và
+#       `pointer_drag/tap` vẫn ghi theo toạ độ BoardHost, `BaseTutorial._board_to_overlay()` cộng vị trí board.
+#     · BÀI HỌC `.tscn`: export NODE dạng MẢNG (`Array[TutorialCell]`) ghi bằng `node_paths=PackedStringArray("cells",
+#       …)` trên dòng `[node …]` + `cells = [NodePath("BoardHost/Cell1"), …]` — THIẾU `node_paths` ⇒ mọi export
+#       im lặng `null` (`show_step()` chết ngay ở `lbl_message.text`); scene bài học KẾ THỪA `base_tutorial.tscn`
+#       và thêm node con bằng `[node name="…" parent="BoardHost" index="N"]`.
+#     · HÀNG RÀO MỚI: `test_ui_scenes` **mục 11** — 8 scene tutorial: mọi `@export` NODE phải bind · export mảng
+#       đúng số phần tử · `grid_pos` không trùng · `BoardHost` phải IGNORE · mọi `[connection]` trong `.tscn` trỏ
+#       tới node + hàm CÓ THẬT · CẤM `draw_*` trong `scripts/nodes/tutorial` · bảng bài của `TutorialController`
+#       phải có scene thật.
+#     · DỌN NỢ TEST: bỏ 2 lời gọi `tab.setup()` đã bị xoá khỏi `AchTabButton`/`RankTabButton` (lỗi cũ làm 6 check
+#       của mục 2/4 KHÔNG hề chạy) — mục 4 nay kiểm đúng thiết kế tab hiện tại (cao 26 · rộng do HBox chia · tự
+#       dịch `label_key` · tự nối `pressed` → `tab_pressed`); mục 9 thêm `retry_note_label` vào bảng
+#       `HUD_EXPORT_OPTIONAL` (bản DỌC đã xoá node `Note`), mục 10 chấp nhận wrapper `HBoxContainer` trong `Sheet`
+#       của Sum Path bản DỌC, sửa lỗi chuỗi hướng `("NGANG" if … else "DỌC")`; `tutorial.gd` bỏ
+#       `get_node_or_null("Controllers/TutorialController")` — nay bind trong `scenes/tutorial.tscn`.
+#     · XEM BẰNG MẮT: `scripts/test_case/dev_tutorial_shots.gd` (dev, ngoài suite) mount từng bài qua
+#       `TutorialController.play_single_tutorial()` ở 1080×1920 + 1920×1080 → `tmp_tut/<cỡ>/<bài>_stepN.png`
+#       (đã soi 28 ảnh: bàn mini · tay chỉ · bóng sáng · HUD đếm · nút GỬI · chấm tiến độ đều đúng).
+#     · KIỂM CHỨNG — FULL SUITE **14/14 PASS** (`test_ui_scenes` **106/106**, trước 71/71 + 3 lỗi nền đã xử lý).
+
+
+# [x] VÒNG 21i (2026-09-28) — TUTORIAL: HIỆU ỨNG (animation/effect) + MỤC TEST TRONG DEBUG CONSOLE (theo yêu cầu
+#     user: “Bạn hãy cải thiện animation/Effect cho tutorial cho tôi · Và thêm test tutorial ở bên trong Debug”):
+#     · HIỆU ỨNG — dùng lại `UIAnim` + `Sfx` của game, KHÔNG tạo node mới, KHÔNG `draw_*`:
+#       – MỞ BÀI `BaseTutorial.play_entrance()`: nền tối hiện dần (0.24s) · thẻ thoại trượt lên 42px ·
+#         `BoardHost` nở 0.94→1 · TỪNG Ô nở SO LE 0.045s · tiếng lật trang.
+#       – ĐỔI BƯỚC: nhãn thoại fade 0.18s · tiêu đề pop nhẹ · CHẤM đang ở bước NẢY lên · tiếng gõ thẻ giấy.
+#       – VÒNG SÁNG: TRƯỢT sang mục tiêu mới 0.26s (trước đây nhảy cứng) + “thở” scale 1↔1.06; hết mục tiêu thì mờ dần.
+#       – TAY CHỈ: chạm (tap) thêm lắc ±7° như gõ ngón tay (rê vẫn lặp như cũ).
+#       – Ô (`TutorialCell`): `play_entrance(delay)` · `play_step()` (nhún + nháy sáng + SFX chấm bút) ·
+#         `play_fail()` (nháy ĐỎ + rung ngang 3 nhịp) · `play_win(delay)` (nở + nháy vàng).
+#       – ĐÚNG/SAI: toast NỞ RA (0.86→1) rồi mờ dần · `play_cells_win()` cho cả bàn nở so le · chữ nổi `✓`/`+N`
+#         bay lên (`UIAnim.spawn_floating_text`) · `flash_fail()` cho tường/HUD · nền loang đỏ khi sai ·
+#         SFX `STAR_POP`/`WALL_HIT`/`CELL_STEP`/`WALL_MARK`/`STAMP_IMPACT`.
+#       – TƯỜNG (Wall Builder): `TutorialWallToggle` cho đoạn tường NỞ RA khi bật / co lại khi tắt (kèm SFX).
+#       – HUD bài học: Sum Path CUỘN SỐ “Tổng” (`UIAnim.animate_counter`) + nảy khi khớp mục tiêu; Wall Builder
+#         nảy khung đếm mỗi lần vẽ/xoá tường; cả 3 nút điều hướng dùng `UIAnim.attach_press_bounce()`.
+#     · DEBUG CONSOLE — mục **TUTORIAL (TEST)**: mỗi bài 1 hàng (● đã học / ○ chưa) + “Chạy chuỗi CORE (3 bài)”
+#       + “Đánh dấu xong hết” + “Xoá tiến trình tutorial” + toggle Test mode; NAVIGATE thêm hàng “Tutorial (menu)”.
+#       Vào thẳng 1 bài: `GameManager.request_tutorial(id)` (giữ yêu cầu qua scene change) → `Nav.goto_tutorial()`
+#       → `TutorialScene` đọc bằng `take_tutorial_request()` (ĐỌC 1 LẦN RỒI XOÁ) → `play_single_tutorial(id)`;
+#       hằng `TutorialController.REQUEST_CORE` = chạy lại chuỗi CORE. Danh sách bài lấy từ
+#       `TutorialController.TUTORIAL_SCENES` ⇒ thêm bài mới là console tự có hàng.
+#     · Test mode DÙNG CHUNG cờ `debug_run`: bật ⇒ `TutorialController._save_progress()` KHÔNG ghi tiến trình;
+#       mở bài lẻ / Test mode ⇒ `TutorialScene._stay_after_finish` (học xong Ở LẠI màn Tutorial, không tự
+#       nhảy `start_level(1)` như luồng onboarding thật).
+#     · DỌN: xoá biến chết `TutorialScene._target_tutorial_id`; thêm `GameManager.reset_tutorial_progress()`
+#       (xoá cờ tutorial, KHÔNG đụng tiến trình màn chơi) + `request_tutorial()` / `take_tutorial_request()`.
+#     · TEST: `test_ui_scenes` mục 11 thêm “đi hết bước → phát `tutorial_completed` đúng id (1 lần)” + “hiệu ứng
+#       chạy được trên cả 7 bài” → **107/107 PASS**; `test_debug_modes` sửa mục 3 (tra `layout.rows_box` thay vì
+#       hard-code `Panel/Content/Scroll/Rows` — lỗi cũ làm 3/5 mục KHÔNG hề chạy) + thêm **mục 6 Tutorial**
+#       (console đủ hàng · API yêu cầu · màn Tutorial mở đúng bài · Test mode không ghi / tắt thì ghi · reset)
+#       → **59/59 PASS** (trước: 1 lỗi / 37 check).
+#     · ⚠️ BÀI HỌC: (a) đừng ghép `Select-Object -First N` vào pipeline chạy Godot — đóng stdout sớm làm tiến
+#       trình treo (dùng `Select-String` rồi `Select-Object -Last`); (b) test cũ `return` sớm khi không thấy node
+#       ⇒ mục 3–5 của `test_debug_modes` im lặng bỏ qua suốt thời gian dài (đã sửa để tra qua layout).
+#     · KIỂM CHỨNG — FULL SUITE **14/14 PASS**; ảnh 2 tỉ lệ qua `dev_tutorial_shots.gd` (soi: tường hiện ra ở
+#       Checking Wall · nét mở đầu First Time · HUD + nút GỬI ở Wall Builder).
+
+# [x] VÒNG 21j (2026-09-28) — ĐA NGÔN NGỮ: QUÉT CHUỖI CỨNG → KHOÁ DỊCH · DỌN 76 KHOÁ CHẾT · SỬA MOJIBAKE CSV
+#     (theo yêu cầu user: "tìm tất cả string cứng bên trong, đưa vào translate · tìm những String ID nào không dùng
+#     thì loại bỏ" + "string text của bạn đang lỗi, sửa cho tôi"):
+#     · CÔNG CỤ MỚI `tools/content/audit_localization.py` — quét `.gd/.tscn/.tres/.json/.py` (scripts/scenes/nodes/
+#       resources/tools), phát hiện: chuỗi cứng trong UI · khoá CHẾT · khoá CHỈ DÙNG TRONG TEST; nhận cả **họ khoá
+#       động** (`STR_X_%`, `STR_%02d`); cờ `--check` (exit 1 nếu VÙNG GÁC còn chuỗi cứng hoặc có khoá chết) ·
+#       `--unused` · `--drop-unused` · `--out=FILE`; bỏ qua `.tres` đã có bạn `*_key` + chuỗi < 2 ký tự chữ.
+#       VÙNG GÁC (production UI): `scripts/nodes/tutorial/` · `scripts/nodes/hud/` · `nodes/hud/` · `nodes/tutorials/`
+#       · `nodes/game/cell.tscn`. KẾT QUẢ cuối: `KEY CHẾT HẮN 0` · `VÙNG GÁC 0 chuỗi cứng` (198 chuỗi còn lại đều
+#       NGOÀI vùng gác — mockup/demo/tools) · 14 khoá chỉ test dùng giữ lại.
+#     · `tools/content/migrate_hardcoded_text.py` (chạy 1 lần): 16 chuỗi cứng trong `.tscn` → khoá dịch (HUD dọc +
+#       ngang · `cell.tscn` · HUD tutorial) + 9 khoá mới; `tools/content/fix_mojibake.py`: sửa CSV theo TỪNG Ô.
+#     · DỮ LIỆU: **28/28 thành tựu** thêm `title_key`/`desc_key` · **4/4 chương** thêm `title_key`/`subtitle_key`
+#       (`ChapterData.display_title()/display_subtitle()` → `chapter_card.gd` + `scenes/levels.gd` đọc qua đó).
+#       `string_extra.csv` **+73 khoá** (en+vi) · **xoá 76 khoá chết** (`string.csv` 118→91 · `string_extra.csv`
+#       1282→1233) · `next_floor.gd` dùng `STR_RANK_POINTS` thay "0 PTS" · HUD tutorial dùng
+#       `STR_TUT_SUM_HUD_FORMAT` / `STR_TUT_WB_COUNTER_FORMAT` (cắt chuỗi quanh `{0}` để `UIAnim.animate_counter`
+#       vẫn chạy ở mọi ngôn ngữ).
+#     · ✅ SỬA LỖI MOJIBAKE `string.csv`: nội dung là mojibake (tới 2 LỚP) trong file vẫn hợp lệ UTF-8; byte `0x81`
+#       (C1 U+0081) KHÔNG có ánh xạ CP1252 ⇒ codec chuẩn bó tay, phải viết bảng nghịch đảo đủ 256 byte + sửa theo
+#       TỪNG Ô (không theo dòng/file). Đã sạch ở CẢ 19 ngôn ngữ (ja/ko/zh/ar/th). ⚠️ Kiểm chứng bằng hex dump file log
+#       đã redirect — scrollback PowerShell có thể "dịch" sai làm tưởng đã sửa xong.
+#     · ✅ 2 LỖI THẬT do hàng rào mới bắt được: (1) tool migrate thay `"chuỗi"` → `"STR_KHOÁ"` đã ĐỔI LUÔN TÊN NODE
+#       `Submit` trong `nodes/hud/portrait/game/action_bar.tscn` (test_controllers_and_signals đỏ ngay) — đã trả lại;
+#       (2) 2 dòng CSV thiếu dấu nháy (phá cột) + 1 khoá khai 2 lần (`STR_HUD_TIME`) — đã sửa.
+#     · TEST MỚI `scripts/test_case/test_localization.gd` — **50 check**: CSV đủ cột/đủ ô/id đúng dạng/không trùng
+#       khoá/`en` không rỗng · **chống mojibake** trong CSV lẫn `.tscn/.gd/.tres` + chặn ký tự C1 · mọi khoá dùng
+#       phải TỒN TẠI · tên node KHÔNG được là khoá dịch · `title_key`/`desc_key` trỏ khoá có thật ·
+#       `TranslationServer` trả chuỗi đã dịch (không trả khoá thô) · `[INFO]` đếm khoá chưa dùng.
+#     · KIỂM CHỨNG — **FULL SUITE 15/15 PASS** (thêm `test_localization`; `test_ui_scenes` 107/107 ·
+#       `test_debug_modes` 59/59 · `test_chapters` 252/252) · audit `--check` **exit 0**.
+# [ ] CÒN LẠI: 198 chuỗi cứng ngoài vùng gác (mockup/demo + `tools/`) — dọn bằng cách mở rộng `GATED_PREFIXES` ·
+#     14 khoá chỉ test dùng (dọn test rồi xoá) · 17 ngôn ngữ còn lại mới sửa MÃ HOÁ, chưa soát NGHĨA ·
+#     `scripts/scenes/tutorial.tscn` (vỏ instance không ai tham chiếu) — xác nhận rồi xoá.
+
+
 # ----------------------------------------------------------------------------
 # VÒNG SỬA 13 (2026-09-19): MÀN CHƠI — CONTROLLERS + BOARD DÙNG CHUNG (BỎ BỘ ĐÔI THEO HƯỚNG)
 # ----------------------------------------------------------------------------

@@ -50,6 +50,6 @@ offset_top = 84.0
 offset_right = 114.0
 offset_bottom = 101.0
 theme_override_font_sizes/font_size = 7
-text = "TỐC ĐỘ: TIÊU CHUẨN"
+text = "STR_HUD_SPEED_STANDARD"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 24" width="240" height="24">
+  <!-- Đoạn TƯỜNG mini của tutorial (NinePatchRect, patch ngang 16 / dọc 8).
+       Vẽ màu SÁNG (giấy + nét mực) để scene `modulate` thành đỏ (Checking Wall) hoặc xanh
+       (Wall Builder) — bản gốc là ColorRect tô màu đặc trong code. -->
+  <rect x="2" y="3" width="236" height="18" rx="6" fill="#FBF7EE" stroke="#3E4C5C" stroke-width="2" />
+  <path d="M22 4 V20 M46 4 V20 M70 4 V20 M94 4 V20 M118 4 V20 M142 4 V20 M166 4 V20 M190 4 V20 M214 4 V20"
+        stroke="#3E4C5C" stroke-width="1.4" stroke-opacity="0.55" />
+  <path d="M10 12.5 H230" stroke="#3E4C5C" stroke-width="1.2" stroke-opacity="0.35" />
+</svg>

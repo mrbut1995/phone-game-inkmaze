@@ -46,6 +46,6 @@ offset_top = 84.0
 offset_right = 110.0
 offset_bottom = 99.0
 theme_override_font_sizes/font_size = 6
-text = "ĐANG DÒ MÌN"
+text = "STR_HUD_MINE_TIME_SUB"
 horizontal_alignment = 1
 vertical_alignment = 1

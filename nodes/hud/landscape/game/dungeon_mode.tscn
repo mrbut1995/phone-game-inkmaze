@@ -57,7 +57,7 @@ offset_top = 86.0
 offset_right = 165.0
 offset_bottom = 101.0
 theme_override_font_sizes/font_size = 7
-text = "BƯỚC CÒN LẠI"
+text = "STR_HUD_STEPS_LEFT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -103,6 +103,6 @@ offset_top = 83.0
 offset_right = 98.0
 offset_bottom = 99.0
 theme_override_font_sizes/font_size = 6
-text = "HẦM NGỤC"
+text = "STR_HUD_DUNGEON_SUB"
 horizontal_alignment = 1
 vertical_alignment = 1
