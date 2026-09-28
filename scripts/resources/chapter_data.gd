@@ -13,6 +13,10 @@ extends Resource
 @export var title: String = ""
 ## Mô tả ngắn 1 dòng dưới tên chương
 @export var subtitle: String = ""
+## Khoá dịch của tên chương (có khoá -> dùng tr(title_key), không thì lấy `title`)
+@export var title_key: String = ""
+## Khoá dịch của mô tả ngắn
+@export var subtitle_key: String = ""
 ## Nhãn kích thước bàn cờ hiện trên chip, ví dụ "3×3 – 5×5" (rỗng = ẩn chip)
 @export var size_label: String = ""
 ## Số SAO cần có để mở khóa chương (0 = mở sẵn, không cần điều kiện)
@@ -24,6 +28,20 @@ extends Resource
 
 func is_valid() -> bool:
 	return chapter_id > 0 and not title.is_empty()
+
+
+## Tên chương đã dịch (ưu tiên `title_key`)
+func display_title() -> String:
+	if not title_key.is_empty():
+		return tr(title_key)
+	return title
+
+
+## Mô tả ngắn đã dịch (ưu tiên `subtitle_key`)
+func display_subtitle() -> String:
+	if not subtitle_key.is_empty():
+		return tr(subtitle_key)
+	return subtitle
 
 
 ## Nhãn hiển thị của chip kích thước (rỗng = không hiện)

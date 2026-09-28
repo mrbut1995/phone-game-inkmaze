@@ -7,7 +7,9 @@ extends Node
 signal locale_changed(locale: String)
 
 const CSV_PATH := "res://resources/localization/string.csv"
-## File bo sung (cac key chua co trong string.csv) - nap them neu ton tai
+## File bổ sung (key chưa có trong string.csv) — nạp SAU nên key trùng sẽ GHI ĐÈ bản dịch en/vi.
+## Hiện chỉ có 1 ghi đè có chủ đích: STR_DAILY_TOTAL_PROGRESS (bản HUD ngắn hơn bản trong string.csv).
+## Test gác cổng: scripts/test_case/test_localization.gd (kiểm tra cột, mojibake, key thiếu/thừa).
 const CSV_EXTRA_PATHS := ["res://resources/localization/string_extra.csv"]
 const DEFAULT_LOCALE := "vi"
 

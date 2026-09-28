@@ -156,8 +156,8 @@ func _chip_variation() -> StringName:
 
 func _apply_texts(chapter: ChapterData, info: Dictionary) -> void:
 	_set_label("Panel/Content/Display/Info/Title", TranslationServer.translate("STR_CHAPTER_TITLE_FORMAT").format([
-		chapter.chapter_id, chapter.title]))
-	_set_label("Panel/Content/Display/Info/Subtitle", chapter.subtitle)
+		chapter.chapter_id, chapter.display_title()]))
+	_set_label("Panel/Content/Display/Info/Subtitle", chapter.display_subtitle())
 	var chip := get_node_or_null("Panel/Content/Display/Info/Chip") as Control
 	if chip != null:
 		var size_text := chapter.display_size()

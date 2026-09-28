@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="InkMaze"
-run/main_scene="uid://bipfa7yko86fv"
+run/main_scene="uid://cmxhcu3mvamoe"
 config/features=PackedStringArray("4.8", "Mobile")
 config/icon="res://icon.svg"
 

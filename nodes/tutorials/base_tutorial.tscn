@@ -1,8 +1,32 @@
 [gd_scene format=3 uid="uid://bdaud8s52opsm"]
 
 [ext_resource type="Script" uid="uid://due7yap3gb5o" path="res://scripts/nodes/tutorial/base_tutorial.gd" id="1_7x6e2"]
+[ext_resource type="Texture2D" uid="uid://d4j4w8ppmldd0" path="res://assets/images/tutorial/tutorial_pointer.svg" id="2_pointer"]
+[ext_resource type="Texture2D" uid="uid://dnk0ylbkxo26p" path="res://assets/images/tutorial/tutorial_spotlight.svg" id="3_spotlight"]
 
-[node name="BaseTutorial" type="Control" unique_id=1525698188]
+[sub_resource type="StyleBoxFlat" id="btn_primary"]
+content_margin_left = 28.0
+content_margin_top = 10.0
+content_margin_right = 28.0
+content_margin_bottom = 10.0
+bg_color = Color(0.15, 0.2, 0.26, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="btn_primary_hover"]
+content_margin_left = 28.0
+content_margin_top = 10.0
+content_margin_right = 28.0
+content_margin_bottom = 10.0
+bg_color = Color(0.22, 0.28, 0.35, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[node name="BaseTutorial" type="Control" unique_id=1525698188 node_paths=PackedStringArray("backdrop", "spotlight", "board_host", "hand_pointer", "dialog_bubble", "lbl_title", "dots_container", "lbl_message", "nav_bar", "btn_skip_all", "btn_skip", "btn_next", "toast_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,3 +34,250 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7x6e2")
+backdrop = NodePath("Backdrop")
+spotlight = NodePath("Spotlight")
+board_host = NodePath("BoardHost")
+hand_pointer = NodePath("HandPointer")
+dialog_bubble = NodePath("DialogBubble")
+lbl_title = NodePath("Header/Title")
+dots_container = NodePath("Dots")
+lbl_message = NodePath("DialogBubble/Message")
+nav_bar = NodePath("NavBar")
+btn_skip_all = NodePath("NavBar/BtnSkipAll")
+btn_skip = NodePath("Header/BtnSkip")
+btn_next = NodePath("NavBar/BtnNext")
+toast_label = NodePath("ToastLabel")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=2046952523]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.969, 0.957, 0.937, 1)
+
+[node name="Spotlight" type="NinePatchRect" parent="." unique_id=393074664]
+visible = false
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 192.0
+texture = ExtResource("3_spotlight")
+patch_margin_left = 48
+patch_margin_top = 48
+patch_margin_right = 48
+patch_margin_bottom = 48
+
+[node name="BoardHost" type="Control" parent="." unique_id=1982948136]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 220.0
+offset_right = 500.0
+offset_bottom = 640.0
+mouse_filter = 2
+
+[node name="HandPointer" type="TextureRect" parent="." unique_id=1128375995]
+visible = false
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_filter = 2
+texture = ExtResource("2_pointer")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Header" type="Control" parent="." unique_id=601935572]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 90.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Header" unique_id=1569248542]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 46.0
+offset_right = 200.0
+offset_bottom = 86.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.165, 0.18, 0.2, 1)
+theme_override_font_sizes/font_size = 20
+text = "STR_TUT_COMMON_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnSkip" type="Button" parent="Header" unique_id=1671343425]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -62.0
+offset_top = 42.0
+offset_right = -18.0
+offset_bottom = 86.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.35, 0.38, 0.42, 1)
+theme_override_colors/font_hover_color = Color(0.15, 0.18, 0.2, 1)
+theme_override_font_sizes/font_size = 22
+flat = true
+text = "✕"
+
+[node name="DialogBubble" type="Control" parent="." unique_id=2017602598]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 36.0
+offset_top = 116.0
+offset_right = -36.0
+offset_bottom = 206.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Message" type="Label" parent="DialogBubble" unique_id=211959486]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.18, 0.22, 0.26, 1)
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ToastLabel" type="Label" parent="." unique_id=1722041310]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -230.0
+offset_top = 86.0
+offset_right = 230.0
+offset_bottom = 126.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="NavBar" type="Control" parent="." unique_id=564302285]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -170.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="BtnNext" type="Button" parent="NavBar" unique_id=966799915]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -68.0
+offset_right = 110.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("btn_primary")
+theme_override_styles/hover = SubResource("btn_primary_hover")
+text = "STR_TUT_COMMON_NEXT"
+
+[node name="BtnSkipAll" type="Button" parent="NavBar" unique_id=220332689]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -14.0
+offset_right = 90.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.55, 0.6, 0.65, 1)
+theme_override_font_sizes/font_size = 13
+flat = true
+text = "STR_TUT_COMMON_SKIP_ALL"
+
+[node name="Dots" type="HBoxContainer" parent="." unique_id=1937457845]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -60.0
+offset_right = 120.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Dot1" type="Label" parent="Dots" unique_id=1848305278]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.831373, 0.847059, 0.866667, 1)
+theme_override_font_sizes/font_size = 14
+text = "●"
+
+[node name="Dot2" type="Label" parent="Dots" unique_id=318154076]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.831373, 0.847059, 0.866667, 1)
+theme_override_font_sizes/font_size = 14
+text = "●"
+
+[node name="Dot3" type="Label" parent="Dots" unique_id=1381081468]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.831373, 0.847059, 0.866667, 1)
+theme_override_font_sizes/font_size = 14
+text = "●"
+
+[node name="Dot4" type="Label" parent="Dots" unique_id=408374677]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.831373, 0.847059, 0.866667, 1)
+theme_override_font_sizes/font_size = 14
+text = "●"
+
+[node name="Dot5" type="Label" parent="Dots" unique_id=1930197384]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.831373, 0.847059, 0.866667, 1)
+theme_override_font_sizes/font_size = 14
+text = "●"
+
+[node name="Dot6" type="Label" parent="Dots" unique_id=967110451]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.831373, 0.847059, 0.866667, 1)
+theme_override_font_sizes/font_size = 14
+text = "●"
+
+[connection signal="pressed" from="Header/BtnSkip" to="." method="skip_tutorial"]
+[connection signal="pressed" from="NavBar/BtnNext" to="." method="next_step"]
+[connection signal="pressed" from="NavBar/BtnSkipAll" to="." method="skip_all_tutorials"]

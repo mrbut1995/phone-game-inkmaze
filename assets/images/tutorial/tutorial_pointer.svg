@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Con trỏ tay (HandPointer) — bản gốc vẽ bằng draw_colored_polygon() trong base_tutorial.gd -->
+  <path d="M24 6 L40 38 L24 31 L8 38 Z" fill="#2D6EA3" stroke="#1E4266" stroke-width="2.5"
+        stroke-linejoin="round" />
+  <circle cx="24" cy="14" r="4.5" fill="#F5A623" stroke="#B77A10" stroke-width="1.5" />
+</svg>

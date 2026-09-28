@@ -34,6 +34,7 @@ DEFAULT = [
     "test_game_scene_integration",
     "test_controllers_and_signals",
     "test_level_special_modes",
+    "test_localization",
 ]
 
 

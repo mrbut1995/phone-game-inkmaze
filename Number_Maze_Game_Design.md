@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Tài liệu** | Number Maze — Game Design Document (InkMaze) |
-| **Phiên bản** | v2.17 — 2026-09-27 (**TỐI ƯU: UI KHAI TRONG SCENE — TAB TỰ LO**: 3 màn có tab (Cửa hàng · Xếp hạng · Sổ tay thành tựu) **không còn dựng tab bằng code** — tab là node **KHAI SẴN trong scene bố cục** (`Tabs/*`, mỗi hướng 1 bản), mỗi tab tự khai `category`/`board_id` + `label_key`, **tự nối `pressed` → `tab_pressed`** và tự chỉnh cỡ; script màn chỉ `_collect_tabs()` gom lại (hết `_build_tabs()`); lưới ô của Cửa hàng cũng thành node **khai sẵn dùng lại** (không instantiate lại mỗi lần đổi tab/trang); Xếp hạng **dùng lại hàng** khi đổi bảng; dọn code thừa (`TAB_*_SCENE` · `_fit_tab_widths` · `apply_row_layout` · `_capture_tab_layout`) → §10.2g; **BÀN CỜ**: 4 **node MẪU** (ô · tường · neo · vệt mực cũ) khai trong `nodes/game/board_layers.tscn` — board `_spawn_template()` = `duplicate()` thay `instantiate()`, cỡ THIẾT KẾ của tường/vệt mực đọc từ node mẫu (bỏ `_read_scene_line_width()` + 4 `preload()`); **Cửa hàng**: bàn nháp thử bút (`Content/List/Pad` · `PadSlot/Pad`) + hàng VIP *Xoá quảng cáo* (`Content/List/NoAds`) cũng khai sẵn trong 2 scene bố cục; `test_ui_scenes` thêm **mục 8** = hàng rào: script nào còn `preload()/instantiate()` scene ĐÃ khai sẵn thì FAIL) · v2.16 — 2026-09-27 (**TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI + MỰC TÔ TAY**: công cụ 8 giờ biết **TÔ GIÁ TRỊ** thay vì chỉ sinh tường — `countdown_cost` có ô **Tổng chi phí đường đi** (chia 1..4 cho các ô sao cho TỔNG khớp, tự nâng `max_steps`), `sum_path` có ô **Tổng điểm đường đi** (chia 1..9), `fading_ink` thêm công cụ 7 **tô MỰC từng ô** + ô **Mực dư mỗi bước** (mực tăng dần theo bước); GAME: Sum Path **không tính S/F** nữa (tổng khớp đúng số thiết kế), Countdown Cost **tôn trọng `max_steps` của màn**, Fading Ink đọc **mực tô tay** → §10.2f) · v2.15 — 2026-09-27 (**VẼ ĐƯỜNG ĐI TRONG TOOL + MÀN MẪU CHO MỌI CHẾ ĐỘ**: công cụ **8** = kéo chuột vẽ đường S→F rồi `Ctrl+Enter` để sinh tường quanh nó (nét vẽ thành **ĐƯỜNG DUY NHẤT**, tự đặt S/F + `max_steps`); thêm **6 màn mẫu 15–20** phủ nốt mọi chế độ Special (mỗi chế độ 1 màn); **sửa LỖI THẬT của One Stroke** (thuật toán phủ kín luôn từ chối nước cuối bước vào F ⇒ màn thiết kế trước đây luôn âm thầm bị thay bằng bàn tự sinh); Debug Console (F9) nhảy được **mọi** màn + đánh dấu màn ◆ chế độ → §10.2f) · v2.14 — 2026-09-27 (**KIỂU EDIT THEO CHẾ ĐỘ + BỎ `dungeon` KHỎI MÀN**: mỗi chế độ có **1 kiểu edit** riêng trong tool (`custom_cell_values`, công cụ **7**): Minesweeper **GHIM MÌN** · Sum Path **ĐIỂM Ô** 1..9 · Countdown Cost **CHI PHÍ Ô** 1..4 (ô không tô = game tự sinh, cố định theo màn); `dungeon` bị **loại khỏi danh sách chế độ của màn** (validator báo LỖI, game coi như `play`) → §10.2f) · v2.13 — 2026-09-27 (**MÀN CHƠI CHẾ ĐỘ SPECIAL + SKIP LEVEL**: màn khai `mode_id` trong LevelData ⇒ game chạy chế độ Special **TRÊN ĐÚNG BÀN NHÀ THIẾT KẾ VẼ** (tường + cell_mask), "gia vị" của chế độ (mìn · điểm ô · chi phí · mực) **CỐ ĐỊNH theo `level_id`**; thêm **nút SKIP LEVEL** trên thanh hành động (chỉ hiện khi chơi MÀN, bấm ⇒ mở khoá màn kế trong chương mà KHÔNG ghi Sao); tool level_designer báo luật riêng theo chế độ → §10.2f) · v2.12 — 2026-09-26 (**THANH HÀNH ĐỘNG MỚI + GIỚI HẠN LƯỢT**: bỏ hẳn 2 nút công cụ VẼ ĐƯỜNG/GHI NHỚ (bàn cờ tự nhận thao tác), **nút CHƠI LẠI dời từ thanh trạng thái xuống thanh hành động** (cả 2 hướng), thêm nút **GỬI BÀI (`Submit`)** cho Wall Builder, **GIỚI HẠN lượt UNDO/HINT mỗi màn** (mặc định 3) + badge **`PanelLimit`** hiện số lượt còn lại và **khoá nút khi hết lượt** → §10.2e) · v2.11 — 2026-09-26 (**HAI KIỂU HIỂN THỊ ĐIỂM**: bản NHÚNG (HUD ngang) = ảnh SẠCH chữ + badge số + DANH SÁCH điểm đầy đủ bên phải; bản POPUP = ảnh giữ NGUYÊN chữ như mockup, KHÔNG badge + KHÔNG khối ĐIỂM (ảnh nở hết bề ngang) — MỌI chữ mô tả trên ảnh đều thành ĐIỂM có hàng trong danh sách → §10.2d) · v2.10 — 2026-09-26 (**SỬA LỖI LẬT TRANG + ẢNH SẠCH**: cụm điều hướng nhúng về **BĂNG ĐÁY khung**, ẩn mọi chữ mô tả trên ảnh) · v2.9 — 2026-09-26 (**BỐ CỤC CỐ ĐỊNH cho hệ hướng dẫn**) · v2.8 — 2026-09-26 (**HƯỚNG DẪN theo mockup landscape**) · v2.7 — 2026-02 (**TÁCH hệ hướng dẫn**) · v2.6 — 2026-02 (**Nền tảng đa tỉ lệ mới**) · v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze**) · v2.4 — 2026-09-19 (2 mode mới vào vòng xoay Daily 9 ngày) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
+| **Phiên bản** | v2.20 — 2026-09-28 (**ĐA NGÔN NGỮ — QUÉT CHUỖI CỨNG → KHOÁ DỊCH · DỌN KHOÁ CHẾT · SỬA MOJIBAKE CSV**: thêm bộ công cụ `tools/content/` (`audit_localization.py` quét & chặn hồi quy · `migrate_hardcoded_text.py` đổi chuỗi cứng → khoá · `fix_mojibake.py` sửa CSV từng ô); 16 chuỗi trong `.tscn` + chữ HUD/ô/nút công cụ/đếm bước tutorial trong script đổi sang `tr()` · **28 thành tựu** (`title_key`/`desc_key`) + **4 chương** (`title_key`/`subtitle_key`) lấy chữ qua `ChapterData.display_title()`; `string_extra.csv` **+73 khoá mới** (en/vi) và **xoá 76 khoá chết**; `string.csv` (91 dòng) **sửa xong mojibake nội dung ở cả 19 ngôn ngữ**; test mới `test_localization` (50 check) chặn mojibake/khoá thiếu/tên node bị đổi thành khoá → §14) · v2.19 — 2026-09-27 (**TUTORIAL KHAI TRONG SCENE + HIỆU ỨNG + TEST TRONG DEBUG**: toàn bộ UI/khung/bàn mini của 7 bài học đưa từ script vào `.tscn` — `base_tutorial.tscn` khai 13 node + 5 StyleBox + 6 chấm tiến độ, mỗi bài khai `BoardPanel` · ô `Cell1…CellN` (component **`TutorialCell`**) · `PathLine` · HUD · nút tường (**`TutorialWallToggle`**) · `BtnSubmit`; 3 nút điều hướng + 2 nút tường + nút GỬI nối bằng `[connection]` trong scene; art chuyển sang SVG (`tutorial_pointer/spotlight/wall/board_paper.svg`); script chỉ còn `@export` bind + luật chơi ⇒ **sửa 3 lỗi thật** (bàn mini bị đẩy ra ngoài màn hình do neo CENTER · kéo đường không ăn vì BoardHost nuốt chuột · so toạ độ lệch không gian) → §10.2h; **HIỆU ỨNG**: mở bài nở so le · chấm bước nảy · vòng sáng trượt + thở · ô nháy đỏ khi sai / nở khi đi qua · toast nở ra · chữ nổi `✓`/`+N` · HUD cuộn số · tường nở ra (dùng `UIAnim`/`Sfx`, không node mới); **DEBUG**: thêm mục **TUTORIAL (TEST)** vào Debug Console — vào thẳng từng bài qua `request_tutorial()`/`take_tutorial_request()`, “Test mode” không ghi tiến trình, xong bài ở lại màn Tutorial → §9.2) · v2.18 — 2026-09-27 (**HUD “CHỈ HIỆN THỨ CẦN THIẾT”**: mỗi HUD chỉ còn đúng thẻ cần (Dungeon Step+Floor · Countdown Budget · Fog Lượt thử lại · Sum Path Tổng+Mục tiêu · mode khác chỉ Time), node thừa **xoá hẳn** khỏi cả 2 hướng (bản DỌC dùng node kế thừa thì chỉ ẩn được) → §10.1 · §10.2g) · v2.17 — 2026-09-27 (**TỐI ƯU: UI KHAI TRONG SCENE — TAB TỰ LO**: 3 màn có tab (Cửa hàng · Xếp hạng · Sổ tay thành tựu) **không còn dựng tab bằng code** — tab là node **KHAI SẴN trong scene bố cục** (`Tabs/*`, mỗi hướng 1 bản), mỗi tab tự khai `category`/`board_id` + `label_key`, **tự nối `pressed` → `tab_pressed`** và tự chỉnh cỡ; script màn chỉ `_collect_tabs()` gom lại (hết `_build_tabs()`); lưới ô của Cửa hàng cũng thành node **khai sẵn dùng lại** (không instantiate lại mỗi lần đổi tab/trang); Xếp hạng **dùng lại hàng** khi đổi bảng; dọn code thừa (`TAB_*_SCENE` · `_fit_tab_widths` · `apply_row_layout` · `_capture_tab_layout`) → §10.2g; **BÀN CỜ**: 4 **node MẪU** (ô · tường · neo · vệt mực cũ) khai trong `nodes/game/board_layers.tscn` — board `_spawn_template()` = `duplicate()` thay `instantiate()`, cỡ THIẾT KẾ của tường/vệt mực đọc từ node mẫu (bỏ `_read_scene_line_width()` + 4 `preload()`); **Cửa hàng**: bàn nháp thử bút (`Content/List/Pad` · `PadSlot/Pad`) + hàng VIP *Xoá quảng cáo* (`Content/List/NoAds`) cũng khai sẵn trong 2 scene bố cục; `test_ui_scenes` thêm **mục 8** = hàng rào: script nào còn `preload()/instantiate()` scene ĐÃ khai sẵn thì FAIL) · v2.16 — 2026-09-27 (**TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI + MỰC TÔ TAY**: công cụ 8 giờ biết **TÔ GIÁ TRỊ** thay vì chỉ sinh tường — `countdown_cost` có ô **Tổng chi phí đường đi** (chia 1..4 cho các ô sao cho TỔNG khớp, tự nâng `max_steps`), `sum_path` có ô **Tổng điểm đường đi** (chia 1..9), `fading_ink` thêm công cụ 7 **tô MỰC từng ô** + ô **Mực dư mỗi bước** (mực tăng dần theo bước); GAME: Sum Path **không tính S/F** nữa (tổng khớp đúng số thiết kế), Countdown Cost **tôn trọng `max_steps` của màn**, Fading Ink đọc **mực tô tay** → §10.2f) · v2.15 — 2026-09-27 (**VẼ ĐƯỜNG ĐI TRONG TOOL + MÀN MẪU CHO MỌI CHẾ ĐỘ**: công cụ **8** = kéo chuột vẽ đường S→F rồi `Ctrl+Enter` để sinh tường quanh nó (nét vẽ thành **ĐƯỜNG DUY NHẤT**, tự đặt S/F + `max_steps`); thêm **6 màn mẫu 15–20** phủ nốt mọi chế độ Special (mỗi chế độ 1 màn); **sửa LỖI THẬT của One Stroke** (thuật toán phủ kín luôn từ chối nước cuối bước vào F ⇒ màn thiết kế trước đây luôn âm thầm bị thay bằng bàn tự sinh); Debug Console (F9) nhảy được **mọi** màn + đánh dấu màn ◆ chế độ → §10.2f) · v2.14 — 2026-09-27 (**KIỂU EDIT THEO CHẾ ĐỘ + BỎ `dungeon` KHỎI MÀN**: mỗi chế độ có **1 kiểu edit** riêng trong tool (`custom_cell_values`, công cụ **7**): Minesweeper **GHIM MÌN** · Sum Path **ĐIỂM Ô** 1..9 · Countdown Cost **CHI PHÍ Ô** 1..4 (ô không tô = game tự sinh, cố định theo màn); `dungeon` bị **loại khỏi danh sách chế độ của màn** (validator báo LỖI, game coi như `play`) → §10.2f) · v2.13 — 2026-09-27 (**MÀN CHƠI CHẾ ĐỘ SPECIAL + SKIP LEVEL**: màn khai `mode_id` trong LevelData ⇒ game chạy chế độ Special **TRÊN ĐÚNG BÀN NHÀ THIẾT KẾ VẼ** (tường + cell_mask), "gia vị" của chế độ (mìn · điểm ô · chi phí · mực) **CỐ ĐỊNH theo `level_id`**; thêm **nút SKIP LEVEL** trên thanh hành động (chỉ hiện khi chơi MÀN, bấm ⇒ mở khoá màn kế trong chương mà KHÔNG ghi Sao); tool level_designer báo luật riêng theo chế độ → §10.2f) · v2.12 — 2026-09-26 (**THANH HÀNH ĐỘNG MỚI + GIỚI HẠN LƯỢT**: bỏ hẳn 2 nút công cụ VẼ ĐƯỜNG/GHI NHỚ (bàn cờ tự nhận thao tác), **nút CHƠI LẠI dời từ thanh trạng thái xuống thanh hành động** (cả 2 hướng), thêm nút **GỬI BÀI (`Submit`)** cho Wall Builder, **GIỚI HẠN lượt UNDO/HINT mỗi màn** (mặc định 3) + badge **`PanelLimit`** hiện số lượt còn lại và **khoá nút khi hết lượt** → §10.2e) · v2.11 — 2026-09-26 (**HAI KIỂU HIỂN THỊ ĐIỂM**: bản NHÚNG (HUD ngang) = ảnh SẠCH chữ + badge số + DANH SÁCH điểm đầy đủ bên phải; bản POPUP = ảnh giữ NGUYÊN chữ như mockup, KHÔNG badge + KHÔNG khối ĐIỂM (ảnh nở hết bề ngang) — MỌI chữ mô tả trên ảnh đều thành ĐIỂM có hàng trong danh sách → §10.2d) · v2.10 — 2026-09-26 (**SỬA LỖI LẬT TRANG + ẢNH SẠCH**: cụm điều hướng nhúng về **BĂNG ĐÁY khung**, ẩn mọi chữ mô tả trên ảnh) · v2.9 — 2026-09-26 (**BỐ CỤC CỐ ĐỊNH cho hệ hướng dẫn**) · v2.8 — 2026-09-26 (**HƯỚNG DẪN theo mockup landscape**) · v2.7 — 2026-02 (**TÁCH hệ hướng dẫn**) · v2.6 — 2026-02 (**Nền tảng đa tỉ lệ mới**) · v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze**) · v2.4 — 2026-09-19 (2 mode mới vào vòng xoay Daily 9 ngày) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
 | **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
 | **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
 | **Quy ước mode** | 1 bộ luật = 1 `class_name` kế thừa `BaseGameMode`; mỗi mode có `mode_id` (khoá xoay vòng Daily + tra chuỗi `STR_MODE_<ID>`), luật riêng, và **1 mockup matchup** ở mục 10 |
@@ -560,10 +560,11 @@ Mở bằng **F9** (hoặc bấm 5 lần vào con dấu phiên bản ở màn Se
 | Nhóm | Nội dung |
 |---|---|
 | STATE | FPS/MEM/Obj · locale · mode · **ván test** (cờ + tầng ép) · số popup đang mở |
-| NAVIGATE | Main · Chọn màn · Daily · Settings · Sổ tay thành tựu · Dungeon run |
+| NAVIGATE | Main · Chọn màn · Daily · Settings · **Tutorial** · Sổ tay thành tựu · Dungeon run |
 | PROGRESS | Nhảy tới màn 1–9 · mở khoá tất cả · ghi 3 sao · xoá tiến trình |
 | DAILY | Ngày hôm nay · chuỗi ngày · chơi daily hôm nay · đánh dấu hoàn thành · xoá dữ liệu Daily |
 | **SPECIAL MODES (TEST)** | Vào thẳng **9 chế độ Special** (vốn chỉ chơi được qua Daily) — xem 9.1 |
+| **TUTORIAL (TEST)** | Vào thẳng **7 bài hướng dẫn** + chạy lại chuỗi onboarding — xem 9.2 |
 | SAVE | Backend · save now · reload · đổi backend · xoá toàn bộ + dump blob JSON |
 | POPUPS | Mở thử win / next floor / game over / pause / language |
 | DEBUG FLAGS | Bật/tắt log theo nhóm (general · sfx · flow · save) |
@@ -579,6 +580,27 @@ Daily Challenge chỉ cho chơi **1 luật/ngày** (`(ngày-1) % 9`), nên Debug
 - Thêm **“Chế độ kế tiếp”** (xoay vòng 9 luật) và **“Chế độ ngẫu nhiên”** để test nhanh nhiều luật liên tiếp.
 
 Cơ chế: `GameManager.prepare_mode_run(mode_id, difficulty, test_run, floor_override)` (đặt cờ, **không** đổi scene — test gọi được) và `GameManager.start_mode(...)` (= prepare + vào `scenes/game.tscn`); `game.gd::_start_floor_for()` đọc `start_floor_override` để chọn tầng xuất phát cho ván test.
+
+### 9.2. Test Tutorial (TUTORIAL (TEST)) — 7 bài hướng dẫn
+
+Muốn **xem lại 1 bài hướng dẫn** (hoặc ôn cả chuỗi onboarding) mà không phải chơi từ đầu: mục
+**TUTORIAL (TEST)** trong Debug Console.
+
+- **Mỗi bài 1 hàng lệnh** (dấu `●` = đã học xong · `○` = chưa): bấm là **vào thẳng bài đó** — Debug gọi
+  `GameManager.request_tutorial(id)` rồi `Nav.goto_tutorial()`; màn Tutorial đọc yêu cầu bằng
+  `take_tutorial_request()` (**đọc 1 lần rồi xoá**) và gọi `TutorialController.play_single_tutorial(id)`.
+  Danh sách bài lấy từ `TutorialController.TUTORIAL_SCENES` ⇒ thêm bài mới là console tự có hàng,
+  và nút “Vào màn Tutorial (menu)” nằm luôn ở nhóm NAVIGATE.
+- **“Chạy chuỗi CORE (3 bài onboarding)”**: `request_tutorial(TutorialController.REQUEST_CORE)` ⇒ màn Tutorial
+  chạy `start_sequence()` (first_time → move → checking wall).
+- **Test mode**: DÙNG CHUNG cờ `GameManager.debug_run` với SPECIAL MODES — bật thì học xong **không ghi**
+  `tutorial_progress` (`TutorialController._save_progress()` bỏ qua) và **không tự nhảy** vào Màn 1.
+- **Học xong Ở LẠI màn Tutorial**: mở bài LẺ từ Debug (hoặc Test mode bật) ⇒ `TutorialScene._stay_after_finish`;
+  luồng onboarding thật (bấm bài trong menu) vẫn giữ hành vi cũ (xong → vào Màn 1).
+- **“Đánh dấu xong hết”** = `mark_core_tutorials_completed()` + ghi cờ cả 7 bài · **“Xoá tiến trình tutorial”**
+  = `GameManager.reset_tutorial_progress()` (KHÔNG đụng tiến trình màn chơi).
+- Kiểm thử: `test_debug_modes` **mục 6** (console có đủ hàng · API yêu cầu · màn Tutorial mở đúng bài ·
+  Test mode không ghi · Test mode tắt thì ghi · reset xoá sạch) — **59/59 PASS**.
 
 ---
 
@@ -1013,6 +1035,92 @@ trỏ node rồi **bind trong `.tscn`**; đổi node/bố cục ⇒ sửa scene,
   từ `label_key`** khi gắn vào cây, 4 node MẪU của bàn cờ + `fixed_nodes()` (7 node);
   `test_layout_bindings` (78) chốt lại danh sách `@export` buộc đúng node trong 2 bản bố cục
   (nay thêm `item_grid` · `doodle_pad` · `noads_row`).
+
+---
+
+### 10.2h. TUTORIAL KHAI TRONG SCENE — Ô BÀN MINI · DÂY TÍN HIỆU · ART SVG (v2.19)
+
+**Yêu cầu user**: “việc tạo ra/init node/connecting signal/vẽ bên trong script rất khó maintain ⇒ đưa tất cả
+vào `.tscn`; chỗ nào VẼ thì tạo SVG rồi load bằng TextureRect/NinePatchRect; gọi node trong code thì `@export`
+và bind ngay trong scene”.
+
+| Trước (dựng trong script) | Sau (khai trong scene) |
+|---|---|
+| `BaseTutorial._build_ui_if_needed()` + `_create_dialog_bubble()` + `_style_primary/secondary_btn()` dựng Backdrop · Spotlight · BoardHost · HandPointer · DialogBubble (StyleBoxFlat + 3 nút) · ToastLabel | `nodes/tutorials/base_tutorial.tscn`: **13 node + 5 StyleBoxFlat**; script chỉ còn `@export` bind (`backdrop` · `spotlight` · `board_host` · `hand_pointer` · `dialog_bubble` · `lbl_title` · `dots_container` · `lbl_message` · `nav_bar` · `btn_skip/_skip_all/_next` · `toast_label`) |
+| `_on_spotlight_draw()` (`draw_rect` vẽ vòng sáng) + `_on_pointer_draw()` (`draw_colored_polygon` vẽ tay chỉ) | art `assets/images/tutorial/tutorial_spotlight.svg` (NinePatchRect, patch 48) + `tutorial_pointer.svg` (TextureRect 48×48) + `tutorial_wall.svg` + `tutorial_board_paper.svg` |
+| `_update_dots()` tự `Label.new()` cho từng chấm | 6 chấm `Dot1…Dot6` khai sẵn trong `DialogBubble/VBox/Header/Dots`; `_update_dots()` chỉ đổi `visible`/`text`/màu |
+| 3 nút điều hướng `.pressed.connect(_on_*_pressed)` trong code | `[connection signal="pressed" from="DialogBubble/VBox/NavBar/BtnNext" to="." method="next_step"]` (× 3) |
+| Mỗi bài (`how_to_play_*.gd`) có `_setup_board()` dựng PanelContainer ô + Label + StyleBoxFlat + Line2D + HUD + nút | bàn mini khai trong `nodes/tutorials/<bài>.tscn`: `BoardPanel` (NinePatchRect giấy) · `Cell1…CellN` (instance **`tutorial_cell.tscn`**) · `PathLine` (Line2D) · `HudPanel`/`Label` · nút tường (`TutorialWallToggle`) · `BtnSubmit` |
+| `_cells: Dictionary` + `_cell_labels` + tra toạ độ bằng hằng số | `@export var cells: Array[TutorialCell]` (+ `path_line` · `wall_top` · `lbl_hud_sum` · `lbl_hud_counter` · `wall_toggles` · `preview_cells`) — bind trong `.tscn` |
+| Nút bật/tắt tường: `Button.new()` + `ColorRect` làm hình + `pressed.connect(lambda)` | **`TutorialWallToggle`** (`scripts/nodes/tutorial/tutorial_wall_toggle.gd`, `signal wall_toggled(wall_id, active)`, `@export wall_id/wall_visual`) + `[connection]` `pressed → _on_pressed` và `wall_toggled → _on_toggled` khai trong `how_to_play_wall_builder.tscn` |
+
+**2 component mới**
+
+- `TutorialCell` (`nodes/tutorials/tutorial_cell.tscn`): PanelContainer + `Label`; `grid_pos` · `style_visited`
+  (nền “đã đi qua” của One Stroke) · `cell_text` · `text_color` · `text_size` — **ghi đè ngay trên node gốc của
+  instance trong `.tscn`** (không cần “Editable Children”, không đụng Label bên trong); API `set_text` ·
+  `set_text_color` · `set_text_size` · `set_visited` · `pulse`.
+- `TutorialWallToggle` (xem hàng bảng trên) — hình đoạn tường là `NinePatchRect` dùng `tutorial_wall.svg`,
+  `modulate` xanh (Wall Builder) / đỏ (Checking Wall).
+
+**`.tscn` — 2 bài học bắt buộc nhớ**
+
+1. Export NODE **mảng** (`Array[TutorialCell]`) ghi bằng `node_paths` + danh sách NodePath, KHÔNG phải
+   `Array[NodePath]`:
+   `[node name="HowToPlayMove" … node_paths=PackedStringArray("cells", "path_line")]`
+   → `cells = [NodePath("BoardHost/Cell1"), NodePath("BoardHost/Cell2"), NodePath("BoardHost/Cell3")]`.
+   ⚠️ Quên `node_paths=PackedStringArray(...)` ở dòng `[node ...]` ⇒ **mọi export im lặng bằng `null`**
+   (`show_step()` chết ngay ở `lbl_message.text`).
+2. Scene bài học là **kế thừa `base_tutorial.tscn`** (`instance=ExtResource("1_base")` + `script = …`), thêm
+   node con bằng `[node name="BoardHost/…" parent="BoardHost" index="N"]` — node của bài nào nằm trong bài đó.
+
+**Lỗi THẬT đã sửa nhân dịp này** (tutorial trước đây gần như không dùng được, chỉ thấy khung thoại):
+
+- `BoardHost` dựng bằng `set_anchors_preset(PRESET_CENTER)` + `position = (40, 200)` ⇒ trong không gian thiết kế
+  **540×920** (`project.godot`: `viewport_width=540 · viewport_height=920 · stretch=viewport`) bàn mini bị đẩy ra
+  NGOÀI màn hình (ô đầu ở x ≈ 380…696). Nay `BoardHost` neo **trên-trái (40, 200) · 460×420** ⇒ vừa khít
+  (đáy 620 < mép thẻ thoại 740).
+- **Kéo đường không bao giờ ăn**: `board_host` (Control, mặc định `STOP`) nuốt sự kiện chuột nên `_gui_input`
+  của root không nhận được. Nay `BoardHost` + `BoardPanel` + mọi ô `mouse_filter = IGNORE` (ô khai trong
+  `tutorial_cell.tscn`, nút tường/GỬI vẫn `STOP`) ⇒ thao tác kéo rơi xuống tutorial root.
+- **Sai không gian toạ độ**: code cũ so `event.position` (toạ độ của root) với `cell.position` (toạ độ trong
+  `board_host`) ⇒ lệch 40/200px. Nay so **toàn cục**: `cell.get_global_rect().has_point(event.global_position)`.
+- Toạ độ ghi trong dữ liệu bước (`spotlight_rect`, `pointer_drag/tap`) vẫn là toạ độ **trong BoardHost**;
+  `BaseTutorial._board_to_overlay()` cộng vị trí `board_host` khi đặt Spotlight/HandPointer ⇒ hết lệch.
+
+**Hàng rào mới** (`test_ui_scenes` mục **11**, 8 scene): mọi `@export` NODE phải bind khác `null` · export mảng
+đúng số phần tử (ô mini / nút tường) · mỗi ô 1 `grid_pos` không trùng · `BoardHost` phải `IGNORE` · mọi dòng
+`[connection]` trong `.tscn` phải trỏ tới node + hàm CÓ THẬT · **CẤM** `draw_rect/draw_polyline/draw_circle/
+draw_colored_polygon` trong `scripts/nodes/tutorial` · bảng bài của `TutorialController` phải có scene thật.
+Mục 6 (cấm `.new()` cho lớp UI) tự xanh khi bỏ code dựng node; `test_ui_scenes` nay **106/106 PASS**.
+
+**Xem bằng mắt**: `scripts/test_case/dev_tutorial_shots.gd` (dev, không thuộc suite) — mount từng bài qua
+`TutorialController.play_single_tutorial()` ở 2 tỉ lệ rồi lưu `tmp_tut/<WxH>/<bài>_stepN.png`
+(&lt;godot&gt; `--path . --rendering-driver opengl3 -s res://scripts/test_case/dev_tutorial_shots.gd`).
+
+**HIỆU ỨNG (animation) — dùng lại `UIAnim` + `Sfx` của game, KHÔNG node mới, KHÔNG `draw_*`:**
+
+| Chỗ | Hiệu ứng |
+|---|---|
+| Mở bài (`play_entrance()`) | nền tối hiện dần 0.24s · thẻ thoại trượt lên 42px · `BoardHost` nở 0.94→1 · **từng ô nở so le 0.045s** · tiếng lật trang |
+| Đổi bước | nhãn thoại fade 0.18s · tiêu đề pop nhẹ · **chấm đang ở bước nảy lên** · tiếng gõ thẻ giấy |
+| Ô đi qua | `TutorialCell.play_step()`: nhún + nháy sáng + tiếng chấm bút (`Sfx.CELL_STEP`) |
+| Thao tác SAI | `TutorialCell.play_fail()`: nháy đỏ + rung ngang 3 nhịp · `flash_fail()` cho tường/HUD · nền loang đỏ 0.45s · tiếng gãy ngòi (`Sfx.WALL_HIT`) |
+| Thao tác ĐÚNG | toast nở ra (0.86→1) rồi mờ dần · `play_cells_win()` cả bàn nở so le · chữ nổi `✓` / `+N` bay lên (`UIAnim.spawn_floating_text`) · tiếng chuông gỗ (`Sfx.STAR_POP`) |
+| Vòng sáng | TRƯỢT sang mục tiêu mới 0.26s (không nhảy cứng) rồi "thở" scale 1↔1.06 |
+| Tay chỉ | rê lặp như cũ; chạm (tap) thêm **lắc ±7°** như gõ ngón tay |
+| HUD bài học | Sum Path **cuộn số** Tổng (`UIAnim.animate_counter`) + nảy khi khớp mục tiêu · Wall Builder nảy khung đếm mỗi lần vẽ/xoá tường · đoạn tường **NỞ RA** khi bật / co lại khi tắt (kèm SFX) |
+| Nút điều hướng | `UIAnim.attach_press_bounce()` cho cả 3 nút (giống mọi nút khác trong game) |
+
+Script bài học KHÔNG tự tạo node/tween lạ: chỉ gọi API `BaseTutorial` (`play_entrance()` · `play_cells_win()` ·
+`spawn_board_text()` · `flash_fail()`), `TutorialCell`/`TutorialWallToggle` và `UIAnim`/`Sfx` ⇒ giữ nguyên
+hàng rào `test_ui_scenes` mục 11 (không `draw_*` · không `.new()` UI · export bind trong .tscn).
+
+**Kèm theo (cùng vòng)**: `scripts/scenes/tutorial.gd` bỏ `get_node_or_null("Controllers/TutorialController")`
+— nay bind trong `scenes/tutorial.tscn` qua `node_paths=PackedStringArray("tutorial_controller")`; `test_ui_scenes`
+bỏ 2 lời gọi `tab.setup()` đã bị xoá khỏi `AchTabButton`/`RankTabButton` (lỗi cũ làm 6 check của mục 2/4
+KHÔNG hề chạy) → mục 4 nay kiểm đúng thiết kế tab hiện tại (giữ chiều cao 26 · bề rộng do HBox chia · tự
+dịch `label_key` · tự nối `pressed` → phát `tab_pressed`).
 
 ---
 
@@ -1835,6 +1943,87 @@ cả hai KẾ THỪA scaffold `portrait.tscn` / `landscape.tscn` trong cùng th�
 
 **5. CÒN LẠI:** art thẻ chế độ bị KÉO NGANG ở layout ngang (thẻ 1848×414 so với art 804×310) → cần **art thẻ bản NGANG**
 hoặc chuyển thẻ sang `StyleBoxTexture` 9-slice · các màn khác chưa tách layout ngang · chưa áp safe-area (tai thỏ).
+
+---
+
+## 14. ĐA NGÔN NGỮ (LOCALIZATION) — CSV · CÔNG CỤ QUÉT · CHỐNG MOJIBAKE (v2.20, 2026-09-28)
+
+**Yêu cầu user:** “tìm tất cả string cứng bên trong, đưa vào translate; String ID nào không dùng thì loại bỏ” — kèm sửa lỗi chữ bị **mojibake**.
+
+### 14.1. Chuỗi lấy từ đâu (nguồn sự thật)
+
+| File | Vai trò |
+|---|---|
+| `resources/localization/string.csv` | Bảng CHÍNH — 19 ngôn ngữ: `id,en,vi,zh_TW,zh_CN,es,ar,de,fr,hi,id,it,ja,ko,ms,pt,pt_BR,ru,th,tr` |
+| `resources/localization/string_extra.csv` | Bảng PHỤ (`id,en,vi`) — nạp SAU nên **ghi đè** bản en/vi (1 ghi đè có chủ đích: `STR_DAILY_TOTAL_PROGRESS`) |
+| `*.translation` | Do bộ nhập CSV của Godot sinh — chỉ là **ĐƯỜNG DỰ PHÒNG** cho build export (khi gói không kèm `.csv`) |
+
+- `LocalizationManager` (autoload) **đọc thẳng CSV lúc chạy** ⇒ sửa chuỗi chỉ cần chạy lại game, KHÔNG cần Import lại trong editor.
+  Nếu gói export không có `.csv`, manager tự nạp các file `<tên>.<locale>.translation` nằm cạnh CSV (`_load_translation_files()`).
+- Ngôn ngữ mặc định `vi`; người chơi đổi trong Cài đặt → `SettingManager` khoá `locale`. `LOCALE_INFO` phải có ĐỦ 19 mã (thiếu ⇒ popup hiện mã thô + cờ `generic`).
+- Quy ước khoá: `STR_<NHÓM>_<TÊN>`; **chuỗi có tham số phải `.format()`**, không cộng chuỗi — VD `STR_TUT_SUM_HUD_FORMAT` = `Tổng: {0}  |  Mục tiêu: = {1}`.
+
+### 14.2. Chữ của UI lấy từ resource, không nhúng trong node
+
+- **Thành tựu**: mỗi file `resources/archivements/*.tres` (**28 file**) thêm `title_key` + `desc_key` (`STR_ACH_*_TITLE` / `_DESC`); `title`/`desc` chữ cứng chỉ còn là phương án dự phòng.
+- **Chương**: `resources/chapters/chapter_1..4.tres` + `scripts/resources/chapter_data.gd` thêm `@export title_key`/`subtitle_key` và **`display_title()` / `display_subtitle()`** ⇒ `chapter_card.gd` và `scenes/levels.gd` đọc qua 2 hàm này (đổi ngôn ngữ là đổi chữ ngay).
+- **Scene**: 16 chỗ `text = "…"` chữ cứng đổi thành khoá dịch (`nodes/hud/**`, `nodes/game/cell.tscn`, HUD tutorial…).
+- **Script**: chữ HUD/ô dùng `tr(khoá)` + `.format(...)` — VD `next_floor.gd` dùng `STR_RANK_POINTS` cho “0 PTS”, HUD tutorial dùng `STR_TUT_SUM_HUD_FORMAT`/`STR_TUT_WB_COUNTER_FORMAT` (cắt chuỗi quanh `{0}` để hiệu ứng đếm số `UIAnim.animate_counter` vẫn chạy ở mọi ngôn ngữ).
+
+### 14.3. Bộ công cụ `tools/content/` (chạy bằng venv Python của project)
+
+```bash
+# 1) QUÉT + CHẶN HỒI QUY (exit 1 nếu vùng gác còn chuỗi cứng HOẶC còn khoá chết)
+python tools/content/audit_localization.py --check --out=tmp_audit.txt
+# 2) Xem / xoá khoá không dùng
+python tools/content/audit_localization.py --unused
+python tools/content/audit_localization.py --drop-unused
+# 3) Sửa CSV bị mojibake (theo TỪNG Ô)
+python tools/content/fix_mojibake.py
+```
+
+- `audit_localization.py`: quét `.gd/.tscn/.tres/.json/.py` trong `scripts/ scenes/ nodes/ resources/ tools/`; nhận diện khoá dùng trực tiếp + **họ khoá động** (`STR_X_%`, `STR_%02d` — chỉ tính từ file KHÔNG thuộc `tools/`); bỏ qua `.tres` đã có bạn `*_key`, bỏ qua chuỗi < 2 ký tự chữ (nên `'/%d ✓'` không bị báo oan).
+- **Vùng GÁC (gated)** — chuỗi cứng ở đây làm `--check` **ĐỎ**: `scripts/nodes/tutorial/`, `scripts/nodes/hud/`, `nodes/hud/`, `nodes/tutorials/`, `nodes/game/cell.tscn`. Ngoài vùng gác (mockup/demo, `tools/`) chỉ liệt kê để dọn dần.
+- **Kết quả hiện tại**: `KEY CHẾT HẮN 0` · `VÙNG GÁC 0 chuỗi cứng` · 198 chuỗi còn lại đều NGOÀI vùng gác · 14 khoá chỉ test dùng (giữ lại).
+
+### 14.4. Vòng này đã làm gì (số liệu)
+
+| Việc | Kết quả |
+|---|---|
+| Chuỗi cứng → khoá dịch | 16 chỗ trong scene + chữ HUD/ô/nút công cụ/HUD tutorial trong script |
+| Thành tựu lấy chữ qua khoá | **28/28** `.tres` có `title_key` + `desc_key` |
+| Chương lấy chữ qua khoá | **4/4** `.tres` + `display_title()/display_subtitle()` |
+| Khoá mới thêm | **+73** dòng (`string_extra.csv`, en + vi) |
+| Khoá chết đã xoá | **76** (`string.csv` 118→91 dòng · `string_extra.csv` 1282→1233 dòng) |
+| Lỗi CSV thật đã sửa | 2 dòng thiếu dấu nháy (phá cột) · 1 khoá khai 2 lần (`STR_HUD_TIME`) |
+| Mojibake | `string.csv` sửa ở **cả 19 ngôn ngữ** (kể cả ja/ko/zh/ar/th) |
+
+### 14.5. 🐞 Bài học: CSV “hợp lệ UTF-8” mà chữ vẫn rác
+
+- Triệu chứng: file vẫn là UTF-8 hợp lệ nhưng **nội dung** là chữ rác (`HẰNG NGÀY` → `Háº°NG NGÃ€Y`) — dấu hiệu UTF-8 bị đọc bằng CP1252/CP1258 rồi ghi lại; nặng hơn thì **2 lớp** (rác của rác).
+- Vì sao codec chuẩn bó tay: byte `0x81` (C1 `U+0081`) **không có ánh xạ trong CP1252** ⇒ mọi vòng `encode/decode` bằng codec có sẵn đều lỗi/không hoàn tác được ⇒ phải dùng **bảng nghịch đảo tự viết đủ 256 byte**, chạy tối đa 2 lượt.
+- Phải sửa theo **TỪNG Ô CSV** (không theo dòng/file): chỉ cần 1 ô không sửa được là cả dòng bị bỏ qua.
+- Chỉ nhận kết quả khi **số dấu hiệu rác GIẢM**; và **kiểm chứng bằng hex dump file log đã redirect ra file** — scrollback của PowerShell có thể “dịch” sai khiến bạn tưởng đã hỏng/đã xong.
+- ⚠️ Bẫy khi migrate hàng loạt: công cụ đổi `"chuỗi"` → `"STR_KHOÁ"` đã **đổi luôn TÊN NODE** `Submit` trong `nodes/hud/portrait/game/action_bar.tscn` (test bắt được ngay). Nếu viết lại tool: **chỉ thay trong dòng `text = "…"`**.
+
+### 14.6. Hàng rào test — `scripts/test_case/test_localization.gd` (50 check)
+
+1. CSV đúng dạng: đủ cột header, mọi dòng đủ ô, `id` đúng dạng `STR_…`, **không trùng khoá** giữa 2 file (trừ ghi đè có chủ đích), `en` không rỗng.
+2. **Chống mojibake**: quét dấu hiệu rác (`á»`/`áº`/`Ä‘`/`Æ°`/`Æ¡`/`â€`) trong CSV lẫn `.tscn/.gd/.tres` + chặn ký tự điều khiển C1.
+3. Mọi khoá `STR_…` dùng trong scene/code phải **có thật** trong CSV.
+4. **Tên node không được là khoá dịch** (bẫy §14.5).
+5. `title_key`/`desc_key` của thành tựu + chương phải trỏ tới khoá có thật.
+6. `TranslationServer` trả chuỗi đã dịch thật (vi + en), **không trả lại khoá thô**.
+7. `[INFO]` báo số khoá chưa dùng (không làm đỏ test).
+
+⇒ Suite nay **15 test**: `… test_level_special_modes · test_localization` — **15/15 PASS**.
+
+### 14.7. Còn lại
+
+- **198 chuỗi cứng ngoài vùng gác** (chủ yếu scene mockup/demo + `tools/`) — muốn dọn thì mở rộng `GATED_PREFIXES`.
+- 14 khoá chỉ test dùng: giữ tới khi dọn test.
+- 17 ngôn ngữ còn lại mới chỉ được **sửa mã hoá**, chưa soát nghĩa (vòng này chỉ soát tay `en`/`vi`).
+- `scripts/scenes/tutorial.tscn` (chỉ là vỏ instance `scenes/tutorial.tscn`, không nơi nào tham chiếu) — rà lại xem có phải rác thì xoá.
 
 
 

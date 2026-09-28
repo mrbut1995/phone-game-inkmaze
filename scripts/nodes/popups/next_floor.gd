@@ -23,14 +23,14 @@ func _on_open() -> void:
 	var total_lbl := piece("TotalValue") as Label
 	if total_lbl != null:
 		if DisplayServer.get_name() != "headless" and total_sc > 0:
-			total_lbl.text = "0 PTS"
+			total_lbl.text = tr("STR_RANK_POINTS").format([0])
 			var tw_sc := create_tween()
 			tw_sc.tween_method(func(v: float) -> void:
 				if is_instance_valid(total_lbl):
-					total_lbl.text = "%s PTS" % _thousands(int(round(v)))
+					total_lbl.text = tr("STR_RANK_POINTS").format([_thousands(int(round(v)))])
 			, 0.0, float(total_sc), 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		else:
-			total_lbl.text = "%s PTS" % _thousands(total_sc)
+			total_lbl.text = tr("STR_RANK_POINTS").format([_thousands(total_sc)])
 
 	var bonus_lbl := piece("BonusBox/Value") as Label
 	if bonus_lbl != null:

@@ -7,6 +7,7 @@ extends SceneTree
 ## 3. DebugScene: có mục "SPECIAL MODES" + 1 hàng lệnh cho mỗi chế độ + toggle test mode.
 ## 4. Ván TEST không ghi tiến trình (không đánh dấu Daily, không báo danh hiệu).
 ## 5. Tầng ép: minesweeper ở tầng 3 -> bàn 5x5 (2 + tầng), tầng 1 -> 3x3.
+## 6. Tutorial: mục "TUTORIAL (TEST)" + API mở thẳng bài + Test mode KHÔNG ghi tiến trình.
 ## ============================================================================
 
 const MINESWEEPER := "minesweeper"
@@ -41,18 +42,22 @@ func _init() -> void:
 	var today_mask := int(dm.call("get_day_mission_mask", today))
 	var arch: Node = root.get_node_or_null("ArchivementManager")
 	var saved_seconds := int(arch.call("stat_value", "play_seconds")) if arch != null else 0
+	var saved_tutorial: Dictionary = (gm.get("tutorial_progress") as Dictionary).duplicate()
 
 	_section_1_game_manager(gm)
 	_section_2_mode_mapping(gm)
 	await _section_3_debug_scene(gm)
 	await _section_4_no_progress(gm, dm, today, today_mask, arch)
 	await _section_5_floor_override(gm)
+	await _section_6_tutorials(gm, saved_tutorial)
 
 	# Khôi phục trạng thái (không phá dữ liệu người chơi)
 	gm.set("current_mode", saved_mode)
 	gm.set("current_difficulty", saved_diff)
 	gm.set("debug_run", saved_test)
 	gm.set("start_floor_override", saved_floor)
+	gm.set("tutorial_progress", saved_tutorial)
+	gm.set("pending_tutorial", "")
 	dm.call("set_day_mission_mask", today, today_mask)
 	if arch != null:
 		arch.call("set_stat_for_test", "play_seconds", saved_seconds)
@@ -118,8 +123,10 @@ func _section_3_debug_scene(gm: Node) -> void:
 	root.add_child(scene)
 	await process_frame
 
-	var rows: Node = scene.get_node_or_null("Panel/Content/Scroll/Rows")
-	_check(rows != null, "Debug scene co vung Rows")
+	var layout: Node = scene.get("layout")
+	# Vùng Rows nay nằm trong BỐ CỤC (`DebugLayout.rows_box`) — tra qua layout, không hard-code đường dẫn
+	var rows: Node = layout.get("rows_box") if layout != null else null
+	_check(rows != null, "Debug scene co vung Rows (layout.rows_box)")
 	if rows == null:
 		return
 
@@ -224,6 +231,87 @@ func _section_5_floor_override(gm: Node) -> void:
 
 	_check(int(sizes.get(1, 0)) == 3 and int(sizes.get(3, 0)) == 5,
 		"Tang 1 -> ban 3x3, tang 3 -> ban 5x5 (dang %s)" % str(sizes))
+
+
+# ---------------------------------------------------------------------------
+# 6. Tutorial: mục TUTORIAL (TEST) + API mở thẳng bài + Test mode
+# ---------------------------------------------------------------------------
+func _section_6_tutorials(gm: Node, saved: Dictionary) -> void:
+	print("\n--- 6. DEBUG CONSOLE: MUC TUTORIAL (TEST) ---")
+	var scene: Node = (load("res://scenes/debug.tscn") as PackedScene).instantiate()
+	root.add_child(scene)
+	await process_frame
+
+	var layout: Node = scene.get("layout")
+	var rows: Node = layout.get("rows_box") if layout != null else null
+	var texts: Array[String] = _collect_texts(rows) if rows != null else []
+	_check(rows != null, "Console co vung rows de kiem tutorial")
+	_check(_contains(texts, "TUTORIAL"), "Co muc 'TUTORIAL (TEST)'")
+
+	var missing: Array[String] = []
+	for id in (TutorialController.TUTORIAL_SCENES as Dictionary):
+		if not _contains(texts, str(id)):
+			missing.append(str(id))
+	_check(missing.is_empty(), "Moi bai tutorial co 1 hang lenh (thieu: %s)" % str(missing))
+	_check(_contains(texts, "Chạy chuỗi CORE"), "Co hang 'Chay chuoi CORE'")
+	_check(_contains(texts, "Xoá tiến trình tutorial"), "Co hang 'Xoa tien trinh tutorial'")
+
+	# API yêu cầu mở thẳng bài (GameManager giữ yêu cầu qua scene change)
+	gm.call("request_tutorial", "how_to_play_sum_path")
+	_check(str(gm.get("pending_tutorial")) == "how_to_play_sum_path",
+		"request_tutorial() luu yeu cau mo thang 1 bai")
+	_check(str(gm.call("take_tutorial_request")) == "how_to_play_sum_path"
+			and str(gm.get("pending_tutorial")).is_empty(),
+		"take_tutorial_request() doc 1 lan roi xoa")
+
+	# Màn Tutorial tiêu thụ yêu cầu: vào là mở ĐÚNG bài được yêu cầu
+	gm.set("debug_run", true)
+	gm.call("request_tutorial", "how_to_play_move")
+	var tut: Node = (load("res://scenes/tutorial.tscn") as PackedScene).instantiate()
+	root.add_child(tut)
+	await process_frame
+	await process_frame
+	var controller: Node = tut.get("tutorial_controller")
+	var opened := str(controller.get("current_tutorial_id")) if controller != null else "<null>"
+	_check(opened == "how_to_play_move", "Vao man Tutorial mo thang bai duoc yeu cau (dang '%s')" % opened)
+
+	# Test mode BẬT: học xong KHÔNG ghi tiến trình
+	var active: Node = controller.get("active_tutorial_node") if controller != null else null
+	if active != null:
+		active.call("complete_tutorial")
+		await process_frame
+	_check(not bool((gm.get("tutorial_progress") as Dictionary).get("how_to_play_move", false)),
+		"Test mode BAT: hoc xong KHONG ghi tien trinh tutorial")
+	tut.queue_free()
+	await process_frame
+
+	# Test mode TẮT: học xong CÓ ghi (và không yêu cầu gì ⇒ chạy chuỗi CORE, bắt đầu first_time)
+	gm.set("debug_run", false)
+	gm.call("request_tutorial", "")
+	var tut2: Node = (load("res://scenes/tutorial.tscn") as PackedScene).instantiate()
+	root.add_child(tut2)
+	await process_frame
+	await process_frame
+	var controller2: Node = tut2.get("tutorial_controller")
+	var active2: Node = controller2.get("active_tutorial_node") if controller2 != null else null
+	var first_id := str(active2.get("tutorial_id")) if active2 != null else "<null>"
+	_check(first_id == "first_time", "Khong co yeu cau -> chay chuoi CORE (dang '%s')" % first_id)
+	if active2 != null:
+		active2.call("complete_tutorial")
+		await process_frame
+	_check(bool((gm.get("tutorial_progress") as Dictionary).get("first_time", false)),
+		"Test mode TAT: hoc xong CO ghi tien trinh")
+	tut2.queue_free()
+	await process_frame
+
+	# Xoá tiến trình tutorial (không đụng tiến trình màn chơi)
+	gm.call("reset_tutorial_progress")
+	_check(not bool((gm.get("tutorial_progress") as Dictionary).get("first_time", false)),
+		"reset_tutorial_progress() xoa het co tutorial")
+
+	scene.queue_free()
+	await process_frame
+	_check(saved.size() > 0, "Da sao luu tien trinh tutorial truoc khi test (%d co)" % saved.size())
 
 
 # ---------------------------------------------------------------------------

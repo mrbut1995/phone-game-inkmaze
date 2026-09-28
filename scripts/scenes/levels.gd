@@ -245,7 +245,7 @@ func chapter_title() -> String:
 	var chapter := _chapter_data()
 	if chapter == null:
 		return ""
-	return TranslationServer.translate("STR_CHAPTER_TITLE_FORMAT").format([chapter.chapter_id, chapter.title])
+	return TranslationServer.translate("STR_CHAPTER_TITLE_FORMAT").format([chapter.chapter_id, chapter.display_title()])
 
 
 func _chapter_data() -> ChapterData:
