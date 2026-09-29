@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/icons/pencil_icon.svg" id="14_ic_pencil"]
 [ext_resource type="Texture2D" uid="uid://n80hdaatt051" path="res://assets/images/icons/icon_circle.svg" id="15_ic_circle"]
 [ext_resource type="Texture2D" uid="uid://dfen0100lldvp" path="res://assets/images/icons/icon_castle.svg" id="16_ic_castle"]
+[ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="17_ic_bulb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_heropanel"]
 bg_color = Color(0.996078, 0.992157, 0.980392, 1)
@@ -30,7 +31,7 @@ corner_radius_top_right = 11
 corner_radius_bottom_right = 11
 corner_radius_bottom_left = 11
 
-[node name="Landscape" node_paths=PackedStringArray("btn_back", "lbl_title", "tutorial_container", "mode_list", "btn_first_time", "btn_move", "btn_checking_wall", "btn_minesweeper", "btn_one_stroke", "btn_sum_path", "btn_wall_builder", "btn_countdown_cost", "btn_fading_ink", "btn_fog_of_war", "btn_blind_memory") instance=ExtResource("1_dymst")]
+[node name="Landscape" node_paths=PackedStringArray("btn_back", "lbl_title", "tutorial_container", "mode_list", "btn_first_time", "btn_move", "btn_checking_wall", "btn_minesweeper", "btn_one_stroke", "btn_sum_path", "btn_wall_builder", "btn_countdown_cost", "btn_fading_ink", "btn_fog_of_war", "btn_blind_memory", "btn_use_tool") instance=ExtResource("1_dymst")]
 script = ExtResource("2_layout")
 btn_back = NodePath("Paper/Body/LeftCol/TopBar/Back")
 lbl_title = NodePath("Paper/Body/LeftCol/TopBar/Title")
@@ -47,6 +48,7 @@ btn_countdown_cost = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnCountd
 btn_fading_ink = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnFadingInk")
 btn_fog_of_war = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnFogOfWar")
 btn_blind_memory = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnBlindMemory")
+btn_use_tool = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnUseTool")
 
 [node name="Paper" type="NinePatchRect" parent="." index="0"]
 layout_mode = 1
@@ -740,6 +742,59 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
 theme_override_font_sizes/font_size = 12
 text = "Ghi nhớ tường trong vài giây — rồi tường ẩn hết!"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnUseTool" type="Button" parent="Paper/Body/RightCol/ModeScroll/ModeList" index="11"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnUseTool" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnUseTool/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("17_ic_bulb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnUseTool/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnUseTool/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "12. Dùng công cụ"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnUseTool/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Quay lại & Gợi ý — mỗi nút dùng 3 lượt mỗi màn"
 vertical_alignment = 1
 autowrap_mode = 3
 

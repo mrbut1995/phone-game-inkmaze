@@ -592,6 +592,7 @@ const TUTORIAL_SCENES := [
 	"res://nodes/tutorials/how_to_play_fading_ink.tscn",
 	"res://nodes/tutorials/how_to_play_fog_of_war.tscn",
 	"res://nodes/tutorials/how_to_play_blind_memory.tscn",
+	"res://nodes/tutorials/how_to_use_tool.tscn",
 ]
 ## Số phần tử mong đợi của export MẢNG (`Array[TutorialCell]` — ô XEM TRƯỚC của bài mở đầu)
 const TUTORIAL_EXPECTED_ARRAYS := {
@@ -610,6 +611,7 @@ const TUTORIAL_EXPECTED_BOARD_CELLS := {
 	"how_to_play_fading_ink.tscn": 9,
 	"how_to_play_fog_of_war.tscn": 9,
 	"how_to_play_blind_memory.tscn": 6,
+	"how_to_use_tool.tscn": 9,
 }
 ## Vẽ bằng code là CẤM: art nằm trong `assets/images/tutorial/*.svg` (TextureRect/NinePatchRect)
 const TUTORIAL_DRAW_CALLS := [

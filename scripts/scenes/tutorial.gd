@@ -77,6 +77,7 @@ func _wire_buttons() -> void:
 		layout.btn_fading_ink: "how_to_play_fading_ink",
 		layout.btn_fog_of_war: "how_to_play_fog_of_war",
 		layout.btn_blind_memory: "how_to_play_blind_memory",
+		layout.btn_use_tool: "how_to_use_tool",
 	}
 
 	for btn in btn_map:

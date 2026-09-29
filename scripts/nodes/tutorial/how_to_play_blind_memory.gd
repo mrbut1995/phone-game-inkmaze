@@ -196,11 +196,16 @@ func _try_step_to(next: Vector2i) -> void:
 		show_step(4)
 
 
-func _update_hud(_animated: bool = true) -> void:
+func _update_hud(animated: bool = true) -> void:
 	if lbl_hud_walls == null:
 		return
 	var visible_count := 0
 	for w in WALLS:
 		visible_count += 1
-	lbl_hud_walls.text = str(tr("STR_TUT_BM_HUD")) if str(tr("STR_TUT_BM_HUD")) != "STR_TUT_BM_HUD" \
-		else "Tường ẩn: %d vị trí" % visible_count
+	var fmt := str(tr("STR_TUT_BM_HUD"))
+	if fmt == "STR_TUT_BM_HUD":
+		fmt = "Tường ẩn: {0} vị trí"
+	lbl_hud_walls.text = fmt.format([visible_count])
+	if not animated:
+		return
+	UIAnim.play_pop_in(lbl_hud_walls, 0.0, 0.88, 0.2)
