@@ -91,6 +91,7 @@ func _reset_path() -> void:
 	_displayed_sum = _current_sum
 	_update_hud(false)
 	if board_tutorial != null:
+		board_tutorial.show_no_moves_overlay(false)
 		board_tutorial.set_path(_visited_cells)
 		board_tutorial.set_player_cell(START_POS, false)
 
@@ -220,9 +221,28 @@ func _try_step_to(next: Vector2i) -> void:
 				var c := board_tutorial.get_cell(next)
 				if c != null:
 					c.play_fail()
-			# Tự động reset sau 0.8 giây để user thử lại từ đầu
 			get_tree().create_timer(0.8).timeout.connect(func() -> void:
 				if current_step_index == 3 and is_inside_tree():
 					_reset_path()
 			)
+		return
+
+	# Tổng đã vượt TARGET_SUM với điều kiện "=" → không còn đường nào dẫn tới F hợp lệ
+	if _current_sum > TARGET_SUM:
+		_show_board_no_moves()
+
+
+## Hiện overlay "Hết nước đi" trên bàn mini — BoardTutorial kế thừa board.gd nên có API này.
+func _show_board_no_moves() -> void:
+	if board_tutorial == null:
+		return
+	if not board_tutorial.is_connected("no_moves_retry_pressed", _on_board_retry):
+		board_tutorial.connect("no_moves_retry_pressed", _on_board_retry)
+	board_tutorial.show_no_moves_overlay(true)
+
+
+func _on_board_retry() -> void:
+	if board_tutorial != null:
+		board_tutorial.show_no_moves_overlay(false)
+	_reset_path()
 

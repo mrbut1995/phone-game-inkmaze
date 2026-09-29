@@ -171,6 +171,10 @@ func is_unwinnable() -> bool:
 	return (operator == "<" or operator == "=") and current_sum > target_val
 
 
+func is_stuck(_pos: Vector2i, _maze: MazeData, _steps: int) -> bool:
+	return is_unwinnable()
+
+
 func check_completion(current_pos: Vector2i, maze: MazeData, _anchor_controller: Node) -> bool:
 	if maze == null:
 		return false

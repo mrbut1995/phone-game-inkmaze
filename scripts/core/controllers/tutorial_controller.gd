@@ -19,6 +19,10 @@ const TUTORIAL_SCENES := {
 	"how_to_play_one_stroke": "res://nodes/tutorials/how_to_play_one_stroke.tscn",
 	"how_to_play_sum_path": "res://nodes/tutorials/how_to_play_sum_path.tscn",
 	"how_to_play_wall_builder": "res://nodes/tutorials/how_to_play_wall_builder.tscn",
+	"how_to_play_countdown_cost": "res://nodes/tutorials/how_to_play_countdown_cost.tscn",
+	"how_to_play_fading_ink": "res://nodes/tutorials/how_to_play_fading_ink.tscn",
+	"how_to_play_fog_of_war": "res://nodes/tutorials/how_to_play_fog_of_war.tscn",
+	"how_to_play_blind_memory": "res://nodes/tutorials/how_to_play_blind_memory.tscn",
 }
 
 const CORE_SEQUENCE := [

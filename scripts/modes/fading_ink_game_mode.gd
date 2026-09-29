@@ -200,6 +200,10 @@ func is_dead_end(current_pos: Vector2i, maze: MazeData) -> bool:
 	return true
 
 
+func is_stuck(pos: Vector2i, maze: MazeData, _steps: int) -> bool:
+	return is_dead_end(pos, maze)
+
+
 func get_hud_extra_info() -> String:
 	return "MỰC PHAI: %d" % moves_made
 

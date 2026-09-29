@@ -30,7 +30,7 @@ corner_radius_top_right = 11
 corner_radius_bottom_right = 11
 corner_radius_bottom_left = 11
 
-[node name="Landscape" node_paths=PackedStringArray("btn_back", "lbl_title", "tutorial_container", "mode_list", "btn_first_time", "btn_move", "btn_checking_wall", "btn_minesweeper", "btn_one_stroke", "btn_sum_path", "btn_wall_builder") instance=ExtResource("1_dymst")]
+[node name="Landscape" node_paths=PackedStringArray("btn_back", "lbl_title", "tutorial_container", "mode_list", "btn_first_time", "btn_move", "btn_checking_wall", "btn_minesweeper", "btn_one_stroke", "btn_sum_path", "btn_wall_builder", "btn_countdown_cost", "btn_fading_ink", "btn_fog_of_war", "btn_blind_memory") instance=ExtResource("1_dymst")]
 script = ExtResource("2_layout")
 btn_back = NodePath("Paper/Body/LeftCol/TopBar/Back")
 lbl_title = NodePath("Paper/Body/LeftCol/TopBar/Title")
@@ -43,6 +43,10 @@ btn_minesweeper = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnMinesweep
 btn_one_stroke = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnOneStroke")
 btn_sum_path = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnSumPath")
 btn_wall_builder = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnWallBuilder")
+btn_countdown_cost = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnCountdownCost")
+btn_fading_ink = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnFadingInk")
+btn_fog_of_war = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnFogOfWar")
+btn_blind_memory = NodePath("Paper/Body/RightCol/ModeScroll/ModeList/BtnBlindMemory")
 
 [node name="Paper" type="NinePatchRect" parent="." index="0"]
 layout_mode = 1
@@ -524,6 +528,218 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
 theme_override_font_sizes/font_size = 12
 text = "Vẽ các đoạn tường ngăn theo chỉ số rồi Gửi bài"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnCountdownCost" type="Button" parent="Paper/Body/RightCol/ModeScroll/ModeList" index="7"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnCountdownCost" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnCountdownCost/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("13_ic_bomb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnCountdownCost/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnCountdownCost/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "8. Chi phí bước đi"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnCountdownCost/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Số trên ô = chi phí — chọn đường rẻ nhất tới F"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnFadingInk" type="Button" parent="Paper/Body/RightCol/ModeScroll/ModeList" index="8"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnFadingInk" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnFadingInk/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("14_ic_pencil")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnFadingInk/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnFadingInk/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "9. Mực phai dần"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnFadingInk/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Mùi mực phai mỗi bước — về đích trước khi lối đi biến mất"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnFogOfWar" type="Button" parent="Paper/Body/RightCol/ModeScroll/ModeList" index="9"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnFogOfWar" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnFogOfWar/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("12_ic_logic")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnFogOfWar/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnFogOfWar/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "10. Sương mù che số"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnFogOfWar/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Số chỉ hiện xung quanh vị trí hiện tại"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnBlindMemory" type="Button" parent="Paper/Body/RightCol/ModeScroll/ModeList" index="10"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("6_cta_n")
+theme_override_styles/pressed = ExtResource("7_cta_p")
+theme_override_styles/hover = ExtResource("6_cta_n")
+theme_override_styles/focus = ExtResource("8_cta_f")
+
+[node name="Content" type="HBoxContainer" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnBlindMemory" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnBlindMemory/Content" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("15_ic_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texts" type="VBoxContainer" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnBlindMemory/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnBlindMemory/Content/Texts" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 15
+text = "11. Trí nhớ mù"
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Paper/Body/RightCol/ModeScroll/ModeList/BtnBlindMemory/Content/Texts" index="1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 12
+text = "Ghi nhớ tường trong vài giây — rồi tường ẩn hết!"
 vertical_alignment = 1
 autowrap_mode = 3
 

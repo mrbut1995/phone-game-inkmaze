@@ -138,6 +138,8 @@ func _wire_controllers() -> void:
 	# Bàn cờ → GridController
 	_connect_once(board_view, "drag_updated", grid_controller, "handle_drag_updated")
 	_connect_once(board_view, "anchor_connected", grid_controller, "handle_anchor_connected")
+	# Bàn cờ → GameController (overlay retry)
+	_connect_once(board_view, "no_moves_retry_pressed", game_controller, "_on_no_moves_retry_pressed")
 	# GridController → GameController (đếm bước · đâm tường · tới đích · hết đường)
 	_connect_once(grid_controller, "step_consumed", game_controller, "_on_step_consumed")
 	_connect_once(grid_controller, "wall_hit", game_controller, "_on_wall_hit")

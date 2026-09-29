@@ -197,6 +197,23 @@ func get_step_cost(_from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> int
 	return get_cell_cost(to_pos)
 
 
+## Ngân sách còn lại không đủ bước vào bất kỳ ô kề nào (trừ F không mất chi phí).
+func is_stuck(pos: Vector2i, maze: MazeData, steps_remaining: int) -> bool:
+	if maze == null:
+		return false
+	for d: Vector2i in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+		var nxt := pos + d
+		if not maze.is_in_bounds(nxt) or not maze.is_cell_active(nxt):
+			continue
+		if maze.has_wall(pos, nxt):
+			continue
+		if nxt == maze.get_end():
+			return false	# Đích F không tốn ngân sách
+		if steps_remaining >= get_cell_cost(nxt):
+			return false
+	return true
+
+
 func evaluate_move(from_pos: Vector2i, to_pos: Vector2i, maze: MazeData) -> Dictionary:
 	var base_eval := super.evaluate_move(from_pos, to_pos, maze)
 	if not base_eval.get("allowed", false):
