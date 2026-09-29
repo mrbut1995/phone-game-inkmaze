@@ -22,7 +22,7 @@ spotlight_cell = Vector2i(1, 0)
 [sub_resource type="Resource" id="Resource_03"]
 script = ExtResource("4_step")
 message_key = "STR_TUT_CC_03"
-fallback_text = "Chọn đường RẾ NHẤT để đến F mà ngân sách không cạn trước."
+fallback_text = "Chọn đường RẺ NHẤT để đến F mà ngân sách không cạn trước."
 advance_mode = "MANUAL"
 spotlight_node = NodePath("BoardHost/HudPanel")
 
@@ -76,7 +76,7 @@ theme_override_styles/panel = SubResource("hud_pill")
 layout_mode = 2
 theme_override_colors/font_color = Color(0.18, 0.22, 0.26, 1)
 theme_override_font_sizes/font_size = 15
-text = "Ngân sách: 10 bước"
+text = "STR_TUT_CC_HUD_FORMAT"
 horizontal_alignment = 1
 vertical_alignment = 1
 

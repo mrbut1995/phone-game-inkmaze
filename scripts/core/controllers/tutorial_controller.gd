@@ -23,6 +23,7 @@ const TUTORIAL_SCENES := {
 	"how_to_play_fading_ink": "res://nodes/tutorials/how_to_play_fading_ink.tscn",
 	"how_to_play_fog_of_war": "res://nodes/tutorials/how_to_play_fog_of_war.tscn",
 	"how_to_play_blind_memory": "res://nodes/tutorials/how_to_play_blind_memory.tscn",
+	"how_to_use_tool": "res://nodes/tutorials/how_to_use_tool.tscn",
 }
 
 const CORE_SEQUENCE := [

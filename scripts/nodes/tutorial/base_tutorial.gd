@@ -83,9 +83,12 @@ func _refresh_overlay_positions() -> void:
 		return
 	if _has_spotlight:
 		_apply_spotlight()
-	if steps_data.size() > 0 and current_step_index < steps_data.size():
-		var data: Dictionary = steps_data[current_step_index]
-		_update_cursor_demonstration(data)
+	# KHÔNG đụng vào hoạt cảnh con trỏ ở đây!
+	# Trước đây hàm này gọi `_update_cursor_demonstration()` ⇒ mỗi sự kiện resize lại
+	# `stop_cursor_animation()` (bước không khai báo pointer_drag/pointer_tap) hoặc
+	# khởi động lại drag (bước có khai báo) ⇒ con trỏ ĐỨNG HÌNH suốt lúc kéo cửa sổ.
+	# Demo con trỏ tự chạy vòng lặp riêng (blueprint loop hoặc chu kỳ của script bài học),
+	# bàn tutorial có kích thước thiết kế cố định nên không cần đặt lại vị trí.
 
 
 ## Override trong scene con để nạp steps riêng

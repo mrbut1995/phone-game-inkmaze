@@ -22,3 +22,4 @@ extends BaseLayout
 @export var btn_fading_ink: BaseButton = null
 @export var btn_fog_of_war: BaseButton = null
 @export var btn_blind_memory: BaseButton = null
+@export var btn_use_tool: BaseButton = null

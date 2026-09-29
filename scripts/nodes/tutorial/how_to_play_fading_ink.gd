@@ -14,11 +14,11 @@ var _visited_cells: Array[Vector2i] = []
 var _moves_made: int = 0
 var _demo_running: bool = false
 
-## Mực ban đầu của từng ô (S/F không tính — luôn đi được)
+## Mực ban đầu của từng ô (S/F KHÔNG có mực — luôn hiện art xuất phát/đích và luôn đi được)
 const CELL_INK: Dictionary = {
 	Vector2i(1, 0): 4, Vector2i(2, 0): 2,
 	Vector2i(0, 1): 3, Vector2i(1, 1): 5, Vector2i(2, 1): 3,
-	Vector2i(0, 2): 2, Vector2i(1, 2): 4, Vector2i(2, 2): 3,
+	Vector2i(0, 2): 2, Vector2i(1, 2): 4,
 }
 const START_POS := Vector2i(0, 0)
 const FINISH_POS := Vector2i(2, 2)

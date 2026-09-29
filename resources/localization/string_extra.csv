@@ -1165,6 +1165,42 @@ STR_CELL_DRY,DRY,CẠN
 STR_TOOL_RESTART,RESTART,CHƠI LẠI
 STR_TUT_SUM_HUD_FORMAT,Sum: {0}  |  Target: = {1},Tổng: {0}  |  Mục tiêu: = {1}
 STR_TUT_WB_COUNTER_FORMAT,Drawn: {0} / {1} segments,Đã vẽ: {0} / {1} đoạn
+STR_TUT_MOVE_02B,Great! Keep dragging to the last cell — cell F.,Tuyệt! Tiếp tục kéo sang ô cuối — ô F.
+STR_TUT_CC_01,Cost Mode: the number on each cell is the amount of STEPS deducted when you enter it.,Chế độ Chi Phí: con số trên mỗi ô là số BƯỚC bị trừ khi bước vào ô đó.
+STR_TUT_CC_02,Your step budget is limited — smaller numbers cost less!,Ngân sách bước của bạn có hạn — ô nào có số nhỏ thì ít tốn hơn!
+STR_TUT_CC_03,Pick the CHEAPEST path to F before the budget runs out.,Chọn đường RẺ NHẤT để đến F mà ngân sách không cạn trước.
+STR_TUT_CC_04,Now try it — reach F as cheaply as you can!,Giờ hãy thử — đi từ S tới F tiết kiệm nhất nhé!
+STR_TUT_CC_05,Excellent! You picked a smart path.,Xuất sắc! Bạn đã chọn đường khôn ngoan rồi đó.
+STR_TUT_CC_FAIL_01,Out of budget! Pick a lower-cost cell.,Hết ngân sách! Chọn ô chi phí thấp hơn.
+STR_TUT_CC_HUD_FORMAT,Budget: {0} steps,Ngân sách: {0} bước
+STR_TUT_FI_01,Fading Ink: the number on each cell is the remaining INK — entering an empty cell is blocked.,Chế độ Mực Phai: số trên ô là LƯỢNG MỰC còn lại — bước vào ô hết mực là bị chặn.
+STR_TUT_FI_02,EVERY MOVE fades ALL cells by 1 — reach the goal before the ink runs out!,MỖI BƯỚC ĐI làm TẤT CẢ ô nhạt đi 1 — hãy về đích trước khi mực cạn!
+STR_TUT_FI_03,Find the shortest path to F before the paths disappear.,Tìm đường ngắn nhất đến F trước khi lối đi biến mất.
+STR_TUT_FI_04,Now try to get from S to F as fast as you can!,Giờ thử đi từ S tới F nhanh nhất có thể nhé!
+STR_TUT_FI_05,Great! You found the path before the ink ran out.,Tuyệt! Bạn đã tìm đường kịp trước khi mực cạn.
+STR_TUT_FI_FAIL_01,This cell is out of ink — pick another one!,Ô này đã cạn mực — hãy chọn ô khác!
+STR_TUT_FI_HUD_FORMAT,Steps taken: {0},Bước đã đi: {0}
+STR_TUT_FOG_01,Fog of War: numbers only appear around YOUR CURRENT position.,Chế độ Sương Mù: số trên ô chỉ hiện ra quanh VỊ TRÍ HIỆN TẠI của bạn.
+STR_TUT_FOG_02,Move to explore — every step reveals more surrounding numbers!,Di chuyển để khám phá — mỗi bước hé lộ thêm số xung quanh!
+STR_TUT_FOG_03,Hitting an invisible wall pushes you back to S and costs 1 RETRY (3 total).,Đâm tường vô hình sẽ bị đẩy về S và mất 1 LƯỢT THỬ LẠI (3 lượt).
+STR_TUT_FOG_04,"Use the numbers to deduce walls, then carefully walk from S to F!","Dùng các con số để suy luận tường, rồi đi thận trọng từ S tới F!"
+STR_TUT_FOG_05,Excellent! You made it through the fog.,Xuất sắc! Bạn đã vượt qua sương mù rồi đó.
+STR_TUT_FOG_FAIL_01,Wall hit! You lose 1 retry.,Đâm tường! Mất 1 lượt thử lại.
+STR_TUT_FOG_HUD_FORMAT,Retries: {0} / 3,Lượt thử: {0} / 3
+STR_TUT_BM_01,Memory Mode: study the board — walls show first then hide!,Chế độ Trí Nhớ: bàn GHI NHỚ — tường hiện trước rồi ẩn hẳn!
+STR_TUT_BM_02,Look closely at the visible walls — you need to remember them.,Nhìn thật kỹ các tường đang hiện — bạn cần nhớ vị trí chúng.
+STR_TUT_BM_03,"Once walls hide — find the right route from memory.","Sau khi tường ẩn, bạn phải đi đúng đường nhờ trí nhớ vừa ghi."
+STR_TUT_BM_04,"Memorize the walls, then walk from S to F!","Ghi nhớ tường, rồi đi từ S tới F!"
+STR_TUT_BM_05,Great! Your memory is impressive.,Tuyệt! Trí nhớ của bạn thật đáng nể.
+STR_TUT_BM_FAIL_01,Wall hit! Try to recall where the walls are.,Đâm tường! Nhớ lại xem tường nằm đâu.
+STR_TUT_BM_HUD,Walls hidden: {0},Tường ẩn: {0} vị trí
+STR_TUT_TOOL_01,The toolbar has 2 tools: UNDO and HINT — each can be used 3 times per level. Let's see how they work!,Thanh công cụ có 2 nút: QUAY LẠI và GỢI Ý — mỗi nút dùng được 3 lượt mỗi màn. Cùng xem cách dùng nhé!
+STR_TUT_TOOL_02,"Example: take a step, then press UNDO — the cursor moves back to the previous cell.",Ví dụ: đi 1 bước rồi nhấn QUAY LẠI — con trỏ tự lùi về ô cũ.
+STR_TUT_TOOL_03,Example: press HINT — the next cell lights up.,Ví dụ: nhấn GỢI Ý — ô nên đi tiếp sẽ sáng lên.
+STR_TUT_TOOL_04,"Now try it yourself — reach F, using UNDO and HINT when needed!","Giờ tự thử — đi tới F, dùng QUAY LẠI và GỢI Ý khi cần nhé!"
+STR_TUT_TOOL_05,Great! You have mastered both tools.,Tuyệt! Bạn đã nắm được 2 công cụ rồi.
+STR_TUT_TOOL_FAIL_UNDO,No steps to undo yet!,Chưa có bước nào để quay lại!
+STR_TUT_TOOL_HUD,Undo: {0} · Hint: {1},Quay lại: {0} lượt · Gợi ý: {1} lượt
 STR_ACH_DL_DAYS_30_TITLE,A Month of Discipline,Một Tháng Kiên Trì
 STR_ACH_DL_DAYS_30_DESC,Complete 30 days of Daily Challenge,Hoàn thành 30 ngày Daily Challenge
 STR_ACH_DL_DAYS_7_TITLE,Diligent Week,Tuần Lễ Chăm Chỉ

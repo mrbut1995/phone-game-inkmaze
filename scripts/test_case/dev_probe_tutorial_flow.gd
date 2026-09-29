@@ -16,6 +16,7 @@ const TUTORIALS := [
 	"res://nodes/tutorials/how_to_play_fading_ink.tscn",
 	"res://nodes/tutorials/how_to_play_fog_of_war.tscn",
 	"res://nodes/tutorials/how_to_play_blind_memory.tscn",
+	"res://nodes/tutorials/how_to_use_tool.tscn",
 ]
 const FRAMES_STEP := 6
 const FRAMES_TAIL := 10

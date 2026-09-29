@@ -1,0 +1,203 @@
+[gd_scene format=3 uid="uid://b3cv48s43206o"]
+
+[ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/tutorial/how_to_use_tool.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://btutorialboard01" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
+[ext_resource type="Script" path="res://scripts/resources/blueprint_step.gd" id="4_step"]
+[ext_resource type="Texture2D" uid="uid://cte1ue0xq3002" path="res://assets/images/game/btn_undo_normal.svg" id="5_undo_n"]
+[ext_resource type="Texture2D" uid="uid://dp6gsathe7et6" path="res://assets/images/game/btn_undo_pressed.svg" id="6_undo_p"]
+[ext_resource type="Texture2D" uid="uid://dqldqskahkgcx" path="res://assets/images/game/btn_undo_disabled.svg" id="7_undo_d"]
+[ext_resource type="Texture2D" uid="uid://dd61x6fjtobav" path="res://assets/images/game/btn_hint_normal.svg" id="8_hint_n"]
+[ext_resource type="Texture2D" uid="uid://c864ne3ni7vvn" path="res://assets/images/game/btn_hint_pressed.svg" id="9_hint_p"]
+[ext_resource type="Texture2D" uid="uid://btgio4y75ub5n" path="res://assets/images/game/btn_hint_disabled.svg" id="10_hint_d"]
+
+[sub_resource type="Resource" id="Resource_01"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_TOOL_01"
+fallback_text = "Thanh công cụ có 2 nút: QUAY LẠI và GỢI Ý — mỗi nút dùng được 3 lượt mỗi màn. Cùng xem cách dùng nhé!"
+advance_mode = "MANUAL"
+spotlight_node = NodePath("BoardHost/ToolRow")
+
+[sub_resource type="Resource" id="Resource_02"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_TOOL_02"
+fallback_text = "Ví dụ: đi 1 bước rồi nhấn QUAY LẠI — con trỏ tự lùi về ô cũ."
+advance_mode = "MANUAL"
+spotlight_node = NodePath("BoardHost/ToolRow/BtnUndo")
+
+[sub_resource type="Resource" id="Resource_03"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_TOOL_03"
+fallback_text = "Ví dụ: nhấn GỢI Ý — ô nên đi tiếp sẽ sáng lên."
+advance_mode = "MANUAL"
+spotlight_node = NodePath("BoardHost/ToolRow/BtnHint")
+
+[sub_resource type="Resource" id="Resource_04"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_TOOL_04"
+fallback_text = "Giờ tự thử — đi tới F, dùng QUAY LẠI và GỢI Ý khi cần nhé!"
+advance_mode = "AUTO"
+required_action = "DRAG_PATH"
+
+[sub_resource type="Resource" id="Resource_05"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_TOOL_05"
+fallback_text = "Tuyệt! Bạn đã nắm được 2 công cụ rồi."
+advance_mode = "MANUAL"
+
+[sub_resource type="StyleBoxFlat" id="hud_pill"]
+content_margin_left = 16.0
+content_margin_top = 6.0
+content_margin_right = 16.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.85)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.04)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="badge_pill"]
+content_margin_left = 2.0
+content_margin_top = 1.0
+content_margin_right = 2.0
+content_margin_bottom = 1.0
+bg_color = Color(1, 1, 1, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.431373, 0.627451, 0.784314, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[node name="HowToUseTool" node_paths=PackedStringArray("board_tutorial", "lbl_hud_tools", "btn_undo", "btn_hint", "lbl_undo_count", "lbl_hint_count") instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+board_tutorial = NodePath("BoardHost/BoardTutorial")
+lbl_hud_tools = NodePath("BoardHost/HudPanel/ToolsLabel")
+btn_undo = NodePath("BoardHost/ToolRow/BtnUndo")
+btn_hint = NodePath("BoardHost/ToolRow/BtnHint")
+lbl_undo_count = NodePath("BoardHost/ToolRow/BtnUndo/Count")
+lbl_hint_count = NodePath("BoardHost/ToolRow/BtnHint/Count")
+blueprint_steps = [SubResource("Resource_01"), SubResource("Resource_02"), SubResource("Resource_03"), SubResource("Resource_04"), SubResource("Resource_05")]
+
+[node name="HudPanel" type="PanelContainer" parent="BoardHost" index="0"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 10.0
+offset_right = 150.0
+offset_bottom = 44.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("hud_pill")
+
+[node name="ToolsLabel" type="Label" parent="BoardHost/HudPanel" index="0"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.18, 0.22, 0.26, 1)
+theme_override_font_sizes/font_size = 15
+text = "STR_TUT_TOOL_HUD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BoardTutorial" parent="BoardHost" index="1" instance=ExtResource("3_board")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -150.0
+offset_right = 155.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ToolRow" type="Control" parent="BoardHost" index="2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -170.0
+offset_top = -76.0
+offset_right = 170.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="BtnUndo" type="TextureButton" parent="BoardHost/ToolRow" index="0"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 8.0
+offset_top = 12.0
+offset_right = 92.0
+offset_bottom = 70.0
+mouse_default_cursor_shape = 2
+tooltip_text = "STR_TOOL_UNDO"
+ignore_texture_size = true
+stretch_mode = 5
+texture_normal = ExtResource("5_undo_n")
+texture_pressed = ExtResource("6_undo_p")
+texture_disabled = ExtResource("7_undo_d")
+
+[node name="Count" type="Label" parent="BoardHost/ToolRow/BtnUndo" index="0"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_top = -14.0
+offset_right = 2.0
+offset_bottom = 4.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("badge_pill")
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnHint" type="TextureButton" parent="BoardHost/ToolRow" index="1"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 248.0
+offset_top = 12.0
+offset_right = 332.0
+offset_bottom = 70.0
+mouse_default_cursor_shape = 2
+tooltip_text = "STR_TOOL_HINT"
+ignore_texture_size = true
+stretch_mode = 5
+texture_normal = ExtResource("8_hint_n")
+texture_pressed = ExtResource("9_hint_p")
+texture_disabled = ExtResource("10_hint_d")
+
+[node name="Count" type="Label" parent="BoardHost/ToolRow/BtnHint" index="0"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_top = -14.0
+offset_right = 2.0
+offset_bottom = 4.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.133333, 0.298039, 0.427451, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("badge_pill")
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="BoardHost/ToolRow/BtnUndo" to="." method="_on_undo_pressed"]
+[connection signal="pressed" from="BoardHost/ToolRow/BtnHint" to="." method="_on_hint_pressed"]

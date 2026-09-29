@@ -74,7 +74,7 @@ theme_override_styles/panel = SubResource("hud_pill")
 layout_mode = 2
 theme_override_colors/font_color = Color(0.18, 0.22, 0.26, 1)
 theme_override_font_sizes/font_size = 15
-text = "Tường ẩn: 2 vị trí"
+text = "STR_TUT_BM_HUD"
 horizontal_alignment = 1
 vertical_alignment = 1
 
