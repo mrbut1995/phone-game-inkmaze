@@ -73,6 +73,10 @@ func _wire_buttons() -> void:
 		layout.btn_one_stroke: "how_to_play_one_stroke",
 		layout.btn_sum_path: "how_to_play_sum_path",
 		layout.btn_wall_builder: "how_to_play_wall_builder",
+		layout.btn_countdown_cost: "how_to_play_countdown_cost",
+		layout.btn_fading_ink: "how_to_play_fading_ink",
+		layout.btn_fog_of_war: "how_to_play_fog_of_war",
+		layout.btn_blind_memory: "how_to_play_blind_memory",
 	}
 
 	for btn in btn_map:

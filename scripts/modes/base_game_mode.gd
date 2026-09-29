@@ -190,6 +190,12 @@ func is_dead_end(_current_pos: Vector2i, _maze: MazeData) -> bool:
 	return false
 
 
+## Người chơi không còn nước đi hợp lệ nào (board overlay "Hết nước đi" sẽ hiện).
+## Sum Path: tổng vượt target · Countdown Cost: ngân sách < chi phí tối thiểu ô lân cận · Fading Ink: mọi ô lân cận cạn mực.
+func is_stuck(_pos: Vector2i, _maze: MazeData, _steps_remaining: int) -> bool:
+	return false
+
+
 ## Nước đi bị CHẶN (evaluate_move trả allowed = false, không phải hazard — VD Fading Ink
 ## hết mực, One Stroke còn ô trống nên chưa được chạm F). Mode có phản hồi riêng thì vẽ ở đây.
 func on_move_blocked(_grid_view: Control, _from_pos: Vector2i, _to_pos: Vector2i, _reason: String) -> void:

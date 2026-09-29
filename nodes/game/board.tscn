@@ -1,8 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://chbg12rc46dp"]
+[gd_scene format=3 uid="uid://chbg12rc46dp"]
 
 [ext_resource type="Texture2D" uid="uid://co2apcdowivue" path="res://assets/images/game/card_board.svg" id="1_pr7sl"]
 [ext_resource type="Script" uid="uid://ctapikig1gy5k" path="res://scripts/nodes/game/board.gd" id="1_v7f7a"]
-[ext_resource type="PackedScene" path="res://nodes/game/board_layers.tscn" id="2_layers"]
+[ext_resource type="PackedScene" uid="uid://djsrgljk5e128" path="res://nodes/game/board_layers.tscn" id="2_layers"]
+[ext_resource type="Texture2D" uid="uid://8t6pit4ikjmc" path="res://assets/images/icons/icon_reset_big.svg" id="6_w0r1h"]
 
 [node name="Board" type="Control" unique_id=181012636]
 custom_minimum_size = Vector2(510, 510)
@@ -31,10 +32,72 @@ axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Layers" parent="." index="1" instance=ExtResource("2_layers")]
+[node name="Layers" parent="." unique_id=869918844 instance=ExtResource("2_layers")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="NoMovesOverlay" type="Control" parent="." unique_id=903740012]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="Button" parent="NoMovesOverlay" unique_id=903740013]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+flat = true
+
+[node name="DimRect" type="ColorRect" parent="NoMovesOverlay/Dim" unique_id=903740016]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.15, 0.2, 0.26, 0.78)
+
+[node name="Icon" type="TextureRect" parent="NoMovesOverlay/Dim" unique_id=1636109694]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_w0r1h")
+
+[node name="Title" type="Label" parent="NoMovesOverlay" unique_id=903740014]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 14.0
+offset_right = 130.0
+offset_bottom = 46.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_font_sizes/font_size = 16
+text = "Hết nước đi"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="NoMovesOverlay/Dim" to="." method="_on_no_moves_retry_btn_pressed"]

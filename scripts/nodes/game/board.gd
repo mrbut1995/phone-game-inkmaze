@@ -11,6 +11,8 @@ extends Control
 signal drag_updated(pos: Vector2i)
 signal anchor_tapped(anchor_id: int)
 signal anchor_connected(corner_a: Vector2i, corner_b: Vector2i)
+## Người chơi bấm nút retry trên overlay "Hết nước đi" (game_controller lắng nghe để restart)
+signal no_moves_retry_pressed
 
 const CRASH_SFX_SCENE := preload("res://nodes/sfx/crash.tscn")
 const MINE_SFX_SCENE := preload("res://nodes/sfx/mine_explosion.tscn")
@@ -1113,6 +1115,30 @@ func animate_cursor_fail_attempt(from_cell: Vector2i, toward_cell: Vector2i) -> 
 ## Rung bàn cờ (Wall Builder: GỬI SAI) — bản public của hiệu ứng rung lưới
 func shake_board() -> void:
 	_play_grid_shake()
+
+
+## Hiện/ẩn overlay "Hết nước đi" trên bàn (Sum Path / Countdown Cost / Fading Ink)
+func show_no_moves_overlay(on: bool) -> void:
+	var overlay := get_node_or_null("NoMovesOverlay")
+	if overlay == null:
+		return
+	if overlay.visible == on:
+		return
+	overlay.visible = on
+	if on:
+		# Huỷ drag đang diễn ra — người dùng giữ ngón tay sẽ không tiếp tục kéo qua overlay
+		_dragging_player = false
+		_pressed_cell = Vector2i(-1, -1)
+		_has_dragged = false
+		_cancel_anchor_drag()
+		var btn := overlay.get_node_or_null("RetryBtn") as Control
+		if btn != null:
+			UIAnim.play_pop_in(btn, 0.12, 0.65, 0.3)
+
+
+func _on_no_moves_retry_btn_pressed() -> void:
+	no_moves_retry_pressed.emit()
+
 
 
 func set_interaction_enabled(enabled: bool) -> void:

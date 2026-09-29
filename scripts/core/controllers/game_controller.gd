@@ -38,6 +38,8 @@ var _move_costs: Array[int] = []
 var _countdown_locked := false
 ## Đang ở pha GHI NHỚ (Blind Memory): đồng hồ dừng, tường hiện, popup đếm ngược đang chạy
 var _memorize_active := false
+## Đang hiện overlay "Hết nước đi" trên bàn (Sum Path / Countdown Cost / Fading Ink)
+var _overlay_showing := false
 ## Dữ liệu đầu vào để chấm Thử thách (tái dùng, không cấp phát mỗi frame)
 var _challenge_ctx := ChallengeContext.new()
 
@@ -117,6 +119,9 @@ func _start_floor(floor_number: int) -> void:
 	if grid_view != null:
 		grid_view.set_interaction_enabled(true)
 	_countdown_locked = false
+	_overlay_showing = false
+	if grid_view != null:
+		grid_view.show_no_moves_overlay(false)
 
 	_update_hud()
 
@@ -169,6 +174,8 @@ func _on_timer_timeout() -> void:
 
 ## Hết đường đi (Fading Ink: mực phai hết lối) -> thua với lý do riêng để popup hiện đúng tiêu đề
 func _on_dead_end() -> void:
+	if _overlay_showing:
+		return	# Overlay "Đã hiện" trong _update_hud() trước đó — không mở popup tûa
 	_game_over("dead_end")
 
 
@@ -191,6 +198,25 @@ func _update_hud() -> void:
 		elif running and _countdown_locked:
 			grid_view.set_interaction_enabled(true)
 	_countdown_locked = countdown_blocked
+	# Sum Path / Countdown Cost / Fading Ink: kiểm overlay "Hết nước đi" trên bàn
+	var was_overlay := _overlay_showing
+	var cur_pos := grid_controller.current_pos if grid_controller != null else Vector2i.ZERO
+	var cur_maze := grid_controller.maze if grid_controller != null else null
+	var stuck := running and mode != null \
+			and mode.is_stuck(cur_pos, cur_maze, game_state.steps_remaining)
+	_overlay_showing = stuck
+	if grid_view != null:
+		grid_view.show_no_moves_overlay(stuck)
+	if stuck and not was_overlay:
+		if timer_controller != null:
+			timer_controller.pause()
+		if grid_view != null:
+			grid_view.set_interaction_enabled(false)
+	elif not stuck and was_overlay:
+		if timer_controller != null:
+			timer_controller.resume()
+		if grid_view != null and running:
+			grid_view.set_interaction_enabled(true)
 	# Sum Path: tổng đã vượt mục tiêu (điều kiện "<" hoặc "=") -> nút CHƠI LẠI dưới thanh nút.
 	var replay_visible := running and mode != null and mode.is_unwinnable()
 	if ui_controller != null:
@@ -610,6 +636,12 @@ func _report_to_archivements(won: bool, floor_time: float) -> void:
 # ---------------------------------------------------------------------------
 func restart_run() -> void:
 	# SFX: gõ thẻ giấy cho nút phụ (Restart trên HUD)
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	_on_retry_requested()
+
+
+## Nút Retry trên board overlay "Hết nước đi" — không phát SFX riêng (đã có trong restart_run)
+func _on_no_moves_retry_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	_on_retry_requested()
 

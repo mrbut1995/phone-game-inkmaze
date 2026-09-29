@@ -18,3 +18,7 @@ extends BaseLayout
 @export var btn_one_stroke: BaseButton = null
 @export var btn_sum_path: BaseButton = null
 @export var btn_wall_builder: BaseButton = null
+@export var btn_countdown_cost: BaseButton = null
+@export var btn_fading_ink: BaseButton = null
+@export var btn_fog_of_war: BaseButton = null
+@export var btn_blind_memory: BaseButton = null
