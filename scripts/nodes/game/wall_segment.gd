@@ -11,6 +11,7 @@ var _state := "invisible"
 var _base_width := 11.0
 var _p1 := Vector2.ZERO
 var _p2 := Vector2.ZERO
+var _preview_pulse: Tween = null
 
 const COLOR_VISIBLE := Color(0.12, 0.16, 0.23, 1.0)        # #1E283A
 const COLOR_SUSPECTED := Color(0.77, 0.52, 0.23, 1.0)      # #C4843A
@@ -77,6 +78,33 @@ func animate_stroke_draw(duration := 0.12) -> void:
 	tw.tween_method(func(prog: float) -> void:
 		points = PackedVector2Array([start_pt, start_pt.lerp(end_pt, prog)])
 	, 0.0, 1.0, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+## Bật/tắt kiểu NÉT ĐỨT (Wall Builder tutorial: preview "tường đứt đoạn").
+## Line2D không có nét đứt gốc — dùng texture lặp như chất liệu bút chì (PenSkin).
+func set_dashed(on: bool) -> void:
+	if on:
+		var w := maxf(width, 1.0)
+		texture_mode = Line2D.LINE_TEXTURE_TILE
+		texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+		texture = PenSkin.dash_texture_for(w * 2.2, w)
+	else:
+		texture_mode = Line2D.LINE_TEXTURE_NONE
+		texture_repeat = CanvasItem.TEXTURE_REPEAT_DISABLED
+		texture = null
+
+
+## Nhấp nháy nhẹ lớp preview (tường đứt đoạn) để mắt bám vào — tắt thì trả alpha về 1
+func set_preview_pulse(on: bool) -> void:
+	if _preview_pulse != null and _preview_pulse.is_valid():
+		_preview_pulse.kill()
+	_preview_pulse = null
+	if on:
+		_preview_pulse = create_tween().set_loops()
+		_preview_pulse.tween_property(self, "modulate:a", 0.45, 0.7)
+		_preview_pulse.tween_property(self, "modulate:a", 1.0, 0.7)
+	else:
+		modulate.a = 1.0
 
 
 ## Hiệu ứng nảy dày nét và đỏ rực khi người chơi đâm trúng tường

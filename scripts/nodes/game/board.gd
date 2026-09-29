@@ -1085,6 +1085,31 @@ func stop_cursor_animation() -> void:
 		_cursor.visible = false
 
 
+## Trình diễn cursor di chuyển qua chuỗi ô (dùng cho demo full-path, lặp)
+func animate_cursor_path(path: Array[Vector2i], dur_per_step: float = 0.45) -> void:
+	if _cursor == null or path.size() < 2:
+		return
+	_player_hidden = false
+	_cursor.visible = true
+	var positions: Array[Vector2] = []
+	for cell in path:
+		positions.append(_cell_center(cell) - _cursor.size * 0.5)
+	_cursor.play_demo_path(positions, dur_per_step)
+
+
+## Trình diễn cursor thử đi đè lên ô đã đi: di chuyển nửa đường rồi nảy lại (1 chu kỳ)
+func animate_cursor_fail_attempt(from_cell: Vector2i, toward_cell: Vector2i) -> void:
+	if _cursor == null:
+		return
+	_player_hidden = false
+	_cursor.visible = true
+	var from_p := _cell_center(from_cell) - _cursor.size * 0.5
+	var toward_p := _cell_center(toward_cell) - _cursor.size * 0.5
+	var midway := from_p.lerp(toward_p, 0.5)
+	var recoil_dir := Vector2(from_cell - toward_cell)
+	_cursor.play_demo_fail_attempt(from_p, midway, recoil_dir)
+
+
 ## Rung bàn cờ (Wall Builder: GỬI SAI) — bản public của hiệu ứng rung lưới
 func shake_board() -> void:
 	_play_grid_shake()

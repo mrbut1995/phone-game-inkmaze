@@ -14,11 +14,18 @@ signal cell_drag_stepped(from_cell: Vector2i, to_cell: Vector2i)
 signal cell_step_attempted(next_cell: Vector2i)
 signal wall_toggled(wall_key: String, active: bool)
 
+const ANCHOR_CALLOUT_SCENE := preload("res://nodes/tutorials/anchor_callout.tscn")
+
 var _tutorial_cells_data: Dictionary = {}
 var _tutorial_walls_data: Array = []
 var _built_walls: Dictionary = {}
 var _anchors_enabled: bool = false
 var _cell_dragging_active: bool = true
+## Wall Builder tutorial: đoạn "tường đứt đoạn" preview + token vô hiệu timer demo cũ
+var _dashed_previews: Dictionary = {}
+var _wall_demo_token: int = 0
+## Vòng tròn đánh số "1"/"2" tại 2 neo của thao tác kéo mẫu (Wall Builder)
+var _anchor_callouts: Array[AnchorCallout] = []
 
 
 func _on_drag(local_pos: Vector2) -> void:
@@ -77,6 +84,10 @@ func setup_tutorial(
 	_tutorial_walls_data = walls_spec
 	_anchors_enabled = with_anchors
 	_built_walls.clear()
+	# Bàn dựng lại ⇒ bỏ preview cũ + vô hiệu hoá timer demo đang chờ
+	_dashed_previews.clear()
+	_anchor_callouts.clear()
+	_wall_demo_token += 1
 
 	# Tự động tìm S và F nếu chưa chỉ định rõ
 	for pos in cells_text:
@@ -288,10 +299,25 @@ func toggle_wall(is_h: bool, lattice: Vector2i) -> bool:
 	else:
 		_built_walls[key] = true
 		set_suspected_wall(is_h, lattice, true)
+		# Tutorial không có game_mode nên mặc định vẽ "suspected"; đổi sang "built"
+		# cho khớp đoạn tường người chơi tự dựng ở chế độ thật (xanh lá, nét liền).
+		var seg := _segment_for(key)
+		if seg != null:
+			seg.set_state("built")
+			seg.set_dashed(false)
+			seg.set_preview_pulse(false)
 		active = true
 
 	wall_toggled.emit(key, active)
 	return active
+
+
+func _segment_for(key: String) -> WallSegment:
+	if _suspected_lines.has(key):
+		return _suspected_lines[key]
+	if _wall_segments.has(key):
+		return _wall_segments[key]
+	return null
 
 
 func has_built_wall(is_h: bool, lattice: Vector2i) -> bool:
@@ -322,3 +348,148 @@ func _on_tutorial_anchor_connected(corner_a: Vector2i, corner_b: Vector2i) -> vo
 		lattice = Vector2i(corner_a.x, mini(corner_a.y, corner_b.y))
 
 	toggle_wall(is_h, lattice)
+
+
+# ============================================================================
+# Wall Builder tutorial: preview "tường đứt đoạn" + trình diễn rê neo dựng tường
+# ============================================================================
+
+## Hiện "tường đứt đoạn" (nét đứt hổ phách, nhấp nháy nhẹ) ở 1 cạnh — minh hoạ
+## đoạn tường mà ô cần có. Trả về đoạn để bài học có thể dùng tiếp nếu muốn.
+func show_dashed_wall(is_h: bool, lattice: Vector2i) -> WallSegment:
+	if not _edge_touches_board(is_h, lattice):
+		return null
+	var key := _lattice_key(is_h, lattice)
+	if _dashed_previews.has(key):
+		var existing: WallSegment = _dashed_previews[key]
+		if is_instance_valid(existing):
+			existing.visible = true
+			return existing
+	var seg := _create_wall_segment(is_h, lattice, "suspected")
+	if seg == null:
+		return null
+	seg.set_dashed(true)
+	seg.set_preview_pulse(true)
+	_suspected_lines[key] = seg
+	_dashed_previews[key] = seg
+	seg.animate_appear()
+	return seg
+
+
+## Xoá hết đoạn preview nét đứt
+func clear_dashed_walls() -> void:
+	for key: String in _dashed_previews:
+		var seg: WallSegment = _dashed_previews[key]
+		if is_instance_valid(seg):
+			seg.queue_free()
+		_suspected_lines.erase(key)
+	_dashed_previews.clear()
+
+
+## Huỷ trình diễn dựng tường (timer cũ tự vô hiệu qua token) + dọn neo/đường kéo
+func cancel_wall_demo() -> void:
+	_wall_demo_token += 1
+	hide_anchor_callouts()
+	if _drag_guide_line != null:
+		_drag_guide_line.visible = false
+	for info in _anchor_nodes:
+		var anchor: MazeAnchor = info.node
+		if is_instance_valid(anchor):
+			anchor.set_selected(false)
+	stop_cursor_animation()
+
+
+## Trình diễn thao tác "rê neo để dựng tường": chọn neo A → trượt con trỏ + đường kéo
+## sang neo B → đoạn tường hiện ra. Con trỏ trượt thẳng cùng nhịp với đường kéo.
+func play_wall_demo_drag(is_h: bool, lattice: Vector2i, duration := 0.55) -> void:
+	if _cursor == null or _drag_guide_line == null:
+		return
+	var corner_a := lattice
+	var corner_b: Vector2i
+	if is_h:
+		corner_b = Vector2i(lattice.x + 1, lattice.y)
+	else:
+		corner_b = Vector2i(lattice.x, lattice.y + 1)
+	var a_center := _anchor_center_pos(corner_a)
+	var b_center := _anchor_center_pos(corner_b)
+	var token := _wall_demo_token
+
+	_cursor.stop_demo()
+	_cursor.visible = true
+	_cursor.position = a_center - _cursor.size * 0.5
+	_set_demo_anchor_selected(corner_a, true)
+	_pulse_demo_anchor(corner_a)
+	Sfx.play(Sfx.ANCHOR_SNAP)
+	_drag_guide_line.visible = true
+	_drag_guide_line.points = PackedVector2Array([a_center, a_center])
+
+	get_tree().create_timer(0.15).timeout.connect(func() -> void:
+		if _wall_demo_token != token or not is_inside_tree():
+			return
+		_cursor.play_demo_slide(a_center, b_center, duration)
+		var line_tw := create_tween()
+		line_tw.tween_method(func(prog: float) -> void:
+			_drag_guide_line.points = PackedVector2Array([a_center, a_center.lerp(b_center, prog)])
+		, 0.0, 1.0, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	)
+
+	get_tree().create_timer(0.15 + duration + 0.06).timeout.connect(func() -> void:
+		if _wall_demo_token != token or not is_inside_tree():
+			return
+		_pulse_demo_anchor(corner_b)
+		Sfx.play(Sfx.WALL_MARK)
+		toggle_wall(is_h, lattice)
+		_drag_guide_line.visible = false
+		_set_demo_anchor_selected(corner_a, false)
+	)
+
+
+func _set_demo_anchor_selected(corner: Vector2i, on: bool) -> void:
+	for info in _anchor_nodes:
+		if info.corner == corner:
+			var anchor: MazeAnchor = info.node
+			anchor.set_selected(on)
+			return
+
+
+func _pulse_demo_anchor(corner: Vector2i) -> void:
+	for info in _anchor_nodes:
+		if info.corner == corner:
+			(info.node as MazeAnchor).pulse()
+			return
+
+
+# --- Callout số "1"/"2" đánh dấu ĐIỂM CHẠM (Wall Builder tutorial) --------------
+
+## Hiện vòng đánh số tại 2 neo: (1) neo bắt đầu kéo, (2) neo kéo tới.
+func show_anchor_callouts(corner_a: Vector2i, corner_b: Vector2i) -> void:
+	_ensure_anchor_callouts()
+	_place_anchor_callout(0, corner_a, 1)
+	_place_anchor_callout(1, corner_b, 2)
+
+
+func hide_anchor_callouts() -> void:
+	for callout in _anchor_callouts:
+		if is_instance_valid(callout):
+			callout.hide_callout()
+
+
+func _ensure_anchor_callouts() -> void:
+	if _anchors_layer == null:
+		return
+	while _anchor_callouts.size() < 2:
+		var callout := ANCHOR_CALLOUT_SCENE.instantiate() as AnchorCallout
+		if callout == null:
+			return
+		_anchors_layer.add_child(callout)
+		_anchor_callouts.append(callout)
+
+
+func _place_anchor_callout(index: int, corner: Vector2i, number: int) -> void:
+	if index >= _anchor_callouts.size():
+		return
+	var callout := _anchor_callouts[index]
+	if not is_instance_valid(callout):
+		return
+	callout.set_number(number)
+	callout.show_at(_anchor_center_pos(corner))
