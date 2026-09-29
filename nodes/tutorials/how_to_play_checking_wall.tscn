@@ -2,13 +2,43 @@
 
 [ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://lnm53g6tkcmx" path="res://scripts/nodes/tutorial/how_to_play_checking_wall.gd" id="2_script"]
-[ext_resource type="PackedScene" uid="uid://btutorialboard01" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
+[ext_resource type="PackedScene" uid="uid://334hk6vbotgi" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
+[ext_resource type="Script" uid="uid://b5k5fxlkk626p" path="res://scripts/resources/blueprint_step.gd" id="4_step"]
 
-[node name="HowToPlayCheckingWall" node_paths=PackedStringArray("board_tutorial") instance=ExtResource("1_base")]
+[sub_resource type="Resource" id="Resource_01"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WALL_01"
+fallback_text = "Con số trên mỗi ô cho biết có BAO NHIÊU cạnh quanh ô đó là tường vô hình."
+spotlight_cell = Vector2i(0, 0)
+
+[sub_resource type="Resource" id="Resource_02"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WALL_02"
+fallback_text = "Tường vô hình sẽ CHẶN đường đi — kéo ngang qua đó, đường sẽ không vẽ được."
+
+[sub_resource type="Resource" id="Resource_03"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WALL_03"
+fallback_text = "Giờ bạn hãy tự đi từ S tới F — nhớ dùng con số để đoán tường nhé!"
+advance_mode = "AUTO"
+required_action = "DRAG_PATH"
+
+[sub_resource type="Resource" id="Resource_04"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WALL_04"
+fallback_text = "Chính xác! Bạn đã dùng con số để đoán đúng tường."
+
+[sub_resource type="Resource" id="Resource_05"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WALL_05"
+fallback_text = "Lưu ý: không phải chế độ nào cũng dùng số kiểu này. Cùng khám phá tiếp nhé!"
+
+[node name="HowToPlayCheckingWall" unique_id=621483456 node_paths=PackedStringArray("board_tutorial") instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 board_tutorial = NodePath("BoardHost/BoardTutorial")
+blueprint_steps = Array[ExtResource("4_step")]([SubResource("Resource_01"), SubResource("Resource_02"), SubResource("Resource_03"), SubResource("Resource_04"), SubResource("Resource_05")])
 
-[node name="BoardTutorial" parent="BoardHost" index="0" instance=ExtResource("3_board")]
+[node name="BoardTutorial" parent="BoardHost" parent_id_path=PackedInt32Array(1982948136) index="0" unique_id=546812142 instance=ExtResource("3_board")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -19,5 +49,3 @@ offset_left = -170.0
 offset_top = -170.0
 offset_right = 170.0
 offset_bottom = 170.0
-grow_horizontal = 2
-grow_vertical = 2

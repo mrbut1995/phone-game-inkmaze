@@ -2,13 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://b004i8grnb2ed" path="res://scripts/nodes/tutorial/how_to_play_minesweeper.gd" id="2_script"]
-[ext_resource type="PackedScene" uid="uid://btutorialboard01" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
+[ext_resource type="PackedScene" uid="uid://334hk6vbotgi" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
 
-[node name="HowToPlayMinesweeper" node_paths=PackedStringArray("board_tutorial") instance=ExtResource("1_base")]
+[node name="HowToPlayMinesweeper" unique_id=1679484934 node_paths=PackedStringArray("board_tutorial") instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 board_tutorial = NodePath("BoardHost/BoardTutorial")
 
-[node name="BoardTutorial" parent="BoardHost" index="0" instance=ExtResource("3_board")]
+[node name="BoardTutorial" parent="BoardHost" parent_id_path=PackedInt32Array(1982948136) index="0" unique_id=1457424240 instance=ExtResource("3_board")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -19,5 +19,3 @@ offset_left = -180.0
 offset_top = -180.0
 offset_right = 180.0
 offset_bottom = 180.0
-grow_horizontal = 2
-grow_vertical = 2

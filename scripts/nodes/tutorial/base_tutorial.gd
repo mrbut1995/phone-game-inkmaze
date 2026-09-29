@@ -22,6 +22,8 @@ signal tutorial_completed(tutorial_id: String)
 signal tutorial_skipped(tutorial_id: String, all: bool)
 
 @export var tutorial_id: String = ""
+## Blueprint steps: Mảng resource chỉnh trong Inspector, mỗi phần tử là BlueprintStep.
+@export var blueprint_steps: Array[BlueprintStep] = []
 var current_step_index: int = 0
 var steps_data: Array = []
 var is_active: bool = false
@@ -59,6 +61,14 @@ func _ready() -> void:
 	if spotlight != null and not spotlight.resized.is_connected(_on_spotlight_resized):
 		spotlight.resized.connect(_on_spotlight_resized)
 	_init_tutorial()
+	# Ưu tiên 1: blueprint_steps được gán trong editor
+	if steps_data.is_empty() and blueprint_steps.size() > 0:
+		setup_steps(blueprint_steps)
+	# Ưu tiên 2: fallback từ code — mỗi tutorial con override _get_default_steps()
+	if steps_data.is_empty():
+		var defaults := _get_default_steps()
+		if defaults.size() > 0:
+			setup_steps(defaults)
 	_wire_button_effects()
 	play_entrance()
 
@@ -81,6 +91,13 @@ func _refresh_overlay_positions() -> void:
 ## Override trong scene con để nạp steps riêng
 func _init_tutorial() -> void:
 	pass
+
+
+## Override để cung cấp steps mặc định từ code khi editor chưa set blueprint_steps.
+## Trả về Array[BlueprintStep] hoặc Array[Dictionary].
+## Editor blueprint_steps luôn được ưu tiên hơn kết quả của hàm này.
+func _get_default_steps() -> Array:
+	return []
 
 
 ## Gắn hiệu ứng nhấn nảy cho 3 nút điều hướng (giống mọi nút khác trong game)
@@ -175,11 +192,29 @@ func _animate_step_text() -> void:
 
 
 func setup_steps(p_steps: Array) -> void:
-	steps_data = p_steps
+	steps_data = []
+	for step in p_steps:
+		if step is BlueprintStep:
+			steps_data.append(step.to_dictionary())
+		elif step is Dictionary:
+			steps_data.append(step.duplicate(true))
 	current_step_index = 0
 	_update_dots()
 	if steps_data.size() > 0:
 		show_step(0)
+
+
+func _normalize_step_data(data: Dictionary) -> Dictionary:
+	var out: Dictionary = data.duplicate(true)
+	if data.has("spotlight_node") and data["spotlight_node"] is NodePath:
+		var path: NodePath = data["spotlight_node"]
+		if not path.is_empty():
+			out["spotlight_node"] = get_node_or_null(path)
+	if data.has("pointer_drag") and data["pointer_drag"] is Dictionary:
+		var drag: Dictionary = data["pointer_drag"]
+		if drag.has("from_cell") and drag.has("to_cell"):
+			out["pointer_drag"] = drag.duplicate(true)
+	return out
 
 
 func _update_dots() -> void:
@@ -209,7 +244,7 @@ func show_step(index: int) -> void:
 	current_step_index = index
 	_update_dots()
 
-	var data: Dictionary = steps_data[index]
+	var data: Dictionary = _normalize_step_data(steps_data[index])
 	var msg_key: String = data.get("message_key", "")
 	var tr_msg := tr(msg_key)
 	if tr_msg == msg_key and data.has("fallback_text"):

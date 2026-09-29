@@ -3,11 +3,37 @@
 [ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/tutorial/first_time.gd" id="2_script"]
 [ext_resource type="PackedScene" uid="uid://btutcell000001" path="res://nodes/tutorials/tutorial_cell.tscn" id="3_cell"]
+[ext_resource type="Script" path="res://scripts/resources/blueprint_step.gd" id="4_step"]
+
+[sub_resource type="Resource" id="Resource_01"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_FIRST_TIME_01"
+fallback_text = "Chào mừng bạn đến với Number Maze!"
+advance_mode = "MANUAL"
+
+[sub_resource type="Resource" id="Resource_02"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_FIRST_TIME_02"
+fallback_text = "Vẽ một đường đi từ điểm BẮT ĐẦU (S) tới điểm KẾT THÚC (F)."
+advance_mode = "MANUAL"
+
+[sub_resource type="Resource" id="Resource_03"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_FIRST_TIME_03"
+fallback_text = "Những con số trên mỗi ô sẽ giúp bạn đoán ra đâu là tường vô hình."
+advance_mode = "MANUAL"
+
+[sub_resource type="Resource" id="Resource_04"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_FIRST_TIME_04"
+fallback_text = "Trước khi chơi thật, hãy cùng luyện 3 kỹ năng cơ bản nhé!"
+advance_mode = "MANUAL"
 
 [node name="FirstTime" instance=ExtResource("1_base") node_paths=PackedStringArray("preview_cells", "preview_line")]
 script = ExtResource("2_script")
 preview_cells = [NodePath("BoardHost/AnimContainer/Cell1"), NodePath("BoardHost/AnimContainer/Cell2"), NodePath("BoardHost/AnimContainer/Cell3")]
 preview_line = NodePath("BoardHost/AnimContainer/PreviewLine")
+blueprint_steps = [SubResource("Resource_01"), SubResource("Resource_02"), SubResource("Resource_03"), SubResource("Resource_04")]
 
 [node name="AnimContainer" type="Control" parent="BoardHost" index="0"]
 layout_mode = 1

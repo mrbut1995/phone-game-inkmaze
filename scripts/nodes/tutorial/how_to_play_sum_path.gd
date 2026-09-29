@@ -50,27 +50,28 @@ func _init_tutorial() -> void:
 	_reset_path()
 
 	var hud_panel := get_node_or_null("BoardHost/HudPanel") as Control
-	var steps: Array = [
+
+
+func _get_default_steps() -> Array:
+	return [
 		{
 			"message_key": "STR_TUT_SUM_01",
-			"fallback_text": "Ở đây, con số là ĐIỂM của ô — không liên quan gì tới tường cả.",
+			"fallback_text": "Chế độ Tính Tổng: đường đi của bạn phải có tổng bằng mục tiêu!",
 			"advance_mode": "MANUAL",
-			"spotlight_cell": Vector2i(1, 0)
 		},
 		{
 			"message_key": "STR_TUT_SUM_02",
-			"fallback_text": "Tổng điểm đường đi của bạn phải khớp đúng điều kiện mục tiêu (= 8).",
+			"fallback_text": "Mỗi ô bạn đi qua được cộng vào tổng. Số ở ô S được tính là điểm khởi đầu.",
 			"advance_mode": "MANUAL",
-			"spotlight_node": hud_panel
 		},
 		{
 			"message_key": "STR_TUT_SUM_03",
-			"fallback_text": "Mỗi ô chỉ tính điểm 1 LẦN, dù bạn có đi qua lại nhiều lần.",
+			"fallback_text": "Nếu đến F mà tổng chưa bằng mục tiêu: cần chọn đường khác.",
 			"advance_mode": "MANUAL",
 		},
 		{
 			"message_key": "STR_TUT_SUM_04",
-			"fallback_text": "Giờ bạn hãy tìm đường từ S tới F sao cho tổng điểm = 8 nhé!",
+			"fallback_text": "Giờ hãy tìm đường có tổng đúng bằng 8 nhé!",
 			"advance_mode": "AUTO",
 			"required_action": "DRAG_PATH"
 		},
@@ -80,7 +81,6 @@ func _init_tutorial() -> void:
 			"advance_mode": "MANUAL",
 		}
 	]
-	setup_steps(steps)
 
 
 func _reset_path() -> void:
@@ -165,3 +165,9 @@ func _try_step_to(next: Vector2i) -> void:
 				var c := board_tutorial.get_cell(next)
 				if c != null:
 					c.play_fail()
+			# Tự động reset sau 0.8 giây để user thử lại từ đầu
+			get_tree().create_timer(0.8).timeout.connect(func() -> void:
+				if current_step_index == 3 and is_inside_tree():
+					_reset_path()
+			)
+

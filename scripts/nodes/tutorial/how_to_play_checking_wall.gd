@@ -22,7 +22,7 @@ func _init_tutorial() -> void:
 			{
 				Vector2i(0, 0): "S",
 				Vector2i(1, 0): "1",
-				Vector2i(0, 1): "1",
+				Vector2i(0, 1): "0",
 				Vector2i(1, 1): "F"
 			},
 			[{"is_h": false, "lattice": WALL_LATTICE, "visible": false}],
@@ -34,7 +34,9 @@ func _init_tutorial() -> void:
 			board_tutorial.cell_step_attempted.connect(_on_cell_step_attempted)
 	_reset_path()
 
-	var steps: Array = [
+
+func _get_default_steps() -> Array:
+	return [
 		{
 			"message_key": "STR_TUT_WALL_01",
 			"fallback_text": "Con số trên mỗi ô cho biết có BAO NHIÊU cạnh quanh ô đó là tường vô hình.",
@@ -63,7 +65,6 @@ func _init_tutorial() -> void:
 			"advance_mode": "MANUAL",
 		}
 	]
-	setup_steps(steps)
 
 
 func _reset_path() -> void:

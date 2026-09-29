@@ -31,47 +31,35 @@ func _init_tutorial() -> void:
 			board_tutorial.cell_step_attempted.connect(_on_cell_step_attempted)
 	_reset_path()
 
-	var steps: Array = [
+
+func _get_default_steps() -> Array:
+	return [
 		{
 			"message_key": "STR_TUT_MOVE_01",
-			"fallback_text": "Đây là điểm BẮT ĐẦU (S). Hãy giữ và kéo sang ô bên cạnh.",
+			"fallback_text": "Chào! Hãy kéo ngón tay qua từng ô để tạo đường đi.",
 			"advance_mode": "MANUAL",
-			"spotlight_cell": Vector2i(0, 0),
-			"pointer_drag": {
-				"from_cell": Vector2i(0, 0),
-				"to_cell": Vector2i(1, 0),
-				"duration": 0.6
-			}
-		},
-		{
-			"message_key": "STR_TUT_MOVE_01",
-			"fallback_text": "Hãy chạm và kéo từ S sang ô ngay bên cạnh.",
-			"advance_mode": "AUTO",
-			"required_action": "DRAG_TO_MIDDLE",
-			"pointer_drag": {
-				"from_cell": Vector2i(0, 0),
-				"to_cell": Vector2i(1, 0),
-				"duration": 0.6
-			}
+			"pointer_drag": {"from_cell": Vector2i(0, 0), "to_cell": Vector2i(2, 0), "duration": 1.0}
 		},
 		{
 			"message_key": "STR_TUT_MOVE_02",
-			"fallback_text": "Giờ kéo tiếp tới F để hoàn thành đường đi.",
+			"fallback_text": "Tốt lắm! Giờ bạn hãy tự kéo từ ô S sang ô giữa.",
 			"advance_mode": "AUTO",
-			"required_action": "DRAG_TO_FINISH",
-			"pointer_drag": {
-				"from_cell": Vector2i(1, 0),
-				"to_cell": Vector2i(2, 0),
-				"duration": 0.6
-			}
+			"required_action": "DRAG_PATH",
+			"pointer_drag": {"from_cell": Vector2i(0, 0), "to_cell": Vector2i(1, 0), "duration": 0.7}
+		},
+		{
+			"message_key": "STR_TUT_MOVE_02B",
+			"fallback_text": "Tuyệt! Tiếp tục kéo sang ô cuối — ô F.",
+			"advance_mode": "AUTO",
+			"required_action": "DRAG_PATH",
+			"pointer_drag": {"from_cell": Vector2i(1, 0), "to_cell": Vector2i(2, 0), "duration": 0.7}
 		},
 		{
 			"message_key": "STR_TUT_MOVE_03",
-			"fallback_text": "Tuyệt vời! Bạn vừa vẽ xong đường đi đầu tiên.",
+			"fallback_text": "Tuyệt vời! Bạn đã tạo được đường đi.",
 			"advance_mode": "MANUAL",
 		}
 	]
-	setup_steps(steps)
 
 
 func _reset_path() -> void:
