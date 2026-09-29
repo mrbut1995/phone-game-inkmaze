@@ -26,6 +26,15 @@ var _dashed_previews: Dictionary = {}
 var _wall_demo_token: int = 0
 ## Vòng tròn đánh số "1"/"2" tại 2 neo của thao tác kéo mẫu (Wall Builder)
 var _anchor_callouts: Array[AnchorCallout] = []
+## Góc neo của từng callout (song song `_anchor_callouts`) — để dời lại khi lưới đổi cỡ
+var _anchor_callout_corners: Array[Vector2i] = []
+
+
+## Lưới tính lại (đổi cỡ cửa sổ / đổi chỗ bàn cờ): lớp cha vẽ lại nét mực; riêng bàn
+## tutorial còn phải dời các vòng đánh số neo về tâm neo MỚI.
+func _update_layout_positions() -> void:
+	super._update_layout_positions()
+	_reposition_anchor_callouts()
 
 
 func _on_drag(local_pos: Vector2) -> void:
@@ -483,6 +492,7 @@ func _ensure_anchor_callouts() -> void:
 			return
 		_anchors_layer.add_child(callout)
 		_anchor_callouts.append(callout)
+		_anchor_callout_corners.append(Vector2i(-1, -1))
 
 
 func _place_anchor_callout(index: int, corner: Vector2i, number: int) -> void:
@@ -491,5 +501,19 @@ func _place_anchor_callout(index: int, corner: Vector2i, number: int) -> void:
 	var callout := _anchor_callouts[index]
 	if not is_instance_valid(callout):
 		return
+	_anchor_callout_corners[index] = corner
 	callout.set_number(number)
 	callout.show_at(_anchor_center_pos(corner))
+
+
+## Dời mọi callout đang hiện về tâm neo mới (không phát lại hiệu ứng nở)
+func _reposition_anchor_callouts() -> void:
+	for i in _anchor_callouts.size():
+		if i >= _anchor_callout_corners.size():
+			return
+		var corner := _anchor_callout_corners[i]
+		if corner.x == -1:
+			continue
+		var callout := _anchor_callouts[i]
+		if is_instance_valid(callout):
+			callout.move_to(_anchor_center_pos(corner))
