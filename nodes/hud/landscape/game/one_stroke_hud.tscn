@@ -3,58 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://du0w6dt2wwbtl" path="res://scripts/nodes/hud/game/one_stroke_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" uid="uid://deifmw0a2fh2o" path="res://assets/images-landscape/game/card_time.svg" id="4_time"]
-[ext_resource type="Texture2D" uid="uid://dtbkkqe0wcqkl" path="res://assets/images/game/card_stroke_time_chip.svg" id="5_chip_time"]
 
-[node name="Hud" unique_id=1332575792 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_base")]
+[node name="Hud" unique_id=1332575792 instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")
 script = ExtResource("2_script")
-time_value_node = NodePath("Content/ModeInformation/Time/Value")
-
-[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=1299858557]
-custom_minimum_size = Vector2(135, 115)
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("4_time")
-
-[node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=1688070]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 10.0
-offset_right = 120.0
-offset_bottom = 24.0
-theme_type_variation = &"HudTimeHead"
-text = "STR_HUD_TIME"
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1180855958]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 33.0
-offset_right = 120.0
-offset_bottom = 75.0
-theme_type_variation = &"HudTimeValue"
-text = "0:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SubChip" type="TextureRect" parent="Content/ModeInformation/Time" index="2" unique_id=1736322692]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 84.0
-offset_right = 107.5
-offset_bottom = 98.0
-mouse_filter = 2
-texture = ExtResource("5_chip_time")
-expand_mode = 1
-
-[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="3" unique_id=359071088]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 84.0
-offset_right = 107.5
-offset_bottom = 98.0
-theme_type_variation = &"HudTimeSub"
-text = "STR_HUD_OS_TIME_SUB"
-horizontal_alignment = 1
-vertical_alignment = 1

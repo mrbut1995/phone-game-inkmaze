@@ -1,51 +1,7 @@
 [gd_scene format=3 uid="uid://c7g3jeoi543mn"]
 
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="5_card_label"]
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://bdgf5rpilmx26" path="res://scripts/nodes/hud/game/minesweep_hud.gd" id="2_script"]
-[ext_resource type="Texture2D" uid="uid://ciclopy7n6bxa" path="res://assets/images-landscape/game/card_land_time_240.svg" id="3_time"]
-[ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="6_time_value"]
 
-[node name="Hud" unique_id=985514002 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_base")]
+[node name="Hud" unique_id=985514002 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-time_value_node = NodePath("Content/ModeInformation/Time/Value")
-
-[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=1299858554]
-custom_minimum_size = Vector2(120, 115)
-layout_mode = 2
-texture = ExtResource("3_time")
-
-[node name="Label" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=954222726]
-modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
-layout_mode = 0
-offset_left = 16.0
-offset_top = 11.0
-offset_right = 110.0
-offset_bottom = 25.0
-text = "STR_HUD_TIME"
-label_settings = ExtResource("5_card_label")
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1818299323]
-modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
-layout_mode = 0
-offset_left = 12.0
-offset_top = 34.0
-offset_right = 110.0
-offset_bottom = 75.0
-text = "0:00"
-label_settings = ExtResource("6_time_value")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=2069746149]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 0
-offset_left = 12.0
-offset_top = 84.0
-offset_right = 110.0
-offset_bottom = 99.0
-theme_override_font_sizes/font_size = 6
-text = "STR_HUD_MINE_TIME_SUB"
-horizontal_alignment = 1
-vertical_alignment = 1

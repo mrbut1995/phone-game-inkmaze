@@ -1,5 +1,5 @@
 class_name SumPathHUD
-extends GameHUD
+extends BaseHUD
 ## ============================================================================
 ## HUD Sum Path — thẻ "CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI".
 ##

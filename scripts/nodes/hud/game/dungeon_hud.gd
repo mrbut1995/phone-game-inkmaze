@@ -1,11 +1,11 @@
 class_name DungeonHUD
-extends GameHUD
+extends BaseHUD
 ## HUD Dungeon Mode (endless): THỜI GIAN + SỐ BƯỚC + TẦNG.
 ## Đây là chế độ DUY NHẤT có bộ đếm bước còn lại (xem Design.md — quy ước "Số bước").
 
-## Số bước còn lại (`Content/ModeInformation/Step/Value`)
+## Số bước còn lại (`Content/ModeInformation/Control/Step/Value` — bản NGANG gom trong `Control`)
 @export var step_value_node : Label
-## Số tầng hiện tại (`Content/ModeInformation/Floor/Value`)
+## Số tầng hiện tại (`Content/ModeInformation/Control/Floor/Value`)
 @export var floor_value_node : Label
 
 

@@ -646,56 +646,43 @@ func _on_no_moves_retry_pressed() -> void:
 	_on_retry_requested()
 
 
-## Mở popup HƯỚNG DẪN của chế độ đang chơi (nút "?" cạnh nút Restart trên HUD).
-## Popup hướng dẫn DÙNG CHUNG — tự nạp NỘI DUNG của chế độ vào Panel/Content (xem popup_instruction.gd).
-const INSTRUCTION_POPUP := "res://nodes/popups/popup_instruction.tscn"
-## Mỗi chế độ có scene NỘI DUNG hướng dẫn riêng trong nodes/popups/instruction/ (3 trang, kế thừa
-## content_instruction.tscn) — dùng cho CẢ popup lẫn khung hướng dẫn NHÚNG trong HUD màn chơi.
-## Đồng hồ đứng trong lúc xem hướng dẫn để không mất thời gian oan — đóng popup thì chạy lại.
-const INSTRUCTION_SCENES := {
-	"play": "normal_maze",
-	"daily_classic": "normal_maze",
-	"dungeon": "dungeon",
-	"minesweeper": "minesweeper",
-	"sum_path": "sumpath",
-	"countdown_cost": "countdowncost",
-	"blind_memory": "blindmemory",
-	"fog_of_war": "fog_of_war",
-	"fading_ink": "fadingink",
-	"one_stroke": "one_stroke",
-	"wall_builder": "wall_builder",
+## Tutorial ID tương ứng với mỗi chế độ chơi — thay thế popup Instruction cũ.
+const TUTORIAL_IDS := {
+	"play":           ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
+	"standard":       ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
+	"daily_classic":  ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
+	"minesweeper":    ["how_to_play_minesweeper"],
+	"sum_path":       ["how_to_play_sum_path"],
+	"countdown_cost": ["how_to_play_countdown_cost"],
+	"blind_memory":   ["how_to_play_blind_memory"],
+	"fog_of_war":     ["how_to_play_fog_of_war"],
+	"fading_ink":     ["how_to_play_fading_ink"],
+	"one_stroke":     ["how_to_play_one_stroke"],
+	"wall_builder":   ["how_to_play_wall_builder"],
 }
-const INSTRUCTION_FALLBACK := "normal_maze"
-
-
-## Đường dẫn scene NỘI DUNG hướng dẫn của chế độ — dùng CHUNG cho popup (bên dưới) và khung
-## hướng dẫn NHÚNG trong HUD màn chơi (xem `scripts/nodes/hud/game/game_hud.gd`).
-static func instruction_scene_path(mode_id: String) -> String:
-	var scene_name: String = INSTRUCTION_SCENES.get(mode_id, INSTRUCTION_FALLBACK)
-	return "res://nodes/popups/instruction/%s.tscn" % scene_name
+## Chế độ không có nút "?" (dungeon)
+const MODES_WITHOUT_TUTORIAL := ["dungeon"]
 
 
 func open_instruction() -> void:
-	# SFX: gõ thẻ giấy cho nút mở hướng dẫn
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	var mode: BaseGameMode = game_mode
 	var mode_id := mode.mode_id if mode != null else ""
-	var popup := Popups.open_path(INSTRUCTION_POPUP, {"mode_id": mode_id})
-	if popup == null:
+	if mode_id in MODES_WITHOUT_TUTORIAL:
 		return
-	if not popup.closed.is_connected(_on_instruction_closed):
-		popup.closed.connect(_on_instruction_closed)
+	var ids: Array = TUTORIAL_IDS.get(mode_id, [])
+	if ids.is_empty():
+		return
+	var gm: Node = Engine.get_main_loop().root.get_node_or_null("GameManager") if Engine.get_main_loop() != null else null
+	if gm == null:
+		return
 	if timer_controller != null:
 		timer_controller.pause()
-
-
-## Đóng popup HƯỚNG DẪN: chạy đồng hồ lại (nếu vẫn trong ván và không còn popup nào khác)
-func _on_instruction_closed() -> void:
-	if timer_controller == null or not _run_active:
-		return
-	if Popups.has_open():
-		return
-	timer_controller.resume()
+	gm.set("pending_return_to_game", true)
+	# pending_tutorial được đọc bởi tutorial.gd; nhiều bài nối bằng dấu phẩy → chạy theo chuỗi
+	gm.set("pending_tutorial", ",".join(ids))
+	var nav := preload("res://scripts/utils/nav.gd")
+	nav.goto_tutorial()
 
 
 func undo() -> void:

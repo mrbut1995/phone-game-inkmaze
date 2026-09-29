@@ -252,7 +252,7 @@ func _ready() -> void:
 	_bind_refs()
 	orientation_changed.connect(_on_orientation_changed)
 	resized.connect(_fit_hud_scale)
-	# Gắn hiệu ứng nảy xúc giác cho các nút trong Game Screen
+	# Những nút trong Game Screen
 	for btn in _all_buttons():
 		if btn != null:
 			UIAnim.attach_press_bounce(btn)
@@ -277,6 +277,10 @@ func _ready() -> void:
 		if d != null and str(d) != "":
 			initial_diff = str(d)
 	switch_mode(initial_mode, initial_diff)
+	# Nếu quay lại từ Tutorial (người chơi bấm “?”), đồng hồ đã dừng trước khi đổi scene — chạy lại.
+	# (timer_controller.pause() gọi trong open_instruction() trước goto_tutorial())
+	if timer_controller != null and game_controller != null:
+		call_deferred("_resume_timer_if_paused")
 
 
 func _on_restart_pressed() -> void:
@@ -293,6 +297,12 @@ func _on_skip_pressed() -> void:
 func _on_pause_pressed() -> void:
 	if ui_controller != null:
 		ui_controller.toggle_settings()
+
+
+func _resume_timer_if_paused() -> void:
+	if timer_controller != null and game_controller != null:
+		if game_controller.get("_run_active") == true:
+			timer_controller.resume()
 
 
 func _on_undo_pressed() -> void:
@@ -317,6 +327,9 @@ func _apply_mode_buttons(mode_name: String) -> void:
 		submit_btn.visible = mode_name.to_lower() == "wall_builder"
 	if skip_btn != null:
 		skip_btn.visible = _is_level_run()
+	# Dungeon: ẩn nút "?" (không có tutorial cho dungeon)
+	if layout != null and layout.instruction_btn != null:
+		layout.instruction_btn.visible = mode_name.to_lower() != "dungeon"
 
 
 ## Ván này có phải là ván chơi MÀN (màn Chọn màn) không — đọc cờ từ GameManager
@@ -501,6 +514,9 @@ func _copy_layout_from(src: Control, dst: Control) -> void:
 	dst.grow_vertical = src.grow_vertical
 	dst.size_flags_horizontal = src.size_flags_horizontal
 	dst.size_flags_vertical = src.size_flags_vertical
+	# Tỉ lệ chia chỗ của CHA (VBox/HBox) — bản NGANG chia cột dọc: HUD nhỏ · bàn cờ lớn.
+	# Thiếu dòng này thì HUD do code tạo giữ tỉ lệ MẶC ĐỊNH 1.0 → phình ra chiếm nửa cột.
+	dst.size_flags_stretch_ratio = src.size_flags_stretch_ratio
 	dst.custom_minimum_size = src.custom_minimum_size
 
 
@@ -530,11 +546,14 @@ func _bind_hud_nodes() -> void:
 	undo_btn = hud.undo_btn()
 	hint_btn = hud.hint_btn()
 	#replay_btn = hud.replay_btn()
-	# Bản NGANG: nút dự phòng trong khung Hướng dẫn (khi khung quá nhỏ để nhúng) mở popup
-	var game_hud := hud as GameHUD
-	if game_hud != null and game_controller != null \
-			and not game_hud.instruction_requested.is_connected(game_controller.open_instruction):
-		game_hud.instruction_requested.connect(game_controller.open_instruction)
+	# Bản NGANG: ActionBar nằm trong layout (LeftCol cùng cột bàn cờ), không nằm trong HUD —
+	# gán lại để hud.restart_btn()/undo_btn()/... vẫn trả đúng nút.
+	if _layout_is_landscape():
+		var gl := layout as GameLayout
+		if gl != null and gl.landscape_action_bar != null:
+			var hud_b := hud_host as BaseHUD
+			if hud_b != null:
+				hud_b.action_bar_node = gl.landscape_action_bar
 	# HintGuide nằm TRONG HUD (đầu `ActionBar` bản dọc / `Content` bản ngang) ⇒ gắn lại theo HUD mới,
 	# nếu không `hint_guide` sẽ trỏ vào node đã bị free khi đổi chế độ.
 	hint_guide = _hud_hint_guide()

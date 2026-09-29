@@ -8,10 +8,9 @@ script = ExtResource("2_script")
 budget_value_node = NodePath("Content/ModeInformation/Sheet/Budget/Display/Value")
 budget_max_label = NodePath("Content/ModeInformation/Sheet/Budget/Display/Max")
 
-[node name="Sheet" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1156059562]
+[node name="Sheet" type="Control" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1854837011]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.78
+anchor_left = 0.028
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
@@ -21,17 +20,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Budget" type="VBoxContainer" parent="Content/ModeInformation/Sheet" index="0" unique_id=1383603858]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = -3.1272728
-anchor_top = -0.0907544
-anchor_right = -3.1272728
-anchor_bottom = -0.0907544
-offset_left = 17.5
-offset_top = 17.0
-offset_right = 402.5
-offset_bottom = 87.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Content/ModeInformation/Sheet/Budget" index="0" unique_id=1434569326]
 layout_mode = 2

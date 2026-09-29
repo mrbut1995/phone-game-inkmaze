@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dt0b7kv16svfy"]
 
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_pt42g"]
+[ext_resource type="Script" uid="uid://jtc5actxn551" path="res://scripts/nodes/hud/game/dungeon_hud.gd" id="2_script"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="5_xqca6"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="11_p7oui"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="13_r5anl"]
-[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_pt42g"]
-[ext_resource type="Script" uid="uid://jtc5actxn551" path="res://scripts/nodes/hud/game/dungeon_hud.gd" id="2_script"]
 [ext_resource type="LabelSettings" uid="uid://cb662usl7mhkf" path="res://resources/settings/text/text_game_information_value.tres" id="16_hqip1"]
 
 [node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("step_value_node", "floor_value_node") instance=ExtResource("1_pt42g")]
@@ -12,9 +12,8 @@ script = ExtResource("2_script")
 step_value_node = NodePath("Content/ModeInformation/Step/Value")
 floor_value_node = NodePath("Content/ModeInformation/Floor/Value")
 
-[node name="Step" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=77572978]
+[node name="Step" type="Control" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="0" unique_id=1923818741]
 layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.28
 anchor_right = 0.72
 anchor_bottom = 1.0
@@ -45,9 +44,8 @@ label_settings = ExtResource("11_p7oui")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Floor" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=94590017]
+[node name="Floor" type="Control" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=1264002405]
 layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.75000006
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -1,5 +1,5 @@
 class_name MinesweepHUD
-extends GameHUD
+extends BaseHUD
 ## ============================================================================
 ## HUD Minesweeper Maze.
 ##

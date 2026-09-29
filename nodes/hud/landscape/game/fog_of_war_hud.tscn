@@ -12,6 +12,9 @@ retry_value_node = NodePath("Content/ModeInformation/Sheet/Retry/Value")
 retry_max_label = NodePath("Content/ModeInformation/Sheet/Retry/Max")
 retry_note_label = NodePath("Content/ModeInformation/Sheet/Retry/Note")
 
+[node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=561028501]
+visible = false
+
 [node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1181006136]
 custom_minimum_size = Vector2(170, 115)
 layout_mode = 2

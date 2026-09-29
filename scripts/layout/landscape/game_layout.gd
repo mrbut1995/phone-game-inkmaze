@@ -33,6 +33,10 @@ func board_slot() -> Control:
 	return board_holder
 
 
+## ActionBar nằm trong LeftCol của layout (cung cột với bàn cờ) — BIND SẴN trong .tscn
+@export var landscape_action_bar: Node = null
+
+
 ## Gắn bàn cờ DÙNG CHUNG vào chỗ của bố cục này rồi chốt lại kích thước
 func mount_board(board: Control) -> void:
 	var slot := board_slot()

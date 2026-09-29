@@ -12,8 +12,8 @@ const NavHelper := preload("res://scripts/utils/nav.gd")
 
 var layout: TutorialLayout = null
 ## Mở 1 bài LẺ (Debug Console) hoặc Test mode ⇒ học xong Ở LẠI màn Tutorial để thử bài khác
-var _stay_after_finish := false
-
+var _stay_after_finish := false## Khi vào tutorial từ màn chơi: quay về game sau khi kết thúc hoặc Back
+var _return_to_game := false
 
 func _ready() -> void:
 	_bind_refs()
@@ -31,6 +31,25 @@ func _ready() -> void:
 func _start_requested() -> void:
 	var requested := _take_tutorial_request()
 	_stay_after_finish = _is_test_mode()
+	# Kiểm flag quay về game (mở từ nút ? trên màn chơi)
+	var gm := get_node_or_null("/root/GameManager")
+	if gm != null and gm.has_method("take_return_to_game_flag"):
+		_return_to_game = bool(gm.call("take_return_to_game_flag"))
+	else:
+		_return_to_game = false
+	if _return_to_game:
+		# requested là danh sách id nối bằng dấu phẩy (do game_controller thiết lập)
+		var ids := requested.split(",", false)
+		if ids.size() > 1:
+			var arr: Array[String] = []
+			for s in ids:
+				arr.append(s.strip_edges())
+			tutorial_controller.start_sequence(arr)
+		elif ids.size() == 1:
+			tutorial_controller.play_single_tutorial(ids[0].strip_edges())
+		else:
+			_finish_and_return()
+		return
 	if requested.is_empty() or requested == TutorialController.REQUEST_CORE:
 		tutorial_controller.start_sequence()
 	else:
@@ -94,11 +113,20 @@ func _on_select_tutorial(tid: String) -> void:
 
 
 func _on_back_pressed() -> void:
+	if _return_to_game:
+		_finish_and_return()
+		return
 	NavHelper.goto_main()
 
 
-func _on_sequence_finished() -> void:
-	# Thử bài từ Debug Console (bài lẻ / Test mode): ở lại màn Tutorial để chọn bài khác
+func _finish_and_return() -> void:
+	NavHelper.goto_game()
+
+
+func _on_sequence_finished() -> void:	# Quay về game sau khi xẾm tutorial từ nút "?"
+	if _return_to_game:
+		_finish_and_return()
+		return	# Thử bài từ Debug Console (bài lẻ / Test mode): ở lại màn Tutorial để chọn bài khác
 	if _stay_after_finish:
 		return
 	# Hoàn thành chuỗi: chuyển sang Màn 1 hoặc về Menu chính

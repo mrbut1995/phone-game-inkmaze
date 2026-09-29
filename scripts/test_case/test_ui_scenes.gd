@@ -407,11 +407,9 @@ const HUD_FOLDERS := [
 	"res://nodes/hud/portrait/game",
 	"res://nodes/hud/landscape/game",
 ]
-## Export CHỈ có ở HUD NGANG (khung Hướng dẫn nhúng `InstructionSection`) — HUD DỌC để trống là
-## ĐÚNG thiết kế (xem `GameHUD.instruction_section()`).
-const HUD_PORTRAIT_OPTIONAL := [
-	"instruction_section_node", "instruction_host", "instruction_fallback_btn",
-]
+## Bản NGANG: ActionBar nằm TRONG LAYOUT (cùng cột dọc với bàn cờ), không nằm trong HUD —
+## `game.gd` gán `hud.action_bar_node = layout.landscape_action_bar` lúc chạy nên scene để trống là ĐÚNG.
+const HUD_LANDSCAPE_OPTIONAL := ["action_bar_node"]
 ## Scene HUD TRƯU TƯỢNG (chưa có `Time` riêng của bản NGANG ⇒ node do từng HUD chế độ khai).
 ## Bỏ qua scene này khi kiểm export: mọi HUD CHẾ ĐỘ đều được kiểm riêng.
 const HUD_ABSTRACT_SCENES := ["game_hud.tscn"]
@@ -425,7 +423,6 @@ const HUD_EXPORT_OPTIONAL := {
 		# Fog of War: bản DỌC chỉ còn LƯỢT THỬ LẠI (Value · Max trong `Retry/Control`) — node
 		# `Note` đã xoá nên export để trống; bản NGANG vẫn giữ `Note` (script tự bỏ qua khi null).
 	"sum_path_hud.tscn": ["time_value_node"],       # Sum Path: chỉ TỔNG · TOÁN TỬ · MỤC TIÊU
-	"fading_ink_hud.tscn": ["time_value_node"],     # bản NGANG xoá `Time`, bản DỌC vẫn có (kế thừa)
 }
 
 
@@ -454,7 +451,7 @@ func _section_9_hud_bindings() -> void:
 			for prop in script.get_script_property_list():
 				if prop.hint != PROPERTY_HINT_NODE_TYPE:
 					continue
-				if HUD_PORTRAIT_OPTIONAL.has(prop.name) and path.contains("/portrait/"):
+				if HUD_LANDSCAPE_OPTIONAL.has(prop.name) and path.contains("/landscape/"):
 					continue
 				if (HUD_EXPORT_OPTIONAL.get(path.get_file(), []) as Array).has(prop.name):
 					continue
@@ -532,18 +529,29 @@ func _section_10_hud_minimal() -> void:
 			var node := (load("%s/%s" % [folder, name]) as PackedScene).instantiate()
 			var info := node.get_node_or_null("Content/ModeInformation")
 			var shown: Array[String] = []
+			var shown_inner: Array[String] = []
 			if info != null:
 				for child in info.get_children():
 					var c := child as Control
 					if c != null and c.visible:
 						shown.append(String(c.name))
+				# Bản NGANG gom nhiều thẻ vào 1 `Control` bao (HBox không neo được như `Control` bản DỌC):
+				# thấy đúng 1 Control hiện thì mở 1 lớp, so các node CON của nó với danh sách chờ.
+				if shown.size() == 1:
+					var wrap := info.get_node_or_null(NodePath(shown[0])) as Control
+					if wrap != null:
+						for child in wrap.get_children():
+							var c2 := child as Control
+							if c2 != null and c2.visible:
+								shown_inner.append(String(c2.name))
 			var want: Array = HUD_VISIBLE_CARDS[file_name]
 			shown.sort()
+			shown_inner.sort()
 			var want_sorted := want.duplicate()
 			want_sorted.sort()
 			checked += 1
 			var huong := "NGANG" if folder.contains("landscape") else "DỌC"
-			if shown != want_sorted:
+			if shown != want_sorted and shown_inner != want_sorted:
 				bad.append("%s (%s): hien [%s] — can [%s]" % [huong,
 					file_name, ", ".join(shown), ", ".join(want_sorted)])
 			# bên trong Sheet

@@ -18,6 +18,9 @@ operator_value_label = NodePath("Content/ModeInformation/Sheet/Emblem/Operator/V
 target_value_node = NodePath("Content/ModeInformation/Sheet/BlockTarget/Target/Value")
 need_label = NodePath("Content/ModeInformation/Sheet/BlockTarget/Target/ChipNeed/Need")
 
+[node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=561028501]
+visible = false
+
 [node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1830702977]
 custom_minimum_size = Vector2(320, 115)
 layout_mode = 2
@@ -28,7 +31,7 @@ patch_margin_top = 20
 patch_margin_right = 42
 patch_margin_bottom = 24
 
-[node name="BlockCurrent" type="NinePatchRect" parent="Content/ModeInformation/Sheet" index="1" unique_id=1408930610]
+[node name="BlockCurrent" type="NinePatchRect" parent="Content/ModeInformation/Sheet" index="0" unique_id=1408930610]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 20.0
@@ -78,7 +81,7 @@ theme_type_variation = &"HudSumNote"
 text = "STR_HUD_SUM_MOVES"
 vertical_alignment = 1
 
-[node name="Emblem" type="TextureRect" parent="Content/ModeInformation/Sheet" index="2" unique_id=1002002]
+[node name="Emblem" type="TextureRect" parent="Content/ModeInformation/Sheet" index="1" unique_id=1002002]
 layout_mode = 0
 offset_left = 110.0
 offset_top = 29.0
@@ -108,7 +111,7 @@ text = "="
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BlockTarget" type="NinePatchRect" parent="Content/ModeInformation/Sheet" index="3" unique_id=1243368685]
+[node name="BlockTarget" type="NinePatchRect" parent="Content/ModeInformation/Sheet" index="2" unique_id=1243368685]
 layout_mode = 0
 offset_left = 148.0
 offset_top = 20.0

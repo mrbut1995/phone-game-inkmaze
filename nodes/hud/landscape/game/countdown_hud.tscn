@@ -3,58 +3,56 @@
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://c7v12qmn3er7o" path="res://scripts/nodes/hud/game/countdown_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" uid="uid://c2c1tho1ce7h8" path="res://assets/images-landscape/game/card_countdown_budget.svg" id="7_sheet"]
 
 [node name="Hud" unique_id=1464339223 node_paths=PackedStringArray("budget_value_node", "budget_max_label") instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")
 script = ExtResource("2_script")
-budget_value_node = NodePath("Content/ModeInformation/Sheet/Budget/Value")
-budget_max_label = NodePath("Content/ModeInformation/Sheet/Budget/Max")
+budget_value_node = NodePath("Content/ModeInformation/Sheet/Budget/Label")
+budget_max_label = NodePath("Content/ModeInformation/Sheet/Budget/Display/Max")
 
-[node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=2099594021]
-custom_minimum_size = Vector2(190, 115)
+[node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=834934233]
+visible = false
+
+[node name="Sheet" type="Control" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1601715472]
 layout_mode = 2
-size_flags_horizontal = 0
-texture = ExtResource("7_sheet")
-patch_margin_left = 23
-patch_margin_top = 22
-patch_margin_right = 40
-patch_margin_bottom = 30
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="Budget" type="Control" parent="Content/ModeInformation/Sheet" index="1" unique_id=769029512]
-anchors_preset = 0
-offset_left = 17.0
-offset_top = 19.0
-offset_right = 97.5
-offset_bottom = 71.0
+[node name="Budget" type="VBoxContainer" parent="Content/ModeInformation/Sheet" index="0" unique_id=824888139]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="Content/ModeInformation/Sheet/Budget" index="0" unique_id=1434569326]
-layout_mode = 0
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 77.5
-offset_bottom = 15.0
+[node name="Label" type="Label" parent="Content/ModeInformation/Sheet/Budget" index="0" unique_id=1179428806]
+layout_mode = 2
 theme_type_variation = &"HudBudgetLabel"
+theme_override_font_sizes/font_size = 28
 text = "STR_HUD_BUDGET_LEFT"
+horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Content/ModeInformation/Sheet/Budget" index="1" unique_id=1019842324]
-layout_mode = 0
-offset_left = 3.0
-offset_top = 17.0
-offset_right = 40.0
-offset_bottom = 47.0
+[node name="Display" type="HBoxContainer" parent="Content/ModeInformation/Sheet/Budget" index="1" unique_id=1445889198]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Value" type="Label" parent="Content/ModeInformation/Sheet/Budget/Display" index="0" unique_id=889516168]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
 theme_type_variation = &"HudBudgetValue"
+theme_override_font_sizes/font_size = 23
 text = "0"
 vertical_alignment = 1
 
-[node name="Max" type="Label" parent="Content/ModeInformation/Sheet/Budget" index="2" unique_id=2021856909]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 22.0
-offset_right = 77.5
-offset_bottom = 47.0
+[node name="Max" type="Label" parent="Content/ModeInformation/Sheet/Budget/Display" index="1" unique_id=228766698]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
 theme_type_variation = &"HudBudgetSuffix"
+theme_override_font_sizes/font_size = 16
 text = "/ 0"
 vertical_alignment = 1

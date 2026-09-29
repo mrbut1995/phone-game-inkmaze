@@ -3,47 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cclmsulcmjhmy" path="res://scripts/nodes/hud/game/fading_ink_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" uid="uid://ciclopy7n6bxa" path="res://assets/images-landscape/game/card_land_time_240.svg" id="4_time"]
 
 [node name="Hud" unique_id=505225000 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")
 script = ExtResource("2_script")
 time_value_node = NodePath("Content/ModeInformation/Time/Value")
-
-[node name="Time" type="TextureRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=1036036466]
-custom_minimum_size = Vector2(120, 115)
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("4_time")
-
-[node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=937397718]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 10.0
-offset_right = 110.0
-offset_bottom = 24.0
-theme_type_variation = &"HudTimeHead"
-text = "STR_HUD_TIME"
-vertical_alignment = 1
-
-[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1374290961]
-layout_mode = 0
-offset_left = 10.0
-offset_top = 33.0
-offset_right = 110.0
-offset_bottom = 75.0
-theme_type_variation = &"HudTimeValue"
-text = "0:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=861101356]
-layout_mode = 0
-offset_left = 10.0
-offset_top = 84.0
-offset_right = 110.0
-offset_bottom = 99.0
-theme_type_variation = &"HudTimeSub"
-text = "STR_HUD_TIME_FREE"
-horizontal_alignment = 1
-vertical_alignment = 1

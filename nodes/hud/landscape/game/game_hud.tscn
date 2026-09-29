@@ -1,35 +1,22 @@
 [gd_scene format=3 uid="uid://cchuuwsep7gyy"]
 
 [ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_8cncu"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_823u4"]
-[ext_resource type="Script" uid="uid://c2quqdplg0rcb" path="res://scripts/nodes/hud/game/game_hud.gd" id="2_adk6y"]
-[ext_resource type="Script" uid="uid://bt8f7hl74mar" path="res://scripts/nodes/game/hint_guide.gd" id="3_0xwuy"]
-[ext_resource type="Texture2D" uid="uid://qaygenosff2s" path="res://assets/images-landscape/game/panel_hint_guide.svg" id="4_lxg6n"]
-[ext_resource type="Texture2D" uid="uid://bojbc3ooimi5j" path="res://assets/images/icons/icon_bulb.svg" id="5_i7rhb"]
-[ext_resource type="PackedScene" uid="uid://dxpf4nu3wy753" path="res://nodes/hud/landscape/game/action_bar.tscn" id="6_00xfy"]
-[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="7_w5h2v"]
-[ext_resource type="LabelSettings" uid="uid://bwpq01l1whp4t" path="res://resources/settings/text/text_game_button_label.tres" id="8_lbl"]
-[ext_resource type="LabelSettings" uid="uid://dg2subtoolbtn" path="res://resources/settings/text/text_game_button_sub.tres" id="9_sub"]
+[ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="5_46jmu"]
 
-[node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("content_root", "action_bar_node", "instruction_section_node", "instruction_host", "instruction_fallback_btn") instance=ExtResource("1_8cncu")]
-anchors_preset = 15
+[node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node", "content_root") instance=ExtResource("1_8cncu")]
 anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.143
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 0.0
-offset_bottom = 0.0
+offset_bottom = 0.43998718
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_adk6y")
+time_value_node = NodePath("Content/ModeInformation/Time/Value")
 content_root = NodePath("Content")
-action_bar_node = NodePath("Content/ActionBar")
-instruction_section_node = NodePath("Content/InstructionSection")
-instruction_host = NodePath("Content/InstructionSection/Panel/GuideHost")
-instruction_fallback_btn = NodePath("Content/InstructionSection/Panel/Fallback")
 
-[node name="Content" type="VBoxContainer" parent="." index="0" unique_id=159019822]
+[node name="Content" type="Control" parent="." index="0" unique_id=843283023]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,129 +25,31 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ModeInformation" type="HBoxContainer" parent="Content" index="0" unique_id=1591333926]
-layout_mode = 2
-
-[node name="HintGuide" type="Control" parent="Content" index="1" unique_id=2049437720]
-custom_minimum_size = Vector2(405, 40)
-layout_mode = 2
-size_flags_vertical = 0
-mouse_filter = 2
-theme = ExtResource("2_823u4")
-script = ExtResource("3_0xwuy")
-metadata/_edit_use_anchors_ = true
-
-[node name="Bg" type="NinePatchRect" parent="Content/HintGuide" index="0" unique_id=1214394522]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_lxg6n")
-patch_margin_left = 37
-patch_margin_top = 9
-patch_margin_right = 40
-patch_margin_bottom = 11
-
-[node name="Icon" type="TextureRect" parent="Content/HintGuide" index="1" unique_id=1230886291]
-layout_mode = 0
-offset_left = 36.0
-offset_top = 9.5
-offset_right = 54.0
-offset_bottom = 27.5
-mouse_filter = 2
-texture = ExtResource("5_i7rhb")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Text" type="Label" parent="Content/HintGuide" index="2" unique_id=1481669796]
-modulate = Color(0.14117648, 0.30588236, 0.43137255, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.095
-anchor_right = 0.98
-anchor_bottom = 1.0
-theme_type_variation = &"HintGuideText"
-text = "STR_HINT_PLAY"
-vertical_alignment = 1
-text_overrun_behavior = 3
-
-[node name="InstructionSection" type="Control" parent="Content" index="2" unique_id=1355135687]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Panel" type="NinePatchRect" parent="Content/InstructionSection" index="0" unique_id=1283041353]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("7_w5h2v")
-patch_margin_left = 72
-patch_margin_top = 58
-patch_margin_right = 59
-patch_margin_bottom = 69
-
-[node name="GuideHost" type="Control" parent="Content/InstructionSection/Panel" index="0" unique_id=1387111911]
-layout_mode = 1
-anchor_left = 0.10925926
-anchor_top = 0.06697108
-anchor_right = 0.95
-anchor_bottom = 0.92085236
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Fallback" type="Button" parent="Content/InstructionSection/Panel" index="1" unique_id=902439547]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-flat = true
-
-[node name="Center" type="VBoxContainer" parent="Content/InstructionSection/Panel/Fallback" index="0" unique_id=1493035706]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
 alignment = 1
 
-[node name="Icon" type="TextureRect" parent="Content/InstructionSection/Panel/Fallback/Center" index="0" unique_id=598127078]
-custom_minimum_size = Vector2(40, 40)
+[node name="Time" type="VBoxContainer" parent="Content/ModeInformation" index="0" unique_id=561028501]
 layout_mode = 2
-size_flags_horizontal = 4
-mouse_filter = 2
-texture = ExtResource("5_i7rhb")
-expand_mode = 1
-stretch_mode = 5
+alignment = 1
 
-[node name="Title" type="Label" parent="Content/InstructionSection/Panel/Fallback/Center" index="1" unique_id=59568303]
+[node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=1928711052]
+layout_mode = 2
+theme_type_variation = &"HudTimeHead"
+theme_override_font_sizes/font_size = 28
+text = "STR_HUD_TIME"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1132989416]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 2
-text = "STR_HUD_INSTRUCTION_OPEN"
-label_settings = ExtResource("8_lbl")
+text = "0:00"
+label_settings = ExtResource("5_46jmu")
 horizontal_alignment = 1
-
-[node name="Sub" type="Label" parent="Content/InstructionSection/Panel/Fallback/Center" index="2" unique_id=1780387367]
-modulate = Color(0.44313726, 0.54509807, 0.61960787, 1)
-layout_mode = 2
-text = "STR_HUD_INSTRUCTION_OPEN_SUB"
-label_settings = ExtResource("9_sub")
-horizontal_alignment = 1
-
-[node name="ActionBar" parent="Content" index="3" unique_id=546417524 instance=ExtResource("6_00xfy")]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="Content" index="4" unique_id=1409029357]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.03
+vertical_alignment = 1

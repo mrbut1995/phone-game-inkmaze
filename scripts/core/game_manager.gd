@@ -80,6 +80,8 @@ func mark_core_tutorials_completed() -> void:
 ## Yêu cầu MỞ THẲNG 1 bài khi vào màn Tutorial (Debug Console đặt rồi đổi scene).
 ## Giá trị: "" = chạy chuỗi mặc định · id bài · `TutorialController.REQUEST_CORE` = chuỗi CORE.
 var pending_tutorial: String = ""
+## Khi mở tutorial từ màn chơi: trả về game thay vì Main sau khi kết thúc
+var pending_return_to_game: bool = false
 
 
 func request_tutorial(tutorial_id: String) -> void:
@@ -91,6 +93,12 @@ func take_tutorial_request() -> String:
 	var requested := pending_tutorial
 	pending_tutorial = ""
 	return requested
+
+
+func take_return_to_game_flag() -> bool:
+	var flag := pending_return_to_game
+	pending_return_to_game = false
+	return flag
 
 
 ## Xoá tiến trình tutorial (Debug Console) — KHÔNG đụng tới tiến trình màn chơi
