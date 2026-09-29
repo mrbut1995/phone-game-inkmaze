@@ -1,5 +1,5 @@
 class_name WallBuilderHUD
-extends GameHUD
+extends BaseHUD
 ## ============================================================================
 ## HUD Wall Builder.
 ##

@@ -1,5 +1,5 @@
 class_name OneStrokeHUD
-extends GameHUD
+extends BaseHUD
 ## ============================================================================
 ## HUD One Stroke.
 ##

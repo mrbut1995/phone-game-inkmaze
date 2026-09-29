@@ -12,7 +12,7 @@ extends Control
 ##   · Nhường input cho bàn cờ : `allow_board_input()`
 ##
 ## HUD con KHÔNG cần lộ node con ra ngoài: muốn thêm nút/thẻ mới thì thêm 1 method ở đây
-## (hoặc ở `GameHUD`) rồi để HUD tự lấy node con của mình — bên ngoài chỉ gọi method.
+## rồi để HUD tự lấy node con của mình — bên ngoài chỉ gọi method.
 ## ============================================================================
 
 ## ---------------------------------------------------------------------------
@@ -33,17 +33,11 @@ extends Control
 func update_hud(ctx: Dictionary) -> void:
 	set_time(float(ctx.get("elapsed_time", 0.0)))
 	_sync_limits(ctx)
-	_sync_instruction(ctx.get("mode"))
 	_on_update(ctx)
 
 
 ## HUD con override để vẽ các thẻ riêng của chế độ mình
 func _on_update(_ctx: Dictionary) -> void:
-	pass
-
-
-## HUD con CÓ khung hướng dẫn nhúng (bản NGANG) thì override — xem `GameHUD._sync_instruction`
-func _sync_instruction(_mode: Variant) -> void:
 	pass
 
 

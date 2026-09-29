@@ -1,5 +1,5 @@
 class_name FadingInkHUD
-extends GameHUD
+extends BaseHUD
 ## ============================================================================
 ## HUD Fading Ink.
 ##

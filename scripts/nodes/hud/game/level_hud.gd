@@ -1,5 +1,5 @@
 class_name LevelHUD
-extends GameHUD
+extends BaseHUD
 ## ============================================================================
 ## HUD Play Mode (và mọi chế độ không có HUD riêng).
 ##

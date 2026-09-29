@@ -1,5 +1,5 @@
 class_name BlindMemoryHUD
-extends GameHUD
+extends BaseHUD
 ## ============================================================================
 ## HUD Blind Memory.
 ##

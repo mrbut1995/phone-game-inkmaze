@@ -1,5 +1,5 @@
 class_name CountdownHUD
-extends GameHUD
+extends BaseHUD
 ## ============================================================================
 ## HUD Countdown Cost.
 ##
