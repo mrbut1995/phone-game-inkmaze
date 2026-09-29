@@ -3,10 +3,43 @@
 [ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://xn56vsqbv4rh" path="res://scripts/nodes/tutorial/how_to_play_one_stroke.gd" id="2_script"]
 [ext_resource type="PackedScene" uid="uid://btutorialboard01" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
+[ext_resource type="Script" path="res://scripts/resources/blueprint_step.gd" id="4_step"]
+
+[sub_resource type="Resource" id="Resource_01"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_ONE_01"
+fallback_text = "Chế độ này KHÔNG có số — tường đã hiện rõ sẵn trên bàn."
+advance_mode = "MANUAL"
+
+[sub_resource type="Resource" id="Resource_02"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_ONE_02"
+fallback_text = "Luật đặc biệt: bạn phải đi qua TẤT CẢ các ô, mỗi ô ĐÚNG 1 LẦN, rồi mới được dừng ở F."
+advance_mode = "MANUAL"
+
+[sub_resource type="Resource" id="Resource_03"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_ONE_03"
+fallback_text = "Đi đè lên ô đã đi qua là THUA NGAY, nên đi tới đâu chắc tới đó nhé."
+advance_mode = "MANUAL"
+
+[sub_resource type="Resource" id="Resource_04"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_ONE_04"
+fallback_text = "Giờ đến lượt bạn — đi hết cả 9 ô rồi kết thúc ở F nhé!"
+advance_mode = "AUTO"
+required_action = "DRAG_PATH"
+
+[sub_resource type="Resource" id="Resource_05"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_ONE_05"
+fallback_text = "Bạn vừa hoàn thành một nét đầu tiên rồi đó!"
+advance_mode = "MANUAL"
 
 [node name="HowToPlayOneStroke" node_paths=PackedStringArray("board_tutorial") instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 board_tutorial = NodePath("BoardHost/BoardTutorial")
+blueprint_steps = [SubResource("Resource_01"), SubResource("Resource_02"), SubResource("Resource_03"), SubResource("Resource_04"), SubResource("Resource_05")]
 
 [node name="BoardTutorial" parent="BoardHost" index="0" instance=ExtResource("3_board")]
 layout_mode = 1

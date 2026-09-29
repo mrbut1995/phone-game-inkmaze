@@ -17,30 +17,6 @@ func _init_tutorial() -> void:
 	tutorial_id = "first_time"
 	btn_skip_all.visible = true
 
-	var steps: Array = [
-		{
-			"message_key": "STR_TUT_FIRST_TIME_01",
-			"fallback_text": "Chào mừng bạn đến với Number Maze!",
-			"advance_mode": "MANUAL",
-		},
-		{
-			"message_key": "STR_TUT_FIRST_TIME_02",
-			"fallback_text": "Vẽ một đường đi từ điểm BẮT ĐẦU (S) tới điểm KẾT THÚC (F).",
-			"advance_mode": "MANUAL",
-		},
-		{
-			"message_key": "STR_TUT_FIRST_TIME_03",
-			"fallback_text": "Những con số trên mỗi ô sẽ giúp bạn đoán ra đâu là tường vô hình.",
-			"advance_mode": "MANUAL",
-		},
-		{
-			"message_key": "STR_TUT_FIRST_TIME_04",
-			"fallback_text": "Trước khi chơi thật, hãy cùng luyện 3 kỹ năng cơ bản nhé!",
-			"advance_mode": "MANUAL",
-		}
-	]
-	setup_steps(steps)
-
 
 func _on_step_entered(index: int, _data: Dictionary) -> void:
 	match index:

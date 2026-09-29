@@ -39,7 +39,9 @@ func _init_tutorial() -> void:
 			board_tutorial.cell_step_attempted.connect(_on_cell_step_attempted)
 	_reset_path()
 
-	var steps: Array = [
+
+func _get_default_steps() -> Array:
+	return [
 		{
 			"message_key": "STR_TUT_MINE_01",
 			"fallback_text": "Ở chế độ này, con số là SỐ MÌN trong 8 ô xung quanh!",
@@ -68,7 +70,6 @@ func _init_tutorial() -> void:
 			"advance_mode": "MANUAL",
 		}
 	]
-	setup_steps(steps)
 
 
 func _reset_path() -> void:

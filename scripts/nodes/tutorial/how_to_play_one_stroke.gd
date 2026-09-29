@@ -36,35 +36,36 @@ func _init_tutorial() -> void:
 			board_tutorial.cell_step_attempted.connect(_on_cell_step_attempted)
 	_reset_board_state()
 
-	var steps: Array = [
+
+func _get_default_steps() -> Array:
+	return [
 		{
 			"message_key": "STR_TUT_ONE_01",
-			"fallback_text": "Chế độ này KHÔNG có số — tường đã hiện rõ sẵn trên bàn.",
+			"fallback_text": "Chế độ Một Nét: bạn phải đi qua TẤT CẢ các ô — mỗi ô đúng 1 lần!",
 			"advance_mode": "MANUAL",
 		},
 		{
 			"message_key": "STR_TUT_ONE_02",
-			"fallback_text": "Luật đặc biệt: bạn phải đi qua TẤT CẢ các ô, mỗi ô ĐÚNG 1 LẦN, rồi mới được dừng ở F.",
+			"fallback_text": "Chỉ kết thúc ở ô F sau khi đã đi qua hết mọi ô.",
 			"advance_mode": "MANUAL",
 		},
 		{
 			"message_key": "STR_TUT_ONE_03",
-			"fallback_text": "Đi đè lên ô đã đi qua là THUA NGAY, nên đi tới đâu chắc tới đó nhé.",
+			"fallback_text": "Nếu đặt chân lên ô đã đi: đường bị phá, phải kéo lại từ đầu.",
 			"advance_mode": "MANUAL",
 		},
 		{
 			"message_key": "STR_TUT_ONE_04",
-			"fallback_text": "Giờ đến lượt bạn — đi hết cả 9 ô rồi kết thúc ở F nhé!",
+			"fallback_text": "Giờ bạn hãy thử — đi qua toàn bộ 9 ô rồi về F!",
 			"advance_mode": "AUTO",
 			"required_action": "DRAG_PATH"
 		},
 		{
 			"message_key": "STR_TUT_ONE_05",
-			"fallback_text": "Bạn vừa hoàn thành một nét đầu tiên rồi đó!",
+			"fallback_text": "Tuyệt vời! Bạn vừa hoàn thành một nét.",
 			"advance_mode": "MANUAL",
 		}
 	]
-	setup_steps(steps)
 
 
 func _reset_board_state() -> void:

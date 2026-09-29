@@ -3,6 +3,45 @@
 [ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/tutorial/how_to_play_wall_builder.gd" id="2_script"]
 [ext_resource type="PackedScene" uid="uid://btutorialboard01" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
+[ext_resource type="Script" path="res://scripts/resources/blueprint_step.gd" id="4_step"]
+
+[sub_resource type="Resource" id="Resource_01"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WB_01"
+fallback_text = "Chế độ này không di chuyển — bạn sẽ TỰ VẼ TƯỜNG để khớp với các con số."
+advance_mode = "MANUAL"
+
+[sub_resource type="Resource" id="Resource_02"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WB_02"
+fallback_text = "Mỗi con số là số tường cần có quanh ô đó — từ 0 tới 4."
+advance_mode = "MANUAL"
+spotlight_cell = Vector2i(0, 0)
+
+[sub_resource type="Resource" id="Resource_03"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WB_03"
+fallback_text = "Chạm vào các cặp điểm neo liền kề để bật đoạn tường."
+advance_mode = "MANUAL"
+
+[sub_resource type="Resource" id="Resource_04"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WB_04"
+fallback_text = "Khung đếm phía trên cho biết bạn cần vẽ bao nhiêu đoạn tường."
+advance_mode = "MANUAL"
+
+[sub_resource type="Resource" id="Resource_05"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WB_05"
+fallback_text = "Hãy bật đủ 2 đoạn tường ngang rồi bấm GỬI nhé!"
+advance_mode = "AUTO"
+required_action = "SUBMIT"
+
+[sub_resource type="Resource" id="Resource_06"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_WB_06"
+fallback_text = "Chính xác! Mọi con số đã khớp hết rồi."
+advance_mode = "MANUAL"
 
 [sub_resource type="StyleBoxFlat" id="hud_pill"]
 content_margin_left = 16.0
@@ -45,6 +84,7 @@ script = ExtResource("2_script")
 board_tutorial = NodePath("BoardHost/BoardTutorial")
 lbl_hud_counter = NodePath("BoardHost/HudPanel/CountLabel")
 btn_submit = NodePath("BoardHost/BtnSubmit")
+blueprint_steps = [SubResource("Resource_01"), SubResource("Resource_02"), SubResource("Resource_03"), SubResource("Resource_04"), SubResource("Resource_05"), SubResource("Resource_06")]
 
 [node name="HudPanel" type="PanelContainer" parent="BoardHost" index="0"]
 layout_mode = 1

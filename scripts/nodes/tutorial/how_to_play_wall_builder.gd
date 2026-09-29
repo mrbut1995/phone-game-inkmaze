@@ -38,33 +38,33 @@ func _init_tutorial() -> void:
 		board_tutorial.wall_toggled.connect(_on_wall_toggled)
 	_update_wall_counter()
 
-	var steps: Array = [
+
+func _get_default_steps() -> Array:
+	return [
 		{
 			"message_key": "STR_TUT_WB_01",
-			"fallback_text": "Chế độ này không di chuyển — bạn sẽ TỰ VẼ TƯỜNG để khớp với các con số.",
+			"fallback_text": "Chế độ Xây Tường: bạn được xây các đoạn tường trên bàn!",
 			"advance_mode": "MANUAL",
 		},
 		{
 			"message_key": "STR_TUT_WB_02",
-			"fallback_text": "Mỗi con số là số tường cần có quanh ô đó — từ 0 tới 4.",
+			"fallback_text": "Mỗi ô có số cho biết cần bao nhiêu đoạn tường bao quanh nó.",
 			"advance_mode": "MANUAL",
-			"spotlight_cell": Vector2i(0, 0)
 		},
 		{
 			"message_key": "STR_TUT_WB_03",
-			"fallback_text": "Chạm vào các cặp điểm neo liền kề để bật đoạn tường.",
+			"fallback_text": "Nhấn vào góc neo (anchor) giữa các ô để bật/tắt đoạn tường.",
 			"advance_mode": "MANUAL",
 		},
 		{
 			"message_key": "STR_TUT_WB_04",
-			"fallback_text": "Khung đếm phía trên cho biết bạn cần vẽ bao nhiêu đoạn tường.",
+			"fallback_text": "Mục tiêu: làm cho số tường thực tế khớp với số trên mỗi ô.",
 			"advance_mode": "MANUAL",
 		},
 		{
 			"message_key": "STR_TUT_WB_05",
-			"fallback_text": "Hãy bật đủ 2 đoạn tường ngang rồi bấm GỬI nhé!",
-			"advance_mode": "AUTO",
-			"required_action": "SUBMIT"
+			"fallback_text": "Giờ hãy xây đúng 2 đoạn tường sao cho mỗi ô có đúng 1 cạnh tường!",
+			"advance_mode": "MANUAL",
 		},
 		{
 			"message_key": "STR_TUT_WB_06",
@@ -72,7 +72,20 @@ func _init_tutorial() -> void:
 			"advance_mode": "MANUAL",
 		}
 	]
-	setup_steps(steps)
+
+
+func _on_step_entered(index: int, _data: Dictionary) -> void:
+	if index == 4:
+		# Reset tường đã vẽ khi bước vào phần thực hành
+		if board_tutorial != null:
+			for k: String in board_tutorial.get_built_wall_keys().duplicate():
+				var parts := k.split(",")
+				if parts.size() == 3:
+					var is_h: bool = (parts[0] == "h")
+					var lat := Vector2i(int(parts[1]), int(parts[2]))
+					board_tutorial.toggle_wall(is_h, lat)  # toggle lại để xoá
+		_built_count = 0
+		_update_wall_counter()
 
 
 func _on_wall_toggled(_wall_key: String, _active: bool) -> void:

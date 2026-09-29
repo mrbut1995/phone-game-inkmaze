@@ -3,6 +3,40 @@
 [ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/tutorial/how_to_play_sum_path.gd" id="2_script"]
 [ext_resource type="PackedScene" uid="uid://btutorialboard01" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
+[ext_resource type="Script" path="res://scripts/resources/blueprint_step.gd" id="4_step"]
+
+[sub_resource type="Resource" id="Resource_01"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_SUM_01"
+fallback_text = "Ở đây, con số là ĐIỂM của ô — không liên quan gì tới tường cả."
+advance_mode = "MANUAL"
+spotlight_cell = Vector2i(1, 0)
+
+[sub_resource type="Resource" id="Resource_02"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_SUM_02"
+fallback_text = "Tổng điểm đường đi của bạn phải khớp đúng điều kiện mục tiêu (= 8)."
+advance_mode = "MANUAL"
+spotlight_node = NodePath("BoardHost/HudPanel")
+
+[sub_resource type="Resource" id="Resource_03"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_SUM_03"
+fallback_text = "Mỗi ô chỉ tính điểm 1 LẦN, dù bạn có đi qua lại nhiều lần."
+advance_mode = "MANUAL"
+
+[sub_resource type="Resource" id="Resource_04"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_SUM_04"
+fallback_text = "Giờ bạn hãy tìm đường từ S tới F sao cho tổng điểm = 8 nhé!"
+advance_mode = "AUTO"
+required_action = "DRAG_PATH"
+
+[sub_resource type="Resource" id="Resource_05"]
+script = ExtResource("4_step")
+message_key = "STR_TUT_SUM_05"
+fallback_text = "Chuẩn không cần chỉnh!"
+advance_mode = "MANUAL"
 
 [sub_resource type="StyleBoxFlat" id="hud_pill"]
 content_margin_left = 16.0
@@ -22,6 +56,7 @@ shadow_offset = Vector2(0, 2)
 script = ExtResource("2_script")
 board_tutorial = NodePath("BoardHost/BoardTutorial")
 lbl_hud_sum = NodePath("BoardHost/HudPanel/SumLabel")
+blueprint_steps = [SubResource("Resource_01"), SubResource("Resource_02"), SubResource("Resource_03"), SubResource("Resource_04"), SubResource("Resource_05")]
 
 [node name="HudPanel" type="PanelContainer" parent="BoardHost" index="0"]
 layout_mode = 1
