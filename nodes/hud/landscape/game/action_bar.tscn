@@ -15,10 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://ccikpt57bxxe1" path="res://assets/images/common/btn_item_normal.svg" id="17_s4ykb"]
 [ext_resource type="Texture2D" uid="uid://dgwk4q0p0i8lb" path="res://assets/images/common/btn_item_pressed.svg" id="18_7hpxb"]
 [ext_resource type="Texture2D" uid="uid://y48vpab5l5u7" path="res://assets/images/common/btn_item_disable.svg" id="19_i0adw"]
-[ext_resource type="Texture2D" uid="uid://n10pv74qr68u" path="res://assets/images/popups/icon_replay.svg" id="bar_replay"]
 [ext_resource type="Script" uid="uid://bbq8fo18vt532" path="res://scripts/nodes/hud/game/action_bar.gd" id="bar_script"]
-[ext_resource type="Script" path="res://scripts/nodes/hud/game/limited_button.gd" id="limit_btn"]
-[ext_resource type="LabelSettings" uid="uid://dg2subtoolbtn" path="res://resources/settings/text/text_game_button_sub.tres" id="bar_sub"]
+[ext_resource type="Script" uid="uid://6o5plv3ncq4w" path="res://scripts/nodes/hud/game/limited_button.gd" id="limit_btn"]
 [ext_resource type="Texture2D" uid="uid://spyw1sa7uxc5" path="res://assets/images/game/btn_restart_disabled.svg" id="restart_d"]
 [ext_resource type="Texture2D" uid="uid://comsw702ysh8j" path="res://assets/images/game/btn_restart_focus.svg" id="restart_f"]
 [ext_resource type="Texture2D" uid="uid://bh5dumnnf028q" path="res://assets/images/game/btn_restart_normal.svg" id="restart_n"]
@@ -27,7 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://ba05fospe3lgy" path="res://assets/images/game/btn_submit_normal.svg" id="submit_n"]
 [ext_resource type="Texture2D" uid="uid://tqg2gg560yg5" path="res://assets/images/game/btn_submit_pressed.svg" id="submit_p"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t30dy"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jbxlu"]
 content_margin_left = 61.0
 content_margin_top = 18.0
 content_margin_right = 30.0
@@ -38,7 +36,7 @@ texture_margin_top = 18.0
 texture_margin_right = 30.0
 texture_margin_bottom = 20.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_srfk4"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s4ykb"]
 content_margin_left = 61.0
 content_margin_top = 18.0
 content_margin_right = 30.0
@@ -49,7 +47,7 @@ texture_margin_top = 18.0
 texture_margin_right = 30.0
 texture_margin_bottom = 20.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iyt1b"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7hpxb"]
 content_margin_left = 61.0
 content_margin_top = 18.0
 content_margin_right = 30.0
@@ -60,7 +58,7 @@ texture_margin_top = 18.0
 texture_margin_right = 30.0
 texture_margin_bottom = 20.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vyd7l"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0adw"]
 content_margin_left = 61.0
 content_margin_top = 18.0
 content_margin_right = 30.0
@@ -90,10 +88,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 tooltip_text = "STR_TOOL_SUBMIT"
-theme_override_styles/normal = SubResource("StyleBoxTexture_t30dy")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_srfk4")
-theme_override_styles/hover = SubResource("StyleBoxTexture_iyt1b")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_vyd7l")
+theme_override_styles/normal = SubResource("StyleBoxTexture_jbxlu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_s4ykb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_7hpxb")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_i0adw")
 script = ExtResource("4_tfbqo")
 texture_normal = ExtResource("submit_n")
 texture_hover = ExtResource("submit_n")
@@ -111,7 +109,6 @@ theme_override_constants/separation = 10
 alignment = 2
 
 [node name="Restart" type="TextureButton" parent="SubRow" unique_id=1496407431]
-custom_minimum_size = Vector2(77.5, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -136,8 +133,6 @@ texture_focused = ExtResource("11_vyd7l")
 stretch_mode = 0
 
 [node name="Undo" type="TextureButton" parent="SubRow" unique_id=293478108]
-script = ExtResource("limit_btn")
-custom_minimum_size = Vector2(77.5, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -148,6 +143,7 @@ texture_hover = ExtResource("10_nytdo")
 texture_disabled = ExtResource("12_srfk4")
 texture_focused = ExtResource("10_nytdo")
 stretch_mode = 0
+script = ExtResource("limit_btn")
 
 [node name="PanelLimit" type="Control" parent="SubRow/Undo" unique_id=1634305007]
 layout_mode = 1
@@ -188,8 +184,6 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Hint" type="TextureButton" parent="SubRow" unique_id=1015673811]
-script = ExtResource("limit_btn")
-custom_minimum_size = Vector2(77.5, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -200,6 +194,7 @@ texture_hover = ExtResource("13_iyt1b")
 texture_disabled = ExtResource("15_nytdo")
 texture_focused = ExtResource("13_iyt1b")
 stretch_mode = 0
+script = ExtResource("limit_btn")
 
 [node name="PanelLimit" type="Control" parent="SubRow/Hint" unique_id=968794150]
 layout_mode = 1
@@ -238,26 +233,3 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
-
-[node name="Replay" type="TextureButton" parent="SubRow" unique_id=1476857671]
-visible = false
-custom_minimum_size = Vector2(77.5, 75)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("bar_replay")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="SubRow/Replay" unique_id=1504247394]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -17.0
-grow_horizontal = 2
-grow_vertical = 0
-label_settings = ExtResource("bar_sub")
-horizontal_alignment = 1
-vertical_alignment = 1

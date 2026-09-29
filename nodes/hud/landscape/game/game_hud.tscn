@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cchuuwsep7gyy"]
 
 [ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_8cncu"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_1d71u"]
 [ext_resource type="LabelSettings" uid="uid://bmsatlur2nokc" path="res://resources/settings/text/text_game_information_subvalue.tres" id="5_46jmu"]
 
 [node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node", "content_root") instance=ExtResource("1_8cncu")]
@@ -13,6 +14,7 @@ offset_right = 0.0
 offset_bottom = 0.43998718
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_1d71u")
 time_value_node = NodePath("Content/ModeInformation/Time/Value")
 content_root = NodePath("Content")
 
@@ -32,6 +34,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Time" type="VBoxContainer" parent="Content/ModeInformation" index="0" unique_id=561028501]
 layout_mode = 2
@@ -40,7 +43,7 @@ alignment = 1
 [node name="Head" type="Label" parent="Content/ModeInformation/Time" index="0" unique_id=1928711052]
 layout_mode = 2
 theme_type_variation = &"HudTimeHead"
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 32
 text = "STR_HUD_TIME"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -49,6 +52,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1132989416]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 text = "0:00"
 label_settings = ExtResource("5_46jmu")
 horizontal_alignment = 1

@@ -540,20 +540,18 @@ func _bind_hud_nodes() -> void:
 	# HUD phủ toàn khung nên phải NHƯỜNG chạm/kéo cho bàn cờ phía sau (nút bên trong vẫn ăn)
 	# — HUD tự lo việc này, màn chơi không đụng node con của nó.
 	hud.allow_board_input()
+	# Bản NGANG: ActionBar nằm trong LAYOUT (cùng cột với bàn cờ), không nằm trong HUD —
+	# gán TRƯỚC khi hỏi nút, nếu không các getter dưới đây trả null ⇒ nút không được nối tín hiệu.
+	if _layout_is_landscape():
+		var gl := layout as GameLayout
+		if gl != null and gl.landscape_action_bar != null:
+			hud.action_bar_node = gl.landscape_action_bar
 	restart_btn = hud.restart_btn()
 	submit_btn = hud.submit_btn()
 	skip_btn = hud.skip_btn()
 	undo_btn = hud.undo_btn()
 	hint_btn = hud.hint_btn()
 	#replay_btn = hud.replay_btn()
-	# Bản NGANG: ActionBar nằm trong layout (LeftCol cùng cột bàn cờ), không nằm trong HUD —
-	# gán lại để hud.restart_btn()/undo_btn()/... vẫn trả đúng nút.
-	if _layout_is_landscape():
-		var gl := layout as GameLayout
-		if gl != null and gl.landscape_action_bar != null:
-			var hud_b := hud_host as BaseHUD
-			if hud_b != null:
-				hud_b.action_bar_node = gl.landscape_action_bar
 	# HintGuide nằm TRONG HUD (đầu `ActionBar` bản dọc / `Content` bản ngang) ⇒ gắn lại theo HUD mới,
 	# nếu không `hint_guide` sẽ trỏ vào node đã bị free khi đổi chế độ.
 	hint_guide = _hud_hint_guide()

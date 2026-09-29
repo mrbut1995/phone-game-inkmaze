@@ -77,6 +77,9 @@ var _suspected_lines: Dictionary = {}   # lattice key -> wall_segment
 var _history_lines: Dictionary = {}     # cell-edge key -> history Line2D
 var _moving_line: InkStroke = null
 var _drag_guide_line: InkStroke = null
+## Đường ĐANG ĐI (danh sách Ô, không phải pixel) — giữ lại để VẼ LẠI nét khi lưới tính lại
+## (đổi cỡ cửa sổ / đổi chỗ bàn cờ); nếu không nét mực đứng yên ở toạ độ cũ.
+var _moving_path: Array[Vector2i] = []
 var _cursor: PlayerCursor = null
 ## Wall Builder: ẩn hẳn nhân vật trên bàn (xem set_player_visible)
 var _player_hidden: bool = false
@@ -100,6 +103,8 @@ var _is_dragging_anchor := false
 var _drag_source_anchor_id := -1
 var _drag_source_anchor_corner := Vector2i(-1, -1)
 var _hover_target_anchor_id := -1
+## Vị trí chuột cuối cùng khi kéo neo — dựng lại đường kéo nếu lưới tính lại giữa chừng
+var _drag_guide_last_local := Vector2.ZERO
 
 # Shake tracking
 var _shake_tween: Tween = null
@@ -526,6 +531,42 @@ func _update_layout_positions() -> void:
 	if _cursor != null:
 		_cursor.position = _cell_center(_player_current_cell) - _cursor.size * 0.5
 
+	# Nét ĐÃ VẼ (đường đang đi · vệt mực cũ · đường kéo neo) nhớ danh sách Ô, nhưng pixel
+	# đã dựng từ lưới CŨ ⇒ vẽ lại theo lưới mới, nếu không đường đi nằm lệch khỏi các ô.
+	_refresh_drawn_strokes()
+
+
+## Vẽ lại mọi nét mực ĐÃ VẼ theo lưới hiện tại — gọi khi cửa sổ đổi cỡ / bàn cờ đổi chỗ.
+## Nét chỉ nhớ Ô (nguồn sự thật) nên chỉ cần suy lại tâm ô mới.
+func _refresh_drawn_strokes() -> void:
+	if _moving_line != null and not _moving_path.is_empty():
+		var pts := PackedVector2Array()
+		for p in _moving_path:
+			pts.append(_cell_center(p))
+		_moving_line.set_stroke(pts)
+
+	for key: String in _history_lines:
+		var line: Line2D = _history_lines[key]
+		if not is_instance_valid(line) or not line.has_meta("cell_a"):
+			continue
+		var a: Vector2i = line.get_meta("cell_a")
+		var b: Vector2i = line.get_meta("cell_b")
+		line.points = PackedVector2Array([_cell_center(a), _cell_center(b)])
+
+	# Đường kéo neo (nếu đang kéo dở): bám lại 2 đầu theo lưới mới
+	if _drag_guide_line != null and _is_dragging_anchor and _drag_source_anchor_id != -1:
+		_drag_guide_line.points = PackedVector2Array(
+			[_anchor_center_pos(_drag_source_anchor_corner), _drag_guide_other_end()])
+
+
+## Đầu thứ 2 của đường kéo neo: tâm neo đang rê trúng, hoặc vị trí chuột cuối cùng
+func _drag_guide_other_end() -> Vector2:
+	if _hover_target_anchor_id != -1:
+		var corner := _anchor_corner(_hover_target_anchor_id)
+		if corner.x != -1:
+			return _anchor_center_pos(corner)
+	return _drag_guide_last_local
+
 
 func _build_cells() -> void:
 	# Board có thể là polyomino: ô ngoài board KHÔNG có node -> mảng giữ null
@@ -678,6 +719,7 @@ func _build_moving_line() -> void:
 	if _moving_line == null:
 		return
 	_moving_line.position = Vector2.ZERO
+	_moving_path.clear()
 	# width/default_color lấy nguyên từ moving_line.tscn
 	_set_line_points(_moving_line, PackedVector2Array())
 
@@ -783,6 +825,8 @@ func _spawn_ink_footstep(pos: Vector2) -> void:
 func set_moving_path(path: Array[Vector2i]) -> void:
 	if _moving_line == null:
 		return
+	# Nhớ đường đi theo Ô để còn vẽ LẠI khi lưới đổi cỡ (xem `_refresh_drawn_strokes`)
+	_moving_path = path.duplicate()
 	var pts := PackedVector2Array()
 	for p in path:
 		pts.append(_cell_center(p))
@@ -808,6 +852,9 @@ func show_history_edge(a: Vector2i, b: Vector2i) -> void:
 	var line := _spawn_template(_history_template) as Line2D
 	_lines_layer.add_child(line)
 	line.points = PackedVector2Array([_cell_center(a), _cell_center(b)])
+	# Nhớ 2 Ô của cạnh (nguồn sự thật) để vẽ LẠI đúng chỗ khi lưới đổi cỡ
+	line.set_meta("cell_a", a)
+	line.set_meta("cell_b", b)
 	# Vệt bút mờ cũ: cùng MÀU + chất liệu ngòi bút (mờ hơn nét đang đi)
 	InkStroke.style_plain(line, _pen_id, _scaled_wall_width(), 0.55)
 	_history_lines[key] = line
@@ -1306,6 +1353,7 @@ func _start_anchor_drag(anchor_info: Dictionary) -> void:
 	Sfx.play(Sfx.ANCHOR_SNAP)
 
 	var anchor_center := _anchor_center_pos(_drag_source_anchor_corner)
+	_drag_guide_last_local = anchor_center
 	_drag_guide_line.visible = true
 	_drag_guide_line.points = PackedVector2Array([anchor_center, anchor_center])
 
@@ -1314,6 +1362,7 @@ func _update_anchor_drag(local_pos: Vector2) -> void:
 	if not _is_dragging_anchor or _drag_source_anchor_id == -1:
 		return
 
+	_drag_guide_last_local = local_pos
 	var anchor_a_pos := _anchor_center_pos(_drag_source_anchor_corner)
 	var hovered_anchor := _hit_anchor_info(local_pos)
 

@@ -1,24 +1,29 @@
 [gd_scene format=3 uid="uid://du7mme5oa6tt6"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_d1bci"]
 [ext_resource type="Script" uid="uid://bxr5a1ltiv2i8" path="res://scripts/layout/landscape/game_layout.gd" id="2_mqnje"]
 [ext_resource type="Texture2D" uid="uid://ddbe0dmjs5l76" path="res://assets/images-landscape/game/header_card.svg" id="3_head_bg"]
-[ext_resource type="Texture2D" uid="uid://chj1v3xgy7qt1" path="res://assets/images-landscape/game/btn_header_pause_normal.svg" id="4_pause_n"]
-[ext_resource type="Texture2D" uid="uid://cmuyo2q1apkvm" path="res://assets/images-landscape/game/btn_header_pause_pressed.svg" id="5_pause_p"]
+[ext_resource type="Texture2D" uid="uid://dbsevqd2c7qp6" path="res://assets/images/game/btn_pause_normal.svg" id="4_6ckgu"]
+[ext_resource type="Texture2D" uid="uid://b1ae0apyceyvp" path="res://assets/images/game/btn_pause_pressed.svg" id="5_d1bci"]
+[ext_resource type="Texture2D" uid="uid://c0trdh54ejc8i" path="res://assets/images/game/btn_pause_disabled.svg" id="6_ihder"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="6_sub_lbl"]
+[ext_resource type="Texture2D" uid="uid://btfb86ck2yqqn" path="res://assets/images/game/btn_pause_focus.svg" id="7_0wfj4"]
 [ext_resource type="LabelSettings" uid="uid://bonmr0e8ujeq3" path="res://resources/settings/text/text_game_title.tres" id="7_bhx41"]
 [ext_resource type="Texture2D" uid="uid://cwg3rpuj0djq3" path="res://assets/images/game/btn_help_normal.svg" id="8_help_n"]
 [ext_resource type="Texture2D" uid="uid://350mhquc4uwi" path="res://assets/images/game/btn_help_pressed.svg" id="9_help_p"]
 [ext_resource type="Texture2D" uid="uid://bghur1ubhq1l8" path="res://assets/images/game/btn_help_disabled.svg" id="10_help_d"]
 [ext_resource type="PackedScene" uid="uid://dxpf4nu3wy753" path="res://nodes/hud/landscape/game/action_bar.tscn" id="11_actionbar"]
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="12_landhud"]
+[ext_resource type="Texture2D" uid="uid://c3up4f0u6hjjq" path="res://assets/images/game/btn_help_focus.svg" id="13_ayin1"]
 
 [node name="Landscape" unique_id=949375316 node_paths=PackedStringArray("landscape_action_bar", "status_bar", "hud_slot", "board_holder", "pause_btn", "instruction_btn", "level_label", "subtitle_label") instance=ExtResource("1_parent")]
+theme = ExtResource("2_d1bci")
 script = ExtResource("2_mqnje")
 landscape_action_bar = NodePath("Content/LeftCol/ActionBar")
 status_bar = NodePath("Content/LeftCol/Status")
 hud_slot = NodePath("Content/LeftCol/Information")
-board_holder = NodePath("Content/LeftCol/BoardSlot")
+board_holder = NodePath("Content/LeftCol/MiddlePart/BoardSlot")
 pause_btn = NodePath("Content/LeftCol/Status/Bar/Pause")
 instruction_btn = NodePath("Content/LeftCol/Status/Bar/Instruction")
 level_label = NodePath("Content/LeftCol/Status/Bar/Title/LevelLabel")
@@ -27,8 +32,10 @@ subtitle_label = NodePath("Content/LeftCol/Status/Bar/Title/Subtitle")
 [node name="Content" type="HBoxContainer" parent="." index="0" unique_id=1503357712]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.99600005
-anchor_bottom = 0.998
+anchor_left = 0.033333335
+anchor_top = 0.048913043
+anchor_right = 0.9626667
+anchor_bottom = 0.8988261
 offset_right = -0.16003418
 offset_bottom = 0.079956055
 metadata/_edit_use_anchors_ = true
@@ -70,12 +77,13 @@ theme_override_constants/separation = 4
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Pause" type="TextureButton" parent="Content/LeftCol/Status/Bar" index="0" unique_id=1819656562]
+[node name="Pause" type="TextureButton" parent="Content/LeftCol/Status/Bar" index="0" unique_id=1765245490]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture_normal = ExtResource("4_pause_n")
-texture_pressed = ExtResource("5_pause_p")
+texture_normal = ExtResource("4_6ckgu")
+texture_pressed = ExtResource("5_d1bci")
+texture_hover = ExtResource("4_6ckgu")
+texture_disabled = ExtResource("6_ihder")
+texture_focused = ExtResource("7_0wfj4")
 
 [node name="Title" type="VBoxContainer" parent="Content/LeftCol/Status/Bar" index="1" unique_id=759259273]
 layout_mode = 2
@@ -100,27 +108,45 @@ text = "MÀN 01"
 label_settings = ExtResource("7_bhx41")
 horizontal_alignment = 1
 
-[node name="Instruction" type="TextureButton" parent="Content/LeftCol/Status/Bar" index="2" unique_id=1819656563]
+[node name="Instruction" type="TextureButton" parent="Content/LeftCol/Status/Bar" index="2" unique_id=816551734]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
+size_flags_horizontal = 8
 texture_normal = ExtResource("8_help_n")
 texture_pressed = ExtResource("9_help_p")
+texture_hover = ExtResource("8_help_n")
 texture_disabled = ExtResource("10_help_d")
+texture_focused = ExtResource("13_ayin1")
 
-[node name="Information" parent="Content/LeftCol" index="1" unique_id=1383101299 instance=ExtResource("12_landhud")]
+[node name="Spacer" type="Control" parent="Content/LeftCol" index="1" unique_id=417899857]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Information" parent="Content/LeftCol" index="2" unique_id=1383101299 instance=ExtResource("12_landhud")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="BoardSlot" type="Control" parent="Content/LeftCol" index="2" unique_id=876523901]
+[node name="MiddlePart" type="Control" parent="Content/LeftCol" index="3" unique_id=876523901]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.8
 mouse_filter = 2
 
-[node name="ActionBar" parent="Content/LeftCol" index="3" unique_id=2091197472 instance=ExtResource("11_actionbar")]
+[node name="BoardSlot" type="Control" parent="Content/LeftCol/MiddlePart" index="0" unique_id=1994075193]
+layout_mode = 1
+anchor_left = 0.08007449
+anchor_top = 0.0800745
+anchor_right = 0.9199255
+anchor_bottom = 0.9199255
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ActionBar" parent="Content/LeftCol" index="4" unique_id=2091197472 instance=ExtResource("11_actionbar")]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05

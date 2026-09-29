@@ -19,11 +19,7 @@ func set_number(n: int) -> void:
 
 ## Hiện vòng tại tâm `center` (toạ độ TRONG bàn) kèm hiệu ứng nở + nhịp "thở"
 func show_at(center: Vector2) -> void:
-	var half := size
-	if half.x <= 0.0:
-		half = custom_minimum_size
-	position = center - half * 0.5
-	pivot_offset = half * 0.5
+	_center_on(center)
 	visible = true
 	_kill_tweens()
 	scale = Vector2(0.55, 0.55)
@@ -32,6 +28,20 @@ func show_at(center: Vector2) -> void:
 	_fx.tween_property(self, "modulate:a", 1.0, 0.18)
 	_fx.parallel().tween_property(self, "scale", Vector2.ONE, 0.26).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_fx.tween_callback(_start_pulse)
+
+
+## Dời vòng sang tâm mới — KHÔNG phát lại hiệu ứng nở (dùng khi lưới tính lại: đổi cỡ cửa sổ)
+func move_to(center: Vector2) -> void:
+	_center_on(center)
+
+
+## Đặt tâm vòng theo cỡ thật của node; chưa có cỡ thì lấy cỡ tối thiểu khai trong scene
+func _center_on(center: Vector2) -> void:
+	var half := size
+	if half.x <= 0.0:
+		half = custom_minimum_size
+	position = center - half * 0.5
+	pivot_offset = half * 0.5
 
 
 func hide_callout() -> void:
