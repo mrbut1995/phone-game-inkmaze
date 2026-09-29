@@ -29,6 +29,7 @@ script = ExtResource("4_step")
 message_key = "STR_TUT_WB_04"
 fallback_text = "Khung đếm phía trên cho biết bạn cần vẽ bao nhiêu đoạn tường."
 advance_mode = "MANUAL"
+spotlight_node = NodePath("BoardHost/HudPanel")
 
 [sub_resource type="Resource" id="Resource_05"]
 script = ExtResource("4_step")

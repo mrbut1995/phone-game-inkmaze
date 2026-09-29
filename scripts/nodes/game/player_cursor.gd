@@ -119,6 +119,122 @@ func play_demo_tap(target_pos: Vector2 = Vector2.ZERO) -> void:
 	_demo_tween.tween_interval(0.3)
 
 
+## Trình diễn cursor đi qua nhiều ô theo thứ tự (dùng cho demo full-path, lặp)
+func play_demo_path(positions: Array[Vector2], dur_per_step: float = 0.5) -> void:
+	if _idle_tween != null and _idle_tween.is_valid():
+		_idle_tween.kill()
+	if _move_tween != null and _move_tween.is_valid():
+		_move_tween.kill()
+	if _demo_tween != null and _demo_tween.is_valid():
+		_demo_tween.kill()
+	if positions.size() < 2:
+		return
+
+	_is_demoing = true
+	visible = true
+
+	_demo_tween = create_tween().set_loops()
+	# Hiện tại vị trí đầu
+	_demo_tween.tween_property(self, "position", positions[0], 0.0)
+	_demo_tween.tween_property(self, "modulate:a", 0.0, 0.0)
+	_demo_tween.tween_property(self, "scale", Vector2.ONE, 0.0)
+	_demo_tween.tween_property(self, "rotation", 0.0, 0.0)
+	_demo_tween.tween_property(self, "modulate:a", 1.0, 0.14)
+
+	for i in range(1, positions.size()):
+		var from_p: Vector2 = positions[i - 1]
+		var to_p: Vector2 = positions[i]
+		var dir := (to_p - from_p).normalized()
+		var tilt := 0.0
+		if dir.x > 0.1:
+			tilt = deg_to_rad(12.0)
+		elif dir.x < -0.1:
+			tilt = deg_to_rad(-12.0)
+		# Pre-hop squash
+		_demo_tween.tween_property(self, "scale", Vector2(1.14, 0.86), 0.07)
+		# Di chuyển sang ô tiếp theo (song song: vị trí + scale + nghiêng)
+		_demo_tween.tween_property(self, "position", to_p, dur_per_step).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		_demo_tween.parallel().tween_property(self, "scale", Vector2.ONE, dur_per_step)
+		_demo_tween.parallel().tween_property(self, "rotation", tilt, dur_per_step * 0.45)
+		# Đổ xuống khi chạm đích
+		_demo_tween.tween_property(self, "scale", Vector2(1.18, 0.82), 0.08)
+		_demo_tween.parallel().tween_property(self, "rotation", 0.0, 0.1)
+		_demo_tween.tween_property(self, "scale", Vector2.ONE, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	# Dừng ở đích rồi fade out, vòng lặp lại từ đầu
+	_demo_tween.tween_interval(0.5)
+	_demo_tween.tween_property(self, "modulate:a", 0.0, 0.22)
+	_demo_tween.tween_interval(0.35)
+
+
+## Trình diễn thử đi đè lên ô đã đi: di chuyển nửa đường rồi nảy lại (1 chu kỳ, không lặp)
+func play_demo_fail_attempt(from_pos: Vector2, midway_pos: Vector2, recoil_dir: Vector2) -> void:
+	if _idle_tween != null and _idle_tween.is_valid():
+		_idle_tween.kill()
+	if _move_tween != null and _move_tween.is_valid():
+		_move_tween.kill()
+	if _demo_tween != null and _demo_tween.is_valid():
+		_demo_tween.kill()
+
+	_is_demoing = true
+	visible = true
+	position = from_pos
+	modulate.a = 1.0
+	scale = Vector2.ONE
+	rotation = 0.0
+
+	var push := recoil_dir.normalized() * 12.0
+
+	_demo_tween = create_tween()
+	# Squash chuẩn bị bước
+	_demo_tween.tween_property(self, "scale", Vector2(1.12, 0.88), 0.08)
+	# Di chuyển nửa đường về phía ô bị cấm
+	_demo_tween.tween_property(self, "position", midway_pos, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_demo_tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.18)
+	# Va chạm: squash mạnh + bị đẩy ngược
+	_demo_tween.tween_property(self, "scale", Vector2(1.38, 0.68), 0.07)
+	_demo_tween.parallel().tween_property(self, "position", midway_pos + push, 0.07)
+	# Nảy đàn hồi về vị trí ban đầu
+	_demo_tween.tween_property(self, "position", from_pos, 0.22).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	_demo_tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	# Nghỉ rồi fade out (tutorial script tự lặp lại chu kỳ tiếp)
+	_demo_tween.tween_interval(0.55)
+	_demo_tween.tween_property(self, "modulate:a", 0.0, 0.2)
+	_demo_tween.tween_callback(func() -> void:
+		_is_demoing = false
+		start_idle()
+	)
+
+
+## Trình diễn RÊ 1 lần từ from_pos → to_pos (Wall Builder: rê neo) — không lặp.
+## Trượt thẳng bằng TRANS_SINE/EASE_IN_OUT để khớp nhịp với đường kéo của bàn.
+func play_demo_slide(from_pos: Vector2, to_pos: Vector2, duration := 0.55) -> void:
+	if _idle_tween != null and _idle_tween.is_valid():
+		_idle_tween.kill()
+	if _move_tween != null and _move_tween.is_valid():
+		_move_tween.kill()
+	if _demo_tween != null and _demo_tween.is_valid():
+		_demo_tween.kill()
+
+	_is_demoing = true
+	visible = true
+	modulate.a = 1.0
+	rotation = 0.0
+	scale = Vector2.ONE
+	position = from_pos
+
+	_demo_tween = create_tween()
+	_demo_tween.tween_property(self, "position", to_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_demo_tween.parallel().tween_property(self, "scale", Vector2(0.92, 1.08), duration * 0.5)
+	# Chạm đích: nén nhẹ rồi phục hồi
+	_demo_tween.tween_property(self, "scale", Vector2(1.12, 0.88), 0.08)
+	_demo_tween.tween_property(self, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_demo_tween.tween_callback(func() -> void:
+		_is_demoing = false
+		start_idle()
+	)
+
+
 ## Dừng hoạt ảnh demo và đưa về trạng thái bình thường
 func stop_demo() -> void:
 	if _demo_tween != null and _demo_tween.is_valid():

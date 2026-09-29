@@ -13,6 +13,7 @@ var _current_cell: Vector2i = Vector2i(0, 0)
 var _visited_cells: Array[Vector2i] = []
 var _current_sum: int = 2
 var _displayed_sum: int = 2
+var _sum_demo_running: bool = false
 
 const CELL_VALUES: Dictionary = {
 	Vector2i(0, 0): 2, Vector2i(1, 0): 1, Vector2i(2, 0): 3,
@@ -95,8 +96,62 @@ func _reset_path() -> void:
 
 
 func _on_step_entered(index: int, _data: Dictionary) -> void:
-	if index == 3:
-		_reset_path()
+	_sum_demo_running = false
+	match index:
+		2:
+			_show_sum_path_demo()
+		3:
+			_reset_path()
+
+
+## Demo step 2: cursor đi theo đường S→(1,0)→(1,1)→(2,1)→F có tổng = 8, lặp
+func _show_sum_path_demo() -> void:
+	if board_tutorial == null:
+		return
+	_sum_demo_running = true
+	var demo_path: Array[Vector2i] = [
+		Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 1), Vector2i(2, 1), Vector2i(2, 2),
+	]
+	board_tutorial.set_path(demo_path)
+	board_tutorial.animate_cursor_path(demo_path, 0.42)
+	_run_sum_hud_cycle()
+
+
+func _run_sum_hud_cycle() -> void:
+	if not _sum_demo_running or current_step_index != 2 or not is_inside_tree():
+		return
+	# Reset HUD đầu chu kỳ
+	_displayed_sum = 2
+	_update_hud(false)
+	# S(2)→(1,0)+1 ≈ 0.83s
+	get_tree().create_timer(0.83).timeout.connect(func() -> void:
+		if not _sum_demo_running or current_step_index != 2: return
+		_displayed_sum = 3; _update_hud(true)
+		spawn_board_text("+1", board_tutorial.get_cell_center(Vector2i(1, 0)))
+	)
+	# (1,0)→(1,1)+2 ≈ 1.52s
+	get_tree().create_timer(1.52).timeout.connect(func() -> void:
+		if not _sum_demo_running or current_step_index != 2: return
+		_displayed_sum = 5; _update_hud(true)
+		spawn_board_text("+2", board_tutorial.get_cell_center(Vector2i(1, 1)))
+	)
+	# (1,1)→(2,1)+1 ≈ 2.21s
+	get_tree().create_timer(2.21).timeout.connect(func() -> void:
+		if not _sum_demo_running or current_step_index != 2: return
+		_displayed_sum = 6; _update_hud(true)
+		spawn_board_text("+1", board_tutorial.get_cell_center(Vector2i(2, 1)))
+	)
+	# (2,1)→F(2,2)+2 = 8 ≈ 2.90s
+	get_tree().create_timer(2.90).timeout.connect(func() -> void:
+		if not _sum_demo_running or current_step_index != 2: return
+		_displayed_sum = 8; _update_hud(true)
+		spawn_board_text("+2", board_tutorial.get_cell_center(Vector2i(2, 2)))
+		var finish := board_tutorial.get_cell(FINISH_POS)
+		if finish != null:
+			finish.play_step()
+	)
+	# Lặp lại sau ~4s để đồng bộ với chu kỳ cursor
+	get_tree().create_timer(4.0).timeout.connect(_run_sum_hud_cycle)
 
 
 func _update_hud(animated: bool = true) -> void:
