@@ -1,7 +1,5 @@
 extends SceneTree
-## ============================================================================
-## Integration Test: Kiểm tra toàn diện GameScene và vòng đời tương tác UI/Board.
-## ============================================================================
+## Integration test: GameScene và vòng đời tương tác UI/Board.
 
 func _init() -> void:
 	print("\n========================================================")
@@ -52,9 +50,7 @@ func _init() -> void:
 	quit(0)
 
 
-## Bug 2026-09-30 ("vẽ đường xong, kéo cửa sổ → đường hiển thị sai vị trí"): nét mực đã vẽ lưu
-## TOẠ ĐỘ PIXEL, còn lưới ô thì tính lại theo khung mới ⇒ nếu không vẽ lại, đường nằm lệch
-## khỏi các ô. Kiểm tra: đổi cỡ bàn cờ → VỆT MỰC CŨ + NÉT ĐANG ĐI đều phải bám tâm ô MỚI.
+## Vệt mực cũ + nét đang đi phải bám tâm ô mới sau khi đổi cỡ bàn cờ.
 func _check_drawn_path_follows_resize(scene: GameScene) -> void:
 	print("\n[CHECK] Duong da ve di theo luoi khi doi co cua so...")
 	var board: BoardView = scene.board_view

@@ -1,37 +1,25 @@
 class_name BoardTutorial
 extends BoardView
-
-## ============================================================================
-## BoardTutorial: Bàn cờ dành riêng cho màn hình Tutorial (Hướng dẫn)
-## Kế thừa toàn bộ View & logic của Board thật (board.gd / board.tscn):
-##   - Dùng panel NinePatchRect với card_board.svg chuẩn như ván game thật
-##   - Dùng MazeCell thật (cell.tscn) liền sát nhau không khe hở
-##   - Dùng PlayerCursor thật (player_cursor.tscn) nhún nhảy tự nhiên
-##   - Dùng hệ thống tường, neo và nét mực của game
-## ============================================================================
+## Bàn cờ Tutorial — kế thừa BoardView với dữ liệu ô/tường chỉ định tay.
 
 signal cell_drag_stepped(from_cell: Vector2i, to_cell: Vector2i)
 signal cell_step_attempted(next_cell: Vector2i)
 signal wall_toggled(wall_key: String, active: bool)
 
-const ANCHOR_CALLOUT_SCENE := preload("res://nodes/tutorials/anchor_callout.tscn")
-
 var _tutorial_cells_data: Dictionary = {}
 var _tutorial_walls_data: Array = []
 var _built_walls: Dictionary = {}
 var _anchors_enabled: bool = false
-var _cell_dragging_active: bool = true
-## Wall Builder tutorial: đoạn "tường đứt đoạn" preview + token vô hiệu timer demo cũ
 var _dashed_previews: Dictionary = {}
+## tăng khi bắt đầu demo mới → vô hiệu callback timer đang chờ
 var _wall_demo_token: int = 0
-## Vòng tròn đánh số "1"/"2" tại 2 neo của thao tác kéo mẫu (Wall Builder)
-var _anchor_callouts: Array[AnchorCallout] = []
-## Góc neo của từng callout (song song `_anchor_callouts`) — để dời lại khi lưới đổi cỡ
-var _anchor_callout_corners: Array[Vector2i] = []
+## Khai sẵn trong scene; vị trí lưu trong `_callout_corners` để bám lại sau resize
+@export var callout_0: AnchorCallout = null
+@export var callout_1: AnchorCallout = null
+var _callout_corners: Array[Vector2i] = [Vector2i(-1, -1), Vector2i(-1, -1)]
 
 
-## Lưới tính lại (đổi cỡ cửa sổ / đổi chỗ bàn cờ): lớp cha vẽ lại nét mực; riêng bàn
-## tutorial còn phải dời các vòng đánh số neo về tâm neo MỚI.
+## Sau khi lưới tính lại: dời thêm vòng đánh số neo về tâm mới.
 func _update_layout_positions() -> void:
 	super._update_layout_positions()
 	_reposition_anchor_callouts()
@@ -69,12 +57,6 @@ func _on_release(local_pos: Vector2) -> void:
 	super._on_release(local_pos)
 
 
-func _ready() -> void:
-	super._ready()
-	if not anchor_connected.is_connected(_on_tutorial_anchor_connected):
-		anchor_connected.connect(_on_tutorial_anchor_connected)
-
-
 ## Thiết lập bàn cờ tutorial với kích thước và dữ liệu ô tuỳ chỉnh
 func setup_tutorial(
 	p_width: int,
@@ -93,9 +75,8 @@ func setup_tutorial(
 	_tutorial_walls_data = walls_spec
 	_anchors_enabled = with_anchors
 	_built_walls.clear()
-	# Bàn dựng lại ⇒ bỏ preview cũ + vô hiệu hoá timer demo đang chờ
 	_dashed_previews.clear()
-	_anchor_callouts.clear()
+	_reset_callouts()
 	_wall_demo_token += 1
 
 	# Tự động tìm S và F nếu chưa chỉ định rõ
@@ -470,50 +451,35 @@ func _pulse_demo_anchor(corner: Vector2i) -> void:
 
 # --- Callout số "1"/"2" đánh dấu ĐIỂM CHẠM (Wall Builder tutorial) --------------
 
-## Hiện vòng đánh số tại 2 neo: (1) neo bắt đầu kéo, (2) neo kéo tới.
 func show_anchor_callouts(corner_a: Vector2i, corner_b: Vector2i) -> void:
-	_ensure_anchor_callouts()
 	_place_anchor_callout(0, corner_a, 1)
 	_place_anchor_callout(1, corner_b, 2)
 
 
 func hide_anchor_callouts() -> void:
-	for callout in _anchor_callouts:
-		if is_instance_valid(callout):
-			callout.hide_callout()
-
-
-func _ensure_anchor_callouts() -> void:
-	if _anchors_layer == null:
-		return
-	while _anchor_callouts.size() < 2:
-		var callout := ANCHOR_CALLOUT_SCENE.instantiate() as AnchorCallout
-		if callout == null:
-			return
-		_anchors_layer.add_child(callout)
-		_anchor_callouts.append(callout)
-		_anchor_callout_corners.append(Vector2i(-1, -1))
+	if callout_0 != null: callout_0.hide_callout()
+	if callout_1 != null: callout_1.hide_callout()
 
 
 func _place_anchor_callout(index: int, corner: Vector2i, number: int) -> void:
-	if index >= _anchor_callouts.size():
+	var callout: AnchorCallout = callout_0 if index == 0 else callout_1
+	if callout == null:
 		return
-	var callout := _anchor_callouts[index]
-	if not is_instance_valid(callout):
-		return
-	_anchor_callout_corners[index] = corner
+	_callout_corners[index] = corner
 	callout.set_number(number)
 	callout.show_at(_anchor_center_pos(corner))
 
 
-## Dời mọi callout đang hiện về tâm neo mới (không phát lại hiệu ứng nở)
 func _reposition_anchor_callouts() -> void:
-	for i in _anchor_callouts.size():
-		if i >= _anchor_callout_corners.size():
-			return
-		var corner := _anchor_callout_corners[i]
-		if corner.x == -1:
+	for i in _callout_corners.size():
+		if _callout_corners[i].x == -1:
 			continue
-		var callout := _anchor_callouts[i]
-		if is_instance_valid(callout):
-			callout.move_to(_anchor_center_pos(corner))
+		var callout: AnchorCallout = callout_0 if i == 0 else callout_1
+		if callout != null:
+			callout.move_to(_anchor_center_pos(_callout_corners[i]))
+
+
+func _reset_callouts() -> void:
+	if callout_0 != null: callout_0.hide_callout()
+	if callout_1 != null: callout_1.hide_callout()
+	_callout_corners = [Vector2i(-1, -1), Vector2i(-1, -1)]
