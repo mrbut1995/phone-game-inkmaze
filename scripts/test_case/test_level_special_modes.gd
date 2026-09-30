@@ -197,6 +197,15 @@ func _section_3_skip_level(gm: Node, lm: Node) -> void:
 	_check(int(gm.call("chapter_of_level", LEVEL_SAMPLE)) == 2, "Man 13 thuoc chuong 2")
 	_check(int(gm.call("chapter_of_level", LEVEL_SAMPLE + 1)) == 2, "Man 14 cung chuong 2")
 
+	# ĐIỀU KIỆN MÔI TRƯỜNG: skip_level() cố ý KHÔNG mở màn thuộc chương còn khoá, nên phải
+	# bảo đảm chương chứa màn kế đang mở — save cục bộ của máy dev có thể chỉ mới tới chương 1
+	# (đã backup/restore unlocked_chapters ở main() nên không ảnh hưởng save thật).
+	var unlocked: Array = (gm.get("unlocked_chapters") as Array).duplicate()
+	var chapter_next := int(gm.call("chapter_of_level", LEVEL_SAMPLE + 1))
+	if not unlocked.has(chapter_next):
+		unlocked.append(chapter_next)
+		gm.set("unlocked_chapters", unlocked)
+
 	var stars_before: Dictionary = (gm.get("level_stars") as Dictionary).duplicate()
 	var next_id := int(gm.call("skip_level", LEVEL_SAMPLE))
 	_check(next_id == LEVEL_SAMPLE + 1, "skip_level(13) -> man ke = 14 (dang %d)" % next_id)

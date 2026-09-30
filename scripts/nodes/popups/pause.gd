@@ -23,48 +23,71 @@ var _syncing := false
 
 func _on_open() -> void:
 	_syncing = true
-	_bind_slider(slider_music, "music", label_music)
-	_bind_slider(slider_sfx, "sfx", label_sfx)
-	_bind_toggle(check_haptic, "vibration")
-	_bind_toggle(check_safe, "auto_mark_safe")
+	_init_slider(slider_music, "music", label_music)
+	_init_slider(slider_sfx, "sfx", label_sfx)
+	_init_toggle(check_haptic, "vibration")
+	_init_toggle(check_safe, "auto_mark_safe")
 	_refresh_progress()
 	_syncing = false
 
-	# Dây 3 nút (Tiếp tục / Chơi lại / Menu) khai trong `pause.tscn` (cùng scene)
+	# Dây 3 nút (Tiếp tục / Chơi lại / Menu) + 2 slider + 2 checkbox khai trong `pause.tscn`
 
 
-## Nối một slider với SettingManager (kind: master / music / sfx)
-func _bind_slider(slider: HSlider, kind: String, value_label: Label) -> void:
+## Nạp giá trị âm lượng hiện tại của SettingManager vào slider
+## (dây `value_changed` khai trong `pause.tscn` — cùng scene)
+func _init_slider(slider: HSlider, kind: String, value_label: Label) -> void:
 	if slider == null:
 		return
 	var settings := _settings()
 	var current := float(settings.call("get_volume", kind)) if settings != null else slider.value
 	slider.value = current
 	_update_percent(value_label, current)
-	slider.value_changed.connect(func(v: float) -> void:
-		if _syncing:
-			return
-		if settings != null:
-			settings.call("set_volume", kind, v)
-		_update_percent(value_label, v)
-		Sfx.play(Sfx.SLIDER_TICK, 0.05)
-	)
 
 
-## Nối một checkbox với một khoá trong SettingManager
-func _bind_toggle(button: TextureButton, key: String) -> void:
+## Nạp trạng thái hiện tại của SettingManager vào checkbox (dây `toggled` khai trong `pause.tscn`)
+func _init_toggle(button: TextureButton, key: String) -> void:
 	if button == null:
 		return
 	var settings := _settings()
 	if settings != null:
 		button.button_pressed = bool(settings.call("get_setting", key, false))
-	button.toggled.connect(func(pressed: bool) -> void:
-		if _syncing:
-			return
-		if settings != null:
-			settings.call("set_setting", key, pressed)
-		Sfx.play(Sfx.CHECKBOX, 0.05)
-	)
+
+
+func _on_music_value_changed(v: float) -> void:
+	_apply_volume("music", v, label_music)
+
+
+func _on_sfx_value_changed(v: float) -> void:
+	_apply_volume("sfx", v, label_sfx)
+
+
+## Ghi âm lượng vào SettingManager + cập nhật nhãn phần trăm (bỏ qua khi đang nạp giá trị)
+func _apply_volume(kind: String, v: float, value_label: Label) -> void:
+	if _syncing:
+		return
+	var settings := _settings()
+	if settings != null:
+		settings.call("set_volume", kind, v)
+	_update_percent(value_label, v)
+	Sfx.play(Sfx.SLIDER_TICK, 0.05)
+
+
+func _on_haptic_toggled(pressed: bool) -> void:
+	_apply_toggle("vibration", pressed)
+
+
+func _on_safe_toggled(pressed: bool) -> void:
+	_apply_toggle("auto_mark_safe", pressed)
+
+
+## Ghi tuỳ chọn vào SettingManager (bỏ qua khi đang nạp trạng thái)
+func _apply_toggle(key: String, pressed: bool) -> void:
+	if _syncing:
+		return
+	var settings := _settings()
+	if settings != null:
+		settings.call("set_setting", key, pressed)
+	Sfx.play(Sfx.CHECKBOX, 0.05)
 
 
 func _update_percent(label: Label, value: float) -> void:

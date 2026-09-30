@@ -10,3 +10,4 @@ extends BaseLayout
 @export var stamp_label: Label = null
 @export var touch_button: TextureButton = null
 @export var fade_overlay: ColorRect = null
+@export var anim_player: AnimationPlayer = null

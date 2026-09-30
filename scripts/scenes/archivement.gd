@@ -57,8 +57,9 @@ var _drag_start_scroll := 0.0
 
 func _ready() -> void:
 	_bind_refs()
+	# Dây nút/tab khai trong `scenes/archivement.tscn` (cả 2 hướng) — guard chỉ nối lại nếu mất
+	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 	if layout.btn_back != null:
-		layout.btn_back.pressed.connect(_on_back_pressed)
 		UIAnim.attach_press_bounce(layout.btn_back)
 	_connect_manager()
 	orientation_changed.connect(_on_orientation_changed)
@@ -285,8 +286,7 @@ func _collect_tabs() -> void:
 		var tab := child as AchTabButton
 		if tab == null:
 			continue
-		if not tab.tab_pressed.is_connected(_on_tab_pressed):
-			tab.tab_pressed.connect(_on_tab_pressed)
+		ensure_signal(tab, &"tab_pressed", &"_on_tab_pressed")
 	_update_tabs()
 
 
@@ -408,6 +408,8 @@ func _go_to_page(index: int, animate := true) -> void:
 	if not animate:
 		layout.scroll.scroll_horizontal = target
 		return
+	# (GIỮ tween) Đích cuộn = số trang × BỀ RỘNG TRANG đo lúc chạy (đổi theo cỡ khung)
+	# nên không thể bake thành track tĩnh trong .tscn.
 	_scroll_tween = create_tween()
 	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	_scroll_tween.tween_property(layout.scroll, "scroll_horizontal", target, SNAP_TIME)

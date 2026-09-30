@@ -102,8 +102,8 @@ func _wire_buttons() -> void:
 	if layout == null:
 		return
 
-	if layout.btn_back != null and not layout.btn_back.is_connected("pressed", _on_back_pressed):
-		layout.btn_back.pressed.connect(_on_back_pressed)
+	# Dây nút khai trong `scenes/tutorial.tscn` (cả 2 hướng) — guard chỉ nối lại nếu dây bị mất
+	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 
 	var btn_map := {
 		layout.btn_first_time: "first_time",
@@ -122,9 +122,7 @@ func _wire_buttons() -> void:
 
 	for btn in btn_map:
 		if btn != null:
-			var tid: String = btn_map[btn]
-			if not btn.is_connected("pressed", _on_select_tutorial.bind(tid)):
-				btn.pressed.connect(_on_select_tutorial.bind(tid))
+			ensure_signal(btn, &"pressed", &"_on_select_tutorial", [str(btn_map[btn])])
 
 
 func _on_select_tutorial(tid: String) -> void:

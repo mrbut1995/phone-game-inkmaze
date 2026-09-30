@@ -3,6 +3,7 @@ extends Control
 ## Vòng đánh số tại neo trên bàn tutorial — "nở" ra rồi phập phồng khi hiện.
 
 @onready var _num: Label = $Num
+@onready var _anim_player: AnimationPlayer = get_node_or_null("AnimationPlayer")
 
 var _fx: Tween = null
 var _pulse: Tween = null
@@ -18,17 +19,29 @@ func show_at(center: Vector2) -> void:
 	_center_on(center)
 	visible = true
 	_kill_tweens()
-	scale = Vector2(0.55, 0.55)
-	modulate.a = 0.0
-	_fx = create_tween()
-	_fx.tween_property(self, "modulate:a", 1.0, 0.18)
-	_fx.parallel().tween_property(self, "scale", Vector2.ONE, 0.26).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	_fx.tween_callback(_start_pulse)
+	if _anim_player != null and _anim_player.has_animation("show"):
+		# Dây `animation_finished → _on_animation_finished` khai trong `anchor_callout.tscn`
+		# (hết "show" thì tự chuyển sang nhịp "pulse")
+		_anim_player.play("show")
+	else:
+		# Fallback khi scene thiếu AnimationPlayer (hiệu ứng "show" khai trong anchor_callout.tscn)
+		scale = Vector2(0.55, 0.55)
+		modulate.a = 0.0
+		_fx = create_tween()
+		_fx.tween_property(self, "modulate:a", 1.0, 0.18)
+		_fx.parallel().tween_property(self, "scale", Vector2.ONE, 0.26).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		_fx.tween_callback(_start_pulse)
 
 
 ## Dời vòng sang tâm mới — KHÔNG phát lại hiệu ứng nở (dùng khi lưới tính lại: đổi cỡ cửa sổ)
 func move_to(center: Vector2) -> void:
 	_center_on(center)
+
+
+## Hết animation "show" → chuyển sang nhịp thở "pulse" (dây khai trong `anchor_callout.tscn`)
+func _on_animation_finished(anim_name: StringName) -> void:
+	if anim_name == &"show" and _anim_player != null and visible:
+		_anim_player.play("pulse")
 
 
 ## Đặt tâm vòng theo cỡ thật của node; chưa có cỡ thì lấy cỡ tối thiểu khai trong scene
@@ -43,11 +56,15 @@ func _center_on(center: Vector2) -> void:
 func hide_callout() -> void:
 	_kill_tweens()
 	visible = false
-	scale = Vector2.ONE
-	modulate.a = 1.0
+	if _anim_player != null:
+		_anim_player.play("RESET")
+	else:
+		scale = Vector2.ONE
+		modulate.a = 1.0
 
 
 ## Phập phồng nhẹ quanh cỡ gốc — chỉ chạy khi vòng đang hiện
+## (chỉ dùng khi thiếu AnimationPlayer; có player thì animation "pulse" đảm nhiệm)
 func _start_pulse() -> void:
 	if not visible:
 		return

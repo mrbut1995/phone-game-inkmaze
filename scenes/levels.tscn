@@ -15,3 +15,10 @@ layout_mode = 1
 
 [node name="Landscape" parent="." index="2" unique_id=1096027511 instance=ExtResource("L_Landscape")]
 layout_mode = 1
+
+[connection signal="pressed" from="Portrait/Content/InformationArea/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/Content/InformationArea/ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="gui_input" from="Portrait/Content/InformationArea/ChapterBanner" to="." method="_on_banner_input"]
+[connection signal="pressed" from="Landscape/Content/InformationArea/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Landscape/Content/InformationArea/ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="gui_input" from="Landscape/Content/InformationArea/ChapterBanner" to="." method="_on_banner_input"]

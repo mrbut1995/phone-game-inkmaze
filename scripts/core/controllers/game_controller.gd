@@ -319,9 +319,9 @@ func _complete_floor() -> void:
 	# SFX: jingle thắng màn; floor hoàn hảo -> thành tích; có thưởng bước -> tiếng đếm hạt gỗ
 	Sfx.play(Sfx.LEVEL_WIN)
 	if game_state.floor_wall_hits == 0:
-		_play_sfx_delayed(Sfx.ACHIEVEMENT, 1.6)
+		_play_sfx_delayed(_sfx_timer_achievement, Sfx.ACHIEVEMENT, 1.6)
 	if _pending_bonus > 0:
-		_play_sfx_delayed(Sfx.FLOOR_BONUS, 1.1)
+		_play_sfx_delayed(_sfx_timer_floor_bonus, Sfx.FLOOR_BONUS, 1.1)
 
 	_report_to_archivements(true, floor_time)
 
@@ -797,12 +797,34 @@ func _on_pause_toggled(is_paused: bool) -> void:
 # ---------------------------------------------------------------------------
 # Helpers SFX & Daily
 # ---------------------------------------------------------------------------
-func _play_sfx_delayed(sfx_name: String, delay: float) -> void:
+## Tiếng thưởng phát SAU khi hiệu ứng ván thắng chạy xong — Timer khai trong `scenes/game.tscn`
+## (AchievementSfxTimer 1.6s · FloorBonusSfxTimer 1.1s + dây `timeout` khai ở đó).
+@onready var _sfx_timer_achievement: Timer = get_node_or_null("AchievementSfxTimer")
+@onready var _sfx_timer_floor_bonus: Timer = get_node_or_null("FloorBonusSfxTimer")
+
+
+func _play_sfx_delayed(timer: Timer, sfx_name: String, delay: float) -> void:
 	if not is_inside_tree():
 		return
-	var tw := create_tween()
-	tw.tween_interval(delay)
-	tw.tween_callback(func() -> void: Sfx.play(sfx_name))
+	if timer != null:
+		timer.start()   # wait_time khai trong scenes/game.tscn
+		return
+	# Fallback khi scene thiếu Timer (dây + thời gian thật khai trong scenes/game.tscn)
+	get_tree().create_timer(delay).timeout.connect(_play_sfx_now.bind(sfx_name))
+
+
+func _play_sfx_now(sfx_name: String) -> void:
+	Sfx.play(sfx_name)
+
+
+## Hết AchievementSfxTimer → tiếng thành tích (dây khai trong scenes/game.tscn)
+func _on_achievement_sfx_timeout() -> void:
+	_play_sfx_now(Sfx.ACHIEVEMENT)
+
+
+## Hết FloorBonusSfxTimer → tiếng thưởng bước (dây khai trong scenes/game.tscn)
+func _on_floor_bonus_sfx_timeout() -> void:
+	_play_sfx_now(Sfx.FLOOR_BONUS)
 
 
 ## Chốt NHIỆM VỤ Daily sau khi thắng ván:

@@ -68,20 +68,21 @@ func _bind_refs() -> void:
 		push_warning("daily: bố cục chưa gắn DailyLayout — thiếu binding trong scenes/layout/<hướng>/daily.tscn")
 
 
-## Nối signal + hiệu ứng (mỗi NODE chỉ nối 1 lần)
+## Nối signal + hiệu ứng (dây NÚT khai trong `scenes/daily.tscn` — guard chỉ nối lại nếu mất dây)
 func _wire_buttons() -> void:
-	if layout.btn_back != null and not layout.btn_back.has_meta("wired"):
-		layout.btn_back.set_meta("wired", true)
-		layout.btn_back.pressed.connect(_on_back_pressed)
+	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
+	ensure_signal(layout.btn_play, &"pressed", &"_on_play_pressed")
+	ensure_signal(layout.calendar, &"day_selected", &"_on_day_selected")
+	if layout.btn_back != null and not layout.btn_back.has_meta("bounce_attached"):
+		layout.btn_back.set_meta("bounce_attached", true)
 		UIAnim.attach_press_bounce(layout.btn_back)
-	if layout.btn_play != null and not layout.btn_play.has_meta("wired"):
-		layout.btn_play.set_meta("wired", true)
-		layout.btn_play.pressed.connect(_on_play_pressed)
+	if layout.btn_play != null and not layout.btn_play.has_meta("bounce_attached"):
+		layout.btn_play.set_meta("bounce_attached", true)
 		UIAnim.attach_press_bounce(layout.btn_play)
-		UIAnim.play_pulse(layout.btn_play, 1.03, 1.8)
-	if layout.calendar != null and not layout.calendar.has_meta("wired"):
-		layout.calendar.set_meta("wired", true)
-		layout.calendar.day_selected.connect(_on_day_selected)
+		# "Thở" nhẹ để hút mắt vào nút CHƠI — animation "pulse" của layout (PulseAnim)
+		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.btn_play):
+			# Fallback khi layout thiếu PulseAnim
+			UIAnim.play_pulse(layout.btn_play, 1.03, 1.8)
 	if _daily != null and _daily.has_signal("daily_changed") \
 			and not _daily.is_connected("daily_changed", _refresh):
 		_daily.connect("daily_changed", _refresh)

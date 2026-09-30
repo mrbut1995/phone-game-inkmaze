@@ -158,14 +158,12 @@ func _wire_controllers() -> void:
 	_connect_once(ui_controller, "daily_requested", game_controller, "_on_daily_requested")
 	_connect_once(ui_controller, "pause_toggled", game_controller, "_on_pause_toggled")
 	_connect_once(ui_controller, "memorize_finished", game_controller, "_on_memorize_finished")
-	# Nút trên thanh Status
-	if layout != null and layout.pause_btn != null and not layout.pause_btn.has_meta("wired"):
-		layout.pause_btn.set_meta("wired", true)
-		layout.pause_btn.pressed.connect(_on_pause_pressed)
-	if layout != null and layout.instruction_btn != null and game_controller != null \
-			and not layout.instruction_btn.has_meta("wired"):
-		layout.instruction_btn.set_meta("wired", true)
-		layout.instruction_btn.pressed.connect(game_controller.open_instruction)
+	# Nút trên thanh Status — dây khai trong `scenes/game.tscn` (cả 2 hướng);
+	# guard chỉ nối lại nếu dây bị mất: nút Pause → script màn, nút "?" → GameController
+	if layout != null and layout.pause_btn != null:
+		ensure_signal(layout.pause_btn, &"pressed", &"_on_pause_pressed")
+	if layout != null and layout.instruction_btn != null and game_controller != null:
+		ensure_signal(layout.instruction_btn, &"pressed", &"open_instruction", [], game_controller)
 
 
 ## Mọi nút của màn chơi: 2 nút trên THANH TRẠNG THÁI (layout) + các nút trong THANH HÀNH ĐỘNG (HUD)

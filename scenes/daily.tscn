@@ -16,3 +16,10 @@ layout_mode = 1
 [node name="Landscape" parent="." index="2" unique_id=1986560234 instance=ExtResource("L_Landscape")]
 layout_mode = 1
 metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Portrait/Panel/HUD/Content/Information/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Play" to="." method="_on_play_pressed"]
+[connection signal="day_selected" from="Portrait/Panel/Calendar" to="." method="_on_day_selected"]
+[connection signal="pressed" from="Landscape/Panel/HUD/Content/Information/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Landscape/Panel/HUD/Content/Information/Play" to="." method="_on_play_pressed"]
+[connection signal="day_selected" from="Landscape/Panel/HUD/Content/Calendar" to="." method="_on_day_selected"]

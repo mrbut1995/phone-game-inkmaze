@@ -19,6 +19,16 @@ var _pencil_tween: Tween = null
 var _transitioning: bool = false
 
 
+## Ngòi bút chì phác họa quanh logo — animation "pencil_idle" (loop) khai trong layout
+## `scenes/layout/<hướng>/splash.tscn` (node `PencilAnim`). Trả về false nếu scene thiếu.
+func _play_pencil_idle() -> bool:
+	var player := layout.get_node_or_null("PencilAnim") as AnimationPlayer
+	if player == null or not player.has_animation(&"pencil_idle"):
+		return false
+	player.play(&"pencil_idle")
+	return true
+
+
 ## Gắn node của layout đang hiển thị (2 layout giữ CÙNG đường dẫn node)
 func _bind_refs() -> void:
 	layout = active_layout() as SplashLayout
@@ -29,8 +39,8 @@ func _bind_refs() -> void:
 func _ready() -> void:
 	_bind_refs()
 	_refresh_stamp()
-	if layout.touch_button != null:
-		layout.touch_button.pressed.connect(_on_touch_pressed)
+	# Dây `pressed → _on_touch_pressed` khai trong `scenes/splash.tscn` (guard chỉ nối lại nếu mất)
+	ensure_signal(layout.touch_button, &"pressed", &"_on_touch_pressed")
 	_setup_animations()
 
 
@@ -49,49 +59,65 @@ func _setup_animations() -> void:
 		_goto_title()
 		return
 
-	# Khởi tạo trạng thái ẩn ban đầu
-	if layout.studio_label != null:
-		layout.studio_label.modulate.a = 0.0
-	if layout.logo_container != null:
-		layout.logo_container.pivot_offset = layout.logo_container.size * 0.5
-		layout.logo_container.scale = Vector2(0.3, 0.3)
-		layout.logo_container.modulate.a = 0.0
-	if layout.title_label != null:
-		layout.title_label.modulate.a = 0.0
-	if layout.tagline_label != null:
-		layout.tagline_label.modulate.a = 0.0
-	if layout.fade_overlay != null:
-		layout.fade_overlay.visible = false
-		layout.fade_overlay.modulate.a = 0.0
+	if layout.anim_player != null and layout.anim_player.has_animation("play_entrance"):
+		# Đặt các pivot cơ bản
+		if layout.logo_container != null:
+			layout.logo_container.pivot_offset = layout.logo_container.size * 0.5
+		layout.anim_player.play("play_entrance")
+		
+		# Ngòi bút chì vẽ phác thảo quanh logo — animation "pencil_idle" (loop) của layout
+		if layout.pencil != null:
+			layout.pencil.pivot_offset = Vector2(0, layout.pencil.size.y)
+			if not _play_pencil_idle():
+				# Fallback khi layout thiếu PencilAnim
+				_pencil_tween = create_tween().set_loops()
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", 16.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", -12.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	else:
+		# Fallback khi layout thiếu animation "play_entrance"
+		# Khởi tạo trạng thái ẩn ban đầu (Fallback)
+		if layout.studio_label != null:
+			layout.studio_label.modulate.a = 0.0
+		if layout.logo_container != null:
+			layout.logo_container.pivot_offset = layout.logo_container.size * 0.5
+			layout.logo_container.scale = Vector2(0.3, 0.3)
+			layout.logo_container.modulate.a = 0.0
+		if layout.title_label != null:
+			layout.title_label.modulate.a = 0.0
+		if layout.tagline_label != null:
+			layout.tagline_label.modulate.a = 0.0
+		if layout.fade_overlay != null:
+			layout.fade_overlay.visible = false
+			layout.fade_overlay.modulate.a = 0.0
 
-	# 1. Studio label hiện nhẹ
-	if layout.studio_label != null:
-		var tw_studio := create_tween()
-		tw_studio.tween_property(layout.studio_label, "modulate:a", 1.0, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		# 1. Studio label hiện nhẹ
+		if layout.studio_label != null:
+			var tw_studio := create_tween()
+			tw_studio.tween_property(layout.studio_label, "modulate:a", 1.0, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
-	# 2. Logo bung nở với hiệu ứng nét mực & đàn hồi
-	if layout.logo_container != null:
-		var tw_logo := create_tween().set_parallel(true)
-		tw_logo.tween_property(layout.logo_container, "scale", Vector2.ONE, 0.55).set_delay(0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		tw_logo.tween_property(layout.logo_container, "modulate:a", 1.0, 0.4).set_delay(0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		# 2. Logo bung nở với hiệu ứng nét mực & đàn hồi
+		if layout.logo_container != null:
+			var tw_logo := create_tween().set_parallel(true)
+			tw_logo.tween_property(layout.logo_container, "scale", Vector2.ONE, 0.55).set_delay(0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tw_logo.tween_property(layout.logo_container, "modulate:a", 1.0, 0.4).set_delay(0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
-	# 3. Ngòi bút chì vẽ phác thảo quanh logo
-	if layout.pencil != null:
-		layout.pencil.pivot_offset = Vector2(0, layout.pencil.size.y)
-		_pencil_tween = create_tween().set_loops()
-		_pencil_tween.tween_property(layout.pencil, "rotation_degrees", 16.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		_pencil_tween.tween_property(layout.pencil, "rotation_degrees", -12.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		# 3. Ngòi bút chì vẽ phác thảo quanh logo
+		if layout.pencil != null:
+			layout.pencil.pivot_offset = Vector2(0, layout.pencil.size.y)
+			if not _play_pencil_idle():
+				# Fallback khi layout thiếu PencilAnim
+				_pencil_tween = create_tween().set_loops()
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", 16.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", -12.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
-	# 4. Tiêu đề và khẩu hiệu xuất hiện
-	if layout.title_label != null:
-		UIAnim.play_pop_in(layout.title_label, 0.45, 0.88, 0.35)
-	if layout.tagline_label != null:
-		UIAnim.play_slide_in(layout.tagline_label, Vector2(0, 15), 0.65, 0.3)
+		# 4. Tiêu đề và khẩu hiệu xuất hiện
+		if layout.title_label != null:
+			UIAnim.play_pop_in(layout.title_label, 0.45, 0.88, 0.35)
+		if layout.tagline_label != null:
+			UIAnim.play_slide_in(layout.tagline_label, Vector2(0, 15), 0.65, 0.3)
 
-	# 5. Tự động chuyển cảnh sau 2.2 giây
-	var tw_timer := create_tween()
-	tw_timer.tween_interval(2.2)
-	tw_timer.tween_callback(Callable(self, "_on_touch_pressed"))
+	# Tự động chuyển cảnh sau 2.2 giây — Timer `AutoAdvanceTimer` khai trong `scenes/splash.tscn`
+	# (autostart + dây `timeout → _on_touch_pressed` khai ở đó)
 
 
 func _on_touch_pressed() -> void:
@@ -100,6 +126,9 @@ func _on_touch_pressed() -> void:
 	_transitioning = true
 	if _pencil_tween != null and _pencil_tween.is_valid():
 		_pencil_tween.kill()
+	var pencil_anim := layout.get_node_or_null("PencilAnim") as AnimationPlayer
+	if pencil_anim != null:
+		pencil_anim.stop()
 
 	Sfx.play(Sfx.PAGE_TURN)
 
@@ -107,14 +136,28 @@ func _on_touch_pressed() -> void:
 		_goto_title()
 		return
 
-	# Hiệu ứng chuyển cảnh mượt mà: Fade overlay giấy ngà che phủ rồi nạp Title Scene
-	if layout.fade_overlay != null:
-		layout.fade_overlay.visible = true
-		layout.fade_overlay.modulate.a = 0.0
-		var tw_out := create_tween()
-		tw_out.tween_property(layout.fade_overlay, "modulate:a", 1.0, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		tw_out.tween_callback(Callable(self, "_goto_title"))
+	# Hiệu ứng chuyển cảnh mượt mà — animation "play_exit" của layout;
+	# dây `animation_finished → _on_exit_animation_finished` khai trong `scenes/splash.tscn`
+	if layout.anim_player != null and layout.anim_player.has_animation("play_exit"):
+		if not layout.anim_player.animation_finished.is_connected(_on_exit_animation_finished):
+			# Guard: chỉ nối lại khi dây trong .tscn bị mất (layout đổi cấu trúc)
+			layout.anim_player.animation_finished.connect(_on_exit_animation_finished)
+		layout.anim_player.play("play_exit")
 	else:
+		# Fallback khi layout thiếu animation "play_exit"
+		if layout.fade_overlay != null:
+			layout.fade_overlay.visible = true
+			layout.fade_overlay.modulate.a = 0.0
+			var tw_out := create_tween()
+			tw_out.tween_property(layout.fade_overlay, "modulate:a", 1.0, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			tw_out.tween_callback(Callable(self, "_goto_title"))
+		else:
+			_goto_title()
+
+
+## Hết animation "play_exit" (dây khai trong `scenes/splash.tscn`) → sang màn Tiêu đề
+func _on_exit_animation_finished(anim_name: StringName) -> void:
+	if anim_name == &"play_exit":
 		_goto_title()
 
 

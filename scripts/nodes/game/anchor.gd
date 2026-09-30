@@ -16,6 +16,19 @@ const SELECTED_MODULATE := Color(1.8, 1.4, 0.4, 1.0)
 const NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
 
 @onready var _button: TextureButton = $TextureButton
+## AnimationPlayer của `anchor.tscn` — các dáng nở/chọn/nhấn khai trong scene,
+## code chỉ set pose đầu + gọi play (kèm fallback tween nếu scene thiếu).
+@onready var _anim: AnimationPlayer = get_node_or_null("AnimationPlayer")
+## Hẹn giờ so le khi neo hiện ra — Timer khai trong `anchor.tscn` (dây `timeout` cũng ở đó);
+## code chỉ đặt `wait_time` (theo toạ độ góc do Board tính) rồi `start()`.
+@onready var _entrance_timer: Timer = get_node_or_null("EntranceTimer")
+
+
+func _play_anim(anim_name: StringName) -> bool:
+	if _anim == null or not _anim.has_animation(anim_name):
+		return false
+	_anim.play(anim_name)
+	return true
 
 
 ## Đặt cỡ neo (Board tính theo số ô) — neo tự lo TÂM XOAY cho hiệu ứng
@@ -28,10 +41,26 @@ func set_anchor_size(side: float) -> void:
 func play_entrance(delay: float) -> void:
 	pivot_offset = size * 0.5
 	scale = Vector2.ZERO
+	if _anim != null and _anim.has_animation(&"entrance"):
+		if delay > 0.0:
+			if _entrance_timer != null:
+				_entrance_timer.wait_time = delay
+				_entrance_timer.start()
+			else:
+				# Fallback khi scene thiếu EntranceTimer (dây thật khai trong anchor.tscn)
+				get_tree().create_timer(delay).timeout.connect(_play_entrance_now)
+		else:
+			_play_entrance_now()
+		return
+	# Fallback khi scene thiếu AnimationPlayer
 	var tw := create_tween()
 	if delay > 0.0:
 		tw.tween_interval(delay)
 	tw.tween_property(self, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func _play_entrance_now() -> void:
+	_play_anim(&"entrance")
 
 
 func _ready() -> void:
@@ -50,6 +79,21 @@ func _on_button_pressed() -> void:
 func set_selected(active: bool) -> void:
 	if _button == null:
 		_button = $TextureButton
+	if active:
+		if _play_anim(&"selected"):
+			return
+	else:
+		# Chỉ chạy animation thu nhỏ khi neo ĐANG ở trạng thái chọn (scale lớn);
+		# nếu đang là dáng thường thì trả về ngay, tránh "giật" do animation ép key gốc.
+		if scale.x > 1.01:
+			if _play_anim(&"unselected"):
+				return
+		else:
+			scale = Vector2.ONE
+			if _button != null:
+				_button.modulate = NORMAL_MODULATE
+			return
+	# Fallback khi scene thiếu AnimationPlayer
 	var tw := create_tween().set_parallel(true)
 	if active:
 		tw.tween_property(self, "scale", Vector2(1.35, 1.35), 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -62,6 +106,9 @@ func set_selected(active: bool) -> void:
 
 
 func pulse() -> void:
+	pivot_offset = size * 0.5
+	if _play_anim(&"pulse"):
+		return
 	var tw := create_tween()
 	tw.tween_property(self, "scale", Vector2(1.4, 1.4), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)

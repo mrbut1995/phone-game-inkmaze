@@ -14,6 +14,27 @@
 [ext_resource type="Texture2D" uid="uid://ilj2cy7bdvb7" path="res://assets/images/popups/btn_popup_success_pressed.svg" id="12_go_p"]
 [ext_resource type="Texture2D" uid="uid://byxyq1x4aulpb" path="res://assets/images/popups/btn_popup_success_focus.svg" id="13_go_f"]
 
+[sub_resource type="Animation" id="Animation_nf_bonus"]
+resource_name = "bonus_pop"
+length = 0.28
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Content/BonusBox/Value:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.28),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nffx"]
+_data = {
+&"bonus_pop": SubResource("Animation_nf_bonus")
+}
+
 [node name="Base" unique_id=1760705024 instance=ExtResource("1_base")]
 script = ExtResource("2_next")
 
@@ -341,6 +362,11 @@ texture_normal = ExtResource("11_go_n")
 texture_pressed = ExtResource("12_go_p")
 texture_hover = ExtResource("11_go_n")
 texture_focused = ExtResource("13_go_f")
+
+[node name="FxAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nffx")
+}
 
 [node name="Label" type="Label" parent="Panel/Content/GoBtn" index="0" unique_id=1435856004]
 layout_mode = 1

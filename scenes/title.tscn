@@ -20,3 +20,8 @@ script = ExtResource("2_script")
 [node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
 
 [node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]
+
+[connection signal="animation_finished" from="Portrait/AnimationPlayer" to="." method="_on_exit_animation_finished"]
+[connection signal="animation_finished" from="Landscape/AnimationPlayer" to="." method="_on_exit_animation_finished"]
+[connection signal="pressed" from="Portrait/TouchButton" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Landscape/TouchButton" to="." method="_on_start_pressed"]

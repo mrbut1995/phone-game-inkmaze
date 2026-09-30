@@ -59,13 +59,25 @@ func set_undo_highlight(on: bool) -> void:
 		return
 	if _undo_highlight_tween != null and _undo_highlight_tween.is_valid():
 		_undo_highlight_tween.kill()
-		_undo_highlight_tween = null
+	_undo_highlight_tween = null
+	# Nhịp "thở" khai trong `action_bar.tscn` (player `PulseAnim`); thiếu thì fallback tween
+	var bar := _undo_pulse_bar()
 	if on:
 		undo_button.modulate = Color(1.25, 1.15, 0.55)
-		_undo_highlight_tween = UIAnim.play_pulse(undo_button, 1.12, 0.7)
+		if bar == null or not UIAnim.play_layout_anim(bar, "PulseAnim", &"pulse_undo", undo_button):
+			_undo_highlight_tween = UIAnim.play_pulse(undo_button, 1.12, 0.7)
 	else:
 		undo_button.modulate = Color.WHITE
+		if bar != null:
+			UIAnim.stop_layout_anim(bar, "PulseAnim")
 		undo_button.scale = Vector2.ONE
+
+
+## Thanh công cụ của HUD đang dùng (chứa player `PulseAnim` cho nhịp nút Undo)
+func _undo_pulse_bar() -> Node:
+	if hud == null:
+		return null
+	return hud.action_bar()
 
 
 func undo_highlighted() -> bool:
@@ -157,8 +169,7 @@ func show_floor_complete(result: Dictionary) -> void:
 	if popup.has_signal("daily_requested"):
 		_connect_once(popup, "daily_requested", _emit_daily)
 
-	if id == Popups.WIN:
-		_play_star_sequence()
+	# Popup WIN: tiếng chuông 3 sao do các Timer autostart khai trong `winning.tscn` phát
 
 
 func show_game_over(result: Dictionary) -> void:
@@ -278,13 +289,3 @@ func _on_home_pressed() -> void:
 func _on_resume_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	pause_toggled.emit(false)
-
-
-## 3 ngôi sao hiện lần lượt trên popup thắng -> 3 tiếng chuông gỗ cao dần
-func _play_star_sequence() -> void:
-	for i in 3:
-		if not is_inside_tree():
-			return
-		var tw := create_tween()
-		tw.tween_interval(0.45 + i * 0.22)
-		tw.tween_callback(func() -> void: Sfx.star_pop(i))

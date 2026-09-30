@@ -12,6 +12,19 @@ var _base_width := 11.0
 var _p1 := Vector2.ZERO
 var _p2 := Vector2.ZERO
 var _preview_pulse: Tween = null
+## AnimationPlayer của `wall_segment.tscn` — hiệu ứng nhấp nháy lớp preview khai trong scene
+var _anim: AnimationPlayer = null
+
+
+func _ready() -> void:
+	_anim = get_node_or_null("AnimationPlayer") as AnimationPlayer
+
+
+func _play_anim(anim_name: StringName) -> bool:
+	if _anim == null or not _anim.has_animation(anim_name):
+		return false
+	_anim.play(anim_name)
+	return true
 
 const COLOR_VISIBLE := Color(0.12, 0.16, 0.23, 1.0)        # #1E283A
 const COLOR_SUSPECTED := Color(0.77, 0.52, 0.23, 1.0)      # #C4843A
@@ -61,6 +74,8 @@ func animate_appear() -> void:
 
 
 ## Hiệu ứng nét bút chì/mực kéo dài từ p1 sang p2
+## (GIỮ tween) Nét vẽ dần bằng cách NỘI SUY ĐIỂM của Line2D — `points` là dữ liệu hình học
+## lúc chạy (số điểm tăng dần), không phải thuộc tính khai được trong animation.
 func animate_stroke_draw(duration := 0.12) -> void:
 	if points.size() < 2:
 		modulate.a = 0.0
@@ -94,20 +109,28 @@ func set_dashed(on: bool) -> void:
 		texture = null
 
 
-## Nhấp nháy nhẹ lớp preview (tường đứt đoạn) để mắt bám vào — tắt thì trả alpha về 1
+## Nhấp nháy nhẹ lớp preview (tường đứt đoạn) để mắt bám vào — tắt thì trả alpha về 1.
+## Nhịp nhấp nháy khai trong animation "preview_pulse" (loop) của scene.
 func set_preview_pulse(on: bool) -> void:
 	if _preview_pulse != null and _preview_pulse.is_valid():
 		_preview_pulse.kill()
 	_preview_pulse = null
 	if on:
+		if _play_anim(&"preview_pulse"):
+			return
+		# Fallback khi scene thiếu AnimationPlayer
 		_preview_pulse = create_tween().set_loops()
 		_preview_pulse.tween_property(self, "modulate:a", 0.45, 0.7)
 		_preview_pulse.tween_property(self, "modulate:a", 1.0, 0.7)
 	else:
+		if _anim != null:
+			_anim.stop()
 		modulate.a = 1.0
 
 
 ## Hiệu ứng nảy dày nét và đỏ rực khi người chơi đâm trúng tường
+## (GIỮ tween) Bề dày đích = _base_width × 1.75 — _base_width do Board set lúc chạy
+## (co theo cỡ bàn) nên không thể bake giá trị tuyệt đối vào track của scene.
 func flash_hit_then_stay_visible() -> void:
 	set_state("hit")
 	var target_width := _base_width * 1.75

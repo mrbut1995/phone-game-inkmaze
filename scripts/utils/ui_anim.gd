@@ -3,11 +3,40 @@ extends RefCounted
 ## ============================================================================
 ## Helper tĩnh: Quản lý các hiệu ứng tương tác (Micro-interactions) và animation
 ## giao diện (UI) cho phong cách Sổ tay & Mực của InkMaze.
+##
+## QUY ƯỚC: hiệu ứng HÌNH TĨNH của từng màn khai bằng AnimationPlayer TRONG .tscn
+## (các player phụ: PencilAnim · IdleAnim · TapAnim · PulseAnim · WalletAnim · FxAnim…);
+## `play_layout_anim()` ưu tiên animation của scene. Tween trong file này là FALLBACK
+## khi scene thiếu + vài helper chạy theo DỮ LIỆU lúc chạy (chữ nổi bay, cuộn số…).
 ## ============================================================================
 
 ## Nhãn "chữ nổi" (+5 · BONUS · PERFECT): cỡ · pivot · canh lề KHAI TRONG SCENE,
 ## code chỉ đặt nội dung + chạy hiệu ứng (không tạo Label bằng `.new()`).
 const FLOATING_TEXT_SCENE := preload("res://nodes/game/floating_text.tscn")
+
+## Chạy hoạt cảnh khai sẵn trong LAYOUT (player phụ như PulseAnim/IdleAnim/TapAnim…).
+## Trả về TRUE nếu đã chạy animation; FALSE = scene thiếu player/animation ⇒ phía gọi
+## tự chạy fallback tween (play_pulse / play_float_idle / play_pop_in…).
+## `pivot_node` (tuỳ chọn): node cần đặt TÂM XOAY trước khi chạy (hiệu ứng scale).
+static func play_layout_anim(layout: Node, player_name: String, anim_name: StringName, pivot_node: Control = null) -> bool:
+	if layout == null or not is_instance_valid(layout):
+		return false
+	var player := layout.get_node_or_null(player_name) as AnimationPlayer
+	if player == null or not player.has_animation(anim_name):
+		return false
+	if pivot_node != null:
+		_update_pivot(pivot_node)
+	player.play(anim_name)
+	return true
+
+
+## Dừng hoạt cảnh lặp của player phụ trong layout (VD trước khi chuyển cảnh / đổi dáng)
+static func stop_layout_anim(layout: Node, player_name: String) -> void:
+	if layout == null or not is_instance_valid(layout):
+		return
+	var player := layout.get_node_or_null(player_name) as AnimationPlayer
+	if player != null:
+		player.stop()
 
 ## Gắn hiệu ứng nhấn nảy đàn hồi (squash & bounce) cho bất kỳ nút bấm nào
 static func attach_press_bounce(btn: BaseButton, scale_down := 0.94, duration := 0.1) -> void:

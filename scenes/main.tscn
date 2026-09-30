@@ -16,3 +16,18 @@ layout_mode = 1
 [node name="Landscape" parent="." index="2" unique_id=2059472326 instance=ExtResource("L_main_landscape")]
 layout_mode = 1
 anchors_preset = -1
+
+[connection signal="pressed" from="Portrait/Panel/Content/GameMode/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Content/GameMode/Dungeon" to="." method="_on_dungeon_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Content/GameMode/DailyChallenge" to="." method="_on_daily_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Content/Other/Leaderboard" to="." method="_on_leaderboard_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Content/Other/Shop" to="." method="_on_shop_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Content/Other/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Archivement" to="." method="_on_archivement_pressed"]
+[connection signal="pressed" from="Landscape/Paper/Menu/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Landscape/Paper/Menu/Dungeon" to="." method="_on_dungeon_pressed"]
+[connection signal="pressed" from="Landscape/Paper/Menu/DailyChallenge" to="." method="_on_daily_pressed"]
+[connection signal="pressed" from="Landscape/Paper/Menu/Utils/Leaderboard" to="." method="_on_leaderboard_pressed"]
+[connection signal="pressed" from="Landscape/Paper/Menu/Utils/Shop" to="." method="_on_shop_pressed"]
+[connection signal="pressed" from="Landscape/Paper/Menu/Utils/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Landscape/Paper/Hero/Archivement" to="." method="_on_archivement_pressed"]

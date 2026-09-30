@@ -140,6 +140,8 @@ func play_transition(target_path: String, change_callback: Callable, style := "p
 # ---------------------------------------------------------------------------
 
 ## Hiệu ứng lật trang sổ tay
+## (GIỮ tween) Toạ độ trang giấy tính theo BỀ RỘNG MÀN HÌNH lúc chạy (start/end = ±w) nên
+## không thể bake thành track tĩnh; node/hình dáng đã khai sẵn trong `scenes/loading.tscn`.
 func _run_page_turn(target_path: String, change_callback: Callable, forward: bool) -> void:
 	var w := _get_screen_size().x
 
@@ -172,6 +174,8 @@ func _run_page_turn(target_path: String, change_callback: Callable, forward: boo
 
 
 ## Hiệu ứng vết mực tròn loang ra (Ink Circle Bloom)
+## (GIỮ tween) Bán kính mực = ĐƯỜNG CHÉO màn hình lúc chạy; vệt mực vẽ bằng `_draw()
+## theo biến `_ink_radius` (không phải thuộc tính node) nên không có track để khai.
 func _run_ink_circle(target_path: String, change_callback: Callable) -> void:
 	var vp_size := _get_screen_size()
 	_ink_max_radius = vp_size.length() * 0.65
@@ -199,6 +203,8 @@ func _run_ink_circle(target_path: String, change_callback: Callable) -> void:
 
 
 ## Hiệu ứng mờ dần (Paper Fade)
+## (GIỮ tween) Đây là hiệu ứng ĐIỀU NHỊP: đổi scene nằm GIỮA 2 chặng (mờ vào → đổi → mờ ra),
+## code phải `await` đúng nhịp nên giữ tween thay vì tách animation rời.
 func _run_paper_fade(target_path: String, change_callback: Callable) -> void:
 	_fade_rect.visible = true
 	_fade_rect.modulate.a = 0.0

@@ -15,3 +15,16 @@ layout_mode = 1
 
 [node name="Landscape" parent="." index="2" unique_id=1411152081 instance=ExtResource("L_Landscape")]
 layout_mode = 1
+
+[connection signal="pressed" from="Portrait/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="tab_pressed" from="Portrait/Sheet/Tabs/Tab0" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Sheet/Tabs/Tab1" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Sheet/Tabs/Tab2" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Sheet/Tabs/Tab3" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Sheet/Tabs/Tab4" to="." method="_on_tab_pressed"]
+[connection signal="pressed" from="Landscape/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="tab_pressed" from="Landscape/Sheet/Body/LeftCol/Tabs/Tab0" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Landscape/Sheet/Body/LeftCol/Tabs/Tab1" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Landscape/Sheet/Body/LeftCol/Tabs/Tab2" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Landscape/Sheet/Body/LeftCol/Tabs/Tab3" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Landscape/Sheet/Body/LeftCol/Tabs/Tab4" to="." method="_on_tab_pressed"]

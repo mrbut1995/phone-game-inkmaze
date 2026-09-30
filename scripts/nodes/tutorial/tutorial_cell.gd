@@ -22,16 +22,29 @@ const TEX_FINISH_CLOSED := preload("res://assets/images/game/cell_finish_closed.
 ## Cỡ chữ — ghi đè trong .tscn
 @export var text_size: int = 0  # 0 = dùng font size từ LabelSettings gốc
 
-var _fx: Tween = null
-var _home_pos := Vector2.ZERO
-
 @onready var _sprite: TextureButton = $Sprite
 @onready var _label: Label = $Sprite/Label
+## AnimationPlayer của chính `tutorial_cell.tscn` — hiệu ứng nảy/nháy/rung khai trong scene;
+## code chỉ set pose ban đầu (scale/màu) + gọi play (kèm fallback tween nếu scene thiếu).
+var _anim: AnimationPlayer = null
+## Hẹn giờ SO LE (ô bay vào / nảy mừng) — Timer khai trong `tutorial_cell.tscn` (dây `timeout` ở đó);
+## code chỉ đặt `wait_time` rồi `start()`.
+var _entrance_timer: Timer = null
+var _win_timer: Timer = null
 
 
 func _ready() -> void:
-	_home_pos = position
+	_anim = get_node_or_null("AnimationPlayer") as AnimationPlayer
+	_entrance_timer = get_node_or_null("EntranceTimer") as Timer
+	_win_timer = get_node_or_null("WinTimer") as Timer
 	_apply_cell_text(cell_text)
+
+
+func _play_anim(anim_name: StringName) -> bool:
+	if _anim == null or not _anim.has_animation(anim_name):
+		return false
+	_anim.play(anim_name)
+	return true
 
 
 func _apply_cell_text(text: String) -> void:
@@ -89,55 +102,89 @@ func set_text_size(px: int) -> void:
 		_label.add_theme_font_size_override("font_size", px)
 
 
-## Nhún nhẹ khi thao tác đúng ("pháo giấy nhỏ" của tutorial)
+## Nhún nhẹ khi thao tác đúng ("pháo giấy nhỏ" của tutorial) — animation "pulse" trong scene
 func pulse() -> void:
-	_kill_fx()
 	pivot_offset = size * 0.5
+	if _play_anim(&"pulse"):
+		return
 	scale = Vector2(0.85, 0.85)
-	_fx = create_tween()
-	_fx.tween_property(self, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	var tw := create_tween()
+	tw.tween_property(self, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 ## Ô bay vào khi mở bài (so le theo `delay` — gọi từ `BaseTutorial.play_entrance()`)
 func play_entrance(delay: float = 0.0) -> void:
+	pivot_offset = size * 0.5
+	scale = Vector2(0.86, 0.86)
+	modulate.a = 0.0
+	if _anim != null and _anim.has_animation(&"entrance"):
+		if delay > 0.0:
+			if _entrance_timer != null:
+				_entrance_timer.wait_time = delay
+				_entrance_timer.start()
+			else:
+				# Fallback khi scene thiếu EntranceTimer (dây thật khai trong tutorial_cell.tscn)
+				get_tree().create_timer(delay).timeout.connect(_play_entrance_now)
+		else:
+			_play_entrance_now()
+		return
+	# Fallback khi scene thiếu AnimationPlayer
 	UIAnim.play_pop_in(self, delay, 0.86, 0.26)
 
 
-## Ô vừa được đi qua: nhún + nháy sáng nhẹ
+func _play_entrance_now() -> void:
+	_play_anim(&"entrance")
+
+
+## Ô vừa được đi qua: nhún + nháy sáng nhẹ — animation "step" trong scene
 func play_step() -> void:
+	pivot_offset = size * 0.5
+	if _play_anim(&"step"):
+		return
 	pulse()
-	var flash := create_tween()
 	modulate = Color(1.18, 1.18, 1.12, 1.0)
+	var flash := create_tween()
 	flash.tween_property(self, "modulate", Color.WHITE, 0.3)
 
 
-## Thao tác SAI (đạp mìn / đi đè ô cũ / đâm tường): nháy đỏ + rung ngang
+## Thao tác SAI (đạp mìn / đi đè ô cũ / đâm tường): nháy đỏ + rung ngang — animation "fail"
 func play_fail() -> void:
-	_kill_fx()
+	if _play_anim(&"fail"):
+		return
 	modulate = Color(1.0, 0.45, 0.42, 1.0)
 	create_tween().tween_property(self, "modulate", Color.WHITE, 0.45)
-	_fx = create_tween()
+	var home := position
+	var tw := create_tween()
 	for i in 3:
-		_fx.tween_property(self, "position", _home_pos + Vector2(6, 0), 0.045)
-		_fx.tween_property(self, "position", _home_pos - Vector2(6, 0), 0.045)
-		_fx.tween_property(self, "position", _home_pos, 0.05)
+		tw.tween_property(self, "position", home + Vector2(6, 0), 0.045)
+		tw.tween_property(self, "position", home - Vector2(6, 0), 0.045)
+		tw.tween_property(self, "position", home, 0.05)
 
 
-## Pháo giấy nhỏ khi thắng (nở ra + nháy vàng nhạt), so le theo `delay`
+## Pháo giấy nhỏ khi thắng (nở ra + nháy vàng nhạt) — animation "win" trong scene, so le `delay`
 func play_win(delay: float = 0.0) -> void:
-	_kill_fx()
 	pivot_offset = size * 0.5
 	modulate = Color(1.25, 1.15, 0.75, 1.0)
 	scale = Vector2(0.8, 0.8)
-	_fx = create_tween()
+	if _anim != null and _anim.has_animation(&"win"):
+		if delay > 0.0:
+			if _win_timer != null:
+				_win_timer.wait_time = delay
+				_win_timer.start()
+			else:
+				# Fallback khi scene thiếu WinTimer (dây thật khai trong tutorial_cell.tscn)
+				get_tree().create_timer(delay).timeout.connect(_play_win_now)
+		else:
+			_play_win_now()
+		return
+	# Fallback khi scene thiếu AnimationPlayer
+	var tw := create_tween()
 	if delay > 0.0:
-		_fx.tween_interval(delay)
-	_fx.set_parallel(true)
-	_fx.tween_property(self, "scale", Vector2.ONE, 0.28).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	_fx.tween_property(self, "modulate", Color.WHITE, 0.4)
+		tw.tween_interval(delay)
+	tw.set_parallel(true)
+	tw.tween_property(self, "scale", Vector2.ONE, 0.28).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "modulate", Color.WHITE, 0.4)
 
 
-func _kill_fx() -> void:
-	if _fx != null and _fx.is_valid():
-		_fx.kill()
-	_fx = null
+func _play_win_now() -> void:
+	_play_anim(&"win")

@@ -33,6 +33,41 @@ texture_margin_top = 12
 texture_margin_right = 18
 texture_margin_bottom = 12
 
+[sub_resource type="Animation" id="Animation_wd_coin"]
+resource_name = "coin_pop"
+length = 0.54
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Content/CoinArea/CoinIcon:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.22, 0.46, 0.52),
+"transitions": PackedFloat32Array(1, 0.5, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1.04, 1.04), Vector2(1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.52),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_coin_pop_sfx"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wdfx"]
+_data = {
+&"coin_pop": SubResource("Animation_wd_coin")
+}
+
 [node name="Base" instance=ExtResource("1_base")]
 script = ExtResource("2_dailywin")
 
@@ -281,6 +316,11 @@ theme_override_styles/normal = SubResource("Sb_pri_n")
 theme_override_styles/hover = SubResource("Sb_pri_n")
 theme_override_styles/pressed = SubResource("Sb_pri_p")
 theme_override_styles/focus = SubResource("Sb_pri_f")
+
+[node name="FxAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wdfx")
+}
 
 [node name="Label" type="Label" parent="Panel/Content/DailyBtn" index="0"]
 layout_mode = 1

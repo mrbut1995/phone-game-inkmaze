@@ -54,6 +54,14 @@ game_mode_controller = NodePath("../GameModeController")
 challenge_controller = NodePath("../ChallengeController")
 grid_view = NodePath("../../Board")
 
+[node name="AchievementSfxTimer" type="Timer" parent="Controllers/GameController"]
+wait_time = 1.6
+one_shot = true
+
+[node name="FloorBonusSfxTimer" type="Timer" parent="Controllers/GameController"]
+wait_time = 1.1
+one_shot = true
+
 [node name="AnchorController" type="Node" parent="Controllers" index="1" unique_id=2040105369]
 script = ExtResource("4_anchor")
 
@@ -88,3 +96,10 @@ script = ExtResource("13_tool")
 
 [node name="ChallengeController" type="Node" parent="Controllers" index="10" unique_id=2100727352]
 script = ExtResource("14_chal")
+
+[connection signal="timeout" from="Controllers/GameController/AchievementSfxTimer" to="Controllers/GameController" method="_on_achievement_sfx_timeout"]
+[connection signal="timeout" from="Controllers/GameController/FloorBonusSfxTimer" to="Controllers/GameController" method="_on_floor_bonus_sfx_timeout"]
+[connection signal="pressed" from="Portrait/Status/Pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="Portrait/Status/Instruction" to="Controllers/GameController" method="open_instruction"]
+[connection signal="pressed" from="Landscape/Content/LeftCol/Status/Bar/Pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="Landscape/Content/LeftCol/Status/Bar/Instruction" to="Controllers/GameController" method="open_instruction"]

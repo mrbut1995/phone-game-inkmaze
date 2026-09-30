@@ -171,6 +171,28 @@ func ui_path(path: String) -> Node:
 	return get_node_or_null(NodePath(path))
 
 
+## ============================================================================
+## DÂY TÍN HIỆU KHAI TRONG .tscn — hàm này chỉ là LƯỚI AN TOÀN
+##
+## Màn hình nối nút/thanh trượt của layout bằng `[connection]` NGAY TRONG SCENE CỦA MÀN
+## (`scenes/<màn>.tscn`, đường dẫn `Portrait/…` + `Landscape/…`).
+## Nếu người dùng sửa layout làm đường dẫn node đổi, Godot có thể bỏ dây trong scene màn
+## ⇒ gọi `ensure_signal()` khi bind lại để nối lại ĐÚNG KHI dây bị mất (không nhân đôi).
+## ============================================================================
+## `target` mặc định là CHÍNH MÀN HÌNH; truyền target khác khi đích là node khác
+## (VD nút "?" của màn chơi nối thẳng tới `GameController`).
+func ensure_signal(source: Object, signal_name: StringName, handler: StringName, binds: Array = [], target: Object = null) -> void:
+	var to: Object = target if target != null else self
+	if source == null or to == null or not source.has_signal(signal_name) or not to.has_method(handler):
+		return
+	for c in source.get_signal_connection_list(signal_name):
+		var cb: Callable = c.get("callable", Callable())
+		if cb.is_valid() and cb.get_object() == to and cb.get_method() == handler:
+			return
+	var cb2 := Callable(to, handler)
+	source.connect(signal_name, cb2 if binds.is_empty() else cb2.bindv(binds))
+
+
 ## Hai bên cột (màn rộng hơn 9:16) tô tiếp màu giấy bằng 2 ColorRect con của
 ## `Background` — nền (`SceneBackground`) tự lo node con của mình, màn hình chỉ đưa số đo.
 func _apply_background_sides(canvas: Vector2) -> void:

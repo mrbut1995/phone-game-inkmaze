@@ -39,20 +39,20 @@ func _apply_grid_columns() -> void:
 	grid.columns = maxi(1, int(width / 1040.0)) if width > 0.0 else grid.columns
 
 
-## Nối signal + hiệu ứng bấm cho nút của layout đang dùng (gọi lại được khi xoay màn hình)
+## Nối signal + hiệu ứng bấm cho nút của layout (dây NÚT khai trong `scenes/chapters.tscn`;
+## guard chỉ nối lại nếu dây bị mất — xoay màn hình gọi lại hàm này)
 func _wire_buttons() -> void:
-	if layout.btn_back != null:
-		if not layout.btn_back.pressed.is_connected(_on_back_pressed):
-			layout.btn_back.pressed.connect(_on_back_pressed)
-		if not layout.btn_back.has_meta("bounce_attached"):
-			layout.btn_back.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(layout.btn_back)
-	if layout.btn_continue != null:
-		if not layout.btn_continue.pressed.is_connected(_on_continue_pressed):
-			layout.btn_continue.pressed.connect(_on_continue_pressed)
-		if not layout.btn_continue.has_meta("bounce_attached"):
-			layout.btn_continue.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(layout.btn_continue)
+	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
+	ensure_signal(layout.btn_continue, &"pressed", &"_on_continue_pressed")
+	if layout.btn_back != null and not layout.btn_back.has_meta("bounce_attached"):
+		layout.btn_back.set_meta("bounce_attached", true)
+		UIAnim.attach_press_bounce(layout.btn_back)
+	if layout.btn_continue != null and not layout.btn_continue.has_meta("bounce_attached"):
+		layout.btn_continue.set_meta("bounce_attached", true)
+		UIAnim.attach_press_bounce(layout.btn_continue)
+		# "Thở" nhẹ để hút mắt vào nút TIẾP TỤC — animation "pulse" của layout (PulseAnim)
+		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.btn_continue):
+			# Fallback khi layout thiếu PulseAnim
 			UIAnim.play_pulse(layout.btn_continue, 1.035, 1.6)
 
 
@@ -259,11 +259,22 @@ func _on_unlock_requested(chapter_id: int) -> void:
 		_refresh_header()
 		if layout.lbl_wallet != null and DisplayServer.get_name() != "headless":
 			layout.lbl_wallet.pivot_offset = layout.lbl_wallet.size * 0.5
-			var tw := layout.lbl_wallet.create_tween()
-			tw.tween_property(layout.lbl_wallet, "scale", Vector2(1.3, 1.3), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			tw.tween_property(layout.lbl_wallet, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			if not _play_wallet_pop():
+				# Fallback khi layout thiếu WalletAnim
+				var tw := layout.lbl_wallet.create_tween()
+				tw.tween_property(layout.lbl_wallet, "scale", Vector2(1.3, 1.3), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+				tw.tween_property(layout.lbl_wallet, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	else:
 		Sfx.play(Sfx.BTN_CLICK)
+
+
+## Ví xu nảy nhẹ khi vừa mở khoá chương — animation "wallet_pop" của layout (`WalletAnim`)
+func _play_wallet_pop() -> bool:
+	var player := layout.get_node_or_null("WalletAnim") as AnimationPlayer
+	if player == null or not player.has_animation(&"wallet_pop"):
+		return false
+	player.play(&"wallet_pop")
+	return true
 
 
 func _on_continue_pressed() -> void:

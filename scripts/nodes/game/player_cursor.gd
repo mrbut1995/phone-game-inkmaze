@@ -16,9 +16,15 @@ signal run_finished()
 signal celebration_finished()
 
 @onready var icon: TextureRect = $Icon
+## AnimationPlayer của CHÍNH scene này (`player_cursor.tscn`) — mọi dáng chạy/nhảy/va chạm
+## (scale · rotation · modulate · Icon offset) khai trong scene; code chỉ điều khiển `position`
+## vì vị trí phụ thuộc toạ độ bàn cờ tính lúc chạy (xem chú thích ở các hàm bên dưới).
+@onready var _anim: AnimationPlayer = get_node_or_null("AnimationPlayer")
+
+## Độ dài chuẩn của animation "hop_*" — khi `duration` khác thì đổi `speed_scale` theo tỉ lệ
+const HOP_LENGTH := 0.16
 
 var _move_tween: Tween = null
-var _idle_tween: Tween = null
 var _demo_tween: Tween = null
 var _is_running: bool = false
 var _is_celebrating: bool = false
@@ -27,7 +33,53 @@ var _is_demoing: bool = false
 
 func _ready() -> void:
 	pivot_offset = size * 0.5
+	# Dây `animation_finished → _on_anim_finished` khai trong `player_cursor.tscn` (cùng scene)
 	start_idle()
+
+
+## Chạy 1 animation của player (đặt lại speed về 1 trừ khi truyền tốc độ khác).
+## Trả về false nếu scene thiếu animation đó (fallback: không chạy hiệu ứng).
+func _play_anim(anim_name: StringName, speed: float = 1.0) -> bool:
+	if _anim == null or not _anim.has_animation(anim_name):
+		return false
+	_anim.speed_scale = speed
+	_anim.play(anim_name)
+	return true
+
+
+func _stop_anim() -> void:
+	if _anim != null:
+		_anim.stop()
+
+
+func _kill_move_tween() -> void:
+	if _move_tween != null and _move_tween.is_valid():
+		_move_tween.kill()
+	_move_tween = null
+
+
+func _kill_demo_tween() -> void:
+	if _demo_tween != null and _demo_tween.is_valid():
+		_demo_tween.kill()
+	_demo_tween = null
+
+
+## Xong 1 animation one-shot: reset dáng + phát tín hiệu + về lại nhịp thở
+func _on_anim_finished(anim_name: StringName) -> void:
+	match anim_name:
+		&"celebrate":
+			_is_celebrating = false
+			rotation = 0.0
+			scale = Vector2.ONE
+			celebration_finished.emit()
+			start_idle()
+		&"spawn_drop":
+			start_idle()
+		&"bonk_left", &"bonk_right":
+			_is_running = false
+			rotation = 0.0
+			scale = Vector2.ONE
+			start_idle()
 
 
 ## Đổi icon con trỏ theo NGÒI BÚT đang dùng (bảng PenSkin) — Board gọi khi dựng ván /
@@ -38,26 +90,24 @@ func apply_pen(pen_id: String) -> void:
 		icon.texture = tex
 
 
-## Hiện hoặc ẩn con trỏ (khi ẩn sẽ tạm dừng các tween)
+## Hiện hoặc ẩn con trỏ (khi ẩn sẽ tạm dừng hoạt cảnh)
 func set_cursor_visible(on: bool) -> void:
 	visible = on
 	if not on:
 		stop_demo()
-		if _idle_tween != null and _idle_tween.is_valid():
-			_idle_tween.kill()
+		_stop_anim()
 	else:
 		if not _is_running and not _is_celebrating and not _is_demoing:
 			start_idle()
 
 
 ## Hoạt ảnh trình diễn kéo từ from_pos sang to_pos (lặp lại, dùng cho tutorial)
+## (GIỮ tween) Toạ độ from/to là dữ liệu lưới tính lúc chạy nên phần di chuyển ở lại code.
 func play_demo_drag(from_pos: Vector2, to_pos: Vector2, duration: float = 0.6) -> void:
-	if _idle_tween != null and _idle_tween.is_valid():
-		_idle_tween.kill()
-	if _move_tween != null and _move_tween.is_valid():
-		_move_tween.kill()
-	if _demo_tween != null and _demo_tween.is_valid():
-		_demo_tween.kill()
+	_kill_move_tween()
+	_kill_demo_tween()
+	_stop_anim()
+	_is_running = false
 
 	_is_demoing = true
 	visible = true
@@ -95,38 +145,28 @@ func play_demo_drag(from_pos: Vector2, to_pos: Vector2, duration: float = 0.6) -
 	_demo_tween.tween_interval(0.25)
 
 
-## Hoạt ảnh trình diễn chạm / gõ (tap) tại vị trí
+## Hoạt ảnh trình diễn chạm / gõ (tap) tại vị trí — nhịp gõ lặp nằm trong animation "demo_tap"
 func play_demo_tap(target_pos: Vector2 = Vector2.ZERO) -> void:
-	if _idle_tween != null and _idle_tween.is_valid():
-		_idle_tween.kill()
-	if _move_tween != null and _move_tween.is_valid():
-		_move_tween.kill()
-	if _demo_tween != null and _demo_tween.is_valid():
-		_demo_tween.kill()
+	_kill_move_tween()
+	_kill_demo_tween()
+	_stop_anim()
+	_is_running = false
 
 	_is_demoing = true
 	visible = true
 	if target_pos != Vector2.ZERO:
 		position = target_pos
 	modulate.a = 1.0
-
-	_demo_tween = create_tween().set_loops()
-	_demo_tween.tween_property(self, "scale", Vector2(0.82, 0.82), 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	_demo_tween.tween_property(self, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	_demo_tween.tween_property(self, "rotation_degrees", 8.0, 0.15)
-	_demo_tween.tween_property(self, "rotation_degrees", -6.0, 0.18)
-	_demo_tween.tween_property(self, "rotation_degrees", 0.0, 0.15)
-	_demo_tween.tween_interval(0.3)
+	_play_anim(&"demo_tap")
 
 
 ## Trình diễn cursor đi qua nhiều ô theo thứ tự (dùng cho demo full-path, lặp)
+## (GIỮ tween) Danh sách toạ độ là dữ liệu lưới tính lúc chạy — xem chú thích ở play_demo_drag.
 func play_demo_path(positions: Array[Vector2], dur_per_step: float = 0.5) -> void:
-	if _idle_tween != null and _idle_tween.is_valid():
-		_idle_tween.kill()
-	if _move_tween != null and _move_tween.is_valid():
-		_move_tween.kill()
-	if _demo_tween != null and _demo_tween.is_valid():
-		_demo_tween.kill()
+	_kill_move_tween()
+	_kill_demo_tween()
+	_stop_anim()
+	_is_running = false
 	if positions.size() < 2:
 		return
 
@@ -168,13 +208,12 @@ func play_demo_path(positions: Array[Vector2], dur_per_step: float = 0.5) -> voi
 
 
 ## Trình diễn thử đi đè lên ô đã đi: di chuyển nửa đường rồi nảy lại (1 chu kỳ, không lặp)
+## (GIỮ tween) Toạ độ tính lúc chạy — xem chú thích ở play_demo_drag.
 func play_demo_fail_attempt(from_pos: Vector2, midway_pos: Vector2, recoil_dir: Vector2) -> void:
-	if _idle_tween != null and _idle_tween.is_valid():
-		_idle_tween.kill()
-	if _move_tween != null and _move_tween.is_valid():
-		_move_tween.kill()
-	if _demo_tween != null and _demo_tween.is_valid():
-		_demo_tween.kill()
+	_kill_move_tween()
+	_kill_demo_tween()
+	_stop_anim()
+	_is_running = false
 
 	_is_demoing = true
 	visible = true
@@ -207,14 +246,13 @@ func play_demo_fail_attempt(from_pos: Vector2, midway_pos: Vector2, recoil_dir: 
 
 
 ## Trình diễn RÊ 1 lần từ from_pos → to_pos (Wall Builder: rê neo) — không lặp.
+## (GIỮ tween) Toạ độ neo tính lúc chạy — xem chú thích ở play_demo_drag.
 ## Trượt thẳng bằng TRANS_SINE/EASE_IN_OUT để khớp nhịp với đường kéo của bàn.
 func play_demo_slide(from_pos: Vector2, to_pos: Vector2, duration := 0.55) -> void:
-	if _idle_tween != null and _idle_tween.is_valid():
-		_idle_tween.kill()
-	if _move_tween != null and _move_tween.is_valid():
-		_move_tween.kill()
-	if _demo_tween != null and _demo_tween.is_valid():
-		_demo_tween.kill()
+	_kill_move_tween()
+	_kill_demo_tween()
+	_stop_anim()
+	_is_running = false
 
 	_is_demoing = true
 	visible = true
@@ -237,9 +275,7 @@ func play_demo_slide(from_pos: Vector2, to_pos: Vector2, duration := 0.55) -> vo
 
 ## Dừng hoạt ảnh demo và đưa về trạng thái bình thường
 func stop_demo() -> void:
-	if _demo_tween != null and _demo_tween.is_valid():
-		_demo_tween.kill()
-		_demo_tween = null
+	_kill_demo_tween()
 	_is_demoing = false
 	rotation = 0.0
 	scale = Vector2.ONE
@@ -247,66 +283,45 @@ func stop_demo() -> void:
 	start_idle()
 
 
-## Hoạt ảnh thở nhẹ kết hợp cựa quậy tự nhiên khi đứng yên
+## Nhịp thở khi đứng yên — animation "idle" (loop) trong player_cursor.tscn
 func start_idle() -> void:
 	if _is_running or _is_celebrating or _is_demoing:
 		return
-	if _idle_tween != null and _idle_tween.is_valid():
-		_idle_tween.kill()
-
-	_idle_tween = create_tween().set_loops()
-	# Chu kỳ 1: Nhịp thở phập phồng nhẹ
-	_idle_tween.tween_property(self, "scale", Vector2(1.06, 0.95), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_idle_tween.tween_property(self, "scale", Vector2(0.96, 1.05), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_play_anim(&"idle")
 
 
-## Thực hiện animation chạy từ vị trí hiện tại đến target_pos
+## Bước chạy 1 ô: VỊ TRÍ do tween dưới đây lo (toạ độ bàn cờ tính lúc chạy);
+## dáng nhảy (stretch → squash → nghiêng người) nằm trong animation "hop_*" của scene.
 func run_to(target_pos: Vector2, move_dir: Vector2 = Vector2.ZERO, duration: float = 0.16) -> void:
-	if _idle_tween != null and _idle_tween.is_valid():
-		_idle_tween.kill()
-	if _move_tween != null and _move_tween.is_valid():
-		_move_tween.kill()
-
+	_kill_move_tween()
 	_is_running = true
 	var start_pos := position
 	var hop_height := 14.0 # Độ nhấc chân khi chạy
 
-	# Tính góc nghiêng theo hướng chạy
-	var tilt_angle := 0.0
-	if move_dir.x > 0.1:
-		tilt_angle = deg_to_rad(14.0)
-	elif move_dir.x < -0.1:
-		tilt_angle = deg_to_rad(-14.0)
-	elif move_dir.y > 0.1:
-		tilt_angle = deg_to_rad(4.0)
-	elif move_dir.y < -0.1:
-		tilt_angle = deg_to_rad(-4.0)
-
-	_move_tween = create_tween().set_parallel(false)
-
-	# Giai đoạn 1: Bứt tốc (Takeoff) - Nhảy lên và stretch theo hướng chạy
 	var t1 := duration * 0.38
 	var half_way := start_pos.lerp(target_pos, 0.5) - Vector2(0, hop_height)
 
-	var sub_tw := _move_tween.chain().set_parallel(true)
-	sub_tw.tween_property(self, "position", half_way, t1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	sub_tw.tween_property(self, "scale", Vector2(0.82, 1.24), t1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	sub_tw.tween_property(self, "rotation", tilt_angle, t1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_move_tween = create_tween().set_parallel(false)
+	_move_tween.tween_property(self, "position", half_way, t1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_move_tween.tween_property(self, "position", target_pos, duration * 0.44).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	# Giai đoạn phục hồi cân bằng (0.18) — chờ animation kết thúc rồi mới báo xong
+	_move_tween.tween_interval(duration * 0.18)
+	_move_tween.tween_callback(Callable(self, "_on_run_completed"))
 
-	# Giai đoạn 2: Tiếp đất (Land & Squash)
-	var t2 := duration * 0.44
-	var sub_tw2 := _move_tween.chain().set_parallel(true)
-	sub_tw2.tween_property(self, "position", target_pos, t2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	sub_tw2.tween_property(self, "scale", Vector2(1.24, 0.82), t2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	sub_tw2.tween_property(self, "rotation", 0.0, t2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_play_anim(_hop_anim_for(move_dir), HOP_LENGTH / maxf(duration, 0.01))
 
-	# Giai đoạn 3: Phục hồi cân bằng (Settle)
-	var t3 := duration * 0.18
-	var sub_tw3 := _move_tween.chain().set_parallel(true)
-	sub_tw3.tween_property(self, "scale", Vector2(1.0, 1.0), t3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
-	# Kết thúc bước chạy
-	_move_tween.chain().tween_callback(Callable(self, "_on_run_completed"))
+## Chọn biến thể dáng nhảy theo hướng đi (nghiêng người theo quán tính)
+func _hop_anim_for(move_dir: Vector2) -> StringName:
+	if move_dir.x > 0.1:
+		return &"hop_right"
+	if move_dir.x < -0.1:
+		return &"hop_left"
+	if move_dir.y > 0.1:
+		return &"hop_down"
+	if move_dir.y < -0.1:
+		return &"hop_up"
+	return &"hop_neutral"
 
 
 func _on_run_completed() -> void:
@@ -317,113 +332,51 @@ func _on_run_completed() -> void:
 	start_idle()
 
 
-## Hoạt ảnh Bonk / Recoil khi va vào tường vô hình
+## Hoạt ảnh Bonk / Recoil khi va vào tường vô hình: VỊ TRÍ lùi theo hướng va chạm (tween),
+## dáng co rúm + lắc lư nằm trong animation "bonk_left"/"bonk_right" của scene.
 func play_bonk_recoil(recoil_dir: Vector2 = Vector2.ZERO) -> void:
-	if _idle_tween != null and _idle_tween.is_valid():
-		_idle_tween.kill()
-	if _move_tween != null and _move_tween.is_valid():
-		_move_tween.kill()
-
+	_kill_move_tween()
 	_is_running = true
 	var base_pos := position
 	var push_back := recoil_dir.normalized() * 16.0
 	if push_back.is_zero_approx():
 		push_back = Vector2(0, -14.0)
 
-	var tw := create_tween().set_parallel(false)
-	# 1. Bị dội ngược lại và co rúm (Squash)
-	var sub1 := tw.chain().set_parallel(true)
-	sub1.tween_property(self, "position", base_pos + push_back, 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	sub1.tween_property(self, "scale", Vector2(1.35, 0.7), 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	sub1.tween_property(self, "rotation_degrees", -12.0 if push_back.x >= 0 else 12.0, 0.08)
+	_move_tween = create_tween()
+	_move_tween.tween_property(self, "position", base_pos + push_back, 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_move_tween.tween_property(self, "position", base_pos, 0.14).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
-	# 2. Lắc lư giật mình
-	var sub2 := tw.chain().set_parallel(true)
-	sub2.tween_property(self, "position", base_pos, 0.14).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-	sub2.tween_property(self, "scale", Vector2(0.88, 1.15), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	sub2.tween_property(self, "rotation_degrees", 8.0 if push_back.x >= 0 else -8.0, 0.1)
-
-	# 3. Trở lại cân bằng
-	var sub3 := tw.chain().set_parallel(true)
-	sub3.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	sub3.tween_property(self, "rotation_degrees", 0.0, 0.12)
-
-	tw.chain().tween_callback(func() -> void:
+	if not _play_anim(&"bonk_left" if push_back.x >= 0.0 else &"bonk_right"):
 		_is_running = false
-		rotation = 0.0
-		scale = Vector2.ONE
-		start_idle()
-	)
 
 
-## Hoạt ảnh Nhảy múa ăn mừng (Celebration) khi tới ô Finish F
+## Hoạt ảnh Nhảy múa ăn mừng (Celebration) khi tới ô Finish F — dáng nén → nảy phục hồi
+## nằm trong animation "celebrate" của scene; code chỉ chờ xong để phát tín hiệu.
 func play_celebration() -> void:
-	if _idle_tween != null and _idle_tween.is_valid():
-		_idle_tween.kill()
-	if _move_tween != null and _move_tween.is_valid():
-		_move_tween.kill()
-
+	_kill_move_tween()
 	_is_celebrating = true
-	var base_pos := position
-	var jump_up := base_pos - Vector2(0, 32.0)
-
-	var tw := create_tween().set_parallel(false)
-	# 1. Nhún đà (Pre-jump squash)
-	tw.chain().tween_property(self, "scale", Vector2(1.3, 0.7), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-
-	## 2. Nhảy bổng lên xoay 360 độ (Takeoff & Spin)
-	#var sub_spin := tw.chain().set_parallel(true)
-	#sub_spin.tween_property(self, "position", jump_up, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	#sub_spin.tween_property(self, "scale", Vector2(0.9, 1.3), 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	#sub_spin.tween_property(self, "rotation_degrees", 360.0, 0.26).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-#
-	## 3. Tiếp đất ăn mừng
-	#var sub_land := tw.chain().set_parallel(true)
-	#sub_land.tween_property(self, "position", base_pos, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	#sub_land.tween_property(self, "scale", Vector2(1.35, 0.75), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-
-	# 4. Nảy nhẹ phục hồi
-	var sub_settle := tw.chain().set_parallel(true)
-	sub_settle.tween_property(self, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-
-	tw.chain().tween_callback(func() -> void:
+	if not _play_anim(&"celebrate"):
 		_is_celebrating = false
 		rotation = 0.0
 		scale = Vector2.ONE
 		celebration_finished.emit()
 		start_idle()
-	)
 
 
-## Hoạt ảnh Rơi nhẹ từ trên xuống (Spawn Drop) khi bắt đầu ván mới tại ô S
+## Rơi nhẹ vào ván mới tại ô S — animation "spawn_drop" (Icon rơi từ trên + stretch) trong scene.
 ##
-## LƯU Ý: CHỈ thả ICON con rơi — KHÔNG tween `position` của node gốc. Lúc mới vào màn, bàn cờ
-## còn đang được gắn vào bố cục (khung giấy đổi vài frame) nên nếu tween vị trí gốc theo một
-## mốc tính sớm thì con trỏ bị kéo lệch/ra NGOÀI giấy. Node gốc luôn do Board đặt theo bố cục.
+## LƯU Ý: animation chỉ đụng ĐỘ CAO CỦA ICON CON (`Icon:position`) — KHÔNG đụng `position`
+## của node gốc: lúc mới vào màn, bàn cờ còn đang được gắn vào bố cục (khung giấy đổi vài
+## frame) nên gốc luôn do Board đặt theo bố cục.
 func play_spawn_drop(_target_pos: Vector2) -> void:
-	if _idle_tween != null and _idle_tween.is_valid():
-		_idle_tween.kill()
-
-	var icon := get_node_or_null("Icon") as Control
-	if icon == null:
-		return
-
-	icon.position = Vector2(0.0, -42.0)
+	_kill_move_tween()
+	if icon != null:
+		icon.position = Vector2(0.0, -42.0)
 	scale = Vector2(0.7, 1.35)
 	modulate.a = 0.0
-
-	var tw := create_tween().set_parallel(false)
-	var sub1 := tw.chain().set_parallel(true)
-	sub1.tween_property(icon, "position", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	sub1.tween_property(self, "modulate:a", 1.0, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	sub1.tween_property(self, "scale", Vector2(1.3, 0.75), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-
-	var sub2 := tw.chain().set_parallel(true)
-	sub2.tween_property(self, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-
-	tw.chain().tween_callback(func() -> void:
-		icon.position = Vector2.ZERO
+	if not _play_anim(&"spawn_drop"):
+		if icon != null:
+			icon.position = Vector2.ZERO
 		scale = Vector2.ONE
-		rotation = 0.0
+		modulate.a = 1.0
 		start_idle()
-	)
