@@ -183,3 +183,6 @@ layout_mode = 2
 theme_type_variation = &"PopupQuote"
 text = "STR_LANGUAGE_FOOTER"
 horizontal_alignment = 1
+
+[connection signal="pressed" from="Panel/Content/Buttons/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="Panel/Content/Buttons/Apply" to="." method="_on_apply_pressed"]

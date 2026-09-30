@@ -132,3 +132,5 @@ text = "STR_TODAY"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
+
+[connection signal="pressed" from="Button" to="." method="_on_btn_pressed"]

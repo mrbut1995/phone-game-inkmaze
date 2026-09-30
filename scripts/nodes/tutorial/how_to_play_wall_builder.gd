@@ -39,7 +39,7 @@ func _init_tutorial() -> void:
 			Vector2i(1, 1),
 			true      # bật anchors
 		)
-		board_tutorial.wall_toggled.connect(_on_wall_toggled)
+		# Dây `wall_toggled → _on_wall_toggled` khai trong `.tscn` (cùng scene)
 	_update_wall_counter()
 
 

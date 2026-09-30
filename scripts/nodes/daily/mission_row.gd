@@ -48,8 +48,7 @@ func _ready() -> void:
 	if title_label != null:
 		_title_left_plain = title_label.offset_left
 	_title_left_badge = _read_badge_title_left()
-	if action_button != null:
-		action_button.pressed.connect(_on_action_pressed)
+	# Dây `Item/Action.pressed → _on_action_pressed` khai trong `mission_row.tscn` (cùng scene)
 	if _has_pending:
 		_has_pending = false
 		_apply(_pending)

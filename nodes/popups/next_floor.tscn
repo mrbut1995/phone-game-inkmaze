@@ -367,3 +367,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
+
+[connection signal="pressed" from="Panel/Content/RestBtn" to="." method="_on_rest_pressed"]
+[connection signal="pressed" from="Panel/Content/GoBtn" to="." method="_on_enter_pressed"]

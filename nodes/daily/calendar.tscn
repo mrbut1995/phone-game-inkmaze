@@ -395,3 +395,6 @@ layout_mode = 2
 
 [node name="Day35" parent="Panel/Content/Days" unique_id=752535920 instance=ExtResource("3_day")]
 layout_mode = 2
+
+[connection signal="pressed" from="Panel/Months/Previous/Button" to="." method="_on_month_switch_pressed" binds= [-1]]
+[connection signal="pressed" from="Panel/Months/Next/Button" to="." method="_on_month_switch_pressed" binds= [1]]

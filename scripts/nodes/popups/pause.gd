@@ -30,9 +30,7 @@ func _on_open() -> void:
 	_refresh_progress()
 	_syncing = false
 
-	bind_button("Panel/Content/ResumeBtn", _on_resume_pressed)
-	bind_button("Panel/Content/RestartBtn", _on_restart_pressed)
-	bind_button("Panel/Content/MenuBtn", _on_menu_pressed)
+	# Dây 3 nút (Tiếp tục / Chơi lại / Menu) khai trong `pause.tscn` (cùng scene)
 
 
 ## Nối một slider với SettingManager (kind: master / music / sfx)

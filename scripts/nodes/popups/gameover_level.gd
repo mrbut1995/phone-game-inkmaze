@@ -83,9 +83,7 @@ func _on_open() -> void:
 	if header_count != null:
 		header_count.text = count_text
 
-	bind_button("Panel/Content/Banner/ReviveBtn", _on_revive_pressed)
-	bind_button("Panel/Content/MenuBtn", _on_menu_pressed)
-	bind_button("Panel/Content/RetryBtn", _on_retry_pressed)
+	# Dây 3 nút (Hồi sinh / Menu / Thử lại) khai trong `gameover_level.tscn` (cùng scene)
 
 
 func _on_revive_pressed() -> void:

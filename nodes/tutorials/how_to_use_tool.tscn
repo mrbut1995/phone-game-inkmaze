@@ -201,3 +201,4 @@ vertical_alignment = 1
 
 [connection signal="pressed" from="BoardHost/ToolRow/BtnUndo" to="." method="_on_undo_pressed"]
 [connection signal="pressed" from="BoardHost/ToolRow/BtnHint" to="." method="_on_hint_pressed"]
+[connection signal="cell_step_attempted" from="BoardHost/BoardTutorial" to="." method="_on_cell_step_attempted"]

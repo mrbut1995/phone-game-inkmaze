@@ -69,8 +69,7 @@ func _ready() -> void:
 	_ui_ready = _bind_nodes()
 	if not _ui_ready:
 		push_error("[SceneTransition] Thieu node giao dien — hay instantiate scenes/loading.tscn thay vi SceneTransition.new()")
-	elif not _ink_circle_drawer.draw.is_connected(_on_ink_draw):
-		_ink_circle_drawer.draw.connect(_on_ink_draw)
+	# Dây `InkCircleDrawer.draw → _on_ink_draw` khai trong scenes/loading.tscn (cùng scene)
 	_reset_all()
 
 

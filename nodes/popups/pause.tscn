@@ -400,3 +400,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
+
+[connection signal="pressed" from="Panel/Content/ResumeBtn" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Panel/Content/RestartBtn" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Panel/Content/MenuBtn" to="." method="_on_menu_pressed"]

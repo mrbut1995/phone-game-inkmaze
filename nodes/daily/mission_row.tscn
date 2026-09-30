@@ -225,3 +225,5 @@ grow_vertical = 0
 texture = ExtResource("7_ou8uo")
 region_rect = Rect2(0, 0, 490, 2)
 patch_margin_left = 48
+
+[connection signal="pressed" from="Item/Action" to="." method="_on_action_pressed"]

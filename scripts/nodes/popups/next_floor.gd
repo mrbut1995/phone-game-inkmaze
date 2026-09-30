@@ -46,8 +46,7 @@ func _on_open() -> void:
 	_set_text("Stamp/StampTitle", tr("STR_RESULT_STAMP_PASSED"))
 	_set_text("Stamp/StampSub", tr("STR_RESULT_STAMP_FLOOR").format(["%02d" % floor]))
 
-	bind_button("Panel/Content/RestBtn", _on_rest_pressed)
-	bind_button("Panel/Content/GoBtn", _on_enter_pressed)
+	# Dây 2 nút (Nghỉ / Vào tầng kế) khai trong `next_floor.tscn` (cùng scene)
 
 
 func _set_text(path: String, text: String) -> void:

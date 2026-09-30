@@ -53,8 +53,7 @@ func _on_open() -> void:
 
 	_set_stars(int(data.get("stars", 0)))
 	_fill_stamp(int(data.get("stars", 0)), data.get("challenges", null))
-	bind_button("Panel/Content/ReplayBtn", _on_replay_pressed)
-	bind_button("Panel/Content/NextBtn", _on_next_pressed)
+	# Dây 2 nút (Chơi lại / Màn kế) khai trong `winning.tscn` (cùng scene)
 	# Hết chương (hoặc chương kế chưa mở) -> nút đổi thành "CHỌN CHƯƠNG" (bấm ra màn Chọn Chương)
 	if btn_next != null:
 		var label := btn_next.get_node_or_null("Label") as Label

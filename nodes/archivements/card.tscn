@@ -261,3 +261,5 @@ anchor_right = 0.9407
 anchor_bottom = 0.762
 mouse_filter = 2
 texture = ExtResource("11_coin")
+
+[connection signal="pressed" from="Panel/Body/Side/ClaimButton" to="." method="_on_claim_pressed"]

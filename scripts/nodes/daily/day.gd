@@ -93,8 +93,7 @@ const PILL_VARIATIONS := {
 
 
 func _ready() -> void:
-	if btn != null:
-		btn.pressed.connect(_on_btn_pressed)
+	# Dây `Button.pressed → _on_btn_pressed` khai trong `day.tscn` (cùng scene)
 	_apply()
 
 

@@ -33,8 +33,7 @@ func _init_tutorial() -> void:
 			Vector2i(0, 0),
 			FINISH_POS
 		)
-		if not board_tutorial.cell_step_attempted.is_connected(_on_cell_step_attempted):
-			board_tutorial.cell_step_attempted.connect(_on_cell_step_attempted)
+		# Dây `cell_step_attempted → _on_cell_step_attempted` khai trong `.tscn` (cùng scene)
 	_reset_board_state()
 
 

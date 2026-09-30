@@ -150,17 +150,6 @@ func _on_opened_anim_done() -> void:
 
 # --- Tiện ích cho popup con -------------------------------------------------
 
-## Nối nhanh nút bấm theo đường dẫn node trong popup (nhận mọi BaseButton: Button/TextureButton…)
-func bind_button(path: NodePath, handler: Callable) -> BaseButton:
-	var btn := get_node_or_null(path) as BaseButton
-	if btn == null:
-		push_warning("%s: khong tim thay nut '%s'" % [name, path])
-		return null
-	if not btn.pressed.is_connected(handler):
-		btn.pressed.connect(handler)
-	return btn
-
-
 ## Lấy node trong khu vực nội dung trên mảnh giấy.
 ## Tìm theo đường dẫn tương đối, nếu không thấy thì tìm sâu theo tên node.
 func piece(path: NodePath) -> Node:

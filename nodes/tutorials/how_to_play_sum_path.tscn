@@ -92,3 +92,5 @@ offset_right = 175.0
 offset_bottom = 195.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[connection signal="cell_step_attempted" from="BoardHost/BoardTutorial" to="." method="_on_cell_step_attempted"]

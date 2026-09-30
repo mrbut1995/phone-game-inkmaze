@@ -63,8 +63,7 @@ func _on_open() -> void:
 		])
 
 	_fill_stamp()
-	bind_button("Panel/Content/ReplayBtn", _on_replay_pressed)
-	bind_button("Panel/Content/DailyBtn", _on_daily_pressed)
+	# Dây 2 nút (Chơi lại / Về Daily) khai trong `winning_daily.tscn` (cùng scene)
 	# Gán chữ cho nút bằng code (rõ ràng hơn auto_translate, test đọc được chuỗi đã dịch)
 	var daily_btn := piece("DailyBtn") as BaseButton
 	if daily_btn != null:

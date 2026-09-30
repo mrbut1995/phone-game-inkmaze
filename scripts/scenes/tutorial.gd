@@ -25,9 +25,9 @@ func _ready() -> void:
 	orientation_changed.connect(_on_orientation_changed)
 
 	# `tutorial_controller` bind trong `scenes/tutorial.tscn` (không dò đường dẫn trong code)
+	# Dây `sequence_finished → _on_sequence_finished` cũng khai trong scene đó.
 	if tutorial_controller != null and layout != null:
 		tutorial_controller.set_container(layout.tutorial_container)
-		tutorial_controller.sequence_finished.connect(_on_sequence_finished)
 		_start_requested()
 
 

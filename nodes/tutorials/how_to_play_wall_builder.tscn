@@ -143,3 +143,4 @@ theme_override_styles/hover = SubResource("submit_pill_hover")
 text = "STR_TOOL_SUBMIT"
 
 [connection signal="pressed" from="BoardHost/BtnSubmit" to="." method="_on_submit_pressed"]
+[connection signal="wall_toggled" from="BoardHost/BoardTutorial" to="." method="_on_wall_toggled"]

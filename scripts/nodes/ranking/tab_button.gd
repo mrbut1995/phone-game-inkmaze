@@ -40,8 +40,7 @@ func _ready() -> void:
 	custom_minimum_size = Vector2(0.0, height)
 	set_label_text(TranslationServer.translate(label_key))
 	UIAnim.attach_press_bounce(self)
-	if not pressed.is_connected(_emit_tab_pressed):
-		pressed.connect(_emit_tab_pressed)
+	# Dây `pressed → _emit_tab_pressed` khai trong `.tscn` (cùng scene)
 
 
 func set_label_text(text: String) -> void:

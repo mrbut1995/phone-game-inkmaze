@@ -30,10 +30,9 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 
 func _ready() -> void:
-	if panel_btn != null:
-		panel_btn.pressed.connect(_on_pressed)
-		if not is_locked:
-			UIAnim.attach_press_bounce(panel_btn)
+	# Dây `Panel.pressed → _on_pressed` khai trong `.tscn` (cùng scene)
+	if panel_btn != null and not is_locked:
+		UIAnim.attach_press_bounce(panel_btn)
 	update_visuals()
 
 
