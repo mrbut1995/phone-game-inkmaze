@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://btutorialboard01"]
+[gd_scene load_steps=4 format=3 uid="uid://btutorialboard01"]
 
 [ext_resource type="PackedScene" uid="uid://chbg12rc46dp" path="res://nodes/game/board.tscn" id="1_board"]
 [ext_resource type="Script" path="res://scripts/nodes/tutorial/board_tutorial.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://f1txpqipipdg" path="res://nodes/tutorials/anchor_callout.tscn" id="3_callout"]
 
 [node name="BoardTutorial" instance=ExtResource("1_board")]
 custom_minimum_size = Vector2(0, 0)
@@ -9,3 +10,12 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("2_script")
+node_paths=PackedStringArray("callout_0", "callout_1")
+callout_0 = NodePath("Callout0")
+callout_1 = NodePath("Callout1")
+
+[node name="Callout0" parent="." instance=ExtResource("3_callout")]
+
+[node name="Callout1" parent="." instance=ExtResource("3_callout")]
+
+[connection signal="anchor_connected" from="." to="." method="_on_tutorial_anchor_connected"]

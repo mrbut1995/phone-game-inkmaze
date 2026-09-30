@@ -1,10 +1,6 @@
 class_name AnchorCallout
 extends Control
-## ============================================================================
-## AnchorCallout: Vòng tròn đánh số tại 1 ĐIỂM NEO trên bàn tutorial.
-## Wall Builder (bước 3): hiện "1" ở neo bắt đầu và "2" ở neo kéo tới để người
-## chơi biết CHẠM vào đâu — vòng tự "nở" ra rồi phập phồng nhẹ cho dễ thấy.
-## ============================================================================
+## Vòng đánh số tại neo trên bàn tutorial — "nở" ra rồi phập phồng khi hiện.
 
 @onready var _num: Label = $Num
 
