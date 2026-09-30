@@ -36,6 +36,7 @@ ShopManager="*uid://t0hqkbfi0hal"
 ArchivementManager="*uid://b6kljl1rc6o52"
 RankingManager="*res://scripts/manager/RankingManager.gd"
 ThemeManager="*uid://bg3pxd8vw2vrw"
+TutorialManager="*uid://6q2po1um0iul"
 
 [display]
 

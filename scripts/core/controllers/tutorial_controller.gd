@@ -24,6 +24,7 @@ const TUTORIAL_SCENES := {
 	"how_to_play_fog_of_war": "res://nodes/tutorials/how_to_play_fog_of_war.tscn",
 	"how_to_play_blind_memory": "res://nodes/tutorials/how_to_play_blind_memory.tscn",
 	"how_to_use_tool": "res://nodes/tutorials/how_to_use_tool.tscn",
+	"congrats_first_time": "res://nodes/tutorials/congrats_first_time.tscn",
 }
 
 const CORE_SEQUENCE := [
@@ -39,6 +40,8 @@ var active_tutorial_node: BaseTutorial = null
 var current_tutorial_id: String = ""
 var sequence_queue: Array[String] = []
 var container_node: Control = null
+## Người chơi vừa bấm "Bỏ qua tất cả" ở bài hiện tại (TutorialScene đọc để kết thúc luồng onboarding)
+var skipped_all := false
 
 
 func set_container(container: Control) -> void:
@@ -53,6 +56,7 @@ func set_container(container: Control) -> void:
 
 
 func start_sequence(sequence: Array = []) -> void:
+	skipped_all = false
 	sequence_queue.clear()
 	if sequence.is_empty():
 		for id in CORE_SEQUENCE:
@@ -65,6 +69,7 @@ func start_sequence(sequence: Array = []) -> void:
 
 
 func play_single_tutorial(tutorial_id: String) -> void:
+	skipped_all = false
 	sequence_queue.clear()
 	sequence_queue.append(tutorial_id)
 	_play_next_in_queue()
@@ -128,6 +133,7 @@ func _on_tutorial_completed(tutorial_id: String) -> void:
 
 func _on_tutorial_skipped(tutorial_id: String, all: bool) -> void:
 	if all:
+		skipped_all = true
 		sequence_queue.clear()
 		_save_core_completed()
 		if active_tutorial_node != null and is_instance_valid(active_tutorial_node):

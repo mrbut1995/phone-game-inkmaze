@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://4br5abaueaea"]
+
+[ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/tutorial/congrats_first_time.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://bgcla6wb8btb7" path="res://assets/images/popups/stamp_done.svg" id="3_stamp"]
+[ext_resource type="Texture2D" uid="uid://bdc7bixy0i0u0" path="res://assets/images/icons/completed_icon.svg" id="4_check"]
+
+[sub_resource type="StyleBoxFlat" id="btn_primary"]
+content_margin_left = 28.0
+content_margin_top = 10.0
+content_margin_right = 28.0
+content_margin_bottom = 10.0
+bg_color = Color(0.15, 0.2, 0.26, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="btn_primary_hover"]
+content_margin_left = 28.0
+content_margin_top = 10.0
+content_margin_right = 28.0
+content_margin_bottom = 10.0
+bg_color = Color(0.22, 0.28, 0.35, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="btn_ghost"]
+content_margin_left = 24.0
+content_margin_top = 8.0
+content_margin_right = 24.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.15, 0.2, 0.26, 0.35)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="CongratsFirstTime" instance=ExtResource("1_base") node_paths=PackedStringArray("stamp", "btn_continue", "btn_main")]
+script = ExtResource("2_script")
+stamp = NodePath("Stamp")
+btn_continue = NodePath("ChoiceRow/BtnContinue")
+btn_main = NodePath("ChoiceRow/BtnMain")
+
+[node name="Stamp" type="TextureRect" parent="." index="8"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -125.0
+offset_right = 150.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_stamp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Check" type="TextureRect" parent="Stamp" index="0"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -50.0
+offset_right = 58.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_check")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ChoiceRow" type="VBoxContainer" parent="." index="9"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -165.0
+offset_top = -168.0
+offset_right = 165.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnContinue" type="Button" parent="ChoiceRow" index="0"]
+custom_minimum_size = Vector2(300, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("btn_primary")
+theme_override_styles/hover = SubResource("btn_primary_hover")
+theme_override_styles/pressed = SubResource("btn_primary_hover")
+text = "STR_TUT_CONGRATS_CONTINUE"
+
+[node name="BtnMain" type="Button" parent="ChoiceRow" index="1"]
+custom_minimum_size = Vector2(300, 44)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.15, 0.2, 0.26, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("btn_ghost")
+theme_override_styles/hover = SubResource("btn_ghost")
+theme_override_styles/pressed = SubResource("btn_ghost")
+text = "STR_TUT_CONGRATS_MAIN"
+
+[connection signal="pressed" from="ChoiceRow/BtnContinue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="ChoiceRow/BtnMain" to="." method="_on_main_pressed"]

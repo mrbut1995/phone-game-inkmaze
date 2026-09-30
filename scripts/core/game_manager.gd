@@ -28,6 +28,12 @@ var current_chapter: int = 1
 var debug_run: bool = false
 var start_floor_override: int = 0        # 0 = tự động (mode tự quyết định)
 
+## LUỒNG HỌC LẦN ĐẦU (TutorialManager điều khiển — xem scripts/manager/TutorialManager.gd):
+## bước đang ở trong chuỗi onboarding + đã học xong luồng chưa. Lưu cùng tiến trình để
+## thoát giữa chừng vẫn chạy tiếp đúng bước ở lần mở sau.
+var tutorial_flow_step: int = 0
+var tutorial_flow_done: bool = false
+
 ## Ván đang chơi có phải là MÀN trong mạch màn Chọn màn không (khác Daily / Dungeon / Debug).
 ## Dùng để: (1) hiện nút SKIP LEVEL trên thanh hành động, (2) cho chế độ SPECIAL chạy trên
 ## BÀN DO NHÀ THIẾT KẾ VẼ của màn thay vì tự sinh bàn (xem BaseGameMode.designed_maze).
@@ -59,6 +65,13 @@ var tutorial_progress: Dictionary = {
 
 func is_tutorial_completed(tutorial_id: String) -> bool:
 	return bool(tutorial_progress.get(tutorial_id, false))
+
+
+## Ghi vị trí luồng onboarding (TutorialManager gọi sau mỗi bước / khi xong luồng)
+func set_tutorial_flow(step: int, done: bool) -> void:
+	tutorial_flow_step = clampi(step, 0, 64)
+	tutorial_flow_done = done
+	Save.queue_save()
 
 
 func set_tutorial_completed(tutorial_id: String, completed := true) -> void:
@@ -105,6 +118,8 @@ func take_return_to_game_flag() -> bool:
 func reset_tutorial_progress() -> void:
 	for key in tutorial_progress:
 		tutorial_progress[key] = false
+	tutorial_flow_step = 0
+	tutorial_flow_done = false
 
 
 func _ready() -> void:
@@ -129,6 +144,8 @@ func start_dungeon() -> void:
 ## Màn không khai gì (hoặc khai id lạ) = chế độ Play như trước.
 func start_level(level_id: int) -> void:
 	prepare_level_run(level_id)
+	if _open_mode_tutorial_once():
+		return
 	_change_scene("res://scenes/game.tscn")
 
 
@@ -199,13 +216,29 @@ func skip_level(level_id: int) -> int:
 ## Khởi động Daily Challenge theo ngày — MAZE ĐẶC BIỆT (mode xoay vòng của ngày)
 func start_daily(day: int) -> void:
 	prepare_daily_run(day, "special")
+	if _open_mode_tutorial_once():
+		return
 	_change_scene("res://scenes/game.tscn")
 
 
 ## Khởi động Daily Challenge theo ngày — MAZE THƯỜNG (classic)
 func start_daily_classic(day: int) -> void:
 	prepare_daily_run(day, "classic")
+	if _open_mode_tutorial_once():
+		return
 	_change_scene("res://scenes/game.tscn")
+
+
+## LẦN ĐẦU vào 1 chế độ Special (từ Daily hoặc từ màn có `mode_id`): mở bài học của chế
+## độ trước rồi mới vào màn chơi (TutorialManager quyết định — xem `MODE_TUTORIALS`).
+## Ván TEST từ Debug Console không tự mở tutorial.
+func _open_mode_tutorial_once() -> bool:
+	if debug_run:
+		return false
+	var tm := get_node_or_null("/root/TutorialManager")
+	if tm == null or not tm.has_method("begin_mode_tutorial"):
+		return false
+	return bool(tm.call("begin_mode_tutorial", current_mode))
 
 
 ## [DEBUG/TEST] Chuẩn bị ván Daily nhưng KHÔNG chuyển scene.
@@ -422,6 +455,8 @@ func export_progress() -> Dictionary:
 		"unlocked_chapters": unlocked_chapters.duplicate(),
 		"current_chapter": current_chapter,
 		"tutorial_progress": tutorial_progress.duplicate(),
+		"tutorial_flow_step": tutorial_flow_step,
+		"tutorial_flow_done": tutorial_flow_done,
 	}
 
 
@@ -442,6 +477,13 @@ func import_progress(data: Dictionary) -> void:
 	if data.has("tutorial_progress") and data["tutorial_progress"] is Dictionary:
 		for k in (data["tutorial_progress"] as Dictionary):
 			tutorial_progress[k] = bool(data["tutorial_progress"][k])
+	tutorial_flow_step = clampi(int(data.get("tutorial_flow_step", 0)), 0, 64)
+	if data.has("tutorial_flow_done"):
+		tutorial_flow_done = bool(data["tutorial_flow_done"])
+	else:
+		# Save cũ (trước khi có luồng "bài học ⇄ màn thực hành"): ai đã học xong bộ CORE
+		# thì coi như xong luồng, KHÔNG bắt học lại từ first_time.
+		tutorial_flow_done = bool(tutorial_progress.get("core_completed", false))
 
 
 func reset_progress() -> void:
@@ -453,6 +495,8 @@ func reset_progress() -> void:
 	current_level = 1
 	unlocked_chapters = [1]
 	current_chapter = 1
+	tutorial_flow_step = 0
+	tutorial_flow_done = false
 	for k in tutorial_progress:
 		tutorial_progress[k] = false
 

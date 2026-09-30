@@ -114,6 +114,10 @@ func _on_start_pressed() -> void:
 
 
 func _goto_main() -> void:
+	# Người chơi MỚI: vào luồng học lần đầu (first_time → … → màn thực hành) thay vì Main
+	var tm := get_node_or_null("/root/TutorialManager")
+	if tm != null and tm.has_method("start_onboarding") and bool(tm.call("start_onboarding")):
+		return
 	var sm := get_node_or_null("/root/SceneManager")
 	if sm != null and sm.has_method("goto_main"):
 		sm.call("goto_main")

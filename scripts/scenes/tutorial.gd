@@ -12,8 +12,12 @@ const NavHelper := preload("res://scripts/utils/nav.gd")
 
 var layout: TutorialLayout = null
 ## Mở 1 bài LẺ (Debug Console) hoặc Test mode ⇒ học xong Ở LẠI màn Tutorial để thử bài khác
-var _stay_after_finish := false## Khi vào tutorial từ màn chơi: quay về game sau khi kết thúc hoặc Back
+var _stay_after_finish := false
+## Khi vào tutorial từ màn chơi: quay về game sau khi kết thúc hoặc Back
 var _return_to_game := false
+## Đang chạy LUỒNG HỌC LẦN ĐẦU (onboarding): học xong bài này thì đi tiếp bước kế của luồng
+## (bài học trong màn / màn thực hành) thay vì về Main — xem scripts/manager/TutorialManager.gd
+var _in_flow := false
 
 func _ready() -> void:
 	_bind_refs()
@@ -52,9 +56,21 @@ func _start_requested() -> void:
 		return
 	if requested.is_empty() or requested == TutorialController.REQUEST_CORE:
 		tutorial_controller.start_sequence()
+	elif _is_flow_tutorial(requested):
+		# Bước hiện tại của LUỒNG HỌC LẦN ĐẦU: học xong sẽ đi tiếp luồng (không về Main)
+		_in_flow = true
+		tutorial_controller.play_single_tutorial(requested)
 	else:
 		_stay_after_finish = true
 		tutorial_controller.play_single_tutorial(requested)
+
+
+## Bài này có phải bước hiện tại của luồng onboarding không
+func _is_flow_tutorial(tutorial_id: String) -> bool:
+	var tm := _tutorial_manager()
+	if tm == null or not tm.has_method("is_flow_tutorial"):
+		return false
+	return bool(tm.call("is_flow_tutorial", tutorial_id))
 
 
 ## Ván TEST (Debug Console bật “Test mode”): không ghi tiến trình, không tự nhảy màn
@@ -69,6 +85,11 @@ func _take_tutorial_request() -> String:
 	if gm != null and gm.has_method("take_tutorial_request"):
 		return str(gm.call("take_tutorial_request"))
 	return ""
+
+
+## Manager điều phối luồng học lần đầu (lấy động qua /root như mọi autoload khác)
+func _tutorial_manager() -> Node:
+	return get_node_or_null("/root/TutorialManager")
 
 
 func _bind_refs() -> void:
@@ -123,13 +144,66 @@ func _finish_and_return() -> void:
 	NavHelper.goto_game()
 
 
-func _on_sequence_finished() -> void:	# Quay về game sau khi xẾm tutorial từ nút "?"
+func _on_sequence_finished() -> void:
+	# Quay về game sau khi xem tutorial từ nút "?"
 	if _return_to_game:
+		# …nhưng nếu LUỒNG HỌC LẦN ĐẦU đang chờ 1 BÀI HỌC thì chạy tiếp NGAY trong màn này
+		# (không nhảy về màn chơi: màn chơi sẽ bị khởi động lại từ đầu + nháy màn hình).
+		if _resume_flow_after_practice():
+			return
 		_finish_and_return()
-		return	# Thử bài từ Debug Console (bài lẻ / Test mode): ở lại màn Tutorial để chọn bài khác
+		return
+	if _in_flow:
+		_continue_flow()
+		return
+	# Thử bài từ Debug Console (bài lẻ / Test mode): ở lại màn Tutorial để chọn bài khác
 	if _stay_after_finish:
 		return
-	# Hoàn thành chuỗi: chuyển sang Màn 1 hoặc về Menu chính
+	# Hoàn thành chuỗi (Debug/chuỗi CORE): chuyển sang Màn 1 hoặc về Menu chính
+	_enter_first_level()
+
+
+## Học xong 1 bài của luồng onboarding: chạy tiếp bài kế (trong màn) · màn thực hành ·
+## hoặc kết thúc luồng. "Bỏ qua tất cả" ⇒ kết thúc luồng rồi vào thẳng Màn 1.
+func _continue_flow() -> void:
+	var tm := _tutorial_manager()
+	if tm == null:
+		NavHelper.goto_main()
+		return
+	if tutorial_controller != null and bool(tutorial_controller.get("skipped_all")):
+		tm.call("abort_flow")
+		_enter_first_level()
+		return
+	var result: Dictionary = tm.call("continue_flow_inplace")
+	var next_id := str(result.get("next", ""))
+	if not next_id.is_empty():
+		tutorial_controller.play_single_tutorial(next_id)
+		return
+	if result.has("level"):
+		return                              # đang chuyển sang màn chơi — scene này sắp bị thay
+	NavHelper.goto_main()                  # luồng đã kết thúc
+
+
+## Vừa học xong bài mở từ nút "?" của màn chơi: nếu bước hiện tại của luồng onboarding là
+## 1 BÀI HỌC thì chạy tiếp luôn trong màn này và chuyển sang chế độ “đang chạy luồng”.
+## Trả true = đã mở bài kế (KHÔNG quay về màn chơi).
+func _resume_flow_after_practice() -> bool:
+	var tm := _tutorial_manager()
+	if tm == null or not tm.has_method("resume_flow_lesson"):
+		return false
+	var next_id := str(tm.call("resume_flow_lesson"))
+	# Bài luồng trả về có thể CHÍNH LÀ bài vừa học (ván TEST không ghi tiến trình, save lệch…) —
+	# lúc đó không mở lại nữa để tránh lặp vô tận.
+	if next_id.is_empty() or next_id == str(tutorial_controller.current_tutorial_id):
+		return false
+	_return_to_game = false
+	_in_flow = true
+	tutorial_controller.play_single_tutorial(next_id)
+	return true
+
+
+## Vào thẳng Màn 1 (nhánh "Bỏ qua tất cả" / chuỗi CORE xong)
+func _enter_first_level() -> void:
 	var gm := get_tree().root.get_node_or_null("GameManager") if get_tree() != null and get_tree().root != null else null
 	if gm != null and gm.has_method("start_level"):
 		gm.call("start_level", 1)

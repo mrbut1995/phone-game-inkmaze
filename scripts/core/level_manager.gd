@@ -252,26 +252,32 @@ func _create_crafted_level(level_id: int) -> LevelData:
 		1:
 			lvl.level_title = "Level 1-1 · Bước Khởi Đầu"
 			lvl.difficulty = "easy"
-			lvl.width = 2
-			lvl.height = 2
-			lvl.start_pos = Vector2i(0, 1)
-			lvl.end_pos = Vector2i(1, 0)
+			lvl.width = 3
+			lvl.height = 3
+			lvl.start_pos = Vector2i(0, 2)
+			lvl.end_pos = Vector2i(2, 0)
 			lvl.max_steps = 8
-			lvl.par_time = 20.0
+			lvl.par_time = 25.0
+			# Màn THỰC HÀNH sau bài "kéo đường": toàn bộ tường HIỆN, không có tường ẩn
 			_setup_level_walls(lvl, [
-				{"is_h": true, "x": 0, "y": 1, "vis": true}
+				{"is_h": true, "x": 0, "y": 2, "vis": true},
+				{"is_h": false, "x": 1, "y": 0, "vis": true},
+				{"is_h": false, "x": 2, "y": 2, "vis": true}
 			])
 		2:
 			lvl.level_title = "Level 1-2 · Bức Tường Ẩn"
 			lvl.difficulty = "easy"
-			lvl.width = 2
-			lvl.height = 2
-			lvl.start_pos = Vector2i(0, 1)
-			lvl.end_pos = Vector2i(1, 0)
+			lvl.width = 3
+			lvl.height = 3
+			lvl.start_pos = Vector2i(0, 2)
+			lvl.end_pos = Vector2i(2, 0)
 			lvl.max_steps = 10
-			lvl.par_time = 25.0
+			lvl.par_time = 30.0
+			# Màn THỰC HÀNH sau bài "đọc số đoán tường": ĐÚNG 1 tường ẩn chặn lối tắt
 			_setup_level_walls(lvl, [
-				{"is_h": false, "x": 1, "y": 1, "vis": false}
+				{"is_h": true, "x": 0, "y": 2, "vis": true},
+				{"is_h": false, "x": 1, "y": 0, "vis": true},
+				{"is_h": false, "x": 2, "y": 0, "vis": false}
 			])
 		3:
 			lvl.level_title = "Level 1-3 · Mê Cung 3x3"
@@ -280,12 +286,15 @@ func _create_crafted_level(level_id: int) -> LevelData:
 			lvl.height = 3
 			lvl.start_pos = Vector2i(0, 2)
 			lvl.end_pos = Vector2i(2, 0)
-			lvl.max_steps = 14
-			lvl.par_time = 35.0
+			lvl.max_steps = 9
+			lvl.par_time = 40.0
+			# Màn THỰC HÀNH sau bài "dùng công cụ": đường dài hơn + 1 tường ẩn
+			# (đi sai thì dùng QUAY LẠI/GỢI Ý cho đỡ tốn bước)
 			_setup_level_walls(lvl, [
-				{"is_h": true, "x": 0, "y": 1, "vis": true},
-				{"is_h": true, "x": 1, "y": 2, "vis": true},
-				{"is_h": false, "x": 1, "y": 0, "vis": false}
+				{"is_h": true, "x": 0, "y": 2, "vis": true},
+				{"is_h": true, "x": 1, "y": 1, "vis": true},
+				{"is_h": true, "x": 2, "y": 1, "vis": true},
+				{"is_h": false, "x": 2, "y": 1, "vis": false}
 			])
 		4:
 			lvl.level_title = "Level 1-4 · Lối Rẽ Vô Hình"
