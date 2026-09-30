@@ -37,15 +37,41 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 	btn_skip.visible = false
 	if dots_container != null:
 		dots_container.visible = false
+	# Ẩn nút lựa chọn — sẽ pop vào sau khi con dấu đóng
+	if btn_continue != null:
+		btn_continue.modulate.a = 0.0
+	if btn_main != null:
+		btn_main.modulate.a = 0.0
 	if stamp != null:
 		stamp.pivot_offset = stamp.size * 0.5
-		stamp.scale = Vector2(1.35, 1.35)
+		stamp.scale = Vector2(1.6, 1.6)
 		stamp.modulate.a = 0.0
+		stamp.rotation = deg_to_rad(-5.0)
 		var tw := stamp.create_tween()
+		# Phase 1: con dấu rơi nhanh + squash nhẹ khi chạm
 		tw.set_parallel(true)
-		tw.tween_property(stamp, "scale", Vector2.ONE, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		tw.tween_property(stamp, "modulate:a", 1.0, 0.25)
-	Sfx.play(Sfx.LEVEL_WIN)
+		tw.tween_property(stamp, "scale", Vector2(0.88, 0.88), 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tw.tween_property(stamp, "modulate:a", 1.0, 0.14)
+		tw.tween_property(stamp, "rotation", 0.0, 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		# Phase 2: nảy lại về kích thước thật
+		tw.set_parallel(false)
+		tw.tween_callback(func() -> void: Sfx.play(Sfx.STAMP_IMPACT))
+		tw.tween_property(stamp, "scale", Vector2.ONE, 0.34).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		# Phase 3: nhạc chiến thắng + nút xuất hiện
+		tw.tween_callback(func() -> void: Sfx.play(Sfx.LEVEL_WIN))
+		tw.tween_callback(func() -> void: _reveal_choice_buttons())
+	else:
+		Sfx.play(Sfx.LEVEL_WIN)
+		_reveal_choice_buttons()
+
+
+## Nút xuất hiện có stagger sau khi con dấu đóng xong
+func _reveal_choice_buttons() -> void:
+	var btns := [btn_continue, btn_main]
+	for i in btns.size():
+		var btn := btns[i] as BaseButton
+		if btn != null:
+			UIAnim.play_pop_in(btn, i * 0.12, 0.88, 0.28)
 
 
 ## "CHƠI BÀN TIẾP THEO": học xong luồng sẽ mở luôn màn kế trong chương

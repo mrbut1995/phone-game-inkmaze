@@ -59,6 +59,11 @@ func _on_step_entered(index: int, _data: Dictionary) -> void:
 				mid.play_step()
 				Sfx.play(Sfx.CELL_STEP)
 		3:
-			# Sẵn sàng! Đổi chữ nút Tiếp tục thành "Bắt Đầu"
 			Sfx.play(Sfx.CHECKBOX)
 			btn_next.text = tr("STR_TUT_FIRST_TIME_START") if tr("STR_TUT_FIRST_TIME_START") != "STR_TUT_FIRST_TIME_START" else "Bắt Đầu"
+			# Từng ô sáng lên so le để chúc mừng hoàn thành bài đầu tiên
+			for i in preview_cells.size():
+				if i == 0:
+					preview_cells[0].play_step()
+				else:
+					get_tree().create_timer(i * 0.1).timeout.connect(preview_cells[i].play_step)
