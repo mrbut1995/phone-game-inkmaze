@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhkawxv1hy7ih"
-path="res://.godot/imported/btn_menu_badge_normal_icon.svg-411c29b5604c2bc92c83d73f2266cb91.ctex"
+uid="uid://0t04k6pa24dy"
+path="res://.godot/imported/icon_shop_large.svg-dcffc6ea69b2374be1004c57a97cb149.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/main/btn_menu_badge_normal_icon.svg"
-dest_files=["res://.godot/imported/btn_menu_badge_normal_icon.svg-411c29b5604c2bc92c83d73f2266cb91.ctex"]
+source_file="res://assets/images/icons/icon_shop_large.svg"
+dest_files=["res://.godot/imported/icon_shop_large.svg-dcffc6ea69b2374be1004c57a97cb149.ctex"]
 
 [params]
 
