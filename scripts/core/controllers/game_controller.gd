@@ -449,6 +449,10 @@ func _on_continue_requested() -> void:
 			var stars: int = challenge_controller.stars() if challenge_controller != null else 0
 			var current := int(gm.get("current_level"))
 			gm.call("record_level_clear", current, stars, game_state.elapsed_time)
+			# LUỒNG HỌC LẦN ĐẦU: màn 1..4 dẫn tiếp sang bài học / màn thực hành kế của luồng
+			var tm: Node = get_node_or_null("/root/TutorialManager")
+			if tm != null and tm.has_method("on_level_finished") and bool(tm.call("on_level_finished", current)):
+				return
 			# CHỈ đi tiếp trong cùng chương (và chương đó phải đã mở); hết chương -> màn Chọn Chương
 			var next_lvl := int(gm.call("next_level_in_chapter", current))
 			if next_lvl > 0 and bool(gm.call("can_play_level", next_lvl)):
@@ -671,6 +675,13 @@ func open_instruction() -> void:
 	if mode_id in MODES_WITHOUT_TUTORIAL:
 		return
 	var ids: Array = TUTORIAL_IDS.get(mode_id, [])
+	# Trong LUỒNG HỌC LẦN ĐẦU: màn thực hành (1·2·3) chỉ mở ĐÚNG bài học của màn đó,
+	# không mở cả 3 bài cơ bản (xem TutorialManager.PRACTICE_TUTORIALS)
+	var tm: Node = Engine.get_main_loop().root.get_node_or_null("TutorialManager") if Engine.get_main_loop() != null else null
+	if tm != null and tm.has_method("practice_tutorial_for_level"):
+		var only := str(tm.call("practice_tutorial_for_level", current_floor()))
+		if not only.is_empty():
+			ids = [only]
 	if ids.is_empty():
 		return
 	var gm: Node = Engine.get_main_loop().root.get_node_or_null("GameManager") if Engine.get_main_loop() != null else null

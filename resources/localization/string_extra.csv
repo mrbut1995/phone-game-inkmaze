@@ -1198,6 +1198,10 @@ STR_TUT_TOOL_04,"Now try it yourself — reach F, using UNDO and HINT when neede
 STR_TUT_TOOL_05,Great! You have mastered both tools.,Tuyệt! Bạn đã nắm được 2 công cụ rồi.
 STR_TUT_TOOL_FAIL_UNDO,No steps to undo yet!,Chưa có bước nào để quay lại!
 STR_TUT_TOOL_HUD,Undo: {0} · Hint: {1},Quay lại: {0} lượt · Gợi ý: {1} lượt
+STR_TUT_CONGRATS_TITLE,CONGRATULATIONS!,CHÚC MỪNG!
+STR_TUT_CONGRATS_BODY,"You finished the first 3 lessons and 4 practice boards — now you are ready for the real journey!","Bạn đã hoàn thành 3 bài học đầu tiên và 4 bàn thử sức — sẵn sàng cho hành trình tiếp theo!"
+STR_TUT_CONGRATS_CONTINUE,NEXT BOARD,CHƠI BÀN TIẾP THEO
+STR_TUT_CONGRATS_MAIN,MAIN MENU,VỀ MÀN HÌNH CHÍNH
 STR_ACH_DL_DAYS_30_TITLE,A Month of Discipline,Một Tháng Kiên Trì
 STR_ACH_DL_DAYS_30_DESC,Complete 30 days of Daily Challenge,Hoàn thành 30 ngày Daily Challenge
 STR_ACH_DL_DAYS_7_TITLE,Diligent Week,Tuần Lễ Chăm Chỉ

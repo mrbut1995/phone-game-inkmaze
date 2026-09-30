@@ -601,6 +601,7 @@ const TUTORIAL_SCENES := [
 	"res://nodes/tutorials/how_to_play_fog_of_war.tscn",
 	"res://nodes/tutorials/how_to_play_blind_memory.tscn",
 	"res://nodes/tutorials/how_to_use_tool.tscn",
+	"res://nodes/tutorials/congrats_first_time.tscn",
 ]
 ## Số phần tử mong đợi của export MẢNG (`Array[TutorialCell]` — ô XEM TRƯỚC của bài mở đầu)
 const TUTORIAL_EXPECTED_ARRAYS := {

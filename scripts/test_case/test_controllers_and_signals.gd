@@ -60,10 +60,10 @@ func _init() -> void:
 	assert(lm != null, "Autoload LevelManager phai ton tai tren root")
 	var lvl1: LevelData = lm.call("load_level", 1)
 	assert(lvl1 != null, "LevelManager phai load duoc Level 1")
-	assert(lvl1.width == 2 and lvl1.height == 2, "Level 1 phai co size 2x2")
+	assert(lvl1.width == 3 and lvl1.height == 3, "Level 1 phai co size 3x3")
 	var maze1 := lvl1.to_maze_data()
 	assert(maze1 != null, "to_maze_data phai tra ve MazeData hop le")
-	assert(maze1.width == 2 and maze1.height == 2, "MazeData phai co size 2x2")
+	assert(maze1.width == 3 and maze1.height == 3, "MazeData phai co size 3x3")
 	print("[SUCCESS] LevelManager & LevelData Resource nạp dữ liệu chuẩn xác!")
 
 	# 4. Kiem tra Settings Popup (Pause) do PopupManager tao ra khi bam Pause

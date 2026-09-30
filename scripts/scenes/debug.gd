@@ -221,6 +221,7 @@ const TUTORIAL_LABELS := {
 	"how_to_play_one_stroke": "Bàn 3×3 — đi hết mọi ô đúng 1 lần",
 	"how_to_play_sum_path": "Bàn 3×3 — tổng điểm khớp mục tiêu",
 	"how_to_play_wall_builder": "Bàn 2×2 — tự vẽ tường rồi GỬI BÀI",
+	"congrats_first_time": "Chúc mừng xong chuỗi mở đầu (về Main hoặc bàn kế)",
 }
 
 
