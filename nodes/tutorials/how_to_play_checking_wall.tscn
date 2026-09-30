@@ -49,3 +49,5 @@ offset_left = -170.0
 offset_top = -170.0
 offset_right = 170.0
 offset_bottom = 170.0
+
+[connection signal="cell_step_attempted" from="BoardHost/BoardTutorial" to="." method="_on_cell_step_attempted"]

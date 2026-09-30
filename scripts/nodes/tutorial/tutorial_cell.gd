@@ -27,7 +27,6 @@ var _home_pos := Vector2.ZERO
 
 @onready var _sprite: TextureButton = $Sprite
 @onready var _label: Label = $Sprite/Label
-@onready var _highlight: Panel = $Highlight
 
 
 func _ready() -> void:
@@ -88,29 +87,6 @@ func set_text_size(px: int) -> void:
 	text_size = px
 	if _label != null:
 		_label.add_theme_font_size_override("font_size", px)
-
-
-## Tô sáng ô (dùng cho Minesweeper / SumPath spotlight trên ô cụ thể)
-func set_highlight(on: bool) -> void:
-	if _highlight != null:
-		_highlight.visible = on
-
-
-## Đánh dấu đã đi qua (One Stroke): dùng overlay Highlight màu xanh nhạt
-func set_visited(on: bool) -> void:
-	if _highlight == null:
-		return
-	if on:
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color(0.5, 0.82, 0.95, 0.38)
-		style.corner_radius_top_left    = 14
-		style.corner_radius_top_right   = 14
-		style.corner_radius_bottom_right = 14
-		style.corner_radius_bottom_left  = 14
-		_highlight.add_theme_stylebox_override("panel", style)
-		_highlight.visible = true
-	else:
-		_highlight.visible = false
 
 
 ## Nhún nhẹ khi thao tác đúng ("pháo giấy nhỏ" của tutorial)

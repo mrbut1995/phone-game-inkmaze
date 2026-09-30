@@ -22,3 +22,5 @@ layout_mode = 1
 
 [node name="TutorialController" type="Node" parent="Controllers" index="0" unique_id=1068048508]
 script = ExtResource("5_controller_script")
+
+[connection signal="sequence_finished" from="Controllers/TutorialController" to="." method="_on_sequence_finished"]

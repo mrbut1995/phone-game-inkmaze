@@ -39,9 +39,7 @@ func _on_open() -> void:
 	if revive_desc != null:
 		revive_desc.text = tr("STR_REVIVE_DESC_STEPS").format([int(data.get("revive_steps", 3))])
 
-	bind_button("Panel/Content/Banner/ReviveBtn", _on_revive_pressed)
-	bind_button("Panel/Content/MenuBtn", _on_menu_pressed)
-	bind_button("Panel/Content/RetryBtn", _on_retry_pressed)
+	# Dây 3 nút (Hồi sinh / Menu / Thử lại) khai trong `gameover.tscn` (cùng scene)
 
 
 func _on_revive_pressed() -> void:

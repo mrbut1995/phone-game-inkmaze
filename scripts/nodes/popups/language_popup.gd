@@ -32,8 +32,7 @@ var _click_lock_until := 0.0
 func _on_open() -> void:
 	_pending_locale = Loc.current()
 	_rebuild()
-	bind_button("Panel/Content/Buttons/Cancel", _on_cancel_pressed)
-	bind_button("Panel/Content/Buttons/Apply", _on_apply_pressed)
+	# Dây 2 nút (Huỷ / Áp dụng) khai trong `language.tscn` (cùng scene)
 
 
 # ---------------------------------------------------------------------------

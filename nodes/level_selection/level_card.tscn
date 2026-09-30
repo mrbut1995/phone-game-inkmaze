@@ -246,3 +246,5 @@ vertical_alignment = 1
 resize_font_to_fit = true
 maximum_font_size = 120
 metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Panel" to="." method="_on_pressed"]

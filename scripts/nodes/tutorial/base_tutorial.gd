@@ -58,8 +58,7 @@ var _entrance_played := false
 
 
 func _ready() -> void:
-	if spotlight != null and not spotlight.resized.is_connected(_on_spotlight_resized):
-		spotlight.resized.connect(_on_spotlight_resized)
+	# Dây `Spotlight.resized → _on_spotlight_resized` khai trong `base_tutorial.tscn` (cùng scene)
 	_init_tutorial()
 	# Ưu tiên 1: blueprint_steps được gán trong editor
 	if steps_data.is_empty() and blueprint_steps.size() > 0:
@@ -405,19 +404,25 @@ func _apply_spotlight() -> void:
 		return
 
 	var target: Rect2
+	const CELL_SIZE_ANCHORING = Vector2(46,46)
+	const CELL_SIZE_CENTERING = (CELL_SIZE_ANCHORING + Vector2(8,8))  / 2
 	if _spotlight_cell != Vector2i(-1, -1):
 		var cell := get_board_cell(_spotlight_cell)
 		if cell != null:
+			print("SPOTLIGHT 1")
 			var grect := cell.get_global_rect()
 			var lpos := grect.position - global_position
-			target = Rect2(lpos - Vector2(4, 4), grect.size + Vector2(8, 8))
+			target = Rect2(lpos - CELL_SIZE_CENTERING, grect.size + CELL_SIZE_ANCHORING)
 		else:
+			print("SPOTLIGHT 2")
 			target = Rect2(_board_to_overlay(_spotlight_rect.position), _spotlight_rect.size)
 	elif _spotlight_node != null and is_instance_valid(_spotlight_node):
 		var grect := _spotlight_node.get_global_rect()
 		var lpos := grect.position - global_position
-		target = Rect2(lpos - Vector2(4, 4), grect.size + Vector2(8, 8))
+		print("SPOTLIGHT 3")
+		target = Rect2(lpos - Vector2(28, 28), grect.size + Vector2(46, 46))
 	else:
+		print("SPOTLIGHT 4")
 		target = Rect2(_board_to_overlay(_spotlight_rect.position), _spotlight_rect.size)
 
 	var was_visible := spotlight.visible

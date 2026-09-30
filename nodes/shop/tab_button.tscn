@@ -29,3 +29,5 @@ theme_type_variation = &"ShopTabLabel"
 text = "TAB"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="." to="." method="_emit_tab_pressed"]

@@ -28,11 +28,7 @@ var month: int = 9
 
 
 func _ready() -> void:
-	if btn_prev != null:
-		btn_prev.pressed.connect(_on_month_switch_pressed.bind(-1))
-	if btn_next != null:
-		btn_next.pressed.connect(_on_month_switch_pressed.bind(1))
-
+	# Dây 2 nút đổi tháng khai trong `calendar.tscn` (cùng scene, kèm `binds` -1/+1)
 	var now := Time.get_date_dict_from_system()
 	year = int(now.get("year", 2026))
 	month = int(now.get("month", 1))

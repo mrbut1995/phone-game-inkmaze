@@ -31,12 +31,11 @@ var active := false
 
 
 func _ready() -> void:
-	# @tool: chỉ nối tín hiệu khi CHẠY (trong editor không cần bounce, tránh nhiễu)
+	# Dây `pressed → _emit_tab_pressed` khai trong `.tscn` (cùng scene).
+	# @tool: chỉ gắn hiệu ứng khi CHẠY (trong editor không cần bounce, tránh nhiễu)
 	if Engine.is_editor_hint():
 		return
 	UIAnim.attach_press_bounce(self)
-	if not pressed.is_connected(_emit_tab_pressed):
-		pressed.connect(_emit_tab_pressed)
 
 
 func _emit_tab_pressed() -> void:

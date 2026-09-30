@@ -181,3 +181,5 @@ color = Color(0.965, 0.945, 0.915, 1)
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1871871165]
 libraries/ = SubResource("AnimationLibrary_101rs")
 autoplay = &"loading"
+
+[connection signal="draw" from="TransitionRoot/InkCircleDrawer" to="." method="_on_ink_draw"]

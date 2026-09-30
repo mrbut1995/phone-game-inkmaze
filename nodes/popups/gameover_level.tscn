@@ -398,3 +398,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
+
+[connection signal="pressed" from="Panel/Content/Banner/ReviveBtn" to="." method="_on_revive_pressed"]
+[connection signal="pressed" from="Panel/Content/MenuBtn" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="Panel/Content/RetryBtn" to="." method="_on_retry_pressed"]

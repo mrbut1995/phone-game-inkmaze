@@ -57,17 +57,17 @@ mouse_filter = 1
 color = Color(0.969, 0.957, 0.937, 1)
 
 [node name="Spotlight" type="NinePatchRect" parent="." unique_id=393074664]
-visible = false
 z_index = 10
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
-mouse_filter = 2
 texture = ExtResource("3_spotlight")
 patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [node name="BoardHost" type="Control" parent="." unique_id=1982948136]
 layout_mode = 1
@@ -122,8 +122,8 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.35, 0.38, 0.42, 1)
 theme_override_colors/font_hover_color = Color(0.15, 0.18, 0.2, 1)
 theme_override_font_sizes/font_size = 22
-flat = true
 text = "✕"
+flat = true
 
 [node name="DialogBubble" type="Control" parent="." unique_id=2017602598]
 layout_mode = 1
@@ -215,8 +215,8 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.55, 0.6, 0.65, 1)
 theme_override_font_sizes/font_size = 13
-flat = true
 text = "STR_TUT_COMMON_SKIP_ALL"
+flat = true
 
 [node name="Dots" type="HBoxContainer" parent="." unique_id=1937457845]
 layout_mode = 1
@@ -276,6 +276,7 @@ theme_override_colors/font_color = Color(0.831373, 0.847059, 0.866667, 1)
 theme_override_font_sizes/font_size = 14
 text = "●"
 
+[connection signal="resized" from="Spotlight" to="." method="_on_spotlight_resized"]
 [connection signal="pressed" from="Header/BtnSkip" to="." method="skip_tutorial"]
 [connection signal="pressed" from="NavBar/BtnNext" to="." method="next_step"]
 [connection signal="pressed" from="NavBar/BtnSkipAll" to="." method="skip_all_tutorials"]

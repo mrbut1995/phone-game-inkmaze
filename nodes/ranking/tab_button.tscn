@@ -33,3 +33,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 maximum_font_size = 40
 metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="." to="." method="_emit_tab_pressed"]

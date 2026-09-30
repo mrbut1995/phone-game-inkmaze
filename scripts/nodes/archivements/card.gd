@@ -50,8 +50,7 @@ var _pct := 0
 
 
 func _ready() -> void:
-	if claim_btn != null:
-		claim_btn.pressed.connect(_on_claim_pressed)
+	# Dây `ClaimButton.pressed → _on_claim_pressed` khai trong `card.tscn` (cùng scene)
 	if stamp_state != null:
 		stamp_state.text = tr("STR_ACH_STATE_CLAIMED")
 	if chip_label != null:
