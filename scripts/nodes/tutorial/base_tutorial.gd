@@ -186,11 +186,30 @@ func flash_fail(target: Control) -> void:
 
 
 ## Đổi nội dung thẻ thoại kèm nhịp fade nhẹ (cha là Container nên không dời vị trí)
-func _animate_step_text() -> void:
+## new_msg/new_title được truyền từ show_step để hỗ trợ crossfade
+func _animate_step_text(new_msg: String, new_title: String) -> void:
 	if _fx_message != null and _fx_message.is_valid():
 		_fx_message.kill()
-	_fx_message = UIAnim.play_fade_in(lbl_message, 0.0, 0.18)
-	UIAnim.play_pop_in(lbl_title, 0.0, 0.94, 0.2)
+	var was_visible := _entrance_played and lbl_message.modulate.a > 0.3
+	if was_visible:
+		# Fade out text cũ nhanh → set text mới → slide in
+		_fx_message = lbl_message.create_tween()
+		_fx_message.tween_property(lbl_message, "modulate:a", 0.0, 0.1)
+		_fx_message.tween_callback(func() -> void:
+			lbl_message.text = new_msg
+			lbl_message.position = Vector2.ZERO
+			if lbl_title.text != new_title:
+				lbl_title.text = new_title
+				UIAnim.play_pop_in(lbl_title, 0.0, 0.88, 0.24)
+			_fx_message = UIAnim.play_slide_in(lbl_message, Vector2(0, 10), 0.0, 0.22)
+		)
+	else:
+		# Lần đầu hoặc đang ẩn: set text ngay rồi slide in
+		lbl_message.text = new_msg
+		lbl_message.position = Vector2.ZERO
+		lbl_title.text = new_title
+		UIAnim.play_pop_in(lbl_title, 0.0, 0.88, 0.24)
+		_fx_message = UIAnim.play_slide_in(lbl_message, Vector2(0, 10), 0.06, 0.24)
 
 
 func setup_steps(p_steps: Array) -> void:
@@ -250,13 +269,9 @@ func show_step(index: int) -> void:
 	var msg_key: String = data.get("message_key", "")
 	var tr_msg := tr(msg_key)
 	if tr_msg == msg_key and data.has("fallback_text"):
-		lbl_message.text = data["fallback_text"]
-	else:
-		lbl_message.text = tr_msg
-
+		tr_msg = data["fallback_text"]
 	var title_key: String = data.get("title_key", "STR_TUT_COMMON_TITLE")
-	lbl_title.text = tr(title_key)
-	_animate_step_text()
+	_animate_step_text(tr_msg, tr(title_key))
 	if _entrance_played:
 		Sfx.play(Sfx.BTN_WOOD_TAP)
 
@@ -409,20 +424,16 @@ func _apply_spotlight() -> void:
 	if _spotlight_cell != Vector2i(-1, -1):
 		var cell := get_board_cell(_spotlight_cell)
 		if cell != null:
-			print("SPOTLIGHT 1")
 			var grect := cell.get_global_rect()
 			var lpos := grect.position - global_position
 			target = Rect2(lpos - CELL_SIZE_CENTERING, grect.size + CELL_SIZE_ANCHORING)
 		else:
-			print("SPOTLIGHT 2")
 			target = Rect2(_board_to_overlay(_spotlight_rect.position), _spotlight_rect.size)
 	elif _spotlight_node != null and is_instance_valid(_spotlight_node):
 		var grect := _spotlight_node.get_global_rect()
 		var lpos := grect.position - global_position
-		print("SPOTLIGHT 3")
 		target = Rect2(lpos - Vector2(28, 28), grect.size + Vector2(46, 46))
 	else:
-		print("SPOTLIGHT 4")
 		target = Rect2(_board_to_overlay(_spotlight_rect.position), _spotlight_rect.size)
 
 	var was_visible := spotlight.visible
@@ -430,16 +441,22 @@ func _apply_spotlight() -> void:
 	spotlight.scale = Vector2.ONE
 	if was_visible:
 		spotlight.modulate.a = 1.0
+		# Dừng pulse cũ để scale không giật khi vòng sáng trượt sang target mới
+		if _fx_spotlight != null and _fx_spotlight.is_valid():
+			_fx_spotlight.kill()
+			_fx_spotlight = null
 		var tw := spotlight.create_tween()
 		tw.set_parallel(true)
 		tw.tween_property(spotlight, "position", target.position, 0.26).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 		tw.tween_property(spotlight, "size", target.size, 0.26).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tw.set_parallel(false)
+		tw.tween_callback(func() -> void: _start_spotlight_pulse())
 	else:
 		spotlight.position = target.position
 		spotlight.size = target.size
 		spotlight.modulate.a = 0.0
 		spotlight.create_tween().tween_property(spotlight, "modulate:a", 1.0, 0.22)
-	_start_spotlight_pulse()
+		_start_spotlight_pulse()
 
 
 ## Mờ dần rồi ẩn vòng sáng (chỉ ẩn khi step mới vẫn KHÔNG có mục tiêu)
