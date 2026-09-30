@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhkawxv1hy7ih"
-path="res://.godot/imported/btn_menu_badge_normal_icon.svg-411c29b5604c2bc92c83d73f2266cb91.ctex"
+uid="uid://b4bkq2p2ryhbn"
+path="res://.godot/imported/logo_doodle_maze_large.svg-e62886018bcdc49c773dfeea527c3ef7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/main/btn_menu_badge_normal_icon.svg"
-dest_files=["res://.godot/imported/btn_menu_badge_normal_icon.svg-411c29b5604c2bc92c83d73f2266cb91.ctex"]
+source_file="res://assets/images/main/logo_doodle_maze_large.svg"
+dest_files=["res://.godot/imported/logo_doodle_maze_large.svg-e62886018bcdc49c773dfeea527c3ef7.ctex"]
 
 [params]
 
