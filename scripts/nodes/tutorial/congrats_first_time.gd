@@ -12,6 +12,9 @@ const TITLE_KEY := "STR_TUT_CONGRATS_TITLE"
 @export var stamp: TextureRect = null
 @export var btn_continue: BaseButton = null
 @export var btn_main: BaseButton = null
+## Hiệu ứng riêng của bài (animation "congrats") — node tên `CongratsAnim` vì scene kế thừa
+## `base_tutorial.tscn` đã có sẵn `AnimationPlayer` (hiệu ứng vào màn) — không được trùng tên.
+@export var fx_anim: AnimationPlayer = null
 
 
 func _init_tutorial() -> void:
@@ -37,16 +40,24 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 	btn_skip.visible = false
 	if dots_container != null:
 		dots_container.visible = false
-	# Ẩn nút lựa chọn — sẽ pop vào sau khi con dấu đóng
-	if btn_continue != null:
-		btn_continue.modulate.a = 0.0
-	if btn_main != null:
-		btn_main.modulate.a = 0.0
+	# Pose ban đầu đặt NGAY bằng code (khung hình đầu đã đúng dáng, trước khi AnimationPlayer chạy);
+	# phần rơi con dấu + hiện dần 2 nút khai trong animation "congrats" của scene.
 	if stamp != null:
 		stamp.pivot_offset = stamp.size * 0.5
 		stamp.scale = Vector2(1.6, 1.6)
 		stamp.modulate.a = 0.0
 		stamp.rotation = deg_to_rad(-5.0)
+	for btn_node in [btn_continue, btn_main]:
+		var b := btn_node as BaseButton
+		if b != null:
+			b.pivot_offset = b.size * 0.5
+			b.modulate.a = 0.0
+			b.scale = Vector2(0.88, 0.88)
+	if fx_anim != null and fx_anim.has_animation(&"congrats"):
+		fx_anim.play(&"congrats")
+		return
+	# Fallback khi scene thiếu CongratsAnim: chạy bằng tween như trước
+	if stamp != null:
 		var tw := stamp.create_tween()
 		# Phase 1: con dấu rơi nhanh + squash nhẹ khi chạm
 		tw.set_parallel(true)
@@ -63,6 +74,16 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 	else:
 		Sfx.play(Sfx.LEVEL_WIN)
 		_reveal_choice_buttons()
+
+
+## Tiếng "đóng dấu" khi con dấu chạm mặt giấy — gọi từ method track của animation "congrats"
+func _stamp_impact() -> void:
+	Sfx.play(Sfx.STAMP_IMPACT)
+
+
+## Nhạc chiến thắng khi con dấu nảy xong — gọi từ method track của animation "congrats"
+func _level_win() -> void:
+	Sfx.play(Sfx.LEVEL_WIN)
 
 
 ## Nút xuất hiện có stagger sau khi con dấu đóng xong

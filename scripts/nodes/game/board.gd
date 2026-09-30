@@ -809,11 +809,7 @@ func _spawn_ink_footstep(pos: Vector2) -> void:
 	var ripple := FOOTSTEP_SCENE.instantiate() as InkFootstep
 	_markers_layer.add_child(ripple)
 	ripple.setup(pos, PenSkin.cursor_texture(_pen_id), PenSkin.ink_color(_pen_id))
-
-	var tw := create_tween().set_parallel(true)
-	tw.tween_property(ripple, "scale", Vector2(1.9, 1.9), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tw.tween_property(ripple, "modulate:a", 0.0, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	tw.chain().tween_callback(ripple.queue_free)
+	# Hiệu ứng lan to + mờ dần (và tự xoá) khai trong `ink_footstep.tscn` (AnimationPlayer autoplay)
 
 
 func set_moving_path(path: Array[Vector2i]) -> void:
@@ -834,6 +830,7 @@ func reset_to_start() -> void:
 	_player_current_cell = maze.get_start()
 	var target_pos := _cell_center(maze.get_start()) - _cursor.size * 0.5
 
+	# (GIỮ tween) Vị trí đích = TÂM Ô theo lưới tính lúc chạy (phụ thuộc kích thước lưới/cỡ ô)
 	var tw := create_tween()
 	tw.tween_property(_cursor, "position", target_pos, 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	set_moving_path([maze.get_start()])
@@ -884,13 +881,7 @@ func show_wall_hit(from_pos: Vector2i, to_pos: Vector2i) -> void:
 	_markers_layer.add_child(crash)
 	crash.position = wall_center - crash.size * 0.5
 	crash.scale = Vector2.ZERO
-
-	var tw_crash := create_tween()
-	tw_crash.tween_property(crash, "scale", Vector2(1.3, 1.3), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tw_crash.tween_property(crash, "scale", Vector2.ONE, 0.06)
-	tw_crash.tween_interval(0.45)
-	tw_crash.tween_property(crash, "modulate:a", 0.0, 0.22)
-	tw_crash.tween_callback(crash.queue_free)
+	# Nảy to → giữ → mờ dần (và tự xoá): khai trong `nodes/sfx/crash.tscn` (AnimationPlayer autoplay)
 
 	# Tác động lực giật nảy lên con trỏ người chơi (Bonk recoil)
 	if _cursor != null:
@@ -917,13 +908,7 @@ func show_mine_hit(pos: Vector2i) -> void:
 	_markers_layer.add_child(mine_sfx)
 	mine_sfx.position = center - mine_sfx.size * 0.5
 	mine_sfx.scale = Vector2.ZERO
-
-	var tw := create_tween()
-	tw.tween_property(mine_sfx, "scale", Vector2(1.4, 1.4), 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tw.tween_property(mine_sfx, "scale", Vector2.ONE, 0.08)
-	tw.tween_interval(0.5)
-	tw.tween_property(mine_sfx, "modulate:a", 0.0, 0.2)
-	tw.tween_callback(mine_sfx.queue_free)
+	# Nảy to → giữ → mờ dần (và tự xoá): khai trong `nodes/sfx/mine_explosion.tscn` (AnimationPlayer autoplay)
 
 	_play_grid_shake()
 
@@ -1038,6 +1023,8 @@ func _play_grid_shake() -> void:
 		_shake_tween.kill()
 		position = _original_position
 
+	# (GIỮ tween) Gốc rung = vị trí bàn do layout tính LÚC CHẠY (không phải số cố định
+	# trong scene) nên không thể bake thành track tĩnh — hiệu ứng động duy nhất của bàn.
 	_shake_tween = create_tween()
 	_shake_tween.tween_property(self, "position", _original_position + Vector2(-6, 4), 0.035)
 	_shake_tween.tween_property(self, "position", _original_position + Vector2(6, -4), 0.035)

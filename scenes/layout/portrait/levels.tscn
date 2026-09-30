@@ -68,6 +68,58 @@ texture_margin_top = 13.0
 texture_margin_right = 18.0
 texture_margin_bottom = 15.0
 
+[sub_resource type="Animation" id="Animation_levels_pulse_continue_p"]
+resource_name = "pulse_continue"
+length = 1.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Content/InformationArea/ContinueButton:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.03, 1.03), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_levels_pulse_banner_p"]
+resource_name = "pulse_banner"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Content/InformationArea/ChapterBanner:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.02, 1.02), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Content/InformationArea/ContinueButton:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_levels_pulse_p"]
+_data = {
+&"pulse_banner": SubResource("Animation_levels_pulse_banner_p"),
+&"pulse_continue": SubResource("Animation_levels_pulse_continue_p")
+}
+
 [node name="Portrait" unique_id=589500212 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_stars", "lbl_chapter", "lbl_change_chapter", "banner", "scroll", "pages_host", "dots_box") instance=ExtResource("1_parent")]
 script = ExtResource("2_h3psh")
 btn_back = NodePath("Content/InformationArea/TopBar/Back")
@@ -296,3 +348,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
 alignment = 1
+
+[node name="PulseAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_levels_pulse_p")
+}

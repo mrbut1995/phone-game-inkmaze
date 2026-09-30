@@ -44,8 +44,9 @@ var _drag_scroll := 0.0
 
 func _ready() -> void:
 	_bind_refs()
+	# Dây nút/tab khai trong `scenes/ranking.tscn` (cả 2 hướng) — guard chỉ nối lại nếu mất
+	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 	if layout.btn_back != null:
-		layout.btn_back.pressed.connect(_on_back_pressed)
 		UIAnim.attach_press_bounce(layout.btn_back)
 	orientation_changed.connect(_on_orientation_changed)
 	_collect_tabs()
@@ -140,8 +141,7 @@ func _collect_tabs() -> void:
 		var btn := child as RankTabButton
 		if btn == null:
 			continue
-		if not btn.tab_pressed.is_connected(_on_tab_pressed):
-			btn.tab_pressed.connect(_on_tab_pressed)
+		ensure_signal(btn, &"tab_pressed", &"_on_tab_pressed")
 		_tab_buttons[btn.board_id] = btn
 	_update_tabs()
 

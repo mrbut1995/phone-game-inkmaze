@@ -11,3 +11,15 @@ script = ExtResource("2_script")
 
 [node name="Portrait" parent="." index="1" unique_id=380138198 instance=ExtResource("L_Portrait")]
 layout_mode = 1
+
+
+[connection signal="pressed" from="Portrait/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/TopBar/Wallet/Plus" to="." method="_on_wallet_plus_pressed"]
+[connection signal="pressed" from="Portrait/Pager/ChangePage/Prev" to="." method="_on_prev_page"]
+[connection signal="pressed" from="Portrait/Pager/ChangePage/Next" to="." method="_on_next_page"]
+[connection signal="pressed" from="Portrait/GiftBanner/GiftBtn" to="." method="_on_gift_pressed"]
+[connection signal="tab_pressed" from="Portrait/Tabs/Tab_pen" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Tabs/Tab_theme" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Tabs/Tab_tool" to="." method="_on_tab_pressed"]
+[connection signal="tab_pressed" from="Portrait/Tabs/Tab_coin" to="." method="_on_tab_pressed"]
+[connection signal="pen_changed" from="Portrait/Content/List/Pad" to="." method="_on_pad_pen_changed"]

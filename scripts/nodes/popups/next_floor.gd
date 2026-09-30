@@ -10,6 +10,17 @@ extends BasePopup
 signal enter_requested
 signal rest_requested
 
+## Hiệu ứng riêng của popup (animation "bonus_pop") — node tên `FxAnim` vì popup đã có
+## `AnimationPlayer` của base.tscn (mở/đóng popup) — không được trùng tên.
+@onready var _fx: AnimationPlayer = get_node_or_null("FxAnim")
+
+
+func _play_fx(anim_name: StringName) -> bool:
+	if _fx == null or not _fx.has_animation(anim_name):
+		return false
+	_fx.play(anim_name)
+	return true
+
 
 func _on_open() -> void:
 	var floor := int(data.get("floor", 1))
@@ -24,6 +35,7 @@ func _on_open() -> void:
 	if total_lbl != null:
 		if DisplayServer.get_name() != "headless" and total_sc > 0:
 			total_lbl.text = tr("STR_RANK_POINTS").format([0])
+			# (GIỮ tween) Đếm số = NỘI SUY DỮ LIỆU (điểm lúc chạy) + format text mỗi khung hình
 			var tw_sc := create_tween()
 			tw_sc.tween_method(func(v: float) -> void:
 				if is_instance_valid(total_lbl):
@@ -35,9 +47,11 @@ func _on_open() -> void:
 	var bonus_lbl := piece("BonusBox/Value") as Label
 	if bonus_lbl != null:
 		bonus_lbl.pivot_offset = bonus_lbl.size * 0.5
-		var tw_b := create_tween()
-		tw_b.tween_property(bonus_lbl, "scale", Vector2(1.2, 1.2), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		tw_b.tween_property(bonus_lbl, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		if not _play_fx(&"bonus_pop"):
+			# Fallback khi scene thiếu FxAnim
+			var tw_b := create_tween()
+			tw_b.tween_property(bonus_lbl, "scale", Vector2(1.2, 1.2), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tw_b.tween_property(bonus_lbl, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 	_set_text("WarnBox/Title", tr("STR_FLOOR_WARNING_TITLE").format([next_floor]))
 	_set_text("GoBtn/Label", tr("STR_BTN_ENTER_NEXT_FLOOR").format([next_floor]))

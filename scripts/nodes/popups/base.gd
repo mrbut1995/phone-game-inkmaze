@@ -32,7 +32,7 @@ var _tween: Tween = null
 @onready var dim: ColorRect = get_node_or_null("Dim")
 @onready var panel: Control = get_node_or_null("Panel")
 @onready var content: Control = get_node_or_null("Panel/Content")
-
+@onready var anim_player: AnimationPlayer = get_node_or_null("AnimationPlayer")
 
 # --- Bố cục theo tỉ lệ màn hình ---------------------------------------------
 
@@ -87,22 +87,30 @@ func open(p_data: Dictionary = {}) -> void:
 
 	_on_open()
 
-	if dim != null:
-		dim.modulate = Color(1, 1, 1, 0)
-	if panel != null:
-		panel.pivot_offset = panel.size * 0.5
-		panel.scale = Vector2.ONE * SCALE_FROM
-		panel.modulate = Color(1, 1, 1, 0)
+	if anim_player != null and anim_player.has_animation("open"):
+		if panel != null:
+			panel.pivot_offset = panel.size * 0.5
+		# Dây `animation_finished → _on_animation_finished` khai trong `base.tscn` (cùng scene,
+		# popup con kế thừa dây này nên KHÔNG nối lại trong code)
+		anim_player.play("open")
+	else:
+		# Fallback khi scene thiếu animation "open" (các popup đã khai "open" trong .tscn)
+		if dim != null:
+			dim.modulate = Color(1, 1, 1, 0)
+		if panel != null:
+			panel.pivot_offset = panel.size * 0.5
+			panel.scale = Vector2.ONE * SCALE_FROM
+			panel.modulate = Color(1, 1, 1, 0)
 
-	var tw := create_tween()
-	_tween = tw
-	tw.set_parallel(true)
-	if dim != null:
-		tw.tween_property(dim, "modulate:a", 1.0, DUR_IN)
-	if panel != null:
-		tw.tween_property(panel, "modulate:a", 1.0, DUR_IN)
-		tw.tween_property(panel, "scale", Vector2.ONE, DUR_IN).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tw.chain().tween_callback(_on_opened_anim_done)
+		var tw := create_tween()
+		_tween = tw
+		tw.set_parallel(true)
+		if dim != null:
+			tw.tween_property(dim, "modulate:a", 1.0, DUR_IN)
+		if panel != null:
+			tw.tween_property(panel, "modulate:a", 1.0, DUR_IN)
+			tw.tween_property(panel, "scale", Vector2.ONE, DUR_IN).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tw.chain().tween_callback(_on_opened_anim_done)
 
 	opened.emit()
 
@@ -116,15 +124,27 @@ func close() -> void:
 	_on_close()
 
 	_kill_tween()
-	var tw := create_tween()
-	_tween = tw
-	tw.set_parallel(true)
-	if dim != null:
-		tw.tween_property(dim, "modulate:a", 0.0, DUR_OUT)
-	if panel != null:
-		tw.tween_property(panel, "modulate:a", 0.0, DUR_OUT)
-		tw.tween_property(panel, "scale", Vector2.ONE * SCALE_FROM, DUR_OUT)
-	tw.chain().tween_callback(_finish_close)
+	if anim_player != null and anim_player.has_animation("close"):
+		# Dây `animation_finished → _on_animation_finished` khai trong `base.tscn` (cùng scene)
+		anim_player.play("close")
+	else:
+		# Fallback khi scene thiếu animation "close"
+		var tw := create_tween()
+		_tween = tw
+		tw.set_parallel(true)
+		if dim != null:
+			tw.tween_property(dim, "modulate:a", 0.0, DUR_OUT)
+		if panel != null:
+			tw.tween_property(panel, "modulate:a", 0.0, DUR_OUT)
+			tw.tween_property(panel, "scale", Vector2.ONE * SCALE_FROM, DUR_OUT)
+		tw.chain().tween_callback(_finish_close)
+
+## Cuối animation mở/đóng popup (dây `animation_finished` khai trong `base.tscn`)
+func _on_animation_finished(anim_name: StringName) -> void:
+	if anim_name == &"open":
+		_on_opened_anim_done()
+	elif anim_name == &"close":
+		_finish_close()
 
 
 func is_closing() -> bool:

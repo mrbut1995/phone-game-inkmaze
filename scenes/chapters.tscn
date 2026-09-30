@@ -21,3 +21,7 @@ script = ExtResource("2_script")
 
 
 [node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
+
+
+[connection signal="pressed" from="Portrait/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/ContinueButton" to="." method="_on_continue_pressed"]

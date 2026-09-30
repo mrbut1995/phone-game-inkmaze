@@ -4,7 +4,6 @@
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme_text"]
 [ext_resource type="Script" path="res://scripts/scenes/tutorial.gd" id="2_scene_script"]
 [ext_resource type="PackedScene" uid="uid://smn1ps0pfgs3" path="res://scenes/layout/portrait/tutorial.tscn" id="3_portrait"]
-[ext_resource type="PackedScene" uid="uid://b8fj3r5c715mg" path="res://scenes/layout/landscape/tutorial.tscn" id="4_landscape"]
 [ext_resource type="Script" path="res://scripts/core/controllers/tutorial_controller.gd" id="5_controller_script"]
 
 [node name="Control" unique_id=1978794255 node_paths=PackedStringArray("tutorial_controller") instance=ExtResource("1_base")]
@@ -15,12 +14,22 @@ tutorial_controller = NodePath("Controllers/TutorialController")
 [node name="Portrait" parent="." index="1" unique_id=1425167812 instance=ExtResource("3_portrait")]
 layout_mode = 1
 
-[node name="Landscape" parent="." index="2" unique_id=1849201523 instance=ExtResource("4_landscape")]
-layout_mode = 1
-
 [node name="Controllers" type="Node" parent="." index="3" unique_id=352963147]
 
 [node name="TutorialController" type="Node" parent="Controllers" index="0" unique_id=1068048508]
 script = ExtResource("5_controller_script")
 
 [connection signal="sequence_finished" from="Controllers/TutorialController" to="." method="_on_sequence_finished"]
+[connection signal="pressed" from="Portrait/Paper/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnFirstTime" to="." method="_on_select_tutorial" binds= ["first_time"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnMove" to="." method="_on_select_tutorial" binds= ["how_to_play_move"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnCheckingWall" to="." method="_on_select_tutorial" binds= ["how_to_play_checking_wall"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnMinesweeper" to="." method="_on_select_tutorial" binds= ["how_to_play_minesweeper"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnOneStroke" to="." method="_on_select_tutorial" binds= ["how_to_play_one_stroke"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnSumPath" to="." method="_on_select_tutorial" binds= ["how_to_play_sum_path"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnWallBuilder" to="." method="_on_select_tutorial" binds= ["how_to_play_wall_builder"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnCountdownCost" to="." method="_on_select_tutorial" binds= ["how_to_play_countdown_cost"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnFadingInk" to="." method="_on_select_tutorial" binds= ["how_to_play_fading_ink"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnFogOfWar" to="." method="_on_select_tutorial" binds= ["how_to_play_fog_of_war"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnBlindMemory" to="." method="_on_select_tutorial" binds= ["how_to_play_blind_memory"]]
+[connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnUseTool" to="." method="_on_select_tutorial" binds= ["how_to_use_tool"]]

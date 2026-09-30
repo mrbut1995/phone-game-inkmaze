@@ -11,3 +11,8 @@ script = ExtResource("2_5ekxl")
 
 [node name="Portrait" parent="." index="1" unique_id=948131174 instance=ExtResource("L_Portrait")]
 layout_mode = 1
+
+
+[connection signal="pressed" from="Portrait/Content/InformationArea/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/Content/InformationArea/ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="gui_input" from="Portrait/Content/InformationArea/ChapterBanner" to="." method="_on_banner_input"]

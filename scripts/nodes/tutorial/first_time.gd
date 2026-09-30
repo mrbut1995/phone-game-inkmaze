@@ -36,6 +36,7 @@ func _on_step_entered(index: int, _data: Dictionary) -> void:
 			var p1 := Vector2(185, 95)
 			var p2 := Vector2(285, 95)
 			preview_line.add_point(p0)
+			# (GIỮ tween) Vẽ nét S→F bằng cách nội suy ĐIỂM của Line2D (dữ liệu hình học)
 			var tw := create_tween()
 			tw.tween_method(func(p: Vector2) -> void:
 				if preview_line.get_point_count() == 1:

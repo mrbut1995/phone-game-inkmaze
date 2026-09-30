@@ -18,6 +18,9 @@ const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
 @onready var value_steps: Label = piece("StatValue2")
 @onready var value_walls: Label = piece("StatValue3")
 @onready var value_score: Label = piece("TotalValue")
+## Hiệu ứng riêng của popup (animation "stars") — node tên `FxAnim` vì popup đã có sẵn
+## `AnimationPlayer` của base.tscn (hiệu ứng mở/đóng) — không được trùng tên.
+@onready var _fx: AnimationPlayer = get_node_or_null("FxAnim")
 
 
 func _on_open() -> void:
@@ -43,6 +46,7 @@ func _on_open() -> void:
 	var target_score := int(data.get("score", 0))
 	if DisplayServer.get_name() != "headless" and target_score > 0:
 		value_score.text = tr("STR_SCORE_FORMAT").format([0])
+		# (GIỮ tween) Đếm số = NỘI SUY DỮ LIỆU (điểm lúc chạy) + format text mỗi khung hình
 		var tw_s := create_tween()
 		tw_s.tween_method(func(v: float) -> void:
 			if is_instance_valid(value_score):
@@ -95,11 +99,12 @@ static func _thousands(value: int) -> String:
 	return ("-" if value < 0 else "") + out
 
 
-## Tô sáng số sao đạt được và phóng nhẹ từng ngôi sao theo nhịp
+## Tô sáng số sao đạt được và phóng nhẹ từng ngôi sao theo nhịp (animation "stars" trong scene)
 func _set_stars(stars: int) -> void:
 	if stars_row == null:
 		return
 	var children := stars_row.get_children()
+	var earned_count := 0
 	for i in children.size():
 		var star := children[i] as TextureRect
 		if star == null:
@@ -109,12 +114,38 @@ func _set_stars(stars: int) -> void:
 		star.modulate = Color(1, 1, 1, 1) if earned else Color(1, 1, 1, 0.75)
 		if not earned:
 			continue
+		earned_count += 1
 		star.pivot_offset = star.size * 0.5
 		star.scale = Vector2.ONE * 0.4
-		var tw := create_tween()
-		tw.tween_interval(0.25 + i * 0.22)
-		tw.tween_property(star, "scale", Vector2.ONE, 0.28).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		tw.tween_callback(func() -> void: Sfx.play(Sfx.STAR_POP))
+	if earned_count == 0:
+		return
+	# Chỉ BẬT track của sao ĐẠT được: track 0/1/2 = Star1/2/3 (scale), track 3/4/5 = tiếng "pop"
+	var anim := _fx.get_animation(&"stars") if _fx != null else null
+	if anim == null:
+		# Fallback khi scene thiếu FxAnim/animation
+		for i in earned_count:
+			var star_fb := children[i] as TextureRect
+			if star_fb == null:
+				continue
+			var tw := create_tween()
+			tw.tween_interval(0.25 + i * 0.22)
+			tw.tween_property(star_fb, "scale", Vector2.ONE, 0.28).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tw.tween_callback(_star_pop)
+		return
+	for t in anim.get_track_count():
+		anim.track_set_enabled(t, (t % 3) < earned_count)
+	_fx.play(&"stars")
+
+
+## Tiếng "pop" mỗi lần một ngôi sao nảy lên — gọi từ method track của animation "stars"
+func _star_pop() -> void:
+	Sfx.play(Sfx.STAR_POP)
+
+
+## Tiếng "chuông" cao dần khi 3 sao hiện — 3 Timer autostart khai trong `winning.tscn`
+## (mỗi dây `[connection]` bind sẵn chỉ số sao qua `binds`)
+func _on_star_tone(index: int) -> void:
+	Sfx.star_pop(index)
 
 
 func _on_replay_pressed() -> void:

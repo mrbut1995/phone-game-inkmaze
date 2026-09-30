@@ -56,38 +56,23 @@ func _wire_once(node: Node) -> bool:
 
 
 func _wire_buttons() -> void:
-	if _wire_once(layout.btn_back):
-		layout.btn_back.pressed.connect(_on_back_pressed)
-		UIAnim.attach_press_bounce(layout.btn_back)
+	# Dây nút/slider/checkbox khai trong `scenes/settings.tscn` (cả 2 hướng)
+	# — guard chỉ nối lại nếu dây bị mất (xoay màn hình gọi lại hàm này).
+	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
+	ensure_signal(layout.bgm_slider, &"value_changed", &"_on_bgm_changed")
+	ensure_signal(layout.sfx_slider, &"value_changed", &"_on_sfx_changed")
+	ensure_signal(layout.chk_haptic, &"toggled", &"_on_haptic_toggled")
+	ensure_signal(layout.chk_auto_mark, &"toggled", &"_on_auto_mark_toggled")
+	ensure_signal(layout.chk_glow, &"toggled", &"_on_glow_toggled")
+	ensure_signal(layout.btn_language, &"pressed", &"_on_language_pressed")
+	ensure_signal(layout.btn_guide, &"pressed", &"_on_guide_pressed")
+	ensure_signal(layout.btn_credits, &"pressed", &"_on_credits_pressed")
+	ensure_signal(layout.btn_reset, &"pressed", &"_on_reset_pressed")
 
-	if _wire_once(layout.bgm_slider):
-		layout.bgm_slider.value_changed.connect(_on_volume_changed.bind("music", layout.bgm_value))
-	if _wire_once(layout.sfx_slider):
-		layout.sfx_slider.value_changed.connect(_on_volume_changed.bind("sfx", layout.sfx_value))
-
-	# TextureButton toggle: toggled(toggled_on) + bind khoá cài đặt tương ứng
-	for pair in [
-		[layout.chk_haptic, "vibration"],
-		[layout.chk_auto_mark, "auto_mark_safe"],
-		[layout.chk_glow, "glow_path"],
-	]:
-		var check: TextureButton = pair[0]
-		if _wire_once(check):
-			check.toggled.connect(_on_toggle_changed.bind(str(pair[1])))
-			UIAnim.attach_press_bounce(check)
-
-	if _wire_once(layout.btn_language):
-		layout.btn_language.pressed.connect(_on_language_pressed)
-		UIAnim.attach_press_bounce(layout.btn_language)
-	if _wire_once(layout.btn_guide):
-		layout.btn_guide.pressed.connect(_on_guide_pressed)
-		UIAnim.attach_press_bounce(layout.btn_guide)
-	if _wire_once(layout.btn_credits):
-		layout.btn_credits.pressed.connect(_on_credits_pressed)
-		UIAnim.attach_press_bounce(layout.btn_credits)
-	if _wire_once(layout.btn_reset):
-		layout.btn_reset.pressed.connect(_on_reset_pressed)
-		UIAnim.attach_press_bounce(layout.btn_reset)
+	for node in [layout.btn_back, layout.chk_haptic, layout.chk_auto_mark, layout.chk_glow,
+			layout.btn_language, layout.btn_guide, layout.btn_credits, layout.btn_reset]:
+		if _wire_once(node):
+			UIAnim.attach_press_bounce(node)
 
 
 ## Xoay màn hình: gắn lại node của layout mới rồi nạp lại giá trị cài đặt lên widget mới
@@ -113,8 +98,9 @@ func _setup_debug_stamp_taps() -> void:
 	for child in stamp.get_children():
 		if child is Control:
 			(child as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
-	if not stamp.gui_input.is_connected(_on_stamp_gui_input):
-		stamp.gui_input.connect(_on_stamp_gui_input)
+	# Dây `gui_input → _on_stamp_gui_input` khai trong `scenes/settings.tscn`;
+	# guard chỉ nối lại nếu dây bị mất (bấm 5 lần vào con dấu để mở màn debug)
+	ensure_signal(stamp, &"gui_input", &"_on_stamp_gui_input")
 
 
 func _on_stamp_gui_input(event: InputEvent) -> void:
@@ -200,6 +186,27 @@ func _on_volume_changed(value: float, kind: String, label: Label) -> void:
 		label.text = _to_percent(value)
 	# SFX: tiếng thước kẻ trượt khi kéo thanh âm lượng
 	Sfx.play(Sfx.SLIDER_TICK)
+
+
+## --- Dây từ slider/checkbox (khai trong `scenes/settings.tscn`) --------------------
+func _on_bgm_changed(value: float) -> void:
+	_on_volume_changed(value, "music", layout.bgm_value)
+
+
+func _on_sfx_changed(value: float) -> void:
+	_on_volume_changed(value, "sfx", layout.sfx_value)
+
+
+func _on_haptic_toggled(on: bool) -> void:
+	_on_toggle_changed(on, "vibration")
+
+
+func _on_auto_mark_toggled(on: bool) -> void:
+	_on_toggle_changed(on, "auto_mark_safe")
+
+
+func _on_glow_toggled(on: bool) -> void:
+	_on_toggle_changed(on, "glow_path")
 
 
 # ---------------------------------------------------------------------------

@@ -12,7 +12,290 @@
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" path="res://scripts/scenes/layout/title_layout.gd" id="2_layout"]
 
-[node name="Portrait" node_paths=PackedStringArray("logo_container", "logo", "pencil", "title_label", "subtitle_label", "tap_container", "play_icon", "tap_label", "stamp_label", "touch_button", "fade_overlay") instance=ExtResource("1_parent")]
+[ext_resource type="Script" path="res://scripts/scenes/layout/title_layout.gd" id="2_layout"]
+
+[sub_resource type="Animation" id="Animation_reset_title"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Title:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.23921569, 0.5137255, 0.68235296, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Title:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Subtitle:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.35, 0.45, 0.55, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Subtitle:offset_top")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FadeOverlay:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("FadeOverlay:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_entrance_title"]
+resource_name = "play_entrance"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeOverlay:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FadeOverlay:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Title:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.08, 0.38),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.23921569, 0.5137255, 0.68235296, 0), Color(0.23921569, 0.5137255, 0.68235296, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Title:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.08, 0.38),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(0.92, 0.92), Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Panel/Subtitle:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.15, 0.43),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.35, 0.45, 0.55, 0), Color(0.35, 0.45, 0.55, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Panel/Subtitle:offset_top")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.15, 0.43),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [15.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_exit_title"]
+resource_name = "play_exit"
+length = 0.24
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeOverlay:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FadeOverlay:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.24),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_title"]
+_data = {
+&"RESET": SubResource("Animation_reset_title"),
+&"play_entrance": SubResource("Animation_entrance_title"),
+&"play_exit": SubResource("Animation_exit_title")
+}
+
+[sub_resource type="Animation" id="Animation_pencil_idle_pt"]
+resource_name = "pencil_idle"
+length = 0.84
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/LogoContainer/Pencil:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.42, 0.84),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.174533, 0.244346, -0.174533]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pencil_pt"]
+_data = {
+&"pencil_idle": SubResource("Animation_pencil_idle_pt")
+}
+
+[sub_resource type="Animation" id="Animation_title_logo_float_pt"]
+resource_name = "logo_float"
+length = 2.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/LogoContainer:offset_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.25, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [12.8484, 5.8484, 12.8484]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/LogoContainer:offset_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.25, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [12.8484, 5.8484, 12.8484]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_title_idle_pt"]
+_data = {
+&"logo_float": SubResource("Animation_title_logo_float_pt")
+}
+
+[sub_resource type="Animation" id="Animation_title_tap_pulse_pt"]
+resource_name = "tap_pulse"
+length = 1.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/TapContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.06, 1.06), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_title_tap_bounce_pt"]
+resource_name = "tap_bounce"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/TapContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.2),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.18, 0.88), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_title_tap_pt"]
+_data = {
+&"tap_bounce": SubResource("Animation_title_tap_bounce_pt"),
+&"tap_pulse": SubResource("Animation_title_tap_pulse_pt")
+}
+
+[node name="Portrait" node_paths=PackedStringArray("logo_container", "logo", "pencil", "title_label", "subtitle_label", "tap_container", "play_icon", "tap_label", "stamp_label", "touch_button", "fade_overlay", "anim_player") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 logo_container = NodePath("Panel/LogoContainer")
 logo = NodePath("Panel/LogoContainer/Logo")
@@ -25,6 +308,7 @@ tap_label = NodePath("Panel/TapContainer/TapLabel")
 stamp_label = NodePath("Panel/Stamp/Label")
 touch_button = NodePath("TouchButton")
 fade_overlay = NodePath("FadeOverlay")
+anim_player = NodePath("AnimationPlayer")
 
 [node name="Panel" type="TextureRect" parent="." index="1" unique_id=1052516246]
 layout_mode = 1
@@ -202,3 +486,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.964706, 0.945098, 0.913725, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4" unique_id=1871871213]
+libraries = {
+"": SubResource("AnimationLibrary_title")
+}
+
+[node name="PencilAnim" type="AnimationPlayer" parent="." index="5"]
+libraries = {
+"": SubResource("AnimationLibrary_pencil_pt")
+}
+
+[node name="IdleAnim" type="AnimationPlayer" parent="." index="6"]
+libraries = {
+"": SubResource("AnimationLibrary_title_idle_pt")
+}
+
+[node name="TapAnim" type="AnimationPlayer" parent="." index="7"]
+libraries = {
+"": SubResource("AnimationLibrary_title_tap_pt")
+}

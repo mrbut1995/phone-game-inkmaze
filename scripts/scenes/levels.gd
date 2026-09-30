@@ -74,28 +74,27 @@ func _bind_refs() -> void:
 		push_warning("LevelScenes: bố cục chưa gắn LevelsLayout — thiếu binding trong scenes/layout/<hướng>/levels.tscn")
 
 
-## Nối signal + hiệu ứng (gọi lại được khi xoay màn hình, không nhân đôi connection)
+## Nối signal + hiệu ứng bấm cho nút/banner (dây khai trong `scenes/levels.tscn`;
+## guard chỉ nối lại nếu dây bị mất — gọi lại được khi xoay màn hình)
 func _wire_buttons() -> void:
-	if layout.btn_back != null:
-		if not layout.btn_back.pressed.is_connected(_on_back_pressed):
-			layout.btn_back.pressed.connect(_on_back_pressed)
-		if not layout.btn_back.has_meta("bounce_attached"):
-			layout.btn_back.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(layout.btn_back)
-	if layout.btn_continue != null:
-		if not layout.btn_continue.pressed.is_connected(_on_continue_pressed):
-			layout.btn_continue.pressed.connect(_on_continue_pressed)
-		if not layout.btn_continue.has_meta("bounce_attached"):
-			layout.btn_continue.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(layout.btn_continue)
+	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
+	ensure_signal(layout.btn_continue, &"pressed", &"_on_continue_pressed")
+	if layout.btn_back != null and not layout.btn_back.has_meta("bounce_attached"):
+		layout.btn_back.set_meta("bounce_attached", true)
+		UIAnim.attach_press_bounce(layout.btn_back)
+	if layout.btn_continue != null and not layout.btn_continue.has_meta("bounce_attached"):
+		layout.btn_continue.set_meta("bounce_attached", true)
+		UIAnim.attach_press_bounce(layout.btn_continue)
+		# "Thở" nhẹ để hút mắt vào nút TIẾP TỤC — animation "pulse_continue" của layout
+		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse_continue", layout.btn_continue):
+			# Fallback khi layout thiếu PulseAnim
 			UIAnim.play_pulse(layout.btn_continue, 1.03, 1.8)
 	# Nhãn "ĐỔI CHƯƠNG" chỉ để trang trí: bấm Ở ĐÂU trên banner cũng mở màn Chọn Chương
 	if layout.lbl_change_chapter != null:
 		layout.lbl_change_chapter.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if layout.banner != null:
 		layout.banner.mouse_filter = Control.MOUSE_FILTER_STOP
-		if not layout.banner.gui_input.is_connected(_on_banner_input):
-			layout.banner.gui_input.connect(_on_banner_input)
+		ensure_signal(layout.banner, &"gui_input", &"_on_banner_input")
 
 
 ## Số thẻ mỗi trang: 3 cột × 3 hàng ở CẢ 2 hướng (lưới phủ kín vùng cuộn, thẻ nở theo ô)
@@ -363,6 +362,8 @@ func _go_to_page(index: int, animate := true) -> void:
 	if not animate:
 		layout.scroll.scroll_horizontal = target
 		return
+	# (GIỮ tween) Đích cuộn = số trang × BỀ RỘNG TRANG đo lúc chạy (đổi theo cỡ khung)
+	# nên không thể bake thành track tĩnh trong .tscn.
 	_scroll_tween = create_tween()
 	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	_scroll_tween.tween_property(layout.scroll, "scroll_horizontal", target, SNAP_TIME)
@@ -516,7 +517,11 @@ func _refresh_chapter_banner() -> void:
 			layout.lbl_change_chapter.theme_type_variation = &"LevelsChangeChapterFocus" if unlockable \
 				else &"LevelsChangeChapter"
 		if unlockable and layout.banner != null:
-			UIAnim.play_pulse(layout.banner, 1.02, 1.6)
+			# Nhấp nháy banner khi có chương mở được — animation "pulse_banner" của layout
+			# (animation này còn kéo nút TIẾP TỤC về dáng chuẩn nếu nhịp "pulse_continue" đang chạy)
+			if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse_banner", layout.banner):
+				# Fallback khi layout thiếu PulseAnim
+				UIAnim.play_pulse(layout.banner, 1.02, 1.6)
 	if layout.lbl_change_chapter != null:
 		layout.lbl_change_chapter.text = TranslationServer.translate(
 			"STR_CHAPTER_UNLOCKABLE" if unlockable else "STR_CHANGE_CHAPTER")

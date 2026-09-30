@@ -139,22 +139,26 @@ func _wire_once(node: Node) -> bool:
 
 
 func _wire_buttons() -> void:
+	# Dây NÚT khai trong `scenes/shop.tscn` (cả 2 hướng) — guard chỉ nối lại nếu dây bị mất
+	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
+	ensure_signal(layout.wallet_plus, &"pressed", &"_on_wallet_plus_pressed")
+	ensure_signal(layout.btn_prev, &"pressed", &"_on_prev_page")
+	ensure_signal(layout.btn_next, &"pressed", &"_on_next_page")
+	ensure_signal(layout.btn_gift, &"pressed", &"_on_gift_pressed")
 	if _wire_once(layout.btn_back):
-		layout.btn_back.pressed.connect(_on_back_pressed)
 		UIAnim.attach_press_bounce(layout.btn_back)
 	if _wire_once(layout.wallet_plus):
-		layout.wallet_plus.pressed.connect(_on_wallet_plus_pressed)
 		UIAnim.attach_press_bounce(layout.wallet_plus)
 	if _wire_once(layout.btn_prev):
-		layout.btn_prev.pressed.connect(_on_prev_page)
 		UIAnim.attach_press_bounce(layout.btn_prev)
 	if _wire_once(layout.btn_next):
-		layout.btn_next.pressed.connect(_on_next_page)
 		UIAnim.attach_press_bounce(layout.btn_next)
 	if _wire_once(layout.btn_gift):
-		layout.btn_gift.pressed.connect(_on_gift_pressed)
 		UIAnim.attach_press_bounce(layout.btn_gift)
-		UIAnim.play_pulse(layout.btn_gift, 1.04, 1.8)
+		# "Thở" nhẹ để hút mắt vào nút quà tặng — animation "pulse" của layout (PulseAnim)
+		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.btn_gift):
+			# Fallback khi layout thiếu PulseAnim
+			UIAnim.play_pulse(layout.btn_gift, 1.04, 1.8)
 
 
 ## Xoay màn hình: gắn lại node + gom lại tab/trang của layout mới
@@ -423,8 +427,7 @@ func _collect_tabs() -> void:
 		var button := child as ShopTabButton
 		if button == null:
 			continue
-		if not button.tab_pressed.is_connected(_on_tab_pressed):
-			button.tab_pressed.connect(_on_tab_pressed)
+		ensure_signal(button, &"tab_pressed", &"_on_tab_pressed")
 		_tabs[button.category] = button
 	_apply_tab_metrics()
 
@@ -568,8 +571,9 @@ func _show_doodle_pad() -> void:
 	_doodle_pad = pad
 	pad.visible = true
 	pad.call("setup", _preview_pen)
-	if pad.has_signal("pen_changed") and not pad.is_connected("pen_changed", _on_pad_pen_changed):
-		pad.connect("pen_changed", _on_pad_pen_changed)
+	# Dây `pen_changed` khai trong `scenes/shop.tscn` (bàn nháp nằm trong layout) —
+	# guard chỉ nối lại nếu dây bị mất
+	ensure_signal(pad, &"pen_changed", &"_on_pad_pen_changed")
 	UIAnim.play_pop_in(pad, 0.0, 0.96, 0.2)
 
 
@@ -829,9 +833,20 @@ func _refresh_wallet(animate := false) -> void:
 		layout.wallet_count.text = Shop.thousands(Shop.coins())
 		if animate and DisplayServer.get_name() != "headless":
 			layout.wallet_count.pivot_offset = layout.wallet_count.size * 0.5
-			var tw := layout.wallet_count.create_tween()
-			tw.tween_property(layout.wallet_count, "scale", Vector2(1.28, 1.28), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			tw.tween_property(layout.wallet_count, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			if not _play_wallet_pop():
+				# Fallback khi layout thiếu WalletAnim
+				var tw := layout.wallet_count.create_tween()
+				tw.tween_property(layout.wallet_count, "scale", Vector2(1.28, 1.28), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+				tw.tween_property(layout.wallet_count, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+## Ví xu nảy nhẹ khi số xu đổi — animation "wallet_pop" của layout (`WalletAnim`)
+func _play_wallet_pop() -> bool:
+	var player := layout.get_node_or_null("WalletAnim") as AnimationPlayer
+	if player == null or not player.has_animation(&"wallet_pop"):
+		return false
+	player.play(&"wallet_pop")
+	return true
 
 
 func _on_back_pressed() -> void:

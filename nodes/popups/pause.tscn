@@ -404,3 +404,7 @@ text_overrun_behavior = 3
 [connection signal="pressed" from="Panel/Content/ResumeBtn" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Panel/Content/RestartBtn" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="Panel/Content/MenuBtn" to="." method="_on_menu_pressed"]
+[connection signal="value_changed" from="Panel/Content/MusicSlider" to="." method="_on_music_value_changed"]
+[connection signal="value_changed" from="Panel/Content/SfxSlider" to="." method="_on_sfx_value_changed"]
+[connection signal="toggled" from="Panel/Content/HapticCheck" to="." method="_on_haptic_toggled"]
+[connection signal="toggled" from="Panel/Content/SafeCheck" to="." method="_on_safe_toggled"]

@@ -6,6 +6,27 @@
 [ext_resource type="Texture2D" path="res://assets/images/popups/washi_tape.svg" id="4_tape"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_memorize_countdown.tres" id="5_number"]
 
+[sub_resource type="Animation" id="Animation_mc_number"]
+resource_name = "number_pop"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Content/Number:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.14, 0.22),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1.35, 1.35), Vector2(1.02, 1.02), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mcfx"]
+_data = {
+&"number_pop": SubResource("Animation_mc_number")
+}
+
 [node name="Base" instance=ExtResource("1_base")]
 close_on_back = false
 script = ExtResource("2_memorize")
@@ -73,3 +94,10 @@ theme_type_variation = &"PopupQuote"
 text = "STR_MEMORIZE_HINT"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="FxAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mcfx")
+}
+
+[connection signal="opened" from="." to="." method="_start_countdown"]

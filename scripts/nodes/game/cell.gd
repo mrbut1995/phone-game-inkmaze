@@ -37,6 +37,20 @@ const VISITED_TEXT_RATIO := 12.0 / 56.0
 @onready var _visited: TextureRect = get_node_or_null("Sprite/Visited")
 @onready var _visited_label: Label = get_node_or_null("Sprite/VisitedLabel")
 @onready var _satisfied: TextureRect = get_node_or_null("Sprite/Satisfied")
+## AnimationPlayer của chính `cell.tscn` — mọi hiệu ứng nảy/rung/nháy (entrance · pulse · step ·
+## win · shudder · fail · pop_text) khai trong scene; code chỉ set pose ban đầu + gọi play.
+@onready var _anim: AnimationPlayer = get_node_or_null("AnimationPlayer")
+## Hẹn giờ SO LE khi ô bay vào / nảy mừng — Timer khai trong `cell.tscn` (dây `timeout` cũng ở đó);
+## code chỉ đặt `wait_time` (dữ liệu so le do Board tính) rồi `start()`.
+@onready var _entrance_timer: Timer = get_node_or_null("EntranceTimer")
+@onready var _win_timer: Timer = get_node_or_null("WinTimer")
+
+
+func _play_anim(anim_name: StringName) -> bool:
+	if _anim == null or not _anim.has_animation(anim_name):
+		return false
+	_anim.play(anim_name)
+	return true
 
 
 func _ready() -> void:
@@ -92,11 +106,27 @@ func play_entrance(delay: float) -> void:
 	pivot_offset = size * 0.5
 	scale = Vector2(0.65, 0.65)
 	modulate.a = 0.0
+	if _anim != null and _anim.has_animation(&"entrance"):
+		if delay > 0.0:
+			if _entrance_timer != null:
+				_entrance_timer.wait_time = delay
+				_entrance_timer.start()
+			else:
+				# Fallback khi scene thiếu EntranceTimer (dây thật khai trong cell.tscn)
+				get_tree().create_timer(delay).timeout.connect(_play_entrance_now)
+		else:
+			_play_entrance_now()
+		return
+	# Fallback khi scene thiếu AnimationPlayer
 	var tw := create_tween().set_parallel(true)
 	if delay > 0.0:
 		tw.tween_interval(delay)
 	tw.tween_property(self, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.tween_property(self, "modulate:a", 1.0, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+func _play_entrance_now() -> void:
+	_play_anim(&"entrance")
 
 
 func set_font_size(fs: int) -> void:
@@ -255,28 +285,26 @@ func has_bomb() -> bool:
 
 func pulse() -> void:
 	pivot_offset = size * 0.5
+	if _play_anim(&"pulse"):
+		return
 	var tw := create_tween()
 	tw.tween_property(self, "scale", Vector2(1.12, 1.12), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
-var _shudder_tween: Tween = null
-var _fail_tween: Tween = null
-
-
 ## Hiệu ứng rung lắc ô khi xảy ra va chạm nguy hiểm (nổ mìn, đâm gai)
 func play_shudder() -> void:
-	if _shudder_tween != null and _shudder_tween.is_valid():
-		_shudder_tween.kill()
+	if _play_anim(&"shudder"):
+		return
 	var sprite := get_node_or_null("Sprite") as Control
 	if sprite == null:
 		return
 	sprite.position = Vector2.ZERO
-	_shudder_tween = create_tween()
-	_shudder_tween.tween_property(sprite, "position", Vector2(-6, 4), 0.035)
-	_shudder_tween.tween_property(sprite, "position", Vector2(6, -4), 0.035)
-	_shudder_tween.tween_property(sprite, "position", Vector2(-3, 2), 0.035)
-	_shudder_tween.tween_property(sprite, "position", Vector2.ZERO, 0.04)
+	var tw := create_tween()
+	tw.tween_property(sprite, "position", Vector2(-6, 4), 0.035)
+	tw.tween_property(sprite, "position", Vector2(6, -4), 0.035)
+	tw.tween_property(sprite, "position", Vector2(-3, 2), 0.035)
+	tw.tween_property(sprite, "position", Vector2.ZERO, 0.04)
 
 
 ## Hiệu ứng nảy số trên ô khi giá trị được cập nhật (Fading Ink / Sum Path)
@@ -286,6 +314,8 @@ func play_pop_text() -> void:
 	if _label == null or not _label.visible:
 		return
 	_label.pivot_offset = _label.size * 0.5
+	if _play_anim(&"pop_text"):
+		return
 	var tw := create_tween()
 	tw.tween_property(_label, "scale", Vector2(1.32, 1.32), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.tween_property(_label, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -294,6 +324,17 @@ func play_pop_text() -> void:
 ## Hiệu ứng chúc mừng thắng màn / bài hướng dẫn: nảy nhẹ so le
 func play_win(delay: float = 0.0) -> void:
 	pivot_offset = size * 0.5
+	if _anim != null and _anim.has_animation(&"win"):
+		if delay > 0.0:
+			if _win_timer != null:
+				_win_timer.wait_time = delay
+				_win_timer.start()
+			else:
+				# Fallback khi scene thiếu WinTimer (dây thật khai trong cell.tscn)
+				get_tree().create_timer(delay).timeout.connect(_play_win_now)
+		else:
+			_play_win_now()
+		return
 	var tw := create_tween()
 	if delay > 0.0:
 		tw.tween_interval(delay)
@@ -301,20 +342,33 @@ func play_win(delay: float = 0.0) -> void:
 	tw.tween_property(self, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
-## Hiệu ứng khi được chọn / đi qua trong tutorial
+func _play_win_now() -> void:
+	_play_anim(&"win")
+
+
+## Hiệu ứng khi được chọn / đi qua trong tutorial: nảy nhẹ + nháy sáng
 func play_step() -> void:
+	pivot_offset = size * 0.5
+	if _play_anim(&"step"):
+		return
 	pulse()
-	var flash := create_tween()
 	modulate = Color(1.18, 1.18, 1.12, 1.0)
+	var flash := create_tween()
 	flash.tween_property(self, "modulate", Color.WHITE, 0.3)
 
 
 ## Hiệu ứng khi thao tác sai: rung giật và nháy đỏ nhẹ
 func play_fail() -> void:
-	play_shudder()
-	if _fail_tween != null and _fail_tween.is_valid():
-		_fail_tween.kill()
-	var old_mod := Color.WHITE
+	if _play_anim(&"fail"):
+		return
+	var sprite := get_node_or_null("Sprite") as Control
+	if sprite != null:
+		sprite.position = Vector2.ZERO
+		var tw := create_tween()
+		tw.tween_property(sprite, "position", Vector2(-6, 4), 0.035)
+		tw.tween_property(sprite, "position", Vector2(6, -4), 0.035)
+		tw.tween_property(sprite, "position", Vector2(-3, 2), 0.035)
+		tw.tween_property(sprite, "position", Vector2.ZERO, 0.04)
 	modulate = Color(1.0, 0.45, 0.42, 1.0)
-	_fail_tween = create_tween()
-	_fail_tween.tween_property(self, "modulate", old_mod, 0.35)
+	var fade := create_tween()
+	fade.tween_property(self, "modulate", Color.WHITE, 0.35)

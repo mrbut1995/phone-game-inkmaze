@@ -33,6 +33,93 @@ texture_margin_top = 12
 texture_margin_right = 18
 texture_margin_bottom = 12
 
+[sub_resource type="Animation" id="Animation_win_stars"]
+resource_name = "stars"
+length = 0.97
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Content/Stars/Star1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.53),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.4, 0.4), Vector2(1.045, 1.045), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Content/Stars/Star2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.47, 0.75),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.4, 0.4), Vector2(1.045, 1.045), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Content/Stars/Star3:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.69, 0.97),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.4, 0.4), Vector2(1.045, 1.045), Vector2(1, 1)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_star_pop"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.47),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_star_pop"
+}]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.69),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_star_pop"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_winfx"]
+_data = {
+&"stars": SubResource("Animation_win_stars")
+}
+
 [node name="Base" unique_id=1146332468 instance=ExtResource("1_base")]
 script = ExtResource("2_win")
 
@@ -291,6 +378,11 @@ theme_override_styles/hover = SubResource("Sb_pri_n")
 theme_override_styles/pressed = SubResource("Sb_pri_p")
 theme_override_styles/focus = SubResource("Sb_pri_f")
 
+[node name="FxAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_winfx")
+}
+
 [node name="Label" type="Label" parent="Panel/Content/NextBtn" index="0" unique_id=629852423]
 layout_mode = 1
 anchors_preset = -1
@@ -317,5 +409,23 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
+[node name="StarTone1" type="Timer" parent="."]
+wait_time = 0.45
+autostart = true
+one_shot = true
+
+[node name="StarTone2" type="Timer" parent="."]
+wait_time = 0.67
+autostart = true
+one_shot = true
+
+[node name="StarTone3" type="Timer" parent="."]
+wait_time = 0.89
+autostart = true
+one_shot = true
+
 [connection signal="pressed" from="Panel/Content/ReplayBtn" to="." method="_on_replay_pressed"]
 [connection signal="pressed" from="Panel/Content/NextBtn" to="." method="_on_next_pressed"]
+[connection signal="timeout" from="StarTone1" to="." method="_on_star_tone" binds= [0]]
+[connection signal="timeout" from="StarTone2" to="." method="_on_star_tone" binds= [1]]
+[connection signal="timeout" from="StarTone3" to="." method="_on_star_tone" binds= [2]]

@@ -25,6 +25,9 @@ signal daily_requested
 @onready var value_coins: Label = piece("CoinArea/CoinValue")
 @onready var label_total: Label = piece("TotalLabel")
 @onready var value_total: Label = piece("TotalValue")
+## Hiệu ứng riêng của popup (animation "coin_pop") — node tên `FxAnim` vì popup đã có
+## `AnimationPlayer` của base.tscn (mở/đóng popup) — không được trùng tên.
+@onready var _fx: AnimationPlayer = get_node_or_null("FxAnim")
 
 
 func _on_open() -> void:
@@ -102,16 +105,26 @@ func _fill_stamp() -> void:
 		sub.text = tr("STR_DAILY_WIN_STAMP_SUB").format([int(data.get("daily_day_coins", 0))])
 
 
-## Đồng xu nảy nhẹ khi popup mở (thay cho chuỗi 3 ngôi sao của popup thường)
+## Đồng xu nảy nhẹ khi popup mở (thay cho chuỗi 3 ngôi sao của popup thường).
+## Dáng nảy + tiếng "pop" khai trong animation "coin_pop" của `winning_daily.tscn`.
 func _pop_coin() -> void:
 	if coin_icon == null or DisplayServer.get_name() == "headless":
 		return
 	coin_icon.pivot_offset = coin_icon.size * 0.5
 	coin_icon.scale = Vector2.ONE * 0.5
+	if _fx != null and _fx.has_animation(&"coin_pop"):
+		_fx.play(&"coin_pop")
+		return
+	# Fallback khi scene thiếu FxAnim
 	var tw := create_tween()
 	tw.tween_interval(0.22)
 	tw.tween_property(coin_icon, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tw.tween_callback(func() -> void: Sfx.play(Sfx.STAR_POP))
+	tw.tween_callback(_coin_pop_sfx)
+
+
+## Tiếng "pop" khi đồng xu nảy xong — gọi từ method track của animation "coin_pop"
+func _coin_pop_sfx() -> void:
+	Sfx.play(Sfx.STAR_POP)
 
 
 func _on_replay_pressed() -> void:

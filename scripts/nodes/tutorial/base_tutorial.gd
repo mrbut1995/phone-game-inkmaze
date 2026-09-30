@@ -41,6 +41,7 @@ var is_active: bool = false
 @export var btn_skip: BaseButton = null
 @export var btn_next: BaseButton = null
 @export var toast_label: Label = null
+@export var anim_player: AnimationPlayer = null
 
 var _auto_timer: SceneTreeTimer = null
 var _spotlight_rect: Rect2 = Rect2()
@@ -51,10 +52,40 @@ var _has_spotlight: bool = false
 ## --- HIỆU ỨNG (animation) ---------------------------------------------------
 ## Trễ giữa 2 ô bàn mini khi chạy hoạt cảnh mở bài
 const CELL_ENTER_STAGGER := 0.045
+## Thời lượng các hiệu ứng UI khai trong `base_tutorial.tscn` (khớp track của animation)
+const TEXT_OUT_SECONDS := 0.1
+const TOAST_IN_SECONDS := 0.22
+const SPOTLIGHT_IN_SECONDS := 0.22
+const SPOTLIGHT_OUT_SECONDS := 0.18
 var _fx_spotlight: Tween = null
 var _fx_toast: Tween = null
 var _fx_message: Tween = null
 var _entrance_played := false
+## Số thứ tự lần toast gần nhất — timer mờ toast cũ không được tắt toast mới
+var _toast_seq := 0
+## Dữ liệu chờ của TextOutTimer / ToastTimer (thay cho bind trong code — dây khai trong .tscn)
+var _pending_msg := ""
+var _pending_title := ""
+var _pending_toast_seq := 0
+
+## AnimationPlayer phụ của scene (mỗi nhóm hiệu ứng 1 player để không tranh nhau):
+## DialogAnim (chữ thoại) · TitleAnim (tiêu đề) · ToastAnim · SpotlightAnim
+@onready var anim_dialog: AnimationPlayer = get_node_or_null("DialogAnim")
+@onready var anim_title: AnimationPlayer = get_node_or_null("TitleAnim")
+## Hẹn giờ chờ hiệu ứng UI — Timer khai trong `base_tutorial.tscn` (dây `timeout` cũng ở đó)
+@onready var _text_out_timer: Timer = get_node_or_null("TextOutTimer")
+@onready var _toast_timer: Timer = get_node_or_null("ToastTimer")
+@onready var _spot_in_timer: Timer = get_node_or_null("SpotlightInTimer")
+@onready var _spot_out_timer: Timer = get_node_or_null("SpotlightOutTimer")
+@onready var anim_toast: AnimationPlayer = get_node_or_null("ToastAnim")
+@onready var anim_spotlight: AnimationPlayer = get_node_or_null("SpotlightAnim")
+
+
+func _play_anim_on(player: AnimationPlayer, anim_name: StringName) -> bool:
+	if player == null or not player.has_animation(anim_name):
+		return false
+	player.play(anim_name)
+	return true
 
 
 func _ready() -> void:
@@ -113,14 +144,17 @@ func _wire_button_effects() -> void:
 ## Hoạt cảnh MỞ BÀI: nền tối hiện dần · thẻ thoại trượt lên · bàn mini + từng ô nở ra so le
 func play_entrance() -> void:
 	Sfx.play(Sfx.PAGE_TURN)
-	if backdrop != null:
-		backdrop.modulate.a = 0.0
-		backdrop.create_tween().tween_property(backdrop, "modulate:a", 1.0, 0.24)
-	var bubble := dialog_bubble as Control
-	if bubble != null and not (bubble.get_parent() is Container):
-		UIAnim.play_slide_in(bubble, Vector2(0, 42), 0.06, 0.32)
-	if board_host != null:
-		UIAnim.play_pop_in(board_host, 0.05, 0.94, 0.3)
+	if anim_player != null and anim_player.has_animation("play_entrance"):
+		anim_player.play("play_entrance")
+	else:
+		if backdrop != null:
+			backdrop.modulate.a = 0.0
+			backdrop.create_tween().tween_property(backdrop, "modulate:a", 1.0, 0.24)
+		var bubble := dialog_bubble as Control
+		if bubble != null and not (bubble.get_parent() is Container):
+			UIAnim.play_slide_in(bubble, Vector2(0, 42), 0.06, 0.32)
+		if board_host != null:
+			UIAnim.play_pop_in(board_host, 0.05, 0.94, 0.3)
 	var delay := 0.0
 	for cell in board_cells():
 		cell.play_entrance(0.12 + delay)
@@ -177,6 +211,7 @@ func spawn_board_text(text: String, board_pos: Vector2, color := Color(0.133, 0.
 
 
 ## Nháy đỏ 1 node rồi trả lại màu cũ (tường · HUD…)
+## (GIỮ tween) Node đích bất kỳ do nơi gọi truyền vào lúc chạy — không khai trước được trong scene.
 func flash_fail(target: Control) -> void:
 	if target == null:
 		return
@@ -185,14 +220,25 @@ func flash_fail(target: Control) -> void:
 	target.create_tween().tween_property(target, "modulate", old, 0.4)
 
 
-## Đổi nội dung thẻ thoại kèm nhịp fade nhẹ (cha là Container nên không dời vị trí)
-## new_msg/new_title được truyền từ show_step để hỗ trợ crossfade
+## Đổi nội dung thẻ thoại kèm nhịp fade nhẹ (cha là Control nên dời vị trí được)
+## Hiệu ứng chữ khai trong `base_tutorial.tscn` (DialogAnim/TitleAnim); mã đây chỉ
+## canh nhịp (chờ fade xong mới đổi chữ) và chạy fallback tween nếu scene thiếu player.
 func _animate_step_text(new_msg: String, new_title: String) -> void:
 	if _fx_message != null and _fx_message.is_valid():
 		_fx_message.kill()
 	var was_visible := _entrance_played and lbl_message.modulate.a > 0.3
+	if was_visible and _play_anim_on(anim_dialog, &"text_out"):
+		# Chờ chữ mờ xong mới đổi nội dung — Timer khai trong `base_tutorial.tscn`
+		_pending_msg = new_msg
+		_pending_title = new_title
+		if _text_out_timer != null:
+			_text_out_timer.start()
+		else:
+			# Fallback khi scene thiếu TextOutTimer
+			get_tree().create_timer(TEXT_OUT_SECONDS).timeout.connect(_apply_step_text_and_slide.bind(new_msg, new_title))
+		return
 	if was_visible:
-		# Fade out text cũ nhanh → set text mới → slide in
+		# Fallback khi scene thiếu DialogAnim
 		_fx_message = lbl_message.create_tween()
 		_fx_message.tween_property(lbl_message, "modulate:a", 0.0, 0.1)
 		_fx_message.tween_callback(func() -> void:
@@ -203,13 +249,35 @@ func _animate_step_text(new_msg: String, new_title: String) -> void:
 				UIAnim.play_pop_in(lbl_title, 0.0, 0.88, 0.24)
 			_fx_message = UIAnim.play_slide_in(lbl_message, Vector2(0, 10), 0.0, 0.22)
 		)
-	else:
-		# Lần đầu hoặc đang ẩn: set text ngay rồi slide in
-		lbl_message.text = new_msg
-		lbl_message.position = Vector2.ZERO
-		lbl_title.text = new_title
+		return
+	# Lần đầu hoặc đang ẩn: set text ngay rồi cho chữ trượt lên
+	lbl_message.text = new_msg
+	lbl_message.position = Vector2.ZERO
+	lbl_title.text = new_title
+	if not _play_anim_on(anim_title, &"title_pop"):
 		UIAnim.play_pop_in(lbl_title, 0.0, 0.88, 0.24)
+	if not _play_anim_on(anim_dialog, &"text_in_first"):
 		_fx_message = UIAnim.play_slide_in(lbl_message, Vector2(0, 10), 0.06, 0.24)
+
+
+## TextOutTimer kêu (chữ cũ đã mờ xong) → đổi sang nội dung bước mới.
+## Dây `timeout → _on_text_out_done` khai trong `base_tutorial.tscn`.
+func _on_text_out_done() -> void:
+	_apply_step_text_and_slide(_pending_msg, _pending_title)
+
+
+## Sau khi fade chữ cũ xong: đổi nội dung, pop tiêu đề (nếu đổi) + cho chữ trượt lên
+func _apply_step_text_and_slide(new_msg: String, new_title: String) -> void:
+	if lbl_message == null or not is_instance_valid(lbl_message):
+		return
+	lbl_message.text = new_msg
+	lbl_message.position = Vector2.ZERO
+	if lbl_title.text != new_title:
+		lbl_title.text = new_title
+		if not _play_anim_on(anim_title, &"title_pop"):
+			UIAnim.play_pop_in(lbl_title, 0.0, 0.88, 0.24)
+	if not _play_anim_on(anim_dialog, &"text_in"):
+		_fx_message = UIAnim.play_slide_in(lbl_message, Vector2(0, 10), 0.0, 0.22)
 
 
 func setup_steps(p_steps: Array) -> void:
@@ -351,10 +419,13 @@ func show_fail_feedback(key: String, fallback_text: String = "") -> void:
 	Sfx.play(Sfx.WALL_HIT)
 	_show_toast(key, fallback_text, Color("#D9534F"), 1.3)
 	# Rung thẻ thoại + loang đỏ nhẹ ở nền (như vết mực)
-	shake_node(dialog_bubble, 0.25, 8.0)
-	if backdrop != null:
-		backdrop.color = Color(0.98, 0.88, 0.88, 1.0)
-		backdrop.create_tween().tween_property(backdrop, "color", Color(0.969, 0.957, 0.937, 1.0), 0.45)
+	if anim_player != null and anim_player.has_animation("fail_feedback"):
+		anim_player.play("fail_feedback")
+	else:
+		shake_node(dialog_bubble, 0.25, 8.0)
+		if backdrop != null:
+			backdrop.color = Color(0.98, 0.88, 0.88, 1.0)
+			backdrop.create_tween().tween_property(backdrop, "color", Color(0.969, 0.957, 0.937, 1.0), 0.45)
 
 
 func show_success_feedback(key: String = "", fallback_text: String = "") -> void:
@@ -362,7 +433,8 @@ func show_success_feedback(key: String = "", fallback_text: String = "") -> void
 	_show_toast(key, fallback_text, Color("#4CAE4C"), 0.95)
 
 
-## Toast phản hồi: nở ra → giữ → mờ dần (1 tween duy nhất, không tranh thuộc tính)
+## Toast phản hồi: nở ra → giữ → mờ dần — animation "toast_in"/"toast_out" của scene
+## (`ToastAnim`); mã chỉ canh nhịp giữ rồi mới chạy "toast_out".
 func _show_toast(key: String, fallback_text: String, color: Color, hold: float) -> void:
 	if toast_label == null:
 		return
@@ -376,6 +448,19 @@ func _show_toast(key: String, fallback_text: String, color: Color, hold: float) 
 	toast_label.pivot_offset = toast_label.size * 0.5
 	toast_label.scale = Vector2(0.86, 0.86)
 	toast_label.modulate.a = 0.0
+	_toast_seq += 1
+	var seq := _toast_seq
+	if _play_anim_on(anim_toast, &"toast_in"):
+		# Giữ chữ toast `hold` giây rồi mới mờ — Timer khai trong `base_tutorial.tscn`
+		_pending_toast_seq = seq
+		if _toast_timer != null:
+			_toast_timer.wait_time = TOAST_IN_SECONDS + hold
+			_toast_timer.start()
+		else:
+			# Fallback khi scene thiếu ToastTimer
+			get_tree().create_timer(TOAST_IN_SECONDS + hold).timeout.connect(_fade_toast_after.bind(seq))
+		return
+	# Fallback khi scene thiếu ToastAnim: một tween duy nhất như trước
 	_fx_toast = toast_label.create_tween()
 	_fx_toast.tween_property(toast_label, "modulate:a", 1.0, 0.16)
 	_fx_toast.parallel().tween_property(toast_label, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -383,6 +468,21 @@ func _show_toast(key: String, fallback_text: String, color: Color, hold: float) 
 	_fx_toast.tween_property(toast_label, "modulate:a", 0.0, 0.3)
 
 
+## Mờ toast SAU khi giữ xong — bỏ qua nếu đã có toast mới hơn chen vào
+func _fade_toast_after(seq: int) -> void:
+	if seq != _toast_seq or toast_label == null or not is_instance_valid(toast_label):
+		return
+	if not _play_anim_on(anim_toast, &"toast_out"):
+		var tw := toast_label.create_tween()
+		tw.tween_property(toast_label, "modulate:a", 0.0, 0.3)
+
+
+## ToastTimer kêu (giữ chữ xong) → mờ toast. Dây khai trong `base_tutorial.tscn`.
+func _on_toast_hold_done() -> void:
+	_fade_toast_after(_pending_toast_seq)
+
+
+## (GIỮ tween) Biên độ rung ngẫu nhiên theo tham số truyền vào lúc chạy (không bake được).
 func shake_node(target: Node, duration: float = 0.25, amplitude: float = 8.0) -> void:
 	if target == null or not (target is Control):
 		return
@@ -440,11 +540,16 @@ func _apply_spotlight() -> void:
 	spotlight.visible = true
 	spotlight.scale = Vector2.ONE
 	if was_visible:
+		# Dừng MỌI hoạt cảnh cũ của vòng sáng (đang "thở" hoặc đang mờ dần) trước khi
+		# trượt sang target mới — nếu để fade-out cũ chạy tiếp thì alpha sẽ bị kéo về 0.
+		if anim_spotlight != null:
+			anim_spotlight.stop()
 		spotlight.modulate.a = 1.0
-		# Dừng pulse cũ để scale không giật khi vòng sáng trượt sang target mới
+		# Dừng pulse cũ (fallback tween) để scale không giật khi vòng sáng trượt sang target mới
 		if _fx_spotlight != null and _fx_spotlight.is_valid():
 			_fx_spotlight.kill()
 			_fx_spotlight = null
+		# (GIỮ tween) Vòng sáng TRƯỢT sang rect mục tiêu tính từ ô/bàn lúc chạy (position+size động)
 		var tw := spotlight.create_tween()
 		tw.set_parallel(true)
 		tw.tween_property(spotlight, "position", target.position, 0.26).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
@@ -455,26 +560,50 @@ func _apply_spotlight() -> void:
 		spotlight.position = target.position
 		spotlight.size = target.size
 		spotlight.modulate.a = 0.0
-		spotlight.create_tween().tween_property(spotlight, "modulate:a", 1.0, 0.22)
-		_start_spotlight_pulse()
+		if _play_anim_on(anim_spotlight, &"spotlight_in"):
+			if _spot_in_timer != null:
+				_spot_in_timer.start()
+			else:
+				# Fallback khi scene thiếu SpotlightInTimer
+				get_tree().create_timer(SPOTLIGHT_IN_SECONDS).timeout.connect(_start_spotlight_pulse)
+		else:
+			# Fallback khi scene thiếu SpotlightAnim
+			spotlight.create_tween().tween_property(spotlight, "modulate:a", 1.0, 0.22)
+			_start_spotlight_pulse()
 
 
 ## Mờ dần rồi ẩn vòng sáng (chỉ ẩn khi step mới vẫn KHÔNG có mục tiêu)
 func _hide_spotlight() -> void:
 	if spotlight == null or not spotlight.visible:
 		return
+	if _play_anim_on(anim_spotlight, &"spotlight_out"):
+		if _spot_out_timer != null:
+			_spot_out_timer.start()
+		else:
+			# Fallback khi scene thiếu SpotlightOutTimer
+			get_tree().create_timer(SPOTLIGHT_OUT_SECONDS).timeout.connect(_hide_spotlight_if_unused)
+		return
+	# Fallback khi scene thiếu SpotlightAnim
 	var tw := spotlight.create_tween()
 	tw.tween_property(spotlight, "modulate:a", 0.0, 0.18)
-	tw.tween_callback(func() -> void:
-		if is_instance_valid(spotlight) and not _has_spotlight:
-			spotlight.visible = false
-	)
+	tw.tween_callback(_hide_spotlight_if_unused)
 
 
-## Vòng sáng "thở" nhẹ (scale) để mắt bám vào mục tiêu — chỉ chạy 1 vòng lặp
+func _hide_spotlight_if_unused() -> void:
+	if is_instance_valid(spotlight) and not _has_spotlight:
+		spotlight.visible = false
+
+
+## Vòng sáng "thở" nhẹ (scale) để mắt bám vào mục tiêu — animation loop "spotlight_pulse"
 func _start_spotlight_pulse() -> void:
+	if anim_spotlight != null and anim_spotlight.current_animation == &"spotlight_pulse" \
+			and anim_spotlight.is_playing():
+		return
 	if _fx_spotlight != null and _fx_spotlight.is_valid():
 		return
+	if _play_anim_on(anim_spotlight, &"spotlight_pulse"):
+		return
+	# Fallback khi scene thiếu SpotlightAnim
 	_fx_spotlight = spotlight.create_tween().set_loops()
 	_fx_spotlight.tween_property(spotlight, "scale", Vector2(1.06, 1.06), 0.85).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_fx_spotlight.tween_property(spotlight, "scale", Vector2.ONE, 0.85).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

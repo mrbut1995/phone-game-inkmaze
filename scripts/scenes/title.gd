@@ -20,6 +20,14 @@ var _pulse_tween: Tween = null
 var _transitioning: bool = false
 
 
+## Các hoạt cảnh "nền" của màn Tiêu đề khai trong layout `scenes/layout/<hướng>/title.tscn`:
+## PencilAnim → "pencil_idle" (ngòi bút chì lắc) · IdleAnim → "logo_float" (logo bồng bềnh)
+## TapAnim → "tap_pulse" (nút chạm "thở") · "tap_bounce" (nảy khi bấm).
+## Trả về false nếu layout thiếu player/animation ⇒ phía gọi chạy fallback tween.
+func _play_pencil_idle() -> bool:
+	return UIAnim.play_layout_anim(layout, "PencilAnim", &"pencil_idle")
+
+
 ## Gắn node của layout đang hiển thị (2 layout giữ CÙNG đường dẫn node)
 func _bind_refs() -> void:
 	layout = active_layout() as TitleLayout
@@ -30,8 +38,8 @@ func _bind_refs() -> void:
 func _ready() -> void:
 	_bind_refs()
 	_refresh_stamp()
-	if layout.touch_button != null:
-		layout.touch_button.pressed.connect(_on_start_pressed)
+	# Dây `pressed → _on_start_pressed` khai trong `scenes/title.tscn` (guard chỉ nối lại nếu mất)
+	ensure_signal(layout.touch_button, &"pressed", &"_on_start_pressed")
 	_setup_animations()
 
 
@@ -49,34 +57,65 @@ func _setup_animations() -> void:
 	if DisplayServer.get_name() == "headless":
 		return
 
-	# Hiệu ứng hé mở từ trang giấy trắng/ngà sau khi chuyển từ Splash sang
-	if layout.fade_overlay != null:
-		layout.fade_overlay.visible = true
-		layout.fade_overlay.modulate.a = 1.0
-		var tw_in := create_tween()
-		tw_in.tween_property(layout.fade_overlay, "modulate:a", 0.0, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		tw_in.tween_callback(func() -> void: layout.fade_overlay.visible = false)
+	if layout.anim_player != null and layout.anim_player.has_animation("play_entrance"):
+		# Thiết lập vị trí gốc ban đầu
+		if layout.logo_container != null:
+			layout.logo_container.pivot_offset = layout.logo_container.size * 0.5
+		if layout.tap_container != null:
+			layout.tap_container.pivot_offset = layout.tap_container.size * 0.5
+			
+		layout.anim_player.play("play_entrance")
+		
+		# Ngòi bút chì phác họa nhẹ quanh logo — animation "pencil_idle" (loop) của layout
+		if layout.pencil != null:
+			layout.pencil.pivot_offset = Vector2(0, layout.pencil.size.y)
+			if not _play_pencil_idle():
+				# Fallback khi layout thiếu PencilAnim
+				_pencil_tween = create_tween().set_loops()
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", 14.0, 0.42).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", -10.0, 0.42).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			
+		# Logo bồng bềnh nhẹ nhàng — animation "logo_float" (loop) của layout
+		if layout.logo_container != null:
+			if not UIAnim.play_layout_anim(layout, "IdleAnim", &"logo_float"):
+				# Fallback khi layout thiếu IdleAnim
+				UIAnim.play_float_idle(layout.logo_container, 7.0, 2.5)
+	else:
+		# Fallback khi layout thiếu animation "play_entrance": hiệu ứng hé mở từ trang giấy trắng/ngà
+		if layout.fade_overlay != null:
+			layout.fade_overlay.visible = true
+			layout.fade_overlay.modulate.a = 1.0
+			var tw_in := create_tween()
+			tw_in.tween_property(layout.fade_overlay, "modulate:a", 0.0, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			tw_in.tween_callback(func() -> void: layout.fade_overlay.visible = false)
 
-	# 1. Logo bồng bềnh nhẹ nhàng
-	if layout.logo_container != null:
-		UIAnim.play_float_idle(layout.logo_container, 7.0, 2.5)
+		# 1. Logo bồng bềnh nhẹ nhàng
+		if layout.logo_container != null:
+			if not UIAnim.play_layout_anim(layout, "IdleAnim", &"logo_float"):
+				# Fallback khi layout thiếu IdleAnim
+				UIAnim.play_float_idle(layout.logo_container, 7.0, 2.5)
 
-	# 2. Ngòi bút chì phác họa nhẹ quanh logo
-	if layout.pencil != null:
-		layout.pencil.pivot_offset = Vector2(0, layout.pencil.size.y)
-		_pencil_tween = create_tween().set_loops()
-		_pencil_tween.tween_property(layout.pencil, "rotation_degrees", 14.0, 0.42).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		_pencil_tween.tween_property(layout.pencil, "rotation_degrees", -10.0, 0.42).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		# 2. Ngòi bút chì phác họa nhẹ quanh logo
+		if layout.pencil != null:
+			layout.pencil.pivot_offset = Vector2(0, layout.pencil.size.y)
+			if not _play_pencil_idle():
+				# Fallback khi layout thiếu PencilAnim
+				_pencil_tween = create_tween().set_loops()
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", 14.0, 0.42).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+				_pencil_tween.tween_property(layout.pencil, "rotation_degrees", -10.0, 0.42).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
-	# 3. Tiêu đề nảy nhẹ
-	if layout.title_label != null:
-		UIAnim.play_pop_in(layout.title_label, 0.08, 0.92, 0.3)
-	if layout.subtitle_label != null:
-		UIAnim.play_slide_in(layout.subtitle_label, Vector2(0, 15), 0.15, 0.28)
+		# 3. Tiêu đề nảy nhẹ
+		if layout.title_label != null:
+			UIAnim.play_pop_in(layout.title_label, 0.08, 0.92, 0.3)
+		if layout.subtitle_label != null:
+			UIAnim.play_slide_in(layout.subtitle_label, Vector2(0, 15), 0.15, 0.28)
 
-	# 4. "CHẠM ĐỂ BẮT ĐẦU" nhịp thở nhấp nhô liên tục
-	if layout.tap_container != null:
-		_pulse_tween = UIAnim.play_pulse(layout.tap_container, 1.06, 1.4)
+		# 4. "CHẠM ĐỂ BẮT ĐẦU" nhịp thở nhấp nhô liên tục — animation "tap_pulse" của layout
+		if layout.tap_container != null:
+			layout.tap_container.pivot_offset = layout.tap_container.size * 0.5
+			if not UIAnim.play_layout_anim(layout, "TapAnim", &"tap_pulse", layout.tap_container):
+				# Fallback khi layout thiếu TapAnim
+				_pulse_tween = UIAnim.play_pulse(layout.tap_container, 1.06, 1.4)
 
 
 func _on_start_pressed() -> void:
@@ -88,6 +127,9 @@ func _on_start_pressed() -> void:
 		_pencil_tween.kill()
 	if _pulse_tween != null and _pulse_tween.is_valid():
 		_pulse_tween.kill()
+	# Dừng các hoạt cảnh LẶP của layout trước khi chuyển cảnh
+	UIAnim.stop_layout_anim(layout, "PencilAnim")
+	UIAnim.stop_layout_anim(layout, "IdleAnim")
 
 	Sfx.play(Sfx.PAGE_TURN)
 
@@ -95,21 +137,38 @@ func _on_start_pressed() -> void:
 		_goto_main()
 		return
 
-	# Hiệu ứng nảy xúc giác cho nút chạm bắt đầu
+	# Hiệu ứng nảy xúc giác cho nút chạm bắt đầu — animation "tap_bounce" của TapAnim
 	if layout.tap_container != null:
 		layout.tap_container.pivot_offset = layout.tap_container.size * 0.5
-		var tw_tap := create_tween()
-		tw_tap.tween_property(layout.tap_container, "scale", Vector2(1.18, 0.88), 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		tw_tap.tween_property(layout.tap_container, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		UIAnim.stop_layout_anim(layout, "TapAnim")
+		if not UIAnim.play_layout_anim(layout, "TapAnim", &"tap_bounce", layout.tap_container):
+			# Fallback khi layout thiếu TapAnim
+			var tw_tap := create_tween()
+			tw_tap.tween_property(layout.tap_container, "scale", Vector2(1.18, 0.88), 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			tw_tap.tween_property(layout.tap_container, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
-	# Mờ sang trang giấy ngà rồi chuyển vào Main Menu
-	if layout.fade_overlay != null:
-		layout.fade_overlay.visible = true
-		layout.fade_overlay.modulate.a = 0.0
-		var tw_out := create_tween()
-		tw_out.tween_property(layout.fade_overlay, "modulate:a", 1.0, 0.24).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		tw_out.tween_callback(Callable(self, "_goto_main"))
+	# Mờ sang trang giấy ngà rồi chuyển vào Main Menu — animation "play_exit" của layout;
+	# dây `animation_finished → _on_exit_animation_finished` khai trong `scenes/title.tscn`
+	if layout.anim_player != null and layout.anim_player.has_animation("play_exit"):
+		if not layout.anim_player.animation_finished.is_connected(_on_exit_animation_finished):
+			# Guard: chỉ nối lại khi dây trong .tscn bị mất (layout đổi cấu trúc)
+			layout.anim_player.animation_finished.connect(_on_exit_animation_finished)
+		layout.anim_player.play("play_exit")
 	else:
+		# Fallback khi layout thiếu animation "play_exit"
+		if layout.fade_overlay != null:
+			layout.fade_overlay.visible = true
+			layout.fade_overlay.modulate.a = 0.0
+			var tw_out := create_tween()
+			tw_out.tween_property(layout.fade_overlay, "modulate:a", 1.0, 0.24).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			tw_out.tween_callback(Callable(self, "_goto_main"))
+		else:
+			_goto_main()
+
+
+## Hết animation "play_exit" (dây khai trong `scenes/title.tscn`) → vào màn hình chính
+func _on_exit_animation_finished(anim_name: StringName) -> void:
+	if anim_name == &"play_exit":
 		_goto_main()
 
 

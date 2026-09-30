@@ -42,13 +42,12 @@ func _on_orientation_changed(_is_landscape_now: bool) -> void:
 	_setup_animations()
 
 
-## Nối signal 1 lần duy nhất (mỗi lần xoay màn hình sẽ gắn lại node của layout mới,
-## còn node của layout cũ vẫn giữ kết nối cũ ⇒ phải guard kẻo "already connected").
+## Dây NÚT khai trong `scenes/main.tscn` (bản dọc) — guard dưới chỉ nối lại
+## nếu dây bị mất (xoay màn hình gắn lại node của layout mới nên hàm này chạy lại được).
 func _connect_pressed(button: BaseButton, handler: Callable) -> void:
 	if button == null:
 		return
-	if not button.pressed.is_connected(handler):
-		button.pressed.connect(handler)
+	ensure_signal(button, &"pressed", handler.get_method())
 	UIAnim.attach_press_bounce(button)
 
 
@@ -64,6 +63,8 @@ func _setup_buttons() -> void:
 
 func _setup_animations() -> void:
 	# 1. Logo bồng bềnh nhẹ
+	# (GIỮ tween) Logo nằm TRONG VBoxContainer — vị trí do container dàn nên không khai
+	# được track tĩnh (offset/scale không thay được vị trí do container quản lý).
 	if layout.logo != null:
 		UIAnim.play_float_idle(layout.logo, 5.0, 2.6)
 

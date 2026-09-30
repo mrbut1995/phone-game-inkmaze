@@ -11,3 +11,9 @@ script = ExtResource("2_daily")
 
 [node name="Portrait" parent="." index="1" unique_id=1504128517 instance=ExtResource("L_Portrait")]
 layout_mode = 1
+
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Portrait/Panel/HUD/Content/Information/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Play" to="." method="_on_play_pressed"]
+[connection signal="day_selected" from="Portrait/Panel/Calendar" to="." method="_on_day_selected"]

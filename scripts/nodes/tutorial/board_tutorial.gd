@@ -417,6 +417,7 @@ func play_wall_demo_drag(is_h: bool, lattice: Vector2i, duration := 0.55) -> voi
 		if _wall_demo_token != token or not is_inside_tree():
 			return
 		_cursor.play_demo_slide(a_center, b_center, duration)
+		# (GIỮ tween) Vẽ dần đường chỉ dẫn bằng NỘI SUY ĐIỂM (dữ liệu hình học a→b tính lúc chạy)
 		var line_tw := create_tween()
 		line_tw.tween_method(func(prog: float) -> void:
 			_drag_guide_line.points = PackedVector2Array([a_center, a_center.lerp(b_center, prog)])
