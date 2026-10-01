@@ -65,10 +65,10 @@ mouse_filter = 2
 [node name="Art" type="TextureRect" parent="Panel" unique_id=848801197]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  -4
-offset_top =  -4
-offset_right =  394
-offset_bottom =  564
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 391.0
+offset_bottom = 561.0
 mouse_filter = 2
 texture = ExtResource("3_panel")
 

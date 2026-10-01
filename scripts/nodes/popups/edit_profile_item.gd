@@ -14,13 +14,13 @@ const COLOR_LOCK_DUNGEON := Color(0.8627, 0.1490, 0.1490)  # #DC2626
 const COLOR_LOCK_STREAK := Color(0.8510, 0.4667, 0.0235)   # #D97706
 const COLOR_LOCK_POINTS := Color(0.8510, 0.4667, 0.0235)   # #D97706
 
-@onready var _selected: NinePatchRect = get_node_or_null("Selected")
-@onready var _icon: TextureRect = get_node_or_null("Icon")
-@onready var _lock_icon: TextureRect = get_node_or_null("LockIcon")
-@onready var _check: TextureRect = get_node_or_null("Check")
-@onready var _name_label: Label = get_node_or_null("Name")
-@onready var _state_label: Label = get_node_or_null("State")
-@onready var _price_chip: Control = get_node_or_null("PriceChip")
+@onready var _selected: NinePatchRect = get_node_or_null("Bg/Selected")
+@onready var _icon: TextureRect = get_node_or_null("Bg/Disc/Icon")
+@onready var _lock_icon: TextureRect = get_node_or_null("Bg/Disc/LockIcon")
+@onready var _check: TextureRect = get_node_or_null("Bg/Check")
+@onready var _name_label: Label = get_node_or_null("Bg/Name")
+@onready var _state_label: Label = get_node_or_null("Bg/State")
+@onready var _price_chip: Control = get_node_or_null("Bg/PriceChip")
 
 
 ## Nạp 1 món trong catalog (entry đã tính trạng thái từ PlayerProfileManager)

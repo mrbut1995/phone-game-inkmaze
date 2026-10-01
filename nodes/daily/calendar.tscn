@@ -68,26 +68,26 @@ texture_margin_right = 7.5
 texture_margin_bottom = 9.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v5uxq"]
-content_margin_left = 8.0
-content_margin_top = 7.0
-content_margin_right = 7.5
-content_margin_bottom = 9.0
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 5.5
+content_margin_bottom = 6.0
 texture = ExtResource("9_next_p")
-texture_margin_left = 8.0
-texture_margin_top = 7.0
-texture_margin_right = 7.5
-texture_margin_bottom = 9.0
+texture_margin_left = 6.0
+texture_margin_top = 5.0
+texture_margin_right = 5.5
+texture_margin_bottom = 6.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jmps4"]
-content_margin_left = 8.0
-content_margin_top = 7.0
-content_margin_right = 7.5
-content_margin_bottom = 9.0
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 5.5
+content_margin_bottom = 6.0
 texture = ExtResource("9_next_p")
-texture_margin_left = 8.0
-texture_margin_top = 7.0
-texture_margin_right = 7.5
-texture_margin_bottom = 9.0
+texture_margin_left = 6.0
+texture_margin_top = 5.0
+texture_margin_right = 5.5
+texture_margin_bottom = 6.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5mqyr"]
 content_margin_left = 8.0
@@ -183,10 +183,10 @@ texture_normal = ExtResource("8_next_n")
 texture_hover = ExtResource("9_next_p")
 texture_pressed = ExtResource("9_next_p")
 texture_disabled = ExtResource("10_next_d")
-patch_margin_left = 8.0
-patch_margin_top = 7.0
-patch_margin_right = 7.5
-patch_margin_bottom = 9.0
+patch_margin_left = 6.0
+patch_margin_top = 5.0
+patch_margin_right = 5.5
+patch_margin_bottom = 6.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Content" type="VBoxContainer" parent="Panel" unique_id=82228673]

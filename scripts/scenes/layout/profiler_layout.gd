@@ -38,12 +38,14 @@ extends BaseLayout
 @export var hero_fill: Control = null
 
 # --- Truy cập node con theo tên (2 hướng khai cùng tên) ---------------------
+## Nhãn trong chip cấp độ — `level_chip` có thể bind vào chính Label hoặc vào Control chứa Label "Text"
 func chip_text() -> Label:
-	return level_chip.get_node_or_null("Text") as Label if level_chip != null else null
-
-
-func hero_node(node_name: String) -> Control:
-	return hero.get_node_or_null(node_name) as Control if hero != null else null
+	if level_chip == null:
+		return null
+	var direct := level_chip as Label
+	if direct != null:
+		return direct
+	return level_chip.get_node_or_null("Text") as Label
 
 
 func stat_card(index: int) -> Control:

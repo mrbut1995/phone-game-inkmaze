@@ -44,10 +44,10 @@ texture = ExtResource("3_slip")
 [node name="Stamp" type="TextureRect" parent="Panel/Content" index="0" unique_id=231962854]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  296
-offset_top =  23.5
-offset_right =  354
-offset_bottom =  81.5
+offset_left = 297.0
+offset_top = 24.5
+offset_right = 353.0
+offset_bottom = 80.5
 mouse_filter = 2
 texture = ExtResource("4_stamp")
 
@@ -293,10 +293,10 @@ vertical_alignment = 1
 [node name="WarnBox" type="TextureRect" parent="Panel/Content" index="13" unique_id=899017202]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  55.5
-offset_top =  353
-offset_right =  379.5
-offset_bottom =  399.5
+offset_left = 56.5
+offset_top = 353.9894
+offset_right = 378.5
+offset_bottom = 398.5106
 mouse_filter = 2
 texture = ExtResource("7_warn_box")
 
@@ -329,10 +329,10 @@ text_overrun_behavior = 3
 [node name="RestBtn" type="TextureButton" parent="Panel/Content" index="14" unique_id=1922301705]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  54.5
-offset_top =  432
-offset_right =  150.5
-offset_bottom =  486
+offset_left = 55.5
+offset_top = 433.0
+offset_right = 149.5
+offset_bottom = 485.0
 texture_normal = ExtResource("8_rest_n")
 texture_pressed = ExtResource("9_rest_p")
 texture_hover = ExtResource("8_rest_n")
