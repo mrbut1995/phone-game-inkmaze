@@ -32,6 +32,7 @@ func _init() -> void:
 		await _case_game_over()
 		await _case_game_over_race()
 		await _case_next_floor()
+		await _case_edit_profile()
 		await _case_loading(size)
 	print("\n=== POPUP REPRO: %d PASS · %d FAIL ===" % [_passes, _fails])
 	quit(0)
@@ -130,6 +131,36 @@ func _case_next_floor() -> void:
 	await _frames(40)
 	_dump("next_floor")
 	_shot("next_floor")
+	Popups.close_all()
+	await _frames(8)
+	scene.queue_free()
+	await _frames(2)
+
+
+## Popup Diện mạo hồ sơ (edit_profile): Dim phải phủ TOÀN canvas — kể cả 2 bên
+## cột nội dung 1080px. Lỗi cũ: node Dim gắn anchor full-rect trong popup nên bị
+## hệ layout kéo về đúng ô của popup ⇒ màn hình ngang chỉ thấy dải đen ở giữa.
+func _case_edit_profile() -> void:
+	var scene: Node = (load("res://scenes/profiler.tscn") as PackedScene).instantiate()
+	root.add_child(scene)
+	current_scene = scene      # PopupManager.get_host() tìm host theo current_scene
+	await _frames(12)
+	Popups.open(Popups.EDIT_PROFILE)
+	await _frames(40)          # chờ hiệu ứng mở xong
+	_dump("edit_profile")
+	var canvas := root.get_visible_rect().size
+	_shot("edit_profile_%dx%d" % [int(canvas.x), int(canvas.y)])
+	var pop := Popups.top()
+	var dim: Control = null
+	if pop != null:
+		dim = pop.get_node_or_null("Dim") as Control
+	var dim_rect := Rect2(dim.global_position, dim.size) if dim != null else Rect2()
+	if dim != null and dim_rect.grow(1.0).encloses(Rect2(Vector2.ZERO, canvas)):
+		print("   [PASS] Dim edit_profile phủ kín canvas %s (dim=%s)" % [str(canvas), str(dim_rect)])
+		_passes += 1
+	else:
+		print("   [FAIL] Dim edit_profile KHÔNG phủ canvas %s (dim=%s)" % [str(canvas), str(dim_rect)])
+		_fails += 1
 	Popups.close_all()
 	await _frames(8)
 	scene.queue_free()

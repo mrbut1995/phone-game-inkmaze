@@ -157,30 +157,29 @@ func _refresh_header() -> void:
 func _refresh_hero() -> void:
 	_set_texture(layout.hero_avatar, Profile.avatar_icon(Profile.avatar_id()))
 	_set_texture(layout.hero_frame, Profile.frame_icon(Profile.frame_id()))
-	var name_label := layout.hero_node("Name") as Label
-	if name_label != null:
-		name_label.text = Profile.display_name()
-	var tier_label := layout.hero_node("TierText") as Label
-	if tier_label != null:
-		tier_label.text = tr(Profile.title_key())
-	var exp_value := layout.hero_node("ExpValue") as Label
-	if exp_value != null:
-		exp_value.text = tr("STR_PROFILE_EXP_FORMAT").format([Profile.exp_in_level(), Profile.exp_step()])
-	var uid_label := layout.hero_node("Uid") as Label
-	if uid_label != null:
-		uid_label.text = tr("STR_PROFILE_UID_FORMAT").format([Profile.uid_text()])
+	# Các nhãn thẻ hero: bind thẳng trong .tscn (2 hướng khai cùng tên)
+	if layout.hero_name != null:
+		layout.hero_name.text = Profile.display_name()
+	if layout.hero_tier_text != null:
+		layout.hero_tier_text.text = tr(Profile.title_key())
+	if layout.hero_exp_value != null:
+		layout.hero_exp_value.text = tr("STR_PROFILE_EXP_FORMAT").format([Profile.exp_in_level(), Profile.exp_step()])
+	if layout.hero_uid != null:
+		layout.hero_uid.text = tr("STR_PROFILE_UID_FORMAT").format([Profile.uid_text()])
 	_fill_bar()
 
 
-## Thanh EXP: bề rộng phần tô theo tỉ lệ EXP trong cấp (giữ chiều cao khai trong .tscn)
+## Thanh EXP: bề rộng phần tô theo tỉ lệ EXP trong cấp
+## (BarFill khai neo "left-wide" trong .tscn nên bề rộng = offset_right,
+##  chiều cao do neo quyết định — đặt thẳng `size` sẽ bị hệ layout ghi đè)
 func _fill_bar() -> void:
-	var track := layout.hero_node("Bar") as Control
-	var fill := layout.hero_node("BarFill") as Control
+	var track := layout.hero_track
+	var fill := layout.hero_fill
 	if track == null or fill == null:
 		return
 	var step := maxi(Profile.exp_step(), 1)
 	var ratio := clampf(float(Profile.exp_in_level()) / float(step), 0.0, 1.0)
-	fill.size = Vector2(maxf(roundf(track.size.x * ratio), 4.0), fill.size.y)
+	fill.offset_right = fill.offset_left + maxf(roundf(track.size.x * ratio), 4.0)
 
 
 func _refresh_stats() -> void:

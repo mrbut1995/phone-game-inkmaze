@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cf0f2d1fggwao" path="res://assets/images/ranking/chip_scope.svg" id="13_circle"]
 [ext_resource type="Texture2D" uid="uid://b5ovppi3sqobw" path="res://assets/images/profiler/bar_track.svg" id="14_bar_track"]
 [ext_resource type="Texture2D" uid="uid://btf7r7p54degs" path="res://assets/images/profiler/bar_fill.svg" id="15_bar_fill"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="15_l6pvb"]
 [ext_resource type="Texture2D" uid="uid://c442wdwl8b6b1" path="res://assets/images/profiler/btn_primary_normal.svg" id="16_pri_n"]
 [ext_resource type="Texture2D" uid="uid://c6bp580h2ct6m" path="res://assets/images/profiler/btn_primary_pressed.svg" id="17_pri_p"]
 [ext_resource type="Texture2D" uid="uid://drlax1oklev7w" path="res://assets/images/profiler/btn_ghost_normal.svg" id="18_gho_n"]
@@ -29,7 +30,9 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_section.tres" id="22_t_section"]
 [ext_resource type="Texture2D" uid="uid://bct7cceiu4qnp" path="res://assets/images/profiler/avatar_cat.svg" id="23_c061d"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_chip_gold.tres" id="23_t_chip_gold"]
+[ext_resource type="Texture2D" uid="uid://b8imq7frnofrv" path="res://assets/images/profiler/chip_dark.svg" id="24_srqk1"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_name.tres" id="24_t_name"]
+[ext_resource type="LabelSettings" uid="uid://10rhkf4kv2gy" path="res://resources/settings/text/text_profiler_lock.tres" id="25_7rfe7"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_label.tres" id="25_t_label"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_value.tres" id="26_t_value"]
 [ext_resource type="LabelSettings" uid="uid://bu8t2nlps33r5" path="res://resources/settings/text/text_profiler_small.tres" id="27_t_small"]
@@ -40,12 +43,49 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_state.tres" id="32_t_state"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="33_theme"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0bc38"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("18_l6pvb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ooetg"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("19_0bc38")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wmwjj"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("18_l6pvb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kmslx"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("20_ooetg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c061d"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("21_wmwjj")
+
 [node name="Portrait" unique_id=1874102296 node_paths=PackedStringArray("btn_back", "lbl_title", "level_chip", "hero", "stat_cards", "badges_box", "gear_box", "rows_box", "btn_edit", "btn_share", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill") instance=ExtResource("1_parent")]
+offset_left = -1.0
+offset_right = -1.0
 theme = ExtResource("33_theme")
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/Back")
 lbl_title = NodePath("TopBar/Title")
-level_chip = NodePath("TopBar/LevelChip")
+level_chip = NodePath("Hero/Bg/Content/Profile/LevelChip/Bg/Text")
 hero = NodePath("Hero")
 stat_cards = NodePath("StatCards")
 badges_box = NodePath("Badges")
@@ -54,15 +94,15 @@ rows_box = NodePath("Rows")
 btn_edit = NodePath("BtnEdit")
 btn_share = NodePath("BtnShare")
 stamp = NodePath("Stamp")
-hero_btn_avatar = NodePath("Hero/Profile")
-hero_avatar = NodePath("Hero/Profile/Frame/Avatar")
-hero_frame = NodePath("Hero/Profile/Frame")
-hero_name = NodePath("Hero/Name")
-hero_tier_text = NodePath("Hero/TierChip/Text")
-hero_exp_value = NodePath("Hero/ExpValue")
-hero_uid = NodePath("Hero/Uid")
-hero_track = NodePath("Hero/Bar")
-hero_fill = NodePath("Hero/Bar/BarFill")
+hero_btn_avatar = NodePath("Hero/Bg/Content/Profile")
+hero_avatar = NodePath("Hero/Bg/Content/Profile/Frame/Avatar")
+hero_frame = NodePath("Hero/Bg/Content/Profile/Frame")
+hero_name = NodePath("Hero/Bg/Content/ProfileInformation/Name")
+hero_tier_text = NodePath("Hero/Bg/Content/ProfileInformation/TierChip/Bg/Text")
+hero_exp_value = NodePath("Hero/Bg/Content/ProfileInformation/Exp/ExpValue")
+hero_uid = NodePath("Hero/Bg/Content/ProfileInformation/Uid")
+hero_track = NodePath("Hero/Bg/Content/ProfileInformation/Bar")
+hero_fill = NodePath("Hero/Bg/Content/ProfileInformation/Bar/BarFill")
 
 [node name="Sheet" type="TextureRect" parent="." index="0" unique_id=847444578]
 layout_mode = 1
@@ -133,38 +173,6 @@ label_settings = ExtResource("21_t_title")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelChip" type="Control" parent="TopBar" index="2" unique_id=9664023]
-anchors_preset = 0
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -57.5
-offset_bottom = 21.0
-grow_horizontal = 0
-mouse_filter = 2
-
-[node name="Bg" type="TextureRect" parent="TopBar/LevelChip" index="0" unique_id=1526444858]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("8_chip_gold")
-expand_mode = 1
-
-[node name="Text" type="Label" parent="TopBar/LevelChip" index="1" unique_id=1694549839]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "LV. 1"
-label_settings = ExtResource("23_t_chip_gold")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Divider" type="TextureRect" parent="." index="2" unique_id=2103713421]
 layout_mode = 0
 offset_left = 60.0
@@ -197,28 +205,37 @@ patch_margin_right = 22
 patch_margin_bottom = 22
 metadata/_edit_use_anchors_ = true
 
-[node name="Profile" type="TextureButton" parent="Hero" index="1" unique_id=551155378]
+[node name="Content" type="HBoxContainer" parent="Hero/Bg" index="0" unique_id=64016870]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05564494
-anchor_top = 0.14728138
-anchor_right = 0.2734163
-anchor_bottom = 0.8244415
-offset_left = -0.14507675
-offset_top = -0.0419693
-offset_right = 0.1018219
-offset_bottom = 0.00592041
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.720001
+offset_top = 29.567871
+offset_right = -24.720001
+offset_bottom = -29.567871
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Profile" type="Button" parent="Hero/Bg/Content" index="0" unique_id=661797333]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+theme_override_styles/normal = SubResource("StyleBoxTexture_0bc38")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ooetg")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wmwjj")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_kmslx")
+theme_override_styles/focus = SubResource("StyleBoxTexture_c061d")
+script = ExtResource("15_l6pvb")
 texture_normal = ExtResource("18_l6pvb")
-texture_pressed = ExtResource("19_0bc38")
 texture_hover = ExtResource("18_l6pvb")
+texture_pressed = ExtResource("19_0bc38")
 texture_disabled = ExtResource("20_ooetg")
-texture_focused = ExtResource("21_wmwjj")
-stretch_mode = 5
+texture_focus = ExtResource("21_wmwjj")
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 metadata/_edit_use_anchors_ = true
 
-[node name="Frame" type="TextureRect" parent="Hero/Profile" index="0" unique_id=308081860]
+[node name="Frame" type="TextureRect" parent="Hero/Bg/Content/Profile" index="0" unique_id=1450145977]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.15155074
@@ -237,7 +254,7 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Avatar" type="TextureRect" parent="Hero/Profile/Frame" index="0" unique_id=637969851]
+[node name="Avatar" type="TextureRect" parent="Hero/Bg/Content/Profile/Frame" index="0" unique_id=597232386]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15714286
@@ -252,71 +269,98 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Disc" type="TextureRect" parent="Hero" index="2" unique_id=1832602870]
-visible = false
-self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
-layout_mode = 0
-offset_left = 35.5
-offset_top = 26.5
-offset_right = 99.5
-offset_bottom = 90.5
-mouse_filter = 2
-texture = ExtResource("13_circle")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="BtnAvatar" type="TextureButton" parent="Hero" index="3" unique_id=71900226]
-visible = false
-layout_mode = 0
-offset_left = 29.5
-offset_top = 20.5
-offset_right = 105.5
-offset_bottom = 96.5
-
-[node name="Frame" type="TextureRect" parent="Hero" index="4" unique_id=1190520118]
-visible = false
-layout_mode = 0
-offset_left = 29.5
-offset_top = 20.5
-offset_right = 105.5
-offset_bottom = 96.5
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Hero" index="5" unique_id=1245396682]
-layout_mode = 0
-offset_left = 120.0
-offset_top = 12.0
-offset_right = 320.0
-offset_bottom = 34.0
-text = "MazeWalker #1024"
-label_settings = ExtResource("24_t_name")
-
-[node name="TierChip" type="Control" parent="Hero" index="6" unique_id=180307109]
-anchors_preset = 0
-offset_left = 120.0
-offset_top = 43.0
-offset_right = 210.0
-offset_bottom = 57.0
-mouse_filter = 2
-
-[node name="Bg" type="TextureRect" parent="Hero/TierChip" index="0" unique_id=520409786]
+[node name="LevelChip" type="Control" parent="Hero/Bg/Content/Profile" index="1" unique_id=840429116]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.512
+anchor_top = 0.5
+anchor_right = 0.512
+anchor_bottom = 0.5
+offset_left = -20.028929
+offset_top = 29.047104
+offset_right = 19.971073
+offset_bottom = 43.047104
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Bg" type="NinePatchRect" parent="Hero/Bg/Content/Profile/LevelChip" index="0" unique_id=1408309356]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.525
+anchor_top = -0.2857143
+anchor_right = 1.425
+anchor_bottom = 1.2142857
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("8_chip_gold")
-expand_mode = 1
+texture = ExtResource("24_srqk1")
+patch_margin_left = 10
+patch_margin_top = 8
+patch_margin_right = 10
+patch_margin_bottom = 8
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="Text" type="Label" parent="Hero/TierChip" index="1" unique_id=1154631137]
+[node name="Text" type="Label" parent="Hero/Bg/Content/Profile/LevelChip/Bg" index="0" unique_id=1348834134]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.102564104
+anchor_top = 0.22727273
+anchor_right = 0.897
+anchor_bottom = 0.864
+offset_right = 0.033996582
+offset_bottom = -2.0080013
+grow_horizontal = 2
+grow_vertical = 2
+text = "LV. 1"
+label_settings = ExtResource("25_7rfe7")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer" type="Control" parent="Hero/Bg/Content" index="1" unique_id=330824943]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+
+[node name="ProfileInformation" type="VBoxContainer" parent="Hero/Bg/Content" index="2" unique_id=1632481808]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+
+[node name="Name" type="Label" parent="Hero/Bg/Content/ProfileInformation" index="0" unique_id=1068124931]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+text = "MazeWalker #1024"
+label_settings = ExtResource("24_t_name")
+text_overrun_behavior = 3
+
+[node name="TierChip" type="HBoxContainer" parent="Hero/Bg/Content/ProfileInformation" index="1" unique_id=371251733]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Hero/Bg/Content/ProfileInformation/TierChip" index="0" unique_id=84430524]
+custom_minimum_size = Vector2(35, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+texture = ExtResource("8_chip_gold")
+patch_margin_left = 9
+patch_margin_top = 6
+patch_margin_right = 11
+patch_margin_bottom = 6
+
+[node name="Text" type="Label" parent="Hero/Bg/Content/ProfileInformation/TierChip/Bg" index="0" unique_id=1719252005]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 5.57143
+offset_top = 1.5
+offset_right = -5.57143
+offset_bottom = -1.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "ROOKIE"
@@ -324,49 +368,50 @@ label_settings = ExtResource("23_t_chip_gold")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ExpLabel" type="Label" parent="Hero" index="7" unique_id=1958163170]
-layout_mode = 0
-offset_left = 120.0
-offset_top = 68.0
-offset_right = 230.0
-offset_bottom = 79.0
+[node name="Spacer" type="Control" parent="Hero/Bg/Content/ProfileInformation/TierChip" index="1" unique_id=1922079630]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.8
+
+[node name="Exp" type="HBoxContainer" parent="Hero/Bg/Content/ProfileInformation" index="2" unique_id=540095273]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="ExpLabel" type="Label" parent="Hero/Bg/Content/ProfileInformation/Exp" index="0" unique_id=1218353706]
+layout_mode = 2
+size_flags_horizontal = 2
 text = "STR_PROFILE_EXP_LABEL"
 label_settings = ExtResource("25_t_label")
+resize_font_to_fit = true
 
-[node name="ExpValue" type="Label" parent="Hero" index="8" unique_id=897911681]
-layout_mode = 0
-offset_left = 234.0
-offset_top = 68.0
-offset_right = 356.0
-offset_bottom = 79.0
+[node name="ExpValue" type="Label" parent="Hero/Bg/Content/ProfileInformation/Exp" index="1" unique_id=1961655801]
+layout_mode = 2
+size_flags_horizontal = 10
 text = "0 / 200"
 label_settings = ExtResource("25_t_label")
 horizontal_alignment = 2
 
-[node name="Bar" type="TextureRect" parent="Hero" index="9" unique_id=1325834906]
-layout_mode = 0
-offset_left = 120.0
-offset_top = 81.5
-offset_right = 356.0
-offset_bottom = 88.5
+[node name="Bar" type="TextureRect" parent="Hero/Bg/Content/ProfileInformation" index="3" unique_id=1003512978]
+custom_minimum_size = Vector2(0, 7)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
 mouse_filter = 2
 texture = ExtResource("14_bar_track")
-expand_mode = 1
+expand_mode = 5
 
-[node name="BarFill" type="TextureRect" parent="Hero/Bar" index="0" unique_id=1562637658]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 7.0
+[node name="BarFill" type="TextureRect" parent="Hero/Bg/Content/ProfileInformation/Bar" index="0" unique_id=653637193]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("15_bar_fill")
 expand_mode = 1
 
-[node name="Uid" type="Label" parent="Hero" index="10" unique_id=1786528535]
-layout_mode = 0
-offset_left = 120.0
-offset_top = 97.0
-offset_right = 356.0
-offset_bottom = 109.0
+[node name="Uid" type="Label" parent="Hero/Bg/Content/ProfileInformation" index="4" unique_id=1786528535]
+layout_mode = 2
 text = "UID: #IM-0000"
 label_settings = ExtResource("25_t_label")
 

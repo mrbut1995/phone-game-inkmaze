@@ -831,29 +831,32 @@ text = "MazeWalker #1024"
 label_settings = ExtResource("32_t_name")
 text_overrun_behavior = 3
 
-[node name="TierChip" type="HBoxContainer" parent="Paper/Hero/ProfileCard/Content/ProfileInformation" index="1" unique_id=1658809951]
+[node name="TierChip" type="HBoxContainer" parent="Paper/Hero/ProfileCard/Content/ProfileInformation" index="1" unique_id=107437573]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.2
 mouse_filter = 2
 
-[node name="Bg" type="TextureRect" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/TierChip" index="0" unique_id=58888856]
-custom_minimum_size = Vector2(0, 14)
+[node name="Bg" type="NinePatchRect" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/TierChip" index="0" unique_id=1820640652]
+custom_minimum_size = Vector2(35, 14)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.45
-mouse_filter = 2
+size_flags_stretch_ratio = 0.2
 texture = ExtResource("19_bwfoc")
-expand_mode = 1
-stretch_mode = 5
+patch_margin_left = 9
+patch_margin_top = 6
+patch_margin_right = 11
+patch_margin_bottom = 6
 
-[node name="Text" type="Label" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/TierChip/Bg" index="0" unique_id=1828952780]
+[node name="Text" type="Label" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/TierChip/Bg" index="0" unique_id=604839309]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 2.5
-offset_bottom = -2.5
+offset_left = 5.57143
+offset_top = 1.5
+offset_right = -5.57143
+offset_bottom = -1.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "ROOKIE"
@@ -861,10 +864,10 @@ label_settings = ExtResource("20_m7v2e")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Spacer" type="Control" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/TierChip" index="1" unique_id=1581589953]
+[node name="Spacer" type="Control" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/TierChip" index="1" unique_id=1312289518]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.7
+size_flags_stretch_ratio = 0.8
 
 [node name="Exp" type="HBoxContainer" parent="Paper/Hero/ProfileCard/Content/ProfileInformation" index="2" unique_id=1263185516]
 layout_mode = 2

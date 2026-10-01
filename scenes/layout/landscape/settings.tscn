@@ -374,7 +374,7 @@ size_flags_vertical = 4
 texture = ExtResource("45_icon_globe")
 
 [node name="LangButton" type="TextureButton" parent="Panel/Content/Body/ColRight/Language/LangRow" index="1" unique_id=1918901386]
-custom_minimum_size = Vector2(155, 27)
+custom_minimum_size = Vector2(153.0, 25.0)
 layout_mode = 2
 size_flags_horizontal = 0
 texture_normal = ExtResource("19_dd_n")
@@ -416,7 +416,7 @@ size_flags_vertical = 4
 texture = ExtResource("46_icon_cloud")
 
 [node name="Chip" type="TextureRect" parent="Panel/Content/Body/ColRight/Language/CloudRow" index="1" unique_id=1918901392]
-custom_minimum_size = Vector2(80, 21)
+custom_minimum_size = Vector2(76.2791, 17.8889)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -470,7 +470,7 @@ layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="Guide" type="TextureButton" parent="Panel/Content/Body/ColRight/Actions" index="0" unique_id=1617146452]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(1.0, 38.0)
 layout_mode = 2
 texture_normal = ExtResource("23_row_n")
 texture_pressed = ExtResource("24_row_p")
@@ -498,10 +498,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -25
-offset_top = -7
-offset_right = -16
-offset_bottom = 7
+offset_left = -24.0
+offset_top = -7.0
+offset_right = -17.0
+offset_bottom = 7.0
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("6_chevron")
@@ -520,7 +520,7 @@ label_settings = ExtResource("35_row")
 vertical_alignment = 1
 
 [node name="Credits" type="TextureButton" parent="Panel/Content/Body/ColRight/Actions" index="1" unique_id=1106923312]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(1.0, 38.0)
 layout_mode = 2
 texture_normal = ExtResource("23_row_n")
 texture_pressed = ExtResource("24_row_p")
@@ -548,10 +548,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -25
-offset_top = -7
-offset_right = -16
-offset_bottom = 7
+offset_left = -24.0
+offset_top = -7.0
+offset_right = -17.0
+offset_bottom = 7.0
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("6_chevron")
@@ -570,7 +570,7 @@ label_settings = ExtResource("35_row")
 vertical_alignment = 1
 
 [node name="Reset" type="TextureButton" parent="Panel/Content/Body/ColRight/Actions" index="2" unique_id=1617146455]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(1.0, 38.0)
 layout_mode = 2
 texture_normal = ExtResource("27_dan_n")
 texture_pressed = ExtResource("28_dan_p")
@@ -598,10 +598,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -25
-offset_top = -7
-offset_right = -16
-offset_bottom = 7
+offset_left = -24.0
+offset_top = -7.0
+offset_right = -17.0
+offset_bottom = 7.0
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("7_chevron_danger")

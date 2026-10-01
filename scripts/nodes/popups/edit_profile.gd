@@ -30,8 +30,8 @@ var _pending_frame := ""
 var _pending_name := ""
 var _hint_token := 0
 
-@onready var _preview_avatar: TextureRect = get_node_or_null("Panel/Content/Preview/Avatar")
-@onready var _preview_frame: TextureRect = get_node_or_null("Panel/Content/Preview/Frame")
+@onready var _preview_avatar: TextureRect = get_node_or_null("Panel/Content/Preview/Profile/Frame/Avatar")
+@onready var _preview_frame: TextureRect = get_node_or_null("Panel/Content/Preview/Profile/Frame")
 @onready var _name_edit: LineEdit = get_node_or_null("Panel/Content/Preview/NameEdit")
 @onready var _name_hint: Label = get_node_or_null("Panel/Content/Preview/NameHint")
 @onready var _grid: GridContainer = get_node_or_null("Panel/Content/Scroll/Grid")

@@ -56,7 +56,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Back" type="TextureButton" parent="TopBar" index="0"]
 stretch_mode = 0
 ignore_texture_size = true
-custom_minimum_size = Vector2(133, 133)
+custom_minimum_size = Vector2(126.35, 120.6279)
 layout_mode = 2
 texture_normal = ExtResource("4_back_n")
 texture_pressed = ExtResource("5_back_p")

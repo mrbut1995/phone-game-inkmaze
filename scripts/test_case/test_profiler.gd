@@ -208,10 +208,10 @@ func _section_5_scene(manager: Node) -> void:
 	var hero_frame := scene.layout.hero_frame as TextureRect
 	_entry(hero_avatar != null and hero_avatar.texture != null, "The hero hien avatar")
 	_entry(hero_frame != null and hero_frame.texture != null, "The hero hien vien khung")
-	var name_label := scene.layout.hero_node("Name") as Label
+	var name_label := scene.layout.hero_name
 	_entry(name_label != null and name_label.text == str(manager.call("display_name_text")),
 		"The hero hien dung ten hien thi")
-	var uid_label := scene.layout.hero_node("Uid") as Label
+	var uid_label := scene.layout.hero_uid
 	_entry(uid_label != null and uid_label.text.contains("IM-"), "Co dong UID (#IM-xxxx)")
 
 	var values_ok := true
@@ -252,6 +252,27 @@ func _section_5_scene(manager: Node) -> void:
 		popup.close()
 		await process_frame
 
+	# Bố cục NGANG: nạp CHÍNH dữ liệu đó vào layout Landscape để chắc chắn binding
+	# (node paths trong scenes/layout/landscape/profiler.tscn) khớp tên node script dùng.
+	var land := (load("res://scenes/layout/landscape/profiler.tscn") as PackedScene).instantiate() as ProfilerLayout
+	scene.add_child(land)
+	await process_frame
+	scene.layout = land
+	scene.refresh()
+	await process_frame
+	_entry(land.hero_avatar != null and land.hero_avatar.texture != null, "Landscape: the hero hien avatar")
+	_entry(land.hero_frame != null and land.hero_frame.texture != null, "Landscape: the hero hien vien khung")
+	_entry(land.hero_name != null and land.hero_name.text == str(manager.call("display_name_text")),
+		"Landscape: the hero hien dung ten hien thi")
+	_entry(land.hero_tier_text != null and not land.hero_tier_text.text.is_empty(), "Landscape: chip danh hieu co chu")
+	_entry(land.hero_exp_value != null and land.hero_exp_value.text.contains("/"), "Landscape: co dong EXP")
+	_entry(land.hero_uid != null and land.hero_uid.text.contains("IM-"), "Landscape: co dong UID")
+	_entry(land.hero_fill != null and land.hero_fill.offset_right > land.hero_fill.offset_left, "Landscape: thanh EXP co phan to")
+	var chip_land := land.chip_text()
+	_entry(chip_land != null and chip_land.text.contains(str(manager.call("level"))), "Landscape: chip cap do khop manager")
+	land.queue_free()
+	await process_frame
+
 	scene.queue_free()
 	await process_frame
 
@@ -270,7 +291,7 @@ func _section_6_popup(manager: Node) -> void:
 	_entry(popup.tab() == "avatar", "Mac dinh mo tab AVATAR")
 	_entry(popup.item_count() == AVATAR_COUNT, "Luoi co %d avatar" % AVATAR_COUNT)
 
-	var preview_avatar := popup.get_node_or_null("Panel/Content/Preview/Avatar") as TextureRect
+	var preview_avatar := popup.get_node_or_null("Panel/Content/Preview/Profile/Frame/Avatar") as TextureRect
 	_entry(preview_avatar != null and preview_avatar.texture != null, "The xem truoc co avatar")
 	var name_edit := popup.get_node_or_null("Panel/Content/Preview/NameEdit") as LineEdit
 	_entry(name_edit != null and name_edit.max_length == 16, "O ten gioi han 16 ky tu")
@@ -280,7 +301,7 @@ func _section_6_popup(manager: Node) -> void:
 	_entry(popup.item_count() == FRAME_COUNT, "Tab VIEN KHUNG co %d mon" % FRAME_COUNT)
 	popup.select_pending("frame_laurel")
 	await process_frame
-	var preview_frame := popup.get_node_or_null("Panel/Content/Preview/Frame") as TextureRect
+	var preview_frame := popup.get_node_or_null("Panel/Content/Preview/Profile/Frame") as TextureRect
 	_entry(preview_frame != null and preview_frame.texture != null, "The xem truoc co vien khung")
 
 	# Bấm SAVE -> đổi viền đang dùng trong hồ sơ
