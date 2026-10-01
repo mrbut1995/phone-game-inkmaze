@@ -47,7 +47,7 @@
     <g filter="url(#mainSheetShadow)">
       <rect width="950" height="1630" rx="28" fill="#FFFDF8"/>
 
-      <!-- Hàng 8 lỗ bấm sổ còng bên lề trái -->
+      <!-- Hàng lỗ bấm sổ còng bên lề trái -->
       <g fill="#EAE3D2" opacity="0.8">
         <circle cx="28" cy="110" r="10"/><circle cx="28" cy="235" r="10"/><circle cx="28" cy="360" r="10"/>
         <circle cx="28" cy="485" r="10"/><circle cx="28" cy="610" r="10"/><circle cx="28" cy="735" r="10"/>
@@ -87,9 +87,49 @@
             fill="none" stroke="#7A8F9B" stroke-width="5" stroke-linecap="round"/>
     </g>
 
-    <!-- ================= 4. HEADER: LOGO & NÚT DANH HIỆU ================= -->
-    
-    <!-- 4.1 LOGO TRUNG TÂM "Ink Maze" -->
+    <!-- ================= 4. HEADER: AVATAR PROFILER · LOGO · DANH HIỆU ================= -->
+
+    <!-- 4.1 AVATAR & KHUNG VIỀN NHÂN VẬT (BẤM VÀO ĐỂ MỞ PROFILER) -->
+    <g transform="translate(135, 60)" style="cursor: pointer;">
+      <!-- Băng keo washi dán sticker avatar -->
+      <rect x="25" y="-12" width="100" height="26" rx="3" fill="#EADFC9" opacity="0.85" transform="rotate(5 75 0)"/>
+      
+      <!-- Khung sticker viền nét đứt -->
+      <rect width="150" height="150" rx="22" fill="#FEFDFA" stroke="#256286" stroke-width="2.5" stroke-dasharray="7 5"/>
+      <!-- Dấu chữ thập nhỏ ở góc trang trí -->
+      <g stroke="#6EA0C8" stroke-width="1.8">
+        <path d="M 18 10 L 18 20 M 13 15 L 23 15"/>
+        <path d="M 132 10 L 132 20 M 127 15 L 137 15"/>
+      </g>
+
+      <!-- Avatar & Khung Viền Bánh Răng Vàng -->
+      <g transform="translate(75, 68)">
+        <!-- Viền Khung Bánh Răng Vàng (Border) -->
+        <circle cx="0" cy="0" r="44" fill="#FFFDF8" stroke="#F59E0B" stroke-width="4" stroke-dasharray="9 3"/>
+        <circle cx="0" cy="0" r="36" fill="#E0F2FE"/>
+
+        <!-- Doodle Nhân vật Mực -->
+        <g stroke="#163A58" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(-18, -20)">
+          <circle cx="18" cy="12" r="9" fill="#FEFDFA"/>
+          <path d="M 6 36 C 6 24 11 22 18 22 C 25 22 30 24 30 36 Z" fill="#FEFDFA"/>
+          <path d="M 15 12 L 17 12 M 20 12 L 22 12"/>
+          <path d="M 16 16 Q 18 18 20 16"/>
+          <!-- Cây bút sau lưng -->
+          <path d="M 25 10 L 32 3" stroke="#D84444" stroke-width="2"/>
+        </g>
+
+        <!-- Badge Cấp độ LV.28 -->
+        <g transform="translate(0, 38)">
+          <rect x="-26" y="-10" width="52" height="18" rx="6" fill="#256C96" stroke="#FFFFFF" stroke-width="1.5"/>
+          <text y="3" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="950" fill="#FFFFFF">LV. 28</text>
+        </g>
+      </g>
+
+      <!-- Nhãn "HỒ SƠ" -->
+      <text x="75" y="182" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#5A7385" letter-spacing="1">HỒ SƠ</text>
+    </g>
+
+    <!-- 4.2 LOGO TRUNG TÂM "Ink Maze" -->
     <g transform="translate(475, 55)" text-anchor="middle">
       <!-- Icon Mê Cung 4x4 Mini dạng Doodle -->
       <g transform="translate(-60, 0)" stroke="#236794" stroke-linecap="round">
@@ -116,17 +156,13 @@
       <text y="275" font-family="sans-serif" font-size="18" font-weight="700" fill="#718B9E">Mê Cung Suy Luận • Vở Ô Ly</text>
     </g>
 
-    <!-- Đường kẻ phân cách Header mỏng -->
-    <line x1="140" y1="350" x2="810" y2="350" stroke="#8FB9D2" stroke-width="2" opacity="0.7"/>
-
-    <!-- 4.2 NÚT DANH HIỆU (GÓC TRÊN PHẢI) -->
+    <!-- 4.3 NÚT DANH HIỆU (GÓC TRÊN PHẢI) -->
     <g transform="translate(730, 60)" style="cursor: pointer;">
       <!-- Băng keo washi nhỏ dán sticker -->
       <rect x="25" y="-12" width="100" height="26" rx="3" fill="#EADFC9" opacity="0.85" transform="rotate(-6 75 0)"/>
       
       <!-- Khung sticker viền nét đứt -->
       <rect width="150" height="150" rx="22" fill="#FEFDFA" stroke="#256286" stroke-width="2.5" stroke-dasharray="7 5"/>
-      <!-- Dấu chữ thập nhỏ ở 4 góc trang trí -->
       <g stroke="#6EA0C8" stroke-width="1.8">
         <path d="M 18 10 L 18 20 M 13 15 L 23 15"/>
         <path d="M 132 10 L 132 20 M 127 15 L 137 15"/>
@@ -134,10 +170,8 @@
 
       <!-- Biểu tượng Huy chương ruy băng với con số 1/28 -->
       <g transform="translate(75, 70)">
-        <!-- Dải ruy băng đuôi nheo cam -->
         <polygon points="-25,18 -32,55 -15,46 0,55 -5,18" fill="#D97706"/>
         <polygon points="25,18 32,55 15,46 0,55 5,18" fill="#B45309"/>
-        <!-- Vòng tròn huy chương vàng -->
         <circle cx="0" cy="0" r="38" fill="#FFFDF8" stroke="#D97706" stroke-width="3.5"/>
         <circle cx="0" cy="0" r="33" fill="none" stroke="#F59E0B" stroke-width="1.8" stroke-dasharray="4 2"/>
         <text y="7" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="950" fill="#78350F">1/28</text>
@@ -147,53 +181,47 @@
       <text x="75" y="182" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="900" fill="#5A7385" letter-spacing="1">DANH HIỆU</text>
     </g>
 
+    <!-- Đường kẻ phân cách Header -->
+    <line x1="140" y1="350" x2="810" y2="350" stroke="#8FB9D2" stroke-width="2" opacity="0.7"/>
+
     <!-- ================= 5. CỤM 3 THẺ CHỌN CHẾ ĐỘ CHƠI ================= -->
 
-    <!-- THẺ 1: PLAY • CHỌN MÀN (CHẾ ĐỘ CHÍNH - NỀN XANH MỰC ĐẬM) -->
+    <!-- THẺ 1: PLAY • CHỌN MÀN -->
     <g transform="translate(140, 395)" filter="url(#stickerShadow)" style="cursor: pointer;">
       <rect width="670" height="205" rx="24" fill="#256C96" stroke="#164663" stroke-width="3.5"/>
-      <!-- Lề sáng tạo vân giấy vở -->
       <line x1="36" y1="0" x2="36" y2="205" stroke="#FAF5EB" stroke-width="3" opacity="0.55"/>
 
-      <!-- Nhãn "CHẾ ĐỘ CHÍNH" góc trên trái -->
       <rect x="52" y="18" width="150" height="30" rx="8" fill="#FBBF24"/>
       <text x="127" y="38" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#78350F" letter-spacing="1">CHẾ ĐỘ CHÍNH</text>
 
-      <!-- Icon Nút PLAY tròn -->
       <g transform="translate(55, 68)">
         <circle cx="42" cy="42" r="40" fill="#1B4F6F"/>
         <polygon points="34,24 34,60 62,42" fill="#FAF5EB"/>
       </g>
 
-      <!-- Nội dung văn bản -->
       <text x="165" y="94" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="950" fill="#FFFFFF" letter-spacing="1">PLAY • CHỌN MÀN</text>
       <text x="165" y="128" font-family="sans-serif" font-size="18" font-weight="600" fill="#BAE6FD">Chinh phục từng cấp độ</text>
       <text x="165" y="156" font-family="sans-serif" font-size="17" font-weight="600" fill="#BAE6FD">Tự do chọn màn • Đua thời gian phá giải</text>
 
-      <!-- Mũi tên điều hướng sang phải -->
       <path d="M 618 102 L 634 102 M 626 94 L 636 102 L 626 110" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 
-      <!-- Huy hiệu MÀN HIỆN TẠI (0) -->
       <g transform="translate(475, 150)">
         <rect width="155" height="34" rx="8" fill="#18425C"/>
         <text x="77" y="23" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#FDE68A">MÀN HIỆN TẠI: (0)</text>
       </g>
     </g>
 
-    <!-- THẺ 2: DUNGEON MODE (VIỀN VÀNG CAM) -->
+    <!-- THẺ 2: DUNGEON MODE -->
     <g transform="translate(140, 635)" filter="url(#stickerShadow)" style="cursor: pointer;">
       <rect width="670" height="195" rx="24" fill="#FEFDFA" stroke="#F59E0B" stroke-width="3.5"/>
       <line x1="36" y1="0" x2="36" y2="195" stroke="#F59E0B" stroke-width="3"/>
 
-      <!-- Nhãn "CHẾ ĐỘ VÔ TẬN" -->
       <rect x="52" y="18" width="150" height="28" rx="7" fill="#FEF3C7"/>
       <text x="127" y="37" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#B45309" letter-spacing="1">CHẾ ĐỘ VÔ TẬN</text>
 
-      <!-- Icon Lâu Đài / Ngục Tối dạng nét vẽ mực -->
       <g transform="translate(55, 62)">
         <circle cx="42" cy="42" r="38" fill="#FFFDF8" stroke="#FDE68A" stroke-width="2"/>
         <g stroke="#163A58" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(18, 20)">
-          <!-- Lâu đài line-art -->
           <path d="M 4 38 L 4 12 L 12 12 L 12 20 L 20 20 L 20 12 L 28 12 L 28 20 L 36 20 L 36 12 L 44 12 L 44 38 Z"/>
           <path d="M 18 38 L 18 27 A 6 6 0 0 1 30 27 L 30 38"/>
         </g>
@@ -203,26 +231,22 @@
       <text x="165" y="122" font-family="sans-serif" font-size="18" font-weight="600" fill="#718B9E">Chinh phục từng tầng</text>
       <text x="165" y="148" font-family="sans-serif" font-size="16" font-weight="600" fill="#9CA3AF">Bảo toàn số bước để đi xa nhất</text>
 
-      <!-- Mũi tên cam -->
       <path d="M 618 95 L 634 95 M 626 87 L 636 95 L 626 103" stroke="#D97706" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 
-      <!-- Huy hiệu KỶ LỤC TẦNG (0) -->
       <g transform="translate(480, 142)">
         <rect width="150" height="34" rx="8" fill="#FEF3C7"/>
         <text x="75" y="23" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#B45309">KỶ LỤC: TẦNG (0)</text>
       </g>
     </g>
 
-    <!-- THẺ 3: DAILY CHALLENGE (VIỀN ĐỎ) -->
+    <!-- THẺ 3: DAILY CHALLENGE -->
     <g transform="translate(140, 860)" filter="url(#stickerShadow)" style="cursor: pointer;">
       <rect width="670" height="195" rx="24" fill="#FEFDFA" stroke="#D84444" stroke-width="3.5"/>
       <line x1="36" y1="0" x2="36" y2="195" stroke="#D84444" stroke-width="3"/>
 
-      <!-- Nhãn "MỖI NGÀY 1 CÂU ĐỐ" -->
       <rect x="52" y="18" width="160" height="28" rx="7" fill="#FEE2E2"/>
       <text x="132" y="37" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#B91C1C" letter-spacing="1">MỖI NGÀY 1 CÂU ĐỐ</text>
 
-      <!-- Icon Lịch Ngày vẽ nét mực -->
       <g transform="translate(55, 62)">
         <circle cx="42" cy="42" r="38" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
         <g stroke="#163A58" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(20, 20)">
@@ -238,10 +262,8 @@
       <text x="165" y="122" font-family="sans-serif" font-size="18" font-weight="600" fill="#718B9E">Thử thách theo ngày</text>
       <text x="165" y="148" font-family="sans-serif" font-size="16" font-weight="600" fill="#9CA3AF">Tích lũy sao &amp; duy trì chuỗi Streak</text>
 
-      <!-- Mũi tên đỏ -->
       <path d="M 618 95 L 634 95 M 626 87 L 636 95 L 626 103" stroke="#D84444" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 
-      <!-- Huy hiệu STREAK: (0) NGÀY -->
       <g transform="translate(480, 142)">
         <rect width="150" height="34" rx="8" fill="#FEE2E2"/>
         <text x="75" y="23" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="900" fill="#B91C1C">STREAK: (0) NGÀY</text>
@@ -254,11 +276,10 @@
     <!-- ================= 6. CỤM 3 NÚT CÔNG CỤ: XẾP HẠNG · CỬA HÀNG · CÀI ĐẶT ================= -->
     <g transform="translate(140, 1130)">
       
-      <!-- NÚT 1: XẾP HẠNG (Cúp vô địch) -->
+      <!-- NÚT 1: XẾP HẠNG -->
       <g transform="translate(0, 0)" style="cursor: pointer;">
         <rect width="205" height="110" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
         <g stroke="#163A58" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(85, 20)">
-          <!-- Cúp line-art -->
           <path d="M 4 2 L 32 2 L 32 16 C 32 24 24 30 18 30 C 12 30 4 24 4 16 Z"/>
           <path d="M 4 8 L -2 8 C -5 8 -7 11 -7 14 C -7 18 -4 21 0 21 L 5 21"/>
           <path d="M 32 8 L 38 8 C 41 8 43 11 43 14 C 43 18 40 21 36 21 L 31 21"/>
@@ -268,14 +289,12 @@
         <text x="102" y="88" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="17" font-weight="900" fill="#163A58">XẾP HẠNG</text>
       </g>
 
-      <!-- NÚT 2: CỬA HÀNG (Mái che cửa hiệu - CẬP NHẬT MỚI) -->
+      <!-- NÚT 2: CỬA HÀNG -->
       <g transform="translate(232, 0)" style="cursor: pointer;">
         <rect width="205" height="110" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
         <g stroke="#163A58" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(82, 18)">
-          <!-- Mái hiên cửa hàng -->
           <path d="M 2 16 L 8 4 L 34 4 L 40 16 Z"/>
           <path d="M 2 16 C 2 20 6 22 10 20 C 14 22 18 20 21 20 C 24 20 28 22 32 20 C 36 22 40 20 40 16"/>
-          <!-- Cửa và người bán -->
           <rect x="6" y="20" width="30" height="20" rx="2"/>
           <circle cx="21" cy="27" r="3" fill="#163A58"/>
           <path d="M 14 36 C 14 32 17 31 21 31 C 25 31 28 32 28 36"/>
@@ -283,11 +302,10 @@
         <text x="102" y="88" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="17" font-weight="900" fill="#163A58">CỬA HÀNG</text>
       </g>
 
-      <!-- NÚT 3: CÀI ĐẶT (Bánh răng) -->
+      <!-- NÚT 3: CÀI ĐẶT -->
       <g transform="translate(465, 0)" style="cursor: pointer;">
         <rect width="205" height="110" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
         <g stroke="#163A58" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(84, 18)">
-          <!-- Biểu tượng hoa thị / bánh răng settings vẽ nét -->
           <circle cx="20" cy="20" r="8"/>
           <line x1="20" y1="4" x2="20" y2="8"/>
           <line x1="20" y1="32" x2="20" y2="36"/>

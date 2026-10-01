@@ -1,0 +1,87 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/profiler/activity_row.gd" id="1_row"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/images/icons/icon_circle.svg" id="3_circle"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_row.tres" id="4_title"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_small.tres" id="5_sub"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_state.tres" id="6_tag"]
+[ext_resource type="Texture2D" path="res://assets/images/profiler/row_bg.svg" id="7_bg"]
+
+[node name="ActivityRow" type="Control"]
+custom_minimum_size = Vector2(380, 36)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 380.0
+offset_bottom = 36.0
+mouse_filter = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_row")
+
+[node name="Bg" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_bg")
+patch_margin_left = 12
+patch_margin_top = 10
+patch_margin_right = 12
+patch_margin_bottom = 10
+metadata/_edit_use_anchors_ = true
+
+[node name="Disc" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 30.0
+offset_top = 3.0
+mouse_filter = 2
+texture = ExtResource("3_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="Disc"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 24.0
+offset_bottom = 24.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 1.0
+offset_right = 280.0
+offset_bottom = 15.0
+mouse_filter = 2
+text = "Màn 24 • Bàn 7×7"
+label_settings = ExtResource("4_title")
+vertical_alignment = 1
+
+[node name="Sub" type="Label" parent="."]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 17.0
+offset_right = 280.0
+offset_bottom = 29.0
+mouse_filter = 2
+text = "Thời gian phá giải: 00:38s"
+label_settings = ExtResource("5_sub")
+vertical_alignment = 1
+
+[node name="Tag" type="Label" parent="."]
+layout_mode = 0
+offset_left = 270.0
+offset_right = 380.0
+offset_bottom = 36.0
+mouse_filter = 2
+text = "3/3 SAO"
+label_settings = ExtResource("6_tag")
+horizontal_alignment = 2
+vertical_alignment = 1

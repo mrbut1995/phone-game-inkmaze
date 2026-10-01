@@ -1,0 +1,363 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <!-- Lưới vở ô ly 40px -->
+    <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.45"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.15"/>
+    </pattern>
+
+    <!-- Đổ bóng tờ giấy chính -->
+    <filter id="sheetShadow" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#2D2115" flood-opacity="0.18"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#2D2115" flood-opacity="0.08"/>
+    </filter>
+
+    <!-- Đổ bóng thẻ nổi / Card / Popup -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1E2830" flood-opacity="0.14"/>
+    </filter>
+
+    <filter id="popupDimShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#0F172A" flood-opacity="0.35"/>
+    </filter>
+
+    <filter id="clipShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <!-- ================= 1. NỀN GIAO DIỆN CHÍNH (PROFILER BACKGROUND SCREEN) ================= -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#notebookGrid)"/>
+  <line x1="95" y1="0" x2="95" y2="1920" stroke="#D84444" stroke-width="3.5" opacity="0.85"/>
+
+  <!-- Tờ giấy nền lớn Profiler (950 x 1700) -->
+  <g transform="translate(65, 120)" filter="url(#sheetShadow)">
+    <rect width="950" height="1720" rx="28" fill="#FFFDF8"/>
+    <rect width="950" height="1720" rx="28" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
+    <!-- Lỗ bấm sổ bên lề -->
+    <g fill="#EAE3D2" opacity="0.85">
+      <circle cx="28" cy="120" r="10"/><circle cx="28" cy="280" r="10"/><circle cx="28" cy="440" r="10"/>
+      <circle cx="28" cy="600" r="10"/><circle cx="28" cy="760" r="10"/><circle cx="28" cy="920" r="10"/>
+      <circle cx="28" cy="1080" r="10"/><circle cx="28" cy="1240" r="10"/><circle cx="28" cy="1400" r="10"/>
+      <circle cx="28" cy="1560" r="10"/>
+    </g>
+    <!-- Lề đỏ trang giấy -->
+    <line x1="88" y1="0" x2="88" y2="1720" stroke="#D84444" stroke-width="2.8" opacity="0.85"/>
+  </g>
+
+  <!-- Ghim kẹp giấy kim loại góc trên trái -->
+  <g transform="translate(190, 100)" filter="url(#clipShadow)">
+    <path d="M 0 55 L 0 12 A 12 12 0 0 1 24 12 L 24 66 A 18 18 0 0 1 -12 66 L -12 18" 
+          fill="none" stroke="#7A8F9B" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Washi tape dán giữ đỉnh trang -->
+  <g transform="translate(430, 98)">
+    <rect width="220" height="45" rx="4" fill="#E8DFCA" fill-opacity="0.9" stroke="#D1C6AE" stroke-width="1.5"/>
+    <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" 
+          stroke="#B5A98F" stroke-width="1.2" opacity="0.35"/>
+  </g>
+
+  <!-- ================= 2. HEADER TOP BAR ================= -->
+  <!-- Nút Trở Về (Back) -->
+  <g transform="translate(110, 160)" style="cursor: pointer;">
+    <rect width="64" height="64" rx="16" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
+    <path d="M 38 22 L 26 32 L 38 42" fill="none" stroke="#224C6D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="540" y="206" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="950" fill="#163A58" letter-spacing="2">HỒ SƠ CÁ NHÂN</text>
+
+  <!-- Huy hiệu Level ID góc phải -->
+  <g transform="translate(860, 160)">
+    <rect width="115" height="42" rx="10" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+    <text x="57" y="27" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#B45309">LV. 24</text>
+  </g>
+
+  <!-- ================= 3. PLAYER HERO CARD (CARD THÔNG TIN NGƯỜI CHƠI) ================= -->
+  <g transform="translate(140, 250)">
+    <rect width="800" height="240" rx="24" fill="#FEFDFA" stroke="#3D83AE" stroke-width="3" filter="url(#cardShadow)"/>
+    <line x1="28" y1="0" x2="28" y2="240" stroke="#D84444" stroke-width="2.5" opacity="0.7"/>
+
+    <!-- AVATAR PORTRAIT CÓ NÚT EDIT (Clickable để mở Popup chỉnh sửa) -->
+    <g transform="translate(60, 35)" style="cursor: pointer;">
+      <!-- Khung Border Avatar (Mẫu Bánh Răng Vàng) -->
+      <circle cx="85" cy="85" r="76" fill="#FFFDF8" stroke="#F59E0B" stroke-width="5" stroke-dasharray="16 6"/>
+      <circle cx="85" cy="85" r="64" fill="#E0F2FE"/>
+      <!-- Icon Nhân vật Doodle (Chiến binh Mực) -->
+      <g stroke="#163A58" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(50, 48)">
+        <circle cx="35" cy="24" r="16" fill="#FEFDFA"/>
+        <path d="M 12 66 C 12 46 22 42 35 42 C 48 42 58 46 58 66 Z" fill="#FEFDFA"/>
+        <path d="M 28 24 L 32 24 M 40 24 L 44 24"/>
+        <path d="M 32 30 Q 36 34 40 30"/>
+        <!-- Bút cắm sau lưng -->
+        <path d="M 48 20 L 62 6 M 58 6 L 64 12" stroke="#D84444" stroke-width="3"/>
+      </g>
+      <!-- Huy hiệu máy ảnh / bút chỉnh sửa nhỏ -->
+      <g transform="translate(125, 125)">
+        <circle cx="16" cy="16" r="18" fill="#256C96" stroke="#FFFFFF" stroke-width="2.5"/>
+        <path d="M 11 21 L 21 11 M 19 9 L 23 13" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- Tên & Danh hiệu Người chơi -->
+    <g transform="translate(265, 52)">
+      <g style="cursor: pointer;">
+        <text x="0" y="32" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="950" fill="#163A58">MazeWalker #1024</text>
+        <!-- Icon cây bút cạnh tên để chỉ định có thể đổi tên -->
+        <path d="M 330 14 L 345 29 M 342 11 L 349 18" stroke="#718B9E" stroke-width="2.8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Danh hiệu đang trang bị -->
+      <rect x="0" y="48" width="180" height="28" rx="7" fill="#FEF3C7"/>
+      <text x="90" y="67" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="900" fill="#B45309" letter-spacing="1">BẬC THẦY TƯ DUY</text>
+
+      <!-- Thanh EXP Level -->
+      <g transform="translate(0, 100)">
+        <text x="0" y="0" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#718B9E">EXP TIẾN TRÌNH</text>
+        <text x="470" y="0" text-anchor="end" font-family="'Segoe UI', monospace" font-size="14" font-weight="900" fill="#256C96">3,450 / 5,000</text>
+        <rect y="10" width="470" height="14" rx="7" fill="#E2E8F0"/>
+        <rect y="10" width="324" height="14" rx="7" fill="#256C96"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= 4. PLAYER STATISTICS (THỐNG KÊ CHIẾN TÍCH) ================= -->
+  <g transform="translate(140, 520)">
+    <text x="10" y="0" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="950" fill="#224C6D" letter-spacing="1">THỐNG KÊ CHIẾN TÍCH</text>
+    
+    <!-- Lưới 4 Thẻ Mini Stat -->
+    <g transform="translate(0, 18)">
+      <!-- Stat 1: Sao đạt được -->
+      <rect x="0" y="0" width="385" height="110" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5" filter="url(#cardShadow)"/>
+      <circle cx="55" cy="55" r="32" fill="#FEF3C7"/>
+      <text x="55" y="65" text-anchor="middle" font-size="28">⭐</text>
+      <text x="105" y="44" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#718B9E">TỔNG SAO ĐẠT</text>
+      <text x="105" y="82" font-family="'Segoe UI', sans-serif" font-size="32" font-weight="950" fill="#163A58">84 <tspan font-size="16" fill="#94A3B8">/ 120</tspan></text>
+
+      <!-- Stat 2: Tầng Dungeon cao nhất -->
+      <rect x="415" y="0" width="385" height="110" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5" filter="url(#cardShadow)"/>
+      <circle cx="470" cy="55" r="32" fill="#FEF2F2"/>
+      <text x="470" y="65" text-anchor="middle" font-size="28">🏰</text>
+      <text x="520" y="44" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#718B9E">KỶ LỤC DUNGEON</text>
+      <text x="520" y="82" font-family="'Segoe UI', sans-serif" font-size="32" font-weight="950" fill="#D84444">TẦNG 42</text>
+
+      <!-- Stat 3: Chuỗi Daily Streak -->
+      <rect x="0" y="128" width="385" height="110" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5" filter="url(#cardShadow)"/>
+      <circle cx="55" cy="183" r="32" fill="#FFFBEB"/>
+      <text x="55" y="193" text-anchor="middle" font-size="28">🔥</text>
+      <text x="105" y="172" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#718B9E">CHUỖI DAILY</text>
+      <text x="105" y="210" font-family="'Segoe UI', sans-serif" font-size="32" font-weight="950" fill="#D97706">18 NGÀY</text>
+
+      <!-- Stat 4: Tỉ lệ giải thành công -->
+      <rect x="415" y="128" width="385" height="110" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5" filter="url(#cardShadow)"/>
+      <circle cx="470" cy="183" r="32" fill="#F0FDF4"/>
+      <text x="470" y="193" text-anchor="middle" font-size="28">🎯</text>
+      <text x="520" y="172" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#718B9E">TỈ LỆ THẮNG MÀN</text>
+      <text x="520" y="210" font-family="'Segoe UI', sans-serif" font-size="32" font-weight="950" fill="#15803D">92.4%</text>
+    </g>
+  </g>
+
+  <!-- ================= 5. HUY HIỆU & SỔ DANH HIỆU TẮT ================= -->
+  <g transform="translate(140, 800)">
+    <text x="10" y="0" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="950" fill="#224C6D" letter-spacing="1">HUY HIỆU DANH DỰ (AP: 420)</text>
+
+    <!-- Hàng 4 huy chương danh dự tiêu biểu -->
+    <g transform="translate(0, 20)">
+      <rect width="800" height="130" rx="20" fill="#FEFDFA" stroke="#8FB9D2" stroke-width="2"/>
+      <!-- Badge 1 -->
+      <circle cx="100" cy="65" r="40" fill="#FEF3C7" stroke="#D97706" stroke-width="3"/>
+      <text x="100" y="75" text-anchor="middle" font-size="30">⚡</text>
+      <!-- Badge 2 -->
+      <circle cx="300" cy="65" r="40" fill="#E0F2FE" stroke="#256C96" stroke-width="3"/>
+      <text x="300" y="75" text-anchor="middle" font-size="30">🛡️</text>
+      <!-- Badge 3 -->
+      <circle cx="500" cy="65" r="40" fill="#FEE2E2" stroke="#DC2626" stroke-width="3"/>
+      <text x="500" y="75" text-anchor="middle" font-size="30">🧠</text>
+      <!-- Badge 4: Slot Khóa -->
+      <circle cx="700" cy="65" r="40" fill="#F1F5F9" stroke="#94A3B8" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <text x="700" y="74" text-anchor="middle" font-size="26" fill="#94A3B8">🔒</text>
+    </g>
+  </g>
+
+
+  <!-- ================================================================================= -->
+  <!-- ================= 6. LỚP POPUP MODAL TÙY CHỈNH DIỆN MẠO (POPUP OVERLAY) ================= -->
+  <!-- ================================================================================= -->
+
+  <!-- Lớp phủ làm tối màn hình (Overlay Dimmer) -->
+  <rect width="1080" height="1920" fill="#0F172A" fill-opacity="0.65"/>
+
+  <!-- KHUNG POPUP TỜ GIẤY CHÍNH (860 x 1180 px) -->
+  <g transform="translate(110, 360)" filter="url(#popupDimShadow)">
+    <rect width="860" height="1200" rx="28" fill="#FFFDF8" stroke="#3D83AE" stroke-width="4"/>
+
+    <!-- Lỗ bấm giấy trang trí bên lề trái popup -->
+    <g fill="#EAE3D2" opacity="0.8">
+      <circle cx="26" cy="100" r="8"/><circle cx="26" cy="240" r="8"/><circle cx="26" cy="380" r="8"/>
+      <circle cx="26" cy="520" r="8"/><circle cx="26" cy="660" r="8"/><circle cx="26" cy="800" r="8"/>
+      <circle cx="26" cy="940" r="8"/><circle cx="26" cy="1080" r="8"/>
+    </g>
+    <line x1="68" y1="0" x2="68" y2="1200" stroke="#D84444" stroke-width="2.5" opacity="0.8"/>
+
+    <!-- Nút Đóng 'X' góc trên phải -->
+    <g transform="translate(775, 25)" style="cursor: pointer;">
+      <circle cx="26" cy="26" r="24" fill="#FEFDFA" stroke="#94A3B8" stroke-width="2"/>
+      <path d="M 17 17 L 35 35 M 35 17 L 17 35" stroke="#475569" stroke-width="3.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- TIÊU ĐỀ POPUP -->
+    <text x="430" y="65" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#163A58" letter-spacing="1">DIỆN MẠO HỒ SƠ</text>
+    <line x1="100" y1="95" x2="760" y2="95" stroke="#8FB9D2" stroke-width="1.8" stroke-dasharray="6 4"/>
+
+    <!-- ================= 6.1 PREVIEW AVATAR HIỆN TẠI & EDIT NAME ================= -->
+    <g transform="translate(100, 120)">
+      <!-- Khung thẻ preview thu nhỏ -->
+      <rect width="660" height="200" rx="20" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+
+      <!-- Preview Avatar + Border đang chọn -->
+      <g transform="translate(40, 20)">
+        <circle cx="80" cy="80" r="70" fill="#FFFDF8" stroke="#F59E0B" stroke-width="6" stroke-dasharray="14 5"/>
+        <circle cx="80" cy="80" r="58" fill="#E0F2FE"/>
+        <!-- Nhân vật -->
+        <g stroke="#163A58" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(48, 48)">
+          <circle cx="32" cy="22" r="14" fill="#FEFDFA"/>
+          <path d="M 12 58 C 12 40 20 38 32 38 C 44 38 52 40 52 58 Z" fill="#FEFDFA"/>
+          <path d="M 26 22 L 29 22 M 35 22 L 38 22"/>
+          <path d="M 28 28 Q 32 31 36 28"/>
+        </g>
+      </g>
+
+      <!-- Khung chỉnh sửa Tên người chơi (Edit Name Box) -->
+      <g transform="translate(230, 35)">
+        <text x="0" y="16" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#64748B">TÊN HIỂN THỊ (BẤM ĐỂ ĐỔI)</text>
+        <!-- Ô Input Box dạng vở kẻ -->
+        <rect y="28" width="390" height="60" rx="12" fill="#FFFFFF" stroke="#256C96" stroke-width="2.5"/>
+        <text x="20" y="68" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="900" fill="#0F172A">MazeWalker #1024</text>
+        <!-- Icon Pen bên trong hộp input -->
+        <g transform="translate(345, 42)">
+          <path d="M 4 18 L 18 4 L 24 10 L 10 24 L 2 26 Z" fill="#E2E8F0" stroke="#256C96" stroke-width="2"/>
+        </g>
+        <text x="0" y="112" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#94A3B8">Tối đa 16 ký tự • Hỗ trợ Tiếng Việt &amp; Số</text>
+      </g>
+    </g>
+
+    <!-- ================= 6.2 HAI TAB: THAY ĐỔI AVATAR / THAY ĐỔI BORDER ================= -->
+    <g transform="translate(100, 355)">
+      <!-- Tab 1: AVATAR (ACTIVE TAB) -->
+      <g style="cursor: pointer;">
+        <path d="M 0 16 C 0 8 8 0 16 0 L 315 0 C 323 0 330 8 330 16 L 330 52 L 0 52 Z" fill="#256C96"/>
+        <text x="165" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#FFFFFF" letter-spacing="1">👤 ĐỔI AVATAR</text>
+      </g>
+
+      <!-- Tab 2: KHUNG BORDER (INACTIVE TAB) -->
+      <g transform="translate(330, 0)" style="cursor: pointer;">
+        <path d="M 0 16 C 0 8 8 0 16 0 L 315 0 C 323 0 330 8 330 16 L 330 52 L 0 52 Z" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2"/>
+        <text x="165" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#64748B" letter-spacing="1">🖼️ ĐỔI VIỀN KHUNG</text>
+      </g>
+      <!-- Đường chỉ đáy tab -->
+      <line x1="0" y1="52" x2="660" y2="52" stroke="#256C96" stroke-width="3"/>
+    </g>
+
+    <!-- ================= 6.3 LƯỚI DANH SÁCH ITEM CỦA TAB ĐANG CHỌN ================= -->
+    <!-- (Đang hiển thị nội dung mẫu của Tab Avatar: 6 ô lựa chọn) -->
+    <g transform="translate(100, 440)">
+      <!-- Item 1: Đang chọn (Selected) -->
+      <g transform="translate(0, 0)" style="cursor: pointer;">
+        <rect width="200" height="210" rx="18" fill="#EFF6FF" stroke="#256C96" stroke-width="3.5"/>
+        <circle cx="100" cy="85" r="50" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2"/>
+        <text x="100" y="98" text-anchor="middle" font-size="44">🧑‍🚀</text>
+        <text x="100" y="160" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="900" fill="#163A58">Chiến Binh Mực</text>
+        <!-- Dấu tích tròn đang chọn -->
+        <circle cx="176" cy="24" r="14" fill="#256C96"/>
+        <path d="M 170 24 L 174 28 L 182 20" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="35" y="174" width="130" height="24" rx="6" fill="#DBEAFE"/>
+        <text x="100" y="190" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="900" fill="#1E40AF">ĐANG DÙNG</text>
+      </g>
+
+      <!-- Item 2: Đã sở hữu -->
+      <g transform="translate(230, 0)" style="cursor: pointer;">
+        <rect width="200" height="210" rx="18" fill="#FEFDFA" stroke="#CBD5E1" stroke-width="2"/>
+        <circle cx="100" cy="85" r="50" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2"/>
+        <text x="100" y="98" text-anchor="middle" font-size="44">🧙‍♂️</text>
+        <text x="100" y="160" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="900" fill="#334155">Phù Thủy Số</text>
+        <rect x="45" y="174" width="110" height="24" rx="6" fill="#F1F5F9"/>
+        <text x="100" y="190" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="900" fill="#64748B">SỞ HỮU</text>
+      </g>
+
+      <!-- Item 3: Đã sở hữu -->
+      <g transform="translate(460, 0)" style="cursor: pointer;">
+        <rect width="200" height="210" rx="18" fill="#FEFDFA" stroke="#CBD5E1" stroke-width="2"/>
+        <circle cx="100" cy="85" r="50" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2"/>
+        <text x="100" y="98" text-anchor="middle" font-size="44">🐱</text>
+        <text x="100" y="160" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="900" fill="#334155">Mèo Mê Cung</text>
+        <rect x="45" y="174" width="110" height="24" rx="6" fill="#F1F5F9"/>
+        <text x="100" y="190" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="900" fill="#64748B">SỞ HỮU</text>
+      </g>
+
+      <!-- Item 4: Khóa (Cần đạt mốc Dungeon tầng 50) -->
+      <g transform="translate(0, 230)" opacity="0.8">
+        <rect width="200" height="210" rx="18" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2" stroke-dasharray="8 5"/>
+        <circle cx="100" cy="85" r="50" fill="#F1F5F9"/>
+        <text x="100" y="96" text-anchor="middle" font-size="34">🤖</text>
+        <circle cx="100" cy="85" r="50" fill="#0F172A" fill-opacity="0.3"/>
+        <text x="100" y="93" text-anchor="middle" font-size="28">🔒</text>
+        <text x="100" y="160" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#64748B">Robot Logic</text>
+        <text x="100" y="188" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="800" fill="#DC2626">Dungeon Tầng 50</text>
+      </g>
+
+      <!-- Item 5: Khóa (Cần đạt 500 Điểm AP) -->
+      <g transform="translate(230, 230)" opacity="0.8">
+        <rect width="200" height="210" rx="18" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2" stroke-dasharray="8 5"/>
+        <circle cx="100" cy="85" r="50" fill="#F1F5F9"/>
+        <text x="100" y="96" text-anchor="middle" font-size="34">👑</text>
+        <circle cx="100" cy="85" r="50" fill="#0F172A" fill-opacity="0.3"/>
+        <text x="100" y="93" text-anchor="middle" font-size="28">🔒</text>
+        <text x="100" y="160" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#64748B">Vua Giải Đố</text>
+        <text x="100" y="188" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="800" fill="#D97706">500 AP Danh Hiệu</text>
+      </g>
+
+      <!-- Item 6: Mua bằng Xu Mực trong Shop -->
+      <g transform="translate(460, 230)" style="cursor: pointer;">
+        <rect width="200" height="210" rx="18" fill="#FEFDFA" stroke="#F59E0B" stroke-width="2"/>
+        <circle cx="100" cy="85" r="50" fill="#FEF3C7" stroke="#FDE68A" stroke-width="2"/>
+        <text x="100" y="98" text-anchor="middle" font-size="44">🦊</text>
+        <text x="100" y="160" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" fill="#78350F">Cáo Tinh Anh</text>
+        <!-- Nút giá xu -->
+        <rect x="35" y="174" width="130" height="26" rx="8" fill="#F59E0B"/>
+        <text x="100" y="192" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="950" fill="#FFFFFF">🪙 500 XU</text>
+      </g>
+    </g>
+
+    <!-- Phân trang danh sách (Page indicator dots) -->
+    <g transform="translate(430, 930)">
+      <rect x="-30" y="0" width="24" height="10" rx="5" fill="#256C96"/>
+      <circle cx="10" cy="5" r="5" fill="#CBD5E1"/>
+      <circle cx="30" cy="5" r="5" fill="#CBD5E1"/>
+    </g>
+
+    <!-- ================= 6.4 HÀNG NÚT BẤM DƯỚI ĐÁY POPUP ================= -->
+    <g transform="translate(100, 980)">
+      <!-- Nút HỦY BỎ -->
+      <g style="cursor: pointer;">
+        <rect width="240" height="80" rx="20" fill="#FEFDFA" stroke="#94A3B8" stroke-width="2.5"/>
+        <text x="120" y="48" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="900" fill="#64748B">HỦY BỎ</text>
+      </g>
+
+      <!-- Nút LƯU THAY ĐỔI -->
+      <g transform="translate(270, 0)" style="cursor: pointer;">
+        <rect width="390" height="80" rx="20" fill="#256C96" stroke="#164663" stroke-width="3"/>
+        <text x="195" y="48" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="950" fill="#FFFFFF" letter-spacing="1">LƯU THAY ĐỔI ✓</text>
+      </g>
+    </g>
+
+    <!-- Dấu con dấu mộc nhỏ góc dưới popup -->
+    <g transform="translate(680, 1085) rotate(-6)" opacity="0.6">
+      <rect width="130" height="42" rx="8" fill="none" stroke="#D84444" stroke-width="2.5" stroke-dasharray="5 3"/>
+      <text x="65" y="27" text-anchor="middle" font-family="'Segoe UI', monospace" font-size="14" font-weight="950" fill="#D84444">INK PROFILE</text>
+    </g>
+  </g>
+
+  <!-- Thanh điều hướng Android Home Gesture -->
+  <rect x="420" y="1885" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
+</svg>

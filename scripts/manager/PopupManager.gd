@@ -23,6 +23,8 @@ const POPUPS := {
 	"pause": "res://nodes/popups/pause.tscn",
 	"language": "res://nodes/popups/language.tscn",
 	"memory_countdown": "res://nodes/popups/memory_countdown.tscn",
+	# Hồ sơ cá nhân: đổi avatar / viền khung / tên hiển thị
+	"edit_profile": "res://nodes/popups/edit_profile.tscn",
 }
 
 const HOST_NAME := "Popups"

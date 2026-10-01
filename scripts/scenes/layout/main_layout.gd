@@ -10,6 +10,13 @@ extends BaseLayout
 @export var btn_settings: BaseButton = null
 @export var btn_archivement: BaseButton = null
 @export var badge_count_label: Label = null
+## Sticker HỒ SƠ (góc trên trái — mở màn Profiler): avatar + viền khung + chip cấp độ
+@export var btn_profile: BaseButton = null
+@export var profile_avatar: TextureRect = null
+@export var profile_frame: TextureRect = null
+@export var profile_level: Label = null
+## Chỉ layout NGANG dùng: thẻ hồ sơ có thêm tên người chơi
+@export var profile_name: Label = null
 @export var badge_play: Label = null
 @export var badge_dungeon: Label = null
 @export var badge_daily: Label = null

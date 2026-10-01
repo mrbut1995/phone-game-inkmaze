@@ -42,6 +42,7 @@ const SCREENS := [
 	{"id": "shop", "path": "res://scenes/shop.tscn"},
 	{"id": "ranking", "path": "res://scenes/ranking.tscn"},
 	{"id": "archivement", "path": "res://scenes/archivement.tscn"},
+	{"id": "profiler", "path": "res://scenes/profiler.tscn"},
 	{"id": "credit", "path": "res://scenes/credit.tscn"},
 	{"id": "debug", "path": "res://scenes/debug.tscn"},
 ]

@@ -26,6 +26,7 @@ const SCREENS := {
 	"splash": "SplashLayout",
 	"title": "TitleLayout",
 	"levels": "LevelsLayout",
+	"profiler": "ProfilerLayout",
 	## Màn chơi: mỗi hướng 1 script riêng, đều kế thừa `GameSceneLayout`
 	"game": "GameSceneLayout|GameLayout",
 }
@@ -40,6 +41,9 @@ const OPTIONAL := {
 	"game|portrait": ["hud_slot", "landscape_action_bar"],
 	"game|landscape": ["hud_slot"],
 	"shop|portrait": ["pad_slot"],
+	## Sticker HỒ SƠ ở bản dọc chỉ là avatar nhỏ (không có chỗ ghi tên);
+	## thẻ hồ sơ ở bản NGANG mới hiện tên người chơi.
+	"main|portrait": ["profile_name"],
 }
 
 var _failed := 0

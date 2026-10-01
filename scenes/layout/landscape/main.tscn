@@ -6,18 +6,29 @@
 [ext_resource type="Texture2D" uid="uid://b4bkq2p2ryhbn" path="res://assets/images/main/logo_doodle_maze_large.svg" id="4_wvcw1"]
 [ext_resource type="Texture2D" uid="uid://cgbp27e1ip682" path="res://assets/images/main/panel_genre_container.svg" id="5_0ld40"]
 [ext_resource type="Texture2D" uid="uid://b86vfwu1mw6xj" path="res://assets/images/main/btn_menu_utility_focus.svg" id="13_qk8x1"]
+[ext_resource type="Texture2D" uid="uid://ekfquw0so41l" path="res://assets/images/profiler/profiler_disc_normal.svg" id="14_6v3ij"]
 [ext_resource type="Texture2D" uid="uid://b6jamoc7rkb8a" path="res://assets/images/icons/icon_play.svg" id="15_icon_play"]
+[ext_resource type="Texture2D" uid="uid://bofrdwmb5s12a" path="res://assets/images/profiler/profiler_disc_pressed.svg" id="15_mjfva"]
 [ext_resource type="Texture2D" uid="uid://dfen0100lldvp" path="res://assets/images/icons/icon_castle.svg" id="16_icon_castle"]
 [ext_resource type="Texture2D" uid="uid://bmqwtnugyrxk1" path="res://assets/images/main/btn_menu_utility_normal.svg" id="16_q4smm"]
 [ext_resource type="Texture2D" uid="uid://d3ujne6a5npe3" path="res://assets/images/archivements/stamp_claimed.svg" id="16_wvcw1"]
+[ext_resource type="Texture2D" uid="uid://dk4s2kydd38p6" path="res://assets/images/profiler/profiler_disc_disabled.svg" id="16_y3wuy"]
+[ext_resource type="Texture2D" uid="uid://bh6htaq00756m" path="res://assets/images/profiler/profiler_disc_focus.svg" id="17_bwfoc"]
 [ext_resource type="Texture2D" uid="uid://cbau2otllid1" path="res://assets/images/icons/icon_calendar.svg" id="17_icon_calendar"]
 [ext_resource type="Texture2D" uid="uid://chgvp6vq7npl3" path="res://assets/images/main/card_mode_level_normal.svg" id="17_nakxj"]
+[ext_resource type="Texture2D" uid="uid://dktbi44ecqw66" path="res://assets/images/profiler/frame_fire_spike.svg" id="18_m7v2e"]
 [ext_resource type="Texture2D" uid="uid://48yxwobs88y0" path="res://assets/images/main/card_mode_level_pressed.svg" id="18_q4smm"]
 [ext_resource type="Texture2D" uid="uid://b44veo021gjvc" path="res://assets/images/main/card_mode_level_disabled.svg" id="19_b0x5b"]
+[ext_resource type="Texture2D" uid="uid://d11ja0c8gr83f" path="res://assets/images/profiler/chip_gold.svg" id="19_bwfoc"]
+[ext_resource type="Texture2D" uid="uid://bct7cceiu4qnp" path="res://assets/images/profiler/avatar_cat.svg" id="19_hksmy"]
 [ext_resource type="Texture2D" uid="uid://dv3upy3xmn4w" path="res://assets/images/main/card_mode_level_focus.svg" id="20_1wgx8"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_chip_gold.tres" id="20_m7v2e"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_label.tres" id="21_hksmy"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version_lg.tres" id="21_stamp_text_lg"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="21_umqxe"]
+[ext_resource type="Texture2D" uid="uid://b5ovppi3sqobw" path="res://assets/images/profiler/bar_track.svg" id="22_usq5l"]
 [ext_resource type="Texture2D" uid="uid://ceqpyii58q5ue" path="res://assets/images/main/card_mode_dungeon_normal.svg" id="23_b0x5b"]
+[ext_resource type="Texture2D" uid="uid://btf7r7p54degs" path="res://assets/images/profiler/bar_fill.svg" id="23_d71o1"]
 [ext_resource type="Texture2D" uid="uid://bn800jpgxtk1v" path="res://assets/images/main/card_mode_dungeon_pressed.svg" id="24_1wgx8"]
 [ext_resource type="Texture2D" uid="uid://1rqvlr6mxk7i" path="res://assets/images/main/btn_menu_badge_normal.svg" id="24_badge_normal"]
 [ext_resource type="Texture2D" uid="uid://cbedwjjj8aba0" path="res://assets/images/main/btn_menu_badge_pressed.svg" id="25_badge_pressed"]
@@ -28,6 +39,9 @@
 [ext_resource type="Texture2D" uid="uid://dlg2c12rsejkc" path="res://assets/images/main/card_mode_daily_normal.svg" id="28_q4smm"]
 [ext_resource type="Texture2D" uid="uid://u7s4jqx5jo2r" path="res://assets/images/main/card_mode_daily_pressed.svg" id="29_b0x5b"]
 [ext_resource type="Texture2D" uid="uid://xhjccjuom0v8" path="res://assets/images/main/card_mode_daily_focus.svg" id="30_1wgx8"]
+[ext_resource type="Texture2D" uid="uid://b8imq7frnofrv" path="res://assets/images/profiler/chip_dark.svg" id="30_chip_dark"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_name.tres" id="32_t_name"]
+[ext_resource type="LabelSettings" uid="uid://10rhkf4kv2gy" path="res://resources/settings/text/text_profiler_lock.tres" id="35_t_lock"]
 [ext_resource type="Texture2D" uid="uid://dc1qb8fgyp8gb" path="res://assets/images/icons/icon_trophy_large.svg" id="67_wvcw1"]
 [ext_resource type="Texture2D" uid="uid://0t04k6pa24dy" path="res://assets/images/icons/icon_shop_large.svg" id="69_wvcw1"]
 [ext_resource type="Texture2D" uid="uid://b5mgcw43vxeir" path="res://assets/images/icons/icon_gear_large.svg" id="70_wvcw1"]
@@ -83,48 +97,77 @@ corner_radius_top_right = 11
 corner_radius_bottom_right = 11
 corner_radius_bottom_left = 11
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0u4nb"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eefmx"]
 content_margin_left = 59.0
-content_margin_top = 32.0
-content_margin_right = 24.0
-content_margin_bottom = 34.0
+content_margin_top = 41.0
+content_margin_right = 32.0
+content_margin_bottom = 31.0
 texture = ExtResource("24_badge_normal")
 texture_margin_left = 59.0
-texture_margin_top = 32.0
-texture_margin_right = 24.0
-texture_margin_bottom = 34.0
+texture_margin_top = 41.0
+texture_margin_right = 32.0
+texture_margin_bottom = 31.0
 axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_asu54"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ilq0m"]
 content_margin_left = 59.0
-content_margin_top = 32.0
-content_margin_right = 24.0
-content_margin_bottom = 34.0
+content_margin_top = 41.0
+content_margin_right = 32.0
+content_margin_bottom = 31.0
 texture = ExtResource("25_badge_pressed")
 texture_margin_left = 59.0
-texture_margin_top = 32.0
-texture_margin_right = 24.0
-texture_margin_bottom = 34.0
+texture_margin_top = 41.0
+texture_margin_right = 32.0
+texture_margin_bottom = 31.0
 axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y456h"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2mlj6"]
 content_margin_left = 59.0
-content_margin_top = 32.0
-content_margin_right = 24.0
-content_margin_bottom = 34.0
+content_margin_top = 41.0
+content_margin_right = 32.0
+content_margin_bottom = 31.0
 texture = ExtResource("24_badge_normal")
 texture_margin_left = 59.0
-texture_margin_top = 32.0
-texture_margin_right = 24.0
-texture_margin_bottom = 34.0
+texture_margin_top = 41.0
+texture_margin_right = 32.0
+texture_margin_bottom = 31.0
 axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w0vxu"]
+content_margin_left = 59.0
+content_margin_top = 41.0
+content_margin_right = 32.0
+content_margin_bottom = 31.0
+texture = ExtResource("27_badge_disabled")
+texture_margin_left = 59.0
+texture_margin_top = 41.0
+texture_margin_right = 32.0
+texture_margin_bottom = 31.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cvhh0"]
+content_margin_left = 59.0
+content_margin_top = 41.0
+content_margin_right = 32.0
+content_margin_bottom = 31.0
+texture = ExtResource("26_badge_focus")
+texture_margin_left = 59.0
+texture_margin_top = 41.0
+texture_margin_right = 32.0
+texture_margin_bottom = 31.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_06u8n"]
 content_margin_left = 59.0
 content_margin_top = 32.0
 content_margin_right = 24.0
 content_margin_bottom = 34.0
-texture = ExtResource("27_badge_disabled")
+texture = ExtResource("24_badge_normal")
 texture_margin_left = 59.0
 texture_margin_top = 32.0
 texture_margin_right = 24.0
@@ -136,7 +179,7 @@ content_margin_left = 59.0
 content_margin_top = 32.0
 content_margin_right = 24.0
 content_margin_bottom = 34.0
-texture = ExtResource("26_badge_focus")
+texture = ExtResource("25_badge_pressed")
 texture_margin_left = 59.0
 texture_margin_top = 32.0
 texture_margin_right = 24.0
@@ -144,44 +187,47 @@ texture_margin_bottom = 34.0
 axis_stretch_horizontal = 2
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k1oop"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
-texture = ExtResource("17_nakxj")
-texture_margin_left = 141.0
-texture_margin_top = 41.0
-texture_margin_right = 116.0
-texture_margin_bottom = 33.0
+content_margin_left = 59.0
+content_margin_top = 32.0
+content_margin_right = 24.0
+content_margin_bottom = 34.0
+texture = ExtResource("24_badge_normal")
+texture_margin_left = 59.0
+texture_margin_top = 32.0
+texture_margin_right = 24.0
+texture_margin_bottom = 34.0
+axis_stretch_horizontal = 2
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtpxm"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
-texture = ExtResource("18_q4smm")
-texture_margin_left = 141.0
-texture_margin_top = 41.0
-texture_margin_right = 116.0
-texture_margin_bottom = 33.0
+content_margin_left = 59.0
+content_margin_top = 32.0
+content_margin_right = 24.0
+content_margin_bottom = 34.0
+texture = ExtResource("27_badge_disabled")
+texture_margin_left = 59.0
+texture_margin_top = 32.0
+texture_margin_right = 24.0
+texture_margin_bottom = 34.0
+axis_stretch_horizontal = 2
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r310m"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
-texture = ExtResource("17_nakxj")
-texture_margin_left = 141.0
-texture_margin_top = 41.0
-texture_margin_right = 116.0
-texture_margin_bottom = 33.0
+content_margin_left = 59.0
+content_margin_top = 32.0
+content_margin_right = 24.0
+content_margin_bottom = 34.0
+texture = ExtResource("26_badge_focus")
+texture_margin_left = 59.0
+texture_margin_top = 32.0
+texture_margin_right = 24.0
+texture_margin_bottom = 34.0
+axis_stretch_horizontal = 2
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6v3ij"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("19_b0x5b")
+texture = ExtResource("17_nakxj")
 texture_margin_left = 141.0
 texture_margin_top = 41.0
 texture_margin_right = 116.0
@@ -192,7 +238,7 @@ content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("20_1wgx8")
+texture = ExtResource("18_q4smm")
 texture_margin_left = 141.0
 texture_margin_top = 41.0
 texture_margin_right = 116.0
@@ -203,40 +249,40 @@ content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("23_b0x5b")
-texture_margin_left = 148.0
-texture_margin_top = 48.0
-texture_margin_right = 112.0
-texture_margin_bottom = 34.0
+texture = ExtResource("17_nakxj")
+texture_margin_left = 141.0
+texture_margin_top = 41.0
+texture_margin_right = 116.0
+texture_margin_bottom = 33.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bwfoc"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("24_1wgx8")
-texture_margin_left = 148.0
-texture_margin_top = 48.0
-texture_margin_right = 112.0
-texture_margin_bottom = 34.0
+texture = ExtResource("19_b0x5b")
+texture_margin_left = 141.0
+texture_margin_top = 41.0
+texture_margin_right = 116.0
+texture_margin_bottom = 33.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m7v2e"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("23_b0x5b")
-texture_margin_left = 148.0
-texture_margin_top = 48.0
-texture_margin_right = 112.0
-texture_margin_bottom = 34.0
+texture = ExtResource("20_1wgx8")
+texture_margin_left = 141.0
+texture_margin_top = 41.0
+texture_margin_right = 116.0
+texture_margin_bottom = 33.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hksmy"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("25_umqxe")
+texture = ExtResource("23_b0x5b")
 texture_margin_left = 148.0
 texture_margin_top = 48.0
 texture_margin_right = 112.0
@@ -247,7 +293,7 @@ content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("26_f5bcp")
+texture = ExtResource("24_1wgx8")
 texture_margin_left = 148.0
 texture_margin_top = 48.0
 texture_margin_right = 112.0
@@ -258,40 +304,40 @@ content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("28_q4smm")
-texture_margin_left = 143.0
-texture_margin_top = 43.0
-texture_margin_right = 121.0
-texture_margin_bottom = 39.0
+texture = ExtResource("23_b0x5b")
+texture_margin_left = 148.0
+texture_margin_top = 48.0
+texture_margin_right = 112.0
+texture_margin_bottom = 34.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6rj8f"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("29_b0x5b")
-texture_margin_left = 143.0
-texture_margin_top = 43.0
-texture_margin_right = 121.0
-texture_margin_bottom = 39.0
+texture = ExtResource("25_umqxe")
+texture_margin_left = 148.0
+texture_margin_top = 48.0
+texture_margin_right = 112.0
+texture_margin_bottom = 34.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x4mmg"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("28_q4smm")
-texture_margin_left = 143.0
-texture_margin_top = 43.0
-texture_margin_right = 121.0
-texture_margin_bottom = 39.0
+texture = ExtResource("26_f5bcp")
+texture_margin_left = 148.0
+texture_margin_top = 48.0
+texture_margin_right = 112.0
+texture_margin_bottom = 34.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vxskp"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("25_umqxe")
+texture = ExtResource("28_q4smm")
 texture_margin_left = 143.0
 texture_margin_top = 43.0
 texture_margin_right = 121.0
@@ -302,44 +348,44 @@ content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-texture = ExtResource("30_1wgx8")
+texture = ExtResource("29_b0x5b")
 texture_margin_left = 143.0
 texture_margin_top = 43.0
 texture_margin_right = 121.0
 texture_margin_bottom = 39.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_56t3x"]
-content_margin_left = 40.0
-content_margin_top = 35.0
-content_margin_right = 40.0
-content_margin_bottom = 35.0
-texture = ExtResource("16_q4smm")
-texture_margin_left = 40.0
-texture_margin_top = 35.0
-texture_margin_right = 40.0
-texture_margin_bottom = 35.0
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("28_q4smm")
+texture_margin_left = 143.0
+texture_margin_top = 43.0
+texture_margin_right = 121.0
+texture_margin_bottom = 39.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w5q8h"]
-content_margin_left = 40.0
-content_margin_top = 35.0
-content_margin_right = 40.0
-content_margin_bottom = 35.0
-texture = ExtResource("16_q4smm")
-texture_margin_left = 40.0
-texture_margin_top = 35.0
-texture_margin_right = 40.0
-texture_margin_bottom = 35.0
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("25_umqxe")
+texture_margin_left = 143.0
+texture_margin_top = 43.0
+texture_margin_right = 121.0
+texture_margin_bottom = 39.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qw4pd"]
-content_margin_left = 40.0
-content_margin_top = 35.0
-content_margin_right = 40.0
-content_margin_bottom = 35.0
-texture = ExtResource("16_q4smm")
-texture_margin_left = 40.0
-texture_margin_top = 35.0
-texture_margin_right = 40.0
-texture_margin_bottom = 35.0
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("30_1wgx8")
+texture_margin_left = 143.0
+texture_margin_top = 43.0
+texture_margin_right = 121.0
+texture_margin_bottom = 39.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bc8r3"]
 content_margin_left = 40.0
@@ -412,7 +458,7 @@ content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
 content_margin_bottom = 35.0
-texture = ExtResource("13_qk8x1")
+texture = ExtResource("16_q4smm")
 texture_margin_left = 40.0
 texture_margin_top = 35.0
 texture_margin_right = 40.0
@@ -445,7 +491,7 @@ content_margin_left = 40.0
 content_margin_top = 35.0
 content_margin_right = 40.0
 content_margin_bottom = 35.0
-texture = ExtResource("16_q4smm")
+texture = ExtResource("13_qk8x1")
 texture_margin_left = 40.0
 texture_margin_top = 35.0
 texture_margin_right = 40.0
@@ -473,7 +519,40 @@ texture_margin_top = 35.0
 texture_margin_right = 40.0
 texture_margin_bottom = 35.0
 
-[node name="Landscape" unique_id=781667487 node_paths=PackedStringArray("logo", "btn_play", "btn_dungeon", "btn_daily", "btn_leaderboard", "btn_shop", "btn_settings", "btn_archivement", "badge_count_label", "badge_play", "badge_dungeon", "badge_daily", "stamp_panel", "stamp_label", "game_mode_box", "other_box") instance=ExtResource("1_parent")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mj5yg"]
+content_margin_left = 40.0
+content_margin_top = 35.0
+content_margin_right = 40.0
+content_margin_bottom = 35.0
+texture = ExtResource("16_q4smm")
+texture_margin_left = 40.0
+texture_margin_top = 35.0
+texture_margin_right = 40.0
+texture_margin_bottom = 35.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nmv1r"]
+content_margin_left = 40.0
+content_margin_top = 35.0
+content_margin_right = 40.0
+content_margin_bottom = 35.0
+texture = ExtResource("16_q4smm")
+texture_margin_left = 40.0
+texture_margin_top = 35.0
+texture_margin_right = 40.0
+texture_margin_bottom = 35.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yd8nt"]
+content_margin_left = 40.0
+content_margin_top = 35.0
+content_margin_right = 40.0
+content_margin_bottom = 35.0
+texture = ExtResource("16_q4smm")
+texture_margin_left = 40.0
+texture_margin_top = 35.0
+texture_margin_right = 40.0
+texture_margin_bottom = 35.0
+
+[node name="Landscape" unique_id=781667487 node_paths=PackedStringArray("logo", "btn_play", "btn_dungeon", "btn_daily", "btn_leaderboard", "btn_shop", "btn_settings", "btn_archivement", "badge_count_label", "btn_profile", "profile_avatar", "profile_frame", "profile_level", "profile_name", "badge_play", "badge_dungeon", "badge_daily", "stamp_panel", "stamp_label", "game_mode_box", "other_box") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 logo = NodePath("Paper/Hero/LogoPanel/LogoArea/Logo")
 btn_play = NodePath("Paper/Menu/Play")
@@ -484,6 +563,11 @@ btn_shop = NodePath("Paper/Menu/Utils/Shop")
 btn_settings = NodePath("Paper/Menu/Utils/Settings")
 btn_archivement = NodePath("Paper/Hero/Archivement")
 badge_count_label = NodePath("Paper/Hero/Archivement/ArchivementText/Count")
+btn_profile = NodePath("Paper/Hero/ProfileCard")
+profile_avatar = NodePath("Paper/Hero/ProfileCard/Content/Profile/Frame/Avatar")
+profile_frame = NodePath("Paper/Hero/ProfileCard/Content/Profile/Frame")
+profile_level = NodePath("Paper/Hero/ProfileCard/Content/Profile/LevelChip/Bg/Text")
+profile_name = NodePath("Paper/Hero/ProfileCard/Content/ProfileInformation/Name")
 badge_play = NodePath("Paper/Menu/Play/BottomLabel/Badge")
 badge_dungeon = NodePath("Paper/Menu/Dungeon/BottomLabel/Badge")
 badge_daily = NodePath("Paper/Menu/DailyChallenge/BottomLabel/Badge")
@@ -523,14 +607,16 @@ theme_override_constants/separation = 12
 [node name="LogoPanel" type="Panel" parent="Paper/Hero" index="0" unique_id=2890456]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 4.8
+size_flags_stretch_ratio = 0.45
 theme_override_styles/panel = SubResource("StyleBoxFlat_heropanel")
 
 [node name="LogoArea" type="VBoxContainer" parent="Paper/Hero/LogoPanel" index="0" unique_id=328949317]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = -0.133
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 34.447
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 0
@@ -542,6 +628,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("4_wvcw1")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="Title" type="Label" parent="Paper/Hero/LogoPanel/LogoArea" index="1" unique_id=270037304]
@@ -594,15 +681,237 @@ text = "STR_GAME_TAGLINE"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Archivement" type="Button" parent="Paper/Hero" index="1" unique_id=160161149]
+[node name="ProfileCard" type="Button" parent="Paper/Hero" index="1" unique_id=781667488]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 2.2
-theme_override_styles/normal = SubResource("StyleBoxTexture_0u4nb")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_asu54")
-theme_override_styles/hover = SubResource("StyleBoxTexture_y456h")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_06u8n")
-theme_override_styles/focus = SubResource("StyleBoxTexture_mei2x")
+size_flags_stretch_ratio = 0.3
+theme_override_styles/normal = SubResource("StyleBoxTexture_eefmx")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ilq0m")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2mlj6")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_w0vxu")
+theme_override_styles/focus = SubResource("StyleBoxTexture_cvhh0")
+script = ExtResource("21_umqxe")
+texture_normal = ExtResource("24_badge_normal")
+texture_hover = ExtResource("24_badge_normal")
+texture_pressed = ExtResource("25_badge_pressed")
+texture_disabled = ExtResource("27_badge_disabled")
+texture_focus = ExtResource("26_badge_focus")
+patch_margin_left = 59.0
+patch_margin_top = 41.0
+patch_margin_right = 32.0
+patch_margin_bottom = 31.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Content" type="HBoxContainer" parent="Paper/Hero/ProfileCard" index="0" unique_id=423232824]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.720001
+offset_top = 29.567871
+offset_right = -24.720001
+offset_bottom = -29.567871
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Profile" type="Control" parent="Paper/Hero/ProfileCard/Content" index="0" unique_id=1103729935]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+mouse_filter = 1
+script = ExtResource("sc_state")
+texture_normal = ExtResource("14_6v3ij")
+texture_hover = ExtResource("14_6v3ij")
+texture_pressed = ExtResource("15_mjfva")
+texture_disabled = ExtResource("16_y3wuy")
+texture_focused = ExtResource("17_bwfoc")
+expand_mode = 1
+stretch_mode = 5
+metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
+metadata/_edit_use_anchors_ = true
+
+[node name="Frame" type="TextureRect" parent="Paper/Hero/ProfileCard/Content/Profile" index="0" unique_id=1307681956]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.15155074
+anchor_top = -0.12678094
+anchor_right = 1.1807227
+anchor_bottom = 1.1321685
+offset_left = 0.019999862
+offset_top = -0.030000687
+offset_right = -2.0
+offset_bottom = 0.02999878
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("18_m7v2e")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Avatar" type="TextureRect" parent="Paper/Hero/ProfileCard/Content/Profile/Frame" index="0" unique_id=812886273]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15714286
+anchor_top = 0.15714286
+anchor_right = 0.8428571
+anchor_bottom = 0.8428571
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("19_hksmy")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="LevelChip" type="Control" parent="Paper/Hero/ProfileCard/Content/Profile" index="1" unique_id=1983371233]
+layout_mode = 1
+anchor_left = 0.512
+anchor_top = 0.5
+anchor_right = 0.512
+anchor_bottom = 0.5
+offset_left = -20.028929
+offset_top = 29.047104
+offset_right = 19.971073
+offset_bottom = 43.047104
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Bg" type="NinePatchRect" parent="Paper/Hero/ProfileCard/Content/Profile/LevelChip" index="0" unique_id=2058619405]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.525
+anchor_top = -0.2857143
+anchor_right = 1.425
+anchor_bottom = 1.2142857
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("30_chip_dark")
+patch_margin_left = 10
+patch_margin_top = 8
+patch_margin_right = 10
+patch_margin_bottom = 8
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Text" type="Label" parent="Paper/Hero/ProfileCard/Content/Profile/LevelChip/Bg" index="0" unique_id=39627641]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.102564104
+anchor_top = 0.22727273
+anchor_right = 0.897
+anchor_bottom = 0.864
+offset_right = 0.033996582
+offset_bottom = -2.0080013
+grow_horizontal = 2
+grow_vertical = 2
+text = "LV. 1"
+label_settings = ExtResource("35_t_lock")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer" type="Control" parent="Paper/Hero/ProfileCard/Content" index="1" unique_id=1608149017]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+
+[node name="ProfileInformation" type="VBoxContainer" parent="Paper/Hero/ProfileCard/Content" index="2" unique_id=333710608]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+
+[node name="Name" type="Label" parent="Paper/Hero/ProfileCard/Content/ProfileInformation" index="0" unique_id=2076590606]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+text = "MazeWalker #1024"
+label_settings = ExtResource("32_t_name")
+text_overrun_behavior = 3
+
+[node name="TierChip" type="HBoxContainer" parent="Paper/Hero/ProfileCard/Content/ProfileInformation" index="1" unique_id=1658809951]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/TierChip" index="0" unique_id=58888856]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.45
+mouse_filter = 2
+texture = ExtResource("19_bwfoc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Text" type="Label" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/TierChip/Bg" index="0" unique_id=1828952780]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.5
+offset_bottom = -2.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "ROOKIE"
+label_settings = ExtResource("20_m7v2e")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/TierChip" index="1" unique_id=1581589953]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+
+[node name="Exp" type="HBoxContainer" parent="Paper/Hero/ProfileCard/Content/ProfileInformation" index="2" unique_id=1263185516]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="ExpLabel" type="Label" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/Exp" index="0" unique_id=1302596548]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "STR_PROFILE_EXP_LABEL"
+label_settings = ExtResource("21_hksmy")
+resize_font_to_fit = true
+
+[node name="ExpValue" type="Label" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/Exp" index="1" unique_id=618299103]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "0 / 200"
+label_settings = ExtResource("21_hksmy")
+horizontal_alignment = 2
+
+[node name="Bar" type="TextureRect" parent="Paper/Hero/ProfileCard/Content/ProfileInformation" index="3" unique_id=1639060342]
+custom_minimum_size = Vector2(0, 7)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+mouse_filter = 2
+texture = ExtResource("22_usq5l")
+expand_mode = 5
+
+[node name="BarFill" type="TextureRect" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/Bar" index="0" unique_id=2069905201]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("23_d71o1")
+expand_mode = 1
+
+[node name="Archivement" type="Button" parent="Paper/Hero" index="2" unique_id=160161149]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+theme_override_styles/normal = SubResource("StyleBoxTexture_06u8n")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mei2x")
+theme_override_styles/hover = SubResource("StyleBoxTexture_k1oop")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_rtpxm")
+theme_override_styles/focus = SubResource("StyleBoxTexture_r310m")
 script = ExtResource("21_umqxe")
 texture_normal = ExtResource("24_badge_normal")
 texture_hover = ExtResource("24_badge_normal")
@@ -672,9 +981,10 @@ vertical_alignment = 1
 maximum_font_size = 25
 metadata/_edit_use_anchors_ = true
 
-[node name="StampArea" type="CenterContainer" parent="Paper/Hero" index="2" unique_id=87380593]
+[node name="StampArea" type="CenterContainer" parent="Paper/Hero" index="3" unique_id=87380593]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
 
 [node name="Control" type="Control" parent="Paper/Hero/StampArea" index="0" unique_id=1915974163]
 custom_minimum_size = Vector2(100, 100)
@@ -733,11 +1043,11 @@ theme_override_constants/separation = 1
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.05
-theme_override_styles/normal = SubResource("StyleBoxTexture_k1oop")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_rtpxm")
-theme_override_styles/hover = SubResource("StyleBoxTexture_r310m")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_6v3ij")
-theme_override_styles/focus = SubResource("StyleBoxTexture_mjfva")
+theme_override_styles/normal = SubResource("StyleBoxTexture_6v3ij")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mjfva")
+theme_override_styles/hover = SubResource("StyleBoxTexture_y3wuy")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_bwfoc")
+theme_override_styles/focus = SubResource("StyleBoxTexture_m7v2e")
 script = ExtResource("21_umqxe")
 texture_normal = ExtResource("17_nakxj")
 texture_hover = ExtResource("17_nakxj")
@@ -915,11 +1225,11 @@ minimum_font_size = 8
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.95
-theme_override_styles/normal = SubResource("StyleBoxTexture_y3wuy")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_bwfoc")
-theme_override_styles/hover = SubResource("StyleBoxTexture_m7v2e")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_hksmy")
-theme_override_styles/focus = SubResource("StyleBoxTexture_usq5l")
+theme_override_styles/normal = SubResource("StyleBoxTexture_hksmy")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_usq5l")
+theme_override_styles/hover = SubResource("StyleBoxTexture_d71o1")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_6rj8f")
+theme_override_styles/focus = SubResource("StyleBoxTexture_x4mmg")
 script = ExtResource("21_umqxe")
 texture_normal = ExtResource("23_b0x5b")
 texture_hover = ExtResource("23_b0x5b")
@@ -1100,11 +1410,11 @@ minimum_font_size = 8
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.95
-theme_override_styles/normal = SubResource("StyleBoxTexture_d71o1")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_6rj8f")
-theme_override_styles/hover = SubResource("StyleBoxTexture_x4mmg")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_vxskp")
-theme_override_styles/focus = SubResource("StyleBoxTexture_1cndw")
+theme_override_styles/normal = SubResource("StyleBoxTexture_vxskp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1cndw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_56t3x")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_w5q8h")
+theme_override_styles/focus = SubResource("StyleBoxTexture_qw4pd")
 script = ExtResource("21_umqxe")
 texture_normal = ExtResource("28_q4smm")
 texture_hover = ExtResource("28_q4smm")
@@ -1295,11 +1605,11 @@ theme_override_constants/separation = 12
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
-theme_override_styles/normal = SubResource("StyleBoxTexture_56t3x")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_w5q8h")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qw4pd")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_bc8r3")
-theme_override_styles/focus = SubResource("StyleBoxTexture_nivqn")
+theme_override_styles/normal = SubResource("StyleBoxTexture_bc8r3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_nivqn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gemtn")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_elw3w")
+theme_override_styles/focus = SubResource("StyleBoxTexture_mpsj4")
 script = ExtResource("21_umqxe")
 texture_normal = ExtResource("16_q4smm")
 texture_hover = ExtResource("16_q4smm")
@@ -1345,11 +1655,11 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
-theme_override_styles/normal = SubResource("StyleBoxTexture_gemtn")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_elw3w")
-theme_override_styles/hover = SubResource("StyleBoxTexture_mpsj4")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_gkumo")
-theme_override_styles/focus = SubResource("StyleBoxTexture_qrd76")
+theme_override_styles/normal = SubResource("StyleBoxTexture_gkumo")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_qrd76")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5lxp8")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_63ddw")
+theme_override_styles/focus = SubResource("StyleBoxTexture_eyhiq")
 script = ExtResource("21_umqxe")
 texture_normal = ExtResource("16_q4smm")
 texture_hover = ExtResource("16_q4smm")
@@ -1395,11 +1705,11 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
-theme_override_styles/normal = SubResource("StyleBoxTexture_5lxp8")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_63ddw")
-theme_override_styles/hover = SubResource("StyleBoxTexture_eyhiq")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_qa1qo")
-theme_override_styles/focus = SubResource("StyleBoxTexture_4g5ik")
+theme_override_styles/normal = SubResource("StyleBoxTexture_qa1qo")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_4g5ik")
+theme_override_styles/hover = SubResource("StyleBoxTexture_mj5yg")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_nmv1r")
+theme_override_styles/focus = SubResource("StyleBoxTexture_yd8nt")
 script = ExtResource("21_umqxe")
 texture_normal = ExtResource("16_q4smm")
 texture_hover = ExtResource("16_q4smm")
