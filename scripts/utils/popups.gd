@@ -21,6 +21,8 @@ const PAUSE := "pause"
 const LANGUAGE := "language"
 ## Popup đếm ngược pha GHI NHỚ của Blind Memory (không có nền mờ — vẫn thấy tường)
 const MEMORIZE := "memory_countdown"
+## Popup đổi diện mạo hồ sơ: avatar · viền khung · tên hiển thị
+const EDIT_PROFILE := "edit_profile"
 
 
 static func _mgr() -> Node:

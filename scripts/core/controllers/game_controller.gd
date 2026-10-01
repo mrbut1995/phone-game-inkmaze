@@ -633,6 +633,34 @@ func _report_to_archivements(won: bool, floor_time: float) -> void:
 		"undos_used": game_state.undos_used,
 		"hardcore": str(mode.difficulty).to_lower() == "hardcore",
 	})
+	_record_profile_run(mode, won, floor_time)
+
+
+## Ghi ván vừa chơi vào LỊCH SỬ HỒ SƠ (màn Profiler — "HOẠT ĐỘNG GẦN ĐÂY").
+## Chỉ nhận dữ liệu RUNTIME; câu chữ/màu do màn Profiler dựng lại từ dict này.
+func _record_profile_run(mode: BaseGameMode, won: bool, floor_time: float) -> void:
+	if game_state == null or mode == null:
+		return
+	var gm: Node = get_node_or_null("/root/GameManager")
+	var daily := gm != null and not str(gm.get("daily_variant")).is_empty()
+	var stars := 0
+	if challenge_controller != null:
+		stars = challenge_controller.stars()
+	var maze: MazeData = grid_controller.maze if grid_controller != null else null
+	Profile.record_run({
+		"mode_id": mode.mode_id,
+		"won": won,
+		"endless": mode.is_endless,
+		"daily": daily,
+		"floor": game_state.floor_number,
+		"score": game_state.score,
+		"elapsed": floor_time,
+		"moves": game_state.floor_moves,
+		"wall_hits": game_state.floor_wall_hits,
+		"width": maze.width if maze != null else 0,
+		"height": maze.height if maze != null else 0,
+		"stars": stars,
+	})
 
 
 # ---------------------------------------------------------------------------

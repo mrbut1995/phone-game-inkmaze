@@ -1,0 +1,276 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <!-- Lưới vở ô ly 40px -->
+    <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.45"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.15"/>
+    </pattern>
+
+    <!-- Đổ bóng cửa sổ Popup nổi -->
+    <filter id="popupModalShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#0F172A" flood-opacity="0.38"/>
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0F172A" flood-opacity="0.15"/>
+    </filter>
+
+    <filter id="itemShadow" x="-10%" y="-15%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- ================= 1. MÀN HÌNH NỀN LÀM MỜ (DIMMED BACKGROUND) ================= -->
+  <!-- Nền vở mờ ảo phía sau -->
+  <rect width="1080" height="1920" fill="#FAF5EB"/>
+  <rect width="1080" height="1920" fill="url(#notebookGrid)"/>
+  <line x1="95" y1="0" x2="95" y2="1920" stroke="#D84444" stroke-width="3.5" opacity="0.4"/>
+
+  <!-- Lớp phủ tối màu Focus Modal (Overlay Dimmer) -->
+  <rect width="1080" height="1920" fill="#0F172A" fill-opacity="0.68"/>
+
+  <!-- ================= 2. KHUNG POPUP CHÍNH (860 x 1260 px) ================= -->
+  <g transform="translate(110, 310)" filter="url(#popupModalShadow)">
+    <!-- Tờ giấy trắng ngà làm thân popup -->
+    <rect width="860" height="1260" rx="28" fill="#FFFDF8" stroke="#3D83AE" stroke-width="4"/>
+
+    <!-- Lỗ bấm sổ còng bên lề trái -->
+    <g fill="#EAE3D2" opacity="0.85">
+      <circle cx="26" cy="110" r="8"/><circle cx="26" cy="260" r="8"/><circle cx="26" cy="410" r="8"/>
+      <circle cx="26" cy="560" r="8"/><circle cx="26" cy="710" r="8"/><circle cx="26" cy="860" r="8"/>
+      <circle cx="26" cy="1010" r="8"/><circle cx="26" cy="1160" r="8"/>
+    </g>
+
+    <!-- Đường lề đỏ vở kẻ -->
+    <line x1="68" y1="0" x2="68" y2="1260" stroke="#D84444" stroke-width="2.5" opacity="0.85"/>
+
+    <!-- Dải washi tape trang trí mép trên -->
+    <g transform="translate(320, -18)">
+      <rect width="220" height="40" rx="4" fill="#E8DFCA" fill-opacity="0.95" stroke="#D1C6AE" stroke-width="1.2"/>
+      <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 40 M 140 0 L 88 40 M 180 0 L 128 40 M 220 0 L 168 40" 
+            stroke="#B5A98F" stroke-width="1.2" opacity="0.35"/>
+    </g>
+
+    <!-- Nút Đóng 'X' góc trên phải -->
+    <g transform="translate(780, 26)" style="cursor: pointer;">
+      <circle cx="24" cy="24" r="22" fill="#FEFDFA" stroke="#94A3B8" stroke-width="2"/>
+      <path d="M 16 16 L 32 32 M 32 16 L 16 32" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+    </g>
+
+    <!-- TIÊU ĐỀ POPUP -->
+    <text x="430" y="65" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="30" font-weight="950" fill="#163A58" letter-spacing="1">DIỆN MẠO HỒ SƠ</text>
+    <line x1="95" y1="95" x2="765" y2="95" stroke="#8FB9D2" stroke-width="1.8" stroke-dasharray="6 4"/>
+
+    <!-- ================= 3. KHU VỰC LIVE PREVIEW & EDIT TÊN ================= -->
+    <g transform="translate(95, 118)">
+      <rect width="670" height="195" rx="20" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+
+      <!-- Live Preview: Avatar kết hợp Viền Khung đang chọn -->
+      <g transform="translate(40, 20)">
+        <!-- Viền Bánh Răng Vàng (Đang xem thử) -->
+        <circle cx="78" cy="78" r="68" fill="#FFFDF8" stroke="#F59E0B" stroke-width="5.5" stroke-dasharray="14 5"/>
+        <circle cx="78" cy="78" r="56" fill="#E0F2FE"/>
+
+        <!-- Avatar Nhân vật Doodle -->
+        <g stroke="#163A58" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(48, 48)">
+          <circle cx="30" cy="20" r="13" fill="#FEFDFA"/>
+          <path d="M 12 56 C 12 38 18 36 30 36 C 42 36 48 38 48 56 Z" fill="#FEFDFA"/>
+          <path d="M 25 20 L 28 20 M 32 20 L 35 20"/>
+          <path d="M 26 25 Q 30 28 34 25"/>
+        </g>
+
+        <!-- Nhãn "Xem thử" nhỏ -->
+        <rect x="28" y="132" width="100" height="20" rx="5" fill="#163A58"/>
+        <text x="78" y="146" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="900" fill="#FFFFFF">XEM TRƯỚC</text>
+      </g>
+
+      <!-- Khung Edit Tên Người Chơi -->
+      <g transform="translate(230, 28)">
+        <text x="0" y="16" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#64748B">TÊN HIỂN THỊ (BẤM ĐỂ SỬA)</text>
+        <!-- Hộp Text Input có icon Pen -->
+        <rect y="26" width="400" height="58" rx="12" fill="#FFFFFF" stroke="#256C96" stroke-width="2.5"/>
+        <text x="18" y="63" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="900" fill="#0F172A">MazeWalker #1024</text>
+        <g transform="translate(355, 38)">
+          <path d="M 4 18 L 18 4 L 24 10 L 10 24 L 2 26 Z" fill="#E2E8F0" stroke="#256C96" stroke-width="2"/>
+        </g>
+        <text x="0" y="108" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#94A3B8">Khung viền sẽ hiển thị quanh Avatar trên toàn game</text>
+      </g>
+    </g>
+
+    <!-- ================= 4. HỆ THỐNG TAB (TAB "ĐỔI VIỀN KHUNG" ĐANG ACTIVE) ================= -->
+    <g transform="translate(95, 345)">
+      <!-- Tab 1: ĐỔI AVATAR (INACTIVE) -->
+      <g style="cursor: pointer;">
+        <path d="M 0 16 C 0 8 8 0 16 0 L 320 0 C 328 0 335 8 335 16 L 335 52 L 0 52 Z" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2"/>
+        <text x="167" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="800" fill="#64748B" letter-spacing="1">👤 ĐỔI AVATAR</text>
+      </g>
+
+      <!-- Tab 2: ĐỔI VIỀN KHUNG (ACTIVE - ĐANG CHỌN) -->
+      <g transform="translate(335, 0)" style="cursor: pointer;">
+        <path d="M 0 16 C 0 8 8 0 16 0 L 320 0 C 328 0 335 8 335 16 L 335 52 L 0 52 Z" fill="#256C96"/>
+        <text x="167" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="950" fill="#FFFFFF" letter-spacing="1">🖼️ ĐỔI VIỀN KHUNG</text>
+      </g>
+
+      <!-- Vạch chỉ xanh đậm đáy tab -->
+      <line x1="0" y1="52" x2="670" y2="52" stroke="#256C96" stroke-width="3"/>
+    </g>
+
+    <!-- ================= 5. LƯỚI 6 MẪU VIỀN KHUNG (FRAME CATALOG) ================= -->
+    <g transform="translate(95, 425)">
+
+      <!-- KHUNG 1: BÁNH RĂNG VÀNG (ĐANG CHỌN / EQUIPPED) -->
+      <g transform="translate(0, 0)" style="cursor: pointer;" filter="url(#itemShadow)">
+        <rect width="205" height="225" rx="18" fill="#EFF6FF" stroke="#256C96" stroke-width="3.5"/>
+        
+        <!-- Hình vẽ Viền Khung 1 -->
+        <g transform="translate(102, 85)">
+          <circle cx="0" cy="0" r="50" fill="#FFFDF8" stroke="#F59E0B" stroke-width="5" stroke-dasharray="12 4"/>
+          <circle cx="0" cy="0" r="40" fill="#E0F2FE"/>
+          <circle cx="0" cy="0" r="22" fill="#BAE6FD" opacity="0.6"/>
+        </g>
+        
+        <!-- Dấu tick đang chọn góc trên -->
+        <circle cx="180" cy="24" r="13" fill="#256C96"/>
+        <path d="M 174 24 L 178 28 L 186 20" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <text x="102" y="162" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" fill="#163A58">Bánh Răng Vàng</text>
+        <rect x="37" y="178" width="130" height="26" rx="6" fill="#DBEAFE"/>
+        <text x="102" y="196" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="900" fill="#1E40AF">ĐANG DÙNG</text>
+      </g>
+
+      <!-- KHUNG 2: VÒNG NGUYỆT QUẾ (ĐÃ SỞ HỮU / OWNED) -->
+      <g transform="translate(232, 0)" style="cursor: pointer;" filter="url(#itemShadow)">
+        <rect width="205" height="225" rx="18" fill="#FEFDFA" stroke="#CBD5E1" stroke-width="2"/>
+
+        <!-- Hình vẽ Viền Khung 2: Lá Nguyệt Quế Xanh -->
+        <g transform="translate(102, 85)">
+          <circle cx="0" cy="0" r="50" fill="#FFFDF8" stroke="#16A34A" stroke-width="3.5"/>
+          <!-- Các cặp lá nguyệt quế đối xứng dạng doodle -->
+          <g stroke="#16A34A" stroke-width="2" fill="#DCFCE7">
+            <ellipse cx="-45" cy="-20" rx="8" ry="4" transform="rotate(-30 -45 -20)"/>
+            <ellipse cx="-48" cy="10" rx="8" ry="4" transform="rotate(20 -48 10)"/>
+            <ellipse cx="45" cy="-20" rx="8" ry="4" transform="rotate(30 45 -20)"/>
+            <ellipse cx="48" cy="10" rx="8" ry="4" transform="rotate(-20 48 10)"/>
+          </g>
+          <circle cx="0" cy="0" r="40" fill="#F8FAFC"/>
+          <circle cx="0" cy="0" r="22" fill="#E2E8F0" opacity="0.6"/>
+        </g>
+
+        <text x="102" y="162" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" fill="#334155">Nguyệt Quế</text>
+        <rect x="47" y="178" width="110" height="26" rx="6" fill="#F1F5F9"/>
+        <text x="102" y="196" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="900" fill="#64748B">SỞ HỮU</text>
+      </g>
+
+      <!-- KHUNG 3: NÉT MỰC KÉP DOODLE (ĐÃ SỞ HỮU / OWNED) -->
+      <g transform="translate(465, 0)" style="cursor: pointer;" filter="url(#itemShadow)">
+        <rect width="205" height="225" rx="18" fill="#FEFDFA" stroke="#CBD5E1" stroke-width="2"/>
+
+        <!-- Hình vẽ Viền Khung 3: Vòng mực đôi + 4 dấu thập tâm điểm -->
+        <g transform="translate(102, 85)">
+          <circle cx="0" cy="0" r="50" fill="#FFFDF8" stroke="#256C96" stroke-width="3"/>
+          <circle cx="0" cy="0" r="44" fill="none" stroke="#6EA0C8" stroke-width="1.8" stroke-dasharray="6 3"/>
+          <!-- Dấu chữ thập nhỏ 4 góc -->
+          <path d="M 0 -54 L 0 -46 M -54 0 L -46 0 M 0 54 L 0 46 M 54 0 L 46 0" stroke="#256C96" stroke-width="2.5"/>
+          <circle cx="0" cy="0" r="38" fill="#F8FAFC"/>
+          <circle cx="0" cy="0" r="22" fill="#E2E8F0" opacity="0.6"/>
+        </g>
+
+        <text x="102" y="162" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" fill="#334155">Nét Mực Kép</text>
+        <rect x="47" y="178" width="110" height="26" rx="6" fill="#F1F5F9"/>
+        <text x="102" y="196" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="900" fill="#64748B">SỞ HỮU</text>
+      </g>
+
+      <!-- KHUNG 4: GAI LỬA STREAK (KHÓA - ĐIỀU KIỆN DAILY 30 NGÀY) -->
+      <g transform="translate(0, 245)" opacity="0.85">
+        <rect width="205" height="225" rx="18" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2" stroke-dasharray="8 5"/>
+
+        <!-- Hình vẽ Viền Khung 4: Ngọn Lửa Cam Rực -->
+        <g transform="translate(102, 85)">
+          <!-- Vòng tia lửa bao quanh -->
+          <circle cx="0" cy="0" r="50" fill="#FFFDF8" stroke="#EA580C" stroke-width="3.5"/>
+          <path d="M 0 -58 L 6 -48 L -6 -48 Z M 0 58 L 6 48 L -6 48 Z M -58 0 L -48 6 L -48 -6 Z M 58 0 L 48 6 L 48 -6 Z" fill="#EA580C"/>
+          <circle cx="0" cy="0" r="40" fill="#FEF3C7"/>
+          <!-- Lớp phủ icon Ổ Khóa -->
+          <circle cx="0" cy="0" r="40" fill="#0F172A" fill-opacity="0.32"/>
+          <text y="9" text-anchor="middle" font-size="26">🔒</text>
+        </g>
+
+        <text x="102" y="162" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#64748B">Gai Lửa Streak</text>
+        <text x="102" y="194" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="900" fill="#D97706">Chuỗi Daily 30 ngày</text>
+      </g>
+
+      <!-- KHUNG 5: HẮC THIẾT NGỤC TỐI (KHÓA - ĐIỀU KIỆN DUNGEON TẦNG 50) -->
+      <g transform="translate(232, 245)" opacity="0.85">
+        <rect width="205" height="225" rx="18" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2" stroke-dasharray="8 5"/>
+
+        <!-- Hình vẽ Viền Khung 5: Khung đinh tán hắc thiết phong cách Dungeon -->
+        <g transform="translate(102, 85)">
+          <circle cx="0" cy="0" r="50" fill="#FFFDF8" stroke="#475569" stroke-width="5"/>
+          <circle cx="0" cy="0" r="43" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+          <!-- 4 đinh tán 4 góc -->
+          <circle cx="-35" cy="-35" r="4" fill="#334155"/>
+          <circle cx="35" cy="-35" r="4" fill="#334155"/>
+          <circle cx="-35" cy="35" r="4" fill="#334155"/>
+          <circle cx="35" cy="35" r="4" fill="#334155"/>
+          <circle cx="0" cy="0" r="38" fill="#F1F5F9"/>
+          <!-- Ổ Khóa -->
+          <circle cx="0" cy="0" r="38" fill="#0F172A" fill-opacity="0.32"/>
+          <text y="9" text-anchor="middle" font-size="26">🔒</text>
+        </g>
+
+        <text x="102" y="162" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#64748B">Hắc Thiết Ngục</text>
+        <text x="102" y="194" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="900" fill="#DC2626">Dungeon Tầng 50</text>
+      </g>
+
+      <!-- KHUNG 6: HÀO QUANG HOÀNG GIA (MUA BẰNG XU MỰC) -->
+      <g transform="translate(465, 245)" style="cursor: pointer;" filter="url(#itemShadow)">
+        <rect width="205" height="225" rx="18" fill="#FEFDFA" stroke="#F59E0B" stroke-width="2"/>
+
+        <!-- Hình vẽ Viền Khung 6: Vương Miện Hoàng Gia Ánh Kim -->
+        <g transform="translate(102, 85)">
+          <circle cx="0" cy="0" r="50" fill="#FFFDF8" stroke="#D97706" stroke-width="4"/>
+          <!-- Họa tiết răng cưa vương miện 8 đỉnh -->
+          <polygon points="0,-56 12,-48 8,-40 0,-44 -8,-40 -12,-48" fill="#D97706"/>
+          <circle cx="0" cy="0" r="42" fill="#FEF3C7" stroke="#FDE68A" stroke-width="2"/>
+          <circle cx="0" cy="0" r="22" fill="#FDE68A" opacity="0.6"/>
+          <!-- Viên đá đỏ trên vương miện -->
+          <circle cx="0" cy="-44" r="3" fill="#DC2626"/>
+        </g>
+
+        <text x="102" y="162" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" fill="#78350F">Hào Quang Đế Vương</text>
+        <!-- Nút mua bằng xu mực -->
+        <rect x="37" y="178" width="130" height="28" rx="8" fill="#F59E0B"/>
+        <text x="102" y="197" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="950" fill="#FFFFFF">🪙 800 XU</text>
+      </g>
+
+    </g>
+
+    <!-- Chấm chuyển trang danh mục (Pagination dots) -->
+    <g transform="translate(430, 975)">
+      <circle cx="-16" cy="0" r="5" fill="#CBD5E1"/>
+      <rect x="-4" y="-5" width="22" height="10" rx="5" fill="#256C96"/>
+      <circle cx="32" cy="0" r="5" fill="#CBD5E1"/>
+    </g>
+
+    <!-- ================= 6. HÀNG NÚT BẤM HÀNH ĐỘNG DƯỚI ĐÁY ================= -->
+    <g transform="translate(95, 1025)">
+      <!-- Nút HỦY BỎ -->
+      <g style="cursor: pointer;">
+        <rect width="240" height="80" rx="20" fill="#FEFDFA" stroke="#94A3B8" stroke-width="2.5"/>
+        <text x="120" y="48" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="900" fill="#64748B">HỦY BỎ</text>
+      </g>
+
+      <!-- Nút LƯU THAY ĐỔI -->
+      <g transform="translate(270, 0)" style="cursor: pointer;">
+        <rect width="400" height="80" rx="20" fill="#256C96" stroke="#164663" stroke-width="3"/>
+        <text x="200" y="48" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="950" fill="#FFFFFF" letter-spacing="1">LƯU THAY ĐỔI ✓</text>
+      </g>
+    </g>
+
+    <!-- Dấu mộc nhỏ chứng nhận diện mạo -->
+    <g transform="translate(680, 1145) rotate(-5)" opacity="0.65">
+      <rect width="140" height="42" rx="8" fill="none" stroke="#D84444" stroke-width="2.5" stroke-dasharray="6 3"/>
+      <text x="70" y="27" text-anchor="middle" font-family="'Segoe UI', monospace" font-size="14" font-weight="950" fill="#D84444">INK BORDER</text>
+    </g>
+  </g>
+
+  <!-- Thanh điều hướng Android Home Gesture -->
+  <rect x="420" y="1885" width="240" height="8" rx="4" fill="#3D5A73" opacity="0.4"/>
+</svg>

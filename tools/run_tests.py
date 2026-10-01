@@ -27,6 +27,7 @@ DEFAULT = [
     "test_daily",
     "test_shop",
     "test_archivement",
+    "test_profiler",
     "test_ranking",
     "test_chapters",
     "test_ui_scenes",

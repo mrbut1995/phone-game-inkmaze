@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 475 860" width="475" height="860">
+  <rect x="0" y="0" width="475" height="860" rx="14" fill="#FFFDF8"/>
+  <g fill="#EAE3D2" opacity="0.85">
+    <circle cx="14" cy="60" r="5"/>
+    <circle cx="14" cy="210" r="5"/>
+    <circle cx="14" cy="360" r="5"/>
+    <circle cx="14" cy="510" r="5"/>
+    <circle cx="14" cy="660" r="5"/>
+    <circle cx="14" cy="810" r="5"/>
+  </g>
+  <line x1="44" y1="0" x2="44" y2="860" stroke="#D84444" stroke-width="1.4" opacity="0.8"/>
+  <g stroke="#8FB9D2" stroke-width="0.7" opacity="0.22">
+    <line x1="52" y1="45" x2="455" y2="45"/>
+    <line x1="52" y1="90" x2="455" y2="90"/>
+    <line x1="52" y1="135" x2="455" y2="135"/>
+    <line x1="52" y1="180" x2="455" y2="180"/>
+    <line x1="52" y1="225" x2="455" y2="225"/>
+    <line x1="52" y1="270" x2="455" y2="270"/>
+    <line x1="52" y1="315" x2="455" y2="315"/>
+    <line x1="52" y1="360" x2="455" y2="360"/>
+    <line x1="52" y1="405" x2="455" y2="405"/>
+    <line x1="52" y1="450" x2="455" y2="450"/>
+    <line x1="52" y1="495" x2="455" y2="495"/>
+    <line x1="52" y1="540" x2="455" y2="540"/>
+    <line x1="52" y1="585" x2="455" y2="585"/>
+    <line x1="52" y1="630" x2="455" y2="630"/>
+    <line x1="52" y1="675" x2="455" y2="675"/>
+    <line x1="52" y1="720" x2="455" y2="720"/>
+    <line x1="52" y1="765" x2="455" y2="765"/>
+    <line x1="52" y1="810" x2="455" y2="810"/>
+  </g>
+  <rect x="0.9" y="0.9" width="473.2" height="858.2" rx="13.5" fill="none" stroke="#6EA0C8" stroke-width="1.8"/>
+</svg>

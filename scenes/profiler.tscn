@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/scenes/profiler.gd" id="2_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
+[ext_resource type="PackedScene" path="res://scenes/layout/portrait/profiler.tscn" id="L_Portrait"]
+
+[node name="Control" unique_id=1469732799 instance=ExtResource("1_base")]
+theme = ExtResource("3_theme")
+script = ExtResource("2_script")
+
+[node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
+
+[connection signal="pressed" from="Portrait/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/Hero/BtnAvatar" to="." method="_on_edit_pressed"]
+[connection signal="pressed" from="Portrait/Badges/BtnMore" to="." method="_on_badges_more_pressed"]
+[connection signal="pressed" from="Portrait/BtnEdit" to="." method="_on_edit_pressed"]
+[connection signal="pressed" from="Portrait/BtnShare" to="." method="_on_share_pressed"]

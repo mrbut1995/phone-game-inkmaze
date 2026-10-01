@@ -55,6 +55,7 @@ func _ensure_ready() -> void:
 	register_provider(tree.root.get_node_or_null("DailyManager"), "daily_changed")
 	register_provider(tree.root.get_node_or_null("ArchivementManager"), "progress_changed")
 	register_provider(tree.root.get_node_or_null("ShopManager"), "item_purchased")
+	register_provider(tree.root.get_node_or_null("PlayerProfileManager"), "profile_changed")
 
 	var app: Node = tree.root.get_node_or_null("AppManager")
 	if app != null and app.has_signal("app_paused") and not app.is_connected("app_paused", _on_app_paused):

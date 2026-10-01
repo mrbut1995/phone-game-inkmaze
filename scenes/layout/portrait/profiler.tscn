@@ -1,0 +1,1117 @@
+[gd_scene format=3 uid="uid://bdudpxxwdkx8u"]
+
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" uid="uid://dflm08pygt1p8" path="res://scripts/scenes/layout/profiler_layout.gd" id="2_layout"]
+[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="Texture2D" uid="uid://dfw14tieu8akq" path="res://assets/images/profiler/sheet.svg" id="5_sheet"]
+[ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="6_tape"]
+[ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="7_clip"]
+[ext_resource type="Texture2D" uid="uid://d11ja0c8gr83f" path="res://assets/images/profiler/chip_gold.svg" id="8_chip_gold"]
+[ext_resource type="Texture2D" uid="uid://b32mi2b0tw8ao" path="res://assets/images/settings/divider_dashed.svg" id="9_divider"]
+[ext_resource type="Texture2D" uid="uid://dd5jlu4go44we" path="res://assets/images/profiler/card_blue.svg" id="10_card_blue"]
+[ext_resource type="Texture2D" uid="uid://d1do6qf2n6ji7" path="res://assets/images/profiler/card_soft.svg" id="11_card_soft"]
+[ext_resource type="Texture2D" uid="uid://bn8j1aro710gg" path="res://assets/images/profiler/mini_card.svg" id="12_mini_card"]
+[ext_resource type="Texture2D" uid="uid://cf0f2d1fggwao" path="res://assets/images/ranking/chip_scope.svg" id="13_circle"]
+[ext_resource type="Texture2D" uid="uid://b5ovppi3sqobw" path="res://assets/images/profiler/bar_track.svg" id="14_bar_track"]
+[ext_resource type="Texture2D" uid="uid://btf7r7p54degs" path="res://assets/images/profiler/bar_fill.svg" id="15_bar_fill"]
+[ext_resource type="Texture2D" uid="uid://c442wdwl8b6b1" path="res://assets/images/profiler/btn_primary_normal.svg" id="16_pri_n"]
+[ext_resource type="Texture2D" uid="uid://c6bp580h2ct6m" path="res://assets/images/profiler/btn_primary_pressed.svg" id="17_pri_p"]
+[ext_resource type="Texture2D" uid="uid://drlax1oklev7w" path="res://assets/images/profiler/btn_ghost_normal.svg" id="18_gho_n"]
+[ext_resource type="Texture2D" uid="uid://ekfquw0so41l" path="res://assets/images/profiler/profiler_disc_normal.svg" id="18_l6pvb"]
+[ext_resource type="Texture2D" uid="uid://bofrdwmb5s12a" path="res://assets/images/profiler/profiler_disc_pressed.svg" id="19_0bc38"]
+[ext_resource type="Texture2D" uid="uid://c4t2m6y1xf0k3" path="res://assets/images/profiler/btn_ghost_pressed.svg" id="19_gho_p"]
+[ext_resource type="Texture2D" uid="uid://dk4s2kydd38p6" path="res://assets/images/profiler/profiler_disc_disabled.svg" id="20_ooetg"]
+[ext_resource type="Texture2D" uid="uid://dqjugipgec7r1" path="res://assets/images/profiler/stamp_verified.svg" id="20_stamp"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_title.tres" id="21_t_title"]
+[ext_resource type="Texture2D" uid="uid://bh6htaq00756m" path="res://assets/images/profiler/profiler_disc_focus.svg" id="21_wmwjj"]
+[ext_resource type="Texture2D" uid="uid://dktbi44ecqw66" path="res://assets/images/profiler/frame_fire_spike.svg" id="22_kmslx"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_section.tres" id="22_t_section"]
+[ext_resource type="Texture2D" uid="uid://bct7cceiu4qnp" path="res://assets/images/profiler/avatar_cat.svg" id="23_c061d"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_chip_gold.tres" id="23_t_chip_gold"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_name.tres" id="24_t_name"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_label.tres" id="25_t_label"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_value.tres" id="26_t_value"]
+[ext_resource type="LabelSettings" uid="uid://bu8t2nlps33r5" path="res://resources/settings/text/text_profiler_small.tres" id="27_t_small"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_row.tres" id="28_t_row"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_button.tres" id="29_t_btn"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_button_ghost.tres" id="30_t_btn_ghost"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_stamp.tres" id="31_t_stamp"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_state.tres" id="32_t_state"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="33_theme"]
+
+[node name="Portrait" unique_id=1874102296 node_paths=PackedStringArray("btn_back", "lbl_title", "level_chip", "hero", "stat_cards", "badges_box", "gear_box", "rows_box", "btn_edit", "btn_share", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill") instance=ExtResource("1_parent")]
+theme = ExtResource("33_theme")
+script = ExtResource("2_layout")
+btn_back = NodePath("TopBar/Back")
+lbl_title = NodePath("TopBar/Title")
+level_chip = NodePath("TopBar/LevelChip")
+hero = NodePath("Hero")
+stat_cards = NodePath("StatCards")
+badges_box = NodePath("Badges")
+gear_box = NodePath("Gear")
+rows_box = NodePath("Rows")
+btn_edit = NodePath("BtnEdit")
+btn_share = NodePath("BtnShare")
+stamp = NodePath("Stamp")
+hero_btn_avatar = NodePath("Hero/Profile")
+hero_avatar = NodePath("Hero/Profile/Frame/Avatar")
+hero_frame = NodePath("Hero/Profile/Frame")
+hero_name = NodePath("Hero/Name")
+hero_tier_text = NodePath("Hero/TierChip/Text")
+hero_exp_value = NodePath("Hero/ExpValue")
+hero_uid = NodePath("Hero/Uid")
+hero_track = NodePath("Hero/Bar")
+hero_fill = NodePath("Hero/Bar/BarFill")
+
+[node name="Sheet" type="TextureRect" parent="." index="0" unique_id=847444578]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.060185
+anchor_top = 0.065217
+anchor_right = 0.939815
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_sheet")
+expand_mode = 1
+
+[node name="Tape" type="TextureRect" parent="Sheet" index="0" unique_id=1428016515]
+layout_mode = 0
+offset_left = 182.5
+offset_top = -11.0
+offset_right = 292.5
+offset_bottom = 12.0
+mouse_filter = 2
+texture = ExtResource("6_tape")
+expand_mode = 1
+
+[node name="Clip" type="TextureRect" parent="Sheet" index="1" unique_id=462841502]
+layout_mode = 0
+offset_left = 60.0
+offset_top = -9.0
+offset_right = 74.0
+offset_bottom = 27.0
+mouse_filter = 2
+texture = ExtResource("7_clip")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TopBar" type="Control" parent="." index="1" unique_id=1590960130]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 22.5
+offset_top = 22.5
+offset_right = -22.5
+offset_bottom = 45.5
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=981494070]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+texture_hover = ExtResource("3_back_n")
+texture_disabled = ExtResource("3_back_n")
+texture_focused = ExtResource("3_back_n")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="TopBar" index="1" unique_id=949369785]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "STR_PROFILE_TITLE"
+label_settings = ExtResource("21_t_title")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelChip" type="Control" parent="TopBar" index="2" unique_id=9664023]
+anchors_preset = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -57.5
+offset_bottom = 21.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="TopBar/LevelChip" index="0" unique_id=1526444858]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_chip_gold")
+expand_mode = 1
+
+[node name="Text" type="Label" parent="TopBar/LevelChip" index="1" unique_id=1694549839]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "LV. 1"
+label_settings = ExtResource("23_t_chip_gold")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Divider" type="TextureRect" parent="." index="2" unique_id=2103713421]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 62.5
+offset_right = 440.0
+offset_bottom = 64.5
+mouse_filter = 2
+texture = ExtResource("9_divider")
+expand_mode = 1
+
+[node name="Hero" type="Control" parent="." index="3" unique_id=514742219]
+anchors_preset = 0
+offset_left = 60.0
+offset_top = 75.0
+offset_right = 440.0
+offset_bottom = 197.5
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Hero" index="0" unique_id=237603081]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.1236842
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_card_blue")
+patch_margin_left = 22
+patch_margin_top = 22
+patch_margin_right = 22
+patch_margin_bottom = 22
+metadata/_edit_use_anchors_ = true
+
+[node name="Profile" type="TextureButton" parent="Hero" index="1" unique_id=551155378]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05564494
+anchor_top = 0.14728138
+anchor_right = 0.2734163
+anchor_bottom = 0.8244415
+offset_left = -0.14507675
+offset_top = -0.0419693
+offset_right = 0.1018219
+offset_bottom = 0.00592041
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("18_l6pvb")
+texture_pressed = ExtResource("19_0bc38")
+texture_hover = ExtResource("18_l6pvb")
+texture_disabled = ExtResource("20_ooetg")
+texture_focused = ExtResource("21_wmwjj")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Frame" type="TextureRect" parent="Hero/Profile" index="0" unique_id=308081860]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.15155074
+anchor_top = -0.12678094
+anchor_right = 1.1807227
+anchor_bottom = 1.1321685
+offset_left = 0.019999862
+offset_top = -0.030000687
+offset_right = -2.0
+offset_bottom = 0.02999878
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("22_kmslx")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Avatar" type="TextureRect" parent="Hero/Profile/Frame" index="0" unique_id=637969851]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15714286
+anchor_top = 0.15714286
+anchor_right = 0.8428571
+anchor_bottom = 0.8428571
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("23_c061d")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Disc" type="TextureRect" parent="Hero" index="2" unique_id=1832602870]
+visible = false
+self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
+layout_mode = 0
+offset_left = 35.5
+offset_top = 26.5
+offset_right = 99.5
+offset_bottom = 90.5
+mouse_filter = 2
+texture = ExtResource("13_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnAvatar" type="TextureButton" parent="Hero" index="3" unique_id=71900226]
+visible = false
+layout_mode = 0
+offset_left = 29.5
+offset_top = 20.5
+offset_right = 105.5
+offset_bottom = 96.5
+
+[node name="Frame" type="TextureRect" parent="Hero" index="4" unique_id=1190520118]
+visible = false
+layout_mode = 0
+offset_left = 29.5
+offset_top = 20.5
+offset_right = 105.5
+offset_bottom = 96.5
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Hero" index="5" unique_id=1245396682]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 12.0
+offset_right = 320.0
+offset_bottom = 34.0
+text = "MazeWalker #1024"
+label_settings = ExtResource("24_t_name")
+
+[node name="TierChip" type="Control" parent="Hero" index="6" unique_id=180307109]
+anchors_preset = 0
+offset_left = 120.0
+offset_top = 43.0
+offset_right = 210.0
+offset_bottom = 57.0
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Hero/TierChip" index="0" unique_id=520409786]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_chip_gold")
+expand_mode = 1
+
+[node name="Text" type="Label" parent="Hero/TierChip" index="1" unique_id=1154631137]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "ROOKIE"
+label_settings = ExtResource("23_t_chip_gold")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExpLabel" type="Label" parent="Hero" index="7" unique_id=1958163170]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 68.0
+offset_right = 230.0
+offset_bottom = 79.0
+text = "STR_PROFILE_EXP_LABEL"
+label_settings = ExtResource("25_t_label")
+
+[node name="ExpValue" type="Label" parent="Hero" index="8" unique_id=897911681]
+layout_mode = 0
+offset_left = 234.0
+offset_top = 68.0
+offset_right = 356.0
+offset_bottom = 79.0
+text = "0 / 200"
+label_settings = ExtResource("25_t_label")
+horizontal_alignment = 2
+
+[node name="Bar" type="TextureRect" parent="Hero" index="9" unique_id=1325834906]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 81.5
+offset_right = 356.0
+offset_bottom = 88.5
+mouse_filter = 2
+texture = ExtResource("14_bar_track")
+expand_mode = 1
+
+[node name="BarFill" type="TextureRect" parent="Hero/Bar" index="0" unique_id=1562637658]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 7.0
+mouse_filter = 2
+texture = ExtResource("15_bar_fill")
+expand_mode = 1
+
+[node name="Uid" type="Label" parent="Hero" index="10" unique_id=1786528535]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 97.0
+offset_right = 356.0
+offset_bottom = 109.0
+text = "UID: #IM-0000"
+label_settings = ExtResource("25_t_label")
+
+[node name="StatsTitle" type="Label" parent="." index="4" unique_id=1548711448]
+layout_mode = 0
+offset_left = 62.5
+offset_top = 206.0
+offset_right = 302.5
+offset_bottom = 222.0
+text = "STR_PROFILE_STATS_TITLE"
+label_settings = ExtResource("22_t_section")
+
+[node name="StatCards" type="Control" parent="." index="5" unique_id=614093522]
+anchors_preset = 0
+offset_left = 60.0
+offset_top = 226.5
+offset_right = 440.0
+offset_bottom = 352.5
+mouse_filter = 2
+
+[node name="Stat1" type="Control" parent="StatCards" index="0" unique_id=1118250117]
+anchors_preset = 0
+offset_right = 182.5
+offset_bottom = 57.5
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="StatCards/Stat1" index="0" unique_id=1151073300]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_card_soft")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="Disc" type="TextureRect" parent="StatCards/Stat1" index="1" unique_id=362143325]
+self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
+layout_mode = 0
+offset_left = 10.5
+offset_top = 12.0
+offset_right = 44.5
+offset_bottom = 46.0
+mouse_filter = 2
+texture = ExtResource("13_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="StatCards/Stat1" index="2" unique_id=602513051]
+layout_mode = 0
+offset_left = 17.5
+offset_top = 19.0
+offset_right = 37.5
+offset_bottom = 39.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="StatCards/Stat1" index="3" unique_id=437444026]
+layout_mode = 0
+offset_left = 52.5
+offset_top = 16.0
+offset_right = 176.5
+offset_bottom = 26.0
+text = "STR_PROFILE_STAT_STARS"
+label_settings = ExtResource("25_t_label")
+
+[node name="Value" type="Label" parent="StatCards/Stat1" index="4" unique_id=808379680]
+layout_mode = 0
+offset_left = 52.5
+offset_top = 32.0
+offset_right = 176.5
+offset_bottom = 50.0
+text = "0 / 0"
+label_settings = ExtResource("26_t_value")
+
+[node name="Stat2" type="Control" parent="StatCards" index="1" unique_id=1486636731]
+anchors_preset = 0
+offset_left = 197.5
+offset_right = 380.0
+offset_bottom = 57.5
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="StatCards/Stat2" index="0" unique_id=221089683]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_card_soft")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="Disc" type="TextureRect" parent="StatCards/Stat2" index="1" unique_id=321402922]
+self_modulate = Color(0.996078, 0.886275, 0.886275, 1)
+layout_mode = 0
+offset_left = 10.5
+offset_top = 12.0
+offset_right = 44.5
+offset_bottom = 46.0
+mouse_filter = 2
+texture = ExtResource("13_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="StatCards/Stat2" index="2" unique_id=1530366209]
+layout_mode = 0
+offset_left = 17.5
+offset_top = 19.0
+offset_right = 37.5
+offset_bottom = 39.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="StatCards/Stat2" index="3" unique_id=752267717]
+layout_mode = 0
+offset_left = 52.5
+offset_top = 16.0
+offset_right = 176.5
+offset_bottom = 26.0
+text = "STR_PROFILE_STAT_DUNGEON"
+label_settings = ExtResource("25_t_label")
+
+[node name="Value" type="Label" parent="StatCards/Stat2" index="4" unique_id=601557832]
+layout_mode = 0
+offset_left = 52.5
+offset_top = 32.0
+offset_right = 176.5
+offset_bottom = 50.0
+text = "FLOOR 0"
+label_settings = ExtResource("26_t_value")
+
+[node name="Stat3" type="Control" parent="StatCards" index="2" unique_id=1851125077]
+anchors_preset = 0
+offset_top = 68.5
+offset_right = 182.5
+offset_bottom = 126.0
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="StatCards/Stat3" index="0" unique_id=1988854800]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_card_soft")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="Disc" type="TextureRect" parent="StatCards/Stat3" index="1" unique_id=142180402]
+self_modulate = Color(1, 0.984314, 0.921569, 1)
+layout_mode = 0
+offset_left = 10.5
+offset_top = 12.0
+offset_right = 44.5
+offset_bottom = 46.0
+mouse_filter = 2
+texture = ExtResource("13_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="StatCards/Stat3" index="2" unique_id=2024549055]
+layout_mode = 0
+offset_left = 17.5
+offset_top = 19.0
+offset_right = 37.5
+offset_bottom = 39.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="StatCards/Stat3" index="3" unique_id=817346799]
+layout_mode = 0
+offset_left = 52.5
+offset_top = 16.0
+offset_right = 176.5
+offset_bottom = 26.0
+text = "STR_PROFILE_STAT_STREAK"
+label_settings = ExtResource("25_t_label")
+
+[node name="Value" type="Label" parent="StatCards/Stat3" index="4" unique_id=530842491]
+layout_mode = 0
+offset_left = 52.5
+offset_top = 32.0
+offset_right = 176.5
+offset_bottom = 50.0
+text = "0 DAYS"
+label_settings = ExtResource("26_t_value")
+
+[node name="Stat4" type="Control" parent="StatCards" index="3" unique_id=2072532703]
+anchors_preset = 0
+offset_left = 197.5
+offset_top = 68.5
+offset_right = 380.0
+offset_bottom = 126.0
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="StatCards/Stat4" index="0" unique_id=1029411164]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_card_soft")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="Disc" type="TextureRect" parent="StatCards/Stat4" index="1" unique_id=1505269888]
+self_modulate = Color(0.941176, 0.992157, 0.956863, 1)
+layout_mode = 0
+offset_left = 10.5
+offset_top = 12.0
+offset_right = 44.5
+offset_bottom = 46.0
+mouse_filter = 2
+texture = ExtResource("13_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="StatCards/Stat4" index="2" unique_id=1352650052]
+layout_mode = 0
+offset_left = 17.5
+offset_top = 19.0
+offset_right = 37.5
+offset_bottom = 39.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="StatCards/Stat4" index="3" unique_id=1049967121]
+layout_mode = 0
+offset_left = 52.5
+offset_top = 16.0
+offset_right = 176.5
+offset_bottom = 26.0
+text = "STR_PROFILE_STAT_WINRATE"
+label_settings = ExtResource("25_t_label")
+
+[node name="Value" type="Label" parent="StatCards/Stat4" index="4" unique_id=1699895227]
+layout_mode = 0
+offset_left = 52.5
+offset_top = 32.0
+offset_right = 176.5
+offset_bottom = 50.0
+text = "0%"
+label_settings = ExtResource("26_t_value")
+
+[node name="BadgesTitle" type="Label" parent="." index="6" unique_id=1871597657]
+layout_mode = 0
+offset_left = 62.5
+offset_top = 365.5
+offset_right = 302.5
+offset_bottom = 381.5
+text = "STR_PROFILE_BADGES_TITLE"
+label_settings = ExtResource("22_t_section")
+
+[node name="Badges" type="Control" parent="." index="7" unique_id=2024048946]
+anchors_preset = 0
+offset_left = 60.0
+offset_top = 377.5
+offset_right = 440.0
+offset_bottom = 467.5
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Badges" index="0" unique_id=597947278]
+layout_mode = 0
+offset_top = 9.0
+offset_right = 380.0
+offset_bottom = 81.5
+texture = ExtResource("11_card_soft")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="ApChip" type="Control" parent="Badges" index="1" unique_id=1072352309]
+anchors_preset = 0
+offset_left = 117.5
+offset_top = -9.0
+offset_right = 165.0
+offset_bottom = 3.0
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Badges/ApChip" index="0" unique_id=2123305191]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_chip_gold")
+expand_mode = 1
+
+[node name="Text" type="Label" parent="Badges/ApChip" index="1" unique_id=1698514621]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0 AP"
+label_settings = ExtResource("23_t_chip_gold")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Badge1" type="Control" parent="Badges" index="2" unique_id=1947459461]
+anchors_preset = 0
+offset_left = 26.5
+offset_top = 24.0
+offset_right = 68.5
+offset_bottom = 84.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Badges/Badge1" index="0" unique_id=1249291401]
+layout_mode = 0
+offset_right = 42.0
+offset_bottom = 42.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Badges/Badge1" index="1" unique_id=680042549]
+layout_mode = 0
+offset_top = 44.0
+offset_right = 42.0
+offset_bottom = 58.0
+text = "—"
+label_settings = ExtResource("27_t_small")
+horizontal_alignment = 1
+
+[node name="Badge2" type="Control" parent="Badges" index="3" unique_id=749118727]
+anchors_preset = 0
+offset_left = 121.5
+offset_top = 24.0
+offset_right = 163.5
+offset_bottom = 84.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Badges/Badge2" index="0" unique_id=1803719632]
+layout_mode = 0
+offset_right = 42.0
+offset_bottom = 42.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Badges/Badge2" index="1" unique_id=889011462]
+layout_mode = 0
+offset_top = 44.0
+offset_right = 42.0
+offset_bottom = 58.0
+text = "—"
+label_settings = ExtResource("27_t_small")
+horizontal_alignment = 1
+
+[node name="Badge3" type="Control" parent="Badges" index="4" unique_id=1468559532]
+anchors_preset = 0
+offset_left = 216.5
+offset_top = 24.0
+offset_right = 258.5
+offset_bottom = 84.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Badges/Badge3" index="0" unique_id=1802903339]
+layout_mode = 0
+offset_right = 42.0
+offset_bottom = 42.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Badges/Badge3" index="1" unique_id=115427877]
+layout_mode = 0
+offset_top = 44.0
+offset_right = 42.0
+offset_bottom = 58.0
+text = "—"
+label_settings = ExtResource("27_t_small")
+horizontal_alignment = 1
+
+[node name="BtnMore" type="TextureButton" parent="Badges" index="5" unique_id=1187893922]
+self_modulate = Color(0.960784, 0.976471, 0.984314, 1)
+layout_mode = 0
+offset_left = 311.5
+offset_top = 24.0
+offset_right = 353.5
+offset_bottom = 66.0
+texture_normal = ExtResource("13_circle")
+texture_pressed = ExtResource("13_circle")
+texture_hover = ExtResource("13_circle")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Plus" type="Label" parent="Badges/BtnMore" index="0" unique_id=1442565506]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "+"
+label_settings = ExtResource("22_t_section")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Text" type="Label" parent="Badges/BtnMore" index="1" unique_id=1946370820]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 44.0
+offset_right = 66.0
+offset_bottom = 58.0
+text = "STR_PROFILE_BADGES_MORE"
+label_settings = ExtResource("32_t_state")
+horizontal_alignment = 1
+
+[node name="GearTitle" type="Label" parent="." index="8" unique_id=2079874394]
+layout_mode = 0
+offset_left = 62.5
+offset_top = 478.0
+offset_right = 302.5
+offset_bottom = 494.0
+text = "STR_PROFILE_GEAR_TITLE"
+label_settings = ExtResource("22_t_section")
+
+[node name="Gear" type="Control" parent="." index="9" unique_id=1581387790]
+anchors_preset = 0
+offset_left = 60.0
+offset_top = 490.0
+offset_right = 440.0
+offset_bottom = 574.0
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Gear" index="0" unique_id=859894123]
+layout_mode = 0
+offset_top = 9.0
+offset_right = 380.0
+offset_bottom = 84.0
+texture = ExtResource("11_card_soft")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="Card1" type="Control" parent="Gear" index="1" unique_id=441713477]
+anchors_preset = 0
+offset_left = 15.0
+offset_top = 21.5
+offset_right = 122.5
+offset_bottom = 71.5
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Gear/Card1" index="0" unique_id=480662002]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_mini_card")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="Disc" type="TextureRect" parent="Gear/Card1" index="1" unique_id=1832266141]
+self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 11.0
+offset_right = 39.0
+offset_bottom = 39.0
+mouse_filter = 2
+texture = ExtResource("13_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="Gear/Card1" index="2" unique_id=511367393]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 35.0
+offset_bottom = 35.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Caption" type="Label" parent="Gear/Card1" index="3" unique_id=1310060249]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 15.0
+offset_right = 102.0
+offset_bottom = 25.0
+text = "STR_PROFILE_GEAR_PEN"
+label_settings = ExtResource("27_t_small")
+
+[node name="Name" type="Label" parent="Gear/Card1" index="4" unique_id=99617532]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 26.0
+offset_right = 104.0
+offset_bottom = 40.0
+text = "—"
+label_settings = ExtResource("28_t_row")
+
+[node name="Card2" type="Control" parent="Gear" index="2" unique_id=2001087359]
+anchors_preset = 0
+offset_left = 136.0
+offset_top = 21.5
+offset_right = 243.5
+offset_bottom = 71.5
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Gear/Card2" index="0" unique_id=1333827168]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_mini_card")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="Disc" type="TextureRect" parent="Gear/Card2" index="1" unique_id=473670630]
+self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 11.0
+offset_right = 39.0
+offset_bottom = 39.0
+mouse_filter = 2
+texture = ExtResource("13_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="Gear/Card2" index="2" unique_id=896466036]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 35.0
+offset_bottom = 35.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Caption" type="Label" parent="Gear/Card2" index="3" unique_id=1818817905]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 15.0
+offset_right = 102.0
+offset_bottom = 25.0
+text = "STR_PROFILE_GEAR_THEME"
+label_settings = ExtResource("27_t_small")
+
+[node name="Name" type="Label" parent="Gear/Card2" index="4" unique_id=269500849]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 26.0
+offset_right = 104.0
+offset_bottom = 40.0
+text = "—"
+label_settings = ExtResource("28_t_row")
+
+[node name="Card3" type="Control" parent="Gear" index="3" unique_id=859656862]
+anchors_preset = 0
+offset_left = 257.5
+offset_top = 21.5
+offset_right = 365.0
+offset_bottom = 71.5
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Gear/Card3" index="0" unique_id=1634404054]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_mini_card")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="Disc" type="TextureRect" parent="Gear/Card3" index="1" unique_id=947987207]
+self_modulate = Color(1, 0.984314, 0.921569, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 11.0
+offset_right = 39.0
+offset_bottom = 39.0
+mouse_filter = 2
+texture = ExtResource("13_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="Gear/Card3" index="2" unique_id=952329148]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 35.0
+offset_bottom = 35.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Caption" type="Label" parent="Gear/Card3" index="3" unique_id=1728709290]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 15.0
+offset_right = 102.0
+offset_bottom = 25.0
+text = "STR_PROFILE_GEAR_FRAME"
+label_settings = ExtResource("27_t_small")
+
+[node name="Name" type="Label" parent="Gear/Card3" index="4" unique_id=1220949750]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 26.0
+offset_right = 104.0
+offset_bottom = 40.0
+text = "—"
+label_settings = ExtResource("28_t_row")
+
+[node name="ActivityTitle" type="Label" parent="." index="10" unique_id=1474642943]
+layout_mode = 0
+offset_left = 62.5
+offset_top = 590.5
+offset_right = 302.5
+offset_bottom = 606.5
+text = "STR_PROFILE_ACTIVITY_TITLE"
+label_settings = ExtResource("22_t_section")
+
+[node name="Rows" type="VBoxContainer" parent="." index="11" unique_id=1996942271]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 611.5
+offset_right = 440.0
+offset_bottom = 729.5
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Empty" type="Label" parent="Rows" index="0" unique_id=1206922635]
+visible = false
+layout_mode = 2
+text = "STR_PROFILE_EMPTY_ACTIVITY"
+label_settings = ExtResource("27_t_small")
+horizontal_alignment = 1
+
+[node name="BtnEdit" type="TextureButton" parent="." index="12" unique_id=1841122082]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 765.0
+offset_right = 295.0
+offset_bottom = 807.5
+texture_normal = ExtResource("16_pri_n")
+texture_pressed = ExtResource("17_pri_p")
+texture_hover = ExtResource("16_pri_n")
+texture_disabled = ExtResource("16_pri_n")
+texture_focused = ExtResource("16_pri_n")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Text" type="Label" parent="BtnEdit" index="0" unique_id=412912841]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "STR_PROFILE_EDIT_BTN"
+label_settings = ExtResource("29_t_btn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnShare" type="TextureButton" parent="." index="13" unique_id=748595947]
+layout_mode = 0
+offset_left = 307.5
+offset_top = 765.0
+offset_right = 440.0
+offset_bottom = 807.5
+texture_normal = ExtResource("18_gho_n")
+texture_pressed = ExtResource("19_gho_p")
+texture_hover = ExtResource("18_gho_n")
+texture_disabled = ExtResource("18_gho_n")
+texture_focused = ExtResource("18_gho_n")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Text" type="Label" parent="BtnShare" index="0" unique_id=1660410149]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "STR_PROFILE_SHARE_BTN"
+label_settings = ExtResource("30_t_btn_ghost")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Stamp" type="Control" parent="." index="14" unique_id=599069767]
+anchors_preset = 0
+offset_left = 370.0
+offset_top = 817.5
+offset_right = 455.0
+offset_bottom = 842.5
+rotation = -0.10472
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Stamp" index="0" unique_id=1621480326]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("20_stamp")
+expand_mode = 1
+
+[node name="Text" type="Label" parent="Stamp" index="1" unique_id=1442779770]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "STR_PROFILE_STAMP"
+label_settings = ExtResource("31_t_stamp")
+horizontal_alignment = 1
+vertical_alignment = 1

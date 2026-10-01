@@ -20,6 +20,8 @@ func _ready() -> void:
 	_refresh_stamp()
 	_refresh_badge()
 	_refresh_mode_badges()
+	_refresh_profile()
+	_connect_profile_manager()
 	_setup_buttons()
 	_setup_animations()
 	orientation_changed.connect(_on_orientation_changed)
@@ -38,6 +40,7 @@ func _on_orientation_changed(_is_landscape_now: bool) -> void:
 	_refresh_stamp()
 	_refresh_badge()
 	_refresh_mode_badges()
+	_refresh_profile()
 	_setup_buttons()
 	_setup_animations()
 
@@ -59,6 +62,7 @@ func _setup_buttons() -> void:
 	_connect_pressed(layout.btn_shop, _on_shop_pressed)
 	_connect_pressed(layout.btn_settings, _on_settings_pressed)
 	_connect_pressed(layout.btn_archivement, _on_archivement_pressed)
+	_connect_pressed(layout.btn_profile, _on_profile_pressed)
 
 
 func _setup_animations() -> void:
@@ -95,6 +99,10 @@ func _setup_animations() -> void:
 	# 3b. Nút Sổ tay thành tựu ở góc trên phải tờ giấy: nảy nhẹ khi mở màn
 	if layout.btn_archivement != null:
 		UIAnim.play_pop_in(layout.btn_archivement, 0.08, 0.9, 0.28)
+
+	# 3c. Sticker HỒ SƠ ở góc trên trái: nảy nhẹ như sticker Danh hiệu
+	if layout.btn_profile != null:
+		UIAnim.play_pop_in(layout.btn_profile, 0.1, 0.9, 0.28)
 
 	# 4. Con dấu phiên bản nảy nhẹ
 	if layout.stamp_panel != null:
@@ -137,6 +145,12 @@ func _on_settings_pressed() -> void:
 func _on_archivement_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	Nav.goto_archivement()
+
+
+## Sticker HỒ SƠ (avatar góc trên trái) mở màn hồ sơ cá nhân
+func _on_profile_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
+	Nav.goto_profiler()
 
 
 func _on_leaderboard_pressed() -> void:
@@ -186,3 +200,22 @@ func _refresh_mode_badges() -> void:
 		streak = int(dm.call("get_streak"))
 	if layout.badge_daily != null:
 		layout.badge_daily.text = tr("STR_STREAK_BADGE").format([streak])
+
+
+## Sticker HỒ SƠ: avatar + viền khung + cấp độ (layout NGANG còn có tên người chơi)
+func _refresh_profile() -> void:
+	if layout.profile_avatar != null:
+		layout.profile_avatar.texture = load(Profile.avatar_icon(Profile.avatar_id())) as Texture2D
+	if layout.profile_frame != null:
+		layout.profile_frame.texture = load(Profile.frame_icon(Profile.frame_id())) as Texture2D
+	if layout.profile_level != null:
+		layout.profile_level.text = tr("STR_PROFILE_LEVEL_FORMAT").format([Profile.level()])
+	if layout.profile_name != null:
+		layout.profile_name.text = Profile.display_name()
+
+
+## Hồ sơ đổi (đổi avatar/viền/tên ở popup) -> sticker trên màn chính cập nhật theo
+func _connect_profile_manager() -> void:
+	var m := Profile.manager()
+	if m != null and m.has_signal("profile_changed") and not m.is_connected("profile_changed", _refresh_profile):
+		m.connect("profile_changed", _refresh_profile)

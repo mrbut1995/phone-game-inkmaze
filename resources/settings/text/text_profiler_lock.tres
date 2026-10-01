@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://10rhkf4kv2gy"]
+
+[ext_resource type="FontFile" uid="uid://p1fc40cda2vk" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-ExtraBold.ttf" id="1_font"]
+
+[resource]
+font = ExtResource("1_font")
+font_size = 12
