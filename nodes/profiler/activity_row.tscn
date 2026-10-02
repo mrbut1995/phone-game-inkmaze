@@ -7,6 +7,14 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_small.tres" id="5_sub"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_state.tres" id="6_tag"]
 [ext_resource type="Texture2D" path="res://assets/images/profiler/row_bg.svg" id="7_bg"]
+[ext_resource type="Texture2D" path="res://assets/images/profiler/chip_grey.svg" id="8_chip"]
+
+[sub_resource type="StyleBoxTexture" id="Sb_tag"]
+texture = ExtResource("8_chip")
+texture_margin_left = 8.0
+texture_margin_top = 6.0
+texture_margin_right = 8.0
+texture_margin_bottom = 6.0
 
 [node name="ActivityRow" type="Control"]
 custom_minimum_size = Vector2(380, 36)
@@ -31,13 +39,19 @@ patch_margin_left = 12
 patch_margin_top = 10
 patch_margin_right = 12
 patch_margin_bottom = 10
-metadata/_edit_use_anchors_ = true
 
 [node name="Disc" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 30.0
-offset_bottom = 30.0
-offset_top = 3.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.5
+anchor_right = 0.0
+anchor_bottom = 0.5
+offset_left = 6.0
+offset_top = -15.0
+offset_right = 36.0
+offset_bottom = 15.0
+grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("3_circle")
 expand_mode = 1
@@ -54,34 +68,52 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Title" type="Label" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
 offset_left = 38.0
-offset_top = 1.0
-offset_right = 280.0
-offset_bottom = 15.0
+offset_top = 2.0
+offset_right = -180.0
+offset_bottom = -1.0
+grow_horizontal = 2
 mouse_filter = 2
 text = "Màn 24 • Bàn 7×7"
 label_settings = ExtResource("4_title")
 vertical_alignment = 1
 
 [node name="Sub" type="Label" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 38.0
-offset_top = 17.0
-offset_right = 280.0
-offset_bottom = 29.0
+offset_top = 1.0
+offset_right = -180.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 text = "Thời gian phá giải: 00:38s"
 label_settings = ExtResource("5_sub")
 vertical_alignment = 1
 
 [node name="Tag" type="Label" parent="."]
-layout_mode = 0
-offset_left = 270.0
-offset_right = 380.0
-offset_bottom = 36.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = 8.0
+offset_right = -10.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 2
 mouse_filter = 2
 text = "3/3 SAO"
 label_settings = ExtResource("6_tag")
+theme_override_styles/normal = SubResource("Sb_tag")
 horizontal_alignment = 2
 vertical_alignment = 1

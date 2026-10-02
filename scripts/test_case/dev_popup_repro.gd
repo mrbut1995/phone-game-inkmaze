@@ -8,10 +8,13 @@ extends SceneTree
 ##   · Màn game (play) → thua ván → popup game_over_level: đo rect + chụp ảnh
 ##   · Mở popup next_floor (dungeon): đo rect + chụp ảnh
 ##   · Lớp chuyển cảnh loading.tscn: chụp ảnh giữa hiệu ứng
-## Ảnh lưu vào tmp_popup/<WxH>_<id>.png (nửa phân giải).
+## Ảnh lưu vào tmp_popup/<WxH>_<id>.png (2× canvas — so 1:1 được với mockup).
 ## ============================================================================
 
 const SIZES := [Vector2i(2560, 1600), Vector2i(1600, 2560)]
+
+## Hệ số phóng ảnh chụp so với canvas (viewport texture = đúng cỡ canvas).
+const _SHOT_SCALE := 2.0
 
 var _passes := 0
 var _fails := 0
@@ -225,7 +228,8 @@ func _shot(id: String) -> void:
 	var img := root.get_texture().get_image()
 	if img == null:
 		return
-	img.resize(maxi(int(img.get_width() * 0.5), 1), maxi(int(img.get_height() * 0.5), 1), Image.INTERPOLATE_LANCZOS)
+	# 2× canvas ⇒ so 1:1 được với mockup (mockup vẽ ở 1080×1920 cho canvas 540×960)
+	img.resize(maxi(int(img.get_width() * _SHOT_SCALE), 1), maxi(int(img.get_height() * _SHOT_SCALE), 1), Image.INTERPOLATE_LANCZOS)
 	img.save_png("res://tmp_popup/%s.png" % id)
 
 

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Icon tab ĐỔI AVATAR (mockup dùng glyph "👤" — vẽ lại thành SVG, tô TRẮNG để tint theo tab) -->
+  <circle cx="12" cy="7.4" r="4.4" fill="#FFFFFF"/>
+  <path d="M 3.6 21.4 C 3.6 15.8 7.4 13.2 12 13.2 C 16.6 13.2 20.4 15.8 20.4 21.4 Z" fill="#FFFFFF"/>
+</svg>

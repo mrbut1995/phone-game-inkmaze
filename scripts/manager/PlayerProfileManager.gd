@@ -30,7 +30,7 @@ const TITLE_TIERS := [
 	{"min_level": 30, "key": "STR_PROFILE_TIER_5"},
 ]
 
-## Catalog AVATAR — 6 mẫu theo mockup Profiler (2 mặc định sở hữu kèm sẵn)
+## Catalog AVATAR — 8 mẫu (3 mặc định sở hữu kèm sẵn)
 const AVATARS := [
 	{"id": "avatar_ink", "name_key": "STR_AVATAR_INK", "icon": ICON_DIR + "avatar_ink_knight.svg", "price": 0},
 	{"id": "avatar_wizard", "name_key": "STR_AVATAR_WIZARD", "icon": ICON_DIR + "avatar_wizard.svg", "price": 0},
@@ -40,9 +40,13 @@ const AVATARS := [
 	{"id": "avatar_king", "name_key": "STR_AVATAR_KING", "icon": ICON_DIR + "avatar_king.svg",
 		"price": 0, "lock_stat": "points", "lock_value": 500},
 	{"id": "avatar_fox", "name_key": "STR_AVATAR_FOX", "icon": ICON_DIR + "avatar_fox.svg", "price": 500},
+	{"id": "avatar_ninja", "name_key": "STR_AVATAR_NINJA", "icon": ICON_DIR + "avatar_ninja.svg",
+		"price": 700},
+	{"id": "avatar_owl", "name_key": "STR_AVATAR_OWL", "icon": ICON_DIR + "avatar_owl.svg",
+		"price": 0, "lock_stat": "daily_streak", "lock_value": 45},
 ]
 
-## Catalog VIỀN KHUNG — 6 mẫu theo mockup Profiler (2 mặc định sở hữu kèm sẵn)
+## Catalog VIỀN KHUNG — 8 mẫu (3 mặc định sở hữu kèm sẵn)
 const FRAMES := [
 	{"id": "frame_gear", "name_key": "STR_FRAME_GEAR", "icon": ICON_DIR + "frame_gear_gold.svg", "price": 0},
 	{"id": "frame_laurel", "name_key": "STR_FRAME_LAUREL", "icon": ICON_DIR + "frame_laurel.svg", "price": 0},
@@ -52,6 +56,9 @@ const FRAMES := [
 	{"id": "frame_iron", "name_key": "STR_FRAME_IRON", "icon": ICON_DIR + "frame_iron_dark.svg",
 		"price": 0, "lock_stat": "dungeon_best_floor", "lock_value": 50},
 	{"id": "frame_royal", "name_key": "STR_FRAME_ROYAL", "icon": ICON_DIR + "frame_royal_aura.svg", "price": 800},
+	{"id": "frame_crystal", "name_key": "STR_FRAME_CRYSTAL", "icon": ICON_DIR + "frame_crystal.svg", "price": 650},
+	{"id": "frame_leaf", "name_key": "STR_FRAME_LEAF", "icon": ICON_DIR + "frame_leaf.svg",
+		"price": 0, "lock_stat": "points", "lock_value": 700},
 ]
 
 const DEFAULT_AVATAR := "avatar_ink"

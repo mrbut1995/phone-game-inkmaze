@@ -2,18 +2,20 @@ extends SceneTree
 ## ============================================================================
 ## Test Case: HỒ SƠ CÁ NHÂN (Profiler) — tính năng 2026-02
 ##
-## 1. Manager (PlayerProfileManager): catalog 6 avatar + 6 viền khung, mặc định
+## 1. Manager (PlayerProfileManager): catalog 8 avatar + 8 viền khung, mặc định
 ##    sở hữu, khoá theo mốc (Dungeon / Chuỗi Daily / AP).
 ## 2. Trang bị + tên: equip món sở hữu, chặn món chưa mở khoá, đổi tên 16 ký tự.
 ## 3. Thống kê: EXP = AP + Sao×25 · Cấp = 1 + EXP/200 · tỉ lệ thắng theo lịch sử.
 ## 4. Lịch sử ván: record_run ghi đúng + giới hạn 10 dòng.
 ## 5. Scene Profiler: 2 hướng bind layout, số liệu đổ lên UI, hàng hoạt động ≤ 3.
-## 6. Popup DIỆN MẠO HỒ SƠ: 6 món/lưới, 2 tab, chọn mẫu đổi phần xem trước.
+## 6. Popup DIỆN MẠO HỒ SƠ: phân trang 6 món/trang (nút ‹ › + chấm trang), 2 tab,
+##    ô mẫu dùng TextureButton (4 art trạng thái, không node con nào chặn chuột).
 ## 7. Lưu trữ: SaveManager đăng ký provider + export/import khôi phục hồ sơ.
 ## ============================================================================
 
-const AVATAR_COUNT := 6
-const FRAME_COUNT := 6
+const AVATAR_COUNT := 8
+const FRAME_COUNT := 8
+const POPUP_ITEMS_PER_PAGE := 6
 const MAX_RECENT := 10
 const EXP_PER_LEVEL := 200
 const EXP_PER_STAR := 25
@@ -39,6 +41,9 @@ func _init() -> void:
 	var manager: Node = root.get_node_or_null("PlayerProfileManager")
 	assert(manager != null, "Autoload PlayerProfileManager phai ton tai")
 	var saved: Dictionary = manager.call("export_progress")
+	# Bắt đầu từ TIẾN TRÌNH MẶC ĐỊNH: save của máy dev có thể đã bị các vòng test trước
+	# mua đồ trong popup ⇒ check "món mua bằng Xu chưa sở hữu" sẽ sai oan. Khôi phục ở cuối.
+	manager.call("reset_progress")
 
 	_section_1_catalog(manager)
 	_section_2_equip_and_name(manager)
@@ -289,16 +294,53 @@ func _section_6_popup(manager: Node) -> void:
 	if popup == null:
 		return
 	_entry(popup.tab() == "avatar", "Mac dinh mo tab AVATAR")
-	_entry(popup.item_count() == AVATAR_COUNT, "Luoi co %d avatar" % AVATAR_COUNT)
+	_entry(popup.item_count() == mini(POPUP_ITEMS_PER_PAGE, AVATAR_COUNT),
+		"Trang avatar hien %d mon" % mini(POPUP_ITEMS_PER_PAGE, AVATAR_COUNT))
 
 	var preview_avatar := popup.get_node_or_null("Panel/Content/Preview/Profile/Frame/Avatar") as TextureRect
 	_entry(preview_avatar != null and preview_avatar.texture != null, "The xem truoc co avatar")
 	var name_edit := popup.get_node_or_null("Panel/Content/Preview/NameEdit") as LineEdit
 	_entry(name_edit != null and name_edit.max_length == 16, "O ten gioi han 16 ky tu")
 
+	# Phân trang: 8 món → 6 + 2; điều hướng bằng nút > < và chấm trang
+	_entry(popup.page_count() == 2, "Avatar co 2 trang")
+	var dots := popup.get_node_or_null("Panel/Content/PageBar/Dots") as HBoxContainer
+	_entry(dots != null and dots.get_child_count() == 2, "Co 2 cham phan trang")
+	if dots != null and dots.get_child_count() == 2:
+		var dot0 := dots.get_child(0) as EditProfileDot
+		_entry(dot0 != null and dot0.is_current(), "Cham trang 1 dang bat")
+	var btn_next := popup.get_node_or_null("Panel/Content/PageBar/BtnNext") as TextureButton
+	_entry(btn_next != null and not btn_next.disabled, "Nut > bam duoc khi con trang sau")
+	if btn_next != null:
+		btn_next.pressed.emit()
+		await process_frame
+	_entry(popup.page_index() == 1 and popup.item_count() == AVATAR_COUNT - POPUP_ITEMS_PER_PAGE,
+		"Trang 2 con %d avatar" % (AVATAR_COUNT - POPUP_ITEMS_PER_PAGE))
+	var btn_prev := popup.get_node_or_null("Panel/Content/PageBar/BtnPrev") as TextureButton
+	if btn_prev != null:
+		btn_prev.pressed.emit()
+		await process_frame
+	_entry(popup.page_index() == 0 and popup.item_count() == POPUP_ITEMS_PER_PAGE, "Nut < quay lai trang 1")
+
+	# Ô mẫu dùng TextureButton (không phải Button nền tĩnh) + không node con nào chặn chuột
+	var first_item := popup.item_node("avatar_ink") as TextureButton
+	_entry(first_item != null, "O avatar dau tien lay duoc node")
+	if first_item != null:
+		_entry(first_item.texture_normal != null and first_item.texture_pressed != null
+			and first_item.texture_hover != null and first_item.texture_focused != null,
+			"O co du art 4 trang thai (thuong/hover/nhan/focus)")
+		var blocking := 0
+		for child in first_item.get_children():
+			var ctrl := child as Control
+			if ctrl != null and ctrl.mouse_filter != Control.MOUSE_FILTER_IGNORE:
+				blocking += 1
+		_entry(blocking == 0, "Khong node con nao chan chuot (con %d)" % blocking)
+
 	popup.set_tab("frame")
 	await process_frame
-	_entry(popup.item_count() == FRAME_COUNT, "Tab VIEN KHUNG co %d mon" % FRAME_COUNT)
+	_entry(popup.item_count() == mini(POPUP_ITEMS_PER_PAGE, FRAME_COUNT),
+		"Trang vien khung hien %d mon" % mini(POPUP_ITEMS_PER_PAGE, FRAME_COUNT))
+	_entry(popup.page_count() == 2, "Vien khung co 2 trang")
 	popup.select_pending("frame_laurel")
 	await process_frame
 	var preview_frame := popup.get_node_or_null("Panel/Content/Preview/Profile/Frame") as TextureRect

@@ -1339,6 +1339,10 @@ STR_FRAME_INK,Double Ink,Nét Mực Kép
 STR_FRAME_FIRE,Streak Fire,Gai Lửa Streak
 STR_FRAME_IRON,Dark Iron,Hắc Thiết Ngục
 STR_FRAME_ROYAL,Royal Aura,Hào Quang Đế Vương
+STR_AVATAR_NINJA,Ink Ninja,Ninja Mực
+STR_AVATAR_OWL,Scholar Owl,Cú Học Giả
+STR_FRAME_CRYSTAL,Crystal Halo,Hào Quang Pha Lê
+STR_FRAME_LEAF,Leaf Wreath,Vòng Lá Nguyệt Quế
 STR_LOCK_DUNGEON,Dungeon Floor {0},Dungeon Tầng {0}
 STR_LOCK_STREAK,Daily streak {0} days,Chuỗi Daily {0} ngày
 STR_LOCK_POINTS,{0} Badge AP,{0} AP Danh Hiệu
