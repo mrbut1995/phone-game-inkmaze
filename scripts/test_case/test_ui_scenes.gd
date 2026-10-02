@@ -154,8 +154,8 @@ func _section_2_archivement() -> void:
 		_entry(page.column() != null and page.column().get_parent() == page,
 			"column() tra ve cot that su cua trang")
 		# Cột thẻ là VBoxContainer (1 cột) — khe dọc khai tường minh trong page.tscn
-		_entry(page.column().get_theme_constant("separation") == 4,
-			"khe giua cac the = 4 (tu scene)")
+		_entry(page.column().get_theme_constant("separation") == 5,
+			"khe giua cac the = 5 (tu scene)")
 		page.column().add_child(Label.new())
 		_entry(page.column().get_child_count() == 1, "them the vao cot = vao dung trang")
 		page.queue_free()

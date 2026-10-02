@@ -9,7 +9,7 @@ extends SceneTree
 ## 4. Lịch sử ván: record_run ghi đúng + giới hạn 10 dòng.
 ## 5. Popup Hồ sơ: nội dung ĐỘC LẬP kế thừa BaseUI (không kế thừa BaseScene),
 ##    mở qua PopupManager (không đổi màn hình), 2 hướng bind layout, Edit Profile
-##    xếp TRÊN Profiler, nút Back đóng popup.
+##    xếp TRÊN Profiler, nút X (Close) nằm bên phải & đóng popup.
 ## 6. Popup DIỆN MẠO HỒ SƠ: phân trang 6 món/trang (nút ‹ › + chấm trang), 2 tab,
 ##    ô mẫu dùng TextureButton (4 art trạng thái, không node con nào chặn chuột).
 ## 7. Lưu trữ: SaveManager đăng ký provider + export/import khôi phục hồ sơ.
@@ -221,8 +221,11 @@ func _section_5_scene(manager: Node) -> void:
 		await process_frame
 		return
 
-	# Nút Back (lấy trước khi mượn layout NGANG bên dưới) — kiểm đóng popup ở cuối mục này
-	var back_btn := scene.layout.btn_back as BaseButton
+	# Nút X (đóng) — lấy trước khi mượn layout NGANG bên dưới; kiểm đóng popup ở cuối mục này
+	var close_btn := scene.layout.btn_close as BaseButton
+	_entry(close_btn != null, "Nut X (Close) duoc bind")
+	_entry(close_btn != null and close_btn.global_position.x > scene.global_position.x + scene.size.x * 0.5,
+		"Nut X nam nua PHAI TopBar")
 
 	var chip := scene.layout.chip_text()
 	_entry(chip != null and not chip.text.is_empty(), "Chip cap do co chu ('%s')" % (chip.text if chip != null else ""))
@@ -308,11 +311,11 @@ func _section_5_scene(manager: Node) -> void:
 	land.queue_free()
 	await process_frame
 
-	# Nút Back của hồ sơ ĐÓNG popup (không điều hướng màn hình)
-	if is_instance_valid(back_btn):
-		back_btn.pressed.emit()
+	# Nút X (Close) của hồ sơ ĐÓNG popup (không điều hướng màn hình)
+	if is_instance_valid(close_btn):
+		close_btn.pressed.emit()
 		await create_timer(0.4).timeout
-	_entry(not Popups.is_open(Popups.PROFILER), "Nut Back -> dong popup ho so")
+	_entry(not Popups.is_open(Popups.PROFILER), "Nut X (Close) -> dong popup ho so")
 	Popups.close_all()
 	await create_timer(0.2).timeout
 

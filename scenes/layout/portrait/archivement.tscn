@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dy3rxdsj3gjk7"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
+[ext_resource type="Script" uid="uid://dnk2a0loscjvb" path="res://scripts/scenes/layout/archivement_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
 [ext_resource type="Texture2D" uid="uid://dl66u1sdji243" path="res://assets/images/archivements/sheet.svg" id="5_sheet"]
@@ -11,8 +12,283 @@
 [ext_resource type="Texture2D" uid="uid://c8u6tfuomo7wl" path="res://assets/images/archivements/bar_track.svg" id="10_track"]
 [ext_resource type="Texture2D" uid="uid://cxb0b14b811tj" path="res://assets/images/archivements/bar_fill.svg" id="11_fill"]
 [ext_resource type="Texture2D" uid="uid://d3ujne6a5npe3" path="res://assets/images/archivements/stamp_claimed.svg" id="12_stamp"]
+[ext_resource type="Texture2D" uid="uid://ybjhyon2kc2m" path="res://assets/images/archivements/tab_active.svg" id="13_nvjrs"]
 [ext_resource type="PackedScene" uid="uid://d1di7hj3ikjhg" path="res://nodes/archivements/tab_button.tscn" id="20_tab"]
-[ext_resource type="Script" path="res://scripts/scenes/layout/archivement_layout.gd" id="2_layout"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c5arx"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_llm1q"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1khfc"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f65yo"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vggof"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pr3d5"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xeoxk"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lc17w"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q7vyp"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ivfd1"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xn2sv"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eq3vv"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mwxns"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_byhwx"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_awf8l"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k8xt3"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_64frj"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vynjp"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o01xe"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_shv0e"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5gt6s"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vvfd4"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_efsiv"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6p2mn"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t3jj8"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("13_nvjrs")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
 
 [node name="Portrait" unique_id=1580945830 node_paths=PackedStringArray("btn_back", "overview_bar", "overview_fill", "overview_pct", "overview_summary", "tabs_box", "card_area", "scroll", "pages_host", "dots_box", "empty_label", "stamp_label") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
@@ -85,11 +361,16 @@ mouse_filter = 2
 texture = ExtResource("7_clip")
 
 [node name="Overview" type="TextureRect" parent="Sheet" index="2" unique_id=178331372]
-layout_mode = 0
-offset_left = 55.0
-offset_top = 27.5
-offset_right = 410.0
-offset_bottom = 87.5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.120000005
+anchor_top = 0.035
+anchor_right = 0.89100003
+anchor_bottom = 0.113000005
+offset_left = -0.20000076
+offset_top = 0.375
+offset_right = 0.13998413
+offset_bottom = -0.07500458
 mouse_filter = 2
 texture = ExtResource("8_overview")
 
@@ -170,33 +451,62 @@ offset_right = 410.0
 offset_bottom = 120.5
 theme_override_constants/separation = 5
 
-[node name="Tab0" parent="Sheet/Tabs" index="0" instance=ExtResource("20_tab")]
+[node name="Tab0" parent="Sheet/Tabs" index="0" unique_id=491206988 instance=ExtResource("20_tab")]
 layout_mode = 2
-category = ""
+theme_override_styles/normal = SubResource("StyleBoxTexture_c5arx")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_llm1q")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1khfc")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_f65yo")
+theme_override_styles/focus = SubResource("StyleBoxTexture_vggof")
 
-[node name="Tab1" parent="Sheet/Tabs" index="1" instance=ExtResource("20_tab")]
+[node name="Tab1" parent="Sheet/Tabs" index="1" unique_id=1169045112 instance=ExtResource("20_tab")]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_pr3d5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xeoxk")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lc17w")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_q7vyp")
+theme_override_styles/focus = SubResource("StyleBoxTexture_ivfd1")
 category = "levels"
 
-[node name="Tab2" parent="Sheet/Tabs" index="2" instance=ExtResource("20_tab")]
+[node name="Tab2" parent="Sheet/Tabs" index="2" unique_id=1293948220 instance=ExtResource("20_tab")]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_xn2sv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_eq3vv")
+theme_override_styles/hover = SubResource("StyleBoxTexture_mwxns")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_byhwx")
+theme_override_styles/focus = SubResource("StyleBoxTexture_awf8l")
 category = "dungeon"
 
-[node name="Tab3" parent="Sheet/Tabs" index="3" instance=ExtResource("20_tab")]
+[node name="Tab3" parent="Sheet/Tabs" index="3" unique_id=1076341958 instance=ExtResource("20_tab")]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_k8xt3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_64frj")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vynjp")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_o01xe")
+theme_override_styles/focus = SubResource("StyleBoxTexture_shv0e")
 category = "daily"
 
-[node name="Tab4" parent="Sheet/Tabs" index="4" instance=ExtResource("20_tab")]
+[node name="Tab4" parent="Sheet/Tabs" index="4" unique_id=1039804949 instance=ExtResource("20_tab")]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_5gt6s")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vvfd4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_efsiv")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_6p2mn")
+theme_override_styles/focus = SubResource("StyleBoxTexture_t3jj8")
 category = "special"
 
 [node name="CardArea" type="Control" parent="Sheet" index="4" unique_id=573368042]
-anchors_preset = 0
-offset_left = 55.0
-offset_top = 132.5
-offset_right = 410.0
-offset_bottom = 597.5
+layout_mode = 1
+anchor_left = 0.120000005
+anchor_top = 0.171
+anchor_right = 0.89100003
+anchor_bottom = 0.771
+offset_left = -0.20000076
+offset_top = -0.025009155
+offset_right = 0.13998413
+offset_bottom = -0.025024414
 mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Scroll" type="ScrollContainer" parent="Sheet/CardArea" index="0" unique_id=1323615310]
 layout_mode = 1
@@ -243,10 +553,13 @@ offset_bottom = 735.0
 mouse_filter = 2
 
 [node name="Quote" type="Label" parent="Sheet/Footer" index="0" unique_id=617506191]
-layout_mode = 0
-offset_top = 25.0
-offset_right = 355.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.27800003
+anchor_right = 1.0
+anchor_bottom = 0.53300005
+offset_top = -0.020002365
+offset_bottom = -7.970005
 theme_type_variation = &"AchQuote"
 text = "STR_ACH_QUOTE"
 horizontal_alignment = 1
@@ -254,7 +567,6 @@ vertical_alignment = 1
 
 [node name="Stamp" type="Control" parent="Sheet/Footer" index="1" unique_id=751884363]
 layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -37.5
