@@ -31,7 +31,8 @@ func _init() -> void:
 	for size in SIZES:
 		DisplayServer.window_set_size(size)
 		await _frames(5)
-		print("\n─── cửa sổ %dx%d  canvas %s" % [size.x, size.y, str(root.get_visible_rect().size)])
+		print("\n─── cửa sổ %dx%d  (thực tế %s)  canvas %s" % [
+			size.x, size.y, str(DisplayServer.window_get_size()), str(root.get_visible_rect().size)])
 		await _case_game_over()
 		await _case_game_over_race()
 		await _case_next_floor()
@@ -53,7 +54,7 @@ func _case_game_over() -> void:
 	controller.call("_game_over")
 	await _frames(40)
 	_dump("game_over_level")
-	_shot("game_over")
+	await _shot("game_over")
 	Popups.close_all()
 	await _frames(8)
 	scene.queue_free()
@@ -133,26 +134,30 @@ func _case_next_floor() -> void:
 	})
 	await _frames(40)
 	_dump("next_floor")
-	_shot("next_floor")
+	await _shot("next_floor")
 	Popups.close_all()
 	await _frames(8)
 	scene.queue_free()
 	await _frames(2)
 
 
-## Popup Diện mạo hồ sơ (edit_profile): Dim phải phủ TOÀN canvas — kể cả 2 bên
-## cột nội dung 1080px. Lỗi cũ: node Dim gắn anchor full-rect trong popup nên bị
-## hệ layout kéo về đúng ô của popup ⇒ màn hình ngang chỉ thấy dải đen ở giữa.
+## Hồ sơ cá nhân nay là POPUP (trước là màn hình) + Edit Profile XẾP LÊN TRÊN:
+## mở main → mở popup PROFILER → mở popup EDIT_PROFILE. Kiểm: Edit Profile nằm trên
+## cùng, Profiler vẫn mở, Dim của Edit Profile phủ TOÀN canvas (kể cả 2 bên cột),
+## và bấm CHUỘT THẬT vào vùng tối ngoài thẻ thì Edit Profile đóng lại.
 func _case_edit_profile() -> void:
-	var scene: Node = (load("res://scenes/profiler.tscn") as PackedScene).instantiate()
+	var scene: Node = (load("res://scenes/main.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	current_scene = scene      # PopupManager.get_host() tìm host theo current_scene
 	await _frames(12)
+	Popups.open(Popups.PROFILER)
+	await _frames(40)          # chờ hiệu ứng mở popup hồ sơ xong
+	var canvas := root.get_visible_rect().size
+	await _shot("profiler_popup_%dx%d" % [int(canvas.x), int(canvas.y)])
 	Popups.open(Popups.EDIT_PROFILE)
 	await _frames(40)          # chờ hiệu ứng mở xong
 	_dump("edit_profile")
-	var canvas := root.get_visible_rect().size
-	_shot("edit_profile_%dx%d" % [int(canvas.x), int(canvas.y)])
+	await _shot("edit_profile_%dx%d" % [int(canvas.x), int(canvas.y)])
 	var pop := Popups.top()
 	var dim: Control = null
 	if pop != null:
@@ -164,6 +169,30 @@ func _case_edit_profile() -> void:
 	else:
 		print("   [FAIL] Dim edit_profile KHÔNG phủ canvas %s (dim=%s)" % [str(canvas), str(dim_rect)])
 		_fails += 1
+	var stacked: bool = pop != null and pop.popup_id == Popups.EDIT_PROFILE and Popups.is_open(Popups.PROFILER)
+	if stacked:
+		print("   [PASS] Edit Profile xếp TRÊN popup Profiler (cả 2 đều mở)")
+		_passes += 1
+	else:
+		print("   [FAIL] Edit Profile KHÔNG nằm trên Profiler (top=%s profiler_open=%s)"
+			% [(pop.popup_id if pop != null else "null"), str(Popups.is_open(Popups.PROFILER))])
+		_fails += 1
+	# Cú bấm THẬT vào vùng tối ngoài thẻ (góc trên-trái canvas) ⇒ Edit Profile phải đóng
+	var ev_out := InputEventMouseButton.new()
+	ev_out.button_index = MOUSE_BUTTON_LEFT
+	ev_out.pressed = true
+	ev_out.position = Vector2(20.0, 20.0)
+	root.push_input(ev_out, true)
+	await _frames(30)
+	if Popups.is_open(Popups.EDIT_PROFILE):
+		print("   [FAIL] Bam vung toi ngoai the KHONG dong duoc Edit Profile (input that)")
+		_fails += 1
+	else:
+		print("   [PASS] Bam vung toi ngoai the -> dong Edit Profile (input that)")
+		_passes += 1
+	ev_out.pressed = false
+	root.push_input(ev_out, true)
+	await _frames(4)
 	Popups.close_all()
 	await _frames(8)
 	scene.queue_free()
@@ -177,7 +206,7 @@ func _case_loading(size: Vector2i) -> void:
 	var transition := layer as Node
 	transition.call("play_transition", "res://scenes/main.tscn", func() -> void: pass, "page_turn_forward")
 	await _frames(14)          # giữa hiệu ứng lật trang
-	_shot("loading_mid_%dx%d" % [size.x, size.y])
+	await _shot("loading_mid_%dx%d" % [size.x, size.y])
 	_transition_dump(transition)
 	await _frames(40)
 	layer.queue_free()
@@ -224,7 +253,10 @@ func _dump(id: String) -> void:
 			str(pr), center_ok, bottom_ok, str(Rect2(Vector2.ZERO, canvas).grow(2).encloses(pr))])
 
 
+## Chụp frame ĐANG vẽ: phải chờ `frame_post_draw` mới lấy texture — nếu không,
+## `get_image()` trả về frame cũ (mọi ảnh trong 1 lần chạy sẽ GIỐNG HỆT nhau).
 func _shot(id: String) -> void:
+	await RenderingServer.frame_post_draw
 	var img := root.get_texture().get_image()
 	if img == null:
 		return

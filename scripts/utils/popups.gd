@@ -23,6 +23,8 @@ const LANGUAGE := "language"
 const MEMORIZE := "memory_countdown"
 ## Popup đổi diện mạo hồ sơ: avatar · viền khung · tên hiển thị
 const EDIT_PROFILE := "edit_profile"
+## Popup HỒ SƠ CÁ NHÂN (toàn khung) — Edit Profile mở chồng lên trên popup này
+const PROFILER := "profiler"
 
 
 static func _mgr() -> Node:

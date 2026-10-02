@@ -26,9 +26,13 @@ const SCREENS := {
 	"splash": "SplashLayout",
 	"title": "TitleLayout",
 	"levels": "LevelsLayout",
-	"profiler": "ProfilerLayout",
 	## Màn chơi: mỗi hướng 1 script riêng, đều kế thừa `GameSceneLayout`
 	"game": "GameSceneLayout|GameLayout",
+}
+## Nội dung POPUP hồ sơ cá nhân — file nằm ở `nodes/popups/profiler_content.tscn`
+## (trước đây là màn hình `scenes/profiler_popup.tscn`) nên kiểm bằng ĐƯỜNG DẪN TƯỜNG MINH.
+const LAYOUT_CONTENTS := {
+	"profiler_content": {"path": "res://nodes/popups/profiler_content.tscn", "layout": "ProfilerLayout"},
 }
 ## Node được phép THIẾU ở 1 hướng (bố cục ngang chưa dựng node đó) — khoá "<màn>|<hướng>"
 ## `hud_slot` của màn chơi: HUD bị THAY bằng code ngay khi vào màn (đổi theo chế độ chơi) nên
@@ -59,6 +63,9 @@ func _init() -> void:
 
 	for screen: String in SCREENS:
 		await _check_screen(screen, SCREENS[screen])
+	for content_name: String in LAYOUT_CONTENTS:
+		var spec: Dictionary = LAYOUT_CONTENTS[content_name]
+		await _check_screen_at(content_name, str(spec.get("path", "")), str(spec.get("layout", "")))
 
 	print("\n--------------------------------------------------------")
 	if _failed == 0:
@@ -70,7 +77,11 @@ func _init() -> void:
 
 
 func _check_screen(screen: String, layout_class: String) -> void:
-	var path := "res://scenes/%s.tscn" % screen
+	await _check_screen_at(screen, "res://scenes/%s.tscn" % screen, layout_class)
+
+
+## Kiểm scene theo ĐƯỜNG DẪN TƯỜNG MINH (dùng cho nội dung popup nằm ngoài `scenes/`)
+func _check_screen_at(screen: String, path: String, layout_class: String) -> void:
 	var packed := load(path) as PackedScene
 	if packed == null:
 		_entry(false, "%s: nạp được %s" % [screen, path])

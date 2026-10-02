@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://7gikqh1sy3p1"]
+
+[ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_33ob7"]
+[ext_resource type="PackedScene" uid="uid://dvtlk8ts62t82" path="res://nodes/popups/profiler_content.tscn" id="2_b7pm4"]
+[ext_resource type="Script" uid="uid://citrrwk6hs1ub" path="res://scripts/nodes/popups/profiler_popup.gd" id="2_rk2nf"]
+
+[node name="Base" unique_id=1640959766 instance=ExtResource("1_33ob7")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_rk2nf")
+
+[node name="Dim" parent="." index="0" unique_id=617447502]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" parent="." index="1" unique_id=290635111]
+anchor_left = 0.074074075
+anchor_top = 0.09074071
+anchor_right = 0.9259259
+anchor_bottom = 0.90925926
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Art" parent="Panel" index="0" unique_id=1533168933]
+visible = false
+
+[node name="Profiler" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="0" unique_id=1469732799 instance=ExtResource("2_b7pm4")]
+layout_mode = 1
+anchor_left = -0.030434782
+anchor_top = -0.075004876
+anchor_right = 1.0304347
+anchor_bottom = 1.0683653

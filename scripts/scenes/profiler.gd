@@ -1,14 +1,20 @@
 class_name ProfilerScene
-extends BaseScene
+extends BaseUI
 ## ============================================================================
-## Màn HỒ SƠ CÁ NHÂN (scenes/profiler.tscn) — mockup/profiler.svg (dọc)
-## và mockup/profiler_landscape.svg (ngang)
+## NỘI DUNG HỒ SƠ CÁ NHÂN (nodes/popups/profiler_content.tscn) — mockup/profiler.svg
+## (dọc) và mockup/profiler_landscape.svg (ngang).
+##
+## Scene ĐỘC LẬP kế thừa `BaseUI` (nhận biết hướng + đổi layout Portrait ⇄ Landscape),
+## KHÔNG kế thừa `BaseScene` — vì đây là NỘI DUNG nằm trong popup chứ không phải màn hình:
+## nó được instantiate vào `Panel/Content/Profiler` của `nodes/popups/profiler_popup.tscn`
+## và phủ kín vùng nội dung popup (BaseUI CHỈ đổi layout khi có node Portrait/Landscape).
+## Nút Back đóng popup qua `owner_popup`; popup Edit Profile mở chồng LÊN TRÊN.
 ##
 ## Nguồn dữ liệu: PlayerProfileManager (qua facade `Profile`) + Sổ tay danh hiệu
 ## (`Archivement`) + Cửa hàng (`Shop`) cho mục "Trang bị đang dùng".
 ##
 ## Layout tĩnh (vị trí/kích thước/dây nút) khai trong
-## `scenes/layout/portrait|landscape/profiler.tscn`; ở đây chỉ ĐỔ DỮ LIỆU +
+## `scenes/layout/portrait|landscape/profiler_popup.tscn`; ở đây chỉ ĐỔ DỮ LIỆU +
 ## MÀU theo trạng thái (cấp bậc, tỉ lệ thắng, trạng thái ván…).
 ## ============================================================================
 
@@ -30,12 +36,16 @@ const COLOR_MUTED := Color(0.5804, 0.6392, 0.7216)     # #94A3B8
 ## Layout đang hiển thị (Portrait / Landscape — cùng tên node, bind qua @export)
 var layout: ProfilerLayout = null
 
+## Popup đang chứa nội dung này (ProfilerPopup gán lúc mở) — nút Back sẽ ĐÓNG popup
+## thay vì điều hướng màn hình. Chạy độc lập (test/harness) thì về Màn hình chính như cũ.
+var owner_popup: BasePopup = null
+
 var _flash_token := 0
 
 
 func _ready() -> void:
 	_bind_refs()
-	# Dây nút khai trong `scenes/profiler.tscn` (cả 2 hướng) — guard chỉ nối lại nếu mất
+	# Dây nút khai trong `nodes/popups/profiler_content.tscn` (cả 2 hướng) — guard chỉ nối lại nếu mất
 	if layout != null:
 		ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 		ensure_signal(layout.btn_edit, &"pressed", &"_on_edit_pressed")
@@ -51,7 +61,7 @@ func _ready() -> void:
 func _bind_refs() -> void:
 	layout = active_layout() as ProfilerLayout
 	if layout == null:
-		push_warning("profiler: bố cục chưa gắn ProfilerLayout — thiếu binding trong scenes/layout/<hướng>/profiler.tscn")
+		push_warning("profiler: bố cục chưa gắn ProfilerLayout — thiếu binding trong scenes/layout/<hướng>/profiler_popup.tscn")
 
 
 func _on_orientation_changed(_is_landscape_now: bool) -> void:
@@ -104,6 +114,9 @@ func activity_row_count() -> int:
 # ---------------------------------------------------------------------------
 func _on_back_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
+	if owner_popup != null and is_instance_valid(owner_popup):
+		owner_popup.close()
+		return
 	Nav.goto_main()
 
 

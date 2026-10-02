@@ -5,6 +5,7 @@ extends Control
 ## - Được PopupManager tạo khi mở và tự xoá khi đóng (không instance sẵn).
 ## - Tự chạy hiệu ứng: nền mờ fade + mảnh giấy phóng nhẹ như dán lên màn hình.
 ## - Chặn input phía sau, đóng bằng nút Back nếu close_on_back = true.
+## - Bấm/chạm vào vùng nền mờ (Dim) NGOÀI thẻ popup cũng đóng nếu close_on_outside = true.
 ##
 ## Popup con override _on_open() / _on_close() để nạp dữ liệu và phát signal.
 ## ============================================================================
@@ -22,6 +23,10 @@ var popup_id: String = ""
 var data: Dictionary = {}
 ## Có đóng popup khi bấm nút Back / Esc không
 @export var close_on_back := true
+## Có đóng popup khi bấm/chạm vào NỀN MỜ bên ngoài thẻ popup không.
+## (Popup bắt buộc như đếm ngược ghi nhớ cứ để nguyên — nền của nó vốn đang ẩn nên
+## không bao giờ nhận được cú bấm.)
+@export var close_on_outside := true
 
 var _closing := false
 ## Tween hiệu ứng đang chạy (mở HOẶC đóng) — phải HUỶ khi bắt đầu hiệu ứng mới,
@@ -41,6 +46,7 @@ func _enter_tree() -> void:
 	var vp := get_viewport()
 	if vp != null and not vp.size_changed.is_connected(_apply_canvas_layout):
 		vp.size_changed.connect(_apply_canvas_layout)
+	_connect_dim_input()
 	_apply_canvas_layout()
 
 
@@ -73,6 +79,37 @@ func _apply_canvas_layout() -> void:
 			floorf((canvas.y - panel.size.y) * 0.5) - global_position.y)
 		if panel.position != target:
 			panel.position = target
+
+
+# --- Bấm nền mờ để đóng ------------------------------------------------------
+
+## Nối sự kiện chuột/chạm trên nền mờ (Dim). Nối Ở ĐÂY (không phải trong từng
+## scene) vì phần lớn popup là scene ĐỘC LẬP, không kế thừa `base.tscn` — dây
+## `[connection]` khai trong base.tscn sẽ không tới được chúng.
+func _connect_dim_input() -> void:
+	var dim_rect := get_node_or_null("Dim") as ColorRect
+	if dim_rect == null:
+		return
+	if close_on_outside:
+		# Nền phải HỨNG chuột (STOP) mới nhận được cú bấm ra ngoài;
+		# để IGNORE thì cú bấm xuyên thẳng xuống màn hình phía sau.
+		dim_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	if not dim_rect.gui_input.is_connected(_on_dim_gui_input):
+		dim_rect.gui_input.connect(_on_dim_gui_input)
+
+
+## Bấm/chạm vào NỀN MỜ ngoài thẻ popup ⇒ đóng popup (giống bấm Back).
+## Cú bấm TRONG thẻ do node thẻ/nút hứng trước nên không bao giờ tới nền.
+func _on_dim_gui_input(event: InputEvent) -> void:
+	if not close_on_outside or _closing:
+		return
+	var mouse := event as InputEventMouseButton
+	if mouse != null and mouse.button_index == MOUSE_BUTTON_LEFT and mouse.pressed:
+		close()
+		return
+	var touch := event as InputEventScreenTouch
+	if touch != null and touch.pressed:
+		close()
 
 
 # --- Vòng đời ---------------------------------------------------------------

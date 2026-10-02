@@ -25,8 +25,7 @@ const SCENE_SHOP := "res://scenes/shop.tscn"
 const SCENE_CREDIT := "res://scenes/credit.tscn"
 ## Màn TUTORIAL — hướng dẫn tương tác
 const SCENE_TUTORIAL := "res://scenes/tutorial.tscn"
-## Màn HỒ SƠ CÁ NHÂN — avatar · tên hiển thị · EXP · thành tích (xem scripts/scenes/profiler.gd)
-const SCENE_PROFILER := "res://scenes/profiler.tscn"
+## (HỒ SƠ CÁ NHÂN nay là POPUP — mở bằng `Popups.open(Popups.PROFILER)`)
 
 
 
@@ -63,11 +62,6 @@ static func goto_settings() -> void:
 ## Sổ tay thành tựu (danh hiệu)
 static func goto_archivement() -> void:
 	change_scene(SCENE_ARCHIVEMENT)
-
-
-## Hồ sơ cá nhân (avatar · tên · EXP · thành tích)
-static func goto_profiler() -> void:
-	change_scene(SCENE_PROFILER)
 
 
 ## Bảng xếp hạng (Dungeon · Play · Daily)

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dvtlk8ts62t82"]
+
+[ext_resource type="Script" uid="uid://bnocjip5nw1vg" path="res://scripts/scenes/profiler.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="PackedScene" uid="uid://n4k0ip5qwh74" path="res://scenes/layout/landscape/profiler_popup.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://bdudpxxwdkx8u" path="res://scenes/layout/portrait/profiler_popup.tscn" id="L_Portrait"]
+
+[node name="Profiler" type="Control" unique_id=556018155]
+layout_mode = 3
+anchor_left = 0.053703703
+anchor_top = 0.05370364
+anchor_right = 0.9462963
+anchor_bottom = 0.94629633
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
+metadata/_edit_use_anchors_ = true
+
+[node name="Portrait" parent="." unique_id=19506614 instance=ExtResource("L_Portrait")]
+layout_mode = 1
+
+[node name="Landscape" parent="." unique_id=1614257397 instance=ExtResource("L_Landscape")]
+layout_mode = 1

@@ -47,7 +47,7 @@ const SCREENS := [
 	{"id": "shop", "path": "res://scenes/shop.tscn"},
 	{"id": "ranking", "path": "res://scenes/ranking.tscn"},
 	{"id": "archivement", "path": "res://scenes/archivement.tscn"},
-	{"id": "profiler", "path": "res://scenes/profiler.tscn"},
+	{"id": "profiler", "path": "res://nodes/popups/profiler_content.tscn", "embedded": true},
 	{"id": "credit", "path": "res://scenes/credit.tscn"},
 	{"id": "debug", "path": "res://scenes/debug.tscn"},
 ]
@@ -58,6 +58,10 @@ const GAME_MODES := ["play", "dungeon", "minesweeper", "sum_path",
 const DESIGN_WIDTH := 540
 ## Bề rộng cột nội dung tối đa ở màn DỌC (khớp `BaseScene.MAX_CONTENT_WIDTH`)
 const MAX_CONTENT_WIDTH := 1440.0
+## Khung nội dung THẬT của popup hồ sơ = Panel `nodes/popups/base.tscn` (425×560)
+## × hệ số neo `Panel/Content` trong `nodes/popups/profiler_popup.tscn` (1.1482×1.5643).
+## Dùng để mount nội dung NHÚNG vào ĐÚNG khung như lúc popup mở thật.
+const POPUP_CONTENT_FRAME := Vector2(488.0, 876.0)
 
 var _shots := false
 var _only: PackedStringArray = []
@@ -120,8 +124,17 @@ func _run_screen(def: Dictionary, size: Vector2i) -> void:
 	var scene: Node = packed.instantiate()
 	root.add_child(scene)
 	current_scene = scene      # PopupManager.get_host() tìm host theo current_scene
+	if bool(def.get("embedded", false)):
+		# Nội dung NHÚNG (popup): giả lập khung `Panel/Content` nằm GIỮA canvas
+		# (nội dung không phủ kín canvas như màn hình).
+		var canvas := root.get_visible_rect().size
+		var frame: Vector2 = POPUP_CONTENT_FRAME
+		var ctrl := scene as Control
+		ctrl.set_anchors_preset(Control.PRESET_TOP_LEFT)
+		ctrl.position = ((canvas - frame) * 0.5).floor()
+		ctrl.size = frame
 	await _frames(20)          # chờ hiệu ứng slide-in/fade mở màn xong mới đo
-	var issues := _check_common(scene as Control)
+	var issues := _check_common(scene as Control, bool(def.get("embedded", false)))
 	_report(id, issues)
 	if _shots:
 		await _frames(10)
@@ -169,9 +182,26 @@ func _run_game(mode_id: String, size: Vector2i) -> void:
 # ---------------------------------------------------------------------------
 # Kiểm tra
 # ---------------------------------------------------------------------------
-func _check_common(scene: Control) -> Array:
+func _check_common(scene: Control, embedded := false) -> Array:
 	var out: Array = []
 	var canvas := root.get_visible_rect().size
+	if embedded:
+		# Nội dung NHÚNG trong popup (VD profiler_content): KHÔNG có "cột nội dung"/"Background"
+		# (phần riêng của màn hình) — chỉ đòi khớp ĐÚNG khung `Panel/Content` của popup
+		# + không node nào tràn ra ngoài CANVAS (băng dính/ghim thò ra khỏi tờ giấy là chủ ý).
+		var frame: Vector2 = POPUP_CONTENT_FRAME
+		var expect_pos := ((canvas - frame) * 0.5).floor()
+		if scene.size.distance_to(frame) > 1.5 or scene.position.distance_to(expect_pos) > 1.5:
+			out.append("FAIL nội dung nhúng không khớp khung popup (pos=%s size=%s · mong pos=%s size=%s)" % [
+				str(scene.position), str(scene.size), str(expect_pos), str(frame)])
+		var holder := scene.call("active_layout") as Control
+		if holder == null or not Rect2(Vector2.ZERO, frame).grow(2.0).encloses(Rect2(holder.global_position - scene.position, holder.size)):
+			out.append("FAIL layout đang hiện không phủ kín nội dung nhúng")
+		var overflow: Array = []
+		_scan_overflow(scene, Rect2(Vector2.ZERO, canvas).grow(2.0), overflow, 0)
+		if not overflow.is_empty():
+			out.append("FAIL %d node tràn màn hình: %s" % [overflow.size(), ", ".join(overflow.slice(0, 6))])
+		return out
 	# 1. Cột nội dung: màn DỌC = clamp(canvas.x, 1080, 1440) canh giữa (base.gd);
 	#    màn đã có layout NGANG thì ở hướng ngang root PHỦ KÍN canvas.
 	var has_landscape_layout := scene.get_node_or_null("Landscape") != null

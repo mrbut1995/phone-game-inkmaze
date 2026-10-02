@@ -50,37 +50,36 @@
 [ext_resource type="Texture2D" uid="uid://cneod32nxa8s7" path="res://assets/images/profiler/badge_medal_2.svg" id="73_medal2"]
 [ext_resource type="Texture2D" uid="uid://bjt6c8xe2w7e2" path="res://assets/images/profiler/badge_medal_3.svg" id="74_medal3"]
 
-[node name="Landscape" unique_id=587724805 node_paths=PackedStringArray("btn_back", "lbl_title", "level_chip", "hero", "stat_cards", "badges_box", "gear_box", "rows_box", "btn_edit", "btn_share", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=587724805 node_paths=PackedStringArray("btn_back", "lbl_title", "level_chip", "hero", "stat_cards", "badges_box", "ap_chip", "gear_box", "rows_box", "btn_edit", "btn_share", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill") instance=ExtResource("1_parent")]
 theme = ExtResource("60_theme")
 script = ExtResource("2_layout")
-btn_back = NodePath("TopBar/Back")
-lbl_title = NodePath("TopBar/Title")
-level_chip = NodePath("TopBar/LevelChip")
-hero = NodePath("LeftCol/Hero")
-stat_cards = NodePath("RightCol/StatCards")
-badges_box = NodePath("RightCol/Badges")
-gear_box = NodePath("LeftCol/Gear")
-rows_box = NodePath("RightCol/Rows")
-btn_edit = NodePath("LeftCol/BtnEdit")
-btn_share = NodePath("LeftCol/BtnShare")
-stamp = NodePath("LeftCol/Stamp")
-hero_btn_avatar = NodePath("LeftCol/Hero/Bg/Content/Top/Profile")
-hero_avatar = NodePath("LeftCol/Hero/Bg/Content/Top/Profile/Frame/Avatar")
-hero_frame = NodePath("LeftCol/Hero/Bg/Content/Top/Profile/Frame")
-hero_name = NodePath("LeftCol/Hero/Bg/Content/Top/Info/NameRow/Name")
-hero_tier_text = NodePath("LeftCol/Hero/Bg/Content/Top/Info/TierChip/Bg/Text")
-hero_exp_value = NodePath("LeftCol/Hero/Bg/Content/Exp/ExpValue")
-hero_uid = NodePath("LeftCol/Hero/Bg/Content/Top/Info/Uid")
-hero_track = NodePath("LeftCol/Hero/Bg/Content/Bar")
-hero_fill = NodePath("LeftCol/Hero/Bg/Content/Bar/BarFill")
+btn_back = NodePath("Sheet/TopBar/Back")
+lbl_title = NodePath("Sheet/TopBar/Title")
+level_chip = NodePath("Sheet/TopBar/LevelChip")
+hero = NodePath("Sheet/LeftCol/Hero")
+stat_cards = NodePath("Sheet/RightCol/StatCards")
+badges_box = NodePath("Sheet/RightCol/Badges")
+ap_chip = NodePath("Sheet/RightCol/Badges/ApChip")
+gear_box = NodePath("Sheet/LeftCol/Gear")
+rows_box = NodePath("Sheet/RightCol/Rows")
+btn_edit = NodePath("Sheet/LeftCol/BtnEdit")
+btn_share = NodePath("Sheet/LeftCol/BtnShare")
+stamp = NodePath("Sheet/LeftCol/Stamp")
+hero_btn_avatar = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Profile")
+hero_avatar = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Profile/Frame/Avatar")
+hero_frame = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Profile/Frame")
+hero_name = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Info/NameRow/Name")
+hero_tier_text = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Info/TierChip/Bg/Text")
+hero_exp_value = NodePath("Sheet/LeftCol/Hero/Bg/Content/Exp/ExpValue")
+hero_uid = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Info/Uid")
+hero_track = NodePath("Sheet/LeftCol/Hero/Bg/Content/Bar")
+hero_fill = NodePath("Sheet/LeftCol/Hero/Bg/Content/Bar/BarFill")
 
 [node name="Sheet" type="NinePatchRect" parent="." index="0" unique_id=1129321426]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.045
-anchor_right = 0.98
-anchor_bottom = 0.955
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_sheet")
@@ -115,16 +114,18 @@ texture = ExtResource("7_clip")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TopBar" type="Control" parent="." index="1" unique_id=207650018]
+[node name="TopBar" type="Control" parent="Sheet" index="2" unique_id=207650018]
 layout_mode = 1
 anchor_left = 0.0806
 anchor_right = 0.943
-offset_top = 67.0
-offset_bottom = 116.0
+offset_left = -9.05904
+offset_top = 25.599998
+offset_right = -9.0590515
+offset_bottom = 74.6
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=308425477]
+[node name="Back" type="TextureButton" parent="Sheet/TopBar" index="0" unique_id=308425477]
 layout_mode = 0
 offset_right = 49.0
 offset_bottom = 49.0
@@ -136,7 +137,7 @@ texture_focused = ExtResource("3_back_n")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="TopBar" index="1" unique_id=1584219335]
+[node name="Title" type="Label" parent="Sheet/TopBar" index="1" unique_id=1584219335]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -148,7 +149,8 @@ label_settings = ExtResource("40_t_title")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelChip" type="Control" parent="TopBar" index="2" unique_id=1647743014]
+[node name="LevelChip" type="Control" parent="Sheet/TopBar" index="2" unique_id=1647743014]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -159,7 +161,7 @@ offset_bottom = 43.3
 grow_horizontal = 0
 mouse_filter = 2
 
-[node name="Bg" type="TextureRect" parent="TopBar/LevelChip" index="0" unique_id=595758012]
+[node name="Bg" type="TextureRect" parent="Sheet/TopBar/LevelChip" index="0" unique_id=595758012]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -170,7 +172,7 @@ mouse_filter = 2
 texture = ExtResource("8_chip_gold")
 expand_mode = 1
 
-[node name="Text" type="Label" parent="TopBar/LevelChip" index="1" unique_id=205843368]
+[node name="Text" type="Label" parent="Sheet/TopBar/LevelChip" index="1" unique_id=205843368]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -182,27 +184,29 @@ label_settings = ExtResource("47_t_chip_gold")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LeftCol" type="Control" parent="." index="2" unique_id=190987533]
+[node name="LeftCol" type="Control" parent="Sheet" index="3" unique_id=190987533]
 layout_mode = 1
 anchor_left = 0.0543
 anchor_top = 0.15200001
 anchor_right = 0.45174077
 anchor_bottom = 0.901
-offset_top = -0.27600098
-offset_right = 0.0599823
+offset_left = -9.627121
+offset_top = -29.090393
+offset_right = -9.567139
+offset_bottom = -28.814392
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Hero" type="Control" parent="LeftCol" index="0" unique_id=1596386811]
+[node name="Hero" type="Control" parent="Sheet/LeftCol" index="0" unique_id=1596386811]
 anchors_preset = 0
 anchor_right = 1.0
 offset_bottom = 307.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="LeftCol/Hero" index="0" unique_id=450486954]
+[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Hero" index="0" unique_id=450486954]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -215,7 +219,7 @@ patch_margin_top = 22
 patch_margin_right = 22
 patch_margin_bottom = 22
 
-[node name="Margin" type="ColorRect" parent="LeftCol/Hero/Bg" index="0" unique_id=482310985]
+[node name="Margin" type="ColorRect" parent="Sheet/LeftCol/Hero/Bg" index="0" unique_id=482310985]
 layout_mode = 0
 offset_left = 22.0
 offset_right = 23.6
@@ -223,7 +227,7 @@ offset_bottom = 307.0
 mouse_filter = 2
 color = Color(0.847059, 0.266667, 0.266667, 0.7)
 
-[node name="Content" type="VBoxContainer" parent="LeftCol/Hero/Bg" index="1" unique_id=1297830328]
+[node name="Content" type="VBoxContainer" parent="Sheet/LeftCol/Hero/Bg" index="1" unique_id=1297830328]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.064042896
@@ -239,12 +243,12 @@ grow_vertical = 2
 theme_override_constants/separation = 8
 metadata/_edit_use_anchors_ = true
 
-[node name="Top" type="HBoxContainer" parent="LeftCol/Hero/Bg/Content" index="0" unique_id=1546681008]
+[node name="Top" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="0" unique_id=1546681008]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.66
 
-[node name="Profile" type="TextureButton" parent="LeftCol/Hero/Bg/Content/Top" index="0" unique_id=805858140]
+[node name="Profile" type="TextureButton" parent="Sheet/LeftCol/Hero/Bg/Content/Top" index="0" unique_id=805858140]
 self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
@@ -257,7 +261,7 @@ texture_disabled = ExtResource("18_disc_d")
 texture_focused = ExtResource("19_disc_f")
 stretch_mode = 3
 
-[node name="Frame" type="TextureRect" parent="LeftCol/Hero/Bg/Content/Top/Profile" index="0" unique_id=1984070926]
+[node name="Frame" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Profile" index="0" unique_id=1984070926]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.113000005
@@ -275,7 +279,7 @@ texture = ExtResource("20_frame")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Avatar" type="TextureRect" parent="LeftCol/Hero/Bg/Content/Top/Profile/Frame" index="0" unique_id=1452298376]
+[node name="Avatar" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Profile/Frame" index="0" unique_id=1452298376]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15714286
@@ -289,7 +293,7 @@ texture = ExtResource("21_avatar")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EditBadge" type="TextureRect" parent="LeftCol/Hero/Bg/Content/Top/Profile/Frame" index="1" unique_id=1600638266]
+[node name="EditBadge" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Profile/Frame" index="1" unique_id=1600638266]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.7772
@@ -303,29 +307,29 @@ texture = ExtResource("22_badge")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Spacer" type="Control" parent="LeftCol/Hero/Bg/Content/Top" index="1" unique_id=461176054]
+[node name="Spacer" type="Control" parent="Sheet/LeftCol/Hero/Bg/Content/Top" index="1" unique_id=461176054]
 custom_minimum_size = Vector2(18, 0)
 layout_mode = 2
 
-[node name="Info" type="VBoxContainer" parent="LeftCol/Hero/Bg/Content/Top" index="2" unique_id=391969285]
+[node name="Info" type="VBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content/Top" index="2" unique_id=391969285]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_constants/separation = 6
 
-[node name="NameRow" type="HBoxContainer" parent="LeftCol/Hero/Bg/Content/Top/Info" index="0" unique_id=1511635350]
+[node name="NameRow" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info" index="0" unique_id=1511635350]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 5
 
-[node name="Name" type="Label" parent="LeftCol/Hero/Bg/Content/Top/Info/NameRow" index="0" unique_id=1249245509]
+[node name="Name" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info/NameRow" index="0" unique_id=1249245509]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "MazeWalker #1024"
 label_settings = ExtResource("42_t_name")
 text_overrun_behavior = 3
 
-[node name="Pen" type="TextureRect" parent="LeftCol/Hero/Bg/Content/Top/Info/NameRow" index="1" unique_id=1288934857]
+[node name="Pen" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info/NameRow" index="1" unique_id=1288934857]
 custom_minimum_size = Vector2(14, 14)
 layout_mode = 2
 size_flags_vertical = 0
@@ -334,11 +338,11 @@ texture = ExtResource("70_pen_name")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TierChip" type="HBoxContainer" parent="LeftCol/Hero/Bg/Content/Top/Info" index="1" unique_id=1749866006]
+[node name="TierChip" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info" index="1" unique_id=1749866006]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="LeftCol/Hero/Bg/Content/Top/Info/TierChip" index="0" unique_id=651457363]
+[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info/TierChip" index="0" unique_id=651457363]
 custom_minimum_size = Vector2(55, 24)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -348,7 +352,7 @@ patch_margin_top = 6
 patch_margin_right = 11
 patch_margin_bottom = 6
 
-[node name="Text" type="Label" parent="LeftCol/Hero/Bg/Content/Top/Info/TierChip/Bg" index="0" unique_id=1582709291]
+[node name="Text" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info/TierChip/Bg" index="0" unique_id=1582709291]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -364,44 +368,44 @@ label_settings = ExtResource("47_t_chip_gold")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Uid" type="Label" parent="LeftCol/Hero/Bg/Content/Top/Info" index="2" unique_id=1941414970]
+[node name="Uid" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info" index="2" unique_id=1941414970]
 layout_mode = 2
 text = "UID: #IM-0000"
 label_settings = ExtResource("45_t_small")
 text_overrun_behavior = 3
 
-[node name="Spacer" type="Control" parent="LeftCol/Hero/Bg/Content" index="1" unique_id=999674321]
+[node name="Spacer" type="Control" parent="Sheet/LeftCol/Hero/Bg/Content" index="1" unique_id=999674321]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="Divider" type="TextureRect" parent="LeftCol/Hero/Bg/Content" index="2" unique_id=1178195870]
+[node name="Divider" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content" index="2" unique_id=1178195870]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("9_divider")
 expand_mode = 1
 
-[node name="Exp" type="HBoxContainer" parent="LeftCol/Hero/Bg/Content" index="3" unique_id=1449470628]
+[node name="Exp" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="3" unique_id=1449470628]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.18
 
-[node name="ExpLabel" type="Label" parent="LeftCol/Hero/Bg/Content/Exp" index="0" unique_id=1016326146]
+[node name="ExpLabel" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Exp" index="0" unique_id=1016326146]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "STR_PROFILE_EXP_LABEL"
 label_settings = ExtResource("43_t_label")
 resize_font_to_fit = true
 
-[node name="ExpValue" type="Label" parent="LeftCol/Hero/Bg/Content/Exp" index="1" unique_id=544936882]
+[node name="ExpValue" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Exp" index="1" unique_id=544936882]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "0 / 200"
 label_settings = ExtResource("43_t_label")
 horizontal_alignment = 2
 
-[node name="Bar" type="TextureRect" parent="LeftCol/Hero/Bg/Content" index="4" unique_id=674762722]
+[node name="Bar" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content" index="4" unique_id=674762722]
 custom_minimum_size = Vector2(0, 7)
 custom_maximum_size = Vector2(-1, 12)
 layout_mode = 2
@@ -411,7 +415,7 @@ mouse_filter = 2
 texture = ExtResource("14_bar_track")
 expand_mode = 5
 
-[node name="BarFill" type="TextureRect" parent="LeftCol/Hero/Bg/Content/Bar" index="0" unique_id=1194130482]
+[node name="BarFill" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Bar" index="0" unique_id=1194130482]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -420,7 +424,7 @@ mouse_filter = 2
 texture = ExtResource("15_bar_fill")
 expand_mode = 1
 
-[node name="Gear" type="Control" parent="LeftCol" index="1" unique_id=150675301]
+[node name="Gear" type="Control" parent="Sheet/LeftCol" index="1" unique_id=150675301]
 anchors_preset = 0
 anchor_right = 1.0
 offset_top = 329.0
@@ -428,7 +432,7 @@ offset_bottom = 529.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="LeftCol/Gear" index="0" unique_id=1116791660]
+[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Gear" index="0" unique_id=1116791660]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -441,7 +445,7 @@ patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 
-[node name="Title" type="Label" parent="LeftCol/Gear" index="1" unique_id=40165021]
+[node name="Title" type="Label" parent="Sheet/LeftCol/Gear" index="1" unique_id=40165021]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 8.0
@@ -450,7 +454,7 @@ offset_bottom = 24.0
 text = "STR_PROFILE_GEAR_TITLE"
 label_settings = ExtResource("41_t_section")
 
-[node name="Card1" type="Control" parent="LeftCol/Gear" index="2" unique_id=712113421]
+[node name="Card1" type="Control" parent="Sheet/LeftCol/Gear" index="2" unique_id=712113421]
 anchors_preset = 0
 anchor_left = 0.0403
 anchor_right = 0.3226
@@ -459,7 +463,7 @@ offset_bottom = 171.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="LeftCol/Gear/Card1" index="0" unique_id=1193806621]
+[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Gear/Card1" index="0" unique_id=1193806621]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -472,7 +476,7 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="Disc" type="TextureRect" parent="LeftCol/Gear/Card1" index="1" unique_id=831101516]
+[node name="Disc" type="TextureRect" parent="Sheet/LeftCol/Gear/Card1" index="1" unique_id=831101516]
 self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -488,7 +492,7 @@ texture = ExtResource("13_circle")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="LeftCol/Gear/Card1" index="2" unique_id=998569892]
+[node name="Icon" type="TextureRect" parent="Sheet/LeftCol/Gear/Card1" index="2" unique_id=998569892]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -502,7 +506,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Caption" type="Label" parent="LeftCol/Gear/Card1" index="3" unique_id=1285891496]
+[node name="Caption" type="Label" parent="Sheet/LeftCol/Gear/Card1" index="3" unique_id=1285891496]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 68.0
@@ -513,7 +517,7 @@ text = "STR_PROFILE_GEAR_PEN"
 label_settings = ExtResource("45_t_small")
 horizontal_alignment = 1
 
-[node name="Name" type="Label" parent="LeftCol/Gear/Card1" index="4" unique_id=841059647]
+[node name="Name" type="Label" parent="Sheet/LeftCol/Gear/Card1" index="4" unique_id=841059647]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 84.0
@@ -524,7 +528,7 @@ text = "—"
 label_settings = ExtResource("46_t_row")
 horizontal_alignment = 1
 
-[node name="Card2" type="Control" parent="LeftCol/Gear" index="3" unique_id=1301322512]
+[node name="Card2" type="Control" parent="Sheet/LeftCol/Gear" index="3" unique_id=1301322512]
 anchors_preset = 0
 anchor_left = 0.3548
 anchor_right = 0.6371
@@ -533,7 +537,7 @@ offset_bottom = 171.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="LeftCol/Gear/Card2" index="0" unique_id=1653679153]
+[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Gear/Card2" index="0" unique_id=1653679153]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -546,7 +550,7 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="Disc" type="TextureRect" parent="LeftCol/Gear/Card2" index="1" unique_id=526938154]
+[node name="Disc" type="TextureRect" parent="Sheet/LeftCol/Gear/Card2" index="1" unique_id=526938154]
 self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -562,7 +566,7 @@ texture = ExtResource("13_circle")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="LeftCol/Gear/Card2" index="2" unique_id=841546785]
+[node name="Icon" type="TextureRect" parent="Sheet/LeftCol/Gear/Card2" index="2" unique_id=841546785]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -576,7 +580,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Caption" type="Label" parent="LeftCol/Gear/Card2" index="3" unique_id=1342693746]
+[node name="Caption" type="Label" parent="Sheet/LeftCol/Gear/Card2" index="3" unique_id=1342693746]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 68.0
@@ -587,7 +591,7 @@ text = "STR_PROFILE_GEAR_THEME"
 label_settings = ExtResource("45_t_small")
 horizontal_alignment = 1
 
-[node name="Name" type="Label" parent="LeftCol/Gear/Card2" index="4" unique_id=684616324]
+[node name="Name" type="Label" parent="Sheet/LeftCol/Gear/Card2" index="4" unique_id=684616324]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 84.0
@@ -598,7 +602,7 @@ text = "—"
 label_settings = ExtResource("46_t_row")
 horizontal_alignment = 1
 
-[node name="Card3" type="Control" parent="LeftCol/Gear" index="4" unique_id=45152131]
+[node name="Card3" type="Control" parent="Sheet/LeftCol/Gear" index="4" unique_id=45152131]
 anchors_preset = 0
 anchor_left = 0.6694
 anchor_right = 0.9516
@@ -607,7 +611,7 @@ offset_bottom = 171.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="LeftCol/Gear/Card3" index="0" unique_id=891910639]
+[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Gear/Card3" index="0" unique_id=891910639]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -620,7 +624,7 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="Disc" type="TextureRect" parent="LeftCol/Gear/Card3" index="1" unique_id=1442681979]
+[node name="Disc" type="TextureRect" parent="Sheet/LeftCol/Gear/Card3" index="1" unique_id=1442681979]
 self_modulate = Color(1, 0.984314, 0.921569, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -636,7 +640,7 @@ texture = ExtResource("13_circle")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="LeftCol/Gear/Card3" index="2" unique_id=752730617]
+[node name="Icon" type="TextureRect" parent="Sheet/LeftCol/Gear/Card3" index="2" unique_id=752730617]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -650,7 +654,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Caption" type="Label" parent="LeftCol/Gear/Card3" index="3" unique_id=732322570]
+[node name="Caption" type="Label" parent="Sheet/LeftCol/Gear/Card3" index="3" unique_id=732322570]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 68.0
@@ -661,7 +665,7 @@ text = "STR_PROFILE_GEAR_FRAME"
 label_settings = ExtResource("45_t_small")
 horizontal_alignment = 1
 
-[node name="Name" type="Label" parent="LeftCol/Gear/Card3" index="4" unique_id=120176920]
+[node name="Name" type="Label" parent="Sheet/LeftCol/Gear/Card3" index="4" unique_id=120176920]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 84.0
@@ -672,7 +676,7 @@ text = "—"
 label_settings = ExtResource("46_t_row")
 horizontal_alignment = 1
 
-[node name="BtnEdit" type="TextureButton" parent="LeftCol" index="2" unique_id=1125431413]
+[node name="BtnEdit" type="TextureButton" parent="Sheet/LeftCol" index="2" unique_id=1125431413]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.6129
@@ -687,7 +691,7 @@ texture_focused = ExtResource("27_pri_n")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Text" type="Label" parent="LeftCol/BtnEdit" index="0" unique_id=551421321]
+[node name="Text" type="Label" parent="Sheet/LeftCol/BtnEdit" index="0" unique_id=551421321]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -699,7 +703,7 @@ label_settings = ExtResource("49_t_btn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BtnShare" type="TextureButton" parent="LeftCol" index="3" unique_id=568730700]
+[node name="BtnShare" type="TextureButton" parent="Sheet/LeftCol" index="3" unique_id=568730700]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6532
@@ -715,7 +719,7 @@ texture_focused = ExtResource("29_gho_n")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Text" type="Label" parent="LeftCol/BtnShare" index="0" unique_id=1077345762]
+[node name="Text" type="Label" parent="Sheet/LeftCol/BtnShare" index="0" unique_id=1077345762]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -727,7 +731,7 @@ label_settings = ExtResource("50_t_btn_ghost")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Stamp" type="Control" parent="LeftCol" index="4" unique_id=819341750]
+[node name="Stamp" type="Control" parent="Sheet/LeftCol" index="4" unique_id=819341750]
 layout_mode = 1
 anchor_left = 0.55
 anchor_right = 0.84
@@ -737,7 +741,7 @@ grow_horizontal = 2
 rotation = -0.0698
 mouse_filter = 2
 
-[node name="Bg" type="TextureRect" parent="LeftCol/Stamp" index="0" unique_id=2131968756]
+[node name="Bg" type="TextureRect" parent="Sheet/LeftCol/Stamp" index="0" unique_id=2131968756]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -748,7 +752,7 @@ mouse_filter = 2
 texture = ExtResource("31_stamp")
 expand_mode = 1
 
-[node name="Text" type="Label" parent="LeftCol/Stamp" index="1" unique_id=864107501]
+[node name="Text" type="Label" parent="Sheet/LeftCol/Stamp" index="1" unique_id=864107501]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -760,25 +764,29 @@ label_settings = ExtResource("51_t_stamp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RightCol" type="Control" parent="." index="3" unique_id=297693424]
+[node name="RightCol" type="Control" parent="Sheet" index="4" unique_id=297693424]
 layout_mode = 1
 anchor_left = 0.46296296
 anchor_top = 0.1517
 anchor_right = 0.92460006
 anchor_bottom = 0.901
+offset_left = -0.80000305
+offset_top = -28.839226
+offset_right = -0.7999878
+offset_bottom = -28.839233
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="StatsTitle" type="Label" parent="RightCol" index="0" unique_id=1006377493]
+[node name="StatsTitle" type="Label" parent="Sheet/RightCol" index="0" unique_id=1006377493]
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 16.0
 text = "STR_PROFILE_STATS_TITLE"
 label_settings = ExtResource("41_t_section")
 
-[node name="StatCards" type="Control" parent="RightCol" index="1" unique_id=2072848975]
+[node name="StatCards" type="Control" parent="Sheet/RightCol" index="1" unique_id=2072848975]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -787,14 +795,14 @@ offset_bottom = 218.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Stat1" type="Control" parent="RightCol/StatCards" index="0" unique_id=1241487618]
+[node name="Stat1" type="Control" parent="Sheet/RightCol/StatCards" index="0" unique_id=1241487618]
 anchors_preset = 0
 anchor_right = 0.485
 offset_bottom = 90.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="RightCol/StatCards/Stat1" index="0" unique_id=345901143]
+[node name="Bg" type="NinePatchRect" parent="Sheet/RightCol/StatCards/Stat1" index="0" unique_id=345901143]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -807,7 +815,7 @@ patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 
-[node name="Disc" type="TextureRect" parent="RightCol/StatCards/Stat1" index="1" unique_id=1171565732]
+[node name="Disc" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat1" index="1" unique_id=1171565732]
 self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
 layout_mode = 0
 offset_left = 20.0
@@ -819,7 +827,7 @@ texture = ExtResource("13_circle")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="RightCol/StatCards/Stat1" index="2" unique_id=1225079282]
+[node name="Icon" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat1" index="2" unique_id=1225079282]
 layout_mode = 0
 offset_left = 31.0
 offset_top = 28.0
@@ -830,7 +838,7 @@ texture = ExtResource("23_ic_star")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="RightCol/StatCards/Stat1" index="3" unique_id=1054907747]
+[node name="Name" type="Label" parent="Sheet/RightCol/StatCards/Stat1" index="3" unique_id=1054907747]
 layout_mode = 0
 offset_left = 92.0
 offset_top = 26.0
@@ -839,7 +847,7 @@ offset_bottom = 42.0
 text = "STR_PROFILE_STAT_STARS"
 label_settings = ExtResource("43_t_label")
 
-[node name="Value" type="Label" parent="RightCol/StatCards/Stat1" index="4" unique_id=393372154]
+[node name="Value" type="Label" parent="Sheet/RightCol/StatCards/Stat1" index="4" unique_id=393372154]
 layout_mode = 0
 offset_left = 92.0
 offset_top = 44.0
@@ -848,7 +856,7 @@ offset_bottom = 78.0
 text = "0 / 0"
 label_settings = ExtResource("44_t_value")
 
-[node name="Stat2" type="Control" parent="RightCol/StatCards" index="1" unique_id=1331638779]
+[node name="Stat2" type="Control" parent="Sheet/RightCol/StatCards" index="1" unique_id=1331638779]
 anchors_preset = 0
 anchor_left = 0.515
 anchor_right = 1.0
@@ -856,7 +864,7 @@ offset_bottom = 90.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="RightCol/StatCards/Stat2" index="0" unique_id=1891354913]
+[node name="Bg" type="NinePatchRect" parent="Sheet/RightCol/StatCards/Stat2" index="0" unique_id=1891354913]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -869,7 +877,7 @@ patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 
-[node name="Disc" type="TextureRect" parent="RightCol/StatCards/Stat2" index="1" unique_id=955491318]
+[node name="Disc" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat2" index="1" unique_id=955491318]
 self_modulate = Color(0.996078, 0.886275, 0.886275, 1)
 layout_mode = 0
 offset_left = 20.0
@@ -881,7 +889,7 @@ texture = ExtResource("13_circle")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="RightCol/StatCards/Stat2" index="2" unique_id=355403056]
+[node name="Icon" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat2" index="2" unique_id=355403056]
 layout_mode = 0
 offset_left = 31.0
 offset_top = 28.0
@@ -892,7 +900,7 @@ texture = ExtResource("24_ic_dungeon")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="RightCol/StatCards/Stat2" index="3" unique_id=2044468319]
+[node name="Name" type="Label" parent="Sheet/RightCol/StatCards/Stat2" index="3" unique_id=2044468319]
 layout_mode = 0
 offset_left = 92.0
 offset_top = 26.0
@@ -901,7 +909,7 @@ offset_bottom = 42.0
 text = "STR_PROFILE_STAT_DUNGEON"
 label_settings = ExtResource("43_t_label")
 
-[node name="Value" type="Label" parent="RightCol/StatCards/Stat2" index="4" unique_id=118007137]
+[node name="Value" type="Label" parent="Sheet/RightCol/StatCards/Stat2" index="4" unique_id=118007137]
 layout_mode = 0
 offset_left = 92.0
 offset_top = 44.0
@@ -910,7 +918,7 @@ offset_bottom = 78.0
 text = "FLOOR 0"
 label_settings = ExtResource("44_t_value")
 
-[node name="Stat3" type="Control" parent="RightCol/StatCards" index="2" unique_id=2055694]
+[node name="Stat3" type="Control" parent="Sheet/RightCol/StatCards" index="2" unique_id=2055694]
 anchors_preset = 0
 anchor_right = 0.485
 offset_top = 107.0
@@ -918,7 +926,7 @@ offset_bottom = 197.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="RightCol/StatCards/Stat3" index="0" unique_id=519485947]
+[node name="Bg" type="NinePatchRect" parent="Sheet/RightCol/StatCards/Stat3" index="0" unique_id=519485947]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -931,7 +939,7 @@ patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 
-[node name="Disc" type="TextureRect" parent="RightCol/StatCards/Stat3" index="1" unique_id=1220343167]
+[node name="Disc" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat3" index="1" unique_id=1220343167]
 self_modulate = Color(1, 0.984314, 0.921569, 1)
 layout_mode = 0
 offset_left = 20.0
@@ -943,7 +951,7 @@ texture = ExtResource("13_circle")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="RightCol/StatCards/Stat3" index="2" unique_id=289291035]
+[node name="Icon" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat3" index="2" unique_id=289291035]
 layout_mode = 0
 offset_left = 31.0
 offset_top = 28.0
@@ -954,7 +962,7 @@ texture = ExtResource("25_ic_streak")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="RightCol/StatCards/Stat3" index="3" unique_id=841515958]
+[node name="Name" type="Label" parent="Sheet/RightCol/StatCards/Stat3" index="3" unique_id=841515958]
 layout_mode = 0
 offset_left = 92.0
 offset_top = 26.0
@@ -963,7 +971,7 @@ offset_bottom = 42.0
 text = "STR_PROFILE_STAT_STREAK"
 label_settings = ExtResource("43_t_label")
 
-[node name="Value" type="Label" parent="RightCol/StatCards/Stat3" index="4" unique_id=1724081753]
+[node name="Value" type="Label" parent="Sheet/RightCol/StatCards/Stat3" index="4" unique_id=1724081753]
 layout_mode = 0
 offset_left = 92.0
 offset_top = 44.0
@@ -972,7 +980,7 @@ offset_bottom = 78.0
 text = "0 DAYS"
 label_settings = ExtResource("44_t_value")
 
-[node name="Stat4" type="Control" parent="RightCol/StatCards" index="3" unique_id=1075487767]
+[node name="Stat4" type="Control" parent="Sheet/RightCol/StatCards" index="3" unique_id=1075487767]
 anchors_preset = 0
 anchor_left = 0.515
 anchor_right = 1.0
@@ -981,7 +989,7 @@ offset_bottom = 197.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="RightCol/StatCards/Stat4" index="0" unique_id=2088463477]
+[node name="Bg" type="NinePatchRect" parent="Sheet/RightCol/StatCards/Stat4" index="0" unique_id=2088463477]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -994,7 +1002,7 @@ patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 
-[node name="Disc" type="TextureRect" parent="RightCol/StatCards/Stat4" index="1" unique_id=1726183252]
+[node name="Disc" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat4" index="1" unique_id=1726183252]
 self_modulate = Color(0.941176, 0.992157, 0.956863, 1)
 layout_mode = 0
 offset_left = 20.0
@@ -1006,7 +1014,7 @@ texture = ExtResource("13_circle")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="RightCol/StatCards/Stat4" index="2" unique_id=1648968872]
+[node name="Icon" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat4" index="2" unique_id=1648968872]
 layout_mode = 0
 offset_left = 31.0
 offset_top = 28.0
@@ -1017,7 +1025,7 @@ texture = ExtResource("26_ic_winrate")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="RightCol/StatCards/Stat4" index="3" unique_id=1213803191]
+[node name="Name" type="Label" parent="Sheet/RightCol/StatCards/Stat4" index="3" unique_id=1213803191]
 layout_mode = 0
 offset_left = 92.0
 offset_top = 26.0
@@ -1026,7 +1034,7 @@ offset_bottom = 42.0
 text = "STR_PROFILE_STAT_WINRATE"
 label_settings = ExtResource("43_t_label")
 
-[node name="Value" type="Label" parent="RightCol/StatCards/Stat4" index="4" unique_id=1204981895]
+[node name="Value" type="Label" parent="Sheet/RightCol/StatCards/Stat4" index="4" unique_id=1204981895]
 layout_mode = 0
 offset_left = 92.0
 offset_top = 44.0
@@ -1035,7 +1043,7 @@ offset_bottom = 78.0
 text = "0%"
 label_settings = ExtResource("44_t_value")
 
-[node name="BadgesTitle" type="Label" parent="RightCol" index="2" unique_id=828128172]
+[node name="BadgesTitle" type="Label" parent="Sheet/RightCol" index="2" unique_id=828128172]
 layout_mode = 0
 offset_top = 238.0
 offset_right = 300.0
@@ -1043,7 +1051,7 @@ offset_bottom = 254.0
 text = "STR_PROFILE_BADGES_TITLE"
 label_settings = ExtResource("41_t_section")
 
-[node name="Badges" type="Control" parent="RightCol" index="3" unique_id=947246509]
+[node name="Badges" type="Control" parent="Sheet/RightCol" index="3" unique_id=947246509]
 anchors_preset = 0
 anchor_right = 1.0
 offset_top = 260.0
@@ -1051,7 +1059,7 @@ offset_bottom = 384.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="RightCol/Badges" index="0" unique_id=783958648]
+[node name="Bg" type="NinePatchRect" parent="Sheet/RightCol/Badges" index="0" unique_id=783958648]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1064,7 +1072,7 @@ patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 
-[node name="ApChip" type="Control" parent="RightCol/Badges" index="1" unique_id=1142217687]
+[node name="ApChip" type="Control" parent="Sheet/RightCol/Badges" index="1" unique_id=1142217687]
 layout_mode = 1
 anchor_left = 0.21
 anchor_right = 0.3
@@ -1073,7 +1081,7 @@ offset_bottom = 10.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Bg" type="TextureRect" parent="RightCol/Badges/ApChip" index="0" unique_id=1537429619]
+[node name="Bg" type="TextureRect" parent="Sheet/RightCol/Badges/ApChip" index="0" unique_id=1537429619]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1084,7 +1092,7 @@ mouse_filter = 2
 texture = ExtResource("8_chip_gold")
 expand_mode = 1
 
-[node name="Text" type="Label" parent="RightCol/Badges/ApChip" index="1" unique_id=1952761839]
+[node name="Text" type="Label" parent="Sheet/RightCol/Badges/ApChip" index="1" unique_id=1952761839]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1096,7 +1104,7 @@ label_settings = ExtResource("47_t_chip_gold")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Badge1" type="Control" parent="RightCol/Badges" index="2" unique_id=422181471]
+[node name="Badge1" type="Control" parent="Sheet/RightCol/Badges" index="2" unique_id=422181471]
 layout_mode = 1
 anchor_left = 0.125
 anchor_right = 0.125
@@ -1107,7 +1115,7 @@ offset_bottom = 95.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Disc" type="TextureRect" parent="RightCol/Badges/Badge1" index="0" unique_id=1580027260]
+[node name="Disc" type="TextureRect" parent="Sheet/RightCol/Badges/Badge1" index="0" unique_id=1580027260]
 layout_mode = 0
 offset_right = 68.0
 offset_bottom = 68.0
@@ -1116,7 +1124,7 @@ texture = ExtResource("72_medal1")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="RightCol/Badges/Badge1" index="1" unique_id=1197459364]
+[node name="Icon" type="TextureRect" parent="Sheet/RightCol/Badges/Badge1" index="1" unique_id=1197459364]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 14.0
@@ -1126,7 +1134,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="RightCol/Badges/Badge1" index="2" unique_id=607566580]
+[node name="Name" type="Label" parent="Sheet/RightCol/Badges/Badge1" index="2" unique_id=607566580]
 layout_mode = 0
 offset_left = -26.0
 offset_top = 70.0
@@ -1137,7 +1145,7 @@ label_settings = ExtResource("45_t_small")
 horizontal_alignment = 1
 text_overrun_behavior = 3
 
-[node name="Badge2" type="Control" parent="RightCol/Badges" index="3" unique_id=1542329204]
+[node name="Badge2" type="Control" parent="Sheet/RightCol/Badges" index="3" unique_id=1542329204]
 layout_mode = 1
 anchor_left = 0.375
 anchor_right = 0.375
@@ -1148,7 +1156,7 @@ offset_bottom = 95.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Disc" type="TextureRect" parent="RightCol/Badges/Badge2" index="0" unique_id=703978216]
+[node name="Disc" type="TextureRect" parent="Sheet/RightCol/Badges/Badge2" index="0" unique_id=703978216]
 layout_mode = 0
 offset_right = 68.0
 offset_bottom = 68.0
@@ -1157,7 +1165,7 @@ texture = ExtResource("73_medal2")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="RightCol/Badges/Badge2" index="1" unique_id=454184769]
+[node name="Icon" type="TextureRect" parent="Sheet/RightCol/Badges/Badge2" index="1" unique_id=454184769]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 14.0
@@ -1167,7 +1175,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="RightCol/Badges/Badge2" index="2" unique_id=192382390]
+[node name="Name" type="Label" parent="Sheet/RightCol/Badges/Badge2" index="2" unique_id=192382390]
 layout_mode = 0
 offset_left = -26.0
 offset_top = 70.0
@@ -1178,7 +1186,7 @@ label_settings = ExtResource("45_t_small")
 horizontal_alignment = 1
 text_overrun_behavior = 3
 
-[node name="Badge3" type="Control" parent="RightCol/Badges" index="4" unique_id=1533717296]
+[node name="Badge3" type="Control" parent="Sheet/RightCol/Badges" index="4" unique_id=1533717296]
 layout_mode = 1
 anchor_left = 0.625
 anchor_right = 0.625
@@ -1189,7 +1197,7 @@ offset_bottom = 95.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Disc" type="TextureRect" parent="RightCol/Badges/Badge3" index="0" unique_id=2084767800]
+[node name="Disc" type="TextureRect" parent="Sheet/RightCol/Badges/Badge3" index="0" unique_id=2084767800]
 layout_mode = 0
 offset_right = 68.0
 offset_bottom = 68.0
@@ -1198,7 +1206,7 @@ texture = ExtResource("74_medal3")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="RightCol/Badges/Badge3" index="1" unique_id=265115584]
+[node name="Icon" type="TextureRect" parent="Sheet/RightCol/Badges/Badge3" index="1" unique_id=265115584]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 14.0
@@ -1208,7 +1216,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="RightCol/Badges/Badge3" index="2" unique_id=895155272]
+[node name="Name" type="Label" parent="Sheet/RightCol/Badges/Badge3" index="2" unique_id=895155272]
 layout_mode = 0
 offset_left = -26.0
 offset_top = 70.0
@@ -1219,7 +1227,7 @@ label_settings = ExtResource("45_t_small")
 horizontal_alignment = 1
 text_overrun_behavior = 3
 
-[node name="BtnMore" type="TextureButton" parent="RightCol/Badges" index="5" unique_id=51839960]
+[node name="BtnMore" type="TextureButton" parent="Sheet/RightCol/Badges" index="5" unique_id=51839960]
 self_modulate = Color(0.960784, 0.976471, 0.984314, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -1236,7 +1244,7 @@ texture_hover = ExtResource("71_disc_more")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Plus" type="Label" parent="RightCol/Badges/BtnMore" index="0" unique_id=995937961]
+[node name="Plus" type="Label" parent="Sheet/RightCol/Badges/BtnMore" index="0" unique_id=995937961]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1248,7 +1256,7 @@ label_settings = ExtResource("41_t_section")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Text" type="Label" parent="RightCol/Badges/BtnMore" index="1" unique_id=1043886999]
+[node name="Text" type="Label" parent="Sheet/RightCol/Badges/BtnMore" index="1" unique_id=1043886999]
 layout_mode = 0
 offset_left = -46.0
 offset_top = 70.0
@@ -1258,7 +1266,7 @@ text = "STR_PROFILE_BADGES_MORE"
 label_settings = ExtResource("48_t_state")
 horizontal_alignment = 1
 
-[node name="ActivityTitle" type="Label" parent="RightCol" index="4" unique_id=1770023584]
+[node name="ActivityTitle" type="Label" parent="Sheet/RightCol" index="4" unique_id=1770023584]
 layout_mode = 0
 offset_top = 413.0
 offset_right = 300.0
@@ -1266,7 +1274,7 @@ offset_bottom = 429.0
 text = "STR_PROFILE_ACTIVITY_TITLE"
 label_settings = ExtResource("41_t_section")
 
-[node name="Rows" type="VBoxContainer" parent="RightCol" index="5" unique_id=12580014]
+[node name="Rows" type="VBoxContainer" parent="Sheet/RightCol" index="5" unique_id=12580014]
 layout_mode = 0
 anchor_right = 1.0
 offset_top = 435.0
@@ -1275,7 +1283,7 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="Empty" type="Label" parent="RightCol/Rows" index="0" unique_id=1073669589]
+[node name="Empty" type="Label" parent="Sheet/RightCol/Rows" index="0" unique_id=1073669589]
 visible = false
 layout_mode = 2
 text = "STR_PROFILE_EMPTY_ACTIVITY"

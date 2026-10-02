@@ -28,8 +28,7 @@ const SCENE_CHAPTERS := "res://scenes/chapters.tscn"
 const SCENE_SHOP := "res://scenes/shop.tscn"
 ## Màn CREDIT — soundtrack + ghi công đội ngũ
 const SCENE_CREDIT := "res://scenes/credit.tscn"
-## Màn HỒ SƠ CÁ NHÂN — avatar · tên hiển thị · EXP · thành tích
-const SCENE_PROFILER := "res://scenes/profiler.tscn"
+## (HỒ SƠ CÁ NHÂN nay là POPUP — xem PopupManager.POPUPS["profiler"])
 ## Lớp phủ chuyển cảnh: node giao diện (trang giấy, mực loang, fade, chặn input)
 ## được khai báo SẴN trong scene này — xem scripts/nodes/common/scene_transition.gd
 const SCENE_LOADING := "res://scenes/loading.tscn"
@@ -158,10 +157,6 @@ func goto_settings() -> void:
 func goto_archivement() -> void:
 	change_scene(SCENE_ARCHIVEMENT)
 
-
-## Hồ sơ cá nhân (avatar · tên · EXP · thành tích)
-func goto_profiler() -> void:
-	change_scene(SCENE_PROFILER)
 
 func goto_ranking() -> void:
 	change_scene(SCENE_RANKING)
