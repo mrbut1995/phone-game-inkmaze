@@ -153,7 +153,35 @@ func _case_edit_profile() -> void:
 	Popups.open(Popups.PROFILER)
 	await _frames(40)          # chờ hiệu ứng mở popup hồ sơ xong
 	var canvas := root.get_visible_rect().size
+	_dump("profiler_popup")
+	var prof_pop := Popups.top()
+	var prof_dim := prof_pop.get_node_or_null("Dim") as Control if prof_pop != null else null
+	var prof_dim_rect := Rect2(prof_dim.global_position, prof_dim.size) if prof_dim != null else Rect2()
+	if prof_dim != null and prof_dim_rect.grow(1.0).encloses(Rect2(Vector2.ZERO, canvas)):
+		print("   [PASS] Dim profiler phủ kín canvas %s (dim=%s)" % [str(canvas), str(prof_dim_rect)])
+		_passes += 1
+	else:
+		print("   [FAIL] Dim profiler KHÔNG phủ canvas %s (dim=%s)" % [str(canvas), str(prof_dim_rect)])
+		_fails += 1
 	await _shot("profiler_popup_%dx%d" % [int(canvas.x), int(canvas.y)])
+	# Bấm CHUỘT THẬT vào vùng tối ngoài tờ hồ sơ ⇒ đóng popup hồ sơ
+	var ev_dim := InputEventMouseButton.new()
+	ev_dim.button_index = MOUSE_BUTTON_LEFT
+	ev_dim.pressed = true
+	ev_dim.position = Vector2(10.0, 10.0)
+	root.push_input(ev_dim, true)
+	await _frames(30)
+	if Popups.is_open(Popups.PROFILER):
+		print("   [FAIL] Bam vung toi ngoai to ho so KHONG dong duoc popup")
+		_fails += 1
+	else:
+		print("   [PASS] Bam vung toi ngoai to ho so -> dong popup (input that)")
+		_passes += 1
+	ev_dim.pressed = false
+	root.push_input(ev_dim, true)
+	await _frames(10)
+	Popups.open(Popups.PROFILER)
+	await _frames(40)
 	Popups.open(Popups.EDIT_PROFILE)
 	await _frames(40)          # chờ hiệu ứng mở xong
 	_dump("edit_profile")

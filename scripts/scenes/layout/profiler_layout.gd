@@ -16,7 +16,7 @@ extends BaseLayout
 ##   · rows_box   : nơi gắn các hàng lịch sử (nodes/profiler/activity_row.tscn)
 ## ============================================================================
 
-@export var btn_back: BaseButton = null
+@export var btn_close: BaseButton = null
 @export var lbl_title: Label = null
 @export var level_chip: Control = null
 @export var hero: Control = null

@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://dflm08pygt1p8" path="res://scripts/scenes/layout/profiler_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" uid="uid://b5g8u2capnu0n" path="res://assets/images/btn_header_back_normal.svg" id="3_back_n"]
-[ext_resource type="Texture2D" uid="uid://uqnqpil3ag8l" path="res://assets/images/btn_header_back_pressed.svg" id="4_back_p"]
+[ext_resource type="Texture2D" path="res://assets/images/btn_header_cancel_normal.svg" id="3_close_n"]
+[ext_resource type="Texture2D" path="res://assets/images/btn_header_cancel_pressed.svg" id="4_close_p"]
 [ext_resource type="Texture2D" uid="uid://dsguvdkobpfxd" path="res://assets/images/profiler/sheet_land.svg" id="5_sheet"]
 [ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="6_tape"]
 [ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="7_clip"]
@@ -50,10 +50,10 @@
 [ext_resource type="Texture2D" uid="uid://cneod32nxa8s7" path="res://assets/images/profiler/badge_medal_2.svg" id="73_medal2"]
 [ext_resource type="Texture2D" uid="uid://bjt6c8xe2w7e2" path="res://assets/images/profiler/badge_medal_3.svg" id="74_medal3"]
 
-[node name="Landscape" unique_id=587724805 node_paths=PackedStringArray("btn_back", "lbl_title", "level_chip", "hero", "stat_cards", "badges_box", "ap_chip", "gear_box", "rows_box", "btn_edit", "btn_share", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=587724805 node_paths=PackedStringArray("btn_close", "lbl_title", "level_chip", "hero", "stat_cards", "badges_box", "ap_chip", "gear_box", "rows_box", "btn_edit", "btn_share", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill") instance=ExtResource("1_parent")]
 theme = ExtResource("60_theme")
 script = ExtResource("2_layout")
-btn_back = NodePath("Sheet/TopBar/Back")
+btn_close = NodePath("Sheet/TopBar/Close")
 lbl_title = NodePath("Sheet/TopBar/Title")
 level_chip = NodePath("Sheet/TopBar/LevelChip")
 hero = NodePath("Sheet/LeftCol/Hero")
@@ -125,15 +125,21 @@ offset_bottom = 74.6
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Back" type="TextureButton" parent="Sheet/TopBar" index="0" unique_id=308425477]
-layout_mode = 0
-offset_right = 49.0
+[node name="Close" type="TextureButton" parent="Sheet/TopBar" index="0" unique_id=308425477]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_top = 0.0
+offset_right = 0.0
 offset_bottom = 49.0
-texture_normal = ExtResource("3_back_n")
-texture_pressed = ExtResource("4_back_p")
-texture_hover = ExtResource("3_back_n")
-texture_disabled = ExtResource("3_back_n")
-texture_focused = ExtResource("3_back_n")
+grow_horizontal = 0
+texture_normal = ExtResource("3_close_n")
+texture_pressed = ExtResource("4_close_p")
+texture_hover = ExtResource("3_close_n")
+texture_disabled = ExtResource("3_close_n")
+texture_focused = ExtResource("3_close_n")
 ignore_texture_size = true
 stretch_mode = 5
 

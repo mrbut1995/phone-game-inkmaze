@@ -47,7 +47,7 @@ func _ready() -> void:
 	_bind_refs()
 	# Dây nút khai trong `nodes/popups/profiler_content.tscn` (cả 2 hướng) — guard chỉ nối lại nếu mất
 	if layout != null:
-		ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
+		ensure_signal(layout.btn_close, &"pressed", &"_on_close_pressed")
 		ensure_signal(layout.btn_edit, &"pressed", &"_on_edit_pressed")
 		ensure_signal(layout.btn_share, &"pressed", &"_on_share_pressed")
 		var hero_btn := layout.hero_btn_avatar as BaseButton
@@ -112,7 +112,7 @@ func activity_row_count() -> int:
 # ---------------------------------------------------------------------------
 # Nút
 # ---------------------------------------------------------------------------
-func _on_back_pressed() -> void:
+func _on_close_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	if owner_popup != null and is_instance_valid(owner_popup):
 		owner_popup.close()

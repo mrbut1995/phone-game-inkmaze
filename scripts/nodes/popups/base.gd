@@ -65,6 +65,12 @@ func _apply_canvas_layout() -> void:
 	var dim_rect := get_node_or_null("Dim") as Control
 	if dim_rect == null:
 		return
+	# Dim phải phủ TOÀN canvas: giữ nó ở chế độ POSITION (anchors mép 0) — nếu scene để
+	# anchors full-rect thì 2 lệnh gán dưới đây bị hệ anchor GHI ĐÈ (Dim chỉ phủ khung node
+	# cha = CỘT nội dung ⇒ hai bên màn rộng không tối — lỗi Dim của popup Hồ sơ).
+	if dim_rect.anchor_left != 0.0 or dim_rect.anchor_top != 0.0 \
+			or dim_rect.anchor_right != 0.0 or dim_rect.anchor_bottom != 0.0:
+		dim_rect.set_anchors_preset(Control.PRESET_TOP_LEFT, true)
 	var canvas := get_viewport_rect().size
 	var dim_pos := -global_position
 	if dim_rect.position != dim_pos:

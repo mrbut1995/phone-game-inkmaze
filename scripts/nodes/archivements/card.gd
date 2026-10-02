@@ -34,7 +34,7 @@ const COLOR_DESC_LOCKED := Color(0.6313726, 0.69411767, 0.7372549, 1)
 @onready var title_label: Label = $Panel/Body/Info/Title
 @onready var desc_label: Label = $Panel/Body/Info/Desc
 @onready var bar: Control = $Panel/Body/Info/Bar
-@onready var bar_track: TextureRect = $Panel/Body/Info/Bar/Track
+@onready var bar_track: NinePatchRect = $Panel/Body/Info/Bar/Track
 @onready var bar_fill: TextureRect = $Panel/Body/Info/Bar/Fill
 @onready var progress_label: Label = $Panel/Body/Info/Progress
 @onready var stamp: Control = $Panel/Body/Side/Stamp
@@ -42,7 +42,7 @@ const COLOR_DESC_LOCKED := Color(0.6313726, 0.69411767, 0.7372549, 1)
 @onready var stamp_reward: Label = $Panel/Body/Side/Stamp/Reward
 @onready var claim_btn: TextureButton = $Panel/Body/Side/ClaimButton
 @onready var claim_label: Label = $Panel/Body/Side/ClaimButton/Label
-@onready var chip: TextureRect = $Panel/Body/Side/Chip
+@onready var chip: NinePatchRect = $Panel/Body/Side/Chip
 @onready var chip_label: Label = $Panel/Body/Side/Chip/Label
 
 var _entry: Dictionary = {}

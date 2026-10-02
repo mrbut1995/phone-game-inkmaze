@@ -15,13 +15,9 @@ grow_vertical = 2
 script = ExtResource("2_rk2nf")
 
 [node name="Dim" parent="." index="0" unique_id=617447502]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 1
+offset_right = 540.0
+offset_bottom = 960.0
 
 [node name="Panel" parent="." index="1" unique_id=290635111]
 anchor_left = 0.074074075
