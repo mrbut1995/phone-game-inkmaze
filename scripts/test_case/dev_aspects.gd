@@ -6,7 +6,8 @@ extends SceneTree
 ##   godot --path . --rendering-driver opengl3 --script res://scripts/test_case/dev_aspects.gd
 ##
 ## Option (đặt SAU `--`):
-##   --shots                lưu PNG nửa độ phân giải vào tmp_aspect/<size>/<id>.png
+##   --shots                lưu PNG 2× canvas vào tmp_aspect/<size>/<id>.png
+##                          (2× canvas ⇒ portrait 1080×1920 = đúng cỡ mockup, so 1:1 được)
 ##   --only main,game       chỉ kiểm tra vài màn (id: main, levels, game…)
 ##   --sizes 1920x1080      chỉ kiểm tra vài cỡ cửa sổ
 ##   --modes play,sum_path  chỉ kiểm tra vài chế độ của màn game
@@ -17,6 +18,10 @@ extends SceneTree
 ##   · Không có node hiển thị nào tràn ra ngoài màn hình
 ##   · Màn game: Board + HUD trong cột; popup pause có Dim phủ canvas, thẻ canh giữa cột
 ## ============================================================================
+
+## Hệ số phóng ảnh chụp so với canvas (viewport texture = đúng cỡ canvas).
+## 2.0 ⇒ khớp mockup (mockup vẽ ở 1080×1920 cho canvas 540×960).
+const _SHOT_SCALE := 2.0
 
 const ASPECTS := [
 	{"label": "9:16  · 1080×1920 (dọc cơ bản)", "size": Vector2i(1080, 1920)},
@@ -311,7 +316,9 @@ func _save_shot(id: String, size: Vector2i) -> void:
 	var img := root.get_texture().get_image()
 	if img == null:
 		return
-	img.resize(maxi(int(img.get_width() * 0.5), 1), maxi(int(img.get_height() * 0.5), 1), Image.INTERPOLATE_LANCZOS)
+	# Ảnh chụp = ĐÚNG 2× canvas (base 540×920 ⇒ 1080×1840+) để đối chiếu 1:1 với mockup
+	# (mockup portrait vẽ ở 1080×1920, canvas 540×960 ⇒ cùng tỉ lệ 2 px/canvas-px).
+	img.resize(maxi(int(img.get_width() * _SHOT_SCALE), 1), maxi(int(img.get_height() * _SHOT_SCALE), 1), Image.INTERPOLATE_LANCZOS)
 	var dir := "res://tmp_aspect/%dx%d" % [size.x, size.y]
 	DirAccess.make_dir_recursive_absolute(dir)
 	img.save_png(dir + "/" + id + ".png")

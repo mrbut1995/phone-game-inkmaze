@@ -12,9 +12,13 @@ extends BasePopup
 ## ============================================================================
 
 const ITEM_SCENE := preload("res://nodes/popups/edit_profile_item.tscn")
+const PROFILE_DOT_SCENE := preload("res://nodes/popups/profile_dot.tscn")
 
 const TAB_AVATAR := "avatar"
 const TAB_FRAME := "frame"
+const ITEMS_PER_PAGE := 6
+const SWIPE_DRAG_THRESHOLD := 10.0
+const SWIPE_PAGE_THRESHOLD := 60.0
 
 const COLOR_TAB_ON := Color(1, 1, 1, 1)
 const COLOR_TAB_OFF := Color(0.3922, 0.4549, 0.5451)   # #64748B
@@ -25,10 +29,15 @@ const COLOR_WARN := Color(0.8471, 0.2667, 0.2667)      # #D84444
 signal profile_saved
 
 var _tab := TAB_AVATAR
+var _page := 0
 var _pending_avatar := ""
 var _pending_frame := ""
 var _pending_name := ""
 var _hint_token := 0
+var _swipe_down := false
+var _swipe_dragged := false
+var _swipe_start := Vector2.ZERO
+var _swipe_last := Vector2.ZERO
 
 @onready var _preview_avatar: TextureRect = get_node_or_null("Panel/Content/Preview/Profile/Frame/Avatar")
 @onready var _preview_frame: TextureRect = get_node_or_null("Panel/Content/Preview/Profile/Frame")
@@ -37,6 +46,9 @@ var _hint_token := 0
 @onready var _grid: GridContainer = get_node_or_null("Panel/Content/Scroll/Grid")
 @onready var _tab_avatar: Button = get_node_or_null("Panel/Content/Tabs/TabAvatar")
 @onready var _tab_frame: Button = get_node_or_null("Panel/Content/Tabs/TabFrame")
+@onready var _btn_prev: TextureButton = get_node_or_null("Panel/Content/PageBar/BtnPrev")
+@onready var _btn_next: TextureButton = get_node_or_null("Panel/Content/PageBar/BtnNext")
+@onready var _dots_box: HBoxContainer = get_node_or_null("Panel/Content/PageBar/Dots")
 
 
 # ---------------------------------------------------------------------------
@@ -44,6 +56,9 @@ var _hint_token := 0
 # ---------------------------------------------------------------------------
 func _on_open() -> void:
 	_tab = TAB_AVATAR
+	_page = 0
+	_swipe_down = false
+	_swipe_dragged = false
 	_pending_avatar = Profile.avatar_id()
 	_pending_frame = Profile.frame_id()
 	_pending_name = Profile.display_name()
@@ -51,6 +66,7 @@ func _on_open() -> void:
 		_name_edit.text = _pending_name
 	_refresh_tabs()
 	_refresh_preview()
+	_attach_popup_animations()
 	_rebuild_grid()
 
 
@@ -63,6 +79,14 @@ func tab() -> String:
 
 func item_count() -> int:
 	return _items().size()
+
+
+func page_index() -> int:
+	return _page
+
+
+func page_count() -> int:
+	return _page_count()
 
 
 func item_node(ident: String) -> EditProfileItem:
@@ -79,13 +103,16 @@ func select_pending(ident: String) -> void:
 		_pending_frame = ident
 	_refresh_preview()
 	_refresh_selection()
+	_pulse_preview()
 
 
 func set_tab(tab_id: String) -> void:
 	if tab_id == _tab:
 		return
 	_tab = tab_id
+	_page = 0
 	_refresh_tabs()
+	_refresh_hint_default()
 	_rebuild_grid()
 
 
@@ -100,6 +127,57 @@ func _on_tab_avatar_pressed() -> void:
 func _on_tab_frame_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	set_tab(TAB_FRAME)
+
+
+func _on_page_prev_pressed() -> void:
+	if _page <= 0:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	_go_to_page(_page - 1)
+
+
+func _on_page_next_pressed() -> void:
+	if _page >= _page_count() - 1:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	_go_to_page(_page + 1)
+
+
+func _on_scroll_gui_input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		var touch := event as InputEventScreenTouch
+		if touch.pressed:
+			_swipe_down = true
+			_swipe_dragged = false
+			_swipe_start = touch.position
+			_swipe_last = touch.position
+		else:
+			_finish_swipe()
+	elif event is InputEventScreenDrag:
+		if not _swipe_down:
+			return
+		var drag := event as InputEventScreenDrag
+		_swipe_last = drag.position
+		if absf(_swipe_last.x - _swipe_start.x) >= SWIPE_DRAG_THRESHOLD:
+			_swipe_dragged = true
+	elif event is InputEventMouseButton:
+		var mb := event as InputEventMouseButton
+		if mb.button_index != MOUSE_BUTTON_LEFT:
+			return
+		if mb.pressed:
+			_swipe_down = true
+			_swipe_dragged = false
+			_swipe_start = mb.position
+			_swipe_last = mb.position
+		else:
+			_finish_swipe()
+	elif event is InputEventMouseMotion:
+		if not _swipe_down or not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			return
+		var motion := event as InputEventMouseMotion
+		_swipe_last = motion.position
+		if absf(_swipe_last.x - _swipe_start.x) >= SWIPE_DRAG_THRESHOLD:
+			_swipe_dragged = true
 
 
 func _on_name_changed(new_text: String) -> void:
@@ -159,9 +237,17 @@ func _style_tab(button: Button, active: bool) -> void:
 		bg_off.visible = not active
 	if bg_on != null:
 		bg_on.visible = active
-	var label := button.get_node_or_null("Text") as Label
+	# Nhãn + icon nằm trong `Row` (HBox canh giữa) — chấp nhận cả 2 kiểu khai node.
+	var label := button.get_node_or_null("Row/Text") as Label
+	if label == null:
+		label = button.get_node_or_null("Text") as Label
 	if label != null:
 		_tint(label, COLOR_TAB_ON if active else COLOR_TAB_OFF)
+	var icon := button.get_node_or_null("Row/Icon") as TextureRect
+	if icon == null:
+		icon = button.get_node_or_null("Icon") as TextureRect
+	if icon != null:
+		icon.modulate = COLOR_TAB_ON if active else COLOR_TAB_OFF
 
 
 func _refresh_preview() -> void:
@@ -187,13 +273,21 @@ func _rebuild_grid() -> void:
 	for child in _grid.get_children():
 		_grid.remove_child(child)
 		child.queue_free()
-	for entry in _catalog():
+	var catalog := _catalog()
+	var total_pages := _page_count_from(catalog.size())
+	_page = clampi(_page, 0, total_pages - 1)
+	var from_idx := _page * ITEMS_PER_PAGE
+	var to_idx := mini(from_idx + ITEMS_PER_PAGE, catalog.size())
+	for idx in range(from_idx, to_idx):
+		var entry: Dictionary = catalog[idx]
 		var item := ITEM_SCENE.instantiate() as EditProfileItem
 		item.name = "Item_" + str(entry.get("id", ""))
 		item.set_item(entry)
 		item.pressed.connect(_on_item_pressed.bind(str(entry.get("id", ""))))
 		_grid.add_child(item)
 	_refresh_selection()
+	_refresh_paging_ui()
+	_animate_grid_in()
 
 
 func _items() -> Array:
@@ -208,6 +302,116 @@ func _items() -> Array:
 
 func _catalog() -> Array:
 	return Profile.avatars() if _tab == TAB_AVATAR else Profile.frames()
+
+
+func _go_to_page(new_page: int) -> void:
+	var target := clampi(new_page, 0, _page_count() - 1)
+	if target == _page:
+		return
+	_page = target
+	_rebuild_grid()
+
+
+func _page_count() -> int:
+	return _page_count_from(_catalog().size())
+
+
+func _page_count_from(total_items: int) -> int:
+	return maxi(1, int(ceil(float(total_items) / float(ITEMS_PER_PAGE))))
+
+
+func _refresh_paging_ui() -> void:
+	var pages := _page_count()
+	var page_bar := get_node_or_null("Panel/Content/PageBar") as Control
+	if page_bar != null:
+		page_bar.visible = pages > 1
+	if _btn_prev != null:
+		_btn_prev.disabled = _page <= 0
+		_btn_prev.modulate = Color(1, 1, 1, 0.45) if _btn_prev.disabled else Color(1, 1, 1, 1)
+	if _btn_next != null:
+		_btn_next.disabled = _page >= pages - 1
+		_btn_next.modulate = Color(1, 1, 1, 0.45) if _btn_next.disabled else Color(1, 1, 1, 1)
+	if _dots_box == null:
+		return
+	for child in _dots_box.get_children():
+		_dots_box.remove_child(child)
+		child.queue_free()
+	for idx in range(pages):
+		var dot := PROFILE_DOT_SCENE.instantiate() as EditProfileDot
+		dot.set_current(idx == _page)
+		dot.pressed.connect(_on_dot_pressed.bind(idx))
+		_dots_box.add_child(dot)
+
+
+func _on_dot_pressed(index: int) -> void:
+	if index == _page:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	_go_to_page(index)
+
+
+func _finish_swipe() -> void:
+	if not _swipe_down:
+		return
+	if _swipe_dragged:
+		var dx := _swipe_last.x - _swipe_start.x
+		if absf(dx) >= SWIPE_PAGE_THRESHOLD:
+			if dx < 0.0 and _page < _page_count() - 1:
+				Sfx.play(Sfx.BTN_CLICK)
+				_go_to_page(_page + 1)
+				get_viewport().set_input_as_handled()
+			elif dx > 0.0 and _page > 0:
+				Sfx.play(Sfx.BTN_CLICK)
+				_go_to_page(_page - 1)
+				get_viewport().set_input_as_handled()
+	_swipe_down = false
+	_swipe_dragged = false
+
+
+# ---------------------------------------------------------------------------
+# Hiệu ứng (animation)
+# ---------------------------------------------------------------------------
+## Gắn hiệu ứng nhấn nảy cho nút của popup (guard: mỗi node chỉ gắn 1 lần)
+func _attach_popup_animations() -> void:
+	var paths := [
+		"Panel/Content/Close",
+		"Panel/Content/BtnCancel",
+		"Panel/Content/BtnSave",
+		"Panel/Content/Tabs/TabAvatar",
+		"Panel/Content/Tabs/TabFrame",
+		"Panel/Content/PageBar/BtnPrev",
+		"Panel/Content/PageBar/BtnNext",
+	]
+	for path: String in paths:
+		var btn := get_node_or_null(path) as BaseButton
+		if btn == null or btn.has_meta("bounce_attached"):
+			continue
+		btn.set_meta("bounce_attached", true)
+		UIAnim.attach_press_bounce(btn)
+
+
+## (GIỮ tween) Hiệu ứng xuất hiện so le của các ô — phụ thuộc DỮ LIỆU lúc chạy (thứ tự ô)
+func _animate_grid_in() -> void:
+	if _grid == null:
+		return
+	var idx := 0
+	for child in _grid.get_children():
+		if child is EditProfileItem:
+			var item := child as EditProfileItem
+			item.play_entrance(0.028 * idx)
+			idx += 1
+
+
+## (GIỮ tween) Nhịp "nảy" xác nhận khi người chơi chọn mẫu mới (thao tác lúc chạy)
+func _pulse_preview() -> void:
+	var disc := get_node_or_null("Panel/Content/Preview/Profile") as Control
+	if disc == null:
+		return
+	if disc.size.length_squared() > 0.0:
+		disc.pivot_offset = disc.size * 0.5
+	var tw := disc.create_tween()
+	tw.tween_property(disc, "scale", Vector2(1.07, 1.07), 0.09).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(disc, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 ## Entry (kèm trạng thái) của 1 món trong tab đang mở

@@ -194,7 +194,8 @@ func _refresh_stats() -> void:
 		_set_stat(3, tr("STR_PROFILE_STAT_WINRATE_VALUE").format(["%.1f" % rate]), COLOR_GREEN)
 
 
-## index 0..3 ứng với Stat1..Stat4 khai trong .tscn (node con: Name · Value · Icon)
+## index 0..3 ứng với Stat1..Stat4 khai trong .tscn (node con: Icon · Name · Value)
+## Icon là art TĨNH khai trong .tscn (mỗi chỉ số 1 icon riêng) — ở đây chỉ đổ SỐ + màu chữ.
 func _set_stat(index: int, value: String, color: Color) -> void:
 	var card := layout.stat_card(index)
 	if card == null:
@@ -203,9 +204,6 @@ func _set_stat(index: int, value: String, color: Color) -> void:
 	if value_label != null:
 		value_label.text = value
 		_tint(value_label, color)
-	var icon := card.get_node_or_null("Icon") as TextureRect
-	if icon != null:
-		icon.self_modulate = color
 
 
 func _refresh_badges() -> void:

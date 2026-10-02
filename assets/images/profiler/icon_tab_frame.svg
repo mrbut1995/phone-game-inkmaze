@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Icon tab ĐỔI VIỀN KHUNG (mockup dùng glyph "🖼️" — vẽ lại thành SVG, tô TRẮNG để tint theo tab) -->
+  <rect x="2.6" y="4.6" width="18.8" height="14.8" rx="2.6" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>
+  <circle cx="8.6" cy="9.8" r="1.9" fill="#FFFFFF"/>
+  <path d="M 4.4 16.8 L 9.8 11.6 L 13.6 15.2 L 16.6 12.6 L 19.6 15.6"
+        fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

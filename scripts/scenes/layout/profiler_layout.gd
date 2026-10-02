@@ -9,7 +9,7 @@ extends BaseLayout
 ##
 ## Tên node con mà màn hình tìm (xem scripts/scenes/profiler.gd):
 ##   · level_chip : "Text"                      — nhãn "LV. 12"
-##   · hero       : Disc · Avatar · Frame · BtnAvatar · Name · TierChip+Text · ExpValue · BarFill · Uid
+##   · hero       : Disc · Avatar · Frame · BtnAvatar · NameRow(Name · Pen) · TierChip+Text · ExpValue · BarFill · Uid
 ##   · stat_cards : Stat1..Stat4 (mỗi thẻ: Name · Value · Icon)
 ##   · badges_box : Badge1..Badge3 (Icon · Name) · ApText · BtnMore
 ##   · gear_box   : Card1..Card3 (Icon · Name)
