@@ -1,7 +1,10 @@
 class_name BaseScene
-extends Control
+extends BaseUI
 ## ============================================================================
-## Scene gốc dùng chung cho MỌI màn hình (instance của `scenes/base.tscn`).
+## Scene gốc dùng chung cho MỌI MÀN HÌNH (instance của `scenes/base.tscn`).
+##
+## Phần NHẬN BIẾT HƯỚNG + ÁP LAYOUT đã tách sang `BaseUI` (scripts/scenes/base_ui.gd)
+## và được BaseScene kế thừa. Ở đây chỉ còn phần DÀNH RIÊNG CHO MÀN HÌNH:
 ##
 ## BẢN PORTRAIT-ONLY — mọi tỉ lệ màn hình DỌC (9:16 · 9:18 · 9:19.5 · 9:21 · tablet 3:4…):
 ##
@@ -13,11 +16,9 @@ extends Control
 ##   · Canh giữa ngang → hai bên là nền giấy — 2 dải `SideL`/`SideR` (con của
 ##     `Background`) tô tiếp màu giấy ra hết mép màn hình nên nhìn như trang vở trải rộng.
 ##
-## Nhờ vậy giao diện KHÔNG bị kéo giãn ngang, không lệch vị trí ở mọi tỉ lệ, và các
-## màn con không cần sửa layout riêng.
-##
 ## LƯU Ý KỸ THUẬT: mọi màn con override `_ready()` (không gọi super) nên logic ở đây
-## KHÔNG đặt trong `_ready` được — dùng `_enter_tree()` + `_notification()` thay thế.
+## đặt trong hook của BaseUI — `_on_ui_enter_tree()` + `_after_responsive_layout()` —
+## KHÔNG đặt trong `_ready`.
 ## ============================================================================
 
 ## Bề rộng thiết kế của cột nội dung (khớp `display/window/size/viewport_width`)
@@ -26,63 +27,15 @@ const DESIGN_WIDTH := 540
 ## dùng trọn bề ngang màn hình; màn nào hẹp hơn thì cột đúng bằng bề ngang canvas.
 const MAX_CONTENT_WIDTH := 1440.0
 
-## (PORTRAIT-ONLY) Giữ để tương thích API: phát ĐÚNG 1 LẦN lúc khởi động (`false`) để
-## các handler `_on_orientation_changed` của màn con chạy bước dàn UI theo layout.
-signal orientation_changed(is_landscape: bool)
-
-## (PORTRAIT-ONLY) Luôn `false` — không còn chế độ ngang.
-var is_landscape := false
-
-var _responsive_ready := false
-var _orientation_ready := false
-
-
-func _enter_tree() -> void:
-	_responsive_ready = true
-	# Bỏ anchors full-rect của node gốc — từ đây Root tự quản size/position (nếu giữ anchors
-	# 0..1 thì Godot ghi đè `size` sau `_ready` và cảnh báo "non-equal opposite anchors").
+## Bỏ anchors full-rect của node gốc — từ đây Root tự quản size/position (nếu giữ anchors
+## 0..1 thì Godot ghi đè `size` sau `_ready` và cảnh báo "non-equal opposite anchors").
+func _on_ui_enter_tree() -> void:
 	set_anchors_preset(Control.PRESET_TOP_LEFT, true)
-	_connect_viewport()
-	_apply_responsive_layout()
 
 
-func _notification(what: int) -> void:
-	# READY: áp lại lần cuối sau khi cả cây scene đã vào (tránh race lúc khởi động).
-	# RESIZED: cửa sổ đổi cỡ (kéo cửa sổ trên Windows / xoay máy trên điện thoại).
-	if what == NOTIFICATION_READY or what == NOTIFICATION_RESIZED:
-		_apply_responsive_layout()
-
-
-## Canvas đổi cỡ -> cập nhật lại cột nội dung (xoay máy, kéo giãn cửa sổ)
-func _connect_viewport() -> void:
-	var vp := get_viewport()
-	if vp != null and not vp.size_changed.is_connected(_apply_responsive_layout):
-		vp.size_changed.connect(_apply_responsive_layout)
-
-
-## ============================================================================
-## BỐ CỤC MÀN HÌNH (bản PORTRAIT-ONLY)
-##
-## Mỗi màn khai 1 layout con tên `Portrait` (kế thừa `scenes/layout/portrait/base_layout.tscn`).
-## Khung nội dung (root Control): cột canh giữa — rộng `clamp(canvas.x, 540, 1440)` × cao canvas.
-## ============================================================================
-## Cột nội dung (canh giữa ngang) + nền giấy phủ toàn canvas
-func _apply_responsive_layout() -> void:
-	if not _responsive_ready or not is_inside_tree():
-		return
-	var canvas := get_viewport_rect().size
-	if canvas.x <= 0.0 or canvas.y <= 0.0:
-		return
-
-	var portrait_layout := get_node_or_null("Portrait") as CanvasItem
-	if portrait_layout != null:
-		portrait_layout.visible = true
-		# Neo layout phụ kín khung nội dung để node con luôn co đúng theo cột.
-		var portrait_ctrl: Control = portrait_layout as Control
-		if portrait_ctrl.anchor_right != 1.0 or portrait_ctrl.anchor_bottom != 1.0 \
-				or portrait_ctrl.offset_right != 0.0 or portrait_ctrl.offset_bottom != 0.0:
-			portrait_ctrl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-
+## Cột nội dung (canh giữa ngang) + nền giấy phủ toàn canvas.
+## Được BaseUI gọi SAU khi đã áp layout `Portrait` của màn hình.
+func _after_responsive_layout(canvas: Vector2) -> void:
 	var column := clampf(canvas.x, DESIGN_WIDTH, MAX_CONTENT_WIDTH)
 	var target_pos := Vector2(floorf((canvas.x - column) * 0.5), 0.0)
 	var target_size := Vector2(column, canvas.y)
@@ -91,72 +44,6 @@ func _apply_responsive_layout() -> void:
 	if size != target_size:
 		size = target_size
 	_apply_background_sides(canvas)
-
-	# Portrait-only: hướng luôn DỌC — vẫn phát 1 lần lúc khởi động để màn con dàn UI.
-	if not _orientation_ready:
-		_orientation_ready = true
-		is_landscape = false
-		orientation_changed.emit(false)
-
-
-## Layout đang hiển thị — nơi chứa toàn bộ UI của màn hình (portrait-only: node `Portrait`).
-## Màn chưa tách layout thì trả về chính root.
-func active_layout() -> Node:
-	var portrait_layout := get_node_or_null("Portrait")
-	if portrait_layout != null:
-		return portrait_layout
-	return self
-
-
-## Tìm node UI theo TÊN trong layout đang hiển thị (node `Portrait`).
-func ui(node_name: String) -> Node:
-	var holder := active_layout()
-	if holder != self:
-		var found := holder.find_child(node_name, true, false)
-		if found != null:
-			return found
-	return find_child(node_name, true, false)
-
-
-## Tìm node con theo tên trong 1 node cha (tránh trùng tên: Badge của 3 thẻ, Label của Stamp…)
-func ui_child(parent_name: String, child_name: String) -> Node:
-	var parent := ui(parent_name)
-	if parent == null:
-		return null
-	return parent.get_node_or_null(child_name)
-
-
-## Lấy node theo ĐƯỜNG DẪN trong layout đang hiển thị (node `Portrait`).
-## Nhờ vậy script màn chỉ cần dùng `ui_path("A/B")` là tìm đúng node trong layout.
-func ui_path(path: String) -> Node:
-	var holder := active_layout()
-	if holder != self:
-		var found := holder.get_node_or_null(NodePath(path))
-		if found != null:
-			return found
-	return get_node_or_null(NodePath(path))
-
-
-## ============================================================================
-## DÂY TÍN HIỆU KHAI TRONG .tscn — hàm này chỉ là LƯỚI AN TOÀN
-##
-## Màn hình nối nút/thanh trượt của layout bằng `[connection]` NGAY TRONG SCENE CỦA MÀN
-## (`scenes/<màn>.tscn`, đường dẫn `Portrait/…`).
-## Nếu người dùng sửa layout làm đường dẫn node đổi, Godot có thể bỏ dây trong scene màn
-## ⇒ gọi `ensure_signal()` khi bind lại để nối lại ĐÚNG KHI dây bị mất (không nhân đôi).
-## ============================================================================
-## `target` mặc định là CHÍNH MÀN HÌNH; truyền target khác khi đích là node khác
-## (VD nút "?" của màn chơi nối thẳng tới `GameController`).
-func ensure_signal(source: Object, signal_name: StringName, handler: StringName, binds: Array = [], target: Object = null) -> void:
-	var to: Object = target if target != null else self
-	if source == null or to == null or not source.has_signal(signal_name) or not to.has_method(handler):
-		return
-	for c in source.get_signal_connection_list(signal_name):
-		var cb: Callable = c.get("callable", Callable())
-		if cb.is_valid() and cb.get_object() == to and cb.get_method() == handler:
-			return
-	var cb2 := Callable(to, handler)
-	source.connect(signal_name, cb2 if binds.is_empty() else cb2.bindv(binds))
 
 
 ## Hai bên cột (màn rộng hơn 9:16) tô tiếp màu giấy bằng 2 ColorRect con của

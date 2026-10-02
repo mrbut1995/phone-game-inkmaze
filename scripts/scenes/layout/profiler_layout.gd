@@ -1,7 +1,7 @@
 class_name ProfilerLayout
 extends BaseLayout
 ## ============================================================================
-## Bố cục màn HỒ SƠ CÁ NHÂN (scenes/layout/<hướng>/profiler.tscn)
+## Bố cục màn HỒ SƠ CÁ NHÂN (scenes/layout/<hướng>/profiler_popup.tscn)
 ##
 ## 2 hướng dùng CHUNG tên node; màn hình bind qua các export dưới đây rồi đọc node
 ## con theo tên cố định trong từng NHÓM (hero · stat_cards · badges_box · gear_box…)
@@ -22,6 +22,9 @@ extends BaseLayout
 @export var hero: Control = null
 @export var stat_cards: Control = null
 @export var badges_box: Control = null
+## Chip "{n} AP" trên giá huy hiệu — 2 hướng đặt ở vị trí khác nhau (dọc: cạnh tiêu
+## đề `BadgeTitle/ApChip`; ngang: trong `RightCol/Badges/ApChip`) nên bind riêng
+@export var ap_chip: Control = null
 @export var gear_box: Control = null
 @export var rows_box: Control = null
 @export var btn_edit: BaseButton = null
@@ -57,12 +60,12 @@ func badge_slot(index: int) -> Control:
 
 
 func gear_card(index: int) -> Control:
-	return gear_box.get_node_or_null("Card%d" % (index + 1)) as Control if gear_box != null else null
+	return gear_box.get_node_or_null("Bg/Container/Card%d" % (index + 1)) as Control if gear_box != null else null
 
 
-## Chip "{n} AP" trên giá huy hiệu (node `ApChip/Text` khai trong .tscn)
+## Chip "{n} AP" trên giá huy hiệu (node `ApChip/Text` — vị trí khai trong .tscn qua `ap_chip`)
 func ap_text() -> Label:
-	return badges_box.get_node_or_null("ApChip/Text") as Label if badges_box != null else null
+	return ap_chip.get_node_or_null("Text") as Label if ap_chip != null else null
 
 
 ## Nút "Xem Sổ Tay" cạnh giá huy hiệu

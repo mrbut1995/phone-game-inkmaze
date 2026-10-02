@@ -7,7 +7,9 @@ extends SceneTree
 ## 2. Trang bị + tên: equip món sở hữu, chặn món chưa mở khoá, đổi tên 16 ký tự.
 ## 3. Thống kê: EXP = AP + Sao×25 · Cấp = 1 + EXP/200 · tỉ lệ thắng theo lịch sử.
 ## 4. Lịch sử ván: record_run ghi đúng + giới hạn 10 dòng.
-## 5. Scene Profiler: 2 hướng bind layout, số liệu đổ lên UI, hàng hoạt động ≤ 3.
+## 5. Popup Hồ sơ: nội dung ĐỘC LẬP kế thừa BaseUI (không kế thừa BaseScene),
+##    mở qua PopupManager (không đổi màn hình), 2 hướng bind layout, Edit Profile
+##    xếp TRÊN Profiler, nút Back đóng popup.
 ## 6. Popup DIỆN MẠO HỒ SƠ: phân trang 6 món/trang (nút ‹ › + chấm trang), 2 tab,
 ##    ô mẫu dùng TextureButton (4 art trạng thái, không node con nào chặn chuột).
 ## 7. Lưu trữ: SaveManager đăng ký provider + export/import khôi phục hồ sơ.
@@ -186,7 +188,7 @@ func _section_4_recent(manager: Node) -> void:
 # 5. Scene Profiler
 # ---------------------------------------------------------------------------
 func _section_5_scene(manager: Node) -> void:
-	print("\n--- 5. SCENE HO SO (2 HUONG) ---")
+	print("\n--- 5. POPUP HO SO (2 HUONG + STACK) ---")
 	manager.call("record_run", {
 		"won": true, "mode_id": "play", "floor": 24, "elapsed": 38.0,
 		"moves": 22, "width": 7, "height": 7, "stars": 3,
@@ -194,16 +196,33 @@ func _section_5_scene(manager: Node) -> void:
 	manager.call("record_run", {"won": true, "mode_id": "dungeon", "endless": true, "floor": 48, "score": 480})
 	manager.call("record_run", {"won": true, "mode_id": "wall_builder", "daily": true, "floor": 30})
 
-	var scene: ProfilerScene = (load("res://scenes/profiler.tscn") as PackedScene).instantiate()
-	root.add_child(scene)
+	# Hồ sơ nay là POPUP: mở qua PopupManager rồi lấy nội dung bên trong
+	var prof_popup := Popups.open(Popups.PROFILER) as ProfilerPopup
 	await process_frame
 	await process_frame
-
-	_entry(scene.layout != null, "Scene gan ProfilerLayout")
-	if scene.layout == null:
-		scene.queue_free()
+	_entry(prof_popup is ProfilerPopup, "Mo duoc popup HO SO")
+	if prof_popup == null:
+		return
+	var scene := prof_popup.profiler() as ProfilerScene
+	_entry(scene != null, "Popup chua noi dung ho so (profiler_content)")
+	if scene == null:
+		prof_popup.close()
 		await process_frame
 		return
+
+	# Ép sang kiểu Node để kiểm tra kế thừa ở RUNTIME (analyzer không cho `is` chéo 2 lớp tĩnh)
+	var raw: Node = scene
+	_entry(raw is BaseUI, "Noi dung ho so ke thua BaseUI (nhan huong + doi layout)")
+	_entry(not (raw is BaseScene), "Noi dung doc lap — KHONG ke thua BaseScene")
+
+	_entry(scene.layout != null, "Noi dung gan ProfilerLayout")
+	if scene.layout == null:
+		prof_popup.close()
+		await process_frame
+		return
+
+	# Nút Back (lấy trước khi mượn layout NGANG bên dưới) — kiểm đóng popup ở cuối mục này
+	var back_btn := scene.layout.btn_back as BaseButton
 
 	var chip := scene.layout.chip_text()
 	_entry(chip != null and not chip.text.is_empty(), "Chip cap do co chu ('%s')" % (chip.text if chip != null else ""))
@@ -247,19 +266,30 @@ func _section_5_scene(manager: Node) -> void:
 		_entry(title != null and not title.text.is_empty(), "Hang hoat dong co tieu de ('%s')"
 			% (title.text if title != null else ""))
 
-	# Nút mở popup đổi diện mạo (bấm nút trong scene)
+	# Nút "ĐỔI AVATAR & TÊN": Edit Profile phải XẾP TRÊN Profiler (không thay thế)
 	scene.layout.btn_edit.pressed.emit()
 	await process_frame
 	await process_frame
 	var popup := Popups.get_popup(Popups.EDIT_PROFILE) as EditProfilePopup
 	_entry(popup is EditProfilePopup, "Bấm ĐỔI AVATAR & TÊN -> mở popup DIỆN MẠO HỒ SƠ")
-	if popup is EditProfilePopup:
-		popup.close()
-		await process_frame
+	_entry(Popups.is_open(Popups.PROFILER), "Profiler VAN MO phia duoi")
+	_entry(Popups.top() == popup, "Edit Profile nam TREN CUNG (stack)")
+	# Bấm vào vùng nền tối NGOÀI thẻ popup ⇒ đóng Edit Profile (Profiler vẫn mở)
+	var dim := popup.get_node_or_null("Dim") as Control
+	_entry(dim != null and dim.mouse_filter == Control.MOUSE_FILTER_STOP,
+		"Nen toi popup HUNG chuot (bam ra ngoai duoc)")
+	if dim != null:
+		var ev := InputEventMouseButton.new()
+		ev.button_index = MOUSE_BUTTON_LEFT
+		ev.pressed = true
+		dim.gui_input.emit(ev)
+	await create_timer(0.4).timeout
+	_entry(not Popups.is_open(Popups.EDIT_PROFILE), "Bam vung toi ngoai popup -> dong Edit Profile")
+	_entry(Popups.is_open(Popups.PROFILER), "Dong Edit Profile -> quay lai Profiler")
 
 	# Bố cục NGANG: nạp CHÍNH dữ liệu đó vào layout Landscape để chắc chắn binding
-	# (node paths trong scenes/layout/landscape/profiler.tscn) khớp tên node script dùng.
-	var land := (load("res://scenes/layout/landscape/profiler.tscn") as PackedScene).instantiate() as ProfilerLayout
+	# (node paths trong scenes/layout/landscape/profiler_popup.tscn) khớp tên node script dùng.
+	var land := (load("res://scenes/layout/landscape/profiler_popup.tscn") as PackedScene).instantiate() as ProfilerLayout
 	scene.add_child(land)
 	await process_frame
 	scene.layout = land
@@ -278,8 +308,13 @@ func _section_5_scene(manager: Node) -> void:
 	land.queue_free()
 	await process_frame
 
-	scene.queue_free()
-	await process_frame
+	# Nút Back của hồ sơ ĐÓNG popup (không điều hướng màn hình)
+	if is_instance_valid(back_btn):
+		back_btn.pressed.emit()
+		await create_timer(0.4).timeout
+	_entry(not Popups.is_open(Popups.PROFILER), "Nut Back -> dong popup ho so")
+	Popups.close_all()
+	await create_timer(0.2).timeout
 
 
 # ---------------------------------------------------------------------------

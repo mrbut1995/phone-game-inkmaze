@@ -147,10 +147,10 @@ func _on_archivement_pressed() -> void:
 	Nav.goto_archivement()
 
 
-## Sticker HỒ SƠ (avatar góc trên trái) mở màn hồ sơ cá nhân
+## Sticker HỒ SƠ (avatar góc trên trái) mở POPUP hồ sơ cá nhân (không đổi màn hình)
 func _on_profile_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
-	Nav.goto_profiler()
+	Popups.open(Popups.PROFILER)
 
 
 func _on_leaderboard_pressed() -> void:

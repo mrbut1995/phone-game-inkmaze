@@ -1,9 +1,9 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dako5w5vjo1uv"]
 
-[ext_resource type="PackedScene" path="res://nodes/popups/base.tscn" id="1_base"]
-[ext_resource type="Script" path="res://scripts/nodes/popups/memory_countdown.gd" id="2_memorize"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/paper_note_memory.svg" id="3_note"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/washi_tape.svg" id="4_tape"]
+[ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://12n1hqh2gxf5" path="res://scripts/nodes/popups/memory_countdown.gd" id="2_memorize"]
+[ext_resource type="Texture2D" uid="uid://cs2wa5ihhx0ua" path="res://assets/images/popups/paper_note_memory.svg" id="3_note"]
+[ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="4_tape"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_memorize_countdown.tres" id="5_number"]
 
 [sub_resource type="Animation" id="Animation_mc_number"]
@@ -27,77 +27,77 @@ _data = {
 &"number_pop": SubResource("Animation_mc_number")
 }
 
-[node name="Base" instance=ExtResource("1_base")]
-close_on_back = false
+[node name="Base" unique_id=581215192 instance=ExtResource("1_base")]
+offset_right = 540.0
+offset_bottom = 960.0
 script = ExtResource("2_memorize")
+close_on_back = false
+close_on_outside = false
 
-[node name="Dim" parent="." index="0"]
+[node name="Dim" parent="." index="0" unique_id=617447502]
 visible = false
+offset_right = 540.0
+offset_bottom = 960.0
 
-[node name="Panel" parent="." index="1"]
-offset_left =  110
-offset_top =  75
-offset_right =  430
-offset_bottom =  215
+[node name="Panel" parent="." index="1" unique_id=290635111]
+offset_left = 110.0
+offset_top = 75.0
+offset_right = 430.0
+offset_bottom = 215.0
 
-[node name="Art" parent="Panel" index="0"]
-offset_left =  -5
-offset_top =  -5
-offset_right =  325
-offset_bottom =  145
+[node name="Art" parent="Panel" index="0" unique_id=1533168933]
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 325.0
+offset_bottom = 145.0
 texture = ExtResource("3_note")
 
-[node name="WashiTape" type="TextureRect" parent="Panel" index="1"]
+[node name="WashiTape" type="TextureRect" parent="Panel" index="1" unique_id=1503578174]
 layout_mode = 0
-offset_left =  103.5
-offset_top =  -12
-offset_right =  216.5
-offset_bottom =  15
+offset_left = 103.5
+offset_top = -12.0
+offset_right = 216.5
+offset_bottom = 15.0
 rotation = -0.05
-pivot_offset =  Vector2(56.5, 13.5)
+pivot_offset = Vector2(56.5, 13.5)
 mouse_filter = 2
 texture = ExtResource("4_tape")
 
-[node name="Title" type="Label" parent="Panel/Content" index="0"]
+[node name="Title" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="0" unique_id=1103272879]
 layout_mode = 0
-offset_left =  22
-offset_top =  7
-offset_right =  298
-offset_bottom =  31
-mouse_filter = 2
+offset_left = 22.0
+offset_top = 7.0
+offset_right = 298.0
+offset_bottom = 31.0
 theme_type_variation = &"PopupTitle"
 text = "STR_MEMORIZE_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Number" type="Label" parent="Panel/Content" index="1"]
+[node name="Number" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="1" unique_id=631470266]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
-offset_left =  22
-offset_top =  31
-offset_right =  298
-offset_bottom =  109
-mouse_filter = 2
+offset_left = 22.0
+offset_top = 31.0
+offset_right = 298.0
+offset_bottom = 109.0
 text = "3"
 label_settings = ExtResource("5_number")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Hint" type="Label" parent="Panel/Content" index="2"]
+[node name="Hint" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="2" unique_id=1328417645]
 layout_mode = 0
-offset_left =  22
-offset_top =  109
-offset_right =  298
-offset_bottom =  129
-mouse_filter = 2
+offset_left = 22.0
+offset_top = 109.0
+offset_right = 298.0
+offset_bottom = 129.0
 theme_type_variation = &"PopupQuote"
 text = "STR_MEMORIZE_HINT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="FxAnim" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_mcfx")
-}
+[node name="FxAnim" type="AnimationPlayer" parent="." index="3" unique_id=417332510]
+libraries/ = SubResource("AnimationLibrary_mcfx")
 
 [connection signal="opened" from="." to="." method="_start_countdown"]

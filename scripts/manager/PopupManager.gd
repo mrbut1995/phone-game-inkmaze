@@ -25,6 +25,8 @@ const POPUPS := {
 	"memory_countdown": "res://nodes/popups/memory_countdown.tscn",
 	# Hồ sơ cá nhân: đổi avatar / viền khung / tên hiển thị
 	"edit_profile": "res://nodes/popups/edit_profile.tscn",
+	# HỒ SƠ CÁ NHÂN (toàn khung) — mở từ sticker ở màn chính; edit_profile xếp lên trên
+	"profiler": "res://nodes/popups/profiler_popup.tscn",
 }
 
 const HOST_NAME := "Popups"
