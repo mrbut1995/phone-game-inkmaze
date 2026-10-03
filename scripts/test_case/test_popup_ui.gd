@@ -19,13 +19,13 @@ const RESTART_ICON := "M 19 29 A 16 16 0 1 1 35 51"
 const RESTART_ARROW := "M 19 19 v 10 h 10"
 ## Art KHÔNG được chứa <text> (ThorVG bỏ qua chữ) — kiểm tra các file vừa sửa
 const NO_TEXT_ART := [
-	"res://assets/images/game/btn_restart_normal.svg",
-	"res://assets/images/game/btn_restart_pressed.svg",
-	"res://assets/images/game/btn_restart_focus.svg",
-	"res://assets/images/game/btn_restart_disabled.svg",
-	"res://assets/images/popups/stamp_done.svg",
-	"res://assets/images/popups/stamp_passed.svg",
-	"res://assets/images/main/logo_doodle_maze.svg",
+	"res://assets/images-png/game/btn_restart_normal.png",
+	"res://assets/images-png/game/btn_restart_pressed.png",
+	"res://assets/images-png/game/btn_restart_focus.png",
+	"res://assets/images-png/game/btn_restart_disabled.png",
+	"res://assets/images-png/popups/stamp_done.png",
+	"res://assets/images-png/popups/stamp_passed.png",
+	"res://assets/images-png/main/logo_doodle_maze.png",
 ]
 
 var _failed := 0
@@ -62,7 +62,7 @@ func _init() -> void:
 func _section_1_restart_icon() -> void:
 	print("[1] Icon nut Restart (4 trang thai)...")
 	for state in ["normal", "pressed", "focus", "disabled"]:
-		var path := "res://assets/images/game/btn_restart_%s.svg" % state
+		var path := "res://assets/images-png/game/btn_restart_%s.png" % state
 		var svg := FileAccess.get_file_as_string(path)
 		_entry(svg.contains(RESTART_ICON), "btn_restart_%s: cung tron dung thiet ke" % state)
 		_entry(svg.contains(RESTART_ARROW), "btn_restart_%s: mui ten goc vuong" % state)
@@ -106,7 +106,7 @@ func _section_2_winning() -> void:
 					"Icon nut CHOI LAI canh giua (nut %.0f, icon tam %.0f)" % [
 						replay.size.x, tex_rect.position.x + tex_rect.size.x * 0.5])
 				break
-		_entry(icon != null and icon.resource_path.ends_with("icon_replay.svg"),
+		_entry(icon != null and icon.resource_path.ends_with("icon_replay.png"),
 			"Nut CHOI LAI co icon (nhan '%s')" % (icon.resource_path if icon != null else "KHONG CO"))
 	popup.queue_free()
 	await process_frame
@@ -172,7 +172,7 @@ func _section_4_language() -> void:
 		var ok_name := name_lbl != null and not name_lbl.text.is_empty() \
 			and name_lbl.text != row_id.to_upper()
 		var ok_flag := flag != null and flag.texture != null \
-			and not flag.texture.resource_path.ends_with("flag_generic.svg")
+			and not flag.texture.resource_path.ends_with("flag_generic.png")
 		if not ok_name or not ok_flag:
 			bad_rows.append(row_id)
 	_entry(bad_rows.is_empty(), "Moi hang co ten + co rieng (hang thieu: %s)" % str(bad_rows))
@@ -267,7 +267,7 @@ func _section_6_locale_info() -> void:
 		var flag := str(info.get("flag", ""))
 		if not ResourceLoader.exists(flag):
 			no_flag.append(key)
-		elif flag.ends_with("flag_generic.svg"):
+		elif flag.ends_with("flag_generic.png"):
 			generic_flag.append(key)
 	_entry(no_name.is_empty(), "Moi ngon ngu co TEN rieng, khong hien ma tho (thieu: %s)" % str(no_name))
 	_entry(no_flag.is_empty(), "Moi ngon ngu co FILE co that trong assets (thieu: %s)" % str(no_flag))

@@ -314,7 +314,7 @@ func _section_5_card() -> void:
 	# Nút chương MỞ: chỗ trống bên trái nút được đặt ICON PLAY
 	var play_icon := card.get_node("Panel/Content/Action/Btn/Icon") as TextureRect
 	_entry(play_icon.visible, "Nut VÀO CHƠI co icon play (khong de trong)")
-	_entry(play_icon.texture == load("res://assets/images/level_selector/icon_play_triangle.svg"),
+	_entry(play_icon.texture == load("res://assets/images-png/level_selector/icon_play_triangle.png"),
 		"Icon do dung la hinh tam giac play")
 	# Ổ khóa lớn phải canh giữa theo doodle (thân khóa nằm trong art 72x72 tai y 30..64)
 	var doodle := card.get_node("Panel/Content/Display/Doodle") as TextureRect
@@ -366,7 +366,7 @@ func _section_5_card() -> void:
 		== TranslationServer.translate("STR_CHAPTER_UNLOCK"), "Nut = MO KHOA")
 	_entry((card.get_node("Panel/Content/Action/Btn/Icon") as Control).visible, "Nut mo khoa co icon ngoi sao")
 	_entry((card.get_node("Panel/Content/Action/Btn/Icon") as TextureRect).texture
-		== load("res://assets/images/icons/icon_star_white.svg"),
+		== load("res://assets/images-png/icons/icon_star_white.png"),
 		"Icon nut MO KHOA la ngoi sao TRANG (khong bi chim mau)")
 	_entry(not (card.get_node("Panel/Content/Action/Btn/LockIcon") as Control).visible,
 		"The du dieu kien khong hien o khoa trong nut")
@@ -385,7 +385,7 @@ func _section_5_card() -> void:
 	_entry(card.state == ChapterCard.State.LOCKED, "Trang thai DANG KHOA")
 	_entry((card.get_node("Panel/Content/Display/Doodle/Lock") as Control).visible, "Dang khoa -> hien o khoa tren doodle")
 	_entry((card.get_node("Panel") as TextureRect).texture
-		== load("res://assets/images/chapters/card_locked.svg"), "Dang khoa -> nen giay xam")
+		== load("res://assets/images-png/chapters/card_locked.png"), "Dang khoa -> nen giay xam")
 	_entry((card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled, "Nut bi khoa")
 	# Ổ khóa trong nút KHÔNG được đè lên chữ (lỗi cũ: chữ bị cắt "CẦN 45")
 	var action_title := card.get_node("Panel/Content/Action/Btn/Title") as Label
@@ -482,9 +482,9 @@ func _section_6_scene(lm: Node) -> void:
 	var icon_3 := (scene.card_for(3).get_node("Panel/Content/Display/Doodle") as TextureRect).texture
 	_entry(icon_1 != icon_2 and icon_2 != icon_3 and icon_1 != icon_3,
 		"Icon 3 chuong khac nhau")
-	_entry(icon_1 == load("res://assets/images/icons/icon_intro.svg"),
+	_entry(icon_1 == load("res://assets/images-png/icons/icon_intro.png"),
 		"Chuong 1 dung icon 'intro'")
-	_entry(icon_2 == load("res://assets/images/icons/icon_logic.svg"),
+	_entry(icon_2 == load("res://assets/images-png/icons/icon_logic.png"),
 		"Chuong 2 dung icon 'logic'")
 	_entry(opened != null and (opened.get_node("Panel/Ribbon/RibbonLabel") as Label).text
 		== TranslationServer.translate("STR_CHAPTER_RIBBON_OPEN"),
@@ -584,7 +584,7 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 			% scene2.chapter_continue_level())
 	_entry(not scene2.chapter_cleared(), "Chuong 1 chua hoan thanh (con man 3)")
 	_entry(_banner_texture(scene2)
-		== load("res://assets/images/level_selector/chapter_banner_focus.svg"),
+		== load("res://assets/images-png/level_selector/chapter_banner_focus.png"),
 		"Banner doi sang art FOCUS khi co chuong du Sao de mo")
 	_entry(scene2.layout.lbl_change_chapter.text
 		== TranslationServer.translate("STR_CHAPTER_UNLOCKABLE"),
@@ -617,7 +617,7 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 	await process_frame
 	await process_frame
 	_entry(_banner_texture(scene4)
-		== load("res://assets/images/level_selector/chapter_banner.svg"),
+		== load("res://assets/images-png/level_selector/chapter_banner.png"),
 		"Mo chuong roi -> banner ve art thuong")
 	_entry((scene4.ui_path("ChapterBanner/TitleContainer/ChangeChapter") as Label).text
 		== TranslationServer.translate("STR_CHANGE_CHAPTER"), "Dong banner ve 'DOI CHUONG'")

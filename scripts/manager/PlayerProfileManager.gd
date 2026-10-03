@@ -15,7 +15,7 @@ extends Node
 
 signal profile_changed
 
-const ICON_DIR := "res://assets/images/profiler/"
+const ICON_DIR := "res://assets/images-png/profiler/"
 const MAX_RECENT := 10
 ## Mỗi 200 EXP = 1 Cấp; mỗi Sao = 25 EXP
 const EXP_PER_LEVEL := 200
@@ -32,32 +32,32 @@ const TITLE_TIERS := [
 
 ## Catalog AVATAR — 8 mẫu (3 mặc định sở hữu kèm sẵn)
 const AVATARS := [
-	{"id": "avatar_ink", "name_key": "STR_AVATAR_INK", "icon": ICON_DIR + "avatar_ink_knight.svg", "price": 0},
-	{"id": "avatar_wizard", "name_key": "STR_AVATAR_WIZARD", "icon": ICON_DIR + "avatar_wizard.svg", "price": 0},
-	{"id": "avatar_cat", "name_key": "STR_AVATAR_CAT", "icon": ICON_DIR + "avatar_cat.svg", "price": 0},
-	{"id": "avatar_robot", "name_key": "STR_AVATAR_ROBOT", "icon": ICON_DIR + "avatar_robot.svg",
+	{"id": "avatar_ink", "name_key": "STR_AVATAR_INK", "icon": ICON_DIR + "avatar_ink_knight.png", "price": 0},
+	{"id": "avatar_wizard", "name_key": "STR_AVATAR_WIZARD", "icon": ICON_DIR + "avatar_wizard.png", "price": 0},
+	{"id": "avatar_cat", "name_key": "STR_AVATAR_CAT", "icon": ICON_DIR + "avatar_cat.png", "price": 0},
+	{"id": "avatar_robot", "name_key": "STR_AVATAR_ROBOT", "icon": ICON_DIR + "avatar_robot.png",
 		"price": 0, "lock_stat": "dungeon_best_floor", "lock_value": 50},
-	{"id": "avatar_king", "name_key": "STR_AVATAR_KING", "icon": ICON_DIR + "avatar_king.svg",
+	{"id": "avatar_king", "name_key": "STR_AVATAR_KING", "icon": ICON_DIR + "avatar_king.png",
 		"price": 0, "lock_stat": "points", "lock_value": 500},
-	{"id": "avatar_fox", "name_key": "STR_AVATAR_FOX", "icon": ICON_DIR + "avatar_fox.svg", "price": 500},
-	{"id": "avatar_ninja", "name_key": "STR_AVATAR_NINJA", "icon": ICON_DIR + "avatar_ninja.svg",
+	{"id": "avatar_fox", "name_key": "STR_AVATAR_FOX", "icon": ICON_DIR + "avatar_fox.png", "price": 500},
+	{"id": "avatar_ninja", "name_key": "STR_AVATAR_NINJA", "icon": ICON_DIR + "avatar_ninja.png",
 		"price": 700},
-	{"id": "avatar_owl", "name_key": "STR_AVATAR_OWL", "icon": ICON_DIR + "avatar_owl.svg",
+	{"id": "avatar_owl", "name_key": "STR_AVATAR_OWL", "icon": ICON_DIR + "avatar_owl.png",
 		"price": 0, "lock_stat": "daily_streak", "lock_value": 45},
 ]
 
 ## Catalog VIỀN KHUNG — 8 mẫu (3 mặc định sở hữu kèm sẵn)
 const FRAMES := [
-	{"id": "frame_gear", "name_key": "STR_FRAME_GEAR", "icon": ICON_DIR + "frame_gear_gold.svg", "price": 0},
-	{"id": "frame_laurel", "name_key": "STR_FRAME_LAUREL", "icon": ICON_DIR + "frame_laurel.svg", "price": 0},
-	{"id": "frame_ink", "name_key": "STR_FRAME_INK", "icon": ICON_DIR + "frame_ink_double.svg", "price": 0},
-	{"id": "frame_fire", "name_key": "STR_FRAME_FIRE", "icon": ICON_DIR + "frame_fire_spike.svg",
+	{"id": "frame_gear", "name_key": "STR_FRAME_GEAR", "icon": ICON_DIR + "frame_gear_gold.png", "price": 0},
+	{"id": "frame_laurel", "name_key": "STR_FRAME_LAUREL", "icon": ICON_DIR + "frame_laurel.png", "price": 0},
+	{"id": "frame_ink", "name_key": "STR_FRAME_INK", "icon": ICON_DIR + "frame_ink_double.png", "price": 0},
+	{"id": "frame_fire", "name_key": "STR_FRAME_FIRE", "icon": ICON_DIR + "frame_fire_spike.png",
 		"price": 0, "lock_stat": "daily_streak", "lock_value": 30},
-	{"id": "frame_iron", "name_key": "STR_FRAME_IRON", "icon": ICON_DIR + "frame_iron_dark.svg",
+	{"id": "frame_iron", "name_key": "STR_FRAME_IRON", "icon": ICON_DIR + "frame_iron_dark.png",
 		"price": 0, "lock_stat": "dungeon_best_floor", "lock_value": 50},
-	{"id": "frame_royal", "name_key": "STR_FRAME_ROYAL", "icon": ICON_DIR + "frame_royal_aura.svg", "price": 800},
-	{"id": "frame_crystal", "name_key": "STR_FRAME_CRYSTAL", "icon": ICON_DIR + "frame_crystal.svg", "price": 650},
-	{"id": "frame_leaf", "name_key": "STR_FRAME_LEAF", "icon": ICON_DIR + "frame_leaf.svg",
+	{"id": "frame_royal", "name_key": "STR_FRAME_ROYAL", "icon": ICON_DIR + "frame_royal_aura.png", "price": 800},
+	{"id": "frame_crystal", "name_key": "STR_FRAME_CRYSTAL", "icon": ICON_DIR + "frame_crystal.png", "price": 650},
+	{"id": "frame_leaf", "name_key": "STR_FRAME_LEAF", "icon": ICON_DIR + "frame_leaf.png",
 		"price": 0, "lock_stat": "points", "lock_value": 700},
 ]
 
@@ -124,8 +124,8 @@ func frame_entry(frame_ident: String) -> Dictionary:
 
 func icon_of(kind: String, ident: String) -> String:
 	if kind == "avatar":
-		return str(avatar_entry(ident).get("icon", ICON_DIR + "avatar_ink_knight.svg"))
-	return str(frame_entry(ident).get("icon", ICON_DIR + "frame_gear_gold.svg"))
+		return str(avatar_entry(ident).get("icon", ICON_DIR + "avatar_ink_knight.png"))
+	return str(frame_entry(ident).get("icon", ICON_DIR + "frame_gear_gold.png"))
 
 
 func owns_avatar(avatar_ident: String) -> bool:

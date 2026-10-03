@@ -18,35 +18,35 @@ signal unlock_requested(chapter_id: int)
 
 enum State { PLAYING, READY, LOCKED, COMING }
 
-const CARD_OPEN := preload("res://assets/images/chapters/card_open.svg")
-const CARD_READY := preload("res://assets/images/chapters/card_ready.svg")
-const CARD_LOCKED := preload("res://assets/images/chapters/card_locked.svg")
-const BTN_PLAY_NORMAL := preload("res://assets/images/chapters/btn_play_normal.svg")
-const BTN_PLAY_PRESSED := preload("res://assets/images/chapters/btn_play_pressed.svg")
-const BTN_UNLOCK_NORMAL := preload("res://assets/images/chapters/btn_unlock_normal.svg")
-const BTN_UNLOCK_PRESSED := preload("res://assets/images/chapters/btn_unlock_pressed.svg")
-const BTN_LOCKED_ART := preload("res://assets/images/chapters/btn_locked.svg")
-const STAR_ICON := preload("res://assets/images/icons/icon_star_white.svg")
-const PLAY_ICON := preload("res://assets/images/level_selector/icon_play_triangle.svg")
+const CARD_OPEN := preload("res://assets/images-png/chapters/card_open.png")
+const CARD_READY := preload("res://assets/images-png/chapters/card_ready.png")
+const CARD_LOCKED := preload("res://assets/images-png/chapters/card_locked.png")
+const BTN_PLAY_NORMAL := preload("res://assets/images-png/chapters/btn_play_normal.png")
+const BTN_PLAY_PRESSED := preload("res://assets/images-png/chapters/btn_play_pressed.png")
+const BTN_UNLOCK_NORMAL := preload("res://assets/images-png/chapters/btn_unlock_normal.png")
+const BTN_UNLOCK_PRESSED := preload("res://assets/images-png/chapters/btn_unlock_pressed.png")
+const BTN_LOCKED_ART := preload("res://assets/images-png/chapters/btn_locked.png")
+const STAR_ICON := preload("res://assets/images-png/icons/icon_star_white.png")
+const PLAY_ICON := preload("res://assets/images-png/level_selector/icon_play_triangle.png")
 ## Icon mê cung dùng chung theo cỡ bàn (fallback khi chương chưa có icon riêng)
 const MAZE_TIERS := {
-	"small": preload("res://assets/images/chapters/maze_small.svg"),
-	"medium": preload("res://assets/images/chapters/maze_medium.svg"),
-	"large": preload("res://assets/images/chapters/maze_large.svg"),
+	"small": preload("res://assets/images-png/chapters/maze_small.png"),
+	"medium": preload("res://assets/images-png/chapters/maze_medium.png"),
+	"large": preload("res://assets/images-png/chapters/maze_large.png"),
 }
 ## Mỗi chương 1 icon RIÊNG (doodle khác nhau cho dễ nhận biết)
 const CHAPTER_ICONS := {
-	1: preload("res://assets/images/icons/icon_intro.svg"),
-	2: preload("res://assets/images/icons/icon_logic.svg"),
-	3: preload("res://assets/images/icons/icon_trap.svg"),
-	4: preload("res://assets/images/icons/icon_master.svg"),
+	1: preload("res://assets/images-png/icons/icon_intro.png"),
+	2: preload("res://assets/images-png/icons/icon_logic.png"),
+	3: preload("res://assets/images-png/icons/icon_trap.png"),
+	4: preload("res://assets/images-png/icons/icon_master.png"),
 }
 ## Tên icon ghi trong `ChapterData.icon` -> texture (ưu tiên hơn số chương)
 const ICON_KEYS := {
-	"intro": preload("res://assets/images/icons/icon_intro.svg"),
-	"logic": preload("res://assets/images/icons/icon_logic.svg"),
-	"trap": preload("res://assets/images/icons/icon_trap.svg"),
-	"master": preload("res://assets/images/icons/icon_master.svg"),
+	"intro": preload("res://assets/images-png/icons/icon_intro.png"),
+	"logic": preload("res://assets/images-png/icons/icon_logic.png"),
+	"trap": preload("res://assets/images-png/icons/icon_trap.png"),
+	"master": preload("res://assets/images-png/icons/icon_master.png"),
 }
 
 ## Màu theo trạng thái (dùng cho doodle + ruy băng + chip kích thước + thanh Sao)

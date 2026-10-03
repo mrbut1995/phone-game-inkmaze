@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://bwcvgfi1l2f6i" path="res://scripts/scenes/layout/title_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="4_paper"]
-[ext_resource type="Texture2D" uid="uid://b4bkq2p2ryhbn" path="res://assets/images/main/logo_doodle_maze_large.svg" id="4_tcygh"]
-[ext_resource type="Texture2D" uid="uid://vohdi4kjxxxf" path="res://assets/images/game/pen_type/pen_fountain_pen_nib.svg" id="6_hiwto"]
-[ext_resource type="Texture2D" uid="uid://2gqng6786mse" path="res://assets/images/icons/icon_play_triangle_large.svg" id="6_tcygh"]
-[ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="8_stamp"]
+[ext_resource type="Texture2D" path="res://assets/images-png/main/main_menu_paper.png" id="4_paper"]
+[ext_resource type="Texture2D" path="res://assets/images-png/main/logo_doodle_maze_large.png" id="4_tcygh"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/pen_type/pen_fountain_pen_nib.png" id="6_hiwto"]
+[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_play_triangle_large.png" id="6_tcygh"]
+[ext_resource type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="8_stamp"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="9_stamp_text"]
 
 [sub_resource type="Animation" id="Animation_reset_title"]

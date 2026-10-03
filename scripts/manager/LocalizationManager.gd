@@ -19,25 +19,25 @@ var supported_locales: PackedStringArray = ["vi", "en"]
 ## Ten/co hien thi cho tung ngon ngu (co = icon svg, khong dung emoji)
 ## Đủ CẢ 19 ngôn ngữ trong string.csv — thiếu ở đây thì popup sẽ hiện mã thô + cờ "generic"
 const LOCALE_INFO := {
-	"vi": {"flag": "res://assets/images/icons/flags/flag_vi.svg", "code": "VN", "name": "Tiếng Việt", "sub": "Mặc định hệ thống"},
-	"en": {"flag": "res://assets/images/icons/flags/flag_en.svg", "code": "US", "name": "English", "sub": "United States"},
-	"zh_TW": {"flag": "res://assets/images/icons/flags/flag_zh_tw.svg", "code": "TW", "name": "繁體中文", "sub": "Traditional Chinese"},
-	"zh_CN": {"flag": "res://assets/images/icons/flags/flag_zh_cn.svg", "code": "CN", "name": "简体中文", "sub": "Simplified Chinese"},
-	"es": {"flag": "res://assets/images/icons/flags/flag_es.svg", "code": "ES", "name": "Español", "sub": "Spanish"},
-	"ar": {"flag": "res://assets/images/icons/flags/flag_ar.svg", "code": "AR", "name": "العربية", "sub": "Arabic"},
-	"de": {"flag": "res://assets/images/icons/flags/flag_de.svg", "code": "DE", "name": "Deutsch", "sub": "German"},
-	"fr": {"flag": "res://assets/images/icons/flags/flag_fr.svg", "code": "FR", "name": "Français", "sub": "French"},
-	"hi": {"flag": "res://assets/images/icons/flags/flag_hi.svg", "code": "IN", "name": "हिन्दी", "sub": "Hindi"},
-	"id": {"flag": "res://assets/images/icons/flags/flag_id.svg", "code": "ID", "name": "Bahasa Indonesia", "sub": "Indonesian"},
-	"it": {"flag": "res://assets/images/icons/flags/flag_it.svg", "code": "IT", "name": "Italiano", "sub": "Italian"},
-	"ja": {"flag": "res://assets/images/icons/flags/flag_ja.svg", "code": "JP", "name": "日本語", "sub": "Japanese"},
-	"ko": {"flag": "res://assets/images/icons/flags/flag_ko.svg", "code": "KR", "name": "한국어", "sub": "Korean"},
-	"ms": {"flag": "res://assets/images/icons/flags/flag_ms.svg", "code": "MY", "name": "Bahasa Melayu", "sub": "Malay"},
-	"pt": {"flag": "res://assets/images/icons/flags/flag_pt.svg", "code": "PT", "name": "Português", "sub": "Portuguese"},
-	"pt_BR": {"flag": "res://assets/images/icons/flags/flag_pt_br.svg", "code": "BR", "name": "Português (Brasil)", "sub": "Brazilian Portuguese"},
-	"ru": {"flag": "res://assets/images/icons/flags/flag_ru.svg", "code": "RU", "name": "Русский", "sub": "Russian"},
-	"th": {"flag": "res://assets/images/icons/flags/flag_th.svg", "code": "TH", "name": "ไทย", "sub": "Thai"},
-	"tr": {"flag": "res://assets/images/icons/flags/flag_tr.svg", "code": "TR", "name": "Türkçe", "sub": "Turkish"},
+	"vi": {"flag": "res://assets/images-png/icons/flags/flag_vi.png", "code": "VN", "name": "Tiếng Việt", "sub": "Mặc định hệ thống"},
+	"en": {"flag": "res://assets/images-png/icons/flags/flag_en.png", "code": "US", "name": "English", "sub": "United States"},
+	"zh_TW": {"flag": "res://assets/images-png/icons/flags/flag_zh_tw.png", "code": "TW", "name": "繁體中文", "sub": "Traditional Chinese"},
+	"zh_CN": {"flag": "res://assets/images-png/icons/flags/flag_zh_cn.png", "code": "CN", "name": "简体中文", "sub": "Simplified Chinese"},
+	"es": {"flag": "res://assets/images-png/icons/flags/flag_es.png", "code": "ES", "name": "Español", "sub": "Spanish"},
+	"ar": {"flag": "res://assets/images-png/icons/flags/flag_ar.png", "code": "AR", "name": "العربية", "sub": "Arabic"},
+	"de": {"flag": "res://assets/images-png/icons/flags/flag_de.png", "code": "DE", "name": "Deutsch", "sub": "German"},
+	"fr": {"flag": "res://assets/images-png/icons/flags/flag_fr.png", "code": "FR", "name": "Français", "sub": "French"},
+	"hi": {"flag": "res://assets/images-png/icons/flags/flag_hi.png", "code": "IN", "name": "हिन्दी", "sub": "Hindi"},
+	"id": {"flag": "res://assets/images-png/icons/flags/flag_id.png", "code": "ID", "name": "Bahasa Indonesia", "sub": "Indonesian"},
+	"it": {"flag": "res://assets/images-png/icons/flags/flag_it.png", "code": "IT", "name": "Italiano", "sub": "Italian"},
+	"ja": {"flag": "res://assets/images-png/icons/flags/flag_ja.png", "code": "JP", "name": "日本語", "sub": "Japanese"},
+	"ko": {"flag": "res://assets/images-png/icons/flags/flag_ko.png", "code": "KR", "name": "한국어", "sub": "Korean"},
+	"ms": {"flag": "res://assets/images-png/icons/flags/flag_ms.png", "code": "MY", "name": "Bahasa Melayu", "sub": "Malay"},
+	"pt": {"flag": "res://assets/images-png/icons/flags/flag_pt.png", "code": "PT", "name": "Português", "sub": "Portuguese"},
+	"pt_BR": {"flag": "res://assets/images-png/icons/flags/flag_pt_br.png", "code": "BR", "name": "Português (Brasil)", "sub": "Brazilian Portuguese"},
+	"ru": {"flag": "res://assets/images-png/icons/flags/flag_ru.png", "code": "RU", "name": "Русский", "sub": "Russian"},
+	"th": {"flag": "res://assets/images-png/icons/flags/flag_th.png", "code": "TH", "name": "ไทย", "sub": "Thai"},
+	"tr": {"flag": "res://assets/images-png/icons/flags/flag_tr.png", "code": "TR", "name": "Türkçe", "sub": "Turkish"},
 }
 
 ## Mã ngôn ngữ trong CSV viết khác khoá ở trên (để tra LOCALE_INFO)
@@ -47,7 +47,7 @@ const LOCALE_ALIASES := {
 	"pt_br": "pt_BR",
 }
 
-const FLAG_FALLBACK := "res://assets/images/icons/flags/flag_generic.svg"
+const FLAG_FALLBACK := "res://assets/images-png/icons/flags/flag_generic.png"
 
 var current_locale := DEFAULT_LOCALE
 

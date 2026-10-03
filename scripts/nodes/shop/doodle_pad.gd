@@ -14,8 +14,8 @@ extends Control
 
 signal pen_changed(pen_id: String)
 
-const STAMP_TRY := preload("res://assets/images/shop/btn_tile_normal.svg")
-const STAMP_USING := preload("res://assets/images/shop/btn_equipped.svg")
+const STAMP_TRY := preload("res://assets/images-png/shop/btn_tile_normal.png")
+const STAMP_USING := preload("res://assets/images-png/shop/btn_equipped.png")
 
 const STROKE_WIDTH := 7        ## bề rộng nét vẽ thử (px) trước khi nhân chất liệu
 const MIN_POINT_DIST := 2.5       ## khoảng cách tối thiểu để ghi thêm điểm (px)

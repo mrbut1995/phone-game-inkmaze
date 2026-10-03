@@ -7,3 +7,11 @@ hotfix/*
 # Python tooling caches (tools/**)
 __pycache__/
 *.pyc
+
+# Thư mục/file tạm (screenshot, probe, log…) — chạy tool để tạo lại, KHÔNG commit
+# (tmp_aspect, tmp_popup, tmp_tut, tmp_flow.txt, tmp_tools, tmp_svg_log.txt…)
+tmp_*
+
+# PNG sinh bởi tools/svg_to_png.py (chạy tool để tạo lại)
+assets/images-png
+assets/images-landscape-png

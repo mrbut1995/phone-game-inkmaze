@@ -8,7 +8,7 @@ extends Button
 ## sửa được ngay trong scene. Popup chỉ việc: setup() rồi set_selected().
 ## ============================================================================
 
-const FALLBACK_FLAG := preload("res://assets/images/icons/flags/flag_generic.svg")
+const FALLBACK_FLAG := preload("res://assets/images-png/icons/flags/flag_generic.png")
 
 @onready var flag: TextureRect = $Flag
 @onready var name_label: Label = $Name

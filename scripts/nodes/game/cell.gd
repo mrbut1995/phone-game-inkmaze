@@ -16,9 +16,9 @@ const FOCUS_MODULATE := Color(0.85, 0.95, 1.0, 1.0)
 const BOMB_TEXT_OUTLINE_SIZE := 4
 const BOMB_TEXT_OUTLINE_COLOR := Color(0.996078, 0.992157, 0.980392, 1.0)   # #FEFDFA
 
-const TEX_NORMAL := preload("res://assets/images/game/cell_normal.svg")
-const TEX_START := preload("res://assets/images/game/cell_start.svg")
-const TEX_FINISH := preload("res://assets/images/game/cell_finish.svg")
+const TEX_NORMAL := preload("res://assets/images-png/game/cell_normal.png")
+const TEX_START := preload("res://assets/images-png/game/cell_start.png")
+const TEX_FINISH := preload("res://assets/images-png/game/cell_finish.png")
 
 ## Mực phai (Fading Ink): tỉ lệ cỡ chữ phụ so với cỡ số trên ô (số gốc 56 -> 11 / 22)
 const WARN_TEXT_RATIO := 11.0 / 56.0

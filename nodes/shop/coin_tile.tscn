@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://y78i0wwbasih" path="res://scripts/nodes/shop/coin_tile.gd" id="1_coin"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
-[ext_resource type="Texture2D" uid="uid://o5loox230rha" path="res://assets/images/shop/card_coin.svg" id="3_card"]
-[ext_resource type="Texture2D" uid="uid://n80hdaatt051" path="res://assets/images/icons/icon_circle.svg" id="4_circle"]
-[ext_resource type="Texture2D" uid="uid://cviihr4gbxev4" path="res://assets/images/settings/section_chip.svg" id="5_chip"]
-[ext_resource type="Texture2D" uid="uid://31hfl18dqhjo" path="res://assets/images/shop/btn_coin.svg" id="6_btn"]
-[ext_resource type="Texture2D" uid="uid://p403jppao78" path="res://assets/images/icons/icon_coin_t1.svg" id="7_icon"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/card_coin.png" id="3_card"]
+[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_circle.png" id="4_circle"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/section_chip.png" id="5_chip"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/btn_coin.png" id="6_btn"]
+[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_coin_t1.png" id="7_icon"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="8_dxbsk"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dxbsk"]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://3ol477wsv33k"]
 
-[ext_resource type="Texture2D" uid="uid://b370lb2u0nfda" path="res://assets/images/game/background.svg" id="1_3ffsd"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/background.png" id="1_3ffsd"]
 [ext_resource type="Script" uid="uid://bxshv77j0bvff" path="res://scripts/scenes/base.gd" id="1_baglu"]
 [ext_resource type="Script" uid="uid://dr20scu5w0j6k" path="res://scripts/nodes/common/background.gd" id="bg_script"]
 

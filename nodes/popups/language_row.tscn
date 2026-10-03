@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/popups/language_row.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/lang_item_normal.svg" id="2_art_normal"]
-[ext_resource type="Texture2D" uid="uid://l5fo0b8wovke" path="res://assets/images/popups/box_dungeon_bonus.svg" id="3_art_pressed"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/lang_item_pressed.svg" id="4_art_hover"]
-[ext_resource type="Texture2D" uid="uid://deio833hbtfq4" path="res://assets/images/settings/row_button_focus.svg" id="5_art_focus"]
-[ext_resource type="Texture2D" path="res://assets/images/popups/icon_check_red.svg" id="6_art_check"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/lang_item_normal.png" id="2_art_normal"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/box_dungeon_bonus.png" id="3_art_pressed"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/lang_item_pressed.png" id="4_art_hover"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_focus.png" id="5_art_focus"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/icon_check_red.png" id="6_art_check"]
 
 [sub_resource type="StyleBoxTexture" id="Sb_row_n"]
 texture = ExtResource("2_art_normal")

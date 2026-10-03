@@ -8,8 +8,8 @@ extends BasePopup
 signal replay_requested
 signal next_requested
 
-const STAR_FULL := preload("res://assets/images/common/star_highlight.svg")
-const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
+const STAR_FULL := preload("res://assets/images-png/common/star_highlight.png")
+const STAR_EMPTY := preload("res://assets/images-png/common/star_empty.png")
 
 @onready var stars_row: Control = piece("Stars")
 @onready var label_subtitle: Label = piece("Subtitle")

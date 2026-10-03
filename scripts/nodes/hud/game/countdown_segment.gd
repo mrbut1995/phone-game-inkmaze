@@ -8,8 +8,8 @@ extends TextureRect
 ## art (xám / cam) + cỡ sửa được ngay trong scene, HUD chỉ đặt bề rộng + trạng thái.
 ## ============================================================================
 
-const OFF := preload("res://assets/images/game/budget_segment_off.svg")
-const ON := preload("res://assets/images/game/budget_segment_on.svg")
+const OFF := preload("res://assets/images-png/game/budget_segment_off.png")
+const ON := preload("res://assets/images-png/game/budget_segment_on.png")
 const HEIGHT := 6
 const MIN_WIDTH := 4.0
 const MAX_WIDTH := 38.0

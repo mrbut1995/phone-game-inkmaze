@@ -10,7 +10,7 @@ extends BasePopup
 signal locale_applied(code: String)
 
 const ROW_SCENE := preload("res://nodes/popups/language_row.tscn")
-const FLAG_FALLBACK := preload("res://assets/images/icons/flags/flag_generic.svg")
+const FLAG_FALLBACK := preload("res://assets/images-png/icons/flags/flag_generic.png")
 
 ## Ngưỡng nhận diện kéo (px) + thời gian khoá bấm hàng sau khi vuốt (giây)
 const DRAG_THRESHOLD := 14.0

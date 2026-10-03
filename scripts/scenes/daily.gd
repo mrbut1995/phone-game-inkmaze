@@ -10,8 +10,8 @@ extends BaseScene
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const MISSION_ROW := preload("res://nodes/daily/mission_row.tscn")
 ## Icon của nút CTA: bút chì (chơi) / đồng Xu (trả Xu mở khoá ngày bỏ lỡ)
-const ICON_PLAY := preload("res://assets/images/icons/pencil_icon.svg")
-const ICON_UNLOCK := preload("res://assets/images/icons/icon_coin.svg")
+const ICON_PLAY := preload("res://assets/images-png/icons/pencil_icon.png")
+const ICON_UNLOCK := preload("res://assets/images-png/icons/icon_coin.png")
 ## 3 nhiệm vụ đầu thuộc MAZE THƯỜNG (Game Classic), nhiệm vụ thứ 4 thuộc MAZE ĐẶC BIỆT
 const CLASSIC_MISSION_COUNT := 3
 ## Quy ước scene: các hàng nhiệm vụ là node `Rows/Slot1..SlotN` KHAI SẴN trong scene —
