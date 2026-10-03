@@ -165,6 +165,8 @@ offset_right = 37.0
 offset_bottom = 29.5
 mouse_filter = 2
 texture = ExtResource("6_star")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Count" type="Label" parent="TopBar/Wallet" index="1" unique_id=1826229850]
 layout_mode = 0

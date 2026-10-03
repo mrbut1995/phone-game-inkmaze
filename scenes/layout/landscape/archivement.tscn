@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/archivements/bar_track.png" id="10_track"]
 [ext_resource type="Texture2D" path="res://assets/images-png/archivements/bar_fill.png" id="11_fill"]
 [ext_resource type="Texture2D" path="res://assets/images-png/archivements/stamp_claimed.png" id="12_stamp"]
-[ext_resource type="PackedScene" uid="uid://d1di7hj3ikjhg" path="res://nodes/archivements/tab_button.tscn" id="20_tab"]
+[ext_resource type="PackedScene" path="res://nodes/archivements/tab_button_landscape.tscn" id="20_tab"]
 
 [node name="Landscape" unique_id=1597886665 node_paths=PackedStringArray("btn_back", "overview_bar", "overview_fill", "overview_pct", "overview_summary", "tabs_box", "card_area", "scroll", "pages_host", "dots_box", "empty_label", "stamp_label") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")

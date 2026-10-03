@@ -1,0 +1,105 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://0waeoqw62pm0" path="res://scripts/nodes/archivements/tab_button.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://botll0m83hqk5" path="res://assets/images-png/archivements/tab_active.png" id="2_art_active"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1ramo"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("2_art_active")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k2qla"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("2_art_active")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_opo8v"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("2_art_active")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fxe4e"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("2_art_active")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cwdnb"]
+content_margin_left = 7.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+texture = ExtResource("2_art_active")
+texture_margin_left = 7.0
+texture_margin_top = 6.0
+texture_margin_right = 10.0
+texture_margin_bottom = 6.0
+
+[node name="TabButton" type="Button" unique_id=117269596]
+custom_minimum_size = Vector2(0, 56)
+anchors_preset = -1
+anchor_right = 0.128
+anchor_bottom = 0.061000004
+offset_right = -0.12000275
+offset_bottom = -0.12000275
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_1ramo")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_k2qla")
+theme_override_styles/hover = SubResource("StyleBoxTexture_opo8v")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_fxe4e")
+theme_override_styles/focus = SubResource("StyleBoxTexture_cwdnb")
+script = ExtResource("1_script")
+texture_normal = ExtResource("2_art_active")
+texture_hover = ExtResource("2_art_active")
+texture_pressed = ExtResource("2_art_active")
+texture_disabled = ExtResource("2_art_active")
+texture_focus = ExtResource("2_art_active")
+patch_margin_left = 7.0
+patch_margin_top = 6.0
+patch_margin_right = 10.0
+patch_margin_bottom = 6.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="." unique_id=2062980494]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 10.0
+offset_right = -6.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_type_variation = &"AchTabLabel"
+theme_override_font_sizes/font_size = 16
+text = "TAB"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="." to="." method="_emit_tab_pressed"]

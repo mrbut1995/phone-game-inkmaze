@@ -1,0 +1,341 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/level_selection/level_card.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape-png/level_selector/level_card_landscape_normal.png" id="2_normal"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape-png/level_selector/level_card_landscape_pressed.png" id="3_pressed"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape-png/level_selector/level_card_landscape_locked.png" id="4_locked"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape-png/level_selector/level_card_landscape_next.png" id="5_next"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape-png/level_selector/level_card_landscape_halo.png" id="6_halo"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape-png/level_selector/level_card_landscape_ribbon.png" id="7_ribbon"]
+[ext_resource type="Texture2D" path="res://assets/images-landscape-png/level_selector/level_card_landscape_seperator.png" id="8_sep"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/level_card_seperator_next.png" id="13_sep_next"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/icon_lock_locked.png" id="9_lock"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/stamp_done_circle.png" id="10_stamp"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_empty.png" id="11_star_empty"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_locked.png" id="12_star_locked"]
+[ext_resource type="Script" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="13_np"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_stamp.tres" id="14_stamp_text"]
+[ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="15_theme"]
+
+[sub_resource type="StyleBoxTexture" id="SB_normal"]
+content_margin_left = 50.0
+content_margin_top = 38.0
+content_margin_right = 38.0
+content_margin_bottom = 38.0
+texture = ExtResource("2_normal")
+texture_margin_left = 50.0
+texture_margin_top = 38.0
+texture_margin_right = 38.0
+texture_margin_bottom = 38.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="SB_pressed"]
+content_margin_left = 50.0
+content_margin_top = 38.0
+content_margin_right = 38.0
+content_margin_bottom = 38.0
+texture = ExtResource("3_pressed")
+texture_margin_left = 50.0
+texture_margin_top = 38.0
+texture_margin_right = 38.0
+texture_margin_bottom = 38.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="SB_hover"]
+content_margin_left = 50.0
+content_margin_top = 38.0
+content_margin_right = 38.0
+content_margin_bottom = 38.0
+texture = ExtResource("2_normal")
+texture_margin_left = 50.0
+texture_margin_top = 38.0
+texture_margin_right = 38.0
+texture_margin_bottom = 38.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="SB_disabled"]
+content_margin_left = 50.0
+content_margin_top = 38.0
+content_margin_right = 38.0
+content_margin_bottom = 38.0
+texture = ExtResource("4_locked")
+texture_margin_left = 50.0
+texture_margin_top = 38.0
+texture_margin_right = 38.0
+texture_margin_bottom = 38.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Level" type="Control" node_paths=PackedStringArray("panel_btn", "prefix_lbl", "level_lbl", "lock_icon", "stamp_done", "seperator", "star1", "star2", "star3", "next_halo", "next_ribbon")]
+custom_minimum_size = Vector2(372, 277)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("15_theme")
+script = ExtResource("1_script")
+panel_btn = NodePath("Panel")
+prefix_lbl = NodePath("Panel/Content/Prefix")
+level_lbl = NodePath("Panel/Content/Number")
+lock_icon = NodePath("Panel/Lock")
+stamp_done = NodePath("Stamp")
+star1 = NodePath("Panel/Content/Rating/Star1")
+star2 = NodePath("Panel/Content/Rating/Star2")
+star3 = NodePath("Panel/Content/Rating/Star3")
+next_halo = NodePath("NextHalo")
+next_ribbon = NodePath("NextRibbon")
+seperator = NodePath("Panel/Content/Seperator")
+next_card_normal = ExtResource("5_next")
+next_card_pressed = ExtResource("5_next")
+next_seperator = ExtResource("13_sep_next")
+locked_star_art = ExtResource("12_star_locked")
+
+[node name="NextHalo" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_halo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Panel" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("SB_normal")
+theme_override_styles/pressed = SubResource("SB_pressed")
+theme_override_styles/hover = SubResource("SB_hover")
+theme_override_styles/disabled = SubResource("SB_disabled")
+theme_override_styles/focus = SubResource("SB_hover")
+script = ExtResource("13_np")
+texture_normal = ExtResource("2_normal")
+texture_hover = ExtResource("2_normal")
+texture_pressed = ExtResource("3_pressed")
+texture_disabled = ExtResource("4_locked")
+texture_focus = ExtResource("2_normal")
+patch_margin_left = 50.0
+patch_margin_top = 38.0
+patch_margin_right = 38.0
+patch_margin_bottom = 38.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Lock" type="TextureRect" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.6065
+anchor_right = 0.5
+anchor_bottom = 0.6065
+offset_left = -23.0
+offset_top = -30.5
+offset_right = 23.0
+offset_bottom = 30.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("9_lock")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Content" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Prefix" type="Label" parent="Panel/Content"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.1
+anchor_right = 0.85
+anchor_bottom = 0.22
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"LevelCardPrefix"
+theme_override_font_sizes/font_size = 16
+text = "STR_LEVEL_PREFIX"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 12
+maximum_font_size = 20
+
+[node name="Number" type="Label" parent="Panel/Content"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.14
+anchor_top = 0.25
+anchor_right = 0.86
+anchor_bottom = 0.55
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"LevelCardNumber"
+theme_override_font_sizes/font_size = 76
+text = "1-1"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 40
+maximum_font_size = 90
+
+[node name="Seperator" type="TextureRect" parent="Panel/Content"]
+custom_minimum_size = Vector2(140, 4)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.6426
+anchor_right = 0.5
+anchor_bottom = 0.6426
+offset_left = -70.0
+offset_top = -2.0
+offset_right = 70.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_sep")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Rating" type="HBoxContainer" parent="Panel/Content"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18
+anchor_top = 0.71
+anchor_right = 0.82
+anchor_bottom = 0.925
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 19
+alignment = 1
+
+[node name="Star1" type="TextureRect" parent="Panel/Content/Rating"]
+custom_minimum_size = Vector2(41, 41)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("11_star_empty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star2" type="TextureRect" parent="Panel/Content/Rating"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("11_star_empty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star3" type="TextureRect" parent="Panel/Content/Rating"]
+custom_minimum_size = Vector2(41, 41)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("11_star_empty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Stamp" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.734
+anchor_top = 0.126
+anchor_right = 0.879
+anchor_bottom = 0.321
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("10_stamp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Stamp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 6.0
+offset_right = -2.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+rotation = 0.5
+theme_override_colors/font_color = Color(0.75069183, 0.25092328, 0.29985005, 1)
+label_settings = ExtResource("14_stamp_text")
+text = "STR_STAMP_PASSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+minimum_font_size = 8
+maximum_font_size = 16
+
+[node name="NextRibbon" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7823
+anchor_top = 0.0217
+anchor_right = 0.9839
+anchor_bottom = 0.195
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="NextRibbon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_ribbon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="NextRibbon"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"LevelCardPrefix"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "STR_LEVEL_NEW"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Panel" to="." method="_on_pressed"]

@@ -224,8 +224,10 @@ func _check_common(scene: Control, embedded := false) -> Array:
 		out.append("FAIL thiếu node Background")
 	else:
 		var col_rect := Rect2(scene.position, Vector2(expect_w, canvas.y))
-		if not col_rect.grow(2.0).encloses(Rect2(bg.global_position, bg.size)):
-			out.append("WARN Background không khớp cột nội dung")
+		# Nền = TRANG GIẤY neo góc TRÊN-TRÁI + scale đều, tràn phải/dưới (ô ly luôn vuông)
+		# ⇒ kiểm tra "phủ cột nội dung", KHÔNG phải "nằm trong cột".
+		if not Rect2(bg.global_position, bg.size).grow(2.0).encloses(col_rect):
+			out.append("WARN Background không phủ cột nội dung")
 		var side_l := bg.get_node_or_null("SideL") as Control
 		var side_r := bg.get_node_or_null("SideR") as Control
 		var need_l := Rect2(0, 0, col_left, canvas.y)
@@ -312,7 +314,9 @@ func _scan_overflow(node: Node, allowed: Rect2, out: Array, depth: int) -> void:
 		if child.name == "Popups" or child is ScrollContainer:
 			continue
 		var c := child as Control
-		if c != null and c.is_visible_in_tree() and c.size.x > 0.0 and c.size.y > 0.0:
+		# Nền tràn phải/dưới CÓ CHỦ ĐÍCH (scale đều để ô ly vuông) — bỏ qua khi quét tràn.
+		var is_background := child.name == "Background"
+		if not is_background and c != null and c.is_visible_in_tree() and c.size.x > 0.0 and c.size.y > 0.0:
 			var rect := Rect2(c.global_position, c.size * c.scale)
 			if not allowed.encloses(rect):
 				out.append("%s%s" % [c.get_path().get_concatenated_names().substr(0, 40),

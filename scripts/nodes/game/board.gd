@@ -521,9 +521,9 @@ func _update_layout_positions() -> void:
 		var pts := _edge_points(is_h, lattice)
 		seg.set_wall_points(pts[0], pts[1])
 
-	# Cập nhật toạ độ player cursor
+	# Cập nhật toạ độ player cursor (giữ ĐẦU BÚT trên tâm ô — xem `cursor_pos_at`)
 	if _cursor != null:
-		_cursor.position = _cell_center(_player_current_cell) - _cursor.size * 0.5
+		_cursor.position = cursor_pos_at(_cell_center(_player_current_cell))
 
 	# Nét ĐÃ VẼ (đường đang đi · vệt mực cũ · đường kéo neo) nhớ danh sách Ô, nhưng pixel
 	# đã dựng từ lưới CŨ ⇒ vẽ lại theo lưới mới, nếu không đường đi nằm lệch khỏi các ô.
@@ -742,7 +742,7 @@ func _place_cursor_at_start() -> void:
 		return
 	# Kích thước cursor lấy nguyên từ player_cursor.tscn
 	_cursor.pivot_offset = _cursor.size * 0.5
-	var target_pos := _cell_center(maze.get_start()) - _cursor.size * 0.5
+	var target_pos := cursor_pos_at(_cell_center(maze.get_start()))
 	_cursor.position = target_pos
 	_cursor.visible = not _player_hidden
 	_player_current_cell = maze.get_start()
@@ -781,7 +781,7 @@ func move_cursor_to(pos: Vector2i) -> void:
 	_player_current_cell = pos
 	var from_center := _cell_center(prev_cell)
 	var target_center := _cell_center(pos)
-	var target_pos := target_center - _cursor.size * 0.5
+	var target_pos := cursor_pos_at(target_center)
 	var move_dir := (Vector2(pos) - Vector2(prev_cell)).normalized()
 
 	# Hiệu ứng vệt chân mực lan nhẹ khi cất bước
@@ -828,7 +828,7 @@ func reset_to_start() -> void:
 	if maze == null or _cursor == null:
 		return
 	_player_current_cell = maze.get_start()
-	var target_pos := _cell_center(maze.get_start()) - _cursor.size * 0.5
+	var target_pos := cursor_pos_at(_cell_center(maze.get_start()))
 
 	# (GIỮ tween) Vị trí đích = TÂM Ô theo lưới tính lúc chạy (phụ thuộc kích thước lưới/cỡ ô)
 	var tw := create_tween()
@@ -1089,8 +1089,8 @@ func animate_cursor_drag(from_cell: Vector2i, to_cell: Vector2i, duration: float
 		return
 	_player_hidden = false
 	_cursor.visible = true
-	var p1 := _cell_center(from_cell) - _cursor.size * 0.5
-	var p2 := _cell_center(to_cell) - _cursor.size * 0.5
+	var p1 := cursor_pos_at(_cell_center(from_cell))
+	var p2 := cursor_pos_at(_cell_center(to_cell))
 	_cursor.play_demo_drag(p1, p2, duration)
 
 
@@ -1100,7 +1100,7 @@ func animate_cursor_tap(cell: Vector2i) -> void:
 		return
 	_player_hidden = false
 	_cursor.visible = true
-	var p := _cell_center(cell) - _cursor.size * 0.5
+	var p := cursor_pos_at(_cell_center(cell))
 	_cursor.play_demo_tap(p)
 
 
@@ -1110,7 +1110,7 @@ func stop_cursor_animation() -> void:
 		return
 	_cursor.stop_demo()
 	if maze != null:
-		_cursor.position = _cell_center(_player_current_cell) - _cursor.size * 0.5
+		_cursor.position = cursor_pos_at(_cell_center(_player_current_cell))
 	if _player_hidden:
 		_cursor.visible = false
 
@@ -1123,7 +1123,7 @@ func animate_cursor_path(path: Array[Vector2i], dur_per_step: float = 0.45) -> v
 	_cursor.visible = true
 	var positions: Array[Vector2] = []
 	for cell in path:
-		positions.append(_cell_center(cell) - _cursor.size * 0.5)
+		positions.append(cursor_pos_at(_cell_center(cell)))
 	_cursor.play_demo_path(positions, dur_per_step)
 
 
@@ -1133,8 +1133,8 @@ func animate_cursor_fail_attempt(from_cell: Vector2i, toward_cell: Vector2i) -> 
 		return
 	_player_hidden = false
 	_cursor.visible = true
-	var from_p := _cell_center(from_cell) - _cursor.size * 0.5
-	var toward_p := _cell_center(toward_cell) - _cursor.size * 0.5
+	var from_p := cursor_pos_at(_cell_center(from_cell))
+	var toward_p := cursor_pos_at(_cell_center(toward_cell))
 	var midway := from_p.lerp(toward_p, 0.5)
 	var recoil_dir := Vector2(from_cell - toward_cell)
 	_cursor.play_demo_fail_attempt(from_p, midway, recoil_dir)
@@ -1477,6 +1477,22 @@ func _corner_edge(a: Vector2i, b: Vector2i) -> Array:
 # ============================================================================
 # Helpers
 # ============================================================================
+## Đầu bút (tip) trong art con trỏ — toạ độ CHUẨN HOÁ theo cỡ sprite (0..1).
+## Đo từ `assets/images-png/game/player_cursor*.png` (28×28 · mực trải (3,3)-(22,22) ·
+## đầu bút ở góc dưới-phải (22,22) ⇒ 22/28 ≈ 0.786 — mọi skin bút cùng vị trí).
+## Bàn cờ đặt ĐẦU BÚT trùng điểm cuối nét mực (tâm ô) chứ KHÔNG đặt tâm sprite — nếu đặt
+## tâm sprite thì đầu bút thò ra ngoài nét vẽ (lỗi người chơi báo 2026-10-03).
+const CURSOR_TIP_UV := Vector2(0.786, 0.786)
+
+
+## Vị trí (góc trên-trái node con trỏ) sao cho ĐẦU BÚT nằm đúng `center` (tâm ô = điểm
+## cuối nét mực). Tự co theo cỡ con trỏ lúc chạy (bàn lớn ⇒ con trỏ nhỏ đi).
+func cursor_pos_at(center: Vector2) -> Vector2:
+	if _cursor == null:
+		return center
+	return center - CURSOR_TIP_UV * _cursor.size
+
+
 ## Tâm của 1 ô (toạ độ lưới → pixel). Chỉ số được KẸP vào trong bảng nên không bao giờ
 ## lỗi "Out of bounds" khi con trỏ/điểm vẽ nằm ngoài board (một số chế độ giữ toạ độ đặc biệt).
 func _cell_center(pos: Vector2i) -> Vector2:

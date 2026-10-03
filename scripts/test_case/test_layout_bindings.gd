@@ -48,6 +48,10 @@ const OPTIONAL := {
 	## Sticker HỒ SƠ ở bản dọc chỉ là avatar nhỏ (không có chỗ ghi tên);
 	## thẻ hồ sơ ở bản NGANG mới hiện tên người chơi.
 	"main|portrait": ["profile_name"],
+	## Màn Chọn màn: chip "ĐẠT n%" + chip kích thước + mô tả chương và dòng chương
+	## trong nút TIẾP TỤC — chỉ bố cục NGANG khai (bản DỌC gọn hơn theo mockup dọc).
+	"levels|portrait": ["lbl_continue_sub", "lbl_banner_size",
+			"lbl_banner_sub", "banner_focus"],
 }
 
 var _failed := 0

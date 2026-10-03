@@ -61,6 +61,15 @@ func change_scene(path: String, record_history := true, style := "auto") -> void
 		push_warning("[SceneManager] Scene không tồn tại: %s" % path)
 		return
 
+	# Nạp TRƯỚC scene: file .tscn có thể tồn tại nhưng THIẾU PHỤ THUỘC (bản export lọc thiếu
+	# script/asset) ⇒ `change_scene_to_file` thất bại GIỮA hiệu ứng và bỏ mặc người chơi ở
+	# màn cũ (đã gặp: export thiếu `scripts/tool/*` → bấm vào MÀN 1 không mở được màn chơi
+	# trên Android). Nạp trước ⇒ lỗi rõ ràng, không đổi màn nửa vời.
+	var packed := load(path) as PackedScene
+	if packed == null:
+		push_error("[SceneManager] Không nạp được scene '%s' (thiếu phụ thuộc trong bản export?)." % path)
+		return
+
 	if transition != null and transition.has_method("is_busy") and bool(transition.call("is_busy")):
 		push_warning("[SceneManager] Đang có chuyển cảnh đang diễn ra, bỏ qua yêu cầu mới.")
 		return
@@ -87,7 +96,7 @@ func change_scene(path: String, record_history := true, style := "auto") -> void
 	# Nếu chạy trong môi trường headless/test không cần frame render hoặc transition bị tắt
 	var is_headless := DisplayServer.get_name() == "headless"
 	if is_headless or transition == null or resolved_style == "none":
-		get_tree().change_scene_to_file(path)
+		get_tree().change_scene_to_packed(packed)
 		scene_changed.emit(path)
 		return
 
@@ -96,7 +105,7 @@ func change_scene(path: String, record_history := true, style := "auto") -> void
 		"play_transition",
 		path,
 		func() -> void:
-			get_tree().change_scene_to_file(path)
+			get_tree().change_scene_to_packed(packed)
 			scene_changed.emit(path),
 		resolved_style
 	)

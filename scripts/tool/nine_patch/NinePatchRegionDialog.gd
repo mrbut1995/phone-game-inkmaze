@@ -17,7 +17,21 @@ static func open_generic(dlg_title: String, tex: Texture2D, initial_reg: Rect2, 
 	dlg.region_rect = initial_reg
 	dlg.patch_margins = initial_margins
 	dlg.on_change_callback = callback
-	EditorInterface.get_base_control().add_child(dlg)
+	# KHÔNG viết thẳng `EditorInterface.*`: đây là lớp CHỈ CÓ trong editor — tham chiếu nó làm
+	# bản EXPORT không compile được (kéo theo NinePatchButton/NinePatchStateTexture ⇒ màn chơi
+	# không mở được trên Android, lỗi đã gặp 2026-10-03). Lấy singleton bằng CHUỖI + fallback
+	# về cây hiện tại (trong editor = cây của editor) là đủ cho tool dev này.
+	var host: Node = null
+	var editor_interface: Object = Engine.get_singleton(&"EditorInterface")
+	if editor_interface != null and editor_interface.has_method("get_base_control"):
+		host = editor_interface.call("get_base_control") as Node
+	if host == null:
+		var loop := Engine.get_main_loop() as SceneTree
+		host = loop.root if loop != null else null
+	if host == null:
+		dlg.queue_free()
+		return
+	host.add_child(dlg)
 	dlg.popup_centered(Vector2i(900, 600))
 
 # Giữ tương thích ngược với NinePatchButton

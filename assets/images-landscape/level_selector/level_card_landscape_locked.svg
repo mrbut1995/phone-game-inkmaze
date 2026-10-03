@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 372 277" width="372" height="277">
+  <defs>
+    <clipPath id="cardClip"><rect width="360" height="265" rx="24"/></clipPath>
+  </defs>
+  <g clip-path="url(#cardClip)">
+    <rect width="360" height="265" fill="#EFECE6"/>
+    <line x1="36" y1="0" x2="36" y2="265" stroke="#D19E9E" stroke-width="2" stroke-dasharray="5 4"/>
+  </g>
+  <rect width="360" height="265" rx="24" fill="none" stroke="#A7B9C3" stroke-width="2.5"/>
+
+</svg>

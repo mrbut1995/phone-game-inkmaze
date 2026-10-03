@@ -2,22 +2,22 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://tfcecgmo7yw" path="res://scripts/scenes/layout/ranking_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/ranking/rank_sheet.png" id="5_sheet"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="6_tape"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/paper_clip.png" id="7_clip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_trophy.png" id="8_trophy"]
-[ext_resource type="Texture2D" path="res://assets/images-png/ranking/chip_scope.png" id="9_chip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="10_divider"]
-[ext_resource type="Texture2D" path="res://assets/images-png/ranking/medal_gold.png" id="11_medal_g"]
-[ext_resource type="Texture2D" path="res://assets/images-png/ranking/medal_silver.png" id="12_medal_s"]
-[ext_resource type="Texture2D" path="res://assets/images-png/ranking/medal_bronze.png" id="13_medal_b"]
-[ext_resource type="Texture2D" path="res://assets/images-png/ranking/podium_gold.png" id="14_podium_g"]
-[ext_resource type="Texture2D" path="res://assets/images-png/ranking/podium_silver.png" id="15_podium_s"]
-[ext_resource type="Texture2D" path="res://assets/images-png/ranking/podium_bronze.png" id="16_podium_b"]
-[ext_resource type="Texture2D" path="res://assets/images-png/ranking/my_rank_bar.png" id="17_mybar"]
-[ext_resource type="PackedScene" path="res://nodes/ranking/tab_button.tscn" id="20_tab"]
+[ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
+[ext_resource type="Texture2D" uid="uid://b3hsm3p524syt" path="res://assets/images-png/ranking/rank_sheet.png" id="5_sheet"]
+[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="6_tape"]
+[ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="7_clip"]
+[ext_resource type="Texture2D" uid="uid://bir8bpmt03wuv" path="res://assets/images-png/icons/icon_trophy.png" id="8_trophy"]
+[ext_resource type="Texture2D" uid="uid://c0ghvvkvr38pj" path="res://assets/images-png/ranking/chip_scope.png" id="9_chip"]
+[ext_resource type="Texture2D" uid="uid://duqcleabqujwd" path="res://assets/images-png/settings/divider_dashed.png" id="10_divider"]
+[ext_resource type="Texture2D" uid="uid://nr8strlnr3mt" path="res://assets/images-png/ranking/medal_gold.png" id="11_medal_g"]
+[ext_resource type="Texture2D" uid="uid://w4mk4oiu8ayu" path="res://assets/images-png/ranking/medal_silver.png" id="12_medal_s"]
+[ext_resource type="Texture2D" uid="uid://bp6nxn3wrk36h" path="res://assets/images-png/ranking/medal_bronze.png" id="13_medal_b"]
+[ext_resource type="Texture2D" uid="uid://coes0kdnsaiv" path="res://assets/images-png/ranking/podium_gold.png" id="14_podium_g"]
+[ext_resource type="Texture2D" uid="uid://c1r6hcmsb6uls" path="res://assets/images-png/ranking/podium_silver.png" id="15_podium_s"]
+[ext_resource type="Texture2D" uid="uid://b8xcvk264ibmj" path="res://assets/images-png/ranking/podium_bronze.png" id="16_podium_b"]
+[ext_resource type="Texture2D" uid="uid://cfmy24n74f1hj" path="res://assets/images-png/ranking/my_rank_bar.png" id="17_mybar"]
+[ext_resource type="PackedScene" uid="uid://dydi6np3xsxp0" path="res://nodes/ranking/tab_button.tscn" id="20_tab"]
 
 [node name="Portrait" unique_id=1574615936 node_paths=PackedStringArray("btn_back", "tabs_box", "podium", "scroll", "rows_box", "my_rank_bar") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
@@ -65,6 +65,7 @@ offset_left = -125.0
 offset_top = 42.5
 offset_right = -25.0
 offset_bottom = 77.5
+grow_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("9_chip")
 
@@ -131,27 +132,27 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.101
 anchor_top = 0.033
-anchor_right = 0.90400004
-anchor_bottom = 0.033
-offset_left = 0.0299988
-offset_top = 0.0949993
-offset_right = 0.119965
-offset_bottom = 26.095
+anchor_right = 0.93100005
+anchor_bottom = 0.087000005
+offset_left = 0.02999878
+offset_top = 0.09499931
+offset_right = -0.07003784
+offset_bottom = -0.10835266
 theme_override_constants/separation = 15
 
-[node name="Tab_dungeon" parent="Sheet/Tabs" index="0" instance=ExtResource("20_tab")]
+[node name="Tab_dungeon" parent="Sheet/Tabs" index="0" unique_id=1680281659 instance=ExtResource("20_tab")]
 layout_mode = 2
 size_flags_horizontal = 3
 board_id = "dungeon"
 label_key = "STR_RANK_TAB_DUNGEON"
 
-[node name="Tab_play" parent="Sheet/Tabs" index="1" instance=ExtResource("20_tab")]
+[node name="Tab_play" parent="Sheet/Tabs" index="1" unique_id=1068338404 instance=ExtResource("20_tab")]
 layout_mode = 2
 size_flags_horizontal = 3
 board_id = "play"
 label_key = "STR_RANK_TAB_PLAY"
 
-[node name="Tab_daily" parent="Sheet/Tabs" index="2" instance=ExtResource("20_tab")]
+[node name="Tab_daily" parent="Sheet/Tabs" index="2" unique_id=1695727906 instance=ExtResource("20_tab")]
 layout_mode = 2
 size_flags_horizontal = 3
 board_id = "daily"
@@ -160,9 +161,9 @@ label_key = "STR_RANK_TAB_DAILY"
 [node name="Divider1" type="TextureRect" parent="Sheet" index="3" unique_id=833636626]
 layout_mode = 0
 offset_left = 47.5
-offset_top = 63.0
+offset_top = 79.0
 offset_right = 425.0
-offset_bottom = 65.0
+offset_bottom = 81.0
 mouse_filter = 2
 texture = ExtResource("10_divider")
 expand_mode = 1
@@ -175,9 +176,9 @@ anchor_top = 0.32500002
 anchor_right = 0.52002126
 anchor_bottom = 0.32500002
 offset_left = -188.91
-offset_top = -185.125
-offset_right = 188.59
-offset_bottom = -0.125015
+offset_top = -169.125
+offset_right = 188.59001
+offset_bottom = 15.8749695
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
@@ -379,9 +380,9 @@ horizontal_alignment = 1
 [node name="Divider2" type="TextureRect" parent="Sheet" index="5" unique_id=342209816]
 layout_mode = 0
 offset_left = 47.5
-offset_top = 261.0
+offset_top = 277.0
 offset_right = 425.0
-offset_bottom = 263.0
+offset_bottom = 279.0
 mouse_filter = 2
 texture = ExtResource("10_divider")
 expand_mode = 1
@@ -391,9 +392,9 @@ stretch_mode = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.101
-anchor_top = 0.34699997
+anchor_top = 0.3924536
 anchor_right = 0.96676606
-anchor_bottom = 0.838
+anchor_bottom = 0.83799994
 offset_left = 0.0299988
 offset_top = 0.105011
 offset_right = 0.119965

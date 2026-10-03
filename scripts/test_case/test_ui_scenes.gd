@@ -50,6 +50,7 @@ func _init() -> void:
 	_section_9_hud_bindings()
 	_section_10_hud_minimal()
 	_section_11_tutorials()
+	await _section_12_stars()
 
 	print("\n--------------------------------------------------------")
 	if _failed == 0:
@@ -136,6 +137,7 @@ func _section_2_archivement() -> void:
 
 	var tab := _spawn("res://nodes/archivements/tab_button.tscn") as AchTabButton
 	_entry(tab != null, "tab_button.tscn instantiate ra AchTabButton")
+	var portrait_tab_h := 0.0
 	if tab != null:
 		_entry(tab.get_node_or_null("Label") != null, "tab Sổ tay co nhan tu scene")
 		_entry(not tab.label.text.is_empty(), "nhan tab So tay khai trong scene: '%s'" % tab.label.text)
@@ -144,7 +146,32 @@ func _section_2_archivement() -> void:
 		tab.set_active(false)
 		var off_color := tab.label.modulate
 		_entry(on_color != off_color, "set_active() doi mau nhan")
+		# Nhãn dài nhất thực tế ("TẤT CẢ (28)") phải vừa ô tab DỌC 67px (trừ lề nhãn 2 bên 4px = 59)
+		tab.label.text = "TẤT CẢ (28)"
+		_entry(tab.label.get_minimum_size().x <= 59.0,
+			"tab DOC: nhan dai nhat vua o 67px (%.0f <= 59)" % tab.label.get_minimum_size().x)
+		portrait_tab_h = tab.custom_minimum_size.y
 		tab.queue_free()
+
+	# TAB có HAI scene riêng theo hướng: dọc = hàng 5 tab (nhỏ gọn) · ngang = lưới 2 cột (to rõ)
+	var tab_land := _spawn("res://nodes/archivements/tab_button_landscape.tscn") as AchTabButton
+	_entry(tab_land != null, "tab_button_landscape.tscn instantiate ra AchTabButton")
+	if tab_land != null:
+		_entry(tab_land.get_node_or_null("Label") != null, "tab NGANG co nhan tu scene")
+		_entry(tab_land.custom_minimum_size.y > portrait_tab_h,
+			"tab NGANG cao hon tab DOC (%.0f > %.0f)" % [tab_land.custom_minimum_size.y, portrait_tab_h])
+		tab_land.queue_free()
+
+	# Mỗi layout Sổ tay phải instance ĐÚNG scene tab của hướng mình
+	_check_layout_tab("res://scenes/layout/portrait/archivement.tscn",
+		"tab_button.tscn", "tab_button_landscape.tscn")
+	_check_layout_tab("res://scenes/layout/landscape/archivement.tscn",
+		"tab_button_landscape.tscn", "tab_button.tscn")
+	# Cỡ chữ khai trong scene: dọc 9 (5 tab/hàng 355px) · ngang 16 (lưới 2 cột rộng)
+	_entry(FileAccess.get_file_as_string("res://nodes/archivements/tab_button.tscn").contains("font_size = 9"),
+		"tab DOC khai co chu 9 trong scene")
+	_entry(FileAccess.get_file_as_string("res://nodes/archivements/tab_button_landscape.tscn").contains("font_size = 16"),
+		"tab NGANG khai co chu 16 trong scene")
 
 	var page := _spawn("res://nodes/archivements/page.tscn") as AchPage
 	_entry(page != null, "page.tscn instantiate ra AchPage")
@@ -188,6 +215,46 @@ func _section_3_levels() -> void:
 		page.grid().add_child(Control.new())
 		_entry(page.grid().get_child_count() == 1, "them the man vao luoi = vao dung trang")
 		page.queue_free()
+
+	# Bản NGANG: trang canh giữa lưới + thẻ nằm ngang (tỉ lệ như mockup level_selection_landscape)
+	var land_page := _spawn("res://nodes/level_selection/page_landscape.tscn") as LevelsPage
+	_entry(land_page != null, "page_landscape.tscn instantiate ra LevelsPage")
+	if land_page != null:
+		_entry(land_page.get_node_or_null("Center/Grid") != null, "trang NGANG co Center/Grid")
+		_entry(land_page.grid() != null and land_page.grid().get_parent() is CenterContainer,
+			"grid() tra ve luoi nam trong CenterContainer (canh giua)")
+		_entry(land_page.grid().columns == 3, "luoi ngang 3 cot (tu scene)")
+		land_page.queue_free()
+
+	var land_card := _spawn("res://nodes/level_selection/level_card_landscape.tscn") as LevelCard
+	_entry(land_card != null, "level_card_landscape.tscn instantiate ra LevelCard")
+	if land_card != null:
+		var design := land_card.custom_minimum_size
+		_entry(design == Vector2(372, 277),
+			"the NGANG giu co thiet ke 372x277 (dang %.0fx%.0f)" % [design.x, design.y])
+		_entry(design.x > design.y, "the NGANG NAM NGANG (rong %.0f > cao %.0f)" % [design.x, design.y])
+		var prefix := land_card.get("prefix_lbl") as Label
+		var halo := land_card.get("next_halo") as Control
+		var ribbon := land_card.get("next_ribbon") as Control
+		_entry(prefix != null and halo != null and ribbon != null,
+			"the NGANG khai bao du prefix_lbl + next_halo + next_ribbon cho trang thai MÀN TIẾP")
+
+		land_card.call("setup", 3, false, 0, false, 1, 3, true)
+		_entry(halo != null and halo.visible and ribbon != null and ribbon.visible,
+			"the 'MÀN TIẾP' hien hao quang + ruy bang NEW")
+		_entry(prefix != null and prefix.text == tr("STR_LEVEL_NEXT"),
+			"the MÀN TIẾP doi nhan thanh '%s'" % tr("STR_LEVEL_NEXT"))
+
+		land_card.call("setup", 4, true, 0, false, 1, 4, false)
+		var star1 := land_card.get("star1") as TextureRect
+		_entry(halo != null and not halo.visible, "the KHOA khong hien hao quang")
+		_entry(star1 != null and star1.texture != null
+				and star1.texture.resource_path.contains("star_locked"),
+			"the KHOA hien art sao xam (%s)"
+				% (star1.texture.resource_path.get_file() if star1 != null and star1.texture != null else "?"))
+		_entry(prefix != null and prefix.text == tr("STR_LEVEL_PREFIX"),
+			"the thuong tra ve nhan goc '%s'" % tr("STR_LEVEL_PREFIX"))
+		land_card.queue_free()
 
 	var dot := _spawn("res://nodes/level_selection/page_dot.tscn")
 	_entry(dot != null, "page_dot.tscn instantiate duoc")
@@ -845,6 +912,71 @@ func _spawn(path: String) -> Node:
 	var node := packed.instantiate()
 	root.add_child(node)
 	return node
+
+
+# ---------------------------------------------------------------------------
+# 12. Ngôi sao: art KHAI SẴN (star_empty/star_highlight = 96px) phải đủ lớn —
+#     KHÔNG node nào vẽ phóng to (tỉ lệ > 1.0) nữa.
+# ---------------------------------------------------------------------------
+func _section_12_stars() -> void:
+	print("[12] Ngôi sao khong bi phong to...")
+
+	var scenes := [
+		["res://nodes/popups/winning.tscn", 0],
+		["res://nodes/popups/gameover_level.tscn", 0],
+		["res://nodes/level_selection/level_card.tscn", 0],
+		["res://scenes/levels.tscn", 0],
+		["res://scenes/chapters.tscn", 0],
+		["res://scenes/daily.tscn", 0],
+	]
+	var worst := 0.0
+	var worst_where := ""
+	var count := 0
+	for case: Array in scenes:
+		var node := _spawn(case[0] as String)
+		if node == null:
+			continue
+		await process_frame
+		await process_frame
+		var found: Array[Node] = []
+		_collect_star_rects(node, found)
+		for r: Node in found:
+			var tr := r as TextureRect
+			var tex := tr.texture.get_size()
+			if tex.x <= 0.0 or tex.y <= 0.0 or tr.size.x <= 0.0 or tr.size.y <= 0.0:
+				continue
+			count += 1
+			var sx := tr.size.x / tex.x
+			var sy := tr.size.y / tex.y
+			# stretch_mode 4/5/6 = giữ tỉ lệ (vẽ theo cạnh nhỏ) · còn lại = kéo đầy rect
+			var drawn := minf(sx, sy) if tr.stretch_mode >= 4 else maxf(sx, sy)
+			if drawn > worst:
+				worst = drawn
+				worst_where = "%s %s" % [(case[0] as String).get_file(), tr.name]
+		node.queue_free()
+		await process_frame
+	_entry(count > 0, "quet duoc %d node Ngôi sao" % count)
+	_entry(worst <= 1.02, "khong node sao nao ve phong to (max %.2fx%s)"
+		% [worst, "" if worst_where.is_empty() else " tai " + worst_where])
+
+
+## Gom mọi TextureRect đang hiển thị art Ngôi sao (star_empty / star_highlight)
+func _collect_star_rects(node: Node, out: Array[Node]) -> void:
+	for child in node.get_children():
+		_collect_star_rects(child, out)
+	var tr := node as TextureRect
+	if tr != null and tr.is_visible_in_tree() and tr.texture != null:
+		if tr.texture.resource_path.contains("star_"):
+			out.append(tr)
+
+
+## Layout Sổ tay phải instance ĐÚNG scene tab của hướng mình (và KHÔNG dùng của hướng kia)
+func _check_layout_tab(layout_path: String, expect_file: String, forbid_file: String) -> void:
+	var text := FileAccess.get_file_as_string(layout_path)
+	var expect := "res://nodes/archivements/%s" % expect_file
+	var forbid := "res://nodes/archivements/%s" % forbid_file
+	_entry(text.contains(expect), "%s dung %s" % [layout_path.get_file(), expect_file])
+	_entry(not text.contains(forbid), "%s khong dung %s" % [layout_path.get_file(), forbid_file])
 
 
 func _entry(condition: bool, label: String) -> void:

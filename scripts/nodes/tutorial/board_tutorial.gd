@@ -244,7 +244,8 @@ func set_path(path: Array[Vector2i]) -> void:
 func set_player_cell(pos: Vector2i, animate: bool = true) -> void:
 	if _cursor == null:
 		return
-	var target_pos := _cell_center(pos) - _cursor.size * 0.5
+	# Đặt ĐẦU BÚT trên tâm ô (không phải tâm sprite) — xem `cursor_pos_at` ở board.gd
+	var target_pos := cursor_pos_at(_cell_center(pos))
 	if animate:
 		var dir := Vector2(pos - _player_current_cell)
 		_cursor.run_to(target_pos, dir, 0.16)
@@ -406,7 +407,7 @@ func play_wall_demo_drag(is_h: bool, lattice: Vector2i, duration := 0.55) -> voi
 
 	_cursor.stop_demo()
 	_cursor.visible = true
-	_cursor.position = a_center - _cursor.size * 0.5
+	_cursor.position = cursor_pos_at(a_center)
 	_set_demo_anchor_selected(corner_a, true)
 	_pulse_demo_anchor(corner_a)
 	Sfx.play(Sfx.ANCHOR_SNAP)

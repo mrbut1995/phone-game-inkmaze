@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/level_selection/page.gd" id="1_script"]
+
+[node name="Page" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 1
+script = ExtResource("1_script")
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Grid" type="GridContainer" parent="Center"]
+layout_mode = 2
+columns = 3
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 18
