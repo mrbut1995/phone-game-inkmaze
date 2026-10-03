@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://l0nj8hlxkxd1" path="res://scripts/nodes/shop/item_tile.gd" id="1_tile"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
-[ext_resource type="Texture2D" uid="uid://dlgmdnsas2lel" path="res://assets/images/shop/card_tile.svg" id="3_card"]
-[ext_resource type="Texture2D" uid="uid://cviihr4gbxev4" path="res://assets/images/settings/section_chip.svg" id="4_chip"]
-[ext_resource type="Texture2D" uid="uid://n80hdaatt051" path="res://assets/images/icons/icon_circle.svg" id="5_circle"]
-[ext_resource type="Texture2D" uid="uid://dkbvimfmt8ksc" path="res://assets/images/shop/ink_stroke.svg" id="6_stroke"]
-[ext_resource type="Texture2D" uid="uid://drqah3ldsnb86" path="res://assets/images/shop/btn_tile_price.svg" id="7_btn_price"]
-[ext_resource type="Texture2D" uid="uid://1u1eht4ctsov" path="res://assets/images/shop/icon_coin.svg" id="8_coin"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/card_tile.png" id="3_card"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/section_chip.png" id="4_chip"]
+[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_circle.png" id="5_circle"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/ink_stroke.png" id="6_stroke"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/btn_tile_price.png" id="7_btn_price"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/icon_coin.png" id="8_coin"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="8_wwefb"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wwefb"]

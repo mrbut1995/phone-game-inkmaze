@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dydi6np3xsxp0"]
 
-[ext_resource type="Texture2D" uid="uid://c58bm3cc0tiuc" path="res://assets/images/ranking/tab_normal.svg" id="1_art"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/tab_normal.png" id="1_art"]
 [ext_resource type="Script" uid="uid://icpf5ojff2kn" path="res://scripts/nodes/ranking/tab_button.gd" id="1_script"]
 
 [node name="TabButton" type="Button" unique_id=850703946]

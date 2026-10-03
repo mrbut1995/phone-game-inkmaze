@@ -6,8 +6,8 @@ extends TextureButton
 ## Bấm được để nhảy tới trang tương ứng (màn nối signal `pressed`).
 ## ============================================================================
 
-const DOT_ACTIVE := preload("res://assets/images/level_selector/dot_active.svg")
-const DOT_INACTIVE := preload("res://assets/images/level_selector/dot_inactive.svg")
+const DOT_ACTIVE := preload("res://assets/images-png/level_selector/dot_active.png")
+const DOT_INACTIVE := preload("res://assets/images-png/level_selector/dot_inactive.png")
 
 const SIZE_ACTIVE := Vector2(34, 24)
 const SIZE_INACTIVE := Vector2(12, 24)

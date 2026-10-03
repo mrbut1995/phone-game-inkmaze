@@ -9,8 +9,8 @@ extends Control
 ## Node UI nằm trong CẤU TRÚC: Body (HBox) → Rank · Flag · Name (giãn) · Stats (VBox: Record + Points)
 ## ============================================================================
 
-const ROW_ART := preload("res://assets/images/ranking/rank_row.svg")
-const ROW_YOU_ART := preload("res://assets/images/ranking/rank_row_you.svg")
+const ROW_ART := preload("res://assets/images-png/ranking/rank_row.png")
+const ROW_YOU_ART := preload("res://assets/images-png/ranking/rank_row_you.png")
 
 ## Bộ cờ có sẵn trong assets/images/icons/flags/ (không dùng emoji)
 const FLAG_CODES: Array[String] = ["vi", "en", "ja", "ko", "zh_cn", "fr", "generic"]
@@ -32,7 +32,7 @@ func setup(entry: Dictionary, board: String) -> void:
 static func flag_texture(code: String) -> Texture2D:
 	if _flag_cache.is_empty():
 		for key in FLAG_CODES:
-			var path := "res://assets/images/icons/flags/flag_%s.svg" % key
+			var path := "res://assets/images-png/icons/flags/flag_%s.png" % key
 			if ResourceLoader.exists(path):
 				_flag_cache[key] = load(path)
 	return _flag_cache.get(code, _flag_cache.get("generic"))

@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/nodes/shop/noads_row.gd" id="1_row"]
 [ext_resource type="Theme" path="res://resources/settings/theme_text.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://assets/images/shop/card_noads.svg" id="3_card"]
-[ext_resource type="Texture2D" uid="uid://dofgrbef5s2ut" path="res://assets/images/chapters/chip_need.svg" id="4_chip"]
-[ext_resource type="Texture2D" path="res://assets/images/shop/btn_noads.svg" id="5_btn"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/card_noads.png" id="3_card"]
+[ext_resource type="Texture2D" path="res://assets/images-png/chapters/chip_need.png" id="4_chip"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/btn_noads.png" id="5_btn"]
 
 [node name="NoadsRow" type="Control"]
 custom_minimum_size = Vector2(490, 100)

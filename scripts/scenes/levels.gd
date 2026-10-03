@@ -16,8 +16,8 @@ const LEVEL_CARD_SCENE := preload("res://nodes/level_selection/level_card.tscn")
 const PAGE_SCENE := preload("res://nodes/level_selection/page.tscn")
 const DOT_SCENE := preload("res://nodes/level_selection/page_dot.tscn")
 ## Banner chương: bản thường + bản "focus" (có chương đủ Sao để mở)
-const BANNER_NORMAL := preload("res://assets/images/level_selector/chapter_banner.svg")
-const BANNER_FOCUS := preload("res://assets/images/level_selector/chapter_banner_focus.svg")
+const BANNER_NORMAL := preload("res://assets/images-png/level_selector/chapter_banner.png")
+const BANNER_FOCUS := preload("res://assets/images-png/level_selector/chapter_banner_focus.png")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Số thẻ màn chơi mỗi trang: lưới 3×3 (khớp `nodes/level_selection/page.tscn` và mockup

@@ -11,8 +11,8 @@ extends TextureButton
 ## Nút tự nối `pressed` → phát `tab_pressed(category)` nên scene chỉ cần khai nhóm hàng.
 ## ============================================================================
 
-const TAB_ACTIVE := preload("res://assets/images/shop/tab_active.svg")
-const TAB_INACTIVE := preload("res://assets/images/shop/tab_inactive.svg")
+const TAB_ACTIVE := preload("res://assets/images-png/shop/tab_active.png")
+const TAB_INACTIVE := preload("res://assets/images-png/shop/tab_inactive.png")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Báo cho màn Cửa hàng biết tab nào vừa được bấm

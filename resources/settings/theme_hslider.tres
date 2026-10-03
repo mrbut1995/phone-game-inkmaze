@@ -1,10 +1,10 @@
 [gd_resource type="Theme" format=3 uid="uid://car0jeqlr0xi"]
 
-[ext_resource type="Texture2D" uid="uid://dbw256if11lrr" path="res://assets/images/settings/slider_track.svg" id="1_track"]
-[ext_resource type="Texture2D" uid="uid://cw6w2b0h8sde4" path="res://assets/images/settings/slider_track_fill.svg" id="2_fill"]
-[ext_resource type="Texture2D" uid="uid://b8qjeit1aiw1u" path="res://assets/images/settings/slider_grabber_normal.svg" id="3_grab"]
-[ext_resource type="Texture2D" uid="uid://boxtyhkgtgxxb" path="res://assets/images/settings/slider_grabber_focus.svg" id="4_grab_hi"]
-[ext_resource type="Texture2D" uid="uid://bc7e4rmx1q3t5" path="res://assets/images/settings/slider_grabber_disabled.svg" id="5_grab_dis"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/slider_track.png" id="1_track"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/slider_track_fill.png" id="2_fill"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/slider_grabber_normal.png" id="3_grab"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/slider_grabber_focus.png" id="4_grab_hi"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/slider_grabber_disabled.png" id="5_grab_dis"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fill"]
 texture = ExtResource("2_fill")

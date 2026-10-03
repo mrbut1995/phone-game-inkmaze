@@ -6,8 +6,8 @@ extends TextureButton
 ## Bấm được để nhảy tới trang tương ứng; chấm ĐANG XEM thì khoá lại.
 ## ============================================================================
 
-const DOT_ACTIVE := preload("res://assets/images/profiler/page_dot_on.svg")
-const DOT_INACTIVE := preload("res://assets/images/profiler/page_dot_off.svg")
+const DOT_ACTIVE := preload("res://assets/images-png/profiler/page_dot_on.png")
+const DOT_INACTIVE := preload("res://assets/images-png/profiler/page_dot_off.png")
 
 
 func set_current(on: bool) -> void:

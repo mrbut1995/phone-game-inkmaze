@@ -13,8 +13,8 @@ extends NinePatchButton
 ## của khay (khay dọc = HBox 5 tab · khay ngang = GridContainer 2 cột) mà không méo góc bo.
 ## ============================================================================
 
-const TAB_ACTIVE := preload("res://assets/images/archivements/tab_active.svg")
-const TAB_INACTIVE := preload("res://assets/images/archivements/tab_inactive.svg")
+const TAB_ACTIVE := preload("res://assets/images-png/archivements/tab_active.png")
+const TAB_INACTIVE := preload("res://assets/images-png/archivements/tab_inactive.png")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const LABEL_ACTIVE_COLOR := Color(1, 1, 1)
 const LABEL_IDLE_COLOR := Color(0.44313726, 0.54509807, 0.61960787, 1)

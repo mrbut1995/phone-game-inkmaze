@@ -8,10 +8,10 @@ extends Control
 ## Mỗi tutorial scene INSTANCE ô này rồi ghi đè cell_text/text_color/text_size + grid_pos.
 ## ============================================================================
 
-const TEX_NORMAL  := preload("res://assets/images/game/cell_normal.svg")
-const TEX_START   := preload("res://assets/images/game/cell_start.svg")
-const TEX_FINISH  := preload("res://assets/images/game/cell_finish.svg")
-const TEX_FINISH_CLOSED := preload("res://assets/images/game/cell_finish_closed.svg")
+const TEX_NORMAL  := preload("res://assets/images-png/game/cell_normal.png")
+const TEX_START   := preload("res://assets/images-png/game/cell_start.png")
+const TEX_FINISH  := preload("res://assets/images-png/game/cell_finish.png")
+const TEX_FINISH_CLOSED := preload("res://assets/images-png/game/cell_finish_closed.png")
 
 ## Toạ độ ô trong bàn mini (tutorial tra ô theo `grid_pos`, không theo thứ tự con)
 @export var grid_pos: Vector2i = Vector2i.ZERO

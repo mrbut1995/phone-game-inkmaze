@@ -10,8 +10,8 @@ extends NinePatchButton
 ## Nút tự nối `pressed` → phát `tab_pressed(board_id)`.
 ## ============================================================================
 
-const TAB_ACTIVE_ART := preload("res://assets/images/ranking/tab_active.svg")
-const TAB_NORMAL_ART := preload("res://assets/images/ranking/tab_normal.svg")
+const TAB_ACTIVE_ART := preload("res://assets/images-png/ranking/tab_active.png")
+const TAB_NORMAL_ART := preload("res://assets/images-png/ranking/tab_normal.png")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const LABEL_ACTIVE_COLOR := Color(1, 1, 1)
 const LABEL_IDLE_COLOR := Color(0.13333334, 0.29803923, 0.42745098)

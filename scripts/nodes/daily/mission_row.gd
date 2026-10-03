@@ -12,14 +12,14 @@ extends Control
 
 signal action_pressed(index: int)
 
-const BOX_DONE := preload("res://assets/images/calendar/box_task_done.svg")
-const BOX_TODO := preload("res://assets/images/calendar/box_task_todo.svg")
-const BTN_DONE_NORMAL := preload("res://assets/images/calendar/btn_completed_normal.svg")
-const BTN_DONE_PRESSED := preload("res://assets/images/calendar/btn_completed_pressed.svg")
-const BTN_DONE_FOCUS := preload("res://assets/images/calendar/btn_completed_focus.svg")
-const BTN_PLAY_NORMAL := preload("res://assets/images/calendar/btn_primary_normal.svg")
-const BTN_PLAY_PRESSED := preload("res://assets/images/calendar/btn_primary_pressed.svg")
-const BTN_PLAY_FOCUS := preload("res://assets/images/calendar/btn_primary_focus.svg")
+const BOX_DONE := preload("res://assets/images-png/calendar/box_task_done.png")
+const BOX_TODO := preload("res://assets/images-png/calendar/box_task_todo.png")
+const BTN_DONE_NORMAL := preload("res://assets/images-png/calendar/btn_completed_normal.png")
+const BTN_DONE_PRESSED := preload("res://assets/images-png/calendar/btn_completed_pressed.png")
+const BTN_DONE_FOCUS := preload("res://assets/images-png/calendar/btn_completed_focus.png")
+const BTN_PLAY_NORMAL := preload("res://assets/images-png/calendar/btn_primary_normal.png")
+const BTN_PLAY_PRESSED := preload("res://assets/images-png/calendar/btn_primary_pressed.png")
+const BTN_PLAY_FOCUS := preload("res://assets/images-png/calendar/btn_primary_focus.png")
 
 ## Lề trái của tiêu đề: bản KHÔNG badge đọc từ scene (`Title.offset_left`), bản CÓ badge đọc từ
 ## metadata `title_left` của node `Tag` — chỉnh trong Inspector, script không hard-code toạ độ.

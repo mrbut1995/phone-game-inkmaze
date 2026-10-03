@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ArchivementData" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/images/common/star_highlight.svg" id="1_g15xp"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="1_g15xp"]
 [ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_fgigt"]
 
 [resource]

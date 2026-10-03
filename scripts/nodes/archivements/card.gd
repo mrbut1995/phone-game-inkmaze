@@ -12,12 +12,12 @@ extends Control
 
 signal claim_requested(id: String)
 
-const BG_CLAIMED := preload("res://assets/images/archivements/card_claimed.svg")
-const BG_CLAIMABLE := preload("res://assets/images/archivements/card_claimable.svg")
-const BG_PROGRESS := preload("res://assets/images/archivements/card_progress.svg")
-const BG_LOCKED := preload("res://assets/images/archivements/card_locked.svg")
+const BG_CLAIMED := preload("res://assets/images-png/archivements/card_claimed.png")
+const BG_CLAIMABLE := preload("res://assets/images-png/archivements/card_claimable.png")
+const BG_PROGRESS := preload("res://assets/images-png/archivements/card_progress.png")
+const BG_LOCKED := preload("res://assets/images-png/archivements/card_locked.png")
 ## Ổ khoá của thẻ: dùng icon CHUNG ở `assets/images/icons/` (bản riêng trong archivements/ đã gỡ)
-const ICON_LOCK := preload("res://assets/images/icons/icon_lock.svg")
+const ICON_LOCK := preload("res://assets/images-png/icons/icon_lock.png")
 
 const COLOR_CLAIMED := Color(0.18039216, 0.49019608, 0.19607843, 1)   # #2E7D32
 const COLOR_CLAIMABLE := Color(0.8509804, 0.46666667, 0.023529412, 1)  # #D97706

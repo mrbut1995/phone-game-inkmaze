@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://12n1hqh2gxf5" path="res://scripts/nodes/popups/memory_countdown.gd" id="2_memorize"]
-[ext_resource type="Texture2D" uid="uid://cs2wa5ihhx0ua" path="res://assets/images/popups/paper_note_memory.svg" id="3_note"]
-[ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="4_tape"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/paper_note_memory.png" id="3_note"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="4_tape"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_memorize_countdown.tres" id="5_number"]
 
 [sub_resource type="Animation" id="Animation_mc_number"]

@@ -18,8 +18,8 @@ signal menu_requested
 signal revive_requested
 
 const COUNT := 3
-const STAR_FULL := preload("res://assets/images/common/star_highlight.svg")
-const STAR_EMPTY := preload("res://assets/images/common/star_empty.svg")
+const STAR_FULL := preload("res://assets/images-png/common/star_highlight.png")
+const STAR_EMPTY := preload("res://assets/images-png/common/star_empty.png")
 
 const VAR_STATUS_OK := &"PopupStatValueSmGood"
 const VAR_STATUS_FAIL := &"PopupStatValueBad"

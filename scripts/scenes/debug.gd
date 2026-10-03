@@ -12,18 +12,18 @@ extends BaseScene
 ## thêm/bớt mục mà không phải sửa .tscn. Chữ trong màn này là chữ dev, không dịch.
 ## ============================================================================
 
-const ROW_NORMAL := preload("res://assets/images/settings/row_button_normal.svg")
-const ROW_PRESSED := preload("res://assets/images/settings/row_button_pressed.svg")
-const ROW_FOCUS := preload("res://assets/images/settings/row_button_focus.svg")
-const ROW_DANGER_N := preload("res://assets/images/settings/row_button_danger_normal.svg")
-const ROW_DANGER_P := preload("res://assets/images/settings/row_button_danger_pressed.svg")
-const ROW_DANGER_F := preload("res://assets/images/settings/row_button_danger_focus.svg")
-const CHIP := preload("res://assets/images/settings/section_chip.svg")
-const DIVIDER := preload("res://assets/images/settings/divider_dashed.svg")
-const CHECK_ON := preload("res://assets/images/common/checkbox_checked.svg")
-const CHECK_OFF := preload("res://assets/images/common/checkbox_normal.svg")
-const CHECK_PRESS := preload("res://assets/images/common/checkbox_pressed.svg")
-const CHECK_FOCUS := preload("res://assets/images/common/checkbox_focus.svg")
+const ROW_NORMAL := preload("res://assets/images-png/settings/row_button_normal.png")
+const ROW_PRESSED := preload("res://assets/images-png/settings/row_button_pressed.png")
+const ROW_FOCUS := preload("res://assets/images-png/settings/row_button_focus.png")
+const ROW_DANGER_N := preload("res://assets/images-png/settings/row_button_danger_normal.png")
+const ROW_DANGER_P := preload("res://assets/images-png/settings/row_button_danger_pressed.png")
+const ROW_DANGER_F := preload("res://assets/images-png/settings/row_button_danger_focus.png")
+const CHIP := preload("res://assets/images-png/settings/section_chip.png")
+const DIVIDER := preload("res://assets/images-png/settings/divider_dashed.png")
+const CHECK_ON := preload("res://assets/images-png/common/checkbox_checked.png")
+const CHECK_OFF := preload("res://assets/images-png/common/checkbox_normal.png")
+const CHECK_PRESS := preload("res://assets/images-png/common/checkbox_pressed.png")
+const CHECK_FOCUS := preload("res://assets/images-png/common/checkbox_focus.png")
 
 const FALLBACK_TOTAL_LEVELS := 9
 const DIFFICULTIES := ["easy", "medium", "hard"]
