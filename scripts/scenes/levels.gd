@@ -20,8 +20,8 @@ const BANNER_NORMAL := preload("res://assets/images-png/level_selector/chapter_b
 const BANNER_FOCUS := preload("res://assets/images-png/level_selector/chapter_banner_focus.png")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-## Số thẻ màn chơi mỗi trang: lưới 3×3 (khớp `nodes/level_selection/page.tscn` và mockup
-## `mockup/level_selection_landscape.svg` — 2 hướng dùng CÙNG 3 cột, thẻ tự co giãn theo ô)
+## Số thẻ màn chơi mỗi trang: lưới 3 CỘT × 3 HÀNG (khớp `nodes/level_selection/page.tscn`),
+## lưới phủ kín khung và thẻ tự co giãn theo ô.
 const ROWS_PER_PAGE := 3
 const GRID_COLUMNS_PORTRAIT := 3
 const SNAP_TIME := 0.22
@@ -36,6 +36,8 @@ const CLICK_LOCK_TIME := 0.15
 var layout: LevelsLayout = null
 
 var _current_columns := GRID_COLUMNS_PORTRAIT
+var _current_rows := ROWS_PER_PAGE
+var _current_card_size := Vector2.ZERO
 var _level_ids: Array[int] = []
 var _level_data: Dictionary = {}        # level_id -> LevelData (chỉ các file có thật)
 var _banner_focus := false
@@ -65,13 +67,13 @@ func _ready() -> void:
 	call_deferred("_go_to_page", _page_for_level(chapter_continue_level()), false)
 
 
-## Gắn node UI từ BỐ CỤC đang hiển thị (bản dọc / bản ngang là 2 scene riêng nhưng CÙNG script
-## `LevelsLayout`) — mọi node đã bind bằng `@export` trong .tscn, thêm/đổi node chỉ cần sửa
+## Gắn node UI từ BỐ CỤC đang hiển thị (`scenes/layout/portrait/levels.tscn`, script `LevelsLayout`)
+## — mọi node đã bind bằng `@export` trong .tscn, thêm/đổi node chỉ cần sửa
 ## scene + export, KHÔNG phải sửa script màn.
 func _bind_refs() -> void:
 	layout = active_layout() as LevelsLayout
 	if layout == null:
-		push_warning("LevelScenes: bố cục chưa gắn LevelsLayout — thiếu binding trong scenes/layout/<hướng>/levels.tscn")
+		push_warning("LevelScenes: bố cục chưa gắn LevelsLayout — thiếu binding trong scenes/layout/portrait/levels.tscn")
 
 
 ## Nối signal + hiệu ứng bấm cho nút/banner (dây khai trong `scenes/levels.tscn`;
@@ -97,13 +99,32 @@ func _wire_buttons() -> void:
 		ensure_signal(layout.banner, &"gui_input", &"_on_banner_input")
 
 
-## Số thẻ mỗi trang: 3 cột × 3 hàng ở CẢ 2 hướng (lưới phủ kín vùng cuộn, thẻ nở theo ô)
+## Số thẻ mỗi trang: 3 cột × 3 hàng
 func _cards_per_page() -> int:
-	return _columns_per_page() * ROWS_PER_PAGE
+	return _columns_per_page() * _rows_per_page()
 
 
 func _columns_per_page() -> int:
 	return GRID_COLUMNS_PORTRAIT
+
+
+## Số HÀNG mỗi trang — lưới phủ kín khung, thẻ tự co giãn theo ô.
+func _rows_per_page() -> int:
+	return ROWS_PER_PAGE
+
+
+## Cỡ thẻ của trang hiện tại: `Vector2.ZERO` = giữ nguyên (lưới tự kéo giãn thẻ theo ô).
+func _card_size() -> Vector2:
+	return Vector2.ZERO
+
+
+## Scene THẺ / TRANG của màn
+func _card_scene() -> PackedScene:
+	return LEVEL_CARD_SCENE
+
+
+func _page_scene() -> PackedScene:
+	return PAGE_SCENE
 
 
 ## Xoay màn hình: gắn lại node của layout mới rồi dựng lại trang + nạp lại header
@@ -115,6 +136,8 @@ func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()
 	_current_columns = _columns_per_page()
+	_current_rows = 0            # buộc `_apply_layout` dựng lại theo khung của layout MỚI
+	_current_card_size = Vector2.ZERO
 	_build_pages()
 	_build_dots()
 	_refresh_header()
@@ -127,6 +150,11 @@ func _rebind_after_orientation() -> void:
 # ---------------------------------------------------------------------------
 func page_count() -> int:
 	return _page_count
+
+
+## Số thẻ tối đa trên 1 trang theo khung hiện tại (3 cột × số hàng vừa khung)
+func page_capacity() -> int:
+	return _cards_per_page()
 
 
 func current_page() -> int:
@@ -161,10 +189,11 @@ func _build_pages() -> void:
 
 	var unlocked := _unlocked_level()
 	var stars_dict := _stars_dict()
+	var next_id := chapter_continue_level()
 	var chapter_seen: Dictionary = {}      # chapter -> số màn đã đếm (để hiện 1-1, 1-2...)
 
 	for page_index in _page_count:
-		var page := PAGE_SCENE.instantiate() as LevelsPage
+		var page := _page_scene().instantiate() as LevelsPage
 		page.name = "Page%d" % (page_index + 1)
 		layout.pages_host.add_child(page)
 
@@ -180,15 +209,18 @@ func _build_pages() -> void:
 			chapter_seen[chapter] = int(chapter_seen.get(chapter, 0)) + 1
 			var rating := int(stars_dict.get(level_id, 0))
 			_add_card(grid, level_id, chapter, int(chapter_seen[chapter]),
-				level_id > unlocked, rating, rating > 0)
+				level_id > unlocked, rating, rating > 0, level_id == next_id)
 
 
 func _add_card(grid: GridContainer, level_id: int, chapter: int, index_in_chapter: int,
-		locked: bool, rating: int, done: bool) -> void:
-	var card: Control = LEVEL_CARD_SCENE.instantiate()
+		locked: bool, rating: int, done: bool, is_next := false) -> void:
+	var card: Control = _card_scene().instantiate()
+	var card_size := _card_size()
+	if card_size != Vector2.ZERO:
+		card.custom_minimum_size = card_size
 	grid.add_child(card)
 	if card.has_method("setup"):
-		card.call("setup", level_id, locked, rating, done, chapter, index_in_chapter)
+		card.call("setup", level_id, locked, rating, done, chapter, index_in_chapter, is_next)
 	elif card.has_method("update_visuals"):
 		card.call("update_visuals")
 	if card.has_signal("selected"):
@@ -337,18 +369,43 @@ func _apply_layout() -> void:
 	if layout.scroll == null or layout.pages_host == null:
 		return
 	var columns := _columns_per_page()
-	if columns != _current_columns:
-		# Bề rộng vùng cuộn đổi (xoay màn hình) -> chia lại trang theo số cột mới
+	var rows := _rows_per_page()
+	var card_size := _card_size()
+	if columns != _current_columns or rows != _current_rows:
+		# Khung cuộn đổi (xoay màn hình / kéo cỡ) -> chia lại trang theo SỐ CỘT × SỐ HÀNG mới
 		_current_columns = columns
+		_current_rows = rows
+		_current_card_size = card_size
 		_build_pages()
 		_build_dots()
 		_refresh_header()
+	elif card_size != _current_card_size:
+		# Chỉ cỡ thẻ đổi chút -> chỉnh cỡ thẻ đang hiện, khỏi dựng lại trang (kéo cỡ mượt)
+		_current_card_size = card_size
+		_apply_card_size(card_size)
 	_page = clampi(_page, 0, maxi(_page_count - 1, 0))
 	_page_width = maxf(layout.scroll.size.x, 1.0)
 	for page in layout.pages_host.get_children():
 		page.custom_minimum_size = Vector2(_page_width, layout.scroll.size.y)
 	_stop_tween()
 	layout.scroll.scroll_horizontal = int(float(_page) * _page_width)
+
+
+## Áp cỡ thẻ mới cho MỌI thẻ đang hiện (không dựng lại trang) — dùng khi cỡ chỉ đổi nhẹ
+func _apply_card_size(size: Vector2) -> void:
+	if size == Vector2.ZERO:
+		return
+	for page in layout.pages_host.get_children():
+		var levels_page := page as LevelsPage
+		if levels_page == null:
+			continue
+		var grid := levels_page.grid()
+		if grid == null:
+			continue
+		for card in grid.get_children():
+			var ctrl := card as Control
+			if ctrl != null:
+				ctrl.custom_minimum_size = size
 
 
 func _go_to_page(index: int, animate := true) -> void:
@@ -477,11 +534,12 @@ func _unhandled_input(event: InputEvent) -> void:
 # ---------------------------------------------------------------------------
 # Header + chọn màn
 # ---------------------------------------------------------------------------
-## Cập nhật số Sao CỦA CHƯƠNG + banner chương + nhãn nút "TIẾP TỤC MÀN {0}"
+## Cập nhật thẻ Tổng Sao + banner chương (thanh tiến độ + %) + nhãn nút "TIẾP TỤC MÀN {0}"
 func _refresh_header() -> void:
 	var chapter := _chapter_data()
 	var own := 0
 	var total := maxi(_level_ids.size(), 1) * 3
+	var stars := _stars_dict()
 	var lm: Node = get_node_or_null("/root/LevelManager")
 	if chapter != null and lm != null and lm.has_method("chapter_stars"):
 		# Số sao hiển thị là sao ĐẠT ĐƯỢC TRONG CHƯƠNG này (trước đây lấy tổng mọi chương
@@ -489,19 +547,35 @@ func _refresh_header() -> void:
 		own = int(lm.call("chapter_stars", chapter.chapter_id))
 		total = maxi(int(lm.call("chapter_star_total", chapter.chapter_id)), 1)
 	else:
-		for value in _stars_dict().values():
+		for value in stars.values():
 			own += int(value)
 
 	if layout.lbl_stars != null:
-		layout.lbl_stars.text = "%d/%d" % [own, total]
+		layout.lbl_stars.text = str(own)
+	if layout.lbl_stars_total != null:
+		layout.lbl_stars_total.text = tr("STR_STARS_TOTAL_FORMAT").format([total])
 	if layout.lbl_chapter != null:
 		var title := chapter_title()
 		if not title.is_empty():
 			layout.lbl_chapter.text = title
+	if layout.lbl_banner_size != null:
+		var size_label := chapter.display_size() if chapter != null else ""
+		layout.lbl_banner_size.visible = not size_label.is_empty()
+		if not size_label.is_empty():
+			layout.lbl_banner_size.text = tr("STR_CHAPTER_SIZE_FORMAT").format([size_label])
+	if layout.lbl_banner_sub != null:
+		var subtitle := chapter.display_subtitle() if chapter != null else ""
+		layout.lbl_banner_sub.visible = not subtitle.is_empty()
+		layout.lbl_banner_sub.text = subtitle
 	_refresh_chapter_banner()
 	if layout.lbl_continue != null:
 		layout.lbl_continue.text = TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE") if chapter_cleared() \
 			else tr("STR_BTN_CONTINUE_LEVEL").format([chapter_continue_level()])
+	if layout.lbl_continue_sub != null:
+		# Dòng 2 của nút: tên chương đang xem (mockup: "CHƯƠNG 1: NHẬP MÔN ›")
+		var chapter_line := chapter_title()
+		layout.lbl_continue_sub.visible = not chapter_line.is_empty()
+		layout.lbl_continue_sub.text = chapter_line if chapter_line.is_empty() else chapter_line + " ›"
 
 
 ## Banner chương: có chương ĐỦ Sao để mở -> đổi sang art "focus" + nhấp nháy + đổi dòng gợi ý
@@ -512,7 +586,9 @@ func _refresh_chapter_banner() -> void:
 	if unlockable != _banner_focus:
 		_banner_focus = unlockable
 		if layout.banner != null:
-			layout.banner.texture = BANNER_FOCUS if unlockable else BANNER_NORMAL
+			# Art banner khai theo TỪNG hướng trong layout; thiếu export thì rơi về art cũ
+			var art: Texture2D = layout.banner_focus if unlockable else layout.banner_normal
+			layout.banner.texture = art if art != null else (BANNER_FOCUS if unlockable else BANNER_NORMAL)
 		if layout.lbl_change_chapter != null:
 			layout.lbl_change_chapter.theme_type_variation = &"LevelsChangeChapterFocus" if unlockable \
 				else &"LevelsChangeChapter"

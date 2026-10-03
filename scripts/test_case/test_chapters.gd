@@ -572,13 +572,32 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 	for level_id in lm.call("levels_in_chapter", 2):
 		chapter_stars[int(level_id)] = 1        # 5 sao thuộc chương 2 (không được cộng vào ô đếm)
 	gm.call("set_chapter", 1)
+	# Mở hết màn để thẻ "MÀN TIẾP" hiện trạng thái FOCUS (thẻ khoá thì không hiện hào quang)
+	gm.set("unlocked_levels", 9)
 	var scene2: LevelScenes = packed.instantiate()
 	root.add_child(scene2)
 	await process_frame
 	await process_frame
-	var count := scene2.ui("Count") as Label
-	_entry(count.text == "24/27",
-		"So Sao theo CHUONG 1 = 24/27 (loi cu: cong ca chuong khac) — nhan '%s'" % count.text)
+	var count := scene2.layout.lbl_stars as Label
+	var count_total := scene2.layout.lbl_stars_total as Label
+	_entry(count.text == "24" and count_total.text.contains("27"),
+		"So Sao theo CHUONG 1 = 24/27 (loi cu: cong ca chuong khac) — nhan '%s%s'"
+			% [count.text, count_total.text])
+	# Thẻ "MÀN TIẾP" (FOCUS): màn nên chơi tiếp = thẻ có hào quang + ruy băng + vạch kẻ CAM
+	var focus_card: LevelCard = null
+	for card in scene2.find_children("*", "LevelCard", true, false):
+		if int(card.get("level_id")) == scene2.chapter_continue_level():
+			focus_card = card
+	_entry(focus_card != null and focus_card.is_next
+			and (focus_card.get("next_halo") as Control).visible
+			and (focus_card.get("next_ribbon") as Control).visible,
+		"Man nen choi tiep (man %d) la the FOCUS: hao quang + ruy bang NEW" % scene2.chapter_continue_level())
+	var focus_sep: Control = focus_card.get("seperator") if focus_card != null else null
+	_entry(focus_sep != null and focus_sep.get("texture") != null
+			and (focus_sep.get("texture") as Texture2D).resource_path.contains("seperator_next"),
+		"The FOCUS doi vach ke sang net dut CAM")
+	_entry((scene2.layout.lbl_chapter as Label).text == scene2.chapter_title(),
+		"Tieu de banner = ten chuong dang xem")
 	_entry(scene2.chapter_continue_level() == 3,
 		"Man tiep theo TRONG chuong 1 = man CHUA dat sao dau tien (3) — nhan %d"
 			% scene2.chapter_continue_level())
@@ -602,7 +621,8 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 	await process_frame
 	await process_frame
 	_entry(scene3.chapter_cleared(), "Chuong 1 da hoan thanh het man")
-	_entry((scene3.ui("Count") as Label).text == "27/27",
+	_entry((scene3.layout.lbl_stars as Label).text == "27"
+			and (scene3.layout.lbl_stars_total as Label).text.contains("27"),
 		"Chuong 1 xong: 27/27 Sao")
 	var cta3 := scene3.ui_child("ContinueButton", "Label") as Label
 	_entry(cta3 != null and cta3.text == TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE"),

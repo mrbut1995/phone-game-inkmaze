@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dydi6np3xsxp0"]
 
-[ext_resource type="Texture2D" path="res://assets/images-png/ranking/tab_normal.png" id="1_art"]
+[ext_resource type="Texture2D" uid="uid://dqapexiqtu5g8" path="res://assets/images-png/ranking/tab_normal.png" id="1_art"]
 [ext_resource type="Script" uid="uid://icpf5ojff2kn" path="res://scripts/nodes/ranking/tab_button.gd" id="1_script"]
 
 [node name="TabButton" type="Button" unique_id=850703946]
@@ -22,12 +22,13 @@ metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.08979592
-anchor_top = 0.23076923
+anchor_top = 0.10576923
 anchor_right = 0.922449
-anchor_bottom = 0.75
+anchor_bottom = 0.875
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"RankTabLabel"
+theme_override_font_sizes/font_size = 14
 text = "TAB"
 horizontal_alignment = 1
 vertical_alignment = 1

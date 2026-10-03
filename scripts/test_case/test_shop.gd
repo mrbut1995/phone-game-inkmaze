@@ -31,6 +31,75 @@ func _ui(scene: Node, path: String) -> Node:
 	return scene.call("ui_path", path)
 
 
+# ---------------------------------------------------------------------------
+# 9. Kéo cỡ cửa sổ (rộng ra rồi VỀ LẠI): khay danh sách phải trở lại đúng ban đầu.
+#    Bẫy đã gặp: khay cuộn để chiều ngang kiểu DISABLED ⇒ khay phình theo bề rộng tối thiểu
+#    của thẻ (thẻ còn cỡ cũ) ⇒ khay rộng ra, thẻ méo cả sau khi thu cửa sổ về.
+# ---------------------------------------------------------------------------
+func _section_9_resize(shop: Node) -> void:
+	print("[9] Keo co cua so roi ve lai...")
+	shop.call("reset_progress")
+	var scene: ShopScene = (load(SCENE_PATH) as PackedScene).instantiate()
+	root.add_child(scene)
+	await process_frame
+	await process_frame
+	var scroll := _layout_ref(scene, "scroll") as ScrollContainer
+	_entry(scroll != null and scroll.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_SHOW_NEVER,
+		"khay danh sach KHONG lay min-size theo noi dung (h_scroll = SHOW_NEVER)")
+	if scroll == null:
+		scene.queue_free()
+		return
+	var base_size := Vector2i(1080, 1920)
+	root.size = base_size
+	await process_frame
+	await process_frame
+	var before := _resize_state(scene)
+	# Kéo RỘNG ra (vẫn dọc, khung nội dung to hơn: canvas 608x920)
+	root.size = Vector2i(1216, 1840)
+	await process_frame
+	await process_frame
+	var wider := _resize_state(scene)
+	_entry(float(wider["scroll_w"]) > float(before["scroll_w"]),
+		"keo rong: khay danh sach rong hon (%.0f -> %.0f)" % [before["scroll_w"], wider["scroll_w"]])
+	# Về lại y như cũ
+	root.size = base_size
+	await process_frame
+	await process_frame
+	var after := _resize_state(scene)
+	_entry(is_equal_approx(after["scroll_w"], before["scroll_w"]),
+		"ve lai: be rong khay tra dung (%.0f = %.0f)" % [after["scroll_w"], before["scroll_w"]])
+	_entry(int(after["columns"]) == int(scene.call("grid_columns")),
+		"ve lai: so cot khop scene (grid=%d · scene=%d)" % [after["columns"], scene.call("grid_columns")])
+	_entry(is_equal_approx(after["card_w"], before["card_w"]),
+		"ve lai: be rong the tra dung (%.0f = %.0f)" % [after["card_w"], before["card_w"]])
+	_entry(is_equal_approx(after["list_w"], before["list_w"]),
+		"ve lai: be rong cot noi dung tra dung (%.0f = %.0f)" % [after["list_w"], before["list_w"]])
+	scene.queue_free()
+	await process_frame
+
+
+## Trạng thái lưới hiện tại (bề rộng khay · cột · bề rộng thẻ đầu · bề rộng cột nội dung)
+func _resize_state(scene: Node) -> Dictionary:
+	var scroll := _layout_ref(scene, "scroll") as Control
+	var grid := _layout_ref(scene, "item_grid") as GridContainer
+	var list := _layout_ref(scene, "list_box") as Control
+	var card_w := 0.0
+	if grid != null and grid.get_child_count() > 0:
+		card_w = (grid.get_child(0) as Control).custom_minimum_size.x
+	return {
+		"scroll_w": scroll.size.x if scroll != null else 0.0,
+		"columns": grid.columns if grid != null else 0,
+		"card_w": card_w,
+		"list_w": list.size.x if list != null else 0.0,
+	}
+
+
+## Node KHAI SẴN của layout đang hiển thị (scroll · list_box · item_grid ...)
+func _layout_ref(scene: Node, name: String) -> Node:
+	var lay: Node = scene.get("layout")
+	return lay.get(name) if lay != null else null
+
+
 func _init() -> void:
 	print("\n========================================================")
 	print("  TEST: %s" % TITLE)
@@ -59,7 +128,7 @@ func _init() -> void:
 	await _section_6_scene(shop, wallet)
 	await _section_7_gestures(shop, wallet)
 	_section_8_wiring()
-
+	await _section_9_resize(shop)
 	# --- Khôi phục dữ liệu người chơi ---
 	shop.call("import_progress", _shop_backup)
 	if wallet != null:

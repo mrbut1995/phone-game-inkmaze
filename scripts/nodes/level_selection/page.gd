@@ -9,6 +9,6 @@ extends Control
 ## ============================================================================
 
 
-## Lưới 3×3 thẻ màn chơi của trang
+## Lưới 3×3 thẻ màn chơi của trang: node `Grid` phủ kín trang (thẻ tự co giãn theo ô).
 func grid() -> GridContainer:
-	return $Grid
+	return get_node_or_null("Grid") as GridContainer

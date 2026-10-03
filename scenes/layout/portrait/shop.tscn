@@ -235,7 +235,7 @@ offset_right = -25.0
 offset_bottom = -201.0
 grow_horizontal = 2
 grow_vertical = 2
-horizontal_scroll_mode = 0
+horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 scroll_deadzone = 12
 

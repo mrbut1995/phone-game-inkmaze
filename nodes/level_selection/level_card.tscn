@@ -11,6 +11,11 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/level_selector/level_card_seperator.png" id="8_jnyni"]
 [ext_resource type="LabelSettings" uid="uid://ceqbsoy3ipfjh" path="res://resources/settings/text/text_stamp.tres" id="8_xwruh"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="9_theme_text"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/level_card_unlocked_next.png" id="10_next"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/level_card_halo.png" id="11_halo"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/level_card_ribbon.png" id="12_ribbon"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/level_card_seperator_next.png" id="13_sep_next"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_locked.png" id="14_star_locked"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jnyni"]
 content_margin_left = 52.0
@@ -64,7 +69,7 @@ texture_margin_bottom = 86.0
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
-[node name="Level" type="Control" unique_id=212139280 node_paths=PackedStringArray("panel_btn", "level_lbl", "lock_icon", "stamp_done", "star1", "star2", "star3")]
+[node name="Level" type="Control" unique_id=212139280 node_paths=PackedStringArray("panel_btn", "prefix_lbl", "level_lbl", "lock_icon", "stamp_done", "seperator", "star1", "star2", "star3", "next_halo", "next_ribbon")]
 layout_mode = 3
 anchor_right = 0.60700005
 anchor_bottom = 0.45800003
@@ -77,12 +82,20 @@ size_flags_vertical = 3
 theme = ExtResource("9_theme_text")
 script = ExtResource("1_066fa")
 panel_btn = NodePath("Panel")
+prefix_lbl = NodePath("Panel/Content/Label")
 level_lbl = NodePath("Panel/Content/Level")
 lock_icon = NodePath("Panel/Lock")
 stamp_done = NodePath("Stamp")
+seperator = NodePath("Panel/Content/Seperator")
 star1 = NodePath("Panel/Content/Rating/RatingStar1")
 star2 = NodePath("Panel/Content/Rating/RatingStar2")
 star3 = NodePath("Panel/Content/Rating/RatingStar3")
+next_halo = NodePath("NextHalo")
+next_ribbon = NodePath("NextRibbon")
+next_card_normal = ExtResource("10_next")
+next_card_pressed = ExtResource("10_next")
+next_seperator = ExtResource("13_sep_next")
+locked_star_art = ExtResource("14_star_locked")
 
 [node name="Panel" type="Button" parent="." unique_id=976011487]
 layout_mode = 1
@@ -246,5 +259,59 @@ vertical_alignment = 1
 resize_font_to_fit = true
 maximum_font_size = 120
 metadata/_edit_use_anchors_ = true
+
+[node name="NextHalo" type="NinePatchRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("11_halo")
+patch_margin_left = 22
+patch_margin_top = 22
+patch_margin_right = 22
+patch_margin_bottom = 22
+
+[node name="NextRibbon" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -47.0
+offset_top = 7.0
+offset_right = -7.0
+offset_bottom = 32.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="NextRibbon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("12_ribbon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="NextRibbon"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.12
+anchor_right = 0.9
+anchor_bottom = 0.62
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 9
+text = "STR_LEVEL_NEW"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="Panel" to="." method="_on_pressed"]

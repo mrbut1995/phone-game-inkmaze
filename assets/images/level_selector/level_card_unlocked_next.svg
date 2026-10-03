@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-14 -14 318 378" width="159" height="189">
+  <defs>
+    <clipPath id="lvlNextClip"><rect width="290" height="350" rx="24" /></clipPath>
+  </defs>
+
+  <g>
+    <g clip-path="url(#lvlNextClip)">
+      <rect width="290" height="350" fill="#FFFDF8" />
+      <path d="M0 90 L290 90 M0 170 L290 170 M0 250 L290 250" stroke="#8FB9D2" stroke-width="1" opacity="0.35" />
+      <line x1="42" y1="0" x2="42" y2="350" stroke="#D84444" stroke-width="2.5" />
+    </g>
+    <rect width="290" height="350" rx="24" fill="none" stroke="#C4843A" stroke-width="4" />
+  </g>
+</svg>

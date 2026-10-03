@@ -2,15 +2,17 @@
 class_name AchTabButton
 extends NinePatchButton
 ## ============================================================================
-## Nút TAB phân loại của Sổ tay thành tựu (nodes/archivements/tab_button.tscn)
+## Nút TAB phân loại của Sổ tay thành tựu — scene `nodes/archivements/tab_button.tscn`:
+## 1 hàng 5 tab (mỗi tab ~67px) nên nút thấp & chữ nhỏ (cao 32 · cỡ chữ 9) cho vừa khay
+## `Sheet/Tabs` (HBox 355px).
 ## Các tab ("" = TẤT CẢ · levels · dungeon · daily · special) được KHAI SẴN trong scene bố cục
-## (`scenes/layout/<hướng>/archivement.tscn` → `Sheet/Tabs/*`), mỗi tab tự khai `category`
+## (`scenes/layout/portrait/archivement.tscn` → `Sheet/Tabs/*`), mỗi tab tự khai `category`
 ## ⇒ script màn KHÔNG dựng tab bằng code nữa (chỉ gom lại: `ArchivementScene._collect_tabs`).
 ## Nhãn do màn cập nhật (`set_label_text`) vì có kèm SỐ LƯỢNG thành tựu đã đạt.
 ## Nút tự nối `pressed` → phát `tab_pressed(category)`.
 ##
 ## Dùng `NinePatchButton` (cắt 9 khúc art) + `size_flags_horizontal = EXPAND` ⇒ tab GIÃN KÍN ô
-## của khay (khay dọc = HBox 5 tab · khay ngang = GridContainer 2 cột) mà không méo góc bo.
+## của khay (HBox 5 tab) mà không méo góc bo.
 ## ============================================================================
 
 const TAB_ACTIVE := preload("res://assets/images-png/archivements/tab_active.png")

@@ -18,21 +18,23 @@ const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_CREDIT := "res://scenes/credit.tscn"
 
+## 2026-10-03: KHÔNG chênh CAO ĐỘ nữa — nhạc phải nghe đúng như bản gốc (người chơi báo
+## vào màn chơi là "nhạc lên cao độ"); chỉ giữ chênh ÂM LƯỢNG nhẹ theo context/theme.
 const CONTEXT_PROFILE := {
 	"menu": {"pitch": 1.0, "gain_db": 0.0},
-	"gameplay": {"pitch": 1.03, "gain_db": -1.25},
-	"credits": {"pitch": 0.95, "gain_db": 0.8},
+	"gameplay": {"pitch": 1.0, "gain_db": -1.25},
+	"credits": {"pitch": 1.0, "gain_db": 0.8},
 }
 
 const THEME_PROFILE := {
 	"theme_gride_4ly": {"pitch": 1.0, "gain_db": 0.0},
-	"theme_blackboard": {"pitch": 0.9, "gain_db": -2.2},
-	"theme_campus": {"pitch": 1.02, "gain_db": 0.2},
-	"theme_bullet": {"pitch": 1.01, "gain_db": 0.1},
-	"theme_tech_grid": {"pitch": 1.06, "gain_db": -0.4},
-	"theme_kraft": {"pitch": 0.96, "gain_db": 0.6},
-	"theme_pastel_caro": {"pitch": 1.08, "gain_db": 0.8},
-	"theme_exam": {"pitch": 1.02, "gain_db": -0.2},
+	"theme_blackboard": {"pitch": 1.0, "gain_db": -2.2},
+	"theme_campus": {"pitch": 1.0, "gain_db": 0.2},
+	"theme_bullet": {"pitch": 1.0, "gain_db": 0.1},
+	"theme_tech_grid": {"pitch": 1.0, "gain_db": -0.4},
+	"theme_kraft": {"pitch": 1.0, "gain_db": 0.6},
+	"theme_pastel_caro": {"pitch": 1.0, "gain_db": 0.8},
+	"theme_exam": {"pitch": 1.0, "gain_db": -0.2},
 }
 
 var _player: AudioStreamPlayer = null

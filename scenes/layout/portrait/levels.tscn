@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_pressed.png" id="10_cont_p"]
 [ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_focus.png" id="11_cont_f"]
 [ext_resource type="Texture2D" path="res://assets/images-png/level_selector/icon_play_triangle.png" id="12_play_icon"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="15_star"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_litip"]
 content_margin_left = 37.0
@@ -120,15 +121,17 @@ _data = {
 &"pulse_continue": SubResource("Animation_levels_pulse_continue_p")
 }
 
-[node name="Portrait" unique_id=589500212 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_stars", "lbl_chapter", "lbl_change_chapter", "banner", "scroll", "pages_host", "dots_box") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=589500212 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_stars", "lbl_stars_total", "lbl_chapter", "lbl_change_chapter", "banner", "scroll", "pages_host", "dots_box") instance=ExtResource("1_parent")]
 script = ExtResource("2_h3psh")
 btn_back = NodePath("Content/InformationArea/TopBar/Back")
 btn_continue = NodePath("Content/InformationArea/ContinueButton")
 lbl_continue = NodePath("Content/InformationArea/ContinueButton/Label")
-lbl_stars = NodePath("Content/InformationArea/StarsCounter/Count")
+lbl_stars = NodePath("Content/InformationArea/StarsCounter/CountRow/Count")
+lbl_stars_total = NodePath("Content/InformationArea/StarsCounter/CountRow/Total")
 lbl_chapter = NodePath("Content/InformationArea/ChapterBanner/TitleContainer/Title")
 lbl_change_chapter = NodePath("Content/InformationArea/ChapterBanner/TitleContainer/ChangeChapter")
 banner = NodePath("Content/InformationArea/ChapterBanner")
+banner_normal = ExtResource("6_banner")
 scroll = NodePath("Content/CardArea/Scroll")
 pages_host = NodePath("Content/CardArea/Scroll/Pages")
 dots_box = NodePath("Content/InformationArea/PaginationDots")
@@ -215,18 +218,42 @@ patch_margin_top = 12
 patch_margin_right = 13
 patch_margin_bottom = 15
 
-[node name="Count" type="Label" parent="Content/InformationArea/StarsCounter" index="0" unique_id=1688571106]
+[node name="CountRow" type="HBoxContainer" parent="Content/InformationArea/StarsCounter" index="0"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.15
+anchor_right = 0.96
+anchor_bottom = 0.85
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Content/InformationArea/StarsCounter/CountRow" index="0"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("15_star")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="Content/InformationArea/StarsCounter/CountRow" index="1"]
+layout_mode = 2
+size_flags_vertical = 4
 theme_type_variation = &"LevelsStarCount"
+theme_override_font_sizes/font_size = 30
 text = "0"
-horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
+
+[node name="Total" type="Label" parent="Content/InformationArea/StarsCounter/CountRow" index="2"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
+theme_override_font_sizes/font_size = 18
+text = "STR_STARS_TOTAL_FORMAT"
+vertical_alignment = 1
 
 [node name="ChapterBanner" type="NinePatchRect" parent="Content/InformationArea" index="2" unique_id=1212751809]
 layout_mode = 1
@@ -248,36 +275,35 @@ patch_margin_right = 16
 patch_margin_bottom = 18
 metadata/_edit_use_anchors_ = true
 
-[node name="TitleContainer" type="VBoxContainer" parent="Content/InformationArea/ChapterBanner" index="0" unique_id=95982347]
+[node name="TitleContainer" type="HBoxContainer" parent="Content/InformationArea/ChapterBanner" index="0" unique_id=95982347]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.16
-anchor_top = 0.2611529
-anchor_right = 0.84
-anchor_bottom = 0.73884714
-offset_left = 0.0669861
-offset_top = -0.000501633
-offset_right = -0.0670166
-offset_bottom = 0.000499725
+anchor_left = 0.076
+anchor_top = 0.32
+anchor_right = 0.966
+anchor_bottom = 0.64
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 12
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="0" unique_id=361920077]
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 theme_type_variation = &"LevelsBannerTitle"
 text = "STR_CHAPTER_1_TITLE"
-horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
 
 [node name="ChangeChapter" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="1" unique_id=2002940200]
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_horizontal = 8
+size_flags_vertical = 4
 theme_type_variation = &"LevelsChangeChapter"
 text = "STR_CHANGE_CHAPTER"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ContinueButton" type="Button" parent="Content/InformationArea" index="3" unique_id=84591377]
