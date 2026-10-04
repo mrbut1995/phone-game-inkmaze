@@ -24,64 +24,74 @@ const STAR_EMPTY := preload("res://assets/images-png/common/star_empty.png")
 const VAR_STATUS_OK := &"PopupStatValueSmGood"
 const VAR_STATUS_FAIL := &"PopupStatValueBad"
 
+## Node binding: khai `node_paths` + `NodePath` trong `gameover_level.tscn`
+@export var label_title: Label = null
+@export var label_subtitle: Label = null
+@export var revive_desc: Label = null
+@export var stamp_count: Label = null
+@export var challenge_count: Label = null
+## Nút "Về Menu" — ẩn trong LUỒNG HỌC LẦN ĐẦU (xem `_on_open`)
+@export var btn_menu: BaseButton = null
+## 3 hàng thử thách cố định theo thiết kế (Row1/2/3 — Star/Name/Status)
+@export var row1_star: TextureRect = null
+@export var row1_name: Label = null
+@export var row1_status: Label = null
+@export var row2_star: TextureRect = null
+@export var row2_name: Label = null
+@export var row2_status: Label = null
+@export var row3_star: TextureRect = null
+@export var row3_name: Label = null
+@export var row3_status: Label = null
+
 
 func _on_open() -> void:
 	# Tiêu đề riêng theo LÝ DO thua: hết đường (Fading Ink / One Stroke) · đi lại ô cũ
 	# (One Stroke) · hết LƯỢT GỬI (Wall Builder)
 	var reason := str(data.get("reason", ""))
 	if reason == "dead_end" or reason == "revisit" or reason == "out_of_submits":
-		var title_node := piece("Title") as Label
-		if title_node != null:
-			match reason:
-				"dead_end":
-					title_node.text = "STR_GAME_OVER_NO_PATH"
-				"revisit":
-					title_node.text = "STR_GAME_OVER_REVISIT"
-				_:
-					title_node.text = "STR_GAME_OVER_OUT_OF_SUBMITS"
+		match reason:
+			"dead_end":
+				label_title.text = "STR_GAME_OVER_NO_PATH"
+			"revisit":
+				label_title.text = "STR_GAME_OVER_REVISIT"
+			_:
+				label_title.text = "STR_GAME_OVER_OUT_OF_SUBMITS"
 
-	var subtitle := piece("Subtitle") as Label
-	if subtitle != null:
-		subtitle.text = tr("STR_GAME_OVER_LEVEL_SUBTITLE").format([int(data.get("progress", 0))])
+	label_subtitle.text = tr("STR_GAME_OVER_LEVEL_SUBTITLE").format([int(data.get("progress", 0))])
 
 	# Chế độ có LƯỢT THỬ LẠI (Fog of War) hoặc LƯỢT GỬI (Wall Builder): nút HỒI SINH
 	# cộng thêm 1 lượt — dòng mô tả lấy theo khoá riêng của chế độ nếu có.
-	var revive_desc := piece("Banner/Desc") as Label
-	if revive_desc != null:
-		var desc_key := str(data.get("revive_desc", ""))
-		if not desc_key.is_empty():
-			revive_desc.text = tr(desc_key)
-		elif int(data.get("max_retries", 0)) > 0:
-			revive_desc.text = tr("STR_REVIVE_DESC_RETRY")
+	var desc_key := str(data.get("revive_desc", ""))
+	if not desc_key.is_empty():
+		revive_desc.text = tr(desc_key)
+	elif int(data.get("max_retries", 0)) > 0:
+		revive_desc.text = tr("STR_REVIVE_DESC_RETRY")
 
 	var rows: Array = data.get("challenges", [])
+	# Gom node ĐÃ BIND của 3 hàng (theo thiết kế cố định) — không dò "Row%d/..." lúc chạy
+	var stars: Array[TextureRect] = [row1_star, row2_star, row3_star]
+	var names: Array[Label] = [row1_name, row2_name, row3_name]
+	var statuses: Array[Label] = [row1_status, row2_status, row3_status]
 	var done := 0
 	for i in COUNT:
 		var row: Dictionary = rows[i] if i < rows.size() else {}
 		var ok := bool(row.get("done", false))
 		if ok:
 			done += 1
-
-		var star := piece("Row%d/Star" % (i + 1)) as TextureRect
-		if star != null:
-			star.texture = STAR_FULL if ok else STAR_EMPTY
-
-		var title := piece("Row%d/Name" % (i + 1)) as Label
-		if title != null and row.has("title"):
-			title.text = str(row.get("title"))
-
-		var status := piece("Row%d/Status" % (i + 1)) as Label
-		if status != null:
-			status.text = str(row.get("status", tr("STR_CHALLENGE_NOT_DONE")))
-			status.theme_type_variation = VAR_STATUS_OK if ok else VAR_STATUS_FAIL
+		stars[i].texture = STAR_FULL if ok else STAR_EMPTY
+		if row.has("title"):
+			names[i].text = str(row.get("title"))
+		statuses[i].text = str(row.get("status", tr("STR_CHALLENGE_NOT_DONE")))
+		statuses[i].theme_type_variation = VAR_STATUS_OK if ok else VAR_STATUS_FAIL
 
 	var count_text := tr("STR_CHALLENGE_COUNT_FORMAT").format([done, COUNT])
-	var stamp_count := piece("StampCount") as Label
-	if stamp_count != null:
-		stamp_count.text = count_text
-	var header_count := piece("ChallengeCount") as Label
-	if header_count != null:
-		header_count.text = count_text
+	stamp_count.text = count_text
+	challenge_count.text = count_text
+
+	# LUỒNG HỌC LẦN ĐẦU (onboarding): KHÔNG cho "Về Menu" (rời luồng giữa chừng) — vẫn giữ
+	# HỒI SINH + THỬ LẠI để chơi tiếp đúng màn của luồng.
+	if btn_menu != null:
+		btn_menu.visible = not bool(data.get("guided", false))
 
 	# Dây 3 nút (Hồi sinh / Menu / Thử lại) khai trong `gameover_level.tscn` (cùng scene)
 

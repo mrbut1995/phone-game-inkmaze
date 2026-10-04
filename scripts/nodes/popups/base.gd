@@ -34,10 +34,11 @@ var _closing := false
 ## sau khi vừa mở lại (bug: popup Game Over "nháy hiện rồi biến mất").
 var _tween: Tween = null
 
-@onready var dim: ColorRect = get_node_or_null("Dim")
-@onready var panel: Control = get_node_or_null("Panel")
-@onready var content: Control = get_node_or_null("Panel/Content")
-@onready var anim_player: AnimationPlayer = get_node_or_null("AnimationPlayer")
+## Node binding: khai `node_paths` + `NodePath` ngay trong scene (.tscn) — mã KHÔNG tự tìm
+## node bằng đường dẫn chuỗi nữa (xem `scripts/scenes/layout/chapters_layout.gd`).
+@export var dim: ColorRect = null
+@export var panel: Control = null
+@export var anim_player: AnimationPlayer = null
 
 # --- Bố cục theo tỉ lệ màn hình ---------------------------------------------
 
@@ -62,23 +63,21 @@ func _notification(what: int) -> void:
 func _apply_canvas_layout() -> void:
 	if not is_inside_tree():
 		return
-	var dim_rect := get_node_or_null("Dim") as Control
-	if dim_rect == null:
+	if dim == null:
 		return
 	# Dim phải phủ TOÀN canvas: giữ nó ở chế độ POSITION (anchors mép 0) — nếu scene để
 	# anchors full-rect thì 2 lệnh gán dưới đây bị hệ anchor GHI ĐÈ (Dim chỉ phủ khung node
 	# cha = CỘT nội dung ⇒ hai bên màn rộng không tối — lỗi Dim của popup Hồ sơ).
-	if dim_rect.anchor_left != 0.0 or dim_rect.anchor_top != 0.0 \
-			or dim_rect.anchor_right != 0.0 or dim_rect.anchor_bottom != 0.0:
-		dim_rect.set_anchors_preset(Control.PRESET_TOP_LEFT, true)
+	if dim.anchor_left != 0.0 or dim.anchor_top != 0.0 \
+			or dim.anchor_right != 0.0 or dim.anchor_bottom != 0.0:
+		dim.set_anchors_preset(Control.PRESET_TOP_LEFT, true)
 	var canvas := get_viewport_rect().size
 	var dim_pos := -global_position
-	if dim_rect.position != dim_pos:
-		dim_rect.position = dim_pos
-	if dim_rect.size != canvas:
-		dim_rect.size = canvas
+	if dim.position != dim_pos:
+		dim.position = dim_pos
+	if dim.size != canvas:
+		dim.size = canvas
 	# Thẻ nội dung: canh giữa theo canvas (bỏ qua offset thiết kế của từng popup)
-	var panel := get_node_or_null("Panel") as Control
 	if panel != null and panel.size.x > 0.0 and panel.size.y > 0.0:
 		var target := Vector2(
 			floorf((canvas.x - panel.size.x) * 0.5) - global_position.x,
@@ -93,15 +92,14 @@ func _apply_canvas_layout() -> void:
 ## scene) vì phần lớn popup là scene ĐỘC LẬP, không kế thừa `base.tscn` — dây
 ## `[connection]` khai trong base.tscn sẽ không tới được chúng.
 func _connect_dim_input() -> void:
-	var dim_rect := get_node_or_null("Dim") as ColorRect
-	if dim_rect == null:
+	if dim == null:
 		return
 	if close_on_outside:
 		# Nền phải HỨNG chuột (STOP) mới nhận được cú bấm ra ngoài;
 		# để IGNORE thì cú bấm xuyên thẳng xuống màn hình phía sau.
-		dim_rect.mouse_filter = Control.MOUSE_FILTER_STOP
-	if not dim_rect.gui_input.is_connected(_on_dim_gui_input):
-		dim_rect.gui_input.connect(_on_dim_gui_input)
+		dim.mouse_filter = Control.MOUSE_FILTER_STOP
+	if not dim.gui_input.is_connected(_on_dim_gui_input):
+		dim.gui_input.connect(_on_dim_gui_input)
 
 
 ## Bấm/chạm vào NỀN MỜ ngoài thẻ popup ⇒ đóng popup (giống bấm Back).
@@ -211,17 +209,7 @@ func _on_opened_anim_done() -> void:
 	pass
 
 
-# --- Tiện ích cho popup con -------------------------------------------------
-
-## Lấy node trong khu vực nội dung trên mảnh giấy.
-## Tìm theo đường dẫn tương đối, nếu không thấy thì tìm sâu theo tên node.
-func piece(path: NodePath) -> Node:
-	var scope: Node = content if content != null else self
-	var node := scope.get_node_or_null(path)
-	if node == null:
-		node = scope.find_child(String(path).get_file(), true, false)
-	return node
-
+# --- Hiệu ứng đóng -----------------------------------------------------------
 
 func _finish_close() -> void:
 	# Trong lúc tween đóng chạy, popup có thể được MỞ LẠI (open) -> không xoá nữa.

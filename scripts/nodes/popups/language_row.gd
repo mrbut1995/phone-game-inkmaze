@@ -10,10 +10,11 @@ extends Button
 
 const FALLBACK_FLAG := preload("res://assets/images-png/icons/flags/flag_generic.png")
 
-@onready var flag: TextureRect = $Flag
-@onready var name_label: Label = $Name
-@onready var sub_label: Label = $Sub
-@onready var check: TextureRect = $Check
+## Node binding: khai `node_paths` + `NodePath` trong `language_row.tscn`
+@export var flag: TextureRect = null
+@export var name_label: Label = null
+@export var sub_label: Label = null
+@export var check: TextureRect = null
 
 
 ## Điền thông tin ngôn ngữ (tên · phụ đề · cờ quốc gia)
@@ -26,5 +27,4 @@ func setup(info: Dictionary, flag_tex: Texture2D) -> void:
 ## Trạng thái đang chọn: nền sáng (StyleBox `pressed`) + dấu tích đỏ
 func set_selected(on: bool) -> void:
 	button_pressed = on
-	if check != null:
-		check.visible = on
+	check.visible = on

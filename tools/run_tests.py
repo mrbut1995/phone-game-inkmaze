@@ -21,6 +21,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 DEFAULT = [
     "test_layout_bindings",
+    "test_popup_bindings",
     "test_full_flow",
     "test_levels_paging",
     "test_main_layout",

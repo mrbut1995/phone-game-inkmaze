@@ -42,6 +42,11 @@ func _ready() -> void:
 func _play_anim(anim_name: StringName, speed: float = 1.0) -> bool:
 	if _anim == null or not _anim.has_animation(anim_name):
 		return false
+	# Đổi animation khi cú RƠI VÀO VÁN (`spawn_drop`) còn dang dở: animation mới (idle/hop/bonk/
+	# demo…) KHÔNG đụng tới `Icon:position` ⇒ Icon kẹt lơ lửng ở -42px (bút "lệch hẳn bên trên").
+	# Nhả Icon về đúng chỗ trước khi chạy animation mới.
+	if anim_name != &"spawn_drop" and _anim.current_animation == &"spawn_drop" and icon != null:
+		icon.position = Vector2.ZERO
 	_anim.speed_scale = speed
 	_anim.play(anim_name)
 	return true
@@ -280,6 +285,9 @@ func stop_demo() -> void:
 	rotation = 0.0
 	scale = Vector2.ONE
 	modulate.a = 1.0
+	# Nhả offset Icon (nếu cú rơi spawn_drop đang dở — xem chú thích `_play_anim`)
+	if icon != null:
+		icon.position = Vector2.ZERO
 	start_idle()
 
 
@@ -309,6 +317,26 @@ func run_to(target_pos: Vector2, move_dir: Vector2 = Vector2.ZERO, duration: flo
 	_move_tween.tween_callback(Callable(self, "_on_run_completed"))
 
 	_play_anim(_hop_anim_for(move_dir), HOP_LENGTH / maxf(duration, 0.01))
+
+
+## Đặt con trỏ về vị trí đích NGAY LẬP TỨC (không nhún), dọn mọi tween di chuyển/
+## trình diễn đang chạy. Dùng khi nét vẽ đã cập nhật tức thì: đầu bút PHẢI trùng cuối
+## nét ngay theo, không được trễ nhịp hop 0.16s (lỗi "bút không nằm ở cuối nét").
+func snap_to(target_pos: Vector2) -> void:
+	_kill_move_tween()
+	_kill_demo_tween()
+	_is_running = false
+	_is_demoing = false
+	position = target_pos
+	rotation = 0.0
+	scale = Vector2.ONE
+	modulate.a = 1.0
+	# Nhả luôn offset Icon (phòng khi cú rơi spawn_drop bị cắt giữa chừng hoặc scene thiếu
+	# AnimationPlayer — xem chú thích `_play_anim`)
+	if icon != null:
+		icon.position = Vector2.ZERO
+	_stop_anim()
+	start_idle()
 
 
 ## Chọn biến thể dáng nhảy theo hướng đi (nghiêng người theo quán tính)

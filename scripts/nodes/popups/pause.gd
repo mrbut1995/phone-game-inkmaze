@@ -11,12 +11,18 @@ signal resume_requested
 signal restart_requested
 signal menu_requested
 
-@onready var slider_music: HSlider = piece("MusicSlider")
-@onready var slider_sfx: HSlider = piece("SfxSlider")
-@onready var label_music: Label = piece("MusicValue")
-@onready var label_sfx: Label = piece("SfxValue")
-@onready var check_haptic: TextureButton = piece("HapticCheck")
-@onready var check_safe: TextureButton = piece("SafeCheck")
+## Node binding: khai `node_paths` + `NodePath` trong `pause.tscn`
+@export var slider_music: HSlider = null
+@export var slider_sfx: HSlider = null
+@export var label_music: Label = null
+@export var label_sfx: Label = null
+@export var check_haptic: TextureButton = null
+@export var check_safe: TextureButton = null
+@export var value_floor: Label = null
+@export var value_steps: Label = null
+## Nút "Chơi lại" + "Về Menu" — ẩn trong LUỒNG HỌC LẦN ĐẦU (xem `_on_open`)
+@export var btn_restart: BaseButton = null
+@export var btn_menu: BaseButton = null
 
 var _syncing := false
 
@@ -28,6 +34,13 @@ func _on_open() -> void:
 	_init_toggle(check_haptic, "vibration")
 	_init_toggle(check_safe, "auto_mark_safe")
 	_refresh_progress()
+	# LUỒNG HỌC LẦN ĐẦU (onboarding): popup tạm dừng chỉ còn "TIẾP TỤC" — ẩn "Chơi lại"
+	# + "Về Menu" để người chơi mới đi đúng trình tự bài học ↔ màn thực hành của luồng.
+	var guided := bool(data.get("guided", false))
+	if btn_restart != null:
+		btn_restart.visible = not guided
+	if btn_menu != null:
+		btn_menu.visible = not guided
 	_syncing = false
 
 	# Dây 3 nút (Tiếp tục / Chơi lại / Menu) + 2 slider + 2 checkbox khai trong `pause.tscn`
@@ -102,13 +115,8 @@ func _refresh_progress() -> void:
 	var steps_max := int(data.get("steps_max", 0))
 	var mode_name := str(data.get("mode_name", "DUNGEON")).to_upper()
 
-	var value_floor := piece("InfoBox/ProgressValue") as Label
-	if value_floor != null:
-		value_floor.text = "%s %02d • %s" % [tr("STR_FLOOR_NUM").format([""]).strip_edges(), floor, mode_name]
-
-	var value_steps := piece("InfoBox/StepsValue") as Label
-	if value_steps != null:
-		value_steps.text = "%d / %d" % [steps_left, steps_max]
+	value_floor.text = "%s %02d • %s" % [tr("STR_FLOOR_NUM").format([""]).strip_edges(), floor, mode_name]
+	value_steps.text = "%d / %d" % [steps_left, steps_max]
 
 
 func _settings() -> Node:

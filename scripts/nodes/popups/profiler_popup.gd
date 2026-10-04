@@ -16,31 +16,18 @@ extends BasePopup
 ## (không điều hướng màn hình).
 ## ============================================================================
 
-## Nội dung hồ sơ (profiler_content) — nhận `owner_popup` khi mở
-@onready var _content: Node = _find_content()
-
-
-## Tìm nội dung hồ sơ trong vùng `Panel/Content` (fallback khi node bị đổi tên)
-func _find_content() -> Node:
-	var direct := get_node_or_null("Panel/Content/Profiler")
-	if direct != null:
-		return direct
-	var holder := get_node_or_null("Panel/Content")
-	if holder != null and holder.get_child_count() > 0:
-		return holder.get_child(0)
-	return null
+## Nội dung hồ sơ (profiler_content) — nhận `owner_popup` khi mở.
+## Binding trong `profiler_popup.tscn` (node `Panel/Content/Profiler`).
+@export var content_node: Node = null
 
 
 func _on_open() -> void:
-	if _content == null:
-		return
 	# Nội dung tự biết đang nằm trong popup nào để nút Back đóng đúng popup này
-	_content.set("owner_popup", self)
-	if _content.has_method("refresh"):
-		_content.call("refresh")
+	content_node.set("owner_popup", self)
+	if content_node.has_method("refresh"):
+		content_node.call("refresh")
 
 	
 ## Nội dung hồ sơ bên trong popup (dùng cho test/dev).
-## Lưu ý: KHÔNG đặt tên `content` vì `BasePopup` đã có biến `content` (= Panel/Content).
 func profiler() -> Node:
-	return _content
+	return content_node

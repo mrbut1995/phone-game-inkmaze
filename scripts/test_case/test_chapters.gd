@@ -671,7 +671,7 @@ func _section_8_win_popup(gm: Node) -> void:
 	end_data["next_available"] = false
 	popup_end.open(end_data)
 	await process_frame
-	var end_label := popup_end.get_node("Panel/Content/NextBtn/Label") as Label
+	var end_label := popup_end.get_node("Panel/Content/Information/Buttons/NextBtn/Label") as Label
 	_entry(end_label.text == TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE"),
 		"Het chuong: nut doi thanh CHON CHUONG ('%s')" % end_label.text)
 	popup_end.queue_free()
@@ -685,7 +685,7 @@ func _section_8_win_popup(gm: Node) -> void:
 	mid_data["next_available"] = true
 	popup_mid.open(mid_data)
 	await process_frame
-	var mid_label := popup_mid.get_node("Panel/Content/NextBtn/Label") as Label
+	var mid_label := popup_mid.get_node("Panel/Content/Information/Buttons/NextBtn/Label") as Label
 	_entry(mid_label.text == TranslationServer.translate("STR_BTN_NEXT_LEVEL"),
 		"Con man trong chuong: nut van la MAN KE TIEP ('%s')" % mid_label.text)
 	var gc_src := FileAccess.get_file_as_string("res://scripts/core/controllers/game_controller.gd")

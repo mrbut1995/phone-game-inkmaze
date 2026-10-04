@@ -103,7 +103,7 @@ func _run(scene: GameScene) -> void:
 	_entry(not bool(gc.get("_floor_finished")), "Ket thuc la THUA (khong tinh la thang man)")
 	_entry(Popups.is_open(Popups.GAME_OVER_LEVEL), "Mo popup THUA (GAME_OVER_LEVEL)")
 	var popup := Popups.get_popup(Popups.GAME_OVER_LEVEL)
-	var desc := popup.get_node_or_null("Panel/Content/Banner/Desc") as Label if popup != null else null
+	var desc := popup.get_node_or_null("Panel/Content/Information/Banner/Desc") as Label if popup != null else null
 	_entry(desc != null and desc.text == tr("STR_REVIVE_DESC_RETRY"),
 		"Dong HỒI SINH noi '+1 LUOT THU' ('%s')" % (desc.text if desc != null else ""))
 

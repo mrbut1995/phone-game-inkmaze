@@ -140,7 +140,7 @@ func _init() -> void:
 			% [floor_before, steps_before, steps_after, bonus])
 
 	# --- 7. Popup thua Dungeon: dòng mô tả nút HỒI SINH hiện đúng số bước của tham số ---
-	var over_popup: Node = (load("res://nodes/popups/gameover.tscn") as PackedScene).instantiate()
+	var over_popup := (load("res://nodes/popups/gameover.tscn") as PackedScene).instantiate() as GameOverPopup
 	root.add_child(over_popup)
 	await process_frame
 	over_popup.call("open", {
@@ -148,7 +148,7 @@ func _init() -> void:
 		"steps_left": 0, "steps_max": 15, "revive_steps": 8,
 	})
 	await process_frame
-	var desc := over_popup.call("piece", "Banner/Desc") as Label
+	var desc := over_popup.revive_desc
 	if desc == null or not desc.text.contains("8"):
 		print("[FAIL] Dong mo ta nut HOI SINH phai hien so buoc 8 (dang la '%s')"
 			% (desc.text if desc != null else "<null>"))

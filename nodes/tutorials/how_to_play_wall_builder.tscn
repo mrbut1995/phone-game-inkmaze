@@ -1,34 +1,30 @@
-[gd_scene load_steps=7 format=3 uid="uid://bwallbuilder001"]
+[gd_scene format=3 uid="uid://c1u4mqdfjbe6s"]
 
 [ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
-[ext_resource type="Script" path="res://scripts/nodes/tutorial/how_to_play_wall_builder.gd" id="2_script"]
-[ext_resource type="PackedScene" uid="uid://btutorialboard01" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
-[ext_resource type="Script" path="res://scripts/resources/blueprint_step.gd" id="4_step"]
+[ext_resource type="Script" uid="uid://btuemf5ie7qd0" path="res://scripts/nodes/tutorial/how_to_play_wall_builder.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://334hk6vbotgi" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
+[ext_resource type="Script" uid="uid://b5k5fxlkk626p" path="res://scripts/resources/blueprint_step.gd" id="4_step"]
 
 [sub_resource type="Resource" id="Resource_01"]
 script = ExtResource("4_step")
 message_key = "STR_TUT_WB_01"
 fallback_text = "Chế độ này không di chuyển — bạn sẽ TỰ VẼ TƯỜNG để khớp với các con số."
-advance_mode = "MANUAL"
 
 [sub_resource type="Resource" id="Resource_02"]
 script = ExtResource("4_step")
 message_key = "STR_TUT_WB_02"
 fallback_text = "Mỗi con số là số tường cần có quanh ô đó — từ 0 tới 4."
-advance_mode = "MANUAL"
 spotlight_cell = Vector2i(0, 0)
 
 [sub_resource type="Resource" id="Resource_03"]
 script = ExtResource("4_step")
 message_key = "STR_TUT_WB_03"
 fallback_text = "Chạm vào các cặp điểm neo liền kề để bật đoạn tường."
-advance_mode = "MANUAL"
 
 [sub_resource type="Resource" id="Resource_04"]
 script = ExtResource("4_step")
 message_key = "STR_TUT_WB_04"
 fallback_text = "Khung đếm phía trên cho biết bạn cần vẽ bao nhiêu đoạn tường."
-advance_mode = "MANUAL"
 spotlight_node = NodePath("BoardHost/HudPanel")
 
 [sub_resource type="Resource" id="Resource_05"]
@@ -42,7 +38,6 @@ required_action = "SUBMIT"
 script = ExtResource("4_step")
 message_key = "STR_TUT_WB_06"
 fallback_text = "Chính xác! Mọi con số đã khớp hết rồi."
-advance_mode = "MANUAL"
 
 [sub_resource type="StyleBoxFlat" id="hud_pill"]
 content_margin_left = 16.0
@@ -80,14 +75,23 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[node name="HowToPlayWallBuilder" node_paths=PackedStringArray("board_tutorial", "lbl_hud_counter", "btn_submit") instance=ExtResource("1_base")]
+[node name="HowToPlayWallBuilder" unique_id=274584885 node_paths=PackedStringArray("board_tutorial", "lbl_hud_counter", "btn_submit") instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 board_tutorial = NodePath("BoardHost/BoardTutorial")
 lbl_hud_counter = NodePath("BoardHost/HudPanel/CountLabel")
 btn_submit = NodePath("BoardHost/BtnSubmit")
-blueprint_steps = [SubResource("Resource_01"), SubResource("Resource_02"), SubResource("Resource_03"), SubResource("Resource_04"), SubResource("Resource_05"), SubResource("Resource_06")]
+blueprint_steps = Array[ExtResource("4_step")]([SubResource("Resource_01"), SubResource("Resource_02"), SubResource("Resource_03"), SubResource("Resource_04"), SubResource("Resource_05"), SubResource("Resource_06")])
 
-[node name="HudPanel" type="PanelContainer" parent="BoardHost" index="0"]
+[node name="Spotlight" parent="." index="1" unique_id=393074664]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.119
+anchor_bottom = 0.07
+offset_right = -0.26000214
+offset_bottom = -0.40000153
+metadata/_edit_use_anchors_ = true
+
+[node name="HudPanel" type="PanelContainer" parent="BoardHost" parent_id_path=PackedInt32Array(1982948136) index="0" unique_id=384837282]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -100,7 +104,7 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("hud_pill")
 
-[node name="CountLabel" type="Label" parent="BoardHost/HudPanel" index="0"]
+[node name="CountLabel" type="Label" parent="BoardHost/HudPanel" index="0" unique_id=1081605609]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.18, 0.22, 0.26, 1)
 theme_override_font_sizes/font_size = 15
@@ -108,7 +112,7 @@ text = "Đã vẽ: 0 / 2 đoạn"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BoardTutorial" parent="BoardHost" index="1" instance=ExtResource("3_board")]
+[node name="BoardTutorial" parent="BoardHost" parent_id_path=PackedInt32Array(1982948136) index="1" unique_id=1652687325 instance=ExtResource("3_board")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -119,10 +123,8 @@ offset_left = -160.0
 offset_top = -145.0
 offset_right = 160.0
 offset_bottom = 155.0
-grow_horizontal = 2
-grow_vertical = 2
 
-[node name="BtnSubmit" type="Button" parent="BoardHost" index="2"]
+[node name="BtnSubmit" type="Button" parent="BoardHost" parent_id_path=PackedInt32Array(1982948136) index="2" unique_id=167411659]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -142,5 +144,5 @@ theme_override_styles/normal = SubResource("submit_pill")
 theme_override_styles/hover = SubResource("submit_pill_hover")
 text = "STR_TOOL_SUBMIT"
 
-[connection signal="pressed" from="BoardHost/BtnSubmit" to="." method="_on_submit_pressed"]
 [connection signal="wall_toggled" from="BoardHost/BoardTutorial" to="." method="_on_wall_toggled"]
+[connection signal="pressed" from="BoardHost/BtnSubmit" to="." method="_on_submit_pressed"]

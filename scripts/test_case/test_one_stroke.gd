@@ -194,8 +194,8 @@ func _run(scene: GameScene) -> void:
 		_entry(not bool(gc.get("_run_active")), "Di lai o cu -> van ket thuc ngay")
 		_entry(not bool(gc.get("_floor_finished")), "Ket thuc do di lai o cu la THUA (khong phai thang)")
 		_entry(Popups.is_open(Popups.GAME_OVER_LEVEL), "Mo popup THUA (GAME_OVER_LEVEL)")
-		var popup := Popups.get_popup(Popups.GAME_OVER_LEVEL)
-		var title := popup.piece("Title") as Label if popup != null else null
+		var popup := Popups.get_popup(Popups.GAME_OVER_LEVEL) as GameOverLevelPopup
+		var title: Label = popup.label_title if popup != null else null
 		_entry(title != null and title.text == "STR_GAME_OVER_REVISIT",
 			"Popup thua hien tieu de 'DI LAI O CU!' ('%s')" % _text_of(title))
 

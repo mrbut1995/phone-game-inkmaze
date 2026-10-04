@@ -194,11 +194,11 @@ func _run(scene: GameScene) -> void:
 	_entry(mode.retries_left == 0, "GUI SAI lan 3 -> het LUOT GUI (%d)" % mode.retries_left)
 	_entry(not bool(gc.get("_run_active")), "Het luot gui -> van ket thuc")
 	_entry(Popups.is_open(Popups.GAME_OVER_LEVEL), "Mo popup THUA (GAME_OVER_LEVEL)")
-	var popup := Popups.get_popup(Popups.GAME_OVER_LEVEL)
-	var title := popup.piece("Title") as Label if popup != null else null
+	var popup := Popups.get_popup(Popups.GAME_OVER_LEVEL) as GameOverLevelPopup
+	var title: Label = popup.label_title if popup != null else null
 	_entry(title != null and title.text == "STR_GAME_OVER_OUT_OF_SUBMITS",
 		"Popup thua hien tieu de 'HET LUOT GUI!' ('%s')" % _text_of(title))
-	var desc := popup.piece("Banner/Desc") as Label if popup != null else null
+	var desc: Label = popup.revive_desc if popup != null else null
 	_entry(desc != null and desc.text == tr("STR_REVIVE_DESC_SUBMIT"),
 		"Dong HOI SINH noi '+1 LUOT GUI' ('%s')" % _text_of(desc))
 

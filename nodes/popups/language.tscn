@@ -34,7 +34,7 @@ texture_margin_top = 12
 texture_margin_right = 16
 texture_margin_bottom = 12
 
-[node name="Base" type="Control" unique_id=1015568792]
+[node name="Base" type="Control" unique_id=1015568792 node_paths=PackedStringArray("dim", "panel", "list", "scroll")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,6 +43,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_script")
+dim = NodePath("Dim")
+panel = NodePath("Panel")
+list = NodePath("Panel/Content/Scroll/List")
+scroll = NodePath("Panel/Content/Scroll")
 
 [node name="Dim" type="ColorRect" parent="." unique_id=1194060954]
 layout_mode = 1

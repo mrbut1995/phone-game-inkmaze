@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/profiler/card_item_pressed.png" id="17_item_p"]
 [ext_resource type="Texture2D" path="res://assets/images-png/profiler/card_item_focus.png" id="18_item_f"]
 
-[node name="EditProfileItem" type="TextureButton"]
+[node name="EditProfileItem" type="TextureButton" node_paths=PackedStringArray("selected_bg", "icon", "frame", "lock_icon", "check", "name_label", "state_bg", "state_label", "price_chip", "price_text")]
 custom_minimum_size = Vector2(100, 105)
 offset_right = 100.0
 offset_bottom = 105.0
@@ -31,6 +31,16 @@ texture_focused = ExtResource("18_item_f")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_item")
+selected_bg = NodePath("Selected")
+icon = NodePath("Disc/Icon")
+frame = NodePath("Disc/Frame")
+lock_icon = NodePath("Disc/LockIcon")
+check = NodePath("Check")
+name_label = NodePath("Name")
+state_bg = NodePath("StateBg")
+state_label = NodePath("State")
+price_chip = NodePath("PriceChip")
+price_text = NodePath("PriceChip/Text")
 
 [node name="Selected" type="NinePatchRect" parent="."]
 visible = false
