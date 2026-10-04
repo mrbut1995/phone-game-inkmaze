@@ -126,7 +126,7 @@ _data = {
 [node name="Landscape" unique_id=569217120 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_continue_sub", "lbl_stars", "lbl_stars_total", "lbl_chapter", "lbl_change_chapter", "lbl_banner_size", "lbl_banner_sub", "banner", "scroll", "pages_host", "dots_box") instance=ExtResource("1_parent")]
 script = ExtResource("2_nkhig")
 btn_back = NodePath("Content/InformationArea/TopBar/Back")
-btn_continue = NodePath("")
+btn_continue = NodePath("Content/InformationArea/ContinueButton")
 lbl_continue = NodePath("Content/InformationArea/ContinueButton/Label")
 lbl_continue_sub = NodePath("Content/InformationArea/ContinueButton/Sub")
 lbl_stars = NodePath("Content/InformationArea/StarsCard/CountRow/Count")
