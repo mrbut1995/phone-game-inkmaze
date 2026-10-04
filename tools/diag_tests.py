@@ -10,10 +10,13 @@ import re
 import subprocess
 import sys
 
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8")
+import os
 
-GODOT = r"D:\Godots\app dev\Godot_v4.7.2-stable_win64.exe\Godot_v4.7.2-stable_win64_console.exe"
+_DEFAULT_GODOT_CANDIDATES = [
+    r"D:\Godots\app dev\Godot Source Code\godot\bin\godot.windows.editor.x86_64.console.exe",
+    r"D:\Godots\app dev\Godot_v4.7.2-stable_win64.exe\Godot_v4.7.2-stable_win64_console.exe",
+]
+GODOT = next((p for p in _DEFAULT_GODOT_CANDIDATES if os.path.exists(p)), _DEFAULT_GODOT_CANDIDATES[0])
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 

@@ -1,37 +1,36 @@
 class_name HowToPlayCheckingWallTutorial
-extends BaseTutorial
+extends BaseInteractivePathTutorial
 
 ## ============================================================================
 ## HowToPlayCheckingWallTutorial: Đọc số & suy luận tường vô hình (Planning.md §3.3)
 ## Dùng BoardTutorial kế thừa BoardView thật: bàn 2×2, tường ẩn giữa (0,0) và (1,0).
+## Kế thừa BaseInteractivePathTutorial (SOLID - OCP/SRP).
 ## ============================================================================
 
-@export var board_tutorial: BoardTutorial = null
-
-var _current_cell: Vector2i = Vector2i(0, 0)
-var _visited_cells: Array[Vector2i] = []
-
+const START_POS := Vector2i(0, 0)
+const FINISH_POS := Vector2i(1, 1)
 const WALL_LATTICE := Vector2i(1, 0)
 
 
 func _init_tutorial() -> void:
 	tutorial_id = "how_to_play_checking_wall"
+	_start_cell = START_POS
+	_goal_cell = FINISH_POS
 	if board_tutorial != null:
 		board_tutorial.setup_tutorial(
 			2, 2,
 			{
-				Vector2i(0, 0): "S",
+				START_POS: "S",
 				Vector2i(1, 0): "1",
 				Vector2i(0, 1): "0",
-				Vector2i(1, 1): "F"
+				FINISH_POS: "F"
 			},
 			[{"is_h": false, "lattice": WALL_LATTICE, "visible": false}],
 			true,
-			Vector2i(0, 0),
-			Vector2i(1, 1)
+			START_POS,
+			FINISH_POS
 		)
-		# Dây `cell_step_attempted → _on_cell_step_attempted` khai trong `.tscn` (cùng scene)
-	_reset_path()
+	reset_path()
 
 
 func _get_default_steps() -> Array:
@@ -40,7 +39,7 @@ func _get_default_steps() -> Array:
 			"message_key": "STR_TUT_WALL_01",
 			"fallback_text": "Con số trên mỗi ô cho biết có BAO NHIÊU cạnh quanh ô đó là tường vô hình.",
 			"advance_mode": "MANUAL",
-			"spotlight_cell": Vector2i(0, 0)
+			"spotlight_cell": START_POS
 		},
 		{
 			"message_key": "STR_TUT_WALL_02",
@@ -66,60 +65,39 @@ func _get_default_steps() -> Array:
 	]
 
 
-func _reset_path() -> void:
-	_visited_cells = [Vector2i(0, 0)]
-	_current_cell = Vector2i(0, 0)
-	if board_tutorial != null:
-		board_tutorial.set_path(_visited_cells)
-		board_tutorial.set_player_cell(Vector2i(0, 0), false)
-
-
 func _on_step_entered(index: int, _data: Dictionary) -> void:
-	if index == 0:
-		_reset_path()
+	match index:
+		0:
+			reset_path()
+			if board_tutorial != null:
+				board_tutorial.reveal_wall_segment(false, WALL_LATTICE, false)
+		1:
+			if board_tutorial != null:
+				board_tutorial.reveal_wall_segment(false, WALL_LATTICE, true)
+		2:
+			reset_path()
+			if board_tutorial != null:
+				board_tutorial.reveal_wall_segment(false, WALL_LATTICE, false)
+
+
+func _is_input_allowed_at_step(step_idx: int) -> bool:
+	return step_idx == 2
+
+
+func _can_step_to(from_cell: Vector2i, to_cell: Vector2i) -> bool:
+	# Kiểm tra đâm vào tường ẩn giữa (0,0) và (1,0)
+	if (from_cell == Vector2i(0, 0) and to_cell == Vector2i(1, 0)) or \
+	   (from_cell == Vector2i(1, 0) and to_cell == Vector2i(0, 0)):
 		if board_tutorial != null:
-			board_tutorial.reveal_wall_segment(false, WALL_LATTICE, false)
-	elif index == 1:
-		if board_tutorial != null:
-			board_tutorial.reveal_wall_segment(false, WALL_LATTICE, true)
-	elif index == 2:
-		_reset_path()
-		if board_tutorial != null:
-			board_tutorial.reveal_wall_segment(false, WALL_LATTICE, false)
-
-
-func _on_cell_step_attempted(next: Vector2i) -> void:
-	if current_step_index != 2:
-		return
-	_try_step_to(next)
-
-
-func _try_step_to(next: Vector2i) -> void:
-	var diff: Vector2i = next - _current_cell
-	if absi(diff.x) + absi(diff.y) != 1:
-		show_fail_feedback("STR_TUT_MOVE_FAIL_01", "Chỉ đi được sang ô NGAY BÊN CẠNH!")
-		return
-
-	# Kiểm tra đâm vào tường giữa (0,0) và (1,0)
-	if (_current_cell == Vector2i(0, 0) and next == Vector2i(1, 0)) or \
-		(_current_cell == Vector2i(1, 0) and next == Vector2i(0, 0)):
-		if board_tutorial != null:
-			board_tutorial.show_wall_hit_at(_current_cell, next)
+			board_tutorial.show_wall_hit_at(from_cell, to_cell)
 		show_fail_feedback("STR_TUT_WALL_FAIL_01", "Ối, đó là tường rồi! Thử hướng khác xem.")
-		return
+		return false
+	return true
 
-	_current_cell = next
-	_visited_cells.append(next)
+
+func _on_goal_reached(next: Vector2i) -> void:
+	play_cells_win()
 	if board_tutorial != null:
-		board_tutorial.set_path(_visited_cells)
-		board_tutorial.set_player_cell(next, true)
-		var c := board_tutorial.get_cell(next)
-		if c != null:
-			c.play_step()
-
-	if next == Vector2i(1, 1):
-		play_cells_win()
-		if board_tutorial != null:
-			spawn_board_text("✓", board_tutorial.get_cell_center(next))
-		show_success_feedback("STR_TUT_WALL_04", "Chính xác!")
-		show_step(3)
+		spawn_board_text("✓", board_tutorial.get_cell_center(next))
+	show_success_feedback("STR_TUT_WALL_04", "Chính xác!")
+	show_step(3)

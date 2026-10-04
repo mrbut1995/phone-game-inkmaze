@@ -1,40 +1,39 @@
 class_name HowToPlayOneStrokeTutorial
-extends BaseTutorial
+extends BaseInteractivePathTutorial
 
 ## ============================================================================
 ## HowToPlayOneStrokeTutorial: Chế độ Một Nét (Planning.md §3.6)
 ## Bàn mini 3×3, không hiện số. Đi qua TẤT CẢ 9 ô, mỗi ô ĐÚNG 1 lần, kết thúc ở F (2,0).
+## Kế thừa BaseInteractivePathTutorial (SOLID - OCP/SRP).
 ## ============================================================================
 
-@export var board_tutorial: BoardTutorial = null
-
-var _current_cell: Vector2i = Vector2i(0, 0)
-var _visited_cells: Array[Vector2i] = []
-var _fail_demo_running: bool = false
-
-const TOTAL_CELLS := 9
+const START_POS := Vector2i(0, 0)
 const FINISH_POS := Vector2i(2, 0)
+const TOTAL_CELLS := 9
+
+var _demo_tween: Tween = null
 
 
 func _init_tutorial() -> void:
 	tutorial_id = "how_to_play_one_stroke"
+	_start_cell = START_POS
+	_goal_cell = FINISH_POS
 	if board_tutorial != null:
 		var cells_map: Dictionary = {}
 		for y in 3:
 			for x in 3:
 				cells_map[Vector2i(x, y)] = ""
-		cells_map[Vector2i(0, 0)] = "S"
+		cells_map[START_POS] = "S"
 		cells_map[FINISH_POS] = "F"
 		board_tutorial.setup_tutorial(
 			3, 3,
 			cells_map,
 			[],
 			true,
-			Vector2i(0, 0),
+			START_POS,
 			FINISH_POS
 		)
-		# Dây `cell_step_attempted → _on_cell_step_attempted` khai trong `.tscn` (cùng scene)
-	_reset_board_state()
+	reset_path()
 
 
 func _get_default_steps() -> Array:
@@ -68,12 +67,8 @@ func _get_default_steps() -> Array:
 	]
 
 
-func _reset_board_state() -> void:
-	_visited_cells = [Vector2i(0, 0)]
-	_current_cell = Vector2i(0, 0)
-	if board_tutorial != null:
-		board_tutorial.set_path(_visited_cells)
-		board_tutorial.set_player_cell(Vector2i(0, 0), false)
+func reset_path(start_pos: Vector2i = _start_cell, update_board: bool = true) -> void:
+	super.reset_path(start_pos, update_board)
 	_update_cell_colors()
 
 
@@ -89,14 +84,22 @@ func _update_cell_colors() -> void:
 
 
 func _on_step_entered(index: int, _data: Dictionary) -> void:
-	_fail_demo_running = false
+	_stop_demo()
 	match index:
 		1:
 			_show_full_path_demo()
 		2:
 			_show_fail_demo()
 		3:
-			_reset_board_state()
+			reset_path()
+
+
+func _stop_demo() -> void:
+	if _demo_tween != null and _demo_tween.is_valid():
+		_demo_tween.kill()
+		_demo_tween = null
+	if board_tutorial != null:
+		board_tutorial.stop_cursor_animation()
 
 
 ## Demo step 1: cursor đi qua toàn bộ 9 ô theo đường Hamiltonian S→F, lặp
@@ -117,11 +120,10 @@ func _show_full_path_demo() -> void:
 	board_tutorial.animate_cursor_path(full_path, 0.42)
 
 
-## Demo step 2: cursor thử đi đè lên ô đã đi rồi bị bật ngược, lặp mỗi 2.5s
+## Demo step 2: cursor thử đi đè lên ô đã đi rồi bị bật ngược
 func _show_fail_demo() -> void:
 	if board_tutorial == null:
 		return
-	_fail_demo_running = true
 	var partial_path: Array[Vector2i] = [
 		Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1),
 	]
@@ -137,67 +139,75 @@ func _show_fail_demo() -> void:
 
 
 func _run_fail_demo_cycle() -> void:
-	if not _fail_demo_running or current_step_index != 2 or not is_inside_tree():
+	if current_step_index != 2 or not is_inside_tree() or board_tutorial == null:
 		return
-	if board_tutorial == null:
-		return
-	# Cursor bật ngược khỏi ô (0,0) đã đi
 	board_tutorial.animate_cursor_fail_attempt(Vector2i(0, 1), Vector2i(0, 0))
-	# Flash ô bị cấm sau khi cursor chạm (~0.26s)
-	get_tree().create_timer(0.26).timeout.connect(func() -> void:
-		if not _fail_demo_running or current_step_index != 2:
+
+	_demo_tween = create_tween()
+	_demo_tween.tween_interval(0.26)
+	_demo_tween.tween_callback(func() -> void:
+		if current_step_index != 2 or board_tutorial == null:
 			return
 		var cell := board_tutorial.get_cell(Vector2i(0, 0))
 		if cell != null:
 			cell.play_fail()
 		show_fail_feedback("STR_TUT_ONE_FAIL_01", "Ô này đi qua rồi! Chọn ô khác thử xem.")
 	)
-	# Lặp chu kỳ tiếp theo
-	get_tree().create_timer(2.5).timeout.connect(_run_fail_demo_cycle)
+	_demo_tween.tween_interval(2.24)
+	_demo_tween.tween_callback(_run_fail_demo_cycle)
 
 
-func _on_cell_step_attempted(next: Vector2i) -> void:
-	if current_step_index != 3:
-		return
-	_try_step_to(next)
+func _is_input_allowed_at_step(step_idx: int) -> bool:
+	return step_idx == 3
 
 
-func _try_step_to(next: Vector2i) -> void:
-	var diff: Vector2i = next - _current_cell
-	if absi(diff.x) + absi(diff.y) != 1:
-		show_fail_feedback("STR_TUT_MOVE_FAIL_01", "Chỉ đi được sang ô NGAY BÊN CẠNH!")
-		return
-
+func _can_step_to(_from_cell: Vector2i, to_cell: Vector2i) -> bool:
 	# Không được đi đè lên ô đã đi
-	if _visited_cells.has(next):
+	if _visited_cells.has(to_cell):
 		show_fail_feedback("STR_TUT_ONE_FAIL_01", "Ô này đi qua rồi! Chọn ô khác thử xem.")
 		if board_tutorial != null:
-			var visited_cell := board_tutorial.get_cell(next)
+			var visited_cell := board_tutorial.get_cell(to_cell)
 			if visited_cell != null:
 				visited_cell.play_fail()
-		return
+		return false
 
 	# Chạm F nhưng chưa đi hết mọi ô
-	if next == FINISH_POS and _visited_cells.size() < TOTAL_CELLS - 1:
+	if to_cell == FINISH_POS and _visited_cells.size() < TOTAL_CELLS - 1:
 		show_fail_feedback("STR_TUT_ONE_FAIL_02", "Còn ô chưa đi kìa — F chỉ mở khi bạn đã đi hết cả bàn!")
 		if board_tutorial != null:
-			var finish_cell := board_tutorial.get_cell(next)
+			var finish_cell := board_tutorial.get_cell(to_cell)
 			if finish_cell != null:
 				finish_cell.play_fail()
-			spawn_board_text("…", board_tutorial.get_cell_center(next), Color(0.2, 0.33, 0.47))
-		return
+			spawn_board_text("…", board_tutorial.get_cell_center(to_cell), Color(0.2, 0.33, 0.47))
+		return false
 
-	_current_cell = next
-	_visited_cells.append(next)
-	if board_tutorial != null:
-		board_tutorial.set_path(_visited_cells)
-		board_tutorial.set_player_cell(next, true)
-		var c := board_tutorial.get_cell(next)
-		if c != null:
-			c.play_step()
+	return true
+
+
+func _on_step_succeeded(_next: Vector2i, _is_first_time: bool) -> void:
 	_update_cell_colors()
 
-	if next == FINISH_POS and _visited_cells.size() == TOTAL_CELLS:
-		play_cells_win()
-		show_success_feedback("STR_TUT_ONE_05", "Tuyệt vời! Bạn vừa hoàn thành một nét.")
-		show_step(4)
+
+func _is_goal_reached(next: Vector2i) -> bool:
+	return next == FINISH_POS and _visited_cells.size() == TOTAL_CELLS
+
+
+func _on_goal_reached(_next: Vector2i) -> void:
+	play_cells_win()
+	show_success_feedback("STR_TUT_ONE_05", "Tuyệt vời! Bạn vừa hoàn thành một nét.")
+	show_step(4)
+
+
+func complete_tutorial() -> void:
+	_stop_demo()
+	super.complete_tutorial()
+
+
+func skip_tutorial() -> void:
+	_stop_demo()
+	super.skip_tutorial()
+
+
+func skip_all_tutorials() -> void:
+	_stop_demo()
+	super.skip_all_tutorials()
