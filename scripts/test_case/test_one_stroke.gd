@@ -142,20 +142,16 @@ func _run(scene: GameScene) -> void:
 	else:
 		_entry(false, "Tim duoc o ke F de thu chan")
 
-	# --- 7. HUD ---
+	# --- 7. HUD (2026-09-27: One Stroke CHỈ hiện THỜI GIAN — bảng "TIẾN ĐỘ PHỦ KÍN" đã gỡ) ---
 	if hud != null:
 		hud.update_hud({"mode": mode})
-		var value := hud.get_node_or_null("Sheet/Cover/CoverValue") as Label
-		var max_lbl := hud.get_node_or_null("Sheet/Cover/CoverMax") as Label
-		var note := hud.get_node_or_null("Sheet/Cover/CoverNote") as Label
-		var chip := hud.get_node_or_null("Sheet/Row1/ChipLabel") as Label
-		var clip := hud.get_node_or_null("Sheet/Row2/SliderFillClip") as Control
-		_entry(value != null and value.text == "1", "HUD: so o da phu = 1 ('%s')" % _text_of(value))
-		_entry(max_lbl != null and max_lbl.text == "/9 Ô", "HUD: tong 9 o ('%s')" % _text_of(max_lbl))
-		_entry(note != null and note.text == "CÒN LẠI 8 Ô", "HUD: con lai 8 o ('%s')" % _text_of(note))
-		_entry(chip != null and chip.text == "11% KÍN", "HUD: chip phan tram kin ('%s')" % _text_of(chip))
-		_entry(clip != null and absf(clip.size.x - 410.0 / 9.0) < 0.6,
-			"HUD: thanh tien do = 1/9 be ngang (%.1f)" % (clip.size.x if clip != null else -1.0))
+		var time_card := hud.find_child("Time", true, false) as Control
+		var time_val := time_card.get_node_or_null("Value") as Label if time_card != null else null
+		_entry(time_card != null and time_card.visible, "HUD: co the THOI GIAN")
+		_entry(time_val != null and not time_val.text.is_empty(),
+			"HUD: the THOI GIAN hien gia tri ('%s')" % _text_of(time_val))
+		_entry(hud.find_child("Sheet", true, false) == null,
+			"HUD: da go bang TIEN DO PHU KIN (chi con THOI GIAN)")
 	# Thanh hanh dong (2026-09-26): nut Tool/Wall cu da BO — chi con CHƠI LẠI · UNDO · HINT
 	_entry(scene.submit_btn != null and not (scene.submit_btn as BaseButton).visible,
 		"Che do khac Wall Builder thi nut GUI BAI AN")

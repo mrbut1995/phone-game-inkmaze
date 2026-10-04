@@ -498,7 +498,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	# Mua thật qua nút trên thẻ: mua gói 500 Xu rồi ví phải tăng
 	if pack_tile != null:
 		var before_coins := int(shop.call("coins"))
-		(pack_tile.get_node("Panel/Action") as TextureButton).pressed.emit()
+		(pack_tile.get_node("Panel/Action") as BaseButton).pressed.emit()
 		await process_frame
 		await process_frame
 		_entry(int(shop.call("coins")) == before_coins + 500,

@@ -1,31 +1,35 @@
 extends SceneTree
 ## ============================================================================
-## Test Case: HUD THEO CHẾ ĐỘ (thiết kế mới) + PANEL HINT GUIDE — 2026-02
+## Test Case: HUD THEO CHẾ ĐỘ (thiết kế "chỉ hiện thứ cần thiết" 2026-09-27) + PANEL HINT GUIDE
 ##
-## 1. Hint Guide: có trong scenes/game.tscn, đổi nội dung theo chế độ,
-##    không rỗng và VỪA 1 DÒNG (đo bằng font thật của theme).
-## 2. SumPathHUD: đủ node mới (Time/Sum/Operator/Target/Bar), thanh tiến độ đúng tỉ lệ,
-##    chip "CẦN THÊM / CÒN ĐƯỢC / ĐẠT VƯỢT / ĐÃ ĐỦ" theo toán tử.
-## 3. CountdownHUD: ngân sách còn/tổng, đã tiêu, dải phân đoạn = đúng số bước + đổi màu,
-##    chip giá cước theo độ khó (easy ẩn chip đắt, hard hiện "3-4").
-## 4. FadingInkHUD: bước đã đi, mực đã phai, cảnh báo ô cạn mực hiện/ẩn đúng.
-## 5. Kích thước thẻ đúng mockup (Time 250x156 tại (0,3) · thẻ mode 715x156 tại (265,3)).
-## 6. Sum Path: hết đường thắng -> nút CHƠI LẠI hiện DƯỚI thanh nút; Undo lùi bước -> tổng tính lại.
+## 1. Hint Guide: nằm TRONG HUD của chế độ (không còn node riêng ở scenes/game.tscn), đổi nội
+##    dung theo chế độ, không rỗng và VỪA 1 DÒNG (đo bằng font thật của theme).
+## 2. SumPathHUD: TỔNG hiện tại · TOÁN TỬ · MỤC TIÊU + chip "CẦN THÊM / CÒN ĐƯỢC / ĐÃ ĐỦ"
+##    (thanh tiến độ đã gỡ).
+## 3. CountdownHUD: chỉ NGÂN SÁCH CÒN "nn / tổng" (TIÊU TỐN · GIÁ CƯỚC · dải phân đoạn đã gỡ).
+## 4. FadingInkHUD: chỉ thẻ THỜI GIAN (bảng "TRẠM ĐO ĐỘ PHAI MỰC" đã gỡ — số mực hiện trên ô).
+## 5. Khối HUD theo chế độ: chế độ TIME-ONLY (play · minesweeper · blind_memory · fading_ink ·
+##    one_stroke · wall_builder) chỉ có thẻ THỜI GIAN; chế độ có thẻ riêng (dungeon · sum_path ·
+##    countdown_cost · fog_of_war) ẩn đồng hồ để nhường chỗ.
+## 6. Sum Path: hết đường thắng -> `is_unwinnable()`; Undo lùi bước -> tổng tính lại.
 ## 7. Countdown Cost: hết ngân sách -> board khoá tương tác + nút Undo được NHẤN MẠNH;
 ##    Undo hoàn ĐÚNG chi phí bước vừa đi rồi mở khoá.
+##
+## ⚠️ Mọi HUD đều đổi instance khi đổi chế độ ⇒ test tra node con qua `@export` của HUD
+##    (`time_value_node` · `retry_value_node` · `sum_value_node` …) chứ KHÔNG dò đường dẫn tuyệt đối.
 ## ============================================================================
 
 const HUD_SCRIPTS := {
-	"play": "res://scripts/nodes/hud/level_hud.gd",
-	"fog_of_war": "res://scripts/nodes/hud/fog_of_war_hud.gd",
-	"dungeon": "res://scripts/nodes/hud/dungeon_hud.gd",
-	"minesweeper": "res://scripts/nodes/hud/minesweep_hud.gd",
-	"blind_memory": "res://scripts/nodes/hud/blind_memory_hud.gd",
-	"sum_path": "res://scripts/nodes/hud/sum_path_hud.gd",
-	"countdown_cost": "res://scripts/nodes/hud/countdown_hud.gd",
-	"fading_ink": "res://scripts/nodes/hud/fading_ink_hud.gd",
-	"one_stroke": "res://scripts/nodes/hud/one_stroke_hud.gd",
-	"wall_builder": "res://scripts/nodes/hud/wall_builder_hud.gd",
+	"play": "res://scripts/nodes/hud/game/level_hud.gd",
+	"fog_of_war": "res://scripts/nodes/hud/game/fog_of_war_hud.gd",
+	"dungeon": "res://scripts/nodes/hud/game/dungeon_hud.gd",
+	"minesweeper": "res://scripts/nodes/hud/game/minesweep_hud.gd",
+	"blind_memory": "res://scripts/nodes/hud/game/blind_memory_hud.gd",
+	"sum_path": "res://scripts/nodes/hud/game/sum_path_hud.gd",
+	"countdown_cost": "res://scripts/nodes/hud/game/countdown_hud.gd",
+	"fading_ink": "res://scripts/nodes/hud/game/fading_ink_hud.gd",
+	"one_stroke": "res://scripts/nodes/hud/game/one_stroke_hud.gd",
+	"wall_builder": "res://scripts/nodes/hud/game/wall_builder_hud.gd",
 }
 
 var _failed := 0
@@ -52,7 +56,7 @@ func _init() -> void:
 	await _section_4c_fog_of_war(scene)
 	await _section_4d_one_stroke(scene)
 	await _section_4e_wall_builder(scene)
-	await _section_5_card_sizes()
+	await _section_5_hud_blocks(scene)
 	await _section_6_sum_path_replay(scene)
 	await _section_7_countdown_budget_lock(scene)
 
@@ -73,28 +77,28 @@ func _init() -> void:
 # ---------------------------------------------------------------------------
 func _section_1_hint_guide(scene: GameScene) -> void:
 	print("[1] Panel Hint Guide...")
-	var guide := scene.get_node_or_null("HintGuide") as Control
-	_entry(guide != null, "scenes/game.tscn co node HintGuide")
+	# HintGuide nam TRONG HUD (ban doc: `Content/ActionBar/HintGuide`) => hoi HUD, khong con la node
+	# rieng cua `scenes/game.tscn` nhu thiet ke cu.
+	var cur_hud := scene.ui_controller.hud
+	var guide := cur_hud.hint_guide() if cur_hud != null else null
+	_entry(guide != null, "HUD theo che do co khung HintGuide (hud.hint_guide())")
 	if guide == null:
 		return
+	_entry(cur_hud.is_ancestor_of(guide), "HintGuide nam trong HUD cua che do dang choi")
 	_entry(guide.get_node_or_null("Bg") is TextureRect, "Hint Guide co nen giay (panel_hint_guide.svg)")
 	_entry(guide.get_node_or_null("Icon") is TextureRect, "Hint Guide co icon bong den (icon_bulb.svg)")
 	var label := guide.get_node_or_null("Text") as Label
 	_entry(label != null, "Hint Guide co Label noi dung")
 	if label == null:
 		return
-	# Nam duoi ban co, tren thanh nut (ban co + thanh nut nay la node DUNG CHUNG / trong HUD)
-	var board := scene.get("board_view") as Control
-	var undo_btn := scene.undo_btn as Control
-	var button := undo_btn.get_parent() as Control if undo_btn != null else null
-	if board != null and button != null:
-		_entry(guide.global_position.y >= board.global_position.y + board.size.y - 20.0
-			and guide.global_position.y + guide.size.y <= button.global_position.y,
-			"Hint Guide nam giua ban co va thanh nut (y=%.0f)" % guide.global_position.y)
-
+	# ⚠️ Thanh hanh dong ban DOC cao 61px (chi du cho hang nut) nen khung goi y duoc AN SAN tu
+	# f0579a7 (2026-09-26): luat choi day qua popup huong dan. Node VAN cap nhat noi dung theo che do
+	# nen test chi kiem tra du lieu + cau truc, KHONG do do rong (khung an thi layout khong tinh).
+	_entry(not guide.visible, "Khung goi y an san trong thanh hanh dong ban DOC (nhuong cho hang nut)")
 	var font := label.get_theme_font("font")
 	var font_size := label.get_theme_font_size("font_size")
 	_entry(font != null and font_size > 0, "Hint Guide lay duoc font tu theme (variation HintGuideText)")
+	var texts := {}
 	for mode_id in HUD_SCRIPTS.keys():
 		scene.switch_mode(str(mode_id), "medium")
 		await process_frame
@@ -102,13 +106,18 @@ func _section_1_hint_guide(scene: GameScene) -> void:
 		var hud := scene.ui_controller.hud
 		_entry(hud != null and hud.get_script() == expected_hud,
 			"Che do '%s' dung dung HUD scene rieng" % mode_id)
-		var text := str(guide.call("current_text"))
+		# HUD la INSTANCE MOI moi lan doi che do => trai lai khung HintGuide theo HUD vua gan
+		var mode_guide := hud.hint_guide() if hud != null else null
+		var mode_label := mode_guide.get_node_or_null("Text") as Label if mode_guide != null else null
+		if mode_label == null:
+			_entry(false, "Che do '%s': HUD khong co khung HintGuide" % mode_id)
+			continue
+		var text := str(mode_guide.call("current_text"))
 		_entry(not text.is_empty() and not text.begins_with("STR_"),
 			"Che do '%s': goi y hien chu that ('%s')" % [mode_id, text.substr(0, 40)])
-		if font != null and font_size > 0:
-			var width := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
-			_entry(width <= label.size.x,
-				"Che do '%s': goi y vua 1 dong (%.0f/%.0f px)" % [mode_id, width, label.size.x])
+		texts[text] = mode_id
+	_entry(texts.size() == HUD_SCRIPTS.size(),
+		"%d/%d che do co noi dung goi y RIENG" % [texts.size(), HUD_SCRIPTS.size()])
 
 
 # ---------------------------------------------------------------------------
@@ -126,32 +135,35 @@ func _section_2_sum_path(scene: GameScene) -> void:
 	_entry(mode != null, "Lay duoc SumPathGameMode")
 	if mode == null:
 		return
-	_entry(hud.get_node_or_null("Sheet") != null, "Co the CAN BANG TONG DIEM (Sheet)")
-	_entry(hud.get_node_or_null("Bar/Fill") != null, "Co thanh tien do (Bar/Fill)")
-	_entry(hud.get_node_or_null("Sum/Note") != null, "Co dong '(N o)' trong khoi TONG")
+	# 2026-09-27 "chi hien thu can thiet": HUD chi con TONG hien tai · TOAN TU · MUC TIEU (+ chip
+	# trang thai trong khoi MUC TIEU). Thanh tien do vuot/duoi muc tieu da GO khoi HUD.
+	_entry(hud.sum_value_node != null and hud.operator_value_label != null
+		and hud.target_value_node != null and hud.need_label != null,
+		"HUD bind du node TONG / TOAN TU / MUC TIEU / chip trang thai")
+	_entry(hud.find_child("Bar", true, false) == null,
+		"Thanh tien do (Bar/Fill) da GO khoi HUD theo thiet ke 2026-09-27")
 
 	mode.current_sum = 20
 	mode.target_val = 50
 	mode.operator = "="
 	hud.update_hud({"mode": mode, "moves": 4})
-	var bar := hud.get_node("Bar") as Control
-	var fill := hud.get_node("Bar/Fill") as Control
-	_entry(int(round(fill.size.x)) == int(round(bar.size.x * 0.4)),
-		"Thanh tien do = 40%% (%.0f/%.0f px)" % [fill.size.x, bar.size.x])
-	_entry(str((hud.get_node("Sum/Note") as Label).text).contains("4"),
-		"Khoi TONG hien so o da di ('%s')" % (hud.get_node("Sum/Note") as Label).text)
-	var chip := hud.get_node("Target/Need") as Label
-	_entry(chip.text == tr("STR_HUD_SUM_NEED").format([30]),
-		"Toan tu '=': chip bao CAN THEM +30 ('%s')" % chip.text)
+	_entry(hud.sum_value_node.text == "20" and hud.operator_value_label.text == "="
+		and hud.target_value_node.text == "50",
+		"Khoi TONG/MUC TIEU hien '20 = 50'")
+	_entry(hud.sum_note_label != null and hud.sum_note_label.text.contains("4"),
+		"Khoi TONG hien so o da di ('%s')"
+		% (hud.sum_note_label.text if hud.sum_note_label != null else ""))
+	_entry(hud.need_label.text == tr("STR_HUD_SUM_NEED").format([30]),
+		"Toan tu '=': chip bao CAN THEM +30 ('%s')" % hud.need_label.text)
 	mode.operator = "<"
 	hud.update_hud({"mode": mode, "moves": 4})
-	_entry(chip.text == tr("STR_HUD_SUM_LEFT").format([29]),
-		"Toan tu '<': chip bao CON DUOC +29 ('%s')" % chip.text)
+	_entry(hud.need_label.text == tr("STR_HUD_SUM_LEFT").format([29]),
+		"Toan tu '<': chip bao CON DUOC +29 ('%s')" % hud.need_label.text)
 	mode.operator = ">"
 	mode.current_sum = 60
 	hud.update_hud({"mode": mode, "moves": 4})
-	_entry(chip.text == tr("STR_HUD_SUM_OK"),
-		"Toan tu '>': da vuot muc tieu -> chip bao DA DU ('%s')" % chip.text)
+	_entry(hud.need_label.text == tr("STR_HUD_SUM_OK"),
+		"Toan tu '>': da vuot muc tieu -> chip bao DA DU ('%s')" % hud.need_label.text)
 
 
 # ---------------------------------------------------------------------------
@@ -171,39 +183,19 @@ func _section_3_countdown(scene: GameScene) -> void:
 		return
 	var total: int = mode.initial_steps
 	hud.update_hud({"mode": mode, "steps_remaining": total - 6, "moves": 4})
-	_entry(str((hud.get_node("Budget/Value") as Label).text) == "%02d" % (total - 6),
-		"Khoi NGAN SACH CON hien %02d" % (total - 6))
-	_entry(str((hud.get_node("Budget/Max") as Label).text) == "/ %d" % total,
+	_entry(hud.budget_value_node != null and hud.budget_value_node.text == "%02d" % (total - 6),
+		"Khoi NGAN SACH CON hien %02d ('%s')"
+		% [total - 6, hud.budget_value_node.text if hud.budget_value_node != null else ""])
+	_entry(hud.budget_max_label != null and hud.budget_max_label.text == "/ %d" % total,
 		"Khoi NGAN SACH CON hien tong '/ %d'" % total)
-	_entry(str((hud.get_node("Spent/Value") as Label).text) == "-06",
-		"Khoi DA TIEU hien -06 ('%s')" % (hud.get_node("Spent/Value") as Label).text)
-	var segments := hud.get_node_or_null("Segments") as HBoxContainer
-	_entry(segments != null and segments.get_child_count() == total,
-		"Dai phan doan co dung %d doan (nhan %d)" % [total, segments.get_child_count() if segments != null else -1])
-	if segments != null and segments.get_child_count() == total:
-		var off_count := 0
-		for i in total:
-			var seg := segments.get_child(i) as TextureRect
-			if seg != null and seg.texture != null and seg.texture.resource_path.contains("segment_on"):
-				off_count = i
-				break
-		_entry(off_count == 6, "6 doan dau la 'da dung' (mau xam), con lai 'con' (mau cam)")
-
-	# Chip giá cước theo độ khó
-	mode.difficulty = "easy"
-	hud.update_hud({"mode": mode, "steps_remaining": total - 6, "moves": 4})
-	var cheap := hud.get_node("Price/ChipCheap") as Control
-	var pricey := hud.get_node("Price/ChipPricey") as Control
-	_entry((cheap.get_node("Label") as Label).text == tr("STR_HUD_PRICE_CHEAP").format([1, 2]),
-		"Easy: chip re '1-2' ('%s')" % (cheap.get_node("Label") as Label).text)
-	_entry(not pricey.visible, "Easy (1-2): an chip gia dat")
-	mode.difficulty = "hard"
-	hud.update_hud({"mode": mode, "steps_remaining": total - 6, "moves": 4})
-	_entry(pricey.visible, "Hard (1-4): hien chip gia dat")
-	_entry((pricey.get_node("Label") as Label).text == tr("STR_HUD_PRICE_PRICEY").format([3, 4]),
-		"Hard: chip dat '3-4' ('%s')" % (pricey.get_node("Label") as Label).text)
-	_entry(str((hud.get_node("Price/Reserve") as Label).text).contains("3"),
-		"Hard: du phong +3 buoc ('%s')" % (hud.get_node("Price/Reserve") as Label).text)
+	# 2026-09-27 "chi hien thu can thiet": chi con NGAN SACH CON; TIÊU TỐN · GIÁ CƯỚC (chip rẻ/đắt) ·
+	# dải phân đoạn đã gỡ — chi phí từng ô hiện NGAY TRÊN Ô của bàn cờ.
+	_entry(hud.find_child("Spent", true, false) == null, "Khoi DA TIEU da GO khoi HUD")
+	_entry(hud.find_child("Segments", true, false) == null, "Dai phan doan ngan sach da GO khoi HUD")
+	_entry(hud.find_child("Price", true, false) == null, "Chip gia cuoc da GO khoi HUD")
+	var time_card := _time_card(hud)
+	_entry(time_card != null and not time_card.visible,
+		"Che do Countdown Cost khong hien dong ho THOI GIAN (thoi gian hoa vao NGAN SACH)")
 
 
 # ---------------------------------------------------------------------------
@@ -222,19 +214,21 @@ func _section_4_fading_ink(scene: GameScene) -> void:
 	if mode == null:
 		return
 	hud.update_hud({"mode": mode})
-	_entry(str((hud.get_node("Steps/Value") as Label).text) == "00",
-		"Buoc da di hien '00' ('%s')" % (hud.get_node("Steps/Value") as Label).text)
-	_entry(str((hud.get_node("Steps/Delta") as Label).text) == tr("STR_HUD_INK_LOST").format([0]),
-		"Delta muc phai hien '(-0 MUC)' ('%s')" % (hud.get_node("Steps/Delta") as Label).text)
-	var warn := hud.get_node("Warn") as Control
-	_entry(not warn.visible, "Chua co o can muc -> an canh bao")
+	# 2026-09-27 "chi hien thu can thiet": chi con the THOI GIAN; bang "TRẠM ĐO ĐỘ PHAI MỰC" đã gỡ —
+	# số mực hiện NGAY TRÊN TỪNG Ô của bàn cờ (lớp cảnh báo SẮP PHAI/CẠN do MazeCell vẽ).
+	var time_card := _time_card(hud)
+	_entry(time_card != null and time_card.visible, "Che do Fading Ink hien the THOI GIAN")
+	_entry(hud.find_child("Steps", true, false) == null and hud.find_child("Warn", true, false) == null,
+		"Bang TRAM DO DO PHAI MUC da GO khoi HUD")
+	_entry(hud.time_value_node != null and not hud.time_value_node.text.is_empty(),
+		"The THOI GIAN co gio van ('%s')"
+		% (hud.time_value_node.text if hud.time_value_node != null else ""))
+	_entry(mode.count_exhausted() == 0, "Dau van chua co o can muc (%d o)" % mode.count_exhausted())
 
 	mode.moves_made = 9          # mực tối đa 9 -> mọi ô đều cạn
 	hud.update_hud({"mode": mode})
-	_entry(mode.count_exhausted() > 0, "count_exhausted() dem duoc o can (%d o)" % mode.count_exhausted())
-	_entry(warn.visible, "Co o can muc -> hien canh bao")
-	_entry(str((hud.get_node("Warn/Label") as Label).text).contains(str(mode.count_exhausted())),
-		"Canh bao hien dung so o can ('%s')" % (hud.get_node("Warn/Label") as Label).text)
+	_entry(mode.count_exhausted() > 0,
+		"count_exhausted() dem duoc o can (%d o) — so o can hien tren ban co" % mode.count_exhausted())
 
 
 # ---------------------------------------------------------------------------
@@ -256,25 +250,28 @@ func _section_4c_fog_of_war(scene: GameScene) -> void:
 		"Dau van co dung 3 luot thu (max=%d con=%d)" % [mode.max_retries, mode.retries_left])
 
 	hud.update_hud({"mode": mode})
-	var value := hud.get_node_or_null("Sheet/Retry/Value") as Label
-	var max_label := hud.get_node_or_null("Sheet/Retry/Max") as Label
-	var note := hud.get_node_or_null("Sheet/Retry/Note") as Label
+	var value := hud.retry_value_node
+	var max_label := hud.retry_max_label
+	var note := hud.retry_note_label
 	_entry(value != null and value.text == "3", "HUD hien '3' luot thu ('%s')"
 		% (value.text if value != null else ""))
 	_entry(max_label != null and max_label.text == "/3", "HUD hien mau '/3'")
-	_entry(note != null and note.text == tr("STR_HUD_FOG_RETRY_NOTE").format([3]),
-		"HUD hien dong nhac theo so luot ('%s')" % (note.text if note != null else ""))
+	if note != null:
+		_entry(note.text == tr("STR_HUD_FOG_RETRY_NOTE").format([3]),
+			"HUD hien dong nhac theo so luot ('%s')" % note.text)
+	else:
+		# 2026-09-27: bang Suong Mu ban DỌC gon con 1 dong (LUOT THU LAI) — khong con dong nhac
+		_entry(true, "Ban doc khong co dong nhac luot thu (bang Suong Mu gon)")
 
 	mode.retries_left = 1
 	hud.update_hud({"mode": mode})
 	_entry(value != null and value.text == "1", "Mat luot -> HUD cap nhat ('%s')"
 		% (value.text if value != null else ""))
-	_entry(note != null and note.get_theme_color("font_color") == FogOfWarHUD.COLOR_NOTE_DANGER,
-		"Con 1 luot -> dong nhac chuyen DO")
+	if note != null:
+		_entry(note.get_theme_color("font_color") == FogOfWarHUD.COLOR_NOTE_DANGER,
+			"Con 1 luot -> dong nhac chuyen DO")
 
-	_entry(hud.get_node_or_null("Time/Value") != null, "Co the THOI GIAN (Time/Value)")
-	_entry((hud.get_node_or_null("Time/Sub") as Label).text == "STR_HUD_FOG_TIME_SUB",
-		"The THOI GIAN co dong phu rieng cua che do")
+	_entry(_time_card(hud) != null, "The THOI GIAN co trong khung HUD cua che do")
 	# Chuỗi dịch của chế độ (đọc theo locale VI để chắc chắn đã re-import CSV)
 	var prev_locale := TranslationServer.get_locale()
 	TranslationServer.set_locale("vi")
@@ -285,16 +282,12 @@ func _section_4c_fog_of_war(scene: GameScene) -> void:
 	_entry(tr("STR_REVIVE_DESC_RETRY") != "STR_REVIVE_DESC_RETRY",
 		"Co chuoi cho nut HOI SINH cua che do luot thu")
 	TranslationServer.set_locale(prev_locale)
-	_entry(hud.get_node_or_null("Sheet/RowVision") is TextureRect, "Co hang TAM NHIN (nen rieng)")
-	_entry((hud.get_node_or_null("Sheet/ChipLabel") as Label).text == "STR_HUD_FOG_VISION_CHIP",
-		"Chip 'XUNG QUANH' nam trong hang TAM NHIN")
-	_entry(hud.get_node_or_null("Sheet/Warn2") is Label, "Co dong canh bao luat choi")
+	_entry(hud.find_child("Sheet", true, false) is NinePatchRect, "Co bang SUONG MU (nen giay rieng)")
+	var head := hud.find_child("Head", true, false) as Label
+	_entry(head != null and head.text == "STR_HUD_FOG_RETRY_HEAD",
+		"Bang Suong Mu co dong tieu de LUOT THU LAI")
 	_entry(hud.challenge_card() == null,
 		"challenge_card() = null (bang Suong Mu chiem cho the THU THACH)")
-	var sheet := hud.get_node_or_null("Sheet") as Control
-	if sheet != null:
-		_entry(absf(sheet.size.x - 690.0) <= 1.0 and absf(sheet.size.y - 156.0) <= 1.0,
-			"Bang Suong Mu 690x156 (%.0fx%.0f)" % [sheet.size.x, sheet.size.y])
 
 
 # ---------------------------------------------------------------------------
@@ -316,32 +309,14 @@ func _section_4d_one_stroke(scene: GameScene) -> void:
 		"Ban easy 3x3 = 9 o, chi o S da di (%d/%d)" % [mode.visited_count(), mode.total_cells()])
 
 	hud.update_hud({"mode": mode})
-	var value := hud.get_node_or_null("Sheet/Cover/CoverValue") as Label
-	var max_label := hud.get_node_or_null("Sheet/Cover/CoverMax") as Label
-	var note := hud.get_node_or_null("Sheet/Cover/CoverNote") as Label
-	var chip := hud.get_node_or_null("Sheet/Row1/ChipLabel") as Label
-	_entry(value != null and value.text == "1", "HUD hien '1' o da phu ('%s')"
-		% (value.text if value != null else ""))
-	_entry(max_label != null and max_label.text == tr("STR_HUD_OS_COVER_MAX").format([9]),
-		"HUD hien tong so o ('%s')" % (max_label.text if max_label != null else ""))
-	_entry(note != null and note.text == tr("STR_HUD_OS_COVER_NOTE").format([8]),
-		"HUD hien so o con lai ('%s')" % (note.text if note != null else ""))
-	_entry(chip != null and chip.text == tr("STR_HUD_OS_CHIP").format([11]),
-		"HUD hien chip phan tram kin ('%s')" % (chip.text if chip != null else ""))
-
-	_entry(hud.get_node_or_null("Time/Value") != null, "Co the THOI GIAN (Time/Value)")
-	_entry((hud.get_node_or_null("Time/Sub") as Label).text == "STR_HUD_OS_TIME_SUB",
-		"The THOI GIAN co dong phu rieng cua che do")
-	_entry(hud.get_node_or_null("Sheet/Row1/Chip") is TextureRect, "Co row luat MỘT NÉT + chip")
-	_entry(hud.get_node_or_null("Sheet/Row2/SliderTrack") is TextureRect, "Co thanh tien do phu kin")
-	_entry(hud.get_node_or_null("Sheet/Row2/SliderFillClip/Fill") is TextureRect,
-		"Thanh tien do co lop FILL bi cat theo so o da di")
+	# 2026-09-27 "chi hien thu can thiet": chi con the THOI GIAN; bang "TIẾN ĐỘ PHỦ KÍN" da GO —
+	# o da di bi gach cheo "ĐÃ ĐI" ngay tren ban co, luat doc o khung Huong dan.
+	var time_card := _time_card(hud)
+	_entry(time_card != null and time_card.visible, "Che do Mot Net hien the THOI GIAN")
+	_entry(hud.find_child("Sheet", true, false) == null,
+		"Bang TIEN DO PHU KIN da GO khoi HUD (tien do thay tren ban co)")
 	_entry(hud.challenge_card() == null,
-		"challenge_card() = null (bang Tien Do chiem cho the THU THACH)")
-	var sheet := hud.get_node_or_null("Sheet") as Control
-	if sheet != null:
-		_entry(absf(sheet.size.x - 690.0) <= 1.0 and absf(sheet.size.y - 156.0) <= 1.0,
-			"Bang Tien Do 690x156 (%.0fx%.0f)" % [sheet.size.x, sheet.size.y])
+		"challenge_card() = null (HUD chi con the THOI GIAN)")
 
 	# Chuỗi dịch của chế độ (đọc theo locale VI để chắc chắn đã re-import CSV)
 	var prev_locale := TranslationServer.get_locale()
@@ -349,7 +324,7 @@ func _section_4d_one_stroke(scene: GameScene) -> void:
 	_entry(tr("STR_HUD_OS_TIME_SUB") == "ĐANG TÍNH GIỜ",
 		"Chuoi VI dong phu the THOI GIAN ('%s')" % tr("STR_HUD_OS_TIME_SUB"))
 	_entry(tr("STR_HUD_OS_ROW_TITLE") != "STR_HUD_OS_ROW_TITLE",
-		"Co chuoi VI cho hang luat MỘT NÉT")
+		"Con chuoi VI cua bang luat MOT NET trong CSV ('%s')" % tr("STR_HUD_OS_ROW_TITLE"))
 	_entry(tr("STR_GAME_OVER_REVISIT") != "STR_GAME_OVER_REVISIT",
 		"Co chuoi cho tieu de thua 'DI LAI O CU!'")
 	_entry(tr("STR_HINT_ONE_STROKE") != "STR_HINT_ONE_STROKE",
@@ -377,33 +352,13 @@ func _section_4e_wall_builder(scene: GameScene) -> void:
 	_entry(mode.retries_left == 3 and mode.max_retries == 3, "Dau van co dung 3 LUOT GUI")
 
 	hud.update_hud({"mode": mode})
-	var value := hud.get_node_or_null("Sheet/Cover/CoverValue") as Label
-	var max_label := hud.get_node_or_null("Sheet/Cover/CoverMax") as Label
-	var note := hud.get_node_or_null("Sheet/Cover/CoverNote") as Label
-	var submit := hud.get_node_or_null("Sheet/Row1/Submit") as Label
-	var chip := hud.get_node_or_null("Sheet/Row1/ChipLabel") as Label
-	_entry(value != null and value.text == "0", "HUD hien '0' doan da dung ('%s')"
-		% (value.text if value != null else ""))
-	_entry(max_label != null and max_label.text == tr("STR_HUD_WB_COVER_MAX").format([mode.required_segments]),
-		"HUD hien tong so doan ('%s')" % (max_label.text if max_label != null else ""))
-	_entry(note != null and note.text == tr("STR_HUD_WB_COVER_NOTE").format([mode.required_segments]),
-		"HUD hien so doan con thieu ('%s')" % (note.text if note != null else ""))
-	_entry(submit != null and submit.text == tr("STR_HUD_WB_SUBMIT").format([3, 3]),
-		"HUD hien dong LUOT GUI ('%s')" % (submit.text if submit != null else ""))
-	_entry(chip != null and chip.text == tr("STR_HUD_WB_CHIP_BUILDING"),
-		"HUD hien chip trang thai ('%s')" % (chip.text if chip != null else ""))
-
-	_entry(hud.get_node_or_null("Time/Value") != null, "Co the THOI GIAN (Time/Value)")
-	_entry((hud.get_node_or_null("Time/Sub") as Label).text == "STR_HUD_WB_TIME_SUB",
-		"The THOI GIAN co dong phu rieng cua che do")
-	_entry(hud.get_node_or_null("Sheet/Row2/SliderTrack") is TextureRect, "Co thanh tien do xay tuong")
-	_entry(hud.get_node_or_null("Sheet/Row2/SliderFillClip/Fill") is TextureRect,
-		"Thanh tien do co lop FILL bi cat theo so doan da dung")
-	_entry(hud.challenge_card() == null, "challenge_card() = null (bang Tuong Da Ve chiem cho the THU THACH)")
-	var sheet := hud.get_node_or_null("Sheet") as Control
-	if sheet != null:
-		_entry(absf(sheet.size.x - 690.0) <= 1.0 and absf(sheet.size.y - 156.0) <= 1.0,
-			"Bang Tuong Da Ve 690x156 (%.0fx%.0f)" % [sheet.size.x, sheet.size.y])
+	# 2026-09-27 "chi hien thu can thiet": chi con the THOI GIAN; bang "TƯỜNG ĐÃ VẼ" da GO —
+	# so tuong doc NGAY TREN TUONG O cua ban co, luot GUI con lai hien o popup khi GUI sai.
+	var time_card := _time_card(hud)
+	_entry(time_card != null and time_card.visible, "Che do Xay Tuong hien the THOI GIAN")
+	_entry(hud.find_child("Sheet", true, false) == null,
+		"Bang TUONG DA VE da GO khoi HUD (so tuong thay tren ban co)")
+	_entry(hud.challenge_card() == null, "challenge_card() = null (HUD chi con the THOI GIAN)")
 
 	# Thanh hanh dong: nut GUI BAI (Submit) = nut rieng cua Wall Builder (2 nut Tool/Wall da BO 2026-09-26)
 	var submit_btn := scene.submit_btn as BaseButton
@@ -449,10 +404,10 @@ func _section_6_sum_path_replay(scene: GameScene) -> void:
 	_entry(mode.is_unwinnable(), "is_unwinnable(): '=' + tong 20 > 10")
 	#_entry(replay.visible and scene.ui_controller.replay_shown(),
 		#"Hien nut CHOI LAI (ui_controller.replay_shown())")
-	var button_bar := scene.get_node("Button") as Control
-	#_entry(replay.global_position.y >= button_bar.global_position.y + button_bar.size.y - 20.0,
+	#_entry(replay.global_position.y >= hud.action_bar().global_position.y
+		#+ hud.action_bar().size.y - 20.0,
 		#"Nut CHOI LAI nam DUOI thanh nut (y=%.0f vs day thanh %.0f)" % [replay.global_position.y,
-			#button_bar.global_position.y + button_bar.size.y])
+			#hud.action_bar().global_position.y + hud.action_bar().size.y])
 	# Điều kiện "<" cũng vậy; điều kiện ">" thì vẫn còn cửa thắng -> ẩn
 	mode.operator = "<"
 	scene.game_controller.call("_update_hud")
@@ -471,7 +426,15 @@ func _section_6_sum_path_replay(scene: GameScene) -> void:
 	await process_frame
 	#_entry(not replay.visible and not mode.is_unwinnable(),
 		#"Bam CHOI LAI -> van moi, nut an lai")
-	# Undo lùi bước -> tổng tính lại (bỏ ô vừa đi khỏi đường)
+	# Undo lùi bước -> tổng tính lại (bỏ ô vừa đi khỏi đường).
+	# Vào VÁN MỚI trước: đoạn trên đã ép `current_sum = 99` để thử `is_unwinnable()` nên tổng không
+	# còn là giá trị thật của đường đi.
+	scene.switch_mode("sum_path", "medium")
+	await process_frame
+	mode = scene.game_mode_controller.game_mode as SumPathGameMode
+	if mode == null:
+		_entry(false, "Khong lay lai duoc SumPathGameMode sau khi vao van moi")
+		return
 	var board := scene.game_controller.grid_view
 	var start_pos: Vector2i = scene.grid_controller.current_pos
 	var target := Vector2i(-1, -1)
@@ -540,35 +503,51 @@ func _section_7_countdown_budget_lock(scene: GameScene) -> void:
 
 
 # ---------------------------------------------------------------------------
-# 5. Kích thước thẻ + map HUD theo chế độ
+# 5. Khối HUD theo chế độ — "chỉ hiện thứ cần thiết" (2026-09-27)
 # ---------------------------------------------------------------------------
-func _section_5_card_sizes() -> void:
-	print("[5] Kich thuoc the...")
-	var size_checks := {
-		"sum_path": "res://nodes/hud/sum_path_hud.tscn",
-		"countdown_cost": "res://nodes/hud/countdown_hud.tscn",
-		"fading_ink": "res://nodes/hud/fading_ink_hud.tscn",
-	}
-	for mode_id in size_checks.keys():
-		var packed := load(str(size_checks[mode_id])) as PackedScene
-		var hud: BaseHUD = packed.instantiate()
-		root.add_child(hud)
+## Chế độ CHỈ có thẻ THỜI GIAN (bảng thông tin riêng đã gỡ: thông tin hiện ngay trên bàn cờ)
+const TIME_ONLY_MODES := ["play", "minesweeper", "blind_memory", "fading_ink", "one_stroke",
+	"wall_builder"]
+## Chế độ CÓ thẻ/bảng thông tin riêng → đồng hồ THỜI GIAN ẩn để nhường chỗ
+const OWN_CARD_MODES := ["dungeon", "sum_path", "countdown_cost", "fog_of_war"]
+
+func _section_5_hud_blocks(scene: GameScene) -> void:
+	print("[5] Khoi HUD theo che do (chi hien thu can thiet)...")
+	for mode_id in TIME_ONLY_MODES:
+		scene.switch_mode(str(mode_id), "medium")
 		await process_frame
-		var time_card := hud.get_node_or_null("Time") as Control
-		var sheet := hud.get_node_or_null("Sheet") as Control
-		_entry(time_card != null and time_card.size == Vector2(250, 156),
-			"'%s': the THOI GIAN 250x156 tai (%.0f,%.0f)" % [mode_id, time_card.position.x, time_card.position.y])
-		_entry(time_card != null and time_card.position == Vector2(0, 3),
-			"'%s': the THOI GIAN dat tai (0,3) nhu mockup" % mode_id)
-		_entry(sheet != null and sheet.size == Vector2(715, 156) and sheet.position == Vector2(265, 3),
-			"'%s': the che do 715x156 tai (265,3)" % mode_id)
-		hud.queue_free()
+		var card := _time_card(scene.ui_controller.hud)
+		var info := _mode_information(scene.ui_controller.hud)
+		_entry(card != null and card.visible and info != null and info.get_child_count() == 1,
+			"'%s': khung che do CHI co the THOI GIAN (%d khoi)"
+			% [mode_id, info.get_child_count() if info != null else -1])
+	for mode_id in OWN_CARD_MODES:
+		scene.switch_mode(str(mode_id), "medium")
 		await process_frame
+		var own_card := _time_card(scene.ui_controller.hud)
+		var own_info := _mode_information(scene.ui_controller.hud)
+		_entry(own_card != null and not own_card.visible and own_info != null
+			and own_info.get_child_count() > 1,
+			"'%s': co khoi thong tin rieng, an dong ho THOI GIAN (%d khoi)"
+			% [mode_id, own_info.get_child_count() if own_info != null else -1])
 
 
 # ---------------------------------------------------------------------------
 # Helper
 # ---------------------------------------------------------------------------
+## Thẻ THỜI GIAN của HUD (node cha của Label giờ ván) — mọi HUD bind sẵn `time_value_node`
+func _time_card(hud: BaseHUD) -> Control:
+	if hud == null or hud.time_value_node == null:
+		return null
+	return hud.time_value_node.get_parent() as Control
+
+
+## Khối `ModeInformation` (node cha của thẻ THỜI GIAN) — nơi mỗi chế độ khai khối thông tin của mình
+func _mode_information(hud: BaseHUD) -> Control:
+	var card := _time_card(hud)
+	return card.get_parent() as Control if card != null else null
+
+
 func _entry(condition: bool, label: String) -> void:
 	_checks += 1
 	if condition:
