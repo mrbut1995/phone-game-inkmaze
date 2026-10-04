@@ -95,13 +95,6 @@ func _init() -> void:
 		print("[FAIL] Phai co 2 dot cho 2 trang (dang %d)" % dots.size())
 		failures += 1
 
-	# --- Bản NGANG: thẻ NẰM NGANG + lưới canh giữa + số ô/trang theo chiều cao khung ---
-	root.size = Vector2i(2000, 920)
-	await create_timer(0.3).timeout
-	failures += _check_landscape(levels_scene)
-	root.size = Vector2i(1080, 1920)
-	await create_timer(0.3).timeout
-
 	# --- Trở về thư mục levels THẬT: chỉ hiện màn của CHƯƠNG đang chơi ---
 	lm.call("set_levels_dir", _original_dir)
 	gm.set("current_chapter", 1)
@@ -171,62 +164,7 @@ func _init() -> void:
 # ---------------------------------------------------------------------------
 # Helper
 # ---------------------------------------------------------------------------
-## Bản NGANG: thẻ nằm ngang (scene riêng) + lưới canh giữa + số ô mỗi trang tính theo chiều cao
-func _check_landscape(scene: LevelScenes) -> int:
-	var failures := 0
-	if not scene.is_landscape:
-		print("[FAIL] Khung 2000x920 phai la bo cuc NGANG (is_landscape=false)")
-		return failures + 1
-
-	var capacity := scene.page_capacity()
-	if capacity < 6:
-		print("[FAIL] Trang ngang phai chua it nhat 6 the (dang %d o/trang)" % capacity)
-		failures += 1
-	var expected_pages := maxi(1, int(ceil(float(TEST_IDS) / float(capacity))))
-	if scene.page_count() != expected_pages:
-		print("[FAIL] Ngang: %d man / %d o moi trang phai ra %d trang (dang %d)"
-			% [TEST_IDS, capacity, expected_pages, scene.page_count()])
-		failures += 1
-
-	var pages := scene.layout.pages_host.get_children()
-	if pages.is_empty():
-		print("[FAIL] Ngang: khong co node trang nao")
-		return failures + 1
-	var grid: GridContainer = pages[0].call("grid")
-	if grid == null:
-		print("[FAIL] Ngang: trang khong co luoi that su (grid() = null)")
-		return failures + 1
-	if not (grid.get_parent() is CenterContainer):
-		print("[FAIL] Ngang: luoi phai nam trong CenterContainer de canh giua")
-		failures += 1
-	if grid.columns != 3:
-		print("[FAIL] Ngang: luoi phai 3 cot (dang %d)" % grid.columns)
-		failures += 1
-
-	var shown := grid.get_child_count()
-	var expected_shown := mini(capacity, TEST_IDS)
-	if shown != expected_shown:
-		print("[FAIL] Ngang: trang 1 phai co %d the (dang %d)" % [expected_shown, shown])
-		failures += 1
-
-	var card: Control = grid.get_child(0) if shown > 0 else null
-	if card != null:
-		if not card.scene_file_path.contains("level_card_landscape"):
-			print("[FAIL] Ngang: phai dung the NGANG (dang '%s')" % card.scene_file_path)
-			failures += 1
-		var size := card.custom_minimum_size
-		if size.x <= size.y:
-			print("[FAIL] Ngang: the phai NAM NGANG (dang %.0fx%.0f)" % [size.x, size.y])
-			failures += 1
-		if not is_equal_approx(size.x, 372.0) or not is_equal_approx(size.y, 277.0):
-			print("[WARN] Ngang: co the lech co thiet ke 372x277 (dang %.0fx%.0f)" % [size.x, size.y])
-
-	if failures == 0:
-		print("[CHECK] Ngang: %d o/trang -> %d trang, the ngang %s, luoi canh giua."
-			% [capacity, scene.page_count(), ("%.0fx%.0f" % [card.custom_minimum_size.x, card.custom_minimum_size.y]) if card != null else "?"])
-	return failures
-
-
+## Bản dọc: kiểm lưới 3 cột + số ô mỗi trang + cỡ thẻ theo thiết kế.
 func _check_pages(scene: LevelScenes) -> int:
 	var failures := 0
 	if scene.level_ids().size() != TEST_IDS:

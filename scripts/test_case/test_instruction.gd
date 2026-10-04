@@ -8,7 +8,7 @@ func _init() -> void:
 	await process_frame
 	TranslationServer.set_locale("vi")
 	await _check_integration()
-	await _check_status_bar_landscape()
+	await _check_status_bar_portrait()
 	if _failures == 0:
 		print("\n[SUCCESS] " + str(_checks) + " check PASS")
 	else:
@@ -66,14 +66,14 @@ func _check_integration() -> void:
 		await process_frame
 
 
-# Layout ngang: nut ? tren status bar
-func _check_status_bar_landscape() -> void:
-	print("-- Layout ngang: nut ? tren status bar --")
-	var ls: Node = (load("res://scenes/layout/landscape/game.tscn") as PackedScene).instantiate()
+# Nut ? tren status bar cua layout doc
+func _check_status_bar_portrait() -> void:
+	print("-- Layout doc: nut ? tren status bar --")
+	var ls: Node = (load("res://scenes/layout/portrait/game.tscn") as PackedScene).instantiate()
 	root.add_child(ls)
 	await process_frame
-	_check(ls.get("instruction_btn") != null, "layout ngang: co bind instruction_btn")
-	_check(ls.get_node_or_null("Content/LeftCol/Status/Bar/Instruction") != null,
-			"StatusBar ngang: co nut Instruction")
+	_check(ls.get("instruction_btn") != null, "layout doc: co bind instruction_btn")
+	_check(ls.get_node_or_null("Status/Instruction") != null,
+			"StatusBar doc: co nut Instruction")
 	ls.queue_free()
 	await process_frame

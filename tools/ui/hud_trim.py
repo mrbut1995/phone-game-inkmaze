@@ -71,63 +71,34 @@ CONFIG: dict[str, dict] = {
         "delete": ["Content/ModeInformation/Challenge"],
         "exports": ["time_value_node"],
     },
-    "nodes/hud/landscape/game/level_mode.tscn": {
-        "delete": ["Content/ModeInformation/Challenge"],
-        "exports": ["time_value_node"],
-    },
     # ---------------------------------------------------------------- Dungeon: SỐ BƯỚC + TẦNG
     "nodes/hud/portrait/game/dungeon_mode.tscn": {
         "delete_children_of": [PORTRAIT_TIME],
         "set": {PORTRAIT_TIME: {"visible": "false"}},
         "exports": ["time_value_node", "step_value_node", "floor_value_node"],
     },
-    "nodes/hud/landscape/game/dungeon_mode.tscn": {
-        "delete": ["Content/ModeInformation/Time"],
-        "exports": ["step_value_node", "floor_value_node"],
-    },
     # ---------------------------------------------------------------- Minesweeper: CHỈ THỜI GIAN
     "nodes/hud/portrait/game/minesweep_hud.tscn": {
         "delete": ["Content/ModeInformation/Bomb"],
         "exports": [],
-    },
-    "nodes/hud/landscape/game/minesweep_hud.tscn": {
-        "delete": ["Content/ModeInformation/Bomb"],
-        "exports": ["time_value_node"],
     },
     # ---------------------------------------------------------------- Blind Memory: CHỈ THỜI GIAN
     "nodes/hud/portrait/game/blind_memory_hud.tscn": {
         "delete": ["Content/ModeInformation/Note"],
         "exports": [],
     },
-    "nodes/hud/landscape/game/blind_memory_hud.tscn": {
-        "delete": ["Content/ModeInformation/Note"],
-        "exports": ["time_value_node"],
-    },
     # ---------------------------------------------------------------- Fading Ink: CHỈ THỜI GIAN
     "nodes/hud/portrait/game/fading_ink_hud.tscn": {
         "delete": ["Content/ModeInformation/Sheet", PORTRAIT_TIME],
         "exports": [],
-    },
-    "nodes/hud/landscape/game/fading_ink_hud.tscn": {
-        "delete": ["Content/ModeInformation/Sheet"],
-        "add_nodes": [FADING_INK_TIME],
-        "exports": ["time_value_node"],
     },
     # ---------------------------------------------------------------- One Stroke: CHỈ THỜI GIAN
     "nodes/hud/portrait/game/one_stroke_hud.tscn": {
         "delete": ["Content/ModeInformation/Sheet"],
         "exports": [],
     },
-    "nodes/hud/landscape/game/one_stroke_hud.tscn": {
-        "delete": ["Content/ModeInformation/Sheet"],
-        "exports": ["time_value_node"],
-    },
     # ---------------------------------------------------------------- Wall Builder: CHỈ THỜI GIAN
     "nodes/hud/portrait/game/wall_builder_hud.tscn": {
-        "delete": ["Content/ModeInformation/Sheet"],
-        "exports": ["time_value_node"],
-    },
-    "nodes/hud/landscape/game/wall_builder_hud.tscn": {
         "delete": ["Content/ModeInformation/Sheet"],
         "exports": ["time_value_node"],
     },
@@ -149,22 +120,6 @@ CONFIG: dict[str, dict] = {
         },
         "exports": ["time_value_node", "budget_value_node", "budget_max_label"],
     },
-    "nodes/hud/landscape/game/countdown_hud.tscn": {
-        "delete": [
-            "Content/ModeInformation/Time",
-            "Content/ModeInformation/Sheet/Title",
-            "Content/ModeInformation/Sheet/Spent",
-            "Content/ModeInformation/Sheet/Price",
-            "Content/ModeInformation/Sheet/Segments",
-        ],
-        "set": {
-            "Content/ModeInformation/Sheet": {
-                "custom_minimum_size": "Vector2(190, 115)",
-                "size_flags_horizontal": "0",
-            },
-        },
-        "exports": ["budget_value_node", "budget_max_label"],
-    },
     # ---------------------------------------------------------------- Fog of War: CHỈ LƯỢT THỬ LẠI
     "nodes/hud/portrait/game/fog_of_war_hud.tscn": {
         "delete": [
@@ -185,27 +140,6 @@ CONFIG: dict[str, dict] = {
             },
         },
         "exports": ["time_value_node", "retry_value_node", "retry_max_label", "retry_note_label"],
-    },
-    "nodes/hud/landscape/game/fog_of_war_hud.tscn": {
-        "delete": [
-            "Content/ModeInformation/Time",
-            "Content/ModeInformation/Sheet/RowVision",
-            "Content/ModeInformation/Sheet/VisionTitle",
-            "Content/ModeInformation/Sheet/Chip",
-            "Content/ModeInformation/Sheet/ChipLabel",
-            "Content/ModeInformation/Sheet/VisionDesc",
-            "Content/ModeInformation/Sheet/RowWarn",
-            "Content/ModeInformation/Sheet/Warn1",
-            "Content/ModeInformation/Sheet/Warn2",
-            "Content/ModeInformation/Sheet/SubNote",
-        ],
-        "set": {
-            "Content/ModeInformation/Sheet": {
-                "custom_minimum_size": "Vector2(170, 115)",
-                "size_flags_horizontal": "0",
-            },
-        },
-        "exports": ["retry_value_node", "retry_max_label", "retry_note_label"],
     },
     # ---------------------------------------------------------------- Sum Path: TỔNG · TOÁN TỬ · MỤC TIÊU
     "nodes/hud/portrait/game/sum_path_hud.tscn": {
@@ -229,24 +163,6 @@ CONFIG: dict[str, dict] = {
         ],
         "exports": [
             "time_value_node", "sum_value_node", "sum_note_label", "operator_value_label",
-            "target_value_node", "need_label",
-        ],
-    },
-    "nodes/hud/landscape/game/sum_path_hud.tscn": {
-        "delete": [
-            "Content/ModeInformation/Time",
-            "Content/ModeInformation/Sheet/Title",
-            "Content/ModeInformation/Sheet/SubNote",
-            "Content/ModeInformation/Sheet/Bar",
-        ],
-        "set": {
-            "Content/ModeInformation/Sheet": {
-                "custom_minimum_size": "Vector2(320, 115)",
-                "size_flags_horizontal": "0",
-            },
-        },
-        "exports": [
-            "sum_value_node", "sum_note_label", "operator_value_label",
             "target_value_node", "need_label",
         ],
     },

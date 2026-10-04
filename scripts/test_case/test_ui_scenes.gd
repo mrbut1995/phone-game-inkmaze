@@ -137,7 +137,6 @@ func _section_2_archivement() -> void:
 
 	var tab := _spawn("res://nodes/archivements/tab_button.tscn") as AchTabButton
 	_entry(tab != null, "tab_button.tscn instantiate ra AchTabButton")
-	var portrait_tab_h := 0.0
 	if tab != null:
 		_entry(tab.get_node_or_null("Label") != null, "tab Sổ tay co nhan tu scene")
 		_entry(not tab.label.text.is_empty(), "nhan tab So tay khai trong scene: '%s'" % tab.label.text)
@@ -150,28 +149,14 @@ func _section_2_archivement() -> void:
 		tab.label.text = "TẤT CẢ (28)"
 		_entry(tab.label.get_minimum_size().x <= 59.0,
 			"tab DOC: nhan dai nhat vua o 67px (%.0f <= 59)" % tab.label.get_minimum_size().x)
-		portrait_tab_h = tab.custom_minimum_size.y
 		tab.queue_free()
 
-	# TAB có HAI scene riêng theo hướng: dọc = hàng 5 tab (nhỏ gọn) · ngang = lưới 2 cột (to rõ)
-	var tab_land := _spawn("res://nodes/archivements/tab_button_landscape.tscn") as AchTabButton
-	_entry(tab_land != null, "tab_button_landscape.tscn instantiate ra AchTabButton")
-	if tab_land != null:
-		_entry(tab_land.get_node_or_null("Label") != null, "tab NGANG co nhan tu scene")
-		_entry(tab_land.custom_minimum_size.y > portrait_tab_h,
-			"tab NGANG cao hon tab DOC (%.0f > %.0f)" % [tab_land.custom_minimum_size.y, portrait_tab_h])
-		tab_land.queue_free()
-
-	# Mỗi layout Sổ tay phải instance ĐÚNG scene tab của hướng mình
+	# TAB: 1 hàng 5 tab (nhỏ gọn) — mỗi layout instante ĐÚNG scene tab của bản dọc
 	_check_layout_tab("res://scenes/layout/portrait/archivement.tscn",
-		"tab_button.tscn", "tab_button_landscape.tscn")
-	_check_layout_tab("res://scenes/layout/landscape/archivement.tscn",
-		"tab_button_landscape.tscn", "tab_button.tscn")
-	# Cỡ chữ khai trong scene: dọc 9 (5 tab/hàng 355px) · ngang 16 (lưới 2 cột rộng)
+		"tab_button.tscn")
+	# Cỡ chữ khai trong scene: 9 (5 tab/hàng 355px)
 	_entry(FileAccess.get_file_as_string("res://nodes/archivements/tab_button.tscn").contains("font_size = 9"),
 		"tab DOC khai co chu 9 trong scene")
-	_entry(FileAccess.get_file_as_string("res://nodes/archivements/tab_button_landscape.tscn").contains("font_size = 16"),
-		"tab NGANG khai co chu 16 trong scene")
 
 	var page := _spawn("res://nodes/archivements/page.tscn") as AchPage
 	_entry(page != null, "page.tscn instantiate ra AchPage")
@@ -216,37 +201,24 @@ func _section_3_levels() -> void:
 		_entry(page.grid().get_child_count() == 1, "them the man vao luoi = vao dung trang")
 		page.queue_free()
 
-	# Bản NGANG: trang canh giữa lưới + thẻ nằm ngang (tỉ lệ như mockup level_selection_landscape)
-	var land_page := _spawn("res://nodes/level_selection/page_landscape.tscn") as LevelsPage
-	_entry(land_page != null, "page_landscape.tscn instantiate ra LevelsPage")
-	if land_page != null:
-		_entry(land_page.get_node_or_null("Center/Grid") != null, "trang NGANG co Center/Grid")
-		_entry(land_page.grid() != null and land_page.grid().get_parent() is CenterContainer,
-			"grid() tra ve luoi nam trong CenterContainer (canh giua)")
-		_entry(land_page.grid().columns == 3, "luoi ngang 3 cot (tu scene)")
-		land_page.queue_free()
-
-	var land_card := _spawn("res://nodes/level_selection/level_card_landscape.tscn") as LevelCard
-	_entry(land_card != null, "level_card_landscape.tscn instantiate ra LevelCard")
-	if land_card != null:
-		var design := land_card.custom_minimum_size
-		_entry(design == Vector2(372, 277),
-			"the NGANG giu co thiet ke 372x277 (dang %.0fx%.0f)" % [design.x, design.y])
-		_entry(design.x > design.y, "the NGANG NAM NGANG (rong %.0f > cao %.0f)" % [design.x, design.y])
-		var prefix := land_card.get("prefix_lbl") as Label
-		var halo := land_card.get("next_halo") as Control
-		var ribbon := land_card.get("next_ribbon") as Control
+	# Thẻ màn chơi: trạng thái MÀN TIẾP + sao xám cho thẻ KHÓA (art khai trong `level_card.tscn`)
+	var card := _spawn("res://nodes/level_selection/level_card.tscn") as LevelCard
+	_entry(card != null, "level_card.tscn instantiate ra LevelCard")
+	if card != null:
+		var prefix := card.get("prefix_lbl") as Label
+		var halo := card.get("next_halo") as Control
+		var ribbon := card.get("next_ribbon") as Control
 		_entry(prefix != null and halo != null and ribbon != null,
-			"the NGANG khai bao du prefix_lbl + next_halo + next_ribbon cho trang thai MÀN TIẾP")
+			"the khai bao du prefix_lbl + next_halo + next_ribbon cho trang thai MAN TIEP")
 
-		land_card.call("setup", 3, false, 0, false, 1, 3, true)
+		card.call("setup", 3, false, 0, false, 1, 3, true)
 		_entry(halo != null and halo.visible and ribbon != null and ribbon.visible,
-			"the 'MÀN TIẾP' hien hao quang + ruy bang NEW")
+			"the 'MAN TIEP' hien hao quang + ruy bang NEW")
 		_entry(prefix != null and prefix.text == tr("STR_LEVEL_NEXT"),
-			"the MÀN TIẾP doi nhan thanh '%s'" % tr("STR_LEVEL_NEXT"))
+			"the MAN TIEP doi nhan thanh '%s'" % tr("STR_LEVEL_NEXT"))
 
-		land_card.call("setup", 4, true, 0, false, 1, 4, false)
-		var star1 := land_card.get("star1") as TextureRect
+		card.call("setup", 4, true, 0, false, 1, 4, false)
+		var star1 := card.get("star1") as TextureRect
 		_entry(halo != null and not halo.visible, "the KHOA khong hien hao quang")
 		_entry(star1 != null and star1.texture != null
 				and star1.texture.resource_path.contains("star_locked"),
@@ -254,7 +226,7 @@ func _section_3_levels() -> void:
 				% (star1.texture.resource_path.get_file() if star1 != null and star1.texture != null else "?"))
 		_entry(prefix != null and prefix.text == tr("STR_LEVEL_PREFIX"),
 			"the thuong tra ve nhan goc '%s'" % tr("STR_LEVEL_PREFIX"))
-		land_card.queue_free()
+		card.queue_free()
 
 	var dot := _spawn("res://nodes/level_selection/page_dot.tscn")
 	_entry(dot != null, "page_dot.tscn instantiate duoc")
@@ -472,23 +444,18 @@ func _section_7_board_hud_popup() -> void:
 # ---------------------------------------------------------------------------
 const HUD_FOLDERS := [
 	"res://nodes/hud/portrait/game",
-	"res://nodes/hud/landscape/game",
 ]
-## Bản NGANG: ActionBar nằm TRONG LAYOUT (cùng cột dọc với bàn cờ), không nằm trong HUD —
-## `game.gd` gán `hud.action_bar_node = layout.landscape_action_bar` lúc chạy nên scene để trống là ĐÚNG.
-const HUD_LANDSCAPE_OPTIONAL := ["action_bar_node"]
-## Scene HUD TRƯU TƯỢNG (chưa có `Time` riêng của bản NGANG ⇒ node do từng HUD chế độ khai).
+## Scene HUD TRƯU TƯỢNG (chưa có `Time` riêng ⇒ node do từng HUD chế độ khai).
 ## Bỏ qua scene này khi kiểm export: mọi HUD CHẾ ĐỘ đều được kiểm riêng.
 const HUD_ABSTRACT_SCENES := ["game_hud.tscn"]
 ## Export CỐ Ý để trống vì node đã XOÁ khỏi scene (2026-09-27 — “chỉ hiện thứ cần thiết”):
-## bản NGANG khai `Time` trong từng HUD chế độ nên xoá được; bản DỌC dùng node KẾ THỪA
-## (`game_hud.tscn`) nên chỉ ẩn được — vì vậy bảng này theo TÊN FILE (áp cho cả 2 hướng).
+## HUD chế độ khai `Time` riêng nên xoá được, còn `game_hud.tscn` dùng node KẾ THỪA nên chỉ ẩn.
 const HUD_EXPORT_OPTIONAL := {
 	"dungeon_mode.tscn": ["time_value_node"],       # Dungeon: chỉ SỐ BƯỚC + TẦNG
 	"countdown_hud.tscn": ["time_value_node"],      # Countdown: chỉ NGÂN SÁCH CÒN
 	"fog_of_war_hud.tscn": ["time_value_node", "retry_note_label"],
-		# Fog of War: bản DỌC chỉ còn LƯỢT THỬ LẠI (Value · Max trong `Retry/Control`) — node
-		# `Note` đã xoá nên export để trống; bản NGANG vẫn giữ `Note` (script tự bỏ qua khi null).
+		# Fog of War: chỉ còn LƯỢT THỬ LẠI (Value · Max trong `Retry/Control`) — node
+		# `Note` đã xoá nên export để trống (script tự bỏ qua khi null).
 	"sum_path_hud.tscn": ["time_value_node"],       # Sum Path: chỉ TỔNG · TOÁN TỬ · MỤC TIÊU
 }
 
@@ -518,8 +485,6 @@ func _section_9_hud_bindings() -> void:
 			for prop in script.get_script_property_list():
 				if prop.hint != PROPERTY_HINT_NODE_TYPE:
 					continue
-				if HUD_LANDSCAPE_OPTIONAL.has(prop.name) and path.contains("/landscape/"):
-					continue
 				if (HUD_EXPORT_OPTIONAL.get(path.get_file(), []) as Array).has(prop.name):
 					continue
 				exports += 1
@@ -527,7 +492,7 @@ func _section_9_hud_bindings() -> void:
 					missing.append("%s: %s" % [path.get_file(), prop.name])
 		node.free()
 
-	_entry(scenes.size() >= 18, "quet duoc %d scene HUD (2 huong)" % scenes.size())
+	_entry(scenes.size() >= 9, "quet duoc %d scene HUD (ban doc)" % scenes.size())
 	_entry(exports >= 30, "HUD co %d export NODE can bind" % exports)
 	_entry(missing.is_empty(),
 		"moi export node cua HUD deu duoc BIND trong scene%s"
@@ -602,7 +567,7 @@ func _section_10_hud_minimal() -> void:
 					var c := child as Control
 					if c != null and c.visible:
 						shown.append(String(c.name))
-				# Bản NGANG gom nhiều thẻ vào 1 `Control` bao (HBox không neo được như `Control` bản DỌC):
+				# Một số HUD gom nhiều thẻ vào 1 `Control` bao (HBox không neo được như `Control`):
 				# thấy đúng 1 Control hiện thì mở 1 lớp, so các node CON của nó với danh sách chờ.
 				if shown.size() == 1:
 					var wrap := info.get_node_or_null(NodePath(shown[0])) as Control
@@ -617,9 +582,8 @@ func _section_10_hud_minimal() -> void:
 			var want_sorted := want.duplicate()
 			want_sorted.sort()
 			checked += 1
-			var huong := "NGANG" if folder.contains("landscape") else "DỌC"
 			if shown != want_sorted and shown_inner != want_sorted:
-				bad.append("%s (%s): hien [%s] — can [%s]" % [huong,
+				bad.append("%s: hien [%s] — can [%s]" % [
 					file_name, ", ".join(shown), ", ".join(want_sorted)])
 			# bên trong Sheet
 			if HUD_SHEET_ROWS.has(file_name):
@@ -971,12 +935,10 @@ func _collect_star_rects(node: Node, out: Array[Node]) -> void:
 
 
 ## Layout Sổ tay phải instance ĐÚNG scene tab của hướng mình (và KHÔNG dùng của hướng kia)
-func _check_layout_tab(layout_path: String, expect_file: String, forbid_file: String) -> void:
+func _check_layout_tab(layout_path: String, expect_file: String) -> void:
 	var text := FileAccess.get_file_as_string(layout_path)
 	var expect := "res://nodes/archivements/%s" % expect_file
-	var forbid := "res://nodes/archivements/%s" % forbid_file
 	_entry(text.contains(expect), "%s dung %s" % [layout_path.get_file(), expect_file])
-	_entry(not text.contains(forbid), "%s khong dung %s" % [layout_path.get_file(), forbid_file])
 
 
 func _entry(condition: bool, label: String) -> void:

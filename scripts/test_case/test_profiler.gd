@@ -290,27 +290,6 @@ func _section_5_scene(manager: Node) -> void:
 	_entry(not Popups.is_open(Popups.EDIT_PROFILE), "Bam vung toi ngoai popup -> dong Edit Profile")
 	_entry(Popups.is_open(Popups.PROFILER), "Dong Edit Profile -> quay lai Profiler")
 
-	# Bố cục NGANG: nạp CHÍNH dữ liệu đó vào layout Landscape để chắc chắn binding
-	# (node paths trong scenes/layout/landscape/profiler_popup.tscn) khớp tên node script dùng.
-	var land := (load("res://scenes/layout/landscape/profiler_popup.tscn") as PackedScene).instantiate() as ProfilerLayout
-	scene.add_child(land)
-	await process_frame
-	scene.layout = land
-	scene.refresh()
-	await process_frame
-	_entry(land.hero_avatar != null and land.hero_avatar.texture != null, "Landscape: the hero hien avatar")
-	_entry(land.hero_frame != null and land.hero_frame.texture != null, "Landscape: the hero hien vien khung")
-	_entry(land.hero_name != null and land.hero_name.text == str(manager.call("display_name_text")),
-		"Landscape: the hero hien dung ten hien thi")
-	_entry(land.hero_tier_text != null and not land.hero_tier_text.text.is_empty(), "Landscape: chip danh hieu co chu")
-	_entry(land.hero_exp_value != null and land.hero_exp_value.text.contains("/"), "Landscape: co dong EXP")
-	_entry(land.hero_uid != null and land.hero_uid.text.contains("IM-"), "Landscape: co dong UID")
-	_entry(land.hero_fill != null and land.hero_fill.offset_right > land.hero_fill.offset_left, "Landscape: thanh EXP co phan to")
-	var chip_land := land.chip_text()
-	_entry(chip_land != null and chip_land.text.contains(str(manager.call("level"))), "Landscape: chip cap do khop manager")
-	land.queue_free()
-	await process_frame
-
 	# Nút X (Close) của hồ sơ ĐÓNG popup (không điều hướng màn hình)
 	if is_instance_valid(close_btn):
 		close_btn.pressed.emit()

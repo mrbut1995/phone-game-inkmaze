@@ -227,11 +227,10 @@ func _section_3_skip_level(gm: Node, lm: Node) -> void:
 # 4. Nút SKIP trên thanh hành động
 # ---------------------------------------------------------------------------
 func _section_4_skip_button(gm: Node) -> void:
-	print("\n--- 4. NUT SKIP: CO O CA 2 HUONG + CHI HIEN KHI CHOI MAN ---")
+	print("\n--- 4. NUT SKIP: CO TRONG BAN DOC + CHI HIEN KHI CHOI MAN ---")
 
 	for path in [
 		"res://nodes/hud/portrait/game/action_bar.tscn",
-		"res://nodes/hud/landscape/game/action_bar.tscn",
 	]:
 		var packed := load(path) as PackedScene
 		var bar := packed.instantiate() as ActionBar if packed != null else null

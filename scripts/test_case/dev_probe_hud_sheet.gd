@@ -5,13 +5,9 @@ extends SceneTree
 
 const PATHS := [
 	"res://nodes/hud/portrait/game/countdown_hud.tscn",
-	"res://nodes/hud/landscape/game/countdown_hud.tscn",
 	"res://nodes/hud/portrait/game/fog_of_war_hud.tscn",
-	"res://nodes/hud/landscape/game/fog_of_war_hud.tscn",
 	"res://nodes/hud/portrait/game/sum_path_hud.tscn",
-	"res://nodes/hud/landscape/game/sum_path_hud.tscn",
 	"res://nodes/hud/portrait/game/dungeon_mode.tscn",
-	"res://nodes/hud/landscape/game/dungeon_mode.tscn",
 ]
 
 
@@ -25,7 +21,7 @@ func _init() -> void:
 		root.add_child(hud)
 		await process_frame
 		await process_frame
-		print("\n=== %s" % path.get_file() + ("  [NGANG]" if path.contains("landscape") else "  [DỌC]"))
+		print("\n=== %s  [DỌC]" % path.get_file())
 		var info := hud.get_node_or_null("Content/ModeInformation")
 		if info != null:
 			_walk(info, 1)

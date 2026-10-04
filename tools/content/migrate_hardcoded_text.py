@@ -29,31 +29,12 @@ SCENE_REPLACEMENTS: dict[str, list[tuple[str, str]]] = {
         ("Tổng số", "STR_HUD_SUM"),
         ("Mục Tiêu", "STR_HUD_TARGET"),
     ],
-    "nodes/hud/landscape/game/dungeon_mode.tscn": [
-        ("BƯỚC CÒN LẠI", "STR_HUD_STEPS_LEFT"),
-        ("HẦM NGỤC", "STR_HUD_DUNGEON_SUB"),
-    ],
-    "nodes/hud/landscape/game/level_mode.tscn": [
-        ("TỐC ĐỘ: TIÊU CHUẨN", "STR_HUD_SPEED_STANDARD"),
-    ],
-    "nodes/hud/landscape/game/minesweep_hud.tscn": [
-        ("ĐANG DÒ MÌN", "STR_HUD_MINE_TIME_SUB"),
-    ],
-    "nodes/hud/landscape/game/blind_memory_hud.tscn": [
-        ("⏸ ĐỒNG HỒ ĐỨNG YÊN", "STR_HUD_BLIND_TIME_PAUSED"),
-    ],
     "nodes/game/cell.tscn": [
         ("SẮP PHAI", "STR_CELL_ALMOST_FADED"),
         ("CẠN", "STR_CELL_DRY"),
     ],
     "nodes/hud/portrait/game/action_bar.tscn": [
         ("Submit", "STR_TOOL_SUBMIT"),
-        ("UNDO", "STR_TOOL_UNDO"),
-        ("HINT", "STR_TOOL_HINT"),
-    ],
-    "nodes/hud/landscape/game/action_bar.tscn": [
-        ("SUBMIT", "STR_TOOL_SUBMIT"),
-        ("RESTART", "STR_TOOL_RESTART"),
         ("UNDO", "STR_TOOL_UNDO"),
         ("HINT", "STR_TOOL_HINT"),
     ],

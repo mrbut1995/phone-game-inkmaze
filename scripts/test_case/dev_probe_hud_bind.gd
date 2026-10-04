@@ -4,9 +4,7 @@ extends SceneTree
 
 const PATHS := [
 	"res://nodes/hud/portrait/game/game_hud.tscn",
-	"res://nodes/hud/landscape/game/game_hud.tscn",
 	"res://nodes/hud/portrait/game/level_mode.tscn",
-	"res://nodes/hud/landscape/game/fog_of_war_hud.tscn",
 	"res://nodes/hud/portrait/game/sum_path_hud.tscn",
 	"res://nodes/hud/portrait/game/countdown_hud.tscn",
 ]
