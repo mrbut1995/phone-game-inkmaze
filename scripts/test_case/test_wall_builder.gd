@@ -95,23 +95,16 @@ func _run(scene: GameScene) -> void:
 	_entry(hud != null, "Man choi dung HUD WallBuilderHUD rieng")
 	if hud != null:
 		hud.update_hud({"mode": mode})
-		var max_lbl := hud.get_node_or_null("Sheet/Cover/CoverMax") as Label
-		var note := hud.get_node_or_null("Sheet/Cover/CoverNote") as Label
-		var submit := hud.get_node_or_null("Sheet/Row1/Submit") as Label
-		var chip := hud.get_node_or_null("Sheet/Row1/ChipLabel") as Label
-		_entry(max_lbl != null and max_lbl.text == tr("STR_HUD_WB_COVER_MAX").format([true_segments]),
-			"HUD: tong so doan ('%s')" % _text_of(max_lbl))
-		_entry(note != null and note.text == tr("STR_HUD_WB_COVER_NOTE").format([true_segments]),
-			"HUD: con thieu bao nhieu doan ('%s')" % _text_of(note))
-		_entry(submit != null and submit.text == tr("STR_HUD_WB_SUBMIT").format([3, 3]),
-			"HUD: dong LUOT GUI ('%s')" % _text_of(submit))
-		_entry(chip != null and chip.text == tr("STR_HUD_WB_CHIP_BUILDING"),
-			"HUD: chip trang thai DANG NOI TUONG ('%s')" % _text_of(chip))
+		# 2026-09-27: HUD Wall Builder CHỈ hiện THỜI GIAN — bảng "TƯỜNG ĐÃ VẼ" (số đoạn · lượt GỬI ·
+		# chip trạng thái · thanh tiến độ) đã gỡ khỏi scene (số tường đọc trực tiếp trên bàn cờ).
+		var time_card := hud.find_child("Time", true, false) as Control
+		var time_val := time_card.get_node_or_null("Value") as Label if time_card != null else null
+		_entry(time_card != null and time_card.visible, "HUD: co the THOI GIAN")
+		_entry(time_val != null and not time_val.text.is_empty(),
+			"HUD: the THOI GIAN hien gia tri ('%s')" % _text_of(time_val))
+		_entry(hud.find_child("Sheet", true, false) == null,
+			"HUD: da go bang TUONG DA VE (chi con THOI GIAN)")
 		_entry(hud.challenge_card() == null, "challenge_card() = null (khong co the THU THACH)")
-		var sheet := hud.get_node_or_null("Sheet") as Control
-		if sheet != null:
-			_entry(absf(sheet.size.x - 690.0) <= 1.0 and absf(sheet.size.y - 156.0) <= 1.0,
-				"Bang Tuong Da Ve 690x156 (%.0fx%.0f)" % [sheet.size.x, sheet.size.y])
 	# Thanh hanh dong: nut GUI BAI (Submit) = nut rieng cua Wall Builder (nut Tool/Wall cu da BO 2026-09-26)
 	var submit_btn := scene.submit_btn as BaseButton
 	_entry(submit_btn != null and submit_btn.visible,
@@ -226,9 +219,10 @@ func _run(scene: GameScene) -> void:
 		"Dung du tuong -> MOI o deu bao DA KHOP SO (nen xanh la nhat)")
 	if hud != null:
 		hud.update_hud({"mode": mode})
-		var chip2 := hud.get_node_or_null("Sheet/Row1/ChipLabel") as Label
-		_entry(chip2 != null and chip2.text == tr("STR_HUD_WB_CHIP_READY"),
-			"Khop het -> chip bao SAN SANG GUI ('%s')" % _text_of(chip2))
+		# 2026-09-27: chip "SẴN SÀNG GỬI" đã gỡ cùng bảng TƯỜNG ĐÃ VẼ — trạng thái đủ tường đọc
+		# trực tiếp trên bàn cờ (mọi ô báo ĐÃ KHỚP SỐ) + nút GỬI BÀI sáng trên thanh hành động.
+		_entry(hud.find_child("Sheet", true, false) == null,
+			"Khop het -> HUD khong con bang TUONG DA VE (chi con THOI GIAN)")
 	gc.submit_build()
 	await process_frame
 	_entry(bool(gc.get("_floor_finished")), "GUI DUNG -> THANG man")

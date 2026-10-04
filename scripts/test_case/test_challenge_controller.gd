@@ -163,13 +163,14 @@ func _check_minesweep_hud(scene: GameScene) -> void:
 func _check_sum_path_hud(scene: GameScene) -> void:
 	var hud := scene.ui_controller.hud as SumPathHUD
 	assert(hud != null, "Sum Path phai dung SumPathHUD (nodes/hud/sum_path_hud.tscn)")
-	var sheet := "Content/ModeInformation/Sheet"
-	var sum_card := hud.get_node_or_null(sheet + "/BlockCurrent") as Control
-	var op_card := hud.get_node_or_null(sheet + "/Emblem") as Control
-	var target_card := hud.get_node_or_null(sheet + "/BlockTarget") as Control
-	var sum_val := hud.get_node_or_null(sheet + "/BlockCurrent/Sum/Value") as Label
-	var op_val := hud.get_node_or_null(sheet + "/Emblem/Operator/Value") as Label
-	var target_val := hud.get_node_or_null(sheet + "/BlockTarget/Target/Value") as Label
+	# Bố cục DỌC bọc 3 khối trong `HBoxContainer`, bản NGANG để trực tiếp trong `Sheet`
+	# ⇒ tra theo TÊN (find_child) để test đúng cho cả 2 hướng.
+	var sum_card := hud.find_child("BlockCurrent", true, false) as Control
+	var op_card := hud.find_child("Emblem", true, false) as Control
+	var target_card := hud.find_child("BlockTarget", true, false) as Control
+	var sum_val := hud.sum_value_node
+	var op_val := hud.operator_value_label
+	var target_val := hud.target_value_node
 	if sum_val == null or sum_val.text.is_empty():
 		_fail("HUD Sum Path thieu gia tri TONG hien tai")
 	if target_val == null or target_val.text.strip_edges().is_empty():
@@ -177,9 +178,9 @@ func _check_sum_path_hud(scene: GameScene) -> void:
 	if op_card == null or op_val == null:
 		_fail("HUD Sum Path thieu panel TOAN TU (giua TONG va MUC TIEU)")
 	# 2026-09-27: thẻ chỉ còn 3 khối này — dòng tiêu đề + thanh tiến độ đã gỡ khỏi scene
-	if hud.get_node_or_null(sheet + "/Bar") != null:
+	if hud.find_child("Bar", true, false) != null:
 		_fail("HUD Sum Path da go thanh tien do (Bar)")
-	if hud.get_node_or_null(sheet + "/Title") != null:
+	if hud.find_child("Title", true, false) != null:
 		_fail("HUD Sum Path da go dong tieu de the (Title)")
 	# Panel TOÁN TỬ phải nằm giữa panel TỔNG và panel MỤC TIÊU
 	if sum_card != null and op_card != null and target_card != null:
@@ -331,35 +332,68 @@ func _ctx(gc: GameController, state: GameState, path: Array[Vector2i], elapsed: 
 	print("[CHECK] Tinh Sao: dang choi=1 · hoan hao=3 · dam tuong=2 · cham&lau=0; nguong 15 buoc/45s")
 
 
+## Tìm đường đi NGẮN NHẤT (BFS, không qua ô ĐÍCH) từ `from_pos` tới 1 ô có tường để đâm.
+## Trả về `{"path": Array[Vector2i], "blocked": Vector2i}` hoặc `{}` nếu không có.
+func _find_wall_hit_target(maze: MazeData, from_pos: Vector2i) -> Dictionary:
+	var end_pos: Vector2i = maze.get_end()
+	var prev := {from_pos: from_pos}
+	var queue: Array[Vector2i] = [from_pos]
+	var visited: Array[Vector2i] = []
+	while not queue.is_empty():
+		var cur: Vector2i = queue.pop_front()
+		visited.append(cur)
+		for dir in DIRS:
+			var nxt: Vector2i = cur + dir
+			if nxt == end_pos or not maze.is_in_bounds(nxt) or not maze.is_cell_active(nxt):
+				continue
+			if maze.has_wall(cur, nxt) or prev.has(nxt):
+				continue
+			prev[nxt] = cur
+			queue.append(nxt)
+	for cell in visited:
+		if cell == from_pos or cell == end_pos:
+			continue
+		for dir in DIRS:
+			var blocked: Vector2i = cell + dir
+			if not maze.is_in_bounds(blocked) or not maze.is_cell_active(blocked):
+				continue
+			if not maze.has_wall(cell, blocked):
+				continue
+			var path: Array[Vector2i] = []
+			var node: Vector2i = cell
+			while node != from_pos:
+				path.push_front(node)
+				node = prev[node]
+			return {"path": path, "blocked": blocked}
+	return {}
+
+
 func _check_revive_level(scene: GameScene, gc: GameController) -> void:
 	var grid: GridController = scene.grid_controller
 	var board: Node = scene.board_view
 	var maze: MazeData = grid.maze
 	var start_pos: Vector2i = grid.current_pos
 
-	# Tìm 1 nước đi hợp lệ tới ô có ít nhất 1 hướng là tường (để test đâm tường)
-	var step_cell := Vector2i(-1, -1)
-	var wall_cell := Vector2i(-1, -1)
-	for dir in DIRS:
-		var a: Vector2i = start_pos + dir
-		if not maze.is_in_bounds(a) or maze.has_wall(start_pos, a) or not maze.is_cell_active(a):
-			continue
-		for dir2 in DIRS:
-			var b: Vector2i = a + dir2
-			if maze.is_in_bounds(b) and maze.is_cell_active(b) and maze.has_wall(a, b):
-				step_cell = a
-				wall_cell = b
-				break
-		if step_cell != Vector2i(-1, -1):
-			break
-	if step_cell == Vector2i(-1, -1):
-		_fail("Khong tim duoc o de test hoi sinh (man khong co tuong canh duong di)")
+	# Tìm đường đi NGẮN NHẤT từ điểm S tới 1 ô có tường để đâm (mê cung nhỏ có thể phải đi vài bước
+	# mới tới được tường; KHÔNG đi qua ô ĐÍCH kẻo thắng màn).
+	var target := _find_wall_hit_target(maze, start_pos)
+	if target.is_empty():
+		_fail("Khong tim duoc duong toi tuong de test hoi sinh")
 		return
+	var path: Array[Vector2i] = target["path"]
+	var wall_cell: Vector2i = target["blocked"]
+	var step_cell: Vector2i = path[path.size() - 1]
+	var back_cell: Vector2i = path[path.size() - 2] if path.size() >= 2 else start_pos
 
-	grid.try_move_to(step_cell)
-	await process_frame
-	if gc.game_state.floor_moves != 1:
-		_fail("Sau 1 buoc, floor_moves phai = 1, dang la %d" % gc.game_state.floor_moves)
+	# Đi hết đường (mỗi bước 1 ô) — số bước phải ĐẾM ĐỦ
+	for cell in path:
+		grid.try_move_to(cell)
+		await process_frame
+	if grid.current_pos != step_cell:
+		_fail("Phai di toi duoc o %s truoc khi dam tuong, dang o %s" % [str(step_cell), str(grid.current_pos)])
+	if gc.game_state.floor_moves != path.size():
+		_fail("Sau %d buoc, floor_moves phai = %d, dang la %d"
+			% [path.size(), path.size(), gc.game_state.floor_moves])
 
 	# Đâm tường = thua ngay (Play Mode) -> popup thua bản LEVEL (3 thử thách + số Sao)
 	grid.try_move_to(wall_cell)
@@ -392,10 +426,11 @@ func _check_revive_level(scene: GameScene, gc: GameController) -> void:
 	await process_frame
 	await create_timer(0.35).timeout
 
-	if grid.current_pos != start_pos:
-		_fail("Hoi sinh Level phai quay ve o truoc do (%s), dang o %s" % [str(start_pos), str(grid.current_pos)])
-	if gc.game_state.floor_moves != 0:
-		_fail("Hoi sinh Level khong cong buoc: floor_moves phai ve 0, dang la %d" % gc.game_state.floor_moves)
+	if grid.current_pos != back_cell:
+		_fail("Hoi sinh Level phai quay ve o truoc do (%s), dang o %s" % [str(back_cell), str(grid.current_pos)])
+	if gc.game_state.floor_moves != path.size() - 1:
+		_fail("Hoi sinh Level khong cong buoc: floor_moves phai ve %d, dang la %d"
+			% [path.size() - 1, gc.game_state.floor_moves])
 	if Popups.has_open():
 		_fail("Sau hoi sinh phai dong popup thua")
 	if not scene.timer_controller.is_running:

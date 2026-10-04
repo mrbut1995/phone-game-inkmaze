@@ -59,7 +59,7 @@ func _run(scene: GameScene) -> void:
 	_entry(hud != null, "Man choi dung HUD FogOfWarHUD rieng")
 	if hud != null:
 		hud.update_hud({"mode": mode})
-		var value := hud.get_node_or_null("Sheet/Retry/Value") as Label
+		var value := hud.retry_value_node
 		_entry(value != null and value.text == "3", "HUD hien 3 luot thu ('%s')"
 			% (value.text if value != null else ""))
 	# Thanh hanh dong (2026-09-26): 2 nut Tool/Wall cu da BO — nut CHƠI LẠI nam trong thanh nay
@@ -86,9 +86,13 @@ func _run(scene: GameScene) -> void:
 	_entry(gc.get("_run_active") == true, "Con 1 luot -> van choi tiep")
 	if hud != null:
 		hud.update_hud({"mode": mode})
-		var note := hud.get_node_or_null("Sheet/Retry/Note") as Label
-		_entry(note != null and note.get_theme_color("font_color") == FogOfWarHUD.COLOR_NOTE_DANGER,
-			"Con 1 luot -> dong nhac tren HUD chuyen DO")
+		# 2026-09-27: bản DỌC đã gỡ dòng nhắc này (chỉ bản NGANG còn `Note`) ⇒ chỉ kiểm khi có node.
+		var note := hud.retry_note_label
+		if note == null:
+			print("[CHECK] Con 1 luot: ban DOC khong co dong nhac (da go) — bo qua kiem tra mau")
+		else:
+			_entry(note.get_theme_color("font_color") == FogOfWarHUD.COLOR_NOTE_DANGER,
+				"Con 1 luot -> dong nhac tren HUD chuyen DO")
 
 	# --- Lần đâm 3: HẾT LƯỢT -> thua ---
 	grid.try_move_to(start + wall_dir)
