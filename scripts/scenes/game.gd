@@ -133,6 +133,9 @@ func _wire_controllers() -> void:
 	_connect_once(grid_controller, "reached_end", game_controller, "_on_reached_end")
 	_connect_once(grid_controller, "dead_end", game_controller, "_on_dead_end")
 	# ToolController → Board (đổi công cụ VẼ ĐƯỜNG ⇄ VẼ TƯỜNG)
+	# Anchor → GridController: đoạn tường người chơi KÉO NỐI (Wall Builder "built" · gợi ý "suspected")
+	# phải được vẽ lại trên bàn cờ — thiếu dây này thì mode ĐẾM đủ tường nhưng bàn cờ không hiện gì.
+	_connect_once(anchor_controller, "suspected_wall_toggled", grid_controller, "_on_suspected_wall_toggled")
 	_connect_once(tool_controller, "tool_changed", board_view, "set_tool_mode")
 	# Đồng hồ → GameController
 	_connect_once(timer_controller, "time_updated", game_controller, "_on_time_updated")
