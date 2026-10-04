@@ -11,16 +11,19 @@ signal next_requested
 const STAR_FULL := preload("res://assets/images-png/common/star_highlight.png")
 const STAR_EMPTY := preload("res://assets/images-png/common/star_empty.png")
 
-@onready var stars_row: Control = piece("Stars")
-@onready var label_subtitle: Label = piece("Subtitle")
-@onready var btn_next: BaseButton = piece("NextBtn")
-@onready var value_time: Label = piece("StatValue1")
-@onready var value_steps: Label = piece("StatValue2")
-@onready var value_walls: Label = piece("StatValue3")
-@onready var value_score: Label = piece("TotalValue")
+## Node binding: khai `node_paths` + `NodePath` trong `winning.tscn` (xem `chapters_layout`)
+@export var stars_row: Control = null
+@export var label_subtitle: Label = null
+@export var label_next: Label = null
+@export var value_time: Label = null
+@export var value_steps: Label = null
+@export var value_walls: Label = null
+@export var value_score: Label = null
+@export var stamp_title: Label = null
+@export var stamp_sub: Label = null
 ## Hiệu ứng riêng của popup (animation "stars") — node tên `FxAnim` vì popup đã có sẵn
 ## `AnimationPlayer` của base.tscn (hiệu ứng mở/đóng) — không được trùng tên.
-@onready var _fx: AnimationPlayer = get_node_or_null("FxAnim")
+@export var fx_anim: AnimationPlayer = null
 
 
 func _on_open() -> void:
@@ -59,12 +62,9 @@ func _on_open() -> void:
 	_fill_stamp(int(data.get("stars", 0)), data.get("challenges", null))
 	# Dây 2 nút (Chơi lại / Màn kế) khai trong `winning.tscn` (cùng scene)
 	# Hết chương (hoặc chương kế chưa mở) -> nút đổi thành "CHỌN CHƯƠNG" (bấm ra màn Chọn Chương)
-	if btn_next != null:
-		var label := btn_next.get_node_or_null("Label") as Label
-		if label != null:
-			label.text = TranslationServer.translate(
-				"STR_BTN_NEXT_LEVEL" if bool(data.get("next_available", true))
-				else "STR_CHAPTER_SCREEN_TITLE")
+	label_next.text = TranslationServer.translate(
+		"STR_BTN_NEXT_LEVEL" if bool(data.get("next_available", true))
+		else "STR_CHAPTER_SCREEN_TITLE")
 
 
 ## Con dấu đỏ ở góc phải: "n / m THỬ THÁCH" + "★ ĐẠT n SAO ★" (mockup popup_win_level.svg)
@@ -78,12 +78,8 @@ func _fill_stamp(stars: int, challenges: Variant) -> void:
 		total += 1
 		if row is Dictionary and bool((row as Dictionary).get("done", false)):
 			done += 1
-	var title := piece("Stamp/StampTitle") as Label
-	if title != null:
-		title.text = tr("STR_WIN_STAMP_TITLE").format([done, total])
-	var sub := piece("Stamp/StampSub") as Label
-	if sub != null:
-		sub.text = tr("STR_WIN_STAMP_SUB").format([stars])
+	stamp_title.text = tr("STR_WIN_STAMP_TITLE").format([done, total])
+	stamp_sub.text = tr("STR_WIN_STAMP_SUB").format([stars])
 
 
 ## 2850 -> "2,850" cho khớp mockup
@@ -120,7 +116,7 @@ func _set_stars(stars: int) -> void:
 	if earned_count == 0:
 		return
 	# Chỉ BẬT track của sao ĐẠT được: track 0/1/2 = Star1/2/3 (scale), track 3/4/5 = tiếng "pop"
-	var anim := _fx.get_animation(&"stars") if _fx != null else null
+	var anim := fx_anim.get_animation(&"stars") if fx_anim != null else null
 	if anim == null:
 		# Fallback khi scene thiếu FxAnim/animation
 		for i in earned_count:
@@ -134,7 +130,7 @@ func _set_stars(stars: int) -> void:
 		return
 	for t in anim.get_track_count():
 		anim.track_set_enabled(t, (t % 3) < earned_count)
-	_fx.play(&"stars")
+	fx_anim.play(&"stars")
 
 
 ## Tiếng "pop" mỗi lần một ngôi sao nảy lên — gọi từ method track của animation "stars"

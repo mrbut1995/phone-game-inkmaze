@@ -2,10 +2,10 @@ extends SceneTree
 ## ============================================================================
 ## Test: CÁC LỖI ASSET/POPUP ĐÃ SỬA (2026-09)
 ##
-## 1. Icon nút Restart trên HUD (4 trạng thái) — thiết kế mới "icon reset" (2026-09-16):
-##    mũi tên góc vuông (M 19 19 v 10 h 10) + cung tròn KHÔNG đè nét mũi tên.
+## 1. Icon nút Restart trên HUD (4 trạng thái) — thiết kế "cục tẩy" (eraser) áp dụng ĐỒNG NHẤT cả 4 trạng thái.
+##    ⚠ Kiểm tra trên NGUỒN .svg (bản .png chỉ là raster lại từ SVG — không đọc được path trong đó).
 ## 2. Popup THẮNG MÀN: con dấu có CHỮ (n / m thử thách + số sao) và nút CHƠI LẠI có icon.
-## 3. Popup THÔNG QUA TẦNG: con dấu hết méo (116×116) + có chữ "ĐÃ QUA" / "TẦNG 0n ✔".
+## 3. Popup THÔNG QUA TẦNG: con dấu hết méo (56×56) + có chữ "ĐÃ QUA" / "TẦNG 0n ✔".
 ## 4. Popup NGÔN NGỮ: hàng nút không tràn ra ngoài + VUỐT DỌC cuộn được danh sách.
 ## 5. Không còn ART nào của game dùng <text> (ThorVG không render chữ trong SVG).
 ## ============================================================================
@@ -15,17 +15,22 @@ const SCENES := {
 	"next_floor": "res://nodes/popups/next_floor.tscn",
 	"language": "res://nodes/popups/language.tscn",
 }
-const RESTART_ICON := "M 19 29 A 16 16 0 1 1 35 51"
-const RESTART_ARROW := "M 19 19 v 10 h 10"
-## Art KHÔNG được chứa <text> (ThorVG bỏ qua chữ) — kiểm tra các file vừa sửa
+## Icon CỤC TẨY mới (viewBox 0 0 140 94) — 3 nét định danh thiết kế, phải có ở MỌI trạng thái:
+## thân cục tẩy (nét chính) · vạch chia thân tẩy · đáy cục tẩy
+const RESTART_ICON := "M 21.2 28.8 L 11.2 28.8 L 4.3 22"
+const RESTART_DIVIDER := "M 8 12.5 L 22.4 26.9"
+const RESTART_BASE := "M 26 28.8 H 38"
+## Icon reset cũ (cung tròn + mũi tên) phải đã bị gỡ hẳn khỏi art
+const OLD_RESET_ICON := "M 19 29"
+## Art KHÔNG được chứa <text> (ThorVG bỏ qua chữ) — kiểm NGUỒN SVG (đọc được path; PNG là file nhị phân)
 const NO_TEXT_ART := [
-	"res://assets/images-png/game/btn_restart_normal.png",
-	"res://assets/images-png/game/btn_restart_pressed.png",
-	"res://assets/images-png/game/btn_restart_focus.png",
-	"res://assets/images-png/game/btn_restart_disabled.png",
-	"res://assets/images-png/popups/stamp_done.png",
-	"res://assets/images-png/popups/stamp_passed.png",
-	"res://assets/images-png/main/logo_doodle_maze.png",
+	"res://assets/images/game/btn_restart_normal.svg",
+	"res://assets/images/game/btn_restart_pressed.svg",
+	"res://assets/images/game/btn_restart_focus.svg",
+	"res://assets/images/game/btn_restart_disabled.svg",
+	"res://assets/images/popups/stamp_done.svg",
+	"res://assets/images/popups/stamp_passed.svg",
+	"res://assets/images/main/logo_doodle_maze.svg",
 ]
 
 var _failed := 0
@@ -61,13 +66,15 @@ func _init() -> void:
 # ---------------------------------------------------------------------------
 func _section_1_restart_icon() -> void:
 	print("[1] Icon nut Restart (4 trang thai)...")
+	# Đọc NGUỒN .svg (thiết kế gốc) — bản .png đã migrate sang assets/images-png chỉ là raster
 	for state in ["normal", "pressed", "focus", "disabled"]:
-		var path := "res://assets/images-png/game/btn_restart_%s.png" % state
+		var path := "res://assets/images/game/btn_restart_%s.svg" % state
 		var svg := FileAccess.get_file_as_string(path)
-		_entry(svg.contains(RESTART_ICON), "btn_restart_%s: cung tron dung thiet ke" % state)
-		_entry(svg.contains(RESTART_ARROW), "btn_restart_%s: mui ten goc vuong" % state)
-		_entry(not svg.contains("L 18.5 22"),
-			"btn_restart_%s: da bo mui ten gay cu (L 18.5 22)" % state)
+		_entry(svg.contains(RESTART_ICON), "btn_restart_%s: net than cuc tay dung thiet ke" % state)
+		_entry(svg.contains(RESTART_DIVIDER), "btn_restart_%s: vach chia than cuc tay" % state)
+		_entry(svg.contains(RESTART_BASE), "btn_restart_%s: day cuc tay" % state)
+		_entry(not svg.contains(OLD_RESET_ICON),
+			"btn_restart_%s: da bo icon reset cu (%s)" % [state, OLD_RESET_ICON])
 
 
 # ---------------------------------------------------------------------------
@@ -86,15 +93,15 @@ func _section_2_winning() -> void:
 	_entry(stamp != null, "Co node con dau (Stamp)")
 	if stamp != null:
 		_entry(stamp.texture != null, "Con dau co art (stamp_done.svg)")
-		_entry(absf(stamp.size.x - 156.0) < 3.0 and absf(stamp.size.y - 90.0) < 3.0,
-			"Con dau dung co 156x90 (nhan %s)" % str(stamp.size))
+		_entry(absf(stamp.size.x - 106.0) < 3.0 and absf(stamp.size.y - 56.0) < 3.0,
+			"Con dau dung co 106x56 (nhan %s)" % str(stamp.size))
 		var title := stamp.get_node_or_null("StampTitle") as Label
 		var sub := stamp.get_node_or_null("StampSub") as Label
 		_entry(title != null and title.text.contains("2 / 3"),
 			"Con dau co chu '2 / 3 THU THACH' (nhan '%s')" % (title.text if title != null else "?"))
 		_entry(sub != null and sub.text.contains("2") and sub.text == tr("STR_WIN_STAMP_SUB").format([2]),
 			"Con dau co chu sao dat duoc (nhan '%s')" % (sub.text if sub != null else "?"))
-	var replay := popup.get_node_or_null("Panel/Content/ReplayBtn") as TextureButton
+	var replay := popup.get_node_or_null("Panel/Content/Information/Buttons/ReplayBtn") as TextureButton
 	_entry(replay != null, "Co nut CHOI LAI")
 	if replay != null:
 		var icon: Texture2D = null
@@ -127,8 +134,8 @@ func _section_3_next_floor() -> void:
 	var stamp := popup.get_node_or_null("Panel/Content/Stamp") as TextureRect
 	_entry(stamp != null, "Co node con dau (Stamp)")
 	if stamp != null:
-		_entry(absf(stamp.size.x - 116.0) < 3.0 and absf(stamp.size.y - 116.0) < 3.0,
-			"Con dau dung co 116x116, khong con meo (nhan %s)" % str(stamp.size))
+		_entry(absf(stamp.size.x - 56.0) < 3.0 and absf(stamp.size.y - 56.0) < 3.0,
+			"Con dau dung co 56x56 (nhan %s)" % str(stamp.size))
 		if panel != null:
 			_entry(stamp.position.x > 0.0 and stamp.position.x + stamp.size.x < panel.size.x,
 				"Con dau nam gon trong phieu (x %.0f..%.0f / rong %.0f)" % [
@@ -202,10 +209,14 @@ func _section_4_language() -> void:
 	_entry(scroll.get_v_scroll_bar().max_value > scroll.size.y,
 		"Danh sach dai hon khung nhin (%.0f > %.0f)" % [
 			scroll.get_v_scroll_bar().max_value, scroll.size.y])
-	# Vuốt dọc -> cuộn được (trước đây bấm hàng "ăn" sự kiện kéo nên không cuộn)
+	# Vuốt dọc -> cuộn được (trước đây bấm hàng "ăn" sự kiện kéo nên không cuộn).
+	# Toạ độ phải nằm TRONG khung danh sách THẬT (canvas lúc test có thể khác thiết kế) -> suy từ rect của scroll.
+	var scroll_rect := scroll.get_global_rect()
+	var drag_from := Vector2(scroll_rect.get_center().x, scroll_rect.position.y + scroll_rect.size.y * 0.8)
+	var drag_to := Vector2(drag_from.x, scroll_rect.position.y + scroll_rect.size.y * 0.2)
 	var before_scroll := scroll.scroll_vertical
-	popup.call("_begin_drag", Vector2(540, 900))
-	popup.call("_update_drag", Vector2(540, 500))
+	popup.call("_begin_drag", drag_from)
+	popup.call("_update_drag", drag_to)
 	popup.call("_end_drag")
 	await process_frame
 	_entry(scroll.scroll_vertical > before_scroll,
@@ -217,8 +228,8 @@ func _section_4_language() -> void:
 		"Vua vuot -> bam hang KHONG doi lua chon (giu '%s')" % pending_before)
 	# Kéo rất ngắn (dưới ngưỡng) thì vẫn tính là bấm bình thường
 	popup.set("_click_lock_until", 0.0)
-	popup.call("_begin_drag", Vector2(540, 900))
-	popup.call("_update_drag", Vector2(540, 905))
+	popup.call("_begin_drag", drag_from)
+	popup.call("_update_drag", drag_from + Vector2(0, 5))
 	popup.call("_end_drag")
 	popup.call("_on_row_pressed", "en")
 	_entry(str(popup.get("_pending_locale")) == "en", "Keo ngan -> bam hang van chon duoc")

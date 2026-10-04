@@ -142,6 +142,83 @@ func _init() -> void:
 	await process_frame
 	print("[SUCCESS] PlayerCursor running animation khoi chay thanh cong!")
 
+	# 7. LUỒNG HỌC LẦN ĐẦU (TutorialManager.flow_active): ẩn nút "?" + ẩn
+	#    "Chơi lại"/"Về Menu" trong popup Tạm dừng / "Về Menu" trong popup Gameover level
+	var tm: Node = root.get_node_or_null("TutorialManager")
+	assert(tm != null, "Autoload TutorialManager phai ton tai de test luong hoc lan dau")
+
+	# 7a. Cờ `guided` phải đi theo run_info (GameController -> UIController -> popup data)
+	if gc.game_state != null:
+		tm.set("flow_active", true)
+		gc._update_hud()
+		assert(bool(ui_ctrl.run_info.get("guided", false)) == true,
+				"Trong luong hoc: run_info phai mang co guided=true")
+		tm.set("flow_active", false)
+		gc._update_hud()
+		assert(bool(ui_ctrl.run_info.get("guided", true)) == false,
+				"Ngoai luong hoc: run_info phai mang co guided=false")
+		print("[SUCCESS] Co `guided` di kem run_info chinh xac!")
+	else:
+		print("[SKIP] gc.game_state null — bo qua check run_info.guided")
+
+	# 7b. Nút "?" trên HUD: ẩn khi đang trong luồng, hiện lại khi hết luồng
+	var ins_btn: BaseButton = game_scene.layout.instruction_btn
+	if ins_btn != null:
+		game_scene.call("_apply_mode_buttons", "play")
+		assert(ins_btn.visible == true, "Ngoai luong hoc: nut '?' phai hien o mode play")
+		tm.set("flow_active", true)
+		game_scene.call("_apply_mode_buttons", "play")
+		assert(ins_btn.visible == false, "Trong luong hoc lan dau: nut '?' phai AN")
+		tm.set("flow_active", false)
+		game_scene.call("_apply_mode_buttons", "play")
+		assert(ins_btn.visible == true, "Ket thuc luong hoc: nut '?' phai hien lai")
+		print("[SUCCESS] Nut '?' an trong luong hoc lan dau!")
+	else:
+		print("[SKIP] Layout active khong co nut '?' (instruction_btn null)")
+
+	# 7c. Popup Tạm dừng: guided -> ẩn "Chơi lại" + "Về Menu"; ngoài luồng -> hiện lại
+	var pause_g: BasePopup = Popups.open(Popups.PAUSE, {"guided": true, "floor": 1, "steps_left": 3, "steps_max": 5})
+	await process_frame
+	assert(pause_g != null, "Popup Tam dung phai mo duoc")
+	var pg_restart: BaseButton = pause_g.get_node_or_null("Panel/Content/Information/Buttons/RestartBtn") as BaseButton
+	var pg_menu: BaseButton = pause_g.get_node_or_null("Panel/Content/Information/Buttons/MenuBtn") as BaseButton
+	assert(pg_restart != null and pg_menu != null, "Popup Tam dung phai co RestartBtn + MenuBtn")
+	assert(pg_restart.visible == false and pg_menu.visible == false,
+			"Luong hoc: popup Tam dung phai AN 'Choi lai' + 'Ve Menu'")
+	Popups.close_id(Popups.PAUSE)
+	await create_timer(0.4).timeout
+	var pause_n: BasePopup = Popups.open(Popups.PAUSE, {"guided": false, "floor": 1, "steps_left": 3, "steps_max": 5})
+	await process_frame
+	var pn_restart: BaseButton = pause_n.get_node_or_null("Panel/Content/Information/Buttons/RestartBtn") as BaseButton
+	assert(pn_restart != null and pn_restart.visible == true,
+			"Ngoai luong hoc: popup Tam dung phai hien lai 'Choi lai'")
+	Popups.close_id(Popups.PAUSE)
+	await create_timer(0.4).timeout
+	print("[SUCCESS] Popup Tam dung an 'Choi lai' + 'Ve Menu' trong luong hoc lan dau!")
+
+	# 7d. Popup Gameover level: guided -> ẩn "Về Menu", vẫn giữ "Thử lại" + "Hồi sinh"
+	var go_g: BasePopup = Popups.open(Popups.GAME_OVER_LEVEL, {"guided": true})
+	await process_frame
+	assert(go_g != null, "Popup Gameover level phai mo duoc")
+	var gg_menu: BaseButton = go_g.get_node_or_null("Panel/Content/Information/Buttons/MenuBtn") as BaseButton
+	var gg_retry: BaseButton = go_g.get_node_or_null("Panel/Content/Information/Buttons/RetryBtn") as BaseButton
+	var gg_revive: BaseButton = go_g.get_node_or_null("Panel/Content/Information/Banner/ReviveBtn") as BaseButton
+	assert(gg_menu != null and gg_retry != null, "Popup Gameover level phai co MenuBtn + RetryBtn")
+	assert(gg_menu.visible == false, "Luong hoc: Gameover level phai AN 'Ve Menu'")
+	assert(gg_retry.visible == true, "Luong hoc: Gameover level VAN GIU 'Thu lai'")
+	if gg_revive != null:
+		assert(gg_revive.visible == true, "Luong hoc: Gameover level VAN GIU 'Hoi sinh'")
+	Popups.close_id(Popups.GAME_OVER_LEVEL)
+	await create_timer(0.4).timeout
+	var go_n: BasePopup = Popups.open(Popups.GAME_OVER_LEVEL, {"guided": false})
+	await process_frame
+	var gn_menu: BaseButton = go_n.get_node_or_null("Panel/Content/Information/Buttons/MenuBtn") as BaseButton
+	assert(gn_menu != null and gn_menu.visible == true,
+			"Ngoai luong hoc: Gameover level phai hien 'Ve Menu'")
+	Popups.close_id(Popups.GAME_OVER_LEVEL)
+	await create_timer(0.4).timeout
+	print("[SUCCESS] Popup Gameover level an 'Ve Menu' trong luong hoc lan dau!")
+
 	print("\n========================================================")
 	print("  TAT CA TEST DEU VUOT QUA THANH CONG!")
 	print("========================================================\n")

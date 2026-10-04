@@ -246,13 +246,20 @@ func set_player_cell(pos: Vector2i, animate: bool = true) -> void:
 		return
 	# Đặt ĐẦU BÚT trên tâm ô (không phải tâm sprite) — xem `cursor_pos_at` ở board.gd
 	var target_pos := cursor_pos_at(_cell_center(pos))
-	if animate:
+	if animate and not _dragging_player:
 		var dir := Vector2(pos - _player_current_cell)
 		_cursor.run_to(target_pos, dir, 0.16)
 		_spawn_ink_footstep(_cell_center(_player_current_cell))
 		Sfx.play(Sfx.CELL_STEP)
 	else:
-		_cursor.position = target_pos
+		# - animate=false (reset bước): về vị trí ngay + dọn tween cũ (snap_to).
+		# - animate=true nhưng NGƯỜI CHƠI ĐANG KÉO (luyện tập): nét vẽ đã dài tới ô mới
+		#   NGAY LẬP TỨC, nên đầu bút phải trùng cuối nét ngay; hoạt cảnh nhún 0.16s
+		#   sẽ làm bút trễ hơn nét (đầu bút không nằm ở phần cuối nét bút).
+		_cursor.snap_to(target_pos)
+		if animate:
+			_spawn_ink_footstep(_cell_center(_player_current_cell))
+			Sfx.play(Sfx.CELL_STEP)
 	_player_current_cell = pos
 
 

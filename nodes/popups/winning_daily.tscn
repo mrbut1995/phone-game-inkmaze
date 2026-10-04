@@ -2,15 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://chniag76q71f5" path="res://scripts/nodes/popups/winning_daily.gd" id="2_dailywin"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/stamp_done.png" id="3_stamp"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_secondary_normal.png" id="6_sec_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_secondary_pressed.png" id="7_sec_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_secondary_focus.png" id="8_sec_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_wide_normal.png" id="9_pri_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_primary_pressed.png" id="10_pri_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_primary_focus.png" id="11_pri_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/icon_replay.png" id="12_replay"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_coin_t1.png" id="13_coin"]
+[ext_resource type="Texture2D" uid="uid://ch2gua71qy2tb" path="res://assets/images-png/popups/stamp_done.png" id="3_stamp"]
+[ext_resource type="Texture2D" uid="uid://brgbsehx8a0xh" path="res://assets/images-png/common/btn_paper_secondary_normal.png" id="6_sec_n"]
+[ext_resource type="Texture2D" uid="uid://b1mq05b61vja" path="res://assets/images-png/common/btn_paper_secondary_pressed.png" id="7_sec_p"]
+[ext_resource type="Texture2D" uid="uid://dcxlfihg580ni" path="res://assets/images-png/common/btn_paper_secondary_focus.png" id="8_sec_f"]
+[ext_resource type="Texture2D" uid="uid://bihw3g42324qa" path="res://assets/images-png/popups/btn_popup_wide_normal.png" id="9_pri_n"]
+[ext_resource type="Texture2D" uid="uid://cnfkkqat6131c" path="res://assets/images-png/common/btn_paper_primary_pressed.png" id="10_pri_p"]
+[ext_resource type="Texture2D" uid="uid://6n6ai5gsk4lo" path="res://assets/images-png/common/btn_paper_primary_focus.png" id="11_pri_f"]
+[ext_resource type="Texture2D" uid="uid://c7tovw3eurdmw" path="res://assets/images-png/popups/icon_replay.png" id="12_replay"]
+[ext_resource type="Texture2D" uid="uid://bc41s6j0xkuu6" path="res://assets/images-png/icons/icon_coin_t1.png" id="13_coin"]
 
 [sub_resource type="StyleBoxTexture" id="Sb_pri_n"]
 texture = ExtResource("9_pri_n")
@@ -68,27 +68,60 @@ _data = {
 &"coin_pop": SubResource("Animation_wd_coin")
 }
 
-[node name="Base" unique_id=219272936 instance=ExtResource("1_base")]
-offset_right = 540.0
-offset_bottom = 960.0
+[node name="Base" unique_id=219272936 node_paths=PackedStringArray("label_subtitle", "value_time", "value_steps", "value_walls", "coin_icon", "value_coins", "label_total", "value_total", "label_daily", "stamp_title", "stamp_sub", "fx_anim") instance=ExtResource("1_base")]
 script = ExtResource("2_dailywin")
+label_subtitle = NodePath("Panel/Content/Subtitle")
+value_time = NodePath("Panel/Content/Information/Stat1/Value")
+value_steps = NodePath("Panel/Content/Information/Stat2/Value")
+value_walls = NodePath("Panel/Content/Information/Stat3/Value")
+coin_icon = NodePath("Panel/Content/CoinArea/CoinIcon")
+value_coins = NodePath("Panel/Content/CoinArea/CoinValue")
+label_total = NodePath("Panel/Content/Information/Total/Label")
+value_total = NodePath("Panel/Content/Information/Total/Value")
+label_daily = NodePath("Panel/Content/Information/Buttons/DailyBtn/Label")
+stamp_title = NodePath("Panel/Content/Stamp/StampTitle")
+stamp_sub = NodePath("Panel/Content/Stamp/StampSub")
+fx_anim = NodePath("FxAnim")
 close_on_back = false
 close_on_outside = false
 
-[node name="Dim" parent="." index="0" unique_id=617447502]
-offset_right = 540.0
-offset_bottom = 960.0
+[node name="Panel" parent="." index="1" unique_id=290635111]
+anchor_left = 0.49100003
+anchor_top = 0.1466087
+anchor_right = 0.49100003
+anchor_bottom = 0.147
+offset_left = -239.14001
+offset_right = 238.85999
+offset_bottom = 684.76
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Art" parent="Panel" parent_id_path=PackedInt32Array(290635111) index="0" unique_id=1533168933]
-offset_top = -13.0
+[node name="Art" parent="Panel" index="0" unique_id=1269512275]
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Stamp" type="NinePatchRect" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="0" unique_id=2032724508]
+[node name="Content" parent="Panel" index="1" unique_id=45188561]
+offset_left = 46.0
+offset_top = 51.159546
+offset_right = -42.0
+offset_bottom = -53.159546
+
+[node name="Stamp" type="NinePatchRect" parent="Panel/Content" index="0" unique_id=2032724508]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 311.0
-offset_top = 44.0
-offset_right = 389.0
-offset_bottom = 89.0
+offset_left = 285.0
+offset_top = 24.840454
+offset_right = 391.0
+offset_bottom = 80.840454
 texture = ExtResource("3_stamp")
 patch_margin_left = 10
 patch_margin_top = 8
@@ -98,11 +131,12 @@ patch_margin_bottom = 8
 [node name="StampTitle" type="Label" parent="Panel/Content/Stamp" index="0" unique_id=1177968785]
 layout_mode = 1
 anchors_preset = -1
-offset_left = -5.0
-offset_top = 14.0
-offset_right = 83.0
-offset_bottom = 26.0
+offset_left = 10.0
+offset_top = 15.0
+offset_right = 99.0
+offset_bottom = 28.0
 theme_type_variation = &"PopupStampTextDanger"
+theme_override_font_sizes/font_size = 12
 text = "0 / 4 NHIỆM VỤ"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -110,47 +144,45 @@ vertical_alignment = 1
 [node name="StampSub" type="Label" parent="Panel/Content/Stamp" index="1" unique_id=989565633]
 layout_mode = 1
 anchors_preset = -1
-offset_left = -5.0
-offset_top = 26.0
-offset_right = 83.0
-offset_bottom = 37.0
+offset_left = 12.0
+offset_top = 33.0
+offset_right = 101.0
+offset_bottom = 46.0
 theme_type_variation = &"PopupStampSubDanger"
+theme_override_font_sizes/font_size = 9
 text = "+0 XU"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CoinArea" type="Control" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="1" unique_id=549050330]
-layout_mode = 1
-offset_left = 145.0
-offset_top = 92.5
-offset_right = 365.0
-offset_bottom = 167.5
-mouse_filter = 2
-
-[node name="CoinIcon" type="TextureRect" parent="Panel/Content/CoinArea" index="0" unique_id=2016770436]
+[node name="CoinArea" type="HBoxContainer" parent="Panel/Content" index="1" unique_id=549050330]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 15.0
-offset_top = 7.5
-offset_right = 75.0
-offset_bottom = 67.5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -110.0
+offset_top = 88.0
+offset_right = 110.0
+offset_bottom = 156.0
+mouse_filter = 2
+theme_override_constants/separation = 9
+alignment = 1
+
+[node name="CoinIcon" type="TextureRect" parent="Panel/Content/CoinArea" index="0" unique_id=2016770436]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("13_coin")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="CoinValue" type="Label" parent="Panel/Content/CoinArea" index="1" unique_id=18559698]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 84.0
-offset_top = 15.0
-offset_right = 220.0
-offset_bottom = 60.0
+layout_mode = 2
 theme_type_variation = &"PopupTotalValue"
 text = "+0 XU"
 vertical_alignment = 1
 
-[node name="Title" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="2" unique_id=546756283]
+[node name="Title" type="Label" parent="Panel/Content" index="2" unique_id=546756283]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 57.5
@@ -163,7 +195,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Subtitle" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="3" unique_id=1275435647]
+[node name="Subtitle" type="Label" parent="Panel/Content" index="3" unique_id=1275435647]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 57.5
@@ -176,121 +208,145 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="StatLabel1" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="4" unique_id=1307158537]
+[node name="Information" type="VBoxContainer" parent="Panel/Content" index="4" unique_id=1985962609]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 57.5
-offset_top = 189.0
-offset_right = 307.5
-offset_bottom = 204.5
+anchor_left = 0.07435898
+anchor_top = 0.26170713
+anchor_right = 0.9953546
+anchor_bottom = 0.89000005
+offset_right = -0.18829346
+offset_bottom = 0.21350098
+theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="Control" parent="Panel/Content/Information" index="0" unique_id=1879324271]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Stat1" type="HBoxContainer" parent="Panel/Content/Information" index="1" unique_id=213803247]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat1" index="0" unique_id=96819639]
+layout_mode = 2
 theme_type_variation = &"PopupStatLabel"
+theme_override_font_sizes/font_size = 15
 text = "STR_STAT_CLEAR_TIME"
 vertical_alignment = 1
 
-[node name="StatValue1" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="5" unique_id=525190886]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 200.0
-offset_top = 187.5
-offset_right = 377.5
-offset_bottom = 206.5
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat1" index="1" unique_id=2019044119]
+layout_mode = 2
+size_flags_horizontal = 11
 theme_type_variation = &"PopupStatValue"
+theme_override_font_sizes/font_size = 15
 text = "00:00s"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="StatLabel2" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="6" unique_id=1168653658]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 224.0
-offset_right = 307.5
-offset_bottom = 239.5
+[node name="Stat2" type="HBoxContainer" parent="Panel/Content/Information" index="2" unique_id=1859335481]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat2" index="0" unique_id=1542016602]
+layout_mode = 2
 theme_type_variation = &"PopupStatLabel"
+theme_override_font_sizes/font_size = 15
 text = "STR_STAT_STEPS_USED"
 vertical_alignment = 1
 
-[node name="StatValue2" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="7" unique_id=1521042092]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 200.0
-offset_top = 222.5
-offset_right = 377.5
-offset_bottom = 241.5
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat2" index="1" unique_id=736612803]
+layout_mode = 2
+size_flags_horizontal = 11
 theme_type_variation = &"PopupStatValueGood"
+theme_override_font_sizes/font_size = 15
 text = "0 / 0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="StatLabel3" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="8" unique_id=1516844850]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 259.0
-offset_right = 307.5
-offset_bottom = 274.5
+[node name="Stat3" type="HBoxContainer" parent="Panel/Content/Information" index="3" unique_id=730695209]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat3" index="0" unique_id=485292020]
+layout_mode = 2
 theme_type_variation = &"PopupStatLabel"
+theme_override_font_sizes/font_size = 15
 text = "STR_STAT_WALL_COLLISIONS"
 vertical_alignment = 1
 
-[node name="StatValue3" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="9" unique_id=1794932068]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 200.0
-offset_top = 257.5
-offset_right = 377.5
-offset_bottom = 275.5
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat3" index="1" unique_id=1802915249]
+layout_mode = 2
+size_flags_horizontal = 11
 theme_type_variation = &"PopupStatValueBad"
+theme_override_font_sizes/font_size = 15
 text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Divider" type="ColorRect" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="10" unique_id=1327617642]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 299.5
-offset_right = 377.5
-offset_bottom = 300.5
+[node name="Spacer" type="Control" parent="Panel/Content/Information" index="4" unique_id=1839714509]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.23
+
+[node name="Divider" type="ColorRect" parent="Panel/Content/Information" index="5" unique_id=1745981717]
+custom_maximum_size = Vector2(-1, 2)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.01
 mouse_filter = 2
 color = Color(0.23921569, 0.5137255, 0.68235296, 1)
 
-[node name="TotalLabel" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="11" unique_id=691770525]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 323.5
-offset_right = 257.5
-offset_bottom = 341.5
+[node name="Spacer4" type="Control" parent="Panel/Content/Information" index="6" unique_id=707326005]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.08
+
+[node name="Total" type="HBoxContainer" parent="Panel/Content/Information" index="7" unique_id=709914040]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Total" index="0" unique_id=1137782613]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
 theme_type_variation = &"PopupTotalLabel"
+theme_override_font_sizes/font_size = 20
 text = "STR_DAILY_WIN_TOTAL_TODAY"
 vertical_alignment = 1
+text_overrun_behavior = 3
 
-[node name="TotalValue" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="12" unique_id=73114346]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 200.0
-offset_top = 316.5
-offset_right = 377.5
-offset_bottom = 344.5
+[node name="Value" type="Label" parent="Panel/Content/Information/Total" index="1" unique_id=386643011]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
 theme_type_variation = &"PopupTotalValue"
 text = "+0/0 XU"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="ReplayBtn" type="TextureButton" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="13" unique_id=761404155]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 55.5
-offset_top = 433.0
-offset_right = 149.5
-offset_bottom = 485.0
+[node name="Spacer3" type="Control" parent="Panel/Content/Information" index="8" unique_id=533693723]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information" index="9" unique_id=670213529]
+layout_mode = 2
+
+[node name="ReplayBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="0" unique_id=1771374412]
+layout_mode = 2
 texture_normal = ExtResource("6_sec_n")
 texture_pressed = ExtResource("7_sec_p")
 texture_hover = ExtResource("6_sec_n")
 texture_focused = ExtResource("8_sec_f")
 
-[node name="Label" type="Label" parent="Panel/Content/ReplayBtn" index="0" unique_id=2033235899]
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/ReplayBtn" index="0" unique_id=1239842830]
 layout_mode = 1
 anchors_preset = -1
 offset_top = 32.5
@@ -303,7 +359,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="TextureRect" type="TextureRect" parent="Panel/Content/ReplayBtn" index="1" unique_id=988688269]
+[node name="TextureRect" type="TextureRect" parent="Panel/Content/Information/Buttons/ReplayBtn" index="1" unique_id=1831889326]
 layout_mode = 0
 offset_left = 38.0
 offset_top = 7.0
@@ -314,37 +370,36 @@ texture = ExtResource("12_replay")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="DailyBtn" type="Button" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="14" unique_id=2111989419]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 163.0
-offset_top = 433.0
-offset_right = 379.5
-offset_bottom = 485.0
+[node name="DailyBtn" type="Button" parent="Panel/Content/Information/Buttons" index="1" unique_id=927250296]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("Sb_pri_n")
 theme_override_styles/pressed = SubResource("Sb_pri_p")
 theme_override_styles/hover = SubResource("Sb_pri_n")
 theme_override_styles/focus = SubResource("Sb_pri_f")
 
-[node name="Label" type="Label" parent="Panel/Content/DailyBtn" index="0" unique_id=1930154764]
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/DailyBtn" index="0" unique_id=1239096586]
 layout_mode = 1
 anchors_preset = -1
-offset_top = 18.0
-offset_right = 218.5
-offset_bottom = 36.0
+offset_left = 5.1411743
+offset_top = 12.730591
+offset_right = 213.14117
+offset_bottom = 38.73059
 theme_type_variation = &"PopupBtnPrimarySm"
+theme_override_font_sizes/font_size = 16
 text = "STR_BTN_BACK_DAILY"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Quote" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="15" unique_id=121133727]
-layout_mode = 1
-anchors_preset = -1
-offset_top = 508.0
-offset_right = 425.0
-offset_bottom = 520.0
+[node name="Spacer2" type="Control" parent="Panel/Content/Information" index="10" unique_id=79340626]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_stretch_ratio = 0.1
+
+[node name="Quote" type="Label" parent="Panel/Content/Information" index="11" unique_id=2059841456]
+layout_mode = 2
 theme_type_variation = &"PopupQuote"
 text = "STR_DAILY_WIN_QUOTE"
 horizontal_alignment = 1
@@ -355,5 +410,5 @@ text_overrun_behavior = 3
 [node name="FxAnim" type="AnimationPlayer" parent="." index="3" unique_id=1493437038]
 libraries/ = SubResource("AnimationLibrary_wdfx")
 
-[connection signal="pressed" from="Panel/Content/ReplayBtn" to="." method="_on_replay_pressed"]
-[connection signal="pressed" from="Panel/Content/DailyBtn" to="." method="_on_daily_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/ReplayBtn" to="." method="_on_replay_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/DailyBtn" to="." method="_on_daily_pressed"]

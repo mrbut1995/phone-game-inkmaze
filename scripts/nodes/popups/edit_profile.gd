@@ -39,16 +39,30 @@ var _swipe_dragged := false
 var _swipe_start := Vector2.ZERO
 var _swipe_last := Vector2.ZERO
 
-@onready var _preview_avatar: TextureRect = get_node_or_null("Panel/Content/Preview/Profile/Frame/Avatar")
-@onready var _preview_frame: TextureRect = get_node_or_null("Panel/Content/Preview/Profile/Frame")
-@onready var _name_edit: LineEdit = get_node_or_null("Panel/Content/Preview/NameEdit")
-@onready var _name_hint: Label = get_node_or_null("Panel/Content/Preview/NameHint")
-@onready var _grid: GridContainer = get_node_or_null("Panel/Content/Scroll/Grid")
-@onready var _tab_avatar: Button = get_node_or_null("Panel/Content/Tabs/TabAvatar")
-@onready var _tab_frame: Button = get_node_or_null("Panel/Content/Tabs/TabFrame")
-@onready var _btn_prev: TextureButton = get_node_or_null("Panel/Content/PageBar/BtnPrev")
-@onready var _btn_next: TextureButton = get_node_or_null("Panel/Content/PageBar/BtnNext")
-@onready var _dots_box: HBoxContainer = get_node_or_null("Panel/Content/PageBar/Dots")
+## Node binding: khai `node_paths` + `NodePath` trong `edit_profile.tscn`
+@export var preview_avatar: TextureRect = null
+@export var preview_frame: TextureRect = null
+@export var preview_disc: TextureRect = null
+@export var name_edit: LineEdit = null
+@export var name_hint: Label = null
+@export var item_grid: GridContainer = null
+@export var page_bar: Control = null
+@export var tab_avatar: Button = null
+@export var tab_avatar_bg_off: TextureRect = null
+@export var tab_avatar_bg_on: TextureRect = null
+@export var tab_avatar_text: Label = null
+@export var tab_avatar_icon: TextureRect = null
+@export var tab_frame: Button = null
+@export var tab_frame_bg_off: TextureRect = null
+@export var tab_frame_bg_on: TextureRect = null
+@export var tab_frame_text: Label = null
+@export var tab_frame_icon: TextureRect = null
+@export var btn_prev: TextureButton = null
+@export var btn_next: TextureButton = null
+@export var dots_box: HBoxContainer = null
+@export var btn_close: TextureButton = null
+@export var btn_cancel: Button = null
+@export var btn_save: Button = null
 
 
 # ---------------------------------------------------------------------------
@@ -62,8 +76,7 @@ func _on_open() -> void:
 	_pending_avatar = Profile.avatar_id()
 	_pending_frame = Profile.frame_id()
 	_pending_name = Profile.display_name()
-	if _name_edit != null:
-		_name_edit.text = _pending_name
+	name_edit.text = _pending_name
 	_refresh_tabs()
 	_refresh_preview()
 	_attach_popup_animations()
@@ -90,7 +103,7 @@ func page_count() -> int:
 
 
 func item_node(ident: String) -> EditProfileItem:
-	return _grid.get_node_or_null("Item_" + ident) as EditProfileItem if _grid != null else null
+	return item_grid.get_node_or_null("Item_" + ident) as EditProfileItem
 
 
 ## Chọn mẫu đang xem thử (bỏ qua khoá / giá — dùng cho test + luồng mua ở `_on_item_pressed`)
@@ -224,43 +237,25 @@ func _on_item_pressed(ident: String) -> void:
 # Vẽ lại từng phần
 # ---------------------------------------------------------------------------
 func _refresh_tabs() -> void:
-	_style_tab(_tab_avatar, _tab == TAB_AVATAR)
-	_style_tab(_tab_frame, _tab == TAB_FRAME)
+	_style_tab(tab_avatar_bg_off, tab_avatar_bg_on, tab_avatar_text, tab_avatar_icon, _tab == TAB_AVATAR)
+	_style_tab(tab_frame_bg_off, tab_frame_bg_on, tab_frame_text, tab_frame_icon, _tab == TAB_FRAME)
 
 
-func _style_tab(button: Button, active: bool) -> void:
-	if button == null:
-		return
-	var bg_off := button.get_node_or_null("BgOff")
-	var bg_on := button.get_node_or_null("BgOn")
-	if bg_off != null:
-		bg_off.visible = not active
-	if bg_on != null:
-		bg_on.visible = active
-	# Nhãn + icon nằm trong `Row` (HBox canh giữa) — chấp nhận cả 2 kiểu khai node.
-	var label := button.get_node_or_null("Row/Text") as Label
-	if label == null:
-		label = button.get_node_or_null("Text") as Label
-	if label != null:
-		_tint(label, COLOR_TAB_ON if active else COLOR_TAB_OFF)
-	var icon := button.get_node_or_null("Row/Icon") as TextureRect
-	if icon == null:
-		icon = button.get_node_or_null("Icon") as TextureRect
-	if icon != null:
-		icon.modulate = COLOR_TAB_ON if active else COLOR_TAB_OFF
+## Tô sáng 1 tab: nền bật/tắt + màu nhãn/icon (node đã bind sẵn trong `edit_profile.tscn`)
+func _style_tab(bg_off: TextureRect, bg_on: TextureRect, label: Label, icon: TextureRect, active: bool) -> void:
+	bg_off.visible = not active
+	bg_on.visible = active
+	_tint(label, COLOR_TAB_ON if active else COLOR_TAB_OFF)
+	icon.modulate = COLOR_TAB_ON if active else COLOR_TAB_OFF
 
 
 func _refresh_preview() -> void:
-	if _preview_avatar != null:
-		_preview_avatar.texture = load(Profile.avatar_icon(_pending_avatar)) as Texture2D
-	if _preview_frame != null:
-		_preview_frame.texture = load(Profile.frame_icon(_pending_frame)) as Texture2D
+	preview_avatar.texture = load(Profile.avatar_icon(_pending_avatar)) as Texture2D
+	preview_frame.texture = load(Profile.frame_icon(_pending_frame)) as Texture2D
 
 
 func _refresh_selection() -> void:
-	if _grid == null:
-		return
-	for child in _grid.get_children():
+	for child in item_grid.get_children():
 		if child is EditProfileItem:
 			var ident := str(child.name).trim_prefix("Item_")
 			child.set_item(_entry_of(ident))
@@ -268,10 +263,8 @@ func _refresh_selection() -> void:
 
 ## Dựng lại lưới mẫu của tab đang mở (6 món: 3 cột × 2 hàng)
 func _rebuild_grid() -> void:
-	if _grid == null:
-		return
-	for child in _grid.get_children():
-		_grid.remove_child(child)
+	for child in item_grid.get_children():
+		item_grid.remove_child(child)
 		child.queue_free()
 	var catalog := _catalog()
 	var total_pages := _page_count_from(catalog.size())
@@ -284,7 +277,7 @@ func _rebuild_grid() -> void:
 		item.name = "Item_" + str(entry.get("id", ""))
 		item.set_item(entry)
 		item.pressed.connect(_on_item_pressed.bind(str(entry.get("id", ""))))
-		_grid.add_child(item)
+		item_grid.add_child(item)
 	_refresh_selection()
 	_refresh_paging_ui()
 	_animate_grid_in()
@@ -292,9 +285,7 @@ func _rebuild_grid() -> void:
 
 func _items() -> Array:
 	var out: Array = []
-	if _grid == null:
-		return out
-	for child in _grid.get_children():
+	for child in item_grid.get_children():
 		if child is EditProfileItem:
 			out.append(child)
 	return out
@@ -322,25 +313,19 @@ func _page_count_from(total_items: int) -> int:
 
 func _refresh_paging_ui() -> void:
 	var pages := _page_count()
-	var page_bar := get_node_or_null("Panel/Content/PageBar") as Control
-	if page_bar != null:
-		page_bar.visible = pages > 1
-	if _btn_prev != null:
-		_btn_prev.disabled = _page <= 0
-		_btn_prev.modulate = Color(1, 1, 1, 0.45) if _btn_prev.disabled else Color(1, 1, 1, 1)
-	if _btn_next != null:
-		_btn_next.disabled = _page >= pages - 1
-		_btn_next.modulate = Color(1, 1, 1, 0.45) if _btn_next.disabled else Color(1, 1, 1, 1)
-	if _dots_box == null:
-		return
-	for child in _dots_box.get_children():
-		_dots_box.remove_child(child)
+	page_bar.visible = pages > 1
+	btn_prev.disabled = _page <= 0
+	btn_prev.modulate = Color(1, 1, 1, 0.45) if btn_prev.disabled else Color(1, 1, 1, 1)
+	btn_next.disabled = _page >= pages - 1
+	btn_next.modulate = Color(1, 1, 1, 0.45) if btn_next.disabled else Color(1, 1, 1, 1)
+	for child in dots_box.get_children():
+		dots_box.remove_child(child)
 		child.queue_free()
 	for idx in range(pages):
 		var dot := PROFILE_DOT_SCENE.instantiate() as EditProfileDot
 		dot.set_current(idx == _page)
 		dot.pressed.connect(_on_dot_pressed.bind(idx))
-		_dots_box.add_child(dot)
+		dots_box.add_child(dot)
 
 
 func _on_dot_pressed(index: int) -> void:
@@ -373,18 +358,9 @@ func _finish_swipe() -> void:
 # ---------------------------------------------------------------------------
 ## Gắn hiệu ứng nhấn nảy cho nút của popup (guard: mỗi node chỉ gắn 1 lần)
 func _attach_popup_animations() -> void:
-	var paths := [
-		"Panel/Content/Close",
-		"Panel/Content/BtnCancel",
-		"Panel/Content/BtnSave",
-		"Panel/Content/Tabs/TabAvatar",
-		"Panel/Content/Tabs/TabFrame",
-		"Panel/Content/PageBar/BtnPrev",
-		"Panel/Content/PageBar/BtnNext",
-	]
-	for path: String in paths:
-		var btn := get_node_or_null(path) as BaseButton
-		if btn == null or btn.has_meta("bounce_attached"):
+	var buttons: Array[BaseButton] = [btn_close, btn_cancel, btn_save, tab_avatar, tab_frame, btn_prev, btn_next]
+	for btn in buttons:
+		if btn.has_meta("bounce_attached"):
 			continue
 		btn.set_meta("bounce_attached", true)
 		UIAnim.attach_press_bounce(btn)
@@ -392,10 +368,8 @@ func _attach_popup_animations() -> void:
 
 ## (GIỮ tween) Hiệu ứng xuất hiện so le của các ô — phụ thuộc DỮ LIỆU lúc chạy (thứ tự ô)
 func _animate_grid_in() -> void:
-	if _grid == null:
-		return
 	var idx := 0
-	for child in _grid.get_children():
+	for child in item_grid.get_children():
 		if child is EditProfileItem:
 			var item := child as EditProfileItem
 			item.play_entrance(0.028 * idx)
@@ -404,14 +378,11 @@ func _animate_grid_in() -> void:
 
 ## (GIỮ tween) Nhịp "nảy" xác nhận khi người chơi chọn mẫu mới (thao tác lúc chạy)
 func _pulse_preview() -> void:
-	var disc := get_node_or_null("Panel/Content/Preview/Profile") as Control
-	if disc == null:
-		return
-	if disc.size.length_squared() > 0.0:
-		disc.pivot_offset = disc.size * 0.5
-	var tw := disc.create_tween()
-	tw.tween_property(disc, "scale", Vector2(1.07, 1.07), 0.09).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tw.tween_property(disc, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	if preview_disc.size.length_squared() > 0.0:
+		preview_disc.pivot_offset = preview_disc.size * 0.5
+	var tw := preview_disc.create_tween()
+	tw.tween_property(preview_disc, "scale", Vector2(1.07, 1.07), 0.09).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(preview_disc, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 ## Entry (kèm trạng thái) của 1 món trong tab đang mở
@@ -426,22 +397,18 @@ func _entry_of(ident: String) -> Dictionary:
 # Nhãn gợi ý dưới ô tên (nháy thông báo lỗi rồi trả về như cũ)
 # ---------------------------------------------------------------------------
 func _flash_hint(text: String, color: Color) -> void:
-	if _name_hint == null:
-		return
 	_hint_token += 1
 	var token := _hint_token
-	_name_hint.text = text
-	_tint(_name_hint, color)
+	name_hint.text = text
+	_tint(name_hint, color)
 	await get_tree().create_timer(1.6).timeout
-	if token == _hint_token and is_instance_valid(_name_hint):
+	if token == _hint_token and is_instance_valid(name_hint):
 		_refresh_hint_default()
 
 
 func _refresh_hint_default() -> void:
-	if _name_hint == null:
-		return
-	_name_hint.text = tr("STR_EDIT_FRAME_HINT") if _tab == TAB_FRAME else tr("STR_EDIT_NAME_HINT")
-	_tint(_name_hint, COLOR_HINT)
+	name_hint.text = tr("STR_EDIT_FRAME_HINT") if _tab == TAB_FRAME else tr("STR_EDIT_NAME_HINT")
+	_tint(name_hint, COLOR_HINT)
 
 
 func _flash_lock_text(entry: Dictionary) -> String:

@@ -179,6 +179,14 @@ func _on_dead_end() -> void:
 	_game_over("dead_end")
 
 
+## Ván đang nằm trong LUỒNG HỌC LẦN ĐẦU (onboarding) không — cờ do TutorialManager giữ.
+## Luồng này dẫn người chơi mới qua từng bài học / màn thực hành nên KHÓA các lối thoát:
+## nút "?" (game.gd), "Chơi lại" + "Về Menu" (pause.gd), "Về Menu" (gameover_level.gd).
+func _guided_run() -> bool:
+	var tm: Node = get_node_or_null("/root/TutorialManager")
+	return tm != null and bool(tm.get("flow_active"))
+
+
 func _update_hud() -> void:
 	if ui_controller == null or game_state == null:
 		return
@@ -231,6 +239,7 @@ func _update_hud() -> void:
 			"undo_max": maxi(undo_limit, 0),
 			"hint_left": hint_left,
 			"hint_max": maxi(hint_limit, 0),
+			"guided": _guided_run(),
 		})
 	ui_controller.update_hud(
 		title,
@@ -434,6 +443,7 @@ func _game_over(reason := "") -> void:
 			"time": floor_time,
 			"reason": reason,
 			"endless": game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless,
+			"guided": _guided_run(),
 		})
 
 
@@ -815,11 +825,13 @@ func _board_center_cell() -> Vector2i:
 
 
 func _on_pause_toggled(is_paused: bool) -> void:
-	if timer_controller != null:
-		if is_paused:
-			timer_controller.pause()
-		else:
-			timer_controller.resume()
+	if timer_controller == null:
+		return
+	if is_paused:
+		timer_controller.pause()
+	elif not _memorize_active:
+		# Pha GHI NHỚ giữ đồng hồ đứng yên tới khi hết đếm ngược — đóng popup pause KHÔNG resume.
+		timer_controller.resume()
 
 
 # ---------------------------------------------------------------------------

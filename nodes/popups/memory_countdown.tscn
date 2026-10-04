@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://12n1hqh2gxf5" path="res://scripts/nodes/popups/memory_countdown.gd" id="2_memorize"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/paper_note_memory.png" id="3_note"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="4_tape"]
+[ext_resource type="Texture2D" uid="uid://u7wqegwmromx" path="res://assets/images-png/popups/paper_note_memory.png" id="3_note"]
+[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="4_tape"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_memorize_countdown.tres" id="5_number"]
 
 [sub_resource type="Animation" id="Animation_mc_number"]
@@ -12,7 +12,7 @@ length = 0.22
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/Content/Number:scale")
+tracks/0/path = NodePath("Panel/Content/Information/Number:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -27,10 +27,11 @@ _data = {
 &"number_pop": SubResource("Animation_mc_number")
 }
 
-[node name="Base" unique_id=581215192 instance=ExtResource("1_base")]
-offset_right = 540.0
-offset_bottom = 960.0
+[node name="Base" unique_id=581215192 node_paths=PackedStringArray("number_label", "title_label", "fx_anim") instance=ExtResource("1_base")]
 script = ExtResource("2_memorize")
+number_label = NodePath("Panel/Content/Information/Number")
+title_label = NodePath("Panel/Content/Information/Title")
+fx_anim = NodePath("FxAnim")
 close_on_back = false
 close_on_outside = false
 
@@ -40,62 +41,87 @@ offset_right = 540.0
 offset_bottom = 960.0
 
 [node name="Panel" parent="." index="1" unique_id=290635111]
-offset_left = 110.0
-offset_top = 75.0
-offset_right = 430.0
-offset_bottom = 215.0
+anchor_left = 0.476
+anchor_top = 0.23400001
+anchor_right = 0.476
+anchor_bottom = 0.23400001
+offset_left = -160.04001
+offset_top = -0.28001404
+offset_right = 159.95999
+offset_bottom = 139.71999
 
-[node name="Art" parent="Panel" index="0" unique_id=1533168933]
-offset_left = -5.0
-offset_top = -5.0
-offset_right = 325.0
-offset_bottom = 145.0
+[node name="Art" parent="Panel" index="0" unique_id=1269512275]
+anchor_left = 0.062000003
+anchor_top = 0.0
+anchor_right = 0.93700004
+anchor_bottom = 1.0
+offset_left = 0.15999985
+offset_top = 0.0
+offset_right = 0.15997314
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_note")
+patch_margin_left = 29
+patch_margin_top = 39
+patch_margin_right = 24
+patch_margin_bottom = 31
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
-[node name="WashiTape" type="TextureRect" parent="Panel" index="1" unique_id=1503578174]
+[node name="WashiTape" type="TextureRect" parent="Panel/Art" index="0" unique_id=1503578174]
 layout_mode = 0
-offset_left = 103.5
-offset_top = -12.0
-offset_right = 216.5
-offset_bottom = 15.0
+offset_left = 76.0
+offset_top = -15.999996
+offset_right = 189.0
+offset_bottom = 11.000004
 rotation = -0.05
 pivot_offset = Vector2(56.5, 13.5)
 mouse_filter = 2
 texture = ExtResource("4_tape")
 
-[node name="Title" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="0" unique_id=1103272879]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 7.0
-offset_right = 298.0
-offset_bottom = 31.0
+[node name="Information" type="VBoxContainer" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="0" unique_id=394558866]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="Panel/Content/Information" index="0" unique_id=361240714]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Title" type="Label" parent="Panel/Content/Information" index="1" unique_id=1103272879]
+layout_mode = 2
 theme_type_variation = &"PopupTitle"
 text = "STR_MEMORIZE_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Number" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="1" unique_id=631470266]
+[node name="Number" type="Label" parent="Panel/Content/Information" index="2" unique_id=631470266]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
-layout_mode = 0
-offset_left = 22.0
-offset_top = 31.0
-offset_right = 298.0
-offset_bottom = 109.0
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
 text = "3"
 label_settings = ExtResource("5_number")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Hint" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="2" unique_id=1328417645]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 109.0
-offset_right = 298.0
-offset_bottom = 129.0
+[node name="Hint" type="Label" parent="Panel/Content/Information" index="3" unique_id=1328417645]
+layout_mode = 2
 theme_type_variation = &"PopupQuote"
 text = "STR_MEMORIZE_HINT"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="Panel/Content/Information" index="4" unique_id=1806851408]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
 
 [node name="FxAnim" type="AnimationPlayer" parent="." index="3" unique_id=417332510]
 libraries/ = SubResource("AnimationLibrary_mcfx")

@@ -52,6 +52,8 @@ var _has_spotlight: bool = false
 ## --- HIỆU ỨNG (animation) ---------------------------------------------------
 ## Trễ giữa 2 ô bàn mini khi chạy hoạt cảnh mở bài
 const CELL_ENTER_STAGGER := 0.045
+## Chờ các ô nở xong hoàn toàn rồi mới áp lại vòng sáng (tránh đo rect lúc ô đang scale)
+const ENTRANCE_SETTLE_SECONDS := 1.0
 ## Thời lượng các hiệu ứng UI khai trong `base_tutorial.tscn` (khớp track của animation)
 const TEXT_OUT_SECONDS := 0.1
 const TOAST_IN_SECONDS := 0.22
@@ -160,6 +162,23 @@ func play_entrance() -> void:
 		cell.play_entrance(0.12 + delay)
 		delay += CELL_ENTER_STAGGER
 	_entrance_played = true
+	# Các ô nở ra bằng SCALE so le ⇒ trong lúc này `get_global_rect()` của ô vẫn là cỡ
+	# TRUNG GIAN → vòng sáng bị tính HỤT (hở khỏi ô). Áp lại sau khi các ô đã vào chỗ.
+	if _has_spotlight:
+		var settle := get_tree().create_timer(ENTRANCE_SETTLE_SECONDS)
+		settle.timeout.connect(_reapply_spotlight_after_entrance)
+
+
+## Áp lại vòng sáng sau khi hoạt cảnh mở bài kết thúc (rect tính theo cỡ THIẾT KẾ nên
+## thường đã đúng sẵn — chỉ trượt lại khi vị trí thực sự lệch, tránh ngắt nhịp "thở").
+func _reapply_spotlight_after_entrance() -> void:
+	if not is_inside_tree() or not _has_spotlight:
+		return
+	if spotlight != null:
+		var target := _spotlight_target()
+		if spotlight.position.is_equal_approx(target.position) and spotlight.size.is_equal_approx(target.size):
+			return
+	_apply_spotlight()
 
 
 ## Danh sách ô bàn mini của bài này (dùng cho hiệu ứng so le) — con của BoardHost
@@ -510,6 +529,31 @@ func _board_to_overlay(p: Vector2) -> Vector2:
 	return board_local_tl + p
 
 
+## Rect mục tiêu của vòng sáng (toạ độ LOCAL của BaseTutorial) — dùng chung cho
+## `_apply_spotlight()` và `_reapply_spotlight_after_entrance()`.
+##
+## Tính theo **TÂM + CỠ THIẾT KẾ** của mục tiêu (`size`), **BỎ QUA `scale` đang chạy**:
+## ô bàn mini nở ra bằng SCALE (0.65 → 1.0) — nếu lấy `get_global_rect()` ngay lúc đó thì
+## vòng sáng bị tính HỤT (~⅔ cỡ ô) rồi "PHÓNG TO" đột ngột khi áp lại sau hoạt cảnh mở bài.
+func _spotlight_target() -> Rect2:
+	# Ôm KHÍT mục tiêu: nét vòng sáng lấn vào đúng viền ô/nút `SPOTLIGHT_INSET` mỗi phía
+	# (mép ink của art nằm đúng vạch viền — dáng "focus đúng" đã chốt với người dùng).
+	const SPOTLIGHT_INSET := 1.5
+	if _spotlight_cell != Vector2i(-1, -1):
+		var cell := get_board_cell(_spotlight_cell)
+		if cell != null:
+			var center := cell.get_global_rect().get_center()
+			var side := cell.size
+			var lpos := center - side * 0.5 - global_position
+			return Rect2(lpos + Vector2(SPOTLIGHT_INSET, SPOTLIGHT_INSET), side - Vector2(SPOTLIGHT_INSET * 2.0, SPOTLIGHT_INSET * 2.0))
+	elif _spotlight_node != null and is_instance_valid(_spotlight_node):
+		var center := _spotlight_node.get_global_rect().get_center()
+		var side := _spotlight_node.size
+		var lpos := center - side * 0.5 - global_position
+		return Rect2(lpos + Vector2(SPOTLIGHT_INSET, SPOTLIGHT_INSET), side - Vector2(SPOTLIGHT_INSET * 2.0, SPOTLIGHT_INSET * 2.0))
+	return Rect2(_board_to_overlay(_spotlight_rect.position), _spotlight_rect.size)
+
+
 ## Đặt vòng sáng theo `spotlight_cell`, `spotlight_node` hoặc `spotlight_rect`
 func _apply_spotlight() -> void:
 	if spotlight == null:
@@ -518,23 +562,7 @@ func _apply_spotlight() -> void:
 		_hide_spotlight()
 		return
 
-	var target: Rect2
-	const CELL_SIZE_ANCHORING = Vector2(46,46)
-	const CELL_SIZE_CENTERING = (CELL_SIZE_ANCHORING + Vector2(8,8))  / 2
-	if _spotlight_cell != Vector2i(-1, -1):
-		var cell := get_board_cell(_spotlight_cell)
-		if cell != null:
-			var grect := cell.get_global_rect()
-			var lpos := grect.position - global_position
-			target = Rect2(lpos - CELL_SIZE_CENTERING, grect.size + CELL_SIZE_ANCHORING)
-		else:
-			target = Rect2(_board_to_overlay(_spotlight_rect.position), _spotlight_rect.size)
-	elif _spotlight_node != null and is_instance_valid(_spotlight_node):
-		var grect := _spotlight_node.get_global_rect()
-		var lpos := grect.position - global_position
-		target = Rect2(lpos - Vector2(28, 28), grect.size + Vector2(46, 46))
-	else:
-		target = Rect2(_board_to_overlay(_spotlight_rect.position), _spotlight_rect.size)
+	var target := _spotlight_target()
 
 	var was_visible := spotlight.visible
 	spotlight.visible = true

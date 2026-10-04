@@ -2,38 +2,63 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cx4o6qtfdn7ty" path="res://scripts/nodes/popups/gameover.gd" id="2_over"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/paper_slip_gameover.png" id="3_slip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/paper_clip.png" id="4_clip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/stamp_failed.png" id="5_stamp"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/icon_cross_red.png" id="6_cross"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/banner_revive.png" id="7_banner"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_ad.png" id="8_ad"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_revive_ad_normal.png" id="9_rev_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_revive_ad_pressed.png" id="10_rev_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_revive_ad_focus.png" id="11_rev_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_muted_normal.png" id="12_men_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_muted_pressed.png" id="13_men_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_muted_focus.png" id="14_men_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_danger_normal.png" id="15_ret_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_danger_pressed.png" id="16_ret_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_danger_focus.png" id="17_ret_f"]
+[ext_resource type="Texture2D" uid="uid://8o13vtagn2ox" path="res://assets/images-png/popups/paper_slip_gameover.png" id="3_slip"]
+[ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="4_clip"]
+[ext_resource type="Texture2D" uid="uid://u7rxj8oviqdf" path="res://assets/images-png/popups/stamp_failed.png" id="5_stamp"]
+[ext_resource type="Texture2D" uid="uid://b8lv6kcyhcqms" path="res://assets/images-png/popups/icon_cross_red.png" id="6_cross"]
+[ext_resource type="Texture2D" uid="uid://cbwmyb5u8ban6" path="res://assets/images-png/popups/banner_revive.png" id="7_banner"]
+[ext_resource type="Texture2D" uid="uid://b4bnagmk0jj2g" path="res://assets/images-png/icons/icon_ad.png" id="8_ad"]
+[ext_resource type="Texture2D" uid="uid://b3pxjd6mceamh" path="res://assets/images-png/popups/btn_revive_ad_normal.png" id="9_rev_n"]
+[ext_resource type="Texture2D" uid="uid://22m656wge4qf" path="res://assets/images-png/popups/btn_revive_ad_pressed.png" id="10_rev_p"]
+[ext_resource type="Texture2D" uid="uid://dd5ghevkdqo7o" path="res://assets/images-png/popups/btn_revive_ad_focus.png" id="11_rev_f"]
+[ext_resource type="Texture2D" uid="uid://c40ibelxrcq8h" path="res://assets/images-png/popups/btn_popup_muted_normal.png" id="12_men_n"]
+[ext_resource type="Texture2D" uid="uid://cbte8wbf32kei" path="res://assets/images-png/popups/btn_popup_muted_pressed.png" id="13_men_p"]
+[ext_resource type="Texture2D" uid="uid://h83gy7yn47fw" path="res://assets/images-png/popups/btn_popup_muted_focus.png" id="14_men_f"]
+[ext_resource type="Texture2D" uid="uid://der7d7ytwsbeq" path="res://assets/images-png/popups/btn_popup_danger_normal.png" id="15_ret_n"]
+[ext_resource type="Texture2D" uid="uid://comcrt2xgtjwm" path="res://assets/images-png/popups/btn_popup_danger_pressed.png" id="16_ret_p"]
+[ext_resource type="Texture2D" uid="uid://cnugf8wcc03sm" path="res://assets/images-png/popups/btn_popup_danger_focus.png" id="17_ret_f"]
 
-[node name="Base" unique_id=570730758 instance=ExtResource("1_base")]
-offset_top = 29.0
-offset_right = 540.0
-offset_bottom = 29.0
+[node name="Base" unique_id=570730758 node_paths=PackedStringArray("value_progress", "value_walls", "value_score", "stamp_count", "revive_desc") instance=ExtResource("1_base")]
 script = ExtResource("2_over")
+value_progress = NodePath("Panel/Content/Information/Stat1/Value")
+value_walls = NodePath("Panel/Content/Information/Stat2/Value")
+value_score = NodePath("Panel/Content/Information/Stat3/Value")
+stamp_count = NodePath("Panel/Content/Stamp/StampCount")
+revive_desc = NodePath("Panel/Content/Information/Banner/Desc")
 close_on_outside = false
 
-[node name="Dim" parent="." index="0" unique_id=617447502]
-offset_right = 540.0
-offset_bottom = 960.0
+[node name="Panel" parent="." index="1" unique_id=290635111]
+anchor_left = 0.49100003
+anchor_top = 0.1466087
+anchor_right = 0.49100003
+anchor_bottom = 0.147
+offset_left = -239.14001
+offset_right = 238.85999
+offset_bottom = 684.76
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Art" parent="Panel" parent_id_path=PackedInt32Array(290635111) index="0" unique_id=1533168933]
-offset_top = -13.0
+[node name="Art" parent="Panel" index="0" unique_id=1269512275]
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_slip")
 
-[node name="Clip" type="TextureRect" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="0" unique_id=1452231226]
+[node name="Content" parent="Panel" index="1" unique_id=45188561]
+offset_left = 46.0
+offset_top = 51.159546
+offset_right = -42.0
+offset_bottom = -53.159546
+
+[node name="Clip" type="TextureRect" parent="Panel/Content" index="0" unique_id=1452231226]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 67.0
@@ -43,12 +68,12 @@ offset_bottom = 55.5
 mouse_filter = 2
 texture = ExtResource("4_clip")
 
-[node name="Stamp" type="TextureRect" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="1" unique_id=1221693744]
+[node name="Stamp" type="TextureRect" parent="Panel/Content" index="1" unique_id=1221693744]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 318.0
+offset_left = 310.0
 offset_top = 70.4907
-offset_right = 398.0
+offset_right = 390.0
 offset_bottom = 122.0093
 mouse_filter = 2
 texture = ExtResource("5_stamp")
@@ -85,23 +110,23 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Cross" type="TextureRect" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="2" unique_id=1464504470]
+[node name="Cross" type="TextureRect" parent="Panel/Content" index="2" unique_id=1464504470]
 modulate = Color(1, 1, 1, 0.55)
 layout_mode = 1
 anchors_preset = -1
-offset_left = 202.5
+offset_left = 185.0
 offset_top = 105.0
-offset_right = 222.5
+offset_right = 205.0
 offset_bottom = 125.0
 mouse_filter = 2
 texture = ExtResource("6_cross")
 
-[node name="Title" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="3" unique_id=612191679]
+[node name="Title" type="Label" parent="Panel/Content" index="3" unique_id=612191679]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 60.0
+offset_left = 45.0
 offset_top = 28.0
-offset_right = 360.0
+offset_right = 345.0
 offset_bottom = 53.0
 theme_type_variation = &"PopupTitleDanger"
 text = "STR_GAME_OVER_TITLE"
@@ -109,12 +134,12 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Subtitle" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="4" unique_id=543051797]
+[node name="Subtitle" type="Label" parent="Panel/Content" index="4" unique_id=543051797]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 60.0
+offset_left = 45.0
 offset_top = 55.5
-offset_right = 360.0
+offset_right = 345.0
 offset_bottom = 67.5
 theme_type_variation = &"PopupSubtitle"
 text = "STR_GAME_OVER_SUBTITLE"
@@ -122,86 +147,91 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="StatLabel1" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="5" unique_id=420483927]
+[node name="Information" type="VBoxContainer" parent="Panel/Content" index="5" unique_id=1509033202]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 57.5
-offset_top = 188.5
-offset_right = 307.5
-offset_bottom = 202.5
+anchor_left = 0.08461538
+anchor_top = 0.26170713
+anchor_right = 0.9153846
+anchor_bottom = 0.89000005
+offset_bottom = 0.21350098
+theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="Control" parent="Panel/Content/Information" index="0" unique_id=1259208813]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Stat1" type="HBoxContainer" parent="Panel/Content/Information" index="1" unique_id=1978907518]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat1" index="0" unique_id=204737463]
+layout_mode = 2
 theme_type_variation = &"PopupStatLabelMuted"
 text = "STR_STAT_DISTANCE_TRAVELED"
 vertical_alignment = 1
 
-[node name="StatValue1" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="6" unique_id=2088700232]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 200.0
-offset_top = 188.0
-offset_right = 377.5
-offset_bottom = 202.0
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat1" index="1" unique_id=1026544600]
+layout_mode = 2
+size_flags_horizontal = 11
 theme_type_variation = &"PopupStatValueBad"
 text = "0%"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="StatLabel2" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="7" unique_id=1046904687]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 223.5
-offset_right = 307.5
-offset_bottom = 237.5
+[node name="Stat2" type="HBoxContainer" parent="Panel/Content/Information" index="2" unique_id=228314635]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat2" index="0" unique_id=1291802389]
+layout_mode = 2
 theme_type_variation = &"PopupStatLabelMuted"
 text = "STR_STAT_WALL_COLLISIONS"
 vertical_alignment = 1
 
-[node name="StatValue2" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="8" unique_id=1991679738]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 200.0
-offset_top = 223.0
-offset_right = 377.5
-offset_bottom = 237.0
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat2" index="1" unique_id=882770986]
+layout_mode = 2
+size_flags_horizontal = 11
 theme_type_variation = &"PopupStatValueBad"
 text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="StatLabel3" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="9" unique_id=1700235519]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 258.5
-offset_right = 307.5
-offset_bottom = 272.5
+[node name="Stat3" type="HBoxContainer" parent="Panel/Content/Information" index="3" unique_id=1237452382]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat3" index="0" unique_id=250168721]
+layout_mode = 2
 theme_type_variation = &"PopupStatLabelMuted"
 text = "STR_STAT_CONSOLATION_SCORE"
 vertical_alignment = 1
 
-[node name="StatValue3" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="10" unique_id=1886148095]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 200.0
-offset_top = 258.0
-offset_right = 377.5
-offset_bottom = 272.0
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat3" index="1" unique_id=952578316]
+layout_mode = 2
+size_flags_horizontal = 11
 theme_type_variation = &"PopupStatValueMuted"
 text = "+0 PTS"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Banner" type="TextureRect" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="11" unique_id=88017727]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 56.5
-offset_top = 306.0
-offset_right = 378.5
-offset_bottom = 355.0
+[node name="Spacer" type="Control" parent="Panel/Content/Information" index="4" unique_id=1022812413]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.23
+
+[node name="Banner" type="TextureRect" parent="Panel/Content/Information" index="5" unique_id=88017727]
+layout_mode = 2
+size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("7_banner")
 
-[node name="AdIcon" type="TextureRect" parent="Panel/Content/Banner" index="0" unique_id=336622308]
+[node name="AdIcon" type="TextureRect" parent="Panel/Content/Information/Banner" index="0" unique_id=336622308]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 14.5
@@ -211,7 +241,7 @@ offset_bottom = 29.0
 mouse_filter = 2
 texture = ExtResource("8_ad")
 
-[node name="Desc" type="Label" parent="Panel/Content/Banner" index="1" unique_id=402594436]
+[node name="Desc" type="Label" parent="Panel/Content/Information/Banner" index="1" unique_id=402594436]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 40.0
@@ -224,7 +254,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="ReviveBtn" type="TextureButton" parent="Panel/Content/Banner" index="2" unique_id=1975147254]
+[node name="ReviveBtn" type="TextureButton" parent="Panel/Content/Information/Banner" index="2" unique_id=1975147254]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 237.0
@@ -236,7 +266,7 @@ texture_pressed = ExtResource("10_rev_p")
 texture_hover = ExtResource("9_rev_n")
 texture_focused = ExtResource("11_rev_f")
 
-[node name="Label" type="Label" parent="Panel/Content/Banner/ReviveBtn" index="0" unique_id=403631218]
+[node name="Label" type="Label" parent="Panel/Content/Information/Banner/ReviveBtn" index="0" unique_id=403631218]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -250,19 +280,23 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="MenuBtn" type="TextureButton" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="12" unique_id=1709849678]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 390.0
-offset_right = 207.5
-offset_bottom = 434.0
+[node name="SpacerB" type="Control" parent="Panel/Content/Information" index="6" unique_id=691644348]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information" index="7" unique_id=1988303326]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="MenuBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="0" unique_id=1709849678]
+layout_mode = 2
 texture_normal = ExtResource("12_men_n")
 texture_pressed = ExtResource("13_men_p")
 texture_hover = ExtResource("12_men_n")
 texture_focused = ExtResource("14_men_f")
 
-[node name="Label" type="Label" parent="Panel/Content/MenuBtn" index="0" unique_id=539897454]
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/MenuBtn" index="0" unique_id=539897454]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -276,19 +310,14 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="RetryBtn" type="TextureButton" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="13" unique_id=296734399]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 227.5
-offset_top = 390.0
-offset_right = 377.5
-offset_bottom = 434.0
+[node name="RetryBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="1" unique_id=296734399]
+layout_mode = 2
 texture_normal = ExtResource("15_ret_n")
 texture_pressed = ExtResource("16_ret_p")
 texture_hover = ExtResource("15_ret_n")
 texture_focused = ExtResource("17_ret_f")
 
-[node name="Label" type="Label" parent="Panel/Content/RetryBtn" index="0" unique_id=1385212708]
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/RetryBtn" index="0" unique_id=1385212708]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -302,12 +331,13 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Quote" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="14" unique_id=793972754]
-layout_mode = 1
-anchors_preset = -1
-offset_top = 470.5
-offset_right = 425.0
-offset_bottom = 482.5
+[node name="Spacer2" type="Control" parent="Panel/Content/Information" index="8" unique_id=542083628]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_stretch_ratio = 0.1
+
+[node name="Quote" type="Label" parent="Panel/Content/Information" index="9" unique_id=793972754]
+layout_mode = 2
 theme_type_variation = &"PopupQuote"
 text = "STR_GAME_OVER_TIP"
 horizontal_alignment = 1
@@ -315,6 +345,6 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[connection signal="pressed" from="Panel/Content/Banner/ReviveBtn" to="." method="_on_revive_pressed"]
-[connection signal="pressed" from="Panel/Content/MenuBtn" to="." method="_on_menu_pressed"]
-[connection signal="pressed" from="Panel/Content/RetryBtn" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Banner/ReviveBtn" to="." method="_on_revive_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/MenuBtn" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/RetryBtn" to="." method="_on_retry_pressed"]

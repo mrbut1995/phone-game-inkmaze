@@ -2,38 +2,35 @@
 
 [ext_resource type="Script" uid="uid://c2xjoof2mc6ir" path="res://scripts/nodes/popups/edit_profile.gd" id="1_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/panel_profile.png" id="3_panel"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="4_washi"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="6_divider"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/card_soft.png" id="7_card"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/tab_on.png" id="9_tab_on"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/tab_off.png" id="10_tab_off"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="12_disc"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/frame_gear_gold.png" id="13_frame"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/avatar_cat.png" id="14_avatar"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/chip_dark.png" id="15_chip_dark"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_primary_normal.png" id="16_pri_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_primary_pressed.png" id="17_pri_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_ghost_normal.png" id="18_gho_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_ghost_pressed.png" id="19_gho_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_close_circle.png" id="25_close"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/stamp_verified.png" id="26_stamp"]
+[ext_resource type="Texture2D" uid="uid://cajlrlkr124xo" path="res://assets/images-png/popups/panel_profile.png" id="3_panel"]
+[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="4_washi"]
+[ext_resource type="Texture2D" uid="uid://duqcleabqujwd" path="res://assets/images-png/settings/divider_dashed.png" id="6_divider"]
+[ext_resource type="Texture2D" uid="uid://ceoo2smykqxpu" path="res://assets/images-png/profiler/card_soft.png" id="7_card"]
+[ext_resource type="Texture2D" uid="uid://cc60f3g3jm5oy" path="res://assets/images-png/profiler/tab_on.png" id="9_tab_on"]
+[ext_resource type="Texture2D" uid="uid://dac4ufwq5n0vr" path="res://assets/images-png/profiler/tab_off.png" id="10_tab_off"]
+[ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="12_disc"]
+[ext_resource type="Texture2D" uid="uid://cdiahelgy8eyf" path="res://assets/images-png/profiler/frame_gear_gold.png" id="13_frame"]
+[ext_resource type="Texture2D" uid="uid://c0itcyyufkxdj" path="res://assets/images-png/profiler/avatar_cat.png" id="14_avatar"]
+[ext_resource type="Texture2D" uid="uid://dqieoipkfwl5t" path="res://assets/images-png/profiler/btn_primary_normal.png" id="16_pri_n"]
+[ext_resource type="Texture2D" uid="uid://57bxbg2334ve" path="res://assets/images-png/profiler/btn_primary_pressed.png" id="17_pri_p"]
+[ext_resource type="Texture2D" uid="uid://ubudnp5w8n2o" path="res://assets/images-png/profiler/btn_ghost_normal.png" id="18_gho_n"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_title.tres" id="18_t_title"]
+[ext_resource type="Texture2D" uid="uid://dqdxs73dfrhnl" path="res://assets/images-png/profiler/btn_ghost_pressed.png" id="19_gho_p"]
 [ext_resource type="LabelSettings" uid="uid://bu8t2nlps33r5" path="res://resources/settings/text/text_profiler_small.tres" id="19_t_small"]
-[ext_resource type="LabelSettings" uid="uid://10rhkf4kv2gy" path="res://resources/settings/text/text_profiler_lock.tres" id="20_t_lock"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_tab_on.tres" id="21_t_tab"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_button.tres" id="22_t_btn"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_button_ghost.tres" id="23_t_btn_ghost"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_stamp.tres" id="24_t_stamp"]
-
+[ext_resource type="Texture2D" uid="uid://dqjxmv1xiavtt" path="res://assets/images-png/profiler/btn_close_circle.png" id="25_close"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_tag.tres" id="25_t_tag"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/icon_pen_input.png" id="27_pen_input"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/icon_tab_avatar.png" id="28_tab_avatar"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/icon_tab_frame.png" id="29_tab_frame"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_page_prev_normal.png" id="30_page_prev_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_page_prev_pressed.png" id="31_page_prev_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_page_next_normal.png" id="32_page_next_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_page_next_pressed.png" id="33_page_next_p"]
+[ext_resource type="Texture2D" uid="uid://tiymsnphf22l" path="res://assets/images-png/profiler/stamp_verified.png" id="26_stamp"]
+[ext_resource type="Texture2D" uid="uid://cqvexadr1rpgx" path="res://assets/images-png/profiler/icon_pen_input.png" id="27_pen_input"]
+[ext_resource type="Texture2D" uid="uid://b8neo2gpfmq4v" path="res://assets/images-png/profiler/icon_tab_avatar.png" id="28_tab_avatar"]
+[ext_resource type="Texture2D" uid="uid://b5my2ymwtl2qd" path="res://assets/images-png/profiler/icon_tab_frame.png" id="29_tab_frame"]
+[ext_resource type="Texture2D" uid="uid://f1fjdg2ggup3" path="res://assets/images-png/profiler/btn_page_prev_normal.png" id="30_page_prev_n"]
+[ext_resource type="Texture2D" uid="uid://ct60k3m21fty2" path="res://assets/images-png/profiler/btn_page_prev_pressed.png" id="31_page_prev_p"]
+[ext_resource type="Texture2D" uid="uid://bpayul8p2cfft" path="res://assets/images-png/profiler/btn_page_next_normal.png" id="32_page_next_n"]
+[ext_resource type="Texture2D" uid="uid://cc0q1gm8651pw" path="res://assets/images-png/profiler/btn_page_next_pressed.png" id="33_page_next_p"]
 
 [sub_resource type="StyleBoxFlat" id="Sb_name"]
 content_margin_left = 8.0
@@ -93,7 +90,7 @@ texture_margin_top = 12.0
 texture_margin_right = 16.0
 texture_margin_bottom = 12.0
 
-[node name="Base" type="Control"]
+[node name="Base" type="Control" unique_id=1093552690 node_paths=PackedStringArray("preview_avatar", "preview_frame", "preview_disc", "name_edit", "name_hint", "item_grid", "page_bar", "tab_avatar", "tab_avatar_bg_off", "tab_avatar_bg_on", "tab_avatar_text", "tab_avatar_icon", "tab_frame", "tab_frame_bg_off", "tab_frame_bg_on", "tab_frame_text", "tab_frame_icon", "btn_prev", "btn_next", "dots_box", "btn_close", "btn_cancel", "btn_save", "dim", "panel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,14 +99,42 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_script")
+preview_avatar = NodePath("Panel/Content/Preview/Profile/Frame/Avatar")
+preview_frame = NodePath("Panel/Content/Preview/Profile/Frame")
+preview_disc = NodePath("Panel/Content/Preview/Profile")
+name_edit = NodePath("Panel/Content/Preview/NameEdit")
+name_hint = NodePath("Panel/Content/Preview/NameHint")
+item_grid = NodePath("Panel/Content/Scroll/Grid")
+page_bar = NodePath("Panel/Content/PageBar")
+tab_avatar = NodePath("Panel/Content/Tabs/TabAvatar")
+tab_avatar_bg_off = NodePath("Panel/Content/Tabs/TabAvatar/BgOff")
+tab_avatar_bg_on = NodePath("Panel/Content/Tabs/TabAvatar/BgOn")
+tab_avatar_text = NodePath("Panel/Content/Tabs/TabAvatar/Row/Text")
+tab_avatar_icon = NodePath("Panel/Content/Tabs/TabAvatar/Row/Icon")
+tab_frame = NodePath("Panel/Content/Tabs/TabFrame")
+tab_frame_bg_off = NodePath("Panel/Content/Tabs/TabFrame/BgOff")
+tab_frame_bg_on = NodePath("Panel/Content/Tabs/TabFrame/BgOn")
+tab_frame_text = NodePath("Panel/Content/Tabs/TabFrame/Row/Text")
+tab_frame_icon = NodePath("Panel/Content/Tabs/TabFrame/Row/Icon")
+btn_prev = NodePath("Panel/Content/PageBar/BtnPrev")
+btn_next = NodePath("Panel/Content/PageBar/BtnNext")
+dots_box = NodePath("Panel/Content/PageBar/Dots")
+btn_close = NodePath("Panel/Content/TopBar/Close")
+btn_cancel = NodePath("Panel/Content/Actions/BtnCancel")
+btn_save = NodePath("Panel/Content/Actions/BtnSave")
+dim = NodePath("Dim")
+panel = NodePath("Panel")
 
-[node name="Dim" type="ColorRect" parent="."]
+[node name="Dim" type="ColorRect" parent="." unique_id=1266455356]
 layout_mode = 1
-offset_right = 540.0
-offset_bottom = 960.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.058824, 0.101961, 0.160784, 0.68)
 
-[node name="Panel" type="Control" parent="."]
+[node name="Panel" type="Control" parent="." unique_id=988368116]
 anchors_preset = 0
 offset_left = 55.0
 offset_top = 160.0
@@ -117,7 +142,7 @@ offset_right = 485.0
 offset_bottom = 760.0
 mouse_filter = 2
 
-[node name="Art" type="TextureRect" parent="Panel"]
+[node name="Art" type="TextureRect" parent="Panel" unique_id=1816123927]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -128,7 +153,7 @@ mouse_filter = 2
 texture = ExtResource("3_panel")
 expand_mode = 1
 
-[node name="Washi" type="TextureRect" parent="Panel"]
+[node name="Washi" type="TextureRect" parent="Panel" unique_id=263293651]
 layout_mode = 0
 offset_left = 160.0
 offset_top = -9.0
@@ -138,7 +163,7 @@ mouse_filter = 2
 texture = ExtResource("4_washi")
 expand_mode = 1
 
-[node name="Content" type="Control" parent="Panel"]
+[node name="Content" type="Control" parent="Panel" unique_id=1562064704]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -147,23 +172,29 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Title" type="Label" parent="Panel/Content"]
+[node name="TopBar" type="HBoxContainer" parent="Panel/Content" unique_id=1744346994]
 layout_mode = 0
 offset_left = 35.0
-offset_top = 14.0
-offset_right = 395.0
+offset_top = 13.0
+offset_right = 413.0
 offset_bottom = 38.0
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Panel/Content/TopBar" unique_id=989772322]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "STR_EDIT_PROFILE_TITLE"
 label_settings = ExtResource("18_t_title")
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
 
-[node name="Close" type="TextureButton" parent="Panel/Content"]
-layout_mode = 0
-offset_left = 388.0
-offset_top = 13.0
-offset_right = 413.0
-offset_bottom = 38.0
+[node name="Close" type="TextureButton" parent="Panel/Content/TopBar" unique_id=293982887]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 4
 texture_normal = ExtResource("25_close")
 texture_pressed = ExtResource("25_close")
 texture_hover = ExtResource("25_close")
@@ -172,7 +203,7 @@ texture_focused = ExtResource("25_close")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Divider" type="TextureRect" parent="Panel/Content"]
+[node name="Divider" type="TextureRect" parent="Panel/Content" unique_id=167364505]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 46.5
@@ -182,7 +213,7 @@ mouse_filter = 2
 texture = ExtResource("6_divider")
 expand_mode = 1
 
-[node name="Preview" type="NinePatchRect" parent="Panel/Content"]
+[node name="Preview" type="NinePatchRect" parent="Panel/Content" unique_id=553218306]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 60.0
@@ -194,7 +225,7 @@ patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 
-[node name="Tag" type="ColorRect" parent="Panel/Content/Preview"]
+[node name="Tag" type="ColorRect" parent="Panel/Content/Preview" unique_id=1340742830]
 layout_mode = 0
 offset_left = 34.0
 offset_top = 76.0
@@ -203,7 +234,7 @@ offset_bottom = 86.0
 mouse_filter = 2
 color = Color(0.0862745, 0.227451, 0.345098, 1)
 
-[node name="TagText" type="Label" parent="Panel/Content/Preview/Tag"]
+[node name="TagText" type="Label" parent="Panel/Content/Preview/Tag" unique_id=1387753867]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -215,7 +246,7 @@ label_settings = ExtResource("25_t_tag")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Profile" type="TextureRect" parent="Panel/Content/Preview"]
+[node name="Profile" type="TextureRect" parent="Panel/Content/Preview" unique_id=1108240110]
 self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
 layout_mode = 0
 offset_left = 29.5
@@ -227,7 +258,7 @@ texture = ExtResource("12_disc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Frame" type="TextureRect" parent="Panel/Content/Preview/Profile"]
+[node name="Frame" type="TextureRect" parent="Panel/Content/Preview/Profile" unique_id=508349584]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.2485
@@ -241,7 +272,7 @@ texture = ExtResource("13_frame")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Avatar" type="TextureRect" parent="Panel/Content/Preview/Profile/Frame"]
+[node name="Avatar" type="TextureRect" parent="Panel/Content/Preview/Profile/Frame" unique_id=818975810]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15714286
@@ -255,7 +286,7 @@ texture = ExtResource("14_avatar")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="NameLabel" type="Label" parent="Panel/Content/Preview"]
+[node name="NameLabel" type="Label" parent="Panel/Content/Preview" unique_id=1229524981]
 layout_mode = 0
 offset_left = 115.0
 offset_top = 17.0
@@ -265,7 +296,7 @@ text = "STR_EDIT_NAME_LABEL"
 label_settings = ExtResource("19_t_small")
 vertical_alignment = 1
 
-[node name="NameEdit" type="LineEdit" parent="Panel/Content/Preview"]
+[node name="NameEdit" type="LineEdit" parent="Panel/Content/Preview" unique_id=1975599917]
 layout_mode = 0
 offset_left = 115.0
 offset_top = 31.5
@@ -278,7 +309,7 @@ theme_override_styles/focus = SubResource("Sb_name")
 text = "MazeWalker #1024"
 max_length = 16
 
-[node name="Pen" type="TextureRect" parent="Panel/Content/Preview/NameEdit"]
+[node name="Pen" type="TextureRect" parent="Panel/Content/Preview/NameEdit" unique_id=1847586552]
 layout_mode = 0
 offset_left = 173.5
 offset_top = 9.0
@@ -289,7 +320,7 @@ texture = ExtResource("27_pen_input")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="NameHint" type="Label" parent="Panel/Content/Preview"]
+[node name="NameHint" type="Label" parent="Panel/Content/Preview" unique_id=2027767149]
 layout_mode = 0
 offset_left = 115.0
 offset_top = 67.0
@@ -300,7 +331,7 @@ label_settings = ExtResource("19_t_small")
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Tabs" type="HBoxContainer" parent="Panel/Content"]
+[node name="Tabs" type="HBoxContainer" parent="Panel/Content" unique_id=1155296352]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 177.5
@@ -309,12 +340,12 @@ offset_bottom = 203.5
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="TabAvatar" type="Button" parent="Panel/Content/Tabs"]
+[node name="TabAvatar" type="Button" parent="Panel/Content/Tabs" unique_id=900659242]
 custom_minimum_size = Vector2(165, 26)
 layout_mode = 2
 flat = true
 
-[node name="BgOff" type="TextureRect" parent="Panel/Content/Tabs/TabAvatar"]
+[node name="BgOff" type="TextureRect" parent="Panel/Content/Tabs/TabAvatar" unique_id=1362430362]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -326,7 +357,7 @@ mouse_filter = 2
 texture = ExtResource("10_tab_off")
 expand_mode = 1
 
-[node name="BgOn" type="TextureRect" parent="Panel/Content/Tabs/TabAvatar"]
+[node name="BgOn" type="TextureRect" parent="Panel/Content/Tabs/TabAvatar" unique_id=1155729364]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -337,7 +368,7 @@ mouse_filter = 2
 texture = ExtResource("9_tab_on")
 expand_mode = 1
 
-[node name="Row" type="HBoxContainer" parent="Panel/Content/Tabs/TabAvatar"]
+[node name="Row" type="HBoxContainer" parent="Panel/Content/Tabs/TabAvatar" unique_id=670517808]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -345,10 +376,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-alignment = 1
 theme_override_constants/separation = 5
+alignment = 1
 
-[node name="Icon" type="TextureRect" parent="Panel/Content/Tabs/TabAvatar/Row"]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Tabs/TabAvatar/Row" unique_id=1976686834]
 custom_minimum_size = Vector2(11, 11)
 layout_mode = 2
 size_flags_vertical = 4
@@ -357,19 +388,18 @@ texture = ExtResource("28_tab_avatar")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Text" type="Label" parent="Panel/Content/Tabs/TabAvatar/Row"]
+[node name="Text" type="Label" parent="Panel/Content/Tabs/TabAvatar/Row" unique_id=737743304]
 layout_mode = 2
-size_flags_vertical = 4
 text = "STR_EDIT_TAB_AVATAR"
 label_settings = ExtResource("21_t_tab")
 vertical_alignment = 1
 
-[node name="TabFrame" type="Button" parent="Panel/Content/Tabs"]
+[node name="TabFrame" type="Button" parent="Panel/Content/Tabs" unique_id=124245951]
 custom_minimum_size = Vector2(165, 26)
 layout_mode = 2
 flat = true
 
-[node name="BgOff" type="TextureRect" parent="Panel/Content/Tabs/TabFrame"]
+[node name="BgOff" type="TextureRect" parent="Panel/Content/Tabs/TabFrame" unique_id=545460372]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -380,7 +410,7 @@ mouse_filter = 2
 texture = ExtResource("10_tab_off")
 expand_mode = 1
 
-[node name="BgOn" type="TextureRect" parent="Panel/Content/Tabs/TabFrame"]
+[node name="BgOn" type="TextureRect" parent="Panel/Content/Tabs/TabFrame" unique_id=1881781443]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -392,7 +422,7 @@ mouse_filter = 2
 texture = ExtResource("9_tab_on")
 expand_mode = 1
 
-[node name="Row" type="HBoxContainer" parent="Panel/Content/Tabs/TabFrame"]
+[node name="Row" type="HBoxContainer" parent="Panel/Content/Tabs/TabFrame" unique_id=148518056]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -400,10 +430,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-alignment = 1
 theme_override_constants/separation = 5
+alignment = 1
 
-[node name="Icon" type="TextureRect" parent="Panel/Content/Tabs/TabFrame/Row"]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Tabs/TabFrame/Row" unique_id=680235900]
 custom_minimum_size = Vector2(11, 11)
 layout_mode = 2
 size_flags_vertical = 4
@@ -412,14 +442,13 @@ texture = ExtResource("29_tab_frame")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Text" type="Label" parent="Panel/Content/Tabs/TabFrame/Row"]
+[node name="Text" type="Label" parent="Panel/Content/Tabs/TabFrame/Row" unique_id=42821700]
 layout_mode = 2
-size_flags_vertical = 4
 text = "STR_EDIT_TAB_FRAME"
 label_settings = ExtResource("21_t_tab")
 vertical_alignment = 1
 
-[node name="TabLine" type="ColorRect" parent="Panel/Content"]
+[node name="TabLine" type="ColorRect" parent="Panel/Content" unique_id=806340498]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 203.5
@@ -428,7 +457,7 @@ offset_bottom = 205.0
 mouse_filter = 2
 color = Color(0.145098, 0.423529, 0.588235, 1)
 
-[node name="Scroll" type="ScrollContainer" parent="Panel/Content"]
+[node name="Scroll" type="ScrollContainer" parent="Panel/Content" unique_id=1494228301]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 220.0
@@ -437,24 +466,24 @@ offset_bottom = 440.0
 mouse_filter = 2
 horizontal_scroll_mode = 0
 
-[node name="Grid" type="GridContainer" parent="Panel/Content/Scroll"]
+[node name="Grid" type="GridContainer" parent="Panel/Content/Scroll" unique_id=1954500039]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 10
 columns = 3
 
-[node name="PageBar" type="Control" parent="Panel/Content"]
+[node name="PageBar" type="HBoxContainer" parent="Panel/Content" unique_id=572859674]
 layout_mode = 0
 offset_left = 120.0
 offset_top = 447.0
 offset_right = 310.0
 offset_bottom = 475.0
 
-[node name="BtnPrev" type="TextureButton" parent="Panel/Content/PageBar"]
-layout_mode = 0
-offset_right = 28.0
-offset_bottom = 28.0
+[node name="BtnPrev" type="TextureButton" parent="Panel/Content/PageBar" unique_id=1228699285]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
 texture_normal = ExtResource("30_page_prev_n")
 texture_pressed = ExtResource("31_page_prev_p")
 texture_hover = ExtResource("30_page_prev_n")
@@ -463,19 +492,16 @@ texture_focused = ExtResource("30_page_prev_n")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Dots" type="HBoxContainer" parent="Panel/Content/PageBar"]
-layout_mode = 0
-offset_left = 46.0
-offset_right = 144.0
-offset_bottom = 28.0
-alignment = 1
+[node name="Dots" type="HBoxContainer" parent="Panel/Content/PageBar" unique_id=147793303]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 8
+alignment = 1
 
-[node name="BtnNext" type="TextureButton" parent="Panel/Content/PageBar"]
-layout_mode = 0
-offset_left = 162.0
-offset_right = 190.0
-offset_bottom = 28.0
+[node name="BtnNext" type="TextureButton" parent="Panel/Content/PageBar" unique_id=1582100929]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
 texture_normal = ExtResource("32_page_next_n")
 texture_pressed = ExtResource("33_page_next_p")
 texture_hover = ExtResource("32_page_next_n")
@@ -484,18 +510,24 @@ texture_focused = ExtResource("32_page_next_n")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="BtnCancel" type="Button" parent="Panel/Content"]
+[node name="Actions" type="HBoxContainer" parent="Panel/Content" unique_id=1365809204]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 490.0
-offset_right = 170.0
+offset_right = 380.0
 offset_bottom = 530.0
+theme_override_constants/separation = 15
+
+[node name="BtnCancel" type="Button" parent="Panel/Content/Actions" unique_id=492430864]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.615
 theme_override_styles/normal = SubResource("Sb_cancel_n")
 theme_override_styles/pressed = SubResource("Sb_cancel_p")
 theme_override_styles/hover = SubResource("Sb_cancel_n")
 theme_override_styles/focus = SubResource("Sb_cancel_f")
 
-[node name="Label" type="Label" parent="Panel/Content/BtnCancel"]
+[node name="Label" type="Label" parent="Panel/Content/Actions/BtnCancel" unique_id=1309081439]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -507,18 +539,15 @@ label_settings = ExtResource("23_t_btn_ghost")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BtnSave" type="Button" parent="Panel/Content"]
-layout_mode = 0
-offset_left = 185.0
-offset_top = 490.0
-offset_right = 380.0
-offset_bottom = 530.0
+[node name="BtnSave" type="Button" parent="Panel/Content/Actions" unique_id=438634452]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("Sb_save_n")
 theme_override_styles/pressed = SubResource("Sb_save_p")
 theme_override_styles/hover = SubResource("Sb_save_n")
 theme_override_styles/focus = SubResource("Sb_save_f")
 
-[node name="Label" type="Label" parent="Panel/Content/BtnSave"]
+[node name="Label" type="Label" parent="Panel/Content/Actions/BtnSave" unique_id=757379790]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -530,7 +559,7 @@ label_settings = ExtResource("22_t_btn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Stamp" type="Control" parent="Panel/Content"]
+[node name="Stamp" type="Control" parent="Panel/Content" unique_id=1680538138]
 anchors_preset = 0
 offset_left = 340.0
 offset_top = 542.5
@@ -539,7 +568,7 @@ offset_bottom = 563.5
 rotation = -0.10472
 mouse_filter = 2
 
-[node name="Bg" type="TextureRect" parent="Panel/Content/Stamp"]
+[node name="Bg" type="TextureRect" parent="Panel/Content/Stamp" unique_id=575606015]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -550,7 +579,7 @@ mouse_filter = 2
 texture = ExtResource("26_stamp")
 expand_mode = 1
 
-[node name="Text" type="Label" parent="Panel/Content/Stamp"]
+[node name="Text" type="Label" parent="Panel/Content/Stamp" unique_id=1919674716]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -562,12 +591,12 @@ label_settings = ExtResource("24_t_stamp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="Panel/Content/Close" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="Panel/Content/TopBar/Close" to="." method="_on_cancel_pressed"]
+[connection signal="text_changed" from="Panel/Content/Preview/NameEdit" to="." method="_on_name_changed"]
 [connection signal="pressed" from="Panel/Content/Tabs/TabAvatar" to="." method="_on_tab_avatar_pressed"]
 [connection signal="pressed" from="Panel/Content/Tabs/TabFrame" to="." method="_on_tab_frame_pressed"]
 [connection signal="gui_input" from="Panel/Content/Scroll" to="." method="_on_scroll_gui_input"]
 [connection signal="pressed" from="Panel/Content/PageBar/BtnPrev" to="." method="_on_page_prev_pressed"]
 [connection signal="pressed" from="Panel/Content/PageBar/BtnNext" to="." method="_on_page_next_pressed"]
-[connection signal="text_changed" from="Panel/Content/Preview/NameEdit" to="." method="_on_name_changed"]
-[connection signal="pressed" from="Panel/Content/BtnCancel" to="." method="_on_cancel_pressed"]
-[connection signal="pressed" from="Panel/Content/BtnSave" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Panel/Content/Actions/BtnCancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="Panel/Content/Actions/BtnSave" to="." method="_on_save_pressed"]

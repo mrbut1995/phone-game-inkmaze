@@ -1,7 +1,8 @@
 extends SceneTree
 ## ============================================================================
 ## Test: Blind Memory Maze — pha GHI NHỚ (đếm ngược trước khi tường biến mất).
-##   - HUD riêng (BlindMemoryHUD): KHÔNG có thẻ THỬ THÁCH.
+##   - HUD riêng (BlindMemoryHUD): KHÔNG có thẻ THỬ THÁCH, CHỈ có thẻ THỜI GIAN.
+##     (Thẻ nhắc GHI NHỚ đã gỡ khỏi HUD từ 2026-09-27 — dòng nhắc 3-2-1-GO nằm trong POPUP đếm ngược.)
 ##   - Vào màn: hiện TOÀN BỘ tường + khoá tương tác + ĐỒNG HỒ DỪNG + popup đếm ngược mở.
 ##   - Hết đếm ngược: tường ẩn lại + mở tương tác + đồng hồ chạy (giờ chơi không tính lúc ghi nhớ).
 ##   - Pha ghi nhớ KHÔNG vẽ label trong board nữa (label cũ bị setup_maze xoá -> crash Null).
@@ -70,13 +71,12 @@ func _check_hud(scene: GameScene, gc: GameController) -> void:
 		_fail("HUD Blind Memory KHONG duoc co the THU THACH")
 	if gc.challenge_controller != null and gc.challenge_controller.card != null:
 		_fail("ChallengeController khong duoc tro vao the thu thach o Blind Memory")
-	var note := hud.get_node_or_null("Note/Title") as Label
-	if note == null or note.text.is_empty():
-		_fail("HUD Blind Memory thieu dong nhac GHI NHO")
-	var time_val := hud.get_node_or_null("Time/Value") as Label
+	# HUD đã gỡ thẻ GHI NHỚ (2026-09-27) — chỉ còn THỜI GIAN; dòng nhắc ghi nhớ do POPUP đếm ngược lo
+	# (kiểm ở `_check_memorize_phase`). Đọc qua EXPORT `time_value_node` — không phụ thuộc đường dẫn node.
+	var time_val := hud.time_value_node
 	if time_val == null or time_val.text.is_empty():
 		_fail("HUD Blind Memory thieu gia tri THOI GIAN")
-	print("[CHECK] HUD Blind Memory: khong co the Thử thách, co the GHI NHỚ + THỜI GIAN")
+	print("[CHECK] HUD Blind Memory: khong co the Thử thách · co the THỜI GIAN (nhac GHI NHO nam trong POPUP)")
 
 
 # ---------------------------------------------------------------------------
@@ -117,9 +117,15 @@ func _check_memorize_phase(scene: GameScene, gc: GameController, board: BoardVie
 			_fail("Pha ghi nho khong duoc tu ve label trong board (%d label trong Markers)" % stray_labels)
 
 	var popup := Popups.get_popup(Popups.MEMORIZE)
-	var number := popup.get_node_or_null("Panel/Content/Number") as Label if popup != null else null
+	var title := popup.get_node_or_null("Panel/Content/Information/Title") as Label if popup != null else null
+	var number := popup.get_node_or_null("Panel/Content/Information/Number") as Label if popup != null else null
+	var hint := popup.get_node_or_null("Panel/Content/Information/Hint") as Label if popup != null else null
+	if title == null or title.text.is_empty():
+		_fail("Popup dem nguoc thieu dong nhac GHI NHO (tieu de)")
 	if number == null or number.text.is_empty():
 		_fail("Popup dem nguoc thieu so hien thi")
+	if hint == null or hint.text.is_empty():
+		_fail("Popup dem nguoc thieu dong nhac cach choi (chan trang)")
 	print("[CHECK] Pha GHINHO: %d/%d tuong hien · tuong_tac=khoa · dong_ho=dung · popup dem nguoc mo" % [visible, total])
 
 

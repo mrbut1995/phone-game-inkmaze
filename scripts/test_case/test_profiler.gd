@@ -385,7 +385,7 @@ func _section_6_popup(manager: Node) -> void:
 	_entry(preview_frame != null and preview_frame.texture != null, "The xem truoc co vien khung")
 
 	# Bấm SAVE -> đổi viền đang dùng trong hồ sơ
-	var save_button := popup.get_node_or_null("Panel/Content/BtnSave") as Button
+	var save_button := popup.get_node_or_null("Panel/Content/Actions/BtnSave") as Button
 	_entry(save_button != null, "Popup co nut LUU THAY DOI")
 	if save_button != null:
 		save_button.pressed.emit()
@@ -397,7 +397,7 @@ func _section_6_popup(manager: Node) -> void:
 	await process_frame
 	_entry(popup != null, "Mo lai popup de kiem tra HUY BO")
 	if popup != null:
-		var cancel := popup.get_node_or_null("Panel/Content/BtnCancel") as Button
+		var cancel := popup.get_node_or_null("Panel/Content/Actions/BtnCancel") as Button
 		popup.set_tab("frame")
 		popup.select_pending("frame_ink")
 		if cancel != null:

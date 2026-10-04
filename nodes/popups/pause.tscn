@@ -20,41 +20,76 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_muted_pressed.png" id="19_men_p"]
 [ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_muted_focus.png" id="20_men_f"]
 
-[node name="Base" unique_id=1828175884 instance=ExtResource("1_base")]
+[node name="Base" unique_id=1828175884 node_paths=PackedStringArray("slider_music", "slider_sfx", "label_music", "label_sfx", "check_haptic", "check_safe", "value_floor", "value_steps", "btn_restart", "btn_menu") instance=ExtResource("1_base")]
 script = ExtResource("2_pause")
+slider_music = NodePath("Panel/Content/Information/MusicRow/Slider")
+slider_sfx = NodePath("Panel/Content/Information/SfxRow/Slider")
+label_music = NodePath("Panel/Content/Information/MusicRow/Value")
+label_sfx = NodePath("Panel/Content/Information/SfxRow/Value")
+check_haptic = NodePath("Panel/Content/Information/HapticRow/Check")
+check_safe = NodePath("Panel/Content/Information/SafeRow/Check")
+value_floor = NodePath("Panel/Content/Information/InfoBox/ProgressValue")
+value_steps = NodePath("Panel/Content/Information/InfoBox/StepsValue")
+btn_restart = NodePath("Panel/Content/Information/Buttons/RestartBtn")
+btn_menu = NodePath("Panel/Content/Information/Buttons/MenuBtn")
+
+[node name="Panel" parent="." index="1" unique_id=290635111]
+anchor_left = 0.49100003
+anchor_top = 0.1466087
+anchor_right = 0.49100003
+anchor_bottom = 0.147
+offset_left = -239.14001
+offset_right = 238.85999
+offset_bottom = 684.76
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Art" parent="Panel" index="0" unique_id=1533168933]
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Content" parent="Panel" index="1" unique_id=45188561]
+offset_left = 46.0
+offset_top = 51.159546
+offset_right = -42.0
+offset_bottom = -53.159546
 
 [node name="Tape" type="TextureRect" parent="Panel/Content" index="0" unique_id=16178311]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  156
-offset_top =  -12.5
-offset_right =  269
-offset_bottom =  14.5
+offset_left = 138.5
+offset_top = -12.5
+offset_right = 251.5
+offset_bottom = 14.5
 mouse_filter = 2
 texture = ExtResource("3_tape")
 
 [node name="Stamp" type="TextureRect" parent="Panel/Content" index="1" unique_id=2019861674]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.813
-anchor_top = 0.021000002
-anchor_right = 0.92100006
-anchor_bottom = 0.10300001
-offset_left = -0.0229
-offset_top = -0.2583
-offset_right = 0.0728
-offset_bottom = -0.1817
+offset_left = 344.0
+offset_top = 12.0
+offset_right = 390.0
+offset_bottom = 58.0
 mouse_filter = 2
 texture = ExtResource("4_stamp")
-metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="Panel/Content" index="2" unique_id=2125809118]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  57.5
-offset_top =  21
-offset_right =  357.5
-offset_bottom =  45
+offset_left = 57.5
+offset_top = 26.0
+offset_right = 307.5
+offset_bottom = 50.0
 theme_type_variation = &"PopupTitle"
 text = "STR_PAUSE_TITLE"
 vertical_alignment = 1
@@ -64,135 +99,142 @@ text_overrun_behavior = 3
 [node name="Subtitle" type="Label" parent="Panel/Content" index="3" unique_id=1930367910]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  57.5
-offset_top =  47
-offset_right =  357.5
-offset_bottom =  59
+offset_left = 57.5
+offset_top = 53.0
+offset_right = 325.0
+offset_bottom = 65.0
 theme_type_variation = &"PopupSubtitle"
 text = "STR_PAUSE_SUBTITLE"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Divider1" type="ColorRect" parent="Panel/Content" index="4" unique_id=1341706531]
+[node name="Information" type="VBoxContainer" parent="Panel/Content" index="4"]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  57.5
-offset_top =  75
-offset_right =  370
-offset_bottom =  76
+anchor_left = 0.08461538
+anchor_top = 0.12908778
+anchor_right = 0.91538462
+anchor_bottom = 0.89000005
+offset_right = 0.0
+offset_bottom = 0.21350098
+theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="DividerTop" type="ColorRect" parent="Panel/Content/Information" index="0"]
+custom_maximum_size = Vector2(-1, 1)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.01
 mouse_filter = 2
 color = Color(0.56078434, 0.7254902, 0.8235294, 0.6)
 
-[node name="AudioSection" type="Label" parent="Panel/Content" index="5" unique_id=889143641]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  57.5
-offset_top =  91
-offset_right =  257.5
-offset_bottom =  102
+[node name="Control" type="Control" parent="Panel/Content/Information" index="1"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="AudioSection" type="Label" parent="Panel/Content/Information" index="2" unique_id=889143641]
+layout_mode = 2
 theme_type_variation = &"PopupSectionLabel"
 text = "STR_SETTINGS_AUDIO_SECTION"
 vertical_alignment = 1
 
-[node name="MusicRow" type="Label" parent="Panel/Content" index="6" unique_id=826863609]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  57.5
-offset_top =  113.5
-offset_right =  257.5
-offset_bottom =  127.5
+[node name="MusicRow" type="HBoxContainer" parent="Panel/Content/Information" index="3"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Panel/Content/Information/MusicRow" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_type_variation = &"PopupRowLabel"
 text = "STR_SETTINGS_BGM"
 vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
 
-[node name="MusicSlider" type="HSlider" parent="Panel/Content" index="7" unique_id=244265358]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  187.5
-offset_top =  115
-offset_right =  327.5
-offset_bottom =  131
+[node name="Slider" type="HSlider" parent="Panel/Content/Information/MusicRow" index="1"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+size_flags_vertical = 4
 theme = ExtResource("5_slider_theme")
 max_value = 1.0
 step = 0.05
 value = 0.8
 
-[node name="MusicValue" type="Label" parent="Panel/Content" index="8" unique_id=712623178]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  300
-offset_top =  113.5
-offset_right =  367.5
-offset_bottom =  127.5
+[node name="Value" type="Label" parent="Panel/Content/Information/MusicRow" index="2"]
+custom_minimum_size = Vector2(68, 0)
+layout_mode = 2
+size_flags_vertical = 4
 theme_type_variation = &"PopupSliderValue"
 text = "80%"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="SfxRow" type="Label" parent="Panel/Content" index="9" unique_id=498912414]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  57.5
-offset_top =  148
-offset_right =  257.5
-offset_bottom =  162
+[node name="SfxRow" type="HBoxContainer" parent="Panel/Content/Information" index="4"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Panel/Content/Information/SfxRow" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_type_variation = &"PopupRowLabel"
 text = "STR_SETTINGS_SFX"
 vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
 
-[node name="SfxSlider" type="HSlider" parent="Panel/Content" index="10" unique_id=379955117]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  187.5
-offset_top =  149.5
-offset_right =  327.5
-offset_bottom =  169.5
+[node name="Slider" type="HSlider" parent="Panel/Content/Information/SfxRow" index="1"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+size_flags_vertical = 4
 theme = ExtResource("5_slider_theme")
 max_value = 1.0
 step = 0.05
 value = 1.0
 
-[node name="SfxValue" type="Label" parent="Panel/Content" index="11" unique_id=1818303288]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  300
-offset_top =  148
-offset_right =  367.5
-offset_bottom =  162
+[node name="Value" type="Label" parent="Panel/Content/Information/SfxRow" index="2"]
+custom_minimum_size = Vector2(68, 0)
+layout_mode = 2
+size_flags_vertical = 4
 theme_type_variation = &"PopupSliderValue"
 text = "100%"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Divider2" type="ColorRect" parent="Panel/Content" index="12" unique_id=404864408]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  57.5
-offset_top =  190
-offset_right =  370
-offset_bottom =  191
+[node name="Divider1" type="ColorRect" parent="Panel/Content/Information" index="5" unique_id=1341706531]
+custom_maximum_size = Vector2(-1, 1)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.01
 mouse_filter = 2
 color = Color(0.56078434, 0.7254902, 0.8235294, 0.5)
 
-[node name="BoardSection" type="Label" parent="Panel/Content" index="13" unique_id=386954736]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  57.5
-offset_top =  206
-offset_right =  257.5
-offset_bottom =  217
+[node name="Control2" type="Control" parent="Panel/Content/Information" index="6"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="BoardSection" type="Label" parent="Panel/Content/Information" index="7" unique_id=386954736]
+layout_mode = 2
 theme_type_variation = &"PopupSectionLabel"
 text = "STR_SETTINGS_BOARD_SECTION"
 vertical_alignment = 1
 
-[node name="HapticCheck" type="TextureButton" parent="Panel/Content" index="14" unique_id=624487126]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  55.5
-offset_top =  224.5
-offset_right =  77.5
-offset_bottom =  246.5
+[node name="HapticRow" type="HBoxContainer" parent="Panel/Content/Information" index="8"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+theme_override_constants/separation = 10
+
+[node name="Check" type="TextureButton" parent="Panel/Content/Information/HapticRow" index="0" unique_id=624487126]
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+size_flags_vertical = 4
 toggle_mode = true
 texture_normal = ExtResource("7_check_off")
 texture_pressed = ExtResource("8_check_press")
@@ -202,26 +244,25 @@ texture_focused = ExtResource("9_check_focus")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="HapticLabel" type="Label" parent="Panel/Content" index="15" unique_id=1772918]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  85
-offset_top =  228.5
-offset_right =  335
-offset_bottom =  242.5
+[node name="Label" type="Label" parent="Panel/Content/Information/HapticRow" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_type_variation = &"PopupRowLabel"
 text = "STR_SETTINGS_HAPTIC"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="SafeCheck" type="TextureButton" parent="Panel/Content" index="16" unique_id=1368611611]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  55.5
-offset_top =  255.5
-offset_right =  77.5
-offset_bottom =  277.5
+[node name="SafeRow" type="HBoxContainer" parent="Panel/Content/Information" index="9"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+theme_override_constants/separation = 10
+
+[node name="Check" type="TextureButton" parent="Panel/Content/Information/SafeRow" index="0" unique_id=1368611611]
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+size_flags_vertical = 4
 toggle_mode = true
 texture_normal = ExtResource("7_check_off")
 texture_pressed = ExtResource("8_check_press")
@@ -231,98 +272,98 @@ texture_focused = ExtResource("9_check_focus")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="SafeLabel" type="Label" parent="Panel/Content" index="17" unique_id=1595031120]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  85
-offset_top =  259.5
-offset_right =  335
-offset_bottom =  273.5
+[node name="Label" type="Label" parent="Panel/Content/Information/SafeRow" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_type_variation = &"PopupRowLabel"
 text = "STR_SETTINGS_AUTO_MARK_SAFE"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="InfoBox" type="TextureRect" parent="Panel/Content" index="18" unique_id=620528795]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  57.5
-offset_top =  295
-offset_right =  372.5
-offset_bottom =  352.5
+[node name="Control3" type="Control" parent="Panel/Content/Information" index="10"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="InfoBox" type="TextureRect" parent="Panel/Content/Information" index="11" unique_id=620528795]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("11_info_box")
 
-[node name="ProgressLabel" type="Label" parent="Panel/Content/InfoBox" index="0" unique_id=1970833668]
+[node name="ProgressLabel" type="Label" parent="Panel/Content/Information/InfoBox" index="0" unique_id=1970833668]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  15
-offset_top =  12.5
-offset_right =  165
-offset_bottom =  23.5
+offset_left = 15.0
+offset_top = 12.5
+offset_right = 165.0
+offset_bottom = 23.5
 theme_type_variation = &"PopupInfoLabel"
 text = "STR_SETTINGS_PROGRESS_LABEL"
 vertical_alignment = 1
 
-[node name="ProgressValue" type="Label" parent="Panel/Content/InfoBox" index="1" unique_id=1754454088]
+[node name="ProgressValue" type="Label" parent="Panel/Content/Information/InfoBox" index="1" unique_id=1754454088]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  15
-offset_top =  26.5
-offset_right =  165
-offset_bottom =  43.5
+offset_left = 15.0
+offset_top = 26.5
+offset_right = 165.0
+offset_bottom = 43.5
 theme_type_variation = &"PopupInfoValue"
 text = "—"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="StepsLabel" type="Label" parent="Panel/Content/InfoBox" index="2" unique_id=2043403590]
+[node name="StepsLabel" type="Label" parent="Panel/Content/Information/InfoBox" index="2" unique_id=2043403590]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  180
-offset_top =  12.5
-offset_right =  300
-offset_bottom =  23.5
+offset_left = 180.0
+offset_top = 12.5
+offset_right = 300.0
+offset_bottom = 23.5
 theme_type_variation = &"PopupInfoLabel"
 text = "STR_SETTINGS_STEPS_LEFT_LABEL"
 vertical_alignment = 1
 
-[node name="StepsValue" type="Label" parent="Panel/Content/InfoBox" index="3" unique_id=1921177288]
+[node name="StepsValue" type="Label" parent="Panel/Content/Information/InfoBox" index="3" unique_id=1921177288]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  180
-offset_top =  26.5
-offset_right =  280
-offset_bottom =  43.5
+offset_left = 180.0
+offset_top = 26.5
+offset_right = 280.0
+offset_bottom = 43.5
 theme_type_variation = &"PopupInfoValueDanger"
 text = "0 / 0"
 vertical_alignment = 1
 
-[node name="StepsIcon" type="TextureRect" parent="Panel/Content/InfoBox" index="4" unique_id=49331451]
+[node name="StepsIcon" type="TextureRect" parent="Panel/Content/Information/InfoBox" index="4" unique_id=49331451]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  283
-offset_top =  29
-offset_right =  298
-offset_bottom =  44
+offset_left = 283.0
+offset_top = 29.0
+offset_right = 298.0
+offset_bottom = 44.0
 mouse_filter = 2
 texture = ExtResource("10_steps")
 
-[node name="ResumeBtn" type="TextureButton" parent="Panel/Content" index="19" unique_id=1430069570]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  57.5
-offset_top =  375
-offset_right =  372.5
-offset_bottom =  423
+[node name="Control4" type="Control" parent="Panel/Content/Information" index="12"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="ResumeBtn" type="TextureButton" parent="Panel/Content/Information" index="13" unique_id=1430069570]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("12_wide_n")
 texture_pressed = ExtResource("13_wide_p")
 texture_hover = ExtResource("12_wide_n")
 texture_focused = ExtResource("14_wide_f")
 
-[node name="Label" type="Label" parent="Panel/Content/ResumeBtn" index="0" unique_id=1870174464]
+[node name="Label" type="Label" parent="Panel/Content/Information/ResumeBtn" index="0" unique_id=1870174464]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -336,19 +377,24 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="RestartBtn" type="TextureButton" parent="Panel/Content" index="20" unique_id=743474376]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  57.5
-offset_top =  435
-offset_right =  207.5
-offset_bottom =  479
+[node name="Control5" type="Control" parent="Panel/Content/Information" index="14"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information" index="15"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 15
+
+[node name="RestartBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="0" unique_id=743474376]
+layout_mode = 2
 texture_normal = ExtResource("15_res_n")
 texture_pressed = ExtResource("16_res_p")
 texture_hover = ExtResource("15_res_n")
 texture_focused = ExtResource("17_res_f")
 
-[node name="Label" type="Label" parent="Panel/Content/RestartBtn" index="0" unique_id=1146882897]
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/RestartBtn" index="0" unique_id=1146882897]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -362,19 +408,14 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="MenuBtn" type="TextureButton" parent="Panel/Content" index="21" unique_id=365655158]
-layout_mode = 1
-anchors_preset = -1
-offset_left =  222.5
-offset_top =  435
-offset_right =  372.5
-offset_bottom =  479
+[node name="MenuBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="1" unique_id=365655158]
+layout_mode = 2
 texture_normal = ExtResource("18_men_n")
 texture_pressed = ExtResource("19_men_p")
 texture_hover = ExtResource("18_men_n")
 texture_focused = ExtResource("20_men_f")
 
-[node name="Label" type="Label" parent="Panel/Content/MenuBtn" index="0" unique_id=757688441]
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/MenuBtn" index="0" unique_id=757688441]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -388,12 +429,13 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Quote" type="Label" parent="Panel/Content" index="22" unique_id=2018395074]
-layout_mode = 1
-anchors_preset = -1
-offset_top =  518
-offset_right =  425
-offset_bottom =  530
+[node name="Spacer2" type="Control" parent="Panel/Content/Information" index="16"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_stretch_ratio = 0.1
+
+[node name="Quote" type="Label" parent="Panel/Content/Information" index="17" unique_id=2018395074]
+layout_mode = 2
 theme_type_variation = &"PopupQuote"
 text = "STR_PAUSE_FOOTER_QUOTE"
 horizontal_alignment = 1
@@ -401,10 +443,10 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[connection signal="pressed" from="Panel/Content/ResumeBtn" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="Panel/Content/RestartBtn" to="." method="_on_restart_pressed"]
-[connection signal="pressed" from="Panel/Content/MenuBtn" to="." method="_on_menu_pressed"]
-[connection signal="value_changed" from="Panel/Content/MusicSlider" to="." method="_on_music_value_changed"]
-[connection signal="value_changed" from="Panel/Content/SfxSlider" to="." method="_on_sfx_value_changed"]
-[connection signal="toggled" from="Panel/Content/HapticCheck" to="." method="_on_haptic_toggled"]
-[connection signal="toggled" from="Panel/Content/SafeCheck" to="." method="_on_safe_toggled"]
+[connection signal="pressed" from="Panel/Content/Information/ResumeBtn" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/RestartBtn" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/MenuBtn" to="." method="_on_menu_pressed"]
+[connection signal="value_changed" from="Panel/Content/Information/MusicRow/Slider" to="." method="_on_music_value_changed"]
+[connection signal="value_changed" from="Panel/Content/Information/SfxRow/Slider" to="." method="_on_sfx_value_changed"]
+[connection signal="toggled" from="Panel/Content/Information/HapticRow/Check" to="." method="_on_haptic_toggled"]
+[connection signal="toggled" from="Panel/Content/Information/SafeRow/Check" to="." method="_on_safe_toggled"]

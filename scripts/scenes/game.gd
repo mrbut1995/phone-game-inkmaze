@@ -301,9 +301,15 @@ func _on_pause_pressed() -> void:
 
 
 func _resume_timer_if_paused() -> void:
-	if timer_controller != null and game_controller != null:
-		if game_controller.get("_run_active") == true:
-			timer_controller.resume()
+	if timer_controller == null or game_controller == null:
+		return
+	if game_controller.get("_run_active") != true:
+		return
+	# Pha GHI NHỚ (Blind Memory) CHỦ ĐỘNG dừng đồng hồ trong `GameController._start_memorize_phase()`
+	# — resume ở đây sẽ đè mất lệnh pause đó ⇒ bỏ qua khi đang ghi nhớ.
+	if game_controller.get("_memorize_active") == true:
+		return
+	timer_controller.resume()
 
 
 func _on_undo_pressed() -> void:
@@ -328,15 +334,23 @@ func _apply_mode_buttons(mode_name: String) -> void:
 		submit_btn.visible = mode_name.to_lower() == "wall_builder"
 	if skip_btn != null:
 		skip_btn.visible = _is_level_run()
-	# Dungeon: ẩn nút "?" (không có tutorial cho dungeon)
+	# Dungeon: ẩn nút "?" (không có tutorial cho dungeon).
+	# LUỒNG HỌC LẦN ĐẦU: các màn M1..M4 tự mở đúng bài học theo trình tự — ẩn nút "?"
+	# để người chơi mới không mở bài sai nhịp của luồng.
 	if layout != null and layout.instruction_btn != null:
-		layout.instruction_btn.visible = mode_name.to_lower() != "dungeon"
+		layout.instruction_btn.visible = mode_name.to_lower() != "dungeon" and not _is_guided_run()
 
 
 ## Ván này có phải là ván chơi MÀN (màn Chọn màn) không — đọc cờ từ GameManager
 func _is_level_run() -> bool:
 	var gm: Node = get_node_or_null("/root/GameManager")
 	return gm != null and bool(gm.get("level_run"))
+
+
+## Ván đang nằm trong LUỒNG HỌC LẦN ĐẦU (cờ do TutorialManager giữ) → xem `_apply_mode_buttons`
+func _is_guided_run() -> bool:
+	var tm: Node = get_node_or_null("/root/TutorialManager")
+	return tm != null and bool(tm.get("flow_active"))
 
 
 ## API chuyển đổi chế độ chơi linh hoạt từ bên ngoài

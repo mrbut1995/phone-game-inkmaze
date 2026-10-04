@@ -17,15 +17,17 @@ const COLOR_LOCK_POINTS := Color(0.8510, 0.4667, 0.0235)   # #D97706
 ## Nền chip trạng thái: art gốc xám #F1F5F9 × modulate ≈ #DBEAFE (xanh nhạt của mockup)
 const COLOR_CHIP_EQUIPPED := Color(0.909, 0.955, 1.0)   # ≈ #DBEAFE
 
-@onready var _selected: NinePatchRect = get_node_or_null("Selected")
-@onready var _icon: TextureRect = get_node_or_null("Disc/Icon")
-@onready var _frame: TextureRect = get_node_or_null("Disc/Frame")
-@onready var _lock_icon: TextureRect = get_node_or_null("Disc/LockIcon")
-@onready var _check: TextureRect = get_node_or_null("Check")
-@onready var _name_label: Label = get_node_or_null("Name")
-@onready var _state_bg: NinePatchRect = get_node_or_null("StateBg")
-@onready var _state_label: Label = get_node_or_null("State")
-@onready var _price_chip: Control = get_node_or_null("PriceChip")
+## Node binding: khai `node_paths` + `NodePath` trong `edit_profile_item.tscn`
+@export var selected_bg: NinePatchRect = null
+@export var icon: TextureRect = null
+@export var frame: TextureRect = null
+@export var lock_icon: TextureRect = null
+@export var check: TextureRect = null
+@export var name_label: Label = null
+@export var state_bg: NinePatchRect = null
+@export var state_label: Label = null
+@export var price_chip: Control = null
+@export var price_text: Label = null
 
 
 func _ready() -> void:
@@ -45,62 +47,50 @@ func play_entrance(delay := 0.0) -> void:
 
 ## Nạp 1 món trong catalog (entry đã tính trạng thái từ PlayerProfileManager)
 func set_item(entry: Dictionary) -> void:
-	if _name_label != null:
-		_name_label.text = tr(str(entry.get("name_key", "")))
+	name_label.text = tr(str(entry.get("name_key", "")))
 	var equipped := bool(entry.get("equipped", false))
 	var locked := bool(entry.get("locked", false))
 	var owned := bool(entry.get("owned", false))
 	var price := int(entry.get("price", 0))
-	if _selected != null:
-		_selected.visible = equipped
-	if _check != null:
-		_check.visible = equipped
-	if _lock_icon != null:
-		_lock_icon.visible = locked
+	selected_bg.visible = equipped
+	check.visible = equipped
+	lock_icon.visible = locked
 	# Món bị khoá: vẫn hiện hình mờ + ổ khoá đè lên (mockup: nhìn thấy nhân vật nhưng bị khoá)
 	# Tab VIỀN KHUNG dùng node `Frame` (vòng ôm quanh đĩa), tab AVATAR dùng node `Icon`.
 	var icon_path := str(entry.get("icon", ""))
 	var is_frame := str(entry.get("id", "")).begins_with("frame_")
 	var alpha := 0.35 if locked and not equipped else 1.0
-	if _icon != null:
-		_icon.visible = not is_frame
-		if not is_frame:
-			_icon.texture = load(icon_path) as Texture2D
-		_icon.modulate = Color(1, 1, 1, alpha)
-	if _frame != null:
-		_frame.visible = is_frame
-		if is_frame:
-			_frame.texture = load(icon_path) as Texture2D
-		_frame.modulate = Color(1, 1, 1, alpha)
+	icon.visible = not is_frame
+	if not is_frame:
+		icon.texture = load(icon_path) as Texture2D
+	icon.modulate = Color(1, 1, 1, alpha)
+	frame.visible = is_frame
+	if is_frame:
+		frame.texture = load(icon_path) as Texture2D
+	frame.modulate = Color(1, 1, 1, alpha)
 	_paint_state(equipped, locked, owned, price, entry)
 
 
 func _paint_state(equipped: bool, locked: bool, owned: bool, price: int, entry: Dictionary) -> void:
-	if _price_chip != null:
-		_price_chip.visible = not owned and not locked and price > 0
-	if _price_chip != null and _price_chip.visible:
-		var price_text := _price_chip.get_node_or_null("Text") as Label
-		if price_text != null:
-			price_text.text = tr("STR_EDIT_PRICE_FORMAT").format([price])
-	if _state_label == null:
-		return
+	price_chip.visible = not owned and not locked and price > 0
+	if price_chip.visible:
+		price_text.text = tr("STR_EDIT_PRICE_FORMAT").format([price])
 	# Nền chip trạng thái (mockup: "ĐANG DÙNG" nền xanh nhạt, "SỞ HỮU" nền xám nhạt);
 	# món khoá thì chỉ có chữ điều kiện, không chip.
-	if _state_bg != null:
-		_state_bg.visible = equipped or owned
-		_state_bg.modulate = COLOR_CHIP_EQUIPPED if equipped else Color(1, 1, 1, 1)
+	state_bg.visible = equipped or owned
+	state_bg.modulate = COLOR_CHIP_EQUIPPED if equipped else Color(1, 1, 1, 1)
 	if equipped:
-		_state_label.text = tr("STR_EDIT_EQUIPPED")
-		_tint(_state_label, COLOR_EQUIPPED)
+		state_label.text = tr("STR_EDIT_EQUIPPED")
+		_tint(state_label, COLOR_EQUIPPED)
 	elif locked:
-		_state_label.text = _lock_text(entry)
-		_tint(_state_label, _lock_color(str(entry.get("lock_stat", ""))))
+		state_label.text = _lock_text(entry)
+		_tint(state_label, _lock_color(str(entry.get("lock_stat", ""))))
 	elif owned:
-		_state_label.text = tr("STR_EDIT_OWNED")
-		_tint(_state_label, COLOR_OWNED)
+		state_label.text = tr("STR_EDIT_OWNED")
+		_tint(state_label, COLOR_OWNED)
 	else:
 		# Món bán bằng Xu nhưng chưa mua: giá hiện trong chip vàng, nhãn trạng thái để trống
-		_state_label.text = ""
+		state_label.text = ""
 
 
 ## "Dungeon Tầng 50" · "Chuỗi Daily 30 ngày" · "500 AP Danh Hiệu"

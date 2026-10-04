@@ -2,17 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://dt24xokjpisit" path="res://scripts/nodes/popups/next_floor.gd" id="2_next"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/paper_slip_dungeon.png" id="3_slip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/stamp_passed.png" id="4_stamp"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/box_dungeon_bonus.png" id="5_bonus_box"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_steps.png" id="6_steps"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/box_floor_warning.png" id="7_warn_box"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_secondary_normal.png" id="8_rest_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_secondary_pressed.png" id="9_rest_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_secondary_focus.png" id="10_rest_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_success_normal.png" id="11_go_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_success_pressed.png" id="12_go_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_success_focus.png" id="13_go_f"]
+[ext_resource type="Texture2D" uid="uid://daqwch5t4anby" path="res://assets/images-png/popups/paper_slip_dungeon.png" id="3_slip"]
+[ext_resource type="Texture2D" uid="uid://bxfbvyff4nl6d" path="res://assets/images-png/popups/stamp_passed.png" id="4_stamp"]
+[ext_resource type="Texture2D" uid="uid://lcih45n4mm0k" path="res://assets/images-png/popups/box_dungeon_bonus.png" id="5_bonus_box"]
+[ext_resource type="Texture2D" uid="uid://dy1pduiidcr2l" path="res://assets/images-png/icons/icon_steps.png" id="6_steps"]
+[ext_resource type="Texture2D" uid="uid://3c8k5u76c0xi" path="res://assets/images-png/popups/box_floor_warning.png" id="7_warn_box"]
+[ext_resource type="Texture2D" uid="uid://brgbsehx8a0xh" path="res://assets/images-png/common/btn_paper_secondary_normal.png" id="8_rest_n"]
+[ext_resource type="Texture2D" uid="uid://b1mq05b61vja" path="res://assets/images-png/common/btn_paper_secondary_pressed.png" id="9_rest_p"]
+[ext_resource type="Texture2D" uid="uid://dcxlfihg580ni" path="res://assets/images-png/common/btn_paper_secondary_focus.png" id="10_rest_f"]
+[ext_resource type="Texture2D" uid="uid://cwntwti53d36w" path="res://assets/images-png/popups/btn_popup_success_normal.png" id="11_go_n"]
+[ext_resource type="Texture2D" uid="uid://bnc6icajjh646" path="res://assets/images-png/popups/btn_popup_success_pressed.png" id="12_go_p"]
+[ext_resource type="Texture2D" uid="uid://du4a1ev376ldv" path="res://assets/images-png/popups/btn_popup_success_focus.png" id="13_go_f"]
 
 [sub_resource type="Animation" id="Animation_nf_bonus"]
 resource_name = "bonus_pop"
@@ -20,7 +20,7 @@ length = 0.28
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/Content/BonusBox/Value:scale")
+tracks/0/path = NodePath("Panel/Content/Information/BonusBox/Value:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -35,28 +35,59 @@ _data = {
 &"bonus_pop": SubResource("Animation_nf_bonus")
 }
 
-[node name="Base" unique_id=1760705024 instance=ExtResource("1_base")]
-offset_right = 540.0
-offset_bottom = 960.0
+[node name="Base" unique_id=1760705024 node_paths=PackedStringArray("value_bonus", "value_base", "value_move", "value_perfect", "value_total", "warn_title", "go_label", "stamp_title", "stamp_sub", "fx_anim") instance=ExtResource("1_base")]
 script = ExtResource("2_next")
+value_bonus = NodePath("Panel/Content/Information/BonusBox/Value")
+value_base = NodePath("Panel/Content/Information/Stat1/Value")
+value_move = NodePath("Panel/Content/Information/Stat2/Value")
+value_perfect = NodePath("Panel/Content/Information/Stat3/Value")
+value_total = NodePath("Panel/Content/Information/Total/Value")
+warn_title = NodePath("Panel/Content/Information/WarnBox/Title")
+go_label = NodePath("Panel/Content/Information/Buttons/GoBtn/Label")
+stamp_title = NodePath("Panel/Content/Stamp/StampTitle")
+stamp_sub = NodePath("Panel/Content/Stamp/StampSub")
+fx_anim = NodePath("FxAnim")
 close_on_back = false
 close_on_outside = false
 
-[node name="Dim" parent="." index="0" unique_id=617447502]
-offset_right = 540.0
-offset_bottom = 960.0
+[node name="Panel" parent="." index="1" unique_id=290635111]
+anchor_left = 0.49100003
+anchor_top = 0.1466087
+anchor_right = 0.49100003
+anchor_bottom = 0.147
+offset_left = -239.14001
+offset_right = 238.85999
+offset_bottom = 684.76
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Art" parent="Panel" parent_id_path=PackedInt32Array(290635111) index="0" unique_id=1533168933]
-offset_top = -13.0
+[node name="Art" parent="Panel" index="0" unique_id=1269512275]
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_slip")
 
-[node name="Stamp" type="TextureRect" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="0" unique_id=231962854]
+[node name="Content" parent="Panel" index="1" unique_id=45188561]
+offset_left = 46.0
+offset_top = 51.159546
+offset_right = -42.0
+offset_bottom = -53.159546
+
+[node name="Stamp" type="TextureRect" parent="Panel/Content" index="0" unique_id=231962854]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 297.0
-offset_top = 24.5
-offset_right = 353.0
-offset_bottom = 80.5
+offset_left = 334.0
+offset_top = 24.840454
+offset_right = 390.0
+offset_bottom = 80.840454
 mouse_filter = 2
 texture = ExtResource("4_stamp")
 
@@ -84,43 +115,50 @@ text = "TẦNG 04 ✔"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Title" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="1" unique_id=1748235728]
+[node name="Title" type="Label" parent="Panel/Content" index="1" unique_id=1748235728]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 57.5
-offset_top = 33.5
-offset_right = 357.5
-offset_bottom = 57.5
+offset_top = 26.0
+offset_right = 307.5
+offset_bottom = 50.0
 theme_type_variation = &"PopupTitle"
 text = "STR_NEXT_FLOOR_TITLE"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Subtitle" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="2" unique_id=304040335]
+[node name="Subtitle" type="Label" parent="Panel/Content" index="2" unique_id=304040335]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 57.5
-offset_top = 60.5
-offset_right = 357.5
-offset_bottom = 72.5
+offset_top = 53.0
+offset_right = 325.0
+offset_bottom = 65.0
 theme_type_variation = &"PopupSubtitleDanger"
 text = "STR_NEXT_FLOOR_SUBTITLE"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="BonusBox" type="TextureRect" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="3" unique_id=229592939]
+[node name="Information" type="VBoxContainer" parent="Panel/Content" index="3" unique_id=405777790]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 55.5
-offset_top = 113.0
-offset_right = 379.5
-offset_bottom = 172.0
+anchor_left = 0.08461538
+anchor_top = 0.19449225
+anchor_right = 0.9153846
+anchor_bottom = 0.89000005
+offset_bottom = 0.21350098
+theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="BonusBox" type="TextureRect" parent="Panel/Content/Information" index="0" unique_id=229592939]
+layout_mode = 2
+size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("5_bonus_box")
 
-[node name="Title" type="Label" parent="Panel/Content/BonusBox" index="0" unique_id=309379128]
+[node name="Title" type="Label" parent="Panel/Content/Information/BonusBox" index="0" unique_id=309379128]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.060000002
@@ -138,7 +176,7 @@ clip_text = true
 text_overrun_behavior = 3
 resize_font_to_fit = true
 
-[node name="Desc" type="Label" parent="Panel/Content/BonusBox" index="1" unique_id=45162691]
+[node name="Desc" type="Label" parent="Panel/Content/Information/BonusBox" index="1" unique_id=45162691]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.060000002
@@ -155,7 +193,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Value" type="Label" parent="Panel/Content/BonusBox" index="2" unique_id=709848059]
+[node name="Value" type="Label" parent="Panel/Content/Information/BonusBox" index="2" unique_id=709848059]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.707
@@ -173,7 +211,7 @@ vertical_alignment = 1
 resize_font_to_fit = true
 metadata/_edit_use_anchors_ = true
 
-[node name="StepsIcon" type="TextureRect" parent="Panel/Content/BonusBox" index="3" unique_id=907320804]
+[node name="StepsIcon" type="TextureRect" parent="Panel/Content/Information/BonusBox" index="3" unique_id=907320804]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.8919136
@@ -188,128 +226,114 @@ mouse_filter = 2
 texture = ExtResource("6_steps")
 metadata/_edit_use_anchors_ = true
 
-[node name="StatLabel1" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="4" unique_id=2003099366]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 193.5
-offset_right = 307.5
-offset_bottom = 207.5
+[node name="Stat1" type="HBoxContainer" parent="Panel/Content/Information" index="1" unique_id=1734573663]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat1" index="0" unique_id=1750806630]
+layout_mode = 2
 theme_type_variation = &"PopupStatLabel"
 text = "STR_STAT_BASE_SCORE"
 vertical_alignment = 1
 
-[node name="StatValue1" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="5" unique_id=1128937303]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 200.0
-offset_top = 193.5
-offset_right = 377.5
-offset_bottom = 206.5
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat1" index="1" unique_id=1509653677]
+layout_mode = 2
+size_flags_horizontal = 11
 theme_type_variation = &"PopupStatValueSm"
 text = "+0 PTS"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="StatLabel2" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="6" unique_id=1624467544]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 226.0
-offset_right = 307.5
-offset_bottom = 240.0
+[node name="Stat2" type="HBoxContainer" parent="Panel/Content/Information" index="2" unique_id=2089637828]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat2" index="0" unique_id=2086084781]
+layout_mode = 2
 theme_type_variation = &"PopupStatLabel"
 text = "STR_STAT_MOVE_BONUS"
 vertical_alignment = 1
 
-[node name="StatValue2" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="7" unique_id=289209223]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 200.0
-offset_top = 226.0
-offset_right = 377.5
-offset_bottom = 239.0
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat2" index="1" unique_id=1427640200]
+layout_mode = 2
+size_flags_horizontal = 11
 theme_type_variation = &"PopupStatValueSm"
 text = "+0 PTS"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="StatLabel3" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="8" unique_id=413289655]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 258.5
-offset_right = 307.5
-offset_bottom = 272.5
+[node name="Stat3" type="HBoxContainer" parent="Panel/Content/Information" index="3" unique_id=1843210296]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat3" index="0" unique_id=1245853785]
+layout_mode = 2
 theme_type_variation = &"PopupStatLabel"
 text = "STR_STAT_PERFECT_FLOOR_BONUS"
 vertical_alignment = 1
 
-[node name="StatValue3" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="9" unique_id=855357468]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 200.0
-offset_top = 258.5
-offset_right = 377.5
-offset_bottom = 271.5
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat3" index="1" unique_id=1899798540]
+layout_mode = 2
+size_flags_horizontal = 11
 theme_type_variation = &"PopupStatValueSmGood"
 text = "+0 PTS"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Divider" type="ColorRect" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="10" unique_id=1123979734]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 57.5
-offset_top = 289.5
-offset_right = 377.5
-offset_bottom = 290.5
+[node name="Spacer" type="Control" parent="Panel/Content/Information" index="4" unique_id=732157823]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.23
+
+[node name="Divider" type="ColorRect" parent="Panel/Content/Information" index="5" unique_id=360894530]
+custom_maximum_size = Vector2(-1, 2)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.01
 mouse_filter = 2
 color = Color(0.23921569, 0.5137255, 0.68235296, 1)
 
-[node name="TotalLabel" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="11" unique_id=161727562]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.135
-anchor_top = 0.5255715
-anchor_right = 0.63500005
-anchor_bottom = 0.56385714
-offset_left = 0.124996
-offset_top = 28.1799
-offset_right = 0.124969
-offset_bottom = 27.74
+[node name="Spacer4" type="Control" parent="Panel/Content/Information" index="6" unique_id=1715975675]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.08
+
+[node name="Total" type="HBoxContainer" parent="Panel/Content/Information" index="7" unique_id=1121971112]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Total" index="0" unique_id=472247455]
+layout_mode = 2
 theme_type_variation = &"PopupTotalLabelSm"
 text = "STR_STAT_TOTAL_DUNGEON_SCORE"
 vertical_alignment = 1
 resize_font_to_fit = true
 
-[node name="TotalValue" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="12" unique_id=330957675]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.702
-anchor_top = 0.537
-anchor_right = 0.8880001
-anchor_bottom = 0.58100003
-offset_left = 0.149994
-offset_top = 16.78
-offset_right = 0.0999756
-offset_bottom = 16.64
+[node name="Value" type="Label" parent="Panel/Content/Information/Total" index="1" unique_id=1937837503]
+layout_mode = 2
+size_flags_horizontal = 11
 theme_type_variation = &"PopupTotalValueAmber"
 text = "0 PTS"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="WarnBox" type="TextureRect" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="13" unique_id=899017202]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 56.5
-offset_top = 353.9894
-offset_right = 378.5
-offset_bottom = 398.5106
+[node name="Spacer3" type="Control" parent="Panel/Content/Information" index="8" unique_id=1812527513]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="WarnBox" type="TextureRect" parent="Panel/Content/Information" index="9" unique_id=899017202]
+layout_mode = 2
+size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("7_warn_box")
 
-[node name="Title" type="Label" parent="Panel/Content/WarnBox" index="0" unique_id=1772797007]
+[node name="Title" type="Label" parent="Panel/Content/Information/WarnBox" index="0" unique_id=1772797007]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 17.0
@@ -322,7 +346,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Desc" type="Label" parent="Panel/Content/WarnBox" index="1" unique_id=886873713]
+[node name="Desc" type="Label" parent="Panel/Content/Information/WarnBox" index="1" unique_id=886873713]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 17.0
@@ -335,19 +359,23 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="RestBtn" type="TextureButton" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="14" unique_id=1922301705]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 55.5
-offset_top = 433.0
-offset_right = 149.5
-offset_bottom = 485.0
+[node name="Spacer5" type="Control" parent="Panel/Content/Information" index="10" unique_id=797480565]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information" index="11" unique_id=1258365976]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="RestBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="0" unique_id=1922301705]
+layout_mode = 2
 texture_normal = ExtResource("8_rest_n")
 texture_pressed = ExtResource("9_rest_p")
 texture_hover = ExtResource("8_rest_n")
 texture_focused = ExtResource("10_rest_f")
 
-[node name="Label" type="Label" parent="Panel/Content/RestBtn" index="0" unique_id=748571038]
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/RestBtn" index="0" unique_id=748571038]
 layout_mode = 1
 anchors_preset = -1
 offset_top = 17.0
@@ -360,23 +388,19 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="GoBtn" type="TextureButton" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="15" unique_id=391312068]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 162.0
-offset_top = 432.0
-offset_right = 380.5
-offset_bottom = 486.0
+[node name="GoBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="1" unique_id=391312068]
+layout_mode = 2
+size_flags_horizontal = 3
 texture_normal = ExtResource("11_go_n")
 texture_pressed = ExtResource("12_go_p")
 texture_hover = ExtResource("11_go_n")
 texture_focused = ExtResource("13_go_f")
 
-[node name="Label" type="Label" parent="Panel/Content/GoBtn" index="0" unique_id=1435856004]
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/GoBtn" index="0" unique_id=1435856004]
 layout_mode = 1
 anchors_preset = -1
+anchor_right = 1.0
 offset_top = 18.0
-offset_right = 218.5
 offset_bottom = 36.0
 theme_type_variation = &"PopupBtnPrimarySm"
 text = "STR_BTN_ENTER_NEXT_FLOOR"
@@ -385,12 +409,13 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Quote" type="Label" parent="Panel/Content" parent_id_path=PackedInt32Array(45188561) index="16" unique_id=942323307]
-layout_mode = 1
-anchors_preset = -1
-offset_top = 508.0
-offset_right = 425.0
-offset_bottom = 520.0
+[node name="Spacer2" type="Control" parent="Panel/Content/Information" index="12" unique_id=541092952]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_stretch_ratio = 0.1
+
+[node name="Quote" type="Label" parent="Panel/Content/Information" index="13" unique_id=942323307]
+layout_mode = 2
 theme_type_variation = &"PopupQuote"
 text = "STR_NEXT_FLOOR_FOOTER_QUOTE"
 horizontal_alignment = 1
@@ -401,5 +426,5 @@ text_overrun_behavior = 3
 [node name="FxAnim" type="AnimationPlayer" parent="." index="3" unique_id=256079101]
 libraries/ = SubResource("AnimationLibrary_nffx")
 
-[connection signal="pressed" from="Panel/Content/RestBtn" to="." method="_on_rest_pressed"]
-[connection signal="pressed" from="Panel/Content/GoBtn" to="." method="_on_enter_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/RestBtn" to="." method="_on_rest_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/GoBtn" to="." method="_on_enter_pressed"]

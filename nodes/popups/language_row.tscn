@@ -35,7 +35,7 @@ texture_margin_top = 14
 texture_margin_right = 20
 texture_margin_bottom = 14
 
-[node name="LanguageRow" type="Button"]
+[node name="LanguageRow" type="Button" node_paths=PackedStringArray("flag", "name_label", "sub_label", "check")]
 custom_minimum_size =  Vector2(0, 51.5)
 offset_right =  320
 offset_bottom =  51.5
@@ -46,6 +46,10 @@ theme_override_styles/hover = SubResource("Sb_row_h")
 theme_override_styles/pressed = SubResource("Sb_row_p")
 theme_override_styles/focus = SubResource("Sb_row_f")
 script = ExtResource("1_script")
+flag = NodePath("Flag")
+name_label = NodePath("Name")
+sub_label = NodePath("Sub")
+check = NodePath("Check")
 
 [node name="Flag" type="TextureRect" parent="."]
 layout_mode = 0
