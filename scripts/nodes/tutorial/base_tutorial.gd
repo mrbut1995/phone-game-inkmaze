@@ -91,6 +91,7 @@ func _play_anim_on(player: AnimationPlayer, anim_name: StringName) -> bool:
 
 
 func _ready() -> void:
+	is_active = true
 	# Dây `Spotlight.resized → _on_spotlight_resized` khai trong `base_tutorial.tscn` (cùng scene)
 	_init_tutorial()
 	# Ưu tiên 1: blueprint_steps được gán trong editor
@@ -393,8 +394,9 @@ func show_step(index: int) -> void:
 	# Auto advance if requested
 	if data.has("auto_delay") and advance_mode == "AUTO":
 		var delay: float = float(data["auto_delay"])
-		get_tree().create_timer(delay).timeout.connect(func() -> void:
-			if current_step_index == index and is_inside_tree():
+		_auto_timer = get_tree().create_timer(delay)
+		_auto_timer.timeout.connect(func() -> void:
+			if is_active and current_step_index == index and is_inside_tree():
 				next_step()
 		)
 
@@ -420,16 +422,19 @@ func prev_step() -> void:
 
 
 func complete_tutorial() -> void:
+	is_active = false
 	stop_cursor_animation()
 	tutorial_completed.emit(tutorial_id)
 
 
 func skip_tutorial() -> void:
+	is_active = false
 	stop_cursor_animation()
 	tutorial_skipped.emit(tutorial_id, false)
 
 
 func skip_all_tutorials() -> void:
+	is_active = false
 	stop_cursor_animation()
 	tutorial_skipped.emit(tutorial_id, true)
 

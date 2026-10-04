@@ -1,17 +1,15 @@
 class_name HowToPlayBlindMemoryTutorial
-extends BaseTutorial
+extends BaseInteractivePathTutorial
 
 ## ============================================================================
 ## HowToPlayBlindMemoryTutorial: Chế độ Trí Nhớ Mù (BlindMemory).
 ## Bàn 2×3, tường hiện lúc đầu → ẩn, người chơi đi từ trí nhớ.
+## Kế thừa BaseInteractivePathTutorial (SOLID - OCP/SRP).
 ## ============================================================================
 
-@export var board_tutorial: BoardTutorial = null
 @export var lbl_hud_walls: Label = null
 
-var _current_cell: Vector2i = Vector2i(0, 0)
-var _visited_cells: Array[Vector2i] = []
-var _demo_running: bool = false
+var _demo_tween: Tween = null
 
 const START_POS := Vector2i(0, 0)
 const FINISH_POS := Vector2i(1, 2)
@@ -24,6 +22,8 @@ const WALLS := [
 
 func _init_tutorial() -> void:
 	tutorial_id = "how_to_play_blind_memory"
+	_start_cell = START_POS
+	_goal_cell = FINISH_POS
 	if board_tutorial != null:
 		board_tutorial.setup_tutorial(
 			2, 3,
@@ -33,15 +33,14 @@ func _init_tutorial() -> void:
 				Vector2i(0, 1): "2",
 				Vector2i(1, 1): "1",
 				Vector2i(0, 2): "0",
-				Vector2i(1, 2): "F",
+				FINISH_POS: "F",
 			},
 			WALLS,
 			true,
 			START_POS,
 			FINISH_POS
 		)
-		# Dây `cell_step_attempted → _on_cell_step_attempted` khai trong `.tscn` (cùng scene)
-	_reset_path(false)
+	reset_path(false)
 
 
 func _get_default_steps() -> Array:
@@ -75,136 +74,154 @@ func _get_default_steps() -> Array:
 	]
 
 
-func _reset_path(walls_visible: bool = false) -> void:
-	_visited_cells = [START_POS]
-	_current_cell = START_POS
+func reset_path_with_walls(walls_visible: bool = false) -> void:
 	if board_tutorial != null:
 		for w in WALLS:
 			board_tutorial.reveal_wall_segment(w["is_h"], w["lattice"], walls_visible)
-		board_tutorial.set_path(_visited_cells)
-		board_tutorial.set_player_cell(START_POS, false)
+	reset_path()
 	_update_hud(false)
 
 
+func reset_path(start_pos: Vector2i = _start_cell, update_board: bool = true) -> void:
+	super.reset_path(start_pos, update_board)
+
+
 func _on_step_entered(index: int, _data: Dictionary) -> void:
-	_demo_running = false
+	_stop_demo()
 	match index:
 		1:
-			# Bước 2: hiện tường để ghi nhớ
-			_reset_path(true)
+			reset_path_with_walls(true)
 		2:
-			# Bước 3: demo ẩn tường → cursor đi nhờ trí nhớ
 			_start_memory_demo()
 		3:
-			_reset_path(true)
+			reset_path_with_walls(true)
 
 
-## Bước 2 visualising: tường hiện sáng lên → rồi ẩn → cursor đi đúng đường
+func _stop_demo() -> void:
+	if _demo_tween != null and _demo_tween.is_valid():
+		_demo_tween.kill()
+		_demo_tween = null
+	if board_tutorial != null:
+		board_tutorial.stop_cursor_animation()
+
+
+## Bước 2 visualising: tường hiện sáng lên → rồi ẩn → cursor đi đúng đường bằng Tween
 func _start_memory_demo() -> void:
 	if board_tutorial == null:
 		return
-	_demo_running = true
 	_run_memory_demo_cycle()
 
 
 func _run_memory_demo_cycle() -> void:
-	if not _demo_running or current_step_index != 2 or not is_inside_tree():
+	if current_step_index != 2 or not is_inside_tree() or board_tutorial == null:
 		return
 	# Hiện tường cho thấy trước
-	_reset_path(true)
+	reset_path_with_walls(true)
 	board_tutorial.stop_cursor_animation()
-	get_tree().create_timer(1.8).timeout.connect(func() -> void:
-		if not _demo_running or current_step_index != 2: return
-		# Ẩn tường
+
+	_demo_tween = create_tween()
+	# Chờ 1.8s rồi ẩn tường
+	_demo_tween.tween_interval(1.8)
+	_demo_tween.tween_callback(func() -> void:
+		if current_step_index != 2 or board_tutorial == null: return
 		for w in WALLS:
 			board_tutorial.reveal_wall_segment(w["is_h"], w["lattice"], false)
 	)
-	# Cursor đi đúng đường nhờ trí nhớ: S(0,0)→(1,0)→(1,1)→(1,2)F (tránh 2 tường ẩn)
-	get_tree().create_timer(2.4).timeout.connect(func() -> void:
-		if not _demo_running or current_step_index != 2: return
-		var path: Array[Vector2i] = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 1), Vector2i(1, 2)]
+	# Chờ thêm 0.6s rồi chạy cursor
+	_demo_tween.tween_interval(0.6)
+	_demo_tween.tween_callback(func() -> void:
+		if current_step_index != 2 or board_tutorial == null: return
+		var path: Array[Vector2i] = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 1), FINISH_POS]
 		board_tutorial.animate_cursor_path(path, 0.52)
 	)
-	get_tree().create_timer(4.0).timeout.connect(func() -> void:
-		if not _demo_running or current_step_index != 2: return
+	# Chờ 1.6s sau khi cursor chạy xong
+	_demo_tween.tween_interval(1.6)
+	_demo_tween.tween_callback(func() -> void:
+		if current_step_index != 2 or board_tutorial == null: return
 		var finish := board_tutorial.get_cell(FINISH_POS)
 		if finish != null:
 			finish.play_step()
 		spawn_board_text("✓", board_tutorial.get_cell_center(FINISH_POS), Color(0.18, 0.49, 0.2))
 	)
-	# Chu kỳ reset
-	get_tree().create_timer(5.8).timeout.connect(func() -> void:
-		if not _demo_running or current_step_index != 2: return
+	# Dừng cursor rồi lặp lại
+	_demo_tween.tween_interval(1.8)
+	_demo_tween.tween_callback(func() -> void:
+		if current_step_index != 2 or board_tutorial == null: return
 		board_tutorial.stop_cursor_animation()
 	)
-	get_tree().create_timer(6.5).timeout.connect(_run_memory_demo_cycle)
+	_demo_tween.tween_interval(0.7)
+	_demo_tween.tween_callback(_run_memory_demo_cycle)
 
 
-func _on_cell_step_attempted(next: Vector2i) -> void:
-	if current_step_index != 3:
-		return
-	_try_step_to(next)
+func _is_input_allowed_at_step(step_idx: int) -> bool:
+	return step_idx == 3
 
 
-func _try_step_to(next: Vector2i) -> void:
-	var diff: Vector2i = next - _current_cell
-	if absi(diff.x) + absi(diff.y) != 1:
-		show_fail_feedback("STR_TUT_MOVE_FAIL_01", "Chỉ đi được sang ô NGAY BÊN CẠNH!")
-		return
-
-	# Kiểm tra tường ẩn
+func _can_step_to(from_cell: Vector2i, to_cell: Vector2i) -> bool:
+	# Kiểm tra va vào tường ẩn
 	var hit_wall := false
 	for w in WALLS:
 		var is_h: bool = w["is_h"]
 		var lat: Vector2i = w["lattice"]
 		if not is_h:
-			if (_current_cell == Vector2i(lat.x - 1, lat.y) and next == Vector2i(lat.x, lat.y)) or \
-			   (_current_cell == Vector2i(lat.x, lat.y) and next == Vector2i(lat.x - 1, lat.y)):
-				hit_wall = true; break
+			if (from_cell == Vector2i(lat.x - 1, lat.y) and to_cell == Vector2i(lat.x, lat.y)) or \
+			   (from_cell == Vector2i(lat.x, lat.y) and to_cell == Vector2i(lat.x - 1, lat.y)):
+				hit_wall = true
+				break
 		else:
-			if (_current_cell == Vector2i(lat.x, lat.y - 1) and next == Vector2i(lat.x, lat.y)) or \
-			   (_current_cell == Vector2i(lat.x, lat.y) and next == Vector2i(lat.x, lat.y - 1)):
-				hit_wall = true; break
+			if (from_cell == Vector2i(lat.x, lat.y - 1) and to_cell == Vector2i(lat.x, lat.y)) or \
+			   (from_cell == Vector2i(lat.x, lat.y) and to_cell == Vector2i(lat.x, lat.y - 1)):
+				hit_wall = true
+				break
 
 	if hit_wall:
-		board_tutorial.show_wall_hit_at(_current_cell, next)
+		if board_tutorial != null:
+			board_tutorial.show_wall_hit_at(from_cell, to_cell)
 		show_fail_feedback("STR_TUT_BM_FAIL_01", "Đâm tường! Nhớ lại xem tường nằm đâu.")
 		# Hiện lại toàn bộ tường cho ghi nhớ rồi ẩn đi sau ~1.2s
-		for w in WALLS:
-			board_tutorial.reveal_wall_segment(w["is_h"], w["lattice"], true)
+		if board_tutorial != null:
+			for w in WALLS:
+				board_tutorial.reveal_wall_segment(w["is_h"], w["lattice"], true)
 		get_tree().create_timer(1.2).timeout.connect(func() -> void:
-			if current_step_index == 3 and is_inside_tree():
+			if current_step_index == 3 and is_inside_tree() and board_tutorial != null:
 				for w in WALLS:
 					board_tutorial.reveal_wall_segment(w["is_h"], w["lattice"], false)
 		)
-		return
+		return false
 
-	_current_cell = next
-	_visited_cells.append(next)
+	return true
+
+
+func _on_goal_reached(next: Vector2i) -> void:
+	play_cells_win()
 	if board_tutorial != null:
-		board_tutorial.set_path(_visited_cells)
-		board_tutorial.set_player_cell(next, true)
-		var c := board_tutorial.get_cell(next)
-		if c != null:
-			c.play_step()
-
-	if next == FINISH_POS:
-		play_cells_win()
 		spawn_board_text("✓", board_tutorial.get_cell_center(next))
-		show_success_feedback("STR_TUT_BM_05", "Tuyệt! Trí nhớ của bạn thật đáng nể.")
-		show_step(4)
+	show_success_feedback("STR_TUT_BM_05", "Tuyệt! Trí nhớ của bạn thật đáng nể.")
+	show_step(4)
 
 
 func _update_hud(animated: bool = true) -> void:
 	if lbl_hud_walls == null:
 		return
-	var visible_count := 0
-	for w in WALLS:
-		visible_count += 1
 	var fmt := str(tr("STR_TUT_BM_HUD"))
 	if fmt == "STR_TUT_BM_HUD":
 		fmt = "Tường ẩn: {0} vị trí"
-	lbl_hud_walls.text = fmt.format([visible_count])
+	lbl_hud_walls.text = fmt.format([WALLS.size()])
 	if not animated:
 		return
 	UIAnim.play_pop_in(lbl_hud_walls, 0.0, 0.88, 0.2)
+
+
+func complete_tutorial() -> void:
+	_stop_demo()
+	super.complete_tutorial()
+
+
+func skip_tutorial() -> void:
+	_stop_demo()
+	super.skip_tutorial()
+
+
+func skip_all_tutorials() -> void:
+	_stop_demo()
+	super.skip_all_tutorials()

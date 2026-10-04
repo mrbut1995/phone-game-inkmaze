@@ -1,26 +1,26 @@
 class_name HowToPlayMinesweeperTutorial
-extends BaseTutorial
+extends BaseInteractivePathTutorial
 
 ## ============================================================================
 ## HowToPlayMinesweeperTutorial: Chế độ Mìn (Planning.md §3.5)
 ## Dùng BoardTutorial: bàn 3×3, S (0,0), F (2,2), Mìn tại (1,0) và (0,2).
+## Kế thừa BaseInteractivePathTutorial (SOLID - OCP/SRP).
 ## ============================================================================
 
-@export var board_tutorial: BoardTutorial = null
-
+const START_POS := Vector2i(0, 0)
+const FINISH_POS := Vector2i(2, 2)
 const MINES: Array[Vector2i] = [Vector2i(1, 0), Vector2i(0, 2)]
-
-var _current_cell: Vector2i = Vector2i(0, 0)
-var _visited_cells: Array[Vector2i] = []
 
 
 func _init_tutorial() -> void:
 	tutorial_id = "how_to_play_minesweeper"
+	_start_cell = START_POS
+	_goal_cell = FINISH_POS
 	if board_tutorial != null:
 		board_tutorial.setup_tutorial(
 			3, 3,
 			{
-				Vector2i(0, 0): "S",
+				START_POS: "S",
 				Vector2i(1, 0): "0",
 				Vector2i(2, 0): "1",
 				Vector2i(0, 1): "2",
@@ -28,15 +28,14 @@ func _init_tutorial() -> void:
 				Vector2i(2, 1): "1",
 				Vector2i(0, 2): "0",
 				Vector2i(1, 2): "1",
-				Vector2i(2, 2): "F"
+				FINISH_POS: "F"
 			},
 			[],
 			true,
-			Vector2i(0, 0),
-			Vector2i(2, 2)
+			START_POS,
+			FINISH_POS
 		)
-		# Dây `cell_step_attempted → _on_cell_step_attempted` khai trong `.tscn` (cùng scene)
-	_reset_path()
+	reset_path()
 
 
 func _get_default_steps() -> Array:
@@ -71,12 +70,9 @@ func _get_default_steps() -> Array:
 	]
 
 
-func _reset_path() -> void:
-	_visited_cells = [Vector2i(0, 0)]
-	_current_cell = Vector2i(0, 0)
+func reset_path(start_pos: Vector2i = _start_cell, update_board: bool = true) -> void:
+	super.reset_path(start_pos, update_board)
 	if board_tutorial != null:
-		board_tutorial.set_path(_visited_cells)
-		board_tutorial.set_player_cell(Vector2i(0, 0), false)
 		for m in MINES:
 			var cell := board_tutorial.get_cell(m)
 			if cell != null:
@@ -85,44 +81,29 @@ func _reset_path() -> void:
 
 func _on_step_entered(index: int, _data: Dictionary) -> void:
 	if index == 2:
-		_reset_path()
+		reset_path()
 
 
-func _on_cell_step_attempted(next: Vector2i) -> void:
-	if current_step_index != 2:
-		return
-	_try_step_to(next)
+func _is_input_allowed_at_step(step_idx: int) -> bool:
+	return step_idx == 2
 
 
-func _try_step_to(next: Vector2i) -> void:
-	var diff: Vector2i = next - _current_cell
-	if absi(diff.x) + absi(diff.y) != 1:
-		show_fail_feedback("STR_TUT_MOVE_FAIL_01", "Chỉ đi được sang ô NGAY BÊN CẠNH!")
-		return
-
-	# Kiểm tra đạp mìn
-	if MINES.has(next):
+func _can_step_to(_from_cell: Vector2i, to_cell: Vector2i) -> bool:
+	if MINES.has(to_cell):
 		show_fail_feedback("STR_TUT_MINE_FAIL_01", "Đây là ô có mìn rồi! Hãy nhìn lại các số lân cận.")
 		if board_tutorial != null:
-			var mine_cell := board_tutorial.get_cell(next)
+			var mine_cell := board_tutorial.get_cell(to_cell)
 			if mine_cell != null:
 				mine_cell.set_bomb(true)
 				mine_cell.play_fail()
-			spawn_board_text("!", board_tutorial.get_cell_center(next), Color(0.85, 0.33, 0.31))
-		return
+			spawn_board_text("!", board_tutorial.get_cell_center(to_cell), Color(0.85, 0.33, 0.31))
+		return false
+	return true
 
-	_current_cell = next
-	_visited_cells.append(next)
+
+func _on_goal_reached(next: Vector2i) -> void:
+	play_cells_win()
 	if board_tutorial != null:
-		board_tutorial.set_path(_visited_cells)
-		board_tutorial.set_player_cell(next, true)
-		var c := board_tutorial.get_cell(next)
-		if c != null:
-			c.play_step()
-
-	if next == Vector2i(2, 2):
-		play_cells_win()
-		if board_tutorial != null:
-			spawn_board_text("✓", board_tutorial.get_cell_center(next))
-		show_success_feedback("STR_TUT_MINE_04", "Chuẩn luôn! Bạn né được hết mìn.")
-		show_step(3)
+		spawn_board_text("✓", board_tutorial.get_cell_center(next))
+	show_success_feedback("STR_TUT_MINE_04", "Chuẩn luôn! Bạn né được hết mìn.")
+	show_step(3)
