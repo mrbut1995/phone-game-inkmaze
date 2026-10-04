@@ -605,10 +605,10 @@ func _section_10_hud_minimal() -> void:
 				checked += 1
 				if not shape_ok:
 					bad.append("%s %s Sheet: con [%s] — can [%s]" % [
-						huong, file_name, ", ".join(rows), ", ".join(want_rows)])
+						file_name, ", ".join(rows), ", ".join(want_rows)])
 			node.free()
 
-	_entry(checked >= 20, "kiem %d luot (scene HUD x 2 huong + the Sheet)" % checked)
+	_entry(checked >= 13, "kiem %d luot (scene HUD ban doc + the Sheet)" % checked)
 	_entry(bad.is_empty(),
 		"moi HUD chi hien dung thu can thiet%s"
 			% ("" if bad.is_empty() else " — sai: %s" % "; ".join(bad)))
