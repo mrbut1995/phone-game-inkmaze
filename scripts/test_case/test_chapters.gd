@@ -578,6 +578,10 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 	root.add_child(scene2)
 	await process_frame
 	await process_frame
+	# Chờ hiệu ứng vào màn (EnterAnim autoplay) chạy xong — modulate mới về trạng thái chuẩn
+	var enter_anim := scene2.find_child("EnterAnim", true, false) as AnimationPlayer
+	if enter_anim != null and enter_anim.is_playing():
+		await enter_anim.animation_finished
 	var count := scene2.layout.lbl_stars as Label
 	var count_total := scene2.layout.lbl_stars_total as Label
 	_entry(count.text == "24" and count_total.text.contains("27"),
@@ -639,7 +643,7 @@ func _section_7_levels_screen(gm: Node, lm: Node) -> void:
 	_entry(_banner_texture(scene4)
 		== load("res://assets/images-png/level_selector/chapter_banner.png"),
 		"Mo chuong roi -> banner ve art thuong")
-	_entry((scene4.ui_path("ChapterBanner/TitleContainer/ChangeChapter") as Label).text
+	_entry((scene4.layout.lbl_change_chapter as Label).text
 		== TranslationServer.translate("STR_CHANGE_CHAPTER"), "Dong banner ve 'DOI CHUONG'")
 	scene4.queue_free()
 	await process_frame

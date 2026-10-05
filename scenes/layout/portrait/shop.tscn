@@ -60,6 +60,115 @@ _data = {
 &"pulse": SubResource("Animation_shop_pulse_p")
 }
 
+[sub_resource type="Animation" id="Animation_shop_enter_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TopBar:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Tabs:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Content:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GiftBanner:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_shop_enter_p"]
+resource_name = "enter"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TopBar:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Tabs:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.07, 0.3),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Content:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.12, 0.45),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GiftBanner:modulate")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_shop_enter_p"]
+_data = {
+&"RESET": SubResource("Animation_shop_enter_reset"),
+&"enter": SubResource("Animation_shop_enter_p")
+}
+
 [node name="Portrait" unique_id=816747492 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line", "item_grid", "doodle_pad", "noads_row") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/Back")
@@ -218,9 +327,9 @@ label_key = "STR_SHOP_TAB_COIN"
 [node name="TabLine" type="ColorRect" parent="." index="2" unique_id=2061983417]
 layout_mode = 0
 offset_left = 25.0
-offset_top = 157.25
+offset_top = 135.0
 offset_right = 515.0
-offset_bottom = 159.0
+offset_bottom = 137.0
 mouse_filter = 2
 color = Color(0.23921569, 0.5137255, 0.68235296, 1)
 
@@ -230,9 +339,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 25.0
-offset_top = 163.0
+offset_top = 142.0
 offset_right = -25.0
-offset_bottom = -201.0
+offset_bottom = -245.0
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 3
@@ -281,6 +390,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Prev" type="TextureButton" parent="Pager/ChangePage" index="0" unique_id=1132602761]
+custom_minimum_size = Vector2(32, 28)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.1
@@ -289,6 +399,7 @@ texture_normal = ExtResource("9_prev")
 texture_pressed = ExtResource("9_prev")
 texture_hover = ExtResource("9_prev")
 ignore_texture_size = true
+stretch_mode = 5
 
 [node name="PageLabel" type="Label" parent="Pager/ChangePage" index="1" unique_id=71839614]
 layout_mode = 2
@@ -302,6 +413,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Next" type="TextureButton" parent="Pager/ChangePage" index="2" unique_id=695487616]
+custom_minimum_size = Vector2(32, 28)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.1
@@ -310,6 +422,7 @@ texture_normal = ExtResource("10_next")
 texture_pressed = ExtResource("10_next")
 texture_hover = ExtResource("10_next")
 ignore_texture_size = true
+stretch_mode = 5
 
 [node name="GiftBanner" type="NinePatchRect" parent="." index="5" unique_id=1022285972]
 layout_mode = 1
@@ -385,25 +498,28 @@ stretch_mode = 5
 
 [node name="GiftBtnLabel" type="Label" parent="GiftBanner/GiftBtn" index="0" unique_id=2032303212]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = -1.1555556
-anchor_right = 0.9554445
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 0.009994507
+grow_horizontal = 2
+grow_vertical = 2
 theme_type_variation = &"ShopBannerBtn"
 text = "STR_SHOP_BANNER_BTN"
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Footer" type="Label" parent="." index="6" unique_id=466609682]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 12
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 50.0
+offset_left = 25.0
 offset_top = -110.0
-offset_right = 490.0
+offset_right = -25.0
 offset_bottom = -94.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_type_variation = &"ShopFooter"
 text = "STR_SHOP_FOOTER"
 horizontal_alignment = 1
@@ -418,3 +534,9 @@ libraries = {
 libraries = {
 "": SubResource("AnimationLibrary_shop_pulse_p")
 }
+
+[node name="EnterAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_shop_enter_p")
+}
+autoplay = "enter"

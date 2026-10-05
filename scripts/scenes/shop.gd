@@ -122,6 +122,11 @@ func _ready() -> void:
 	_refresh_pagination_if_needed()
 
 
+## Phát lại EnterAnim mỗi khi màn được kích hoạt (quay lại từ màn khác)
+func _on_active() -> void:
+	UIAnim.play_layout_anim(active_layout(), "EnterAnim", &"enter")
+
+
 ## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
 func _bind_refs() -> void:
 	layout = active_layout() as ShopLayout
@@ -171,6 +176,13 @@ func _rebind_after_orientation() -> void:
 	_wire_buttons()
 	_collect_tabs()
 	_refresh_wallet()
+	_refresh_tab_visuals()
+	_rebuild()
+	# Chờ các container của layout mới hoàn thành dàn kích thước thật (1-2 frame)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_apply_tab_metrics()
+	_apply_card_metrics()
 	_refresh_pagination_if_needed()
 
 
@@ -222,7 +234,8 @@ func tile_height() -> float:
 
 
 ## Số CỘT của lưới ô theo BỀ RỘNG THẬT của khung danh sách (cả 2 hướng):
-##  · Bản NGANG: chia theo bề rộng thẻ TỐI THIỂU (`TILE_MIN_W`) — như trước giờ.
+##  · Bản NGANG: điện thoại cầm tay giữ 2 cột to rõ, dễ nhìn, nút bấm dễ chạm ngón cái;
+##    màn hình rộng (tablet/PC) tự tăng lên 3-4 cột.
 ##  · Bản DỌC : lấy cỡ THIẾT KẾ của thẻ làm mốc rồi làm tròn tới cột gần nhất ⇒ kéo dãn
 ##    ngang đủ chỗ là TỰ THÊM một cột, thu nhỏ không đủ chỗ là BỎ cột đó đi.
 ## Không bao giờ hẹp hơn `TILE_MIN_W` và không quá `GRID_COLUMNS_MAX`.
@@ -231,9 +244,7 @@ func grid_columns() -> int:
 	if width <= 0.0:
 		return GRID_COLUMNS
 	if is_landscape:
-		var tile_min_w := TILE_MIN_W
-		if(current_tab() == "coin"):
-			tile_min_w = coin_design_size().x
+		var tile_min_w := 200.0 if _category != "coin" else coin_design_size().x
 		return clampi(int((width + GRID_H_SEP * 0.5) / (tile_min_w + GRID_H_SEP)),
 			GRID_COLUMNS, GRID_COLUMNS_MAX)
 	var design_w: float = (coin_design_size() if _category == "coin" else tile_design_size()).x
@@ -490,6 +501,8 @@ func _rebuild() -> void:
 	_cards.clear()
 	if layout.doodle_pad != null:
 		layout.doodle_pad.visible = false
+	if layout.pad_slot != null:
+		layout.pad_slot.visible = (_category == "pen")
 	if layout.noads_row != null:
 		layout.noads_row.visible = false
 

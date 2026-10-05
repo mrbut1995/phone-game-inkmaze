@@ -40,7 +40,8 @@ func _init_tutorial() -> void:
 			START_POS,
 			FINISH_POS
 		)
-	reset_path(false)
+	# GIỮ trạng thái nội bộ (không đẩy lên bàn ở bước init) — API mới có thêm `start_pos`
+	reset_path(_start_cell, false)
 
 
 func _get_default_steps() -> Array:

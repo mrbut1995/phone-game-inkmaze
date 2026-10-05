@@ -13,6 +13,7 @@ extends NinePatchButton
 const TAB_ACTIVE_ART := preload("res://assets/images-png/ranking/tab_active.png")
 const TAB_NORMAL_ART := preload("res://assets/images-png/ranking/tab_normal.png")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
+
 const LABEL_ACTIVE_COLOR := Color(1, 1, 1)
 const LABEL_IDLE_COLOR := Color(0.13333334, 0.29803923, 0.42745098)
 
@@ -27,10 +28,11 @@ signal tab_pressed(board_id: String)
 ## Khoá dịch của nhãn (STR_RANK_TAB_*) — KHAI TRONG SCENE
 @export var label_key := ""
 
+@export var label: Label = null
+
 ## Tab đang được chọn
 var active := false
 
-@onready var label: Label = $Label
 
 
 func _ready() -> void:
@@ -52,7 +54,7 @@ func _emit_tab_pressed() -> void:
 	tab_pressed.emit(board_id)
 
 
-## Đổi trạng thái chọn: art + màu nhãn
+## Đổi trạng thái chọn: art + màu nhãn có hiệu ứng transition mượt
 func set_active(on: bool) -> void:
 	active = on
 	var art: Texture2D = TAB_ACTIVE_ART if on else TAB_NORMAL_ART
@@ -62,5 +64,12 @@ func set_active(on: bool) -> void:
 	texture_focus = art
 	texture_disabled = art
 	if label != null:
+		# Đổi màu TỨC THỜI (contract đồng bộ: set_active() xong là đọc được màu mới)
 		label.add_theme_color_override("font_color",
-			LABEL_ACTIVE_COLOR if on else LABEL_IDLE_COLOR)
+				LABEL_ACTIVE_COLOR if on else LABEL_IDLE_COLOR)
+	# Pop nhẹ khi tab được KÍCH HOẠT (chỉ hiệu ứng scale — không ảnh hưởng giá trị đọc được)
+	if on and not Engine.is_editor_hint():
+		UIAnim._update_pivot(self)
+		var tw := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tw.tween_property(self, "scale", Vector2(1.06, 1.06), 0.10)
+		tw.tween_property(self, "scale", Vector2.ONE, 0.12)

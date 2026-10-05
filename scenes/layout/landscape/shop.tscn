@@ -61,6 +61,43 @@ _data = {
 &"pulse": SubResource("Animation_shop_pulse_l")
 }
 
+[sub_resource type="Animation" id="Animation_shop_enter_reset_l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_shop_enter_l"]
+resource_name = "enter"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_shop_enter_l"]
+_data = {
+&"RESET": SubResource("Animation_shop_enter_reset_l"),
+&"enter": SubResource("Animation_shop_enter_l")
+}
+
 [node name="Landscape" unique_id=2028930175 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line", "pad_slot", "item_grid", "doodle_pad", "noads_row") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("Body/LeftCol/HeaderRow/TopBar/Back")
@@ -102,11 +139,12 @@ size_flags_stretch_ratio = 0.4
 theme_override_constants/separation = 10
 
 [node name="HeaderRow" type="HBoxContainer" parent="Body/LeftCol" index="0" unique_id=198647249]
-custom_minimum_size = Vector2(0, 38)
+custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="TopBar" type="HBoxContainer" parent="Body/LeftCol/HeaderRow" index="0" unique_id=250299373]
+custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
@@ -128,34 +166,40 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("5_chip")
-patch_margin_left = 26
-patch_margin_top = 10
-patch_margin_right = 26
-patch_margin_bottom = 10
+patch_margin_left = 16
+patch_margin_top = 6
+patch_margin_right = 16
+patch_margin_bottom = 6
 
 [node name="Eyebrow" type="Label" parent="Body/LeftCol/HeaderRow/TopBar/TitlePanel" index="0" unique_id=1935647114]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 0.42
+anchor_bottom = 0.4
 theme_type_variation = &"ShopEyebrow"
+theme_override_font_sizes/font_size = 7
 text = "STR_SHOP_EYEBROW"
 horizontal_alignment = 1
 vertical_alignment = 1
+text_overrun_behavior = 3
+clip_text = true
 
 [node name="Title" type="Label" parent="Body/LeftCol/HeaderRow/TopBar/TitlePanel" index="1" unique_id=1188374298]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.4
+anchor_top = 0.38
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme_type_variation = &"ShopTitle"
+theme_override_font_sizes/font_size = 12
 text = "STR_SHOP_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
+text_overrun_behavior = 3
+clip_text = true
 
 [node name="Wallet" type="TextureRect" parent="Body/LeftCol/HeaderRow" index="1" unique_id=143524538]
-custom_minimum_size = Vector2(172, 38)
+custom_minimum_size = Vector2(138, 38)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
@@ -165,9 +209,9 @@ expand_mode = 1
 [node name="CoinIcon" type="TextureRect" parent="Body/LeftCol/HeaderRow/Wallet" index="0" unique_id=1136029441]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.09
+anchor_left = 0.08
 anchor_top = 0.2
-anchor_right = 0.24
+anchor_right = 0.22
 anchor_bottom = 0.8
 mouse_filter = 2
 texture = ExtResource("7_coin")
@@ -177,9 +221,9 @@ stretch_mode = 5
 [node name="Count" type="Label" parent="Body/LeftCol/HeaderRow/Wallet" index="1" unique_id=270781639]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.26
+anchor_left = 0.24
 anchor_top = 0.06
-anchor_right = 0.78
+anchor_right = 0.76
 anchor_bottom = 0.94
 theme_type_variation = &"ShopWalletCount"
 text = "0"
@@ -189,9 +233,9 @@ vertical_alignment = 1
 [node name="Plus" type="TextureButton" parent="Body/LeftCol/HeaderRow/Wallet" index="2" unique_id=863129120]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.79
+anchor_left = 0.78
 anchor_top = 0.11
-anchor_right = 1.0
+anchor_right = 0.96
 anchor_bottom = 0.89
 focus_mode = 0
 texture_normal = ExtResource("8_plus")
@@ -201,13 +245,19 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="PadSlot" type="Control" parent="Body/LeftCol" index="1" unique_id=836920332]
-custom_minimum_size = Vector2(0, 108)
+custom_minimum_size = Vector2(0, 115)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="Pad" parent="Body/LeftCol/PadSlot" index="0" instance=ExtResource("22_pad")]
 visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Spacer" type="Control" parent="Body/LeftCol" index="2" unique_id=568821146]
 layout_mode = 2
@@ -226,10 +276,10 @@ patch_margin_bottom = 14
 [node name="GiftIcon" type="TextureRect" parent="Body/LeftCol/GiftBanner" index="0" unique_id=1020375429]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.07
-anchor_top = 0.18
+anchor_left = 0.05
+anchor_top = 0.2
 anchor_right = 0.16
-anchor_bottom = 0.56
+anchor_bottom = 0.65
 mouse_filter = 2
 texture = ExtResource("12_gift_box")
 expand_mode = 1
@@ -238,64 +288,55 @@ stretch_mode = 5
 [node name="GiftTitle" type="Label" parent="Body/LeftCol/GiftBanner" index="1" unique_id=769052905]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.19
-anchor_top = 0.07300001
-anchor_right = 0.95400006
-anchor_bottom = 0.34800002
-offset_top = 0.0039987564
-offset_right = -0.06402588
-offset_bottom = -0.016002655
+anchor_left = 0.18
+anchor_top = 0.1
+anchor_right = 0.68
+anchor_bottom = 0.42
 theme_type_variation = &"ShopBannerTitle"
 theme_override_font_sizes/font_size = 13
 text = "STR_SHOP_BANNER_TITLE"
 vertical_alignment = 1
 text_overrun_behavior = 3
-resize_font_to_fit = true
+clip_text = true
 
 [node name="GiftDesc" type="Label" parent="Body/LeftCol/GiftBanner" index="2" unique_id=797794959]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.19
-anchor_top = 0.38060877
-anchor_right = 0.9422668
-anchor_bottom = 0.60260874
-offset_top = -0.01600647
-offset_right = -0.06300354
+anchor_left = 0.18
+anchor_top = 0.42
+anchor_right = 0.68
+anchor_bottom = 0.88
 theme_type_variation = &"ShopBannerDesc"
 text = "STR_SHOP_BANNER_DESC"
 vertical_alignment = 1
 autowrap_mode = 2
-resize_font_to_fit = true
-metadata/_edit_use_anchors_ = true
+text_overrun_behavior = 3
+clip_text = true
 
 [node name="GiftBtn" type="TextureButton" parent="Body/LeftCol/GiftBanner" index="3" unique_id=2143910326]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.72
-anchor_top = 0.5269565
+anchor_left = 0.7
+anchor_top = 0.24
 anchor_right = 0.96
-anchor_bottom = 1.0469564
+anchor_bottom = 0.76
+pivot_offset = Vector2(44, 24)
 focus_mode = 0
 texture_normal = ExtResource("13_btn_amber")
 texture_pressed = ExtResource("13_btn_amber")
 texture_hover = ExtResource("13_btn_amber")
 ignore_texture_size = true
 stretch_mode = 5
-metadata/_edit_use_anchors_ = true
 
 [node name="GiftBtnLabel" type="Label" parent="Body/LeftCol/GiftBanner/GiftBtn" index="0" unique_id=1117782763]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.22700001
-anchor_right = 1.2270001
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 11.997667
-offset_right = -11.997673
-offset_bottom = -0.3200035
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ShopBannerBtn"
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 11
 text = "STR_SHOP_BANNER_BTN"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -362,13 +403,13 @@ layout_mode = 2
 
 [node name="Pager" type="HBoxContainer" parent="Body/RightCol" index="3" unique_id=987313937]
 visible = false
-custom_minimum_size = Vector2(0, 30)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
 [node name="Prev" type="TextureButton" parent="Body/RightCol/Pager" index="0" unique_id=917902135]
-custom_minimum_size = Vector2(26, 26)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
@@ -386,6 +427,7 @@ theme_override_constants/separation = 2
 [node name="PageLabel" type="Label" parent="Body/RightCol/Pager/Mid" index="0" unique_id=405606336]
 layout_mode = 2
 theme_type_variation = &"ShopPageLabel"
+theme_override_font_sizes/font_size = 11
 text = "TRANG 1 / 2"
 horizontal_alignment = 1
 
@@ -395,7 +437,7 @@ theme_override_constants/separation = 12
 alignment = 1
 
 [node name="Next" type="TextureButton" parent="Body/RightCol/Pager" index="2" unique_id=1090091530]
-custom_minimum_size = Vector2(26, 26)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
@@ -414,3 +456,9 @@ libraries = {
 libraries = {
 "": SubResource("AnimationLibrary_shop_pulse_l")
 }
+
+[node name="EnterAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_shop_enter_l")
+}
+autoplay = "enter"

@@ -2,30 +2,30 @@
 
 [ext_resource type="Script" uid="uid://dpo6pm3gqfe8o" path="res://scripts/nodes/popups/edit_profile_item.gd" id="1_item"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/card_selected.png" id="4_sel"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="5_disc"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/check_badge.png" id="6_check"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/frame_gear_gold.png" id="7_frame"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/avatar_cat.png" id="8_avatar"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_lock.png" id="9_lock"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/chip_gold.png" id="10_chip"]
+[ext_resource type="Texture2D" uid="uid://d4bwxfevawdsm" path="res://assets/images-png/profiler/card_selected.png" id="4_sel"]
+[ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="5_disc"]
+[ext_resource type="Texture2D" uid="uid://3la8khi18c3h" path="res://assets/images-png/profiler/check_badge.png" id="6_check"]
+[ext_resource type="Texture2D" uid="uid://d1kaxcikq5x34" path="res://assets/images-png/frames/frame_gear_gold.png" id="7_frame"]
+[ext_resource type="Texture2D" uid="uid://de1fy87ucyxya" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="8_avatar"]
+[ext_resource type="Texture2D" uid="uid://cw3gi00w0cnpu" path="res://assets/images-png/icons/icon_lock.png" id="9_lock"]
+[ext_resource type="Texture2D" uid="uid://dg4xvt153bci" path="res://assets/images-png/profiler/chip_gold.png" id="10_chip"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_row.tres" id="11_name"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_state.tres" id="12_state"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_chip_gold.tres" id="13_price"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/chip_grey.png" id="14_chip_grey"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/card_item_normal.png" id="15_item_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/card_item_hover.png" id="16_item_h"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/card_item_pressed.png" id="17_item_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/card_item_focus.png" id="18_item_f"]
+[ext_resource type="LabelSettings" uid="uid://ktw4ufvt335t" path="res://resources/settings/text/text_profiler_chip_gold.tres" id="13_price"]
+[ext_resource type="Texture2D" uid="uid://b6gyqqm5unbyy" path="res://assets/images-png/profiler/chip_grey.png" id="14_chip_grey"]
+[ext_resource type="Texture2D" uid="uid://bu7s4twctv4ak" path="res://assets/images-png/profiler/card_item_normal.png" id="15_item_n"]
+[ext_resource type="Texture2D" uid="uid://dvt1py361ll1b" path="res://assets/images-png/profiler/card_item_hover.png" id="16_item_h"]
+[ext_resource type="Texture2D" uid="uid://dssxqrgg47ogl" path="res://assets/images-png/profiler/card_item_pressed.png" id="17_item_p"]
+[ext_resource type="Texture2D" uid="uid://wwytc5shg55t" path="res://assets/images-png/profiler/card_item_focus.png" id="18_item_f"]
 
-[node name="EditProfileItem" type="TextureButton" node_paths=PackedStringArray("selected_bg", "icon", "frame", "lock_icon", "check", "name_label", "state_bg", "state_label", "price_chip", "price_text")]
+[node name="EditProfileItem" type="TextureButton" unique_id=611203042 node_paths=PackedStringArray("selected_bg", "icon", "frame", "lock_icon", "check", "name_label", "state_bg", "state_label", "price_chip", "price_text")]
 custom_minimum_size = Vector2(100, 105)
 offset_right = 100.0
 offset_bottom = 105.0
 theme = ExtResource("2_theme")
 texture_normal = ExtResource("15_item_n")
-texture_hover = ExtResource("16_item_h")
 texture_pressed = ExtResource("17_item_p")
+texture_hover = ExtResource("16_item_h")
 texture_disabled = ExtResource("15_item_n")
 texture_focused = ExtResource("18_item_f")
 ignore_texture_size = true
@@ -42,7 +42,7 @@ state_label = NodePath("State")
 price_chip = NodePath("PriceChip")
 price_text = NodePath("PriceChip/Text")
 
-[node name="Selected" type="NinePatchRect" parent="."]
+[node name="Selected" type="NinePatchRect" parent="." unique_id=1416217472]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -50,14 +50,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("4_sel")
 patch_margin_left = 20
 patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 
-[node name="Disc" type="TextureRect" parent="."]
+[node name="Disc" type="TextureRect" parent="." unique_id=395925783]
 self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
 layout_mode = 0
 offset_left = 25.0
@@ -69,7 +68,7 @@ texture = ExtResource("5_disc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Frame" type="TextureRect" parent="Disc"]
+[node name="Frame" type="TextureRect" parent="Disc" unique_id=109478522]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -84,18 +83,20 @@ texture = ExtResource("7_frame")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="Disc"]
-layout_mode = 0
-offset_left = 7.0
-offset_top = 7.0
-offset_right = 43.0
-offset_bottom = 43.0
+[node name="Icon" type="TextureRect" parent="Disc" unique_id=333428830]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.04
+anchor_right = 0.9599999
+anchor_bottom = 0.9599999
 mouse_filter = 2
 texture = ExtResource("8_avatar")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
-[node name="LockIcon" type="TextureRect" parent="Disc"]
+[node name="LockIcon" type="TextureRect" parent="Disc" unique_id=436240120]
 visible = false
 modulate = Color(1, 1, 1, 0.85)
 layout_mode = 0
@@ -108,7 +109,7 @@ texture = ExtResource("9_lock")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Check" type="TextureRect" parent="."]
+[node name="Check" type="TextureRect" parent="." unique_id=610998879]
 visible = false
 layout_mode = 0
 offset_left = 81.0
@@ -120,41 +121,38 @@ texture = ExtResource("6_check")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="."]
+[node name="Name" type="Label" parent="." unique_id=558036394]
 layout_mode = 0
 offset_top = 74.0
 offset_right = 100.0
 offset_bottom = 86.0
-mouse_filter = 2
 text = "—"
 label_settings = ExtResource("11_name")
 horizontal_alignment = 1
 
-[node name="StateBg" type="NinePatchRect" parent="."]
+[node name="StateBg" type="NinePatchRect" parent="." unique_id=1255007779]
 visible = false
 layout_mode = 0
 offset_left = 17.5
 offset_top = 87.0
 offset_right = 82.5
 offset_bottom = 99.0
-mouse_filter = 2
 texture = ExtResource("14_chip_grey")
 patch_margin_left = 9
 patch_margin_top = 5
 patch_margin_right = 9
 patch_margin_bottom = 5
 
-[node name="State" type="Label" parent="."]
+[node name="State" type="Label" parent="." unique_id=139670728]
 layout_mode = 0
 offset_top = 89.0
 offset_right = 100.0
 offset_bottom = 101.0
-mouse_filter = 2
 text = "—"
 label_settings = ExtResource("12_state")
 horizontal_alignment = 1
 
-[node name="PriceChip" type="Control" parent="."]
+[node name="PriceChip" type="Control" parent="." unique_id=1568454775]
 visible = false
 anchors_preset = 0
 offset_left = 17.5
@@ -163,7 +161,7 @@ offset_right = 82.5
 offset_bottom = 100.0
 mouse_filter = 2
 
-[node name="Bg" type="TextureRect" parent="PriceChip"]
+[node name="Bg" type="TextureRect" parent="PriceChip" unique_id=254940135]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -174,14 +172,13 @@ mouse_filter = 2
 texture = ExtResource("10_chip")
 expand_mode = 1
 
-[node name="Text" type="Label" parent="PriceChip"]
+[node name="Text" type="Label" parent="PriceChip" unique_id=106460226]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 text = "0 XU"
 label_settings = ExtResource("13_price")
 horizontal_alignment = 1

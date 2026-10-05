@@ -85,6 +85,13 @@ func set_active(on: bool) -> void:
 	texture_focused = art
 	texture_disabled = art
 	_apply_own_size()
+	# Pop nhẹ khi tab được KÍCH HOẠT để tạo cảm giác responsive
+	if on and not Engine.is_editor_hint():
+		UIAnim._update_pivot(self)
+		var tw := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tw.tween_property(self, "scale", Vector2(1.05, 1.05), 0.10)
+		tw.tween_property(self, "scale", Vector2.ONE, 0.13)
+
 
 
 ## Tab đang chọn cao hết hàng, tab chưa chọn thấp hơn + canh ĐÁY hàng.

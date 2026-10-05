@@ -43,7 +43,7 @@ static func uid_text() -> String:
 
 static func avatar_id() -> String:
 	var m := manager()
-	return str(m.get("avatar_id")) if m != null else "avatar_ink"
+	return str(m.get("avatar_id")) if m != null else "avatar_baby_child_kid"
 
 
 static func frame_id() -> String:
@@ -53,12 +53,12 @@ static func frame_id() -> String:
 
 static func avatar_icon(ident: String) -> String:
 	var value: Variant = _call("icon_of", ["avatar", ident])
-	return str(value) if value != null else "res://assets/images-png/profiler/avatar_ink_knight.png"
+	return str(value) if value != null else "res://assets/images-png/avatars/avatar-baby-child-kid.png"
 
 
 static func frame_icon(ident: String) -> String:
 	var value: Variant = _call("icon_of", ["frame", ident])
-	return str(value) if value != null else "res://assets/images-png/profiler/frame_gear_gold.png"
+	return str(value) if value != null else "res://assets/images-png/frames/frame_gear_gold.png"
 
 
 # --- Danh mục / trang bị ----------------------------------------------------
