@@ -2,7 +2,7 @@ extends SceneTree
 ## ============================================================================
 ## Test Case: HỒ SƠ CÁ NHÂN (Profiler) — tính năng 2026-02
 ##
-## 1. Manager (PlayerProfileManager): catalog 8 avatar + 8 viền khung, mặc định
+## 1. Manager (PlayerProfileManager): catalog 34 avatar + 8 viền khung, mặc định
 ##    sở hữu, khoá theo mốc (Dungeon / Chuỗi Daily / AP).
 ## 2. Trang bị + tên: equip món sở hữu, chặn món chưa mở khoá, đổi tên 16 ký tự.
 ## 3. Thống kê: EXP = AP + Sao×25 · Cấp = 1 + EXP/200 · tỉ lệ thắng theo lịch sử.
@@ -15,7 +15,7 @@ extends SceneTree
 ## 7. Lưu trữ: SaveManager đăng ký provider + export/import khôi phục hồ sơ.
 ## ============================================================================
 
-const AVATAR_COUNT := 8
+const AVATAR_COUNT := 34
 const FRAME_COUNT := 8
 const POPUP_ITEMS_PER_PAGE := 6
 const MAX_RECENT := 10
@@ -90,26 +90,26 @@ func _section_1_catalog(manager: Node) -> void:
 			print("[FAIL] Mon thieu du lieu: %s" % str(entry))
 	_entry(broken == 0, "Moi mon co id + name_key + file icon ton tai (loi: %d)" % broken)
 
-	_entry(str(manager.get("avatar_id")) == "avatar_ink", "Avatar mac dinh: chiến binh mực")
+	_entry(str(manager.get("avatar_id")) == "avatar_baby_child_kid", "Avatar mac dinh: Em Bé")
 	_entry(str(manager.get("frame_id")) == "frame_gear", "Vien khung mac dinh: bánh răng vàng")
 
 	# Mặc định đã sở hữu 3 avatar + 3 viền (mockup: ĐANG DÙNG / SỞ HỮU / khoá)
-	_entry(bool(manager.call("owns_avatar", "avatar_wizard")), "So huu san Phù Thủy Số")
+	_entry(bool(manager.call("owns_avatar", "avatar_boy_kid")), "So huu san Cậu Bé")
 	_entry(bool(manager.call("owns_frame", "frame_laurel")), "So huu san Nguyệt Quế")
-	_entry(not bool(manager.call("owns_avatar", "avatar_fox")), "Cáo Tinh Anh chua so huu (500 xu)")
+	_entry(not bool(manager.call("owns_avatar", "avatar_coffee_cup")), "Cốc Cà Phê chua so huu (600 xu)")
 
 	# Khoá theo mốc: Dungeon 50 · Chuỗi Daily 30 · 500 AP
-	var robot_lock: Dictionary = manager.call("lock_of", "avatar", "avatar_robot")
-	_entry(robot_lock.is_empty() or (str(robot_lock.get("stat", "")) == "dungeon_best_floor"
-		and int(robot_lock.get("value", 0)) == 50),
-		"Robot Logic khoá theo mốc Dungeon 50 (đang %s)" % str(robot_lock))
+	var luchador_lock: Dictionary = manager.call("lock_of", "avatar", "avatar_fighter_luchador_man")
+	_entry(luchador_lock.is_empty() or (str(luchador_lock.get("stat", "")) == "dungeon_best_floor"
+		and int(luchador_lock.get("value", 0)) == 50),
+		"Đô Vật Luchador khoá theo mốc Dungeon 50 (đang %s)" % str(luchador_lock))
 	var fire_lock: Dictionary = manager.call("lock_of", "frame", "frame_fire")
 	_entry(fire_lock.is_empty() or (str(fire_lock.get("stat", "")) == "daily_streak"
 		and int(fire_lock.get("value", 0)) == 30),
 		"Gai Lửa khoá theo chuỗi Daily 30 (đang %s)" % str(fire_lock))
 
-	var entry_fox: Dictionary = manager.call("avatar_entry", "avatar_fox")
-	_entry(int(entry_fox.get("price", 0)) == 500, "Cáo Tinh Anh gia 500 xu")
+	var entry_coffee: Dictionary = manager.call("avatar_entry", "avatar_coffee_cup")
+	_entry(int(entry_coffee.get("price", 0)) == 600, "Cốc Cà Phê gia 600 xu")
 	var entry_royal: Dictionary = manager.call("frame_entry", "frame_royal")
 	_entry(int(entry_royal.get("price", 0)) == 800, "Hào Quang Đế Vương gia 800 xu")
 
@@ -119,9 +119,9 @@ func _section_1_catalog(manager: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_2_equip_and_name(manager: Node) -> void:
 	print("\n--- 2. TRANG BI + TEN HIEN THI ---")
-	_entry(bool(manager.call("equip_avatar", "avatar_wizard")), "Doi sang avatar da so huu")
-	_entry(str(manager.get("avatar_id")) == "avatar_wizard", "avatar_id cap nhat")
-	_entry(not bool(manager.call("equip_avatar", "avatar_fox")), "Chan do avatar chua mua")
+	_entry(bool(manager.call("equip_avatar", "avatar_boy_kid")), "Doi sang avatar da so huu")
+	_entry(str(manager.get("avatar_id")) == "avatar_boy_kid", "avatar_id cap nhat")
+	_entry(not bool(manager.call("equip_avatar", "avatar_coffee_cup")), "Chan do avatar chua mua")
 	_entry(not bool(manager.call("equip_avatar", "khong_ton_tai")), "Chan avatar la")
 	_entry(bool(manager.call("equip_frame", "frame_laurel")), "Doi sang vien khung da so huu")
 
@@ -319,11 +319,11 @@ func _section_6_popup(manager: Node) -> void:
 	var name_edit := popup.get_node_or_null("Panel/Content/Preview/NameEdit") as LineEdit
 	_entry(name_edit != null and name_edit.max_length == 16, "O ten gioi han 16 ky tu")
 
-	# Phân trang: 8 món → 6 + 2; điều hướng bằng nút > < và chấm trang
-	_entry(popup.page_count() == 2, "Avatar co 2 trang")
+	# Phân trang: 34 món → 6 trang (trang cuối 4 món); điều hướng bằng nút > < và chấm trang
+	_entry(popup.page_count() == 6, "Avatar co 6 trang")
 	var dots := popup.get_node_or_null("Panel/Content/PageBar/Dots") as HBoxContainer
-	_entry(dots != null and dots.get_child_count() == 2, "Co 2 cham phan trang")
-	if dots != null and dots.get_child_count() == 2:
+	_entry(dots != null and dots.get_child_count() == 6, "Co 6 cham phan trang")
+	if dots != null and dots.get_child_count() == 6:
 		var dot0 := dots.get_child(0) as EditProfileDot
 		_entry(dot0 != null and dot0.is_current(), "Cham trang 1 dang bat")
 	var btn_next := popup.get_node_or_null("Panel/Content/PageBar/BtnNext") as TextureButton
@@ -331,16 +331,23 @@ func _section_6_popup(manager: Node) -> void:
 	if btn_next != null:
 		btn_next.pressed.emit()
 		await process_frame
-	_entry(popup.page_index() == 1 and popup.item_count() == AVATAR_COUNT - POPUP_ITEMS_PER_PAGE,
-		"Trang 2 con %d avatar" % (AVATAR_COUNT - POPUP_ITEMS_PER_PAGE))
+	_entry(popup.page_index() == 1 and popup.item_count() == POPUP_ITEMS_PER_PAGE,
+		"Trang 2 con %d avatar" % POPUP_ITEMS_PER_PAGE)
 	var btn_prev := popup.get_node_or_null("Panel/Content/PageBar/BtnPrev") as TextureButton
 	if btn_prev != null:
 		btn_prev.pressed.emit()
 		await process_frame
 	_entry(popup.page_index() == 0 and popup.item_count() == POPUP_ITEMS_PER_PAGE, "Nut < quay lai trang 1")
+	# Nhảy tới trang CUỐI để kiểm trang lẻ (34 = 5×6 + 4)
+	popup.call("_go_to_page", popup.page_count() - 1)
+	await process_frame
+	_entry(popup.page_index() == 5 and popup.item_count() == AVATAR_COUNT - POPUP_ITEMS_PER_PAGE * 5,
+		"Trang cuoi con %d avatar" % (AVATAR_COUNT - POPUP_ITEMS_PER_PAGE * 5))
+	popup.call("_go_to_page", 0)
+	await process_frame
 
 	# Ô mẫu dùng TextureButton (không phải Button nền tĩnh) + không node con nào chặn chuột
-	var first_item := popup.item_node("avatar_ink") as TextureButton
+	var first_item := popup.item_node("avatar_baby_child_kid") as TextureButton
 	_entry(first_item != null, "O avatar dau tien lay duoc node")
 	if first_item != null:
 		_entry(first_item.texture_normal != null and first_item.texture_pressed != null
@@ -400,7 +407,7 @@ func _section_7_save(manager: Node, saved: Dictionary) -> void:
 	_entry(registered, "SaveManager da dang ky PlayerProfileManager (autosave)")
 
 	manager.call("set_display_name", "Ho So Test")
-	manager.call("equip_avatar", "avatar_wizard")
+	manager.call("equip_avatar", "avatar_child_girl")
 	var snapshot: Dictionary = manager.call("export_progress")
 	_entry(str(snapshot.get("display_name", "")) == "Ho So Test", "Blob luu co ten hien thi")
 	_entry(snapshot.get("recent") is Array, "Blob luu co lich su van")
@@ -408,7 +415,7 @@ func _section_7_save(manager: Node, saved: Dictionary) -> void:
 	manager.call("reset_progress")
 	manager.call("import_progress", snapshot)
 	_entry(str(manager.call("display_name_text")) == "Ho So Test", "import khoi phuc ten")
-	_entry(str(manager.get("avatar_id")) == "avatar_wizard", "import khoi phuc avatar dang dung")
+	_entry(str(manager.get("avatar_id")) == "avatar_child_girl", "import khoi phuc avatar dang dung")
 	_entry(str(manager.get("uid_suffix")).length() == 4, "import khoi phuc UID 4 so")
 
 	manager.call("import_progress", saved)

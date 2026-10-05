@@ -67,6 +67,10 @@ func _ready() -> void:
 	call_deferred("_go_to_page", _page_for_level(chapter_continue_level()), false)
 
 
+## Phát lại EnterAnim mỗi khi màn được kích hoạt (quay lại từ màn khác)
+func _on_active() -> void:
+	UIAnim.play_layout_anim(active_layout(), "EnterAnim", &"enter")
+
 ## Gắn node UI từ BỐ CỤC đang hiển thị (`scenes/layout/portrait/levels.tscn`, script `LevelsLayout`)
 ## — mọi node đã bind bằng `@export` trong .tscn, thêm/đổi node chỉ cần sửa
 ## scene + export, KHÔNG phải sửa script màn.

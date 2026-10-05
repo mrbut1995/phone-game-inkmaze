@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://cc60f3g3jm5oy" path="res://assets/images-png/profiler/tab_on.png" id="9_tab_on"]
 [ext_resource type="Texture2D" uid="uid://dac4ufwq5n0vr" path="res://assets/images-png/profiler/tab_off.png" id="10_tab_off"]
 [ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="12_disc"]
-[ext_resource type="Texture2D" uid="uid://cdiahelgy8eyf" path="res://assets/images-png/profiler/frame_gear_gold.png" id="13_frame"]
-[ext_resource type="Texture2D" uid="uid://c0itcyyufkxdj" path="res://assets/images-png/profiler/avatar_cat.png" id="14_avatar"]
+[ext_resource type="Texture2D" uid="uid://d1kaxcikq5x34" path="res://assets/images-png/frames/frame_gear_gold.png" id="13_frame"]
+[ext_resource type="Texture2D" uid="uid://de1fy87ucyxya" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="14_avatar"]
 [ext_resource type="Texture2D" uid="uid://dqieoipkfwl5t" path="res://assets/images-png/profiler/btn_primary_normal.png" id="16_pri_n"]
 [ext_resource type="Texture2D" uid="uid://57bxbg2334ve" path="res://assets/images-png/profiler/btn_primary_pressed.png" id="17_pri_p"]
 [ext_resource type="Texture2D" uid="uid://ubudnp5w8n2o" path="res://assets/images-png/profiler/btn_ghost_normal.png" id="18_gho_n"]
@@ -24,9 +24,9 @@
 [ext_resource type="Texture2D" uid="uid://dqjxmv1xiavtt" path="res://assets/images-png/profiler/btn_close_circle.png" id="25_close"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_tag.tres" id="25_t_tag"]
 [ext_resource type="Texture2D" uid="uid://tiymsnphf22l" path="res://assets/images-png/profiler/stamp_verified.png" id="26_stamp"]
-[ext_resource type="Texture2D" uid="uid://cqvexadr1rpgx" path="res://assets/images-png/profiler/icon_pen_input.png" id="27_pen_input"]
-[ext_resource type="Texture2D" uid="uid://b8neo2gpfmq4v" path="res://assets/images-png/profiler/icon_tab_avatar.png" id="28_tab_avatar"]
-[ext_resource type="Texture2D" uid="uid://b5my2ymwtl2qd" path="res://assets/images-png/profiler/icon_tab_frame.png" id="29_tab_frame"]
+[ext_resource type="Texture2D" uid="uid://brr7e77mbxbdl" path="res://assets/images-png/icons/icon_pen_input.png" id="27_pen_input"]
+[ext_resource type="Texture2D" uid="uid://ruuki0rql0d4" path="res://assets/images-png/icons/icon_tab_avatar.png" id="28_tab_avatar"]
+[ext_resource type="Texture2D" uid="uid://kgq414e5dsyt" path="res://assets/images-png/icons/icon_tab_frame.png" id="29_tab_frame"]
 [ext_resource type="Texture2D" uid="uid://f1fjdg2ggup3" path="res://assets/images-png/profiler/btn_page_prev_normal.png" id="30_page_prev_n"]
 [ext_resource type="Texture2D" uid="uid://ct60k3m21fty2" path="res://assets/images-png/profiler/btn_page_prev_pressed.png" id="31_page_prev_p"]
 [ext_resource type="Texture2D" uid="uid://bpayul8p2cfft" path="res://assets/images-png/profiler/btn_page_next_normal.png" id="32_page_next_n"]
@@ -248,15 +248,19 @@ vertical_alignment = 1
 
 [node name="Profile" type="TextureRect" parent="Panel/Content/Preview" unique_id=1108240110]
 self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
-layout_mode = 0
-offset_left = 29.5
-offset_top = 19.5
-offset_right = 90.5
-offset_bottom = 80.5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09657576
+anchor_top = 0.14
+anchor_right = 0.25430307
+anchor_bottom = 0.6600001
+offset_left = 0.12999916
+offset_right = 0.0799942
 mouse_filter = 2
 texture = ExtResource("12_disc")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="Frame" type="TextureRect" parent="Panel/Content/Preview/Profile" unique_id=508349584]
 layout_mode = 1

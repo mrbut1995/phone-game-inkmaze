@@ -56,6 +56,11 @@ func _ready() -> void:
 	_show_board(_board)
 
 
+## Phát lại EnterAnim mỗi khi màn được kích hoạt (quay lại từ màn khác)
+func _on_active() -> void:
+	UIAnim.play_layout_anim(active_layout(), "EnterAnim", &"enter")
+
+
 ## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
 func _bind_refs() -> void:
 	layout = active_layout() as RankingLayout

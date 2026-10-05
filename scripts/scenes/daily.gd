@@ -61,6 +61,11 @@ func _ready() -> void:
 		vp.size_changed.connect(_layout_responsive)
 
 
+## Phát lại EnterAnim mỗi khi màn được kích hoạt (quay lại từ màn khác)
+func _on_active() -> void:
+	UIAnim.play_layout_anim(active_layout(), "EnterAnim", &"enter")
+
+
 ## Gắn node của layout đang hiển thị (bản ngang đổi cấu trúc cột nên tra theo TÊN)
 func _bind_refs() -> void:
 	layout = active_layout() as DailyLayout

@@ -15,7 +15,8 @@ extends Node
 
 signal profile_changed
 
-const ICON_DIR := "res://assets/images-png/profiler/"
+const AVATAR_DIR := "res://assets/images-png/avatars/"
+const FRAME_DIR := "res://assets/images-png/frames/"
 const MAX_RECENT := 10
 ## Mỗi 200 EXP = 1 Cấp; mỗi Sao = 25 EXP
 const EXP_PER_LEVEL := 200
@@ -30,45 +31,76 @@ const TITLE_TIERS := [
 	{"min_level": 30, "key": "STR_PROFILE_TIER_5"},
 ]
 
-## Catalog AVATAR — 8 mẫu (3 mặc định sở hữu kèm sẵn)
+## Catalog AVATAR — 34 mẫu trong assets/images/avatars/ (3 mặc định sở hữu kèm sẵn)
+## · id   = khoá lưu save — KHÔNG đổi sau khi phát hành
+## · icon = bản PNG trong cây images-png/avatars/ (tên gốc SVG: <id>.svg với '-' thay '_')
 const AVATARS := [
-	{"id": "avatar_ink", "name_key": "STR_AVATAR_INK", "icon": ICON_DIR + "avatar_ink_knight.png", "price": 0},
-	{"id": "avatar_wizard", "name_key": "STR_AVATAR_WIZARD", "icon": ICON_DIR + "avatar_wizard.png", "price": 0},
-	{"id": "avatar_cat", "name_key": "STR_AVATAR_CAT", "icon": ICON_DIR + "avatar_cat.png", "price": 0},
-	{"id": "avatar_robot", "name_key": "STR_AVATAR_ROBOT", "icon": ICON_DIR + "avatar_robot.png",
-		"price": 0, "lock_stat": "dungeon_best_floor", "lock_value": 50},
-	{"id": "avatar_king", "name_key": "STR_AVATAR_KING", "icon": ICON_DIR + "avatar_king.png",
+	# --- Mặc định sở hữu kèm ---
+	{"id": "avatar_baby_child_kid", "name_key": "STR_AVATAR_BABY_CHILD_KID", "icon": AVATAR_DIR + "avatar-baby-child-kid.png", "price": 0},
+	{"id": "avatar_boy_kid", "name_key": "STR_AVATAR_BOY_KID", "icon": AVATAR_DIR + "avatar-boy-kid.png", "price": 0},
+	{"id": "avatar_child_girl", "name_key": "STR_AVATAR_CHILD_GIRL", "icon": AVATAR_DIR + "avatar-child-girl.png", "price": 0},
+	# --- Mua bằng Xu mực ---
+	{"id": "avatar_actor_chaplin_comedy", "name_key": "STR_AVATAR_ACTOR_CHAPLIN_COMEDY", "icon": AVATAR_DIR + "avatar-actor-chaplin-comedy.png", "price": 400},
+	{"id": "avatar_addicted_draw_love", "name_key": "STR_AVATAR_ADDICTED_DRAW_LOVE", "icon": AVATAR_DIR + "avatar-addicted-draw-love.png", "price": 600},
+	{"id": "avatar_afro_avatar_male_2", "name_key": "STR_AVATAR_AFRO_AVATAR_MALE_2", "icon": AVATAR_DIR + "avatar-afro-avatar-male-2.png", "price": 800},
+	{"id": "avatar_afro_boy_child", "name_key": "STR_AVATAR_AFRO_BOY_CHILD", "icon": AVATAR_DIR + "avatar-afro-boy-child.png", "price": 400},
+	{"id": "avatar_alien_avatar_space", "name_key": "STR_AVATAR_ALIEN_AVATAR_SPACE", "icon": AVATAR_DIR + "avatar-alien-avatar-space.png", "price": 600},
+	{"id": "avatar_animal_avatar_bear", "name_key": "STR_AVATAR_ANIMAL_AVATAR_BEAR", "icon": AVATAR_DIR + "avatar-animal-avatar-bear.png", "price": 800},
+	{"id": "avatar_animal_avatar_mutton", "name_key": "STR_AVATAR_ANIMAL_AVATAR_MUTTON", "icon": AVATAR_DIR + "avatar-animal-avatar-mutton.png", "price": 400},
+	{"id": "avatar_apple_avatar_illness", "name_key": "STR_AVATAR_APPLE_AVATAR_ILLNESS", "icon": AVATAR_DIR + "avatar-apple-avatar-illness.png", "price": 600},
+	{"id": "avatar_beard_hipster_male", "name_key": "STR_AVATAR_BEARD_HIPSTER_MALE", "icon": AVATAR_DIR + "avatar-beard-hipster-male.png", "price": 800},
+	{"id": "avatar_bug_insect", "name_key": "STR_AVATAR_BUG_INSECT", "icon": AVATAR_DIR + "avatar-bug-insect.png", "price": 400},
+	{"id": "avatar_cacti_cactus", "name_key": "STR_AVATAR_CACTI_CACTUS", "icon": AVATAR_DIR + "avatar-cacti-cactus.png", "price": 600},
+	{"id": "avatar_christmas_clous_santa", "name_key": "STR_AVATAR_CHRISTMAS_CLOUS_SANTA", "icon": AVATAR_DIR + "avatar-christmas-clous-santa.png", "price": 800},
+	{"id": "avatar_cloud_crying", "name_key": "STR_AVATAR_CLOUD_CRYING", "icon": AVATAR_DIR + "avatar-cloud-crying.png", "price": 400},
+	{"id": "avatar_coffee_cup", "name_key": "STR_AVATAR_COFFEE_CUP", "icon": AVATAR_DIR + "avatar-coffee-cup.png", "price": 600},
+	{"id": "avatar_dead_monster", "name_key": "STR_AVATAR_DEAD_MONSTER", "icon": AVATAR_DIR + "avatar-dead-monster.png", "price": 800},
+	{"id": "avatar_elderly_grandma", "name_key": "STR_AVATAR_ELDERLY_GRANDMA", "icon": AVATAR_DIR + "avatar-elderly-grandma.png", "price": 400},
+	{"id": "avatar_female_girl", "name_key": "STR_AVATAR_FEMALE_GIRL", "icon": AVATAR_DIR + "avatar-female-girl.png", "price": 600},
+	{"id": "avatar_female_portrait_2", "name_key": "STR_AVATAR_FEMALE_PORTRAIT_2", "icon": AVATAR_DIR + "avatar-female-portrait-2.png", "price": 800},
+	{"id": "avatar_female_portrait", "name_key": "STR_AVATAR_FEMALE_PORTRAIT", "icon": AVATAR_DIR + "avatar-female-portrait.png", "price": 400},
+	{"id": "avatar_indian_male_man", "name_key": "STR_AVATAR_INDIAN_MALE_MAN", "icon": AVATAR_DIR + "avatar-indian-male-man.png", "price": 600},
+	{"id": "avatar_indian_man_sikh", "name_key": "STR_AVATAR_INDIAN_MAN_SIKH", "icon": AVATAR_DIR + "avatar-indian-man-sikh.png", "price": 800},
+	{"id": "avatar_lazybones_sloth", "name_key": "STR_AVATAR_LAZYBONES_SLOTH", "icon": AVATAR_DIR + "avatar-lazybones-sloth.png", "price": 400},
+	{"id": "avatar_male_man_old", "name_key": "STR_AVATAR_MALE_MAN_OLD", "icon": AVATAR_DIR + "avatar-male-man-old.png", "price": 600},
+	{"id": "avatar_male_man", "name_key": "STR_AVATAR_MALE_MAN", "icon": AVATAR_DIR + "avatar-male-man.png", "price": 800},
+	{"id": "avatar_man_person", "name_key": "STR_AVATAR_MAN_PERSON", "icon": AVATAR_DIR + "avatar-man-person.png", "price": 400},
+	{"id": "avatar_nun_sister", "name_key": "STR_AVATAR_NUN_SISTER", "icon": AVATAR_DIR + "avatar-nun-sister.png", "price": 600},
+	{"id": "avatar_person_pilot", "name_key": "STR_AVATAR_PERSON_PILOT", "icon": AVATAR_DIR + "avatar-person-pilot.png", "price": 800},
+	# --- Khoá theo mốc thành tích ---
+	{"id": "avatar_artist_avatar_marilyn", "name_key": "STR_AVATAR_ARTIST_AVATAR_MARILYN", "icon": AVATAR_DIR + "avatar-artist-avatar-marilyn.png",
 		"price": 0, "lock_stat": "points", "lock_value": 500},
-	{"id": "avatar_fox", "name_key": "STR_AVATAR_FOX", "icon": ICON_DIR + "avatar_fox.png", "price": 500},
-	{"id": "avatar_ninja", "name_key": "STR_AVATAR_NINJA", "icon": ICON_DIR + "avatar_ninja.png",
-		"price": 700},
-	{"id": "avatar_owl", "name_key": "STR_AVATAR_OWL", "icon": ICON_DIR + "avatar_owl.png",
-		"price": 0, "lock_stat": "daily_streak", "lock_value": 45},
+	{"id": "avatar_builder_helmet_worker", "name_key": "STR_AVATAR_BUILDER_HELMET_WORKER", "icon": AVATAR_DIR + "avatar-builder-helmet-worker.png",
+		"price": 0, "lock_stat": "daily_streak", "lock_value": 30},
+	{"id": "avatar_einstein_professor", "name_key": "STR_AVATAR_EINSTEIN_PROFESSOR", "icon": AVATAR_DIR + "avatar-einstein-professor.png",
+		"price": 0, "lock_stat": "points", "lock_value": 700},
+	{"id": "avatar_fighter_luchador_man", "name_key": "STR_AVATAR_FIGHTER_LUCHADOR_MAN", "icon": AVATAR_DIR + "avatar-fighter-luchador-man.png",
+		"price": 0, "lock_stat": "dungeon_best_floor", "lock_value": 50},
 ]
 
-## Catalog VIỀN KHUNG — 8 mẫu (3 mặc định sở hữu kèm sẵn)
+## Catalog VIỀN KHUNG — 8 mẫu trong assets/images/frames/ (3 mặc định sở hữu kèm sẵn)
 const FRAMES := [
-	{"id": "frame_gear", "name_key": "STR_FRAME_GEAR", "icon": ICON_DIR + "frame_gear_gold.png", "price": 0},
-	{"id": "frame_laurel", "name_key": "STR_FRAME_LAUREL", "icon": ICON_DIR + "frame_laurel.png", "price": 0},
-	{"id": "frame_ink", "name_key": "STR_FRAME_INK", "icon": ICON_DIR + "frame_ink_double.png", "price": 0},
-	{"id": "frame_fire", "name_key": "STR_FRAME_FIRE", "icon": ICON_DIR + "frame_fire_spike.png",
+	{"id": "frame_gear", "name_key": "STR_FRAME_GEAR", "icon": FRAME_DIR + "frame_gear_gold.png", "price": 0},
+	{"id": "frame_laurel", "name_key": "STR_FRAME_LAUREL", "icon": FRAME_DIR + "frame_laurel.png", "price": 0},
+	{"id": "frame_ink", "name_key": "STR_FRAME_INK", "icon": FRAME_DIR + "frame_ink_double.png", "price": 0},
+	{"id": "frame_fire", "name_key": "STR_FRAME_FIRE", "icon": FRAME_DIR + "frame_fire_spike.png",
 		"price": 0, "lock_stat": "daily_streak", "lock_value": 30},
-	{"id": "frame_iron", "name_key": "STR_FRAME_IRON", "icon": ICON_DIR + "frame_iron_dark.png",
+	{"id": "frame_iron", "name_key": "STR_FRAME_IRON", "icon": FRAME_DIR + "frame_iron_dark.png",
 		"price": 0, "lock_stat": "dungeon_best_floor", "lock_value": 50},
-	{"id": "frame_royal", "name_key": "STR_FRAME_ROYAL", "icon": ICON_DIR + "frame_royal_aura.png", "price": 800},
-	{"id": "frame_crystal", "name_key": "STR_FRAME_CRYSTAL", "icon": ICON_DIR + "frame_crystal.png", "price": 650},
-	{"id": "frame_leaf", "name_key": "STR_FRAME_LEAF", "icon": ICON_DIR + "frame_leaf.png",
+	{"id": "frame_royal", "name_key": "STR_FRAME_ROYAL", "icon": FRAME_DIR + "frame_royal_aura.png", "price": 800},
+	{"id": "frame_crystal", "name_key": "STR_FRAME_CRYSTAL", "icon": FRAME_DIR + "frame_crystal.png", "price": 650},
+	{"id": "frame_leaf", "name_key": "STR_FRAME_LEAF", "icon": FRAME_DIR + "frame_leaf.png",
 		"price": 0, "lock_stat": "points", "lock_value": 700},
 ]
 
-const DEFAULT_AVATAR := "avatar_ink"
+const DEFAULT_AVATAR := "avatar_baby_child_kid"
 const DEFAULT_FRAME := "frame_gear"
 
 # --- Trạng thái lưu save -----------------------------------------------------
 var display_name := ""
 var avatar_id := DEFAULT_AVATAR
 var frame_id := DEFAULT_FRAME
-var owned_avatars: Array[String] = ["avatar_ink", "avatar_wizard", "avatar_cat"]
+var owned_avatars: Array[String] = ["avatar_baby_child_kid", "avatar_boy_kid", "avatar_child_girl"]
 var owned_frames: Array[String] = ["frame_gear", "frame_laurel", "frame_ink"]
 var uid_suffix := ""
 var joined_date := ""
@@ -124,8 +156,8 @@ func frame_entry(frame_ident: String) -> Dictionary:
 
 func icon_of(kind: String, ident: String) -> String:
 	if kind == "avatar":
-		return str(avatar_entry(ident).get("icon", ICON_DIR + "avatar_ink_knight.png"))
-	return str(frame_entry(ident).get("icon", ICON_DIR + "frame_gear_gold.png"))
+		return str(avatar_entry(ident).get("icon", AVATAR_DIR + "avatar-baby-child-kid.png"))
+	return str(frame_entry(ident).get("icon", FRAME_DIR + "frame_gear_gold.png"))
 
 
 func owns_avatar(avatar_ident: String) -> bool:
@@ -363,6 +395,7 @@ func import_progress(data: Dictionary) -> void:
 	var rows: Variant = data.get("recent", [])
 	recent = rows if rows is Array else []
 	_ensure_identity()
+	_ensure_valid_selection()
 	profile_changed.emit()
 
 
@@ -370,7 +403,7 @@ func reset_progress() -> void:
 	display_name = ""
 	avatar_id = DEFAULT_AVATAR
 	frame_id = DEFAULT_FRAME
-	owned_avatars = ["avatar_ink", "avatar_wizard", "avatar_cat"]
+	owned_avatars = ["avatar_baby_child_kid", "avatar_boy_kid", "avatar_child_girl"]
 	owned_frames = ["frame_gear", "frame_laurel", "frame_ink"]
 	runs_played = 0
 	runs_won = 0
@@ -378,11 +411,32 @@ func reset_progress() -> void:
 	uid_suffix = ""
 	joined_date = ""
 	_ensure_identity()
+	_ensure_valid_selection()
 	profile_changed.emit()
 
 
 func _ready() -> void:
 	_ensure_identity()
+	_ensure_valid_selection()
+
+
+## Save cũ có thể còn id avatar/viền đã bị GỠ khỏi catalog (đổi bộ art mới) —
+## trả về mặc định + dọn danh sách sở hữu cho khớp catalog hiện tại.
+func _ensure_valid_selection() -> void:
+	if _raw_entry(AVATARS, avatar_id).is_empty():
+		avatar_id = DEFAULT_AVATAR
+	if _raw_entry(FRAMES, frame_id).is_empty():
+		frame_id = DEFAULT_FRAME
+	owned_avatars = _prune_owned(AVATARS, owned_avatars)
+	owned_frames = _prune_owned(FRAMES, owned_frames)
+
+
+func _prune_owned(catalog: Array, owned_list: Array[String]) -> Array[String]:
+	var out: Array[String] = []
+	for ident in owned_list:
+		if not _raw_entry(catalog, ident).is_empty() and not out.has(ident):
+			out.append(ident)
+	return out
 
 
 ## UID + ngày tham gia sinh 1 lần rồi giữ nguyên (mockup: "UID: #IM-8842 • 08/2026")

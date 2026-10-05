@@ -2,53 +2,53 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://dflm08pygt1p8" path="res://scripts/scenes/layout/profiler_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_cancel_normal.png" id="3_close_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_cancel_pressed.png" id="4_close_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/sheet.png" id="5_sheet"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="6_tape"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/paper_clip.png" id="7_clip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/chip_gold.png" id="8_chip_gold"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="9_divider"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/card_blue.png" id="10_card_blue"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/card_soft.png" id="11_card_soft"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/mini_card.png" id="12_mini_card"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/disc_small.png" id="13_circle"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/bar_track.png" id="14_bar_track"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/bar_fill.png" id="15_bar_fill"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="16_disc_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/profiler_disc_pressed.png" id="17_disc_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/profiler_disc_disabled.png" id="18_disc_d"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/profiler_disc_focus.png" id="19_disc_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/frame_fire_spike.png" id="20_frame"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/avatar_cat.png" id="21_avatar"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/badge_edit.png" id="22_badge"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/icon_stat_stars.png" id="23_ic_star"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/icon_stat_dungeon.png" id="24_ic_dungeon"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/icon_stat_streak.png" id="25_ic_streak"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/icon_stat_winrate.png" id="26_ic_winrate"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_primary_normal.png" id="27_pri_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_primary_pressed.png" id="28_pri_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_ghost_normal.png" id="29_gho_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/btn_ghost_pressed.png" id="30_gho_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/stamp_verified.png" id="31_stamp"]
+[ext_resource type="Texture2D" uid="uid://c7ng3gx7uq2fr" path="res://assets/images-png/btn_header_cancel_normal.png" id="3_close_n"]
+[ext_resource type="Texture2D" uid="uid://ptgbk5np0gkd" path="res://assets/images-png/btn_header_cancel_pressed.png" id="4_close_p"]
+[ext_resource type="Texture2D" uid="uid://dp0x85lki83lb" path="res://assets/images-png/profiler/sheet.png" id="5_sheet"]
+[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="6_tape"]
+[ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="7_clip"]
+[ext_resource type="Texture2D" uid="uid://dg4xvt153bci" path="res://assets/images-png/profiler/chip_gold.png" id="8_chip_gold"]
+[ext_resource type="Texture2D" uid="uid://duqcleabqujwd" path="res://assets/images-png/settings/divider_dashed.png" id="9_divider"]
+[ext_resource type="Texture2D" uid="uid://dqkp11d7wudn2" path="res://assets/images-png/profiler/card_blue.png" id="10_card_blue"]
+[ext_resource type="Texture2D" uid="uid://ceoo2smykqxpu" path="res://assets/images-png/profiler/card_soft.png" id="11_card_soft"]
+[ext_resource type="Texture2D" uid="uid://hmk4g7vu5ga7" path="res://assets/images-png/profiler/mini_card.png" id="12_mini_card"]
+[ext_resource type="Texture2D" uid="uid://baidvwbwrh4r4" path="res://assets/images-png/profiler/disc_small.png" id="13_circle"]
+[ext_resource type="Texture2D" uid="uid://dgbjpp8fpfp88" path="res://assets/images-png/profiler/bar_track.png" id="14_bar_track"]
+[ext_resource type="Texture2D" uid="uid://1oydljxdinbf" path="res://assets/images-png/profiler/bar_fill.png" id="15_bar_fill"]
+[ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="16_disc_n"]
+[ext_resource type="Texture2D" uid="uid://d1b6ds3wgbpty" path="res://assets/images-png/profiler/profiler_disc_pressed.png" id="17_disc_p"]
+[ext_resource type="Texture2D" uid="uid://cid3n7oklo1fq" path="res://assets/images-png/profiler/profiler_disc_disabled.png" id="18_disc_d"]
+[ext_resource type="Texture2D" uid="uid://c721ocng7punk" path="res://assets/images-png/profiler/profiler_disc_focus.png" id="19_disc_f"]
+[ext_resource type="Texture2D" uid="uid://bfwsklairlnlr" path="res://assets/images-png/frames/frame_fire_spike.png" id="20_frame"]
+[ext_resource type="Texture2D" uid="uid://de1fy87ucyxya" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="21_avatar"]
+[ext_resource type="Texture2D" uid="uid://b4778ot7wu5gx" path="res://assets/images-png/profiler/badge_edit.png" id="22_badge"]
+[ext_resource type="Texture2D" uid="uid://bray4sykmnjpa" path="res://assets/images-png/icons/icon_stat_stars.png" id="23_ic_star"]
+[ext_resource type="Texture2D" uid="uid://bd72lnrbmab0y" path="res://assets/images-png/icons/icon_stat_dungeon.png" id="24_ic_dungeon"]
+[ext_resource type="Texture2D" uid="uid://ccrh45dk7ty0e" path="res://assets/images-png/icons/icon_stat_streak.png" id="25_ic_streak"]
+[ext_resource type="Texture2D" uid="uid://cljs1r2u05vwn" path="res://assets/images-png/icons/icon_stat_winrate.png" id="26_ic_winrate"]
+[ext_resource type="Texture2D" uid="uid://dqieoipkfwl5t" path="res://assets/images-png/profiler/btn_primary_normal.png" id="27_pri_n"]
+[ext_resource type="Texture2D" uid="uid://57bxbg2334ve" path="res://assets/images-png/profiler/btn_primary_pressed.png" id="28_pri_p"]
+[ext_resource type="Texture2D" uid="uid://ubudnp5w8n2o" path="res://assets/images-png/profiler/btn_ghost_normal.png" id="29_gho_n"]
+[ext_resource type="Texture2D" uid="uid://dqdxs73dfrhnl" path="res://assets/images-png/profiler/btn_ghost_pressed.png" id="30_gho_p"]
+[ext_resource type="Texture2D" uid="uid://tiymsnphf22l" path="res://assets/images-png/profiler/stamp_verified.png" id="31_stamp"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_title.tres" id="40_t_title"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_section.tres" id="41_t_section"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_name.tres" id="42_t_name"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_label.tres" id="43_t_label"]
+[ext_resource type="LabelSettings" uid="uid://cun7o8etjjfji" path="res://resources/settings/text/text_profiler_name.tres" id="42_t_name"]
+[ext_resource type="LabelSettings" uid="uid://brmhg3ih2ledh" path="res://resources/settings/text/text_profiler_label.tres" id="43_t_label"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_value.tres" id="44_t_value"]
 [ext_resource type="LabelSettings" uid="uid://bu8t2nlps33r5" path="res://resources/settings/text/text_profiler_small.tres" id="45_t_small"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_row.tres" id="46_t_row"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_chip_gold.tres" id="47_t_chip_gold"]
+[ext_resource type="LabelSettings" uid="uid://ktw4ufvt335t" path="res://resources/settings/text/text_profiler_chip_gold.tres" id="47_t_chip_gold"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_state.tres" id="48_t_state"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_button.tres" id="49_t_btn"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_button_ghost.tres" id="50_t_btn_ghost"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_stamp.tres" id="51_t_stamp"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="60_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/icon_pen_name.png" id="70_pen_name"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/disc_more.png" id="71_disc_more"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/badge_medal_1.png" id="72_medal1"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/badge_medal_2.png" id="73_medal2"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/badge_medal_3.png" id="74_medal3"]
+[ext_resource type="Texture2D" uid="uid://c01iwhf75vw5v" path="res://assets/images-png/icons/icon_pen_name.png" id="70_pen_name"]
+[ext_resource type="Texture2D" uid="uid://b52p0d0m0i2st" path="res://assets/images-png/profiler/disc_more.png" id="71_disc_more"]
+[ext_resource type="Texture2D" uid="uid://r0b2tfj8v6it" path="res://assets/images-png/profiler/badge_medal_1.png" id="72_medal1"]
+[ext_resource type="Texture2D" uid="uid://bo556we0iujnn" path="res://assets/images-png/profiler/badge_medal_2.png" id="73_medal2"]
+[ext_resource type="Texture2D" uid="uid://d2c7a6ko468eb" path="res://assets/images-png/profiler/badge_medal_3.png" id="74_medal3"]
 
 [node name="Portrait" unique_id=843989875 node_paths=PackedStringArray("btn_close", "lbl_title", "level_chip", "hero", "stat_cards", "badges_box", "ap_chip", "gear_box", "rows_box", "btn_edit", "btn_share", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill") instance=ExtResource("1_parent")]
 theme = ExtResource("60_theme")
@@ -231,15 +231,18 @@ color = Color(0.847059, 0.266667, 0.266667, 0.7)
 
 [node name="Content" type="HBoxContainer" parent="Sheet/Hero/Bg" index="1" unique_id=187324209]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 24.72
-offset_top = 27.25
-offset_right = -24.72
-offset_bottom = -27.25
+anchors_preset = -1
+anchor_left = 0.059000004
+anchor_top = 0.02604082
+anchor_right = 0.94100004
+anchor_bottom = 0.87600005
+offset_left = 0.18278503
+offset_top = 12.059999
+offset_right = -0.1828003
+offset_bottom = -0.060005188
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Profile" type="TextureButton" parent="Sheet/Hero/Bg/Content" index="0" unique_id=1113519570]
 self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
@@ -257,10 +260,14 @@ stretch_mode = 5
 [node name="Frame" type="TextureRect" parent="Sheet/Hero/Bg/Content/Profile" index="0" unique_id=57526852]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.225
+anchor_left = -0.096
 anchor_top = -0.225
-anchor_right = 1.225
-anchor_bottom = 1.225
+anchor_right = 1.0960001
+anchor_bottom = 1.0960001
+offset_left = -0.0049324036
+offset_top = 11.862663
+offset_right = 0.004928589
+offset_bottom = 0.005340576
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -281,6 +288,7 @@ mouse_filter = 2
 texture = ExtResource("21_avatar")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="EditBadge" type="TextureRect" parent="Sheet/Hero/Bg/Content/Profile/Frame" index="1" unique_id=636879852]
 layout_mode = 1

@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/shop/btn_noads.png" id="5_btn"]
 
 [node name="NoadsRow" type="Control"]
-custom_minimum_size = Vector2(490, 100)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 490.0

@@ -46,7 +46,7 @@ func set_row(row: Dictionary) -> void:
 	_set_tag(_tag_text(row, won, endless, daily), _tag_color(won, endless, daily), _tag_bg(won, endless, daily))
 
 	# Icon + màu vòng theo chế độ (dùng lại art có sẵn của màn chính / profiler)
-	var icon_path := "res://assets/images-png/profiler/icon_target.png"
+	var icon_path := "res://assets/images-png/icons/icon_target.png"
 	var tint := Color(0.1451, 0.4235, 0.5882)          # #256C96
 	var disc_color := DISC_PLAY
 	if endless:

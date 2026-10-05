@@ -49,7 +49,7 @@ func set_label_text(text: String) -> void:
 		label.text = text
 
 
-## Đổi trạng thái chọn: đổi art + màu nhãn
+## Đổi trạng thái chọn: đổi art + màu nhãn có hiệu ứng transition mượt
 func set_active(on: bool) -> void:
 	active = on
 	var art: Texture2D = TAB_ACTIVE if on else TAB_INACTIVE
@@ -58,4 +58,11 @@ func set_active(on: bool) -> void:
 	texture_hover = art
 	texture_focus = art
 	if label != null:
+		# Đổi màu TỨC THỜI (contract đồng bộ: set_active() xong là đọc được màu mới)
 		label.modulate = LABEL_ACTIVE_COLOR if on else LABEL_IDLE_COLOR
+	# Pop nhẹ khi tab được KÍCH HOẠT (chỉ hiệu ứng scale — không ảnh hưởng giá trị đọc được)
+	if on and not Engine.is_editor_hint():
+		UIAnim._update_pivot(self)
+		var tw := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tw.tween_property(self, "scale", Vector2(1.06, 1.06), 0.10)
+		tw.tween_property(self, "scale", Vector2.ONE, 0.12)
