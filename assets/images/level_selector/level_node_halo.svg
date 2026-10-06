@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 264" width="132" height="132">
+  <defs>
+    <filter id="haloGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#D84444" flood-opacity="0.45" />
+    </filter>
+  </defs>
+
+  <!-- Vòng "màn đang chơi": nét đứt đỏ mực + quầng sáng, ôm quanh nút màn -->
+  <rect x="20" y="20" width="224" height="224" rx="54" fill="none"
+        stroke="#D84444" stroke-width="7" stroke-dasharray="18 12"
+        stroke-linecap="round" opacity="0.95" filter="url(#haloGlow)" />
+  <rect x="34" y="34" width="196" height="196" rx="44" fill="#FDE9E9" opacity="0.28" />
+</svg>

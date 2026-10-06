@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8k3hdvrbkkk5"
-path="res://.godot/imported/level_node_done.svg-87d59064f4dc1f9b59e72ecdb1d01626.ctex"
+uid="uid://n3lkppfiuvxb"
+path="res://.godot/imported/bg_doodle_tile.svg-7d835336f38f3fcc7bd627ebadbdbfe7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/level_selector/level_node_done.svg"
-dest_files=["res://.godot/imported/level_node_done.svg-87d59064f4dc1f9b59e72ecdb1d01626.ctex"]
+source_file="res://assets/images/common/bg_doodle_tile.svg"
+dest_files=["res://.godot/imported/bg_doodle_tile.svg-7d835336f38f3fcc7bd627ebadbdbfe7.ctex"]
 
 [params]
 
@@ -39,6 +39,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=2.0
+svg/scale=1.0
 editor/scale_with_editor_scale=false
 editor/convert_colors_with_editor_theme=false

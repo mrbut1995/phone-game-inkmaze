@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 224" width="112" height="112">
+  <defs>
+    <linearGradient id="faceH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" />
+      <stop offset="1" stop-color="#F7F0E0" />
+    </linearGradient>
+    <filter id="shadowH" x="-25%" y="-25%" width="150%" height="170%">
+      <feDropShadow dx="0" dy="11" stdDeviation="7" flood-color="#1E3D52" flood-opacity="0.26" />
+    </filter>
+  </defs>
+
+  <!-- Nút màn chơi — trạng thái RÊ CHUỘT: nổi cao hơn, viền sáng hơn -->
+  <rect x="16" y="14" width="192" height="192" rx="44" fill="url(#faceH)"
+        stroke="#4E93BE" stroke-width="7" filter="url(#shadowH)" />
+  <line x1="58" y1="36" x2="166" y2="36" stroke="#FFFFFF" stroke-width="9"
+        stroke-linecap="round" opacity="0.95" />
+  <line x1="70" y1="186" x2="154" y2="186" stroke="#C9BEA6" stroke-width="6"
+        stroke-linecap="round" opacity="0.45" />
+</svg>

@@ -306,21 +306,26 @@ func _check_pause_popup(scene: Control) -> Array:
 
 
 ## Quét mọi Control ĐANG HIỆN (kể cả tổ tiên đều hiện) xem có node nào vượt ra ngoài canvas không.
-## Bỏ qua nội dung bên trong ScrollContainer (được phép dài hơn khung nhìn — nó cuộn).
+## Bỏ qua nội dung bên trong ScrollContainer (được phép dài hơn khung nhìn — nó cuộn) và
+## cả CÂY NỀN (`Background` + các lớp parallax bên trong — nền tràn ra ngoài là CHỦ ĐÍCH).
 func _scan_overflow(node: Node, allowed: Rect2, out: Array, depth: int) -> void:
 	if depth > 12 or out.size() > 24:
 		return
 	for child in node.get_children():
 		if child.name == "Popups" or child is ScrollContainer:
 			continue
+		# Nền (Background + con của nó như PaperFar/HolesMid/DoodleNear) tràn ra ngoài CÓ CHỦ ĐÍCH.
+		if child.name == "Background":
+			continue
 		var c := child as Control
-		# Nền tràn phải/dưới CÓ CHỦ ĐÍCH (scale đều để ô ly vuông) — bỏ qua khi quét tràn.
-		var is_background := child.name == "Background"
-		if not is_background and c != null and c.is_visible_in_tree() and c.size.x > 0.0 and c.size.y > 0.0:
+		if c != null and c.is_visible_in_tree() and c.size.x > 0.0 and c.size.y > 0.0:
 			var rect := Rect2(c.global_position, c.size * c.scale)
 			if not allowed.encloses(rect):
 				out.append("%s%s" % [c.get_path().get_concatenated_names().substr(0, 40),
 					str(rect).substr(0, 60)])
+		# Khung CẮT BIÊN: con có thể dài hơn khung nhưng người chơi không thấy phần tràn.
+		if c != null and c.clip_contents:
+			continue
 		_scan_overflow(child, allowed, out, depth + 1)
 
 

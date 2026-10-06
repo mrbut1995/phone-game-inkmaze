@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 52" width="40" height="26">
+  <defs>
+    <linearGradient id="markerInk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4E93BE" />
+      <stop offset="1" stop-color="#2F6E96" />
+    </linearGradient>
+  </defs>
+
+  <!-- Viền sáng giúp mũi chỉ nổi trên nền giấy -->
+  <path d="M 8 12 L 40 42 L 72 12" fill="none" stroke="#FFFDF8" stroke-width="22"
+        stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
+  <!-- Mũi chỉ màn tiếp theo -->
+  <path d="M 8 12 L 40 42 L 72 12" fill="none" stroke="url(#markerInk)" stroke-width="14"
+        stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 16 14 L 40 36 L 64 14" fill="none" stroke="#BCE0F2" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round" opacity="0.75" />
+</svg>

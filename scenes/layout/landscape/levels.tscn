@@ -274,6 +274,7 @@ text_overrun_behavior = 3
 [node name="ChangeChapter" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="1"]
 layout_mode = 2
 size_flags_horizontal = 8
+mouse_filter = 2
 theme_type_variation = &"LevelsChangeChapter"
 text = "STR_CHANGE_CHAPTER"
 vertical_alignment = 1

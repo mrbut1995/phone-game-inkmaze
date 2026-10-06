@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 224" width="112" height="112">
+  <defs>
+    <linearGradient id="faceD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2EFE8" />
+      <stop offset="1" stop-color="#E4E0D5" />
+    </linearGradient>
+    <filter id="shadowD" x="-25%" y="-20%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="7" stdDeviation="5" flood-color="#5A6B78" flood-opacity="0.16" />
+    </filter>
+    <pattern id="hatchD" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="16" stroke="#B7C2CB" stroke-width="3" opacity="0.5" />
+    </pattern>
+    <clipPath id="clipD"><rect x="16" y="16" width="192" height="192" rx="44" /></clipPath>
+  </defs>
+
+  <!-- Nút màn chơi — trạng thái KHOÁ: xám phẳng, có gạch chéo mờ -->
+  <rect x="16" y="16" width="192" height="192" rx="44" fill="url(#faceD)"
+        stroke="#A9B8C4" stroke-width="7" filter="url(#shadowD)" />
+  <g clip-path="url(#clipD)">
+    <rect x="16" y="16" width="192" height="192" fill="url(#hatchD)" opacity="0.35" />
+  </g>
+  <line x1="58" y1="38" x2="166" y2="38" stroke="#FFFFFF" stroke-width="8"
+        stroke-linecap="round" opacity="0.55" />
+</svg>

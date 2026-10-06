@@ -7,18 +7,71 @@
 [ext_resource type="PackedScene" uid="uid://hng3ln6muswr" path="res://scenes/layout/landscape/levels.tscn" id="L_Landscape"]
 [ext_resource type="PackedScene" uid="uid://vs5xiygkv5e" path="res://scenes/layout/portrait/levels.tscn" id="L_Portrait"]
 
-[node name="Control" unique_id=1978794255 instance=ExtResource("1_hcnff")]
+[sub_resource type="Gradient" id="Gradient_fade"]
+offsets = PackedFloat32Array(0, 0.45, 1)
+colors = PackedColorArray(0.980392, 0.960784, 0.921569, 1, 0.980392, 0.960784, 0.921569, 0.55, 0.980392, 0.960784, 0.921569, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_top"]
+gradient = SubResource("Gradient_fade")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bottom"]
+gradient = SubResource("Gradient_fade")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[node name="Control" unique_id=1978794255 node_paths=PackedStringArray("map", "background") instance=ExtResource("1_hcnff")]
 theme = ExtResource("14_theme_text")
 script = ExtResource("2_5ekxl")
+map = NodePath("MapArea/LevelMap")
+background = NodePath("Background")
 
-[node name="Background" parent="." index="0" unique_id=1260349669]
-
-[node name="LevelMap" parent="." index="1" unique_id=1390647588 instance=ExtResource("6_byla0")]
-
-[node name="Portrait" parent="." index="2" unique_id=948131174 instance=ExtResource("L_Portrait")]
+[node name="MapArea" type="Control" parent="." index="1" unique_id=1390647588]
+clip_contents = true
 layout_mode = 1
+anchor_top = 0.2
+anchor_right = 1.0
+anchor_bottom = 0.82
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="Landscape" parent="." index="3" unique_id=1096027511 instance=ExtResource("L_Landscape")]
+[node name="LevelMap" parent="MapArea" index="0" unique_id=557547088 instance=ExtResource("6_byla0")]
+
+[node name="FadeTop" type="TextureRect" parent="MapArea" index="1" unique_id=565857553]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 72.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_top")
+expand_mode = 1
+
+[node name="FadeBottom" type="TextureRect" parent="MapArea" index="2" unique_id=1706964805]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -72.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_bottom")
+expand_mode = 1
+
+[node name="Portrait" parent="." index="2" unique_id=948131174 node_paths=PackedStringArray("level_map") instance=ExtResource("L_Portrait")]
 layout_mode = 1
 mouse_filter = 2
+level_map = NodePath("../MapArea/LevelMap")
+
+[node name="Landscape" parent="." index="3" unique_id=1096027511 node_paths=PackedStringArray("level_map") instance=ExtResource("L_Landscape")]
+layout_mode = 1
+mouse_filter = 2
+level_map = NodePath("../MapArea/LevelMap")
+
+[connection signal="level_selected" from="MapArea/LevelMap" to="." method="_on_level_selected"]
+[connection signal="scrolled" from="MapArea/LevelMap" to="." method="_on_map_scrolled"]

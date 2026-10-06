@@ -1,11 +1,20 @@
 class_name LevelScenes
 extends BaseScene
 ## ============================================================================
-## View Controller: Màn hình Chọn Màn chơi (Level Selection) — Road Map
-## - Hiển thị bản đồ dọc (LevelMap) thay vì lưới thẻ phân trang.
-## - LevelMap là Node2D dùng chung cho cả portrait lẫn landscape.
-## - Người chơi kéo lên/xuống để di chuyển bản đồ.
-## - Header vẫn giữ: nút Back, banner chương, tổng sao, nút Tiếp Tục.
+## View Controller: Màn hình Chọn Màn chơi (Level Selection) — Bản đồ road map
+## · Hiển thị bản đồ dọc `LevelMap` (thay cho lưới thẻ phân trang cũ).
+## · Bản đồ là node dùng chung cho cả 2 hướng, đặt trong khung `MapArea` (có cắt biên
+##   + 2 dải mờ trên/dưới) nên nút màn không lọt lên che header/banner.
+## · Người chơi kéo lên/xuống để đi trên bản đồ; bản đồ phát tiến độ cuộn cho nền giấy
+##   parallax (`Background`) trượt nhẹ theo.
+## · Header giữ nguyên: nút Back, tổng Sao, banner chương, nút Tiếp Tục.
+##
+## Quy ước của project (xem `scenes/levels.tscn`):
+##   · Node UI bind bằng `@export` (`map`, `background`, `LevelsLayout`) — script KHÔNG tra đường dẫn.
+##   · Dây tới node TRONG `scenes/levels.tscn` (LevelMap) khai bằng `[connection]`.
+##   · Dây tới nút NẰM TRONG 2 bố cục (Portrait/Landscape là scene instance — Godot KHÔNG
+##     tạo được `[connection]` xuyên vào node bên trong instance) nối bằng `ensure_signal`
+##     có guard `is_connected` — gọi lại được mỗi lần đổi hướng.
 ## ============================================================================
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
@@ -13,23 +22,21 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const BANNER_NORMAL := preload("res://assets/images-png/level_selector/chapter_banner.png")
 const BANNER_FOCUS  := preload("res://assets/images-png/level_selector/chapter_banner_focus.png")
 
-## Node UI gắn lại mỗi lần ĐỔI HƯỚNG (portrait/landscape dùng cùng script LevelsLayout)
+## Bố cục đang hiển thị (Portrait / Landscape) — gắn lại mỗi lần ĐỔI HƯỚNG
 var layout: LevelsLayout = null
+## Bản đồ + nền giấy — bind trong `scenes/levels.tscn`
+@export var map: LevelMap = null
+@export var background: SceneBackground = null
 
 var _level_ids: Array[int] = []
-var _level_data: Dictionary = {}   # level_id -> LevelData
+var _level_data: Dictionary = {}   # level_id -> LevelData (chỉ các file có thật)
 var _banner_focus := false
-
-## LevelMap dùng chung (lấy từ scenes/levels.tscn, không phụ thuộc layout)
-@onready var _map: LevelMap = $LevelMap
 
 
 func _ready() -> void:
 	_bind_refs()
 	_wire_buttons()
-	resized.connect(_on_resized)
 	orientation_changed.connect(_on_orientation_changed)
-	_map.level_selected.connect(_on_level_selected)
 	_build_map()
 	_refresh_header()
 
@@ -39,43 +46,51 @@ func _on_active() -> void:
 	UIAnim.play_layout_anim(active_layout(), "EnterAnim", &"enter")
 
 
+## Gắn node UI từ BỐ CỤC đang hiển thị (2 bố cục là 2 scene riêng nhưng CÙNG script
+## `LevelsLayout`) — mọi node đã bind bằng `@export` trong .tscn.
 func _bind_refs() -> void:
 	layout = active_layout() as LevelsLayout
 	if layout == null:
 		push_warning("LevelScenes: bố cục chưa gắn LevelsLayout")
+	if map == null:
+		push_warning("LevelScenes: thiếu binding `map` (MapArea/LevelMap)")
 
 
+## Nối dây cho nút TRONG bố cục + gắn hiệu ứng "sống" (nhún khi bấm, nút Tiếp tục "thở").
+## Nút nằm trong scene instance nên KHÔNG khai `[connection]` trong .tscn được — dùng
+## `ensure_signal` (guard `is_connected`) để gọi lại an toàn mỗi lần đổi hướng.
 func _wire_buttons() -> void:
+	if layout == null:
+		return
 	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 	ensure_signal(layout.btn_continue, &"pressed", &"_on_continue_pressed")
-	if layout.btn_back != null and not layout.btn_back.has_meta("bounce_attached"):
-		layout.btn_back.set_meta("bounce_attached", true)
-		UIAnim.attach_press_bounce(layout.btn_back)
-	if layout.btn_continue != null and not layout.btn_continue.has_meta("bounce_attached"):
-		layout.btn_continue.set_meta("bounce_attached", true)
-		UIAnim.attach_press_bounce(layout.btn_continue)
-		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse_continue", layout.btn_continue):
-			UIAnim.play_pulse(layout.btn_continue, 1.03, 1.8)
-	if layout.lbl_change_chapter != null:
-		layout.lbl_change_chapter.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if layout.banner != null:
 		layout.banner.mouse_filter = Control.MOUSE_FILTER_STOP
 		ensure_signal(layout.banner, &"gui_input", &"_on_banner_input")
+	for button: BaseButton in [layout.btn_back, layout.btn_continue]:
+		if button == null or button.has_meta("bounce_attached"):
+			continue
+		button.set_meta("bounce_attached", true)
+		UIAnim.attach_press_bounce(button)
+	if layout.btn_continue != null:
+		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse_continue", layout.btn_continue):
+			UIAnim.play_pulse(layout.btn_continue, 1.03, 1.8)
 
 
 # ---------------------------------------------------------------------------
-# Dựng bản đồ
+# Bản đồ
 # ---------------------------------------------------------------------------
 func _build_map() -> void:
 	_load_level_ids()
-	if _map == null:
+	if map == null:
 		return
+	map.build(_level_ids, _stars_dict(), _unlocked_level(), chapter_continue_level())
 
-	var unlocked := _unlocked_level()
-	var stars := _stars_dict()
-	var current_id := chapter_continue_level()
 
-	_map.build(_level_ids, stars, unlocked, current_id)
+## Kéo bản đồ ⇒ nền giấy trượt theo (tỉ lệ cố định theo từng lớp, đúng nhịp tay kéo)
+func _on_map_scrolled(delta_y: float) -> void:
+	if background != null:
+		background.set_scroll_delta(delta_y)
 
 
 ## Danh sách level_id có file .tres thật (LevelManager quét resources/levels)
@@ -184,17 +199,15 @@ func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()
 	_refresh_header()
-	# Map không cần dựng lại — Camera2D dùng viewport tự động
-
-
-func _on_resized() -> void:
-	pass  # Map dùng Camera2D — không cần làm gì khi resize
+	# Bản đồ tự dựng lại khi khung đổi cỡ (LevelMap nghe `size_changed` của viewport)
 
 
 # ---------------------------------------------------------------------------
 # Header
 # ---------------------------------------------------------------------------
 func _refresh_header() -> void:
+	if layout == null:
+		return
 	var chapter := _chapter_data()
 	var own := 0
 	var total := maxi(_level_ids.size(), 1) * 3
@@ -222,6 +235,8 @@ func _refresh_header() -> void:
 
 
 func _refresh_chapter_banner() -> void:
+	if layout == null:
+		return
 	var gm := _game_manager()
 	var unlockable := gm != null and gm.has_method("has_unlockable_chapter") \
 		and bool(gm.call("has_unlockable_chapter"))
@@ -242,7 +257,7 @@ func _refresh_chapter_banner() -> void:
 
 
 # ---------------------------------------------------------------------------
-# Events
+# Events (dây signal khai trong `scenes/levels.tscn`)
 # ---------------------------------------------------------------------------
 func _on_banner_input(event: InputEvent) -> void:
 	var pressed: bool = (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT
@@ -253,7 +268,7 @@ func _on_banner_input(event: InputEvent) -> void:
 
 func _on_level_selected(level_id: int) -> void:
 	var gm := _game_manager()
-	if gm != null:
+	if gm != null and gm.has_method("start_level"):
 		gm.call("start_level", level_id)
 	else:
 		Nav.goto_game()

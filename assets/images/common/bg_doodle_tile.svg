@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="512" height="512">
+  <g fill="none" stroke="#6E9BB8" stroke-linecap="round" stroke-linejoin="round" opacity="0.42">
+
+    <!-- Ngôi sao vẽ tay -->
+    <g transform="rotate(-12 150 150)" stroke-width="5">
+      <path d="M 150 62 L 176 130 L 248 132 L 190 176 L 210 244 L 150 204 L 90 246 L 110 176 L 52 134 L 124 130 Z" />
+    </g>
+
+    <!-- Xoắn ốc nguệch ngoạc -->
+    <path d="M 352 288 a 16 16 0 0 1 16 16 a 32 32 0 0 1 -32 32 a 48 48 0 0 1 -48 -48
+             a 64 64 0 0 1 64 -64 a 82 82 0 0 1 82 82" stroke-width="5" />
+
+    <!-- Mũi tên cong -->
+    <g stroke-width="5" transform="rotate(8 820 180)">
+      <path d="M 720 140 C 770 104, 846 116, 872 168" />
+      <path d="M 846 150 L 874 170 L 850 194" />
+    </g>
+
+    <!-- Dấu cộng nhỏ + chấm mực -->
+    <g stroke-width="4.5">
+      <path d="M 690 470 L 718 470 M 704 456 L 704 484" />
+      <path d="M 196 690 L 224 690 M 210 676 L 210 704" />
+    </g>
+    <circle cx="880" cy="620" r="7" fill="#6E9BB8" stroke="none" opacity="0.8" />
+
+    <!-- Sóng nước nguệch ngoạc -->
+    <path d="M 300 800 q 34 -26 68 0 q 34 26 68 0 q 34 -26 68 0" stroke-width="5" />
+
+    <!-- Cung tròn nhỏ (như nét thước kẻ) -->
+    <path d="M 748 828 a 56 56 0 0 0 56 56" stroke-width="5" />
+  </g>
+</svg>

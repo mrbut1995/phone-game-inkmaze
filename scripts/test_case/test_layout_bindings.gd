@@ -49,7 +49,11 @@ const OPTIONAL := {
 	## thẻ hồ sơ ở bản NGANG mới hiện tên người chơi.
 	"main|portrait": ["profile_name"],
 	## Màn Chọn màn: bản DỌC không có art banner "focus" riêng (dùng art gốc + preload dự phòng).
-	"levels|portrait": ["banner_focus"],
+	## `level_map` là node DÙNG CHUNG nằm NGOÀI 2 bố cục (trong `scenes/levels.tscn` →
+	## `MapArea/LevelMap`) nên bố cục đứng riêng không thể bind — binding thật khai ở
+	## node gốc màn và được `test_levels_map` kiểm.
+	"levels|portrait": ["banner_focus", "level_map"],
+	"levels|landscape": ["level_map"],
 }
 
 var _failed := 0
