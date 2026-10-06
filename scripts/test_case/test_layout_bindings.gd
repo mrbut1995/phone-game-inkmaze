@@ -43,10 +43,8 @@ const OPTIONAL := {
 	"shop|portrait": ["pad_slot"],
 	## Sticker HỒ SƠ ở bản dọc chỉ là avatar nhỏ (không có chỗ ghi tên người chơi).
 	"main|portrait": ["profile_name"],
-	## Màn Chọn màn: chip "ĐẠT n%" + chip kích thước + mô tả chương và dòng chương
-	## trong nút TIẾP TỤC — chỉ bố cục NGANG khai (bản DỌC gọn hơn theo mockup dọc).
-	"levels|portrait": ["lbl_continue_sub", "lbl_banner_size",
-			"lbl_banner_sub", "banner_focus"],
+	## Màn Chọn màn: bản DỌC không có art banner "focus" riêng (dùng art gốc + preload dự phòng).
+	"levels|portrait": ["banner_focus"],
 }
 
 var _failed := 0

@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://bi3gnmrmf3cqr"]
+
+[ext_resource type="Script" uid="uid://d2vt03lbgcomk" path="res://scripts/nodes/level_selection/level_node.gd" id="1_6b1ut"]
+[ext_resource type="Texture2D" uid="uid://b8d30eex5v3e2" path="res://assets/images/common/star_empty.svg" id="2_stremp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_touch"]
+size = Vector2(76, 94)
+
+[node name="LevelNode" type="Node2D" unique_id=1435095361]
+script = ExtResource("1_6b1ut")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1630683576]
+texture_filter = 1
+
+[node name="Label" type="Label" parent="." unique_id=2891047211]
+offset_left = -30.0
+offset_top = -34.0
+offset_right = 30.0
+offset_bottom = 10.0
+pivot_offset = Vector2(30, 22)
+theme_type_variation = &"LevelMapNumber"
+theme_override_font_sizes/font_size = 26
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Stars" type="HBoxContainer" parent="." unique_id=987162534]
+offset_left = -32.0
+offset_top = 18.0
+offset_right = 32.0
+offset_bottom = 36.0
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Star1" type="TextureRect" parent="Stars" unique_id=111222331]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("2_stremp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star2" type="TextureRect" parent="Stars" unique_id=111222332]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("2_stremp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star3" type="TextureRect" parent="Stars" unique_id=111222333]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("2_stremp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HitButton" type="Button" parent="." unique_id=778899001]
+modulate = Color(1, 1, 1, 0)
+offset_left = -38.0
+offset_top = -47.0
+offset_right = 38.0
+offset_bottom = 47.0
+flat = true
+
+[node name="TouchArea" type="Area2D" parent="." unique_id=3812047111]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TouchArea" unique_id=3099274411]
+shape = SubResource("RectangleShape2D_touch")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1645814861]

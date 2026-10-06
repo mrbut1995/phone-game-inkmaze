@@ -19,7 +19,9 @@ if hasattr(sys.stdout, "reconfigure"):
 import os
 
 _DEFAULT_GODOT_CANDIDATES = [
-    r"D:\Godots\app dev\Godot Source Code\godot\bin\godot.windows.editor.x86_64.console.exe",
+    # Engine THẬT của game (bản dev 4.8 đã build riêng). LƯU Ý: file `.console.exe`
+    # nằm cùng thư mục bin là bản 4.4-stable cũ ⇒ KHÔNG dùng để chạy test (kết quả lệch).
+    r"D:\Godots\app dev\Godot Source Code\godot\bin\godot.windows.editor.x86_64.exe",
     r"D:\Godots\app dev\Godot_v4.7.2-stable_win64.exe\Godot_v4.7.2-stable_win64_console.exe",
 ]
 GODOT = next((p for p in _DEFAULT_GODOT_CANDIDATES if os.path.exists(p)), _DEFAULT_GODOT_CANDIDATES[0])
