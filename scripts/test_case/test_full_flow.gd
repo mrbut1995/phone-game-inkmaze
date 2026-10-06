@@ -31,18 +31,22 @@ func _init() -> void:
 	await process_frame
 	await process_frame
 	assert(levels_scene.layout.btn_back != null, "LevelScenes phai co btn_back")
-	assert(levels_scene.layout.scroll != null, "LevelScenes phai co ScrollContainer de phan trang")
-	assert(levels_scene.layout.pages_host != null, "LevelScenes phai co Pages")
-	assert(levels_scene.page_count() >= 1, "LevelScenes phai co it nhat 1 trang")
-	var levels_card_count := 0
-	for page in levels_scene.layout.pages_host.get_children():
-		levels_card_count += (page.get_child(0) as GridContainer).get_child_count()
-	assert(levels_card_count == maxi(levels_scene.level_ids().size(), 1),
-		"So the man phai bang so level (dang %d the / %d man)"
-			% [levels_card_count, levels_scene.level_ids().size()])
-	print("[CHECK] LevelScenes: %d man / %d trang, dots = %d."
-		% [levels_scene.level_ids().size(), levels_scene.page_count(),
-			levels_scene.layout.dots_box.get_child_count()])
+	assert(levels_scene.map != null, "LevelScenes phai co ban do LevelMap (bind bang @export)")
+	var levels_count := levels_scene.level_ids().size()
+	assert(levels_scene.map.node_count() == levels_count,
+		"So nut tren ban do phai bang so man cua chuong (dang %d nut / %d man)"
+			% [levels_scene.map.node_count(), levels_count])
+	# Cụm nút màn + đường nối nằm trong `Tracks/Items`; cờ đích + mũi chỉ là node có sẵn
+	var items: Node2D = levels_scene.map.items
+	assert(items != null and items.get_child_count() == maxi(levels_count * 2 - 1, 0),
+		"Items phai co %d con (nut man + duong noi)" % maxi(levels_count * 2 - 1, 0))
+	var current_node: LevelMapNode = levels_scene.map.node_for(levels_scene.chapter_continue_level())
+	assert(current_node != null and current_node.state == LevelMapNode.State.CURRENT,
+		"Man nen choi tiep phai co nut o trang thai CURRENT")
+	assert(levels_scene.map.marker != null and levels_scene.map.marker.visible,
+		"Mui chi 'man tiep theo' phai hien tren ban do")
+	print("[CHECK] LevelScenes: %d man -> %d nut ban do, mui chi o man %d."
+		% [levels_count, levels_scene.map.node_count(), levels_scene.chapter_continue_level()])
 	levels_scene.queue_free()
 	await process_frame
 

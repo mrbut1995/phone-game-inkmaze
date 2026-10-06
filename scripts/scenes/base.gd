@@ -29,6 +29,9 @@ const MAX_CONTENT_WIDTH := 1440.0
 
 ## Bỏ anchors full-rect của node gốc — từ đây Root tự quản size/position (nếu giữ anchors
 ## 0..1 thì Godot ghi đè `size` sau `_ready` và cảnh báo "non-equal opposite anchors").
+## `mouse_filter = IGNORE` (khai trong `scenes/base.tscn`): node gốc phủ kín canvas nên nếu
+## để STOP nó sẽ NUỐT mọi cú bấm ⇒ các nút Node2D con bên dưới (vd `TextureButton2D` trên
+## bản đồ màn Chọn màn — dùng `_unhandled_input`) KHÔNG bao giờ nhận được input.
 func _on_ui_enter_tree() -> void:
 	set_anchors_preset(Control.PRESET_TOP_LEFT, true)
 

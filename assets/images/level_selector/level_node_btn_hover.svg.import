@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bux2s0s7eby7n"
-path="res://.godot/imported/level_node_skipped.svg-8db06abd587c789c387f0876ba126241.ctex"
+uid="uid://bauv2p0sufcsr"
+path="res://.godot/imported/level_node_btn_hover.svg-5d9d0fe13168c000238e0be3c7220094.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/level_selector/level_node_skipped.svg"
-dest_files=["res://.godot/imported/level_node_skipped.svg-8db06abd587c789c387f0876ba126241.ctex"]
+source_file="res://assets/images/level_selector/level_node_btn_hover.svg"
+dest_files=["res://.godot/imported/level_node_btn_hover.svg-5d9d0fe13168c000238e0be3c7220094.ctex"]
 
 [params]
 

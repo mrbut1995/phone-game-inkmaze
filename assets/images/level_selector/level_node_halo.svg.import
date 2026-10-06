@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2mn3bphapx3q"
-path="res://.godot/imported/level_node_current.svg-fb146eaef4302fdf1aa66b1ef45aad0e.ctex"
+uid="uid://dly2n01k0v7uq"
+path="res://.godot/imported/level_node_halo.svg-263ccd1b31fc608a8e15304829a07d3f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/level_selector/level_node_current.svg"
-dest_files=["res://.godot/imported/level_node_current.svg-fb146eaef4302fdf1aa66b1ef45aad0e.ctex"]
+source_file="res://assets/images/level_selector/level_node_halo.svg"
+dest_files=["res://.godot/imported/level_node_halo.svg-263ccd1b31fc608a8e15304829a07d3f.ctex"]
 
 [params]
 

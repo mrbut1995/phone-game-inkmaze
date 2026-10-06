@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 240" width="2560" height="240">
+  <!-- Lỗ bấm giấy: 1 cột duy nhất ở mép trái (tile rộng 2560 nên không lặp ngang màn).
+       Dịch +91px = đệm của lớp parallax giữa (EDGE_PAD + quãng trượt) ⇒ lỗ nằm ~28px
+       từ mép trái khung nội dung, ngay bên trái lề đỏ của trang giấy.
+       Hình PHẲNG (không gradient) để không bị đọc thành "viên bi 3D". -->
+  <g transform="translate(91 0)">
+    <circle cx="56" cy="120" r="14" fill="#F1EAD9" stroke="#D9CDB1" stroke-width="2.5" />
+  </g>
+</svg>

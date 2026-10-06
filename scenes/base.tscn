@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://3ol477wsv33k"]
 
-[ext_resource type="Texture2D" path="res://assets/images-png/game/background.png" id="1_3ffsd"]
+[ext_resource type="PackedScene" path="res://nodes/common/parallax_background.tscn" id="bg_scene"]
 [ext_resource type="Script" uid="uid://bxshv77j0bvff" path="res://scripts/scenes/base.gd" id="1_baglu"]
-[ext_resource type="Script" uid="uid://dr20scu5w0j6k" path="res://scripts/nodes/common/background.gd" id="bg_script"]
 
 [node name="Control" type="Control" unique_id=1978794255]
 layout_mode = 3
@@ -11,27 +10,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_baglu")
 
-[node name="Background" type="TextureRect" parent="." unique_id=1260349669]
+[node name="Background" parent="." unique_id=1260349669 instance=ExtResource("bg_scene")]
 layout_mode = 1
-anchors_preset = 0
-offset_right = 540.0
-offset_bottom = 960.0
-texture = ExtResource("1_3ffsd")
-expand_mode = 1
-script = ExtResource("bg_script")
 metadata/_edit_lock_ = true
-
-[node name="SideL" type="ColorRect" parent="Background" unique_id=154183801]
-layout_mode = 0
-mouse_filter = 2
-color = Color(0.98039216, 0.9607844, 0.92156863, 1)
-
-[node name="SideR" type="ColorRect" parent="Background" unique_id=1333467610]
-layout_mode = 0
-mouse_filter = 2
-color = Color(0.98039216, 0.9607844, 0.92156863, 1)
 
 [node name="Popups" type="Control" parent="." unique_id=1066741891]
 layout_mode = 1

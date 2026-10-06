@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/common/background.gd" id="1_bg"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/background.png" id="2_paper"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/bg_hole_column.png" id="3_holes"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/bg_doodle_tile.png" id="4_doodles"]
+
+[node name="Background" type="Control" node_paths=PackedStringArray("layer_far", "layer_mid", "layer_near", "paper_art", "holes_art", "doodles_art")]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_bg")
+layer_far = NodePath("PaperFar")
+layer_mid = NodePath("HolesMid")
+layer_near = NodePath("DoodleNear")
+paper_art = NodePath("PaperFar/Art")
+holes_art = NodePath("HolesMid/Pattern")
+doodles_art = NodePath("DoodleNear/Pattern")
+
+[node name="SideL" type="ColorRect" parent="." index="0"]
+layout_mode = 0
+mouse_filter = 2
+color = Color(0.98039216, 0.9607844, 0.92156863, 1)
+
+[node name="SideR" type="ColorRect" parent="." index="1"]
+layout_mode = 0
+mouse_filter = 2
+color = Color(0.98039216, 0.9607844, 0.92156863, 1)
+
+[node name="PaperFar" type="Parallax2D" parent="." index="2"]
+scroll_scale = Vector2(0.05, 0.05)
+
+[node name="Art" type="TextureRect" parent="PaperFar" index="0"]
+texture = ExtResource("2_paper")
+expand_mode = 1
+stretch_mode = 0
+mouse_filter = 2
+
+[node name="HolesMid" type="Parallax2D" parent="." index="3"]
+scroll_scale = Vector2(0.14, 0.14)
+
+[node name="Pattern" type="TextureRect" parent="HolesMid" index="0"]
+modulate = Color(1, 1, 1, 0.85)
+texture = ExtResource("3_holes")
+expand_mode = 1
+stretch_mode = 1
+mouse_filter = 2
+
+[node name="DoodleNear" type="Parallax2D" parent="." index="4"]
+scroll_scale = Vector2(0.28, 0.28)
+
+[node name="Pattern" type="TextureRect" parent="DoodleNear" index="0"]
+modulate = Color(1, 1, 1, 0.5)
+texture = ExtResource("4_doodles")
+expand_mode = 1
+stretch_mode = 1
+mouse_filter = 2
