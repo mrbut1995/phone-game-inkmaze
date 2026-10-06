@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Level Node: Current / Active level - Highlighted paper card (76x94) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 220 270" width="76" height="94">
+  <defs>
+    <filter id="currGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#D84444" flood-opacity="0.45" />
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.25" />
+    </filter>
+    <clipPath id="currClip"><rect width="200" height="250" rx="32"/></clipPath>
+  </defs>
+  <g filter="url(#currGlow)">
+    <!-- Main card body -->
+    <rect width="200" height="250" rx="32" fill="#FFFDF8"/>
+    <!-- Notebook lines inside -->
+    <g clip-path="url(#currClip)">
+      <line x1="0" y1="65" x2="200" y2="65" stroke="#8FB9D2" stroke-width="2.5" opacity="0.45"/>
+      <line x1="0" y1="110" x2="200" y2="110" stroke="#8FB9D2" stroke-width="2.5" opacity="0.45"/>
+      <line x1="0" y1="155" x2="200" y2="155" stroke="#8FB9D2" stroke-width="2.5" opacity="0.45"/>
+      <line x1="0" y1="200" x2="200" y2="200" stroke="#8FB9D2" stroke-width="2.5" opacity="0.45"/>
+      <!-- Red margin line -->
+      <line x1="38" y1="0" x2="38" y2="250" stroke="#D84444" stroke-width="5" opacity="0.9"/>
+    </g>
+    <!-- Border - vivid red ink -->
+    <rect width="200" height="250" rx="32" fill="none" stroke="#D84444" stroke-width="8"/>
+    <!-- Top shine -->
+    <line x1="44" y1="4" x2="170" y2="4" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>

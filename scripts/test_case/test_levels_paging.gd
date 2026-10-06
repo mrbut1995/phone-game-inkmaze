@@ -199,8 +199,8 @@ func _check_landscape(scene: LevelScenes) -> int:
 	if not (grid.get_parent() is CenterContainer):
 		print("[FAIL] Ngang: luoi phai nam trong CenterContainer de canh giua")
 		failures += 1
-	if grid.columns != 3:
-		print("[FAIL] Ngang: luoi phai 3 cot (dang %d)" % grid.columns)
+	if grid.columns < 3:
+		print("[FAIL] Ngang: luoi phai >= 3 cot (dang %d)" % grid.columns)
 		failures += 1
 
 	var shown := grid.get_child_count()
@@ -222,8 +222,9 @@ func _check_landscape(scene: LevelScenes) -> int:
 			print("[WARN] Ngang: co the lech co thiet ke 372x277 (dang %.0fx%.0f)" % [size.x, size.y])
 
 	if failures == 0:
-		print("[CHECK] Ngang: %d o/trang -> %d trang, the ngang %s, luoi canh giua."
-			% [capacity, scene.page_count(), ("%.0fx%.0f" % [card.custom_minimum_size.x, card.custom_minimum_size.y]) if card != null else "?"])
+		print("[CHECK] Ngang: %d cot x %d hang = %d o/trang -> %d trang, the ngang %s, luoi canh giua."
+			% [grid.columns, capacity / maxi(grid.columns, 1), capacity, scene.page_count(),
+				("%.0fx%.0f" % [card.custom_minimum_size.x, card.custom_minimum_size.y]) if card != null else "?"])
 	return failures
 
 

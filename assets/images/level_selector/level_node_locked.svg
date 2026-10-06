@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Level Node: Locked - Greyed paper card with lock icon (76x94) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 212 262" width="76" height="94">
+  <defs>
+    <filter id="lockedDropShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1E2830" flood-opacity="0.12" />
+    </filter>
+    <clipPath id="lockedClip"><rect width="200" height="250" rx="32"/></clipPath>
+  </defs>
+  <g filter="url(#lockedDropShadow)">
+    <!-- Main card body - muted cream/grey -->
+    <rect width="200" height="250" rx="32" fill="#ECE9E2"/>
+    <!-- Notebook lines inside -->
+    <g clip-path="url(#lockedClip)">
+      <line x1="0" y1="65" x2="200" y2="65" stroke="#A7B9C3" stroke-width="2" opacity="0.3"/>
+      <line x1="0" y1="110" x2="200" y2="110" stroke="#A7B9C3" stroke-width="2" opacity="0.3"/>
+      <line x1="0" y1="155" x2="200" y2="155" stroke="#A7B9C3" stroke-width="2" opacity="0.3"/>
+      <line x1="0" y1="200" x2="200" y2="200" stroke="#A7B9C3" stroke-width="2" opacity="0.3"/>
+      <!-- Faded dashed margin line -->
+      <line x1="38" y1="0" x2="38" y2="250" stroke="#C8A0A0" stroke-width="3" stroke-dasharray="6 5" opacity="0.6"/>
+    </g>
+    <!-- Border - muted grey-blue -->
+    <rect width="200" height="250" rx="32" fill="none" stroke="#A7B9C3" stroke-width="5"/>
+    <!-- Top shine -->
+    <line x1="44" y1="4" x2="170" y2="4" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="5" stroke-linecap="round"/>
+    <!-- Lock Icon in center -->
+    <g transform="translate(100, 115)">
+      <!-- Shackle -->
+      <path d="M-16,-4 V-20 C-16,-30 16,-30 16,-20 V-4" fill="none" stroke="#7A8E9A" stroke-width="5.5" stroke-linecap="round"/>
+      <!-- Lock body -->
+      <rect x="-24" y="-4" width="48" height="38" rx="8" fill="#7A8E9A" stroke="#5E707C" stroke-width="2"/>
+      <!-- Keyhole -->
+      <circle cx="0" cy="11" r="4.5" fill="#ECE9E2"/>
+      <polygon points="-2,12 2,12 3,22 -3,22" fill="#ECE9E2"/>
+    </g>
+  </g>
+</svg>

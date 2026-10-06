@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Level Node: Normal / Playable - Paper notebook style (76x94) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 212 262" width="76" height="94">
+  <defs>
+    <filter id="nodeDropShadow" x="-15%" y="-15%" width="135%" height="135%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.22" />
+    </filter>
+    <clipPath id="nodeClip"><rect width="200" height="250" rx="32"/></clipPath>
+  </defs>
+  <g filter="url(#nodeDropShadow)">
+    <!-- Main card body -->
+    <rect width="200" height="250" rx="32" fill="#FEFDFA"/>
+    <!-- Notebook lines inside -->
+    <g clip-path="url(#nodeClip)">
+      <line x1="0" y1="65" x2="200" y2="65" stroke="#8FB9D2" stroke-width="2.5" opacity="0.45"/>
+      <line x1="0" y1="110" x2="200" y2="110" stroke="#8FB9D2" stroke-width="2.5" opacity="0.45"/>
+      <line x1="0" y1="155" x2="200" y2="155" stroke="#8FB9D2" stroke-width="2.5" opacity="0.45"/>
+      <line x1="0" y1="200" x2="200" y2="200" stroke="#8FB9D2" stroke-width="2.5" opacity="0.45"/>
+      <!-- Red margin line -->
+      <line x1="38" y1="0" x2="38" y2="250" stroke="#D84444" stroke-width="4.5" opacity="0.85"/>
+    </g>
+    <!-- Border - crisp blue ink -->
+    <rect width="200" height="250" rx="32" fill="none" stroke="#6EA0C8" stroke-width="7"/>
+    <!-- Top shine -->
+    <line x1="44" y1="4" x2="170" y2="4" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>

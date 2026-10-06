@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://cgl8mm7pxq57q"]
 
-[ext_resource type="Script" path="res://scripts/nodes/level_selection/page_dot.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/dot_inactive.png" id="2_dot_idle"]
+[ext_resource type="Script" uid="uid://chdmdnyfld2c7" path="res://scripts/nodes/level_selection/page_dot.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://yk4gr5oupndp" path="res://assets/images-png/level_selector/dot_inactive.png" id="2_dot_idle"]
 
-[node name="PageDot" type="TextureButton"]
-custom_minimum_size =  Vector2(6, 12)
-offset_right =  6
-offset_bottom =  12
+[node name="PageDot" type="TextureButton" unique_id=1670915311]
+custom_minimum_size = Vector2(6, 12)
+offset_right = 6.0
+offset_bottom = 12.0
 focus_mode = 0
 texture_normal = ExtResource("2_dot_idle")
 texture_pressed = ExtResource("2_dot_idle")
