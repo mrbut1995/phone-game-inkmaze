@@ -20,6 +20,7 @@ from ..config import (
 from ..controllers.app_controller import AppController
 from ..controllers.editor_controller import EditorController
 from ..controllers.events import EV_LEVEL_CHANGED, EV_MODEL_UPDATED, EV_PATH_CHANGED, EV_STATUS
+from ..models import challenge_rules as chrules
 from ..models import missions as chal
 from ..models.level import Cell
 
@@ -35,6 +36,7 @@ class InspectorView(ttk.Frame):
 
         self._build_general()
         self._build_rules()
+        self._build_challenge()
         self._build_missions()
         self._build_tools()
         self._build_report()
@@ -93,7 +95,44 @@ class InspectorView(ttk.Frame):
         if spec["is_cell_value"]:
             lines.append("→ dùng công cụ %s để tô %s (%d..%d %s); ô bỏ trống = game tự sinh." % (
                 TOOL_VALUE_KEY, spec["tool"].lower(), spec["min"], spec["max"], spec["unit"]))
+        if mode == "challenge":
+            lines.append("→ chọn LUẬT + tham số ở khối \"Thử thách (Challenge)\" bên dưới.")
         self.var_mode_label.set("\n".join(lines))
+
+    def _build_challenge(self) -> None:
+        """Luật thử thách (Challenge Mode): LevelData.challenge + challenge_param.
+
+        CHỈ áp dụng khi mode_id = "challenge" — vi phạm luật (hoặc quá hạn) là thua ngay.
+        Tham số 0 = game tự tính theo luật/bàn cờ (xem app/models/challenge_rules.py).
+        """
+        frame = ttk.LabelFrame(self, text="Thử thách (Challenge · mode_id = \"challenge\")", padding=(8, 6))
+        frame.pack(fill="x", pady=(0, 8))
+
+        self.var_challenge_rule = tk.StringVar()
+        self.var_challenge_param = tk.IntVar()
+
+        ttk.Label(frame, text="Luật").grid(row=0, column=0, sticky="w", pady=2)
+        self.combo_challenge = ttk.Combobox(
+            frame, textvariable=self.var_challenge_rule,
+            values=[chrules.NONE_LABEL, *chrules.combo_values()], width=34, state="readonly")
+        self.combo_challenge.grid(row=0, column=1, sticky="ew", pady=2)
+        self.combo_challenge.bind("<<ComboboxSelected>>", lambda _e: self._on_challenge_rule())
+
+        param_row = ttk.Frame(frame)
+        param_row.grid(row=1, column=0, columnspan=2, sticky="ew", pady=(4, 0))
+        ttk.Label(param_row, text="Tham số").pack(side="left")
+        self.spin_challenge_param = ttk.Spinbox(param_row, textvariable=self.var_challenge_param,
+                                                from_=0, to=9999, width=7)
+        self.spin_challenge_param.pack(side="left", padx=(6, 4))
+        self.spin_challenge_param.bind("<Return>", lambda _e: self._on_challenge_param())
+        self.spin_challenge_param.bind("<FocusOut>", lambda _e: self._on_challenge_param())
+        self.lbl_challenge_unit = ttk.Label(param_row, text="", style="Hint.TLabel")
+        self.lbl_challenge_unit.pack(side="left")
+
+        self.lbl_challenge_hint = ttk.Label(frame, text="", style="Hint.TLabel",
+                                            wraplength=280, justify="left")
+        self.lbl_challenge_hint.grid(row=2, column=0, columnspan=2, sticky="w", pady=(4, 0))
+        frame.columnconfigure(1, weight=1)
 
     def _build_rules(self) -> None:
         frame = ttk.LabelFrame(self, text="Lưới & luật chơi", padding=(8, 6))
@@ -329,6 +368,63 @@ class InspectorView(ttk.Frame):
         return handler
 
     # ------------------------------------------------------------------
+    # LUẬT THỬ THÁCH (Challenge) — đọc/ghi qua controller (có undo)
+    # ------------------------------------------------------------------
+    def _on_challenge_rule(self) -> None:
+        if self._suspend:
+            return
+        self.editor.set_challenge_rule(chrules.from_combo(self.var_challenge_rule.get()))
+
+    def _on_challenge_param(self) -> None:
+        if self._suspend:
+            return
+        if not chrules.has_param(chrules.from_combo(self.var_challenge_rule.get())):
+            return                                   # luật không cần tham số -> bỏ qua
+        try:
+            value = int(self.var_challenge_param.get())
+        except (tk.TclError, ValueError):
+            return
+        self.editor.set_challenge_param(value)
+
+    def _refresh_challenge(self) -> None:
+        level = self.editor.level
+        mode = str(level.mode_id or PLAY_MODE_ID).strip().lower()
+        rule = str(level.challenge or "").strip()
+        active = mode == "challenge"
+
+        if chrules.is_valid(rule) or not rule:
+            self.var_challenge_rule.set(chrules.to_combo(rule) if rule else chrules.NONE_LABEL)
+        else:
+            self.var_challenge_rule.set(rule)        # luật lạ trong file -> hiện nguyên để thấy mà sửa
+        self.var_challenge_param.set(int(level.challenge_param))
+
+        has_param = chrules.is_valid(rule) and chrules.has_param(rule)
+        self.combo_challenge.configure(state="readonly" if active else "disabled")
+        if has_param:
+            _low, high = chrules.param_bounds(rule)
+            self.spin_challenge_param.configure(from_=0, to=high,
+                                                state="normal" if active else "disabled")
+        else:
+            self.spin_challenge_param.configure(state="disabled")
+        self.lbl_challenge_unit.configure(text=chrules.unit(rule) if has_param else "")
+
+        if not active:
+            self.lbl_challenge_hint.configure(
+                text="Luật CHỈ áp dụng khi mode_id = \"challenge\" (hiện tại: \"%s\") — đổi ở ô mode_id phía trên."
+                     % (mode or PLAY_MODE_ID))
+            return
+        if not chrules.is_valid(rule):
+            self.lbl_challenge_hint.configure(
+                text="Màn chưa gắn luật (hoặc luật không hợp lệ) — chọn 1 luật ở ô trên. "
+                     "Luật \"chỉ đi trên ô có số/không số\" cần màn có ĐƯỜNG hợp lệ (bảng Kiểm tra sẽ báo).")
+            return
+        note = chrules.note(rule)
+        if has_param and int(level.challenge_param) == 0:
+            note += " · Gợi ý cho màn này: ~%d %s" % (level.suggested_challenge_param(),
+                                                     chrules.unit(rule))
+        self.lbl_challenge_hint.configure(text=note)
+
+    # ------------------------------------------------------------------
     # Nhiệm vụ: đọc/ghi qua controller (có undo)
     # ------------------------------------------------------------------
     def _on_mission_type(self, slot: int) -> None:
@@ -405,6 +501,7 @@ class InspectorView(ttk.Frame):
         finally:
             self._suspend = False
         self._refresh_missions()
+        self._refresh_challenge()
         self._refresh_path_sum()
         self._refresh_report()
 

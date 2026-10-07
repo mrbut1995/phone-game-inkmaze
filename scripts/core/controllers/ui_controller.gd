@@ -114,7 +114,8 @@ func update_hud(
 	floor_number: int,
 	extra_info := "",
 	mode: BaseGameMode = null,
-	moves := 0
+	moves := 0,
+	challenge := {}
 ) -> void:
 	if level_label != null:
 		level_label.text = title
@@ -133,6 +134,8 @@ func update_hud(
 			"extra": extra_info,
 			"mode": mode,
 			"moves": moves,
+			# CHALLENGE MODE: trạng thái thử thách cho khối THỜI GIAN (xem ChallengeHUD)
+			"challenge": challenge,
 			# Giới hạn lượt Hoàn tác/Gợi ý của màn (GameController gửi qua set_run_info)
 			# → HUD hiện trên badge PanelLimit + khoá nút khi hết lượt
 			"undo_left": int(run_info.get("undo_left", 0)),
@@ -150,8 +153,9 @@ func show_floor_complete(result: Dictionary) -> void:
 	# Ván Daily dùng popup riêng (nút "VỀ DAILY" thay cho "MÀN KẾ TIẾP")
 	var is_daily := bool(result.get("daily", false))
 	var id := Popups.NEXT_FLOOR if bool(result.get("endless", false)) \
-		else (Popups.WIN_DAILY if is_daily else Popups.WIN)
-	# SFX: con dấu "cộp" lên giấy
+		else (Popups.WIN_DAILY if is_daily else Popups.WIN)	# Challenge: màn thử thách dùng popup "hoàn thành thử thách" riêng
+	if not str(result.get("challenge_id", "")).is_empty():
+		id = Popups.WIN_CHALLENGE	# SFX: con dấu "cộp" lên giấy
 	Sfx.play(Sfx.STAMP_IMPACT)
 
 	var popup := Popups.open(id, result)
@@ -179,6 +183,9 @@ func show_game_over(result: Dictionary) -> void:
 	# Dungeon Mode thua vì HẾT BƯỚC (phiếu giấy + điểm an ủi);
 	# các chế độ khác thua vì ĐÂM TƯỜNG (phiếu nêu 3 nhiệm vụ + số Sao đạt được)
 	var id := Popups.GAME_OVER if bool(result.get("endless", true)) else Popups.GAME_OVER_LEVEL
+	# Challenge: thua vì vi phạm / hết hạn thử thách -> popup riêng (nêu rõ luật + lý do)
+	if not str(result.get("challenge_id", "")).is_empty():
+		id = Popups.GAME_OVER_CHALLENGE
 	var popup := Popups.open(id, result)
 	if popup == null:
 		return

@@ -308,6 +308,32 @@ func get_mode_for_day(day: int) -> String:
 	return modes[index]
 
 
+## ---- KẾ HOẠCH 3 GAME CỦA NGÀY (2026-10) ----
+## Mỗi ngày có 3 GAME (hàng 1..3 của bảng Daily): mỗi game là MAZE THƯỜNG ("standard")
+## hoặc 1 CHALLENGE ("challenge" + `challenge_id`) — chọn theo NGÀY bằng RNG gieo hạt từ
+## số ngày (cùng ngày = cùng kế hoạch; luật challenge không lặp nhau trong 1 ngày).
+const DAILY_GAME_COUNT := 3
+## Tỉ lệ 1 slot là MAZE THƯỜNG (phần còn lại là CHALLENGE)
+const DAILY_STANDARD_CHANCE := 0.4
+
+
+func get_day_games(day: int) -> Array[Dictionary]:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = maxi(day, 1) * 7919 + 13
+	var pool: Array[String] = []
+	for id in ChallengeGameMode.CHALLENGE_IDS:
+		pool.append(str(id))
+	var out: Array[Dictionary] = []
+	for _slot in DAILY_GAME_COUNT:
+		if pool.is_empty() or rng.randf() < DAILY_STANDARD_CHANCE:
+			out.append({"mode": "standard", "challenge_id": ""})
+		else:
+			var index := rng.randi_range(0, pool.size() - 1)
+			out.append({"mode": "challenge", "challenge_id": pool[index]})
+			pool.remove_at(index)
+	return out
+
+
 func get_completed_count() -> int:
 	return completed_days.size()
 

@@ -65,6 +65,41 @@ def shortest_path(level: LevelModel) -> Optional[list[Cell]]:
     return path
 
 
+def path_filtered(level: LevelModel, allowed) -> Optional[list[Cell]]:
+    """Đường NGẮN NHẤT S→F chỉ đi qua các ô mà `allowed(cell)` trả True (BFS có lọc).
+
+    Dùng cho 2 luật thử thách "đi trên ô ..." (walk_number_only / walk_empty_only):
+    gọi với `allowed` = { S, F } ∪ { ô có số } (hoặc ∪ { ô không số }).
+    Giống game: game kiểm ô ĐÍCH trước khi bước (S/F luôn được phép).
+    """
+    if not level.start_end_ok():
+        return None
+    if not level.is_cell_active(level.start) or not level.is_cell_active(level.end):
+        return None
+
+    dist: dict[Cell, int] = {level.start: 0}
+    prev: dict[Cell, Optional[Cell]] = {level.start: None}
+    queue: deque[Cell] = deque([level.start])
+    while queue:
+        cell = queue.popleft()
+        for nxt in neighbors(level, cell):
+            if nxt in dist or not allowed(nxt):
+                continue
+            dist[nxt] = dist[cell] + 1
+            prev[nxt] = cell
+            queue.append(nxt)
+    if level.end not in dist:
+        return None
+
+    path: list[Cell] = []
+    cursor: Optional[Cell] = level.end
+    while cursor is not None:
+        path.append(cursor)
+        cursor = prev.get(cursor)
+    path.reverse()
+    return path
+
+
 def analyze(level: LevelModel) -> dict:
     """Thông tin phân tích màn chơi dùng cho inspector/validator.
 

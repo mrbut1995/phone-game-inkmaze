@@ -68,14 +68,22 @@ Các cờ hữu ích khác (không mở cửa sổ):
 - Hiện **đường đi ngắn nhất** bằng BFS để biết màn có lời giải hay không — BFS chỉ đi trong **các ô thuộc board**.
 - **Vẽ đường đi trước rồi sinh tường (công cụ 8)** — kéo chuột vẽ đường S→F, bấm `Ctrl+Enter` là có
   ngay một màn “đi được tới đích” với đường đã vẽ là **đường duy nhất** ⇒ chi tiết ở **mục 5b**.
-- **Thử thách (tối đa 3 / màn — 1 thử thách hoàn thành = 1 Sao)**: chọn loại ở 3 ô combobox bên phải,
-  nhập tham số N (bước / giây / % số ô / tổng số), nút `×` để bỏ. Để trống = game dùng 3 thử thách mặc định
-  (không đâm tường · đủ bước · đủ thời gian). Nút **“Ghi 3 mặc định”** để ghi rõ 3 thử thách chuẩn vào màn.
-  16 loại: xem bảng trong `Number_Maze_Game_Design.md` (mục 3.1) hoặc `app/models/challenges.py`.
+- **NHIỆM VỤ — Mission (tối đa 3 / màn — 1 nhiệm vụ hoàn thành = 1 Sao)**: chọn loại ở 3 ô combobox bên phải,
+  nhập tham số N (bước / giây / % số ô / tổng số), nút `×` để bỏ. Để trống = game dùng 3 nhiệm vụ mặc định
+  (không đâm tường · đủ bước · đủ thời gian). Nút **“Ghi 3 mặc định”** để ghi rõ 3 nhiệm vụ chuẩn vào màn.
+  17 loại: xem bảng trong `Number_Maze_Game_Design.md` (mục 3.1) hoặc `app/models/missions.py`
+  (mới 2026-10: `no_wrong_submit` — riêng Wall Builder, gửi đúng ngay lần đầu).
+- **CHALLENGE MODE — 1 LUẬT THỬ THÁCH / màn**: khối **“Thử thách (Challenge)”** ở bảng phải — chọn
+  `mode_id = "challenge"` rồi chọn **1 luật** (8 luật: countdown · move_limit · step_timer · no_tool ·
+  no_move_overlapped · walk_number_only · walk_empty_only · backtrack_limit) + tham số (0 = game tự tính).
+  Vi phạm luật (hoặc quá hạn) là **THUA NGAY**. Validator kiểm tra màn *có đường thắng được không* —
+  vd `move_limit` nhỏ hơn đường ngắn nhất, hay luật “chỉ đi trên ô có số/không số” mà màn KHÔNG có
+  đường hợp lệ ⇒ **LỖI** (chặn lưu). Xem **mục 5c**.
 - Bảng **Kiểm tra** tự động: S/F trùng, S/F nằm ở **ô trống**, **không có đường đi từ S tới F**,
   `max_steps` nhỏ hơn đường ngắn nhất (không thể thắng), **ô thuộc board không tới được**,
-  màn thiếu tường ẩn, **thử thách mâu thuẫn / không thể đạt** (ví dụ `steps_max` < đường ngắn nhất,
-  `len_max_percent` quá nhỏ, `only_numbered` + `avoid_numbered` cùng lúc…)
+  màn thiếu tường ẩn, **nhiệm vụ mâu thuẫn / không thể đạt** (ví dụ `steps_max` < đường ngắn nhất,
+  `len_max_percent` quá nhỏ, `only_numbered` + `avoid_numbered` cùng lúc…) và **luật thử thách**
+  (luật đặt sai chỗ, tham số ngoài khoảng, không có đường theo luật…)
   ⇒ **nút Lưu bị chặn nếu có lỗi** (cảnh báo thì vẫn lưu được).
 - **Hoàn tác / Làm lại** (Ctrl+Z / Ctrl+Y) theo từng "nét vẽ".
 - Panel bên trái: mở / tạo mới / nhân bản / xoá file level.
@@ -107,7 +115,11 @@ tools/level_designer/
 ├── app/
 │   ├── config.py               # đường dẫn, giới hạn, màu, tên công cụ
 │   ├── models/                 # MODEL - dữ liệu thuần, không phụ thuộc GUI
-│   │   ├── level.py            #   LevelModel: tường, S/F, kích thước, snapshot/undo
+│   │   ├── level.py            #   LevelModel: tường, S/F, kích thước, mission + challenge, snapshot/undo
+│   │   ├── missions.py         #   registry 17 NHIỆM VỤ (khớp MissionTypes bên game)
+│   │   ├── challenge_rules.py  #   registry 8 LUẬT THỬ THÁCH (khớp ChallengeGameMode bên game)
+│   │   ├── chapter.py          #   ChapterModel (chương — resources/chapters/*.tres)
+│   │   ├── chapter_repository.py #  đọc/ghi/xoá các chương
 │   │   └── repository.py       #   đọc/ghi/xoá resources/levels/*.tres
 │   ├── services/               # dịch vụ dùng chung
 │   │   ├── tres_io.py          #   parser/ghi file .tres đúng định dạng Godot
@@ -122,10 +134,13 @@ tools/level_designer/
 │       ├── grid_view.py        #   canvas lưới mê cung (vẽ + chuột + zoom)
 │       ├── inspector_view.py   #   bảng thuộc tính + kết quả kiểm tra
 │       ├── level_list_view.py  #   danh sách level + nút file
+│       ├── chapter_dialog.py   #   hộp thoại tạo/sửa chương
 │       └── main_window.py      #   menu, toolbar, 3 panel, phím tắt, trạng thái
-└── tests/                      # unittest (29 test)
+└── tests/                      # unittest (chạy: python -m unittest discover -s tests -t .)
     ├── test_level_model.py     #   quy ước chỉ số tường, resize, snapshot
-    ├── test_tres_roundtrip.py  #   định dạng .tres + đọc lại 9 màn thật
+    ├── test_tres_roundtrip.py  #   định dạng .tres + đọc lại màn thật
+    ├── test_missions.py        #   NHIỆM VỤ: model → .tres → validator → undo
+    ├── test_challenge.py       #   LUẬT THỬ THÁCH: registry → model → .tres → validator → undo
     ├── test_controllers.py     #   undo/redo, lưu/xoá, chặn lưu màn lỗi
     └── test_gui_smoke.py       #   dựng cửa sổ thật, vẽ thử, kiểm tra toạ độ
 ```
@@ -149,8 +164,12 @@ script = ExtResource("1_level")
 level_id = 3
 level_title = "Level 1-3 · Mê Cung 3x3"
 chapter = 1
-mode_id = "play"
+mode_id = "play"                 # hoặc id chế độ Special / "challenge" (mục 5)
 difficulty = "easy"
+challenge = ""                       # LUẬT THỬ THÁCH (chỉ dùng khi mode_id = "challenge"):
+challenge_param = 0                   # countdown · move_limit · step_timer · no_tool ·
+                                      # no_move_overlapped · walk_number_only · walk_empty_only ·
+                                      # backtrack_limit — 0 tham số = game tự tính; "" = không gắn
 width = 3
 height = 3
 start_pos = Vector2i(0, 2)     # Vector2i(x, y)
@@ -164,10 +183,10 @@ h_walls_visible = PackedByteArray(...)
 cell_mask = PackedByteArray(...)        # HÌNH DẠNG BOARD: w*h phần tử, index = y*w + x
                                         # 1 = ô thuộc board, 0 = ô trống (ngoài board)
                                         # PackedByteArray() = chữ nhật đầy đủ (màn cũ)
-challenge_types = PackedStringArray("no_wall", "steps_max", "len_max_percent")
-                                        # THỬ THÁCH của màn — TỐI ĐA 3, hai mảng SONG SONG;
-challenge_params = PackedInt32Array(0, 15, 80)
-                                        # rỗng = game dùng 3 thử thách mặc định (màn cũ)
+mission_types = PackedStringArray("no_wall", "steps_max", "len_max_percent")
+                                        # NHIỆM VỤ của màn — TỐI ĐA 3, hai mảng SONG SONG;
+mission_params = PackedInt32Array(0, 15, 80)
+                                        # rỗng = game dùng 3 nhiệm vụ mặc định (màn cũ)
 custom_cell_values = {}                 # DỮ LIỆU RIÊNG CỦA CHẾ ĐỘ: {"x,y": giá trị} — xem mục 5
                                         # (mìn ghim · điểm ô · chi phí bước); {} = game tự sinh hết
 ```
@@ -204,7 +223,7 @@ chọn `Chế độ` ở bảng phải (trường `mode_id` trong file `.tres`) 
 | `minesweeper` · `sum_path` · `countdown_cost` · `fading_ink` | **Cần THẤY tường** để tính đường — validator CẢNH BÁO nếu màn còn tường ẩn (bấm "Tường hiện" cho các đoạn đó) |
 | `one_stroke` | Game **ép HIỆN** toàn bộ tường khi chơi |
 | `blind_memory` · `fog_of_war` · `wall_builder` | Game **ép ẨN** toàn bộ tường khi chơi (màn ghi gì không quan trọng) |
-| `play` | Tôn trọng đúng thiết kế (tường ẩn là luật chơi gốc) |
+| `play` · `challenge` | Tôn trọng đúng thiết kế (tường ẩn là luật chơi gốc) |
 
 **KIỂU EDIT RIÊNG THEO CHẾ ĐỘ (công cụ 7 — mới 2026-09-27)**
 
@@ -218,7 +237,7 @@ Mỗi chế độ có **1 kiểu edit** — chọn chế độ ở ô `mode_id` 
 | `sum_path` | Ô giá trị 1..9 + ô **Tổng điểm đường đi** | **ĐIỂM Ô**: ô nào không tô thì random 1..9; S/F KHÔNG tính điểm |
 | `countdown_cost` | Ô giá trị 1..4 + ô **Tổng chi phí đường đi** | **CHI PHÍ BƯỚC** của ô (giữ đúng 1..4, không kẹp theo độ khó) |
 | `fading_ink` | Ô giá trị 1..9 + ô **Mực dư mỗi bước** | **MỰC BAN ĐẦU** của ô: mỗi bước đi làm mọi ô phai 1 mực, ô hết mực không đi vào được |
-| `play` · `blind_memory` · `fog_of_war` · `one_stroke` · `wall_builder` | Không có | Game tự sinh hết — chỉ vẽ tường/ô board/S/F (validator in ghi chú riêng cho từng chế độ) |
+| `play` · `blind_memory` · `fog_of_war` · `one_stroke` · `wall_builder` · `challenge` | Không có | Game tự sinh hết — chỉ vẽ tường/ô board/S/F (validator in ghi chú riêng cho từng chế độ) |
 
 Cách dùng: chọn `mode_id` → bấm nút công cụ **7** (hoặc phím `7`) → chọn giá trị ở ô nhập → tô/kéo
 trên lưới. **Chuột phải** xoá giá trị của ô (ưu tiên hơn xoá tường). Menu **Sửa → Xoá hết giá trị riêng
@@ -257,13 +276,15 @@ zoom + Lưu) để cửa sổ hẹp không bị tràn. Khối **ĐƯỜNG ĐI** 
 - `fading_ink`: **mực** của ô tô tay được giữ đúng; ô không tô thì game tự cấp (đủ đi hết đường ngắn nhất + dư 2..3). Ô ở bước thứ j cần mực ≥ j mới vào được.
 - `one_stroke`: màn phải có **đường đi qua HẾT mọi ô** và kết thúc ở F. Nếu không, game in cảnh báo và **tạm dùng bàn tự sinh** để màn vẫn thắng được.
 - `wall_builder`: các con số suy ra từ chính tường của màn; màn quá ít tường thì "đố" mất hay (validator cảnh báo).
+- `challenge`: chơi y như Play Mode nhưng kèm **1 luật thử thách** — xem **mục 5c**.
 - `blind_memory` / `fog_of_war`: màn càng nhiều tường ẩn càng khó — thử chơi để cân lại `par_time`.
 
 Danh sách màn bên trái hiện nhãn `◆ tên_chế_độ` ở cuối dòng để nhìn là biết ngay màn nào đặc biệt.
 **Màn mẫu có sẵn CHO MỌI CHẾ ĐỘ** (chương 2, `make_samples.py` ghi lại được):
 **13** = minesweeper · **14** = sum_path (19 ô, tổng 60) · **15** = countdown_cost (8 ô, tổng 30 bước) ·
 **16** = blind_memory · **17** = fog_of_war · **18** = fading_ink (9 ô có mực tô tay) ·
-**19** = one_stroke (bàn trống 6×4) · **20** = wall_builder (12 tường ẩn).
+**19** = one_stroke (bàn trống 6×4) · **20** = wall_builder (12 tường ẩn) ·
+**21** = challenge (walk_number_only, S=(0,4)→F=(5,0), có đường chỉ qua ô có số).
 
 ---
 
@@ -299,19 +320,61 @@ Cách nhanh nhất để có một màn “đi được tới đích” mà khô
 
 ---
 
+## 5c. CHALLENGE MODE — MÀN GẮN 1 LUẬT THỬ THÁCH (mới 2026-10)
+
+Chế độ chơi của game (`scripts/modes/challenge_game_mode.gd`): ván chơi **y như Play Mode**
+(đâm tường = thua ngay, xếp hạng theo thời gian) nhưng màn gắn **1 LUẬT** — **vi phạm luật (hoặc quá hạn)
+là THUA NGAY**; thắng màn mở popup “HOÀN THÀNH THỬ THÁCH”.
+
+**Gắn luật trong tool**
+
+1. Ô `mode_id` (bảng phải) → chọn **`challenge`**.
+2. Khối **“Thử thách (Challenge)”** → chọn **Luật** + nhập **Tham số** (0 = game tự tính).
+
+| Luật | Ý nghĩa | Tham số |
+|---|---|---|
+| `countdown` | Về đích trước khi hết đếm ngược | giây (0 = 60 + 4×số ô, tối thiểu 75) |
+| `move_limit` | Đi tối đa N bước | bước (0 = đúng `max_steps` của màn) |
+| `step_timer` | MỖI bước phải đi trong X giây (đồng hồ con, reset mỗi bước) | giây (0 = dễ 30 · thường 20 · khó 15) |
+| `no_tool` | Bấm GỢI Ý hoặc HOÀN TÁC = thua ngay | — |
+| `no_move_overlapped` | Đi lại ô đã đi = thua ngay | — |
+| `walk_number_only` | Chỉ đi trên ô CÓ SỐ (ô 0 tường quanh nó = ô không số) | — |
+| `walk_empty_only` | Chỉ đi trên ô KHÔNG SỐ | — |
+| `backtrack_limit` | Quay đầu (lùi về ô vừa rời) tối đa N lần | lượt (0 = 3) |
+
+- **Ô S/F luôn đi được** với 2 luật “đi trên ô …”; bước vào ô sai loại = **không di chuyển** + thua ngay.
+- Luật CHỈ áp dụng khi `mode_id = "challenge"` — đặt luật ở mode khác thì game BỎ QUA (validator cảnh báo).
+
+**Validator kiểm tra thay bạn** (chặn Lưu nếu LỖI)
+
+| Tình huống | Kết quả |
+|---|---|
+| `move_limit` nhỏ hơn đường đi ngắn nhất | **LỖI** — không thể thắng |
+| `walk_number_only` mà màn KHÔNG có đường chỉ qua ô có số | **LỖI** (tool BFS theo đúng luật) |
+| `walk_empty_only` mà màn KHÔNG có đường chỉ qua ô không số | **LỖI** (tool BFS theo đúng luật) |
+| Tham số ngoài khoảng (giây 5..3600 · bước 1..9999 · lượt 1..99) | **LỖI** |
+| `mode_id = "challenge"` nhưng chưa chọn luật | cảnh báo — game sẽ chơi như Play thường |
+| `move_limit` ĐÚNG BẰNG đường ngắn nhất · `countdown` < 1 giây/bước · `step_timer` < 4 giây | cảnh báo (quá gắt) |
+
+- Màn mẫu: **level_21** (chương 2) = `walk_number_only` — mở thử để xem luật hoạt động trong game.
+- Nhiệm vụ hàng ngày (Daily) cũng dùng đúng 8 luật này để sinh 3 game/ngày cho mỗi ngày.
+
+---
+
 ## 6. Test & build
 
 ```powershell
 cd tools\level_designer
 
-# chạy test (153 test)
+# chạy test (190 test)
 python -m unittest discover -s tests -t .
 
 # self-test đọc/ghi các màn thật (kể cả màn polyomino) + kiểm tra đường đi
 python main.py --selftest
 
-# tạo lại các MÀN MẪU (level_10..level_20: polyomino + MỌI chế độ Special) - có sẵn trong repo
+# tạo lại các MÀN MẪU (level_10..level_21: polyomino + MỌI chế độ Special + challenge) - có sẵn trong repo
 python make_samples.py             # thêm --dry-run để chỉ kiểm tra, không ghi file
+python make_samples.py --only 21   # chỉ ghi lại 1 (hoặc vài) màn mẫu: --only 21,22
 
 # build file .exe  ->  dist\LevelDesigner.exe
 python build_exe.py            # hoặc double-click build_exe.bat

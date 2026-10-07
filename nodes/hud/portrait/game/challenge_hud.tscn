@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bv3j6n2e6b7u4"]
+
+[ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_e0log"]
+[ext_resource type="Script" path="res://scripts/nodes/hud/game/challenge_hud.gd" id="2_c27ht"]
+
+[node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node", "sub_value_node", "head_node") instance=ExtResource("1_e0log")]
+script = ExtResource("2_c27ht")
+time_value_node = NodePath("Content/ModeInformation/Time/HBoxContainer/Value")
+sub_value_node = NodePath("Content/ModeInformation/Time/HBoxContainer/Sub")
+head_node = NodePath("Content/ModeInformation/Time/Head")

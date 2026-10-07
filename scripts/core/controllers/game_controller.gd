@@ -36,6 +36,10 @@ var hint_left := 0
 var _move_costs: Array[int] = []
 ## Đang khoá tương tác vì Countdown Cost hết ngân sách (chỉ mở lại khi VỪA lùi bước để có thêm bước)
 var _countdown_locked := false
+## CHALLENGE MODE: mốc `floor_elapsed` lúc bắt đầu bước hiện tại (đồng hồ con luật "mỗi bước")
+var _ch_step_start := 0.0
+## CHALLENGE MODE: số lần QUAY ĐẦU đã dùng của màn (luật "giới hạn quay đầu")
+var _ch_backtracks := 0
 ## Đang ở pha GHI NHỚ (Blind Memory): đồng hồ dừng, tường hiện, popup đếm ngược đang chạy
 var _memorize_active := false
 ## Đang hiện overlay "Hết nước đi" trên bàn (Sum Path / Countdown Cost / Fading Ink)
@@ -102,6 +106,9 @@ func _start_floor(floor_number: int) -> void:
 
 	_floor_finished = false
 	_move_costs.clear()
+	# Challenge: cấp lại đồng hồ con "mỗi bước" + lượt quay đầu cho màn mới
+	_ch_step_start = 0.0
+	_ch_backtracks = 0
 	# Cấp lại lượt Gợi ý/Hoàn tác cho MÀN mới (Dungeon: mỗi tầng một suất mới)
 	undo_left = maxi(undo_limit, 0)
 	hint_left = maxi(hint_limit, 0)
@@ -160,6 +167,7 @@ func _process(delta: float) -> void:
 	if not _run_active or timer_controller == null:
 		return
 	timer_controller.tick(delta)
+	_challenge_tick()
 
 
 func _on_time_updated(total_elapsed: float, _floor_elapsed: float) -> void:
@@ -249,7 +257,8 @@ func _update_hud() -> void:
 		game_state.floor_number,
 		extra_info,
 		game_mode_controller.game_mode,
-		game_state.floor_moves
+		game_state.floor_moves,
+		_challenge_hud_ctx()
 	)
 	# Cập nhật trạng thái sống của các nhiệm vụ (chưa chốt Sao khi đang chơi)
 	if mission_controller != null:
@@ -272,7 +281,18 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 	# Nhớ chi phí bước ĐI ĐƯỢC để Undo hoàn lại đúng (Countdown Cost: mỗi ô 1..4 bước)
 	if not hit_hazard:
 		_move_costs.append(cost)
+		# Challenge: reset đồng hồ con "mỗi bước" + soi vi phạm (vượt bước · giẫm lại · quay đầu).
+		# `grid_controller.path` đã cập nhật vị trí mới TRƯỚC khi signal này bắn ra.
+		if _challenge() != null:
+			_ch_step_start = timer_controller.floor_elapsed if timer_controller != null else 0.0
+			_challenge_after_step()
 	if hit_hazard:
+		# Challenge: bước vào ô vi phạm luật (hazard "challenge_*") -> thua NGAY,
+		# KHÔNG tính là đâm tường (giữ "ván hoàn hảo" + nhiệm vụ không đâm tường).
+		var ch := _challenge()
+		if ch != null and _is_challenge_hazard():
+			_challenge_fail(ch.challenge_id)
+			return
 		game_state.record_wall_hit()
 		# Chế độ thua-ngay (Play / Daily Classic / Minesweeper...) -> mở popup thua.
 		# Chế độ có LƯỢT THỬ LẠI (Fog of War): trừ 1 lượt, hết lượt mới thua.
@@ -298,6 +318,86 @@ func _hazard_game_over_reason() -> String:
 	if grid_controller != null and grid_controller.last_hazard_type == "revisit":
 		return "revisit"
 	return ""
+
+
+## ---------------------------------------------------------------------------
+## CHALLENGE MODE — theo dõi VI PHẠM thử thách (8 luật, xem ChallengeGameMode)
+## ---------------------------------------------------------------------------
+## Trả về ChallengeGameMode đang bật thử thách (null nếu ván này không phải thử thách)
+func _challenge() -> ChallengeGameMode:
+	var mode: BaseGameMode = game_mode_controller.game_mode if game_mode_controller != null else null
+	var ch := mode as ChallengeGameMode
+	if ch != null and ch.is_active():
+		return ch
+	return null
+
+
+## VI PHẠM luật thử thách -> thua ngay với `reason` riêng (popup GameOver thử thách).
+## Dùng call_deferred vì nhiều nguồn có thể gọi trong cùng khung hình (đi bước + hết giờ)
+func _challenge_fail(id: String) -> void:
+	_game_over.call_deferred(ChallengeGameMode.fail_reason_for(id))
+
+
+## Luật "không công cụ": chặn CẢ gợi ý lẫn hoàn tác
+func _challenge_blocks_tool() -> bool:
+	var ch := _challenge()
+	return ch != null and ch.blocks_tool()
+
+
+## Vừa bước vào ô vi phạm luật thử thách? (hazard_type "challenge_*" do mode phát)
+## Dùng để KHÔNG tính đó là "đâm tường" (không phá ván hoàn hảo / nhiệm vụ không đâm tường)
+func _is_challenge_hazard() -> bool:
+	return grid_controller != null and grid_controller.last_hazard_type.begins_with("challenge_")
+
+
+## Soi 2 luật có ĐỒNG HỒ mỗi khung hình: đếm ngược tổng + "mỗi bước trong X giây".
+## LƯU Ý: KHÔNG dùng TimerController.is_countdown (đổi nghĩa floor_elapsed, phá Nhiệm vụ) —
+## chỉ so `floor_elapsed` với hạn mức trong lúc đồng hồ vẫn chạy bình thường.
+func _challenge_tick() -> void:
+	var ch := _challenge()
+	if ch == null or not _run_active or game_state == null or timer_controller == null:
+		return
+	var elapsed: float = timer_controller.floor_elapsed
+	if ch.challenge_id == ChallengeGameMode.COUNTDOWN and elapsed >= float(ch.challenge_param):
+		_challenge_fail(ch.challenge_id)
+	elif ch.challenge_id == ChallengeGameMode.STEP_TIMER \
+			and elapsed - _ch_step_start >= float(ch.challenge_param):
+		_challenge_fail(ch.challenge_id)
+
+
+## Soi 3 luật theo NƯỚC ĐI (gọi ngay sau khi bước thành công — path đã có vị trí mới):
+## vượt số bước · đi lại trên đường đã đi · quay đầu quá số lượt.
+func _challenge_after_step() -> void:
+	var ch := _challenge()
+	if ch == null or not _run_active or game_state == null:
+		return
+	var path: Array[Vector2i] = grid_controller.path if grid_controller != null else []
+	match ch.challenge_id:
+		ChallengeGameMode.MOVE_LIMIT:
+			if game_state.floor_moves > ch.challenge_param:
+				_challenge_fail(ch.challenge_id)
+		ChallengeGameMode.NO_MOVE_OVERLAPPED:
+			if not path.is_empty() and path.count(path[path.size() - 1]) > 1:
+				_challenge_fail(ch.challenge_id)
+		ChallengeGameMode.BACKTRACK_LIMIT:
+			if path.size() >= 3 and path[path.size() - 1] == path[path.size() - 3]:
+				_ch_backtracks += 1
+				if _ch_backtracks > ch.challenge_param:
+					_challenge_fail(ch.challenge_id)
+
+
+## Dữ liệu khối THỜI GIAN cho ChallengeHUD (rỗng nếu ván này không có thử thách)
+func _challenge_hud_ctx() -> Dictionary:
+	var ch := _challenge()
+	if ch == null or game_state == null:
+		return {}
+	var elapsed: float = timer_controller.floor_elapsed if timer_controller != null else 0.0
+	return ch.hud_state(
+		float(ch.challenge_param) - elapsed,
+		game_state.floor_moves,
+		float(ch.challenge_param) - (elapsed - _ch_step_start),
+		ch.challenge_param - _ch_backtracks
+	)
 
 
 func _on_reached_end() -> void:
@@ -346,6 +446,8 @@ func _complete_floor() -> void:
 	# Daily: chốt NHIỆM VỤ của ngày (rỗng nếu ván này không phải ván Daily)
 	var daily := _complete_daily_missions(mission_rows)
 
+	# Challenge: gửi kèm dữ liệu thử thách để UIController mở popup "hoàn thành thử thách"
+	var ch := _challenge()
 	if ui_controller != null:
 		var next_available := true
 		var gm_node: Node = get_node_or_null("/root/GameManager")
@@ -359,6 +461,8 @@ func _complete_floor() -> void:
 		ui_controller.show_floor_complete({
 			"level": game_state.floor_number,
 			"floor": game_state.floor_number,
+			"challenge_id": ch.challenge_id if ch != null else "",
+			"challenge_name_key": ch.name_key() if ch != null else "",
 			"next_floor": game_state.floor_number + 1,
 			"next_available": next_available,
 			"grid": "5×5",
@@ -400,7 +504,8 @@ func _check_game_over() -> void:
 func _game_over(reason := "") -> void:
 	# Nhiều nguồn có thể gọi cùng lúc (hết giờ + đâm tường + hết bước) -> chỉ xử lý 1 lần,
 	# nếu không popup thua bị MỞ LẠI giữa lúc đang mở và bị tween đóng cũ xoá mất.
-	if not _run_active:
+	# `_floor_finished` = màn đã THẮNG trong khung hình này (VPN thua hoãn lại không được đè lên)
+	if not _run_active or _floor_finished:
 		return
 	_run_active = false
 	if timer_controller != null:
@@ -426,9 +531,12 @@ func _game_over(reason := "") -> void:
 	_report_to_archivements(false, floor_time)
 
 	var mode: BaseGameMode = game_mode_controller.game_mode
+	var ch := _challenge()
 	if ui_controller != null:
 		ui_controller.show_game_over({
 			"floor": game_state.floor_number,
+			"challenge_id": ch.challenge_id if ch != null else "",
+			"challenge_name_key": ch.name_key() if ch != null else "",
 			"progress": _maze_progress_percent(),
 			"wall_hits": game_state.floor_wall_hits,
 			"score": game_state.score,
@@ -692,7 +800,9 @@ func _on_no_moves_retry_pressed() -> void:
 const TUTORIAL_IDS := {
 	"play":           ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
 	"standard":       ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
+	"challenge":      ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
 	"daily_classic":  ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
+	"daily_challenge": ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
 	"minesweeper":    ["how_to_play_minesweeper"],
 	"sum_path":       ["how_to_play_sum_path"],
 	"countdown_cost": ["how_to_play_countdown_cost"],
@@ -735,6 +845,10 @@ func open_instruction() -> void:
 
 
 func undo() -> void:
+	# Challenge "không công cụ": bấm Hoàn tác = vi phạm -> thua ngay (popup thua thử thách)
+	if _challenge_blocks_tool():
+		_challenge_fail(ChallengeGameMode.NO_TOOL)
+		return
 	# Hết lượt hoàn tác của màn (nút đã bị khoá ở HUD) → không làm gì
 	if undo_limit > 0 and undo_left <= 0:
 		return
@@ -765,6 +879,10 @@ func undo() -> void:
 
 func hint() -> void:
 	if grid_controller == null:
+		return
+	# Challenge "không công cụ": bấm Gợi ý = vi phạm -> thua ngay (popup thua thử thách)
+	if _challenge_blocks_tool():
+		_challenge_fail(ChallengeGameMode.NO_TOOL)
 		return
 	# Hết lượt gợi ý của màn (nút đã bị khoá ở HUD) → không làm gì
 	if hint_limit > 0 and hint_left <= 0:
@@ -867,11 +985,11 @@ func _on_floor_bonus_sfx_timeout() -> void:
 	_play_sfx_now(Sfx.FLOOR_BONUS)
 
 
-## Chốt NHIỆM VỤ Daily sau khi thắng ván:
-## - Maze THƯỜNG ("classic"): 3 nhiệm vụ của ván chính là nhiệm vụ 0..2 của ngày.
-## - Maze ĐẶC BIỆT ("special"): hoàn thành ván = nhiệm vụ 3 của ngày.
+## Chốt TIẾN TRÌNH Daily sau khi thắng ván (2026-10 — "3 GAME + 1 SPECIAL"):
+## - Game 0..2 của ngày ("classic"/"challenge"): thắng game thứ `daily_game` = đánh dấu XONG game đó.
+## - Maze ĐẶC BIỆT ("special"): hoàn thành ván = nhiệm vụ cuối (3) của ngày.
 ## Trả về Dictionary mô tả kết quả (RỖNG nếu ván này không phải ván Daily).
-func _complete_daily_missions(mission_rows: Array) -> Dictionary:
+func _complete_daily_missions(_mission_rows: Array) -> Dictionary:
 	var gm: Variant = get_node_or_null("/root/GameManager")
 	var dm: Variant = get_node_or_null("/root/DailyManager")
 	if gm == null or dm == null or _is_debug_run():
@@ -882,18 +1000,16 @@ func _complete_daily_missions(mission_rows: Array) -> Dictionary:
 
 	var day := maxi(int(gm.get("selected_daily_day")), 1)
 	var coins := 0
-	if variant == "classic":
-		var flags: Array[bool] = []
-		for i in 3:
-			var done := false
-			if i < mission_rows.size() and mission_rows[i] is Dictionary:
-				done = bool((mission_rows[i] as Dictionary).get("done", false))
-			flags.append(done)
-		coins = int(dm.call("complete_day_missions", day, flags))
-	else:
+	if variant == "special":
 		# Nhiệm vụ cuối cùng trong ngày = nhiệm vụ của maze đặc biệt
 		var special_index := maxi(int(dm.call("mission_count")) - 1, 0)
 		coins = int(dm.call("complete_day_mission", day, special_index))
+	else:
+		# 3 GAME của ngày: thắng game thứ `daily_game` -> đánh dấu xong CHÍNH game đó.
+		# Ván "classic" chơi tự do (daily_game = -1, VD Debug Console) -> không đánh dấu gì.
+		var game_index := int(gm.get("daily_game"))
+		if game_index >= 0:
+			coins = int(dm.call("complete_day_mission", day, clampi(game_index, 0, 2)))
 
 	var mode_id := ""
 	var mode_name := ""

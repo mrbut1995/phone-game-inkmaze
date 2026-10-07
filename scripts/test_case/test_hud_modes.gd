@@ -30,6 +30,7 @@ const HUD_SCRIPTS := {
 	"fading_ink": "res://scripts/nodes/hud/game/fading_ink_hud.gd",
 	"one_stroke": "res://scripts/nodes/hud/game/one_stroke_hud.gd",
 	"wall_builder": "res://scripts/nodes/hud/game/wall_builder_hud.gd",
+	"challenge": "res://scripts/nodes/hud/game/challenge_hud.gd",
 }
 
 var _failed := 0

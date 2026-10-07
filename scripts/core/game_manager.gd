@@ -18,8 +18,13 @@ var unlocked_levels: int = 1
 var level_stars: Dictionary = { 1: 0 }    # level_id -> stars (1-3)
 var level_best_time: Dictionary = {}     # level_id -> seconds
 var selected_daily_day: int = 1
-## Loại ván Daily đang chơi: "" (không phải Daily) · "classic" (maze thường) · "special" (maze đặc biệt)
+## Loại ván Daily đang chơi: "" (không phải Daily) · "classic" (maze thường) ·
+## "challenge" (1 game thử thách của ngày) · "special" (maze đặc biệt của ngày)
 var daily_variant: String = ""
+## Daily: đang chơi GAME thứ mấy của ngày (0..2) — -1 = không thuộc game nào (ván special / chơi tự do)
+var daily_game: int = -1
+## Daily: luật thử thách của game đang chơi (rỗng nếu không phải game challenge)
+var daily_challenge_id: String = ""
 ## CHƯƠNG: danh sách chương đã mở khóa + chương đang xem ở màn Chọn màn
 var unlocked_chapters: Array[int] = [1]
 var current_chapter: int = 1
@@ -196,7 +201,7 @@ func difficulty_of_level(level_id: int) -> String:
 
 ## id chế độ có tồn tại không (Play · Dungeon · Daily Classic · 8 chế độ Special)
 func is_known_mode(mode_id: String) -> bool:
-	if mode_id in ["play", "classic", "standard", "dungeon", "daily_classic"]:
+	if mode_id in ["play", "classic", "standard", "challenge", "dungeon", "daily_classic", "daily_challenge"]:
 		return true
 	return DAILY_MODES.has(mode_id)
 
@@ -229,6 +234,38 @@ func start_daily_classic(day: int) -> void:
 	_change_scene("res://scenes/game.tscn")
 
 
+## [DEBUG/TEST] Chuẩn bị 1 GAME (0..2) trong ngày nhưng KHÔNG chuyển scene.
+## Kế hoạch ngày (`DailyManager.get_day_games`) quyết định game là MAZE THƯỜNG hay CHALLENGE.
+func prepare_daily_game(day: int, index: int) -> String:
+	var dm := get_node_or_null("/root/DailyManager")
+	var plan: Array = []
+	if dm != null and dm.has_method("get_day_games"):
+		var raw: Variant = dm.call("get_day_games", maxi(day, 1))
+		if raw is Array:
+			plan = raw as Array
+	var game_index := clampi(index, 0, maxi(plan.size() - 1, 0))
+	var entry: Dictionary = {}
+	if game_index < plan.size() and plan[game_index] is Dictionary:
+		entry = plan[game_index] as Dictionary
+	var mode := ""
+	if str(entry.get("mode", "standard")) == "challenge":
+		daily_challenge_id = str(entry.get("challenge_id", ""))
+		mode = prepare_daily_run(day, "challenge")
+	else:
+		daily_challenge_id = ""
+		mode = prepare_daily_run(day, "classic")
+	daily_game = game_index
+	return mode
+
+
+## Khởi động GAME thứ `index` (0..2) của ngày Daily — ván này tính vào tiến trình ngày
+func start_daily_game(day: int, index: int) -> void:
+	prepare_daily_game(day, index)
+	if _open_mode_tutorial_once():
+		return
+	_change_scene("res://scenes/game.tscn")
+
+
 ## LẦN ĐẦU vào 1 chế độ Special (từ Daily hoặc từ màn có `mode_id`): mở bài học của chế
 ## độ trước rồi mới vào màn chơi (TutorialManager quyết định — xem `MODE_TUTORIALS`).
 ## Ván TEST từ Debug Console không tự mở tutorial.
@@ -242,17 +279,28 @@ func _open_mode_tutorial_once() -> bool:
 
 
 ## [DEBUG/TEST] Chuẩn bị ván Daily nhưng KHÔNG chuyển scene.
-## variant = "classic" (maze thường) hoặc "special" (maze đặc biệt của ngày).
-## Trả về mode id sẽ dùng.
+## variant = "classic" (maze thường) · "challenge" (game thử thách của ngày) ·
+## "special" (maze đặc biệt của ngày). Trả về mode id sẽ dùng.
+## (Luật của game challenge do `daily_challenge_id` giữ — xem `prepare_daily_game`.)
 func prepare_daily_run(day: int, variant := "special") -> String:
 	selected_daily_day = maxi(day, 1)
-	daily_variant = "classic" if variant == "classic" else "special"
+	if variant == "classic":
+		daily_variant = "classic"
+	elif variant == "challenge":
+		daily_variant = "challenge"
+	else:
+		daily_variant = "special"
 	current_difficulty = "medium"
 	level_run = false
 	debug_run = false
 	start_floor_override = 0
+	daily_game = -1
+	if daily_variant == "special":
+		daily_challenge_id = ""
 	if daily_variant == "classic":
 		current_mode = "daily_classic"
+	elif daily_variant == "challenge":
+		current_mode = "daily_challenge"
 	else:
 		var mode_index := (selected_daily_day - 1) % DAILY_MODES.size()
 		current_mode = DAILY_MODES[mode_index]
@@ -273,6 +321,8 @@ func prepare_mode_run(mode_id: String, difficulty := "medium", test_run := false
 	current_mode = mode_id
 	current_difficulty = difficulty
 	daily_variant = ""
+	daily_game = -1
+	daily_challenge_id = ""
 	level_run = false
 	debug_run = test_run
 	start_floor_override = maxi(floor_override, 0)

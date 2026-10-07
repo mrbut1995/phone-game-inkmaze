@@ -3,7 +3,7 @@ extends BaseScene
 ## ============================================================================
 ## View Controller: Màn hình Daily Mission (scenes/daily.tscn)
 ## - Lịch tháng (nodes/daily/calendar.tscn) để chọn ngày nhiệm vụ
-## - Bảng nhiệm vụ ngày: 3 nhiệm vụ + tiến độ + thưởng sao
+## - Bảng nhiệm vụ ngày: 3 GAME của ngày (maze thường / challenge) + maze đặc biệt
 ## - Huy hiệu chuỗi ngày (streak) và nút chơi chế độ xoay vòng của hôm nay
 ## ============================================================================
 
@@ -12,7 +12,7 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 ## Icon của nút CTA: bút chì (chơi) / đồng Xu (trả Xu mở khoá ngày bỏ lỡ)
 const ICON_PLAY := preload("res://assets/images-png/icons/pencil_icon.png")
 const ICON_UNLOCK := preload("res://assets/images-png/icons/icon_coin.png")
-## 3 nhiệm vụ đầu thuộc MAZE THƯỜNG (Game Classic), nhiệm vụ thứ 4 thuộc MAZE ĐẶC BIỆT
+## 3 GAME đầu của ngày (maze thường HOẶC challenge theo kế hoạch ngày), hàng thứ 4 = MAZE ĐẶC BIỆT
 @export var CLASSIC_MISSION_COUNT := 3
 ## Quy ước scene: các hàng nhiệm vụ là node `Rows/Slot1..SlotN` KHAI SẴN trong scene —
 ## mỗi hàng được ĐẶT VÀO đúng slot của nó, nên muốn đổi vị trí/kích thước hàng thì kéo
@@ -288,16 +288,17 @@ func _refresh() -> void:
 		layout.calendar.rebuild()
 
 
-## 4 hàng nhiệm vụ: 3 nhiệm vụ maze thường (0..2) + 1 nhiệm vụ maze đặc biệt (3)
+## 4 hàng: 3 GAME của ngày (0..2 — maze thường HOẶC challenge tuỳ kế hoạch ngày) + 1 maze đặc biệt (3)
 func _refresh_rows(day: int, mode_name: String) -> void:
 	var playable := _is_day_playable(day)
+	var plan := _day_games(day)
 	for i in _rows.size():
 		var done := false
 		if _daily.has_method("is_mission_done"):
 			done = bool(_daily.call("is_mission_done", day, i))
 		_rows[i].setup(i, {
-			"title": _mission_title(i, mode_name),
-			"desc": _mission_desc(i),
+			"title": _row_title(i, mode_name, plan),
+			"desc": _row_desc(i, plan),
 			"progress": tr("STR_DAILY_MISSION_PROGRESS_DONE" if done else "STR_DAILY_MISSION_PROGRESS_TODO"),
 			"reward": _mission_reward(i),
 			"done": done,
@@ -306,28 +307,46 @@ func _refresh_rows(day: int, mode_name: String) -> void:
 		})
 
 
-func _mission_title(index: int, mode_name: String) -> String:
-	match index:
-		0:
-			return tr("STR_DAILY_MISSION_NO_WALL_TITLE")
-		1:
-			return tr("STR_DAILY_MISSION_STEPS_TITLE").format([_classic_steps()])
-		2:
-			return tr("STR_DAILY_MISSION_TIME_TITLE").format([_classic_time()])
-		_:
-			return tr("STR_DAILY_MISSION_SPECIAL_TITLE").format([mode_name])
+## Kế hoạch 3 game của ngày (DailyManager): [{mode:"standard"/"challenge", challenge_id}]
+func _day_games(day: int) -> Array:
+	if _daily != null and _daily.has_method("get_day_games"):
+		var raw: Variant = _daily.call("get_day_games", day)
+		if raw is Array:
+			return raw as Array
+	return []
 
 
-func _mission_desc(index: int) -> String:
-	match index:
-		0:
-			return tr("STR_DAILY_MISSION_NO_WALL_DESC")
-		1:
-			return tr("STR_DAILY_MISSION_STEPS_DESC")
-		2:
-			return tr("STR_DAILY_MISSION_TIME_DESC")
-		_:
-			return tr("STR_DAILY_MISSION_SPECIAL_DESC")
+## Tên luật thử thách của 1 game (rỗng nếu game là maze thường)
+func _game_rule_name(entry: Dictionary) -> String:
+	var cid := str(entry.get("challenge_id", ""))
+	var key := str(ChallengeGameMode.NAME_KEYS.get(cid, ""))
+	return tr(key) if not key.is_empty() else ""
+
+
+func _row_title(index: int, mode_name: String, plan: Array) -> String:
+	if index >= CLASSIC_MISSION_COUNT:
+		return tr("STR_DAILY_MISSION_SPECIAL_TITLE").format([mode_name])
+	var entry: Dictionary = {}
+	if index < plan.size() and plan[index] is Dictionary:
+		entry = plan[index] as Dictionary
+	var game_name := tr("STR_DAILY_WIN_CLASSIC")
+	if str(entry.get("mode", "")) == "challenge":
+		var rule := _game_rule_name(entry)
+		if not rule.is_empty():
+			game_name = rule
+	return tr("STR_DAILY_GAME_TITLE").format([index + 1, game_name])
+
+
+func _row_desc(index: int, plan: Array) -> String:
+	if index >= CLASSIC_MISSION_COUNT:
+		return tr("STR_DAILY_MISSION_SPECIAL_DESC")
+	var entry: Dictionary = {}
+	if index < plan.size() and plan[index] is Dictionary:
+		entry = plan[index] as Dictionary
+	if str(entry.get("mode", "")) == "challenge":
+		var rule := _game_rule_name(entry)
+		return tr("STR_DAILY_GAME_CHALLENGE_DESC").format([rule if not rule.is_empty() else ""])
+	return tr("STR_DAILY_GAME_STD_DESC")
 
 
 ## Thanh tiến độ ngày (x/4 nhiệm vụ) + Xu đã nhận trong ngày
@@ -417,15 +436,6 @@ func _mode_name(day: int) -> String:
 	return tr("STR_MODE_%s" % mode_id.to_upper())
 
 
-## Số bước / giới hạn thời gian của maze thường trong ngày (khớp DailyClassicGameMode)
-func _classic_steps() -> int:
-	return DailyClassicGameMode.DESIGN_STEPS
-
-
-func _classic_time() -> int:
-	return DailyClassicGameMode.TIME_LIMIT_SEC
-
-
 func _current_year() -> int:
 	return int(Time.get_date_dict_from_system().get("year", 2026))
 
@@ -462,19 +472,24 @@ func _unlock_selected_day() -> void:
 	Sfx.play(Sfx.WALL_HIT)
 
 
-## Nút trên hàng nhiệm vụ: 3 hàng đầu -> MAZE THƯỜNG, hàng 4 -> MAZE ĐẶC BIỆT
+## Nút trên hàng: 3 hàng đầu -> GAME của ngày (kế hoạch ngày quyết định), hàng 4 -> MAZE ĐẶC BIỆT
 func _on_row_action_pressed(index: int) -> void:
 	if index < CLASSIC_MISSION_COUNT:
-		_play_classic()
+		_play_game(index)
 	else:
 		_play_special()
 
 
-func _play_classic() -> void:
+## Game thứ `index` (0..2) của ngày đang xem — maze thường HOẶC challenge theo kế hoạch ngày
+func _play_game(index: int) -> void:
 	if not _is_day_playable(_selected_day):
 		return
 	Sfx.play(Sfx.BTN_CLICK)
-	_start_daily(_selected_day, true)
+	var gm: Node = get_node_or_null("/root/GameManager")
+	if gm != null and gm.has_method("start_daily_game"):
+		gm.call("start_daily_game", _selected_day, index)
+	else:
+		Nav.goto_game()
 
 
 func _play_special() -> void:

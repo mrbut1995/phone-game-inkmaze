@@ -19,6 +19,8 @@ const HINT_KEYS := {
 	"fading_ink": "STR_HINT_FADING_INK",
 	"one_stroke": "STR_HINT_ONE_STROKE",
 	"wall_builder": "STR_HINT_WALL_BUILDER",
+	"challenge": "STR_HINT_CHALLENGE",
+	"daily_challenge": "STR_HINT_CHALLENGE",
 }
 
 

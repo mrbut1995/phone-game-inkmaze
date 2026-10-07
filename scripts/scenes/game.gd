@@ -58,7 +58,7 @@ const HUD_FOG_OF_WAR := preload("res://nodes/hud/portrait/game/fog_of_war_hud.ts
 const HUD_ONE_STROKE := preload("res://nodes/hud/portrait/game/one_stroke_hud.tscn")
 ## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Nhiệm vụ
 const HUD_WALL_BUILDER := preload("res://nodes/hud/portrait/game/wall_builder_hud.tscn")
-
+const HUD_CHALLENGE := preload("res://nodes/hud/portrait/game/challenge_hud.tscn")
 #@export var game_mode : BaseGameMode
 
 
@@ -240,6 +240,10 @@ func _ready() -> void:
 		UIAnim.play_slide_in(layout.status_bar, Vector2(0, -25), 0.0, 0.25)
 	if layout != null and layout.hud_slot != null:
 		UIAnim.play_slide_in(layout.hud_slot, Vector2(0, -15), 0.04, 0.25)
+	var button_bar := undo_btn.get_parent() as Control if undo_btn != null else null
+	if button_bar != null:
+		UIAnim.play_slide_in(button_bar, Vector2(0, 30), 0.08, 0.25)
+
 	# Khởi động ván chơi dựa trên GameManager hoặc mặc định
 	var gm: Node = get_node_or_null("/root/GameManager")
 	var initial_mode: String = "dungeon"
@@ -391,6 +395,8 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 			return HUD_DUNGEON
 		"daily_classic":
 			return HUD_LEVEL
+		"daily_challenge":
+			return HUD_CHALLENGE
 		"minesweeper":
 			return HUD_MINESWEEP
 		"sum_path":
@@ -407,6 +413,8 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 			return HUD_ONE_STROKE
 		"wall_builder":
 			return HUD_WALL_BUILDER
+		"challenge":
+			return HUD_CHALLENGE
 		_:
 			return HUD_LEVEL
 
@@ -417,6 +425,8 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return DungeonHUD
 		"daily_classic":
 			return LevelHUD
+		"daily_challenge":
+			return ChallengeHUD
 		"minesweeper":
 			return MinesweepHUD
 		"sum_path":
@@ -433,6 +443,8 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return OneStrokeHUD
 		"wall_builder":
 			return WallBuilderHUD
+		"challenge":
+			return ChallengeHUD
 		_:
 			return LevelHUD
 

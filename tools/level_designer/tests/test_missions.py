@@ -231,13 +231,20 @@ class MissionControllerTest(unittest.TestCase):
 
 class MissionRegistryTest(unittest.TestCase):
     def test_registry_matches_game_ids(self) -> None:
-        # 16 loại, id không trùng, id trong ORDER đều hợp lệ
+        # 17 loại, id không trùng, id trong ORDER đều hợp lệ
         self.assertEqual(len(chal.ORDER), len(set(chal.ORDER)))
-        self.assertEqual(len(chal.ORDER), 16)
+        self.assertEqual(len(chal.ORDER), 17)
         for type_id in chal.ORDER:
             self.assertTrue(chal.is_valid(type_id), type_id)
             self.assertTrue(chal.label(type_id))
         self.assertEqual(set(chal.DEFAULT_TYPES), {chal.NO_WALL, chal.STEPS_MAX, chal.TIME_MAX})
+
+    def test_no_wrong_submit_for_wall_builder(self) -> None:
+        # Loại mới 2026-10 (game: MissionTypes.NO_WRONG_SUBMIT — riêng Wall Builder)
+        self.assertTrue(chal.is_valid(chal.NO_WRONG_SUBMIT))
+        self.assertFalse(chal.has_param(chal.NO_WRONG_SUBMIT))
+        self.assertIn(chal.NO_WRONG_SUBMIT, chal.NO_PARAM_TYPES)
+        self.assertIn(chal.NO_WRONG_SUBMIT, chal.combo_values()[-1])
 
     def test_combo_roundtrip(self) -> None:
         for type_id in chal.ORDER:

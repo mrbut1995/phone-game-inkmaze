@@ -1,0 +1,495 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/popups/winning_challenge.gd" id="2_win"]
+[ext_resource type="Texture2D" uid="uid://ch2gua71qy2tb" path="res://assets/images-png/popups/stamp_done.png" id="3_stamp"]
+[ext_resource type="Texture2D" uid="uid://cphd7lexro270" path="res://assets/images-png/common/star_empty.png" id="4_star_empty"]
+[ext_resource type="Texture2D" uid="uid://brgbsehx8a0xh" path="res://assets/images-png/common/btn_paper_secondary_normal.png" id="6_sec_n"]
+[ext_resource type="Texture2D" uid="uid://b1mq05b61vja" path="res://assets/images-png/common/btn_paper_secondary_pressed.png" id="7_sec_p"]
+[ext_resource type="Texture2D" uid="uid://dcxlfihg580ni" path="res://assets/images-png/common/btn_paper_secondary_focus.png" id="8_sec_f"]
+[ext_resource type="Texture2D" uid="uid://bihw3g42324qa" path="res://assets/images-png/popups/btn_popup_wide_normal.png" id="9_pri_n"]
+[ext_resource type="Texture2D" uid="uid://cnfkkqat6131c" path="res://assets/images-png/common/btn_paper_primary_pressed.png" id="10_pri_p"]
+[ext_resource type="Texture2D" uid="uid://6n6ai5gsk4lo" path="res://assets/images-png/common/btn_paper_primary_focus.png" id="11_pri_f"]
+[ext_resource type="Texture2D" uid="uid://c7tovw3eurdmw" path="res://assets/images-png/popups/icon_replay.png" id="12_replay"]
+
+[sub_resource type="StyleBoxTexture" id="Sb_pri_n"]
+texture = ExtResource("9_pri_n")
+texture_margin_left = 18.0
+texture_margin_top = 12.0
+texture_margin_right = 18.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="Sb_pri_p"]
+texture = ExtResource("10_pri_p")
+texture_margin_left = 17.0
+texture_margin_top = 11.0
+texture_margin_right = 17.0
+texture_margin_bottom = 11.0
+
+[sub_resource type="StyleBoxTexture" id="Sb_pri_f"]
+texture = ExtResource("11_pri_f")
+texture_margin_left = 17.0
+texture_margin_top = 11.0
+texture_margin_right = 17.0
+texture_margin_bottom = 11.0
+
+[sub_resource type="Animation" id="Animation_win_stars"]
+resource_name = "stars"
+length = 0.97
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Content/Stars/Star1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.53),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.4, 0.4), Vector2(1.045, 1.045), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Content/Stars/Star2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.47, 0.75),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.4, 0.4), Vector2(1.045, 1.045), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Content/Stars/Star3:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.69, 0.97),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.4, 0.4), Vector2(1.045, 1.045), Vector2(1, 1)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_star_pop"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.47),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_star_pop"
+}]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.69),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_star_pop"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_winfx"]
+_data = {
+&"stars": SubResource("Animation_win_stars")
+}
+
+[node name="Base" unique_id=1146332468 node_paths=PackedStringArray("stars_row", "label_subtitle", "label_next", "value_time", "value_steps", "value_walls", "value_score", "stamp_title", "stamp_sub", "fx_anim") instance=ExtResource("1_base")]
+script = ExtResource("2_win")
+stars_row = NodePath("Panel/Content/Stars")
+label_subtitle = NodePath("Panel/Content/Subtitle")
+label_next = NodePath("Panel/Content/Information/Buttons/NextBtn/Label")
+value_time = NodePath("Panel/Content/Information/Stat1/Value")
+value_steps = NodePath("Panel/Content/Information/Stat2/Value")
+value_walls = NodePath("Panel/Content/Information/Stat3/Value")
+value_score = NodePath("Panel/Content/Information/Total/Value")
+stamp_title = NodePath("Panel/Content/Stamp/StampTitle")
+stamp_sub = NodePath("Panel/Content/Stamp/StampSub")
+fx_anim = NodePath("FxAnim")
+close_on_back = false
+close_on_outside = false
+
+[node name="Panel" parent="." index="1" unique_id=290635111]
+anchor_left = 0.49100003
+anchor_top = 0.1466087
+anchor_right = 0.49100003
+anchor_bottom = 0.147
+offset_left = -239.14001
+offset_right = 238.85999
+offset_bottom = 684.76
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Art" parent="Panel" index="0" unique_id=1269512275]
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Content" parent="Panel" index="1" unique_id=45188561]
+offset_left = 46.0
+offset_top = 51.159546
+offset_right = -42.0
+offset_bottom = -53.159546
+
+[node name="Stamp" type="NinePatchRect" parent="Panel/Content" index="0" unique_id=1229286845]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 285.0
+offset_top = 24.840454
+offset_right = 391.0
+offset_bottom = 80.840454
+texture = ExtResource("3_stamp")
+patch_margin_left = 10
+patch_margin_top = 8
+patch_margin_right = 10
+patch_margin_bottom = 8
+
+[node name="StampTitle" type="Label" parent="Panel/Content/Stamp" index="0" unique_id=690781721]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 10.0
+offset_top = 15.0
+offset_right = 99.0
+offset_bottom = 28.0
+theme_type_variation = &"PopupStampTextDanger"
+theme_override_font_sizes/font_size = 12
+text = "0 / 0 NHIỆM VỤ"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StampSub" type="Label" parent="Panel/Content/Stamp" index="1" unique_id=132511703]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 12.0
+offset_top = 33.0
+offset_right = 101.0
+offset_bottom = 46.0
+theme_type_variation = &"PopupStampSubDanger"
+theme_override_font_sizes/font_size = 9
+text = "★ ĐẠT 0 SAO ★"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Stars" type="Control" parent="Panel/Content" index="1" unique_id=2078131612]
+layout_mode = 1
+anchor_left = 0.517
+anchor_top = 0.13900001
+anchor_right = 0.517
+anchor_bottom = 0.13900001
+offset_left = -75.12601
+offset_top = -0.2150116
+offset_right = 74.87399
+offset_bottom = 64.78499
+mouse_filter = 2
+
+[node name="Star1" type="TextureRect" parent="Panel/Content/Stars" index="0" unique_id=475565006]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 2.5
+offset_top = 17.5
+offset_right = 41.5
+offset_bottom = 56.5
+mouse_filter = 2
+texture = ExtResource("4_star_empty")
+expand_mode = 1
+
+[node name="Star2" type="TextureRect" parent="Panel/Content/Stars" index="1" unique_id=1884663650]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 52.5
+offset_top = 5.0
+offset_right = 100.5
+offset_bottom = 53.0
+mouse_filter = 2
+texture = ExtResource("4_star_empty")
+expand_mode = 1
+
+[node name="Star3" type="TextureRect" parent="Panel/Content/Stars" index="2" unique_id=1698480717]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 105.0
+offset_top = 17.5
+offset_right = 144.0
+offset_bottom = 56.5
+mouse_filter = 2
+texture = ExtResource("4_star_empty")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="Panel/Content" index="2" unique_id=1600126711]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 57.5
+offset_top = 26.0
+offset_right = 307.5
+offset_bottom = 50.0
+theme_type_variation = &"PopupTitle"
+text = "STR_WIN_TITLE"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Subtitle" type="Label" parent="Panel/Content" index="3" unique_id=736560378]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 57.5
+offset_top = 53.0
+offset_right = 325.0
+offset_bottom = 65.0
+theme_type_variation = &"PopupSubtitle"
+text = "STR_WIN_SUBTITLE"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Information" type="VBoxContainer" parent="Panel/Content" index="4" unique_id=25197129]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1282353
+anchor_top = 0.26170713
+anchor_right = 0.94100004
+anchor_bottom = 0.89000005
+offset_right = -19.644135
+offset_bottom = 0.21350098
+theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="Control" parent="Panel/Content/Information" index="0" unique_id=2041246936]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Stat1" type="HBoxContainer" parent="Panel/Content/Information" index="1" unique_id=1550057628]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat1" index="0" unique_id=1776996974]
+layout_mode = 2
+theme_type_variation = &"PopupStatLabel"
+theme_override_font_sizes/font_size = 15
+text = "STR_STAT_CLEAR_TIME"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat1" index="1" unique_id=179358695]
+layout_mode = 2
+size_flags_horizontal = 11
+theme_type_variation = &"PopupStatValue"
+theme_override_font_sizes/font_size = 15
+text = "00:00s"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Stat2" type="HBoxContainer" parent="Panel/Content/Information" index="2" unique_id=2012996352]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat2" index="0" unique_id=1739808595]
+layout_mode = 2
+theme_type_variation = &"PopupStatLabel"
+theme_override_font_sizes/font_size = 15
+text = "STR_STAT_STEPS_USED"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat2" index="1" unique_id=244259155]
+layout_mode = 2
+size_flags_horizontal = 11
+theme_type_variation = &"PopupStatValueGood"
+theme_override_font_sizes/font_size = 15
+text = "0 / 0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Stat3" type="HBoxContainer" parent="Panel/Content/Information" index="3" unique_id=333247696]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Stat3" index="0" unique_id=2118091018]
+layout_mode = 2
+theme_type_variation = &"PopupStatLabel"
+theme_override_font_sizes/font_size = 15
+text = "STR_STAT_WALL_COLLISIONS"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Panel/Content/Information/Stat3" index="1" unique_id=19871101]
+layout_mode = 2
+size_flags_horizontal = 11
+theme_type_variation = &"PopupStatValueBad"
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="Panel/Content/Information" index="4" unique_id=430563843]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.23
+
+[node name="Divider" type="ColorRect" parent="Panel/Content/Information" index="5" unique_id=533275318]
+custom_maximum_size = Vector2(-1, 2)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.01
+mouse_filter = 2
+color = Color(0.23921569, 0.5137255, 0.68235296, 1)
+
+[node name="Spacer4" type="Control" parent="Panel/Content/Information" index="6" unique_id=1695624961]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.08
+
+[node name="Total" type="HBoxContainer" parent="Panel/Content/Information" index="7" unique_id=2062862218]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Total" index="0" unique_id=1542941071]
+layout_mode = 2
+theme_type_variation = &"PopupTotalLabel"
+theme_override_font_sizes/font_size = 20
+text = "STR_STAT_TOTAL_SCORE"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Panel/Content/Information/Total" index="1" unique_id=1675315561]
+layout_mode = 2
+size_flags_horizontal = 11
+theme_type_variation = &"PopupTotalValue"
+text = "+0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Spacer3" type="Control" parent="Panel/Content/Information" index="8" unique_id=34706897]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information" index="9" unique_id=307954057]
+layout_mode = 2
+
+[node name="ReplayBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="0" unique_id=1914559703]
+layout_mode = 2
+texture_normal = ExtResource("6_sec_n")
+texture_pressed = ExtResource("7_sec_p")
+texture_hover = ExtResource("6_sec_n")
+texture_focused = ExtResource("8_sec_f")
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/ReplayBtn" index="0" unique_id=1107054409]
+layout_mode = 1
+anchors_preset = -1
+offset_top = 32.5
+offset_right = 96.0
+offset_bottom = 47.5
+theme_type_variation = &"PopupBtnTextSmall"
+text = "STR_BTN_REPLAY"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="TextureRect" type="TextureRect" parent="Panel/Content/Information/Buttons/ReplayBtn" index="1" unique_id=715849010]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 7.0
+offset_right = 58.0
+offset_bottom = 27.0
+mouse_filter = 2
+texture = ExtResource("12_replay")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NextBtn" type="Button" parent="Panel/Content/Information/Buttons" index="1" unique_id=1915845557]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("Sb_pri_n")
+theme_override_styles/pressed = SubResource("Sb_pri_p")
+theme_override_styles/hover = SubResource("Sb_pri_n")
+theme_override_styles/focus = SubResource("Sb_pri_f")
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/NextBtn" index="0" unique_id=629852423]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 5.1411743
+offset_top = 12.730591
+offset_right = 213.14117
+offset_bottom = 38.73059
+theme_type_variation = &"PopupBtnPrimarySm"
+theme_override_font_sizes/font_size = 16
+text = "STR_BTN_NEXT_LEVEL"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Spacer2" type="Control" parent="Panel/Content/Information" index="10" unique_id=166265683]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_stretch_ratio = 0.1
+
+[node name="Quote" type="Label" parent="Panel/Content/Information" index="11" unique_id=1988912447]
+layout_mode = 2
+theme_type_variation = &"PopupQuote"
+text = "STR_WIN_FOOTER_QUOTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="FxAnim" type="AnimationPlayer" parent="." index="3" unique_id=440093771]
+libraries/ = SubResource("AnimationLibrary_winfx")
+
+[node name="StarTone1" type="Timer" parent="." index="4" unique_id=1229677341]
+wait_time = 0.45
+one_shot = true
+autostart = true
+
+[node name="StarTone2" type="Timer" parent="." index="5" unique_id=367282018]
+wait_time = 0.67
+one_shot = true
+autostart = true
+
+[node name="StarTone3" type="Timer" parent="." index="6" unique_id=1543344368]
+wait_time = 0.89
+one_shot = true
+autostart = true
+
+[connection signal="pressed" from="Panel/Content/Information/Buttons/ReplayBtn" to="." method="_on_replay_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/NextBtn" to="." method="_on_next_pressed"]
+[connection signal="timeout" from="StarTone1" to="." method="_on_star_tone" binds= [0]]
+[connection signal="timeout" from="StarTone2" to="." method="_on_star_tone" binds= [1]]
+[connection signal="timeout" from="StarTone3" to="." method="_on_star_tone" binds= [2]]

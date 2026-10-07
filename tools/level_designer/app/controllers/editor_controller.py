@@ -24,6 +24,7 @@ from ..config import (
     TOOL_WALL_VISIBLE,
     mode_edit_spec,
 )
+from ..models import challenge_rules as chrules
 from ..models import missions as chal
 from ..models.level import Cell, LevelModel, WallRef
 from ..services import path_values, solver
@@ -588,6 +589,68 @@ class EditorController:
         self._set_dirty(True)
         self.events.emit(EV_MODEL_UPDATED)
         self.events.emit(EV_STATUS, "Đã ghi 3 nhiệm vụ mặc định vào màn")
+
+    # ------------------------------------------------------------------
+    # LUẬT THỬ THÁCH (CHALLENGE) — xem app/models/challenge_rules.py
+    # Luật chỉ áp dụng khi mode_id = "challenge"; tham số 0 = game tự tính.
+    # ------------------------------------------------------------------
+    def set_challenge_rule(self, rule_id: str) -> None:
+        """Gắn/bỏ luật thử thách cho màn (rule_id rỗng = bỏ luật). Đổi luật mới -> tham số về 0."""
+        rule_id = str(rule_id or "").strip()
+        if rule_id and not chrules.is_valid(rule_id):
+            self.events.emit(EV_STATUS, "Luật thử thách không hợp lệ: %s" % rule_id)
+            return
+        if rule_id == str(self.level.challenge or "").strip():
+            return                                  # chọn lại đúng luật đang gắn -> không làm gì
+
+        before = self.level.snapshot()
+        # Luật mới có thể dùng tham số theo đơn vị khác (giây/bước/lượt) -> đưa về 0 = game tự tính
+        if not self.level.set_challenge(rule_id, 0):
+            return
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        if not rule_id:
+            self.events.emit(EV_STATUS, "Đã bỏ luật thử thách")
+            return
+        if chrules.has_param(rule_id):
+            self.events.emit(EV_STATUS, "Luật thử thách: %s (tham số 0 = game tự tính ~%d %s)"
+                             % (chrules.label(rule_id), self.level.suggested_challenge_param(),
+                                chrules.unit(rule_id)))
+        else:
+            self.events.emit(EV_STATUS, "Luật thử thách: %s" % chrules.label(rule_id))
+
+    def set_challenge_param(self, param: int) -> None:
+        """Đổi tham số của luật thử thách đang gắn (0 = game tự tính)."""
+        rule_id = str(self.level.challenge or "").strip()
+        if not chrules.is_valid(rule_id) or not chrules.has_param(rule_id):
+            return
+        try:
+            value = max(0, int(param))
+        except (TypeError, ValueError):
+            return
+        before = self.level.snapshot()
+        if not self.level.set_challenge(rule_id, value):
+            return
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        if value == 0:
+            self.events.emit(EV_STATUS, "Tham số thử thách = 0 (game tự tính ~%d %s)"
+                             % (self.level.suggested_challenge_param(), chrules.unit(rule_id)))
+        else:
+            self.events.emit(EV_STATUS, "Tham số thử thách: %d %s" % (value, chrules.unit(rule_id)))
+
+    def clear_challenge(self) -> None:
+        """Bỏ luật thử thách đang gắn (có undo)."""
+        before = self.level.snapshot()
+        if not self.level.clear_challenge():
+            self.events.emit(EV_STATUS, "Màn chưa gắn luật thử thách")
+            return
+        self._push_undo(before)
+        self._set_dirty(True)
+        self.events.emit(EV_MODEL_UPDATED)
+        self.events.emit(EV_STATUS, "Đã bỏ luật thử thách")
 
     def invert_row_cells(self, row: int) -> None:
         """Đảo trạng thái ô của cả 1 hàng (tiện vẽ polyomino nhanh)."""

@@ -17,8 +17,10 @@ signal popup_closed(id: String)
 const POPUPS := {
 	"win": "res://nodes/popups/winning.tscn",
 	"win_daily": "res://nodes/popups/winning_daily.tscn",
+	"win_challenge": "res://nodes/popups/winning_challenge.tscn",
 	"game_over": "res://nodes/popups/gameover.tscn",
 	"game_over_level": "res://nodes/popups/gameover_level.tscn",
+	"game_over_challenge": "res://nodes/popups/gameover_challenge.tscn",
 	"next_floor": "res://nodes/popups/next_floor.tscn",
 	"pause": "res://nodes/popups/pause.tscn",
 	"language": "res://nodes/popups/language.tscn",

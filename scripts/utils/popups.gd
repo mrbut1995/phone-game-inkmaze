@@ -13,9 +13,13 @@ extends RefCounted
 const WIN := "win"
 ## Popup thắng ván DAILY: nút "VỀ DAILY" thay cho "MÀN KẾ TIẾP"
 const WIN_DAILY := "win_daily"
+## CHALLENGE MODE: hoàn thành thử thách (popup riêng, dòng phụ đề riêng)
+const WIN_CHALLENGE := "win_challenge"
 const GAME_OVER := "game_over"
 ## Popup thua của Play/Level Mode: 3 nhiệm vụ + số Sao thay cho bước còn lại
 const GAME_OVER_LEVEL := "game_over_level"
+## CHALLENGE MODE: thua vì vi phạm / hết hạn thử thách (nêu rõ luật + lý do)
+const GAME_OVER_CHALLENGE := "game_over_challenge"
 const NEXT_FLOOR := "next_floor"
 const PAUSE := "pause"
 const LANGUAGE := "language"

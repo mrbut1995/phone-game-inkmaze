@@ -89,6 +89,7 @@ MODE_IDS = (
     "fading_ink",
     "one_stroke",
     "wall_builder",
+    "challenge",
 )
 ## Chế độ KHÔNG dùng được cho màn nhưng vẫn có thể gặp trong file cũ → validator báo LỖI rõ ràng
 RETIRED_MODE_IDS = ("dungeon",)
@@ -109,6 +110,7 @@ MODE_LABELS = {
     "fading_ink": "Fading Ink — mực phai dần theo từng bước",
     "one_stroke": "One Stroke — 1 nét phủ kín mọi ô, tường HIỆN RÕ",
     "wall_builder": "Wall Builder — suy luận lại toàn bộ tường từ các con số",
+    "challenge": "Challenge — 1 luật thử thách, vi phạm là thua ngay",
 }
 # Mode mà game ÉP trạng thái hiện/ẩn của tường khi chơi trên màn (xem MazeData.set_all_walls_visible)
 MODE_WALL_VISIBILITY_OVERRIDE = {
@@ -215,6 +217,12 @@ MODE_EDITS = {
     "wall_builder": {
         "kind": "none",
         "note": "Số trên ô suy từ CHÍNH tường của màn — vẽ tường đủ nhiều để bàn đáng suy luận.",
+    },
+    "challenge": {
+        "kind": "none",
+        "note": "Chơi như Play Mode nhưng phải theo 1 LUẬT — chọn luật + tham số ở khối "
+                "\"Thử thách (Challenge)\" bên dưới. Vi phạm luật là thua ngay; "
+                "2 luật \"chỉ đi trên ô có số/không số\" cần màn CÓ đường hợp lệ (validator kiểm tra).",
     },
 }
 
