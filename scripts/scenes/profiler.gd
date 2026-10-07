@@ -17,19 +17,19 @@ extends BaseUI
 ## MÀU theo trạng thái (cấp bậc, tỉ lệ thắng, trạng thái ván…).
 ## ============================================================================
 
-const ROW_SCENE := preload("res://nodes/profiler/activity_row.tscn")
-const ICON_LOCK := preload("res://assets/images-png/icons/icon_lock.png")
+@export var ROW_SCENE: PackedScene = preload("res://nodes/profiler/activity_row.tscn")
+@export var ICON_LOCK: Texture2D = preload("res://assets/images-png/icons/icon_lock.png")
 
 ## Số hàng lịch sử hiển thị (mockup: 3)
-const ACTIVITY_ROWS := 3
+@export var ACTIVITY_ROWS := 3
 ## Số huy hiệu trên giá (mockup: 3)
-const BADGE_SLOTS := 3
+@export var BADGE_SLOTS := 3
 
 # Màu số liệu (mockup: điểm đỏ · streak cam · thắng xanh · sao vàng)
-const COLOR_GOLD := Color(0.7098, 0.3529, 0.0353)      # #B45309
-const COLOR_RED := Color(0.8471, 0.2667, 0.2667)       # #D84444
-const COLOR_STREAK := Color(0.8510, 0.4667, 0.0235)    # #D97706
-const COLOR_GREEN := Color(0.0863, 0.6392, 0.2902)     # #16A34A
+@export var COLOR_GOLD := Color(0.7098, 0.3529, 0.0353)      # #B45309
+@export var COLOR_RED := Color(0.8471, 0.2667, 0.2667)       # #D84444
+@export var COLOR_STREAK := Color(0.8510, 0.4667, 0.0235)    # #D97706
+@export var COLOR_GREEN := Color(0.0863, 0.6392, 0.2902)     # #16A34A
 const COLOR_MUTED := Color(0.5804, 0.6392, 0.7216)     # #94A3B8
 
 ## Layout đang hiển thị (Portrait / Landscape — cùng tên node, bind qua @export)

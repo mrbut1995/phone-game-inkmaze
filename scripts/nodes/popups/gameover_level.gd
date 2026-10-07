@@ -17,7 +17,7 @@ signal retry_requested
 signal menu_requested
 signal revive_requested
 
-const COUNT := 3
+@export var COUNT := 3
 const STAR_FULL := preload("res://assets/images-png/common/star_highlight.png")
 const STAR_EMPTY := preload("res://assets/images-png/common/star_empty.png")
 

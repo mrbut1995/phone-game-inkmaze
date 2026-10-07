@@ -18,8 +18,8 @@ extends NinePatchButton
 const TAB_ACTIVE := preload("res://assets/images-png/archivements/tab_active.png")
 const TAB_INACTIVE := preload("res://assets/images-png/archivements/tab_inactive.png")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-const LABEL_ACTIVE_COLOR := Color(1, 1, 1)
-const LABEL_IDLE_COLOR := Color(0.44313726, 0.54509807, 0.61960787, 1)
+@export var LABEL_ACTIVE_COLOR := Color(1, 1, 1)
+@export var LABEL_IDLE_COLOR := Color(0.44313726, 0.54509807, 0.61960787, 1)
 
 ## Báo cho màn Sổ tay biết tab nào vừa được bấm
 signal tab_pressed(category: String)

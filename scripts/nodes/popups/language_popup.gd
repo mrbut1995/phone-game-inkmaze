@@ -13,8 +13,8 @@ const ROW_SCENE := preload("res://nodes/popups/language_row.tscn")
 const FLAG_FALLBACK := preload("res://assets/images-png/icons/flags/flag_generic.png")
 
 ## Ngưỡng nhận diện kéo (px) + thời gian khoá bấm hàng sau khi vuốt (giây)
-const DRAG_THRESHOLD := 14.0
-const CLICK_LOCK_TIME := 0.35
+@export_range(0.0, 80.0, 1.0) var drag_threshold := 14.0
+@export_range(0.0, 1.5, 0.05) var click_lock_time := 0.35
 
 ## Node binding: khai `node_paths` + `NodePath` trong `language.tscn`
 @export var list: VBoxContainer = null
@@ -113,7 +113,7 @@ func _update_drag(pos: Vector2) -> void:
 		return
 	var delta_y := pos.y - _drag_start_y
 	if not _drag_moved:
-		if absf(delta_y) < DRAG_THRESHOLD:
+		if absf(delta_y) < drag_threshold:
 			return
 		_drag_moved = true          # kéo đủ xa -> coi là VUỐT (không phải bấm)
 	scroll.scroll_vertical = int(_drag_scroll - delta_y)
@@ -135,7 +135,7 @@ func _clicks_locked() -> bool:
 
 
 func _lock_clicks() -> void:
-	_click_lock_until = _now() + CLICK_LOCK_TIME
+	_click_lock_until = _now() + click_lock_time
 
 
 func _now() -> float:

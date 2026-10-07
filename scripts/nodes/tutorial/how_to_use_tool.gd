@@ -15,9 +15,9 @@ extends BaseInteractivePathTutorial
 @export var lbl_undo_count: Label = null
 @export var lbl_hint_count: Label = null
 
-const START_POS := Vector2i(0, 0)
-const FINISH_POS := Vector2i(2, 2)
-const TOOL_USES := 3
+@export var START_POS := Vector2i(0, 0)
+@export var FINISH_POS := Vector2i(2, 2)
+@export var TOOL_USES := 3
 
 var _undo_left: int = TOOL_USES
 var _hint_left: int = TOOL_USES

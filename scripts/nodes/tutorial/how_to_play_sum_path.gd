@@ -18,9 +18,9 @@ const CELL_VALUES: Dictionary = {
 	Vector2i(0, 1): 4, Vector2i(1, 1): 2, Vector2i(2, 1): 1,
 	Vector2i(0, 2): 1, Vector2i(1, 2): 3, Vector2i(2, 2): 2,
 }
-const START_POS := Vector2i(0, 0)
-const FINISH_POS := Vector2i(2, 2)
-const TARGET_SUM := 8
+@export var START_POS := Vector2i(0, 0)
+@export var FINISH_POS := Vector2i(2, 2)
+@export var TARGET_SUM := 8
 
 
 func _init_tutorial() -> void:

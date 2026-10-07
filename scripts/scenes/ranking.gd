@@ -13,7 +13,7 @@ extends BaseScene
 ## Dữ liệu & công thức điểm: xem scripts/manager/RankingManager.gd
 ## ============================================================================
 
-const ROW_SCENE := preload("res://nodes/ranking/rank_row.tscn")
+@export var ROW_SCENE: PackedScene = preload("res://nodes/ranking/rank_row.tscn")
 
 const TAB_KEYS := {
 	"dungeon": "STR_RANK_TAB_DUNGEON",
@@ -24,7 +24,7 @@ const TAB_KEYS := {
 const PODIUM_GROUPS: Array[String] = ["Gold", "Silver", "Bronze"]
 
 ## Ngưỡng kéo tối thiểu (px) trước khi coi là VUỐT/CUỘN thay vì chạm
-const DRAG_THRESHOLD := 14.0
+@export var DRAG_THRESHOLD := 14.0
 
 ## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
 ## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/ranking.tscn`

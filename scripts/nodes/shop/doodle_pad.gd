@@ -17,11 +17,11 @@ signal pen_changed(pen_id: String)
 const STAMP_TRY := preload("res://assets/images-png/shop/btn_tile_normal.png")
 const STAMP_USING := preload("res://assets/images-png/shop/btn_equipped.png")
 
-const STROKE_WIDTH := 7        ## bề rộng nét vẽ thử (px) trước khi nhân chất liệu
-const MIN_POINT_DIST := 2.5       ## khoảng cách tối thiểu để ghi thêm điểm (px)
-const MAX_POINTS := 800           ## chặn nét quá dài (bỏ điểm cũ nhất)
-const MAX_STROKES := 16           ## số nét tối đa giữ trên bàn nháp
-const DEFAULT_AREA := Vector2(616.0, 150.0)
+@export var STROKE_WIDTH := 7        ## bề rộng nét vẽ thử (px) trước khi nhân chất liệu
+@export var MIN_POINT_DIST := 2.5       ## khoảng cách tối thiểu để ghi thêm điểm (px)
+@export var MAX_POINTS := 800           ## chặn nét quá dài (bỏ điểm cũ nhất)
+@export var MAX_STROKES := 16           ## số nét tối đa giữ trên bàn nháp
+@export var DEFAULT_AREA := Vector2(616.0, 150.0)
 
 @onready var _draw_area: Control = $DrawArea
 @onready var _strokes_layer: Control = $DrawArea/Strokes

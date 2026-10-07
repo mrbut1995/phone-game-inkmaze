@@ -12,21 +12,21 @@ extends BaseScene
 ## Cấu trúc node (scenes/archivement.tscn): TopBar/Sheet{Overview, Tabs, CardArea{Scroll/Pages}, Dots, Footer}
 ## ============================================================================
 
-const CARD_SCENE := preload("res://nodes/archivements/card.tscn")
-const PAGE_SCENE := preload("res://nodes/archivements/page.tscn")
-const DOT_SCENE := preload("res://nodes/archivements/page_dot.tscn")
+@export var CARD_SCENE: PackedScene = preload("res://nodes/archivements/card.tscn")
+@export var PAGE_SCENE: PackedScene = preload("res://nodes/archivements/page.tscn")
+@export var DOT_SCENE: PackedScene = preload("res://nodes/archivements/page_dot.tscn")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Số thẻ danh hiệu mỗi trang ở bản DỌC (1 cột × 5 hàng — khe nằm trong nodes/archivements/page.tscn)
-const CARDS_PER_PAGE := 5
+@export var CARDS_PER_PAGE := 5
 ## Bản NGANG: lưới nhiều cột (thẻ 710px) × số hàng vừa khung cuộn
-const PORTRAIT_COLUMNS := 1
+@export var PORTRAIT_COLUMNS := 1
 ## Cỡ 1 thẻ danh hiệu + khe (đọc theo `nodes/archivements/card.tscn`: 355×85 · khe 10)
-const CARD_SIZE := Vector2(355.0, 85.0)
-const GRID_SEP := Vector2(10.0, 10.0)
-const SNAP_TIME := 0.22
-const DRAG_THRESHOLD := 8.0
-const CLICK_LOCK_TIME := 0.15
+@export var CARD_SIZE := Vector2(355.0, 85.0)
+@export var GRID_SEP := Vector2(10.0, 10.0)
+@export var SNAP_TIME := 0.22
+@export var DRAG_THRESHOLD := 8.0
+@export var CLICK_LOCK_TIME := 0.15
 
 ## Tab = "" (TẤT CẢ) + các category của ArchivementManager
 const TABS := ["", "levels", "dungeon", "daily", "special"]

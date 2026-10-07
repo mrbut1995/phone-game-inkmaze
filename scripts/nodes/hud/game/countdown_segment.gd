@@ -10,9 +10,9 @@ extends TextureRect
 
 const OFF := preload("res://assets/images-png/game/budget_segment_off.png")
 const ON := preload("res://assets/images-png/game/budget_segment_on.png")
-const HEIGHT := 6
-const MIN_WIDTH := 4.0
-const MAX_WIDTH := 38.0
+@export var HEIGHT := 6
+@export var MIN_WIDTH := 4.0
+@export var MAX_WIDTH := 38.0
 
 
 ## Bề rộng vạch (dải tự co để cả dải luôn vừa bề rộng thẻ, ngân sách có thể > 16 bước)

@@ -11,16 +11,17 @@ extends BaseScene
 ##
 ## Quy ước của project (xem `scenes/levels.tscn`):
 ##   · Node UI bind bằng `@export` (`map`, `background`, `LevelsLayout`) — script KHÔNG tra đường dẫn.
-##   · Dây tới node TRONG `scenes/levels.tscn` (LevelMap) khai bằng `[connection]`.
-##   · Dây tới nút NẰM TRONG bố cục (Portrait là scene instance — Godot KHÔNG tạo được
-##     `[connection]` xuyên vào node bên trong instance) nối bằng `ensure_signal` có guard
-##     `is_connected` — gọi lại được mỗi lần đổi bố cục.
+##   · TOÀN BỘ dây signal khai bằng `[connection]` trong `scenes/levels.tscn` — kể cả nút
+##     nằm trong bố cục (Portrait): `[connection]` trỏ vào node bên trong scene instance
+##     hoạt động bình thường (giống các màn shop / chapters / settings…).
+##   · Script chỉ còn phần ĐỘNG: hiệu ứng nút (nhún/thở) + dữ liệu bản đồ.
 ## ============================================================================
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-## Banner chương: bản thường + bản "focus" (có chương đủ Sao để mở)
-const BANNER_NORMAL := preload("res://assets/images-png/level_selector/chapter_banner.png")
-const BANNER_FOCUS  := preload("res://assets/images-png/level_selector/chapter_banner_focus.png")
+## Banner chương: bản thường + bản "focus" (có chương đủ Sao để mở) — art DỰ PHÒNG khi
+## bố cục chưa gán `banner_normal`/`banner_focus` (đổi được trong Inspector)
+@export var banner_normal: Texture2D = preload("res://assets/images-png/level_selector/chapter_banner.png")
+@export var banner_focus: Texture2D = preload("res://assets/images-png/level_selector/chapter_banner_focus.png")
 
 ## Bố cục đang hiển thị (bản dọc) — gắn lại mỗi lần ĐỔI BỐ CỤC
 var layout: LevelsLayout = null
@@ -35,7 +36,7 @@ var _banner_focus := false
 
 func _ready() -> void:
 	_bind_refs()
-	_wire_buttons()
+	_setup_button_effects()
 	orientation_changed.connect(_on_orientation_changed)
 	_build_map()
 	_refresh_header()
@@ -57,17 +58,14 @@ func _bind_refs() -> void:
 		push_warning("LevelScenes: thiếu binding `map` (MapArea/LevelMap)")
 
 
-## Nối dây cho nút TRONG bố cục + gắn hiệu ứng "sống" (nhún khi bấm, nút Tiếp tục "thở").
-## Nút nằm trong scene instance nên KHÔNG khai `[connection]` trong .tscn được — dùng
-## `ensure_signal` (guard `is_connected`) để gọi lại an toàn mỗi lần đổi hướng.
-func _wire_buttons() -> void:
+## Gắn hiệu ứng "sống" cho nút trong bố cục (nhún khi bấm, nút Tiếp tục "thở") + cho
+## banner HỨNG chuột (bấm vào banner mở Đổi chương). DÂY SIGNAL khai trong
+## `scenes/levels.tscn` bằng `[connection]` — hàm này chạy lại mỗi lần đổi hướng.
+func _setup_button_effects() -> void:
 	if layout == null:
 		return
-	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
-	ensure_signal(layout.btn_continue, &"pressed", &"_on_continue_pressed")
 	if layout.banner != null:
 		layout.banner.mouse_filter = Control.MOUSE_FILTER_STOP
-		ensure_signal(layout.banner, &"gui_input", &"_on_banner_input")
 	for button: BaseButton in [layout.btn_back, layout.btn_continue]:
 		if button == null or button.has_meta("bounce_attached"):
 			continue
@@ -198,7 +196,7 @@ func _on_orientation_changed(_is_landscape_now: bool) -> void:
 
 func _rebind_after_orientation() -> void:
 	_bind_refs()
-	_wire_buttons()
+	_setup_button_effects()
 	_refresh_header()
 	# Bản đồ tự dựng lại khi khung đổi cỡ (LevelMap nghe `size_changed` của viewport)
 
@@ -245,7 +243,7 @@ func _refresh_chapter_banner() -> void:
 		_banner_focus = unlockable
 		if layout.banner != null:
 			var art: Texture2D = layout.banner_focus if unlockable else layout.banner_normal
-			layout.banner.texture = art if art != null else (BANNER_FOCUS if unlockable else BANNER_NORMAL)
+			layout.banner.texture = art if art != null else (banner_focus if unlockable else banner_normal)
 		if layout.lbl_change_chapter != null:
 			layout.lbl_change_chapter.theme_type_variation = &"LevelsChangeChapterFocus" if unlockable \
 				else &"LevelsChangeChapter"

@@ -9,8 +9,8 @@ extends TextureRect
 const DOT_ACTIVE := preload("res://assets/images-png/level_selector/dot_active.png")
 const DOT_INACTIVE := preload("res://assets/images-png/level_selector/dot_inactive.png")
 
-const SIZE_ACTIVE := Vector2(34, 24)
-const SIZE_INACTIVE := Vector2(12, 24)
+@export var SIZE_ACTIVE := Vector2(34, 24)
+@export var SIZE_INACTIVE := Vector2(12, 24)
 
 
 ## Đặt trạng thái chấm: đang xem hay không

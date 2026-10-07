@@ -25,22 +25,22 @@ static var _design_moving_line_width := 0.0
 static var _design_cursor_size := 0.0
 
 ## Fallback an toàn khi không đọc được scene gốc (giá trị thật nằm trong .tscn)
-const FALLBACK_CELL_SIZE := 88
-const FALLBACK_ANCHOR_SIZE := 20
-const FALLBACK_WALL_WIDTH := 5.5
-const FALLBACK_CURSOR_SIZE := 66
-const FALLBACK_MOVING_LINE_WIDTH := 20
-const FALLBACK_FONT_SIZE := 28
+@export var FALLBACK_CELL_SIZE := 88
+@export var FALLBACK_ANCHOR_SIZE := 20
+@export var FALLBACK_WALL_WIDTH := 5.5
+@export var FALLBACK_CURSOR_SIZE := 66
+@export var FALLBACK_MOVING_LINE_WIDTH := 20
+@export var FALLBACK_FONT_SIZE := 28
 
 ## Mép chừa thêm bên trong phần GIẤY VẼ THẬT (px) - để ô không chạm viền giấy
-const BOARD_PADDING := 6
+@export var BOARD_PADDING := 6
 ## Nhỏ nhất có thể co (0.24 * 176 ≈ 42px) -> board 20x20 vẫn nằm gọn
-const MIN_FIT_SCALE := 0.24
+@export var MIN_FIT_SCALE := 0.24
 ## Kích thước tối thiểu để còn nhìn thấy rõ
-const MIN_WALL_WIDTH := 1.5
-const MIN_ANCHOR_SIZE := 7.0
-const MIN_CURSOR_SIZE := 9.0
-const MIN_FONT_SIZE := 6
+@export var MIN_WALL_WIDTH := 1.5
+@export var MIN_ANCHOR_SIZE := 7.0
+@export var MIN_CURSOR_SIZE := 9.0
+@export var MIN_FONT_SIZE := 6
 
 var maze: MazeData = null
 var game_mode: BaseGameMode = null
@@ -1482,7 +1482,7 @@ func _corner_edge(a: Vector2i, b: Vector2i) -> Array:
 ## đầu bút ở góc dưới-phải (22,22) ⇒ 22/28 ≈ 0.786 — mọi skin bút cùng vị trí).
 ## Bàn cờ đặt ĐẦU BÚT trùng điểm cuối nét mực (tâm ô) chứ KHÔNG đặt tâm sprite — nếu đặt
 ## tâm sprite thì đầu bút thò ra ngoài nét vẽ (lỗi người chơi báo 2026-10-03).
-const CURSOR_TIP_UV := Vector2(0.786, 0.786)
+@export var CURSOR_TIP_UV := Vector2(0.786, 0.786)
 
 
 ## Vị trí (góc trên-trái node con trỏ) sao cho ĐẦU BÚT nằm đúng `center` (tâm ô = điểm

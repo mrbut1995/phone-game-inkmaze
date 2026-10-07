@@ -199,3 +199,4 @@ mouse_filter = 2
 libraries/ = SubResource("AnimationLibrary_base")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]
+[connection signal="gui_input" from="Dim" to="." method="_on_dim_gui_input"]

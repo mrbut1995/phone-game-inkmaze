@@ -13,7 +13,7 @@ extends BaseScene
 
 signal guide_requested
 
-const PLAYER_ID_PLACEHOLDER := "#NM-8924-VN"
+@export var PLAYER_ID_PLACEHOLDER := "#NM-8924-VN"
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
@@ -24,7 +24,7 @@ var layout: SettingsLayout = null
 ## Chặn ghi ngược khi đang đồng bộ UI từ SettingManager
 var _syncing := false
 ## Số lần bấm vào con dấu phiên bản để mở màn debug
-const DEBUG_TAP_COUNT := 5
+@export var DEBUG_TAP_COUNT := 5
 var _stamp_taps := 0
 
 

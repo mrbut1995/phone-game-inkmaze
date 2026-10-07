@@ -12,7 +12,7 @@ extends BaseTutorial
 @export var lbl_hud_counter: Label = null
 @export var btn_submit: Button = null
 
-const TARGET_COUNT := 2
+@export var TARGET_COUNT := 2
 
 var _built_count: int = 0
 var _demo_tween: Tween = null

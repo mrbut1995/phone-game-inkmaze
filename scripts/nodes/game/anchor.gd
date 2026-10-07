@@ -12,8 +12,8 @@ signal anchor_tapped(anchor_id: int)
 
 @export var anchor_id: int = -1
 
-const SELECTED_MODULATE := Color(1.8, 1.4, 0.4, 1.0)
-const NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
+@export var SELECTED_MODULATE := Color(1.8, 1.4, 0.4, 1.0)
+@export var NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
 
 @onready var _button: TextureButton = $TextureButton
 ## AnimationPlayer của `anchor.tscn` — các dáng nở/chọn/nhấn khai trong scene,

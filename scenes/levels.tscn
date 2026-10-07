@@ -68,3 +68,9 @@ level_map = NodePath("../MapArea/LevelMap")
 
 [connection signal="level_selected" from="MapArea/LevelMap" to="." method="_on_level_selected"]
 [connection signal="scrolled" from="MapArea/LevelMap" to="." method="_on_map_scrolled"]
+[connection signal="pressed" from="Portrait/Content/InformationArea/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/Content/InformationArea/ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="gui_input" from="Portrait/Content/InformationArea/ChapterBanner" to="." method="_on_banner_input"]
+[connection signal="pressed" from="Landscape/Content/InformationArea/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Landscape/Content/InformationArea/ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="gui_input" from="Landscape/Content/InformationArea/ChapterBanner" to="." method="_on_banner_input"]

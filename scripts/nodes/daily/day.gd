@@ -23,6 +23,8 @@ enum State {
 	TODAY,    ## Ngày hôm nay
 }
 
+## Số nhiệm vụ tối đa giữ trên 1 ngày — calendar.gd TRUY CẬP TĨNH qua `DailyDayCell.`
+## nên phải giữ `const` (không export được)
 const MAX_MISSIONS := 4
 const TEX_DIR := "res://assets/images-png/calendar/"
 

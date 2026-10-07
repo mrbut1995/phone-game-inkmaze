@@ -9,22 +9,22 @@ extends Control
 
 @export var grid_pos: Vector2i = Vector2i.ZERO
 
-const NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
-const FOCUS_MODULATE := Color(0.85, 0.95, 1.0, 1.0)
+@export var NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
+@export var FOCUS_MODULATE := Color(0.85, 0.95, 1.0, 1.0)
 
 ## Số trên ô vẽ ĐÈ LÊN icon Bomb (nền mìn đậm) -> thêm viền màu giấy cho số để vẫn đọc được.
-const BOMB_TEXT_OUTLINE_SIZE := 4
-const BOMB_TEXT_OUTLINE_COLOR := Color(0.996078, 0.992157, 0.980392, 1.0)   # #FEFDFA
+@export var BOMB_TEXT_OUTLINE_SIZE := 4
+@export var BOMB_TEXT_OUTLINE_COLOR := Color(0.996078, 0.992157, 0.980392, 1.0)   # #FEFDFA
 
 const TEX_NORMAL := preload("res://assets/images-png/game/cell_normal.png")
 const TEX_START := preload("res://assets/images-png/game/cell_start.png")
 const TEX_FINISH := preload("res://assets/images-png/game/cell_finish.png")
 
 ## Mực phai (Fading Ink): tỉ lệ cỡ chữ phụ so với cỡ số trên ô (số gốc 56 -> 11 / 22)
-const WARN_TEXT_RATIO := 11.0 / 56.0
-const FADED_TEXT_RATIO := 22.0 / 56.0
+@export var WARN_TEXT_RATIO := 11.0 / 56.0
+@export var FADED_TEXT_RATIO := 22.0 / 56.0
 ## One Stroke: tỉ lệ cỡ chữ nhãn "ĐÃ ĐI" (số gốc 56 -> 12)
-const VISITED_TEXT_RATIO := 12.0 / 56.0
+@export var VISITED_TEXT_RATIO := 12.0 / 56.0
 
 @onready var _button: TextureButton = $Sprite
 @onready var _label: Label = $Sprite/Label

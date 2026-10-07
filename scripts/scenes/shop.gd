@@ -13,32 +13,32 @@ extends BaseScene
 ## - VUỐT DỌC để cuộn danh sách (tự xử lý ở `_input` vì nút trên thẻ "ăn" sự kiện kéo)
 ## ============================================================================
 
-const ROW_SCENE := preload("res://nodes/shop/item_row.tscn")
-const TILE_SCENE := preload("res://nodes/shop/item_tile.tscn")
-const COIN_SCENE := preload("res://nodes/shop/coin_tile.tscn")
-const PAGE_DOT_SCENE := preload("res://nodes/shop/page_dot.tscn")
+@export var ROW_SCENE: PackedScene = preload("res://nodes/shop/item_row.tscn")
+@export var TILE_SCENE: PackedScene = preload("res://nodes/shop/item_tile.tscn")
+@export var COIN_SCENE: PackedScene = preload("res://nodes/shop/coin_tile.tscn")
+@export var PAGE_DOT_SCENE: PackedScene = preload("res://nodes/shop/page_dot.tscn")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Số món mỗi trang ở lưới 2 cột — GIÁ TRỊ THIẾT KẾ (màn 1080×1920).
 ## Số thực tế được tính lại theo CHIỀU CAO khung nhìn (`_grid_per_page`): màn thấp /
 ## xoay ngang thì ít hàng hơn, màn cao thì nhiều hàng hơn (content giãn hết chỗ trống).
-const TILES_PER_PAGE := 3
+@export var TILES_PER_PAGE := 3
 ## Lưới ô: số cột TỰ CHIA theo bề rộng khung (cả 2 hướng) — `GRID_COLUMNS` là mức tối thiểu,
 ## `GRID_COLUMNS_MAX` là mức tối đa; khe ngang 30 / khe dọc 24 — khai trong `item_grid.tscn`.
-const GRID_COLUMNS := 2
-const GRID_COLUMNS_MAX := 4
+@export var GRID_COLUMNS := 2
+@export var GRID_COLUMNS_MAX := 4
 ## Bề rộng TỐI THIỂU của 1 thẻ ô ở bản NGANG — cơ sở để chia số cột (thẻ tự nở đầy ô)
-const TILE_MIN_W := 130.0
+@export var TILE_MIN_W := 130.0
 ## Lưới GÓI NẠP XU dùng chung cách chia cột với lưới ô (xem `grid_columns`)
-const GRID_H_SEP := 30.0
-const GRID_V_SEP := 24.0
+@export var GRID_H_SEP := 30.0
+@export var GRID_V_SEP := 24.0
 ## Khe dọc giữa các khối trong danh sách (khớp `List.theme_override_constants/separation`)
-const LIST_SEP := 20.0
+@export var LIST_SEP := 20.0
 ## Ngưỡng nhận diện kéo (px) và ngưỡng tính là "vuốt" (px)
-const DRAG_THRESHOLD := 14.0
-const SWIPE_MIN := 70.0
+@export var DRAG_THRESHOLD := 14.0
+@export var SWIPE_MIN := 70.0
 ## Khoá bấm nút trong bao lâu sau khi vuốt (tránh vừa vuốt vừa mua nhầm)
-const CLICK_LOCK_TIME := 0.35
+@export var CLICK_LOCK_TIME := 0.35
 ## Thứ tự tab trong hàng — tab THẬT nằm SẴN trong scene bố cục (`Tabs/*`), mỗi tab tự khai
 ## `category` + `label_key`; danh sách này chỉ dùng để kiểm tra tên tab hợp lệ.
 const TAB_ORDER := ["pen", "theme", "tool", "coin"]
@@ -50,12 +50,12 @@ const GRID_CATEGORIES := ["pen", "theme"]
 ##   · TAB  : chiều cao = chiều cao art `tab_active.svg` (tab chưa chọn = art `tab_inactive.svg`)
 ##   · THẺ Ô: rộng × cao = `custom_minimum_size` của `nodes/shop/item_tile.tscn`
 ## Canvas thiết kế (chiều cao). Hệ số co giãn = cao_canvas / 1920, kẹp trong khoảng dưới.
-const DESIGN_CANVAS_H := 1920.0
-const SCREEN_SCALE_MIN := 0.85      # màn ngang / thấp: nhỏ nhất còn 0,85×
-const SCREEN_SCALE_MAX := 1.5       # màn dọc siêu cao: lớn nhất 1,5×
+@export var DESIGN_CANVAS_H := 1920.0
+@export var SCREEN_SCALE_MIN := 0.85      # màn ngang / thấp: nhỏ nhất còn 0,85×
+@export var SCREEN_SCALE_MAX := 1.5       # màn dọc siêu cao: lớn nhất 1,5×
 ## Hệ số phóng to THẺ Ô so với cỡ thiết kế trong `item_tile.tscn`
 ## (muốn cỡ khác: sửa số này HOẶC sửa cỡ thiết kế trong scene — không cần sửa gì khác)
-const TILE_SCALE := 1.25
+@export var TILE_SCALE := 1.25
 ## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
 ## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/shop.tscn`
 ## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
@@ -77,7 +77,7 @@ static var _tile_size := Vector2.ZERO
 var _coin_size := Vector2.ZERO
 ## Cỡ bàn nháp thử bút khi SCENE không khai `custom_minimum_size` (giá trị thật nằm trong
 ## `nodes/shop/doodle_pad.tscn` — node khai sẵn trong bố cục, xem `ShopLayout.doodle_pad`)
-const FALLBACK_PAD_H := 215.0
+@export var FALLBACK_PAD_H := 215.0
 ## Bàn nháp thử bút (chỉ tab BÚT & MỰC) + ngòi bút đang xem thử trên đó
 var _doodle_pad: Control = null
 var _preview_pen := ""

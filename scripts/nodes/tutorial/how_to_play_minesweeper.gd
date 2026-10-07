@@ -7,8 +7,8 @@ extends BaseInteractivePathTutorial
 ## Kế thừa BaseInteractivePathTutorial (SOLID - OCP/SRP).
 ## ============================================================================
 
-const START_POS := Vector2i(0, 0)
-const FINISH_POS := Vector2i(2, 2)
+@export var START_POS := Vector2i(0, 0)
+@export var FINISH_POS := Vector2i(2, 2)
 const MINES: Array[Vector2i] = [Vector2i(1, 0), Vector2i(0, 2)]
 
 

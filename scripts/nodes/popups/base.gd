@@ -13,9 +13,10 @@ extends Control
 signal opened
 signal closed
 
-const DUR_IN := 0.22
-const DUR_OUT := 0.14
-const SCALE_FROM := 0.92
+@export_group("Hiệu ứng mở / đóng")
+@export_range(0.05, 1.0, 0.01) var dur_in := 0.22
+@export_range(0.05, 1.0, 0.01) var dur_out := 0.14
+@export_range(0.5, 1.0, 0.01) var scale_from := 0.92
 
 ## Id do PopupManager gán khi mở (khoá trong POPUPS hoặc tên file scene)
 var popup_id: String = ""
@@ -47,7 +48,7 @@ func _enter_tree() -> void:
 	var vp := get_viewport()
 	if vp != null and not vp.size_changed.is_connected(_apply_canvas_layout):
 		vp.size_changed.connect(_apply_canvas_layout)
-	_connect_dim_input()
+	_setup_dim()
 	_apply_canvas_layout()
 
 
@@ -88,18 +89,16 @@ func _apply_canvas_layout() -> void:
 
 # --- Bấm nền mờ để đóng ------------------------------------------------------
 
-## Nối sự kiện chuột/chạm trên nền mờ (Dim). Nối Ở ĐÂY (không phải trong từng
-## scene) vì phần lớn popup là scene ĐỘC LẬP, không kế thừa `base.tscn` — dây
-## `[connection]` khai trong base.tscn sẽ không tới được chúng.
-func _connect_dim_input() -> void:
+## Canh nền mờ (Dim) HỨNG chuột khi cho phép bấm ra ngoài. DÂY `gui_input` khai
+## bằng `[connection]` trong `base.tscn` (vá 2 popup tự dựng Dim riêng:
+## `edit_profile.tscn` + `language.tscn`).
+func _setup_dim() -> void:
 	if dim == null:
 		return
 	if close_on_outside:
 		# Nền phải HỨNG chuột (STOP) mới nhận được cú bấm ra ngoài;
 		# để IGNORE thì cú bấm xuyên thẳng xuống màn hình phía sau.
 		dim.mouse_filter = Control.MOUSE_FILTER_STOP
-	if not dim.gui_input.is_connected(_on_dim_gui_input):
-		dim.gui_input.connect(_on_dim_gui_input)
 
 
 ## Bấm/chạm vào NỀN MỜ ngoài thẻ popup ⇒ đóng popup (giống bấm Back).
@@ -140,17 +139,17 @@ func open(p_data: Dictionary = {}) -> void:
 			dim.modulate = Color(1, 1, 1, 0)
 		if panel != null:
 			panel.pivot_offset = panel.size * 0.5
-			panel.scale = Vector2.ONE * SCALE_FROM
+			panel.scale = Vector2.ONE * scale_from
 			panel.modulate = Color(1, 1, 1, 0)
 
 		var tw := create_tween()
 		_tween = tw
 		tw.set_parallel(true)
 		if dim != null:
-			tw.tween_property(dim, "modulate:a", 1.0, DUR_IN)
+			tw.tween_property(dim, "modulate:a", 1.0, dur_in)
 		if panel != null:
-			tw.tween_property(panel, "modulate:a", 1.0, DUR_IN)
-			tw.tween_property(panel, "scale", Vector2.ONE, DUR_IN).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tw.tween_property(panel, "modulate:a", 1.0, dur_in)
+			tw.tween_property(panel, "scale", Vector2.ONE, dur_in).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		tw.chain().tween_callback(_on_opened_anim_done)
 
 	opened.emit()
@@ -174,10 +173,10 @@ func close() -> void:
 		_tween = tw
 		tw.set_parallel(true)
 		if dim != null:
-			tw.tween_property(dim, "modulate:a", 0.0, DUR_OUT)
+			tw.tween_property(dim, "modulate:a", 0.0, dur_out)
 		if panel != null:
-			tw.tween_property(panel, "modulate:a", 0.0, DUR_OUT)
-			tw.tween_property(panel, "scale", Vector2.ONE * SCALE_FROM, DUR_OUT)
+			tw.tween_property(panel, "modulate:a", 0.0, dur_out)
+			tw.tween_property(panel, "scale", Vector2.ONE * scale_from, dur_out)
 		tw.chain().tween_callback(_finish_close)
 
 ## Cuối animation mở/đóng popup (dây `animation_finished` khai trong `base.tscn`)

@@ -1,8 +1,9 @@
 extends SceneTree
 ## ============================================================================
 ## Test Case: MÀN CHỌN MÀN — BẢN ĐỒ ROAD MAP (thay lưới thẻ phân trang, 2026-10)
-##   · Mỗi màn của chương = 1 nút trên bản đồ, nối nhau bằng MỘT đường LIỀN MẠCH
-##     (mọi nút nằm đúng trên đường); màn 1 ở DƯỚI CÙNG.
+##   · Mỗi màn của chương = 1 nút trên bản đồ, nối nhau bằng MỘT đường UỐN LƯỢN
+##     dạng chữ S (mọi nút nằm đúng trên đường, giữa 2 nút có điểm uốn xen kẽ);
+##     màn 1 ở DƯỚI CÙNG.
 ##   · Nhấn giữ nút: số màn + hàng sao trôi theo nút (không "float"), thả ra về chỗ.
 ##   · Trạng thái nút: KHOÁ / ĐÃ XONG / MÀN NÊN CHƠI TIẾP (CURRENT) / BỎ QUA / thường.
 ##   · Nút màn + đường nối sinh trong `Tracks/Items`; cờ đích + mũi chỉ là node CÓ SẴN
@@ -15,6 +16,9 @@ extends SceneTree
 const TEST_IDS := 12
 const UNLOCKED := 10          # khoá 11, 12 để kiểm tra trạng thái khoá
 const TEMP_DIR := "user://test_levels/"
+## Độ lệch tối thiểu của điểm giữa cung so với dây cung nối 2 nút (px): nhỏ hơn
+## ngưỡng này nghĩa là đường bị "thẳng" — mất dáng uốn chữ S của mockup.
+const MIN_SEGMENT_BULGE := 40.0
 
 var _original_dir := ""
 
@@ -87,7 +91,7 @@ func _init() -> void:
 		print("\n[FAILED] %d loi o ban do man choi.\n" % failures)
 		quit(1)
 		return
-	print("\n[SUCCESS] Ban do man choi dung: nut/trang thai/duong noi lien mach/nhan giu/cuon/parallax.\n")
+	print("\n[SUCCESS] Ban do man choi dung: nut/trang thai/duong uon chu S/nhan giu/cuon/parallax.\n")
 	quit(0)
 
 
@@ -162,9 +166,11 @@ func _check_road(map: LevelMap) -> int:
 		print("[FAIL] Duong noi phai giu curve tron ven trong `Path`")
 		return failures + 1
 	var curve := road.path_node.curve
-	if curve.point_count != map.node_count():
-		print("[FAIL] Curve phai di qua du %d nut (dang %d diem)"
-			% [map.node_count(), curve.point_count])
+	# n nút + (n-1) điểm uốn xen kẽ giữa các đoạn
+	var expected_controls := map.node_count() * 2 - 1
+	if curve.point_count != expected_controls:
+		print("[FAIL] Curve phai co %d diem kiem soat (nut + diem uon) (dang %d)"
+			% [expected_controls, curve.point_count])
 		failures += 1
 	for level_id in range(1, TEST_IDS + 1):
 		var node := map.node_for(level_id)
@@ -174,8 +180,26 @@ func _check_road(map: LevelMap) -> int:
 			print("[FAIL] Nut man %d phai nam TREN duong noi" % level_id)
 			failures += 1
 			break
+	# Đường phải UỐN (chữ S) chứ không nối thẳng: đo độ lệch của điểm giữa cung
+	# so với dây cung nối 2 nút liền nhau.
+	var min_bulge := 99999.0
+	for index in range(1, TEST_IDS):
+		var from_node := map.node_for(index)
+		var to_node := map.node_for(index + 1)
+		if from_node == null or to_node == null:
+			continue
+		var from_d := curve.get_closest_offset(from_node.position)
+		var to_d := curve.get_closest_offset(to_node.position)
+		var arc_mid := curve.sample_baked((from_d + to_d) * 0.5)
+		var chord_point := Geometry2D.get_closest_point_to_segment(arc_mid, from_node.position, to_node.position)
+		min_bulge = minf(min_bulge, arc_mid.distance_to(chord_point))
+	if min_bulge < MIN_SEGMENT_BULGE:
+		print("[FAIL] Duong noi bi THANG giua cac nut (lech giua doan chi %.1fpx < %.0fpx)"
+			% [min_bulge, MIN_SEGMENT_BULGE])
+		failures += 1
 	if failures == 0:
-		print("[CHECK] Duong noi lien mach: 1 path qua %d nut, moi nut nam tren duong." % TEST_IDS)
+		print("[CHECK] Duong noi uon chu S: 1 path qua %d nut (lech giua doan >= %.1fpx), moi nut nam tren duong."
+			% [TEST_IDS, min_bulge])
 	return failures
 
 

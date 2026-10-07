@@ -18,11 +18,11 @@ const CHECK_DONE := preload("res://assets/images-png/game/chal_check_done.png")
 const CHECK_PENDING := preload("res://assets/images-png/game/chal_check_pending.png")
 
 ## Chưa đạt nhưng vẫn còn cơ hội (chữ cam) / đã lệch mục tiêu (chữ đỏ)
-const COLOR_LIVE := Color(0.70980394, 0.38431373, 0.101960786, 1)
-const COLOR_FAIL := Color(0.84705883, 0.26666668, 0.26666668, 1)
+@export var COLOR_LIVE := Color(0.70980394, 0.38431373, 0.101960786, 1)
+@export var COLOR_FAIL := Color(0.84705883, 0.26666668, 0.26666668, 1)
 ## Màu chữ mờ (tên thử thách hỏng) + màu tên bình thường
-const COLOR_IDLE := Color(0.44313726, 0.54509807, 0.61960787, 1)
-const COLOR_NAME := Color(0.13333334, 0.29803923, 0.42745098, 1)
+@export var COLOR_IDLE := Color(0.44313726, 0.54509807, 0.61960787, 1)
+@export var COLOR_NAME := Color(0.13333334, 0.29803923, 0.42745098, 1)
 
 
 ## Vẽ lại toàn bộ thẻ.

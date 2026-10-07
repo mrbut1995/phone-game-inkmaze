@@ -25,33 +25,51 @@ signal level_selected(level_id: int)
 ## dài/ngắn như khi quy về tiến độ [-1..1].
 signal scrolled(delta_y: float)
 
-const NODE_SCENE := preload("res://nodes/level_selection/level_node.tscn")
-const PATH_SCENE := preload("res://nodes/level_selection/level_path.tscn")
+## ============================================================================
+## CẤU HÌNH — chỉnh trực tiếp trong Inspector (mỗi scene override riêng được)
+## ============================================================================
+@export_group("Scene con")
+## Scene nút màn + scene đường nối (đổi art/logic không cần sửa code)
+@export var node_scene: PackedScene = preload("res://nodes/level_selection/level_node.tscn")
+@export var path_scene: PackedScene = preload("res://nodes/level_selection/level_path.tscn")
 
-## Khoảng cách tâm 2 nút theo trục Y (px) và độ lệch zigzag quanh tâm
-const SPACING_PORTRAIT := 158.0
-const SPACING_LANDSCAPE := 200.0
-const ZIGZAG_PORTRAIT := 74.0
-const ZIGZAG_LANDSCAPE := 320.0
+@export_group("Bố cục")
+## Khoảng cách tâm 2 nút theo trục Y (px) và độ lệch zigzag quanh tâm — theo hướng màn hình
+@export_range(80.0, 400.0, 1.0) var spacing_portrait := 158.0
+@export_range(100.0, 600.0, 1.0) var spacing_landscape := 200.0
+@export_range(0.0, 300.0, 1.0) var zigzag_portrait := 74.0
+@export_range(0.0, 800.0, 1.0) var zigzag_landscape := 320.0
 ## Nút cùng art to hơn ở màn ngang cho cân bề ngang rộng
-const NODE_SCALE_LANDSCAPE := 1.28
+@export_range(0.5, 2.5, 0.01) var node_scale_landscape := 1.28
+## Độ uốn ngang của đường nối tại điểm giữa mỗi đoạn (dáng chữ S như mockup):
+## lấy theo nhịp dọc SPACING × tỉ lệ này, nhưng KẸP lại để không tràn khỏi khung
+@export_range(0.0, 2.0, 0.05) var sway_spacing_ratio := 0.6
+@export_range(0.0, 200.0, 1.0) var sway_edge_margin := 60.0
+@export_range(0.0, 120.0, 1.0) var sway_min := 28.0
+
+@export_group("Cờ đích / mũi chỉ")
 ## Nút màn hiển thị 112px (art 2× vẽ ở scale 0.5): nửa nút = 56, LÒNG nút (mặt giấy) = 96
-## ⇒ mép trên mặt nút cách tâm 48 — dùng để cắm cờ đích / đặt mũi chỉ cho khớp nút.
-const NODE_FACE_TOP := 48.0
+## ⇒ mép trên mặt nút cách tâm 48 — dùng để cắm cờ đích / đặt mũi chỉ cho khớp nút
+@export_range(0.0, 120.0, 1.0) var node_face_top := 48.0
 ## Art cờ đích 64×88 (tâm giữa ⇒ đáy cột cờ cách tâm 44) + độ chồng lên mép nút
-const FLAG_HALF_HEIGHT := 44.0
-const FLAG_OVERLAP := 20.0
+@export_range(0.0, 120.0, 1.0) var flag_half_height := 44.0
+@export_range(0.0, 80.0, 1.0) var flag_overlap := 20.0
 ## Cột cờ nằm lệch trái tâm art 18px (art 64 rộng, cột ở x≈14) ⇒ canh bù để CỘT CỜ
 ## trùng trục giữa nút cuối (nhìn như cắm giữa nút, không lệch ra ngoài)
-const FLAG_POLE_OFFSET := 18.0
-## Lề trên/dưới khi tính giới hạn cuộn
-const SCROLL_MARGIN := 90.0
-## Thời gian auto-scroll đến màn đang chơi
-const SCROLL_TO_DURATION := 0.5
-## Kéo / quán tính
-const DRAG_FRICTION := 0.88
-const DRAG_MIN_SPEED := 1.5
-const WHEEL_STEP := 70.0
+@export_range(0.0, 60.0, 1.0) var flag_pole_offset := 18.0
+## Khoảng cách mũi chỉ (màn tiếp theo) phía trên mặt nút (px)
+@export_range(0.0, 80.0, 1.0) var marker_face_gap := 20.0
+
+@export_group("Cuộn / kéo")
+## Lề trên/dưới khi tính giới hạn cuộn (px)
+@export_range(0.0, 300.0, 1.0) var scroll_margin := 90.0
+## Thời gian auto-scroll đến màn đang chơi (giây)
+@export_range(0.05, 2.0, 0.05) var scroll_to_duration := 0.5
+## Quán tính kéo: hệ số giảm tốc mỗi frame + tốc độ tối thiểu để còn trượt (px/frame)
+@export_range(0.5, 0.999, 0.001) var drag_friction := 0.88
+@export_range(0.0, 20.0, 0.1) var drag_min_speed := 1.5
+## Bước cuộn mỗi nấc lăn chuột (px)
+@export_range(10.0, 300.0, 1.0) var wheel_step := 70.0
 
 ## Node con — bind bằng `@export` trong `level_map.tscn`
 @export var tracks: Node2D = null
@@ -126,7 +144,7 @@ func scroll_to(level_id: int, animate := true) -> void:
 		return
 	_scroll_tween = create_tween()
 	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-	_scroll_tween.tween_method(_set_scroll_y, scroll_offset_y(), target_y, SCROLL_TO_DURATION)
+	_scroll_tween.tween_method(_set_scroll_y, scroll_offset_y(), target_y, scroll_to_duration)
 
 
 ## Nút của 1 màn (null nếu màn không thuộc chương đang xem)
@@ -173,9 +191,9 @@ func _rebuild() -> void:
 
 	var area := _area_size()
 	var wide := area.x > area.y
-	var spacing := SPACING_LANDSCAPE if wide else SPACING_PORTRAIT
-	var zigzag := ZIGZAG_LANDSCAPE if wide else ZIGZAG_PORTRAIT
-	var node_scale := NODE_SCALE_LANDSCAPE if wide else 1.0
+	var spacing := spacing_landscape if wide else spacing_portrait
+	var zigzag := zigzag_landscape if wide else zigzag_portrait
+	var node_scale := node_scale_landscape if wide else 1.0
 	var center_x := area.x * 0.5
 
 	# Sắp xếp tăng dần: màn nhỏ nhất ở dưới cùng (y = 0), các màn sau leo dần lên (y âm)
@@ -190,22 +208,32 @@ func _rebuild() -> void:
 	_build_nodes(sorted_ids, positions, node_scale)
 
 	var count := sorted_ids.size()
-	_min_scroll_y = _focus_y() - SCROLL_MARGIN
-	_max_scroll_y = _focus_y() + float(count - 1) * spacing + SCROLL_MARGIN
+	_min_scroll_y = _focus_y() - scroll_margin
+	_max_scroll_y = _focus_y() + float(count - 1) * spacing + scroll_margin
 	_set_scroll_y(_focus_y() - _current_position_y(positions, sorted_ids))
 	call_deferred("scroll_to", _current_id, true)
 
 
-## Đường nối nằm DƯỚI các nút (thêm trước): MỘT đường liền mạch qua tâm TẤT CẢ các nút
+## Đường nối nằm DƯỚI các nút (thêm trước): MỘT đường uốn chữ S qua tâm TẤT CẢ các nút
 func _build_paths(sorted_ids: Array[int], positions: Array[Vector2]) -> void:
 	if items == null or sorted_ids.size() < 2:
 		return
-	var road := PATH_SCENE.instantiate() as LevelMapPath
+	var road := path_scene.instantiate() as LevelMapPath
 	items.add_child(road)
 	var states: Array[int] = []
 	for index in range(sorted_ids.size() - 1):
 		states.append(int(_path_state_for(sorted_ids[index])))
-	road.setup(positions, states)
+	road.setup(positions, states, _road_sway())
+
+
+## Độ lệch của điểm uốn giữa mỗi đoạn nối: theo nhịp dọc nhưng không vượt mép khung
+func _road_sway() -> float:
+	var area := _area_size()
+	var wide := area.x > area.y
+	var spacing := spacing_landscape if wide else spacing_portrait
+	var zigzag := zigzag_landscape if wide else zigzag_portrait
+	var room := area.x * 0.5 - zigzag - sway_edge_margin
+	return maxf(sway_min, minf(spacing * sway_spacing_ratio, room))
 
 
 ## Các nút màn + canh cờ đích / mũi chỉ
@@ -214,7 +242,7 @@ func _build_nodes(sorted_ids: Array[int], positions: Array[Vector2], node_scale:
 		return
 	for index in sorted_ids.size():
 		var level_id := sorted_ids[index]
-		var node := NODE_SCENE.instantiate() as LevelMapNode
+		var node := node_scene.instantiate() as LevelMapNode
 		items.add_child(node)
 		node.position = positions[index]
 		node.scale = Vector2.ONE * node_scale
@@ -229,15 +257,15 @@ func _build_nodes(sorted_ids: Array[int], positions: Array[Vector2], node_scale:
 		goal.visible = true
 		goal.scale = Vector2.ONE * node_scale
 		# Cắm cờ vào MÉP TRÊN nút cuối (chồng nhẹ) — cờ nằm trong nút "End Level", không lơ lửng
-		var lift := (NODE_FACE_TOP + FLAG_HALF_HEIGHT - FLAG_OVERLAP) * node_scale
-		goal.position = last_position + Vector2(FLAG_POLE_OFFSET * node_scale, -lift)
+		var lift := (node_face_top + flag_half_height - flag_overlap) * node_scale
+		goal.position = last_position + Vector2(flag_pole_offset * node_scale, -lift)
 	var current := node_for(_current_id)
 	var show_marker := current != null and _current_id != last_id
 	if marker != null:
 		marker.visible = show_marker
 		if show_marker:
 			marker.scale = Vector2.ONE * node_scale
-			marker.position = current.position + Vector2(0.0, -(NODE_FACE_TOP + 20.0) * node_scale)
+			marker.position = current.position + Vector2(0.0, -(node_face_top + marker_face_gap) * node_scale)
 
 
 func _set_decor_visible(visible_now: bool) -> void:
@@ -340,9 +368,9 @@ func _input(event: InputEvent) -> void:
 			else:
 				_end_drag()
 		elif button.pressed and button.button_index == MOUSE_BUTTON_WHEEL_UP and _inside_area(button.position):
-			_set_scroll_y(scroll_offset_y() + WHEEL_STEP)
+			_set_scroll_y(scroll_offset_y() + wheel_step)
 		elif button.pressed and button.button_index == MOUSE_BUTTON_WHEEL_DOWN and _inside_area(button.position):
-			_set_scroll_y(scroll_offset_y() - WHEEL_STEP)
+			_set_scroll_y(scroll_offset_y() - wheel_step)
 	elif event is InputEventMouseMotion and (event.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
 		_update_drag(event.position, event.relative)
 
@@ -370,16 +398,16 @@ func _update_drag(pos: Vector2, relative: Vector2) -> void:
 
 func _end_drag() -> void:
 	_drag_active = false
-	set_process(absf(_velocity_y) >= DRAG_MIN_SPEED)
+	set_process(absf(_velocity_y) >= drag_min_speed)
 
 
 func _process(_delta: float) -> void:
-	if _drag_active or absf(_velocity_y) < DRAG_MIN_SPEED:
+	if _drag_active or absf(_velocity_y) < drag_min_speed:
 		_velocity_y = 0.0
 		set_process(false)
 		return
 	_set_scroll_y(scroll_offset_y() + _velocity_y)
-	_velocity_y *= DRAG_FRICTION
+	_velocity_y *= drag_friction
 
 
 func _stop_scroll_tween() -> void:

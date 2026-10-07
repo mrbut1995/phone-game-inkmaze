@@ -17,8 +17,8 @@ const CELL_INK: Dictionary = {
 	Vector2i(0, 1): 3, Vector2i(1, 1): 5, Vector2i(2, 1): 3,
 	Vector2i(0, 2): 2, Vector2i(1, 2): 4,
 }
-const START_POS := Vector2i(0, 0)
-const FINISH_POS := Vector2i(2, 2)
+@export var START_POS := Vector2i(0, 0)
+@export var FINISH_POS := Vector2i(2, 2)
 
 
 func _init_tutorial() -> void:

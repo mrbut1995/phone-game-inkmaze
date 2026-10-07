@@ -19,12 +19,12 @@ const BG_LOCKED := preload("res://assets/images-png/archivements/card_locked.png
 ## Ổ khoá của thẻ: dùng icon CHUNG ở `assets/images/icons/` (bản riêng trong archivements/ đã gỡ)
 const ICON_LOCK := preload("res://assets/images-png/icons/icon_lock.png")
 
-const COLOR_CLAIMED := Color(0.18039216, 0.49019608, 0.19607843, 1)   # #2E7D32
-const COLOR_CLAIMABLE := Color(0.8509804, 0.46666667, 0.023529412, 1)  # #D97706
-const COLOR_PROGRESS := Color(0.23921569, 0.5137255, 0.68235296, 1)    # #3D83AE
-const COLOR_LOCKED := Color(0.47843137, 0.56078434, 0.60784316, 1)     # #7A8F9B
-const COLOR_DESC := Color(0.44313726, 0.54509807, 0.61960787, 1)
-const COLOR_DESC_LOCKED := Color(0.6313726, 0.69411767, 0.7372549, 1)
+@export var COLOR_CLAIMED := Color(0.18039216, 0.49019608, 0.19607843, 1)   # #2E7D32
+@export var COLOR_CLAIMABLE := Color(0.8509804, 0.46666667, 0.023529412, 1)  # #D97706
+@export var COLOR_PROGRESS := Color(0.23921569, 0.5137255, 0.68235296, 1)    # #3D83AE
+@export var COLOR_LOCKED := Color(0.47843137, 0.56078434, 0.60784316, 1)     # #7A8F9B
+@export var COLOR_DESC := Color(0.44313726, 0.54509807, 0.61960787, 1)
+@export var COLOR_DESC_LOCKED := Color(0.6313726, 0.69411767, 0.7372549, 1)
 
 ## Node UI nằm trong CẤU TRÚC: `Panel` (nền thẻ) → `Body` (HBox) → IconRing · Info (VBox) · Side (Stamp/ClaimButton/Chip)
 ## Mọi thành phần nằm TRONG `Panel` để nền và nội dung luôn khớp nhau khi co giãn.

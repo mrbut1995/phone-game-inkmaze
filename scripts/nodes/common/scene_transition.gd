@@ -23,12 +23,13 @@ signal transition_started(style: String)
 signal scene_swapped
 signal transition_finished(style: String)
 
-const COLOR_INK := Color(0.133, 0.298, 0.427, 1.0)            # Lam mực đậm InkMaze
+@export var color_ink := Color(0.133, 0.298, 0.427, 1.0)      # Lam mực đậm InkMaze
 
-const DURATION_PAGE_IN := 0.22
-const DURATION_PAGE_OUT := 0.22
-const DURATION_INK := 0.24
-const DURATION_FADE := 0.18
+@export_group("Thời lượng hiệu ứng (giây)")
+@export_range(0.05, 1.5, 0.01) var duration_page_in := 0.22
+@export_range(0.05, 1.5, 0.01) var duration_page_out := 0.22
+@export_range(0.05, 1.5, 0.01) var duration_ink := 0.24
+@export_range(0.05, 1.5, 0.01) var duration_fade := 0.18
 
 ## Đường dẫn node giao diện trong scenes/loading.tscn (không đổi tên nếu không sửa scene)
 const NODE_TRANSITION_ROOT := "TransitionRoot"
@@ -158,7 +159,7 @@ func _run_page_turn(target_path: String, change_callback: Callable, forward: boo
 
 	# Phase 1: Trang giấy lướt vào che kín màn hình
 	var tw_in := create_tween()
-	tw_in.tween_property(_paper_page, "position:x", 0.0, DURATION_PAGE_IN).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tw_in.tween_property(_paper_page, "position:x", 0.0, duration_page_in).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	await tw_in.finished
 
 	# Phase 2: Thực hiện đổi scene
@@ -169,7 +170,7 @@ func _run_page_turn(target_path: String, change_callback: Callable, forward: boo
 
 	# Phase 3: Trang giấy lướt tiếp ra ngoài để hé mở scene mới
 	var tw_out := create_tween()
-	tw_out.tween_property(_paper_page, "position:x", end_x, DURATION_PAGE_OUT).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tw_out.tween_property(_paper_page, "position:x", end_x, duration_page_out).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	await tw_out.finished
 
 
@@ -185,7 +186,7 @@ func _run_ink_circle(target_path: String, change_callback: Callable) -> void:
 
 	# Phase 1: Mực loang từ tâm che phủ màn hình
 	var tw_in := create_tween()
-	tw_in.tween_method(_set_ink_radius, 0.0, _ink_max_radius, DURATION_INK).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw_in.tween_method(_set_ink_radius, 0.0, _ink_max_radius, duration_ink).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	await tw_in.finished
 
 	# Phase 2: Đổi scene
@@ -197,8 +198,8 @@ func _run_ink_circle(target_path: String, change_callback: Callable) -> void:
 	# Phase 3: Mực tan biến mờ dần hé lộ màn chơi
 	var tw_out := create_tween()
 	tw_out.set_parallel(true)
-	tw_out.tween_property(_ink_circle_drawer, "modulate:a", 0.0, DURATION_PAGE_OUT).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tw_out.tween_method(_set_ink_radius, _ink_max_radius, _ink_max_radius * 1.3, DURATION_PAGE_OUT).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw_out.tween_property(_ink_circle_drawer, "modulate:a", 0.0, duration_page_out).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw_out.tween_method(_set_ink_radius, _ink_max_radius, _ink_max_radius * 1.3, duration_page_out).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	await tw_out.finished
 
 
@@ -210,7 +211,7 @@ func _run_paper_fade(target_path: String, change_callback: Callable) -> void:
 	_fade_rect.modulate.a = 0.0
 
 	var tw_in := create_tween()
-	tw_in.tween_property(_fade_rect, "modulate:a", 1.0, DURATION_FADE).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw_in.tween_property(_fade_rect, "modulate:a", 1.0, duration_fade).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	await tw_in.finished
 
 	if change_callback.is_valid():
@@ -219,7 +220,7 @@ func _run_paper_fade(target_path: String, change_callback: Callable) -> void:
 	await _wait_frames(2)
 
 	var tw_out := create_tween()
-	tw_out.tween_property(_fade_rect, "modulate:a", 0.0, DURATION_FADE).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tw_out.tween_property(_fade_rect, "modulate:a", 0.0, duration_fade).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await tw_out.finished
 
 
@@ -248,7 +249,7 @@ func _on_ink_draw() -> void:
 	if _ink_radius <= 0.0 or not _ink_circle_drawer.visible:
 		return
 	var center := _get_screen_size() * 0.5
-	_ink_circle_drawer.draw_circle(center, _ink_radius, COLOR_INK)
+	_ink_circle_drawer.draw_circle(center, _ink_radius, color_ink)
 
 
 func _get_screen_size() -> Vector2:

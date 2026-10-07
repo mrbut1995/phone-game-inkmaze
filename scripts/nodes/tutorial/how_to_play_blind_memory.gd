@@ -11,8 +11,8 @@ extends BaseInteractivePathTutorial
 
 var _demo_tween: Tween = null
 
-const START_POS := Vector2i(0, 0)
-const FINISH_POS := Vector2i(1, 2)
+@export var START_POS := Vector2i(0, 0)
+@export var FINISH_POS := Vector2i(1, 2)
 ## Tường ẩn: giữa (0,1)↔(1,1) và (1,0)↔(1,1)
 const WALLS := [
 	{"is_h": false, "lattice": Vector2i(1, 1), "visible": false},
