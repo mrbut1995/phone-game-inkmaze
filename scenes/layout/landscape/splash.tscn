@@ -2,10 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://w5iv7tlodnrv" path="res://scripts/scenes/layout/splash_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/main_menu_paper.png" id="4_paper"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/logo_doodle_maze_large.png" id="4_piijc"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/pen_type/pen_fountain_pen_nib.png" id="6_651hb"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="7_stamp"]
+[ext_resource type="Texture2D" uid="uid://dodkr1s1s7ick" path="res://assets/images-png/main/main_menu_paper.png" id="4_paper"]
+[ext_resource type="Texture2D" uid="uid://blf05s2jptgu0" path="res://company_logo.png" id="4_piijc"]
+[ext_resource type="Texture2D" uid="uid://bt4mb18wc2rf2" path="res://assets/images-png/main/stamp_version.png" id="7_stamp"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="8_stamp_text"]
 
 [sub_resource type="Animation" id="Animation_reset_splash"]
@@ -242,34 +241,11 @@ _data = {
 &"play_exit": SubResource("Animation_exit_splash")
 }
 
-[sub_resource type="Animation" id="Animation_pencil_idle_ls"]
-resource_name = "pencil_idle"
-length = 0.76
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/LogoContainer/Pencil:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.38, 0.76),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [-0.20944, 0.279253, -0.20944]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_pencil_ls"]
-_data = {
-&"pencil_idle": SubResource("Animation_pencil_idle_ls")
-}
-
-[node name="Landscape" unique_id=1290202701 node_paths=PackedStringArray("studio_label", "logo_container", "logo", "pencil", "title_label", "tagline_label", "stamp_label", "touch_button", "fade_overlay", "anim_player") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=1290202701 node_paths=PackedStringArray("studio_label", "logo_container", "logo", "title_label", "tagline_label", "stamp_label", "touch_button", "fade_overlay", "anim_player") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 studio_label = NodePath("Panel/StudioLabel")
 logo_container = NodePath("Panel/LogoContainer")
 logo = NodePath("Panel/LogoContainer/Logo")
-pencil = NodePath("Panel/LogoContainer/Pencil")
 title_label = NodePath("Panel/Title")
 tagline_label = NodePath("Panel/Tagline")
 stamp_label = NodePath("Panel/Stamp/Label")
@@ -297,7 +273,7 @@ anchor_bottom = 0.12
 offset_left = -600.0
 offset_right = 600.0
 theme_type_variation = &"MainTagline"
-text = "STR_SPLASH_STUDIO"
+text = "INVISIBLE GEAR"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -308,38 +284,21 @@ anchor_left = 0.5
 anchor_top = 0.28
 anchor_right = 0.5
 anchor_bottom = 0.52
-offset_left = -420.0
-offset_right = 420.0
+offset_left = -160.0
+offset_right = 160.0
 scale = Vector2(0.3, 0.3)
 
 [node name="Logo" type="TextureRect" parent="Panel/LogoContainer" index="0" unique_id=1473174428]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.3595238
-anchor_right = 0.6224763
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 0.11993408
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_piijc")
 expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
-
-[node name="Pencil" type="TextureRect" parent="Panel/LogoContainer" index="1" unique_id=1830771421]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.68
-anchor_top = 0.62
-anchor_right = 0.96
-anchor_bottom = 0.96
-offset_left = -15.841614
-offset_top = -23.58899
-offset_right = -15.841614
-offset_bottom = -23.58899
-texture = ExtResource("6_651hb")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="Title" type="Label" parent="Panel" index="2" unique_id=853179373]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 0)
@@ -353,7 +312,7 @@ offset_left = -700.0
 offset_right = 700.0
 scale = Vector2(0.88, 0.88)
 theme_type_variation = &"MainTitle"
-text = "Ink Maze"
+text = "Invisible Gear"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -438,6 +397,3 @@ color = Color(0.964706, 0.945098, 0.913725, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3" unique_id=1871871212]
 libraries/ = SubResource("AnimationLibrary_splash")
-
-[node name="PencilAnim" type="AnimationPlayer" parent="." index="4" unique_id=419018871]
-libraries/ = SubResource("AnimationLibrary_pencil_ls")
