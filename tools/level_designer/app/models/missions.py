@@ -27,6 +27,8 @@ SUM_GT = "sum_gt"
 SUM_GE = "sum_ge"
 NO_HINT = "no_hint"
 NO_UNDO = "no_undo"
+# Riêng Wall Builder: GỬI đúng ngay lần đầu (gửi sai 1 lần là hỏng nhiệm vụ)
+NO_WRONG_SUBMIT = "no_wrong_submit"
 
 PARAM_NONE = ""
 PARAM_STEPS = "steps"
@@ -83,6 +85,10 @@ MISSIONS: dict[str, tuple[str, str, str, str]] = {
     SUM_GE: ("Tổng số trên đường đi >= N", PARAM_SUM, "", "Buộc đi qua ô số lớn"),
     NO_HINT: ("Không dùng gợi ý", PARAM_NONE, "", "Không bấm nút GỢI Ý lần nào"),
     NO_UNDO: ("Không dùng hoàn tác", PARAM_NONE, "", "Không bấm nút UNDO lần nào"),
+    NO_WRONG_SUBMIT: (
+        "Gửi đúng ngay lần đầu", PARAM_NONE, "",
+        "Riêng Wall Builder: gửi SAI dù chỉ 1 lần là hỏng nhiệm vụ",
+    ),
 }
 
 # Thứ tự hiển thị trong combobox
@@ -103,6 +109,7 @@ ORDER: list[str] = [
     SUM_GE,
     NO_HINT,
     NO_UNDO,
+    NO_WRONG_SUBMIT,
 ]
 
 DEFAULT_TYPES: list[str] = [NO_WALL, STEPS_MAX, TIME_MAX]
@@ -117,6 +124,7 @@ NO_PARAM_TYPES: set[str] = {
     VISIT_ALL_NUMBERED,
     NO_HINT,
     NO_UNDO,
+    NO_WRONG_SUBMIT,
 }
 
 # Giá trị tham số mặc định theo loại

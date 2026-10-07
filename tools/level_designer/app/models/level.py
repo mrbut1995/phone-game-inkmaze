@@ -20,6 +20,7 @@ from dataclasses import dataclass, field
 from typing import Iterable
 
 from ..config import MIN_SIZE
+from . import challenge_rules as chrules
 from . import missions as chal
 
 Cell = tuple[int, int]
@@ -35,6 +36,12 @@ class LevelModel:
     chapter: int = 1
     mode_id: str = "play"
     difficulty: str = "medium"
+
+    ## LUẬT THỬ THÁCH (Challenge Mode) — CHỈ dùng khi mode_id = "challenge".
+    ## challenge = id luật (rỗng = không gắn) · challenge_param = số (0 = game tự tính).
+    ## Danh sách luật: app/models/challenge_rules.py (khớp scripts/modes/challenge_game_mode.gd).
+    challenge: str = ""
+    challenge_param: int = 0
 
     width: int = 3
     height: int = 3
@@ -443,6 +450,49 @@ class LevelModel:
             (chal.TIME_MAX, max(5, int(round(self.par_time)))),
         ]
 
+    # ------------------------------------------------------------------
+    # LUẬT THỬ THÁCH (CHALLENGE) — xem app/models/challenge_rules.py
+    # ------------------------------------------------------------------
+    def has_challenge(self) -> bool:
+        """Màn có gắn luật thử thách không (mode_id phải là "challenge" thì game mới dùng)."""
+        return bool(str(self.challenge or "").strip())
+
+    def set_challenge(self, rule_id: str, param: int = 0) -> bool:
+        """Gắn luật thử thách (rule_id rỗng = bỏ luật). Trả về True nếu có thay đổi.
+
+        `param <= 0` -> 0 = game tự tính theo luật/bàn cờ (xem `challenge_rules.suggested_param`).
+        Luật không có tham số thì param luôn được đưa về 0.
+        """
+        rule_id = str(rule_id or "").strip()
+        if not rule_id:
+            return self.clear_challenge()
+        if not chrules.is_valid(rule_id):
+            return False
+        try:
+            value = max(0, int(param))
+        except (TypeError, ValueError):
+            value = 0
+        if not chrules.has_param(rule_id):
+            value = 0
+        if self.challenge == rule_id and int(self.challenge_param) == value:
+            return False
+        self.challenge = rule_id
+        self.challenge_param = value
+        return True
+
+    def clear_challenge(self) -> bool:
+        """Bỏ luật thử thách (về "" + 0)."""
+        if not self.challenge and int(self.challenge_param) == 0:
+            return False
+        self.challenge = ""
+        self.challenge_param = 0
+        return True
+
+    def suggested_challenge_param(self) -> int:
+        """Gợi ý tham số cho luật đang gắn (chỉ để HIỂN THỊ — vào game tham số 0 tự tính lại)."""
+        return chrules.suggested_param(self.challenge, self.width, self.height,
+                                       self.max_steps, self.difficulty)
+
     def snapshot(self) -> dict:
         """Ảnh chụp trạng thái để phục vụ undo/redo."""
         return {
@@ -451,6 +501,8 @@ class LevelModel:
             "chapter": self.chapter,
             "mode_id": self.mode_id,
             "difficulty": self.difficulty,
+            "challenge": self.challenge,
+            "challenge_param": self.challenge_param,
             "width": self.width,
             "height": self.height,
             "start": tuple(self.start),

@@ -76,8 +76,12 @@ func _on_open() -> void:
 
 ## Nhãn mê cung của ván vừa thắng: "MAZE THƯỜNG" hoặc tên mode đặc biệt của ngày
 func _maze_label() -> String:
-	if str(data.get("daily_variant", "")) == "classic":
+	var variant := str(data.get("daily_variant", ""))
+	if variant == "classic":
 		return tr("STR_DAILY_WIN_CLASSIC")
+	if variant == "challenge":
+		# Game thử thách của ngày: tên luật (mode tự đổi `mode_name` theo luật đang gắn)
+		return str(data.get("daily_mode_name", ""))
 	var mode_id := str(data.get("daily_mode_id", ""))
 	if mode_id.is_empty():
 		return str(data.get("daily_mode_name", ""))

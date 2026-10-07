@@ -10,14 +10,14 @@ extends SceneTree
 ## 4. Nút SKIP: có trong CẢ HAI action bar (dọc/ngang) và CHỈ HIỆN khi ván này là ván màn.
 ## 5. KIỂU EDIT THEO CHẾ ĐỘ: Countdown Cost đọc chi phí tự đặt · Minesweeper giữ mìn GHIM
 ##    (bỏ mìn ghim nếu nó chặn hết đường) · Sum Path đọc điểm ô — và 'dungeon' bị loại khỏi màn.
-## 6. MỖI CHẾ ĐỘ 1 MÀN MẪU (13..20 — xem tools/level_designer/make_samples.py): chế độ chạy
+# 6. MỖI CHẾ ĐỘ 1 MÀN MẪU (13..21 — xem tools/level_designer/make_samples.py): chế độ chạy
 ##    ĐÚNG bàn nhà thiết kế vẽ, tường giữ nguyên, dữ liệu riêng của chế độ được tôn trọng.
 ## ============================================================================
 
 ## Màn mẫu: 13 = Minesweeper, 14 = Sum Path (xem tools/level_designer/make_samples.py)
 const LEVEL_SAMPLE := 13
 const LEVEL_SAMPLE_SUM := 14
-## MỌI chế độ có 1 màn mẫu: level_id -> mode_id (màn 15..20 thêm 2026-09-27)
+## MỌI chế độ có 1 màn mẫu: level_id -> mode_id (màn 15..20 thêm 2026-09-27; màn 21 = CHALLENGE 2026-10)
 const MODE_SAMPLES := {
 	13: "minesweeper",
 	14: "sum_path",
@@ -27,6 +27,7 @@ const MODE_SAMPLES := {
 	18: "fading_ink",
 	19: "one_stroke",
 	20: "wall_builder",
+	21: "challenge",
 }
 ## Hằng số gieo hạt giống của GameController._seed_level_run (level_id * 7919 + 13)
 const SEED_MULTIPLIER := 7919
@@ -331,7 +332,7 @@ func _section_5_mode_edits(gm: Node, lm: Node) -> void:
 # 6. MỖI CHẾ ĐỘ 1 MÀN MẪU: chế độ chạy trên ĐÚNG bàn của màn + dữ liệu riêng được tôn trọng
 # ---------------------------------------------------------------------------
 func _section_6_all_mode_samples(gm: Node, lm: Node) -> void:
-	print("\n--- 6. MOI CHE DO CO MAN MAU (13..20) ---")
+	print("\n--- 6. MOI CHE DO CO MAN MAU (13..21) ---")
 
 	var ids: Array = MODE_SAMPLES.keys()
 	ids.sort()
@@ -413,6 +414,15 @@ func _section_6_all_mode_samples(gm: Node, lm: Node) -> void:
 				_check(int(mode.call("total_cells")) == lvl.width * lvl.height,
 					"Man 19: che do PHU KIN duoc ca %d o (khong roi ve ban tu sinh)" % (lvl.width * lvl.height))
 				_check(_has_no_inner_wall(maze), "Man 19: ban trong (chi co vien ngoai) — du dieu kien phu kin")
+			"challenge":
+				# Màn 21: luật + tham số đọc từ LevelData (tool Level Designer ghi) — tham số 0 = tự tính
+				_check(str(mode.get("challenge_id")) == "walk_number_only",
+					"Man 21: luat lay tu LevelData (dang '%s')" % str(mode.get("challenge_id")))
+				_check(bool(mode.call("is_active")), "Man 21: thach thuc duoc KICH HOAT")
+				_check(int(mode.get("challenge_param")) == 0,
+					"Man 21: luat 'walk_number_only' KHONG dung tham so -> param giu 0 (%d)"
+						% int(mode.get("challenge_param")))
+				_check(_has_rule_route(maze, mode), "Man 21: co duong S->F chi qua o CO SO")
 			_:
 				pass
 
@@ -489,6 +499,8 @@ func _new_mode(mode_id: String, difficulty: String) -> BaseGameMode:
 				return OneStrokeGameMode.new(difficulty)
 		"wall_builder":
 			return WallBuilderGameMode.new(difficulty)
+		"challenge":
+			return ChallengeGameMode.new(difficulty)
 	return null
 
 
@@ -547,6 +559,31 @@ func _has_safe_route(maze: MazeData, mode: BaseGameMode) -> bool:
 			if maze.has_wall(cur, nxt):
 				continue
 			if mode != null and mode.has_method("is_mine") and bool(mode.call("is_mine", nxt)):
+				continue
+			seen[nxt] = true
+			queue.append(nxt)
+	return false
+
+
+## Còn đường S→F chỉ qua các ô HỢP LỆ theo luật "đi trên ô" không (walk_number_only/walk_empty_only)
+func _has_rule_route(maze: MazeData, mode: BaseGameMode) -> bool:
+	if maze == null or mode == null:
+		return false
+	var start := maze.get_start()
+	var end := maze.get_end()
+	var seen := {start: true}
+	var queue: Array[Vector2i] = [start]
+	while not queue.is_empty():
+		var cur: Vector2i = queue.pop_front()
+		if cur == end:
+			return true
+		for d: Vector2i in [Vector2i.RIGHT, Vector2i.DOWN, Vector2i.UP, Vector2i.LEFT]:
+			var nxt: Vector2i = cur + d
+			if seen.has(nxt) or not maze.is_in_bounds(nxt) or not maze.is_cell_active(nxt):
+				continue
+			if maze.has_wall(cur, nxt):
+				continue
+			if not bool(mode.call("cell_allowed_by_rule", nxt, maze)):
 				continue
 			seen[nxt] = true
 			queue.append(nxt)

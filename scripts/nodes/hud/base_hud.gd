@@ -20,11 +20,13 @@ extends Control
 ## ---------------------------------------------------------------------------
 ## Label đồng hồ ván (`Content/ModeInformation/Time/Value`)
 @export var time_value_node : Label
+
+@export var sub_value_node : Label
+
 ## Khối nội dung HUD (`Content`) — cần để NHƯỜNG input cho bàn cờ
 @export var content_root : Control
 ## Thanh nút hành động (`Content/ActionBar`) — mỗi HUD instance 1 thanh riêng
 @export var action_bar_node : ActionBar
-
 
 ## Gọi mỗi khi HUD cần vẽ lại (GameController._update_hud). ctx gồm:
 ##   title:String · subtitle:String · steps_remaining:int · elapsed_time:float

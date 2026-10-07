@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_00ya7"]
 [ext_resource type="PackedScene" uid="uid://cb348h6q1r8lf" path="res://nodes/hud/portrait/game/action_bar.tscn" id="2_6vbsf"]
 
-[node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node", "content_root", "action_bar_node") instance=ExtResource("1_hr3we")]
+[node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node", "sub_value_node", "content_root", "action_bar_node") instance=ExtResource("1_hr3we")]
 anchors_preset = 15
 anchor_top = 0.0
 anchor_right = 1.0
@@ -16,7 +16,8 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_00ya7")
-time_value_node = NodePath("Content/ModeInformation/Time/Value")
+time_value_node = NodePath("Content/ModeInformation/Time/HBoxContainer/Value")
+sub_value_node = NodePath("Content/ModeInformation/Time/HBoxContainer/Sub")
 content_root = NodePath("Content")
 action_bar_node = NodePath("Content/ActionBar")
 
@@ -65,35 +66,35 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Value" type="Label" parent="Content/ModeInformation/Time" index="1" unique_id=1109199695]
+[node name="HBoxContainer" type="HBoxContainer" parent="Content/ModeInformation/Time" index="1" unique_id=1333395965]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.17760628
-anchor_top = 0.38477495
-anchor_right = 0.9052674
-anchor_bottom = 0.7080672
-offset_top = -0.0430794
-offset_bottom = -0.0118408
+anchor_left = 0.17343679
+anchor_top = 0.36363637
+anchor_right = 1.0270001
+anchor_bottom = 0.768
+offset_right = -0.06460571
+offset_bottom = -0.03199768
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Content/ModeInformation/Time/HBoxContainer" index="0" unique_id=1109199695]
+layout_mode = 2
 theme_type_variation = &"HudTimeValue"
-theme_override_font_sizes/font_size = 23
+theme_override_font_sizes/font_size = 26
 text = "0:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Sub" type="Label" parent="Content/ModeInformation/Time" index="2" unique_id=2036591602]
+[node name="Sub" type="Label" parent="Content/ModeInformation/Time/HBoxContainer" index="1" unique_id=2036591602]
 visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.14800002
-anchor_top = 0.6627363
-anchor_right = 0.892
-anchor_bottom = 0.8167363
-offset_top = 0.0349541
-offset_bottom = 0.0374374
+layout_mode = 2
+size_flags_vertical = 1
 theme_type_variation = &"HudTimeSub"
-text = "STR_HUD_TIME_FREE"
-vertical_alignment = 1
+theme_override_font_sizes/font_size = 16
+text = "/0"
+vertical_alignment = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ActionBar" parent="Content" index="1" unique_id=1405900313 instance=ExtResource("2_6vbsf")]

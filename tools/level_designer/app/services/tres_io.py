@@ -48,6 +48,9 @@ def dumps(level: LevelModel) -> str:
         "chapter = %d" % int(level.chapter),
         "mode_id = %s" % _gd_string(level.mode_id),
         "difficulty = %s" % _gd_string(level.difficulty),
+        # LUẬT THỬ THÁCH (Challenge Mode) — chỉ áp dụng khi mode_id = "challenge"
+        "challenge = %s" % _gd_string(level.challenge),
+        "challenge_param = %d" % int(level.challenge_param),
         "width = %d" % int(level.width),
         "height = %d" % int(level.height),
         "start_pos = Vector2i(%d, %d)" % (int(level.start[0]), int(level.start[1])),
@@ -138,6 +141,11 @@ def loads(text: str) -> LevelModel:
             level.mode_id = _parse_gd_string(value)
         elif key == "difficulty":
             level.difficulty = _parse_gd_string(value)
+        elif key == "challenge":
+            # Giữ NGUYÊN id đọc được (kể cả id lạ) để validator báo lỗi rõ cho nhà thiết kế
+            level.challenge = _parse_gd_string(value).strip()
+        elif key == "challenge_param":
+            level.challenge_param = max(0, _to_int(value, 0))
         elif key == "width":
             level.width = max(2, _to_int(value, 3))
         elif key == "height":

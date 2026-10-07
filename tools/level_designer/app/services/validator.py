@@ -18,8 +18,9 @@ from ..config import (
     TOOL_VALUE_KEY,
     mode_edit_spec,
 )
+from ..models import challenge_rules as chrules
 from ..models import missions as chal
-from ..models.level import LevelModel
+from ..models.level import Cell, LevelModel
 from . import solver
 
 LEVEL_ERROR = "error"
@@ -207,6 +208,126 @@ def _validate_custom_values(level: LevelModel, info: dict) -> list[Issue]:
     return issues
 
 
+# ---------------------------------------------------------------------------
+# LUẬT THỬ THÁCH (CHALLENGE) — xem app/models/challenge_rules.py
+# Luật chỉ áp dụng khi mode_id = "challenge" (game: scripts/modes/challenge_game_mode.gd).
+# Vi phạm luật (hoặc quá hạn) là THUA NGAY; 2 luật "đi trên ô ..." cần màn có ĐƯỜNG hợp lệ.
+# ---------------------------------------------------------------------------
+def _walk_rule_path(level: LevelModel, walk_number: bool) -> list[Cell] | None:
+    """Đường S→F chỉ đi qua ô có số (hoặc chỉ ô KHÔNG số) — S/F luôn được phép.
+
+    Ô "có số" = số tường quanh ô > 0 (đúng như số hiển thị trong game).
+    Giống điều kiện sinh màn của chế độ challenge daily bên game.
+    """
+    def allowed(cell: Cell) -> bool:
+        if cell == level.start or cell == level.end:
+            return True                      # S/F luôn được phép (chặn 2 đầu thì không bao giờ tới F)
+        has_number = level.wall_count(cell) > 0
+        return has_number if walk_number else not has_number
+
+    return solver.path_filtered(level, allowed)
+
+
+def _validate_challenge(level: LevelModel, path_length: int) -> list[Issue]:
+    """Kiểm tra LUẬT THỬ THÁCH của màn (LevelData.challenge + challenge_param)."""
+    issues: list[Issue] = []
+    mode = str(level.mode_id or PLAY_MODE_ID).strip().lower()
+    rule = str(level.challenge or "").strip()
+    param = int(level.challenge_param)
+
+    if not rule:
+        if mode == "challenge":
+            issues.append(Issue(
+                LEVEL_WARNING,
+                "mode_id = 'challenge' nhưng CHƯA chọn luật → game chơi như Play Mode thường "
+                "(không có thử thách). Chọn 1 luật ở khối \"Thử thách (Challenge)\".",
+            ))
+        return issues
+
+    if not chrules.is_valid(rule):
+        issues.append(Issue(
+            LEVEL_ERROR,
+            "Luật thử thách không tồn tại: '%s' — xem danh sách luật trong khối \"Thử thách (Challenge)\"" % rule,
+        ))
+        return issues
+
+    if mode != "challenge":
+        issues.append(Issue(
+            LEVEL_WARNING,
+            "Luật thử thách '%s' CHỈ áp dụng khi mode_id = 'challenge' — hiện mode_id = '%s' "
+            "nên game BỎ QUA luật này" % (rule, mode),
+        ))
+        return issues
+
+    label = chrules.label(rule)
+    unit = chrules.unit(rule)
+    if chrules.has_param(rule):
+        low, high = chrules.param_bounds(rule)
+        if param != 0 and not low <= param <= high:
+            issues.append(Issue(
+                LEVEL_ERROR,
+                "Thử thách \"%s\": tham số %d ngoài khoảng %d..%d" % (label, param, low, high),
+            ))
+        elif param == 0:
+            suggestion = chrules.suggested_param(rule, level.width, level.height,
+                                                 level.max_steps, level.difficulty)
+            issues.append(Issue(
+                LEVEL_INFO,
+                "Thử thách \"%s\": tham số 0 = game tự tính (theo màn này ~%d %s)"
+                % (label, suggestion, unit),
+            ))
+        else:
+            issues.append(Issue(LEVEL_INFO, "Thử thách \"%s\": %d %s" % (label, param, unit)))
+    else:
+        issues.append(Issue(LEVEL_INFO, "Thử thách \"%s\"" % label))
+
+    if rule == chrules.MOVE_LIMIT:
+        limit = param if param > 0 else max(1, int(level.max_steps))
+        if path_length and limit < path_length:
+            issues.append(Issue(
+                LEVEL_ERROR,
+                "Thử thách \"%s\": %d bước < đường đi ngắn nhất (%d) → không thể thắng"
+                % (label, limit, path_length),
+            ))
+        elif path_length and limit == path_length:
+            issues.append(Issue(
+                LEVEL_WARNING,
+                "Thử thách \"%s\": %d bước ĐÚNG BẰNG đường ngắn nhất (không có dự phòng)"
+                % (label, limit),
+            ))
+    elif rule == chrules.COUNTDOWN and param > 0 and path_length and param < path_length:
+        issues.append(Issue(
+            LEVEL_WARNING,
+            "Thử thách \"%s\": %d giây cho đường %d bước (< 1 giây/bước) — gần như không thể"
+            % (label, param, path_length),
+        ))
+    elif rule == chrules.STEP_TIMER and 0 < param < 4:
+        issues.append(Issue(
+            LEVEL_WARNING,
+            "Thử thách \"%s\": mỗi bước chỉ %d giây — quá gấp với người chơi" % (label, param),
+        ))
+    elif rule in (chrules.WALK_NUMBER_ONLY, chrules.WALK_EMPTY_ONLY):
+        want_number = rule == chrules.WALK_NUMBER_ONLY
+        route = _walk_rule_path(level, walk_number=want_number)
+        cell_kind = "CÓ số" if want_number else "KHÔNG số"
+        if route is None:
+            hint = ("vẽ thêm tường quanh các ô trên đường (ô 0 tường quanh nó = ô không số)"
+                    if want_number else
+                    "cần hành lang các ô trống quanh nó (0 tường) nối S tới F")
+            issues.append(Issue(
+                LEVEL_ERROR,
+                "Thử thách \"%s\": KHÔNG có đường S→F nào chỉ đi qua ô %s → không thể thắng (S/F luôn đi được). "
+                "Gợi ý: %s" % (label, cell_kind, hint),
+            ))
+        else:
+            issues.append(Issue(
+                LEVEL_INFO,
+                "Thử thách \"%s\": có đường hợp lệ %d bước (chỉ qua ô %s)"
+                % (label, len(route) - 1, cell_kind),
+            ))
+    return issues
+
+
 def validate(level: LevelModel) -> list[Issue]:
     """Trả về danh sách vấn đề (rỗng = hợp lệ hoàn toàn)."""
     issues: list[Issue] = []
@@ -266,6 +387,7 @@ def validate(level: LevelModel) -> list[Issue]:
     if str(level.mode_id or PLAY_MODE_ID).strip().lower() != PLAY_MODE_ID:
         issues.extend(_validate_mode(level, info))
     issues.extend(_validate_custom_values(level, info))
+    issues.extend(_validate_challenge(level, path_length=int(path_length)))
     if int(info["empty_cells"]) > 0:
         issues.append(Issue(
             LEVEL_INFO,

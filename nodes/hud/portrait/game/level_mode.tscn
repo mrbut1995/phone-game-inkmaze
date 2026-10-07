@@ -5,4 +5,4 @@
 
 [node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_2ygqj")]
 script = ExtResource("2_jkgoi")
-time_value_node = NodePath("Content/ModeInformation/Time/Value")
+time_value_node = NodePath("Content/ModeInformation/Time/HBoxContainer/Value")

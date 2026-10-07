@@ -176,6 +176,35 @@ class GuiSmokeTest(unittest.TestCase):
             window.update()
             route = window.editor.resolve_path_for_values()[0]
             self.assertEqual(sum(self.app.editor.level.custom_value(cell) for cell in route[1:-1]), 5)
+
+            # CHALLENGE: gắn luật thử thách qua khối "Thử thách (Challenge)" trong bảng phải
+            from app.models import challenge_rules as chrules
+
+            window.inspector.var_mode.set("challenge")
+            window.inspector._commit("mode_id", "challenge")
+            window.update()
+            self.assertEqual(str(window.inspector.combo_challenge.cget("state")), "readonly",
+                             "mode_id = challenge -> ô chọn luật phải bật")
+            window.inspector.var_challenge_rule.set(chrules.to_combo(chrules.MOVE_LIMIT))
+            window.inspector._on_challenge_rule()
+            window.update()
+            self.assertEqual(self.app.editor.level.challenge, chrules.MOVE_LIMIT)
+            self.assertEqual(str(window.inspector.spin_challenge_param.cget("state")), "normal",
+                             "luật có tham số -> ô tham số phải bật")
+            window.inspector.var_challenge_param.set(12)
+            window.inspector._on_challenge_param()
+            self.assertEqual(self.app.editor.level.challenge_param, 12)
+            # Chọn lại "— Không gắn luật —" -> bỏ luật
+            window.inspector.var_challenge_rule.set(chrules.NONE_LABEL)
+            window.inspector._on_challenge_rule()
+            window.update()
+            self.assertEqual(self.app.editor.level.challenge, "")
+            # Về mode play -> ô chọn luật bị khoá
+            window.inspector.var_mode.set("play")
+            window.inspector._commit("mode_id", "play")
+            window.update()
+            self.assertEqual(str(window.inspector.combo_challenge.cget("state")), "disabled",
+                             "mode play -> ô chọn luật khoá (luật không được áp dụng)")
         finally:
             window.destroy()
 

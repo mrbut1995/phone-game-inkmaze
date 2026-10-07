@@ -58,6 +58,7 @@ const HUD_FOG_OF_WAR := preload("res://nodes/hud/portrait/game/fog_of_war_hud.ts
 const HUD_ONE_STROKE := preload("res://nodes/hud/portrait/game/one_stroke_hud.tscn")
 ## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Nhiệm vụ
 const HUD_WALL_BUILDER := preload("res://nodes/hud/portrait/game/wall_builder_hud.tscn")
+const HUD_CHALLENGE := preload("res://nodes/hud/portrait/game/challenge_hud.tscn")
 
 ## Bản NGANG của từng chế độ (thẻ nằm trên · action bar 2 hàng nằm dưới, trong cùng HUD)
 const HUD_LAND_LEVEL := preload("res://nodes/hud/landscape/game/level_mode.tscn")
@@ -70,6 +71,7 @@ const HUD_LAND_FADING_INK := preload("res://nodes/hud/landscape/game/fading_ink_
 const HUD_LAND_FOG_OF_WAR := preload("res://nodes/hud/landscape/game/fog_of_war_hud.tscn")
 const HUD_LAND_ONE_STROKE := preload("res://nodes/hud/landscape/game/one_stroke_hud.tscn")
 const HUD_LAND_WALL_BUILDER := preload("res://nodes/hud/landscape/game/wall_builder_hud.tscn")
+const HUD_LAND_CHALLENGE := preload("res://nodes/hud/landscape/game/challenge_hud.tscn")
 #@export var game_mode : BaseGameMode
 ## HUD đang gắn thuộc bản NGANG hay bản DỌC (đổi hướng màn hình là phải đổi cả biến thể HUD)
 var _hud_variant_landscape := false
@@ -418,6 +420,8 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 			return _hud_variant(HUD_DUNGEON, HUD_LAND_DUNGEON)
 		"daily_classic":
 			return _hud_variant(HUD_LEVEL, HUD_LAND_LEVEL)
+		"daily_challenge":
+			return _hud_variant(HUD_CHALLENGE, HUD_LAND_CHALLENGE)
 		"minesweeper":
 			return _hud_variant(HUD_MINESWEEP, HUD_LAND_MINESWEEP)
 		"sum_path":
@@ -434,6 +438,8 @@ func _hud_scene_for(mode_name: String) -> PackedScene:
 			return _hud_variant(HUD_ONE_STROKE, HUD_LAND_ONE_STROKE)
 		"wall_builder":
 			return _hud_variant(HUD_WALL_BUILDER, HUD_LAND_WALL_BUILDER)
+		"challenge":
+			return _hud_variant(HUD_CHALLENGE, HUD_LAND_CHALLENGE)
 		_:
 			return _hud_variant(HUD_LEVEL, HUD_LAND_LEVEL)
 
@@ -444,6 +450,8 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return DungeonHUD
 		"daily_classic":
 			return LevelHUD
+		"daily_challenge":
+			return ChallengeHUD
 		"minesweeper":
 			return MinesweepHUD
 		"sum_path":
@@ -460,6 +468,8 @@ func _hud_class_for(mode_name: String) -> GDScript:
 			return OneStrokeHUD
 		"wall_builder":
 			return WallBuilderHUD
+		"challenge":
+			return ChallengeHUD
 		_:
 			return LevelHUD
 

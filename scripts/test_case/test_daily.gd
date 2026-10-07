@@ -1,12 +1,13 @@
 extends SceneTree
 ## ============================================================================
-## Test: DAILY MISSION (mô hình mới)
-##  1. DailyManager: 4 nhiệm vụ/ngày (3 maze thường + 1 maze đặc biệt), thưởng XU
+## Test: DAILY MISSION (mô hình "3 GAME + 1 SPECIAL", 2026-10)
+##  1. DailyManager: 4 nhiệm vụ/ngày (3 GAME + 1 maze đặc biệt), thưởng XU
 ##  1b. Mở khoá ngày bỏ lỡ bằng Xu (unlock_day)
-##  2. GameManager: prepare_daily_run("classic"/"special") -> mode + variant đúng
-##  3. Màn Daily: 4 hàng, chọn ngày chỉ XEM (không nhảy màn), nút HOÀN THÀNH, footer Xu,
-##     nút CTA đổi thành "MỞ KHOÁ: 50 XU" cho ngày bỏ lỡ
+##  1c. Kế hoạch 3 GAME của ngày: deterministic + luật hợp lệ + không trùng luật trong ngày
+##  2. GameManager: prepare_daily_run("classic"/"challenge"/"special") + prepare_daily_game
+##  3. Màn Daily: 4 hàng, hàng 1..3 = "TRÒ CHƠI n · <tên>", chọn ngày chỉ XEM, footer Xu, CTA mở khoá
 ##  4. Popup winning_daily: nút "VỀ DAILY", Xu thay Sao, signal đúng
+##  5. Chơi thật 1 GAME CHALLENGE + 1 GAME STANDARD của ngày -> đánh dấu ĐÚNG ô (bit) của game
 ## ============================================================================
 
 var _failed := 0
@@ -41,9 +42,11 @@ func _init() -> void:
 
 	_section_1_manager(dm, arch)
 	_section_1b_unlock(dm, arch)
+	_section_1c_day_games(dm)
 	_section_2_game_manager(gm)
 	await _section_3_scene(gm, dm, arch)
 	await _section_4_popup(dm)
+	await _section_5_game_run(gm, dm)
 
 	# Khôi phục dữ liệu người chơi
 	dm.call("import_progress", _daily_backup)
@@ -165,7 +168,59 @@ func _section_1b_unlock(dm: Node, arch: Node) -> void:
 
 
 # ---------------------------------------------------------------------------
-# 2. GameManager: chuẩn bị ván daily classic / special
+# 1c. Kế hoạch 3 GAME của ngày (DailyManager.get_day_games)
+# ---------------------------------------------------------------------------
+func _section_1c_day_games(dm: Node) -> void:
+	print("--- 1c. Ke hoach 3 GAME cua ngay ---")
+	var plan: Array = dm.call("get_day_games", 10)
+	_check(plan.size() == 3, "Moi ngay co dung 3 GAME (dang %d)" % plan.size())
+
+	var again: Array = dm.call("get_day_games", 10)
+	var same := plan.size() == again.size()
+	for i in mini(plan.size(), again.size()):
+		if _game_key(plan[i]) != _game_key(again[i]):
+			same = false
+	_check(same, "Cung ngay -> cung ke hoach (deterministic)")
+
+	var valid_mode := true
+	var valid_rule := true
+	var used_rules := {}
+	var duplicate := false
+	for entry in plan:
+		var e: Dictionary = entry as Dictionary
+		var mode := str(e.get("mode", ""))
+		var cid := str(e.get("challenge_id", ""))
+		if mode == "standard":
+			if not cid.is_empty():
+				valid_rule = false
+		elif mode == "challenge":
+			if not ChallengeGameMode.CHALLENGE_IDS.has(cid):
+				valid_rule = false
+			if used_rules.has(cid):
+				duplicate = true
+			used_rules[cid] = true
+		else:
+			valid_mode = false
+	_check(valid_mode, "Mode moi slot = 'standard' hoac 'challenge'")
+	_check(valid_rule, "challenge_id hop le (rong voi standard; thuoc CHALLENGE_IDS voi challenge)")
+	_check(not duplicate, "Trong 1 ngay cac luat challenge khong trung nhau")
+
+	var changed := false
+	for d in range(11, 41):
+		var other: Array = dm.call("get_day_games", d)
+		for i in mini(plan.size(), other.size()):
+			if _game_key(other[i]) != _game_key(plan[i]):
+				changed = true
+	_check(changed, "Cac ngay khac -> ke hoach doi (khong lap 1 kieu)")
+
+
+func _game_key(entry: Variant) -> String:
+	var e: Dictionary = entry as Dictionary
+	return "%s|%s" % [str(e.get("mode", "")), str(e.get("challenge_id", ""))]
+
+
+# ---------------------------------------------------------------------------
+# 2. GameManager: chuẩn bị ván daily (classic / challenge / special)
 # ---------------------------------------------------------------------------
 func _section_2_game_manager(gm: Node) -> void:
 	print("--- 2. GameManager: daily variant ---")
@@ -183,13 +238,42 @@ func _section_2_game_manager(gm: Node) -> void:
 	_check(special_mode == expected, "Maze đặc biệt -> mode xoay vòng '%s'" % expected)
 	_check(str(gm.get("daily_variant")) == "special", "daily_variant = special")
 
+	# GAME 0..2 của ngày: prepare_daily_game -> mode theo kế hoạch (standard/challenge)
+	var plan: Array = []
+	var dm_node: Node = root.get_node_or_null("DailyManager")
+	if dm_node != null:
+		var raw: Variant = dm_node.call("get_day_games", 10)
+		if raw is Array:
+			plan = raw as Array
+	for i in mini(plan.size(), 3):
+		var entry: Dictionary = plan[i] as Dictionary
+		var mode_id := str(gm.call("prepare_daily_game", 10, i))
+		var want := "daily_challenge" if str(entry.get("mode", "")) == "challenge" else "daily_classic"
+		_check(mode_id == want, "prepare_daily_game(10, %d) -> '%s' (nhan '%s')" % [i, want, mode_id])
+		_check(int(gm.get("daily_game")) == i, "daily_game = %d" % i)
+		var cid := str(gm.get("daily_challenge_id"))
+		if want == "daily_challenge":
+			_check(cid == str(entry.get("challenge_id", "")),
+				"daily_challenge_id = '%s' (theo ke hoach)" % cid)
+		else:
+			_check(cid.is_empty(), "Game standard: daily_challenge_id rong")
+
+	var challenge_mode := str(gm.call("prepare_daily_run", 10, "challenge"))
+	_check(challenge_mode == "daily_challenge", "prepare_daily_run('challenge') -> 'daily_challenge'")
+	_check(str(gm.get("daily_variant")) == "challenge", "daily_variant = challenge")
+	_check(int(gm.get("daily_game")) == -1, "prepare_daily_run dat daily_game = -1 (khong thuoc game nao)")
+
 	# Chơi màn thường / dungeon phải xoá cờ Daily
 	gm.call("prepare_mode_run", "play", "medium", true, 0)
 	_check(str(gm.get("daily_variant")) == "", "prepare_mode_run xoa daily_variant")
+	_check(int(gm.get("daily_game")) == -1 and str(gm.get("daily_challenge_id")).is_empty(),
+		"prepare_mode_run xoa daily_game + daily_challenge_id")
 
 	gm.set("current_mode", saved_mode)
 	gm.set("daily_variant", saved_variant)
 	gm.set("selected_daily_day", saved_day)
+	gm.set("daily_game", -1)
+	gm.set("daily_challenge_id", "")
 
 
 # ---------------------------------------------------------------------------
@@ -212,8 +296,17 @@ func _section_3_scene(gm: Node, dm: Node, arch: Node) -> void:
 	if row0 != null and row3 != null:
 		_check(row0.get_node("Tag").visible == false, "Hang maze thuong KHONG co badge SPECIAL MODE")
 		_check(row3.get_node("Tag").visible == true, "Hang 4 (maze dac biet) CO badge SPECIAL MODE")
-		_check(row0.title_label.text == tr("STR_DAILY_MISSION_NO_WALL_TITLE"),
-			"Hang 1 = nhiem vu 'khong dam tuong' (nhan '%s')" % row0.title_label.text)
+		# Hàng 1..3 = GAME của ngày: "TRÒ CHƠI n · <tên>" (tên theo kế hoạch ngày)
+		var plan: Array = dm.call("get_day_games", today)
+		var entry0: Dictionary = {}
+		if plan.size() > 0 and plan[0] is Dictionary:
+			entry0 = plan[0] as Dictionary
+		var name0 := tr("STR_DAILY_WIN_CLASSIC")
+		var key0 := str(ChallengeGameMode.NAME_KEYS.get(str(entry0.get("challenge_id", "")), ""))
+		if str(entry0.get("mode", "")) == "challenge" and not key0.is_empty():
+			name0 = tr(key0)
+		_check(row0.title_label.text == tr("STR_DAILY_GAME_TITLE").format([1, name0]),
+			"Hang 1 = 'TRO CHOI 1 · <ten>' (nhan '%s')" % row0.title_label.text)
 		_check(int(row3.index) == 3, "Hang 4 index = 3")
 
 	# Chọn ngày khác: chỉ đổi ngày đang xem, KHÔNG nhảy vào màn chơi
@@ -422,6 +515,113 @@ func _section_4_popup(dm: Node) -> void:
 
 	scene.queue_free()
 	await process_frame
+
+
+# ---------------------------------------------------------------------------
+# 5. Chơi thật 1 GAME của ngày -> đánh dấu ĐÚNG ô (bit) của game đó
+# ---------------------------------------------------------------------------
+func _section_5_game_run(gm: Node, dm: Node) -> void:
+	print("--- 5. Thang 1 GAME cua ngay -> danh dau dung game ---")
+	var game_day := 1
+	var game_index := -1
+	var std_day := 1
+	var std_index := -1
+	for d in range(1, 61):
+		var plan: Array = dm.call("get_day_games", d)
+		for i in mini(plan.size(), 3):
+			var e: Dictionary = plan[i] as Dictionary
+			var mode := str(e.get("mode", ""))
+			if game_index < 0 and mode == "challenge":
+				game_day = d
+				game_index = i
+			if std_index < 0 and mode == "standard":
+				std_day = d
+				std_index = i
+	_check(game_index >= 0, "Co ngay chua GAME CHALLENGE trong 60 ngay dau")
+	_check(std_index >= 0, "Co ngay chua GAME STANDARD trong 60 ngay dau")
+
+	var scene: GameScene = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	root.add_child(scene)
+	await process_frame
+	await process_frame
+
+	# --- GAME CHALLENGE: mode daily_challenge + ĐÚNG luật của ngày ---
+	if game_index >= 0:
+		dm.call("set_day_mission_mask", game_day, 0)
+		gm.call("prepare_daily_game", game_day, game_index)
+		scene.switch_mode("daily_challenge", "medium")
+		await process_frame
+		await process_frame
+		var plan: Array = dm.call("get_day_games", game_day)
+		var want_rule := str((plan[game_index] as Dictionary).get("challenge_id", ""))
+		var mode := scene.game_mode_controller.game_mode as ChallengeGameMode
+		_check(mode is DailyChallengeGameMode, "Mode 'daily_challenge' -> DailyChallengeGameMode")
+		if mode != null:
+			_check(mode.challenge_id == want_rule,
+				"Luat cua ngay '%s' duoc gan (nhan '%s')" % [want_rule, mode.challenge_id])
+			var grid := scene.game_controller.grid_controller
+			var path := _rule_path(grid.maze, mode)
+			_check(not path.is_empty(), "Maze trong ngay CO duong thang theo luat '%s'" % want_rule)
+			for pos: Vector2i in path:
+				grid.try_move_to(pos)
+			await process_frame
+			await process_frame
+			_check(int(dm.call("is_mission_done", game_day, game_index)) == 1,
+				"Thang game %d cua ngay %d -> danh dau dung o game do" % [game_index, game_day])
+		Popups.close_all()
+		await process_frame
+
+	# --- GAME STANDARD: mode daily_classic -> thắng -> đánh dấu ô của game ---
+	if std_index >= 0:
+		dm.call("set_day_mission_mask", std_day, 0)
+		gm.call("prepare_daily_game", std_day, std_index)
+		scene.switch_mode("daily_classic", "medium")
+		await process_frame
+		await process_frame
+		var mode2 := scene.game_mode_controller.game_mode
+		_check(mode2 != null and mode2.mode_id == "daily_classic", "Game standard -> mode 'daily_classic'")
+		var grid2 := scene.game_controller.grid_controller
+		var path2 := _rule_path(grid2.maze, null)
+		for pos2: Vector2i in path2:
+			grid2.try_move_to(pos2)
+		await process_frame
+		await process_frame
+		_check(int(dm.call("is_mission_done", std_day, std_index)) == 1,
+			"Thang game standard %d cua ngay %d -> danh dau dung o game do" % [std_index, std_day])
+		Popups.close_all()
+		await process_frame
+
+	scene.queue_free()
+	await process_frame
+
+
+## BFS tới F, chỉ qua ô hợp luật walk_* (mode = null -> đường thường)
+func _rule_path(maze: MazeData, mode: ChallengeGameMode) -> Array[Vector2i]:
+	var start := maze.get_start()
+	var queue: Array[Vector2i] = [start]
+	var came := {start: start}
+	while not queue.is_empty():
+		var cur: Vector2i = queue.pop_front()
+		if cur == maze.get_end():
+			break
+		for dir: Vector2i in [Vector2i.RIGHT, Vector2i.LEFT, Vector2i.UP, Vector2i.DOWN]:
+			var next: Vector2i = cur + dir
+			if next.x < 0 or next.y < 0 or next.x >= maze.width or next.y >= maze.height:
+				continue
+			if came.has(next) or maze.has_wall(cur, next):
+				continue
+			if mode != null and mode.is_walk_rule() and not mode.cell_allowed_by_rule(next, maze):
+				continue
+			came[next] = cur
+			queue.append(next)
+	var path: Array[Vector2i] = []
+	if not came.has(maze.get_end()):
+		return path
+	var walk := maze.get_end()
+	while walk != start:
+		path.push_front(walk)
+		walk = came[walk]
+	return path
 
 
 # ---------------------------------------------------------------------------

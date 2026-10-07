@@ -476,7 +476,9 @@ const HUD_FOLDERS := [
 ]
 ## Bản NGANG: ActionBar nằm TRONG LAYOUT (cùng cột dọc với bàn cờ), không nằm trong HUD —
 ## `game.gd` gán `hud.action_bar_node = layout.landscape_action_bar` lúc chạy nên scene để trống là ĐÚNG.
-const HUD_LANDSCAPE_OPTIONAL := ["action_bar_node"]
+## Khối `Time` của bản NGANG chỉ có Head + Value (KHÔNG có Sub) — script HUD tự bỏ qua khi null
+## (ChallengeHUD ghép Sub vào Value), nên `sub_value_node` cũng để trống hợp lệ ở hướng ngang.
+const HUD_LANDSCAPE_OPTIONAL := ["action_bar_node", "sub_value_node"]
 ## Scene HUD TRƯU TƯỢNG (chưa có `Time` riêng của bản NGANG ⇒ node do từng HUD chế độ khai).
 ## Bỏ qua scene này khi kiểm export: mọi HUD CHẾ ĐỘ đều được kiểm riêng.
 const HUD_ABSTRACT_SCENES := ["game_hud.tscn"]

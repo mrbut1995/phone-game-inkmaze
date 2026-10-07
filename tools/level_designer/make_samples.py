@@ -4,14 +4,21 @@ Chạy:
     cd tools/level_designer
     python make_samples.py            # ghi các màn mẫu vào resources/levels/
     python make_samples.py --dry-run  # chỉ in kết quả kiểm tra, không ghi file
+    python make_samples.py --only 21  # chỉ ghi 1 (hoặc vài) màn mẫu: --only 21,22
 
-Màn mẫu nằm ở chương 2 (level_10..level_14) nên không đụng 9 màn gốc của chương 1.
+Màn mẫu nằm ở chương 2 (level_10..level_21) nên không đụng 9 màn gốc của chương 1.
 Mỗi màn đều được kiểm tra bằng validator: PHẢI có đường đi từ S tới F.
 
 Khóa `"mode"` trong `SAMPLES` = CHẾ ĐỘ CHƠI của màn (mặc định "play"):
     · "play"          — mê cung thường.
     · id Special khác — game chạy chế độ đó TRÊN ĐÚNG BÀN NÀY (xem app/config.py + README).
       Màn 13 = minesweeper, màn 14 = sum_path là 2 màn mẫu cho tính năng này.
+
+Khóa `"challenge"` = LUẬT THỬ THÁCH (chỉ dùng khi "mode": "challenge"): (id_luật, tham_số).
+    · id: countdown · move_limit · step_timer · no_tool · no_move_overlapped ·
+          walk_number_only · walk_empty_only · backtrack_limit (xem app/models/challenge_rules.py)
+    · tham số 0 = game tự tính theo luật/bàn cờ/độ khó.
+    Màn 21 = challenge "chỉ đi trên ô có số" — validator kiểm tra màn CÓ đường hợp lệ.
 
 Khóa `"custom_values"` = KIỂU EDIT RIÊNG của chế độ: {(x, y): giá trị} — vd minesweeper ghim mìn,
 sum_path/countdown_cost tô điểm ô/chi phí (ô không tô thì game tự sinh).
@@ -306,6 +313,33 @@ SAMPLES: dict[int, dict] = {
             ("h", 2, 1, False),
         ],
     },
+    21: {
+        # MÀN MẪU CHALLENGE MODE: 1 luật thử thách — vi phạm là thua ngay.
+        # Luật "chỉ đi trên ô CÓ số": các ô trên đường S→F đều có ≥1 tường quanh nó
+        # (→ hiện số), còn lại đường nào qua ô KHÔNG số cũng không bị chặn kín.
+        "title": "Level 2-12 · Challenge — chỉ đi trên ô có số",
+        "difficulty": "medium",
+        "chapter": 2,
+        "mode": "challenge",
+        # id luật + tham số (0 = game tự tính; luật này không cần tham số)
+        "challenge": ("walk_number_only", 0),
+        "shape": ["######"] * 5,
+        "start": (0, 4),
+        "end": (5, 0),
+        "walls": [
+            # Cho các ô hàng dưới (1,4)..(3,4) mỗi ô 1 tường phía trên → có số
+            ("h", 1, 4, True),
+            ("h", 2, 4, True),
+            ("h", 3, 4, True),
+            # Chặn lối rẽ phải ở (4,4) + cho (4,4) có số
+            ("v", 5, 4, True),
+            # Cột x=4 đi lên: mỗi ô 1 tường bên trái → có số; (4,0) rẽ phải tới F
+            ("v", 4, 3, True),
+            ("v", 4, 2, True),
+            ("v", 4, 1, True),
+            ("v", 4, 0, True),
+        ],
+    },
 }
 
 
@@ -346,6 +380,13 @@ def build_sample(sample: dict) -> object:
     for slot, entry in enumerate(sample.get("missions", [])[:chal.MAX_PER_LEVEL]):
         type_id, param = entry
         level.set_mission(slot, str(type_id), int(param))
+
+    # 5b. LUẬT THỬ THÁCH (Challenge Mode): ("walk_number_only", 0) — chỉ dùng với "mode": "challenge"
+    challenge = sample.get("challenge")
+    if challenge:
+        rule_id, param = challenge
+        if not level.set_challenge(str(rule_id), int(param)):
+            raise ValueError("luật thử thách không hợp lệ: %s" % rule_id)
 
     # 6. TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI ("path_values") — cùng luật với nút Ctrl+Enter của tool:
     #    dùng đường NGẮN NHẤT của màn, bỏ 2 đầu S/F, chia theo TỔNG hoặc cấp mực theo bước.
@@ -394,14 +435,26 @@ def paint_path_values(level, cfg: dict) -> int:
     return sum(numbers)
 
 
+def _parse_only() -> set[int]:
+    """Đọc cờ `--only 21` / `--only 21,22` (rỗng = làm TẤT CẢ màn mẫu)."""
+    args = sys.argv
+    if "--only" not in args:
+        return set()
+    index = args.index("--only")
+    if index + 1 >= len(args):
+        return set()
+    return {int(part) for part in args[index + 1].split(",") if part.strip()}
+
+
 def main() -> int:
     dry_run = "--dry-run" in sys.argv
+    only = _parse_only()
     repo = LevelRepository()
     print("Ghi màn mẫu vào: %s" % repo.levels_dir)
     failures = 0
     used_ids: set[int] = set()
 
-    for level_id in sorted(SAMPLES):
+    for level_id in [i for i in sorted(SAMPLES) if not only or i in only]:
         sample = dict(SAMPLES[level_id])
         sample["_id"] = level_id
         # Đặt lại id để create_level dùng đúng số (vd 10 -> "Level 1-10")
@@ -428,6 +481,10 @@ def main() -> int:
             painted = [cell for cell in route[1:-1] if level.custom_value(cell) > 0]
             print("    tô giá trị theo đường: %d ô · tổng = %d"
                   % (len(painted), sum(level.custom_value(cell) for cell in painted)))
+        if sample.get("challenge"):
+            rule_id, param = sample["challenge"]
+            print("    luật thử thách: %s · tham số %d (0 = game tự tính)"
+                  % (rule_id, int(param)))
         for issue in issues:
             print("    %s" % issue.format())
 
@@ -444,7 +501,8 @@ def main() -> int:
     if failures:
         print("\nCÓ %d màn mẫu KHÔNG hợp lệ - cần sửa lại thiết kế." % failures)
         return 1
-    print("\nXong: %d màn mẫu hợp lệ%s." % (len(SAMPLES), " (dry-run, chưa ghi file)" if dry_run else ""))
+    count = len(only) if only else len(SAMPLES)
+    print("\nXong: %d màn mẫu hợp lệ%s." % (count, " (dry-run, chưa ghi file)" if dry_run else ""))
     return 0
 
 

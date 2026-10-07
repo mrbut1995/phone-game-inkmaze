@@ -127,8 +127,9 @@ func try_move_to(pos: Vector2i) -> void:
 		if hazard_type == "mine":
 			var mine_pos: Vector2i = eval_result.get("pos", pos)
 			board_view.show_mine_hit(mine_pos)
-		elif hazard_type == "revisit":
-			# One Stroke: đạp lên ô ĐÃ ĐI = thua ngay, KHÔNG vẽ thêm đoạn tường gãy
+		elif hazard_type == "revisit" or hazard_type.begins_with("challenge_"):
+			# One Stroke đi lại ô cũ / Challenge bước SAI LOẠI ô: chỉ PULSE ô,
+			# KHÔNG vẽ thêm đoạn tường gãy (không phải đâm tường thật)
 			board_view.pulse_cell(pos)
 		else:
 			board_view.show_wall_hit(from_cell, pos)

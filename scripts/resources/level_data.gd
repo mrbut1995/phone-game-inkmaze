@@ -11,6 +11,13 @@ extends Resource
 @export var mode_id: String = "play"
 @export var difficulty: String = "medium"
 
+## CHALLENGE MODE: màn này gắn THỬ THÁCH nào ("" = không gắn). Id hợp lệ:
+## scripts/modes/challenge_game_mode.gd — countdown · move_limit · step_timer · no_tool ·
+## no_move_overlapped · walk_number_only · walk_empty_only · backtrack_limit.
+## `challenge_param` = số giây / số bước / số lượt tuỳ luật (0 = game tự tính mặc định).
+@export var challenge: String = ""
+@export var challenge_param: int = 0
+
 @export var width: int = 3
 @export var height: int = 3
 @export var start_pos: Vector2i = Vector2i(0, 2)
