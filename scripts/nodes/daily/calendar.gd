@@ -9,8 +9,8 @@ extends Control
 
 signal day_selected(day: int)
 
-const COLS := 7
-const ROWS := 5
+@export var COLS := 7
+@export var ROWS := 5
 const DOW_KEYS: Array[String] = [
 	"STR_DOW_MON", "STR_DOW_TUE", "STR_DOW_WED", "STR_DOW_THU",
 	"STR_DOW_FRI", "STR_DOW_SAT", "STR_DOW_SUN",

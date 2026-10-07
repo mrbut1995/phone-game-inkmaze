@@ -7,9 +7,9 @@ extends BaseInteractivePathTutorial
 ## Kế thừa BaseInteractivePathTutorial (SOLID - OCP/SRP).
 ## ============================================================================
 
-const START_POS := Vector2i(0, 0)
-const FINISH_POS := Vector2i(1, 1)
-const WALL_LATTICE := Vector2i(1, 0)
+@export var START_POS := Vector2i(0, 0)
+@export var FINISH_POS := Vector2i(1, 1)
+@export var WALL_LATTICE := Vector2i(1, 0)
 
 
 func _init_tutorial() -> void:

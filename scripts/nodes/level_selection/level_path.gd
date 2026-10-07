@@ -1,11 +1,12 @@
 class_name LevelMapPath
 extends Node2D
 ## ============================================================================
-## LevelMapPath — ĐƯỜNG NỐI LIỀN MẠCH giữa TẤT CẢ các nút màn (road map)
+## LevelMapPath — ĐƯỜNG NỐI UỐN LƯỢN giữa TẤT CẢ các nút màn (road map)
 ##
-## MỘT đường duy nhất uốn lượn qua đúng tâm mọi nút (đường cong Catmull-Rom với tiếp
-## tuyến liên tục tại từng nút) — không còn từng cung rời ghép theo cặp nên không có
-## "khúc"/gãy góc giữa các đoạn nối.
+## MỘT đường duy nhất uốn lượn qua đúng tâm mọi nút: mỗi đoạn nối 2 nút được chèn
+## thêm 1 ĐIỂM UỐN ở giữa, lệch sang 2 bên XEN KẼ ⇒ đường cong dạng chữ S liên
+## tiếp (không phải đường thẳng nối nút). Toàn bộ đi qua 1 đường cong Catmull-Rom
+## nên không có "khúc"/gãy góc ở các mối nối.
 ##
 ## Trạng thái thể hiện qua màu / kiểu nét TỪNG ĐOẠN (đoạn i nối nút i → nút i+1):
 ##   COMPLETE  → nét liền đậm màu đỏ ink (#D84444); các đoạn liền nhau GỘP thành 1 nét
@@ -24,22 +25,24 @@ enum PathState {
 	COMPLETE, ## Node trước đã hoàn thành
 }
 
-## Màu theo trạng thái
-const COLOR_COMPLETE  := Color(0.847, 0.267, 0.267, 1.0)   # Đỏ ink mực phê
-const COLOR_SKIPPED   := Color(0.910, 0.580, 0.120, 1.0)   # Cam cảnh báo
-const COLOR_UPCOMING  := Color(0.320, 0.480, 0.620, 0.95)  # Xanh mực đậm rõ nét
-const COLOR_LOCKED    := Color(0.550, 0.640, 0.720, 0.65)  # Xám xanh mờ hơn
+@export_group("Màu theo trạng thái")
+@export var color_complete := Color(0.847, 0.267, 0.267, 1.0)   # Đỏ ink mực phê
+@export var color_skipped := Color(0.910, 0.580, 0.120, 1.0)    # Cam cảnh báo
+@export var color_upcoming := Color(0.320, 0.480, 0.620, 0.95)  # Xanh mực đậm rõ nét
+@export var color_locked := Color(0.550, 0.640, 0.720, 0.65)    # Xám xanh mờ hơn
 
-const WIDTH_COMPLETE  := 5.0
-const WIDTH_SKIPPED   := 4.5
-const WIDTH_UPCOMING  := 4.0
-const WIDTH_LOCKED    := 3.5
+@export_group("Độ dày nét theo trạng thái")
+@export var width_complete := 5.0
+@export var width_skipped := 4.5
+@export var width_upcoming := 4.0
+@export var width_locked := 3.5
 
+@export_group("Nét đứt / lấy mẫu")
 ## Độ dài 1 gạch và 1 khe của nét đứt (px)
-const DASH_LENGTH := 10.0
-const DASH_GAP    := 7.0
+@export var dash_length := 10.0
+@export var dash_gap := 7.0
 ## Bước lấy mẫu cho nét LIỀN (px) — nhỏ thì đường cong mượt hơn
-const SOLID_SAMPLE_STEP := 3.0
+@export var solid_sample_step := 3.0
 
 ## Node con — bind bằng `@export` trong `level_path.tscn`
 @export var path_node: Path2D = null
@@ -52,27 +55,47 @@ var _strokes: Array[Dictionary] = []
 
 ## Dựng đường nối qua `points` (tâm các nút, thứ tự dưới → trên).
 ## `states[i]` = trạng thái của đoạn nối `points[i]` → `points[i + 1]`.
-func setup(points: Array[Vector2], states: Array[int]) -> void:
+## `sway` = độ lệch ngang của ĐIỂM UỐN giữa mỗi đoạn (0 = đường thẳng qua nút).
+func setup(points: Array[Vector2], states: Array[int], sway: float = 0.0) -> void:
 	_strokes.clear()
 	_curve = null
 	if points.size() >= 2:
-		_curve = _build_road(points)
+		_curve = _build_road(_build_route(points, sway))
 		_build_strokes(points, states)
 	if path_node != null:
 		path_node.curve = _curve if _curve != null else Curve2D.new()
 	queue_redraw()
 
 
-## Đường cong Catmull-Rom qua mọi điểm: tiếp tuyến tại mỗi nút = (nút trước → nút sau)/6
-## nên 2 đoạn kề nhau dùng CHUNG một tiếp tuyến tại nút chung ⇒ đường trơn liền mạch.
-func _build_road(points: Array[Vector2]) -> Curve2D:
+## Chèn 1 ĐIỂM UỐN vào giữa mỗi đoạn nút→nút, lệch XEN KẼ 2 bên theo trục ngang
+## (đoạn dọc) hoặc trục dọc (đoạn ngang) — nút vẫn nằm đúng trên đường vì
+## Catmull-Rom đi QUA mọi điểm kiểm soát.
+func _build_route(points: Array[Vector2], sway: float) -> Array[Vector2]:
+	if sway <= 0.0:
+		return points
+	var route: Array[Vector2] = [points[0]]
+	for index in points.size() - 1:
+		var from := points[index]
+		var to := points[index + 1]
+		var delta := to - from
+		# Đoạn chủ yếu DỌC thì uốn ngang, chủ yếu NGANG thì uốn dọc
+		var axis := Vector2(1.0, 0.0) if absf(delta.y) >= absf(delta.x) else Vector2(0.0, 1.0)
+		var side := 1.0 if index % 2 == 0 else -1.0
+		route.append((from + to) * 0.5 + axis * (side * sway))
+		route.append(to)
+	return route
+
+
+## Đường cong Catmull-Rom qua mọi điểm: tiếp tuyến tại mỗi nút = (điểm trước → điểm sau)/6
+## nên 2 đoạn kề nhau dùng CHUNG một tiếp tuyến tại điểm chung ⇒ trơn liền mạch.
+func _build_road(route: Array[Vector2]) -> Curve2D:
 	var curve := Curve2D.new()
-	var count := points.size()
+	var count := route.size()
 	for index in count:
-		var prev := points[index - 1] if index > 0 else points[index] * 2.0 - points[index + 1]
-		var next := points[index + 1] if index < count - 1 else points[index] * 2.0 - points[index - 1]
+		var prev := route[index - 1] if index > 0 else route[index] * 2.0 - route[index + 1]
+		var next := route[index + 1] if index < count - 1 else route[index] * 2.0 - route[index - 1]
 		var tangent := (next - prev) / 6.0
-		curve.add_point(points[index], -tangent, tangent)
+		curve.add_point(route[index], -tangent, tangent)
 	return curve
 
 
@@ -101,16 +124,16 @@ func _build_strokes(points: Array[Vector2], states: Array[int]) -> void:
 ## Lấy mẫu curve trong khoảng [from_d, to_d] (đơn vị: độ dài cung px)
 func _sample_range(from_d: float, to_d: float, skip_first := false) -> PackedVector2Array:
 	var points := PackedVector2Array()
-	var distance := from_d + (SOLID_SAMPLE_STEP if skip_first else 0.0)
+	var distance := from_d + (solid_sample_step if skip_first else 0.0)
 	while distance < to_d:
 		points.append(_curve.sample_baked(distance))
-		distance += SOLID_SAMPLE_STEP
+		distance += solid_sample_step
 	points.append(_curve.sample_baked(to_d))
 	return points
 
 
 func _solid_stroke(points: PackedVector2Array) -> Dictionary:
-	return {"points": points, "color": COLOR_COMPLETE, "width": WIDTH_COMPLETE, "dashed": false}
+	return {"points": points, "color": color_complete, "width": width_complete, "dashed": false}
 
 
 ## Nét đứt của 1 đoạn: gạch nối tiếp nhau dọc theo cung (màu/độ rộng theo trạng thái)
@@ -119,17 +142,17 @@ func _dashed_stroke(from_d: float, to_d: float, state: int) -> Dictionary:
 	var distance := from_d
 	while distance < to_d:
 		points.append(_curve.sample_baked(distance))
-		points.append(_curve.sample_baked(minf(distance + DASH_LENGTH, to_d)))
-		distance += DASH_LENGTH + DASH_GAP
-	var color := COLOR_LOCKED
-	var width := WIDTH_LOCKED
+		points.append(_curve.sample_baked(minf(distance + dash_length, to_d)))
+		distance += dash_length + dash_gap
+	var color := color_locked
+	var width := width_locked
 	match state:
 		PathState.SKIPPED:
-			color = COLOR_SKIPPED
-			width = WIDTH_SKIPPED
+			color = color_skipped
+			width = width_skipped
 		PathState.UPCOMING:
-			color = COLOR_UPCOMING
-			width = WIDTH_UPCOMING
+			color = color_upcoming
+			width = width_upcoming
 	return {"points": points, "color": color, "width": width, "dashed": true}
 
 

@@ -16,14 +16,14 @@ const PROFILE_DOT_SCENE := preload("res://nodes/popups/profile_dot.tscn")
 
 const TAB_AVATAR := "avatar"
 const TAB_FRAME := "frame"
-const ITEMS_PER_PAGE := 6
-const SWIPE_DRAG_THRESHOLD := 10.0
-const SWIPE_PAGE_THRESHOLD := 60.0
+@export var ITEMS_PER_PAGE := 6
+@export var SWIPE_DRAG_THRESHOLD := 10.0
+@export var SWIPE_PAGE_THRESHOLD := 60.0
 
-const COLOR_TAB_ON := Color(1, 1, 1, 1)
-const COLOR_TAB_OFF := Color(0.3922, 0.4549, 0.5451)   # #64748B
-const COLOR_HINT := Color(0.4431, 0.5451, 0.6196)      # #718B9E
-const COLOR_WARN := Color(0.8471, 0.2667, 0.2667)      # #D84444
+@export var COLOR_TAB_ON := Color(1, 1, 1, 1)
+@export var COLOR_TAB_OFF := Color(0.3922, 0.4549, 0.5451)   # #64748B
+@export var COLOR_HINT := Color(0.4431, 0.5451, 0.6196)      # #718B9E
+@export var COLOR_WARN := Color(0.8471, 0.2667, 0.2667)      # #D84444
 
 ## Phát khi bấm LƯU và có thay đổi thật sự được ghi vào hồ sơ
 signal profile_saved

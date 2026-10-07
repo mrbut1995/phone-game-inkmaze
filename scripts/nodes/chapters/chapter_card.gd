@@ -50,13 +50,13 @@ const ICON_KEYS := {
 }
 
 ## Màu theo trạng thái (dùng cho doodle + ruy băng + chip kích thước + thanh Sao)
-const COLOR_PLAYING := Color(0.23921569, 0.5137255, 0.68235296)
-const COLOR_READY := Color(0.76862746, 0.5176471, 0.22745098)
-const COLOR_LOCKED := Color(0.47843137, 0.56078434, 0.60784316)
+@export var COLOR_PLAYING := Color(0.23921569, 0.5137255, 0.68235296)
+@export var COLOR_READY := Color(0.76862746, 0.5176471, 0.22745098)
+@export var COLOR_LOCKED := Color(0.47843137, 0.56078434, 0.60784316)
 ## Nền chip kích thước (đặt bằng modulate trên art trắng)
-const CHIP_BG_PLAYING := Color(0.92156863, 0.9529412, 0.972549)
-const CHIP_BG_READY := Color(0.99607843, 0.9529412, 0.78039217)
-const CHIP_BG_LOCKED := Color(0.8862745, 0.8666667, 0.8352941)
+@export var CHIP_BG_PLAYING := Color(0.92156863, 0.9529412, 0.972549)
+@export var CHIP_BG_READY := Color(0.99607843, 0.9529412, 0.78039217)
+@export var CHIP_BG_LOCKED := Color(0.8862745, 0.8666667, 0.8352941)
 
 var chapter_id: int = 1
 var state: State = State.PLAYING

@@ -26,11 +26,11 @@ func _play_anim(anim_name: StringName) -> bool:
 	_anim.play(anim_name)
 	return true
 
-const COLOR_VISIBLE := Color(0.12, 0.16, 0.23, 1.0)        # #1E283A
-const COLOR_SUSPECTED := Color(0.77, 0.52, 0.23, 1.0)      # #C4843A
-const COLOR_HIT := Color(0.85, 0.27, 0.27, 1.0)            # #D84444
+@export var COLOR_VISIBLE := Color(0.12, 0.16, 0.23, 1.0)        # #1E283A
+@export var COLOR_SUSPECTED := Color(0.77, 0.52, 0.23, 1.0)      # #C4843A
+@export var COLOR_HIT := Color(0.85, 0.27, 0.27, 1.0)            # #D84444
 ## Wall Builder: đoạn tường người chơi TỰ DỰNG (xanh lá — khớp tông "xây tường" của mode)
-const COLOR_BUILT := Color(0.18039216, 0.49019608, 0.19607843, 1.0)   # #2E7D32
+@export var COLOR_BUILT := Color(0.18039216, 0.49019608, 0.19607843, 1.0)   # #2E7D32
 
 
 func get_state() -> String:

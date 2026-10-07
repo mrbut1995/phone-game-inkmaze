@@ -18,11 +18,11 @@ extends Control
 ## ============================================================================
 
 ## Quãng cuộn TỐI ĐA của MÀN HÌNH (px) mà nền còn trượt theo. Lớp nhân thêm `scroll_scale`
-## của chính nó ⇒ quãng trượt thật của lớp = `PARALLAX_RANGE × scroll_scale` (đệm quanh
+## của chính nó ⇒ quãng trượt thật của lớp = `parallax_range × scroll_scale` (đệm quanh
 ## canvas cũng lấy đúng số này nên không bao giờ hở mép).
-const PARALLAX_RANGE := 1400.0
+@export_range(0.0, 3000.0, 10.0) var parallax_range := 1400.0
 ## Đệm thêm quanh canvas để lớp trượt không hở mép
-const EDGE_PAD := 60.0
+@export_range(0.0, 300.0, 1.0) var edge_pad := 60.0
 
 ## 3 lớp parallax + nội dung từng lớp (khai trong `nodes/common/parallax_background.tscn`).
 ## Script chỉ CANH vị trí/kích thước node có sẵn — không tạo node lúc chạy.
@@ -48,9 +48,9 @@ func apply_sides(canvas: Vector2, frame: Rect2) -> void:
 
 ## Trượt 3 lớp theo ĐỘ DỊCH CUỘN THẬT của màn hình (`delta_y` px so với giữa khoảng cuộn).
 ## Mỗi lớp dịch `delta_y × scroll_scale` ⇒ tốc độ nền tỉ lệ CỐ ĐỊNH với tay kéo (mượt, đều);
-## vượt `PARALLAX_RANGE` thì lớp dừng lại (giữ đúng đệm nên không hở mép nền).
+## vượt `parallax_range` thì lớp dừng lại (giữ đúng đệm nên không hở mép nền).
 func set_scroll_delta(delta_y: float) -> void:
-	var delta := clampf(delta_y, -PARALLAX_RANGE, PARALLAX_RANGE)
+	var delta := clampf(delta_y, -parallax_range, parallax_range)
 	_set_layer_delta(layer_far, delta)
 	_set_layer_delta(layer_mid, delta)
 	_set_layer_delta(layer_near, delta)
@@ -63,13 +63,13 @@ func _set_layer_delta(layer: Parallax2D, delta_y: float) -> void:
 	layer.scroll_offset = Vector2(0.0, delta_y * layer.scroll_scale.y)
 
 
-## Canh 1 lớp phủ kín canvas, chừa đệm `EDGE_PAD` + quãng trượt của chính lớp đó ở CẢ 4 phía
+## Canh 1 lớp phủ kín canvas, chừa đệm `edge_pad` + quãng trượt của chính lớp đó ở CẢ 4 phía
 ## (nền luôn tràn ra ngoài khung nên trượt tới đâu cũng không hở mép).
 func _layout_layer(layer: Parallax2D, art: Control, canvas: Vector2) -> void:
 	if art == null:
 		return
-	var max_shift := PARALLAX_RANGE * (layer.scroll_scale.y if layer != null else 0.0)
-	var pad := max_shift + EDGE_PAD
+	var max_shift := parallax_range * (layer.scroll_scale.y if layer != null else 0.0)
+	var pad := max_shift + edge_pad
 	_fit_control(art, Vector2(-pad, -pad), _cover_size(art, canvas + Vector2(pad, pad) * 2.0))
 
 

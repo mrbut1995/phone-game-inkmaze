@@ -9,8 +9,8 @@ extends Control
 ## Bàn chỉ việc: `footstep.setup(tâm_ô, texture_ngòi_bút, màu_mực)`.
 ## ============================================================================
 
-const SIZE := Vector2(18, 18)
-const ALPHA := 0.45
+@export var SIZE := Vector2(18, 18)
+@export var ALPHA := 0.45
 
 @onready var mark: TextureRect = $Mark
 

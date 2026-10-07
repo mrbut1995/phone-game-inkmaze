@@ -22,7 +22,7 @@ signal celebration_finished()
 @onready var _anim: AnimationPlayer = get_node_or_null("AnimationPlayer")
 
 ## Độ dài chuẩn của animation "hop_*" — khi `duration` khác thì đổi `speed_scale` theo tỉ lệ
-const HOP_LENGTH := 0.16
+@export var HOP_LENGTH := 0.16
 
 var _move_tween: Tween = null
 var _demo_tween: Tween = null

@@ -14,11 +14,11 @@ const TAB_ACTIVE_ART := preload("res://assets/images-png/ranking/tab_active.png"
 const TAB_NORMAL_ART := preload("res://assets/images-png/ranking/tab_normal.png")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-const LABEL_ACTIVE_COLOR := Color(1, 1, 1)
-const LABEL_IDLE_COLOR := Color(0.13333334, 0.29803923, 0.42745098)
+@export var LABEL_ACTIVE_COLOR := Color(1, 1, 1)
+@export var LABEL_IDLE_COLOR := Color(0.13333334, 0.29803923, 0.42745098)
 
 ## Chiều cao mặc định khi scene KHÔNG khai `custom_minimum_size.y` (tránh tab cao 0px)
-const DEFAULT_HEIGHT := 26.0
+@export var DEFAULT_HEIGHT := 26.0
 
 ## Báo cho màn Xếp hạng biết tab nào vừa được bấm
 signal tab_pressed(board_id: String)

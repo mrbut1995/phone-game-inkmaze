@@ -8,12 +8,12 @@ extends BaseScene
 ## ============================================================================
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-const MISSION_ROW := preload("res://nodes/daily/mission_row.tscn")
+@export var MISSION_ROW: PackedScene = preload("res://nodes/daily/mission_row.tscn")
 ## Icon của nút CTA: bút chì (chơi) / đồng Xu (trả Xu mở khoá ngày bỏ lỡ)
 const ICON_PLAY := preload("res://assets/images-png/icons/pencil_icon.png")
 const ICON_UNLOCK := preload("res://assets/images-png/icons/icon_coin.png")
 ## 3 nhiệm vụ đầu thuộc MAZE THƯỜNG (Game Classic), nhiệm vụ thứ 4 thuộc MAZE ĐẶC BIỆT
-const CLASSIC_MISSION_COUNT := 3
+@export var CLASSIC_MISSION_COUNT := 3
 ## Quy ước scene: các hàng nhiệm vụ là node `Rows/Slot1..SlotN` KHAI SẴN trong scene —
 ## mỗi hàng được ĐẶT VÀO đúng slot của nó, nên muốn đổi vị trí/kích thước hàng thì kéo
 ## slot trong editor (script không tính).

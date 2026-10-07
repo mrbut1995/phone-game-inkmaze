@@ -9,8 +9,9 @@ extends BasePopup
 
 signal finished
 
-const STEP_SECONDS := 0.85
-const GO_SECONDS := 0.5
+@export_group("Nhịp đếm")
+@export_range(0.1, 3.0, 0.05) var step_seconds := 0.85
+@export_range(0.1, 3.0, 0.05) var go_seconds := 0.5
 
 ## Node binding: khai `node_paths` + `NodePath` trong `memory_countdown.tscn`
 @export var number_label: Label = null
@@ -45,9 +46,9 @@ func _start_countdown() -> void:
 	_tw = create_tween()
 	for s in range(_seconds, 0, -1):
 		_tw.tween_callback(_show_step.bind(str(s)))
-		_tw.tween_interval(STEP_SECONDS)
+		_tw.tween_interval(step_seconds)
 	_tw.tween_callback(_show_step.bind("GO!"))
-	_tw.tween_interval(GO_SECONDS)
+	_tw.tween_interval(go_seconds)
 	_tw.tween_callback(_finish)
 
 

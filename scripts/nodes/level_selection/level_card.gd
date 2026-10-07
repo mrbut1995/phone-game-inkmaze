@@ -18,7 +18,7 @@ const STAR_FULL := preload("res://assets/images-png/common/star_highlight.png")
 const STAR_EMPTY := preload("res://assets/images-png/common/star_empty.png")
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 ## Màu nhấn của thẻ "MÀN TIẾP" (mockup bản ngang: viền cam #C4843A)
-const NEXT_COLOR := Color(0.76862746, 0.51764709, 0.22745098, 1)
+@export var NEXT_COLOR := Color(0.76862746, 0.51764709, 0.22745098, 1)
 
 @export var level_id: int = 1
 @export var is_locked: bool = false

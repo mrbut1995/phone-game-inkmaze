@@ -34,10 +34,8 @@ const STAR_HIGHLIGHT := preload("res://assets/images/common/star_highlight.svg")
 const STAR_EMPTY     := preload("res://assets/images/common/star_empty.svg")
 
 ## Màu số màn theo trạng thái (màn đang chơi nhấn bằng đỏ mực, còn lại mực xanh đậm)
-const COLOR_NUMBER_CURRENT := Color(0.85, 0.26, 0.26, 1.0)
-const COLOR_NUMBER_NORMAL  := Color(0.13, 0.18, 0.23, 1.0)
-## Art vẽ ở 2× (224px) nên node vẽ ở scale 0.5 ⇒ nút hiển thị 112px (lòng nút 96px)
-const ART_SCALE := Vector2(0.5, 0.5)
+@export var color_number_current := Color(0.85, 0.26, 0.26, 1.0)
+@export var color_number_normal := Color(0.13, 0.18, 0.23, 1.0)
 
 ## Node con — bind bằng `@export` trong `level_node.tscn`
 @export var button: TextureButton2D = null
@@ -84,7 +82,7 @@ func _apply_number() -> void:
 	label.visible = show_number
 	if show_number:
 		label.text = str(level_id)
-	label.modulate = COLOR_NUMBER_CURRENT if state == State.CURRENT else COLOR_NUMBER_NORMAL
+	label.modulate = color_number_current if state == State.CURRENT else color_number_normal
 
 
 ## 3 sao của màn (màn khoá ẩn cả hàng sao)
@@ -134,9 +132,10 @@ func _on_anim_finished(anim_name: StringName) -> void:
 ## Art nút vẽ sẵn độ lệch: pressed chìm 4px thiết kế = 2px hiển thị; hover nâng 2px
 ## thiết kế = 1px. Bù đúng chừng đó cho các node nội dung (số màn · hàng sao · ổ khoá ·
 ## vòng halo) để chúng dính chặt vào mặt nút.
-const CONTENT_PRESS_SINK := 2.0
-const CONTENT_HOVER_LIFT := -1.0
-const CONTENT_FOLLOW_SEC := 0.08
+@export_group("Nội dung trôi theo nút")
+@export_range(0.0, 12.0, 0.5) var content_press_sink := 2.0
+@export_range(-6.0, 6.0, 0.5) var content_hover_lift := -1.0
+@export_range(0.01, 0.5, 0.01) var content_follow_sec := 0.08
 
 var _button_down := false
 var _button_hovered := false
@@ -160,9 +159,9 @@ func _on_button_hover_changed(is_hovered: bool) -> void:
 func _follow_button_art() -> void:
 	var target := 0.0
 	if _button_down:
-		target = CONTENT_PRESS_SINK
+		target = content_press_sink
 	elif _button_hovered:
-		target = CONTENT_HOVER_LIFT
+		target = content_hover_lift
 	if _content_base.is_empty():
 		for node in _content_nodes():
 			_content_base[node] = node.get("position")
@@ -174,7 +173,7 @@ func _follow_button_art() -> void:
 	_content_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	for node in _content_nodes():
 		var base: Vector2 = _content_base[node]
-		_content_tween.tween_property(node, "position", base + Vector2(0.0, target), CONTENT_FOLLOW_SEC)
+		_content_tween.tween_property(node, "position", base + Vector2(0.0, target), content_follow_sec)
 
 
 ## Các node là "nội dung mặt nút" (mọi thứ TRỪ art nút): halo · số · hàng sao · ổ khoá

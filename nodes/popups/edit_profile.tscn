@@ -603,4 +603,5 @@ vertical_alignment = 1
 [connection signal="pressed" from="Panel/Content/PageBar/BtnPrev" to="." method="_on_page_prev_pressed"]
 [connection signal="pressed" from="Panel/Content/PageBar/BtnNext" to="." method="_on_page_next_pressed"]
 [connection signal="pressed" from="Panel/Content/Actions/BtnCancel" to="." method="_on_cancel_pressed"]
+[connection signal="gui_input" from="Dim" to="." method="_on_dim_gui_input"]
 [connection signal="pressed" from="Panel/Content/Actions/BtnSave" to="." method="_on_save_pressed"]

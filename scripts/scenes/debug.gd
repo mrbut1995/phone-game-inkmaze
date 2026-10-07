@@ -25,9 +25,9 @@ const CHECK_OFF := preload("res://assets/images-png/common/checkbox_normal.png")
 const CHECK_PRESS := preload("res://assets/images-png/common/checkbox_pressed.png")
 const CHECK_FOCUS := preload("res://assets/images-png/common/checkbox_focus.png")
 
-const FALLBACK_TOTAL_LEVELS := 9
-const DIFFICULTIES := ["easy", "medium", "hard"]
-const TEST_FLOORS := [1, 2, 3, 5]
+@export var FALLBACK_TOTAL_LEVELS := 9
+@export var DIFFICULTIES := ["easy", "medium", "hard"]
+@export var TEST_FLOORS := [1, 2, 3, 5]
 
 ## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
 ## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/debug.tscn`
@@ -41,7 +41,7 @@ var _floor := 1
 
 ## Nhịp cập nhật dòng thống kê (giây). Đổi text mỗi frame làm font phải reshape
 ## liên tục -> màn hình Debug bị giật; 0.2s (~5 lần/giây) là đủ để theo dõi.
-const STATS_REFRESH_SEC := 0.2
+@export var STATS_REFRESH_SEC := 0.2
 
 var _stats_elapsed := 0.0
 var _stats_text := ""

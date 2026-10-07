@@ -9,13 +9,13 @@ extends TextureButton
 ##   ĐANG DÙNG (viền xanh + dấu tick) · SỞ HỮU · KHOÁ theo mốc · giá XU
 ## ============================================================================
 
-const COLOR_EQUIPPED := Color(0.1176, 0.2510, 0.6980)   # #1E40AF
-const COLOR_OWNED := Color(0.3922, 0.4549, 0.5451)      # #64748B
-const COLOR_LOCK_DUNGEON := Color(0.8627, 0.1490, 0.1490)  # #DC2626
-const COLOR_LOCK_STREAK := Color(0.8510, 0.4667, 0.0235)   # #D97706
-const COLOR_LOCK_POINTS := Color(0.8510, 0.4667, 0.0235)   # #D97706
+@export var COLOR_EQUIPPED := Color(0.1176, 0.2510, 0.6980)   # #1E40AF
+@export var COLOR_OWNED := Color(0.3922, 0.4549, 0.5451)      # #64748B
+@export var COLOR_LOCK_DUNGEON := Color(0.8627, 0.1490, 0.1490)  # #DC2626
+@export var COLOR_LOCK_STREAK := Color(0.8510, 0.4667, 0.0235)   # #D97706
+@export var COLOR_LOCK_POINTS := Color(0.8510, 0.4667, 0.0235)   # #D97706
 ## Nền chip trạng thái: art gốc xám #F1F5F9 × modulate ≈ #DBEAFE (xanh nhạt của mockup)
-const COLOR_CHIP_EQUIPPED := Color(0.909, 0.955, 1.0)   # ≈ #DBEAFE
+@export var COLOR_CHIP_EQUIPPED := Color(0.909, 0.955, 1.0)   # ≈ #DBEAFE
 
 ## Node binding: khai `node_paths` + `NodePath` trong `edit_profile_item.tscn`
 @export var selected_bg: NinePatchRect = null

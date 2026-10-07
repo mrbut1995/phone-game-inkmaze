@@ -7,9 +7,9 @@ extends BaseInteractivePathTutorial
 ## Kế thừa BaseInteractivePathTutorial (SOLID - OCP/SRP).
 ## ============================================================================
 
-const START_POS := Vector2i(0, 0)
-const FINISH_POS := Vector2i(2, 0)
-const TOTAL_CELLS := 9
+@export var START_POS := Vector2i(0, 0)
+@export var FINISH_POS := Vector2i(2, 0)
+@export var TOTAL_CELLS := 9
 
 var _demo_tween: Tween = null
 

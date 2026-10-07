@@ -190,3 +190,4 @@ horizontal_alignment = 1
 
 [connection signal="pressed" from="Panel/Content/Buttons/Cancel" to="." method="_on_cancel_pressed"]
 [connection signal="pressed" from="Panel/Content/Buttons/Apply" to="." method="_on_apply_pressed"]
+[connection signal="gui_input" from="Dim" to="." method="_on_dim_gui_input"]

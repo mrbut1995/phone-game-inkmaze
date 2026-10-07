@@ -14,8 +14,8 @@ extends BaseHUD
 ## ============================================================================
 
 ## Màu dòng "CÒN n LẦN VỀ S": xanh khi còn nhiều, đỏ khi chỉ còn ≤ 1 lượt
-const COLOR_NOTE_OK := Color(0.18039216, 0.49019608, 0.19607843)
-const COLOR_NOTE_DANGER := Color(0.84705883, 0.26666668, 0.26666668)
+@export var COLOR_NOTE_OK := Color(0.18039216, 0.49019608, 0.19607843)
+@export var COLOR_NOTE_DANGER := Color(0.84705883, 0.26666668, 0.26666668)
 
 ## LƯỢT THỬ LẠI còn lại (`Content/ModeInformation/Sheet/Retry/Value`)
 @export var retry_value_node : Label

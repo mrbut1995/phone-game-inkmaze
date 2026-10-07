@@ -51,14 +51,14 @@ var _has_spotlight: bool = false
 
 ## --- HIỆU ỨNG (animation) ---------------------------------------------------
 ## Trễ giữa 2 ô bàn mini khi chạy hoạt cảnh mở bài
-const CELL_ENTER_STAGGER := 0.045
+@export var CELL_ENTER_STAGGER := 0.045
 ## Chờ các ô nở xong hoàn toàn rồi mới áp lại vòng sáng (tránh đo rect lúc ô đang scale)
-const ENTRANCE_SETTLE_SECONDS := 1.0
+@export var ENTRANCE_SETTLE_SECONDS := 1.0
 ## Thời lượng các hiệu ứng UI khai trong `base_tutorial.tscn` (khớp track của animation)
-const TEXT_OUT_SECONDS := 0.1
-const TOAST_IN_SECONDS := 0.22
-const SPOTLIGHT_IN_SECONDS := 0.22
-const SPOTLIGHT_OUT_SECONDS := 0.18
+@export var TEXT_OUT_SECONDS := 0.1
+@export var TOAST_IN_SECONDS := 0.22
+@export var SPOTLIGHT_IN_SECONDS := 0.22
+@export var SPOTLIGHT_OUT_SECONDS := 0.18
 var _fx_spotlight: Tween = null
 var _fx_toast: Tween = null
 var _fx_message: Tween = null
