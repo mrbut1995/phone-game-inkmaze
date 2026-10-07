@@ -25,20 +25,20 @@ var initial_steps: int = 15
 var difficulty: String = "medium"  # "easy", "medium", "hard", "normal", "hardcore"
 
 ## LevelData nguồn của màn/tầng hiện tại (null nếu mode tự sinh mê cung).
-## Dùng để lấy danh sách Thử thách do nhà thiết kế đặt cho màn.
+## Dùng để lấy danh sách Nhiệm vụ do nhà thiết kế đặt cho màn.
 var current_level_data: LevelData = null
 
 
-## Thử thách của màn hiện tại: [{ type, param }, ...] (rỗng = game dùng 3 thử thách mặc định)
-func get_challenges() -> Array[Dictionary]:
+## Nhiệm vụ của màn hiện tại: [{ type, param }, ...] (rỗng = game dùng 3 nhiệm vụ mặc định)
+func get_missions() -> Array[Dictionary]:
 	if current_level_data != null:
-		return current_level_data.get_challenges()
+		return current_level_data.get_missions()
 	return []
 
 
-## Bộ thử thách MẶC ĐỊNH riêng của chế độ (rỗng = dùng bộ chung no_wall/steps_max/time_max).
+## Bộ nhiệm vụ MẶC ĐỊNH riêng của chế độ (rỗng = dùng bộ chung no_wall/steps_max/time_max).
 ## Màn/tầng do nhà thiết kế khai báo thì luôn được ưu tiên hơn bộ này.
-func default_challenges() -> Array[String]:
+func default_missions() -> Array[String]:
 	return []
 
 

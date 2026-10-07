@@ -1,12 +1,12 @@
-class_name ChallengeTypes
+class_name MissionTypes
 extends RefCounted
 ## ============================================================================
-## Registry: toàn bộ LOẠI THỬ THÁCH (challenge) mà game hỗ trợ.
+## Registry: toàn bộ LOẠI NHIỆM VỤ (mission) mà game hỗ trợ.
 ##
-## Mỗi màn (LevelData) gắn TỐI ĐA 3 thử thách: `challenge_types[i]` + `challenge_params[i]`
-## (mảng song song). Màn cũ không có dữ liệu -> dùng 3 thử thách mặc định (DEFAULTS).
+## Mỗi màn (LevelData) gắn TỐI ĐA 3 nhiệm vụ: `mission_types[i]` + `mission_params[i]`
+## (mảng song song). Màn cũ không có dữ liệu -> dùng 3 nhiệm vụ mặc định (DEFAULTS).
 ##
-## Nhóm thử thách:
+## Nhóm nhiệm vụ:
 ##   A. Mặc định (màn nào cũng có sẵn nếu không chỉnh):
 ##        no_wall · steps_max · time_max
 ##   B. Ô / đường đi:
@@ -43,7 +43,7 @@ const NO_HINT := "no_hint"
 const NO_UNDO := "no_undo"
 const NO_WRONG_SUBMIT := "no_wrong_submit"
 
-## 3 thử thách mặc định (màn cũ / màn chưa chọn gì)
+## 3 nhiệm vụ mặc định (màn cũ / màn chưa chọn gì)
 const DEFAULTS := [NO_WALL, STEPS_MAX, TIME_MAX]
 
 ## Đơn vị của tham số (để tool hiển thị nhãn cho đúng)
@@ -76,26 +76,26 @@ const ORDER := [
 
 ## id -> { key: khoá chuỗi hiển thị · param: đơn vị tham số · unit: nhãn đơn vị }
 const INFO := {
-	NO_WALL: {"key": "STR_CHALLENGE_NO_WALL", "param": PARAM_NONE, "unit": ""},
-	STEPS_MAX: {"key": "STR_CHALLENGE_STEPS", "param": PARAM_STEPS, "unit": "bước"},
-	TIME_MAX: {"key": "STR_CHALLENGE_TIME", "param": PARAM_SECONDS, "unit": "giây"},
-	ONLY_NUMBERED: {"key": "STR_CHALLENGE_ONLY_NUMBERED", "param": PARAM_NONE, "unit": ""},
-	AVOID_NUMBERED: {"key": "STR_CHALLENGE_AVOID_NUMBERED", "param": PARAM_NONE, "unit": ""},
-	NO_REVISIT: {"key": "STR_CHALLENGE_NO_REVISIT", "param": PARAM_NONE, "unit": ""},
-	VISIT_ALL: {"key": "STR_CHALLENGE_VISIT_ALL", "param": PARAM_NONE, "unit": ""},
-	VISIT_ALL_NUMBERED: {"key": "STR_CHALLENGE_VISIT_ALL_NUMBERED", "param": PARAM_NONE, "unit": ""},
-	LEN_MIN_PERCENT: {"key": "STR_CHALLENGE_LEN_MIN", "param": PARAM_PERCENT, "unit": "%"},
-	LEN_MAX_PERCENT: {"key": "STR_CHALLENGE_LEN_MAX", "param": PARAM_PERCENT, "unit": "%"},
-	SUM_LT: {"key": "STR_CHALLENGE_SUM_LT", "param": PARAM_SUM, "unit": ""},
-	SUM_LE: {"key": "STR_CHALLENGE_SUM_LE", "param": PARAM_SUM, "unit": ""},
-	SUM_GT: {"key": "STR_CHALLENGE_SUM_GT", "param": PARAM_SUM, "unit": ""},
-	SUM_GE: {"key": "STR_CHALLENGE_SUM_GE", "param": PARAM_SUM, "unit": ""},
-	NO_HINT: {"key": "STR_CHALLENGE_NO_HINT", "param": PARAM_NONE, "unit": ""},
-	NO_UNDO: {"key": "STR_CHALLENGE_NO_UNDO", "param": PARAM_NONE, "unit": ""},
-	NO_WRONG_SUBMIT: {"key": "STR_CHALLENGE_NO_WRONG_SUBMIT", "param": PARAM_NONE, "unit": ""},
+	NO_WALL: {"key": "STR_MISSION_NO_WALL", "param": PARAM_NONE, "unit": ""},
+	STEPS_MAX: {"key": "STR_MISSION_STEPS", "param": PARAM_STEPS, "unit": "bước"},
+	TIME_MAX: {"key": "STR_MISSION_TIME", "param": PARAM_SECONDS, "unit": "giây"},
+	ONLY_NUMBERED: {"key": "STR_MISSION_ONLY_NUMBERED", "param": PARAM_NONE, "unit": ""},
+	AVOID_NUMBERED: {"key": "STR_MISSION_AVOID_NUMBERED", "param": PARAM_NONE, "unit": ""},
+	NO_REVISIT: {"key": "STR_MISSION_NO_REVISIT", "param": PARAM_NONE, "unit": ""},
+	VISIT_ALL: {"key": "STR_MISSION_VISIT_ALL", "param": PARAM_NONE, "unit": ""},
+	VISIT_ALL_NUMBERED: {"key": "STR_MISSION_VISIT_ALL_NUMBERED", "param": PARAM_NONE, "unit": ""},
+	LEN_MIN_PERCENT: {"key": "STR_MISSION_LEN_MIN", "param": PARAM_PERCENT, "unit": "%"},
+	LEN_MAX_PERCENT: {"key": "STR_MISSION_LEN_MAX", "param": PARAM_PERCENT, "unit": "%"},
+	SUM_LT: {"key": "STR_MISSION_SUM_LT", "param": PARAM_SUM, "unit": ""},
+	SUM_LE: {"key": "STR_MISSION_SUM_LE", "param": PARAM_SUM, "unit": ""},
+	SUM_GT: {"key": "STR_MISSION_SUM_GT", "param": PARAM_SUM, "unit": ""},
+	SUM_GE: {"key": "STR_MISSION_SUM_GE", "param": PARAM_SUM, "unit": ""},
+	NO_HINT: {"key": "STR_MISSION_NO_HINT", "param": PARAM_NONE, "unit": ""},
+	NO_UNDO: {"key": "STR_MISSION_NO_UNDO", "param": PARAM_NONE, "unit": ""},
+	NO_WRONG_SUBMIT: {"key": "STR_MISSION_NO_WRONG_SUBMIT", "param": PARAM_NONE, "unit": ""},
 }
 
-## Thử thách chưa cần tham số
+## Nhiệm vụ chưa cần tham số
 const NO_PARAM_TYPES := [
 	NO_WALL,
 	ONLY_NUMBERED,
@@ -176,7 +176,7 @@ static func tool_label(type_id: String) -> String:
 			return type_id
 
 
-## Danh sách 3 thử thách mặc định suy ra từ dữ liệu màn (giữ hành vi cũ)
+## Danh sách 3 nhiệm vụ mặc định suy ra từ dữ liệu màn (giữ hành vi cũ)
 static func defaults_for(design_steps: int, time_limit: float) -> Array:
 	return [
 		{"type": NO_WALL, "param": 0},

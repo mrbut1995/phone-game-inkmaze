@@ -253,7 +253,7 @@ script = ExtResource("2_layout")
 logo = NodePath("Panel/Content/Title/Logo")
 btn_play = NodePath("Panel/Content/GameMode/Play")
 btn_dungeon = NodePath("Panel/Content/GameMode/Dungeon")
-btn_daily = NodePath("Panel/Content/GameMode/DailyChallenge")
+btn_daily = NodePath("Panel/Content/GameMode/DailyMission")
 btn_leaderboard = NodePath("Panel/Content/Other/Leaderboard")
 btn_shop = NodePath("Panel/Content/Other/Shop")
 btn_settings = NodePath("Panel/Content/Other/Settings")
@@ -265,7 +265,7 @@ profile_frame = NodePath("Panel/Profile/Frame")
 profile_level = NodePath("Panel/Profile/LevelChip/Bg/Text")
 badge_play = NodePath("Panel/Content/GameMode/Play/BottomLabel/Badge")
 badge_dungeon = NodePath("Panel/Content/GameMode/Dungeon/BottomLabel/Badge")
-badge_daily = NodePath("Panel/Content/GameMode/DailyChallenge/BottomLabel/Badge")
+badge_daily = NodePath("Panel/Content/GameMode/DailyMission/BottomLabel/Badge")
 stamp_panel = NodePath("Panel/Stamp")
 stamp_label = NodePath("Panel/Stamp/Label")
 game_mode_box = NodePath("Panel/Content/GameMode")
@@ -938,7 +938,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 minimum_font_size = 8
 
-[node name="DailyChallenge" type="Button" parent="Panel/Content/GameMode" index="2" unique_id=1371178186]
+[node name="DailyMission" type="Button" parent="Panel/Content/GameMode" index="2" unique_id=1371178186]
 custom_minimum_size = Vector2(0, 155)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_1nlku")
@@ -958,7 +958,7 @@ patch_margin_right = 121.0
 patch_margin_bottom = 24.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="ButtonDescription" type="HBoxContainer" parent="Panel/Content/GameMode/DailyChallenge" index="0" unique_id=1469544575]
+[node name="ButtonDescription" type="HBoxContainer" parent="Panel/Content/GameMode/DailyMission" index="0" unique_id=1469544575]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.23799999
@@ -970,7 +970,7 @@ offset_right = -0.86001587
 offset_bottom = -0.039985657
 metadata/_edit_use_anchors_ = true
 
-[node name="CircleIcon" type="Control" parent="Panel/Content/GameMode/DailyChallenge/ButtonDescription" index="0" unique_id=2075889369]
+[node name="CircleIcon" type="Control" parent="Panel/Content/GameMode/DailyMission/ButtonDescription" index="0" unique_id=2075889369]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 1
@@ -984,7 +984,7 @@ expand_mode = 2
 stretch_mode = 5
 metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
 
-[node name="ModeIcon" type="TextureRect" parent="Panel/Content/GameMode/DailyChallenge/ButtonDescription/CircleIcon" index="0" unique_id=56048713]
+[node name="ModeIcon" type="TextureRect" parent="Panel/Content/GameMode/DailyMission/ButtonDescription/CircleIcon" index="0" unique_id=56048713]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.064
@@ -1000,14 +1000,14 @@ grow_vertical = 2
 texture = ExtResource("17_icon_calendar")
 metadata/_edit_use_anchors_ = true
 
-[node name="TitleContainer" type="VBoxContainer" parent="Panel/Content/GameMode/DailyChallenge/ButtonDescription" index="1" unique_id=184144769]
+[node name="TitleContainer" type="VBoxContainer" parent="Panel/Content/GameMode/DailyMission/ButtonDescription" index="1" unique_id=184144769]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="Title" type="Label" parent="Panel/Content/GameMode/DailyChallenge/ButtonDescription/TitleContainer" index="0" unique_id=727473907]
+[node name="Title" type="Label" parent="Panel/Content/GameMode/DailyMission/ButtonDescription/TitleContainer" index="0" unique_id=727473907]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 size_flags_stretch_ratio = 0.7
@@ -1016,26 +1016,26 @@ theme_override_font_sizes/font_size = 22
 text = "STR_MODE_DAILY_TITLE"
 vertical_alignment = 1
 
-[node name="PlayDesc1" type="Label" parent="Panel/Content/GameMode/DailyChallenge/ButtonDescription/TitleContainer" index="1" unique_id=900140720]
+[node name="PlayDesc1" type="Label" parent="Panel/Content/GameMode/DailyMission/ButtonDescription/TitleContainer" index="1" unique_id=900140720]
 layout_mode = 2
 theme_type_variation = &"CardDesc"
 theme_override_font_sizes/font_size = 16
 text = "STR_MODE_DAILY_DESC_1"
 text_overrun_behavior = 3
 
-[node name="PlayDesc2" type="Label" parent="Panel/Content/GameMode/DailyChallenge/ButtonDescription/TitleContainer" index="2" unique_id=1616628451]
+[node name="PlayDesc2" type="Label" parent="Panel/Content/GameMode/DailyMission/ButtonDescription/TitleContainer" index="2" unique_id=1616628451]
 layout_mode = 2
 theme_type_variation = &"CardDesc2"
 theme_override_font_sizes/font_size = 14
 text = "STR_MODE_DAILY_DESC_2"
 text_overrun_behavior = 3
 
-[node name="Spacer" type="Control" parent="Panel/Content/GameMode/DailyChallenge/ButtonDescription" index="2" unique_id=1179650178]
+[node name="Spacer" type="Control" parent="Panel/Content/GameMode/DailyMission/ButtonDescription" index="2" unique_id=1179650178]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="TopBadge" type="Control" parent="Panel/Content/GameMode/DailyChallenge" index="1" unique_id=691483248]
+[node name="TopBadge" type="Control" parent="Panel/Content/GameMode/DailyMission" index="1" unique_id=691483248]
 layout_mode = 1
 anchors_preset = 0
 offset_left = 33.5
@@ -1057,7 +1057,7 @@ texture_disabled = ExtResource("p_tex_15")
 texture_focused = ExtResource("p_tex_32")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
-[node name="Tag" type="Label" parent="Panel/Content/GameMode/DailyChallenge/TopBadge" index="0" unique_id=96439748]
+[node name="Tag" type="Label" parent="Panel/Content/GameMode/DailyMission/TopBadge" index="0" unique_id=96439748]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -1072,7 +1072,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 minimum_font_size = 8
 
-[node name="BottomLabel" type="Control" parent="Panel/Content/GameMode/DailyChallenge" index="2" unique_id=1232902253]
+[node name="BottomLabel" type="Control" parent="Panel/Content/GameMode/DailyMission" index="2" unique_id=1232902253]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -1098,7 +1098,7 @@ texture_disabled = ExtResource("p_tex_18")
 texture_focused = ExtResource("p_tex_33")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
-[node name="Badge" type="Label" parent="Panel/Content/GameMode/DailyChallenge/BottomLabel" index="0" unique_id=1790326617]
+[node name="Badge" type="Label" parent="Panel/Content/GameMode/DailyMission/BottomLabel" index="0" unique_id=1790326617]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = 15

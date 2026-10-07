@@ -68,7 +68,7 @@ vertical_alignment = 1'''
 CONFIG: dict[str, dict] = {
     # ---------------------------------------------------------------- Play / Level
     "nodes/hud/portrait/game/level_mode.tscn": {
-        "delete": ["Content/ModeInformation/Challenge"],
+        "delete": ["Content/ModeInformation/Mission"],
         "exports": ["time_value_node"],
     },
     # ---------------------------------------------------------------- Dungeon: SỐ BƯỚC + TẦNG

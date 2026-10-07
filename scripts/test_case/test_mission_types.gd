@@ -1,14 +1,14 @@
 extends SceneTree
 ## ============================================================================
-## Test Case: 17 LOẠI THỬ THÁCH (ChallengeTypes) + giới hạn 3 thử thách / màn.
+## Test Case: 17 LOẠI NHIỆM VỤ (MissionTypes) + giới hạn 3 nhiệm vụ / màn.
 ##
-## Vì ChallengeController chấm dựa trên `ctx.path` (danh sách ô đã đi), test có thể
+## Vì MissionController chấm dựa trên `ctx.path` (danh sách ô đã đi), test có thể
 ## dựng đường đi tuỳ ý nên kiểm tra được từng loại một cách xác định (không phụ thuộc random).
 ## ============================================================================
 
 var _failures := 0
 
-var _cc: ChallengeController = null
+var _cc: MissionController = null
 var _maze: MazeData = null
 var _mode: StandardGameMode = null
 var _state: GameState = null
@@ -18,11 +18,11 @@ var _blank: Array[Vector2i] = []
 
 func _init() -> void:
 	print("\n========================================================")
-	print("  TEST: 17 LOAI THU THACH (CHALLENGE TYPES)")
+	print("  TEST: 17 LOAI THU THACH (MISSION TYPES)")
 	print("========================================================\n")
 	await process_frame
 
-	_cc = ChallengeController.new()
+	_cc = MissionController.new()
 	root.add_child(_cc)
 	await process_frame
 
@@ -63,7 +63,7 @@ func _init() -> void:
 
 
 # ---------------------------------------------------------------------------
-# Từng nhóm thử thách
+# Từng nhóm nhiệm vụ
 # ---------------------------------------------------------------------------
 func _check_no_wall() -> void:
 	_state.floor_wall_hits = 0
@@ -171,7 +171,7 @@ func _check_tools() -> void:
 
 
 func _check_limits_and_level_data() -> void:
-	# Tối đa 3 thử thách: khai báo 4 -> chỉ lấy 3 đầu
+	# Tối đa 3 nhiệm vụ: khai báo 4 -> chỉ lấy 3 đầu
 	var rows := _run(
 		["no_wall", "steps_max", "time_max", "no_hint"],
 		[0, 15, 45, 0],
@@ -179,15 +179,15 @@ func _check_limits_and_level_data() -> void:
 		0.0,
 		false
 	)
-	if rows.size() != ChallengeTypes.MAX_PER_LEVEL:
+	if rows.size() != MissionTypes.MAX_PER_LEVEL:
 		_fail("Khai bao 4 thu thach phai bi cat con 3, dang co %d" % rows.size())
 
-	# Loại thử thách lạ bị bỏ qua, phần còn lại giữ nguyên
+	# Loại nhiệm vụ lạ bị bỏ qua, phần còn lại giữ nguyên
 	var lvl := LevelData.new()
 	lvl.max_steps = 20
-	lvl.challenge_types = PackedStringArray(["khong_ton_tai", "no_wall", "no_hint"])
-	lvl.challenge_params = PackedInt32Array([0, 0, 0])
-	var parsed := lvl.get_challenges()
+	lvl.mission_types = PackedStringArray(["khong_ton_tai", "no_wall", "no_hint"])
+	lvl.mission_params = PackedInt32Array([0, 0, 0])
+	var parsed := lvl.get_missions()
 	if parsed.size() != 2:
 		_fail("Loai thu thach la phai bi bo qua, con lai 2, dang co %d" % parsed.size())
 	elif str(parsed[0].get("type")) != "no_wall":
@@ -198,20 +198,20 @@ func _check_limits_and_level_data() -> void:
 	if _cc.rows().size() != 2:
 		_fail("Man khai bao 2 thu thach phai co 2 dong, dang co %d" % _cc.rows().size())
 
-	# Màn cũ (không khai báo) -> 3 thử thách mặc định
+	# Màn cũ (không khai báo) -> 3 nhiệm vụ mặc định
 	_cc.setup_for_floor(20, null)
 	var types: Array[String] = []
 	for row in _cc.rows():
 		types.append(str(row.get("type")))
 	if types != ["no_wall", "steps_max", "time_max"]:
 		_fail("Man cu phai dung 3 thu thach mac dinh, dang la %s" % str(types))
-	print("[CHECK] Giới hạn 3 thử thách + đọc từ LevelData + mặc định cho màn cũ: OK")
+	print("[CHECK] Giới hạn 3 nhiệm vụ + đọc từ LevelData + mặc định cho màn cũ: OK")
 
 
 # ---------------------------------------------------------------------------
 # Helper
 # ---------------------------------------------------------------------------
-## Chạy 1 kịch bản và so sánh cờ `done` của từng thử thách
+## Chạy 1 kịch bản và so sánh cờ `done` của từng nhiệm vụ
 func _expect(
 	label: String,
 	types: Array,
@@ -249,11 +249,11 @@ func _run(
 		type_names.append(str(t))
 	for p in params:
 		param_values.append(int(p))
-	lvl.challenge_types = type_names
-	lvl.challenge_params = param_values
+	lvl.mission_types = type_names
+	lvl.mission_params = param_values
 
 	_cc.setup_for_floor(20, lvl)
-	var ctx := ChallengeContext.new()
+	var ctx := MissionContext.new()
 	ctx.set_values(_state, _mode, _maze, path, elapsed, is_final)
 	_cc.refresh(ctx)
 	return _cc.rows()

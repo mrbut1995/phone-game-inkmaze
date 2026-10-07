@@ -2,7 +2,7 @@ class_name DailyMissionRow
 extends Control
 ## ============================================================================
 ## Component: 1 hàng nhiệm vụ trong bảng Mission của màn Daily
-## (nodes/daily/mission_row.tscn — khớp mockup daily_challenge.svg)
+## (nodes/daily/mission_row.tscn — khớp mockup daily_mission.svg)
 ##
 ## Mỗi hàng 980x110:
 ##   - Cột trái (Status): ô tick + chữ trạng thái + Xu thưởng

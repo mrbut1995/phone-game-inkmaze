@@ -40,7 +40,7 @@ APP_DIR = Path(__file__).resolve().parent
 if str(APP_DIR) not in sys.path:
     sys.path.insert(0, str(APP_DIR))
 
-from app.models import challenges as chal  # noqa: E402
+from app.models import missions as chal  # noqa: E402
 from app.models.repository import LevelRepository  # noqa: E402
 from app.config import mode_edit_spec  # noqa: E402
 from app.services import path_values, solver, validator  # noqa: E402
@@ -62,8 +62,8 @@ SAMPLES: dict[int, dict] = {
             ("h", 2, 1, False),    # tường ẩn: chặn lối lên của ô (2,0)
             ("h", 2, 2, True),     # tường hiện: chặn lối xuống của ô (2,1)
         ],
-        # Thử thách: param 0 = tự lấy theo max_steps/par_time của màn
-        "challenges": [
+        # Nhiệm vụ: param 0 = tự lấy theo max_steps/par_time của màn
+        "missions": [
             (chal.NO_WALL, 0),
             (chal.STEPS_MAX, 0),
             (chal.NO_HINT, 0),
@@ -87,7 +87,7 @@ SAMPLES: dict[int, dict] = {
             ("h", 0, 2, True),     # tường hiện dưới ô (0,1)
             ("v", 3, 1, False),    # tường ẩn giữa (2,1) và (3,1)
         ],
-        "challenges": [
+        "missions": [
             (chal.NO_WALL, 0),
             (chal.STEPS_MAX, 0),
             (chal.TIME_MAX, 0),
@@ -117,7 +117,7 @@ SAMPLES: dict[int, dict] = {
             ("v", 1, 0, False),    # tường ẩn ở hành lang trên
             ("v", 2, 1, True),     # tường hiện ở hành lang trên
         ],
-        "challenges": [
+        "missions": [
             (chal.NO_WALL, 0),
             (chal.NO_REVISIT, 0),
             (chal.LEN_MAX_PERCENT, 80),
@@ -147,7 +147,7 @@ SAMPLES: dict[int, dict] = {
             (0, 2): 1,
             (2, 3): 1,
         },
-        "challenges": [
+        "missions": [
             (chal.NO_WALL, 0),
             (chal.LEN_MIN_PERCENT, 60),
             (chal.NO_UNDO, 0),
@@ -175,7 +175,7 @@ SAMPLES: dict[int, dict] = {
         ],
         # KIỂU EDIT của chế độ sum_path: tô ĐIỂM Ô (1..9) — chia theo TỔNG của đường ngắn nhất
         "path_values": {"fill": "sum", "value": 60},
-        "challenges": [
+        "missions": [
             (chal.NO_WALL, 0),
             (chal.STEPS_MAX, 0),
             (chal.LEN_MAX_PERCENT, 45),
@@ -183,7 +183,7 @@ SAMPLES: dict[int, dict] = {
     },
     # ------------------------------------------------------------------
     # 15..20: MỖI CHẾ ĐỘ SPECIAL 1 MÀN — để test nhanh toàn bộ chế độ trên màn tự vẽ.
-    # Để trống "challenges" ⇒ game dùng BỘ THỬ THÁCH MẶC ĐỊNH RIÊNG của chế độ đó.
+    # Để trống "missions" ⇒ game dùng BỘ NHIỆM VỤ MẶC ĐỊNH RIÊNG của chế độ đó.
     # ------------------------------------------------------------------
     15: {
         "title": "Level 2-6 · Countdown Cost — chi phí từng ô",
@@ -341,11 +341,11 @@ def build_sample(sample: dict) -> object:
     level.max_steps = solver.auto_max_steps(level, extra=4)
     level.par_time = float(max(20, level.max_steps * 3))
 
-    # 5. THỬ THÁCH (tối đa 3): param 0 -> tự lấy theo max_steps/par_time vừa tính
-    level.challenges = []
-    for slot, entry in enumerate(sample.get("challenges", [])[:chal.MAX_PER_LEVEL]):
+    # 5. NHIỆM VỤ (tối đa 3): param 0 -> tự lấy theo max_steps/par_time vừa tính
+    level.missions = []
+    for slot, entry in enumerate(sample.get("missions", [])[:chal.MAX_PER_LEVEL]):
         type_id, param = entry
-        level.set_challenge(slot, str(type_id), int(param))
+        level.set_mission(slot, str(type_id), int(param))
 
     # 6. TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI ("path_values") — cùng luật với nút Ctrl+Enter của tool:
     #    dùng đường NGẮN NHẤT của màn, bỏ 2 đầu S/F, chia theo TỔNG hoặc cấp mực theo bước.

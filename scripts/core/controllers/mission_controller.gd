@@ -1,22 +1,22 @@
-class_name ChallengeController
+class_name MissionController
 extends Node
 ## ============================================================================
-## Controller: tối đa 3 Thử thách (Challenge) của mỗi màn/tầng — nguồn tính Sao.
+## Controller: tối đa 3 Nhiệm vụ (Mission) của mỗi màn/tầng — nguồn tính Sao.
 ##
 ## LUẬT (Number_Maze_Game_Design.md — mục 3.1 & 5.10):
-##   - Mỗi match-up (Màn ở Play Mode / Tầng ở Dungeon Mode / ngày Daily) có TỐI ĐA 3 Thử thách.
-##   - Hoàn thành 1 Thử thách = 1 Sao. Sao KHÔNG tính theo thời gian còn lại.
-##   - Màn chưa chọn thử thách (màn cũ) -> dùng 3 thử thách mặc định:
+##   - Mỗi match-up (Màn ở Play Mode / Tầng ở Dungeon Mode / ngày Daily) có TỐI ĐA 3 Nhiệm vụ.
+##   - Hoàn thành 1 Nhiệm vụ = 1 Sao. Sao KHÔNG tính theo thời gian còn lại.
+##   - Màn chưa chọn nhiệm vụ (màn cũ) -> dùng 3 nhiệm vụ mặc định:
 ##        no_wall · steps_max (N = max_steps) · time_max (T = N × 3, kẹp 30..240s)
 ##
-## 17 loại thử thách: xem ChallengeTypes (id · nhãn · loại tham số). Riêng chế độ có thể khai báo
-## bộ 3 thử thách MẶC ĐỊNH của mình qua `BaseGameMode.default_challenges()` (VD Wall Builder:
+## 17 loại nhiệm vụ: xem MissionTypes (id · nhãn · loại tham số). Riêng chế độ có thể khai báo
+## bộ 3 nhiệm vụ MẶC ĐỊNH của mình qua `BaseGameMode.default_missions()` (VD Wall Builder:
 ## no_wrong_submit · time_max · no_hint — §5.13).
-## Thử thách do LevelData khai báo qua `challenge_types` + `challenge_params` (mảng song song).
+## Nhiệm vụ do LevelData khai báo qua `mission_types` + `mission_params` (mảng song song).
 ##
-## HUD: panel "THỬ THÁCH" nằm trong HUD của chế độ (node Challenge của
+## HUD: panel "NHIỆM VỤ" nằm trong HUD của chế độ (node Mission của
 ## nodes/hud/level_mode.tscn) — GameScene gắn node đó vào `card` mỗi lần đổi chế độ.
-## Popup thua/kết quả lấy dữ liệu qua rows() (danh sách thử thách + trạng thái) và stars().
+## Popup thua/kết quả lấy dữ liệu qua rows() (danh sách nhiệm vụ + trạng thái) và stars().
 ## ============================================================================
 
 signal updated
@@ -25,17 +25,17 @@ const SECONDS_PER_STEP := 3.0
 const MIN_TIME_LIMIT := 30.0
 const MAX_TIME_LIMIT := 240.0
 
-## Thẻ THỬ THÁCH trên HUD — `GameScene._bind_hud_nodes()` gán theo HUD của chế độ đang chơi.
-## Controller CHỈ đưa TRẠNG THÁI vào `ChallengeCard.refresh()`; thẻ tự lấy node con + chọn art/màu.
-@export var card: ChallengeCard = null
+## Thẻ NHIỆM VỤ trên HUD — `GameScene._bind_hud_nodes()` gán theo HUD của chế độ đang chơi.
+## Controller CHỈ đưa TRẠNG THÁI vào `MissionCard.refresh()`; thẻ tự lấy node con + chọn art/màu.
+@export var card: MissionCard = null
 
 ## Ngưỡng mặc định của màn/tầng đang chơi
 var step_limit := 0
 var time_limit := 0.0
-## Chế độ đang chơi — để lấy BỘ THỬ THÁCH MẶC ĐỊNH riêng của chế độ (xem default_challenges)
+## Chế độ đang chơi — để lấy BỘ NHIỆM VỤ MẶC ĐỊNH riêng của chế độ (xem default_missions)
 var _mode: BaseGameMode = null
 
-## Thử thách của màn hiện tại: [{ type, param }]
+## Nhiệm vụ của màn hiện tại: [{ type, param }]
 var _entries: Array[Dictionary] = []
 ## Trạng thái hiện tại: [{ type, title, done, status, on_track }]
 var _rows: Array[Dictionary] = []
@@ -44,16 +44,16 @@ var _last_key := ""
 ## Số ô thuộc board (để tính % độ dài đường đi / đi hết ô)
 var _board_cells := 0
 
-signal challenge_update()
+signal mission_update()
 
 func _ready() -> void:
 	setup_for_floor(0)
-	var ctx := ChallengeContext.new()
+	var ctx := MissionContext.new()
 	ctx.set_values(null, null, null, [], 0.0, false)
 	refresh(ctx)
 
 
-## Gọi khi bắt đầu màn/tầng. `level_data = null` -> dùng 3 thử thách mặc định.
+## Gọi khi bắt đầu màn/tầng. `level_data = null` -> dùng 3 nhiệm vụ mặc định.
 func setup_for_floor(design_steps: int, level_data: LevelData = null,
 		mode: BaseGameMode = null) -> void:
 	step_limit = maxi(design_steps, 1)
@@ -66,9 +66,9 @@ func setup_for_floor(design_steps: int, level_data: LevelData = null,
 	_refresh_hud()
 
 
-## Cập nhật trạng thái thử thách theo số liệu ván đang chơi.
+## Cập nhật trạng thái nhiệm vụ theo số liệu ván đang chơi.
 ## `ctx.final = true` khi màn/tầng đã kết thúc -> chốt ĐẠT/CHƯA ĐẠT để tính Sao cho popup.
-func refresh(ctx: ChallengeContext) -> void:
+func refresh(ctx: MissionContext) -> void:
 	if ctx == null or ctx.state == null:
 		return
 	if _entries.is_empty():
@@ -105,12 +105,12 @@ func refresh(ctx: ChallengeContext) -> void:
 		updated.emit()
 
 
-## Danh sách thử thách + trạng thái: [{ type, title, done, status, on_track }, ...]
+## Danh sách nhiệm vụ + trạng thái: [{ type, title, done, status, on_track }, ...]
 func rows() -> Array[Dictionary]:
 	return _rows
 
 
-## Số Sao = số thử thách đã hoàn thành
+## Số Sao = số nhiệm vụ đã hoàn thành
 func stars() -> int:
 	var total := 0
 	for row in _rows:
@@ -119,8 +119,8 @@ func stars() -> int:
 	return total
 
 
-## Tổng số thử thách của màn (tối đa 3)
-func challenge_count() -> int:
+## Tổng số nhiệm vụ của màn (tối đa 3)
+func mission_count() -> int:
 	return _rows.size()
 
 
@@ -129,57 +129,57 @@ func all_done() -> bool:
 
 
 # ---------------------------------------------------------------------------
-# Dựng danh sách thử thách
+# Dựng danh sách nhiệm vụ
 # ---------------------------------------------------------------------------
 func _resolve_entries(level_data: LevelData) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	if level_data != null:
-		var types := level_data.challenge_types
-		var params := level_data.challenge_params
-		for i in mini(types.size(), ChallengeTypes.MAX_PER_LEVEL):
+		var types := level_data.mission_types
+		var params := level_data.mission_params
+		for i in mini(types.size(), MissionTypes.MAX_PER_LEVEL):
 			var type_id := str(types[i])
-			if not ChallengeTypes.is_valid(type_id):
-				push_warning("ChallengeController: bo qua loai thu thach la '%s'" % type_id)
+			if not MissionTypes.is_valid(type_id):
+				push_warning("MissionController: bo qua loai thu thach la '%s'" % type_id)
 				continue
 			var param := int(params[i]) if i < params.size() else 0
-			if ChallengeTypes.has_param(type_id) and param <= 0:
+			if MissionTypes.has_param(type_id) and param <= 0:
 				param = _default_param(type_id)
 			out.append({"type": type_id, "param": param})
 	if out.is_empty():
 		out = _mode_defaults()
 	if out.is_empty():
-		for entry in ChallengeTypes.defaults_for(step_limit, time_limit):
+		for entry in MissionTypes.defaults_for(step_limit, time_limit):
 			out.append(entry)
 	return out
 
 
-## Bộ thử thách mặc định RIÊNG của chế độ (VD Wall Builder: no_wrong_submit · time_max · no_hint).
-## Rỗng = chế độ không khai báo gì -> ChallengeController dùng bộ chung.
+## Bộ nhiệm vụ mặc định RIÊNG của chế độ (VD Wall Builder: no_wrong_submit · time_max · no_hint).
+## Rỗng = chế độ không khai báo gì -> MissionController dùng bộ chung.
 func _mode_defaults() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	if _mode == null:
 		return out
-	for type_id in _mode.default_challenges():
-		if out.size() >= ChallengeTypes.MAX_PER_LEVEL:
+	for type_id in _mode.default_missions():
+		if out.size() >= MissionTypes.MAX_PER_LEVEL:
 			break
-		if not ChallengeTypes.is_valid(type_id):
+		if not MissionTypes.is_valid(type_id):
 			continue
 		var param := 0
-		if ChallengeTypes.has_param(type_id):
+		if MissionTypes.has_param(type_id):
 			param = _default_param(type_id)
 		out.append({"type": type_id, "param": param})
 	return out
 
 
 func _default_param(type_id: String) -> int:
-	match ChallengeTypes.param_kind(type_id):
-		ChallengeTypes.PARAM_STEPS:
+	match MissionTypes.param_kind(type_id):
+		MissionTypes.PARAM_STEPS:
 			return step_limit
-		ChallengeTypes.PARAM_SECONDS:
+		MissionTypes.PARAM_SECONDS:
 			return int(round(time_limit))
-		ChallengeTypes.PARAM_PERCENT:
+		MissionTypes.PARAM_PERCENT:
 			return 50
-		ChallengeTypes.PARAM_SUM:
+		MissionTypes.PARAM_SUM:
 			return 20
 		_:
 			return 0
@@ -192,19 +192,19 @@ func _build_rows() -> void:
 			"type": str(entry.get("type", "")),
 			"title": _title_for(entry),
 			"done": false,
-			"status": tr("STR_CHALLENGE_NOT_DONE"),
+			"status": tr("STR_MISSION_NOT_DONE"),
 			"on_track": true,
 		})
 
 
-## Nhãn hiển thị của thử thách (đã điền tham số nếu có)
+## Nhãn hiển thị của nhiệm vụ (đã điền tham số nếu có)
 func _title_for(entry: Dictionary) -> String:
 	var type_id := str(entry.get("type", ""))
-	var key := ChallengeTypes.label_key(type_id)
+	var key := MissionTypes.label_key(type_id)
 	if key.is_empty():
 		return type_id
 	var text := tr(key)
-	if ChallengeTypes.has_param(type_id):
+	if MissionTypes.has_param(type_id):
 		return text.format([int(entry.get("param", 0))])
 	return text
 
@@ -212,7 +212,7 @@ func _title_for(entry: Dictionary) -> String:
 # ---------------------------------------------------------------------------
 # Số liệu của đường đi hiện tại
 # ---------------------------------------------------------------------------
-func _collect_metrics(ctx: ChallengeContext) -> Dictionary:
+func _collect_metrics(ctx: MissionContext) -> Dictionary:
 	var visited := {}
 	var revisits := 0
 	var sum := 0
@@ -262,12 +262,12 @@ func _collect_metrics(ctx: ChallengeContext) -> Dictionary:
 
 
 ## Số lần GỬI SAI (Wall Builder) — chế độ khác luôn trả 0
-func _submit_miss_count(ctx: ChallengeContext) -> int:
+func _submit_miss_count(ctx: MissionContext) -> int:
 	return ctx.mode.submit_miss_count() if ctx.mode != null else 0
 
 
 ## Số hiển thị trên ô (-1 = ô không có số; S/F trả về "S"/"F" nên cũng là -1)
-func _cell_number(pos: Vector2i, ctx: ChallengeContext) -> int:
+func _cell_number(pos: Vector2i, ctx: MissionContext) -> int:
 	if ctx.mode == null or ctx.maze == null or not ctx.maze.is_in_bounds(pos):
 		return -1
 	var text := ctx.mode.get_cell_text(pos, ctx.maze)
@@ -290,54 +290,54 @@ func _count_active_cells(maze: MazeData) -> int:
 
 
 # ---------------------------------------------------------------------------
-# Chấm điểm từng loại thử thách
+# Chấm điểm từng loại nhiệm vụ
 # ---------------------------------------------------------------------------
-func _evaluate(entry: Dictionary, ctx: ChallengeContext, m: Dictionary, is_final: bool) -> Dictionary:
+func _evaluate(entry: Dictionary, ctx: MissionContext, m: Dictionary, is_final: bool) -> Dictionary:
 	var type_id := str(entry.get("type", ""))
 	var param := int(entry.get("param", 0))
 	var state := ctx.state
 
 	match type_id:
-		ChallengeTypes.NO_WALL:
+		MissionTypes.NO_WALL:
 			var hits := state.floor_wall_hits
 			var ok := hits == 0
 			return _verdict(ok, _pass_fail(ok))
 
-		ChallengeTypes.STEPS_MAX:
+		MissionTypes.STEPS_MAX:
 			var moves := state.floor_moves
 			var ok := moves <= param
 			if is_final:
 				return _verdict(ok, _pass_fail(ok))
-			return _pending(tr("STR_CHALLENGE_STEPS_PROGRESS").format([moves, param]), ok)
+			return _pending(tr("STR_MISSION_STEPS_PROGRESS").format([moves, param]), ok)
 
-		ChallengeTypes.TIME_MAX:
+		MissionTypes.TIME_MAX:
 			var left := float(param) - ctx.elapsed
 			var ok := left >= 0.0
 			if is_final:
 				return _verdict(ok, _pass_fail(ok))
-			var text := tr("STR_CHALLENGE_TIME_LEFT").format([int(ceil(left))]) if ok \
-				else tr("STR_CHALLENGE_TIME_OVER").format([int(ceil(-left))])
+			var text := tr("STR_MISSION_TIME_LEFT").format([int(ceil(left))]) if ok \
+				else tr("STR_MISSION_TIME_OVER").format([int(ceil(-left))])
 			return _pending(text, ok)
 
-		ChallengeTypes.ONLY_NUMBERED:
+		MissionTypes.ONLY_NUMBERED:
 			var bad := _offending_cells(ctx, m, false)
 			if bad > 0:
-				return _verdict(false, tr("STR_CHALLENGE_ST_VIOLATED"))
-			return _verdict(true, tr("STR_CHALLENGE_ST_NUMBERED_OK"))
+				return _verdict(false, tr("STR_MISSION_ST_VIOLATED"))
+			return _verdict(true, tr("STR_MISSION_ST_NUMBERED_OK"))
 
-		ChallengeTypes.AVOID_NUMBERED:
+		MissionTypes.AVOID_NUMBERED:
 			var bad := _offending_cells(ctx, m, true)
 			if bad > 0:
-				return _verdict(false, tr("STR_CHALLENGE_ST_VIOLATED"))
-			return _verdict(true, tr("STR_CHALLENGE_ST_OK"))
+				return _verdict(false, tr("STR_MISSION_ST_VIOLATED"))
+			return _verdict(true, tr("STR_MISSION_ST_OK"))
 
-		ChallengeTypes.NO_REVISIT:
+		MissionTypes.NO_REVISIT:
 			var revisits := int(m["revisits"])
 			if revisits > 0:
-				return _verdict(false, tr("STR_CHALLENGE_ST_REVISITED").format([revisits]))
-			return _verdict(true, tr("STR_CHALLENGE_ST_OK"))
+				return _verdict(false, tr("STR_MISSION_ST_REVISITED").format([revisits]))
+			return _verdict(true, tr("STR_MISSION_ST_OK"))
 
-		ChallengeTypes.VISIT_ALL:
+		MissionTypes.VISIT_ALL:
 			var visited := int(m["visited"])
 			var cells := maxi(int(m["board_cells"]), 1)
 			var ok := visited >= cells
@@ -345,9 +345,9 @@ func _evaluate(entry: Dictionary, ctx: ChallengeContext, m: Dictionary, is_final
 				return _verdict(true, _pass_fail(true))
 			if is_final:
 				return _verdict(false, _pass_fail(false))
-			return _pending(tr("STR_CHALLENGE_ST_VISIT_ALL").format([visited, cells]), true)
+			return _pending(tr("STR_MISSION_ST_VISIT_ALL").format([visited, cells]), true)
 
-		ChallengeTypes.VISIT_ALL_NUMBERED:
+		MissionTypes.VISIT_ALL_NUMBERED:
 			var done_cells := int(m["numbered_on_path"])
 			var need := int(m["board_numbered"])
 			var ok := need == 0 or done_cells >= need
@@ -355,49 +355,49 @@ func _evaluate(entry: Dictionary, ctx: ChallengeContext, m: Dictionary, is_final
 				return _verdict(true, _pass_fail(true))
 			if is_final:
 				return _verdict(false, _pass_fail(false))
-			return _pending(tr("STR_CHALLENGE_ST_VISIT_ALL").format([done_cells, need]), true)
+			return _pending(tr("STR_MISSION_ST_VISIT_ALL").format([done_cells, need]), true)
 
-		ChallengeTypes.LEN_MIN_PERCENT:
+		MissionTypes.LEN_MIN_PERCENT:
 			return _percent_verdict(int(m["visited"]), int(m["board_cells"]), param, true, is_final)
 
-		ChallengeTypes.LEN_MAX_PERCENT:
+		MissionTypes.LEN_MAX_PERCENT:
 			return _percent_verdict(int(m["visited"]), int(m["board_cells"]), param, false, is_final)
 
-		ChallengeTypes.SUM_LT:
+		MissionTypes.SUM_LT:
 			return _sum_verdict(int(m["sum"]), param, "<", is_final)
-		ChallengeTypes.SUM_LE:
+		MissionTypes.SUM_LE:
 			return _sum_verdict(int(m["sum"]), param, "<=", is_final)
-		ChallengeTypes.SUM_GT:
+		MissionTypes.SUM_GT:
 			return _sum_verdict(int(m["sum"]), param, ">", is_final)
-		ChallengeTypes.SUM_GE:
+		MissionTypes.SUM_GE:
 			return _sum_verdict(int(m["sum"]), param, ">=", is_final)
 
-		ChallengeTypes.NO_HINT:
+		MissionTypes.NO_HINT:
 			var used := state.hints_used
 			var ok := used == 0
-			return _verdict(ok, _pass_fail(ok) if ok else tr("STR_CHALLENGE_ST_HINT_USED").format([used]))
+			return _verdict(ok, _pass_fail(ok) if ok else tr("STR_MISSION_ST_HINT_USED").format([used]))
 
-		ChallengeTypes.NO_UNDO:
+		MissionTypes.NO_UNDO:
 			var used := state.undos_used
 			var ok := used == 0
-			return _verdict(ok, _pass_fail(ok) if ok else tr("STR_CHALLENGE_ST_UNDO_USED").format([used]))
+			return _verdict(ok, _pass_fail(ok) if ok else tr("STR_MISSION_ST_UNDO_USED").format([used]))
 
-		ChallengeTypes.NO_WRONG_SUBMIT:
+		MissionTypes.NO_WRONG_SUBMIT:
 			# Wall Builder: GỬI ĐÚNG NGAY Ở LẦN GỬI ĐẦU TIÊN (không được nộp sai lần nào)
 			var misses := int(m["submit_misses"])
 			if misses > 0:
-				return _verdict(false, tr("STR_CHALLENGE_ST_SUBMIT_MISSED").format([misses]))
+				return _verdict(false, tr("STR_MISSION_ST_SUBMIT_MISSED").format([misses]))
 			if is_final:
 				return _verdict(true, _pass_fail(true))
-			return _pending(tr("STR_CHALLENGE_ST_OK"), true)
+			return _pending(tr("STR_MISSION_ST_OK"), true)
 
 		_:
-			return _verdict(false, tr("STR_CHALLENGE_NOT_DONE"))
+			return _verdict(false, tr("STR_MISSION_NOT_DONE"))
 
 
 ## Đếm số ô đã đi VI PHẠM: `forbid_numbered = false` -> chỉ được đi ô có số;
 ## `true` -> không được đi ô có số.
-func _offending_cells(ctx: ChallengeContext, m: Dictionary, forbid_numbered: bool) -> int:
+func _offending_cells(ctx: MissionContext, m: Dictionary, forbid_numbered: bool) -> int:
 	var cells: Dictionary = m["cells"]
 	var start := ctx.maze.get_start() if ctx.maze != null else Vector2i(-1, -1)
 	var end := ctx.maze.get_end() if ctx.maze != null else Vector2i(-1, -1)
@@ -419,7 +419,7 @@ func _percent_verdict(visited: int, cells: int, percent: int, need_min: bool, is
 	var ok := got >= percent if need_min else got <= percent
 	if is_final:
 		return _verdict(ok, _pass_fail(ok))
-	var text := tr("STR_CHALLENGE_ST_VISITED_PCT").format([got])
+	var text := tr("STR_MISSION_ST_VISITED_PCT").format([got])
 	return _pending(text, ok)
 
 
@@ -436,14 +436,14 @@ func _sum_verdict(current: int, target: int, op: String, is_final: bool) -> Dict
 			ok = current >= target
 	if is_final:
 		return _verdict(ok, _pass_fail(ok))
-	return _pending(tr("STR_CHALLENGE_ST_PATH_SUM").format([current]), ok)
+	return _pending(tr("STR_MISSION_ST_PATH_SUM").format([current]), ok)
 
 
 # ---------------------------------------------------------------------------
 # Nội bộ
 # ---------------------------------------------------------------------------
 func _pass_fail(ok: bool) -> String:
-	return tr("STR_CHALLENGE_DONE") if ok else tr("STR_CHALLENGE_NOT_DONE")
+	return tr("STR_MISSION_DONE") if ok else tr("STR_MISSION_NOT_DONE")
 
 
 ## Kết quả CHỐT (cuối màn/tầng): có đạt hay không — chưa đạt thì không còn cơ hội nữa
@@ -451,16 +451,16 @@ func _verdict(done: bool, status: String) -> Dictionary:
 	return {"done": done, "status": status, "on_track": true}
 
 
-## Kết quả TẠM (đang chơi): chưa đạt · `on_track` = còn khả năng đạt (xem ChallengeCard)
+## Kết quả TẠM (đang chơi): chưa đạt · `on_track` = còn khả năng đạt (xem MissionCard)
 func _pending(status: String, on_track: bool) -> Dictionary:
 	return {"done": false, "status": status, "on_track": on_track}
 
 
-## Vẽ trạng thái các thử thách lên thẻ HUD "THỬ THÁCH" (mockup matchup_level.svg).
-## Controller chỉ đưa TRẠNG THÁI (đạt · còn cơ hội) — thẻ `ChallengeCard` tự lấy node con,
+## Vẽ trạng thái các nhiệm vụ lên thẻ HUD "NHIỆM VỤ" (mockup matchup_level.svg).
+## Controller chỉ đưa TRẠNG THÁI (đạt · còn cơ hội) — thẻ `MissionCard` tự lấy node con,
 ## tự chọn art/màu
 func _refresh_hud() -> void:
 	if card == null:
 		return
 	card.refresh(_rows, stars(), maxi(_rows.size(), 1),
-		tr("STR_CHALLENGE_DONE_COUNT").format([stars()]))
+		tr("STR_MISSION_DONE_COUNT").format([stars()]))

@@ -526,7 +526,7 @@ func _section_9_hud_bindings() -> void:
 ## Node CON HIỆN của `Content/ModeInformation` (node vừa xoá thì không còn; node kế thừa bị ẩn
 ## `visible = false` thì coi như không hiện) — mỗi HUD 2 HƯỚNG phải giống nhau.
 const HUD_VISIBLE_CARDS := {
-	"level_mode.tscn": ["Time"],                     # Play: CHỈ THỜI GIAN (thử thách ở popup)
+	"level_mode.tscn": ["Time"],                     # Play: CHỈ THỜI GIAN (nhiệm vụ ở popup)
 	"minesweep_hud.tscn": ["Time"],                  # Minesweeper: CHỈ THỜI GIAN
 	"blind_memory_hud.tscn": ["Time"],               # Blind Memory: CHỈ THỜI GIAN
 	"fading_ink_hud.tscn": ["Time"],                 # Fading Ink: CHỈ THỜI GIAN

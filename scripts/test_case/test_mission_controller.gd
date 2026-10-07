@@ -1,10 +1,10 @@
 extends SceneTree
 ## ============================================================================
-## Test Case: Hệ thống 3 Thử thách & Sao (ChallengeController) + popup thua.
-##   - Mỗi màn có đúng 3 thử thách; hoàn thành 1 = 1 Sao (không tính theo thời gian còn lại).
+## Test Case: Hệ thống 3 Nhiệm vụ & Sao (MissionController) + popup thua.
+##   - Mỗi màn có đúng 3 nhiệm vụ; hoàn thành 1 = 1 Sao (không tính theo thời gian còn lại).
 ##   - Hệ HUD tách theo chế độ: scripts/nodes/hud/*.gd + nodes/hud/*.tscn
-##     (Play = LevelHUD thẻ Thử thách, Dungeon = DungeonHUD bước/tầng, Minesweeper/Sum Path riêng).
-##   - Popup thua: Level -> gameover_level.tscn (thử thách + số Sao), Dungeon -> gameover.tscn (bước).
+##     (Play = LevelHUD thẻ Nhiệm vụ, Dungeon = DungeonHUD bước/tầng, Minesweeper/Sum Path riêng).
+##   - Popup thua: Level -> gameover_level.tscn (nhiệm vụ + số Sao), Dungeon -> gameover.tscn (bước).
 ##   - Hồi sinh: Level = quay lại bước trước đó, Endless = GIỮ NGUYÊN mê cung + cộng thêm bước.
 ## ============================================================================
 
@@ -37,11 +37,11 @@ func _init() -> void:
 	await process_frame
 
 	var gc: GameController = scene.game_controller
-	var cc: ChallengeController = gc.challenge_controller
-	assert(cc != null, "GameController phai duoc gan ChallengeController tu scene")
+	var cc: MissionController = gc.mission_controller
+	assert(cc != null, "GameController phai duoc gan MissionController tu scene")
 	_check_play_hud(scene, gc, cc)
 
-	# 2. Chuyển sang Dungeon -> HUD đổi sang SỐ BƯỚC + TẦNG, ẩn thẻ thử thách
+	# 2. Chuyển sang Dungeon -> HUD đổi sang SỐ BƯỚC + TẦNG, ẩn thẻ nhiệm vụ
 	scene.switch_mode("dungeon")
 	await process_frame
 	_check_dungeon_hud(scene, cc)
@@ -79,20 +79,20 @@ func _init() -> void:
 # ---------------------------------------------------------------------------
 # HUD
 # ---------------------------------------------------------------------------
-func _check_play_hud(scene: GameScene, _gc: GameController, cc: ChallengeController) -> void:
+func _check_play_hud(scene: GameScene, _gc: GameController, cc: MissionController) -> void:
 	var hud := scene.ui_controller.hud as LevelHUD
 	assert(hud != null, "Play Mode phai dung LevelHUD (nodes/hud/level_mode.tscn)")
-	# 2026-09-27 — HUD Play CHỈ hiện THỜI GIAN: thẻ Thử thách đã gỡ khỏi HUD (kết quả 3 thử thách +
-	# Sao hiện ở POPUP kết thúc ván) nên `challenge_card()` phải trả null và controller không giữ thẻ.
-	if hud.challenge_card() != null:
+	# 2026-09-27 — HUD Play CHỈ hiện THỜI GIAN: thẻ Nhiệm vụ đã gỡ khỏi HUD (kết quả 3 nhiệm vụ +
+	# Sao hiện ở POPUP kết thúc ván) nên `mission_card()` phải trả null và controller không giữ thẻ.
+	if hud.mission_card() != null:
 		_fail("HUD Play da go the THU THACH (chi con THOI GIAN)")
 	if cc.card != null:
-		_fail("ChallengeController khong duoc tro vao the thu thach o HUD nua")
+		_fail("MissionController khong duoc tro vao the thu thach o HUD nua")
 	var time_val := hud.get_node_or_null("Content/ModeInformation/Time/Value") as Label
 	if time_val == null or time_val.text.is_empty():
 		_fail("HUD Play thieu gia tri THOI GIAN")
-	if hud.get_node_or_null("Content/ModeInformation/Challenge") != null:
-		_fail("HUD Play con node Challenge (phai go khoi scene)")
+	if hud.get_node_or_null("Content/ModeInformation/Mission") != null:
+		_fail("HUD Play con node Mission (phai go khoi scene)")
 	print("[CHECK] Play Mode HUD: CHI THOI GIAN (%s) — the thu thach o popup ket qua"
 		% (time_val.text if time_val != null else "-"))
 
@@ -118,7 +118,7 @@ func _check_dungeon_hazard(scene: GameScene) -> void:
 	print("[CHECK] Dungeon: dam tuong van dua nhan vat ve diem S (khong doi hanh vi)")
 
 
-func _check_dungeon_hud(scene: GameScene, cc: ChallengeController) -> void:
+func _check_dungeon_hud(scene: GameScene, cc: MissionController) -> void:
 	var hud := scene.ui_controller.hud as DungeonHUD
 	assert(hud != null, "Dungeon Mode phai dung DungeonHUD (nodes/hud/dungeon_mode.tscn)")
 	# 2026-09-27: Dungeon CHỈ hiện SỐ BƯỚC + TẦNG (đồng hồ đã gỡ/ẩn)
@@ -133,10 +133,10 @@ func _check_dungeon_hud(scene: GameScene, cc: ChallengeController) -> void:
 	var time_card := hud.get_node_or_null("Content/ModeInformation/Time") as Control
 	if time_card != null and time_card.visible:
 		_fail("Dungeon HUD khong hien THOI GIAN nua (chi SO BUOC + TANG)")
-	if hud.challenge_card() != null:
+	if hud.mission_card() != null:
 		_fail("Dungeon HUD khong duoc co the THU THACH")
 	if cc.card != null:
-		_fail("ChallengeController khong duoc tro vao the thu thach o Dungeon Mode")
+		_fail("MissionController khong duoc tro vao the thu thach o Dungeon Mode")
 	if step_val == null or step_val.text.is_empty():
 		_fail("Dungeon HUD thieu gia tri SO BUOC CON LAI")
 	if floor_val == null or floor_val.text.length() < 2:
@@ -154,7 +154,7 @@ func _check_minesweep_hud(scene: GameScene) -> void:
 		_fail("HUD Minesweeper thieu gia tri THOI GIAN")
 	if hud.get_node_or_null("Content/ModeInformation/Bomb") != null:
 		_fail("HUD Minesweeper da go the BOMB (chi con THOI GIAN)")
-	if hud.challenge_card() != null:
+	if hud.mission_card() != null:
 		_fail("HUD Minesweeper khong duoc co the THU THACH")
 	print("[CHECK] Minesweeper HUD: CHI THOI GIAN (%s)" % (time_val.text if time_val != null else "-"))
 
@@ -267,7 +267,7 @@ func _check_revive_endless(scene: GameScene, gc: GameController) -> void:
 # ---------------------------------------------------------------------------
 # Logic
 # ---------------------------------------------------------------------------
-func _check_star_math(gc: GameController, cc: ChallengeController) -> void:
+func _check_star_math(gc: GameController, cc: MissionController) -> void:
 	cc.setup_for_floor(15)
 	if cc.step_limit != 15:
 		_fail("Nguong so buoc phai la 15, dang la %d" % cc.step_limit)
@@ -275,7 +275,7 @@ func _check_star_math(gc: GameController, cc: ChallengeController) -> void:
 		_fail("Nguong thoi gian phai la 45s (15 buoc x 3), dang la %.1f" % cc.time_limit)
 
 	var rows := cc.rows()
-	if rows.size() != ChallengeTypes.MAX_PER_LEVEL:
+	if rows.size() != MissionTypes.MAX_PER_LEVEL:
 		_fail("Man khong khai bao thu thach phai dung 3 thu thach mac dinh, dang co %d" % rows.size())
 	var steps_title := str(rows[1].get("title", ""))
 	var time_title := str(rows[2].get("title", ""))
@@ -284,7 +284,7 @@ func _check_star_math(gc: GameController, cc: ChallengeController) -> void:
 	if not time_title.contains("45"):
 		_fail("Ten thu thach thoi gian phai neu nguong 45, dang la '%s'" % time_title)
 
-	# Khi đang chơi: chỉ thử thách 1 có thể "đạt" ngay, 2 thử thách kia còn chờ
+	# Khi đang chơi: chỉ nhiệm vụ 1 có thể "đạt" ngay, 2 nhiệm vụ kia còn chờ
 	var state := GameState.new()
 	state.begin_run(15, "play", 1)
 	cc.refresh(_ctx(gc, state, [], 0.0, false))
@@ -316,9 +316,9 @@ func _check_star_math(gc: GameController, cc: ChallengeController) -> void:
 		_fail("Vuot nguong buoc + thoi gian (con dam tuong) phai la 0 Sao, dang co %d" % cc.stars())
 
 
-## Tạo ChallengeContext từ scene đang chơi (để chấm thử thách trong test)
-func _ctx(gc: GameController, state: GameState, path: Array[Vector2i], elapsed: float, is_final: bool) -> ChallengeContext:
-	var ctx := ChallengeContext.new()
+## Tạo MissionContext từ scene đang chơi (để chấm nhiệm vụ trong test)
+func _ctx(gc: GameController, state: GameState, path: Array[Vector2i], elapsed: float, is_final: bool) -> MissionContext:
+	var ctx := MissionContext.new()
 	ctx.set_values(
 		state,
 		gc.game_mode,
@@ -395,7 +395,7 @@ func _check_revive_level(scene: GameScene, gc: GameController) -> void:
 		_fail("Sau %d buoc, floor_moves phai = %d, dang la %d"
 			% [path.size(), path.size(), gc.game_state.floor_moves])
 
-	# Đâm tường = thua ngay (Play Mode) -> popup thua bản LEVEL (3 thử thách + số Sao)
+	# Đâm tường = thua ngay (Play Mode) -> popup thua bản LEVEL (3 nhiệm vụ + số Sao)
 	grid.try_move_to(wall_cell)
 	await process_frame
 	await process_frame
@@ -412,7 +412,11 @@ func _check_revive_level(scene: GameScene, gc: GameController) -> void:
 	var popup := Popups.get_popup(Popups.GAME_OVER_LEVEL)
 	if popup != null:
 		var stamp := popup.find_child("StampCount", true, false) as Label
-		var header := popup.find_child("ChallengeCount", true, false) as Label
+		# Số nhiệm vụ hiển thị ở panel "MissionHead/Value" của popup (không phải node tên MissionCount)
+		var header_node := popup.find_child("MissionHead", true, false) as Control
+		var header: Label = null
+		if header_node != null:
+			header = header_node.get_node_or_null("Value") as Label
 		if stamp == null or header == null:
 			_fail("Popup level thieu con dau / so thu thach")
 		elif stamp.text != header.text:

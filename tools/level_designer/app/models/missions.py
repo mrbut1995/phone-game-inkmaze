@@ -1,10 +1,10 @@
-"""Danh mục LOẠI THỬ THÁCH (challenge) — bản Python, khớp với game.
+"""Danh mục LOẠI NHIỆM VỤ (mission) — bản Python, khớp với game.
 
-Game: `scripts/core/controllers/challenge_types.gd` (class ChallengeTypes).
+Game: `scripts/core/controllers/mission_types.gd` (class MissionTypes).
 Tool: module này. Khi thêm loại mới phải sửa CẢ HAI nơi.
 
-Mỗi màn gắn TỐI ĐA 3 thử thách: `LevelModel.challenges = [(type_id, param), ...]`.
-Để trống = game dùng 3 thử thách mặc định (no_wall · steps_max · time_max).
+Mỗi màn gắn TỐI ĐA 3 nhiệm vụ: `LevelModel.missions = [(type_id, param), ...]`.
+Để trống = game dùng 3 nhiệm vụ mặc định (no_wall · steps_max · time_max).
 """
 
 from __future__ import annotations
@@ -35,7 +35,7 @@ PARAM_PERCENT = "percent"
 PARAM_SUM = "sum"
 
 # id -> (nhãn tiếng Việt, loại tham số, đơn vị hiển thị, mô tả ngắn)
-CHALLENGES: dict[str, tuple[str, str, str, str]] = {
+MISSIONS: dict[str, tuple[str, str, str, str]] = {
     NO_WALL: (
         "Không đâm vào tường vô hình",
         PARAM_NONE, "",
@@ -107,7 +107,7 @@ ORDER: list[str] = [
 
 DEFAULT_TYPES: list[str] = [NO_WALL, STEPS_MAX, TIME_MAX]
 
-# Thử thách không cần tham số
+# Nhiệm vụ không cần tham số
 NO_PARAM_TYPES: set[str] = {
     NO_WALL,
     ONLY_NUMBERED,
@@ -137,23 +137,23 @@ PARAM_RANGE: dict[str, tuple[int, int]] = {
 
 
 def is_valid(type_id: str) -> bool:
-    return type_id in CHALLENGES
+    return type_id in MISSIONS
 
 
 def label(type_id: str) -> str:
-    return CHALLENGES.get(type_id, (type_id, PARAM_NONE, "", ""))[0]
+    return MISSIONS.get(type_id, (type_id, PARAM_NONE, "", ""))[0]
 
 
 def param_kind(type_id: str) -> str:
-    return CHALLENGES.get(type_id, (type_id, PARAM_NONE, "", ""))[1]
+    return MISSIONS.get(type_id, (type_id, PARAM_NONE, "", ""))[1]
 
 
 def unit(type_id: str) -> str:
-    return CHALLENGES.get(type_id, (type_id, PARAM_NONE, "", ""))[2]
+    return MISSIONS.get(type_id, (type_id, PARAM_NONE, "", ""))[2]
 
 
 def hint(type_id: str) -> str:
-    return CHALLENGES.get(type_id, (type_id, PARAM_NONE, "", ""))[3]
+    return MISSIONS.get(type_id, (type_id, PARAM_NONE, "", ""))[3]
 
 
 def has_param(type_id: str) -> bool:

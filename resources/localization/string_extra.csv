@@ -23,8 +23,8 @@ STR_HUD_WB_CHIP_BUILDING,CONNECTING WALLS,ĐANG NỐI TƯỜNG
 STR_HUD_WB_CHIP_READY,READY TO SUBMIT,SẴN SÀNG GỬI
 STR_WB_WRONG_COUNT,{0} WALLS STILL OFF!,CÒN LỆCH {0} ĐOẠN!
 STR_REVIVE_DESC_SUBMIT,Get +1 SUBMIT to hand it in again,Nhận thêm +1 LƯỢT GỬI để nộp lại
-STR_CHALLENGE_NO_WRONG_SUBMIT,Submit right on the first try,Gửi đúng ngay lần đầu
-STR_CHALLENGE_ST_SUBMIT_MISSED,{0} wrong submits,Đã gửi sai {0} lần
+STR_MISSION_NO_WRONG_SUBMIT,Submit right on the first try,Gửi đúng ngay lần đầu
+STR_MISSION_ST_SUBMIT_MISSED,{0} wrong submits,Đã gửi sai {0} lần
 STR_SETTINGS_SUBTITLE_TITLE,EXPERIENCE SETUP,THIẾT LẬP TRẢI NGHIỆM
 STR_SETTINGS_SUBTITLE_DESC,"Adjust sound, controls and storage","Điều chỉnh âm thanh, điều khiển và lưu trữ"
 STR_SETTINGS_LANGUAGE_SECTION,LANGUAGE & STORAGE,NGÔN NGỮ & LƯU TRỮ
@@ -140,9 +140,9 @@ STR_MEMORIZE_TITLE,MEMORIZE!,GHI NHỚ!
 STR_MEMORIZE_HINT,The walls will vanish when the countdown ends,Tường sẽ biến mất khi đếm ngược kết thúc
 STR_GAME_OVER_NO_PATH,NO PATH LEFT!,HẾT ĐƯỜNG ĐI!
 STR_RESULT_SUBTITLE,Level {0} • {1} Grid,Màn {0} • Bàn cờ {1}
-STR_WIN_STAMP_TITLE,{0} / {1} CHALLENGES,{0} / {1} THỬ THÁCH
+STR_WIN_STAMP_TITLE,{0} / {1} MISSIONS,{0} / {1} NHIỆM VỤ
 STR_WIN_STAMP_SUB,★ {0} STARS EARNED ★,★ ĐẠT {0} SAO ★
-STR_CHALLENGE_DONE_COUNT,{0} COMPLETED,{0} ĐÃ HOÀN THÀNH
+STR_MISSION_DONE_COUNT,{0} COMPLETED,{0} ĐÃ HOÀN THÀNH
 STR_CHAPTER_FORMAT,CHAPTER {0},CHƯƠNG {0}
 STR_LEVEL_TITLE_FORMAT,LEVEL {0},MÀN {0}
 STR_LEVEL_NEXT,NEXT,MÀN TIẾP
@@ -170,39 +170,39 @@ STR_ACH_QUOTE,~ Every precise move leaves a mark in your badge book ~,~ Mỗi b�
 STR_ACH_BADGES_FORMAT,{0}/{1} BADGES,{0}/{1} BADGES
 STR_ACH_EMPTY,No badges in this category yet,Chưa có danh hiệu nào trong mục này
 STR_ACH_PERCENT,{0}%,{0}%
-STR_CHALLENGE_NO_WALL,Do not hit a hidden wall,Không đâm vào tường
-STR_CHALLENGE_STEPS,Finish within {0} steps,Đi không quá {0} bước
-STR_CHALLENGE_TIME,Reach F in under {0}s,Về đích dưới {0} giây
-STR_CHALLENGE_ONLY_NUMBERED,Step only on numbered cells,Chỉ đi vào ô CÓ số
-STR_CHALLENGE_AVOID_NUMBERED,Do not step on numbered cells,Không đi vào ô CÓ số
-STR_CHALLENGE_NO_REVISIT,Do not retrace your path,Không lặp lại ô cũ
-STR_CHALLENGE_VISIT_ALL,Visit every cell,Đi qua hết mọi ô
-STR_CHALLENGE_VISIT_ALL_NUMBERED,Visit every numbered cell,Đi hết mọi ô có số
-STR_CHALLENGE_LEN_MIN,Walk at least {0}% of the cells,Đi tối thiểu {0}% số ô
-STR_CHALLENGE_LEN_MAX,Walk at most {0}% of the cells,Đi tối đa {0}% số ô
-STR_CHALLENGE_SUM_LT,Path sum under {0},Tổng số đã đi < {0}
-STR_CHALLENGE_SUM_LE,Path sum at most {0},Tổng số đã đi <= {0}
-STR_CHALLENGE_SUM_GT,Path sum over {0},Tổng số đã đi > {0}
-STR_CHALLENGE_SUM_GE,Path sum at least {0},Tổng số đã đi >= {0}
-STR_CHALLENGE_NO_HINT,Do not use hints,Không dùng gợi ý
-STR_CHALLENGE_NO_UNDO,Do not use undo,Không dùng hoàn tác
-STR_CHALLENGE_ST_OK,OK,ổn
-STR_CHALLENGE_ST_VIOLATED,VIOLATED,VI PHẠM
-STR_CHALLENGE_ST_NUMBERED_OK,all numbered,toàn ô có số
-STR_CHALLENGE_ST_VISITED_PCT,{0}% cells,{0}% số ô
-STR_CHALLENGE_ST_VISIT_ALL,{0}/{1} cells,{0}/{1} ô
-STR_CHALLENGE_ST_PATH_SUM,sum {0},tổng {0}
-STR_CHALLENGE_ST_REVISITED,{0} revisits,đi đè {0}
-STR_CHALLENGE_ST_HINT_USED,hints {0},gợi ý {0}
-STR_CHALLENGE_ST_UNDO_USED,undos {0},hoàn tác {0}
-STR_CHALLENGE_STEPS_PROGRESS,{0}/{1} steps,{0}/{1} bước
-STR_CHALLENGE_TIME_LEFT,{0}s left,còn {0}s
-STR_CHALLENGE_TIME_OVER,{0}s over,quá {0}s
-STR_CHALLENGE_DONE,★ DONE,★ ĐẠT
-STR_CHALLENGE_NOT_DONE,NOT DONE,CHƯA ĐẠT
-STR_CHALLENGE_HEADER,LEVEL CHALLENGES:,THỬ THÁCH CỦA MÀN:
-STR_CHALLENGE_STAMP_TITLE,CHALLENGES,THỬ THÁCH
-STR_CHALLENGE_COUNT_FORMAT,{0} / {1},{0} / {1}
+STR_MISSION_NO_WALL,Do not hit a hidden wall,Không đâm vào tường
+STR_MISSION_STEPS,Finish within {0} steps,Đi không quá {0} bước
+STR_MISSION_TIME,Reach F in under {0}s,Về đích dưới {0} giây
+STR_MISSION_ONLY_NUMBERED,Step only on numbered cells,Chỉ đi vào ô CÓ số
+STR_MISSION_AVOID_NUMBERED,Do not step on numbered cells,Không đi vào ô CÓ số
+STR_MISSION_NO_REVISIT,Do not retrace your path,Không lặp lại ô cũ
+STR_MISSION_VISIT_ALL,Visit every cell,Đi qua hết mọi ô
+STR_MISSION_VISIT_ALL_NUMBERED,Visit every numbered cell,Đi hết mọi ô có số
+STR_MISSION_LEN_MIN,Walk at least {0}% of the cells,Đi tối thiểu {0}% số ô
+STR_MISSION_LEN_MAX,Walk at most {0}% of the cells,Đi tối đa {0}% số ô
+STR_MISSION_SUM_LT,Path sum under {0},Tổng số đã đi < {0}
+STR_MISSION_SUM_LE,Path sum at most {0},Tổng số đã đi <= {0}
+STR_MISSION_SUM_GT,Path sum over {0},Tổng số đã đi > {0}
+STR_MISSION_SUM_GE,Path sum at least {0},Tổng số đã đi >= {0}
+STR_MISSION_NO_HINT,Do not use hints,Không dùng gợi ý
+STR_MISSION_NO_UNDO,Do not use undo,Không dùng hoàn tác
+STR_MISSION_ST_OK,OK,ổn
+STR_MISSION_ST_VIOLATED,VIOLATED,VI PHẠM
+STR_MISSION_ST_NUMBERED_OK,all numbered,toàn ô có số
+STR_MISSION_ST_VISITED_PCT,{0}% cells,{0}% số ô
+STR_MISSION_ST_VISIT_ALL,{0}/{1} cells,{0}/{1} ô
+STR_MISSION_ST_PATH_SUM,sum {0},tổng {0}
+STR_MISSION_ST_REVISITED,{0} revisits,đi đè {0}
+STR_MISSION_ST_HINT_USED,hints {0},gợi ý {0}
+STR_MISSION_ST_UNDO_USED,undos {0},hoàn tác {0}
+STR_MISSION_STEPS_PROGRESS,{0}/{1} steps,{0}/{1} bước
+STR_MISSION_TIME_LEFT,{0}s left,còn {0}s
+STR_MISSION_TIME_OVER,{0}s over,quá {0}s
+STR_MISSION_DONE,★ DONE,★ ĐẠT
+STR_MISSION_NOT_DONE,NOT DONE,CHƯA ĐẠT
+STR_MISSION_HEADER,LEVEL MISSIONS:,NHIỆM VỤ CỦA MÀN:
+STR_MISSION_STAMP_TITLE,MISSIONS,NHIỆM VỤ
+STR_MISSION_COUNT_FORMAT,{0} / {1},{0} / {1}
 STR_GAMEOVER_STAMP_TITLE,OUT OF STEPS,HẾT BƯỚC
 STR_GAMEOVER_STAMP_STEPS,{0} / {1} STEPS,{0} / {1} BƯỚC
 STR_RANK_TITLE,LEADERBOARD,BẢNG XẾP HẠNG
@@ -264,7 +264,7 @@ STR_CHAPTER_PLAY_SUB,Level {0} ›,Màn {0} ›
 STR_CHAPTER_UNLOCK,UNLOCK,MỞ KHÓA
 STR_CHAPTER_NOT_ENOUGH,Not enough stars,Chưa đủ sao
 STR_CHAPTER_STARS_HELD,STARS,SAO CÓ
-STR_CHAPTER_BANNER,Clear level challenges to collect Stars and unlock new Chapters!,Chinh phục thử thách ở các màn để tích lũy Sao mở khóa Chương mới!
+STR_CHAPTER_BANNER,Clear level missions to collect Stars and unlock new Chapters!,Chinh phục nhiệm vụ ở các màn để tích lũy Sao mở khóa Chương mới!
 STR_CHAPTER_UNLOCKABLE,A new Chapter is ready — tap to unlock!,Có Chương mới có thể mở khóa — bấm để xem!
 STR_SHOP_TITLE,SHOP,CỬA HÀNG
 STR_SHOP_EYEBROW,STATIONERY STORE,TIỆM VĂN PHÒNG PHẨM
@@ -408,13 +408,13 @@ STR_GI_BLINDMEMORY_P2_TAB1,3-SECOND COUNTDOWN,ĐẾM NGƯỢC 3 GIÂY
 STR_GI_BLINDMEMORY_P2_TAB2,WALLS VANISH,TƯỜNG BIẾN MẤT
 STR_GI_BLINDMEMORY_P2_TAB3,PLACE DRAFT WALLS,DỰNG TƯỜNG NHÁP
 STR_GI_BLINDMEMORY_P2_TITLE,Walls Vanish & Walking From Memory,Tường Biến Mất & Đi Bằng Trí Nhớ
-STR_GI_BLINDMEMORY_P3_CTA,UNDERSTOOD • MEMORY CHALLENGE,ĐÃ HIỂU • THỬ THÁCH TRÍ NHỚ
+STR_GI_BLINDMEMORY_P3_CTA,UNDERSTOOD • MEMORY MISSION,ĐÃ HIỂU • NHIỆM VỤ TRÍ NHỚ
 STR_GI_BLINDMEMORY_P3_LINK,Review from the start (Page 1),Xem lại từ đầu (Trang 1)
 STR_GI_BLINDMEMORY_P3_R1D,Connect 2 Anchors to mark the important walls you just saw before the memory fades.,Nối 2 điểm Anchor để đánh dấu các bức tường quan trọng bạn vừa thấy trước khi bộ nhớ bị phai.
 STR_GI_BLINDMEMORY_P3_R1T,Place Draft Walls Immediately:,Dựng Tường Nháp Ngay Lập Tức:
 STR_GI_BLINDMEMORY_P3_R2D,"If a middle section slips away, don't gamble — tap Hint to reveal 1 safe cell.","Nếu quên hẳn khúc giữa, đừng liều đâm bừa; hãy bấm Gợi Ý để soi ra 1 ô an toàn."
 STR_GI_BLINDMEMORY_P3_R2T,Use The Hint Button When Stuck:,Tận Dụng Nút Gợi Ý Khi Bị Bí:
-STR_GI_BLINDMEMORY_P3_R3D,"Bigger boards (4×4 then 5×5) pack more walls for a top-tier brain challenge!","Màn chơi càng rộng (4×4 rồi 5×5), số lượng tường càng nhiều, thử thách trí não đỉnh cao!"
+STR_GI_BLINDMEMORY_P3_R3D,"Bigger boards (4×4 then 5×5) pack more walls for a top-tier brain mission!","Màn chơi càng rộng (4×4 rồi 5×5), số lượng tường càng nhiều, nhiệm vụ trí não đỉnh cao!"
 STR_GI_BLINDMEMORY_P3_R3T,Train Your Memory Daily:,Rèn Luyện Trí Nhớ Mỗi Ngày:
 STR_GI_BLINDMEMORY_P3_SECTION,WINNING SECRETS,BÍ QUYẾT CHIẾN THẮNG
 STR_GI_BLINDMEMORY_P3_TAB1,3-SECOND COUNTDOWN,ĐẾM NGƯỢC 3 GIÂY
@@ -654,7 +654,7 @@ STR_GI_NORMAL_MAZE_P3_R1D,Don't draw right away — connect Anchors to seal the 
 STR_GI_NORMAL_MAZE_P3_R1T,Observe & Mark Walls First:,Quan Sát & Đánh Dấu Tường Trước:
 STR_GI_NORMAL_MAZE_P3_R2D,Drag the ink line cell by cell from the Start stair to Finish along the opened path.,Kéo nét mực từng ô một từ Cầu thang Start sang Finish theo lối đã mở.
 STR_GI_NORMAL_MAZE_P3_R2T,Draw Slowly & Surely:,Vẽ Chậm Rãi & Chắc Chắn:
-STR_GI_NORMAL_MAZE_P3_R3D,Clear all 3 Challenges on the HUD to collect all 3 Stars and unlock the next Chapter!,Hoàn thành cả 3 Thử Thách trên bảng HUD để gom trọn vẹn 3 Sao mở Chương mới!
+STR_GI_NORMAL_MAZE_P3_R3D,Clear all 3 Missions on the HUD to collect all 3 Stars and unlock the next Chapter!,Hoàn thành cả 3 Nhiệm Vụ trên bảng HUD để gom trọn vẹn 3 Sao mở Chương mới!
 STR_GI_NORMAL_MAZE_P3_R3T,Earn 3 Stars Per Level:,Đạt 3 Sao Mỗi Màn:
 STR_GI_NORMAL_MAZE_P3_SECTION,WINNING SECRETS,BÍ QUYẾT CHIẾN THẮNG
 STR_GI_NORMAL_MAZE_P3_TAB1,START & FINISH,BẮT ĐẦU & ĐÍCH
@@ -664,7 +664,7 @@ STR_GI_NORMAL_MAZE_P3_TITLE,Helper Tools,Công Cụ Trợ Giúp
 STR_GI_ONE_STROKE_CHIP,ONE STROKE • ONE LINE,ONE STROKE • MỘT NÉT
 STR_GI_ONE_STROKE_P1_CTA,NEXT: NO RE-ENTERING OLD CELLS (2/3) ›,TIẾP THEO: CẤM ĐI LẠI Ô CŨ (2/3) ›
 STR_GI_ONE_STROKE_P1_LINK,Skip the guide & start drawing now,Bỏ qua hướng dẫn & Vào vẽ một nét ngay
-STR_GI_ONE_STROKE_P1_R1D,Every wall shows up front — the whole challenge is the order of your steps to cover the board.,Mọi vách ngăn đều hiện sẵn. Toàn bộ thử thách là tìm thứ tự đi bao phủ trọn vẹn bàn cờ.
+STR_GI_ONE_STROKE_P1_R1D,Every wall shows up front — the whole mission is the order of your steps to cover the board.,Mọi vách ngăn đều hiện sẵn. Toàn bộ nhiệm vụ là tìm thứ tự đi bao phủ trọn vẹn bàn cờ.
 STR_GI_ONE_STROKE_P1_R1T,"Walls Are Visible, No Numbers At All:","Tường Nhìn Thấy Rõ, Hoàn Toàn Không Có Số:"
 STR_GI_ONE_STROKE_P1_R2D,The stroke must fill 100% of the board — no cell may be left empty before you finish.,"Nét vẽ phải lấp đầy 100% diện tích, không được bỏ trống bất kỳ một ô nào trước khi về đích."
 STR_GI_ONE_STROKE_P1_R2T,You Must Visit Every Cell On The Board:,Phải Đi Hết Tất Cả Các Ô Thuộc Bàn Cờ:
@@ -1206,13 +1206,13 @@ STR_TUT_CONGRATS_BODY,"You finished the first 3 lessons and 4 practice boards �
 STR_TUT_CONGRATS_CONTINUE,NEXT BOARD,CHƠI BÀN TIẾP THEO
 STR_TUT_CONGRATS_MAIN,MAIN MENU,VỀ MÀN HÌNH CHÍNH
 STR_ACH_DL_DAYS_30_TITLE,A Month of Discipline,Một Tháng Kiên Trì
-STR_ACH_DL_DAYS_30_DESC,Complete 30 days of Daily Challenge,Hoàn thành 30 ngày Daily Challenge
+STR_ACH_DL_DAYS_30_DESC,Complete 30 days of Daily Mission,Hoàn thành 30 ngày Daily Mission
 STR_ACH_DL_DAYS_7_TITLE,Diligent Week,Tuần Lễ Chăm Chỉ
-STR_ACH_DL_DAYS_7_DESC,Complete 7 days of Daily Challenge,Hoàn thành 7 ngày Daily Challenge
+STR_ACH_DL_DAYS_7_DESC,Complete 7 days of Daily Mission,Hoàn thành 7 ngày Daily Mission
 STR_ACH_DL_FIRST_DAY_TITLE,First Day,Ngày Đầu Tiên
-STR_ACH_DL_FIRST_DAY_DESC,Complete your first Daily Challenge day,Hoàn thành ngày Daily Challenge đầu tiên
+STR_ACH_DL_FIRST_DAY_DESC,Complete your first Daily Mission day,Hoàn thành ngày Daily Mission đầu tiên
 STR_ACH_DL_STARS_30_TITLE,Daily Star Vault,Kho Sao Daily
-STR_ACH_DL_STARS_30_DESC,Collect 30 stars from Daily Challenge days,Thu thập 30 sao từ các ngày Daily Challenge
+STR_ACH_DL_STARS_30_DESC,Collect 30 stars from Daily Mission days,Thu thập 30 sao từ các ngày Daily Mission
 STR_ACH_DL_STREAK_14_TITLE,14-Day Streak,Chuỗi 14 Ngày
 STR_ACH_DL_STREAK_14_DESC,Keep a 14-day streak,Duy trì chuỗi 14 ngày liên tiếp
 STR_ACH_DL_STREAK_3_TITLE,Disciplined Streak,Chuỗi Ngày Kỷ Luật
@@ -1266,7 +1266,7 @@ STR_CHAPTER_1_SUB,Get familiar with step & wall rules,Làm quen với các quy l
 STR_CHAPTER_2_NAME,DEDUCTION,SUY LUẬN
 STR_CHAPTER_2_SUB,Bigger mazes with denser walls,Mê cung rộng hơn với mật độ tường tăng cao
 STR_CHAPTER_3_NAME,HIDDEN TRAPS,BẪY ẨN
-STR_CHAPTER_3_SUB,Test your memory and wall-free drawing,Thử thách trí nhớ và khả năng vẽ không chạm tường
+STR_CHAPTER_3_SUB,Test your memory and wall-free drawing,Nhiệm vụ trí nhớ và khả năng vẽ không chạm tường
 STR_CHAPTER_4_NAME,GRANDMASTER,BẬC THẦY
 STR_CHAPTER_4_SUB,Huge mazes for deduction masters,Mê cung khổng lồ dành cho cao thủ suy luận
 STR_TOOL_SKIP,SKIP,BỎ QUA
@@ -1304,7 +1304,7 @@ STR_PROFILE_SHARE_BTN,SHARE,CHIA SẺ
 STR_PROFILE_STAMP,INK VERIFIED,INK VERIFIED
 STR_PROFILE_ACT_LEVEL,STAGE {0} • {1}×{2},MÀN {0} • BÀN {1}×{2}
 STR_PROFILE_ACT_DUNGEON,DUNGEON MODE • FLOOR {0},DUNGEON MODE • TẦNG {0}
-STR_PROFILE_ACT_DAILY,DAILY CHALLENGE • {0},DAILY CHALLENGE • {0}
+STR_PROFILE_ACT_DAILY,DAILY MISSION • {0},DAILY MISSION • {0}
 STR_PROFILE_ACT_CUSTOM,{0} • STAGE {1},{0} • MÀN {1}
 STR_PROFILE_ACT_TIME_FORMAT,Solve time: {0}s,Thời gian phá giải: {0}s
 STR_PROFILE_ACT_MOVES_FORMAT,{0} steps,{0} bước chân

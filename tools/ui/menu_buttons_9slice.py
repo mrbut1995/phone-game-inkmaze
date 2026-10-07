@@ -72,7 +72,7 @@ BUTTONS: dict[str, dict[str, str]] = {
         "pressed": "card_mode_dungeon_pressed", "focus": "card_mode_dungeon_focus",
         "disabled": "card_mode_disabled",
     },
-    "DailyChallenge": {
+    "DailyMission": {
         "normal": "card_mode_daily_normal", "hover": "card_mode_daily_normal",
         "pressed": "card_mode_daily_pressed", "focus": "card_mode_dungeon_focus",
         "disabled": "card_mode_disabled",
@@ -100,7 +100,7 @@ BUTTONS: dict[str, dict[str, str]] = {
     },
 }
 
-CARD_NAMES = {"Play", "Dungeon", "DailyChallenge"}
+CARD_NAMES = {"Play", "Dungeon", "DailyMission"}
 UTIL_NAMES = {"Leaderboard", "Shop", "Settings"}
 
 SCENES = [

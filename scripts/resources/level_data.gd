@@ -36,23 +36,23 @@ extends Resource
 ## Dữ liệu mở rộng cho các mode khác (Minesweeper, Sum Path, ...)
 @export var custom_cell_values: Dictionary = {}
 
-## THỬ THÁCH của màn (TỐI ĐA 3): challenge_types[i] + challenge_params[i] là 2 mảng song song.
-## Để TRỐNG = dùng 3 thử thách mặc định (không đâm tường · đủ bước · đủ thời gian).
-## Danh sách loại thử thách: scripts/core/controllers/challenge_types.gd (ChallengeTypes).
-@export var challenge_types: PackedStringArray = PackedStringArray()
-@export var challenge_params: PackedInt32Array = PackedInt32Array()
+## NHIỆM VỤ của màn (TỐI ĐA 3): mission_types[i] + mission_params[i] là 2 mảng song song.
+## Để TRỐNG = dùng 3 nhiệm vụ mặc định (không đâm tường · đủ bước · đủ thời gian).
+## Danh sách loại nhiệm vụ: scripts/core/controllers/mission_types.gd (MissionTypes).
+@export var mission_types: PackedStringArray = PackedStringArray()
+@export var mission_params: PackedInt32Array = PackedInt32Array()
 
 
-## Danh sách thử thách của màn: [{ type, param }, ...] (rỗng = game tự dùng mặc định)
-func get_challenges() -> Array[Dictionary]:
+## Danh sách nhiệm vụ của màn: [{ type, param }, ...] (rỗng = game tự dùng mặc định)
+func get_missions() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
-	for i in mini(challenge_types.size(), ChallengeTypes.MAX_PER_LEVEL):
-		var type_id := str(challenge_types[i])
-		if not ChallengeTypes.is_valid(type_id):
+	for i in mini(mission_types.size(), MissionTypes.MAX_PER_LEVEL):
+		var type_id := str(mission_types[i])
+		if not MissionTypes.is_valid(type_id):
 			continue
 		out.append({
 			"type": type_id,
-			"param": int(challenge_params[i]) if i < challenge_params.size() else 0,
+			"param": int(mission_params[i]) if i < mission_params.size() else 0,
 		})
 	return out
 

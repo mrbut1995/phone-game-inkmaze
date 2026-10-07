@@ -64,7 +64,7 @@ func set_row(row: Dictionary) -> void:
 		_disc.self_modulate = disc_color
 
 
-## "Màn 24 • Bàn 7×7" / "Dungeon Mode • Tầng 48" / "Daily Challenge • Wall Builder"
+## "Màn 24 • Bàn 7×7" / "Dungeon Mode • Tầng 48" / "Daily Mission • Wall Builder"
 func _title_text(endless: bool, daily: bool, mode_id: String, floor_id: int, width: int, height: int) -> String:
 	if endless:
 		return tr("STR_PROFILE_ACT_DUNGEON").format([floor_id])

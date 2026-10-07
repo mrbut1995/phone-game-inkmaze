@@ -41,7 +41,7 @@ var _mode_id := "level"
 @export var undo_controller: UndoController = null
 @export var hint_controller: HintController = null
 @export var game_mode_controller : GameModeController = null
-@export var challenge_controller : ChallengeController = null
+@export var mission_controller : MissionController = null
 
 ## HUD theo chế độ chơi — mỗi chế độ có 1 scene HUD DỌC (nodes/hud/portrait/game/<mode>.tscn,
 ## kế thừa portrait/portrait.tscn). Xem scripts/nodes/hud/base.gd
@@ -52,11 +52,11 @@ const HUD_SUM_PATH := preload("res://nodes/hud/portrait/game/sum_path_hud.tscn")
 const HUD_BLIND_MEMORY := preload("res://nodes/hud/portrait/game/blind_memory_hud.tscn")
 const HUD_COUNTDOWN := preload("res://nodes/hud/portrait/game/countdown_hud.tscn")
 const HUD_FADING_INK := preload("res://nodes/hud/portrait/game/fading_ink_hud.tscn")
-## Fog of War: THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử lại · tầm nhìn · cảnh báo) — không có thẻ Thử thách
+## Fog of War: THỜI GIAN + BẢNG SƯƠNG MÙ (lượt thử lại · tầm nhìn · cảnh báo) — không có thẻ Nhiệm vụ
 const HUD_FOG_OF_WAR := preload("res://nodes/hud/portrait/game/fog_of_war_hud.tscn")
-## One Stroke: THỜI GIAN + BẢNG TIẾN ĐỘ PHỦ KÍN (số ô đã đi · thanh tiến độ) — không có thẻ Thử thách
+## One Stroke: THỜI GIAN + BẢNG TIẾN ĐỘ PHỦ KÍN (số ô đã đi · thanh tiến độ) — không có thẻ Nhiệm vụ
 const HUD_ONE_STROKE := preload("res://nodes/hud/portrait/game/one_stroke_hud.tscn")
-## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Thử thách
+## Wall Builder: THỜI GIAN + BẢNG TƯỜNG ĐÃ VẼ (đoạn đã dựng · lượt gửi) — không có thẻ Nhiệm vụ
 const HUD_WALL_BUILDER := preload("res://nodes/hud/portrait/game/wall_builder_hud.tscn")
 
 #@export var game_mode : BaseGameMode
@@ -86,8 +86,8 @@ func _bind_refs() -> void:
 		hint_controller = get_node_or_null("Controllers/HintController") as HintController
 	if game_mode_controller == null:
 		game_mode_controller = get_node_or_null("Controllers/GameModeController") as GameModeController
-	if challenge_controller == null:
-		challenge_controller = get_node_or_null("Controllers/ChallengeController") as ChallengeController
+	if mission_controller == null:
+		mission_controller = get_node_or_null("Controllers/MissionController") as MissionController
 	if board_view == null:
 		board_view = get_node_or_null("Board") as Control
 	# UI của bố cục đang hiển thị — đã BIND SẴN trong scenes/layout/<hướng>/game.tscn
@@ -442,7 +442,7 @@ func _hud_class_for(mode_name: String) -> GDScript:
 ## Builder nằm ở nút `Submit` trên thanh hành động (xem `_apply_mode_buttons` / `_wire_action_bar`).
 
 ## Thay khung Information bằng HUD của chế độ đang chơi rồi gắn lại cho UIController /
-## ChallengeController (thẻ Thử thách nằm trong HUD nên phải trỏ lại node mới).
+## MissionController (thẻ Nhiệm vụ nằm trong HUD nên phải trỏ lại node mới).
 func _apply_hud_for_mode(mode_name: String) -> void:
 	_mode_id = mode_name
 	if not is_inside_tree():
@@ -510,7 +510,7 @@ func _hud_hint_guide() -> HintGuide:
 	return hud.hint_guide() if hud != null else null
 
 
-## Gắn HUD hiện tại cho UIController (vẽ nội dung) và ChallengeController (thẻ Thử thách).
+## Gắn HUD hiện tại cho UIController (vẽ nội dung) và MissionController (thẻ Nhiệm vụ).
 ## Đồng thời lấy thanh nút hành động NẰM TRONG HUD (phương án A) rồi nối lại tín hiệu — nhờ vậy
 ## mỗi HUD/chế độ tự bày nút theo bố cục dọc-ngang của mình, màn chơi không giữ nút nào.
 ## MỌI thứ thuộc HUD (nút · khung Hướng dẫn · nhường input) đều hỏi qua METHOD của HUD —
@@ -538,8 +538,8 @@ func _bind_hud_nodes() -> void:
 	hud.set_landscape(_layout_is_landscape())
 	if ui_controller != null:
 		ui_controller.set_hud(hud)
-	if challenge_controller != null:
-		challenge_controller.card = hud.challenge_card()
+	if mission_controller != null:
+		mission_controller.card = hud.mission_card()
 	hint_guide = _hud_hint_guide()
 	_refresh_hint_guide()
 	_fit_hud_scale.call_deferred()

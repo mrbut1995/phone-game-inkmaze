@@ -1,7 +1,7 @@
 class_name DailyCalendar
 extends Control
 ## ============================================================================
-## Component: Lịch tháng của màn Daily Challenge (nodes/daily/calendar.tscn)
+## Component: Lịch tháng của màn Daily Mission (nodes/daily/calendar.tscn)
 ## - Điều hướng tháng trước / tháng sau
 ## - Tự dựng lại lưới 7x5 ô ngày (nodes/daily/day.tscn) theo tháng đang xem
 ## - Ngày hôm nay / ngày đã hoàn thành lấy dữ liệu từ DailyManager

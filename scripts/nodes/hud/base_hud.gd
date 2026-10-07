@@ -7,7 +7,7 @@ extends Control
 ##   · Đồng hồ ván             : `update_hud(ctx)` · `set_time()`
 ##   · Thanh nút hành động     : `action_bar()` · `restart_btn()` · `submit_btn()` · `skip_btn()`
 ##                               · `undo_btn()` · `hint_btn()`
-##   · Thẻ THỬ THÁCH           : `challenge_card()` (HUD không xài thì trả null)
+##   · Thẻ NHIỆM VỤ           : `mission_card()` (HUD không xài thì trả null)
 ##   · Khung Hướng dẫn         : `hint_guide()`
 ##   · Nhường input cho bàn cờ : `allow_board_input()`
 ##
@@ -41,9 +41,9 @@ func _on_update(_ctx: Dictionary) -> void:
 	pass
 
 
-## Thẻ THỬ THÁCH nếu HUD có (chỉ HUD của các chế độ dùng hệ thống Thử thách) —
-## `ChallengeController` gọi hàm này rồi chỉ đưa TRẠNG THÁI vào `ChallengeCard.refresh()`.
-func challenge_card() -> ChallengeCard:
+## Thẻ NHIỆM VỤ nếu HUD có (chỉ HUD của các chế độ dùng hệ thống Nhiệm vụ) —
+## `MissionController` gọi hàm này rồi chỉ đưa TRẠNG THÁI vào `MissionCard.refresh()`.
+func mission_card() -> MissionCard:
 	return null
 
 

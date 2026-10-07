@@ -2,7 +2,7 @@
 """SỬA CHUỖI BỊ MOJIBAKE trong file text (chữ Việt/CJK bị mã hoá nhầm nhiều lớp).
 
 Nguyên nhân: file UTF-8 bị đọc bằng CP1252/"Windows-1252 châm chước" rồi ghi lại UTF-8
-⇒ "THỬ THÁCH" → "THá»¬ THÃCH" (có thể bị chồng 2–3 lớp).
+⇒ "NHIỆM VỤ" → "THá»¬ THÃCH" (có thể bị chồng 2–3 lớp).
 
   python tools/content/fix_mojibake.py               # chỉ báo cáo file nào đang lỗi
   python tools/content/fix_mojibake.py --apply       # sửa tại chỗ (chỉ file trong SCAN_DIRS)

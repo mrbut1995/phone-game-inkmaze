@@ -136,7 +136,7 @@ func _build_navigate() -> void:
 	_add_action("Select Chapter", "scenes/chapters.tscn", func() -> void: Nav.goto_chapters())
 	_add_action("Shop", "scenes/shop.tscn", func() -> void: Nav.goto_shop())
 	_add_action("Select Level", "scenes/levels.tscn", func() -> void: Nav.goto_levels())
-	_add_action("Daily Challenge", "scenes/daily.tscn", func() -> void: Nav.goto_daily())
+	_add_action("Daily Mission", "scenes/daily.tscn", func() -> void: Nav.goto_daily())
 	_add_action("Settings", "scenes/settings.tscn", func() -> void: Nav.goto_settings())
 	_add_action("Credits", "scenes/credit.tscn", func() -> void: Nav.goto_credit())
 	_add_action("Tutorial (menu)", "scenes/tutorial.tscn", func() -> void: Nav.goto_tutorial())

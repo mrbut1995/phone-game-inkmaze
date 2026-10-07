@@ -177,7 +177,7 @@ func show_game_over(result: Dictionary) -> void:
 	# SFX: tiếng vo tròn tờ giấy nháp ném đi
 	Sfx.play(Sfx.GAME_OVER)
 	# Dungeon Mode thua vì HẾT BƯỚC (phiếu giấy + điểm an ủi);
-	# các chế độ khác thua vì ĐÂM TƯỜNG (phiếu nêu 3 thử thách + số Sao đạt được)
+	# các chế độ khác thua vì ĐÂM TƯỜNG (phiếu nêu 3 nhiệm vụ + số Sao đạt được)
 	var id := Popups.GAME_OVER if bool(result.get("endless", true)) else Popups.GAME_OVER_LEVEL
 	var popup := Popups.open(id, result)
 	if popup == null:

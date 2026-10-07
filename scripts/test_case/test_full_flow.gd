@@ -51,7 +51,7 @@ func _init() -> void:
 	levels_scene.queue_free()
 	await process_frame
 
-	# 3. Test Daily Challenge Scene
+	# 3. Test Daily Mission Scene
 	var daily_packed: PackedScene = load("res://scenes/daily.tscn")
 	assert(daily_packed != null, "scenes/daily.tscn phai load duoc")
 	var daily_scene: DailyScene = daily_packed.instantiate()

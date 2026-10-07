@@ -39,6 +39,9 @@ const LAYOUT_CONTENTS := {
 ## node Information ban đầu bị free — binding cũ trỏ vào node đã free là chuyện bình thường.
 ## `pad_slot` của shop: bản DỌC để bàn nháp trong danh sách nên không khai node này.
 const OPTIONAL := {
+	## Splash: ngòi bút chì (Pencil) đã bỏ khỏi bố cục; bản DỌC không có dấu tem phiên bản
+	## (stamp_label) — đều là thiết kế, không phải lỗi binding.
+	"splash|portrait": ["pencil", "stamp_label"],
 	"game|portrait": ["hud_slot"],
 	"shop|portrait": ["pad_slot"],
 	## Sticker HỒ SƠ ở bản dọc chỉ là avatar nhỏ (không có chỗ ghi tên người chơi).

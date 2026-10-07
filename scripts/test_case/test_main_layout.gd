@@ -73,7 +73,7 @@ func _init() -> void:
 
 	# 2b. Mỗi thẻ chế độ phải được tách 3 phần: CircleIcon / TopBadge / BottomLabel
 	# (theo cấu trúc mới: CircleIcon nằm trong HBox `ButtonDescription` — cùng Title của thẻ)
-	for card_name in ["Play", "Dungeon", "DailyChallenge"]:
+	for card_name in ["Play", "Dungeon", "DailyMission"]:
 		var card := main_scene.ui(card_name) as Control
 		assert(card != null, "Phai co the %s" % card_name)
 		var circle := card.get_node_or_null("ButtonDescription/CircleIcon")
@@ -86,7 +86,7 @@ func _init() -> void:
 		assert(bottom.get_node_or_null("Badge") != null, "%s/BottomLabel phai chua Badge" % card_name)
 
 	# 3 huy hieu tren the che do phai duoc DIEN SO luc chay (chuoi dich co "{0}")
-	for pair in [["Play", "Badge"], ["Dungeon", "Badge"], ["DailyChallenge", "Badge"]]:
+	for pair in [["Play", "Badge"], ["Dungeon", "Badge"], ["DailyMission", "Badge"]]:
 		var badge := main_scene.ui_child(str(pair[0]), "BottomLabel/%s" % str(pair[1])) as Label
 		assert(badge != null, "Phai co Label huy hieu tai %s/BottomLabel/Badge" % str(pair[0]))
 		assert(not badge.text.contains("{0}"),

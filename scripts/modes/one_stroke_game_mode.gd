@@ -1,11 +1,11 @@
 class_name OneStrokeGameMode
 extends BaseGameMode
 ## ============================================================================
-## Mode: One Stroke (Một Nét) — Daily Challenge đặc biệt (GDD §5.12).
+## Mode: One Stroke (Một Nét) — Daily Mission đặc biệt (GDD §5.12).
 ##
 ## LUẬT:
 ## - Bàn cờ KHÔNG có số; tường hiện RÕ 100% (không có tường ẩn, không có mìn).
-##   Thử thách nằm ở THỨ TỰ ĐI, không phải ở việc dò tường.
+##   Nhiệm vụ nằm ở THỨ TỰ ĐI, không phải ở việc dò tường.
 ## - Phải VẼ ĐÚNG 1 NÉT LIỀN phủ kín MỌI ô của bàn cờ, mỗi ô chỉ được vào ĐÚNG 1 LẦN.
 ## - Ô đã đi qua bị KHOÁ VĨNH VIỄN: cố tình đi đè lên = THUA NGAY
 ##   (evaluate_move trả hazard "revisit" + instant_game_over_on_hazard).
@@ -416,10 +416,10 @@ func get_hud_extra_info() -> String:
 	return "PHỦ KÍN: %d/%d" % [_visited.size(), _total_cells]
 
 
-## Thử thách mặc định của One Stroke (§5.12): không đâm tường là vô nghĩa ở đây nên dùng
+## Nhiệm vụ mặc định của One Stroke (§5.12): không đâm tường là vô nghĩa ở đây nên dùng
 ## time_max · no_hint · no_undo (KHÔNG dùng visit_all/no_revisit vì đó là luật cứng của chế độ).
-func default_challenges() -> Array[String]:
-	return [ChallengeTypes.TIME_MAX, ChallengeTypes.NO_HINT, ChallengeTypes.NO_UNDO]
+func default_missions() -> Array[String]:
+	return [MissionTypes.TIME_MAX, MissionTypes.NO_HINT, MissionTypes.NO_UNDO]
 
 
 # ---------------------------------------------------------------------------
