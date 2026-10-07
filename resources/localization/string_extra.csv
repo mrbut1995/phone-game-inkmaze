@@ -1364,13 +1364,34 @@ STR_AVATAR_ARTIST_AVATAR_MARILYN,Artist Marilyn,Nghệ Sĩ Marilyn
 STR_AVATAR_BUILDER_HELMET_WORKER,Builder,Thợ Xây
 STR_AVATAR_EINSTEIN_PROFESSOR,Professor Einstein,Giáo Sư Einstein
 STR_AVATAR_FIGHTER_LUCHADOR_MAN,Luchador,Đô Vật Luchador
-STR_FRAME_GEAR,Golden Gear,Bánh Răng Vàng
+STR_FRAME_DEFAULT,Basic Frame,Khung Cơ Bản
+STR_FRAME_BRONZE,Bronze Relic,Đồng Cổ
 STR_FRAME_LAUREL,Laurel Wreath,Nguyệt Quế
-STR_FRAME_INK,Double Ink,Nét Mực Kép
-STR_FRAME_FIRE,Streak Fire,Gai Lửa Streak
-STR_FRAME_IRON,Dark Iron,Hắc Thiết Ngục
-STR_FRAME_ROYAL,Royal Aura,Hào Quang Đế Vương
+STR_FRAME_CYAN,Cyan Ring,Xanh Lơ
+STR_FRAME_GREEN,Verdant Ring,Xanh Lá
+STR_FRAME_ORANGE,Amber Ring,Cam Hổ Phách
+STR_FRAME_PINK,Blossom Ring,Hồng Phấn
+STR_FRAME_PURPLE,Amethyst Ring,Tím Mộng
+STR_FRAME_RED,Crimson Ring,Đỏ Thắm
+STR_FRAME_YELLOW,Sunbeam Ring,Vàng Nắng
+STR_FRAME_NOTEBOOK,Doodle Notebook,Sổ Tay Nguệch Ngoạc
+STR_FRAME_SKY,Blue Sky,Trời Xanh
+STR_FRAME_OCEAN,Deep Ocean,Đại Dương
+STR_FRAME_PAW,Paw Prints,Dấu Chân Thú
+STR_FRAME_VALENTINE,Sweet Valentine,Valentine Ngọt Ngào
 STR_FRAME_CRYSTAL,Crystal Halo,Hào Quang Pha Lê
+STR_FRAME_SILVER,Bright Silver,Bạc Sáng
+STR_FRAME_GOLD,Pure Gold,Vàng Kim
+STR_FRAME_HALLOWEEN,Halloween Night,Đêm Halloween
+STR_FRAME_CHRISTMAS,Christmas Carol,Giáng Sinh
+STR_FRAME_CHINESE_NEW_YEAR,Lunar New Year,Tết Cổ Truyền
+STR_FRAME_DINOSAUR,Dino World,Thế Giới Khủng Long
+STR_FRAME_SUN,Radiant Sun,Thái Dương Rực Rỡ
+STR_FRAME_PLATINUM,Platinum Crest,Bạch Kim
+STR_FRAME_ROYAL,Royal Aura,Hào Quang Đế Vương
+STR_FRAME_NIGHT,Moonlit Night,Đêm Trăng
+STR_FRAME_SPIKE,Iron Spikes,Vòng Gai Sắt
+STR_FRAME_SPACE,Outer Space,Vũ Trụ Bao La
 STR_FRAME_LEAF,Leaf Wreath,Vòng Lá Nguyệt Quế
 STR_LOCK_DUNGEON,Dungeon Floor {0},Dungeon Tầng {0}
 STR_LOCK_STREAK,Daily streak {0} days,Chuỗi Daily {0} ngày

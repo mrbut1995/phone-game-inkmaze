@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-einstein-professor.png" id="1_2yhor"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_4jlrd"]
+
+[resource]
+script = ExtResource("2_4jlrd")
+id = "avatar_einstein_professor"
+name_key = "STR_AVATAR_EINSTEIN_PROFESSOR"
+icon = ExtResource("1_2yhor")
+price = 0
+lock_stat = "points"
+lock_value = 700

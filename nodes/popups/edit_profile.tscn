@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cc60f3g3jm5oy" path="res://assets/images-png/profiler/tab_on.png" id="9_tab_on"]
 [ext_resource type="Texture2D" uid="uid://dac4ufwq5n0vr" path="res://assets/images-png/profiler/tab_off.png" id="10_tab_off"]
 [ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="12_disc"]
-[ext_resource type="Texture2D" uid="uid://d1kaxcikq5x34" path="res://assets/images-png/frames/frame_gear_gold.png" id="13_frame"]
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_default.png" id="13_frame"]
 [ext_resource type="Texture2D" uid="uid://de1fy87ucyxya" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="14_avatar"]
 [ext_resource type="Texture2D" uid="uid://dqieoipkfwl5t" path="res://assets/images-png/profiler/btn_primary_normal.png" id="16_pri_n"]
 [ext_resource type="Texture2D" uid="uid://57bxbg2334ve" path="res://assets/images-png/profiler/btn_primary_pressed.png" id="17_pri_p"]

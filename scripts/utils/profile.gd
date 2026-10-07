@@ -48,7 +48,7 @@ static func avatar_id() -> String:
 
 static func frame_id() -> String:
 	var m := manager()
-	return str(m.get("frame_id")) if m != null else "frame_gear"
+	return str(m.get("frame_id")) if m != null else "frame_default"
 
 
 static func avatar_icon(ident: String) -> String:
@@ -58,7 +58,7 @@ static func avatar_icon(ident: String) -> String:
 
 static func frame_icon(ident: String) -> String:
 	var value: Variant = _call("icon_of", ["frame", ident])
-	return str(value) if value != null else "res://assets/images-png/frames/frame_gear_gold.png"
+	return str(value) if value != null else "res://assets/images-png/frames/frame_default.png"
 
 
 # --- Danh mục / trang bị ----------------------------------------------------

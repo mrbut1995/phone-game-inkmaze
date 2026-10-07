@@ -38,8 +38,9 @@ func _init() -> void:
 			% [levels_scene.map.node_count(), levels_count])
 	# Cụm nút màn + đường nối nằm trong `Tracks/Items`; cờ đích + mũi chỉ là node có sẵn
 	var items: Node2D = levels_scene.map.items
-	assert(items != null and items.get_child_count() == maxi(levels_count * 2 - 1, 0),
-		"Items phai co %d con (nut man + duong noi)" % maxi(levels_count * 2 - 1, 0))
+	var expected_items := levels_count + (1 if levels_count >= 2 else 0)
+	assert(items != null and items.get_child_count() == expected_items,
+		"Items phai co %d con (nut man + duong noi lien mach)" % expected_items)
 	var current_node: LevelMapNode = levels_scene.map.node_for(levels_scene.chapter_continue_level())
 	assert(current_node != null and current_node.state == LevelMapNode.State.CURRENT,
 		"Man nen choi tiep phai co nut o trang thai CURRENT")

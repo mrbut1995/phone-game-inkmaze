@@ -1,9 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
-  <circle cx="60" cy="60" r="46" fill="none" stroke="#16A34A" stroke-width="3.4"/>
-  <g stroke="#16A34A" stroke-width="1.8" fill="#DCFCE7">
-    <ellipse cx="22" cy="42" rx="9" ry="4.5" transform="rotate(-35 22 42)"/>
-    <ellipse cx="18" cy="68" rx="9" ry="4.5" transform="rotate(25 18 68)"/>
-    <ellipse cx="98" cy="42" rx="9" ry="4.5" transform="rotate(35 98 42)"/>
-    <ellipse cx="102" cy="68" rx="9" ry="4.5" transform="rotate(-25 102 68)"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <!-- FRAME PLACEHOLDER (sinh tự động) — PNG thật nằm ở assets/images-png/frames/.
+       LƯU Ý: chạy tools/svg_to_png.py sẽ ĐÈ placeholder lên PNG thật! -->
+  <circle cx="120" cy="120" r="104" fill="none" stroke="#94A3B8" stroke-width="9"/>
+  <circle cx="120" cy="120" r="84" fill="none" stroke="#CBD5E1" stroke-width="4" stroke-dasharray="16 11"/>
 </svg>

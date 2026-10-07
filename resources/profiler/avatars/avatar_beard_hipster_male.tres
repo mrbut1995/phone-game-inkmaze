@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-beard-hipster-male.png" id="1_mxmsi"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_75iy2"]
+
+[resource]
+script = ExtResource("2_75iy2")
+id = "avatar_beard_hipster_male"
+name_key = "STR_AVATAR_BEARD_HIPSTER_MALE"
+icon = ExtResource("1_mxmsi")
+price = 800
+lock_stat = ""
+lock_value = 0

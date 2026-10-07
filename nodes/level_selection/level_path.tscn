@@ -4,18 +4,9 @@
 
 [sub_resource type="Curve2D" id="Curve2D_10lku"]
 
-[node name="LevelPath" type="Node2D" unique_id=837943706 node_paths=PackedStringArray("path_node", "line_node")]
+[node name="LevelPath" type="Node2D" unique_id=837943706 node_paths=PackedStringArray("path_node")]
 script = ExtResource("1_path")
 path_node = NodePath("Path")
-line_node = NodePath("Line")
 
 [node name="Path" type="Path2D" parent="." unique_id=2088888183]
 curve = SubResource("Curve2D_10lku")
-
-[node name="Line" type="Line2D" parent="." unique_id=2091847211]
-width = 5.0
-default_color = Color(0.655, 0.725, 0.765, 0.7)
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-antialiased = true

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_space.png" id="1_ks0sb"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_4jujf"]
+
+[resource]
+script = ExtResource("2_4jujf")
+id = "frame_space"
+name_key = "STR_FRAME_SPACE"
+icon = ExtResource("1_ks0sb")
+price = 0
+lock_stat = "points"
+lock_value = 500

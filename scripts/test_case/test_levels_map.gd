@@ -1,7 +1,9 @@
 extends SceneTree
 ## ============================================================================
 ## Test Case: MÀN CHỌN MÀN — BẢN ĐỒ ROAD MAP (thay lưới thẻ phân trang, 2026-10)
-##   · Mỗi màn của chương = 1 nút trên bản đồ, nối nhau bằng cung; màn 1 ở DƯỚI CÙNG.
+##   · Mỗi màn của chương = 1 nút trên bản đồ, nối nhau bằng MỘT đường LIỀN MẠCH
+##     (mọi nút nằm đúng trên đường); màn 1 ở DƯỚI CÙNG.
+##   · Nhấn giữ nút: số màn + hàng sao trôi theo nút (không "float"), thả ra về chỗ.
 ##   · Trạng thái nút: KHOÁ / ĐÃ XONG / MÀN NÊN CHƠI TIẾP (CURRENT) / BỎ QUA / thường.
 ##   · Nút màn + đường nối sinh trong `Tracks/Items`; cờ đích + mũi chỉ là node CÓ SẴN
 ##     trong `level_map.tscn` (script chỉ canh vị trí).
@@ -55,9 +57,11 @@ func _init() -> void:
 	map.build(_ids(TEST_IDS), stars, UNLOCKED, 3)
 	await process_frame
 	failures += _check_structure(map)
+	failures += _check_road(map)
 	failures += _check_states(map)
 	failures += _check_decor(map)
 	failures += _check_tap(map)
+	failures += await _check_press_follow(map)
 	failures += await _check_scroll_to(map)
 
 	# ------------------------------------------------- B. Màn chọn màn thật
@@ -85,7 +89,7 @@ func _init() -> void:
 		print("\n[FAILED] %d loi o ban do man choi.\n" % failures)
 		quit(1)
 		return
-	print("\n[SUCCESS] Ban do man choi dung: nut/trang thai/cuon/parallax/ngang.\n")
+	print("\n[SUCCESS] Ban do man choi dung: nut/trang thai/duong noi lien mach/nhan giu/cuon/parallax/ngang.\n")
 	quit(0)
 
 
@@ -131,8 +135,8 @@ func _check_structure(map: LevelMap) -> int:
 				% [first.position.x, second.position.x, center_x])
 			failures += 1
 
-	# Items = nút màn + đường nối (n + n-1)
-	var expected_items := TEST_IDS + TEST_IDS - 1
+	# Items = nút màn + MỘT đường nối liền mạch (n + 1)
+	var expected_items := TEST_IDS + 1
 	if map.items == null or map.items.get_child_count() != expected_items:
 		print("[FAIL] Items phai co %d con (dang %d)"
 			% [expected_items, map.items.get_child_count() if map.items != null else -1])
@@ -141,6 +145,39 @@ func _check_structure(map: LevelMap) -> int:
 	if failures == 0:
 		print("[CHECK] Ban do: %d nut, man 1 duoi cung, leo deu len tren, zigzag dung, Items = %d con."
 			% [TEST_IDS, expected_items])
+	return failures
+
+
+## Đường nối: ĐÚNG MỘT path uốn liền mạch qua tâm TẤT CẢ các nút
+func _check_road(map: LevelMap) -> int:
+	var failures := 0
+	var road: LevelMapPath = null
+	var road_count := 0
+	for child in map.items.get_children():
+		if child is LevelMapPath:
+			road_count += 1
+			road = child as LevelMapPath
+	if road_count != 1:
+		print("[FAIL] Phai co DUNG 1 duong noi lien mach (dang %d)" % road_count)
+		return failures + 1
+	if road.path_node == null or road.path_node.curve == null:
+		print("[FAIL] Duong noi phai giu curve tron ven trong `Path`")
+		return failures + 1
+	var curve := road.path_node.curve
+	if curve.point_count != map.node_count():
+		print("[FAIL] Curve phai di qua du %d nut (dang %d diem)"
+			% [map.node_count(), curve.point_count])
+		failures += 1
+	for level_id in range(1, TEST_IDS + 1):
+		var node := map.node_for(level_id)
+		if node == null:
+			continue
+		if curve.get_closest_point(node.position).distance_to(node.position) > 0.5:
+			print("[FAIL] Nut man %d phai nam TREN duong noi" % level_id)
+			failures += 1
+			break
+	if failures == 0:
+		print("[CHECK] Duong noi lien mach: 1 path qua %d nut, moi nut nam tren duong." % TEST_IDS)
 	return failures
 
 
@@ -212,6 +249,43 @@ func _check_tap(map: LevelMap) -> int:
 		failures += 1
 	if failures == 0:
 		print("[CHECK] Bam nut: man mo phat signal, man khoa im lang.")
+	return failures
+
+
+## Nhấn GIỮ nút: số màn + hàng sao phải trôi theo nút (không float); thả ra về chỗ cũ
+func _check_press_follow(map: LevelMap) -> int:
+	var failures := 0
+	map.scroll_to(5, false)
+	await process_frame
+	var node := map.node_for(5)
+	if node == null:
+		print("[FAIL] Thieu nut man 5 de thu nhan giu")
+		return failures + 1
+	var pos: Vector2 = map.tracks.get_global_transform() * node.position
+	var stars_base := node.stars_box.position.y
+	var label_base := node.label.position.y
+	_push_motion(pos)
+	_push_button(pos, true)
+	await create_timer(0.2).timeout
+	var stars_down := node.stars_box.position.y - stars_base
+	var label_down := node.label.position.y - label_base
+	if stars_down < 1.5 or label_down < 1.5:
+		print("[FAIL] Nhan giu: sao + so phai chim 2px theo nut (sao %.2f, so %.2f)"
+			% [stars_down, label_down])
+		failures += 1
+	if absf(stars_down - label_down) > 0.1:
+		print("[FAIL] Sao va so phai chim CUNG mot do (%.2f vs %.2f)" % [stars_down, label_down])
+		failures += 1
+	# Thả chuột + rời con trỏ đi chỗ khác -> nội dung trôi về vị trí gốc
+	_push_button(pos, false)
+	_push_motion(Vector2(2, 2))
+	await create_timer(0.2).timeout
+	stars_down = node.stars_box.position.y - stars_base
+	if absf(stars_down) > 0.1:
+		print("[FAIL] Tha nut: sao phai ve dung cho cu (%.2f)" % stars_down)
+		failures += 1
+	if failures == 0:
+		print("[CHECK] Nhan giu nut: sao + so chim theo nut roi ve dung cho.")
 	return failures
 
 
@@ -323,17 +397,25 @@ func _check_real_click(scene: LevelScenes) -> int:
 ## LƯU Ý: `push_input(ev, true)` = toạ độ theo CANVAS (mặc định là toạ độ CỬA SỔ nên bị
 ## chia theo tỉ lệ stretch ⇒ cú bấm lệch chỗ).
 func _click_at(pos: Vector2) -> void:
+	_push_motion(pos)
+	for pressed in [true, false]:
+		_push_button(pos, pressed)
+
+
+func _push_motion(pos: Vector2) -> void:
 	var motion := InputEventMouseMotion.new()
 	motion.position = pos
 	motion.global_position = pos
 	root.push_input(motion, true)
-	for pressed in [true, false]:
-		var click := InputEventMouseButton.new()
-		click.button_index = MOUSE_BUTTON_LEFT
-		click.pressed = pressed
-		click.position = pos
-		click.global_position = pos
-		root.push_input(click, true)
+
+
+func _push_button(pos: Vector2, pressed: bool) -> void:
+	var click := InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.pressed = pressed
+	click.position = pos
+	click.global_position = pos
+	root.push_input(click, true)
 
 
 ## Vị trí Y của nút trong khung bản đồ (đã tính độ cuộn hiện tại)

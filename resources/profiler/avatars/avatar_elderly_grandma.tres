@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-elderly-grandma.png" id="1_oox53"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_d6b4x"]
+
+[resource]
+script = ExtResource("2_d6b4x")
+id = "avatar_elderly_grandma"
+name_key = "STR_AVATAR_ELDERLY_GRANDMA"
+icon = ExtResource("1_oox53")
+price = 400
+lock_stat = ""
+lock_value = 0

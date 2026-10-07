@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-christmas-clous-santa.png" id="1_1mmf7"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_yyejo"]
+
+[resource]
+script = ExtResource("2_yyejo")
+id = "avatar_christmas_clous_santa"
+name_key = "STR_AVATAR_CHRISTMAS_CLOUS_SANTA"
+icon = ExtResource("1_1mmf7")
+price = 800
+lock_stat = ""
+lock_value = 0

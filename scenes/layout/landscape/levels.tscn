@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://oalyje7bs0yo" path="res://assets/images-png/level_selector/icon_play_triangle.png" id="13_play"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="14_nine"]
 
-[sub_resource type="StyleBoxTexture" id="SB_cta_normal"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7cae8"]
 content_margin_left = 37.0
 content_margin_top = 13.0
 content_margin_right = 18.0
@@ -26,7 +26,7 @@ texture_margin_top = 13.0
 texture_margin_right = 18.0
 texture_margin_bottom = 15.0
 
-[sub_resource type="StyleBoxTexture" id="SB_cta_pressed"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xuhkg"]
 content_margin_left = 37.0
 content_margin_top = 13.0
 content_margin_right = 18.0
@@ -37,7 +37,7 @@ texture_margin_top = 13.0
 texture_margin_right = 18.0
 texture_margin_bottom = 15.0
 
-[sub_resource type="StyleBoxTexture" id="SB_cta_hover"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p7s8q"]
 content_margin_left = 37.0
 content_margin_top = 13.0
 content_margin_right = 18.0
@@ -48,7 +48,7 @@ texture_margin_top = 13.0
 texture_margin_right = 18.0
 texture_margin_bottom = 15.0
 
-[sub_resource type="StyleBoxTexture" id="SB_cta_disabled"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2ijhr"]
 content_margin_left = 37.0
 content_margin_top = 13.0
 content_margin_right = 18.0
@@ -59,7 +59,7 @@ texture_margin_top = 13.0
 texture_margin_right = 18.0
 texture_margin_bottom = 15.0
 
-[sub_resource type="StyleBoxTexture" id="SB_cta_focus"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vf13l"]
 content_margin_left = 37.0
 content_margin_top = 13.0
 content_margin_right = 18.0
@@ -70,7 +70,7 @@ texture_margin_top = 13.0
 texture_margin_right = 18.0
 texture_margin_bottom = 15.0
 
-[sub_resource type="Animation" id="Animation_levels_pulse_banner_l"]
+[sub_resource type="Animation" id="Animation_levels_pulse_banner_p"]
 resource_name = "pulse_banner"
 length = 1.6
 loop_mode = 1
@@ -99,7 +99,7 @@ tracks/1/keys = {
 "values": [Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_levels_pulse_continue_l"]
+[sub_resource type="Animation" id="Animation_levels_pulse_continue_p"]
 resource_name = "pulse_continue"
 length = 1.8
 loop_mode = 1
@@ -116,10 +116,95 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(1.03, 1.03), Vector2(1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_levels_pulse_l"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rulf0"]
 _data = {
-&"pulse_banner": SubResource("Animation_levels_pulse_banner_l"),
-&"pulse_continue": SubResource("Animation_levels_pulse_continue_l")
+&"pulse_banner": SubResource("Animation_levels_pulse_banner_p"),
+&"pulse_continue": SubResource("Animation_levels_pulse_continue_p")
+}
+
+[sub_resource type="Animation" id="Animation_levels_enter_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Content/InformationArea/TopBar:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Content/InformationArea/ChapterBanner:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Content/InformationArea/ContinueButton:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_levels_enter_p"]
+resource_name = "enter"
+length = 0.44
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Content/InformationArea/TopBar:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.24),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Content/InformationArea/ChapterBanner:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06, 0.35),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Content/InformationArea/ContinueButton:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.18, 0.44),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4qak1"]
+_data = {
+&"RESET": SubResource("Animation_levels_enter_reset"),
+&"enter": SubResource("Animation_levels_enter_p")
 }
 
 [node name="Landscape" unique_id=569217120 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_stars", "lbl_stars_total", "lbl_chapter", "lbl_change_chapter", "banner") instance=ExtResource("1_parent")]
@@ -136,7 +221,7 @@ banner = NodePath("Content/InformationArea/ChapterBanner")
 banner_normal = ExtResource("5_banner")
 banner_focus = ExtResource("6_banner_f")
 
-[node name="Content" type="Control" parent="." index="0"]
+[node name="Content" type="Control" parent="." index="0" unique_id=1704964074]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -145,7 +230,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="InformationArea" type="Control" parent="Content" index="0"]
+[node name="InformationArea" type="Control" parent="Content" index="0" unique_id=57534011]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,43 +239,39 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="TopBar" type="HBoxContainer" parent="Content/InformationArea" index="0"]
+[node name="TopBar" type="HBoxContainer" parent="Content/InformationArea" index="0" unique_id=974197230]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.0338
-anchor_right = 0.98
-anchor_bottom = 0.0788
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 24
+anchor_left = 0.034
+anchor_top = 0.033770833
+anchor_right = 0.961
+anchor_bottom = 0.07877084
 
-[node name="Back" type="TextureButton" parent="Content/InformationArea/TopBar" index="0"]
+[node name="Back" type="TextureButton" parent="Content/InformationArea/TopBar" index="0" unique_id=1221517212]
 layout_mode = 2
-size_flags_vertical = 4
 texture_normal = ExtResource("3_back_n")
 texture_pressed = ExtResource("4_back_p")
 texture_hover = ExtResource("3_back_n")
 texture_disabled = ExtResource("3_back_n")
 texture_focused = ExtResource("3_back_n")
 
-[node name="Title" type="Label" parent="Content/InformationArea/TopBar" index="1"]
+[node name="Title" type="Label" parent="Content/InformationArea/TopBar" index="1" unique_id=274530115]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LevelsTitle"
-theme_override_font_sizes/font_size = 36
 text = "STR_SELECT_LEVEL_TITLE"
-vertical_alignment = 1
+horizontal_alignment = 1
 
-[node name="StarsCounter" type="NinePatchRect" parent="Content/InformationArea" index="1"]
+[node name="StarsCounter" type="NinePatchRect" parent="Content/InformationArea" index="1" unique_id=1041580372]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.975
+anchor_left = 0.7592593
 anchor_top = 0.042968735
-anchor_right = 0.975
+anchor_right = 0.9537037
 anchor_bottom = 0.08723957
-offset_left = -150.0
-grow_horizontal = 0
+offset_top = -1.1354141
+offset_bottom = 1.1354141
+grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_stars")
 patch_margin_left = 11
@@ -198,7 +279,7 @@ patch_margin_top = 12
 patch_margin_right = 13
 patch_margin_bottom = 15
 
-[node name="CountRow" type="HBoxContainer" parent="Content/InformationArea/StarsCounter" index="0"]
+[node name="CountRow" type="HBoxContainer" parent="Content/InformationArea/StarsCounter" index="0" unique_id=946922707]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.04
@@ -207,11 +288,11 @@ anchor_right = 0.96
 anchor_bottom = 0.85
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 alignment = 1
 
-[node name="Icon" type="TextureRect" parent="Content/InformationArea/StarsCounter/CountRow" index="0"]
-custom_minimum_size = Vector2(34, 34)
+[node name="Icon" type="TextureRect" parent="Content/InformationArea/StarsCounter/CountRow" index="0" unique_id=1137013977]
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
@@ -219,29 +300,31 @@ texture = ExtResource("8_star")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Count" type="Label" parent="Content/InformationArea/StarsCounter/CountRow" index="1"]
+[node name="Count" type="Label" parent="Content/InformationArea/StarsCounter/CountRow" index="1" unique_id=383198064]
 layout_mode = 2
-size_flags_vertical = 4
 theme_type_variation = &"LevelsStarCount"
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 30
 text = "0"
 vertical_alignment = 1
 
-[node name="Total" type="Label" parent="Content/InformationArea/StarsCounter/CountRow" index="2"]
+[node name="Total" type="Label" parent="Content/InformationArea/StarsCounter/CountRow" index="2" unique_id=430991127]
 layout_mode = 2
-size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 18
 text = "STR_STARS_TOTAL_FORMAT"
 vertical_alignment = 1
 
-[node name="ChapterBanner" type="NinePatchRect" parent="Content/InformationArea" index="2"]
+[node name="ChapterBanner" type="NinePatchRect" parent="Content/InformationArea" index="2" unique_id=1534693521]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.1014
-anchor_right = 0.98
-anchor_bottom = 0.1834
+anchor_left = 0.044000003
+anchor_top = 0.10139131
+anchor_right = 0.9571667
+anchor_bottom = 0.1833913
+offset_left = -2.130005
+offset_top = 0.21999359
+offset_right = 2.130005
+offset_bottom = 3.7799988
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_banner")
@@ -249,20 +332,22 @@ patch_margin_left = 28
 patch_margin_top = 13
 patch_margin_right = 16
 patch_margin_bottom = 18
+metadata/_edit_use_anchors_ = true
 
-[node name="TitleContainer" type="HBoxContainer" parent="Content/InformationArea/ChapterBanner" index="0"]
+[node name="TitleContainer" type="HBoxContainer" parent="Content/InformationArea/ChapterBanner" index="0" unique_id=1831550229]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.02
+anchor_left = 0.076
 anchor_top = 0.32
-anchor_right = 0.98
+anchor_right = 0.966
 anchor_bottom = 0.64
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
 mouse_filter = 2
+theme_override_constants/separation = 12
+metadata/_edit_use_anchors_ = true
 
-[node name="Title" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="0"]
+[node name="Title" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="0" unique_id=103463027]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LevelsBannerTitle"
@@ -271,32 +356,30 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="ChangeChapter" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="1"]
+[node name="ChangeChapter" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="1" unique_id=1212192529]
 layout_mode = 2
 size_flags_horizontal = 8
-mouse_filter = 2
 theme_type_variation = &"LevelsChangeChapter"
 text = "STR_CHANGE_CHAPTER"
 vertical_alignment = 1
 
-[node name="ContinueButton" type="Button" parent="Content/InformationArea" index="3"]
+[node name="ContinueButton" type="Button" parent="Content/InformationArea" index="3" unique_id=112635413]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.878
-anchor_right = 0.5
-anchor_bottom = 0.878
-offset_left = -350.0
-offset_right = 350.0
-offset_bottom = 60.0
+anchor_left = 0.13000001
+anchor_top = 0.8385417
+anchor_right = 0.87000006
+anchor_bottom = 0.901
+offset_left = -0.20000458
+offset_right = 0.19995117
+offset_bottom = 0.038330078
 grow_horizontal = 2
-grow_vertical = 0
-focus_mode = 0
-theme_override_styles/normal = SubResource("SB_cta_normal")
-theme_override_styles/pressed = SubResource("SB_cta_pressed")
-theme_override_styles/hover = SubResource("SB_cta_hover")
-theme_override_styles/disabled = SubResource("SB_cta_disabled")
-theme_override_styles/focus = SubResource("SB_cta_focus")
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_7cae8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xuhkg")
+theme_override_styles/hover = SubResource("StyleBoxTexture_p7s8q")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_2ijhr")
+theme_override_styles/focus = SubResource("StyleBoxTexture_vf13l")
 script = ExtResource("14_nine")
 texture_normal = ExtResource("9_cont_n")
 texture_hover = ExtResource("9_cont_n")
@@ -309,7 +392,7 @@ patch_margin_right = 18.0
 patch_margin_bottom = 15.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="Label" type="Label" parent="Content/InformationArea/ContinueButton" index="0"]
+[node name="Label" type="Label" parent="Content/InformationArea/ContinueButton" index="0" unique_id=190299414]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -324,7 +407,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Icon" type="TextureRect" parent="Content/InformationArea/ContinueButton" index="1"]
+[node name="Icon" type="TextureRect" parent="Content/InformationArea/ContinueButton" index="1" unique_id=719305804]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 52.5
@@ -337,5 +420,9 @@ texture = ExtResource("13_play")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="PulseAnim" type="AnimationPlayer" parent="." index="1"]
-libraries/ = SubResource("AnimationLibrary_levels_pulse_l")
+[node name="PulseAnim" type="AnimationPlayer" parent="." index="1" unique_id=1268405968]
+libraries/ = SubResource("AnimationLibrary_rulf0")
+
+[node name="EnterAnim" type="AnimationPlayer" parent="." index="2" unique_id=908111743]
+libraries/ = SubResource("AnimationLibrary_4qak1")
+autoplay = &"enter"

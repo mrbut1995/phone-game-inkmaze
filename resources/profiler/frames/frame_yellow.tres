@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_yellow.png" id="1_d0vej"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_743vn"]
+
+[resource]
+script = ExtResource("2_743vn")
+id = "frame_yellow"
+name_key = "STR_FRAME_YELLOW"
+icon = ExtResource("1_d0vej")
+price = 400
+lock_stat = ""
+lock_value = 0

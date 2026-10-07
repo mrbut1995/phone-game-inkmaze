@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://c721ocng7punk" path="res://assets/images-png/profiler/profiler_disc_focus.png" id="17_bwfoc"]
 [ext_resource type="Texture2D" uid="uid://1670puwwv605" path="res://assets/images-png/icons/icon_calendar.png" id="17_icon_calendar"]
 [ext_resource type="Texture2D" uid="uid://dhpyiqygt22s7" path="res://assets/images-png/main/card_mode_level_normal.png" id="17_nakxj"]
-[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_fire_spike.png" id="18_m7v2e"]
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_default.png" id="18_m7v2e"]
 [ext_resource type="Texture2D" uid="uid://bgjip8km1n1lj" path="res://assets/images-png/main/card_mode_level_pressed.png" id="18_q4smm"]
 [ext_resource type="Texture2D" uid="uid://dlcnay8dqxl36" path="res://assets/images-png/main/card_mode_level_disabled.png" id="19_b0x5b"]
 [ext_resource type="Texture2D" uid="uid://dg4xvt153bci" path="res://assets/images-png/profiler/chip_gold.png" id="19_bwfoc"]

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-boy-kid.png" id="1_70hmm"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_hgv6v"]
+
+[resource]
+script = ExtResource("2_hgv6v")
+id = "avatar_boy_kid"
+name_key = "STR_AVATAR_BOY_KID"
+icon = ExtResource("1_70hmm")
+price = 0
+lock_stat = ""
+lock_value = 0

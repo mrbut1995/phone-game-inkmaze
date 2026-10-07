@@ -4,8 +4,8 @@ extends Node2D
 ## LevelMap — Bản đồ road map dọc của màn Chọn màn
 ##
 ## Bố cục: các nút màn xếp DỌC từ dưới lên (màn 1 ở dưới cùng), lệch zigzag quanh trục
-## giữa, nối nhau bằng cung `LevelMapPath`. Cuộn bản đồ bằng cách dịch node `Tracks`
-## (KHÔNG dùng Camera2D để UI — header, banner, nút Tiếp tục — đứng yên).
+## giữa, nối nhau bằng MỘT đường `LevelMapPath` uốn liền mạch qua tâm các nút. Cuộn bản
+## đồ bằng cách dịch node `Tracks` (KHÔNG dùng Camera2D để UI — header, banner — đứng yên).
 ##
 ## Quy ước của project (CẤU HÌNH TĨNH nằm trong `level_map.tscn`):
 ##   · `Tracks` — node dịch chuyển khi cuộn (bind `@export`)
@@ -154,6 +154,14 @@ func scroll_delta_y() -> float:
 	return scroll_offset_y() - (_max_scroll_y + _min_scroll_y) * 0.5
 
 
+## Tiến độ cuộn chuẩn hoá [-1..1]: -1 = đáy (màn đầu), +1 = đỉnh (màn cuối), 0 = giữa
+func scroll_progress() -> float:
+	var half_span := (_max_scroll_y - _min_scroll_y) * 0.5
+	if half_span <= 0.0:
+		return 0.0
+	return clampf(scroll_delta_y() / half_span, -1.0, 1.0)
+
+
 # ---------------------------------------------------------------------------
 # Dựng bản đồ
 # ---------------------------------------------------------------------------
@@ -188,14 +196,16 @@ func _rebuild() -> void:
 	call_deferred("scroll_to", _current_id, true)
 
 
-## Các đoạn nối nằm DƯỚI các nút (thêm trước)
+## Đường nối nằm DƯỚI các nút (thêm trước): MỘT đường liền mạch qua tâm TẤT CẢ các nút
 func _build_paths(sorted_ids: Array[int], positions: Array[Vector2]) -> void:
-	if items == null:
+	if items == null or sorted_ids.size() < 2:
 		return
+	var road := PATH_SCENE.instantiate() as LevelMapPath
+	items.add_child(road)
+	var states: Array[int] = []
 	for index in range(sorted_ids.size() - 1):
-		var path := PATH_SCENE.instantiate() as LevelMapPath
-		items.add_child(path)
-		path.setup(positions[index], positions[index + 1], _path_state_for(sorted_ids[index]))
+		states.append(int(_path_state_for(sorted_ids[index])))
+	road.setup(positions, states)
 
 
 ## Các nút màn + canh cờ đích / mũi chỉ

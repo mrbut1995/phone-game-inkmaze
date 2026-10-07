@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-coffee-cup.png" id="1_ojuee"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_rrt83"]
+
+[resource]
+script = ExtResource("2_rrt83")
+id = "avatar_coffee_cup"
+name_key = "STR_AVATAR_COFFEE_CUP"
+icon = ExtResource("1_ojuee")
+price = 600
+lock_stat = ""
+lock_value = 0

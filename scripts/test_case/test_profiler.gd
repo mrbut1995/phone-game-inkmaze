@@ -2,8 +2,8 @@ extends SceneTree
 ## ============================================================================
 ## Test Case: HỒ SƠ CÁ NHÂN (Profiler) — tính năng 2026-02
 ##
-## 1. Manager (PlayerProfileManager): catalog 34 avatar + 8 viền khung, mặc định
-##    sở hữu, khoá theo mốc (Dungeon / Chuỗi Daily / AP).
+## 1. Manager (PlayerProfileManager): catalog 34 avatar + 29 viền khung (nạp từ
+##    resources/profiler/*.tres), mặc định sở hữu, khoá theo mốc (Dungeon / Chuỗi Daily / AP).
 ## 2. Trang bị + tên: equip món sở hữu, chặn món chưa mở khoá, đổi tên 16 ký tự.
 ## 3. Thống kê: EXP = AP + Sao×25 · Cấp = 1 + EXP/200 · tỉ lệ thắng theo lịch sử.
 ## 4. Lịch sử ván: record_run ghi đúng + giới hạn 10 dòng.
@@ -16,7 +16,7 @@ extends SceneTree
 ## ============================================================================
 
 const AVATAR_COUNT := 34
-const FRAME_COUNT := 8
+const FRAME_COUNT := 29
 const POPUP_ITEMS_PER_PAGE := 6
 const MAX_RECENT := 10
 const EXP_PER_LEVEL := 200
@@ -91,7 +91,7 @@ func _section_1_catalog(manager: Node) -> void:
 	_entry(broken == 0, "Moi mon co id + name_key + file icon ton tai (loi: %d)" % broken)
 
 	_entry(str(manager.get("avatar_id")) == "avatar_baby_child_kid", "Avatar mac dinh: Em Bé")
-	_entry(str(manager.get("frame_id")) == "frame_gear", "Vien khung mac dinh: bánh răng vàng")
+	_entry(str(manager.get("frame_id")) == "frame_default", "Vien khung mac dinh: Khung Cơ Bản")
 
 	# Mặc định đã sở hữu 3 avatar + 3 viền (mockup: ĐANG DÙNG / SỞ HỮU / khoá)
 	_entry(bool(manager.call("owns_avatar", "avatar_boy_kid")), "So huu san Cậu Bé")
@@ -103,15 +103,19 @@ func _section_1_catalog(manager: Node) -> void:
 	_entry(luchador_lock.is_empty() or (str(luchador_lock.get("stat", "")) == "dungeon_best_floor"
 		and int(luchador_lock.get("value", 0)) == 50),
 		"Đô Vật Luchador khoá theo mốc Dungeon 50 (đang %s)" % str(luchador_lock))
-	var fire_lock: Dictionary = manager.call("lock_of", "frame", "frame_fire")
-	_entry(fire_lock.is_empty() or (str(fire_lock.get("stat", "")) == "daily_streak"
-		and int(fire_lock.get("value", 0)) == 30),
-		"Gai Lửa khoá theo chuỗi Daily 30 (đang %s)" % str(fire_lock))
+	var streak_lock: Dictionary = manager.call("lock_of", "frame", "frame_night")
+	_entry(streak_lock.is_empty() or (str(streak_lock.get("stat", "")) == "daily_streak"
+		and int(streak_lock.get("value", 0)) == 30),
+		"Đêm Trăng khoá theo chuỗi Daily 30 (đang %s)" % str(streak_lock))
+	var spike_lock: Dictionary = manager.call("lock_of", "frame", "frame_spike")
+	_entry(spike_lock.is_empty() or (str(spike_lock.get("stat", "")) == "dungeon_best_floor"
+		and int(spike_lock.get("value", 0)) == 50),
+		"Vòng Gai Sắt khoá theo mốc Dungeon 50 (đang %s)" % str(spike_lock))
 
 	var entry_coffee: Dictionary = manager.call("avatar_entry", "avatar_coffee_cup")
 	_entry(int(entry_coffee.get("price", 0)) == 600, "Cốc Cà Phê gia 600 xu")
 	var entry_royal: Dictionary = manager.call("frame_entry", "frame_royal")
-	_entry(int(entry_royal.get("price", 0)) == 800, "Hào Quang Đế Vương gia 800 xu")
+	_entry(int(entry_royal.get("price", 0)) == 1200, "Hào Quang Đế Vương gia 1200 xu")
 
 
 # ---------------------------------------------------------------------------
@@ -385,7 +389,14 @@ func _section_6_popup(manager: Node) -> void:
 	await process_frame
 	_entry(popup.item_count() == mini(POPUP_ITEMS_PER_PAGE, FRAME_COUNT),
 		"Trang vien khung hien %d mon" % mini(POPUP_ITEMS_PER_PAGE, FRAME_COUNT))
-	_entry(popup.page_count() == 2, "Vien khung co 2 trang")
+	_entry(popup.page_count() == 5, "Vien khung co 5 trang (29 mon)")
+	# Trang cuoi: 29 = 4×6 + 5
+	popup.call("_go_to_page", popup.page_count() - 1)
+	await process_frame
+	_entry(popup.page_index() == 4 and popup.item_count() == FRAME_COUNT - POPUP_ITEMS_PER_PAGE * 4,
+		"Trang cuoi con %d vien khung" % (FRAME_COUNT - POPUP_ITEMS_PER_PAGE * 4))
+	popup.call("_go_to_page", 0)
+	await process_frame
 	popup.select_pending("frame_laurel")
 	await process_frame
 	var preview_frame := popup.get_node_or_null("Panel/Content/Preview/Profile/Frame") as TextureRect
@@ -406,7 +417,7 @@ func _section_6_popup(manager: Node) -> void:
 	if popup != null:
 		var cancel := popup.get_node_or_null("Panel/Content/Actions/BtnCancel") as Button
 		popup.set_tab("frame")
-		popup.select_pending("frame_ink")
+		popup.select_pending("frame_bronze")
 		if cancel != null:
 			cancel.pressed.emit()
 			await process_frame

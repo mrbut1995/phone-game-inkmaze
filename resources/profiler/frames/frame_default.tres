@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_default.png" id="1_73vh8"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_43amg"]
+
+[resource]
+script = ExtResource("2_43amg")
+id = "frame_default"
+name_key = "STR_FRAME_DEFAULT"
+icon = ExtResource("1_73vh8")
+price = 0
+lock_stat = ""
+lock_value = 0

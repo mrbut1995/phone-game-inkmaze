@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ProfilerTitleData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/profiler_title_data.gd" id="1_65tab"]
+
+[resource]
+script = ExtResource("1_65tab")
+min_level = 10
+name_key = "STR_PROFILE_TIER_3"

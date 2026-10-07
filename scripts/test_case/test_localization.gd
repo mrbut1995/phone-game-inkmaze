@@ -7,7 +7,7 @@ extends SceneTree
 ##    (á»…/Ä‘/Æ°/Æ¡/â€) và không có ký tự điều khiển C1 trong CSV lẫn .tscn/.gd/.tres.
 ## 3. Mọi khoá "STR_…" dùng trong scene/code phải TỒN TẠI trong CSV.
 ## 4. Tên node KHÔNG được bị thay bằng khoá dịch (lỗi từng gặp khi migrate hàng loạt).
-## 5. Khoá dịch của Thành tựu / Chương (title_key, desc_key…) trỏ tới khoá có thật.
+## 5. Khoá dịch của Thành tựu / Chương / Hồ sơ (title_key, desc_key, name_key…) trỏ tới khoá có thật.
 ## 6. TranslationServer trả về chuỗi đã dịch thật (vi + en), không trả lại khoá thô.
 ## 7. [INFO] Khoá không dùng — báo số lượng để dọn dần (không làm đỏ test).
 ## ============================================================================
@@ -195,9 +195,12 @@ func _section_4_node_names() -> void:
 # 5. Khoá dịch của Thành tựu / Chương
 # ---------------------------------------------------------------------------
 func _section_5_resource_keys() -> void:
-	print("[5] Khoa dich trong .tres (thanh tuu / chuong)...")
+	print("[5] Khoa dich trong .tres (thanh tuu / chuong / ho so)...")
 	_check_tres_keys("res://resources/archivements", ["title_key", "desc_key"])
 	_check_tres_keys("res://resources/chapters", ["title_key", "subtitle_key"])
+	_check_tres_keys("res://resources/profiler/avatars", ["name_key"])
+	_check_tres_keys("res://resources/profiler/frames", ["name_key"])
+	_check_tres_keys("res://resources/profiler/titles", ["name_key"])
 
 
 func _check_tres_keys(folder: String, properties: Array) -> void:

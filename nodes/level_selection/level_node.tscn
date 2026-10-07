@@ -170,4 +170,6 @@ texture = ExtResource("9_lock")
 libraries/ = SubResource("AnimationLibrary_node")
 
 [connection signal="pressed" from="Body/Button" to="." method="_on_button_pressed"]
+[connection signal="press_changed" from="Body/Button" to="." method="_on_button_press_changed"]
+[connection signal="hover_changed" from="Body/Button" to="." method="_on_button_hover_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_anim_finished"]

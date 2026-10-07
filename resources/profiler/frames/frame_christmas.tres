@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_christmas.png" id="1_w6oks"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_aurpf"]
+
+[resource]
+script = ExtResource("2_aurpf")
+id = "frame_christmas"
+name_key = "STR_FRAME_CHRISTMAS"
+icon = ExtResource("1_w6oks")
+price = 800
+lock_stat = ""
+lock_value = 0

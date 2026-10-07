@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-indian-man-sikh.png" id="1_sag5c"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_50r5d"]
+
+[resource]
+script = ExtResource("2_50r5d")
+id = "avatar_indian_man_sikh"
+name_key = "STR_AVATAR_INDIAN_MAN_SIKH"
+icon = ExtResource("1_sag5c")
+price = 800
+lock_stat = ""
+lock_value = 0

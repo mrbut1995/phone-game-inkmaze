@@ -1,16 +1,20 @@
 class_name LevelMapPath
 extends Node2D
 ## ============================================================================
-## LevelMapPath — Đoạn nối giữa 2 nút màn trên bản đồ (road map)
-## Trạng thái thể hiện qua màu / kiểu nét:
-##   COMPLETE  → nét liền đậm màu đỏ ink (#D84444) qua `Line`
+## LevelMapPath — ĐƯỜNG NỐI LIỀN MẠCH giữa TẤT CẢ các nút màn (road map)
+##
+## MỘT đường duy nhất uốn lượn qua đúng tâm mọi nút (đường cong Catmull-Rom với tiếp
+## tuyến liên tục tại từng nút) — không còn từng cung rời ghép theo cặp nên không có
+## "khúc"/gãy góc giữa các đoạn nối.
+##
+## Trạng thái thể hiện qua màu / kiểu nét TỪNG ĐOẠN (đoạn i nối nút i → nút i+1):
+##   COMPLETE  → nét liền đậm màu đỏ ink (#D84444); các đoạn liền nhau GỘP thành 1 nét
 ##   SKIPPED   → nét đứt màu cam (#E8A020)
 ##   UPCOMING  → nét đứt màu xanh mực (#507894)
 ##   LOCKED    → nét đứt màu xám (#8FA0B0)
 ##
-## Quy ước của project: node con (`Path` + `Line`) và cấu hình nét TĨNH (độ rộng, nối tròn,
-## khử răng cưa, màu mặc định) khai trong `level_path.tscn`; script bind bằng `@export`,
-## chỉ còn phần ĐỘNG: dựng `Curve2D` nối 2 nút và chọn kiểu nét theo trạng thái.
+## Quy ước của project: node con (`Path` giữ curve trọn vẹn) khai trong
+## `level_path.tscn`; script chỉ còn phần ĐỘNG: dựng curve + cắt nét theo trạng thái.
 ## ============================================================================
 
 enum PathState {
@@ -34,92 +38,107 @@ const WIDTH_LOCKED    := 3.5
 ## Độ dài 1 gạch và 1 khe của nét đứt (px)
 const DASH_LENGTH := 10.0
 const DASH_GAP    := 7.0
-## Lực uốn cong của đoạn nối (px) — cung vòng ra phía ngoài biên bản đồ
-const ARC_BULGE   := 26.0
+## Bước lấy mẫu cho nét LIỀN (px) — nhỏ thì đường cong mượt hơn
+const SOLID_SAMPLE_STEP := 3.0
 
 ## Node con — bind bằng `@export` trong `level_path.tscn`
 @export var path_node: Path2D = null
-@export var line_node: Line2D = null
 
-## Dữ liệu vẽ nét đứt bằng `draw_multiline`
-var _dash_points: PackedVector2Array = PackedVector2Array()
-var _dash_color: Color = Color.WHITE
-var _dash_width: float = 4.0
+## Curve trọn vẹn qua mọi nút (đặt vào `Path` để test/soi "nút nằm đúng trên đường")
+var _curve: Curve2D = null
+## Các nét đã cắt sẵn theo trạng thái: {points, color, width, dashed}
+var _strokes: Array[Dictionary] = []
 
 
-## Vẽ đoạn nối cong mượt mà từ điểm `from` đến `to` theo trạng thái `path_state`
-func setup(from: Vector2, to: Vector2, path_state: PathState) -> void:
-	var curve := _build_curve(from, to)
+## Dựng đường nối qua `points` (tâm các nút, thứ tự dưới → trên).
+## `states[i]` = trạng thái của đoạn nối `points[i]` → `points[i + 1]`.
+func setup(points: Array[Vector2], states: Array[int]) -> void:
+	_strokes.clear()
+	_curve = null
+	if points.size() >= 2:
+		_curve = _build_road(points)
+		_build_strokes(points, states)
 	if path_node != null:
-		path_node.curve = curve
-	if path_state == PathState.COMPLETE:
-		_show_solid(curve)
-	else:
-		_show_dashed(curve, path_state)
+		path_node.curve = _curve if _curve != null else Curve2D.new()
+	queue_redraw()
 
 
-## Cung nối 2 điểm: đỉnh cung lệch ra phía ngoài biên, tiếp tuyến tại đỉnh song song
-## tuyệt đối với dây cung nên đường cong trơn 100% (không gãy góc).
-func _build_curve(from: Vector2, to: Vector2) -> Curve2D:
-	var chord := to - from
-	var chord_dir := chord.normalized()
-	var perp := Vector2(-chord_dir.y, chord_dir.x)
-	# Hướng uốn cong ra phía ngoài biên bản đồ
-	var curve_dir := 1.0 if from.x > to.x else -1.0
-	if (perp.x * curve_dir) < 0.0:
-		perp = -perp
-
-	var arc_mid := (from + to) * 0.5 + perp * ARC_BULGE
-	var mid_tangent := chord_dir * (chord.length() * 0.25)
-
+## Đường cong Catmull-Rom qua mọi điểm: tiếp tuyến tại mỗi nút = (nút trước → nút sau)/6
+## nên 2 đoạn kề nhau dùng CHUNG một tiếp tuyến tại nút chung ⇒ đường trơn liền mạch.
+func _build_road(points: Array[Vector2]) -> Curve2D:
 	var curve := Curve2D.new()
-	curve.add_point(from, Vector2.ZERO, (arc_mid - from) * 0.4)
-	curve.add_point(arc_mid, -mid_tangent, mid_tangent)
-	curve.add_point(to, (arc_mid - to) * 0.4, Vector2.ZERO)
+	var count := points.size()
+	for index in count:
+		var prev := points[index - 1] if index > 0 else points[index] * 2.0 - points[index + 1]
+		var next := points[index + 1] if index < count - 1 else points[index] * 2.0 - points[index - 1]
+		var tangent := (next - prev) / 6.0
+		curve.add_point(points[index], -tangent, tangent)
 	return curve
 
 
-## Màn đã xong: nét LIỀN đỏ qua Line2D
-func _show_solid(curve: Curve2D) -> void:
-	_dash_points.clear()
-	queue_redraw()
-	if line_node == null:
-		return
-	line_node.visible = true
-	line_node.default_color = COLOR_COMPLETE
-	line_node.width = WIDTH_COMPLETE
-	line_node.clear_points()
-	for point in curve.tessellate(6, 1.2):
-		line_node.add_point(point)
+## Cắt curve thành từng nét: các đoạn COMPLETE liền nhau GỘP thành 1 nét liền đỏ;
+## đoạn còn lại cắt thành gạch đứt theo màu trạng thái.
+func _build_strokes(points: Array[Vector2], states: Array[int]) -> void:
+	var bounds := PackedFloat32Array()
+	for point in points:
+		bounds.append(_curve.get_closest_offset(point))
+	var solid_run := PackedVector2Array()
+	for index in points.size() - 1:
+		var from_d := bounds[index]
+		var to_d := bounds[index + 1]
+		var state: int = states[index] if index < states.size() else PathState.LOCKED
+		if state == PathState.COMPLETE:
+			solid_run.append_array(_sample_range(from_d, to_d, not solid_run.is_empty()))
+			continue
+		if not solid_run.is_empty():
+			_strokes.append(_solid_stroke(solid_run))
+			solid_run = PackedVector2Array()
+		_strokes.append(_dashed_stroke(from_d, to_d, state))
+	if not solid_run.is_empty():
+		_strokes.append(_solid_stroke(solid_run))
 
 
-## Màn chưa xong / bỏ qua / khoá: nét ĐỨT vẽ bằng `draw_multiline`
-func _show_dashed(curve: Curve2D, path_state: PathState) -> void:
-	if line_node != null:
-		line_node.visible = false
-		line_node.clear_points()
+## Lấy mẫu curve trong khoảng [from_d, to_d] (đơn vị: độ dài cung px)
+func _sample_range(from_d: float, to_d: float, skip_first := false) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	var distance := from_d + (SOLID_SAMPLE_STEP if skip_first else 0.0)
+	while distance < to_d:
+		points.append(_curve.sample_baked(distance))
+		distance += SOLID_SAMPLE_STEP
+	points.append(_curve.sample_baked(to_d))
+	return points
 
-	_dash_points.clear()
-	var total_len := curve.get_baked_length()
-	var distance := 0.0
-	while distance < total_len:
-		_dash_points.append(curve.sample_baked(distance))
-		_dash_points.append(curve.sample_baked(minf(distance + DASH_LENGTH, total_len)))
+
+func _solid_stroke(points: PackedVector2Array) -> Dictionary:
+	return {"points": points, "color": COLOR_COMPLETE, "width": WIDTH_COMPLETE, "dashed": false}
+
+
+## Nét đứt của 1 đoạn: gạch nối tiếp nhau dọc theo cung (màu/độ rộng theo trạng thái)
+func _dashed_stroke(from_d: float, to_d: float, state: int) -> Dictionary:
+	var points := PackedVector2Array()
+	var distance := from_d
+	while distance < to_d:
+		points.append(_curve.sample_baked(distance))
+		points.append(_curve.sample_baked(minf(distance + DASH_LENGTH, to_d)))
 		distance += DASH_LENGTH + DASH_GAP
-
-	match path_state:
+	var color := COLOR_LOCKED
+	var width := WIDTH_LOCKED
+	match state:
 		PathState.SKIPPED:
-			_dash_color = COLOR_SKIPPED
-			_dash_width = WIDTH_SKIPPED
+			color = COLOR_SKIPPED
+			width = WIDTH_SKIPPED
 		PathState.UPCOMING:
-			_dash_color = COLOR_UPCOMING
-			_dash_width = WIDTH_UPCOMING
-		_:
-			_dash_color = COLOR_LOCKED
-			_dash_width = WIDTH_LOCKED
-	queue_redraw()
+			color = COLOR_UPCOMING
+			width = WIDTH_UPCOMING
+	return {"points": points, "color": color, "width": width, "dashed": true}
 
 
 func _draw() -> void:
-	if not _dash_points.is_empty():
-		draw_multiline(_dash_points, _dash_color, _dash_width)
+	for stroke in _strokes:
+		var points: PackedVector2Array = stroke["points"]
+		var color: Color = stroke["color"]
+		var width: float = stroke["width"]
+		if bool(stroke["dashed"]):
+			draw_multiline(points, color, width)
+		else:
+			draw_polyline(points, color, width, true)

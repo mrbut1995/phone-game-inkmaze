@@ -4,6 +4,10 @@ extends Node2D
 
 ## Tín hiệu phát ra khi click nút thành công
 signal pressed
+## Phát khi trạng thái NHẤN GIỮ đổi (nội dung mặt nút trôi theo nút)
+signal press_changed(is_pressed: bool)
+## Phát khi trạng thái RÊ CHUỘT đổi
+signal hover_changed(is_hovered: bool)
 
 @export_group("Textures Các Trạng Thái")
 ## Texture ở trạng thái bình thường (bắt buộc)
@@ -41,8 +45,12 @@ signal pressed
 @export var disabled: bool = false:
 	set(value):
 		disabled = value
-		_is_hovered = false
-		_is_pressed = false
+		if _is_hovered:
+			_is_hovered = false
+			hover_changed.emit(false)
+		if _is_pressed:
+			_is_pressed = false
+			press_changed.emit(false)
 		queue_redraw()
 
 # Các biến theo dõi trạng thái tương tác chuột
@@ -118,22 +126,35 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# Xử lý Hover
 	if event is InputEventMouseMotion:
-		var hovered_now = rect.has_point(local_pos)
-		if hovered_now != _is_hovered:
-			_is_hovered = hovered_now
-			queue_redraw()
+		_set_hovered(rect.has_point(local_pos))
 
 	# Xử lý Click (Press / Release)
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.is_pressed():
 			# Nhấn TRONG nút ⇒ coi như đang rê lên nút (cảm ứng không có bước hover riêng)
 			if rect.has_point(local_pos):
-				_is_hovered = true
-				_is_pressed = true
-				queue_redraw()
+				_set_hovered(true)
+				_set_pressed(true)
 		elif _is_pressed:
-			_is_pressed = false
-			queue_redraw()
+			_set_pressed(false)
 			# Chỉ kích hoạt nếu thả chuột vẫn ở bên trong nút
 			if rect.has_point(local_pos):
 				pressed.emit()
+
+
+## Đổi trạng thái rê chuột + phát signal (chỉ khi THẬT SỰ đổi)
+func _set_hovered(value: bool) -> void:
+	if value == _is_hovered:
+		return
+	_is_hovered = value
+	queue_redraw()
+	hover_changed.emit(_is_hovered)
+
+
+## Đổi trạng thái nhấn giữ + phát signal (chỉ khi THẬT SỰ đổi)
+func _set_pressed(value: bool) -> void:
+	if value == _is_pressed:
+		return
+	_is_pressed = value
+	queue_redraw()
+	press_changed.emit(_is_pressed)
