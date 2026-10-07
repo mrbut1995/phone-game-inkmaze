@@ -1,6 +1,6 @@
 extends SceneTree
 ## ============================================================================
-## Test: DAILY CHALLENGE (mô hình mới)
+## Test: DAILY MISSION (mô hình mới)
 ##  1. DailyManager: 4 nhiệm vụ/ngày (3 maze thường + 1 maze đặc biệt), thưởng XU
 ##  1b. Mở khoá ngày bỏ lỡ bằng Xu (unlock_day)
 ##  2. GameManager: prepare_daily_run("classic"/"special") -> mode + variant đúng
@@ -18,7 +18,7 @@ var _coins_backup := 0
 
 func _init() -> void:
 	print("\n========================================================")
-	print("  TEST: DAILY CHALLENGE (2 MAZE/NGÀY · THƯỞNG XU)")
+	print("  TEST: DAILY MISSION (2 MAZE/NGÀY · THƯỞNG XU)")
 	print("========================================================\n")
 
 	if FileAccess.file_exists("user://inkmaze_data.json"):

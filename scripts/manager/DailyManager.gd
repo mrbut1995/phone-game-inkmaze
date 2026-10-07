@@ -1,9 +1,9 @@
 extends Node
 ## ============================================================================
-## Manager: DailyManager - Thử thách hằng ngày (Daily Challenge).
+## Manager: DailyManager - Nhiệm vụ hằng ngày (Daily Mission).
 ## - Xác định "hôm nay" là ngày nào (1..31) theo lịch máy.
 ## - MỖI NGÀY có 2 mê cung: MAZE THƯỜNG (classic) + MAZE ĐẶC BIỆT (mode xoay vòng).
-## - 4 NHIỆM VỤ mỗi ngày: index 0..2 = 3 thử thách của maze thường,
+## - 4 NHIỆM VỤ mỗi ngày: index 0..2 = 3 nhiệm vụ của maze thường,
 ##   index 3 = nhiệm vụ của maze đặc biệt.
 ## - Hoàn thành nhiệm vụ thưởng XU (ví dùng chung với Shop/Archivement), KHÔNG thưởng Sao nữa.
 ## - Lưu tiến độ qua SaveManager; user://daily.cfg chỉ còn để DI TRÚ.

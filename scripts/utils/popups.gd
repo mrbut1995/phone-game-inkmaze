@@ -14,7 +14,7 @@ const WIN := "win"
 ## Popup thắng ván DAILY: nút "VỀ DAILY" thay cho "MÀN KẾ TIẾP"
 const WIN_DAILY := "win_daily"
 const GAME_OVER := "game_over"
-## Popup thua của Play/Level Mode: 3 thử thách + số Sao thay cho bước còn lại
+## Popup thua của Play/Level Mode: 3 nhiệm vụ + số Sao thay cho bước còn lại
 const GAME_OVER_LEVEL := "game_over_level"
 const NEXT_FLOOR := "next_floor"
 const PAUSE := "pause"

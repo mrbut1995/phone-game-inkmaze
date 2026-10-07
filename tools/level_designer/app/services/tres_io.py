@@ -19,7 +19,7 @@ import re
 from pathlib import Path
 
 from ..config import LEVEL_SCRIPT_ID, LEVEL_SCRIPT_RES
-from ..models import challenges as chal
+from ..models import missions as chal
 from ..models.level import LevelModel
 
 _HEADER = '[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3'
@@ -59,8 +59,8 @@ def dumps(level: LevelModel) -> str:
         "h_walls = %s" % _gd_bytes(level.h_walls),
         "h_walls_visible = %s" % _gd_bytes(level.h_walls_visible),
         "cell_mask = %s" % _gd_mask(level),
-        "challenge_types = %s" % _gd_string_array([c[0] for c in level.challenges]),
-        "challenge_params = %s" % _gd_int_array([c[1] for c in level.challenges]),
+        "mission_types = %s" % _gd_string_array([c[0] for c in level.missions]),
+        "mission_params = %s" % _gd_int_array([c[1] for c in level.missions]),
         "custom_cell_values = %s" % _gd_custom_values(level),
     ]
     return "\n".join(lines) + "\n"
@@ -113,8 +113,8 @@ def save_file(level: LevelModel, path: Path) -> None:
 def loads(text: str) -> LevelModel:
     """Phân tích nội dung .tres thành LevelModel (bỏ qua phần không nhận biết)."""
     level = LevelModel(custom_cell_values_raw="{}")
-    challenge_types: list[str] = []
-    challenge_params: list[int] = []
+    mission_types: list[str] = []
+    mission_params: list[int] = []
 
     uid_match = re.search(r'\[gd_resource[^\]]*uid="([^"]+)"', text)
     if uid_match:
@@ -160,22 +160,22 @@ def loads(text: str) -> LevelModel:
             level.h_walls_visible = _parse_bytes(value)
         elif key == "cell_mask":
             level.cell_mask = _parse_bytes(value)
-        elif key == "challenge_types":
-            challenge_types = _parse_string_array(value)
-        elif key == "challenge_params":
-            challenge_params = _parse_int_array(value)
+        elif key == "mission_types":
+            mission_types = _parse_string_array(value)
+        elif key == "mission_params":
+            mission_params = _parse_int_array(value)
         elif key == "custom_cell_values":
             values, unknown = parse_custom_values(value)
             level.custom_cell_values = values
             level.custom_cell_values_raw = value or "{}"
             level.custom_raw_unknown = unknown
 
-    level.challenges = []
-    for index, type_id in enumerate(challenge_types[: chal.MAX_PER_LEVEL]):
+    level.missions = []
+    for index, type_id in enumerate(mission_types[: chal.MAX_PER_LEVEL]):
         if not chal.is_valid(type_id):
             continue
-        param = challenge_params[index] if index < len(challenge_params) else 0
-        level.challenges.append((type_id, param))
+        param = mission_params[index] if index < len(mission_params) else 0
+        level.missions.append((type_id, param))
 
     level.normalize_arrays()
     level.ensure_borders()

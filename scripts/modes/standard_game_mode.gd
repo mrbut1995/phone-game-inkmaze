@@ -38,7 +38,7 @@ func setup_floor(floor_number: int) -> MazeData:
 			var lvl: LevelData = lm.call("load_level", floor_number)
 			if lvl != null:
 				initial_steps = lvl.max_steps
-				current_level_data = lvl      # nguồn Thử thách của màn (tối đa 3)
+				current_level_data = lvl      # nguồn Nhiệm vụ của màn (tối đa 3)
 				return lvl.to_maze_data()
 
 	# Fallback tạo maze nếu không có LevelManager

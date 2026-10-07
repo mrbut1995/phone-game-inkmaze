@@ -480,7 +480,7 @@ script = ExtResource("2_layout")
 logo = NodePath("Paper/Hero/LogoPanel/LogoArea/Logo")
 btn_play = NodePath("Paper/Menu/Play")
 btn_dungeon = NodePath("Paper/Menu/Dungeon")
-btn_daily = NodePath("Paper/Menu/DailyChallenge")
+btn_daily = NodePath("Paper/Menu/DailyMission")
 btn_leaderboard = NodePath("Paper/Menu/Utils/Leaderboard")
 btn_shop = NodePath("Paper/Menu/Utils/Shop")
 btn_settings = NodePath("Paper/Menu/Utils/Settings")
@@ -493,7 +493,7 @@ profile_level = NodePath("Paper/Hero/ProfileCard/Content/Profile/LevelChip/Bg/Te
 profile_name = NodePath("Paper/Hero/ProfileCard/Content/ProfileInformation/Name")
 badge_play = NodePath("Paper/Menu/Play/BottomLabel/Badge")
 badge_dungeon = NodePath("Paper/Menu/Dungeon/BottomLabel/Badge")
-badge_daily = NodePath("Paper/Menu/DailyChallenge/BottomLabel/Badge")
+badge_daily = NodePath("Paper/Menu/DailyMission/BottomLabel/Badge")
 stamp_panel = NodePath("Paper/Hero/StampArea/Control/Stamp")
 stamp_label = NodePath("Paper/Hero/StampArea/Control/Stamp/Label")
 game_mode_box = NodePath("Paper/Menu")
@@ -1348,7 +1348,7 @@ text_overrun_behavior = 3
 resize_font_to_fit = true
 minimum_font_size = 8
 
-[node name="DailyChallenge" type="Button" parent="Paper/Menu" index="2" unique_id=1942849630]
+[node name="DailyMission" type="Button" parent="Paper/Menu" index="2" unique_id=1942849630]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.95
@@ -1374,7 +1374,7 @@ content_margin_right = 8.0
 content_margin_bottom = 8.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="ButtonDescription" type="HBoxContainer" parent="Paper/Menu/DailyChallenge" index="0" unique_id=76692436]
+[node name="ButtonDescription" type="HBoxContainer" parent="Paper/Menu/DailyMission" index="0" unique_id=76692436]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1387,7 +1387,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 6
 
-[node name="CircleIcon" type="Control" parent="Paper/Menu/DailyChallenge/ButtonDescription" index="0" unique_id=1389532240]
+[node name="CircleIcon" type="Control" parent="Paper/Menu/DailyMission/ButtonDescription" index="0" unique_id=1389532240]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 1
@@ -1401,7 +1401,7 @@ expand_mode = 2
 stretch_mode = 5
 metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
 
-[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/DailyChallenge/ButtonDescription/CircleIcon" index="0" unique_id=1471516198]
+[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/DailyMission/ButtonDescription/CircleIcon" index="0" unique_id=1471516198]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.064
@@ -1418,12 +1418,12 @@ texture = ExtResource("17_icon_calendar")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Spacer" type="Control" parent="Paper/Menu/DailyChallenge/ButtonDescription" index="1" unique_id=686306888]
+[node name="Spacer" type="Control" parent="Paper/Menu/DailyMission/ButtonDescription" index="1" unique_id=686306888]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="TitleContainer" type="VBoxContainer" parent="Paper/Menu/DailyChallenge/ButtonDescription" index="2" unique_id=124471845]
+[node name="TitleContainer" type="VBoxContainer" parent="Paper/Menu/DailyMission/ButtonDescription" index="2" unique_id=124471845]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1431,7 +1431,7 @@ theme_override_constants/separation = 3
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Title" type="Label" parent="Paper/Menu/DailyChallenge/ButtonDescription/TitleContainer" index="0" unique_id=425842661]
+[node name="Title" type="Label" parent="Paper/Menu/DailyMission/ButtonDescription/TitleContainer" index="0" unique_id=425842661]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 size_flags_vertical = 3
@@ -1442,7 +1442,7 @@ text = "STR_MODE_DAILY_TITLE"
 vertical_alignment = 2
 text_overrun_behavior = 3
 
-[node name="PlayDesc1" type="Label" parent="Paper/Menu/DailyChallenge/ButtonDescription/TitleContainer" index="1" unique_id=662704890]
+[node name="PlayDesc1" type="Label" parent="Paper/Menu/DailyMission/ButtonDescription/TitleContainer" index="1" unique_id=662704890]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.2
@@ -1452,7 +1452,7 @@ text = "STR_MODE_DAILY_DESC_1"
 vertical_alignment = 1
 text_overrun_behavior = 3
 
-[node name="PlayDesc2" type="Label" parent="Paper/Menu/DailyChallenge/ButtonDescription/TitleContainer" index="2" unique_id=2113582409]
+[node name="PlayDesc2" type="Label" parent="Paper/Menu/DailyMission/ButtonDescription/TitleContainer" index="2" unique_id=2113582409]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.2
@@ -1461,12 +1461,12 @@ theme_override_font_sizes/font_size = 17
 text = "STR_MODE_DAILY_DESC_2"
 text_overrun_behavior = 3
 
-[node name="Spacer" type="Control" parent="Paper/Menu/DailyChallenge/ButtonDescription/TitleContainer" index="3" unique_id=1880970606]
+[node name="Spacer" type="Control" parent="Paper/Menu/DailyMission/ButtonDescription/TitleContainer" index="3" unique_id=1880970606]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="TopBadge" type="Control" parent="Paper/Menu/DailyChallenge" index="1" unique_id=193033958]
+[node name="TopBadge" type="Control" parent="Paper/Menu/DailyMission" index="1" unique_id=193033958]
 layout_mode = 1
 anchors_preset = 0
 offset_left = 33.5
@@ -1488,7 +1488,7 @@ texture_disabled = ExtResource("p_tex_15")
 texture_focused = ExtResource("p_tex_32")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
-[node name="Tag" type="Label" parent="Paper/Menu/DailyChallenge/TopBadge" index="0" unique_id=2037718859]
+[node name="Tag" type="Label" parent="Paper/Menu/DailyMission/TopBadge" index="0" unique_id=2037718859]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -1504,7 +1504,7 @@ vertical_alignment = 1
 resize_font_to_fit = true
 minimum_font_size = 6
 
-[node name="BottomLabel" type="Control" parent="Paper/Menu/DailyChallenge" index="2" unique_id=11304712]
+[node name="BottomLabel" type="Control" parent="Paper/Menu/DailyMission" index="2" unique_id=11304712]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -1530,7 +1530,7 @@ texture_disabled = ExtResource("p_tex_18")
 texture_focused = ExtResource("p_tex_33")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
-[node name="Badge" type="Label" parent="Paper/Menu/DailyChallenge/BottomLabel" index="0" unique_id=71718738]
+[node name="Badge" type="Label" parent="Paper/Menu/DailyMission/BottomLabel" index="0" unique_id=71718738]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 1
 anchors_preset = 15

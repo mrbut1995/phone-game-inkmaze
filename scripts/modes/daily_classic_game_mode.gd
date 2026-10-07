@@ -1,11 +1,11 @@
 class_name DailyClassicGameMode
 extends StandardGameMode
 ## ============================================================================
-## Mode: DAILY — MAZE THƯỜNG (classic maze của ngày Daily Challenge)
+## Mode: DAILY — MAZE THƯỜNG (classic maze của ngày Daily Mission)
 ##
 ## - Sinh mê cung 5×5 ngẫu nhiên tại chỗ (không nạp LevelData của màn thường).
 ## - Luật giống Play Mode: đâm vào tường vô hình = thua ngay.
-## - 3 thử thách mặc định (không đâm tường · đủ bước · đủ thời gian)
+## - 3 nhiệm vụ mặc định (không đâm tường · đủ bước · đủ thời gian)
 ##   chính là 3 nhiệm vụ đầu của ngày Daily (xem DailyManager).
 ## ============================================================================
 
@@ -30,7 +30,7 @@ func setup_floor(_floor_number: int) -> MazeData:
 	var maze := MazeData.new()
 	maze.generate(MAZE_SIZE, MAZE_SIZE, WALL_VISIBLE_RATIO)
 	initial_steps = DESIGN_STEPS
-	current_level_data = null      # -> ChallengeController dùng 3 thử thách mặc định
+	current_level_data = null      # -> MissionController dùng 3 nhiệm vụ mặc định
 	return maze
 
 
@@ -40,4 +40,4 @@ func get_hud_floor_title(_floor_number: int) -> String:
 
 
 func get_hud_subtitle(_floor_number: int) -> String:
-	return tr("STR_DAILY_CHALLENGE_TITLE")
+	return tr("STR_DAILY_MISSION_TITLE")

@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://baibccmdx3g5u" path="res://scripts/core/controllers/timer_controller.gd" id="11_timer"]
 [ext_resource type="Script" uid="uid://bcqi64nve5wp5" path="res://scripts/core/controllers/ui_controller.gd" id="12_ui"]
 [ext_resource type="Script" uid="uid://btmprlxpqdg6j" path="res://scripts/core/controllers/tool_controller.gd" id="13_tool"]
-[ext_resource type="Script" uid="uid://csd7cnldm2tu3" path="res://scripts/core/controllers/challenge_controller.gd" id="14_chal"]
+[ext_resource type="Script" uid="uid://csd7cnldm2tu3" path="res://scripts/core/controllers/mission_controller.gd" id="14_chal"]
 [ext_resource type="PackedScene" uid="uid://du7mme5oa6tt6" path="res://scenes/layout/landscape/game.tscn" id="L_Landscape"]
 [ext_resource type="PackedScene" uid="uid://wwrw355dsr83" path="res://scenes/layout/portrait/game.tscn" id="L_Portrait"]
 
@@ -29,7 +29,7 @@ tool_controller = NodePath("Controllers/ToolController")
 undo_controller = NodePath("Controllers/UndoController")
 hint_controller = NodePath("Controllers/HintController")
 game_mode_controller = NodePath("Controllers/GameModeController")
-challenge_controller = NodePath("Controllers/ChallengeController")
+mission_controller = NodePath("Controllers/MissionController")
 
 [node name="Portrait" parent="." index="1" unique_id=1629983650 instance=ExtResource("L_Portrait")]
 layout_mode = 1
@@ -43,7 +43,7 @@ layout_mode = 1
 
 [node name="Controllers" type="Node" parent="." index="4" unique_id=1749084702]
 
-[node name="GameController" type="Node" parent="Controllers" index="0" unique_id=414807406 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "challenge_controller", "grid_view")]
+[node name="GameController" type="Node" parent="Controllers" index="0" unique_id=414807406 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "mission_controller", "grid_view")]
 script = ExtResource("10_game")
 floor_controller = NodePath("../FloorController")
 timer_controller = NodePath("../TimerController")
@@ -51,7 +51,7 @@ grid_controller = NodePath("../GridController")
 ui_controller = NodePath("../UIController")
 tool_controller = NodePath("../ToolController")
 game_mode_controller = NodePath("../GameModeController")
-challenge_controller = NodePath("../ChallengeController")
+mission_controller = NodePath("../MissionController")
 grid_view = NodePath("../../Board")
 
 [node name="AchievementSfxTimer" type="Timer" parent="Controllers/GameController"]
@@ -94,7 +94,7 @@ script = ExtResource("12_ui")
 [node name="ToolController" type="Node" parent="Controllers" index="9" unique_id=1949838204]
 script = ExtResource("13_tool")
 
-[node name="ChallengeController" type="Node" parent="Controllers" index="10" unique_id=2100727352]
+[node name="MissionController" type="Node" parent="Controllers" index="10" unique_id=2100727352]
 script = ExtResource("14_chal")
 
 [connection signal="timeout" from="Controllers/GameController/AchievementSfxTimer" to="Controllers/GameController" method="_on_achievement_sfx_timeout"]

@@ -20,7 +20,7 @@ const INK_MAX := 9
 ## Ô ngoài đường ngắn nhất: mực thấp (lối tắt dự phòng, mau phai)
 const OFF_PATH_MIN := 2
 const OFF_PATH_MAX := 6
-## Số bước của đường ngắn nhất + khoảng dư để chốt ngưỡng thử thách "đi không quá N bước"
+## Số bước của đường ngắn nhất + khoảng dư để chốt ngưỡng nhiệm vụ "đi không quá N bước"
 const STEP_SLACK := 4
 
 ## Khoảng MỰC mà TOOL cho nhà thiết kế tô (`custom_cell_values`, công cụ 7 / nút "Sinh giá trị trên đường"):
@@ -71,14 +71,14 @@ func setup_floor(_floor_number: int) -> MazeData:
 	return _setup_on_maze(maze)
 
 
-## Cấp mực + ngưỡng thử thách cho 1 bàn đã có (tự sinh hoặc do nhà thiết kế vẽ)
+## Cấp mực + ngưỡng nhiệm vụ cho 1 bàn đã có (tự sinh hoặc do nhà thiết kế vẽ)
 func _setup_on_maze(maze: MazeData) -> MazeData:
 	_start_pos = maze.get_start()
 	_end_pos = maze.get_end()
 
 	var shortest := maze.get_shortest_path(_start_pos, _end_pos)
 	design_moves = maxi(shortest.size() - 1, 0)
-	# Ngưỡng thử thách: đi đúng đường ngắn nhất + chút dư (mode không giới hạn bước)
+	# Ngưỡng nhiệm vụ: đi đúng đường ngắn nhất + chút dư (mode không giới hạn bước)
 	initial_steps = design_moves + STEP_SLACK
 
 	_assign_ink(maze, shortest)

@@ -57,9 +57,9 @@ DEFAULT_CHAPTER_TITLES = (
 DEFAULT_CHAPTER_SUBTITLES = (
     "Làm quen với các quy luật bước & tường",
     "Mê cung rộng hơn với mật độ tường tăng cao",
-    "Thử thách trí nhớ và khả năng vẽ không chạm tường",
+    "Nhiệm vụ trí nhớ và khả năng vẽ không chạm tường",
     "Mê cung khổng lồ dành cho cao thủ suy luận",
-    "Thử thách giới hạn dành cho người chơi kỳ cựu",
+    "Nhiệm vụ giới hạn dành cho người chơi kỳ cựu",
 )
 # Phí sao mặc định để mở chương (theo thứ tự chương 1..4)
 DEFAULT_CHAPTER_COSTS = (0, 25, 45, 70)
@@ -130,7 +130,7 @@ TOOL_VALUE_KEY = "7"
 MODE_EDITS = {
     "play": {
         "kind": "none",
-        "note": "Mê cung thường: tường (hiện/ẩn) + ô board + S/F + thử thách là đủ.",
+        "note": "Mê cung thường: tường (hiện/ẩn) + ô board + S/F + nhiệm vụ là đủ.",
     },
     "minesweeper": {
         "kind": "cell_value",

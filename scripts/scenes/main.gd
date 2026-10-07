@@ -5,7 +5,7 @@ extends BaseScene
 ## Quản lý 3 cổng chơi chính:
 ##   1. Play (Chọn Màn) -> Chuyển sang scenes/levels.tscn
 ##   2. Dungeon Mode    -> Bắt đầu ngay chế độ vô tận trong scenes/game.tscn
-##   3. Daily Challenge -> Chuyển sang scenes/daily.tscn
+##   3. Daily Mission -> Chuyển sang scenes/daily.tscn
 ## ============================================================================
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 

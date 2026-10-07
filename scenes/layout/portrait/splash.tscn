@@ -239,12 +239,11 @@ _data = {
 &"play_exit": SubResource("Animation_exit_splash")
 }
 
-[node name="Portrait" unique_id=1022756227 node_paths=PackedStringArray("studio_label", "logo_container", "logo", "pencil", "title_label", "tagline_label", "touch_button", "fade_overlay", "anim_player") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=1022756227 node_paths=PackedStringArray("studio_label", "logo_container", "logo", "title_label", "tagline_label", "touch_button", "fade_overlay", "anim_player") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 studio_label = NodePath("Panel/StudioLabel")
 logo_container = NodePath("Panel/LogoContainer")
 logo = NodePath("Panel/LogoContainer/Logo")
-pencil = NodePath("")
 title_label = NodePath("Panel/Title")
 tagline_label = NodePath("Panel/Tagline")
 touch_button = NodePath("TouchButton")

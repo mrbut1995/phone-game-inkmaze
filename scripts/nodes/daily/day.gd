@@ -1,8 +1,8 @@
 class_name DailyDayCell
 extends Control
 ## ============================================================================
-## Component: Ô ngày trong Lịch Daily Challenge (nodes/daily/day.tscn)
-## Bố cục bám mockup (mockup/daily_challenge.svg), ô chuẩn 130x150 px:
+## Component: Ô ngày trong Lịch Daily Mission (nodes/daily/day.tscn)
+## Bố cục bám mockup (mockup/daily_mission.svg), ô chuẩn 130x150 px:
 ##   - Số ngày (2 chữ số) ở góc trên - trái
 ##   - Dấu tick đỏ ở góc trên - phải (ngày đã chơi được >= 1 sao)
 ##   - Viên trạng thái ở đáy ô: "3/3 SAO" / "2/3 XONG" / "CHƯA MỞ"

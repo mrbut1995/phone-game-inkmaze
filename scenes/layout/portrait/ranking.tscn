@@ -547,7 +547,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.109000005
 anchor_top = 0.92
-anchor_right = 0.91300005
+anchor_right = 0.96619153
 anchor_bottom = 0.92
 offset_left = -0.23000336
 offset_top = -54.811462
@@ -598,20 +598,26 @@ vertical_alignment = 1
 text_overrun_behavior = 3
 
 [node name="Record" type="Label" parent="Sheet/MyRank" index="4" unique_id=328510847]
-layout_mode = 0
-offset_left = 270.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -108.0
 offset_top = 10.0
-offset_right = 362.5
+offset_right = -15.5
 offset_bottom = 28.0
 theme_type_variation = &"RankMyRecord"
 text = "TẦNG 12"
 horizontal_alignment = 2
 
 [node name="Points" type="Label" parent="Sheet/MyRank" index="5" unique_id=1367217871]
-layout_mode = 0
-offset_left = 252.5
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -125.5
 offset_top = 29.0
-offset_right = 362.5
+offset_right = -15.5
 offset_bottom = 47.0
 theme_type_variation = &"RankMyValue"
 text = "7,840 PTS"

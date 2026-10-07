@@ -17,7 +17,7 @@ var game_state: GameState = null
 @export var ui_controller: UIController = null
 @export var tool_controller: ToolController = null
 @export var game_mode_controller: GameModeController = null
-@export var challenge_controller: ChallengeController = null
+@export var mission_controller: MissionController = null
 @export var grid_view: BoardView = null
 
 var _pending_bonus := 0
@@ -40,8 +40,8 @@ var _countdown_locked := false
 var _memorize_active := false
 ## Đang hiện overlay "Hết nước đi" trên bàn (Sum Path / Countdown Cost / Fading Ink)
 var _overlay_showing := false
-## Dữ liệu đầu vào để chấm Thử thách (tái dùng, không cấp phát mỗi frame)
-var _challenge_ctx := ChallengeContext.new()
+## Dữ liệu đầu vào để chấm Nhiệm vụ (tái dùng, không cấp phát mỗi frame)
+var _mission_ctx := MissionContext.new()
 
 
 var game_mode: BaseGameMode:
@@ -107,9 +107,9 @@ func _start_floor(floor_number: int) -> void:
 	hint_left = maxi(hint_limit, 0)
 	if game_state != null:
 		game_state.floor_number = floor_number
-	# Chốt ngưỡng 3 thử thách của màn/tầng mới (số bước thiết kế đã nạp trong setup_floor)
-	if challenge_controller != null:
-		challenge_controller.setup_for_floor(
+	# Chốt ngưỡng 3 nhiệm vụ của màn/tầng mới (số bước thiết kế đã nạp trong setup_floor)
+	if mission_controller != null:
+		mission_controller.setup_for_floor(
 			game_mode_controller.game_mode.initial_steps,
 			game_mode_controller.game_mode.current_level_data,
 			game_mode_controller.game_mode
@@ -251,10 +251,10 @@ func _update_hud() -> void:
 		game_mode_controller.game_mode,
 		game_state.floor_moves
 	)
-	# Cập nhật trạng thái sống của các thử thách (chưa chốt Sao khi đang chơi)
-	if challenge_controller != null:
+	# Cập nhật trạng thái sống của các nhiệm vụ (chưa chốt Sao khi đang chơi)
+	if mission_controller != null:
 		var floor_time: float = timer_controller.floor_elapsed if timer_controller != null else game_state.elapsed_time
-		_challenge_ctx.set_values(
+		_mission_ctx.set_values(
 			game_state,
 			game_mode_controller.game_mode,
 			grid_controller.maze if grid_controller != null else null,
@@ -262,7 +262,7 @@ func _update_hud() -> void:
 			floor_time,
 			false
 		)
-		challenge_controller.refresh(_challenge_ctx)
+		mission_controller.refresh(_mission_ctx)
 
 
 func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
@@ -334,17 +334,17 @@ func _complete_floor() -> void:
 
 	_report_to_archivements(true, floor_time)
 
-	# Chốt 3 thử thách của màn/tầng -> số Sao (1 thử thách hoàn thành = 1 Sao)
-	var challenge_rows: Array[Dictionary] = []
+	# Chốt 3 nhiệm vụ của màn/tầng -> số Sao (1 nhiệm vụ hoàn thành = 1 Sao)
+	var mission_rows: Array[Dictionary] = []
 	var stars := 0
-	if challenge_controller != null:
-		_challenge_ctx.final = true
-		challenge_controller.refresh(_challenge_ctx)
-		challenge_rows = challenge_controller.rows()
-		stars = challenge_controller.stars()
+	if mission_controller != null:
+		_mission_ctx.final = true
+		mission_controller.refresh(_mission_ctx)
+		mission_rows = mission_controller.rows()
+		stars = mission_controller.stars()
 
 	# Daily: chốt NHIỆM VỤ của ngày (rỗng nếu ván này không phải ván Daily)
-	var daily := _complete_daily_missions(challenge_rows)
+	var daily := _complete_daily_missions(mission_rows)
 
 	if ui_controller != null:
 		var next_available := true
@@ -368,7 +368,7 @@ func _complete_floor() -> void:
 			"wall_hits": game_state.floor_wall_hits,
 			"score": game_state.score,
 			"stars": stars,
-			"challenges": challenge_rows,
+			"missions": mission_rows,
 			"bonus_steps": _pending_bonus,
 			"steps_bonus": _pending_bonus,
 			"base_score": score_data.get("base_score", 0),
@@ -407,12 +407,12 @@ func _game_over(reason := "") -> void:
 		timer_controller.stop()
 	if grid_view != null:
 		grid_view.set_interaction_enabled(false)
-	# Chốt 3 thử thách -> popup thua hiển thị trạng thái + số Sao đã đạt
-	var challenge_rows: Array[Dictionary] = []
+	# Chốt 3 nhiệm vụ -> popup thua hiển thị trạng thái + số Sao đã đạt
+	var mission_rows: Array[Dictionary] = []
 	var stars := 0
 	var floor_time: float = timer_controller.floor_elapsed if timer_controller != null else 0.0
-	if challenge_controller != null and game_state != null:
-		_challenge_ctx.set_values(
+	if mission_controller != null and game_state != null:
+		_mission_ctx.set_values(
 			game_state,
 			game_mode_controller.game_mode,
 			grid_controller.maze if grid_controller != null else null,
@@ -420,9 +420,9 @@ func _game_over(reason := "") -> void:
 			floor_time,
 			true
 		)
-		challenge_controller.refresh(_challenge_ctx)
-		challenge_rows = challenge_controller.rows()
-		stars = challenge_controller.stars()
+		mission_controller.refresh(_mission_ctx)
+		mission_rows = mission_controller.rows()
+		stars = mission_controller.stars()
 	_report_to_archivements(false, floor_time)
 
 	var mode: BaseGameMode = game_mode_controller.game_mode
@@ -439,7 +439,7 @@ func _game_over(reason := "") -> void:
 			"retries_left": mode.retries_left if mode != null else 0,
 			"revive_desc": mode.revive_desc_key() if mode != null else "",
 			"stars": stars,
-			"challenges": challenge_rows,
+			"missions": mission_rows,
 			"time": floor_time,
 			"reason": reason,
 			"endless": game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless,
@@ -456,7 +456,7 @@ func _on_continue_requested() -> void:
 	if game_mode_controller != null and game_mode_controller.game_mode != null and not game_mode_controller.game_mode.is_endless:
 		var gm: Node = get_node_or_null("/root/GameManager")
 		if gm != null:
-			var stars: int = challenge_controller.stars() if challenge_controller != null else 0
+			var stars: int = mission_controller.stars() if mission_controller != null else 0
 			var current := int(gm.get("current_level"))
 			gm.call("record_level_clear", current, stars, game_state.elapsed_time)
 			# LUỒNG HỌC LẦN ĐẦU: màn 1..4 dẫn tiếp sang bài học / màn thực hành kế của luồng
@@ -654,8 +654,8 @@ func _record_profile_run(mode: BaseGameMode, won: bool, floor_time: float) -> vo
 	var gm: Node = get_node_or_null("/root/GameManager")
 	var daily := gm != null and not str(gm.get("daily_variant")).is_empty()
 	var stars := 0
-	if challenge_controller != null:
-		stars = challenge_controller.stars()
+	if mission_controller != null:
+		stars = mission_controller.stars()
 	var maze: MazeData = grid_controller.maze if grid_controller != null else null
 	Profile.record_run({
 		"mode_id": mode.mode_id,
@@ -744,7 +744,7 @@ func undo() -> void:
 			and game_mode_controller.game_mode.undo_drawn_wall(grid_controller.anchor_controller):
 		Sfx.play(Sfx.UNDO)
 		if game_state != null:
-			game_state.undos_used += 1     # thử thách "không dùng hoàn tác"
+			game_state.undos_used += 1     # nhiệm vụ "không dùng hoàn tác"
 		undo_left = maxi(undo_left - 1, 0)
 		_update_hud()
 		return
@@ -758,7 +758,7 @@ func undo() -> void:
 			if not _move_costs.is_empty():
 				refund = _move_costs.pop_back()
 			game_state.refund_step(refund)
-			game_state.undos_used += 1     # thử thách "không dùng hoàn tác"
+			game_state.undos_used += 1     # nhiệm vụ "không dùng hoàn tác"
 		undo_left = maxi(undo_left - 1, 0)
 		_update_hud()
 
@@ -775,13 +775,13 @@ func hint() -> void:
 	if game_mode_controller != null and game_mode_controller.game_mode != null \
 			and game_mode_controller.game_mode.hint_wall(grid_controller.anchor_controller, grid_controller.maze):
 		if game_state != null:
-			game_state.hints_used += 1     # thử thách "không dùng gợi ý"
+			game_state.hints_used += 1     # nhiệm vụ "không dùng gợi ý"
 		hint_left = maxi(hint_left - 1, 0)
 		_update_hud()
 		return
 	grid_controller.give_hint()
 	if game_state != null:
-		game_state.hints_used += 1     # thử thách "không dùng gợi ý"
+		game_state.hints_used += 1     # nhiệm vụ "không dùng gợi ý"
 	hint_left = maxi(hint_left - 1, 0)
 	_update_hud()
 
@@ -868,10 +868,10 @@ func _on_floor_bonus_sfx_timeout() -> void:
 
 
 ## Chốt NHIỆM VỤ Daily sau khi thắng ván:
-## - Maze THƯỜNG ("classic"): 3 thử thách của ván chính là nhiệm vụ 0..2 của ngày.
+## - Maze THƯỜNG ("classic"): 3 nhiệm vụ của ván chính là nhiệm vụ 0..2 của ngày.
 ## - Maze ĐẶC BIỆT ("special"): hoàn thành ván = nhiệm vụ 3 của ngày.
 ## Trả về Dictionary mô tả kết quả (RỖNG nếu ván này không phải ván Daily).
-func _complete_daily_missions(challenge_rows: Array) -> Dictionary:
+func _complete_daily_missions(mission_rows: Array) -> Dictionary:
 	var gm: Variant = get_node_or_null("/root/GameManager")
 	var dm: Variant = get_node_or_null("/root/DailyManager")
 	if gm == null or dm == null or _is_debug_run():
@@ -886,8 +886,8 @@ func _complete_daily_missions(challenge_rows: Array) -> Dictionary:
 		var flags: Array[bool] = []
 		for i in 3:
 			var done := false
-			if i < challenge_rows.size() and challenge_rows[i] is Dictionary:
-				done = bool((challenge_rows[i] as Dictionary).get("done", false))
+			if i < mission_rows.size() and mission_rows[i] is Dictionary:
+				done = bool((mission_rows[i] as Dictionary).get("done", false))
 			flags.append(done)
 		coins = int(dm.call("complete_day_missions", day, flags))
 	else:

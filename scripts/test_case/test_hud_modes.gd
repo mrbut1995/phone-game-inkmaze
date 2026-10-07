@@ -286,8 +286,8 @@ func _section_4c_fog_of_war(scene: GameScene) -> void:
 	var head := hud.find_child("Head", true, false) as Label
 	_entry(head != null and head.text == "STR_HUD_FOG_RETRY_HEAD",
 		"Bang Suong Mu co dong tieu de LUOT THU LAI")
-	_entry(hud.challenge_card() == null,
-		"challenge_card() = null (bang Suong Mu chiem cho the THU THACH)")
+	_entry(hud.mission_card() == null,
+		"mission_card() = null (bang Suong Mu chiem cho the THU THACH)")
 
 
 # ---------------------------------------------------------------------------
@@ -315,8 +315,8 @@ func _section_4d_one_stroke(scene: GameScene) -> void:
 	_entry(time_card != null and time_card.visible, "Che do Mot Net hien the THOI GIAN")
 	_entry(hud.find_child("Sheet", true, false) == null,
 		"Bang TIEN DO PHU KIN da GO khoi HUD (tien do thay tren ban co)")
-	_entry(hud.challenge_card() == null,
-		"challenge_card() = null (HUD chi con the THOI GIAN)")
+	_entry(hud.mission_card() == null,
+		"mission_card() = null (HUD chi con the THOI GIAN)")
 
 	# Chuỗi dịch của chế độ (đọc theo locale VI để chắc chắn đã re-import CSV)
 	var prev_locale := TranslationServer.get_locale()
@@ -358,7 +358,7 @@ func _section_4e_wall_builder(scene: GameScene) -> void:
 	_entry(time_card != null and time_card.visible, "Che do Xay Tuong hien the THOI GIAN")
 	_entry(hud.find_child("Sheet", true, false) == null,
 		"Bang TUONG DA VE da GO khoi HUD (so tuong thay tren ban co)")
-	_entry(hud.challenge_card() == null, "challenge_card() = null (HUD chi con the THOI GIAN)")
+	_entry(hud.mission_card() == null, "mission_card() = null (HUD chi con the THOI GIAN)")
 
 	# Thanh hanh dong: nut GUI BAI (Submit) = nut rieng cua Wall Builder (2 nut Tool/Wall da BO 2026-09-26)
 	var submit_btn := scene.submit_btn as BaseButton

@@ -18,7 +18,7 @@ from ..config import (
     TOOL_VALUE_KEY,
     mode_edit_spec,
 )
-from ..models import challenges as chal
+from ..models import missions as chal
 from ..models.level import LevelModel
 from . import solver
 
@@ -278,31 +278,31 @@ def validate(level: LevelModel) -> list[Issue]:
         "Đường ngắn nhất %d bước · dư %d bước · %d tường hiện / %d tường ẩn"
         % (path_length, max(0, level.max_steps - path_length), stats["visible_walls"], stats["hidden_walls"]),
     ))
-    issues.extend(validate_challenges(level, path_length=int(path_length), info=info))
+    issues.extend(validate_missions(level, path_length=int(path_length), info=info))
     return issues
 
 
 # ---------------------------------------------------------------------------
-# THỬ THÁCH (tối đa 3 / màn) — xem app/models/challenges.py
+# NHIỆM VỤ (tối đa 3 / màn) — xem app/models/missions.py
 # ---------------------------------------------------------------------------
-def validate_challenges(
+def validate_missions(
     level: LevelModel,
     path_length: int = 0,
     info: dict | None = None,
 ) -> list[Issue]:
-    """Kiểm tra danh sách thử thách của màn (rỗng = dùng mặc định của game)."""
+    """Kiểm tra danh sách nhiệm vụ của màn (rỗng = dùng mặc định của game)."""
     issues: list[Issue] = []
-    items = list(level.challenges)
+    items = list(level.missions)
 
     if len(items) > chal.MAX_PER_LEVEL:
         issues.append(Issue(
             LEVEL_ERROR,
-            "Mỗi màn chỉ được TỐI ĐA %d thử thách (đang có %d)" % (chal.MAX_PER_LEVEL, len(items)),
+            "Mỗi màn chỉ được TỐI ĐA %d nhiệm vụ (đang có %d)" % (chal.MAX_PER_LEVEL, len(items)),
         ))
     if not items:
         issues.append(Issue(
             LEVEL_INFO,
-            "Chưa chọn thử thách -> game dùng 3 thử thách mặc định (không đâm tường · %d bước · %d giây)"
+            "Chưa chọn nhiệm vụ -> game dùng 3 nhiệm vụ mặc định (không đâm tường · %d bước · %d giây)"
             % (max(1, int(level.max_steps)), max(5, int(round(level.par_time)))),
         ))
         return issues
@@ -310,15 +310,15 @@ def validate_challenges(
     types = [str(item[0]) for item in items]
     for type_id in types:
         if not chal.is_valid(type_id):
-            issues.append(Issue(LEVEL_ERROR, "Loại thử thách không tồn tại: '%s'" % type_id))
+            issues.append(Issue(LEVEL_ERROR, "Loại nhiệm vụ không tồn tại: '%s'" % type_id))
     for type_id in sorted(set(types)):
         if list(types).count(type_id) > 1:
-            issues.append(Issue(LEVEL_WARNING, "Thử thách '%s' bị lặp lại" % chal.label(type_id)))
+            issues.append(Issue(LEVEL_WARNING, "Nhiệm vụ '%s' bị lặp lại" % chal.label(type_id)))
 
     if chal.ONLY_NUMBERED in types and chal.AVOID_NUMBERED in types:
         issues.append(Issue(
             LEVEL_ERROR,
-            "Hai thử thách 'chỉ đi vào ô CÓ số' và 'không đi vào ô CÓ số' mâu thuẫn nhau",
+            "Hai nhiệm vụ 'chỉ đi vào ô CÓ số' và 'không đi vào ô CÓ số' mâu thuẫn nhau",
         ))
 
     numbers = _numbered_cells(level)
@@ -330,7 +330,7 @@ def validate_challenges(
     if (chal.ONLY_NUMBERED in types or chal.AVOID_NUMBERED in types or _uses_sum(types)) and not numbers:
         issues.append(Issue(
             LEVEL_WARNING,
-            "Màn không có ô nào hiện số -> thử thách liên quan tới số rất khó đạt",
+            "Màn không có ô nào hiện số -> nhiệm vụ liên quan tới số rất khó đạt",
         ))
 
     if (chal.VISIT_ALL in types or chal.VISIT_ALL_NUMBERED in types) and info is not None:
@@ -338,7 +338,7 @@ def validate_challenges(
         if chal.VISIT_ALL in types and blocked:
             issues.append(Issue(
                 LEVEL_ERROR,
-                "Thử thách 'đi qua hết mọi ô' không thể đạt: %d ô thuộc board không tới được" % blocked,
+                "Nhiệm vụ 'đi qua hết mọi ô' không thể đạt: %d ô thuộc board không tới được" % blocked,
             ))
     if chal.VISIT_ALL in types and chal.NO_REVISIT in types:
         issues.append(Issue(
@@ -356,7 +356,7 @@ def validate_challenges(
         if param < low or param > high:
             issues.append(Issue(
                 LEVEL_ERROR,
-                "Thử thách %d (%s): tham số %d ngoài khoảng %d..%d" % (index + 1, label, param, low, high),
+                "Nhiệm vụ %d (%s): tham số %d ngoài khoảng %d..%d" % (index + 1, label, param, low, high),
             ))
             continue
 
@@ -364,52 +364,52 @@ def validate_challenges(
         if type_id == chal.STEPS_MAX and path_length and param < path_length:
             issues.append(Issue(
                 LEVEL_ERROR,
-                "Thử thách %d (%s): %d bước < đường đi ngắn nhất (%d) -> không thể đạt"
+                "Nhiệm vụ %d (%s): %d bước < đường đi ngắn nhất (%d) -> không thể đạt"
                 % (index + 1, label, param, path_length),
             ))
         elif type_id == chal.LEN_MAX_PERCENT and param < min_percent:
             issues.append(Issue(
                 LEVEL_ERROR,
-                "Thử thách %d (%s): tối đa %d%% nhưng đường ngắn nhất đã cần %d%% số ô"
+                "Nhiệm vụ %d (%s): tối đa %d%% nhưng đường ngắn nhất đã cần %d%% số ô"
                 % (index + 1, label, param, min_percent),
             ))
         elif type_id == chal.LEN_MIN_PERCENT and param > max_percent:
             issues.append(Issue(
                 LEVEL_ERROR,
-                "Thử thách %d (%s): tối thiểu %d%% > 100%%" % (index + 1, label, param),
+                "Nhiệm vụ %d (%s): tối thiểu %d%% > 100%%" % (index + 1, label, param),
             ))
         elif type_id == chal.SUM_LT and param <= 0:
             issues.append(Issue(
                 LEVEL_ERROR,
-                "Thử thách %d (%s): tổng luôn >= 0 nên N phải > 0" % (index + 1, label),
+                "Nhiệm vụ %d (%s): tổng luôn >= 0 nên N phải > 0" % (index + 1, label),
             ))
         elif type_id == chal.SUM_GT and param > 0 and param >= total_number:
             issues.append(Issue(
                 LEVEL_ERROR,
-                "Thử thách %d (%s): N = %d >= tổng số lớn nhất có thể (%d) -> không thể đạt"
+                "Nhiệm vụ %d (%s): N = %d >= tổng số lớn nhất có thể (%d) -> không thể đạt"
                 % (index + 1, label, param, total_number),
             ))
         elif type_id == chal.SUM_GE and param > 0 and param > total_number:
             issues.append(Issue(
                 LEVEL_ERROR,
-                "Thử thách %d (%s): N = %d > tổng số lớn nhất có thể (%d) -> không thể đạt"
+                "Nhiệm vụ %d (%s): N = %d > tổng số lớn nhất có thể (%d) -> không thể đạt"
                 % (index + 1, label, param, total_number),
             ))
         elif kind == chal.PARAM_PERCENT:
             issues.append(Issue(
                 LEVEL_INFO,
-                "Thử thách %d (%s): đường ngắn nhất chiếm %d%% số ô" % (index + 1, label, min_percent),
+                "Nhiệm vụ %d (%s): đường ngắn nhất chiếm %d%% số ô" % (index + 1, label, min_percent),
             ))
 
     if len(items) < chal.MAX_PER_LEVEL:
         issues.append(Issue(
             LEVEL_INFO,
-            "Màn có %d thử thách -> tối đa %d Sao cho màn này" % (len(items), len(items)),
+            "Màn có %d nhiệm vụ -> tối đa %d Sao cho màn này" % (len(items), len(items)),
         ))
     else:
         issues.append(Issue(
             LEVEL_INFO,
-            "3 thử thách: %s" % " · ".join(chal.label(str(item[0])) for item in items),
+            "3 nhiệm vụ: %s" % " · ".join(chal.label(str(item[0])) for item in items),
         ))
     return issues
 

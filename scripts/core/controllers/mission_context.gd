@@ -1,8 +1,8 @@
-class_name ChallengeContext
+class_name MissionContext
 extends RefCounted
 ## ============================================================================
-## Dữ liệu đầu vào để ChallengeController chấm 3 Thử thách của màn/tầng.
-## GameController cập nhật rồi gọi ChallengeController.refresh(ctx) mỗi khi HUD đổi.
+## Dữ liệu đầu vào để MissionController chấm 3 Nhiệm vụ của màn/tầng.
+## GameController cập nhật rồi gọi MissionController.refresh(ctx) mỗi khi HUD đổi.
 ## ============================================================================
 
 var state: GameState = null

@@ -82,8 +82,8 @@ func _run(scene: GameScene) -> void:
 	_entry(mode.required_segments >= maze.width,
 		"Ban khong qua de: so doan tuong (%d) >= canh ban (%d)" % [mode.required_segments, maze.width])
 
-	# Thử thách MẶC ĐỊNH của chế độ (§5.13): no_wrong_submit · time_max · no_hint
-	var cc := scene.challenge_controller
+	# Nhiệm vụ MẶC ĐỊNH của chế độ (§5.13): no_wrong_submit · time_max · no_hint
+	var cc := scene.mission_controller
 	if cc != null:
 		var rows: Array[Dictionary] = cc.rows()
 		_entry(rows.size() == 3 and str(rows[0].get("type", "")) == "no_wrong_submit",
@@ -104,7 +104,7 @@ func _run(scene: GameScene) -> void:
 			"HUD: the THOI GIAN hien gia tri ('%s')" % _text_of(time_val))
 		_entry(hud.find_child("Sheet", true, false) == null,
 			"HUD: da go bang TUONG DA VE (chi con THOI GIAN)")
-		_entry(hud.challenge_card() == null, "challenge_card() = null (khong co the THU THACH)")
+		_entry(hud.mission_card() == null, "mission_card() = null (khong co the THU THACH)")
 	# Thanh hanh dong: nut GUI BAI (Submit) = nut rieng cua Wall Builder (nut Tool/Wall cu da BO 2026-09-26)
 	var submit_btn := scene.submit_btn as BaseButton
 	_entry(submit_btn != null and submit_btn.visible,

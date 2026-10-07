@@ -5,12 +5,12 @@ extends BasePopup
 ## — mockup popup_game_over_level.svg
 ##
 ## Khác bản Dungeon (nodes/popups/gameover.tscn):
-##   - Thay "Quãng đường đã đi / Va chạm tường / Điểm an ủi" bằng DANH SÁCH 3 THỬ THÁCH
+##   - Thay "Quãng đường đã đi / Va chạm tường / Điểm an ủi" bằng DANH SÁCH 3 NHIỆM VỤ
 ##     kèm trạng thái ĐẠT / CHƯA ĐẠT.
-##   - Con dấu (stamp) in SỐ THỬ THÁCH ĐÃ HOÀN THÀNH (thay cho "hết bước" của bản Dungeon).
+##   - Con dấu (stamp) in SỐ NHIỆM VỤ ĐÃ HOÀN THÀNH (thay cho "hết bước" của bản Dungeon).
 ##   - Nút HỒI SINH = "Quay lại bước trước đó" (Design.md 5.10).
 ##
-## Dữ liệu: open({ floor, progress, wall_hits, score, stars, challenges: [ {title,done,status} ] })
+## Dữ liệu: open({ floor, progress, wall_hits, score, stars, missions: [ {title,done,status} ] })
 ## ============================================================================
 
 signal retry_requested
@@ -29,10 +29,10 @@ const VAR_STATUS_FAIL := &"PopupStatValueBad"
 @export var label_subtitle: Label = null
 @export var revive_desc: Label = null
 @export var stamp_count: Label = null
-@export var challenge_count: Label = null
+@export var mission_count: Label = null
 ## Nút "Về Menu" — ẩn trong LUỒNG HỌC LẦN ĐẦU (xem `_on_open`)
 @export var btn_menu: BaseButton = null
-## 3 hàng thử thách cố định theo thiết kế (Row1/2/3 — Star/Name/Status)
+## 3 hàng nhiệm vụ cố định theo thiết kế (Row1/2/3 — Star/Name/Status)
 @export var row1_star: TextureRect = null
 @export var row1_name: Label = null
 @export var row1_status: Label = null
@@ -67,7 +67,7 @@ func _on_open() -> void:
 	elif int(data.get("max_retries", 0)) > 0:
 		revive_desc.text = tr("STR_REVIVE_DESC_RETRY")
 
-	var rows: Array = data.get("challenges", [])
+	var rows: Array = data.get("missions", [])
 	# Gom node ĐÃ BIND của 3 hàng (theo thiết kế cố định) — không dò "Row%d/..." lúc chạy
 	var stars: Array[TextureRect] = [row1_star, row2_star, row3_star]
 	var names: Array[Label] = [row1_name, row2_name, row3_name]
@@ -81,12 +81,12 @@ func _on_open() -> void:
 		stars[i].texture = STAR_FULL if ok else STAR_EMPTY
 		if row.has("title"):
 			names[i].text = str(row.get("title"))
-		statuses[i].text = str(row.get("status", tr("STR_CHALLENGE_NOT_DONE")))
+		statuses[i].text = str(row.get("status", tr("STR_MISSION_NOT_DONE")))
 		statuses[i].theme_type_variation = VAR_STATUS_OK if ok else VAR_STATUS_FAIL
 
-	var count_text := tr("STR_CHALLENGE_COUNT_FORMAT").format([done, COUNT])
+	var count_text := tr("STR_MISSION_COUNT_FORMAT").format([done, COUNT])
 	stamp_count.text = count_text
-	challenge_count.text = count_text
+	mission_count.text = count_text
 
 	# LUỒNG HỌC LẦN ĐẦU (onboarding): KHÔNG cho "Về Menu" (rời luồng giữa chừng) — vẫn giữ
 	# HỒI SINH + THỬ LẠI để chơi tiếp đúng màn của luồng.

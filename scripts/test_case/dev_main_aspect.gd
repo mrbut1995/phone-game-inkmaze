@@ -73,7 +73,7 @@ func _run(size: Vector2i) -> void:
 	print("  Portrait.visible=%s · Landscape.visible=%s" % [
 		str(portrait.visible if portrait != null else false),
 		str(landscape.visible if landscape != null else false)])
-	for name in ["Paper", "Panel", "Logo", "Play", "Dungeon", "DailyChallenge", "Leaderboard",
+	for name in ["Paper", "Panel", "Logo", "Play", "Dungeon", "DailyMission", "Leaderboard",
 			"Shop", "Settings", "Archivement", "Stamp"]:
 		var node := scene.ui(name) as Control
 		if node == null:

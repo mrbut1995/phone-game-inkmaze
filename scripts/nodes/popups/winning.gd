@@ -59,7 +59,7 @@ func _on_open() -> void:
 		value_score.text = tr("STR_SCORE_FORMAT").format([_thousands(target_score)])
 
 	_set_stars(int(data.get("stars", 0)))
-	_fill_stamp(int(data.get("stars", 0)), data.get("challenges", null))
+	_fill_stamp(int(data.get("stars", 0)), data.get("missions", null))
 	# Dây 2 nút (Chơi lại / Màn kế) khai trong `winning.tscn` (cùng scene)
 	# Hết chương (hoặc chương kế chưa mở) -> nút đổi thành "CHỌN CHƯƠNG" (bấm ra màn Chọn Chương)
 	label_next.text = TranslationServer.translate(
@@ -67,13 +67,13 @@ func _on_open() -> void:
 		else "STR_CHAPTER_SCREEN_TITLE")
 
 
-## Con dấu đỏ ở góc phải: "n / m THỬ THÁCH" + "★ ĐẠT n SAO ★" (mockup popup_win_level.svg)
-func _fill_stamp(stars: int, challenges: Variant) -> void:
+## Con dấu đỏ ở góc phải: "n / m NHIỆM VỤ" + "★ ĐẠT n SAO ★" (mockup popup_win_level.svg)
+func _fill_stamp(stars: int, missions: Variant) -> void:
 	var done := 0
 	var total := 0
 	var rows: Array = []
-	if challenges is Array:
-		rows = challenges as Array
+	if missions is Array:
+		rows = missions as Array
 	for row in rows:
 		total += 1
 		if row is Dictionary and bool((row as Dictionary).get("done", false)):

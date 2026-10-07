@@ -63,7 +63,7 @@ func _init() -> void:
 	await process_frame
 	await create_timer(0.5).timeout
 
-	# Play mode dùng popup thua bản LEVEL (3 thử thách), Dungeon dùng bản bước còn lại
+	# Play mode dùng popup thua bản LEVEL (3 nhiệm vụ), Dungeon dùng bản bước còn lại
 	var endless: bool = controller.game_mode != null and controller.game_mode.is_endless
 	var over_id: String = Popups.GAME_OVER if endless else Popups.GAME_OVER_LEVEL
 	var popup: Node = Popups.get_popup(over_id)

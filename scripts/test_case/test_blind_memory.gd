@@ -1,7 +1,7 @@
 extends SceneTree
 ## ============================================================================
 ## Test: Blind Memory Maze — pha GHI NHỚ (đếm ngược trước khi tường biến mất).
-##   - HUD riêng (BlindMemoryHUD): KHÔNG có thẻ THỬ THÁCH, CHỈ có thẻ THỜI GIAN.
+##   - HUD riêng (BlindMemoryHUD): KHÔNG có thẻ NHIỆM VỤ, CHỈ có thẻ THỜI GIAN.
 ##     (Thẻ nhắc GHI NHỚ đã gỡ khỏi HUD từ 2026-09-27 — dòng nhắc 3-2-1-GO nằm trong POPUP đếm ngược.)
 ##   - Vào màn: hiện TOÀN BỘ tường + khoá tương tác + ĐỒNG HỒ DỪNG + popup đếm ngược mở.
 ##   - Hết đếm ngược: tường ẩn lại + mở tương tác + đồng hồ chạy (giờ chơi không tính lúc ghi nhớ).
@@ -59,7 +59,7 @@ func _fail(msg: String) -> void:
 
 
 # ---------------------------------------------------------------------------
-# 1. HUD riêng, KHÔNG có thẻ Thử thách
+# 1. HUD riêng, KHÔNG có thẻ Nhiệm vụ
 # ---------------------------------------------------------------------------
 func _check_hud(scene: GameScene, gc: GameController) -> void:
 	var hud := scene.ui_controller.hud
@@ -67,16 +67,16 @@ func _check_hud(scene: GameScene, gc: GameController) -> void:
 		_fail("Blind Memory phai dung BlindMemoryHUD (dang la '%s')" % (
 			hud.get_script().resource_path.get_file() if hud != null and hud.get_script() != null else "<null>"))
 		return
-	if hud.challenge_card() != null:
+	if hud.mission_card() != null:
 		_fail("HUD Blind Memory KHONG duoc co the THU THACH")
-	if gc.challenge_controller != null and gc.challenge_controller.card != null:
-		_fail("ChallengeController khong duoc tro vao the thu thach o Blind Memory")
+	if gc.mission_controller != null and gc.mission_controller.card != null:
+		_fail("MissionController khong duoc tro vao the thu thach o Blind Memory")
 	# HUD đã gỡ thẻ GHI NHỚ (2026-09-27) — chỉ còn THỜI GIAN; dòng nhắc ghi nhớ do POPUP đếm ngược lo
 	# (kiểm ở `_check_memorize_phase`). Đọc qua EXPORT `time_value_node` — không phụ thuộc đường dẫn node.
 	var time_val := hud.time_value_node
 	if time_val == null or time_val.text.is_empty():
 		_fail("HUD Blind Memory thieu gia tri THOI GIAN")
-	print("[CHECK] HUD Blind Memory: khong co the Thử thách · co the THỜI GIAN (nhac GHI NHO nam trong POPUP)")
+	print("[CHECK] HUD Blind Memory: khong co the Nhiệm vụ · co the THỜI GIAN (nhac GHI NHO nam trong POPUP)")
 
 
 # ---------------------------------------------------------------------------

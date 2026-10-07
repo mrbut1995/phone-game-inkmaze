@@ -1,7 +1,7 @@
 class_name WallBuilderGameMode
 extends BaseGameMode
 ## ============================================================================
-## Mode: Wall Builder (Xây Tường) — Daily Challenge đặc biệt (GDD §5.13).
+## Mode: Wall Builder (Xây Tường) — Daily Mission đặc biệt (GDD §5.13).
 ##
 ## LUẬT:
 ## - Bàn có mê cung sinh sẵn nhưng **tường bị ẩn HOÀN TOÀN**; KHÔNG có S/F,
@@ -300,9 +300,9 @@ func tracks_satisfied_cells() -> bool:
 	return true
 
 
-## Thử thách mặc định của Wall Builder (§5.13): gửi đúng ngay lần đầu · trong thời gian · không gợi ý.
-func default_challenges() -> Array[String]:
-	return [ChallengeTypes.NO_WRONG_SUBMIT, ChallengeTypes.TIME_MAX, ChallengeTypes.NO_HINT]
+## Nhiệm vụ mặc định của Wall Builder (§5.13): gửi đúng ngay lần đầu · trong thời gian · không gợi ý.
+func default_missions() -> Array[String]:
+	return [MissionTypes.NO_WRONG_SUBMIT, MissionTypes.TIME_MAX, MissionTypes.NO_HINT]
 
 
 # ---------------------------------------------------------------------------
@@ -402,7 +402,7 @@ func mark_solved() -> void:
 	_solved = true
 
 
-## Ghi nhận 1 lần GỬI SAI (thống kê/HUD + thử thách "gửi đúng ngay lần đầu")
+## Ghi nhận 1 lần GỬI SAI (thống kê/HUD + nhiệm vụ "gửi đúng ngay lần đầu")
 func register_submit_miss() -> void:
 	submit_misses += 1
 

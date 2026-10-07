@@ -4,7 +4,7 @@ extends SceneTree
 ##
 ## 1. Icon nút Restart trên HUD (4 trạng thái) — thiết kế "cục tẩy" (eraser) áp dụng ĐỒNG NHẤT cả 4 trạng thái.
 ##    ⚠ Kiểm tra trên NGUỒN .svg (bản .png chỉ là raster lại từ SVG — không đọc được path trong đó).
-## 2. Popup THẮNG MÀN: con dấu có CHỮ (n / m thử thách + số sao) và nút CHƠI LẠI có icon.
+## 2. Popup THẮNG MÀN: con dấu có CHỮ (n / m nhiệm vụ + số sao) và nút CHƠI LẠI có icon.
 ## 3. Popup THÔNG QUA TẦNG: con dấu hết méo (56×56) + có chữ "ĐÃ QUA" / "TẦNG 0n ✔".
 ## 4. Popup NGÔN NGỮ: hàng nút không tràn ra ngoài + VUỐT DỌC cuộn được danh sách.
 ## 5. Không còn ART nào của game dùng <text> (ThorVG không render chữ trong SVG).
@@ -85,7 +85,7 @@ func _section_2_winning() -> void:
 	var popup := await _open(SCENES["winning"], {
 		"level": 10, "grid": "5×5", "time": 12.0, "steps_used": 5, "steps_max": 9,
 		"wall_hits": 0, "score": 1116, "next_available": true, "stars": 2,
-		"challenges": [{"done": true}, {"done": true}, {"done": false}],
+		"missions": [{"done": true}, {"done": true}, {"done": false}],
 	})
 	if popup == null:
 		return

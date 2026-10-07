@@ -40,7 +40,10 @@ const LAYOUT_CONTENTS := {
 ## `pad_slot` của shop: CHỈ bố cục NGANG có khung riêng cho Bàn nháp (cột trái như mockup);
 ## bản DỌC vẫn để bàn nháp trong danh sách nên không khai node này.
 const OPTIONAL := {
-	"splash|landscape": ["fade_overlay"],
+	## Splash: ngòi bút chì (Pencil) đã bỏ khỏi cả 2 bố cục; bản NGANG không có FadeOverlay,
+	## bản DỌC không có dấu tem phiên bản (stamp_label) — đều là thiết kế, không phải lỗi binding.
+	"splash|portrait": ["pencil", "stamp_label"],
+	"splash|landscape": ["fade_overlay", "pencil"],
 	"title|landscape": ["touch_button", "fade_overlay"],
 	"game|portrait": ["hud_slot", "landscape_action_bar"],
 	"game|landscape": ["hud_slot"],

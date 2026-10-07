@@ -154,7 +154,7 @@ func _section_3_keys_exist() -> void:
 	print("  [INFO] Khoa chua thay cho dung: %d" % _unused.size())
 
 	# Vài khoá trọng yếu phải có (HUD, công cụ, tutorial, thành tựu, chương)
-	for id in ["STR_DAILY_CHALLENGE_TITLE", "STR_SELECT_LEVEL_TITLE", "STR_HUD_SUM",
+	for id in ["STR_DAILY_MISSION_TITLE", "STR_SELECT_LEVEL_TITLE", "STR_HUD_SUM",
 			"STR_HUD_TARGET", "STR_TOOL_SUBMIT", "STR_TOOL_RESTART", "STR_TOOL_UNDO",
 			"STR_TOOL_HINT", "STR_TOOL_SKIP", "STR_TUT_SUM_HUD_FORMAT",
 			"STR_TUT_WB_COUNTER_FORMAT", "STR_ACH_LV_FIRST_STEP_TITLE",
@@ -233,11 +233,11 @@ func _section_6_runtime_translation() -> void:
 	var manager: Node = root.get_node_or_null("LocalizationManager")
 	_entry(manager != null, "Autoload LocalizationManager ton tai")
 	var backup := TranslationServer.get_locale()
-	for pair in [["vi", "THỬ THÁCH HẰNG NGÀY"], ["en", "DAILY CHALLENGE"]]:
+	for pair in [["vi", "NHIỆM VỤ HẰNG NGÀY"], ["en", "DAILY MISSION"]]:
 		TranslationServer.set_locale(pair[0])
-		var translated := TranslationServer.translate("STR_DAILY_CHALLENGE_TITLE")
+		var translated := TranslationServer.translate("STR_DAILY_MISSION_TITLE")
 		_entry(translated == pair[1], "Locale %s dich dung ('%s')" % [pair[0], translated])
-		_entry(translated != "STR_DAILY_CHALLENGE_TITLE", "Locale %s khong tra lai khoa tho" % pair[0])
+		_entry(translated != "STR_DAILY_MISSION_TITLE", "Locale %s khong tra lai khoa tho" % pair[0])
 	TranslationServer.set_locale(backup)
 
 

@@ -1,7 +1,7 @@
 class_name BlindMemoryGameMode
 extends BaseGameMode
 ## ============================================================================
-## Mode: Blind Memory Maze (Thử thách Trí nhớ Không gian).
+## Mode: Blind Memory Maze (Nhiệm vụ Trí nhớ Không gian).
 ## - Không hiển thị số trên các ô.
 ## - Khi bắt đầu, toàn bộ tường hiển thị kèm Countdown đếm ngược (3..2..1..GO!).
 ## - Sau khi Countdown kết thúc, tường ẩn hoàn toàn và bắt đầu tính giờ/bước.

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbay7lxac310s"
-path="res://.godot/imported/card_challenge.svg-7fe10f0fc155f8781eef7ff361a580a9.ctex"
+uid="uid://bqooopacxspei"
+path="res://.godot/imported/card_mission.svg-b694c8d9aad01248d56af2a522c43d39.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images-landscape/game/card_challenge.svg"
-dest_files=["res://.godot/imported/card_challenge.svg-7fe10f0fc155f8781eef7ff361a580a9.ctex"]
+source_file="res://assets/images/game/card_mission.svg"
+dest_files=["res://.godot/imported/card_mission.svg-b694c8d9aad01248d56af2a522c43d39.ctex"]
 
 [params]
 

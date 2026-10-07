@@ -75,13 +75,13 @@ texture_margin_top = 7.0
 texture_margin_right = 14.0
 texture_margin_bottom = 10.0
 
-[node name="Base" unique_id=1975349716 node_paths=PackedStringArray("label_title", "label_subtitle", "revive_desc", "stamp_count", "challenge_count", "btn_menu", "row1_star", "row1_name", "row1_status", "row2_star", "row2_name", "row2_status", "row3_star", "row3_name", "row3_status") instance=ExtResource("1_base")]
+[node name="Base" unique_id=1975349716 node_paths=PackedStringArray("label_title", "label_subtitle", "revive_desc", "stamp_count", "mission_count", "btn_menu", "row1_star", "row1_name", "row1_status", "row2_star", "row2_name", "row2_status", "row3_star", "row3_name", "row3_status") instance=ExtResource("1_base")]
 script = ExtResource("2_level")
 label_title = NodePath("Panel/Content/Title")
 label_subtitle = NodePath("Panel/Content/Subtitle")
 revive_desc = NodePath("Panel/Content/Information/Banner/Desc")
 stamp_count = NodePath("Panel/Content/Stamp/StampCount")
-challenge_count = NodePath("Panel/Content/Information/ChallengeHead/Value")
+mission_count = NodePath("Panel/Content/Information/MissionHead/Value")
 btn_menu = NodePath("Panel/Content/Information/Buttons/MenuBtn")
 row1_star = NodePath("Panel/Content/Information/Row1/Star")
 row1_name = NodePath("Panel/Content/Information/Row1/Name")
@@ -155,7 +155,7 @@ offset_bottom = 29.0
 rotation = -0.10471976
 pivot_offset = Vector2(37.5, 6.5)
 theme_type_variation = &"PopupStampTextDanger"
-text = "STR_CHALLENGE_STAMP_TITLE"
+text = "STR_MISSION_STAMP_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
@@ -230,18 +230,18 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="ChallengeHead" type="HBoxContainer" parent="Panel/Content/Information" index="1" unique_id=2039443779]
+[node name="MissionHead" type="HBoxContainer" parent="Panel/Content/Information" index="1" unique_id=2039443779]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
 
-[node name="Label" type="Label" parent="Panel/Content/Information/ChallengeHead" index="0" unique_id=1046108976]
+[node name="Label" type="Label" parent="Panel/Content/Information/MissionHead" index="0" unique_id=1046108976]
 layout_mode = 2
 theme_type_variation = &"PopupStatLabelMuted"
-text = "STR_CHALLENGE_HEADER"
+text = "STR_MISSION_HEADER"
 vertical_alignment = 1
 
-[node name="Value" type="Label" parent="Panel/Content/Information/ChallengeHead" index="1" unique_id=1011028124]
+[node name="Value" type="Label" parent="Panel/Content/Information/MissionHead" index="1" unique_id=1011028124]
 layout_mode = 2
 size_flags_horizontal = 11
 theme_type_variation = &"PopupTotalValueAmber"
@@ -266,7 +266,7 @@ expand_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PopupStatLabelMuted"
-text = "STR_CHALLENGE_NO_WALL"
+text = "STR_MISSION_NO_WALL"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
@@ -274,7 +274,7 @@ text_overrun_behavior = 3
 [node name="Status" type="Label" parent="Panel/Content/Information/Row1" index="2" unique_id=1396882020]
 layout_mode = 2
 theme_type_variation = &"PopupStatValueBad"
-text = "STR_CHALLENGE_NOT_DONE"
+text = "STR_MISSION_NOT_DONE"
 horizontal_alignment = 2
 vertical_alignment = 1
 clip_text = true
@@ -297,7 +297,7 @@ expand_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PopupStatLabelMuted"
-text = "STR_CHALLENGE_STEPS"
+text = "STR_MISSION_STEPS"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
@@ -305,7 +305,7 @@ text_overrun_behavior = 3
 [node name="Status" type="Label" parent="Panel/Content/Information/Row2" index="2" unique_id=1240904882]
 layout_mode = 2
 theme_type_variation = &"PopupStatValueBad"
-text = "STR_CHALLENGE_NOT_DONE"
+text = "STR_MISSION_NOT_DONE"
 horizontal_alignment = 2
 vertical_alignment = 1
 clip_text = true
@@ -328,7 +328,7 @@ expand_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PopupStatLabelMuted"
-text = "STR_CHALLENGE_TIME"
+text = "STR_MISSION_TIME"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
@@ -336,7 +336,7 @@ text_overrun_behavior = 3
 [node name="Status" type="Label" parent="Panel/Content/Information/Row3" index="2" unique_id=1853916646]
 layout_mode = 2
 theme_type_variation = &"PopupStatValueBad"
-text = "STR_CHALLENGE_NOT_DONE"
+text = "STR_MISSION_NOT_DONE"
 horizontal_alignment = 2
 vertical_alignment = 1
 clip_text = true

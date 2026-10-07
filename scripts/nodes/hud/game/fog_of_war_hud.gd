@@ -9,13 +9,14 @@ extends BaseHUD
 ##
 ## Luật (xem `FogOfWarGameMode`): đâm tường vô hình -> về ô S và TRỪ 1 LƯỢT THỬ;
 ## hết 3 lượt là thua. Hồi sinh bằng quảng cáo -> cộng thêm 1 lượt thử.
-## Chế độ này KHÔNG hiện thẻ THỬ THÁCH (`challenge_card()` = null) — bảng Sương Mù
+## Chế độ này KHÔNG hiện thẻ NHIỆM VỤ (`mission_card()` = null) — bảng Sương Mù
 ## chiếm trọn bề ngang bên phải như mockup.
 ## ============================================================================
 
 ## Màu dòng "CÒN n LẦN VỀ S": xanh khi còn nhiều, đỏ khi chỉ còn ≤ 1 lượt
-@export var COLOR_NOTE_OK := Color(0.18039216, 0.49019608, 0.19607843)
-@export var COLOR_NOTE_DANGER := Color(0.84705883, 0.26666668, 0.26666668)
+## Màu chữ gợi ý (test truy cập TĨNH `FogOfWarHUD.COLOR_NOTE_*` ⇒ PHẢI là const, không được đổi sang @export)
+const COLOR_NOTE_OK := Color(0.18039216, 0.49019608, 0.19607843)
+const COLOR_NOTE_DANGER := Color(0.84705883, 0.26666668, 0.26666668)
 
 ## LƯỢT THỬ LẠI còn lại (`Content/ModeInformation/Sheet/Retry/Value`)
 @export var retry_value_node : Label

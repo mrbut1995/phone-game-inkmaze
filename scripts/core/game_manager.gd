@@ -213,7 +213,7 @@ func skip_level(level_id: int) -> int:
 	return next_id
 
 
-## Khởi động Daily Challenge theo ngày — MAZE ĐẶC BIỆT (mode xoay vòng của ngày)
+## Khởi động Daily Mission theo ngày — MAZE ĐẶC BIỆT (mode xoay vòng của ngày)
 func start_daily(day: int) -> void:
 	prepare_daily_run(day, "special")
 	if _open_mode_tutorial_once():
@@ -221,7 +221,7 @@ func start_daily(day: int) -> void:
 	_change_scene("res://scenes/game.tscn")
 
 
-## Khởi động Daily Challenge theo ngày — MAZE THƯỜNG (classic)
+## Khởi động Daily Mission theo ngày — MAZE THƯỜNG (classic)
 func start_daily_classic(day: int) -> void:
 	prepare_daily_run(day, "classic")
 	if _open_mode_tutorial_once():
@@ -260,7 +260,7 @@ func prepare_daily_run(day: int, variant := "special") -> String:
 	return current_mode
 
 
-## Danh sách id của 8 chế độ SPECIAL (chỉ chơi được qua Daily Challenge)
+## Danh sách id của 8 chế độ SPECIAL (chỉ chơi được qua Daily Mission)
 func special_mode_ids() -> Array[String]:
 	return DAILY_MODES.duplicate()
 
@@ -301,7 +301,7 @@ func go_to_chapters() -> void:
 	_change_scene("res://scenes/chapters.tscn")
 
 
-## Điều hướng tới Màn hình Daily Challenge
+## Điều hướng tới Màn hình Daily Mission
 func go_to_daily() -> void:
 	_change_scene("res://scenes/daily.tscn")
 

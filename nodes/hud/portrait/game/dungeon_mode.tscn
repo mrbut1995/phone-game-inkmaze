@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_pt42g"]
 [ext_resource type="Script" uid="uid://jtc5actxn551" path="res://scripts/nodes/hud/game/dungeon_hud.gd" id="2_script"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_challenge_count_sub.tres" id="5_xqca6"]
+[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_mission_count_sub.tres" id="5_xqca6"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="11_p7oui"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="13_r5anl"]
 [ext_resource type="LabelSettings" uid="uid://cb662usl7mhkf" path="res://resources/settings/text/text_game_information_value.tres" id="16_hqip1"]

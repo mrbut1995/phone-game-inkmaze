@@ -20,7 +20,7 @@ from dataclasses import dataclass, field
 from typing import Iterable
 
 from ..config import MIN_SIZE
-from . import challenges as chal
+from . import missions as chal
 
 Cell = tuple[int, int]
 WallRef = tuple[str, int, int]  # ("v" | "h", ix, iy)
@@ -60,9 +60,9 @@ class LevelModel:
     ## True = trong file có phần tool KHÔNG hiểu → giữ nguyên chuỗi gốc, không ghi đè từ dict
     custom_raw_unknown: bool = False
 
-    ## THỬ THÁCH của màn (tối đa 3): danh sách (type_id, param).
-    ## Rỗng = game dùng 3 thử thách mặc định (no_wall · steps_max · time_max).
-    challenges: list[tuple[str, int]] = field(default_factory=list)
+    ## NHIỆM VỤ của màn (tối đa 3): danh sách (type_id, param).
+    ## Rỗng = game dùng 3 nhiệm vụ mặc định (no_wall · steps_max · time_max).
+    missions: list[tuple[str, int]] = field(default_factory=list)
 
     ## Uid Godot của file nguồn (giữ lại khi ghi đè để không đổi định danh)
     source_uid: str = ""
@@ -401,10 +401,10 @@ class LevelModel:
         self.ensure_borders()
 
     # ------------------------------------------------------------------
-    # THỬ THÁCH (tối đa 3 / màn) — xem app/models/challenges.py
+    # NHIỆM VỤ (tối đa 3 / màn) — xem app/models/missions.py
     # ------------------------------------------------------------------
-    def set_challenge(self, slot: int, type_id: str, param: int = 0) -> bool:
-        """Đặt thử thách ở vị trí `slot` (0..2). Trả về True nếu có thay đổi."""
+    def set_mission(self, slot: int, type_id: str, param: int = 0) -> bool:
+        """Đặt nhiệm vụ ở vị trí `slot` (0..2). Trả về True nếu có thay đổi."""
         if slot < 0 or slot >= chal.MAX_PER_LEVEL:
             return False
         if not chal.is_valid(type_id):
@@ -413,30 +413,30 @@ class LevelModel:
         if value <= 0 and chal.has_param(type_id):
             value = chal.default_param(type_id, self.max_steps, self.par_time)
         entry = (type_id, value)
-        while len(self.challenges) <= slot:
-            self.challenges.append(("", 0))
-        if self.challenges[slot] == entry:
+        while len(self.missions) <= slot:
+            self.missions.append(("", 0))
+        if self.missions[slot] == entry:
             return False
-        self.challenges[slot] = entry
-        self.challenges = [c for c in self.challenges if chal.is_valid(c[0])]
+        self.missions[slot] = entry
+        self.missions = [c for c in self.missions if chal.is_valid(c[0])]
         return True
 
-    def clear_challenge(self, slot: int) -> bool:
-        """Bỏ thử thách ở vị trí `slot`."""
-        if slot < 0 or slot >= len(self.challenges):
+    def clear_mission(self, slot: int) -> bool:
+        """Bỏ nhiệm vụ ở vị trí `slot`."""
+        if slot < 0 or slot >= len(self.missions):
             return False
-        self.challenges.pop(slot)
+        self.missions.pop(slot)
         return True
 
-    def clear_all_challenges(self) -> bool:
-        """Về chế độ "để game tự dùng 3 thử thách mặc định"."""
-        if not self.challenges:
+    def clear_all_missions(self) -> bool:
+        """Về chế độ "để game tự dùng 3 nhiệm vụ mặc định"."""
+        if not self.missions:
             return False
-        self.challenges = []
+        self.missions = []
         return True
 
-    def default_challenges(self) -> list[tuple[str, int]]:
-        """3 thử thách mặc định suy ra từ max_steps/par_time của màn."""
+    def default_missions(self) -> list[tuple[str, int]]:
+        """3 nhiệm vụ mặc định suy ra từ max_steps/par_time của màn."""
         return [
             (chal.NO_WALL, 0),
             (chal.STEPS_MAX, max(1, int(self.max_steps))),
@@ -464,7 +464,7 @@ class LevelModel:
             "cell_mask": list(self.cell_mask),
             "custom_cell_values": dict(self.custom_cell_values),
             "custom_cell_values_raw": self.custom_cell_values_raw,
-            "challenges": [tuple(item) for item in self.challenges],
+            "missions": [tuple(item) for item in self.missions],
         }
 
     def restore(self, snap: dict) -> None:

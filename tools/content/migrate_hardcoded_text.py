@@ -81,10 +81,10 @@ NEW_KEYS: list[tuple[str, str, str]] = [
 # 3. Danh hiệu: id -> bản EN (bản VI giữ nguyên trong .tres làm dự phòng)
 # ---------------------------------------------------------------------------
 ACH_EN: dict[str, tuple[str, str]] = {
-    "dl_days_30": ("A Month of Discipline", "Complete 30 days of Daily Challenge"),
-    "dl_days_7": ("Diligent Week", "Complete 7 days of Daily Challenge"),
-    "dl_first_day": ("First Day", "Complete your first Daily Challenge day"),
-    "dl_stars_30": ("Daily Star Vault", "Collect 30 stars from Daily Challenge days"),
+    "dl_days_30": ("A Month of Discipline", "Complete 30 days of Daily Mission"),
+    "dl_days_7": ("Diligent Week", "Complete 7 days of Daily Mission"),
+    "dl_first_day": ("First Day", "Complete your first Daily Mission day"),
+    "dl_stars_30": ("Daily Star Vault", "Collect 30 stars from Daily Mission days"),
     "dl_streak_14": ("14-Day Streak", "Keep a 14-day streak"),
     "dl_streak_3": ("Disciplined Streak", "Keep a 3-day streak"),
     "dl_streak_7": ("7-Day Streak", "Keep a 7-day streak"),

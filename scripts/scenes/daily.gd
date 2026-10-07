@@ -1,8 +1,8 @@
 class_name DailyScene
 extends BaseScene
 ## ============================================================================
-## View Controller: Màn hình Daily Challenge (scenes/daily.tscn)
-## - Lịch tháng (nodes/daily/calendar.tscn) để chọn ngày thử thách
+## View Controller: Màn hình Daily Mission (scenes/daily.tscn)
+## - Lịch tháng (nodes/daily/calendar.tscn) để chọn ngày nhiệm vụ
 ## - Bảng nhiệm vụ ngày: 3 nhiệm vụ + tiến độ + thưởng sao
 ## - Huy hiệu chuỗi ngày (streak) và nút chơi chế độ xoay vòng của hôm nay
 ## ============================================================================
