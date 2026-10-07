@@ -8,6 +8,10 @@ extends Node
 ##   · Thống kê: Sao · Kỷ lục Dungeon · Chuỗi Daily · Tỉ lệ thắng
 ##   · Lịch sử 10 ván gần nhất (GameController gọi `record_run` khi kết thúc ván)
 ##
+## Danh mục Avatar / Viền khung / Bậc danh hiệu = các file .tres
+## (AvatarData / FrameData / ProfilerTitleData) trong `res://resources/profiler/` —
+## quét thư mục lúc khởi động, THÊM món mới chỉ cần tạo file .tres trong editor.
+##
 ## Lưu save qua SaveManager (provider "PlayerProfileManager", autosave theo signal).
 ## Đọc chéo manager khác QUA /root (không dùng identifier autoload — test --script
 ## không resolve được identifier autoload lúc parse).
@@ -22,86 +26,32 @@ const MAX_RECENT := 10
 const EXP_PER_LEVEL := 200
 const EXP_PER_STAR := 25
 
-## Cấp độ → khoá danh hiệu (chip cạnh tên trong Profiler)
-const TITLE_TIERS := [
-	{"min_level": 1, "key": "STR_PROFILE_TIER_1"},
-	{"min_level": 5, "key": "STR_PROFILE_TIER_2"},
-	{"min_level": 10, "key": "STR_PROFILE_TIER_3"},
-	{"min_level": 20, "key": "STR_PROFILE_TIER_4"},
-	{"min_level": 30, "key": "STR_PROFILE_TIER_5"},
-]
+## Danh mục nạp từ .tres lúc _ready (xem scripts/resources/avatar_data.gd…):
+##   resources/profiler/avatars/avatar_<id>.tres   (AvatarData)
+##   resources/profiler/frames/frame_<id>.tres     (FrameData)
+##   resources/profiler/titles/tier_<n>.tres       (ProfilerTitleData)
+const AVATAR_RES_DIR := "res://resources/profiler/avatars/"
+const FRAME_RES_DIR := "res://resources/profiler/frames/"
+const TITLE_RES_DIR := "res://resources/profiler/titles/"
 
-## Catalog AVATAR — 34 mẫu trong assets/images/avatars/ (3 mặc định sở hữu kèm sẵn)
-## · id   = khoá lưu save — KHÔNG đổi sau khi phát hành
-## · icon = bản PNG trong cây images-png/avatars/ (tên gốc SVG: <id>.svg với '-' thay '_')
-const AVATARS := [
-	# --- Mặc định sở hữu kèm ---
-	{"id": "avatar_baby_child_kid", "name_key": "STR_AVATAR_BABY_CHILD_KID", "icon": AVATAR_DIR + "avatar-baby-child-kid.png", "price": 0},
-	{"id": "avatar_boy_kid", "name_key": "STR_AVATAR_BOY_KID", "icon": AVATAR_DIR + "avatar-boy-kid.png", "price": 0},
-	{"id": "avatar_child_girl", "name_key": "STR_AVATAR_CHILD_GIRL", "icon": AVATAR_DIR + "avatar-child-girl.png", "price": 0},
-	# --- Mua bằng Xu mực ---
-	{"id": "avatar_actor_chaplin_comedy", "name_key": "STR_AVATAR_ACTOR_CHAPLIN_COMEDY", "icon": AVATAR_DIR + "avatar-actor-chaplin-comedy.png", "price": 400},
-	{"id": "avatar_addicted_draw_love", "name_key": "STR_AVATAR_ADDICTED_DRAW_LOVE", "icon": AVATAR_DIR + "avatar-addicted-draw-love.png", "price": 600},
-	{"id": "avatar_afro_avatar_male_2", "name_key": "STR_AVATAR_AFRO_AVATAR_MALE_2", "icon": AVATAR_DIR + "avatar-afro-avatar-male-2.png", "price": 800},
-	{"id": "avatar_afro_boy_child", "name_key": "STR_AVATAR_AFRO_BOY_CHILD", "icon": AVATAR_DIR + "avatar-afro-boy-child.png", "price": 400},
-	{"id": "avatar_alien_avatar_space", "name_key": "STR_AVATAR_ALIEN_AVATAR_SPACE", "icon": AVATAR_DIR + "avatar-alien-avatar-space.png", "price": 600},
-	{"id": "avatar_animal_avatar_bear", "name_key": "STR_AVATAR_ANIMAL_AVATAR_BEAR", "icon": AVATAR_DIR + "avatar-animal-avatar-bear.png", "price": 800},
-	{"id": "avatar_animal_avatar_mutton", "name_key": "STR_AVATAR_ANIMAL_AVATAR_MUTTON", "icon": AVATAR_DIR + "avatar-animal-avatar-mutton.png", "price": 400},
-	{"id": "avatar_apple_avatar_illness", "name_key": "STR_AVATAR_APPLE_AVATAR_ILLNESS", "icon": AVATAR_DIR + "avatar-apple-avatar-illness.png", "price": 600},
-	{"id": "avatar_beard_hipster_male", "name_key": "STR_AVATAR_BEARD_HIPSTER_MALE", "icon": AVATAR_DIR + "avatar-beard-hipster-male.png", "price": 800},
-	{"id": "avatar_bug_insect", "name_key": "STR_AVATAR_BUG_INSECT", "icon": AVATAR_DIR + "avatar-bug-insect.png", "price": 400},
-	{"id": "avatar_cacti_cactus", "name_key": "STR_AVATAR_CACTI_CACTUS", "icon": AVATAR_DIR + "avatar-cacti-cactus.png", "price": 600},
-	{"id": "avatar_christmas_clous_santa", "name_key": "STR_AVATAR_CHRISTMAS_CLOUS_SANTA", "icon": AVATAR_DIR + "avatar-christmas-clous-santa.png", "price": 800},
-	{"id": "avatar_cloud_crying", "name_key": "STR_AVATAR_CLOUD_CRYING", "icon": AVATAR_DIR + "avatar-cloud-crying.png", "price": 400},
-	{"id": "avatar_coffee_cup", "name_key": "STR_AVATAR_COFFEE_CUP", "icon": AVATAR_DIR + "avatar-coffee-cup.png", "price": 600},
-	{"id": "avatar_dead_monster", "name_key": "STR_AVATAR_DEAD_MONSTER", "icon": AVATAR_DIR + "avatar-dead-monster.png", "price": 800},
-	{"id": "avatar_elderly_grandma", "name_key": "STR_AVATAR_ELDERLY_GRANDMA", "icon": AVATAR_DIR + "avatar-elderly-grandma.png", "price": 400},
-	{"id": "avatar_female_girl", "name_key": "STR_AVATAR_FEMALE_GIRL", "icon": AVATAR_DIR + "avatar-female-girl.png", "price": 600},
-	{"id": "avatar_female_portrait_2", "name_key": "STR_AVATAR_FEMALE_PORTRAIT_2", "icon": AVATAR_DIR + "avatar-female-portrait-2.png", "price": 800},
-	{"id": "avatar_female_portrait", "name_key": "STR_AVATAR_FEMALE_PORTRAIT", "icon": AVATAR_DIR + "avatar-female-portrait.png", "price": 400},
-	{"id": "avatar_indian_male_man", "name_key": "STR_AVATAR_INDIAN_MALE_MAN", "icon": AVATAR_DIR + "avatar-indian-male-man.png", "price": 600},
-	{"id": "avatar_indian_man_sikh", "name_key": "STR_AVATAR_INDIAN_MAN_SIKH", "icon": AVATAR_DIR + "avatar-indian-man-sikh.png", "price": 800},
-	{"id": "avatar_lazybones_sloth", "name_key": "STR_AVATAR_LAZYBONES_SLOTH", "icon": AVATAR_DIR + "avatar-lazybones-sloth.png", "price": 400},
-	{"id": "avatar_male_man_old", "name_key": "STR_AVATAR_MALE_MAN_OLD", "icon": AVATAR_DIR + "avatar-male-man-old.png", "price": 600},
-	{"id": "avatar_male_man", "name_key": "STR_AVATAR_MALE_MAN", "icon": AVATAR_DIR + "avatar-male-man.png", "price": 800},
-	{"id": "avatar_man_person", "name_key": "STR_AVATAR_MAN_PERSON", "icon": AVATAR_DIR + "avatar-man-person.png", "price": 400},
-	{"id": "avatar_nun_sister", "name_key": "STR_AVATAR_NUN_SISTER", "icon": AVATAR_DIR + "avatar-nun-sister.png", "price": 600},
-	{"id": "avatar_person_pilot", "name_key": "STR_AVATAR_PERSON_PILOT", "icon": AVATAR_DIR + "avatar-person-pilot.png", "price": 800},
-	# --- Khoá theo mốc thành tích ---
-	{"id": "avatar_artist_avatar_marilyn", "name_key": "STR_AVATAR_ARTIST_AVATAR_MARILYN", "icon": AVATAR_DIR + "avatar-artist-avatar-marilyn.png",
-		"price": 0, "lock_stat": "points", "lock_value": 500},
-	{"id": "avatar_builder_helmet_worker", "name_key": "STR_AVATAR_BUILDER_HELMET_WORKER", "icon": AVATAR_DIR + "avatar-builder-helmet-worker.png",
-		"price": 0, "lock_stat": "daily_streak", "lock_value": 30},
-	{"id": "avatar_einstein_professor", "name_key": "STR_AVATAR_EINSTEIN_PROFESSOR", "icon": AVATAR_DIR + "avatar-einstein-professor.png",
-		"price": 0, "lock_stat": "points", "lock_value": 700},
-	{"id": "avatar_fighter_luchador_man", "name_key": "STR_AVATAR_FIGHTER_LUCHADOR_MAN", "icon": AVATAR_DIR + "avatar-fighter-luchador-man.png",
-		"price": 0, "lock_stat": "dungeon_best_floor", "lock_value": 50},
-]
+## Danh mục đã nạp — thứ tự hiển thị: tặng sẵn → giá tăng dần → khoá mốc
+## (công cụ sinh file: scripts/tool/gen_profiler_resources.gd)
+var _avatars: Array[AvatarData] = []
+var _frames: Array[FrameData] = []
+var _titles: Array[ProfilerTitleData] = []
 
-## Catalog VIỀN KHUNG — 8 mẫu trong assets/images/frames/ (3 mặc định sở hữu kèm sẵn)
-const FRAMES := [
-	{"id": "frame_gear", "name_key": "STR_FRAME_GEAR", "icon": FRAME_DIR + "frame_gear_gold.png", "price": 0},
-	{"id": "frame_laurel", "name_key": "STR_FRAME_LAUREL", "icon": FRAME_DIR + "frame_laurel.png", "price": 0},
-	{"id": "frame_ink", "name_key": "STR_FRAME_INK", "icon": FRAME_DIR + "frame_ink_double.png", "price": 0},
-	{"id": "frame_fire", "name_key": "STR_FRAME_FIRE", "icon": FRAME_DIR + "frame_fire_spike.png",
-		"price": 0, "lock_stat": "daily_streak", "lock_value": 30},
-	{"id": "frame_iron", "name_key": "STR_FRAME_IRON", "icon": FRAME_DIR + "frame_iron_dark.png",
-		"price": 0, "lock_stat": "dungeon_best_floor", "lock_value": 50},
-	{"id": "frame_royal", "name_key": "STR_FRAME_ROYAL", "icon": FRAME_DIR + "frame_royal_aura.png", "price": 800},
-	{"id": "frame_crystal", "name_key": "STR_FRAME_CRYSTAL", "icon": FRAME_DIR + "frame_crystal.png", "price": 650},
-	{"id": "frame_leaf", "name_key": "STR_FRAME_LEAF", "icon": FRAME_DIR + "frame_leaf.png",
-		"price": 0, "lock_stat": "points", "lock_value": 700},
-]
-
+## Catalog AVATAR/VIỀN — nay nằm trong `resources/profiler/` (34 avatar + 29 viền):
+##   · avatar_<id>.tres / frame_<id>.tres — xem gen_profiler_resources.gd
 const DEFAULT_AVATAR := "avatar_baby_child_kid"
-const DEFAULT_FRAME := "frame_gear"
+## Viền mặc định = món tặng sẵn trong catalog (frame_default.tres)
+const DEFAULT_FRAME := "frame_default"
 
 # --- Trạng thái lưu save -----------------------------------------------------
 var display_name := ""
 var avatar_id := DEFAULT_AVATAR
 var frame_id := DEFAULT_FRAME
 var owned_avatars: Array[String] = ["avatar_baby_child_kid", "avatar_boy_kid", "avatar_child_girl"]
-var owned_frames: Array[String] = ["frame_gear", "frame_laurel", "frame_ink"]
+var owned_frames: Array[String] = ["frame_default", "frame_laurel", "frame_bronze"]
 var uid_suffix := ""
 var joined_date := ""
 ## Thống kê tích luỹ cho tỉ lệ thắng (chỉ tính các ván ghi từ khi có tính năng)
@@ -139,46 +89,67 @@ func _stat(key: String) -> int:
 # ---------------------------------------------------------------------------
 ## entries = mỗi món kèm trạng thái tính sẵn: owned · equipped · locked · price
 func avatars() -> Array[Dictionary]:
-	return _with_state(AVATARS, "avatar")
+	var out: Array[Dictionary] = []
+	for data in _avatars:
+		out.append(_state_of(data, "avatar"))
+	return out
 
 
 func frames() -> Array[Dictionary]:
-	return _with_state(FRAMES, "frame")
+	var out: Array[Dictionary] = []
+	for data in _frames:
+		out.append(_state_of(data, "frame"))
+	return out
 
 
 func avatar_entry(avatar_ident: String) -> Dictionary:
-	return _entry(AVATARS, avatar_ident, "avatar")
+	var data := _find_avatar(avatar_ident)
+	return _state_of(data, "avatar") if data != null else {}
 
 
 func frame_entry(frame_ident: String) -> Dictionary:
-	return _entry(FRAMES, frame_ident, "frame")
+	var data := _find_frame(frame_ident)
+	return _state_of(data, "frame") if data != null else {}
 
 
+## Đường dẫn PNG của avatar/viền — UI tự `load()` (giữ API chuỗi như trước)
 func icon_of(kind: String, ident: String) -> String:
-	if kind == "avatar":
-		return str(avatar_entry(ident).get("icon", AVATAR_DIR + "avatar-baby-child-kid.png"))
-	return str(frame_entry(ident).get("icon", FRAME_DIR + "frame_gear_gold.png"))
+	var data: Resource = _find_avatar(ident) if kind == "avatar" else _find_frame(ident)
+	if data == null or data.get("icon") == null:
+		if kind == "avatar":
+			return AVATAR_DIR + "avatar-baby-child-kid.png"
+		return FRAME_DIR + "frame_default.png"
+	var icon := data.get("icon") as Texture2D
+	return icon.resource_path
 
 
 func owns_avatar(avatar_ident: String) -> bool:
-	return owned_avatars.has(avatar_ident) or bool(_entry(AVATARS, avatar_ident, "avatar").get("_free", false))
+	var data := _find_avatar(avatar_ident)
+	if data != null and data.price <= 0:
+		return true
+	return owned_avatars.has(avatar_ident)
 
 
 func owns_frame(frame_ident: String) -> bool:
-	return owned_frames.has(frame_ident) or bool(_entry(FRAMES, frame_ident, "frame").get("_free", false))
+	var data := _find_frame(frame_ident)
+	if data != null and data.price <= 0:
+		return true
+	return owned_frames.has(frame_ident)
 
 
 ## Đủ điều kiện mở khoá theo mốc (dungeon/streak/AP)? Trả {} nếu không bị khoá mốc.
 func lock_of(kind: String, ident: String) -> Dictionary:
-	var catalog: Array = AVATARS if kind == "avatar" else FRAMES
-	return _lock_from_raw(_raw_entry(catalog, ident))
+	return _lock_from(_find_avatar(ident) if kind == "avatar" else _find_frame(ident))
 
 
-func _lock_from_raw(raw: Dictionary) -> Dictionary:
-	var stat_key := str(raw.get("lock_stat", ""))
+## Khoá mốc của 1 món (rỗng = không khoá mốc; ĐÃ ĐẠT mốc ⇒ cũng trả rỗng = mở khoá)
+func _lock_from(data: Resource) -> Dictionary:
+	if data == null:
+		return {}
+	var stat_key := str(data.get("lock_stat"))
 	if stat_key.is_empty():
 		return {}
-	var need := int(raw.get("lock_value", 0))
+	var need := int(data.get("lock_value"))
 	if _stat(stat_key) >= need:
 		return {}
 	return {"stat": stat_key, "value": need}
@@ -202,21 +173,22 @@ func equip_frame(frame_ident: String) -> bool:
 
 ## Mua avatar bằng Xu mực (đủ tiền + chưa sở hữu + không khoá mốc)
 func buy_avatar(avatar_ident: String) -> bool:
-	return _buy(AVATARS, owned_avatars, avatar_ident, "avatar")
+	return _buy(_find_avatar(avatar_ident), owned_avatars)
 
 
 func buy_frame(frame_ident: String) -> bool:
-	return _buy(FRAMES, owned_frames, frame_ident, "frame")
+	return _buy(_find_frame(frame_ident), owned_frames)
 
 
-func _buy(catalog: Array, owned_list: Array[String], ident: String, _kind: String) -> bool:
-	var entry := _entry(catalog, ident, "")
-	if entry.is_empty():
+## Mua 1 món trong catalog — Xu mực lấy từ kho danh hiệu (ArchivementManager.spend_coins)
+func _buy(data: Resource, owned_list: Array[String]) -> bool:
+	if data == null:
 		return false
-	var price := int(entry.get("price", 0))
+	var ident := str(data.get("id"))
+	var price := int(data.get("price"))
 	if price <= 0 and owned_list.has(ident):
 		return false
-	if not lock_of(_kind_from_catalog(catalog), ident).is_empty():
+	if not _lock_from(data).is_empty():
 		return false
 	var wallets := _achievements()
 	if wallets == null or not wallets.has_method("spend_coins"):
@@ -228,10 +200,6 @@ func _buy(catalog: Array, owned_list: Array[String], ident: String, _kind: Strin
 	owned_list.append(ident)
 	_notify()
 	return true
-
-
-func _kind_from_catalog(catalog: Array) -> String:
-	return "avatar" if catalog == AVATARS else "frame"
 
 
 func set_display_name(new_name: String) -> bool:
@@ -296,12 +264,15 @@ func exp_level_step() -> int:
 	return EXP_PER_LEVEL
 
 
+## Bậc danh hiệu theo cấp hồ sơ — catalog `resources/profiler/titles/` (sắp theo min_level)
 func title_key() -> String:
+	if _titles.is_empty():
+		return "STR_PROFILE_TIER_1"
 	var lv := level()
-	var key := str(TITLE_TIERS[0]["key"])
-	for tier in TITLE_TIERS:
-		if lv >= int(tier["min_level"]):
-			key = str(tier["key"])
+	var key := str(_titles[0].get("name_key"))
+	for tier in _titles:
+		if lv >= int(tier.get("min_level")):
+			key = str(tier.get("name_key"))
 	return key
 
 
@@ -404,7 +375,7 @@ func reset_progress() -> void:
 	avatar_id = DEFAULT_AVATAR
 	frame_id = DEFAULT_FRAME
 	owned_avatars = ["avatar_baby_child_kid", "avatar_boy_kid", "avatar_child_girl"]
-	owned_frames = ["frame_gear", "frame_laurel", "frame_ink"]
+	owned_frames = ["frame_default", "frame_laurel", "frame_bronze"]
 	runs_played = 0
 	runs_won = 0
 	recent = []
@@ -416,25 +387,119 @@ func reset_progress() -> void:
 
 
 func _ready() -> void:
+	_load_catalog()
 	_ensure_identity()
 	_ensure_valid_selection()
+
+
+## Nạp lại danh mục từ .tres (dùng cho test hoặc khi thêm file lúc chạy)
+func reload_catalog() -> void:
+	_load_catalog()
+	_ensure_valid_selection()
+	profile_changed.emit()
+
+
+## Quét 3 thư mục resources/profiler/ (giống ArchivementManager quét danh hiệu)
+func _load_catalog() -> void:
+	_load_avatars()
+	_load_frames()
+	_load_titles()
+
+
+func _load_avatars() -> void:
+	_avatars.clear()
+	for resource_name in _tres_files(AVATAR_RES_DIR):
+		var data := load(AVATAR_RES_DIR + resource_name) as AvatarData
+		if data == null or not data.is_valid():
+			push_warning("[PlayerProfileManager] Bo qua avatar thieu du lieu: %s" % resource_name)
+			continue
+		if _find_avatar(data.id) != null:
+			push_warning("[PlayerProfileManager] Trung id avatar '%s' (%s) - bo qua" % [data.id, resource_name])
+			continue
+		_avatars.append(data)
+	_avatars.sort_custom(_entry_before)
+
+
+func _load_frames() -> void:
+	_frames.clear()
+	for resource_name in _tres_files(FRAME_RES_DIR):
+		var data := load(FRAME_RES_DIR + resource_name) as FrameData
+		if data == null or not data.is_valid():
+			push_warning("[PlayerProfileManager] Bo qua vien khung thieu du lieu: %s" % resource_name)
+			continue
+		if _find_frame(data.id) != null:
+			push_warning("[PlayerProfileManager] Trung id vien khung '%s' (%s) - bo qua" % [data.id, resource_name])
+			continue
+		_frames.append(data)
+	_frames.sort_custom(_entry_before)
+
+
+func _load_titles() -> void:
+	_titles.clear()
+	for resource_name in _tres_files(TITLE_RES_DIR):
+		var data := load(TITLE_RES_DIR + resource_name) as ProfilerTitleData
+		if data == null or not data.is_valid():
+			push_warning("[PlayerProfileManager] Bo qua bac danh hieu thieu du lieu: %s" % resource_name)
+			continue
+		_titles.append(data)
+	_titles.sort_custom(_title_before)
+
+
+## File .tres trong 1 thư mục danh mục. Bản EXPORT chuyển .tres sang binary kèm
+## file "<ten>.tres.remap" -> bỏ đuôi .remap mới thấy đúng tên tài nguyên.
+func _tres_files(dir_path: String) -> Array[String]:
+	var out: Array[String] = []
+	var dir := DirAccess.open(dir_path)
+	if dir == null:
+		push_warning("[PlayerProfileManager] Khong mo duoc thu muc %s" % dir_path)
+		return out
+	for file_name in dir.get_files():
+		var base := file_name.trim_suffix(".remap")
+		if base.ends_with(".tres") and not out.has(base):
+			out.append(base)
+	out.sort()
+	return out
+
+
+## Thứ tự hiển thị: món tặng sẵn (0) → bán bằng Xu (1, giá tăng dần) → khoá mốc (2)
+func _entry_before(a: Resource, b: Resource) -> bool:
+	var group_a := _sort_group(a)
+	var group_b := _sort_group(b)
+	if group_a != group_b:
+		return group_a < group_b
+	var price_a := int(a.get("price"))
+	var price_b := int(b.get("price"))
+	if price_a != price_b:
+		return price_a < price_b
+	return str(a.get("id")) < str(b.get("id"))
+
+
+func _sort_group(data: Resource) -> int:
+	if not str(data.get("lock_stat")).is_empty():
+		return 2
+	return 1 if int(data.get("price")) > 0 else 0
+
+
+func _title_before(a: Resource, b: Resource) -> bool:
+	return int(a.get("min_level")) < int(b.get("min_level"))
 
 
 ## Save cũ có thể còn id avatar/viền đã bị GỠ khỏi catalog (đổi bộ art mới) —
 ## trả về mặc định + dọn danh sách sở hữu cho khớp catalog hiện tại.
 func _ensure_valid_selection() -> void:
-	if _raw_entry(AVATARS, avatar_id).is_empty():
+	if _find_avatar(avatar_id) == null:
 		avatar_id = DEFAULT_AVATAR
-	if _raw_entry(FRAMES, frame_id).is_empty():
+	if _find_frame(frame_id) == null:
 		frame_id = DEFAULT_FRAME
-	owned_avatars = _prune_owned(AVATARS, owned_avatars)
-	owned_frames = _prune_owned(FRAMES, owned_frames)
+	owned_avatars = _prune_owned(true, owned_avatars)
+	owned_frames = _prune_owned(false, owned_frames)
 
 
-func _prune_owned(catalog: Array, owned_list: Array[String]) -> Array[String]:
+func _prune_owned(for_avatars: bool, owned_list: Array[String]) -> Array[String]:
 	var out: Array[String] = []
 	for ident in owned_list:
-		if not _raw_entry(catalog, ident).is_empty() and not out.has(ident):
+		var exists := _find_avatar(ident) != null if for_avatars else _find_frame(ident) != null
+		if exists and not out.has(ident):
 			out.append(ident)
 	return out
 
@@ -455,44 +520,43 @@ func _notify() -> void:
 # ---------------------------------------------------------------------------
 # Nội bộ
 # ---------------------------------------------------------------------------
-func _with_state(catalog: Array, kind: String) -> Array[Dictionary]:
-	var out: Array[Dictionary] = []
-	for raw in catalog:
-		var entry := _compute_state(raw, kind)
-		out.append(entry)
-	return out
+func _find_avatar(ident: String) -> AvatarData:
+	for data in _avatars:
+		if data.id == ident:
+			return data
+	return null
 
 
-## Entry THÔ trong catalog (không kèm trạng thái) — tránh đệ quy khi tính khoá
-func _raw_entry(catalog: Array, ident: String) -> Dictionary:
-	for raw in catalog:
-		if str(raw.get("id", "")) == ident:
-			return raw
-	return {}
+func _find_frame(ident: String) -> FrameData:
+	for data in _frames:
+		if data.id == ident:
+			return data
+	return null
 
 
-func _entry(catalog: Array, ident: String, kind: String) -> Dictionary:
-	var raw := _raw_entry(catalog, ident)
-	if raw.is_empty() or kind.is_empty():
-		return raw
-	return _compute_state(raw, kind)
-
-
-func _compute_state(raw: Dictionary, kind: String) -> Dictionary:
-	var entry := raw.duplicate(true)
-	var ident := str(entry.get("id", ""))
+## 1 món kèm trạng thái tính sẵn cho UI: owned · equipped · locked · price · icon (đường dẫn)
+func _state_of(data: Resource, kind: String) -> Dictionary:
+	if data == null:
+		return {}
+	var ident := str(data.get("id"))
 	var owned_list := owned_avatars if kind == "avatar" else owned_frames
 	var equipped := avatar_id if kind == "avatar" else frame_id
-	var price := int(entry.get("price", 0))
-	var lock := _lock_from_raw(raw)
-	entry["kind"] = kind
-	entry["_free"] = price <= 0
-	entry["equipped"] = ident == equipped
-	entry["owned"] = owned_list.has(ident) or price <= 0
-	entry["locked"] = not lock.is_empty()
-	entry["lock_stat"] = lock.get("stat", "")
-	entry["lock_value"] = int(lock.get("value", 0))
-	return entry
+	var price := int(data.get("price"))
+	var lock := _lock_from(data)
+	var icon := data.get("icon") as Texture2D
+	return {
+		"kind": kind,
+		"id": ident,
+		"name_key": str(data.get("name_key")),
+		"icon": icon.resource_path if icon != null else "",
+		"price": price,
+		"_free": price <= 0,
+		"equipped": ident == equipped,
+		"owned": owned_list.has(ident) or price <= 0,
+		"locked": not lock.is_empty(),
+		"lock_stat": str(lock.get("stat", "")),
+		"lock_value": int(lock.get("value", 0)),
+	}
 
 
 func _to_string_array(value: Variant) -> Array[String]:

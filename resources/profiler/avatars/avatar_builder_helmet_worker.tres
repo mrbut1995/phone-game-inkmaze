@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-builder-helmet-worker.png" id="1_2rqxf"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_n4dyg"]
+
+[resource]
+script = ExtResource("2_n4dyg")
+id = "avatar_builder_helmet_worker"
+name_key = "STR_AVATAR_BUILDER_HELMET_WORKER"
+icon = ExtResource("1_2rqxf")
+price = 0
+lock_stat = "daily_streak"
+lock_value = 30

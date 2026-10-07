@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_sun.png" id="1_kl4np"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_mearb"]
+
+[resource]
+script = ExtResource("2_mearb")
+id = "frame_sun"
+name_key = "STR_FRAME_SUN"
+icon = ExtResource("1_kl4np")
+price = 1000
+lock_stat = ""
+lock_value = 0

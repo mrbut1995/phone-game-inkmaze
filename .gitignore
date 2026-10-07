@@ -14,3 +14,5 @@ tmp_*
 
 # PNG sinh bởi tools/svg_to_png.py (chạy tool để tạo lại)
 assets/images-png
+assets/images-landscape-png
+assets/images-used

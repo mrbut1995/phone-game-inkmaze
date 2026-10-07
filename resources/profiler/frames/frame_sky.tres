@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_sky.png" id="1_rq43x"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_rkhq7"]
+
+[resource]
+script = ExtResource("2_rkhq7")
+id = "frame_sky"
+name_key = "STR_FRAME_SKY"
+icon = ExtResource("1_rq43x")
+price = 600
+lock_stat = ""
+lock_value = 0

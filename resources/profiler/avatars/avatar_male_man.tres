@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-male-man.png" id="1_77wi6"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_082uj"]
+
+[resource]
+script = ExtResource("2_082uj")
+id = "avatar_male_man"
+name_key = "STR_AVATAR_MALE_MAN"
+icon = ExtResource("1_77wi6")
+price = 800
+lock_stat = ""
+lock_value = 0

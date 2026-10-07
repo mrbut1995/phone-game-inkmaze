@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-dead-monster.png" id="1_rbucq"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_yotxs"]
+
+[resource]
+script = ExtResource("2_yotxs")
+id = "avatar_dead_monster"
+name_key = "STR_AVATAR_DEAD_MONSTER"
+icon = ExtResource("1_rbucq")
+price = 800
+lock_stat = ""
+lock_value = 0

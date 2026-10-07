@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_halloween.png" id="1_uj2ph"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_iuhxs"]
+
+[resource]
+script = ExtResource("2_iuhxs")
+id = "frame_halloween"
+name_key = "STR_FRAME_HALLOWEEN"
+icon = ExtResource("1_uj2ph")
+price = 800
+lock_stat = ""
+lock_value = 0

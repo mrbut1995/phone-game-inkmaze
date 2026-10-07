@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-alien-avatar-space.png" id="1_srqlw"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_2yv8d"]
+
+[resource]
+script = ExtResource("2_2yv8d")
+id = "avatar_alien_avatar_space"
+name_key = "STR_AVATAR_ALIEN_AVATAR_SPACE"
+icon = ExtResource("1_srqlw")
+price = 600
+lock_stat = ""
+lock_value = 0

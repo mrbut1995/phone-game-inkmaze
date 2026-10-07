@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_chinese_new_year.png" id="1_mc61e"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_0ah22"]
+
+[resource]
+script = ExtResource("2_0ah22")
+id = "frame_chinese_new_year"
+name_key = "STR_FRAME_CHINESE_NEW_YEAR"
+icon = ExtResource("1_mc61e")
+price = 800
+lock_stat = ""
+lock_value = 0

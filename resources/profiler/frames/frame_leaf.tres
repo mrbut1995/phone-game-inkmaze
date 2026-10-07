@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_leaf.png" id="1_8u62x"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_7wrlg"]
+
+[resource]
+script = ExtResource("2_7wrlg")
+id = "frame_leaf"
+name_key = "STR_FRAME_LEAF"
+icon = ExtResource("1_8u62x")
+price = 0
+lock_stat = "points"
+lock_value = 700

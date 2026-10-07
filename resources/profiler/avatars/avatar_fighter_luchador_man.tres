@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-fighter-luchador-man.png" id="1_8hd8r"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_7kvmf"]
+
+[resource]
+script = ExtResource("2_7kvmf")
+id = "avatar_fighter_luchador_man"
+name_key = "STR_AVATAR_FIGHTER_LUCHADOR_MAN"
+icon = ExtResource("1_8hd8r")
+price = 0
+lock_stat = "dungeon_best_floor"
+lock_value = 50

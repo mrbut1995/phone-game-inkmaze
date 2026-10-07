@@ -1,13 +1,14 @@
 extends SceneTree
 ## ============================================================================
 ## Test Case: MÀN CHỌN MÀN — BẢN ĐỒ ROAD MAP (thay lưới thẻ phân trang, 2026-10)
-##   · Mỗi màn của chương = 1 nút trên bản đồ, nối nhau bằng cung; màn 1 ở DƯỚI CÙNG.
+##   · Mỗi màn của chương = 1 nút trên bản đồ, nối nhau bằng MỘT đường LIỀN MẠCH
+##     (mọi nút nằm đúng trên đường); màn 1 ở DƯỚI CÙNG.
+##   · Nhấn giữ nút: số màn + hàng sao trôi theo nút (không "float"), thả ra về chỗ.
 ##   · Trạng thái nút: KHOÁ / ĐÃ XONG / MÀN NÊN CHƠI TIẾP (CURRENT) / BỎ QUA / thường.
 ##   · Nút màn + đường nối sinh trong `Tracks/Items`; cờ đích + mũi chỉ là node CÓ SẴN
 ##     trong `level_map.tscn` (script chỉ canh vị trí).
 ##   · Kéo dọc để đi trên bản đồ; kéo ở header/banner (ngoài khung bản đồ) KHÔNG cuộn.
 ##   · Mỗi lần cuộn, bản đồ phát tiến độ → nền giấy parallax trượt theo.
-##   · Bố cục NGANG: nút to hơn, khoảng cách + zigzag rộng hơn.
 ## Dùng thư mục user://test_levels/ tạm nên KHÔNG đụng resources/levels thật.
 ## ============================================================================
 
@@ -55,9 +56,11 @@ func _init() -> void:
 	map.build(_ids(TEST_IDS), stars, UNLOCKED, 3)
 	await process_frame
 	failures += _check_structure(map)
+	failures += _check_road(map)
 	failures += _check_states(map)
 	failures += _check_decor(map)
 	failures += _check_tap(map)
+	failures += await _check_press_follow(map)
 	failures += await _check_scroll_to(map)
 
 	# ------------------------------------------------- B. Màn chọn màn thật
@@ -69,7 +72,6 @@ func _init() -> void:
 	failures += _check_screen_wiring(scene)
 	failures += await _check_drag_inside_outside(scene)
 	failures += await _check_parallax(scene)
-	failures += await _check_landscape(scene)
 
 	# ---------------------------------------------------------------- Dọn dẹp
 	stage.queue_free()
@@ -85,7 +87,7 @@ func _init() -> void:
 		print("\n[FAILED] %d loi o ban do man choi.\n" % failures)
 		quit(1)
 		return
-	print("\n[SUCCESS] Ban do man choi dung: nut/trang thai/cuon/parallax/ngang.\n")
+	print("\n[SUCCESS] Ban do man choi dung: nut/trang thai/duong noi lien mach/nhan giu/cuon/parallax.\n")
 	quit(0)
 
 
@@ -131,8 +133,8 @@ func _check_structure(map: LevelMap) -> int:
 				% [first.position.x, second.position.x, center_x])
 			failures += 1
 
-	# Items = nút màn + đường nối (n + n-1)
-	var expected_items := TEST_IDS + TEST_IDS - 1
+	# Items = nút màn + MỘT đường nối liền mạch (n + 1)
+	var expected_items := TEST_IDS + 1
 	if map.items == null or map.items.get_child_count() != expected_items:
 		print("[FAIL] Items phai co %d con (dang %d)"
 			% [expected_items, map.items.get_child_count() if map.items != null else -1])
@@ -141,6 +143,39 @@ func _check_structure(map: LevelMap) -> int:
 	if failures == 0:
 		print("[CHECK] Ban do: %d nut, man 1 duoi cung, leo deu len tren, zigzag dung, Items = %d con."
 			% [TEST_IDS, expected_items])
+	return failures
+
+
+## Đường nối: ĐÚNG MỘT path uốn liền mạch qua tâm TẤT CẢ các nút
+func _check_road(map: LevelMap) -> int:
+	var failures := 0
+	var road: LevelMapPath = null
+	var road_count := 0
+	for child in map.items.get_children():
+		if child is LevelMapPath:
+			road_count += 1
+			road = child as LevelMapPath
+	if road_count != 1:
+		print("[FAIL] Phai co DUNG 1 duong noi lien mach (dang %d)" % road_count)
+		return failures + 1
+	if road.path_node == null or road.path_node.curve == null:
+		print("[FAIL] Duong noi phai giu curve tron ven trong `Path`")
+		return failures + 1
+	var curve := road.path_node.curve
+	if curve.point_count != map.node_count():
+		print("[FAIL] Curve phai di qua du %d nut (dang %d diem)"
+			% [map.node_count(), curve.point_count])
+		failures += 1
+	for level_id in range(1, TEST_IDS + 1):
+		var node := map.node_for(level_id)
+		if node == null:
+			continue
+		if curve.get_closest_point(node.position).distance_to(node.position) > 0.5:
+			print("[FAIL] Nut man %d phai nam TREN duong noi" % level_id)
+			failures += 1
+			break
+	if failures == 0:
+		print("[CHECK] Duong noi lien mach: 1 path qua %d nut, moi nut nam tren duong." % TEST_IDS)
 	return failures
 
 
@@ -212,6 +247,43 @@ func _check_tap(map: LevelMap) -> int:
 		failures += 1
 	if failures == 0:
 		print("[CHECK] Bam nut: man mo phat signal, man khoa im lang.")
+	return failures
+
+
+## Nhấn GIỮ nút: số màn + hàng sao phải trôi theo nút (không float); thả ra về chỗ cũ
+func _check_press_follow(map: LevelMap) -> int:
+	var failures := 0
+	map.scroll_to(5, false)
+	await process_frame
+	var node := map.node_for(5)
+	if node == null:
+		print("[FAIL] Thieu nut man 5 de thu nhan giu")
+		return failures + 1
+	var pos: Vector2 = map.tracks.get_global_transform() * node.position
+	var stars_base := node.stars_box.position.y
+	var label_base := node.label.position.y
+	_push_motion(pos)
+	_push_button(pos, true)
+	await create_timer(0.2).timeout
+	var stars_down := node.stars_box.position.y - stars_base
+	var label_down := node.label.position.y - label_base
+	if stars_down < 1.5 or label_down < 1.5:
+		print("[FAIL] Nhan giu: sao + so phai chim 2px theo nut (sao %.2f, so %.2f)"
+			% [stars_down, label_down])
+		failures += 1
+	if absf(stars_down - label_down) > 0.1:
+		print("[FAIL] Sao va so phai chim CUNG mot do (%.2f vs %.2f)" % [stars_down, label_down])
+		failures += 1
+	# Thả chuột + rời con trỏ đi chỗ khác -> nội dung trôi về vị trí gốc
+	_push_button(pos, false)
+	_push_motion(Vector2(2, 2))
+	await create_timer(0.2).timeout
+	stars_down = node.stars_box.position.y - stars_base
+	if absf(stars_down) > 0.1:
+		print("[FAIL] Tha nut: sao phai ve dung cho cu (%.2f)" % stars_down)
+		failures += 1
+	if failures == 0:
+		print("[CHECK] Nhan giu nut: sao + so chim theo nut roi ve dung cho.")
 	return failures
 
 
@@ -323,17 +395,25 @@ func _check_real_click(scene: LevelScenes) -> int:
 ## LƯU Ý: `push_input(ev, true)` = toạ độ theo CANVAS (mặc định là toạ độ CỬA SỔ nên bị
 ## chia theo tỉ lệ stretch ⇒ cú bấm lệch chỗ).
 func _click_at(pos: Vector2) -> void:
+	_push_motion(pos)
+	for pressed in [true, false]:
+		_push_button(pos, pressed)
+
+
+func _push_motion(pos: Vector2) -> void:
 	var motion := InputEventMouseMotion.new()
 	motion.position = pos
 	motion.global_position = pos
 	root.push_input(motion, true)
-	for pressed in [true, false]:
-		var click := InputEventMouseButton.new()
-		click.button_index = MOUSE_BUTTON_LEFT
-		click.pressed = pressed
-		click.position = pos
-		click.global_position = pos
-		root.push_input(click, true)
+
+
+func _push_button(pos: Vector2, pressed: bool) -> void:
+	var click := InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.pressed = pressed
+	click.position = pos
+	click.global_position = pos
+	root.push_input(click, true)
 
 
 ## Vị trí Y của nút trong khung bản đồ (đã tính độ cuộn hiện tại)
@@ -400,42 +480,6 @@ func _check_parallax(scene: LevelScenes) -> int:
 	if failures == 0:
 		print("[CHECK] Parallax: 3 lop truot theo ban do, lop gan dung ti le %.2f (far %.1f · near %.1f)."
 			% [near_ratio, far_high, near_high])
-	return failures
-
-
-func _check_landscape(scene: LevelScenes) -> int:
-	var failures := 0
-	root.size = Vector2i(2000, 920)
-	await create_timer(0.6).timeout      # đợi dựng lại bản đồ theo khung ngang
-	var map: LevelMap = scene.map
-	if not map.is_wide():
-		print("[FAIL] Khung 2000x920 phai la bo cuc NGANG")
-		return failures + 1
-	if map.node_count() != TEST_IDS:
-		print("[FAIL] Ngang: so nut phai giu nguyen %d (dang %d)" % [TEST_IDS, map.node_count()])
-		failures += 1
-	var node := map.node_for(1)
-	var next_node := map.node_for(2)
-	if node == null or next_node == null:
-		print("[FAIL] Ngang: thieu nut man")
-		return failures + 1
-	var scale_x := node.scale.x
-	var spacing := node.position.y - next_node.position.y
-	var offset_x := absf(node.position.x - 2000.0 * 0.5)
-	if scale_x <= 1.0:
-		print("[FAIL] Ngang: nut phai TO hon ban doc (scale = %.2f)" % scale_x)
-		failures += 1
-	if spacing <= 140.0:
-		print("[FAIL] Ngang: khoang cach nut phai rong hon ban doc (%.1f)" % spacing)
-		failures += 1
-	if offset_x <= 70.0:
-		print("[FAIL] Ngang: zigzag phai rong hon ban doc (x = %.1f)" % node.position.x)
-		failures += 1
-	root.size = Vector2i(1080, 1920)
-	await create_timer(0.4).timeout
-	if failures == 0:
-		print("[CHECK] Ngang: nut to hon (scale %.2f), khoang cach %.0f, zigzag rong, du %d nut."
-			% [scale_x, spacing, TEST_IDS])
 	return failures
 
 

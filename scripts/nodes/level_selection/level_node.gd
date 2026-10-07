@@ -16,6 +16,8 @@ extends Node2D
 ##   DONE    → hiện số + sao đã đạt
 ##   SKIPPED → ẩn số (chỉ còn sao trống) để nhấc người chơi quay lại
 ##   NORMAL  → nút thường
+## Nhấn giữ / rê chuột: art nút tự vẽ độ lệch (pressed chìm, hover nâng) nên số màn +
+## hàng sao + ổ khoá + vòng halo được TRÔI THEO cùng độ lệch — nội dung dính vào nút.
 ## ============================================================================
 
 signal pressed(level_id: int)
@@ -124,3 +126,66 @@ func _on_button_pressed() -> void:
 func _on_anim_finished(anim_name: StringName) -> void:
 	if anim_name == &"press" and state == State.CURRENT:
 		play_pulse()
+
+
+# ---------------------------------------------------------------------------
+# Nội dung trôi theo nút (không "float" khi nhấn / rê)
+# ---------------------------------------------------------------------------
+## Art nút vẽ sẵn độ lệch: pressed chìm 4px thiết kế = 2px hiển thị; hover nâng 2px
+## thiết kế = 1px. Bù đúng chừng đó cho các node nội dung (số màn · hàng sao · ổ khoá ·
+## vòng halo) để chúng dính chặt vào mặt nút.
+const CONTENT_PRESS_SINK := 2.0
+const CONTENT_HOVER_LIFT := -1.0
+const CONTENT_FOLLOW_SEC := 0.08
+
+var _button_down := false
+var _button_hovered := false
+var _content_base: Dictionary = {}
+var _content_tween: Tween = null
+
+
+## `Body/Button` phát khi trạng thái nhấn giữ đổi (dây nối khai trong .tscn)
+func _on_button_press_changed(is_down: bool) -> void:
+	_button_down = is_down
+	_follow_button_art()
+
+
+## `Body/Button` phát khi trạng thái rê chuột đổi (dây nối khai trong .tscn)
+func _on_button_hover_changed(is_hovered: bool) -> void:
+	_button_hovered = is_hovered
+	_follow_button_art()
+
+
+## Trôi các node nội dung theo đúng trạng thái hiển thị của art nút (pressed > hover > thường)
+func _follow_button_art() -> void:
+	var target := 0.0
+	if _button_down:
+		target = CONTENT_PRESS_SINK
+	elif _button_hovered:
+		target = CONTENT_HOVER_LIFT
+	if _content_base.is_empty():
+		for node in _content_nodes():
+			_content_base[node] = node.get("position")
+	if _content_tween != null and _content_tween.is_valid():
+		_content_tween.kill()
+	if not is_inside_tree():
+		return
+	_content_tween = create_tween().set_parallel(true)
+	_content_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	for node in _content_nodes():
+		var base: Vector2 = _content_base[node]
+		_content_tween.tween_property(node, "position", base + Vector2(0.0, target), CONTENT_FOLLOW_SEC)
+
+
+## Các node là "nội dung mặt nút" (mọi thứ TRỪ art nút): halo · số · hàng sao · ổ khoá
+func _content_nodes() -> Array[Node]:
+	var out: Array[Node] = []
+	if halo != null:
+		out.append(halo)
+	if label != null:
+		out.append(label)
+	if stars_box != null:
+		out.append(stars_box)
+	if lock_icon != null:
+		out.append(lock_icon)
+	return out

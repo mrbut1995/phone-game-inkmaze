@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-afro-boy-child.png" id="1_irnrr"]
+[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_pmouv"]
+
+[resource]
+script = ExtResource("2_pmouv")
+id = "avatar_afro_boy_child"
+name_key = "STR_AVATAR_AFRO_BOY_CHILD"
+icon = ExtResource("1_irnrr")
+price = 400
+lock_stat = ""
+lock_value = 0

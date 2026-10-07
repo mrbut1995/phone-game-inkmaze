@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_night.png" id="1_c2khk"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_jdtnr"]
+
+[resource]
+script = ExtResource("2_jdtnr")
+id = "frame_night"
+name_key = "STR_FRAME_NIGHT"
+icon = ExtResource("1_c2khk")
+price = 0
+lock_stat = "daily_streak"
+lock_value = 30

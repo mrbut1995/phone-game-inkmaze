@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_spike.png" id="1_xm8qv"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_peuau"]
+
+[resource]
+script = ExtResource("2_peuau")
+id = "frame_spike"
+name_key = "STR_FRAME_SPIKE"
+icon = ExtResource("1_xm8qv")
+price = 0
+lock_stat = "dungeon_best_floor"
+lock_value = 50

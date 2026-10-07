@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_bronze.png" id="1_67l02"]
+[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_oa5xj"]
+
+[resource]
+script = ExtResource("2_oa5xj")
+id = "frame_bronze"
+name_key = "STR_FRAME_BRONZE"
+icon = ExtResource("1_67l02")
+price = 0
+lock_stat = ""
+lock_value = 0

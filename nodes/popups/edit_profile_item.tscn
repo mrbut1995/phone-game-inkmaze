@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://d4bwxfevawdsm" path="res://assets/images-png/profiler/card_selected.png" id="4_sel"]
 [ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="5_disc"]
 [ext_resource type="Texture2D" uid="uid://3la8khi18c3h" path="res://assets/images-png/profiler/check_badge.png" id="6_check"]
-[ext_resource type="Texture2D" uid="uid://d1kaxcikq5x34" path="res://assets/images-png/frames/frame_gear_gold.png" id="7_frame"]
+[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_default.png" id="7_frame"]
 [ext_resource type="Texture2D" uid="uid://de1fy87ucyxya" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="8_avatar"]
 [ext_resource type="Texture2D" uid="uid://cw3gi00w0cnpu" path="res://assets/images-png/icons/icon_lock.png" id="9_lock"]
 [ext_resource type="Texture2D" uid="uid://dg4xvt153bci" path="res://assets/images-png/profiler/chip_gold.png" id="10_chip"]
