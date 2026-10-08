@@ -18,6 +18,8 @@ signal pause_toggled(is_paused: bool)
 signal revive_requested
 ## Popup thắng Daily: người chơi bấm "VỀ DAILY" -> quay lại màn Daily
 signal daily_requested
+## Popup thắng THỬ THÁCH: bấm "TRỞ VỀ" -> quay lại MÀN TRƯỚC ĐÓ (Daily / Chọn màn / Debug)
+signal back_requested
 ## Pha GHI NHỚ (Blind Memory) đếm ngược xong -> GameController ẩn tường và chạy đồng hồ
 signal memorize_finished
 
@@ -162,7 +164,10 @@ func show_floor_complete(result: Dictionary) -> void:
 	if popup == null:
 		return
 
-	if popup.has_signal("next_requested"):
+	# Popup có nút "TRỞ VỀ" (thắng thử thách) thì ưu tiên — không nối "MÀN KẾ TIẾP" cho nó
+	if popup.has_signal("back_requested"):
+		_connect_once(popup, "back_requested", _emit_back)
+	elif popup.has_signal("next_requested"):
 		_connect_once(popup, "next_requested", _emit_continue)
 	elif popup.has_signal("enter_requested"):
 		_connect_once(popup, "enter_requested", _emit_continue)
@@ -252,6 +257,10 @@ func _emit_home() -> void:
 
 func _emit_daily() -> void:
 	daily_requested.emit()
+
+
+func _emit_back() -> void:
+	back_requested.emit()
 
 
 func _emit_revive() -> void:

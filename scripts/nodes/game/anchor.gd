@@ -6,6 +6,11 @@ extends Control
 ##
 ## Board chỉ gọi method (`set_anchor_size` · `play_entrance` · `set_selected` · `pulse`) —
 ## neo tự lo phần trình bày (tâm xoay · hiệu ứng) nên bên ngoài KHÔNG cần chạm node con.
+##
+## LƯU Ý SỰ KIỆN CHUỘT: neo KHÔNG được "ăn" nhấn/kéo — Board phải nhận trọn cú NHẤN + KÉO
+## để vẽ đường gợi ý (hint line) nối 2 neo rồi tạo Tường Nghi Ngờ; `mouse_filter = 2` (IGNORE)
+## khai SẴN trong `anchor.tscn` cho CẢ root lẫn TextureButton (ô Cell cũng nhường y hệt).
+## MỌI tham số (node · hiệu ứng · màu) chỉnh TRONG `anchor.tscn` — script chỉ `@export`.
 ## ============================================================================
 
 signal anchor_tapped(anchor_id: int)
@@ -15,19 +20,20 @@ signal anchor_tapped(anchor_id: int)
 @export var SELECTED_MODULATE := Color(1.8, 1.4, 0.4, 1.0)
 @export var NORMAL_MODULATE := Color(1.0, 1.0, 1.0, 1.0)
 
-@onready var _button: TextureButton = $TextureButton
+## Node binding: khai `node_paths` + NodePath trong `anchor.tscn`
+@export var button: TextureButton = null
 ## AnimationPlayer của `anchor.tscn` — các dáng nở/chọn/nhấn khai trong scene,
 ## code chỉ set pose đầu + gọi play (kèm fallback tween nếu scene thiếu).
-@onready var _anim: AnimationPlayer = get_node_or_null("AnimationPlayer")
+@export var anim: AnimationPlayer = null
 ## Hẹn giờ so le khi neo hiện ra — Timer khai trong `anchor.tscn` (dây `timeout` cũng ở đó);
 ## code chỉ đặt `wait_time` (theo toạ độ góc do Board tính) rồi `start()`.
-@onready var _entrance_timer: Timer = get_node_or_null("EntranceTimer")
+@export var entrance_timer: Timer = null
 
 
 func _play_anim(anim_name: StringName) -> bool:
-	if _anim == null or not _anim.has_animation(anim_name):
+	if anim == null or not anim.has_animation(anim_name):
 		return false
-	_anim.play(anim_name)
+	anim.play(anim_name)
 	return true
 
 
@@ -41,11 +47,11 @@ func set_anchor_size(side: float) -> void:
 func play_entrance(delay: float) -> void:
 	pivot_offset = size * 0.5
 	scale = Vector2.ZERO
-	if _anim != null and _anim.has_animation(&"entrance"):
+	if anim != null and anim.has_animation(&"entrance"):
 		if delay > 0.0:
-			if _entrance_timer != null:
-				_entrance_timer.wait_time = delay
-				_entrance_timer.start()
+			if entrance_timer != null:
+				entrance_timer.wait_time = delay
+				entrance_timer.start()
 			else:
 				# Fallback khi scene thiếu EntranceTimer (dây thật khai trong anchor.tscn)
 				get_tree().create_timer(delay).timeout.connect(_play_entrance_now)
@@ -63,22 +69,11 @@ func _play_entrance_now() -> void:
 	_play_anim(&"entrance")
 
 
-func _ready() -> void:
-	# Anchor KHÔNG được "ăn" sự kiện chuột/cảm ứng: Board cần nhận trọn cú NHẤN + KÉO
-	# để vẽ đường gợi ý (hint line) nối 2 anchor rồi tạo Tường Nghi Ngờ.
-	# Ô Cell cũng nhường sự kiện y hệt (cell.gd::_ready) nên kéo vẽ đường đi mới chạy được.
-	if _button != null:
-		_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-
 func _on_button_pressed() -> void:
 	anchor_tapped.emit(anchor_id)
 
 
 func set_selected(active: bool) -> void:
-	if _button == null:
-		_button = $TextureButton
 	if active:
 		if _play_anim(&"selected"):
 			return
@@ -90,19 +85,19 @@ func set_selected(active: bool) -> void:
 				return
 		else:
 			scale = Vector2.ONE
-			if _button != null:
-				_button.modulate = NORMAL_MODULATE
+			if button != null:
+				button.modulate = NORMAL_MODULATE
 			return
 	# Fallback khi scene thiếu AnimationPlayer
 	var tw := create_tween().set_parallel(true)
 	if active:
 		tw.tween_property(self, "scale", Vector2(1.35, 1.35), 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		if _button != null:
-			tw.tween_property(_button, "modulate", SELECTED_MODULATE, 0.1)
+		if button != null:
+			tw.tween_property(button, "modulate", SELECTED_MODULATE, 0.1)
 	else:
 		tw.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		if _button != null:
-			tw.tween_property(_button, "modulate", NORMAL_MODULATE, 0.12)
+		if button != null:
+			tw.tween_property(button, "modulate", NORMAL_MODULATE, 0.12)
 
 
 func pulse() -> void:

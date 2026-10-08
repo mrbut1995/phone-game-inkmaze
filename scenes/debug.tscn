@@ -5,13 +5,40 @@
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
 [ext_resource type="PackedScene" path="res://scenes/layout/landscape/debug.tscn" id="L_Landscape"]
 [ext_resource type="PackedScene" path="res://scenes/layout/portrait/debug.tscn" id="L_Portrait"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_normal.png" id="t_row_normal"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_pressed.png" id="t_row_pressed"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_focus.png" id="t_row_focus"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_danger_normal.png" id="t_row_danger_normal"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_danger_pressed.png" id="t_row_danger_pressed"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_danger_focus.png" id="t_row_danger_focus"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/section_chip.png" id="t_chip"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="t_divider"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/checkbox_checked.png" id="t_check_on"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/checkbox_normal.png" id="t_check_off"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/checkbox_pressed.png" id="t_check_press"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/checkbox_focus.png" id="t_check_focus"]
 
 [node name="Control" unique_id=1978794255 instance=ExtResource("1_lgrwq")]
 theme = ExtResource("3_theme")
 script = ExtResource("2_debug")
+ROW_NORMAL = ExtResource("t_row_normal")
+ROW_PRESSED = ExtResource("t_row_pressed")
+ROW_FOCUS = ExtResource("t_row_focus")
+ROW_DANGER_N = ExtResource("t_row_danger_normal")
+ROW_DANGER_P = ExtResource("t_row_danger_pressed")
+ROW_DANGER_F = ExtResource("t_row_danger_focus")
+CHIP = ExtResource("t_chip")
+DIVIDER = ExtResource("t_divider")
+CHECK_ON = ExtResource("t_check_on")
+CHECK_OFF = ExtResource("t_check_off")
+CHECK_PRESS = ExtResource("t_check_press")
+CHECK_FOCUS = ExtResource("t_check_focus")
 
 [node name="Portrait" parent="." index="1" unique_id=1707383291 instance=ExtResource("L_Portrait")]
 layout_mode = 1
 
 [node name="Landscape" parent="." index="2" unique_id=527651484 instance=ExtResource("L_Landscape")]
 layout_mode = 1
+
+[connection signal="pressed" from="Portrait/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Landscape/TopBar/Back" to="." method="_on_back_pressed"]

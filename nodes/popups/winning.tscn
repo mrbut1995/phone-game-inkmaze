@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bc7ui1gwgx8xp" path="res://scripts/nodes/popups/winning.gd" id="2_win"]
 [ext_resource type="Texture2D" uid="uid://ch2gua71qy2tb" path="res://assets/images-png/popups/stamp_done.png" id="3_stamp"]
 [ext_resource type="Texture2D" uid="uid://cphd7lexro270" path="res://assets/images-png/common/star_empty.png" id="4_star_empty"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="5_star_full"]
 [ext_resource type="Texture2D" uid="uid://brgbsehx8a0xh" path="res://assets/images-png/common/btn_paper_secondary_normal.png" id="6_sec_n"]
 [ext_resource type="Texture2D" uid="uid://b1mq05b61vja" path="res://assets/images-png/common/btn_paper_secondary_pressed.png" id="7_sec_p"]
 [ext_resource type="Texture2D" uid="uid://dcxlfihg580ni" path="res://assets/images-png/common/btn_paper_secondary_focus.png" id="8_sec_f"]
@@ -132,6 +133,8 @@ value_score = NodePath("Panel/Content/Information/Total/Value")
 stamp_title = NodePath("Panel/Content/Stamp/StampTitle")
 stamp_sub = NodePath("Panel/Content/Stamp/StampSub")
 fx_anim = NodePath("FxAnim")
+star_full = ExtResource("5_star_full")
+star_empty = ExtResource("4_star_empty")
 close_on_back = false
 close_on_outside = false
 

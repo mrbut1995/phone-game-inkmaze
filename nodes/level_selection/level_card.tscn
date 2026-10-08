@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/level_selector/level_card_unlocked_normal.png" id="2_23rcg"]
 [ext_resource type="Texture2D" path="res://assets/images-png/level_selector/level_card_locked.png" id="3_fwgxh"]
 [ext_resource type="Texture2D" path="res://assets/images-png/common/star_empty.png" id="3_h4clh"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="15_star_full"]
 [ext_resource type="Texture2D" path="res://assets/images-png/level_selector/level_card_unlocked_pressed.png" id="5_press"]
 [ext_resource type="Texture2D" path="res://assets/images-png/level_selector/stamp_done_circle.png" id="6_23rcg"]
 [ext_resource type="Texture2D" path="res://assets/images-png/level_selector/icon_lock_locked.png" id="6_fwgxh"]
@@ -96,6 +97,8 @@ next_card_normal = ExtResource("10_next")
 next_card_pressed = ExtResource("10_next")
 next_seperator = ExtResource("13_sep_next")
 locked_star_art = ExtResource("14_star_locked")
+star_full = ExtResource("15_star_full")
+star_empty = ExtResource("3_h4clh")
 
 [node name="Panel" type="Button" parent="." unique_id=976011487]
 layout_mode = 1

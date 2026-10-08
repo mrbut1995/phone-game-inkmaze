@@ -14,8 +14,9 @@ extends Control
 
 signal pen_changed(pen_id: String)
 
-const STAMP_TRY := preload("res://assets/images-png/shop/btn_tile_normal.png")
-const STAMP_USING := preload("res://assets/images-png/shop/btn_equipped.png")
+## Con dấu thẻ "ĐANG XEM THỬ" — gán trong `doodle_pad.tscn` (ExtResource)
+@export var stamp_try: Texture2D = null
+@export var stamp_using: Texture2D = null
 
 @export var STROKE_WIDTH := 7        ## bề rộng nét vẽ thử (px) trước khi nhân chất liệu
 @export var MIN_POINT_DIST := 2.5       ## khoảng cách tối thiểu để ghi thêm điểm (px)
@@ -23,14 +24,16 @@ const STAMP_USING := preload("res://assets/images-png/shop/btn_equipped.png")
 @export var MAX_STROKES := 16           ## số nét tối đa giữ trên bàn nháp
 @export var DEFAULT_AREA := Vector2(616.0, 150.0)
 
-@onready var _draw_area: Control = $DrawArea
-@onready var _strokes_layer: Control = $DrawArea/Strokes
-@onready var _pen_tip: TextureRect = $DrawArea/PenTip
-@onready var _badge_eyebrow: Label = $Badge/Eyebrow
-@onready var _badge_name: Label = $Badge/Name
-@onready var _badge_icon: TextureRect = $Badge/Icon
-@onready var _stamp: TextureRect = $Badge/Stamp
-@onready var _stamp_label: Label = $Badge/StampLabel
+## Node binding: khai `node_paths` + NodePath trong `doodle_pad.tscn`
+## (`badge_name()` là HÀM công khai nên biến nhãn tên đặt `badge_name_label` cho khỏi trùng tên)
+@export var draw_area: Control = null
+@export var strokes_layer: Control = null
+@export var pen_tip: TextureRect = null
+@export var badge_eyebrow: Label = null
+@export var badge_name_label: Label = null
+@export var badge_icon: TextureRect = null
+@export var stamp: TextureRect = null
+@export var stamp_label: Label = null
 
 var _pen_id := PenSkin.DEFAULT_PEN
 var _strokes: Array[InkStroke] = []
@@ -88,11 +91,11 @@ func draw_test_stroke(p_points: PackedVector2Array) -> InkStroke:
 
 
 func badge_name() -> String:
-	return _badge_name.text if _badge_name != null else ""
+	return badge_name_label.text if badge_name_label != null else ""
 
 
 func stamp_text() -> String:
-	return _stamp_label.text if _stamp_label != null else ""
+	return stamp_label.text if stamp_label != null else ""
 
 
 func is_using_pen() -> bool:
@@ -108,24 +111,24 @@ func blocks_scroll_at(global_pos: Vector2) -> bool:
 # Thẻ ĐANG XEM THỬ
 # ---------------------------------------------------------------------------
 func _refresh_badge() -> void:
-	if _badge_eyebrow != null:
-		_badge_eyebrow.text = tr("STR_SHOP_TRY_BADGE")
-	if _badge_name != null:
-		_badge_name.text = TranslationServer.translate(str(Shop.item(_pen_id).get("name_key", "")))
+	if badge_eyebrow != null:
+		badge_eyebrow.text = tr("STR_SHOP_TRY_BADGE")
+	if badge_name_label != null:
+		badge_name_label.text = TranslationServer.translate(str(Shop.item(_pen_id).get("name_key", "")))
 
 	var cursor_tex := PenSkin.cursor_texture(_pen_id)
-	if _badge_icon != null:
-		_badge_icon.texture = cursor_tex
-	if _pen_tip != null:
-		_pen_tip.texture = cursor_tex
+	if badge_icon != null:
+		badge_icon.texture = cursor_tex
+	if pen_tip != null:
+		pen_tip.texture = cursor_tex
 
 	var using := is_using_pen()
-	if _stamp != null:
-		_stamp.texture = STAMP_USING if using else STAMP_TRY
-		_stamp.modulate = Color.WHITE if using else PenSkin.ink_color(_pen_id)
-	if _stamp_label != null:
-		_stamp_label.text = tr("STR_SHOP_TRY_USING") if using else tr("STR_SHOP_TRY_STAMP")
-		_stamp_label.theme_type_variation = &"ShopBtnTextDone" if using else &"ShopBtnText"
+	if stamp != null:
+		stamp.texture = stamp_using if using else stamp_try
+		stamp.modulate = Color.WHITE if using else PenSkin.ink_color(_pen_id)
+	if stamp_label != null:
+		stamp_label.text = tr("STR_SHOP_TRY_USING") if using else tr("STR_SHOP_TRY_STAMP")
+		stamp_label.theme_type_variation = &"ShopBtnTextDone" if using else &"ShopBtnText"
 
 
 # ---------------------------------------------------------------------------
@@ -133,7 +136,7 @@ func _refresh_badge() -> void:
 # ---------------------------------------------------------------------------
 ## Nét mẫu "dải sóng" để vừa chọn ngòi là thấy ngay chất liệu
 func _draw_sample() -> void:
-	var area := _draw_area.size if _draw_area != null else DEFAULT_AREA
+	var area := draw_area.size if draw_area != null else DEFAULT_AREA
 	if area.x <= 1.0 or area.y <= 1.0:
 		area = DEFAULT_AREA
 	var path := PackedVector2Array()
@@ -149,7 +152,7 @@ func _new_stroke() -> InkStroke:
 	var stroke := InkStroke.new()
 	stroke.apply_pen(_pen_id)
 	stroke.set_base_width(STROKE_WIDTH)
-	_strokes_layer.add_child(stroke)
+	strokes_layer.add_child(stroke)
 	stroke.set_stroke(PackedVector2Array())
 	_strokes.append(stroke)
 	while _strokes.size() > MAX_STROKES:
@@ -180,7 +183,7 @@ func _on_draw_input(event: InputEvent) -> void:
 
 
 func _begin_stroke(pos: Vector2) -> void:
-	if _strokes_layer == null:
+	if strokes_layer == null:
 		return
 	_drawing = true
 	_active = _new_stroke()
@@ -211,7 +214,7 @@ func _end_stroke() -> void:
 
 
 func _move_tip(pos: Vector2) -> void:
-	if _pen_tip == null:
+	if pen_tip == null:
 		return
-	_pen_tip.visible = true
-	_pen_tip.position = pos - _pen_tip.size * 0.5
+	pen_tip.visible = true
+	pen_tip.position = pos - pen_tip.size * 0.5

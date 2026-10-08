@@ -28,7 +28,8 @@ var active := false
 ## Chiều cao hàng tab (tab đang chọn) — màn Cửa hàng set theo cỡ màn hình
 var _row_h := 0.0
 
-@onready var label: Label = $Label
+## Node binding: khai `node_paths` + NodePath trong `tab_button.tscn`
+@export var label: Label = null
 
 
 func _ready() -> void:

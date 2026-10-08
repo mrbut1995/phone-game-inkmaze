@@ -8,10 +8,11 @@ extends Control
 ## Mỗi tutorial scene INSTANCE ô này rồi ghi đè cell_text/text_color/text_size + grid_pos.
 ## ============================================================================
 
-const TEX_NORMAL  := preload("res://assets/images-png/game/cell_normal.png")
-const TEX_START   := preload("res://assets/images-png/game/cell_start.png")
-const TEX_FINISH  := preload("res://assets/images-png/game/cell_finish.png")
-const TEX_FINISH_CLOSED := preload("res://assets/images-png/game/cell_finish_closed.png")
+## Texture 4 trạng thái ô — gán trong `tutorial_cell.tscn` (ExtResource), KHÔNG hard-code
+@export var texture_normal: Texture2D = null
+@export var texture_start: Texture2D = null
+@export var texture_finish: Texture2D = null
+@export var texture_finish_closed: Texture2D = null
 
 ## Toạ độ ô trong bàn mini (tutorial tra ô theo `grid_pos`, không theo thứ tự con)
 @export var grid_pos: Vector2i = Vector2i.ZERO
@@ -22,63 +23,61 @@ const TEX_FINISH_CLOSED := preload("res://assets/images-png/game/cell_finish_clo
 ## Cỡ chữ — ghi đè trong .tscn
 @export var text_size: int = 0  # 0 = dùng font size từ LabelSettings gốc
 
-@onready var _sprite: TextureButton = $Sprite
-@onready var _label: Label = $Sprite/Label
+## Node binding: khai `node_paths` + NodePath trong `tutorial_cell.tscn`
+@export var sprite: TextureButton = null
+@export var label: Label = null
 ## AnimationPlayer của chính `tutorial_cell.tscn` — hiệu ứng nảy/nháy/rung khai trong scene;
 ## code chỉ set pose ban đầu (scale/màu) + gọi play (kèm fallback tween nếu scene thiếu).
-var _anim: AnimationPlayer = null
+@export var anim: AnimationPlayer = null
 ## Hẹn giờ SO LE (ô bay vào / nảy mừng) — Timer khai trong `tutorial_cell.tscn` (dây `timeout` ở đó);
 ## code chỉ đặt `wait_time` rồi `start()`.
-var _entrance_timer: Timer = null
-var _win_timer: Timer = null
+@export var entrance_timer: Timer = null
+@export var win_timer: Timer = null
 
 
 func _ready() -> void:
-	_anim = get_node_or_null("AnimationPlayer") as AnimationPlayer
-	_entrance_timer = get_node_or_null("EntranceTimer") as Timer
-	_win_timer = get_node_or_null("WinTimer") as Timer
 	_apply_cell_text(cell_text)
 
 
 func _play_anim(anim_name: StringName) -> bool:
-	if _anim == null or not _anim.has_animation(anim_name):
+	if anim == null or not anim.has_animation(anim_name):
 		return false
-	_anim.play(anim_name)
+	anim.play(anim_name)
 	return true
 
 
 func _apply_cell_text(text: String) -> void:
-	if _sprite == null or _label == null:
+	if sprite == null or label == null:
 		return
 	match text:
 		"S":
-			_sprite.texture_normal = TEX_START
-			_sprite.texture_hover  = TEX_START
-			_sprite.texture_focused = TEX_START
-			_label.text    = ""
-			_label.visible = false
+			sprite.texture_normal = texture_start
+			sprite.texture_hover  = texture_start
+			sprite.texture_focused = texture_start
+			label.text    = ""
+			label.visible = false
 		"F":
-			_sprite.texture_normal = TEX_FINISH
-			_sprite.texture_hover  = TEX_FINISH
-			_sprite.texture_focused = TEX_FINISH
-			_label.text    = ""
-			_label.visible = false
+			sprite.texture_normal = texture_finish
+			sprite.texture_hover  = texture_finish
+			sprite.texture_focused = texture_finish
+			label.text    = ""
+			label.visible = false
 		"F_CLOSED":
-			_sprite.texture_normal = TEX_FINISH_CLOSED
-			_sprite.texture_hover  = TEX_FINISH_CLOSED
-			_sprite.texture_focused = TEX_FINISH_CLOSED
-			_label.text    = ""
-			_label.visible = false
+			sprite.texture_normal = texture_finish_closed
+			sprite.texture_hover  = texture_finish_closed
+			sprite.texture_focused = texture_finish_closed
+			label.text    = ""
+			label.visible = false
 		_:
-			_sprite.texture_normal = TEX_NORMAL
-			_sprite.texture_hover  = TEX_NORMAL
-			_sprite.texture_focused = TEX_NORMAL
-			_label.text    = text
-			_label.visible = not text.is_empty()
+			sprite.texture_normal = texture_normal
+			sprite.texture_hover  = texture_normal
+			sprite.texture_focused = texture_normal
+			label.text    = text
+			label.visible = not text.is_empty()
 			# Áp màu chữ và cỡ chữ tùy chỉnh nếu có
-			_label.add_theme_color_override("font_color", text_color)
+			label.add_theme_color_override("font_color", text_color)
 			if text_size > 0:
-				_label.add_theme_font_size_override("font_size", text_size)
+				label.add_theme_font_size_override("font_size", text_size)
 
 
 func set_text(text: String) -> void:
@@ -87,19 +86,19 @@ func set_text(text: String) -> void:
 
 
 func text() -> String:
-	return _label.text if _label != null else cell_text
+	return label.text if label != null else cell_text
 
 
 func set_text_color(color: Color) -> void:
 	text_color = color
-	if _label != null:
-		_label.add_theme_color_override("font_color", color)
+	if label != null:
+		label.add_theme_color_override("font_color", color)
 
 
 func set_text_size(px: int) -> void:
 	text_size = px
-	if _label != null:
-		_label.add_theme_font_size_override("font_size", px)
+	if label != null:
+		label.add_theme_font_size_override("font_size", px)
 
 
 ## Nhún nhẹ khi thao tác đúng ("pháo giấy nhỏ" của tutorial) — animation "pulse" trong scene
@@ -117,11 +116,11 @@ func play_entrance(delay: float = 0.0) -> void:
 	pivot_offset = size * 0.5
 	scale = Vector2(0.86, 0.86)
 	modulate.a = 0.0
-	if _anim != null and _anim.has_animation(&"entrance"):
+	if anim != null and anim.has_animation(&"entrance"):
 		if delay > 0.0:
-			if _entrance_timer != null:
-				_entrance_timer.wait_time = delay
-				_entrance_timer.start()
+			if entrance_timer != null:
+				entrance_timer.wait_time = delay
+				entrance_timer.start()
 			else:
 				# Fallback khi scene thiếu EntranceTimer (dây thật khai trong tutorial_cell.tscn)
 				get_tree().create_timer(delay).timeout.connect(_play_entrance_now)
@@ -166,11 +165,11 @@ func play_win(delay: float = 0.0) -> void:
 	pivot_offset = size * 0.5
 	modulate = Color(1.25, 1.15, 0.75, 1.0)
 	scale = Vector2(0.8, 0.8)
-	if _anim != null and _anim.has_animation(&"win"):
+	if anim != null and anim.has_animation(&"win"):
 		if delay > 0.0:
-			if _win_timer != null:
-				_win_timer.wait_time = delay
-				_win_timer.start()
+			if win_timer != null:
+				win_timer.wait_time = delay
+				win_timer.start()
 			else:
 				# Fallback khi scene thiếu WinTimer (dây thật khai trong tutorial_cell.tscn)
 				get_tree().create_timer(delay).timeout.connect(_play_win_now)

@@ -2,16 +2,17 @@ class_name AnchorCallout
 extends Control
 ## Vòng đánh số tại neo trên bàn tutorial — "nở" ra rồi phập phồng khi hiện.
 
-@onready var _num: Label = $Num
-@onready var _anim_player: AnimationPlayer = get_node_or_null("AnimationPlayer")
+## Node binding: khai `node_paths` + NodePath trong `anchor_callout.tscn`
+@export var num: Label = null
+@export var anim_player: AnimationPlayer = null
 
 var _fx: Tween = null
 var _pulse: Tween = null
 
 
 func set_number(n: int) -> void:
-	if _num != null:
-		_num.text = str(n)
+	if num != null:
+		num.text = str(n)
 
 
 ## Hiện vòng tại tâm `center` (toạ độ TRONG bàn) kèm hiệu ứng nở + nhịp "thở"
@@ -19,10 +20,10 @@ func show_at(center: Vector2) -> void:
 	_center_on(center)
 	visible = true
 	_kill_tweens()
-	if _anim_player != null and _anim_player.has_animation("show"):
+	if anim_player != null and anim_player.has_animation("show"):
 		# Dây `animation_finished → _on_animation_finished` khai trong `anchor_callout.tscn`
 		# (hết "show" thì tự chuyển sang nhịp "pulse")
-		_anim_player.play("show")
+		anim_player.play("show")
 	else:
 		# Fallback khi scene thiếu AnimationPlayer (hiệu ứng "show" khai trong anchor_callout.tscn)
 		scale = Vector2(0.55, 0.55)
@@ -40,8 +41,8 @@ func move_to(center: Vector2) -> void:
 
 ## Hết animation "show" → chuyển sang nhịp thở "pulse" (dây khai trong `anchor_callout.tscn`)
 func _on_animation_finished(anim_name: StringName) -> void:
-	if anim_name == &"show" and _anim_player != null and visible:
-		_anim_player.play("pulse")
+	if anim_name == &"show" and anim_player != null and visible:
+		anim_player.play("pulse")
 
 
 ## Đặt tâm vòng theo cỡ thật của node; chưa có cỡ thì lấy cỡ tối thiểu khai trong scene
@@ -56,8 +57,8 @@ func _center_on(center: Vector2) -> void:
 func hide_callout() -> void:
 	_kill_tweens()
 	visible = false
-	if _anim_player != null:
-		_anim_player.play("RESET")
+	if anim_player != null:
+		anim_player.play("RESET")
 	else:
 		scale = Vector2.ONE
 		modulate.a = 1.0

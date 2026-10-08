@@ -9,8 +9,15 @@ extends Control
 ## Node UI nằm trong CẤU TRÚC: Body (HBox) → Rank · Flag · Name (giãn) · Stats (VBox: Record + Points)
 ## ============================================================================
 
-const ROW_ART := preload("res://assets/images-png/ranking/rank_row.png")
-const ROW_YOU_ART := preload("res://assets/images-png/ranking/rank_row_you.png")
+## Art nền hàng + node binding: khai `node_paths` + NodePath trong `rank_row.tscn`
+@export var row_art: Texture2D = null
+@export var row_you_art: Texture2D = null
+@export var bg: TextureRect = null
+@export var rank_label: Label = null
+@export var flag: TextureRect = null
+@export var name_label: Label = null
+@export var record_label: Label = null
+@export var points_label: Label = null
 
 ## Bộ cờ có sẵn trong assets/images/icons/flags/ (không dùng emoji)
 const FLAG_CODES: Array[String] = ["vi", "en", "ja", "ko", "zh_cn", "fr", "generic"]
@@ -20,12 +27,12 @@ static var _flag_cache: Dictionary = {}
 
 func setup(entry: Dictionary, board: String) -> void:
 	var is_you := bool(entry.get("is_player", false))
-	($Bg as TextureRect).texture = ROW_YOU_ART if is_you else ROW_ART
-	($Body/Rank as Label).text = Ranking.rank_text(int(entry.get("rank", 0)))
-	($Body/Flag as TextureRect).texture = flag_texture(str(entry.get("flag", "generic")))
-	($Body/Name as Label).text = Ranking.display_name(entry)
-	($Body/Stats/Record as Label).text = Ranking.record_text(board, entry)
-	($Body/Stats/Points as Label).text = Ranking.points_text(entry)
+	bg.texture = row_you_art if is_you else row_art
+	rank_label.text = Ranking.rank_text(int(entry.get("rank", 0)))
+	flag.texture = flag_texture(str(entry.get("flag", "generic")))
+	name_label.text = Ranking.display_name(entry)
+	record_label.text = Ranking.record_text(board, entry)
+	points_label.text = Ranking.points_text(entry)
 
 
 ## Cờ quốc gia theo mã (vi/en/ja/ko/zh_cn/fr/generic) — có cache, fallback về cờ chung

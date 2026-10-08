@@ -5,8 +5,9 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/shop/doodle_pad.png" id="3_bg"]
 [ext_resource type="Texture2D" path="res://assets/images-png/shop/doodle_badge.png" id="4_badge"]
 [ext_resource type="Texture2D" path="res://assets/images-png/shop/btn_tile_normal.png" id="5_stamp"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/btn_equipped.png" id="6_stamp_using"]
 
-[node name="DoodlePad" type="Control" unique_id=2102772593]
+[node name="DoodlePad" type="Control" unique_id=2102772593 node_paths=PackedStringArray("draw_area", "strokes_layer", "pen_tip", "badge_eyebrow", "badge_name_label", "badge_icon", "stamp", "stamp_label")]
 custom_minimum_size = Vector2(0, 107.5)
 layout_mode = 3
 anchors_preset = 0
@@ -14,6 +15,16 @@ offset_right = 490.0
 offset_bottom = 107.5
 theme = ExtResource("2_theme")
 script = ExtResource("1_pad")
+draw_area = NodePath("DrawArea")
+strokes_layer = NodePath("DrawArea/Strokes")
+pen_tip = NodePath("DrawArea/PenTip")
+badge_eyebrow = NodePath("Badge/Eyebrow")
+badge_name_label = NodePath("Badge/Name")
+badge_icon = NodePath("Badge/Icon")
+stamp = NodePath("Badge/Stamp")
+stamp_label = NodePath("Badge/StampLabel")
+stamp_try = ExtResource("5_stamp")
+stamp_using = ExtResource("6_stamp_using")
 
 [node name="Bg" type="NinePatchRect" parent="." unique_id=1184152865]
 layout_mode = 1

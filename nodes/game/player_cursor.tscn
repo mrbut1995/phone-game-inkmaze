@@ -356,13 +356,15 @@ _data = {
 &"spawn_drop": SubResource("Animation_cursor_spawn_drop")
 }
 
-[node name="PlayerCursor" type="Control" unique_id=759599067]
+[node name="PlayerCursor" type="Control" unique_id=759599067 node_paths=PackedStringArray("icon", "anim")]
 layout_mode = 3
 anchors_preset = 0
 offset_right =  66
 offset_bottom =  66
 mouse_filter = 2
 script = ExtResource("1_script")
+icon = NodePath("Icon")
+anim = NodePath("AnimationPlayer")
 
 [node name="Icon" type="TextureRect" parent="." unique_id=1223840900]
 layout_mode = 1

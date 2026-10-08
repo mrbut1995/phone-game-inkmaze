@@ -13,17 +13,14 @@ var _p1 := Vector2.ZERO
 var _p2 := Vector2.ZERO
 var _preview_pulse: Tween = null
 ## AnimationPlayer của `wall_segment.tscn` — hiệu ứng nhấp nháy lớp preview khai trong scene
-var _anim: AnimationPlayer = null
-
-
-func _ready() -> void:
-	_anim = get_node_or_null("AnimationPlayer") as AnimationPlayer
+## Node binding: khai `node_paths` + NodePath trong `wall_segment.tscn`
+@export var anim: AnimationPlayer = null
 
 
 func _play_anim(anim_name: StringName) -> bool:
-	if _anim == null or not _anim.has_animation(anim_name):
+	if anim == null or not anim.has_animation(anim_name):
 		return false
-	_anim.play(anim_name)
+	anim.play(anim_name)
 	return true
 
 @export var COLOR_VISIBLE := Color(0.12, 0.16, 0.23, 1.0)        # #1E283A
@@ -123,8 +120,8 @@ func set_preview_pulse(on: bool) -> void:
 		_preview_pulse.tween_property(self, "modulate:a", 0.45, 0.7)
 		_preview_pulse.tween_property(self, "modulate:a", 1.0, 0.7)
 	else:
-		if _anim != null:
-			_anim.stop()
+		if anim != null:
+			anim.stop()
 		modulate.a = 1.0
 
 

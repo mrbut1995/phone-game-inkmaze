@@ -17,11 +17,12 @@ const DOW_KEYS: Array[String] = [
 ]
 const MONTH_WIDTH: Array[int] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-@onready var month_label: Label = $Panel/Months/Label
-@onready var btn_prev: NinePatchButton = $Panel/Months/Previous/Button
-@onready var btn_next: NinePatchButton = $Panel/Months/Next/Button
-@onready var dow_row: HBoxContainer = $Panel/Content/DayTitle
-@onready var grid: GridContainer = $Panel/Content/Days
+## Node binding: khai `node_paths` + NodePath trong `calendar.tscn`
+@export var month_label: Label = null
+@export var btn_prev: NinePatchButton = null
+@export var btn_next: NinePatchButton = null
+@export var dow_row: HBoxContainer = null
+@export var grid: GridContainer = null
 
 var year: int = 2026
 var month: int = 9

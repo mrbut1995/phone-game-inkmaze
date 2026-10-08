@@ -17,8 +17,9 @@ extends NinePatchButton
 ## của khay (khay dọc = HBox 5 tab · khay ngang = GridContainer 2 cột) mà không méo góc bo.
 ## ============================================================================
 
-const TAB_ACTIVE := preload("res://assets/images-png/archivements/tab_active.png")
-const TAB_INACTIVE := preload("res://assets/images-png/archivements/tab_inactive.png")
+## Art 2 trạng thái tab — gán trong `tab_button*.tscn` (ExtResource), KHÔNG hard-code
+@export var art_active: Texture2D = null
+@export var art_idle: Texture2D = null
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @export var LABEL_ACTIVE_COLOR := Color(1, 1, 1)
 @export var LABEL_IDLE_COLOR := Color(0.44313726, 0.54509807, 0.61960787, 1)
@@ -31,7 +32,8 @@ signal tab_pressed(category: String)
 ## Tab đang được chọn
 var active := false
 
-@onready var label: Label = $Label
+## Node binding: khai `node_paths` + NodePath trong `tab_button*.tscn`
+@export var label: Label = null
 
 
 func _ready() -> void:
@@ -54,7 +56,7 @@ func set_label_text(text: String) -> void:
 ## Đổi trạng thái chọn: đổi art + màu nhãn có hiệu ứng transition mượt
 func set_active(on: bool) -> void:
 	active = on
-	var art: Texture2D = TAB_ACTIVE if on else TAB_INACTIVE
+	var art: Texture2D = art_active if on else art_idle
 	texture_normal = art
 	texture_pressed = art
 	texture_hover = art

@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_lang_apply_normal.png" id="10_pri_n"]
 [ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_lang_apply_pressed.png" id="11_pri_p"]
 [ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_lang_apply_focus.png" id="12_pri_f"]
+[ext_resource type="Texture2D" path="res://assets/images-png/icons/flags/flag_generic.png" id="13_flag_fallback"]
 
 [sub_resource type="StyleBoxTexture" id="Sb_sec_n"]
 texture = ExtResource("7_sec_n")
@@ -47,6 +48,7 @@ dim = NodePath("Dim")
 panel = NodePath("Panel")
 list = NodePath("Panel/Content/Scroll/List")
 scroll = NodePath("Panel/Content/Scroll")
+flag_fallback = ExtResource("13_flag_fallback")
 
 [node name="Dim" type="ColorRect" parent="." unique_id=1194060954]
 layout_mode = 1

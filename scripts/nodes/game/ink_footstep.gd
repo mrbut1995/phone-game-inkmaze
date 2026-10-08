@@ -7,12 +7,15 @@ extends Control
 ## SCENE riêng: cỡ 36×36 · con "Mark" bám kín · alpha mờ 0.45.
 ## Hiệu ứng lan to + mờ dần (và tự xoá) khai trong `ink_footstep.tscn` (AnimationPlayer autoplay).
 ## Bàn chỉ việc: `footstep.setup(tâm_ô, texture_ngòi_bút, màu_mực)`.
+##
+## MỌI tham số (node · cỡ · alpha) chỉnh TRONG `ink_footstep.tscn` — script chỉ `@export`.
 ## ============================================================================
 
 @export var SIZE := Vector2(18, 18)
 @export var ALPHA := 0.45
 
-@onready var mark: TextureRect = $Mark
+## Node binding: khai `node_paths` + NodePath trong `ink_footstep.tscn`
+@export var mark: TextureRect = null
 
 
 ## Đặt vệt mực tại TÂM ô `pos` với texture + màu mực của ngòi bút đang dùng

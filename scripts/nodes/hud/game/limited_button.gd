@@ -8,14 +8,18 @@ extends TextureButton
 ## khoá của chính mình, bên ngoài KHÔNG phải `find_child("PanelLimit")` rồi sửa node con.
 ## ============================================================================
 
+## Node binding: khai `node_paths` + NodePath cho TỪNG nút (Undo/Hint) trong
+## `nodes/hud/portrait/game/action_bar.tscn` + `nodes/hud/landscape/game/action_bar.tscn`
+@export var panel_limit: Control = null
+@export var limit_label: Label = null
+
+
 ## Cập nhật badge + khoá nút. `max_uses <= 0` = màn không giới hạn lượt ⇒ ẩn badge, không khoá.
 func set_limit(left: int, max_uses: int) -> void:
 	var limited := max_uses > 0
 	disabled = limited and left <= 0
-	var panel := get_node_or_null("PanelLimit") as Control
-	if panel == null:
+	if panel_limit == null:
 		return
-	panel.visible = limited
-	var label := panel.get_node_or_null("Label") as Label
-	if label != null:
-		label.text = str(maxi(left, 0))
+	panel_limit.visible = limited
+	if limit_label != null:
+		limit_label.text = str(maxi(left, 0))

@@ -15,11 +15,12 @@ extends Control
 signal run_finished()
 signal celebration_finished()
 
-@onready var icon: TextureRect = $Icon
+## Node binding: khai `node_paths` + NodePath trong `player_cursor.tscn`
+@export var icon: TextureRect = null
 ## AnimationPlayer của CHÍNH scene này (`player_cursor.tscn`) — mọi dáng chạy/nhảy/va chạm
 ## (scale · rotation · modulate · Icon offset) khai trong scene; code chỉ điều khiển `position`
 ## vì vị trí phụ thuộc toạ độ bàn cờ tính lúc chạy (xem chú thích ở các hàm bên dưới).
-@onready var _anim: AnimationPlayer = get_node_or_null("AnimationPlayer")
+@export var anim: AnimationPlayer = null
 
 ## Độ dài chuẩn của animation "hop_*" — khi `duration` khác thì đổi `speed_scale` theo tỉ lệ
 @export var HOP_LENGTH := 0.16
@@ -40,21 +41,21 @@ func _ready() -> void:
 ## Chạy 1 animation của player (đặt lại speed về 1 trừ khi truyền tốc độ khác).
 ## Trả về false nếu scene thiếu animation đó (fallback: không chạy hiệu ứng).
 func _play_anim(anim_name: StringName, speed: float = 1.0) -> bool:
-	if _anim == null or not _anim.has_animation(anim_name):
+	if anim == null or not anim.has_animation(anim_name):
 		return false
 	# Đổi animation khi cú RƠI VÀO VÁN (`spawn_drop`) còn dang dở: animation mới (idle/hop/bonk/
 	# demo…) KHÔNG đụng tới `Icon:position` ⇒ Icon kẹt lơ lửng ở -42px (bút "lệch hẳn bên trên").
 	# Nhả Icon về đúng chỗ trước khi chạy animation mới.
-	if anim_name != &"spawn_drop" and _anim.current_animation == &"spawn_drop" and icon != null:
+	if anim_name != &"spawn_drop" and anim.current_animation == &"spawn_drop" and icon != null:
 		icon.position = Vector2.ZERO
-	_anim.speed_scale = speed
-	_anim.play(anim_name)
+	anim.speed_scale = speed
+	anim.play(anim_name)
 	return true
 
 
 func _stop_anim() -> void:
-	if _anim != null:
-		_anim.stop()
+	if anim != null:
+		anim.stop()
 
 
 func _kill_move_tween() -> void:

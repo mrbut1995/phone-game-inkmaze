@@ -100,7 +100,7 @@ texture_margin_top = 7.0
 texture_margin_right = 7.5
 texture_margin_bottom = 9.0
 
-[node name="Calendar" type="Control" unique_id=1529876078]
+[node name="Calendar" type="Control" unique_id=1529876078 node_paths=PackedStringArray("month_label", "btn_prev", "btn_next", "dow_row", "grid")]
 clip_contents = true
 layout_mode = 3
 anchors_preset = 15
@@ -110,6 +110,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("12_theme")
 script = ExtResource("1_cal")
+month_label = NodePath("Panel/Months/Label")
+btn_prev = NodePath("Panel/Months/Previous/Button")
+btn_next = NodePath("Panel/Months/Next/Button")
+dow_row = NodePath("Panel/Content/DayTitle")
+grid = NodePath("Panel/Content/Days")
 
 [node name="Panel" type="NinePatchRect" parent="." unique_id=732625991]
 layout_mode = 1

@@ -5,6 +5,9 @@ extends Control
 ## Tự co giãn theo kích thước ô (không có khoảng cách): board.gd đặt `size` cho ô,
 ## art (mọi trạng thái) đều cùng khung 176x176 và TextureButton ở chế độ stretch
 ## nên co lại vẫn khớp nhau; số trên ô co theo qua set_font_size().
+##
+## MỌI tham số (node · texture · màu · tỉ lệ cỡ chữ) chỉnh TRONG `cell.tscn` —
+## script chỉ `@export`, KHÔNG hard-code; binding node khai bằng `node_paths`.
 ## ============================================================================
 
 @export var grid_pos: Vector2i = Vector2i.ZERO
@@ -16,9 +19,10 @@ extends Control
 @export var BOMB_TEXT_OUTLINE_SIZE := 4
 @export var BOMB_TEXT_OUTLINE_COLOR := Color(0.996078, 0.992157, 0.980392, 1.0)   # #FEFDFA
 
-const TEX_NORMAL := preload("res://assets/images-png/game/cell_normal.png")
-const TEX_START := preload("res://assets/images-png/game/cell_start.png")
-const TEX_FINISH := preload("res://assets/images-png/game/cell_finish.png")
+## Texture nền ô theo NỘI DUNG: thường / xuất phát S / đích F (gán trong `cell.tscn`)
+@export var texture_normal: Texture2D = null
+@export var texture_start: Texture2D = null
+@export var texture_finish: Texture2D = null
 
 ## Mực phai (Fading Ink): tỉ lệ cỡ chữ phụ so với cỡ số trên ô (số gốc 56 -> 11 / 22)
 @export var WARN_TEXT_RATIO := 11.0 / 56.0
@@ -26,73 +30,61 @@ const TEX_FINISH := preload("res://assets/images-png/game/cell_finish.png")
 ## One Stroke: tỉ lệ cỡ chữ nhãn "ĐÃ ĐI" (số gốc 56 -> 12)
 @export var VISITED_TEXT_RATIO := 12.0 / 56.0
 
-@onready var _button: TextureButton = $Sprite
-@onready var _label: Label = $Sprite/Label
-@onready var _bomb: TextureRect = $Sprite/Bomb
-@onready var _warn: TextureRect = get_node_or_null("Sprite/Warn")
-@onready var _warn_label: Label = get_node_or_null("Sprite/WarnLabel")
-@onready var _faded: TextureRect = get_node_or_null("Sprite/Faded")
-@onready var _faded_badge: TextureRect = get_node_or_null("Sprite/FadedBadge")
-@onready var _faded_label: Label = get_node_or_null("Sprite/FadedLabel")
-@onready var _visited: TextureRect = get_node_or_null("Sprite/Visited")
-@onready var _visited_label: Label = get_node_or_null("Sprite/VisitedLabel")
-@onready var _satisfied: TextureRect = get_node_or_null("Sprite/Satisfied")
+## Node binding: khai `node_paths` + NodePath trong `cell.tscn`
+@export var button: TextureButton = null
+@export var label: Label = null
+@export var bomb: TextureRect = null
+@export var warn: TextureRect = null
+@export var warn_label: Label = null
+@export var faded: TextureRect = null
+@export var faded_badge: TextureRect = null
+@export var faded_label: Label = null
+@export var visited: TextureRect = null
+@export var visited_label: Label = null
+@export var satisfied: TextureRect = null
 ## AnimationPlayer của chính `cell.tscn` — mọi hiệu ứng nảy/rung/nháy (entrance · pulse · step ·
 ## win · shudder · fail · pop_text) khai trong scene; code chỉ set pose ban đầu + gọi play.
-@onready var _anim: AnimationPlayer = get_node_or_null("AnimationPlayer")
+@export var anim: AnimationPlayer = null
 ## Hẹn giờ SO LE khi ô bay vào / nảy mừng — Timer khai trong `cell.tscn` (dây `timeout` cũng ở đó);
 ## code chỉ đặt `wait_time` (dữ liệu so le do Board tính) rồi `start()`.
-@onready var _entrance_timer: Timer = get_node_or_null("EntranceTimer")
-@onready var _win_timer: Timer = get_node_or_null("WinTimer")
+@export var entrance_timer: Timer = null
+@export var win_timer: Timer = null
 
 
 func _play_anim(anim_name: StringName) -> bool:
-	if _anim == null or not _anim.has_animation(anim_name):
+	if anim == null or not anim.has_animation(anim_name):
 		return false
-	_anim.play(anim_name)
+	anim.play(anim_name)
 	return true
 
 
-func _ready() -> void:
-	if _button != null:
-		_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-
 func set_text(text: String) -> void:
-	if _label == null:
-		_label = $Sprite/Label
-	if _button == null:
-		_button = $Sprite
-
 	if text == "S":
-		if _button != null:
-			_button.texture_normal = TEX_START
-		if _label != null:
-			_label.text = ""
-			_label.visible = false
+		if button != null:
+			button.texture_normal = texture_start
+		if label != null:
+			label.text = ""
+			label.visible = false
 	elif text == "F":
-		if _button != null:
-			_button.texture_normal = TEX_FINISH
-		if _label != null:
-			_label.text = ""
-			_label.visible = false
+		if button != null:
+			button.texture_normal = texture_finish
+		if label != null:
+			label.text = ""
+			label.visible = false
 	else:
-		if _button != null:
-			_button.texture_normal = TEX_NORMAL
-		if _label != null:
-			_label.text = text
-			_label.visible = not text.is_empty()
+		if button != null:
+			button.texture_normal = texture_normal
+		if label != null:
+			label.text = text
+			label.visible = not text.is_empty()
 
 
 ## Cỡ chữ SỐ đang dùng trên ô (0 = scene chưa khai LabelSettings) — Board đọc giá trị này
 ## để suy cỡ chữ GỐC rồi co theo từng cỡ board, KHÔNG cần biết cấu trúc node con của ô.
 func text_font_size() -> int:
-	if _label == null:
-		_label = $Sprite/Label
-	if _label == null or _label.label_settings == null:
+	if label == null or label.label_settings == null:
 		return 0
-	return _label.label_settings.font_size
+	return label.label_settings.font_size
 
 
 ## Đặt cỡ ô (Board tính theo số cột/hàng) — ô tự lo phần đi kèm cỡ: TÂM XOAY cho hiệu ứng
@@ -106,11 +98,11 @@ func play_entrance(delay: float) -> void:
 	pivot_offset = size * 0.5
 	scale = Vector2(0.65, 0.65)
 	modulate.a = 0.0
-	if _anim != null and _anim.has_animation(&"entrance"):
+	if anim != null and anim.has_animation(&"entrance"):
 		if delay > 0.0:
-			if _entrance_timer != null:
-				_entrance_timer.wait_time = delay
-				_entrance_timer.start()
+			if entrance_timer != null:
+				entrance_timer.wait_time = delay
+				entrance_timer.start()
 			else:
 				# Fallback khi scene thiếu EntranceTimer (dây thật khai trong cell.tscn)
 				get_tree().create_timer(delay).timeout.connect(_play_entrance_now)
@@ -130,20 +122,12 @@ func _play_entrance_now() -> void:
 
 
 func set_font_size(fs: int) -> void:
-	if _label == null:
-		_label = $Sprite/Label
-	_apply_label_font_size(_label, fs)
+	_apply_label_font_size(label, fs)
 	# Chữ phụ của lớp mực phai co theo cùng tỉ lệ với số trên ô
-	if _warn_label == null:
-		_warn_label = get_node_or_null("Sprite/WarnLabel")
-	_apply_label_font_size(_warn_label, maxi(int(round(fs * WARN_TEXT_RATIO)), 8))
-	if _faded_label == null:
-		_faded_label = get_node_or_null("Sprite/FadedLabel")
-	_apply_label_font_size(_faded_label, maxi(int(round(fs * FADED_TEXT_RATIO)), 10))
+	_apply_label_font_size(warn_label, maxi(int(round(fs * WARN_TEXT_RATIO)), 8))
+	_apply_label_font_size(faded_label, maxi(int(round(fs * FADED_TEXT_RATIO)), 10))
 	# Nhãn "ĐÃ ĐI" của mode One Stroke co theo cùng tỉ lệ với số trên ô
-	if _visited_label == null:
-		_visited_label = get_node_or_null("Sprite/VisitedLabel")
-	_apply_label_font_size(_visited_label, maxi(int(round(fs * VISITED_TEXT_RATIO)), 9))
+	_apply_label_font_size(visited_label, maxi(int(round(fs * VISITED_TEXT_RATIO)), 9))
 
 
 ## Đổi cỡ chữ 1 Label — LƯU Ý: LabelSettings đè theme override nên phải sửa cả hai;
@@ -162,111 +146,87 @@ func _apply_label_font_size(lbl: Label, fs: int) -> void:
 ## 0 = CẠN (lớp gạch ngang + huy hiệu CẠN), giá trị khác = ô bình thường.
 ## Gọi set_ink_left(-1) để tắt mọi lớp cảnh báo (dùng cho ô S/F).
 func set_ink_left(ink: int) -> void:
-	var warn := ink == 1
-	var faded := ink == 0
-	if _warn == null:
-		_warn = get_node_or_null("Sprite/Warn")
-	if _warn_label == null:
-		_warn_label = get_node_or_null("Sprite/WarnLabel")
-	if _faded == null:
-		_faded = get_node_or_null("Sprite/Faded")
-	if _faded_badge == null:
-		_faded_badge = get_node_or_null("Sprite/FadedBadge")
-	if _faded_label == null:
-		_faded_label = get_node_or_null("Sprite/FadedLabel")
-	if _warn != null:
-		_warn.visible = warn
-	if _warn_label != null:
-		_warn_label.visible = warn
-	if _faded != null:
-		_faded.visible = faded
-	if _faded_badge != null:
-		_faded_badge.visible = faded
-	if _faded_label != null:
-		_faded_label.visible = faded
+	var warn_on := ink == 1
+	var faded_on := ink == 0
+	if warn != null:
+		warn.visible = warn_on
+	if warn_label != null:
+		warn_label.visible = warn_on
+	if faded != null:
+		faded.visible = faded_on
+	if faded_badge != null:
+		faded_badge.visible = faded_on
+	if faded_label != null:
+		faded_label.visible = faded_on
 
 
 func warn_visible() -> bool:
-	return _warn != null and _warn.visible
+	return warn != null and warn.visible
 
 
 ## One Stroke: ô ĐÃ ĐI QUA (bị khoá vĩnh viễn, đi lại là thua) — tô mực xanh + gạch chéo
 ## + nhãn "ĐÃ ĐI" ở mép trên. Ô S/F không bao giờ bật lớp này (mockup giữ nguyên art S/F).
 func set_visited_own(on: bool) -> void:
-	if _visited == null:
-		_visited = get_node_or_null("Sprite/Visited")
-	if _visited_label == null:
-		_visited_label = get_node_or_null("Sprite/VisitedLabel")
-	if _visited != null:
-		_visited.visible = on
-	if _visited_label != null:
-		_visited_label.visible = on
+	if visited != null:
+		visited.visible = on
+	if visited_label != null:
+		visited_label.visible = on
 		if on:
-			_visited_label.text = tr("STR_OS_CELL_VISITED")
+			visited_label.text = tr("STR_OS_CELL_VISITED")
 
 
 func visited_visible() -> bool:
-	return _visited != null and _visited.visible
+	return visited != null and visited.visible
 
 
 ## Wall Builder: ô ĐÃ KHỚP SỐ (số tường quanh ô bằng đúng các đoạn đã nối) — nền xanh lá nhạt.
 ## Chỉ là gợi ý trực quan của chế độ, không ảnh hưởng luật.
 func set_satisfied(on: bool) -> void:
-	if _satisfied == null:
-		_satisfied = get_node_or_null("Sprite/Satisfied")
-	if _satisfied != null:
-		_satisfied.visible = on
+	if satisfied != null:
+		satisfied.visible = on
 
 
 func satisfied_visible() -> bool:
-	return _satisfied != null and _satisfied.visible
+	return satisfied != null and satisfied.visible
 
 
 func visited_text() -> String:
-	return _visited_label.text if _visited_label != null else ""
+	return visited_label.text if visited_label != null else ""
 
 
 func faded_visible() -> bool:
-	return _faded != null and _faded.visible
+	return faded != null and faded.visible
 
 
 func warn_text() -> String:
-	return _warn_label.text if _warn_label != null else ""
+	return warn_label.text if warn_label != null else ""
 
 
 func faded_text() -> String:
-	return _faded_label.text if _faded_label != null else ""
+	return faded_label.text if faded_label != null else ""
 
 
 func get_text() -> String:
-	if _label == null:
-		_label = $Sprite/Label
-	return _label.text if _label != null else ""
+	return label.text if label != null else ""
 
 
 func set_focused(active: bool) -> void:
-	if _button == null:
-		_button = $Sprite
-	if _button != null:
-		_button.modulate = FOCUS_MODULATE if active else NORMAL_MODULATE
+	if button != null:
+		button.modulate = FOCUS_MODULATE if active else NORMAL_MODULATE
 
 
 ## Hiện/ẩn biểu tượng Bomb đã nổ (Minesweeper) — icon to giữa ô, số trên ô vẽ ĐÈ LÊN icon.
 func set_bomb(active: bool) -> void:
-	if _bomb == null:
-		_bomb = get_node_or_null("Sprite/Bomb")
-	if _bomb != null:
-		_bomb.visible = active
+	if bomb != null:
+		bomb.visible = active
 	_apply_bomb_text_outline(active)
 
 
 ## Số nằm trên nền mìn đậm nên cần viền sáng; khi ẩn Bomb thì trả lại như cũ.
 func _apply_bomb_text_outline(active: bool) -> void:
-	if _label == null:
-		_label = get_node_or_null("Sprite/Label")
-	if _label == null or _label.label_settings == null:
+	if label == null or label.label_settings == null:
 		return
-	var settings := _label.label_settings
+	var settings := label.label_settings
 	var has_outline := settings.outline_size > 0
 	if active == has_outline:
 		return
@@ -274,13 +234,11 @@ func _apply_bomb_text_outline(active: bool) -> void:
 	settings = settings.duplicate() as LabelSettings
 	settings.outline_size = BOMB_TEXT_OUTLINE_SIZE if active else 0
 	settings.outline_color = BOMB_TEXT_OUTLINE_COLOR
-	_label.label_settings = settings
+	label.label_settings = settings
 
 
 func has_bomb() -> bool:
-	if _bomb == null:
-		_bomb = get_node_or_null("Sprite/Bomb")
-	return _bomb != null and _bomb.visible
+	return bomb != null and bomb.visible
 
 
 func pulse() -> void:
@@ -296,39 +254,37 @@ func pulse() -> void:
 func play_shudder() -> void:
 	if _play_anim(&"shudder"):
 		return
-	var sprite := get_node_or_null("Sprite") as Control
-	if sprite == null:
+	if button == null:
 		return
-	sprite.position = Vector2.ZERO
+	# Fallback khi scene thiếu AnimationPlayer
+	button.position = Vector2.ZERO
 	var tw := create_tween()
-	tw.tween_property(sprite, "position", Vector2(-6, 4), 0.035)
-	tw.tween_property(sprite, "position", Vector2(6, -4), 0.035)
-	tw.tween_property(sprite, "position", Vector2(-3, 2), 0.035)
-	tw.tween_property(sprite, "position", Vector2.ZERO, 0.04)
+	tw.tween_property(button, "position", Vector2(-6, 4), 0.035)
+	tw.tween_property(button, "position", Vector2(6, -4), 0.035)
+	tw.tween_property(button, "position", Vector2(-3, 2), 0.035)
+	tw.tween_property(button, "position", Vector2.ZERO, 0.04)
 
 
 ## Hiệu ứng nảy số trên ô khi giá trị được cập nhật (Fading Ink / Sum Path)
 func play_pop_text() -> void:
-	if _label == null:
-		_label = get_node_or_null("Sprite/Label")
-	if _label == null or not _label.visible:
+	if label == null or not label.visible:
 		return
-	_label.pivot_offset = _label.size * 0.5
+	label.pivot_offset = label.size * 0.5
 	if _play_anim(&"pop_text"):
 		return
 	var tw := create_tween()
-	tw.tween_property(_label, "scale", Vector2(1.32, 1.32), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tw.tween_property(_label, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(label, "scale", Vector2(1.32, 1.32), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(label, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
 ## Hiệu ứng chúc mừng thắng màn / bài hướng dẫn: nảy nhẹ so le
 func play_win(delay: float = 0.0) -> void:
 	pivot_offset = size * 0.5
-	if _anim != null and _anim.has_animation(&"win"):
+	if anim != null and anim.has_animation(&"win"):
 		if delay > 0.0:
-			if _win_timer != null:
-				_win_timer.wait_time = delay
-				_win_timer.start()
+			if win_timer != null:
+				win_timer.wait_time = delay
+				win_timer.start()
 			else:
 				# Fallback khi scene thiếu WinTimer (dây thật khai trong cell.tscn)
 				get_tree().create_timer(delay).timeout.connect(_play_win_now)
@@ -361,14 +317,14 @@ func play_step() -> void:
 func play_fail() -> void:
 	if _play_anim(&"fail"):
 		return
-	var sprite := get_node_or_null("Sprite") as Control
-	if sprite != null:
-		sprite.position = Vector2.ZERO
+	if button != null:
+		# Fallback khi scene thiếu AnimationPlayer
+		button.position = Vector2.ZERO
 		var tw := create_tween()
-		tw.tween_property(sprite, "position", Vector2(-6, 4), 0.035)
-		tw.tween_property(sprite, "position", Vector2(6, -4), 0.035)
-		tw.tween_property(sprite, "position", Vector2(-3, 2), 0.035)
-		tw.tween_property(sprite, "position", Vector2.ZERO, 0.04)
+		tw.tween_property(button, "position", Vector2(-6, 4), 0.035)
+		tw.tween_property(button, "position", Vector2(6, -4), 0.035)
+		tw.tween_property(button, "position", Vector2(-3, 2), 0.035)
+		tw.tween_property(button, "position", Vector2.ZERO, 0.04)
 	modulate = Color(1.0, 0.45, 0.42, 1.0)
 	var fade := create_tween()
 	fade.tween_property(self, "modulate", Color.WHITE, 0.35)

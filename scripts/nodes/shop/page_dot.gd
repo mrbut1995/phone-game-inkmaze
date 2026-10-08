@@ -6,8 +6,9 @@ extends TextureRect
 ## Cỡ + art: chấm ĐANG XEM to (34×24), các chấm khác nhỏ (12×24).
 ## ============================================================================
 
-const DOT_ACTIVE := preload("res://assets/images-png/level_selector/dot_active.png")
-const DOT_INACTIVE := preload("res://assets/images-png/level_selector/dot_inactive.png")
+## Art chấm — gán trong `page_dot.tscn` (ExtResource)
+@export var dot_active: Texture2D = null
+@export var dot_inactive: Texture2D = null
 
 @export var SIZE_ACTIVE := Vector2(34, 24)
 @export var SIZE_INACTIVE := Vector2(12, 24)
@@ -15,5 +16,5 @@ const DOT_INACTIVE := preload("res://assets/images-png/level_selector/dot_inacti
 
 ## Đặt trạng thái chấm: đang xem hay không
 func set_current(on: bool) -> void:
-	texture = DOT_ACTIVE if on else DOT_INACTIVE
+	texture = dot_active if on else dot_inactive
 	custom_minimum_size = SIZE_ACTIVE if on else SIZE_INACTIVE

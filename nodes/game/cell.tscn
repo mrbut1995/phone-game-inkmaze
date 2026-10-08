@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/game/cell_visited_hatch.png" id="11_visited"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_cell_visited.tres" id="12_visitedls"]
 [ext_resource type="Texture2D" path="res://assets/images-png/game/cell_satisfied_wash.png" id="13_satisfied"]
+[ext_resource type="Texture2D" uid="uid://cowu67bwhbm4n" path="res://assets/images-png/game/cell_start.png" id="14_start"]
+[ext_resource type="Texture2D" uid="uid://dqyi8ijauyy0j" path="res://assets/images-png/game/cell_finish.png" id="15_finish"]
 
 [sub_resource type="Animation" id="Animation_cell_reset"]
 length = 0.001
@@ -226,13 +228,30 @@ _data = {
 &"win": SubResource("Animation_cell_win")
 }
 
-[node name="Cell" type="Control" unique_id=1607724359]
+[node name="Cell" type="Control" unique_id=1607724359 node_paths=PackedStringArray("button", "label", "bomb", "warn", "warn_label", "faded", "faded_badge", "faded_label", "visited", "visited_label", "satisfied", "anim", "entrance_timer", "win_timer")]
 layout_mode = 3
 anchors_preset = 0
 offset_right =  88
 offset_bottom =  88
 mouse_filter = 2
 script = ExtResource("1_fj7pj")
+button = NodePath("Sprite")
+label = NodePath("Sprite/Label")
+bomb = NodePath("Sprite/Bomb")
+warn = NodePath("Sprite/Warn")
+warn_label = NodePath("Sprite/WarnLabel")
+faded = NodePath("Sprite/Faded")
+faded_badge = NodePath("Sprite/FadedBadge")
+faded_label = NodePath("Sprite/FadedLabel")
+visited = NodePath("Sprite/Visited")
+visited_label = NodePath("Sprite/VisitedLabel")
+satisfied = NodePath("Sprite/Satisfied")
+anim = NodePath("AnimationPlayer")
+entrance_timer = NodePath("EntranceTimer")
+win_timer = NodePath("WinTimer")
+texture_normal = ExtResource("1_pne7a")
+texture_start = ExtResource("14_start")
+texture_finish = ExtResource("15_finish")
 
 [node name="Sprite" type="TextureButton" parent="." unique_id=1867171790]
 layout_mode = 1

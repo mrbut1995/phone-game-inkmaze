@@ -50,13 +50,14 @@ _data = {
 &"ripple": SubResource("Animation_footstep_ripple")
 }
 
-[node name="InkFootstep" type="Control" unique_id=1890410275]
+[node name="InkFootstep" type="Control" unique_id=1890410275 node_paths=PackedStringArray("mark")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 18.0
 offset_bottom = 18.0
 mouse_filter = 2
 script = ExtResource("1_script")
+mark = NodePath("Mark")
 
 [node name="Mark" type="TextureRect" parent="." unique_id=821722271]
 layout_mode = 1

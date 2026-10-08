@@ -12,12 +12,13 @@ extends Control
 
 signal claim_requested(id: String)
 
-const BG_CLAIMED := preload("res://assets/images-png/archivements/card_claimed.png")
-const BG_CLAIMABLE := preload("res://assets/images-png/archivements/card_claimable.png")
-const BG_PROGRESS := preload("res://assets/images-png/archivements/card_progress.png")
-const BG_LOCKED := preload("res://assets/images-png/archivements/card_locked.png")
+## Nền 4 trạng thái + ổ khoá gán trong `card.tscn` (ExtResource) — KHÔNG hard-code
+@export var bg_claimed: Texture2D = null
+@export var bg_claimable: Texture2D = null
+@export var bg_progress: Texture2D = null
+@export var bg_locked: Texture2D = null
 ## Ổ khoá của thẻ: dùng icon CHUNG ở `assets/images/icons/` (bản riêng trong archivements/ đã gỡ)
-const ICON_LOCK := preload("res://assets/images-png/icons/icon_lock.png")
+@export var icon_lock: Texture2D = null
 
 @export var COLOR_CLAIMED := Color(0.18039216, 0.49019608, 0.19607843, 1)   # #2E7D32
 @export var COLOR_CLAIMABLE := Color(0.8509804, 0.46666667, 0.023529412, 1)  # #D97706
@@ -28,22 +29,23 @@ const ICON_LOCK := preload("res://assets/images-png/icons/icon_lock.png")
 
 ## Node UI nằm trong CẤU TRÚC: `Panel` (nền thẻ) → `Body` (HBox) → IconRing · Info (VBox) · Side (Stamp/ClaimButton/Chip)
 ## Mọi thành phần nằm TRONG `Panel` để nền và nội dung luôn khớp nhau khi co giãn.
-@onready var bg: NinePatchRect = $Panel
-@onready var icon_ring: TextureRect = $Panel/Body/IconRing
-@onready var icon: TextureRect = $Panel/Body/IconRing/Icon
-@onready var title_label: Label = $Panel/Body/Info/Title
-@onready var desc_label: Label = $Panel/Body/Info/Desc
-@onready var bar: Control = $Panel/Body/Info/Bar
-@onready var bar_track: NinePatchRect = $Panel/Body/Info/Bar/Track
-@onready var bar_fill: TextureRect = $Panel/Body/Info/Bar/Fill
-@onready var progress_label: Label = $Panel/Body/Info/Progress
-@onready var stamp: Control = $Panel/Body/Side/Stamp
-@onready var stamp_state: Label = $Panel/Body/Side/Stamp/State
-@onready var stamp_reward: Label = $Panel/Body/Side/Stamp/Reward
-@onready var claim_btn: TextureButton = $Panel/Body/Side/ClaimButton
-@onready var claim_label: Label = $Panel/Body/Side/ClaimButton/Label
-@onready var chip: NinePatchRect = $Panel/Body/Side/Chip
-@onready var chip_label: Label = $Panel/Body/Side/Chip/Label
+## Node binding: khai `node_paths` + NodePath trong `card.tscn`
+@export var bg: NinePatchRect = null
+@export var icon_ring: TextureRect = null
+@export var icon: TextureRect = null
+@export var title_label: Label = null
+@export var desc_label: Label = null
+@export var bar: Control = null
+@export var bar_track: NinePatchRect = null
+@export var bar_fill: TextureRect = null
+@export var progress_label: Label = null
+@export var stamp: Control = null
+@export var stamp_state: Label = null
+@export var stamp_reward: Label = null
+@export var claim_btn: TextureButton = null
+@export var claim_label: Label = null
+@export var chip: NinePatchRect = null
+@export var chip_label: Label = null
 
 var _entry: Dictionary = {}
 var _pct := 0
@@ -83,22 +85,22 @@ func setup(entry: Dictionary) -> void:
 	# Nền + màu trạng thái
 	var state_color := COLOR_PROGRESS
 	if hidden:
-		bg.texture = BG_LOCKED
+		bg.texture = bg_locked
 		state_color = COLOR_LOCKED
 	elif claimed:
-		bg.texture = BG_CLAIMED
+		bg.texture = bg_claimed
 		state_color = COLOR_CLAIMED
 	elif claimable:
-		bg.texture = BG_CLAIMABLE
+		bg.texture = bg_claimable
 		state_color = COLOR_CLAIMABLE
 	else:
-		bg.texture = BG_PROGRESS
+		bg.texture = bg_progress
 
 	icon_ring.modulate = state_color
 
 	# Huy hiệu + tiêu đề + mô tả
 	if hidden:
-		icon.texture = ICON_LOCK
+		icon.texture = icon_lock
 		title_label.text = tr("STR_ACH_SECRET_TITLE")
 		desc_label.text = tr("STR_ACH_SECRET_DESC")
 		title_label.modulate = COLOR_LOCKED

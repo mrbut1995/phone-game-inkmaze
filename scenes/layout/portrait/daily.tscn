@@ -1,25 +1,23 @@
 [gd_scene format=3 uid="uid://ddx6na0robdma"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="5_back_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="6_back_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/streak_badge.png" id="7_streak"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/fire_icon.png" id="8_fire"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/panel_daily_mission.png" id="9_panel"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/tag_day.png" id="10_tag_day"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/tag_reward.png" id="11_tag_reward"]
-[ext_resource type="Texture2D" path="res://assets/images-png/shop/icon_coin.png" id="12_coin"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/panel_information.png" id="15_kuh0v"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/main_menu_paper.png" id="18_imq2u"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/card_wall_slider_track.png" id="22_bar_bg"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/card_wall_slider_fill.png" id="23_bar_fill"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_normal.png" id="24_play_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_pressed.png" id="25_play_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_focus.png" id="26_play_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/pencil_icon.png" id="27_pencil"]
 [ext_resource type="Script" uid="uid://d3tppcudxm1tm" path="res://scripts/scenes/layout/daily_layout.gd" id="2_layout"]
-
+[ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
+[ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="5_back_n"]
+[ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="6_back_p"]
+[ext_resource type="Texture2D" uid="uid://cfmosoc1ok1ly" path="res://assets/images-png/calendar/streak_badge.png" id="7_streak"]
+[ext_resource type="Texture2D" uid="uid://cpbluvkao52yj" path="res://assets/images-png/icons/fire_icon.png" id="8_fire"]
+[ext_resource type="Texture2D" uid="uid://d1dnqdjb7py2q" path="res://assets/images-png/calendar/panel_daily_mission.png" id="9_panel"]
+[ext_resource type="Texture2D" uid="uid://bjeb8uvq4xesn" path="res://assets/images-png/calendar/tag_day.png" id="10_tag_day"]
+[ext_resource type="Texture2D" uid="uid://cxu2xe2kip7he" path="res://assets/images-png/calendar/tag_reward.png" id="11_tag_reward"]
+[ext_resource type="Texture2D" uid="uid://vyex76nan353" path="res://assets/images-png/shop/icon_coin.png" id="12_coin"]
+[ext_resource type="Texture2D" uid="uid://cu4e6t41rs731" path="res://assets/images-png/common/panel_information.png" id="15_kuh0v"]
+[ext_resource type="Texture2D" uid="uid://cnsqb6m1w4sjb" path="res://assets/images-png/game/card_wall_slider_track.png" id="22_bar_bg"]
+[ext_resource type="Texture2D" uid="uid://ci833ihmlk3il" path="res://assets/images-png/game/card_wall_slider_fill.png" id="23_bar_fill"]
+[ext_resource type="Texture2D" uid="uid://ckxdbnug8ecl6" path="res://assets/images-png/common/btn_paper_cta_normal.png" id="24_play_n"]
+[ext_resource type="Texture2D" uid="uid://5vjrbk835y5f" path="res://assets/images-png/common/btn_paper_cta_pressed.png" id="25_play_p"]
+[ext_resource type="Texture2D" uid="uid://d0tl47hvj62ph" path="res://assets/images-png/common/btn_paper_cta_focus.png" id="26_play_f"]
+[ext_resource type="Texture2D" uid="uid://c501hpv5a4si6" path="res://assets/images-png/icons/pencil_icon.png" id="27_pencil"]
 
 [sub_resource type="Animation" id="Animation_daily_pulse_p"]
 resource_name = "pulse"
@@ -271,21 +269,20 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top =  9.5
-offset_bottom =  -2.5
+offset_top = 9.5
+offset_bottom = -2.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("18_imq2u")
 region_rect = Rect2(0, 0, 467, 816)
-patch_margin_left =  88
-patch_margin_right =  53
+patch_margin_left = 88
+patch_margin_right = 53
 
 [node name="HUD" type="Control" parent="Panel" index="0" unique_id=653766467]
 layout_mode = 1
 anchor_right = 0.99700004
-offset_top =  -9.5
-offset_right =  0.119995
-offset_bottom =  42.5
+offset_top = -9.5
+offset_right = 0.119995
+offset_bottom = 42.5
 
 [node name="Content" type="Control" parent="Panel/HUD" index="0" unique_id=137350295]
 layout_mode = 1
@@ -310,11 +307,11 @@ anchor_left = 0.05
 anchor_top = 0.712
 anchor_right = 0.96000004
 anchor_bottom = 1.529
-offset_left =  0.0749989
-offset_top =  -0.0240021
-offset_right =  0.039978
-offset_bottom =  -0.00800323
-theme_override_constants/separation =  10
+offset_left = 0.0749989
+offset_top = -0.0240021
+offset_right = 0.039978
+offset_bottom = -0.00800323
+theme_override_constants/separation = 10
 
 [node name="Back" type="TextureButton" parent="Panel/HUD/Content/Information/TopBar" index="0" unique_id=1019985210]
 layout_mode = 2
@@ -329,10 +326,10 @@ texture_focused = ExtResource("5_back_n")
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("15_kuh0v")
-patch_margin_left =  24
-patch_margin_top =  16
-patch_margin_right =  32
-patch_margin_bottom =  23
+patch_margin_left = 24
+patch_margin_top = 16
+patch_margin_right = 32
+patch_margin_bottom = 23
 
 [node name="Title" type="Label" parent="Panel/HUD/Content/Information/TopBar/TitlePanel" index="0" unique_id=613672660]
 modulate = Color(0.14163879, 0.45273864, 0.7033491, 1)
@@ -353,15 +350,15 @@ resize_font_to_fit = true
 metadata/_edit_use_anchors_ = true
 
 [node name="StreakBadge" type="NinePatchRect" parent="Panel/HUD/Content/Information/TopBar" index="2" unique_id=1491378003]
-custom_minimum_size =  Vector2(120, 38)
+custom_minimum_size = Vector2(120, 38)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 texture = ExtResource("7_streak")
-patch_margin_left =  19
-patch_margin_top =  10
-patch_margin_right =  27.5
-patch_margin_bottom =  15
+patch_margin_left = 19
+patch_margin_top = 10
+patch_margin_right = 27
+patch_margin_bottom = 15
 
 [node name="StreakContainer" type="HBoxContainer" parent="Panel/HUD/Content/Information/TopBar/StreakBadge" index="0" unique_id=890837703]
 layout_mode = 1
@@ -370,8 +367,8 @@ anchor_left = 0.15416667
 anchor_top = 0.19736843
 anchor_right = 0.917
 anchor_bottom = 0.7496842
-offset_right =  -0.0400009
-offset_bottom =  0.0119991
+offset_right = -0.0400009
+offset_bottom = 0.0119991
 metadata/_edit_use_anchors_ = true
 
 [node name="Fire" type="TextureRect" parent="Panel/HUD/Content/Information/TopBar/StreakBadge/StreakContainer" index="0" unique_id=219296112]
@@ -395,35 +392,35 @@ anchor_left = 0.028
 anchor_top = 0.09
 anchor_right = 0.97200006
 anchor_bottom = 0.09
-offset_left =  -0.120001
-offset_top =  -8.82
-offset_right =  0.119995
-offset_bottom =  496.18
+offset_left = -0.120001
+offset_top = -8.82
+offset_right = 0.119995
+offset_bottom = 496.18
 
 [node name="Missions" type="NinePatchRect" parent="Panel" index="2" unique_id=1074224783]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
+anchor_left = 0.042000003
 anchor_top = 0.1
-anchor_right = 0.50100005
+anchor_right = 0.96900004
 anchor_bottom = 0.1
-offset_left =  -247.5
-offset_top =  482.7
-offset_right =  252.46
-offset_bottom =  741.044
+offset_left = -0.18000221
+offset_top = 482.7
+offset_right = -0.25994873
+offset_bottom = 741.044
 texture = ExtResource("9_panel")
-patch_margin_left =  106
-patch_margin_top =  42.5
-patch_margin_right =  91.5
-patch_margin_bottom =  41.5
+patch_margin_left = 106
+patch_margin_top = 42
+patch_margin_right = 91
+patch_margin_bottom = 41
 
 [node name="DateTag" type="TextureRect" parent="Panel/Missions" index="0" unique_id=1698417265]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  22.5
-offset_top =  12
-offset_right =  86
-offset_bottom =  31
+offset_left = 22.5
+offset_top = 12.0
+offset_right = 86.0
+offset_bottom = 31.0
 texture = ExtResource("10_tag_day")
 
 [node name="Label" type="Label" parent="Panel/Missions/DateTag" index="0" unique_id=535679775]
@@ -445,10 +442,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Mode" type="Label" parent="Panel/Missions" index="1" unique_id=2093370042]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  97
-offset_top =  12.5
-offset_right =  408.5
-offset_bottom =  30.5
+offset_left = 97.0
+offset_top = 12.5
+offset_right = 408.5
+offset_bottom = 30.5
 theme_type_variation = &"DailyTaskTitle"
 text = "STR_DAILY_TODAY_MODE"
 vertical_alignment = 1
@@ -459,29 +456,29 @@ resize_font_to_fit = true
 [node name="Reward" type="TextureRect" parent="Panel/Missions" index="2" unique_id=1700693757]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  430.5
-offset_top =  10.5
-offset_right =  488
-offset_bottom =  29.5
+offset_left = 430.5
+offset_top = 10.5
+offset_right = 488.0
+offset_bottom = 29.5
 texture = ExtResource("11_tag_reward")
 
 [node name="CoinIcon" type="TextureRect" parent="Panel/Missions/Reward" index="0" unique_id=2135901154]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  5
-offset_top =  4
-offset_right =  15
-offset_bottom =  14
+offset_left = 5.0
+offset_top = 4.0
+offset_right = 15.0
+offset_bottom = 14.0
 texture = ExtResource("12_coin")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Panel/Missions/Reward" index="1" unique_id=1390468146]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  17
-offset_top =  4
-offset_right =  54
-offset_bottom =  15
+offset_left = 17.0
+offset_top = 4.0
+offset_right = 54.0
+offset_bottom = 15.0
 theme_type_variation = &"DailyTaskReward"
 text = "+35"
 horizontal_alignment = 1
@@ -490,10 +487,10 @@ vertical_alignment = 1
 [node name="ProgressLabel" type="Label" parent="Panel/Missions" index="3" unique_id=1214704438]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  18
-offset_top =  226.5
-offset_right =  180
-offset_bottom =  240.5
+offset_left = 18.0
+offset_top = 226.5
+offset_right = 180.0
+offset_bottom = 240.5
 theme_type_variation = &"DailyProgressLabel"
 text = "STR_DAILY_TOTAL_PROGRESS"
 vertical_alignment = 1
@@ -501,25 +498,25 @@ vertical_alignment = 1
 [node name="ProgressBar" type="TextureProgressBar" parent="Panel/Missions" index="4" unique_id=1143325296]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  169
-offset_top =  229.5
-offset_right =  354
-offset_bottom =  236.5
+offset_left = 169.0
+offset_top = 229.5
+offset_right = 354.0
+offset_bottom = 236.5
+nine_patch_stretch = true
+stretch_margin_left = 4
+stretch_margin_top = 2
+stretch_margin_right = 4
+stretch_margin_bottom = 2
 texture_under = ExtResource("22_bar_bg")
-	texture_progress = ExtResource("23_bar_fill")
-	nine_patch_stretch = true
-	stretch_margin_left = 4
-	stretch_margin_top = 2
-	stretch_margin_right = 4
-	stretch_margin_bottom = 2
+texture_progress = ExtResource("23_bar_fill")
 
 [node name="Claim" type="Label" parent="Panel/Missions" index="5" unique_id=1945106779]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  358.5
-offset_top =  226
-offset_right =  486
-offset_bottom =  240
+offset_left = 358.5
+offset_top = 226.0
+offset_right = 486.0
+offset_bottom = 240.0
 theme_type_variation = &"DailyProgressClaim"
 text = "STR_DAILY_CLAIMED_REWARD"
 vertical_alignment = 1
@@ -529,12 +526,12 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top =  30
-offset_bottom =  -37.5
+offset_top = 30.0
+offset_bottom = -37.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/separation =  0
+theme_override_constants/separation = 0
 
 [node name="Slot1" type="Control" parent="Panel/Missions/Rows" index="0" unique_id=1683577933]
 layout_mode = 2
@@ -557,10 +554,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.50200003
 anchor_right = 0.50200003
-offset_left =  -200.08
-offset_top =  847.5
-offset_right =  199.92
-offset_bottom =  907.5
+offset_left = -200.08
+offset_top = 847.5
+offset_right = 199.92
+offset_bottom = 907.5
 texture_normal = ExtResource("24_play_n")
 texture_pressed = ExtResource("25_play_p")
 texture_hover = ExtResource("25_play_p")
@@ -570,18 +567,18 @@ texture_focused = ExtResource("26_play_f")
 [node name="Icon" type="TextureRect" parent="Panel/Play" index="0" unique_id=186845186]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  47.5
-offset_top =  21
-offset_right =  61.5
-offset_bottom =  35
+offset_left = 47.5
+offset_top = 21.0
+offset_right = 61.5
+offset_bottom = 35.0
 texture = ExtResource("27_pencil")
 
 [node name="Label" type="Label" parent="Panel/Play" index="1" unique_id=1786849018]
 layout_mode = 1
 anchors_preset = -1
-offset_left =  50
-offset_right =  380
-offset_bottom =  60
+offset_left = 50.0
+offset_right = 380.0
+offset_bottom = 60.0
 theme_type_variation = &"DailyCta"
 text = "STR_BTN_PLAY_DAILY_MODE"
 horizontal_alignment = 1
@@ -590,13 +587,9 @@ clip_text = true
 text_overrun_behavior = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="PulseAnim" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_daily_pulse_p")
-}
+[node name="PulseAnim" type="AnimationPlayer" parent="." index="1" unique_id=237065804]
+libraries/ = SubResource("AnimationLibrary_daily_pulse_p")
 
-[node name="EnterAnim" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_daily_enter_p")
-}
-autoplay = "enter"
+[node name="EnterAnim" type="AnimationPlayer" parent="." index="2" unique_id=536759756]
+libraries/ = SubResource("AnimationLibrary_daily_enter_p")
+autoplay = &"enter"

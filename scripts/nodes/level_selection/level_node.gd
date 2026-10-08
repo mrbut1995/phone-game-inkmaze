@@ -30,8 +30,9 @@ enum State {
 	SKIPPED,   ## Đã bỏ qua
 }
 
-const STAR_HIGHLIGHT := preload("res://assets/images/common/star_highlight.svg")
-const STAR_EMPTY     := preload("res://assets/images/common/star_empty.svg")
+## Art sao — gán trong `level_node.tscn` (ExtResource; dùng bản `-png` chuẩn dự án)
+@export var star_highlight: Texture2D = null
+@export var star_empty: Texture2D = null
 
 ## Màu số màn theo trạng thái (màn đang chơi nhấn bằng đỏ mực, còn lại mực xanh đậm)
 @export var color_number_current := Color(0.85, 0.26, 0.26, 1.0)
@@ -93,11 +94,11 @@ func _apply_stars(stars: int) -> void:
 	if not stars_box.visible:
 		return
 	if star1 != null:
-		star1.texture = STAR_HIGHLIGHT if stars >= 1 else STAR_EMPTY
+		star1.texture = star_highlight if stars >= 1 else star_empty
 	if star2 != null:
-		star2.texture = STAR_HIGHLIGHT if stars >= 2 else STAR_EMPTY
+		star2.texture = star_highlight if stars >= 2 else star_empty
 	if star3 != null:
-		star3.texture = STAR_HIGHLIGHT if stars >= 3 else STAR_EMPTY
+		star3.texture = star_highlight if stars >= 3 else star_empty
 
 
 ## "Thở" cho màn tiếp theo (animation `pulse` khai trong .tscn)

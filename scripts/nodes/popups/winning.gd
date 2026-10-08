@@ -8,8 +8,9 @@ extends BasePopup
 signal replay_requested
 signal next_requested
 
-const STAR_FULL := preload("res://assets/images-png/common/star_highlight.png")
-const STAR_EMPTY := preload("res://assets/images-png/common/star_empty.png")
+## Art sao — gán trong `winning.tscn` + `winning_challenge.tscn` (ExtResource)
+@export var star_full: Texture2D = null
+@export var star_empty: Texture2D = null
 
 ## Node binding: khai `node_paths` + `NodePath` trong `winning.tscn` (xem `chapters_layout`)
 @export var stars_row: Control = null
@@ -106,7 +107,7 @@ func _set_stars(stars: int) -> void:
 		if star == null:
 			continue
 		var earned := i < stars
-		star.texture = STAR_FULL if earned else STAR_EMPTY
+		star.texture = star_full if earned else star_empty
 		star.modulate = Color(1, 1, 1, 1) if earned else Color(1, 1, 1, 0.75)
 		if not earned:
 			continue

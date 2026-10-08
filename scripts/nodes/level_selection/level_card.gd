@@ -14,8 +14,9 @@ extends Control
 
 signal selected(level_id: int)
 
-const STAR_FULL := preload("res://assets/images-png/common/star_highlight.png")
-const STAR_EMPTY := preload("res://assets/images-png/common/star_empty.png")
+## Art sao — gán trong `level_card.tscn` + `level_card_landscape.tscn` (ExtResource)
+@export var star_full: Texture2D = null
+@export var star_empty: Texture2D = null
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 ## Màu nhấn của thẻ "MÀN TIẾP" (mockup bản ngang: viền cam #C4843A)
 @export var NEXT_COLOR := Color(0.76862746, 0.51764709, 0.22745098, 1)
@@ -113,7 +114,7 @@ func update_visuals() -> void:
 		if locked_art != null:
 			star.texture = locked_art
 		else:
-			star.texture = STAR_FULL if rating >= i + 1 else STAR_EMPTY
+			star.texture = star_full if rating >= i + 1 else star_empty
 
 	# Thẻ "MÀN TIẾP" (chỉ khi scene có hào quang/ruy băng ⇒ bản ngang):
 	# art viền cam + hào quang + ruy băng NEW + nhãn/màu cam.

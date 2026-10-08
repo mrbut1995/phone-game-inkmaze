@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://0waeoqw62pm0" path="res://scripts/nodes/archivements/tab_button.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://botll0m83hqk5" path="res://assets/images-png/archivements/tab_active.png" id="2_art_active"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_inactive.png" id="3_art_idle"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1ramo"]
 content_margin_left = 7.0
@@ -58,7 +59,7 @@ texture_margin_top = 6.0
 texture_margin_right = 10.0
 texture_margin_bottom = 6.0
 
-[node name="TabButton" type="Button" unique_id=117269596]
+[node name="TabButton" type="Button" unique_id=117269596 node_paths=PackedStringArray("label")]
 custom_minimum_size = Vector2(0, 32)
 anchors_preset = -1
 anchor_right = 0.128
@@ -73,6 +74,9 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_opo8v")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_fxe4e")
 theme_override_styles/focus = SubResource("StyleBoxTexture_cwdnb")
 script = ExtResource("1_script")
+label = NodePath("Label")
+art_active = ExtResource("2_art_active")
+art_idle = ExtResource("3_art_idle")
 texture_normal = ExtResource("2_art_active")
 texture_hover = ExtResource("2_art_active")
 texture_pressed = ExtResource("2_art_active")

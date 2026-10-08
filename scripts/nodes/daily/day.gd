@@ -84,14 +84,15 @@ const PILL_VARIATIONS := {
 ## Ngày bỏ lỡ đã trả Xu MỞ KHOÁ (hiện "ĐÃ MỞ" thay vì "BỎ LỠ")
 @export var unlocked: bool = false
 
-@onready var btn: TextureButton = $Button
-@onready var number_label: Label = $Button/Number
-@onready var check_icon: TextureRect = $Button/CheckIcon
-@onready var star_icon: TextureRect = $Button/StarIcon
-@onready var pill: TextureRect = $Button/StatusPill
-@onready var status_label: Label = $Button/StatusPill/StatusLabel
-@onready var today_tag: TextureRect = $Button/TodayTag
-@onready var today_label: Label = $Button/TodayTag/TodayLabel
+## Node binding: khai `node_paths` + NodePath trong `day.tscn`
+@export var btn: TextureButton = null
+@export var number_label: Label = null
+@export var check_icon: TextureRect = null
+@export var star_icon: TextureRect = null
+@export var pill: TextureRect = null
+@export var status_label: Label = null
+@export var today_tag: TextureRect = null
+@export var today_label: Label = null
 
 
 func _ready() -> void:

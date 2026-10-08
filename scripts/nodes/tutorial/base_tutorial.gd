@@ -72,15 +72,16 @@ var _pending_toast_seq := 0
 
 ## AnimationPlayer phụ của scene (mỗi nhóm hiệu ứng 1 player để không tranh nhau):
 ## DialogAnim (chữ thoại) · TitleAnim (tiêu đề) · ToastAnim · SpotlightAnim
-@onready var anim_dialog: AnimationPlayer = get_node_or_null("DialogAnim")
-@onready var anim_title: AnimationPlayer = get_node_or_null("TitleAnim")
 ## Hẹn giờ chờ hiệu ứng UI — Timer khai trong `base_tutorial.tscn` (dây `timeout` cũng ở đó)
-@onready var _text_out_timer: Timer = get_node_or_null("TextOutTimer")
-@onready var _toast_timer: Timer = get_node_or_null("ToastTimer")
-@onready var _spot_in_timer: Timer = get_node_or_null("SpotlightInTimer")
-@onready var _spot_out_timer: Timer = get_node_or_null("SpotlightOutTimer")
-@onready var anim_toast: AnimationPlayer = get_node_or_null("ToastAnim")
-@onready var anim_spotlight: AnimationPlayer = get_node_or_null("SpotlightAnim")
+## Node binding: khai `node_paths` + NodePath trong `base_tutorial.tscn`
+@export var anim_dialog: AnimationPlayer = null
+@export var anim_title: AnimationPlayer = null
+@export var text_out_timer: Timer = null
+@export var toast_timer: Timer = null
+@export var spot_in_timer: Timer = null
+@export var spot_out_timer: Timer = null
+@export var anim_toast: AnimationPlayer = null
+@export var anim_spotlight: AnimationPlayer = null
 
 
 func _play_anim_on(player: AnimationPlayer, anim_name: StringName) -> bool:
@@ -251,8 +252,8 @@ func _animate_step_text(new_msg: String, new_title: String) -> void:
 		# Chờ chữ mờ xong mới đổi nội dung — Timer khai trong `base_tutorial.tscn`
 		_pending_msg = new_msg
 		_pending_title = new_title
-		if _text_out_timer != null:
-			_text_out_timer.start()
+		if text_out_timer != null:
+			text_out_timer.start()
 		else:
 			# Fallback khi scene thiếu TextOutTimer
 			get_tree().create_timer(TEXT_OUT_SECONDS).timeout.connect(_apply_step_text_and_slide.bind(new_msg, new_title))
@@ -477,9 +478,9 @@ func _show_toast(key: String, fallback_text: String, color: Color, hold: float) 
 	if _play_anim_on(anim_toast, &"toast_in"):
 		# Giữ chữ toast `hold` giây rồi mới mờ — Timer khai trong `base_tutorial.tscn`
 		_pending_toast_seq = seq
-		if _toast_timer != null:
-			_toast_timer.wait_time = TOAST_IN_SECONDS + hold
-			_toast_timer.start()
+		if toast_timer != null:
+			toast_timer.wait_time = TOAST_IN_SECONDS + hold
+			toast_timer.start()
 		else:
 			# Fallback khi scene thiếu ToastTimer
 			get_tree().create_timer(TOAST_IN_SECONDS + hold).timeout.connect(_fade_toast_after.bind(seq))
@@ -594,8 +595,8 @@ func _apply_spotlight() -> void:
 		spotlight.size = target.size
 		spotlight.modulate.a = 0.0
 		if _play_anim_on(anim_spotlight, &"spotlight_in"):
-			if _spot_in_timer != null:
-				_spot_in_timer.start()
+			if spot_in_timer != null:
+				spot_in_timer.start()
 			else:
 				# Fallback khi scene thiếu SpotlightInTimer
 				get_tree().create_timer(SPOTLIGHT_IN_SECONDS).timeout.connect(_start_spotlight_pulse)
@@ -610,8 +611,8 @@ func _hide_spotlight() -> void:
 	if spotlight == null or not spotlight.visible:
 		return
 	if _play_anim_on(anim_spotlight, &"spotlight_out"):
-		if _spot_out_timer != null:
-			_spot_out_timer.start()
+		if spot_out_timer != null:
+			spot_out_timer.start()
 		else:
 			# Fallback khi scene thiếu SpotlightOutTimer
 			get_tree().create_timer(SPOTLIGHT_OUT_SECONDS).timeout.connect(_hide_spotlight_if_unused)

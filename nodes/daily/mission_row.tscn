@@ -1,16 +1,20 @@
 [gd_scene format=3 uid="uid://1cx6388j3q2r"]
 
 [ext_resource type="Script" uid="uid://5v3d5j1xa8df" path="res://scripts/nodes/daily/mission_row.gd" id="1_row"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/box_task_todo.png" id="2_box"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/tag_special_mode.png" id="3_tag"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/btn_primary_normal.png" id="4_btn_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/row_seperator.png" id="4_n7nb6"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/btn_primary_pressed.png" id="5_btn_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/btn_primary_focus.png" id="6_btn_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/panel_daily_seperator.png" id="7_ou8uo"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/red_section.png" id="8_pixy8"]
+[ext_resource type="Texture2D" uid="uid://c22si67aq3wtt" path="res://assets/images-png/calendar/box_task_todo.png" id="2_box"]
+[ext_resource type="Texture2D" uid="uid://ivmu77fwnwyl" path="res://assets/images-png/calendar/tag_special_mode.png" id="3_tag"]
+[ext_resource type="Texture2D" uid="uid://m120kjxggvc" path="res://assets/images-png/calendar/btn_primary_normal.png" id="4_btn_n"]
+[ext_resource type="Texture2D" uid="uid://c77ncskuec8y8" path="res://assets/images-png/calendar/row_seperator.png" id="4_n7nb6"]
+[ext_resource type="Texture2D" uid="uid://bqygi32w7qixm" path="res://assets/images-png/calendar/btn_primary_pressed.png" id="5_btn_p"]
+[ext_resource type="Texture2D" uid="uid://bsob47ks88i5l" path="res://assets/images-png/calendar/btn_primary_focus.png" id="6_btn_f"]
+[ext_resource type="Texture2D" uid="uid://bda4uabk2lqaf" path="res://assets/images-png/calendar/panel_daily_seperator.png" id="7_ou8uo"]
+[ext_resource type="Texture2D" uid="uid://bphegvtvspet8" path="res://assets/images-png/calendar/red_section.png" id="8_pixy8"]
+[ext_resource type="Texture2D" uid="uid://ccja8tp04p2ob" path="res://assets/images-png/calendar/box_task_done.png" id="9_box_done"]
+[ext_resource type="Texture2D" uid="uid://digk33w5peiyu" path="res://assets/images-png/calendar/btn_completed_normal.png" id="10_done_n"]
+[ext_resource type="Texture2D" uid="uid://dbouqoeaiuayc" path="res://assets/images-png/calendar/btn_completed_pressed.png" id="11_done_p"]
+[ext_resource type="Texture2D" uid="uid://ban2uhxnuy3p3" path="res://assets/images-png/calendar/btn_completed_focus.png" id="12_done_f"]
 
-[node name="Control" type="Control" unique_id=245762476]
+[node name="Control" type="Control" unique_id=245762476 node_paths=PackedStringArray("box", "reward_label", "tag", "tag_label", "title_label", "progress_label", "action_button", "action_label", "special_section")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +25,23 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("1_row")
+box = NodePath("Item/Centering/Check/Box")
+reward_label = NodePath("Item/Centering/Check/Text/Reward")
+tag = NodePath("Item/Text/TitleContainer/Tag")
+tag_label = NodePath("Item/Text/TitleContainer/Tag/Label")
+title_label = NodePath("Item/Text/TitleContainer/Title")
+progress_label = NodePath("Item/Text/Progress")
+action_button = NodePath("Item/Action")
+action_label = NodePath("Item/Action/Label")
+special_section = NodePath("SpecialSection")
+texture_box_done = ExtResource("9_box_done")
+texture_box_todo = ExtResource("2_box")
+texture_done_normal = ExtResource("10_done_n")
+texture_done_pressed = ExtResource("11_done_p")
+texture_done_focus = ExtResource("12_done_f")
+texture_play_normal = ExtResource("4_btn_n")
+texture_play_pressed = ExtResource("5_btn_p")
+texture_play_focus = ExtResource("6_btn_f")
 
 [node name="SpecialSection" type="NinePatchRect" parent="." unique_id=1037267615]
 layout_mode = 1
@@ -78,17 +99,6 @@ stretch_mode = 5
 layout_mode = 2
 theme_override_constants/separation = 1
 
-[node name="Status" type="Label" parent="Item/Centering/Check/Text" unique_id=1895697198]
-layout_mode = 2
-theme_type_variation = &"DailyTaskStatusTodo"
-theme_override_font_sizes/font_size = 9
-text = "0/1"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
-minimum_font_size = 11
-maximum_font_size = 15
-
 [node name="Reward" type="Label" parent="Item/Centering/Check/Text" unique_id=1214629740]
 layout_mode = 2
 theme_type_variation = &"DailyTaskReward"
@@ -104,7 +114,7 @@ maximum_font_size = 15
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_constants/separation = 2
+theme_override_constants/separation = 5
 
 [node name="TitleContainer" type="HBoxContainer" parent="Item/Text" unique_id=1776966037]
 custom_minimum_size = Vector2(0, 17)
@@ -112,7 +122,7 @@ layout_mode = 2
 theme_override_constants/separation = 5
 
 [node name="Tag" type="NinePatchRect" parent="Item/Text/TitleContainer" unique_id=1864771490]
-custom_minimum_size = Vector2(65, 13)
+custom_minimum_size = Vector2(70, 13)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -148,26 +158,13 @@ custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"DailyTaskTitle"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "..."
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 minimum_font_size = 18
 maximum_font_size = 30
-
-[node name="Desc" type="Label" parent="Item/Text" unique_id=991696763]
-custom_minimum_size = Vector2(0, 13)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"DailyTaskDesc"
-theme_override_font_sizes/font_size = 10
-text = "..."
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-minimum_font_size = 14
-maximum_font_size = 22
 
 [node name="Progress" type="Label" parent="Item/Text" unique_id=1255076877]
 custom_minimum_size = Vector2(0, 13)

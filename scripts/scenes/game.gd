@@ -161,6 +161,7 @@ func _wire_controllers() -> void:
 	_connect_once(ui_controller, "revive_requested", game_controller, "_on_revive_requested")
 	_connect_once(ui_controller, "home_requested", game_controller, "_on_home_requested")
 	_connect_once(ui_controller, "daily_requested", game_controller, "_on_daily_requested")
+	_connect_once(ui_controller, "back_requested", game_controller, "_on_back_requested")
 	_connect_once(ui_controller, "pause_toggled", game_controller, "_on_pause_toggled")
 	_connect_once(ui_controller, "memorize_finished", game_controller, "_on_memorize_finished")
 	# Nút trên thanh Status — dây khai trong `scenes/game.tscn` (cả 2 hướng);

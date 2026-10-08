@@ -264,6 +264,23 @@ func _section_3_run() -> void:
 		var stamp := win.get("stamp_title") as Label
 		_entry(stamp != null and stamp.text == tr("STR_CHALLENGE_STAMP_TITLE"),
 			"Con dau ghi 'THU THACH' (dang '%s')" % (stamp.text if stamp != null else "?"))
+		# Nut chinh = "TRO VE" (thay vi "MAN KE TIEP") + day bam khai trong tscn
+		var back_label := win.get("label_next") as Label
+		_entry(back_label != null and back_label.text == tr("STR_BTN_BACK_PREV"),
+			"Nut chinh ghi 'TRO VE' (nhan '%s')" % (back_label.text if back_label != null else "?"))
+		var back_btn := win.get_node_or_null("Panel/Content/Information/Buttons/BackBtn") as Button
+		_entry(back_btn != null, "Popup co nut BackBtn (doi ten tu NextBtn)")
+		_entry(back_btn != null and back_btn.pressed.is_connected(Callable(win, "_on_back_pressed")),
+			"Day nut BackBtn -> _on_back_pressed (khai trong tscn)")
+		if back_btn != null:
+			# Ngat day toi UIController truoc khi bam thu de test KHONG doi scene
+			var ui: Node = scene.ui_controller
+			if ui != null and win.is_connected("back_requested", Callable(ui, "_emit_back")):
+				win.disconnect("back_requested", Callable(ui, "_emit_back"))
+			var got_back := [false]
+			win.connect("back_requested", func() -> void: got_back[0] = true)
+			win.call("_on_back_pressed")
+			_entry(got_back[0], "Bam 'TRO VE' phat signal back_requested")
 	Popups.close_all()
 	await process_frame
 

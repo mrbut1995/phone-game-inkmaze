@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://c45w07472jvgh" path="res://scripts/nodes/ranking/rank_row.gd" id="1_row"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/rank_row.png" id="3_art_row"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/rank_row_you.png" id="4_art_you"]
 
-[node name="RankRow" type="Control" unique_id=2119227117]
+[node name="RankRow" type="Control" unique_id=2119227117 node_paths=PackedStringArray("bg", "rank_label", "flag", "name_label", "record_label", "points_label")]
 custom_minimum_size = Vector2(377.5, 45)
 layout_mode = 3
 anchors_preset = 0
@@ -11,6 +13,14 @@ offset_right = 377.5
 offset_bottom = 45.0
 theme = ExtResource("2_theme")
 script = ExtResource("1_row")
+bg = NodePath("Bg")
+rank_label = NodePath("Body/Rank")
+flag = NodePath("Body/Flag")
+name_label = NodePath("Body/Name")
+record_label = NodePath("Body/Stats/Record")
+points_label = NodePath("Body/Stats/Points")
+row_art = ExtResource("3_art_row")
+row_you_art = ExtResource("4_art_you")
 
 [node name="Bg" type="TextureRect" parent="." unique_id=669903944]
 layout_mode = 1

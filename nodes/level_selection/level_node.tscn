@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://dvkcdbe03vq0f" path="res://assets/images-png/level_selector/level_node_btn_disabled.png" id="6_btn_d"]
 [ext_resource type="Texture2D" uid="uid://bge7ohe3efauf" path="res://assets/images-png/level_selector/level_node_halo.png" id="7_halo"]
 [ext_resource type="Texture2D" uid="uid://cqe1sdpj4yw71" path="res://assets/images/common/star_empty.svg" id="8_stremp"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="9_starfull"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_empty.png" id="10_starempty"]
 [ext_resource type="Texture2D" uid="uid://blikk0nkl6dow" path="res://assets/images/level_selector/icon_lock_locked.svg" id="9_lock"]
 
 [sub_resource type="Animation" id="Animation_node_reset"]
@@ -93,6 +95,8 @@ star2 = NodePath("Body/Stars/Star2")
 star3 = NodePath("Body/Stars/Star3")
 lock_icon = NodePath("Body/Lock")
 anim = NodePath("AnimationPlayer")
+star_highlight = ExtResource("9_starfull")
+star_empty = ExtResource("10_starempty")
 
 [node name="Body" type="Node2D" parent="." unique_id=1712345601]
 

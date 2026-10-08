@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://djsrgljk5e128" path="res://nodes/game/board_layers.tscn" id="2_layers"]
 [ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_reset_big.png" id="6_w0r1h"]
 
-[node name="Board" type="Control" unique_id=181012636]
+[node name="Board" type="Control" unique_id=181012636 node_paths=PackedStringArray("layers")]
 custom_minimum_size = Vector2(510, 510)
 layout_mode = 3
 anchors_preset = 15
@@ -14,6 +14,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_v7f7a")
+layers = NodePath("Layers")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="NinePatchRect" parent="." unique_id=1792955065]

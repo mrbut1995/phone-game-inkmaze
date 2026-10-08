@@ -1,27 +1,26 @@
 [gd_scene format=3 uid="uid://ka36asr06er2"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="5_back_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/panel_information.png" id="5_uaalm"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="6_back_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/streak_badge.png" id="7_streak"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/fire_icon.png" id="8_fire"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/panel_daily_mission.png" id="9_panel"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/tag_day.png" id="10_tag_day"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/tag_reward.png" id="11_tag_reward"]
-[ext_resource type="Texture2D" path="res://assets/images-png/shop/icon_coin.png" id="12_coin"]
-[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="16_aqjlc"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/card_wall_slider_track.png" id="22_bar_bg"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/card_wall_slider_fill.png" id="23_bar_fill"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_normal.png" id="24_play_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_pressed.png" id="25_play_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_focus.png" id="26_play_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/pencil_icon.png" id="27_pencil"]
 [ext_resource type="Script" uid="uid://d3tppcudxm1tm" path="res://scripts/scenes/layout/daily_layout.gd" id="2_layout"]
+[ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
+[ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="5_back_n"]
+[ext_resource type="Texture2D" uid="uid://cu4e6t41rs731" path="res://assets/images-png/common/panel_information.png" id="5_uaalm"]
+[ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="6_back_p"]
+[ext_resource type="Texture2D" uid="uid://cfmosoc1ok1ly" path="res://assets/images-png/calendar/streak_badge.png" id="7_streak"]
+[ext_resource type="Texture2D" uid="uid://cpbluvkao52yj" path="res://assets/images-png/icons/fire_icon.png" id="8_fire"]
+[ext_resource type="Texture2D" uid="uid://d1dnqdjb7py2q" path="res://assets/images-png/calendar/panel_daily_mission.png" id="9_panel"]
+[ext_resource type="Texture2D" uid="uid://bjeb8uvq4xesn" path="res://assets/images-png/calendar/tag_day.png" id="10_tag_day"]
+[ext_resource type="Texture2D" uid="uid://cxu2xe2kip7he" path="res://assets/images-png/calendar/tag_reward.png" id="11_tag_reward"]
+[ext_resource type="Texture2D" uid="uid://vyex76nan353" path="res://assets/images-png/shop/icon_coin.png" id="12_coin"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="16_aqjlc"]
+[ext_resource type="Texture2D" uid="uid://cnsqb6m1w4sjb" path="res://assets/images-png/game/card_wall_slider_track.png" id="22_bar_bg"]
+[ext_resource type="Texture2D" uid="uid://ci833ihmlk3il" path="res://assets/images-png/game/card_wall_slider_fill.png" id="23_bar_fill"]
+[ext_resource type="Texture2D" uid="uid://ckxdbnug8ecl6" path="res://assets/images-png/common/btn_paper_cta_normal.png" id="24_play_n"]
+[ext_resource type="Texture2D" uid="uid://5vjrbk835y5f" path="res://assets/images-png/common/btn_paper_cta_pressed.png" id="25_play_p"]
+[ext_resource type="Texture2D" uid="uid://d0tl47hvj62ph" path="res://assets/images-png/common/btn_paper_cta_focus.png" id="26_play_f"]
+[ext_resource type="Texture2D" uid="uid://c501hpv5a4si6" path="res://assets/images-png/icons/pencil_icon.png" id="27_pencil"]
 
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uaalm"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7rue4"]
 content_margin_left = 106.0
 content_margin_top = 32.0
 content_margin_right = 65.0
@@ -32,7 +31,7 @@ texture_margin_top = 32.0
 texture_margin_right = 65.0
 texture_margin_bottom = 34.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4ahgp"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c8j7n"]
 content_margin_left = 106.0
 content_margin_top = 32.0
 content_margin_right = 65.0
@@ -43,7 +42,7 @@ texture_margin_top = 32.0
 texture_margin_right = 65.0
 texture_margin_bottom = 34.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1lf86"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yvydf"]
 content_margin_left = 106.0
 content_margin_top = 32.0
 content_margin_right = 65.0
@@ -54,7 +53,7 @@ texture_margin_top = 32.0
 texture_margin_right = 65.0
 texture_margin_bottom = 34.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7lagm"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nwja1"]
 content_margin_left = 106.0
 content_margin_top = 32.0
 content_margin_right = 65.0
@@ -65,7 +64,7 @@ texture_margin_top = 32.0
 texture_margin_right = 65.0
 texture_margin_bottom = 34.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mgsun"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r740i"]
 content_margin_left = 106.0
 content_margin_top = 32.0
 content_margin_right = 65.0
@@ -393,13 +392,12 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
 nine_patch_stretch = true
+stretch_margin_left = 4
+stretch_margin_top = 2
+stretch_margin_right = 4
+stretch_margin_bottom = 2
 texture_under = ExtResource("22_bar_bg")
-	texture_progress = ExtResource("23_bar_fill")
-	nine_patch_stretch = true
-	stretch_margin_left = 4
-	stretch_margin_top = 2
-	stretch_margin_right = 4
-	stretch_margin_bottom = 2
+texture_progress = ExtResource("23_bar_fill")
 
 [node name="Claim" type="Label" parent="Panel/HUD/Content/Information/Missions" index="6" unique_id=1945106779]
 layout_mode = 1
@@ -426,11 +424,11 @@ maximum_font_size = 17
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
-theme_override_styles/normal = SubResource("StyleBoxTexture_uaalm")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_4ahgp")
-theme_override_styles/hover = SubResource("StyleBoxTexture_1lf86")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_7lagm")
-theme_override_styles/focus = SubResource("StyleBoxTexture_mgsun")
+theme_override_styles/normal = SubResource("StyleBoxTexture_7rue4")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_c8j7n")
+theme_override_styles/hover = SubResource("StyleBoxTexture_yvydf")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_nwja1")
+theme_override_styles/focus = SubResource("StyleBoxTexture_r740i")
 script = ExtResource("16_aqjlc")
 texture_normal = ExtResource("24_play_n")
 texture_hover = ExtResource("25_play_p")
@@ -478,7 +476,5 @@ text_overrun_behavior = 3
 minimum_font_size = 18
 maximum_font_size = 28
 
-[node name="PulseAnim" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_daily_pulse_l")
-}
+[node name="PulseAnim" type="AnimationPlayer" parent="." index="1" unique_id=1033823570]
+libraries/ = SubResource("AnimationLibrary_daily_pulse_l")

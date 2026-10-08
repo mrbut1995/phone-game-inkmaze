@@ -12,18 +12,19 @@ extends BaseScene
 ## thêm/bớt mục mà không phải sửa .tscn. Chữ trong màn này là chữ dev, không dịch.
 ## ============================================================================
 
-const ROW_NORMAL := preload("res://assets/images-png/settings/row_button_normal.png")
-const ROW_PRESSED := preload("res://assets/images-png/settings/row_button_pressed.png")
-const ROW_FOCUS := preload("res://assets/images-png/settings/row_button_focus.png")
-const ROW_DANGER_N := preload("res://assets/images-png/settings/row_button_danger_normal.png")
-const ROW_DANGER_P := preload("res://assets/images-png/settings/row_button_danger_pressed.png")
-const ROW_DANGER_F := preload("res://assets/images-png/settings/row_button_danger_focus.png")
-const CHIP := preload("res://assets/images-png/settings/section_chip.png")
-const DIVIDER := preload("res://assets/images-png/settings/divider_dashed.png")
-const CHECK_ON := preload("res://assets/images-png/common/checkbox_checked.png")
-const CHECK_OFF := preload("res://assets/images-png/common/checkbox_normal.png")
-const CHECK_PRESS := preload("res://assets/images-png/common/checkbox_pressed.png")
-const CHECK_FOCUS := preload("res://assets/images-png/common/checkbox_focus.png")
+## Art của các hàng/mục do code dựng — gán trong `scenes/debug.tscn` (ExtResource)
+@export var ROW_NORMAL: Texture2D = null
+@export var ROW_PRESSED: Texture2D = null
+@export var ROW_FOCUS: Texture2D = null
+@export var ROW_DANGER_N: Texture2D = null
+@export var ROW_DANGER_P: Texture2D = null
+@export var ROW_DANGER_F: Texture2D = null
+@export var CHIP: Texture2D = null
+@export var DIVIDER: Texture2D = null
+@export var CHECK_ON: Texture2D = null
+@export var CHECK_OFF: Texture2D = null
+@export var CHECK_PRESS: Texture2D = null
+@export var CHECK_FOCUS: Texture2D = null
 
 @export var FALLBACK_TOTAL_LEVELS := 9
 @export var DIFFICULTIES := ["easy", "medium", "hard"]
@@ -57,8 +58,7 @@ func _bind_refs() -> void:
 func _ready() -> void:
 	_bind_refs()
 	_sync_special_selection()
-	if layout.btn_back != null:
-		layout.btn_back.pressed.connect(_on_back_pressed)
+	# Dây `Back.pressed → _on_back_pressed` khai trong `scenes/debug.tscn` (cả 2 bố cục)
 	if layout.lbl_title != null:
 		layout.lbl_title.text = "DEBUG CONSOLE"
 	if layout.lbl_footer != null:

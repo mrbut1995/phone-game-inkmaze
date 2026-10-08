@@ -293,10 +293,28 @@ func _section_3_scene(gm: Node, dm: Node, arch: Node) -> void:
 	var row0 := scene.row_at(0)
 	var row3 := scene.row_at(3)
 	_check(row0 != null and row3 != null, "Lay duoc hang 0 va hang 3")
+	# Dây NÚT khai trong `scenes/daily.tscn` (nối xuyên instance cho CẢ 2 bố cục) — code chỉ giữ guard
+	_check(scene.layout.btn_back.pressed.is_connected(Callable(scene, "_on_back_pressed")),
+		"Nut Back noi san trong daily.tscn")
+	_check(scene.layout.btn_play.pressed.is_connected(Callable(scene, "_on_play_pressed")),
+		"Nut CTA noi san trong daily.tscn")
+	_check((scene.layout.calendar as Object).is_connected("day_selected", Callable(scene, "_on_day_selected")),
+		"Lich noi san day_selected trong daily.tscn")
 	if row0 != null and row3 != null:
-		_check(row0.get_node("Tag").visible == false, "Hang maze thuong KHONG co badge SPECIAL MODE")
-		_check(row3.get_node("Tag").visible == true, "Hang 4 (maze dac biet) CO badge SPECIAL MODE")
-		# Hàng 1..3 = GAME của ngày: "TRÒ CHƠI n · <tên>" (tên theo kế hoạch ngày)
+		# Node binding của hàng khai bằng @export trong `mission_row.tscn` (script KHÔNG tự dò node)
+		_check(row0.box != null and row0.title_label != null and row0.progress_label != null
+			and row0.action_button != null and row0.special_section != null,
+			"Hang nhiem vu: export node binding du (box/title/progress/nut/nen)")
+		_check(row0.texture_play_normal != null and row0.texture_play_pressed != null
+			and row0.texture_done_normal != null and row0.texture_box_done != null,
+			"Hang nhiem vu: texture trang thai binding trong scene")
+		# Hàng chỉ còn ĐÚNG 2 DÒNG: Title + Tiến độ (bỏ hẳn node Desc/Status)
+		_check(row0.get_node_or_null("Item/Text/Desc") == null
+			and row0.get_node_or_null("Item/Centering/Check/Text/Status") == null,
+			"Hang nhiem vu chi con 2 dong (khong con Desc/Status)")
+		_check(row0.tag.visible == false, "Hang maze thuong KHONG co badge SPECIAL MODE")
+		_check(row3.tag.visible == true, "Hang 4 (maze dac biet) CO badge SPECIAL MODE")
+		# Hàng 1..3 = GAME của ngày: CHALLENGE -> title CHÍNH LÀ tên luật; maze thường -> "TRÒ CHƠI n · MAZE THƯỜNG"
 		var plan: Array = dm.call("get_day_games", today)
 		var entry0: Dictionary = {}
 		if plan.size() > 0 and plan[0] is Dictionary:
@@ -305,8 +323,11 @@ func _section_3_scene(gm: Node, dm: Node, arch: Node) -> void:
 		var key0 := str(ChallengeGameMode.NAME_KEYS.get(str(entry0.get("challenge_id", "")), ""))
 		if str(entry0.get("mode", "")) == "challenge" and not key0.is_empty():
 			name0 = tr(key0)
-		_check(row0.title_label.text == tr("STR_DAILY_GAME_TITLE").format([1, name0]),
-			"Hang 1 = 'TRO CHOI 1 · <ten>' (nhan '%s')" % row0.title_label.text)
+			_check(row0.title_label.text == name0,
+				"Hang challenge: title CHI hien ten luat (nhan '%s')" % row0.title_label.text)
+		else:
+			_check(row0.title_label.text == tr("STR_DAILY_GAME_TITLE").format([1, name0]),
+				"Hang maze thuong = 'TRO CHOI 1 · MAZE THUONG' (nhan '%s')" % row0.title_label.text)
 		_check(int(row3.index) == 3, "Hang 4 index = 3")
 
 	# Chọn ngày khác: chỉ đổi ngày đang xem, KHÔNG nhảy vào màn chơi
@@ -434,7 +455,7 @@ func _mode_label(dm: Node, day: int) -> String:
 
 ## Ô ngày trên lịch theo số ngày (chỉ tính ô của tháng đang xem, bỏ ô đệm/tháng trước)
 func _cell_for(scene: DailyScene, day: int) -> DailyDayCell:
-	var grid := scene.layout.calendar.get_node_or_null("Days")
+	var grid := scene.layout.calendar.get_node_or_null("Panel/Content/Days")
 	if grid == null:
 		return null
 	for child in grid.get_children():

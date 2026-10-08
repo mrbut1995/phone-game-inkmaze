@@ -162,11 +162,14 @@ func _notification(what: int) -> void:
 
 ## Lớp vẽ + nét mực + con trỏ + node MẪU đều KHAI SẴN trong scene (`Layers` = board_layers.tscn)
 ## ⇒ không instantiate lúc chạy: mỗi tầng mới chỉ RESET trạng thái và nhân bản từ node mẫu.
+## Node binding: khai `node_paths` + NodePath trong `nodes/game/board.tscn`
+@export var layers: BoardLayers = null
+
+
 func _init_layers() -> void:
 	if _cells_layer != null:
 		return
 
-	var layers := get_node_or_null("Layers") as BoardLayers
 	if layers == null:
 		push_warning("board: thiếu node Layers — khai trong nodes/game/board.tscn")
 		return

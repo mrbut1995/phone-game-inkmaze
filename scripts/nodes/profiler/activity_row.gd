@@ -10,25 +10,26 @@ extends Control
 ## ============================================================================
 
 ## Màu nhãn kết quả theo loại (giống mockup: vàng sao · đỏ điểm · xanh hoàn thành)
-const COLOR_GOLD := Color(0.7098, 0.3529, 0.0353)     # #B45309
-const COLOR_RED := Color(0.8627, 0.1490, 0.1490)      # #DC2626
-const COLOR_GREEN := Color(0.0863, 0.6392, 0.2902)    # #16A34A
-const COLOR_MUTED := Color(0.4431, 0.5451, 0.6196)    # #718B9E
+@export var COLOR_GOLD := Color(0.7098, 0.3529, 0.0353)     # #B45309
+@export var COLOR_RED := Color(0.8627, 0.1490, 0.1490)      # #DC2626
+@export var COLOR_GREEN := Color(0.0863, 0.6392, 0.2902)    # #16A34A
+@export var COLOR_MUTED := Color(0.4431, 0.5451, 0.6196)    # #718B9E
 
 ## Nền NHẠT theo loại dòng (mockup: vòng icon + chip kết quả đều có nền pastel)
-const BG_GOLD := Color(0.9961, 0.9529, 0.7804)      # #FEF3C7
-const BG_RED := Color(0.9961, 0.8863, 0.8863)       # #FEE2E2
-const BG_GREEN := Color(0.8627, 0.9882, 0.9020)     # #DCFCE7
-const BG_MUTED := Color(0.9451, 0.9608, 0.9725)     # #F1F5F9
-const DISC_PLAY := Color(0.9373, 0.9647, 1.0)       # #EFF6FF
-const DISC_DUNGEON := Color(0.9961, 0.9490, 0.9490) # #FEF2F2
-const DISC_DAILY := Color(0.9412, 0.9922, 0.9569)   # #F0FDF4
+@export var BG_GOLD := Color(0.9961, 0.9529, 0.7804)      # #FEF3C7
+@export var BG_RED := Color(0.9961, 0.8863, 0.8863)       # #FEE2E2
+@export var BG_GREEN := Color(0.8627, 0.9882, 0.9020)     # #DCFCE7
+@export var BG_MUTED := Color(0.9451, 0.9608, 0.9725)     # #F1F5F9
+@export var DISC_PLAY := Color(0.9373, 0.9647, 1.0)       # #EFF6FF
+@export var DISC_DUNGEON := Color(0.9961, 0.9490, 0.9490) # #FEF2F2
+@export var DISC_DAILY := Color(0.9412, 0.9922, 0.9569)   # #F0FDF4
 
-@onready var _disc: TextureRect = $Disc
-@onready var _icon: TextureRect = $Disc/Icon
-@onready var _title: Label = $Title
-@onready var _sub: Label = $Sub
-@onready var _tag: Label = $Tag
+## Node binding: khai `node_paths` + NodePath trong `activity_row.tscn`
+@export var disc: TextureRect = null
+@export var icon: TextureRect = null
+@export var title: Label = null
+@export var sub: Label = null
+@export var tag: Label = null
 
 
 ## Nạp 1 dòng lịch sử (dict thô từ PlayerProfileManager.record_run)
@@ -41,8 +42,8 @@ func set_row(row: Dictionary) -> void:
 	var width := int(row.get("width", 0))
 	var height := int(row.get("height", 0))
 
-	_title.text = _title_text(endless, daily, mode_id, floor_id, width, height)
-	_sub.text = _sub_text(row, endless, daily)
+	title.text = _title_text(endless, daily, mode_id, floor_id, width, height)
+	sub.text = _sub_text(row, endless, daily)
 	_set_tag(_tag_text(row, won, endless, daily), _tag_color(won, endless, daily), _tag_bg(won, endless, daily))
 
 	# Icon + màu vòng theo chế độ (dùng lại art có sẵn của màn chính / profiler)
@@ -57,11 +58,11 @@ func set_row(row: Dictionary) -> void:
 		icon_path = "res://assets/images-png/icons/icon_calendar.png"
 		tint = Color(0.8510, 0.4667, 0.0235)           # #D97706
 		disc_color = DISC_DAILY
-	if _icon != null:
-		_icon.texture = load(icon_path) as Texture2D
-		_icon.self_modulate = tint
-	if _disc != null:
-		_disc.self_modulate = disc_color
+	if icon != null:
+		icon.texture = load(icon_path) as Texture2D
+		icon.self_modulate = tint
+	if disc != null:
+		disc.self_modulate = disc_color
 
 
 ## "Màn 24 • Bàn 7×7" / "Dungeon Mode • Tầng 48" / "Daily Mission • Wall Builder"
@@ -116,22 +117,22 @@ func _tag_bg(won: bool, endless: bool, daily: bool) -> Color:
 
 
 func _set_tag(text: String, color: Color, bg: Color) -> void:
-	if _tag == null:
+	if tag == null:
 		return
-	_tag.text = text
+	tag.text = text
 	# Màu theo dòng là dữ liệu RUNTIME ⇒ nhân bản LabelSettings rồi đổi font_color
-	if _tag.label_settings != null:
-		var settings := _tag.label_settings.duplicate() as LabelSettings
+	if tag.label_settings != null:
+		var settings := tag.label_settings.duplicate() as LabelSettings
 		settings.font_color = color
-		_tag.label_settings = settings
+		tag.label_settings = settings
 	# Chip nền: art TĨNH khai trong .tscn (chip_grey) → nhân màu pastel theo loại dòng,
 	# và co bề rộng ôm theo chữ (nhãn neo phải nên chỉ cần kéo offset_left).
-	var box := _tag.get_theme_stylebox("normal")
+	var box := tag.get_theme_stylebox("normal")
 	if box is StyleBoxTexture:
 		var styled := (box as StyleBoxTexture).duplicate() as StyleBoxTexture
 		styled.modulate_color = bg
-		_tag.add_theme_stylebox_override("normal", styled)
-	_tag.offset_left = -(maxf(_tag.get_minimum_size().x, 28.0) + 10.0)
+		tag.add_theme_stylebox_override("normal", styled)
+	tag.offset_left = -(maxf(tag.get_minimum_size().x, 28.0) + 10.0)
 
 
 ## Tên chế độ đặc biệt (rỗng với màn thường / dungeon / daily cổ điển)
