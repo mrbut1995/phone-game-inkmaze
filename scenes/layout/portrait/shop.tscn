@@ -2,16 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://c8wjjvea1kmhm" path="res://scripts/scenes/layout/shop_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="4_back_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="5_back_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/shop/wallet_chip.png" id="6_wallet"]
-[ext_resource type="Texture2D" path="res://assets/images-png/shop/icon_coin.png" id="7_coin"]
-[ext_resource type="Texture2D" path="res://assets/images-png/shop/btn_plus.png" id="8_plus"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/day_btn_prev_normal.png" id="9_prev"]
-[ext_resource type="Texture2D" path="res://assets/images-png/calendar/day_btn_next_normal.png" id="10_next"]
-[ext_resource type="Texture2D" path="res://assets/images-png/shop/banner_gift.png" id="11_gift"]
-[ext_resource type="Texture2D" path="res://assets/images-png/shop/gift_box.png" id="12_gift_box"]
-[ext_resource type="Texture2D" path="res://assets/images-png/shop/btn_action_amber.png" id="13_btn_amber"]
+[ext_resource uid="uid://b5g8u2capnu0n" type="Texture2D" path="res://assets/images/btn_header_back_normal.svg" id="4_back_n"]
+[ext_resource uid="uid://uqnqpil3ag8l" type="Texture2D" path="res://assets/images/btn_header_back_pressed.svg" id="5_back_p"]
+[ext_resource uid="uid://dyce7yam3arwp" type="Texture2D" path="res://assets/images/shop/wallet_chip.svg" id="6_wallet"]
+[ext_resource uid="uid://1u1eht4ctsov" type="Texture2D" path="res://assets/images/shop/icon_coin.svg" id="7_coin"]
+[ext_resource uid="uid://iqlsipno706o" type="Texture2D" path="res://assets/images/shop/btn_plus.svg" id="8_plus"]
+[ext_resource uid="uid://btoscldl6syrd" type="Texture2D" path="res://assets/images/calendar/day_btn_prev_normal.svg" id="9_prev"]
+[ext_resource uid="uid://cmhk3b2oias7f" type="Texture2D" path="res://assets/images/calendar/day_btn_next_normal.svg" id="10_next"]
+[ext_resource uid="uid://6gq24f7mmebm" type="Texture2D" path="res://assets/images/shop/banner_gift.svg" id="11_gift"]
+[ext_resource uid="uid://b4h7w6mxyr4tw" type="Texture2D" path="res://assets/images/shop/gift_box.svg" id="12_gift_box"]
+[ext_resource uid="uid://fxfvq2310v0i" type="Texture2D" path="res://assets/images/common/btn_action_normal.svg" id="13_btn_amber"]
+[ext_resource type="ShaderMaterial" path="res://resources/materials/btn_action_amber.tres" id="mat_amber_gift"]
 [ext_resource type="PackedScene" path="res://nodes/shop/tab_button.tscn" id="20_tab"]
 [ext_resource type="PackedScene" path="res://nodes/shop/item_grid.tscn" id="21_grid"]
 [ext_resource type="PackedScene" uid="uid://deknldvs1yxnu" path="res://nodes/shop/doodle_pad.tscn" id="22_pad"]
@@ -490,6 +491,7 @@ offset_top = 13.0
 offset_right = -15.0
 offset_bottom = 44.0
 focus_mode = 0
+material = ExtResource("mat_amber_gift")
 texture_normal = ExtResource("13_btn_amber")
 texture_pressed = ExtResource("13_btn_amber")
 texture_hover = ExtResource("13_btn_amber")

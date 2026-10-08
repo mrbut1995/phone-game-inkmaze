@@ -15,6 +15,11 @@ CÁCH LÀM:
         + chưa có .import         -> BỎ uid (Godot tự điền khi mở editor)
       (tránh uid cũ còn trỏ về SVG — editor sẽ tự "sửa" path ngược lại).
     - Chạy lại nhiều lần vô hại (idempotent). Ref không map được sẽ được báo, không sửa.
+    - VÁ UID: dòng [ext_resource] thiếu uid sẽ được thêm nếu ASSET đích có .import
+      (vá dấu vết đợt migrate chạy khi PNG chưa import). KHÔNG lấy uid từ .gd.uid/header
+      .tscn/.tres — build này load fail âm thầm với uid ngoài .import (xem heal_uids).
+    - Bỏ qua scripts/test_case/test_popup_ui.gd — test này CỐ Ý đọc NGUỒN .svg để kiểm tra
+      thiết kế (đổi sang .png là hỏng test, PNG không đọc được path/chữ trong đó).
     - Đổi CẢ literal đuôi RỜI (không có res://) — kiểu `ICON_DIR + "avatar.svg"`, `"day_cell_empty.svg"`,
       `ends_with("icon_coin_t1.svg")`: nếu tên file (bỏ đuôi) khớp một asset của cây `assets/**`
       thì đổi đuôi; tự bỏ qua chuỗi chứa `mockup`, `*`, `%` hay bắt đầu bằng `res://`.
@@ -46,6 +51,10 @@ SCAN_EXTS = {".tscn", ".tres", ".gd", ".godot", ".cfg"}
 EXCLUDE_DIRS = {
     ".godot", ".git", ".venv", "__pycache__", "android", "mockup", "optimizing_clean",
     "bug", "Memorizing", "planning", "Errow When Resize",
+}
+## File CỐ Ý đọc NGUỒN .svg (kiểm tra thiết kế bên trong SVG) — KHÔNG đổi sang .png:
+SKIP_FILES = {
+    "scripts/test_case/test_popup_ui.gd",
 }
 
 REF_SVG = re.compile(r'res://[^"\'\s\)\]]*\.svg(?![.\w])')
@@ -251,10 +260,37 @@ def iter_files(root: Path, exts: set[str], only: list[str]) -> list[Path]:
             if p.suffix.lower() not in exts:
                 continue
             rel = p.relative_to(root).as_posix()
+            if rel in SKIP_FILES:
+                continue
             if only and not any(s.lower() in rel.lower() for s in only):
                 continue
             found.append(p)
     return found
+
+
+def heal_uids(text: str, root: Path) -> tuple[str, int]:
+    """Vá `uid` còn thiếu cho dòng [ext_resource ... path=...] khi ASSET đích có .import.
+
+    Lý do: đợt migrate trước chạy lúc PNG chưa được Godot import ⇒ tool đã gỡ uid
+    (đúng quy tắc "chưa có .import thì bỏ uid"); sau khi import xong, pass này thêm uid
+    cho khớp cách editor ghi — tránh editor tự sửa + diff loạn khi mở/save scene sau này.
+
+    ⚠ CHỈ lấy uid từ `.import` — KHÔNG lấy từ `.gd.uid`/header .tscn/.tres: đã thử (2026-10-08)
+    và build này load fail âm thầm (uid không có trong uid_cache runtime ⇒ scene
+    instantiate = null) ⇒ đừng mở rộng nguồn uid ở đây.
+    """
+    n = 0
+    out: list[str] = []
+    for line in text.split("\n"):
+        if line.startswith("[ext_resource") and 'uid="uid://' not in line:
+            pm = re.search(r'path="(res://[^"]+)"', line)
+            if pm is not None:
+                uid = lookup_uid(root / pm.group(1)[len("res://"):])
+                if uid:
+                    line = line.replace("[ext_resource ", f'[ext_resource uid="{uid}" ', 1)
+                    n += 1
+        out.append(line)
+    return "\n".join(out), n
 
 
 def main(argv: list[str] | None = None, direction: str = "png") -> int:
@@ -283,6 +319,7 @@ def main(argv: list[str] | None = None, direction: str = "png") -> int:
     print(f"Stem asset : {len(stems)}  (đổi cả literal đuôi rời không có res:// nếu khớp tên file)")
 
     total_hits = 0
+    uid_healed = 0
     changed: list[tuple[Path, int]] = []
     all_hits: list[tuple[str, str]] = []
     unmapped_report: list[tuple[Path, list[str]]] = []
@@ -294,9 +331,11 @@ def main(argv: list[str] | None = None, direction: str = "png") -> int:
             new, hits_old = _migrate_old_png(new)
         new, suffixes = convert_suffix_literals(new, direction, stems)
         new, dirs = convert_dir_refs(new, direction)
+        new, healed = heal_uids(new, root)
+        uid_healed += healed
         if unmapped:
             unmapped_report.append((p, unmapped))
-        n_changes = len(hits) + len(hits_old) + len(suffixes) + len(dirs)
+        n_changes = len(hits) + len(hits_old) + len(suffixes) + len(dirs) + healed
         if not n_changes:
             continue
         new = fix_uids(orig, new, mapping, root, target_ext)
@@ -311,6 +350,8 @@ def main(argv: list[str] | None = None, direction: str = "png") -> int:
                 print(f"    {p.relative_to(root).as_posix()}: \"{old}\"  ->  \"{newu}\"")
             for old, newu in dirs:
                 print(f"    {p.relative_to(root).as_posix()}: \"{old}\"  ->  \"{newu}\" (THƯ MỤC)")
+            if healed:
+                print(f"    {p.relative_to(root).as_posix()}: +{healed} uid còn thiếu (từ .import)")
         if args.apply:
             write_text_raw(p, new)
         all_hits += hits + hits_old
@@ -354,7 +395,8 @@ def main(argv: list[str] | None = None, direction: str = "png") -> int:
         print("\nMọi đích tham chiếu đều tồn tại trên đĩa: OK")
 
     state = "ĐÃ GHI" if args.apply else "DRY-RUN (thêm --apply để ghi)"
-    print(f"\nTỔNG: {total_hits} tham chiếu trong {len(changed)} file — {state}")
+    extra = f"  ·  vá uid: {uid_healed}" if uid_healed else ""
+    print(f"\nTỔNG: {total_hits} thay đổi trong {len(changed)} file{extra} — {state}")
     return 0
 
 

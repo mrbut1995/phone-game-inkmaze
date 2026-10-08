@@ -447,9 +447,9 @@ func _section_7_board_hud_popup() -> void:
 		segment.set_width(999.0)
 		_entry(segment.custom_minimum_size.x == 38.0, "vạch tự kẹp bề rộng tối đa 38")
 		segment.set_used(true)
-		var art_off: Texture2D = segment.texture
+		var col_used: Color = segment.self_modulate
 		segment.set_used(false)
-		_entry(art_off != null and art_off != segment.texture, "set_used() đổi art xám ⇄ cam")
+		_entry(col_used != segment.self_modulate, "set_used() đổi màu xám ⇄ cam")
 		segment.queue_free()
 
 	var row: LanguageRow = _spawn("res://nodes/popups/language_row.tscn") as LanguageRow

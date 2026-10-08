@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://brkqre7amkosw" path="res://scripts/nodes/hud/game/fog_of_war_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-landscape-png/game/card_fog_of_war.png" id="6_sheet"]
+[ext_resource uid="uid://bqpdyw2so82nt" type="Texture2D" path="res://assets/images-landscape/game/card_fog_of_war.svg" id="6_sheet"]
 
 [node name="Hud" unique_id=830556550 node_paths=PackedStringArray("retry_value_node", "retry_max_label", "retry_note_label") instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")

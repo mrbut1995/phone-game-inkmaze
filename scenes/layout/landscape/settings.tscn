@@ -2,31 +2,30 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://blu4gqnjmvqys" path="res://scripts/scenes/layout/settings_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/settings_panel.png" id="3_panel"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/section_chip.png" id="4_chip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/icon_chevron_right.png" id="6_chevron"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/icon_chevron_right_danger.png" id="7_chevron_danger"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="10_stamp"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="11_back_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="12_back_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_focus.png" id="13_back_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_disabled.png" id="14_back_d"]
+[ext_resource uid="uid://nwnmgpgwvc7y" type="Texture2D" path="res://assets/images/settings/settings_panel.svg" id="3_panel"]
+[ext_resource uid="uid://cviihr4gbxev4" type="Texture2D" path="res://assets/images/settings/section_chip.svg" id="4_chip"]
+[ext_resource uid="uid://b0lne77x5060u" type="Texture2D" path="res://assets/images/common/icon_chevron.svg" id="6_chevron"]
+[ext_resource uid="uid://cr6w077lhvqlt" type="Texture2D" path="res://assets/images/main/stamp_version.svg" id="10_stamp"]
+[ext_resource uid="uid://b5g8u2capnu0n" type="Texture2D" path="res://assets/images/btn_header_back_normal.svg" id="11_back_n"]
+[ext_resource uid="uid://uqnqpil3ag8l" type="Texture2D" path="res://assets/images/btn_header_back_pressed.svg" id="12_back_p"]
+[ext_resource uid="uid://4d7njodvx3lu" type="Texture2D" path="res://assets/images/btn_header_back_focus.svg" id="13_back_f"]
+[ext_resource uid="uid://8bnoveqi6xk7" type="Texture2D" path="res://assets/images/btn_header_back_disabled.svg" id="14_back_d"]
 [ext_resource type="Theme" uid="uid://car0jeqlr0xi" path="res://resources/settings/theme_hslider.tres" id="15_slider_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/checkbox_normal.png" id="16_chk_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/checkbox_checked.png" id="17_chk_on"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/checkbox_disabled.png" id="18_chk_off"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/dropdown_normal.png" id="19_dd_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/dropdown_pressed.png" id="20_dd_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/dropdown_focus.png" id="21_dd_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/dropdown_disabled.png" id="22_dd_dis"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_normal.png" id="23_row_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_pressed.png" id="24_row_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_focus.png" id="25_row_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_disabled.png" id="26_row_dis"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_danger_normal.png" id="27_dan_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_danger_pressed.png" id="28_dan_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_danger_focus.png" id="29_dan_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/chip_cloud_connected.png" id="30_cloud"]
+[ext_resource uid="uid://bkim2iaw7uob8" type="Texture2D" path="res://assets/images/common/checkbox_normal.svg" id="16_chk_n"]
+[ext_resource uid="uid://ynti432r8cxt" type="Texture2D" path="res://assets/images/common/checkbox_checked.svg" id="17_chk_on"]
+[ext_resource uid="uid://meoc42coall6" type="Texture2D" path="res://assets/images/common/checkbox_disabled.svg" id="18_chk_off"]
+[ext_resource uid="uid://mkng57io7vjx" type="Texture2D" path="res://assets/images/settings/dropdown_normal.svg" id="19_dd_n"]
+[ext_resource uid="uid://ka86r0at7r8q" type="Texture2D" path="res://assets/images/settings/dropdown_pressed.svg" id="20_dd_p"]
+[ext_resource uid="uid://7q1vxr0b6t0f" type="Texture2D" path="res://assets/images/settings/dropdown_focus.svg" id="21_dd_f"]
+[ext_resource uid="uid://cn0y32xrkhtew" type="Texture2D" path="res://assets/images/settings/dropdown_disabled.svg" id="22_dd_dis"]
+[ext_resource uid="uid://1q0xgmwgw35w" type="Texture2D" path="res://assets/images/settings/row_button_normal.svg" id="23_row_n"]
+[ext_resource uid="uid://dvmi22e71kxj2" type="Texture2D" path="res://assets/images/settings/row_button_pressed.svg" id="24_row_p"]
+[ext_resource uid="uid://deio833hbtfq4" type="Texture2D" path="res://assets/images/settings/row_button_focus.svg" id="25_row_f"]
+[ext_resource uid="uid://3y212uxu5056" type="Texture2D" path="res://assets/images/settings/row_button_disabled.svg" id="26_row_dis"]
+[ext_resource uid="uid://n3by37fl3qbu" type="Texture2D" path="res://assets/images/settings/row_button_danger_normal.svg" id="27_dan_n"]
+[ext_resource uid="uid://cl1tm62cdwrbv" type="Texture2D" path="res://assets/images/settings/row_button_danger_pressed.svg" id="28_dan_p"]
+[ext_resource uid="uid://lk631qnxiwfb" type="Texture2D" path="res://assets/images/settings/row_button_danger_focus.svg" id="29_dan_f"]
+[ext_resource uid="uid://tr3le4ga34pp" type="Texture2D" path="res://assets/images/settings/chip_cloud_connected.svg" id="30_cloud"]
 [ext_resource type="LabelSettings" uid="uid://bonmr0e8ujeq3" path="res://resources/settings/text/text_game_title.tres" id="31_title"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_title.tres" id="32_sub_title"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_subtitle.tres" id="33_sub_subtitle"]
@@ -38,12 +37,12 @@
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_dropdown.tres" id="39_dropdown"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_chip.tres" id="40_chip_text"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="41_version"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_music.png" id="43_icon_music"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_bell.png" id="44_icon_bell"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_globe.png" id="45_icon_globe"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_cloud.png" id="46_icon_cloud"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_book.png" id="47_icon_book"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_reset.png" id="48_icon_reset"]
+[ext_resource uid="uid://cy2083u74jwjg" type="Texture2D" path="res://assets/images/icons/icon_music.svg" id="43_icon_music"]
+[ext_resource uid="uid://dm2kq3punmuku" type="Texture2D" path="res://assets/images/icons/icon_bell.svg" id="44_icon_bell"]
+[ext_resource uid="uid://cikjnvfv5pdnx" type="Texture2D" path="res://assets/images/icons/icon_globe.svg" id="45_icon_globe"]
+[ext_resource uid="uid://cwys2l4jdlkj1" type="Texture2D" path="res://assets/images/icons/icon_cloud.svg" id="46_icon_cloud"]
+[ext_resource uid="uid://i60mj1vk7shb" type="Texture2D" path="res://assets/images/icons/icon_book.svg" id="47_icon_book"]
+[ext_resource uid="uid://cct547hsvxktf" type="Texture2D" path="res://assets/images/icons/icon_reset.svg" id="48_icon_reset"]
 
 [node name="Landscape" unique_id=284512550 node_paths=PackedStringArray("btn_back", "content_root", "bgm_slider", "bgm_value", "sfx_slider", "sfx_value", "chk_haptic", "chk_auto_mark", "chk_glow", "btn_language", "lbl_language", "lbl_player_id", "btn_guide", "btn_credits", "btn_reset", "lbl_version") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
@@ -492,6 +491,7 @@ grow_vertical = 2
 texture = ExtResource("47_icon_book")
 
 [node name="Chevron" type="TextureRect" parent="Panel/Content/Body/ColRight/Actions/Guide" index="1" unique_id=1617146454]
+self_modulate = Color(0.239216, 0.513726, 0.682353, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -542,6 +542,7 @@ grow_vertical = 2
 texture = ExtResource("43_icon_music")
 
 [node name="Chevron" type="TextureRect" parent="Panel/Content/Body/ColRight/Actions/Credits" index="1" unique_id=968373481]
+self_modulate = Color(0.239216, 0.513726, 0.682353, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -592,6 +593,7 @@ grow_vertical = 2
 texture = ExtResource("48_icon_reset")
 
 [node name="Chevron" type="TextureRect" parent="Panel/Content/Body/ColRight/Actions/Reset" index="1" unique_id=1617146457]
+self_modulate = Color(0.847059, 0.266667, 0.266667, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -604,7 +606,7 @@ offset_right = -17.0
 offset_bottom = 7.0
 grow_horizontal = 0
 grow_vertical = 2
-texture = ExtResource("7_chevron_danger")
+texture = ExtResource("6_chevron")
 
 [node name="Label" type="Label" parent="Panel/Content/Body/ColRight/Actions/Reset" index="2" unique_id=1617146456]
 layout_mode = 1

@@ -21,6 +21,13 @@ SCALE (độ phân giải PNG so với kích thước thiết kế):
     Mặc định lấy `svg/scale` trong file `.import` của từng SVG (thường 1.0 — đúng
     bằng kích thước texture Godot đang import). `--scale N` ép tất cả về N (VD 2 = nét gấp đôi).
 
+ẢNH DỰNG SẴN (assets/images-used — ưu tiên hơn rasterize):
+    Trước khi rasterize, tool soi `assets/images-used/` theo ĐÚNG thư mục con của SVG
+    (VD: assets/images/frames/frame_bronze.svg → assets/images-used/frames/…). Nếu có
+    ảnh khớp tên — cho phép ĐẢO TOKEN: `frame_bronze` ⇄ `bronze_frame` — thì COPY ảnh
+    đó thành PNG đích, KHÔNG rasterize SVG nữa (dùng cho art đã vẽ tay/chỉnh sẵn).
+    Ảnh phải là PNG (định dạng khác cần Pillow để đổi). Tắt: --no-used.
+
 SAU KHI CHẠY:
     1. .venv\\Scripts\\python.exe tools/switch_refs_svg_to_png.py --apply   (đổi tham chiếu)
     2. Mở editor Godot 1 lần (hoặc chạy --import) để tạo `.import` cho PNG mới.
@@ -30,6 +37,7 @@ VÍ DỤ:
     .venv\\Scripts\\python.exe tools/svg_to_png.py                    # chạy thật
     .venv\\Scripts\\python.exe tools/svg_to_png.py --only btn_header_cancel --out tmp_tools/png_probe
     .venv\\Scripts\\python.exe tools/svg_to_png.py --scale 2          # PNG nét gấp đôi
+    .venv\\Scripts\\python.exe tools/svg_to_png.py --no-used          # bỏ qua ảnh dựng sẵn (rasterize tất cả)
 """
 
 from __future__ import annotations
@@ -52,6 +60,8 @@ ROOT = Path(__file__).resolve().parents[1]
 GODOT_DEFAULT = r"D:\Godots\app dev\Godot_v4.7.2-stable_win64.exe\Godot_v4.7.2-stable_win64_console.exe"
 
 DEFAULT_ROOTS = ["assets/images", "assets/images-landscape"]
+USED_DIR = ROOT / "assets/images-used"
+USED_EXTS = (".png", ".webp", ".jpg", ".jpeg")
 TMP_DIR = ROOT / "tmp_tools"
 TMP_GD = TMP_DIR / "_svg_raster_tmp.gd"
 TMP_JOBS = TMP_DIR / "_svg_raster_jobs.json"
@@ -146,6 +156,85 @@ def import_scale(svg: Path) -> float:
         if m:
             return float(m.group(1))
     return 1.0
+
+
+# ---------------------------------------------------------------------------
+# Ảnh dựng sẵn: assets/images-used (ưu tiên hơn rasterize)
+# ---------------------------------------------------------------------------
+def _sub_dir(path: Path, base: Path) -> str:
+    """Thư mục con (posix, chữ thường) của `path` tính từ `base`; file ngay gốc -> ""."""
+    parent = path.relative_to(base).parent
+    return "" if parent == Path(".") else parent.as_posix().lower()
+
+
+def _token_key(stem: str) -> frozenset[str]:
+    """Tập token của tên file (bỏ dấu phân cách, hạ chữ) — 'frame_bronze' == 'bronze_frame'."""
+    return frozenset(t for t in re.split(r"[^0-9a-z]+", stem.lower()) if t)
+
+
+def used_index() -> dict[tuple[str, frozenset[str]], list[Path]]:
+    """Gom ảnh trong assets/images-used: khóa = (thư mục con, tập token tên file)."""
+    index: dict[tuple[str, frozenset[str]], list[Path]] = {}
+    if not USED_DIR.is_dir():
+        return index
+    for p in sorted(USED_DIR.rglob("*")):
+        if p.is_file() and p.suffix.lower() in USED_EXTS:
+            index.setdefault((_sub_dir(p, USED_DIR), _token_key(p.stem)), []).append(p)
+    return index
+
+
+def find_used_image(svg: Path, index: dict[tuple[str, frozenset[str]], list[Path]]) -> Path | None:
+    """Ảnh dựng sẵn khớp SVG (cùng thư mục con + cùng tập token), None nếu không có."""
+    rel = svg.resolve().relative_to(ROOT)
+    sub = ""
+    for r in DEFAULT_ROOTS:
+        try:
+            sub = _sub_dir(rel, Path(r))
+            break
+        except ValueError:
+            continue
+    candidates = index.get((sub, _token_key(svg.stem)))
+    if not candidates:
+        return None
+    if len(candidates) > 1:  # ưu tiên tên trùng khít, rồi PNG, rồi theo alphabet
+        exact = [c for c in candidates if c.stem.lower() == svg.stem.lower()]
+        pngs = [c for c in (exact or candidates) if c.suffix.lower() == ".png"]
+        candidates = pngs or (exact or candidates)
+    if len(candidates) > 1:
+        print(f"  [CẢNH BÁO] {svg.name}: {len(candidates)} ảnh khớp trong images-used — dùng {candidates[0].name}")
+    return candidates[0]
+
+
+def copy_used(jobs: list[dict]) -> list[dict]:
+    """Copy ảnh dựng sẵn (không rasterize). PNG copy nguyên byte; định dạng khác cần Pillow."""
+    results: list[dict] = []
+    for j in jobs:
+        res = {"src": j["src"], "out": j["out"], "ok": False, "err": "", "w": 0, "h": 0}
+        used, out = Path(j["used"]), Path(j["out"])
+        try:
+            out.parent.mkdir(parents=True, exist_ok=True)
+            if used.suffix.lower() == ".png":
+                shutil.copyfile(used, out)
+            else:
+                try:
+                    from PIL import Image  # type: ignore
+                except ImportError:
+                    res["err"] = f"ảnh sẵn {used.name} không phải PNG — cài `pip install pillow` hoặc export PNG"
+                    results.append(res)
+                    continue
+                with Image.open(used) as im:
+                    im.convert("RGBA").save(out)
+        except OSError as exc:
+            res["err"] = f"copy_used: {exc}"
+            results.append(res)
+            continue
+        size = png_size(out)
+        if size:
+            res.update(ok=True, w=size[0], h=size[1])
+        else:
+            res["err"] = f"ảnh sẵn không phải PNG hợp lệ: {used.name}"
+        results.append(res)
+    return results
 
 
 def _round_half_up(x: float) -> int:
@@ -402,6 +491,7 @@ def main() -> int:
     ap.add_argument("--root", action="append", default=[], metavar="DIR", help="thêm root chứa SVG (mặc định: assets/images + assets/images-landscape)")
     ap.add_argument("--no-root-icons", action="store_true", help="bỏ qua các icon *.svg ở gốc project")
     ap.add_argument("--skip-existing", action="store_true", help="bỏ qua file PNG đã tồn tại")
+    ap.add_argument("--no-used", action="store_true", help="bỏ qua ảnh dựng sẵn trong assets/images-used (rasterize tất cả)")
     ap.add_argument("--verbose", action="store_true", help="in từng file")
     args = ap.parse_args()
 
@@ -415,6 +505,7 @@ def main() -> int:
         print("Không tìm thấy SVG nào khớp.")
         return 0
 
+    used_idx = {} if args.no_used else used_index()
     jobs: list[dict] = []
     skipped: list[tuple[Path, Path]] = []
     collision: dict[str, str] = {}
@@ -432,40 +523,52 @@ def main() -> int:
             skipped.append((svg, out))
             continue
         scale = args.scale if args.scale is not None else import_scale(svg)
-        jobs.append({"src": svg.as_posix(), "out": out.as_posix(), "scale": scale})
+        job = {"src": svg.as_posix(), "out": out.as_posix(), "scale": scale}
+        used = find_used_image(svg, used_idx)
+        if used is not None:
+            job["used"] = used.as_posix()
+        jobs.append(job)
+
+    copy_jobs = [j for j in jobs if j.get("used")]
+    raster_jobs = [j for j in jobs if not j.get("used")]
 
     print(f"SVG tìm thấy   : {len(svgs)}")
     if skipped:
         print(f"Bỏ qua (đã có): {len(skipped)}")
-    print(f"Sẽ rasterize   : {len(jobs)}  →  {out_dir if out_dir else 'assets/images-png + assets/images-landscape-png'}")
+    if copy_jobs:
+        print(f"Dùng ảnh sẵn   : {len(copy_jobs)}  ← assets/images-used (copy, không rasterize)")
+    print(f"Sẽ rasterize   : {len(raster_jobs)}  →  {out_dir if out_dir else 'assets/images-png + assets/images-landscape-png'}")
     if args.dry_run:
         for j in jobs[: (10 ** 9 if args.verbose else 12)]:
-            print(f"    {Path(j['src']).relative_to(ROOT).as_posix():<62} -> {Path(j['out']).relative_to(ROOT).as_posix()}")
+            tail = f"  [ẢNH SẴN: {Path(j['used']).name}]" if j.get("used") else ""
+            print(f"    {Path(j['src']).relative_to(ROOT).as_posix():<62} -> {Path(j['out']).relative_to(ROOT).as_posix()}{tail}")
         if not args.verbose and len(jobs) > 12:
             print(f"    ... và {len(jobs) - 12} file nữa (thêm --verbose để in hết)")
         print("DRY-RUN — chưa ghi gì. Bỏ --dry-run để chạy thật.")
         return 0
 
-    engine = resolve_engine(args.engine, args.edge)
-    note = ""
-    if engine == "edge":
-        note = "  (giống TRÌNH DUYỆT: pattern + text + feDropShadow)"
-    elif engine == "godot":
-        note = "  ⚠ ThorVG KHÔNG vẽ <pattern>/<text>/feDropShadow — cài Edge/cairosvg để giữ đủ chi tiết"
-    elif engine == "cairosvg":
-        note = "  (giữ pattern/text; KHÔNG có feDropShadow — dùng engine edge nếu cần bóng)"
-    print(f"Engine         : {engine}" + ("  (godot: " + args.godot + ")" if engine == "godot" else "") + note)
-    print("Đang rasterize...")
-    if engine == "edge":
-        edge_bin = find_edge(args.edge)
-        if edge_bin is None:
-            print("  [LỖI] Không tìm thấy Edge/Chrome — dùng --edge <đường dẫn> hoặc --engine cairosvg/godot.")
-            return 1
-        results = raster_edge(jobs, edge_bin, workers=max(1, args.workers))
-    elif engine == "godot":
-        results = raster_godot(jobs, args.godot, timeout=900.0)
-    else:
-        results = raster_cairosvg(jobs)
+    results: list[dict] = copy_used(copy_jobs)
+    if raster_jobs:
+        engine = resolve_engine(args.engine, args.edge)
+        note = ""
+        if engine == "edge":
+            note = "  (giống TRÌNH DUYỆT: pattern + text + feDropShadow)"
+        elif engine == "godot":
+            note = "  ⚠ ThorVG KHÔNG vẽ <pattern>/<text>/feDropShadow — cài Edge/cairosvg để giữ đủ chi tiết"
+        elif engine == "cairosvg":
+            note = "  (giữ pattern/text; KHÔNG có feDropShadow — dùng engine edge nếu cần bóng)"
+        print(f"Engine         : {engine}" + ("  (godot: " + args.godot + ")" if engine == "godot" else "") + note)
+        print("Đang rasterize...")
+        if engine == "edge":
+            edge_bin = find_edge(args.edge)
+            if edge_bin is None:
+                print("  [LỖI] Không tìm thấy Edge/Chrome — dùng --edge <đường dẫn> hoặc --engine cairosvg/godot.")
+                return 1
+            results += raster_edge(raster_jobs, edge_bin, workers=max(1, args.workers))
+        elif engine == "godot":
+            results += raster_godot(raster_jobs, args.godot, timeout=900.0)
+        else:
+            results += raster_cairosvg(raster_jobs)
 
     # Gộp kết quả theo src (ưu tiên bản OK) — và THỬ LẠI 1 lần cho file chưa OK
     def _merge(rs: list[dict]) -> dict[str, dict]:
@@ -477,9 +580,9 @@ def main() -> int:
         return by
 
     by_src = _merge(results)
-    retry_jobs = [j for j in jobs if j["src"] not in by_src or not by_src[j["src"]].get("ok")]
+    retry_jobs = [j for j in raster_jobs if j["src"] not in by_src or not by_src[j["src"]].get("ok")]
     if retry_jobs:
-        print(f"  [THỬ LẠI] {len(retry_jobs)}/{len(jobs)} file chưa có kết quả OK — chạy lại...")
+        print(f"  [THỬ LẠI] {len(retry_jobs)}/{len(raster_jobs)} file chưa có kết quả OK — chạy lại...")
         retry = raster_godot(retry_jobs, args.godot, timeout=900.0) if engine == "godot" else raster_cairosvg(retry_jobs)
         by_src = _merge(results + retry)
 
@@ -498,14 +601,19 @@ def main() -> int:
     # Kiểm tra chéo kích thước PNG với kích thước mong đợi (từ width/height/viewBox của SVG)
     mismatches: list[str] = []
     for r, j in ok:
-        exp = expected_size(Path(r["src"]), float(j["scale"]))
         real = (r["w"], r["h"])
+        if j.get("used"):  # ảnh dựng sẵn: chấp nhận nguyên trạng, không đối chiếu cỡ SVG
+            if args.verbose:
+                print(f"    [COPY] {Path(r['src']).relative_to(ROOT).as_posix():<62} {real[0]}x{real[1]}  ← {Path(j['used']).name}")
+            continue
+        exp = expected_size(Path(r["src"]), float(j["scale"]))
         if exp and (abs(exp[0] - real[0]) > 1 or abs(exp[1] - real[1]) > 1):
             mismatches.append(f"{Path(r['src']).relative_to(ROOT).as_posix()}: {real[0]}x{real[1]} (mong đợi {exp[0]}x{exp[1]})")
         if args.verbose:
             print(f"    [OK] {Path(r['src']).relative_to(ROOT).as_posix():<62} {real[0]}x{real[1]}")
 
-    print(f"\nKẾT QUẢ: {len(ok)}/{len(jobs)} PNG tạo thành công")
+    n_copy = sum(1 for _r, j in ok if j.get("used"))
+    print(f"\nKẾT QUẢ: {len(ok)}/{len(jobs)} PNG tạo thành công" + (f"  (copy ảnh sẵn: {n_copy})" if n_copy else ""))
     for r in fails[:15]:
         print(f"    [FAIL] {Path(r['src']).relative_to(ROOT).as_posix()} — {r.get('err')}")
     if len(fails) > 15:

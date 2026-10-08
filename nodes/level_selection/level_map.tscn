@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://cp4og3e21hxqe"]
 
 [ext_resource type="Script" uid="uid://rtn1qsfwyho6" path="res://scripts/nodes/level_selection/level_map.gd" id="1_ylqc1"]
-[ext_resource type="Texture2D" uid="uid://1fbef2kod8vs" path="res://assets/images-png/level_selector/map_goal_flag.png" id="2_flag"]
-[ext_resource type="Texture2D" uid="uid://citg6rwywxusy" path="res://assets/images-png/level_selector/map_marker_arrow.png" id="3_marker"]
+[ext_resource type="Texture2D" uid="uid://dj2b7a48u68vr" path="res://assets/images/level_selector/map_goal_flag.svg" id="2_flag"]
+[ext_resource type="Texture2D" uid="uid://bmuhj3sr7il6u" path="res://assets/images/level_selector/map_marker_arrow.svg" id="3_marker"]
 
 [sub_resource type="Animation" id="Animation_goal_bob"]
 resource_name = "bob"

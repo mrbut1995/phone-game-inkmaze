@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-artist-avatar-marilyn.png" id="1_vcmld"]
+[ext_resource uid="uid://bjfwldlik37fj" type="Texture2D" path="res://assets/images/avatars/avatar-artist-avatar-marilyn.svg" id="1_vcmld"]
 [ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_y6cug"]
 
 [resource]

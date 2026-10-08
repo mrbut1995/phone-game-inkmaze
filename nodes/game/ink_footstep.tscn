@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cspwoqn43s5ul"]
 
 [ext_resource type="Script" uid="uid://d0d7d0sx57mpx" path="res://scripts/nodes/game/ink_footstep.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/images-png/game/player_cursor.png" id="2_art"]
+[ext_resource uid="uid://b4y1ckvumy7cc" type="Texture2D" path="res://assets/images/game/player_cursor.svg" id="2_art"]
 
 [sub_resource type="Animation" id="Animation_footstep_ripple"]
 resource_name = "ripple"

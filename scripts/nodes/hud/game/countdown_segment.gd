@@ -8,9 +8,9 @@ extends TextureRect
 ## art (xám / cam) + cỡ sửa được ngay trong scene, HUD chỉ đặt bề rộng + trạng thái.
 ## ============================================================================
 
-## Art vạch — gán trong `countdown_segment.tscn` (ExtResource)
-@export var texture_off: Texture2D = null
-@export var texture_on: Texture2D = null
+## Màu vạch — art TRẮNG trong `countdown_segment.tscn`, màu do `self_modulate` này
+@export var color_on := Color(0.917647, 0.345098, 0.047059, 1)
+@export var color_off := Color(0.886275, 0.909804, 0.941176, 1)
 @export var HEIGHT := 6
 @export var MIN_WIDTH := 4.0
 @export var MAX_WIDTH := 38.0
@@ -23,4 +23,4 @@ func set_width(width: float) -> void:
 
 ## Trạng thái: đã dùng (xám · OFF) hay còn lại (cam · ON)
 func set_used(used: bool) -> void:
-	texture = texture_off if used else texture_on
+	self_modulate = color_off if used else color_on

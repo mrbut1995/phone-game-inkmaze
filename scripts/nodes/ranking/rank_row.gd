@@ -39,7 +39,7 @@ func setup(entry: Dictionary, board: String) -> void:
 static func flag_texture(code: String) -> Texture2D:
 	if _flag_cache.is_empty():
 		for key in FLAG_CODES:
-			var path := "res://assets/images-png/icons/flags/flag_%s.png" % key
+			var path := "res://assets/images/icons/flags/flag_%s.svg" % key
 			if ResourceLoader.exists(path):
 				_flag_cache[key] = load(path)
 	return _flag_cache.get(code, _flag_cache.get("generic"))

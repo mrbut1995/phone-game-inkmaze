@@ -13,14 +13,14 @@ signal action_pressed(item_id: String)
 ## Chạm vào thân thẻ (ngoài nút) = chọn ngòi bút này để XEM THỬ ở Bàn nháp thử bút
 signal preview_pressed(item_id: String)
 
-const BTN_NORMAL := preload("res://assets/images-png/shop/btn_tile_normal.png")
-const BTN_DONE := preload("res://assets/images-png/shop/btn_tile_done.png")
-const BTN_PRICE := preload("res://assets/images-png/shop/btn_tile_price.png")
-const BTN_PRICE_VIP := preload("res://assets/images-png/shop/btn_tile_price_vip.png")
+const BTN_TILE := preload("res://assets/images/common/btn_tile.svg")
+const MAT_TILE_NORMAL := preload("res://resources/materials/btn_tile_normal.tres")
+const MAT_TILE_DONE := preload("res://resources/materials/btn_tile_done.tres")
+const MAT_TILE_VIP := preload("res://resources/materials/btn_tile_vip.tres")
 const ICONS := {
-	"pen": preload("res://assets/images-png/icons/icon_pen.png"),
-	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
-	"paper": preload("res://assets/images-png/icons/icon_paper.png"),
+	"pen": preload("res://assets/images/icons/icon_pen.svg"),
+	"ink": preload("res://assets/images/icons/icon_ink.svg"),
+	"paper": preload("res://assets/images/icons/icon_paper.svg"),
 }
 const VIP_BADGE := "STR_SHOP_BADGE_VIP"
 
@@ -142,9 +142,11 @@ func _set_button(color: Color) -> void:
 		return
 	btn.self_modulate = Color.WHITE
 	btn.disabled = false
+	btn.material = null
 	# Đang dùng -> con dấu xanh lá (khoá bấm)
 	if Shop.is_equipped(item_id):
-		btn.texture_normal = BTN_DONE
+		btn.texture_normal = BTN_TILE
+		btn.material = MAT_TILE_DONE
 		btn.disabled = true
 		label.theme_type_variation = &"ShopBtnTextDone"
 		label.text = TranslationServer.translate("STR_SHOP_EQUIPPED")
@@ -155,7 +157,8 @@ func _set_button(color: Color) -> void:
 	# Đã sở hữu -> nút "SỬ DỤNG" tô màu món hàng (art TRẮNG + modulate)
 	# (pressed/hover/disabled tự lấy theo `normal` — NinePatchButton lo phần fallback)
 	if Shop.is_owned(item_id):
-		btn.texture_normal = BTN_NORMAL
+		btn.texture_normal = BTN_TILE
+		btn.material = MAT_TILE_NORMAL
 		btn.self_modulate = color
 		label.theme_type_variation = &"ShopBtnText"
 		label.text = TranslationServer.translate("STR_SHOP_USE")
@@ -165,7 +168,9 @@ func _set_button(color: Color) -> void:
 		
 	# Chưa sở hữu -> nút giá Xu (món VIP dùng nút hổ phách đặc, chữ trắng)
 	var vip := str(item_data.get("badge_key", "")) == VIP_BADGE
-	btn.texture_normal = BTN_PRICE_VIP if vip else BTN_PRICE
+	btn.texture_normal = BTN_TILE
+	if vip:
+		btn.material = MAT_TILE_VIP
 	btn.disabled = not Shop.can_afford(item_id)
 	label.theme_type_variation = &"ShopBtnText" if vip else &"ShopPrice"
 	label.text = TranslationServer.translate("STR_SHOP_PRICE_FORMAT").format([

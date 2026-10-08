@@ -18,35 +18,34 @@ signal unlock_requested(chapter_id: int)
 
 enum State { PLAYING, READY, LOCKED, COMING }
 
-const CARD_OPEN := preload("res://assets/images-png/chapters/card_open.png")
-const CARD_READY := preload("res://assets/images-png/chapters/card_ready.png")
-const CARD_LOCKED := preload("res://assets/images-png/chapters/card_locked.png")
-const BTN_PLAY_NORMAL := preload("res://assets/images-png/chapters/btn_play_normal.png")
-const BTN_PLAY_PRESSED := preload("res://assets/images-png/chapters/btn_play_pressed.png")
-const BTN_UNLOCK_NORMAL := preload("res://assets/images-png/chapters/btn_unlock_normal.png")
-const BTN_UNLOCK_PRESSED := preload("res://assets/images-png/chapters/btn_unlock_pressed.png")
-const BTN_LOCKED_ART := preload("res://assets/images-png/chapters/btn_locked.png")
-const STAR_ICON := preload("res://assets/images-png/icons/icon_star_white.png")
-const PLAY_ICON := preload("res://assets/images-png/level_selector/icon_play_triangle.png")
+const CARD_OPEN := preload("res://assets/images/chapters/card_open.svg")
+const CARD_READY := preload("res://assets/images/chapters/card_ready.svg")
+const CARD_LOCKED := preload("res://assets/images/chapters/card_locked.svg")
+const BTN_NORMAL := preload("res://assets/images/common/btn_chapter_normal.svg")
+const BTN_PRESSED := preload("res://assets/images/common/btn_chapter_pressed.svg")
+const MAT_UNLOCK := preload("res://resources/materials/btn_chapter_unlock.tres")
+const MAT_LOCKED := preload("res://resources/materials/btn_chapter_locked.tres")
+const STAR_ICON := preload("res://assets/images/icons/icon_star_white.svg")
+const PLAY_ICON := preload("res://assets/images/level_selector/icon_play_triangle.svg")
 ## Icon mê cung dùng chung theo cỡ bàn (fallback khi chương chưa có icon riêng)
 const MAZE_TIERS := {
-	"small": preload("res://assets/images-png/chapters/maze_small.png"),
-	"medium": preload("res://assets/images-png/chapters/maze_medium.png"),
-	"large": preload("res://assets/images-png/chapters/maze_large.png"),
+	"small": preload("res://assets/images/chapters/maze_small.svg"),
+	"medium": preload("res://assets/images/chapters/maze_medium.svg"),
+	"large": preload("res://assets/images/chapters/maze_large.svg"),
 }
 ## Mỗi chương 1 icon RIÊNG (doodle khác nhau cho dễ nhận biết)
 const CHAPTER_ICONS := {
-	1: preload("res://assets/images-png/icons/icon_intro.png"),
-	2: preload("res://assets/images-png/icons/icon_logic.png"),
-	3: preload("res://assets/images-png/icons/icon_trap.png"),
-	4: preload("res://assets/images-png/icons/icon_master.png"),
+	1: preload("res://assets/images/icons/icon_intro.svg"),
+	2: preload("res://assets/images/icons/icon_logic.svg"),
+	3: preload("res://assets/images/icons/icon_trap.svg"),
+	4: preload("res://assets/images/icons/icon_master.svg"),
 }
 ## Tên icon ghi trong `ChapterData.icon` -> texture (ưu tiên hơn số chương)
 const ICON_KEYS := {
-	"intro": preload("res://assets/images-png/icons/icon_intro.png"),
-	"logic": preload("res://assets/images-png/icons/icon_logic.png"),
-	"trap": preload("res://assets/images-png/icons/icon_trap.png"),
-	"master": preload("res://assets/images-png/icons/icon_master.png"),
+	"intro": preload("res://assets/images/icons/icon_intro.svg"),
+	"logic": preload("res://assets/images/icons/icon_logic.svg"),
+	"trap": preload("res://assets/images/icons/icon_trap.svg"),
+	"master": preload("res://assets/images/icons/icon_master.svg"),
 }
 
 ## Màu theo trạng thái (dùng cho doodle + ruy băng + chip kích thước + thanh Sao)
@@ -256,8 +255,9 @@ func _apply_action(_chapter: ChapterData, info: Dictionary) -> void:
 		lock.visible = false
 	match state:
 		State.READY:
-			btn.texture_normal = BTN_UNLOCK_NORMAL
-			btn.texture_pressed = BTN_UNLOCK_PRESSED
+			btn.texture_normal = BTN_NORMAL
+			btn.texture_pressed = BTN_PRESSED
+			btn.material = MAT_UNLOCK
 			btn.disabled = false
 			_set_label("Panel/Content/Action/Btn/Title", TranslationServer.translate("STR_CHAPTER_UNLOCK"))
 			_set_label("Panel/Content/Action/Btn/Sub", TranslationServer.translate("STR_CHAPTER_REQUIRE_FORMAT").format([
@@ -268,8 +268,9 @@ func _apply_action(_chapter: ChapterData, info: Dictionary) -> void:
 				star.texture = STAR_ICON
 				star.visible = true
 		State.LOCKED:
-			btn.texture_normal = BTN_LOCKED_ART
-			btn.texture_pressed = BTN_LOCKED_ART
+			btn.texture_normal = BTN_NORMAL
+			btn.texture_pressed = BTN_PRESSED
+			btn.material = MAT_LOCKED
 			btn.disabled = true
 			_set_label("Panel/Content/Action/Btn/Title", TranslationServer.translate("STR_CHAPTER_REQUIRE_FORMAT").format([
 				maxi(int(info.get("star_cost", 0)), 0)]))
@@ -279,15 +280,17 @@ func _apply_action(_chapter: ChapterData, info: Dictionary) -> void:
 			if lock != null:
 				lock.visible = true
 		State.COMING:
-			btn.texture_normal = BTN_LOCKED_ART
-			btn.texture_pressed = BTN_LOCKED_ART
+			btn.texture_normal = BTN_NORMAL
+			btn.texture_pressed = BTN_PRESSED
+			btn.material = MAT_LOCKED
 			btn.disabled = true
 			_set_label("Panel/Content/Action/Btn/Title", TranslationServer.translate("STR_CHAPTER_RIBBON_COMING"))
 			_set_label("Panel/Content/Action/Btn/Sub", "")
 			title.theme_type_variation = &"ChapterActionLocked"
 		_:
-			btn.texture_normal = BTN_PLAY_NORMAL
-			btn.texture_pressed = BTN_PLAY_PRESSED
+			btn.texture_normal = BTN_NORMAL
+			btn.texture_pressed = BTN_PRESSED
+			btn.material = null
 			btn.disabled = false
 			_set_label("Panel/Content/Action/Btn/Title", TranslationServer.translate("STR_CHAPTER_PLAY"))
 			_set_label("Panel/Content/Action/Btn/Sub", TranslationServer.translate("STR_CHAPTER_PLAY_SUB").format([

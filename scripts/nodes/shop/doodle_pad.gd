@@ -14,6 +14,9 @@ extends Control
 
 signal pen_changed(pen_id: String)
 
+## Bảng màu cho con dấu THỬ (art trắng dẫn xuất: xoá nét viền, giữ nền trắng)
+const MAT_TILE_TRY := preload("res://resources/materials/btn_tile_normal.tres")
+
 ## Con dấu thẻ "ĐANG XEM THỬ" — gán trong `doodle_pad.tscn` (ExtResource)
 @export var stamp_try: Texture2D = null
 @export var stamp_using: Texture2D = null
@@ -125,6 +128,7 @@ func _refresh_badge() -> void:
 	var using := is_using_pen()
 	if stamp != null:
 		stamp.texture = stamp_using if using else stamp_try
+		stamp.material = null if using else MAT_TILE_TRY
 		stamp.modulate = Color.WHITE if using else PenSkin.ink_color(_pen_id)
 	if stamp_label != null:
 		stamp_label.text = tr("STR_SHOP_TRY_USING") if using else tr("STR_SHOP_TRY_STAMP")

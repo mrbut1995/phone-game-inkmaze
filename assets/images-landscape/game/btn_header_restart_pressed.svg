@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="26" height="26">
-  <rect width="52" height="52" rx="14" fill="#E2EBF1" stroke="#3D83AE" stroke-width="2" />
-  <path d="M 37 19 A 12 12 0 1 0 39 33" fill="none" stroke="#215477" stroke-width="3.2" stroke-linecap="round" />
-  <polyline points="31,15 38,18 36,25" fill="none" stroke="#215477" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
-</svg>

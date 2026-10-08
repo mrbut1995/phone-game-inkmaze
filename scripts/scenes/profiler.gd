@@ -19,7 +19,7 @@ extends BaseUI
 ## ============================================================================
 
 @export var ROW_SCENE: PackedScene = preload("res://nodes/profiler/activity_row.tscn")
-@export var ICON_LOCK: Texture2D = preload("res://assets/images-png/icons/icon_lock.png")
+@export var ICON_LOCK: Texture2D = preload("res://assets/images/icons/icon_lock.svg")
 
 ## Số hàng lịch sử hiển thị (mockup: 3)
 @export var ACTIVITY_ROWS := 3
@@ -273,7 +273,7 @@ func _refresh_gear() -> void:
 	_set_gear_card(0, tr("STR_PROFILE_GEAR_PEN"), _pen_icon(), _pen_name(), Color(1, 1, 1, 1))
 	var theme_item := Shop.item(Shop.equipped_theme())
 	var theme_tint := Color(str(theme_item.get("color", "#3D83AE")))
-	_set_gear_card(1, tr("STR_PROFILE_GEAR_THEME"), load("res://assets/images-png/icons/icon_paper.png") as Texture2D,
+	_set_gear_card(1, tr("STR_PROFILE_GEAR_THEME"), load("res://assets/images/icons/icon_paper.svg") as Texture2D,
 		tr(str(theme_item.get("name_key", ""))), theme_tint)
 	_set_gear_card(2, tr("STR_PROFILE_GEAR_FRAME"), load(Profile.frame_icon(Profile.frame_id())) as Texture2D,
 		_frame_name(), Color(1, 1, 1, 1))
@@ -297,7 +297,7 @@ func _set_gear_card(index: int, caption: String, icon: Texture2D, name_text: Str
 
 func _pen_icon() -> Texture2D:
 	var skin: Dictionary = PenSkin.SKINS.get(Shop.equipped_pen(), {})
-	var icon_path := str(skin.get("icon", "res://assets/images-png/icons/icon_pen.png"))
+	var icon_path := str(skin.get("icon", "res://assets/images/icons/icon_pen.svg"))
 	return load(icon_path) as Texture2D
 
 

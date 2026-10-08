@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://w5iv7tlodnrv" path="res://scripts/scenes/layout/splash_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" uid="uid://dodkr1s1s7ick" path="res://assets/images-png/main/main_menu_paper.png" id="4_paper"]
+[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="4_paper"]
 [ext_resource type="Texture2D" uid="uid://blf05s2jptgu0" path="res://company_logo.png" id="4_piijc"]
-[ext_resource type="Texture2D" uid="uid://bt4mb18wc2rf2" path="res://assets/images-png/main/stamp_version.png" id="7_stamp"]
+[ext_resource type="Texture2D" uid="uid://cr6w077lhvqlt" path="res://assets/images/main/stamp_version.svg" id="7_stamp"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="8_stamp_text"]
 
 [sub_resource type="Animation" id="Animation_reset_splash"]

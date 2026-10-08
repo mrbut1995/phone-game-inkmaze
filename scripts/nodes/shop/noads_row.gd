@@ -7,8 +7,8 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const BTN := preload("res://assets/images-png/shop/btn_noads.png")
-const OWNED_BTN := preload("res://assets/images-png/shop/btn_equipped.png")
+const BTN := preload("res://assets/images/shop/btn_noads.svg")
+const OWNED_BTN := preload("res://assets/images/shop/btn_equipped.svg")
 
 var item_id: String = ""
 var item_data: Dictionary = {}
