@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_lgrwq"]
 [ext_resource type="Script" uid="uid://cu0pk85hl650m" path="res://scripts/scenes/debug.gd" id="2_debug"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="4_back_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="5_back_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/settings/settings_panel.png" id="6_panel"]
+[ext_resource uid="uid://b5g8u2capnu0n" type="Texture2D" path="res://assets/images/btn_header_back_normal.svg" id="4_back_n"]
+[ext_resource uid="uid://uqnqpil3ag8l" type="Texture2D" path="res://assets/images/btn_header_back_pressed.svg" id="5_back_p"]
+[ext_resource uid="uid://nwnmgpgwvc7y" type="Texture2D" path="res://assets/images/settings/settings_panel.svg" id="6_panel"]
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" path="res://scripts/scenes/layout/debug_layout.gd" id="2_layout"]
 

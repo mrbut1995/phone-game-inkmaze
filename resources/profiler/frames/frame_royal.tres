@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_royal.png" id="1_rluod"]
+[ext_resource uid="uid://bkhugkuee221i" type="Texture2D" path="res://assets/images/frames/frame_royal.svg" id="1_rluod"]
 [ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_c7h5c"]
 
 [resource]

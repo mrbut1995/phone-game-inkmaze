@@ -2,23 +2,29 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://c7rcjnlxpl3al" path="res://scripts/nodes/popups/pause.gd" id="2_pause"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="3_tape"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/stamp_pause.png" id="4_stamp"]
+[ext_resource uid="uid://b3mt6oyu1owuv" type="Texture2D" path="res://assets/images/popups/washi_tape.svg" id="3_tape"]
+[ext_resource uid="uid://bf2julfqurtgm" type="Texture2D" path="res://assets/images/popups/stamp_pause.svg" id="4_stamp"]
 [ext_resource type="Theme" uid="uid://car0jeqlr0xi" path="res://resources/settings/theme_hslider.tres" id="5_slider_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/checkbox_normal.png" id="7_check_off"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/checkbox_pressed.png" id="8_check_press"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/checkbox_focus.png" id="9_check_focus"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_steps.png" id="10_steps"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/box_progress_info.png" id="11_info_box"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_wide_normal.png" id="12_wide_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_wide_pressed.png" id="13_wide_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_wide_focus.png" id="14_wide_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_ghost_normal.png" id="15_res_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_ghost_pressed.png" id="16_res_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_ghost_focus.png" id="17_res_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_muted_normal.png" id="18_men_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_muted_pressed.png" id="19_men_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/btn_popup_muted_focus.png" id="20_men_f"]
+[ext_resource uid="uid://bkim2iaw7uob8" type="Texture2D" path="res://assets/images/common/checkbox_normal.svg" id="7_check_off"]
+[ext_resource uid="uid://gva00yt1xk06" type="Texture2D" path="res://assets/images/common/checkbox_pressed.svg" id="8_check_press"]
+[ext_resource uid="uid://di5k2trgp6glv" type="Texture2D" path="res://assets/images/common/checkbox_focus.svg" id="9_check_focus"]
+[ext_resource uid="uid://bmk3xd7h0vimt" type="Texture2D" path="res://assets/images/icons/icon_steps.svg" id="10_steps"]
+[ext_resource uid="uid://chexec8tb64ne" type="Texture2D" path="res://assets/images/popups/box_progress_info.svg" id="11_info_box"]
+[ext_resource uid="uid://70kk5gh3n1y" type="Texture2D" path="res://assets/images/popups/btn_popup_wide_normal.svg" id="12_wide_n"]
+[ext_resource uid="uid://deiyafisu0cba" type="Texture2D" path="res://assets/images/popups/btn_popup_wide_pressed.svg" id="13_wide_p"]
+[ext_resource uid="uid://c1l1v41hv7wtk" type="Texture2D" path="res://assets/images/popups/btn_popup_wide_focus.svg" id="14_wide_f"]
+[ext_resource uid="uid://bdy6qxkca8icr" type="Texture2D" path="res://assets/images/common/popup_btn_normal.svg" id="15_res_n"]
+[ext_resource uid="uid://ctg7cmimgat2t" type="Texture2D" path="res://assets/images/common/popup_btn_pressed.svg" id="16_res_p"]
+[ext_resource uid="uid://dxw6ho62eaijt" type="Texture2D" path="res://assets/images/common/popup_btn_focus.svg" id="17_res_f"]
+
+[ext_resource type="Shader" path="res://shaders/color_remap.gdshader" id="sh_color_remap"]
+[sub_resource type="ShaderMaterial" id="mat_ghost_btn"]
+shader = ExtResource("sh_color_remap")
+shader_parameter/tolerance = 0.06
+shader_parameter/f1 = Color(0.729412, 0.780392, 0.811765, 1)
+shader_parameter/t1 = Color(0.431373, 0.627451, 0.784314, 1)
+shader_parameter/f2 = Color(0.623529, 0.682353, 0.721569, 1)
+shader_parameter/t2 = Color(0.352941, 0.54902, 0.690196, 1)
 
 [node name="Base" unique_id=1828175884 node_paths=PackedStringArray("slider_music", "slider_sfx", "label_music", "label_sfx", "check_haptic", "check_safe", "value_floor", "value_steps", "btn_restart", "btn_menu") instance=ExtResource("1_base")]
 script = ExtResource("2_pause")
@@ -388,6 +394,7 @@ alignment = 1
 theme_override_constants/separation = 15
 
 [node name="RestartBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="0" unique_id=743474376]
+material = SubResource("mat_ghost_btn")
 layout_mode = 2
 texture_normal = ExtResource("15_res_n")
 texture_pressed = ExtResource("16_res_p")
@@ -410,10 +417,10 @@ text_overrun_behavior = 3
 
 [node name="MenuBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="1" unique_id=365655158]
 layout_mode = 2
-texture_normal = ExtResource("18_men_n")
-texture_pressed = ExtResource("19_men_p")
-texture_hover = ExtResource("18_men_n")
-texture_focused = ExtResource("20_men_f")
+texture_normal = ExtResource("15_res_n")
+texture_pressed = ExtResource("16_res_p")
+texture_hover = ExtResource("15_res_n")
+texture_focused = ExtResource("17_res_f")
 
 [node name="Label" type="Label" parent="Panel/Content/Information/Buttons/MenuBtn" index="0" unique_id=757688441]
 layout_mode = 1

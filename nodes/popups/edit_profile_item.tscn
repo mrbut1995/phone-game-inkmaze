@@ -2,21 +2,20 @@
 
 [ext_resource type="Script" uid="uid://dpo6pm3gqfe8o" path="res://scripts/nodes/popups/edit_profile_item.gd" id="1_item"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
-[ext_resource type="Texture2D" uid="uid://d4bwxfevawdsm" path="res://assets/images-png/profiler/card_selected.png" id="4_sel"]
-[ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="5_disc"]
-[ext_resource type="Texture2D" uid="uid://3la8khi18c3h" path="res://assets/images-png/profiler/check_badge.png" id="6_check"]
-[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_default.png" id="7_frame"]
-[ext_resource type="Texture2D" uid="uid://de1fy87ucyxya" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="8_avatar"]
-[ext_resource type="Texture2D" uid="uid://cw3gi00w0cnpu" path="res://assets/images-png/icons/icon_lock.png" id="9_lock"]
-[ext_resource type="Texture2D" uid="uid://dg4xvt153bci" path="res://assets/images-png/profiler/chip_gold.png" id="10_chip"]
+[ext_resource type="Texture2D" uid="uid://cg3j3naujab7o" path="res://assets/images/profiler/card_selected.svg" id="4_sel"]
+[ext_resource type="Texture2D" uid="uid://ekfquw0so41l" path="res://assets/images/profiler/profiler_disc_normal.svg" id="5_disc"]
+[ext_resource type="Texture2D" uid="uid://dt5me33fotq65" path="res://assets/images/profiler/check_badge.svg" id="6_check"]
+[ext_resource uid="uid://c2k8iokxuk3br" type="Texture2D" path="res://assets/images/frames/frame_default.svg" id="7_frame"]
+[ext_resource type="Texture2D" uid="uid://scy26gl3aaxu" path="res://assets/images/avatars/avatar-baby-child-kid.svg" id="8_avatar"]
+[ext_resource type="Texture2D" uid="uid://d3whb6j1ukvy3" path="res://assets/images/icons/icon_lock.svg" id="9_lock"]
+[ext_resource uid="uid://djuo7xwkl81rt" type="Texture2D" path="res://assets/images/common/chip_pill.svg" id="10_chip"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_row.tres" id="11_name"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_state.tres" id="12_state"]
 [ext_resource type="LabelSettings" uid="uid://ktw4ufvt335t" path="res://resources/settings/text/text_profiler_chip_gold.tres" id="13_price"]
-[ext_resource type="Texture2D" uid="uid://b6gyqqm5unbyy" path="res://assets/images-png/profiler/chip_grey.png" id="14_chip_grey"]
-[ext_resource type="Texture2D" uid="uid://bu7s4twctv4ak" path="res://assets/images-png/profiler/card_item_normal.png" id="15_item_n"]
-[ext_resource type="Texture2D" uid="uid://dvt1py361ll1b" path="res://assets/images-png/profiler/card_item_hover.png" id="16_item_h"]
-[ext_resource type="Texture2D" uid="uid://dssxqrgg47ogl" path="res://assets/images-png/profiler/card_item_pressed.png" id="17_item_p"]
-[ext_resource type="Texture2D" uid="uid://wwytc5shg55t" path="res://assets/images-png/profiler/card_item_focus.png" id="18_item_f"]
+[ext_resource type="Texture2D" uid="uid://clify37q62pyp" path="res://assets/images/profiler/card_item_normal.svg" id="15_item_n"]
+[ext_resource type="Texture2D" uid="uid://cmmdxo5kcbj1r" path="res://assets/images/profiler/card_item_hover.svg" id="16_item_h"]
+[ext_resource type="Texture2D" uid="uid://dqguqcsqusiu7" path="res://assets/images/profiler/card_item_pressed.svg" id="17_item_p"]
+[ext_resource type="Texture2D" uid="uid://do5h4cqtpp1jx" path="res://assets/images/profiler/card_item_focus.svg" id="18_item_f"]
 
 [node name="EditProfileItem" type="TextureButton" unique_id=611203042 node_paths=PackedStringArray("selected_bg", "icon", "frame", "lock_icon", "check", "name_label", "state_bg", "state_label", "price_chip", "price_text")]
 custom_minimum_size = Vector2(100, 105)
@@ -131,13 +130,14 @@ label_settings = ExtResource("11_name")
 horizontal_alignment = 1
 
 [node name="StateBg" type="NinePatchRect" parent="." unique_id=1255007779]
+self_modulate = Color(0.945098, 0.960784, 0.976471, 1)
 visible = false
 layout_mode = 0
 offset_left = 17.5
 offset_top = 87.0
 offset_right = 82.5
 offset_bottom = 99.0
-texture = ExtResource("14_chip_grey")
+texture = ExtResource("10_chip")
 patch_margin_left = 9
 patch_margin_top = 5
 patch_margin_right = 9
@@ -162,6 +162,7 @@ offset_bottom = 100.0
 mouse_filter = 2
 
 [node name="Bg" type="TextureRect" parent="PriceChip" unique_id=254940135]
+self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

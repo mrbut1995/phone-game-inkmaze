@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ArchivementData" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_castle.png" id="1_wrlbx"]
+[ext_resource uid="uid://dfen0100lldvp" type="Texture2D" path="res://assets/images/icons/icon_castle.svg" id="1_wrlbx"]
 [ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_k880w"]
 
 [resource]

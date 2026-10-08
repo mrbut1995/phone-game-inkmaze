@@ -26,30 +26,30 @@ enum State {
 ## Số nhiệm vụ tối đa giữ trên 1 ngày — calendar.gd TRUY CẬP TĨNH qua `DailyDayCell.`
 ## nên phải giữ `const` (không export được)
 const MAX_MISSIONS := 4
-const TEX_DIR := "res://assets/images-png/calendar/"
+const TEX_DIR := "res://assets/images/calendar/"
 
 ## state -> [normal, pressed, focus] ("" = dùng lại texture normal)
 const TEXTURES := {
-	State.EMPTY: ["day_cell_empty.png", "", ""],
-	State.NONE: ["day_cell_empty.png", "", ""],
-	State.FUTURE: ["day_cell_locked_normal.png", "", "day_cell_locked_focus.png"],
-	State.LATER: ["day_cell_locked_normal.png", "", "day_cell_locked_focus.png"],
-	State.MISSED: ["day_cell_locked_normal.png", "", "day_cell_locked_focus.png"],
-	State.PARTIAL: ["day_cell_completed_normal.png", "day_cell_completed_pressed.png", "day_cell_completed_focus.png"],
-	State.DONE: ["day_cell_completed_normal.png", "day_cell_completed_pressed.png", "day_cell_completed_focus.png"],
-	State.TODAY: ["day_cell_selected_normal.png", "day_cell_selected_pressed.png", "day_cell_selected_focus.png"],
+	State.EMPTY: ["day_cell_empty.svg", "", ""],
+	State.NONE: ["day_cell_empty.svg", "", ""],
+	State.FUTURE: ["day_cell_locked_normal.svg", "", "day_cell_locked_focus.svg"],
+	State.LATER: ["day_cell_locked_normal.svg", "", "day_cell_locked_focus.svg"],
+	State.MISSED: ["day_cell_locked_normal.svg", "", "day_cell_locked_focus.svg"],
+	State.PARTIAL: ["day_cell_completed_normal.svg", "day_cell_completed_pressed.svg", "day_cell_completed_focus.svg"],
+	State.DONE: ["day_cell_completed_normal.svg", "day_cell_completed_pressed.svg", "day_cell_completed_focus.svg"],
+	State.TODAY: ["day_cell_selected_normal.svg", "day_cell_selected_pressed.svg", "day_cell_selected_focus.svg"],
 }
 
 ## state -> texture viên trạng thái ("" = ẩn viên)
 const PILL_TEXTURES := {
 	State.EMPTY: "",
 	State.NONE: "",
-	State.FUTURE: "tag_progress_locked.png",
+	State.FUTURE: "tag_progress_locked.svg",
 	State.LATER: "",
-	State.MISSED: "tag_progress_missed.png",
-	State.PARTIAL: "tag_progress_partial.png",
-	State.DONE: "tag_progress_completed.png",
-	State.TODAY: "tag_progress_today.png",
+	State.MISSED: "tag_progress_missed.svg",
+	State.PARTIAL: "tag_progress_partial.svg",
+	State.DONE: "tag_progress_completed.svg",
+	State.TODAY: "tag_progress_today.svg",
 }
 
 ## state -> theme variation của số ngày

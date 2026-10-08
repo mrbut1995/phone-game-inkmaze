@@ -12,10 +12,10 @@ extends NinePatchRect
 ## Nhờ vậy đổi mockup/art/màu của thẻ chỉ cần sửa file này + scene, không đụng controller.
 ## ============================================================================
 
-const ROW_DONE := preload("res://assets/images-png/game/chal_row_done.png")
-const ROW_PENDING := preload("res://assets/images-png/game/chal_row_pending.png")
-const CHECK_DONE := preload("res://assets/images-png/game/chal_check_done.png")
-const CHECK_PENDING := preload("res://assets/images-png/game/chal_check_pending.png")
+const ROW_ART := preload("res://assets/images/common/chal_row.svg")
+const MAT_ROW_DONE := preload("res://resources/materials/chal_row_done.tres")
+const CHECK_DONE := preload("res://assets/images/game/chal_check_done.svg")
+const CHECK_PENDING := preload("res://assets/images/game/chal_check_pending.svg")
 
 ## Chưa đạt nhưng vẫn còn cơ hội (chữ cam) / đã lệch mục tiêu (chữ đỏ)
 @export var COLOR_LIVE := Color(0.70980394, 0.38431373, 0.101960786, 1)
@@ -49,7 +49,13 @@ func _apply_row(row_node: Control, row: Dictionary) -> void:
 	var done := bool(row.get("done", false))
 	var on_track := bool(row.get("on_track", true))
 
-	_set_texture(row_node, "Bg", ROW_DONE if done else ROW_PENDING)
+	var bg := row_node.get_node_or_null("Bg") as TextureRect
+	if bg != null:
+		if bg.texture != ROW_ART:
+			bg.texture = ROW_ART
+		var want_mat: Material = MAT_ROW_DONE if done else null
+		if bg.material != want_mat:
+			bg.material = want_mat
 	_set_texture(row_node, "Bg/Check", CHECK_DONE if done else CHECK_PENDING)
 
 	var name_label := row_node.get_node_or_null("Bg/Name") as Label

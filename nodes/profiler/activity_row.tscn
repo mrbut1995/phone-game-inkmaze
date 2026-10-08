@@ -2,15 +2,16 @@
 
 [ext_resource type="Script" path="res://scripts/nodes/profiler/activity_row.gd" id="1_row"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_circle.png" id="3_circle"]
+[ext_resource uid="uid://n80hdaatt051" type="Texture2D" path="res://assets/images/icons/icon_circle.svg" id="3_circle"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_row.tres" id="4_title"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_small.tres" id="5_sub"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_state.tres" id="6_tag"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/row_bg.png" id="7_bg"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/chip_grey.png" id="8_chip"]
+[ext_resource uid="uid://dtbnplc416uqp" type="Texture2D" path="res://assets/images/profiler/row_bg.svg" id="7_bg"]
+[ext_resource uid="uid://djuo7xwkl81rt" type="Texture2D" path="res://assets/images/common/chip_pill.svg" id="8_chip"]
 
 [sub_resource type="StyleBoxTexture" id="Sb_tag"]
 texture = ExtResource("8_chip")
+modulate_color = Color(0.945098, 0.960784, 0.976471, 1)
 texture_margin_left = 8.0
 texture_margin_top = 6.0
 texture_margin_right = 8.0

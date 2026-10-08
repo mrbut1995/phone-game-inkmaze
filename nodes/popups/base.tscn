@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://j75ew1kc04k7"]
 
 [ext_resource type="Script" uid="uid://8brtf8g5a8uu" path="res://scripts/nodes/popups/base.gd" id="1_base"]
-[ext_resource type="Texture2D" uid="uid://g56pcy0nrdxn" path="res://assets/images-png/popups/paper_slip_win.png" id="2_slip"]
+[ext_resource type="Texture2D" uid="uid://cs45eohxsfgf6" path="res://assets/images/popups/paper_slip_win.svg" id="2_slip"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
 
 [sub_resource type="Animation" id="Animation_reset"]

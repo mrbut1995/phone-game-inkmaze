@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://shaders/palette_remap.gdshader" id="1_shader"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/count = 4
+shader_parameter/f1 = Color(0.137255, 0.352941, 0.490196, 1)
+shader_parameter/t1 = Color(0.654902, 0.72549, 0.764706, 1)
+shader_parameter/f2 = Color(0.239216, 0.513726, 0.682353, 1)
+shader_parameter/t2 = Color(0.87451, 0.862745, 0.835294, 1)
+shader_parameter/f3 = Color(0.105882, 0.278431, 0.384314, 1)
+shader_parameter/t3 = Color(0.654902, 0.72549, 0.764706, 1)
+shader_parameter/f4 = Color(0.180392, 0.415686, 0.54902, 1)
+shader_parameter/t4 = Color(0.87451, 0.862745, 0.835294, 1)

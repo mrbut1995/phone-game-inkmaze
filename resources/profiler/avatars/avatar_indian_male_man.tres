@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-indian-male-man.png" id="1_m2y4p"]
+[ext_resource uid="uid://b50lk1lq1knrg" type="Texture2D" path="res://assets/images/avatars/avatar-indian-male-man.svg" id="1_m2y4p"]
 [ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_gysdi"]
 
 [resource]

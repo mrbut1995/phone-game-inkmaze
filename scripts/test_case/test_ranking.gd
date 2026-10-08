@@ -233,8 +233,8 @@ func _section_7_scene(manager: Node) -> void:
 	_entry(scene.tab_count() == 3, "3 tab khai san trong scene (nhan %d)" % scene.tab_count())
 	var tabs := _ui(scene, "Sheet/Tabs") as HBoxContainer
 	_entry(tabs != null and tabs.get_child_count() == 3, "HBox Tabs co 3 nut")
-	var tab_active_art: Texture2D = load("res://assets/images-png/ranking/tab_active.png")
-	var tab_normal_art: Texture2D = load("res://assets/images-png/ranking/tab_normal.png")
+	var tab_active_art: Texture2D = load("res://assets/images/ranking/tab_active.svg")
+	var tab_normal_art: Texture2D = load("res://assets/images/ranking/tab_normal.svg")
 	_entry((tabs.get_child(0) as TextureButton).texture_normal == tab_active_art,
 		"Tab dau (dungeon) dang chon -> dung art active")
 
@@ -268,7 +268,7 @@ func _section_7_scene(manager: Node) -> void:
 			player_index = i
 	if player_index >= 0:
 		var player_row := rows_host.get_child(player_index) as RankRow
-		_entry((player_row.get_node("Bg") as TextureRect).texture == load("res://assets/images-png/ranking/rank_row_you.png"),
+		_entry((player_row.get_node("Bg") as TextureRect).texture == load("res://assets/images/ranking/rank_row_you.svg"),
 			"Hang cua nguoi choi dung art rieng (rank_row_you.svg)")
 		_entry((player_row.get_node("Body/Name") as Label).text == Ranking.display_name(rest[player_index]),
 			"Hang cua nguoi choi hien dung ten ('%s')" % (player_row.get_node("Body/Name") as Label).text)

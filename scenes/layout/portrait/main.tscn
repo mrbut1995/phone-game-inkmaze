@@ -1,80 +1,58 @@
 [gd_scene format=3 uid="uid://csymwcf8hd7mx"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/main_menu_paper.png" id="2_0wfyh"]
+[ext_resource uid="uid://b64xrilpekc4p" type="Texture2D" path="res://assets/images/main/main_menu_paper.svg" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://dmhi5353c17ko" path="res://scripts/scenes/layout/main_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/logo_doodle_maze.png" id="3_sugp2"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/panel_genre_container.png" id="5_0ld40"]
+[ext_resource uid="uid://ccvjj4234cnvi" type="Texture2D" path="res://assets/images/main/logo_doodle_maze.svg" id="3_sugp2"]
+[ext_resource uid="uid://cgbp27e1ip682" type="Texture2D" path="res://assets/images/main/panel_genre_container.svg" id="5_0ld40"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="5_p4rsb"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_normal.png" id="5_yevyv"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_pressed.png" id="6_vutaq"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_normal.png" id="7_a2lrt"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_disabled.png" id="7_riw04"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_focus.png" id="8_2raqb"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_pressed.png" id="8_ap3l5"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_disabled.png" id="9_av0p1"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_shop.png" id="9_icon_shop"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_focus.png" id="10_04w1a"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="11_ya4ey"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_normal.png" id="12_yevyv"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_pressed.png" id="13_vutaq"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_focus.png" id="14_riw04"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_play.png" id="15_icon_play"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="15_q3pnp"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/profiler_disc_pressed.png" id="16_8yheo"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_castle.png" id="16_icon_castle"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/profiler_disc_disabled.png" id="17_h7nmd"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_calendar.png" id="17_icon_calendar"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/profiler_disc_focus.png" id="18_ewaly"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_trophy.png" id="18_icon_trophy"]
-[ext_resource type="Texture2D" path="res://assets/images-png/frames/frame_default.png" id="19_h7nmd"]
-[ext_resource type="Texture2D" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="20_ewaly"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_gear.png" id="20_icon_gear"]
+[ext_resource uid="uid://chgvp6vq7npl3" type="Texture2D" path="res://assets/images/main/card_mode_level_normal.svg" id="5_yevyv"]
+[ext_resource uid="uid://48yxwobs88y0" type="Texture2D" path="res://assets/images/main/card_mode_level_pressed.svg" id="6_vutaq"]
+[ext_resource uid="uid://bncvs7635j8mr" type="Texture2D" path="res://assets/images/common/card_mode_normal.svg" id="7_a2lrt"]
+[ext_resource uid="uid://b44veo021gjvc" type="Texture2D" path="res://assets/images/main/card_mode_level_disabled.svg" id="7_riw04"]
+[ext_resource uid="uid://dv3upy3xmn4w" type="Texture2D" path="res://assets/images/main/card_mode_level_focus.svg" id="8_2raqb"]
+[ext_resource uid="uid://dtlg8wo5bkdge" type="Texture2D" path="res://assets/images/common/card_mode_pressed.svg" id="8_ap3l5"]
+[ext_resource uid="uid://cnfdg6korh6gn" type="Texture2D" path="res://assets/images/main/card_mode_disabled.svg" id="9_av0p1"]
+[ext_resource uid="uid://bue8as2pv2ov2" type="Texture2D" path="res://assets/images/icons/icon_shop.svg" id="9_icon_shop"]
+[ext_resource uid="uid://cabkur7frl0if" type="Texture2D" path="res://assets/images/common/card_mode_focus.svg" id="10_04w1a"]
+[ext_resource uid="uid://cr6w077lhvqlt" type="Texture2D" path="res://assets/images/main/stamp_version.svg" id="11_ya4ey"]
+[ext_resource uid="uid://b6jamoc7rkb8a" type="Texture2D" path="res://assets/images/icons/icon_play.svg" id="15_icon_play"]
+[ext_resource uid="uid://ekfquw0so41l" type="Texture2D" path="res://assets/images/profiler/profiler_disc_normal.svg" id="15_q3pnp"]
+[ext_resource uid="uid://bofrdwmb5s12a" type="Texture2D" path="res://assets/images/profiler/profiler_disc_pressed.svg" id="16_8yheo"]
+[ext_resource uid="uid://dfen0100lldvp" type="Texture2D" path="res://assets/images/icons/icon_castle.svg" id="16_icon_castle"]
+[ext_resource uid="uid://dk4s2kydd38p6" type="Texture2D" path="res://assets/images/profiler/profiler_disc_disabled.svg" id="17_h7nmd"]
+[ext_resource uid="uid://cbau2otllid1" type="Texture2D" path="res://assets/images/icons/icon_calendar.svg" id="17_icon_calendar"]
+[ext_resource uid="uid://bh6htaq00756m" type="Texture2D" path="res://assets/images/profiler/profiler_disc_focus.svg" id="18_ewaly"]
+[ext_resource uid="uid://iurtsy651xdc" type="Texture2D" path="res://assets/images/icons/icon_trophy.svg" id="18_icon_trophy"]
+[ext_resource uid="uid://c2k8iokxuk3br" type="Texture2D" path="res://assets/images/frames/frame_default.svg" id="19_h7nmd"]
+[ext_resource uid="uid://scy26gl3aaxu" type="Texture2D" path="res://assets/images/avatars/avatar-baby-child-kid.svg" id="20_ewaly"]
+[ext_resource uid="uid://21i38jchhg60" type="Texture2D" path="res://assets/images/icons/icon_gear.svg" id="20_icon_gear"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="21_stamp_text"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/btn_menu_badge_normal.png" id="24_badge_normal"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/btn_menu_badge_pressed.png" id="25_badge_pressed"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/btn_menu_badge_focus.png" id="26_badge_focus"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/btn_menu_badge_disabled.png" id="27_badge_disabled"]
-[ext_resource type="Texture2D" path="res://assets/images-png/profiler/chip_dark.png" id="28_chip_dark"]
+[ext_resource uid="uid://1rqvlr6mxk7i" type="Texture2D" path="res://assets/images/main/btn_menu_badge_normal.svg" id="24_badge_normal"]
+[ext_resource uid="uid://cbedwjjj8aba0" type="Texture2D" path="res://assets/images/main/btn_menu_badge_pressed.svg" id="25_badge_pressed"]
+[ext_resource uid="uid://s2egoesghjer" type="Texture2D" path="res://assets/images/main/btn_menu_badge_focus.svg" id="26_badge_focus"]
+[ext_resource uid="uid://ce4bov5qet800" type="Texture2D" path="res://assets/images/main/btn_menu_badge_disabled.svg" id="27_badge_disabled"]
+[ext_resource uid="uid://b8imq7frnofrv" type="Texture2D" path="res://assets/images/profiler/chip_dark.svg" id="28_chip_dark"]
 [ext_resource type="LabelSettings" uid="uid://bu8t2nlps33r5" path="res://resources/settings/text/text_profiler_small.tres" id="29_t_small"]
 [ext_resource type="LabelSettings" uid="uid://10rhkf4kv2gy" path="res://resources/settings/text/text_profiler_lock.tres" id="30_t_lock"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/btn_menu_badge_normal_icon.png" id="p_icon_1"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/btn_menu_badge_pressed_icon.png" id="p_icon_2"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/btn_menu_badge_focus_icon.png" id="p_icon_3"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/btn_menu_badge_disabled_icon.png" id="p_icon_4"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_normal_circle_icon.png" id="p_tex_1"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_pressed_circle_icon.png" id="p_tex_2"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_disabled_circle_icon.png" id="p_tex_3"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_normal_top_badge.png" id="p_tex_4"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_pressed_top_badge.png" id="p_tex_5"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_disabled_top_badge.png" id="p_tex_6"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_normal_bottom_label.png" id="p_tex_7"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_pressed_bottom_label.png" id="p_tex_8"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_disabled_bottom_label.png" id="p_tex_9"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_normal_circle_icon.png" id="p_tex_10"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_pressed_circle_icon.png" id="p_tex_11"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_disabled_circle_icon.png" id="p_tex_12"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_normal_top_badge.png" id="p_tex_13"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_pressed_top_badge.png" id="p_tex_14"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_disabled_top_badge.png" id="p_tex_15"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_normal_bottom_label.png" id="p_tex_16"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_pressed_bottom_label.png" id="p_tex_17"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_disabled_bottom_label.png" id="p_tex_18"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_normal_circle_icon.png" id="p_tex_19"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_pressed_circle_icon.png" id="p_tex_20"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_normal_top_badge.png" id="p_tex_21"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_pressed_top_badge.png" id="p_tex_22"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_normal_bottom_label.png" id="p_tex_23"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_pressed_bottom_label.png" id="p_tex_24"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_focus_circle_icon.png" id="p_tex_25"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_focus_top_badge.png" id="p_tex_26"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_level_focus_bottom_label.png" id="p_tex_27"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_focus_circle_icon.png" id="p_tex_28"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_focus_top_badge.png" id="p_tex_29"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_dungeon_focus_bottom_label.png" id="p_tex_30"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_focus_circle_icon.png" id="p_tex_31"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_focus_top_badge.png" id="p_tex_32"]
-[ext_resource type="Texture2D" path="res://assets/images-png/main/card_mode_daily_focus_bottom_label.png" id="p_tex_33"]
+[ext_resource uid="uid://bhkawxv1hy7ih" type="Texture2D" path="res://assets/images/main/btn_menu_badge_normal_icon.svg" id="p_icon_1"]
+[ext_resource uid="uid://d3nsskbj7wnsd" type="Texture2D" path="res://assets/images/main/btn_menu_badge_pressed_icon.svg" id="p_icon_2"]
+[ext_resource uid="uid://oad7ci1nrsk8" type="Texture2D" path="res://assets/images/main/btn_menu_badge_disabled_icon.svg" id="p_icon_4"]
+[ext_resource uid="uid://b14hkwtacvtpq" type="Texture2D" path="res://assets/images/main/card_mode_level_normal_circle_icon.svg" id="p_tex_1"]
+[ext_resource uid="uid://c6s53ekyq3d4d" type="Texture2D" path="res://assets/images/main/card_mode_level_pressed_circle_icon.svg" id="p_tex_2"]
+[ext_resource uid="uid://pdleqdio220k" type="Texture2D" path="res://assets/images/main/card_mode_level_disabled_circle_icon.svg" id="p_tex_3"]
+[ext_resource uid="uid://5l7mqahnxl0e" type="Texture2D" path="res://assets/images/common/card_mode_top_badge.svg" id="p_tex_4"]
+[ext_resource uid="uid://ot3aetavvmdo" type="Texture2D" path="res://assets/images/main/card_mode_level_pressed_top_badge.svg" id="p_tex_5"]
+[ext_resource uid="uid://dxubsrby2kcax" type="Texture2D" path="res://assets/images/main/card_mode_disabled_top_badge.svg" id="p_tex_6"]
+[ext_resource uid="uid://btek4i8u7ovdj" type="Texture2D" path="res://assets/images/common/card_mode_bottom_label.svg" id="p_tex_7"]
+[ext_resource uid="uid://u2h7q1wc1fv" type="Texture2D" path="res://assets/images/main/card_mode_level_pressed_bottom_label.svg" id="p_tex_8"]
+[ext_resource uid="uid://dn0pbmys5kmwt" type="Texture2D" path="res://assets/images/main/card_mode_disabled_bottom_label.svg" id="p_tex_9"]
+[ext_resource uid="uid://dhffhbmbs43w0" type="Texture2D" path="res://assets/images/common/card_mode_circle_icon.svg" id="p_tex_10"]
+[ext_resource uid="uid://drfdndtnpl6tg" type="Texture2D" path="res://assets/images/common/card_mode_circle_icon_pressed.svg" id="p_tex_11"]
+[ext_resource uid="uid://c1aq3booua4ma" type="Texture2D" path="res://assets/images/main/card_mode_disabled_circle_icon.svg" id="p_tex_12"]
+[ext_resource uid="uid://bvng3vfc0n2u4" type="Texture2D" path="res://assets/images/common/card_mode_top_badge_pressed.svg" id="p_tex_14"]
+[ext_resource uid="uid://bvy8eqhgidwvx" type="Texture2D" path="res://assets/images/common/card_mode_bottom_label_pressed.svg" id="p_tex_17"]
+[ext_resource uid="uid://s62gr2haf6t7" type="Texture2D" path="res://assets/images/common/card_mode_circle_icon_focus.svg" id="p_tex_28"]
 [ext_resource type="Script" uid="uid://blpdwtvxerh8h" path="res://scripts/tool/nine_patch/NinePatchStateTexture.gd" id="sc_npstate"]
 [ext_resource type="Script" uid="uid://bbrwe45fwv4mb" path="res://scripts/tool/StateTexture.gd" id="sc_state"]
 [ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_focus.tres" id="S_util_focus"]
@@ -82,6 +60,36 @@
 [ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_normal.tres" id="S_util_normal"]
 [ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_pressed.tres" id="S_util_pressed"]
 [ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_settings.tres" id="S_util_settings"]
+[ext_resource type="Shader" path="res://shaders/color_remap.gdshader" id="sh_color_remap"]
+
+[sub_resource type="ShaderMaterial" id="mat_level_badge"]
+shader = ExtResource("sh_color_remap")
+shader_parameter/tolerance = 0.06
+shader_parameter/f1 = Color(0.996078, 0.886275, 0.886275, 1)
+shader_parameter/t1 = Color(0.984314, 0.74902, 0.141176, 1)
+[sub_resource type="ShaderMaterial" id="mat_level_label"]
+shader = ExtResource("sh_color_remap")
+shader_parameter/tolerance = 0.06
+shader_parameter/f1 = Color(0.996078, 0.886275, 0.886275, 1)
+shader_parameter/t1 = Color(0.12549, 0.313725, 0.431373, 1)
+
+[sub_resource type="ShaderMaterial" id="mat_dungeon"]
+shader = ExtResource("sh_color_remap")
+shader_parameter/tolerance = 0.06
+shader_parameter/f1 = Color(0.847059, 0.266667, 0.266667, 1)
+shader_parameter/t1 = Color(0.960784, 0.619608, 0.043137, 1)
+shader_parameter/f2 = Color(0.960784, 0.913725, 0.901961, 1)
+shader_parameter/t2 = Color(0.956863, 0.929412, 0.878431, 1)
+shader_parameter/f3 = Color(0.72549, 0.109804, 0.109804, 1)
+shader_parameter/t3 = Color(0.705882, 0.32549, 0.035294, 1)
+shader_parameter/f4 = Color(0.996078, 0.886275, 0.886275, 1)
+shader_parameter/t4 = Color(0.996078, 0.952941, 0.780392, 1)
+shader_parameter/f5 = Color(0.996078, 0.792157, 0.792157, 1)
+shader_parameter/t5 = Color(0.992157, 0.901961, 0.541176, 1)
+shader_parameter/f6 = Color(0.996078, 0.94902, 0.94902, 1)
+shader_parameter/t6 = Color(1, 0.984314, 0.921569, 1)
+shader_parameter/f7 = Color(0.972549, 0.443137, 0.443137, 1)
+shader_parameter/t7 = Color(0.984314, 0.74902, 0.141176, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q3pnp"]
 content_margin_left = 146.0
@@ -198,7 +206,7 @@ content_margin_left = 146.0
 content_margin_top = 50.5
 content_margin_right = 121.0
 content_margin_bottom = 24.0
-texture = ExtResource("12_yevyv")
+texture = ExtResource("7_a2lrt")
 texture_margin_left = 146.0
 texture_margin_top = 50.5
 texture_margin_right = 121.0
@@ -209,7 +217,7 @@ content_margin_left = 146.0
 content_margin_top = 50.5
 content_margin_right = 121.0
 content_margin_bottom = 24.0
-texture = ExtResource("13_vutaq")
+texture = ExtResource("8_ap3l5")
 texture_margin_left = 146.0
 texture_margin_top = 50.5
 texture_margin_right = 121.0
@@ -220,7 +228,7 @@ content_margin_left = 146.0
 content_margin_top = 50.5
 content_margin_right = 121.0
 content_margin_bottom = 24.0
-texture = ExtResource("12_yevyv")
+texture = ExtResource("7_a2lrt")
 texture_margin_left = 146.0
 texture_margin_top = 50.5
 texture_margin_right = 121.0
@@ -242,7 +250,7 @@ content_margin_left = 146.0
 content_margin_top = 50.5
 content_margin_right = 121.0
 content_margin_bottom = 24.0
-texture = ExtResource("14_riw04")
+texture = ExtResource("10_04w1a")
 texture_margin_left = 146.0
 texture_margin_top = 50.5
 texture_margin_right = 121.0
@@ -354,7 +362,7 @@ texture_normal = ExtResource("p_icon_1")
 texture_hover = ExtResource("p_icon_1")
 texture_pressed = ExtResource("p_icon_2")
 texture_disabled = ExtResource("p_icon_4")
-texture_focused = ExtResource("p_icon_3")
+texture_focused = ExtResource("p_icon_1")
 metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
 
 [node name="Count" type="Label" parent="Panel/Archivement" index="1" unique_id=1008134821]
@@ -627,7 +635,7 @@ texture_normal = ExtResource("p_tex_1")
 texture_hover = ExtResource("p_tex_1")
 texture_pressed = ExtResource("p_tex_2")
 texture_disabled = ExtResource("p_tex_3")
-texture_focused = ExtResource("p_tex_25")
+texture_focused = ExtResource("p_tex_1")
 expand_mode = 2
 stretch_mode = 5
 metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
@@ -680,6 +688,7 @@ text = "STR_MODE_PLAY_DESC_2"
 text_overrun_behavior = 3
 
 [node name="TopBadge" type="Control" parent="Panel/Content/GameMode/Play" index="1" unique_id=1558200895]
+material = SubResource("mat_level_badge")
 layout_mode = 1
 anchors_preset = 0
 offset_left = 33.5
@@ -698,7 +707,7 @@ texture_normal = ExtResource("p_tex_4")
 texture_hover = ExtResource("p_tex_4")
 texture_pressed = ExtResource("p_tex_5")
 texture_disabled = ExtResource("p_tex_6")
-texture_focused = ExtResource("p_tex_26")
+texture_focused = ExtResource("p_tex_4")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
 [node name="Tag" type="Label" parent="Panel/Content/GameMode/Play/TopBadge" index="0" unique_id=773805983]
@@ -716,6 +725,7 @@ vertical_alignment = 1
 minimum_font_size = 8
 
 [node name="BottomLabel" type="Control" parent="Panel/Content/GameMode/Play" index="2" unique_id=1895202491]
+material = SubResource("mat_level_label")
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -738,7 +748,7 @@ texture_normal = ExtResource("p_tex_7")
 texture_hover = ExtResource("p_tex_7")
 texture_pressed = ExtResource("p_tex_8")
 texture_disabled = ExtResource("p_tex_9")
-texture_focused = ExtResource("p_tex_27")
+texture_focused = ExtResource("p_tex_7")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
 [node name="Badge" type="Label" parent="Panel/Content/GameMode/Play/BottomLabel" index="0" unique_id=933830205]
@@ -767,6 +777,7 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_04x0s")
 theme_override_styles/hover = SubResource("StyleBoxTexture_joq2v")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_uxnst")
 theme_override_styles/focus = SubResource("StyleBoxTexture_uyvhh")
+material = SubResource("mat_dungeon")
 script = ExtResource("5_p4rsb")
 texture_normal = ExtResource("7_a2lrt")
 texture_hover = ExtResource("7_a2lrt")
@@ -791,6 +802,7 @@ offset_right = 54.13199
 offset_bottom = -0.039985657
 
 [node name="CircleIcon" type="Control" parent="Panel/Content/GameMode/Dungeon/ButtonDescription" index="0" unique_id=1684663410]
+material = SubResource("mat_dungeon")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 1
@@ -856,6 +868,7 @@ text = "STR_MODE_DUNGEON_DESC_2"
 text_overrun_behavior = 3
 
 [node name="TopBadge" type="Control" parent="Panel/Content/GameMode/Dungeon" index="1" unique_id=622248729]
+material = SubResource("mat_dungeon")
 layout_mode = 1
 anchors_preset = 0
 offset_left = 33.5
@@ -870,11 +883,11 @@ patch_margin_left = 5.0
 patch_margin_top = 5.0
 patch_margin_right = 5.0
 patch_margin_bottom = 5.0
-texture_normal = ExtResource("p_tex_13")
-texture_hover = ExtResource("p_tex_13")
+texture_normal = ExtResource("p_tex_4")
+texture_hover = ExtResource("p_tex_4")
 texture_pressed = ExtResource("p_tex_14")
-texture_disabled = ExtResource("p_tex_15")
-texture_focused = ExtResource("p_tex_29")
+texture_disabled = ExtResource("p_tex_6")
+texture_focused = ExtResource("p_tex_4")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
 [node name="Tag" type="Label" parent="Panel/Content/GameMode/Dungeon/TopBadge" index="0" unique_id=978315534]
@@ -894,6 +907,7 @@ minimum_font_size = 8
 maximum_font_size = 28
 
 [node name="BottomLabel" type="Control" parent="Panel/Content/GameMode/Dungeon" index="2" unique_id=1494086835]
+material = SubResource("mat_dungeon")
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -912,11 +926,11 @@ patch_margin_left = 5.0
 patch_margin_top = 5.0
 patch_margin_right = 5.0
 patch_margin_bottom = 5.0
-texture_normal = ExtResource("p_tex_16")
-texture_hover = ExtResource("p_tex_16")
+texture_normal = ExtResource("p_tex_7")
+texture_hover = ExtResource("p_tex_7")
 texture_pressed = ExtResource("p_tex_17")
-texture_disabled = ExtResource("p_tex_18")
-texture_focused = ExtResource("p_tex_30")
+texture_disabled = ExtResource("p_tex_9")
+texture_focused = ExtResource("p_tex_7")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
 [node name="Badge" type="Label" parent="Panel/Content/GameMode/Dungeon/BottomLabel" index="0" unique_id=1779795099]
@@ -947,11 +961,11 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_oi66u")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_2rmko")
 theme_override_styles/focus = SubResource("StyleBoxTexture_w6s66")
 script = ExtResource("5_p4rsb")
-texture_normal = ExtResource("12_yevyv")
-texture_hover = ExtResource("12_yevyv")
-texture_pressed = ExtResource("13_vutaq")
+texture_normal = ExtResource("7_a2lrt")
+texture_hover = ExtResource("7_a2lrt")
+texture_pressed = ExtResource("8_ap3l5")
 texture_disabled = ExtResource("9_av0p1")
-texture_focus = ExtResource("14_riw04")
+texture_focus = ExtResource("10_04w1a")
 patch_margin_left = 146.0
 patch_margin_top = 50.5
 patch_margin_right = 121.0
@@ -975,11 +989,11 @@ layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 1
 script = ExtResource("sc_state")
-texture_normal = ExtResource("p_tex_19")
-texture_hover = ExtResource("p_tex_19")
-texture_pressed = ExtResource("p_tex_20")
+texture_normal = ExtResource("p_tex_10")
+texture_hover = ExtResource("p_tex_10")
+texture_pressed = ExtResource("p_tex_11")
 texture_disabled = ExtResource("p_tex_12")
-texture_focused = ExtResource("p_tex_31")
+texture_focused = ExtResource("p_tex_28")
 expand_mode = 2
 stretch_mode = 5
 metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
@@ -1050,11 +1064,11 @@ patch_margin_left = 5.0
 patch_margin_top = 5.0
 patch_margin_right = 5.0
 patch_margin_bottom = 5.0
-texture_normal = ExtResource("p_tex_21")
-texture_hover = ExtResource("p_tex_21")
-texture_pressed = ExtResource("p_tex_22")
-texture_disabled = ExtResource("p_tex_15")
-texture_focused = ExtResource("p_tex_32")
+texture_normal = ExtResource("p_tex_4")
+texture_hover = ExtResource("p_tex_4")
+texture_pressed = ExtResource("p_tex_14")
+texture_disabled = ExtResource("p_tex_6")
+texture_focused = ExtResource("p_tex_4")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
 [node name="Tag" type="Label" parent="Panel/Content/GameMode/DailyMission/TopBadge" index="0" unique_id=96439748]
@@ -1091,11 +1105,11 @@ patch_margin_left = 5.0
 patch_margin_top = 5.0
 patch_margin_right = 5.0
 patch_margin_bottom = 5.0
-texture_normal = ExtResource("p_tex_23")
-texture_hover = ExtResource("p_tex_23")
-texture_pressed = ExtResource("p_tex_24")
-texture_disabled = ExtResource("p_tex_18")
-texture_focused = ExtResource("p_tex_33")
+texture_normal = ExtResource("p_tex_7")
+texture_hover = ExtResource("p_tex_7")
+texture_pressed = ExtResource("p_tex_17")
+texture_disabled = ExtResource("p_tex_9")
+texture_focused = ExtResource("p_tex_7")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
 
 [node name="Badge" type="Label" parent="Panel/Content/GameMode/DailyMission/BottomLabel" index="0" unique_id=1790326617]

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://gpu3hvws2a5j"]
 
 [ext_resource type="Script" uid="uid://beu82xphg17i6" path="res://scripts/nodes/common/scene_transition.gd" id="1_transition"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icon.png" id="2_logo"]
-[ext_resource type="Texture2D" path="res://assets/images-png/image_loading.png" id="3_dhqfv"]
+[ext_resource uid="uid://dol12u34jktb3" type="Texture2D" path="res://icon.svg" id="2_logo"]
+[ext_resource uid="uid://dmdfeiqx44vj8" type="Texture2D" path="res://assets/images/image_loading.svg" id="3_dhqfv"]
 
 [sub_resource type="Gradient" id="GradShadowLeft"]
 colors = PackedColorArray(0.12, 0.1, 0.08, 0.38, 0, 0, 0, 0)

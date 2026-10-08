@@ -8,22 +8,22 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const ICON_BOX := preload("res://assets/images-png/icons/icon_box.png")
-const BTN_NORMAL := preload("res://assets/images-png/shop/btn_action_normal.png")
-const BTN_PRESSED := preload("res://assets/images-png/shop/btn_action_pressed.png")
-const BTN_AMBER := preload("res://assets/images-png/shop/btn_action_amber.png")
-const BTN_DONE := preload("res://assets/images-png/shop/btn_equipped.png")
+const ICON_BOX := preload("res://assets/images/icons/icon_box.svg")
+const BTN_NORMAL := preload("res://assets/images/common/btn_action_normal.svg")
+const BTN_PRESSED := preload("res://assets/images/common/btn_action_pressed.svg")
+const MAT_AMBER := preload("res://resources/materials/btn_action_amber.tres")
+const BTN_DONE := preload("res://assets/images/shop/btn_equipped.svg")
 const ICONS := {
-	"pen": preload("res://assets/images-png/icons/icon_pen.png"),
-	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
-	"paper": preload("res://assets/images-png/icons/icon_paper.png"),
-	"coin": preload("res://assets/images-png/icons/icon_coin.png"),
-	"tool_undo": preload("res://assets/images-png/icons/icon_tool_undo.png"),
-	"tool_hint": preload("res://assets/images-png/icons/icon_tool_hint.png"),
-	"tool_reveal": preload("res://assets/images-png/icons/icon_tool_reveal.png"),
-	"tool_time": preload("res://assets/images-png/icons/icon_tool_time.png"),
-	"tool_revive": preload("res://assets/images-png/icons/icon_tool_revive.png"),
-	"tool_shield": preload("res://assets/images-png/icons/icon_tool_shield.png"),
+	"pen": preload("res://assets/images/icons/icon_pen.svg"),
+	"ink": preload("res://assets/images/icons/icon_ink.svg"),
+	"paper": preload("res://assets/images/icons/icon_paper.svg"),
+	"coin": preload("res://assets/images/icons/icon_coin.svg"),
+	"tool_undo": preload("res://assets/images/icons/icon_tool_undo.svg"),
+	"tool_hint": preload("res://assets/images/icons/icon_tool_hint.svg"),
+	"tool_reveal": preload("res://assets/images/icons/icon_tool_reveal.svg"),
+	"tool_time": preload("res://assets/images/icons/icon_tool_time.svg"),
+	"tool_revive": preload("res://assets/images/icons/icon_tool_revive.svg"),
+	"tool_shield": preload("res://assets/images/icons/icon_tool_shield.svg"),
 }
 
 var item_id: String = ""
@@ -90,13 +90,15 @@ func _set_button(color: Color) -> void:
 	if btn == null or label == null:
 		return
 	btn.disabled = false
+	btn.material = null
 	var category: String = str(Shop.category_of(item_id))
 	var price := int(Shop.item(item_id).get("price", 0))
 
 	if str(category) == "coin":		# Gói nạp tiền thật: nút hổ phách ghi giá VNĐ (gói xoá quảng cáo chỉ mua 1 lần)
 		var vnd := int(item_data.get("vnd", 0))
-		btn.texture_normal = BTN_AMBER
-		btn.texture_pressed = BTN_AMBER
+		btn.texture_normal = BTN_NORMAL
+		btn.texture_pressed = BTN_NORMAL
+		btn.material = MAT_AMBER
 		if bool(item_data.get("no_ads", false)) and Shop.is_owned(item_id):
 			_use_done_style(btn, label)
 		else:
