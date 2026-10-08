@@ -98,7 +98,9 @@ func _run(scene: GameScene) -> void:
 		# 2026-09-27: HUD Wall Builder CHỈ hiện THỜI GIAN — bảng "TƯỜNG ĐÃ VẼ" (số đoạn · lượt GỬI ·
 		# chip trạng thái · thanh tiến độ) đã gỡ khỏi scene (số tường đọc trực tiếp trên bàn cờ).
 		var time_card := hud.find_child("Time", true, false) as Control
-		var time_val := time_card.get_node_or_null("Value") as Label if time_card != null else null
+		# Gia tri dong ho lay qua export cua HUD (`Time/HBoxContainer/Value`) — KHONG do duong dan
+		# tuyet doi vi so tang trong the THOI GIAN co the doi ma khong bao.
+		var time_val := hud.time_value_node
 		_entry(time_card != null and time_card.visible, "HUD: co the THOI GIAN")
 		_entry(time_val != null and not time_val.text.is_empty(),
 			"HUD: the THOI GIAN hien gia tri ('%s')" % _text_of(time_val))

@@ -145,8 +145,10 @@ func _run(scene: GameScene) -> void:
 	# --- 7. HUD (2026-09-27: One Stroke CHỈ hiện THỜI GIAN — bảng "TIẾN ĐỘ PHỦ KÍN" đã gỡ) ---
 	if hud != null:
 		hud.update_hud({"mode": mode})
+		# Gia tri dong ho lay qua export cua HUD (`Time/HBoxContainer/Value`) — KHONG do duong dan
+		# tuyet doi vi so tang trong the THOI GIAN co the doi ma khong bao.
 		var time_card := hud.find_child("Time", true, false) as Control
-		var time_val := time_card.get_node_or_null("Value") as Label if time_card != null else null
+		var time_val := hud.time_value_node
 		_entry(time_card != null and time_card.visible, "HUD: co the THOI GIAN")
 		_entry(time_val != null and not time_val.text.is_empty(),
 			"HUD: the THOI GIAN hien gia tri ('%s')" % _text_of(time_val))
