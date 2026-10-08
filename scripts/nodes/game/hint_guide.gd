@@ -23,6 +23,9 @@ const HINT_KEYS := {
 	"daily_challenge": "STR_HINT_CHALLENGE",
 }
 
+## Node binding: khai `node_paths` + NodePath trong `nodes/hud/portrait/game/action_bar.tscn`
+@export var text_label: Label = null
+
 
 ## Đổi nội dung gợi ý theo chế độ đang chơi
 func show_mode(mode: BaseGameMode) -> void:
@@ -38,12 +41,10 @@ func show_mode(mode: BaseGameMode) -> void:
 func show_text(text: String) -> void:
 	if text.is_empty():
 		return
-	var label := get_node_or_null("Text") as Label
-	if label != null and label.text != text:
-		label.text = text
+	if text_label != null and text_label.text != text:
+		text_label.text = text
 
 
 ## Nội dung đang hiển thị (test)
 func current_text() -> String:
-	var label := get_node_or_null("Text") as Label
-	return label.text if label != null else ""
+	return text_label.text if text_label != null else ""

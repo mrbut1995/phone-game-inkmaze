@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://comcrt2xgtjwm" path="res://assets/images-png/popups/btn_popup_danger_pressed.png" id="16_ret_p"]
 [ext_resource type="Texture2D" uid="uid://cnugf8wcc03sm" path="res://assets/images-png/popups/btn_popup_danger_focus.png" id="17_ret_f"]
 [ext_resource type="Texture2D" uid="uid://cphd7lexro270" path="res://assets/images-png/common/star_empty.png" id="18_star_off"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="19_star_full"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="18_yr0sl"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h0h1r"]
@@ -92,6 +93,8 @@ row2_status = NodePath("Panel/Content/Information/Row2/Status")
 row3_star = NodePath("Panel/Content/Information/Row3/Star")
 row3_name = NodePath("Panel/Content/Information/Row3/Name")
 row3_status = NodePath("Panel/Content/Information/Row3/Status")
+star_full = ExtResource("19_star_full")
+star_empty = ExtResource("18_star_off")
 btn_revive = NodePath("Panel/Content/Information/Banner/ReviveBtn")
 close_on_outside = false
 

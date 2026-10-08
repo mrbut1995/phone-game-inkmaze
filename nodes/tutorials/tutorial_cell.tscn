@@ -5,6 +5,9 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/game/cell_pressed.png" id="3_pressed"]
 [ext_resource type="Texture2D" path="res://assets/images-png/game/cell_disabled.png" id="4_disabled"]
 [ext_resource type="LabelSettings" uid="uid://d1q5q45o84b40" path="res://resources/settings/text/text_game_cell.tres" id="5_label_settings"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/cell_start.png" id="6_start"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/cell_finish.png" id="7_finish"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/cell_finish_closed.png" id="8_finish_closed"]
 
 [sub_resource type="StyleBoxFlat" id="highlight_style"]
 bg_color = Color(1.0, 0.9, 0.35, 0.55)
@@ -214,11 +217,20 @@ _data = {
 &"win": SubResource("Animation_tcell_win")
 }
 
-[node name="TutorialCell" type="Control" unique_id=1]
+[node name="TutorialCell" type="Control" unique_id=1 node_paths=PackedStringArray("sprite", "label", "anim", "entrance_timer", "win_timer")]
 offset_right = 76.0
 offset_bottom = 76.0
 mouse_filter = 2
 script = ExtResource("1_cell")
+sprite = NodePath("Sprite")
+label = NodePath("Sprite/Label")
+anim = NodePath("AnimationPlayer")
+entrance_timer = NodePath("EntranceTimer")
+win_timer = NodePath("WinTimer")
+texture_normal = ExtResource("2_normal")
+texture_start = ExtResource("6_start")
+texture_finish = ExtResource("7_finish")
+texture_finish_closed = ExtResource("8_finish_closed")
 
 [node name="Sprite" type="TextureButton" parent="."]
 layout_mode = 1

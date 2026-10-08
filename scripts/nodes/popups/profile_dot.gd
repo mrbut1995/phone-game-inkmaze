@@ -6,15 +6,16 @@ extends TextureButton
 ## Bấm được để nhảy tới trang tương ứng; chấm ĐANG XEM thì khoá lại.
 ## ============================================================================
 
-const DOT_ACTIVE := preload("res://assets/images-png/profiler/page_dot_on.png")
-const DOT_INACTIVE := preload("res://assets/images-png/profiler/page_dot_off.png")
+## Art chấm — gán trong `profile_dot.tscn` (ExtResource)
+@export var dot_active: Texture2D = null
+@export var dot_inactive: Texture2D = null
 
 
 func set_current(on: bool) -> void:
-	var tex: Texture2D = DOT_ACTIVE if on else DOT_INACTIVE
+	var tex: Texture2D = dot_active if on else dot_inactive
 	texture_normal = tex
-	texture_pressed = DOT_ACTIVE
-	texture_hover = DOT_INACTIVE if on else DOT_ACTIVE
+	texture_pressed = dot_active
+	texture_hover = dot_inactive if on else dot_active
 	texture_focused = tex
 	texture_disabled = tex
 	disabled = on

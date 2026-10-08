@@ -10,7 +10,8 @@ extends BasePopup
 signal locale_applied(code: String)
 
 const ROW_SCENE := preload("res://nodes/popups/language_row.tscn")
-const FLAG_FALLBACK := preload("res://assets/images-png/icons/flags/flag_generic.png")
+## Cờ dự phòng khi thiếu art — gán trong `language.tscn` (ExtResource)
+@export var flag_fallback: Texture2D = null
 
 ## Ngưỡng nhận diện kéo (px) + thời gian khoá bấm hàng sau khi vuốt (giây)
 @export_range(0.0, 80.0, 1.0) var drag_threshold := 14.0
@@ -62,7 +63,7 @@ func _add_row(code: String) -> void:
 
 func _flag_texture(path: String) -> Texture2D:
 	if path.is_empty() or not ResourceLoader.exists(path):
-		return FLAG_FALLBACK
+		return flag_fallback
 	return load(path) as Texture2D
 
 

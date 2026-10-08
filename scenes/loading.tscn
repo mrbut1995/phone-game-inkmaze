@@ -58,10 +58,19 @@ _data = {
 &"loading": SubResource("Animation_dhqfv")
 }
 
-[node name="Loading" type="CanvasLayer" unique_id=1836600101]
+[node name="Loading" type="CanvasLayer" unique_id=1836600101 node_paths=PackedStringArray("transition_root", "blocker", "paper_page", "page_bg", "page_shadow_left", "page_shadow_right", "watermark", "ink_circle_drawer", "fade_rect")]
 process_mode = 3
 layer = 128
 script = ExtResource("1_transition")
+transition_root = NodePath("TransitionRoot")
+blocker = NodePath("TransitionRoot/InputBlocker")
+paper_page = NodePath("TransitionRoot/PaperPage")
+page_bg = NodePath("TransitionRoot/PaperPage/PaperBg")
+page_shadow_left = NodePath("TransitionRoot/PaperPage/ShadowLeft")
+page_shadow_right = NodePath("TransitionRoot/PaperPage/ShadowRight")
+watermark = NodePath("TransitionRoot/PaperPage/Watermark")
+ink_circle_drawer = NodePath("TransitionRoot/InkCircleDrawer")
+fade_rect = NodePath("TransitionRoot/FadeRect")
 
 [node name="TransitionRoot" type="Control" parent="." unique_id=2081642660]
 layout_mode = 3

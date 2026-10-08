@@ -39,7 +39,7 @@ layout_mode = 1
 
 [node name="Controllers" type="Node" parent="." index="4" unique_id=1749084702]
 
-[node name="GameController" type="Node" parent="Controllers" index="0" unique_id=414807406 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "mission_controller", "grid_view")]
+[node name="GameController" type="Node" parent="Controllers" index="0" unique_id=414807406 node_paths=PackedStringArray("floor_controller", "timer_controller", "grid_controller", "ui_controller", "tool_controller", "game_mode_controller", "mission_controller", "grid_view", "sfx_timer_achievement", "sfx_timer_floor_bonus")]
 script = ExtResource("10_game")
 floor_controller = NodePath("../FloorController")
 timer_controller = NodePath("../TimerController")
@@ -49,6 +49,8 @@ tool_controller = NodePath("../ToolController")
 game_mode_controller = NodePath("../GameModeController")
 mission_controller = NodePath("../MissionController")
 grid_view = NodePath("../../Board")
+sfx_timer_achievement = NodePath("AchievementSfxTimer")
+sfx_timer_floor_bonus = NodePath("FloorBonusSfxTimer")
 
 [node name="AchievementSfxTimer" type="Timer" parent="Controllers/GameController"]
 wait_time = 1.6

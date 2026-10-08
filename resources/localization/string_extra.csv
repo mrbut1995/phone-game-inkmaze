@@ -87,6 +87,7 @@ STR_DAILY_TODO_FORMAT,{0}/{1} TO DO,{0}/{1} CHƯA
 STR_STATUS_DONE_SHORT,DONE,XONG
 STR_BTN_COMPLETE,COMPLETED,HOÀN THÀNH
 STR_BTN_BACK_DAILY,BACK TO DAILY,VỀ DAILY
+STR_BTN_BACK_PREV,BACK,TRỞ VỀ
 STR_DAILY_MISSION_NO_WALL_TITLE,Do not touch a hidden wall,Không đâm vào tường ẩn
 STR_DAILY_MISSION_NO_WALL_DESC,Draw a safe ink line to F without touching any hidden wall,"Vẽ nét an toàn tới hố đích F, không chạm tường vô hình"
 STR_DAILY_MISSION_STEPS_TITLE,Finish within {0} steps,Hoàn thành trong {0} bước

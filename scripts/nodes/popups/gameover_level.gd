@@ -18,8 +18,9 @@ signal menu_requested
 signal revive_requested
 
 @export var COUNT := 3
-const STAR_FULL := preload("res://assets/images-png/common/star_highlight.png")
-const STAR_EMPTY := preload("res://assets/images-png/common/star_empty.png")
+## Art sao — gán trong `gameover_level.tscn` + `gameover_challenge.tscn` (ExtResource)
+@export var star_full: Texture2D = null
+@export var star_empty: Texture2D = null
 
 const VAR_STATUS_OK := &"PopupStatValueSmGood"
 const VAR_STATUS_FAIL := &"PopupStatValueBad"
@@ -78,7 +79,7 @@ func _on_open() -> void:
 		var ok := bool(row.get("done", false))
 		if ok:
 			done += 1
-		stars[i].texture = STAR_FULL if ok else STAR_EMPTY
+		stars[i].texture = star_full if ok else star_empty
 		if row.has("title"):
 			names[i].text = str(row.get("title"))
 		statuses[i].text = str(row.get("status", tr("STR_MISSION_NOT_DONE")))

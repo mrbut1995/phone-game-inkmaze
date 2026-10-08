@@ -105,13 +105,14 @@ theme = ExtResource("1_w6pjg")
 script = ExtResource("bar_script")
 metadata/_edit_use_anchors_ = true
 
-[node name="HintGuide" type="Control" parent="." unique_id=2049437720]
+[node name="HintGuide" type="Control" parent="." unique_id=2049437720 node_paths=PackedStringArray("text_label")]
 visible = false
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 mouse_filter = 2
 theme = ExtResource("1_w6pjg")
 script = ExtResource("bar_hintguide")
+text_label = NodePath("Text")
 
 [node name="Bg" type="TextureRect" parent="HintGuide" unique_id=1663004128]
 layout_mode = 1
@@ -211,8 +212,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.8
 
-[node name="Undo" type="TextureButton" parent="Row" unique_id=1686832729]
+[node name="Undo" type="TextureButton" parent="Row" unique_id=1686832729 node_paths=PackedStringArray("panel_limit", "limit_label")]
 script = ExtResource("limit_btn")
+panel_limit = NodePath("PanelLimit")
+limit_label = NodePath("PanelLimit/Label")
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
@@ -260,8 +263,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Hint" type="TextureButton" parent="Row" unique_id=801132198]
+[node name="Hint" type="TextureButton" parent="Row" unique_id=801132198 node_paths=PackedStringArray("panel_limit", "limit_label")]
 script = ExtResource("limit_btn")
+panel_limit = NodePath("PanelLimit")
+limit_label = NodePath("PanelLimit/Label")
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4

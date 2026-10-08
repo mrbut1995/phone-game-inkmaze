@@ -97,13 +97,15 @@ _data = {
 &"show": SubResource("Animation_show_callout")
 }
 
-[node name="AnchorCallout" type="Control"]
+[node name="AnchorCallout" type="Control" node_paths=PackedStringArray("num", "anim_player")]
 visible = false
 custom_minimum_size = Vector2(60, 60)
 offset_right = 60.0
 offset_bottom = 60.0
 mouse_filter = 2
 script = ExtResource("1_script")
+num = NodePath("Num")
+anim_player = NodePath("AnimationPlayer")
 
 [node name="Ring" type="Panel" parent="."]
 layout_mode = 1

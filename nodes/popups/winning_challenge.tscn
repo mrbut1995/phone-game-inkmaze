@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scripts/nodes/popups/winning_challenge.gd" id="2_win"]
 [ext_resource type="Texture2D" uid="uid://ch2gua71qy2tb" path="res://assets/images-png/popups/stamp_done.png" id="3_stamp"]
 [ext_resource type="Texture2D" uid="uid://cphd7lexro270" path="res://assets/images-png/common/star_empty.png" id="4_star_empty"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="5_star_full"]
 [ext_resource type="Texture2D" uid="uid://brgbsehx8a0xh" path="res://assets/images-png/common/btn_paper_secondary_normal.png" id="6_sec_n"]
 [ext_resource type="Texture2D" uid="uid://b1mq05b61vja" path="res://assets/images-png/common/btn_paper_secondary_pressed.png" id="7_sec_p"]
 [ext_resource type="Texture2D" uid="uid://dcxlfihg580ni" path="res://assets/images-png/common/btn_paper_secondary_focus.png" id="8_sec_f"]
@@ -124,7 +125,7 @@ _data = {
 script = ExtResource("2_win")
 stars_row = NodePath("Panel/Content/Stars")
 label_subtitle = NodePath("Panel/Content/Subtitle")
-label_next = NodePath("Panel/Content/Information/Buttons/NextBtn/Label")
+label_next = NodePath("Panel/Content/Information/Buttons/BackBtn/Label")
 value_time = NodePath("Panel/Content/Information/Stat1/Value")
 value_steps = NodePath("Panel/Content/Information/Stat2/Value")
 value_walls = NodePath("Panel/Content/Information/Stat3/Value")
@@ -132,6 +133,8 @@ value_score = NodePath("Panel/Content/Information/Total/Value")
 stamp_title = NodePath("Panel/Content/Stamp/StampTitle")
 stamp_sub = NodePath("Panel/Content/Stamp/StampSub")
 fx_anim = NodePath("FxAnim")
+star_full = ExtResource("5_star_full")
+star_empty = ExtResource("4_star_empty")
 close_on_back = false
 close_on_outside = false
 
@@ -433,7 +436,7 @@ texture = ExtResource("12_replay")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="NextBtn" type="Button" parent="Panel/Content/Information/Buttons" index="1" unique_id=1915845557]
+[node name="BackBtn" type="Button" parent="Panel/Content/Information/Buttons" index="1" unique_id=1915845557]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("Sb_pri_n")
@@ -441,7 +444,7 @@ theme_override_styles/pressed = SubResource("Sb_pri_p")
 theme_override_styles/hover = SubResource("Sb_pri_n")
 theme_override_styles/focus = SubResource("Sb_pri_f")
 
-[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/NextBtn" index="0" unique_id=629852423]
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/BackBtn" index="0" unique_id=629852423]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 5.1411743
@@ -450,7 +453,7 @@ offset_right = 213.14117
 offset_bottom = 38.73059
 theme_type_variation = &"PopupBtnPrimarySm"
 theme_override_font_sizes/font_size = 16
-text = "STR_BTN_NEXT_LEVEL"
+text = "STR_BTN_BACK_PREV"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
@@ -489,7 +492,7 @@ one_shot = true
 autostart = true
 
 [connection signal="pressed" from="Panel/Content/Information/Buttons/ReplayBtn" to="." method="_on_replay_pressed"]
-[connection signal="pressed" from="Panel/Content/Information/Buttons/NextBtn" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/BackBtn" to="." method="_on_back_pressed"]
 [connection signal="timeout" from="StarTone1" to="." method="_on_star_tone" binds= [0]]
 [connection signal="timeout" from="StarTone2" to="." method="_on_star_tone" binds= [1]]
 [connection signal="timeout" from="StarTone3" to="." method="_on_star_tone" binds= [2]]

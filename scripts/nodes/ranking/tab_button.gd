@@ -10,8 +10,9 @@ extends NinePatchButton
 ## Nút tự nối `pressed` → phát `tab_pressed(board_id)`.
 ## ============================================================================
 
-const TAB_ACTIVE_ART := preload("res://assets/images-png/ranking/tab_active.png")
-const TAB_NORMAL_ART := preload("res://assets/images-png/ranking/tab_normal.png")
+## Art 2 trạng thái tab — gán trong `tab_button.tscn` (ExtResource)
+@export var art_active: Texture2D = null
+@export var art_normal: Texture2D = null
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 @export var LABEL_ACTIVE_COLOR := Color(1, 1, 1)
@@ -57,7 +58,7 @@ func _emit_tab_pressed() -> void:
 ## Đổi trạng thái chọn: art + màu nhãn có hiệu ứng transition mượt
 func set_active(on: bool) -> void:
 	active = on
-	var art: Texture2D = TAB_ACTIVE_ART if on else TAB_NORMAL_ART
+	var art: Texture2D = art_active if on else art_normal
 	texture_normal = art
 	texture_pressed = art
 	texture_hover = art

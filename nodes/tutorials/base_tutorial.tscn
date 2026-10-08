@@ -477,7 +477,7 @@ _data = {
 &"spotlight_pulse": SubResource("Animation_tt_spotlight_pulse")
 }
 
-[node name="BaseTutorial" type="Control" unique_id=1525698188 node_paths=PackedStringArray("backdrop", "spotlight", "board_host", "dialog_bubble", "lbl_title", "dots_container", "lbl_message", "nav_bar", "btn_skip_all", "btn_skip", "btn_next", "toast_label", "anim_player")]
+[node name="BaseTutorial" type="Control" unique_id=1525698188 node_paths=PackedStringArray("backdrop", "spotlight", "board_host", "dialog_bubble", "lbl_title", "dots_container", "lbl_message", "nav_bar", "btn_skip_all", "btn_skip", "btn_next", "toast_label", "anim_player", "anim_dialog", "anim_title", "text_out_timer", "toast_timer", "spot_in_timer", "spot_out_timer", "anim_toast", "anim_spotlight")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -498,6 +498,14 @@ btn_skip = NodePath("Header/BtnSkip")
 btn_next = NodePath("NavBar/BtnNext")
 toast_label = NodePath("ToastLabel")
 anim_player = NodePath("AnimationPlayer")
+anim_dialog = NodePath("DialogAnim")
+anim_title = NodePath("TitleAnim")
+text_out_timer = NodePath("TextOutTimer")
+toast_timer = NodePath("ToastTimer")
+spot_in_timer = NodePath("SpotlightInTimer")
+spot_out_timer = NodePath("SpotlightOutTimer")
+anim_toast = NodePath("ToastAnim")
+anim_spotlight = NodePath("SpotlightAnim")
 
 [node name="Backdrop" type="ColorRect" parent="." unique_id=2046952523]
 layout_mode = 1

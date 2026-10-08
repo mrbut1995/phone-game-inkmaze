@@ -9,9 +9,9 @@ extends BaseScene
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 @export var MISSION_ROW: PackedScene = preload("res://nodes/daily/mission_row.tscn")
-## Icon của nút CTA: bút chì (chơi) / đồng Xu (trả Xu mở khoá ngày bỏ lỡ)
-const ICON_PLAY := preload("res://assets/images-png/icons/pencil_icon.png")
-const ICON_UNLOCK := preload("res://assets/images-png/icons/icon_coin.png")
+## Icon của nút CTA: bút chì (chơi) / đồng Xu (trả Xu mở khoá ngày bỏ lỡ) — gán trong `scenes/daily.tscn`
+@export var icon_play: Texture2D = null
+@export var icon_unlock: Texture2D = null
 ## 3 GAME đầu của ngày (maze thường HOẶC challenge theo kế hoạch ngày), hàng thứ 4 = MAZE ĐẶC BIỆT
 @export var CLASSIC_MISSION_COUNT := 3
 ## Quy ước scene: các hàng nhiệm vụ là node `Rows/Slot1..SlotN` KHAI SẴN trong scene —
@@ -275,7 +275,7 @@ func _refresh() -> void:
 	else:
 		layout.lbl_play.text = tr("STR_DAILY_PLAY_MODE").format([mode_name])
 	if layout.icon_play != null:
-		layout.icon_play.texture = ICON_UNLOCK if unlockable else ICON_PLAY
+		layout.icon_play.texture = icon_unlock if unlockable else icon_play
 	if layout.btn_play != null:
 		# Ngày tương lai (chưa mở) thì nút khoá hẳn; ngày bỏ lỡ vẫn bấm được để MỞ KHOÁ
 		layout.btn_play.disabled = not _is_day_playable(day) and not unlockable
@@ -289,6 +289,7 @@ func _refresh() -> void:
 
 
 ## 4 hàng: 3 GAME của ngày (0..2 — maze thường HOẶC challenge tuỳ kế hoạch ngày) + 1 maze đặc biệt (3)
+## Mỗi hàng ĐÚNG 2 DÒNG (Title + Tiến độ) — xem `nodes/daily/mission_row.tscn`
 func _refresh_rows(day: int, mode_name: String) -> void:
 	var playable := _is_day_playable(day)
 	var plan := _day_games(day)
@@ -298,7 +299,6 @@ func _refresh_rows(day: int, mode_name: String) -> void:
 			done = bool(_daily.call("is_mission_done", day, i))
 		_rows[i].setup(i, {
 			"title": _row_title(i, mode_name, plan),
-			"desc": _row_desc(i, plan),
 			"progress": tr("STR_DAILY_MISSION_PROGRESS_DONE" if done else "STR_DAILY_MISSION_PROGRESS_TODO"),
 			"reward": _mission_reward(i),
 			"done": done,
@@ -323,30 +323,19 @@ func _game_rule_name(entry: Dictionary) -> String:
 	return tr(key) if not key.is_empty() else ""
 
 
+## Dòng title của hàng: hàng CHALLENGE hiện THẲNG tên luật (bỏ tiền tố "TRÒ CHƠI n ·"),
+## hàng maze thường & hàng đặc biệt giữ format riêng.
 func _row_title(index: int, mode_name: String, plan: Array) -> String:
 	if index >= CLASSIC_MISSION_COUNT:
 		return tr("STR_DAILY_MISSION_SPECIAL_TITLE").format([mode_name])
 	var entry: Dictionary = {}
 	if index < plan.size() and plan[index] is Dictionary:
 		entry = plan[index] as Dictionary
-	var game_name := tr("STR_DAILY_WIN_CLASSIC")
 	if str(entry.get("mode", "")) == "challenge":
 		var rule := _game_rule_name(entry)
 		if not rule.is_empty():
-			game_name = rule
-	return tr("STR_DAILY_GAME_TITLE").format([index + 1, game_name])
-
-
-func _row_desc(index: int, plan: Array) -> String:
-	if index >= CLASSIC_MISSION_COUNT:
-		return tr("STR_DAILY_MISSION_SPECIAL_DESC")
-	var entry: Dictionary = {}
-	if index < plan.size() and plan[index] is Dictionary:
-		entry = plan[index] as Dictionary
-	if str(entry.get("mode", "")) == "challenge":
-		var rule := _game_rule_name(entry)
-		return tr("STR_DAILY_GAME_CHALLENGE_DESC").format([rule if not rule.is_empty() else ""])
-	return tr("STR_DAILY_GAME_STD_DESC")
+			return rule
+	return tr("STR_DAILY_GAME_TITLE").format([index + 1, tr("STR_DAILY_WIN_CLASSIC")])
 
 
 ## Thanh tiến độ ngày (x/4 nhiệm vụ) + Xu đã nhận trong ngày

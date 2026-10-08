@@ -8,7 +8,8 @@ extends Button
 ## sửa được ngay trong scene. Popup chỉ việc: setup() rồi set_selected().
 ## ============================================================================
 
-const FALLBACK_FLAG := preload("res://assets/images-png/icons/flags/flag_generic.png")
+## Cờ dự phòng khi thiếu art — gán trong `language_row.tscn` (ExtResource)
+@export var fallback_flag: Texture2D = null
 
 ## Node binding: khai `node_paths` + `NodePath` trong `language_row.tscn`
 @export var flag: TextureRect = null
@@ -21,7 +22,7 @@ const FALLBACK_FLAG := preload("res://assets/images-png/icons/flags/flag_generic
 func setup(info: Dictionary, flag_tex: Texture2D) -> void:
 	name_label.text = str(info.get("name", ""))
 	sub_label.text = str(info.get("sub", ""))
-	flag.texture = flag_tex if flag_tex != null else FALLBACK_FLAG
+	flag.texture = flag_tex if flag_tex != null else fallback_flag
 
 
 ## Trạng thái đang chọn: nền sáng (StyleBox `pressed`) + dấu tích đỏ

@@ -18,3 +18,5 @@ texture_disabled = ExtResource("3_dot_on")
 ignore_texture_size = true
 stretch_mode = 5
 script = ExtResource("1_script")
+dot_active = ExtResource("3_dot_on")
+dot_inactive = ExtResource("2_dot_off")

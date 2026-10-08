@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/calendar/tag_day.png" id="4_tag"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="5_theme"]
 
-[node name="Day" type="Control" unique_id=2128801110]
+[node name="Day" type="Control" unique_id=2128801110 node_paths=PackedStringArray("btn", "number_label", "check_icon", "star_icon", "pill", "status_label", "today_tag", "today_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("5_theme")
 script = ExtResource("1_day")
+btn = NodePath("Button")
+number_label = NodePath("Button/Number")
+check_icon = NodePath("Button/CheckIcon")
+star_icon = NodePath("Button/StarIcon")
+pill = NodePath("Button/StatusPill")
+status_label = NodePath("Button/StatusPill/StatusLabel")
+today_tag = NodePath("Button/TodayTag")
+today_label = NodePath("Button/TodayTag/TodayLabel")
 
 [node name="Button" type="TextureButton" parent="." unique_id=142223511]
 layout_mode = 1

@@ -428,9 +428,9 @@ func _complete_floor() -> void:
 	# SFX: jingle thắng màn; floor hoàn hảo -> thành tích; có thưởng bước -> tiếng đếm hạt gỗ
 	Sfx.play(Sfx.LEVEL_WIN)
 	if game_state.floor_wall_hits == 0:
-		_play_sfx_delayed(_sfx_timer_achievement, Sfx.ACHIEVEMENT, 1.6)
+		_play_sfx_delayed(sfx_timer_achievement, Sfx.ACHIEVEMENT, 1.6)
 	if _pending_bonus > 0:
-		_play_sfx_delayed(_sfx_timer_floor_bonus, Sfx.FLOOR_BONUS, 1.1)
+		_play_sfx_delayed(sfx_timer_floor_bonus, Sfx.FLOOR_BONUS, 1.1)
 
 	_report_to_archivements(true, floor_time)
 
@@ -731,6 +731,27 @@ func _on_daily_requested() -> void:
 		Nav.goto_daily()
 
 
+## Popup thắng THỬ THÁCH: người chơi bấm "TRỞ VỀ" — quay lại ĐÚNG màn trước đó.
+## Ván Daily -> màn Daily; còn lại -> lùi LỊCH SỬ điều hướng (Chọn màn / Debug / màn đã vào ván).
+func _on_back_requested() -> void:
+	if ui_controller != null:
+		ui_controller.hide_overlays()
+	var gm: Node = get_node_or_null("/root/GameManager")
+	if gm != null and not str(gm.get("daily_variant")).is_empty():
+		gm.call("go_to_daily")
+		return
+	var screen: Node = get_node_or_null("/root/ScreenManager")
+	if screen != null and screen.has_method("go_back") and bool(screen.call("go_back")):
+		return
+	# Không còn lịch sử để lùi: ván màn -> Chọn màn, còn lại -> Menu chính
+	if gm != null and bool(gm.get("level_run")):
+		gm.call("go_to_levels")
+	elif gm != null:
+		gm.call("go_to_main_menu")
+	else:
+		Nav.goto_main()
+
+
 ## Báo kết quả màn/tầng cho Sổ tay thành tựu (Archivement) — thắng hoặc thua.
 ## Số liệu tích luỹ (tầng sâu nhất, số ván thắng, gợi ý/hoàn tác...) do ArchivementManager ghi nhận.
 func _report_to_archivements(won: bool, floor_time: float) -> void:
@@ -957,8 +978,9 @@ func _on_pause_toggled(is_paused: bool) -> void:
 # ---------------------------------------------------------------------------
 ## Tiếng thưởng phát SAU khi hiệu ứng ván thắng chạy xong — Timer khai trong `scenes/game.tscn`
 ## (AchievementSfxTimer 1.6s · FloorBonusSfxTimer 1.1s + dây `timeout` khai ở đó).
-@onready var _sfx_timer_achievement: Timer = get_node_or_null("AchievementSfxTimer")
-@onready var _sfx_timer_floor_bonus: Timer = get_node_or_null("FloorBonusSfxTimer")
+## Node binding: khai `node_paths` + NodePath trên node `Controllers/GameController` trong `scenes/game.tscn`
+@export var sfx_timer_achievement: Timer = null
+@export var sfx_timer_floor_bonus: Timer = null
 
 
 func _play_sfx_delayed(timer: Timer, sfx_name: String, delay: float) -> void:

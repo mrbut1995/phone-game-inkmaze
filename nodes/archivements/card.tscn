@@ -11,8 +11,12 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/archivements/btn_claim_normal.png" id="12_claim_n"]
 [ext_resource type="Texture2D" path="res://assets/images-png/archivements/btn_claim_pressed.png" id="13_claim_p"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="14_theme"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/card_claimed.png" id="15_claimed"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/card_claimable.png" id="16_claimable"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/card_locked.png" id="17_locked"]
+[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_lock.png" id="18_lock"]
 
-[node name="Card" type="Control" unique_id=1906862728]
+[node name="Card" type="Control" unique_id=1906862728 node_paths=PackedStringArray("bg", "icon_ring", "icon", "title_label", "desc_label", "bar", "bar_track", "bar_fill", "progress_label", "stamp", "stamp_state", "stamp_reward", "claim_btn", "claim_label", "chip", "chip_label")]
 custom_minimum_size = Vector2(355, 85)
 layout_mode = 3
 anchor_right = 0.994
@@ -21,6 +25,27 @@ offset_right = 0.23999023
 offset_bottom = 0.22000122
 theme = ExtResource("14_theme")
 script = ExtResource("1_card")
+bg = NodePath("Panel")
+icon_ring = NodePath("Panel/Body/IconRing")
+icon = NodePath("Panel/Body/IconRing/Icon")
+title_label = NodePath("Panel/Body/Info/Title")
+desc_label = NodePath("Panel/Body/Info/Desc")
+bar = NodePath("Panel/Body/Info/Bar")
+bar_track = NodePath("Panel/Body/Info/Bar/Track")
+bar_fill = NodePath("Panel/Body/Info/Bar/Fill")
+progress_label = NodePath("Panel/Body/Info/Progress")
+stamp = NodePath("Panel/Body/Side/Stamp")
+stamp_state = NodePath("Panel/Body/Side/Stamp/State")
+stamp_reward = NodePath("Panel/Body/Side/Stamp/Reward")
+claim_btn = NodePath("Panel/Body/Side/ClaimButton")
+claim_label = NodePath("Panel/Body/Side/ClaimButton/Label")
+chip = NodePath("Panel/Body/Side/Chip")
+chip_label = NodePath("Panel/Body/Side/Chip/Label")
+bg_progress = ExtResource("2_bg_progress")
+bg_claimed = ExtResource("15_claimed")
+bg_claimable = ExtResource("16_claimable")
+bg_locked = ExtResource("17_locked")
+icon_lock = ExtResource("18_lock")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="NinePatchRect" parent="." unique_id=1003055028]

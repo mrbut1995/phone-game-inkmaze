@@ -14,7 +14,9 @@ extends Line2D
 var _pen_id := ""
 var _base_width := 0.0
 var _alpha_scale := 1.0
-var _glow: Line2D = null
+## Node binding: khai `node_paths` + NodePath trong `nodes/game/moving_line.tscn`
+## (nét nào không khai `Glow` thì `_glow_node()` trả null — bỏ qua phần quầng sáng)
+@export var glow_line: Line2D = null
 
 
 ## Áp ngòi bút (gọi set_base_width() để biết bề rộng GỐC trước khi nhân chất liệu)
@@ -76,6 +78,6 @@ func _refresh() -> void:
 ## Quầng sáng KHAI SẴN trong scene (`Glow` — Line2D blend CỘNG, z_index = -1;
 ## xem nodes/game/moving_line.tscn). Nét nào không khai `Glow` thì bỏ qua phần quầng sáng.
 func _glow_node() -> Line2D:
-	if _glow == null or not is_instance_valid(_glow):
-		_glow = get_node_or_null("Glow") as Line2D
-	return _glow
+	if glow_line == null or not is_instance_valid(glow_line):
+		glow_line = get_node_or_null("Glow") as Line2D
+	return glow_line

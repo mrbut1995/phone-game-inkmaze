@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/popups/lang_item_pressed.png" id="4_art_hover"]
 [ext_resource type="Texture2D" path="res://assets/images-png/settings/row_button_focus.png" id="5_art_focus"]
 [ext_resource type="Texture2D" path="res://assets/images-png/popups/icon_check_red.png" id="6_art_check"]
+[ext_resource type="Texture2D" path="res://assets/images-png/icons/flags/flag_generic.png" id="7_flag_fallback"]
 
 [sub_resource type="StyleBoxTexture" id="Sb_row_n"]
 texture = ExtResource("2_art_normal")
@@ -50,6 +51,7 @@ flag = NodePath("Flag")
 name_label = NodePath("Name")
 sub_label = NodePath("Sub")
 check = NodePath("Check")
+fallback_flag = ExtResource("7_flag_fallback")
 
 [node name="Flag" type="TextureRect" parent="."]
 layout_mode = 0

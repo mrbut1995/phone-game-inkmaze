@@ -130,13 +130,16 @@ _data = {
 &"unselected": SubResource("Animation_anchor_unselected")
 }
 
-[node name="Anchor" type="Control" unique_id=946968232]
+[node name="Anchor" type="Control" unique_id=946968232 node_paths=PackedStringArray("button", "anim", "entrance_timer")]
 layout_mode = 3
 anchors_preset = 0
 offset_right =  20
 offset_bottom =  20
 mouse_filter = 2
 script = ExtResource("1_fgv2j")
+button = NodePath("TextureButton")
+anim = NodePath("AnimationPlayer")
+entrance_timer = NodePath("EntranceTimer")
 
 [node name="TextureButton" type="TextureButton" parent="." unique_id=63874327]
 layout_mode = 1

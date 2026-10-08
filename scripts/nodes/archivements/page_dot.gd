@@ -6,15 +6,16 @@ extends TextureButton
 ## Bấm được để nhảy tới trang tương ứng (màn nối signal `pressed`).
 ## ============================================================================
 
-const DOT_ACTIVE := preload("res://assets/images-png/level_selector/dot_active.png")
-const DOT_INACTIVE := preload("res://assets/images-png/level_selector/dot_inactive.png")
+## Art chấm — gán trong `page_dot.tscn` (ExtResource)
+@export var dot_active: Texture2D = null
+@export var dot_inactive: Texture2D = null
 
 @export var SIZE_ACTIVE := Vector2(34, 24)
 @export var SIZE_INACTIVE := Vector2(12, 24)
 
 
 func set_current(on: bool) -> void:
-	texture_normal = DOT_ACTIVE if on else DOT_INACTIVE
+	texture_normal = dot_active if on else dot_inactive
 	texture_pressed = texture_normal
 	texture_hover = texture_normal
 	texture_focused = texture_normal

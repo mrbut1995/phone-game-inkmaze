@@ -250,8 +250,7 @@ func _is_stuck_in_tutorial() -> bool:
 func _show_board_no_moves() -> void:
 	if board_tutorial == null:
 		return
-	if not board_tutorial.is_connected("no_moves_retry_pressed", _on_board_retry):
-		board_tutorial.connect("no_moves_retry_pressed", _on_board_retry)
+	# Dây `no_moves_retry_pressed → _on_board_retry` khai trong `how_to_play_fading_ink.tscn`
 	board_tutorial.show_no_moves_overlay(true)
 
 
