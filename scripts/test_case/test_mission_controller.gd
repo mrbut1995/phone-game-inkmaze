@@ -88,7 +88,9 @@ func _check_play_hud(scene: GameScene, _gc: GameController, cc: MissionControlle
 		_fail("HUD Play da go the THU THACH (chi con THOI GIAN)")
 	if cc.card != null:
 		_fail("MissionController khong duoc tro vao the thu thach o HUD nua")
-	var time_val := hud.get_node_or_null("Content/ModeInformation/Time/Value") as Label
+	# Gia tri dong ho lay qua export cua HUD (Label nam trong the Time, KHONG phai con truc tiep:
+	# `Time/HBoxContainer/Value`) nen tra theo export thay vi do duong dan tuyet doi.
+	var time_val := hud.time_value_node
 	if time_val == null or time_val.text.is_empty():
 		_fail("HUD Play thieu gia tri THOI GIAN")
 	if hud.get_node_or_null("Content/ModeInformation/Mission") != null:
@@ -149,7 +151,7 @@ func _check_dungeon_hud(scene: GameScene, cc: MissionController) -> void:
 func _check_minesweep_hud(scene: GameScene) -> void:
 	var hud := scene.ui_controller.hud as MinesweepHUD
 	assert(hud != null, "Minesweeper phai dung MinesweepHUD (nodes/hud/minesweep_hud.tscn)")
-	var time_val := hud.get_node_or_null("Content/ModeInformation/Time/Value") as Label
+	var time_val := hud.time_value_node
 	if time_val == null or time_val.text.is_empty():
 		_fail("HUD Minesweeper thieu gia tri THOI GIAN")
 	if hud.get_node_or_null("Content/ModeInformation/Bomb") != null:
