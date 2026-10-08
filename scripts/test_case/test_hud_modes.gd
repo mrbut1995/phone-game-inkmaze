@@ -536,17 +536,17 @@ func _section_5_hud_blocks(scene: GameScene) -> void:
 # ---------------------------------------------------------------------------
 # Helper
 # ---------------------------------------------------------------------------
-## Thẻ THỜI GIAN của HUD (node cha của Label giờ ván) — mọi HUD bind sẵn `time_value_node`
-func _time_card(hud: BaseHUD) -> Control:
-	if hud == null or hud.time_value_node == null:
-		return null
-	return hud.time_value_node.get_parent() as Control
-
-
-## Khối `ModeInformation` (node cha của thẻ THỜI GIAN) — nơi mỗi chế độ khai khối thông tin của mình
+## Khối `ModeInformation` của HUD — nơi mỗi chế độ khai thẻ thông tin riêng của mình.
+## Tra theo TÊN (mọi HUD đều có đúng 1 node này) chứ không suy từ `time_value_node`, vì Label
+## giờ ván nằm sâu trong thẻ (`Time/HBoxContainer/Value`) — số tầng có thể đổi mà không báo.
 func _mode_information(hud: BaseHUD) -> Control:
-	var card := _time_card(hud)
-	return card.get_parent() as Control if card != null else null
+	return hud.find_child("ModeInformation", true, false) as Control if hud != null else null
+
+
+## Thẻ THỜI GIAN của HUD (`…/ModeInformation/Time`) — `visible = false` ở chế độ có thẻ riêng
+func _time_card(hud: BaseHUD) -> Control:
+	var info := _mode_information(hud)
+	return info.get_node_or_null("Time") as Control if info != null else null
 
 
 func _entry(condition: bool, label: String) -> void:
