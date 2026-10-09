@@ -3,30 +3,22 @@
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cfyy2h4gv0pnb" path="res://scripts/scenes/splash.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
-[ext_resource uid="uid://b64xrilpekc4p" type="Texture2D" path="res://assets/images/main/main_menu_paper.svg" id="4_paper"]
-[ext_resource uid="uid://ccvjj4234cnvi" type="Texture2D" path="res://assets/images/main/logo_doodle_maze.svg" id="5_logo"]
-[ext_resource uid="uid://vohdi4kjxxxf" type="Texture2D" path="res://assets/images/game/pen_type/pen_fountain_pen_nib.svg" id="6_651hb"]
-[ext_resource uid="uid://cr6w077lhvqlt" type="Texture2D" path="res://assets/images/main/stamp_version.svg" id="7_stamp"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="8_stamp_text"]
-[ext_resource type="PackedScene" path="res://scenes/layout/portrait/splash.tscn" id="L_Portrait"]
-[ext_resource type="PackedScene" path="res://scenes/layout/landscape/splash.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://cm8mnjom2wcxs" path="res://scenes/layout/landscape/splash.tscn" id="L_Landscape"]
+[ext_resource type="PackedScene" uid="uid://cswk033ayh2sx" path="res://scenes/layout/portrait/splash.tscn" id="L_Portrait"]
 
 [node name="Control" unique_id=1419240075 instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")
 script = ExtResource("2_script")
 
+[node name="Portrait" parent="." index="1" unique_id=1909293097 instance=ExtResource("L_Portrait")]
+layout_mode = 1
 
-[node name="Portrait" parent="." index="1" instance=ExtResource("L_Portrait")]
+[node name="Landscape" parent="." index="2" unique_id=618474580 instance=ExtResource("L_Landscape")]
+layout_mode = 1
 
-[node name="Landscape" parent="." index="2" instance=ExtResource("L_Landscape")]
-
-[node name="AutoAdvanceTimer" type="Timer" parent="." index="3"]
+[node name="AutoAdvanceTimer" type="Timer" parent="." index="3" unique_id=1194745996]
 wait_time = 2.2
-autostart = true
 one_shot = true
+autostart = true
 
 [connection signal="timeout" from="AutoAdvanceTimer" to="." method="_on_touch_pressed"]
-[connection signal="animation_finished" from="Portrait/AnimationPlayer" to="." method="_on_exit_animation_finished"]
-[connection signal="animation_finished" from="Landscape/AnimationPlayer" to="." method="_on_exit_animation_finished"]
-[connection signal="pressed" from="Portrait/TouchButton" to="." method="_on_touch_pressed"]
-[connection signal="pressed" from="Landscape/TouchButton" to="." method="_on_touch_pressed"]

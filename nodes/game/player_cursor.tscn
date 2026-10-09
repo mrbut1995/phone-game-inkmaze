@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://8odi16if8g7o"]
 
 [ext_resource type="Script" uid="uid://cko4fccna6vl0" path="res://scripts/nodes/game/player_cursor.gd" id="1_script"]
-[ext_resource uid="uid://b4y1ckvumy7cc" type="Texture2D" path="res://assets/images/game/player_cursor.svg" id="1_tex"]
+[ext_resource uid="uid://drnmh5ibc6fhg" type="Texture2D" path="res://assets/images-png/game/player_cursor.png" id="1_tex"]
 
 [sub_resource type="Animation" id="Animation_cursor_reset"]
 length = 0.001

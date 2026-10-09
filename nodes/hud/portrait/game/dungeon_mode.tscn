@@ -2,10 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_pt42g"]
 [ext_resource type="Script" uid="uid://jtc5actxn551" path="res://scripts/nodes/hud/game/dungeon_hud.gd" id="2_script"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_mission_count_sub.tres" id="5_xqca6"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_value_steps.tres" id="11_p7oui"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_game_card_label.tres" id="13_r5anl"]
-[ext_resource type="LabelSettings" uid="uid://cb662usl7mhkf" path="res://resources/settings/text/text_game_information_value.tres" id="16_hqip1"]
 
 [node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("step_value_node", "floor_value_node") instance=ExtResource("1_pt42g")]
 script = ExtResource("2_script")
@@ -28,7 +24,7 @@ offset_top = 9.0
 offset_right = 208.0
 offset_bottom = 26.0
 text = "STR_HUD_STEPS"
-label_settings = ExtResource("5_xqca6")
+theme_type_variation = &"GameMissionCountSub"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -40,7 +36,7 @@ offset_top = 28.0
 offset_right = 208.0
 offset_bottom = 73.0
 text = "0"
-label_settings = ExtResource("11_p7oui")
+theme_type_variation = &"GameCardValueSteps"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -61,7 +57,7 @@ offset_top = 10.0
 offset_right = 115.0
 offset_bottom = 23.0
 text = "STR_HUD_FLOOR"
-label_settings = ExtResource("13_r5anl")
+theme_type_variation = &"GameCardLabel"
 vertical_alignment = 1
 
 [node name="Value" type="Label" parent="Content/ModeInformation/Floor" index="1" unique_id=1239213361]
@@ -72,7 +68,7 @@ offset_top = 25.0
 offset_right = 109.0
 offset_bottom = 65.0
 text = "01"
-label_settings = ExtResource("16_hqip1")
+theme_type_variation = &"GameInformationValue"
 horizontal_alignment = 1
 vertical_alignment = 1
 

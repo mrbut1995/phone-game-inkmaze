@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" uid="uid://drfoh8ppet55o" path="res://scripts/nodes/hud/game/countdown_segment.gd" id="1_script"]
-[ext_resource uid="uid://oqtbox7i8trw" type="Texture2D" path="res://assets/images/common/budget_segment.svg" id="2_pill"]
+[ext_resource uid="uid://bn6d4t13oqdlj" type="Texture2D" path="res://assets/images-png/common/budget_segment.png" id="2_pill"]
 
 [node name="CountdownSegment" type="TextureRect"]
 custom_minimum_size =  Vector2(2, 6)

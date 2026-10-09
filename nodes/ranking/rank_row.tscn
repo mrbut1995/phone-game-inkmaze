@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c45w07472jvgh" path="res://scripts/nodes/ranking/rank_row.gd" id="1_row"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
-[ext_resource uid="uid://be5a27wvafav2" type="Texture2D" path="res://assets/images/ranking/rank_row.svg" id="3_art_row"]
-[ext_resource uid="uid://d3t6yrvqgifmb" type="Texture2D" path="res://assets/images/ranking/rank_row_you.svg" id="4_art_you"]
+[ext_resource uid="uid://clkjr627kgppm" type="Texture2D" path="res://assets/images-png/ranking/rank_row.png" id="3_art_row"]
+[ext_resource uid="uid://m8uufqbponih" type="Texture2D" path="res://assets/images-png/ranking/rank_row_you.png" id="4_art_you"]
 
 [node name="RankRow" type="Control" unique_id=2119227117 node_paths=PackedStringArray("bg", "rank_label", "flag", "name_label", "record_label", "points_label")]
 custom_minimum_size = Vector2(377.5, 45)

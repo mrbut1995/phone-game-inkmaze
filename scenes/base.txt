@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://3ol477wsv33k"]
+
+[ext_resource type="PackedScene" path="res://nodes/common/parallax_background.tscn" id="bg_scene"]
+[ext_resource type="Script" uid="uid://bxshv77j0bvff" path="res://scripts/scenes/base.gd" id="1_baglu"]
+
+[node name="Control" type="Control" unique_id=1978794255]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_baglu")
+
+[node name="Background" parent="." unique_id=1260349669 instance=ExtResource("bg_scene")]
+layout_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="Popups" type="Control" parent="." unique_id=1066741891]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true

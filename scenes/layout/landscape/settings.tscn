@@ -26,17 +26,6 @@
 [ext_resource uid="uid://cl1tm62cdwrbv" type="Texture2D" path="res://assets/images/settings/row_button_danger_pressed.svg" id="28_dan_p"]
 [ext_resource uid="uid://lk631qnxiwfb" type="Texture2D" path="res://assets/images/settings/row_button_danger_focus.svg" id="29_dan_f"]
 [ext_resource uid="uid://tr3le4ga34pp" type="Texture2D" path="res://assets/images/settings/chip_cloud_connected.svg" id="30_cloud"]
-[ext_resource type="LabelSettings" uid="uid://bonmr0e8ujeq3" path="res://resources/settings/text/text_game_title.tres" id="31_title"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_title.tres" id="32_sub_title"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_subtitle.tres" id="33_sub_subtitle"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_section.tres" id="34_section"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_row.tres" id="35_row"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_row_danger.tres" id="36_row_danger"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_desc.tres" id="37_desc"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_value.tres" id="38_value"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_dropdown.tres" id="39_dropdown"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_chip.tres" id="40_chip_text"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version.tres" id="41_version"]
 [ext_resource uid="uid://cy2083u74jwjg" type="Texture2D" path="res://assets/images/icons/icon_music.svg" id="43_icon_music"]
 [ext_resource uid="uid://dm2kq3punmuku" type="Texture2D" path="res://assets/images/icons/icon_bell.svg" id="44_icon_bell"]
 [ext_resource uid="uid://cikjnvfv5pdnx" type="Texture2D" path="res://assets/images/icons/icon_globe.svg" id="45_icon_globe"]
@@ -86,7 +75,7 @@ texture_focused = ExtResource("13_back_f")
 layout_mode = 2
 size_flags_horizontal = 3
 text = "STR_BTN_SETTINGS"
-label_settings = ExtResource("31_title")
+theme_type_variation = &"GameTitle"
 horizontal_alignment = 1
 
 [node name="Panel" type="NinePatchRect" parent="." index="1" unique_id=299897848]
@@ -118,12 +107,12 @@ theme_override_constants/separation = 0
 [node name="Title" type="Label" parent="Panel/Content/Header" index="0" unique_id=1210858818]
 layout_mode = 2
 text = "STR_SETTINGS_SUBTITLE_TITLE"
-label_settings = ExtResource("32_sub_title")
+theme_type_variation = &"SettingsTitle"
 
 [node name="Subtitle" type="Label" parent="Panel/Content/Header" index="1" unique_id=1210858819]
 layout_mode = 2
 text = "STR_SETTINGS_SUBTITLE_DESC"
-label_settings = ExtResource("33_sub_subtitle")
+theme_type_variation = &"SettingsSubtitle"
 
 [node name="Body" type="HBoxContainer" parent="Panel/Content" index="1" unique_id=542083345]
 layout_mode = 2
@@ -153,7 +142,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_AUDIO_SECTION"
-label_settings = ExtResource("34_section")
+theme_type_variation = &"SettingsSection"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -180,7 +169,7 @@ step = 0.05
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 text = "100%"
-label_settings = ExtResource("38_value")
+theme_type_variation = &"SettingsValue"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -188,7 +177,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "STR_SETTINGS_BGM"
-label_settings = ExtResource("35_row")
+theme_type_variation = &"SettingsRow"
 vertical_alignment = 1
 
 [node name="SfxRow" type="HBoxContainer" parent="Panel/Content/Body/ColLeft/Audio" index="2" unique_id=2043596897]
@@ -214,7 +203,7 @@ step = 0.05
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 text = "100%"
-label_settings = ExtResource("38_value")
+theme_type_variation = &"SettingsValue"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -222,7 +211,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "STR_SETTINGS_SFX"
-label_settings = ExtResource("35_row")
+theme_type_variation = &"SettingsRow"
 vertical_alignment = 1
 
 [node name="Board" type="VBoxContainer" parent="Panel/Content/Body/ColLeft" index="1" unique_id=2006969508]
@@ -243,7 +232,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_BOARD_SECTION"
-label_settings = ExtResource("34_section")
+theme_type_variation = &"SettingsSection"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -269,12 +258,12 @@ theme_override_constants/separation = 0
 [node name="Title" type="Label" parent="Panel/Content/Body/ColLeft/Board/HapticRow/Text" index="0" unique_id=2006969512]
 layout_mode = 2
 text = "STR_SETTINGS_HAPTIC"
-label_settings = ExtResource("35_row")
+theme_type_variation = &"SettingsRow"
 
 [node name="Desc" type="Label" parent="Panel/Content/Body/ColLeft/Board/HapticRow/Text" index="1" unique_id=2006969513]
 layout_mode = 2
 text = "STR_SETTINGS_HAPTIC_DESC"
-label_settings = ExtResource("37_desc")
+theme_type_variation = &"SettingsDesc"
 
 [node name="AutoMarkRow" type="HBoxContainer" parent="Panel/Content/Body/ColLeft/Board" index="2" unique_id=2006969514]
 layout_mode = 2
@@ -298,12 +287,12 @@ theme_override_constants/separation = 0
 [node name="Title" type="Label" parent="Panel/Content/Body/ColLeft/Board/AutoMarkRow/Text" index="0" unique_id=2006969517]
 layout_mode = 2
 text = "STR_SETTINGS_AUTO_MARK_SAFE"
-label_settings = ExtResource("35_row")
+theme_type_variation = &"SettingsRow"
 
 [node name="Desc" type="Label" parent="Panel/Content/Body/ColLeft/Board/AutoMarkRow/Text" index="1" unique_id=2006969518]
 layout_mode = 2
 text = "STR_SETTINGS_AUTO_MARK_SAFE_DESC"
-label_settings = ExtResource("37_desc")
+theme_type_variation = &"SettingsDesc"
 
 [node name="GlowRow" type="HBoxContainer" parent="Panel/Content/Body/ColLeft/Board" index="3" unique_id=2006969519]
 layout_mode = 2
@@ -327,12 +316,12 @@ theme_override_constants/separation = 0
 [node name="Title" type="Label" parent="Panel/Content/Body/ColLeft/Board/GlowRow/Text" index="0" unique_id=2006969522]
 layout_mode = 2
 text = "STR_SETTINGS_GLOW"
-label_settings = ExtResource("35_row")
+theme_type_variation = &"SettingsRow"
 
 [node name="Desc" type="Label" parent="Panel/Content/Body/ColLeft/Board/GlowRow/Text" index="1" unique_id=2006969523]
 layout_mode = 2
 text = "STR_SETTINGS_GLOW_DESC"
-label_settings = ExtResource("37_desc")
+theme_type_variation = &"SettingsDesc"
 
 [node name="ColRight" type="VBoxContainer" parent="Panel/Content/Body" index="1" unique_id=981240112]
 layout_mode = 2
@@ -357,7 +346,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_LANGUAGE_SECTION"
-label_settings = ExtResource("34_section")
+theme_type_variation = &"SettingsSection"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -393,14 +382,14 @@ offset_right = -22.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Tiếng Việt (VN)"
-label_settings = ExtResource("39_dropdown")
+theme_type_variation = &"SettingsDropdown"
 vertical_alignment = 1
 
 [node name="Label" type="Label" parent="Panel/Content/Body/ColRight/Language/LangRow" index="2" unique_id=1918901385]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "STR_SETTINGS_LANGUAGE"
-label_settings = ExtResource("35_row")
+theme_type_variation = &"SettingsRow"
 vertical_alignment = 1
 
 [node name="CloudRow" type="HBoxContainer" parent="Panel/Content/Body/ColRight/Language" index="2" unique_id=1918901388]
@@ -429,7 +418,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_CONNECTED"
-label_settings = ExtResource("40_chip_text")
+theme_type_variation = &"SettingsChip"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -441,12 +430,12 @@ theme_override_constants/separation = 0
 [node name="Title" type="Label" parent="Panel/Content/Body/ColRight/Language/CloudRow/Text" index="0" unique_id=1918901390]
 layout_mode = 2
 text = "STR_SETTINGS_CLOUD"
-label_settings = ExtResource("35_row")
+theme_type_variation = &"SettingsRow"
 
 [node name="Desc" type="Label" parent="Panel/Content/Body/ColRight/Language/CloudRow/Text" index="1" unique_id=1918901391]
 layout_mode = 2
 text = "STR_SETTINGS_CLOUD_DESC"
-label_settings = ExtResource("37_desc")
+theme_type_variation = &"SettingsDesc"
 
 [node name="PlayerRow" type="HBoxContainer" parent="Panel/Content/Body/ColRight/Language" index="3" unique_id=1918901394]
 layout_mode = 2
@@ -455,13 +444,13 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 text = "STR_SETTINGS_PLAYER_ID"
-label_settings = ExtResource("37_desc")
+theme_type_variation = &"SettingsDesc"
 vertical_alignment = 1
 
 [node name="PlayerIdValue" type="Label" parent="Panel/Content/Body/ColRight/Language/PlayerRow" index="1" unique_id=1918901396]
 layout_mode = 2
 text = "#NM-8924-VN"
-label_settings = ExtResource("38_value")
+theme_type_variation = &"SettingsValue"
 horizontal_alignment = 2
 
 [node name="Actions" type="VBoxContainer" parent="Panel/Content/Body/ColRight" index="1" unique_id=1617146451]
@@ -516,7 +505,7 @@ offset_right = -30
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_GUIDE"
-label_settings = ExtResource("35_row")
+theme_type_variation = &"SettingsRow"
 vertical_alignment = 1
 
 [node name="Credits" type="TextureButton" parent="Panel/Content/Body/ColRight/Actions" index="1" unique_id=1106923312]
@@ -567,7 +556,7 @@ offset_right = -30
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_CREDITS"
-label_settings = ExtResource("35_row")
+theme_type_variation = &"SettingsRow"
 vertical_alignment = 1
 
 [node name="Reset" type="TextureButton" parent="Panel/Content/Body/ColRight/Actions" index="2" unique_id=1617146455]
@@ -618,7 +607,7 @@ offset_right = -30
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_SETTINGS_RESET"
-label_settings = ExtResource("36_row_danger")
+theme_type_variation = &"SettingsRowDanger"
 vertical_alignment = 1
 
 [node name="Footer" type="HBoxContainer" parent="Panel/Content" index="2" unique_id=1617146458]
@@ -629,7 +618,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 text = "STR_SETTINGS_FOOTER"
-label_settings = ExtResource("37_desc")
+theme_type_variation = &"SettingsDesc"
 vertical_alignment = 1
 
 [node name="Stamp" type="Control" parent="Panel/Content/Footer" index="1" unique_id=1617146460]
@@ -656,6 +645,6 @@ offset_bottom = -1.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "VER 1.0.0"
-label_settings = ExtResource("41_version")
+theme_type_variation = &"SettingsVersion"
 horizontal_alignment = 1
 vertical_alignment = 1

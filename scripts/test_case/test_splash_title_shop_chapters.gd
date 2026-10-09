@@ -38,7 +38,6 @@ func _init() -> void:
 
 	assert(_has(splash_inst, "Panel/LogoContainer/Logo"), "Splash phai co Panel/LogoContainer/Logo")
 	assert(_has(splash_inst, "Panel/Title"), "Splash phai co Panel/Title")
-	assert(_has(splash_inst, "Panel/Tagline"), "Splash phai co Panel/Tagline")
 	assert(_has(splash_inst, "FadeOverlay"), "Splash phai co FadeOverlay")
 	# Node riêng của từng bố cục — kiểm tra TRỰC TIẾP trên từng layout (không phụ thuộc
 	# hướng màn hình đang bật, vốn thay đổi theo môi trường chạy test).
@@ -46,8 +45,12 @@ func _init() -> void:
 	var splash_landscape := splash_inst.get_node_or_null("Landscape")
 	assert(splash_portrait != null and splash_landscape != null,
 		"Splash phai co ca 2 bo cuc Portrait/Landscape")
-	assert(splash_landscape.get_node_or_null("Panel/Stamp") != null,
-		"Splash landscape phai co Panel/Stamp")
+	## Splash moi (10/2026): bo Tagline/HintTap/Stamp — landscape giong portrait
+	assert(splash_portrait.get_node_or_null("Panel/Tagline") == null
+		and splash_landscape.get_node_or_null("Panel/Tagline") == null,
+		"Splash moi khong con Panel/Tagline")
+	assert(splash_landscape.get_node_or_null("Panel/Stamp") == null,
+		"Splash landscape khong con Panel/Stamp (giong portrait)")
 	print("[CHECK] SplashScene load va chua day du cac node giao dien truc quan.")
 
 	splash_inst.queue_free()

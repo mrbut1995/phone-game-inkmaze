@@ -1,65 +1,60 @@
 [gd_scene format=3 uid="uid://b1ur8k7vpgte1"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Texture2D" uid="uid://b64xrilpekc4p" path="res://assets/images/main/main_menu_paper.svg" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://dodkr1s1s7ick" path="res://assets/images-png/main/main_menu_paper.png" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://dmhi5353c17ko" path="res://scripts/scenes/layout/main_layout.gd" id="2_layout"]
-[ext_resource type="Texture2D" uid="uid://b4bkq2p2ryhbn" path="res://assets/images/main/logo_doodle_maze_large.svg" id="4_wvcw1"]
-[ext_resource type="Texture2D" uid="uid://cgbp27e1ip682" path="res://assets/images/main/panel_genre_container.svg" id="5_0ld40"]
-[ext_resource type="Texture2D" uid="uid://b86vfwu1mw6xj" path="res://assets/images/main/btn_menu_utility_focus.svg" id="13_qk8x1"]
-[ext_resource type="Texture2D" uid="uid://ekfquw0so41l" path="res://assets/images/profiler/profiler_disc_normal.svg" id="14_6v3ij"]
-[ext_resource type="Texture2D" uid="uid://b6jamoc7rkb8a" path="res://assets/images/icons/icon_play.svg" id="15_icon_play"]
-[ext_resource type="Texture2D" uid="uid://bofrdwmb5s12a" path="res://assets/images/profiler/profiler_disc_pressed.svg" id="15_mjfva"]
-[ext_resource type="Texture2D" uid="uid://dfen0100lldvp" path="res://assets/images/icons/icon_castle.svg" id="16_icon_castle"]
-[ext_resource type="Texture2D" uid="uid://bmqwtnugyrxk1" path="res://assets/images/main/btn_menu_utility_normal.svg" id="16_q4smm"]
-[ext_resource type="Texture2D" uid="uid://d3ujne6a5npe3" path="res://assets/images/archivements/stamp_claimed.svg" id="16_wvcw1"]
-[ext_resource type="Texture2D" uid="uid://dk4s2kydd38p6" path="res://assets/images/profiler/profiler_disc_disabled.svg" id="16_y3wuy"]
-[ext_resource type="Texture2D" uid="uid://bh6htaq00756m" path="res://assets/images/profiler/profiler_disc_focus.svg" id="17_bwfoc"]
-[ext_resource type="Texture2D" uid="uid://cbau2otllid1" path="res://assets/images/icons/icon_calendar.svg" id="17_icon_calendar"]
-[ext_resource type="Texture2D" uid="uid://chgvp6vq7npl3" path="res://assets/images/main/card_mode_level_normal.svg" id="17_nakxj"]
-[ext_resource uid="uid://c2k8iokxuk3br" type="Texture2D" path="res://assets/images/frames/frame_default.svg" id="18_m7v2e"]
-[ext_resource type="Texture2D" uid="uid://48yxwobs88y0" path="res://assets/images/main/card_mode_level_pressed.svg" id="18_q4smm"]
-[ext_resource type="Texture2D" uid="uid://b44veo021gjvc" path="res://assets/images/main/card_mode_level_disabled.svg" id="19_b0x5b"]
-[ext_resource uid="uid://djuo7xwkl81rt" type="Texture2D" path="res://assets/images/common/chip_pill.svg" id="19_bwfoc"]
-[ext_resource uid="uid://scy26gl3aaxu" type="Texture2D" path="res://assets/images/avatars/avatar-baby-child-kid.svg" id="19_hksmy"]
-[ext_resource type="Texture2D" uid="uid://dv3upy3xmn4w" path="res://assets/images/main/card_mode_level_focus.svg" id="20_1wgx8"]
-[ext_resource type="LabelSettings" uid="uid://cme1til0opru7" path="res://resources/settings/text/text_profiler_main_name.tres" id="20_hksmy"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_settings_version_lg.tres" id="21_stamp_text_lg"]
+[ext_resource type="Texture2D" uid="uid://bo8mw46r5qoak" path="res://assets/images-png/main/logo_doodle_maze_large.png" id="4_wvcw1"]
+[ext_resource type="Texture2D" uid="uid://c4oor0isfc8tu" path="res://assets/images-png/main/panel_genre_container.png" id="5_0ld40"]
+[ext_resource type="Texture2D" uid="uid://3easrijkk58x" path="res://assets/images-png/main/btn_menu_utility_focus.png" id="13_qk8x1"]
+[ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="14_6v3ij"]
+[ext_resource type="Texture2D" uid="uid://dlpk5il107r6h" path="res://assets/images-png/icons/icon_play.png" id="15_icon_play"]
+[ext_resource type="Texture2D" uid="uid://d1b6ds3wgbpty" path="res://assets/images-png/profiler/profiler_disc_pressed.png" id="15_mjfva"]
+[ext_resource type="Texture2D" uid="uid://j2x0g1f5tl6p" path="res://assets/images-png/icons/icon_castle.png" id="16_icon_castle"]
+[ext_resource type="Texture2D" uid="uid://d2wq5wt2eutnn" path="res://assets/images-png/main/btn_menu_utility_normal.png" id="16_q4smm"]
+[ext_resource type="Texture2D" uid="uid://bh04s7e4a26qx" path="res://assets/images-png/archivements/stamp_claimed.png" id="16_wvcw1"]
+[ext_resource type="Texture2D" uid="uid://cid3n7oklo1fq" path="res://assets/images-png/profiler/profiler_disc_disabled.png" id="16_y3wuy"]
+[ext_resource type="Texture2D" uid="uid://c721ocng7punk" path="res://assets/images-png/profiler/profiler_disc_focus.png" id="17_bwfoc"]
+[ext_resource type="Texture2D" uid="uid://1670puwwv605" path="res://assets/images-png/icons/icon_calendar.png" id="17_icon_calendar"]
+[ext_resource type="Texture2D" uid="uid://dhpyiqygt22s7" path="res://assets/images-png/main/card_mode_level_normal.png" id="17_nakxj"]
+[ext_resource uid="uid://cd635wxi2hio4" type="Texture2D" path="res://assets/images-png/frames/frame_default.png" id="18_m7v2e"]
+[ext_resource type="Texture2D" uid="uid://bgjip8km1n1lj" path="res://assets/images-png/main/card_mode_level_pressed.png" id="18_q4smm"]
+[ext_resource type="Texture2D" uid="uid://dlcnay8dqxl36" path="res://assets/images-png/main/card_mode_level_disabled.png" id="19_b0x5b"]
+[ext_resource uid="uid://cmlxyub4bj30v" type="Texture2D" path="res://assets/images-png/common/chip_pill.png" id="19_bwfoc"]
+[ext_resource uid="uid://de1fy87ucyxya" type="Texture2D" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="19_hksmy"]
+[ext_resource type="Texture2D" uid="uid://bsmxkawr78ooj" path="res://assets/images-png/main/card_mode_level_focus.png" id="20_1wgx8"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="21_umqxe"]
-[ext_resource type="LabelSettings" uid="uid://d1uxlfanxwcis" path="res://resources/settings/text/text_profiler_main_chip_gold.tres" id="22_hksmy"]
-[ext_resource uid="uid://bh32ib26f80xl" type="Texture2D" path="res://assets/images/common/bar_pill.svg" id="22_usq5l"]
-[ext_resource uid="uid://bncvs7635j8mr" type="Texture2D" path="res://assets/images/common/card_mode_normal.svg" id="23_b0x5b"]
-[ext_resource uid="uid://bh32ib26f80xl" type="Texture2D" path="res://assets/images/common/bar_pill.svg" id="23_d71o1"]
-[ext_resource type="LabelSettings" uid="uid://bl260i0qew4f3" path="res://resources/settings/text/text_profiler_main_label.tres" id="23_hksmy"]
-[ext_resource uid="uid://dtlg8wo5bkdge" type="Texture2D" path="res://assets/images/common/card_mode_pressed.svg" id="24_1wgx8"]
-[ext_resource type="Texture2D" uid="uid://1rqvlr6mxk7i" path="res://assets/images/main/btn_menu_badge_normal.svg" id="24_badge_normal"]
-[ext_resource type="Texture2D" uid="uid://cbedwjjj8aba0" path="res://assets/images/main/btn_menu_badge_pressed.svg" id="25_badge_pressed"]
-[ext_resource type="Texture2D" uid="uid://cnfdg6korh6gn" path="res://assets/images/main/card_mode_disabled.svg" id="25_umqxe"]
-[ext_resource type="Texture2D" uid="uid://s2egoesghjer" path="res://assets/images/main/btn_menu_badge_focus.svg" id="26_badge_focus"]
-[ext_resource uid="uid://cabkur7frl0if" type="Texture2D" path="res://assets/images/common/card_mode_focus.svg" id="26_f5bcp"]
-[ext_resource type="Texture2D" uid="uid://ce4bov5qet800" path="res://assets/images/main/btn_menu_badge_disabled.svg" id="27_badge_disabled"]
-[ext_resource type="Texture2D" uid="uid://b8imq7frnofrv" path="res://assets/images/profiler/chip_dark.svg" id="30_chip_dark"]
-[ext_resource type="LabelSettings" uid="uid://10rhkf4kv2gy" path="res://resources/settings/text/text_profiler_lock.tres" id="35_t_lock"]
-[ext_resource type="Texture2D" uid="uid://dc1qb8fgyp8gb" path="res://assets/images/icons/icon_trophy_large.svg" id="67_wvcw1"]
-[ext_resource type="Texture2D" uid="uid://0t04k6pa24dy" path="res://assets/images/icons/icon_shop_large.svg" id="69_wvcw1"]
-[ext_resource type="Texture2D" uid="uid://b5mgcw43vxeir" path="res://assets/images/icons/icon_gear_large.svg" id="70_wvcw1"]
-[ext_resource type="Texture2D" uid="uid://bhkawxv1hy7ih" path="res://assets/images/main/btn_menu_badge_normal_icon.svg" id="p_icon_1"]
-[ext_resource type="Texture2D" uid="uid://d3nsskbj7wnsd" path="res://assets/images/main/btn_menu_badge_pressed_icon.svg" id="p_icon_2"]
-[ext_resource type="Texture2D" uid="uid://oad7ci1nrsk8" path="res://assets/images/main/btn_menu_badge_disabled_icon.svg" id="p_icon_4"]
-[ext_resource type="Texture2D" uid="uid://b14hkwtacvtpq" path="res://assets/images/main/card_mode_level_normal_circle_icon.svg" id="p_tex_1"]
-[ext_resource type="Texture2D" uid="uid://c6s53ekyq3d4d" path="res://assets/images/main/card_mode_level_pressed_circle_icon.svg" id="p_tex_2"]
-[ext_resource type="Texture2D" uid="uid://pdleqdio220k" path="res://assets/images/main/card_mode_level_disabled_circle_icon.svg" id="p_tex_3"]
-[ext_resource uid="uid://5l7mqahnxl0e" type="Texture2D" path="res://assets/images/common/card_mode_top_badge.svg" id="p_tex_4"]
-[ext_resource type="Texture2D" uid="uid://ot3aetavvmdo" path="res://assets/images/main/card_mode_level_pressed_top_badge.svg" id="p_tex_5"]
-[ext_resource uid="uid://dxubsrby2kcax" type="Texture2D" path="res://assets/images/main/card_mode_disabled_top_badge.svg" id="p_tex_6"]
-[ext_resource uid="uid://btek4i8u7ovdj" type="Texture2D" path="res://assets/images/common/card_mode_bottom_label.svg" id="p_tex_7"]
-[ext_resource type="Texture2D" uid="uid://u2h7q1wc1fv" path="res://assets/images/main/card_mode_level_pressed_bottom_label.svg" id="p_tex_8"]
-[ext_resource uid="uid://dn0pbmys5kmwt" type="Texture2D" path="res://assets/images/main/card_mode_disabled_bottom_label.svg" id="p_tex_9"]
-[ext_resource uid="uid://dhffhbmbs43w0" type="Texture2D" path="res://assets/images/common/card_mode_circle_icon.svg" id="p_tex_10"]
-[ext_resource uid="uid://drfdndtnpl6tg" type="Texture2D" path="res://assets/images/common/card_mode_circle_icon_pressed.svg" id="p_tex_11"]
-[ext_resource type="Texture2D" uid="uid://c1aq3booua4ma" path="res://assets/images/main/card_mode_disabled_circle_icon.svg" id="p_tex_12"]
-[ext_resource uid="uid://bvng3vfc0n2u4" type="Texture2D" path="res://assets/images/common/card_mode_top_badge_pressed.svg" id="p_tex_14"]
-[ext_resource uid="uid://bvy8eqhgidwvx" type="Texture2D" path="res://assets/images/common/card_mode_bottom_label_pressed.svg" id="p_tex_17"]
-[ext_resource uid="uid://s62gr2haf6t7" type="Texture2D" path="res://assets/images/common/card_mode_circle_icon_focus.svg" id="p_tex_28"]
+[ext_resource uid="uid://hv0sne6ucuxk" type="Texture2D" path="res://assets/images-png/common/bar_pill.png" id="22_usq5l"]
+[ext_resource uid="uid://clxkdp7v1picf" type="Texture2D" path="res://assets/images-png/common/card_mode_normal.png" id="23_b0x5b"]
+[ext_resource uid="uid://hv0sne6ucuxk" type="Texture2D" path="res://assets/images-png/common/bar_pill.png" id="23_d71o1"]
+[ext_resource uid="uid://cgnqga8nqe183" type="Texture2D" path="res://assets/images-png/common/card_mode_pressed.png" id="24_1wgx8"]
+[ext_resource type="Texture2D" uid="uid://sndyn3h7uo5l" path="res://assets/images-png/main/btn_menu_badge_normal.png" id="24_badge_normal"]
+[ext_resource type="Texture2D" uid="uid://dyiv3cr6wfe5o" path="res://assets/images-png/main/btn_menu_badge_pressed.png" id="25_badge_pressed"]
+[ext_resource type="Texture2D" uid="uid://bix4mh6ckd2l" path="res://assets/images-png/main/card_mode_disabled.png" id="25_umqxe"]
+[ext_resource type="Texture2D" uid="uid://io5j4wy4fkdg" path="res://assets/images-png/main/btn_menu_badge_focus.png" id="26_badge_focus"]
+[ext_resource uid="uid://b5nskow6rjg7t" type="Texture2D" path="res://assets/images-png/common/card_mode_focus.png" id="26_f5bcp"]
+[ext_resource type="Texture2D" uid="uid://bn4v60luvcllb" path="res://assets/images-png/main/btn_menu_badge_disabled.png" id="27_badge_disabled"]
+[ext_resource type="Texture2D" uid="uid://c5w2jwf5qrx7p" path="res://assets/images-png/profiler/chip_dark.png" id="30_chip_dark"]
+[ext_resource type="Texture2D" uid="uid://wtcr1npagrot" path="res://assets/images-png/icons/icon_trophy_large.png" id="67_wvcw1"]
+[ext_resource type="Texture2D" uid="uid://w7e4ci5yk7fp" path="res://assets/images-png/icons/icon_shop_large.png" id="69_wvcw1"]
+[ext_resource type="Texture2D" uid="uid://dxu4vvp81b3ui" path="res://assets/images-png/icons/icon_gear_large.png" id="70_wvcw1"]
+[ext_resource type="Texture2D" uid="uid://b07owls4fppef" path="res://assets/images-png/main/btn_menu_badge_normal_icon.png" id="p_icon_1"]
+[ext_resource type="Texture2D" uid="uid://dq57danjasjev" path="res://assets/images-png/main/btn_menu_badge_pressed_icon.png" id="p_icon_2"]
+[ext_resource type="Texture2D" uid="uid://o2gke0vwqjtp" path="res://assets/images-png/main/btn_menu_badge_disabled_icon.png" id="p_icon_4"]
+[ext_resource type="Texture2D" uid="uid://bnb21mxne7dsh" path="res://assets/images-png/main/card_mode_level_normal_circle_icon.png" id="p_tex_1"]
+[ext_resource type="Texture2D" uid="uid://b32hptnwtpce6" path="res://assets/images-png/main/card_mode_level_pressed_circle_icon.png" id="p_tex_2"]
+[ext_resource type="Texture2D" uid="uid://b050cwy2jxkik" path="res://assets/images-png/main/card_mode_level_disabled_circle_icon.png" id="p_tex_3"]
+[ext_resource uid="uid://dnd3llck1jlse" type="Texture2D" path="res://assets/images-png/common/card_mode_top_badge.png" id="p_tex_4"]
+[ext_resource type="Texture2D" uid="uid://bs1xxdl2cwqub" path="res://assets/images-png/main/card_mode_level_pressed_top_badge.png" id="p_tex_5"]
+[ext_resource uid="uid://diejpf18dm40y" type="Texture2D" path="res://assets/images-png/main/card_mode_disabled_top_badge.png" id="p_tex_6"]
+[ext_resource uid="uid://dvtahqp83aml8" type="Texture2D" path="res://assets/images-png/common/card_mode_bottom_label.png" id="p_tex_7"]
+[ext_resource type="Texture2D" uid="uid://djrysv7nga0u1" path="res://assets/images-png/main/card_mode_level_pressed_bottom_label.png" id="p_tex_8"]
+[ext_resource uid="uid://bngwgn4ni78tw" type="Texture2D" path="res://assets/images-png/main/card_mode_disabled_bottom_label.png" id="p_tex_9"]
+[ext_resource uid="uid://dnqgyxy4yfhho" type="Texture2D" path="res://assets/images-png/common/card_mode_circle_icon.png" id="p_tex_10"]
+[ext_resource uid="uid://lb4f34io5stn" type="Texture2D" path="res://assets/images-png/common/card_mode_circle_icon_pressed.png" id="p_tex_11"]
+[ext_resource type="Texture2D" uid="uid://brc2eyunb207p" path="res://assets/images-png/main/card_mode_disabled_circle_icon.png" id="p_tex_12"]
+[ext_resource uid="uid://bsiywro6m3rr4" type="Texture2D" path="res://assets/images-png/common/card_mode_top_badge_pressed.png" id="p_tex_14"]
+[ext_resource uid="uid://b02hnqlscvqf5" type="Texture2D" path="res://assets/images-png/common/card_mode_bottom_label_pressed.png" id="p_tex_17"]
+[ext_resource uid="uid://b6rjmn4bih1yk" type="Texture2D" path="res://assets/images-png/common/card_mode_circle_icon_focus.png" id="p_tex_28"]
 [ext_resource type="Script" uid="uid://blpdwtvxerh8h" path="res://scripts/tool/nine_patch/NinePatchStateTexture.gd" id="sc_npstate"]
 [ext_resource type="Script" uid="uid://bbrwe45fwv4mb" path="res://scripts/tool/StateTexture.gd" id="sc_state"]
 [ext_resource type="Shader" path="res://shaders/color_remap.gdshader" id="sh_color_remap"]
@@ -641,7 +636,7 @@ offset_bottom = -2.0080013
 grow_horizontal = 2
 grow_vertical = 2
 text = "LV. 1"
-label_settings = ExtResource("35_t_lock")
+theme_type_variation = &"ProfilerLock"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -660,7 +655,7 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
 text = "MazeWalker #1024"
-label_settings = ExtResource("20_hksmy")
+theme_type_variation = &"ProfilerMainName"
 vertical_alignment = 2
 text_overrun_behavior = 3
 
@@ -695,7 +690,7 @@ offset_bottom = -1.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "ROOKIE"
-label_settings = ExtResource("22_hksmy")
+theme_type_variation = &"ProfilerMainChipGold"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -713,14 +708,14 @@ size_flags_stretch_ratio = 0.2
 layout_mode = 2
 size_flags_horizontal = 2
 text = "STR_PROFILE_EXP_LABEL"
-label_settings = ExtResource("23_hksmy")
+theme_type_variation = &"ProfilerMainLabel"
 resize_font_to_fit = true
 
 [node name="ExpValue" type="Label" parent="Paper/Hero/ProfileCard/Content/ProfileInformation/Exp" index="1" unique_id=618299103]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "0 / 200"
-label_settings = ExtResource("23_hksmy")
+theme_type_variation = &"ProfilerMainLabel"
 horizontal_alignment = 2
 
 [node name="Bar" type="TextureRect" parent="Paper/Hero/ProfileCard/Content/ProfileInformation" index="3" unique_id=1639060342]
@@ -948,7 +943,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 24
 text = "STR_SETTINGS_VERSION"
-label_settings = ExtResource("21_stamp_text_lg")
+theme_type_variation = &"SettingsVersionLg"
 horizontal_alignment = 1
 vertical_alignment = 1
 

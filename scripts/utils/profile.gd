@@ -53,12 +53,12 @@ static func frame_id() -> String:
 
 static func avatar_icon(ident: String) -> String:
 	var value: Variant = _call("icon_of", ["avatar", ident])
-	return str(value) if value != null else "res://assets/images/avatars/avatar-baby-child-kid.svg"
+	return str(value) if value != null else "res://assets/images-png/avatars/avatar-baby-child-kid.png"
 
 
 static func frame_icon(ident: String) -> String:
 	var value: Variant = _call("icon_of", ["frame", ident])
-	return str(value) if value != null else "res://assets/images/frames/frame_default.svg"
+	return str(value) if value != null else "res://assets/images-png/frames/frame_default.png"
 
 
 # --- Danh mục / trang bị ----------------------------------------------------

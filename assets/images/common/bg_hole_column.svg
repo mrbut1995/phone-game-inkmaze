@@ -1,10 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 240" width="2560" height="240">
-  <!-- Lỗ bấm giấy: 1 cột duy nhất ở mép trái (tile rộng 2560 nên không lặp ngang màn).
-       Dịch +91px = đệm của lớp parallax giữa (EDGE_PAD + quãng trượt) ⇒ lỗ nằm ~28px
-       từ mép trái khung nội dung, ngay bên trái lề đỏ của trang giấy.
-       Hình PHẲNG (không gradient) để không bị đọc thành "viên bi 3D". -->
-  <g transform="translate(91 0)">
-    <circle cx="56" cy="120" r="14" fill="#F1EAD9" stroke="#D9CDB1" stroke-width="2.5" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" width="1080" height="240">
+  <defs>
+    <!-- Filter tạo bóng lõm tự nhiên vào lòng lỗ -->
+    <filter id="paperHoleShadow" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
+      <feOffset dy="2" />
+      <feGaussianBlur stdDeviation="2" result="offset-blur" />
+      <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
+      <feFlood flood-color="#8B8260" flood-opacity="0.3" result="color" />
+      <feComposite operator="in" in="color" in2="inverse" result="shadow" />
+      <feComposite operator="over" in="shadow" in2="SourceGraphic" />
+    </filter>
+  </defs>
+
+  <!-- Tâm x=65 (chính giữa dải gáy 0-130px), y=120 (giữa nhịp 240px) -->
+  <g>
+    <!-- Thân lỗ có bóng chìm -->
+    <circle cx="65" cy="120" r="18" fill="#F4EFE6" filter="url(#paperHoleShadow)" />
+    <!-- Vòng mép bấm sắc nét -->
+    <circle cx="65" cy="120" r="18" fill="none" stroke="#DBDCCF" stroke-width="1.5" />
   </g>
 </svg>

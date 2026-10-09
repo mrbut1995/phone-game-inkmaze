@@ -13,7 +13,7 @@ config_version=5
 config/name="InkMaze"
 run/main_scene="uid://dx4d2ahb6l2q0"
 config/features=PackedStringArray("4.8", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://assets/images-png/icon.png"
 
 [autoload]
 
@@ -46,6 +46,10 @@ window/size/viewport_height=920
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/handheld/orientation=6
+
+[gui]
+
+theme/custom="res://resources/settings/theme_default.tres"
 
 [input_devices]
 

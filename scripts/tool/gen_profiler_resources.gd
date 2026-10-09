@@ -17,8 +17,8 @@ extends SceneTree
 ## trong editor là cách làm việc chính; chạy lại script này sẽ GHI ĐÈ tất cả.
 ## ============================================================================
 
-const AVATAR_ICON_DIR := "res://assets/images/avatars/"
-const FRAME_ICON_DIR := "res://assets/images/frames/"
+const AVATAR_ICON_DIR := "res://assets/images-png/avatars/"
+const FRAME_ICON_DIR := "res://assets/images-png/frames/"
 const AVATAR_OUT := "res://resources/profiler/avatars/"
 const FRAME_OUT := "res://resources/profiler/frames/"
 const TITLE_OUT := "res://resources/profiler/titles/"

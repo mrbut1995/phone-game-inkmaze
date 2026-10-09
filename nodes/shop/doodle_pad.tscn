@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://deknldvs1yxnu"]
 
 [ext_resource type="Script" uid="uid://8f0oqmm53ket" path="res://scripts/nodes/shop/doodle_pad.gd" id="1_pad"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
-[ext_resource uid="uid://dubgwdal12gg4" type="Texture2D" path="res://assets/images/shop/doodle_pad.svg" id="3_bg"]
-[ext_resource uid="uid://bpoqukvelivvd" type="Texture2D" path="res://assets/images/shop/doodle_badge.svg" id="4_badge"]
-[ext_resource uid="uid://cc277mkowgo8f" type="Texture2D" path="res://assets/images/common/btn_tile.svg" id="5_stamp"]
-[ext_resource uid="uid://c633g4v4axj1i" type="Texture2D" path="res://assets/images/shop/btn_equipped.svg" id="6_stamp_using"]
+[ext_resource type="Theme" path="res://resources/settings/theme_default.tres" id="2_theme"]
+[ext_resource type="Texture2D" uid="uid://csk840g1a70lg" path="res://assets/images-png/shop/doodle_pad.png" id="3_bg"]
+[ext_resource type="Texture2D" uid="uid://bgcexstq48ay7" path="res://assets/images-png/shop/doodle_badge.png" id="4_badge"]
+[ext_resource type="Texture2D" uid="uid://jv4a0fhocyiw" path="res://assets/images-png/common/btn_tile.png" id="5_stamp"]
+[ext_resource type="Texture2D" uid="uid://by7aqfsoeqv63" path="res://assets/images-png/shop/btn_equipped.png" id="6_stamp_using"]
 
 [node name="DoodlePad" type="Control" unique_id=2102772593 node_paths=PackedStringArray("draw_area", "strokes_layer", "pen_tip", "badge_eyebrow", "badge_name_label", "badge_icon", "stamp", "stamp_label")]
 custom_minimum_size = Vector2(0, 107.5)

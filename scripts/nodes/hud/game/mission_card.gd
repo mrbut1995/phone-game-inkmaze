@@ -12,10 +12,10 @@ extends NinePatchRect
 ## Nhờ vậy đổi mockup/art/màu của thẻ chỉ cần sửa file này + scene, không đụng controller.
 ## ============================================================================
 
-const ROW_ART := preload("res://assets/images/common/chal_row.svg")
+const ROW_ART := preload("res://assets/images-png/common/chal_row.png")
 const MAT_ROW_DONE := preload("res://resources/materials/chal_row_done.tres")
-const CHECK_DONE := preload("res://assets/images/game/chal_check_done.svg")
-const CHECK_PENDING := preload("res://assets/images/game/chal_check_pending.svg")
+const CHECK_DONE := preload("res://assets/images-png/game/chal_check_done.png")
+const CHECK_PENDING := preload("res://assets/images-png/game/chal_check_pending.png")
 
 ## Chưa đạt nhưng vẫn còn cơ hội (chữ cam) / đã lệch mục tiêu (chữ đỏ)
 @export var COLOR_LIVE := Color(0.70980394, 0.38431373, 0.101960786, 1)

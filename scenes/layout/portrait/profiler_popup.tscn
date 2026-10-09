@@ -31,18 +31,6 @@
 [ext_resource type="Texture2D" uid="uid://drlax1oklev7w" path="res://assets/images/profiler/btn_ghost_normal.svg" id="29_gho_n"]
 [ext_resource type="Texture2D" uid="uid://c4t2m6y1xf0k3" path="res://assets/images/profiler/btn_ghost_pressed.svg" id="30_gho_p"]
 [ext_resource type="Texture2D" uid="uid://dqjugipgec7r1" path="res://assets/images/profiler/stamp_verified.svg" id="31_stamp"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_title.tres" id="40_t_title"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_section.tres" id="41_t_section"]
-[ext_resource type="LabelSettings" uid="uid://cun7o8etjjfji" path="res://resources/settings/text/text_profiler_name.tres" id="42_t_name"]
-[ext_resource type="LabelSettings" uid="uid://brmhg3ih2ledh" path="res://resources/settings/text/text_profiler_label.tres" id="43_t_label"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_value.tres" id="44_t_value"]
-[ext_resource type="LabelSettings" uid="uid://bu8t2nlps33r5" path="res://resources/settings/text/text_profiler_small.tres" id="45_t_small"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_row.tres" id="46_t_row"]
-[ext_resource type="LabelSettings" uid="uid://ktw4ufvt335t" path="res://resources/settings/text/text_profiler_chip_gold.tres" id="47_t_chip_gold"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_state.tres" id="48_t_state"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_button.tres" id="49_t_btn"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_button_ghost.tres" id="50_t_btn_ghost"]
-[ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_stamp.tres" id="51_t_stamp"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="60_theme"]
 [ext_resource type="Texture2D" uid="uid://c8f7gjw5uscwb" path="res://assets/images/icons/icon_pen_name.svg" id="70_pen_name"]
 [ext_resource type="Texture2D" uid="uid://b373m251uejix" path="res://assets/images/profiler/disc_more.svg" id="71_disc_more"]
@@ -161,7 +149,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_PROFILE_TITLE"
-label_settings = ExtResource("40_t_title")
+theme_type_variation = &"ProfilerTitle"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -197,7 +185,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "LV. 1"
-label_settings = ExtResource("47_t_chip_gold")
+theme_type_variation = &"ProfilerChipGold"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -343,7 +331,7 @@ theme_override_constants/separation = 4
 layout_mode = 2
 size_flags_vertical = 3
 text = "MazeWalker #1024"
-label_settings = ExtResource("42_t_name")
+theme_type_variation = &"ProfilerName"
 
 [node name="Pen" type="TextureRect" parent="Sheet/Hero/Bg/Content/ProfileInformation/NameRow" index="1" unique_id=132565154]
 custom_minimum_size = Vector2(10, 10)
@@ -384,7 +372,7 @@ offset_bottom = -1.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "ROOKIE"
-label_settings = ExtResource("47_t_chip_gold")
+theme_type_variation = &"ProfilerChipGold"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -402,14 +390,14 @@ size_flags_stretch_ratio = 0.2
 layout_mode = 2
 size_flags_horizontal = 2
 text = "STR_PROFILE_EXP_LABEL"
-label_settings = ExtResource("43_t_label")
+theme_type_variation = &"ProfilerLabel"
 resize_font_to_fit = true
 
 [node name="ExpValue" type="Label" parent="Sheet/Hero/Bg/Content/ProfileInformation/Exp" index="1" unique_id=244948097]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "0 / 200"
-label_settings = ExtResource("43_t_label")
+theme_type_variation = &"ProfilerLabel"
 horizontal_alignment = 2
 
 [node name="Bar" type="TextureRect" parent="Sheet/Hero/Bg/Content/ProfileInformation" index="3" unique_id=1534473670]
@@ -435,7 +423,7 @@ expand_mode = 1
 [node name="Uid" type="Label" parent="Sheet/Hero/Bg/Content/ProfileInformation" index="4" unique_id=789109580]
 layout_mode = 2
 text = "UID: #IM-0000"
-label_settings = ExtResource("43_t_label")
+theme_type_variation = &"ProfilerLabel"
 
 [node name="StatsTitle" type="Label" parent="Sheet" index="5" unique_id=1481689818]
 layout_mode = 1
@@ -449,7 +437,7 @@ offset_top = -42.53975
 offset_right = -20.859924
 offset_bottom = -41.87976
 text = "STR_PROFILE_STATS_TITLE"
-label_settings = ExtResource("41_t_section")
+theme_type_variation = &"ProfilerSection"
 
 [node name="StatCards" type="GridContainer" parent="Sheet" index="6" unique_id=1218602242]
 layout_mode = 1
@@ -515,7 +503,7 @@ offset_top = 16.0
 offset_right = 176.5
 offset_bottom = 26.0
 text = "STR_PROFILE_STAT_STARS"
-label_settings = ExtResource("43_t_label")
+theme_type_variation = &"ProfilerLabel"
 
 [node name="Value" type="Label" parent="Sheet/StatCards/Stat1" index="4" unique_id=1428835619]
 layout_mode = 0
@@ -524,7 +512,7 @@ offset_top = 32.0
 offset_right = 176.5
 offset_bottom = 50.0
 text = "0 / 0"
-label_settings = ExtResource("44_t_value")
+theme_type_variation = &"ProfilerValue"
 
 [node name="Stat2" type="Control" parent="Sheet/StatCards" index="1" unique_id=493667126]
 layout_mode = 2
@@ -575,7 +563,7 @@ offset_top = 16.0
 offset_right = 176.5
 offset_bottom = 26.0
 text = "STR_PROFILE_STAT_DUNGEON"
-label_settings = ExtResource("43_t_label")
+theme_type_variation = &"ProfilerLabel"
 
 [node name="Value" type="Label" parent="Sheet/StatCards/Stat2" index="4" unique_id=654876158]
 layout_mode = 0
@@ -584,7 +572,7 @@ offset_top = 32.0
 offset_right = 176.5
 offset_bottom = 50.0
 text = "FLOOR 0"
-label_settings = ExtResource("44_t_value")
+theme_type_variation = &"ProfilerValue"
 
 [node name="Stat3" type="Control" parent="Sheet/StatCards" index="2" unique_id=1818083824]
 layout_mode = 2
@@ -635,7 +623,7 @@ offset_top = 16.0
 offset_right = 176.5
 offset_bottom = 26.0
 text = "STR_PROFILE_STAT_STREAK"
-label_settings = ExtResource("43_t_label")
+theme_type_variation = &"ProfilerLabel"
 
 [node name="Value" type="Label" parent="Sheet/StatCards/Stat3" index="4" unique_id=2025210763]
 layout_mode = 0
@@ -644,7 +632,7 @@ offset_top = 32.0
 offset_right = 176.5
 offset_bottom = 50.0
 text = "0 DAYS"
-label_settings = ExtResource("44_t_value")
+theme_type_variation = &"ProfilerValue"
 
 [node name="Stat4" type="Control" parent="Sheet/StatCards" index="3" unique_id=2080012392]
 layout_mode = 2
@@ -695,7 +683,7 @@ offset_top = 16.0
 offset_right = 176.5
 offset_bottom = 26.0
 text = "STR_PROFILE_STAT_WINRATE"
-label_settings = ExtResource("43_t_label")
+theme_type_variation = &"ProfilerLabel"
 
 [node name="Value" type="Label" parent="Sheet/StatCards/Stat4" index="4" unique_id=1406839521]
 layout_mode = 0
@@ -704,7 +692,7 @@ offset_top = 32.0
 offset_right = 176.5
 offset_bottom = 50.0
 text = "0%"
-label_settings = ExtResource("44_t_value")
+theme_type_variation = &"ProfilerValue"
 
 [node name="BadgeTitle" type="HBoxContainer" parent="Sheet" index="7" unique_id=1669970083]
 layout_mode = 1
@@ -722,7 +710,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Title" type="Label" parent="Sheet/BadgeTitle" index="0" unique_id=501174265]
 layout_mode = 2
 text = "STR_PROFILE_BADGES_TITLE"
-label_settings = ExtResource("41_t_section")
+theme_type_variation = &"ProfilerSection"
 
 [node name="ApChip" type="Control" parent="Sheet/BadgeTitle" index="1" unique_id=1774238471]
 custom_minimum_size = Vector2(35, 0)
@@ -751,7 +739,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "0 AP"
-label_settings = ExtResource("47_t_chip_gold")
+theme_type_variation = &"ProfilerChipGold"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -816,7 +804,7 @@ offset_top = 44.0
 offset_right = 66.0
 offset_bottom = 58.0
 text = "—"
-label_settings = ExtResource("45_t_small")
+theme_type_variation = &"ProfilerSmall"
 horizontal_alignment = 1
 text_overrun_behavior = 3
 
@@ -855,7 +843,7 @@ offset_top = 44.0
 offset_right = 66.0
 offset_bottom = 58.0
 text = "—"
-label_settings = ExtResource("45_t_small")
+theme_type_variation = &"ProfilerSmall"
 horizontal_alignment = 1
 text_overrun_behavior = 3
 
@@ -894,7 +882,7 @@ offset_top = 44.0
 offset_right = 66.0
 offset_bottom = 58.0
 text = "—"
-label_settings = ExtResource("45_t_small")
+theme_type_variation = &"ProfilerSmall"
 horizontal_alignment = 1
 text_overrun_behavior = 3
 
@@ -919,7 +907,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "+"
-label_settings = ExtResource("41_t_section")
+theme_type_variation = &"ProfilerSection"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -937,7 +925,7 @@ offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_PROFILE_BADGES_MORE"
-label_settings = ExtResource("48_t_state")
+theme_type_variation = &"ProfilerState"
 horizontal_alignment = 1
 
 [node name="GearTitle" type="Label" parent="Sheet" index="9" unique_id=1426227218]
@@ -952,7 +940,7 @@ offset_top = -25.099884
 offset_right = -20.859924
 offset_bottom = -23.579895
 text = "STR_PROFILE_GEAR_TITLE"
-label_settings = ExtResource("41_t_section")
+theme_type_variation = &"ProfilerSection"
 
 [node name="Gear" type="Control" parent="Sheet" index="10" unique_id=1340920575]
 layout_mode = 1
@@ -1046,7 +1034,7 @@ offset_top = 0.024000168
 offset_right = -0.01600647
 offset_bottom = -2.9840012
 text = "STR_PROFILE_GEAR_PEN"
-label_settings = ExtResource("45_t_small")
+theme_type_variation = &"ProfilerSmall"
 text_overrun_behavior = 3
 metadata/_edit_use_anchors_ = true
 
@@ -1062,7 +1050,7 @@ offset_top = -0.016002655
 offset_right = 0.06399536
 offset_bottom = 0.01599884
 text = "—"
-label_settings = ExtResource("46_t_row")
+theme_type_variation = &"ProfilerRow"
 text_overrun_behavior = 3
 metadata/_edit_use_anchors_ = true
 
@@ -1119,7 +1107,7 @@ offset_top = 0.024000168
 offset_right = -0.01600647
 offset_bottom = -2.9840012
 text = "STR_PROFILE_GEAR_THEME"
-label_settings = ExtResource("45_t_small")
+theme_type_variation = &"ProfilerSmall"
 text_overrun_behavior = 3
 metadata/_edit_use_anchors_ = true
 
@@ -1135,7 +1123,7 @@ offset_top = 2.0
 offset_right = 0.06399536
 offset_bottom = 0.01599884
 text = "—"
-label_settings = ExtResource("46_t_row")
+theme_type_variation = &"ProfilerRow"
 text_overrun_behavior = 3
 metadata/_edit_use_anchors_ = true
 
@@ -1192,7 +1180,7 @@ offset_top = 0.024000168
 offset_right = -0.039001465
 offset_bottom = -2.9840012
 text = "STR_PROFILE_GEAR_FRAME"
-label_settings = ExtResource("45_t_small")
+theme_type_variation = &"ProfilerSmall"
 text_overrun_behavior = 3
 metadata/_edit_use_anchors_ = true
 
@@ -1208,7 +1196,7 @@ offset_top = -0.016002655
 offset_right = 0.025993347
 offset_bottom = 0.01599884
 text = "—"
-label_settings = ExtResource("46_t_row")
+theme_type_variation = &"ProfilerRow"
 text_overrun_behavior = 3
 metadata/_edit_use_anchors_ = true
 
@@ -1224,7 +1212,7 @@ offset_top = -17.519897
 offset_right = -10.0000305
 offset_bottom = -16.859924
 text = "STR_PROFILE_ACTIVITY_TITLE"
-label_settings = ExtResource("41_t_section")
+theme_type_variation = &"ProfilerSection"
 
 [node name="Rows" type="VBoxContainer" parent="Sheet" index="12" unique_id=117943397]
 layout_mode = 1
@@ -1244,7 +1232,7 @@ theme_override_constants/separation = 5
 visible = false
 layout_mode = 2
 text = "STR_PROFILE_EMPTY_ACTIVITY"
-label_settings = ExtResource("45_t_small")
+theme_type_variation = &"ProfilerSmall"
 horizontal_alignment = 1
 
 [node name="BtnEdit" type="TextureButton" parent="Sheet" index="13" unique_id=651058027]
@@ -1269,7 +1257,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_PROFILE_EDIT_BTN"
-label_settings = ExtResource("49_t_btn")
+theme_type_variation = &"ProfilerButton"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1295,7 +1283,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_PROFILE_SHARE_BTN"
-label_settings = ExtResource("50_t_btn_ghost")
+theme_type_variation = &"ProfilerButtonGhost"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1327,6 +1315,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "STR_PROFILE_STAMP"
-label_settings = ExtResource("51_t_stamp")
+theme_type_variation = &"ProfilerStamp"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -19,8 +19,8 @@ extends Node
 
 signal profile_changed
 
-const AVATAR_DIR := "res://assets/images/avatars/"
-const FRAME_DIR := "res://assets/images/frames/"
+const AVATAR_DIR := "res://assets/images-png/avatars/"
+const FRAME_DIR := "res://assets/images-png/frames/"
 const MAX_RECENT := 10
 ## Mỗi 200 EXP = 1 Cấp; mỗi Sao = 25 EXP
 const EXP_PER_LEVEL := 200
@@ -117,8 +117,8 @@ func icon_of(kind: String, ident: String) -> String:
 	var data: Resource = _find_avatar(ident) if kind == "avatar" else _find_frame(ident)
 	if data == null or data.get("icon") == null:
 		if kind == "avatar":
-			return AVATAR_DIR + "avatar-baby-child-kid.svg"
-		return FRAME_DIR + "frame_default.svg"
+			return AVATAR_DIR + "avatar-baby-child-kid.png"
+		return FRAME_DIR + "frame_default.png"
 	var icon := data.get("icon") as Texture2D
 	return icon.resource_path
 

@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://cxb1slgndopaa" path="res://scripts/scenes/daily.gd" id="2_daily"]
 [ext_resource type="PackedScene" uid="uid://1cx6388j3q2r" path="res://nodes/daily/mission_row.tscn" id="4_fnv54"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="4_theme"]
-[ext_resource type="Texture2D" uid="uid://bohijnsuyn6u3" path="res://assets/images/icons/pencil_icon.svg" id="5_icon_play"]
-[ext_resource type="Texture2D" uid="uid://cgsaf0uhh0ttn" path="res://assets/images/icons/icon_coin.svg" id="6_icon_unlock"]
+[ext_resource type="Texture2D" uid="uid://c501hpv5a4si6" path="res://assets/images-png/icons/pencil_icon.png" id="5_icon_play"]
+[ext_resource type="Texture2D" uid="uid://bsenhucno4lsr" path="res://assets/images-png/icons/icon_coin.png" id="6_icon_unlock"]
 [ext_resource type="PackedScene" uid="uid://ka36asr06er2" path="res://scenes/layout/landscape/daily.tscn" id="L_Landscape"]
 [ext_resource type="PackedScene" uid="uid://ddx6na0robdma" path="res://scenes/layout/portrait/daily.tscn" id="L_Portrait"]
 

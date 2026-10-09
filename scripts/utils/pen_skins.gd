@@ -11,70 +11,70 @@ extends RefCounted
 ## ============================================================================
 
 const DEFAULT_PEN := "pen_blue"
-const CURSOR_DIR := "res://assets/images/game/player_cursor/"
-const ICON_DIR := "res://assets/images/game/pen_type/"
+const CURSOR_DIR := "res://assets/images-png/game/player_cursor/"
+const ICON_DIR := "res://assets/images-png/game/pen_type/"
 ## Bề rộng texture nét đứt mặc định (px)
 const DASH_TEX_WIDTH := 16
 
 ## id món hàng -> { cursor: icon con trỏ · icon: hình ngòi bút · ink: màu mực · style: chất liệu }
 const SKINS := {
 	"pen_blue": {
-		"cursor": CURSOR_DIR + "player_cursor_1.svg",
-		"icon": ICON_DIR + "pen_fountain_pen_nib.svg",
+		"cursor": CURSOR_DIR + "player_cursor_1.png",
+		"icon": ICON_DIR + "pen_fountain_pen_nib.png",
 		"ink": "#2575A7",
 		"style": "ink",
 	},
 	"pen_purple": {
-		"cursor": CURSOR_DIR + "player_cursor_7.svg",
-		"icon": ICON_DIR + "pen_fountain_pen_nib.svg",
+		"cursor": CURSOR_DIR + "player_cursor_7.png",
+		"icon": ICON_DIR + "pen_fountain_pen_nib.png",
 		"ink": "#7C3AED",
 		"style": "ink",
 	},
 	"pen_pencil_2b": {
-		"cursor": CURSOR_DIR + "player_cursor_2.svg",
-		"icon": ICON_DIR + "pen_pencil.svg",
+		"cursor": CURSOR_DIR + "player_cursor_2.png",
+		"icon": ICON_DIR + "pen_pencil.png",
 		"ink": "#4B5563",
 		"style": "pencil",
 	},
 	"pen_red_teacher": {
-		"cursor": CURSOR_DIR + "player_cursor_3.svg",
-		"icon": ICON_DIR + "pen_fountain_pen_nib.svg",
+		"cursor": CURSOR_DIR + "player_cursor_3.png",
+		"icon": ICON_DIR + "pen_fountain_pen_nib.png",
 		"ink": "#DC2626",
 		"style": "ink",
 	},
 	"pen_highlighter": {
-		"cursor": CURSOR_DIR + "player_cursor_4.svg",
-		"icon": ICON_DIR + "pen_stabilo_highlighter.svg",
+		"cursor": CURSOR_DIR + "player_cursor_4.png",
+		"icon": ICON_DIR + "pen_stabilo_highlighter.png",
 		"ink": "#F59E0B",
 		"style": "highlighter",
 	},
 	"pen_gold_ink": {
-		"cursor": CURSOR_DIR + "player_cursor_6.svg",
-		"icon": ICON_DIR + "pen_calligraphy_brush.svg",
+		"cursor": CURSOR_DIR + "player_cursor_6.png",
+		"icon": ICON_DIR + "pen_calligraphy_brush.png",
 		"ink": "#B45309",
 		"style": "gold",
 	},
 	"pen_green_tea": {
-		"cursor": CURSOR_DIR + "player_cursor_8.svg",
-		"icon": ICON_DIR + "pen_art_brush.svg",
+		"cursor": CURSOR_DIR + "player_cursor_8.png",
+		"icon": ICON_DIR + "pen_art_brush.png",
 		"ink": "#15803D",
 		"style": "brush",
 	},
 	"pen_pink_diary": {
-		"cursor": CURSOR_DIR + "player_cursor_9.svg",
-		"icon": ICON_DIR + "pen_felt-tip_marker.svg",
+		"cursor": CURSOR_DIR + "player_cursor_9.png",
+		"icon": ICON_DIR + "pen_felt-tip_marker.png",
 		"ink": "#DB2777",
 		"style": "marker",
 	},
 	"pen_graphite_4b": {
-		"cursor": CURSOR_DIR + "player_cursor_5.svg",
-		"icon": ICON_DIR + "pen_drafting_pencil.svg",
+		"cursor": CURSOR_DIR + "player_cursor_5.png",
+		"icon": ICON_DIR + "pen_drafting_pencil.png",
 		"ink": "#374151",
 		"style": "graphite",
 	},
 	"pen_navy_night": {
-		"cursor": CURSOR_DIR + "player_cursor_10.svg",
-		"icon": ICON_DIR + "pen_needle_point_gel.svg",
+		"cursor": CURSOR_DIR + "player_cursor_10.png",
+		"icon": ICON_DIR + "pen_needle_point_gel.png",
 		"ink": "#1E3A8A",
 		"style": "gel",
 	},

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dydi6np3xsxp0"]
 
-[ext_resource type="Texture2D" uid="uid://c58bm3cc0tiuc" path="res://assets/images/ranking/tab_normal.svg" id="1_art"]
-[ext_resource uid="uid://qu81rkn4r6u0" type="Texture2D" path="res://assets/images/ranking/tab_active.svg" id="2_art_active"]
+[ext_resource type="Texture2D" uid="uid://dqapexiqtu5g8" path="res://assets/images-png/ranking/tab_normal.png" id="1_art"]
 [ext_resource type="Script" uid="uid://icpf5ojff2kn" path="res://scripts/nodes/ranking/tab_button.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cebpgcr6ffrrr" path="res://assets/images-png/ranking/tab_active.png" id="2_art_active"]
 
 [node name="TabButton" type="Button" unique_id=850703946 node_paths=PackedStringArray("label")]
 custom_minimum_size = Vector2(120, 26)
@@ -13,9 +13,9 @@ offset_right = 0.11998749
 offset_bottom = 0.23999977
 focus_mode = 0
 script = ExtResource("1_script")
-label = NodePath("Label")
-art_normal = ExtResource("1_art")
 art_active = ExtResource("2_art_active")
+art_normal = ExtResource("1_art")
+label = NodePath("Label")
 texture_normal = ExtResource("1_art")
 texture_hover = ExtResource("1_art")
 texture_pressed = ExtResource("1_art")
@@ -35,7 +35,7 @@ anchor_bottom = 0.875
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"RankTabLabel"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 11
 text = "TAB"
 horizontal_alignment = 1
 vertical_alignment = 1

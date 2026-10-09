@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
 
-[ext_resource uid="uid://scy26gl3aaxu" type="Texture2D" path="res://assets/images/avatars/avatar-baby-child-kid.svg" id="1_jeqyj"]
+[ext_resource uid="uid://de1fy87ucyxya" type="Texture2D" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="1_jeqyj"]
 [ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_53lbo"]
 
 [resource]

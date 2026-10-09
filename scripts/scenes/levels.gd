@@ -20,8 +20,8 @@ extends BaseScene
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 ## Banner chương: bản thường + bản "focus" (có chương đủ Sao để mở) — art DỰ PHÒNG khi
 ## bố cục chưa gán `banner_normal`/`banner_focus` (đổi được trong Inspector)
-@export var banner_normal: Texture2D = preload("res://assets/images/level_selector/chapter_banner.svg")
-@export var banner_focus: Texture2D = preload("res://assets/images/level_selector/chapter_banner_focus.svg")
+@export var banner_normal: Texture2D = preload("res://assets/images-png/level_selector/chapter_banner.png")
+@export var banner_focus: Texture2D = preload("res://assets/images-png/level_selector/chapter_banner_focus.png")
 
 ## Bố cục đang hiển thị (Portrait / Landscape) — gắn lại mỗi lần ĐỔI HƯỚNG
 var layout: LevelsLayout = null

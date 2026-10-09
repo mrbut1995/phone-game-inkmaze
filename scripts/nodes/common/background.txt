@@ -68,29 +68,11 @@ func _set_layer_delta(layer: Parallax2D, delta_y: float) -> void:
 func _layout_layer(layer: Parallax2D, art: Control, canvas: Vector2) -> void:
 	if art == null:
 		return
-	
-	# Nếu là lớp lỗ bấm:
-	if art == holes_art:
-		var tex_rect := art as TextureRect
-		if tex_rect and tex_rect.texture:
-			var tex_size := tex_rect.texture.get_size()
-			# Tỉ lệ co giãn ngang khớp 100% với canvas
-			var scale_ratio: float = canvas.x / tex_size.x
-			var final_h: float = tex_size.y * scale_ratio
-			
-			# Kích thước 1 ô lỗ chuẩn
-			_fit_control(art, Vector2.ZERO, Vector2(canvas.x, final_h))
-			
-			# Parallax2D chịu trách nhiệm lặp dọc vô tận
-			if layer:
-				layer.repeat_size = Vector2(0.0, final_h)
-				layer.repeat_times = int(ceil((canvas.y + parallax_range) / final_h)) + 2
-		return
-
-	# Lớp giấy nền PaperFar
+	var max_shift := parallax_range * (layer.scroll_scale.y if layer != null else 0.0)
 	var pad := 0
 	_fit_control(art, Vector2(-pad, -pad), _cover_size(art, canvas + Vector2(pad, pad) * 2.0))
-		
+
+
 ## Cỡ để art phủ kín khung `target` mà KHÔNG kéo méo (scale đều, neo góc trên-trái)
 func _cover_size(art: Control, target: Vector2) -> Vector2:
 	var texture_rect := art as TextureRect
