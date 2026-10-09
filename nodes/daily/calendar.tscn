@@ -10,7 +10,7 @@
 [ext_resource uid="uid://bi20hlvtod50l" type="Texture2D" path="res://assets/images-png/calendar/day_btn_next_normal.png" id="8_next_n"]
 [ext_resource uid="uid://clg8sb8y8ae43" type="Texture2D" path="res://assets/images-png/calendar/day_btn_next_pressed.png" id="9_next_p"]
 [ext_resource uid="uid://uuwqad3jf00j" type="Texture2D" path="res://assets/images-png/calendar/day_btn_next_disabled.png" id="10_next_d"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="12_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="12_theme"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ut84u"]
 content_margin_left = 7.5

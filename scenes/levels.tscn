@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_hcnff"]
 [ext_resource type="Script" uid="uid://byfef235y6820" path="res://scripts/scenes/levels.gd" id="2_5ekxl"]
 [ext_resource type="PackedScene" uid="uid://cp4og3e21hxqe" path="res://nodes/level_selection/level_map.tscn" id="6_byla0"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="14_theme_text"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="14_theme_text"]
 [ext_resource type="PackedScene" uid="uid://vs5xiygkv5e" path="res://scenes/layout/portrait/levels.tscn" id="L_Portrait"]
 
 [sub_resource type="Gradient" id="Gradient_fade"]
@@ -71,6 +71,3 @@ level_map = NodePath("../MapArea/LevelMap")
 [connection signal="pressed" from="Portrait/Content/InformationArea/TopBar/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Portrait/Content/InformationArea/ContinueButton" to="." method="_on_continue_pressed"]
 [connection signal="gui_input" from="Portrait/Content/InformationArea/ChapterBanner" to="." method="_on_banner_input"]
-[connection signal="pressed" from="Landscape/Content/InformationArea/TopBar/Back" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="Landscape/Content/InformationArea/ContinueButton" to="." method="_on_continue_pressed"]
-[connection signal="gui_input" from="Landscape/Content/InformationArea/ChapterBanner" to="." method="_on_banner_input"]

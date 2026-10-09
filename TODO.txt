@@ -1507,7 +1507,7 @@
 #       nét đứt + bục vinh quang (Gold 240x200 giữa · Silver 200x155 · Bronze 200x130, đáy thẳng hàng) + danh sách cuộn
 #       (nodes/ranking/rank_row.tscn, hàng của bạn đổi art rank_row_you.svg) + thanh "hạng của bạn" dán đáy + chân trang.
 #     - Asset mới: assets/images/ranking/*.svg (rank_sheet · tab_active/normal · medal_* · podium_* · rank_row(_you) ·
-#       my_rank_bar · chip_scope) + theme variation Rank* trong theme_text.tres + chuỗi STR_RANK_* (string_extra.csv).
+#       my_rank_bar · chip_scope) + theme variation Rank* trong theme_default.tres + chuỗi STR_RANK_* (string_extra.csv).
 #     - Nối: SceneManager.SCENE_RANKING/goto_ranking · Nav.goto_ranking() · nút XẾP HẠNG ở Main (đã connect pressed)
 #       · Debug Console NAVIGATE "Leaderboard".
 #     - Test mới: scripts/test_case/test_ranking.gd (84 check) — API · sắp hạng · người chơi · ổn định · làm mới ·

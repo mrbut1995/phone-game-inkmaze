@@ -10,7 +10,7 @@
 [ext_resource uid="uid://boafjmoalh4w6" type="Texture2D" path="res://assets/images-png/level_selector/icon_lock_locked.png" id="6_fwgxh"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="6_ihwf0"]
 [ext_resource uid="uid://boessvvtvl6t1" type="Texture2D" path="res://assets/images-png/level_selector/level_card_seperator.png" id="8_jnyni"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="9_theme_text"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="9_theme_text"]
 [ext_resource uid="uid://giqwc1uvd2k3" type="Texture2D" path="res://assets/images-png/level_selector/level_card_unlocked_next.png" id="10_next"]
 [ext_resource uid="uid://c7iw78sa2n5y8" type="Texture2D" path="res://assets/images-png/level_selector/level_card_halo.png" id="11_halo"]
 [ext_resource uid="uid://iv1ux2auk1g1" type="Texture2D" path="res://assets/images-png/level_selector/level_card_ribbon.png" id="12_ribbon"]

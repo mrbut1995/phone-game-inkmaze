@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://d08w7ys60m1vk" path="res://scripts/scenes/title.gd" id="2_script"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="3_theme"]
 [ext_resource uid="uid://dodkr1s1s7ick" type="Texture2D" path="res://assets/images-png/main/main_menu_paper.png" id="4_paper"]
 [ext_resource uid="uid://bssvcnaam8t6i" type="Texture2D" path="res://assets/images-png/main/logo_doodle_maze.png" id="5_logo"]
 [ext_resource uid="uid://bjey8neasfcau" type="Texture2D" path="res://assets/images-png/game/pen_type/pen_fountain_pen_nib.png" id="6_hiwto"]
