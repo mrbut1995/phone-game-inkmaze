@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://b4523r4lkysqq" path="res://assets/images-png/common/star_locked.png" id="12_star_locked"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="13_np"]
 [ext_resource type="Texture2D" uid="uid://seyf3bf1r8o6" path="res://assets/images-png/level_selector/level_card_seperator_next.png" id="13_sep_next"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="15_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="15_theme"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_trhwq"]
 content_margin_left = 50.0

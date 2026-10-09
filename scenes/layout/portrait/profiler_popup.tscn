@@ -31,7 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://drlax1oklev7w" path="res://assets/images/profiler/btn_ghost_normal.svg" id="29_gho_n"]
 [ext_resource type="Texture2D" uid="uid://c4t2m6y1xf0k3" path="res://assets/images/profiler/btn_ghost_pressed.svg" id="30_gho_p"]
 [ext_resource type="Texture2D" uid="uid://dqjugipgec7r1" path="res://assets/images/profiler/stamp_verified.svg" id="31_stamp"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="60_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="60_theme"]
 [ext_resource type="Texture2D" uid="uid://c8f7gjw5uscwb" path="res://assets/images/icons/icon_pen_name.svg" id="70_pen_name"]
 [ext_resource type="Texture2D" uid="uid://b373m251uejix" path="res://assets/images/profiler/disc_more.svg" id="71_disc_more"]
 [ext_resource uid="uid://dicn7uknox8gp" type="Texture2D" path="res://assets/images/common/badge_medal.svg" id="72_medal1"]

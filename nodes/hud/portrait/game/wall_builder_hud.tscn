@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://bkhumwx0cgwps" path="res://scripts/nodes/hud/game/wall_builder_hud.gd" id="2_script"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="3_theme"]
 
 [node name="Hud" unique_id=55312883 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")

@@ -15,7 +15,7 @@
 [ext_resource uid="uid://coes0kdnsaiv" type="Texture2D" path="res://assets/images-png/ranking/podium_gold.png" id="14_podium_g"]
 [ext_resource uid="uid://c1r6hcmsb6uls" type="Texture2D" path="res://assets/images-png/ranking/podium_silver.png" id="15_podium_s"]
 [ext_resource uid="uid://b8xcvk264ibmj" type="Texture2D" path="res://assets/images-png/ranking/podium_bronze.png" id="16_podium_b"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="18_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="18_theme"]
 [ext_resource type="PackedScene" uid="uid://blqmr7o13tvys" path="res://scenes/layout/portrait/ranking.tscn" id="L_Portrait"]
 [ext_resource type="PackedScene" uid="uid://dk7hw8k4h4rom" path="res://scenes/layout/landscape/ranking.tscn" id="L_Landscape"]
 

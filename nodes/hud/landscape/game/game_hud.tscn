@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cchuuwsep7gyy"]
 
 [ext_resource type="PackedScene" uid="uid://bnohqoayq3dt2" path="res://nodes/hud/base.tscn" id="1_8cncu"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_1d71u"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="2_1d71u"]
 
 [node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node", "content_root") instance=ExtResource("1_8cncu")]
 anchor_top = 0.0

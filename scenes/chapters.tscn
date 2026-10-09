@@ -12,7 +12,7 @@
 [ext_resource uid="uid://5vjrbk835y5f" type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_pressed.png" id="10_cta_p"]
 [ext_resource uid="uid://d0tl47hvj62ph" type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_focus.png" id="11_cta_f"]
 [ext_resource uid="uid://oalyje7bs0yo" type="Texture2D" path="res://assets/images-png/level_selector/icon_play_triangle.png" id="12_play_icon"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="13_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="13_theme"]
 [ext_resource type="PackedScene" path="res://scenes/layout/portrait/chapters.tscn" id="L_Portrait"]
 [ext_resource type="PackedScene" path="res://scenes/layout/landscape/chapters.tscn" id="L_Landscape"]
 

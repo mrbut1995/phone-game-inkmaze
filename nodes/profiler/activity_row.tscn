@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/profiler/activity_row.gd" id="1_row"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="2_theme"]
 [ext_resource uid="uid://n80hdaatt051" type="Texture2D" path="res://assets/images/icons/icon_circle.svg" id="3_circle"]
 [ext_resource type="LabelSettings" path="res://resources/settings/text/text_profiler_state.tres" id="6_tag"]
 [ext_resource uid="uid://dtbnplc416uqp" type="Texture2D" path="res://assets/images/profiler/row_bg.svg" id="7_bg"]

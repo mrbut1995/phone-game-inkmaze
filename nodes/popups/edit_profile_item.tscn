@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ivxocq5cgurc"]
 
 [ext_resource type="Script" uid="uid://dpo6pm3gqfe8o" path="res://scripts/nodes/popups/edit_profile_item.gd" id="1_item"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="2_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="2_theme"]
 [ext_resource type="Texture2D" uid="uid://d4bwxfevawdsm" path="res://assets/images-png/profiler/card_selected.png" id="4_sel"]
 [ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="5_disc"]
 [ext_resource type="Texture2D" uid="uid://3la8khi18c3h" path="res://assets/images-png/profiler/check_badge.png" id="6_check"]

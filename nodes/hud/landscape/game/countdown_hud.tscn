@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://c7v12qmn3er7o" path="res://scripts/nodes/hud/game/countdown_hud.gd" id="2_script"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="3_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="3_theme"]
 
 [node name="Hud" unique_id=1464339223 node_paths=PackedStringArray("budget_value_node", "budget_max_label") instance=ExtResource("1_base")]
 theme = ExtResource("3_theme")

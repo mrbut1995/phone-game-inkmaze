@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cb348h6q1r8lf"]
 
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="1_w6pjg"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="1_w6pjg"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="5_l0kg0"]
 [ext_resource uid="uid://b62wcl4y41lv7" type="Texture2D" path="res://assets/images-png/game/btn_submit_normal.png" id="13_8y1nw"]
 [ext_resource uid="uid://blq6cnnryjyqu" type="Texture2D" path="res://assets/images-png/game/btn_restart_normal.png" id="13_31yh8"]
