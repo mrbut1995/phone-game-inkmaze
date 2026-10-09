@@ -168,7 +168,7 @@ func _section_1_catalog(shop: Node) -> void:
 			_entry(shop.call("item", item_id).size() > 0, "Tim thay mon '%s'" % item_id)
 			_entry(int(item.get("price", -1)) >= 0, "Mon %s co gia hop le" % item_id)
 			# Mọi món phải có icon thật trong assets/images/shop
-			var icon_path := "res://assets/images/icons/icon_%s.svg" % str(item.get("icon", ""))
+			var icon_path := "res://assets/images-png/icons/icon_%s.png" % str(item.get("icon", ""))
 			_entry(ResourceLoader.exists(icon_path), "Co icon cho %s (%s)" % [item_id, icon_path])
 	_entry(total == 30, "Tong cong 30 mon hang (nhan %d)" % total)
 
@@ -481,18 +481,18 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 		_entry(pack_tile.size.is_equal_approx(scene.coin_tile_size()),
 			"The goi nap dung coin_tile_size() = %s (nhan %s)" % [str(scene.coin_tile_size()), str(pack_tile.size)])
 		var icon: Texture2D = pack_tile.call("icon_texture")
-		_entry(icon != null and icon.resource_path.ends_with("icon_coin_t1.svg"),
+		_entry(icon != null and icon.resource_path.ends_with("icon_coin_t1.png"),
 			"Goi 500 Xu dung icon cap 1 (%s)" % str(icon.resource_path if icon != null else ""))
 	var pack2 := scene.card_at(2)
 	if pack2 != null:
 		var icon2: Texture2D = pack2.call("icon_texture")
 		_entry(str(pack2.get("item_id")) == "coin_2000", "The goi thu hai la coin_2000")
-		_entry(icon2 != null and icon2.resource_path.ends_with("icon_coin_t2.svg"),
+		_entry(icon2 != null and icon2.resource_path.ends_with("icon_coin_t2.png"),
 			"Goi 2,000 Xu dung icon cap 2 (%s)" % str(icon2.resource_path if icon2 != null else ""))
 	var last_tile := scene.card_at(5)
 	if last_tile != null:
 		var icon5: Texture2D = last_tile.call("icon_texture")
-		_entry(icon5 != null and icon5.resource_path.ends_with("icon_coin_t5.svg"),
+		_entry(icon5 != null and icon5.resource_path.ends_with("icon_coin_t5.png"),
 			"Goi 20,000 Xu dung icon cap 5 (ruong vang)")
 
 	# Mua thật qua nút trên thẻ: mua gói 500 Xu rồi ví phải tăng

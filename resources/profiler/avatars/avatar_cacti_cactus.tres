@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
 
-[ext_resource uid="uid://q6ecpxh72ee6" type="Texture2D" path="res://assets/images/avatars/avatar-cacti-cactus.svg" id="1_c72j8"]
+[ext_resource uid="uid://y6on0pty7ams" type="Texture2D" path="res://assets/images-png/avatars/avatar-cacti-cactus.png" id="1_c72j8"]
 [ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_vi6v8"]
 
 [resource]

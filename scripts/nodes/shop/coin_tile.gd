@@ -8,13 +8,13 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const CARD_ART := preload("res://assets/images/shop/card_coin.svg")
+const CARD_ART := preload("res://assets/images-png/shop/card_coin.png")
 const ICONS := {
-	"coin_t1": preload("res://assets/images/icons/icon_coin_t1.svg"),
-	"coin_t2": preload("res://assets/images/icons/icon_coin_t2.svg"),
-	"coin_t3": preload("res://assets/images/icons/icon_coin_t3.svg"),
-	"coin_t4": preload("res://assets/images/icons/icon_coin_t4.svg"),
-	"coin_t5": preload("res://assets/images/icons/icon_coin_t5.svg"),
+	"coin_t1": preload("res://assets/images-png/icons/icon_coin_t1.png"),
+	"coin_t2": preload("res://assets/images-png/icons/icon_coin_t2.png"),
+	"coin_t3": preload("res://assets/images-png/icons/icon_coin_t3.png"),
+	"coin_t4": preload("res://assets/images-png/icons/icon_coin_t4.png"),
+	"coin_t5": preload("res://assets/images-png/icons/icon_coin_t5.png"),
 }
 
 var item_id: String = ""

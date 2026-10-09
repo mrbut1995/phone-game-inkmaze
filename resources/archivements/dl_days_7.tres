@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ArchivementData" format=3]
 
-[ext_resource uid="uid://cbau2otllid1" type="Texture2D" path="res://assets/images/icons/icon_calendar.svg" id="1_cd1ym"]
+[ext_resource uid="uid://1670puwwv605" type="Texture2D" path="res://assets/images-png/icons/icon_calendar.png" id="1_cd1ym"]
 [ext_resource type="Script" path="res://scripts/resources/archivement_data.gd" id="2_iypl1"]
 
 [resource]

@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dig7mt8e1aqsg"]
 
-[ext_resource uid="uid://dk4f7tb5u0b7t" type="Texture2D" path="res://assets/images/game/anchor_normal.svg" id="1_aae84"]
+[ext_resource uid="uid://dxmvuyyd2tetc" type="Texture2D" path="res://assets/images-png/game/anchor_normal.png" id="1_aae84"]
 [ext_resource type="Script" uid="uid://ija82o52h4mq" path="res://scripts/nodes/game/anchor.gd" id="1_fgv2j"]
-[ext_resource uid="uid://skq0744148rx" type="Texture2D" path="res://assets/images/game/anchor_pressed.svg" id="2_6q3p4"]
-[ext_resource uid="uid://cy0vghc1vdbc8" type="Texture2D" path="res://assets/images/game/anchor_disabled.svg" id="3_6q3p4"]
-[ext_resource uid="uid://cgrxktrgq3wbp" type="Texture2D" path="res://assets/images/game/anchor_focus.svg" id="3_fgv2j"]
+[ext_resource uid="uid://dxecul80qvakj" type="Texture2D" path="res://assets/images-png/game/anchor_pressed.png" id="2_6q3p4"]
+[ext_resource uid="uid://bjujt0gsrxiqg" type="Texture2D" path="res://assets/images-png/game/anchor_disabled.png" id="3_6q3p4"]
+[ext_resource uid="uid://cch54lvvo0xn6" type="Texture2D" path="res://assets/images-png/game/anchor_focus.png" id="3_fgv2j"]
 
 [sub_resource type="Animation" id="Animation_anchor_reset"]
 length = 0.001

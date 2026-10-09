@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
 
-[ext_resource uid="uid://htxsdm4747bd" type="Texture2D" path="res://assets/images/frames/frame_chinese_new_year.svg" id="1_mc61e"]
+[ext_resource uid="uid://bruubdjvq7m4j" type="Texture2D" path="res://assets/images-png/frames/frame_chinese_new_year.png" id="1_mc61e"]
 [ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_0ah22"]
 
 [resource]

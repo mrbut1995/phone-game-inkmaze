@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
 
-[ext_resource uid="uid://byq2l6f3loqfd" type="Texture2D" path="res://assets/images/avatars/avatar-elderly-grandma.svg" id="1_oox53"]
+[ext_resource uid="uid://cm5m342pkgo12" type="Texture2D" path="res://assets/images-png/avatars/avatar-elderly-grandma.png" id="1_oox53"]
 [ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_d6b4x"]
 
 [resource]

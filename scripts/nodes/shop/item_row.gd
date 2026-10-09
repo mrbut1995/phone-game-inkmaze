@@ -8,22 +8,22 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const ICON_BOX := preload("res://assets/images/icons/icon_box.svg")
-const BTN_NORMAL := preload("res://assets/images/common/btn_action_normal.svg")
-const BTN_PRESSED := preload("res://assets/images/common/btn_action_pressed.svg")
+const ICON_BOX := preload("res://assets/images-png/icons/icon_box.png")
+const BTN_NORMAL := preload("res://assets/images-png/common/btn_action_normal.png")
+const BTN_PRESSED := preload("res://assets/images-png/common/btn_action_pressed.png")
 const MAT_AMBER := preload("res://resources/materials/btn_action_amber.tres")
-const BTN_DONE := preload("res://assets/images/shop/btn_equipped.svg")
+const BTN_DONE := preload("res://assets/images-png/shop/btn_equipped.png")
 const ICONS := {
-	"pen": preload("res://assets/images/icons/icon_pen.svg"),
-	"ink": preload("res://assets/images/icons/icon_ink.svg"),
-	"paper": preload("res://assets/images/icons/icon_paper.svg"),
-	"coin": preload("res://assets/images/icons/icon_coin.svg"),
-	"tool_undo": preload("res://assets/images/icons/icon_tool_undo.svg"),
-	"tool_hint": preload("res://assets/images/icons/icon_tool_hint.svg"),
-	"tool_reveal": preload("res://assets/images/icons/icon_tool_reveal.svg"),
-	"tool_time": preload("res://assets/images/icons/icon_tool_time.svg"),
-	"tool_revive": preload("res://assets/images/icons/icon_tool_revive.svg"),
-	"tool_shield": preload("res://assets/images/icons/icon_tool_shield.svg"),
+	"pen": preload("res://assets/images-png/icons/icon_pen.png"),
+	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
+	"paper": preload("res://assets/images-png/icons/icon_paper.png"),
+	"coin": preload("res://assets/images-png/icons/icon_coin.png"),
+	"tool_undo": preload("res://assets/images-png/icons/icon_tool_undo.png"),
+	"tool_hint": preload("res://assets/images-png/icons/icon_tool_hint.png"),
+	"tool_reveal": preload("res://assets/images-png/icons/icon_tool_reveal.png"),
+	"tool_time": preload("res://assets/images-png/icons/icon_tool_time.png"),
+	"tool_revive": preload("res://assets/images-png/icons/icon_tool_revive.png"),
+	"tool_shield": preload("res://assets/images-png/icons/icon_tool_shield.png"),
 }
 
 var item_id: String = ""

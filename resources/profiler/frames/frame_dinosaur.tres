@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
 
-[ext_resource uid="uid://4iy2eqnknoeb" type="Texture2D" path="res://assets/images/frames/frame_dinosaur.svg" id="1_o0ilh"]
+[ext_resource uid="uid://dx3txrccjf8b8" type="Texture2D" path="res://assets/images-png/frames/frame_dinosaur.png" id="1_o0ilh"]
 [ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_knvd0"]
 
 [resource]

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
 
-[ext_resource uid="uid://bity0mr4hnnue" type="Texture2D" path="res://assets/images/avatars/avatar-cloud-crying.svg" id="1_i3ji5"]
+[ext_resource uid="uid://ddmrt4uio7cdv" type="Texture2D" path="res://assets/images-png/avatars/avatar-cloud-crying.png" id="1_i3ji5"]
 [ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_q4r2e"]
 
 [resource]

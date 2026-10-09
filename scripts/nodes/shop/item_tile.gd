@@ -13,14 +13,14 @@ signal action_pressed(item_id: String)
 ## Chạm vào thân thẻ (ngoài nút) = chọn ngòi bút này để XEM THỬ ở Bàn nháp thử bút
 signal preview_pressed(item_id: String)
 
-const BTN_TILE := preload("res://assets/images/common/btn_tile.svg")
+const BTN_TILE := preload("res://assets/images-png/common/btn_tile.png")
 const MAT_TILE_NORMAL := preload("res://resources/materials/btn_tile_normal.tres")
 const MAT_TILE_DONE := preload("res://resources/materials/btn_tile_done.tres")
 const MAT_TILE_VIP := preload("res://resources/materials/btn_tile_vip.tres")
 const ICONS := {
-	"pen": preload("res://assets/images/icons/icon_pen.svg"),
-	"ink": preload("res://assets/images/icons/icon_ink.svg"),
-	"paper": preload("res://assets/images/icons/icon_paper.svg"),
+	"pen": preload("res://assets/images-png/icons/icon_pen.png"),
+	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
+	"paper": preload("res://assets/images-png/icons/icon_paper.png"),
 }
 const VIP_BADGE := "STR_SHOP_BADGE_VIP"
 

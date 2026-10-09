@@ -47,15 +47,15 @@ func set_row(row: Dictionary) -> void:
 	_set_tag(_tag_text(row, won, endless, daily), _tag_color(won, endless, daily), _tag_bg(won, endless, daily))
 
 	# Icon + màu vòng theo chế độ (dùng lại art có sẵn của màn chính / profiler)
-	var icon_path := "res://assets/images/icons/icon_target.svg"
+	var icon_path := "res://assets/images-png/icons/icon_target.png"
 	var tint := Color(0.1451, 0.4235, 0.5882)          # #256C96
 	var disc_color := DISC_PLAY
 	if endless:
-		icon_path = "res://assets/images/icons/icon_castle.svg"
+		icon_path = "res://assets/images-png/icons/icon_castle.png"
 		tint = Color(0.8471, 0.2667, 0.2667)           # #D84444
 		disc_color = DISC_DUNGEON
 	elif daily:
-		icon_path = "res://assets/images/icons/icon_calendar.svg"
+		icon_path = "res://assets/images-png/icons/icon_calendar.png"
 		tint = Color(0.8510, 0.4667, 0.0235)           # #D97706
 		disc_color = DISC_DAILY
 	if icon != null:
@@ -120,11 +120,13 @@ func _set_tag(text: String, color: Color, bg: Color) -> void:
 	if tag == null:
 		return
 	tag.text = text
-	# Màu theo dòng là dữ liệu RUNTIME ⇒ nhân bản LabelSettings rồi đổi font_color
+	# Màu theo dòng là dữ liệu RUNTIME ⇒ nhân bản LabelSettings (nếu còn) hoặc override theme
 	if tag.label_settings != null:
 		var settings := tag.label_settings.duplicate() as LabelSettings
 		settings.font_color = color
 		tag.label_settings = settings
+	else:
+		tag.add_theme_color_override("font_color", color)
 	# Chip nền: art TĨNH khai trong .tscn (chip_grey) → nhân màu pastel theo loại dòng,
 	# và co bề rộng ôm theo chữ (nhãn neo phải nên chỉ cần kéo offset_left).
 	var box := tag.get_theme_stylebox("normal")

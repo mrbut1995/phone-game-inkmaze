@@ -1,22 +1,21 @@
 [gd_scene format=3 uid="uid://dfmh01huguti4"]
 
 [ext_resource type="Script" uid="uid://3e0i4bldywkh" path="res://scripts/nodes/level_selection/level_card.gd" id="1_066fa"]
-[ext_resource uid="uid://dk7amg5p6bi7a" type="Texture2D" path="res://assets/images/level_selector/level_card_unlocked_normal.svg" id="2_23rcg"]
-[ext_resource uid="uid://b0qku0upl126x" type="Texture2D" path="res://assets/images/level_selector/level_card_locked.svg" id="3_fwgxh"]
-[ext_resource uid="uid://cqe1sdpj4yw71" type="Texture2D" path="res://assets/images/common/star_empty.svg" id="3_h4clh"]
-[ext_resource uid="uid://c66v5bmdvegnd" type="Texture2D" path="res://assets/images/common/star_highlight.svg" id="15_star_full"]
-[ext_resource uid="uid://b36x4h1vea5ax" type="Texture2D" path="res://assets/images/level_selector/level_card_unlocked_pressed.svg" id="5_press"]
-[ext_resource uid="uid://ceu3tnfq77j3j" type="Texture2D" path="res://assets/images/level_selector/stamp_done_circle.svg" id="6_23rcg"]
-[ext_resource uid="uid://blikk0nkl6dow" type="Texture2D" path="res://assets/images/level_selector/icon_lock_locked.svg" id="6_fwgxh"]
+[ext_resource uid="uid://bpttt21y46dho" type="Texture2D" path="res://assets/images-png/level_selector/level_card_unlocked_normal.png" id="2_23rcg"]
+[ext_resource uid="uid://brfv0q4sqmn26" type="Texture2D" path="res://assets/images-png/level_selector/level_card_locked.png" id="3_fwgxh"]
+[ext_resource uid="uid://cphd7lexro270" type="Texture2D" path="res://assets/images-png/common/star_empty.png" id="3_h4clh"]
+[ext_resource uid="uid://6voljbarwsoh" type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="15_star_full"]
+[ext_resource uid="uid://b27135c7tvyot" type="Texture2D" path="res://assets/images-png/level_selector/level_card_unlocked_pressed.png" id="5_press"]
+[ext_resource uid="uid://dgfi1ybnnec75" type="Texture2D" path="res://assets/images-png/level_selector/stamp_done_circle.png" id="6_23rcg"]
+[ext_resource uid="uid://boafjmoalh4w6" type="Texture2D" path="res://assets/images-png/level_selector/icon_lock_locked.png" id="6_fwgxh"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="6_ihwf0"]
-[ext_resource uid="uid://c7jjffnt56fk4" type="Texture2D" path="res://assets/images/level_selector/level_card_seperator.svg" id="8_jnyni"]
-[ext_resource type="LabelSettings" uid="uid://ceqbsoy3ipfjh" path="res://resources/settings/text/text_stamp.tres" id="8_xwruh"]
+[ext_resource uid="uid://boessvvtvl6t1" type="Texture2D" path="res://assets/images-png/level_selector/level_card_seperator.png" id="8_jnyni"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_text.tres" id="9_theme_text"]
-[ext_resource uid="uid://dlwgqwj5h0smp" type="Texture2D" path="res://assets/images/level_selector/level_card_unlocked_next.svg" id="10_next"]
-[ext_resource uid="uid://bir1ya8salb62" type="Texture2D" path="res://assets/images/level_selector/level_card_halo.svg" id="11_halo"]
-[ext_resource uid="uid://dt21wq5c3uos8" type="Texture2D" path="res://assets/images/level_selector/level_card_ribbon.svg" id="12_ribbon"]
-[ext_resource uid="uid://cq02f6n2di7ro" type="Texture2D" path="res://assets/images/level_selector/level_card_seperator_next.svg" id="13_sep_next"]
-[ext_resource uid="uid://clmw0yfx1j2ct" type="Texture2D" path="res://assets/images/common/star_locked.svg" id="14_star_locked"]
+[ext_resource uid="uid://giqwc1uvd2k3" type="Texture2D" path="res://assets/images-png/level_selector/level_card_unlocked_next.png" id="10_next"]
+[ext_resource uid="uid://c7iw78sa2n5y8" type="Texture2D" path="res://assets/images-png/level_selector/level_card_halo.png" id="11_halo"]
+[ext_resource uid="uid://iv1ux2auk1g1" type="Texture2D" path="res://assets/images-png/level_selector/level_card_ribbon.png" id="12_ribbon"]
+[ext_resource uid="uid://seyf3bf1r8o6" type="Texture2D" path="res://assets/images-png/level_selector/level_card_seperator_next.png" id="13_sep_next"]
+[ext_resource uid="uid://b4523r4lkysqq" type="Texture2D" path="res://assets/images-png/common/star_locked.png" id="14_star_locked"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jnyni"]
 content_margin_left = 52.0
@@ -256,7 +255,7 @@ offset_bottom = -0.0200005
 rotation = 0.6646398
 theme_override_colors/font_color = Color(0.75069183, 0.25092328, 0.29985005, 1)
 text = "STR_STAMP_PASSED"
-label_settings = ExtResource("8_xwruh")
+theme_type_variation = &"LevelCardStamp"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true

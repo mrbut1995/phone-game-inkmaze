@@ -1,17 +1,28 @@
 <?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="540" height="960">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
   <defs>
-    
-    <pattern id="notebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.6" />
-      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.2" />
+    <!-- Pattern lưới caro: chu kỳ 240x240px gồm 5 ô ly 48x48px -->
+    <pattern id="notebookGrid" width="240" height="240" patternUnits="userSpaceOnUse">
+      <!-- 4 đường phụ 48px màu xanh nhạt mảnh -->
+      <path d="M 48 0 V 240 M 96 0 V 240 M 144 0 V 240 M 192 0 V 240" fill="none" stroke="#DDE5E9" stroke-width="1.2" />
+      <path d="M 0 48 H 240 M 0 96 H 240 M 0 144 H 240 M 0 192 H 240" fill="none" stroke="#DDE5E9" stroke-width="1.2" />
+      
+      <!-- Đường chính bao quanh cụm 240px -->
+      <path d="M 240 0 H 0 V 240" fill="none" stroke="#CBD9E2" stroke-width="1.8" />
     </pattern>
   </defs>
 
-  
-  <rect width="1080" height="1920" fill="#FAF5EB" />
-  
-  <rect width="1080" height="1920" fill="url(#notebookGrid)" />
-  
-  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5" />
+  <!-- Nền giấy ngà chính -->
+  <rect width="1080" height="1920" fill="#FFFDF7" />
+
+  <!-- Dải gáy sổ bên trái (rộng 130px) -->
+  <rect x="0" y="0" width="130" height="1920" fill="#FFFCF0" />
+  <!-- Đường chỉ may gân gáy -->
+  <line x1="130" y1="0" x2="130" y2="1920" stroke="#DBDCCF" stroke-width="1.5" />
+
+  <!-- Lưới caro bắt đầu từ sau gáy -->
+  <rect x="130" y="0" width="950" height="1920" fill="url(#notebookGrid)" />
+
+  <!-- Đường lề đỏ vở học sinh (đặt tại x=150) -->
+  <line x1="150" y1="0" x2="150" y2="1920" stroke="#DFAEAC" stroke-width="2.5" />
 </svg>

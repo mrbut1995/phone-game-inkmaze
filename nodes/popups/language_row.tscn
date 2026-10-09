@@ -1,12 +1,12 @@
 [gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/popups/language_row.gd" id="1_script"]
-[ext_resource uid="uid://cwo64rd8xpjlk" type="Texture2D" path="res://assets/images/popups/lang_item_normal.svg" id="2_art_normal"]
-[ext_resource uid="uid://l5fo0b8wovke" type="Texture2D" path="res://assets/images/popups/box_dungeon_bonus.svg" id="3_art_pressed"]
-[ext_resource uid="uid://d4fiejc8geokq" type="Texture2D" path="res://assets/images/popups/lang_item_pressed.svg" id="4_art_hover"]
-[ext_resource uid="uid://deio833hbtfq4" type="Texture2D" path="res://assets/images/settings/row_button_focus.svg" id="5_art_focus"]
-[ext_resource uid="uid://00qvfel7vtef" type="Texture2D" path="res://assets/images/popups/icon_check_red.svg" id="6_art_check"]
-[ext_resource uid="uid://dnmpir4jonxbk" type="Texture2D" path="res://assets/images/icons/flags/flag_generic.svg" id="7_flag_fallback"]
+[ext_resource uid="uid://cujdcc37e708g" type="Texture2D" path="res://assets/images-png/popups/lang_item_normal.png" id="2_art_normal"]
+[ext_resource uid="uid://lcih45n4mm0k" type="Texture2D" path="res://assets/images-png/popups/box_dungeon_bonus.png" id="3_art_pressed"]
+[ext_resource uid="uid://dypjxt4hp47ue" type="Texture2D" path="res://assets/images-png/popups/lang_item_pressed.png" id="4_art_hover"]
+[ext_resource uid="uid://b584v4pnnb50u" type="Texture2D" path="res://assets/images-png/settings/row_button_focus.png" id="5_art_focus"]
+[ext_resource uid="uid://p6b6mo5klfvl" type="Texture2D" path="res://assets/images-png/popups/icon_check_red.png" id="6_art_check"]
+[ext_resource uid="uid://cdlnxrlq486tt" type="Texture2D" path="res://assets/images-png/icons/flags/flag_generic.png" id="7_flag_fallback"]
 
 [sub_resource type="StyleBoxTexture" id="Sb_row_n"]
 texture = ExtResource("2_art_normal")

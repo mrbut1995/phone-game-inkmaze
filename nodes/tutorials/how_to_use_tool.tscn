@@ -4,12 +4,12 @@
 [ext_resource type="Script" path="res://scripts/nodes/tutorial/how_to_use_tool.gd" id="2_script"]
 [ext_resource type="PackedScene" uid="uid://btutorialboard01" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
 [ext_resource type="Script" path="res://scripts/resources/blueprint_step.gd" id="4_step"]
-[ext_resource uid="uid://cte1ue0xq3002" type="Texture2D" path="res://assets/images/game/btn_undo_normal.svg" id="5_undo_n"]
-[ext_resource uid="uid://dp6gsathe7et6" type="Texture2D" path="res://assets/images/game/btn_undo_pressed.svg" id="6_undo_p"]
-[ext_resource uid="uid://dqldqskahkgcx" type="Texture2D" path="res://assets/images/game/btn_undo_disabled.svg" id="7_undo_d"]
-[ext_resource uid="uid://dd61x6fjtobav" type="Texture2D" path="res://assets/images/game/btn_hint_normal.svg" id="8_hint_n"]
-[ext_resource uid="uid://c864ne3ni7vvn" type="Texture2D" path="res://assets/images/game/btn_hint_pressed.svg" id="9_hint_p"]
-[ext_resource uid="uid://btgio4y75ub5n" type="Texture2D" path="res://assets/images/game/btn_hint_disabled.svg" id="10_hint_d"]
+[ext_resource uid="uid://duvuocvoymd43" type="Texture2D" path="res://assets/images-png/game/btn_undo_normal.png" id="5_undo_n"]
+[ext_resource uid="uid://pvdjm7lb1xxc" type="Texture2D" path="res://assets/images-png/game/btn_undo_pressed.png" id="6_undo_p"]
+[ext_resource uid="uid://bm1khrfv3tkx7" type="Texture2D" path="res://assets/images-png/game/btn_undo_disabled.png" id="7_undo_d"]
+[ext_resource uid="uid://c4louruvu6ijq" type="Texture2D" path="res://assets/images-png/game/btn_hint_normal.png" id="8_hint_n"]
+[ext_resource uid="uid://c1rsbeag67ckp" type="Texture2D" path="res://assets/images-png/game/btn_hint_pressed.png" id="9_hint_p"]
+[ext_resource uid="uid://dybqvaw2rmp7w" type="Texture2D" path="res://assets/images-png/game/btn_hint_disabled.png" id="10_hint_d"]
 
 [sub_resource type="Resource" id="Resource_01"]
 script = ExtResource("4_step")
