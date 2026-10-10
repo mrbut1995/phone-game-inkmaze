@@ -1,8 +1,7 @@
 class_name ProfilerScene
 extends BaseUI
 ## ============================================================================
-## NỘI DUNG HỒ SƠ CÁ NHÂN (nodes/popups/profiler_content.tscn) — mockup/profiler.svg
-## (dọc) và mockup/profiler_landscape.svg (ngang).
+## NỘI DUNG HỒ SƠ CÁ NHÂN (nodes/popups/profiler_content.tscn) — mockup/profiler.svg.
 ##
 ## Scene ĐỘC LẬP kế thừa `BaseUI` (nhận biết hướng + đổi layout Portrait ⇄ Landscape),
 ## KHÔNG kế thừa `BaseScene` — vì đây là NỘI DUNG nằm trong popup chứ không phải màn hình:
@@ -10,28 +9,97 @@ extends BaseUI
 ## và phủ kín vùng nội dung popup (BaseUI CHỈ đổi layout khi có node Portrait/Landscape).
 ## Nút Back đóng popup qua `owner_popup`; popup Edit Profile mở chồng LÊN TRÊN.
 ##
-## Nguồn dữ liệu: PlayerProfileManager (qua facade `Profile`) + Sổ tay danh hiệu
-## (`Archivement`) + Cửa hàng (`Shop`) cho mục "Trang bị đang dùng".
+## Nguồn dữ liệu: PlayerProfileManager (qua facade `Profile`) — toàn bộ số liệu
+## tích luỹ nằm trong `Profile.deep_stats()` (5 nhóm: Play · Dungeon · Time · Game Mode · In Game).
+##
+## DANH SÁCH THÔNG TIN (theo mockup): 5 nhóm, mỗi nhóm = băng washi dán tiêu đề +
+## lưới THẺ số liệu (`ProfilerStatCard`) có ICON:
+##   · Icon tách từ mockup → `assets/images/profiler/ic_*.svg` (21 icon)
+##   · Chế độ đặc biệt không có icon trong mockup → dùng icon sẵn có của game (`icons/`)
+##   · Icon + màu washi/đầu nhóm theo nhóm (xem `TAPES`/`SQUIGGLES`)
+## Bố cục DỌC: thẻ đứng (icon trên, số dưới + nét nguệch ngoạc), lưới 3/2/3/4/3 cột.
+## Bố cục NGANG (mockup profiler_landscape): Hero nằm CỘT TRÁI, danh sách ở CỘT PHẢI cuộn DỌC
+## với thẻ NGANG (icon trái, số phải), lưới 4 cột; đầu nhóm = băng washi dán trái + đường gạch nối.
+## Hero card GIỮ CỐ ĐỊNH ngoài vùng cuộn ở cả 2 hướng (KHÔNG còn nút Đổi avatar/Chia sẻ —
+## bấm avatar hoặc icon bút cạnh tên để mở popup Diện mạo).
 ##
 ## Layout tĩnh (vị trí/kích thước/dây nút) khai trong
-## `scenes/layout/portrait|landscape/profiler_popup.tscn`; ở đây chỉ ĐỔ DỮ LIỆU +
-## MÀU theo trạng thái (cấp bậc, tỉ lệ thắng, trạng thái ván…).
+## `scenes/layout/portrait|landscape/profiler_popup.tscn`; ở đây chỉ ĐỔ DỮ LIỆU.
 ## ============================================================================
 
-@export var ROW_SCENE: PackedScene = preload("res://nodes/profiler/activity_row.tscn")
-@export var ICON_LOCK: Texture2D = preload("res://assets/images-png/icons/icon_lock.png")
+## Scene 1 NHÓM số liệu (băng washi + lưới thẻ) — dựng vào `layout.info_list`
+const GROUP_SCENE := preload("res://nodes/profiler/stat_group.tscn")
 
-## Số hàng lịch sử hiển thị (mockup: 3)
-@export var ACTIVITY_ROWS := 3
-## Số huy hiệu trên giá (mockup: 3)
-@export var BADGE_SLOTS := 3
+## Icon từng ô số liệu: 21 icon tách từ mockup + 7 icon có sẵn của game
+## (các CHẾ ĐỘ ĐẶC BIỆT không xuất hiện trong mockup: mìn, tổng đường, đếm ngược…)
+const ICONS := {
+	"play": preload("res://assets/images/profiler/ic_play.svg"),
+	"trophy": preload("res://assets/images/profiler/ic_trophy.svg"),
+	"pie": preload("res://assets/images/profiler/ic_pie.svg"),
+	"target": preload("res://assets/images/profiler/ic_target.svg"),
+	"flame": preload("res://assets/images/profiler/ic_flame.svg"),
+	"calendar": preload("res://assets/images/profiler/ic_calendar.svg"),
+	"castle": preload("res://assets/images/profiler/ic_castle.svg"),
+	"wall": preload("res://assets/images/profiler/ic_wall.svg"),
+	"stopwatch": preload("res://assets/images/profiler/ic_stopwatch.svg"),
+	"hourglass": preload("res://assets/images/profiler/ic_hourglass.svg"),
+	"bolt": preload("res://assets/images/profiler/ic_bolt.svg"),
+	"feet": preload("res://assets/images/profiler/ic_feet.svg"),
+	"route": preload("res://assets/images/profiler/ic_route.svg"),
+	"pencil": preload("res://assets/images/profiler/ic_pencil.svg"),
+	"revert": preload("res://assets/images/profiler/ic_revert.svg"),
+	"undo": preload("res://assets/images/profiler/ic_undo.svg"),
+	"skip": preload("res://assets/images/profiler/ic_skip.svg"),
+	"maze": preload("res://assets/images/profiler/ic_maze.svg"),
+	"gate": preload("res://assets/images/profiler/ic_gate.svg"),
+	"sun": preload("res://assets/images/profiler/ic_sun.svg"),
+	"rocket": preload("res://assets/images/profiler/ic_rocket.svg"),
+	"bomb": preload("res://assets/images/icons/icon_bomb.svg"),
+	"logic": preload("res://assets/images/icons/icon_logic.svg"),
+	"tool_time": preload("res://assets/images/icons/icon_tool_time.svg"),
+	"bulb": preload("res://assets/images/icons/icon_bulb.svg"),
+	"cloud": preload("res://assets/images/icons/icon_cloud.svg"),
+	"ink": preload("res://assets/images/icons/icon_ink.svg"),
+	"pen": preload("res://assets/images/icons/icon_pen.svg"),
+}
 
-# Màu số liệu (mockup: điểm đỏ · streak cam · thắng xanh · sao vàng)
-@export var COLOR_GOLD := Color(0.7098, 0.3529, 0.0353)      # #B45309
-@export var COLOR_RED := Color(0.8471, 0.2667, 0.2667)       # #D84444
-@export var COLOR_STREAK := Color(0.8510, 0.4667, 0.0235)    # #D97706
-@export var COLOR_GREEN := Color(0.0863, 0.6392, 0.2902)     # #16A34A
-const COLOR_MUTED := Color(0.5804, 0.6392, 0.7216)     # #94A3B8
+## Băng washi tiêu đề theo nhóm (màu lấy đúng mockup)
+const TAPES := {
+	"play": preload("res://assets/images/profiler/tape_play.svg"),
+	"dungeon": preload("res://assets/images/profiler/tape_dungeon.svg"),
+	"time": preload("res://assets/images/profiler/tape_time.svg"),
+	"mode": preload("res://assets/images/profiler/tape_mode.svg"),
+	"ingame": preload("res://assets/images/profiler/tape_ingame.svg"),
+}
+
+## Nét nguệch ngoạc dưới số liệu theo nhóm
+const SQUIGGLES := {
+	"play": preload("res://assets/images/profiler/squiggle_play.svg"),
+	"dungeon": preload("res://assets/images/profiler/squiggle_dungeon.svg"),
+	"time": preload("res://assets/images/profiler/squiggle_time.svg"),
+	"mode": preload("res://assets/images/profiler/squiggle_mode.svg"),
+	"ingame": preload("res://assets/images/profiler/squiggle_ingame.svg"),
+}
+
+## Nhóm "GAME MODE STATS": mỗi THẺ = 1 chế độ (SỐ LẦN CHƠI) + icon riêng;
+## `ids` = các mode_id cộng dồn vào thẻ đó; `icon` = khoá trong `ICONS`
+const MODE_ROWS: Array = [
+	{"key": "STR_MODE_PLAY_NAME", "ids": ["play"], "icon": "maze"},
+	{"key": "STR_MODE_DUNGEON_NAME", "ids": ["dungeon"], "icon": "gate"},
+	{"key": "STR_MODE_DAILY_CLASSIC_NAME", "ids": ["daily_classic"], "icon": "sun"},
+	{"key": "STR_MODE_DAILY_CHALLENGE_NAME", "ids": ["daily_challenge"], "icon": "calendar"},
+	{"key": "STR_MODE_CHALLENGE_NAME", "ids": ["challenge"], "icon": "rocket"},
+	{"key": "STR_MODE_MINESWEEPER", "ids": ["minesweeper"], "icon": "bomb"},
+	{"key": "STR_MODE_SUM_PATH", "ids": ["sum_path"], "icon": "logic"},
+	{"key": "STR_MODE_COUNTDOWN_COST", "ids": ["countdown_cost"], "icon": "tool_time"},
+	{"key": "STR_MODE_BLIND_MEMORY", "ids": ["blind_memory"], "icon": "bulb"},
+	{"key": "STR_MODE_FOG_OF_WAR", "ids": ["fog_of_war"], "icon": "cloud"},
+	{"key": "STR_MODE_FADING_INK", "ids": ["fading_ink"], "icon": "ink"},
+	{"key": "STR_MODE_ONE_STROKE", "ids": ["one_stroke"], "icon": "pen"},
+	{"key": "STR_MODE_WALL_BUILDER", "ids": ["wall_builder"], "icon": "wall"},
+]
+
+## Chiều rộng 1 nhóm ở bố cục NGANG — danh sách chiếm hết cột phải nên không cần nữa
 
 ## Layout đang hiển thị (Portrait / Landscape — cùng tên node, bind qua @export)
 var layout: ProfilerLayout = null
@@ -40,19 +108,14 @@ var layout: ProfilerLayout = null
 ## thay vì điều hướng màn hình. Chạy độc lập (test/harness) thì về Màn hình chính như cũ.
 var owner_popup: BasePopup = null
 
-var _flash_token := 0
-
 
 func _ready() -> void:
 	_bind_refs()
 	# Dây nút khai trong `nodes/popups/profiler_content.tscn` (cả 2 hướng) — guard chỉ nối lại nếu mất
 	if layout != null:
 		ensure_signal(layout.btn_close, &"pressed", &"_on_close_pressed")
-		ensure_signal(layout.btn_edit, &"pressed", &"_on_edit_pressed")
-		ensure_signal(layout.btn_share, &"pressed", &"_on_share_pressed")
 		var hero_btn := layout.hero_btn_avatar as BaseButton
 		ensure_signal(hero_btn, &"pressed", &"_on_edit_pressed")
-		ensure_signal(layout.btn_more(), &"pressed", &"_on_badges_more_pressed")
 	orientation_changed.connect(_on_orientation_changed)
 	_connect_manager()
 	refresh()
@@ -93,18 +156,16 @@ func refresh() -> void:
 	Archivement.refresh()
 	_refresh_header()
 	_refresh_hero()
-	_refresh_stats()
-	_refresh_badges()
-	_refresh_gear()
-	_refresh_activity()
+	_refresh_info()
 
 
-func activity_row_count() -> int:
-	if layout == null or layout.rows_box == null:
+## Số NHÓM thông tin đang hiển thị (test) — mỗi nhóm là 1 nodes/profiler/stat_group.tscn
+func info_group_count() -> int:
+	if layout == null or layout.info_list == null:
 		return 0
 	var count := 0
-	for child in layout.rows_box.get_children():
-		if child is ProfilerActivityRow:
+	for child in layout.info_list.get_children():
+		if child is ProfilerStatGroup:
 			count += 1
 	return count
 
@@ -123,37 +184,6 @@ func _on_close_pressed() -> void:
 func _on_edit_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	Popups.open(Popups.EDIT_PROFILE)
-
-
-func _on_badges_more_pressed() -> void:
-	Sfx.play(Sfx.BTN_CLICK)
-	Nav.goto_archivement()
-
-
-func _on_share_pressed() -> void:
-	Sfx.play(Sfx.BTN_CLICK)
-	var text := "%s • %s • %s %d/%d" % [
-		Profile.display_name(),
-		tr("STR_PROFILE_LEVEL_FORMAT").format([Profile.level()]),
-		tr("STR_PROFILE_STAT_STARS"),
-		int(Profile.stats().get("stars", 0)),
-		int(Profile.stats().get("stars_max", 0)),
-	]
-	DisplayServer.clipboard_set(text)
-	_flash_share_label()
-
-
-## Nháy nhãn nút Chia sẻ thành "Đã sao chép hồ sơ!" rồi trả về như cũ
-func _flash_share_label() -> void:
-	var label := _button_label(layout.btn_share)
-	if label == null:
-		return
-	_flash_token += 1
-	var token := _flash_token
-	label.text = tr("STR_PROFILE_SHARE_DONE")
-	await get_tree().create_timer(1.4).timeout
-	if token == _flash_token and is_instance_valid(label):
-		label.text = tr("STR_PROFILE_SHARE_BTN")
 
 
 # ---------------------------------------------------------------------------
@@ -178,7 +208,17 @@ func _refresh_hero() -> void:
 	if layout.hero_exp_value != null:
 		layout.hero_exp_value.text = tr("STR_PROFILE_EXP_FORMAT").format([Profile.exp_in_level(), Profile.exp_step()])
 	if layout.hero_uid != null:
-		layout.hero_uid.text = tr("STR_PROFILE_UID_FORMAT").format([Profile.uid_text()])
+		# Bố cục NGANG (mockup mới) tách "UID" và "THAM GIA" thành 2 khối riêng → giá trị trần;
+		# bố cục dọc giữ 1 dòng "UID: #IM-xxxx • 10/2026" như cũ.
+		if layout.hero_join != null:
+			layout.hero_uid.text = Profile.uid_code()
+		else:
+			layout.hero_uid.text = tr("STR_PROFILE_UID_FORMAT").format([Profile.uid_text()])
+	if layout.hero_join != null:
+		layout.hero_join.text = Profile.joined_date_text()
+	if layout.hero_exp_remain != null:
+		var remain := maxi(Profile.exp_step() - Profile.exp_in_level(), 0)
+		layout.hero_exp_remain.text = tr("STR_PROFILE_EXP_REMAIN").format([remain, Profile.level() + 1])
 	_fill_bar()
 
 
@@ -195,141 +235,96 @@ func _fill_bar() -> void:
 	fill.offset_right = fill.offset_left + maxf(roundf(track.size.x * ratio), 4.0)
 
 
-func _refresh_stats() -> void:
-	var data := Profile.stats()
-	_set_stat(0, tr("STR_PROFILE_STAT_STARS_VALUE").format([int(data.get("stars", 0)), int(data.get("stars_max", 0))]), COLOR_GOLD)
-	_set_stat(1, tr("STR_PROFILE_STAT_FLOOR_VALUE").format([int(data.get("dungeon_floor", 0))]), COLOR_RED)
-	_set_stat(2, tr("STR_PROFILE_STAT_STREAK_VALUE").format([int(data.get("streak", 0))]), COLOR_STREAK)
-	var rate := float(data.get("win_rate", -1.0))
-	if rate < 0.0:
-		_set_stat(3, tr("STR_PROFILE_STAT_NONE"), COLOR_MUTED)
-	else:
-		_set_stat(3, tr("STR_PROFILE_STAT_WINRATE_VALUE").format(["%.1f" % rate]), COLOR_GREEN)
-
-
-## index 0..3 ứng với Stat1..Stat4 khai trong .tscn (node con: Icon · Name · Value)
-## Icon là art TĨNH khai trong .tscn (mỗi chỉ số 1 icon riêng) — ở đây chỉ đổ SỐ + màu chữ.
-func _set_stat(index: int, value: String, color: Color) -> void:
-	var card := layout.stat_card(index)
-	if card == null:
+# ---------------------------------------------------------------------------
+# Danh sách thông tin — 5 nhóm THẺ có icon, cuộn DỌC ở cả 2 hướng
+# ---------------------------------------------------------------------------
+func _refresh_info() -> void:
+	if layout.info_list == null:
 		return
-	var value_label := card.get_node_or_null("Value") as Label
-	if value_label != null:
-		value_label.text = value
-		_tint(value_label, color)
+	for child in layout.info_list.get_children():
+		layout.info_list.remove_child(child)
+		child.queue_free()
+	var data := Profile.deep_stats()
+	var mode_counts: Dictionary = data.get("mode_plays", {})
+
+	# 1. PLAY STATS — 6 thẻ (3 cột × 2 hàng)
+	_add_info_group("play", tr("STR_PROFILE_GROUP_PLAY"), 3, [
+		_card("play", "STR_PROFILE_STAT_LEVEL_PLAY", str(int(data.get("level_plays", 0)))),
+		_card("trophy", "STR_PROFILE_STAT_LEVEL_WIN", str(int(data.get("level_wins", 0)))),
+		_card("pie", "STR_PROFILE_STAT_WINRATE",
+			tr("STR_PROFILE_STAT_WINRATE_VALUE").format(["%.1f" % float(data.get("level_winrate", 0.0))])),
+		_card("target", "STR_PROFILE_STAT_FIRST_TRY", str(int(data.get("first_try_wins", 0)))),
+		_card("flame", "STR_PROFILE_STAT_STREAK_NOW", str(int(data.get("win_streak", 0)))),
+		_card("calendar", "STR_PROFILE_STAT_DAILY_DAYS", str(int(data.get("daily_days", 0)))),
+	])
+
+	# 2. DUNGEON STATS — 2 thẻ rộng (2 cột)
+	_add_info_group("dungeon", tr("STR_PROFILE_GROUP_DUNGEON"), 2, [
+		_card("castle", "STR_PROFILE_STAT_HIGHEST_FLOOR", str(int(data.get("highest_floor", 0)))),
+		_card("wall", "STR_PROFILE_STAT_WALL_COLLISIONS", str(int(data.get("dungeon_wall_hits", 0)))),
+	])
+
+	# 3. TIME STATS — 3 thẻ (3 cột)
+	_add_info_group("time", tr("STR_PROFILE_GROUP_TIME"), 3, [
+		_card("stopwatch", "STR_PROFILE_STAT_AVG_LEVEL_TIME", _fmt_time(float(data.get("avg_level_time", 0.0)))),
+		_card("hourglass", "STR_PROFILE_STAT_TOTAL_LEVEL_TIME", _fmt_time(float(data.get("total_level_time", 0.0)))),
+		_card("bolt", "STR_PROFILE_STAT_AVG_TIME_MOVE",
+			tr("STR_PROFILE_TIME_SEC").format(["%.1f" % float(data.get("avg_time_move", 0.0))])),
+	])
+
+	# 4. GAME MODE STATS — SỐ LẦN CHƠI TỪNG CHẾ ĐỘ (13 thẻ, 4 cột; chưa chơi → thẻ mờ)
+	var mode_cards: Array = []
+	for entry_v in MODE_ROWS:
+		var entry: Dictionary = entry_v
+		var count := 0
+		for mode_id in entry.get("ids", []):
+			count += int(mode_counts.get(str(mode_id), 0))
+		mode_cards.append(_card(str(entry.get("icon", "")), str(entry.get("key", "")), str(count), count == 0))
+	_add_info_group("mode", tr("STR_PROFILE_GROUP_MODES"), 4, mode_cards)
+
+	# 5. IN GAME STATS — 6 thẻ (3 cột × 2 hàng)
+	_add_info_group("ingame", tr("STR_PROFILE_GROUP_INGAME"), 3, [
+		_card("route", "STR_PROFILE_STAT_AVG_MOVE", "%.1f" % float(data.get("avg_move", 0.0))),
+		_card("feet", "STR_PROFILE_STAT_TOTAL_MOVE", str(int(data.get("moves_total", 0)))),
+		_card("pencil", "STR_PROFILE_STAT_WALL_DRAW", str(int(data.get("wall_draws", 0)))),
+		_card("revert", "STR_PROFILE_STAT_REVERT_USED", str(int(data.get("wall_erases", 0)))),
+		_card("undo", "STR_PROFILE_STAT_UNDO_USED", str(int(data.get("undos_total", 0)))),
+		_card("skip", "STR_PROFILE_STAT_SKIP_USED", str(int(data.get("skips_total", 0)))),
+	])
 
 
-func _refresh_badges() -> void:
-	var ap := layout.ap_text()
-	if ap != null:
-		ap.text = tr("STR_PROFILE_AP_FORMAT").format([Archivement.points()])
-	var entries := _badge_entries()
-	for slot_index in BADGE_SLOTS:
-		var slot := layout.badge_slot(slot_index)
-		if slot == null:
-			continue
-		var has_entry := slot_index < entries.size()
-		slot.visible = has_entry
-		if not has_entry:
-			continue
-		var entry: Dictionary = entries[slot_index]
-		var icon := slot.get_node_or_null("Icon") as TextureRect
-		if icon != null:
-			icon.texture = ICON_LOCK if bool(entry.get("secret_hidden", false)) else entry.get("icon", null) as Texture2D
-			icon.self_modulate = Color(1, 1, 1, 1)
-		var name_label := slot.get_node_or_null("Name") as Label
-		if name_label != null:
-			name_label.text = str(entry.get("title", ""))
+## Dựng 1 nhóm vào `layout.info_list`. Bố cục NGANG (danh sách ở CỘT PHẢI): thẻ NGANG
+## (icon trái, số phải), đầu nhóm dán trái + đường gạch nối — xem `ProfilerStatGroup.setup`.
+## Nhóm NGANG CHỈ 1 HÀNG mà thừa bề ngang (≤ 4 thẻ) được giãn ĐÚNG số thẻ cho kín hàng
+## (VD Dungeon 2 thẻ → mỗi thẻ nửa bề rộng) — nhóm nhiều hàng giữ lưới 4 cột.
+func _add_info_group(tape_key: String, title: String, columns: int, entries: Array) -> void:
+	var group := GROUP_SCENE.instantiate() as ProfilerStatGroup
+	layout.info_list.add_child(group)
+	var wide := layout.is_side_layout()
+	var cols := columns
+	if wide:
+		cols = entries.size() if entries.size() <= 4 else 4
+	group.setup(title, TAPES[tape_key], SQUIGGLES[tape_key], entries, cols, wide)
 
 
-## Huy hiệu trên giá: ưu tiên mục ĐÃ ĐẠT (nhiều AP trước), thiếu thì lấy mục sắp đạt
-func _badge_entries() -> Array:
-	var unlocked: Array = []
-	var pending: Array = []
-	for entry in Archivement.entries():
-		if bool(entry.get("secret_hidden", false)):
-			pending.append(entry)
-		elif bool(entry.get("unlocked", false)):
-			unlocked.append(entry)
-		else:
-			pending.append(entry)
-	unlocked.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-		return int(a.get("points", 0)) > int(b.get("points", 0)))
-	pending.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-		return int(a.get("pct", 0)) > int(b.get("pct", 0)))
-	var out: Array = []
-	for entry in unlocked:
-		if out.size() >= BADGE_SLOTS:
-			break
-		out.append(entry)
-	for entry in pending:
-		if out.size() >= BADGE_SLOTS:
-			break
-		out.append(entry)
-	return out
+## 1 thẻ số liệu: icon (khoá `ICONS`) + nhãn (khoá dịch) + giá trị đã định dạng
+func _card(icon_key: String, label_key: String, value: String, muted := false) -> Dictionary:
+	return {
+		"icon": ICONS.get(icon_key),
+		"label": tr(label_key),
+		"value": value,
+		"muted": muted,
+	}
 
 
-func _refresh_gear() -> void:
-	_set_gear_card(0, tr("STR_PROFILE_GEAR_PEN"), _pen_icon(), _pen_name(), Color(1, 1, 1, 1))
-	var theme_item := Shop.item(Shop.equipped_theme())
-	var theme_tint := Color(str(theme_item.get("color", "#3D83AE")))
-	_set_gear_card(1, tr("STR_PROFILE_GEAR_THEME"), load("res://assets/images-png/icons/icon_paper.png") as Texture2D,
-		tr(str(theme_item.get("name_key", ""))), theme_tint)
-	_set_gear_card(2, tr("STR_PROFILE_GEAR_FRAME"), load(Profile.frame_icon(Profile.frame_id())) as Texture2D,
-		_frame_name(), Color(1, 1, 1, 1))
-
-
-func _set_gear_card(index: int, caption: String, icon: Texture2D, name_text: String, tint: Color) -> void:
-	var card := layout.gear_card(index)
-	if card == null:
-		return
-	var caption_label := card.get_node_or_null("Caption") as Label
-	if caption_label != null:
-		caption_label.text = caption
-	var name_label := card.get_node_or_null("Name") as Label
-	if name_label != null:
-		name_label.text = name_text
-	var icon_rect := card.get_node_or_null("Icon") as TextureRect
-	if icon_rect != null:
-		icon_rect.texture = icon
-		icon_rect.self_modulate = tint
-
-
-func _pen_icon() -> Texture2D:
-	var skin: Dictionary = PenSkin.SKINS.get(Shop.equipped_pen(), {})
-	var icon_path := str(skin.get("icon", "res://assets/images-png/icons/icon_pen.png"))
-	return load(icon_path) as Texture2D
-
-
-func _pen_name() -> String:
-	var item := Shop.item(Shop.equipped_pen())
-	var key := str(item.get("name_key", ""))
-	return tr(key) if not key.is_empty() else tr("STR_PROFILE_GEAR_PEN")
-
-
-func _frame_name() -> String:
-	var frame_ident := Profile.frame_id()
-	for entry in Profile.frames():
-		if str(entry.get("id", "")) == frame_ident:
-			return tr(str(entry.get("name_key", "")))
-	return tr("STR_PROFILE_GEAR_FRAME")
-
-
-func _refresh_activity() -> void:
-	if layout.rows_box == null:
-		return
-	for child in layout.rows_box.get_children():
-		if child is ProfilerActivityRow:
-			layout.rows_box.remove_child(child)
-			child.queue_free()
-	var rows := Profile.recent(ACTIVITY_ROWS)
-	var empty := layout.rows_box.get_node_or_null("Empty") as Label
-	if empty != null:
-		empty.visible = rows.is_empty()
-	for row_data in rows:
-		var row := ROW_SCENE.instantiate() as ProfilerActivityRow
-		layout.rows_box.add_child(row)
-		row.set_row(row_data)
+## Thời gian: "45s" · "12m 05s" · "1h 02m"
+func _fmt_time(seconds: float) -> String:
+	var s := maxi(roundi(seconds), 0)
+	if s < 60:
+		return tr("STR_PROFILE_TIME_SEC").format([s])
+	if s < 3600:
+		return tr("STR_PROFILE_TIME_MIN").format([s / 60, "%02d" % (s % 60)])
+	return tr("STR_PROFILE_TIME_HOUR").format([s / 3600, "%02d" % ((s % 3600) / 60)])
 
 
 # ---------------------------------------------------------------------------
@@ -340,18 +335,3 @@ func _set_texture(node: Control, path: String) -> void:
 	if rect == null or path.is_empty():
 		return
 	rect.texture = load(path) as Texture2D
-
-
-## Nhãn trong nút 9-slice: Label tên "Text" (khai trong .tscn)
-func _button_label(button: BaseButton) -> Label:
-	return button.get_node_or_null("Text") as Label if button != null else null
-
-
-## Màu chữ theo DỮ LIỆU (khác nhau mỗi ô) ⇒ nhân bản LabelSettings rồi đổi font_color
-func _tint(label: Label, color: Color) -> void:
-	if label.label_settings == null:
-		label.add_theme_color_override("font_color", color)
-		return
-	var settings := label.label_settings.duplicate() as LabelSettings
-	settings.font_color = color
-	label.label_settings = settings

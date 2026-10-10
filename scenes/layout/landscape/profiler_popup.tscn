@@ -8,11 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b3mt6oyu1owuv" path="res://assets/images/popups/washi_tape.svg" id="6_tape"]
 [ext_resource type="Texture2D" uid="uid://medw6sktk5h3" path="res://assets/images/popups/paper_clip.svg" id="7_clip"]
 [ext_resource uid="uid://djuo7xwkl81rt" type="Texture2D" path="res://assets/images/common/chip_pill.svg" id="8_chip_gold"]
-[ext_resource type="Texture2D" uid="uid://b32mi2b0tw8ao" path="res://assets/images/settings/divider_dashed.svg" id="9_divider"]
 [ext_resource type="Texture2D" uid="uid://dd5jlu4go44we" path="res://assets/images/profiler/card_blue.svg" id="10_card_blue"]
-[ext_resource type="Texture2D" uid="uid://d1do6qf2n6ji7" path="res://assets/images/profiler/card_soft.svg" id="11_card_soft"]
-[ext_resource type="Texture2D" uid="uid://bn8j1aro710gg" path="res://assets/images/profiler/mini_card.svg" id="12_mini_card"]
-[ext_resource type="Texture2D" uid="uid://dorafsiy0jmkr" path="res://assets/images/profiler/disc_small.svg" id="13_circle"]
 [ext_resource uid="uid://bh32ib26f80xl" type="Texture2D" path="res://assets/images/common/bar_pill.svg" id="14_bar_track"]
 [ext_resource uid="uid://bh32ib26f80xl" type="Texture2D" path="res://assets/images/common/bar_pill.svg" id="15_bar_fill"]
 [ext_resource type="Texture2D" uid="uid://ekfquw0so41l" path="res://assets/images/profiler/profiler_disc_normal.svg" id="16_disc_n"]
@@ -20,60 +16,42 @@
 [ext_resource type="Texture2D" uid="uid://dk4s2kydd38p6" path="res://assets/images/profiler/profiler_disc_disabled.svg" id="18_disc_d"]
 [ext_resource type="Texture2D" uid="uid://bh6htaq00756m" path="res://assets/images/profiler/profiler_disc_focus.svg" id="19_disc_f"]
 [ext_resource uid="uid://c2k8iokxuk3br" type="Texture2D" path="res://assets/images/frames/frame_default.svg" id="20_frame"]
-[ext_resource uid="uid://scy26gl3aaxu" type="Texture2D" path="res://assets/images/avatars/avatar-baby-child-kid.svg" id="21_avatar"]
+[ext_resource type="Texture2D" uid="uid://scy26gl3aaxu" path="res://assets/images/avatars/avatar-baby-child-kid.svg" id="21_avatar"]
 [ext_resource type="Texture2D" uid="uid://b82uppkddth31" path="res://assets/images/profiler/badge_edit.svg" id="22_badge"]
-[ext_resource uid="uid://b7bv66poo1sr4" type="Texture2D" path="res://assets/images/icons/icon_stat_stars.svg" id="23_ic_star"]
-[ext_resource uid="uid://4ps41kkn4ymm" type="Texture2D" path="res://assets/images/icons/icon_stat_dungeon.svg" id="24_ic_dungeon"]
-[ext_resource uid="uid://0jpjfoj1d28f" type="Texture2D" path="res://assets/images/icons/icon_stat_streak.svg" id="25_ic_streak"]
-[ext_resource uid="uid://hau48wd7trpy" type="Texture2D" path="res://assets/images/icons/icon_stat_winrate.svg" id="26_ic_winrate"]
-[ext_resource type="Texture2D" uid="uid://c442wdwl8b6b1" path="res://assets/images/profiler/btn_primary_normal.svg" id="27_pri_n"]
-[ext_resource type="Texture2D" uid="uid://c6bp580h2ct6m" path="res://assets/images/profiler/btn_primary_pressed.svg" id="28_pri_p"]
-[ext_resource type="Texture2D" uid="uid://drlax1oklev7w" path="res://assets/images/profiler/btn_ghost_normal.svg" id="29_gho_n"]
-[ext_resource type="Texture2D" uid="uid://c4t2m6y1xf0k3" path="res://assets/images/profiler/btn_ghost_pressed.svg" id="30_gho_p"]
-[ext_resource type="Texture2D" uid="uid://dqjugipgec7r1" path="res://assets/images/profiler/stamp_verified.svg" id="31_stamp"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="60_theme"]
-[ext_resource uid="uid://c8f7gjw5uscwb" type="Texture2D" path="res://assets/images/icons/icon_pen_name.svg" id="70_pen_name"]
-[ext_resource type="Texture2D" uid="uid://b373m251uejix" path="res://assets/images/profiler/disc_more.svg" id="71_disc_more"]
-[ext_resource uid="uid://dicn7uknox8gp" type="Texture2D" path="res://assets/images/common/badge_medal.svg" id="72_medal1"]
+[ext_resource type="Texture2D" uid="uid://c8f7gjw5uscwb" path="res://assets/images/icons/icon_pen_name.svg" id="70_pen_name"]
+[ext_resource type="Script" path="res://scripts/nodes/profiler/scroll_drag.gd" id="9_info_scroll"]
 
-[ext_resource type="Shader" path="res://shaders/color_remap.gdshader" id="sh_color_remap"]
-[sub_resource type="ShaderMaterial" id="mat_medal2"]
-shader = ExtResource("sh_color_remap")
-shader_parameter/tolerance = 0.06
-shader_parameter/f1 = Color(0.85098, 0.466667, 0.023529, 1)
-shader_parameter/t1 = Color(0.145098, 0.423529, 0.588235, 1)
-shader_parameter/f2 = Color(0.996078, 0.952941, 0.780392, 1)
-shader_parameter/t2 = Color(0.878431, 0.94902, 0.996078, 1)
-[sub_resource type="ShaderMaterial" id="mat_medal3"]
-shader = ExtResource("sh_color_remap")
-shader_parameter/tolerance = 0.06
-shader_parameter/f1 = Color(0.85098, 0.466667, 0.023529, 1)
-shader_parameter/t1 = Color(0.862745, 0.14902, 0.14902, 1)
-shader_parameter/f2 = Color(0.996078, 0.952941, 0.780392, 1)
-shader_parameter/t2 = Color(0.996078, 0.886275, 0.886275, 1)
+[sub_resource type="StyleBoxFlat" id="Sb_list_panel"]
+bg_color = Color(0.984314, 0.968627, 0.92549, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.898039, 0.866667, 0.784314, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
-[node name="Landscape" unique_id=587724805 node_paths=PackedStringArray("btn_close", "lbl_title", "level_chip", "hero", "stat_cards", "badges_box", "ap_chip", "gear_box", "rows_box", "btn_edit", "btn_share", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=587724805 node_paths=PackedStringArray("btn_close", "lbl_title", "level_chip", "hero", "info_scroll", "info_list", "hero_exp_remain", "hero_join", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill") instance=ExtResource("1_parent")]
 theme = ExtResource("60_theme")
 script = ExtResource("2_layout")
 btn_close = NodePath("Sheet/TopBar/Close")
 lbl_title = NodePath("Sheet/TopBar/Title")
 level_chip = NodePath("Sheet/TopBar/LevelChip")
 hero = NodePath("Sheet/LeftCol/Hero")
-stat_cards = NodePath("Sheet/RightCol/StatCards")
-badges_box = NodePath("Sheet/RightCol/Badges")
-ap_chip = NodePath("Sheet/RightCol/Badges/ApChip")
-gear_box = NodePath("Sheet/LeftCol/Gear")
-rows_box = NodePath("Sheet/RightCol/Rows")
-btn_edit = NodePath("Sheet/LeftCol/BtnEdit")
-btn_share = NodePath("Sheet/LeftCol/BtnShare")
-stamp = NodePath("Sheet/LeftCol/Stamp")
-hero_btn_avatar = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Profile")
-hero_avatar = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Profile/Frame/Avatar")
-hero_frame = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Profile/Frame")
-hero_name = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Info/NameRow/Name")
-hero_tier_text = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Info/TierChip/Bg/Text")
+info_scroll = NodePath("Sheet/RightCol/InfoScroll")
+info_list = NodePath("Sheet/RightCol/InfoScroll/InfoList")
+hero_exp_remain = NodePath("Sheet/LeftCol/Hero/Bg/Content/ExpSub")
+hero_join = NodePath("Sheet/LeftCol/Hero/Bg/Content/UidBlock/Join")
+hero_btn_avatar = NodePath("Sheet/LeftCol/Hero/Bg/Content/Profile")
+hero_avatar = NodePath("Sheet/LeftCol/Hero/Bg/Content/Profile/Frame/Avatar")
+hero_frame = NodePath("Sheet/LeftCol/Hero/Bg/Content/Profile/Frame")
+hero_name = NodePath("Sheet/LeftCol/Hero/Bg/Content/NameRow/Name")
+hero_tier_text = NodePath("Sheet/LeftCol/Hero/Bg/Content/TierChip/Bg/Text")
 hero_exp_value = NodePath("Sheet/LeftCol/Hero/Bg/Content/Exp/ExpValue")
-hero_uid = NodePath("Sheet/LeftCol/Hero/Bg/Content/Top/Info/Uid")
+hero_uid = NodePath("Sheet/LeftCol/Hero/Bg/Content/UidBlock/Uid")
 hero_track = NodePath("Sheet/LeftCol/Hero/Bg/Content/Bar")
 hero_fill = NodePath("Sheet/LeftCol/Hero/Bg/Content/Bar/BarFill")
 
@@ -193,13 +171,11 @@ vertical_alignment = 1
 
 [node name="LeftCol" type="Control" parent="Sheet" index="3" unique_id=190987533]
 layout_mode = 1
-anchor_left = 0.0543
-anchor_top = 0.15200001
-anchor_right = 0.45174077
+anchor_left = 0.0599
+anchor_top = 0.152
+anchor_right = 0.2943
 anchor_bottom = 0.901
-offset_left = -9.627121
 offset_top = -29.090393
-offset_right = -9.567139
 offset_bottom = -28.814392
 grow_horizontal = 2
 grow_vertical = 2
@@ -207,10 +183,12 @@ mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Hero" type="Control" parent="Sheet/LeftCol" index="0" unique_id=1596386811]
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 307.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Hero" index="0" unique_id=450486954]
@@ -227,59 +205,45 @@ patch_margin_right = 22
 patch_margin_bottom = 22
 
 [node name="Margin" type="ColorRect" parent="Sheet/LeftCol/Hero/Bg" index="0" unique_id=482310985]
-layout_mode = 0
+layout_mode = 1
+anchor_bottom = 1.0
 offset_left = 22.0
 offset_right = 23.6
-offset_bottom = 307.0
+grow_vertical = 2
 mouse_filter = 2
 color = Color(0.847059, 0.266667, 0.266667, 0.7)
 
 [node name="Content" type="VBoxContainer" parent="Sheet/LeftCol/Hero/Bg" index="1" unique_id=1297830328]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.064042896
-anchor_top = 0.08608145
-anchor_right = 0.97734743
-anchor_bottom = 0.91191864
-offset_left = -0.07060051
-offset_top = 0.008983612
-offset_right = -0.29000854
-offset_bottom = 0.040985107
+anchor_left = 0.1333
+anchor_top = 0.0645
+anchor_right = 0.9222
+anchor_bottom = 0.9448
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 9
 metadata/_edit_use_anchors_ = true
 
-[node name="Top" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="0" unique_id=1546681008]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.66
-
-[node name="Profile" type="TextureButton" parent="Sheet/LeftCol/Hero/Bg/Content/Top" index="0" unique_id=805858140]
+[node name="Profile" type="TextureButton" parent="Sheet/LeftCol/Hero/Bg/Content" index="0" unique_id=805858140]
 self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
-custom_minimum_size = Vector2(45, 45)
+custom_minimum_size = Vector2(122, 122)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
+size_flags_horizontal = 4
 texture_normal = ExtResource("16_disc_n")
 texture_pressed = ExtResource("17_disc_p")
 texture_hover = ExtResource("16_disc_n")
 texture_disabled = ExtResource("18_disc_d")
 texture_focused = ExtResource("19_disc_f")
-stretch_mode = 3
+stretch_mode = 5
 
-[node name="Frame" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Profile" index="0" unique_id=1984070926]
+[node name="Frame" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Profile" index="0" unique_id=1984070926]
 texture_filter = 4
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.113000005
-anchor_top = -0.113000005
+anchor_left = -0.113
+anchor_top = -0.113
 anchor_right = 1.113
 anchor_bottom = 1.113
-offset_left = -0.008992195
-offset_top = -0.008992195
-offset_right = 0.008987427
-offset_bottom = 0.008987427
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -287,7 +251,7 @@ texture = ExtResource("20_frame")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Avatar" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Profile/Frame" index="0" unique_id=1452298376]
+[node name="Avatar" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Profile/Frame" index="0" unique_id=1452298376]
 texture_filter = 4
 layout_mode = 1
 anchors_preset = -1
@@ -302,7 +266,7 @@ texture = ExtResource("21_avatar")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EditBadge" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Profile/Frame" index="1" unique_id=1600638266]
+[node name="EditBadge" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Profile/Frame" index="1" unique_id=1600638266]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.7772
@@ -316,44 +280,39 @@ texture = ExtResource("22_badge")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Spacer" type="Control" parent="Sheet/LeftCol/Hero/Bg/Content/Top" index="1" unique_id=461176054]
-custom_minimum_size = Vector2(18, 0)
+[node name="NameRow" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="1" unique_id=1511635350]
 layout_mode = 2
-
-[node name="Info" type="VBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content/Top" index="2" unique_id=391969285]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_override_constants/separation = 6
-
-[node name="NameRow" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info" index="0" unique_id=1511635350]
-layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.12
+alignment = 1
 mouse_filter = 2
 theme_override_constants/separation = 5
 
-[node name="Name" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info/NameRow" index="0" unique_id=1249245509]
+[node name="Name" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/NameRow" index="0" unique_id=1249245509]
 layout_mode = 2
-size_flags_horizontal = 3
 text = "MazeWalker #1024"
-theme_type_variation = &"ProfilerNameLand"
-text_overrun_behavior = 3
+theme_type_variation = &"ProfilerName"
+vertical_alignment = 1
 
-[node name="Pen" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info/NameRow" index="1" unique_id=1288934857]
-custom_minimum_size = Vector2(14, 14)
+[node name="Pen" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/NameRow" index="1" unique_id=1288934857]
+custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("70_pen_name")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TierChip" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info" index="1" unique_id=1749866006]
+[node name="TierChip" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="2" unique_id=1749866006]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+alignment = 1
 mouse_filter = 2
 
-[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info/TierChip" index="0" unique_id=651457363]
+[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Hero/Bg/Content/TierChip" index="0" unique_id=651457363]
 self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
-custom_minimum_size = Vector2(55, 24)
+custom_minimum_size = Vector2(100, 16)
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("8_chip_gold")
@@ -362,7 +321,7 @@ patch_margin_top = 6
 patch_margin_right = 11
 patch_margin_bottom = 6
 
-[node name="Text" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info/TierChip/Bg" index="0" unique_id=1582709291]
+[node name="Text" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/TierChip/Bg" index="0" unique_id=1582709291]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -374,53 +333,39 @@ offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "ROOKIE"
-theme_type_variation = &"ProfilerChipGoldLand"
+theme_type_variation = &"ProfilerChipGold"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Uid" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Info" index="2" unique_id=1941414970]
-layout_mode = 2
-text = "UID: #IM-0000"
-theme_type_variation = &"ProfilerSmallLand"
-text_overrun_behavior = 3
-
-[node name="Spacer" type="Control" parent="Sheet/LeftCol/Hero/Bg/Content" index="1" unique_id=999674321]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-
-[node name="Divider" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content" index="2" unique_id=1178195870]
-custom_minimum_size = Vector2(0, 2)
+[node name="Divider" type="ColorRect" parent="Sheet/LeftCol/Hero/Bg/Content" index="3" unique_id=1178195870]
+custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("9_divider")
-expand_mode = 1
+color = Color(0.886275, 0.909804, 0.941176, 1)
 
-[node name="Exp" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="3" unique_id=1449470628]
+[node name="Exp" type="HBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="4" unique_id=1449470628]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.18
+size_flags_stretch_ratio = 0.08
 
 [node name="ExpLabel" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Exp" index="0" unique_id=1016326146]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "STR_PROFILE_EXP_LABEL"
-theme_type_variation = &"ProfilerLabelLand"
+theme_type_variation = &"ProfilerLabel"
 resize_font_to_fit = true
 
 [node name="ExpValue" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/Exp" index="1" unique_id=544936882]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "0 / 200"
-theme_type_variation = &"ProfilerLabelLand"
+theme_type_variation = &"ProfilerState"
+theme_override_font_sizes/font_size = 10
 horizontal_alignment = 2
 
-[node name="Bar" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content" index="4" unique_id=674762722]
-custom_minimum_size = Vector2(0, 7)
-custom_maximum_size = Vector2(-1, 12)
+[node name="Bar" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content" index="5" unique_id=674762722]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.05
 mouse_filter = 2
 texture = ExtResource("14_bar_track")
 self_modulate = Color(0.886275, 0.909804, 0.941176, 1)
@@ -436,701 +381,62 @@ texture = ExtResource("15_bar_fill")
 self_modulate = Color(0.145098, 0.423529, 0.588235, 1)
 expand_mode = 1
 
-[node name="Gear" type="Control" parent="Sheet/LeftCol" index="1" unique_id=150675301]
-anchors_preset = 0
-anchor_right = 1.0
-offset_top = 329.0
-offset_bottom = 529.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Gear" index="0" unique_id=1116791660]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_card_soft")
-patch_margin_left = 20
-patch_margin_top = 20
-patch_margin_right = 20
-patch_margin_bottom = 20
-
-[node name="Title" type="Label" parent="Sheet/LeftCol/Gear" index="1" unique_id=40165021]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 8.0
-offset_right = 320.0
-offset_bottom = 24.0
-text = "STR_PROFILE_GEAR_TITLE"
-theme_type_variation = &"ProfilerSectionLand"
-
-[node name="Card1" type="Control" parent="Sheet/LeftCol/Gear" index="2" unique_id=712113421]
-anchors_preset = 0
-anchor_left = 0.0403
-anchor_right = 0.3226
-offset_top = 51.0
-offset_bottom = 171.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Gear/Card1" index="0" unique_id=1193806621]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("12_mini_card")
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
-
-[node name="Disc" type="TextureRect" parent="Sheet/LeftCol/Gear/Card1" index="1" unique_id=831101516]
-self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -24.5
-offset_top = 14.0
-offset_right = 24.5
-offset_bottom = 63.0
-grow_horizontal = 2
-mouse_filter = 2
-texture = ExtResource("13_circle")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="Sheet/LeftCol/Gear/Card1" index="2" unique_id=998569892]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -12.5
-offset_top = 26.0
-offset_right = 12.5
-offset_bottom = 51.0
-grow_horizontal = 2
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Caption" type="Label" parent="Sheet/LeftCol/Gear/Card1" index="3" unique_id=1285891496]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.5
-offset_top = 8.0
-offset_right = 74.5
-offset_bottom = 22.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_PROFILE_GEAR_PEN"
-theme_type_variation = &"ProfilerSmallLand"
-horizontal_alignment = 1
-
-[node name="Name" type="Label" parent="Sheet/LeftCol/Gear/Card1" index="4" unique_id=841059647]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -6.5
-offset_top = 25.0
-offset_right = 6.500002
-offset_bottom = 43.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ExpSub" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content" index="6"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.08
 text = "—"
-theme_type_variation = &"ProfilerRowLand"
-horizontal_alignment = 1
+theme_type_variation = &"ProfilerLabel"
+resize_font_to_fit = true
 
-[node name="Card2" type="Control" parent="Sheet/LeftCol/Gear" index="3" unique_id=1301322512]
-anchors_preset = 0
-anchor_left = 0.3548
-anchor_right = 0.6371
-offset_top = 51.0
-offset_bottom = 171.0
-grow_horizontal = 2
+[node name="DividerBottom" type="ColorRect" parent="Sheet/LeftCol/Hero/Bg/Content" index="7"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
 mouse_filter = 2
+color = Color(0.886275, 0.909804, 0.941176, 1)
 
-[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Gear/Card2" index="0" unique_id=1653679153]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("12_mini_card")
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
+[node name="UidBlock" type="VBoxContainer" parent="Sheet/LeftCol/Hero/Bg/Content" index="8"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+theme_override_constants/separation = 3
 
-[node name="Disc" type="TextureRect" parent="Sheet/LeftCol/Gear/Card2" index="1" unique_id=526938154]
-self_modulate = Color(0.878431, 0.94902, 0.996078, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -24.5
-offset_top = 14.0
-offset_right = 24.5
-offset_bottom = 63.0
-grow_horizontal = 2
-mouse_filter = 2
-texture = ExtResource("13_circle")
-expand_mode = 1
-stretch_mode = 5
+[node name="UidLabel" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/UidBlock" index="0"]
+layout_mode = 2
+text = "UID"
+theme_type_variation = &"ProfilerLabel"
 
-[node name="Icon" type="TextureRect" parent="Sheet/LeftCol/Gear/Card2" index="2" unique_id=841546785]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -12.5
-offset_top = 26.0
-offset_right = 12.5
-offset_bottom = 51.0
-grow_horizontal = 2
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
+[node name="Uid" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/UidBlock" index="1"]
+layout_mode = 2
+text = "#IM-0000"
+theme_type_variation = &"ProfilerValue"
+theme_override_font_sizes/font_size = 12
 
-[node name="Caption" type="Label" parent="Sheet/LeftCol/Gear/Card2" index="3" unique_id=1342693746]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -82.5
-offset_top = 8.0
-offset_right = 82.5
-offset_bottom = 22.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_PROFILE_GEAR_THEME"
-theme_type_variation = &"ProfilerSmallLand"
-horizontal_alignment = 1
+[node name="JoinLabel" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/UidBlock" index="2"]
+layout_mode = 2
+text = "STR_PROFILE_JOIN_LABEL"
+theme_type_variation = &"ProfilerLabel"
 
-[node name="Name" type="Label" parent="Sheet/LeftCol/Gear/Card2" index="4" unique_id=684616324]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -6.5
-offset_top = 25.0
-offset_right = 6.5
-offset_bottom = 43.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "—"
-theme_type_variation = &"ProfilerRowLand"
-horizontal_alignment = 1
-
-[node name="Card3" type="Control" parent="Sheet/LeftCol/Gear" index="4" unique_id=45152131]
-anchors_preset = 0
-anchor_left = 0.6694
-anchor_right = 0.9516
-offset_top = 51.0
-offset_bottom = 171.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Bg" type="NinePatchRect" parent="Sheet/LeftCol/Gear/Card3" index="0" unique_id=891910639]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("12_mini_card")
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
-
-[node name="Disc" type="TextureRect" parent="Sheet/LeftCol/Gear/Card3" index="1" unique_id=1442681979]
-self_modulate = Color(1, 0.984314, 0.921569, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -24.5
-offset_top = 14.0
-offset_right = 24.5
-offset_bottom = 63.0
-grow_horizontal = 2
-mouse_filter = 2
-texture = ExtResource("13_circle")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="Sheet/LeftCol/Gear/Card3" index="2" unique_id=752730617]
-texture_filter = 4
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -12.5
-offset_top = 26.0
-offset_right = 12.5
-offset_bottom = 51.0
-grow_horizontal = 2
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Caption" type="Label" parent="Sheet/LeftCol/Gear/Card3" index="3" unique_id=732322570]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -83.00001
-offset_top = 8.0
-offset_right = 82.99999
-offset_bottom = 22.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_PROFILE_GEAR_FRAME"
-theme_type_variation = &"ProfilerSmallLand"
-horizontal_alignment = 1
-
-[node name="Name" type="Label" parent="Sheet/LeftCol/Gear/Card3" index="4" unique_id=120176920]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -6.5
-offset_top = 25.0
-offset_right = 6.5
-offset_bottom = 43.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "—"
-theme_type_variation = &"ProfilerRowLand"
-horizontal_alignment = 1
-
-[node name="BtnEdit" type="TextureButton" parent="Sheet/LeftCol" index="2" unique_id=1125431413]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.6129
-offset_top = 550.0
-offset_bottom = 623.0
-grow_horizontal = 2
-texture_normal = ExtResource("27_pri_n")
-texture_pressed = ExtResource("28_pri_p")
-texture_hover = ExtResource("27_pri_n")
-texture_disabled = ExtResource("27_pri_n")
-texture_focused = ExtResource("27_pri_n")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="Text" type="Label" parent="Sheet/LeftCol/BtnEdit" index="0" unique_id=551421321]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_PROFILE_EDIT_BTN"
-theme_type_variation = &"ProfilerButtonLand"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="BtnShare" type="TextureButton" parent="Sheet/LeftCol" index="3" unique_id=568730700]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.6532
-anchor_right = 1.0
-offset_top = 550.0
-offset_bottom = 623.0
-grow_horizontal = 2
-texture_normal = ExtResource("29_gho_n")
-texture_pressed = ExtResource("30_gho_p")
-texture_hover = ExtResource("29_gho_n")
-texture_disabled = ExtResource("29_gho_n")
-texture_focused = ExtResource("29_gho_n")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="Text" type="Label" parent="Sheet/LeftCol/BtnShare" index="0" unique_id=1077345762]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_PROFILE_SHARE_BTN"
-theme_type_variation = &"ProfilerButtonGhostLand"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Stamp" type="Control" parent="Sheet/LeftCol" index="4" unique_id=819341750]
-layout_mode = 1
-anchor_left = 0.55
-anchor_right = 0.84
-offset_top = 648.0
-offset_bottom = 689.0
-grow_horizontal = 2
-rotation = -0.0698
-mouse_filter = 2
-
-[node name="Bg" type="TextureRect" parent="Sheet/LeftCol/Stamp" index="0" unique_id=2131968756]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("31_stamp")
-expand_mode = 1
-
-[node name="Text" type="Label" parent="Sheet/LeftCol/Stamp" index="1" unique_id=864107501]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_PROFILE_STAMP"
-theme_type_variation = &"ProfilerStampLand"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Join" type="Label" parent="Sheet/LeftCol/Hero/Bg/Content/UidBlock" index="3"]
+layout_mode = 2
+text = "00/0000"
+theme_type_variation = &"ProfilerValue"
+theme_override_font_sizes/font_size = 12
 
 [node name="RightCol" type="Control" parent="Sheet" index="4" unique_id=297693424]
 layout_mode = 1
-anchor_left = 0.46296296
-anchor_top = 0.1517
-anchor_right = 0.92460006
+anchor_left = 0.3125
+anchor_top = 0.152
+anchor_right = 0.9167
 anchor_bottom = 0.901
-offset_left = -0.80000305
-offset_top = -28.839226
-offset_right = -0.7999878
-offset_bottom = -28.839233
+offset_top = -29.090393
+offset_bottom = -28.814392
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="StatsTitle" type="Label" parent="Sheet/RightCol" index="0" unique_id=1006377493]
-layout_mode = 0
-offset_right = 300.0
-offset_bottom = 16.0
-text = "STR_PROFILE_STATS_TITLE"
-theme_type_variation = &"ProfilerSectionLand"
-
-[node name="StatCards" type="Control" parent="Sheet/RightCol" index="1" unique_id=2072848975]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 21.0
-offset_bottom = 218.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Stat1" type="Control" parent="Sheet/RightCol/StatCards" index="0" unique_id=1241487618]
-anchors_preset = 0
-anchor_right = 0.485
-offset_bottom = 90.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Bg" type="NinePatchRect" parent="Sheet/RightCol/StatCards/Stat1" index="0" unique_id=345901143]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_card_soft")
-patch_margin_left = 20
-patch_margin_top = 20
-patch_margin_right = 20
-patch_margin_bottom = 20
-
-[node name="Disc" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat1" index="1" unique_id=1171565732]
-self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
-layout_mode = 0
-offset_left = 20.0
-offset_top = 17.0
-offset_right = 76.0
-offset_bottom = 73.0
-mouse_filter = 2
-texture = ExtResource("13_circle")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat1" index="2" unique_id=1225079282]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 28.0
-offset_right = 65.0
-offset_bottom = 62.0
-mouse_filter = 2
-texture = ExtResource("23_ic_star")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Sheet/RightCol/StatCards/Stat1" index="3" unique_id=1054907747]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 26.0
-offset_right = 340.0
-offset_bottom = 42.0
-text = "STR_PROFILE_STAT_STARS"
-theme_type_variation = &"ProfilerLabelLand"
-
-[node name="Value" type="Label" parent="Sheet/RightCol/StatCards/Stat1" index="4" unique_id=393372154]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 44.0
-offset_right = 340.0
-offset_bottom = 78.0
-text = "0 / 0"
-theme_type_variation = &"ProfilerValueLand"
-
-[node name="Stat2" type="Control" parent="Sheet/RightCol/StatCards" index="1" unique_id=1331638779]
-anchors_preset = 0
-anchor_left = 0.515
-anchor_right = 1.0
-offset_bottom = 90.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Bg" type="NinePatchRect" parent="Sheet/RightCol/StatCards/Stat2" index="0" unique_id=1891354913]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_card_soft")
-patch_margin_left = 20
-patch_margin_top = 20
-patch_margin_right = 20
-patch_margin_bottom = 20
-
-[node name="Disc" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat2" index="1" unique_id=955491318]
-self_modulate = Color(0.996078, 0.886275, 0.886275, 1)
-layout_mode = 0
-offset_left = 20.0
-offset_top = 17.0
-offset_right = 76.0
-offset_bottom = 73.0
-mouse_filter = 2
-texture = ExtResource("13_circle")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat2" index="2" unique_id=355403056]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 28.0
-offset_right = 65.0
-offset_bottom = 62.0
-mouse_filter = 2
-texture = ExtResource("24_ic_dungeon")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Sheet/RightCol/StatCards/Stat2" index="3" unique_id=2044468319]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 26.0
-offset_right = 360.0
-offset_bottom = 42.0
-text = "STR_PROFILE_STAT_DUNGEON"
-theme_type_variation = &"ProfilerLabelLand"
-
-[node name="Value" type="Label" parent="Sheet/RightCol/StatCards/Stat2" index="4" unique_id=118007137]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 44.0
-offset_right = 360.0
-offset_bottom = 78.0
-text = "FLOOR 0"
-theme_type_variation = &"ProfilerValueLand"
-
-[node name="Stat3" type="Control" parent="Sheet/RightCol/StatCards" index="2" unique_id=2055694]
-anchors_preset = 0
-anchor_right = 0.485
-offset_top = 107.0
-offset_bottom = 197.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Bg" type="NinePatchRect" parent="Sheet/RightCol/StatCards/Stat3" index="0" unique_id=519485947]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_card_soft")
-patch_margin_left = 20
-patch_margin_top = 20
-patch_margin_right = 20
-patch_margin_bottom = 20
-
-[node name="Disc" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat3" index="1" unique_id=1220343167]
-self_modulate = Color(1, 0.984314, 0.921569, 1)
-layout_mode = 0
-offset_left = 20.0
-offset_top = 17.0
-offset_right = 76.0
-offset_bottom = 73.0
-mouse_filter = 2
-texture = ExtResource("13_circle")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat3" index="2" unique_id=289291035]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 28.0
-offset_right = 65.0
-offset_bottom = 62.0
-mouse_filter = 2
-texture = ExtResource("25_ic_streak")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Sheet/RightCol/StatCards/Stat3" index="3" unique_id=841515958]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 26.0
-offset_right = 340.0
-offset_bottom = 42.0
-text = "STR_PROFILE_STAT_STREAK"
-theme_type_variation = &"ProfilerLabelLand"
-
-[node name="Value" type="Label" parent="Sheet/RightCol/StatCards/Stat3" index="4" unique_id=1724081753]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 44.0
-offset_right = 340.0
-offset_bottom = 78.0
-text = "0 DAYS"
-theme_type_variation = &"ProfilerValueLand"
-
-[node name="Stat4" type="Control" parent="Sheet/RightCol/StatCards" index="3" unique_id=1075487767]
-anchors_preset = 0
-anchor_left = 0.515
-anchor_right = 1.0
-offset_top = 107.0
-offset_bottom = 197.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Bg" type="NinePatchRect" parent="Sheet/RightCol/StatCards/Stat4" index="0" unique_id=2088463477]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_card_soft")
-patch_margin_left = 20
-patch_margin_top = 20
-patch_margin_right = 20
-patch_margin_bottom = 20
-
-[node name="Disc" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat4" index="1" unique_id=1726183252]
-self_modulate = Color(0.941176, 0.992157, 0.956863, 1)
-layout_mode = 0
-offset_left = 20.0
-offset_top = 17.0
-offset_right = 76.0
-offset_bottom = 73.0
-mouse_filter = 2
-texture = ExtResource("13_circle")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="Sheet/RightCol/StatCards/Stat4" index="2" unique_id=1648968872]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 28.0
-offset_right = 65.0
-offset_bottom = 62.0
-mouse_filter = 2
-texture = ExtResource("26_ic_winrate")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Sheet/RightCol/StatCards/Stat4" index="3" unique_id=1213803191]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 26.0
-offset_right = 360.0
-offset_bottom = 42.0
-text = "STR_PROFILE_STAT_WINRATE"
-theme_type_variation = &"ProfilerLabelLand"
-
-[node name="Value" type="Label" parent="Sheet/RightCol/StatCards/Stat4" index="4" unique_id=1204981895]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 44.0
-offset_right = 360.0
-offset_bottom = 78.0
-text = "0%"
-theme_type_variation = &"ProfilerValueLand"
-
-[node name="BadgesTitle" type="Label" parent="Sheet/RightCol" index="2" unique_id=828128172]
-layout_mode = 0
-offset_top = 238.0
-offset_right = 300.0
-offset_bottom = 254.0
-text = "STR_PROFILE_BADGES_TITLE"
-theme_type_variation = &"ProfilerSectionLand"
-
-[node name="Badges" type="Control" parent="Sheet/RightCol" index="3" unique_id=947246509]
-anchors_preset = 0
-anchor_right = 1.0
-offset_top = 260.0
-offset_bottom = 384.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Bg" type="NinePatchRect" parent="Sheet/RightCol/Badges" index="0" unique_id=783958648]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_card_soft")
-patch_margin_left = 20
-patch_margin_top = 20
-patch_margin_right = 20
-patch_margin_bottom = 20
-
-[node name="ApChip" type="Control" parent="Sheet/RightCol/Badges" index="1" unique_id=1142217687]
-layout_mode = 1
-anchor_left = 0.21
-anchor_right = 0.3
-offset_top = -14.0
-offset_bottom = 10.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Bg" type="TextureRect" parent="Sheet/RightCol/Badges/ApChip" index="0" unique_id=1537429619]
+[node name="Panel" type="Panel" parent="Sheet/RightCol" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1138,206 +444,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("8_chip_gold")
-self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
-expand_mode = 1
+theme_override_styles/panel = SubResource("Sb_list_panel")
 
-[node name="Text" type="Label" parent="Sheet/RightCol/Badges/ApChip" index="1" unique_id=1952761839]
+[node name="InfoScroll" type="ScrollContainer" parent="Sheet/RightCol" index="1" unique_id=778200001]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "0 AP"
-theme_type_variation = &"ProfilerChipGoldLand"
-horizontal_alignment = 1
-vertical_alignment = 1
+script = ExtResource("9_info_scroll")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 1
 
-[node name="Badge1" type="Control" parent="Sheet/RightCol/Badges" index="2" unique_id=422181471]
-layout_mode = 1
-anchor_left = 0.125
-anchor_right = 0.125
-offset_left = -34.0
-offset_top = 27.0
-offset_right = 34.0
-offset_bottom = 95.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Disc" type="TextureRect" parent="Sheet/RightCol/Badges/Badge1" index="0" unique_id=1580027260]
-layout_mode = 0
-offset_right = 68.0
-offset_bottom = 68.0
-mouse_filter = 2
-texture = ExtResource("72_medal1")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="Sheet/RightCol/Badges/Badge1" index="1" unique_id=1197459364]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 14.0
-offset_right = 54.0
-offset_bottom = 54.0
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Sheet/RightCol/Badges/Badge1" index="2" unique_id=607566580]
-layout_mode = 0
-offset_left = -26.0
-offset_top = 70.0
-offset_right = 94.0
-offset_bottom = 84.0
-text = "—"
-theme_type_variation = &"ProfilerSmallLand"
-horizontal_alignment = 1
-text_overrun_behavior = 3
-
-[node name="Badge2" type="Control" parent="Sheet/RightCol/Badges" index="3" unique_id=1542329204]
-layout_mode = 1
-anchor_left = 0.375
-anchor_right = 0.375
-offset_left = -34.0
-offset_top = 27.0
-offset_right = 34.0
-offset_bottom = 95.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Disc" type="TextureRect" parent="Sheet/RightCol/Badges/Badge2" index="0" unique_id=703978216]
-material = SubResource("mat_medal2")
-layout_mode = 0
-offset_right = 68.0
-offset_bottom = 68.0
-mouse_filter = 2
-texture = ExtResource("72_medal1")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="Sheet/RightCol/Badges/Badge2" index="1" unique_id=454184769]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 14.0
-offset_right = 54.0
-offset_bottom = 54.0
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Sheet/RightCol/Badges/Badge2" index="2" unique_id=192382390]
-layout_mode = 0
-offset_left = -26.0
-offset_top = 70.0
-offset_right = 94.0
-offset_bottom = 84.0
-text = "—"
-theme_type_variation = &"ProfilerSmallLand"
-horizontal_alignment = 1
-text_overrun_behavior = 3
-
-[node name="Badge3" type="Control" parent="Sheet/RightCol/Badges" index="4" unique_id=1533717296]
-layout_mode = 1
-anchor_left = 0.625
-anchor_right = 0.625
-offset_left = -34.0
-offset_top = 27.0
-offset_right = 34.0
-offset_bottom = 95.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Disc" type="TextureRect" parent="Sheet/RightCol/Badges/Badge3" index="0" unique_id=2084767800]
-material = SubResource("mat_medal3")
-layout_mode = 0
-offset_right = 68.0
-offset_bottom = 68.0
-mouse_filter = 2
-texture = ExtResource("72_medal1")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="Sheet/RightCol/Badges/Badge3" index="1" unique_id=265115584]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 14.0
-offset_right = 54.0
-offset_bottom = 54.0
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Sheet/RightCol/Badges/Badge3" index="2" unique_id=895155272]
-layout_mode = 0
-offset_left = -26.0
-offset_top = 70.0
-offset_right = 94.0
-offset_bottom = 84.0
-text = "—"
-theme_type_variation = &"ProfilerSmallLand"
-horizontal_alignment = 1
-text_overrun_behavior = 3
-
-[node name="BtnMore" type="TextureButton" parent="Sheet/RightCol/Badges" index="5" unique_id=51839960]
-self_modulate = Color(0.960784, 0.976471, 0.984314, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.875
-anchor_right = 0.875
-offset_left = -34.0
-offset_top = 27.0
-offset_right = 34.0
-offset_bottom = 95.0
-grow_horizontal = 2
-texture_normal = ExtResource("71_disc_more")
-texture_pressed = ExtResource("71_disc_more")
-texture_hover = ExtResource("71_disc_more")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="Plus" type="Label" parent="Sheet/RightCol/Badges/BtnMore" index="0" unique_id=995937961]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "+"
-theme_type_variation = &"ProfilerSectionLand"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Text" type="Label" parent="Sheet/RightCol/Badges/BtnMore" index="1" unique_id=1043886999]
-layout_mode = 0
-offset_left = -46.0
-offset_top = 70.0
-offset_right = 114.0
-offset_bottom = 84.0
-text = "STR_PROFILE_BADGES_MORE"
-theme_type_variation = &"ProfilerStateLand"
-horizontal_alignment = 1
-
-[node name="ActivityTitle" type="Label" parent="Sheet/RightCol" index="4" unique_id=1770023584]
-layout_mode = 0
-offset_top = 413.0
-offset_right = 300.0
-offset_bottom = 429.0
-text = "STR_PROFILE_ACTIVITY_TITLE"
-theme_type_variation = &"ProfilerSectionLand"
-
-[node name="Rows" type="VBoxContainer" parent="Sheet/RightCol" index="5" unique_id=12580014]
-layout_mode = 0
-anchor_right = 1.0
-offset_top = 435.0
-offset_bottom = 640.0
-grow_horizontal = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Empty" type="Label" parent="Sheet/RightCol/Rows" index="0" unique_id=1073669589]
-visible = false
+[node name="InfoList" type="VBoxContainer" parent="Sheet/RightCol/InfoScroll" index="0" unique_id=778200002]
 layout_mode = 2
-text = "STR_PROFILE_EMPTY_ACTIVITY"
-theme_type_variation = &"ProfilerSmallLand"
-horizontal_alignment = 1
+size_flags_horizontal = 3
+theme_override_constants/separation = 12

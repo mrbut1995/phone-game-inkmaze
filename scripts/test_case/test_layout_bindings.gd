@@ -59,6 +59,10 @@ const OPTIONAL := {
 	## node gốc màn và được `test_levels_map` kiểm.
 	"levels|portrait": ["banner_focus", "level_map"],
 	"levels|landscape": ["level_map"],
+	## Nội dung Hồ sơ: bản DỌC không tách 2 nhãn riêng UID/THAM GIA + dòng "còn EXP" (chỉ bản
+	## NGANG theo mockup landscape mới); bản NGANG không có con dấu INK VERIFIED.
+	"profiler_content|portrait": ["hero_exp_remain", "hero_join"],
+	"profiler_content|landscape": ["stamp"],
 }
 
 var _failed := 0

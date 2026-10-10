@@ -145,6 +145,7 @@ func _wire_controllers() -> void:
 	# GridController → GameController (đếm bước · đâm tường · tới đích · hết đường)
 	_connect_once(grid_controller, "step_consumed", game_controller, "_on_step_consumed")
 	_connect_once(grid_controller, "wall_hit", game_controller, "_on_wall_hit")
+	_connect_once(grid_controller, "wall_toggled_by_player", game_controller, "_on_wall_toggled_by_player")
 	_connect_once(grid_controller, "reached_end", game_controller, "_on_reached_end")
 	_connect_once(grid_controller, "dead_end", game_controller, "_on_dead_end")
 	# ToolController → Board (đổi công cụ VẼ ĐƯỜNG ⇄ VẼ TƯỜNG)

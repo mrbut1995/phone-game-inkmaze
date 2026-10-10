@@ -51,6 +51,7 @@ func _init() -> void:
 	_section_2_equip_and_name(manager)
 	_section_3_stats(manager)
 	_section_4_recent(manager)
+	_section_4b_deep_stats(manager)
 	await _section_5_scene(manager)
 	await _section_6_popup(manager)
 	_section_7_save(manager, saved)
@@ -189,6 +190,60 @@ func _section_4_recent(manager: Node) -> void:
 
 
 # ---------------------------------------------------------------------------
+# 4b. Số liệu MỞ RỘNG (bản Hồ sơ mới)
+# ---------------------------------------------------------------------------
+func _section_4b_deep_stats(manager: Node) -> void:
+	print("\n--- 4b. SO LIEU MO RONG (PLAY / DUNGEON / TIME / MODE / INGAME) ---")
+	manager.call("reset_progress")
+	manager.call("record_run", {
+		"won": true, "mode_id": "play", "level_run": true, "level_id": 5,
+		"elapsed": 30.0, "moves": 10, "wall_hits": 2,
+		"undos": 1, "wall_draws": 3, "wall_erases": 1, "skips": 0,
+	})
+	var d: Dictionary = manager.call("deep_stats")
+	_entry(int(d.get("level_plays", 0)) == 1, "level_plays = 1")
+	_entry(int(d.get("level_wins", 0)) == 1, "level_wins = 1")
+	_entry(int(d.get("first_try_wins", 0)) == 1, "First Try Win: thang ngay lan dau choi man")
+	_entry(int(d.get("win_streak", 0)) == 1, "Chuoi thang hien tai = 1")
+	var mp: Dictionary = d.get("mode_plays", {})
+	_entry(int(mp.get("play", 0)) == 1, "mode_plays[play] = 1")
+	_entry(int(d.get("moves_total", 0)) == 10 and int(d.get("wall_draws", 0)) == 3
+		and int(d.get("wall_erases", 0)) == 1 and int(d.get("undos_total", 0)) == 1,
+		"Tong move/wall-draw/revert/undo dung (10/3/1/1)")
+	_entry(absf(float(d.get("avg_level_time", 0.0)) - 30.0) < 0.01, "TG trung binh man = 30s")
+
+	# Ván 2 cùng màn: THUA -> chuỗi thắng về 0, First Try giữ nguyên
+	manager.call("record_run", {
+		"won": false, "mode_id": "play", "level_run": true, "level_id": 5,
+		"elapsed": 10.0, "moves": 5,
+	})
+	d = manager.call("deep_stats")
+	_entry(int(d.get("level_plays", 0)) == 2 and int(d.get("level_wins", 0)) == 1,
+		"2 luot choi / 1 thang (winrate %.1f%%)" % float(d.get("level_winrate", 0.0)))
+	_entry(int(d.get("first_try_wins", 0)) == 1, "Lan 2 thua -> First Try giu nguyen 1")
+	_entry(int(d.get("win_streak", 0)) == 0, "Thua -> chuoi thang ve 0")
+
+	# Dungeon: va chạm tường + thời gian/bước (mọi chế độ)
+	manager.call("record_run", {
+		"won": false, "mode_id": "dungeon", "endless": true, "floor": 9,
+		"wall_hits": 4, "moves": 20, "elapsed": 40.0,
+	})
+	d = manager.call("deep_stats")
+	_entry(int(d.get("dungeon_wall_hits", 0)) == 4, "Dungeon Wall Collisions = 4")
+	_entry(absf(float(d.get("avg_time_move", 0.0)) - 80.0 / 35.0) < 0.01,
+		"TG trung binh/buoc = tong tg / tong buoc (%.3f)" % float(d.get("avg_time_move", 0.0)))
+
+	# Lưu trữ: export/import giữ đúng số liệu mở rộng
+	var exported: Dictionary = manager.call("export_progress")
+	manager.call("reset_progress")
+	manager.call("import_progress", exported)
+	d = manager.call("deep_stats")
+	_entry(int(d.get("level_plays", 0)) == 2 and int(d.get("moves_total", 0)) == 35
+		and int(d.get("dungeon_wall_hits", 0)) == 4 and int(d.get("wall_draws", 0)) == 3,
+		"export/import giu nguyen so lieu mo rong")
+
+
+# ---------------------------------------------------------------------------
 # 5. Scene Profiler
 # ---------------------------------------------------------------------------
 func _section_5_scene(manager: Node) -> void:
@@ -245,36 +300,60 @@ func _section_5_scene(manager: Node) -> void:
 	var uid_label := scene.layout.hero_uid
 	_entry(uid_label != null and uid_label.text.contains("IM-"), "Co dong UID (#IM-xxxx)")
 
-	var values_ok := true
-	for index in 4:
-		var card := scene.layout.stat_card(index)
-		var value := card.get_node_or_null("Value") as Label if card != null else null
-		if value == null or value.text.strip_edges().is_empty():
-			values_ok = false
-	_entry(values_ok, "4 the thong ke deu co so lieu")
+	var info_scroll := scene.layout.info_scroll
+	_entry(info_scroll != null and scene.layout.info_list != null, "Co vung cuon InfoScroll + InfoList")
+	var groups := scene.info_group_count()
+	_entry(groups == 5, "Danh sach thong tin: 5 nhom (Play/Dungeon/Time/Mode/InGame — dang %d)" % groups)
+	var info_ok := true
+	var cards_ok := true
+	var total_cards := 0
+	if scene.layout.info_list != null:
+		for child in scene.layout.info_list.get_children():
+			var group := child as ProfilerStatGroup
+			if group == null or group.tape_label == null or group.tape_label.text.strip_edges().is_empty() \
+					or group.cards_grid == null or group.cards_grid.get_child_count() < 2:
+				info_ok = false
+				continue
+			total_cards += group.cards_grid.get_child_count()
+			for card_v in group.cards_grid.get_children():
+				var card := card_v as ProfilerStatCard
+				if card == null or card.icon == null or card.icon.texture == null \
+						or card.name_label == null or card.name_label.text.strip_edges().is_empty() \
+						or card.value_label == null or card.value_label.text.strip_edges().is_empty():
+					cards_ok = false
+	_entry(info_ok, "Moi nhom co bang washi tieu de + luoi the so lieu day du")
+	_entry(total_cards == 30, "Tong so the so lieu = 30 (6+2+3+13+6; dang %d)" % total_cards)
+	_entry(cards_ok, "Moi the co ICON + nhan + gia tri (icon tach tu mockup)")
+	if scene.layout.info_list != null and scene.layout.info_list.get_child_count() > 0:
+		var g0 := scene.layout.info_list.get_child(0) as ProfilerStatGroup
+		_entry(g0 != null and g0.cards_grid != null and g0.cards_grid.columns == 3,
+			"Portrait: nhom dau xep 3 cot (the Play)")
+		_entry(g0 != null and g0.header_dash != null and not g0.header_dash.visible,
+			"Portrait: dau nhom chi co bang washi can giua (khong gach noi)")
+		_entry(g0 != null and g0.cards_grid != null and g0.cards_grid.get_child_count() > 0
+				and (g0.cards_grid.get_child(0) as Node).find_child("TapeCorner", true, false) == null,
+			"Portrait: the khong con washi goc (TapeCorner da bo)")
+	_entry(info_scroll != null and not info_scroll.is_ancestor_of(scene.layout.hero),
+		"Hero nam NGOAI vung cuon (giu co dinh)")
+	if info_scroll != null:
+		_entry(info_scroll.vertical_scroll_mode != ScrollContainer.ScrollMode.SCROLL_MODE_DISABLED,
+			"Portrait: cuon DOC bat (len/xuong)")
+		_entry(info_scroll.horizontal_scroll_mode == ScrollContainer.ScrollMode.SCROLL_MODE_DISABLED,
+			"Portrait: cuon NGANG tat")
+		await process_frame
+		var vbar := info_scroll.get_v_scroll_bar()
+		_entry(vbar.max_value > vbar.page + 1.0,
+			"Portrait: noi dung dai hon khung -> keo len/xuong duoc (max %.0f > page %.0f)" % [vbar.max_value, vbar.page])
+		info_scroll.scroll_vertical = 40
+		await process_frame
+		_entry(info_scroll.scroll_vertical == 40, "Portrait: dat scroll_vertical = 40 (dang %d)" % info_scroll.scroll_vertical)
 
-	var gear_ok := true
-	for index in 3:
-		var card := scene.layout.gear_card(index)
-		var gear_name := card.get_node_or_null("Name") as Label if card != null else null
-		var icon := card.get_node_or_null("Icon") as TextureRect if card != null else null
-		if gear_name == null or gear_name.text.strip_edges().is_empty() or icon == null or icon.texture == null:
-			gear_ok = false
-	_entry(gear_ok, "3 the trang bi deu co ten + icon")
-
-	var ap_text := scene.layout.ap_text()
-	_entry(ap_text != null and ap_text.text.contains("AP"), "Gia huy hieu co chip AP ('%s')"
-		% (ap_text.text if ap_text != null else ""))
-	_entry(scene.activity_row_count() == 3, "Hien 3 hang hoat dong (dang %d)" % scene.activity_row_count())
-	var row_node := scene.layout.rows_box.get_child(scene.layout.rows_box.get_child_count() - 1)
-	_entry(row_node is ProfilerActivityRow, "Hang hoat dong dung scene nodes/profiler/activity_row.tscn")
-	if row_node is ProfilerActivityRow:
-		var title := row_node.get_node_or_null("Title") as Label
-		_entry(title != null and not title.text.is_empty(), "Hang hoat dong co tieu de ('%s')"
-			% (title.text if title != null else ""))
-
-	# Nút "ĐỔI AVATAR & TÊN": Edit Profile phải XẾP TRÊN Profiler (không thay thế)
-	scene.layout.btn_edit.pressed.emit()
+	# KHÔNG còn nút "ĐỔI AVATAR & TÊN"/"CHIA SẺ": bấm THẺ AVATAR để mở Edit Profile (vẫn xếp TRÊN Profiler)
+	var portrait_holder := scene.get_node_or_null("Portrait")
+	_entry(portrait_holder != null and portrait_holder.find_child("BtnEdit", true, false) == null
+			and portrait_holder.find_child("BtnShare", true, false) == null,
+		"Portrait: da bo 2 nut Doi avatar & Chia se")
+	scene.layout.hero_btn_avatar.pressed.emit()
 	await process_frame
 	await process_frame
 	var popup := Popups.get_popup(Popups.EDIT_PROFILE) as EditProfilePopup
@@ -310,8 +389,42 @@ func _section_5_scene(manager: Node) -> void:
 	_entry(land.hero_exp_value != null and land.hero_exp_value.text.contains("/"), "Landscape: co dong EXP")
 	_entry(land.hero_uid != null and land.hero_uid.text.contains("IM-"), "Landscape: co dong UID")
 	_entry(land.hero_fill != null and land.hero_fill.offset_right > land.hero_fill.offset_left, "Landscape: thanh EXP co phan to")
+	_entry(land.hero_join != null and not land.hero_join.text.strip_edges().is_empty(),
+		"Landscape: khoi UID tach rieng — co ngay THAM GIA ('%s')" % (land.hero_join.text if land.hero_join != null else ""))
+	_entry(land.hero_exp_remain != null and land.hero_exp_remain.text.contains("EXP"),
+		"Landscape: co dong 'con EXP de len cap'")
 	var chip_land := land.chip_text()
 	_entry(chip_land != null and chip_land.text.contains(str(manager.call("level"))), "Landscape: chip cap do khop manager")
+	var l_scroll := land.info_scroll
+	_entry(l_scroll != null and land.info_list != null, "Landscape: co InfoScroll + InfoList")
+	_entry(land.find_child("BtnEdit", true, false) == null and land.find_child("BtnShare", true, false) == null,
+		"Landscape: da bo 2 nut Doi avatar & Chia se")
+	if l_scroll != null:
+		_entry(l_scroll.vertical_scroll_mode != ScrollContainer.ScrollMode.SCROLL_MODE_DISABLED,
+			"Landscape: cuon DOC bat (len/xuong — mockup moi)")
+		_entry(l_scroll.horizontal_scroll_mode == ScrollContainer.ScrollMode.SCROLL_MODE_DISABLED,
+			"Landscape: cuon NGANG tat")
+		await process_frame
+		var vbar_l := l_scroll.get_v_scroll_bar()
+		_entry(vbar_l.max_value > vbar_l.page + 1.0,
+			"Landscape: noi dung dai hon khung -> keo len/xuong duoc (max %.0f > page %.0f)" % [vbar_l.max_value, vbar_l.page])
+		_entry(land.info_list is VBoxContainer, "Landscape: danh sach xep DOC (VBox — cot phai)")
+		var g_land := land.info_list.get_child(0) as ProfilerStatGroup
+		_entry(g_land != null and g_land.tape_label != null and not g_land.tape_label.text.strip_edges().is_empty(),
+			"Landscape: nhom co bang washi tieu de")
+		_entry(g_land != null and g_land.cards_grid != null and g_land.cards_grid.columns == 4,
+			"Landscape: moi nhom xep 4 cot (the NGANG)")
+		_entry(g_land != null and g_land.header_dash != null and g_land.header_dash.visible,
+			"Landscape: dau nhom washi dan trai + duong gach noi")
+		_entry(g_land != null and g_land.cards_grid != null and g_land.cards_grid.get_child_count() > 0
+				and (g_land.cards_grid.get_child(0) as Control).custom_minimum_size.y >= 60.0,
+			"Landscape: the NGANG to hon (cao >= 60) de de nhin")
+		var g_land_dg := land.info_list.get_child(1) as ProfilerStatGroup
+		var g_land_tm := land.info_list.get_child(2) as ProfilerStatGroup
+		_entry(g_land_dg != null and g_land_dg.cards_grid != null and g_land_dg.cards_grid.columns == 2,
+			"Landscape: nhom Dungeon (1 hang) dan 2 cot kin be ngang")
+		_entry(g_land_tm != null and g_land_tm.cards_grid != null and g_land_tm.cards_grid.columns == 3,
+			"Landscape: nhom Time (1 hang) dan 3 cot kin be ngang")
 	land.queue_free()
 	await process_frame
 

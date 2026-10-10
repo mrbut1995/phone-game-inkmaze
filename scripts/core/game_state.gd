@@ -17,6 +17,10 @@ var floor_wall_hits: int = 0    # số lần đâm tường trong floor hiện t
 var perfect_floor: bool = true  # chưa đâm tường lần nào trong floor
 var hints_used: int = 0         # số lần bấm Gợi ý trong floor hiện tại (cho nhiệm vụ)
 var undos_used: int = 0         # số lần bấm Hoàn tác trong floor hiện tại (cho nhiệm vụ)
+## --- Số liệu Profiler (bản Hồ sơ mới) ---
+var wall_draws: int = 0         # số lần VẼ tường nghi ngờ (kéo nối 2 giao điểm)
+var wall_erases: int = 0        # số lần GỠ tường đã vẽ (kéo lại để tắt)
+var skips_used: int = 0         # số lần bấm SKIP LEVEL trong floor hiện tại
 
 
 func begin_run(initial_steps: int, p_mode_id := "dungeon", start_floor := 1) -> void:
@@ -49,6 +53,9 @@ func _begin_floor() -> void:
 	perfect_floor = true
 	hints_used = 0
 	undos_used = 0
+	wall_draws = 0
+	wall_erases = 0
+	skips_used = 0
 
 
 func consume_step(amount: int = 1) -> void:

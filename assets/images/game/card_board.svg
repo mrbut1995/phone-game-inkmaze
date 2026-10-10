@@ -1,28 +1,65 @@
 <?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="5 13 1010 1016" width="505" height="508">
   <defs>
-    
-    <filter id="boardShadow" x="-10%" y="-10%" width="125%" height="130%">
-      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1E1610" flood-opacity="0.25" />
-      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E1610" flood-opacity="0.10" />
+    <!-- Bóng đổ nổi bật của trang giấy -->
+    <filter id="mainSheetCleanShadow" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#2D2115" flood-opacity="0.22" />
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#2D2115" flood-opacity="0.10" />
     </filter>
-
-    
-    <clipPath id="boardClip">
-      <rect x="20" y="20" width="980" height="980" rx="28" />
-    </clipPath>
+    <!-- Bóng đổ của kẹp giấy kim loại -->
+    <filter id="clipShadowClean" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.25" />
+    </filter>
   </defs>
 
-  
-  <g clip-path="url(#boardClip)">
-    <rect x="20" y="20" width="980" height="980" fill="#FEFDFA" />
-    
-    <line x1="62" y1="20" x2="62" y2="1000" stroke="#D84444" stroke-width="3" />
+  <!-- Trang giấy chính (căn giữa khung hình, kích thước 930x940 khớp tỉ lệ card_board) -->
+  <g transform="translate(45, 42)" filter="url(#mainSheetCleanShadow)">
+    <rect width="930" height="940" rx="24" fill="#FFFDF8" />
+
+    <!-- Cột lỗ bấm gáy sổ bên trái -->
+    <g fill="#EAE3D2" opacity="0.65">
+      <circle cx="28" cy="80" r="8" />
+      <circle cx="28" cy="180" r="8" />
+      <circle cx="28" cy="280" r="8" />
+      <circle cx="28" cy="380" r="8" />
+      <circle cx="28" cy="480" r="8" />
+      <circle cx="28" cy="580" r="8" />
+      <circle cx="28" cy="680" r="8" />
+      <circle cx="28" cy="780" r="8" />
+      <circle cx="28" cy="880" r="8" />
+    </g>
+
+    <!-- Các đường kẻ ngang tập vở -->
+    <g stroke="#8FB9D2" stroke-width="1.2" opacity="0.32">
+      <line x1="95" y1="130" x2="880" y2="130" />
+      <line x1="95" y1="195" x2="880" y2="195" />
+      <line x1="95" y1="260" x2="880" y2="260" />
+      <line x1="95" y1="325" x2="880" y2="325" />
+      <line x1="95" y1="390" x2="880" y2="390" />
+      <line x1="95" y1="455" x2="880" y2="455" />
+      <line x1="95" y1="520" x2="880" y2="520" />
+      <line x1="95" y1="585" x2="880" y2="585" />
+      <line x1="95" y1="650" x2="880" y2="650" />
+      <line x1="95" y1="715" x2="880" y2="715" />
+      <line x1="95" y1="780" x2="880" y2="780" />
+      <line x1="95" y1="845" x2="880" y2="845" />
+    </g>
+
+    <!-- Đường vạch lề đỏ vở học sinh -->
+    <line x1="82" y1="0" x2="82" y2="940" stroke="#D84444" stroke-width="2.8" opacity="0.85" />
+
+    <!-- Đường viền xanh bao quanh mép giấy -->
+    <rect width="930" height="940" rx="24" fill="none" stroke="#6EA0C8" stroke-width="4" />
   </g>
 
-  
-  <rect x="20" y="20" width="980" height="980" rx="28" fill="none" stroke="#6EA0C8" stroke-width="6" filter="url(#boardShadow)" />
+  <!-- Miếng băng dính (Washi Tape) dán mép trên -->
+  <g transform="translate(400, 24)">
+    <rect width="220" height="48" rx="4" fill="#E8DFCA" fill-opacity="0.88" stroke="#D1C6AE" stroke-width="1.5" />
+    <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" stroke="#B5A98F" stroke-width="1.2" opacity="0.35" />
+  </g>
 
-  
-  <line x1="55" y1="23" x2="965" y2="23" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="5" stroke-linecap="round" />
+  <!-- Kẹp giấy kim loại ở góc trên bên trái -->
+  <g transform="translate(165, 26)" filter="url(#clipShadowClean)">
+    <path d="M 0 50 L 0 12 A 12 12 0 0 1 24 12 L 24 60 A 18 18 0 0 1 -12 60 L -12 18" fill="none" stroke="#7A8F9B" stroke-width="5" stroke-linecap="round" />
+  </g>
 </svg>

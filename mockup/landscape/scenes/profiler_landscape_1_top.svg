@@ -1,0 +1,370 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTplMTljNmU5OS1jODYyLTQ4ODMtYWVmMC0yMjM0ZTViMThkYjYAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaFJ6+Z8MJUsIOIbJY2sqLf4AAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpjNWI4M2QxOS0zM2E3LTQ3Y2EtYmNiNy1kZTEwNzJjYzI4MDZscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNokPh7jeVeyPLC5iQhTsNZkAAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggdGgUlo4YZPmZ28BChQr/9G19z+oeO9VMkUQO0EG40bekZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaEEFbfxrPAHSoiv2oRW/hlUAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCD5kFuBZnUU9II5A5uWmLPdTbhu6ycvHRuZIivbwtT2YWRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBiaZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmUxOWM2ZTk5LWM4NjItNDg4My1hZWYwLTIyMzRlNWIxOGRiNi9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmUyYmYwM2ZlLTgyZDEtNGY0YS1hM2QwLWViYTc4ZjM5ZDZmZnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCB0aBSWjhhk+ZnbwEKFCv/0bX3P6h471UyRRA7QQbjRt6JjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggFesBsCiCN6HlDoAw++VGP/s60ISPRAdWqBci4Jfhz4SiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggYgMHUjgi/rX5gKH5oR9w8OjGeskOQx2G//Ixr777sNB0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQFyRm++L1MXy+ptP0GxEynKNCX7xExGOabYiTGQZqOqZ4vhsa2Geycw0diQEcikkbdyGbJUtx/tn/Y0OlyAuCp4=</c2pa:manifest></metadata>
+  <defs>
+    <!-- Lưới vở học sinh 40px -->
+    <pattern id="mainNotebookGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.55"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.18"/>
+    </pattern>
+
+    <!-- Đổ bóng tờ giấy menu chính -->
+    <filter id="mainSheetShadow" x="-10%" y="-10%" width="125%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#2D2115" flood-opacity="0.22"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#2D2115" flood-opacity="0.08"/>
+    </filter>
+
+    <!-- Đổ bóng thẻ / sticker bên trong -->
+    <filter id="stickerShadow" x="-10%" y="-15%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.10"/>
+    </filter>
+
+    <!-- Đổ bóng ghim kẹp giấy kim loại -->
+    <filter id="clipShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.22"/>
+    </filter>
+  <clipPath id="listClip"><rect x="600" y="115" width="1160" height="815" rx="20"/></clipPath>
+    <linearGradient id="fadeTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBF7EC" stop-opacity="1"/><stop offset="1" stop-color="#FBF7EC" stop-opacity="0"/></linearGradient>
+    <linearGradient id="fadeBottom" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBF7EC" stop-opacity="0"/><stop offset="1" stop-color="#FBF7EC" stop-opacity="1"/></linearGradient>
+    <symbol id="ic-play" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="26" fill="#4DA3F5"/><path d="M26 19 L46 32 L26 45 Z" fill="#fff"/></g></symbol>
+    <symbol id="ic-trophy" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8H46V26C46 36 40 42 32 42C24 42 18 36 18 26Z" fill="#F6B623"/><path d="M18 14H8C8 26 12 31 20 33M46 14H56C56 26 52 31 44 33" fill="none"/><rect x="27" y="42" width="10" height="9" fill="#E09A12"/><rect x="18" y="51" width="28" height="9" rx="3" fill="#F6B623"/><path d="M24 14V26" stroke="#FFF1B8"/></g></symbol>
+    <symbol id="ic-pie" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="26" fill="#fff"/><path d="M32 32L32 6A26 26 0 1 1 6 32Z" fill="#F6A623"/><path d="M29 29L3 29A26 26 0 0 1 29 3Z" fill="#FFE08A"/></g></symbol>
+    <symbol id="ic-target" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="26" fill="#E5383B"/><circle cx="32" cy="32" r="18" fill="#fff"/><circle cx="32" cy="32" r="10" fill="#E5383B"/><circle cx="32" cy="32" r="3.5" fill="#fff" stroke="none"/><path d="M32 32L53 11" stroke="#3B6FD8" stroke-width="5"/><path d="M45 17L48 5L58 15Z" fill="#6AA8FF"/></g></symbol>
+    <symbol id="ic-flame" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M32 3C34 16 50 22 50 40C50 52 42 60 32 60C22 60 14 52 14 40C14 30 20 26 22 17C26 21 28 25 28 30C32 24 34 12 32 3Z" fill="#FF7A1A"/><path d="M32 59C26 59 22 55 22 49C22 42 30 38 32 31C34 38 42 42 42 49C42 55 38 59 32 59Z" fill="#FFC83D" stroke="none"/></g></symbol>
+    <symbol id="ic-calendar" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="12" width="48" height="44" rx="6" fill="#fff"/><path d="M8 25V18A6 6 0 0 1 14 12H50A6 6 0 0 1 56 18V25Z" fill="#5BA0E8"/><rect x="17" y="5" width="6" height="12" rx="3" fill="#fff"/><rect x="41" y="5" width="6" height="12" rx="3" fill="#fff"/><path d="M17 41L27 49L46 31" fill="none" stroke="#3DBE5A" stroke-width="7"/></g></symbol>
+    <symbol id="ic-castle" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 57V18H20V26H26V18H38V26H44V18H55V57Z" fill="#B9B3CC"/><path d="M25 57V45A7 7 0 0 1 39 45V57Z" fill="#7A4A2E"/><path d="M32 18V4"/><path d="M32 4L46 9L32 14Z" fill="#E5383B"/></g></symbol>
+    <symbol id="ic-wall" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="18" width="46" height="38" rx="3" fill="#D96C4A"/><path d="M5 30.5H51M5 43H51M28 18V30.5M16 30.5V43M40 30.5V43M28 43V56" fill="none" stroke-width="2.5"/><polygon points="47.0,2.0 50.1,9.6 57.6,6.4 54.4,13.9 62.0,17.0 54.4,20.1 57.6,27.6 50.1,24.4 47.0,32.0 43.9,24.4 36.4,27.6 39.6,20.1 32.0,17.0 39.6,13.9 36.4,6.4 43.9,9.6" fill="#FFD43B"/></g></symbol>
+    <symbol id="ic-stopwatch" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="26" y="3" width="12" height="8" rx="2" fill="#C9D3DD"/><path d="M48 14L53 9" stroke-width="5"/><circle cx="32" cy="36" r="22" fill="#CDEBFF"/><path d="M32 36L32 21" stroke-width="4"/><path d="M32 36L42 41" stroke-width="4" stroke="#E5383B"/><circle cx="32" cy="36" r="3" fill="#163A58" stroke="none"/></g></symbol>
+    <symbol id="ic-hourglass" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8H47V12C47 22 38 28 34 32C38 36 47 42 47 52V56H17V52C17 42 26 36 30 32C26 28 17 22 17 12Z" fill="#CDEBFF"/><path d="M24 14H40C40 19 35 22 32 25C29 22 24 19 24 14Z" fill="#F6B623" stroke="none"/><path d="M23 54H41C41 47 36 44 32 40C28 44 23 47 23 54Z" fill="#F6B623" stroke="none"/><rect x="11" y="3" width="42" height="7" rx="3" fill="#C47A3A"/><rect x="11" y="54" width="42" height="7" rx="3" fill="#C47A3A"/></g></symbol>
+    <symbol id="ic-bolt" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M37 3L13 36H28L23 61L51 26H35Z" fill="#FFC83D"/></g></symbol>
+    <symbol id="ic-feet" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(-8 20 40)"><ellipse cx="20" cy="42" rx="9" ry="13" fill="#7BC96F"/><circle cx="14" cy="23" r="3.2" fill="#7BC96F"/><circle cx="20" cy="21" r="3.2" fill="#7BC96F"/><circle cx="26" cy="23" r="3.2" fill="#7BC96F"/></g><g transform="rotate(8 44 26)"><ellipse cx="44" cy="28" rx="9" ry="13" fill="#7BC96F"/><circle cx="38" cy="9" r="3.2" fill="#7BC96F"/><circle cx="44" cy="7" r="3.2" fill="#7BC96F"/><circle cx="50" cy="9" r="3.2" fill="#7BC96F"/></g></g></symbol>
+    <symbol id="ic-route" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="54" r="6" fill="#4DA3F5"/><path d="M14 52C26 52 18 40 30 42C40 44 38 36 44 34" fill="none" stroke-dasharray="1 7" stroke-linecap="round" stroke-width="4.5"/><path d="M46 3C39 3 34 8 34 14C34 22 46 33 46 33C46 33 58 22 58 14C58 8 53 3 46 3Z" fill="#E5383B"/><circle cx="46" cy="14" r="4.5" fill="#fff"/></g></symbol>
+    <symbol id="ic-pencil" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(45 32 32)"><rect x="25" y="3" width="14" height="9" rx="3" fill="#F58CA0"/><rect x="25" y="12" width="14" height="5" fill="#C9D3DD"/><rect x="25" y="17" width="14" height="27" fill="#FFC83D"/><path d="M25 44H39L32 58Z" fill="#F5D6A8"/><path d="M29.5 52H34.5L32 58Z" fill="#163A58" stroke="none"/></g><path d="M5 59Q12 53 19 59" fill="none" stroke="#4DA3F5" stroke-width="3.5"/></g></symbol>
+    <symbol id="ic-revert" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M50 32A18 18 0 1 1 40 16" fill="none" stroke="#4DA3F5" stroke-width="8"/><path d="M50 20L44.5 7L35.5 25Z" fill="#4DA3F5"/></g></symbol>
+    <symbol id="ic-undo" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 28H40A14 14 0 0 1 40 56H22" fill="none" stroke="#8E5BD9" stroke-width="8"/><path d="M6 28L22 12V44Z" fill="#8E5BD9"/></g></symbol>
+    <symbol id="ic-skip" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12L28 32L6 52Z" fill="#3DBE8A"/><path d="M26 12L48 32L26 52Z" fill="#3DBE8A"/><rect x="50" y="12" width="8" height="40" rx="2" fill="#3DBE8A"/></g></symbol>
+    <symbol id="ic-maze" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="50" height="50" rx="8" fill="#FFF0C2"/><path d="M16 49V16H48V40H29V28H38" fill="none" stroke="#C47A3A" stroke-width="5"/><circle cx="16" cy="49" r="4" fill="#4DA3F5" stroke="none"/></g></symbol>
+    <symbol id="ic-gate" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 58V28A22 22 0 0 1 54 28V58Z" fill="#9A8FB0"/><path d="M20 58V33A12 12 0 0 1 44 33V58Z" fill="#3C2B4A"/><path d="M32 21V58M26 58V28M38 58V28" fill="none" stroke="#9A8FB0" stroke-width="2.5"/></g></symbol>
+    <symbol id="ic-sun" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="13" fill="#FFC83D"/><g stroke-width="4.5"><line x1="47.0" y1="32.0" x2="56.0" y2="32.0"/><line x1="42.6" y1="42.6" x2="49.0" y2="49.0"/><line x1="32.0" y1="47.0" x2="32.0" y2="56.0"/><line x1="21.4" y1="42.6" x2="15.0" y2="49.0"/><line x1="17.0" y1="32.0" x2="8.0" y2="32.0"/><line x1="21.4" y1="21.4" x2="15.0" y2="15.0"/><line x1="32.0" y1="17.0" x2="32.0" y2="8.0"/><line x1="42.6" y1="21.4" x2="49.0" y2="15.0"/></g></g></symbol>
+    <symbol id="ic-rocket" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 38L9 52L23 48Z" fill="#E5383B"/><path d="M42 38L55 52L41 48Z" fill="#E5383B"/><path d="M27 48H37L32 61Z" fill="#FFB020"/><path d="M32 3C45 12 47 30 42 46H22C17 30 19 12 32 3Z" fill="#F4F4F4"/><circle cx="32" cy="25" r="6.5" fill="#4DA3F5"/></g></symbol>
+    <symbol id="ic-ring" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="26" fill="#E7F5FF"/><path d="M32 10A22 22 0 1 1 10 32A14 14 0 1 1 32 18A6 6 0 1 1 26 24" fill="none"/><circle cx="26" cy="24" r="3.5" fill="#E5383B" stroke="none"/></g></symbol>
+    <symbol id="ic-sumpath" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="50" height="50" rx="9" fill="#FFF4D6"/><path d="M15 46H27V30H44V20" fill="none" stroke="#E5383B" stroke-width="4.5"/><circle cx="15" cy="46" r="4" fill="#4DA3F5" stroke="none"/><path d="M44 38V54M36 46H52" stroke="#3DBE5A" stroke-width="4.5" fill="none"/></g></symbol>
+    <symbol id="ic-countdown" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="26" y="3" width="12" height="8" rx="2" fill="#C9D3DD"/><circle cx="32" cy="36" r="23" fill="#FFE3E3"/><text x="32" y="47" text-anchor="middle" font-size="30" font-weight="900" fill="#E5383B" stroke="none" font-family="Segoe UI, sans-serif">3</text></g></symbol>
+    <symbol id="ic-bulb" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M32 5C20 5 14 14 14 23C14 31 20 35 22 41H42C44 35 50 31 50 23C50 14 44 5 32 5Z" fill="#FFE066"/><rect x="23" y="41" width="18" height="7" rx="2" fill="#C9D3DD"/><rect x="26" y="48" width="12" height="7" rx="3" fill="#C9D3DD"/><path d="M27 30L32 23L37 30" fill="none"/></g></symbol>
+    <symbol id="ic-cloud" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 43A10 10 0 0 1 16 24A13 13 0 0 1 41 19A11 11 0 0 1 49 43Z" fill="#E3EEF8"/><path d="M12 51H52M20 58H44" fill="none"/></g></symbol>
+    <symbol id="ic-drop" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M32 5C32 5 14 27 14 39A18 18 0 0 0 50 39C50 27 32 5 32 5Z" fill="#4D79D8"/><path d="M23 40A9 9 0 0 0 30 49" fill="none" stroke="#fff" stroke-width="3" opacity="0.8"/></g></symbol>
+    <symbol id="ic-nib" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M32 4L47 28L32 52L17 28Z" fill="#D5DBE3"/><path d="M32 30V50" fill="none"/><circle cx="32" cy="28" r="3.5" fill="#163A58" stroke="none"/><path d="M8 59H56" stroke="#4DA3F5" stroke-width="4.5" fill="none"/></g></symbol>
+    <symbol id="ic-bricks" viewBox="0 0 64 64"><g stroke="#163A58" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="20" width="46" height="38" rx="3" fill="#D96C4A"/><path d="M5 32.5H51M5 45H51M28 20V32.5M16 32.5V45M40 32.5V45M28 45V58" fill="none" stroke-width="2.5"/><path d="M50 4V22M41 13H59" stroke="#FFC83D" stroke-width="6" fill="none"/></g></symbol>
+  </defs>
+
+  <!-- ================= 1. NỀN BÀN & LỀ ĐỎ NGOÀI CÙNG ================= -->
+  <rect width="1920" height="1080" fill="#FAF5EB"/>
+  <rect width="1920" height="1080" fill="url(#mainNotebookGrid)"/>
+  <line x1="80" y1="0" x2="80" y2="1080" stroke="#D84444" stroke-width="3" opacity="0.85"/>
+
+  <!-- ================= 2. TỜ GIẤY LỚN LANDSCAPE (1820 x 980 px) ================= -->
+  <g transform="translate(50, 50)">
+    <!-- Thân tờ giấy lớn -->
+    <g filter="url(#mainSheetShadow)">
+      <rect width="1820" height="980" rx="28" fill="#FFFDF8"/>
+
+      <!-- Hàng 8 lỗ bấm sổ còng bên lề trái -->
+      <g fill="#EAE3D2" opacity="0.8">
+        <circle cx="28" cy="80" r="9"/><circle cx="28" cy="200" r="9"/><circle cx="28" cy="320" r="9"/>
+        <circle cx="28" cy="440" r="9"/><circle cx="28" cy="560" r="9"/><circle cx="28" cy="680" r="9"/>
+        <circle cx="28" cy="800" r="9"/><circle cx="28" cy="920" r="9"/>
+      </g>
+
+      <!-- Đường lề đỏ trên tờ giấy -->
+      <line x1="88" y1="0" x2="88" y2="980" stroke="#D84444" stroke-width="2.8" opacity="0.85"/>
+      <!-- Viền mực xanh bao quanh tờ giấy -->
+      <rect width="1820" height="980" rx="28" fill="none" stroke="#6EA0C8" stroke-width="3.5"/>
+    </g>
+
+    <!-- Dải băng dính Washi Tape trên đỉnh giữa -->
+    <g transform="translate(800, -22)">
+      <rect width="220" height="48" rx="4" fill="#E8DFCA" fill-opacity="0.88" stroke="#D1C6AE" stroke-width="1.5"/>
+      <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" 
+            stroke="#B5A98F" stroke-width="1.2" opacity="0.35"/>
+    </g>
+
+    <!-- Ghim kẹp giấy kim loại góc trên trái -->
+    <g transform="translate(130, -18)" filter="url(#clipShadow)">
+      <path d="M 0 55 L 0 12 A 12 12 0 0 1 24 12 L 24 66 A 18 18 0 0 1 -12 66 L -12 18" 
+            fill="none" stroke="#7A8F9B" stroke-width="5" stroke-linecap="round"/>
+    </g>
+
+    <!-- ================= 3. HEADER THANH TRÊN CÙNG ================= -->
+    <!-- Nút Quay lại (Back) -->
+    <g transform="translate(115, 30)" style="cursor: pointer;">
+      <rect width="56" height="56" rx="16" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5"/>
+      <path d="M 33 19 L 23 28 L 33 37" fill="none" stroke="#163A58" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Tiêu đề Màn hình -->
+    <text x="910" y="68" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="950" fill="#163A58" letter-spacing="2">HỒ SƠ NGƯỜI CHƠI</text>
+
+    <!-- Cấp độ & Điểm AP góc phải -->
+    <g transform="translate(1620, 36)">
+      <rect width="130" height="44" rx="12" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+      <text x="65" y="28" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="17" font-weight="950" fill="#B45309">CẤP ĐỘ 28</text>
+    </g>
+
+    <!-- Đường phân cách Header mảnh -->
+    <line x1="115" y1="98" x2="1760" y2="98" stroke="#8FB9D2" stroke-width="1.8" opacity="0.6"/>
+
+    <!-- ================= LEFT: AVATAR & THÔNG TIN NGƯỜI CHƠI ================= -->
+    <g transform="translate(115, 115)" filter="url(#stickerShadow)">
+      <rect width="450" height="815" rx="24" fill="#FEFDFA" stroke="#3D83AE" stroke-width="3"/>
+      <line x1="26" y1="0" x2="26" y2="815" stroke="#D84444" stroke-width="2.5" opacity="0.75"/>
+
+      <g transform="translate(103, 40) scale(1.8)">
+        <circle cx="75" cy="75" r="68" fill="#FFFDF8" stroke="#F59E0B" stroke-width="3" stroke-dasharray="10 4"/>
+        <circle cx="75" cy="75" r="56" fill="#E0F2FE"/>
+        <g stroke="#163A58" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(45, 45)">
+          <circle cx="30" cy="20" r="14" fill="#FEFDFA"/>
+          <path d="M 10 56 C 10 38 18 36 30 36 C 42 36 50 38 50 56 Z" fill="#FEFDFA"/>
+          <path d="M 24 20 L 27 20 M 33 20 L 36 20"/>
+          <path d="M 27 25 Q 30 28 33 25"/>
+          <path d="M 40 16 L 52 4 M 48 4 L 54 10" stroke="#D84444" stroke-width="2.2"/>
+        </g>
+      </g>
+
+      <text x="238" y="372" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="34" font-weight="900" fill="#163A58">MazeWalker #1024</text>
+      <rect x="138" y="394" width="200" height="32" rx="8" fill="#FEF3C7"/>
+      <text x="238" y="416" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" fill="#B45309" letter-spacing="1.2">BẬC THẦY TƯ DUY</text>
+
+      <line x1="60" y1="462" x2="415" y2="462" stroke="#E2E8F0" stroke-width="2"/>
+
+      <g transform="translate(60, 500)">
+        <text x="0" y="0" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="800" fill="#718B9E">EXP CẤP 28</text>
+        <text x="355" y="0" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#256C96">3,850 / 5,000</text>
+        <rect y="14" width="355" height="20" rx="10" fill="#E2E8F0"/>
+        <rect y="14" width="273" height="20" rx="10" fill="#256C96"/>
+        <text x="0" y="64" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="600" fill="#94A3B8">Còn 1,150 EXP để lên cấp 29</text>
+      </g>
+
+      <line x1="60" y1="598" x2="415" y2="598" stroke="#E2E8F0" stroke-width="2"/>
+
+      <g transform="translate(60, 645)">
+        <text x="0" y="0" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#94A3B8">UID</text>
+        <text x="0" y="32" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="800" fill="#163A58">#IM-8842</text>
+        <text x="0" y="82" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#94A3B8">THAM GIA</text>
+        <text x="0" y="114" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="800" fill="#163A58">Tháng 08/2026</text>
+      </g>
+    </g>
+
+    <!-- ================= RIGHT: DANH SÁCH STATS (KÉO DỌC) ================= -->
+    <rect x="600" y="115" width="1160" height="815" rx="20" fill="#FBF7EC" stroke="#E5DDC8" stroke-width="2"/>
+    <g clip-path="url(#listClip)">
+      <g transform="translate(624, 133)">
+      <rect x="0" y="0" width="184" height="36" rx="8" fill="#F8D7A0" stroke="#C9A15F" stroke-width="1.8"/>
+      <text x="92.0" y="25" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="900" fill="#163A58" letter-spacing="1.5">PLAY STATS</text>
+      <line x1="200" y1="18" x2="1100" y2="18" stroke="#8FB9D2" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+      <g transform="translate(0, 50)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-play" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Level Play</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">142</text>
+      </g>
+      <g transform="translate(279, 50)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-trophy" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Level Win</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">135</text>
+      </g>
+      <g transform="translate(558, 50)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-pie" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Winrate</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">95.1%</text>
+      </g>
+      <g transform="translate(837, 50)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-target" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">First Try Win</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">98</text>
+      </g>
+      <g transform="translate(0, 164)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-flame" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Current Streak</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">27</text>
+      </g>
+      <g transform="translate(279, 164)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-calendar" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Daily Challenge</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">18</text>
+      </g>
+      <rect x="0" y="292" width="226" height="36" rx="8" fill="#DCC6EC" stroke="#A98BC4" stroke-width="1.8"/>
+      <text x="113.0" y="317" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="900" fill="#163A58" letter-spacing="1.5">DUNGEON STATS</text>
+      <line x1="242" y1="310" x2="1100" y2="310" stroke="#8FB9D2" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+      <g transform="translate(0, 342)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-castle" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Highest Floor</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">58</text>
+      </g>
+      <g transform="translate(279, 342)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-wall" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Wall Collisions</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">42</text>
+      </g>
+      <rect x="0" y="470" width="184" height="36" rx="8" fill="#BFE0F2" stroke="#7FB0CE" stroke-width="1.8"/>
+      <text x="92.0" y="495" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="900" fill="#163A58" letter-spacing="1.5">TIME STATS</text>
+      <line x1="200" y1="488" x2="1100" y2="488" stroke="#8FB9D2" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+      <g transform="translate(0, 520)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-stopwatch" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Avg Level Time</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">00:38</text>
+      </g>
+      <g transform="translate(279, 520)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-hourglass" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Total Level Time</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">5h 24m</text>
+      </g>
+      <g transform="translate(558, 520)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-bolt" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Avg Time Move</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">1.4s</text>
+      </g>
+      <rect x="0" y="648" width="254" height="36" rx="8" fill="#BFE5CC" stroke="#7DB892" stroke-width="1.8"/>
+      <text x="127.0" y="673" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="900" fill="#163A58" letter-spacing="1.5">GAME MODE STATS</text>
+      <line x1="270" y1="666" x2="1100" y2="666" stroke="#8FB9D2" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+      <g transform="translate(0, 698)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-maze" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Chế độ Play</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">142</text>
+      </g>
+      <g transform="translate(279, 698)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-gate" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Chế độ Dungeon</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">68</text>
+      </g>
+      <g transform="translate(558, 698)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-sun" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Maze thường</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">54</text>
+      </g>
+      <g transform="translate(837, 698)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-calendar" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Thử thách ngày</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">18</text>
+      </g>
+      <g transform="translate(0, 812)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-rocket" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Thử thách</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">21</text>
+      </g>
+      <g transform="translate(279, 812)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-ring" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Mê cung mịn</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">12</text>
+      </g>
+      <g transform="translate(558, 812)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-sumpath" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Đường tổng</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">9</text>
+      </g>
+      <g transform="translate(837, 812)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-countdown" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Chi phí đếm ngược</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">7</text>
+      </g>
+      <g transform="translate(0, 926)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-bulb" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Trí nhớ mù</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">5</text>
+      </g>
+      <g transform="translate(279, 926)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-cloud" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Sương mù</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">11</text>
+      </g>
+      <g transform="translate(558, 926)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-drop" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Mực phai</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">6</text>
+      </g>
+      <g transform="translate(837, 926)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-nib" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Một nét</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">14</text>
+      </g>
+      <g transform="translate(0, 1040)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-bricks" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Xây tường</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">8</text>
+      </g>
+      <rect x="0" y="1168" width="226" height="36" rx="8" fill="#F6C7CE" stroke="#CE8E98" stroke-width="1.8"/>
+      <text x="113.0" y="1193" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="900" fill="#163A58" letter-spacing="1.5">IN-GAME STATS</text>
+      <line x1="242" y1="1186" x2="1100" y2="1186" stroke="#8FB9D2" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+      <g transform="translate(0, 1218)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-route" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Average Move</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">16.4</text>
+      </g>
+      <g transform="translate(279, 1218)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-feet" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Total Move</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">3,420</text>
+      </g>
+      <g transform="translate(558, 1218)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-pencil" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Wall Draw</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">512</text>
+      </g>
+      <g transform="translate(837, 1218)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-revert" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Revert Used</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">24</text>
+      </g>
+      <g transform="translate(0, 1332)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-undo" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Undo Used</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">38</text>
+      </g>
+      <g transform="translate(279, 1332)">
+        <g filter="url(#stickerShadow)"><rect width="263" height="100" rx="14" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2"/></g>
+        <use href="#ic-skip" x="16" y="20" width="60" height="60"/>
+        <text x="92" y="43" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#5B7386">Skip Used</text>
+        <text x="92" y="81" font-family="'Segoe UI', Roboto, sans-serif" font-size="33" font-weight="800" fill="#163A58">2</text>
+      </g>
+      </g>
+      
+      <rect x="600" y="870" width="1120" height="60" fill="url(#fadeBottom)"/>
+    </g>
+    
+      <g transform="translate(1065.0, 878)">
+        <rect width="190" height="36" rx="18" fill="#163A58" opacity="0.88"/>
+        <text x="95" y="24" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">Kéo để xem thêm  ↓</text>
+      </g>
+    <!-- Scrollbar -->
+    <rect x="1736" y="133" width="8" height="779" rx="4" fill="#E2E8F0"/>
+    <rect x="1736" y="133.0" width="8" height="432.5" rx="4" fill="#6EA0C8"/>
+  </g>
+
+  <!-- Thanh điều hướng Android Home Gesture -->
+  <rect x="840" y="1062" width="240" height="6" rx="3" fill="#1E2830" opacity="0.3"/>
+</svg>

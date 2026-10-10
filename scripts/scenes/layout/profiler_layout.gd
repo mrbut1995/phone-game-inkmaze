@@ -4,31 +4,30 @@ extends BaseLayout
 ## Bố cục màn HỒ SƠ CÁ NHÂN (scenes/layout/<hướng>/profiler_popup.tscn)
 ##
 ## 2 hướng dùng CHUNG tên node; màn hình bind qua các export dưới đây rồi đọc node
-## con theo tên cố định trong từng NHÓM (hero · stat_cards · badges_box · gear_box…)
-## nên thêm/bớt node chỉ cần sửa .tscn, không phải sửa code màn.
+## con theo tên cố định trong từng NHÓM (hero · info_list…) nên thêm/bớt node chỉ cần
+## sửa .tscn, không phải sửa code màn.
 ##
 ## Tên node con mà màn hình tìm (xem scripts/scenes/profiler.gd):
 ##   · level_chip : "Text"                      — nhãn "LV. 12"
-##   · hero       : Disc · Avatar · Frame · BtnAvatar · NameRow(Name · Pen) · TierChip+Text · ExpValue · BarFill · Uid
-##   · stat_cards : Stat1..Stat4 (mỗi thẻ: Name · Value · Icon)
-##   · badges_box : Badge1..Badge3 (Icon · Name) · ApText · BtnMore
-##   · gear_box   : Card1..Card3 (Icon · Name)
-##   · rows_box   : nơi gắn các hàng lịch sử (nodes/profiler/activity_row.tscn)
+##   · hero       : Disc · Avatar · Frame · BtnAvatar · NameRow(Name · Pen) · TierChip+Text ·
+##                  Exp/ExpValue · ExpSub (NGANG) · Bar/BarFill · Uid · UidBlock/Join (NGANG)
+##   · info_scroll: ScrollContainer chứa DANH SÁCH THÔNG TIN — cuộn DỌC ở CẢ 2 hướng
+##                  (ngang: Hero nằm CỘT TRÁI, danh sách ở CỘT PHẢI giống mockup); Hero cố định.
+##   · info_list  : nơi gắn các nhóm số liệu (nodes/profiler/stat_group.tscn)
 ## ============================================================================
 
 @export var btn_close: BaseButton = null
 @export var lbl_title: Label = null
 @export var level_chip: Control = null
 @export var hero: Control = null
-@export var stat_cards: Control = null
-@export var badges_box: Control = null
-## Chip "{n} AP" trên giá huy hiệu — 2 hướng đặt ở vị trí khác nhau (dọc: cạnh tiêu
-## đề `BadgeTitle/ApChip`; ngang: trong `RightCol/Badges/ApChip`) nên bind riêng
-@export var ap_chip: Control = null
-@export var gear_box: Control = null
-@export var rows_box: Control = null
-@export var btn_edit: BaseButton = null
-@export var btn_share: BaseButton = null
+## Vùng CUỘN của danh sách thông tin (Hero không nằm trong đây)
+@export var info_scroll: ScrollContainer = null
+## Nơi dựng các nhóm số liệu — VBoxContainer (cuộn DỌC cả 2 hướng)
+@export var info_list: BoxContainer = null
+## Nhãn "Còn {0} EXP để lên cấp {1}" + ngày tham gia — CHỈ bố cục NGANG có
+## (mockup landscape); bản dọc để null, màn hình guard null từng nhãn.
+@export var hero_exp_remain: Label = null
+@export var hero_join: Label = null
 @export var stamp: Control = null
 @export var hero_btn_avatar : BaseButton = null
 @export var hero_avatar : TextureRect = null
@@ -51,23 +50,8 @@ func chip_text() -> Label:
 	return level_chip.get_node_or_null("Text") as Label
 
 
-func stat_card(index: int) -> Control:
-	return stat_cards.get_node_or_null("Stat%d" % (index + 1)) as Control if stat_cards != null else null
-
-
-func badge_slot(index: int) -> Control:
-	return badges_box.get_node_or_null("Badge%d" % (index + 1)) as Control if badges_box != null else null
-
-
-func gear_card(index: int) -> Control:
-	return gear_box.get_node_or_null("Bg/Container/Card%d" % (index + 1)) as Control if gear_box != null else null
-
-
-## Chip "{n} AP" trên giá huy hiệu (node `ApChip/Text` — vị trí khai trong .tscn qua `ap_chip`)
-func ap_text() -> Label:
-	return ap_chip.get_node_or_null("Text") as Label if ap_chip != null else null
-
-
-## Nút "Xem Sổ Tay" cạnh giá huy hiệu
-func btn_more() -> BaseButton:
-	return badges_box.get_node_or_null("BtnMore") as BaseButton if badges_box != null else null
+## Bố cục NGANG (danh sách nằm trong cột phải "RightCol") — nhận biết từ CHÍNH cây
+## layout đang bind, KHÔNG dùng cờ hướng của màn (test gán layout trực tiếp nên cờ có thể sai).
+func is_side_layout() -> bool:
+	var parent := info_scroll.get_parent() if info_scroll != null else null
+	return parent != null and parent.name == &"RightCol"
