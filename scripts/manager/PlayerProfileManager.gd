@@ -60,6 +60,27 @@ var runs_won := 0
 ## Lịch sử ván gần nhất (mới nhất đứng đầu) — xem `record_run`
 var recent: Array = []
 
+## --- Số liệu MỞ RỘNG cho bản Hồ sơ mới (Profiler) — tích luỹ theo save ---
+## Play Stats (ván MÀN = chơi từ màn Chọn màn, cờ `GameManager.level_run`)
+var level_plays := 0            # số ván MÀN đã chơi
+var level_wins := 0             # số ván MÀN thắng
+var first_try_wins := 0         # thắng màn ngay LẦN ĐẦU tiên chơi màn đó
+var win_streak := 0             # chuỗi ván MÀN thắng LIÊN TIẾP hiện tại
+var level_attempts: Dictionary = {}   # level_id -> số lần đã chơi (để tính First Try)
+## Game Mode Stats
+var mode_plays: Dictionary = {}       # mode_id -> số lần chơi
+## Dungeon Stats
+var dungeon_wall_hits := 0      # tổng va chạm tường ở các ván Dungeon
+## In Game / Time Stats (mọi chế độ)
+var runs_total := 0             # tổng số ván đã ghi
+var moves_total := 0            # tổng số bước
+var time_total := 0.0           # tổng thời gian (giây, mọi ván)
+var level_time_total := 0.0     # tổng thời gian các ván MÀN (giây)
+var undos_total := 0            # tổng lượt Hoàn tác
+var wall_draws_total := 0       # tổng lượt VẼ tường nghi ngờ
+var wall_erases_total := 0      # tổng lượt GỠ tường đã vẽ (Revert)
+var skips_total := 0            # tổng lượt SKIP màn
+
 
 # ---------------------------------------------------------------------------
 # Truy cập manager khác qua /root
@@ -299,6 +320,48 @@ func stats() -> Dictionary:
 	}
 
 
+## Số liệu MỞ RỘNG cho bản Hồ sơ mới (5 nhóm: Play · Dungeon · Time · Game Mode · In Game).
+## Giá trị thô (chưa format) — màn Hồ sơ tự định dạng/thêm khoá dịch.
+func deep_stats() -> Dictionary:
+	var winrate := float(level_wins) / float(level_plays) * 100.0 if level_plays > 0 else 0.0
+	var avg_level_time := level_time_total / float(level_plays) if level_plays > 0 else 0.0
+	var avg_time_move := time_total / float(moves_total) if moves_total > 0 else 0.0
+	var avg_move := float(moves_total) / float(runs_total) if runs_total > 0 else 0.0
+	return {
+		# Play Stats
+		"level_plays": level_plays,
+		"level_wins": level_wins,
+		"level_winrate": winrate,
+		"first_try_wins": first_try_wins,
+		"win_streak": win_streak,
+		"daily_days": _daily_completed_days(),
+		# Dungeon Stats
+		"highest_floor": dungeon_floor(),
+		"dungeon_wall_hits": dungeon_wall_hits,
+		# Time Stats
+		"avg_level_time": avg_level_time,
+		"total_level_time": level_time_total,
+		"avg_time_move": avg_time_move,
+		# Game Mode Stats (mode_id -> số lần chơi)
+		"mode_plays": mode_plays.duplicate(),
+		# In Game Stats
+		"avg_move": avg_move,
+		"moves_total": moves_total,
+		"wall_draws": wall_draws_total,
+		"wall_erases": wall_erases_total,
+		"undos_total": undos_total,
+		"skips_total": skips_total,
+	}
+
+
+## Số NGÀY đã hoàn thành Daily Challenge (DailyManager giữ danh sách completed_days)
+func _daily_completed_days() -> int:
+	var dm := get_node_or_null("/root/DailyManager")
+	if dm == null or not dm.has_method("get_completed_count"):
+		return 0
+	return int(dm.call("get_completed_count"))
+
+
 # ---------------------------------------------------------------------------
 # Lịch sử ván (GameController gọi khi kết thúc ván — bỏ qua ván test Debug)
 # ---------------------------------------------------------------------------
@@ -307,6 +370,33 @@ func record_run(info: Dictionary) -> void:
 	runs_played += 1
 	if won:
 		runs_won += 1
+	# --- Số liệu mở rộng (Profiler mới) ---
+	runs_total += 1
+	moves_total += maxi(int(info.get("moves", 0)), 0)
+	var elapsed := maxf(float(info.get("elapsed", 0.0)), 0.0)
+	time_total += elapsed
+	var mode_id := str(info.get("mode_id", ""))
+	if not mode_id.is_empty():
+		mode_plays[mode_id] = int(mode_plays.get(mode_id, 0)) + 1
+	if bool(info.get("endless", false)):
+		dungeon_wall_hits += maxi(int(info.get("wall_hits", 0)), 0)
+	undos_total += maxi(int(info.get("undos", 0)), 0)
+	wall_draws_total += maxi(int(info.get("wall_draws", 0)), 0)
+	wall_erases_total += maxi(int(info.get("wall_erases", 0)), 0)
+	skips_total += maxi(int(info.get("skips", 0)), 0)
+	if bool(info.get("level_run", false)):
+		level_plays += 1
+		level_time_total += elapsed
+		var level_id := maxi(int(info.get("level_id", 0)), 0)
+		if level_id > 0:
+			level_attempts[level_id] = int(level_attempts.get(level_id, 0)) + 1
+		if won:
+			level_wins += 1
+			win_streak += 1
+			if level_id > 0 and int(level_attempts.get(level_id, 0)) == 1:
+				first_try_wins += 1
+		else:
+			win_streak = 0
 	var row := {
 		"won": won,
 		"mode_id": str(info.get("mode_id", "")),
@@ -350,6 +440,22 @@ func export_progress() -> Dictionary:
 		"runs_played": runs_played,
 		"runs_won": runs_won,
 		"recent": recent.duplicate(true),
+		# --- Số liệu mở rộng (Profiler mới) ---
+		"level_plays": level_plays,
+		"level_wins": level_wins,
+		"first_try_wins": first_try_wins,
+		"win_streak": win_streak,
+		"level_attempts": level_attempts.duplicate(),
+		"mode_plays": mode_plays.duplicate(),
+		"dungeon_wall_hits": dungeon_wall_hits,
+		"runs_total": runs_total,
+		"moves_total": moves_total,
+		"time_total": time_total,
+		"level_time_total": level_time_total,
+		"undos_total": undos_total,
+		"wall_draws_total": wall_draws_total,
+		"wall_erases_total": wall_erases_total,
+		"skips_total": skips_total,
 	}
 
 
@@ -363,6 +469,22 @@ func import_progress(data: Dictionary) -> void:
 	joined_date = str(data.get("joined_date", ""))
 	runs_played = int(data.get("runs_played", 0))
 	runs_won = int(data.get("runs_won", 0))
+	# --- Số liệu mở rộng (Profiler mới) ---
+	level_plays = int(data.get("level_plays", 0))
+	level_wins = int(data.get("level_wins", 0))
+	first_try_wins = int(data.get("first_try_wins", 0))
+	win_streak = int(data.get("win_streak", 0))
+	level_attempts = _to_int_dict(data.get("level_attempts", {}))
+	mode_plays = _to_string_key_dict(data.get("mode_plays", {}))
+	dungeon_wall_hits = int(data.get("dungeon_wall_hits", 0))
+	runs_total = int(data.get("runs_total", 0))
+	moves_total = int(data.get("moves_total", 0))
+	time_total = float(data.get("time_total", 0.0))
+	level_time_total = float(data.get("level_time_total", 0.0))
+	undos_total = int(data.get("undos_total", 0))
+	wall_draws_total = int(data.get("wall_draws_total", 0))
+	wall_erases_total = int(data.get("wall_erases_total", 0))
+	skips_total = int(data.get("skips_total", 0))
 	var rows: Variant = data.get("recent", [])
 	recent = rows if rows is Array else []
 	_ensure_identity()
@@ -379,6 +501,22 @@ func reset_progress() -> void:
 	runs_played = 0
 	runs_won = 0
 	recent = []
+	# --- Số liệu mở rộng (Profiler mới) ---
+	level_plays = 0
+	level_wins = 0
+	first_try_wins = 0
+	win_streak = 0
+	level_attempts = {}
+	mode_plays = {}
+	dungeon_wall_hits = 0
+	runs_total = 0
+	moves_total = 0
+	time_total = 0.0
+	level_time_total = 0.0
+	undos_total = 0
+	wall_draws_total = 0
+	wall_erases_total = 0
+	skips_total = 0
 	uid_suffix = ""
 	joined_date = ""
 	_ensure_identity()
@@ -564,4 +702,22 @@ func _to_string_array(value: Variant) -> Array[String]:
 	if value is Array:
 		for item in value:
 			out.append(str(item))
+	return out
+
+
+## Dữ liệu lưu dạng Dictionary (level_attempts / mode_plays) — ép về khoá int + giá trị int
+func _to_int_dict(value: Variant) -> Dictionary:
+	var out := {}
+	if value is Dictionary:
+		for key in value:
+			out[int(key)] = int(value[key])
+	return out
+
+
+## Như `_to_int_dict` nhưng giữ khoá STRING (mode_plays: mode_id -> số lần chơi)
+func _to_string_key_dict(value: Variant) -> Dictionary:
+	var out := {}
+	if value is Dictionary:
+		for key in value:
+			out[str(key)] = int(value[key])
 	return out

@@ -14,6 +14,9 @@ signal wall_hit
 signal reached_end
 ## Hết đường đi (mode tự báo qua is_dead_end) -> GameController mở popup thua
 signal dead_end
+## Người chơi VẼ/GỠ tường nghi ngờ bằng thao tác kéo — dùng cho số liệu Profiler.
+## KHÔNG bắn khi mode tự đổi trạng thái qua `AnchorController.set_suspected`.
+signal wall_toggled_by_player(is_h: bool, lattice: Vector2i, active: bool)
 
 var maze: MazeData = null
 #var view: Control = null
@@ -69,6 +72,9 @@ func handle_anchor_connected(corner_a: Vector2i, corner_b: Vector2i) -> void:
 			return
 	if not anchor_controller.handle_anchor_connection(corner_a, corner_b):
 		return
+	if not edge.is_empty():
+		wall_toggled_by_player.emit(bool(edge[0]), edge[1],
+			anchor_controller.is_suspected(bool(edge[0]), edge[1]))
 	if not edge.is_empty() and mode != null:
 		var toggled_h := bool(edge[0])
 		var toggled_lattice: Vector2i = edge[1]

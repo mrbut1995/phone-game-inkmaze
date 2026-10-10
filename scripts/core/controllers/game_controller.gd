@@ -312,6 +312,17 @@ func _on_wall_hit() -> void:
 	pass
 
 
+## Người chơi kéo nối 2 giao điểm để VẼ tường nghi ngờ (active=true) hoặc GỠ tường
+## đã vẽ (active=false) — đếm riêng cho số liệu Profiler (Wall Draw / Revert Used).
+func _on_wall_toggled_by_player(_is_h: bool, _lattice: Vector2i, active: bool) -> void:
+	if game_state == null:
+		return
+	if active:
+		game_state.wall_draws += 1
+	else:
+		game_state.wall_erases += 1
+
+
 ## Lý do thua khi vừa đâm chướng ngại vật (đi kèm popup thua):
 ## One Stroke đạp lên Ô ĐÃ ĐI = chất hazard "revisit" -> tiêu đề riêng "ĐI LẠI Ô CŨ!".
 func _hazard_game_over_reason() -> String:
@@ -634,6 +645,8 @@ func skip_current_level() -> bool:
 		return false
 	if ui_controller != null:
 		ui_controller.hide_overlays()
+	if game_state != null:
+		game_state.skips_used += 1    # số liệu Profiler "Skip Used"
 	var next_id := int(gm.call("skip_level", current_floor()))
 	if next_id > 0:
 		gm.call("start_level", next_id)
@@ -799,6 +812,14 @@ func _record_profile_run(mode: BaseGameMode, won: bool, floor_time: float) -> vo
 		"width": maze.width if maze != null else 0,
 		"height": maze.height if maze != null else 0,
 		"stars": stars,
+		# --- Số liệu mở rộng cho bản Hồ sơ mới (Profiler stats) ---
+		"level_run": gm != null and bool(gm.get("level_run")),
+		"level_id": int(gm.get("current_level")) if gm != null else 0,
+		"undos": game_state.undos_used,
+		"hints": game_state.hints_used,
+		"wall_draws": game_state.wall_draws,
+		"wall_erases": game_state.wall_erases,
+		"skips": game_state.skips_used,
 	})
 
 

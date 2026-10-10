@@ -41,6 +41,20 @@ static func uid_text() -> String:
 	return "#IM-%s • %s" % [str(m.get("uid_suffix")), str(m.get("joined_date"))]
 
 
+## Mã định danh TRẦN (không kèm ngày) — khối UID tách rời ở bố cục NGANG
+static func uid_code() -> String:
+	var m := manager()
+	if m == null:
+		return "#IM-0000"
+	return "#IM-%s" % str(m.get("uid_suffix"))
+
+
+## Ngày tham gia dạng "MM/YYYY" (manager sinh lúc tạo hồ sơ)
+static func joined_date_text() -> String:
+	var m := manager()
+	return str(m.get("joined_date")) if m != null else ""
+
+
 static func avatar_id() -> String:
 	var m := manager()
 	return str(m.get("avatar_id")) if m != null else "avatar_baby_child_kid"
@@ -96,6 +110,12 @@ static func lock_of(kind: String, ident: String) -> Dictionary:
 # --- Thống kê / EXP ---------------------------------------------------------
 static func stats() -> Dictionary:
 	var value: Variant = _call("stats")
+	return value if value is Dictionary else {}
+
+
+## Số liệu MỞ RỘNG cho bản Hồ sơ mới (5 nhóm: Play · Dungeon · Time · Game Mode · In Game)
+static func deep_stats() -> Dictionary:
+	var value: Variant = _call("deep_stats")
 	return value if value is Dictionary else {}
 
 
