@@ -10,7 +10,7 @@ extends Control
 ## vật đi đường · kéo nối 2 Anchor để đánh dấu tường) nên thanh nút chỉ còn thao tác thật:
 ##   · `Restart` — CHƠI LẠI màn/tầng (DỜI từ thanh trạng thái xuống đây — có ở MỌI chế độ)
 ##   · `Submit`  — GỬI BÀI (chỉ Wall Builder; GameScene tự bật/tắt theo chế độ)
-##   · `Undo` / `Hint` — kèm `PanelLimit` (badge nhỏ đè góc nút) hiện SỐ LƯỢT CÒN LẠI
+##   · `Skip` / `Undo` / `Hint` — kèm `PanelLimit` hiện SỐ LƯỢT CÒN LẠI
 ##   · `Replay` — nút phụ ẩn sẵn, UIController hiện khi ván không còn thắng được (Sum Path)
 ##
 ## HUD bản dọc = `nodes/hud/<mode>.tscn` (kế thừa `portrait/portrait.tscn`)
@@ -44,8 +44,8 @@ func submit_btn() -> BaseButton:
 
 
 ## Nút SKIP LEVEL — CHỈ hiện khi đang chơi MÀN trong màn Chọn màn (GameScene tự bật/tắt)
-func skip_btn() -> BaseButton:
-	return button("Skip")
+func skip_btn() -> LimitedButton:
+	return button("Skip") as LimitedButton
 
 func undo_btn() -> LimitedButton:
 	return button("Undo") as LimitedButton
@@ -58,12 +58,14 @@ func hint_btn() -> LimitedButton:
 	#return button("Restart")
 
 
-## Cập nhật badge giới hạn + trạng thái KHOÁ của 2 nút — mỗi nút tự lo badge của mình
-## (`LimitedButton.set_limit`), thanh nút không với tay vào node con của nút.
-func update_limits(undo_left: int, undo_max: int, hint_left: int, hint_max: int) -> void:
+## Cập nhật số dư toàn tài khoản + trạng thái khoá của các nút có giới hạn.
+func update_tool_counts(skip_left: int, undo_left: int, hint_left: int) -> void:
+	var skip := skip_btn()
+	if skip != null:
+		skip.set_remaining(skip_left)
 	var undo := undo_btn()
 	if undo != null:
-		undo.set_limit(undo_left, undo_max)
+		undo.set_remaining(undo_left)
 	var hint := hint_btn()
 	if hint != null:
-		hint.set_limit(hint_left, hint_max)
+		hint.set_remaining(hint_left)

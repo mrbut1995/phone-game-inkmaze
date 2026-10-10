@@ -108,31 +108,53 @@ func _init() -> void:
 	assert(submit_btn.visible == false, "Nut GUI BAI AN o che do khong phai Wall Builder")
 	var undo_btn := game_scene.undo_btn
 	var hint_btn := game_scene.hint_btn
+	var skip_btn := game_scene.skip_btn
 	assert(undo_btn != null and hint_btn != null, "Thanh hanh dong phai co nut UNDO + HINT")
 	assert(undo_btn.find_child("PanelLimit", true, false) != null
-			and hint_btn.find_child("PanelLimit", true, false) != null,
-			"Moi nut UNDO/HINT phai co badge PanelLimit")
+			and hint_btn.find_child("PanelLimit", true, false) != null
+			and skip_btn.find_child("PanelLimit", true, false) != null,
+			"Moi nut SKIP/UNDO/HINT phai co badge PanelLimit")
 	assert(restart_btn.pressed.is_connected(game_scene._on_restart_pressed),
 			"Nut CHOI LAI phai duoc noi toi _on_restart_pressed")
 	assert(submit_btn.pressed.is_connected(gc.submit_build),
 			"Nut GUI BAI phai duoc noi toi GameController.submit_build")
-	print("[SUCCESS] Nut CHOI LAI nam trong thanh hanh dong + 2 badge PanelLimit co mat!")
+	print("[SUCCESS] Nut CHOI LAI nam trong thanh hanh dong + 3 badge PanelLimit co mat!")
 
-	# 5c. Giới hạn lượt Hoàn tác/Gợi ý: hết lượt thì CHẶN + khoá nút
-	gc.undo_left = 0
-	gc.hint_left = 1
+	# 5c. Số dư công cụ toàn game: hết lượt thì CHẶN, lượt Hint đã dùng không được nạp lại.
+	var manager: Node = root.get_node("GameManager")
+	var saved_tool_uses: Dictionary = (manager.get("tool_uses") as Dictionary).duplicate()
+	var hint_before_grant := int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT))
+	assert(not bool(manager.call("grant_tool_uses", GameManagerClass.TOOL_HINT, 1, "debug")),
+			"Chi mua hang/nhiem vu moi duoc cap them luot qua API gameplay")
+	assert(bool(manager.call("grant_tool_uses", GameManagerClass.TOOL_HINT, 1, "mission")),
+			"Nhiem vu co the cap them luot cong cu")
+	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT)) == hint_before_grant + 1,
+			"Cap thuong cong cu phai tang dung so luot")
+	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_UNDO, 0)
+	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_HINT, 1)
+	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_SKIP, 0)
+	gc._update_hud()
 	game_scene._on_undo_pressed()
-	assert(gc.undo_left == 0, "Het luot hoan tac thi bam UNDO khong tru them luot")
+	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_UNDO)) == 0,
+			"Het luot hoan tac thi bam UNDO khong tru them luot")
 	gc._update_hud()
 	assert(undo_btn.disabled == true, "Het luot -> nut UNDO bi KHOA")
 	assert(hint_btn.disabled == false, "Con luot -> nut HINT khong bi khoa")
-	var hint_left_before := gc.hint_left
 	game_scene._on_hint_pressed()
-	assert(gc.hint_left == hint_left_before - 1, "Bam HINT phai tru 1 luot")
-	gc.hint_left = 0
+	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT)) == 0,
+			"Bam HINT phai tru mot luot dung chung")
 	gc._update_hud()
 	assert(hint_btn.disabled == true, "Het luot -> nut HINT bi KHOA")
-	print("[SUCCESS] Gioi han luot UNDO/HINT hoat dong (het luot = khoa nut)!")
+	assert(skip_btn.disabled == true, "Het luot -> nut SKIP bi KHOA")
+	var inventory_snapshot: Dictionary = manager.call("export_progress")
+	manager.call("debug_set_tool_uses", GameManagerClass.TOOL_HINT, 9)
+	manager.call("import_progress", inventory_snapshot)
+	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT)) == 0,
+			"So du cong cu phai duoc khoi phuc tu du lieu da luu")
+	for tool_id in saved_tool_uses:
+		manager.call("debug_set_tool_uses", str(tool_id), int(saved_tool_uses[tool_id]))
+	gc._update_hud()
+	print("[SUCCESS] So du SKIP/UNDO/HINT dung chung va duoc luu; het luot = khoa nut!")
 
 	# 6. Kiem tra Player Cursor Running Animation
 	var cursor = game_scene.board_view._cursor
@@ -218,6 +240,21 @@ func _init() -> void:
 	Popups.close_id(Popups.GAME_OVER_LEVEL)
 	await create_timer(0.4).timeout
 	print("[SUCCESS] Popup Gameover level an 'Ve Menu' trong luong hoc lan dau!")
+
+	var debug_scene := (load("res://scenes/debug.tscn") as PackedScene).instantiate()
+	root.add_child(debug_scene)
+	await process_frame
+	var tool_spinners := debug_scene.find_children("*", "SpinBox", true, false)
+	assert(tool_spinners.size() == 3, "Debug Console phai co SpinBox de chinh ca 3 cong cu")
+	var hint_spinner := tool_spinners[2] as SpinBox
+	var hint_balance := int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT))
+	hint_spinner.value = hint_balance + 1
+	assert(int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT)) == hint_balance + 1,
+			"Debug SpinBox phai cap nhat so du cong cu")
+	hint_spinner.value = hint_balance
+	debug_scene.queue_free()
+	await process_frame
+	print("[SUCCESS] Debug Console co SpinBox chinh duoc so du SKIP/UNDO/HINT!")
 
 	print("\n========================================================")
 	print("  TAT CA TEST DEU VUOT QUA THANH CONG!")

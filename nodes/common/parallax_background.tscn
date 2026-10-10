@@ -7,7 +7,11 @@
 
 [node name="Background" type="Control" unique_id=284872059 node_paths=PackedStringArray("layer_far", "layer_mid", "layer_near", "paper_art", "holes_art", "doodles_art")]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_bg")
 layer_far = NodePath("PaperFar")
@@ -28,7 +32,7 @@ mouse_filter = 2
 color = Color(0.98039216, 0.9607844, 0.92156863, 1)
 
 [node name="PaperFar" type="Parallax2D" parent="." unique_id=1024311938]
-scroll_scale = Vector2(0.05, 0.05)
+scroll_scale = Vector2(0, 0)
 
 [node name="Art" type="TextureRect" parent="PaperFar" unique_id=66681557]
 anchors_preset = 15
@@ -52,11 +56,15 @@ texture = ExtResource("3_holes")
 expand_mode = 1
 
 [node name="DoodleNear" type="Parallax2D" parent="." unique_id=1138998453]
-visible = false
 scroll_scale = Vector2(0.28, 0.28)
 
 [node name="Pattern" type="TextureRect" parent="DoodleNear" unique_id=1598044319]
 modulate = Color(1, 1, 1, 0.5)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("4_doodles")
 expand_mode = 1

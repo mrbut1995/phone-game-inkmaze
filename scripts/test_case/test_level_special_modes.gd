@@ -237,6 +237,8 @@ func _section_4_skip_button(gm: Node) -> void:
 		var packed := load(path) as PackedScene
 		var bar := packed.instantiate() as ActionBar if packed != null else null
 		_check(bar != null and bar.skip_btn() != null, "ActionBar co nut Skip (%s)" % path.get_file())
+		_check(bar != null and bar.skip_btn().find_child("PanelLimit", true, false) != null,
+			"Nut Skip co PanelLimit (%s)" % path.get_file())
 		if bar != null:
 			bar.free()
 
@@ -262,6 +264,19 @@ func _section_4_skip_button(gm: Node) -> void:
 	gm.call("prepare_level_run", LEVEL_SAMPLE)
 	scene._apply_mode_buttons(str(gm.get("current_mode")))
 	_check(scene.skip_btn.visible, "Van man: nut Skip HIEN")
+	scene.game_controller._update_hud()
+	var skip_label := scene.skip_btn.find_child("Label", true, false) as Label
+	_check(skip_label != null
+		and skip_label.text == str(gm.call("tool_uses_left", GameManagerClass.TOOL_SKIP)),
+		"Badge Skip hien so du dung chung")
+	var saved_skip_uses := int(gm.call("tool_uses_left", GameManagerClass.TOOL_SKIP))
+	gm.call("debug_set_tool_uses", GameManagerClass.TOOL_SKIP, 0)
+	scene.game_controller._update_hud()
+	_check(scene.skip_btn.disabled, "Het luot Skip: nut bi khoa")
+	_check(not scene.game_controller.skip_current_level(),
+		"Het luot Skip: bo qua man bi tu choi")
+	gm.call("debug_set_tool_uses", GameManagerClass.TOOL_SKIP, saved_skip_uses)
+	scene.game_controller._update_hud()
 
 	scene.queue_free()
 	await process_frame

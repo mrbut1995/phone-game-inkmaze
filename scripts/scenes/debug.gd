@@ -103,6 +103,7 @@ func _build() -> void:
 		child.queue_free()
 
 	_build_state()
+	_build_tool_balances()
 	_build_navigate()
 	_build_progress()
 	_build_daily()
@@ -128,6 +129,44 @@ func _build_state() -> void:
 	_add_value("Test run", "%s · floor %d" % [str(_gm_value("debug_run", false)),
 		int(_gm_value("start_floor_override", 0))])
 	_add_value("Popups open", str(Popups.has_open()))
+
+
+func _build_tool_balances() -> void:
+	_add_section("TOOL BALANCES")
+	_add_label("Số lượt dùng chung toàn bộ trò chơi; chỉ mua hàng/nhiệm vụ mới cấp thêm.",
+		&"PopupSubtitle")
+	var gm := _game_manager()
+	if gm == null:
+		_add_label("Không tìm thấy GameManager", &"PopupSubtitle")
+		return
+	for tool_data in [
+		[GameManagerClass.TOOL_SKIP, "Skip"],
+		[GameManagerClass.TOOL_UNDO, "Eraser / Undo"],
+		[GameManagerClass.TOOL_HINT, "Hint"],
+	]:
+		var tool_id := str(tool_data[0])
+		var row := HBoxContainer.new()
+		row.custom_minimum_size = Vector2(0, 58)
+		row.add_theme_constant_override("separation", 16)
+		layout.rows_box.add_child(row)
+
+		var label := Label.new()
+		label.theme_type_variation = &"PopupRowLabel"
+		label.text = str(tool_data[1])
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		row.add_child(label)
+
+		var amount := SpinBox.new()
+		amount.min_value = 0
+		amount.max_value = 999999
+		amount.step = 1
+		amount.value = int(gm.call("tool_uses_left", tool_id))
+		amount.custom_minimum_size = Vector2(180, 48)
+		amount.value_changed.connect(func(value: float) -> void:
+			gm.call("debug_set_tool_uses", tool_id, int(value))
+		)
+		row.add_child(amount)
 
 
 func _build_navigate() -> void:

@@ -24,12 +24,8 @@ var _pending_bonus := 0
 var _floor_finished := false
 var _run_active := false
 
-## GIỚI HẠN lượt GỢI Ý / HOÀN TÁC của MỖI MÀN/TẦNG (0 = không giới hạn → HUD ẩn badge PanelLimit).
-## Nạp lại ĐẦY ĐỦ mỗi khi vào màn/tầng mới (xem `_start_floor`) — hàng mới của Dungeon cũng
-## được cấp lại lượt.
-@export var undo_limit := 3
-@export var hint_limit := 3
-## Số lượt CÒN LẠI của màn hiện tại — HUD hiện trên badge `PanelLimit` của 2 nút (xem ActionBar)
+## Số dư công cụ toàn tài khoản, chép sang HUD khi vẽ lại.
+var skip_left := 0
 var undo_left := 0
 var hint_left := 0
 ## Chi phí từng bước đã đi (Countdown Cost thu 1..4 bước mỗi ô) — Undo hoàn lại ĐÚNG chi phí
@@ -109,9 +105,6 @@ func _start_floor(floor_number: int) -> void:
 	# Challenge: cấp lại đồng hồ con "mỗi bước" + lượt quay đầu cho màn mới
 	_ch_step_start = 0.0
 	_ch_backtracks = 0
-	# Cấp lại lượt Gợi ý/Hoàn tác cho MÀN mới (Dungeon: mỗi tầng một suất mới)
-	undo_left = maxi(undo_limit, 0)
-	hint_left = maxi(hint_limit, 0)
 	if game_state != null:
 		game_state.floor_number = floor_number
 	# Chốt ngưỡng 3 nhiệm vụ của màn/tầng mới (số bước thiết kế đã nạp trong setup_floor)
@@ -199,6 +192,9 @@ func _update_hud() -> void:
 	if ui_controller == null or game_state == null:
 		return
 	var mode: BaseGameMode = game_mode_controller.game_mode if game_mode_controller != null else null
+	skip_left = _tool_uses_left(GameManagerClass.TOOL_SKIP)
+	undo_left = _tool_uses_left(GameManagerClass.TOOL_UNDO)
+	hint_left = _tool_uses_left(GameManagerClass.TOOL_HINT)
 	var extra_info := game_mode_controller.game_mode.get_hud_extra_info() if game_mode_controller.game_mode != null else ""
 	var title := game_mode_controller.game_mode.get_hud_floor_title(game_state.floor_number) if game_mode_controller.game_mode != null else "TẦNG %d" % game_state.floor_number
 	var subtitle := game_mode_controller.game_mode.get_hud_subtitle(game_state.floor_number) if game_mode_controller.game_mode != null else ""
@@ -243,10 +239,9 @@ func _update_hud() -> void:
 			"mode_name": mode.mode_id if mode != null else "dungeon",
 			"undo_highlight": countdown_blocked,
 			"replay_visible": replay_visible,
+			"skip_left": skip_left,
 			"undo_left": undo_left,
-			"undo_max": maxi(undo_limit, 0),
 			"hint_left": hint_left,
-			"hint_max": maxi(hint_limit, 0),
 			"guided": _guided_run(),
 		})
 	ui_controller.update_hud(
@@ -638,10 +633,14 @@ func _seed_level_run(floor_number: int) -> void:
 
 ## Nút SKIP LEVEL (chỉ hiện khi chơi màn): BỎ QUA màn đang chơi — mở khoá màn KẾ TIẾP trong
 ## cùng chương nhưng **KHÔNG ghi Sao / thời gian**, rồi vào luôn màn đó.
-## Hết chương (không còn màn kế) -> mở màn Chọn Chương. Trả về false nếu ván này không phải ván màn.
+## Hết chương (không còn màn kế) -> mở màn Chọn Chương. Trả về false nếu không phải ván màn hoặc hết lượt Skip.
 func skip_current_level() -> bool:
 	var gm: Node = get_node_or_null("/root/GameManager")
 	if gm == null or not bool(gm.get("level_run")):
+		return false
+	if _tool_uses_left(GameManagerClass.TOOL_SKIP) <= 0:
+		return false
+	if not bool(gm.call("consume_tool_use", GameManagerClass.TOOL_SKIP)):
 		return false
 	if ui_controller != null:
 		ui_controller.hide_overlays()
@@ -891,8 +890,8 @@ func undo() -> void:
 	if _challenge_blocks_tool():
 		_challenge_fail(ChallengeGameMode.NO_TOOL)
 		return
-	# Hết lượt hoàn tác của màn (nút đã bị khoá ở HUD) → không làm gì
-	if undo_limit > 0 and undo_left <= 0:
+	# Hết lượt hoàn tác toàn tài khoản (nút đã bị khoá ở HUD) → không làm gì
+	if _tool_uses_left(GameManagerClass.TOOL_UNDO) <= 0:
 		return
 	# Wall Builder: Undo xoá ĐOẠN TƯỜNG vừa nối (chế độ không có nước đi để lùi)
 	if grid_controller != null and game_mode_controller != null \
@@ -901,7 +900,7 @@ func undo() -> void:
 		Sfx.play(Sfx.UNDO)
 		if game_state != null:
 			game_state.undos_used += 1     # nhiệm vụ "không dùng hoàn tác"
-		undo_left = maxi(undo_left - 1, 0)
+		_consume_tool_use(GameManagerClass.TOOL_UNDO)
 		_update_hud()
 		return
 	if grid_controller != null and grid_controller.undo_last_move():
@@ -915,7 +914,7 @@ func undo() -> void:
 				refund = _move_costs.pop_back()
 			game_state.refund_step(refund)
 			game_state.undos_used += 1     # nhiệm vụ "không dùng hoàn tác"
-		undo_left = maxi(undo_left - 1, 0)
+		_consume_tool_use(GameManagerClass.TOOL_UNDO)
 		_update_hud()
 
 
@@ -926,8 +925,8 @@ func hint() -> void:
 	if _challenge_blocks_tool():
 		_challenge_fail(ChallengeGameMode.NO_TOOL)
 		return
-	# Hết lượt gợi ý của màn (nút đã bị khoá ở HUD) → không làm gì
-	if hint_limit > 0 and hint_left <= 0:
+	# Hết lượt gợi ý toàn tài khoản (nút đã bị khoá ở HUD) → không làm gì
+	if _tool_uses_left(GameManagerClass.TOOL_HINT) <= 0:
 		return
 	# SFX: chuông gió khi bấm Gợi ý
 	Sfx.play(Sfx.HINT)
@@ -936,14 +935,24 @@ func hint() -> void:
 			and game_mode_controller.game_mode.hint_wall(grid_controller.anchor_controller, grid_controller.maze):
 		if game_state != null:
 			game_state.hints_used += 1     # nhiệm vụ "không dùng gợi ý"
-		hint_left = maxi(hint_left - 1, 0)
+		_consume_tool_use(GameManagerClass.TOOL_HINT)
 		_update_hud()
 		return
 	grid_controller.give_hint()
 	if game_state != null:
 		game_state.hints_used += 1     # nhiệm vụ "không dùng gợi ý"
-	hint_left = maxi(hint_left - 1, 0)
+	_consume_tool_use(GameManagerClass.TOOL_HINT)
 	_update_hud()
+
+
+func _tool_uses_left(tool_id: String) -> int:
+	var gm := get_node_or_null("/root/GameManager")
+	return int(gm.call("tool_uses_left", tool_id)) if gm != null else 0
+
+
+func _consume_tool_use(tool_id: String) -> bool:
+	var gm := get_node_or_null("/root/GameManager")
+	return bool(gm.call("consume_tool_use", tool_id)) if gm != null else false
 
 
 ## Wall Builder: người chơi bấm GỬI — đối chiếu bản dựng với MỌI con số trên bàn.
