@@ -31,7 +31,7 @@ extends Control
 ## Gọi mỗi khi HUD cần vẽ lại (GameController._update_hud). ctx gồm:
 ##   title:String · subtitle:String · steps_remaining:int · elapsed_time:float
 ##   floor_number:int · extra:String · mode:BaseGameMode
-##   undo_left/undo_max · hint_left/hint_max :int — giới hạn lượt Hoàn tác/Gợi ý của màn
+##   skip_left · undo_left · hint_left :int — số dư công cụ toàn tài khoản
 func update_hud(ctx: Dictionary) -> void:
 	set_time(float(ctx.get("elapsed_time", 0.0)))
 	_sync_limits(ctx)
@@ -78,13 +78,14 @@ func action_bar() -> ActionBar:
 	return action_bar_node
 
 
-## Giới hạn lượt Gợi ý/Hoàn tác (GameController tính) → badge `PanelLimit` + khoá nút khi hết lượt
+## Số dư công cụ tài khoản → badge `PanelLimit` + khoá nút khi hết lượt
 func _sync_limits(ctx: Dictionary) -> void:
 	var bar := action_bar()
 	if bar != null:
-		bar.update_limits(
-			int(ctx.get("undo_left", 0)), int(ctx.get("undo_max", 0)),
-			int(ctx.get("hint_left", 0)), int(ctx.get("hint_max", 0)))
+		bar.update_tool_counts(
+			int(ctx.get("skip_left", 0)),
+			int(ctx.get("undo_left", 0)),
+			int(ctx.get("hint_left", 0)))
 
 
 ## Bật bố cục NGANG cho thanh nút (dọc/ngang mỗi hướng 1 scene action_bar riêng)
@@ -106,7 +107,7 @@ func submit_btn() -> BaseButton:
 
 
 ## Nút SKIP LEVEL (chỉ hiện khi chơi MÀN trong màn Chọn màn)
-func skip_btn() -> BaseButton:
+func skip_btn() -> LimitedButton:
 	var bar := action_bar()
 	return bar.skip_btn() if bar != null else null
 

@@ -196,7 +196,10 @@ texture_hover = ExtResource("13_31yh8")
 texture_disabled = ExtResource("15_oj83g")
 texture_focused = ExtResource("16_5kyg3")
 
-[node name="Skip" type="TextureButton" parent="Row" unique_id=368139109]
+[node name="Skip" type="TextureButton" parent="Row" unique_id=368139109 node_paths=PackedStringArray("panel_limit", "limit_label")]
+script = ExtResource("limit_btn")
+panel_limit = NodePath("PanelLimit")
+limit_label = NodePath("PanelLimit/Label")
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_stretch_ratio = 0.2
@@ -206,6 +209,44 @@ texture_pressed = ExtResource("15_vjyni")
 texture_hover = ExtResource("14_kn0bs")
 texture_disabled = ExtResource("16_trajn")
 texture_focused = ExtResource("14_kn0bs")
+
+[node name="PanelLimit" type="Control" parent="Row/Skip" unique_id=390261103]
+layout_mode = 1
+anchor_left = 0.59300005
+anchor_top = -0.279
+anchor_right = 1.088
+anchor_bottom = 0.344
+offset_left = 0.036994934
+offset_top = 0.019001007
+offset_right = -0.008003235
+offset_bottom = 0.01599884
+mouse_filter = 1
+script = ExtResource("23_7v77u")
+patch_margin_left = 12.0
+patch_margin_top = 11.0
+patch_margin_right = 13.0
+patch_margin_bottom = 14.0
+texture_normal = ExtResource("24_kfsk0")
+texture_hover = ExtResource("24_kfsk0")
+texture_pressed = ExtResource("25_vvy6r")
+texture_disabled = ExtResource("26_1uc10")
+metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+
+[node name="Label" type="Label" parent="Row/Skip/PanelLimit" unique_id=390261104]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1521739
+anchor_top = 0.12903225
+anchor_right = 0.87000006
+anchor_bottom = 0.74200004
+offset_right = -0.020004272
+offset_bottom = -0.0020008087
+theme_type_variation = &"HintGuideText"
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Spacer" type="Control" parent="Row" unique_id=844901431]
 layout_mode = 2

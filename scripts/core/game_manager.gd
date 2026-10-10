@@ -8,10 +8,23 @@ extends Node
 signal level_completed(level_id: int, stars: int, score: int)
 signal mode_changed(new_mode: String)
 signal chapter_unlocked(chapter_id: int)
+signal tool_inventory_changed(tool_id: String, remaining: int)
+
+const TOOL_SKIP := "skip"
+const TOOL_UNDO := "undo"
+const TOOL_HINT := "hint"
+const TOOL_IDS: Array[String] = [TOOL_SKIP, TOOL_UNDO, TOOL_HINT]
+const INITIAL_TOOL_USES := 3
 
 var current_mode: String = "dungeon"
 var current_difficulty: String = "medium"
 var current_level: int = 1
+## Số lượt dùng công cụ còn lại trên TOÀN BỘ trò chơi, không được cấp lại theo màn/tầng.
+var tool_uses: Dictionary = {
+	TOOL_SKIP: INITIAL_TOOL_USES,
+	TOOL_UNDO: INITIAL_TOOL_USES,
+	TOOL_HINT: INITIAL_TOOL_USES,
+}
 
 # Tiến trình người chơi
 var unlocked_levels: int = 1
@@ -216,6 +229,51 @@ func skip_level(level_id: int) -> int:
 		unlocked_levels = next_id
 		Save.queue_save()
 	return next_id
+
+
+## Số lượt còn lại của công cụ trên toàn tài khoản người chơi.
+func tool_uses_left(tool_id: String) -> int:
+	if not TOOL_IDS.has(tool_id):
+		return 0
+	return maxi(int(tool_uses.get(tool_id, 0)), 0)
+
+
+## Tiêu thụ một lượt dùng. Trả false khi công cụ không hợp lệ hoặc đã hết lượt.
+func consume_tool_use(tool_id: String) -> bool:
+	if not TOOL_IDS.has(tool_id) or tool_uses_left(tool_id) <= 0:
+		return false
+	tool_uses[tool_id] = tool_uses_left(tool_id) - 1
+	tool_inventory_changed.emit(tool_id, tool_uses_left(tool_id))
+	Save.queue_save()
+	return true
+
+
+## Cấp lượt từ nguồn mua hàng/nhiệm vụ. Các luồng này sẽ được nối khi được định nghĩa.
+func grant_tool_uses(tool_id: String, amount: int, source: String) -> bool:
+	if not TOOL_IDS.has(tool_id) or amount <= 0 or not ["purchase", "mission"].has(source):
+		return false
+	return _set_tool_uses(tool_id, tool_uses_left(tool_id) + amount)
+
+
+## Chỉnh số dư trong Debug Console; giá trị được lưu như tiến trình người chơi.
+func debug_set_tool_uses(tool_id: String, amount: int) -> bool:
+	if not OS.is_debug_build():
+		push_warning("[GameManager] Chi cho phep chinh so du cong cu trong debug build")
+		return false
+	return _set_tool_uses(tool_id, amount)
+
+
+func _set_tool_uses(tool_id: String, amount: int) -> bool:
+	if not TOOL_IDS.has(tool_id):
+		push_warning("[GameManager] Cong cu khong hop le: '%s'" % tool_id)
+		return false
+	var remaining := maxi(amount, 0)
+	if tool_uses_left(tool_id) == remaining:
+		return true
+	tool_uses[tool_id] = remaining
+	tool_inventory_changed.emit(tool_id, remaining)
+	Save.queue_save()
+	return true
 
 
 ## Khởi động Daily Mission theo ngày — MAZE ĐẶC BIỆT (mode xoay vòng của ngày)
@@ -502,6 +560,7 @@ func export_progress() -> Dictionary:
 		"level_best_time": level_best_time.duplicate(),
 		"selected_daily_day": selected_daily_day,
 		"current_level": current_level,
+		"tool_uses": tool_uses.duplicate(),
 		"unlocked_chapters": unlocked_chapters.duplicate(),
 		"current_chapter": current_chapter,
 		"tutorial_progress": tutorial_progress.duplicate(),
@@ -518,6 +577,11 @@ func import_progress(data: Dictionary) -> void:
 	level_best_time = _int_key_dict(data.get("level_best_time", null), level_best_time, false)
 	selected_daily_day = int(data.get("selected_daily_day", selected_daily_day))
 	current_level = maxi(int(data.get("current_level", current_level)), 1)
+	if data.get("tool_uses", null) is Dictionary:
+		var saved_tool_uses: Dictionary = data["tool_uses"]
+		for tool_id in TOOL_IDS:
+			if saved_tool_uses.has(tool_id):
+				tool_uses[tool_id] = maxi(int(saved_tool_uses[tool_id]), 0)
 	unlocked_chapters = _int_array(data.get("unlocked_chapters", null))
 	if unlocked_chapters.is_empty():
 		unlocked_chapters = [1]
