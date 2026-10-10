@@ -65,6 +65,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Frame" type="TextureRect" parent="Disc" unique_id=109478522]
+texture_filter = 4
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -80,6 +81,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Icon" type="TextureRect" parent="Disc" unique_id=333428830]
+texture_filter = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.04

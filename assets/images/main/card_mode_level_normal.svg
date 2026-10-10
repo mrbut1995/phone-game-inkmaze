@@ -1,19 +1,37 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -30 804 310" width="402" height="155">
+<svg width="402" height="155" viewBox="-12 -30 804 310" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="dgShadow" x="-10%" y="-15%" width="120%" height="135%">
-      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E2830" flood-opacity="0.14" />
+    <filter id="cardShadowNormal" x="-12" y="-10" width="804" height="290" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="bgFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="5"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.27 0 0 0 0 0.26 0 0 0 0 0.19 0 0 0 0.08 0"/>
+      <feBlend mode="normal" in2="bgFix" result="shadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="shadow" result="shape"/>
     </filter>
   </defs>
-  <g filter="url(#dgShadow)">
-    <rect width="780" height="260" rx="24" fill="#3D83AE" stroke="#235A7D" stroke-width="4" />
-    <line x1="38" y1="0" x2="38" y2="260" stroke="#FAF5EB" stroke-width="3" opacity="0.65" />
-    
-    
-    
-    
-    <g transform="translate(725, 105)">
-      <path d="M 0 0 L 15 0 M 8 -10 L 18 0 L 8 10" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
-    </g>
+
+  <!-- Lớp giấy lót bên dưới -->
+  <rect x="4" y="6" width="772" height="252" rx="4" fill="#F3B3A2"/>
+
+  <!-- Thân thẻ chính với bóng đổ -->
+  <g filter="url(#cardShadowNormal)">
+    <path d="M 6 0 H 736 L 776 40 V 254 L 768 258 L 760 254 L 752 258 L 744 254 L 736 258 L 728 254 H 6 L 0 254 V 6 L 6 0 Z" fill="#FBDDD2" stroke="#C95F4A" stroke-width="2.5" stroke-linejoin="round"/>
   </g>
+
+  <!-- Nếp gấp góc phải trên -->
+  <path d="M 736 0 L 776 40 H 736 V 0 Z" fill="#F3B3A2" stroke="#EBA99A" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Gáy sổ & 3 lỗ bấm giấy -->
+  <line x1="48" y1="16" x2="48" y2="242" stroke="#EBA99A" stroke-width="1.5"/>
+  <circle cx="24" cy="48" r="4.5" fill="#F8CFC3" stroke="#EBA99A" stroke-width="1.2"/>
+  <circle cx="24" cy="130" r="4.5" fill="#F8CFC3" stroke="#EBA99A" stroke-width="1.2"/>
+  <circle cx="24" cy="212" r="4.5" fill="#F8CFC3" stroke="#EBA99A" stroke-width="1.2"/>
+
+  <!-- Các đường kẻ ngang ghi chú -->
+  <line x1="70" y1="105" x2="720" y2="105" stroke="#EBA99A" stroke-width="1.5"/>
+  <line x1="70" y1="195" x2="720" y2="195" stroke="#EBA99A" stroke-width="2.5"/>
+
+  <!-- Dấu mộc tròn góc dưới phải -->
+  <circle cx="725" cy="215" r="14" fill="none" stroke="#C95F4A" stroke-width="2"/>
 </svg>

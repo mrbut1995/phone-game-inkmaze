@@ -670,7 +670,7 @@ Khung HUD: `Information` = Control tại `(50, 175)` kích thước `980 × 249`
 | **TRẠM ĐO ĐỘ PHAI MỰC** | 715 × 156 | (265, 3) | `card_ink_meter.svg` + `bar_ink_warning.svg` | BƯỚC ĐÃ ĐI (`NN` + `(-N MỰC)`) · quang phổ 4 mức · cảnh báo `N Ô ĐÃ CẠN MỰC` (tự ẩn khi chưa có ô nào cạn) (`FadingInkHUD`) |
 | **CÂN BẰNG TỔNG ĐIỂM ĐƯỜNG ĐI** | 715 × 156 | (265, 3) | `card_sum_balance.svg` + `bar_sum_fill.svg` + `bar_sum_ticks.svg` | TỔNG HIỆN TẠI (+ số ô) · con dấu TOÁN TỬ `< > =` · MỤC TIÊU · chip `CẦN THÊM / CÒN ĐƯỢC / ĐANG VƯỢT / ĐÃ ĐỦ` · thanh tiến độ (`SumPathHUD`) |
 
-- Cả 3 thẻ đều theo ngôn ngữ **sổ tay**: viền màu theo chế độ (cam `#C2410C` · mực `#1D4E72` · xanh `#3D83AE`), lề dọc, dòng kẻ ô ly mờ; số liệu dùng theme variation `Hud*` trong `theme_text.tres`.
+- Cả 3 thẻ đều theo ngôn ngữ **sổ tay**: viền màu theo chế độ (cam `#C2410C` · mực `#1D4E72` · xanh `#3D83AE`), lề dọc, dòng kẻ ô ly mờ; số liệu dùng theme variation `Hud*` trong `theme_default.tres`.
 - **Dải phân đoạn ngân sách**: mỗi bước = 1 phân đoạn (đã dùng = xám `#E2E8F0`, còn lại = cam `#EA580C`); bề rộng phân đoạn **tự co** để cả dải luôn vừa 654px khi ngân sách > 16 bước.
 - **Trích KHỐI ra texture node (2026-09-17)**: 3 sheet trên nay **CHỈ vẽ phần tĩnh** (khung · lề · dòng kẻ · vạch chia);
   các khối bên trong đã tách thành art riêng và đặt bằng NODE trong scene HUD (chèn ngay sau `Sheet` → nằm trên
@@ -1290,14 +1290,14 @@ Thẻ chương (`nodes/chapters/chapter_card.tscn`, `class_name ChapterCard`, 97
 | ĐANG KHÓA | xám `btn_locked` | ổ khóa (xám) | `CẦN n SAO` / `Chưa đủ sao` |
 | SẮP RA MẮT | xám `btn_locked` | — | `SẮP RA MẮT` |
 
-Cỡ chữ trên thẻ đã tăng cho dễ đọc: tiêu đề 40 · mô tả 22 · thanh Sao 23 · chip 17–19 · nút 24–26 · ruy băng 17 · ví Sao 40 (xem `theme_text.tres`, nhóm `Chapter*`).
+Cỡ chữ trên thẻ đã tăng cho dễ đọc: tiêu đề 40 · mô tả 22 · thanh Sao 23 · chip 17–19 · nút 24–26 · ruy băng 17 · ví Sao 40 (xem `theme_default.tres`, nhóm `Chapter*`).
 
 Màn **Chọn màn** (`scripts/scenes/levels.gd`) nay **chỉ hiện màn của `current_chapter`** (chương rỗng → hiện tất cả để không chặn người chơi), banner trên cùng hiện "CHƯƠNG n: Tên" (30px) + dòng **ĐỔI CHƯƠNG** (24px); **bấm cả panel banner** (node `ChapterBanner`, đã nối `gui_input`) → màn Chọn Chương; nút Back → Main.
 
 ### 12.5. Asset · theme · chuỗi dịch
 
 - `assets/images/chapters/` (25 SVG): 3 nền thẻ (`card_open`/`card_ready`/`card_locked`) · `halo_ready` · `ribbon` · `chip_size`/`chip_need`/`chip_have` · `bar_track`/`bar_fill` · `wallet_chip` · `banner_rule` · 3 nút 250×100 (`btn_play_*`, `btn_unlock_*`, `btn_locked`) · **4 icon riêng theo chương** (`icon_intro`/`logic`/`trap`/`master`) · 3 doodle theo cỡ (`maze_small`/`medium`/`large`) · `icon_star_white` · `lock_overlay`.
-- Theme variations (`resources/settings/theme_text.tres`): `ChapterCardTitle(Locked)` · `ChapterCardSubtitle(Locked)` · `ChapterChipSize(Amber/Muted)` · `ChapterRibbon` · `ChapterStars(Muted/Sub)` · `ChapterNeedChip`/`ChapterHaveChip` · `ChapterAction(Sub/SubAmber/Locked/LockedSub)` · `ChapterWalletCount`/`ChapterWalletLabel` · `ChapterBannerText`.
+- Theme variations (`resources/settings/theme_default.tres`): `ChapterCardTitle(Locked)` · `ChapterCardSubtitle(Locked)` · `ChapterChipSize(Amber/Muted)` · `ChapterRibbon` · `ChapterStars(Muted/Sub)` · `ChapterNeedChip`/`ChapterHaveChip` · `ChapterAction(Sub/SubAmber/Locked/LockedSub)` · `ChapterWalletCount`/`ChapterWalletLabel` · `ChapterBannerText`.
 - Chuỗi mới trong `string_extra.csv`: `STR_CHAPTER_SCREEN_TITLE` · `STR_CHAPTER_TITLE_FORMAT` · `STR_CHAPTER_RIBBON_{PLAYING,OPEN,READY,LOCKED,COMING}` · `STR_CHAPTER_SIZE_FORMAT` · `STR_CHAPTER_STARS_FORMAT` · `STR_CHAPTER_LEVELS_FORMAT` · `STR_CHAPTER_NEED_FORMAT` · `STR_CHAPTER_REQUIRE_FORMAT` · `STR_CHAPTER_HAVE_FORMAT` · `STR_CHAPTER_PLAY(_SUB)` · `STR_CHAPTER_UNLOCK` · `STR_CHAPTER_NOT_ENOUGH` · `STR_CHAPTER_STARS_HELD` · `STR_CHAPTER_BANNER` · `STR_CHAPTER_CONTINUE_FORMAT`.
 
 ### 12.6. File liên quan
@@ -1431,7 +1431,7 @@ Mọi node gốc của scene đều có `index="1".."8"` để node `Popups` c�
 ### 13.7. Asset · theme · chuỗi dịch
 
 - `assets/images/shop/` (30 SVG): `tab_active`/`tab_inactive` · `card_row` (980×180) · **`card_tile` (475×294 — thẻ ô)** · **`card_coin` (475×240)** · **`card_noads` (980×200)** · `chip_price` · `chip_red` (nhãn đỏ no-ads) · `btn_action_{normal,pressed,amber}` · `btn_equipped` · **`btn_tile_{normal,done,price,price_vip}` (200×46)** · **`btn_coin` (419×56)** · **`btn_noads` (230×80)** · `wallet_chip` · `banner_gift` · `btn_plus` · `gift_box` · `icon_box` · **`icon_circle`** · `ink_stroke` · `icon_{pen,ink,paper,coin}` · `icon_tool_{undo,hint,reveal,time,revive,shield}` (art TRẮNG → `modulate`) · **`icon_coin_t1..t5`** (icon cấp Xu: xu đơn · cọc xu · đống xu · túi tiền · rương vàng — lấy từ `mockup/coin_tiers.svg`).
-- Theme variations (`theme_text.tres`, nhóm `Shop*`, 27 cái): `ShopTitle` · `ShopEyebrow` · `ShopTabLabel(Active)` · `ShopName(Tile)` · `ShopDesc` · `ShopStock` · `ShopPrice(Amber)` · `ShopBadge(Danger)` · `ShopBonus` · `ShopNoads{Title,Desc,Price}` · `ShopBtnText(Amber/Done)` · `ShopWalletCount/Label` · `ShopBannerTitle/Desc/Btn` · `ShopPageLabel` · `ShopFooter`.
+- Theme variations (`theme_default.tres`, nhóm `Shop*`, 27 cái): `ShopTitle` · `ShopEyebrow` · `ShopTabLabel(Active)` · `ShopName(Tile)` · `ShopDesc` · `ShopStock` · `ShopPrice(Amber)` · `ShopBadge(Danger)` · `ShopBonus` · `ShopNoads{Title,Desc,Price}` · `ShopBtnText(Amber/Done)` · `ShopWalletCount/Label` · `ShopBannerTitle/Desc/Btn` · `ShopPageLabel` · `ShopFooter`.
 - Chuỗi mới (`string_extra.csv`): `STR_SHOP_TITLE/EYEBROW` · `STR_SHOP_TAB_{PEN,THEME,TOOL,COIN}` · `STR_SHOP_PAGE_FORMAT` · `STR_SHOP_STOCK_FORMAT` + `STR_SHOP_UNIT_{PACK,TURN,COIN}` · `STR_SHOP_BONUS_TAG` · `STR_SHOP_USE` · `STR_SHOP_BUY_MORE` · `STR_SHOP_EQUIPPED` · `STR_SHOP_OWNED_BTN` · `STR_SHOP_NOT_ENOUGH` · `STR_SHOP_PRICE_FORMAT` · `STR_SHOP_BANNER_*` · 23 nhãn `STR_SHOP_BADGE_*` · 60 khoá tên/mô tả món hàng (`STR_SHOP_ITEM_*`, `STR_SHOP_THEME_*`, `STR_SHOP_TOOL_*`, `STR_SHOP_COIN_*`).
 - Mockup: `mockup/shopping_pencil.svg` · `shopping_tool.svg` · `shopping_coin.svg` (hàng VIP + lưới 5 gói Xu có icon cấp) · `shopping_theme_page_1/2.svg` (**thẻ ô, 6 thẻ/trang**) · `coin_tiers.svg` (5 cấp icon, số Xu = 500/2,000/3,500/8,000/20,000 khớp gói nạp thật) — **cùng một bộ khung** (status bar · Back (50,85) · eyebrow + CỬA HÀNG · ví 255×70 tại (775,85) · 4 tab nhãn vở với tab đang chọn nổi lên + vạch đáy y=250 · banner (50,1545) · chân trang y≈1710 · thanh gesture home).
 
