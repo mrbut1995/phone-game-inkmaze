@@ -112,19 +112,6 @@
     </g>
 
     <!-- ================= 5. TAB CHÍNH (ĐANG CHỌN DAILY CHALLENGE) ================= -->
-    <g transform="translate(95, 45)">
-      <!-- Tab 1: DUNGEON (Chưa chọn) -->
-      <g transform="translate(0, 0)" style="cursor: pointer;">
-        <rect width="365" height="50" rx="14" fill="#FEFDFA" stroke="#8FB9D2" stroke-width="2"/>
-        <text x="182" y="31" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="800" fill="#718B9E">🏰 DUNGEON</text>
-      </g>
-
-      <!-- Tab 2: DAILY CHALLENGE (Active — Đỏ cam nhận diện Daily) -->
-      <g transform="translate(390, 0)" style="cursor: pointer;">
-        <rect width="365" height="50" rx="14" fill="#D84444" stroke="#A72828" stroke-width="2"/>
-        <text x="182" y="31" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF">📅 DAILY CHALLENGE</text>
-      </g>
-    </g>
 
     <!-- ================= HÀNG 3 SUB-TAB PHỤ: NGÀY • TUẦN • THÁNG ================= -->
     <!-- Đặt tại y = 110 -->

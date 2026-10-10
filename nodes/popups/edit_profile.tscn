@@ -256,6 +256,7 @@ stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="Frame" type="TextureRect" parent="Panel/Content/Preview/Profile" unique_id=508349584]
+texture_filter = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.2485
@@ -270,6 +271,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Avatar" type="TextureRect" parent="Panel/Content/Preview/Profile/Frame" unique_id=818975810]
+texture_filter = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15714286

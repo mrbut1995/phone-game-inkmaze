@@ -1,4 +1,4 @@
-[gd_resource type="Theme" format=3]
+[gd_resource type="Theme" format=3 uid="uid://tgkncqeoxj2g"]
 
 [ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Black.ttf" id="1_black"]
 [ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-ExtraBold.ttf" id="2_xbold"]
@@ -63,16 +63,12 @@ AchTabLabel/base_type = &"Label"
 AchTabLabel/colors/font_color = Color(1, 1, 1, 1)
 AchTabLabel/font_sizes/font_size = 8
 AchTabLabel/fonts/font = ExtResource("1_black")
-CardBadgeDaily/base_type = &"Label"
-CardBadgeDaily/colors/font_color = Color(0.84705883, 0.26666668, 0.26666668, 1)
-CardBadgeDaily/font_sizes/font_size = 7
-CardBadgeDaily/fonts/font = ExtResource("2_xbold")
 CardBadgeDungeon/base_type = &"Label"
 CardBadgeDungeon/colors/font_color = Color(0.14509805, 0.38431373, 0.5254902, 1)
 CardBadgeDungeon/font_sizes/font_size = 7
 CardBadgeDungeon/fonts/font = ExtResource("2_xbold")
 CardBadgePlay/base_type = &"Label"
-CardBadgePlay/colors/font_color = Color(0.99215686, 0.9019608, 0.5411765, 1)
+CardBadgePlay/colors/font_color = Color(0.090196, 0.258824, 0.329412, 1)
 CardBadgePlay/font_sizes/font_size = 7
 CardBadgePlay/fonts/font = ExtResource("2_xbold")
 CardDesc/base_type = &"Label"
@@ -84,19 +80,15 @@ CardDesc2/colors/font_color = Color(0.6117647, 0.6392157, 0.6862745, 1)
 CardDesc2/font_sizes/font_size = 9
 CardDesc2/fonts/font = ExtResource("4_semibold")
 CardDescPlay/base_type = &"Label"
-CardDescPlay/colors/font_color = Color(0.7294118, 0.9019608, 0.99215686, 1)
+CardDescPlay/colors/font_color = Color(0.305882, 0.415686, 0.494118, 1)
 CardDescPlay/font_sizes/font_size = 10
 CardDescPlay/fonts/font = ExtResource("4_semibold")
-CardTagDaily/base_type = &"Label"
-CardTagDaily/colors/font_color = Color(0.7254902, 0.10980392, 0.10980392, 1)
-CardTagDaily/font_sizes/font_size = 6
-CardTagDaily/fonts/font = ExtResource("1_black")
 CardTagDungeon/base_type = &"Label"
 CardTagDungeon/colors/font_color = Color(0.14509805, 0.38431373, 0.5254902, 1)
 CardTagDungeon/font_sizes/font_size = 6
 CardTagDungeon/fonts/font = ExtResource("1_black")
 CardTagPlay/base_type = &"Label"
-CardTagPlay/colors/font_color = Color(0.47058824, 0.20784314, 0.05882353, 1)
+CardTagPlay/colors/font_color = Color(0.090196, 0.258824, 0.329412, 1)
 CardTagPlay/font_sizes/font_size = 7
 CardTagPlay/fonts/font = ExtResource("1_black")
 CardTitle/base_type = &"Label"
@@ -104,7 +96,7 @@ CardTitle/colors/font_color = Color(0.13333334, 0.29803923, 0.42745098, 1)
 CardTitle/font_sizes/font_size = 17
 CardTitle/fonts/font = ExtResource("1_black")
 CardTitlePlay/base_type = &"Label"
-CardTitlePlay/colors/font_color = Color(1, 1, 1, 1)
+CardTitlePlay/colors/font_color = Color(0.109804, 0.247059, 0.341176, 1)
 CardTitlePlay/font_sizes/font_size = 19
 CardTitlePlay/fonts/font = ExtResource("1_black")
 ChapterAction/base_type = &"Label"

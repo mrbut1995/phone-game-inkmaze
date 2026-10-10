@@ -269,6 +269,7 @@ texture_focused = ExtResource("19_disc_f")
 stretch_mode = 3
 
 [node name="Frame" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Profile" index="0" unique_id=1984070926]
+texture_filter = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.113000005
@@ -287,6 +288,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Avatar" type="TextureRect" parent="Sheet/LeftCol/Hero/Bg/Content/Top/Profile/Frame" index="0" unique_id=1452298376]
+texture_filter = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15714286
@@ -675,6 +677,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Icon" type="TextureRect" parent="Sheet/LeftCol/Gear/Card3" index="2" unique_id=752730617]
+texture_filter = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5

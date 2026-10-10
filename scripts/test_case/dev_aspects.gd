@@ -131,8 +131,12 @@ func _run_screen(def: Dictionary, size: Vector2i) -> void:
 		var frame: Vector2 = POPUP_CONTENT_FRAME
 		var ctrl := scene as Control
 		ctrl.set_anchors_preset(Control.PRESET_TOP_LEFT)
-		ctrl.position = ((canvas - frame) * 0.5).floor()
+		# THỨ TỰ QUAN TRỌNG: đặt size TRƯỚC rồi position SAU.
+		# Root scene có grow_horizontal/vertical = BOTH ⇒ `set_size` giãn đối xứng quanh
+		# tâm và dịch pos đi nửa sai lệch cỡ (VD content 482×856.9 → frame 488×876 làm
+		# pos lệch −3/−9.6). Gán position SAU khi size đã đúng ⇒ pos giữ nguyên chính xác.
 		ctrl.size = frame
+		ctrl.position = ((canvas - frame) * 0.5).floor()
 	await _frames(20)          # chờ hiệu ứng slide-in/fade mở màn xong mới đo
 	var issues := _check_common(scene as Control, bool(def.get("embedded", false)))
 	_report(id, issues)

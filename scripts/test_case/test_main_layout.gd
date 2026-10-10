@@ -73,11 +73,14 @@ func _init() -> void:
 		"Man hinh DỌC thi layout ngang phai ẩn")
 
 	# 2b. Mỗi thẻ chế độ phải được tách 3 phần: CircleIcon / TopBadge / BottomLabel
-	# (theo cấu trúc mới: CircleIcon nằm trong HBox `ButtonDescription` — cùng Title của thẻ)
+	# (Play: CircleIcon nằm trong HBox `ButtonDescription`; Dungeon/DailyMission: CircleIcon
+	#  là CON TRỰC TIẾP, neo GÓC PHẢI-TRÊN — cùng bộ art chung `card_mode_*`)
 	for card_name in ["Play", "Dungeon", "DailyMission"]:
 		var card := main_scene.ui(card_name) as Control
 		assert(card != null, "Phai co the %s" % card_name)
-		var circle := card.get_node_or_null("ButtonDescription/CircleIcon")
+		var circle := card.get_node_or_null("CircleIcon")
+		if circle == null:
+			circle = card.get_node_or_null("ButtonDescription/CircleIcon")
 		var top_badge := card.get_node_or_null("TopBadge")
 		var bottom := card.get_node_or_null("BottomLabel")
 		assert(circle != null and top_badge != null and bottom != null,
@@ -85,6 +88,12 @@ func _init() -> void:
 		assert(circle.get_node_or_null("ModeIcon") != null, "%s/CircleIcon phai chua ModeIcon" % card_name)
 		assert(top_badge.get_node_or_null("Tag") != null, "%s/TopBadge phai chua Tag" % card_name)
 		assert(bottom.get_node_or_null("Badge") != null, "%s/BottomLabel phai chua Badge" % card_name)
+		if card_name != "Play":
+			assert(circle.get_parent() == card,
+				"%s/CircleIcon phai la con truc tiep (goc phai-tren)" % card_name)
+			assert(circle.anchor_left >= 0.75 and circle.anchor_top < 0.3,
+				"%s/CircleIcon phai neo GOC PHAI-TREN (left=%f top=%f)"
+				% [card_name, circle.anchor_left, circle.anchor_top])
 
 	# 3 huy hieu tren the che do phai duoc DIEN SO luc chay (chuoi dich co "{0}")
 	for pair in [["Play", "Badge"], ["Dungeon", "Badge"], ["DailyMission", "Badge"]]:

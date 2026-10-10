@@ -15,13 +15,10 @@
 [ext_resource type="Texture2D" uid="uid://cid3n7oklo1fq" path="res://assets/images-png/profiler/profiler_disc_disabled.png" id="16_y3wuy"]
 [ext_resource type="Texture2D" uid="uid://c721ocng7punk" path="res://assets/images-png/profiler/profiler_disc_focus.png" id="17_bwfoc"]
 [ext_resource type="Texture2D" uid="uid://1670puwwv605" path="res://assets/images-png/icons/icon_calendar.png" id="17_icon_calendar"]
-[ext_resource type="Texture2D" uid="uid://dhpyiqygt22s7" path="res://assets/images-png/main/card_mode_level_normal.png" id="17_nakxj"]
 [ext_resource uid="uid://cd635wxi2hio4" type="Texture2D" path="res://assets/images-png/frames/frame_default.png" id="18_m7v2e"]
-[ext_resource type="Texture2D" uid="uid://bgjip8km1n1lj" path="res://assets/images-png/main/card_mode_level_pressed.png" id="18_q4smm"]
 [ext_resource type="Texture2D" uid="uid://dlcnay8dqxl36" path="res://assets/images-png/main/card_mode_level_disabled.png" id="19_b0x5b"]
 [ext_resource uid="uid://cmlxyub4bj30v" type="Texture2D" path="res://assets/images-png/common/chip_pill.png" id="19_bwfoc"]
 [ext_resource uid="uid://de1fy87ucyxya" type="Texture2D" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="19_hksmy"]
-[ext_resource type="Texture2D" uid="uid://bsmxkawr78ooj" path="res://assets/images-png/main/card_mode_level_focus.png" id="20_1wgx8"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="21_umqxe"]
 [ext_resource uid="uid://hv0sne6ucuxk" type="Texture2D" path="res://assets/images-png/common/bar_pill.png" id="22_usq5l"]
 [ext_resource uid="uid://clxkdp7v1picf" type="Texture2D" path="res://assets/images-png/common/card_mode_normal.png" id="23_b0x5b"]
@@ -40,14 +37,9 @@
 [ext_resource type="Texture2D" uid="uid://b07owls4fppef" path="res://assets/images-png/main/btn_menu_badge_normal_icon.png" id="p_icon_1"]
 [ext_resource type="Texture2D" uid="uid://dq57danjasjev" path="res://assets/images-png/main/btn_menu_badge_pressed_icon.png" id="p_icon_2"]
 [ext_resource type="Texture2D" uid="uid://o2gke0vwqjtp" path="res://assets/images-png/main/btn_menu_badge_disabled_icon.png" id="p_icon_4"]
-[ext_resource type="Texture2D" uid="uid://bnb21mxne7dsh" path="res://assets/images-png/main/card_mode_level_normal_circle_icon.png" id="p_tex_1"]
-[ext_resource type="Texture2D" uid="uid://b32hptnwtpce6" path="res://assets/images-png/main/card_mode_level_pressed_circle_icon.png" id="p_tex_2"]
-[ext_resource type="Texture2D" uid="uid://b050cwy2jxkik" path="res://assets/images-png/main/card_mode_level_disabled_circle_icon.png" id="p_tex_3"]
 [ext_resource uid="uid://dnd3llck1jlse" type="Texture2D" path="res://assets/images-png/common/card_mode_top_badge.png" id="p_tex_4"]
-[ext_resource type="Texture2D" uid="uid://bs1xxdl2cwqub" path="res://assets/images-png/main/card_mode_level_pressed_top_badge.png" id="p_tex_5"]
 [ext_resource uid="uid://diejpf18dm40y" type="Texture2D" path="res://assets/images-png/main/card_mode_disabled_top_badge.png" id="p_tex_6"]
 [ext_resource uid="uid://dvtahqp83aml8" type="Texture2D" path="res://assets/images-png/common/card_mode_bottom_label.png" id="p_tex_7"]
-[ext_resource type="Texture2D" uid="uid://djrysv7nga0u1" path="res://assets/images-png/main/card_mode_level_pressed_bottom_label.png" id="p_tex_8"]
 [ext_resource uid="uid://bngwgn4ni78tw" type="Texture2D" path="res://assets/images-png/main/card_mode_disabled_bottom_label.png" id="p_tex_9"]
 [ext_resource uid="uid://dnqgyxy4yfhho" type="Texture2D" path="res://assets/images-png/common/card_mode_circle_icon.png" id="p_tex_10"]
 [ext_resource uid="uid://lb4f34io5stn" type="Texture2D" path="res://assets/images-png/common/card_mode_circle_icon_pressed.png" id="p_tex_11"]
@@ -58,17 +50,12 @@
 [ext_resource type="Script" uid="uid://blpdwtvxerh8h" path="res://scripts/tool/nine_patch/NinePatchStateTexture.gd" id="sc_npstate"]
 [ext_resource type="Script" uid="uid://bbrwe45fwv4mb" path="res://scripts/tool/StateTexture.gd" id="sc_state"]
 [ext_resource type="Shader" path="res://shaders/color_remap.gdshader" id="sh_color_remap"]
-
-[sub_resource type="ShaderMaterial" id="mat_level_badge"]
-shader = ExtResource("sh_color_remap")
-shader_parameter/tolerance = 0.06
-shader_parameter/f1 = Color(0.996078, 0.886275, 0.886275, 1)
-shader_parameter/t1 = Color(0.984314, 0.74902, 0.141176, 1)
-[sub_resource type="ShaderMaterial" id="mat_level_label"]
-shader = ExtResource("sh_color_remap")
-shader_parameter/tolerance = 0.06
-shader_parameter/f1 = Color(0.996078, 0.886275, 0.886275, 1)
-shader_parameter/t1 = Color(0.12549, 0.313725, 0.431373, 1)
+[ext_resource type="Texture2D" uid="uid://dhpyiqygt22s7" path="res://assets/images-png/main/card_mode_level_normal.png" id="17_nakxj"]
+[ext_resource type="Texture2D" uid="uid://bgjip8km1n1lj" path="res://assets/images-png/main/card_mode_level_pressed.png" id="18_q4smm"]
+[ext_resource type="Texture2D" uid="uid://bsmxkawr78ooj" path="res://assets/images-png/main/card_mode_level_focus.png" id="20_1wgx8"]
+[ext_resource type="Texture2D" uid="uid://bnb21mxne7dsh" path="res://assets/images-png/main/card_mode_level_normal_circle_icon.png" id="p_tex_1"]
+[ext_resource type="Texture2D" uid="uid://b32hptnwtpce6" path="res://assets/images-png/main/card_mode_level_pressed_circle_icon.png" id="p_tex_2"]
+[ext_resource type="Texture2D" uid="uid://b050cwy2jxkik" path="res://assets/images-png/main/card_mode_level_disabled_circle_icon.png" id="p_tex_3"]
 
 [sub_resource type="ShaderMaterial" id="mat_dungeon"]
 shader = ExtResource("sh_color_remap")
@@ -559,6 +546,7 @@ stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="Frame" type="TextureRect" parent="Paper/Hero/ProfileCard/Content/Profile" index="0" unique_id=1307681956]
+texture_filter = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.15155074
@@ -578,6 +566,7 @@ stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="Avatar" type="TextureRect" parent="Paper/Hero/ProfileCard/Content/Profile/Frame" index="0" unique_id=812886273]
+texture_filter = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15714286
@@ -1078,7 +1067,6 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
 [node name="TopBadge" type="Control" parent="Paper/Menu/Play" index="1" unique_id=1033934598]
-material = SubResource("mat_level_badge")
 layout_mode = 1
 anchors_preset = 0
 offset_left = 33.5
@@ -1095,7 +1083,7 @@ patch_margin_right = 5.0
 patch_margin_bottom = 5.0
 texture_normal = ExtResource("p_tex_4")
 texture_hover = ExtResource("p_tex_4")
-texture_pressed = ExtResource("p_tex_5")
+texture_pressed = ExtResource("p_tex_14")
 texture_disabled = ExtResource("p_tex_6")
 texture_focused = ExtResource("p_tex_4")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
@@ -1116,7 +1104,6 @@ resize_font_to_fit = true
 minimum_font_size = 6
 
 [node name="BottomLabel" type="Control" parent="Paper/Menu/Play" index="2" unique_id=321833421]
-material = SubResource("mat_level_label")
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -1137,7 +1124,7 @@ patch_margin_right = 5.0
 patch_margin_bottom = 5.0
 texture_normal = ExtResource("p_tex_7")
 texture_hover = ExtResource("p_tex_7")
-texture_pressed = ExtResource("p_tex_8")
+texture_pressed = ExtResource("p_tex_17")
 texture_disabled = ExtResource("p_tex_9")
 texture_focused = ExtResource("p_tex_7")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
@@ -1185,7 +1172,48 @@ content_margin_right = 8.0
 content_margin_bottom = 8.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="ButtonDescription" type="HBoxContainer" parent="Paper/Menu/Dungeon" index="0" unique_id=207380134]
+[node name="CircleIcon" type="Control" parent="Paper/Menu/Dungeon" index="0" unique_id=1720332464]
+material = SubResource("mat_dungeon")
+layout_mode = 1
+anchor_left = 0.858
+anchor_top = 0.12900001
+anchor_right = 0.9186
+anchor_bottom = 0.41351613
+offset_left = -0.2000122
+offset_top = 0.050195694
+offset_right = 0.15197754
+offset_bottom = -0.049804688
+size_flags_horizontal = 0
+mouse_filter = 1
+script = ExtResource("sc_state")
+texture_normal = ExtResource("p_tex_10")
+texture_hover = ExtResource("p_tex_10")
+texture_pressed = ExtResource("p_tex_11")
+texture_disabled = ExtResource("p_tex_12")
+texture_focused = ExtResource("p_tex_28")
+expand_mode = 2
+stretch_mode = 5
+metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
+metadata/_edit_use_anchors_ = true
+
+[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/Dungeon/CircleIcon" index="0" unique_id=888373399]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1992
+anchor_top = 0.1992
+anchor_right = 0.8008
+anchor_bottom = 0.8008
+offset_left = 0.025
+offset_top = 0.025
+offset_right = -0.025
+offset_bottom = -0.025
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_icon_castle")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonDescription" type="HBoxContainer" parent="Paper/Menu/Dungeon" index="1" unique_id=207380134]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1198,42 +1226,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 6
 
-[node name="CircleIcon" type="Control" parent="Paper/Menu/Dungeon/ButtonDescription" index="0" unique_id=1720332464]
-material = SubResource("mat_dungeon")
-layout_mode = 2
-size_flags_horizontal = 0
-mouse_filter = 1
-script = ExtResource("sc_state")
-texture_normal = ExtResource("p_tex_10")
-texture_hover = ExtResource("p_tex_10")
-texture_pressed = ExtResource("p_tex_11")
-texture_disabled = ExtResource("p_tex_12")
-texture_focused = ExtResource("p_tex_28")
-expand_mode = 2
-stretch_mode = 5
-metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
-
-[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/Dungeon/ButtonDescription/CircleIcon" index="0" unique_id=888373399]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.064
-anchor_top = 0.28695652
-anchor_right = 0.93600005
-anchor_bottom = 0.71304345
-offset_left = -0.019999743
-offset_right = 0.019996643
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("16_icon_castle")
-stretch_mode = 5
-metadata/_edit_use_anchors_ = true
-
-[node name="Spacer" type="Control" parent="Paper/Menu/Dungeon/ButtonDescription" index="1" unique_id=1540083204]
+[node name="Spacer" type="Control" parent="Paper/Menu/Dungeon/ButtonDescription" index="0" unique_id=1540083204]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="TitleContainer" type="VBoxContainer" parent="Paper/Menu/Dungeon/ButtonDescription" index="2" unique_id=142108829]
+[node name="TitleContainer" type="VBoxContainer" parent="Paper/Menu/Dungeon/ButtonDescription" index="1" unique_id=142108829]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1276,7 +1274,7 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="TopBadge" type="Control" parent="Paper/Menu/Dungeon" index="1" unique_id=1803963586]
+[node name="TopBadge" type="Control" parent="Paper/Menu/Dungeon" index="2" unique_id=1803963586]
 material = SubResource("mat_dungeon")
 layout_mode = 1
 anchors_preset = 0
@@ -1315,7 +1313,7 @@ vertical_alignment = 1
 resize_font_to_fit = true
 minimum_font_size = 6
 
-[node name="BottomLabel" type="Control" parent="Paper/Menu/Dungeon" index="2" unique_id=1688049159]
+[node name="BottomLabel" type="Control" parent="Paper/Menu/Dungeon" index="3" unique_id=1688049159]
 material = SubResource("mat_dungeon")
 layout_mode = 1
 anchors_preset = 3
@@ -1369,6 +1367,7 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_qrd76")
 theme_override_styles/hover = SubResource("StyleBoxTexture_5lxp8")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_63ddw")
 theme_override_styles/focus = SubResource("StyleBoxTexture_eyhiq")
+material = SubResource("mat_dungeon")
 script = ExtResource("21_umqxe")
 texture_normal = ExtResource("23_b0x5b")
 texture_hover = ExtResource("23_b0x5b")
@@ -1386,21 +1385,17 @@ content_margin_right = 8.0
 content_margin_bottom = 8.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="ButtonDescription" type="HBoxContainer" parent="Paper/Menu/DailyMission" index="0" unique_id=76692436]
+[node name="CircleIcon" type="Control" parent="Paper/Menu/DailyMission" index="0" unique_id=1389532240]
+material = SubResource("mat_dungeon")
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 37.690002
-offset_top = 35.529
-offset_right = -14.309998
-offset_bottom = -35.52899
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 6
-
-[node name="CircleIcon" type="Control" parent="Paper/Menu/DailyMission/ButtonDescription" index="0" unique_id=1389532240]
-layout_mode = 2
+anchor_left = 0.858
+anchor_top = 0.12900001
+anchor_right = 0.9186
+anchor_bottom = 0.41351613
+offset_left = -0.2000122
+offset_top = 0.050195694
+offset_right = 0.15197754
+offset_bottom = -0.049804688
 size_flags_horizontal = 0
 mouse_filter = 1
 script = ExtResource("sc_state")
@@ -1412,30 +1407,44 @@ texture_focused = ExtResource("p_tex_28")
 expand_mode = 2
 stretch_mode = 5
 metadata/_custom_type_script = "uid://bbrwe45fwv4mb"
+metadata/_edit_use_anchors_ = true
 
-[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/DailyMission/ButtonDescription/CircleIcon" index="0" unique_id=1471516198]
+[node name="ModeIcon" type="TextureRect" parent="Paper/Menu/DailyMission/CircleIcon" index="0" unique_id=1471516198]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.064
-anchor_top = 0.18800001
-anchor_right = 0.93600005
-anchor_bottom = 0.78700006
-offset_left = 5.4800034
-offset_top = 3.4870777
-offset_right = -5.4800034
-offset_bottom = -3.4870834
+anchor_left = 0.1992
+anchor_top = 0.1992
+anchor_right = 0.8008
+anchor_bottom = 0.8008
+offset_left = 0.025
+offset_top = 0.025
+offset_right = -0.025
+offset_bottom = -0.025
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("17_icon_calendar")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Spacer" type="Control" parent="Paper/Menu/DailyMission/ButtonDescription" index="1" unique_id=686306888]
+[node name="ButtonDescription" type="HBoxContainer" parent="Paper/Menu/DailyMission" index="1" unique_id=76692436]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 37.880035
+offset_top = 35.529053
+offset_right = -22.309998
+offset_bottom = -35.529053
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="Spacer" type="Control" parent="Paper/Menu/DailyMission/ButtonDescription" index="0" unique_id=686306888]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.05
 
-[node name="TitleContainer" type="VBoxContainer" parent="Paper/Menu/DailyMission/ButtonDescription" index="2" unique_id=124471845]
+[node name="TitleContainer" type="VBoxContainer" parent="Paper/Menu/DailyMission/ButtonDescription" index="1" unique_id=124471845]
 modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1478,7 +1487,8 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="TopBadge" type="Control" parent="Paper/Menu/DailyMission" index="1" unique_id=193033958]
+[node name="TopBadge" type="Control" parent="Paper/Menu/DailyMission" index="2" unique_id=193033958]
+material = SubResource("mat_dungeon")
 layout_mode = 1
 anchors_preset = 0
 offset_left = 33.5
@@ -1508,7 +1518,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"CardTagDaily"
+theme_type_variation = &"CardTagDungeon"
 theme_override_font_sizes/font_size = 25
 text = "STR_TAG_DAILY_MODE"
 horizontal_alignment = 1
@@ -1516,7 +1526,8 @@ vertical_alignment = 1
 resize_font_to_fit = true
 minimum_font_size = 6
 
-[node name="BottomLabel" type="Control" parent="Paper/Menu/DailyMission" index="2" unique_id=11304712]
+[node name="BottomLabel" type="Control" parent="Paper/Menu/DailyMission" index="3" unique_id=11304712]
+material = SubResource("mat_dungeon")
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -1551,7 +1562,7 @@ anchor_bottom = 1.0
 offset_top = 5.324005
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"CardBadgeDaily"
+theme_type_variation = &"CardBadgeDungeon"
 theme_override_font_sizes/font_size = 25
 text = "STR_STREAK_BADGE"
 horizontal_alignment = 1

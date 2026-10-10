@@ -90,63 +90,13 @@
   <g transform="translate(50, 155)">
 
     <!-- THẺ 1: TIME PANEL (240 x 156 px) -->
-    <g transform="translate(0, 5)" filter="url(#uiShadow)">
-      <rect width="240" height="146" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/>
-      <text x="120" y="38" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="800" fill="#718B9E">THỜI GIAN</text>
-      <text x="120" y="98" text-anchor="middle" font-family="'Segoe UI', monospace" font-size="46" font-weight="950" fill="#224C6D">0:06</text>
+    <g transform="translate(350, 5)" filter="url(#uiShadow)">
+      <!-- <rect width="240" height="146" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3"/> -->
+      <text x="120" y="38" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="38" font-weight="800" fill="#718B9E">THỜI GIAN</text>
+      <text x="120" y="128" text-anchor="middle" font-family="'Segoe UI', monospace" font-size="92" font-weight="950" fill="#224C6D">0:06</text>
     </g>
 
-    <!-- THẺ 2: CHALLENGE PANEL (725 x 156 px) -->
-    <g transform="translate(255, 0)" filter="url(#uiShadow)">
-      <rect width="725" height="156" rx="22" fill="#FEFDFA" stroke="#D84444" stroke-width="3"/>
 
-      <!-- KHU VỰC TỔNG KẾT BÊN TRÁI -->
-      <g transform="translate(30, 0)">
-        <text x="0" y="38" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" fill="#D84444" letter-spacing="0.5">THỬ THÁCH</text>
-        
-        <!-- 1/3 ✓ -->
-        <text x="0" y="96" font-family="'Segoe UI', sans-serif">
-          <tspan font-size="48" font-weight="950" fill="#D84444">1</tspan>
-          <tspan font-size="28" font-weight="800" fill="#8FA0AC">/3 </tspan>
-          <tspan font-size="36" font-weight="950" fill="#D84444">✓</tspan>
-        </text>
-        
-        <text x="0" y="128" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#2E7D32">1 ĐÃ HOÀN THÀNH</text>
-      </g>
-
-      <!-- Vạch ngăn cách dọc -->
-      <line x1="180" y1="16" x2="180" y2="140" stroke="#F0EBE1" stroke-width="2"/>
-
-      <!-- DANH SÁCH 3 THỬ THÁCH -->
-      <g transform="translate(195, 10)">
-
-        <!-- Thử thách 1: Không đâm vào tường (Đã Đạt) -->
-        <g transform="translate(0, 0)">
-          <rect width="510" height="40" rx="9" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.2"/>
-          <use href="#check-got" x="10" y="8"/>
-          <text x="42" y="26" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="800" fill="#1E283A">Không đâm vào tường</text>
-          <rect x="422" y="7" width="76" height="26" rx="6" fill="#D84444"/>
-          <text x="460" y="25" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="900" fill="#FFFFFF">✓ ĐẠT</text>
-        </g>
-
-        <!-- Thử thách 2: Đi không quá 8 bước -->
-        <g transform="translate(0, 47)">
-          <rect width="510" height="40" rx="9" fill="#FAF5EB" stroke="#EAE4D6" stroke-width="1.2"/>
-          <use href="#check-pending" x="10" y="8"/>
-          <text x="42" y="26" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="800" fill="#224C6D">Đi không quá 8 bước</text>
-          <text x="498" y="26" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="900" fill="#D84444">0/8 bước</text>
-        </g>
-
-        <!-- Thử thách 3: Về đích dưới 30 giây -->
-        <g transform="translate(0, 94)">
-          <rect width="510" height="40" rx="9" fill="#FAF5EB" stroke="#EAE4D6" stroke-width="1.2"/>
-          <use href="#check-pending" x="10" y="8"/>
-          <text x="42" y="26" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#718B9E">Về đích dưới 30 giây</text>
-          <text x="498" y="26" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="900" fill="#D84444">còn 24s</text>
-        </g>
-
-      </g>
-    </g>
   </g>
 
   <!-- ================= 4. KHUNG BÀN CỜ NUMBER MAZE 5x5 (GIỮ NGUYÊN HOÀN TOÀN) ================= -->
@@ -351,7 +301,7 @@
 
     <!-- CỤM PHẢI: HOÀN TÁC (UNDO) & GỢI Ý (HINT) CÓ HUY HIỆU ĐẾM -->
     <!-- 3. NÚT UNDO + HUY HIỆU '3' -->
-    <g transform="translate(560, 0)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <g transform="translate(710, 0)" filter="url(#uiShadow)" style="cursor: pointer;">
       <rect width="125" height="105" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3.5"/>
       <g transform="translate(62, 52)" stroke="#3D83AE" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path d="M -14 -8 L -24 0 L -14 8"/>
@@ -365,7 +315,7 @@
     </g>
 
     <!-- 4. NÚT GỢI Ý (BÓNG ĐÈN) + HUY HIỆU '3' -->
-    <g transform="translate(710, 0)" filter="url(#uiShadow)" style="cursor: pointer;">
+    <g transform="translate(860, 0)" filter="url(#uiShadow)" style="cursor: pointer;">
       <rect width="125" height="105" rx="24" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3.5"/>
       <!-- Icon bóng đèn vàng cam -->
       <g transform="translate(62, 52)">
