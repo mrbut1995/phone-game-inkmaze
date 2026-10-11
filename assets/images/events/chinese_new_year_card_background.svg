@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252">
+  <defs>
+    <!-- Pattern lưới trắng mờ trang trí -->
+    <pattern id="gw" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.1"/>
+    </pattern>
+
+    <!-- Gradient đỏ lễ hội Tết / Năm mới -->
+    <linearGradient id="bg_newyear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C62828"/>
+      <stop offset="0.5" stop-color="#B71C1C"/>
+      <stop offset="1" stop-color="#6D0E12"/>
+    </linearGradient>
+
+    <!-- ClipPath bo góc chuẩn 340x504 -->
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <!-- Container bọc clipPath theo form của Card sự kiện -->
+  <g clip-path="url(#cardClip)">
+    <!-- 1. Lớp nền gradient & texture lưới -->
+    <rect width="340" height="504" fill="url(#bg_newyear)"/>
+    <rect width="340" height="504" fill="url(#gw)"/>
+
+    <!-- 2. Nhóm chi tiết artwork: Pháo hoa, Đèn lồng truyền thống, Dải viền vàng và Hoa mai -->
+    <g transform="translate(0,-50)">
+      <!-- Pháo hoa vàng lớn (ở giữa) -->
+      <line x1="235" y1="180" x2="264" y2="180" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="272" cy="180" r="2.8" fill="#FFE082"/>
+      <line x1="233" y1="188" x2="258" y2="202" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="265" cy="206" r="2.8" fill="#FFE082"/>
+      <line x1="228" y1="193" x2="242" y2="218" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="246" cy="225" r="2.8" fill="#FFE082"/>
+      <line x1="220" y1="195" x2="220" y2="224" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="220" cy="232" r="2.8" fill="#FFE082"/>
+      <line x1="212" y1="193" x2="198" y2="218" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="194" cy="225" r="2.8" fill="#FFE082"/>
+      <line x1="207" y1="188" x2="182" y2="202" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="175" cy="206" r="2.8" fill="#FFE082"/>
+      <line x1="205" y1="180" x2="176" y2="180" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="168" cy="180" r="2.8" fill="#FFE082"/>
+      <line x1="207" y1="172" x2="182" y2="158" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="175" cy="154" r="2.8" fill="#FFE082"/>
+      <line x1="212" y1="167" x2="198" y2="142" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="194" cy="135" r="2.8" fill="#FFE082"/>
+      <line x1="220" y1="165" x2="220" y2="136" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="220" cy="128" r="2.8" fill="#FFE082"/>
+      <line x1="228" y1="167" x2="242" y2="142" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="246" cy="135" r="2.8" fill="#FFE082"/>
+      <line x1="233" y1="172" x2="258" y2="158" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="265" cy="154" r="2.8" fill="#FFE082"/>
+
+      <!-- Pháo hoa hồng nhạt (bên trái) -->
+      <line x1="118" y1="130" x2="134" y2="130" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="138" cy="130" r="2.8" fill="#FFC1B0"/>
+      <line x1="117" y1="134" x2="131" y2="142" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="135" cy="144" r="2.8" fill="#FFC1B0"/>
+      <line x1="114" y1="137" x2="122" y2="151" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="124" cy="155" r="2.8" fill="#FFC1B0"/>
+      <line x1="110" y1="138" x2="110" y2="154" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="110" cy="158" r="2.8" fill="#FFC1B0"/>
+      <line x1="106" y1="137" x2="98" y2="151" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="96" cy="155" r="2.8" fill="#FFC1B0"/>
+      <line x1="103" y1="134" x2="89" y2="142" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="85" cy="144" r="2.8" fill="#FFC1B0"/>
+      <line x1="102" y1="130" x2="86" y2="130" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="82" cy="130" r="2.8" fill="#FFC1B0"/>
+      <line x1="103" y1="126" x2="89" y2="118" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="85" cy="116" r="2.8" fill="#FFC1B0"/>
+      <line x1="106" y1="123" x2="98" y2="109" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="96" cy="105" r="2.8" fill="#FFC1B0"/>
+      <line x1="110" y1="122" x2="110" y2="106" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="110" cy="102" r="2.8" fill="#FFC1B0"/>
+      <line x1="114" y1="123" x2="122" y2="109" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="124" cy="105" r="2.8" fill="#FFC1B0"/>
+      <line x1="117" y1="126" x2="131" y2="118" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="135" cy="116" r="2.8" fill="#FFC1B0"/>
+
+      <!-- Pháo hoa vàng nhỏ (góc phải) -->
+      <line x1="306" y1="110" x2="318" y2="110" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="321" cy="110" r="2.8" fill="#FFE082"/>
+      <line x1="305" y1="113" x2="316" y2="119" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="318" cy="121" r="2.8" fill="#FFE082"/>
+      <line x1="303" y1="115" x2="309" y2="126" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="311" cy="128" r="2.8" fill="#FFE082"/>
+      <line x1="300" y1="116" x2="300" y2="128" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="300" cy="131" r="2.8" fill="#FFE082"/>
+      <line x1="297" y1="115" x2="291" y2="126" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="289" cy="128" r="2.8" fill="#FFE082"/>
+      <line x1="295" y1="113" x2="284" y2="119" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="282" cy="121" r="2.8" fill="#FFE082"/>
+      <line x1="294" y1="110" x2="282" y2="110" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="279" cy="110" r="2.8" fill="#FFE082"/>
+      <line x1="295" y1="107" x2="284" y2="101" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="282" cy="99" r="2.8" fill="#FFE082"/>
+      <line x1="297" y1="105" x2="291" y2="94" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="289" cy="92" r="2.8" fill="#FFE082"/>
+      <line x1="300" y1="104" x2="300" y2="92" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="300" cy="89" r="2.8" fill="#FFE082"/>
+      <line x1="303" y1="105" x2="309" y2="94" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="311" cy="92" r="2.8" fill="#FFE082"/>
+      <line x1="305" y1="107" x2="316" y2="101" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="318" cy="99" r="2.8" fill="#FFE082"/>
+
+      <!-- Đèn lồng đỏ lớn (trái) -->
+      <g transform="translate(52,170) scale(0.85)">
+        <line x1="0" y1="-60" x2="0" y2="-32" stroke="#FFD54F" stroke-width="2"/>
+        <rect x="-10" y="-34" width="20" height="9" rx="2" fill="#FFC83D"/>
+        <ellipse rx="27" ry="31" fill="#E53935" stroke="#FFC83D" stroke-width="3"/>
+        <path d="M -14 -27 Q -23 0 -14 27 M 14 -27 Q 23 0 14 27" stroke="#FFC83D" stroke-width="2" fill="none"/>
+        <rect x="-10" y="27" width="20" height="8" rx="2" fill="#FFC83D"/>
+        <line x1="0" y1="35" x2="0" y2="56" stroke="#FFC83D" stroke-width="3"/>
+        <circle cy="58" r="4" fill="#FFC83D"/>
+      </g>
+
+      <!-- Đèn lồng đỏ nhỏ (phải) -->
+      <g transform="translate(300,215) scale(0.62)">
+        <line x1="0" y1="-60" x2="0" y2="-32" stroke="#FFD54F" stroke-width="2"/>
+        <rect x="-10" y="-34" width="20" height="9" rx="2" fill="#FFC83D"/>
+        <ellipse rx="27" ry="31" fill="#E53935" stroke="#FFC83D" stroke-width="3"/>
+        <path d="M -14 -27 Q -23 0 -14 27 M 14 -27 Q 23 0 14 27" stroke="#FFC83D" stroke-width="2" fill="none"/>
+        <rect x="-10" y="27" width="20" height="8" rx="2" fill="#FFC83D"/>
+        <line x1="0" y1="35" x2="0" y2="56" stroke="#FFC83D" stroke-width="3"/>
+        <circle cy="58" r="4" fill="#FFC83D"/>
+      </g>
+
+      <!-- Khối đồi đỏ đậm phía dưới (che phần text/UI) -->
+      <path d="M 0 700 L 0 292 Q 85 270 170 292 T 340 286 L 340 700 Z" fill="#6D0E12" fill-opacity="0.95"/>
+      <!-- Đường viền kim loại vàng lượn sóng -->
+      <path d="M 0 292 Q 85 270 170 292 T 340 286" fill="none" stroke="#FFC83D" stroke-width="4"/>
+
+      <!-- Chùm hoa mai 1 (hồng mai lớn) -->
+      <circle cx="40.0" cy="276.8" r="9.4" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="50.6" cy="284.6" r="9.4" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="46.6" cy="297.0" r="9.4" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="33.4" cy="297.0" r="9.4" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="29.4" cy="284.6" r="9.4" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="40" cy="288" r="5.4" fill="#FFC83D"/>
+
+      <!-- Chùm hoa mai 2 (hồng mai nhỏ) -->
+      <circle cx="92.0" cy="288.6" r="6.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="99.1" cy="293.7" r="6.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="96.4" cy="302.0" r="6.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="87.6" cy="302.0" r="6.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="84.9" cy="293.7" r="6.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="92" cy="296" r="3.6" fill="#FFC83D"/>
+
+      <!-- Chùm hoa mai 3 (hoàng mai vàng) -->
+      <circle cx="298.0" cy="272.1" r="8.3" fill="#FFE082" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="307.4" cy="278.9" r="8.3" fill="#FFE082" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="303.8" cy="290.0" r="8.3" fill="#FFE082" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="292.2" cy="290.0" r="8.3" fill="#FFE082" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="288.6" cy="278.9" r="8.3" fill="#FFE082" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="298" cy="282" r="4.8" fill="#E53935"/>
+
+      <!-- Chùm hoa mai 4 (hồng mai nhỏ góc phải) -->
+      <circle cx="250.0" cy="285.8" r="5.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="255.9" cy="290.1" r="5.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="253.6" cy="297.0" r="5.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="246.4" cy="297.0" r="5.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="244.1" cy="290.1" r="5.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
+      <circle cx="250" cy="292" r="3.0" fill="#FFC83D"/>
+    </g>
+  </g>
+
+  <!-- Viền sáng trắng bao quanh card đặc trưng -->
+  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="3"/>
+</svg>

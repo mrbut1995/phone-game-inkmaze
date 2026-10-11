@@ -25,6 +25,8 @@ const SCENE_SHOP := "res://scenes/shop.tscn"
 const SCENE_CREDIT := "res://scenes/credit.tscn"
 ## Màn TUTORIAL — hướng dẫn tương tác
 const SCENE_TUTORIAL := "res://scenes/tutorial.tscn"
+## Màn CHI TIẾT SỰ KIỆN — xem scripts/scenes/event.gd
+const SCENE_EVENT := "res://scenes/event.tscn"
 ## (HỒ SƠ CÁ NHÂN nay là POPUP — mở bằng `Popups.open(Popups.PROFILER)`)
 
 
@@ -92,6 +94,15 @@ static func goto_debug() -> void:
 ## Màn TUTORIAL (hướng dẫn chơi tương tác)
 static func goto_tutorial() -> void:
 	change_scene(SCENE_TUTORIAL)
+
+
+## Màn CHI TIẾT SỰ KIỆN — truyền event_id qua SceneManager trước khi chuyển cảnh
+static func goto_event(event_id: StringName) -> void:
+	var manager := _manager()
+	if manager != null and manager.has_method("goto_event"):
+		manager.call("goto_event", event_id)
+		return
+	change_scene(SCENE_EVENT)
 
 
 static func _manager() -> Node:

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252">
+  <defs>
+    <!-- Pattern lưới ô ly mờ trên nền băng tuyết -->
+    <pattern id="gd" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#163A58" stroke-width="1" opacity="0.07"/>
+    </pattern>
+
+    <!-- Gradient bầu trời mùa đông buốt giá -->
+    <linearGradient id="bg_winter" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E3F4FF"/>
+      <stop offset="0.5" stop-color="#9CCDF4"/>
+      <stop offset="1" stop-color="#6FA8E0"/>
+    </linearGradient>
+
+    <!-- ClipPath bo góc chuẩn card 340x504 -->
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <!-- Container bọc clipPath theo form của Card sự kiện -->
+  <g clip-path="url(#cardClip)">
+    <!-- 1. Lớp nền gradient & texture ô ly -->
+    <rect width="340" height="504" fill="url(#bg_winter)"/>
+    <rect width="340" height="504" fill="url(#gd)"/>
+
+    <!-- 2. Nhóm chi tiết artwork: Núi tuyết, Bông tuyết 6 cánh, Đồi tuyết trắng & Cây thông Noel -->
+    <g transform="translate(0,-55)">
+      <!-- Các rặng núi tuyết ở xa -->
+      <polygon points="0,300 80,170 130,240 200,120 270,230 340,180 340,300" fill="#FFFFFF" fill-opacity="0.5"/>
+      <polygon points="40,300 120,190 160,250 200,120 250,200 300,300" fill="#9CC8EE" fill-opacity="0.8"/>
+
+      <!-- Hoa tuyết lớn (Snowflake 1) -->
+      <g transform="translate(240,170)" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.95">
+        <g transform="rotate(0)"><line x1="0" y1="0" x2="0" y2="-46"/><line x1="0" y1="-27.6" x2="11.5" y2="-37.72"/><line x1="0" y1="-27.6" x2="-11.5" y2="-37.72"/></g>
+        <g transform="rotate(60)"><line x1="0" y1="0" x2="0" y2="-46"/><line x1="0" y1="-27.6" x2="11.5" y2="-37.72"/><line x1="0" y1="-27.6" x2="-11.5" y2="-37.72"/></g>
+        <g transform="rotate(120)"><line x1="0" y1="0" x2="0" y2="-46"/><line x1="0" y1="-27.6" x2="11.5" y2="-37.72"/><line x1="0" y1="-27.6" x2="-11.5" y2="-37.72"/></g>
+        <g transform="rotate(180)"><line x1="0" y1="0" x2="0" y2="-46"/><line x1="0" y1="-27.6" x2="11.5" y2="-37.72"/><line x1="0" y1="-27.6" x2="-11.5" y2="-37.72"/></g>
+        <g transform="rotate(240)"><line x1="0" y1="0" x2="0" y2="-46"/><line x1="0" y1="-27.6" x2="11.5" y2="-37.72"/><line x1="0" y1="-27.6" x2="-11.5" y2="-37.72"/></g>
+        <g transform="rotate(300)"><line x1="0" y1="0" x2="0" y2="-46"/><line x1="0" y1="-27.6" x2="11.5" y2="-37.72"/><line x1="0" y1="-27.6" x2="-11.5" y2="-37.72"/></g>
+      </g>
+
+      <!-- Hoa tuyết vừa (Snowflake 2 - góc trái) -->
+      <g transform="translate(90,150)" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.95">
+        <g transform="rotate(0)"><line x1="0" y1="0" x2="0" y2="-20"/><line x1="0" y1="-12.0" x2="5.0" y2="-16.4"/><line x1="0" y1="-12.0" x2="-5.0" y2="-16.4"/></g>
+        <g transform="rotate(60)"><line x1="0" y1="0" x2="0" y2="-20"/><line x1="0" y1="-12.0" x2="5.0" y2="-16.4"/><line x1="0" y1="-12.0" x2="-5.0" y2="-16.4"/></g>
+        <g transform="rotate(120)"><line x1="0" y1="0" x2="0" y2="-20"/><line x1="0" y1="-12.0" x2="5.0" y2="-16.4"/><line x1="0" y1="-12.0" x2="-5.0" y2="-16.4"/></g>
+        <g transform="rotate(180)"><line x1="0" y1="0" x2="0" y2="-20"/><line x1="0" y1="-12.0" x2="5.0" y2="-16.4"/><line x1="0" y1="-12.0" x2="-5.0" y2="-16.4"/></g>
+        <g transform="rotate(240)"><line x1="0" y1="0" x2="0" y2="-20"/><line x1="0" y1="-12.0" x2="5.0" y2="-16.4"/><line x1="0" y1="-12.0" x2="-5.0" y2="-16.4"/></g>
+        <g transform="rotate(300)"><line x1="0" y1="0" x2="0" y2="-20"/><line x1="0" y1="-12.0" x2="5.0" y2="-16.4"/><line x1="0" y1="-12.0" x2="-5.0" y2="-16.4"/></g>
+      </g>
+
+      <!-- Hoa tuyết nhỏ (Snowflake 3 - góc phải) -->
+      <g transform="translate(300,200)" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.95">
+        <g transform="rotate(0)"><line x1="0" y1="0" x2="0" y2="-14"/><line x1="0" y1="-8.4" x2="3.5" y2="-11.48"/><line x1="0" y1="-8.4" x2="-3.5" y2="-11.48"/></g>
+        <g transform="rotate(60)"><line x1="0" y1="0" x2="0" y2="-14"/><line x1="0" y1="-8.4" x2="3.5" y2="-11.48"/><line x1="0" y1="-8.4" x2="-3.5" y2="-11.48"/></g>
+        <g transform="rotate(120)"><line x1="0" y1="0" x2="0" y2="-14"/><line x1="0" y1="-8.4" x2="3.5" y2="-11.48"/><line x1="0" y1="-8.4" x2="-3.5" y2="-11.48"/></g>
+        <g transform="rotate(180)"><line x1="0" y1="0" x2="0" y2="-14"/><line x1="0" y1="-8.4" x2="3.5" y2="-11.48"/><line x1="0" y1="-8.4" x2="-3.5" y2="-11.48"/></g>
+        <g transform="rotate(240)"><line x1="0" y1="0" x2="0" y2="-14"/><line x1="0" y1="-8.4" x2="3.5" y2="-11.48"/><line x1="0" y1="-8.4" x2="-3.5" y2="-11.48"/></g>
+        <g transform="rotate(300)"><line x1="0" y1="0" x2="0" y2="-14"/><line x1="0" y1="-8.4" x2="3.5" y2="-11.48"/><line x1="0" y1="-8.4" x2="-3.5" y2="-11.48"/></g>
+      </g>
+
+      <!-- Bông tuyết tròn li ti rơi -->
+      <circle cx="40" cy="70" r="4" fill="#FFFFFF" fill-opacity="0.9"/>
+      <circle cx="150" cy="60" r="4" fill="#FFFFFF" fill-opacity="0.9"/>
+      <circle cx="310" cy="60" r="4" fill="#FFFFFF" fill-opacity="0.9"/>
+      <circle cx="30" cy="200" r="4" fill="#FFFFFF" fill-opacity="0.9"/>
+      <circle cx="160" cy="150" r="4" fill="#FFFFFF" fill-opacity="0.9"/>
+
+      <!-- Đồi tuyết trắng uốn lượn phía dưới (che phần text/UI) -->
+      <path d="M 0 700 L 0 296 Q 90 270 180 292 T 340 282 L 340 700 Z" fill="#FFFFFF" fill-opacity="0.93"/>
+
+      <!-- Cây thông Noel lớn phủ tuyết -->
+      <g transform="translate(46,300) scale(0.8)">
+        <polygon points="0,-70 -22,-36 22,-36" fill="#1F5F4A"/>
+        <polygon points="0,-52 -28,-14 28,-14" fill="#1F5F4A"/>
+        <polygon points="0,-34 -34,6 34,6" fill="#1F5F4A"/>
+        <rect x="-5" y="6" width="10" height="12" fill="#5A3A1E"/>
+        <path d="M -10 -50 Q 0 -56 10 -50 M -16 -28 Q 0 -36 16 -28" stroke="#FFFFFF" stroke-width="4" fill="none" opacity="0.85" stroke-linecap="round"/>
+      </g>
+
+      <!-- Cây thông Noel nhỏ cạnh bên -->
+      <g transform="translate(96,304) scale(0.52)">
+        <polygon points="0,-70 -22,-36 22,-36" fill="#2A7458"/>
+        <polygon points="0,-52 -28,-14 28,-14" fill="#2A7458"/>
+        <polygon points="0,-34 -34,6 34,6" fill="#2A7458"/>
+        <rect x="-5" y="6" width="10" height="12" fill="#5A3A1E"/>
+        <path d="M -10 -50 Q 0 -56 10 -50 M -16 -28 Q 0 -36 16 -28" stroke="#FFFFFF" stroke-width="4" fill="none" opacity="0.85" stroke-linecap="round"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Viền sáng ngoài card đặc trưng -->
+  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="3"/>
+</svg>

@@ -1,0 +1,23 @@
+<svg width="392" height="136" viewBox="0 0 784 272" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Lớp giấy lót bên dưới -->
+  <rect x="6" y="8" width="772" height="252" rx="4" fill="#E4E2D5"/>
+
+  <!-- Thân thẻ phẳng xám mờ -->
+  <path d="M 8 2 H 738 L 778 42 V 256 L 770 260 L 762 256 L 754 260 L 746 256 L 738 260 L 730 256 H 8 L 2 256 V 8 L 8 2 Z" fill="#EDEDE6" stroke="#DBDCCF" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Nếp gấp góc phải trên mờ -->
+  <path d="M 738 2 L 778 42 H 738 V 2 Z" fill="#E4E2D5" stroke="#DBDCCF" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Gáy sổ & 3 lỗ bấm giấy mờ -->
+  <line x1="50" y1="18" x2="50" y2="244" stroke="#DBDCCF" stroke-width="1.5"/>
+  <circle cx="26" cy="50" r="4.5" fill="#F2F1EB" stroke="#DBDCCF" stroke-width="1.2"/>
+  <circle cx="26" cy="132" r="4.5" fill="#F2F1EB" stroke="#DBDCCF" stroke-width="1.2"/>
+  <circle cx="26" cy="214" r="4.5" fill="#F2F1EB" stroke="#DBDCCF" stroke-width="1.2"/>
+
+  <!-- Các đường kẻ ngang ghi chú mờ -->
+  <line x1="72" y1="107" x2="722" y2="107" stroke="#DBDCCF" stroke-width="1.5"/>
+  <line x1="72" y1="197" x2="722" y2="197" stroke="#DBDCCF" stroke-width="2.5"/>
+
+  <!-- Dấu mộc tròn góc dưới phải mờ -->
+  <circle cx="727" cy="217" r="14" fill="none" stroke="#DBDCCF" stroke-width="1.5"/>
+</svg>

@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="EventData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_abge6"]
+[ext_resource type="Resource" path="res://resources/levels/events/april/level_1300.tres" id="2_w0t17"]
+[ext_resource type="Resource" path="res://resources/levels/events/april/level_1301.tres" id="3_c31db"]
+[ext_resource type="Resource" path="res://resources/levels/events/april/level_1302.tres" id="4_y7sa2"]
+[ext_resource type="Resource" path="res://resources/levels/events/april/level_1303.tres" id="5_f1mmi"]
+[ext_resource type="Resource" path="res://resources/levels/events/april/level_1304.tres" id="6_wgu3t"]
+[ext_resource type="Resource" path="res://resources/levels/events/april/level_1305.tres" id="7_v4ih6"]
+[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="8_pg7t7"]
+[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="9_gruwh"]
+[ext_resource type="Resource" path="res://resources/events/themes/april.tres" id="10_8l4lr"]
+
+[sub_resource type="Resource" id="Resource_2cqki"]
+script = ExtResource("8_pg7t7")
+amount = 300
+label_key = &"STR_EVENT_APRIL_REWARD_1"
+
+[sub_resource type="Resource" id="Resource_t5hwo"]
+script = ExtResource("8_pg7t7")
+amount = 150
+label_key = &"STR_EVENT_APRIL_REWARD_2"
+
+[resource]
+script = ExtResource("9_gruwh")
+id = &"april"
+type = 1
+theme = ExtResource("10_8l4lr")
+sort_order = 60
+chip_key = &"STR_EVENT_APRIL_CHIP"
+title_key_1 = &"STR_EVENT_APRIL_TITLE_1"
+title_key_2 = &"STR_EVENT_APRIL_TITLE_2"
+sub_key_1 = &"STR_EVENT_APRIL_SUB_1"
+sub_key_2 = &"STR_EVENT_APRIL_SUB_2"
+cta_key = &"STR_EVENT_CTA_CONTINUE"
+start_utc = "2027-03-28T00:00:00Z"
+end_utc = "2027-04-04T00:00:00Z"
+levels = Array[ExtResource("1_abge6")]([ExtResource("2_w0t17"), ExtResource("3_c31db"), ExtResource("4_y7sa2"), ExtResource("5_f1mmi"), ExtResource("6_wgu3t"), ExtResource("7_v4ih6")])
+dungeon_milestones = PackedInt32Array()
+rewards = Array[ExtResource("8_pg7t7")]([SubResource("Resource_2cqki"), SubResource("Resource_t5hwo")])

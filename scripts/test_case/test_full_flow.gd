@@ -16,9 +16,9 @@ func _init() -> void:
 	print("[CHECK] MainScene instantiated.")
 	await process_frame
 	await process_frame
-	assert(main_scene.layout.btn_play != null, "MainScene phai co btn_play")
-	assert(main_scene.layout.btn_dungeon != null, "MainScene phai co btn_dungeon")
-	assert(main_scene.layout.btn_daily != null, "MainScene phai co btn_daily")
+	assert(main_scene.layout.card_play != null, "MainScene phai co the Play (ModeCard)")
+	assert(main_scene.layout.card_dungeon != null, "MainScene phai co the Dungeon (ModeCard)")
+	assert(main_scene.layout.event_carousel != null, "MainScene phai co EventCarousel")
 	main_scene.queue_free()
 	await process_frame
 

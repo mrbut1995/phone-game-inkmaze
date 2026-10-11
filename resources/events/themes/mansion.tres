@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="EventTheme" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/events/haunted_house_card_background.png" id="1_lvks4"]
+[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_182mh"]
+
+[resource]
+script = ExtResource("2_182mh")
+id = &"mansion"
+bg_stops = PackedColorArray(0.05882353, 0.16470589, 0.18039216, 1, 0.047058824, 0.10980392, 0.1254902, 1, 0.02745098, 0.050980393, 0.05882353, 1)
+grid_overlay = &"white"
+back_art = ExtResource("1_lvks4")
+art_offset_y = 0.0
+accent = Color(0.35686275, 0.8509804, 0.6039216, 1)
+accent2 = Color(0.7490196, 1, 0.8627451, 1)
+title_color = Color(0.7490196, 1, 0.8627451, 1)
+title_outline = Color(0.015686275, 0.0627451, 0.05882353, 1)
+sub_color = Color(0.6627451, 0.8509804, 0.78431374, 1)
+label_color = Color(0.8666667, 0.9843137, 0.9372549, 1)
+panel_color = Color(0, 0, 0, 1)
+panel_stroke = Color(0.35686275, 0.8509804, 0.6039216, 0.4)
+cta_fill = Color(0.35686275, 0.8509804, 0.6039216, 1)
+cta_stroke = Color(0.18039216, 0.56078434, 0.4, 1)
+cta_text = Color(0.015686275, 0.15686275, 0.105882354, 1)
+chip_fill = Color(0, 0, 0, 1)
+chip_text = Color(0.7490196, 1, 0.8627451, 1)

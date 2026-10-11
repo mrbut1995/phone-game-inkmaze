@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://b2j4vx7jkcbal"]
+
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_68s7y"]
+[ext_resource type="Script" path="res://scripts/scenes/layout/event_layout.gd" id="2_layout"]
+[ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
+
+[node name="Landscape" unique_id=1041501532 node_paths=PackedStringArray("btn_back", "event_title", "event_subtitle", "event_timer", "progress_label", "cta_button") instance=ExtResource("1_68s7y")]
+script = ExtResource("2_layout")
+btn_back = NodePath("Content/Header/BtnBack")
+event_title = NodePath("Content/Body/BodyContent/TitleRow/Title")
+event_subtitle = NodePath("Content/Body/BodyContent/Subtitle")
+event_timer = NodePath("Content/Body/BodyContent/TitleRow/TimerLabel")
+progress_label = NodePath("Content/Body/BodyContent/ProgressRow/ProgressText")
+cta_button = NodePath("Content/Footer/CtaButton")
+
+[node name="Content" type="HBoxContainer" parent="." index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+mouse_filter = 2
+
+[node name="Header" type="VBoxContainer" parent="Content" index="0"]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BtnBack" type="TextureButton" parent="Content/Header" index="0"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+stretch_mode = 5
+
+[node name="Spacer" type="Control" parent="Content/Header" index="1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Body" type="ScrollContainer" parent="Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="BodyContent" type="VBoxContainer" parent="Content/Body" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="TitleRow" type="HBoxContainer" parent="Content/Body/BodyContent" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Content/Body/BodyContent/TitleRow" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EventTitle"
+text = ""
+outline_size = 8
+
+[node name="TimerLabel" type="Label" parent="Content/Body/BodyContent/TitleRow" index="1"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"EventTimerLabel"
+text = ""
+horizontal_alignment = 2
+
+[node name="Subtitle" type="Label" parent="Content/Body/BodyContent" index="1"]
+layout_mode = 2
+theme_type_variation = &"EventSubLabel"
+text = ""
+
+[node name="ProgressRow" type="HBoxContainer" parent="Content/Body/BodyContent" index="2"]
+layout_mode = 2
+
+[node name="ProgressText" type="Label" parent="Content/Body/BodyContent/ProgressRow" index="0"]
+layout_mode = 2
+theme_type_variation = &"EventProgressValue"
+text = "0 / 0"
+
+[node name="UnitText" type="Label" parent="Content/Body/BodyContent/ProgressRow" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EventUnitLabel"
+text = ""
+
+[node name="Footer" type="VBoxContainer" parent="Content" index="2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="CtaButton" type="Button" parent="Content/Footer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "STR_EVENT_CTA_PLAY"
+theme_type_variation = &"EventCtaButton"

@@ -57,6 +57,11 @@ var tutorial_flow_done: bool = false
 ## BÀN DO NHÀ THIẾT KẾ VẼ của màn thay vì tự sinh bàn (xem BaseGameMode.designed_maze).
 var level_run: bool = false
 
+## EVENT: id sự kiện đang chơi (rỗng = không phải ván sự kiện) + LevelData của màn event.
+## Ván sự kiện KHÔNG ghi Sao/mở khoá vào mạch màn thường (xem `record_level_clear`).
+var current_event_id: StringName = &""
+var event_level: LevelData = null
+
 const DAILY_MODES: Array[String] = [
 	"minesweeper",
 	"sum_path",
@@ -146,6 +151,7 @@ func _ready() -> void:
 
 ## Khởi động Dungeon Mode
 func start_dungeon() -> void:
+	clear_event_run()
 	current_mode = "dungeon"
 	current_difficulty = "medium"
 	daily_variant = ""
@@ -161,14 +167,50 @@ func start_dungeon() -> void:
 ## khi đó ván chơi chạy bằng chế độ Special TRÊN BÀN DO NHÀ THIẾT KẾ VẼ (xem BaseGameMode.designed_maze).
 ## Màn không khai gì (hoặc khai id lạ) = chế độ Play như trước.
 func start_level(level_id: int) -> void:
+	clear_event_run()
 	prepare_level_run(level_id)
 	if _open_mode_tutorial_once():
 		return
 	_change_scene("res://scenes/game.tscn")
 
 
+## Chơi 1 MÀN của SỰ KIỆN (LevelData truyền thẳng, không tra theo id — §B7).
+## Màn event dùng id riêng (1000+) nằm ngoài danh sách chương và KHÔNG ảnh hưởng mở khoá Sao.
+func start_level_from_event(level: LevelData, event_id: StringName) -> void:
+	if level == null:
+		return
+	event_level = level
+	current_event_id = event_id
+	current_level = maxi(level.level_id, 1)
+	current_difficulty = str(level.difficulty) if not str(level.difficulty).is_empty() else "medium"
+	current_mode = _mode_of_level_data(level)
+	daily_variant = ""
+	level_run = true
+	debug_run = false
+	start_floor_override = 0
+	mode_changed.emit(current_mode)
+	_change_scene("res://scenes/game.tscn")
+
+
+## Xoá trạng thái ván sự kiện (gọi khi bắt đầu ván KHÔNG phải event)
+func clear_event_run() -> void:
+	current_event_id = &""
+	event_level = null
+
+
+## Chế độ của 1 LevelData ("play" nếu không khai hoặc khai id lạ — khớp mode_id_of_level)
+func _mode_of_level_data(data: LevelData) -> String:
+	if data == null:
+		return "play"
+	var mode_id := str(data.mode_id).strip_edges().to_lower()
+	if mode_id.is_empty() or mode_id == "dungeon" or not is_known_mode(mode_id):
+		return "play"
+	return mode_id
+
+
 ## Nạp cấu hình 1 MÀN nhưng KHÔNG chuyển scene (test gọi được). Trả về mode id sẽ dùng.
 func prepare_level_run(level_id: int) -> String:
+	clear_event_run()
 	current_level = maxi(level_id, 1)
 	current_difficulty = difficulty_of_level(current_level)
 	current_mode = mode_id_of_level(current_level)
@@ -184,6 +226,9 @@ func prepare_level_run(level_id: int) -> String:
 ## LƯU Ý: `LevelManager.load_level()` tự TẠO file cho id lạ ⇒ phải hỏi `has_level()` trước,
 ## không thì chỉ cần hỏi mode của 1 id linh tinh là mọc thêm màn rác trong resources/levels.
 func level_data_of(level_id: int) -> LevelData:
+	# Ván SỰ KIỆN: màn event không nằm trong danh sách chương → trả LevelData đã truyền vào
+	if event_level != null and not current_event_id.is_empty() and level_id == current_level:
+		return event_level
 	var lm := get_node_or_null("/root/LevelManager")
 	if lm == null or not lm.has_method("load_level"):
 		return null
@@ -341,6 +386,7 @@ func _open_mode_tutorial_once() -> bool:
 ## "special" (maze đặc biệt của ngày). Trả về mode id sẽ dùng.
 ## (Luật của game challenge do `daily_challenge_id` giữ — xem `prepare_daily_game`.)
 func prepare_daily_run(day: int, variant := "special") -> String:
+	clear_event_run()
 	selected_daily_day = maxi(day, 1)
 	if variant == "classic":
 		daily_variant = "classic"
@@ -376,6 +422,7 @@ func special_mode_ids() -> Array[String]:
 ##   floor_override   -> bắt đầu ở tầng đó (0 = mặc định tầng 1) — để thử bàn to/nhỏ
 func prepare_mode_run(mode_id: String, difficulty := "medium", test_run := false,
 		floor_override := 0) -> void:
+	clear_event_run()
 	current_mode = mode_id
 	current_difficulty = difficulty
 	daily_variant = ""
@@ -421,6 +468,15 @@ func _change_scene(path: String) -> void:
 
 ## Ghi nhận hoàn thành màn
 func record_level_clear(level_id: int, stars: int, clear_time: float) -> void:
+	# Ván SỰ KIỆN: chỉ báo cho EventManager, KHÔNG ghi Sao/mở khoá vào mạch màn thường (§B7)
+	if not current_event_id.is_empty():
+		var em := get_node_or_null("/root/EventManager")
+		var lvl := level_data_of(level_id)
+		if em != null and em.has_method("on_level_won") and lvl != null:
+			em.call("on_level_won", current_event_id, lvl, stars)
+		level_completed.emit(level_id, stars, int(clear_time))
+		return
+
 	var prev_stars: int = level_stars.get(level_id, 0)
 	if stars > prev_stars:
 		level_stars[level_id] = stars

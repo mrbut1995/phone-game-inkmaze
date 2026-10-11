@@ -1,0 +1,59 @@
+; EventHeader — tiêu đề khối Sự kiện (title + badge số event + "Xem tất cả")
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/event_header.gd" id="1_head"]
+
+[sub_resource type="StyleBoxFlat" id="sb_badge"]
+bg_color = Color(0.9882353, 0.61960787, 0.043137256, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="EventHeader" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+theme_override_constants/separation = 5
+script = ExtResource("1_head")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"EventHeaderTitle"
+text = "STR_EVENT_SECTION_TITLE"
+
+[node name="Badge" type="Panel" parent="."]
+custom_minimum_size = Vector2(18, 15)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_badge")
+
+[node name="CountLabel" type="Label" parent="Badge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"EventHeaderCount"
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ViewAll" type="Button" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+flat = true
+theme_type_variation = &"EventViewAll"
+text = "STR_EVENT_VIEW_ALL"

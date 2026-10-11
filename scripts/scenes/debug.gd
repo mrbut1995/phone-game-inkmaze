@@ -107,6 +107,7 @@ func _build() -> void:
 	_build_navigate()
 	_build_progress()
 	_build_daily()
+	_build_events()
 	_build_special_modes()
 	_build_tutorials()
 	_build_save()
@@ -206,6 +207,117 @@ func _build_daily() -> void:
 	_add_action("Mark today done (4 nhiệm vụ)", "Đánh dấu hôm nay xong hết nhiệm vụ", _complete_today_daily)
 	_add_action("Unlock yesterday", "Trả Xu mở khoá ngày đã bỏ lỡ (hôm qua)", _unlock_yesterday)
 	_add_action("Reset daily data", "Xoá toàn bộ ngày/nhiệm vụ/Xu đã thưởng", _reset_daily, true)
+
+
+# ---------------------------------------------------------------------------
+# EVENTS (Sự kiện — chỉ có ở bản dev)
+# ---------------------------------------------------------------------------
+func _build_events() -> void:
+	_add_section("EVENTS")
+	var em := _event_manager()
+	if em == null:
+		_add_value("EventManager", "không nạp được")
+		return
+	var active: Array = em.call("get_active_events")
+	_add_value("Đang mở", "%d thẻ" % active.size())
+	for item in active:
+		var ev: EventData = item
+		var prog: Dictionary = em.call("get_progress", ev.id)
+		var note := "%d / %d" % [int(prog.get("done", 0)), int(prog.get("total", 0))]
+		if bool(prog.get("claimed", false)):
+			note += " · ĐÃ NHẬN"
+		elif bool(prog.get("completed", false)):
+			note += " · XONG (chờ nhận)"
+		_add_value("  %s" % str(ev.id), note)
+	_add_action("Bắt đầu ngay (mọi event)", "Ép cửa sổ thời gian quanh hiện tại",
+		_events_start_all)
+	_add_action("Kết thúc ngay (mọi event)", "Đóng cửa sổ thời gian của mọi event",
+		_events_end_all)
+	_add_action("+1 ngày (dịch giờ giả)", "Cộng 86400s vào now_utc() của EventManager",
+		_events_shift.bind(86400))
+	_add_action("-1 ngày (dịch giờ giả)", "Trừ 86400s khỏi now_utc() của EventManager",
+		_events_shift.bind(-86400))
+	_add_action("Hoàn thành màn kế", "Đánh dấu xong màn chưa xong đầu tiên của mỗi event series",
+		_events_complete_next)
+	_add_action("Đặt tiến độ = đủ", "Đẩy mọi event lên mốc cuối (để test nhận quà)",
+		_events_set_full)
+	_add_action("Nhận quà (mọi event)", "claim_reward cho mọi event đã hoàn thành",
+		_events_claim_all)
+	_add_action("Reset tiến độ + cờ đã nhận", "Xoá tiến độ và cờ claimed của mọi event",
+		_events_reset, true)
+
+
+func _event_manager() -> Node:
+	return get_node_or_null("/root/EventManager")
+
+
+func _events_start_all() -> void:
+	var em := _event_manager()
+	if em == null:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	for ev in em.call("get_active_events"):
+		em.call("debug_set_window", (ev as EventData).id, -3600, 86400 * 7)
+
+
+func _events_end_all() -> void:
+	var em := _event_manager()
+	if em == null:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	for ev in em.call("get_active_events"):
+		em.call("debug_set_window", (ev as EventData).id, -86400 * 2, -3600)
+
+
+func _events_shift(delta: int) -> void:
+	var em := _event_manager()
+	if em == null:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	em.call("debug_shift_time", delta)
+
+
+func _events_complete_next() -> void:
+	var em := _event_manager()
+	if em == null:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	for ev in em.call("get_active_events"):
+		em.call("debug_complete_next_level", (ev as EventData).id)
+	_build()
+
+
+func _events_set_full() -> void:
+	var em := _event_manager()
+	if em == null:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	for ev in em.call("get_active_events"):
+		var ev_data: EventData = ev
+		em.call("debug_set_progress", ev_data.id, maxi(ev_data.total_progress(), 1))
+	_build()
+
+
+func _events_claim_all() -> void:
+	var em := _event_manager()
+	if em == null:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	for ev in em.call("get_active_events"):
+		var id: StringName = (ev as EventData).id
+		if bool(em.call("can_claim", id)):
+			em.call("claim_reward", id)
+	_build()
+
+
+func _events_reset() -> void:
+	var em := _event_manager()
+	if em == null:
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	for ev in em.call("get_active_events"):
+		em.call("debug_reset_event", (ev as EventData).id)
+	_build()
 
 
 # ---------------------------------------------------------------------------

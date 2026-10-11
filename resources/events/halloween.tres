@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="EventData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_d6r17"]
+[ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1000.tres" id="2_vuvyv"]
+[ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1001.tres" id="3_7vctd"]
+[ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1002.tres" id="4_mmn5i"]
+[ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1003.tres" id="5_mevfw"]
+[ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1004.tres" id="6_j2qp3"]
+[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="7_b4k8a"]
+[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="8_g24xi"]
+[ext_resource type="Resource" path="res://resources/events/themes/halloween.tres" id="9_3fvuu"]
+
+[sub_resource type="Resource" id="Resource_8cuh2"]
+script = ExtResource("7_b4k8a")
+amount = 500
+label_key = &"STR_EVENT_HALLOWEEN_REWARD_1"
+
+[sub_resource type="Resource" id="Resource_sekmx"]
+script = ExtResource("7_b4k8a")
+amount = 200
+label_key = &"STR_EVENT_HALLOWEEN_REWARD_2"
+
+[resource]
+script = ExtResource("8_g24xi")
+id = &"halloween"
+theme = ExtResource("9_3fvuu")
+sort_order = 10
+chip_key = &"STR_EVENT_HALLOWEEN_CHIP"
+title_key_1 = &"STR_EVENT_HALLOWEEN_TITLE_1"
+title_key_2 = &"STR_EVENT_HALLOWEEN_TITLE_2"
+sub_key_1 = &"STR_EVENT_HALLOWEEN_SUB_1"
+sub_key_2 = &"STR_EVENT_HALLOWEEN_SUB_2"
+unit_key = &"STR_EVENT_UNIT_MODES"
+cta_key = &"STR_EVENT_CTA_CONTINUE"
+start_utc = "2026-10-01T00:00:00Z"
+end_utc = "2026-11-07T00:00:00Z"
+levels = Array[ExtResource("1_d6r17")]([ExtResource("2_vuvyv"), ExtResource("3_7vctd"), ExtResource("4_mmn5i"), ExtResource("5_mevfw"), ExtResource("6_j2qp3")])
+dungeon_milestones = PackedInt32Array()
+rewards = Array[ExtResource("7_b4k8a")]([SubResource("Resource_8cuh2"), SubResource("Resource_sekmx")])

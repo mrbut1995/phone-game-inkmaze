@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://bn1qi288tevke"]
+
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_qx0ac"]
+[ext_resource type="Script" uid="uid://baxctysnb2on2" path="res://scripts/scenes/layout/event_layout.gd" id="2_layout"]
+[ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
+
+[node name="Portrait" unique_id=1041501532 node_paths=PackedStringArray("btn_back", "event_title", "event_subtitle", "event_timer", "progress_label", "cta_button") instance=ExtResource("1_qx0ac")]
+script = ExtResource("2_layout")
+btn_back = NodePath("Content/Header/BtnBack")
+event_title = NodePath("Content/Body/BodyContent/Title")
+event_subtitle = NodePath("Content/Body/BodyContent/Subtitle")
+event_timer = NodePath("Content/Header/TimerLabel")
+progress_label = NodePath("Content/Body/BodyContent/ProgressRow/ProgressText")
+cta_button = NodePath("Content/Footer/CtaButton")
+
+[node name="Content" type="VBoxContainer" parent="." index="0" unique_id=473338321]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Header" type="HBoxContainer" parent="Content" index="0" unique_id=132747452]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="BtnBack" type="TextureButton" parent="Content/Header" index="0" unique_id=1241633460]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+stretch_mode = 5
+
+[node name="TitleLabel" type="Label" parent="Content/Header" index="1" unique_id=1552727494]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ShopTitle"
+text = "STR_EVENT_HEADER"
+vertical_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="Content/Header" index="2" unique_id=641542597]
+layout_mode = 2
+theme_type_variation = &"EventTimerLabel"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Body" type="ScrollContainer" parent="Content" index="1" unique_id=499620545]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="BodyContent" type="VBoxContainer" parent="Content/Body" index="0" unique_id=556004791]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Content/Body/BodyContent" index="0" unique_id=299799978]
+layout_mode = 2
+theme_type_variation = &"EventTitle"
+
+[node name="Subtitle" type="Label" parent="Content/Body/BodyContent" index="1" unique_id=1303990150]
+layout_mode = 2
+theme_type_variation = &"EventSubLabel"
+
+[node name="ProgressRow" type="HBoxContainer" parent="Content/Body/BodyContent" index="2" unique_id=1174435505]
+layout_mode = 2
+
+[node name="ProgressText" type="Label" parent="Content/Body/BodyContent/ProgressRow" index="0" unique_id=569562922]
+layout_mode = 2
+theme_type_variation = &"EventProgressValue"
+text = "0 / 0"
+
+[node name="UnitText" type="Label" parent="Content/Body/BodyContent/ProgressRow" index="1" unique_id=307836437]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EventUnitLabel"
+
+[node name="Footer" type="HBoxContainer" parent="Content" index="2" unique_id=540313187]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="CtaButton" type="Button" parent="Content/Footer" index="0" unique_id=1211624232]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"EventCtaButton"
+text = "STR_EVENT_CTA_PLAY"

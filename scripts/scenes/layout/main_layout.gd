@@ -1,26 +1,41 @@
 class_name MainLayout
 extends BaseLayout
+## ============================================================================
+## Layout: Main Screen — node UI bind sẵn cho cả 2 bố cục (Portrait / Landscape).
+## Script màn chỉ đọc `layout.<tên>` (xem scripts/scenes/main.gd).
+##
+## Bố cục mới (§A): thanh trên (hồ sơ · Xu · Sao · Cài đặt) + khối Sự kiện
+## (header + carousel) + 2 thẻ chế độ (Play · Dungeon) + dock 4 nút.
+## ============================================================================
 
+## Logo/tiêu đề game (nhỏ, đầu màn)
 @export var logo: TextureRect = null
-@export var btn_play: BaseButton = null
-@export var btn_dungeon: BaseButton = null
-@export var btn_daily: BaseButton = null
-@export var btn_leaderboard: BaseButton = null
-@export var btn_shop: BaseButton = null
+## Khối hồ sơ (avatar · cấp · tên · thanh XP) — bấm mở popup Hồ sơ
+@export var profile_card: ProfileCard = null
+## Ví Xu Mực (+ nút `+` mở Cửa hàng)
+@export var coin_chip: CoinChip = null
+## Tổng Sao
+@export var star_chip: StarChip = null
+## Nút Cài đặt (bánh răng) — dời lên thanh trên
 @export var btn_settings: BaseButton = null
-@export var btn_archivement: BaseButton = null
-@export var badge_count_label: Label = null
-## Sticker HỒ SƠ (góc trên trái — mở màn Profiler): avatar + viền khung + chip cấp độ
-@export var btn_profile: BaseButton = null
-@export var profile_avatar: TextureRect = null
-@export var profile_frame: TextureRect = null
-@export var profile_level: Label = null
-## Chỉ layout NGANG dùng: thẻ hồ sơ có thêm tên người chơi
-@export var profile_name: Label = null
-@export var badge_play: Label = null
-@export var badge_dungeon: Label = null
-@export var badge_daily: Label = null
+## Tiêu đề khối Sự kiện (badge số event + "Xem tất cả")
+@export var event_header: EventHeader = null
+## Carousel thẻ sự kiện (Daily ghim đầu)
+@export var event_carousel: EventCarousel = null
+## Thẻ chế độ Play (chọn màn)
+@export var card_play: ModeCard = null
+## Thẻ chế độ Dungeon (vô tận)
+@export var card_dungeon: ModeCard = null
+## Dock: Cửa hàng
+@export var dock_shop: DockButton = null
+## Dock: Bảng xếp hạng
+@export var dock_ranking: DockButton = null
+## Dock: Sổ tay thành tựu (danh hiệu)
+@export var dock_badges: DockButton = null
+## Dock: Luật chơi (Tutorial)
+@export var dock_rules: DockButton = null
+## Con dấu phiên bản
 @export var stamp_panel: Control = null
 @export var stamp_label: Label = null
-@export var game_mode_box: Control = null
-@export var other_box: Control = null
+## Khối 2 thẻ chế độ (dùng cho hiệu ứng trượt)
+@export var mode_box: Control = null

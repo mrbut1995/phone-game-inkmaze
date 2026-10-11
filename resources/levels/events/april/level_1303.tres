@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_vuhnw"]
+
+[resource]
+script = ExtResource("1_vuhnw")
+level_id = 1303
+level_title = "April · 4"
+chapter = 0
+mode_id = "challenge"
+challenge = "no_tool"
+par_time = 40.0
+v_walls = PackedByteArray(1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1)
+cell_mask = PackedByteArray()
+mission_types = PackedStringArray()
+mission_params = PackedInt32Array()

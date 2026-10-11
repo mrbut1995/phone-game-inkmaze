@@ -1,11 +1,15 @@
 extends SceneTree
 ## ============================================================================
-## Test: Kiểm tra layout các nút và thẻ trong Main Scene
+## Test: Layout màn hình chính (Main Screen) — bố cục mới (§A)
+##   · Thanh trên: Hồ sơ · Xu · Sao · Cài đặt
+##   · Khối Sự kiện: header + carousel (Daily ghim đầu, KHÔNG còn thẻ Daily riêng)
+##   · 2 thẻ chế độ: Play · Dungeon (ModeCard thẻ giấy)
+##   · Dock 4 nút: Cửa hàng · Xếp hạng · Danh hiệu · Luật chơi
 ## ============================================================================
 
 func _init() -> void:
 	print("\n========================================================")
-	print("  TEST: MAIN SCENE BUTTONS LAYOUT")
+	print("  TEST: MAIN SCENE (bo cuc moi)")
 	print("========================================================\n")
 
 	root.size = Vector2i(1080, 1920)
@@ -14,96 +18,79 @@ func _init() -> void:
 	var main_packed: PackedScene = load("res://scenes/main.tscn")
 	var main_scene: MainScene = main_packed.instantiate()
 	root.add_child(main_scene)
-
-	# Cho 10 frames de container sap xep layout va animation chay xong
 	for i in 25:
 		await process_frame
 
-	print("[INFO] btn_play pos.y: %f" % main_scene.layout.btn_play.position.y)
-	print("[INFO] btn_dungeon pos.y: %f" % main_scene.layout.btn_dungeon.position.y)
-	print("[INFO] btn_daily pos.y: %f" % main_scene.layout.btn_daily.position.y)
+	var portrait := main_scene.get_node_or_null("Portrait") as Control
+	var landscape := main_scene.get_node_or_null("Landscape") as Control
+	assert(portrait != null, "Phai co layout Portrait")
+	assert(landscape != null, "Phai co layout Landscape")
+	assert(not landscape.visible, "Man hinh DOC thi layout ngang phai an")
 
-	print("[INFO] btn_leaderboard pos.x: %f" % main_scene.layout.btn_leaderboard.position.x)
-	print("[INFO] btn_shop pos.x: %f" % main_scene.layout.btn_shop.position.x)
-	print("[INFO] btn_settings pos.x: %f" % main_scene.layout.btn_settings.position.x)
-	print("[INFO] btn_archivement global: %s size: %s"
-		% [str(main_scene.layout.btn_archivement.global_position), str(main_scene.layout.btn_archivement.size)])
+	# 1. Thanh trên — hồ sơ / xu / sao / cài đặt, xếp trái→phải
+	var profile_card := main_scene.layout.profile_card
+	var coin_chip := main_scene.layout.coin_chip
+	var star_chip := main_scene.layout.star_chip
+	var btn_settings := main_scene.layout.btn_settings
+	assert(profile_card != null and coin_chip != null and star_chip != null and btn_settings != null,
+		"Thanh tren phai co du Ho so · Xu · Sao · Cai dat")
+	assert(profile_card.global_position.x < coin_chip.global_position.x,
+		"Ho so phai nam ben trai vi Xu")
+	assert(coin_chip.global_position.x < star_chip.global_position.x,
+		"Vi Xu phai nam ben trai o Sao")
+	assert(star_chip.global_position.x < btn_settings.global_position.x,
+		"Nut Cai dat phai nam ben phai cung thanh tren")
+	assert(profile_card.size.x >= 120.0, "The ho so phai du rong (%.0f)" % profile_card.size.x)
 
-	assert(main_scene.layout.btn_play.position.y < main_scene.layout.btn_dungeon.position.y,
-		"btn_dungeon phai nam duoi btn_play, khong duoc de chong len nhau")
-	assert(main_scene.layout.btn_dungeon.position.y < main_scene.layout.btn_daily.position.y,
-		"btn_daily phai nam duoi btn_dungeon, khong duoc de chong len nhau")
+	# 2. Khối sự kiện — header TRÊN carousel
+	var header: Node = main_scene.layout.event_header
+	var carousel: Node = main_scene.layout.event_carousel
+	assert(header != null, "Phai co EventHeader")
+	assert(carousel != null, "Phai co EventCarousel")
+	assert(header.global_position.y < carousel.global_position.y,
+		"Tieu de khoi su kien phai nam TREN carousel")
 
-	assert(main_scene.layout.btn_leaderboard.position.x < main_scene.layout.btn_shop.position.x,
-		"btn_shop (Cua hang) phai nam ben phai btn_leaderboard")
-	assert(main_scene.layout.btn_shop.position.x < main_scene.layout.btn_settings.position.x,
-		"btn_settings phai nam ben phai btn_shop")
+	# 3. 2 thẻ chế độ — Play TRÊN Dungeon, đủ cấu trúc ModeCard
+	var card_play: ModeCard = main_scene.layout.card_play
+	var card_dungeon: ModeCard = main_scene.layout.card_dungeon
+	assert(card_play != null and card_dungeon != null, "Phai co 2 the che do Play + Dungeon")
+	assert(card_play.global_position.y < card_dungeon.global_position.y,
+		"The Play phai nam TREN the Dungeon")
+	for card in [card_play, card_dungeon]:
+		assert(card.get_node_or_null("Content/IconBox/Icon") != null, "ModeCard phai co Icon")
+		assert(card.get_node_or_null("Content/Texts/Title") != null, "ModeCard phai co Title")
+		assert(card.get_node_or_null("Content/Right/StatValue") != null, "ModeCard phai co StatValue")
+		assert(card.get_node_or_null("Content/Right/ActionButton") != null, "ModeCard phai co ActionButton")
+		assert(card.size.x > 0.0 and card.size.y > 0.0, "ModeCard phai co kich thuoc")
+		assert(card.card_pressed.get_connections().size() > 0, "ModeCard phai noi card_pressed")
 
-	# Nút Sổ tay thành tựu: icon LỚN ở góc TRÊN PHẢI tờ giấy, không nằm trong hàng Other
-	assert(main_scene.layout.btn_archivement.global_position.y < main_scene.layout.btn_leaderboard.global_position.y,
-		"Nút thành tựu phải nằm PHÍA TRÊN hàng nút Other")
-	assert(main_scene.layout.btn_archivement.global_position.x > main_scene.layout.btn_play.global_position.x,
-		"Nút thành tựu phải nằm bên PHẢI (góc trên phải tờ giấy)")
-	assert(main_scene.layout.btn_archivement.size.x >= 100.0 and main_scene.layout.btn_archivement.size.y >= 100.0,
-		"Nút thành tựu phải là icon LỚN (>= 100x100), đang %s" % str(main_scene.layout.btn_archivement.size))
-	assert(main_scene.layout.btn_archivement.texture_normal != main_scene.layout.btn_archivement.texture_pressed
-			and main_scene.layout.btn_archivement.texture_pressed != main_scene.layout.btn_archivement.texture_focused,
-		"Nút thành tựu phải có đủ trạng thái normal / pressed / focus")
+	# 4. Dock 4 nút — đều nhau, đủ rộng
+	var dock: Node = main_scene.ui("Dock")
+	assert(dock != null, "Phai co Dock duoi cung")
+	assert(dock.get_child_count() == 4, "Dock phai co dung 4 nut, dang %d" % dock.get_child_count())
+	var names := ["DockShop", "DockRanking", "DockBadges", "DockRules"]
+	for i in names.size():
+		var btn := dock.get_node_or_null(names[i]) as Control
+		assert(btn != null, "Dock phai co nut %s" % names[i])
+		assert(btn.size.x > 40.0 and btn.size.y > 40.0, "Nut %s phai co kich thuoc" % names[i])
+		var label := btn.get_node_or_null("Label") as Label
+		assert(label != null and not label.text.is_empty(), "Nut %s phai co nhan chu" % names[i])
 
-	# Hàng Other phải còn đúng 3 nút: Xếp hạng · Cửa hàng · Cài đặt
-	var other_box := main_scene.ui("Other") as Control
-	assert(other_box != null, "Phai co hang nut Other (layout doc)")
-	if other_box != null:
-		assert(other_box.get_child_count() == 3,
-			"Hang Other phai co dung 3 nut, dang %d" % other_box.get_child_count())
-		assert(other_box.get_node_or_null("Archivement") == null,
-			"Nut thanh tuu KHONG con nam trong hang Other")
-		for child in other_box.get_children():
-			var button := child as BaseButton
-			assert(button != null and button.size.x > 0.0, "Nut %s phai co kich thuoc" % child.name)
-			assert(absf(button.size.x - 115.0) < 1.0 and absf(button.size.y - 65.0) < 1.0,
-				"Nut %s phai dung kich thuoc art 115x65 (dang %s)" % [child.name, str(button.size)])
+	# 5. Bỏ các thành phần cũ (tờ giấy, hàng nút Other, thẻ Daily riêng)
+	assert(main_scene.ui("Paper") == null, "KHONG con to giay Paper")
+	assert(main_scene.ui("Other") == null, "KHONG con hang nut Other")
+	assert(main_scene.ui("DailyMission") == null, "KHONG con the Daily rieng")
+	assert(main_scene.ui("GameMode") == null, "KHONG con khoi GameMode cu")
+	assert(main_scene.ui("Archivement") == null, "KHONG con nut Danh hieu lon cu")
 
-	# 2 LAYOUT theo hướng màn hình phải cùng tồn tại, đúng layout được bật
-	assert(main_scene.get_node_or_null("Portrait") != null, "Phai co layout Portrait")
-	assert(main_scene.get_node_or_null("Landscape") != null, "Phai co layout Landscape")
-	assert(main_scene.ui("Paper") != null, "Layout NGANG phai co to giay Paper")
-	var landscape_layout := main_scene.get_node_or_null("Landscape") as Control
-	assert(landscape_layout != null and not landscape_layout.visible,
-		"Man hinh DỌC thi layout ngang phai ẩn")
+	# 6. Thẻ sự kiện có đúng cấu trúc con + dùng node khai sẵn
+	var card_node: Node = main_scene.ui("EventCard")
+	assert(card_node != null, "Carousel phai instantiate it nhat 1 EventCard")
+	if card_node != null:
+		for child in ["BgGradient", "BackArt", "ThemeChip", "TimerChip", "ProgressPanel", "CtaButton"]:
+			assert(card_node.get_node_or_null(child) != null, "EventCard phai co node %s" % child)
 
-	# 2b. Mỗi thẻ chế độ phải được tách 3 phần: CircleIcon / TopBadge / BottomLabel
-	# (Play: CircleIcon nằm trong HBox `ButtonDescription`; Dungeon/DailyMission: CircleIcon
-	#  là CON TRỰC TIẾP, neo GÓC PHẢI-TRÊN — cùng bộ art chung `card_mode_*`)
-	for card_name in ["Play", "Dungeon", "DailyMission"]:
-		var card := main_scene.ui(card_name) as Control
-		assert(card != null, "Phai co the %s" % card_name)
-		var circle := card.get_node_or_null("CircleIcon")
-		if circle == null:
-			circle = card.get_node_or_null("ButtonDescription/CircleIcon")
-		var top_badge := card.get_node_or_null("TopBadge")
-		var bottom := card.get_node_or_null("BottomLabel")
-		assert(circle != null and top_badge != null and bottom != null,
-			"The %s phai co du 3 node phan CircleIcon/TopBadge/BottomLabel" % card_name)
-		assert(circle.get_node_or_null("ModeIcon") != null, "%s/CircleIcon phai chua ModeIcon" % card_name)
-		assert(top_badge.get_node_or_null("Tag") != null, "%s/TopBadge phai chua Tag" % card_name)
-		assert(bottom.get_node_or_null("Badge") != null, "%s/BottomLabel phai chua Badge" % card_name)
-		if card_name != "Play":
-			assert(circle.get_parent() == card,
-				"%s/CircleIcon phai la con truc tiep (goc phai-tren)" % card_name)
-			assert(circle.anchor_left >= 0.75 and circle.anchor_top < 0.3,
-				"%s/CircleIcon phai neo GOC PHAI-TREN (left=%f top=%f)"
-				% [card_name, circle.anchor_left, circle.anchor_top])
-
-	# 3 huy hieu tren the che do phai duoc DIEN SO luc chay (chuoi dich co "{0}")
-	for pair in [["Play", "Badge"], ["Dungeon", "Badge"], ["DailyMission", "Badge"]]:
-		var badge := main_scene.ui_child(str(pair[0]), "BottomLabel/%s" % str(pair[1])) as Label
-		assert(badge != null, "Phai co Label huy hieu tai %s/BottomLabel/Badge" % str(pair[0]))
-		assert(not badge.text.contains("{0}"),
-			"Huy hieu %s phai duoc dien so (dang '%s')" % [str(pair[0]), badge.text])
-		print("[INFO] %s/Badge -> %s" % [str(pair[0]), badge.text])
-
-	print("\n[SUCCESS] Cac button va the tren Main Scene da duoc xep dung vi tri, khong bi de chong len nhau!\n")
+	print("\n[SUCCESS] Bo cuc Main Screen moi dung: thanh tren · su kien · 2 the che do · dock 4 nut.\n")
 	main_scene.queue_free()
 	await process_frame
 	quit(0)

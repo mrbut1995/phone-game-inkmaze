@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="EventData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_ex6i5"]
+[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="2_iuv04"]
+[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="3_20vu0"]
+[ext_resource type="Resource" path="res://resources/events/themes/newyear.tres" id="4_0phry"]
+
+[sub_resource type="Resource" id="Resource_vmbef"]
+script = ExtResource("2_iuv04")
+amount = 888
+label_key = &"STR_EVENT_NEWYEAR_REWARD_1"
+
+[sub_resource type="Resource" id="Resource_1hn1f"]
+script = ExtResource("2_iuv04")
+amount = 200
+label_key = &"STR_EVENT_NEWYEAR_REWARD_2"
+
+[resource]
+script = ExtResource("3_20vu0")
+id = &"newyear"
+type = 3
+theme = ExtResource("4_0phry")
+sort_order = 50
+chip_key = &"STR_EVENT_NEWYEAR_CHIP"
+title_key_1 = &"STR_EVENT_NEWYEAR_TITLE_1"
+title_key_2 = &"STR_EVENT_NEWYEAR_TITLE_2"
+sub_key_1 = &"STR_EVENT_NEWYEAR_SUB_1"
+sub_key_2 = &"STR_EVENT_NEWYEAR_SUB_2"
+unit_key = &"STR_EVENT_UNIT_DAYS"
+cta_key = &"STR_EVENT_CTA_CLAIM_LUCKY_MONEY"
+start_utc = "2026-12-28T00:00:00Z"
+end_utc = "2027-01-10T00:00:00Z"
+dungeon_milestones = PackedInt32Array()
+rewards = Array[ExtResource("2_iuv04")]([SubResource("Resource_vmbef"), SubResource("Resource_1hn1f")])

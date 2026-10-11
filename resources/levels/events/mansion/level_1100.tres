@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_q8idi"]
+
+[resource]
+script = ExtResource("1_q8idi")
+level_id = 1100
+level_title = "Mansion · 1"
+chapter = 0
+difficulty = "easy"
+max_steps = 8
+par_time = 25.0
+v_walls = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1)
+cell_mask = PackedByteArray()
+mission_types = PackedStringArray()
+mission_params = PackedInt32Array()

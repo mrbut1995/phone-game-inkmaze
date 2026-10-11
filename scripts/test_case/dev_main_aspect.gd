@@ -33,8 +33,8 @@ func _rotate_test() -> void:
 	await _frames(6)
 	var portrait := scene.get_node_or_null("Portrait") as Control
 	var landscape := scene.get_node_or_null("Landscape") as Control
-	var first_play := scene.layout.btn_play
-	print("  dọc:  is_landscape=%s P=%s L=%s · btn_play ở x=%.0f" % [str(scene.is_landscape),
+	var first_play := scene.layout.card_play
+	print("  dọc:  is_landscape=%s P=%s L=%s · card_play ở x=%.0f" % [str(scene.is_landscape),
 		str(portrait.visible), str(landscape.visible), first_play.global_position.x])
 
 	DisplayServer.window_set_size(Vector2i(1920, 1080))
@@ -42,15 +42,15 @@ func _rotate_test() -> void:
 	var canvas := root.get_visible_rect().size
 	print("  ngang: is_landscape=%s P=%s L=%s" % [str(scene.is_landscape),
 		str(portrait.visible), str(landscape.visible)])
-	print("     · btn_play ĐỔI sang node layout ngang: %s (x=%.0f · canvas=%.0f)" % [
-		str(scene.layout.btn_play != first_play), scene.layout.btn_play.global_position.x, canvas.x])
-	print("     · nút mới bấm được: %s" % str(scene.layout.btn_play.pressed.get_connections().size() > 0))
+	print("     · card_play ĐỔI sang node layout ngang: %s (x=%.0f · canvas=%.0f)" % [
+		str(scene.layout.card_play != first_play), scene.layout.card_play.global_position.x, canvas.x])
+	print("     · nút mới bấm được: %s" % str(scene.layout.card_play.card_pressed.get_connections().size() > 0))
 
 	DisplayServer.window_set_size(Vector2i(1080, 1920))
 	await _frames(8)
-	print("  quay lại dọc: is_landscape=%s P=%s L=%s · btn_play về node cũ: %s" % [
+	print("  quay lại dọc: is_landscape=%s P=%s L=%s · card_play về node cũ: %s" % [
 		str(scene.is_landscape), str(portrait.visible), str(landscape.visible),
-		str(scene.layout.btn_play == first_play)])
+		str(scene.layout.card_play == first_play)])
 	scene.queue_free()
 	await _frames(2)
 
@@ -73,17 +73,19 @@ func _run(size: Vector2i) -> void:
 	print("  Portrait.visible=%s · Landscape.visible=%s" % [
 		str(portrait.visible if portrait != null else false),
 		str(landscape.visible if landscape != null else false)])
-	for name in ["Paper", "Panel", "Logo", "Play", "Dungeon", "DailyMission", "Leaderboard",
-			"Shop", "Settings", "Archivement", "Stamp"]:
+	for name in ["Body", "TopBar", "Logo", "ProfileCard", "CoinChip", "StarChip", "Settings",
+			"EventHeader", "EventCarousel", "Modes", "Play", "Dungeon", "Dock", "DockShop",
+			"DockRules", "Stamp"]:
 		var node := scene.ui(name) as Control
 		if node == null:
 			continue
 		var r := Rect2(node.global_position, node.size)
 		var inside := r.position.x >= -1.0 and r.position.y >= -1.0 and r.end.x <= canvas.x + 1.0 and r.end.y <= canvas.y + 1.0
 		print("    %-16s %-34s %s" % [name, str(r), "OK" if inside else "!!! TRÀN" + str(size)])
-	# Chi tiết trong thẻ Play + vùng logo (kiểm tra chữ có nằm gọn trong khung không)
-	for pair in [["Play", "Tag"], ["Play", "Title"], ["Play", "Badge"], ["Play", "ModeIcon"],
-			["Play", "VBoxContainer"], ["Archivement", "Count"], ["Stamp", "Label"]]:
+	# Chi tiết trong thẻ Play (kiểm tra chữ/icon có nằm gọn trong khung không)
+	for pair in [["Play", "Content/IconBox/Icon"], ["Play", "Content/Texts/Title"],
+			["Play", "Content/Texts/Chip/ChipLabel"], ["Play", "Content/Right/StatValue"],
+			["Play", "Content/Right/ActionButton"], ["ProfileCard", "Name"], ["Stamp", "Label"]]:
 		var child := scene.ui_child(str(pair[0]), str(pair[1])) as Control
 		if child == null:
 			continue

@@ -1,0 +1,42 @@
+; EventCarousel scene — ScrollContainer ngang (ẩn thanh cuộn) → HBox (khe 18) → các EventCard
+; Dưới cùng là EventDots (chấm phân trang)
+[gd_scene format=3]
+
+
+[ext_resource type="Script" path="res://scripts/nodes/event_carousel.gd" id="1_carousel"]
+[ext_resource type="PackedScene" path="res://nodes/main/event_card.tscn" id="2_card"]
+[ext_resource type="PackedScene" path="res://nodes/main/event_dots.tscn" id="3_dots"]
+
+[node name="EventCarousel" type="Control"]
+custom_minimum_size = Vector2(0, 270)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("1_carousel")
+event_card_scene = ExtResource("2_card")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -14
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+
+[node name="HBox" type="HBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 9
+
+[node name="EventDots" parent="." instance=ExtResource("3_dots")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -11
+grow_horizontal = 2
+grow_vertical = 0

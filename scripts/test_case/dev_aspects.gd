@@ -38,6 +38,7 @@ const ASPECTS := [
 
 const SCREENS := [
 	{"id": "main", "path": "res://scenes/main.tscn"},
+	{"id": "event", "path": "res://scenes/event.tscn"},
 	{"id": "splash", "path": "res://scenes/splash.tscn"},
 	{"id": "title", "path": "res://scenes/title.tscn"},
 	{"id": "levels", "path": "res://scenes/levels.tscn"},

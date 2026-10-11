@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252">
+  <defs>
+    <!-- Pattern lưới tối màu đặc trưng của tomb -->
+    <pattern id="gd" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#163A58" stroke-width="1" opacity="0.07"/>
+    </pattern>
+
+    <!-- Gradient sa mạc & hoàng hôn kim tự tháp -->
+    <linearGradient id="bg_tomb" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE2A0"/>
+      <stop offset="0.45" stop-color="#E7A95A"/>
+      <stop offset="1" stop-color="#3A210E"/>
+    </linearGradient>
+
+    <!-- Ánh trăng sa mạc tỏa sáng -->
+    <radialGradient id="moonGlow">
+      <stop offset="0" stop-color="#FFE9A8" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- ClipPath bo góc chuẩn card 340x504 -->
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <!-- Container bọc clipPath theo form của Card sự kiện -->
+  <g clip-path="url(#cardClip)">
+    <!-- 1. Lớp nền gradient & texture ô ly -->
+    <rect width="340" height="504" fill="url(#bg_tomb)"/>
+    <rect width="340" height="504" fill="url(#gd)"/>
+
+    <!-- 2. Nhóm chi tiết artwork: Mặt trăng, Kim tự tháp Ai Cập, Biểu tượng Ankh & Đụn cát sa mạc -->
+    <g transform="translate(0,-55)">
+      <!-- Mặt trăng tròn trên bầu trời sa mạc -->
+      <circle cx="250" cy="160" r="100" fill="url(#moonGlow)"/>
+      <circle cx="250" cy="160" r="46" fill="#FFF1B8"/>
+
+      <!-- Kim tự tháp chính (trái) với bóng đổ -->
+      <polygon points="10,300 105,190 200,300" fill="#C97A2B"/>
+      <polygon points="105,190 200,300 118,300" fill="#000000" fill-opacity="0.16"/>
+
+      <!-- Kim tự tháp phụ (phải) với bóng đổ -->
+      <polygon points="120,300 225,212 330,300" fill="#A5601E"/>
+      <polygon points="225,212 330,300 238,300" fill="#000000" fill-opacity="0.18"/>
+
+      <!-- Biểu tượng Ankh (Chìa khóa sinh mệnh cổ Ai Cập) -->
+      <g transform="translate(58,160)" fill="none" stroke="#3A210E" stroke-width="5" stroke-linecap="round">
+        <ellipse cy="-14" rx="9" ry="12"/>
+        <line x1="0" y1="-2" x2="0" y2="34"/>
+        <line x1="-14" y1="8" x2="14" y2="8"/>
+      </g>
+
+      <!-- Các ngôi sao lấp lánh trên bầu trời đêm sa mạc -->
+      <path d="M 40 105 Q 40 110 45 110 Q 40 110 40 115 Q 40 110 35 110 Q 40 110 40 105 Z" fill="#FFFFFF" fill-opacity="0.8"/>
+      <path d="M 150 96 Q 150 100 154 100 Q 150 100 150 104 Q 150 100 146 100 Q 150 100 150 96 Z" fill="#FFFFFF" fill-opacity="0.8"/>
+      <path d="M 300 105 Q 300 110 305 110 Q 300 110 300 115 Q 300 110 295 110 Q 300 110 300 105 Z" fill="#FFFFFF" fill-opacity="0.8"/>
+      <path d="M 170 156 Q 170 160 174 160 Q 170 160 170 164 Q 170 160 166 160 Q 170 160 170 156 Z" fill="#FFFFFF" fill-opacity="0.8"/>
+
+      <!-- Dải đụn cát tối màu chân trời (Silhouette che phần text/UI) -->
+      <path d="M 0 700 L 0 282 Q 90 258 180 280 T 340 270 L 340 700 Z" fill="#3A210E" fill-opacity="0.96"/>
+    </g>
+  </g>
+
+  <!-- Viền sáng ngoài card đặc trưng -->
+  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="3"/>
+</svg>

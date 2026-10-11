@@ -38,6 +38,7 @@ PlayerProfileManager="*res://scripts/manager/PlayerProfileManager.gd"
 RankingManager="*res://scripts/manager/RankingManager.gd"
 ThemeManager="*uid://bg3pxd8vw2vrw"
 TutorialManager="*uid://6q2po1um0iul"
+EventManager="*res://scripts/manager/EventManager.gd"
 
 [display]
 
