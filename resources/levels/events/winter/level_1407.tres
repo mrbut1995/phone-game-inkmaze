@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_w4l2n"]
+
+[resource]
+script = ExtResource("1_w4l2n")
+level_id = 1407
+level_title = "Winter · 8"
+chapter = 0
+difficulty = "hard"
+width = 4
+height = 4
+start_pos = Vector2i(0, 3)
+end_pos = Vector2i(3, 0)
+max_steps = 24
+par_time = 60.0
+v_walls = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1)
+cell_mask = PackedByteArray()
+mission_types = PackedStringArray()
+mission_params = PackedInt32Array()

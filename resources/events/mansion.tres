@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="EventData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_mdd0s"]
+[ext_resource type="Resource" path="res://resources/levels/events/mansion/level_1100.tres" id="2_vbm3x"]
+[ext_resource type="Resource" path="res://resources/levels/events/mansion/level_1101.tres" id="3_ic6mv"]
+[ext_resource type="Resource" path="res://resources/levels/events/mansion/level_1102.tres" id="4_k2l0u"]
+[ext_resource type="Resource" path="res://resources/levels/events/mansion/level_1103.tres" id="5_b5y3h"]
+[ext_resource type="Resource" path="res://resources/levels/events/mansion/level_1104.tres" id="6_o7240"]
+[ext_resource type="Resource" path="res://resources/levels/events/mansion/level_1105.tres" id="7_7yufy"]
+[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="8_nbkyk"]
+[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="9_s322s"]
+[ext_resource type="Resource" path="res://resources/events/themes/mansion.tres" id="10_xjxor"]
+
+[sub_resource type="Resource" id="Resource_tly0g"]
+script = ExtResource("8_nbkyk")
+amount = 700
+label_key = &"STR_EVENT_MANSION_REWARD_1"
+
+[sub_resource type="Resource" id="Resource_tk1h0"]
+script = ExtResource("8_nbkyk")
+amount = 300
+label_key = &"STR_EVENT_MANSION_REWARD_2"
+
+[resource]
+script = ExtResource("9_s322s")
+id = &"mansion"
+type = 1
+theme = ExtResource("10_xjxor")
+sort_order = 20
+chip_key = &"STR_EVENT_MANSION_CHIP"
+title_key_1 = &"STR_EVENT_MANSION_TITLE_1"
+title_key_2 = &"STR_EVENT_MANSION_TITLE_2"
+sub_key_1 = &"STR_EVENT_MANSION_SUB_1"
+sub_key_2 = &"STR_EVENT_MANSION_SUB_2"
+cta_key = &"STR_EVENT_CTA_ENTER_MANSION"
+start_utc = "2026-10-05T00:00:00Z"
+end_utc = "2026-10-31T00:00:00Z"
+levels = Array[ExtResource("1_mdd0s")]([ExtResource("2_vbm3x"), ExtResource("3_ic6mv"), ExtResource("4_k2l0u"), ExtResource("5_b5y3h"), ExtResource("6_o7240"), ExtResource("7_7yufy")])
+dungeon_milestones = PackedInt32Array()
+rewards = Array[ExtResource("8_nbkyk")]([SubResource("Resource_tly0g"), SubResource("Resource_tk1h0")])

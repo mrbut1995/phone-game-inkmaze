@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_tly0s"]
+
+[resource]
+script = ExtResource("1_tly0s")
+level_id = 1002
+level_title = "Halloween · 3"
+chapter = 0
+mode_id = "challenge"
+difficulty = "easy"
+challenge = "walk_number_only"
+max_steps = 9
+par_time = 40.0
+v_walls = PackedByteArray(1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1)
+cell_mask = PackedByteArray()
+mission_types = PackedStringArray()
+mission_params = PackedInt32Array()

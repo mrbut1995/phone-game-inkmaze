@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="EventData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_2qa7e"]
+[ext_resource type="Resource" path="res://resources/levels/events/tomb/level_1200.tres" id="2_7qq1d"]
+[ext_resource type="Resource" path="res://resources/levels/events/tomb/level_1201.tres" id="3_0q3rq"]
+[ext_resource type="Resource" path="res://resources/levels/events/tomb/level_1202.tres" id="4_ayjw4"]
+[ext_resource type="Resource" path="res://resources/levels/events/tomb/level_1203.tres" id="5_arscr"]
+[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="6_mif6j"]
+[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="7_yojtt"]
+[ext_resource type="Resource" path="res://resources/events/themes/tomb.tres" id="8_e50te"]
+
+[sub_resource type="Resource" id="Resource_afm1v"]
+script = ExtResource("6_mif6j")
+amount = 600
+label_key = &"STR_EVENT_TOMB_REWARD_1"
+
+[sub_resource type="Resource" id="Resource_w6bed"]
+script = ExtResource("6_mif6j")
+amount = 250
+label_key = &"STR_EVENT_TOMB_REWARD_2"
+
+[resource]
+script = ExtResource("7_yojtt")
+id = &"tomb"
+theme = ExtResource("8_e50te")
+sort_order = 30
+chip_key = &"STR_EVENT_TOMB_CHIP"
+title_key_1 = &"STR_EVENT_TOMB_TITLE_1"
+title_key_2 = &"STR_EVENT_TOMB_TITLE_2"
+sub_key_1 = &"STR_EVENT_TOMB_SUB_1"
+sub_key_2 = &"STR_EVENT_TOMB_SUB_2"
+unit_key = &"STR_EVENT_UNIT_MODES"
+cta_key = &"STR_EVENT_CTA_EXPLORE"
+start_utc = "2026-10-01T00:00:00Z"
+end_utc = "2026-10-20T00:00:00Z"
+levels = Array[ExtResource("1_2qa7e")]([ExtResource("2_7qq1d"), ExtResource("3_0q3rq"), ExtResource("4_ayjw4"), ExtResource("5_arscr")])
+dungeon_milestones = PackedInt32Array()
+rewards = Array[ExtResource("6_mif6j")]([SubResource("Resource_afm1v"), SubResource("Resource_w6bed")])

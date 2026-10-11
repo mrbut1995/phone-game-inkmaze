@@ -2063,9 +2063,36 @@
 # 4. SỐ ĐO QUAN TRỌNG: màn NGANG có canvas CAO ĐÚNG 1920 → cỡ chữ/khung layout ngang = spec × 1.778
 #    (16:9 → canvas 3413×1920 · 4:3 → 2560×1920 · 19.5:9 → 4160×1920; 3:4 dọc → 1440×1920). In lại bằng
 #    `--rendering-driver opengl3 --script res://scripts/test_case/dev_size_probe.gd`.
-# 5. TEST: `test_main_layout` cập nhật theo 2 layout · `dev_aspects.gd -- --only=main --shots=1` 10/10 OK
-#    (ảnh: `tmp_aspect/<WxH>/main.png`) · full 33 suite: 31 xanh (2 đỏ CŨ: Sum Path/Fading Ink HUD).
-# [ ] CÒN LẠI: art thẻ chế độ bị KÉO NGANG ở layout ngang (1848×414 vs art 804×310) → cần art ngang riêng hoặc
-#     StyleBoxTexture 9-slice · các màn khác chưa tách layout ngang (xem GUIDE §6) · chưa áp safe-area tai thỏ ·
-#     test máy ảo/APK.
+# ============================================================================================
+# VÒNG 28: SỬA LỖI GIAO DIỆN MAIN SCREEN THEO AGENT_SPEC_MAINSCREEN_FIXLAYOUT.MD (2026-10)
+# ============================================================================================
+# [x] ĐÃ HOÀN THÀNH TOÀN BỘ 17 MỤC CHẨN ĐOÁN VÀ ĐẶC TẢ BẢNG CỠ CHUẨN 540x920 (K = 0.5):
+#     1. `event_header.tscn`: Bỏ clip_text ở Title, min cao 22, Badge (18, 15).
+#     2. `portrait/main.tscn` & `landscape/main.tscn`: Logo expand_mode = 5 (Fit Height Proportional), min cao 40.
+#     3. `event_carousel.tscn`: horizontal_scroll_mode = 3 (SHOW_NEVER), xoá uid tự đặt tay.
+#     4. `portrait/main.tscn`: Thêm SectionGap (62px, stretch 3) giữa Carousel và Modes; thêm BottomGap (stretch 2)
+#        sau Modes; chuyển Stamp ra ngoài Scroll xuống cuối Body dưới Dock.
+#     5. `mode_card.tscn` & `mode_card.gd`: Cập nhật min cao 132; 9-slice margin L37 T38 R60 B20; Content offset L39
+#        T14 R-32 B-18 khe 10; IconBox 56x56; Chip là PanelContainer tự giãn theo chữ; Title dùng AutoFitLabel
+#        (min_font 14); ActionButton cao 32; _cta_style border 2, radius 10, margin 4+-2.
+#     6. `coin_chip.tscn` & `star_chip.tscn` & Settings: Đồng bộ chiều cao thanh TopBar = 44px; CoinChip 111x44 (icon 24,
+#        plus 22x22); StarChip 95x44 (icon 22); Settings 44x44 (icon inset 8); ProfileCard 150x44 (Frame 36x36, Name 14,
+#        XPBar 6); khe TopBar = 8px.
+#     7. `theme_default.tres`: Nâng cỡ chữ các nhãn phụ lên sàn 8px (EventChipLabel, EventTimerLabel, EventSubLabel,
+#        EventRewardLabel, EventDailyMonth, EventDailyWeekday); ModeCardStatValue = 18px.
+#     8. Thẻ Daily: Bổ sung 2 quà mặc định (120 Xu và Chuỗi 7 ngày) trong `EventManager._make_daily_event()`;
+#        UnitLabel căn trái sát số; co ProgressPanel khi event không có quà.
+#     9. `event_card.tscn` & `event_card.gd`: ThemeChip tự động co giãn `theme_chip.size.x = chip_label.get_minimum_size().x + 19`;
+#        TimerChip rộng 78px (offset L84 R162); bỏ clip_text ở ChipLabel, TimerLabel, UnitLabel.
+#     10. Parallax / Lề đỏ: Căn lề Body L12 T6 R-12 B-6 ở Portrait và L10 T6 R-10 B-6 ở Landscape tránh đè lề đỏ / lỗ bấm.
+#     11. Dock: DockBadges dùng icon huy chương `assets/images/icons/icon_badge_medal.svg`; Dock cao 75px ở Portrait,
+#         65px ở Landscape; DockButton cao 72px, Icon 32x32, Label cao 14 sát đáy -6.
+#     12. Vuốt cuộn Carousel: EventCard root `mouse_filter = 1 (PASS)`; BgGradient, BgGrid, ProgressPanel `mouse_filter = 2 (IGNORE)`.
+#     13. Vệ sinh scene: Xoá các `uid` tự đặt tay không hợp lệ trong `event_card.tscn` và `event_carousel.tscn`.
+#     14. Chip Play/Dungeon: Chuyển sang `PanelContainer` tự giãn theo text, không bị co về 0.
+#     15. Phân trang Carousel: Sửa `event_carousel.gd` để chấm cuối sáng khi cuộn tới cuối (`scroll_horizontal >= max_scroll - 1`).
+#     16. Đọc thông số động: `event_carousel.gd` đọc CARD_GAP từ hbox theme separation và card_width từ kích thước thẻ.
+#     17. Landscape: Cập nhật chuẩn `scenes/layout/landscape/main.tscn` (TopBar 44, Mid separation 16, Left separation 6,
+#         Right min rộng 405, Modes cao 132x2+8 = 272 thẳng đáy với Carousel 270, Dock cao 65 separation 12).
+
 

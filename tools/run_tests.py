@@ -46,6 +46,7 @@ DEFAULT = [
     "test_controllers_and_signals",
     "test_level_special_modes",
     "test_challenge_mode",
+    "test_event_manager",
     "test_localization",
 ]
 

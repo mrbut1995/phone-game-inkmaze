@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_cxoa2"]
+
+[resource]
+script = ExtResource("1_cxoa2")
+level_id = 1101
+level_title = "Mansion · 2"
+chapter = 0
+difficulty = "easy"
+max_steps = 10
+par_time = 30.0
+v_walls = PackedByteArray(1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1)
+cell_mask = PackedByteArray()
+mission_types = PackedStringArray()
+mission_params = PackedInt32Array()

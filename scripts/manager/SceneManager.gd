@@ -28,6 +28,11 @@ const SCENE_CHAPTERS := "res://scenes/chapters.tscn"
 const SCENE_SHOP := "res://scenes/shop.tscn"
 ## Màn CREDIT — soundtrack + ghi công đội ngũ
 const SCENE_CREDIT := "res://scenes/credit.tscn"
+## Màn CHI TIẾT SỰ KIỆN — xem scripts/scenes/event.gd
+const SCENE_EVENT := "res://scenes/event.tscn"
+
+## ID event sẽ nạp khi vào màn Event (truyền trước khi gọi goto_event)
+var _pending_event_id: StringName = &""
 ## (HỒ SƠ CÁ NHÂN nay là POPUP — xem PopupManager.POPUPS["profiler"])
 ## Lớp phủ chuyển cảnh: node giao diện (trang giấy, mực loang, fade, chặn input)
 ## được khai báo SẴN trong scene này — xem scripts/nodes/common/scene_transition.gd
@@ -189,6 +194,30 @@ func goto_debug() -> void:
 
 func is_debug_scene() -> bool:
 	return current_scene_path() == SCENE_DEBUG
+
+
+## Chuyển sang màn chi tiết sự kiện, truyền event_id để EventScene nạp đúng event.
+func goto_event(event_id: StringName) -> void:
+	_pending_event_id = event_id
+	change_scene(SCENE_EVENT)
+
+
+## Lấy event_id đang chờ (EventScene gọi khi _ready, sau đó xoá)
+func consume_pending_event_id() -> StringName:
+	var id := _pending_event_id
+	_pending_event_id = &""
+	return id
+
+
+## Quay lại màn trước theo lịch sử ScreenManager
+func go_back() -> void:
+	var screen: Node = get_node_or_null("/root/ScreenManager")
+	if screen != null and screen.has_method("pop_history"):
+		var prev: String = screen.call("pop_history")
+		if not prev.is_empty():
+			change_scene(prev, false)
+			return
+	goto_main()
 
 
 func _play_transition_sfx(style: String) -> void:

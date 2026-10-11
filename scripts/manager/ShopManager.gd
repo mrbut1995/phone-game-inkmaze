@@ -214,6 +214,16 @@ func _add_coins(amount: int) -> void:
 	coins_changed.emit(coins())
 
 
+## Cộng Xu từ NGUỒN NGOÀI ví (sự kiện, thưởng…). Trả về true nếu ví tồn tại.
+func add_coins(amount: int, _source: String = "") -> bool:
+	if amount == 0:
+		return false
+	if get_node_or_null("/root/ArchivementManager") == null:
+		return false
+	_add_coins(amount)
+	return true
+
+
 func can_afford(item_id: String) -> bool:
 	return coins() >= price_of(item_id)
 

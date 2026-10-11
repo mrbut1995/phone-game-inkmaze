@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252">
+  <defs>
+    <!-- Pattern lưới trang trí -->
+    <pattern id="gw" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.1"/>
+    </pattern>
+
+    <!-- Gradient nền Halloween tím huyền bí -->
+    <linearGradient id="bg_halloween" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B0B33"/>
+      <stop offset="0.5" stop-color="#3B1668"/>
+      <stop offset="1" stop-color="#220B3F"/>
+    </linearGradient>
+
+    <!-- Quầng trăng sáng & ánh hoàng hôn rực cam -->
+    <radialGradient id="moonGlow">
+      <stop offset="0" stop-color="#FFE9A8" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="horizon">
+      <stop offset="0" stop-color="#E8700A" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#E8700A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- ClipPath bo góc chuẩn 340x504 -->
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <!-- Container bọc clipPath theo form của Card sự kiện -->
+  <g clip-path="url(#cardClip)">
+    <!-- 1. Lớp nền gradient & texture lưới -->
+    <rect width="340" height="504" fill="url(#bg_halloween)"/>
+    <rect width="340" height="504" fill="url(#gw)"/>
+
+    <!-- 2. Nhóm chi tiết bầu trời & mặt đất (Moon, Bats, Ghost, Hills, Pumpkins) -->
+    <g transform="translate(0,-60)">
+      <!-- Vầng cam chân trời & Mặt trăng rỗ -->
+      <ellipse cx="170" cy="290" rx="220" ry="80" fill="url(#horizon)"/>
+      <circle cx="232" cy="170" r="104" fill="url(#moonGlow)"/>
+      <circle cx="232" cy="170" r="54" fill="#FFE9A8"/>
+      <circle cx="216" cy="156" r="10" fill="#F2CF72"/>
+      <circle cx="252" cy="186" r="8" fill="#F2CF72"/>
+      <circle cx="244" cy="146" r="5" fill="#F2CF72"/>
+
+      <!-- Các vì sao lấp lánh -->
+      <path d="M 40 95 Q 40 100 45 100 Q 40 100 40 105 Q 40 100 35 100 Q 40 100 40 95 Z" fill="#FFFFFF" fill-opacity="0.85"/>
+      <path d="M 110 72 Q 110 76 114 76 Q 110 76 110 80 Q 110 76 106 76 Q 110 76 110 72 Z" fill="#FFFFFF" fill-opacity="0.85"/>
+      <path d="M 180 54 Q 180 60 186 60 Q 180 60 180 66 Q 180 60 174 60 Q 180 60 180 54 Z" fill="#FFFFFF" fill-opacity="0.85"/>
+      <path d="M 300 75 Q 300 80 305 80 Q 300 80 300 85 Q 300 80 295 80 Q 300 80 300 75 Z" fill="#FFFFFF" fill-opacity="0.85"/>
+      <path d="M 60 186 Q 60 190 64 190 Q 60 190 60 194 Q 60 190 56 190 Q 60 190 60 186 Z" fill="#FFFFFF" fill-opacity="0.85"/>
+      <path d="M 300 206 Q 300 210 304 210 Q 300 210 300 214 Q 300 210 296 210 Q 300 210 300 206 Z" fill="#FFFFFF" fill-opacity="0.85"/>
+
+      <!-- Đàn dơi -->
+      <path transform="translate(130,130) scale(0.7)" d="M 0 0 C -10 -12 -22 -10 -32 2 C -25 -2 -19 0 -15 6 C -10 1 -6 3 0 10 C 6 3 10 1 15 6 C 19 0 25 -2 32 2 C 22 -10 10 -12 0 0 Z" fill="#12061F"/>
+      <path transform="translate(300,205) scale(0.5)" d="M 0 0 C -10 -12 -22 -10 -32 2 C -25 -2 -19 0 -15 6 C -10 1 -6 3 0 10 C 6 3 10 1 15 6 C 19 0 25 -2 32 2 C 22 -10 10 -12 0 0 Z" fill="#12061F"/>
+
+      <!-- Bé ma bay (Ghost) -->
+      <g transform="translate(70,195) rotate(-8) scale(0.95)">
+        <path d="M -20 24 L -20 -4 A 20 24 0 0 1 20 -4 L 20 24 L 13 17 L 6.5 24 L 0 17 L -6.5 24 L -13 17 Z" fill="#FFFFFF" fill-opacity="0.93" stroke="#CDB8F0" stroke-width="2"/>
+        <ellipse cx="-7" cy="-3" rx="3" ry="4.5" fill="#2A0F4F"/>
+        <ellipse cx="7" cy="-3" rx="3" ry="4.5" fill="#2A0F4F"/>
+        <ellipse cx="0" cy="8" rx="4" ry="5" fill="#2A0F4F"/>
+      </g>
+
+      <!-- Dải đất đồi bóng đêm (Silhouette Ground) -->
+      <path d="M 0 700 L 0 276 Q 50 250 120 270 T 250 262 T 340 252 L 340 700 Z" fill="#12061F" fill-opacity="0.94"/>
+
+      <!-- Quả bí ngô lớn (Pumpkin 1) -->
+      <g transform="translate(268,238) scale(0.85)">
+        <ellipse cx="-17" cy="2" rx="17" ry="25" fill="#E8700A" stroke="#7A2E00" stroke-width="3"/>
+        <ellipse cx="17" cy="2" rx="17" ry="25" fill="#E8700A" stroke="#7A2E00" stroke-width="3"/>
+        <ellipse cx="0" cy="2" rx="17" ry="27" fill="#FF8A1F" stroke="#7A2E00" stroke-width="3"/>
+        <path d="M -2 -26 Q 0 -38 8 -40" fill="none" stroke="#3F6B1B" stroke-width="6" stroke-linecap="round"/>
+        <polygon points="-12,-6 -4,-6 -8,-14" fill="#2A0F4F"/>
+        <polygon points="12,-6 4,-6 8,-14" fill="#2A0F4F"/>
+        <path d="M -14 10 L -8 16 L -4 10 L 0 16 L 4 10 L 8 16 L 14 10 L 12 20 Q 0 28 -12 20 Z" fill="#2A0F4F"/>
+      </g>
+
+      <!-- Quả bí ngô nhỏ (Pumpkin 2) -->
+      <g transform="translate(222,258) scale(0.5)">
+        <ellipse cx="-17" cy="2" rx="17" ry="25" fill="#E8700A" stroke="#7A2E00" stroke-width="3"/>
+        <ellipse cx="17" cy="2" rx="17" ry="25" fill="#E8700A" stroke="#7A2E00" stroke-width="3"/>
+        <ellipse cx="0" cy="2" rx="17" ry="27" fill="#FF8A1F" stroke="#7A2E00" stroke-width="3"/>
+        <path d="M -2 -26 Q 0 -38 8 -40" fill="none" stroke="#3F6B1B" stroke-width="6" stroke-linecap="round"/>
+        <polygon points="-12,-6 -4,-6 -8,-14" fill="#2A0F4F"/>
+        <polygon points="12,-6 4,-6 8,-14" fill="#2A0F4F"/>
+        <path d="M -14 10 L -8 16 L -4 10 L 0 16 L 4 10 L 8 16 L 14 10 L 12 20 Q 0 28 -12 20 Z" fill="#2A0F4F"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Viền sáng ngoài card đặc trưng (Card border highlight) -->
+  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="3"/>
+</svg>

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252">
+  <defs>
+    <!-- Pattern lưới trang trí -->
+    <pattern id="gw" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.1"/>
+    </pattern>
+
+    <!-- Gradient nền đêm u ám Mansion -->
+    <linearGradient id="bg_mansion" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0F2A2E"/>
+      <stop offset="0.5" stop-color="#0C1C20"/>
+      <stop offset="1" stop-color="#070D0F"/>
+    </linearGradient>
+
+    <!-- ClipPath bo góc chuẩn 340x504 -->
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <!-- Container bọc clipPath theo form của Card sự kiện -->
+  <g clip-path="url(#cardClip)">
+    <!-- 1. Lớp nền gradient & texture lưới -->
+    <rect width="340" height="504" fill="url(#bg_mansion)"/>
+    <rect width="340" height="504" fill="url(#gw)"/>
+
+    <!-- 2. Nhóm chi tiết artwork: Lâu đài cổ, mặt trăng xanh ngọc, cửa sổ phát sáng, đàn dơi & hàng rào sắt -->
+    <g transform="translate(0,-55)">
+      <!-- Mặt trăng & ánh trăng huyền ảo (Teal Glow) -->
+      <circle cx="255" cy="150" r="80" fill="#BFFFDC" fill-opacity="0.12"/>
+      <circle cx="255" cy="150" r="34" fill="#CFFAE8"/>
+
+      <!-- Tòa nhà chính & mái nhọn biệt thự -->
+      <rect x="85" y="170" width="170" height="130" fill="#050B0D"/>
+      <polygon points="75,172 170,112 265,172" fill="#050B0D"/>
+
+      <!-- Tháp trái -->
+      <rect x="55" y="140" width="40" height="160" fill="#050B0D"/>
+      <polygon points="50,140 75,96 100,140" fill="#050B0D"/>
+
+      <!-- Tháp phải -->
+      <rect x="245" y="140" width="40" height="160" fill="#050B0D"/>
+      <polygon points="240,140 265,96 290,140" fill="#050B0D"/>
+
+      <!-- Các ô cửa sổ sáng đèn ma mị (vàng chanh & xanh dạ quang) -->
+      <rect x="68" y="170" width="14" height="20" rx="3" fill="#FFD86B" fill-opacity="0.92"/>
+      <rect x="68" y="215" width="14" height="20" rx="3" fill="#7CF2C0" fill-opacity="0.92"/>
+      <rect x="258" y="170" width="14" height="20" rx="3" fill="#7CF2C0" fill-opacity="0.92"/>
+      <rect x="258" y="215" width="14" height="20" rx="3" fill="#FFD86B" fill-opacity="0.92"/>
+
+      <rect x="105" y="190" width="14" height="20" rx="3" fill="#FFD86B" fill-opacity="0.92"/>
+      <rect x="150" y="190" width="14" height="20" rx="3" fill="#7CF2C0" fill-opacity="0.92"/>
+      <rect x="195" y="190" width="14" height="20" rx="3" fill="#FFD86B" fill-opacity="0.92"/>
+      <rect x="105" y="240" width="14" height="20" rx="3" fill="#7CF2C0" fill-opacity="0.92"/>
+      <rect x="195" y="240" width="14" height="20" rx="3" fill="#FFD86B" fill-opacity="0.92"/>
+
+      <!-- Cổng vòm chính biệt thự -->
+      <path d="M 152 300 L 152 262 A 18 18 0 0 1 188 262 L 188 300 Z" fill="#0F2A2E" stroke="#FFD86B" stroke-opacity="0.6" stroke-width="2"/>
+
+      <!-- Đàn dơi đêm bay quanh lâu đài -->
+      <path transform="translate(120,120) scale(0.6)" d="M 0 0 C -10 -12 -22 -10 -32 2 C -25 -2 -19 0 -15 6 C -10 1 -6 3 0 10 C 6 3 10 1 15 6 C 19 0 25 -2 32 2 C 22 -10 10 -12 0 0 Z" fill="#050B0D"/>
+      <path transform="translate(290,215) scale(0.45)" d="M 0 0 C -10 -12 -22 -10 -32 2 C -25 -2 -19 0 -15 6 C -10 1 -6 3 0 10 C 6 3 10 1 15 6 C 19 0 25 -2 32 2 C 22 -10 10 -12 0 0 Z" fill="#050B0D"/>
+
+      <!-- Làn sương mù mờ ảo chân tường -->
+      <ellipse cx="90" cy="292" rx="120" ry="16" fill="#CFFAE8" fill-opacity="0.12"/>
+      <ellipse cx="260" cy="286" rx="110" ry="14" fill="#CFFAE8" fill-opacity="0.1"/>
+
+      <!-- Nền tối phía dưới (Silhouette che phần text/UI) -->
+      <rect x="0" y="296" width="340" height="404" fill="#050B0D" fill-opacity="0.96"/>
+
+      <!-- Dãy hàng rào sắt chông nhọn -->
+      <rect x="4" y="262" width="3" height="40" fill="#050B0D"/><polygon points="3,262 5.5,254 8,262" fill="#050B0D"/>
+      <rect x="18" y="262" width="3" height="40" fill="#050B0D"/><polygon points="17,262 19.5,254 22,262" fill="#050B0D"/>
+      <rect x="32" y="262" width="3" height="40" fill="#050B0D"/><polygon points="31,262 33.5,254 36,262" fill="#050B0D"/>
+      <rect x="46" y="262" width="3" height="40" fill="#050B0D"/><polygon points="45,262 47.5,254 50,262" fill="#050B0D"/>
+      <rect x="60" y="262" width="3" height="40" fill="#050B0D"/><polygon points="59,262 61.5,254 64,262" fill="#050B0D"/>
+      <rect x="74" y="262" width="3" height="40" fill="#050B0D"/><polygon points="73,262 75.5,254 78,262" fill="#050B0D"/>
+      <rect x="88" y="262" width="3" height="40" fill="#050B0D"/><polygon points="87,262 89.5,254 92,262" fill="#050B0D"/>
+      <rect x="102" y="262" width="3" height="40" fill="#050B0D"/><polygon points="101,262 103.5,254 106,262" fill="#050B0D"/>
+      <rect x="116" y="262" width="3" height="40" fill="#050B0D"/><polygon points="115,262 117.5,254 120,262" fill="#050B0D"/>
+      <rect x="130" y="262" width="3" height="40" fill="#050B0D"/><polygon points="129,262 131.5,254 134,262" fill="#050B0D"/>
+      <rect x="144" y="262" width="3" height="40" fill="#050B0D"/><polygon points="143,262 145.5,254 148,262" fill="#050B0D"/>
+      <rect x="158" y="262" width="3" height="40" fill="#050B0D"/><polygon points="157,262 159.5,254 162,262" fill="#050B0D"/>
+      <rect x="172" y="262" width="3" height="40" fill="#050B0D"/><polygon points="171,262 173.5,254 176,262" fill="#050B0D"/>
+      <rect x="186" y="262" width="3" height="40" fill="#050B0D"/><polygon points="185,262 187.5,254 190,262" fill="#050B0D"/>
+      <rect x="200" y="262" width="3" height="40" fill="#050B0D"/><polygon points="199,262 201.5,254 204,262" fill="#050B0D"/>
+      <rect x="214" y="262" width="3" height="40" fill="#050B0D"/><polygon points="213,262 215.5,254 218,262" fill="#050B0D"/>
+      <rect x="228" y="262" width="3" height="40" fill="#050B0D"/><polygon points="227,262 229.5,254 232,262" fill="#050B0D"/>
+      <rect x="242" y="262" width="3" height="40" fill="#050B0D"/><polygon points="241,262 243.5,254 246,262" fill="#050B0D"/>
+      <rect x="256" y="262" width="3" height="40" fill="#050B0D"/><polygon points="255,262 257.5,254 260,262" fill="#050B0D"/>
+      <rect x="270" y="262" width="3" height="40" fill="#050B0D"/><polygon points="269,262 271.5,254 274,262" fill="#050B0D"/>
+      <rect x="284" y="262" width="3" height="40" fill="#050B0D"/><polygon points="283,262 285.5,254 288,262" fill="#050B0D"/>
+      <rect x="298" y="262" width="3" height="40" fill="#050B0D"/><polygon points="297,262 299.5,254 302,262" fill="#050B0D"/>
+      <rect x="312" y="262" width="3" height="40" fill="#050B0D"/><polygon points="311,262 313.5,254 316,262" fill="#050B0D"/>
+      <rect x="326" y="262" width="3" height="40" fill="#050B0D"/><polygon points="325,262 327.5,254 330,262" fill="#050B0D"/>
+      <rect x="0" y="274" width="340" height="3" fill="#050B0D"/>
+
+      <!-- Vệt sương mờ trước hàng rào -->
+      <ellipse cx="170" cy="300" rx="210" ry="22" fill="#CFFAE8" fill-opacity="0.12"/>
+    </g>
+  </g>
+
+  <!-- Viền sáng trắng bao quanh card đặc trưng -->
+  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="3"/>
+</svg>

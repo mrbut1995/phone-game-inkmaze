@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="EventData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_7hnp4"]
+[ext_resource type="Resource" path="res://resources/levels/events/winter/level_1400.tres" id="2_mou7r"]
+[ext_resource type="Resource" path="res://resources/levels/events/winter/level_1401.tres" id="3_w2qvl"]
+[ext_resource type="Resource" path="res://resources/levels/events/winter/level_1402.tres" id="4_twuw6"]
+[ext_resource type="Resource" path="res://resources/levels/events/winter/level_1403.tres" id="5_bp7qo"]
+[ext_resource type="Resource" path="res://resources/levels/events/winter/level_1404.tres" id="6_r1c7t"]
+[ext_resource type="Resource" path="res://resources/levels/events/winter/level_1405.tres" id="7_jikaa"]
+[ext_resource type="Resource" path="res://resources/levels/events/winter/level_1406.tres" id="8_2rwh2"]
+[ext_resource type="Resource" path="res://resources/levels/events/winter/level_1407.tres" id="9_ofpui"]
+[ext_resource type="Resource" path="res://resources/levels/events/winter/level_1408.tres" id="10_r55ca"]
+[ext_resource type="Resource" path="res://resources/levels/events/winter/level_1409.tres" id="11_4lxi3"]
+[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="12_18877"]
+[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="13_6kyhs"]
+[ext_resource type="Resource" path="res://resources/events/themes/winter.tres" id="14_0o3v3"]
+
+[sub_resource type="Resource" id="Resource_haa0r"]
+script = ExtResource("12_18877")
+amount = 400
+label_key = &"STR_EVENT_WINTER_REWARD_1"
+
+[sub_resource type="Resource" id="Resource_6kuhr"]
+script = ExtResource("12_18877")
+amount = 200
+label_key = &"STR_EVENT_WINTER_REWARD_2"
+
+[resource]
+script = ExtResource("13_6kyhs")
+id = &"winter"
+type = 1
+theme = ExtResource("14_0o3v3")
+sort_order = 70
+chip_key = &"STR_EVENT_WINTER_CHIP"
+title_key_1 = &"STR_EVENT_WINTER_TITLE_1"
+title_key_2 = &"STR_EVENT_WINTER_TITLE_2"
+sub_key_1 = &"STR_EVENT_WINTER_SUB_1"
+sub_key_2 = &"STR_EVENT_WINTER_SUB_2"
+cta_key = &"STR_EVENT_CTA_CONTINUE"
+start_utc = "2026-12-01T00:00:00Z"
+end_utc = "2026-12-31T00:00:00Z"
+levels = Array[ExtResource("1_7hnp4")]([ExtResource("2_mou7r"), ExtResource("3_w2qvl"), ExtResource("4_twuw6"), ExtResource("5_bp7qo"), ExtResource("6_r1c7t"), ExtResource("7_jikaa"), ExtResource("8_2rwh2"), ExtResource("9_ofpui"), ExtResource("10_r55ca"), ExtResource("11_4lxi3")])
+dungeon_milestones = PackedInt32Array()
+rewards = Array[ExtResource("12_18877")]([SubResource("Resource_haa0r"), SubResource("Resource_6kuhr")])

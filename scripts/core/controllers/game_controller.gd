@@ -440,6 +440,11 @@ func _complete_floor() -> void:
 
 	_report_to_archivements(true, floor_time)
 
+	# SỰ KIỆN: báo qua tầng cho event DUNGEON đang chạy (ghi mốc tầng — §B7)
+	var em := get_node_or_null("/root/EventManager")
+	if em != null and em.has_method("on_dungeon_floor_cleared"):
+		em.call("on_dungeon_floor_cleared", game_state.floor_number)
+
 	# Chốt 3 nhiệm vụ của màn/tầng -> số Sao (1 nhiệm vụ hoàn thành = 1 Sao)
 	var mission_rows: Array[Dictionary] = []
 	var stars := 0

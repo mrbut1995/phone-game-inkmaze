@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Tài liệu** | Number Maze — Game Design Document (InkMaze) |
-| **Phiên bản** | v2.20 — 2026-09-28 (**ĐA NGÔN NGỮ — QUÉT CHUỖI CỨNG → KHOÁ DỊCH · DỌN KHOÁ CHẾT · SỬA MOJIBAKE CSV**: thêm bộ công cụ `tools/content/` (`audit_localization.py` quét & chặn hồi quy · `migrate_hardcoded_text.py` đổi chuỗi cứng → khoá · `fix_mojibake.py` sửa CSV từng ô); 16 chuỗi trong `.tscn` + chữ HUD/ô/nút công cụ/đếm bước tutorial trong script đổi sang `tr()` · **28 thành tựu** (`title_key`/`desc_key`) + **4 chương** (`title_key`/`subtitle_key`) lấy chữ qua `ChapterData.display_title()`; `string_extra.csv` **+73 khoá mới** (en/vi) và **xoá 76 khoá chết**; `string.csv` (91 dòng) **sửa xong mojibake nội dung ở cả 19 ngôn ngữ**; test mới `test_localization` (50 check) chặn mojibake/khoá thiếu/tên node bị đổi thành khoá → §14) · v2.19 — 2026-09-27 (**TUTORIAL KHAI TRONG SCENE + HIỆU ỨNG + TEST TRONG DEBUG**: toàn bộ UI/khung/bàn mini của 7 bài học đưa từ script vào `.tscn` — `base_tutorial.tscn` khai 13 node + 5 StyleBox + 6 chấm tiến độ, mỗi bài khai `BoardPanel` · ô `Cell1…CellN` (component **`TutorialCell`**) · `PathLine` · HUD · nút tường (**`TutorialWallToggle`**) · `BtnSubmit`; 3 nút điều hướng + 2 nút tường + nút GỬI nối bằng `[connection]` trong scene; art chuyển sang SVG (`tutorial_pointer/spotlight/wall/board_paper.svg`); script chỉ còn `@export` bind + luật chơi ⇒ **sửa 3 lỗi thật** (bàn mini bị đẩy ra ngoài màn hình do neo CENTER · kéo đường không ăn vì BoardHost nuốt chuột · so toạ độ lệch không gian) → §10.2h; **HIỆU ỨNG**: mở bài nở so le · chấm bước nảy · vòng sáng trượt + thở · ô nháy đỏ khi sai / nở khi đi qua · toast nở ra · chữ nổi `✓`/`+N` · HUD cuộn số · tường nở ra (dùng `UIAnim`/`Sfx`, không node mới); **DEBUG**: thêm mục **TUTORIAL (TEST)** vào Debug Console — vào thẳng từng bài qua `request_tutorial()`/`take_tutorial_request()`, “Test mode” không ghi tiến trình, xong bài ở lại màn Tutorial → §9.2) · v2.18 — 2026-09-27 (**HUD “CHỈ HIỆN THỨ CẦN THIẾT”**: mỗi HUD chỉ còn đúng thẻ cần (Dungeon Step+Floor · Countdown Budget · Fog Lượt thử lại · Sum Path Tổng+Mục tiêu · mode khác chỉ Time), node thừa **xoá hẳn** khỏi cả 2 hướng (bản DỌC dùng node kế thừa thì chỉ ẩn được) → §10.1 · §10.2g) · v2.17 — 2026-09-27 (**TỐI ƯU: UI KHAI TRONG SCENE — TAB TỰ LO**: 3 màn có tab (Cửa hàng · Xếp hạng · Sổ tay thành tựu) **không còn dựng tab bằng code** — tab là node **KHAI SẴN trong scene bố cục** (`Tabs/*`, mỗi hướng 1 bản), mỗi tab tự khai `category`/`board_id` + `label_key`, **tự nối `pressed` → `tab_pressed`** và tự chỉnh cỡ; script màn chỉ `_collect_tabs()` gom lại (hết `_build_tabs()`); lưới ô của Cửa hàng cũng thành node **khai sẵn dùng lại** (không instantiate lại mỗi lần đổi tab/trang); Xếp hạng **dùng lại hàng** khi đổi bảng; dọn code thừa (`TAB_*_SCENE` · `_fit_tab_widths` · `apply_row_layout` · `_capture_tab_layout`) → §10.2g; **BÀN CỜ**: 4 **node MẪU** (ô · tường · neo · vệt mực cũ) khai trong `nodes/game/board_layers.tscn` — board `_spawn_template()` = `duplicate()` thay `instantiate()`, cỡ THIẾT KẾ của tường/vệt mực đọc từ node mẫu (bỏ `_read_scene_line_width()` + 4 `preload()`); **Cửa hàng**: bàn nháp thử bút (`Content/List/Pad` · `PadSlot/Pad`) + hàng VIP *Xoá quảng cáo* (`Content/List/NoAds`) cũng khai sẵn trong 2 scene bố cục; `test_ui_scenes` thêm **mục 8** = hàng rào: script nào còn `preload()/instantiate()` scene ĐÃ khai sẵn thì FAIL) · v2.16 — 2026-09-27 (**TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI + MỰC TÔ TAY**: công cụ 8 giờ biết **TÔ GIÁ TRỊ** thay vì chỉ sinh tường — `countdown_cost` có ô **Tổng chi phí đường đi** (chia 1..4 cho các ô sao cho TỔNG khớp, tự nâng `max_steps`), `sum_path` có ô **Tổng điểm đường đi** (chia 1..9), `fading_ink` thêm công cụ 7 **tô MỰC từng ô** + ô **Mực dư mỗi bước** (mực tăng dần theo bước); GAME: Sum Path **không tính S/F** nữa (tổng khớp đúng số thiết kế), Countdown Cost **tôn trọng `max_steps` của màn**, Fading Ink đọc **mực tô tay** → §10.2f) · v2.15 — 2026-09-27 (**VẼ ĐƯỜNG ĐI TRONG TOOL + MÀN MẪU CHO MỌI CHẾ ĐỘ**: công cụ **8** = kéo chuột vẽ đường S→F rồi `Ctrl+Enter` để sinh tường quanh nó (nét vẽ thành **ĐƯỜNG DUY NHẤT**, tự đặt S/F + `max_steps`); thêm **6 màn mẫu 15–20** phủ nốt mọi chế độ Special (mỗi chế độ 1 màn); **sửa LỖI THẬT của One Stroke** (thuật toán phủ kín luôn từ chối nước cuối bước vào F ⇒ màn thiết kế trước đây luôn âm thầm bị thay bằng bàn tự sinh); Debug Console (F9) nhảy được **mọi** màn + đánh dấu màn ◆ chế độ → §10.2f) · v2.14 — 2026-09-27 (**KIỂU EDIT THEO CHẾ ĐỘ + BỎ `dungeon` KHỎI MÀN**: mỗi chế độ có **1 kiểu edit** riêng trong tool (`custom_cell_values`, công cụ **7**): Minesweeper **GHIM MÌN** · Sum Path **ĐIỂM Ô** 1..9 · Countdown Cost **CHI PHÍ Ô** 1..4 (ô không tô = game tự sinh, cố định theo màn); `dungeon` bị **loại khỏi danh sách chế độ của màn** (validator báo LỖI, game coi như `play`) → §10.2f) · v2.13 — 2026-09-27 (**MÀN CHƠI CHẾ ĐỘ SPECIAL + SKIP LEVEL**: màn khai `mode_id` trong LevelData ⇒ game chạy chế độ Special **TRÊN ĐÚNG BÀN NHÀ THIẾT KẾ VẼ** (tường + cell_mask), "gia vị" của chế độ (mìn · điểm ô · chi phí · mực) **CỐ ĐỊNH theo `level_id`**; thêm **nút SKIP LEVEL** trên thanh hành động (chỉ hiện khi chơi MÀN, bấm ⇒ mở khoá màn kế trong chương mà KHÔNG ghi Sao); tool level_designer báo luật riêng theo chế độ → §10.2f) · v2.12 — 2026-09-26 (**THANH HÀNH ĐỘNG MỚI + GIỚI HẠN LƯỢT**: bỏ hẳn 2 nút công cụ VẼ ĐƯỜNG/GHI NHỚ (bàn cờ tự nhận thao tác), **nút CHƠI LẠI dời từ thanh trạng thái xuống thanh hành động** (cả 2 hướng), thêm nút **GỬI BÀI (`Submit`)** cho Wall Builder, **GIỚI HẠN lượt UNDO/HINT mỗi màn** (mặc định 3) + badge **`PanelLimit`** hiện số lượt còn lại và **khoá nút khi hết lượt** → §10.2e) · v2.11 — 2026-09-26 (**HAI KIỂU HIỂN THỊ ĐIỂM**: bản NHÚNG (HUD ngang) = ảnh SẠCH chữ + badge số + DANH SÁCH điểm đầy đủ bên phải; bản POPUP = ảnh giữ NGUYÊN chữ như mockup, KHÔNG badge + KHÔNG khối ĐIỂM (ảnh nở hết bề ngang) — MỌI chữ mô tả trên ảnh đều thành ĐIỂM có hàng trong danh sách → §10.2d) · v2.10 — 2026-09-26 (**SỬA LỖI LẬT TRANG + ẢNH SẠCH**: cụm điều hướng nhúng về **BĂNG ĐÁY khung**, ẩn mọi chữ mô tả trên ảnh) · v2.9 — 2026-09-26 (**BỐ CỤC CỐ ĐỊNH cho hệ hướng dẫn**) · v2.8 — 2026-09-26 (**HƯỚNG DẪN theo mockup landscape**) · v2.7 — 2026-02 (**TÁCH hệ hướng dẫn**) · v2.6 — 2026-02 (**Nền tảng đa tỉ lệ mới**) · v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze**) · v2.4 — 2026-09-19 (2 mode mới vào vòng xoay Daily 9 ngày) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
+| **Phiên bản** | v2.21 — 2026-10-11 (**EVENT SYSTEM + GIAO DIỆN MAIN MỚI**: thêm **hệ thống Sự kiện** data-driven (`EventData`/`EventTheme`/`EventReward` `.tres`, autoload **`EventManager`**, thẻ `EventCard` 340×504 + carousel `EventCarousel`/`EventDots`, màn chi tiết `scenes/event.tscn`, 8 theme + 8 event + màn event riêng, test `test_event_manager` 33 check) → **§15**; **Main Screen bố cục lại cả 2 hướng**: thanh trên (Hồ sơ · Xu · Sao · Cài đặt) + khối Sự kiện (Daily **ghim đầu**, bỏ thẻ Daily riêng) + 2 thẻ giấy `ModeCard` 9-slice (Play · Dungeon) + dock 4 nút (Cửa hàng · Xếp hạng · Danh hiệu · Luật chơi); bỏ tờ giấy lớn/hero/hàng nút `btn_menu_utility_*`; harness `dev_aspects -- --only=main,event` **20/20 OK**) · v2.20 — 2026-09-28 (**ĐA NGÔN NGỮ — QUÉT CHUỖI CỨNG → KHOÁ DỊCH · DỌN KHOÁ CHẾT · SỬA MOJIBAKE CSV**: thêm bộ công cụ `tools/content/` (`audit_localization.py` quét & chặn hồi quy · `migrate_hardcoded_text.py` đổi chuỗi cứng → khoá · `fix_mojibake.py` sửa CSV từng ô); 16 chuỗi trong `.tscn` + chữ HUD/ô/nút công cụ/đếm bước tutorial trong script đổi sang `tr()` · **28 thành tựu** (`title_key`/`desc_key`) + **4 chương** (`title_key`/`subtitle_key`) lấy chữ qua `ChapterData.display_title()`; `string_extra.csv` **+73 khoá mới** (en/vi) và **xoá 76 khoá chết**; `string.csv` (91 dòng) **sửa xong mojibake nội dung ở cả 19 ngôn ngữ**; test mới `test_localization` (50 check) chặn mojibake/khoá thiếu/tên node bị đổi thành khoá → §14) · v2.19 — 2026-09-27 (**TUTORIAL KHAI TRONG SCENE + HIỆU ỨNG + TEST TRONG DEBUG**: toàn bộ UI/khung/bàn mini của 7 bài học đưa từ script vào `.tscn` — `base_tutorial.tscn` khai 13 node + 5 StyleBox + 6 chấm tiến độ, mỗi bài khai `BoardPanel` · ô `Cell1…CellN` (component **`TutorialCell`**) · `PathLine` · HUD · nút tường (**`TutorialWallToggle`**) · `BtnSubmit`; 3 nút điều hướng + 2 nút tường + nút GỬI nối bằng `[connection]` trong scene; art chuyển sang SVG (`tutorial_pointer/spotlight/wall/board_paper.svg`); script chỉ còn `@export` bind + luật chơi ⇒ **sửa 3 lỗi thật** (bàn mini bị đẩy ra ngoài màn hình do neo CENTER · kéo đường không ăn vì BoardHost nuốt chuột · so toạ độ lệch không gian) → §10.2h; **HIỆU ỨNG**: mở bài nở so le · chấm bước nảy · vòng sáng trượt + thở · ô nháy đỏ khi sai / nở khi đi qua · toast nở ra · chữ nổi `✓`/`+N` · HUD cuộn số · tường nở ra (dùng `UIAnim`/`Sfx`, không node mới); **DEBUG**: thêm mục **TUTORIAL (TEST)** vào Debug Console — vào thẳng từng bài qua `request_tutorial()`/`take_tutorial_request()`, “Test mode” không ghi tiến trình, xong bài ở lại màn Tutorial → §9.2) · v2.18 — 2026-09-27 (**HUD “CHỈ HIỆN THỨ CẦN THIẾT”**: mỗi HUD chỉ còn đúng thẻ cần (Dungeon Step+Floor · Countdown Budget · Fog Lượt thử lại · Sum Path Tổng+Mục tiêu · mode khác chỉ Time), node thừa **xoá hẳn** khỏi cả 2 hướng (bản DỌC dùng node kế thừa thì chỉ ẩn được) → §10.1 · §10.2g) · v2.17 — 2026-09-27 (**TỐI ƯU: UI KHAI TRONG SCENE — TAB TỰ LO**: 3 màn có tab (Cửa hàng · Xếp hạng · Sổ tay thành tựu) **không còn dựng tab bằng code** — tab là node **KHAI SẴN trong scene bố cục** (`Tabs/*`, mỗi hướng 1 bản), mỗi tab tự khai `category`/`board_id` + `label_key`, **tự nối `pressed` → `tab_pressed`** và tự chỉnh cỡ; script màn chỉ `_collect_tabs()` gom lại (hết `_build_tabs()`); lưới ô của Cửa hàng cũng thành node **khai sẵn dùng lại** (không instantiate lại mỗi lần đổi tab/trang); Xếp hạng **dùng lại hàng** khi đổi bảng; dọn code thừa (`TAB_*_SCENE` · `_fit_tab_widths` · `apply_row_layout` · `_capture_tab_layout`) → §10.2g; **BÀN CỜ**: 4 **node MẪU** (ô · tường · neo · vệt mực cũ) khai trong `nodes/game/board_layers.tscn` — board `_spawn_template()` = `duplicate()` thay `instantiate()`, cỡ THIẾT KẾ của tường/vệt mực đọc từ node mẫu (bỏ `_read_scene_line_width()` + 4 `preload()`); **Cửa hàng**: bàn nháp thử bút (`Content/List/Pad` · `PadSlot/Pad`) + hàng VIP *Xoá quảng cáo* (`Content/List/NoAds`) cũng khai sẵn trong 2 scene bố cục; `test_ui_scenes` thêm **mục 8** = hàng rào: script nào còn `preload()/instantiate()` scene ĐÃ khai sẵn thì FAIL) · v2.16 — 2026-09-27 (**TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI + MỰC TÔ TAY**: công cụ 8 giờ biết **TÔ GIÁ TRỊ** thay vì chỉ sinh tường — `countdown_cost` có ô **Tổng chi phí đường đi** (chia 1..4 cho các ô sao cho TỔNG khớp, tự nâng `max_steps`), `sum_path` có ô **Tổng điểm đường đi** (chia 1..9), `fading_ink` thêm công cụ 7 **tô MỰC từng ô** + ô **Mực dư mỗi bước** (mực tăng dần theo bước); GAME: Sum Path **không tính S/F** nữa (tổng khớp đúng số thiết kế), Countdown Cost **tôn trọng `max_steps` của màn**, Fading Ink đọc **mực tô tay** → §10.2f) · v2.15 — 2026-09-27 (**VẼ ĐƯỜNG ĐI TRONG TOOL + MÀN MẪU CHO MỌI CHẾ ĐỘ**: công cụ **8** = kéo chuột vẽ đường S→F rồi `Ctrl+Enter` để sinh tường quanh nó (nét vẽ thành **ĐƯỜNG DUY NHẤT**, tự đặt S/F + `max_steps`); thêm **6 màn mẫu 15–20** phủ nốt mọi chế độ Special (mỗi chế độ 1 màn); **sửa LỖI THẬT của One Stroke** (thuật toán phủ kín luôn từ chối nước cuối bước vào F ⇒ màn thiết kế trước đây luôn âm thầm bị thay bằng bàn tự sinh); Debug Console (F9) nhảy được **mọi** màn + đánh dấu màn ◆ chế độ → §10.2f) · v2.14 — 2026-09-27 (**KIỂU EDIT THEO CHẾ ĐỘ + BỎ `dungeon` KHỎI MÀN**: mỗi chế độ có **1 kiểu edit** riêng trong tool (`custom_cell_values`, công cụ **7**): Minesweeper **GHIM MÌN** · Sum Path **ĐIỂM Ô** 1..9 · Countdown Cost **CHI PHÍ Ô** 1..4 (ô không tô = game tự sinh, cố định theo màn); `dungeon` bị **loại khỏi danh sách chế độ của màn** (validator báo LỖI, game coi như `play`) → §10.2f) · v2.13 — 2026-09-27 (**MÀN CHƠI CHẾ ĐỘ SPECIAL + SKIP LEVEL**: màn khai `mode_id` trong LevelData ⇒ game chạy chế độ Special **TRÊN ĐÚNG BÀN NHÀ THIẾT KẾ VẼ** (tường + cell_mask), "gia vị" của chế độ (mìn · điểm ô · chi phí · mực) **CỐ ĐỊNH theo `level_id`**; thêm **nút SKIP LEVEL** trên thanh hành động (chỉ hiện khi chơi MÀN, bấm ⇒ mở khoá màn kế trong chương mà KHÔNG ghi Sao); tool level_designer báo luật riêng theo chế độ → §10.2f) · v2.12 — 2026-09-26 (**THANH HÀNH ĐỘNG MỚI + GIỚI HẠN LƯỢT**: bỏ hẳn 2 nút công cụ VẼ ĐƯỜNG/GHI NHỚ (bàn cờ tự nhận thao tác), **nút CHƠI LẠI dời từ thanh trạng thái xuống thanh hành động** (cả 2 hướng), thêm nút **GỬI BÀI (`Submit`)** cho Wall Builder, **GIỚI HẠN lượt UNDO/HINT mỗi màn** (mặc định 3) + badge **`PanelLimit`** hiện số lượt còn lại và **khoá nút khi hết lượt** → §10.2e) · v2.11 — 2026-09-26 (**HAI KIỂU HIỂN THỊ ĐIỂM**: bản NHÚNG (HUD ngang) = ảnh SẠCH chữ + badge số + DANH SÁCH điểm đầy đủ bên phải; bản POPUP = ảnh giữ NGUYÊN chữ như mockup, KHÔNG badge + KHÔNG khối ĐIỂM (ảnh nở hết bề ngang) — MỌI chữ mô tả trên ảnh đều thành ĐIỂM có hàng trong danh sách → §10.2d) · v2.10 — 2026-09-26 (**SỬA LỖI LẬT TRANG + ẢNH SẠCH**: cụm điều hướng nhúng về **BĂNG ĐÁY khung**, ẩn mọi chữ mô tả trên ảnh) · v2.9 — 2026-09-26 (**BỐ CỤC CỐ ĐỊNH cho hệ hướng dẫn**) · v2.8 — 2026-09-26 (**HƯỚNG DẪN theo mockup landscape**) · v2.7 — 2026-02 (**TÁCH hệ hướng dẫn**) · v2.6 — 2026-02 (**Nền tảng đa tỉ lệ mới**) · v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze**) · v2.4 — 2026-09-19 (2 mode mới vào vòng xoay Daily 9 ngày) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
 | **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
 | **Cập nhật tính năng** | 2026-10-10: số lượt Skip/Eraser/Hint được lưu dùng chung toàn game, badge `PanelLimit` hiện số dư, và Debug Console cho phép chỉnh số lượng. |
 | **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
@@ -98,30 +98,38 @@ Phần thưởng **Sao (Star)** của **mọi match-up** nay do **3 Thử thách
 
 ---
 
-## 4. Ba cổng vào chính (Main Screen)
+## 4. Hai cổng chính + Danh sách Sự kiện (Main Screen)
 
-Theo mockup `mainscreen.svg` mới nhất, Main Screen chỉ hiện **3 thẻ chế độ lớn**, không liệt kê cả 9 luật chơi ngang hàng:
+Theo mockup `mainscreen.svg` / `mainscreen_landscape.svg` mới nhất (v2.21), Main Screen **không còn 3 thẻ chế độ lớn** và không liệt kê 9 luật chơi ngang hàng. Bố cục mới gồm **thanh trên** + **khối Sự kiện** (carousel thẻ dọc) + **2 thẻ chế độ thường trực** + **dock 4 nút**.
 
-| Thẻ trên Main Screen | Bộ luật đứng sau | Truy cập |
-|---|---|---|
-| **PLAY · CHỌN MÀN** | Play Mode (Level Selection) | Luôn mở, chơi tự do theo Chương/Màn |
-| **DUNGEON MODE** | Dungeon Mode | Luôn mở, chơi endless không giới hạn |
-| **DAILY CHALLENGE** | 8 bộ luật còn lại (luân phiên theo ngày) | Chỉ chơi được đúng bộ luật của ngày hôm đó |
+| Khối | Nội dung |
+|---|---|
+| **Thanh trên** | Thẻ **Hồ sơ** (avatar · khung · cấp · tên · thanh XP) · **ví Xu** (`+` mở Cửa hàng) · **tổng Sao** · nút **Cài đặt** (bánh răng) |
+| **Khối Sự kiện** | Tiêu đề (badge cam = số event đang mở) + **carousel thẻ dọc 340×504** + chấm phân trang. **Daily Challenge là event ghim ĐẦU danh sách** |
+| **2 thẻ chế độ** (`ModeCard`) | **PLAY · CHỌN MÀN** (Play Mode — chọn màn theo chương) · **DUNGEON MODE** (vô tận) |
+| **Dock 4 nút** | **Cửa hàng** · **Xếp hạng** · **Danh hiệu** (Sổ tay thành tựu) · **Luật chơi** (Tutorial) |
 
-**Nguyên tắc quan trọng:** Chỉ có **Play Mode** và **Dungeon Mode** là 2 chế độ "thường trực" người chơi có thể vào chơi bất cứ lúc nào. **8 bộ luật còn lại** (Minesweeper Maze, **Fading Ink**, Sum Path, Countdown Cost, Blind Memory Maze, Fog of War Maze, **One Stroke**, **Wall Builder**) **không tồn tại như mục chọn riêng** trên Main Screen — chúng chỉ xuất hiện **lần lượt, mỗi ngày 1 bộ luật**, thông qua màn hình Daily Challenge (mục 6).
+**Nguyên tắc quan trọng:** Chỉ có **Play Mode** và **Dungeon Mode** là 2 chế độ "thường trực" người chơi vào bất cứ lúc nào (2 thẻ giấy `ModeCard`). **8 bộ luật còn lại** (Minesweeper Maze, **Fading Ink**, Sum Path, Countdown Cost, Blind Memory Maze, Fog of War Maze, **One Stroke**, **Wall Builder**) **không tồn tại như mục chọn riêng** — chúng chỉ xuất hiện qua **Daily Challenge** (luân phiên mỗi ngày — mục 6) và qua **Event** (event dùng lại chính các luật này — xem **§15**).
 
-### 4.1. Các nút truy cập khác trên Main Screen
+> **BỎ so với bản v2.20:** tờ giấy lớn (`NinePatchRect` `main_menu_paper.svg`) + lỗ bấm sổ còng + kẹp giấy + băng washi; thẻ **DAILY CHALLENGE** riêng (Daily chuyển vào danh sách Sự kiện); khối **Hero** (logo + tag + con dấu + nút **DANH HIỆU 224×224**) và **hàng 3 nút nhỏ** `btn_menu_utility_*`.
+>
+> **GIỮ:** nền `Background` (giấy kem + lưới ô ly + lề đỏ + 2 dải `SideL`/`SideR`), logic điều hướng, hiệu ứng bấm nút.
 
-| Nút | Vị trí | Nội dung |
-|---|---|---|
-| **Sổ tay thành tựu** (Badge Book) | **Góc trên phải tờ giấy** | Icon huy chương **lớn 224×224** vẽ theo theme giấy ô ly (sticker dán + băng keo washi + huy chương có ruy băng); **ô giữa huy chương hiện `x/y` danh hiệu đã mở**, nhãn `DANH HIỆU` ngay bên dưới sticker |
-| **XẾP HẠNG** | Hàng nút nhỏ (1/3) | Icon cúp vàng — mở **Bảng xếp hạng** (mục 11) |
-| **CỬA HÀNG (SHOP)** | Hàng nút nhỏ (2/3) | Icon cửa hiệu — **thay cho nút "LUẬT CHƠI" cũ** (bản mockup `mainscreen.svg` vẽ Luật Chơi; trong game nay là Cửa hàng) |
-| **CÀI ĐẶT** | Hàng nút nhỏ (3/3) | Icon bánh răng — mở màn Settings |
+### 4.1. Thanh trên & dock
 
-- Icon huy chương có **đủ 4 trạng thái nút** (`assets/images/main/btn_menu_badge_{normal,pressed,focus,disabled}.svg`): normal = viền mực xanh đậm · pressed = sticker lún 3px, giấy sậm hơn · focus = viền nét đứt mực cam · disabled = bạc màu (khi chưa mở danh hiệu nào).
-- 3 nút nhỏ đều dùng chung khuôn giấy `btn_menu_utility_*` kích thước art **210×110** (node 230×130), xếp giữa hàng, cách nhau 5px — thay cho kích thước 180×146 trước đây (làm art bị co méo).
-- Bấm icon huy chương → mở **Sổ tay thành tựu** (mục 8); bấm nút XẾP HẠNG → mở **Bảng xếp hạng** (mục 11); nút CỬA HÀNG chưa có màn hình riêng (mới chỉ chạy hiệu ứng bấm).
+| Thành phần | Nội dung / hành vi |
+|---|---|
+| `ProfileCard` | avatar tròn + khung + chip `LV.xx` + tên + thanh XP mini + `x / y XP`. Bấm → **popup Hồ sơ** |
+| `CoinChip` | icon Xu Mực vàng + số Xu + nút `+` → mở **Cửa hàng** |
+| `StarChip` | icon Sao + **tổng Sao** (nguồn `GameManager.total_stars()` — cùng số dùng mở khoá chương §12.3) |
+| `Settings` | bánh răng → màn **Settings** |
+| `DockShop` | → Cửa hàng (art `btn_menu_utility_*` 9-slice, nhãn `STR_BTN_SHOP`) |
+| `DockRanking` | → Bảng xếp hạng (§11) |
+| `DockBadges` | → Sổ tay thành tựu (§8); có badge đỏ khi có danh hiệu chưa nhận |
+| `DockRules` | → màn **Tutorial** (7 bài §9.2) |
+
+- Mọi nút dock dùng chung khuôn giấy `btn_menu_utility_*` (StyleBoxTexture 9-slice, margin 20) — **không kéo méo art**.
+- 2 thẻ chế độ dùng art **`card_mode_normal/pressed/focus/disabled`** qua `StyleBoxTexture` 9-slice (margin trái 40 · trên 30 · phải 60 · dưới 24 đọc từ art 402×155) ⇒ **đóng mục "CÒN LẠI" số 5 của §13.23** (art thẻ không còn bị kéo ngang ở layout ngang).
 
 ---
 
@@ -453,6 +461,8 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 ## 6. Hệ thống Daily Challenge
 
+> **v2.21:** Daily Challenge nay **không còn thẻ riêng** trên Main Screen. Nó là **event ẢO ghim ĐẦU** danh sách Sự kiện (thẻ lá lịch đỏ) do `EventManager` tạo từ `DailyManager`; bấm CTA vẫn mở đúng luồng Daily dưới đây. Xem **§15**.
+
 Theo mockup `daily_challenge.svg`, đây là màn hình quản lý toàn bộ **8 bộ luật** ở mục 5.3–5.9 · 5.12–5.13 (Time Attack đã bỏ 2026-09-19):
 
 - **Lịch dạng calendar theo tháng**, mỗi ngày là 1 ô có thể bấm vào (nếu đã đến/đã qua ngày đó) hoặc khóa (nếu là ngày tương lai — hiển thị "CHƯA MỞ").
@@ -564,6 +574,7 @@ Mở bằng **F9** (hoặc bấm 5 lần vào con dấu phiên bản ở màn Se
 | NAVIGATE | Main · Chọn màn · Daily · Settings · **Tutorial** · Sổ tay thành tựu · Dungeon run |
 | PROGRESS | Nhảy tới màn 1–9 · mở khoá tất cả · ghi 3 sao · xoá tiến trình |
 | DAILY | Ngày hôm nay · chuỗi ngày · chơi daily hôm nay · đánh dấu hoàn thành · xoá dữ liệu Daily |
+| **EVENTS** | Danh sách event đang mở + tiến độ · **Bắt đầu ngay / Kết thúc ngay** (ép cửa sổ thời gian) · **±1 ngày** (dịch `now_utc` giả) · **Hoàn thành màn kế** · **đặt tiến độ = đủ** · **Nhận quà** · **Reset tiến độ + cờ đã nhận** — xem §15.5 |
 | **SPECIAL MODES (TEST)** | Vào thẳng **9 chế độ Special** (vốn chỉ chơi được qua Daily) — xem 9.1 |
 | **TUTORIAL (TEST)** | Vào thẳng **7 bài hướng dẫn** + chạy lại chuỗi onboarding — xem 9.2 |
 | SAVE | Backend · save now · reload · đổi backend · xoá toàn bộ + dump blob JSON |
@@ -1943,8 +1954,34 @@ cả hai KẾ THỪA scaffold `portrait.tscn` / `landscape.tscn` trong cùng th�
 **4. Kiểm chứng:** `test_main_layout` (đã cập nhật theo 2 layout) PASS · harness `dev_aspects.gd -- --only=main`
 **10/10 tỉ lệ OK** (ảnh chứng cứ `tmp_aspect/<WxH>/main.png`) · toàn bộ **33 suite: 31 xanh** — 2 suite đỏ vẫn là lỗi CŨ (Sum Path/Fading Ink HUD).
 
-**5. CÒN LẠI:** art thẻ chế độ bị KÉO NGANG ở layout ngang (thẻ 1848×414 so với art 804×310) → cần **art thẻ bản NGANG**
-hoặc chuyển thẻ sang `StyleBoxTexture` 9-slice · các màn khác chưa tách layout ngang · chưa áp safe-area (tai thỏ).
+**5. ~~CÒN LẠI~~ ĐÃ ĐÓNG (v2.21):** art thẻ chế độ từng bị KÉO NGANG ở layout ngang (thẻ 1848×414 so với art 804×310)
+→ đã chuyển **2 thẻ chế độ + nút dock sang `StyleBoxTexture` 9-slice** (xem **§13.24**).
+Còn lại: các màn khác chưa tách layout ngang · chưa áp safe-area (tai thỏ).
+
+---
+
+### 13.24. MAIN SCREEN BỐ CỤC MỚI 2 HƯỚNG + THẺ GIẤY 9-SLICE (v2.21, 2026-10-11)
+
+**Yêu cầu (user):** đổi giao diện Main theo mockup mới + thêm khối Sự kiện (xem **§15**).
+
+**1. Bố cục dọc** (`scenes/layout/portrait/main.tscn`) — `Body` (VBoxContainer, lề 12/10/12/12, khe 8):
+`TopBar` (cao 68: `ProfileCard` co giãn · `CoinChip` 126×52 · `StarChip` 96×52 · `Settings` 64×64) →
+`Scroll` (ScrollContainer dọc, chế độ AUTO) → `Column` (logo 36 · `EventHeader` 34 · `EventCarousel` 540 · `Modes` 2×`ModeCard` 150 · con dấu phiên bản) → `Dock` (4×`DockButton` 115×92).
+Cuộn dọc chỉ bật khi máy thấp — máy cao (9:19.5 trở lên) hiện đủ 100% trong một màn.
+
+**2. Bố cục ngang** (`scenes/layout/landscape/main.tscn`) — `Body` VBox:
+`TopBar` (logo trái · đẩy phải: hồ sơ · Xu · Sao · Cài đặt) → `Mid` (HBox: **Left** = tiêu đề + carousel co giãn · **Right** 380px = 2 thẻ chế độ + con dấu) → `Dock` (4 nút).
+
+**3. Thẻ giấy `ModeCard`** (`nodes/main/mode_card.tscn`, `scripts/nodes/mode_card.gd`): root **LÀ nút** (kế thừa `NinePatchButton`) với 4 trạng thái `card_mode_{normal,pressed,focus,disabled}` qua **9-slice** (margin 40/30/60/24) ⇒ art không méo ở mọi bề rộng. Bên trong: `Tape` (băng dính nhận diện) · `IconBox` 76×76 · chip · tiêu đề · phụ đề · hàng thông tin · khối phải (nhãn số · giá trị · nút CTA). Cấu hình bằng `setup(data)`, **không tạo node lúc chạy**.
+Mọi nhãn đặt **`clip_text = true`** ⇒ chữ dài (tiếng Việt) KHÔNG đẩy bề rộng tối thiểu của thẻ, tránh tràn ở layout ngang.
+
+**4. Node con mới** (`nodes/main/`): `profile_card.tscn` · `coin_chip.tscn` · `star_chip.tscn` · `event_header.tscn` · `event_dots.tscn` · `mode_card.tscn` · `dock_button.tscn` (mỗi scene 1 script `class_name`).
+`MainLayout` (`scripts/scenes/layout/main_layout.gd`) đổi `@export` sang bộ node mới; `scripts/scenes/main.gd` gắn lại dây nút + nạp dữ liệu (Xu · Sao · hồ sơ · 2 thẻ chế độ · carousel).
+`DockButton.set_badge()` hiện chấm đỏ "có thứ chưa nhận"; `EventHeader` ẩn link "Xem tất cả" ở giai đoạn 1.
+
+**5. Kiểm chứng:** `test_main_layout` viết lại theo bố cục mới · `test_ui_scenes` 139/139 · `test_layout_bindings` 84/84 · harness
+`dev_aspects.gd -- --only=main,event` **20/20 OK** (ảnh `tmp_aspect/<WxH>/main.png` · `event.png`) · toàn bộ suite mặc định **20/20 xanh**
+(lỗi `game/*` HUD của harness là lỗi CÓ TỪ TRƯỚC, không liên quan — xem §13.23 mục 4).
 
 ---
 
@@ -2026,6 +2063,124 @@ python tools/content/fix_mojibake.py
 - 14 khoá chỉ test dùng: giữ tới khi dọn test.
 - 17 ngôn ngữ còn lại mới chỉ được **sửa mã hoá**, chưa soát nghĩa (vòng này chỉ soát tay `en`/`vi`).
 - `scripts/scenes/tutorial.tscn` (chỉ là vỏ instance `scenes/tutorial.tscn`, không nơi nào tham chiếu) — rà lại xem có phải rác thì xoá.
+
+---
+
+## 15. EVENT SYSTEM — HỆ THỐNG SỰ KIỆN (v2.21, 2026-10-11)
+
+**Yêu cầu (user):** thêm hệ thống Sự kiện (event) hiện thành **thẻ dọc** trong carousel Main Screen, có **theme riêng**, quản lý **thời hạn · tiến độ · phần thưởng** — và **thêm event mới KHÔNG phải sửa script** (data-driven).
+
+### 15.1. Khái niệm
+
+**Event** = nội dung có **thời hạn** (trừ Daily), hiện thành **1 thẻ dọc 340×504** trong carousel, có **theme riêng** (nền, màu, trang trí). Một event thuộc đúng 1 loại:
+
+| `event_type` | Mô tả | Cách đo tiến độ (hiện bằng CHỮ, KHÔNG thanh) |
+|---|---|---|
+| `SPECIAL_SERIES` | Chuỗi màn dùng **luật Special** (mỗi màn khai `mode_id` trong `LevelData`) | `màn đã xong / tổng màn` + đơn vị `chế độ`/`màn` |
+| `STANDARD_SERIES` | Chuỗi màn **chuẩn** (luật Play), có thể có biến thể | `đã xong / tổng` + `màn` |
+| `DUNGEON` | Sự kiện trên **Dungeon**: hệ số thưởng + mốc tầng | `tầng cao nhất / tầng mốc cuối` + `tầng` |
+| `LOGIN_STREAK` | Vào game mỗi ngày trong N ngày | `ngày đã đạt / N` + `ngày` |
+| `DAILY` | **Daily Challenge** — event ẢO, **ghim đầu**, làm mới 00:00 giờ máy | `thử thách xong / 3` |
+
+> **Daily KHÔNG bị viết lại.** `EventManager` tạo một `EventData` **ảo** (không phải file `.tres`) từ logic Daily có sẵn (`DailyManager`): tiến độ = số bit 0..2 của `day_missions[hôm nay]`. Bấm CTA của thẻ Daily → mở đúng luồng Daily hiện tại.
+
+### 15.2. Dữ liệu (Resource, data-driven)
+
+| Thư mục | Nội dung |
+|---|---|
+| `resources/events/themes/<theme_id>.tres` | `EventTheme` — gradient nền, art, màu chip/tiêu đề/panel/CTA |
+| `resources/events/<event_id>.tres` | `EventData` — loại · theme · khoá chữ · thời hạn · màn · quà |
+| `resources/levels/events/<event_id>/level_<n>.tres` | `LevelData` của màn event (id **1000+**, KHÔNG nằm trong danh sách chương) |
+
+- `EventData`: `id · type · theme · sort_order · enabled · chip_key · title_key_1/2 · sub_key_1/2 · unit_key · cta_key · start_utc · end_utc · levels · dungeon_coin_multiplier · dungeon_milestones · login_days_required · rewards`.
+- `EventReward`: `kind` (COIN · PEN_SKIN · AVATAR_FRAME · COIN_MULTIPLIER) · `amount` · `item_id` · `label_key`. Thẻ chỉ hiện **tối đa 2** phần thưởng.
+- **Mọi chữ qua khoá dịch** (`STR_EVENT_<ID>_*`), không chữ cứng (§14).
+
+**8 theme hiện có** (`theme_id` → art nền full-card 340×504 trong `assets/images-png/events/`):
+
+| `theme_id` | Event | Nền (trên→dưới) | Art |
+|---|---|---|---|
+| `daily` | Daily Challenge (ghim đầu) | `#FFFDF8 → #FFF3EE` | `daily_card_background` |
+| `halloween` | Đêm Mực Ma Quái | `#1B0B33 → #3B1668 → #220B3F` | `halloween_event_card_background` |
+| `mansion` | Biệt Thự Ma Ám | `#0F2A2E → #0C1C20 → #070D0F` | `haunted_house_card_background` |
+| `tomb` | Thám Hiểm Mộ Cổ | `#FFE2A0 → #E7A95A → #3A210E` | `explore_pyramid_card_background` |
+| `newyear` | Chào Năm Mới | `#C62828 → #B71C1C → #6D0E12` | `chinese_new_year_card_background` |
+| `april` | Màn Lộn Ngược | `#FFF176 → #FFC4EA → #FF9ADD` | `april_fool_card_background` |
+| `winter` | Mùa Tuyết Trắng | `#E3F4FF → #9CCDF4 → #6FA8E0` | `winter_card_background` |
+| `dungeon` | Tuần Lễ Hầm Ngục | `#2A1E12 → #17120D` | `dungeon_card_background` |
+
+*(Art nền = 1 lớp SVG full-card, rasterize sang PNG bằng `tools/svg_to_png.py`; `accent/accent2/title/panel/cta/chip` lấy từ bảng màu trong spec `Agent_Spec_MainScreen_EventSystem.md` §B2.)*
+
+**8 event đang ship:** `halloween` (SPECIAL_SERIES 5 màn · luật `no_move_overlapped`/`move_limit`/`walk_number_only`/`countdown`/`backtrack_limit`) · `mansion` (STANDARD_SERIES 6) · `tomb` (SPECIAL_SERIES 4) · `newyear` (LOGIN_STREAK 7 ngày) · `april` (STANDARD_SERIES 6, luật biến thể) · `winter` (STANDARD_SERIES 10) · `dungeon` (DUNGEON, x2 Xu, mốc 5·10·15·20·25) · `daily` (ảo).
+
+### 15.3. `EventManager` (autoload — `scripts/manager/EventManager.gd`)
+
+```gdscript
+signal events_changed
+signal event_progress_changed(event_id: StringName)
+signal event_expired(event_id: StringName)
+
+func get_active_events() -> Array[EventData]   # Daily ĐẦU → sort_order → hạn gần nhất; tối đa 8
+func get_event(id) -> EventData
+func get_progress(id) -> Dictionary            # {done, total, unit_key, completed, claimed}
+func seconds_left(id) -> int
+func on_level_won(event_id, level, stars) -> void
+func on_dungeon_floor_cleared(floor_idx) -> void
+func on_app_day_started() -> void
+func can_claim(id) -> bool
+func claim_reward(id) -> bool                  # idempotent
+func get_dungeon_coin_multiplier() -> float
+func now_utc() -> int                          # nguồn thời gian DUY NHẤT (đổi sang giờ server ở giai đoạn 2)
+```
+
+Quy tắc:
+- **Nạp event:** quét `res://resources/events/*.tres` lúc khởi động (đọc thư mục, KHÔNG liệt kê cứng). Event lỗi (thiếu `theme`, series rỗng, `end < start`) → **bỏ qua + `push_warning`**, không crash.
+- **Lưu tiến độ:** qua `SaveManager` (`export_progress`/`import_progress`), khoá `events: { "<id>": {done_levels, best_floor, login_days, claimed} }`; lưu NGAY sau mỗi thay đổi; dọn bản ghi hết hạn quá **30 ngày**.
+- **Phát quà:** Xu qua `ShopManager.add_coins()` (idempotent vì `claim_reward` chặn lần 2); `COIN_MULTIPLIER` áp cho Dungeon đang chạy.
+- **Chống chỉnh giờ máy:** giai đoạn 2 (ghi chú trong `now_utc()`).
+
+### 15.4. Luồng chơi từng loại
+
+| Loại | Bấm CTA | Trong game | Xong |
+|---|---|---|---|
+| `SPECIAL_/STANDARD_SERIES` | Vào màn **chưa xong đầu tiên** của event (hết → nhận quà) | `GameManager.start_level_from_event(level, event_id)` → chạy `game.tscn`; `LevelData.mode_id` quyết định luật | Gọi `EventManager.on_level_won()`; **KHÔNG ghi Sao/mở khoá** vào mạch chương thường |
+| `DUNGEON` | Vào Dungeon bình thường | `get_dungeon_coin_multiplier()` nhân Xu mỗi tầng | Qua mốc tầng ghi `best_floor`; đạt mốc cuối → nhận quà |
+| `LOGIN_STREAK` | (giai đoạn 2: popup lịch N ngày) | — | Đủ N ngày → nhận quà |
+| `DAILY` | Mở luồng Daily hiện tại | Không đổi | Không đổi |
+
+### 15.5. UI
+
+| File | Vai trò |
+|---|---|
+| `nodes/main/event_card.tscn` + `scripts/nodes/event_card.gd` | Thẻ sự kiện 340×504: nền gradient + lưới ô ly → `BackArt` (art theme) → chip theme + chip thời gian (icon đồng hồ **vẽ**, không emoji) → tiêu đề 2 dòng (viền) → phụ đề 2 dòng → panel tiến độ (`x / y` + đơn vị + tối đa 2 phần thưởng) → nút CTA. Đếm ngược bằng `Timer` 45s (≥48h → ngày · ≥1h → giờ · <1h → phút). Trạng thái `normal/pressed/completed/claimed/locked` |
+| `nodes/main/event_carousel.tscn` + `scripts/nodes/event_carousel.gd` | `ScrollContainer` ngang (ẩn thanh cuộn) → HBox khe 18 → các `EventCard`; **snap theo trang** khi thả tay; tối đa 8 thẻ; rỗng/1 thẻ → canh giữa + ẩn chấm |
+| `nodes/main/event_dots.tscn` + `scripts/nodes/event_dots.gd` | 8 chấm **khai sẵn trong scene**, script chỉ bật/tắt + đổi cỡ/màu (chấm đang chọn dài 46, còn lại 30) |
+| `nodes/main/event_header.tscn` + `scripts/nodes/event_header.gd` | Tiêu đề khối Sự kiện + badge cam số event đang mở + link "Xem tất cả" (giai đoạn 1 ẩn) |
+| `scenes/event.tscn` + `scripts/scenes/event.gd` + `scenes/layout/{portrait,landscape}/event.tscn` + `scripts/scenes/layout/event_layout.gd` | Màn chi tiết event (2 hướng, cùng tên node): tiêu đề · phụ đề · đếm ngược · tiến độ · CTA · nút Back. Nhận `event_id` qua `SceneManager.goto_event()/consume_pending_event_id()` |
+
+### 15.6. Quy trình thêm 1 event mới (không cần sửa script)
+
+1. Vẽ art nền → `assets/images/events/<theme_id>_card_background.svg` → `python tools/svg_to_png.py --only <theme_id>_card_background` → mở Godot 1 lần để import PNG.
+2. Tạo `resources/events/themes/<theme_id>.tres` (`EventTheme`: màu + art).
+3. (Nếu là series) tạo `LevelData` cho từng màn → `resources/levels/events/<event_id>/level_<n>.tres` (id **1000+**).
+4. Tạo `resources/events/<event_id>.tres` (`EventData`: loại · theme · khoá chữ · thời hạn · màn · quà).
+5. Thêm các khoá `STR_EVENT_<ID>_*` (chip/title/sub/cta/reward) vào `resources/localization/string_extra.csv` (en/vi) → chạy `godot --headless --import` để sinh lại `.translation`.
+6. Mở game: thẻ **tự xuất hiện** đúng thời hạn. **Nếu phải sửa `.gd` để thêm event ⇒ thiết kế sai.**
+
+### 15.7. Kiểm thử
+
+`scripts/test_case/test_event_manager.gd` (**33 check**): lọc theo thời gian + `enabled` · Daily luôn đầu + sắp xếp `sort_order` · tiến độ series (thắng lại không cộng) · `claim_reward` idempotent (Xu cộng đúng 1 lần) · Dungeon (hệ số xu trong/ngoài hạn + mốc `best_floor`) · login streak 1 lần/ngày · dữ liệu lỗi bị bỏ qua · lưu/nạp giữ tiến độ.
+Đã thêm vào bộ mặc định `tools/run_tests.py` ⇒ suite mặc định **20 test, 20/20 PASS**.
+Harness đa tỉ lệ: `dev_aspects.gd -- --only=main,event` **20/20 OK** (màn `event` đã thêm vào danh sách `SCREENS`).
+
+### 15.8. Còn lại (giai đoạn 2)
+
+- **LOGIN_STREAK**: popup **lịch N ngày** (ô đã/chưa/hôm nay + nút NHẬN LÌ XÌ) chưa dựng — CTA hiện là no-op (chưa có màn riêng).
+- **Phần thưởng vật phẩm**: `PEN_SKIN`/`AVATAR_FRAME` chưa phát (chưa có item trong shop/profile) ⇒ 8 event đang ship **toàn bộ quà = Xu**.
+- **Hệ số xu Dungeon**: `EventManager.get_dungeon_coin_multiplier()` đã có, nhưng ván Dungeon hiện **chưa cộng Xu theo tầng** ⇒ hệ số chưa có chỗ áp (chỉ ghi mốc tầng/`best_floor`).
+- **"TIẾP TỤC EVENT"** trên popup kết quả (§B7) chưa thêm; `EventListScreen` (lưới tất cả + event đã kết thúc) chưa làm ⇒ link "Xem tất cả" đang ẩn.
+- **Chống chỉnh giờ máy** (server time) — giai đoạn 2, đã cô lập trong `EventManager.now_utc()`.
+- **Khoá dịch thừa**: bỏ thẻ Daily/tờ giấy khỏi Main khiến **7 khoá** cũ thành chết (`STR_TAG_MAIN_MODE` · `STR_TAG_ENDLESS_MODE` · `STR_TAG_DAILY_MODE` · `STR_STREAK_BADGE` · `STR_GAME_TAGLINE` · `STR_MAIN_PROFILE` · `STR_MAIN_PROFILE_HINT`) — `tools/content/audit_localization.py` báo trong mục "KEY CHẾT HẲN" (bộ này VỐN ĐÃ có khoá chết từ trước v2.21 nên `--check` vốn đã trả 1; chưa dọn vì có nhóm khoá theo tiền tố `STR_MODE_<id>_…` dùng bằng cách ghép chuỗi — xoá nhầm sẽ hỏng chữ của chế độ).
 
 
 

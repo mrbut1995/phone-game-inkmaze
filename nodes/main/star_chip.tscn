@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://dxm1sm66f5qi1"]
+
+[ext_resource type="Script" uid="uid://dvytliwilt5i1" path="res://scripts/nodes/star_chip.gd" id="1_star"]
+[ext_resource type="Texture2D" uid="uid://bray4sykmnjpa" path="res://assets/images-png/icons/icon_stat_stars.png" id="2_ico"]
+
+[sub_resource type="StyleBoxFlat" id="sb_panel"]
+bg_color = Color(1, 0.99215686, 0.9411765, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.7176471, 0.7607843, 0.8039216, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="StarChip" type="Panel" unique_id=1603018634]
+custom_minimum_size = Vector2(95, 32)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_panel")
+script = ExtResource("1_star")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1182769879]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 6.0
+offset_top = -11.0
+offset_right = 28.0
+offset_bottom = 11.0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_ico")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="." unique_id=1478086877]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 30.0
+offset_top = -10.0
+offset_right = -6.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"TopChipValue"
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
