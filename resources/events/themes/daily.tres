@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/images-png/events/daily_card_background.png" id="1_wryus"]
+[ext_resource uid="uid://dkto7e26t3okj" type="Texture2D" path="res://assets/images-png/events/daily_card_background.png" id="1_wryus"]
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_m021p"]
 
 [resource]

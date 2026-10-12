@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Bầu trời đêm Halloween ma mị -->
+    <linearGradient id="hlwSkyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#140426"/>
+      <stop offset="0.35" stop-color="#2D0C52"/>
+      <stop offset="0.65" stop-color="#4A1373"/>
+      <stop offset="0.88" stop-color="#B23805"/>
+      <stop offset="1" stop-color="#FF6B00"/>
+    </linearGradient>
+
+    <!-- Quầng trăng thu hoạch vàng rực -->
+    <radialGradient id="hlwMoonAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFF8D6" stop-opacity="1"/>
+      <stop offset="0.45" stop-color="#FFE082" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#FF9800" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Lâu đài Gothic xa xăm nơi chân trời -->
+    <linearGradient id="hlwDistantCastle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2E0A47"/>
+      <stop offset="1" stop-color="#140321"/>
+    </linearGradient>
+
+    <!-- Mẫu dơi bóng đêm bay xa -->
+    <g id="bg_bat">
+      <path d="M 0 0 C -5 -8 -15 -6 -22 2 C -17 -2 -13 0 -10 4 C -7 1 -4 2 0 7 C 4 2 7 1 10 4 C 13 0 17 -2 22 2 C 15 -6 5 -8 0 0 Z" 
+            fill="#0D0219"/>
+    </g>
+  </defs>
+
+  <!-- Nền trời đêm ma mị bao phủ toàn canvas -->
+  <rect width="1080" height="960" fill="url(#hlwSkyGrad)"/>
+
+  <!-- ==================== MẶT TRĂNG THU HOẠCH KHỔNG LỒ ==================== -->
+  <!-- Trăng 1 (x = 360, y = 220) -->
+  <circle cx="360" cy="220" r="120" fill="url(#hlwMoonAura)"/>
+  <circle cx="360" cy="220" r="48" fill="#FFF2BD"/>
+  <circle cx="344" cy="206" r="10" fill="#E8C868" opacity="0.5"/>
+  <circle cx="378" cy="235" r="8" fill="#E8C868" opacity="0.45"/>
+  <circle cx="372" cy="198" r="6" fill="#E8C868" opacity="0.4"/>
+  <circle cx="348" cy="234" r="7" fill="#E8C868" opacity="0.45"/>
+
+  <!-- Trăng lặp chu kỳ đối ứng bên phải (x = 900) -->
+  <circle cx="900" cy="220" r="120" fill="url(#hlwMoonAura)"/>
+  <circle cx="900" cy="220" r="48" fill="#FFF2BD"/>
+  <circle cx="884" cy="206" r="10" fill="#E8C868" opacity="0.5"/>
+  <circle cx="918" cy="235" r="8" fill="#E8C868" opacity="0.45"/>
+
+  <!-- Mây đen rách trôi lơ lửng ngang mặt trăng -->
+  <path d="M 280 210 Q 340 190 420 215 Q 360 230 280 210 Z" fill="#1C0834" opacity="0.75"/>
+  <path d="M 330 242 Q 380 228 440 245 Q 390 258 330 242 Z" fill="#1C0834" opacity="0.65"/>
+  <path d="M 820 210 Q 880 190 960 215 Q 900 230 820 210 Z" fill="#1C0834" opacity="0.75"/>
+  <path d="M 870 242 Q 920 228 980 245 Q 930 258 870 242 Z" fill="#1C0834" opacity="0.65"/>
+
+  <!-- Các vì sao lấp lánh giữa đêm -->
+  <g fill="#FFFFFF">
+    <path d="M 120 140 Q 120 146 126 146 Q 120 146 120 152 Q 120 146 114 146 Q 120 146 120 140 Z" opacity="0.95"/>
+    <path d="M 240 110 Q 240 115 244 115 Q 240 115 240 120 Q 240 115 236 115 Q 240 115 240 110 Z" opacity="0.9"/>
+    <path d="M 480 160 Q 480 166 486 166 Q 480 166 480 172 Q 480 166 474 166 Q 480 166 480 160 Z" opacity="0.95"/>
+    <path d="M 660 140 Q 660 146 666 146 Q 660 146 660 152 Q 660 146 654 146 Q 660 146 660 140 Z" opacity="0.95"/>
+    <path d="M 780 110 Q 780 115 784 115 Q 780 115 780 120 Q 780 115 776 115 Q 780 115 780 110 Z" opacity="0.9"/>
+    <path d="M 1020 160 Q 1020 166 1026 166 Q 1020 166 1020 172 Q 1020 166 1014 166 Q 1020 166 1020 160 Z" opacity="0.95"/>
+  </g>
+
+  <!-- Đàn dơi bay xa cắt ngang vầng trăng -->
+  <g>
+    <g transform="translate(250, 180) scale(0.75)"><use href="#bg_bat"/></g>
+    <g transform="translate(290, 150) scale(0.5)"><use href="#bg_bat"/></g>
+    <g transform="translate(430, 230) scale(0.65)"><use href="#bg_bat"/></g>
+    <g transform="translate(170, 205) scale(0.45)"><use href="#bg_bat"/></g>
+    <g transform="translate(790, 180) scale(0.75)"><use href="#bg_bat"/></g>
+    <g transform="translate(830, 150) scale(0.5)"><use href="#bg_bat"/></g>
+    <g transform="translate(970, 230) scale(0.65)"><use href="#bg_bat"/></g>
+  </g>
+
+  <!-- ĐƯỜNG CHÂN TRỜI: LÂU ĐÀI GOTHIC & ĐỒI NÚI MA QUÁI XA XĂM -->
+  <!-- Seamless: Khớp nối tại x=0 và x=1080 ở y=510 -->
+  <path d="M 0 510 
+           L 40 510 L 55 460 L 65 440 L 75 460 L 90 510 L 150 510 
+           L 165 470 L 175 430 L 185 410 L 195 430 L 205 470 L 220 510 
+           L 320 510 L 380 480 L 440 510 L 540 510 
+           L 580 510 L 595 460 L 605 440 L 615 460 L 630 510 L 690 510 
+           L 705 470 L 715 430 L 725 410 L 735 430 L 745 470 L 760 510 
+           L 860 510 L 920 480 L 980 510 L 1080 510 
+           L 1080 580 L 0 580 Z" 
+        fill="url(#hlwDistantCastle)" opacity="0.75"/>
+</svg>

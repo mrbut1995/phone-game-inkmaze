@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Đụn cát sa mạc tầng trung -->
+    <linearGradient id="tombMidDunes" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C26A28"/>
+      <stop offset="0.45" stop-color="#8C3F14"/>
+      <stop offset="1" stop-color="#4E1E08"/>
+    </linearGradient>
+
+    <!-- Khối đá kim tự tháp hứng sáng -->
+    <linearGradient id="pyrLitMid" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F5B25D"/>
+      <stop offset="0.6" stop-color="#D9802B"/>
+      <stop offset="1" stop-color="#B86018"/>
+    </linearGradient>
+
+    <!-- Khối đá kim tự tháp đổ bóng -->
+    <linearGradient id="pyrShadowMid" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7A360D"/>
+      <stop offset="0.6" stop-color="#542004"/>
+      <stop offset="1" stop-color="#331102"/>
+    </linearGradient>
+
+    <!-- Chóp kim tự tháp vàng kim loại (Gold Pyramidion) -->
+    <linearGradient id="pyrCapGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF3B0"/>
+      <stop offset="0.4" stop-color="#FFD54F"/>
+      <stop offset="1" stop-color="#D49424"/>
+    </linearGradient>
+
+    <!-- Mẫu tượng Nhân Sư (Sphinx) trung cảnh -->
+    <g id="sphinx_silhouette">
+      <!-- Thân sư tử nằm phục -->
+      <path d="M -45 25 C -45 10 -25 5 -15 8 L 15 8 C 25 5 45 10 45 25 Z" fill="#5E2708"/>
+      <!-- Đầu pharaoh với khăn Nemes -->
+      <path d="M 12 8 L 15 -12 L 28 -12 L 31 8 Z" fill="#5E2708"/>
+      <circle cx="21.5" cy="-8" r="8" fill="#8A3D0E"/>
+      <path d="M 10 6 Q 21.5 2 33 6" stroke="#D49424" stroke-width="2" fill="none"/>
+    </g>
+  </defs>
+
+  <!-- ĐỤN CÁT SA MẠC TẦNG TRUNG (Seamless: x=0 (y=530) và x=1080 (y=530)) -->
+  <path d="M 0 530 
+           Q 135 480 270 515 T 540 530 
+           Q 675 480 810 515 T 1080 530 
+           L 1080 670 L 0 670 Z" 
+        fill="url(#tombMidDunes)"/>
+
+  <!-- ==================== QUẦN THỂ KIM TỰ THÁP GIZA 3D ==================== -->
+  <!-- KIM TỰ THÁP LỚN 1 (Bên trái, x ≈ 140 - 360) -->
+  <g transform="translate(140, 390)">
+    <!-- Mặt hứng sáng trăng -->
+    <polygon points="100,50 0,160 120,160" fill="url(#pyrLitMid)"/>
+    <!-- Mặt đổ bóng sâu -->
+    <polygon points="100,50 120,160 210,160" fill="url(#pyrShadowMid)"/>
+    <!-- Chóp đỉnh bọc vàng nguyên khối -->
+    <polygon points="100,50 82,70 102,70" fill="url(#pyrCapGold)"/>
+    <polygon points="100,50 102,70 117,70" fill="#B87814"/>
+    <!-- Vân bậc đá cổ xưa -->
+    <line x1="60" y1="95" x2="135" y2="95" stroke="#3D1502" stroke-width="1.5" opacity="0.4"/>
+    <line x1="38" y1="120" x2="160" y2="120" stroke="#3D1502" stroke-width="1.8" opacity="0.4"/>
+    <line x1="18" y1="142" x2="185" y2="142" stroke="#3D1502" stroke-width="1.8" opacity="0.4"/>
+  </g>
+
+  <!-- KIM TỰ THÁP PHỤ 1 (x ≈ 280) -->
+  <g transform="translate(280, 420) scale(0.85)">
+    <polygon points="90,60 0,160 105,160" fill="url(#pyrLitMid)" opacity="0.9"/>
+    <polygon points="90,60 105,160 185,160" fill="url(#pyrShadowMid)" opacity="0.95"/>
+    <polygon points="90,60 75,76 94,76" fill="url(#pyrCapGold)"/>
+    <polygon points="90,60 94,76 107,76" fill="#B87814"/>
+  </g>
+
+  <!-- TƯỢNG NHÂN SƯ (SPHINX) CANH GIỮ (x = 420) -->
+  <g transform="translate(420, 505) scale(0.95)"><use href="#sphinx_silhouette"/></g>
+
+  <!-- ==================== CỤM KIM TỰ THÁP LẶP BÊN PHẢI (CHỦ KỲ 540px) ==================== -->
+  <!-- KIM TỰ THÁP LỚN 2 (x ≈ 680 - 900) -->
+  <g transform="translate(680, 390)">
+    <polygon points="100,50 0,160 120,160" fill="url(#pyrLitMid)"/>
+    <polygon points="100,50 120,160 210,160" fill="url(#pyrShadowMid)"/>
+    <polygon points="100,50 82,70 102,70" fill="url(#pyrCapGold)"/>
+    <polygon points="100,50 102,70 117,70" fill="#B87814"/>
+    <line x1="60" y1="95" x2="135" y2="95" stroke="#3D1502" stroke-width="1.5" opacity="0.4"/>
+    <line x1="38" y1="120" x2="160" y2="120" stroke="#3D1502" stroke-width="1.8" opacity="0.4"/>
+    <line x1="18" y1="142" x2="185" y2="142" stroke="#3D1502" stroke-width="1.8" opacity="0.4"/>
+  </g>
+
+  <!-- KIM TỰ THÁP PHỤ 2 (x ≈ 820) -->
+  <g transform="translate(820, 420) scale(0.85)">
+    <polygon points="90,60 0,160 105,160" fill="url(#pyrLitMid)" opacity="0.9"/>
+    <polygon points="90,60 105,160 185,160" fill="url(#pyrShadowMid)" opacity="0.95"/>
+    <polygon points="90,60 75,76 94,76" fill="url(#pyrCapGold)"/>
+    <polygon points="90,60 94,76 107,76" fill="#B87814"/>
+  </g>
+
+  <!-- TƯỢNG NHÂN SƯ THỨ HAI (x = 960) -->
+  <g transform="translate(960, 505) scale(0.95)"><use href="#sphinx_silhouette"/></g>
+
+  <!-- BỤI CÁT VÀNG PHẢN CHIẾU BAY TRÊN ĐỈNH ĐỤN CÁT -->
+  <g fill="#FFD54F" opacity="0.8">
+    <circle cx="210" cy="480" r="2"/><circle cx="250" cy="460" r="1.5"/><circle cx="340" cy="495" r="2"/>
+    <circle cx="750" cy="480" r="2"/><circle cx="790" cy="460" r="1.5"/><circle cx="880" cy="495" r="2"/>
+  </g>
+</svg>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Triền đồi bao quanh dinh thự tầng trung -->
+    <linearGradient id="msnMidHills" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0E282E"/>
+      <stop offset="0.45" stop-color="#07191C"/>
+      <stop offset="1" stop-color="#030D0F"/>
+    </linearGradient>
+
+    <!-- Ánh sáng cửa sổ vàng ma mị -->
+    <radialGradient id="mgWinGold" cx="50%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#FFF9C4"/>
+      <stop offset="0.7" stop-color="#FFD54F"/>
+      <stop offset="1" stop-color="#FF8F00"/>
+    </radialGradient>
+
+    <!-- Ánh sáng cửa sổ xanh ngọc dạ quang -->
+    <radialGradient id="mgWinTeal" cx="50%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#E8FFF5"/>
+      <stop offset="0.6" stop-color="#7CF2C0"/>
+      <stop offset="1" stop-color="#26A69A"/>
+    </radialGradient>
+
+    <!-- Màn sương mù cuộn sóng -->
+    <linearGradient id="fogStream" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#BFFFDC" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#BFFFDC" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#BFFFDC" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- MẪU TÒA DINH THỰ GOTHIC TRUNG CẢNH -->
+    <g id="mg_gothic_mansion">
+      <!-- Tháp nhọn chính ở giữa -->
+      <polygon points="0,-75 -25,10 25,10" fill="#040D0F"/>
+      <line x1="0" y1="-95" x2="0" y2="-75" stroke="#040D0F" stroke-width="2.5"/>
+      <rect x="-24" y="10" width="48" height="95" fill="#061417"/>
+      <!-- Cửa sổ vòm tầng trên -->
+      <rect x="-10" y="24" width="20" height="30" rx="8" fill="url(#mgWinGold)"/>
+      <line x1="0" y1="24" x2="0" y2="54" stroke="#040D0F" stroke-width="1.8"/>
+
+      <!-- Tháp trái -->
+      <polygon points="-50,-35 -72,25 -28,25" fill="#040D0F"/>
+      <line x1="-50" y1="-48" x2="-50" y2="-35" stroke="#040D0F" stroke-width="2"/>
+      <rect x="-70" y="25" width="40" height="80" fill="#051214"/>
+      <rect x="-58" y="40" width="16" height="24" rx="6" fill="url(#mgWinTeal)"/>
+      <rect x="-58" y="72" width="16" height="24" rx="6" fill="url(#mgWinGold)"/>
+
+      <!-- Tháp phải -->
+      <polygon points="50,-35 28,25 72,25" fill="#040D0F"/>
+      <line x1="50" y1="-48" x2="50" y2="-35" stroke="#040D0F" stroke-width="2"/>
+      <rect x="30" y="25" width="40" height="80" fill="#051214"/>
+      <rect x="42" y="40" width="16" height="24" rx="6" fill="url(#mgWinGold)"/>
+      <rect x="42" y="72" width="16" height="24" rx="6" fill="url(#mgWinTeal)"/>
+
+      <!-- Cổng vòm tầng dưới sáng đèn -->
+      <path d="M -16 105 L -16 75 A 16 16 0 0 1 16 75 L 16 105 Z" fill="url(#mgWinTeal)"/>
+      <line x1="0" y1="65" x2="0" y2="105" stroke="#040D0F" stroke-width="2"/>
+    </g>
+  </defs>
+
+  <!-- ĐỒI SƯƠNG ĐÊM MÙA U ÁM (Seamless: x=0 (y=530) và x=1080 (y=530)) -->
+  <path d="M 0 530 
+           Q 135 480 270 518 T 540 530 
+           Q 675 480 810 518 T 1080 530 
+           L 1080 675 L 0 675 Z" 
+        fill="url(#msnMidHills)"/>
+
+  <!-- ==================== CÁC TÒA BIỆT THỰ MA ÁM GOTHIC ==================== -->
+  <!-- Dinh thự 1 (x ≈ 230) -->
+  <g transform="translate(230, 440) scale(0.95)"><use href="#mg_gothic_mansion"/></g>
+
+  <!-- Dinh thự 2 (Lặp chu kỳ đối ứng bên phải, x ≈ 770) -->
+  <g transform="translate(770, 440) scale(0.95)"><use href="#mg_gothic_mansion"/></g>
+
+  <!-- CÂY KHÔ MA QUÁI KHẲNG KHIU TRUNG CẢNH -->
+  <g stroke="#040C0E" stroke-linecap="round" fill="none">
+    <!-- Cây cạnh dinh thự 1 (x ≈ 370) -->
+    <path d="M 370 540 C 375 500 365 470 355 440" stroke-width="6"/>
+    <path d="M 365 480 Q 395 460 415 440" stroke-width="3.5"/>
+    <path d="M 355 450 Q 330 430 320 415" stroke-width="3"/>
+
+    <!-- Cây cạnh dinh thự 2 (x ≈ 910) -->
+    <path d="M 910 540 C 915 500 905 470 895 440" stroke-width="6"/>
+    <path d="M 905 480 Q 935 460 955 440" stroke-width="3.5"/>
+    <path d="M 895 450 Q 870 430 860 415" stroke-width="3"/>
+  </g>
+
+  <!-- DẢI SƯƠNG MÙ DÀY ĐẶC DẠ QUANG CUỘN QUANH CHÂN ĐỒI -->
+  <g fill="none">
+    <path d="M 0 550 Q 135 520 270 545 T 540 550 T 810 545 T 1080 550" stroke="url(#fogStream)" stroke-width="22" stroke-linecap="round"/>
+    <path d="M 0 575 Q 135 550 270 570 T 540 575 T 810 570 T 1080 575" stroke="url(#fogStream)" stroke-width="28" stroke-linecap="round"/>
+  </g>
+</svg>

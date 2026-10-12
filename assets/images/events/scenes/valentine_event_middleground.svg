@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Mặt hồ tình yêu phản chiếu ánh trăng hồng -->
+    <linearGradient id="valSwanLake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8E2055"/>
+      <stop offset="0.45" stop-color="#5E0F37"/>
+      <stop offset="1" stop-color="#36051E"/>
+    </linearGradient>
+
+    <!-- MẪU ĐÔI THIÊN NGA TRẮNG HÌNH TRÁI TIM -->
+    <g id="swan_couple">
+      <!-- Vệt nước phản chiếu -->
+      <ellipse cx="0" cy="16" rx="28" ry="6" fill="#4A0A2B" opacity="0.6"/>
+      <!-- Thiên nga trái -->
+      <path d="M -16 12 C -24 8 -22 -2 -14 -4 C -8 -4 -6 2 -4 6 C -2 -4 6 -14 0 -18 C -6 -18 -8 -10 -4 -6" 
+            fill="#FFFFFF" stroke="#FFC4D8" stroke-width="1"/>
+      <path d="M -16 12 C -8 16 0 14 2 8 C 0 4 -8 4 -16 12 Z" fill="#FFFFFF"/>
+      <polygon points="-6,-18 -3,-17 -5,-15" fill="#FFA000"/>
+      <!-- Thiên nga phải (Đối xứng tạo hình trái tim giữa 2 cổ) -->
+      <path d="M 16 12 C 24 8 22 -2 14 -4 C 8 -4 6 2 4 6 C 2 -4 -6 -14 0 -18 C 6 -18 8 -10 4 -6" 
+            fill="#FFFFFF" stroke="#FFC4D8" stroke-width="1"/>
+      <path d="M 16 12 C 8 16 0 14 -2 8 C 0 4 8 4 16 12 Z" fill="#FFFFFF"/>
+      <polygon points="6,-18 3,-17 5,-15" fill="#FFA000"/>
+    </g>
+
+    <!-- MẪU CHÒI HOA HỒNG LÃNG MẠN (ROSE GAZEBO) -->
+    <g id="rose_gazebo">
+      <!-- Cột tròn chòi nghỉ -->
+      <line x1="-22" y1="-10" x2="-22" y2="35" stroke="#FFFFFF" stroke-width="3"/>
+      <line x1="22" y1="-10" x2="22" y2="35" stroke="#FFFFFF" stroke-width="3"/>
+      <line x1="-7" y1="-15" x2="-7" y2="35" stroke="#FFFFFF" stroke-width="2"/>
+      <line x1="7" y1="-15" x2="7" y2="35" stroke="#FFFFFF" stroke-width="2"/>
+      <!-- Mái vòm tròn hoa hồng -->
+      <path d="M -28 -10 Q 0 -35 28 -10 Z" fill="#FFFFFF" stroke="#FFB6D0" stroke-width="1.5"/>
+      <circle cx="0" cy="-35" r="3.5" fill="#FFD54F"/>
+      <!-- Dây leo hoa hồng quấn quanh mái -->
+      <path d="M -28 -10 Q 0 -30 28 -10" stroke="#4CAF50" stroke-width="3" fill="none"/>
+      <circle cx="-16" cy="-18" r="4" fill="#E91E63"/>
+      <circle cx="0" cy="-28" r="4.5" fill="#FF4081"/>
+      <circle cx="16" cy="-18" r="4" fill="#E91E63"/>
+    </g>
+  </defs>
+
+  <!-- MẶT HỒ TÌNH YÊU TẦNG TRUNG (Seamless: x=0 (y=530) và x=1080 (y=530)) -->
+  <path d="M 0 530 
+           Q 135 480 270 515 T 540 530 
+           Q 675 480 810 515 T 1080 530 
+           L 1080 670 L 0 670 Z" 
+        fill="url(#valSwanLake)"/>
+
+  <!-- Gợn sóng nước lấp lánh phản chiếu trăng hồng (Chu kỳ 270px -> Seamless 100%) -->
+  <g stroke="#FFD1E3" stroke-opacity="0.4" stroke-linecap="round" fill="none">
+    <path d="M 0 560 Q 67.5 554 135 560 T 270 560 T 405 560 T 540 560 T 675 560 T 810 560 T 945 560 T 1080 560" stroke-width="1.8"/>
+    <path d="M 0 595 Q 67.5 588 135 595 T 270 595 T 405 595 T 540 595 T 675 595 T 810 595 T 945 595 T 1080 595" stroke-width="2.2"/>
+    <path d="M 0 630 Q 67.5 623 135 630 T 270 630 T 405 630 T 540 630 T 675 630 T 810 630 T 945 630 T 1080 630" stroke-width="2"/>
+  </g>
+
+  <!-- ==================== ĐÔI THIÊN NGA & CHÒI HOA HỒNG ==================== -->
+  <!-- Đôi thiên nga chụm đầu (x ≈ 230) -->
+  <g transform="translate(230, 580) scale(1.1)"><use href="#swan_couple"/></g>
+  <!-- Chòi hoa hồng ven hồ (x ≈ 380) -->
+  <g transform="translate(380, 490) scale(0.95)"><use href="#rose_gazebo"/></g>
+
+  <!-- Cụm lặp bên phải (Chu kỳ 540px: x ≈ 770 & x ≈ 920) -->
+  <g transform="translate(770, 580) scale(1.1)"><use href="#swan_couple"/></g>
+  <g transform="translate(920, 490) scale(0.95)"><use href="#rose_gazebo"/></g>
+
+  <!-- HOA ĐĂNG TRÁI TIM THẢ TRÔI TRÊN HỒ -->
+  <g fill="#FF4081">
+    <ellipse cx="140" cy="590" rx="8" ry="4" opacity="0.85"/>
+    <ellipse cx="320" cy="620" rx="10" ry="5" opacity="0.9"/>
+    <ellipse cx="480" cy="580" rx="8" ry="4" opacity="0.85"/>
+
+    <ellipse cx="680" cy="590" rx="8" ry="4" opacity="0.85"/>
+    <ellipse cx="860" cy="620" rx="10" ry="5" opacity="0.9"/>
+    <ellipse cx="1020" cy="580" rx="8" ry="4" opacity="0.85"/>
+  </g>
+</svg>

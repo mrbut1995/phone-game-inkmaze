@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Sàn sân thượng ngắm pháo hoa sang trọng (Nền tương phản tốt cho UI) -->
+    <linearGradient id="rooftopFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0E1236"/>
+      <stop offset="0.25" stop-color="#080B22"/>
+      <stop offset="0.65" stop-color="#040514"/>
+      <stop offset="1" stop-color="#02020A"/>
+    </linearGradient>
+
+    <!-- Vàng kim loại đồng hồ hoàng gia 3D -->
+    <linearGradient id="fgClockGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFDE0"/>
+      <stop offset="0.35" stop-color="#FFD54F"/>
+      <stop offset="0.7" stop-color="#FFA000"/>
+      <stop offset="1" stop-color="#B87300"/>
+    </linearGradient>
+
+    <!-- Hào quang đồng hồ và bọt sâm-panh -->
+    <radialGradient id="fgChampagneGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFFDE7" stop-opacity="1"/>
+      <stop offset="0.45" stop-color="#FFD54F" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#FF8F00" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Đổ bóng mặt đất -->
+    <radialGradient id="fgFloorShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#02030D" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#02030D" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- MẪU CHAI CHAMPAGNE NỔ NẮP BẬT SÂM-PANH -->
+    <g id="popping_champagne">
+      <!-- Thân chai rượu champagne xanh đậm -->
+      <path d="M -12 70 L 12 70 L 10 24 L 6 0 L -6 0 L -10 24 Z" fill="#0C2B18" stroke="#FFD54F" stroke-width="1.5"/>
+      <rect x="-7" y="10" width="14" height="20" fill="#FFD54F"/>
+      <!-- Nắp chai bật tung bay lên -->
+      <rect x="-5" y="-35" width="10" height="12" rx="3" fill="#D49424" transform="rotate(30 -5 -35)"/>
+      <!-- Bọt rượu vàng kim sủi tăm bắn tung tóe -->
+      <circle cx="0" cy="-10" r="14" fill="url(#fgChampagneGlow)"/>
+      <circle cx="-12" cy="-28" r="5" fill="#FFF9C4"/>
+      <circle cx="4" cy="-34" r="6" fill="#FFF9C4"/>
+      <circle cx="16" cy="-24" r="4" fill="#FFD54F"/>
+      <circle cx="-6" cy="-48" r="5.5" fill="#FFFDE7"/>
+      <circle cx="10" cy="-52" r="4" fill="#FFD54F"/>
+      <circle cx="2" cy="-65" r="3.5" fill="#FFFFFF"/>
+    </g>
+
+    <!-- MẪU CẶP LY PHA LÊ NÂNG CỐC GIAO THỪA -->
+    <g id="clinking_glasses">
+      <!-- Ly trái nghiêng -->
+      <g transform="rotate(-15)">
+        <polygon points="-10,0 10,0 6,24 -6,24" fill="#FFFFFF" fill-opacity="0.4" stroke="#00E5FF" stroke-width="1.2"/>
+        <line x1="0" y1="24" x2="0" y2="42" stroke="#00E5FF" stroke-width="1.8"/>
+        <ellipse cx="0" cy="42" rx="10" ry="2.5" fill="#00E5FF" fill-opacity="0.6"/>
+        <polygon points="-8,4 8,4 5,20 -5,20" fill="#FFD54F" fill-opacity="0.85"/>
+      </g>
+      <!-- Ly phải nghiêng -->
+      <g transform="translate(18, 0) rotate(15)">
+        <polygon points="-10,0 10,0 6,24 -6,24" fill="#FFFFFF" fill-opacity="0.4" stroke="#00E5FF" stroke-width="1.2"/>
+        <line x1="0" y1="24" x2="0" y2="42" stroke="#00E5FF" stroke-width="1.8"/>
+        <ellipse cx="0" cy="42" rx="10" ry="2.5" fill="#00E5FF" fill-opacity="0.6"/>
+        <polygon points="-8,4 8,4 5,20 -5,20" fill="#FFD54F" fill-opacity="0.85"/>
+      </g>
+      <!-- Điểm chạm phát tia sáng lấp lánh -->
+      <path d="M 9 10 Q 9 5 14 5 Q 9 5 9 0 Q 9 5 4 5 Q 9 5 9 10 Z" fill="#FFFFFF"/>
+    </g>
+  </defs>
+
+  <!-- THẢM SÀN SÂN THƯỢNG quan sát TIỀN CẢNH (Seamless chu kỳ 540px: x=0 (y=610) và x=1080 (y=610)) -->
+  <path d="M 0 610 
+           Q 135 570 270 605 T 540 610 
+           Q 675 570 810 605 T 1080 610 
+           L 1080 960 L 0 960 Z" 
+        fill="url(#rooftopFloor)"/>
+
+  <!-- Lan can ban công viền vàng kim loại và đèn led cyan sắc nét -->
+  <path d="M 0 610 Q 135 570 270 605 T 540 610 Q 675 570 810 605 T 1080 610" 
+        fill="none" stroke="url(#fgClockGold)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 0 616 Q 135 576 270 611 T 540 616 Q 675 576 810 611 T 1080 616" 
+        fill="none" stroke="#00E5FF" stroke-opacity="0.65" stroke-width="2.5"/>
+
+  <!-- ==================== CÁC VẬT THỂ TIỀN CẢNH ==================== -->
+
+  <!-- 1. ĐỒNG HỒ CƠ KHÍ KHỔNG LỒ 3D MẠ VÀNG (Bên trái, x ≈ 130) -->
+  <g transform="translate(130, 480)">
+    <!-- Đổ bóng đáy bệ đồng hồ -->
+    <ellipse cx="30" cy="160" rx="65" ry="18" fill="url(#fgFloorShadow)"/>
+
+    <!-- Trụ bệ đỡ Art-Deco mạ vàng -->
+    <polygon points="10,160 50,160 42,90 18,90" fill="#0C1033" stroke="url(#fgClockGold)" stroke-width="2"/>
+    <rect x="5" y="80" width="50" height="15" rx="3" fill="url(#fgClockGold)"/>
+
+    <!-- VÒNG TRÒN ĐỒNG HỒ GIAO THỪA 3D LỘNG LẪY -->
+    <g transform="translate(30, 15)">
+      <!-- Hào quang phát sáng khoảnh khắc 00:00 -->
+      <circle cx="0" cy="0" r="82" fill="url(#fgChampagneGlow)"/>
+
+      <!-- Vành benzel chạm khắc nhiều nấc mạ vàng -->
+      <circle cx="0" cy="0" r="68" fill="url(#fgClockGold)" stroke="#663D00" stroke-width="2.5"/>
+      <circle cx="0" cy="0" r="58" fill="#080C28" stroke="#FFD54F" stroke-width="2"/>
+      <circle cx="0" cy="0" r="55" fill="#121845"/>
+
+      <!-- Mặt kính phản quang góc nghiêng -->
+      <path d="M -40 -40 Q 0 -58 40 -40 Q 20 -15 -40 -40 Z" fill="#FFFFFF" opacity="0.18"/>
+
+      <!-- Các vạch khắc giờ la mã -->
+      <g stroke="#FFD54F" stroke-linecap="round">
+        <line x1="0" y1="-50" x2="0" y2="-40" stroke-width="3.5"/>
+        <line x1="50" y1="0" x2="40" y2="0" stroke-width="3.5"/>
+        <line x1="0" y1="50" x2="0" y2="40" stroke-width="3.5"/>
+        <line x1="-50" y1="0" x2="-40" y2="0" stroke-width="3.5"/>
+        <!-- Vạch giờ phụ -->
+        <line x1="25" y1="-43.3" x2="20" y2="-34.6" stroke-width="2"/>
+        <line x1="43.3" y1="-25" x2="34.6" y2="-20" stroke-width="2"/>
+        <line x1="43.3" y1="25" x2="34.6" y2="20" stroke-width="2"/>
+        <line x1="25" y1="43.3" x2="20" y2="34.6" stroke-width="2"/>
+        <line x1="-25" y1="43.3" x2="-20" y2="34.6" stroke-width="2"/>
+        <line x1="-43.3" y1="25" x2="-34.6" y2="20" stroke-width="2"/>
+        <line x1="-43.3" y1="-25" x2="-34.6" y2="-20" stroke-width="2"/>
+        <line x1="-25" y1="-43.3" x2="-20" y2="-34.6" stroke-width="2"/>
+      </g>
+
+      <!-- KIM ĐỒNG HỒ ĐIỂM 11:59:55 -->
+      <line x1="0" y1="0" x2="-5" y2="-30" stroke="url(#fgClockGold)" stroke-width="4.5" stroke-linecap="round"/>
+      <line x1="0" y1="0" x2="-1" y2="-44" stroke="url(#fgClockGold)" stroke-width="3.2" stroke-linecap="round"/>
+      <line x1="0" y1="8" x2="0" y2="-48" stroke="#FF1744" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Trục quay mạ vàng -->
+      <circle cx="0" cy="0" r="6.5" fill="url(#fgClockGold)" stroke="#663D00" stroke-width="1.2"/>
+      <circle cx="0" cy="0" r="2.5" fill="#D50000"/>
+    </g>
+  </g>
+
+  <!-- 2. CHAI SÂM-PANH NỔ NẮP & LY PHA LÊ NÂNG CỐC Ở GIỮA (x ≈ 420 - 540) -->
+  <g transform="translate(420, 560)">
+    <!-- Chai champagne nổ nắp bắn bọt -->
+    <g transform="translate(20, -10) rotate(-18)"><use href="#popping_champagne"/></g>
+    <!-- Cặp ly pha lê chạm nhau phát sáng -->
+    <g transform="translate(75, 45)"><use href="#clinking_glasses"/></g>
+  </g>
+
+  <!-- 3. ĐỒNG HỒ THỨ HAI & CHAI CHAMPAGNE (Bên phải, x ≈ 880) -->
+  <g transform="translate(860, 480)">
+    <ellipse cx="30" cy="160" rx="65" ry="18" fill="url(#fgFloorShadow)"/>
+    <polygon points="10,160 50,160 42,90 18,90" fill="#0C1033" stroke="url(#fgClockGold)" stroke-width="2"/>
+    <rect x="5" y="80" width="50" height="15" rx="3" fill="url(#fgClockGold)"/>
+
+    <g transform="translate(30, 15)">
+      <circle cx="0" cy="0" r="82" fill="url(#fgChampagneGlow)"/>
+      <circle cx="0" cy="0" r="68" fill="url(#fgClockGold)" stroke="#663D00" stroke-width="2.5"/>
+      <circle cx="0" cy="0" r="58" fill="#080C28" stroke="#FFD54F" stroke-width="2"/>
+      <line x1="0" y1="0" x2="-5" y2="-30" stroke="url(#fgClockGold)" stroke-width="4.5" stroke-linecap="round"/>
+      <line x1="0" y1="0" x2="-1" y2="-44" stroke="url(#fgClockGold)" stroke-width="3.2" stroke-linecap="round"/>
+      <line x1="0" y1="8" x2="0" y2="-48" stroke="#FF1744" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="0" cy="0" r="6.5" fill="url(#fgClockGold)"/>
+    </g>
+
+    <g transform="translate(130, 40) rotate(20)"><use href="#popping_champagne"/></g>
+  </g>
+
+  <!-- 4. MƯA PHÁO GIẤY CONFETTI & RUY-BĂNG RƠI RỘN RÃ CẬN MÁY QUAY -->
+  <g>
+    <!-- Mảnh pháo giấy vàng kim, hồng neon và xanh cyan -->
+    <rect x="80" y="440" width="14" height="9" rx="2" fill="#FFD54F" stroke="#663D00" stroke-width="0.8" transform="rotate(35 87 444)"/>
+    <rect x="250" y="420" width="15" height="10" rx="2" fill="#00E5FF" stroke="#004D40" stroke-width="0.8" transform="rotate(-25 257 425)"/>
+    <rect x="320" y="490" width="14" height="9" rx="2" fill="#FF4081" stroke="#880E4F" stroke-width="0.8" transform="rotate(45 327 494)"/>
+    <circle cx="210" cy="460" r="5" fill="#FFD54F"/>
+    <circle cx="370" cy="450" r="5.5" fill="#00E5FF"/>
+    <polygon points="280,470 292,474 284,484" fill="#FF4081"/>
+
+    <rect x="620" y="440" width="14" height="9" rx="2" fill="#FFD54F" stroke="#663D00" stroke-width="0.8" transform="rotate(35 627 444)"/>
+    <rect x="790" y="420" width="15" height="10" rx="2" fill="#00E5FF" stroke="#004D40" stroke-width="0.8" transform="rotate(-25 797 425)"/>
+    <rect x="860" y="490" width="14" height="9" rx="2" fill="#FF4081" stroke="#880E4F" stroke-width="0.8" transform="rotate(45 867 494)"/>
+    <circle cx="750" cy="460" r="5" fill="#FFD54F"/>
+    <circle cx="910" cy="450" r="5.5" fill="#00E5FF"/>
+
+    <!-- Ngôi sao lấp lánh (Sparkles) -->
+    <path d="M 170 380 Q 170 388 178 388 Q 170 388 170 396 Q 170 388 162 388 Q 170 388 170 380 Z" fill="#FFFFFF"/>
+    <path d="M 710 380 Q 710 388 718 388 Q 710 388 710 396 Q 710 388 702 388 Q 710 388 710 380 Z" fill="#FFFFFF"/>
+  </g>
+</svg>

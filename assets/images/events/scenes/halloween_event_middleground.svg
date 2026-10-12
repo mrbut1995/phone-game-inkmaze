@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Triền đồi nghĩa địa tầng trung -->
+    <linearGradient id="hlwMidHills" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2D0B4A"/>
+      <stop offset="0.45" stop-color="#1B042F"/>
+      <stop offset="1" stop-color="#0E021A"/>
+    </linearGradient>
+
+    <!-- Mẫu cây khô ma quái trung cảnh -->
+    <g id="mg_spooky_tree">
+      <path d="M 0 70 C 2 45 -4 25 -8 5 C -15 15 -25 22 -35 25 M -8 5 C -6 -15 -18 -30 -30 -38 M -8 5 C -2 -15 8 -25 22 -32 M 5 18 C 15 12 28 8 38 12 M 10 -25 C 16 -38 25 -45 35 -48" 
+            stroke="#110321" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    </g>
+
+    <!-- Mẫu bia mộ cổ rêu phong (Tombstone) -->
+    <g id="tombstone">
+      <path d="M -12 25 L -12 -5 C -12 -16 12 -16 12 -5 L 12 25 Z" fill="#240B3B" stroke="#0E021A" stroke-width="1.8"/>
+      <!-- Chữ thập khắc trên bia -->
+      <line x1="0" y1="-5" x2="0" y2="10" stroke="#4A1C70" stroke-width="2.5"/>
+      <line x1="-5" y1="0" x2="5" y2="0" stroke="#4A1C70" stroke-width="2.5"/>
+    </g>
+  </defs>
+
+  <!-- ĐỒI NGHĨA ĐỊA MA QUÁI TẦNG TRUNG (Seamless: x=0 (y=530) và x=1080 (y=530)) -->
+  <path d="M 0 530 
+           Q 135 480 270 518 T 540 530 
+           Q 675 480 810 518 T 1080 530 
+           L 1080 675 L 0 675 Z" 
+        fill="url(#hlwMidHills)"/>
+
+  <!-- ==================== CÂY KHÔ MA QUÁI & BIA MỘ ==================== -->
+  <!-- Cây khô 1 (x ≈ 160) -->
+  <g transform="translate(160, 470)"><use href="#mg_spooky_tree"/></g>
+  <!-- Cây khô 2 (x ≈ 700, đối ứng chu kỳ 540px) -->
+  <g transform="translate(700, 470)"><use href="#mg_spooky_tree"/></g>
+  <!-- Cây khô phụ nhỏ (x ≈ 420 & x ≈ 960) -->
+  <g transform="translate(420, 490) scale(0.75)"><use href="#mg_spooky_tree"/></g>
+  <g transform="translate(960, 490) scale(0.75)"><use href="#mg_spooky_tree"/></g>
+
+  <!-- Các bia mộ cổ cắm trên sườn đồi -->
+  <g transform="translate(240, 510)"><use href="#tombstone"/></g>
+  <g transform="translate(275, 518) scale(0.85) rotate(8)"><use href="#tombstone"/></g>
+  <g transform="translate(480, 520) scale(0.9)"><use href="#tombstone"/></g>
+  <g transform="translate(780, 510)"><use href="#tombstone"/></g>
+  <g transform="translate(815, 518) scale(0.85) rotate(8)"><use href="#tombstone"/></g>
+  <g transform="translate(1020, 520) scale(0.9)"><use href="#tombstone"/></g>
+
+  <!-- HÀNG RÀO SẮT GAI NGHĨA ĐỊA CỔ KÍNH (Wrought Iron Fence) -->
+  <g stroke="#150328" stroke-linecap="round">
+    <!-- Cụm rào 1 (x ≈ 300 - 410) -->
+    <line x1="300" y1="535" x2="410" y2="525" stroke-width="2.5"/>
+    <line x1="300" y1="545" x2="410" y2="535" stroke-width="2.5"/>
+    <line x1="310" y1="520" x2="310" y2="550" stroke-width="3.5"/>
+    <line x1="335" y1="518" x2="335" y2="548" stroke-width="3.5"/>
+    <line x1="360" y1="515" x2="360" y2="545" stroke-width="3.5"/>
+    <line x1="385" y1="513" x2="385" y2="543" stroke-width="3.5"/>
+    <!-- Mũi giáo nhọn trên đầu cọc sắt -->
+    <polygon points="310,515 307,522 313,522" fill="#150328"/>
+    <polygon points="335,513 332,520 338,520" fill="#150328"/>
+    <polygon points="360,510 357,517 363,517" fill="#150328"/>
+    <polygon points="385,508 382,515 388,515" fill="#150328"/>
+
+    <!-- Cụm rào 2 (Lặp bên phải, x ≈ 840 - 950) -->
+    <line x1="840" y1="535" x2="950" y2="525" stroke-width="2.5"/>
+    <line x1="840" y1="545" x2="950" y2="535" stroke-width="2.5"/>
+    <line x1="850" y1="520" x2="850" y2="550" stroke-width="3.5"/>
+    <line x1="875" y1="518" x2="875" y2="548" stroke-width="3.5"/>
+    <line x1="900" y1="515" x2="900" y2="545" stroke-width="3.5"/>
+    <line x1="925" y1="513" x2="925" y2="543" stroke-width="3.5"/>
+    <polygon points="850,515 847,522 853,522" fill="#150328"/>
+    <polygon points="875,513 872,520 878,520" fill="#150328"/>
+    <polygon points="900,510 897,517 903,517" fill="#150328"/>
+    <polygon points="925,508 922,515 928,515" fill="#150328"/>
+  </g>
+
+  <!-- DẢI SƯƠNG MÙ MA MỊ DẠ QUANG LƯỢN SÓNG (Ghostly Mist) -->
+  <g fill="none" opacity="0.35">
+    <path d="M 0 550 Q 135 525 270 545 T 540 550 T 810 545 T 1080 550" stroke="#B388FF" stroke-width="12" stroke-linecap="round"/>
+    <path d="M 0 575 Q 135 555 270 570 T 540 575 T 810 570 T 1080 575" stroke="#7C4DFF" stroke-width="16" stroke-linecap="round"/>
+  </g>
+</svg>

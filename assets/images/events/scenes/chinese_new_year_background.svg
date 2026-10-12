@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Bầu trời đêm giao thừa đỏ nhung hoàng gia -->
+    <linearGradient id="nyNightSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#240306"/>
+      <stop offset="0.35" stop-color="#54080F"/>
+      <stop offset="0.7" stop-color="#8E1119"/>
+      <stop offset="1" stop-color="#4A050A"/>
+    </linearGradient>
+
+    <!-- Ánh trăng rằm đầu xuân -->
+    <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFFDE0" stop-opacity="1"/>
+      <stop offset="0.4" stop-color="#FFE082" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#FFB300" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Hào quang pháo hoa nổ -->
+    <radialGradient id="fwGoldAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFF9C4" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#FFD54F" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#FF8F00" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="fwPinkAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFE8EC" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#FF8DA1" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#E91E63" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Nền trời đêm lễ hội -->
+  <rect width="1080" height="960" fill="url(#nyNightSky)"/>
+
+  <!-- Trăng rằm cát tường (x = 360, y = 200) -->
+  <circle cx="360" cy="200" r="110" fill="url(#moonGlow)"/>
+  <circle cx="360" cy="200" r="44" fill="#FFFBE6"/>
+  <circle cx="348" cy="188" r="8" fill="#FCEAA6" opacity="0.4"/>
+  <circle cx="376" cy="214" r="12" fill="#FCEAA6" opacity="0.3"/>
+
+  <!-- Dải mây như ý viền vàng trôi qua vầng trăng -->
+  <path d="M 240 220 Q 280 200 320 215 Q 350 190 390 205 Q 430 195 460 215 Q 430 235 390 225 Q 340 245 290 230 Z" 
+        fill="#FFE082" fill-opacity="0.12"/>
+  <path d="M 780 210 Q 820 190 860 205 Q 890 180 930 195 Q 970 185 1000 205 Q 970 225 930 215 Q 880 235 830 220 Z" 
+        fill="#FFE082" fill-opacity="0.12"/>
+
+  <!-- ==================== CÁC CHÙM PHÁO HOA ĐẠI BÁC XA ==================== -->
+  <!-- Pháo hoa 1: Vàng kim rực rỡ (x = 180, y = 160) -->
+  <g transform="translate(180, 160)">
+    <circle cx="0" cy="0" r="50" fill="url(#fwGoldAura)"/>
+    <g stroke="#FFF3B0" stroke-width="2.2" stroke-linecap="round">
+      <line x1="0" y1="-12" x2="0" y2="-45"/><circle cx="0" cy="-48" r="2.5" fill="#FFE082"/>
+      <line x1="9" y1="-9" x2="32" y2="-32"/><circle cx="35" cy="-35" r="2.5" fill="#FFE082"/>
+      <line x1="12" y1="0" x2="45" y2="0"/><circle cx="48" cy="0" r="2.5" fill="#FFE082"/>
+      <line x1="9" y1="9" x2="32" y2="32"/><circle cx="35" cy="35" r="2.5" fill="#FFE082"/>
+      <line x1="0" y1="12" x2="0" y2="45"/><circle cx="0" cy="48" r="2.5" fill="#FFE082"/>
+      <line x1="-9" y1="9" x2="-32" y2="32"/><circle cx="-35" cy="35" r="2.5" fill="#FFE082"/>
+      <line x1="-12" y1="0" x2="-45" y2="0"/><circle cx="-48" cy="0" r="2.5" fill="#FFE082"/>
+      <line x1="-9" y1="-9" x2="-32" y2="-32"/><circle cx="-35" cy="-35" r="2.5" fill="#FFE082"/>
+    </g>
+  </g>
+
+  <!-- Pháo hoa 2: Hồng ngọc lộng lẫy (x = 560, y = 140) -->
+  <g transform="translate(560, 140) scale(1.15)">
+    <circle cx="0" cy="0" r="50" fill="url(#fwPinkAura)"/>
+    <g stroke="#FFCDD2" stroke-width="2.2" stroke-linecap="round">
+      <line x1="0" y1="-12" x2="0" y2="-45"/><circle cx="0" cy="-48" r="2.5" fill="#FF4081"/>
+      <line x1="9" y1="-9" x2="32" y2="-32"/><circle cx="35" cy="-35" r="2.5" fill="#FF4081"/>
+      <line x1="12" y1="0" x2="45" y2="0"/><circle cx="48" cy="0" r="2.5" fill="#FF4081"/>
+      <line x1="9" y1="9" x2="32" y2="32"/><circle cx="35" cy="35" r="2.5" fill="#FF4081"/>
+      <line x1="0" y1="12" x2="0" y2="45"/><circle cx="0" cy="48" r="2.5" fill="#FF4081"/>
+      <line x1="-9" y1="9" x2="-32" y2="32"/><circle cx="-35" cy="35" r="2.5" fill="#FF4081"/>
+      <line x1="-12" y1="0" x2="-45" y2="0"/><circle cx="-48" cy="0" r="2.5" fill="#FF4081"/>
+      <line x1="-9" y1="-9" x2="-32" y2="-32"/><circle cx="-35" cy="-35" r="2.5" fill="#FF4081"/>
+    </g>
+  </g>
+
+  <!-- Pháo hoa 3: Vàng kim lặp chu kỳ đối xứng (x = 720, y = 160) -->
+  <g transform="translate(720, 160)">
+    <circle cx="0" cy="0" r="50" fill="url(#fwGoldAura)"/>
+    <g stroke="#FFF3B0" stroke-width="2.2" stroke-linecap="round">
+      <line x1="0" y1="-12" x2="0" y2="-45"/><circle cx="0" cy="-48" r="2.5" fill="#FFE082"/>
+      <line x1="9" y1="-9" x2="32" y2="-32"/><circle cx="35" cy="-35" r="2.5" fill="#FFE082"/>
+      <line x1="12" y1="0" x2="45" y2="0"/><circle cx="48" cy="0" r="2.5" fill="#FFE082"/>
+      <line x1="9" y1="9" x2="32" y2="32"/><circle cx="35" cy="35" r="2.5" fill="#FFE082"/>
+      <line x1="0" y1="12" x2="0" y2="45"/><circle cx="0" cy="48" r="2.5" fill="#FFE082"/>
+      <line x1="-9" y1="9" x2="-32" y2="32"/><circle cx="-35" cy="35" r="2.5" fill="#FFE082"/>
+      <line x1="-12" y1="0" x2="-45" y2="0"/><circle cx="-48" cy="0" r="2.5" fill="#FFE082"/>
+      <line x1="-9" y1="-9" x2="-32" y2="-32"/><circle cx="-35" cy="-35" r="2.5" fill="#FFE082"/>
+    </g>
+  </g>
+
+  <!-- Pháo hoa 4: Hồng phấn xa (x = 980, y = 180) -->
+  <g transform="translate(980, 180) scale(0.85)">
+    <circle cx="0" cy="0" r="45" fill="url(#fwPinkAura)"/>
+    <g stroke="#FFCDD2" stroke-width="2" stroke-linecap="round">
+      <line x1="0" y1="-10" x2="0" y2="-36"/><circle cx="0" cy="-40" r="2.2" fill="#FF4081"/>
+      <line x1="8" y1="-8" x2="26" y2="-26"/><circle cx="29" cy="-29" r="2.2" fill="#FF4081"/>
+      <line x1="10" y1="0" x2="36" y2="0"/><circle cx="40" cy="0" r="2.2" fill="#FF4081"/>
+      <line x1="8" y1="8" x2="26" y2="26"/><circle cx="29" cy="29" r="2.2" fill="#FF4081"/>
+      <line x1="0" y1="10" x2="0" y2="36"/><circle cx="0" cy="40" r="2.2" fill="#FF4081"/>
+      <line x1="-8" y1="8" x2="-26" y2="26"/><circle cx="-29" cy="29" r="2.2" fill="#FF4081"/>
+      <line x1="-10" y1="0" x2="-36" y2="0"/><circle cx="-40" cy="0" r="2.2" fill="#FF4081"/>
+      <line x1="-8" y1="-8" x2="-26" y2="-26"/><circle cx="-29" cy="-29" r="2.2" fill="#FF4081"/>
+    </g>
+  </g>
+
+  <!-- ĐƯỜNG CHÂN TRỜI: BÓNG MÁI ĐÌNH / MÁI NGÓI CỔ KÍNH XA XĂM -->
+  <!-- Seamless: Khớp nối tại x=0 và x=1080 ở y=520 -->
+  <path d="M 0 520 
+           L 40 520 L 70 500 L 100 520 L 160 520 
+           L 180 495 L 210 475 L 240 495 L 260 520 L 320 520 
+           L 350 500 L 380 520 L 460 520 L 500 505 L 540 520 
+           L 580 520 L 610 500 L 640 520 L 700 520 
+           L 720 495 L 750 475 L 780 495 L 800 520 L 860 520 
+           L 890 500 L 920 520 L 1000 520 L 1040 505 L 1080 520 
+           L 1080 570 L 0 570 Z" 
+        fill="#260408" opacity="0.65"/>
+</svg>

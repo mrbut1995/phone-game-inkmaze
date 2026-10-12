@@ -19,7 +19,7 @@ const ICON_PLAY := "res://assets/images-png/icons/icon_play.png"
 const ICON_CASTLE := "res://assets/images-png/icons/icon_castle.png"
 const ICON_SHOP := "res://assets/images-png/icons/icon_shop.png"
 const ICON_RANK := "res://assets/images-png/icons/icon_trophy.png"
-const ICON_BADGES := "res://assets/images/icons/icon_badge_medal.svg"
+const ICON_BADGES := "res://assets/images-png/icons/icon_badge_medal.png"
 const ICON_RULES := "res://assets/images-png/icons/icon_book.png"
 
 var layout: MainLayout = null

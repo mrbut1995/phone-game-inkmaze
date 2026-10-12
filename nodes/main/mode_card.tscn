@@ -76,12 +76,12 @@ corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
 [node name="ModeCard" type="Button" unique_id=1813699044]
-custom_minimum_size = Vector2(0, 132)
+custom_minimum_size = Vector2(0, 156)
 anchors_preset = -1
 anchor_right = 0.841
-anchor_bottom = 0.143
+anchor_bottom = 0.17
 offset_right = -0.14001465
-offset_bottom = 0.43998718
+offset_bottom = -24.40001
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_6t4cc")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_4xcjq")

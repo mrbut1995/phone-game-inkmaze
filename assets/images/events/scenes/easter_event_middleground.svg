@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Đồi cỏ mùa xuân tầng trung -->
+    <linearGradient id="easterMidHills" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#72D47E"/>
+      <stop offset="0.5" stop-color="#46B357"/>
+      <stop offset="1" stop-color="#288739"/>
+    </linearGradient>
+
+    <!-- Mẫu cây nở hoa mùa xuân -->
+    <g id="spring_tree">
+      <path d="M 0 45 L 0 15 M 0 25 L -8 10 M 0 20 L 8 8" stroke="#4E2B14" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="-12" cy="0" r="18" fill="#FFB7CE" opacity="0.9"/>
+      <circle cx="12" cy="0" r="18" fill="#FF85A1" opacity="0.9"/>
+      <circle cx="0" cy="-12" r="20" fill="#FFAEC0" opacity="0.95"/>
+      <circle cx="0" cy="-5" r="14" fill="#FFFFFF" opacity="0.75"/>
+    </g>
+
+    <!-- Mẫu cối xay gió đồng quê xa -->
+    <g id="rustic_windmill">
+      <polygon points="-8,40 8,40 5,0 -5,0" fill="#E8D5B5" stroke="#7A5636" stroke-width="1"/>
+      <polygon points="-6,0 6,0 0,-8" fill="#B24949"/>
+      <!-- Cánh quạt chữ X -->
+      <line x1="-22" y1="-22" x2="22" y2="22" stroke="#FFFFFF" stroke-width="2"/>
+      <line x1="-22" y1="22" x2="22" y2="-22" stroke="#FFFFFF" stroke-width="2"/>
+      <circle cx="0" cy="0" r="2.5" fill="#7A5636"/>
+    </g>
+  </defs>
+
+  <!-- TRIỀN ĐỒI CỎ MÙA XUÂN (Seamless: x=0 (y=530) và x=1080 (y=530)) -->
+  <path d="M 0 530 
+           Q 135 480 270 515 T 540 530 
+           Q 675 480 810 515 T 1080 530 
+           L 1080 670 L 0 670 Z" 
+        fill="url(#easterMidHills)"/>
+
+  <!-- ==================== CÂY CỎ & CỐI XAY GIÓ ĐỒNG QUÊ ==================== -->
+  <!-- Cối xay gió Hà Lan xa xăm (x = 380 & x = 920) -->
+  <g transform="translate(380, 485) scale(0.9)"><use href="#rustic_windmill"/></g>
+  <g transform="translate(920, 485) scale(0.9)"><use href="#rustic_windmill"/></g>
+
+  <!-- Rặng cây hoa xuân trên triền đồi -->
+  <g transform="translate(120, 485)"><use href="#spring_tree"/></g>
+  <g transform="translate(260, 500) scale(0.8)"><use href="#spring_tree"/></g>
+  <g transform="translate(480, 505) scale(0.85)"><use href="#spring_tree"/></g>
+  
+  <g transform="translate(660, 485)"><use href="#spring_tree"/></g>
+  <g transform="translate(800, 500) scale(0.8)"><use href="#spring_tree"/></g>
+  <g transform="translate(1020, 505) scale(0.85)"><use href="#spring_tree"/></g>
+
+  <!-- HÀNG RÀO GỖ TRẮNG XINH XẮN (Picket Fence) -->
+  <g stroke="#FFFFFF" stroke-linecap="round" opacity="0.95">
+    <!-- Cụm rào 1 (x ≈ 180 - 280) -->
+    <line x1="180" y1="540" x2="280" y2="535" stroke-width="2.5"/>
+    <line x1="180" y1="548" x2="280" y2="543" stroke-width="2.5"/>
+    <line x1="190" y1="532" x2="190" y2="556" stroke-width="3.5"/>
+    <line x1="215" y1="530" x2="215" y2="554" stroke-width="3.5"/>
+    <line x1="240" y1="528" x2="240" y2="552" stroke-width="3.5"/>
+    <line x1="265" y1="527" x2="265" y2="551" stroke-width="3.5"/>
+
+    <!-- Cụm rào 2 (Lặp bên phải, x ≈ 720 - 820) -->
+    <line x1="720" y1="540" x2="820" y2="535" stroke-width="2.5"/>
+    <line x1="720" y1="548" x2="820" y2="543" stroke-width="2.5"/>
+    <line x1="730" y1="532" x2="730" y2="556" stroke-width="3.5"/>
+    <line x1="755" y1="530" x2="755" y2="554" stroke-width="3.5"/>
+    <line x1="780" y1="528" x2="780" y2="552" stroke-width="3.5"/>
+    <line x1="805" y1="527" x2="805" y2="551" stroke-width="3.5"/>
+  </g>
+
+  <!-- BƯỚM XUÂN TẦNG TRUNG BAY LƯỢN -->
+  <g fill="#FF85A1">
+    <ellipse cx="320" cy="460" rx="6" ry="8" transform="rotate(-20 320 460)"/>
+    <ellipse cx="330" cy="460" rx="6" ry="8" transform="rotate(20 330 460)"/>
+    <ellipse cx="860" cy="460" rx="6" ry="8" transform="rotate(-20 860 460)"/>
+    <ellipse cx="870" cy="460" rx="6" ry="8" transform="rotate(20 870 460)"/>
+  </g>
+</svg>

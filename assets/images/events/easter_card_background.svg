@@ -1,0 +1,305 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
+  <defs>
+    <!-- ClipPath bo góc chuẩn 340x504 -->
+    <clipPath id="easterCardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+
+    <!-- Lưới ô ly mờ đồng bộ Design System -->
+    <pattern id="easterGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#2D6A4F" stroke-width="1" opacity="0.06"/>
+    </pattern>
+
+    <!-- Bầu trời mùa xuân pastel dịu mát -->
+    <linearGradient id="sky_easter" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE3F1"/>
+      <stop offset="0.4" stop-color="#D9EEFF"/>
+      <stop offset="0.8" stop-color="#E8F8EA"/>
+      <stop offset="1" stop-color="#FFF9D2"/>
+    </linearGradient>
+
+    <!-- Ánh mặt trời xuân ấm áp -->
+    <radialGradient id="springSunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFFDE0" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#FFF3A6" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#FFF3A6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Đồi cỏ phía xa -->
+    <linearGradient id="hillDistant" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#A7E8A2"/>
+      <stop offset="1" stop-color="#6BC97A"/>
+    </linearGradient>
+
+    <!-- Đồi cỏ tiền cảnh (Nền tương phản cho Text & UI) -->
+    <linearGradient id="meadowForeground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3FA85B"/>
+      <stop offset="0.3" stop-color="#2D8A46"/>
+      <stop offset="0.75" stop-color="#1E6B34"/>
+      <stop offset="1" stop-color="#144D24"/>
+    </linearGradient>
+
+    <!-- Gradient khối 3D cho các quả trứng -->
+    <radialGradient id="eggShade" cx="35%" cy="30%" r="65%">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="0.55" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.35"/>
+    </radialGradient>
+
+    <!-- Bóng đổ mềm trên cỏ -->
+    <radialGradient id="grassShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#134720" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#134720" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Mẫu hoa cúc họa mi trắng nhụy vàng -->
+    <g id="daisy_flower">
+      <ellipse cx="0" cy="-6" rx="2.4" ry="5.5" fill="#FFFFFF"/>
+      <ellipse cx="4.2" cy="-4.2" rx="2.4" ry="5.5" fill="#FFFFFF" transform="rotate(45 4.2 -4.2)"/>
+      <ellipse cx="6" cy="0" rx="2.4" ry="5.5" fill="#FFFFFF" transform="rotate(90 6 0)"/>
+      <ellipse cx="4.2" cy="4.2" rx="2.4" ry="5.5" fill="#FFFFFF" transform="rotate(135 4.2 4.2)"/>
+      <ellipse cx="0" cy="6" rx="2.4" ry="5.5" fill="#FFFFFF"/>
+      <ellipse cx="-4.2" cy="4.2" rx="2.4" ry="5.5" fill="#FFFFFF" transform="rotate(225 -4.2 4.2)"/>
+      <ellipse cx="-6" cy="0" rx="2.4" ry="5.5" fill="#FFFFFF" transform="rotate(270 -6 0)"/>
+      <ellipse cx="-4.2" cy="-4.2" rx="2.4" ry="5.5" fill="#FFFFFF" transform="rotate(315 -4.2 -4.2)"/>
+      <circle cx="0" cy="0" r="3.2" fill="#FFCA28"/>
+      <circle cx="0" cy="0" r="1.5" fill="#FFA000"/>
+    </g>
+  </defs>
+
+  <g clip-path="url(#easterCardClip)">
+    <!-- ============================================== -->
+    <!-- 1. BẦU TRỜI PASTEL & NẮNG XUÂN ẤM ÁP          -->
+    <!-- ============================================== -->
+    <rect width="340" height="504" fill="url(#sky_easter)"/>
+    <rect width="340" height="504" fill="url(#easterGrid)"/>
+
+    <!-- Vệt cầu vồng pastel nhẹ mờ ảo phía xa -->
+    <path d="M -20 180 A 180 180 0 0 1 300 30" stroke="#FF8FA3" stroke-width="3" fill="none" opacity="0.25"/>
+    <path d="M -20 184 A 180 180 0 0 1 300 34" stroke="#FFD166" stroke-width="3" fill="none" opacity="0.25"/>
+    <path d="M -20 188 A 180 180 0 0 1 300 38" stroke="#06D6A0" stroke-width="3" fill="none" opacity="0.25"/>
+    <path d="M -20 192 A 180 180 0 0 1 300 42" stroke="#118AB2" stroke-width="3" fill="none" opacity="0.25"/>
+
+    <!-- Mặt trời mùa xuân dịu dàng -->
+    <circle cx="68" cy="95" r="85" fill="url(#springSunGlow)"/>
+    <circle cx="68" cy="95" r="28" fill="#FFF275"/>
+
+    <!-- Những đám mây trắng xốp trôi lững lờ -->
+    <g transform="translate(245, 88) scale(0.9)" fill="#FFFFFF" fill-opacity="0.95">
+      <ellipse cx="0" cy="0" rx="28" ry="13"/>
+      <circle cx="-13" cy="-8" r="13"/>
+      <circle cx="7" cy="-14" r="16"/>
+      <circle cx="22" cy="-4" r="11"/>
+    </g>
+    <g transform="translate(145, 66) scale(0.6)" fill="#FFFFFF" fill-opacity="0.9">
+      <ellipse cx="0" cy="0" rx="28" ry="13"/>
+      <circle cx="-13" cy="-8" r="13"/>
+      <circle cx="7" cy="-14" r="16"/>
+      <circle cx="22" cy="-4" r="11"/>
+    </g>
+
+    <!-- Đốm sáng lấp lánh (Sparkles) -->
+    <path d="M 32 145 Q 32 150 37 150 Q 32 150 32 155 Q 32 150 27 150 Q 32 150 32 145 Z" fill="#FFFFFF" fill-opacity="0.95"/>
+    <path d="M 125 125 Q 125 129 129 129 Q 125 129 125 133 Q 125 129 121 129 Q 125 129 125 125 Z" fill="#FFFFFF" fill-opacity="0.9"/>
+    <path d="M 190 105 Q 190 109 194 109 Q 190 109 190 113 Q 190 109 186 109 Q 190 109 190 105 Z" fill="#FFFFFF" fill-opacity="0.9"/>
+
+    <!-- Cánh bướm xuân chao lượn -->
+    <g transform="translate(142, 115) scale(0.85)">
+      <ellipse cx="-8" cy="-5" rx="9" ry="11" fill="#FF85A1" transform="rotate(-25 -8 -5)"/>
+      <ellipse cx="8" cy="-5" rx="9" ry="11" fill="#FF85A1" transform="rotate(25 8 -5)"/>
+      <ellipse cx="-6" cy="7" rx="6" ry="7.5" fill="#FFD166" transform="rotate(20 -6 7)"/>
+      <ellipse cx="6" cy="7" rx="6" ry="7.5" fill="#FFD166" transform="rotate(-20 6 7)"/>
+      <circle cx="0" cy="1" r="2.5" fill="#4A154B"/>
+      <line x1="0" y1="0" x2="-5" y2="-12" stroke="#4A154B" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="0" y1="0" x2="5" y2="-12" stroke="#4A154B" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+
+    <!-- ============================================== -->
+    <!-- 2. ĐỒI CỎ XA & RỪNG CÂY MÙA XUÂN               -->
+    <!-- ============================================== -->
+    <path d="M 0 216 Q 80 180 170 205 T 340 195 L 340 280 L 0 280 Z" fill="url(#hillDistant)"/>
+    <path d="M 0 236 Q 90 204 185 224 T 340 215 L 340 280 L 0 280 Z" fill="#58BA6B"/>
+
+    <!-- ============================================== -->
+    <!-- 3. CHÚ THỎ PHỤC SINH 3D ĐÁNG YÊU (EASTER BUNNY) -->
+    <!-- ============================================== -->
+    <g transform="translate(232, 118)">
+      <!-- Bóng đổ thân thỏ -->
+      <ellipse cx="18" cy="120" rx="36" ry="12" fill="url(#grassShadow)"/>
+
+      <!-- Đôi tai thỏ dài mềm mại -->
+      <!-- Tai trái -->
+      <g transform="rotate(-14 4 10)">
+        <ellipse cx="4" cy="10" rx="9.5" ry="32" fill="#FFFFFF" stroke="#F0D3E2" stroke-width="1.8"/>
+        <ellipse cx="4" cy="12" rx="4.8" ry="22" fill="#FFB7CE"/>
+      </g>
+      <!-- Tai phải gấp nhẹ dễ thương -->
+      <g transform="rotate(16 32 6)">
+        <ellipse cx="32" cy="6" rx="9.5" ry="32" fill="#FFFFFF" stroke="#F0D3E2" stroke-width="1.8"/>
+        <ellipse cx="32" cy="8" rx="4.8" ry="22" fill="#FFB7CE"/>
+      </g>
+
+      <!-- Thân thỏ tròn xoe -->
+      <ellipse cx="18" cy="92" rx="34" ry="28" fill="#FFFFFF" stroke="#F0D3E2" stroke-width="1.8"/>
+
+      <!-- Đầu thỏ bầu bĩnh -->
+      <ellipse cx="18" cy="48" rx="28" ry="24" fill="#FFFFFF" stroke="#F0D3E2" stroke-width="1.8"/>
+
+      <!-- Đôi mắt long lanh anime -->
+      <ellipse cx="8" cy="45" rx="3.5" ry="4.5" fill="#36222F"/>
+      <circle cx="7" cy="43.5" r="1.4" fill="#FFFFFF"/>
+      <circle cx="9.5" cy="46.5" r="0.7" fill="#FFFFFF"/>
+
+      <ellipse cx="28" cy="45" rx="3.5" ry="4.5" fill="#36222F"/>
+      <circle cx="27" cy="43.5" r="1.4" fill="#FFFFFF"/>
+      <circle cx="29.5" cy="46.5" r="0.7" fill="#FFFFFF"/>
+
+      <!-- Mũi hồng & Miệng chúm chím -->
+      <ellipse cx="18" cy="53" rx="3.8" ry="2.6" fill="#FF85A1"/>
+      <path d="M 18 55 Q 18 60 13 60 M 18 55 Q 18 60 23 60" stroke="#36222F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+      <!-- Má hồng ửng đào -->
+      <circle cx="2" cy="54" r="5.5" fill="#FFB7CE" opacity="0.6"/>
+      <circle cx="34" cy="54" r="5.5" fill="#FFB7CE" opacity="0.6"/>
+
+      <!-- Nơ bướm lụa pastel quanh cổ thỏ -->
+      <g transform="translate(18, 70)">
+        <polygon points="-11,-6 0,-1 -11,4" fill="#FF70A6"/>
+        <polygon points="11,-6 0,-1 11,4" fill="#FF70A6"/>
+        <circle cx="0" cy="-1" r="3.2" fill="#FFD166"/>
+      </g>
+
+      <!-- Hai bàn chân trước ôm ngực -->
+      <ellipse cx="6" cy="85" rx="7.5" ry="10" fill="#FFFFFF" stroke="#F0D3E2" stroke-width="1.5" transform="rotate(20 6 85)"/>
+      <ellipse cx="30" cy="85" rx="7.5" ry="10" fill="#FFFFFF" stroke="#F0D3E2" stroke-width="1.5" transform="rotate(-20 30 85)"/>
+
+      <!-- Hai bàn chân sau mũm mĩm -->
+      <ellipse cx="4" cy="114" rx="10" ry="7.5" fill="#FFFFFF" stroke="#F0D3E2" stroke-width="1.5"/>
+      <ellipse cx="32" cy="114" rx="10" ry="7.5" fill="#FFFFFF" stroke="#F0D3E2" stroke-width="1.5"/>
+    </g>
+
+    <!-- ============================================== -->
+    <!-- 4. NHỮNG QUẢ TRỨNG PHỤC SINH 3D RỰC RỠ       -->
+    <!-- (Xếp nép bên trái và xung quanh chú thỏ)       -->
+    <!-- ============================================== -->
+    <!-- TRỨNG 1: Trứng hồng phấn kẻ sọc zig-zag lớn (Bên trái, x = 60, y = 205) -->
+    <g transform="translate(58, 192)">
+      <!-- Bóng đổ quả trứng trên cỏ -->
+      <ellipse cx="0" cy="28" rx="20" ry="6" fill="url(#grassShadow)"/>
+      <g>
+        <clipPath id="eggClip1">
+          <ellipse cx="0" cy="5" rx="19" ry="25"/>
+        </clipPath>
+        <!-- Nền quả trứng -->
+        <ellipse cx="0" cy="5" rx="19" ry="25" fill="#FF85A1"/>
+        <!-- Hoa văn bên trong -->
+        <g clip-path="url(#eggClip1)">
+          <rect x="-25" y="-12" width="50" height="8" fill="#FFF0F5"/>
+          <path d="M -22 6 L -14 0 L -6 6 L 2 0 L 10 6 L 18 0 L 26 6" stroke="#FFE082" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M -22 13 L -14 7 L -6 13 L 2 7 L 10 13 L 18 7 L 26 13" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="-12" cy="22" r="3" fill="#48CAE4"/>
+          <circle cx="0" cy="22" r="3" fill="#FFD166"/>
+          <circle cx="12" cy="22" r="3" fill="#48CAE4"/>
+          <!-- Shading 3D & Specular Highlight -->
+          <ellipse cx="0" cy="5" rx="19" ry="25" fill="url(#eggShade)"/>
+          <ellipse cx="-7" cy="-5" rx="5" ry="9" fill="#FFFFFF" opacity="0.6" transform="rotate(-25 -7 -5)"/>
+        </g>
+        <ellipse cx="0" cy="5" rx="19" ry="25" fill="none" stroke="#000000" stroke-opacity="0.1" stroke-width="1"/>
+      </g>
+    </g>
+
+    <!-- TRỨNG 2: Trứng xanh Cyan chấm bi vàng (x = 108, y = 215) -->
+    <g transform="translate(108, 208) scale(0.85)">
+      <ellipse cx="0" cy="26" rx="18" ry="5.5" fill="url(#grassShadow)"/>
+      <g>
+        <clipPath id="eggClip2">
+          <ellipse cx="0" cy="5" rx="16" ry="22"/>
+        </clipPath>
+        <ellipse cx="0" cy="5" rx="16" ry="22" fill="#48CAE4"/>
+        <g clip-path="url(#eggClip2)">
+          <circle cx="-7" cy="-6" r="3.2" fill="#FFF3A6"/>
+          <circle cx="6" cy="-8" r="3.2" fill="#FFFFFF"/>
+          <circle cx="-2" cy="3" r="3.5" fill="#FF85A1"/>
+          <circle cx="-9" cy="14" r="3.2" fill="#FFFFFF"/>
+          <circle cx="7" cy="12" r="3.2" fill="#FFF3A6"/>
+          <ellipse cx="0" cy="5" rx="16" ry="22" fill="url(#eggShade)"/>
+          <ellipse cx="-6" cy="-4" rx="4" ry="7" fill="#FFFFFF" opacity="0.6" transform="rotate(-25 -6 -4)"/>
+        </g>
+        <ellipse cx="0" cy="5" rx="16" ry="22" fill="none" stroke="#000000" stroke-opacity="0.1" stroke-width="1"/>
+      </g>
+    </g>
+
+    <!-- TRỨNG 3: Trứng tím hoa cà pastel (Cạnh thỏ, x = 168, y = 222) -->
+    <g transform="translate(168, 218) scale(0.78)">
+      <ellipse cx="0" cy="25" rx="17" ry="5" fill="url(#grassShadow)"/>
+      <g>
+        <clipPath id="eggClip3">
+          <ellipse cx="0" cy="5" rx="16" ry="21"/>
+        </clipPath>
+        <ellipse cx="0" cy="5" rx="16" ry="21" fill="#BDB2FF"/>
+        <g clip-path="url(#eggClip3)">
+          <rect x="-20" y="-4" width="40" height="7" fill="#FFC6FF"/>
+          <rect x="-20" y="8" width="40" height="7" fill="#FDFFB6"/>
+          <ellipse cx="0" cy="5" rx="16" ry="21" fill="url(#eggShade)"/>
+          <ellipse cx="-5" cy="-3" rx="4" ry="7" fill="#FFFFFF" opacity="0.6" transform="rotate(-25 -5 -3)"/>
+        </g>
+        <ellipse cx="0" cy="5" rx="16" ry="21" fill="none" stroke="#000000" stroke-opacity="0.1" stroke-width="1"/>
+      </g>
+    </g>
+
+    <!-- TRỨNG 4: Trứng vàng nghệ nhỏ rìa phải (x = 308, y = 224) -->
+    <g transform="translate(308, 222) scale(0.75)">
+      <ellipse cx="0" cy="24" rx="16" ry="5" fill="url(#grassShadow)"/>
+      <g>
+        <clipPath id="eggClip4">
+          <ellipse cx="0" cy="5" rx="15" ry="20"/>
+        </clipPath>
+        <ellipse cx="0" cy="5" rx="15" ry="20" fill="#FFD166"/>
+        <g clip-path="url(#eggClip4)">
+          <circle cx="0" cy="5" r="8" fill="#FF9F1C"/>
+          <circle cx="0" cy="5" r="4" fill="#FFFFFF"/>
+          <ellipse cx="0" cy="5" rx="15" ry="20" fill="url(#eggShade)"/>
+          <ellipse cx="-5" cy="-3" rx="3.5" ry="6.5" fill="#FFFFFF" opacity="0.6" transform="rotate(-25 -5 -3)"/>
+        </g>
+        <ellipse cx="0" cy="5" rx="15" ry="20" fill="none" stroke="#000000" stroke-opacity="0.1" stroke-width="1"/>
+      </g>
+    </g>
+
+    <!-- BỤI CỎ NON XANH TƯƠI CHE CHÂN TRỨNG -->
+    <g fill="#52B766">
+      <path d="M 38 226 Q 42 210 46 226 Z"/>
+      <path d="M 44 227 Q 50 208 55 227 Z"/>
+      <path d="M 72 228 Q 78 212 84 228 Z"/>
+      <path d="M 94 230 Q 98 214 104 230 Z"/>
+      <path d="M 148 232 Q 154 218 160 232 Z"/>
+      <path d="M 292 233 Q 296 218 302 233 Z"/>
+    </g>
+
+    <!-- HOA CÚC HỌA MI ĐẦU MÙA VEN BỜ ĐỒI -->
+    <g transform="translate(32, 230) scale(0.85)"><use href="#daisy_flower"/></g>
+    <g transform="translate(138, 235) scale(0.7)"><use href="#daisy_flower"/></g>
+    <g transform="translate(322, 234) scale(0.8)"><use href="#daisy_flower"/></g>
+
+    <!-- ============================================== -->
+    <!-- 5. ĐỒI CỎ MÙA XUÂN (SAFE ZONE: y ≈ 244–504)    -->
+    <!-- Nền xanh ngọc đậm mượt mà, phẳng & tương phản cao-->
+    <!-- ============================================== -->
+    <path d="M 0 244 Q 85 220 175 242 T 340 234 L 340 504 L 0 504 Z" fill="url(#meadowForeground)"/>
+
+    <!-- Dải viền cỏ sáng rực ánh xuân ngăn cách hai vùng -->
+    <path d="M 0 244 Q 85 220 175 242 T 340 234" fill="none" stroke="#B8F2A6" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 0 249 Q 85 225 175 247 T 340 239" fill="none" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="1.8"/>
+
+    <!-- ============================================== -->
+    <!-- 6. VÙNG AN TOÀN TRỐNG (SAFE ZONE TUYỆT ĐỐI)   -->
+    <!-- Dành riêng để inject dữ liệu thẻ sự kiện:      -->
+    <!-- - Tiêu đề Lễ Phục Sinh (y: 260 - 310)          -->
+    <!-- - Phụ đề 2 dòng       (y: 325 - 350)          -->
+    <!-- - Hộp tiến độ & 2 quà (y: 356 - 438)          -->
+    <!-- - Nút CTA hành động   (y: 448 - 494)          -->
+    <!-- ============================================== -->
+  </g>
+
+  <!-- Viền highlight sang trọng bo tròn toàn thẻ -->
+  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.65" stroke-width="3"/>
+</svg>

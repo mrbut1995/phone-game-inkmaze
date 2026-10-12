@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Bầu trời đêm giao thừa huyền bí chuyển sắc 4 nấc -->
+    <linearGradient id="nySkyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#050826"/>
+      <stop offset="0.35" stop-color="#120E3E"/>
+      <stop offset="0.68" stop-color="#241454"/>
+      <stop offset="1" stop-color="#3A1A68"/>
+    </linearGradient>
+
+    <!-- Hào quang pháo hoa vàng kim -->
+    <radialGradient id="nyFwGold" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFF9C4" stop-opacity="1"/>
+      <stop offset="0.45" stop-color="#FFD54F" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#FF6F00" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Hào quang pháo hoa hồng neon -->
+    <radialGradient id="nyFwPink" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFD1EC" stop-opacity="1"/>
+      <stop offset="0.45" stop-color="#FF4081" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#C2185B" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Hào quang pháo hoa xanh Cyan neon -->
+    <radialGradient id="nyFwCyan" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#E0F7FA" stop-opacity="1"/>
+      <stop offset="0.45" stop-color="#00E5FF" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#0097A7" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Luồng đèn pha Searchlight quét trời đêm -->
+    <linearGradient id="searchlightBeam" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#00E5FF" stop-opacity="0.35"/>
+      <stop offset="0.7" stop-color="#00E5FF" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#00E5FF" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Đường chân trời xa xăm -->
+    <linearGradient id="nyDistantSkyline" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#161245"/>
+      <stop offset="1" stop-color="#080922"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Nền trời đêm bao phủ toàn canvas -->
+  <rect width="1080" height="960" fill="url(#nySkyGrad)"/>
+
+  <!-- ==================== CÁC LUỒNG ĐÈN LASER QUÉT TRỜI ==================== -->
+  <g>
+    <!-- Luồng quét bên trái -->
+    <polygon points="180,510 110,60 210,60" fill="url(#searchlightBeam)" transform="rotate(-15 180 510)"/>
+    <polygon points="340,510 320,40 400,40" fill="url(#searchlightBeam)" transform="rotate(18 340 510)"/>
+    <!-- Luồng quét lặp chu kỳ bên phải -->
+    <polygon points="720,510 650,60 750,60" fill="url(#searchlightBeam)" transform="rotate(-15 720 510)"/>
+    <polygon points="880,510 860,40 940,40" fill="url(#searchlightBeam)" transform="rotate(18 880 510)"/>
+  </g>
+
+  <!-- ==================== MÀN PHÁO HOA ĐẠI BÁC GIAO THỪA ==================== -->
+  <!-- PHÁO HOA VÀNG KIM LỚN (x = 240, y = 170) -->
+  <g transform="translate(240, 170)">
+    <circle cx="0" cy="0" r="62" fill="url(#nyFwGold)"/>
+    <g stroke="#FFD54F" stroke-width="2.5" stroke-linecap="round">
+      <line x1="0" y1="-14" x2="0" y2="-52"/><circle cx="0" cy="-56" r="2.8" fill="#FFF9C4"/>
+      <line x1="10" y1="-10" x2="38" y2="-38"/><circle cx="41" cy="-41" r="2.8" fill="#FFF9C4"/>
+      <line x1="14" y1="0" x2="52" y2="0"/><circle cx="56" cy="0" r="2.8" fill="#FFF9C4"/>
+      <line x1="10" y1="10" x2="38" y2="38"/><circle cx="41" cy="41" r="2.8" fill="#FFF9C4"/>
+      <line x1="0" y1="14" x2="0" y2="52"/><circle cx="0" cy="56" r="2.8" fill="#FFF9C4"/>
+      <line x1="-10" y1="10" x2="-38" y2="38"/><circle cx="-41" cy="41" r="2.8" fill="#FFF9C4"/>
+      <line x1="-14" y1="0" x2="-52" y2="0"/><circle cx="-56" cy="0" r="2.8" fill="#FFF9C4"/>
+      <line x1="-10" y1="-10" x2="-38" y2="-38"/><circle cx="-41" cy="-41" r="2.8" fill="#FFF9C4"/>
+    </g>
+  </g>
+
+  <!-- PHÁO HOA HỒNG NEON (x = 480, y = 150) -->
+  <g transform="translate(480, 150) scale(1.1)">
+    <circle cx="0" cy="0" r="55" fill="url(#nyFwPink)"/>
+    <g stroke="#FF4081" stroke-width="2.5" stroke-linecap="round">
+      <line x1="0" y1="-12" x2="0" y2="-48"/><circle cx="0" cy="-51" r="2.8" fill="#FFFFFF"/>
+      <line x1="9" y1="-9" x2="34" y2="-34"/><circle cx="37" cy="-37" r="2.8" fill="#FFFFFF"/>
+      <line x1="12" y1="0" x2="48" y2="0"/><circle cx="51" cy="0" r="2.8" fill="#FFFFFF"/>
+      <line x1="9" y1="9" x2="34" y2="34"/><circle cx="37" cy="37" r="2.8" fill="#FFFFFF"/>
+      <line x1="0" y1="12" x2="0" y2="48"/><circle cx="0" cy="51" r="2.8" fill="#FFFFFF"/>
+      <line x1="-9" y1="9" x2="-34" y2="34"/><circle cx="-37" cy="37" r="2.8" fill="#FFFFFF"/>
+      <line x1="-12" y1="0" x2="-48" y2="0"/><circle cx="-51" cy="0" r="2.8" fill="#FFFFFF"/>
+      <line x1="-9" y1="-9" x2="-34" y2="-34"/><circle cx="-37" cy="-37" r="2.8" fill="#FFFFFF"/>
+    </g>
+  </g>
+
+  <!-- PHÁO HOA CYAN NEON (x = 360, y = 260) -->
+  <g transform="translate(360, 260) scale(0.85)">
+    <circle cx="0" cy="0" r="50" fill="url(#nyFwCyan)"/>
+    <g stroke="#00E5FF" stroke-width="2.2" stroke-linecap="round">
+      <line x1="0" y1="-10" x2="0" y2="-42"/><circle cx="0" cy="-45" r="2.5" fill="#FFFFFF"/>
+      <line x1="8" y1="-8" x2="30" y2="-30"/><circle cx="33" cy="-33" r="2.5" fill="#FFFFFF"/>
+      <line x1="10" y1="0" x2="42" y2="0"/><circle cx="45" cy="0" r="2.5" fill="#FFFFFF"/>
+      <line x1="8" y1="8" x2="30" y2="30"/><circle cx="33" cy="33" r="2.5" fill="#FFFFFF"/>
+      <line x1="0" y1="10" x2="0" y2="42"/><circle cx="0" cy="45" r="2.5" fill="#FFFFFF"/>
+      <line x1="-8" y1="8" x2="-30" y2="30"/><circle cx="-33" cy="33" r="2.5" fill="#FFFFFF"/>
+      <line x1="-10" y1="0" x2="-42" y2="0"/><circle cx="-45" cy="0" r="2.5" fill="#FFFFFF"/>
+      <line x1="-8" y1="-8" x2="-30" y2="-30"/><circle cx="-33" cy="-33" r="2.5" fill="#FFFFFF"/>
+    </g>
+  </g>
+
+  <!-- PHÁO HOA LẶP CHU KỲ BÊN PHẢI (x = 780, y = 170 & x = 1020, y = 150) -->
+  <g transform="translate(780, 170)">
+    <circle cx="0" cy="0" r="62" fill="url(#nyFwGold)"/>
+    <g stroke="#FFD54F" stroke-width="2.5" stroke-linecap="round">
+      <line x1="0" y1="-14" x2="0" y2="-52"/><circle cx="0" cy="-56" r="2.8" fill="#FFF9C4"/>
+      <line x1="10" y1="-10" x2="38" y2="-38"/><circle cx="41" cy="-41" r="2.8" fill="#FFF9C4"/>
+      <line x1="14" y1="0" x2="52" y2="0"/><circle cx="56" cy="0" r="2.8" fill="#FFF9C4"/>
+      <line x1="10" y1="10" x2="38" y2="38"/><circle cx="41" cy="41" r="2.8" fill="#FFF9C4"/>
+      <line x1="0" y1="14" x2="0" y2="52"/><circle cx="0" cy="56" r="2.8" fill="#FFF9C4"/>
+      <line x1="-10" y1="10" x2="-38" y2="38"/><circle cx="-41" cy="41" r="2.8" fill="#FFF9C4"/>
+      <line x1="-14" y1="0" x2="-52" y2="0"/><circle cx="-56" cy="0" r="2.8" fill="#FFF9C4"/>
+      <line x1="-10" y1="-10" x2="-38" y2="-38"/><circle cx="-41" cy="-41" r="2.8" fill="#FFF9C4"/>
+    </g>
+  </g>
+  <g transform="translate(1020, 150) scale(1.1)">
+    <circle cx="0" cy="0" r="55" fill="url(#nyFwPink)"/>
+    <g stroke="#FF4081" stroke-width="2.5" stroke-linecap="round">
+      <line x1="0" y1="-12" x2="0" y2="-48"/><circle cx="0" cy="-51" r="2.8" fill="#FFFFFF"/>
+      <line x1="9" y1="-9" x2="34" y2="-34"/><circle cx="37" cy="-37" r="2.8" fill="#FFFFFF"/>
+      <line x1="12" y1="0" x2="48" y2="0"/><circle cx="51" cy="0" r="2.8" fill="#FFFFFF"/>
+      <line x1="9" y1="9" x2="34" y2="34"/><circle cx="37" cy="37" r="2.8" fill="#FFFFFF"/>
+      <line x1="0" y1="12" x2="0" y2="48"/><circle cx="0" cy="51" r="2.8" fill="#FFFFFF"/>
+      <line x1="-9" y1="9" x2="-34" y2="34"/><circle cx="-37" cy="37" r="2.8" fill="#FFFFFF"/>
+      <line x1="-12" y1="0" x2="-48" y2="0"/><circle cx="-51" cy="0" r="2.8" fill="#FFFFFF"/>
+      <line x1="-9" y1="-9" x2="-34" y2="-34"/><circle cx="-37" cy="-37" r="2.8" fill="#FFFFFF"/>
+    </g>
+  </g>
+
+  <!-- Đốm sao sáng li ti phủ khắp nền trời -->
+  <g fill="#FFFFFF" opacity="0.9">
+    <circle cx="80" cy="140" r="1.8"/><circle cx="160" cy="90" r="2"/><circle cx="320" cy="110" r="1.8"/>
+    <circle cx="620" cy="140" r="1.8"/><circle cx="700" cy="90" r="2"/><circle cx="860" cy="110" r="1.8"/>
+  </g>
+
+  <!-- ĐƯỜNG CHÂN TRỜI: CAO ỐC XA XĂM & CẦU DÂY VĂNG THÀNH PHỐ -->
+  <!-- Seamless: Khớp nối tại x=0 và x=1080 ở y=510 -->
+  <path d="M 0 510 
+           L 40 510 L 40 460 L 70 460 L 70 510 L 120 510 
+           L 140 440 L 160 410 L 180 440 L 200 510 L 260 510 
+           L 280 470 L 320 470 L 340 510 L 420 510 L 450 480 L 480 510 L 540 510 
+           L 580 510 L 580 460 L 610 460 L 610 510 L 660 510 
+           L 680 440 L 700 410 L 720 440 L 740 510 L 800 510 
+           L 820 470 L 860 470 L 880 510 L 960 510 L 990 480 L 1020 510 L 1080 510 
+           L 1080 580 L 0 580 Z" 
+        fill="url(#nyDistantSkyline)" opacity="0.75"/>
+</svg>

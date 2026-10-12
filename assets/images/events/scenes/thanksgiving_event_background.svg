@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Bầu trời hoàng hôn mùa thu hoạch ấm áp -->
+    <linearGradient id="tgSkyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFCF8A"/>
+      <stop offset="0.35" stop-color="#F29D44"/>
+      <stop offset="0.7" stop-color="#BA541E"/>
+      <stop offset="1" stop-color="#59230E"/>
+    </linearGradient>
+
+    <!-- Quầng vầng dương mùa thu hoạch -->
+    <radialGradient id="tgSunAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFF8DE" stop-opacity="1"/>
+      <stop offset="0.45" stop-color="#FFD67A" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#FF9E42" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Dãy đồi rừng phong mờ xa chân trời -->
+    <linearGradient id="tgDistantHills" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8F3E18"/>
+      <stop offset="1" stop-color="#4F1E0B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Nền trời mùa thu hoạch bao phủ toàn canvas -->
+  <rect width="1080" height="960" fill="url(#tgSkyGrad)"/>
+
+  <!-- ==================== VẦNG DƯƠNG MÙA GẶT ẤM ÁP ==================== -->
+  <!-- Mặt trời 1 (x = 360, y = 200) -->
+  <circle cx="360" cy="200" r="120" fill="url(#tgSunAura)"/>
+  <circle cx="360" cy="200" r="44" fill="#FFF2BD"/>
+
+  <!-- Mặt trời lặp chu kỳ đối ứng bên phải (x = 900) -->
+  <circle cx="900" cy="200" r="120" fill="url(#tgSunAura)"/>
+  <circle cx="900" cy="200" r="44" fill="#FFF2BD"/>
+
+  <!-- Mây ráng chiều ửng vàng mật ong (Chu kỳ 540px) -->
+  <g fill="#FFF3E0" fill-opacity="0.85">
+    <g transform="translate(150, 160) scale(1.15)">
+      <ellipse cx="0" cy="0" rx="36" ry="16"/><circle cx="-16" cy="-9" r="15"/><circle cx="10" cy="-14" r="18"/><circle cx="28" cy="-5" r="13"/>
+    </g>
+    <g transform="translate(690, 150) scale(1.15)">
+      <ellipse cx="0" cy="0" rx="36" ry="16"/><circle cx="-16" cy="-9" r="15"/><circle cx="10" cy="-14" r="18"/><circle cx="28" cy="-5" r="13"/>
+    </g>
+    <g transform="translate(460, 240) scale(0.75)" fill-opacity="0.7">
+      <ellipse cx="0" cy="0" rx="32" ry="12"/><circle cx="-13" cy="-7" r="13"/><circle cx="8" cy="-9" r="15"/>
+    </g>
+    <g transform="translate(1000, 230) scale(0.75)" fill-opacity="0.7">
+      <ellipse cx="0" cy="0" rx="32" ry="12"/><circle cx="-13" cy="-7" r="13"/><circle cx="8" cy="-9" r="15"/>
+    </g>
+  </g>
+
+  <!-- Đàn ngỗng trời bay về phương nam tránh rét -->
+  <g stroke="#54200D" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.85">
+    <path d="M 230 230 Q 238 220 246 230 M 246 230 Q 254 220 262 230"/>
+    <path d="M 268 245 Q 275 238 282 245 M 282 245 Q 289 238 296 245"/>
+    <path d="M 302 262 Q 308 255 314 262 M 314 262 Q 320 255 326 262"/>
+    <path d="M 770 220 Q 778 210 786 220 M 786 220 Q 794 210 802 220"/>
+    <path d="M 808 235 Q 815 228 822 235 M 822 235 Q 829 228 836 235"/>
+  </g>
+
+  <!-- ĐƯỜNG CHÂN TRỜI: RỪNG PHONG MỜ XA TRONG NẮNG CHIỀU -->
+  <!-- Seamless: Khớp nối tại x=0 và x=1080 ở y=510 -->
+  <path d="M 0 510 
+           Q 90 465 180 490 Q 260 515 340 480 Q 440 450 540 510 
+           Q 630 465 720 490 Q 800 515 880 480 Q 980 450 1080 510 
+           L 1080 580 L 0 580 Z" 
+        fill="url(#tgDistantHills)" opacity="0.7"/>
+</svg>

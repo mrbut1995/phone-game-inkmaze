@@ -1,10 +1,10 @@
 [gd_resource type="Theme" format=3 uid="uid://tgkncqeoxj2g"]
 
-[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Black.ttf" id="1_black"]
-[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-ExtraBold.ttf" id="2_xbold"]
-[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Bold.ttf" id="3_bold"]
-[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-SemiBold.ttf" id="4_semibold"]
-[ext_resource type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-SemiBoldItalic.ttf" id="6_sbitalic"]
+[ext_resource uid="uid://i8w4kewq1j3" type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Black.ttf" id="1_black"]
+[ext_resource uid="uid://p1fc40cda2vk" type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-ExtraBold.ttf" id="2_xbold"]
+[ext_resource uid="uid://op7o2oudfc2g" type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Bold.ttf" id="3_bold"]
+[ext_resource uid="uid://chl28gl8r6dmd" type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-SemiBold.ttf" id="4_semibold"]
+[ext_resource uid="uid://bdkw8m4akrunb" type="FontFile" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-SemiBoldItalic.ttf" id="6_sbitalic"]
 
 [resource]
 AchBadgesStamp/base_type = &"Label"

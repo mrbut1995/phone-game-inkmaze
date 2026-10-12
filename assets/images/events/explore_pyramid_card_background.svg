@@ -1,67 +1,180 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
   <defs>
-    <!-- Pattern lưới tối màu đặc trưng của tomb -->
-    <pattern id="gd" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#163A58" stroke-width="1" opacity="0.07"/>
-    </pattern>
-
-    <!-- Gradient sa mạc & hoàng hôn kim tự tháp -->
-    <linearGradient id="bg_tomb" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FFE2A0"/>
-      <stop offset="0.45" stop-color="#E7A95A"/>
-      <stop offset="1" stop-color="#3A210E"/>
-    </linearGradient>
-
-    <!-- Ánh trăng sa mạc tỏa sáng -->
-    <radialGradient id="moonGlow">
-      <stop offset="0" stop-color="#FFE9A8" stop-opacity="0.55"/>
-      <stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/>
-    </radialGradient>
-
-    <!-- ClipPath bo góc chuẩn card 340x504 -->
+    <!-- Khung bo góc chuẩn thẻ sự kiện 340x504 -->
     <clipPath id="cardClip">
       <rect width="340" height="504" rx="28"/>
     </clipPath>
+
+    <!-- Vân lưới mờ nhận diện Design System -->
+    <pattern id="gd" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFE9A8" stroke-width="1" opacity="0.08"/>
+    </pattern>
+
+    <!-- Nền trời hoàng hôn sa mạc huyền bí -->
+    <linearGradient id="bg_tomb_sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE6A8"/>
+      <stop offset="0.38" stop-color="#EAA858"/>
+      <stop offset="0.75" stop-color="#9C5220"/>
+      <stop offset="1" stop-color="#4E230B"/>
+    </linearGradient>
+
+    <!-- Ánh trăng tròn sa mạc tỏa sáng -->
+    <radialGradient id="desertMoonGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFFBE3" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#FFE9A8" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#E7A95A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Vàng kim loại Ai Cập cổ đại (Egyptian Gold Foil) -->
+    <linearGradient id="egyptGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF4BD"/>
+      <stop offset="0.35" stop-color="#F2C14E"/>
+      <stop offset="0.7" stop-color="#D49424"/>
+      <stop offset="1" stop-color="#8C5807"/>
+    </linearGradient>
+
+    <!-- Khối đá kim tự tháp hứng sáng -->
+    <linearGradient id="pyramidLit" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F5B25D"/>
+      <stop offset="0.6" stop-color="#D9802B"/>
+      <stop offset="1" stop-color="#B86018"/>
+    </linearGradient>
+
+    <!-- Khối đá kim tự tháp đổ bóng -->
+    <linearGradient id="pyramidShadow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#853E0F"/>
+      <stop offset="0.6" stop-color="#5E2606"/>
+      <stop offset="1" stop-color="#3D1502"/>
+    </linearGradient>
+
+    <!-- Nền cát lăng mộ tối phẳng (Vùng an toàn cho chữ) -->
+    <linearGradient id="tombSoil" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3D210E"/>
+      <stop offset="0.3" stop-color="#2D1608"/>
+      <stop offset="0.75" stop-color="#1E0D03"/>
+      <stop offset="1" stop-color="#120701"/>
+    </linearGradient>
+
+    <!-- Biểu tượng Ankh mạ vàng chạm ngọc Lapis Lazuli -->
+    <g id="golden_ankh_symbol">
+      <!-- Thân Ankh đúc vàng -->
+      <path d="M 0 -22 C 7 -22, 12 -16, 12 -9 C 12 -1, 4 3, 4 9 L -4 9 C -4 3, -12 -1, -12 -9 C -12 -16, -7 -22, 0 -22 Z" 
+            fill="url(#egyptGold)" stroke="#4A2600" stroke-width="1.2"/>
+      <ellipse cx="0" cy="-9" rx="5" ry="7" fill="#2E1505"/>
+      <rect x="-16" y="9" width="32" height="7" rx="2" fill="url(#egyptGold)" stroke="#4A2600" stroke-width="1.2"/>
+      <rect x="-4.5" y="16" width="9" height="26" rx="2" fill="url(#egyptGold)" stroke="#4A2600" stroke-width="1.2"/>
+      <!-- Viên ngọc lam Lapis Lazuli khảm giữa ngực -->
+      <circle cx="0" cy="12.5" r="2.8" fill="#1E88E5" stroke="#0D47A1" stroke-width="0.8"/>
+      <circle cx="-0.8" cy="11.7" r="0.8" fill="#E3F2FD"/>
+    </g>
   </defs>
 
-  <!-- Container bọc clipPath theo form của Card sự kiện -->
   <g clip-path="url(#cardClip)">
-    <!-- 1. Lớp nền gradient & texture ô ly -->
-    <rect width="340" height="504" fill="url(#bg_tomb)"/>
+    <!-- ============================================== -->
+    <!-- 1. BẦU TRỜI SA MẠC & TRĂNG RẰM HUYỀN BÍ        -->
+    <!-- ============================================== -->
+    <rect width="340" height="504" fill="url(#bg_tomb_sky)"/>
     <rect width="340" height="504" fill="url(#gd)"/>
 
-    <!-- 2. Nhóm chi tiết artwork: Mặt trăng, Kim tự tháp Ai Cập, Biểu tượng Ankh & Đụn cát sa mạc -->
-    <g transform="translate(0,-55)">
-      <!-- Mặt trăng tròn trên bầu trời sa mạc -->
-      <circle cx="250" cy="160" r="100" fill="url(#moonGlow)"/>
-      <circle cx="250" cy="160" r="46" fill="#FFF1B8"/>
+    <!-- Vầng trăng sa mạc tỏa ánh sáng ấm -->
+    <circle cx="242" cy="115" r="95" fill="url(#desertMoonGlow)"/>
+    <circle cx="242" cy="115" r="42" fill="#FFF4C4"/>
+    <circle cx="232" cy="104" r="8" fill="#F7DA8D" opacity="0.45"/>
+    <circle cx="258" cy="126" r="11" fill="#F7DA8D" opacity="0.35"/>
 
-      <!-- Kim tự tháp chính (trái) với bóng đổ -->
-      <polygon points="10,300 105,190 200,300" fill="#C97A2B"/>
-      <polygon points="105,190 200,300 118,300" fill="#000000" fill-opacity="0.16"/>
+    <!-- Các vì sao Ai Cập lấp lánh trên bầu trời đêm -->
+    <path d="M 42 75 Q 42 81 47 81 Q 42 81 42 87 Q 42 81 37 81 Q 42 81 42 75 Z" fill="#FFFFFF" opacity="0.95"/>
+    <path d="M 125 65 Q 125 70 129 70 Q 125 70 125 75 Q 125 70 121 70 Q 125 70 125 65 Z" fill="#FFFFFF" opacity="0.9"/>
+    <path d="M 305 78 Q 305 83 310 83 Q 305 83 305 88 Q 305 83 300 83 Q 305 83 305 78 Z" fill="#FFFFFF" opacity="0.9"/>
+    <path d="M 165 110 Q 165 114 168 114 Q 165 114 165 118 Q 165 114 162 114 Q 165 114 165 110 Z" fill="#FFFFFF" opacity="0.8"/>
 
-      <!-- Kim tự tháp phụ (phải) với bóng đổ -->
-      <polygon points="120,300 225,212 330,300" fill="#A5601E"/>
-      <polygon points="225,212 330,300 238,300" fill="#000000" fill-opacity="0.18"/>
+    <!-- ============================================== -->
+    <!-- 2. QUẦN THỂ KIM TỰ THÁP GIZA 3D CHI TIẾT       -->
+    <!-- ============================================== -->
+    <!-- Đụn cát đệm phía sau -->
+    <path d="M -10 215 Q 80 185 180 205 Q 260 220 350 195 L 350 260 L -10 260 Z" fill="#75350F" opacity="0.6"/>
 
-      <!-- Biểu tượng Ankh (Chìa khóa sinh mệnh cổ Ai Cập) -->
-      <g transform="translate(58,160)" fill="none" stroke="#3A210E" stroke-width="5" stroke-linecap="round">
-        <ellipse cy="-14" rx="9" ry="12"/>
-        <line x1="0" y1="-2" x2="0" y2="34"/>
-        <line x1="-14" y1="8" x2="14" y2="8"/>
-      </g>
-
-      <!-- Các ngôi sao lấp lánh trên bầu trời đêm sa mạc -->
-      <path d="M 40 105 Q 40 110 45 110 Q 40 110 40 115 Q 40 110 35 110 Q 40 110 40 105 Z" fill="#FFFFFF" fill-opacity="0.8"/>
-      <path d="M 150 96 Q 150 100 154 100 Q 150 100 150 104 Q 150 100 146 100 Q 150 100 150 96 Z" fill="#FFFFFF" fill-opacity="0.8"/>
-      <path d="M 300 105 Q 300 110 305 110 Q 300 110 300 115 Q 300 110 295 110 Q 300 110 300 105 Z" fill="#FFFFFF" fill-opacity="0.8"/>
-      <path d="M 170 156 Q 170 160 174 160 Q 170 160 170 164 Q 170 160 166 160 Q 170 160 170 156 Z" fill="#FFFFFF" fill-opacity="0.8"/>
-
-      <!-- Dải đụn cát tối màu chân trời (Silhouette che phần text/UI) -->
-      <path d="M 0 700 L 0 282 Q 90 258 180 280 T 340 270 L 340 700 Z" fill="#3A210E" fill-opacity="0.96"/>
+    <!-- KIM TỰ THÁP CHÍNH (Đại Kim Tự Tháp, x = 110, y = 140..255) -->
+    <g transform="translate(10, -5)">
+      <!-- Mặt hứng nắng (Lit Face) -->
+      <polygon points="105,142 10,255 125,255" fill="url(#pyramidLit)"/>
+      <!-- Mặt đổ bóng sâu (Shadow Face) -->
+      <polygon points="105,142 125,255 205,255" fill="url(#pyramidShadow)"/>
+      <!-- Chóp kim tự tháp bọc vàng (Golden Pyramidion) -->
+      <polygon points="105,142 88,162 108,162" fill="url(#egyptGold)"/>
+      <polygon points="105,142 108,162 122,162" fill="#D49424"/>
+      <!-- Các đường vân bậc đá phong trần -->
+      <line x1="68" y1="185" x2="140" y2="185" stroke="#4A1E04" stroke-width="1.2" opacity="0.45"/>
+      <line x1="45" y1="212" x2="165" y2="212" stroke="#4A1E04" stroke-width="1.5" opacity="0.45"/>
+      <line x1="25" y1="236" x2="188" y2="236" stroke="#4A1E04" stroke-width="1.5" opacity="0.45"/>
     </g>
+
+    <!-- KIM TỰ THÁP PHỤ (Phía sau bên phải, x = 230, y = 165..255) -->
+    <g transform="translate(15, -5)">
+      <!-- Mặt hứng sáng -->
+      <polygon points="220,165 130,255 235,255" fill="url(#pyramidLit)" opacity="0.9"/>
+      <!-- Mặt đổ bóng -->
+      <polygon points="220,165 235,255 315,255" fill="url(#pyramidShadow)" opacity="0.95"/>
+      <!-- Chóp vàng -->
+      <polygon points="220,165 206,182 223,182" fill="url(#egyptGold)"/>
+      <polygon points="220,165 223,182 236,182" fill="#D49424"/>
+      <!-- Vân đá -->
+      <line x1="180" y1="202" x2="268" y2="202" stroke="#381502" stroke-width="1.2" opacity="0.4"/>
+      <line x1="150" y1="228" x2="295" y2="228" stroke="#381502" stroke-width="1.2" opacity="0.4"/>
+    </g>
+
+    <!-- Kim tự tháp nhỏ xa xăm (Góc trái) -->
+    <polygon points="18,208 -10,255 45,255" fill="#A8551E" opacity="0.75"/>
+    <polygon points="18,208 45,255 75,255" fill="#4E1E05" opacity="0.8"/>
+
+    <!-- ============================================== -->
+    <!-- 3. BIỂU TƯỢNG ANKH VÀNG CỔ ĐẠI & BỤI CÁT VÀNG  -->
+    <!-- ============================================== -->
+    <!-- Biểu tượng Ankh mạ vàng thiêng liêng (Bên trái, x = 62, y = 145) -->
+    <g transform="translate(62, 142) scale(0.95)">
+      <!-- Hào quang phát sáng quanh Ankh -->
+      <circle cx="0" cy="5" r="32" fill="#FFD54F" opacity="0.18"/>
+      <use href="#golden_ankh_symbol"/>
+    </g>
+
+    <!-- Bụi cát vàng lấp lánh bay theo gió đêm -->
+    <circle cx="160" cy="180" r="1.8" fill="#FFE082" opacity="0.85"/>
+    <circle cx="175" cy="165" r="2.2" fill="#FFD54F" opacity="0.75"/>
+    <circle cx="190" cy="195" r="1.5" fill="#FFE082" opacity="0.9"/>
+    <circle cx="280" cy="185" r="2" fill="#FFD54F" opacity="0.8"/>
+
+    <!-- ============================================== -->
+    <!-- 4. ĐỤN CÁT SA MẠC & VÙNG NỀN AN TOÀN (SAFE ZONE) -->
+    <!-- Đường chân đồi cát uốn lượn tại y ≈ 242         -->
+    <!-- ============================================== -->
+    <path d="M 0 242 Q 85 218 175 238 T 340 230 L 340 504 L 0 504 Z" fill="url(#tombSoil)"/>
+
+    <!-- Gờ cồn cát viền vàng kim loại sắc nét đón ánh trăng -->
+    <path d="M 0 242 Q 85 218 175 238 T 340 230" fill="none" stroke="url(#egyptGold)" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 0 247 Q 85 223 175 243 T 340 235" fill="none" stroke="#FFA000" stroke-opacity="0.35" stroke-width="1.8"/>
+
+    <!-- ============================================== -->
+    <!-- 5. CHI TIẾT CHUYỂN TIẾP VEN MÉP (RÌA NGOÀI CÙNG)-->
+    <!-- Cực kỳ gọn gàng, giữ sạch 100% không gian giữa   -->
+    <!-- ============================================== -->
+    <!-- Bọ hung Scarab chạm khắc nhỏ sát góc phải mép cồn cát -->
+    <g transform="translate(308, 238) scale(0.65)" opacity="0.9">
+      <ellipse cx="0" cy="0" rx="9" ry="12" fill="url(#egyptGold)"/>
+      <ellipse cx="0" cy="2" rx="6" ry="8" fill="#1565C0"/>
+      <circle cx="0" cy="-7" r="4" fill="url(#egyptGold)"/>
+      <path d="M -9 0 L -14 -4 M 9 0 L 14 -4 M -8 6 L -13 9 M 8 6 L 13 9" stroke="#FFA000" stroke-width="1.5"/>
+    </g>
+
+    <!-- ============================================== -->
+    <!-- 6. VÙNG AN TOÀN TRỐNG (SAFE ZONE: y ≈ 244–504)  -->
+    <!-- Nền nâu đất cổ kính phẳng tuyệt đối dành cho:   -->
+    <!-- - Tiêu đề Thám Hiểm Mộ Cổ (y: 260 - 310)       -->
+    <!-- - Phụ đề 2 dòng          (y: 325 - 350)       -->
+    <!-- - Hộp tiến độ & 2 quà    (y: 356 - 438)       -->
+    <!-- - Nút CTA vàng Pharaoh   (y: 448 - 494)       -->
+    <!-- ============================================== -->
   </g>
 
-  <!-- Viền sáng ngoài card đặc trưng -->
-  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="3"/>
+  <!-- Viền sáng vàng ánh kim bo quanh thẻ chuẩn Design System -->
+  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="url(#egyptGold)" stroke-opacity="0.5" stroke-width="3"/>
 </svg>

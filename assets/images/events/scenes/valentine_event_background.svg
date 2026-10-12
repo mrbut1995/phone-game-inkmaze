@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Bầu trời hoàng hôn Lễ Tình Nhân chuyển sắc 4 nấc -->
+    <linearGradient id="valSkyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFA8C5"/>
+      <stop offset="0.35" stop-color="#F04E85"/>
+      <stop offset="0.7" stop-color="#9C1E55"/>
+      <stop offset="1" stop-color="#4A0A2B"/>
+    </linearGradient>
+
+    <!-- Quầng trăng tình yêu ấm áp -->
+    <radialGradient id="valMoonAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFF0F5" stop-opacity="1"/>
+      <stop offset="0.45" stop-color="#FFB6D0" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#E91E63" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Dãy đồi hoa xa xăm chân trời -->
+    <linearGradient id="valDistantHills" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7B1846"/>
+      <stop offset="1" stop-color="#3D0621"/>
+    </linearGradient>
+
+    <!-- Mẫu chim bồ câu trắng đưa thư tình bay xa -->
+    <g id="white_dove">
+      <path d="M 0 0 C 4 -8 14 -12 22 -10 C 18 -4 14 0 10 2 C 14 5 18 10 16 14 C 10 12 6 6 0 0 Z" fill="#FFFFFF" opacity="0.9"/>
+      <path d="M 0 0 C -4 -6 -10 -8 -16 -6 C -12 -2 -8 0 -4 2 C -8 4 -12 8 -10 11 C -6 9 -3 5 0 0 Z" fill="#FFFFFF" opacity="0.8"/>
+    </g>
+  </defs>
+
+  <!-- Nền trời hoàng hôn ngọt ngào bao phủ toàn canvas -->
+  <rect width="1080" height="960" fill="url(#valSkyGrad)"/>
+
+  <!-- ==================== VẦNG TRĂNG TÌNH YÊU TRÒN ĐẦY ==================== -->
+  <!-- Trăng 1 (x = 360, y = 200) -->
+  <circle cx="360" cy="200" r="115" fill="url(#valMoonAura)"/>
+  <circle cx="360" cy="200" r="44" fill="#FFF0F5"/>
+  <circle cx="348" cy="188" r="8" fill="#FFC4D8" opacity="0.4"/>
+  <circle cx="376" cy="214" r="10" fill="#FFC4D8" opacity="0.35"/>
+
+  <!-- Trăng lặp chu kỳ đối ứng bên phải (x = 900) -->
+  <circle cx="900" cy="200" r="115" fill="url(#valMoonAura)"/>
+  <circle cx="900" cy="200" r="44" fill="#FFF0F5"/>
+  <circle cx="888" cy="188" r="8" fill="#FFC4D8" opacity="0.4"/>
+  <circle cx="916" cy="214" r="10" fill="#FFC4D8" opacity="0.35"/>
+
+  <!-- Mây kẹo bông hồng pastel bồng bềnh (Chu kỳ 540px) -->
+  <g fill="#FFF0F5" fill-opacity="0.88">
+    <g transform="translate(150, 160) scale(1.15)">
+      <ellipse cx="0" cy="0" rx="36" ry="16"/><circle cx="-16" cy="-9" r="15"/><circle cx="10" cy="-14" r="18"/><circle cx="28" cy="-5" r="13"/>
+    </g>
+    <g transform="translate(690, 150) scale(1.15)">
+      <ellipse cx="0" cy="0" rx="36" ry="16"/><circle cx="-16" cy="-9" r="15"/><circle cx="10" cy="-14" r="18"/><circle cx="28" cy="-5" r="13"/>
+    </g>
+    <g transform="translate(460, 240) scale(0.75)" fill-opacity="0.7">
+      <ellipse cx="0" cy="0" rx="32" ry="12"/><circle cx="-13" cy="-7" r="13"/><circle cx="8" cy="-9" r="15"/>
+    </g>
+    <g transform="translate(1000, 230) scale(0.75)" fill-opacity="0.7">
+      <ellipse cx="0" cy="0" rx="32" ry="12"/><circle cx="-13" cy="-7" r="13"/><circle cx="8" cy="-9" r="15"/>
+    </g>
+  </g>
+
+  <!-- Đàn bồ câu trắng chao liệng giữa trời -->
+  <g>
+    <g transform="translate(240, 220) scale(0.85)"><use href="#white_dove"/></g>
+    <g transform="translate(280, 240) scale(0.65)"><use href="#white_dove"/></g>
+    <g transform="translate(180, 190) scale(0.7)"><use href="#white_dove"/></g>
+    <g transform="translate(780, 220) scale(0.85)"><use href="#white_dove"/></g>
+    <g transform="translate(820, 240) scale(0.65)"><use href="#white_dove"/></g>
+    <g transform="translate(720, 190) scale(0.7)"><use href="#white_dove"/></g>
+  </g>
+
+  <!-- Đốm sao và bụi lấp lánh lãng mạn -->
+  <g fill="#FFFFFF" opacity="0.95">
+    <circle cx="90" cy="120" r="2"/><circle cx="180" cy="90" r="1.8"/><circle cx="320" cy="110" r="2.2"/>
+    <circle cx="630" cy="120" r="2"/><circle cx="720" cy="90" r="1.8"/><circle cx="860" cy="110" r="2.2"/>
+  </g>
+
+  <!-- ĐƯỜNG CHÂN TRỜI: DÃY ĐỒI OẢI HƯƠNG XA XĂM -->
+  <!-- Seamless: Khớp nối tại x=0 và x=1080 ở y=510 -->
+  <path d="M 0 510 
+           Q 90 465 180 490 Q 260 515 340 480 Q 440 450 540 510 
+           Q 630 465 720 490 Q 800 515 880 480 Q 980 450 1080 510 
+           L 1080 580 L 0 580 Z" 
+        fill="url(#valDistantHills)" opacity="0.75"/>
+</svg>

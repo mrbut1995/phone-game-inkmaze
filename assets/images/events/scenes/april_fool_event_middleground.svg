@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Triền đồi rạp xiếc carnival tầng trung -->
+    <linearGradient id="circusMidHills" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#BA68C8"/>
+      <stop offset="0.45" stop-color="#8E24AA"/>
+      <stop offset="1" stop-color="#4A148C"/>
+    </linearGradient>
+
+    <!-- Mẫu lều rạp xiếc Big Top trung cảnh -->
+    <g id="circus_big_top">
+      <!-- Thân lều -->
+      <polygon points="-40,45 40,45 35,20 -35,20" fill="#FFFFFF" stroke="#3B0A45" stroke-width="1.8"/>
+      <path d="M -20 45 L -16 20 L -6 20 L -10 45 Z" fill="#E91E63"/>
+      <path d="M 6 45 L 8 20 L 18 20 L 14 45 Z" fill="#E91E63"/>
+      <!-- Mái vòm nón sọc đỏ trắng -->
+      <polygon points="-42,20 42,20 0,-18" fill="#E91E63" stroke="#3B0A45" stroke-width="1.8"/>
+      <polygon points="-24,20 -10,20 0,-18" fill="#FFFFFF"/>
+      <polygon points="10,20 24,20 0,-18" fill="#FFFFFF"/>
+      <!-- Cờ đuôi nheo đỉnh lều -->
+      <line x1="0" y1="-18" x2="0" y2="-28" stroke="#3B0A45" stroke-width="1.8"/>
+      <polygon points="0,-28 14,-23 0,-18" fill="#FFD54F"/>
+    </g>
+
+    <!-- Mẫu chùm bóng bay carnival -->
+    <g id="balloon_cluster">
+      <!-- Dây bóng -->
+      <path d="M 0 35 Q -4 18 -10 0" stroke="#3B0A45" stroke-width="1" fill="none"/>
+      <path d="M 0 35 Q 2 18 0 -6" stroke="#3B0A45" stroke-width="1" fill="none"/>
+      <path d="M 0 35 Q 8 18 12 -2" stroke="#3B0A45" stroke-width="1" fill="none"/>
+      <!-- Quả bóng -->
+      <ellipse cx="-10" cy="-6" rx="9" ry="12" fill="#00BCD4" stroke="#3B0A45" stroke-width="1"/>
+      <ellipse cx="0" cy="-14" rx="9" ry="12" fill="#E91E63" stroke="#3B0A45" stroke-width="1"/>
+      <ellipse cx="12" cy="-8" rx="9" ry="12" fill="#FFC107" stroke="#3B0A45" stroke-width="1"/>
+    </g>
+  </defs>
+
+  <!-- TRIỀN ĐỒI CARNIVAL TẦNG TRUNG (Seamless: x=0 (y=530) và x=1080 (y=530)) -->
+  <path d="M 0 530 
+           Q 135 485 270 518 T 540 530 
+           Q 675 485 810 518 T 1080 530 
+           L 1080 675 L 0 675 Z" 
+        fill="url(#circusMidHills)"/>
+
+  <!-- ==================== LỀU RẠP XIẾC & CỘT CỜ TRUNG CẢNH ==================== -->
+  <!-- Lều rạp xiếc 1 (x ≈ 180) -->
+  <g transform="translate(180, 475) scale(0.95)"><use href="#circus_big_top"/></g>
+  <!-- Lều rạp xiếc 2 (x ≈ 720, đối ứng chu kỳ 540px) -->
+  <g transform="translate(720, 475) scale(0.95)"><use href="#circus_big_top"/></g>
+
+  <!-- Chùm bóng bay cắm trên đồi -->
+  <g transform="translate(100, 480)"><use href="#balloon_cluster"/></g>
+  <g transform="translate(380, 490) scale(0.9)"><use href="#balloon_cluster"/></g>
+  <g transform="translate(640, 480)"><use href="#balloon_cluster"/></g>
+  <g transform="translate(920, 490) scale(0.9)"><use href="#balloon_cluster"/></g>
+
+  <!-- DÂY CỜ TAM GIÁC LỄ HỘI CHĂNG GIỮA CÁC ĐỈNH ĐỒI -->
+  <g>
+    <!-- Dây cờ 1 (x ≈ 230 - 370) -->
+    <path d="M 230 495 Q 300 525 370 495" stroke="#3B0A45" stroke-width="1.8" fill="none"/>
+    <polygon points="245,502 260,505 252,520" fill="#FFD54F"/>
+    <polygon points="270,508 285,510 278,525" fill="#E91E63"/>
+    <polygon points="295,511 310,511 302,526" fill="#00BCD4"/>
+    <polygon points="320,510 335,508 328,524" fill="#7C3AED"/>
+    <polygon points="345,505 360,501 352,518" fill="#FF5722"/>
+
+    <!-- Dây cờ 2 (Lặp chu kỳ bên phải, x ≈ 770 - 910) -->
+    <path d="M 770 495 Q 840 525 910 495" stroke="#3B0A45" stroke-width="1.8" fill="none"/>
+    <polygon points="785,502 800,505 792,520" fill="#FFD54F"/>
+    <polygon points="810,508 825,510 818,525" fill="#E91E63"/>
+    <polygon points="835,511 850,511 842,526" fill="#00BCD4"/>
+    <polygon points="860,510 875,508 868,524" fill="#7C3AED"/>
+    <polygon points="885,505 900,501 892,518" fill="#FF5722"/>
+  </g>
+
+  <!-- CÁC DẢI RUY-BĂNG XOẮN VÀNG & HỒNG BAY GIỮA KHÔNG TRUNG -->
+  <g opacity="0.8">
+    <path d="M 310 440 Q 325 455 315 470 Q 330 485 320 500" stroke="#FFD54F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M 490 450 Q 505 465 495 480 Q 510 495 500 510" stroke="#FF4081" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M 850 440 Q 865 455 855 470 Q 870 485 860 500" stroke="#FFD54F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M 1030 450 Q 1045 465 1035 480 Q 1050 495 1040 510" stroke="#FF4081" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>
