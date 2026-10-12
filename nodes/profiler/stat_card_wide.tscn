@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/profiler/stat_card.gd" id="1_card"]
-[ext_resource type="Texture2D" path="res://assets/images/profiler/card_stat.svg" id="2_bg"]
-[ext_resource type="Texture2D" path="res://assets/images/settings/divider_dashed.svg" id="3_dash"]
+[ext_resource uid="uid://vp0gj5oue3qw" type="Texture2D" path="res://assets/images-png/profiler/card_stat.png" id="2_bg"]
+[ext_resource uid="uid://duqcleabqujwd" type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="3_dash"]
 
 [node name="StatCardWide" type="Control" node_paths=PackedStringArray("icon", "name_label", "value_label")]
 custom_minimum_size = Vector2(116, 72)

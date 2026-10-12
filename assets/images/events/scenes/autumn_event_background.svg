@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Nền trời hoàng hôn thu rực rỡ -->
+    <linearGradient id="autumnSkyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFDD94"/>
+      <stop offset="0.35" stop-color="#F39C44"/>
+      <stop offset="0.7" stop-color="#C8521A"/>
+      <stop offset="1" stop-color="#5E200C"/>
+    </linearGradient>
+
+    <!-- Hào quang mặt trời lặn -->
+    <radialGradient id="autumnSunAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFFBE3" stop-opacity="0.95"/>
+      <stop offset="0.4" stop-color="#FFD67A" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#FF9E42" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Dãy núi xa mờ trong ráng chiều -->
+    <linearGradient id="mistyMountains" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9C441E"/>
+      <stop offset="1" stop-color="#561E0D"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Nền trời bao phủ toàn canvas -->
+  <rect width="1080" height="960" fill="url(#autumnSkyGrad)"/>
+
+  <!-- Mặt trời chiều thu tỏa sáng ấm áp (x = 380, y = 220) -->
+  <circle cx="380" cy="220" r="120" fill="url(#autumnSunAura)"/>
+  <circle cx="380" cy="220" r="48" fill="#FFF2C6"/>
+
+  <!-- Mây ráng chiều ửng hồng (Lặp tuần hoàn chu kỳ 540px) -->
+  <g fill="#FFF0DC" fill-opacity="0.82">
+    <!-- Cụm mây 1 -->
+    <g transform="translate(140, 160) scale(1.15)">
+      <ellipse cx="0" cy="0" rx="38" ry="15"/>
+      <circle cx="-18" cy="-8" r="16"/>
+      <circle cx="12" cy="-12" r="19"/>
+      <circle cx="30" cy="-4" r="14"/>
+    </g>
+    <!-- Cụm mây 2 (Đối ứng tại x + 540) -->
+    <g transform="translate(680, 150) scale(1.15)">
+      <ellipse cx="0" cy="0" rx="38" ry="15"/>
+      <circle cx="-18" cy="-8" r="16"/>
+      <circle cx="12" cy="-12" r="19"/>
+      <circle cx="30" cy="-4" r="14"/>
+    </g>
+    <!-- Mây tầng trung nhạt -->
+    <g transform="translate(460, 260) scale(0.75)" fill-opacity="0.65">
+      <ellipse cx="0" cy="0" rx="32" ry="12"/>
+      <circle cx="-14" cy="-8" r="13"/>
+      <circle cx="10" cy="-9" r="15"/>
+    </g>
+    <g transform="translate(1000, 250) scale(0.75)" fill-opacity="0.65">
+      <ellipse cx="0" cy="0" rx="32" ry="12"/>
+      <circle cx="-14" cy="-8" r="13"/>
+      <circle cx="10" cy="-9" r="15"/>
+    </g>
+  </g>
+
+  <!-- Đàn chim nhạn di cư về phương nam theo đội hình chữ V -->
+  <g stroke="#5E220B" stroke-width="2.6" fill="none" stroke-linecap="round" opacity="0.85">
+    <path d="M 230 240 Q 238 230 246 240 M 246 240 Q 254 230 262 240"/>
+    <path d="M 268 256 Q 275 248 282 256 M 282 256 Q 289 248 296 256"/>
+    <path d="M 302 274 Q 308 267 314 274 M 314 274 Q 320 267 326 274"/>
+    <path d="M 212 260 Q 218 253 224 260 M 224 260 Q 230 253 236 260"/>
+    <!-- Nhóm chim xa lặp chu kỳ bên phải -->
+    <path d="M 770 230 Q 778 220 786 230 M 786 230 Q 794 220 802 230"/>
+    <path d="M 808 246 Q 815 238 822 246 M 822 246 Q 829 238 836 246"/>
+  </g>
+
+  <!-- Dãy núi xa mờ ở đường chân trời (Khớp liền mạch tại x=0 và x=1080 ở y=510) -->
+  <path d="M 0 510 
+           Q 90 465 180 490 Q 260 515 340 480 Q 440 445 540 510 
+           Q 630 465 720 490 Q 800 515 880 480 Q 980 445 1080 510 
+           L 1080 570 L 0 570 Z" 
+        fill="url(#mistyMountains)" opacity="0.55"/>
+</svg>

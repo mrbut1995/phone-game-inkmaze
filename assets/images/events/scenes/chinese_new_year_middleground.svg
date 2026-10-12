@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Dòng sông đêm lễ hội phản chiếu ánh đèn -->
+    <linearGradient id="festivalRiver" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#40060B"/>
+      <stop offset="0.45" stop-color="#6B0C15"/>
+      <stop offset="1" stop-color="#320509"/>
+    </linearGradient>
+
+    <!-- Đèn lồng đỏ phát sáng trung cảnh -->
+    <radialGradient id="mgLanternGlow" cx="45%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#FFA726"/>
+      <stop offset="0.5" stop-color="#E53935"/>
+      <stop offset="1" stop-color="#7F0000"/>
+    </radialGradient>
+
+    <linearGradient id="mgGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF3B0"/>
+      <stop offset="0.5" stop-color="#FFD54F"/>
+      <stop offset="1" stop-color="#FF9800"/>
+    </linearGradient>
+
+    <!-- Mẫu đèn hoa đăng thả sông -->
+    <g id="water_lantern">
+      <ellipse cx="0" cy="4" rx="14" ry="4.5" fill="#FF8F00" opacity="0.45"/>
+      <!-- Cánh sen hồng bao quanh nến -->
+      <path d="M -10 2 Q 0 -6 10 2 Q 0 8 -10 2 Z" fill="#FF5252"/>
+      <path d="M -7 0 Q 0 -8 7 0 Q 0 6 -7 0 Z" fill="#FF8A80"/>
+      <!-- Ngọn nến vàng ấm -->
+      <ellipse cx="0" cy="-2" rx="2.5" ry="4" fill="#FFF9C4"/>
+      <circle cx="0" cy="-3" r="1.5" fill="#FFD54F"/>
+    </g>
+  </defs>
+
+  <!-- DÒNG SÔNG ĐÊM LỄ HỘI (Bắt đầu từ chân phố y=530 đến mép bờ tiền cảnh y=650) -->
+  <rect x="0" y="530" width="1080" height="150" fill="url(#festivalRiver)"/>
+
+  <!-- Gợn sóng lấp lánh phản chiếu ánh đèn (Chu kỳ 270px -> Seamless 100%) -->
+  <g stroke="#FFE082" stroke-opacity="0.35" stroke-linecap="round" fill="none">
+    <path d="M 0 560 Q 67.5 554 135 560 T 270 560 T 405 560 T 540 560 T 675 560 T 810 560 T 945 560 T 1080 560" stroke-width="1.8"/>
+    <path d="M 0 595 Q 67.5 588 135 595 T 270 595 T 405 595 T 540 595 T 675 595 T 810 595 T 945 595 T 1080 595" stroke-width="2.2"/>
+    <path d="M 0 630 Q 67.5 623 135 630 T 270 630 T 405 630 T 540 630 T 675 630 T 810 630 T 945 630 T 1080 630" stroke-width="2"/>
+  </g>
+
+  <!-- ==================== DÃY MÁI ĐÌNH & PHỐ ĐÈN LỒNG ==================== -->
+  <!-- Cụm kiến trúc 1 (x ≈ 80 - 240) -->
+  <g transform="translate(100, 430)">
+    <!-- Thân đình / tường gỗ -->
+    <rect x="20" y="50" width="100" height="55" fill="#3D060B"/>
+    <!-- Mái ngói cong vút cổ truyền -->
+    <path d="M 0 50 Q 70 30 140 50 L 130 38 Q 70 20 10 38 Z" fill="#7F131A" stroke="#FFD54F" stroke-width="1.2"/>
+    <path d="M -10 52 Q -2 46 8 50" stroke="#FFD54F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M 150 52 Q 142 46 132 50" stroke="#FFD54F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <!-- Cửa vòm ấm áp -->
+    <path d="M 55 105 L 55 75 A 15 15 0 0 1 85 75 L 85 105 Z" fill="#FFC107" opacity="0.85"/>
+  </g>
+
+  <!-- Cụm kiến trúc 2 (x ≈ 620 - 780, đối ứng chu kỳ 540) -->
+  <g transform="translate(640, 430)">
+    <rect x="20" y="50" width="100" height="55" fill="#3D060B"/>
+    <path d="M 0 50 Q 70 30 140 50 L 130 38 Q 70 20 10 38 Z" fill="#7F131A" stroke="#FFD54F" stroke-width="1.2"/>
+    <path d="M -10 52 Q -2 46 8 50" stroke="#FFD54F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M 150 52 Q 142 46 132 50" stroke="#FFD54F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M 55 105 L 55 75 A 15 15 0 0 1 85 75 L 85 105 Z" fill="#FFC107" opacity="0.85"/>
+  </g>
+
+  <!-- DÂY TREO ĐÈN LỒNG GIĂNG MẮC QUA PHỐ (Võng tự nhiên) -->
+  <g>
+    <!-- Dây đèn 1 -->
+    <path d="M 230 475 Q 340 515 450 480" stroke="#FFD54F" stroke-width="1.2" fill="none" opacity="0.7"/>
+    <!-- Các đèn lồng đỏ treo lơ lửng -->
+    <g transform="translate(280, 492) scale(0.65)"><ellipse cx="0" cy="0" rx="14" ry="16" fill="url(#mgLanternGlow)"/><line x1="0" y1="16" x2="0" y2="28" stroke="#FFD54F" stroke-width="2"/></g>
+    <g transform="translate(340, 503) scale(0.75)"><ellipse cx="0" cy="0" rx="14" ry="16" fill="url(#mgLanternGlow)"/><line x1="0" y1="16" x2="0" y2="28" stroke="#FFD54F" stroke-width="2"/></g>
+    <g transform="translate(400, 492) scale(0.65)"><ellipse cx="0" cy="0" rx="14" ry="16" fill="url(#mgLanternGlow)"/><line x1="0" y1="16" x2="0" y2="28" stroke="#FFD54F" stroke-width="2"/></g>
+
+    <!-- Dây đèn 2 (Lặp bên phải) -->
+    <path d="M 770 475 Q 880 515 990 480" stroke="#FFD54F" stroke-width="1.2" fill="none" opacity="0.7"/>
+    <g transform="translate(820, 492) scale(0.65)"><ellipse cx="0" cy="0" rx="14" ry="16" fill="url(#mgLanternGlow)"/><line x1="0" y1="16" x2="0" y2="28" stroke="#FFD54F" stroke-width="2"/></g>
+    <g transform="translate(880, 503) scale(0.75)"><ellipse cx="0" cy="0" rx="14" ry="16" fill="url(#mgLanternGlow)"/><line x1="0" y1="16" x2="0" y2="28" stroke="#FFD54F" stroke-width="2"/></g>
+    <g transform="translate(940, 492) scale(0.65)"><ellipse cx="0" cy="0" rx="14" ry="16" fill="url(#mgLanternGlow)"/><line x1="0" y1="16" x2="0" y2="28" stroke="#FFD54F" stroke-width="2"/></g>
+  </g>
+
+  <!-- ĐÈN HOA ĐĂNG THẢ TRÔI TRÊN DÒNG SÔNG XUÂN -->
+  <g>
+    <g transform="translate(220, 575) scale(1.1)"><use href="#water_lantern"/></g>
+    <g transform="translate(360, 610) scale(1.3)"><use href="#water_lantern"/></g>
+    <g transform="translate(480, 565) scale(0.95)"><use href="#water_lantern"/></g>
+    <!-- Nhóm đối ứng bên phải -->
+    <g transform="translate(760, 575) scale(1.1)"><use href="#water_lantern"/></g>
+    <g transform="translate(900, 610) scale(1.3)"><use href="#water_lantern"/></g>
+    <g transform="translate(1020, 565) scale(0.95)"><use href="#water_lantern"/></g>
+  </g>
+</svg>

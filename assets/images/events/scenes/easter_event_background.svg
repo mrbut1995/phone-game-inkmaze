@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Bầu trời mùa xuân pastel 4 nấc chuyển màu -->
+    <linearGradient id="easterSkyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFDEEF"/>
+      <stop offset="0.38" stop-color="#D5ECFF"/>
+      <stop offset="0.75" stop-color="#E8F8EA"/>
+      <stop offset="1" stop-color="#FFF8D6"/>
+    </linearGradient>
+
+    <!-- Ánh nắng xuân ấm áp -->
+    <radialGradient id="easterSunAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFFDE0" stop-opacity="1"/>
+      <stop offset="0.45" stop-color="#FFF3A6" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#FFF3A6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Đồi xa mờ trong sương xuân -->
+    <linearGradient id="easterDistantHills" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#88DCA0"/>
+      <stop offset="1" stop-color="#55B373"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Nền trời mùa xuân bao phủ toàn canvas -->
+  <rect width="1080" height="960" fill="url(#easterSkyGrad)"/>
+
+  <!-- Vệt cầu vồng pastel nhẹ nhàng vắt ngang bầu trời -->
+  <g opacity="0.35">
+    <path d="M 0 380 Q 270 120 540 380" stroke="#FF8FA3" stroke-width="6" fill="none"/>
+    <path d="M 0 386 Q 270 126 540 386" stroke="#FFD166" stroke-width="6" fill="none"/>
+    <path d="M 0 392 Q 270 132 540 392" stroke="#06D6A0" stroke-width="6" fill="none"/>
+    <path d="M 0 398 Q 270 138 540 398" stroke="#118AB2" stroke-width="6" fill="none"/>
+
+    <!-- Cầu vồng đối ứng chu kỳ 540px -->
+    <path d="M 540 380 Q 810 120 1080 380" stroke="#FF8FA3" stroke-width="6" fill="none"/>
+    <path d="M 540 386 Q 810 126 1080 386" stroke="#FFD166" stroke-width="6" fill="none"/>
+    <path d="M 540 392 Q 810 132 1080 392" stroke="#06D6A0" stroke-width="6" fill="none"/>
+    <path d="M 540 398 Q 810 138 1080 398" stroke="#118AB2" stroke-width="6" fill="none"/>
+  </g>
+
+  <!-- Mặt trời xuân dịu dàng (x = 360, y = 200) -->
+  <circle cx="360" cy="200" r="115" fill="url(#easterSunAura)"/>
+  <circle cx="360" cy="200" r="42" fill="#FFF275"/>
+
+  <!-- Mây trắng bồng bềnh (Lặp chu kỳ 540px) -->
+  <g fill="#FFFFFF" fill-opacity="0.92">
+    <!-- Cụm mây 1 -->
+    <g transform="translate(150, 160) scale(1.15)">
+      <ellipse cx="0" cy="0" rx="36" ry="16"/>
+      <circle cx="-16" cy="-9" r="15"/>
+      <circle cx="10" cy="-14" r="18"/>
+      <circle cx="28" cy="-5" r="13"/>
+    </g>
+    <!-- Cụm mây 2 (Đối ứng tại x + 540) -->
+    <g transform="translate(690, 150) scale(1.15)">
+      <ellipse cx="0" cy="0" rx="36" ry="16"/>
+      <circle cx="-16" cy="-9" r="15"/>
+      <circle cx="10" cy="-14" r="18"/>
+      <circle cx="28" cy="-5" r="13"/>
+    </g>
+    <!-- Mây nhỏ xa -->
+    <g transform="translate(450, 250) scale(0.7)" fill-opacity="0.75">
+      <ellipse cx="0" cy="0" rx="32" ry="12"/>
+      <circle cx="-13" cy="-7" r="13"/>
+      <circle cx="8" cy="-9" r="15"/>
+    </g>
+    <g transform="translate(990, 240) scale(0.7)" fill-opacity="0.75">
+      <ellipse cx="0" cy="0" rx="32" ry="12"/>
+      <circle cx="-13" cy="-7" r="13"/>
+      <circle cx="8" cy="-9" r="15"/>
+    </g>
+  </g>
+
+  <!-- Đàn chim én mùa xuân chao liệng -->
+  <g stroke="#32506D" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.8">
+    <path d="M 230 230 Q 238 220 246 230 M 246 230 Q 254 220 262 230"/>
+    <path d="M 268 245 Q 275 238 282 245 M 282 245 Q 289 238 296 245"/>
+    <path d="M 302 262 Q 308 255 314 262 M 314 262 Q 320 255 326 262"/>
+    <path d="M 770 220 Q 778 210 786 220 M 786 220 Q 794 210 802 220"/>
+    <path d="M 808 235 Q 815 228 822 235 M 822 235 Q 829 228 836 235"/>
+  </g>
+
+  <!-- ĐỒI XANH MỜ PHÍA CHÂN TRỜI (Seamless: Khớp tại x=0 và x=1080 ở y=510) -->
+  <path d="M 0 510 
+           Q 90 465 180 490 Q 260 515 340 480 Q 440 450 540 510 
+           Q 630 465 720 490 Q 800 515 880 480 Q 980 450 1080 510 
+           L 1080 580 L 0 580 Z" 
+        fill="url(#easterDistantHills)" opacity="0.6"/>
+</svg>

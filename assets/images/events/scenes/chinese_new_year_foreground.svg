@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Thảm sân đình / Bờ đất lễ hội lát đá đỏ hoàng gia -->
+    <linearGradient id="festivalFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4E080E"/>
+      <stop offset="0.25" stop-color="#380408"/>
+      <stop offset="0.7" stop-color="#240205"/>
+      <stop offset="1" stop-color="#140103"/>
+    </linearGradient>
+
+    <linearGradient id="fgGoldFoil" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF3B0"/>
+      <stop offset="0.35" stop-color="#FFD54F"/>
+      <stop offset="0.7" stop-color="#FFA000"/>
+      <stop offset="1" stop-color="#D48800"/>
+    </linearGradient>
+
+    <!-- Đèn lồng lụa đỏ tiền cảnh phát sáng 3D -->
+    <radialGradient id="fgLanternGlow" cx="45%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#FF6E40"/>
+      <stop offset="0.5" stop-color="#D50000"/>
+      <stop offset="1" stop-color="#6A0005"/>
+    </radialGradient>
+
+    <!-- Đổ bóng mặt đất -->
+    <radialGradient id="fgFloorShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#000000" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Mẫu hoa đào 5 cánh tiền cảnh sắc nét -->
+    <g id="fg_peach_flower">
+      <circle cx="0" cy="-9" r="7" fill="#FF8EA3"/>
+      <circle cx="8.5" cy="-2.5" r="7" fill="#FF8EA3"/>
+      <circle cx="5.2" cy="7.8" r="7" fill="#FF8EA3"/>
+      <circle cx="-5.2" cy="7.8" r="7" fill="#FF8EA3"/>
+      <circle cx="-8.5" cy="-2.5" r="7" fill="#FF8EA3"/>
+      <circle cx="0" cy="-7.5" r="4.5" fill="#FFAEC0"/>
+      <circle cx="7" cy="-2" r="4.5" fill="#FFAEC0"/>
+      <circle cx="4.2" cy="6.5" r="4.5" fill="#FFAEC0"/>
+      <circle cx="-4.2" cy="6.5" r="4.5" fill="#FFAEC0"/>
+      <circle cx="-7" cy="-2" r="4.5" fill="#FFAEC0"/>
+      <circle cx="0" cy="0" r="4" fill="#FFE082"/>
+      <circle cx="0" cy="0" r="2" fill="#D32F2F"/>
+    </g>
+
+    <!-- Mẫu hoa mai vàng phú quý -->
+    <g id="fg_apricot_flower">
+      <circle cx="0" cy="-9" r="7" fill="#FFD54F"/>
+      <circle cx="8.5" cy="-2.5" r="7" fill="#FFD54F"/>
+      <circle cx="5.2" cy="7.8" r="7" fill="#FFD54F"/>
+      <circle cx="-5.2" cy="7.8" r="7" fill="#FFD54F"/>
+      <circle cx="-8.5" cy="-2.5" r="7" fill="#FFD54F"/>
+      <circle cx="0" cy="0" r="3.8" fill="#FF9800"/>
+      <circle cx="0" cy="0" r="1.8" fill="#B71C1C"/>
+    </g>
+
+    <!-- Mẫu bao lì xì đỏ treo cành cây -->
+    <g id="red_envelope">
+      <rect x="-8" y="-12" width="16" height="24" rx="3" fill="#D50000" stroke="url(#fgGoldFoil)" stroke-width="1.2"/>
+      <circle cx="0" cy="-2" r="4" fill="url(#fgGoldFoil)"/>
+      <line x1="0" y1="-12" x2="0" y2="-20" stroke="url(#fgGoldFoil)" stroke-width="1.5"/>
+    </g>
+  </defs>
+
+  <!-- THẢM SÂN ĐÌNH TIỀN CẢNH (Uốn lượn tuần hoàn chu kỳ 540px: x=0 (y=610) và x=1080 (y=610)) -->
+  <path d="M 0 610 
+           Q 135 575 270 605 T 540 610 
+           Q 675 575 810 605 T 1080 610 
+           L 1080 960 L 0 960 Z" 
+        fill="url(#festivalFloor)"/>
+
+  <!-- Viền kim loại vàng kép sang trọng ngăn cách mép sân -->
+  <path d="M 0 610 Q 135 575 270 605 T 540 610 Q 675 575 810 605 T 1080 610" 
+        fill="none" stroke="url(#fgGoldFoil)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M 0 616 Q 135 581 270 611 T 540 616 Q 675 581 810 611 T 1080 616" 
+        fill="none" stroke="#FFD54F" stroke-opacity="0.45" stroke-width="1.8"/>
+
+  <!-- ==================== CÁC VẬT THỂ TIỀN CẢNH ==================== -->
+
+  <!-- 1. CÂY MAI / ĐÀO CỔ THỤ LỚN VƯƠN NHÁNH (Bên trái, x ≈ 0 - 240) -->
+  <g transform="translate(40, 280)">
+    <!-- Thân cành gỗ sần sùi uốn lượn nghệ thuật -->
+    <path d="M 20 400 C 40 310 25 210 -10 120" stroke="#421E0F" stroke-width="20" fill="none" stroke-linecap="round"/>
+    <path d="M 12 250 Q 80 180 150 140" stroke="#421E0F" stroke-width="11" fill="none" stroke-linecap="round"/>
+    <path d="M 90 170 Q 140 100 200 80" stroke="#421E0F" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M 30 180 Q -10 110 -30 60" stroke="#421E0F" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+    <!-- Các bông hoa đào hồng & mai vàng nở rộ tiền cảnh -->
+    <g transform="translate(140, 140) scale(1.25)"><use href="#fg_peach_flower"/></g>
+    <g transform="translate(195, 80) scale(1.15)"><use href="#fg_apricot_flower"/></g>
+    <g transform="translate(85, 175) scale(1.1)"><use href="#fg_peach_flower"/></g>
+    <g transform="translate(40, 220) scale(1.0)"><use href="#fg_apricot_flower"/></g>
+    <g transform="translate(-25, 65) scale(1.2)"><use href="#fg_peach_flower"/></g>
+
+    <!-- Bao lì xì may mắn treo lủng lẳng trên cành -->
+    <g transform="translate(110, 200)"><use href="#red_envelope"/></g>
+    <g transform="translate(165, 125)"><use href="#red_envelope"/></g>
+
+    <!-- DÂY PHÁO ĐỎ TẾT TREO ĐẦU CÀNH -->
+    <g transform="translate(60, 230)">
+      <line x1="0" y1="0" x2="0" y2="70" stroke="#FFD54F" stroke-width="1.5"/>
+      <!-- Tép pháo đỏ viền vàng xếp chéo nhau -->
+      <rect x="-8" y="10" width="7" height="14" rx="2" fill="#D50000" stroke="#FFD54F" stroke-width="0.8" transform="rotate(-20 -5 17)"/>
+      <rect x="2" y="18" width="7" height="14" rx="2" fill="#D50000" stroke="#FFD54F" stroke-width="0.8" transform="rotate(20 5 25)"/>
+      <rect x="-8" y="28" width="7" height="14" rx="2" fill="#D50000" stroke="#FFD54F" stroke-width="0.8" transform="rotate(-20 -5 35)"/>
+      <rect x="2" y="36" width="7" height="14" rx="2" fill="#D50000" stroke="#FFD54F" stroke-width="0.8" transform="rotate(20 5 43)"/>
+      <rect x="-8" y="46" width="7" height="14" rx="2" fill="#D50000" stroke="#FFD54F" stroke-width="0.8" transform="rotate(-20 -5 53)"/>
+      <!-- Quả pháo đại dưới cùng -->
+      <rect x="-5" y="60" width="10" height="20" rx="3" fill="#D50000" stroke="#FFD54F" stroke-width="1.2"/>
+    </g>
+  </g>
+
+  <!-- 2. ĐÈN LỒNG CUNG ĐÌNH LỚN RỦ XUỐNG TỪ TRÊN (Bên trái, x = 180, y = 300) -->
+  <g transform="translate(180, 290)">
+    <line x1="0" y1="-80" x2="0" y2="-28" stroke="url(#fgGoldFoil)" stroke-width="2.5"/>
+    <circle cx="0" cy="-28" r="4" fill="#FFD54F"/>
+    <rect x="-16" y="-28" width="32" height="8" rx="2" fill="url(#fgGoldFoil)" stroke="#7F0000" stroke-width="1"/>
+    <!-- Thân lồng đèn phát sáng 3D -->
+    <ellipse cx="0" cy="8" rx="30" ry="32" fill="url(#fgLanternGlow)"/>
+    <path d="M -16 -20 Q -28 8 -16 32" stroke="url(#fgGoldFoil)" stroke-width="2" fill="none"/>
+    <path d="M 16 -20 Q 28 8 16 32" stroke="url(#fgGoldFoil)" stroke-width="2" fill="none"/>
+    <line x1="0" y1="-20" x2="0" y2="36" stroke="url(#fgGoldFoil)" stroke-width="2"/>
+    <rect x="-16" y="32" width="32" height="8" rx="2" fill="url(#fgGoldFoil)" stroke="#7F0000" stroke-width="1"/>
+    <!-- Khuyên ngọc & tua rua vàng dài tha thướt -->
+    <circle cx="0" cy="45" r="5" fill="#FFD54F" stroke="#B27400" stroke-width="1.2"/>
+    <path d="M -7 50 L -4 90 L 0 94 L 4 90 L 7 50 Z" fill="url(#fgGoldFoil)"/>
+  </g>
+
+  <!-- 3. CÂY MAI / ĐÀO CỔ THỤ THỨ HAI (Bên phải, x ≈ 880 - 1080) -->
+  <g transform="translate(980, 310)">
+    <path d="M -10 370 C -30 280 -15 190 20 100" stroke="#421E0F" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <path d="M -5 230 Q -70 160 -130 120" stroke="#421E0F" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M -80 150 Q -120 90 -170 70" stroke="#421E0F" stroke-width="6.5" fill="none" stroke-linecap="round"/>
+    
+    <g transform="translate(-130, 120) scale(1.2)"><use href="#fg_apricot_flower"/></g>
+    <g transform="translate(-170, 70) scale(1.15)"><use href="#fg_peach_flower"/></g>
+    <g transform="translate(-60, 180) scale(1.05)"><use href="#fg_apricot_flower"/></g>
+    <g transform="translate(10, 110) scale(1.2)"><use href="#fg_peach_flower"/></g>
+
+    <g transform="translate(-100, 170)"><use href="#red_envelope"/></g>
+  </g>
+
+  <!-- 4. ĐÈN LỒNG LỚN THỨ HAI (Bên phải, x = 860, y = 320) -->
+  <g transform="translate(860, 310) scale(0.9)">
+    <line x1="0" y1="-80" x2="0" y2="-28" stroke="url(#fgGoldFoil)" stroke-width="2.5"/>
+    <circle cx="0" cy="-28" r="4" fill="#FFD54F"/>
+    <rect x="-16" y="-28" width="32" height="8" rx="2" fill="url(#fgGoldFoil)"/>
+    <ellipse cx="0" cy="8" rx="30" ry="32" fill="url(#fgLanternGlow)"/>
+    <path d="M -16 -20 Q -28 8 -16 32" stroke="url(#fgGoldFoil)" stroke-width="2" fill="none"/>
+    <path d="M 16 -20 Q 28 8 16 32" stroke="url(#fgGoldFoil)" stroke-width="2" fill="none"/>
+    <line x1="0" y1="-20" x2="0" y2="36" stroke="url(#fgGoldFoil)" stroke-width="2"/>
+    <rect x="-16" y="32" width="32" height="8" rx="2" fill="url(#fgGoldFoil)"/>
+    <circle cx="0" cy="45" r="5" fill="#FFD54F"/>
+    <path d="M -7 50 L -4 90 L 0 94 L 4 90 L 7 50 Z" fill="url(#fgGoldFoil)"/>
+  </g>
+
+  <!-- 5. HOA RỤNG TRÊN SÂN & MƯA HOA XUÂN CHAO LIỆNG -->
+  <g>
+    <!-- Cánh hoa xoay tít trong gió xuân -->
+    <circle cx="280" cy="500" r="4" fill="#FF8EA3" opacity="0.9"/>
+    <circle cx="340" cy="540" r="3.5" fill="#FFD54F" opacity="0.9"/>
+    <circle cx="430" cy="480" r="4.2" fill="#FF8EA3" opacity="0.85"/>
+    <circle cx="500" cy="530" r="3.8" fill="#FFD54F" opacity="0.85"/>
+
+    <circle cx="820" cy="500" r="4" fill="#FF8EA3" opacity="0.9"/>
+    <circle cx="880" cy="540" r="3.5" fill="#FFD54F" opacity="0.9"/>
+    <circle cx="970" cy="480" r="4.2" fill="#FF8EA3" opacity="0.85"/>
+
+    <!-- Hoa nở rải rác tĩnh trên thảm sân đình -->
+    <g transform="translate(320, 640) scale(0.8)"><use href="#fg_peach_flower"/></g>
+    <g transform="translate(480, 660) scale(0.75)"><use href="#fg_apricot_flower"/></g>
+    <g transform="translate(860, 640) scale(0.8)"><use href="#fg_peach_flower"/></g>
+    <g transform="translate(1020, 660) scale(0.75)"><use href="#fg_apricot_flower"/></g>
+  </g>
+</svg>

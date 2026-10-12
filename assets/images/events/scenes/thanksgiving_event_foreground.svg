@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Sàn gỗ bàn tiệc mùa thu hoạch tiền cảnh (Nền tương phản tốt cho UI) -->
+    <linearGradient id="tgTableFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A230F"/>
+      <stop offset="0.25" stop-color="#341608"/>
+      <stop offset="0.65" stop-color="#200B03"/>
+      <stop offset="1" stop-color="#120501"/>
+    </linearGradient>
+
+    <!-- Gradient đuôi gà tây tiền cảnh -->
+    <linearGradient id="fgFeatherRed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D32F2F"/><stop offset="1" stop-color="#7A1010"/>
+    </linearGradient>
+    <linearGradient id="fgFeatherOrange" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F57C00"/><stop offset="1" stop-color="#8F3200"/>
+    </linearGradient>
+    <linearGradient id="fgFeatherGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFCA28"/><stop offset="1" stop-color="#B28704"/>
+    </linearGradient>
+
+    <!-- Đổ bóng mặt đất -->
+    <radialGradient id="tgFloorShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#0E0401" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#0E0401" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- MẪU QUẢ BÍ NGÔ VÀNG CAM TIỀN CẢNH -->
+    <g id="fg_harvest_pumpkin">
+      <path d="M -2 -24 C -2 -34 6 -38 12 -38 C 10 -31 5 -27 4 -24 Z" fill="#4B6B22" stroke="#2B4010" stroke-width="1.5"/>
+      <ellipse cx="-18" cy="2" rx="16" ry="24" fill="#E65100" stroke="#6E2300" stroke-width="2"/>
+      <ellipse cx="18" cy="2" rx="16" ry="24" fill="#E65100" stroke="#6E2300" stroke-width="2"/>
+      <ellipse cx="0" cy="2" rx="18" ry="26" fill="#FF8A1F" stroke="#6E2300" stroke-width="2"/>
+    </g>
+
+    <!-- MẪU BẮP NGÔ VÀNG ÓNG -->
+    <g id="fg_sweet_corn">
+      <path d="M -8 10 Q -18 -6 -10 -20 Q -4 -8 0 8 Z" fill="#689F38"/>
+      <path d="M 8 10 Q 18 -6 10 -20 Q 4 -8 0 8 Z" fill="#7CB342"/>
+      <ellipse cx="0" cy="-10" rx="9" ry="24" fill="#FFCA28" stroke="#C47D00" stroke-width="1.5"/>
+      <path d="M -6 -24 L 6 -24 M -7 -14 L 7 -14 M -7 -4 L 7 -4 M -5 6 L 5 6" stroke="#B26A00" stroke-width="1.5" opacity="0.6"/>
+    </g>
+
+    <!-- MẪU LÁ PHONG RƠI TIỀN CẢNH SẮC NÉT -->
+    <g id="fg_tg_maple_leaf">
+      <path d="M 0 -18 C 1 -13, 3 -13, 7 -15 C 6 -11, 9 -9, 13 -12 C 11 -7, 12 -5, 15 -4 C 12 -1, 12 1, 13 6 C 9 4, 8 5, 6 9 C 4 6, 3 6, 0 8 C -3 6, -4 6, -6 9 C -8 5, -9 4, -13 6 C -12 1, -12 -1, -15 -4 C -12 -5, -11 -7, -13 -12 C -9 -9, -6 -11, -7 -15 C -3 -13, -1 -13, 0 -18 Z" 
+            stroke="#000000" stroke-opacity="0.18" stroke-width="1"/>
+      <line x1="0" y1="-14" x2="0" y2="8" stroke="#000000" stroke-opacity="0.25" stroke-width="1.4"/>
+      <line x1="0" y1="8" x2="0" y2="18" stroke="#4A220D" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </defs>
+
+  <!-- THẢM BÀN TIỆC GỖ TIỀN CẢNH (Seamless chu kỳ 540px: x=0 (y=610) và x=1080 (y=610)) -->
+  <path d="M 0 610 
+           Q 135 570 270 605 T 540 610 
+           Q 675 570 810 605 T 1080 610 
+           L 1080 960 L 0 960 Z" 
+        fill="url(#tgTableFloor)"/>
+
+  <!-- Viền gờ nẹp bàn gỗ đón ánh nắng vàng ấm -->
+  <path d="M 0 610 Q 135 570 270 605 T 540 610 Q 675 570 810 605 T 1080 610" 
+        fill="none" stroke="#FFA726" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 0 616 Q 135 576 270 611 T 540 616 Q 675 576 810 611 T 1080 616" 
+        fill="none" stroke="#8D4316" stroke-opacity="0.5" stroke-width="2.5"/>
+
+  <!-- ==================== CÁC VẬT THỂ TIỀN CẢNH ==================== -->
+
+  <!-- 1. CHÚ GÀ TÂY PILGRIM 3D KHỔNG LỒ (Bên trái, x ≈ 130) -->
+  <g transform="translate(130, 480)">
+    <ellipse cx="0" cy="120" rx="65" ry="18" fill="url(#tgFloorShadow)"/>
+
+    <!-- ĐUÔI GÀ TÂY XÒE RỘNG ĐA TẦNG -->
+    <g transform="rotate(-68)"><ellipse cx="0" cy="-75" rx="16" ry="60" fill="url(#fgFeatherRed)" stroke="#3D0F00" stroke-width="2.5"/><ellipse cx="0" cy="-90" rx="8" ry="24" fill="#FFF9C4" opacity="0.75"/></g>
+    <g transform="rotate(-45)"><ellipse cx="0" cy="-75" rx="16" ry="60" fill="url(#fgFeatherOrange)" stroke="#3D0F00" stroke-width="2.5"/><ellipse cx="0" cy="-90" rx="8" ry="24" fill="#FFF9C4" opacity="0.75"/></g>
+    <g transform="rotate(-22)"><ellipse cx="0" cy="-75" rx="16" ry="60" fill="url(#fgFeatherGold)" stroke="#3D0F00" stroke-width="2.5"/><ellipse cx="0" cy="-90" rx="8" ry="24" fill="#FFF9C4" opacity="0.75"/></g>
+    <g transform="rotate(0)"><ellipse cx="0" cy="-78" rx="17" ry="62" fill="#79461A" stroke="#3D0F00" stroke-width="2.5"/><ellipse cx="0" cy="-94" rx="8" ry="24" fill="#FFF9C4" opacity="0.75"/></g>
+    <g transform="rotate(22)"><ellipse cx="0" cy="-75" rx="16" ry="60" fill="url(#fgFeatherGold)" stroke="#3D0F00" stroke-width="2.5"/><ellipse cx="0" cy="-90" rx="8" ry="24" fill="#FFF9C4" opacity="0.75"/></g>
+    <g transform="rotate(45)"><ellipse cx="0" cy="-75" rx="16" ry="60" fill="url(#fgFeatherOrange)" stroke="#3D0F00" stroke-width="2.5"/><ellipse cx="0" cy="-90" rx="8" ry="24" fill="#FFF9C4" opacity="0.75"/></g>
+    <g transform="rotate(68)"><ellipse cx="0" cy="-75" rx="16" ry="60" fill="url(#fgFeatherRed)" stroke="#3D0F00" stroke-width="2.5"/><ellipse cx="0" cy="-90" rx="8" ry="24" fill="#FFF9C4" opacity="0.75"/></g>
+
+    <!-- THÂN GÀ TÂY TRÒN MẬP 3D -->
+    <ellipse cx="0" cy="65" rx="46" ry="40" fill="#79461A" stroke="#361705" stroke-width="3"/>
+    <ellipse cx="0" cy="74" rx="28" ry="24" fill="#A46830"/>
+
+    <!-- ĐẦU GÀ TÂY & MŨ PILGRIM -->
+    <circle cx="0" cy="20" r="22" fill="#8D5220" stroke="#361705" stroke-width="2.8"/>
+    <circle cx="-8" cy="16" r="5" fill="#FFFFFF"/><circle cx="-7" cy="16" r="2.5" fill="#1C0D04"/>
+    <circle cx="8" cy="16" r="5" fill="#FFFFFF"/><circle cx="7" cy="16" r="2.5" fill="#1C0D04"/>
+    <polygon points="0,24 -10,36 10,36" fill="#FFC107" stroke="#D87A00" stroke-width="1.5"/>
+    <path d="M 0 35 C -8 40 -8 54 0 55 C 7 54 7 42 0 35 Z" fill="#D32F2F"/>
+
+    <!-- Mũ Pilgrim -->
+    <g transform="translate(0, -3)">
+      <ellipse cx="0" cy="4" rx="30" ry="7.5" fill="#2E1B10" stroke="#170A04" stroke-width="2"/>
+      <polygon points="-16,4 16,4 12,-32 -12,-32" fill="#3D2415" stroke="#170A04" stroke-width="2"/>
+      <rect x="-14" y="-5" width="28" height="9" fill="#FFB300"/>
+      <rect x="-6" y="-6" width="12" height="11" fill="#FFD54F" stroke="#7A4B00" stroke-width="1.5"/>
+    </g>
+
+    <!-- Chân gà tây cắm trên sàn gỗ -->
+    <line x1="-14" y1="102" x2="-14" y2="116" stroke="#F57C00" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="14" y1="102" x2="14" y2="116" stroke="#F57C00" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- 2. SỪNG DÊ BỘI THU (CORNUCOPIA) & NÔNG SẢN Ở GIỮA (x ≈ 420 - 540) -->
+  <g transform="translate(420, 560)">
+    <ellipse cx="40" cy="45" rx="55" ry="14" fill="url(#tgFloorShadow)"/>
+    <!-- Chiếc sừng dê đan bằng mây tre (Cornucopia basket) -->
+    <path d="M -20 20 C 10 40 40 45 70 30 C 50 10 20 -15 -10 -15 C -35 -15 -45 5 -20 20 Z" 
+          fill="#8D5B28" stroke="#4A2B0A" stroke-width="3"/>
+    <path d="M -15 -10 C -30 0 -25 15 -5 18" stroke="#5E3812" stroke-width="2.5" fill="none"/>
+    <path d="M 5 -5 C -10 10 -5 25 15 26" stroke="#5E3812" stroke-width="2.5" fill="none"/>
+
+    <!-- Nông sản tràn ra khỏi sừng dê -->
+    <g transform="translate(65, 10)"><use href="#fg_harvest_pumpkin"/></g>
+    <g transform="translate(30, 20) rotate(-25)"><use href="#fg_sweet_corn"/></g>
+    <circle cx="85" cy="35" r="14" fill="#D32F2F" stroke="#4A1408" stroke-width="1.8"/>
+    <circle cx="102" cy="40" r="12" fill="#7B1FA2" stroke="#310544" stroke-width="1.5"/>
+  </g>
+
+  <!-- 3. CHÚ GÀ TÂY THỨ HAI & GIỎ THU HOẠCH (Bên phải, x ≈ 880) -->
+  <g transform="translate(860, 480)">
+    <ellipse cx="0" cy="120" rx="65" ry="18" fill="url(#tgFloorShadow)"/>
+    <!-- Đuôi xòe -->
+    <g transform="rotate(-60)"><ellipse cx="0" cy="-70" rx="15" ry="55" fill="url(#fgFeatherRed)" stroke="#3D0F00" stroke-width="2.2"/></g>
+    <g transform="rotate(-30)"><ellipse cx="0" cy="-70" rx="15" ry="55" fill="url(#fgFeatherOrange)" stroke="#3D0F00" stroke-width="2.2"/></g>
+    <g transform="rotate(0)"><ellipse cx="0" cy="-72" rx="16" ry="58" fill="url(#fgFeatherGold)" stroke="#3D0F00" stroke-width="2.2"/></g>
+    <g transform="rotate(30)"><ellipse cx="0" cy="-70" rx="15" ry="55" fill="url(#fgFeatherOrange)" stroke="#3D0F00" stroke-width="2.2"/></g>
+    <g transform="rotate(60)"><ellipse cx="0" cy="-70" rx="15" ry="55" fill="url(#fgFeatherRed)" stroke="#3D0F00" stroke-width="2.2"/></g>
+    <!-- Thân & đầu -->
+    <ellipse cx="0" cy="65" rx="44" ry="38" fill="#79461A" stroke="#361705" stroke-width="3"/>
+    <ellipse cx="0" cy="74" rx="26" ry="22" fill="#A46830"/>
+    <circle cx="0" cy="20" r="20" fill="#8D5220" stroke="#361705" stroke-width="2.5"/>
+    <polygon points="0,24 -9,34 9,34" fill="#FFC107"/>
+    <path d="M 0 33 C -7 38 -7 50 0 52 C 6 50 6 39 0 33 Z" fill="#D32F2F"/>
+
+    <!-- Giỏ bí ngô bên cạnh -->
+    <g transform="translate(80, 45)"><use href="#fg_harvest_pumpkin"/></g>
+  </g>
+
+  <!-- 4. MƯA LÁ PHONG ĐỎ VÀNG RƠI CẬN CẢNH MÁY QUAY -->
+  <g>
+    <g transform="translate(240, 430) rotate(35) scale(1.2)" fill="#D32F2F"><use href="#fg_tg_maple_leaf"/></g>
+    <g transform="translate(340, 470) rotate(-25) scale(1.05)" fill="#F57C00"><use href="#fg_tg_maple_leaf"/></g>
+    <g transform="translate(560, 490) rotate(50) scale(1.15)" fill="#FFB300"><use href="#fg_tg_maple_leaf"/></g>
+    <g transform="translate(760, 440) rotate(-40) scale(1.1)" fill="#C2185B"><use href="#fg_tg_maple_leaf"/></g>
+    <g transform="translate(980, 460) rotate(30) scale(1.2)" fill="#D32F2F"><use href="#fg_tg_maple_leaf"/></g>
+  </g>
+</svg>

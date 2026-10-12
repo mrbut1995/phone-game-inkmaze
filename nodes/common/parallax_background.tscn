@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dr20scu5w0j6k" path="res://scripts/nodes/common/background.gd" id="1_bg"]
 [ext_resource type="Texture2D" uid="uid://burq6os2jxjwn" path="res://assets/images-png/game/background.png" id="2_paper"]
-[ext_resource type="Texture2D" uid="uid://b8i2ymfqltwi5" path="res://assets/images-png/common/bg_hole_column.png" id="3_holes"]
+[ext_resource uid="uid://b8i2ymfqltwi5" type="Texture2D" path="res://assets/images-png/common/bg_hole_column.png" id="3_holes"]
 [ext_resource type="Texture2D" uid="uid://qdmmbc3243de" path="res://assets/images-png/common/bg_doodle_tile.png" id="4_doodles"]
 
 [node name="Background" type="Control" unique_id=284872059 node_paths=PackedStringArray("layer_far", "layer_mid", "layer_near", "paper_art", "holes_art", "doodles_art")]
@@ -34,15 +34,16 @@ color = Color(0.98039216, 0.9607844, 0.92156863, 1)
 [node name="PaperFar" type="Parallax2D" parent="." unique_id=1024311938]
 scroll_scale = Vector2(0, 0)
 
-[node name="Art" type="TextureRect" parent="PaperFar" unique_id=66681557]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Art" type="NinePatchRect" parent="PaperFar" unique_id=66681557]
+layout_mode = 0
 mouse_filter = 2
 texture = ExtResource("2_paper")
-expand_mode = 1
+patch_margin_left = 96
+patch_margin_top = 0
+patch_margin_right = 264
+patch_margin_bottom = 0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [node name="HolesMid" type="Parallax2D" parent="." unique_id=33373278]
 scroll_scale = Vector2(0.14, 0.14)

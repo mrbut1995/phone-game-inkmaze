@@ -4,7 +4,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/event_card.gd" id="1_card"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
+[ext_resource uid="uid://cwum1n04j1scb" type="Texture2D" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
 
 [sub_resource type="StyleBoxFlat" id="sb_bg"]
 bg_color = Color(0.1, 0.1, 0.1, 0.6)

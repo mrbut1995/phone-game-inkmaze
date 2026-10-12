@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Bầu trời hoàng hôn sa mạc chuyển sắc huyền bí -->
+    <linearGradient id="tombSkyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE09C"/>
+      <stop offset="0.35" stop-color="#E59E50"/>
+      <stop offset="0.7" stop-color="#9E4E1C"/>
+      <stop offset="1" stop-color="#4E2009"/>
+    </linearGradient>
+
+    <!-- Hào quang mặt trăng sa mạc -->
+    <radialGradient id="tombMoonAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFFDE8" stop-opacity="1"/>
+      <stop offset="0.4" stop-color="#FFE8A3" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#E8A752" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Dãy cao nguyên sa mạc phía chân trời -->
+    <linearGradient id="tombDistantPlateau" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8F4017"/>
+      <stop offset="1" stop-color="#4F1F07"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Nền trời sa mạc bao phủ toàn canvas -->
+  <rect width="1080" height="960" fill="url(#tombSkyGrad)"/>
+
+  <!-- Mặt trăng sa mạc tròn đầy huyền bí (x = 360, y = 200) -->
+  <circle cx="360" cy="200" r="115" fill="url(#tombMoonAura)"/>
+  <circle cx="360" cy="200" r="44" fill="#FFF5C7"/>
+  <!-- Vết bề mặt trăng mờ ảo -->
+  <circle cx="348" cy="188" r="9" fill="#F8DE97" opacity="0.45"/>
+  <circle cx="376" cy="214" r="13" fill="#F8DE97" opacity="0.35"/>
+  <circle cx="355" cy="225" r="7" fill="#F8DE97" opacity="0.4"/>
+
+  <!-- Mặt trăng lặp chu kỳ đối ứng bên phải (x = 900) -->
+  <circle cx="900" cy="200" r="115" fill="url(#tombMoonAura)"/>
+  <circle cx="900" cy="200" r="44" fill="#FFF5C7"/>
+  <circle cx="888" cy="188" r="9" fill="#F8DE97" opacity="0.45"/>
+  <circle cx="916" cy="214" r="13" fill="#F8DE97" opacity="0.35"/>
+
+  <!-- Các chòm sao đêm Ai Cập & Bụi sao lấp lánh (Orion & Sirius) -->
+  <g fill="#FFFFFF">
+    <path d="M 120 130 Q 120 136 126 136 Q 120 136 120 142 Q 120 136 114 136 Q 120 136 120 130 Z" opacity="0.95"/>
+    <path d="M 230 160 Q 230 165 234 165 Q 230 165 230 170 Q 230 165 226 165 Q 230 165 230 160 Z" opacity="0.9"/>
+    <path d="M 480 140 Q 480 146 486 146 Q 480 146 480 152 Q 480 146 474 146 Q 480 146 480 140 Z" opacity="0.95"/>
+    <path d="M 660 130 Q 660 136 666 136 Q 660 136 660 142 Q 660 136 654 136 Q 660 136 660 130 Z" opacity="0.95"/>
+    <path d="M 770 160 Q 770 165 774 165 Q 770 165 770 170 Q 770 165 766 165 Q 770 165 770 160 Z" opacity="0.9"/>
+    <path d="M 1020 140 Q 1020 146 1026 146 Q 1020 146 1020 152 Q 1020 146 1014 146 Q 1020 146 1020 140 Z" opacity="0.95"/>
+
+    <!-- Sao nhỏ rải rác -->
+    <circle cx="80" cy="210" r="1.5" opacity="0.75"/>
+    <circle cx="180" cy="110" r="1.8" opacity="0.8"/>
+    <circle cx="280" cy="240" r="1.4" opacity="0.7"/>
+    <circle cx="620" cy="210" r="1.5" opacity="0.75"/>
+    <circle cx="720" cy="110" r="1.8" opacity="0.8"/>
+    <circle cx="820" cy="240" r="1.4" opacity="0.7"/>
+  </g>
+
+  <!-- ĐƯỜNG CHÂN TRỜI: CAO NGUYÊN ĐÁ & KIM TỰ THÁP XA XĂM -->
+  <!-- Seamless: Khớp nối tại x=0 và x=1080 ở y=510 -->
+  <path d="M 0 510 
+           L 60 510 L 90 495 L 120 510 L 220 510 
+           L 260 480 L 300 510 L 420 510 L 470 490 L 520 510 L 540 510 
+           L 600 510 L 630 495 L 660 510 L 760 510 
+           L 800 480 L 840 510 L 960 510 L 1010 490 L 1060 510 L 1080 510 
+           L 1080 580 L 0 580 Z" 
+        fill="url(#tombDistantPlateau)" opacity="0.6"/>
+</svg>

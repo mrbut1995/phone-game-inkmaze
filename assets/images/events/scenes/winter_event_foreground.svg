@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Thảm tuyết trắng muốt tiền cảnh (Nền tương phản tốt cho UI) -->
+    <linearGradient id="winStageFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.25" stop-color="#EEF6FD"/>
+      <stop offset="0.65" stop-color="#D9ECFB"/>
+      <stop offset="1" stop-color="#BFDEF5"/>
+    </linearGradient>
+
+    <!-- Đổ bóng trên nền tuyết lạnh -->
+    <radialGradient id="winFloorShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#6097C2" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#6097C2" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- MẪU BÔNG TUYẾT PHA LÊ 6 CÁNH TIỀN CẢNH LỚN -->
+    <g id="fg_crystal_snowflake">
+      <circle cx="0" cy="0" r="42" fill="#E1F2FE" opacity="0.35"/>
+      <g stroke="#FFFFFF" stroke-linecap="round">
+        <line x1="0" y1="0" x2="0" y2="-40" stroke-width="4"/>
+        <line x1="0" y1="-22" x2="11" y2="-32" stroke-width="2.8"/><line x1="0" y1="-22" x2="-11" y2="-32" stroke-width="2.8"/>
+        
+        <line x1="0" y1="0" x2="34.6" y2="-20" stroke-width="4"/>
+        <line x1="19.5" y1="-11.2" x2="29.5" y2="-6.2" stroke-width="2.8"/><line x1="19.5" y1="-11.2" x2="24.5" y2="-21.2" stroke-width="2.8"/>
+
+        <line x1="0" y1="0" x2="34.6" y2="20" stroke-width="4"/>
+        <line x1="19.5" y1="11.2" x2="24.5" y2="21.2" stroke-width="2.8"/><line x1="19.5" y1="11.2" x2="29.5" y2="6.2" stroke-width="2.8"/>
+
+        <line x1="0" y1="0" x2="0" y2="40" stroke-width="4"/>
+        <line x1="0" y1="22" x2="-11" y2="32" stroke-width="2.8"/><line x1="0" y1="22" x2="11" y2="32" stroke-width="2.8"/>
+
+        <line x1="0" y1="0" x2="-34.6" y2="20" stroke-width="4"/>
+        <line x1="-19.5" y1="11.2" x2="-29.5" y2="6.2" stroke-width="2.8"/><line x1="-19.5" y1="11.2" x2="-24.5" y2="21.2" stroke-width="2.8"/>
+
+        <line x1="0" y1="0" x2="-34.6" y2="-20" stroke-width="4"/>
+        <line x1="-19.5" y1="-11.2" x2="-24.5" y2="-21.2" stroke-width="2.8"/><line x1="-19.5" y1="-11.2" x2="-29.5" y2="-6.2" stroke-width="2.8"/>
+      </g>
+      <circle cx="0" cy="0" r="6" fill="#CBE6FE" stroke="#FFFFFF" stroke-width="2"/>
+    </g>
+
+    <!-- MẪU CÂY THÔNG TIỀN CẢNH ĐẠI THỤ -->
+    <g id="fg_giant_pine">
+      <rect x="-8" y="50" width="16" height="50" fill="#3E2723"/>
+      <!-- Tầng 1 -->
+      <polygon points="0,-10 -55,45 55,45" fill="#1B4D3E" stroke="#0E3328" stroke-width="2"/>
+      <path d="M -55 45 Q 0 25 55 45 Q 35 32 0 32 Q -35 32 -55 45 Z" fill="#FFFFFF"/>
+      <!-- Tầng 2 -->
+      <polygon points="0,-50 -44,5 44,5" fill="#1B4D3E" stroke="#0E3328" stroke-width="2"/>
+      <path d="M -44 5 Q 0 -15 44 5 Q 28 -8 0 -8 Q -28 -8 -44 5 Z" fill="#FFFFFF"/>
+      <!-- Tầng 3 -->
+      <polygon points="0,-90 -32,-35 32,-35" fill="#1B4D3E" stroke="#0E3328" stroke-width="2"/>
+      <path d="M -32 -35 Q 0 -55 32 -35 Q 20 -48 0 -48 Q -20 -48 -32 -35 Z" fill="#FFFFFF"/>
+      <!-- Chóp tuyết đỉnh -->
+      <polygon points="0,-98 -8,-82 8,-82" fill="#FFFFFF"/>
+    </g>
+  </defs>
+
+  <!-- THẢM TUYẾT TRẮNG MUỐT TIỀN CẢNH (Seamless chu kỳ 540px: x=0 (y=610) và x=1080 (y=610)) -->
+  <path d="M 0 610 
+           Q 135 570 270 605 T 540 610 
+           Q 675 570 810 605 T 1080 610 
+           L 1080 960 L 0 960 Z" 
+        fill="url(#winStageFloor)"/>
+
+  <!-- Viền mép đồi tuyết xanh băng óng ánh đón ánh nắng lạnh -->
+  <path d="M 0 610 Q 135 570 270 605 T 540 610 Q 675 570 810 605 T 1080 610" 
+        fill="none" stroke="#CBE6FE" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 0 616 Q 135 576 270 611 T 540 616 Q 675 576 810 611 T 1080 616" 
+        fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+
+  <!-- ==================== CÁC VẬT THỂ TIỀN CẢNH ==================== -->
+
+  <!-- 1. CHÚ NGƯỜI TUYẾT 3D NGỘ NGHĨNH (Bên trái, x ≈ 130) -->
+  <g transform="translate(130, 520)">
+    <!-- Đổ bóng trên tuyết -->
+    <ellipse cx="0" cy="95" rx="52" ry="16" fill="url(#winFloorShadow)"/>
+
+    <!-- Thân dưới tròn xoe -->
+    <circle cx="0" cy="55" r="42" fill="#FFFFFF" stroke="#C5E3F9" stroke-width="2.5"/>
+    <!-- Cúc áo than đen -->
+    <circle cx="0" cy="42" r="3.5" fill="#212121"/><circle cx="0" cy="58" r="3.5" fill="#212121"/><circle cx="0" cy="74" r="3.5" fill="#212121"/>
+
+    <!-- Thân trên / Đầu người tuyết -->
+    <circle cx="0" cy="-6" r="30" fill="#FFFFFF" stroke="#C5E3F9" stroke-width="2.5"/>
+    <!-- Mắt than đen & miệng cười đá sỏi -->
+    <circle cx="-9" cy="-12" r="3.2" fill="#212121"/><circle cx="-8" cy="-13" r="1.2" fill="#FFFFFF"/>
+    <circle cx="9" cy="-12" r="3.2" fill="#212121"/><circle cx="10" cy="-13" r="1.2" fill="#FFFFFF"/>
+    <circle cx="-12" cy="5" r="2" fill="#424242"/><circle cx="-6" cy="9" r="2" fill="#424242"/><circle cx="0" cy="10" r="2" fill="#424242"/><circle cx="6" cy="9" r="2" fill="#424242"/><circle cx="12" cy="5" r="2" fill="#424242"/>
+
+    <!-- Mũi cà rốt cam nhọn hoắt -->
+    <polygon points="0,-4 24,0 0,3" fill="#FF6D00" stroke="#E65100" stroke-width="1"/>
+
+    <!-- Khăn quàng cổ len đỏ tươi -->
+    <path d="M -24 16 Q 0 25 24 16 L 22 24 Q 0 33 -22 24 Z" fill="#D32F2F"/>
+    <rect x="8" y="22" width="10" height="26" rx="2" fill="#D32F2F" transform="rotate(15 8 22)"/>
+
+    <!-- Mũ phớt đen trên đầu -->
+    <g transform="translate(0, -32)">
+      <ellipse cx="0" cy="0" rx="28" ry="6" fill="#37474F"/>
+      <rect x="-16" y="-22" width="32" height="22" fill="#455A64"/>
+      <rect x="-16" y="-6" width="32" height="6" fill="#D32F2F"/>
+    </g>
+
+    <!-- Hai tay cành cây khô -->
+    <path d="M -28 35 L -52 18 M -46 22 L -56 30" stroke="#5D4037" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 28 35 L 54 15 M 48 20 L 52 5" stroke="#5D4037" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- 2. ĐIÊU KHẮC HOA TUYẾT PHA LÊ LỚN Ở GIỮA (x ≈ 420 - 540) -->
+  <g transform="translate(450, 560)">
+    <ellipse cx="0" cy="50" rx="42" ry="12" fill="url(#winFloorShadow)"/>
+    <use href="#fg_crystal_snowflake"/>
+  </g>
+
+  <!-- 3. CÂY THÔNG ĐẠI THỤ PHỦ TUYẾT TRĨU CÀNH (Bên phải, x ≈ 880) -->
+  <g transform="translate(860, 480)">
+    <ellipse cx="0" cy="100" rx="60" ry="16" fill="url(#winFloorShadow)"/>
+    <use href="#fg_giant_pine"/>
+    <!-- Người tuyết nhỏ bên cạnh -->
+    <g transform="translate(75, 40) scale(0.65)">
+      <circle cx="0" cy="55" r="42" fill="#FFFFFF" stroke="#C5E3F9" stroke-width="2.5"/>
+      <circle cx="0" cy="-6" r="30" fill="#FFFFFF" stroke="#C5E3F9" stroke-width="2.5"/>
+      <polygon points="0,-4 20,0 0,3" fill="#FF6D00"/>
+      <rect x="-16" y="16" width="32" height="10" rx="2" fill="#1976D2"/>
+    </g>
+  </g>
+
+  <!-- 4. MƯA BÔNG TUYẾT TRẮNG RƠI DÀY ĐẶC CẬN MÁY QUAY -->
+  <g fill="#FFFFFF" opacity="0.95">
+    <circle cx="80" cy="440" r="4"/><circle cx="240" cy="410" r="5"/><circle cx="360" cy="480" r="4.5"/>
+    <circle cx="560" cy="430" r="4"/><circle cx="700" cy="460" r="5"/><circle cx="980" cy="420" r="4.5"/>
+    <!-- Tinh thể tuyết nhỏ lấp lánh -->
+    <path d="M 180 430 Q 180 436 185 436 Q 180 436 180 442 Q 180 436 175 436 Q 180 436 180 430 Z"/>
+    <path d="M 640 440 Q 640 446 645 446 Q 640 446 640 452 Q 640 446 635 446 Q 640 446 640 440 Z"/>
+    <path d="M 1040 440 Q 1040 446 1045 446 Q 1040 446 1040 452 Q 1040 446 1035 446 Q 1040 446 1040 440 Z"/>
+  </g>
+</svg>

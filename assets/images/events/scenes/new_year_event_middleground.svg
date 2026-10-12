@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Khối cao ốc thành phố tầng trung -->
+    <linearGradient id="nyMidCity" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141846"/>
+      <stop offset="0.45" stop-color="#0B0E2A"/>
+      <stop offset="1" stop-color="#050616"/>
+    </linearGradient>
+
+    <!-- Ánh sáng cửa sổ vàng ấm -->
+    <linearGradient id="winGoldLight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF9D2"/>
+      <stop offset="0.5" stop-color="#FFD54F"/>
+      <stop offset="1" stop-color="#FFA000"/>
+    </linearGradient>
+
+    <!-- MẪU TÒA THÁP CHỌC TRỜI HIỆN ĐẠI KÈM MÀN HÌNH LED -->
+    <g id="mg_skyscraper_group">
+      <!-- Tòa tháp trung tâm có tháp Spire cao vút -->
+      <rect x="0" y="30" width="80" height="150" fill="url(#nyMidCity)" stroke="#222A6B" stroke-width="1.5"/>
+      <polygon points="40,-35 25,30 55,30" fill="#1C2260"/>
+      <line x1="40" y1="-50" x2="40" y2="-35" stroke="#FFD54F" stroke-width="2"/>
+      <circle cx="40" cy="-52" r="3" fill="#FF1744"/>
+
+      <!-- Màn hình LED lớn hiển thị HAPPY NEW YEAR rực sáng -->
+      <rect x="8" y="45" width="64" height="28" rx="4" fill="#02081C" stroke="#00E5FF" stroke-width="1.8"/>
+      <text x="40" y="64" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" font-weight="900" fill="#00E5FF" letter-spacing="1">2027</text>
+
+      <!-- Các dãy cửa sổ văn phòng sáng đèn -->
+      <g fill="url(#winGoldLight)" opacity="0.9">
+        <rect x="12" y="85" width="10" height="12" rx="2"/>
+        <rect x="28" y="85" width="10" height="12" rx="2"/>
+        <rect x="44" y="85" width="10" height="12" rx="2"/>
+        <rect x="60" y="85" width="10" height="12" rx="2"/>
+        <rect x="12" y="105" width="10" height="12" rx="2"/>
+        <rect x="28" y="105" width="10" height="12" rx="2"/>
+        <rect x="44" y="105" width="10" height="12" rx="2"/>
+        <rect x="60" y="105" width="10" height="12" rx="2"/>
+        <rect x="12" y="125" width="10" height="12" rx="2"/>
+        <rect x="28" y="125" width="10" height="12" rx="2"/>
+        <rect x="44" y="125" width="10" height="12" rx="2"/>
+        <rect x="60" y="125" width="10" height="12" rx="2"/>
+      </g>
+
+      <!-- Tòa nhà kính bên cạnh (Xanh Cyan) -->
+      <rect x="85" y="65" width="65" height="115" fill="#0C1033" stroke="#00E5FF" stroke-opacity="0.3" stroke-width="1.5"/>
+      <g fill="#00E5FF" opacity="0.8">
+        <rect x="95" y="80" width="14" height="6" rx="1"/>
+        <rect x="120" y="80" width="14" height="6" rx="1"/>
+        <rect x="95" y="96" width="14" height="6" rx="1"/>
+        <rect x="120" y="96" width="14" height="6" rx="1"/>
+        <rect x="95" y="112" width="14" height="6" rx="1"/>
+        <rect x="120" y="112" width="14" height="6" rx="1"/>
+      </g>
+    </g>
+  </defs>
+
+  <!-- ĐƯỜNG CHÂN TRỜI CAO ỐC THÀNH PHỐ TẦNG TRUNG (Seamless: x=0 (y=530) và x=1080 (y=530)) -->
+  <path d="M 0 530 
+           L 40 530 L 40 480 L 110 480 L 110 530 L 180 530 
+           L 230 450 L 320 450 L 360 530 L 440 530 L 470 490 L 510 490 L 540 530 
+           L 580 530 L 580 480 L 650 480 L 650 530 L 720 530 
+           L 770 450 L 860 450 L 900 530 L 980 530 L 1010 490 L 1050 490 L 1080 530 
+           L 1080 675 L 0 675 Z" 
+        fill="url(#nyMidCity)"/>
+
+  <!-- ==================== CỤM CAO ỐC HIỆN ĐẠI & MÀN HÌNH ĐẾM NGƯỢC ==================== -->
+  <!-- Cụm cao ốc 1 (x ≈ 180) -->
+  <g transform="translate(180, 440)"><use href="#mg_skyscraper_group"/></g>
+
+  <!-- Cụm cao ốc 2 (Lặp chu kỳ đối ứng bên phải, x ≈ 720) -->
+  <g transform="translate(720, 440)"><use href="#mg_skyscraper_group"/></g>
+
+  <!-- PHÁO HOA TẦM TRUNG BẮN LÊN TỪ NÓC CÁC TÒA NHÀ -->
+  <g transform="translate(110, 420) scale(0.65)">
+    <circle cx="0" cy="0" r="35" fill="#FFD54F" opacity="0.4"/>
+    <g stroke="#FFD54F" stroke-width="2.5" stroke-linecap="round">
+      <line x1="0" y1="-6" x2="0" y2="-28"/><line x1="5" y1="-5" x2="20" y2="-20"/>
+      <line x1="6" y1="0" x2="28" y2="0"/><line x1="5" y1="5" x2="20" y2="20"/>
+      <line x1="-5" y1="5" x2="-20" y2="20"/><line x1="-6" y1="0" x2="-28" y2="0"/>
+    </g>
+  </g>
+  <g transform="translate(650, 420) scale(0.65)">
+    <circle cx="0" cy="0" r="35" fill="#FFD54F" opacity="0.4"/>
+    <g stroke="#FFD54F" stroke-width="2.5" stroke-linecap="round">
+      <line x1="0" y1="-6" x2="0" y2="-28"/><line x1="5" y1="-5" x2="20" y2="-20"/>
+      <line x1="6" y1="0" x2="28" y2="0"/><line x1="5" y1="5" x2="20" y2="20"/>
+      <line x1="-5" y1="5" x2="-20" y2="20"/><line x1="-6" y1="0" x2="-28" y2="0"/>
+    </g>
+  </g>
+
+  <!-- DẢI RUY-BĂNG LỄ HỘI LƠ LỬNG TRONG GIÓ ĐÊM -->
+  <g opacity="0.85">
+    <path d="M 360 460 Q 380 480 365 500 Q 385 520 370 540" stroke="#FFD54F" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M 480 440 Q 500 460 485 480 Q 505 500 490 520" stroke="#FF4081" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M 900 460 Q 920 480 905 500 Q 925 520 910 540" stroke="#FFD54F" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M 1020 440 Q 1040 460 1025 480 Q 1045 500 1030 520" stroke="#FF4081" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

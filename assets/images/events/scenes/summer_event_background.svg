@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1FA5F0"/>
+      <stop offset="0.45" stop-color="#7CE1FF"/>
+      <stop offset="0.8" stop-color="#FFF0BE"/>
+      <stop offset="1" stop-color="#FFE094"/>
+    </linearGradient>
+
+    <radialGradient id="sunAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFFDF0" stop-opacity="0.95"/>
+      <stop offset="0.4" stop-color="#FFE875" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#FFE875" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Nền trời bao phủ toàn màn hình -->
+  <rect width="1080" height="960" fill="url(#skyGrad)"/>
+
+  <!-- Mặt trời & hào quang -->
+  <circle cx="360" cy="180" r="110" fill="url(#sunAura)"/>
+  <circle cx="360" cy="180" r="42" fill="#FFF066"/>
+  <g stroke="#FFE875" stroke-width="3" stroke-linecap="round" opacity="0.75">
+    <line x1="360" y1="115" x2="360" y2="95"/>
+    <line x1="360" y1="245" x2="360" y2="265"/>
+    <line x1="295" y1="180" x2="275" y2="180"/>
+    <line x1="425" y1="180" x2="445" y2="180"/>
+    <line x1="314" y1="134" x2="300" y2="120"/>
+    <line x1="406" y1="226" x2="420" y2="240"/>
+    <line x1="314" y1="226" x2="300" y2="240"/>
+    <line x1="406" y1="134" x2="420" y2="120"/>
+  </g>
+
+  <!-- Các cụm mây trắng (Lặp đối xứng theo chu kỳ 540px) -->
+  <g fill="#FFFFFF" fill-opacity="0.9">
+    <!-- Cụm mây 1 -->
+    <g transform="translate(140, 150) scale(1.1)">
+      <ellipse cx="0" cy="0" rx="36" ry="16"/>
+      <circle cx="-16" cy="-10" r="17"/>
+      <circle cx="10" cy="-15" r="21"/>
+      <circle cx="28" cy="-5" r="15"/>
+    </g>
+    <!-- Cụm mây 2 (Đối ứng tại x + 540) -->
+    <g transform="translate(680, 140) scale(1.1)">
+      <ellipse cx="0" cy="0" rx="36" ry="16"/>
+      <circle cx="-16" cy="-10" r="17"/>
+      <circle cx="10" cy="-15" r="21"/>
+      <circle cx="28" cy="-5" r="15"/>
+    </g>
+    <!-- Mây nhỏ tầng cao -->
+    <g transform="translate(440, 240) scale(0.7)" fill-opacity="0.75">
+      <ellipse cx="0" cy="0" rx="30" ry="12"/>
+      <circle cx="-12" cy="-8" r="13"/>
+      <circle cx="8" cy="-10" r="15"/>
+    </g>
+    <g transform="translate(980, 230) scale(0.7)" fill-opacity="0.75">
+      <ellipse cx="0" cy="0" rx="30" ry="12"/>
+      <circle cx="-12" cy="-8" r="13"/>
+      <circle cx="8" cy="-10" r="15"/>
+    </g>
+  </g>
+
+  <!-- Đàn chim hải âu xa -->
+  <g stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.9">
+    <path d="M 220 250 Q 228 238 236 250 M 236 250 Q 244 238 252 250"/>
+    <path d="M 256 268 Q 262 258 268 268 M 268 268 Q 274 258 280 268"/>
+    <path d="M 760 240 Q 768 228 776 240 M 776 240 Q 784 228 792 240"/>
+  </g>
+
+  <!-- Dãy đảo mờ xa xăm ở đường chân trời y = 440 (Khớp mép x=0 và x=1080) -->
+  <path d="M 0 440 
+           Q 80 415 160 428 Q 220 438 280 440 
+           L 480 440 Q 560 410 640 425 Q 700 435 760 440 
+           L 1080 440 L 1080 490 L 0 490 Z" 
+        fill="#4BAAC7" opacity="0.35"/>
+</svg>

@@ -1,134 +1,198 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
   <defs>
-    <!-- Pattern lưới trắng mờ trang trí -->
-    <pattern id="gw" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.1"/>
-    </pattern>
-
-    <!-- Gradient đỏ lễ hội Tết / Năm mới -->
-    <linearGradient id="bg_newyear" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#C62828"/>
-      <stop offset="0.5" stop-color="#B71C1C"/>
-      <stop offset="1" stop-color="#6D0E12"/>
-    </linearGradient>
-
-    <!-- ClipPath bo góc chuẩn 340x504 -->
+    <!-- Khung bo góc chuẩn thẻ sự kiện 340x504 -->
     <clipPath id="cardClip">
       <rect width="340" height="504" rx="28"/>
     </clipPath>
+
+    <!-- Nền dải màu kẹo ngọt Cá Tháng Tư -->
+    <linearGradient id="bg_april" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF59D"/>
+      <stop offset="0.35" stop-color="#FFD1EB"/>
+      <stop offset="0.7" stop-color="#FFA4DC"/>
+      <stop offset="1" stop-color="#FF7BC8"/>
+    </linearGradient>
+
+    <!-- Nền phẳng sạch cho vùng nội dung chữ (Safe Zone) -->
+    <linearGradient id="bg_text_candy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFD5F0"/>
+      <stop offset="0.35" stop-color="#FFAEE0"/>
+      <stop offset="1" stop-color="#FF82CA"/>
+    </linearGradient>
+
+    <!-- Vân lưới mờ nhận diện Design System -->
+    <pattern id="gd" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#3B0A45" stroke-width="1" opacity="0.06"/>
+    </pattern>
+
+    <!-- Chuông vàng kim loại 3D -->
+    <radialGradient id="bellGold" cx="35%" cy="30%" r="65%">
+      <stop offset="0" stop-color="#FFFDE7"/>
+      <stop offset="0.4" stop-color="#FFD54F"/>
+      <stop offset="0.8" stop-color="#FF9800"/>
+      <stop offset="1" stop-color="#C66900"/>
+    </radialGradient>
+
+    <!-- Mũi cà chua chú hề bóng 3D -->
+    <radialGradient id="clownNose" cx="35%" cy="30%" r="65%">
+      <stop offset="0" stop-color="#FF8DA1"/>
+      <stop offset="0.4" stop-color="#FF1744"/>
+      <stop offset="1" stop-color="#B70028"/>
+    </radialGradient>
+
+    <!-- Độ bóng 3D mặt cười -->
+    <radialGradient id="faceShade" cx="35%" cy="30%" r="65%">
+      <stop offset="0" stop-color="#FFFDE7"/>
+      <stop offset="0.6" stop-color="#FFE082"/>
+      <stop offset="1" stop-color="#FFCA28"/>
+    </radialGradient>
+
+    <!-- Mẫu quả chuông vàng lục lạc -->
+    <g id="jester_bell">
+      <circle cx="0" cy="0" r="9" fill="url(#bellGold)"/>
+      <ellipse cx="-2.5" cy="-2.5" rx="3" ry="1.8" fill="#FFFFFF" opacity="0.65"/>
+      <path d="M -5 3 L 5 3 M 0 3 L 0 7" stroke="#8D4F00" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="0" cy="3" r="1.5" fill="#8D4F00"/>
+    </g>
   </defs>
 
-  <!-- Container bọc clipPath theo form của Card sự kiện -->
+  <!-- Đổ bóng đáy thẻ -->
+  <rect x="0" y="10" width="340" height="504" rx="28" fill="#1E2830" fill-opacity="0.16"/>
+
   <g clip-path="url(#cardClip)">
-    <!-- 1. Lớp nền gradient & texture lưới -->
-    <rect width="340" height="504" fill="url(#bg_newyear)"/>
-    <rect width="340" height="504" fill="url(#gw)"/>
+    <!-- ============================================== -->
+    <!-- 1. LỚP NỀN GRADIENT & TEXTURE LƯỚI            -->
+    <!-- ============================================== -->
+    <rect width="340" height="504" fill="url(#bg_april)"/>
+    <rect width="340" height="504" fill="url(#gd)"/>
 
-    <!-- 2. Nhóm chi tiết artwork: Pháo hoa, Đèn lồng truyền thống, Dải viền vàng và Hoa mai -->
-    <g transform="translate(0,-50)">
-      <!-- Pháo hoa vàng lớn (ở giữa) -->
-      <line x1="235" y1="180" x2="264" y2="180" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="272" cy="180" r="2.8" fill="#FFE082"/>
-      <line x1="233" y1="188" x2="258" y2="202" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="265" cy="206" r="2.8" fill="#FFE082"/>
-      <line x1="228" y1="193" x2="242" y2="218" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="246" cy="225" r="2.8" fill="#FFE082"/>
-      <line x1="220" y1="195" x2="220" y2="224" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="220" cy="232" r="2.8" fill="#FFE082"/>
-      <line x1="212" y1="193" x2="198" y2="218" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="194" cy="225" r="2.8" fill="#FFE082"/>
-      <line x1="207" y1="188" x2="182" y2="202" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="175" cy="206" r="2.8" fill="#FFE082"/>
-      <line x1="205" y1="180" x2="176" y2="180" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="168" cy="180" r="2.8" fill="#FFE082"/>
-      <line x1="207" y1="172" x2="182" y2="158" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="175" cy="154" r="2.8" fill="#FFE082"/>
-      <line x1="212" y1="167" x2="198" y2="142" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="194" cy="135" r="2.8" fill="#FFE082"/>
-      <line x1="220" y1="165" x2="220" y2="136" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="220" cy="128" r="2.8" fill="#FFE082"/>
-      <line x1="228" y1="167" x2="242" y2="142" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="246" cy="135" r="2.8" fill="#FFE082"/>
-      <line x1="233" y1="172" x2="258" y2="158" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="265" cy="154" r="2.8" fill="#FFE082"/>
+    <!-- ============================================== -->
+    <!-- 2. TRANG TRÍ LỄ HỘI CARNIVAL PHÍA TRÊN         -->
+    <!-- (Dải cờ, ruy-băng, pháo giấy nghệ thuật)      -->
+    <!-- ============================================== -->
 
-      <!-- Pháo hoa hồng nhạt (bên trái) -->
-      <line x1="118" y1="130" x2="134" y2="130" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="138" cy="130" r="2.8" fill="#FFC1B0"/>
-      <line x1="117" y1="134" x2="131" y2="142" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="135" cy="144" r="2.8" fill="#FFC1B0"/>
-      <line x1="114" y1="137" x2="122" y2="151" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="124" cy="155" r="2.8" fill="#FFC1B0"/>
-      <line x1="110" y1="138" x2="110" y2="154" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="110" cy="158" r="2.8" fill="#FFC1B0"/>
-      <line x1="106" y1="137" x2="98" y2="151" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="96" cy="155" r="2.8" fill="#FFC1B0"/>
-      <line x1="103" y1="134" x2="89" y2="142" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="85" cy="144" r="2.8" fill="#FFC1B0"/>
-      <line x1="102" y1="130" x2="86" y2="130" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="82" cy="130" r="2.8" fill="#FFC1B0"/>
-      <line x1="103" y1="126" x2="89" y2="118" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="85" cy="116" r="2.8" fill="#FFC1B0"/>
-      <line x1="106" y1="123" x2="98" y2="109" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="96" cy="105" r="2.8" fill="#FFC1B0"/>
-      <line x1="110" y1="122" x2="110" y2="106" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="110" cy="102" r="2.8" fill="#FFC1B0"/>
-      <line x1="114" y1="123" x2="122" y2="109" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="124" cy="105" r="2.8" fill="#FFC1B0"/>
-      <line x1="117" y1="126" x2="131" y2="118" stroke="#FFC1B0" stroke-width="3" stroke-linecap="round"/><circle cx="135" cy="116" r="2.8" fill="#FFC1B0"/>
-
-      <!-- Pháo hoa vàng nhỏ (góc phải) -->
-      <line x1="306" y1="110" x2="318" y2="110" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="321" cy="110" r="2.8" fill="#FFE082"/>
-      <line x1="305" y1="113" x2="316" y2="119" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="318" cy="121" r="2.8" fill="#FFE082"/>
-      <line x1="303" y1="115" x2="309" y2="126" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="311" cy="128" r="2.8" fill="#FFE082"/>
-      <line x1="300" y1="116" x2="300" y2="128" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="300" cy="131" r="2.8" fill="#FFE082"/>
-      <line x1="297" y1="115" x2="291" y2="126" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="289" cy="128" r="2.8" fill="#FFE082"/>
-      <line x1="295" y1="113" x2="284" y2="119" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="282" cy="121" r="2.8" fill="#FFE082"/>
-      <line x1="294" y1="110" x2="282" y2="110" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="279" cy="110" r="2.8" fill="#FFE082"/>
-      <line x1="295" y1="107" x2="284" y2="101" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="282" cy="99" r="2.8" fill="#FFE082"/>
-      <line x1="297" y1="105" x2="291" y2="94" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="289" cy="92" r="2.8" fill="#FFE082"/>
-      <line x1="300" y1="104" x2="300" y2="92" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="300" cy="89" r="2.8" fill="#FFE082"/>
-      <line x1="303" y1="105" x2="309" y2="94" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="311" cy="92" r="2.8" fill="#FFE082"/>
-      <line x1="305" y1="107" x2="316" y2="101" stroke="#FFE082" stroke-width="3" stroke-linecap="round"/><circle cx="318" cy="99" r="2.8" fill="#FFE082"/>
-
-      <!-- Đèn lồng đỏ lớn (trái) -->
-      <g transform="translate(52,170) scale(0.85)">
-        <line x1="0" y1="-60" x2="0" y2="-32" stroke="#FFD54F" stroke-width="2"/>
-        <rect x="-10" y="-34" width="20" height="9" rx="2" fill="#FFC83D"/>
-        <ellipse rx="27" ry="31" fill="#E53935" stroke="#FFC83D" stroke-width="3"/>
-        <path d="M -14 -27 Q -23 0 -14 27 M 14 -27 Q 23 0 14 27" stroke="#FFC83D" stroke-width="2" fill="none"/>
-        <rect x="-10" y="27" width="20" height="8" rx="2" fill="#FFC83D"/>
-        <line x1="0" y1="35" x2="0" y2="56" stroke="#FFC83D" stroke-width="3"/>
-        <circle cy="58" r="4" fill="#FFC83D"/>
-      </g>
-
-      <!-- Đèn lồng đỏ nhỏ (phải) -->
-      <g transform="translate(300,215) scale(0.62)">
-        <line x1="0" y1="-60" x2="0" y2="-32" stroke="#FFD54F" stroke-width="2"/>
-        <rect x="-10" y="-34" width="20" height="9" rx="2" fill="#FFC83D"/>
-        <ellipse rx="27" ry="31" fill="#E53935" stroke="#FFC83D" stroke-width="3"/>
-        <path d="M -14 -27 Q -23 0 -14 27 M 14 -27 Q 23 0 14 27" stroke="#FFC83D" stroke-width="2" fill="none"/>
-        <rect x="-10" y="27" width="20" height="8" rx="2" fill="#FFC83D"/>
-        <line x1="0" y1="35" x2="0" y2="56" stroke="#FFC83D" stroke-width="3"/>
-        <circle cy="58" r="4" fill="#FFC83D"/>
-      </g>
-
-      <!-- Khối đồi đỏ đậm phía dưới (che phần text/UI) -->
-      <path d="M 0 700 L 0 292 Q 85 270 170 292 T 340 286 L 340 700 Z" fill="#6D0E12" fill-opacity="0.95"/>
-      <!-- Đường viền kim loại vàng lượn sóng -->
-      <path d="M 0 292 Q 85 270 170 292 T 340 286" fill="none" stroke="#FFC83D" stroke-width="4"/>
-
-      <!-- Chùm hoa mai 1 (hồng mai lớn) -->
-      <circle cx="40.0" cy="276.8" r="9.4" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="50.6" cy="284.6" r="9.4" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="46.6" cy="297.0" r="9.4" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="33.4" cy="297.0" r="9.4" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="29.4" cy="284.6" r="9.4" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="40" cy="288" r="5.4" fill="#FFC83D"/>
-
-      <!-- Chùm hoa mai 2 (hồng mai nhỏ) -->
-      <circle cx="92.0" cy="288.6" r="6.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="99.1" cy="293.7" r="6.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="96.4" cy="302.0" r="6.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="87.6" cy="302.0" r="6.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="84.9" cy="293.7" r="6.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="92" cy="296" r="3.6" fill="#FFC83D"/>
-
-      <!-- Chùm hoa mai 3 (hoàng mai vàng) -->
-      <circle cx="298.0" cy="272.1" r="8.3" fill="#FFE082" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="307.4" cy="278.9" r="8.3" fill="#FFE082" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="303.8" cy="290.0" r="8.3" fill="#FFE082" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="292.2" cy="290.0" r="8.3" fill="#FFE082" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="288.6" cy="278.9" r="8.3" fill="#FFE082" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="298" cy="282" r="4.8" fill="#E53935"/>
-
-      <!-- Chùm hoa mai 4 (hồng mai nhỏ góc phải) -->
-      <circle cx="250.0" cy="285.8" r="5.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="255.9" cy="290.1" r="5.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="253.6" cy="297.0" r="5.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="246.4" cy="297.0" r="5.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="244.1" cy="290.1" r="5.2" fill="#FFB3C7" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5"/>
-      <circle cx="250" cy="292" r="3.0" fill="#FFC83D"/>
+    <!-- Dây cờ tam giác lễ hội vắt ngang trên cao -->
+    <g opacity="0.85">
+      <path d="M -10 65 Q 85 85 180 70 Q 260 58 350 72" stroke="#3B0A45" stroke-width="1.8" fill="none"/>
+      <!-- Các lá cờ tam giác màu sắc rực rỡ -->
+      <polygon points="15,69 35,72 25,95" fill="#E91E63"/>
+      <polygon points="50,75 70,77 60,100" fill="#00BCD4"/>
+      <polygon points="85,78 105,79 95,103" fill="#FFC107"/>
+      <polygon points="120,77 140,76 130,100" fill="#7C3AED"/>
+      <polygon points="155,73 175,70 165,94" fill="#FF5722"/>
+      <polygon points="210,65 230,62 220,86" fill="#00BCD4"/>
+      <polygon points="245,61 265,60 255,84" fill="#E91E63"/>
+      <polygon points="280,62 300,64 290,88" fill="#FFC107"/>
     </g>
+
+    <!-- Dải ruy-băng xoắn 3D (Serpentine streamer bên trái) -->
+    <path d="M 18 100 Q 30 115 16 130 Q 32 145 20 160 Q 34 175 22 190" 
+          stroke="#7C3AED" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.75"/>
+    <path d="M 20 102 Q 32 117 18 132 Q 34 147 22 162 Q 36 177 24 192" 
+          stroke="#C4B5FD" stroke-width="1.8" fill="none" opacity="0.6"/>
+
+    <!-- ============================================== -->
+    <!-- 3. MẶT CƯỜI HỀ & MŨ HỀ BA NGỌN 3D NỔI KHỐI     -->
+    <!-- ============================================== -->
+
+    <!-- MẶT CƯỜI HỀ TINH NGHỊCH (Bên trái, x = 72, y = 168) -->
+    <g transform="translate(72, 165)">
+      <!-- Khuôn mặt tròn vàng 3D -->
+      <circle r="28" fill="url(#faceShade)" stroke="#3B0A45" stroke-width="2.5"/>
+      <!-- Mắt nháy vui nhộn -->
+      <path d="M -14 -6 A 5 5 0 0 1 -4 -6" fill="none" stroke="#3B0A45" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="10" cy="-6" r="3.5" fill="#3B0A45"/>
+      <circle cx="11.5" cy="-7.5" r="1.2" fill="#FFFFFF"/>
+      <!-- Mũi cà chua đỏ 3D ngộ nghĩnh -->
+      <circle cx="0" cy="2" r="7" fill="url(#clownNose)"/>
+      <!-- Miệng cười rộng le lưỡi -->
+      <path d="M -15 8 Q 0 24 15 8" fill="#3B0A45" stroke="#3B0A45" stroke-width="1.5"/>
+      <path d="M -6 14 Q 0 24 6 14 Z" fill="#FF4081"/>
+      <!-- Má hồng ửng đào -->
+      <circle cx="-16" cy="4" r="5" fill="#FF80AB" opacity="0.5"/>
+      <circle cx="16" cy="4" r="5" fill="#FF80AB" opacity="0.5"/>
+    </g>
+
+    <!-- MŨ CHÚ HỀ BA NGỌN RỰC RỠ (Bên phải, x = 220, y = 145) -->
+    <g transform="translate(225, 145) rotate(8) scale(0.92)">
+      <!-- Đổ bóng đáy mũ -->
+      <ellipse cx="0" cy="45" rx="52" ry="12" fill="#3B0A45" opacity="0.25"/>
+
+      <!-- NGỌN 1: Bên trái (Hồng cánh sen uốn cong) -->
+      <g>
+        <path d="M -35 35 C -65 25 -95 -5 -85 -30 C -60 -2 -35 15 -10 35 Z" 
+              fill="#E91E63" stroke="#3B0A45" stroke-width="3" stroke-linejoin="round"/>
+        <!-- Chuông vàng ngọn 1 -->
+        <g transform="translate(-86, -30)"><use href="#jester_bell"/></g>
+      </g>
+
+      <!-- NGỌN 2: Ở giữa (Tím hoàng gia vươn cao) -->
+      <g>
+        <path d="M -22 35 C -25 -15 -10 -55 0 -62 C 10 -55 25 -15 22 35 Z" 
+              fill="#7C3AED" stroke="#3B0A45" stroke-width="3" stroke-linejoin="round"/>
+        <!-- Dải quả trám vàng trang trí ngọn giữa -->
+        <polygon points="0,-48 8,-32 0,-16 -8,-32" fill="#FDE68A" opacity="0.9"/>
+        <!-- Chuông vàng ngọn 2 -->
+        <g transform="translate(0, -62)"><use href="#jester_bell"/></g>
+      </g>
+
+      <!-- NGỌN 3: Bên phải (Xanh ngọc năng động) -->
+      <g>
+        <path d="M 10 35 C 35 15 60 -2 85 -30 C 95 -5 65 25 35 35 Z" 
+              fill="#00BCD4" stroke="#3B0A45" stroke-width="3" stroke-linejoin="round"/>
+        <!-- Chuông vàng ngọn 3 -->
+        <g transform="translate(86, -30)"><use href="#jester_bell"/></g>
+      </g>
+
+      <!-- Đai nẹp chân mũ viền quả trám sang trọng -->
+      <rect x="-50" y="32" width="100" height="22" rx="10" fill="#3B0A45"/>
+      <g fill="#FDE68A">
+        <polygon points="-36,43 -28,35 -20,43 -28,51"/>
+        <polygon points="-8,43 0,35 8,43 0,51"/>
+        <polygon points="20,43 28,35 36,43 28,51"/>
+      </g>
+    </g>
+
+    <!-- ============================================== -->
+    <!-- 4. PHÁO GIẤY CONFETTI & NGÔI SAO LỄ HỘI       -->
+    <!-- (Gom gọn gàng ở tầng nghệ thuật y < 235)      -->
+    <!-- ============================================== -->
+    <!-- Các mảnh confetti đa sắc -->
+    <rect x="135" y="105" width="12" height="12" rx="2" fill="#E91E63" transform="rotate(25 141 111)"/>
+    <rect x="295" y="115" width="13" height="13" rx="2" fill="#00BCD4" transform="rotate(45 301 121)"/>
+    <circle cx="150" cy="148" r="6.5" fill="#FFD54F"/>
+    <circle cx="310" cy="175" r="5.5" fill="#E91E63"/>
+    <polygon points="120,185 128,193 118,200" fill="#7C3AED"/>
+    <polygon points="280,85 292,89 284,98" fill="#FF5722"/>
+
+    <!-- Ngôi sao lấp lánh (Sparkles) -->
+    <path d="M 180 170 Q 180 176 186 176 Q 180 176 180 182 Q 180 176 174 176 Q 180 176 180 170 Z" fill="#FFFFFF"/>
+    <path d="M 45 110 Q 45 115 50 115 Q 45 115 45 120 Q 45 115 40 115 Q 45 115 45 110 Z" fill="#FFFFFF"/>
+
+    <!-- ============================================== -->
+    <!-- 5. DẢI PHÂN CÁCH RẠP XIẾC & VÙNG AN TOÀN       -->
+    <!-- Đường viền sóng circus tại y ≈ 242             -->
+    <!-- ============================================== -->
+    <path d="M 0 242 Q 85 220 170 242 T 340 236 L 340 504 L 0 504 Z" fill="url(#bg_text_candy)"/>
+
+    <!-- Viền kép uốn lượn phong cách carnival -->
+    <path d="M 0 242 Q 85 220 170 242 T 340 236" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 0 247 Q 85 225 170 247 T 340 241" fill="none" stroke="#3B0A45" stroke-opacity="0.2" stroke-width="2"/>
+
+    <!-- Hai chuông nhỏ điểm xuyết ở hai bên mép dải viền -->
+    <g transform="translate(18, 245) scale(0.65)"><use href="#jester_bell"/></g>
+    <g transform="translate(322, 238) scale(0.65)"><use href="#jester_bell"/></g>
+
+    <!-- ============================================== -->
+    <!-- 6. VÙNG AN TOÀN TRỐNG (SAFE ZONE: y ≈ 244–504)  -->
+    <!-- Nền phẳng sạch 100% dành riêng cho Text & UI:  -->
+    <!-- - Tiêu đề (y: 260 - 310)                       -->
+    <!-- - Phụ đề  (y: 325 - 350)                       -->
+    <!-- - Hộp tiến độ & quà (y: 356 - 438)             -->
+    <!-- - Nút CTA hành động (y: 448 - 494)             -->
+    <!-- ============================================== -->
   </g>
 
-  <!-- Viền sáng trắng bao quanh card đặc trưng -->
-  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="3"/>
+  <!-- Viền trắng mờ bao quanh thẻ chuẩn Design System -->
+  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="3"/>
 </svg>

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Triền đồi trang trại mùa thu hoạch tầng trung -->
+    <linearGradient id="tgMidFields" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C96824"/>
+      <stop offset="0.45" stop-color="#8E3C12"/>
+      <stop offset="1" stop-color="#54210B"/>
+    </linearGradient>
+
+    <!-- MẪU NHÀ KHO ĐỎ TRUYỀN THỐNG (CLASSIC RED BARN) -->
+    <g id="farm_red_barn">
+      <!-- Thân nhà kho gỗ đỏ -->
+      <polygon points="-40,40 40,40 40,0 -40,0" fill="#B71C1C" stroke="#4A1010" stroke-width="1.8"/>
+      <!-- Mái vòm kiểu Gambrel truyền thống -->
+      <polygon points="-44,0 -26,-22 0,-30 26,-22 44,0" fill="#E0E0E0" stroke="#4A1010" stroke-width="1.8"/>
+      <line x1="0" y1="-30" x2="0" y2="-40" stroke="#FFD54F" stroke-width="2"/>
+      <!-- Cửa nhà kho chữ X trắng -->
+      <rect x="-14" y="10" width="28" height="30" fill="#FFFFFF"/>
+      <line x1="-14" y1="10" x2="14" y2="40" stroke="#B71C1C" stroke-width="2.5"/>
+      <line x1="14" y1="10" x2="-14" y2="40" stroke="#B71C1C" stroke-width="2.5"/>
+    </g>
+
+    <!-- MẪU CỐI XAY GIÓ NÔNG TRẠI (FARM WINDMILL) -->
+    <g id="farm_windmill">
+      <polygon points="-6,55 6,55 3,0 -3,0" fill="#616161" stroke="#37474F" stroke-width="1.5"/>
+      <!-- Cánh quạt kim loại -->
+      <circle cx="0" cy="0" r="18" fill="none" stroke="#B0BEC5" stroke-width="1.5"/>
+      <line x1="-18" y1="0" x2="18" y2="0" stroke="#78909C" stroke-width="1.8"/>
+      <line x1="0" y1="-18" x2="0" y2="18" stroke="#78909C" stroke-width="1.8"/>
+      <line x1="-13" y1="-13" x2="13" y2="13" stroke="#78909C" stroke-width="1.5"/>
+      <line x1="-13" y1="13" x2="13" y2="-13" stroke="#78909C" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="3.5" fill="#37474F"/>
+    </g>
+
+    <!-- MẪU CUỘN RƠM VÀNG (ROUND HAY BALE) -->
+    <g id="hay_bale">
+      <ellipse cx="0" cy="0" rx="14" ry="18" fill="#FBC02D" stroke="#B58604" stroke-width="1.5"/>
+      <path d="M 0 -18 C 14 -18 25 -8 25 0 C 25 8 14 18 0 18 Z" fill="#F57F17"/>
+      <circle cx="0" cy="0" r="7" fill="none" stroke="#B58604" stroke-width="1.2"/>
+    </g>
+  </defs>
+
+  <!-- ĐỒI TRANG TRẠI MÙA THU TẦNG TRUNG (Seamless: x=0 (y=530) và x=1080 (y=530)) -->
+  <path d="M 0 530 
+           Q 135 480 270 515 T 540 530 
+           Q 675 480 810 515 T 1080 530 
+           L 1080 670 L 0 670 Z" 
+        fill="url(#tgMidFields)"/>
+
+  <!-- ==================== NHÀ KHO ĐỎ, CỐI XAY GIÓ & CUỘN RƠM ==================== -->
+  <!-- Cụm trang trại 1 (x ≈ 160) -->
+  <g transform="translate(160, 485) scale(0.95)"><use href="#farm_red_barn"/></g>
+  <g transform="translate(240, 470) scale(0.9)"><use href="#farm_windmill"/></g>
+  <g transform="translate(90, 520) scale(0.85)"><use href="#hay_bale"/></g>
+
+  <!-- Cụm trang trại 2 (Lặp chu kỳ bên phải, x ≈ 700) -->
+  <g transform="translate(700, 485) scale(0.95)"><use href="#farm_red_barn"/></g>
+  <g transform="translate(780, 470) scale(0.9)"><use href="#farm_windmill"/></g>
+  <g transform="translate(630, 520) scale(0.85)"><use href="#hay_bale"/></g>
+
+  <!-- HÀNG RÀO GỖ NÔNG TRẠI VẮT NGANG SƯỜN ĐỒI -->
+  <g stroke="#4A1E0B" stroke-linecap="round" opacity="0.9">
+    <!-- Cụm rào 1 (x ≈ 280 - 390) -->
+    <line x1="280" y1="535" x2="390" y2="525" stroke-width="2.5"/>
+    <line x1="280" y1="545" x2="390" y2="535" stroke-width="2.5"/>
+    <line x1="290" y1="525" x2="290" y2="550" stroke-width="3.5"/>
+    <line x1="320" y1="522" x2="320" y2="547" stroke-width="3.5"/>
+    <line x1="350" y1="518" x2="350" y2="543" stroke-width="3.5"/>
+    <line x1="380" y1="515" x2="380" y2="540" stroke-width="3.5"/>
+
+    <!-- Cụm rào 2 (Lặp bên phải, x ≈ 820 - 930) -->
+    <line x1="820" y1="535" x2="930" y2="525" stroke-width="2.5"/>
+    <line x1="820" y1="545" x2="930" y2="535" stroke-width="2.5"/>
+    <line x1="830" y1="525" x2="830" y2="550" stroke-width="3.5"/>
+    <line x1="860" y1="522" x2="860" y2="547" stroke-width="3.5"/>
+    <line x1="890" y1="518" x2="890" y2="543" stroke-width="3.5"/>
+    <line x1="920" y1="515" x2="920" y2="540" stroke-width="3.5"/>
+  </g>
+
+  <!-- RẶNG CÂY PHONG ĐỎ & VÀNG TRÊN ĐỈNH ĐỒI -->
+  <g opacity="0.9">
+    <circle cx="430" cy="505" r="24" fill="#C62828"/>
+    <circle cx="455" cy="495" r="28" fill="#F57C00"/>
+    <circle cx="485" cy="505" r="22" fill="#FFB300"/>
+
+    <circle cx="970" cy="505" r="24" fill="#C62828"/>
+    <circle cx="995" cy="495" r="28" fill="#F57C00"/>
+    <circle cx="1025" cy="505" r="22" fill="#FFB300"/>
+  </g>
+</svg>

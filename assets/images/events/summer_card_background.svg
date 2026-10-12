@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
+  <defs>
+    <!-- Clip bo góc chuẩn thẻ sự kiện 340x504 -->
+    <clipPath id="summerCardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+
+    <!-- Lưới ô ly mờ nhận diện Design System -->
+    <pattern id="cardGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#163A58" stroke-width="1" opacity="0.06"/>
+    </pattern>
+
+    <!-- Nền trời hè chuyển sắc 3 nấc -->
+    <linearGradient id="bgSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2EB2F6"/>
+      <stop offset="0.45" stop-color="#88E2FF"/>
+      <stop offset="1" stop-color="#FFEBB3"/>
+    </linearGradient>
+
+    <!-- Hào quang mặt trời -->
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFFBE0" stop-opacity="0.95"/>
+      <stop offset="0.4" stop-color="#FFE885" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#FFE885" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Nước biển xanh ngọc nhiệt đới -->
+    <linearGradient id="seaDeep" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#20CFE8"/>
+      <stop offset="0.5" stop-color="#0CA6D1"/>
+      <stop offset="1" stop-color="#06789D"/>
+    </linearGradient>
+
+    <!-- Bãi cát vàng mịn màng (Vùng an toàn cho chữ) -->
+    <linearGradient id="sandClean" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF5D9"/>
+      <stop offset="0.25" stop-color="#FDEBBB"/>
+      <stop offset="1" stop-color="#F5D48E"/>
+    </linearGradient>
+
+    <!-- Độ bóng cho các vật thể -->
+    <radialGradient id="softShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#8F6826" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#8F6826" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Thân cây cọ -->
+    <linearGradient id="palmTrunk" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#54351A"/>
+      <stop offset="0.5" stop-color="#8B5B31"/>
+      <stop offset="1" stop-color="#B37D4B"/>
+    </linearGradient>
+
+    <!-- Bóng 3D cho quả bóng bãi biển -->
+    <radialGradient id="ballShade" cx="35%" cy="30%" r="65%">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.6"/>
+      <stop offset="0.5" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.4"/>
+    </radialGradient>
+  </defs>
+
+  <g clip-path="url(#summerCardClip)">
+    <!-- ============================================== -->
+    <!-- 1. BẦU TRỜI & KHÍ QUYỂN                        -->
+    <!-- ============================================== -->
+    <rect width="340" height="504" fill="url(#bgSky)"/>
+    <rect width="340" height="504" fill="url(#cardGrid)"/>
+
+    <!-- Mặt trời & tia nắng rực rỡ -->
+    <circle cx="82" cy="98" r="80" fill="url(#sunGlow)"/>
+    <circle cx="82" cy="98" r="32" fill="#FFE052"/>
+    <g stroke="#FFE052" stroke-width="3.5" stroke-linecap="round" opacity="0.85">
+      <line x1="82" y1="56" x2="82" y2="46"/>
+      <line x1="82" y1="140" x2="82" y2="150"/>
+      <line x1="40" y1="98" x2="30" y2="98"/>
+      <line x1="124" y1="98" x2="134" y2="98"/>
+      <line x1="52" y1="68" x2="44" y2="60"/>
+      <line x1="112" y1="128" x2="120" y2="136"/>
+      <line x1="52" y1="128" x2="44" y2="136"/>
+      <line x1="112" y1="68" x2="120" y2="60"/>
+    </g>
+
+    <!-- Mây trắng bồng bềnh -->
+    <g transform="translate(236,88) scale(0.9)" fill="#FFFFFF" fill-opacity="0.95">
+      <ellipse cx="0" cy="0" rx="26" ry="12"/>
+      <circle cx="-12" cy="-7" r="13"/>
+      <circle cx="6" cy="-12" r="16"/>
+      <circle cx="21" cy="-3" r="11"/>
+    </g>
+    <g transform="translate(154,66) scale(0.55)" fill="#FFFFFF" fill-opacity="0.85">
+      <ellipse cx="0" cy="0" rx="26" ry="12"/>
+      <circle cx="-12" cy="-7" r="13"/>
+      <circle cx="6" cy="-12" r="16"/>
+      <circle cx="21" cy="-3" r="11"/>
+    </g>
+
+    <!-- Đàn chim hải âu chao lượn -->
+    <path d="M 166 106 Q 172 98 178 106 M 178 106 Q 184 98 190 106" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M 198 122 Q 203 115 208 122 M 208 122 Q 213 115 218 122" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+    <!-- ============================================== -->
+    <!-- 2. BIỂN & THUYỀN BUỒM CHI TIẾT                -->
+    <!-- ============================================== -->
+    <!-- Mặt biển -->
+    <path d="M 0 172 Q 15 167 30 172 T 60 172 T 90 172 T 120 172 T 150 172 T 180 172 T 210 172 T 240 172 T 270 172 T 300 172 T 330 172 L 340 172 L 340 252 L 0 252 Z" fill="url(#seaDeep)"/>
+    
+    <!-- Các gợn sóng biển xa và gần -->
+    <path d="M 0 188 Q 15 183 30 188 T 60 188 T 90 188 T 120 188 T 150 188 T 180 188 T 210 188 T 240 188 T 270 188 T 300 188 T 330 188" stroke="#FFFFFF" stroke-opacity="0.65" stroke-width="1.8" fill="none"/>
+    <path d="M 10 205 Q 25 200 40 205 T 70 205 T 100 205 T 130 205 T 160 205 T 190 205 T 220 205 T 250 205 T 280 205 T 310 205" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="2" fill="none"/>
+
+    <!-- Thuyền buồm chi tiết trên biển -->
+    <g transform="translate(182, 148)">
+      <!-- Vệt nước phản chiếu dưới lườn thuyền -->
+      <ellipse cx="28" cy="43" rx="20" ry="3.5" fill="#045A77" opacity="0.6"/>
+      <path d="M 12 44 Q 28 46 44 44" stroke="#FFFFFF" stroke-width="1.5" stroke-opacity="0.8" fill="none"/>
+      <!-- Thân thuyền (Hull) 2 tông màu thể thao -->
+      <path d="M 10 32 L 46 32 C 43 38, 38 42, 33 42 L 18 42 C 13 42, 11 38, 10 32 Z" fill="#FFFFFF" stroke="#0A4D6B" stroke-width="1"/>
+      <path d="M 12 36 L 44 36 C 42 39, 38 41, 33 41 L 18 41 C 14 41, 13 39, 12 36 Z" fill="#0A77A5"/>
+      <!-- Cột buồm & dây chằng (Rigging) -->
+      <line x1="28" y1="4" x2="28" y2="33" stroke="#523A25" stroke-width="2"/>
+      <line x1="28" y1="6" x2="10" y2="32" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.8"/>
+      <line x1="28" y1="6" x2="46" y2="32" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="0.8"/>
+      <!-- Buồm chính lớn (Căng gió có bóng đổ) -->
+      <path d="M 28 6 Q 38 18 45 30 L 28 29 Z" fill="#FFF9EB"/>
+      <path d="M 28 6 Q 34 18 36 29 L 28 29 Z" fill="#E6D7BA" opacity="0.5"/>
+      <!-- Buồm phụ phía trước (Màu cam san hô nổi bật) -->
+      <path d="M 26 10 Q 18 20 12 30 L 26 29 Z" fill="#FF5E57"/>
+      <path d="M 26 10 Q 22 20 18 29 L 26 29 Z" fill="#D93D37"/>
+      <!-- Cờ đuôi nheo đỉnh cột -->
+      <polygon points="28,4 20,6.5 28,9" fill="#FFA900"/>
+    </g>
+
+    <!-- ============================================== -->
+    <!-- 3. BÃI BIỂN, BỜ CÁT & BỌT SÓNG VỖ BỜ           -->
+    <!-- ============================================== -->
+    <!-- Mép nước cạn trong suốt đè lên cát -->
+    <path d="M 0 236 Q 85 216 175 230 T 340 220 L 340 250 L 0 250 Z" fill="#67E6F5" opacity="0.45"/>
+    <!-- Bãi cát chính (VÙNG NỀN AN TOÀN TỪ ĐÂY XUỐNG ĐÁY) -->
+    <path d="M 0 240 Q 85 218 175 232 T 340 222 L 340 504 L 0 504 Z" fill="url(#sandClean)"/>
+    <!-- Dải bọt sóng trắng viền bãi cát -->
+    <path d="M 0 240 Q 85 218 175 232 T 340 222" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 5 243 Q 85 222 175 235 T 335 225" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.8" stroke-dasharray="8 6"/>
+
+    <!-- ============================================== -->
+    <!-- 4. Ô DÙ BÃI BIỂN CHI TIẾT (BÊN TRÁI)           -->
+    <!-- ============================================== -->
+    <g transform="translate(8, 0)">
+      <!-- Bóng đổ của ô trên cát -->
+      <ellipse cx="64" cy="246" rx="36" ry="11" fill="url(#softShadow)"/>
+      <!-- Cán ô bằng gỗ cắm nghiêng vào cát -->
+      <line x1="50" y1="244" x2="63" y2="152" stroke="#5C3A1E" stroke-width="4.5" stroke-linecap="round"/>
+      <line x1="51.5" y1="244" x2="64.5" y2="152" stroke="#9C6B3D" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Khung nan kim loại bên dưới tán ô -->
+      <line x1="63" y1="156" x2="22" y2="162" stroke="#3D2916" stroke-width="1.8"/>
+      <line x1="63" y1="156" x2="42" y2="166" stroke="#3D2916" stroke-width="1.8"/>
+      <line x1="63" y1="156" x2="72" y2="167" stroke="#3D2916" stroke-width="1.8"/>
+      <line x1="63" y1="156" x2="98" y2="164" stroke="#3D2916" stroke-width="1.8"/>
+      <!-- Tán dù 3D có độ rủ & múi màu sắc nét -->
+      <!-- Múi 1: Trắng ngà khuất góc trái -->
+      <path d="M 63 120 Q 40 136 20 160 Q 30 162 38 162 Q 52 140 63 120 Z" fill="#F0EADB" stroke="#000000" stroke-opacity="0.12"/>
+      <!-- Múi 2: Đỏ cam san hô -->
+      <path d="M 63 120 Q 52 140 38 162 Q 48 165 56 165 Q 61 140 63 120 Z" fill="#FF5252" stroke="#000000" stroke-opacity="0.12"/>
+      <!-- Múi 3: Trắng kem chính diện -->
+      <path d="M 63 120 Q 61 140 56 165 Q 67 167 76 165 Q 73 140 63 120 Z" fill="#FFFFFF" stroke="#000000" stroke-opacity="0.12"/>
+      <!-- Múi 4: Đỏ cam san hô hứng sáng -->
+      <path d="M 63 120 Q 73 140 76 165 Q 86 164 94 161 Q 81 138 63 120 Z" fill="#FF6B6B" stroke="#000000" stroke-opacity="0.12"/>
+      <!-- Múi 5: Trắng kem mép phải -->
+      <path d="M 63 120 Q 81 138 94 161 Q 100 159 104 156 Q 87 134 63 120 Z" fill="#FFF2DF" stroke="#000000" stroke-opacity="0.12"/>
+      <!-- Đỉnh chóp ô -->
+      <circle cx="63" cy="119" r="4.5" fill="#FFE082" stroke="#DDA622" stroke-width="1"/>
+    </g>
+
+    <!-- ============================================== -->
+    <!-- 5. CÂY CỌ DỪA NHIỆT ĐỚI CHI TIẾT (BÊN PHẢI)    -->
+    <!-- ============================================== -->
+    <g transform="translate(18, 0)">
+      <!-- Bóng chân cọ đổ trên cát -->
+      <ellipse cx="276" cy="248" rx="22" ry="7" fill="url(#softShadow)"/>
+      <!-- Thân cây dừa cong có vân đốt nổi khối -->
+      <path d="M 276 248 C 286 215 284 185 272 144" stroke="url(#palmTrunk)" stroke-width="9.5" fill="none" stroke-linecap="round"/>
+      <!-- Các rãnh đốt dừa -->
+      <g stroke="#3D210F" stroke-width="1.8" opacity="0.6">
+        <line x1="272" y1="236" x2="280" y2="238"/>
+        <line x1="274" y1="222" x2="282" y2="224"/>
+        <line x1="276" y1="208" x2="284" y2="209"/>
+        <line x1="275" y1="192" x2="283" y2="193"/>
+        <line x1="273" y1="176" x2="281" y2="176"/>
+        <line x1="269" y1="160" x2="277" y2="159"/>
+      </g>
+      <!-- Chùm 3 quả dừa tại nách lá -->
+      <g transform="translate(270, 144)">
+        <circle cx="-4" cy="4" r="5.5" fill="#5A3A1B"/>
+        <circle cx="3" cy="7" r="5" fill="#754E28"/>
+        <circle cx="2" cy="1" r="5.2" fill="#8F6236"/>
+        <circle cx="3" cy="0" r="1.5" fill="#D3A274" opacity="0.8"/>
+      </g>
+      <!-- Tán lá cọ đa tầng (Lớp sau: xanh thẫm, Lớp trước: xanh tươi + gân) -->
+      <!-- Tàu lá 1: Vươn trái ra biển (Lớp sau) -->
+      <path d="M 270 144 Q 230 134 195 146 Q 232 146 270 144 Z" fill="#1B6931"/>
+      <!-- Tàu lá 2: Vươn cao ngọn (Lớp sau) -->
+      <path d="M 270 144 Q 256 104 230 84 Q 252 110 270 144 Z" fill="#1E7A3A"/>
+      <!-- Tàu lá 3: Tỏa sang góc phải trên -->
+      <path d="M 270 144 Q 294 106 324 100 Q 302 124 270 144 Z" fill="#258E43"/>
+      <!-- Tàu lá 4: Vươn dài sang trái rủ xuống (Lớp trước - chính diện) -->
+      <path d="M 270 144 Q 220 120 180 162 Q 225 142 270 144 Z" fill="#2FAD51"/>
+      <path d="M 270 144 Q 222 126 182 161" stroke="#8AE83A" stroke-width="1.2" fill="none" opacity="0.75"/>
+      <!-- Tàu lá 5: Vươn cong sang mép phải ngoài cùng -->
+      <path d="M 270 144 Q 310 132 334 154 Q 308 144 270 144 Z" fill="#39BE5B"/>
+      <!-- Tàu lá 6: Rủ xuống tự nhiên -->
+      <path d="M 270 144 Q 284 158 290 184 Q 280 162 270 144 Z" fill="#299E49"/>
+    </g>
+
+    <!-- ============================================== -->
+    <!-- 6. BÓNG BÃI BIỂN 3D CHI TIẾT (BEACH BALL)      -->
+    <!-- ============================================== -->
+    <!-- Đặt tại y ≈ 226-246, tránh khu vực chữ chính -->
+    <g transform="translate(136, 226)">
+      <!-- Bóng đổ quả bóng trên nền cát -->
+      <ellipse cx="14" cy="19" rx="14" ry="4.5" fill="url(#softShadow)"/>
+      <g>
+        <clipPath id="ballClip">
+          <circle cx="14" cy="11" r="11"/>
+        </clipPath>
+        <!-- Khối cầu tròn cơ sở -->
+        <circle cx="14" cy="11" r="11" fill="#FFFFFF"/>
+        <!-- Các múi màu bọc quanh khối cầu 3D -->
+        <g clip-path="url(#ballClip)">
+          <!-- Múi đỏ san hô -->
+          <path d="M 14 0 C 7 3, 5 15, 8 22 L 14 11 Z" fill="#FF4D4D"/>
+          <!-- Múi vàng nghệ -->
+          <path d="M 14 0 C 18 2, 23 7, 24 13 L 14 11 Z" fill="#FFC83B"/>
+          <!-- Múi xanh dương -->
+          <path d="M 24 13 C 25 18, 20 22, 14 22 L 14 11 Z" fill="#1EA7FD"/>
+          <!-- Nắp tròn trắng nhỏ trên đỉnh bóng -->
+          <ellipse cx="14" cy="3" rx="3.5" ry="1.5" fill="#FFFFFF" stroke="#000000" stroke-opacity="0.15" stroke-width="0.5"/>
+          <!-- Lớp phủ tạo chiều sâu & bóng phản xạ cầu (Shading) -->
+          <circle cx="14" cy="11" r="11" fill="url(#ballShade)"/>
+          <!-- Vệt sáng bóng loáng (Specular Gloss) -->
+          <ellipse cx="11" cy="7" rx="3.2" ry="1.8" fill="#FFFFFF" opacity="0.6" transform="rotate(-25 11 7)"/>
+        </g>
+        <circle cx="14" cy="11" r="11" fill="none" stroke="#000000" stroke-opacity="0.15" stroke-width="0.8"/>
+      </g>
+    </g>
+
+    <!-- Điểm xuyết vỏ sò / sao biển nhỏ sát rìa mép -->
+    <polygon points="318,236 319.2,241 324,242 320,245 321,250 317,247 313,249 314.5,244.5 311,241 316,241" fill="#FFA347" stroke="#DE7110" stroke-width="0.7"/>
+
+    <!-- ============================================== -->
+    <!-- 7. VÙNG AN TOÀN TRỐNG (SAFE ZONE: y ≈ 245–504)  -->
+    <!-- Dành riêng để inject:                          -->
+    <!-- - Tiêu đề (y: 260 - 310)                       -->
+    <!-- - Phụ đề  (y: 325 - 350)                       -->
+    <!-- - Hộp tiến độ & quà (y: 356 - 438)             -->
+    <!-- - Nút CTA (y: 448 - 494)                       -->
+    <!-- ============================================== -->
+  </g>
+
+  <!-- Viền highlight sang trọng bo góc toàn thẻ -->
+  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.65" stroke-width="3"/>
+</svg>

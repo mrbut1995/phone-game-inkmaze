@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/images-png/events/dungeon_card_background.png" id="1_w12t0"]
+[ext_resource uid="uid://dow2h5c00787d" type="Texture2D" path="res://assets/images-png/events/dungeon_card_background.png" id="1_w12t0"]
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_g7myi"]
 
 [resource]

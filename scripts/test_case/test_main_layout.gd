@@ -57,7 +57,7 @@ func _init() -> void:
 	assert(card_play.global_position.y < card_dungeon.global_position.y,
 		"The Play phai nam TREN the Dungeon")
 	for card in [card_play, card_dungeon]:
-		assert(card.get_node_or_null("Content/IconBox/Icon") != null, "ModeCard phai co Icon")
+		assert(card.get_node_or_null("Content/IconBox/Panel/Icon") != null, "ModeCard phai co Icon")
 		assert(card.get_node_or_null("Content/Texts/Title") != null, "ModeCard phai co Title")
 		assert(card.get_node_or_null("Content/Right/StatValue") != null, "ModeCard phai co StatValue")
 		assert(card.get_node_or_null("Content/Right/ActionButton") != null, "ModeCard phai co ActionButton")

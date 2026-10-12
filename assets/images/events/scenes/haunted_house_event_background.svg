@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960">
+  <defs>
+    <!-- Bầu trời đêm u ám Mansion chuyển sắc 4 nấc -->
+    <linearGradient id="msnSkyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#081E22"/>
+      <stop offset="0.35" stop-color="#0D2D33"/>
+      <stop offset="0.65" stop-color="#113940"/>
+      <stop offset="0.88" stop-color="#0A2226"/>
+      <stop offset="1" stop-color="#040F11"/>
+    </linearGradient>
+
+    <!-- Quầng trăng xanh ngọc dạ quang (Teal/Mint Moon Glow) -->
+    <radialGradient id="msnMoonAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#E8FFF5" stop-opacity="1"/>
+      <stop offset="0.4" stop-color="#BFFFDC" stop-opacity="0.6"/>
+      <stop offset="0.75" stop-color="#5BD99A" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#0E2B30" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Tháp nhọn Gothic xa xăm nơi chân trời -->
+    <linearGradient id="msnDistantTowers" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#092226"/>
+      <stop offset="1" stop-color="#030C0D"/>
+    </linearGradient>
+
+    <!-- Mẫu dơi bóng đêm bay xa -->
+    <g id="msn_bg_bat">
+      <path d="M 0 0 C -5 -8 -15 -6 -22 2 C -17 -2 -13 0 -10 4 C -7 1 -4 2 0 7 C 4 2 7 1 10 4 C 13 0 17 -2 22 2 C 15 -6 5 -8 0 0 Z" 
+            fill="#020809"/>
+    </g>
+  </defs>
+
+  <!-- Nền trời đêm bao phủ toàn canvas -->
+  <rect width="1080" height="960" fill="url(#msnSkyGrad)"/>
+
+  <!-- ==================== VẦNG TRĂNG XANH NGỌC DẠ QUANG ==================== -->
+  <!-- Trăng 1 (x = 360, y = 210) -->
+  <circle cx="360" cy="210" r="120" fill="url(#msnMoonAura)"/>
+  <circle cx="360" cy="210" r="48" fill="#E8FFF5"/>
+  <circle cx="344" cy="196" r="10" fill="#BCEFD9" opacity="0.6"/>
+  <circle cx="380" cy="226" r="8.5" fill="#BCEFD9" opacity="0.5"/>
+  <circle cx="372" cy="188" r="6" fill="#BCEFD9" opacity="0.45"/>
+
+  <!-- Trăng lặp chu kỳ đối ứng bên phải (x = 900) -->
+  <circle cx="900" cy="210" r="120" fill="url(#msnMoonAura)"/>
+  <circle cx="900" cy="210" r="48" fill="#E8FFF5"/>
+  <circle cx="884" cy="196" r="10" fill="#BCEFD9" opacity="0.6"/>
+  <circle cx="920" cy="226" r="8.5" fill="#BCEFD9" opacity="0.5"/>
+
+  <!-- Mây đen sương mù trôi ngang vầng trăng -->
+  <path d="M 280 200 Q 340 180 430 206 Q 370 224 280 200 Z" fill="#061A1D" opacity="0.75"/>
+  <path d="M 330 232 Q 380 218 450 236 Q 400 248 330 232 Z" fill="#061A1D" opacity="0.65"/>
+  <path d="M 820 200 Q 880 180 970 206 Q 910 224 820 200 Z" fill="#061A1D" opacity="0.75"/>
+  <path d="M 870 232 Q 920 218 990 236 Q 940 248 870 232 Z" fill="#061A1D" opacity="0.65"/>
+
+  <!-- Các đốm sao xanh ma mị lấp lánh -->
+  <g fill="#BFFFDC">
+    <path d="M 120 130 Q 120 136 126 136 Q 120 136 120 142 Q 120 136 114 136 Q 120 136 120 130 Z" opacity="0.9"/>
+    <path d="M 230 150 Q 230 155 234 155 Q 230 155 230 160 Q 230 155 226 155 Q 230 155 230 150 Z" opacity="0.85"/>
+    <path d="M 480 140 Q 480 146 486 146 Q 480 146 480 152 Q 480 146 474 146 Q 480 146 480 140 Z" opacity="0.9"/>
+    <path d="M 660 130 Q 660 136 666 136 Q 660 136 660 142 Q 660 136 654 136 Q 660 136 660 130 Z" opacity="0.9"/>
+    <path d="M 770 150 Q 770 155 774 155 Q 770 155 770 160 Q 770 155 766 155 Q 770 155 770 150 Z" opacity="0.85"/>
+    <path d="M 1020 140 Q 1020 146 1026 146 Q 1020 146 1020 152 Q 1020 146 1014 146 Q 1020 146 1020 140 Z" opacity="0.9"/>
+  </g>
+
+  <!-- Đàn dơi bay xa cắt ngang vầng trăng -->
+  <g>
+    <g transform="translate(250, 175) scale(0.75)"><use href="#msn_bg_bat"/></g>
+    <g transform="translate(290, 145) scale(0.5)"><use href="#msn_bg_bat"/></g>
+    <g transform="translate(430, 220) scale(0.65)"><use href="#msn_bg_bat"/></g>
+    <g transform="translate(170, 195) scale(0.45)"><use href="#msn_bg_bat"/></g>
+    <g transform="translate(790, 175) scale(0.75)"><use href="#msn_bg_bat"/></g>
+    <g transform="translate(830, 145) scale(0.5)"><use href="#msn_bg_bat"/></g>
+    <g transform="translate(970, 220) scale(0.65)"><use href="#msn_bg_bat"/></g>
+  </g>
+
+  <!-- ĐƯỜNG CHÂN TRỜI: THÁP NHỌN GOTHIC & RỪNG CÂY MA ÁM XA XĂM -->
+  <!-- Seamless: Khớp nối tại x=0 và x=1080 ở y=510 -->
+  <path d="M 0 510 
+           L 40 510 L 55 460 L 65 435 L 75 460 L 90 510 L 150 510 
+           L 165 470 L 175 420 L 185 400 L 195 420 L 205 470 L 220 510 
+           L 320 510 L 370 480 L 420 510 L 540 510 
+           L 580 510 L 595 460 L 605 435 L 615 460 L 630 510 L 690 510 
+           L 705 470 L 715 420 L 725 400 L 735 420 L 745 470 L 760 510 
+           L 860 510 L 910 480 L 960 510 L 1080 510 
+           L 1080 580 L 0 580 Z" 
+        fill="url(#msnDistantTowers)" opacity="0.8"/>
+</svg>
