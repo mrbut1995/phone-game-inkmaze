@@ -1,23 +1,24 @@
-; EventDots — chấm phân trang (8 chấm + node MẪU giữ cỡ chấm đang chọn)
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bgkpwurp12qw3"]
 
-[ext_resource type="Script" path="res://scripts/nodes/event_dots.gd" id="1_dots"]
+[ext_resource type="Script" uid="uid://b2aedgadj7rqm" path="res://scripts/nodes/event_dots.gd" id="1_dots"]
+[ext_resource type="PackedScene" path="res://nodes/main/event_dot.tscn" id="2_dot"]
 
 [sub_resource type="StyleBoxFlat" id="sb_dot"]
 bg_color = Color(0.84705883, 0.8862745, 0.9098039, 1)
-corner_radius_top_left = 2.5
-corner_radius_top_right = 2.5
-corner_radius_bottom_right = 2.5
-corner_radius_bottom_left = 2.5
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
-[node name="EventDots" type="Control"]
+[node name="EventDots" type="Control" unique_id=1809494274]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_dots")
+dot_scene = ExtResource("2_dot")
 
-[node name="Dots" type="HBoxContainer" parent="."]
+[node name="Dots" type="HBoxContainer" parent="." unique_id=979510000]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,72 +26,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-alignment = 1
 theme_override_constants/separation = 4
+alignment = 1
 
-[node name="Dot1" type="Panel" parent="Dots"]
-custom_minimum_size = Vector2(5, 5)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb_dot")
-
-[node name="Dot2" type="Panel" parent="Dots"]
-custom_minimum_size = Vector2(5, 5)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb_dot")
-
-[node name="Dot3" type="Panel" parent="Dots"]
-custom_minimum_size = Vector2(5, 5)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb_dot")
-
-[node name="Dot4" type="Panel" parent="Dots"]
-custom_minimum_size = Vector2(5, 5)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb_dot")
-
-[node name="Dot5" type="Panel" parent="Dots"]
-custom_minimum_size = Vector2(5, 5)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb_dot")
-
-[node name="Dot6" type="Panel" parent="Dots"]
-custom_minimum_size = Vector2(5, 5)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb_dot")
-
-[node name="Dot7" type="Panel" parent="Dots"]
-custom_minimum_size = Vector2(5, 5)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb_dot")
-
-[node name="Dot8" type="Panel" parent="Dots"]
-custom_minimum_size = Vector2(5, 5)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_styles/panel = SubResource("sb_dot")
-
-[node name="ActiveTemplate" type="Panel" parent="."]
+[node name="ActiveTemplate" type="Panel" parent="." unique_id=1619709554]
 visible = false
 custom_minimum_size = Vector2(15, 5)
 layout_mode = 0
-offset_left = -40
-offset_top = -20
-offset_right = -25
-offset_bottom = -15
+offset_left = -40.0
+offset_top = -20.0
+offset_right = -25.0
+offset_bottom = -15.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("sb_dot")

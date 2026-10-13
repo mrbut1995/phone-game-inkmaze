@@ -1,25 +1,84 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo2NzAwNGJhOC0wZmZlLTQzNTItOTQ3YS1kN2E4YmE0ODJlOWIAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaBV5C+3/80Xtd0XT/zSsD24AAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDplM2QyMjQ2Ny1lNDJmLTRlYmQtOTMxZi1mNDFjMzNlYjY4NDhscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNowgIrOBwvu7HfxbsLE5vQUQAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggdpJaQME8C7MnchA/EyDLQPScD3FqYhFa8qOejhVjgd+kZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaKRWFbayQ1XyuM9MxZtJo8AAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCDvX2KIzFbp7XXrJVtumHTyHZxhKrbidvblPxybPps7XmRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBiWZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjY3MDA0YmE4LTBmZmUtNDM1Mi05NDdhLWQ3YThiYTQ4MmU5Yi9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjllYzc2MjAyLWJhMjgtNGQ1OC05ZDcxLWIyZWNhNTdmN2EwYnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCB2klpAwTwLsydyED8TIMtA9JwPcWpiEVryo56OFWOB36JjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFgg6V+AW5sEvkjpX9x6OfvpMuf0q7hHfojqWUgdasV4GXmiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggS5hhAdFrX702JYSKbfTuarrRDnJg8r5LPeREKG9/SMd0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQOy1azuAPW9q24+aF5byqxIPPs7cXZeXuVg3/wEVqyr2JeJjz9oCAzIO/0RRvdMLkVM62xx4GRItpzxGW7yckjs=</c2pa:manifest></metadata>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252">
   <defs>
-    <!-- Lưới ô ly mờ (cùng chuẩn các thẻ event khác) -->
-    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.1"/>
-    </pattern>
-    <linearGradient id="bg_anniversary" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B1B6B"/><stop offset="0.5" stop-color="#5B2A93"/><stop offset="1" stop-color="#220F45"/></linearGradient>
-    <radialGradient id="glow"><stop offset="0" stop-color="#FFE082" stop-opacity="0.6"/><stop offset="1" stop-color="#FFE082" stop-opacity="0"/></radialGradient>
-    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1257"/><stop offset="1" stop-color="#150827"/></linearGradient>
-    <!-- ClipPath bo góc chuẩn 340x504 -->
-    <clipPath id="cardClip"><rect width="340" height="504" rx="28"/></clipPath>
+    <!-- Vầng sáng hào quang trung tâm -->
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#FFE082" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#FFE082" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
   </defs>
-  <!-- Vùng tranh: y ≈ 56–235 (chừa hàng chip y 16–52). Vùng chữ từ y ≈ 232 trở xuống phải phẳng, tương phản. Không có chữ trong SVG. -->
-  <g clip-path="url(#cardClip)">
-    <rect width="340" height="504" fill="url(#bg_anniversary)"/>
-    <rect width="340" height="504" fill="url(#grid)"/>
 
-    <circle cx="170" cy="150" r="140" fill="url(#glow)"/><polygon points="170,150 390,150 387.3,184.4" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 374,232.4 358.6,263.3" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 328.3,302.8 302.4,325.7" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 259.5,351 226.9,362.5" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 177.7,369.9 143.2,368.4" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 94.8,356.7 63.3,342.4" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 22.8,313.5 -1,288.5" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 -27.7,246.4 -40.4,214.3" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 -49.5,165.3 -49.2,130.8" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 -39.2,82 -26,50.1" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 1.5,8.6 25.7,-16" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 66.7,-44.2 98.4,-58" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 147,-68.8 181.5,-69.7" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 230.6,-61.5 263,-49.4" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 305.4,-23.4 330.9,-0" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 360.5,40 375.4,71.2" fill="#FFFFFF" fill-opacity="0.06"/><polygon points="170,150 387.9,119.4 390,153.8" fill="#FFFFFF" fill-opacity="0.06"/>
-    <path d="M 0 60 Q 170 96 340 60" fill="none" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="2"/><polygon points="14,67.8 36,67.8 25,91.8" fill="#FFC83D" stroke="#00000022" stroke-width="1"/><polygon points="48,72 70,72 59,96" fill="#FF5FA2" stroke="#00000022" stroke-width="1"/><polygon points="82,75.6 104,75.6 93,99.6" fill="#4DD8E8" stroke="#00000022" stroke-width="1"/><polygon points="116,78.3 138,78.3 127,102.3" fill="#9B7BFF" stroke="#00000022" stroke-width="1"/><polygon points="150,79.8 172,79.8 161,103.8" fill="#FFC83D" stroke="#00000022" stroke-width="1"/><polygon points="184,79.9 206,79.9 195,103.9" fill="#FF5FA2" stroke="#00000022" stroke-width="1"/><polygon points="218,78.6 240,78.6 229,102.6" fill="#4DD8E8" stroke="#00000022" stroke-width="1"/><polygon points="252,76.2 274,76.2 263,100.2" fill="#9B7BFF" stroke="#00000022" stroke-width="1"/><polygon points="286,72.7 308,72.7 297,96.7" fill="#FFC83D" stroke="#00000022" stroke-width="1"/><polygon points="320,68.6 342,68.6 331,92.6" fill="#FF5FA2" stroke="#00000022" stroke-width="1"/>
-    <g transform="translate(34,128) scale(0.95)"><path d="M 0 40 Q -6 70 4 96" fill="none" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.6"/><ellipse cx="0" cy="0" rx="20" ry="25" fill="#FFC83D" stroke="#00000022" stroke-width="1.2"/><polygon points="0,25 -4,32 4,32" fill="#FFC83D"/><ellipse cx="-7" cy="-9" rx="4.5" ry="8" fill="#FFFFFF" fill-opacity="0.4" transform="rotate(20 -7 -9)"/></g><g transform="translate(66,102) scale(0.85)"><path d="M 0 40 Q -6 70 4 96" fill="none" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.6"/><ellipse cx="0" cy="0" rx="20" ry="25" fill="#FF5FA2" stroke="#00000022" stroke-width="1.2"/><polygon points="0,25 -4,32 4,32" fill="#FF5FA2"/><ellipse cx="-7" cy="-9" rx="4.5" ry="8" fill="#FFFFFF" fill-opacity="0.4" transform="rotate(20 -7 -9)"/></g><g transform="translate(306,124) scale(0.95)"><path d="M 0 40 Q -6 70 4 96" fill="none" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.6"/><ellipse cx="0" cy="0" rx="20" ry="25" fill="#4DD8E8" stroke="#00000022" stroke-width="1.2"/><polygon points="0,25 -4,32 4,32" fill="#4DD8E8"/><ellipse cx="-7" cy="-9" rx="4.5" ry="8" fill="#FFFFFF" fill-opacity="0.4" transform="rotate(20 -7 -9)"/></g><g transform="translate(274,100) scale(0.85)"><path d="M 0 40 Q -6 70 4 96" fill="none" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.6"/><ellipse cx="0" cy="0" rx="20" ry="25" fill="#9B7BFF" stroke="#00000022" stroke-width="1.2"/><polygon points="0,25 -4,32 4,32" fill="#9B7BFF"/><ellipse cx="-7" cy="-9" rx="4.5" ry="8" fill="#FFFFFF" fill-opacity="0.4" transform="rotate(20 -7 -9)"/></g>
-    <rect x="85.5" y="122.6" width="8" height="5" rx="1" fill="#FFD66B" transform="rotate(101 89.5 125.1)"/><circle cx="163.2" cy="121" r="3.2" fill="#FF6FB1"/><polygon points="16.3,177 25.3,180 18.3,186" fill="#66E0FF"/><rect x="102.6" y="230.8" width="8" height="5" rx="1" fill="#FFFFFF" transform="rotate(15 106.6 233.3)"/><circle cx="81" cy="175.5" r="3.2" fill="#B58CFF"/><polygon points="98.5,131.1 107.5,134.1 100.5,140.1" fill="#FFD66B"/><rect x="44" y="136.2" width="8" height="5" rx="1" fill="#FF6FB1" transform="rotate(6 48 138.7)"/><circle cx="275.3" cy="208.4" r="3.2" fill="#66E0FF"/><polygon points="266.1,133.6 275.1,136.6 268.1,142.6" fill="#FFFFFF"/><rect x="109.2" y="186.5" width="8" height="5" rx="1" fill="#B58CFF" transform="rotate(95 113.2 189)"/><circle cx="37.7" cy="183.9" r="3.2" fill="#FFD66B"/><polygon points="224.9,171.7 233.9,174.7 226.9,180.7" fill="#FF6FB1"/><rect x="66.9" y="167.8" width="8" height="5" rx="1" fill="#66E0FF" transform="rotate(22 70.9 170.3)"/><circle cx="312.3" cy="209.8" r="3.2" fill="#FFFFFF"/><polygon points="311.5,212.5 320.5,215.5 313.5,221.5" fill="#B58CFF"/><rect x="12.3" y="145.6" width="8" height="5" rx="1" fill="#FFD66B" transform="rotate(79 16.3 148.1)"/><circle cx="281.4" cy="172" r="3.2" fill="#FF6FB1"/><polygon points="142.5,183.1 151.5,186.1 144.5,192.1" fill="#66E0FF"/><rect x="147.9" y="129.7" width="8" height="5" rx="1" fill="#FFFFFF" transform="rotate(78 151.9 132.2)"/><circle cx="93.1" cy="207.3" r="3.2" fill="#B58CFF"/><polygon points="35.9,166.4 44.9,169.4 37.9,175.4" fill="#FFD66B"/><rect x="329.2" y="173.3" width="8" height="5" rx="1" fill="#FF6FB1" transform="rotate(165 333.2 175.8)"/><circle cx="160.8" cy="151.8" r="3.2" fill="#66E0FF"/><polygon points="329.1,133.9 338.1,136.9 331.1,142.9" fill="#FFFFFF"/><rect x="142.1" y="134.7" width="8" height="5" rx="1" fill="#B58CFF" transform="rotate(161 146.1 137.2)"/><circle cx="151.2" cy="132.4" r="3.2" fill="#FFD66B"/>
-    
+  <g clip-path="url(#cardClip)">
+    <!-- 1. VẦNG SÁNG & CÁC TIA SÁNG TỎA RA (SUNBURST) -->
+    <circle cx="170" cy="150" r="140" fill="url(#glow)"/>
+    <polygon points="170,150 390,150 387.3,184.4" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 374,232.4 358.6,263.3" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 328.3,302.8 302.4,325.7" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 259.5,351 226.9,362.5" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 177.7,369.9 143.2,368.4" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 94.8,356.7 63.3,342.4" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 22.8,313.5 -1,288.5" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 -27.7,246.4 -40.4,214.3" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 -49.5,165.3 -49.2,130.8" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 -39.2,82 -26,50.1" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 1.5,8.6 25.7,-16" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 66.7,-44.2 98.4,-58" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 147,-68.8 181.5,-69.7" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 230.6,-61.5 263,-49.4" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 305.4,-23.4 330.9,-0" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 360.5,40 375.4,71.2" fill="#FFFFFF" fill-opacity="0.06"/>
+    <polygon points="170,150 387.9,119.4 390,153.8" fill="#FFFFFF" fill-opacity="0.06"/>
+
+    <!-- 2. DÂY CỜ ĐUÔI NHEO -->
+    <path d="M 0 60 Q 170 96 340 60" fill="none" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="2"/>
+    <polygon points="14,67.8 36,67.8 25,91.8" fill="#FFC83D" stroke="#00000022" stroke-width="1"/>
+    <polygon points="48,72 70,72 59,96" fill="#FF5FA2" stroke="#00000022" stroke-width="1"/>
+    <polygon points="82,75.6 104,75.6 93,99.6" fill="#4DD8E8" stroke="#00000022" stroke-width="1"/>
+    <polygon points="116,78.3 138,78.3 127,102.3" fill="#9B7BFF" stroke="#00000022" stroke-width="1"/>
+    <polygon points="150,79.8 172,79.8 161,103.8" fill="#FFC83D" stroke="#00000022" stroke-width="1"/>
+    <polygon points="184,79.9 206,79.9 195,103.9" fill="#FF5FA2" stroke="#00000022" stroke-width="1"/>
+    <polygon points="218,78.6 240,78.6 229,102.6" fill="#4DD8E8" stroke="#00000022" stroke-width="1"/>
+    <polygon points="252,76.2 274,76.2 263,100.2" fill="#9B7BFF" stroke="#00000022" stroke-width="1"/>
+    <polygon points="286,72.7 308,72.7 297,96.7" fill="#FFC83D" stroke="#00000022" stroke-width="1"/>
+    <polygon points="320,68.6 342,68.6 331,92.6" fill="#FF5FA2" stroke="#00000022" stroke-width="1"/>
+
+    <!-- 3. CHÙM BÓNG BAY 2 BÊN -->
+    <g transform="translate(34,128) scale(0.95)"><path d="M 0 40 Q -6 70 4 96" fill="none" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.6"/><ellipse cx="0" cy="0" rx="20" ry="25" fill="#FFC83D" stroke="#00000022" stroke-width="1.2"/><polygon points="0,25 -4,32 4,32" fill="#FFC83D"/><ellipse cx="-7" cy="-9" rx="4.5" ry="8" fill="#FFFFFF" fill-opacity="0.4" transform="rotate(20 -7 -9)"/></g>
+    <g transform="translate(66,102) scale(0.85)"><path d="M 0 40 Q -6 70 4 96" fill="none" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.6"/><ellipse cx="0" cy="0" rx="20" ry="25" fill="#FF5FA2" stroke="#00000022" stroke-width="1.2"/><polygon points="0,25 -4,32 4,32" fill="#FF5FA2"/><ellipse cx="-7" cy="-9" rx="4.5" ry="8" fill="#FFFFFF" fill-opacity="0.4" transform="rotate(20 -7 -9)"/></g>
+    <g transform="translate(306,124) scale(0.95)"><path d="M 0 40 Q -6 70 4 96" fill="none" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.6"/><ellipse cx="0" cy="0" rx="20" ry="25" fill="#4DD8E8" stroke="#00000022" stroke-width="1.2"/><polygon points="0,25 -4,32 4,32" fill="#4DD8E8"/><ellipse cx="-7" cy="-9" rx="4.5" ry="8" fill="#FFFFFF" fill-opacity="0.4" transform="rotate(20 -7 -9)"/></g>
+    <g transform="translate(274,100) scale(0.85)"><path d="M 0 40 Q -6 70 4 96" fill="none" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.6"/><ellipse cx="0" cy="0" rx="20" ry="25" fill="#9B7BFF" stroke="#00000022" stroke-width="1.2"/><polygon points="0,25 -4,32 4,32" fill="#9B7BFF"/><ellipse cx="-7" cy="-9" rx="4.5" ry="8" fill="#FFFFFF" fill-opacity="0.4" transform="rotate(20 -7 -9)"/></g>
+
+    <!-- 4. PHÁO GIẤY CONFETTI -->
+    <rect x="85.5" y="122.6" width="8" height="5" rx="1" fill="#FFD66B" transform="rotate(101 89.5 125.1)"/>
+    <circle cx="163.2" cy="121" r="3.2" fill="#FF6FB1"/>
+    <polygon points="16.3,177 25.3,180 18.3,186" fill="#66E0FF"/>
+    <rect x="102.6" y="230.8" width="8" height="5" rx="1" fill="#FFFFFF" transform="rotate(15 106.6 233.3)"/>
+    <circle cx="81" cy="175.5" r="3.2" fill="#B58CFF"/>
+    <polygon points="98.5,131.1 107.5,134.1 100.5,140.1" fill="#FFD66B"/>
+    <rect x="44" y="136.2" width="8" height="5" rx="1" fill="#FF6FB1" transform="rotate(6 48 138.7)"/>
+    <circle cx="275.3" cy="208.4" r="3.2" fill="#66E0FF"/>
+    <polygon points="266.1,133.6 275.1,136.6 268.1,142.6" fill="#FFFFFF"/>
+    <rect x="109.2" y="186.5" width="8" height="5" rx="1" fill="#B58CFF" transform="rotate(95 113.2 189)"/>
+    <circle cx="37.7" cy="183.9" r="3.2" fill="#FFD66B"/>
+    <polygon points="224.9,171.7 233.9,174.7 226.9,180.7" fill="#FF6FB1"/>
+    <rect x="66.9" y="167.8" width="8" height="5" rx="1" fill="#66E0FF" transform="rotate(22 70.9 170.3)"/>
+    <circle cx="312.3" cy="209.8" r="3.2" fill="#FFFFFF"/>
+    <polygon points="311.5,212.5 320.5,215.5 313.5,221.5" fill="#B58CFF"/>
+    <rect x="12.3" y="145.6" width="8" height="5" rx="1" fill="#FFD66B" transform="rotate(79 16.3 148.1)"/>
+    <circle cx="281.4" cy="172" r="3.2" fill="#FF6FB1"/>
+    <polygon points="142.5,183.1 151.5,186.1 144.5,192.1" fill="#66E0FF"/>
+    <rect x="147.9" y="129.7" width="8" height="5" rx="1" fill="#FFFFFF" transform="rotate(78 151.9 132.2)"/>
+    <circle cx="93.1" cy="207.3" r="3.2" fill="#B58CFF"/>
+    <polygon points="35.9,166.4 44.9,169.4 37.9,175.4" fill="#FFD66B"/>
+    <rect x="329.2" y="173.3" width="8" height="5" rx="1" fill="#FF6FB1" transform="rotate(165 333.2 175.8)"/>
+    <circle cx="160.8" cy="151.8" r="3.2" fill="#66E0FF"/>
+    <polygon points="329.1,133.9 338.1,136.9 331.1,142.9" fill="#FFFFFF"/>
+    <rect x="142.1" y="134.7" width="8" height="5" rx="1" fill="#B58CFF" transform="rotate(161 146.1 137.2)"/>
+    <circle cx="151.2" cy="132.4" r="3.2" fill="#FFD66B"/>
+
+    <!-- 5. BÁNH KEM 3 TẦNG, NẾN & SAO -->
     <ellipse cx="170" cy="236" rx="84" ry="10" fill="#E8D6FF"/>
     <rect x="108" y="196" width="124" height="38" rx="6" fill="#FFF3E0" stroke="#00000022" stroke-width="1.5"/>
     <path d="M 108 204 Q 118 218 128 204 Q 138 220 148 204 Q 158 220 168 204 Q 178 220 188 204 Q 198 220 208 204 Q 218 220 232 204 L 232 196 L 108 196 Z" fill="#FF8FB7"/>
@@ -27,12 +86,25 @@
     <path d="M 128 170 Q 137 182 146 170 Q 155 184 164 170 Q 173 184 182 170 Q 191 184 200 170 Q 206 180 212 170 L 212 162 L 128 162 Z" fill="#9B7BFF"/>
     <rect x="146" y="132" width="48" height="30" rx="6" fill="#FFF3E0" stroke="#00000022" stroke-width="1.5"/>
     <path d="M 146 140 Q 154 152 162 140 Q 170 152 178 140 Q 186 152 194 140 L 194 132 L 146 132 Z" fill="#4DD8E8"/>
-    <rect x="153.5" y="108" width="5" height="24" rx="1.5" fill="#FFC83D" stroke="#00000022" stroke-width="1"/><path d="M 156 94 Q 162 102 156 108 Q 150 102 156 94 Z" fill="#FFB020"/><path d="M 156 99 Q 159 103 156 106 Q 153 103 156 99 Z" fill="#FFF3A6"/><rect x="167.5" y="108" width="5" height="24" rx="1.5" fill="#FF5FA2" stroke="#00000022" stroke-width="1"/><path d="M 170 94 Q 176 102 170 108 Q 164 102 170 94 Z" fill="#FFB020"/><path d="M 170 99 Q 173 103 170 106 Q 167 103 170 99 Z" fill="#FFF3A6"/><rect x="181.5" y="108" width="5" height="24" rx="1.5" fill="#4DD8E8" stroke="#00000022" stroke-width="1"/><path d="M 184 94 Q 190 102 184 108 Q 178 102 184 94 Z" fill="#FFB020"/><path d="M 184 99 Q 187 103 184 106 Q 181 103 184 99 Z" fill="#FFF3A6"/>
+    <rect x="153.5" y="108" width="5" height="24" rx="1.5" fill="#FFC83D" stroke="#00000022" stroke-width="1"/>
+    <path d="M 156 94 Q 162 102 156 108 Q 150 102 156 94 Z" fill="#FFB020"/>
+    <path d="M 156 99 Q 159 103 156 106 Q 153 103 156 99 Z" fill="#FFF3A6"/>
+    <rect x="167.5" y="108" width="5" height="24" rx="1.5" fill="#FF5FA2" stroke="#00000022" stroke-width="1"/>
+    <path d="M 170 94 Q 176 102 170 108 Q 164 102 170 94 Z" fill="#FFB020"/>
+    <path d="M 170 99 Q 173 103 170 106 Q 167 103 170 99 Z" fill="#FFF3A6"/>
+    <rect x="181.5" y="108" width="5" height="24" rx="1.5" fill="#4DD8E8" stroke="#00000022" stroke-width="1"/>
+    <path d="M 184 94 Q 190 102 184 108 Q 178 102 184 94 Z" fill="#FFB020"/>
+    <path d="M 184 99 Q 187 103 184 106 Q 181 103 184 99 Z" fill="#FFF3A6"/>
     <polygon points="170,71 173,77.9 180.5,78.6 174.8,83.6 176.5,90.9 170,87.1 163.5,90.9 165.2,83.6 159.5,78.6 167,77.9" fill="#FFC83D"/>
-    <!-- Sàn tiệc (vùng chữ) -->
-    <path d="M 0 242 Q 170 228 340 242 L 340 504 L 0 504 Z" fill="url(#floor)"/>
-    <path d="M 0 242 Q 170 228 340 242" fill="none" stroke="#B58CFF" stroke-opacity="0.55" stroke-width="3"/>
-    <rect x="14" y="210" width="40" height="30" rx="3" fill="#FF5FA2" stroke="#00000022" stroke-width="1.2"/><rect x="30.5" y="210" width="7" height="30" fill="#FFC83D"/><rect x="14" y="222" width="40" height="6" fill="#FFC83D"/><path d="M 34 210 Q 22 194 20 206 Z M 34 210 Q 46 194 48 206 Z" fill="#FFC83D"/><rect x="286" y="212" width="40" height="30" rx="3" fill="#4DD8E8" stroke="#00000022" stroke-width="1.2"/><rect x="302.5" y="212" width="7" height="30" fill="#FFFFFF"/><rect x="286" y="224" width="40" height="6" fill="#FFFFFF"/><path d="M 306 212 Q 294 196 292 208 Z M 306 212 Q 318 196 320 208 Z" fill="#FFFFFF"/>
 
+    <!-- 6. HAI HỘP QUÀ HAI BÊN -->
+    <rect x="14" y="210" width="40" height="30" rx="3" fill="#FF5FA2" stroke="#00000022" stroke-width="1.2"/>
+    <rect x="30.5" y="210" width="7" height="30" fill="#FFC83D"/>
+    <rect x="14" y="222" width="40" height="6" fill="#FFC83D"/>
+    <path d="M 34 210 Q 22 194 20 206 Z M 34 210 Q 46 194 48 206 Z" fill="#FFC83D"/>
+    <rect x="286" y="212" width="40" height="30" rx="3" fill="#4DD8E8" stroke="#00000022" stroke-width="1.2"/>
+    <rect x="302.5" y="212" width="7" height="30" fill="#FFFFFF"/>
+    <rect x="286" y="224" width="40" height="6" fill="#FFFFFF"/>
+    <path d="M 306 212 Q 294 196 292 208 Z M 306 212 Q 318 196 320 208 Z" fill="#FFFFFF"/>
   </g>
 </svg>

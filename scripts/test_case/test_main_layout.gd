@@ -47,6 +47,34 @@ func _init() -> void:
 	assert(carousel != null, "Phai co EventCarousel")
 	assert(header.global_position.y < carousel.global_position.y,
 		"Tieu de khoi su kien phai nam TREN carousel")
+	var preview_carousel := carousel as EventCarousel
+	assert(preview_carousel != null and preview_carousel.show_all_events_for_preview,
+		"Main bat che do xem thu tat ca EventData")
+	if preview_carousel != null:
+		var em := root.get_node_or_null("EventManager")
+		var expected_event_count := (em.call("get_all_events_for_preview") as Array).size() if em != null else 0
+		assert(preview_carousel.get_displayed_event_count() == expected_event_count,
+			"Carousel hien thi du %d EventData" % expected_event_count)
+		var badge_label := header.get_node_or_null("Badge/CountLabel") as Label
+		assert(badge_label != null and badge_label.text == str(expected_event_count),
+			"Badge dem dung so EventData dang hien")
+		var first_event_card := carousel.get_node_or_null("ScrollContainer/HBox/EventCard") as Control
+		assert(first_event_card != null, "Carousel co the event de kiem tra thu tu lop")
+		if first_event_card != null:
+			var event_background := first_event_card.get_node("Content/Background") as Control
+			var event_text := first_event_card.get_node("Content/Text") as Control
+			var event_chips := first_event_card.get_node("Content/Chips") as Control
+			var event_information := first_event_card.get_node("Content/Information") as Control
+			assert(event_text.z_index > event_background.z_index,
+				"Title va ngay Daily nam tren lop artwork")
+			assert(event_chips.z_index > event_background.z_index,
+				"Chip chu nam tren lop artwork")
+			assert(event_information.z_index > event_background.z_index,
+				"Thong tin tien do va CTA nam tren lop artwork")
+			for title_path in ["Content/Text/Title/Title1", "Content/Text/Title/Title2"]:
+				var title_label := first_event_card.get_node(title_path) as Label
+				assert(title_label.get_theme_constant("outline_size") >= 5,
+					"%s co outline de title_outline trong theme resource co hieu luc" % title_path)
 
 	# 3. 2 thẻ chế độ — Play TRÊN Dungeon, đủ cấu trúc ModeCard
 	var card_play: ModeCard = main_scene.layout.card_play
@@ -91,7 +119,15 @@ func _init() -> void:
 	var card_node: Node = main_scene.ui("EventCard")
 	assert(card_node != null, "Carousel phai instantiate it nhat 1 EventCard")
 	if card_node != null:
-		for child in ["BgGradient", "BackArt", "ThemeChip", "TimerChip", "ProgressPanel", "CtaButton"]:
+		for child in [
+			"Content/Background/BgGradient",
+			"Content/Background/BackArt",
+			"Content/Background/FrontArt",
+			"Content/Chips/ThemeChip",
+			"Content/Chips/TimerChip",
+			"Content/Information/ProgressPanel",
+			"Content/Information/CtaButton",
+		]:
 			assert(card_node.get_node_or_null(child) != null, "EventCard phai co node %s" % child)
 
 	print("\n[SUCCESS] Bo cuc Main Screen moi dung: thanh tren · su kien · 2 the che do · dock 4 nut.\n")

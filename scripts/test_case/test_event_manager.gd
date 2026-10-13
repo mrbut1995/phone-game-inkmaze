@@ -10,6 +10,12 @@ var _em: Node = null
 var _saved_events: Array = []
 var _saved_progress: Dictionary = {}
 
+const NEW_THEME_IDS := [
+	&"anniversary", &"autumn", &"easter", &"new_year",
+	&"spring", &"summer", &"thanksgiving", &"valentine",
+]
+const NEW_EVENT_IDS := NEW_THEME_IDS
+
 
 func _init() -> void:
 	print("\n========================================================")
@@ -27,7 +33,10 @@ func _init() -> void:
 	_saved_progress = (_em.call("export_progress") as Dictionary).duplicate(true)
 
 	_section_load_and_sort()
+	_section_theme_art()
+	_section_new_event_data()
 	_section_time_filter()
+	await _section_all_active_events_and_dots()
 	_section_series_progress()
 	_section_claim()
 	_section_dungeon()
@@ -110,6 +119,13 @@ func _section_load_and_sort() -> void:
 	_check(active.size() > 0, "Co su kien dang hoat dong (%d)" % active.size())
 	_check((active[0] as EventData).type == EventData.Type.DAILY,
 		"Event DAILY luon dung DAU danh sach")
+	var preview_events: Array = _em.call("get_all_events_for_preview")
+	_check(preview_events.size() == (_em.get("_all_events") as Array).size(),
+		"API xem thu giu ca event ngoai lich/disabled")
+	var mansion := _em.call("get_event", &"mansion") as EventData
+	_check(mansion != null, "EventData mansion duoc nap tu resources/events")
+	if mansion != null and mansion.is_active_now(int(_em.call("now_utc"))):
+		_check(mansion in active, "Mansion dang trong han duoc dua vao danh sach hien thi")
 	var prev := -1
 	var sorted_ok := true
 	for i in range(1, active.size()):
@@ -121,6 +137,60 @@ func _section_load_and_sort() -> void:
 
 	var daily_prog: Dictionary = _em.call("get_progress", &"daily")
 	_check(int(daily_prog.get("total", 0)) == 3, "Daily co 3 thu thach (dang %d)" % int(daily_prog.get("total", 0)))
+
+
+func _section_theme_art() -> void:
+	print("Kiem tra art theme...")
+	var dir := DirAccess.open("res://resources/events/themes")
+	_check(dir != null, "Thu muc EventTheme ton tai")
+	if dir == null:
+		return
+
+	var loaded_ids: Array[StringName] = []
+	dir.list_dir_begin()
+	var filename := dir.get_next()
+	while not filename.is_empty():
+		if not dir.current_is_dir() and filename.ends_with(".tres"):
+			var path := "res://resources/events/themes/" + filename
+			var theme := ResourceLoader.load(path, "EventTheme") as EventTheme
+			_check(theme != null, "%s load thanh EventTheme" % filename)
+			if theme != null:
+				loaded_ids.append(theme.id)
+				_check(theme.back_art != null, "%s co background art" % theme.id)
+				_check(theme.title_color.a == 1.0 and theme.title_outline.a == 1.0,
+					"%s dung title color/outline khong trong suot" % theme.id)
+				_check(theme.title_color != theme.title_outline,
+					"%s phan biet title fill va outline" % theme.id)
+				if theme.id not in [&"daily", &"dungeon"]:
+					_check(theme.front_art != null, "%s co foreground art" % theme.id)
+					if theme.back_art != null and theme.front_art != null:
+						var bg_size := theme.back_art.get_size()
+						var fg_size := theme.front_art.get_size()
+						var bg_aspect := bg_size.x / bg_size.y if bg_size.y > 0.0 else 0.0
+						var fg_aspect := fg_size.x / fg_size.y if fg_size.y > 0.0 else 0.0
+						_check(is_equal_approx(bg_aspect, fg_aspect),
+							"%s background/foreground giu cung ti le khung" % theme.id)
+		filename = dir.get_next()
+	dir.list_dir_end()
+
+	for theme_id in NEW_THEME_IDS:
+		_check(theme_id in loaded_ids, "Theme moi %s da duoc dang ky" % theme_id)
+
+
+func _section_new_event_data() -> void:
+	print("Kiem tra EventData moi...")
+	for event_id in NEW_EVENT_IDS:
+		var event := _em.call("get_event", event_id) as EventData
+		_check(event != null, "EventData %s da duoc nap" % event_id)
+		if event == null:
+			continue
+		_check(event.is_valid(), "EventData %s hop le" % event_id)
+		_check(event.theme != null and event.theme.id == event_id,
+			"EventData %s dung theme tuong ung" % event_id)
+		_check(event.type in [EventData.Type.SPECIAL_SERIES, EventData.Type.STANDARD_SERIES],
+			"EventData %s dung luong CTA da ho tro" % event_id)
+		_check(event.levels.size() == 3, "EventData %s co 3 man" % event_id)
+		_check(event.rewards.size() == 2, "EventData %s co du 2 phan thuong" % event_id)
 
 
 # ---------------------------------------------------------------------------
@@ -145,6 +215,61 @@ func _section_time_filter() -> void:
 	for e in active:
 		ids.append(str((e as EventData).id))
 	_check(ids == ["daily", "t_inside"], "get_active_events chi tra Daily + event trong han (%s)" % str(ids))
+
+
+func _section_all_active_events_and_dots() -> void:
+	print("Kiem tra hien thi tat ca EventData trong che do xem thu...")
+	var many_events: Array = [_mk("daily", EventData.Type.DAILY, -9999, 0, 0)]
+	for i in 10:
+		var event := _mk("t_many_%d" % i, EventData.Type.STANDARD_SERIES, i, -3600, 3600)
+		if i % 2 == 0:
+			event.start_utc = Time.get_datetime_string_from_unix_time(
+				int(Time.get_unix_time_from_system()) + 3600, false)
+		elif i == 9:
+			event.enabled = false
+		many_events.append(event)
+	_set_events(many_events)
+	var active: Array = _em.call("get_active_events")
+	var preview_events: Array = _em.call("get_all_events_for_preview")
+	_check(active.size() < many_events.size(),
+		"Gameplay van loc event chua toi lich/disabled (%d/%d)" % [active.size(), many_events.size()])
+	_check(preview_events.size() == many_events.size(),
+		"Che do xem thu tra ve tat ca EventData, ke ca chua toi lich/disabled (%d)" % preview_events.size())
+	_check((preview_events[0] as EventData).type == EventData.Type.DAILY,
+		"Daily van dung dau danh sach xem thu")
+
+	var packed := load("res://nodes/main/event_dots.tscn") as PackedScene
+	var event_dots: EventDots = null
+	if packed != null:
+		event_dots = packed.instantiate() as EventDots
+	_check(event_dots != null, "EventDots scene instantiate thanh cong")
+	if event_dots == null:
+		return
+	root.add_child(event_dots)
+	await process_frame
+	event_dots.set_pages(preview_events.size(), preview_events.size() - 1)
+	_check(event_dots.get_node("Dots").get_child_count() == preview_events.size(),
+		"Co mot cham trang cho moi EventData")
+	var last_dot := event_dots.get_node("Dots").get_child(preview_events.size() - 1) as Panel
+	_check(last_dot.visible, "Cham trang cuoi hien thi khi danh sach vuot 8 event")
+	event_dots.queue_free()
+
+	var carousel_packed := load("res://nodes/main/event_carousel.tscn") as PackedScene
+	var carousel: EventCarousel = null
+	if carousel_packed != null:
+		carousel = carousel_packed.instantiate() as EventCarousel
+	_check(carousel != null, "EventCarousel scene instantiate thanh cong")
+	if carousel == null:
+		await process_frame
+		return
+	root.add_child(carousel)
+	await process_frame
+	carousel.refresh()
+	await process_frame
+	_check(carousel.get_node("ScrollContainer/HBox").get_child_count() == preview_events.size(),
+		"EventCarousel hien thi tat ca EventData, ke ca event inactive")
+	carousel.queue_free()
+	await process_frame
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,16 @@
+; EventDot — scene mẫu cho một dấu trang của EventCarousel
+[gd_scene format=3]
+
+[sub_resource type="StyleBoxFlat" id="sb_dot"]
+bg_color = Color(0.84705883, 0.8862745, 0.9098039, 1)
+corner_radius_top_left = 2.5
+corner_radius_top_right = 2.5
+corner_radius_bottom_right = 2.5
+corner_radius_bottom_left = 2.5
+
+[node name="EventDot" type="Panel"]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_dot")

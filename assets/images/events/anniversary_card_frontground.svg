@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252">
+  <defs>
+    <!-- Màu mực tím đen nửa dưới -->
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2A1257"/>
+      <stop offset="1" stop-color="#150827"/>
+    </linearGradient>
+    <!-- Giữ bo góc chuẩn của card (rx=28) -->
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#cardClip)">
+    <!-- 1. Mảng mực tím đen phía dưới (giữ nguyên vị trí y: 228 -> 504) -->
+    <path d="M 0 242 Q 170 228 340 242 L 340 504 L 0 504 Z" fill="url(#floor)"/>
+
+    <!-- 2. Phần viền cong tím sáng ngăn cách -->
+    <path d="M 0 242 Q 170 228 340 242" fill="none" stroke="#B58CFF" stroke-opacity="0.55" stroke-width="3"/>
+  </g>
+</svg>

@@ -1,22 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
   <defs>
-    <!-- Khung bo góc chuẩn thẻ sự kiện 340x504 -->
+    <!-- Khung bo góc chuẩn 340x504 -->
     <clipPath id="cardClip">
       <rect width="340" height="504" rx="28"/>
     </clipPath>
-
-    <!-- Nền tím ma mị đêm Halloween -->
-    <linearGradient id="bg_halloween" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#190730"/>
-      <stop offset="0.38" stop-color="#381363"/>
-      <stop offset="0.75" stop-color="#240A42"/>
-      <stop offset="1" stop-color="#120421"/>
-    </linearGradient>
-
-    <!-- Lưới ô ly mờ nhận diện Design System -->
-    <pattern id="gw" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.08"/>
-    </pattern>
 
     <!-- Ánh hoàng hôn rực cam chân trời -->
     <radialGradient id="horizonGlow" cx="50%" cy="50%" r="50%">
@@ -47,14 +34,6 @@
       <stop offset="1" stop-color="#B39DDB" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Nền đồi nghĩa địa tối phẳng (Vùng an toàn cho chữ) -->
-    <linearGradient id="cemeterySoil" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1A072E"/>
-      <stop offset="0.3" stop-color="#120421"/>
-      <stop offset="0.75" stop-color="#0C0217"/>
-      <stop offset="1" stop-color="#06010C"/>
-    </linearGradient>
-
     <!-- Dơi bóng đêm -->
     <g id="bat_silhouette">
       <path d="M 0 0 C -6 -10 -18 -8 -26 2 C -20 -2 -15 0 -12 5 C -8 1 -5 2 0 8 C 5 2 8 1 12 5 C 15 0 20 -2 26 2 C 18 -8 6 -10 0 0 Z" 
@@ -63,19 +42,12 @@
   </defs>
 
   <g clip-path="url(#cardClip)">
-    <!-- ============================================== -->
-    <!-- 1. BẦU TRỜI ĐÊM HUYỀN BÍ & TRĂNG THU HOẠCH     -->
-    <!-- ============================================== -->
-    <rect width="340" height="504" fill="url(#bg_halloween)"/>
-    <rect width="340" height="504" fill="url(#gw)"/>
-
-    <!-- Vầng sáng cam ma quái nơi chân trời -->
+    <!-- 1. VẦNG SÁNG CHÂN TRỜI & MẶT TRĂNG KHỔNG LỒ -->
     <ellipse cx="170" cy="225" rx="200" ry="75" fill="url(#horizonGlow)"/>
 
-    <!-- Mặt trăng tròn Halloween khổng lồ (x = 236, y = 112) -->
     <circle cx="236" cy="112" r="95" fill="url(#moonGlow)"/>
     <circle cx="236" cy="112" r="46" fill="#FFF2BD"/>
-    <!-- Vết bề mặt trăng rỗ ma quái -->
+    <!-- Vết rỗ ma quái trên mặt trăng -->
     <circle cx="222" cy="100" r="9" fill="#E8C868" opacity="0.5"/>
     <circle cx="254" cy="126" r="7.5" fill="#E8C868" opacity="0.45"/>
     <circle cx="248" cy="92" r="5" fill="#E8C868" opacity="0.4"/>
@@ -85,20 +57,20 @@
     <path d="M 170 102 Q 220 85 285 106 Q 240 120 170 102 Z" fill="#1C0834" opacity="0.75"/>
     <path d="M 215 130 Q 255 118 305 132 Q 265 142 215 130 Z" fill="#1C0834" opacity="0.65"/>
 
-    <!-- Các vì sao lấp lánh giữa trời đêm -->
+    <!-- Các vì sao lấp lánh -->
     <path d="M 42 75 Q 42 80 47 80 Q 42 80 42 85 Q 42 80 37 80 Q 42 80 42 75 Z" fill="#FFFFFF" opacity="0.95"/>
     <path d="M 112 55 Q 112 60 116 60 Q 112 60 112 65 Q 112 60 108 60 Q 112 60 112 55 Z" fill="#FFFFFF" opacity="0.9"/>
     <path d="M 182 40 Q 182 46 188 46 Q 182 46 182 52 Q 182 46 176 46 Q 182 46 182 40 Z" fill="#FFFFFF" opacity="0.95"/>
     <path d="M 302 65 Q 302 70 307 70 Q 302 70 302 75 Q 302 70 297 70 Q 302 70 302 65 Z" fill="#FFFFFF" opacity="0.9"/>
     <path d="M 65 155 Q 65 159 69 159 Q 65 159 65 163 Q 65 159 61 159 Q 65 159 65 155 Z" fill="#FFFFFF" opacity="0.85"/>
 
-    <!-- Đàn dơi bay lượn từ xa tới gần -->
+    <!-- Đàn dơi bóng đêm -->
     <g transform="translate(135, 95) scale(0.75)"><use href="#bat_silhouette"/></g>
     <g transform="translate(168, 72) scale(0.5)"><use href="#bat_silhouette"/></g>
     <g transform="translate(295, 155) scale(0.55)"><use href="#bat_silhouette"/></g>
     <g transform="translate(95, 125) scale(0.4)"><use href="#bat_silhouette"/></g>
 
-    <!-- Cành cây khô ma quái vươn từ mép trái -->
+    <!-- Cành cây khô ma quái bên mép trái -->
     <g stroke="#120521" stroke-linecap="round" fill="none">
       <path d="M -10 130 Q 30 110 55 125 Q 75 135 100 120" stroke-width="5"/>
       <path d="M 35 116 Q 45 95 65 90" stroke-width="3"/>
@@ -107,70 +79,38 @@
       <path d="M 85 124 Q 95 108 110 112" stroke-width="1.8"/>
     </g>
 
-    <!-- ============================================== -->
-    <!-- 2. BÉ MA BAY DẠ QUANG MA MỊ (ETHEREAL GHOST)    -->
-    <!-- (Bay lơ lửng bên trái, x = 68, y = 160)       -->
-    <!-- ============================================== -->
+    <!-- 2. BÉ MA BAY PHÁT SÁNG DẠ QUANG -->
     <g transform="translate(68, 160) rotate(-6)">
-      <!-- Hào quang tâm linh phát sáng quanh ma -->
       <ellipse cx="0" cy="15" rx="34" ry="38" fill="url(#ghostAura)"/>
-      <!-- Thân bé ma vải trắng uốn lượn -->
       <path d="M -22 28 C -24 0 -22 -22 0 -22 C 22 -22 24 0 22 28 C 15 20 8 28 0 20 C -8 28 -15 20 -22 28 Z" 
             fill="#FFFFFF" stroke="#D1C4E9" stroke-width="2"/>
-      <!-- Đôi mắt to tròn đen láy -->
       <ellipse cx="-8" cy="-5" rx="3.5" ry="5.5" fill="#240A42"/>
       <circle cx="-9.2" cy="-7" r="1.5" fill="#FFFFFF"/>
       <ellipse cx="8" cy="-5" rx="3.5" ry="5.5" fill="#240A42"/>
       <circle cx="6.8" cy="-7" r="1.5" fill="#FFFFFF"/>
-      <!-- Miệng chữ 'o' kinh ngạc dễ thương -->
       <ellipse cx="0" cy="7" rx="4.5" ry="6" fill="#240A42"/>
-      <!-- Má hồng ma quái tím phớt -->
       <circle cx="-14" cy="2" r="4" fill="#D1C4E9" opacity="0.6"/>
       <circle cx="14" cy="2" r="4" fill="#D1C4E9" opacity="0.6"/>
     </g>
 
-    <!-- ============================================== -->
-    <!-- 3. ĐỒI ĐẤT NGHĨA ĐỊA & VÙNG NỀN AN TOÀN        -->
-    <!-- Đường chân đồi uốn lượn tại y ≈ 242            -->
-    <!-- ============================================== -->
-    <path d="M 0 242 Q 85 218 170 238 T 340 230 L 340 504 L 0 504 Z" fill="url(#cemeterySoil)"/>
-
-    <!-- Viền mép đồi dạ quang ma quái màu tím cam rực rỡ -->
-    <path d="M 0 242 Q 85 218 170 238 T 340 230" fill="none" stroke="#E85D04" stroke-width="4.5" stroke-linecap="round"/>
-    <path d="M 0 247 Q 85 223 170 243 T 340 235" fill="none" stroke="#9C27B0" stroke-opacity="0.45" stroke-width="1.8"/>
-
-    <!-- ============================================== -->
-    <!-- 4. QUẢ BÍ NGÔ JACK-O'-LANTERN 3D PHÁT SÁNG      -->
-    <!-- (Xếp nép bên phải đồi cát, x ≈ 230 - 315)      -->
-    <!-- ============================================== -->
-
-    <!-- QUẢ BÍ NGÔ LỚN (Chính diện bên phải, x = 278, y = 222) -->
+    <!-- 3. QUẢ BÍ NGÔ JACK-O'-LANTERN LỚN & NHỎ -->
+    <!-- Quả lớn -->
     <g transform="translate(278, 222) scale(0.92)">
-      <!-- Đổ bóng đáy bí ngô -->
       <ellipse cx="0" cy="28" rx="35" ry="10" fill="#0A0214" opacity="0.8"/>
-
-      <!-- Cuống bí ngô gồ ghề màu xanh rêu -->
       <path d="M -3 -26 C -3 -38 6 -42 12 -42 C 10 -36 5 -32 4 -26 Z" fill="#4B6B22" stroke="#2B4010" stroke-width="1.5"/>
-
-      <!-- Các múi bí ngô 3D nổi khối màu cam chín -->
       <ellipse cx="-20" cy="2" rx="18" ry="26" fill="#D35400" stroke="#7A2E00" stroke-width="2"/>
       <ellipse cx="20" cy="2" rx="18" ry="26" fill="#D35400" stroke="#7A2E00" stroke-width="2"/>
       <ellipse cx="-11" cy="2" rx="18" ry="28" fill="#E65100" stroke="#7A2E00" stroke-width="2"/>
       <ellipse cx="11" cy="2" rx="18" ry="28" fill="#E65100" stroke="#7A2E00" stroke-width="2"/>
       <ellipse cx="0" cy="2" rx="18" ry="29" fill="#FF7A00" stroke="#7A2E00" stroke-width="2"/>
-
-      <!-- HỐC MẮT & NỤ CƯỜI KHẮC PHÁT SÁNG NỘI TẠI -->
-      <!-- Hốc mắt tam giác rực lửa -->
       <polygon points="-16,-6 -6,-6 -11,-15" fill="url(#candleFire)" stroke="#5D1B00" stroke-width="1"/>
       <polygon points="16,-6 6,-6 11,-15" fill="url(#candleFire)" stroke="#5D1B00" stroke-width="1"/>
-      <!-- Mũi tam giác nhỏ -->
       <polygon points="-3,0 3,0 0,-6" fill="url(#candleFire)" stroke="#5D1B00" stroke-width="0.8"/>
-      <!-- Nụ cười răng cưa tinh quái -->
       <path d="M -18 10 L -12 17 L -7 11 L 0 18 L 7 11 L 12 17 L 18 10 L 15 21 Q 0 30 -15 21 Z" 
             fill="url(#candleFire)" stroke="#5D1B00" stroke-width="1.5"/>
     </g>
 
-    <!-- QUẢ BÍ NGÔ NHỎ (Nép cạnh bên trái quả lớn, x = 230, y = 236) -->
+    <!-- Quả nhỏ -->
     <g transform="translate(230, 236) scale(0.58)">
       <ellipse cx="0" cy="28" rx="32" ry="9" fill="#0A0214" opacity="0.8"/>
       <path d="M -3 -26 C -3 -36 5 -40 10 -40 C 8 -34 4 -30 3 -26 Z" fill="#4B6B22"/>
@@ -182,20 +122,8 @@
       <path d="M -14 10 L -9 16 L -4 10 L 0 16 L 4 10 L 9 16 L 14 10 Q 0 26 -14 10 Z" fill="url(#candleFire)"/>
     </g>
 
-    <!-- Bụi cỏ dại ma quái bên mép đồi -->
+    <!-- Bụi cỏ dại hai bên mép đồi -->
     <path d="M 20 242 Q 22 230 26 242 Q 30 226 36 243 Z" fill="#1A072E"/>
     <path d="M 315 233 Q 320 222 325 234 Z" fill="#1A072E"/>
-
-    <!-- ============================================== -->
-    <!-- 5. VÙNG AN TOÀN TRỐNG (SAFE ZONE: y ≈ 244–504)  -->
-    <!-- Nền tím đen sâu thẳm phẳng tuyệt đối dành cho:  -->
-    <!-- - Tiêu đề Đêm Mực Ma Quái (y: 260 - 310)       -->
-    <!-- - Phụ đề 2 dòng          (y: 325 - 350)       -->
-    <!-- - Hộp tiến độ & 2 quà    (y: 356 - 438)       -->
-    <!-- - Nút CTA cam lửa        (y: 448 - 494)       -->
-    <!-- ============================================== -->
   </g>
-
-  <!-- Viền sáng trắng bao quanh card đặc trưng chuẩn Design System -->
-  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="3"/>
 </svg>

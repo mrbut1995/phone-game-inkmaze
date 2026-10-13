@@ -1,31 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
   <defs>
-    <!-- ClipPath bo góc chuẩn thẻ sự kiện 340x504 -->
+    <!-- Khung bo góc chuẩn 340x504 -->
     <clipPath id="cardClip">
       <rect width="340" height="504" rx="28"/>
     </clipPath>
 
-    <!-- Lưới hoa văn mờ nhận diện Design System -->
-    <pattern id="festiveGrid" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFE082" stroke-width="1" opacity="0.07"/>
-    </pattern>
-
-    <!-- Nền đỏ hoàng gia lễ hội -->
-    <linearGradient id="bg_festive" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#D32F2F"/>
-      <stop offset="0.4" stop-color="#B71C1C"/>
-      <stop offset="0.8" stop-color="#7A0A10"/>
-      <stop offset="1" stop-color="#4A0609"/>
-    </linearGradient>
-
-    <!-- Nền nhung đỏ thẫm (Vùng an toàn cho chữ và UI) -->
-    <linearGradient id="bg_text_velvet" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#58080E"/>
-      <stop offset="0.3" stop-color="#400408"/>
-      <stop offset="1" stop-color="#240205"/>
-    </linearGradient>
-
-    <!-- Gradient vàng kim loại (Gold Foil) sang trọng -->
+    <!-- Gradient vàng kim loại -->
     <linearGradient id="goldGradient" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#FFF3B0"/>
       <stop offset="0.35" stop-color="#FFD54F"/>
@@ -40,26 +20,25 @@
       <stop offset="1" stop-color="#7B0B11"/>
     </radialGradient>
 
+    <!-- Hào quang pháo hoa -->
     <radialGradient id="fireworkAura" cx="50%" cy="50%" r="50%">
       <stop offset="0" stop-color="#FFF9C4" stop-opacity="0.95"/>
       <stop offset="0.4" stop-color="#FFE082" stop-opacity="0.6"/>
       <stop offset="1" stop-color="#FFB300" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Mẫu hoa đào 5 cánh chi tiết -->
+    <!-- Mẫu hoa đào 5 cánh -->
     <g id="peach_blossom">
       <circle cx="0" cy="-7" r="5.5" fill="#FF8EA3"/>
       <circle cx="6.5" cy="-2" r="5.5" fill="#FF8EA3"/>
       <circle cx="4" cy="6" r="5.5" fill="#FF8EA3"/>
       <circle cx="-4" cy="6" r="5.5" fill="#FF8EA3"/>
       <circle cx="-6.5" cy="-2" r="5.5" fill="#FF8EA3"/>
-      <!-- Lớp cánh trong phớt trắng hồng -->
       <circle cx="0" cy="-6" r="3.5" fill="#FFAEC0" opacity="0.8"/>
       <circle cx="5" cy="-1.5" r="3.5" fill="#FFAEC0" opacity="0.8"/>
       <circle cx="3" cy="5" r="3.5" fill="#FFAEC0" opacity="0.8"/>
       <circle cx="-3" cy="5" r="3.5" fill="#FFAEC0" opacity="0.8"/>
       <circle cx="-5" cy="-1.5" r="3.5" fill="#FFAEC0" opacity="0.8"/>
-      <!-- Nhụy hoa vàng đỏ -->
       <circle cx="0" cy="0" r="3.2" fill="#FFE082"/>
       <circle cx="0" cy="0" r="1.6" fill="#D32F2F"/>
     </g>
@@ -71,29 +50,21 @@
       <circle cx="4" cy="6" r="5.5" fill="#FFD54F"/>
       <circle cx="-4" cy="6" r="5.5" fill="#FFD54F"/>
       <circle cx="-6.5" cy="-2" r="5.5" fill="#FFD54F"/>
-      <!-- Nhụy hoa đỏ cam -->
       <circle cx="0" cy="0" r="3" fill="#FF9800"/>
       <circle cx="0" cy="0" r="1.4" fill="#B71C1C"/>
     </g>
   </defs>
 
   <g clip-path="url(#cardClip)">
-    <!-- ============================================== -->
-    <!-- 1. BẦU TRỜI LỄ HỘI & PHÁO HOA GIAO THỪA       -->
-    <!-- ============================================== -->
-    <rect width="340" height="504" fill="url(#bg_festive)"/>
-    <rect width="340" height="504" fill="url(#festiveGrid)"/>
-
-    <!-- Mây cát tường viền vàng phong cách cổ phong -->
+    <!-- 1. MÂY CÁT TƯỜNG CỔ PHONG -->
     <path d="M -10 90 Q 20 70 50 85 Q 70 60 100 80 Q 80 105 50 95 Q 20 115 -10 90 Z" fill="#FFE082" fill-opacity="0.08"/>
     <path d="M 230 70 Q 260 50 290 65 Q 310 40 340 60 Q 320 85 290 75 Q 260 95 230 70 Z" fill="#FFE082" fill-opacity="0.08"/>
 
-    <!-- CHÙM PHÁO HOA CHÍNH (Vàng kim rực rỡ, trung tâm) -->
+    <!-- 2. CÁC CHÙM PHÁO HOA GIAO THỪA -->
+    <!-- Chùm pháo hoa chính (Vàng kim) -->
     <g transform="translate(225, 125)">
-      <!-- Hào quang tâm pháo hoa -->
       <circle cx="0" cy="0" r="45" fill="url(#fireworkAura)"/>
       <circle cx="0" cy="0" r="6" fill="#FFFDE7"/>
-      <!-- Các tia pháo hoa vươn dài kèm đốm lấp lánh -->
       <g stroke="url(#goldGradient)" stroke-width="2.2" stroke-linecap="round">
         <line x1="0" y1="-12" x2="0" y2="-42"/><circle cx="0" cy="-45" r="2.5" fill="#FFF9C4"/>
         <line x1="9" y1="-9" x2="28" y2="-28"/><circle cx="30" cy="-30" r="2.5" fill="#FFF9C4"/>
@@ -103,7 +74,6 @@
         <line x1="-9" y1="9" x2="-28" y2="28"/><circle cx="-30" cy="30" r="2.5" fill="#FFF9C4"/>
         <line x1="-12" y1="0" x2="-42" y2="0"/><circle cx="-45" cy="0" r="2.5" fill="#FFF9C4"/>
         <line x1="-9" y1="-9" x2="-28" y2="-28"/><circle cx="-30" cy="-30" r="2.5" fill="#FFF9C4"/>
-        <!-- Tia phụ ngắn xen kẽ -->
         <line x1="5" y1="-11" x2="16" y2="-32" stroke-width="1.5" opacity="0.8"/>
         <line x1="11" y1="-5" x2="32" y2="-16" stroke-width="1.5" opacity="0.8"/>
         <line x1="11" y1="5" x2="32" y2="16" stroke-width="1.5" opacity="0.8"/>
@@ -115,7 +85,7 @@
       </g>
     </g>
 
-    <!-- Chùm pháo hoa phụ (Hồng phấn góc trái) -->
+    <!-- Chùm pháo hoa phụ (Hồng phấn) -->
     <g transform="translate(110, 85) scale(0.65)" opacity="0.85">
       <circle cx="0" cy="0" r="30" fill="url(#fireworkAura)"/>
       <g stroke="#FFCDD2" stroke-width="2.5" stroke-linecap="round">
@@ -130,32 +100,24 @@
       </g>
     </g>
 
-    <!-- ============================================== -->
-    <!-- 2. ĐÈN LỒNG CUNG ĐÌNH TRUYỀN THỐNG CHI TIẾT    -->
-    <!-- ============================================== -->
+    <!-- 3. ĐÈN LỒNG CUNG ĐÌNH TRUYỀN THỐNG -->
     <!-- Đèn lồng lớn bên trái -->
     <g transform="translate(56, 115)">
-      <!-- Dây treo vàng -->
       <line x1="0" y1="-45" x2="0" y2="-24" stroke="url(#goldGradient)" stroke-width="2"/>
       <circle cx="0" cy="-24" r="3" fill="#FFD54F"/>
-      <!-- Nẹp vàng trên -->
       <rect x="-14" y="-24" width="28" height="7" rx="2" fill="url(#goldGradient)" stroke="#8D5B00" stroke-width="0.8"/>
-      <!-- Thân đèn lồng lụa tròn 3D -->
       <ellipse cx="0" cy="6" rx="26" ry="28" fill="url(#lanternGlow)"/>
-      <!-- Các nan sườn lồng đèn vàng kim uốn cong theo phối cảnh -->
       <path d="M -14 -18 Q -24 6 -14 28" stroke="url(#goldGradient)" stroke-width="1.8" fill="none" opacity="0.85"/>
       <path d="M 14 -18 Q 24 6 14 28" stroke="url(#goldGradient)" stroke-width="1.8" fill="none" opacity="0.85"/>
       <line x1="0" y1="-18" x2="0" y2="30" stroke="url(#goldGradient)" stroke-width="1.8" opacity="0.85"/>
-      <!-- Nẹp vàng dưới -->
       <rect x="-14" y="27" width="28" height="7" rx="2" fill="url(#goldGradient)" stroke="#8D5B00" stroke-width="0.8"/>
-      <!-- Khuyên ngọc & Tua rua vàng rủ mềm mại -->
       <circle cx="0" cy="38" r="4.5" fill="#FFD54F" stroke="#B27400" stroke-width="1"/>
       <path d="M -6 42 L -3 74 L 0 76 L 3 74 L 6 42 Z" fill="url(#goldGradient)"/>
       <line x1="-2" y1="42" x2="-1" y2="74" stroke="#FFE082" stroke-width="1"/>
       <line x1="2" y1="42" x2="1" y2="74" stroke="#FFE082" stroke-width="1"/>
     </g>
 
-    <!-- Đèn lồng nhỏ treo lơ lửng bên phải -->
+    <!-- Đèn lồng nhỏ bên phải -->
     <g transform="translate(295, 175) scale(0.68)">
       <line x1="0" y1="-50" x2="0" y2="-24" stroke="url(#goldGradient)" stroke-width="2"/>
       <rect x="-13" y="-24" width="26" height="6" rx="2" fill="url(#goldGradient)"/>
@@ -168,19 +130,13 @@
       <path d="M -5 40 L -2 70 L 2 70 L 5 40 Z" fill="url(#goldGradient)"/>
     </g>
 
-    <!-- ============================================== -->
-    <!-- 3. CÀNH ĐÀO / MAI KHAI XUÂN UỐN LƯỢN TỰ NHIÊN   -->
-    <!-- (Ôm sát mép vòm, không chắn vùng nội dung)     -->
-    <!-- ============================================== -->
-    <!-- Cành hoa phía trên vươn từ mép trái -->
+    <!-- 4. CÀNH ĐÀO / MAI KHAI XUÂN PHÍA TRÊN -->
     <g>
-      <!-- Nhánh cành gỗ nâu -->
       <path d="M -10 135 Q 25 140 45 160 Q 65 175 95 168 Q 120 160 140 170" 
             stroke="#4E2713" stroke-width="3" stroke-linecap="round" fill="none"/>
       <path d="M 45 160 Q 55 145 75 142" stroke="#4E2713" stroke-width="2" stroke-linecap="round" fill="none"/>
       <path d="M 95 168 Q 105 185 118 190" stroke="#4E2713" stroke-width="1.8" stroke-linecap="round" fill="none"/>
 
-      <!-- Nụ hoa và bông hoa nở rực rỡ -->
       <circle cx="20" cy="138" r="3.5" fill="#E91E63"/>
       <circle cx="75" cy="142" r="4" fill="#E91E63"/>
       <g transform="translate(42, 160) scale(0.85)"><use href="#peach_blossom"/></g>
@@ -189,47 +145,9 @@
       <g transform="translate(138, 170) scale(0.8)"><use href="#apricot_blossom"/></g>
     </g>
 
-    <!-- ============================================== -->
-    <!-- 4. VÙNG NỀN AN TOÀN CHO CHỮ (SAFE ZONE: y=242+) -->
-    <!-- Khối nhung đỏ thẫm viền vàng kim loại lượn sóng-->
-    <!-- ============================================== -->
-    <path d="M 0 244 Q 85 220 170 242 T 340 236 L 340 504 L 0 504 Z" fill="url(#bg_text_velvet)"/>
-
-    <!-- Viền kim loại vàng kép sang trọng ngăn cách 2 vùng -->
-    <path d="M 0 244 Q 85 220 170 242 T 340 236" fill="none" stroke="url(#goldGradient)" stroke-width="4.5" stroke-linecap="round"/>
-    <path d="M 0 249 Q 85 225 170 247 T 340 241" fill="none" stroke="#FFD54F" stroke-opacity="0.4" stroke-width="1.5"/>
-
-    <!-- ============================================== -->
-    <!-- 5. CHÙM HOA MAI PHÚ QUÝ RÌA MÉP PHẢI (GỌN GÀNG)-->
-    <!-- Nằm gọn sát biên phải, nhường 100% diện tích   -->
-    <!-- từ x: 20 đến 250 cho Tiêu đề & Nội dung card   -->
-    <!-- ============================================== -->
-    <g transform="translate(290, 230)">
-      <!-- Cành phụ nhỏ ôm cua bờ đồi -->
-      <path d="M -30 20 Q 0 10 30 18" stroke="#4E2713" stroke-width="2.5" fill="none"/>
-      <!-- Hoa mai vàng nở rực rỡ góc phải -->
-      <g transform="translate(12, 10) scale(1.15)"><use href="#apricot_blossom"/></g>
-      <g transform="translate(-14, 18) scale(0.9)"><use href="#peach_blossom"/></g>
-      <g transform="translate(32, 28) scale(0.75)"><use href="#apricot_blossom"/></g>
-      <circle cx="-28" cy="18" r="3.5" fill="#FFC107"/>
-      <circle cx="28" cy="12" r="3" fill="#E91E63"/>
-    </g>
-
-    <!-- Cánh hoa rơi lả tả theo gió -->
+    <!-- 5. CÁNH HOA RƠI LẢ TẢ -->
     <circle cx="160" cy="210" r="2.5" fill="#FF8EA3" opacity="0.8"/>
     <circle cx="230" cy="195" r="2.2" fill="#FFD54F" opacity="0.8"/>
     <circle cx="195" cy="235" r="2" fill="#FF8EA3" opacity="0.7"/>
-
-    <!-- ============================================== -->
-    <!-- 6. VÙNG TRỐNG TUYỆT ĐỐI (SAFE ZONE: y ≈ 246–504) -->
-    <!-- Dành cho text, progress box và CTA:            -->
-    <!-- - Tiêu đề dòng 1 & 2 (y: 260 - 310)            -->
-    <!-- - Phụ đề 2 dòng     (y: 325 - 350)            -->
-    <!-- - Hộp tiến độ & quà (y: 356 - 438)             -->
-    <!-- - Nút CTA vàng/đỏ   (y: 448 - 494)             -->
-    <!-- ============================================== -->
   </g>
-
-  <!-- Viền sáng vàng ánh kim bo góc toàn thẻ -->
-  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="url(#goldGradient)" stroke-opacity="0.6" stroke-width="3"/>
 </svg>

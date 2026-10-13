@@ -1,22 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
   <defs>
-    <!-- Khung bo góc chuẩn thẻ sự kiện 340x504 -->
+    <!-- Khung bo góc chuẩn 340x504 -->
     <clipPath id="cardClip">
       <rect width="340" height="504" rx="28"/>
     </clipPath>
-
-    <!-- Nền trời mùa thu hoạch vàng ấm -->
-    <linearGradient id="bg_thanksgiving" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#F9BE7A"/>
-      <stop offset="0.38" stop-color="#E58E3A"/>
-      <stop offset="0.75" stop-color="#A84C1C"/>
-      <stop offset="1" stop-color="#54220E"/>
-    </linearGradient>
-
-    <!-- Lưới ô ly mờ nhận diện Design System -->
-    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.08"/>
-    </pattern>
 
     <!-- Quầng nắng vàng ấm mật ong -->
     <radialGradient id="thanksGlow" cx="50%" cy="50%" r="50%">
@@ -24,14 +11,6 @@
       <stop offset="0.45" stop-color="#FFE082" stop-opacity="0.6"/>
       <stop offset="1" stop-color="#FF9E42" stop-opacity="0"/>
     </radialGradient>
-
-    <!-- Nền bàn tiệc gỗ ấm áp (Vùng an toàn cho chữ) -->
-    <linearGradient id="thanksgivingTable" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#4A230F"/>
-      <stop offset="0.25" stop-color="#36170A"/>
-      <stop offset="0.7" stop-color="#240D05"/>
-      <stop offset="1" stop-color="#140602"/>
-    </linearGradient>
 
     <!-- Gradient lông vũ đuôi gà tây -->
     <linearGradient id="featherRed" x1="0" y1="0" x2="0" y2="1">
@@ -53,7 +32,7 @@
       <stop offset="1" stop-color="#140602" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Mẫu lá phong 5 thùy chuẩn chi tiết -->
+    <!-- Mẫu lá phong chi tiết -->
     <g id="thanks_maple_leaf">
       <path d="M 0 -16 
                C 1 -12, 3 -12, 6 -14 C 5 -10, 8 -8, 12 -11 C 10 -6, 11 -4, 14 -3 
@@ -69,36 +48,23 @@
   </defs>
 
   <g clip-path="url(#cardClip)">
-    <!-- ============================================== -->
-    <!-- 1. BẦU TRỜI NẮNG ẤM & QUẦNG SÁNG MÙA THU       -->
-    <!-- ============================================== -->
-    <rect width="340" height="504" fill="url(#bg_thanksgiving)"/>
-    <rect width="340" height="504" fill="url(#grid)"/>
-
-    <!-- Quầng nắng vàng ấm trung tâm -->
+    <!-- 1. QUẦNG NẮNG VÀNG ẤM & LÁ PHONG BAY -->
     <circle cx="150" cy="140" r="125" fill="url(#thanksGlow)"/>
 
-    <!-- Những chiếc lá phong chao liệng trong nắng -->
     <g transform="translate(42, 85) rotate(-25) scale(0.75)" fill="#D32F2F"><use href="#thanks_maple_leaf"/></g>
     <g transform="translate(295, 75) rotate(35) scale(0.68)" fill="#F57C00"><use href="#thanks_maple_leaf"/></g>
     <g transform="translate(68, 160) rotate(42) scale(0.6)" fill="#FFB300"><use href="#thanks_maple_leaf"/></g>
     <g transform="translate(315, 145) rotate(-30) scale(0.65)" fill="#C2185B"><use href="#thanks_maple_leaf"/></g>
 
-    <!-- Đốm sáng mùa thu lấp lánh -->
     <circle cx="95" cy="105" r="2.2" fill="#FFFFFF" opacity="0.85"/>
     <circle cx="215" cy="85" r="2.5" fill="#FFFFFF" opacity="0.9"/>
     <circle cx="270" cy="125" r="1.8" fill="#FFFFFF" opacity="0.8"/>
 
-    <!-- ============================================== -->
-    <!-- 2. CHÚ GÀ TÂY LỄ TẠ ƠN 3D ĐỘI MŨ PILGRIM      -->
-    <!-- (Trung tâm bên trái, x = 115, y = 145..240)    -->
-    <!-- ============================================== -->
+    <!-- 2. CHÚ GÀ TÂY LỄ TẠ ƠN 3D ĐỘI MŨ PILGRIM -->
     <g transform="translate(115, 158)">
-      <!-- Đổ bóng đáy gà tây trên bàn -->
       <ellipse cx="0" cy="82" rx="42" ry="12" fill="url(#tableShadow)"/>
 
-      <!-- ĐUÔI GÀ TÂY HÌNH CÁNH QUẠT ĐA TẦNG XÒE RỘNG -->
-      <!-- Tầng lông 1: Đỏ mận -->
+      <!-- Đuôi cánh quạt xòe rộng -->
       <g transform="rotate(-68)"><ellipse cx="0" cy="-56" rx="12" ry="44" fill="url(#featherRed)" stroke="#4E1402" stroke-width="1.8"/><ellipse cx="0" cy="-68" rx="6" ry="18" fill="#FFF8E1" opacity="0.6"/></g>
       <g transform="rotate(-45)"><ellipse cx="0" cy="-56" rx="12" ry="44" fill="url(#featherOrange)" stroke="#4E1402" stroke-width="1.8"/><ellipse cx="0" cy="-68" rx="6" ry="18" fill="#FFF8E1" opacity="0.6"/></g>
       <g transform="rotate(-22)"><ellipse cx="0" cy="-56" rx="12" ry="44" fill="url(#featherGold)" stroke="#4E1402" stroke-width="1.8"/><ellipse cx="0" cy="-68" rx="6" ry="18" fill="#FFF8E1" opacity="0.6"/></g>
@@ -107,98 +73,28 @@
       <g transform="rotate(45)"><ellipse cx="0" cy="-56" rx="12" ry="44" fill="url(#featherOrange)" stroke="#4E1402" stroke-width="1.8"/><ellipse cx="0" cy="-68" rx="6" ry="18" fill="#FFF8E1" opacity="0.6"/></g>
       <g transform="rotate(68)"><ellipse cx="0" cy="-56" rx="12" ry="44" fill="url(#featherRed)" stroke="#4E1402" stroke-width="1.8"/><ellipse cx="0" cy="-68" rx="6" ry="18" fill="#FFF8E1" opacity="0.6"/></g>
 
-      <!-- THÂN GÀ TÂY TRÒN MẬP NỔI KHỐI 3D -->
+      <!-- Thân và ức gà tây -->
       <ellipse cx="0" cy="46" rx="32" ry="28" fill="#79461A" stroke="#3D1D08" stroke-width="2.2"/>
-      <!-- Bụng ức gà tây vàng nâu sáng -->
       <ellipse cx="0" cy="52" rx="20" ry="17" fill="#A46830"/>
 
-      <!-- ĐẦU GÀ TÂY VÀ KHUÔN MẶT HÀI HƯỚC -->
+      <!-- Đầu và khuôn mặt -->
       <circle cx="0" cy="14" r="16" fill="#8D5220" stroke="#3D1D08" stroke-width="2"/>
-      <!-- Đôi mắt to tròn long lanh -->
       <circle cx="-6" cy="11" r="3.6" fill="#FFFFFF"/><circle cx="-5.2" cy="11" r="1.8" fill="#1C0D04"/>
       <circle cx="6" cy="11" r="3.6" fill="#FFFFFF"/><circle cx="5.2" cy="11" r="1.8" fill="#1C0D04"/>
-      <!-- Mỏ vàng cam hình tam giác -->
       <polygon points="0,17 -7,25 7,25" fill="#FFC107" stroke="#D87A00" stroke-width="1"/>
-      <!-- Yếm đỏ rủ mềm (Wattle) -->
       <path d="M 0 24 C -6 28 -6 38 0 39 C 5 38 5 30 0 24 Z" fill="#D32F2F"/>
 
-      <!-- CHIẾC MŨ HÀNH HƯƠNG PILGRIM TRUYỀN THỐNG -->
+      <!-- Mũ Pilgrim truyền thống -->
       <g transform="translate(0, -2)">
-        <!-- Vành mũ đen -->
         <ellipse cx="0" cy="3" rx="22" ry="5.5" fill="#2E1B10" stroke="#170A04" stroke-width="1.5"/>
-        <!-- Thân mũ nón cao -->
         <polygon points="-12,3 12,3 9,-24 -9,-24" fill="#3D2415" stroke="#170A04" stroke-width="1.5"/>
-        <!-- Đai vàng quanh mũ -->
         <rect x="-10" y="-3" width="20" height="6" fill="#FFB300"/>
         <rect x="-4" y="-4" width="8" height="8" fill="#FFD54F" stroke="#7A4B00" stroke-width="1"/>
       </g>
 
-      <!-- Hai bàn chân gà tây màu cam bám trên bàn -->
+      <!-- Hai bàn chân bám trên bàn -->
       <line x1="-10" y1="72" x2="-10" y2="82" stroke="#F57C00" stroke-width="3.5" stroke-linecap="round"/>
       <line x1="10" y1="72" x2="10" y2="82" stroke="#F57C00" stroke-width="3.5" stroke-linecap="round"/>
     </g>
-
-    <!-- ============================================== -->
-    <!-- 3. MẶT BÀN TIỆC GỖ & VÙNG NỀN AN TOÀN           -->
-    <!-- Đường chân bàn uốn nhẹ tại y ≈ 242             -->
-    <!-- ============================================== -->
-    <path d="M 0 242 Q 85 224 170 240 T 340 234 L 340 504 L 0 504 Z" fill="url(#thanksgivingTable)"/>
-
-    <!-- Viền gờ nẹp bàn gỗ đón ánh nắng vàng óng -->
-    <path d="M 0 242 Q 85 224 170 240 T 340 234" fill="none" stroke="#FFA726" stroke-width="4.5" stroke-linecap="round"/>
-    <path d="M 0 247 Q 85 229 170 245 T 340 239" fill="none" stroke="#8D4316" stroke-opacity="0.45" stroke-width="1.8"/>
-
-    <!-- ============================================== -->
-    <!-- 4. CỤM NÔNG SẢN THU HOẠCH GỌN GÀNG GÓC PHẢI    -->
-    <!-- (x > 255, nhường 100% diện tích giữa cho chữ)  -->
-    <!-- ============================================== -->
-    <g transform="translate(285, 230)">
-      <!-- Đổ bóng cụm hoa quả -->
-      <ellipse cx="0" cy="12" rx="42" ry="10" fill="url(#tableShadow)"/>
-
-      <!-- QUẢ BÍ NGÔ VÀNG CAM NỔI KHỐI 3D (x = -5, y = -15) -->
-      <g transform="translate(-10, -18) scale(0.85)">
-        <path d="M -2 -22 C -2 -32 5 -36 10 -36 C 8 -30 4 -26 3 -22 Z" fill="#4B6B22"/>
-        <ellipse cx="-16" cy="2" rx="14" ry="22" fill="#E65100" stroke="#7A2E00" stroke-width="2"/>
-        <ellipse cx="16" cy="2" rx="14" ry="22" fill="#E65100" stroke="#7A2E00" stroke-width="2"/>
-        <ellipse cx="0" cy="2" rx="16" ry="24" fill="#FF8A1F" stroke="#7A2E00" stroke-width="2"/>
-      </g>
-
-      <!-- BẮP NGÔ NƯỚNG VÀNG ÓNG (Corn on the cob) -->
-      <g transform="translate(24, 0) rotate(18) scale(0.85)">
-        <!-- Bẹ ngô xanh xòe ra -->
-        <path d="M -8 8 Q -18 -6 -10 -18 Q -4 -8 0 6 Z" fill="#689F38"/>
-        <path d="M 8 8 Q 18 -6 10 -18 Q 4 -8 0 6 Z" fill="#7CB342"/>
-        <!-- Bắp ngô vàng căng mọng hạt -->
-        <ellipse cx="0" cy="-8" rx="8" ry="20" fill="#FFCA28" stroke="#D48800" stroke-width="1.2"/>
-        <path d="M -5 -20 L 5 -20 M -6 -12 L 6 -12 M -6 -4 L 6 -4 M -5 4 L 5 4 M 0 -26 L 0 6" 
-              stroke="#B26A00" stroke-width="1.2" opacity="0.6"/>
-      </g>
-
-      <!-- QUẢ TÁO ĐỎ MÙA THU CĂNG BÓNG -->
-      <g transform="translate(-38, 2)">
-        <circle cx="0" cy="0" r="9.5" fill="#D32F2F" stroke="#4A1408" stroke-width="1.2"/>
-        <ellipse cx="-3" cy="-3" rx="2.5" ry="4" fill="#FFFFFF" opacity="0.45" transform="rotate(-25 -3 -3)"/>
-        <path d="M 0 -8 Q 3 -12 6 -11" stroke="#3E2723" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-      </g>
-    </g>
-
-    <!-- Hạt dẻ / quả sồi rơi cạnh chân gà tây bên trái mép ngoài -->
-    <g transform="translate(22, 246) scale(0.8)">
-      <ellipse cx="0" cy="5" rx="5" ry="7" fill="#8D5220"/>
-      <path d="M -6 1 Q 0 -3 6 1 L 5 3 Q 0 0 -5 3 Z" fill="#4E2B08"/>
-    </g>
-
-    <!-- ============================================== -->
-    <!-- 5. VÙNG AN TOÀN TRỐNG (SAFE ZONE: y ≈ 244–504)  -->
-    <!-- Nền bàn tiệc gỗ sồi phẳng tuyệt đối dành cho:  -->
-    <!-- - Tiêu đề Lễ Tạ Ơn (y: 260 - 310)              -->
-    <!-- - Phụ đề 2 dòng   (y: 325 - 350)              -->
-    <!-- - Hộp tiến độ & 2 quà (y: 356 - 438)          -->
-    <!-- - Nút CTA hành động (y: 448 - 494)            -->
-    <!-- ============================================== -->
   </g>
-
-  <!-- Viền sáng trắng bao quanh card chuẩn Design System -->
-  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="3"/>
 </svg>

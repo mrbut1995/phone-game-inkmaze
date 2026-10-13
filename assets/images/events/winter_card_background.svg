@@ -1,43 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
   <defs>
-    <!-- Khung bo góc chuẩn thẻ sự kiện 340x504 -->
+    <!-- Khung bo góc chuẩn 340x504 (rx=28) -->
     <clipPath id="cardClip">
       <rect width="340" height="504" rx="28"/>
     </clipPath>
-
-    <!-- Nền bầu trời mùa đông buốt giá chuyển sắc 4 nấc -->
-    <linearGradient id="bg_winter_sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#E1F2FE"/>
-      <stop offset="0.38" stop-color="#A5D4F8"/>
-      <stop offset="0.75" stop-color="#6FAAE2"/>
-      <stop offset="1" stop-color="#4B88C4"/>
-    </linearGradient>
-
-    <!-- Lưới ô ly mờ nhận diện Design System -->
-    <pattern id="gd" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#163A58" stroke-width="1" opacity="0.06"/>
-    </pattern>
-
-    <!-- Quầng vầng dương mùa đông dịu mát -->
-    <radialGradient id="winterSunGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/>
-      <stop offset="0.4" stop-color="#E3F4FF" stop-opacity="0.6"/>
-      <stop offset="1" stop-color="#9CCDF4" stop-opacity="0"/>
-    </radialGradient>
-
-    <!-- Vách núi tuyết hứng sáng -->
-    <linearGradient id="peakLit" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#FFFFFF"/>
-      <stop offset="0.6" stop-color="#E1F0FA"/>
-      <stop offset="1" stop-color="#B8DCF5"/>
-    </linearGradient>
-
-    <!-- Vách núi tuyết đổ bóng xanh băng -->
-    <linearGradient id="peakShadow" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#8BBDE3"/>
-      <stop offset="0.6" stop-color="#6097C2"/>
-      <stop offset="1" stop-color="#3C72A0"/>
-    </linearGradient>
 
     <!-- Đồi tuyết trắng muốt phẳng (Vùng an toàn cho chữ) -->
     <linearGradient id="snowValleySoil" x1="0" y1="0" x2="0" y2="1">
@@ -52,139 +18,30 @@
       <stop offset="0" stop-color="#6FA8E0" stop-opacity="0.6"/>
       <stop offset="1" stop-color="#6FA8E0" stop-opacity="0"/>
     </radialGradient>
-
-    <!-- MẪU HOA TUYẾT LỤC GIÁC 3D LỚN -->
-    <g id="crystal_snowflake">
-      <g stroke="#FFFFFF" stroke-linecap="round">
-        <!-- 6 trục chính -->
-        <line x1="0" y1="0" x2="0" y2="-32" stroke-width="3"/>
-        <line x1="0" y1="-18" x2="8" y2="-25" stroke-width="2.2"/><line x1="0" y1="-18" x2="-8" y2="-25" stroke-width="2.2"/>
-        <line x1="0" y1="-8" x2="5" y2="-13" stroke-width="1.8"/><line x1="0" y1="-8" x2="-5" y2="-13" stroke-width="1.8"/>
-
-        <line x1="0" y1="0" x2="27.7" y2="-16" stroke-width="3"/>
-        <line x1="15.6" y1="-9" x2="23.6" y2="-5" stroke-width="2.2"/><line x1="15.6" y1="-9" x2="19.6" y2="-17" stroke-width="2.2"/>
-
-        <line x1="0" y1="0" x2="27.7" y2="16" stroke-width="3"/>
-        <line x1="15.6" y1="9" x2="19.6" y2="17" stroke-width="2.2"/><line x1="15.6" y1="9" x2="23.6" y2="5" stroke-width="2.2"/>
-
-        <line x1="0" y1="0" x2="0" y2="32" stroke-width="3"/>
-        <line x1="0" y1="18" x2="-8" y2="25" stroke-width="2.2"/><line x1="0" y1="18" x2="8" y2="25" stroke-width="2.2"/>
-
-        <line x1="0" y1="0" x2="-27.7" y2="16" stroke-width="3"/>
-        <line x1="-15.6" y1="9" x2="-23.6" y2="5" stroke-width="2.2"/><line x1="-15.6" y1="9" x2="-19.6" y2="17" stroke-width="2.2"/>
-
-        <line x1="0" y1="0" x2="-27.7" y2="-16" stroke-width="3"/>
-        <line x1="-15.6" y1="-9" x2="-19.6" y2="-17" stroke-width="2.2"/><line x1="-15.6" y1="-9" x2="-23.6" y2="-5" stroke-width="2.2"/>
-      </g>
-      <!-- Hạt tâm pha lê -->
-      <circle cx="0" cy="0" r="4.5" fill="#E1F2FE" stroke="#FFFFFF" stroke-width="1.5"/>
-    </g>
   </defs>
 
   <g clip-path="url(#cardClip)">
-    <!-- ============================================== -->
-    <!-- 1. BẦU TRỜI ĐÔNG BĂNG GIÁ & NẮNG LẠNH DỊU MÁT   -->
-    <!-- ============================================== -->
-    <rect width="340" height="504" fill="url(#bg_winter_sky)"/>
-    <rect width="340" height="504" fill="url(#gd)"/>
-
-    <!-- Mặt trời mùa đông tỏa quầng sáng dịu (x = 75, y = 85) -->
-    <circle cx="75" cy="85" r="75" fill="url(#winterSunGlow)"/>
-    <circle cx="75" cy="85" r="24" fill="#FFFFFF"/>
-
-    <!-- Bụi tuyết rơi li ti khắp trời -->
-    <g fill="#FFFFFF" opacity="0.9">
-      <circle cx="35" cy="65" r="2.8"/><circle cx="145" cy="55" r="3.2"/>
-      <circle cx="215" cy="75" r="2.5"/><circle cx="310" cy="65" r="3"/>
-      <circle cx="45" cy="145" r="2.2"/><circle cx="185" cy="115" r="2.5"/>
-      <circle cx="280" cy="145" r="2.8"/><circle cx="120" cy="175" r="2"/>
-    </g>
-
-    <!-- ============================================== -->
-    <!-- 2. DÃY NÚI TUYẾT ALPINE 3D TRÙNG ĐIỆP          -->
-    <!-- ============================================== -->
-    <!-- Núi tuyết xa tầng 1 (Mờ sương) -->
-    <polygon points="110,95 30,220 190,220" fill="#E8F4FD" opacity="0.6"/>
-    <polygon points="110,95 190,220 250,220" fill="#8BBDE3" opacity="0.5"/>
-
-    <polygon points="265,120 185,225 345,225" fill="#E8F4FD" opacity="0.6"/>
-    <polygon points="265,120 345,225 380,225" fill="#8BBDE3" opacity="0.5"/>
-
-    <!-- DÃY NÚI CHÍNH TẦNG 2 (Sắc nét 3D) -->
-    <!-- Đỉnh núi bên trái (x = 80, y = 145) -->
-    <polygon points="85,142 0,240 105,240" fill="url(#peakLit)"/>
-    <polygon points="85,142 105,240 170,240" fill="url(#peakShadow)"/>
-    <polygon points="85,142 62,175 92,175" fill="#FFFFFF"/>
-
-    <!-- Đỉnh núi trung tâm cao vút (x = 195, y = 105) -->
-    <polygon points="195,105 105,240 215,240" fill="url(#peakLit)"/>
-    <polygon points="195,105 215,240 285,240" fill="url(#peakShadow)"/>
-    <polygon points="195,105 170,145 202,145" fill="#FFFFFF"/>
-    <polygon points="195,105 202,145 218,145" fill="#E1F0FA"/>
-
-    <!-- Đỉnh núi bên phải (x = 290, y = 135) -->
-    <polygon points="290,135 220,240 305,240" fill="url(#peakLit)"/>
-    <polygon points="290,135 305,240 360,240" fill="url(#peakShadow)"/>
-    <polygon points="290,135 272,165 295,165" fill="#FFFFFF"/>
-
-    <!-- ============================================== -->
-    <!-- 3. HOA TUYẾT PHA LÊ 6 CÁNH 3D NỔI KHỐI         -->
-    <!-- ============================================== -->
-    <!-- Hoa tuyết lớn lộng lẫy bên phải (x = 245, y = 148) -->
-    <g transform="translate(245, 148) scale(1.15)">
-      <circle cx="0" cy="0" r="36" fill="#FFFFFF" opacity="0.2"/>
-      <use href="#crystal_snowflake"/>
-    </g>
-
-    <!-- Hoa tuyết vừa bên trái (x = 85, y = 135) -->
-    <g transform="translate(85, 135) scale(0.72)" opacity="0.95">
-      <circle cx="0" cy="0" r="30" fill="#FFFFFF" opacity="0.18"/>
-      <use href="#crystal_snowflake"/>
-    </g>
-
-    <!-- Hoa tuyết nhỏ rìa phải (x = 308, y = 175) -->
-    <g transform="translate(308, 175) scale(0.55)" opacity="0.9">
-      <use href="#crystal_snowflake"/>
-    </g>
-
-    <!-- Ngôi sao băng giá lấp lánh (Ice sparkles) -->
-    <path d="M 150 95 Q 150 100 154 100 Q 150 100 150 105 Q 150 100 146 100 Q 150 100 150 95 Z" fill="#FFFFFF"/>
-    <path d="M 275 80 Q 275 85 279 85 Q 275 85 275 90 Q 275 85 271 85 Q 275 85 275 80 Z" fill="#FFFFFF"/>
-
-    <!-- ============================================== -->
-    <!-- 4. ĐỒI TUYẾT TRẮNG TINH KHÔI & VÙNG AN TOÀN    -->
-    <!-- Đường chân đồi uốn lượn tại y ≈ 242            -->
-    <!-- ============================================== -->
+    <!-- 1. Mảng thung lũng tuyết phía dưới (y: 218/242 -> 504) -->
     <path d="M 0 242 Q 85 218 175 238 T 340 230 L 340 504 L 0 504 Z" fill="url(#snowValleySoil)"/>
 
-    <!-- Dải viền mép đồi tuyết xanh băng óng ánh -->
+    <!-- 2. Dải viền mép đồi tuyết xanh băng óng ánh ngăn cách -->
     <path d="M 0 242 Q 85 218 175 238 T 340 230" fill="none" stroke="#CBE6FE" stroke-width="4.5" stroke-linecap="round"/>
     <path d="M 0 247 Q 85 223 175 243 T 340 235" fill="none" stroke="#FFFFFF" stroke-width="2"/>
 
-    <!-- ============================================== -->
-    <!-- 5. RỪNG THÔNG PHỦ TUYẾT XỐP NÉP GỌN GÓC TRÁI   -->
-    <!-- (x < 55, nhường 100% diện tích giữa cho chữ)   -->
-    <!-- ============================================== -->
+    <!-- 3. Cụm thông phủ tuyết nép gọn góc trái -->
     <g transform="translate(32, 230)">
-      <!-- Đổ bóng cây thông trên tuyết -->
       <ellipse cx="0" cy="18" rx="22" ry="7" fill="url(#snowShadow)"/>
-
-      <!-- CÂY THÔNG LỚN PHỦ TUYẾT (x = 0) -->
-      <!-- Gốc cây gỗ -->
+      <!-- Cây thông lớn -->
       <rect x="-4" y="6" width="8" height="15" fill="#4E342E"/>
-      <!-- Tầng lá dưới -->
       <polygon points="0,-10 -22,10 22,10" fill="#1B4D3E"/>
       <path d="M -22 10 Q 0 1 22 10 Q 14 5 0 5 Q -14 5 -22 10 Z" fill="#FFFFFF"/>
-      <!-- Tầng lá giữa -->
       <polygon points="0,-26 -18,-6 18,-6" fill="#1B4D3E"/>
       <path d="M -18 -6 Q 0 -15 18 -6 Q 12 -11 0 -11 Q -12 -11 -18 -6 Z" fill="#FFFFFF"/>
-      <!-- Tầng lá trên cùng -->
       <polygon points="0,-42 -14,-22 14,-22" fill="#1B4D3E"/>
       <path d="M -14 -22 Q 0 -31 14 -22 Q 9 -27 0 -27 Q -9 -27 -14 -22 Z" fill="#FFFFFF"/>
-      <!-- Chóp tuyết đỉnh thông -->
       <polygon points="0,-45 -4,-37 4,-37" fill="#FFFFFF"/>
 
-      <!-- CÂY THÔNG NHỎ NÉP BÊN CẠNH (x = 24) -->
+      <!-- Cây thông nhỏ -->
       <g transform="translate(24, 6) scale(0.65)">
         <rect x="-3" y="6" width="6" height="12" fill="#4E342E"/>
         <polygon points="0,-10 -18,10 18,10" fill="#235E4C"/>
@@ -196,7 +53,7 @@
       </g>
     </g>
 
-    <!-- Cụm thông nhỏ điểm xuyết sát mép phải ngoài cùng -->
+    <!-- Cụm thông nhỏ sát mép phải ngoài cùng -->
     <g transform="translate(325, 226) scale(0.55)">
       <ellipse cx="0" cy="18" rx="18" ry="6" fill="url(#snowShadow)"/>
       <rect x="-3" y="6" width="6" height="12" fill="#4E342E"/>
@@ -206,17 +63,5 @@
       <polygon points="0,-36 -10,-18 10,-18" fill="#1B4D3E"/>
       <polygon points="0,-38 -3,-30 3,-30" fill="#FFFFFF"/>
     </g>
-
-    <!-- ============================================== -->
-    <!-- 6. VÙNG AN TOÀN TRỐNG (SAFE ZONE: y ≈ 244–504)  -->
-    <!-- Nền đồi tuyết trắng muốt phẳng tuyệt đối cho:   -->
-    <!-- - Tiêu đề Mùa Tuyết Trắng (y: 260 - 310)       -->
-    <!-- - Phụ đề 2 dòng           (y: 325 - 350)       -->
-    <!-- - Hộp tiến độ & 2 quà     (y: 356 - 438)       -->
-    <!-- - Nút CTA Xanh Băng       (y: 448 - 494)       -->
-    <!-- ============================================== -->
   </g>
-
-  <!-- Viền sáng trắng bao quanh card đặc trưng chuẩn Design System -->
-  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.65" stroke-width="3"/>
 </svg>

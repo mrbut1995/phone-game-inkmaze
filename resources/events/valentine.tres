@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="EventData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_level"]
+[ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1002.tres" id="2_level"]
+[ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1003.tres" id="3_level"]
+[ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1004.tres" id="4_level"]
+[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="5_reward"]
+[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="6_event"]
+[ext_resource type="Resource" path="res://resources/events/themes/valentine.tres" id="7_theme"]
+
+[sub_resource type="Resource" id="Reward_1"]
+script = ExtResource("5_reward")
+amount = 350
+label_key = &"STR_EVENT_VALENTINE_REWARD_1"
+
+[sub_resource type="Resource" id="Reward_2"]
+script = ExtResource("5_reward")
+amount = 150
+label_key = &"STR_EVENT_VALENTINE_REWARD_2"
+
+[resource]
+script = ExtResource("6_event")
+id = &"valentine"
+type = 0
+theme = ExtResource("7_theme")
+sort_order = 30
+chip_key = &"STR_EVENT_VALENTINE_CHIP"
+title_key_1 = &"STR_EVENT_VALENTINE_TITLE_1"
+title_key_2 = &"STR_EVENT_VALENTINE_TITLE_2"
+sub_key_1 = &"STR_EVENT_VALENTINE_SUB_1"
+sub_key_2 = &"STR_EVENT_VALENTINE_SUB_2"
+unit_key = &"STR_EVENT_UNIT_MODES"
+cta_key = &"STR_EVENT_CTA_CONTINUE"
+start_utc = "2027-02-10T00:00:00Z"
+end_utc = "2027-02-20T00:00:00Z"
+levels = Array[ExtResource("1_level")]([ExtResource("2_level"), ExtResource("3_level"), ExtResource("4_level")])
+rewards = Array[ExtResource("5_reward")]([SubResource("Reward_1"), SubResource("Reward_2")])

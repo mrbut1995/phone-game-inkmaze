@@ -20,6 +20,9 @@ const DRAG_THRESHOLD := 12.0
 ## Scene thẻ event (gán trong Inspector hoặc preload)
 @export var event_card_scene: PackedScene = null
 
+## Chỉ bật tạm thời để kiểm tra toàn bộ EventData trên Main.
+@export var show_all_events_for_preview: bool = false
+
 ## Màu chấm hiện tại / chấm khác
 @export var dot_active_color: Color = Color("#256C96")
 @export var dot_inactive_color: Color = Color("#D8E2E8")
@@ -48,9 +51,13 @@ func refresh() -> void:
 	var em := get_node_or_null("/root/EventManager")
 	if em == null:
 		return
-	var events: Array[EventData] = em.get_active_events()
+	var events: Array[EventData] = (
+		em.get_all_events_for_preview()
+		if show_all_events_for_preview
+		else em.get_active_events()
+	)
 	for ev in events:
-		_add_card(ev)
+		_add_card(ev, show_all_events_for_preview)
 	# Cuộn về đầu (Daily luôn đứng đầu)
 	if scroll != null:
 		scroll.scroll_horizontal = 0
@@ -58,14 +65,18 @@ func refresh() -> void:
 	_update_dots()
 
 
-func _add_card(data: EventData) -> void:
+func get_displayed_event_count() -> int:
+	return _cards.size()
+
+
+func _add_card(data: EventData, preview_mode: bool) -> void:
 	if event_card_scene == null:
 		return
 	var card := event_card_scene.instantiate() as EventCard
 	if card == null:
 		return
 	hbox.add_child(card)
-	card.setup(data)
+	card.setup(data, preview_mode)
 	card.card_pressed.connect(_on_card_pressed)
 	_cards.append(card)
 

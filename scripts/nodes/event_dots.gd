@@ -3,45 +3,53 @@ extends Control
 ## ============================================================================
 ## Node: EventDots — chấm phân trang cho EventCarousel.
 ##
-## KHÔNG tạo node lúc chạy (§13.15 GDD): 8 chấm khai SẴN trong scene, script chỉ
-## bật/tắt + đổi màu. CỠ chấm lấy từ scene (không hard-code px trong script):
-##   · `Dot1`..`Dot8`  = cỡ chấm THƯỜNG (custom_minimum_size trong scene)
-##   · `ActiveTemplate` = node MẪU (ẩn) giữ cỡ chấm ĐANG CHỌN + StyleBoxFlat bo góc
+## Các chấm được tạo từ scene EventDot theo số trang. Kích thước lấy từ scene,
+## còn ActiveTemplate giữ cỡ và StyleBox của chấm đang chọn.
 ## ============================================================================
 
 @export var active_color: Color = Color("#256C96")
 @export var inactive_color: Color = Color("#D8E2E8")
+@export var dot_scene: PackedScene
 
 @onready var dots: HBoxContainer = $Dots
 @onready var active_template: Panel = $ActiveTemplate
 
+var _dot_nodes: Array[Panel] = []
 var _inactive_size := Vector2.ZERO
 var _active_size := Vector2.ZERO
 
 
 func _ready() -> void:
+	if dot_scene == null:
+		push_error("[EventDots] Chưa gán scene EventDot.")
 	if active_template != null:
 		_active_size = active_template.custom_minimum_size
-	if dots != null and dots.get_child_count() > 0:
-		var first := dots.get_child(0) as Panel
-		if first != null:
-			_inactive_size = first.custom_minimum_size
 
 
 ## Cập nhật số trang hiển thị và trang đang chọn
 func set_pages(count: int, current: int) -> void:
 	if dots == null:
 		return
-	# 0 hoặc 1 thẻ → ẩn dấu chấm (trạng thái rỗng chỉ có Daily — §B5)
+	while _dot_nodes.size() < count:
+		if dot_scene == null:
+			push_error("[EventDots] Không thể hiển thị đủ chấm vì thiếu scene EventDot.")
+			return
+		var dot := dot_scene.instantiate() as Panel
+		if dot == null:
+			push_error("[EventDots] Scene EventDot không có Panel làm root.")
+			return
+		if _inactive_size == Vector2.ZERO:
+			_inactive_size = dot.custom_minimum_size
+		dots.add_child(dot)
+		_dot_nodes.append(dot)
+
+	# 0 hoặc 1 thẻ → ẩn dấu chấm.
 	visible = count > 1
 	var base_sb: StyleBox = null
 	if active_template != null:
 		base_sb = active_template.get_theme_stylebox("panel")
-	var children := dots.get_children()
-	for i in children.size():
-		var dot := children[i] as Panel
-		if dot == null:
-			continue
+	for i in _dot_nodes.size():
+		var dot := _dot_nodes[i]
 		if i >= count:
 			dot.visible = false
 			continue

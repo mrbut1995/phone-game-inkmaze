@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="EventData" format=3]
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://cto3tpi4ebhvq"]
 
-[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_d6r17"]
+[ext_resource type="Script" uid="uid://db1uxhq02q40b" path="res://scripts/resources/level_data.gd" id="1_d6r17"]
 [ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1000.tres" id="2_vuvyv"]
 [ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1001.tres" id="3_7vctd"]
 [ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1002.tres" id="4_mmn5i"]
 [ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1003.tres" id="5_mevfw"]
 [ext_resource type="Resource" path="res://resources/levels/events/halloween/level_1004.tres" id="6_j2qp3"]
-[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="7_b4k8a"]
-[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="8_g24xi"]
-[ext_resource type="Resource" path="res://resources/events/themes/halloween.tres" id="9_3fvuu"]
+[ext_resource type="Script" uid="uid://cwohm5s4hil0g" path="res://scripts/resources/event_reward.gd" id="7_b4k8a"]
+[ext_resource type="Script" uid="uid://cn82doapsk344" path="res://scripts/resources/event_data.gd" id="8_g24xi"]
+[ext_resource type="Resource" uid="uid://nb22ne0qu5b1" path="res://resources/events/themes/halloween.tres" id="9_3fvuu"]
 
 [sub_resource type="Resource" id="Resource_8cuh2"]
 script = ExtResource("7_b4k8a")

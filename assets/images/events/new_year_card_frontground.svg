@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
+  <defs>
+    <!-- Khung bo góc chuẩn 340x504 (rx=28) -->
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+
+    <!-- Nền thành phố đêm tối phẳng (Vùng an toàn cho chữ) -->
+    <linearGradient id="cityNightSoil" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0D102E"/>
+      <stop offset="0.3" stop-color="#080A21"/>
+      <stop offset="0.75" stop-color="#050616"/>
+      <stop offset="1" stop-color="#02030B"/>
+    </linearGradient>
+
+    <!-- Vàng kim loại đồng hồ cơ khí cho đường viền -->
+    <linearGradient id="clockGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF9D2"/>
+      <stop offset="0.35" stop-color="#FFD54F"/>
+      <stop offset="0.7" stop-color="#FFA000"/>
+      <stop offset="1" stop-color="#C67D00"/>
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#cardClip)">
+    <!-- 1. Lớp thành phố bóng mờ phía sau -->
+    <path d="M 0 242 
+             L 25 242 L 25 210 L 48 210 L 48 242 
+             L 78 242 L 78 198 L 105 198 L 105 242 
+             L 140 242 L 140 218 L 165 218 L 165 242 
+             L 205 242 L 205 204 L 230 204 L 230 242 
+             L 260 242 L 260 195 L 290 195 L 290 242 
+             L 315 242 L 315 215 L 340 215 L 340 260 L 0 260 Z" 
+          fill="#080B22" opacity="0.6"/>
+
+    <!-- 2. Lớp thành phố tiền cảnh & khối nền chữ phía dưới (y: 202/242 -> 504) -->
+    <path d="M 0 242 
+             L 18 242 L 18 218 L 42 218 L 42 242 
+             L 68 242 L 68 205 L 92 205 L 92 242 
+             L 128 242 L 128 222 L 150 222 L 150 242 
+             L 190 242 L 190 212 L 215 212 L 215 242 
+             L 248 242 L 248 202 L 275 202 L 275 242 
+             L 302 242 L 302 220 L 325 220 L 325 242 L 340 242 
+             L 340 504 L 0 504 Z" 
+          fill="url(#cityNightSoil)"/>
+
+    <!-- 3. Viền kim loại vàng kim tuyến uốn lượn ngăn cách -->
+    <path d="M 0 242 Q 85 220 170 242 T 340 236" fill="none" stroke="url(#clockGold)" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 0 247 Q 85 225 170 247 T 340 241" fill="none" stroke="#FFD54F" stroke-opacity="0.35" stroke-width="1.8"/>
+
+    <!-- 4. Ăng-ten và ngọn đèn tháp chọc trời nhấp nháy trên đỉnh -->
+    <line x1="80" y1="205" x2="80" y2="190" stroke="#FFD54F" stroke-width="1.5"/>
+    <circle cx="80" cy="189" r="2" fill="#FF1744"/>
+
+    <line x1="262" y1="202" x2="262" y2="186" stroke="#00E5FF" stroke-width="1.5"/>
+    <circle cx="262" cy="185" r="2" fill="#00E5FF"/>
+
+    <!-- 5. Các ô cửa kính sáng đèn trên nóc tháp -->
+    <rect x="73" y="212" width="4" height="5" rx="1" fill="#FFD54F" opacity="0.9"/>
+    <rect x="83" y="212" width="4" height="5" rx="1" fill="#FFD54F" opacity="0.9"/>
+    <rect x="254" y="208" width="4" height="5" rx="1" fill="#00E5FF" opacity="0.85"/>
+    <rect x="264" y="208" width="4" height="5" rx="1" fill="#00E5FF" opacity="0.85"/>
+  </g>
+</svg>

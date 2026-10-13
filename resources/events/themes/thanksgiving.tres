@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="EventTheme" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/images/events/thanksgiving_card_background.svg" id="2_background"]
+[ext_resource type="Texture2D" path="res://assets/images/events/thanksgiving_card_frontground.svg" id="3_foreground"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"thanksgiving"
+bg_stops = PackedColorArray(0.3137255, 0.15294118, 0.0627451, 1, 0.20392157, 0.08627451, 0.023529412, 1, 0.078431375, 0.023529412, 0.007843138, 1)
+grid_overlay = &"white"
+back_art = ExtResource("2_background")
+front_art = ExtResource("3_foreground")
+art_offset_y = 0.0
+accent = Color(0.9607843, 0.4862745, 0, 1)
+accent2 = Color(1, 0.7921569, 0.15686275, 1)
+title_color = Color(1, 0.99215686, 0.93333334, 1)
+title_outline = Color(0.047058824, 0.011764706, 0.003921569, 1)
+sub_color = Color(0.9411765, 0.8235294, 0.6666667, 1)
+label_color = Color(1, 0.92941177, 0.80784315, 1)
+panel_color = Color(0.078431375, 0.023529412, 0.007843138, 0.82)
+panel_stroke = Color(0.9607843, 0.4862745, 0, 0.45)
+cta_fill = Color(0.9607843, 0.4862745, 0, 1)
+cta_stroke = Color(0.5921569, 0.22745098, 0, 1)
+cta_text = Color(0.078431375, 0.023529412, 0.007843138, 1)
+chip_fill = Color(0.078431375, 0.023529412, 0.007843138, 0.9)
+chip_text = Color(1, 0.8784314, 0.50980395, 1)

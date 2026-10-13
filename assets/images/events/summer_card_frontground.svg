@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
+  <defs>
+    <!-- Clip bo góc chuẩn 340x504 (rx=28) -->
+    <clipPath id="summerCardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+
+    <!-- Bãi cát vàng mịn màng (Vùng an toàn cho chữ) -->
+    <linearGradient id="sandClean" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF5D9"/>
+      <stop offset="0.25" stop-color="#FDEBBB"/>
+      <stop offset="1" stop-color="#F5D48E"/>
+    </linearGradient>
+
+    <!-- Độ bóng mềm trên cát -->
+    <radialGradient id="softShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#8F6826" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#8F6826" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Bóng 3D cho quả bóng bãi biển -->
+    <radialGradient id="ballShade" cx="35%" cy="30%" r="65%">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.6"/>
+      <stop offset="0.5" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.4"/>
+    </radialGradient>
+    <clipPath id="ballClip">
+      <circle cx="14" cy="11" r="11"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#summerCardClip)">
+    <!-- 1. Mép nước cạn trong suốt đè lên cát -->
+    <path d="M 0 236 Q 85 216 175 230 T 340 220 L 340 250 L 0 250 Z" fill="#67E6F5" opacity="0.45"/>
+
+    <!-- 2. Bãi cát chính phía dưới (y: 218/240 -> 504) -->
+    <path d="M 0 240 Q 85 218 175 232 T 340 222 L 340 504 L 0 504 Z" fill="url(#sandClean)"/>
+
+    <!-- 3. Dải bọt sóng trắng viền bãi cát ngăn cách -->
+    <path d="M 0 240 Q 85 218 175 232 T 340 222" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 5 243 Q 85 222 175 235 T 335 225" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.8" stroke-dasharray="8 6"/>
+
+    <!-- 4. Quả bóng bãi biển 3D đặt ven bờ cát (y ≈ 226-246) -->
+    <g transform="translate(136, 226)">
+      <ellipse cx="14" cy="19" rx="14" ry="4.5" fill="url(#softShadow)"/>
+      <circle cx="14" cy="11" r="11" fill="#FFFFFF"/>
+      <g clip-path="url(#ballClip)">
+        <path d="M 14 0 C 7 3, 5 15, 8 22 L 14 11 Z" fill="#FF4D4D"/>
+        <path d="M 14 0 C 18 2, 23 7, 24 13 L 14 11 Z" fill="#FFC83B"/>
+        <path d="M 24 13 C 25 18, 20 22, 14 22 L 14 11 Z" fill="#1EA7FD"/>
+        <ellipse cx="14" cy="3" rx="3.5" ry="1.5" fill="#FFFFFF" stroke="#000000" stroke-opacity="0.15" stroke-width="0.5"/>
+        <circle cx="14" cy="11" r="11" fill="url(#ballShade)"/>
+        <ellipse cx="11" cy="7" rx="3.2" ry="1.8" fill="#FFFFFF" opacity="0.6" transform="rotate(-25 11 7)"/>
+      </g>
+      <circle cx="14" cy="11" r="11" fill="none" stroke="#000000" stroke-opacity="0.15" stroke-width="0.8"/>
+    </g>
+
+    <!-- Sao biển nhỏ sát rìa mép cát -->
+    <polygon points="318,236 319.2,241 324,242 320,245 321,250 317,247 313,249 314.5,244.5 311,241 316,241" fill="#FFA347" stroke="#DE7110" stroke-width="0.7"/>
+  </g>
+</svg>

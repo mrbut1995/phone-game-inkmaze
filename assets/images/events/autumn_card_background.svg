@@ -1,51 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
   <defs>
-    <!-- ClipPath bo góc chuẩn thẻ sự kiện 340x504 -->
-    <clipPath id="autumnCardClip">
+    <!-- Khung bo góc chuẩn 340x504 (rx=28) -->
+    <clipPath id="cardClip">
       <rect width="340" height="504" rx="28"/>
     </clipPath>
 
-    <!-- Lưới ô ly mờ đồng bộ Design System -->
-    <pattern id="autumnGrid" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.08"/>
-    </pattern>
-
-    <!-- Nền trời hoàng hôn mùa thu vàng rực -->
-    <linearGradient id="sky_autumn" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FFDD94"/>
-      <stop offset="0.38" stop-color="#F39C44"/>
-      <stop offset="0.75" stop-color="#C8521A"/>
-      <stop offset="1" stop-color="#6E260E"/>
-    </linearGradient>
-
-    <!-- Hào quang mặt trời thu chiều tà -->
-    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#FFF8D6" stop-opacity="0.95"/>
-      <stop offset="0.45" stop-color="#FFD67A" stop-opacity="0.6"/>
-      <stop offset="1" stop-color="#FF9E42" stop-opacity="0"/>
-    </radialGradient>
-
-    <!-- Đồi xa mờ sương -->
-    <linearGradient id="distantHills" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#D76E2D"/>
-      <stop offset="1" stop-color="#8F3011"/>
-    </linearGradient>
-
-    <!-- Vùng đất rừng mùa thu (Nền tương phản cao cho Text & UI) -->
+    <!-- Vùng đất rừng mùa thu -->
     <linearGradient id="forestSoil" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#3A1A0B"/>
       <stop offset="0.35" stop-color="#2D1307"/>
       <stop offset="1" stop-color="#1B0A03"/>
     </linearGradient>
 
-    <!-- Thân cây gỗ mùa thu -->
-    <linearGradient id="treeTrunk" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#3D1D0D"/>
-      <stop offset="0.6" stop-color="#5E3119"/>
-      <stop offset="1" stop-color="#7D4626"/>
-    </linearGradient>
-
-    <!-- Mẫu lá phong 5 thùy chuẩn chi tiết (Lá lớn) -->
+    <!-- Mẫu lá phong cho chi tiết lá rụng ở góc bờ đất -->
     <g id="maple_leaf_detailed">
       <path d="M 0 -16 
                C 1 -12, 3 -12, 6 -14 C 5 -10, 8 -8, 12 -11 C 10 -6, 11 -4, 14 -3 
@@ -53,148 +20,29 @@
                C -2 7, -3 7, -5 10 C -7 6, -8 5, -12 7 C -11 2, -11 0, -14 -3 
                C -11 -4, -10 -6, -12 -11 C -8 -8, -5 -10, -6 -14 C -3 -12, -1 -12, 0 -16 Z" 
             stroke="#000000" stroke-opacity="0.15" stroke-width="0.8"/>
-      <!-- Sống gân lá -->
       <line x1="0" y1="-12" x2="0" y2="10" stroke="#000000" stroke-opacity="0.25" stroke-width="1.2"/>
       <line x1="0" y1="0" x2="7" y2="-6" stroke="#000000" stroke-opacity="0.2" stroke-width="0.8"/>
       <line x1="0" y1="0" x2="-7" y2="-6" stroke="#000000" stroke-opacity="0.2" stroke-width="0.8"/>
       <line x1="0" y1="3" x2="8" y2="3" stroke="#000000" stroke-opacity="0.2" stroke-width="0.8"/>
       <line x1="0" y1="3" x2="-8" y2="3" stroke="#000000" stroke-opacity="0.2" stroke-width="0.8"/>
-      <!-- Cuống lá -->
       <line x1="0" y1="9" x2="0" y2="18" stroke="#4A220D" stroke-width="1.6" stroke-linecap="round"/>
     </g>
   </defs>
 
   <g clip-path="url(#cardClip)">
-    <!-- ============================================== -->
-    <!-- 1. BẦU TRỜI & KHÍ QUYỂN THU HOÀNG HÔN          -->
-    <!-- ============================================== -->
-    <rect width="340" height="504" fill="url(#sky_autumn)"/>
-    <rect width="340" height="504" fill="url(#autumnGrid)"/>
-
-    <!-- Mặt trời thu ấm áp & tia hào quang -->
-    <circle cx="245" cy="140" r="95" fill="url(#sunGlow)"/>
-    <circle cx="245" cy="140" r="42" fill="#FFF2C6"/>
-
-    <!-- Đàn nhạn/thiên nga di cư về phương Nam -->
-    <g stroke="#61260E" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.85">
-      <path d="M 38 72 Q 45 64 52 72 M 52 72 Q 59 64 66 72"/>
-      <path d="M 76 86 Q 82 79 88 86 M 88 86 Q 94 79 100 86"/>
-      <path d="M 112 102 Q 117 96 122 102 M 122 102 Q 127 96 132 102"/>
-      <path d="M 52 108 Q 57 103 62 108 M 62 108 Q 67 103 72 108"/>
-    </g>
-
-    <!-- Dãy đồi xa nhấp nhô mờ ảo -->
-    <path d="M 0 185 Q 85 150 180 175 T 340 165 L 340 260 L 0 260 Z" fill="url(#distantHills)" opacity="0.6"/>
-    <path d="M 0 206 Q 95 180 200 198 T 340 190 L 340 260 L 0 260 Z" fill="#993813"/>
-
-    <!-- ============================================== -->
-    <!-- 2. RỪNG CÂY LÁ PHONG CHI TIẾT ĐA TẦNG         -->
-    <!-- ============================================== -->
-    <!-- Rừng cây nền phía sau (Bóng cây xa) -->
-    <g opacity="0.85">
-      <!-- Cây xa trái -->
-      <path d="M 12 180 Q 28 155 46 180 Q 48 200 14 204 Z" fill="#B33E15"/>
-      <!-- Cây xa giữa -->
-      <path d="M 125 178 Q 148 150 172 178 Q 170 200 128 204 Z" fill="#D45B1C"/>
-      <!-- Cây xa phải -->
-      <path d="M 230 174 Q 252 145 276 174 Q 272 196 232 198 Z" fill="#B84218"/>
-    </g>
-
-    <!-- Cụm cây phong tiền cảnh 1 (Góc trái: Thân cành + tán lá nhiều lớp) -->
-    <g transform="translate(24, 150)">
-      <!-- Thân cành -->
-      <path d="M 16 90 L 16 48 L 4 32 M 16 52 L 28 36" stroke="url(#treeTrunk)" stroke-width="4.5" stroke-linecap="round"/>
-      <!-- Các chùm tán lá phong đan xen -->
-      <!-- Tầng 1: Đỏ rượu thẫm đáy -->
-      <circle cx="8" cy="36" r="16" fill="#A82810"/>
-      <circle cx="28" cy="38" r="15" fill="#B83214"/>
-      <!-- Tầng 2: Cam cháy nổi khối -->
-      <circle cx="16" cy="24" r="21" fill="#E6581B"/>
-      <circle cx="3" cy="22" r="13" fill="#D94A14"/>
-      <circle cx="30" cy="24" r="13" fill="#E06A22"/>
-      <!-- Tầng 3: Vàng óng hứng nắng đỉnh -->
-      <circle cx="18" cy="12" r="13" fill="#F7A222"/>
-      <circle cx="9" cy="14" r="9" fill="#F5B838"/>
-    </g>
-
-    <!-- Cụm cây phong tiền cảnh 2 (Chính diện & góc phải: Cây lớn rực rỡ) -->
-    <g transform="translate(196, 134)">
-      <!-- Thân cành chính vươn nhánh tự nhiên -->
-      <path d="M 32 108 L 32 50 L 14 30 M 32 58 L 52 38 M 32 72 L 44 62" stroke="url(#treeTrunk)" stroke-width="5.5" stroke-linecap="round"/>
-      <!-- Khối tán lá lớn phân tầng màu phong phú -->
-      <circle cx="12" cy="42" r="19" fill="#99230E"/>
-      <circle cx="50" cy="44" r="20" fill="#B32F12"/>
-      <circle cx="32" cy="32" r="26" fill="#D94313"/>
-      <circle cx="8" cy="25" r="17" fill="#E8611C"/>
-      <circle cx="54" cy="28" r="18" fill="#EB7223"/>
-      <circle cx="32" cy="14" r="20" fill="#F59E1B"/>
-      <circle cx="20" cy="8" r="14" fill="#F7BA2C"/>
-      <circle cx="44" cy="10" r="14" fill="#F7BA2C"/>
-    </g>
-
-    <!-- Cụm cây phụ viền góc phải ngoài cùng -->
-    <g transform="translate(290, 160)">
-      <path d="M 12 80 L 12 40 L 4 28 M 12 45 L 20 32" stroke="url(#treeTrunk)" stroke-width="3.5" stroke-linecap="round"/>
-      <circle cx="10" cy="32" r="16" fill="#B83214"/>
-      <circle cx="6" cy="18" r="15" fill="#E65E1E"/>
-      <circle cx="18" cy="20" r="13" fill="#F5A827"/>
-    </g>
-
-    <!-- ============================================== -->
-    <!-- 3. LÁ PHONG CHI TIẾT BAY TRONG GIÓ             -->
-    <!-- (Bay lượn theo luồng gió thu từ cao xuống thấp)-->
-    <!-- ============================================== -->
-    <!-- Lá 1 (Đỏ cam trên cao góc trái) -->
-    <g transform="translate(56, 102) rotate(-25) scale(0.75)" fill="#D93814">
-      <use href="#maple_leaf_detailed"/>
-    </g>
-    <!-- Lá 2 (Vàng nghệ lơ lửng giữa trời) -->
-    <g transform="translate(132, 92) rotate(35) scale(0.65)" fill="#F5A827">
-      <use href="#maple_leaf_detailed"/>
-    </g>
-    <!-- Lá 3 (Cam cháy lớn lượn trước mặt trời) -->
-    <g transform="translate(178, 130) rotate(-15) scale(0.85)" fill="#E85E1A">
-      <use href="#maple_leaf_detailed"/>
-    </g>
-    <!-- Lá 4 (Đỏ thẫm ruby chao nghiêng) -->
-    <g transform="translate(284, 88) rotate(48) scale(0.6)" fill="#B0250E">
-      <use href="#maple_leaf_detailed"/>
-    </g>
-    <!-- Lá 5 (Vàng tươi tầng trung) -->
-    <g transform="translate(112, 162) rotate(-40) scale(0.7)" fill="#F7BA2C">
-      <use href="#maple_leaf_detailed"/>
-    </g>
-    <!-- Lá 6 (Cam đậm rụng gần mặt đất) -->
-    <g transform="translate(242, 198) rotate(22) scale(0.6)" fill="#D94313">
-      <use href="#maple_leaf_detailed"/>
-    </g>
-    <!-- Lá 7 (Nhỏ bay xa) -->
-    <g transform="translate(74, 186) rotate(60) scale(0.45)" fill="#F5A827">
-      <use href="#maple_leaf_detailed"/>
-    </g>
-
-    <!-- ============================================== -->
-    <!-- 4. THẢM ĐẤT RỪNG MÙA THU (VÙNG NỀN CHO NỘI DUNG)-->
-    <!-- Đường chân đồi uốn lượn tại y ≈ 240            -->
-    <!-- ============================================== -->
+    <!-- 1. Mảng thảm đất rừng mùa thu phía dưới (y: 226/244 -> 504) -->
     <path d="M 0 244 Q 80 226 170 238 T 340 230 L 340 504 L 0 504 Z" fill="url(#forestSoil)"/>
-    <!-- Viền mép đồi đất với ánh cỏ thu vàng úa -->
+
+    <!-- 2. Viền mép đồi đất với ánh cỏ thu vàng úa ngăn cách -->
     <path d="M 0 244 Q 80 226 170 238 T 340 230" fill="none" stroke="#662E12" stroke-width="3"/>
     <path d="M 0 245 Q 80 227 170 239 T 340 231" fill="none" stroke="#D97A29" stroke-opacity="0.6" stroke-width="1.2"/>
 
-    <!-- ============================================== -->
-    <!-- 5. CHI TIẾT RÌA GÓC VEN BỜ ĐẤT (CỰC KỲ GỌN)   -->
-    <!-- Giữ 100% diện tích giữa (x: 20-320, y: 250-504)-->
-    <!-- hoàn toàn thông thoáng cho Text & UI           -->
-    <!-- ============================================== -->
-
-    <!-- Cụm góc trái: Lá phong rụng & quả sồi (Acorn) -->
+    <!-- 3. CÁC CHI TIẾT NẰM DƯỚI VIỀN (THUỘC VÙNG ĐẤT NỀN) -->
+    <!-- Góc trái: Quả sồi (Acorn) & lá phong rụng -->
     <g transform="translate(16, 246)">
-      <!-- Lá phong nằm trên đất -->
       <g transform="rotate(72) scale(0.55)" fill="#D94313">
         <use href="#maple_leaf_detailed"/>
       </g>
-      <!-- Quả sồi nhỏ ven mép (Acorn) -->
       <g transform="translate(18, 5) scale(0.85)">
         <ellipse cx="0" cy="5" rx="4.5" ry="6" fill="#8F5425"/>
         <path d="M -5.5 2 Q 0 -2 5.5 2 L 4.5 4 Q 0 1 -4.5 4 Z" fill="#522E13"/>
@@ -202,13 +50,11 @@
       </g>
     </g>
 
-    <!-- Cụm góc phải: Nấm rừng chấm bi 3D & lá thu rơi -->
+    <!-- Góc phải: Cụm nấm rừng chấm bi 3D & lá rơi bên cạnh -->
     <g transform="translate(306, 240)">
       <!-- Nấm rừng lớn -->
       <g transform="translate(0, 0)">
-        <!-- Chân nấm -->
         <path d="M -3 10 L -2 2 Q 0 0 2 2 L 3 10 Z" fill="#F4E8D3"/>
-        <!-- Mũ nấm đỏ cam cong 3D -->
         <path d="M -11 3 Q 0 -9 11 3 C 8 5, -8 5, -11 3 Z" fill="#D93814"/>
         <circle cx="-5" cy="-1" r="1.6" fill="#FFFFFF"/>
         <circle cx="2" cy="-4" r="1.4" fill="#FFFFFF"/>
@@ -226,17 +72,5 @@
         <use href="#maple_leaf_detailed"/>
       </g>
     </g>
-
-    <!-- ============================================== -->
-    <!-- 6. VÙNG AN TOÀN TRỐNG (SAFE ZONE: y ≈ 245–504)  -->
-    <!-- Dành riêng để đưa nội dung lên sau:            -->
-    <!-- - Tiêu đề mùa thu (Màu trắng/vàng kem #FFE9B0)  -->
-    <!-- - Phụ đề 2 dòng                                -->
-    <!-- - Hộp tiến độ & 2 icon quà                     -->
-    <!-- - Nút CTA cam cháy nhiệt đới / nâu gỗ          -->
-    <!-- ============================================== -->
   </g>
-
-  <!-- Viền highlight sang trọng bo góc chuẩn Design System -->
-  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3"/>
 </svg>
