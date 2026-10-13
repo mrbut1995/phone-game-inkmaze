@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="EventTheme" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/images/events/valentine_card_background.svg" id="2_background"]
+[ext_resource type="Texture2D" path="res://assets/images/events/valentine_card_frontground.svg" id="3_foreground"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"valentine"
+bg_stops = PackedColorArray(0.6862745, 0.078431375, 0.34117648, 1, 0.41568628, 0.039215688, 0.21568628, 1, 0.19607843, 0, 0.09411765, 1)
+grid_overlay = &"white"
+back_art = ExtResource("2_background")
+front_art = ExtResource("3_foreground")
+art_offset_y = 0.0
+accent = Color(0.9137255, 0.11764706, 0.3882353, 1)
+accent2 = Color(1, 0.6313726, 0.7921569, 1)
+title_color = Color(1, 0.9882353, 0.99215686, 1)
+title_outline = Color(0.21176471, 0, 0.0627451, 1)
+sub_color = Color(1, 0.7921569, 0.8666667, 1)
+label_color = Color(1, 0.9254902, 0.9529412, 1)
+panel_color = Color(0.19607843, 0, 0.09411765, 0.82)
+panel_stroke = Color(0.9137255, 0.11764706, 0.3882353, 0.45)
+cta_fill = Color(0.9137255, 0.11764706, 0.3882353, 1)
+cta_stroke = Color(0.41568628, 0, 0.1882353, 1)
+cta_text = Color(1, 1, 1, 1)
+chip_fill = Color(0.19607843, 0, 0.09411765, 0.9)
+chip_text = Color(1, 0.7921569, 0.8666667, 1)

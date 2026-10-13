@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
+  <defs>
+    <!-- ClipPath bo góc chuẩn 340x504 (rx=28) -->
+    <clipPath id="easterCardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+
+    <!-- Đồi cỏ tiền cảnh (Nền tương phản cho Text & UI) -->
+    <linearGradient id="meadowForeground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3FA85B"/>
+      <stop offset="0.3" stop-color="#2D8A46"/>
+      <stop offset="0.75" stop-color="#1E6B34"/>
+      <stop offset="1" stop-color="#144D24"/>
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#easterCardClip)">
+    <!-- 1. Mảng đồi cỏ mùa xuân phía dưới (y: 220/244 -> 504) -->
+    <path d="M 0 244 Q 85 220 175 242 T 340 234 L 340 504 L 0 504 Z" fill="url(#meadowForeground)"/>
+
+    <!-- 2. Dải viền cỏ sáng rực ánh xuân ngăn cách với detail -->
+    <path d="M 0 244 Q 85 220 175 242 T 340 234" fill="none" stroke="#B8F2A6" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 0 249 Q 85 225 175 247 T 340 239" fill="none" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="1.8"/>
+  </g>
+</svg>

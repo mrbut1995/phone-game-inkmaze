@@ -1564,3 +1564,59 @@ STR_MODECARD_LEVEL_VAL,Level {0},Màn {0}
 STR_MODECARD_FLOOR_VAL,Floor {0},Tầng {0}
 STR_EVENT_DAILY_REWARD_1,120 Coins,120 Xu
 STR_EVENT_DAILY_REWARD_2,7-Day Streak,Chuỗi 7 ngày
+STR_EVENT_ANNIVERSARY_CHIP,ANNIVERSARY,KỶ NIỆM
+STR_EVENT_ANNIVERSARY_TITLE_1,InkMaze,InkMaze
+STR_EVENT_ANNIVERSARY_TITLE_2,Anniversary,Mừng Sinh Nhật
+STR_EVENT_ANNIVERSARY_SUB_1,Complete three maze levels,Hoàn thành ba màn mê cung
+STR_EVENT_ANNIVERSARY_SUB_2,and celebrate with us,cùng chúc mừng với chúng tôi
+STR_EVENT_ANNIVERSARY_REWARD_1,500 Coins,500 Xu
+STR_EVENT_ANNIVERSARY_REWARD_2,150 Bonus Coins,150 Xu thưởng
+STR_EVENT_AUTUMN_CHIP,AUTUMN,MÙA THU
+STR_EVENT_AUTUMN_TITLE_1,Autumn,Mê Cung
+STR_EVENT_AUTUMN_TITLE_2,Trails,Lá Vàng
+STR_EVENT_AUTUMN_SUB_1,Explore three autumn mazes,Khám phá ba mê cung mùa thu
+STR_EVENT_AUTUMN_SUB_2,through falling leaves,băng qua rừng lá rơi
+STR_EVENT_AUTUMN_REWARD_1,300 Coins,300 Xu
+STR_EVENT_AUTUMN_REWARD_2,100 Bonus Coins,100 Xu thưởng
+STR_EVENT_EASTER_CHIP,EASTER,LỄ PHỤC SINH
+STR_EVENT_EASTER_TITLE_1,Easter,Trứng Phục Sinh
+STR_EVENT_EASTER_TITLE_2,Adventure,Cuộc Phiêu Lưu
+STR_EVENT_EASTER_SUB_1,Beat three special mazes,Chinh phục ba mê cung đặc biệt
+STR_EVENT_EASTER_SUB_2,and uncover hidden rewards,tìm phần thưởng ẩn
+STR_EVENT_EASTER_REWARD_1,350 Coins,350 Xu
+STR_EVENT_EASTER_REWARD_2,150 Bonus Coins,150 Xu thưởng
+STR_EVENT_NEW_YEAR_CHIP,NEW YEAR,NĂM MỚI
+STR_EVENT_NEW_YEAR_TITLE_1,A Fresh,Một Khởi Đầu
+STR_EVENT_NEW_YEAR_TITLE_2,Start,Mới
+STR_EVENT_NEW_YEAR_SUB_1,Solve three new-year mazes,Giải ba mê cung năm mới
+STR_EVENT_NEW_YEAR_SUB_2,begin the year in ink,khởi đầu năm mới với mực
+STR_EVENT_NEW_YEAR_REWARD_1,400 Coins,400 Xu
+STR_EVENT_NEW_YEAR_REWARD_2,200 Bonus Coins,200 Xu thưởng
+STR_EVENT_SPRING_CHIP,SPRING,MÙA XUÂN
+STR_EVENT_SPRING_TITLE_1,Spring,Đường Hoa
+STR_EVENT_SPRING_TITLE_2,Blossoms,Mùa Xuân
+STR_EVENT_SPRING_SUB_1,Follow three special paths,Đi theo ba lối đi đặc biệt
+STR_EVENT_SPRING_SUB_2,through the spring garden,xuyên qua vườn xuân
+STR_EVENT_SPRING_REWARD_1,350 Coins,350 Xu
+STR_EVENT_SPRING_REWARD_2,150 Bonus Coins,150 Xu thưởng
+STR_EVENT_SUMMER_CHIP,SUMMER,MÙA HÈ
+STR_EVENT_SUMMER_TITLE_1,Summer,Thử Thách
+STR_EVENT_SUMMER_TITLE_2,Splash,Mùa Hè
+STR_EVENT_SUMMER_SUB_1,Complete three sunny mazes,Hoàn thành ba mê cung nắng
+STR_EVENT_SUMMER_SUB_2,for a cool reward,nhận quà mát lành
+STR_EVENT_SUMMER_REWARD_1,400 Coins,400 Xu
+STR_EVENT_SUMMER_REWARD_2,200 Bonus Coins,200 Xu thưởng
+STR_EVENT_THANKSGIVING_CHIP,HARVEST,MÙA LỄ TẠ ƠN
+STR_EVENT_THANKSGIVING_TITLE_1,Harvest,Đường Mùa
+STR_EVENT_THANKSGIVING_TITLE_2,Thanks,Tạ Ơn
+STR_EVENT_THANKSGIVING_SUB_1,Complete three harvest mazes,Hoàn thành ba mê cung mùa gặt
+STR_EVENT_THANKSGIVING_SUB_2,and share the harvest,chia sẻ niềm vui mùa lễ
+STR_EVENT_THANKSGIVING_REWARD_1,350 Coins,350 Xu
+STR_EVENT_THANKSGIVING_REWARD_2,150 Bonus Coins,150 Xu thưởng
+STR_EVENT_VALENTINE_CHIP,VALENTINE,LỄ TÌNH NHÂN
+STR_EVENT_VALENTINE_TITLE_1,Hearts,Trái Tim
+STR_EVENT_VALENTINE_TITLE_2,In Ink,Mực Yêu Thương
+STR_EVENT_VALENTINE_SUB_1,Beat three special mazes,Chinh phục ba mê cung đặc biệt
+STR_EVENT_VALENTINE_SUB_2,share a little love,trao nhau chút yêu thương
+STR_EVENT_VALENTINE_REWARD_1,350 Coins,350 Xu
+STR_EVENT_VALENTINE_REWARD_2,150 Bonus Coins,150 Xu thưởng

@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource uid="uid://bdcld1rqnwgj1" type="Texture2D" path="res://assets/images-png/events/chinese_new_year_card_background.png" id="1_bd60k"]
+[ext_resource type="Texture2D" path="res://assets/images/events/chinese_new_year_card_background.svg" id="1_bd60k"]
+[ext_resource type="Texture2D" path="res://assets/images/events/chinese_new_year_card_frontground.svg" id="3_front"]
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_f4gub"]
 
 [resource]
@@ -9,11 +10,12 @@ id = &"newyear"
 bg_stops = PackedColorArray(0.7764706, 0.15686275, 0.15686275, 1, 0.7176471, 0.10980392, 0.10980392, 1, 0.42745098, 0.05490196, 0.07058824, 1)
 grid_overlay = &"white"
 back_art = ExtResource("1_bd60k")
+front_art = ExtResource("3_front")
 art_offset_y = 0.0
 accent = Color(1, 0.78431374, 0.23921569, 1)
 accent2 = Color(1, 0.8784314, 0.50980395, 1)
-title_color = Color(1, 0.8784314, 0.50980395, 1)
-title_outline = Color(0.42745098, 0.05490196, 0.07058824, 1)
+title_color = Color(1, 0.9764706, 0.8784314, 1)
+title_outline = Color(0.2509804, 0.007843138, 0.023529412, 1)
 sub_color = Color(1, 0.8509804, 0.8156863, 1)
 label_color = Color(1, 0.9529412, 0.8784314, 1)
 panel_color = Color(0.22745098, 0.023529412, 0.03137255, 1)

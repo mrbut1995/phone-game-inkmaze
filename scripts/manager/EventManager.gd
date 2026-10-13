@@ -18,8 +18,6 @@ signal event_expired(event_id: StringName)
 
 ## Thư mục chứa file .tres event
 const EVENTS_DIR := "res://resources/events/"
-## Tối đa thẻ sự kiện hiển thị trong carousel (kể cả Daily)
-const MAX_CARDS := 8
 ## Xoá bản ghi event đã hết hạn quá N ngày
 const STALE_DAYS := 30
 
@@ -159,15 +157,27 @@ func _make_default_daily_theme() -> EventTheme:
 # API CÔNG KHAI
 # ---------------------------------------------------------------------------
 
-## Trả danh sách event đang hoạt động, Daily đứng đầu, sắp xếp theo sort_order rồi hạn
+## Trả event đang hoạt động, Daily đứng đầu, sắp xếp theo sort_order rồi hạn.
 func get_active_events() -> Array[EventData]:
 	var now := now_utc()
 	var active: Array[EventData] = []
 	for ev in _all_events:
 		if ev.enabled and ev.is_active_now(now):
 			active.append(ev)
-	# Sắp xếp: Daily luôn đầu, còn lại theo sort_order rồi end_utc gần nhất
-	active.sort_custom(func(a: EventData, b: EventData) -> bool:
+	return _sort_events(active)
+
+
+## Danh sách phục vụ xem thử EventData trên Main, không lọc enabled hoặc thời hạn.
+## Không dùng API này cho luồng gameplay.
+func get_all_events_for_preview() -> Array[EventData]:
+	var events: Array[EventData] = []
+	events.append_array(_all_events)
+	return _sort_events(events)
+
+
+func _sort_events(events: Array[EventData]) -> Array[EventData]:
+	# Daily luôn đầu, còn lại theo sort_order rồi end_utc gần nhất.
+	events.sort_custom(func(a: EventData, b: EventData) -> bool:
 		if a.type == EventData.Type.DAILY:
 			return true
 		if b.type == EventData.Type.DAILY:
@@ -180,10 +190,7 @@ func get_active_events() -> Array[EventData]:
 		if eb == 0: eb = 0x7FFFFFFF
 		return ea < eb
 	)
-	# Tối đa MAX_CARDS thẻ
-	if active.size() > MAX_CARDS:
-		active.resize(MAX_CARDS)
-	return active
+	return events
 
 
 ## Lấy EventData theo id (null nếu không có)

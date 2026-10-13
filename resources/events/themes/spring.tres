@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EventTheme" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/images/events/spring_card_background.svg" id="2_background"]
+[ext_resource type="Texture2D" path="res://assets/images/events/spring_card_frontground.svg" id="3_foreground"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"spring"
+bg_stops = PackedColorArray(0.90588236, 0.972549, 1, 1, 0.8117647, 0.9490196, 0.8901961, 1, 0.6039216, 0.84705883, 0.6901961, 1)
+back_art = ExtResource("2_background")
+front_art = ExtResource("3_foreground")
+art_offset_y = 0.0
+accent = Color(0.8980392, 0.35686275, 0.52156866, 1)
+accent2 = Color(1, 0.8352941, 0.30980393, 1)
+title_color = Color(0.05490196, 0.1764706, 0.09411765, 1)
+title_outline = Color(1, 1, 1, 1)
+sub_color = Color(0.22352941, 0.41568628, 0.29411766, 1)
+label_color = Color(0.16470589, 0.31764707, 0.21960784, 1)
+panel_color = Color(1, 1, 1, 0.84)
+panel_stroke = Color(0.8980392, 0.35686275, 0.52156866, 0.4)
+cta_fill = Color(0.8980392, 0.35686275, 0.52156866, 1)
+cta_stroke = Color(0.6627451, 0.19607843, 0.34509805, 1)
+cta_text = Color(1, 1, 1, 1)
+chip_fill = Color(1, 1, 1, 0.88)
+chip_text = Color(0.16470589, 0.31764707, 0.21960784, 1)

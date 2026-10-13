@@ -1,18 +1,20 @@
-[gd_resource type="Resource" script_class="EventTheme" format=3]
+[gd_resource type="Resource" script_class="EventTheme" format=3 uid="uid://ytia1j27gt6f"]
 
-[ext_resource uid="uid://dpv423dwk3u5l" type="Texture2D" path="res://assets/images-png/events/explore_pyramid_card_background.png" id="1_cw6e4"]
-[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_yt6uv"]
+[ext_resource type="Texture2D" path="res://assets/images/events/explore_pyramid_card_background.svg" id="1_cw6e4"]
+[ext_resource type="Texture2D" path="res://assets/images/events/explore_pyramid_card_frontground.svg" id="2_r8rk8"]
+[ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="2_yt6uv"]
 
 [resource]
 script = ExtResource("2_yt6uv")
 id = &"tomb"
 bg_stops = PackedColorArray(1, 0.8862745, 0.627451, 1, 0.90588236, 0.6627451, 0.3529412, 1, 0.22745098, 0.12941177, 0.05490196, 1)
 back_art = ExtResource("1_cw6e4")
+front_art = ExtResource("2_r8rk8")
 art_offset_y = 0.0
 accent = Color(0.9490196, 0.72156864, 0.29411766, 1)
 accent2 = Color(1, 0.9137255, 0.6901961, 1)
-title_color = Color(1, 0.9137255, 0.6901961, 1)
-title_outline = Color(0.22745098, 0.12941177, 0.05490196, 1)
+title_color = Color(1, 1, 0.972549, 1)
+title_outline = Color(0.101960786, 0.050980393, 0.015686275, 1)
 sub_color = Color(0.9529412, 0.8509804, 0.65882355, 1)
 label_color = Color(1, 0.94509804, 0.8156863, 1)
 panel_color = Color(0.11764706, 0.05882353, 0.019607844, 1)

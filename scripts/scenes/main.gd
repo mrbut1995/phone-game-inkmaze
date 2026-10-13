@@ -303,7 +303,9 @@ func _refresh_event_header() -> void:
 		return
 	var em := get_node_or_null("/root/EventManager")
 	var count := 0
-	if em != null and em.has_method("get_active_events"):
+	if layout.event_carousel.has_method("get_displayed_event_count"):
+		count = layout.event_carousel.get_displayed_event_count()
+	elif em != null and em.has_method("get_active_events"):
 		count = (em.call("get_active_events") as Array).size()
 	layout.event_header.set_count(count)
 	# Giai đoạn 1: ẩn "Xem tất cả" (mở EventListScreen ở giai đoạn 2 — §B5)

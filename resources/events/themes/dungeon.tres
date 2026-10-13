@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource uid="uid://dow2h5c00787d" type="Texture2D" path="res://assets/images-png/events/dungeon_card_background.png" id="1_w12t0"]
+[ext_resource type="Texture2D" path="res://assets/images/events/dungeon_card_background.svg" id="1_w12t0"]
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_g7myi"]
 
 [resource]
@@ -12,8 +12,8 @@ back_art = ExtResource("1_w12t0")
 art_offset_y = 0.0
 accent = Color(0.9607843, 0.61960787, 0.043137256, 1)
 accent2 = Color(0.99215686, 0.9019608, 0.5411765, 1)
-title_color = Color(0.99215686, 0.9019608, 0.5411765, 1)
-title_outline = Color(0.09019608, 0.07058824, 0.050980393, 1)
+title_color = Color(1, 0.972549, 0.83137256, 1)
+title_outline = Color(0.03529412, 0.023529412, 0.011764706, 1)
 sub_color = Color(0.90588236, 0.827451, 0.6901961, 1)
 label_color = Color(0.9529412, 0.8901961, 0.7647059, 1)
 panel_color = Color(0, 0, 0, 1)

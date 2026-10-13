@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
+  <defs>
+    <!-- Khung bo góc chuẩn 340x504 (rx=28) -->
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+
+    <!-- Màu nền kẹo ngọt cho vùng nội dung chữ phía dưới -->
+    <linearGradient id="bg_text_candy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFD5F0"/>
+      <stop offset="0.35" stop-color="#FFAEE0"/>
+      <stop offset="1" stop-color="#FF82CA"/>
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#cardClip)">
+    <!-- 1. Mảng nền kẹo ngọt phía dưới (giữ nguyên vị trí y: 220/242 -> 504) -->
+    <path d="M 0 242 Q 85 220 170 242 T 340 236 L 340 504 L 0 504 Z" fill="url(#bg_text_candy)"/>
+
+    <!-- 2. Viền kép uốn lượn phong cách carnival ngăn cách với detail -->
+    <path d="M 0 242 Q 85 220 170 242 T 340 236" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 0 247 Q 85 225 170 247 T 340 241" fill="none" stroke="#3B0A45" stroke-opacity="0.2" stroke-width="2"/>
+  </g>
+</svg>

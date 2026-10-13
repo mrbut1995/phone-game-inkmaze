@@ -1,7 +1,6 @@
-; EventHeader — tiêu đề khối Sự kiện (title + badge số event + "Xem tất cả")
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://xuj64d8yo0mg"]
 
-[ext_resource type="Script" path="res://scripts/nodes/event_header.gd" id="1_head"]
+[ext_resource type="Script" uid="uid://btsi4u0i0wvxu" path="res://scripts/nodes/event_header.gd" id="1_head"]
 
 [sub_resource type="StyleBoxFlat" id="sb_badge"]
 bg_color = Color(0.9882353, 0.61960787, 0.043137256, 1)
@@ -10,50 +9,47 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="EventHeader" type="HBoxContainer"]
+[node name="EventHeader" type="HBoxContainer" unique_id=99512451]
 custom_minimum_size = Vector2(0, 22)
-layout_mode = 3
-anchors_preset = 0
 mouse_filter = 2
 theme_override_constants/separation = 5
 script = ExtResource("1_head")
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=1986212383]
 layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
 theme_type_variation = &"EventHeaderTitle"
+theme_override_font_sizes/font_size = 16
 text = "STR_EVENT_SECTION_TITLE"
 
-[node name="Badge" type="Panel" parent="."]
+[node name="Badge" type="Panel" parent="." unique_id=801472962]
 custom_minimum_size = Vector2(18, 15)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
 theme_override_styles/panel = SubResource("sb_badge")
 
-[node name="CountLabel" type="Label" parent="Badge"]
+[node name="CountLabel" type="Label" parent="Badge" unique_id=1529651327]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_type_variation = &"EventHeaderCount"
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Spacer" type="Control" parent="."]
+[node name="Spacer" type="Control" parent="." unique_id=789402521]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ViewAll" type="Button" parent="."]
+[node name="ViewAll" type="Button" parent="." unique_id=973540797]
 layout_mode = 2
 size_flags_vertical = 4
 mouse_default_cursor_shape = 2
-flat = true
 theme_type_variation = &"EventViewAll"
+theme_override_font_sizes/font_size = 10
 text = "STR_EVENT_VIEW_ALL"
+flat = true

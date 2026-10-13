@@ -14,34 +14,31 @@ extends Control
 signal card_pressed(event_id: StringName)
 
 ## Node con — bind bằng @onready (không dùng %UniqueName theo §13.10)
-@onready var bg_gradient: ColorRect = $BgGradient
-@onready var bg_grid: ColorRect = $BgGrid
-@onready var back_art: TextureRect = $BackArt
-@onready var front_art: TextureRect = $FrontArt
-@onready var theme_chip: Panel = $ThemeChip
-@onready var chip_label: Label = $ThemeChip/ChipLabel
-@onready var chip_dot: ColorRect = $ThemeChip/ChipDot
-@onready var timer_chip: Panel = $TimerChip
-@onready var timer_label: Label = $TimerChip/TimerLabel
-@onready var title_1: Label = $Title1
-@onready var title_2: Label = $Title2
-@onready var sub_1: Label = $Sub1
-@onready var sub_2: Label = $Sub2
-@onready var progress_panel: Panel = $ProgressPanel
-@onready var progress_text: Label = $ProgressPanel/ProgressText
-@onready var progress_unit: Label = $ProgressPanel/UnitLabel
-@onready var reward_1_icon: Control = $ProgressPanel/Reward1/Icon
-@onready var reward_1_label: Label = $ProgressPanel/Reward1/RewardLabel
-@onready var reward_2_icon: Control = $ProgressPanel/Reward2/Icon
-@onready var reward_2_label: Label = $ProgressPanel/Reward2/RewardLabel
-@onready var daily_date: Control = $DailyDate
-@onready var daily_month: Label = $DailyDate/Month
-@onready var daily_day: Label = $DailyDate/Day
-@onready var daily_weekday: Label = $DailyDate/Weekday
-@onready var cta_button: Button = $CtaButton
-@onready var cta_label: Label = $CtaButton/CtaLabel
-@onready var timer_node: Timer = $CountdownTimer
-@onready var completed_overlay: ColorRect = $CompletedOverlay
+@onready var bg_gradient: ColorRect = $Content/Background/BgGradient
+@onready var back_art: TextureRect = $Content/Background/BackArt
+@onready var front_art: NinePatchRect = $Content/Background/FrontArt
+@onready var theme_chip: PanelContainer = $Content/Chips/ThemeChip
+@onready var chip_label: Label = $Content/Chips/ThemeChip/Content/ChipLabel
+@onready var chip_dot: ColorRect = $Content/Chips/ThemeChip/Content/ChipDot
+@onready var timer_chip: PanelContainer = $Content/Chips/TimerChip
+@onready var timer_label: Label = $Content/Chips/TimerChip/Content/TimerLabel
+@onready var title_1: Label = $Content/Text/Title/Title1
+@onready var title_2: Label = $Content/Text/Title/Title2
+@onready var sub_1: Label = $Content/Sub1
+@onready var sub_2: Label = $Content/Sub2
+@onready var progress_panel: Panel = $Content/Information/ProgressPanel
+@onready var reward_1_icon: Control = $Content/Information/ProgressPanel/Rewards/Reward1/Icon
+@onready var reward_1_label: Label = $Content/Information/ProgressPanel/Rewards/Reward1/RewardLabel
+@onready var reward_2_icon: Control = $Content/Information/ProgressPanel/Rewards/Reward2/Icon
+@onready var reward_2_label: Label = $Content/Information/ProgressPanel/Rewards/Reward2/RewardLabel
+@onready var daily_date: Control = $Content/Text/DailyDate
+@onready var daily_month: Label = $Content/Text/DailyDate/Month
+@onready var daily_day: Label = $Content/Text/DailyDate/Day
+@onready var daily_weekday: Label = $Content/Text/DailyDate/Weekday
+@onready var cta_button: Button = $Content/Information/CtaButton
+@onready var cta_label: Label = $Content/Information/CtaButton/CtaLabel
+@onready var timer_node: Timer = $Content/CountdownTimer
+@onready var completed_overlay: ColorRect = $Content/CompletedOverlay
 
 ## Ảnh icon phần thưởng theo `EventReward.Kind` (nạp 1 lần)
 const REWARD_ICONS := {
@@ -54,6 +51,7 @@ const REWARD_ICONS := {
 ## Gradient texture động (tạo lúc setup để không hardcode màu)
 var _event_data: EventData = null
 var _event_id: StringName = &""
+var _preview_mode: bool = false
 var _card_press_active := false
 var _card_press_position := Vector2.ZERO
 
@@ -68,9 +66,10 @@ func _ready() -> void:
 
 
 ## Thiết lập thẻ từ dữ liệu EventData
-func setup(data: EventData) -> void:
+func setup(data: EventData, preview_mode: bool = false) -> void:
 	_event_data = data
 	_event_id = data.id
+	_preview_mode = preview_mode
 	_apply_theme(data.theme)
 	_apply_texts(data)
 	_apply_daily_date(data)
@@ -115,12 +114,6 @@ func _apply_theme(t: EventTheme) -> void:
 	# Nền: ColorRect lót dưới art (dùng màu đầu của gradient) — art (nếu có) phủ lên trên
 	if bg_gradient != null and t.bg_stops.size() > 0:
 		bg_gradient.color = t.bg_stops[0]
-	# Grid overlay
-	if bg_grid != null:
-		if t.grid_overlay == &"white":
-			bg_grid.color = Color(1, 1, 1, 0.08)
-		else:
-			bg_grid.color = Color(0.086, 0.227, 0.345, 0.07)
 	# Art
 	if back_art != null:
 		back_art.texture = t.back_art
@@ -180,10 +173,6 @@ func _apply_theme(t: EventTheme) -> void:
 		ps.corner_radius_bottom_right = 10
 		ps.corner_radius_bottom_left = 10
 		progress_panel.add_theme_stylebox_override("panel", ps)
-	if progress_text != null:
-		progress_text.add_theme_color_override("font_color", t.accent2)
-	if progress_unit != null:
-		progress_unit.add_theme_color_override("font_color", t.label_color)
 	if reward_1_label != null:
 		reward_1_label.add_theme_color_override("font_color", t.label_color)
 	if reward_2_label != null:
@@ -244,17 +233,17 @@ func _apply_texts(data: EventData) -> void:
 		reward_1_icon, reward_1_label)
 	_apply_reward(data.rewards.size() > 1, data.rewards[1] if data.rewards.size() > 1 else null,
 		reward_2_icon, reward_2_label)
-	if progress_panel != null:
-		if not has_rewards:
-			progress_panel.offset_bottom = progress_panel.offset_top + 26.0
-			if cta_button != null:
-				cta_button.offset_top = 205.0
-				cta_button.offset_bottom = 229.0
-		else:
-			progress_panel.offset_bottom = progress_panel.offset_top + 44.0
-			if cta_button != null:
-				cta_button.offset_top = 221.0
-				cta_button.offset_bottom = 245.0
+	#if progress_panel != null:
+		#if not has_rewards:
+			#progress_panel.offset_bottom = progress_panel.offset_top + 26.0
+			#if cta_button != null:
+				#cta_button.offset_top = 205.0
+				#cta_button.offset_bottom = 229.0
+		#else:
+			#progress_panel.offset_bottom = progress_panel.offset_top + 44.0
+			#if cta_button != null:
+				#cta_button.offset_top = 221.0
+				#cta_button.offset_bottom = 245.0
 
 
 
@@ -291,10 +280,6 @@ func _refresh_progress() -> void:
 	var unit: StringName = prog.get("unit_key", &"STR_EVENT_UNIT_LEVELS")
 	var completed: bool = prog.get("completed", false)
 	var claimed: bool = prog.get("claimed", false)
-	if progress_text != null:
-		progress_text.text = tr("STR_EVENT_PROGRESS_FORMAT").format([done, total])
-	if progress_unit != null:
-		progress_unit.text = tr(str(unit))
 	# Trạng thái CTA
 	if cta_label != null:
 		if claimed:
@@ -331,8 +316,20 @@ func _refresh_timer() -> void:
 	var em := _get_event_manager()
 	if em == null:
 		return
+	if _preview_mode and not _event_data.is_active_now(int(em.call("now_utc"))):
+		if timer_chip != null:
+			timer_chip.hide()
+		return
+	if timer_chip != null:
+		timer_chip.show()
 	var secs: int = em.seconds_left(_event_id)
 	if secs <= 0:
+		if _preview_mode:
+			if timer_chip != null:
+				timer_chip.hide()
+			if timer_node != null:
+				timer_node.stop()
+			return
 		# Hết hạn — phát signal và làm mờ thẻ
 		modulate = Color(1, 1, 1, 0.4)
 		if timer_node != null:
@@ -384,7 +381,7 @@ func _on_card_gui_input(event: InputEvent) -> void:
 			return
 		if mb.pressed:
 			_card_press_active = cta_button == null or not cta_button.get_global_rect().has_point(mb.global_position)
-			_card_press_position = mb.global_position
+			#_card_press_position = mb.global_position
 			return
 		if not _card_press_active:
 			return

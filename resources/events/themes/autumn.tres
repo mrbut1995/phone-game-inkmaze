@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="EventTheme" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/images/events/autumn_card_background.svg" id="2_background"]
+[ext_resource type="Texture2D" path="res://assets/images/events/autumn_card_frontground.svg" id="3_foreground"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"autumn"
+bg_stops = PackedColorArray(0.22745098, 0.101960786, 0.043137256, 1, 0.1764706, 0.07450981, 0.02745098, 1, 0.105882354, 0.039215688, 0.011764706, 1)
+grid_overlay = &"white"
+back_art = ExtResource("2_background")
+front_art = ExtResource("3_foreground")
+art_offset_y = 0.0
+accent = Color(0.8509804, 0.47843137, 0.16078432, 1)
+accent2 = Color(1, 0.76862746, 0.41960785, 1)
+title_color = Color(1, 0.99215686, 0.9647059, 1)
+title_outline = Color(0.08235294, 0.02745098, 0.003921569, 1)
+sub_color = Color(0.9411765, 0.79607844, 0.6313726, 1)
+label_color = Color(1, 0.9254902, 0.8, 1)
+panel_color = Color(0.105882354, 0.039215688, 0.011764706, 0.82)
+panel_stroke = Color(0.8509804, 0.47843137, 0.16078432, 0.45)
+cta_fill = Color(0.8509804, 0.47843137, 0.16078432, 1)
+cta_stroke = Color(0.4, 0.13333334, 0.03137255, 1)
+cta_text = Color(0.105882354, 0.039215688, 0.011764706, 1)
+chip_fill = Color(0.105882354, 0.039215688, 0.011764706, 0.9)
+chip_text = Color(1, 0.84313726, 0.57254905, 1)

@@ -2066,7 +2066,7 @@ python tools/content/fix_mojibake.py
 
 ---
 
-## 15. EVENT SYSTEM — HỆ THỐNG SỰ KIỆN (v2.21, 2026-10-11)
+## 15. EVENT SYSTEM — HỆ THỐNG SỰ KIỆN (v2.22, 2026-10-13; bổ sung 8 EventData mùa vụ)
 
 **Yêu cầu (user):** thêm hệ thống Sự kiện (event) hiện thành **thẻ dọc** trong carousel Main Screen, có **theme riêng**, quản lý **thời hạn · tiến độ · phần thưởng** — và **thêm event mới KHÔNG phải sửa script** (data-driven).
 
@@ -2096,7 +2096,7 @@ python tools/content/fix_mojibake.py
 - `EventReward`: `kind` (COIN · PEN_SKIN · AVATAR_FRAME · COIN_MULTIPLIER) · `amount` · `item_id` · `label_key`. Thẻ chỉ hiện **tối đa 2** phần thưởng.
 - **Mọi chữ qua khoá dịch** (`STR_EVENT_<ID>_*`), không chữ cứng (§14).
 
-**8 theme hiện có** (`theme_id` → art nền full-card 340×504 trong `assets/images-png/events/`):
+**8 theme đang dùng bởi các event hiện có** (`theme_id` → art nền full-card):
 
 | `theme_id` | Event | Nền (trên→dưới) | Art |
 |---|---|---|---|
@@ -2109,9 +2109,24 @@ python tools/content/fix_mojibake.py
 | `winter` | Mùa Tuyết Trắng | `#E3F4FF → #9CCDF4 → #6FA8E0` | `winter_card_background` |
 | `dungeon` | Tuần Lễ Hầm Ngục | `#2A1E12 → #17120D` | `dungeon_card_background` |
 
-*(Art nền = 1 lớp SVG full-card, rasterize sang PNG bằng `tools/svg_to_png.py`; `accent/accent2/title/panel/cta/chip` lấy từ bảng màu trong spec `Agent_Spec_MainScreen_EventSystem.md` §B2.)*
+*(Theme được khai trong `resources/events/themes/<theme_id>.tres`; `back_art` và `front_art` tham chiếu các lớp SVG nguồn trong `assets/images/events/`. Các trường màu vẫn lấy từ bảng màu trong spec `Agent_Spec_MainScreen_EventSystem.md` §B2.)*
 
-**8 event đang ship:** `halloween` (SPECIAL_SERIES 5 màn · luật `no_move_overlapped`/`move_limit`/`walk_number_only`/`countdown`/`backtrack_limit`) · `mansion` (STANDARD_SERIES 6) · `tomb` (SPECIAL_SERIES 4) · `newyear` (LOGIN_STREAK 7 ngày) · `april` (STANDARD_SERIES 6, luật biến thể) · `winter` (STANDARD_SERIES 10) · `dungeon` (DUNGEON, x2 Xu, mốc 5·10·15·20·25) · `daily` (ảo).
+**Event mùa vụ bổ sung (2026-10-13):** artwork được tách thành SVG `*_card_background.svg` + `*_card_frontground.svg` khi có foreground. Tám theme mới hiện đã có `EventTheme` và `EventData` tương ứng. Các event mới đều là chuỗi màn đang được hỗ trợ; mỗi event dùng ba `LevelData` đã có, có thưởng xu và lịch UTC:
+
+| Event / `theme_id` | Loại | Thời gian UTC | Tiến độ | Thưởng xu |
+|---|---|---|---|---|
+| `anniversary` | `STANDARD_SERIES` | 2027-06-01 → 2027-06-15 | 3 màn | 500 + 150 |
+| `autumn` | `STANDARD_SERIES` | 2026-11-08 → 2026-11-22 | 3 màn | 300 + 100 |
+| `easter` | `SPECIAL_SERIES` | 2027-03-26 → 2027-04-05 | 3 màn | 350 + 150 |
+| `new_year` | `STANDARD_SERIES` | 2027-01-11 → 2027-01-25 | 3 màn | 400 + 200 |
+| `spring` | `SPECIAL_SERIES` | 2027-04-20 → 2027-05-04 | 3 màn | 350 + 150 |
+| `summer` | `STANDARD_SERIES` | 2027-07-01 → 2027-07-15 | 3 màn | 400 + 200 |
+| `thanksgiving` | `STANDARD_SERIES` | 2026-11-23 → 2026-12-01 | 3 màn | 350 + 150 |
+| `valentine` | `SPECIAL_SERIES` | 2027-02-10 → 2027-02-20 | 3 màn | 350 + 150 |
+
+Mốc bắt đầu/kết thúc dùng thời gian UTC ISO-8601; event bị ẩn khi giờ hiện tại vượt qua mốc kết thúc. `new_year` (event chuỗi màn tháng 1) khác `newyear` (event đăng nhập dịp Tết đã có). `LOGIN_STREAK` chưa dùng cho event mới vì luồng CTA/lịch nhận thưởng của loại này hiện chưa được triển khai.
+
+**16 event đã cấu hình (bao gồm Daily ảo):** `halloween` (SPECIAL_SERIES 5 màn · luật `no_move_overlapped`/`move_limit`/`walk_number_only`/`countdown`/`backtrack_limit`) · `mansion` (STANDARD_SERIES 6) · `tomb` (SPECIAL_SERIES 4) · `newyear` (LOGIN_STREAK 7 ngày) · `april` (STANDARD_SERIES 6, luật biến thể) · `winter` (STANDARD_SERIES 10) · `dungeon` (DUNGEON, x2 Xu, mốc 5·10·15·20·25) · `daily` (ảo) · `anniversary` · `autumn` · `easter` · `new_year` · `spring` · `summer` · `thanksgiving` · `valentine`.
 
 ### 15.3. `EventManager` (autoload — `scripts/manager/EventManager.gd`)
 
@@ -2120,7 +2135,8 @@ signal events_changed
 signal event_progress_changed(event_id: StringName)
 signal event_expired(event_id: StringName)
 
-func get_active_events() -> Array[EventData]   # Daily ĐẦU → sort_order → hạn gần nhất; tối đa 8
+func get_active_events() -> Array[EventData]   # Gameplay: event đang hoạt động; Daily ĐẦU → sort_order → hạn gần nhất
+func get_all_events_for_preview() -> Array[EventData] # Xem thử: toàn bộ dữ liệu, không lọc thời hạn/enabled
 func get_event(id) -> EventData
 func get_progress(id) -> Dictionary            # {done, total, unit_key, completed, claimed}
 func seconds_left(id) -> int
@@ -2152,9 +2168,9 @@ Quy tắc:
 
 | File | Vai trò |
 |---|---|
-| `nodes/main/event_card.tscn` + `scripts/nodes/event_card.gd` | Thẻ sự kiện 340×504: nền gradient + lưới ô ly → `BackArt` (art theme) → chip theme + chip thời gian (icon đồng hồ **vẽ**, không emoji) → tiêu đề 2 dòng (viền) → phụ đề 2 dòng → panel tiến độ (`x / y` + đơn vị + tối đa 2 phần thưởng) → nút CTA. Đếm ngược bằng `Timer` 45s (≥48h → ngày · ≥1h → giờ · <1h → phút). Trạng thái `normal/pressed/completed/claimed/locked` |
-| `nodes/main/event_carousel.tscn` + `scripts/nodes/event_carousel.gd` | `ScrollContainer` ngang (ẩn thanh cuộn) → HBox khe 18 → các `EventCard`; **snap theo trang** khi thả tay; tối đa 8 thẻ; rỗng/1 thẻ → canh giữa + ẩn chấm |
-| `nodes/main/event_dots.tscn` + `scripts/nodes/event_dots.gd` | 8 chấm **khai sẵn trong scene**, script chỉ bật/tắt + đổi cỡ/màu (chấm đang chọn dài 46, còn lại 30) |
+| `nodes/main/event_card.tscn` + `scripts/nodes/event_card.gd` | Thẻ sự kiện 340×504: nền gradient + lưới ô ly → `BackArt` (art theme) → chip theme + chip thời gian (icon đồng hồ **vẽ**, không emoji) → tiêu đề 2 dòng với màu/viền tương phản theo theme (outline 5px ở viewport K=0.5) → phụ đề 2 dòng → panel tiến độ (`x / y` + đơn vị + tối đa 2 phần thưởng) → nút CTA. Đếm ngược bằng `Timer` 45s (≥48h → ngày · ≥1h → giờ · <1h → phút). Trạng thái `normal/pressed/completed/claimed/locked` |
+| `nodes/main/event_carousel.tscn` + `scripts/nodes/event_carousel.gd` | `ScrollContainer` ngang (ẩn thanh cuộn) → HBox khe 18 → danh sách gameplay hoặc toàn bộ dữ liệu khi `show_all_events_for_preview` bật; **snap theo trang** khi thả tay; rỗng/1 thẻ → canh giữa + ẩn chấm |
+| `nodes/main/event_dots.tscn` + `scripts/nodes/event_dots.gd` | Tạo chấm từ `event_dot.tscn` theo đúng số trang; chấm đang chọn dài 15, còn lại 5 (scene scale K=0.5) |
 | `nodes/main/event_header.tscn` + `scripts/nodes/event_header.gd` | Tiêu đề khối Sự kiện + badge cam số event đang mở + link "Xem tất cả" (giai đoạn 1 ẩn) |
 | `scenes/event.tscn` + `scripts/scenes/event.gd` + `scenes/layout/{portrait,landscape}/event.tscn` + `scripts/scenes/layout/event_layout.gd` | Màn chi tiết event (2 hướng, cùng tên node): tiêu đề · phụ đề · đếm ngược · tiến độ · CTA · nút Back. Nhận `event_id` qua `SceneManager.goto_event()/consume_pending_event_id()` |
 
@@ -2181,7 +2197,3 @@ Harness đa tỉ lệ: `dev_aspects.gd -- --only=main,event` **20/20 OK** (màn 
 - **"TIẾP TỤC EVENT"** trên popup kết quả (§B7) chưa thêm; `EventListScreen` (lưới tất cả + event đã kết thúc) chưa làm ⇒ link "Xem tất cả" đang ẩn.
 - **Chống chỉnh giờ máy** (server time) — giai đoạn 2, đã cô lập trong `EventManager.now_utc()`.
 - **Khoá dịch thừa**: bỏ thẻ Daily/tờ giấy khỏi Main khiến **7 khoá** cũ thành chết (`STR_TAG_MAIN_MODE` · `STR_TAG_ENDLESS_MODE` · `STR_TAG_DAILY_MODE` · `STR_STREAK_BADGE` · `STR_GAME_TAGLINE` · `STR_MAIN_PROFILE` · `STR_MAIN_PROFILE_HINT`) — `tools/content/audit_localization.py` báo trong mục "KEY CHẾT HẲN" (bộ này VỐN ĐÃ có khoá chết từ trước v2.21 nên `--check` vốn đã trả 1; chưa dọn vì có nhóm khoá theo tiền tố `STR_MODE_<id>_…` dùng bằng cách ghép chuỗi — xoá nhầm sẽ hỏng chữ của chế độ).
-
-
-
-

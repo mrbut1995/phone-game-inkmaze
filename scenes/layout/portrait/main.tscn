@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://kk7tudhk7r3m" path="res://nodes/main/profile_card.tscn" id="3_profile"]
 [ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="4_coin"]
 [ext_resource type="PackedScene" uid="uid://dxm1sm66f5qi1" path="res://nodes/main/star_chip.tscn" id="5_star"]
-[ext_resource type="PackedScene" path="res://nodes/main/event_header.tscn" id="6_header"]
-[ext_resource type="PackedScene" path="res://nodes/main/event_carousel.tscn" id="7_carousel"]
+[ext_resource type="PackedScene" uid="uid://xuj64d8yo0mg" path="res://nodes/main/event_header.tscn" id="6_header"]
+[ext_resource type="PackedScene" uid="uid://cb8r4phad4ar5" path="res://nodes/main/event_carousel.tscn" id="7_carousel"]
 [ext_resource type="PackedScene" uid="uid://rtaworqe3fbl" path="res://nodes/main/mode_card.tscn" id="8_mode"]
 [ext_resource type="PackedScene" uid="uid://k2k3skjevrxy" path="res://nodes/main/dock_button.tscn" id="9_dock"]
 [ext_resource type="Texture2D" uid="uid://bssvcnaam8t6i" path="res://assets/images-png/main/logo_doodle_maze.png" id="10_logo"]
@@ -19,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://bix4mh6ckd2l" path="res://assets/images-png/main/card_mode_disabled.png" id="16_t0ecn"]
 [ext_resource type="Texture2D" uid="uid://b5nskow6rjg7t" path="res://assets/images-png/common/card_mode_focus.png" id="17_6y0m5"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nuhf0"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dmrpp"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -28,7 +28,7 @@ texture = ExtResource("14_dmrpp")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r22o1"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i6aov"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -37,7 +37,7 @@ texture = ExtResource("15_i6aov")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3v8t1"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t0ecn"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -46,7 +46,7 @@ texture = ExtResource("14_dmrpp")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lkr8n"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6y0m5"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -55,7 +55,7 @@ texture = ExtResource("16_t0ecn")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u64b0"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nuhf0"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -64,7 +64,7 @@ texture = ExtResource("17_6y0m5")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0adh"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r22o1"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -73,7 +73,7 @@ texture = ExtResource("14_dmrpp")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_34l34"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3v8t1"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -82,7 +82,7 @@ texture = ExtResource("15_i6aov")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ytua2"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lkr8n"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -91,7 +91,7 @@ texture = ExtResource("14_dmrpp")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5mbti"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u64b0"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -100,7 +100,7 @@ texture = ExtResource("16_t0ecn")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1lwti"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0adh"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -197,7 +197,6 @@ size_flags_vertical = 3
 [node name="Column" type="VBoxContainer" parent="Body/Scroll" index="0" unique_id=629861957]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0
 anchor_top = 0.033333413
 anchor_right = 1.0
 anchor_bottom = 1.0066855
@@ -232,41 +231,45 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="EventCarousel" parent="Body/Scroll/Column" index="3" unique_id=1469894858 instance=ExtResource("7_carousel")]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
 
 [node name="SectionGap" type="Control" parent="Body/Scroll/Column" index="4" unique_id=294477781]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
+size_flags_stretch_ratio = 0.7
 mouse_filter = 2
 
 [node name="Modes" type="VBoxContainer" parent="Body/Scroll/Column" index="5" unique_id=1908082681]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 10
 mouse_filter = 2
 theme_override_constants/separation = 3
 
 [node name="Play" parent="Body/Scroll/Column/Modes" index="0" unique_id=1619671183 instance=ExtResource("8_mode")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_nuhf0")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_r22o1")
-theme_override_styles/hover = SubResource("StyleBoxTexture_3v8t1")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_lkr8n")
-theme_override_styles/focus = SubResource("StyleBoxTexture_u64b0")
+theme_override_styles/normal = SubResource("StyleBoxTexture_dmrpp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i6aov")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t0ecn")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_6y0m5")
+theme_override_styles/focus = SubResource("StyleBoxTexture_nuhf0")
 
 [node name="Dungeon" parent="Body/Scroll/Column/Modes" index="1" unique_id=1869028643 instance=ExtResource("8_mode")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_i0adh")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_34l34")
-theme_override_styles/hover = SubResource("StyleBoxTexture_ytua2")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_5mbti")
-theme_override_styles/focus = SubResource("StyleBoxTexture_1lwti")
+theme_override_styles/normal = SubResource("StyleBoxTexture_r22o1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_3v8t1")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lkr8n")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_u64b0")
+theme_override_styles/focus = SubResource("StyleBoxTexture_i0adh")
 mode_id = &"dungeon"
 
 [node name="BottomGap" type="Control" parent="Body/Scroll/Column" index="6" unique_id=814319747]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 0.5
 mouse_filter = 2
 
 [node name="Dock" type="HBoxContainer" parent="Body" index="2" unique_id=715687745]

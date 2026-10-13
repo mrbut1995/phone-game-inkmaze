@@ -1,22 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
   <defs>
-    <!-- Khung bo góc chuẩn thẻ sự kiện 340x504 -->
+    <!-- Khung bo góc chuẩn 340x504 -->
     <clipPath id="cardClip">
       <rect width="340" height="504" rx="28"/>
     </clipPath>
-
-    <!-- Nền trời đêm giao thừa xanh tím thẫm huyền bí -->
-    <linearGradient id="bg_countdown_night" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#050824"/>
-      <stop offset="0.38" stop-color="#141142"/>
-      <stop offset="0.75" stop-color="#241656"/>
-      <stop offset="1" stop-color="#331A68"/>
-    </linearGradient>
-
-    <!-- Lưới ô ly mờ nhận diện Design System -->
-    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.08"/>
-    </pattern>
 
     <!-- Vàng kim loại đồng hồ cơ khí (Luxury Gold Foil) -->
     <linearGradient id="clockGold" x1="0" y1="0" x2="1" y2="1">
@@ -46,24 +33,10 @@
       <stop offset="0.45" stop-color="#00E5FF" stop-opacity="0.55"/>
       <stop offset="1" stop-color="#0097A7" stop-opacity="0"/>
     </radialGradient>
-
-    <!-- Nền thành phố đêm tối phẳng (Vùng an toàn cho chữ) -->
-    <linearGradient id="cityNightSoil" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0D102E"/>
-      <stop offset="0.3" stop-color="#080A21"/>
-      <stop offset="0.75" stop-color="#050616"/>
-      <stop offset="1" stop-color="#02030B"/>
-    </linearGradient>
   </defs>
 
   <g clip-path="url(#cardClip)">
-    <!-- ============================================== -->
-    <!-- 1. BẦU TRỜI ĐÊM GIAO THỪA & MƯA SAO LẤP LÁNH   -->
-    <!-- ============================================== -->
-    <rect width="340" height="504" fill="url(#bg_countdown_night)"/>
-    <rect width="340" height="504" fill="url(#grid)"/>
-
-    <!-- Các vì sao và đốm sáng giao thừa -->
+    <!-- 1. CÁC VÌ SAO VÀ ĐỐM SÁNG GIAO THỪA -->
     <g fill="#FFFFFF">
       <path d="M 45 65 Q 45 70 49 70 Q 45 70 45 75 Q 45 70 41 70 Q 45 70 45 65 Z" opacity="0.95"/>
       <path d="M 115 50 Q 115 55 119 55 Q 115 55 115 60 Q 115 55 111 55 Q 115 55 115 50 Z" opacity="0.9"/>
@@ -74,11 +47,8 @@
       <circle cx="275" cy="80" r="1.5" opacity="0.8"/>
     </g>
 
-    <!-- ============================================== -->
-    <!-- 2. PHÁO HOA GIAO THỪA ĐA SẮC ĐỒNG LOẠT BUNG NỞ  -->
-    <!-- ============================================== -->
-
-    <!-- CHÙM PHÁO HOA VÀNG KIM (Bên trái, x = 65, y = 115) -->
+    <!-- 2. PHÁO HOA GIAO THỪA ĐA SẮC ĐỒNG LOẠT BUNG NỞ -->
+    <!-- Pháo hoa vàng kim bên trái -->
     <g transform="translate(65, 115)">
       <circle cx="0" cy="0" r="48" fill="url(#clockAura)"/>
       <g stroke="#FFD54F" stroke-width="2.2" stroke-linecap="round">
@@ -93,7 +63,7 @@
       </g>
     </g>
 
-    <!-- CHÙM PHÁO HOA HỒNG NEON (Bên phải, x = 278, y = 105) -->
+    <!-- Pháo hoa hồng neon bên phải -->
     <g transform="translate(278, 105) scale(0.9)">
       <circle cx="0" cy="0" r="45" fill="url(#fwPinkGlow)"/>
       <g stroke="#FF4081" stroke-width="2.2" stroke-linecap="round">
@@ -108,7 +78,7 @@
       </g>
     </g>
 
-    <!-- CHÙM PHÁO HOA CYAN NEON (Góc trên, x = 205, y = 72) -->
+    <!-- Pháo hoa cyan neon phía trên -->
     <g transform="translate(205, 72) scale(0.65)" opacity="0.9">
       <circle cx="0" cy="0" r="38" fill="url(#fwCyanGlow)"/>
       <g stroke="#00E5FF" stroke-width="2.2" stroke-linecap="round">
@@ -123,30 +93,20 @@
       </g>
     </g>
 
-    <!-- ============================================== -->
-    <!-- 3. ĐỒNG HỒ ĐẾM NGƯỢC GIAO THỪA 3D CHẠM KHẮC VÀNG-->
-    <!-- (Trung tâm thu hút thị giác, x = 170, y = 135)   -->
-    <!-- ============================================== -->
+    <!-- 3. ĐỒNG HỒ ĐẾM NGƯỢC GIAO THỪA 3D CHẠM KHẮC VÀNG -->
     <g transform="translate(170, 134)">
-      <!-- Hào quang phát sáng khoảnh khắc giao thừa -->
       <circle cx="0" cy="0" r="62" fill="url(#clockAura)"/>
-
-      <!-- Vành benzel đồng hồ mạ vàng 3D nhiều nấc -->
       <circle cx="0" cy="0" r="50" fill="url(#clockGold)" stroke="#663D00" stroke-width="2"/>
       <circle cx="0" cy="0" r="44" fill="#0A0D28" stroke="#FFD54F" stroke-width="1.5"/>
       <circle cx="0" cy="0" r="42" fill="#141842"/>
-
-      <!-- Mặt kính phản chiếu ánh sáng nghiêng -->
       <path d="M -30 -30 Q 0 -42 30 -30 Q 15 -10 -30 -30 Z" fill="#FFFFFF" opacity="0.15"/>
 
-      <!-- Các vạch khắc giờ la mã vàng kim -->
+      <!-- Vạch khắc giờ la mã -->
       <g stroke="#FFD54F" stroke-linecap="round">
-        <!-- Vạch 12h, 3h, 6h, 9h đậm nét -->
         <line x1="0" y1="-40" x2="0" y2="-32" stroke-width="2.8"/>
         <line x1="40" y1="0" x2="32" y2="0" stroke-width="2.8"/>
         <line x1="0" y1="40" x2="0" y2="32" stroke-width="2.8"/>
         <line x1="-40" y1="0" x2="-32" y2="0" stroke-width="2.8"/>
-        <!-- Các vạch giờ phụ -->
         <line x1="20" y1="-34.6" x2="16" y2="-27.7" stroke-width="1.6"/>
         <line x1="34.6" y1="-20" x2="27.7" y2="-16" stroke-width="1.6"/>
         <line x1="34.6" y1="20" x2="27.7" y2="16" stroke-width="1.6"/>
@@ -157,30 +117,23 @@
         <line x1="-20" y1="-34.6" x2="-16" y2="-27.7" stroke-width="1.6"/>
       </g>
 
-      <!-- KIM ĐỒNG HỒ ĐIỂM 11:59:55 (CHỜ CHẠM 00:00) -->
-      <!-- Kim giờ (hướng sát số 12) -->
+      <!-- Kim đồng hồ (11:59:55) -->
       <line x1="0" y1="0" x2="-4" y2="-24" stroke="url(#clockGold)" stroke-width="3.8" stroke-linecap="round"/>
-      <!-- Kim phút (hướng sát đỉnh 12) -->
       <line x1="0" y1="0" x2="-1" y2="-34" stroke="url(#clockGold)" stroke-width="2.8" stroke-linecap="round"/>
-      <!-- Kim giây đỏ ruby lướt qua đỉnh số 12 -->
       <line x1="0" y1="6" x2="0" y2="-38" stroke="#FF1744" stroke-width="1.6" stroke-linecap="round"/>
-      <!-- Trục quay tâm đồng hồ mạ vàng -->
       <circle cx="0" cy="0" r="5" fill="url(#clockGold)" stroke="#663D00" stroke-width="1"/>
       <circle cx="0" cy="0" r="2" fill="#D50000"/>
     </g>
 
-    <!-- ============================================== -->
-    <!-- 4. RUY-BĂNG LỄ HỘI & PHÁO GIẤY CONFETTI        -->
-    <!-- (Gom gọn gàng ở tầng nghệ thuật y < 235)      -->
-    <!-- ============================================== -->
-    <!-- Dải ruy-băng xoắn vàng kim bên trái -->
+    <!-- 4. RUY-BĂNG LỄ HỘI & PHÁO GIẤY CONFETTI -->
+    <!-- Ruy-băng xoắn vàng bên trái -->
     <path d="M 24 135 Q 36 150 22 165 Q 38 180 26 195 Q 40 210 28 225" 
           stroke="url(#clockGold)" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.8"/>
-    <!-- Dải ruy-băng xoắn hồng tím bên phải -->
+    <!-- Ruy-băng xoắn hồng tím bên phải -->
     <path d="M 315 130 Q 302 145 316 160 Q 300 175 314 190 Q 298 205 312 220" 
           stroke="#FF4081" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.8"/>
 
-    <!-- Mảnh pháo giấy rơi tự do đa sắc -->
+    <!-- Pháo giấy đa sắc rơi tự do -->
     <rect x="110" y="85" width="10" height="6" rx="1.5" fill="#FFD54F" transform="rotate(35 115 88)"/>
     <rect x="235" y="88" width="10" height="6" rx="1.5" fill="#00E5FF" transform="rotate(-25 240 91)"/>
     <rect x="125" y="185" width="9" height="5" rx="1.5" fill="#FF4081" transform="rotate(45 129 187)"/>
@@ -189,59 +142,5 @@
     <circle cx="285" cy="170" r="3.2" fill="#FFD54F"/>
     <polygon points="100,165 108,168 102,174" fill="#FFFFFF"/>
     <polygon points="245,160 253,163 247,169" fill="#00E5FF"/>
-
-    <!-- ============================================== -->
-    <!-- 5. SKYLINE THÀNH PHỐ ĐÊM & VÙNG NỀN AN TOÀN    -->
-    <!-- Đường chân trời các tòa cao ốc tại y ≈ 242    -->
-    <!-- ============================================== -->
-    <!-- Lớp thành phố bóng mờ phía sau -->
-    <path d="M 0 242 
-             L 25 242 L 25 210 L 48 210 L 48 242 
-             L 78 242 L 78 198 L 105 198 L 105 242 
-             L 140 242 L 140 218 L 165 218 L 165 242 
-             L 205 242 L 205 204 L 230 204 L 230 242 
-             L 260 242 L 260 195 L 290 195 L 290 242 
-             L 315 242 L 315 215 L 340 215 L 340 260 L 0 260 Z" 
-          fill="#080B22" opacity="0.6"/>
-
-    <!-- LỚP THÀNH PHỐ TIỀN CẢNH & KHỐI VÙNG CHỮ TỪ Y=242 XUỐNG ĐÁY -->
-    <path d="M 0 242 
-             L 18 242 L 18 218 L 42 218 L 42 242 
-             L 68 242 L 68 205 L 92 205 L 92 242 
-             L 128 242 L 128 222 L 150 222 L 150 242 
-             L 190 242 L 190 212 L 215 212 L 215 242 
-             L 248 242 L 248 202 L 275 202 L 275 242 
-             L 302 242 L 302 220 L 325 220 L 325 242 L 340 242 
-             L 340 504 L 0 504 Z" 
-          fill="url(#cityNightSoil)"/>
-
-    <!-- Viền kim loại vàng kim tuyến sắc nét chạy dọc chân các tòa tháp -->
-    <path d="M 0 242 Q 85 220 170 242 T 340 236" fill="none" stroke="url(#clockGold)" stroke-width="4.5" stroke-linecap="round"/>
-    <path d="M 0 247 Q 85 225 170 247 T 340 241" fill="none" stroke="#FFD54F" stroke-opacity="0.35" stroke-width="1.8"/>
-
-    <!-- Ăng-ten và ngọn đèn tháp chọc trời nhấp nháy trên đỉnh -->
-    <line x1="80" y1="205" x2="80" y2="190" stroke="#FFD54F" stroke-width="1.5"/>
-    <circle cx="80" cy="189" r="2" fill="#FF1744"/>
-
-    <line x1="262" y1="202" x2="262" y2="186" stroke="#00E5FF" stroke-width="1.5"/>
-    <circle cx="262" cy="185" r="2" fill="#00E5FF"/>
-
-    <!-- Một vài ô cửa kính sáng đèn tinh tế sát mép nóc tháp (Không lấn vào vùng chữ) -->
-    <rect x="73" y="212" width="4" height="5" rx="1" fill="#FFD54F" opacity="0.9"/>
-    <rect x="83" y="212" width="4" height="5" rx="1" fill="#FFD54F" opacity="0.9"/>
-    <rect x="254" y="208" width="4" height="5" rx="1" fill="#00E5FF" opacity="0.85"/>
-    <rect x="264" y="208" width="4" height="5" rx="1" fill="#00E5FF" opacity="0.85"/>
-
-    <!-- ============================================== -->
-    <!-- 6. VÙNG AN TOÀN TRỐNG (SAFE ZONE: y ≈ 244–504)  -->
-    <!-- Nền thành phố đêm xanh đen phẳng tuyệt đối:     -->
-    <!-- - Tiêu đề Đêm Giao Thừa (y: 260 - 310)         -->
-    <!-- - Phụ đề 2 dòng         (y: 325 - 350)         -->
-    <!-- - Hộp tiến độ & 2 quà   (y: 356 - 438)         -->
-    <!-- - Nút CTA Đón Năm Mới   (y: 448 - 494)         -->
-    <!-- ============================================== -->
   </g>
-
-  <!-- Viền sáng trắng bao quanh card chuẩn Design System -->
-  <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="3"/>
 </svg>

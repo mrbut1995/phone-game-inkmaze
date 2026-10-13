@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EventTheme" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/images/events/easter_card_background.svg" id="2_background"]
+[ext_resource type="Texture2D" path="res://assets/images/events/easter_card_frontground.svg" id="3_foreground"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"easter"
+bg_stops = PackedColorArray(0.96862745, 0.98039216, 0.87058824, 1, 0.8117647, 0.9490196, 0.7372549, 1, 0.41960785, 0.7882353, 0.47843137, 1)
+back_art = ExtResource("2_background")
+front_art = ExtResource("3_foreground")
+art_offset_y = 0.0
+accent = Color(0.22745098, 0.6509804, 0.3764706, 1)
+accent2 = Color(1, 0.7921569, 0.15686275, 1)
+title_color = Color(0.043137256, 0.1882353, 0.09411765, 1)
+title_outline = Color(1, 1, 0.96862745, 1)
+sub_color = Color(0.18039216, 0.39607844, 0.23529412, 1)
+label_color = Color(0.08627451, 0.2784314, 0.15686275, 1)
+panel_color = Color(1, 1, 1, 0.84)
+panel_stroke = Color(0.22745098, 0.6509804, 0.3764706, 0.45)
+cta_fill = Color(0.22745098, 0.6509804, 0.3764706, 1)
+cta_stroke = Color(0.11764706, 0.4392157, 0.23529412, 1)
+cta_text = Color(1, 1, 1, 1)
+chip_fill = Color(1, 1, 1, 0.88)
+chip_text = Color(0.08627451, 0.2784314, 0.15686275, 1)

@@ -1,42 +1,35 @@
-; EventCarousel scene — ScrollContainer ngang (ẩn thanh cuộn) → HBox (khe 18) → các EventCard
-; Dưới cùng là EventDots (chấm phân trang)
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cb8r4phad4ar5"]
 
+[ext_resource type="Script" uid="uid://bvae4rnw5wify" path="res://scripts/nodes/event_carousel.gd" id="1_carousel"]
+[ext_resource type="PackedScene" uid="uid://bjq8mjemf8glo" path="res://nodes/main/event_card.tscn" id="2_card"]
+[ext_resource type="PackedScene" uid="uid://bgkpwurp12qw3" path="res://nodes/main/event_dots.tscn" id="3_dots"]
 
-[ext_resource type="Script" path="res://scripts/nodes/event_carousel.gd" id="1_carousel"]
-[ext_resource type="PackedScene" path="res://nodes/main/event_card.tscn" id="2_card"]
-[ext_resource type="PackedScene" path="res://nodes/main/event_dots.tscn" id="3_dots"]
-
-[node name="EventCarousel" type="Control"]
-custom_minimum_size = Vector2(0, 270)
-layout_mode = 2
+[node name="EventCarousel" type="VBoxContainer" unique_id=2133296595]
+custom_minimum_size = Vector2(0, 285)
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.31
+offset_bottom = -0.2000122
+grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 script = ExtResource("1_carousel")
 event_card_scene = ExtResource("2_card")
+show_all_events_for_preview = true
+metadata/_edit_use_anchors_ = true
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -14
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=321714740]
+custom_minimum_size = Vector2(0, 270)
+layout_mode = 2
+size_flags_vertical = 3
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
-[node name="HBox" type="HBoxContainer" parent="ScrollContainer"]
+[node name="HBox" type="HBoxContainer" parent="ScrollContainer" unique_id=1101755039]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 9
 
-[node name="EventDots" parent="." instance=ExtResource("3_dots")]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -11
-grow_horizontal = 2
-grow_vertical = 0
+[node name="EventDots" parent="." unique_id=2138539523 instance=ExtResource("3_dots")]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true

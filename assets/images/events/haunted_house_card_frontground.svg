@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
+  <defs>
+    <!-- Khung bo góc chuẩn 340x504 (rx=28) -->
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+
+    <!-- Nền đồi tối phẳng (Vùng an toàn cho chữ) -->
+    <linearGradient id="mansionSoil" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0A1C20"/>
+      <stop offset="0.3" stop-color="#061214"/>
+      <stop offset="0.75" stop-color="#040C0E"/>
+      <stop offset="1" stop-color="#020607"/>
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#cardClip)">
+    <!-- 1. Mảng đồi đất phía dưới (giữ nguyên vị trí y: 218/242 -> 504) -->
+    <path d="M 0 242 Q 85 218 170 238 T 340 230 L 340 504 L 0 504 Z" fill="url(#mansionSoil)"/>
+
+    <!-- 2. Viền gờ đồi dạ quang xanh ngọc bích ngăn cách với detail -->
+    <path d="M 0 242 Q 85 218 170 238 T 340 230" fill="none" stroke="#5BD99A" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 0 247 Q 85 223 170 243 T 340 235" fill="none" stroke="#00E676" stroke-opacity="0.35" stroke-width="1.8"/>
+  </g>
+</svg>

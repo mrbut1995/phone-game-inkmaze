@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource uid="uid://dkto7e26t3okj" type="Texture2D" path="res://assets/images-png/events/daily_card_background.png" id="1_wryus"]
+[ext_resource type="Texture2D" path="res://assets/images/events/daily_card_background.svg" id="1_wryus"]
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_m021p"]
 
 [resource]
@@ -11,8 +11,8 @@ back_art = ExtResource("1_wryus")
 art_offset_y = 0.0
 accent = Color(0.84705883, 0.26666668, 0.26666668, 1)
 accent2 = Color(0.9607843, 0.61960787, 0.043137256, 1)
-title_color = Color(0.08627451, 0.22745098, 0.34509805, 1)
-title_outline = Color(1, 0.99215686, 0.972549, 1)
+title_color = Color(0.039215688, 0.14509805, 0.23921569, 1)
+title_outline = Color(1, 1, 1, 1)
 sub_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
 label_color = Color(0.08627451, 0.22745098, 0.34509805, 1)
 panel_color = Color(0.99607843, 0.8862745, 0.8862745, 1)

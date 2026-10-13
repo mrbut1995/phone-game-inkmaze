@@ -1,44 +1,17 @@
-; Event card node scene — 340×504
-; Anatomy: BgGradient + BgGrid → BackArt → FrontArt → ThemeChip → TimerChip
-;   → Title1/Title2 → Sub1/Sub2 → ProgressPanel → CtaButton
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bjq8mjemf8glo"]
 
-[ext_resource type="Script" path="res://scripts/nodes/event_card.gd" id="1_card"]
-[ext_resource uid="uid://cwum1n04j1scb" type="Texture2D" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
+[ext_resource type="Script" uid="uid://bjmxaiw28fnlx" path="res://scripts/nodes/event_card.gd" id="1_card"]
+[ext_resource type="Texture2D" uid="uid://cwum1n04j1scb" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
+[ext_resource type="Texture2D" uid="uid://cr5uula2ncf05" path="res://assets/images/events/halloween_event_card_background.svg" id="2_d08ep"]
+[ext_resource type="Texture2D" uid="uid://bdwi0qhf4icsp" path="res://assets/images/events/halloween_event_card_frontground.svg" id="3_jnhu0"]
 
-[sub_resource type="StyleBoxFlat" id="sb_bg"]
-bg_color = Color(0.1, 0.1, 0.1, 0.6)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
-
-[sub_resource type="StyleBoxFlat" id="sb_chip"]
-bg_color = Color(0.847, 0.267, 0.267, 0.85)
-corner_radius_top_left = 9
-corner_radius_top_right = 9
-corner_radius_bottom_right = 9
-corner_radius_bottom_left = 9
-
-[sub_resource type="StyleBoxFlat" id="sb_panel"]
-bg_color = Color(1, 0.886, 0.886, 0.6)
-border_color = Color(0.847, 0.267, 0.267, 0.25)
+[sub_resource type="StyleBoxFlat" id="sb_cta"]
+bg_color = Color(0.847, 0.267, 0.267, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="sb_cta"]
-bg_color = Color(0.847, 0.267, 0.267, 1.0)
-border_color = Color(0.631, 0.169, 0.169, 1.0)
-border_width_left = 1.5
-border_width_top = 1.5
-border_width_right = 1.5
-border_width_bottom = 1.5
+border_color = Color(0.631, 0.169, 0.169, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -46,307 +19,322 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxEmpty" id="sb_empty"]
 
-[node name="EventCard" type="Control"]
-custom_minimum_size = Vector2(170, 252)
-size = Vector2(170, 252)
+[node name="EventCard" type="Control" unique_id=107151932]
+custom_minimum_size = Vector2(220, 270)
+layout_mode = 3
+anchor_right = 0.407
+anchor_bottom = 0.293
+offset_right = 0.22000122
+offset_bottom = 0.44000244
 mouse_filter = 1
 script = ExtResource("1_card")
+metadata/_edit_use_anchors_ = true
 
-[node name="BgGradient" type="ColorRect" parent="."]
-layout_mode = 1
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.1, 0.07, 0.2, 1.0)
-
-[node name="BgGrid" type="ColorRect" parent="."]
-layout_mode = 1
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.086, 0.227, 0.345, 0.07)
-mouse_filter = 2
-
-[node name="BackArt" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 170
-offset_bottom = 252
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 6
-
-[node name="FrontArt" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 170
-offset_bottom = 115
-stretch_mode = 5
-expand_mode = 1
-mouse_filter = 2
-
-[node name="ThemeChip" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 8
-offset_top = 8
-offset_right = 78
-offset_bottom = 26
-mouse_filter = 2
-
-[node name="ChipDot" type="ColorRect" parent="ThemeChip"]
-layout_mode = 0
-offset_left = 6
-offset_top = 6
-offset_right = 12.5
-offset_bottom = 12.5
-color = Color(0.847, 0.267, 0.267, 1.0)
-
-[node name="ChipLabel" type="Label" parent="ThemeChip"]
+[node name="Content" type="Control" parent="." unique_id=461250899]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 15
-offset_top = 1
-offset_right = -4
-offset_bottom = -1
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"EventChipLabel"
-text = "EVENT"
 
-[node name="TimerChip" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 84
-offset_top = 8
-offset_right = 162
-offset_bottom = 26
+[node name="Background" type="Control" parent="Content" unique_id=1895401948]
+anchors_preset = 0
+offset_right = 220.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BgGradient" type="ColorRect" parent="Content/Background" unique_id=2025717736]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.1, 0.07, 0.2, 1)
+
+[node name="BackArt" type="TextureRect" parent="Content/Background" unique_id=1815859565]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_d08ep")
+expand_mode = 1
+
+[node name="FrontArt" type="NinePatchRect" parent="Content/Background" unique_id=1012687160]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_jnhu0")
+region_rect = Rect2(0, 0, 340, 504)
+
+[node name="Chips" type="HBoxContainer" parent="Content" unique_id=286276332]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.036363635
+anchor_top = 0.02962963
+anchor_right = 0.96363634
+anchor_bottom = 0.1037037
+metadata/_edit_use_anchors_ = true
+
+[node name="ThemeChip" type="PanelContainer" parent="Content/Chips" unique_id=453213414]
+custom_minimum_size = Vector2(65, 0)
+layout_mode = 2
+size_flags_horizontal = 2
 mouse_filter = 2
 
-[node name="ClockIcon" type="TextureRect" parent="TimerChip"]
-layout_mode = 0
-offset_left = 5
-offset_top = 4
-offset_right = 16
-offset_bottom = 15
+[node name="Content" type="HBoxContainer" parent="Content/Chips/ThemeChip" unique_id=1751407532]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Content/Chips/ThemeChip/Content" unique_id=524989]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="ChipDot" type="ColorRect" parent="Content/Chips/ThemeChip/Content" unique_id=1916691921]
+custom_minimum_size = Vector2(6.5, 6.5)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.1
+color = Color(0.847, 0.267, 0.267, 1)
+
+[node name="ChipLabel" type="Label" parent="Content/Chips/ThemeChip/Content" unique_id=1040990975]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EventChipLabel"
+text = "EVENT"
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Content/Chips/ThemeChip/Content" unique_id=997314503]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="TimerChip" type="PanelContainer" parent="Content/Chips" unique_id=897390266]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+
+[node name="Content" type="HBoxContainer" parent="Content/Chips/TimerChip" unique_id=244144988]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Content/Chips/TimerChip/Content" unique_id=1926529018]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="ClockIcon" type="TextureRect" parent="Content/Chips/TimerChip/Content" unique_id=965860900]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("2_clock")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TimerLabel" type="Label" parent="TimerChip"]
-layout_mode = 0
-offset_left = 17
-offset_top = 2
-offset_right = 74
-offset_bottom = 16
+[node name="TimerLabel" type="Label" parent="Content/Chips/TimerChip/Content" unique_id=2075591522]
+layout_mode = 2
 theme_type_variation = &"EventTimerLabel"
 text = "Còn 3 ngày"
+vertical_alignment = 1
 
-[node name="Title1" type="Label" parent="."]
-layout_mode = 0
-offset_left = 8
-offset_top = 112
-offset_right = 162
-offset_bottom = 130
-clip_text = true
-theme_type_variation = &"EventTitle"
-text = "Tiêu đề"
-outline_size = 4
-
-[node name="Title2" type="Label" parent="."]
-layout_mode = 0
-offset_left = 8
-offset_top = 130
-offset_right = 162
-offset_bottom = 148
-clip_text = true
-theme_type_variation = &"EventTitle"
-text = "Dòng 2"
-outline_size = 4
-
-[node name="Sub1" type="Label" parent="."]
-layout_mode = 0
-offset_left = 8
-offset_top = 148
-offset_right = 162
-offset_bottom = 160
-clip_text = true
-theme_type_variation = &"EventSubLabel"
-text = "Phụ đề dòng 1"
-
-[node name="Sub2" type="Label" parent="."]
-layout_mode = 0
-offset_left = 8
-offset_top = 159
-offset_right = 162
-offset_bottom = 171
-clip_text = true
-theme_type_variation = &"EventSubLabel"
-text = "Phụ đề dòng 2"
-
-[node name="ProgressPanel" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 7
-offset_top = 173
-offset_right = 163
-offset_bottom = 217
-mouse_filter = 2
-
-[node name="ProgressText" type="Label" parent="ProgressPanel"]
-layout_mode = 0
-offset_left = 8
-offset_top = 2
-offset_right = 50
-offset_bottom = 20
-clip_text = true
-theme_type_variation = &"EventProgressValue"
-text = "0 / 5"
-
-[node name="UnitLabel" type="Label" parent="ProgressPanel"]
-layout_mode = 0
-offset_left = 52
-offset_top = 5
-offset_right = 150
-offset_bottom = 19
-theme_type_variation = &"EventUnitLabel"
-text = "chế độ"
-
-
-[node name="Reward1" type="HBoxContainer" parent="ProgressPanel"]
-layout_mode = 0
-offset_left = 6
-offset_top = 23
-offset_right = 78
-offset_bottom = 38
-theme_override_constants/separation = 3
-
-[node name="Icon" type="TextureRect" parent="ProgressPanel/Reward1"]
-custom_minimum_size = Vector2(12, 12)
+[node name="Spacer2" type="Control" parent="Content/Chips/TimerChip/Content" unique_id=1243199281]
+custom_minimum_size = Vector2(2, 0)
 layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
 
-[node name="RewardLabel" type="Label" parent="ProgressPanel/Reward1"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-clip_text = true
-theme_type_variation = &"EventRewardLabel"
-text = "500 Xu"
-
-[node name="Reward2" type="HBoxContainer" parent="ProgressPanel"]
-layout_mode = 0
-offset_left = 80
-offset_top = 23
-offset_right = 154
-offset_bottom = 38
-theme_override_constants/separation = 3
-
-[node name="Icon" type="TextureRect" parent="ProgressPanel/Reward2"]
-custom_minimum_size = Vector2(12, 12)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="RewardLabel" type="Label" parent="ProgressPanel/Reward2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-clip_text = true
-theme_type_variation = &"EventRewardLabel"
-text = "Bút Ma Trơi"
-
-[node name="DailyDate" type="Control" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 51
-offset_top = 34
-offset_right = 119
-offset_bottom = 108
-mouse_filter = 2
-
-[node name="Month" type="Label" parent="DailyDate"]
+[node name="Text" type="VBoxContainer" parent="Content" unique_id=472646293]
+z_index = 1
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 2
-offset_bottom = 21
-grow_horizontal = 2
+anchors_preset = -1
+anchor_left = 0.13636364
+anchor_top = 0.17037037
+anchor_right = 0.83645463
+anchor_bottom = 0.615
+offset_right = -0.020019531
+offset_bottom = -0.05000305
+theme_override_constants/separation = 14
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="DailyDate" type="VBoxContainer" parent="Content/Text" unique_id=211784393]
+visible = false
+layout_mode = 2
 mouse_filter = 2
-clip_text = true
+
+[node name="Month" type="Label" parent="Content/Text/DailyDate" unique_id=496465143]
+layout_mode = 2
 theme_type_variation = &"EventDailyMonth"
 text = "THÁNG 10"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Day" type="Label" parent="DailyDate"]
-layout_mode = 1
-anchors_preset = 0
-offset_top = 22
-offset_right = 68
-offset_bottom = 54
-mouse_filter = 2
 clip_text = true
+
+[node name="Day" type="Label" parent="Content/Text/DailyDate" unique_id=1362914701]
+layout_mode = 2
 theme_type_variation = &"EventDailyDay"
 text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Weekday" type="Label" parent="DailyDate"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -20
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 2
 clip_text = true
+
+[node name="Weekday" type="Label" parent="Content/Text/DailyDate" unique_id=2033491359]
+layout_mode = 2
 theme_type_variation = &"EventDailyWeekday"
 text = "Thứ Bảy"
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
 
-[node name="CtaButton" type="Button" parent="."]
+[node name="Title" type="VBoxContainer" parent="Content/Text" unique_id=1852283813]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Title1" type="Label" parent="Content/Text/Title" unique_id=1773429349]
+layout_mode = 2
+theme_type_variation = &"EventTitle"
+theme_override_constants/outline_size = 5
+text = "Tiêu đề"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="Title2" type="Label" parent="Content/Text/Title" unique_id=1014819584]
+layout_mode = 2
+theme_type_variation = &"EventTitle"
+theme_override_constants/outline_size = 5
+text = "Dòng 2"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="Sub1" type="Label" parent="Content" unique_id=1660078467]
+visible = false
+z_index = 1
 layout_mode = 0
-offset_left = 7
-offset_top = 221
-offset_right = 163
-offset_bottom = 245
+offset_left = 8.0
+offset_top = 148.0
+offset_right = 162.0
+offset_bottom = 160.0
+theme_type_variation = &"EventSubLabel"
+text = "Phụ đề dòng 1"
+clip_text = true
+
+[node name="Sub2" type="Label" parent="Content" unique_id=460142217]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = 8.0
+offset_top = 159.0
+offset_right = 162.0
+offset_bottom = 171.0
+theme_type_variation = &"EventSubLabel"
+text = "Phụ đề dòng 2"
+clip_text = true
+
+[node name="Information" type="VBoxContainer" parent="Content" unique_id=43340114]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06363636
+anchor_top = 0.688963
+anchor_right = 0.93636364
+anchor_bottom = 0.9777778
+offset_top = -19.020004
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressPanel" type="Panel" parent="Content/Information" unique_id=976411541]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Rewards" type="VBoxContainer" parent="Content/Information/ProgressPanel" unique_id=2132383580]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.94200003
+anchor_bottom = 0.90900004
+offset_left = 5.0
+offset_top = 4.0
+offset_right = -2.952011
+offset_bottom = 0.0039978027
+
+[node name="Reward1" type="HBoxContainer" parent="Content/Information/ProgressPanel/Rewards" unique_id=1216615704]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Icon" type="TextureRect" parent="Content/Information/ProgressPanel/Rewards/Reward1" unique_id=1020390952]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+expand_mode = 1
+
+[node name="RewardLabel" type="Label" parent="Content/Information/ProgressPanel/Rewards/Reward1" unique_id=1602495665]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EventRewardLabel"
+text = "500 Xu"
+clip_text = true
+
+[node name="Reward2" type="HBoxContainer" parent="Content/Information/ProgressPanel/Rewards" unique_id=189959507]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Icon" type="TextureRect" parent="Content/Information/ProgressPanel/Rewards/Reward2" unique_id=912117909]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RewardLabel" type="Label" parent="Content/Information/ProgressPanel/Rewards/Reward2" unique_id=2086926343]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EventRewardLabel"
+text = "Bút Ma Trơi"
+clip_text = true
+
+[node name="Spacer" type="Control" parent="Content/Information" unique_id=265797556]
+layout_mode = 2
+
+[node name="CtaButton" type="Button" parent="Content/Information" unique_id=1551060116]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
 theme_override_styles/normal = SubResource("sb_cta")
 theme_override_styles/hover = SubResource("sb_cta")
 theme_override_styles/focus = SubResource("sb_empty")
 
-[node name="CtaLabel" type="Label" parent="CtaButton"]
+[node name="CtaLabel" type="Label" parent="Content/Information/CtaButton" unique_id=1998966182]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-clip_text = true
 theme_type_variation = &"EventCtaLabel"
 text = "CHƠI"
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
 
-[node name="CompletedOverlay" type="ColorRect" parent="."]
+[node name="CompletedOverlay" type="ColorRect" parent="Content" unique_id=343414216]
 visible = false
-layout_mode = 1
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.45)
 mouse_filter = 2
+color = Color(0, 0, 0, 0.45)
 
-[node name="CountdownTimer" type="Timer" parent="."]
+[node name="CountdownTimer" type="Timer" parent="Content" unique_id=1807431067]
 wait_time = 45.0
-autostart = false
