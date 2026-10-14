@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bjmxaiw28fnlx" path="res://scripts/nodes/event_card.gd" id="1_card"]
 [ext_resource type="Texture2D" uid="uid://cwum1n04j1scb" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
-[ext_resource type="Texture2D" uid="uid://cr5uula2ncf05" path="res://assets/images/events/halloween_event_card_background.svg" id="2_d08ep"]
-[ext_resource type="Texture2D" uid="uid://bdwi0qhf4icsp" path="res://assets/images/events/halloween_event_card_frontground.svg" id="3_jnhu0"]
+[ext_resource type="Texture2D" uid="uid://c1e8elv060y5" path="res://assets/images-png/events/halloween_event_card_background.png" id="2_d08ep"]
+[ext_resource type="Texture2D" uid="uid://6s27psw45flr" path="res://assets/images-png/events/halloween_event_card_frontground.png" id="3_jnhu0"]
 
 [sub_resource type="StyleBoxFlat" id="sb_cta"]
 bg_color = Color(0.847, 0.267, 0.267, 1)
@@ -19,29 +19,25 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxEmpty" id="sb_empty"]
 
-[node name="EventCard" type="Control" unique_id=107151932]
-custom_minimum_size = Vector2(220, 270)
-layout_mode = 3
-anchor_right = 0.407
-anchor_bottom = 0.293
-offset_right = 0.22000122
-offset_bottom = 0.44000244
-mouse_filter = 1
+[node name="EventCard" type="AspectRatioContainer" unique_id=1846176079]
+custom_minimum_size = Vector2(216, 270)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+ratio = 0.8
+stretch_mode = 1
+alignment_horizontal = 1
+alignment_vertical = 1
 script = ExtResource("1_card")
-metadata/_edit_use_anchors_ = true
 
 [node name="Content" type="Control" parent="." unique_id=461250899]
+layout_mode = 2
+
+[node name="Background" type="Control" parent="Content" unique_id=1895401948]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Background" type="Control" parent="Content" unique_id=1895401948]
-anchors_preset = 0
-offset_right = 220.0
-offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -153,14 +149,14 @@ layout_mode = 2
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.13636364
+anchor_left = 0.03181818
 anchor_top = 0.17037037
-anchor_right = 0.83645463
+anchor_right = 0.9410001
 anchor_bottom = 0.615
 offset_right = -0.020019531
 offset_bottom = -0.05000305
 theme_override_constants/separation = 14
-alignment = 1
+alignment = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="DailyDate" type="VBoxContainer" parent="Content/Text" unique_id=211784393]
@@ -200,6 +196,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 theme_type_variation = &"EventTitle"
 theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 24
 text = "Tiêu đề"
 horizontal_alignment = 1
 clip_text = true
@@ -208,6 +205,7 @@ clip_text = true
 layout_mode = 2
 theme_type_variation = &"EventTitle"
 theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 24
 text = "Dòng 2"
 horizontal_alignment = 1
 clip_text = true

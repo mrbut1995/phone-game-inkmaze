@@ -1,8 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 -1 76 77.0913" width="38" height="38.5456">
-  <g transform="translate(5, 3)">
-    
-    <rect width="70" height="70" rx="18" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="2.5" />
-    <path d="M42 23 L26 35 L42 47" fill="none" stroke="#BAC7CF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-  </g>
+<svg width="77" height="77" viewBox="0 0 76.8 76.8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8.4 0H68.4L76.8 8.4V68.4L68.4 76.8H8.4L0 68.4V8.4L8.4 0Z" fill="#EDEDE6"/>
+  <path d="M64.5 6.72L70.08 12.3V64.5L64.5 70.08H12.3L6.72 64.5V12.3L12.3 6.72H64.5Z" stroke="#85887F" stroke-width="1.44"/>
+  <!-- Back Chevron Icon (Disabled state) -->
+  <path d="M47.5 24L28.5 38.4L47.5 52.8" fill="none" stroke="#85887F" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3 uid="uid://nb22ne0qu5b1"]
 
-[ext_resource type="Texture2D" path="res://assets/images/events/halloween_event_card_background.svg" id="1_vw1fq"]
+[ext_resource uid="uid://c1e8elv060y5" type="Texture2D" path="res://assets/images-png/events/halloween_event_card_background.png" id="1_vw1fq"]
 [ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="2_8lt8r"]
-[ext_resource type="Texture2D" path="res://assets/images/events/halloween_event_card_frontground.svg" id="2_memky"]
+[ext_resource uid="uid://6s27psw45flr" type="Texture2D" path="res://assets/images-png/events/halloween_event_card_frontground.png" id="2_memky"]
 
 [resource]
 script = ExtResource("2_8lt8r")
@@ -14,8 +14,8 @@ front_art = ExtResource("2_memky")
 art_offset_y = 0.0
 accent = Color(1, 0.5411765, 0.12156863, 1)
 accent2 = Color(1, 0.78431374, 0.34117648, 1)
-title_color = Color(1, 1, 1, 1)
-title_outline = Color(0.039215688, 0.007843138, 0.09411765, 1)
+title_color = Color(1, 0.68, 0.15, 1)
+title_outline = Color(0.12, 0.03, 0.2, 1)
 sub_color = Color(0.90588236, 0.8392157, 1, 1)
 label_color = Color(0.9529412, 0.9098039, 1, 1)
 panel_color = Color(0.07058824, 0.023529412, 0.12156863, 1)

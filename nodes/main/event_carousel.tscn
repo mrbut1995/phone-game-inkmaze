@@ -11,15 +11,14 @@ anchor_right = 1.0
 anchor_bottom = 0.31
 offset_bottom = -0.2000122
 grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 script = ExtResource("1_carousel")
 event_card_scene = ExtResource("2_card")
 show_all_events_for_preview = true
-metadata/_edit_use_anchors_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=321714740]
-custom_minimum_size = Vector2(0, 270)
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 3
@@ -27,7 +26,8 @@ vertical_scroll_mode = 0
 
 [node name="HBox" type="HBoxContainer" parent="ScrollContainer" unique_id=1101755039]
 layout_mode = 2
-size_flags_vertical = 4
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 9
 
 [node name="EventDots" parent="." unique_id=2138539523 instance=ExtResource("3_dots")]

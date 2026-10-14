@@ -199,14 +199,17 @@ class_name EventTheme extends Resource
 
 | `theme_id` | Event | Nền (trên → dưới) | `accent` | `accent2` | Tiêu đề | Viền tiêu đề | Phụ đề | Nhãn | `dy` |
 |---|---|---|---|---|---|---|---|---|---|
-| `daily` | Daily Challenge (ghim đầu) | `#FFFDF8 → #FFF3EE` | `#D84444` | `#F59E0B` | `#163A58` | `#FFFDF8` | `#718B9E` | `#163A58` | `-45` |
+| `daily` | Daily Challenge (ghim đầu) | `#FFFDF8 → #FFF3EE` | `#D84444` | `#F59E0B` | `#A8323C` | `#FFFDF8` | `#718B9E` | `#163A58` | `-45` |
 | `halloween` | Halloween | `#1B0B33 → #3B1668 → #220B3F` | `#FF8A1F` | `#FFC857` | `#FFFFFF` | `#2A0F4F` | `#E7D6FF` | `#F3E8FF` | `-60` |
 | `mansion` | Biệt Thự Ma Ám | `#0F2A2E → #0C1C20 → #070D0F` | `#5BD99A` | `#BFFFDC` | `#BFFFDC` | `#04100F` | `#A9D9C8` | `#DDFBEF` | `-55` |
-| `tomb` | Thám Hiểm Mộ Cổ | `#FFE2A0 → #E7A95A → #3A210E` | `#F2B84B` | `#FFE9B0` | `#FFE9B0` | `#3A210E` | `#F3D9A8` | `#FFF1D0` | `-55` |
+| `tomb` | Thám Hiểm Mộ Cổ | `#FFE2A0 → #E7A95A → #3A210E` | `#F2B84B` | `#FFE9B0` | `#4A2A0C` | `#FFF3D6` | `#F3D9A8` | `#FFF1D0` | `-55` |
 | `newyear` | Năm Mới | `#C62828 → #B71C1C → #6D0E12` | `#FFC83D` | `#FFE082` | `#FFE082` | `#6D0E12` | `#FFD9D0` | `#FFF3E0` | `-50` |
 | `april` | Cá Tháng Tư | `#FFF176 → #FFC4EA → #FF9ADD` | `#E91E8C` | `#00B3A4` | `#3B0A45` | `#FFFFFF` | `#5B2A6B` | `#3B0A45` | `-50` |
 | `winter` | Mùa Đông | `#E3F4FF → #9CCDF4 → #6FA8E0` | `#1E6FD0` | `#FFFFFF` | `#0F2F5C` | `#FFFFFF` | `#1F4A80` | `#0F2F5C` | `-55` |
 | `dungeon` | Tuần Lễ Dungeon | `#2A1E12 → #17120D` | `#F59E0B` | `#FDE68A` | `#FDE68A` | `#17120D` | `#E7D3B0` | `#F3E3C3` | `-50` |
+
+> **Cập nhật 2026-10-14 — `title_color` / `title_outline`:** mỗi theme giờ có cặp màu tiêu đề riêng theo tông thật của vùng chữ, không theme nào trùng nhau. Hai theme lệch khỏi mockup gốc để chữ không chìm: `daily` (nền giấy sáng, chuyển từ navy `#163A58` sang đỏ `#A8323C` — tránh trùng navy với `winter`) và `tomb` (nền cát sáng, chuyển từ chữ cát `#FFE9B0` sang nâu đậm `#4A2A0C` + viền kem). Tám theme mùa vụ thêm sau có bảng màu riêng trong `Number_Maze_Game_Design.md` §15.2; `test_event_manager` chặn trùng cặp màu và bắt tương phản chữ↔viền ≥ 4.5:1.
+
 
 | `theme_id` | Panel / độ mờ | CTA nền | CTA viền | CTA chữ | Chip nền (mờ 0.85) | Chip chữ |
 |---|---|---|---|---|---|---|

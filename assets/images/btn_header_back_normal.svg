@@ -1,12 +1,20 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 80 85" width="40" height="42.5">
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g filter="url(#back_normal_shadow)">
+    <path d="M18 6H78L86.4 14.4V74.4L78 82.8H18L9.6 74.4V14.4L18 6Z" fill="#FFFCF0"/>
+  </g>
+  <path d="M74.1 12.72L79.68 18.3V70.5L74.1 76.08H21.9L16.32 70.5V18.3L21.9 12.72H74.1Z" stroke="#3266B1" stroke-width="1.44"/>
+  <!-- Back Chevron Icon -->
+  <path d="M57 30L38 44.4L57 58.8" fill="none" stroke="#3266B1" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
   <defs>
-    <filter id="backShadow" x="-10%" y="-15%" width="125%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1E2830" flood-opacity="0.14" />
+    <filter id="back_normal_shadow" x="0" y="0" width="96" height="96" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="3.6"/>
+      <feGaussianBlur stdDeviation="4.8"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.270588 0 0 0 0 0.262745 0 0 0 0 0.192157 0 0 0 0.0705882 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
     </filter>
   </defs>
-  <g transform="translate(5, 3)" filter="url(#backShadow)">
-    <rect width="70" height="70" rx="18" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="3" />
-    <path d="M42 23 L26 35 L42 47" fill="none" stroke="#3D83AE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-  </g>
 </svg>
