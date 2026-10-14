@@ -2098,18 +2098,39 @@ python tools/content/fix_mojibake.py
 
 **8 theme đang dùng bởi các event hiện có** (`theme_id` → art nền full-card):
 
-| `theme_id` | Event | Nền (trên→dưới) | Art |
+| `theme_id` | Event | Nền (trên→dưới) | Tiêu đề | Viền tiêu đề | Art |
 |---|---|---|---|
-| `daily` | Daily Challenge (ghim đầu) | `#FFFDF8 → #FFF3EE` | `daily_card_background` |
-| `halloween` | Đêm Mực Ma Quái | `#1B0B33 → #3B1668 → #220B3F` | `halloween_event_card_background` |
-| `mansion` | Biệt Thự Ma Ám | `#0F2A2E → #0C1C20 → #070D0F` | `haunted_house_card_background` |
-| `tomb` | Thám Hiểm Mộ Cổ | `#FFE2A0 → #E7A95A → #3A210E` | `explore_pyramid_card_background` |
-| `newyear` | Chào Năm Mới | `#C62828 → #B71C1C → #6D0E12` | `chinese_new_year_card_background` |
-| `april` | Màn Lộn Ngược | `#FFF176 → #FFC4EA → #FF9ADD` | `april_fool_card_background` |
-| `winter` | Mùa Tuyết Trắng | `#E3F4FF → #9CCDF4 → #6FA8E0` | `winter_card_background` |
-| `dungeon` | Tuần Lễ Hầm Ngục | `#2A1E12 → #17120D` | `dungeon_card_background` |
+| `daily` | Daily Challenge (ghim đầu) | `#FFFDF8 → #FFF3EE` | `#A8323C` | `#FFFDF8` | `daily_card_background` |
+| `halloween` | Đêm Mực Ma Quái | `#1B0B33 → #3B1668 → #220B3F` | `#FFFFFF` | `#2A0F4F` | `halloween_event_card_background` |
+| `mansion` | Biệt Thự Ma Ám | `#0F2A2E → #0C1C20 → #070D0F` | `#BFFFDC` | `#04100F` | `haunted_house_card_background` |
+| `tomb` | Thám Hiểm Mộ Cổ | `#FFE2A0 → #E7A95A → #3A210E` | `#4A2A0C` | `#FFF3D6` | `explore_pyramid_card_background` |
+| `newyear` | Chào Năm Mới | `#C62828 → #B71C1C → #6D0E12` | `#FFE082` | `#6D0E12` | `chinese_new_year_card_background` |
+| `april` | Màn Lộn Ngược | `#FFF176 → #FFC4EA → #FF9ADD` | `#3B0A45` | `#FFFFFF` | `april_fool_card_background` |
+| `winter` | Mùa Tuyết Trắng | `#E3F4FF → #9CCDF4 → #6FA8E0` | `#0F2F5C` | `#FFFFFF` | `winter_card_background` |
+| `dungeon` | Tuần Lễ Hầm Ngục | `#2A1E12 → #17120D` | `#FDE68A` | `#17120D` | `dungeon_card_background` |
 
-*(Theme được khai trong `resources/events/themes/<theme_id>.tres`; `back_art` và `front_art` tham chiếu các lớp SVG nguồn trong `assets/images/events/`. Các trường màu vẫn lấy từ bảng màu trong spec `Agent_Spec_MainScreen_EventSystem.md` §B2.)*
+*(Theme được khai trong `resources/events/themes/<theme_id>.tres`; `back_art` và `front_art` tham chiếu các lớp SVG nguồn trong `assets/images/events/`. Bảng màu tham chiếu spec `Agent_Spec_MainScreen_EventSystem.md` §B2.)*
+
+**Màu tiêu đề theo theme (2026-10-14):** mỗi theme có cặp `title_color` / `title_outline` riêng, chọn theo tông thật của vùng chữ trên `*_card_background` — nền sáng dùng chữ đậm + viền sáng, nền tối dùng chữ sáng + viền đậm. Độ dày viền 5px (scene K=0.5). Không theme nào trùng cặp màu, và mọi cặp đạt tương phản chữ↔viền ≥ 4.5:1 (đo bằng `tools/run_tests.py test_event_manager`):
+
+| Theme | Nền vùng chữ | `title_color` | `title_outline` |
+|---|---|---|---|
+| `daily` | sáng (giấy kẻ ô) | `#A8323C` | `#FFFDF8` |
+| `halloween` | tối (tím/đen) | `#FFFFFF` | `#2A0F4F` |
+| `mansion` | tối (xanh mực) | `#BFFFDC` | `#04100F` |
+| `tomb` | sáng (cát) | `#4A2A0C` | `#FFF3D6` |
+| `newyear` | tối (đỏ) | `#FFE082` | `#6D0E12` |
+| `april` | sáng (vàng/hồng) | `#3B0A45` | `#FFFFFF` |
+| `winter` | sáng (tuyết) | `#0F2F5C` | `#FFFFFF` |
+| `dungeon` | tối (nâu/hầm) | `#FDE68A` | `#17120D` |
+| `anniversary` | tối (tím đêm) | `#D9C6FF` | `#3A1A55` |
+| `autumn` | tối (nâu) | `#FFCFA0` | `#2B0F03` |
+| `easter` | sáng (kem/lục) | `#12472A` | `#FFFBEC` |
+| `new_year` | tối (xanh đêm) | `#CFE8FF` | `#06122E` |
+| `spring` | sáng (xanh băng) | `#6D1639` | `#FFFFFF` |
+| `summer` | sáng (lam) | `#06384A` | `#FFF6DE` |
+| `thanksgiving` | tối (nâu) | `#FFB65C` | `#2E0B03` |
+| `valentine` | tối (hồng đậm) | `#FFD3E0` | `#4A0A22` |
 
 **Event mùa vụ bổ sung (2026-10-13):** artwork được tách thành SVG `*_card_background.svg` + `*_card_frontground.svg` khi có foreground. Tám theme mới hiện đã có `EventTheme` và `EventData` tương ứng. Các event mới đều là chuỗi màn đang được hỗ trợ; mỗi event dùng ba `LevelData` đã có, có thưởng xu và lịch UTC:
 

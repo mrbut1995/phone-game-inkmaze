@@ -1,7 +1,20 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 80 85" width="40" height="42.5">
-  <g transform="translate(5, 5)">
-    <rect width="70" height="68" rx="18" fill="#EDE6D8" stroke="#256286" stroke-width="3.2" />
-    <path d="M42 24 L26 36 L42 48" fill="none" stroke="#256286" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<svg width="77" height="79" viewBox="0 0 76.8 79.2" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g filter="url(#back_pressed_innershadow)">
+    <path d="M8.4 2.4H68.4L76.8 10.8V70.8L68.4 79.2H8.4L0 70.8V10.8L8.4 2.4Z" fill="#EEEBDD"/>
   </g>
+  <path d="M64.5 9.12L70.08 14.7V66.9L64.5 72.48H12.3L6.72 66.9V14.7L12.3 9.12H64.5Z" stroke="#3266B1" stroke-width="1.44"/>
+  <!-- Back Chevron Icon (hơi dịch nhẹ xuống 1.5px để tạo cảm giác nhấn) -->
+  <path d="M47.5 28L28.5 42L47.5 56" fill="none" stroke="#3266B1" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <filter id="back_pressed_innershadow" x="0" y="2.4" width="76.8" height="79.2" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="2.4"/>
+      <feGaussianBlur stdDeviation="1.8"/>
+      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.270588 0 0 0 0 0.262745 0 0 0 0 0.192157 0 0 0 0.0941176 0"/>
+      <feBlend mode="normal" in2="shape" result="effect1_innerShadow"/>
+    </filter>
+  </defs>
 </svg>

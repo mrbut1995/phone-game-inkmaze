@@ -1,7 +1,7 @@
 class_name EventCard
-extends Control
+extends AspectRatioContainer
 ## ============================================================================
-## Node: EventCard — Thẻ sự kiện 340×504 trong carousel Main Screen.
+## Node: EventCard — Thẻ sự kiện tỷ lệ aspect ratio (mặc định 0.8) trong carousel Main Screen.
 ##
 ## Cách dùng:
 ##   var card = preload("res://nodes/main/event_card.tscn").instantiate()
@@ -58,6 +58,18 @@ var _card_press_position := Vector2.ZERO
 const CARD_CLICK_DRAG_THRESHOLD := 12.0
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED:
+		_update_aspect_width()
+
+
+func _update_aspect_width() -> void:
+	if size.y > 0.0:
+		var target_w := roundf(size.y * ratio)
+		if not is_equal_approx(custom_minimum_size.x, target_w):
+			custom_minimum_size.x = target_w
+
+
 func _ready() -> void:
 	if cta_button != null:
 		cta_button.pressed.connect(_on_cta_pressed)
@@ -95,6 +107,10 @@ func _apply_daily_date(data: EventData) -> void:
 		daily_day.text = str(int(now.get("day", 1)))
 	if daily_weekday != null:
 		daily_weekday.text = tr(_WEEKDAY_KEYS[clampi(int(now.get("weekday", 0)), 0, 6)])
+	if title_1 != null:
+		title_1.add_theme_font_size_override("font_size",16)
+	if title_2 != null:
+		title_2.add_theme_font_size_override("font_size",16)
 
 
 ## Khoá dịch thứ trong tuần (Time.weekday: 0 = Chủ nhật … 6 = Thứ Bảy)
@@ -154,6 +170,7 @@ func _apply_theme(t: EventTheme) -> void:
 	if title_2 != null:
 		title_2.add_theme_color_override("font_color", t.title_color)
 		title_2.add_theme_color_override("font_outline_color", t.title_outline)
+
 	# Phụ đề
 	if sub_1 != null:
 		sub_1.add_theme_color_override("font_color", t.sub_color)

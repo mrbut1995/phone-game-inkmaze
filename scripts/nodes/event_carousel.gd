@@ -38,6 +38,7 @@ var _snap_tween: Tween
 
 func _ready() -> void:
 	if scroll != null:
+		scroll.resized.connect(_update_cards_layout)
 		scroll.get_h_scroll_bar().value_changed.connect(_on_scroll_changed)
 		if scroll.has_signal("scroll_ended"):
 			scroll.scroll_ended.connect(_on_scroll_ended)
@@ -58,6 +59,7 @@ func refresh() -> void:
 	)
 	for ev in events:
 		_add_card(ev, show_all_events_for_preview)
+	_update_cards_layout()
 	# Cuộn về đầu (Daily luôn đứng đầu)
 	if scroll != null:
 		scroll.scroll_horizontal = 0
@@ -69,12 +71,33 @@ func get_displayed_event_count() -> int:
 	return _cards.size()
 
 
+func _update_cards_layout() -> void:
+	if scroll == null or _cards.is_empty():
+		return
+	var h := scroll.size.y
+	if h <= 0.0:
+		return
+	for card in _cards:
+		if is_instance_valid(card):
+			var r := 0.8
+			if "ratio" in card:
+				r = float(card.ratio)
+			var w := roundf(h * r)
+			if card.custom_minimum_size.x != w:
+				card.custom_minimum_size = Vector2(w, 0)
+
+
 func _add_card(data: EventData, preview_mode: bool) -> void:
 	if event_card_scene == null:
 		return
 	var card := event_card_scene.instantiate() as EventCard
 	if card == null:
 		return
+	if scroll != null and scroll.size.y > 0.0:
+		var r := 0.8
+		if "ratio" in card:
+			r = float(card.ratio)
+		card.custom_minimum_size = Vector2(roundf(scroll.size.y * r), 0)
 	hbox.add_child(card)
 	card.setup(data, preview_mode)
 	card.card_pressed.connect(_on_card_pressed)
@@ -108,7 +131,14 @@ func _get_card_metrics() -> Vector2:
 		gap = float(hbox.get_theme_constant("separation"))
 	var width := 0.0
 	if _cards.size() > 0 and is_instance_valid(_cards[0]):
-		width = _cards[0].size.x if _cards[0].size.x > 0.0 else _cards[0].custom_minimum_size.x
+		width = _cards[0].size.x
+		if width <= 1.0:
+			width = _cards[0].custom_minimum_size.x
+	if width <= 1.0 and scroll != null and scroll.size.y > 0.0:
+		var r := 0.8
+		if _cards.size() > 0 and is_instance_valid(_cards[0]) and "ratio" in _cards[0]:
+			r = float(_cards[0].ratio)
+		width = roundf(scroll.size.y * r)
 	return Vector2(width, gap)
 
 

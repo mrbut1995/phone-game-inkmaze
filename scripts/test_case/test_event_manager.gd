@@ -70,6 +70,24 @@ func _check(cond: bool, label: String) -> void:
 
 
 # ---------------------------------------------------------------------------
+## Độ tương phản WCAG giữa 2 màu (dùng để bắt theme có tiêu đề bị chìm)
+func _contrast_ratio(a: Color, b: Color) -> float:
+	var la := _relative_luminance(a)
+	var lb := _relative_luminance(b)
+	return (maxf(la, lb) + 0.05) / (minf(la, lb) + 0.05)
+
+
+func _relative_luminance(c: Color) -> float:
+	var channels := [c.r, c.g, c.b]
+	var weights := [0.2126, 0.7152, 0.0722]
+	var total := 0.0
+	for i in 3:
+		var v: float = channels[i]
+		v = v / 12.92 if v <= 0.04045 else pow((v + 0.055) / 1.055, 2.4)
+		total += float(weights[i]) * v
+	return total
+
+
 func _mk(id: String, type: EventData.Type, sort_order: int, start_off: int, end_off: int,
 		enabled := true) -> EventData:
 	var e := EventData.new()
@@ -147,6 +165,7 @@ func _section_theme_art() -> void:
 		return
 
 	var loaded_ids: Array[StringName] = []
+	var title_pairs := {}
 	dir.list_dir_begin()
 	var filename := dir.get_next()
 	while not filename.is_empty():
@@ -161,6 +180,14 @@ func _section_theme_art() -> void:
 					"%s dung title color/outline khong trong suot" % theme.id)
 				_check(theme.title_color != theme.title_outline,
 					"%s phan biet title fill va outline" % theme.id)
+				var pair := "%s/%s" % [
+					theme.title_color.to_html(false), theme.title_outline.to_html(false)]
+				_check(not title_pairs.has(pair),
+					"%s dung cap mau tieu de rieng (khong trung theme khac)" % theme.id)
+				title_pairs[pair] = theme.id
+				var title_contrast := _contrast_ratio(theme.title_color, theme.title_outline)
+				_check(title_contrast >= 4.5,
+					"%s chu tieu de tuong phan voi vien (%.2f)" % [theme.id, title_contrast])
 				if theme.id not in [&"daily", &"dungeon"]:
 					_check(theme.front_art != null, "%s co foreground art" % theme.id)
 					if theme.back_art != null and theme.front_art != null:

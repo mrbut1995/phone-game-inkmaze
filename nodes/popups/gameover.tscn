@@ -11,12 +11,125 @@
 [ext_resource type="Texture2D" uid="uid://b3pxjd6mceamh" path="res://assets/images-png/popups/btn_revive_ad_normal.png" id="9_rev_n"]
 [ext_resource type="Texture2D" uid="uid://22m656wge4qf" path="res://assets/images-png/popups/btn_revive_ad_pressed.png" id="10_rev_p"]
 [ext_resource type="Texture2D" uid="uid://dd5ghevkdqo7o" path="res://assets/images-png/popups/btn_revive_ad_focus.png" id="11_rev_f"]
-[ext_resource uid="uid://b8rwt2332ygre" type="Texture2D" path="res://assets/images-png/common/popup_btn_normal.png" id="12_men_n"]
-[ext_resource uid="uid://cydicvgwyy1rd" type="Texture2D" path="res://assets/images-png/common/popup_btn_pressed.png" id="13_men_p"]
-[ext_resource uid="uid://c48bl0l8o5lrv" type="Texture2D" path="res://assets/images-png/common/popup_btn_focus.png" id="14_men_f"]
+[ext_resource type="Texture2D" uid="uid://b8rwt2332ygre" path="res://assets/images-png/common/popup_btn_normal.png" id="12_men_n"]
+[ext_resource type="Texture2D" uid="uid://cydicvgwyy1rd" path="res://assets/images-png/common/popup_btn_pressed.png" id="13_men_p"]
+[ext_resource type="Texture2D" uid="uid://c48bl0l8o5lrv" path="res://assets/images-png/common/popup_btn_focus.png" id="14_0r3h4"]
+[ext_resource type="Texture2D" uid="uid://b8rwt2332ygre" path="res://assets/images-png/common/popup_btn_normal.png" id="14_tjpcd"]
 [ext_resource type="Texture2D" uid="uid://der7d7ytwsbeq" path="res://assets/images-png/popups/btn_popup_danger_normal.png" id="15_ret_n"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="15_tjpcd"]
 [ext_resource type="Texture2D" uid="uid://comcrt2xgtjwm" path="res://assets/images-png/popups/btn_popup_danger_pressed.png" id="16_ret_p"]
-[ext_resource type="Texture2D" uid="uid://cnugf8wcc03sm" path="res://assets/images-png/popups/btn_popup_danger_focus.png" id="17_ret_f"]
+[ext_resource type="Texture2D" uid="uid://cnugf8wcc03sm" path="res://assets/images-png/popups/btn_popup_danger_focus.png" id="19_tjpcd"]
+[ext_resource type="Texture2D" uid="uid://der7d7ytwsbeq" path="res://assets/images-png/popups/btn_popup_danger_normal.png" id="19_v46n2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v46n2"]
+content_margin_left = 14.0
+content_margin_top = 9.0
+content_margin_right = 13.0
+content_margin_bottom = 9.0
+texture = ExtResource("12_men_n")
+texture_margin_left = 14.0
+texture_margin_top = 9.0
+texture_margin_right = 13.0
+texture_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2ux8c"]
+content_margin_left = 14.0
+content_margin_top = 9.0
+content_margin_right = 13.0
+content_margin_bottom = 9.0
+texture = ExtResource("13_men_p")
+texture_margin_left = 14.0
+texture_margin_top = 9.0
+texture_margin_right = 13.0
+texture_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gqa8v"]
+content_margin_left = 14.0
+content_margin_top = 9.0
+content_margin_right = 13.0
+content_margin_bottom = 9.0
+texture = ExtResource("12_men_n")
+texture_margin_left = 14.0
+texture_margin_top = 9.0
+texture_margin_right = 13.0
+texture_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_klux5"]
+content_margin_left = 14.0
+content_margin_top = 9.0
+content_margin_right = 13.0
+content_margin_bottom = 9.0
+texture = ExtResource("14_tjpcd")
+texture_margin_left = 14.0
+texture_margin_top = 9.0
+texture_margin_right = 13.0
+texture_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7h24s"]
+content_margin_left = 14.0
+content_margin_top = 9.0
+content_margin_right = 13.0
+content_margin_bottom = 9.0
+texture = ExtResource("14_0r3h4")
+texture_margin_left = 14.0
+texture_margin_top = 9.0
+texture_margin_right = 13.0
+texture_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i5lbx"]
+content_margin_left = 21.0
+content_margin_top = 11.0
+content_margin_right = 14.0
+content_margin_bottom = 11.0
+texture = ExtResource("15_ret_n")
+texture_margin_left = 21.0
+texture_margin_top = 11.0
+texture_margin_right = 14.0
+texture_margin_bottom = 11.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6lwd4"]
+content_margin_left = 21.0
+content_margin_top = 11.0
+content_margin_right = 14.0
+content_margin_bottom = 11.0
+texture = ExtResource("16_ret_p")
+texture_margin_left = 21.0
+texture_margin_top = 11.0
+texture_margin_right = 14.0
+texture_margin_bottom = 11.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jyp1p"]
+content_margin_left = 21.0
+content_margin_top = 11.0
+content_margin_right = 14.0
+content_margin_bottom = 11.0
+texture = ExtResource("15_ret_n")
+texture_margin_left = 21.0
+texture_margin_top = 11.0
+texture_margin_right = 14.0
+texture_margin_bottom = 11.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_px1ik"]
+content_margin_left = 21.0
+content_margin_top = 11.0
+content_margin_right = 14.0
+content_margin_bottom = 11.0
+texture = ExtResource("19_v46n2")
+texture_margin_left = 21.0
+texture_margin_top = 11.0
+texture_margin_right = 14.0
+texture_margin_bottom = 11.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q1cc6"]
+content_margin_left = 21.0
+content_margin_top = 11.0
+content_margin_right = 14.0
+content_margin_bottom = 11.0
+texture = ExtResource("19_tjpcd")
+texture_margin_left = 21.0
+texture_margin_top = 11.0
+texture_margin_right = 14.0
+texture_margin_bottom = 11.0
 
 [node name="Base" unique_id=570730758 node_paths=PackedStringArray("value_progress", "value_walls", "value_score", "stamp_count", "revive_desc") instance=ExtResource("1_base")]
 script = ExtResource("2_over")
@@ -286,15 +399,29 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
 
 [node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information" index="7" unique_id=1988303326]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="MenuBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="0" unique_id=1709849678]
+[node name="MenuBtn" type="Button" parent="Panel/Content/Information/Buttons" index="0" unique_id=1445808229]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxTexture_v46n2")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_2ux8c")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gqa8v")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_klux5")
+theme_override_styles/focus = SubResource("StyleBoxTexture_7h24s")
+script = ExtResource("15_tjpcd")
 texture_normal = ExtResource("12_men_n")
-texture_pressed = ExtResource("13_men_p")
 texture_hover = ExtResource("12_men_n")
-texture_focused = ExtResource("14_men_f")
+texture_pressed = ExtResource("13_men_p")
+texture_disabled = ExtResource("14_tjpcd")
+texture_focus = ExtResource("14_0r3h4")
+patch_margin_left = 14.0
+patch_margin_top = 9.0
+patch_margin_right = 13.0
+patch_margin_bottom = 9.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Label" type="Label" parent="Panel/Content/Information/Buttons/MenuBtn" index="0" unique_id=539897454]
 layout_mode = 1
@@ -310,18 +437,32 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="RetryBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="1" unique_id=296734399]
+[node name="RetryBtn" type="Button" parent="Panel/Content/Information/Buttons" index="1" unique_id=2146387241]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxTexture_i5lbx")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6lwd4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jyp1p")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_px1ik")
+theme_override_styles/focus = SubResource("StyleBoxTexture_q1cc6")
+script = ExtResource("15_tjpcd")
 texture_normal = ExtResource("15_ret_n")
-texture_pressed = ExtResource("16_ret_p")
 texture_hover = ExtResource("15_ret_n")
-texture_focused = ExtResource("17_ret_f")
+texture_pressed = ExtResource("16_ret_p")
+texture_disabled = ExtResource("19_v46n2")
+texture_focus = ExtResource("19_tjpcd")
+patch_margin_left = 21.0
+patch_margin_top = 11.0
+patch_margin_right = 14.0
+patch_margin_bottom = 11.0
+metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
 [node name="Label" type="Label" parent="Panel/Content/Information/Buttons/RetryBtn" index="0" unique_id=1385212708]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"PopupBtnTextSmall"
@@ -330,6 +471,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
+resize_font_to_fit = true
 
 [node name="Spacer2" type="Control" parent="Panel/Content/Information" index="8" unique_id=542083628]
 custom_minimum_size = Vector2(0, 10)
