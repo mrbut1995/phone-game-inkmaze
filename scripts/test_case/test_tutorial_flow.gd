@@ -60,6 +60,7 @@ func _init() -> void:
 	await _section_2b_skip_all()
 	await _section_2c_unlocked_save()
 	await _section_2d_resume()
+	await _section_2e_list()
 	await _section_3_question_mark()
 	await _section_3b_question_mark_resumes_flow()
 	await _section_4_mode_tutorial()
@@ -226,8 +227,8 @@ func _section_2b_skip_all() -> void:
 		active.call("skip_all_tutorials")
 	await _settle(4)
 	_check(bool(_gm.get("tutorial_flow_done")), "Bo qua tat ca -> ket thuc luong onboarding")
-	_check(_scene_path() == GAME_SCENE_PATH and int(_gm.get("current_level")) == 1,
-		"Bo qua tat ca -> vao thang MAN 1 (dang '%s')" % _scene_path())
+	_check(_scene_path() == MAIN_SCENE_PATH,
+		"Bo qua tat ca khi dang trong LUONG -> ve MAN HINH CHINH (dang '%s')" % _scene_path())
 
 
 # ---------------------------------------------------------------------------
@@ -307,8 +308,66 @@ func _section_2d_resume() -> void:
 		"Chon ve Main -> mo man hinh chinh (dang '%s')" % _scene_path())
 
 
+# ---------------------------------------------------------------------------# 2e. Nút LUẬT CHƠI ở Màn hình chính: HIỆN DANH SÁCH bài học (không tự chạy chuỗi CORE);
+#     bài ĐÃ XEM = nút ACTIVE · bài CHƯA XEM = nút KHOÁ (mờ, không bấm được).
+#     “Bỏ qua tất cả” khi mở từ DANH SÁCH → quay lại DANH SÁCH.
 # ---------------------------------------------------------------------------
-# 3. Nút "?" trong luồng: màn thực hành chỉ mở đúng bài của màn
+func _section_2e_list() -> void:
+	print("\n-- 2e. Danh sach bai hoc (nut LUAT CHOI) --")
+	_set_flow_state(0, true, 9)
+	_gm.call("set_tutorial_completed", "first_time", true)
+
+	var main: Node = (load(MAIN_SCENE_PATH) as PackedScene).instantiate()
+	root.add_child(main)
+	current_scene = main
+	await _settle(3)
+	main.call("_on_rules_pressed")
+	await _settle(4)
+	_check(_scene_path() == TUTORIAL_SCENE_PATH,
+		"Nut LUAT CHOI -> mo man Tutorial (dang '%s')" % _scene_path())
+	var ctrl: Node = _tutorial_controller()
+	_check(ctrl != null and ctrl.get("active_tutorial_node") == null,
+		"Vao man Tutorial: HIEN DANH SACH, khong tu chay bai nao")
+
+	var layout: Node = current_scene.get("layout") if current_scene != null else null
+	var btn_seen: BaseButton = layout.get("btn_first_time") if layout != null else null
+	var btn_new: BaseButton = layout.get("btn_minesweeper") if layout != null else null
+	_check(btn_seen != null and not btn_seen.disabled,
+		"Bai DA XEM (first_time): nut ACTIVE")
+	_check(btn_new != null and btn_new.disabled and btn_new.modulate.a < 0.9,
+		"Bai CHUA XEM (minesweeper): nut KHOA (mo)")
+
+	# Bấm bài CHƯA XEM → không mở gì cả
+	if btn_new != null:
+		btn_new.pressed.emit()
+	await _settle(2)
+	_check(ctrl != null and ctrl.get("active_tutorial_node") == null,
+		"Bam bai CHUA XEM -> khong mo gi (nut dang khoa)")
+
+	# Bấm bài ĐÃ XEM → mở ĐÚNG bài đó (không chạy chuỗi CORE)
+	if btn_seen != null:
+		btn_seen.pressed.emit()
+	await _settle(3)
+	_check(str(_current_tutorial_id()) == "first_time",
+		"Bam bai da xem -> mo dung bai do (dang '%s')" % _current_tutorial_id())
+
+	# “Bỏ qua tất cả” khi mở từ DANH SÁCH → quay lại DANH SÁCH (ở lại màn Tutorial)
+	var active: Node = ctrl.get("active_tutorial_node") if ctrl != null else null
+	if active != null:
+		active.call("skip_all_tutorials")
+	await _settle(4)
+	_check(_scene_path() == TUTORIAL_SCENE_PATH,
+		"Bo qua tat ca tu danh sach -> o lai man Tutorial (dang '%s')" % _scene_path())
+	_check(_tutorial_controller() != null and _tutorial_controller().get("active_tutorial_node") == null,
+		"Bo qua tat ca tu danh sach -> hien lai danh sach (khong bai nao dang mo)")
+
+	if current_scene != null:
+		current_scene.queue_free()
+		current_scene = null
+	await _settle(2)
+
+
+# ---------------------------------------------------------------------------# 3. Nút "?" trong luồng: màn thực hành chỉ mở đúng bài của màn
 # ---------------------------------------------------------------------------
 func _section_3_question_mark() -> void:
 	print("\n-- 3. Nut '?' trong luong onboarding --")
@@ -330,17 +389,30 @@ func _section_3_question_mark() -> void:
 	_check(str(_tm.call("practice_tutorial_for_level", 4)) == "",
 		"Man 4 khong phai man thuc hanh")
 
-	# Mở màn chơi MÀN 1 rồi bấm "?" — chỉ được yêu cầu ĐÚNG 1 bài
+	# Mở màn chơi MÀN 1 rồi bấm "?" — chỉ được mở ĐÚNG 1 bài (dạng LỚP PHỦ, không đổi scene)
 	_gm.call("prepare_level_run", 1)
 	var gs: Node = (load(GAME_SCENE_PATH) as PackedScene).instantiate()
 	root.add_child(gs)
+	current_scene = gs
 	await _settle(2)
 	gs.game_controller.call("open_instruction")
-	_check(str(_gm.get("pending_tutorial")) == "how_to_play_move",
-		"Nut ? o MAN 1 chi mo how_to_play_move (dang '%s')" % str(_gm.get("pending_tutorial")))
-	_check(bool(_gm.get("pending_return_to_game")), "Nut ? -> hoc xong quay lai man choi")
 	await _settle(3)
+	_check(_overlay() != null and str(_current_tutorial_id()) == "how_to_play_move",
+		"Nut ? o MAN 1 mo LOP PHU bai how_to_play_move (dang '%s')" % _current_tutorial_id())
+	_check(_tutorial_scene() != null and bool(_tutorial_scene().get("_return_to_game")),
+		"Nut ? -> hoc xong quay lai man choi")
+	_check(_scene_path() == GAME_SCENE_PATH,
+		"Nut ? KHONG doi scene, man choi giu nguyen (dang '%s')" % _scene_path())
+
+	# Back (Android/Esc) khi lớp phủ đang mở → CHỈ đóng lớp phủ, vẫn ở ván đang chơi
+	root.propagate_notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	await _settle(3)
+	_check(_scene_path() == GAME_SCENE_PATH and _overlay() == null,
+		"Back khi lop phu mo -> dong lop phu, giu nguyen man choi (dang '%s')" % _scene_path())
+	_check(bool(_gm.get("level_run")) and int(_gm.get("current_level")) == 1,
+		"Back dong lop phu -> van trong van dang choi (khong nghi van)")
 	gs.queue_free()
+	current_scene = null
 	await _settle(2)
 
 
@@ -363,30 +435,29 @@ func _section_3b_question_mark_resumes_flow() -> void:
 	current_scene = gs
 	await _settle(3)
 	gs.game_controller.call("open_instruction")
-	_check(str(_gm.get("pending_tutorial")) == "how_to_play_move",
-		"Nut ? o MAN 1 mo bai thuc hanh how_to_play_move (dang '%s')" % str(_gm.get("pending_tutorial")))
 	_check(str(_tm.call("resume_flow_lesson")) == "how_to_play_checking_wall",
 		"Luong dang cho bai how_to_play_checking_wall (dang '%s')" % str(_tm.call("resume_flow_lesson")))
 	await _settle(4)
-	_check(_scene_path() == TUTORIAL_SCENE_PATH and str(_current_tutorial_id()) == "how_to_play_move",
-		"Bai thuc hanh mo trong man Tutorial (dang '%s')" % _current_tutorial_id())
+	_check(_scene_path() == GAME_SCENE_PATH and _overlay() != null and str(_current_tutorial_id()) == "how_to_play_move",
+		"Bai thuc hanh mo dang LOP PHU tren man choi ('%s' · bai '%s')" % [_scene_path(), _current_tutorial_id()])
 
-	# Học xong bài thực hành → bài của LUỒNG chạy tiếp NGAY (không về màn chơi)
+	# Học xong bài thực hành → bài của LUỒNG chạy tiếp NGAY (không về màn chơi, scene vẫn giữ nguyên)
 	_complete_active_tutorial(_tutorial_controller())
 	await _settle(4)
-	_check(_scene_path() == TUTORIAL_SCENE_PATH,
-		"Xong bai thuc hanh -> VAN o man Tutorial, khong nhay ve man choi (dang '%s')" % _scene_path())
+	_check(_scene_path() == GAME_SCENE_PATH and _overlay() != null,
+		"Xong bai thuc hanh -> VAN o lop phu, man choi giu nguyen (dang '%s')" % _scene_path())
 	_check(str(_current_tutorial_id()) == "how_to_play_checking_wall",
-		"Bai cua luong chay tiep trong man (dang '%s')" % _current_tutorial_id())
-	_check(current_scene != null and bool(current_scene.get("_in_flow")),
-		"Man Tutorial chuyen sang che do chay LUONG (in_flow = true)")
-	_check(current_scene != null and not bool(current_scene.get("_return_to_game")),
+		"Bai cua luong chay tiep trong lop phu (dang '%s')" % _current_tutorial_id())
+	_check(_tutorial_scene() != null and bool(_tutorial_scene().get("_in_flow")),
+		"Lop phu chuyen sang che do chay LUONG (in_flow = true)")
+	_check(_tutorial_scene() != null and not bool(_tutorial_scene().get("_return_to_game")),
 		"Da tat co 'hoc xong quay ve man choi'")
 
-	# Học xong bài của luồng → luồng đi tiếp bước kế (MÀN 2)
+	# Học xong bài của luồng → luồng đi tiếp bước kế (MÀN 2) — ĐỔI SCENE sang màn chơi mới,
+	# lớp phủ cũ biến mất theo màn chơi cũ
 	_complete_active_tutorial(_tutorial_controller())
 	await _settle(5)
-	_check(_scene_path() == GAME_SCENE_PATH and int(_gm.get("current_level")) == 2,
+	_check(_scene_path() == GAME_SCENE_PATH and _overlay() == null and int(_gm.get("current_level")) == 2,
 		"Xong bai cua luong -> di tiep MAN 2 (dang '%s' · level %d)"
 			% [_scene_path(), int(_gm.get("current_level"))])
 
@@ -479,10 +550,20 @@ func _scene_path() -> String:
 	return current_scene.scene_file_path if current_scene != null else ""
 
 
+## Lớp phủ Tutorial gắn trên scene hiện tại (mở từ nút "?" — không đổi scene)
+func _overlay() -> Node:
+	return current_scene.get_node_or_null("TutorialOverlay") if current_scene != null else null
+
+
+## Node màn Tutorial: LỚP PHỦ trên màn chơi nếu có, không thì scene hiện tại
+func _tutorial_scene() -> Node:
+	var overlay := _overlay()
+	return overlay if overlay != null else current_scene
+
+
 func _tutorial_controller() -> Node:
-	if current_scene == null:
-		return null
-	return current_scene.get("tutorial_controller")
+	var host := _tutorial_scene()
+	return host.get("tutorial_controller") if host != null else null
 
 
 func _current_tutorial_id() -> String:

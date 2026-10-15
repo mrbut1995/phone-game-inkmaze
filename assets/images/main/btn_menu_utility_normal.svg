@@ -1,4 +1,19 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 230 130" width="115" height="65">
-  <rect width="210" height="110" rx="20" fill="#FEFDFA" stroke="#6EA0C8" stroke-width="2.5" />
+<svg width="115" height="65" viewBox="0 0 230 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g filter="url(#shadow_normal_utility)">
+    <path d="M24 8H206L220 22V104L206 118H24L10 104V22L24 8Z" fill="#FFFCF0"/>
+  </g>
+  <!-- Inner Decorative Contour Line -->
+  <path d="M27 14H203L214 25V101L203 112H27L16 101V25L27 14Z" stroke="#3266B1" stroke-width="1.4"/>
+  <defs>
+    <filter id="shadow_normal_utility" x="0" y="0" width="230" height="130" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="3"/>
+      <feGaussianBlur stdDeviation="3"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.270588 0 0 0 0 0.262745 0 0 0 0 0.192157 0 0 0 0.08 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+  </defs>
 </svg>

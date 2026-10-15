@@ -287,7 +287,7 @@ func _section_6_tutorials(gm: Node, saved: Dictionary) -> void:
 	tut.queue_free()
 	await process_frame
 
-	# Test mode TẮT: học xong CÓ ghi (và không yêu cầu gì ⇒ chạy chuỗi CORE, bắt đầu first_time)
+	# Test mode TẮT + KHÔNG yêu cầu gì ⇒ chỉ HIỆN DANH SÁCH (không tự chạy chuỗi CORE)
 	gm.set("debug_run", false)
 	gm.call("request_tutorial", "")
 	var tut2: Node = (load("res://scenes/tutorial.tscn") as PackedScene).instantiate()
@@ -296,8 +296,16 @@ func _section_6_tutorials(gm: Node, saved: Dictionary) -> void:
 	await process_frame
 	var controller2: Node = tut2.get("tutorial_controller")
 	var active2: Node = controller2.get("active_tutorial_node") if controller2 != null else null
-	var first_id := str(active2.get("tutorial_id")) if active2 != null else "<null>"
-	_check(first_id == "first_time", "Khong co yeu cau -> chay chuoi CORE (dang '%s')" % first_id)
+	_check(active2 == null, "Khong co yeu cau -> HIEN DANH SACH, khong tu chay bai nao")
+
+	# Bấm 1 bài trong DANH SÁCH (như người chơi) → test mode TẮT: học xong CÓ ghi tiến trình
+	gm.call("set_tutorial_completed", "first_time", true)  # mở khoá nút để bấm được
+	var layout2: Node = tut2.get("layout")
+	var btn_first: BaseButton = layout2.get("btn_first_time") if layout2 != null else null
+	if btn_first != null:
+		btn_first.pressed.emit()
+	await process_frame
+	active2 = controller2.get("active_tutorial_node") if controller2 != null else null
 	if active2 != null:
 		gm.call("set_tutorial_completed", "first_time", false)  # xoá cờ trước để phép thử có nghĩa
 		active2.call("complete_tutorial")

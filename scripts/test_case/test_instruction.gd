@@ -13,7 +13,7 @@ func _init() -> void:
 		print("\n[SUCCESS] " + str(_checks) + " check PASS")
 	else:
 		print("\n[FAILED] " + str(_failures) + "/" + str(_checks) + " check loi")
-	quit(0)
+	quit(1 if _failures > 0 else 0)
 
 
 func _fail(msg: String) -> void:
@@ -31,9 +31,10 @@ func _check(cond: bool, msg: String) -> void:
 	else: _fail(msg)
 
 
-# open_instruction() -> dat co tutorial, KHONG mo popup instruction
+# open_instruction() -> mo Tutorial dạng LỚP PHỦ trên màn chơi, KHÔNG mở popup instruction
+# (dungeon KHÔNG có nút "?" ⇒ không mở gì)
 func _check_integration() -> void:
-	print("-- open_instruction -> TUTORIAL --")
+	print("-- open_instruction -> LOP PHU TUTORIAL --")
 	var gm: Node = root.get_node_or_null("GameManager")
 	if gm == null:
 		_fail("Khong tim thay GameManager")
@@ -51,16 +52,22 @@ func _check_integration() -> void:
 		scene.switch_mode(mode_id)
 		await process_frame
 		scene.game_controller.open_instruction()
-		var request: String = str(gm.get("pending_tutorial"))
-		var return_to_game: bool = bool(gm.get("pending_return_to_game"))
 		await process_frame
 		var want: String = ",".join(GameController.TUTORIAL_IDS.get(mode_id, []))
-		_check(request == want and return_to_game == not want.is_empty(),
-			mode_id + ": open_instruction -> tutorial")
-		if current_scene != null and current_scene != scene:
-			var loaded: Node = current_scene
-			current_scene = null
-			loaded.queue_free()
+		var overlay: Node = scene.get_node_or_null("TutorialOverlay")
+		if want.is_empty():
+			_check(overlay == null, mode_id + ": open_instruction -> KHONG mo tutorial")
+		else:
+			# Yêu cầu được lớp phủ đọc NGAY (đồng bộ) — kiểm bài đang chạy thay vì cờ pending
+			var first_want := want.split(",")[0]
+			var played := ""
+			var returning := false
+			if overlay != null:
+				var ctrl: Node = overlay.get("tutorial_controller")
+				played = str(ctrl.get("current_tutorial_id")) if ctrl != null else ""
+				returning = bool(overlay.get("_return_to_game"))
+			_check(overlay != null and played == first_want and returning,
+				mode_id + ": open_instruction -> LOP PHU tutorial '%s' (dang '%s')" % [first_want, played])
 		Popups.close_all()
 		scene.queue_free()
 		await process_frame
