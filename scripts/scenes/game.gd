@@ -258,8 +258,8 @@ func _ready() -> void:
 		if d != null and str(d) != "":
 			initial_diff = str(d)
 	switch_mode(initial_mode, initial_diff)
-	# Nếu quay lại từ Tutorial (người chơi bấm “?”), đồng hồ đã dừng trước khi đổi scene — chạy lại.
-	# (timer_controller.pause() gọi trong open_instruction() trước goto_tutorial())
+	# Nếu quay lại từ Tutorial (người chơi bấm “?”), đồng hồ đã dừng trước khi mở — chạy lại.
+	# (timer_controller.pause() gọi trong open_instruction(); tới đây khi Tutorial đổi scene)
 	if timer_controller != null and game_controller != null:
 		call_deferred("_resume_timer_if_paused")
 
@@ -290,6 +290,12 @@ func _resume_timer_if_paused() -> void:
 	if game_controller.get("_memorize_active") == true:
 		return
 	timer_controller.resume()
+
+
+## Lớp phủ Tutorial (nút "?") đóng lại → CHƠI TIẾP đúng ván đang chơi: chạy lại đồng hồ đã dừng
+## khi mở lớp phủ (TutorialScene gọi qua host — xem `_close_overlay` trong scripts/scenes/tutorial.gd)
+func resume_after_tutorial() -> void:
+	_resume_timer_if_paused()
 
 
 func _on_undo_pressed() -> void:

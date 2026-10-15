@@ -4,11 +4,22 @@ extends BaseScene
 ## ============================================================================
 ## View Controller: Màn hình Tutorial (hướng dẫn tương tác)
 ## Kế thừa BaseScene, điều phối chạy các màn tutorial độc lập hoặc theo chuỗi onboarding.
+##
+## Hai kiểu mở:
+##   · ĐỔI SCENE (`Nav.goto_tutorial`): từ Title / Main / Debug — có yêu cầu thì mở bài,
+##     KHÔNG có yêu cầu (nút LUẬT CHƠI) thì chỉ HIỆN DANH SÁCH, không tự chạy chuỗi CORE.
+##   · LỚP PHỦ (`overlay_mode` — mở từ nút "?" trên màn chơi): scene chơi được GIỮ NGUYÊN
+##     và tạm DỪNG (host `process_mode = DISABLED`) ⇒ đóng là về ĐÚNG ván đang chơi.
+##
+## Danh sách bài: bài ĐÃ XEM = nút ACTIVE · bài CHƯA XEM = nút KHOÁ (mờ) — `_refresh_list_state`.
 ## ============================================================================
 
 const NavHelper := preload("res://scripts/utils/nav.gd")
 
 @export var tutorial_controller: TutorialController = null
+
+## Mở dạng LỚP PHỦ trên màn chơi (game_controller set TRƯỚC khi add_child — đọc trong _ready)
+var overlay_mode := false
 
 var layout: TutorialLayout = null
 ## Mở 1 bài LẺ (Debug Console) hoặc Test mode ⇒ học xong Ở LẠI màn Tutorial để thử bài khác
@@ -20,6 +31,9 @@ var _return_to_game := false
 var _in_flow := false
 
 func _ready() -> void:
+	if overlay_mode:
+		# Lớp phủ phải trùm kín màn chơi bên dưới (root Control của `scenes/base.tscn`)
+		set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_bind_refs()
 	_wire_buttons()
 	orientation_changed.connect(_on_orientation_changed)
@@ -29,6 +43,8 @@ func _ready() -> void:
 	if tutorial_controller != null and layout != null:
 		tutorial_controller.set_container(layout.tutorial_container)
 		_start_requested()
+	# Không có bài nào chạy ⇒ DANH SÁCH hiện ra: khoá/mở nút theo tiến trình người chơi
+	_refresh_list_state()
 
 
 ## Debug Console có thể yêu cầu mở THẲNG 1 bài (hoặc chạy lại chuỗi CORE) trước khi vào màn
@@ -54,15 +70,18 @@ func _start_requested() -> void:
 		else:
 			_finish_and_return()
 		return
-	if requested.is_empty() or requested == TutorialController.REQUEST_CORE:
+	if requested == TutorialController.REQUEST_CORE:
+		# Debug Console: chạy lại CHUỖI CORE (first_time → move → checking_wall)
 		tutorial_controller.start_sequence()
 	elif _is_flow_tutorial(requested):
 		# Bước hiện tại của LUỒNG HỌC LẦN ĐẦU: học xong sẽ đi tiếp luồng (không về Main)
 		_in_flow = true
 		tutorial_controller.play_single_tutorial(requested)
-	else:
+	elif not requested.is_empty():
 		_stay_after_finish = true
 		tutorial_controller.play_single_tutorial(requested)
+	# requested RỖNG (nút LUẬT CHƠI ở Main · dòng “Tutorial (menu)” của Debug):
+	# KHÔNG tự chạy bài nào — chỉ hiện DANH SÁCH cho người chơi chọn (nút đã xem mới bấm được)
 
 
 ## Bài này có phải bước hiện tại của luồng onboarding không
@@ -105,27 +124,54 @@ func _wire_buttons() -> void:
 	# Dây nút khai trong `scenes/tutorial.tscn` (cả 2 hướng) — guard chỉ nối lại nếu dây bị mất
 	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 
-	var btn_map := {
-		layout.btn_first_time: "first_time",
-		layout.btn_move: "how_to_play_move",
-		layout.btn_checking_wall: "how_to_play_checking_wall",
-		layout.btn_minesweeper: "how_to_play_minesweeper",
-		layout.btn_one_stroke: "how_to_play_one_stroke",
-		layout.btn_sum_path: "how_to_play_sum_path",
-		layout.btn_wall_builder: "how_to_play_wall_builder",
-		layout.btn_countdown_cost: "how_to_play_countdown_cost",
-		layout.btn_fading_ink: "how_to_play_fading_ink",
-		layout.btn_fog_of_war: "how_to_play_fog_of_war",
-		layout.btn_blind_memory: "how_to_play_blind_memory",
-		layout.btn_use_tool: "how_to_use_tool",
+	for tid in _list_buttons():
+		var btn: BaseButton = _list_buttons()[tid]
+		if btn != null:
+			ensure_signal(btn, &"pressed", &"_on_select_tutorial", [tid])
+
+
+## Nút của DANH SÁCH bài học ở bố cục hiện tại (id → nút) — dùng chung cho nối dây + khoá/mở
+func _list_buttons() -> Dictionary:
+	if layout == null:
+		return {}
+	return {
+		"first_time": layout.btn_first_time,
+		"how_to_play_move": layout.btn_move,
+		"how_to_play_checking_wall": layout.btn_checking_wall,
+		"how_to_play_minesweeper": layout.btn_minesweeper,
+		"how_to_play_one_stroke": layout.btn_one_stroke,
+		"how_to_play_sum_path": layout.btn_sum_path,
+		"how_to_play_wall_builder": layout.btn_wall_builder,
+		"how_to_play_countdown_cost": layout.btn_countdown_cost,
+		"how_to_play_fading_ink": layout.btn_fading_ink,
+		"how_to_play_fog_of_war": layout.btn_fog_of_war,
+		"how_to_play_blind_memory": layout.btn_blind_memory,
+		"how_to_use_tool": layout.btn_use_tool,
 	}
 
-	for btn in btn_map:
-		if btn != null:
-			ensure_signal(btn, &"pressed", &"_on_select_tutorial", [str(btn_map[btn])])
+
+## DANH SÁCH: bài ĐÃ XEM → nút ACTIVE · bài CHƯA XEM → nút KHOÁ (mờ, không bấm được)
+func _refresh_list_state() -> void:
+	var gm := get_node_or_null("/root/GameManager")
+	for tid in _list_buttons():
+		var btn: BaseButton = _list_buttons()[tid]
+		if btn == null:
+			continue
+		var seen := true
+		if gm != null and gm.has_method("is_tutorial_completed"):
+			seen = bool(gm.call("is_tutorial_completed", tid))
+		btn.disabled = not seen
+		# Giữ NGUYÊN art giấy cho nút khoá (theme mặc định không có style "disabled") rồi LÀM MỜ
+		btn.add_theme_stylebox_override("disabled", btn.get_theme_stylebox("normal"))
+		btn.modulate = Color(1, 1, 1, 1) if seen else Color(1, 1, 1, 0.45)
 
 
 func _on_select_tutorial(tid: String) -> void:
+	# Nút bài CHƯA XEM đã bị khoá — chặn thêm một lần nữa nếu tín hiệu bị phát bằng tay
+	var gm := get_node_or_null("/root/GameManager")
+	if gm != null and gm.has_method("is_tutorial_completed"):
+		if not bool(gm.call("is_tutorial_completed", tid)):
+			return
 	_stay_after_finish = true
 	if tutorial_controller != null:
 		tutorial_controller.play_single_tutorial(tid)
@@ -138,11 +184,53 @@ func _on_back_pressed() -> void:
 	NavHelper.goto_main()
 
 
+## ScreenManager gọi khi Back (nút cứng Android / phím Esc) trong lúc LỚP PHỦ đang mở:
+## đóng lớp phủ để quay lại đúng ván đang chơi (giống nút Back trong màn Tutorial)
+func close_from_back() -> void:
+	if overlay_mode:
+		_finish_and_return()
+		return
+	_on_back_pressed()
+
+
 func _finish_and_return() -> void:
+	# Mở dạng LỚP PHỦ từ màn chơi: chỉ đóng lớp phủ — ván đang chơi GIỮ NGUYÊN trạng thái
+	if overlay_mode:
+		_close_overlay()
+		return
 	NavHelper.goto_game()
 
 
+## Đóng LỚP PHỦ Tutorial: trả quyền xử lý cho màn chơi bên dưới + chạy lại đồng hồ đang dừng
+func _close_overlay() -> void:
+	var host := get_parent()
+	if host != null and is_instance_valid(host):
+		host.process_mode = Node.PROCESS_MODE_INHERIT
+		if host.has_method("resume_after_tutorial"):
+			host.call("resume_after_tutorial")
+	queue_free()
+
+
 func _on_sequence_finished() -> void:
+	# ── “BỎ QUA TẤT CẢ”: điều hướng theo NGUỒN đã mở màn Tutorial ──
+	#    · mở từ MÀN CHƠI (nút "?") → ĐÓNG lớp phủ ⇒ về lại đúng ván đang chơi (giữ nguyên trạng thái)
+	#    · đang trong LUỒNG HỌC LẦN ĐẦU → kết thúc luồng rồi về MÀN HÌNH CHÍNH
+	#    · mở từ DANH SÁCH (nút LUẬT CHƠI) → ở lại màn Tutorial, hiện lại danh sách
+	if tutorial_controller != null and bool(tutorial_controller.get("skipped_all")):
+		if _return_to_game:
+			if _in_flow:
+				var tm_skip := _tutorial_manager()
+				if tm_skip != null:
+					tm_skip.call("abort_flow")
+			_finish_and_return()
+		elif _in_flow:
+			var tm_flow := _tutorial_manager()
+			if tm_flow != null:
+				tm_flow.call("abort_flow")
+			NavHelper.goto_main()
+		else:
+			_refresh_list_state()
+		return
 	# Quay về game sau khi xem tutorial từ nút "?"
 	if _return_to_game:
 		# …nhưng nếu LUỒNG HỌC LẦN ĐẦU đang chờ 1 BÀI HỌC thì chạy tiếp NGAY trong màn này
@@ -154,23 +242,20 @@ func _on_sequence_finished() -> void:
 	if _in_flow:
 		_continue_flow()
 		return
-	# Thử bài từ Debug Console (bài lẻ / Test mode): ở lại màn Tutorial để chọn bài khác
+	# Thử bài từ Debug Console (bài lẻ / Test mode) hoặc mở từ DANH SÁCH: ở lại màn Tutorial
 	if _stay_after_finish:
+		_refresh_list_state()
 		return
 	# Hoàn thành chuỗi (Debug/chuỗi CORE): chuyển sang Màn 1 hoặc về Menu chính
 	_enter_first_level()
 
 
 ## Học xong 1 bài của luồng onboarding: chạy tiếp bài kế (trong màn) · màn thực hành ·
-## hoặc kết thúc luồng. "Bỏ qua tất cả" ⇒ kết thúc luồng rồi vào thẳng Màn 1.
+## hoặc kết thúc luồng. (Nhánh “Bỏ qua tất cả” xử lý riêng ở `_on_sequence_finished`.)
 func _continue_flow() -> void:
 	var tm := _tutorial_manager()
 	if tm == null:
 		NavHelper.goto_main()
-		return
-	if tutorial_controller != null and bool(tutorial_controller.get("skipped_all")):
-		tm.call("abort_flow")
-		_enter_first_level()
 		return
 	var result: Dictionary = tm.call("continue_flow_inplace")
 	var next_id := str(result.get("next", ""))
@@ -200,7 +285,7 @@ func _resume_flow_after_practice() -> bool:
 	return true
 
 
-## Vào thẳng Màn 1 (nhánh "Bỏ qua tất cả" / chuỗi CORE xong)
+## Vào thẳng Màn 1 (chuỗi CORE của Debug Console học xong)
 func _enter_first_level() -> void:
 	var gm := get_tree().root.get_node_or_null("GameManager") if get_tree() != null and get_tree().root != null else null
 	if gm != null and gm.has_method("start_level"):
@@ -214,3 +299,5 @@ func _on_orientation_changed(_is_land: bool) -> void:
 	_wire_buttons()
 	if tutorial_controller != null and layout != null:
 		tutorial_controller.set_container(layout.tutorial_container)
+	# Bố cục mới = bộ nút mới ⇒ cập nhật lại trạng thái khoá/mở
+	_refresh_list_state()

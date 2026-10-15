@@ -1,12 +1,8 @@
-[gd_resource type="StyleBoxTexture" format=3]
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://js8kuoleser1"]
 
-[ext_resource uid="uid://ckxdbnug8ecl6" type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_normal.png" id="1_tex"]
+[ext_resource type="Texture2D" uid="uid://ckxdbnug8ecl6" path="res://assets/images-png/common/btn_paper_cta_normal.png" id="1_tex"]
 
 [resource]
 texture = ExtResource("1_tex")
-texture_margin_left =  24
-texture_margin_top =  24
-texture_margin_right =  24
-texture_margin_bottom =  24
-axis_stretch_horizontal = 0
-axis_stretch_vertical = 0
+texture_margin_left = 72.0
+texture_margin_right = 24.0

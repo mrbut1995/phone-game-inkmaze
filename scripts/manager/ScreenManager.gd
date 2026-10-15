@@ -95,6 +95,15 @@ func _handle_back(allow_quit: bool) -> bool:
 			popup_manager.call("close_top")
 		return true
 
+	# LỚP PHỦ của màn hiện tại đang mở (VD Tutorial mở từ nút "?" trên màn chơi):
+	# Back chỉ ĐÓNG lớp phủ — giữ nguyên ván đang chơi, KHÔNG điều hướng màn.
+	var scene: Node = get_tree().current_scene
+	if scene != null:
+		var overlay: Node = scene.get_node_or_null("TutorialOverlay")
+		if overlay != null and overlay.has_method("close_from_back"):
+			overlay.call("close_from_back")
+			return true
+
 	# Còn lịch sử ⇒ lùi về màn trước
 	if go_back():
 		return true

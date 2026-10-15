@@ -886,8 +886,29 @@ func open_instruction() -> void:
 	gm.set("pending_return_to_game", true)
 	# pending_tutorial được đọc bởi tutorial.gd; nhiều bài nối bằng dấu phẩy → chạy theo chuỗi
 	gm.set("pending_tutorial", ",".join(ids))
-	var nav := preload("res://scripts/utils/nav.gd")
-	nav.goto_tutorial()
+	_open_tutorial_overlay()
+
+
+## Mở màn Tutorial dạng LỚP PHỦ ngay TRÊN màn chơi (không đổi scene): ván đang chơi được
+## GIỮ NGUYÊN (đường đã vẽ · vị trí · đồng hồ đang dừng) và tạm DỪNG xử lý trong lúc học.
+## Đóng lớp phủ (học xong / bỏ qua / Back) → chơi tiếp ĐÚNG ván đó — xem `tutorial.gd`.
+func _open_tutorial_overlay() -> void:
+	var host: Node = owner
+	if host == null:
+		host = get_tree().current_scene if get_tree() != null else null
+	if host == null or host.has_node("TutorialOverlay"):
+		return
+	var scene := load("res://scenes/tutorial.tscn") as PackedScene
+	if scene == null:
+		return
+	var overlay := scene.instantiate()
+	overlay.name = "TutorialOverlay"
+	# Cờ này được TutorialScene đọc trong `_ready` ⇒ phải set TRƯỚC khi add_child
+	overlay.set("overlay_mode", true)
+	overlay.process_mode = Node.PROCESS_MODE_ALWAYS
+	host.add_child(overlay)
+	# Màn chơi bên dưới đứng yên hoàn toàn (cả nhận input) cho tới khi đóng lớp phủ
+	host.process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func undo() -> void:
