@@ -39,7 +39,7 @@ func _ready() -> void:
 	# @tool: chỉ gắn hiệu ứng khi CHẠY (trong editor không cần bounce, tránh nhiễu)
 	if Engine.is_editor_hint():
 		return
-	UIAnim.attach_press_bounce(self)
+	UIAnim.attach_press_down(self)
 
 
 func _emit_tab_pressed() -> void:

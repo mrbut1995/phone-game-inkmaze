@@ -1,7 +1,25 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="400" height="60">
-  
-  <rect width="800" height="120" rx="28" fill="#3D83AE" stroke="#265B7D" stroke-width="4" />
-  <rect x="6" y="6" width="788" height="108" rx="23" fill="none" stroke="#C4843A" stroke-width="3" stroke-dasharray="9 6" />
-  <line x1="60" y1="4" x2="60" y2="116" stroke="#FAF5EB" stroke-width="3.5" opacity="0.6" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 150" width="400" height="75" fill="none">
+  <g filter="url(#filter_cta_focus_150)">
+    <path d="M10 75L62 6H762L792 36V114L762 144H62L10 75Z" fill="#FFFCF0"/>
+  </g>
+  <!-- Focus Outer Ring -->
+  <path d="M4 75L64 2.5H764L796 34.5V115.5L764 147.5H64L4 75Z" stroke="#3266B1" stroke-width="3"/>
+  <!-- Ticket Perforation Line -->
+  <path d="M125 30V120" stroke="#B7B8AA" stroke-width="2.5" stroke-dasharray="4 6"/>
+  <!-- Rivet Eyelet -->
+  <circle cx="82" cy="75" r="10" fill="#F2F1EB" stroke="#3266B1" stroke-width="2.5"/>
+  <!-- Inner Contour Line -->
+  <path d="M754 14L784 44V106L754 136H68L20 75L68 14H754Z" stroke="#3266B1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <filter id="filter_cta_focus_150" x="0" y="0" width="800" height="150" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="3"/>
+      <feGaussianBlur stdDeviation="3"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.270588 0 0 0 0 0.262745 0 0 0 0 0.192157 0 0 0 0.08 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+  </defs>
 </svg>

@@ -42,10 +42,20 @@ signal scrolled(delta_y: float)
 ## Nút cùng art to hơn ở màn ngang cho cân bề ngang rộng
 @export_range(0.5, 2.5, 0.01) var node_scale_landscape := 1.28
 ## Độ uốn ngang của đường nối tại điểm giữa mỗi đoạn (dáng chữ S như mockup):
-## lấy theo nhịp dọc SPACING × tỉ lệ này, nhưng KẸP lại để không tràn khỏi khung
+## lấy theo nhịp dọc SPACING × tỉ lệ này, nhưng KẸP lại để không tràn khỏi khung.
+## Dùng khi 2 nút liền nhau lệch chủ yếu theo trục DỌC (bản dọc: nút xếp gần như thẳng cột
+## ⇒ cần uốn NGANG mới ra dáng chữ S).
 @export_range(0.0, 2.0, 0.05) var sway_spacing_ratio := 0.6
+## Tỉ lệ uốn khi 2 nút liền nhau lệch chủ yếu theo trục NGANG (bản ngang: zigzag đã tạo sẵn
+## dáng uốn lượn, uốn VUÔNG GÓC thêm làm tiếp tuyến Catmull-Rom quá lớn ⇒ đường TỰ CẮT
+## thành vòng — đã gặp thật). Đo ở canvas 1635×920 (nút cách nhau 640×200): tỉ lệ ≤ 0,30
+## (uốn ≤ 60 px) không tự cắt; ≥ 0,45 (uốn ≥ 90 px) tự cắt 3 chỗ ⇒ chọn 0,30.
+@export_range(0.0, 1.0, 0.05) var sway_flat_ratio := 0.3
 @export_range(0.0, 200.0, 1.0) var sway_edge_margin := 60.0
 @export_range(0.0, 120.0, 1.0) var sway_min := 28.0
+## Nửa bề rộng art nút màn (nút 112 px ở bản dọc) — dùng để KẸP zigzag cho nút
+## không lòi ra ngoài khung bản đồ ở màn hẹp
+@export_range(0.0, 200.0, 1.0) var node_half_width := 56.0
 
 @export_group("Cờ đích / mũi chỉ")
 ## Nút màn hiển thị 112px (art 2× vẽ ở scale 0.5): nửa nút = 56, LÒNG nút (mặt giấy) = 96
@@ -190,9 +200,9 @@ func _rebuild() -> void:
 		return
 
 	var area := _area_size()
-	var wide := area.x > area.y
+	var wide := is_wide()
 	var spacing := spacing_landscape if wide else spacing_portrait
-	var zigzag := zigzag_landscape if wide else zigzag_portrait
+	var zigzag := _zigzag()
 	var node_scale := node_scale_landscape if wide else 1.0
 	var center_x := area.x * 0.5
 
@@ -226,14 +236,19 @@ func _build_paths(sorted_ids: Array[int], positions: Array[Vector2]) -> void:
 	road.setup(positions, states, _road_sway())
 
 
-## Độ lệch của điểm uốn giữa mỗi đoạn nối: theo nhịp dọc nhưng không vượt mép khung
+## Độ lệch của điểm uốn giữa mỗi đoạn nối: theo nhịp dọc nhưng không vượt mép khung.
+## Chọn tỉ lệ theo HƯỚNG của đoạn nối: bản dọc cần uốn ngang (chữ S), bản ngang đã uốn sẵn
+## nhờ zigzag nên chỉ uốn rất nhẹ (xem `sway_flat_ratio`).
 func _road_sway() -> float:
 	var area := _area_size()
-	var wide := area.x > area.y
+	var wide := is_wide()
 	var spacing := spacing_landscape if wide else spacing_portrait
-	var zigzag := zigzag_landscape if wide else zigzag_portrait
+	var ratio := sway_flat_ratio if wide else sway_spacing_ratio
+	if ratio <= 0.0:
+		return 0.0
+	var zigzag := _zigzag()
 	var room := area.x * 0.5 - zigzag - sway_edge_margin
-	return maxf(sway_min, minf(spacing * sway_spacing_ratio, room))
+	return maxf(sway_min, minf(spacing * ratio, room))
 
 
 ## Các nút màn + canh cờ đích / mũi chỉ
@@ -331,10 +346,28 @@ func _focus_y() -> float:
 	return _area_size().y * 0.5
 
 
-## Có phải màn NGANG (khung rộng hơn cao) — quyết định cỡ nút / khoảng cách
+## Có phải màn NGANG (canvas rộng hơn cao) — quyết định cỡ nút / khoảng cách.
+## LẤY THEO CANVAS (không theo khung `MapArea`): khung này chỉ cao ~62% canvas và nằm trong
+## CỘT NỘI DUNG canh giữa (xem `scripts/scenes/base.gd`), nên với màn DỌC rộng (3:4, cửa sổ
+## lớn…) khung vẫn "rộng hơn cao" ⇒ trước đây bản đồ lỡ dùng thông số NGANG: zigzag 320 làm
+## nút lòi ra ngoài khung + đổi cả trục uốn của đường nối ⇒ đường nối vẽ sai (đã gặp thật).
+## Dùng canvas cho khớp cách `BaseUI` quyết định hướng layout.
 func is_wide() -> bool:
+	var canvas := get_viewport_rect().size
+	if canvas.x > 0.0 and canvas.y > 0.0:
+		return canvas.x > canvas.y
 	var area := _area_size()
 	return area.x > area.y
+
+
+## Độ lệch zigzag đang dùng, KẸP để art nút không lòi ra ngoài khung bản đồ
+func _zigzag() -> float:
+	var area := _area_size()
+	var wide := is_wide()
+	var scale := node_scale_landscape if wide else 1.0
+	var wanted := zigzag_landscape if wide else zigzag_portrait
+	var room := maxf(0.0, area.x * 0.5 - node_half_width * scale - sway_edge_margin)
+	return clampf(wanted, 0.0, room)
 
 
 ## Đặt vị trí cuộn (đã kẹp giới hạn) rồi phát độ dịch cho nền parallax

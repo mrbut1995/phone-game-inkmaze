@@ -16,7 +16,7 @@ extends Control
 signal pressed()
 
 func _ready() -> void:
-	UIAnim.attach_press_bounce(profile_button)
+	UIAnim.attach_press_down(profile_button)
 	_refresh()
 
 

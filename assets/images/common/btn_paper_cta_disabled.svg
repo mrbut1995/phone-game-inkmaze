@@ -1,6 +1,9 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="400" height="60">
-  
-  <rect width="800" height="120" rx="28" fill="#F0ECE3" stroke="#BAC7CF" stroke-width="3" />
-  <line x1="60" y1="4" x2="60" y2="116" stroke="#BAC7CF" stroke-width="3" opacity="0.7" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 150" width="400" height="75" fill="none">
+  <path d="M10 75L62 6H762L792 36V114L762 144H62L10 75Z" fill="#EDEDE6"/>
+  <!-- Ticket Perforation Line -->
+  <path d="M125 30V120" stroke="#B0B2A6" stroke-width="2.5" stroke-dasharray="4 6"/>
+  <!-- Rivet Eyelet -->
+  <circle cx="82" cy="75" r="10" fill="#E2E2DC" stroke="#85887F" stroke-width="2.5"/>
+  <!-- Inner Contour Line -->
+  <path d="M754 14L784 44V106L754 136H68L20 75L68 14H754Z" stroke="#85887F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

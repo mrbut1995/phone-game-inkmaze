@@ -165,7 +165,7 @@ func _connect_pressed(button: BaseButton, handler: Callable) -> void:
 	if button == null:
 		return
 	ensure_signal(button, &"pressed", handler.get_method())
-	UIAnim.attach_press_bounce(button)
+	UIAnim.attach_press_down(button)
 
 
 func _setup_buttons() -> void:
@@ -205,7 +205,7 @@ func _connect_mode_card(card: ModeCard, handler: Callable) -> void:
 	if card.card_pressed.is_connected(handler):
 		return
 	card.card_pressed.connect(handler)
-	UIAnim.attach_press_bounce(card)
+	UIAnim.attach_press_down(card)
 
 
 func _setup_dock_button(button: DockButton, icon_path: String, label: String) -> void:
@@ -320,4 +320,19 @@ func _on_events_changed() -> void:
 
 func _on_event_card_pressed(event_id: StringName) -> void:
 	Sfx.play(Sfx.BTN_CLICK)
+	# Thẻ DAILY mở THẲNG màn Daily (`scenes/daily.tscn`): Daily là event ẢO do EventManager
+	# tạo (không có file .tres, không có màn chi tiết riêng) nên không đi qua `scenes/event.tscn`.
+	# Mọi loại event khác vẫn mở màn chi tiết Event.
+	if _is_daily_event(event_id):
+		Nav.goto_daily()
+		return
 	Nav.goto_event(event_id)
+
+
+## Có phải event DAILY (ảo) không — dùng EventManager để tra loại theo id
+func _is_daily_event(event_id: StringName) -> bool:
+	var em := get_node_or_null("/root/EventManager")
+	if em == null or not em.has_method("get_event"):
+		return event_id == &"daily"
+	var event: EventData = em.call("get_event", event_id)
+	return event != null and event.type == EventData.Type.DAILY

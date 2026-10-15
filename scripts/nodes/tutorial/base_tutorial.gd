@@ -142,7 +142,7 @@ func _wire_button_effects() -> void:
 	for btn in [btn_skip_all, btn_skip, btn_next]:
 		var base_button := btn as BaseButton
 		if base_button != null:
-			UIAnim.attach_press_bounce(base_button)
+			UIAnim.attach_press_down(base_button)
 
 
 ## Hoạt cảnh MỞ BÀI: nền tối hiện dần · thẻ thoại trượt lên · bàn mini + từng ô nở ra so le

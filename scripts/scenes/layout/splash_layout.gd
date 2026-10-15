@@ -11,3 +11,7 @@ extends BaseLayout
 @export var touch_button: TextureButton = null
 @export var fade_overlay: ColorRect = null
 @export var anim_player: AnimationPlayer = null
+## Khối thanh tiến trình nạp (LoadingBox/LoadingLabel/LoadingBar) — xem scripts/manager/LoadingManager.gd
+@export var loading_box: Control = null
+@export var loading_label: Label = null
+@export var loading_bar: ProgressBar = null

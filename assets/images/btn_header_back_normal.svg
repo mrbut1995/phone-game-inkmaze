@@ -1,18 +1,18 @@
-<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g filter="url(#back_normal_shadow)">
-    <path d="M18 6H78L86.4 14.4V74.4L78 82.8H18L9.6 74.4V14.4L18 6Z" fill="#FFFCF0"/>
+<svg width="76" height="76" viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g filter="url(#shadow_normal_76)">
+    <path d="M12 3H64L72 11V63L64 71H12L4 63V11L12 3Z" fill="#FFFCF0"/>
   </g>
-  <path d="M74.1 12.72L79.68 18.3V70.5L74.1 76.08H21.9L16.32 70.5V18.3L21.9 12.72H74.1Z" stroke="#3266B1" stroke-width="1.44"/>
-  <!-- Back Chevron Icon -->
-  <path d="M57 30L38 44.4L57 58.8" fill="none" stroke="#3266B1" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14 7.5H62L67.5 13V61L62 66.5H14L8.5 61V13L14 7.5Z" stroke="#3266B1" stroke-width="1.2"/>
+  <!-- Chevron Icon -->
+  <path d="M46 24.5L29 37L46 49.5" fill="none" stroke="#3266B1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   <defs>
-    <filter id="back_normal_shadow" x="0" y="0" width="96" height="96" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <filter id="shadow_normal_76" x="0" y="0" width="76" height="76" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
       <feFlood flood-opacity="0" result="BackgroundImageFix"/>
       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feOffset dy="3.6"/>
-      <feGaussianBlur stdDeviation="4.8"/>
+      <feOffset dy="2"/>
+      <feGaussianBlur stdDeviation="2"/>
       <feComposite in2="hardAlpha" operator="out"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.270588 0 0 0 0 0.262745 0 0 0 0 0.192157 0 0 0 0.0705882 0"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.270588 0 0 0 0 0.262745 0 0 0 0 0.192157 0 0 0 0.08 0"/>
       <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
       <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
     </filter>

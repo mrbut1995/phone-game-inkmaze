@@ -1,20 +1,20 @@
-<svg width="96" height="97" viewBox="0 0 96 97.2" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g filter="url(#back_focus_shadow)">
-    <path d="M18 7.2H78L86.4 15.6V75.6L78 84H18L9.6 75.6V15.6L18 7.2Z" fill="#FFFCF0"/>
+<svg width="76" height="76" viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g filter="url(#shadow_focus_76)">
+    <path d="M12 3H64L72 11V63L64 71H12L4 63V11L12 3Z" fill="#FFFCF0"/>
   </g>
-  <path d="M74.1 13.92L79.68 19.5V71.7L74.1 77.28H21.9L16.32 71.7V19.5L21.9 13.92H74.1Z" stroke="#3266B1" stroke-width="1.44"/>
-  <!-- Focus Outline Ring -->
-  <path d="M82.3 1.2L92.4 11.3V79.9L82.3 90H13.7L3.6 79.9V11.3L13.7 1.2H82.3Z" stroke="#3266B1" stroke-width="2.4"/>
-  <!-- Back Chevron Icon -->
-  <path d="M57 31.2L38 45.6L57 60" fill="none" stroke="#3266B1" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14 7.5H62L67.5 13V61L62 66.5H14L8.5 61V13L14 7.5Z" stroke="#3266B1" stroke-width="1.2"/>
+  <!-- Focus Outer Ring -->
+  <path d="M11 1H65L74.5 10.5V63.5L65 73H11L1.5 63.5V10.5L11 1Z" stroke="#3266B1" stroke-width="1.8"/>
+  <!-- Chevron Icon -->
+  <path d="M46 24.5L29 37L46 49.5" fill="none" stroke="#3266B1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   <defs>
-    <filter id="back_focus_shadow" x="0" y="1.2" width="96" height="96" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <filter id="shadow_focus_76" x="0" y="0" width="76" height="76" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
       <feFlood flood-opacity="0" result="BackgroundImageFix"/>
       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feOffset dy="3.6"/>
-      <feGaussianBlur stdDeviation="4.8"/>
+      <feOffset dy="2"/>
+      <feGaussianBlur stdDeviation="2"/>
       <feComposite in2="hardAlpha" operator="out"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.270588 0 0 0 0 0.262745 0 0 0 0 0.192157 0 0 0 0.0705882 0"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.270588 0 0 0 0 0.262745 0 0 0 0 0.192157 0 0 0 0.08 0"/>
       <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
       <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
     </filter>

@@ -188,7 +188,7 @@ func _rebind_after_orientation() -> void:
 	for btn in _all_buttons():
 		if btn != null and not btn.has_meta("bounce_attached"):
 			btn.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(btn)
+			UIAnim.attach_press_down(btn)
 	# HUD (và thanh nút bên trong nó) là instance RIÊNG của mỗi bố cục ⇒ đổi cả BIẾN THỂ HUD
 	# (dọc ↔ ngang) rồi gắn lại nút từ HUD mới
 	_apply_hud_for_mode(_mode_id)
@@ -236,7 +236,7 @@ func _ready() -> void:
 	# Những nút trong Game Screen
 	for btn in _all_buttons():
 		if btn != null:
-			UIAnim.attach_press_bounce(btn)
+			UIAnim.attach_press_down(btn)
 
 	if layout != null and layout.status_bar != null:
 		UIAnim.play_slide_in(layout.status_bar, Vector2(0, -25), 0.0, 0.25)
@@ -564,7 +564,7 @@ func _wire_action_bar() -> void:
 	for btn in _all_buttons():
 		if btn != null and not btn.has_meta("bounce_attached"):
 			btn.set_meta("bounce_attached", true)
-			UIAnim.attach_press_bounce(btn)
+			UIAnim.attach_press_down(btn)
 	if game_controller != null:
 		if restart_btn != null and not restart_btn.pressed.is_connected(_on_restart_pressed):
 			restart_btn.pressed.connect(_on_restart_pressed)

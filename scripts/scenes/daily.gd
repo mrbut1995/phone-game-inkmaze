@@ -80,10 +80,10 @@ func _wire_buttons() -> void:
 	ensure_signal(layout.calendar, &"day_selected", &"_on_day_selected")
 	if layout.btn_back != null and not layout.btn_back.has_meta("bounce_attached"):
 		layout.btn_back.set_meta("bounce_attached", true)
-		UIAnim.attach_press_bounce(layout.btn_back)
+		UIAnim.attach_press_down(layout.btn_back)
 	if layout.btn_play != null and not layout.btn_play.has_meta("bounce_attached"):
 		layout.btn_play.set_meta("bounce_attached", true)
-		UIAnim.attach_press_bounce(layout.btn_play)
+		UIAnim.attach_press_down(layout.btn_play)
 		# "Thở" nhẹ để hút mắt vào nút CHƠI — animation "pulse" của layout (PulseAnim)
 		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.btn_play):
 			# Fallback khi layout thiếu PulseAnim

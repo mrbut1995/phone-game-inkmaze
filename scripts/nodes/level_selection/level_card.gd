@@ -67,7 +67,7 @@ func _ready() -> void:
 		_base_tex_seperator = seperator.get("texture") as Texture2D
 	# Dây `Panel.pressed → _on_pressed` khai trong `.tscn` (cùng scene)
 	if panel_btn != null and not is_locked:
-		UIAnim.attach_press_bounce(panel_btn)
+		UIAnim.attach_press_down(panel_btn)
 	update_visuals()
 
 

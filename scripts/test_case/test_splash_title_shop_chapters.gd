@@ -48,6 +48,37 @@ func _init() -> void:
 		"Splash moi khong con Panel/Tagline")
 	assert(splash_portrait.get_node_or_null("Panel/Stamp") == null,
 		"Splash khong con Panel/Stamp")
+
+	# Thanh tiến trình nạp — do autoload LoadingManager điều khiển (xem §13.26)
+	var loading_manager: Node = root.get_node_or_null("LoadingManager")
+	assert(loading_manager != null, "Autoload LoadingManager phai ton tai")
+	if loading_manager != null:
+		assert(loading_manager.has_method("add_step") and loading_manager.has_method("progress"),
+			"LoadingManager phai co add_step/progress/is_loading_done")
+		assert(loading_manager.has_method("is_loading_done") and bool(loading_manager.call("is_loading_done")),
+			"Headless: LoadingManager phai nap xong ngay trong _ready")
+		assert(int(loading_manager.call("pending_steps")) == 0,
+			"Headless: khong con buoc nap nao treo")
+		assert(is_equal_approx(float(loading_manager.call("progress")), 1.0),
+			"Headless: tien do nap = 1.0")
+		var preloaded: Array = loading_manager.get("_preloaded")
+		assert(preloaded.size() > 0, "LoadingManager phai nap san scene cho man ke tiep")
+	for side in [splash_portrait]:
+		assert(side.get_node_or_null("Panel/LoadingBox/LoadingBar") != null,
+			"Splash phai co thanh tien trinh nap (Panel/LoadingBox/LoadingBar)")
+		assert(side.get_node_or_null("Panel/LoadingBox/LoadingLabel") != null,
+			"Splash phai co nhan tien trinh nap")
+	var splash_layout: SplashLayout = splash_inst.layout as SplashLayout
+	assert(splash_layout != null, "SplashScene phai bind duoc SplashLayout")
+	if splash_layout != null:
+		assert(splash_layout.loading_bar != null and splash_layout.loading_label != null,
+			"SplashLayout phai bind loading_bar/loading_label bang @export")
+		if splash_layout.loading_bar != null:
+			assert(is_equal_approx(splash_layout.loading_bar.value, 1.0),
+				"Nap xong thi thanh tien trinh o 100%% (dang %.2f)" % splash_layout.loading_bar.value)
+		if splash_layout.loading_label != null:
+			assert(not splash_layout.loading_label.text.begins_with("STR_"),
+				"Nhan tien trinh hien chu da dich, khong lo khoa tho ('%s')" % splash_layout.loading_label.text)
 	print("[CHECK] SplashScene load va chua day du cac node giao dien truc quan.")
 
 	splash_inst.queue_free()

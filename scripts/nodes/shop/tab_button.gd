@@ -34,7 +34,7 @@ var _row_h := 0.0
 
 func _ready() -> void:
 	set_label_text(TranslationServer.translate(label_key))
-	UIAnim.attach_press_bounce(self)
+	UIAnim.attach_press_down(self)
 	# Dây `pressed → _emit_tab_pressed` khai trong `.tscn` (cùng scene)
 	_apply_own_size()
 

@@ -301,12 +301,12 @@
 # [x] VÒNG 21 (2026-09-27) — TỐI ƯU: UI KHAI TRONG SCENE, TAB TỰ LO (theo yêu cầu user: “optimizing lại code —
 #     xóa code thừa không còn dùng đến / tìm những đoạn tạo scene trực tiếp trong lúc build mà có thể không cần
 #     tạo, VD `_build_tabs()` bên trong Shop → tạo trực tiếp tab trên tscn, connect signal trực tiếp trên tscn,
-#     và attach_press_bounce bên trong ShopTabButton + tương tự với `_build_tabs()` trong ranking.gd”):
+#     và.attach_press_down bên trong ShopTabButton + tương tự với `_build_tabs()` trong ranking.gd”):
 #     · 3 MÀN CÓ TAB KHÔNG CÒN `_build_tabs(): tab là node KHAI SẴN trong scene bố cục (CẢ 2 hướng):
 #         Shop      -> `Tabs/Tab_pen · Tab_theme · Tab_tool · Tab_coin`     (4 tab, `category` + `label_key`)
 #         Ranking   -> `Sheet/Tabs/Tab_dungeon · Tab_play · Tab_daily`      (3 tab, `board_id` + `label_key`)
 #         Sổ tay    -> `Sheet/Tabs/Tab0…Tab4` (category "" · levels · dungeon · daily · special)
-#       Mỗi tab tự lo (component): dịch nhãn từ `label_key` · `UIAnim.attach_press_bounce(self)` · nối
+#       Mỗi tab tự lo (component): dịch nhãn từ `label_key` · `UIAnim.attach_press_down(self)` · nối
 #       `pressed` → phát `tab_pressed(id)` · tự chỉnh cỡ; màn chỉ `_collect_tabs()` gom lại + nối 1 lần
 #       (chống nối trùng bằng `is_connected`) và xoay màn hình chỉ gom lại (không dựng lại node).
 #     · Bề rộng tab: HBox chia đều (`size_flags_horizontal = EXPAND_FILL` khai trong scene) — XÓA hẳn
@@ -578,7 +578,7 @@
 #         SFX `STAR_POP`/`WALL_HIT`/`CELL_STEP`/`WALL_MARK`/`STAMP_IMPACT`.
 #       – TƯỜNG (Wall Builder): `TutorialWallToggle` cho đoạn tường NỞ RA khi bật / co lại khi tắt (kèm SFX).
 #       – HUD bài học: Sum Path CUỘN SỐ “Tổng” (`UIAnim.animate_counter`) + nảy khi khớp mục tiêu; Wall Builder
-#         nảy khung đếm mỗi lần vẽ/xoá tường; cả 3 nút điều hướng dùng `UIAnim.attach_press_bounce()`.
+#         nảy khung đếm mỗi lần vẽ/xoá tường; cả 3 nút điều hướng dùng `UIAnim.attach_press_down()`.
 #     · DEBUG CONSOLE — mục **TUTORIAL (TEST)**: mỗi bài 1 hàng (● đã học / ○ chưa) + “Chạy chuỗi CORE (3 bài)”
 #       + “Đánh dấu xong hết” + “Xoá tiến trình tutorial” + toggle Test mode; NAVIGATE thêm hàng “Tutorial (menu)”.
 #       Vào thẳng 1 bài: `GameManager.request_tutorial(id)` (giữ yêu cầu qua scene change) → `Nav.goto_tutorial()`

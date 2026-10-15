@@ -46,10 +46,10 @@ func _wire_buttons() -> void:
 	ensure_signal(layout.btn_continue, &"pressed", &"_on_continue_pressed")
 	if layout.btn_back != null and not layout.btn_back.has_meta("bounce_attached"):
 		layout.btn_back.set_meta("bounce_attached", true)
-		UIAnim.attach_press_bounce(layout.btn_back)
+		UIAnim.attach_press_down(layout.btn_back)
 	if layout.btn_continue != null and not layout.btn_continue.has_meta("bounce_attached"):
 		layout.btn_continue.set_meta("bounce_attached", true)
-		UIAnim.attach_press_bounce(layout.btn_continue)
+		UIAnim.attach_press_down(layout.btn_continue)
 		# "Thở" nhẹ để hút mắt vào nút TIẾP TỤC — animation "pulse" của layout (PulseAnim)
 		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.btn_continue):
 			# Fallback khi layout thiếu PulseAnim

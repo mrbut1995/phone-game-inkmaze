@@ -26,7 +26,7 @@ func _ready() -> void:
 	# Dây `pressed → _on_back_pressed` khai trong `scenes/credit.tscn` (guard chỉ nối lại nếu mất)
 	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 	if layout.btn_back != null:
-		UIAnim.attach_press_bounce(layout.btn_back)
+		UIAnim.attach_press_down(layout.btn_back)
 	if layout.content_root != null:
 		UIAnim.play_slide_in(layout.content_root, Vector2(0, 24), 0.04, 0.24)
 	_apply_credit_context()

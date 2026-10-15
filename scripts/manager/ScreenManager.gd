@@ -10,6 +10,9 @@ signal history_changed(size: int)
 const MAX_HISTORY := 16
 
 var _history: Array[String] = []
+## Chống xử lý 2 lần cho CÙNG một lần bấm Back (Android vừa phát
+## NOTIFICATION_WM_GO_BACK_REQUEST, vừa có phím Key::BACK)
+var _back_busy := false
 
 
 func _ready() -> void:
@@ -58,12 +61,64 @@ func go_back() -> bool:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	# Nút Back Android / Esc: quay lại màn trước nếu có lịch sử
+	# Phím Esc (desktop) / ui_cancel: quay lại màn trước nếu có lịch sử
 	if not event.is_action_pressed("ui_cancel"):
 		return
-	# Popup đang mở thì để PopupManager xử lý (đóng popup, không đổi màn)
-	var popup_manager: Node = get_node_or_null("/root/PopupManager")
-	if popup_manager != null and popup_manager.has_method("has_open") and bool(popup_manager.call("has_open")):
-		return
-	if go_back():
+	if _handle_back(false):
 		get_viewport().set_input_as_handled()
+
+
+## Nút Back cứng Android: engine KHÔNG phát `ui_cancel` mà gửi notification này cho mọi
+## node (xem Window::_propagate_window_notification). Project đặt
+## `application/config/quit_on_go_back=false` nên app không tự thoát — điều hướng ở đây.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		_handle_back(true)
+
+
+## Một chỗ DUY NHẤT quyết định điều hướng Back. Trả về true nếu đã xử lý xong.
+## `allow_quit` = true chỉ cho luồng Back hệ thống Android (ở màn chính thì thoát app);
+## phím Esc trên desktop giữ nguyên hành vi cũ (không thoát app).
+func _handle_back(allow_quit: bool) -> bool:
+	if _back_busy:
+		return false
+	_back_busy = true
+	call_deferred("_clear_back_busy")
+
+	# Popup đang mở: đóng popup trên cùng, KHÔNG đổi màn hình
+	var popup_manager: Node = get_node_or_null("/root/PopupManager")
+	if popup_manager != null and popup_manager.has_method("has_open") \
+			and bool(popup_manager.call("has_open")):
+		var top_popup: Variant = popup_manager.call("top") if popup_manager.has_method("top") else null
+		if top_popup != null and bool(top_popup.get("close_on_back")) \
+				and popup_manager.has_method("close_top"):
+			popup_manager.call("close_top")
+		return true
+
+	# Còn lịch sử ⇒ lùi về màn trước
+	if go_back():
+		return true
+
+	# Hết lịch sử: về màn chính (SceneManager.go_back() tự fallback, KHÔNG ghi thêm lịch sử);
+	# đang ở màn chính thì thoát app (chỉ luồng Back hệ thống Android)
+	var scene_manager: Node = get_node_or_null("/root/SceneManager")
+	if scene_manager == null:
+		return false
+	if not bool(scene_manager.call("is_main_scene")):
+		scene_manager.call("go_back")
+		return true
+	if allow_quit:
+		_quit_app()
+	return true
+
+
+func _clear_back_busy() -> void:
+	_back_busy = false
+
+
+## Thoát app (Android): lưu dữ liệu trước rồi mới thoát
+func _quit_app() -> void:
+	var save: Node = get_node_or_null("/root/SaveManager")
+	if save != null and save.has_method("flush"):
+		save.call("flush")
+	get_tree().quit()

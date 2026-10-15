@@ -32,15 +32,16 @@ enum PathState {
 @export var color_locked := Color(0.550, 0.640, 0.720, 0.65)    # Xám xanh mờ hơn
 
 @export_group("Độ dày nét theo trạng thái")
-@export var width_complete := 5.0
-@export var width_skipped := 4.5
-@export var width_upcoming := 4.0
-@export var width_locked := 3.5
+## Nét dày hơn để đường nối rõ trên màn điện thoại (canvas 540 px rộng)
+@export var width_complete := 8.0
+@export var width_skipped := 7.0
+@export var width_upcoming := 6.5
+@export var width_locked := 5.5
 
 @export_group("Nét đứt / lấy mẫu")
 ## Độ dài 1 gạch và 1 khe của nét đứt (px)
-@export var dash_length := 10.0
-@export var dash_gap := 7.0
+@export var dash_length := 15.0
+@export var dash_gap := 11.0
 ## Bước lấy mẫu cho nét LIỀN (px) — nhỏ thì đường cong mượt hơn
 @export var solid_sample_step := 3.0
 

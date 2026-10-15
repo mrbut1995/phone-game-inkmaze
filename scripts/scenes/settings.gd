@@ -72,7 +72,7 @@ func _wire_buttons() -> void:
 	for node in [layout.btn_back, layout.chk_haptic, layout.chk_auto_mark, layout.chk_glow,
 			layout.btn_language, layout.btn_guide, layout.btn_credits, layout.btn_reset]:
 		if _wire_once(node):
-			UIAnim.attach_press_bounce(node)
+			UIAnim.attach_press_down(node)
 
 
 ## Xoay màn hình: gắn lại node của layout mới rồi nạp lại giá trị cài đặt lên widget mới

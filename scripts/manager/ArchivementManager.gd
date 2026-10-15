@@ -45,8 +45,25 @@ var _unlocked_seen: Dictionary = {}    # id -> true (đã từng báo "mở kho�
 var coins := 0                         # xu đã nhận từ danh hiệu
 
 
+var _initialized := false
+
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	# Quét + nạp toàn bộ danh hiệu là việc NẶNG ⇒ hoãn tới khi màn Splash đã hiện
+	# (xem LoadingManager). Headless thì LoadingManager gọi lại NGAY nên hành vi không đổi.
+	var boot: Node = get_node_or_null("/root/LoadingManager")
+	if boot != null and boot.has_method("add_step"):
+		boot.call("add_step", Callable(self, "initialize"), "archivements")
+	else:
+		initialize()
+
+
+## Nạp số liệu mặc định + danh sách danh hiệu (idempotent)
+func initialize() -> void:
+	if _initialized:
+		return
+	_initialized = true
 	_stats = STAT_DEFAULTS.duplicate()
 	_load_catalog()
 

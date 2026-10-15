@@ -78,6 +78,60 @@ static func attach_press_bounce(btn: BaseButton, scale_down := 0.94, duration :=
 			tw.tween_property(btn, "scale", Vector2.ONE, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	)
 
+static func attach_press_down(btn: BaseButton, press_offset := 5.0, duration := 0.08) -> void:
+	if btn == null or not is_instance_valid(btn):
+		return
+
+	# Lưu trạng thái để quản lý Tween và chống lỗi trôi nút khi click liên tục
+	var state := {
+		"tween": null,
+		"origin_y": btn.position.y,
+		"is_animating": false
+	}
+
+	# Khi nhấn xuống -> lún xuống theo trục Y
+	btn.button_down.connect(func() -> void:
+		# Chỉ ghi nhận vị trí gốc khi nút đang ở trạng thái nghỉ
+		if not state["is_animating"]:
+			state["origin_y"] = btn.position.y
+			state["is_animating"] = true
+
+		if state["tween"] != null and is_instance_valid(state["tween"]):
+			(state["tween"] as Tween).kill()
+
+		var tw := btn.create_tween()
+		state["tween"] = tw
+		tw.tween_property(btn, "position:y", state["origin_y"] + press_offset, duration)\
+			.set_trans(Tween.TRANS_QUAD)\
+			.set_ease(Tween.EASE_OUT)
+	)
+
+	# Khi thả nút -> nảy nhẹ lên trên rồi trở về vị trí ban đầu
+	var release_action := func() -> void:
+		if state["tween"] != null and is_instance_valid(state["tween"]):
+			(state["tween"] as Tween).kill()
+
+		var tw := btn.create_tween()
+		state["tween"] = tw
+
+		# TRANS_BACK sẽ tự động tạo độ nảy nhẹ (overshoot) qua vị trí gốc rồi hồi lại rất tự nhiên
+		tw.tween_property(btn, "position:y", state["origin_y"], duration * 1.5)\
+			.set_trans(Tween.TRANS_BACK)\
+			.set_ease(Tween.EASE_OUT)
+
+		# Khi hiệu ứng kết thúc hoàn toàn, đánh dấu nút đã về trạng thái nghỉ
+		tw.tween_callback(func() -> void:
+			state["is_animating"] = false
+			btn.position.y = state["origin_y"] # Đảm bảo vị trí chuẩn xác tuyệt đối
+		)
+
+	btn.button_up.connect(release_action)
+
+	# Nếu kéo chuột ra ngoài khi đang ấn
+	btn.mouse_exited.connect(func() -> void:
+		if state["is_animating"] and btn.position.y != state["origin_y"]:
+			release_action.call()
+	)
 
 ## Hiệu ứng hiện hình mờ dần (Fade-in) an toàn tuyệt đối cho node con trong Container
 static func play_fade_in(node: Control, delay := 0.0, duration := 0.25) -> Tween:

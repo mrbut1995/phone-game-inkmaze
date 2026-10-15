@@ -363,7 +363,7 @@ func _attach_popup_animations() -> void:
 		if btn.has_meta("bounce_attached"):
 			continue
 		btn.set_meta("bounce_attached", true)
-		UIAnim.attach_press_bounce(btn)
+		UIAnim.attach_press_down(btn)
 
 
 ## (GIỮ tween) Hiệu ứng xuất hiện so le của các ô — phụ thuộc DỮ LIỆU lúc chạy (thứ tự ô)

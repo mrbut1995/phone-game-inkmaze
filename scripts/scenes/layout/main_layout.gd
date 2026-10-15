@@ -17,7 +17,7 @@ extends BaseLayout
 ## Tổng Sao
 @export var star_chip: StarChip = null
 ## Nút Cài đặt (bánh răng) — dời lên thanh trên
-@export var btn_settings: BaseButton = null
+@export var btn_settings: TextureButton = null
 ## Tiêu đề khối Sự kiện (badge số event + "Xem tất cả")
 @export var event_header: EventHeader = null
 ## Carousel thẻ sự kiện (Daily ghim đầu)
