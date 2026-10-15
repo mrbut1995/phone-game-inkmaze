@@ -15,9 +15,9 @@ func _init() -> void:
 	var test_btn := Button.new()
 	test_btn.size = Vector2(100, 50)
 	root.add_child(test_btn)
-	UIAnim.attach_press_bounce(test_btn)
+	UIAnim.attach_press_down(test_btn)
 	assert(test_btn.pivot_offset == Vector2(50, 25), "UIAnim phai tu can pivot offset ve tam")
-	print("[CHECK] UIAnim.attach_press_bounce hoat dong tot.")
+	print("[CHECK] UIAnim.attach_press_down hoat dong tot.")
 
 	var test_control := Control.new()
 	test_control.size = Vector2(200, 100)

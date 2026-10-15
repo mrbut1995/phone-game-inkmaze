@@ -126,6 +126,22 @@ func _init() -> void:
 		]:
 			assert(card_node.get_node_or_null(child) != null, "EventCard phai co node %s" % child)
 
+	# 7. Thẻ DAILY phải mở THẲNG màn Daily (`scenes/daily.tscn`), KHÔNG qua màn chi tiết Event
+	# (Daily là event ẢO: không có file .tres và không có màn chi tiết riêng).
+	var daily_card: EventCard = null
+	for child in carousel.get_node("ScrollContainer/HBox").get_children():
+		if child is EventCard and str((child as EventCard).get("_event_id")) == "daily":
+			daily_card = child as EventCard
+	assert(daily_card != null, "Carousel phai co the Daily (ghim dau)")
+	# Bấm thẻ = phát signal như cú chạm thật (EventCard -> EventCarousel -> MainScene)
+	daily_card.card_pressed.emit(&"daily")
+	for i in 3:
+		await process_frame
+	var scene_manager := root.get_node_or_null("SceneManager")
+	var now_path := str(scene_manager.call("current_scene_path")) if scene_manager != null else ""
+	assert(now_path == "res://scenes/daily.tscn",
+		"Bam the Daily phai mo scenes/daily.tscn (dang '%s')" % now_path)
+
 	print("\n[SUCCESS] Bo cuc Main Screen moi dung: thanh tren · su kien · 2 the che do · dock 4 nut.\n")
 	main_scene.queue_free()
 	await process_frame

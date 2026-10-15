@@ -78,6 +78,7 @@ func _init() -> void:
 	failures += await _check_drag_inside_outside(scene)
 	failures += await _check_parallax(scene)
 	failures += await _check_landscape(scene)
+	failures += await _check_portrait_wide_column(scene)
 
 	# ---------------------------------------------------------------- Dọn dẹp
 	stage.queue_free()
@@ -202,7 +203,43 @@ func _check_road(map: LevelMap) -> int:
 	if failures == 0:
 		print("[CHECK] Duong noi uon chu S: 1 path qua %d nut (lech giua doan >= %.1fpx), moi nut nam tren duong."
 			% [TEST_IDS, min_bulge])
+	failures += _check_road_no_cross(map)
 	return failures
+
+
+## Đường nối KHÔNG được TỰ CẮT: uốn quá lớn làm tiếp tuyến Catmull-Rom vượt tầm ⇒ đường
+## vẽ thành vòng chồng chéo (đã gặp thật ở bản NGANG với sway 90+ px).
+func _check_road_no_cross(map: LevelMap) -> int:
+	var path := (map.items.get_child(0) as LevelMapPath) if map.items != null else null
+	if path == null or path.path_node == null or path.path_node.curve == null:
+		return 0
+	var crossings := road_crossings(path.path_node.curve.tessellate())
+	if crossings > 0:
+		print("[FAIL] Duong noi TU CAT %d cho (sway qua lon)" % crossings)
+		return 1
+	return 0
+
+
+## Đếm số lần polyline tự cắt (bỏ qua các cặp kề nhau) — dùng chung cho các phép thử
+func road_crossings(poly: PackedVector2Array) -> int:
+	var count := 0
+	for i in range(poly.size() - 1):
+		for j in range(i + 2, poly.size() - 1):
+			if not _segments_cross(poly[i], poly[i + 1], poly[j], poly[j + 1]):
+				continue
+			count += 1
+	return count
+
+
+func _segments_cross(p1: Vector2, p2: Vector2, p3: Vector2, p4: Vector2) -> bool:
+	var d1 := p2 - p1
+	var d2 := p4 - p3
+	var denom := d1.cross(d2)
+	if absf(denom) < 0.0001:
+		return false
+	var t := (p3 - p1).cross(d2) / denom
+	var u := (p3 - p1).cross(d1) / denom
+	return t > 0.02 and t < 0.98 and u > 0.02 and u < 0.98
 
 
 func _check_states(map: LevelMap) -> int:
@@ -537,11 +574,57 @@ func _check_landscape(scene: LevelScenes) -> int:
 	if offset_x <= 70.0:
 		print("[FAIL] Ngang: zigzag phai rong hon ban doc (x = %.1f)" % node.position.x)
 		failures += 1
+	failures += _check_road_no_cross(map)
 	root.size = Vector2i(1080, 1920)
 	await create_timer(0.4).timeout
 	if failures == 0:
 		print("[CHECK] Ngang: nut to hon (scale %.2f), khoang cach %.0f, zigzag rong, du %d nut."
 			% [scale_x, spacing, TEST_IDS])
+	return failures
+
+
+## Màn DỌC nhưng CỘT NỘI DUNG rộng hơn khung bản đồ (canvas 690×920: khung `MapArea` chỉ
+## 690×570 ⇒ "khung rộng hơn cao"). Trước đây bản đồ lấy hướng theo KHUNG nên tưởng là màn
+## NGANG: dùng zigzag 320 ⇒ nút lòi ra ngoài khung + đổi trục uốn của đường nối.
+## Hướng phải lấy theo CANVAS (xem `LevelMap.is_wide`).
+func _check_portrait_wide_column(scene: LevelScenes) -> int:
+	var failures := 0
+	root.size = Vector2i(690, 920)
+	await create_timer(0.6).timeout
+	var canvas := root.get_visible_rect().size
+	if canvas.x >= canvas.y:
+		print("[SKIP] Canvas %s khong phai man DOC — bo qua phep thu" % str(canvas))
+		root.size = Vector2i(1080, 1920)
+		await create_timer(0.4).timeout
+		return failures
+	var map: LevelMap = scene.map
+	var area: Control = map.get_parent()
+	if map.is_wide():
+		print("[FAIL] Canvas DOC %s nhung ban do lai coi la NGANG (khung %s)" % [str(canvas), str(area.size)])
+		failures += 1
+	var node := map.node_for(1)
+	var next_node := map.node_for(2)
+	if node == null or next_node == null:
+		print("[FAIL] Doc-rong: thieu nut man")
+		return failures + 1
+	var spacing := node.position.y - next_node.position.y
+	var zigzag := absf(node.position.x - area.size.x * 0.5)
+	var inside := node.position.x - 56.0 >= 0.0 and node.position.x + 56.0 <= area.size.x
+	if zigzag > 120.0:
+		print("[FAIL] Doc-rong: zigzag phai theo ban DOC (%.1f > 120)" % zigzag)
+		failures += 1
+	if not inside:
+		print("[FAIL] Doc-rong: nut bi loi ra ngoai khung (x = %.1f, khung %.0f)" % [node.position.x, area.size.x])
+		failures += 1
+	if spacing > 180.0:
+		print("[FAIL] Doc-rong: khoang cach nut phai theo ban DOC (%.1f > 180)" % spacing)
+		failures += 1
+	failures += _check_road_no_cross(map)
+	root.size = Vector2i(1080, 1920)
+	await create_timer(0.4).timeout
+	if failures == 0:
+		print("[CHECK] Doc-rong (canvas %s, khung %s): van dung bo cuc DOC — zigzag %.0f, cach %.0f, nut trong khung."
+			% [str(canvas), str(area.size), zigzag, spacing])
 	return failures
 
 

@@ -69,7 +69,7 @@ func _setup_button_effects() -> void:
 		if button == null or button.has_meta("bounce_attached"):
 			continue
 		button.set_meta("bounce_attached", true)
-		UIAnim.attach_press_bounce(button)
+		UIAnim.attach_press_down(button)
 	if layout.btn_continue != null:
 		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse_continue", layout.btn_continue):
 			UIAnim.play_pulse(layout.btn_continue, 1.03, 1.8)
@@ -289,6 +289,11 @@ func _on_continue_pressed() -> void:
 
 func _on_back_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
+	# Lùi về màn TRƯỚC (thường là Main, hoặc Chọn Chương nếu vào từ đó) và KHÔNG ghi thêm
+	# lịch sử — ghi thêm sẽ khiến Back ở màn sau nhảy ngược về đây.
+	var screen := get_node_or_null("/root/ScreenManager")
+	if screen != null and screen.has_method("go_back") and bool(screen.call("go_back")):
+		return
 	Nav.goto_main()
 
 

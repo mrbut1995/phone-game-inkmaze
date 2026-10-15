@@ -34,7 +34,7 @@ func _ready() -> void:
 	# Hiệu ứng nhấn nảy (guard: không gắn trùng khi node bị tái sử dụng)
 	if not has_meta("bounce_attached"):
 		set_meta("bounce_attached", true)
-		UIAnim.attach_press_bounce(self, 0.93, 0.09)
+		UIAnim.attach_press_down(self, 0.93, 0.09)
 
 
 ## (GIỮ tween) Hiệu ứng xuất hiện so le khi dựng lại lưới / lật trang — thứ tự ô là dữ liệu lúc chạy

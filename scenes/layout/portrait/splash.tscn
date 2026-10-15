@@ -166,7 +166,26 @@ _data = {
 &"play_exit": SubResource("Animation_exit_splash")
 }
 
-[node name="Portrait" unique_id=1022756227 node_paths=PackedStringArray("studio_label", "logo_container", "logo", "title_label", "tagline_label", "touch_button", "fade_overlay", "anim_player") instance=ExtResource("1_parent")]
+[sub_resource type="StyleBoxFlat" id="sb_load_track"]
+bg_color = Color(0.8980392, 0.87058824, 0.827451, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.7607843, 0.7137255, 0.6392157, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="sb_load_fill"]
+bg_color = Color(0.23921569, 0.5137255, 0.68235296, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="Portrait" unique_id=1022756227 node_paths=PackedStringArray("studio_label", "logo_container", "logo", "title_label", "tagline_label", "touch_button", "fade_overlay", "anim_player", "loading_box", "loading_label", "loading_bar") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 studio_label = NodePath("")
 logo_container = NodePath("Panel/LogoContainer")
@@ -176,6 +195,9 @@ tagline_label = NodePath("")
 touch_button = NodePath("TouchButton")
 fade_overlay = NodePath("FadeOverlay")
 anim_player = NodePath("AnimationPlayer")
+loading_box = NodePath("Panel/LoadingBox")
+loading_label = NodePath("Panel/LoadingBox/LoadingLabel")
+loading_bar = NodePath("Panel/LoadingBox/LoadingBar")
 
 [node name="Panel" type="TextureRect" parent="." index="0" unique_id=125026115]
 layout_mode = 1
@@ -223,6 +245,36 @@ theme_type_variation = &"MainTitle"
 text = "Invisible Gear"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="LoadingBox" type="VBoxContainer" parent="Panel" index="2" unique_id=1712045566]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18
+anchor_top = 0.62
+anchor_right = 0.82
+anchor_bottom = 0.7
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="LoadingBar" type="ProgressBar" parent="Panel/LoadingBox" index="0" unique_id=1300572119]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+max_value = 1.0
+step = 0.001
+show_percentage = false
+theme_override_styles/background = SubResource("sb_load_track")
+theme_override_styles/fill = SubResource("sb_load_fill")
+
+[node name="LoadingLabel" type="Label" parent="Panel/LoadingBox" index="1" unique_id=1055413042]
+layout_mode = 2
+theme_type_variation = &"SplashLoadingLabel"
+text = "0%"
+horizontal_alignment = 1
 
 [node name="TouchButton" type="TextureButton" parent="." index="1" unique_id=179601720]
 layout_mode = 1

@@ -1,6 +1,6 @@
-<svg width="77" height="77" viewBox="0 0 76.8 76.8" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8.4 0H68.4L76.8 8.4V68.4L68.4 76.8H8.4L0 68.4V8.4L8.4 0Z" fill="#EDEDE6"/>
-  <path d="M64.5 6.72L70.08 12.3V64.5L64.5 70.08H12.3L6.72 64.5V12.3L12.3 6.72H64.5Z" stroke="#85887F" stroke-width="1.44"/>
-  <!-- Back Chevron Icon (Disabled state) -->
-  <path d="M47.5 24L28.5 38.4L47.5 52.8" fill="none" stroke="#85887F" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="76" height="76" viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 3H64L72 11V63L64 71H12L4 63V11L12 3Z" fill="#EDEDE6"/>
+  <path d="M14 7.5H62L67.5 13V61L62 66.5H14L8.5 61V13L14 7.5Z" stroke="#85887F" stroke-width="1.2"/>
+  <!-- Chevron Icon (Disabled) -->
+  <path d="M46 24.5L29 37L46 49.5" fill="none" stroke="#85887F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

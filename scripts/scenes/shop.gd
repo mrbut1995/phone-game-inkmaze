@@ -151,15 +151,15 @@ func _wire_buttons() -> void:
 	ensure_signal(layout.btn_next, &"pressed", &"_on_next_page")
 	ensure_signal(layout.btn_gift, &"pressed", &"_on_gift_pressed")
 	if _wire_once(layout.btn_back):
-		UIAnim.attach_press_bounce(layout.btn_back)
+		UIAnim.attach_press_down(layout.btn_back)
 	if _wire_once(layout.wallet_plus):
-		UIAnim.attach_press_bounce(layout.wallet_plus)
+		UIAnim.attach_press_down(layout.wallet_plus)
 	if _wire_once(layout.btn_prev):
-		UIAnim.attach_press_bounce(layout.btn_prev)
+		UIAnim.attach_press_down(layout.btn_prev)
 	if _wire_once(layout.btn_next):
-		UIAnim.attach_press_bounce(layout.btn_next)
+		UIAnim.attach_press_down(layout.btn_next)
 	if _wire_once(layout.btn_gift):
-		UIAnim.attach_press_bounce(layout.btn_gift)
+		UIAnim.attach_press_down(layout.btn_gift)
 		# "Thở" nhẹ để hút mắt vào nút quà tặng — animation "pulse" của layout (PulseAnim)
 		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.btn_gift):
 			# Fallback khi layout thiếu PulseAnim

@@ -34,11 +34,28 @@ var _last_login_day: String = ""
 ## Offset thời gian giả (debug): số giây cộng thêm vào now_utc()
 var _debug_time_offset: int = 0
 
+## Đã chạy nạp danh mục/event chưa (LoadingManager gọi `initialize()` — xem đầu file)
+var _initialized := false
+
 # ---------------------------------------------------------------------------
 # LIFECYCLE
 # ---------------------------------------------------------------------------
 
 func _ready() -> void:
+	# Quét thư mục + nạp toàn bộ EventData là việc NẶNG ⇒ hoãn tới khi màn Splash đã hiện
+	# (xem LoadingManager). Headless thì LoadingManager gọi lại NGAY nên hành vi không đổi.
+	var boot: Node = get_node_or_null("/root/LoadingManager")
+	if boot != null and boot.has_method("add_step"):
+		boot.call("add_step", Callable(self, "initialize"), "events")
+	else:
+		initialize()
+
+
+## Nạp toàn bộ EventData + ghi nhận ngày đăng nhập (idempotent)
+func initialize() -> void:
+	if _initialized:
+		return
+	_initialized = true
 	_load_all_events()
 	# Gọi on_app_day_started mỗi khi game khởi động (đếm login streak)
 	on_app_day_started()

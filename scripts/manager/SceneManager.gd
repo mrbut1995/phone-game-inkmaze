@@ -209,7 +209,9 @@ func consume_pending_event_id() -> StringName:
 	return id
 
 
-## Quay lại màn trước theo lịch sử ScreenManager
+## Quay lại màn trước theo lịch sử ScreenManager.
+## Hết lịch sử ⇒ về Main và KHÔNG ghi thêm lịch sử (nếu ghi, Back ở Main sẽ nhảy ngược lại
+## màn vừa rời — lỗi "Back không về được" khi bấm liên tiếp).
 func go_back() -> void:
 	var screen: Node = get_node_or_null("/root/ScreenManager")
 	if screen != null and screen.has_method("pop_history"):
@@ -217,7 +219,12 @@ func go_back() -> void:
 		if not prev.is_empty():
 			change_scene(prev, false)
 			return
-	goto_main()
+	change_scene(SCENE_MAIN, false)
+
+
+## Đang ở màn chính hay không (dùng cho luồng Back cứng Android)
+func is_main_scene() -> bool:
+	return current_scene_path() == SCENE_MAIN
 
 
 func _play_transition_sfx(style: String) -> void:

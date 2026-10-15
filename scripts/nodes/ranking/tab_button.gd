@@ -42,7 +42,7 @@ func _ready() -> void:
 	var height := custom_minimum_size.y if custom_minimum_size.y > 0.0 else DEFAULT_HEIGHT
 	custom_minimum_size = Vector2(0.0, height)
 	set_label_text(TranslationServer.translate(label_key))
-	UIAnim.attach_press_bounce(self)
+	UIAnim.attach_press_down(self)
 	# Dây `pressed → _emit_tab_pressed` khai trong `.tscn` (cùng scene)
 
 

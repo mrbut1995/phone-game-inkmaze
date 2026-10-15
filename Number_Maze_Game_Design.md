@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Tài liệu** | Number Maze — Game Design Document (InkMaze) |
-| **Phiên bản** | v2.21 — 2026-10-11 (**EVENT SYSTEM + GIAO DIỆN MAIN MỚI**: thêm **hệ thống Sự kiện** data-driven (`EventData`/`EventTheme`/`EventReward` `.tres`, autoload **`EventManager`**, thẻ `EventCard` 340×504 + carousel `EventCarousel`/`EventDots`, màn chi tiết `scenes/event.tscn`, 8 theme + 8 event + màn event riêng, test `test_event_manager` 33 check) → **§15**; **Main Screen bố cục lại cả 2 hướng**: thanh trên (Hồ sơ · Xu · Sao · Cài đặt) + khối Sự kiện (Daily **ghim đầu**, bỏ thẻ Daily riêng) + 2 thẻ giấy `ModeCard` 9-slice (Play · Dungeon) + dock 4 nút (Cửa hàng · Xếp hạng · Danh hiệu · Luật chơi); bỏ tờ giấy lớn/hero/hàng nút `btn_menu_utility_*`; harness `dev_aspects -- --only=main,event` **20/20 OK**) · v2.20 — 2026-09-28 (**ĐA NGÔN NGỮ — QUÉT CHUỖI CỨNG → KHOÁ DỊCH · DỌN KHOÁ CHẾT · SỬA MOJIBAKE CSV**: thêm bộ công cụ `tools/content/` (`audit_localization.py` quét & chặn hồi quy · `migrate_hardcoded_text.py` đổi chuỗi cứng → khoá · `fix_mojibake.py` sửa CSV từng ô); 16 chuỗi trong `.tscn` + chữ HUD/ô/nút công cụ/đếm bước tutorial trong script đổi sang `tr()` · **28 thành tựu** (`title_key`/`desc_key`) + **4 chương** (`title_key`/`subtitle_key`) lấy chữ qua `ChapterData.display_title()`; `string_extra.csv` **+73 khoá mới** (en/vi) và **xoá 76 khoá chết**; `string.csv` (91 dòng) **sửa xong mojibake nội dung ở cả 19 ngôn ngữ**; test mới `test_localization` (50 check) chặn mojibake/khoá thiếu/tên node bị đổi thành khoá → §14) · v2.19 — 2026-09-27 (**TUTORIAL KHAI TRONG SCENE + HIỆU ỨNG + TEST TRONG DEBUG**: toàn bộ UI/khung/bàn mini của 7 bài học đưa từ script vào `.tscn` — `base_tutorial.tscn` khai 13 node + 5 StyleBox + 6 chấm tiến độ, mỗi bài khai `BoardPanel` · ô `Cell1…CellN` (component **`TutorialCell`**) · `PathLine` · HUD · nút tường (**`TutorialWallToggle`**) · `BtnSubmit`; 3 nút điều hướng + 2 nút tường + nút GỬI nối bằng `[connection]` trong scene; art chuyển sang SVG (`tutorial_pointer/spotlight/wall/board_paper.svg`); script chỉ còn `@export` bind + luật chơi ⇒ **sửa 3 lỗi thật** (bàn mini bị đẩy ra ngoài màn hình do neo CENTER · kéo đường không ăn vì BoardHost nuốt chuột · so toạ độ lệch không gian) → §10.2h; **HIỆU ỨNG**: mở bài nở so le · chấm bước nảy · vòng sáng trượt + thở · ô nháy đỏ khi sai / nở khi đi qua · toast nở ra · chữ nổi `✓`/`+N` · HUD cuộn số · tường nở ra (dùng `UIAnim`/`Sfx`, không node mới); **DEBUG**: thêm mục **TUTORIAL (TEST)** vào Debug Console — vào thẳng từng bài qua `request_tutorial()`/`take_tutorial_request()`, “Test mode” không ghi tiến trình, xong bài ở lại màn Tutorial → §9.2) · v2.18 — 2026-09-27 (**HUD “CHỈ HIỆN THỨ CẦN THIẾT”**: mỗi HUD chỉ còn đúng thẻ cần (Dungeon Step+Floor · Countdown Budget · Fog Lượt thử lại · Sum Path Tổng+Mục tiêu · mode khác chỉ Time), node thừa **xoá hẳn** khỏi cả 2 hướng (bản DỌC dùng node kế thừa thì chỉ ẩn được) → §10.1 · §10.2g) · v2.17 — 2026-09-27 (**TỐI ƯU: UI KHAI TRONG SCENE — TAB TỰ LO**: 3 màn có tab (Cửa hàng · Xếp hạng · Sổ tay thành tựu) **không còn dựng tab bằng code** — tab là node **KHAI SẴN trong scene bố cục** (`Tabs/*`, mỗi hướng 1 bản), mỗi tab tự khai `category`/`board_id` + `label_key`, **tự nối `pressed` → `tab_pressed`** và tự chỉnh cỡ; script màn chỉ `_collect_tabs()` gom lại (hết `_build_tabs()`); lưới ô của Cửa hàng cũng thành node **khai sẵn dùng lại** (không instantiate lại mỗi lần đổi tab/trang); Xếp hạng **dùng lại hàng** khi đổi bảng; dọn code thừa (`TAB_*_SCENE` · `_fit_tab_widths` · `apply_row_layout` · `_capture_tab_layout`) → §10.2g; **BÀN CỜ**: 4 **node MẪU** (ô · tường · neo · vệt mực cũ) khai trong `nodes/game/board_layers.tscn` — board `_spawn_template()` = `duplicate()` thay `instantiate()`, cỡ THIẾT KẾ của tường/vệt mực đọc từ node mẫu (bỏ `_read_scene_line_width()` + 4 `preload()`); **Cửa hàng**: bàn nháp thử bút (`Content/List/Pad` · `PadSlot/Pad`) + hàng VIP *Xoá quảng cáo* (`Content/List/NoAds`) cũng khai sẵn trong 2 scene bố cục; `test_ui_scenes` thêm **mục 8** = hàng rào: script nào còn `preload()/instantiate()` scene ĐÃ khai sẵn thì FAIL) · v2.16 — 2026-09-27 (**TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI + MỰC TÔ TAY**: công cụ 8 giờ biết **TÔ GIÁ TRỊ** thay vì chỉ sinh tường — `countdown_cost` có ô **Tổng chi phí đường đi** (chia 1..4 cho các ô sao cho TỔNG khớp, tự nâng `max_steps`), `sum_path` có ô **Tổng điểm đường đi** (chia 1..9), `fading_ink` thêm công cụ 7 **tô MỰC từng ô** + ô **Mực dư mỗi bước** (mực tăng dần theo bước); GAME: Sum Path **không tính S/F** nữa (tổng khớp đúng số thiết kế), Countdown Cost **tôn trọng `max_steps` của màn**, Fading Ink đọc **mực tô tay** → §10.2f) · v2.15 — 2026-09-27 (**VẼ ĐƯỜNG ĐI TRONG TOOL + MÀN MẪU CHO MỌI CHẾ ĐỘ**: công cụ **8** = kéo chuột vẽ đường S→F rồi `Ctrl+Enter` để sinh tường quanh nó (nét vẽ thành **ĐƯỜNG DUY NHẤT**, tự đặt S/F + `max_steps`); thêm **6 màn mẫu 15–20** phủ nốt mọi chế độ Special (mỗi chế độ 1 màn); **sửa LỖI THẬT của One Stroke** (thuật toán phủ kín luôn từ chối nước cuối bước vào F ⇒ màn thiết kế trước đây luôn âm thầm bị thay bằng bàn tự sinh); Debug Console (F9) nhảy được **mọi** màn + đánh dấu màn ◆ chế độ → §10.2f) · v2.14 — 2026-09-27 (**KIỂU EDIT THEO CHẾ ĐỘ + BỎ `dungeon` KHỎI MÀN**: mỗi chế độ có **1 kiểu edit** riêng trong tool (`custom_cell_values`, công cụ **7**): Minesweeper **GHIM MÌN** · Sum Path **ĐIỂM Ô** 1..9 · Countdown Cost **CHI PHÍ Ô** 1..4 (ô không tô = game tự sinh, cố định theo màn); `dungeon` bị **loại khỏi danh sách chế độ của màn** (validator báo LỖI, game coi như `play`) → §10.2f) · v2.13 — 2026-09-27 (**MÀN CHƠI CHẾ ĐỘ SPECIAL + SKIP LEVEL**: màn khai `mode_id` trong LevelData ⇒ game chạy chế độ Special **TRÊN ĐÚNG BÀN NHÀ THIẾT KẾ VẼ** (tường + cell_mask), "gia vị" của chế độ (mìn · điểm ô · chi phí · mực) **CỐ ĐỊNH theo `level_id`**; thêm **nút SKIP LEVEL** trên thanh hành động (chỉ hiện khi chơi MÀN, bấm ⇒ mở khoá màn kế trong chương mà KHÔNG ghi Sao); tool level_designer báo luật riêng theo chế độ → §10.2f) · v2.12 — 2026-09-26 (**THANH HÀNH ĐỘNG MỚI + GIỚI HẠN LƯỢT**: bỏ hẳn 2 nút công cụ VẼ ĐƯỜNG/GHI NHỚ (bàn cờ tự nhận thao tác), **nút CHƠI LẠI dời từ thanh trạng thái xuống thanh hành động** (cả 2 hướng), thêm nút **GỬI BÀI (`Submit`)** cho Wall Builder, **GIỚI HẠN lượt UNDO/HINT mỗi màn** (mặc định 3) + badge **`PanelLimit`** hiện số lượt còn lại và **khoá nút khi hết lượt** → §10.2e) · v2.11 — 2026-09-26 (**HAI KIỂU HIỂN THỊ ĐIỂM**: bản NHÚNG (HUD ngang) = ảnh SẠCH chữ + badge số + DANH SÁCH điểm đầy đủ bên phải; bản POPUP = ảnh giữ NGUYÊN chữ như mockup, KHÔNG badge + KHÔNG khối ĐIỂM (ảnh nở hết bề ngang) — MỌI chữ mô tả trên ảnh đều thành ĐIỂM có hàng trong danh sách → §10.2d) · v2.10 — 2026-09-26 (**SỬA LỖI LẬT TRANG + ẢNH SẠCH**: cụm điều hướng nhúng về **BĂNG ĐÁY khung**, ẩn mọi chữ mô tả trên ảnh) · v2.9 — 2026-09-26 (**BỐ CỤC CỐ ĐỊNH cho hệ hướng dẫn**) · v2.8 — 2026-09-26 (**HƯỚNG DẪN theo mockup landscape**) · v2.7 — 2026-02 (**TÁCH hệ hướng dẫn**) · v2.6 — 2026-02 (**Nền tảng đa tỉ lệ mới**) · v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze**) · v2.4 — 2026-09-19 (2 mode mới vào vòng xoay Daily 9 ngày) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
+| **Phiên bản** | v2.27 — 2026-10-15 (**THẺ DAILY TRÊN MAIN MỞ THẲNG MÀN DAILY**: `MainScene._on_event_card_pressed()` trước đây đẩy MỌI thẻ qua `Nav.goto_event()` nên bấm thẻ Daily lại mở `scenes/event.tscn` (phải bấm thêm CTA mới tới Daily); nay tra loại qua `EventManager.get_event()` — `type == DAILY` → `Nav.goto_daily()`, các loại khác vẫn mở màn chi tiết Event; `test_main_layout` thêm phép gác "bấm thẻ Daily phải ra `res://scenes/daily.tscn`" (đã thử phá thì test FAIL đúng như thiết kế)) · v2.26 — 2026-10-14 (**BẢN ĐỒ CHỌN MÀN, BẢN NGANG: hết tự cắt**: điểm uốn vuông góc ở bản ngang (nút lệch 640×200) làm tiếp tuyến Catmull-Rom quá lớn ⇒ đường nối tự cắt thành hình chữ X (probe đếm **3 chỗ**); thêm `sway_flat_ratio` (bản ngang uốn nhẹ 0,30 thay vì 0,60 — quét thử: ≤0,30 sạch, ≥0,45 tự cắt 3 chỗ), `test_levels_map` thêm `road_crossings()` chặn đường TỰ CẮT ở cả 3 phép thử) · v2.25 — 2026-10-14 (**BẢN ĐỒ CHỌN MÀN: hướng màn hình lấy theo CANVAS + nét nối dày hơn**: `LevelMap.is_wide()` trước đây so khung `MapArea` (chỉ cao 62 % canvas, nằm trong cột nội dung) nên màn DỌC rộng (3:4, cửa sổ lớn khi test) bị coi là NGANG ⇒ zigzag 320 làm nút lòi ra ngoài khung + đổi trục uốn khiến đường nối vẽ sai dáng chữ S; nay lấy theo canvas, thêm `_zigzag()` kẹp theo bề rộng khung (`node_half_width`), nét nối dày hơn (5→8 · 4,5→7 · 4→6,5 · 3,5→5,5 px; gạch đứt 10/7 → 15/11), `test_levels_map` thêm mục gác `_check_portrait_wide_column()`) · v2.24 — 2026-10-14 (**`LoadingManager` + THANH TIẾN TRÌNH Ở SPLASH**: gom việc **nạp/khởi động** vào autoload `LoadingManager` — autoload nặng đăng ký `add_step(initialize)` và manager còn **nạp sẵn scene** (`PRELOAD_SCENES`: title · main · levels) rồi giữ tham chiếu; màn Splash có `Panel/LoadingBox` (`ProgressBar` + nhãn `STR_LOADING_PROGRESS`, theme variation `SplashLoadingLabel`) hiện tiến trình 0→100 % và **chờ nạp xong + 1,2 s tối thiểu** mới sang Title) · v2.23 — 2026-10-14 (**KHỞI ĐỘNG "SPLASH TRƯỚC, NẠP SAU" + NÚT BACK CỨNG ANDROID**: thêm autoload **`BootManager`** (nay là `LoadingManager`) hoãn 4 việc nạp nặng (`LocalizationManager` · `PlayerProfileManager` · `EventManager` · `ArchivementManager`) tới SAU frame Splash đầu tiên ⇒ hết màn hình đen sau icon app (frame đầu **1216 → 397 ms**); `project.godot` thêm ảnh **boot splash** (`assets/images-png/boot_splash.png` sinh bằng `tools/make_boot_splash.py`, nền giấy `#FAF5EB` + logo) + `quit_on_go_back=false`; `export_presets.cfg` đổi nền system splash & nền cửa sổ từ đen sang `#FAF5EB`; nút **Back cứng Android** nay điều hướng qua `ScreenManager` (bắt `NOTIFICATION_WM_GO_BACK_REQUEST`) thay vì thoát app, lịch sử điều hướng không còn bị "bẩn") · v2.22 — 2026-10-13 (**8 EVENTDATA MÙA VỤ + MÀU TIÊU ĐỀ RIÊNG THEO THEME**: thêm 8 `EventData` (Anniversary · Autumn · Easter · New Year · Spring · Summer · Thanksgiving · Valentine — mỗi event 3 màn + 2 quà Xu + lịch UTC) ⇒ **16 event** gồm Daily ảo; `title_color`/`title_outline` riêng cho **cả 16 theme** (chọn theo tông thật của vùng chữ trên art, viền 5 px, test chặn trùng màu + bắt tương phản ≥ 4,5:1); `EventManager` bỏ trần 8 thẻ, `EventDots` tạo chấm theo số trang, Main có cờ tạm `show_all_events_for_preview` để xem thử mọi event) · v2.21 — 2026-10-11 (**EVENT SYSTEM + GIAO DIỆN MAIN MỚI**: thêm **hệ thống Sự kiện** data-driven (`EventData`/`EventTheme`/`EventReward` `.tres`, autoload **`EventManager`**, thẻ `EventCard` 340×504 + carousel `EventCarousel`/`EventDots`, màn chi tiết `scenes/event.tscn`, 8 theme + 8 event + màn event riêng, test `test_event_manager` 33 check) → **§15**; **Main Screen bố cục lại cả 2 hướng**: thanh trên (Hồ sơ · Xu · Sao · Cài đặt) + khối Sự kiện (Daily **ghim đầu**, bỏ thẻ Daily riêng) + 2 thẻ giấy `ModeCard` 9-slice (Play · Dungeon) + dock 4 nút (Cửa hàng · Xếp hạng · Danh hiệu · Luật chơi); bỏ tờ giấy lớn/hero/hàng nút `btn_menu_utility_*`; harness `dev_aspects -- --only=main,event` **20/20 OK**) · v2.20 — 2026-09-28 (**ĐA NGÔN NGỮ — QUÉT CHUỖI CỨNG → KHOÁ DỊCH · DỌN KHOÁ CHẾT · SỬA MOJIBAKE CSV**: thêm bộ công cụ `tools/content/` (`audit_localization.py` quét & chặn hồi quy · `migrate_hardcoded_text.py` đổi chuỗi cứng → khoá · `fix_mojibake.py` sửa CSV từng ô); 16 chuỗi trong `.tscn` + chữ HUD/ô/nút công cụ/đếm bước tutorial trong script đổi sang `tr()` · **28 thành tựu** (`title_key`/`desc_key`) + **4 chương** (`title_key`/`subtitle_key`) lấy chữ qua `ChapterData.display_title()`; `string_extra.csv` **+73 khoá mới** (en/vi) và **xoá 76 khoá chết**; `string.csv` (91 dòng) **sửa xong mojibake nội dung ở cả 19 ngôn ngữ**; test mới `test_localization` (50 check) chặn mojibake/khoá thiếu/tên node bị đổi thành khoá → §14) · v2.19 — 2026-09-27 (**TUTORIAL KHAI TRONG SCENE + HIỆU ỨNG + TEST TRONG DEBUG**: toàn bộ UI/khung/bàn mini của 7 bài học đưa từ script vào `.tscn` — `base_tutorial.tscn` khai 13 node + 5 StyleBox + 6 chấm tiến độ, mỗi bài khai `BoardPanel` · ô `Cell1…CellN` (component **`TutorialCell`**) · `PathLine` · HUD · nút tường (**`TutorialWallToggle`**) · `BtnSubmit`; 3 nút điều hướng + 2 nút tường + nút GỬI nối bằng `[connection]` trong scene; art chuyển sang SVG (`tutorial_pointer/spotlight/wall/board_paper.svg`); script chỉ còn `@export` bind + luật chơi ⇒ **sửa 3 lỗi thật** (bàn mini bị đẩy ra ngoài màn hình do neo CENTER · kéo đường không ăn vì BoardHost nuốt chuột · so toạ độ lệch không gian) → §10.2h; **HIỆU ỨNG**: mở bài nở so le · chấm bước nảy · vòng sáng trượt + thở · ô nháy đỏ khi sai / nở khi đi qua · toast nở ra · chữ nổi `✓`/`+N` · HUD cuộn số · tường nở ra (dùng `UIAnim`/`Sfx`, không node mới); **DEBUG**: thêm mục **TUTORIAL (TEST)** vào Debug Console — vào thẳng từng bài qua `request_tutorial()`/`take_tutorial_request()`, “Test mode” không ghi tiến trình, xong bài ở lại màn Tutorial → §9.2) · v2.18 — 2026-09-27 (**HUD “CHỈ HIỆN THỨ CẦN THIẾT”**: mỗi HUD chỉ còn đúng thẻ cần (Dungeon Step+Floor · Countdown Budget · Fog Lượt thử lại · Sum Path Tổng+Mục tiêu · mode khác chỉ Time), node thừa **xoá hẳn** khỏi cả 2 hướng (bản DỌC dùng node kế thừa thì chỉ ẩn được) → §10.1 · §10.2g) · v2.17 — 2026-09-27 (**TỐI ƯU: UI KHAI TRONG SCENE — TAB TỰ LO**: 3 màn có tab (Cửa hàng · Xếp hạng · Sổ tay thành tựu) **không còn dựng tab bằng code** — tab là node **KHAI SẴN trong scene bố cục** (`Tabs/*`, mỗi hướng 1 bản), mỗi tab tự khai `category`/`board_id` + `label_key`, **tự nối `pressed` → `tab_pressed`** và tự chỉnh cỡ; script màn chỉ `_collect_tabs()` gom lại (hết `_build_tabs()`); lưới ô của Cửa hàng cũng thành node **khai sẵn dùng lại** (không instantiate lại mỗi lần đổi tab/trang); Xếp hạng **dùng lại hàng** khi đổi bảng; dọn code thừa (`TAB_*_SCENE` · `_fit_tab_widths` · `apply_row_layout` · `_capture_tab_layout`) → §10.2g; **BÀN CỜ**: 4 **node MẪU** (ô · tường · neo · vệt mực cũ) khai trong `nodes/game/board_layers.tscn` — board `_spawn_template()` = `duplicate()` thay `instantiate()`, cỡ THIẾT KẾ của tường/vệt mực đọc từ node mẫu (bỏ `_read_scene_line_width()` + 4 `preload()`); **Cửa hàng**: bàn nháp thử bút (`Content/List/Pad` · `PadSlot/Pad`) + hàng VIP *Xoá quảng cáo* (`Content/List/NoAds`) cũng khai sẵn trong 2 scene bố cục; `test_ui_scenes` thêm **mục 8** = hàng rào: script nào còn `preload()/instantiate()` scene ĐÃ khai sẵn thì FAIL) · v2.16 — 2026-09-27 (**TÔ GIÁ TRỊ THEO ĐƯỜNG ĐI + MỰC TÔ TAY**: công cụ 8 giờ biết **TÔ GIÁ TRỊ** thay vì chỉ sinh tường — `countdown_cost` có ô **Tổng chi phí đường đi** (chia 1..4 cho các ô sao cho TỔNG khớp, tự nâng `max_steps`), `sum_path` có ô **Tổng điểm đường đi** (chia 1..9), `fading_ink` thêm công cụ 7 **tô MỰC từng ô** + ô **Mực dư mỗi bước** (mực tăng dần theo bước); GAME: Sum Path **không tính S/F** nữa (tổng khớp đúng số thiết kế), Countdown Cost **tôn trọng `max_steps` của màn**, Fading Ink đọc **mực tô tay** → §10.2f) · v2.15 — 2026-09-27 (**VẼ ĐƯỜNG ĐI TRONG TOOL + MÀN MẪU CHO MỌI CHẾ ĐỘ**: công cụ **8** = kéo chuột vẽ đường S→F rồi `Ctrl+Enter` để sinh tường quanh nó (nét vẽ thành **ĐƯỜNG DUY NHẤT**, tự đặt S/F + `max_steps`); thêm **6 màn mẫu 15–20** phủ nốt mọi chế độ Special (mỗi chế độ 1 màn); **sửa LỖI THẬT của One Stroke** (thuật toán phủ kín luôn từ chối nước cuối bước vào F ⇒ màn thiết kế trước đây luôn âm thầm bị thay bằng bàn tự sinh); Debug Console (F9) nhảy được **mọi** màn + đánh dấu màn ◆ chế độ → §10.2f) · v2.14 — 2026-09-27 (**KIỂU EDIT THEO CHẾ ĐỘ + BỎ `dungeon` KHỎI MÀN**: mỗi chế độ có **1 kiểu edit** riêng trong tool (`custom_cell_values`, công cụ **7**): Minesweeper **GHIM MÌN** · Sum Path **ĐIỂM Ô** 1..9 · Countdown Cost **CHI PHÍ Ô** 1..4 (ô không tô = game tự sinh, cố định theo màn); `dungeon` bị **loại khỏi danh sách chế độ của màn** (validator báo LỖI, game coi như `play`) → §10.2f) · v2.13 — 2026-09-27 (**MÀN CHƠI CHẾ ĐỘ SPECIAL + SKIP LEVEL**: màn khai `mode_id` trong LevelData ⇒ game chạy chế độ Special **TRÊN ĐÚNG BÀN NHÀ THIẾT KẾ VẼ** (tường + cell_mask), "gia vị" của chế độ (mìn · điểm ô · chi phí · mực) **CỐ ĐỊNH theo `level_id`**; thêm **nút SKIP LEVEL** trên thanh hành động (chỉ hiện khi chơi MÀN, bấm ⇒ mở khoá màn kế trong chương mà KHÔNG ghi Sao); tool level_designer báo luật riêng theo chế độ → §10.2f) · v2.12 — 2026-09-26 (**THANH HÀNH ĐỘNG MỚI + GIỚI HẠN LƯỢT**: bỏ hẳn 2 nút công cụ VẼ ĐƯỜNG/GHI NHỚ (bàn cờ tự nhận thao tác), **nút CHƠI LẠI dời từ thanh trạng thái xuống thanh hành động** (cả 2 hướng), thêm nút **GỬI BÀI (`Submit`)** cho Wall Builder, **GIỚI HẠN lượt UNDO/HINT mỗi màn** (mặc định 3) + badge **`PanelLimit`** hiện số lượt còn lại và **khoá nút khi hết lượt** → §10.2e) · v2.11 — 2026-09-26 (**HAI KIỂU HIỂN THỊ ĐIỂM**: bản NHÚNG (HUD ngang) = ảnh SẠCH chữ + badge số + DANH SÁCH điểm đầy đủ bên phải; bản POPUP = ảnh giữ NGUYÊN chữ như mockup, KHÔNG badge + KHÔNG khối ĐIỂM (ảnh nở hết bề ngang) — MỌI chữ mô tả trên ảnh đều thành ĐIỂM có hàng trong danh sách → §10.2d) · v2.10 — 2026-09-26 (**SỬA LỖI LẬT TRANG + ẢNH SẠCH**: cụm điều hướng nhúng về **BĂNG ĐÁY khung**, ẩn mọi chữ mô tả trên ảnh) · v2.9 — 2026-09-26 (**BỐ CỤC CỐ ĐỊNH cho hệ hướng dẫn**) · v2.8 — 2026-09-26 (**HƯỚNG DẪN theo mockup landscape**) · v2.7 — 2026-02 (**TÁCH hệ hướng dẫn**) · v2.6 — 2026-02 (**Nền tảng đa tỉ lệ mới**) · v2.5 — 2026-09-19 (**BỎ hẳn Time Attack Maze**) · v2.4 — 2026-09-19 (2 mode mới vào vòng xoay Daily 9 ngày) · v2.3 — 2026-09-19 (**Wall Builder đã lập trình xong** → §5.13 · §13.19) · v2.2 — 2026-09-19 (**One Stroke đã lập trình xong** → §5.12 · §13.18) · v2.1 — 2026-09-18 (đặc tả 2 bộ luật mới → §13.17) · v2.0 — 2026-11 (chuẩn hoá template đặc tả mode + bộ mockup matchup 9 chế độ) |
 | **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
 | **Cập nhật tính năng** | 2026-10-10: số lượt Skip/Eraser/Hint được lưu dùng chung toàn game, badge `PanelLimit` hiện số dư, và Debug Console cho phép chỉnh số lượng. |
 | **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
@@ -461,7 +461,7 @@ Mỗi bộ luật dưới đây được đặc tả theo **cùng một template
 
 ## 6. Hệ thống Daily Challenge
 
-> **v2.21:** Daily Challenge nay **không còn thẻ riêng** trên Main Screen. Nó là **event ẢO ghim ĐẦU** danh sách Sự kiện (thẻ lá lịch đỏ) do `EventManager` tạo từ `DailyManager`; bấm CTA vẫn mở đúng luồng Daily dưới đây. Xem **§15**.
+> **v2.21:** Daily Challenge nay **không còn thẻ riêng** trên Main Screen. Nó là **event ẢO ghim ĐẦU** danh sách Sự kiện (thẻ lá lịch đỏ) do `EventManager` tạo từ `DailyManager`; bấm thẻ (hoặc CTA) mở **thẳng** `scenes/daily.tscn`. Xem **§15**.
 
 Theo mockup `daily_challenge.svg`, đây là màn hình quản lý toàn bộ **8 bộ luật** ở mục 5.3–5.9 · 5.12–5.13 (Time Attack đã bỏ 2026-09-19):
 
@@ -946,7 +946,7 @@ riêng** cho màn; màn chỉ **gom lại** và điều khiển trạng thái. C
 
 | Màn | Trước v2.17 (dựng bằng code) | Sau v2.17 (khai trong scene) |
 |---|---|---|
-| Cửa hàng | `_build_tabs()`: xoá sạch khay rồi `TAB_BUTTON_SCENE.instantiate()` × 4, `setup(category, key)` + nối `pressed` + `attach_press_bounce` + `_apply_tab_metrics()` tự chia bề rộng | `Tabs/Tab_pen · Tab_theme · Tab_tool · Tab_coin` trong `scenes/layout/{portrait,landscape}/shop.tscn`; màn chỉ `_collect_tabs()` |
+| Cửa hàng | `_build_tabs()`: xoá sạch khay rồi `TAB_BUTTON_SCENE.instantiate()` × 4, `setup(category, key)` + nối `pressed` + .attach_press_down` + `_apply_tab_metrics()` tự chia bề rộng | `Tabs/Tab_pen · Tab_theme · Tab_tool · Tab_coin` trong `scenes/layout/{portrait,landscape}/shop.tscn`; màn chỉ `_collect_tabs()` |
 | Xếp hạng | `_build_tabs()` + `_fit_tab_widths()` (tự tính lại bề rộng theo anchors vì HBox bị min-size của tab đẩy tràn) | `Sheet/Tabs/Tab_dungeon · Tab_play · Tab_daily` (ĐÚNG thứ tự) trong 2 scene ranking; bề rộng do **HBox chia đều** (`size_flags_horizontal = EXPAND_FILL`) ⇒ hết `_fit_tab_widths()` |
 | Sổ tay thành tựu | `_build_tabs()` × 5 tab (khay dọc = HBox · khay ngang = GridContainer 2 cột) | `Sheet/Tabs/Tab0…Tab4` (category `""` · levels · dungeon · daily · special) trong 2 scene archivement |
 | Cửa hàng (lưới ô) | `_make_grid()` instantiate `item_grid.tscn` mỗi lần dựng danh sách | `Content/List/Grid` khai sẵn trong 2 scene shop; màn **dùng lại** (xoá thẻ cũ + `move_child` xuống cuối) |
@@ -961,7 +961,7 @@ riêng** cho màn; màn chỉ **gom lại** và điều khiển trạng thái. C
 1. Scene bố cục khai instance `tab_button.tscn` + 2 thuộc tính `@export`:
    `category` (Cửa hàng) / `board_id` (Xếp hạng) / `category` (Sổ tay) và `label_key` (khoá dịch nhãn;
    Sổ tay để trống vì nhãn kèm **số lượng** nên màn tự đặt qua `set_label_text()`).
-2. `_ready()` của component: dịch nhãn · `UIAnim.attach_press_bounce(self)` · nối `pressed` → phát
+2. `_ready()` của component: dịch nhãn · `UIAnim.attach_press_down(self)` · nối `pressed` → phát
    `tab_pressed(id)` · chỉnh cỡ (`ShopTabButton.apply_metrics()` theo cỡ màn hình; `RankTabButton` giữ
    chiều cao của scene nhưng **bỏ bề rộng tối thiểu** để HBox chia đều).
 3. Màn `_collect_tabs()`: duyệt `layout.tabs_box.get_children()`, nối `tab_pressed` → handler **1 lần**
@@ -1123,7 +1123,7 @@ Mục 6 (cấm `.new()` cho lớp UI) tự xanh khi bỏ code dựng node; `test
 | Vòng sáng | TRƯỢT sang mục tiêu mới 0.26s (không nhảy cứng) rồi "thở" scale 1↔1.06 |
 | Tay chỉ | rê lặp như cũ; chạm (tap) thêm **lắc ±7°** như gõ ngón tay |
 | HUD bài học | Sum Path **cuộn số** Tổng (`UIAnim.animate_counter`) + nảy khi khớp mục tiêu · Wall Builder nảy khung đếm mỗi lần vẽ/xoá tường · đoạn tường **NỞ RA** khi bật / co lại khi tắt (kèm SFX) |
-| Nút điều hướng | `UIAnim.attach_press_bounce()` cho cả 3 nút (giống mọi nút khác trong game) |
+| Nút điều hướng | `UIAnim.attach_press_down()` cho cả 3 nút (giống mọi nút khác trong game) |
 
 Script bài học KHÔNG tự tạo node/tween lạ: chỉ gọi API `BaseTutorial` (`play_entrance()` · `play_cells_win()` ·
 `spawn_board_text()` · `flash_fail()`), `TutorialCell`/`TutorialWallToggle` và `UIAnim`/`Sfx` ⇒ giữ nguyên
@@ -1619,8 +1619,8 @@ Kết quả sau sửa: **29/29 suite PASS** · harness tỉ lệ **220/220 PASS*
 (grid giữa thẻ, HUD đúng, nút có dòng phụ, popup Game Over giữ nguyên, Daily không đè, Shop hết khoảng trống + banner cuối trang).
 
 **9. Ghi nhận còn lại (chưa sửa, chờ quyết định):**
-- Nút **Back trên Android đang thoát app** khi màn chơi đang mở popup (project để mặc định `quit_on_go_back = true`;
-  trên Windows phải bấm Esc **2 lần** mới đóng popup — lần 1 bị xử lý ở chỗ khác). Popup vẫn đóng bình thường bằng nút trên màn hình.
+- ~~Nút **Back trên Android đang thoát app** khi màn chơi đang mở popup~~ → **ĐÃ SỬA 2026-10-14** (§13.25 mục 5:
+  `quit_on_go_back=false` + `ScreenManager` bắt `NOTIFICATION_WM_GO_BACK_REQUEST`; popup đang mở thì Back đóng popup).
 - Màn chính còn khoảng trống dưới thanh điều hướng trên màn dọc cao (nav ở y≈1800 trong canvas 2424).
 - Còn `print()` debug của user: `Close Popup …`, `Show Game Over because …`, `GAME_OVER because …`.
 
@@ -1985,6 +1985,138 @@ Mọi nhãn đặt **`clip_text = true`** ⇒ chữ dài (tiếng Việt) KHÔNG
 
 ---
 
+### 13.25. KHỞI ĐỘNG "SPLASH TRƯỚC, NẠP SAU" + `LoadingManager` + NÚT BACK CỨNG ANDROID (v2.23 → v2.24, 2026-10-14)
+
+**Yêu cầu (user):** *"sau khi hiện ra icon app thì màn hình màu đen, do phải loading rồi mới sang splash screen"*
+→ muốn Splash hiện TRƯỚC, việc nạp chạy nền trong lúc Splash đang hiển thị, nạp xong mới sang màn kế tiếp.
+Kèm: *"ở màn hình levels, sau khi ấn nút back về thì nó không back về được"*.
+(Vòng sau) *"tạo thêm Loading Manager… đưa nó xử lý việc Load Assets/Booting; ở splash scene nên thêm loading progressing"*.
+
+**1. Vì sao có màn hình đen (đo được, không phải phỏng đoán).** `_ready()` của autoload chạy TRƯỚC frame vẽ đầu tiên.
+Đo trên máy dev (`tools/…` probe tạm, debug build): **frame đầu mất 1216 ms**, trong đó `LocalizationManager._load_translations()`
+**192 ms** · `PlayerProfileManager._load_catalog()` **175 ms** · `EventManager._load_all_events()` **99 ms** ·
+`ArchivementManager._load_catalog()` **24 ms**. Bốn việc này (≈ 0,5 s máy dev, lâu hơn trên Android) nằm TRƯỚC frame đầu
+⇒ người chơi thấy màn trống ngay sau icon app. Trên Android còn 2 chỗ đặt màu ĐEN trong `export_presets.cfg`:
+`splash_screen/background_color` (nền system splash) và `screen/background_color` (nền cửa sổ Activity) — xem §13.11 về việc
+nền cửa sổ lộ ra khi canvas lệch tỉ lệ.
+
+**2. Autoload `LoadingManager`** (`scripts/manager/LoadingManager.gd`, đứng ĐẦU danh sách autoload) — gom **2 loại** việc nạp:
+- **Booting** (autoload): manager nặng gọi `add_step(Callable(self, "initialize"), "tên-bước")` trong `_ready()` thay vì tự nạp.
+- **Load assets**: `PRELOAD_SCENES` (`title` · `main` · `levels`) được nạp sẵn — giữ tham chiếu trong `_preloaded` nên tài nguyên
+  không bị thu hồi khỏi cache, `SceneManager` vào màn sau tức thì (`ResourceLoader.has_cached()` = true).
+- Màn Splash gọi `start()`; mỗi bước chạy **1 bước/frame** sau frame Splash đầu tiên (`FIRST_FRAME_DELAY`) ⇒ hoạt ảnh + thanh
+  tiến trình vẫn chạy trong lúc nạp nền. API: `progress()` · `pending_steps()` · `current_label()` (dev) ·
+  `is_loading_done()` · signal `progress_changed(progress, label)` + `loading_finished`.
+- Chạy **headless** (`godot --headless --script`, test/CI) hoặc khi không thấy màn Splash ⇒ nạp + preload **NGAY** như trước
+  (`add_step` sau khi xong sẽ gọi hàm ngay) ⇒ **test/harness không đổi hành vi**.
+- 4 autoload chuyển việc nạp sang `initialize()` (idempotent): `LocalizationManager` (có `is_ready()`) · `PlayerProfileManager` ·
+  `EventManager` · `ArchivementManager`. Thứ tự tương đối với `SaveManager.load_all()` **giữ nguyên** như trước.
+
+**3. Ảnh boot splash + màu nền.** Thêm `tools/make_boot_splash.py` sinh `assets/images-png/boot_splash.png`
+(720×1280 = nền giấy `#FAF5EB` + logo + chữ "Invisible Gear", khớp tỉ lệ màn Splash động) — chạy lại khi đổi logo/tên hãng.
+⚠️ `assets/images-png/` **bị .gitignore** (mọi PNG ở đây do tool sinh ra, xem `.gitignore`): dựng máy mới thì phải chạy
+tool này **cùng** `tools/svg_to_png.py`, nếu thiếu file thì engine chỉ hiện **nền giấy** (không đen, xem `boot_splash/bg_color`).
+`project.godot`: `boot_splash/bg_color = #FAF5EB` · `boot_splash/image = boot_splash.png` · `fullsize = true` · `use_filter = true`.
+`export_presets.cfg` (Android): `splash_screen/background_color` và `screen/background_color` đổi từ **đen → `#FAF5EB`**.
+Nhờ vậy chuỗi hình khi mở app liền mạch: icon app → system splash (nền giấy) → boot splash (nền giấy + logo) → màn Splash động.
+
+**4. Màn Splash: THANH TIẾN TRÌNH + chờ nạp xong mới đi.** Node khai trong CẢ 2 bố cục
+(`scenes/layout/{portrait,landscape}/splash.tscn`) — `Panel/LoadingBox` (`VBoxContainer`) → `LoadingBar` (`ProgressBar`,
+`max_value = 1.0`, 2 `StyleBoxFlat` khai trong scene: nền `#E5DECF` + fill mực `#3D83AE`) + `LoadingLabel`
+(theme variation **`SplashLoadingLabel`**). `SplashLayout` bind 3 node bằng `@export`; `splash.gd` nối `progress_changed`/
+`loading_finished` của `LoadingManager`:
+- Nhãn hiện **`STR_LOADING_PROGRESS`** (`"Đang nạp {0}%"`) — nhưng **chỉ khi bảng dịch đã nạp xong**
+  (`LocalizationManager.is_ready()`, là bước ĐẦU của `LoadingManager`); trước đó hiện mỗi phần trăm ⇒ không lộ khoá thô.
+- `_on_touch_pressed()` (chạm màn hình **hoặc** `AutoAdvanceTimer` 2,2 s) chỉ ĐẶT `_advance_pending` nếu còn đang nạp;
+  `_on_loading_finished()` giữ Splash đủ `MIN_DISPLAY_SEC` (1,2 s) rồi mới chạy hoạt ảnh thoát sang Title.
+- Nếu nạp đã xong TRƯỚC khi Splash kịp dựng (test/headless) thì ẩn `LoadingBox` và đặt thanh ở 100 %.
+
+**5. Nút Back cứng Android.** Gốc lỗi: project để mặc định `application/config/quit_on_go_back = true` ⇒ Back **THOÁT APP**;
+engine còn KHÔNG phát `ui_cancel` cho Android (xem `platform/android/android_input_handler.cpp`: gửi `WINDOW_EVENT_GO_BACK_REQUEST`
++ phím `Key::BACK`) nên `ScreenManager._unhandled_input` (chỉ bắt `ui_cancel`) không bao giờ chạy.
+Sửa: `project.godot` đặt `config/quit_on_go_back=false`; `ScreenManager._notification()` bắt `NOTIFICATION_WM_GO_BACK_REQUEST`
+(engine lan tới MỌI node — `Window::_propagate_window_notification`) và gọi **một chỗ duy nhất** `_handle_back(allow_quit)`:
+popup đang mở ⇒ đóng popup trên cùng · còn lịch sử ⇒ lùi màn trước · hết lịch sử ⇒ về Main (không ghi thêm lịch sử) ·
+đang ở Main ⇒ **thoát app** (lưu dữ liệu trước). Cờ `_back_busy` chống xử lý 2 lần cho cùng một lần bấm.
+`SceneManager`: thêm `is_main_scene()`; `go_back()` khi hết lịch sử về Main **không ghi lịch sử**
+(trước đây gọi `goto_main()` ⇒ Main bị đẩy vào lịch sử, bấm Back ở Main nhảy ngược lại màn vừa rời).
+`scripts/scenes/levels.gd` `_on_back_pressed()`: lùi theo **lịch sử** (về Main, hoặc về Chọn Chương nếu vào từ đó) và không ghi thêm lịch sử.
+
+**6. Kiểm chứng.** Probe chạy máy thật (không headless), đo lại sau khi thêm `LoadingManager` + thanh tiến trình:
+- Frame đầu **397 ms** (đo lại vòng này **411 ms**), lúc đó `done=false`, `pending=4`, `progress=0.00`, `event_init=false`
+  ⇒ Splash hiện TRƯỚC, việc nạp nằm sau frame đầu. Tiến độ chạy **0 → 0,43 → 0,57 → 0,71 → 0,86 → 1,0** (mỗi bước 1 frame),
+  nhãn hiện `"Đang nạp 29%"` → `"Đang nạp 100%"` (đã dịch, không lộ khoá), `_preloaded` = **3** scene, và
+  `ResourceLoader.has_cached("res://scenes/title.tscn")` = **true** ⇒ sang Title tức thì. Splash ở lại đúng `MIN_DISPLAY_SEC`
+  rồi mới sang Title (tổng ≈ 1,2 s kể từ lúc mở Splash).
+- Back Android mô phỏng bằng `root.propagate_notification(NOTIFICATION_WM_GO_BACK_REQUEST)`: ở Chọn Màn ⇒ về Main
+  (lịch sử sạch `[]`), ở Main ⇒ thoát app.
+- Ảnh: `dev_aspects.gd -- --only=splash --shots` OK ở cả 2 hướng (`tmp_aspect/<WxH>/splash.png`).
+- Full suite headless **20/20 PASS** (`test_splash_title_shop_chapters` nay gác thêm `LoadingManager` + node thanh tiến trình);
+  `godot --export-debug "Android"` **build thành công** và APK có `assets/.godot/imported/boot_splash.png-*.ctex`
+  (import lossless, `vram_texture=false` — điều kiện để engine nạp được lúc khởi động).
+
+---
+
+### 13.26. BẢN ĐỒ CHỌN MÀN: HƯỚNG MÀN HÌNH LẤY THEO CANVAS + NÉT NỐI DÀY HƠN + BẢN NGANG HẾT TỰ CẮT (v2.25 → v2.26, 2026-10-14)
+
+**Yêu cầu (user):** *"ở màn Levels Scene, phần Portrait, đường nối giữa các node đang bị sai… có một trường hợp ở
+Portrait size khác nhau thì hiển thị lỗi… tăng kích cỡ của đường nối"* (kèm 2 ảnh: đường nối vẽ sai + nút màn lòi ra
+ngoài khung ở bản dọc).
+
+**1. Nguyên nhân (đo bằng probe, không phải phỏng đoán).** `LevelMap.is_wide()` cũ so **khung `MapArea`** với chiều cao
+của nó: `area.x > area.y`. Nhưng khung này chỉ cao **~62 % canvas** và nằm trong **CỘT NỘI DUNG canh giữa** (§13.10 —
+`scripts/scenes/base.gd`), nên với mọi màn DỌC có tỉ lệ rộng hơn **0,62** (3:4 tablet, cửa sổ lớn khi test…) khung vẫn
+"rộng hơn cao" ⇒ bản đồ lỡ coi là màn NGANG:
+- dùng `zigzag_landscape = 320` (thay vì 74) ⇒ **nút màn lòi ra ngoài khung** (ảnh 3: nút 4 và 2 bị cắt ở mép trái);
+- đổi cả **trục uốn** của điểm giữa: đoạn nối chủ yếu NGANG (delta x = 640 > delta y = 200) nên uốn theo trục DỌC,
+  Catmull-Rom cho tiếp tuyến rất lớn ở nút ⇒ đường nối vẽ thành **vòng quét rộng** sai hẳn dáng chữ S (ảnh 1);
+- `sway` bị kẹp còn 28 (do `room` âm) nên càng mất dáng.
+
+Probe in ra đúng bệnh: cửa sổ `850×1090` → canvas `717×920` (DỌC) nhưng `MapArea 717×570` ⇒ `is_wide=true`, zigzag 320,
+nút 1 và 2 ở `x = 678` và `38` trong khung rộng 717 (art nút 143 px ⇒ nút bị cắt). Còn ở canvas `540×960` (tỉ lệ 0,5625)
+thì `540 > 595` = false ⇒ đúng — vì vậy bug chỉ hiện ở **một số** cỡ dọc.
+
+**2. Sửa: hướng lấy theo CANVAS** (`get_viewport_rect().size.x > .y`) — khớp cách `BaseUI`/`BaseScene` quyết định layout;
+chỉ khi canvas chưa sẵn sàng mới quay về so khung. Thêm `LevelMap._zigzag()` **KẸP** zigzag theo bề rộng khung thật
+(`area.x/2 − node_half_width×scale − sway_edge_margin`, tham số mới `node_half_width = 56`) để nút không bao giờ lòi ra
+ngoài, kể cả khi ai đó chỉnh số trong Inspector. `_road_sway()` và `_rebuild()` dùng chung `_zigzag()`.
+
+**3. Nét nối DÀY HƠN** (`scripts/nodes/level_selection/level_path.gd`, đơn vị px canvas 540): `width_complete` 5 → **8** ·
+`width_skipped` 4,5 → **7** · `width_upcoming` 4 → **6,5** · `width_locked` 3,5 → **5,5**; gạch đứt dài hơn cho khớp nét dày:
+`dash_length` 10 → **15** · `dash_gap` 7 → **11**.
+
+**3b. Bản NGANG: đường nối TỰ CẮT nhau (sửa tiếp cùng ngày).** Sau khi sửa mục 2, bản NGANG vẫn sai: các đoạn nối
+"bóp" vào giữa rồi **cắt nhau thành hình chữ X**. Nguyên nhân: ở bản ngang 2 nút liền nhau lệch **640 px ngang / 200 px dọc**,
+mà điểm uốn lại đặt **vuông góc** (trục Y, ±`sway`) ⇒ tiếp tuyến Catmull-Rom tại nút (tính trên khoảng cách lớn) quá lớn ⇒
+đường vượt tầm và **tự cắt**. Probe đếm được **3 chỗ tự cắt** (độ võng thật 1527 px — không còn là đường nối nữa).
+Sửa: thêm `sway_flat_ratio` — bản NGANG uốn rất nhẹ thay vì uốn vuông góc mạnh. Quét thử ở canvas 1635×920:
+
+| `sway_flat_ratio` | sway | tự cắt | độ võng đoạn |
+|---|---|---|---|
+| 0,00 | 0 px | 0 | 28 px |
+| 0,15 | 30 px | 0 | 30 px |
+| **0,30** | **60 px** | **0** | **57 px** |
+| 0,45 | 90 px | **3** | 86 px |
+| 0,60 | 120 px | **3** | 114 px |
+
+⇒ chọn **0,30** (có dáng uốn mà vẫn sạch). Đo lại sau sửa: bản ngang **0 chỗ tự cắt**, bản dọc giữ **0**; độ võng đoạn
+dọc 69 px · ngang 57 px.
+
+**4. Kiểm chứng.** Probe (headless, đặt `root.size` trực tiếp) sau khi sửa: **mọi cỡ DỌC** (canvas 540×960 · 717×920 ·
+690×920) đều dùng bộ số DỌC (zigzag 74 · spacing 158 · sway 95), **nút TRÀN khung = 0/9**; cỡ NGANG (canvas 1635×920)
+vẫn dùng bộ NGANG (zigzag 320 · spacing 200). Ảnh chụp máy thật: canvas 690×920 (đúng ca đã lỗi) khớp dáng mong muốn,
+bản ngang (1920×1080) nay là **một đường uốn liền mạch** từ nút 2 → 3 → 4, không còn chữ X.
+`test_levels_map` thêm mục **`_check_portrait_wide_column()`** (canvas 690×920 — khung "rộng hơn cao" — phải vẫn là bố cục
+DỌC, nút trong khung, zigzag ≤ 120, spacing ≤ 180) và **`road_crossings()`** chặn đường TỰ CẮT ở cả 3 phép thử (dọc · ngang ·
+dọc-rộng); thử phá (đặt `sway_flat_ratio = 0,6`) thì test **FAIL** đúng như thiết kế ("Duong noi TU CAT 5 cho").
+Full suite headless **20/20 PASS**.
+
+> **Bài học quy trình:** đừng sửa file nguồn có tiếng Việt bằng `Get-Content | Set-Content` của Windows PowerShell —
+> nó đọc/ghi khác bảng mã và làm hỏng cả file. Lần này `test_localization` phát hiện ngay (báo `level_map.gd (63)` ký tự C1
+> + 693 dấu mojibake) và file đã được `git checkout` rồi áp lại thay đổi bằng công cụ sửa file theo từng đoạn.
+
+---
+
 ## 14. ĐA NGÔN NGỮ (LOCALIZATION) — CSV · CÔNG CỤ QUÉT · CHỐNG MOJIBAKE (v2.20, 2026-09-28)
 
 **Yêu cầu user:** “tìm tất cả string cứng bên trong, đưa vào translate; String ID nào không dùng thì loại bỏ” — kèm sửa lỗi chữ bị **mojibake**.
@@ -2082,7 +2214,8 @@ python tools/content/fix_mojibake.py
 | `LOGIN_STREAK` | Vào game mỗi ngày trong N ngày | `ngày đã đạt / N` + `ngày` |
 | `DAILY` | **Daily Challenge** — event ẢO, **ghim đầu**, làm mới 00:00 giờ máy | `thử thách xong / 3` |
 
-> **Daily KHÔNG bị viết lại.** `EventManager` tạo một `EventData` **ảo** (không phải file `.tres`) từ logic Daily có sẵn (`DailyManager`): tiến độ = số bit 0..2 của `day_missions[hôm nay]`. Bấm CTA của thẻ Daily → mở đúng luồng Daily hiện tại.
+> **Daily KHÔNG bị viết lại.** `EventManager` tạo một `EventData` **ảo** (không phải file `.tres`) từ logic Daily có sẵn (`DailyManager`): tiến độ = số bit 0..2 của `day_missions[hôm nay]`.
+> **Bấm thẻ Daily trên Main (2026-10-15):** mở **THẲNG** `scenes/daily.tscn` — `MainScene._on_event_card_pressed()` tra loại event qua `EventManager.get_event()` và định tuyến `type == DAILY` sang `Nav.goto_daily()`, các loại khác (kể cả `LOGIN_STREAK`) vẫn mở màn chi tiết `scenes/event.tscn`. Trước đây MỌI thẻ đều đi qua `Nav.goto_event()` nên bấm Daily lại mở màn Event (phải bấm thêm 1 lần ở CTA mới tới Daily) — `test_main_layout` nay gác: bấm thẻ Daily phải ra `res://scenes/daily.tscn`.
 
 ### 15.2. Dữ liệu (Resource, data-driven)
 

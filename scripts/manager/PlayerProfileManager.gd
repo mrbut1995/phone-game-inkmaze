@@ -524,7 +524,25 @@ func reset_progress() -> void:
 	profile_changed.emit()
 
 
+## Đã chạy nạp danh mục chưa (LoadingManager gọi `initialize()` — xem đầu file)
+var _initialized := false
+
+
 func _ready() -> void:
+	# Quét + nạp danh mục hồ sơ (avatar/khung/danh hiệu) là việc NẶNG ⇒ hoãn tới khi màn
+	# Splash đã hiện (xem LoadingManager). Headless thì LoadingManager gọi lại NGAY nên hành vi không đổi.
+	var boot: Node = get_node_or_null("/root/LoadingManager")
+	if boot != null and boot.has_method("add_step"):
+		boot.call("add_step", Callable(self, "initialize"), "player_profile")
+	else:
+		initialize()
+
+
+## Nạp danh mục + bảo đảm danh tính/đang chọn hợp lệ (idempotent)
+func initialize() -> void:
+	if _initialized:
+		return
+	_initialized = true
 	_load_catalog()
 	_ensure_identity()
 	_ensure_valid_selection()

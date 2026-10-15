@@ -3,12 +3,18 @@ extends BaseScene
 ## ============================================================================
 ## View Controller: Màn hình Splash (scenes/splash.tscn)
 ## - Hoạt ảnh xuất hiện logo Mực & Giấy (Ink bloom, nét vẽ bút chì phác thảo).
-## - Tự động đếm giờ hoặc nhận chạm màn hình để chuyển sang Title Scene.
+## - HIỆN TRƯỚC TIÊN khi mở app, hiển thị THANH TIẾN TRÌNH NẠP của `LoadingManager`
+##   (nạp bảng dịch/hồ sơ/danh hiệu/event + preload scene chạy nền trong lúc Splash đang hiện).
+## - Chỉ chuyển sang Title khi nạp XONG (và đã đủ thời gian tối thiểu để thấy logo + thanh nạp);
+##   chạm màn hình thì chuyển sớm ngay khi nạp xong.
 ## - Chuyển cảnh mượt mà bằng hiệu ứng lật trang sổ tay & fade giấy ngà.
 ## ============================================================================
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const SCENE_TITLE := "res://scenes/title.tscn"
+
+## Giữ Splash tối thiểu bao lâu (giây) để người chơi kịp thấy logo + thanh nạp
+const MIN_DISPLAY_SEC := 1.2
 
 ## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
 ## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/splash.tscn`
@@ -17,6 +23,12 @@ var layout: SplashLayout = null
 
 var _pencil_tween: Tween = null
 var _transitioning: bool = false
+## Nạp nền đã xong chưa (chờ LoadingManager) — chưa xong thì KHÔNG sang màn kế tiếp
+var _loading_done := false
+## Người chơi đã chạm / hết giờ tự chuyển trong lúc còn đang nạp
+var _advance_pending := false
+## Mốc thời gian bắt đầu màn Splash (để giữ đủ MIN_DISPLAY_SEC)
+var _started_ms := 0
 
 
 ## Ngòi bút chì phác họa quanh logo — animation "pencil_idle" (loop) khai trong layout
@@ -37,11 +49,84 @@ func _bind_refs() -> void:
 
 
 func _ready() -> void:
+	_started_ms = Time.get_ticks_msec()
 	_bind_refs()
 	_refresh_stamp()
 	# Dây `pressed → _on_touch_pressed` khai trong `scenes/splash.tscn` (guard chỉ nối lại nếu mất)
 	ensure_signal(layout.touch_button, &"pressed", &"_on_touch_pressed")
+	_bind_loading()
 	_setup_animations()
+
+
+## Thanh tiến trình nạp: theo dõi `LoadingManager` (xem scripts/manager/LoadingManager.gd).
+## Splash hiện ra trước, hoạt ảnh + thanh nạp chạy trong lúc nạp nền;
+## nạp xong mới cho phép sang Title.
+func _bind_loading() -> void:
+	var loading := _loading_manager()
+	if loading == null or bool(loading.call("is_loading_done")):
+		# Nạp đã xong trước khi Splash kịp hiện (test/headless) ⇒ không có gì để hiện
+		_loading_done = true
+		_set_loading_progress(1.0)
+		_set_loading_box_visible(false)
+		return
+	if not loading.is_connected("progress_changed", _on_loading_progress):
+		loading.connect("progress_changed", _on_loading_progress)
+	if not loading.is_connected("loading_finished", _on_loading_finished):
+		loading.connect("loading_finished", _on_loading_finished)
+	_on_loading_progress(float(loading.call("progress")), "")
+	loading.call("start")
+
+
+func _loading_manager() -> Node:
+	return get_node_or_null("/root/LoadingManager")
+
+
+func _on_loading_progress(value: float, _label: String) -> void:
+	_set_loading_progress(value)
+
+
+## Cập nhật thanh + nhãn tiến trình (0..1)
+func _set_loading_progress(value: float) -> void:
+	if layout.loading_bar != null:
+		layout.loading_bar.value = clampf(value, 0.0, 1.0)
+	_update_loading_text(value)
+
+
+func _on_loading_finished() -> void:
+	_loading_done = true
+	_set_loading_progress(1.0)
+	if _advance_pending:
+		_advance_to_title()
+		return
+	# Chưa ai chạm: giữ Splash đủ lâu để thấy logo + thanh nạp rồi tự sang Title
+	await _wait_min_display()
+	if not _transitioning and not _advance_pending:
+		_advance_to_title()
+
+
+## Chữ trên thanh nạp: CHỈ hiện chữ đã dịch khi bảng dịch đã nạp xong (bước đầu của
+## LoadingManager) — trước đó hiện phần trăm (không phụ thuộc ngôn ngữ) để không lộ khoá thô.
+func _update_loading_text(value: float) -> void:
+	if layout.loading_label == null:
+		return
+	var percent := roundi(clampf(value, 0.0, 1.0) * 100.0)
+	var loc := get_node_or_null("/root/LocalizationManager")
+	var translated := loc != null and bool(loc.call("is_ready"))
+	layout.loading_label.text = (tr("STR_LOADING_PROGRESS").format([percent])
+		if translated else "%d%%" % percent)
+
+
+func _set_loading_box_visible(shown: bool) -> void:
+	if layout.loading_box != null:
+		layout.loading_box.visible = shown
+
+
+func _wait_min_display() -> void:
+	var elapsed := float(Time.get_ticks_msec() - _started_ms) / 1000.0
+	var remaining := MIN_DISPLAY_SEC - elapsed
+	if remaining <= 0.0:
+		return
+	await get_tree().create_timer(remaining).timeout
 
 
 func _refresh_stamp() -> void:
@@ -116,11 +201,23 @@ func _setup_animations() -> void:
 		if layout.tagline_label != null:
 			UIAnim.play_slide_in(layout.tagline_label, Vector2(0, 15), 0.65, 0.3)
 
-	# Tự động chuyển cảnh sau 2.2 giây — Timer `AutoAdvanceTimer` khai trong `scenes/splash.tscn`
-	# (autostart + dây `timeout → _on_touch_pressed` khai ở đó)
+	# Tự chuyển cảnh: `_on_loading_finished()` giữ Splash đủ MIN_DISPLAY_SEC rồi sang Title.
+	# Timer `AutoAdvanceTimer` (2,2 s) khai trong `scenes/splash.tscn` là lưới an toàn:
+	# nạp lâu hơn 2,2 s thì nó đặt `_advance_pending`, chuyển ngay khi nạp xong.
 
 
+## Người chơi chạm màn hình (hoặc Timer lưới an toàn): chuyển sớm — nhưng vẫn phải chờ nạp xong
 func _on_touch_pressed() -> void:
+	if _transitioning:
+		return
+	if not _loading_done:
+		_advance_pending = true
+		return
+	_advance_to_title()
+
+
+## Chạy hoạt ảnh thoát rồi sang màn Title (chỉ gọi được 1 lần)
+func _advance_to_title() -> void:
 	if _transitioning:
 		return
 	_transitioning = true

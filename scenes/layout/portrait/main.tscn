@@ -6,20 +6,21 @@
 [ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="4_coin"]
 [ext_resource type="PackedScene" uid="uid://dxm1sm66f5qi1" path="res://nodes/main/star_chip.tscn" id="5_star"]
 [ext_resource type="PackedScene" uid="uid://xuj64d8yo0mg" path="res://nodes/main/event_header.tscn" id="6_header"]
+[ext_resource type="Texture2D" uid="uid://ht772c02qnl" path="res://assets/images-png/main/btn_settings_normal.png" id="6_i6aov"]
 [ext_resource type="PackedScene" uid="uid://cb8r4phad4ar5" path="res://nodes/main/event_carousel.tscn" id="7_carousel"]
+[ext_resource type="Texture2D" uid="uid://cheydeptnm3w6" path="res://assets/images-png/main/btn_settings_pressed.png" id="7_t0ecn"]
+[ext_resource type="Texture2D" uid="uid://d0gks40yyxdv2" path="res://assets/images-png/main/btn_settings_hover.png" id="8_6y0m5"]
 [ext_resource type="PackedScene" uid="uid://rtaworqe3fbl" path="res://nodes/main/mode_card.tscn" id="8_mode"]
 [ext_resource type="PackedScene" uid="uid://k2k3skjevrxy" path="res://nodes/main/dock_button.tscn" id="9_dock"]
+[ext_resource type="Texture2D" uid="uid://daksl6ghofec0" path="res://assets/images-png/main/btn_settings_disabled.png" id="9_nuhf0"]
 [ext_resource type="Texture2D" uid="uid://bssvcnaam8t6i" path="res://assets/images-png/main/logo_doodle_maze.png" id="10_logo"]
-[ext_resource type="Texture2D" uid="uid://bmukphu6ir55k" path="res://assets/images-png/icons/icon_gear.png" id="11_gear"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_normal.tres" id="12_util_n"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_pressed.tres" id="13_util_p"]
+[ext_resource type="Texture2D" uid="uid://dhkgonrwe7f5o" path="res://assets/images-png/main/btn_settings_focus.png" id="10_r22o1"]
 [ext_resource type="Texture2D" uid="uid://clxkdp7v1picf" path="res://assets/images-png/common/card_mode_normal.png" id="14_dmrpp"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_focus.tres" id="14_util_f"]
 [ext_resource type="Texture2D" uid="uid://cgnqga8nqe183" path="res://assets/images-png/common/card_mode_pressed.png" id="15_i6aov"]
 [ext_resource type="Texture2D" uid="uid://bix4mh6ckd2l" path="res://assets/images-png/main/card_mode_disabled.png" id="16_t0ecn"]
 [ext_resource type="Texture2D" uid="uid://b5nskow6rjg7t" path="res://assets/images-png/common/card_mode_focus.png" id="17_6y0m5"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dmrpp"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o8qj2"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -28,7 +29,7 @@ texture = ExtResource("14_dmrpp")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i6aov"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2gh1x"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -37,7 +38,7 @@ texture = ExtResource("15_i6aov")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t0ecn"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j5fet"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -46,7 +47,7 @@ texture = ExtResource("14_dmrpp")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6y0m5"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lckxw"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -55,7 +56,7 @@ texture = ExtResource("16_t0ecn")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nuhf0"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dmrpp"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -64,7 +65,7 @@ texture = ExtResource("17_6y0m5")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r22o1"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i6aov"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -73,7 +74,7 @@ texture = ExtResource("14_dmrpp")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3v8t1"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t0ecn"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -82,7 +83,7 @@ texture = ExtResource("15_i6aov")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lkr8n"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6y0m5"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -91,7 +92,7 @@ texture = ExtResource("14_dmrpp")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u64b0"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nuhf0"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -100,7 +101,7 @@ texture = ExtResource("16_t0ecn")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0adh"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r22o1"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -115,7 +116,7 @@ logo = NodePath("Body/Scroll/Column/Logo")
 profile_card = NodePath("Body/TopBar/ProfileCard")
 coin_chip = NodePath("Body/TopBar/CoinChip")
 star_chip = NodePath("Body/TopBar/StarChip")
-btn_settings = NodePath("Body/TopBar/Settings")
+btn_settings = NodePath("")
 event_header = NodePath("Body/Scroll/Column/EventHeader")
 event_carousel = NodePath("Body/Scroll/Column/EventCarousel")
 card_play = NodePath("Body/Scroll/Column/Modes/Play")
@@ -164,31 +165,16 @@ custom_minimum_size = Vector2(75, 32)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Settings" type="Button" parent="Body/TopBar" index="3" unique_id=1430182698]
+[node name="Settings" type="TextureButton" parent="Body/TopBar" index="3" unique_id=1915005296]
 custom_minimum_size = Vector2(66, 66)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = ExtResource("12_util_n")
-theme_override_styles/pressed = ExtResource("13_util_p")
-theme_override_styles/hover = ExtResource("12_util_n")
-theme_override_styles/focus = ExtResource("14_util_f")
-
-[node name="Icon" type="TextureRect" parent="Body/TopBar/Settings" index="0" unique_id=1563540367]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("11_gear")
-expand_mode = 1
-stretch_mode = 5
+texture_normal = ExtResource("6_i6aov")
+texture_pressed = ExtResource("7_t0ecn")
+texture_hover = ExtResource("8_6y0m5")
+texture_disabled = ExtResource("9_nuhf0")
+texture_focused = ExtResource("10_r22o1")
 
 [node name="Scroll" type="Control" parent="Body" index="1" unique_id=887565838]
 layout_mode = 2
@@ -251,19 +237,19 @@ theme_override_constants/separation = 3
 
 [node name="Play" parent="Body/Scroll/Column/Modes" index="0" unique_id=1619671183 instance=ExtResource("8_mode")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_dmrpp")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_i6aov")
-theme_override_styles/hover = SubResource("StyleBoxTexture_t0ecn")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_6y0m5")
-theme_override_styles/focus = SubResource("StyleBoxTexture_nuhf0")
+theme_override_styles/normal = SubResource("StyleBoxTexture_o8qj2")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_2gh1x")
+theme_override_styles/hover = SubResource("StyleBoxTexture_j5fet")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_lckxw")
+theme_override_styles/focus = SubResource("StyleBoxTexture_dmrpp")
 
 [node name="Dungeon" parent="Body/Scroll/Column/Modes" index="1" unique_id=1869028643 instance=ExtResource("8_mode")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_r22o1")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_3v8t1")
-theme_override_styles/hover = SubResource("StyleBoxTexture_lkr8n")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_u64b0")
-theme_override_styles/focus = SubResource("StyleBoxTexture_i0adh")
+theme_override_styles/normal = SubResource("StyleBoxTexture_i6aov")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_t0ecn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6y0m5")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_nuhf0")
+theme_override_styles/focus = SubResource("StyleBoxTexture_r22o1")
 mode_id = &"dungeon"
 
 [node name="BottomGap" type="Control" parent="Body/Scroll/Column" index="6" unique_id=814319747]

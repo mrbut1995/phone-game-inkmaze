@@ -1620,3 +1620,4 @@ STR_EVENT_VALENTINE_SUB_1,Beat three special mazes,Chinh phục ba mê cung đ�
 STR_EVENT_VALENTINE_SUB_2,share a little love,trao nhau chút yêu thương
 STR_EVENT_VALENTINE_REWARD_1,350 Coins,350 Xu
 STR_EVENT_VALENTINE_REWARD_2,150 Bonus Coins,150 Xu thưởng
+STR_LOADING_PROGRESS,"Loading {0}%","Đang nạp {0}%"

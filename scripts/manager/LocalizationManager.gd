@@ -51,14 +51,35 @@ const FLAG_FALLBACK := "res://assets/images-png/icons/flags/flag_generic.png"
 
 var current_locale := DEFAULT_LOCALE
 
+var _initialized := false
+
 
 func _ready() -> void:
+	# Nạp bảng dịch là việc NẶNG (~200 ms) ⇒ hoãn tới khi màn Splash đã hiện
+	# (xem LoadingManager). Headless thì LoadingManager gọi lại NGAY nên hành vi không đổi.
+	var boot: Node = get_node_or_null("/root/LoadingManager")
+	if boot != null and boot.has_method("add_step"):
+		boot.call("add_step", Callable(self, "initialize"), "localization")
+	else:
+		initialize()
+
+
+## Nạp bảng dịch + áp ngôn ngữ đã lưu (idempotent — LoadingManager gọi sau frame Splash đầu)
+func initialize() -> void:
+	if _initialized:
+		return
+	_initialized = true
 	_load_translations()
 	var sm: Variant = get_node_or_null("/root/SettingManager")
 	var saved := DEFAULT_LOCALE
 	if sm != null:
 		saved = str(sm.call("get_setting", "locale", DEFAULT_LOCALE))
 	set_locale(saved, false)
+
+
+## Bảng dịch đã nạp xong chưa (màn Splash dùng để biết khi nào được hiện CHỮ đã dịch)
+func is_ready() -> bool:
+	return _initialized
 
 
 # ---------------------------------------------------------------------------

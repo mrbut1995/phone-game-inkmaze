@@ -47,7 +47,7 @@ func _ready() -> void:
 	# Dây nút/tab khai trong `scenes/ranking.tscn` (cả 2 hướng) — guard chỉ nối lại nếu mất
 	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 	if layout.btn_back != null:
-		UIAnim.attach_press_bounce(layout.btn_back)
+		UIAnim.attach_press_down(layout.btn_back)
 	orientation_changed.connect(_on_orientation_changed)
 	_collect_tabs()
 	_connect_manager()
