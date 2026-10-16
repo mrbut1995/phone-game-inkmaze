@@ -156,8 +156,7 @@ patch_margin_bottom = 2
 [node name="Fill" type="TextureRect" parent="Panel/Content/Display/Info/Bar" unique_id=2113885124]
 layout_mode = 1
 anchors_preset = -1
-offset_right = 190.0
-offset_bottom = 7.0
+anchor_bottom = 1.0
 mouse_filter = 2
 texture = ExtResource("9_fill")
 expand_mode = 1

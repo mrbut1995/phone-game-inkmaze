@@ -79,14 +79,22 @@ func _notification(what: int) -> void:
 		_apply_bar_fill()
 
 
-## Thanh Sao: đo lại mỗi khi thẻ đổi cỡ — thẻ nằm trong CONTAINER nên lúc `setup()`
-## bề rộng thanh có thể còn 0 (bố cục chưa dàn xong).
+## Thanh Sao: đặt bề rộng bằng NEO (`anchor_right = tỉ lệ`) — KHÔNG đặt `size` cứng.
+## Lý do: lúc `setup()` bố cục có thể chưa dàn xong (`Bar.size.x` còn 0) ⇒ size tính ra 0 và
+## sau đó KHÔNG có sự kiện nào cập nhật lại (thẻ không đổi cỡ nữa) ⇒ thanh Sao trắng trơn.
+## Neo thì engine tự tính lại mỗi khi `Bar` đổi cỡ, khỏi cần đo.
 func _apply_bar_fill() -> void:
-	var bar := get_node_or_null("Panel/Content/Display/Info/Bar") as Control
 	var fill := get_node_or_null("Panel/Content/Display/Info/Bar/Fill") as Control
-	if bar == null or fill == null:
+	if fill == null:
 		return
-	fill.size = Vector2(bar.size.x * _ratio, bar.size.y)
+	fill.anchor_left = 0.0
+	fill.anchor_top = 0.0
+	fill.anchor_right = clampf(_ratio, 0.0, 1.0)
+	fill.anchor_bottom = 1.0
+	fill.offset_left = 0.0
+	fill.offset_top = 0.0
+	fill.offset_right = 0.0
+	fill.offset_bottom = 0.0
 
 
 # ---------------------------------------------------------------------------

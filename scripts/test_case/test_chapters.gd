@@ -17,6 +17,8 @@ extends SceneTree
 const TITLE := "HỆ THỐNG CHƯƠNG"
 const CARD_SCENE_PATH := "res://nodes/chapters/chapter_card.tscn"
 const SCENE_PATH := "res://scenes/chapters.tscn"
+const LEVELS_SCENE_PATH := "res://scenes/levels.tscn"
+const MAIN_SCENE_PATH := "res://scenes/main.tscn"
 
 var _backup := ""
 var _progress: Dictionary = {}
@@ -53,6 +55,7 @@ func _init() -> void:
 	await _section_7_levels_screen(gm, lm)
 	await _section_8_win_popup(gm)
 	_section_9_wiring()
+	await _section_10_back_loop()
 
 	# --- Khôi phục dữ liệu người chơi ---
 	if not _progress.is_empty():
@@ -507,9 +510,17 @@ func _section_6_scene(lm: Node) -> void:
 	var wallet_count := scene.ui_child("Wallet", "Count") as Label
 	_entry(wallet_count != null and wallet_count.text == str(int(gm.call("total_stars"))),
 		"Vi Sao hien tong sao hien co (%s)" % (wallet_count.text if wallet_count != null else "<null>"))
+	var wallet := scene.layout.wallet_bar as Control
+	_entry(wallet != null and wallet.size.y <= 40.0 and wallet.size.x >= 120.0,
+		"Panel Vi giu dung co art 125x35, khong bi keo gian theo hang (%.0fx%.0f)" % [wallet.size.x, wallet.size.y])
 	var cta := scene.ui_child("ContinueButton", "Label") as Label
 	_entry(cta != null and cta.text.contains(str(playing)),
 		"Nhan CTA nhac toi chuong dang choi (%s)" % (cta.text if cta != null else "<null>"))
+	# Nút chân trang dùng art GIẤY ⇒ nhãn phải là MỰC ĐẬM; trước đây là chữ TRẮNG của nút xanh
+	# cũ ⇒ trắng trên giấy trắng = vô hình.
+	_entry(cta != null and cta.get_theme_color("font_color").get_luminance() < 0.35,
+		"Nhan CTA dung mau MUC dam, khong phai chu trang (do sang %.2f)"
+			% (cta.get_theme_color("font_color").get_luminance() if cta != null else 1.0))
 	var cta_icon := scene.ui_child("ContinueButton", "Icon") as TextureRect
 	_entry(cta_icon != null and cta_icon.texture != null, "CTA co icon tam giac")
 	_entry((scene.ui_path("List/Cards") as VBoxContainer).get_theme_constant("separation") == 15,
@@ -720,17 +731,61 @@ func _section_9_wiring() -> void:
 	var levels_src := FileAccess.get_file_as_string("res://scripts/scenes/levels.gd")
 	_entry(levels_src.contains("_on_banner_input") and levels_src.contains("Nav.goto_chapters()"),
 		"Bam banner o man Chon man -> man Chon Chuong")
-	_entry(levels_src.contains("go_to_main") or levels_src.contains("goto_main"),
-		"Back o man Chon man -> Main")
+	_entry(levels_src.contains("Nav.back_to_main()"),
+		"Back o man Chon man -> Main, KHONG ghi lich su (goi y: Nav.back_to_main)")
 	var chapters_src := FileAccess.get_file_as_string("res://scripts/scenes/chapters.gd")
-	_entry(chapters_src.contains("Nav.goto_levels()"),
-		"Back o man Chon Chuong -> man Chon man")
+	_entry(chapters_src.contains("Nav.back_to_levels()"),
+		"Back o man Chon Chuong -> man Chon man, KHONG ghi lich su (goi y: Nav.back_to_levels)")
 	_entry(levels_src.contains("current_chapter"), "Man Chon man doc current_chapter")
 	var debug_src := FileAccess.get_file_as_string("res://scripts/scenes/debug.gd")
 	_entry(debug_src.contains("scenes/chapters.tscn"), "Debug Console co muc chon chuong")
 	var gm_src := FileAccess.get_file_as_string("res://scripts/core/game_manager.gd")
 	_entry(gm_src.contains("\"unlocked_chapters\""), "GameManager luu unlocked_chapters")
 	_entry(gm_src.contains("func go_to_chapters"), "GameManager co go_to_chapters()")
+
+
+# ---------------------------------------------------------------------------
+# 10. Back KHÔNG được LẶP: Chọn màn → Chọn chương → Back → Chọn màn → Back → Main
+#     (lỗi thật 2026-10-16: `chapters._on_back_pressed()` gọi `Nav.goto_levels()` — CÓ ghi
+#      lịch sử — nên Back ở Chọn màn lại pop ra Chọn chương ⇒ kẹt vòng lặp 2 màn này)
+# ---------------------------------------------------------------------------
+func _section_10_back_loop() -> void:
+	print("[10] Back khong lap: Chon man <-> Chon chuong...")
+	var screen: Node = root.get_node_or_null("ScreenManager")
+	if screen == null:
+		_entry(false, "Autoload ScreenManager ton tai")
+		return
+	screen.call("clear_history")
+
+	# Mở màn Chọn màn (mô phỏng người chơi vào từ Main — chưa cần lịch sử)
+	var levels_scene: Node = (load(LEVELS_SCENE_PATH) as PackedScene).instantiate()
+	root.add_child(levels_scene)
+	current_scene = levels_scene
+	await _frames(3)
+
+	# Vào Chọn chương như bấm BANNER (có ghi lịch sử)
+	Nav.goto_chapters()
+	await _frames(6)
+	_entry(_scene_path() == SCENE_PATH,
+		"Banner o Chon man -> mo man Chon chuong (dang '%s')" % _scene_path())
+
+	# Back ở Chọn chương -> về Chọn màn
+	current_scene.call("_on_back_pressed")
+	await _frames(6)
+	_entry(_scene_path() == LEVELS_SCENE_PATH,
+		"Back o Chon chuong -> ve CHON MAN (dang '%s')" % _scene_path())
+
+	# Back ở Chọn màn -> Main, KHÔNG được nhảy ngược về Chọn chương
+	current_scene.call("_on_back_pressed")
+	await _frames(6)
+	_entry(_scene_path() == MAIN_SCENE_PATH,
+		"Back o Chon man -> MAN HINH CHINH, khong lap ve Chon chuong (dang '%s')" % _scene_path())
+
+	if current_scene != null:
+		current_scene.queue_free()
+		current_scene = null
+	screen.call("clear_history")
+	await _frames(2)
 
 
 # ---------------------------------------------------------------------------
@@ -753,3 +808,13 @@ func _entry(condition: bool, label: String) -> void:
 	else:
 		_failed += 1
 		print("  [FAIL] %s" % label)
+
+
+## Đường dẫn scene đang mở (rỗng nếu chưa có)
+func _scene_path() -> String:
+	return current_scene.scene_file_path if current_scene != null else ""
+
+
+func _frames(n: int) -> void:
+	for i in n:
+		await process_frame

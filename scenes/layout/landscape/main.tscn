@@ -111,13 +111,14 @@ texture = ExtResource("18_luyyg")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "event_header", "event_carousel", "card_play", "card_dungeon", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "mode_box") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "card_play", "card_dungeon", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "mode_box") instance=ExtResource("1_parent")]
 visible = false
 script = ExtResource("2_layout")
 logo = NodePath("Scaler/Body/TopBar/LogoBlock/Logo")
 profile_card = NodePath("Scaler/Body/TopBar/ProfileCard")
 coin_chip = NodePath("Scaler/Body/TopBar/CoinChip")
 star_chip = NodePath("Scaler/Body/TopBar/StarChip")
+btn_settings = NodePath("Scaler/Body/TopBar/Settings")
 event_header = NodePath("Scaler/Body/Mid/Left/EventHeader")
 event_carousel = NodePath("Scaler/Body/Mid/Left/EventCarousel")
 card_play = NodePath("Scaler/Body/Mid/Right/Modes/Play")

@@ -99,7 +99,9 @@ func _rebind_after_orientation() -> void:
 ## Kiểu chữ của nút CTA chân trang (đặt ở cả 2 layout)
 func _prepare_continue_label() -> void:
 	if layout.lbl_continue != null:
-		layout.lbl_continue.theme_type_variation = &"LevelsContinue"
+		# Nút chân trang dùng art GIẤY (`btn_paper_cta_*`) ⇒ nhãn phải là MỰC đậm, không phải
+		# chữ TRẮNG của nút xanh cũ (trắng trên giấy trắng = vô hình)
+		layout.lbl_continue.theme_type_variation = &"PaperCtaLabel"
 
 
 # ---------------------------------------------------------------------------
@@ -283,8 +285,13 @@ func _on_continue_pressed() -> void:
 
 func _on_back_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
-	# Màn Chọn Chương là màn CON của Chọn màn -> Back quay về Chọn màn
-	Nav.goto_levels()
+	# Màn Chọn Chương là màn CON của Chọn màn: lùi theo LỊCH SỬ về đúng màn đã mở nó.
+	# ☠️ KHÔNG dùng `Nav.goto_levels()` (có ghi lịch sử): ghi vào đây thì Back ở Chọn màn lại
+	# nhảy ngược về Chọn Chương ⇒ VÒNG LẶP Chọn màn ⇄ Chọn Chương.
+	var screen := get_node_or_null("/root/ScreenManager")
+	if screen != null and screen.has_method("go_back") and bool(screen.call("go_back")):
+		return
+	Nav.back_to_levels()
 
 
 func _on_chapter_unlocked(_chapter_id: int) -> void:
