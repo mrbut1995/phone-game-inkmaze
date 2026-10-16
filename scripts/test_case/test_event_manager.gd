@@ -9,6 +9,10 @@ var _checks := 0
 var _em: Node = null
 var _saved_events: Array = []
 var _saved_progress: Dictionary = {}
+## ☠️ Phải sao lưu cả FILE SAVE: mọi thay đổi tiến độ phát tín hiệu "changed" ⇒ SaveManager
+## ghi ngay ra `user://inkmaze_data.json`; chỉ khôi phục RAM là file vẫn giữ số liệu của test.
+const SAVE_PATH := "user://inkmaze_data.json"
+var _save_backup := ""
 
 const NEW_THEME_IDS := [
 	&"anniversary", &"autumn", &"easter", &"new_year",
@@ -31,6 +35,7 @@ func _init() -> void:
 	# Giữ lại trạng thái thật để khôi phục cuối test
 	_saved_events = (_em.get("_all_events") as Array).duplicate()
 	_saved_progress = (_em.call("export_progress") as Dictionary).duplicate(true)
+	_save_backup = FileAccess.get_file_as_string(SAVE_PATH) if FileAccess.file_exists(SAVE_PATH) else ""
 
 	_section_load_and_sort()
 	_section_theme_art()
@@ -47,6 +52,10 @@ func _init() -> void:
 	# Khôi phục
 	_em.set("_all_events", _saved_events)
 	_em.call("import_progress", _saved_progress)
+	if not _save_backup.is_empty():
+		var wf := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+		if wf != null:
+			wf.store_string(_save_backup)
 	_finish()
 
 

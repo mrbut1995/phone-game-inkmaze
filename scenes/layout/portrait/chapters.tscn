@@ -153,8 +153,12 @@ text = "STR_CHAPTER_SCREEN_TITLE"
 horizontal_alignment = 1
 
 [node name="Wallet" type="TextureRect" parent="TopBar" index="2" unique_id=1740014496]
+custom_minimum_size = Vector2(125, 35)
 layout_mode = 2
+size_flags_vertical = 4
 mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
 texture = ExtResource("5_wallet")
 
 [node name="Star" type="TextureRect" parent="TopBar/Wallet" index="0" unique_id=734155314]
@@ -280,7 +284,7 @@ anchor_left = 0.075
 anchor_right = 0.975
 anchor_bottom = 1.1830001
 offset_bottom = -10.980003
-theme_type_variation = &"LevelsContinue"
+theme_type_variation = &"PaperCtaLabel"
 text = "STR_CHAPTER_CONTINUE_FORMAT"
 horizontal_alignment = 1
 vertical_alignment = 1

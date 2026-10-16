@@ -51,9 +51,44 @@ DEFAULT = [
 ]
 
 
+def _project_name() -> str:
+    """Tên project trong `project.godot` (config/name) — dùng để tìm thư mục user://."""
+    try:
+        for line in (ROOT / "project.godot").read_text(encoding="utf-8", errors="replace").splitlines():
+            if line.startswith("config/name="):
+                return line.split("=", 1)[1].strip().strip('"')
+    except OSError:
+        pass
+    return ROOT.name
+
+
+def _user_save_path() -> pathlib.Path | None:
+    """Đường dẫn file save người chơi (`user://inkmaze_data.json`) nếu tìm thấy thư mục user://."""
+    name = _project_name()
+    dirs: list[pathlib.Path] = []
+    appdata = os.environ.get("APPDATA")
+    if appdata:
+        dirs.append(pathlib.Path(appdata) / "Godot" / "app_userdata" / name)
+    home = pathlib.Path(os.path.expanduser("~"))
+    dirs.append(home / ".local" / "share" / "godot" / "app_userdata" / name)
+    dirs.append(home / "Library" / "Application Support" / "Godot" / "app_userdata" / name)
+    for d in dirs:
+        if d.is_dir():
+            return d / "inkmaze_data.json"
+    return None
+
+
 def run(name: str, timeout: float) -> tuple[str, str]:
     script = f"res://scripts/test_case/{name}.gd"
     cmd = [GODOT, "--headless", "--path", str(ROOT), "--script", script]
+    # ☠️ LƯỚI AN TOÀN cho SAVE NGƯỜI CHƠI: nhiều test đổi tiến trình (sao/màn/cửa hàng…),
+    # thay đổi đó phát tín hiệu "changed" ⇒ SaveManager GHI NGAY vào `user://…/inkmaze_data.json`.
+    # Test nào quên khôi phục file (hoặc chỉ khôi phục RAM) sẽ XOÁ TIẾN TRÌNH THẬT của người chơi.
+    # ⇒ Chụp file TRƯỚC mỗi test và trả lại NGUYÊN VĂN sau khi test xong.
+    save_path = _user_save_path()
+    snapshot: bytes | None = None
+    if save_path is not None and save_path.exists():
+        snapshot = save_path.read_bytes()
     try:
         done = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True,
                               encoding="utf-8", errors="replace", timeout=timeout)
@@ -64,7 +99,17 @@ def run(name: str, timeout: float) -> tuple[str, str]:
               ((exc.stderr or "") if isinstance(exc.stderr, str) else "")
         fails = [l.strip() for l in out.splitlines() if "FAIL" in l or "SCRIPT ERROR" in l]
         tail = " | ".join(fails[-3:]) if fails else "(không có dòng FAIL — có thể treo ở await)"
-        return "TIMEOUT", tail
+        verdict, out = "TIMEOUT", out
+        return verdict, tail
+    finally:
+        if save_path is not None:
+            try:
+                if snapshot is not None:
+                    save_path.write_bytes(snapshot)
+                elif save_path.exists():
+                    save_path.unlink()
+            except OSError:
+                print(f"  ⚠ không khôi phục được save người chơi: {save_path}")
     summary = ""
     for line in out.splitlines():
         if re.search(r"KET QUA|CHECK PASS|CHECK FAIL|\[SUCCESS\]|\[FAIL\]", line):

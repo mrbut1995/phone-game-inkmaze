@@ -49,6 +49,29 @@ static func goto_levels() -> void:
 	change_scene(SCENE_LEVELS)
 
 
+## Điều hướng KHÔNG ghi lịch sử — dùng cho nút BACK (về màn CHA).
+## Vì `ScreenManager` lùi theo LỊCH SỬ, nếu Back có ghi lịch sử thì Back ở màn cha sẽ nhảy
+## NGƯỢC về màn con ⇒ vòng lặp điều hướng (lỗi đã gặp: Chọn màn ⇄ Chọn chương).
+static func back_to(path: String) -> void:
+	var manager := _manager()
+	if manager != null and manager.has_method("change_scene"):
+		manager.call("change_scene", path, false)
+		return
+	var tree := _tree()
+	if tree != null:
+		tree.change_scene_to_file(path)
+
+
+## Back về MÀN HÌNH CHÍNH (không ghi lịch sử)
+static func back_to_main() -> void:
+	back_to(SCENE_MAIN)
+
+
+## Back về màn CHỌN MÀN (không ghi lịch sử)
+static func back_to_levels() -> void:
+	back_to(SCENE_LEVELS)
+
+
 static func goto_game() -> void:
 	change_scene(SCENE_GAME)
 

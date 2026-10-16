@@ -295,7 +295,7 @@ func _on_back_pressed() -> void:
 	var screen := get_node_or_null("/root/ScreenManager")
 	if screen != null and screen.has_method("go_back") and bool(screen.call("go_back")):
 		return
-	Nav.goto_main()
+	Nav.back_to_main()
 
 
 # ---------------------------------------------------------------------------

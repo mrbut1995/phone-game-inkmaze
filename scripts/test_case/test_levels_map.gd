@@ -39,6 +39,11 @@ func _init() -> void:
 	var backup_unlocked := int(gm.get("unlocked_levels"))
 	var backup_stars: Dictionary = gm.get("level_stars")
 	var backup_chapter := int(gm.get("current_chapter"))
+	# ☠️ Phải sao lưu cả FILE SAVE, không chỉ giá trị trong RAM: `gm.set("level_stars", …)` phát
+	# tín hiệu "changed" ⇒ SaveManager GHI NGAY ra `user://inkmaze_data.json`. Chỉ khôi phục RAM
+	# thì file vẫn giữ số liệu của test ⇒ SAVE NGƯỜI CHƠI BỊ MẤT SAO (đã xảy ra 2026-10-16).
+	var save_path := "user://inkmaze_data.json"
+	var save_backup := FileAccess.get_file_as_string(save_path) if FileAccess.file_exists(save_path) else ""
 
 	var failures := 0
 	failures += _prepare_temp_levels()
@@ -87,6 +92,11 @@ func _init() -> void:
 	gm.set("level_stars", backup_stars)
 	gm.set("current_chapter", backup_chapter)
 	_remove_temp_levels()
+	# Trả lại NGUYÊN VĂN file save (xem chú thích ở đầu `_init`)
+	if not save_backup.is_empty():
+		var wf := FileAccess.open(save_path, FileAccess.WRITE)
+		if wf != null:
+			wf.store_string(save_backup)
 
 	if failures > 0:
 		print("\n[FAILED] %d loi o ban do man choi.\n" % failures)
