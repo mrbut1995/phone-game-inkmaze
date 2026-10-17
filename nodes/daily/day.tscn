@@ -1,144 +1,163 @@
 [gd_scene format=3 uid="uid://cggt0mrkea7fs"]
 
 [ext_resource type="Script" uid="uid://c0jpbwfj0dbrw" path="res://scripts/nodes/daily/day.gd" id="1_day"]
-[ext_resource uid="uid://bmkai0vpvee5i" type="Texture2D" path="res://assets/images-png/icons/completed_icon.png" id="2_check"]
-[ext_resource uid="uid://6voljbarwsoh" type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="3_star"]
-[ext_resource uid="uid://bjeb8uvq4xesn" type="Texture2D" path="res://assets/images-png/calendar/tag_day.png" id="4_tag"]
-[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="5_theme"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/cell_done.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/check_red.png" id="3_check"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/pill_stars.png" id="4_pill"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/today_ribbon.png" id="5_ribbon"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="6_theme"]
 
-[node name="Day" type="Control" unique_id=2128801110 node_paths=PackedStringArray("btn", "number_label", "check_icon", "star_icon", "pill", "status_label", "today_tag", "today_label")]
+[node name="Day" type="Control" node_paths=PackedStringArray("hit", "bg", "number_label", "number_big", "state_icon", "pill", "pill_label", "today_ribbon", "today_label")]
+custom_minimum_size = Vector2(57.0, 58.0)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("5_theme")
+anchors_preset = 0
+offset_right = 57.0
+offset_bottom = 58.0
+mouse_filter = 2
+theme = ExtResource("6_theme")
 script = ExtResource("1_day")
-btn = NodePath("Button")
-number_label = NodePath("Button/Number")
-check_icon = NodePath("Button/CheckIcon")
-star_icon = NodePath("Button/StarIcon")
-pill = NodePath("Button/StatusPill")
-status_label = NodePath("Button/StatusPill/StatusLabel")
-today_tag = NodePath("Button/TodayTag")
-today_label = NodePath("Button/TodayTag/TodayLabel")
+hit = NodePath("Hit")
+bg = NodePath("Bg")
+number_label = NodePath("Number")
+number_big = NodePath("NumberBig")
+state_icon = NodePath("StateIcon")
+pill = NodePath("StarsPill")
+pill_label = NodePath("StarsPill/Label")
+today_ribbon = NodePath("TodayRibbon")
+today_label = NodePath("TodayRibbon/Label")
 
-[node name="Button" type="TextureButton" parent="." unique_id=142223511]
+[node name="Bg" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-ignore_texture_size = true
+mouse_filter = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
 stretch_mode = 0
 
-[node name="Number" type="Label" parent="Button" unique_id=265045023]
+[node name="Hit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+flat = true
+
+[node name="Number" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.06
-anchor_right = 0.55
-anchor_bottom = 0.4
-offset_left =  0
-offset_top =  0
-offset_right =  0
-offset_bottom =  0
-theme_type_variation = &"DailyDayNum"
+offset_left = 7.0
+offset_top = 3.0
+offset_right = 45.0
+offset_bottom = 21.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
+theme_override_font_sizes/font_size = 13
 text = "01"
 vertical_alignment = 1
-clip_text = true
 
-[node name="CheckIcon" type="TextureRect" parent="Button" unique_id=1336019975]
+[node name="NumberBig" type="Label" parent="."]
 visible = false
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.55
-anchor_top = 0.08
-anchor_right = 0.88
-anchor_bottom = 0.35
-offset_left =  0
-offset_top =  0
-offset_right =  0
-offset_bottom =  0
-texture = ExtResource("2_check")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="StarIcon" type="TextureRect" parent="Button" unique_id=754873809]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.58
-anchor_top = 0.1
-anchor_right = 0.88
-anchor_bottom = 0.36
-offset_left =  0
-offset_top =  0
-offset_right =  0
-offset_bottom =  0
-texture = ExtResource("3_star")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="StatusPill" type="TextureRect" parent="Button" unique_id=798544517]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.65
-anchor_right = 0.9
-anchor_bottom = 0.92
-offset_left =  0
-offset_top =  0
-offset_right =  0
-offset_bottom =  0
-expand_mode = 1
-stretch_mode = 0
-
-[node name="StatusLabel" type="Label" parent="Button/StatusPill" unique_id=1356295277]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 10.0
+offset_right = 20.0
+offset_bottom = 32.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"DailyDayStatusDone"
-text = "3/3 SAO"
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.631373, 0.372549, 0.105882, 1)
+theme_override_font_sizes/font_size = 16
+text = "01"
 horizontal_alignment = 1
 vertical_alignment = 1
-clip_text = true
 
-[node name="TodayTag" type="TextureRect" parent="Button" unique_id=1614266182]
+[node name="StateIcon" type="TextureRect" parent="."]
 visible = false
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.12
-anchor_top = -0.1
-anchor_right = 0.88
-anchor_bottom = 0.1
-offset_left =  0
-offset_top =  0
-offset_right =  0
-offset_bottom =  0
-texture = ExtResource("4_tag")
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -11.0
+offset_top = -28.0
+offset_right = 11.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("3_check")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StarsPill" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -19.0
+offset_top = -18.0
+offset_right = 19.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("4_pill")
 expand_mode = 1
 stretch_mode = 0
 
-[node name="TodayLabel" type="Label" parent="Button/TodayTag" unique_id=2106916228]
+[node name="Label" type="Label" parent="StarsPill"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"DailyTodayTag"
+theme_override_colors/font_color = Color(0.541176, 0.352941, 0.070588, 1)
+theme_override_font_sizes/font_size = 8
+text = "STR_DAILY_STARS_BADGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TodayRibbon" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -23.0
+offset_top = -6.0
+offset_right = 23.0
+offset_bottom = 8.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("5_ribbon")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="TodayRibbon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 8
 text = "STR_TODAY"
 horizontal_alignment = 1
 vertical_alignment = 1
-clip_text = true
 
-[connection signal="pressed" from="Button" to="." method="_on_btn_pressed"]
+[connection signal="pressed" from="Hit" to="." method="_on_pressed"]

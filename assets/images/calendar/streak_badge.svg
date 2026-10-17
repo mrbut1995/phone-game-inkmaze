@@ -1,6 +1,18 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 70" width="100" height="35">
-  <rect x="1.5" y="1.5" width="197" height="67" rx="18" fill="#FEFDFA" stroke="#D84444" stroke-width="3" />
-  
-  <line x1="22" y1="1.5" x2="22" y2="68.5" stroke="#FAF5EB" stroke-width="2" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 64" width="90" height="32" fill="none">
+  <defs>
+    <filter id="streakShadow" x="-10%" y="-15%" width="125%" height="150%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#7C2D12" flood-opacity="0.14" />
+    </filter>
+    <linearGradient id="streakBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFDF7" />
+      <stop offset="100%" stop-color="#FEF2E0" />
+    </linearGradient>
+  </defs>
+  <g filter="url(#streakShadow)">
+    <rect x="1.5" y="1.5" width="177" height="59" rx="16" fill="url(#streakBg)" stroke="#E14D2A" stroke-width="2.4" />
+    <!-- Fire icon aura -->
+    <circle cx="28" cy="31" r="14" fill="#FFEDD5" opacity="0.85" />
+    <!-- Inner dashed border -->
+    <rect x="5.5" y="5.5" width="169" height="51" rx="12" fill="none" stroke="#FDBA74" stroke-width="1" stroke-dasharray="4 3" opacity="0.75" />
+  </g>
 </svg>

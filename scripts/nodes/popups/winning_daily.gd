@@ -5,13 +5,14 @@ extends BasePopup
 ##
 ## Khác popup thắng thường (winning.tscn):
 ## - KHÔNG có nút "MÀN KẾ TIẾP" — thay bằng nút "VỀ DAILY" (quay lại màn Daily).
-## - Thưởng hiển thị bằng XU (không còn Sao).
-## - Con dấu ghi số NHIỆM VỤ đã xong trong ngày (x/4) + tổng Xu kiếm được trong ngày.
+## - Thưởng hiển thị bằng SAO của ván (tối đa 3) + tổng Sao của THÁNG (mốc thưởng tháng).
+## - Con dấu ghi số SAO của NGÀY (x/6) + tổng Sao tháng.
 ##
 ## Dữ liệu GameController truyền qua open({...}):
-##   daily_day, daily_variant ("classic"/"special"), daily_mode_id,
-##   daily_coins (Xu ván này), daily_day_coins, daily_day_reward_max,
-##   daily_missions_done, daily_missions_total, time, steps_used, steps_max, wall_hits
+##   daily_day, daily_variant ("classic"/"challenge"/"special"), daily_mode_id,
+##   daily_stars (sao ván này), daily_stars_gained (sao thực sự tăng),
+##   daily_day_stars, daily_stars_max, daily_month_stars, daily_month_goal,
+##   time, steps_used, steps_max, wall_hits
 ## ============================================================================
 
 signal replay_requested
@@ -56,14 +57,14 @@ func _on_open() -> void:
 		else tr("STR_WALL_HITS_FORMAT").format([hits, ""]).strip_edges()
 	value_walls.theme_type_variation = &"PopupStatValueGood" if hits == 0 else &"PopupStatValueBad"
 
-	# Xu kiếm được trong VÁN NÀY (to, cạnh icon đồng xu)
-	value_coins.text = tr("STR_DAILY_REWARD_COINS").format([int(data.get("daily_coins", 0))])
+	# Sao kiếm được trong VÁN NÀY (to, cạnh icon ngôi sao)
+	value_coins.text = tr("STR_DAILY_STARS_GAINED").format([int(data.get("daily_stars_gained", 0))])
 
-	# Tổng Xu kiếm được trong NGÀY (bao gồm các ván trước)
+	# Tổng Sao của THÁNG (mốc thưởng tháng tính theo tổng này)
 	label_total.text = tr("STR_DAILY_WIN_TOTAL_TODAY")
 	value_total.text = tr("STR_DAILY_COINS_TOTAL").format([
-		int(data.get("daily_day_coins", 0)),
-		int(data.get("daily_day_reward_max", 0)),
+		int(data.get("daily_month_stars", 0)),
+		int(data.get("daily_month_goal", 150)),
 	])
 
 	_fill_stamp()
@@ -93,13 +94,13 @@ func _days_in_month() -> int:
 	return DailyCalendar.days_in_month(int(now.get("year", 2026)), int(now.get("month", 1)))
 
 
-## Con dấu đỏ: "n / 4 NHIỆM VỤ" + "+Xu hôm nay"
+## Con dấu đỏ: "n / 6 SAO" + tổng Sao của tháng
 func _fill_stamp() -> void:
 	stamp_title.text = tr("STR_DAILY_WIN_STAMP_TITLE").format([
-		int(data.get("daily_missions_done", 0)),
-		int(data.get("daily_missions_total", 4)),
+		int(data.get("daily_day_stars", 0)),
+		int(data.get("daily_stars_max", 6)),
 	])
-	stamp_sub.text = tr("STR_DAILY_WIN_STAMP_SUB").format([int(data.get("daily_day_coins", 0))])
+	stamp_sub.text = tr("STR_DAILY_WIN_STAMP_SUB").format([int(data.get("daily_month_stars", 0))])
 
 
 ## Đồng xu nảy nhẹ khi popup mở (thay cho chuỗi 3 ngôi sao của popup thường).

@@ -1,405 +1,302 @@
 [gd_scene format=3 uid="uid://ba36iykveefpu"]
 
 [ext_resource type="Script" uid="uid://b8u3x0v0x0ol0" path="res://scripts/nodes/daily/calendar.gd" id="1_cal"]
-[ext_resource uid="uid://wfj5u284imxl" type="Texture2D" path="res://assets/images-png/calendar/calendar_board.png" id="2_board"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/board.png" id="2_board"]
 [ext_resource type="PackedScene" uid="uid://cggt0mrkea7fs" path="res://nodes/daily/day.tscn" id="3_day"]
-[ext_resource uid="uid://by5pnt7sch66d" type="Texture2D" path="res://assets/images-png/calendar/day_btn_prev_normal.png" id="4_prev_n"]
-[ext_resource uid="uid://daby51l6l7oih" type="Texture2D" path="res://assets/images-png/calendar/day_btn_prev_pressed.png" id="5_prev_p"]
-[ext_resource uid="uid://ca6lb1qbti3l0" type="Texture2D" path="res://assets/images-png/calendar/day_btn_prev_disabled.png" id="6_prev_d"]
-[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="7_g7v8n"]
-[ext_resource uid="uid://bi20hlvtod50l" type="Texture2D" path="res://assets/images-png/calendar/day_btn_next_normal.png" id="8_next_n"]
-[ext_resource uid="uid://clg8sb8y8ae43" type="Texture2D" path="res://assets/images-png/calendar/day_btn_next_pressed.png" id="9_next_p"]
-[ext_resource uid="uid://uuwqad3jf00j" type="Texture2D" path="res://assets/images-png/calendar/day_btn_next_disabled.png" id="10_next_d"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/btn_nav_normal.png" id="4_nav_n"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/btn_nav_pressed.png" id="5_nav_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/btn_nav_r_normal.png" id="6_navr_n"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/btn_nav_r_pressed.png" id="7_navr_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/check_red.png" id="8_check"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/cross_red.png" id="9_cross"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/legend_box.png" id="10_box"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/legend_dashed.png" id="11_dash"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="12_theme"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ut84u"]
-content_margin_left = 7.5
-content_margin_top = 7.0
-content_margin_right = 7.5
-content_margin_bottom = 8.5
-texture = ExtResource("4_prev_n")
-texture_margin_left = 7.5
-texture_margin_top = 7.0
-texture_margin_right = 7.5
-texture_margin_bottom = 8.5
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g7v8n"]
-content_margin_left = 7.5
-content_margin_top = 7.0
-content_margin_right = 7.5
-content_margin_bottom = 8.5
-texture = ExtResource("5_prev_p")
-texture_margin_left = 7.5
-texture_margin_top = 7.0
-texture_margin_right = 7.5
-texture_margin_bottom = 8.5
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w5v05"]
-content_margin_left = 7.5
-content_margin_top = 7.0
-content_margin_right = 7.5
-content_margin_bottom = 8.5
-texture = ExtResource("5_prev_p")
-texture_margin_left = 7.5
-texture_margin_top = 7.0
-texture_margin_right = 7.5
-texture_margin_bottom = 8.5
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fe7dn"]
-content_margin_left = 7.5
-content_margin_top = 7.0
-content_margin_right = 7.5
-content_margin_bottom = 8.5
-texture = ExtResource("6_prev_d")
-texture_margin_left = 7.5
-texture_margin_top = 7.0
-texture_margin_right = 7.5
-texture_margin_bottom = 8.5
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8lf86"]
-content_margin_left = 8.0
-content_margin_top = 7.0
-content_margin_right = 7.5
-content_margin_bottom = 9.0
-texture = ExtResource("8_next_n")
-texture_margin_left = 8.0
-texture_margin_top = 7.0
-texture_margin_right = 7.5
-texture_margin_bottom = 9.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v5uxq"]
-content_margin_left = 6.0
-content_margin_top = 5.0
-content_margin_right = 5.5
-content_margin_bottom = 6.0
-texture = ExtResource("9_next_p")
-texture_margin_left = 6.0
-texture_margin_top = 5.0
-texture_margin_right = 5.5
-texture_margin_bottom = 6.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jmps4"]
-content_margin_left = 6.0
-content_margin_top = 5.0
-content_margin_right = 5.5
-content_margin_bottom = 6.0
-texture = ExtResource("9_next_p")
-texture_margin_left = 6.0
-texture_margin_top = 5.0
-texture_margin_right = 5.5
-texture_margin_bottom = 6.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5mqyr"]
-content_margin_left = 8.0
-content_margin_top = 7.0
-content_margin_right = 7.5
-content_margin_bottom = 9.0
-texture = ExtResource("10_next_d")
-texture_margin_left = 8.0
-texture_margin_top = 7.0
-texture_margin_right = 7.5
-texture_margin_bottom = 9.0
-
-[node name="Calendar" type="Control" unique_id=1529876078 node_paths=PackedStringArray("month_label", "btn_prev", "btn_next", "dow_row", "grid")]
-clip_contents = true
+[node name="Calendar" type="Control" node_paths=PackedStringArray("month_label", "btn_prev", "btn_next", "dow_row", "grid")]
+custom_minimum_size = Vector2(462, 417)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 462.0
+offset_bottom = 417.0
 theme = ExtResource("12_theme")
 script = ExtResource("1_cal")
 month_label = NodePath("Panel/Months/Label")
-btn_prev = NodePath("Panel/Months/Previous/Button")
-btn_next = NodePath("Panel/Months/Next/Button")
-dow_row = NodePath("Panel/Content/DayTitle")
-grid = NodePath("Panel/Content/Days")
+btn_prev = NodePath("Panel/Months/Prev")
+btn_next = NodePath("Panel/Months/Next")
+dow_row = NodePath("Panel/DayTitle")
+grid = NodePath("Panel/Days")
 
-[node name="Panel" type="NinePatchRect" parent="." unique_id=732625991]
+[node name="Panel" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_board")
-region_rect = Rect2(0, 0, 510, 505)
-patch_margin_left = 60
-patch_margin_top = 81
-patch_margin_right = 55
-patch_margin_bottom = 87
 
-[node name="Months" type="HBoxContainer" parent="Panel" unique_id=2039597602]
+[node name="Board" type="TextureRect" parent="Panel"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.080000006
-anchor_right = 0.92
-offset_top = 20.736
-offset_bottom = 54.432
-theme_override_constants/separation = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_board")
+expand_mode = 1
+stretch_mode = 0
 
-[node name="Previous" type="AspectRatioContainer" parent="Panel/Months" unique_id=1252037088]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.1
+[node name="Months" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 14.0
+offset_bottom = 44.0
+grow_horizontal = 2
 
-[node name="Button" type="Button" parent="Panel/Months/Previous" unique_id=295496633]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.1
-theme_override_styles/normal = SubResource("StyleBoxTexture_ut84u")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_g7v8n")
-theme_override_styles/hover = SubResource("StyleBoxTexture_w5v05")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_fe7dn")
-script = ExtResource("7_g7v8n")
-texture_normal = ExtResource("4_prev_n")
-texture_hover = ExtResource("5_prev_p")
-texture_pressed = ExtResource("5_prev_p")
-texture_disabled = ExtResource("6_prev_d")
-patch_margin_left = 7.5
-patch_margin_top = 7.0
-patch_margin_right = 7.5
-patch_margin_bottom = 8.5
-metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+[node name="Prev" type="TextureButton" parent="Panel/Months"]
+custom_minimum_size = Vector2(27, 27)
+layout_mode = 1
+anchors_preset = 0
+offset_left = 22.0
+offset_right = 49.0
+offset_bottom = 27.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_nav_n")
+texture_pressed = ExtResource("5_nav_p")
+texture_hover = ExtResource("5_nav_p")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="Label" type="Label" parent="Panel/Months" unique_id=1562895281]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.8
-theme_type_variation = &"DailyMonth"
+[node name="Next" type="TextureButton" parent="Panel/Months"]
+custom_minimum_size = Vector2(27, 27)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_right = -22.0
+offset_bottom = 27.0
+grow_horizontal = 0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("6_navr_n")
+texture_pressed = ExtResource("7_navr_p")
+texture_hover = ExtResource("7_navr_p")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Panel/Months"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_right = -56.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
+theme_override_font_sizes/font_size = 19
 text = "STR_MONTH_SEP"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Next" type="AspectRatioContainer" parent="Panel/Months" unique_id=61869356]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.1
-
-[node name="Button" type="Button" parent="Panel/Months/Next" unique_id=771336401]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_8lf86")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_v5uxq")
-theme_override_styles/hover = SubResource("StyleBoxTexture_jmps4")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_5mqyr")
-script = ExtResource("7_g7v8n")
-texture_normal = ExtResource("8_next_n")
-texture_hover = ExtResource("9_next_p")
-texture_pressed = ExtResource("9_next_p")
-texture_disabled = ExtResource("10_next_d")
-patch_margin_left = 6.0
-patch_margin_top = 5.0
-patch_margin_right = 5.5
-patch_margin_bottom = 6.0
-metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
-
-[node name="Content" type="VBoxContainer" parent="Panel" unique_id=82228673]
+[node name="DayTitle" type="HBoxContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 29.0
-offset_top = 59.7
-offset_right = -18.0
-offset_bottom = -22.6999
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 7.0
+offset_top = 48.0
+offset_right = 454.0
+offset_bottom = 65.0
+mouse_filter = 2
+theme_override_constants/separation = 8
 
-[node name="DayTitle" type="HBoxContainer" parent="Panel/Content" unique_id=836109917]
-custom_minimum_size = Vector2(0, 35)
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_constants/separation = 0
-
-[node name="Monday" type="Label" parent="Panel/Content/DayTitle" unique_id=287543008]
+[node name="Monday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"DailyDow"
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.333333, 0.439216, 0.498039, 1)
+theme_override_font_sizes/font_size = 11
 text = "STR_DOW_MON"
 horizontal_alignment = 1
 vertical_alignment = 1
-clip_text = true
-resize_font_to_fit = true
 
-[node name="Tuesday" type="Label" parent="Panel/Content/DayTitle" unique_id=1680296222]
+[node name="Tuesday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"DailyDow"
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.333333, 0.439216, 0.498039, 1)
+theme_override_font_sizes/font_size = 11
 text = "STR_DOW_TUE"
 horizontal_alignment = 1
 vertical_alignment = 1
-clip_text = true
-resize_font_to_fit = true
 
-[node name="Wednesday" type="Label" parent="Panel/Content/DayTitle" unique_id=1156634934]
+[node name="Wednesday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"DailyDow"
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.333333, 0.439216, 0.498039, 1)
+theme_override_font_sizes/font_size = 11
 text = "STR_DOW_WED"
 horizontal_alignment = 1
 vertical_alignment = 1
-clip_text = true
-resize_font_to_fit = true
 
-[node name="Thursday" type="Label" parent="Panel/Content/DayTitle" unique_id=457928259]
+[node name="Thursday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"DailyDow"
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.333333, 0.439216, 0.498039, 1)
+theme_override_font_sizes/font_size = 11
 text = "STR_DOW_THU"
 horizontal_alignment = 1
 vertical_alignment = 1
-clip_text = true
-resize_font_to_fit = true
 
-[node name="Friday" type="Label" parent="Panel/Content/DayTitle" unique_id=496338754]
+[node name="Friday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"DailyDow"
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.333333, 0.439216, 0.498039, 1)
+theme_override_font_sizes/font_size = 11
 text = "STR_DOW_FRI"
 horizontal_alignment = 1
 vertical_alignment = 1
-clip_text = true
-resize_font_to_fit = true
 
-[node name="Saturday" type="Label" parent="Panel/Content/DayTitle" unique_id=383582934]
+[node name="Saturday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"DailyDow"
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.631373, 0.372549, 0.105882, 1)
+theme_override_font_sizes/font_size = 11
 text = "STR_DOW_SAT"
 horizontal_alignment = 1
 vertical_alignment = 1
-clip_text = true
-resize_font_to_fit = true
 
-[node name="Sunday" type="Label" parent="Panel/Content/DayTitle" unique_id=281731615]
+[node name="Sunday" type="Label" parent="Panel/DayTitle"]
+custom_minimum_size = Vector2(57, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"DailyDowSun"
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.788235, 0.235294, 0.235294, 1)
+theme_override_font_sizes/font_size = 11
 text = "STR_DOW_SUN"
 horizontal_alignment = 1
 vertical_alignment = 1
-clip_text = true
-resize_font_to_fit = true
 
-[node name="Days" type="GridContainer" parent="Panel/Content" unique_id=1650849745]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/h_separation = 0
-theme_override_constants/v_separation = 0
+[node name="Days" type="GridContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 7.0
+offset_top = 71.0
+offset_right = 454.0
+offset_bottom = 379.0
+mouse_filter = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 6
 columns = 7
 
-[node name="Day01" parent="Panel/Content/Days" unique_id=70993467 instance=ExtResource("3_day")]
-layout_mode = 2
+[node name="Legend" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 15.0
+offset_top = 385.0
+offset_right = 447.0
+offset_bottom = 407.0
+mouse_filter = 2
+theme_override_constants/separation = 16
+alignment = 1
 
-[node name="Day02" parent="Panel/Content/Days" unique_id=1421843907 instance=ExtResource("3_day")]
+[node name="Done" type="HBoxContainer" parent="Panel/Legend"]
 layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
 
-[node name="Day03" parent="Panel/Content/Days" unique_id=60999894 instance=ExtResource("3_day")]
+[node name="Icon" type="TextureRect" parent="Panel/Legend/Done"]
+custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("8_check")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Day04" parent="Panel/Content/Days" unique_id=1585123841 instance=ExtResource("3_day")]
+[node name="Label" type="Label" parent="Panel/Legend/Done"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 10
+text = "STR_DAILY_LEGEND_DONE"
+vertical_alignment = 1
 
-[node name="Day05" parent="Panel/Content/Days" unique_id=522678856 instance=ExtResource("3_day")]
+[node name="Missed" type="HBoxContainer" parent="Panel/Legend"]
 layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
 
-[node name="Day06" parent="Panel/Content/Days" unique_id=1990514917 instance=ExtResource("3_day")]
+[node name="Icon" type="TextureRect" parent="Panel/Legend/Missed"]
+custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("9_cross")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Day07" parent="Panel/Content/Days" unique_id=470418376 instance=ExtResource("3_day")]
+[node name="Label" type="Label" parent="Panel/Legend/Missed"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 10
+text = "STR_DAILY_LEGEND_MISSED"
+vertical_alignment = 1
 
-[node name="Day08" parent="Panel/Content/Days" unique_id=2059872758 instance=ExtResource("3_day")]
+[node name="Today" type="HBoxContainer" parent="Panel/Legend"]
 layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
 
-[node name="Day09" parent="Panel/Content/Days" unique_id=1023850233 instance=ExtResource("3_day")]
+[node name="Icon" type="TextureRect" parent="Panel/Legend/Today"]
+custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("10_box")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Day10" parent="Panel/Content/Days" unique_id=1338457634 instance=ExtResource("3_day")]
+[node name="Label" type="Label" parent="Panel/Legend/Today"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 10
+text = "STR_DAILY_LEGEND_TODAY"
+vertical_alignment = 1
 
-[node name="Day11" parent="Panel/Content/Days" unique_id=360525893 instance=ExtResource("3_day")]
+[node name="Upcoming" type="HBoxContainer" parent="Panel/Legend"]
 layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
 
-[node name="Day12" parent="Panel/Content/Days" unique_id=256499662 instance=ExtResource("3_day")]
+[node name="Icon" type="TextureRect" parent="Panel/Legend/Upcoming"]
+custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("11_dash")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Day13" parent="Panel/Content/Days" unique_id=755463639 instance=ExtResource("3_day")]
+[node name="Label" type="Label" parent="Panel/Legend/Upcoming"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.443137, 0.545098, 0.619608, 1)
+theme_override_font_sizes/font_size = 10
+text = "STR_DAILY_LEGEND_UPCOMING"
+vertical_alignment = 1
 
-[node name="Day14" parent="Panel/Content/Days" unique_id=363055135 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day15" parent="Panel/Content/Days" unique_id=1706698347 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day16" parent="Panel/Content/Days" unique_id=1958212356 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day17" parent="Panel/Content/Days" unique_id=1447076589 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day18" parent="Panel/Content/Days" unique_id=794658831 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day19" parent="Panel/Content/Days" unique_id=1241554984 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day20" parent="Panel/Content/Days" unique_id=366527187 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day21" parent="Panel/Content/Days" unique_id=1198026685 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day22" parent="Panel/Content/Days" unique_id=1759518417 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day23" parent="Panel/Content/Days" unique_id=2036095642 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day24" parent="Panel/Content/Days" unique_id=392956756 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day25" parent="Panel/Content/Days" unique_id=1497244935 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day26" parent="Panel/Content/Days" unique_id=1325319102 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day27" parent="Panel/Content/Days" unique_id=378735544 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day28" parent="Panel/Content/Days" unique_id=262368137 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day29" parent="Panel/Content/Days" unique_id=276744149 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day30" parent="Panel/Content/Days" unique_id=1144470902 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day31" parent="Panel/Content/Days" unique_id=11105099 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day32" parent="Panel/Content/Days" unique_id=1592694710 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day33" parent="Panel/Content/Days" unique_id=1261598626 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day34" parent="Panel/Content/Days" unique_id=86870189 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[node name="Day35" parent="Panel/Content/Days" unique_id=752535920 instance=ExtResource("3_day")]
-layout_mode = 2
-
-[connection signal="pressed" from="Panel/Months/Previous/Button" to="." method="_on_month_switch_pressed" binds= [-1]]
-[connection signal="pressed" from="Panel/Months/Next/Button" to="." method="_on_month_switch_pressed" binds= [1]]
+[connection signal="pressed" from="Panel/Months/Prev" to="." method="_on_month_switch_pressed" binds= [-1]]
+[connection signal="pressed" from="Panel/Months/Next" to="." method="_on_month_switch_pressed" binds= [1]]

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" width="240" height="70" fill="none">
+  <defs>
+    <linearGradient id="btnChallengeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E88A22"/>
+      <stop offset="100%" stop-color="#B85908"/>
+    </linearGradient>
+  </defs>
+  <!-- 3D bottom bevel -->
+  <rect y="4" width="240" height="66" rx="16" fill="#78350F"/>
+  <!-- Main face -->
+  <rect width="240" height="66" rx="16" fill="url(#btnChallengeGrad)" stroke="#92400E" stroke-width="2"/>
+  <!-- Top highlight -->
+  <rect x="3" y="2" width="234" height="8" rx="5" fill="#FFFFFF" fill-opacity="0.22"/>
+</svg>

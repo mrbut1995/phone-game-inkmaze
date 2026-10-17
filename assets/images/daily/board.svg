@@ -1,0 +1,7 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 924 834' width='924' height='834' fill='none'>
+  <rect x='1.5' y='1.5' width='921' height='831' rx='20' fill='#FFFDF8' stroke='#6EA0C8' stroke-width='3'/>
+  <line x1='34' y1='92' x2='890' y2='92' stroke='#CBDCE6' stroke-width='2' stroke-dasharray='7 6'/>
+  <line x1='34' y1='134' x2='890' y2='134' stroke='#CBDCE6' stroke-width='2' stroke-dasharray='7 6'/>
+  <path d='M812 833 L924 721 V833 Z' fill='#EDF1F4'/>
+  <path d='M812 833 L924 721' stroke='#6EA0C8' stroke-width='2.5'/>
+</svg>

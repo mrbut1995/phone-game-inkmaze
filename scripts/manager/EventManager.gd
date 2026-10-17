@@ -233,14 +233,10 @@ func get_progress(id: StringName) -> Dictionary:
 		EventData.Type.LOGIN_STREAK:
 			done = (p.get("login_days", []) as Array).size()
 		EventData.Type.DAILY:
-			# Daily dùng 3 nhiệm vụ maze thường (bit 0..2) — khớp thẻ "x/3 thử thách" (§B1)
+			# Daily nay tính theo SAO của hôm nay (tối đa 6: 3 Sao CHƠI + 3 Sao THỬ THÁCH)
 			var dm := _get_daily_manager()
-			if dm != null and dm.has_method("get_today") and dm.has_method("get_day_mission_mask"):
-				var today: int = int(dm.call("get_today"))
-				var mask: int = int(dm.call("get_day_mission_mask", today))
-				for bit in range(3):
-					if (mask & (1 << bit)) != 0:
-						done += 1
+			if dm != null and dm.has_method("get_today") and dm.has_method("get_day_stars"):
+				done = int(dm.call("get_day_stars", int(dm.call("get_today"))))
 	var total := ev.total_progress()
 	return {
 		"done": done,

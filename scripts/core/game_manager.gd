@@ -293,9 +293,13 @@ func consume_tool_use(tool_id: String) -> bool:
 	return true
 
 
-## Cấp lượt từ nguồn mua hàng/nhiệm vụ. Các luồng này sẽ được nối khi được định nghĩa.
+## Nguồn hợp lệ khi cấp lượt dùng công cụ: mua ở Shop, thưởng nhiệm vụ, thưởng mốc Sao Daily
+const GRANT_SOURCES: Array[String] = ["purchase", "mission", "daily_milestone"]
+
+
+## Cấp lượt từ nguồn mua hàng/nhiệm vụ/mốc thưởng Daily.
 func grant_tool_uses(tool_id: String, amount: int, source: String) -> bool:
-	if not TOOL_IDS.has(tool_id) or amount <= 0 or not ["purchase", "mission"].has(source):
+	if not TOOL_IDS.has(tool_id) or amount <= 0 or not GRANT_SOURCES.has(source):
 		return false
 	return _set_tool_uses(tool_id, tool_uses_left(tool_id) + amount)
 
@@ -332,6 +336,23 @@ func start_daily(day: int) -> void:
 ## Khởi động Daily Mission theo ngày — MAZE THƯỜNG (classic)
 func start_daily_classic(day: int) -> void:
 	prepare_daily_run(day, "classic")
+	if _open_mode_tutorial_once():
+		return
+	_change_scene("res://scenes/game.tscn")
+
+
+## Khởi động phần CHƠI của ngày (1 màn maze thường, tối đa 3 Sao theo nhiệm vụ)
+func start_daily_play(day: int) -> void:
+	start_daily_classic(day)
+
+
+## Khởi động phần THỬ THÁCH của ngày (luật Special xoay vòng, thắng = 3 Sao)
+func start_daily_challenge(day: int) -> void:
+	var dm := get_node_or_null("/root/DailyManager")
+	daily_challenge_id = ""
+	if dm != null and dm.has_method("challenge_mode_for_day"):
+		daily_challenge_id = str(dm.call("challenge_mode_for_day", maxi(day, 1)))
+	prepare_daily_run(day, "challenge")
 	if _open_mode_tutorial_once():
 		return
 	_change_scene("res://scenes/game.tscn")

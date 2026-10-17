@@ -1,16 +1,19 @@
 class_name DailyCalendar
 extends Control
 ## ============================================================================
-## Component: Lịch tháng của màn Daily Mission (nodes/daily/calendar.tscn)
+## Component: Lịch tháng của màn Daily (nodes/daily/calendar.tscn)
 ## - Điều hướng tháng trước / tháng sau
-## - Tự dựng lại lưới 7x5 ô ngày (nodes/daily/day.tscn) theo tháng đang xem
-## - Ngày hôm nay / ngày đã hoàn thành lấy dữ liệu từ DailyManager
+## - Tự dựng lại lưới 7×5 ô ngày (nodes/daily/day.tscn) theo tháng đang xem
+## - Ngày hôm nay / ngày đã chơi lấy dữ liệu từ DailyManager
 ## ============================================================================
 
 signal day_selected(day: int)
 
 @export var COLS := 7
 @export var ROWS := 5
+## Ô ngày được DỰNG LÚC CHẠY (35 ô) vào `grid` — cùng quy ước với các danh sách
+## động khác của project (`test_ui_scenes` vẫn thấy scene `day.tscn` + script riêng).
+const DAY_SCENE: PackedScene = preload("res://nodes/daily/day.tscn")
 const DOW_KEYS: Array[String] = [
 	"STR_DOW_MON", "STR_DOW_TUE", "STR_DOW_WED", "STR_DOW_THU",
 	"STR_DOW_FRI", "STR_DOW_SAT", "STR_DOW_SUN",
@@ -19,8 +22,8 @@ const MONTH_WIDTH: Array[int] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 ## Node binding: khai `node_paths` + NodePath trong `calendar.tscn`
 @export var month_label: Label = null
-@export var btn_prev: NinePatchButton = null
-@export var btn_next: NinePatchButton = null
+@export var btn_prev: BaseButton = null
+@export var btn_next: BaseButton = null
 @export var dow_row: HBoxContainer = null
 @export var grid: GridContainer = null
 
@@ -33,9 +36,22 @@ func _ready() -> void:
 	var now := Time.get_date_dict_from_system()
 	year = int(now.get("year", 2026))
 	month = int(now.get("month", 1))
+	_build_cells()
 	_connect_cells()
 	_refresh_dow()
 	rebuild()
+
+
+## Dựng lưới 7×5 ô ngày vào `grid` (mỗi ô là `day.tscn`)
+func _build_cells() -> void:
+	if grid == null:
+		return
+	for child in grid.get_children():
+		child.queue_free()
+	for i in COLS * ROWS:
+		var cell := DAY_SCENE.instantiate() as DailyDayCell
+		cell.name = "Day%02d" % (i + 1)
+		grid.add_child(cell)
 
 
 ## Nối tín hiệu chọn ngày của từng ô lên cho scene cha
@@ -48,24 +64,15 @@ func _connect_cells() -> void:
 			cell.day_selected.connect(_on_cell_selected)
 
 
-## Đặt chữ cho hàng thứ trong tuần (T2..CN)
+## Đặt chữ cho hàng thứ trong tuần (T2..CN) — màu đã khai sẵn trong scene
 func _refresh_dow() -> void:
 	if dow_row == null:
 		return
-	var today_col := _today_column()
-	var real_month := _is_current_month()
 	var children := dow_row.get_children()
-	for i in children.size():
+	for i in mini(children.size(), DOW_KEYS.size()):
 		var lbl := children[i] as Label
-		if lbl == null:
-			continue
-		lbl.text = tr(DOW_KEYS[i])
-		if i == 6:
-			lbl.theme_type_variation = &"DailyDowSun"
-		elif real_month and i == today_col:
-			lbl.theme_type_variation = &"DailyDowActive"
-		else:
-			lbl.theme_type_variation = &"DailyDow"
+		if lbl != null:
+			lbl.text = tr(DOW_KEYS[i])
 
 
 ## Dựng lại toàn bộ lưới ngày của tháng đang xem
@@ -98,47 +105,43 @@ func rebuild() -> void:
 			cell.setup(0, DailyDayCell.State.NONE)
 			continue
 
-		var weekend := (i % COLS) >= 5
+		var weekend := (i % COLS) == COLS - 1  # mockup: chỉ CN tô đỏ
 		var unlocked := false
 		if daily != null and daily.has_method("is_day_unlocked"):
 			unlocked = bool(daily.call("is_day_unlocked", day))
-		cell.setup(day, _state_for(day, is_current, today, daily), _missions_for(day, daily), weekend, unlocked)
+		cell.setup(day, _state_for(day, is_current, today, daily), _stars_for(day, daily), weekend, unlocked)
 
 
-## Xác định trạng thái của một ngày trong tháng đang xem
+## Xác định trạng thái của một ngày trong tháng đang xem (theo mockup)
 func _state_for(day: int, is_current: bool, today: int, daily: Node) -> DailyDayCell.State:
 	if not is_current:
 		# Chỉ theo dõi tháng hiện tại, các tháng khác xem như chưa mở khoá
 		return DailyDayCell.State.LATER
-	var missions := _missions_for(day, daily)
+	var stars := _stars_for(day, daily)
 	if day == today:
 		return DailyDayCell.State.TODAY
 	if day > today:
-		# 3 ngày kế tiếp hiển thị viên "CHƯA MỞ", xa hơn thì mờ gọn lại
-		return DailyDayCell.State.FUTURE if day - today <= 3 else DailyDayCell.State.LATER
-	if missions >= DailyDayCell.MAX_MISSIONS:
+		# 2 ngày kế tiếp chỉ hiện SỐ, xa hơn thì hiện ô NÉT ĐỨT (như mockup)
+		return DailyDayCell.State.FUTURE if day - today <= 2 else DailyDayCell.State.LATER
+	if stars >= DailyDayCell.MAX_STARS:
 		return DailyDayCell.State.DONE
-	if missions > 0:
+	if stars > 0:
 		return DailyDayCell.State.PARTIAL
 	return DailyDayCell.State.MISSED
 
 
-func _missions_for(day: int, daily: Node) -> int:
+## Số Sao đã đạt của một ngày (0..6)
+func _stars_for(day: int, daily: Node) -> int:
 	if daily == null:
 		return 0
-	if daily.has_method("get_day_missions"):
-		return int(daily.call("get_day_missions", day))
-	return DailyDayCell.MAX_MISSIONS if bool(daily.call("is_completed", day)) else 0
+	if daily.has_method("get_day_stars"):
+		return int(daily.call("get_day_stars", day))
+	return DailyDayCell.MAX_STARS if bool(daily.call("is_completed", day)) else 0
 
 
 func _is_current_month() -> bool:
 	var now := Time.get_date_dict_from_system()
 	return int(now.get("year", 0)) == year and int(now.get("month", 0)) == month
-
-
-func _today_column() -> int:
-	var now := Time.get_date_dict_from_system()
-	return (weekday_of(year, month, int(now.get("day", 1))) + 6) % 7
 
 
 func _on_month_switch_pressed(delta: int) -> void:

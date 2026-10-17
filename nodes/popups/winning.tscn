@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://b1mq05b61vja" path="res://assets/images-png/common/btn_paper_secondary_pressed.png" id="7_sec_p"]
 [ext_resource type="Texture2D" uid="uid://dcxlfihg580ni" path="res://assets/images-png/common/btn_paper_secondary_focus.png" id="8_sec_f"]
 [ext_resource type="Texture2D" uid="uid://bihw3g42324qa" path="res://assets/images-png/popups/btn_popup_wide_normal.png" id="9_pri_n"]
-[ext_resource type="Texture2D" uid="uid://cnfkkqat6131c" path="res://assets/images-png/common/btn_paper_primary_pressed.png" id="10_pri_p"]
-[ext_resource type="Texture2D" uid="uid://6n6ai5gsk4lo" path="res://assets/images-png/common/btn_paper_primary_focus.png" id="11_pri_f"]
+[ext_resource type="Texture2D" uid="uid://bjepqbbqy7wak" path="res://assets/images-png/common/btn_paper_primary_pressed.png" id="10_pri_p"]
+[ext_resource type="Texture2D" uid="uid://bpxy4vopr7j4d" path="res://assets/images-png/common/btn_paper_primary_focus.png" id="11_pri_f"]
 [ext_resource type="Texture2D" uid="uid://c7tovw3eurdmw" path="res://assets/images-png/popups/icon_replay.png" id="12_replay"]
 
 [sub_resource type="StyleBoxTexture" id="Sb_pri_n"]

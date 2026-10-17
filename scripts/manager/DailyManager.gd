@@ -1,41 +1,61 @@
 extends Node
 ## ============================================================================
-## Manager: DailyManager - Nhiệm vụ hằng ngày (Daily Mission).
-## - Xác định "hôm nay" là ngày nào (1..31) theo lịch máy.
-## - MỖI NGÀY có 2 mê cung: MAZE THƯỜNG (classic) + MAZE ĐẶC BIỆT (mode xoay vòng).
-## - 4 NHIỆM VỤ mỗi ngày: index 0..2 = 3 nhiệm vụ của maze thường,
-##   index 3 = nhiệm vụ của maze đặc biệt.
-## - Hoàn thành nhiệm vụ thưởng XU (ví dùng chung với Shop/Archivement), KHÔNG thưởng Sao nữa.
-## - Lưu tiến độ qua SaveManager; user://daily.cfg chỉ còn để DI TRÚ.
+## Manager: DailyManager — Thử thách hằng ngày (v2.28 "1 Màn + 1 Thử thách").
+##
+## MỖI NGÀY có 2 hoạt động, mỗi hoạt động cho tối đa 3 SAO:
+##   · CHƠI      — 1 màn maze thường: mỗi NHIỆM VỤ hoàn thành = 1 Sao (như màn thường).
+##   · THỬ THÁCH — 1 luật Special xoay vòng: luật này KHÔNG có nhiệm vụ ⇒ thắng = +3 Sao.
+## ⇒ Tối đa 6 Sao/ngày. Sao tích luỹ theo THÁNG để mở các MỐC THƯỞNG (xem MILESTONES).
+##
+## Lưu trữ: `months["YYYY_MM"] = { "days": { <ngày>: {"play": 0..3, "challenge": 0..3} },
+##                                 "claimed": [<mốc đã nhận>] }` — sang tháng mới là một khoá mới,
+## nên "tháng này được bao nhiêu sao" luôn tính đúng mà không cần reset tay.
+## Dữ liệu đi qua SaveManager như mọi tiến trình khác (export_progress / import_progress).
 ## ============================================================================
 
-signal daily_completed(day: int)
 signal daily_changed
+signal stars_changed(day: int)
+## Vừa đạt một mốc thưởng tháng (còn chờ người chơi bấm NHẬN)
+signal milestone_unlocked(stars: int)
+## Vừa bấm NHẬN thưởng một mốc
+signal milestone_claimed(stars: int)
+## Vừa được cộng Xu từ mốc thưởng
 signal coins_awarded(day: int, amount: int)
 
 const CONFIG_PATH := "user://daily.cfg"
 const SECTION := "daily"
 
-## Số nhiệm vụ mỗi ngày: 3 nhiệm vụ maze thường (0..2) + 1 nhiệm vụ maze đặc biệt (3)
-const MAX_MISSIONS_PER_DAY := 4
-## Xu thưởng cho từng nhiệm vụ (index 0..3) — tổng 50 Xu/ngày
-const MISSION_REWARDS: Array[int] = [10, 10, 15, 15]
-const ALL_MISSIONS_MASK := 0b1111
-## Xu phải trả để MỞ KHOÁ một ngày đã bỏ lỡ (ngày trước hôm nay chưa chơi gì)
+## CHƠI: tối đa 3 Sao (1 nhiệm vụ = 1 Sao, giống màn thường)
+const PLAY_STARS_MAX := 3
+## THỬ THÁCH: luật Special không có nhiệm vụ ⇒ thắng là +3 Sao
+const CHALLENGE_STARS_MAX := 3
+## Tối đa một ngày
+const DAY_STARS_MAX := PLAY_STARS_MAX + CHALLENGE_STARS_MAX
+## Xu phải trả để MỞ KHOÁ một ngày đã bỏ lỡ
 const UNLOCK_COST := 50
 
-var completed_days: Array[int] = []
-## day (1..31) -> bitmask 4 nhiệm vụ đã xong (bit 0..2 = maze thường, bit 3 = maze đặc biệt)
-var day_missions: Dictionary = {}
-## day (1..31) -> tổng Xu đã thưởng trong ngày (chống trả thưởng trùng khi chơi lại)
-var day_coins: Dictionary = {}
-## day (1..31) -> đã trả Xu để MỞ KHOÁ (ngày bỏ lỡ được chơi lại như bình thường)
+## Mốc thưởng THÁNG — đúng như mockup `daily_challenge.svg` (15★ · 30★ · 45★ · 60★).
+## `coins`/`hint`/`undo`/`skip` = số lượng thưởng (0 = không thưởng loại đó).
+const MILESTONES: Array[Dictionary] = [
+	{"stars": 15, "coins": 100, "hint": 0, "undo": 0, "skip": 0},
+	{"stars": 30, "coins": 0, "hint": 2, "undo": 0, "skip": 0},
+	{"stars": 45, "coins": 250, "hint": 0, "undo": 2, "skip": 0},
+	{"stars": 60, "coins": 500, "hint": 3, "undo": 0, "skip": 0},
+]
+
+## "YYYY_MM" -> { "days": { ngày: {"play": int, "challenge": int} }, "claimed": Array[int] }
+var months: Dictionary = {}
+## Ngày (1..31, thuộc tháng hiện tại) đã trả Xu MỞ KHOÁ
 var unlocked_days: Array[int] = []
 
 
 func _ready() -> void:
 	_load_completed()
 
+
+# ---------------------------------------------------------------------------
+# NGÀY / THÁNG
+# ---------------------------------------------------------------------------
 
 ## Ngày hôm nay theo lịch máy (1..31)
 func get_today() -> int:
@@ -46,148 +66,295 @@ func is_today(day: int) -> bool:
 	return day == get_today()
 
 
+## Khoá tháng hiện tại dạng "YYYY_MM"
+func month_key() -> String:
+	var now := Time.get_date_dict_from_system()
+	return "%04d_%02d" % [int(now.get("year", 2026)), int(now.get("month", 1))]
+
+
+## Khoá tháng của một năm/tháng bất kỳ (test + debug)
+func month_key_of(year: int, month: int) -> String:
+	return "%04d_%02d" % [year, month]
+
+
+## Dữ liệu tháng hiện tại (tạo mới nếu chưa có)
+func _month() -> Dictionary:
+	return month_entry(month_key())
+
+
+## Dữ liệu một tháng bất kỳ — tạo rỗng nếu chưa có
+func month_entry(key: String) -> Dictionary:
+	var entry: Variant = months.get(key, null)
+	if not (entry is Dictionary):
+		entry = {"days": {}, "claimed": []}
+		months[key] = entry
+	var dict: Dictionary = entry
+	if not (dict.get("days") is Dictionary):
+		dict["days"] = {}
+	if not (dict.get("claimed") is Array):
+		dict["claimed"] = []
+	return dict
+
+
+# ---------------------------------------------------------------------------
+# SAO CỦA NGÀY
+# ---------------------------------------------------------------------------
+
+## Sao của phần CHƠI trong ngày (0..3)
+func get_day_play_stars(day: int) -> int:
+	var days: Dictionary = _month()["days"]
+	var rec: Variant = days.get(day, null)
+	if not (rec is Dictionary):
+		return 0
+	return clampi(int((rec as Dictionary).get("play", 0)), 0, PLAY_STARS_MAX)
+
+
+## Sao của phần THỬ THÁCH trong ngày (0 hoặc 3)
+func get_day_challenge_stars(day: int) -> int:
+	var days: Dictionary = _month()["days"]
+	var rec: Variant = days.get(day, null)
+	if not (rec is Dictionary):
+		return 0
+	return clampi(int((rec as Dictionary).get("challenge", 0)), 0, CHALLENGE_STARS_MAX)
+
+
+## Tổng sao của một ngày (0..6)
+func get_day_stars(day: int) -> int:
+	return get_day_play_stars(day) + get_day_challenge_stars(day)
+
+
+## Đã chơi màn CHƠI của ngày chưa (dùng cho streak + trạng thái ô lịch)
+func has_played(day: int) -> bool:
+	return get_day_play_stars(day) > 0
+
+
+## Ngày đã hoàn thành TRỌN (đủ 6 sao)
 func is_completed(day: int) -> bool:
-	return get_day_mission_mask(day) == ALL_MISSIONS_MASK
+	return get_day_stars(day) >= DAY_STARS_MAX
 
 
-## Đánh dấu ngày đã xong HẾT nhiệm vụ (không thưởng Xu — dùng cho dữ liệu cũ/debug)
-func mark_completed(day: int) -> void:
-	if is_completed(day):
-		return
-	day_missions[day] = ALL_MISSIONS_MASK
-	if not completed_days.has(day):
-		completed_days.append(day)
-	_save_completed()
-	daily_completed.emit(day)
-	daily_changed.emit()
-
-
-# ---------------------------------------------------------------------------
-# NHIỆM VỤ TRONG NGÀY (4 nhiệm vụ · thưởng Xu)
-# ---------------------------------------------------------------------------
-## Số nhiệm vụ của một ngày (hằng số tiện cho UI)
-func mission_count() -> int:
-	return MAX_MISSIONS_PER_DAY
-
-
-## Xu thưởng của nhiệm vụ theo index (0..3)
-func mission_reward(index: int) -> int:
-	if index < 0 or index >= MISSION_REWARDS.size():
-		return 0
-	return MISSION_REWARDS[index]
-
-
-## Tổng Xu thưởng tối đa một ngày
-func day_reward_max() -> int:
+## Tổng sao đã tích luỹ trong THÁNG hiện tại
+func get_month_stars() -> int:
 	var total := 0
-	for reward in MISSION_REWARDS:
-		total += int(reward)
+	var days: Dictionary = _month()["days"]
+	for day in days:
+		var rec: Variant = days[day]
+		if rec is Dictionary:
+			total += clampi(int((rec as Dictionary).get("play", 0)), 0, PLAY_STARS_MAX)
+			total += clampi(int((rec as Dictionary).get("challenge", 0)), 0, CHALLENGE_STARS_MAX)
 	return total
 
 
-## Bitmask 4 nhiệm vụ đã xong của một ngày
-func get_day_mission_mask(day: int) -> int:
-	return int(day_missions.get(day, 0))
+## Ghi nhận thắng một ván Daily. `stars` = số sao ván này đạt (0..3).
+## Chỉ GIỮ MỨC CAO NHẤT — chơi lại không mất sao và không cộng trùng.
+## Trả về số Sao THỰC SỰ tăng thêm (0 nếu ván này không tốt hơn lần trước).
+func record_daily_win(day: int, is_challenge: bool, stars: int) -> int:
+	var gained := _apply_stars(day, is_challenge, stars)
+	if gained > 0:
+		daily_changed.emit()
+		_emit_milestones_reached()
+	return gained
 
 
-## Số nhiệm vụ (0..4) đã xong của một ngày
-func get_day_missions(day: int) -> int:
-	var mask := get_day_mission_mask(day)
-	var count := 0
-	for i in MAX_MISSIONS_PER_DAY:
-		if (mask & (1 << i)) != 0:
-			count += 1
-	return count
+## Chốt sao vào dữ liệu tháng (không kiểm mốc) — dùng chung cho đường thi đấu và debug
+func _apply_stars(day: int, is_challenge: bool, stars: int) -> int:
+	if day <= 0:
+		return 0
+	var days: Dictionary = _month()["days"]
+	var raw: Variant = days.get(day, null)
+	var rec: Dictionary = {"play": 0, "challenge": 0}
+	if raw is Dictionary:
+		rec = raw
+	var before := clampi(int(rec.get("play", 0)), 0, PLAY_STARS_MAX) \
+		+ clampi(int(rec.get("challenge", 0)), 0, CHALLENGE_STARS_MAX)
+	var key := "challenge" if is_challenge else "play"
+	var cap := CHALLENGE_STARS_MAX if is_challenge else PLAY_STARS_MAX
+	rec[key] = maxi(int(rec.get(key, 0)), clampi(stars, 0, cap))
+	days[day] = rec
+	_save_completed()
+	stars_changed.emit(day)
+	return get_day_stars(day) - before
 
 
-func is_mission_done(day: int, index: int) -> bool:
-	if index < 0 or index >= MAX_MISSIONS_PER_DAY:
+## Báo các MỐC vừa đạt được (chưa nhận) để UI bật hiệu ứng
+func _emit_milestones_reached() -> void:
+	var total := get_month_stars()
+	for def in MILESTONES:
+		var threshold := int(def.get("stars", 0))
+		if threshold <= total and not is_milestone_claimed(threshold):
+			milestone_unlocked.emit(threshold)
+
+
+# ---------------------------------------------------------------------------
+# MỐC THƯỞNG THÁNG
+# ---------------------------------------------------------------------------
+
+## Danh sách mốc thưởng (bản sao — UI không sửa được hằng số)
+func milestone_defs() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for def in MILESTONES:
+		out.append((def as Dictionary).duplicate(true))
+	return out
+
+
+## Mốc cao nhất của tháng (đích của thanh tiến độ)
+func month_star_goal() -> int:
+	if MILESTONES.is_empty():
+		return DAY_STARS_MAX
+	return int((MILESTONES[MILESTONES.size() - 1] as Dictionary).get("stars", DAY_STARS_MAX))
+
+
+func is_milestone_claimed(threshold: int) -> bool:
+	var claimed: Array = _month()["claimed"]
+	return claimed.has(threshold)
+
+
+## Đủ Sao để nhận mốc này chưa
+func can_claim_milestone(threshold: int) -> bool:
+	return get_month_stars() >= threshold and not is_milestone_claimed(threshold)
+
+
+## Nhận thưởng mốc (Xu và/hoặc lượt dùng công cụ). Trả true nếu vừa nhận.
+func claim_milestone(threshold: int) -> bool:
+	if not can_claim_milestone(threshold):
 		return false
-	return (get_day_mission_mask(day) & (1 << index)) != 0
+	var def := milestone_def(threshold)
+	if def.is_empty():
+		return false
+	var claimed: Array = _month()["claimed"]
+	claimed.append(threshold)
+	_grant(def)
+	_save_completed()
+	milestone_claimed.emit(threshold)
+	daily_changed.emit()
+	return true
 
 
-## Tổng Xu ĐÃ THƯỞNG của một ngày (chỉ tăng, không trả lại khi chơi lại)
-func day_coins_earned(day: int) -> int:
-	return int(day_coins.get(day, 0))
+## Định nghĩa một mốc theo ngưỡng Sao ({} nếu không có)
+func milestone_def(threshold: int) -> Dictionary:
+	for def in MILESTONES:
+		if int(def.get("stars", 0)) == threshold:
+			return def
+	return {}
 
 
-## Tổng Xu thưởng của các nhiệm vụ ĐÃ XONG trong ngày (khớp day_coins_earned sau khi chơi thật)
-func day_reward_of(day: int) -> int:
+## Chuỗi mô tả phần thưởng của một mốc (dùng chung cho mọi UI) — vd "+100 XU" / "Hint ×2"
+func reward_text(def: Dictionary) -> String:
+	var parts: Array[String] = []
+	var coins := int(def.get("coins", 0))
+	if coins > 0:
+		parts.append(tr("STR_DAILY_REWARD_COINS").format([coins]))
+	for tool_id in ["hint", "undo", "skip"]:
+		var amount := int(def.get(tool_id, 0))
+		if amount > 0:
+			parts.append(tr("STR_DAILY_TOOL_%s" % tool_id.to_upper()).format([amount]))
+	return " + ".join(parts)
+
+
+## Trao thưởng của một mốc: Xu (ví chung) + lượt dùng công cụ (GameManager)
+func _grant(def: Dictionary) -> void:
+	var coins := int(def.get("coins", 0))
+	if coins > 0:
+		_pay_coins(coins)
+		coins_awarded.emit(get_today(), coins)
+	var gm: Node = get_node_or_null("/root/GameManager")
+	if gm == null or not gm.has_method("grant_tool_uses"):
+		return
+	for tool_id in ["hint", "undo", "skip"]:
+		var amount := int(def.get(tool_id, 0))
+		if amount > 0:
+			gm.call("grant_tool_uses", tool_id, amount, "daily_milestone")
+
+
+## Cộng Xu vào ví chung (Shop / Archivement dùng cùng ví này)
+func _pay_coins(amount: int) -> void:
+	if amount <= 0:
+		return
+	var wallet: Node = get_node_or_null("/root/ArchivementManager")
+	if wallet == null:
+		return
+	wallet.set("coins", maxi(int(wallet.get("coins")) + amount, 0))
+	if wallet.has_method("notify_coins_changed"):
+		wallet.call("notify_coins_changed")
+
+
+## Tổng thưởng Xu của mọi mốc trong tháng (UI hiển thị "tối đa")
+func month_coin_total() -> int:
 	var total := 0
-	var mask := get_day_mission_mask(day)
-	for i in MAX_MISSIONS_PER_DAY:
-		if (mask & (1 << i)) != 0:
-			total += mission_reward(i)
+	for def in MILESTONES:
+		total += int(def.get("coins", 0))
 	return total
 
 
-## Chốt nhiệm vụ sau một ván chơi. `flags[i] = true` = nhiệm vụ i vừa hoàn thành.
-## Trả về số XU vừa được thưởng (0 nếu không có gì mới).
-func complete_day_missions(day: int, flags: Array) -> int:
-	var mask := get_day_mission_mask(day)
-	var updated := mask
-	for i in mini(flags.size(), MAX_MISSIONS_PER_DAY):
-		if bool(flags[i]):
-			updated |= (1 << i)
-	if updated == mask:
-		return 0
+# ---------------------------------------------------------------------------
+# CHUỖI NGÀY (streak)
+# ---------------------------------------------------------------------------
 
-	# Chỉ trả Xu cho nhiệm vụ MỚI xong (nhiệm vụ xong từ trước không thưởng lại)
-	var awarded := 0
-	for i in MAX_MISSIONS_PER_DAY:
-		var bit := 1 << i
-		if (updated & bit) != 0 and (mask & bit) == 0:
-			awarded += mission_reward(i)
-
-	day_missions[day] = updated
-	if awarded > 0:
-		day_coins[day] = day_coins_earned(day) + awarded
-		_pay_coins(awarded)
-
-	var just_completed := updated == ALL_MISSIONS_MASK and not completed_days.has(day)
-	if just_completed:
-		completed_days.append(day)
-	_save_completed()
-
-	if awarded > 0:
-		coins_awarded.emit(day, awarded)
-	if just_completed:
-		daily_completed.emit(day)
-	daily_changed.emit()
-	return awarded
-
-
-## Chốt 1 nhiệm vụ đơn lẻ (dùng cho maze đặc biệt)
-func complete_day_mission(day: int, index: int) -> int:
-	var flags: Array[bool] = []
-	for i in MAX_MISSIONS_PER_DAY:
-		flags.append(i == index)
-	return complete_day_missions(day, flags)
+## Chuỗi ngày liên tiếp có chơi màn CHƠI, tính lùi từ hôm nay (hoặc hôm qua)
+func get_streak() -> int:
+	var cursor := get_today()
+	if not has_played(cursor) and has_played(cursor - 1):
+		cursor -= 1
+	var streak := 0
+	while cursor >= 1 and has_played(cursor):
+		streak += 1
+		cursor -= 1
+	return streak
 
 
 # ---------------------------------------------------------------------------
-# MỞ KHOÁ NGÀY BỎ LỠ (trả Xu)
+# THỬ THÁCH CỦA NGÀY
 # ---------------------------------------------------------------------------
-## Giá mở khoá một ngày bỏ lỡ (Xu)
+
+## Luật Special xoay vòng của ngày — cùng một ngày luôn ra cùng một luật
+func challenge_mode_for_day(day: int) -> String:
+	var ids: Array = ChallengeGameMode.CHALLENGE_IDS
+	if ids.is_empty():
+		return ""
+	return str(ids[posmod(maxi(day, 1) - 1, ids.size())])
+
+
+## Thông tin Thử thách của ngày cho UI: { mode_id, title, subtitle }
+func get_daily_challenge_info(day: int) -> Dictionary:
+	var mode_id := challenge_mode_for_day(day)
+	if mode_id.is_empty():
+		return {"mode_id": "", "title": "", "subtitle": ""}
+	var name_key := str(ChallengeGameMode.NAME_KEYS.get(mode_id, ""))
+	var title := tr(name_key) if not name_key.is_empty() else mode_id
+	return {"mode_id": mode_id, "title": title, "subtitle": title}
+
+
+## Giữ API cũ cho Debug/Test: "kế hoạch game của ngày" — nay là CHƠI + THỬ THÁCH
+func get_day_games(day: int) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	out.append({"mode": "standard", "challenge_id": ""})
+	var mode_id := challenge_mode_for_day(day)
+	if not mode_id.is_empty():
+		out.append({"mode": "challenge", "challenge_id": mode_id})
+	return out
+
+
+# ---------------------------------------------------------------------------
+# MỞ KHOÁ NGÀY BỎ LỠ
+# ---------------------------------------------------------------------------
+
 func unlock_cost() -> int:
 	return UNLOCK_COST
 
 
-## Ngày đã được trả Xu mở khoá?
 func is_day_unlocked(day: int) -> bool:
-	return unlocked_days.has(day)
+	return unlocked_days.has(day) or has_played(day)
 
 
-## Ngày bỏ lỡ CÓ THỂ mở khoá? = ngày đã qua + chưa chơi nhiệm vụ nào + chưa mở khoá
 func can_unlock_day(day: int) -> bool:
-	if day <= 0 or day >= get_today():
+	if day >= get_today() or day < 1 or is_day_unlocked(day):
 		return false
-	if is_day_unlocked(day):
+	var wallet: Node = get_node_or_null("/root/ArchivementManager")
+	if wallet == null:
 		return false
-	return get_day_mission_mask(day) == 0
+	return int(wallet.get("coins")) >= UNLOCK_COST
 
 
-## Trả Xu để mở khoá ngày bỏ lỡ. Trả về true nếu mở khoá thành công.
 func unlock_day(day: int) -> bool:
 	if not can_unlock_day(day):
 		return false
@@ -199,7 +366,6 @@ func unlock_day(day: int) -> bool:
 	return true
 
 
-## Đặt cờ mở khoá (test/debug khôi phục trạng thái), KHÔNG trừ Xu
 func set_day_unlocked(day: int, value: bool) -> void:
 	var had := unlocked_days.has(day)
 	if value and not had:
@@ -210,215 +376,203 @@ func set_day_unlocked(day: int, value: bool) -> void:
 	daily_changed.emit()
 
 
-## Trừ Xu từ ví chung (Shop/Archivement dùng cùng ví này). false = ví không đủ.
 func _spend_coins(amount: int) -> bool:
-	if amount <= 0:
-		return true
 	var wallet: Node = get_node_or_null("/root/ArchivementManager")
-	if wallet == null:
+	if wallet == null or int(wallet.get("coins")) < amount:
 		return false
-	if int(wallet.get("coins")) < amount:
-		return false
-	if wallet.has_method("spend_coins"):
-		return bool(wallet.call("spend_coins", amount))
-	wallet.set("coins", int(wallet.get("coins")) - amount)
+	wallet.set("coins", maxi(int(wallet.get("coins")) - amount, 0))
 	if wallet.has_method("notify_coins_changed"):
 		wallet.call("notify_coins_changed")
 	return true
 
 
-## Cộng Xu vào ví chung (Shop/Archivement dùng cùng ví này)
-func _pay_coins(amount: int) -> void:
-	if amount <= 0:
-		return
-	var wallet: Variant = get_node_or_null("/root/ArchivementManager")
-	if wallet == null:
-		return
-	wallet.set("coins", maxi(int(wallet.get("coins")) + amount, 0))
-	if wallet.has_method("notify_coins_changed"):
-		wallet.call("notify_coins_changed")
+# ---------------------------------------------------------------------------
+# API TƯƠNG THÍCH (Debug Console / thống kê cũ dùng bitmask nhiệm vụ)
+# ---------------------------------------------------------------------------
 
-
-## Tương thích API cũ: số sao = số nhiệm vụ đã xong
-func get_day_stars(day: int) -> int:
-	return get_day_missions(day)
-
-
-## Tương thích API cũ (Debug/Test): đặt nhanh số nhiệm vụ đã xong, KHÔNG thưởng Xu
-func set_day_stars(day: int, stars: int) -> void:
-	var count := clampi(stars, 0, MAX_MISSIONS_PER_DAY)
+## Bitmask 4 bit như bản cũ: bit 0..2 = nhiệm vụ CHƠI đã xong, bit 3 = đã xong THỬ THÁCH
+func get_day_mission_mask(day: int) -> int:
 	var mask := 0
-	for i in count:
-		mask |= 1 << i
-	set_day_mission_mask(day, mask)
+	for i in get_day_play_stars(day):
+		mask |= 1 << clampi(i, 0, PLAY_STARS_MAX - 1)
+	if get_day_challenge_stars(day) > 0:
+		mask |= 1 << 3
+	return mask
 
 
-## Đặt thẳng mask nhiệm vụ (test/debug khôi phục trạng thái chính xác), KHÔNG thưởng Xu
-func set_day_mission_mask(day: int, mask: int) -> void:
-	var value := mask & ALL_MISSIONS_MASK
-	day_missions[day] = value
-	if value == ALL_MISSIONS_MASK and not completed_days.has(day):
-		completed_days.append(day)
-	elif value != ALL_MISSIONS_MASK and completed_days.has(day):
-		completed_days.erase(day)
+## Đặt thẳng số sao CHƠI/THỬ THÁCH của ngày (Debug/Test) — không thưởng gì
+func set_day_stars_split(day: int, play: int, challenge: int) -> void:
+	var days: Dictionary = _month()["days"]
+	days[day] = {
+		"play": clampi(play, 0, PLAY_STARS_MAX),
+		"challenge": clampi(challenge, 0, CHALLENGE_STARS_MAX),
+	}
 	_save_completed()
 	daily_changed.emit()
+	stars_changed.emit(day)
 
 
-## Tổng số nhiệm vụ đã hoàn thành trong tháng (thay cho "tổng sao" ngày xưa)
-func get_total_missions() -> int:
-	var total := 0
-	for day in day_missions:
-		total += get_day_missions(int(day))
-	return total
+## Đặt số sao CHƠI của ngày, giữ nguyên phần THỬ THÁCH
+func set_day_stars(day: int, stars: int) -> void:
+	set_day_stars_split(day, stars, get_day_challenge_stars(day))
 
 
-## Tương thích API cũ — giờ trả về TỔNG NHIỆM VỤ (không còn sao)
-func get_total_stars() -> int:
-	return get_total_missions()
+## Đặt thẳng bitmask (Debug/Test) — không thưởng gì
+func set_day_mission_mask(day: int, mask: int) -> void:
+	var play := 0
+	for i in PLAY_STARS_MAX:
+		if (mask & (1 << i)) != 0:
+			play += 1
+	var challenge := CHALLENGE_STARS_MAX if (mask & (1 << 3)) != 0 else 0
+	set_day_stars_split(day, play, challenge)
 
 
-## Chuỗi ngày liên tiếp đã hoàn thành (đủ 4/4 nhiệm vụ), tính lùi từ hôm nay (hoặc hôm qua)
-func get_streak() -> int:
-	var today := get_today()
-	var cursor := today
-	if not completed_days.has(today) and completed_days.has(today - 1):
-		cursor = today - 1
-	var streak := 0
-	while cursor >= 1 and completed_days.has(cursor):
-		streak += 1
-		cursor -= 1
-	return streak
+## Số nhiệm vụ tối đa của phần CHƠI
+func mission_count() -> int:
+	return PLAY_STARS_MAX
 
 
-## Danh sách 4 nhiệm vụ đã xong của một ngày
+func is_mission_done(day: int, index: int) -> bool:
+	if index < 0 or index >= PLAY_STARS_MAX:
+		return false
+	return get_day_play_stars(day) > index
+
+
+func get_day_missions(day: int) -> int:
+	return get_day_play_stars(day)
+
+
 func get_task_mask(day: int) -> Array[bool]:
 	var out: Array[bool] = []
-	for i in MAX_MISSIONS_PER_DAY:
+	for i in PLAY_STARS_MAX:
 		out.append(is_mission_done(day, i))
 	return out
 
 
-## Mode xoay vòng cho 1 ngày (1 -> mode đầu tiên trong danh sách)
-func get_mode_for_day(day: int) -> String:
-	var modes := GameManagerClass.DAILY_MODES
-	if modes.is_empty():
-		return ""
-	var index := posmod(day - 1, modes.size())
-	return modes[index]
+## API cũ: chốt nhiệm vụ theo cờ (Debug Console). Không còn thưởng Xu ⇒ trả 0.
+func complete_day_missions(day: int, flags: Array) -> int:
+	var play := 0
+	for i in mini(flags.size(), PLAY_STARS_MAX):
+		if bool(flags[i]):
+			play += 1
+	var challenge := CHALLENGE_STARS_MAX if flags.size() > 3 and bool(flags[3]) else 0
+	set_day_stars_split(day, maxi(play, get_day_play_stars(day)),
+		maxi(challenge, get_day_challenge_stars(day)))
+	return 0
 
 
-## ---- KẾ HOẠCH 3 GAME CỦA NGÀY (2026-10) ----
-## Mỗi ngày có 3 GAME (hàng 1..3 của bảng Daily): mỗi game là MAZE THƯỜNG ("standard")
-## hoặc 1 CHALLENGE ("challenge" + `challenge_id`) — chọn theo NGÀY bằng RNG gieo hạt từ
-## số ngày (cùng ngày = cùng kế hoạch; luật challenge không lặp nhau trong 1 ngày).
-const DAILY_GAME_COUNT := 3
-## Tỉ lệ 1 slot là MAZE THƯỜNG (phần còn lại là CHALLENGE)
-const DAILY_STANDARD_CHANCE := 0.4
+## API cũ: chốt 1 nhiệm vụ theo index (>= 3 là THỬ THÁCH)
+func complete_day_mission(day: int, index: int) -> int:
+	if index >= PLAY_STARS_MAX:
+		return CHALLENGE_STARS_MAX if record_daily_win(day, true, CHALLENGE_STARS_MAX) > 0 else 0
+	return 1 if record_daily_win(day, false, 1) > 0 else 0
 
 
-func get_day_games(day: int) -> Array[Dictionary]:
-	var rng := RandomNumberGenerator.new()
-	rng.seed = maxi(day, 1) * 7919 + 13
-	var pool: Array[String] = []
-	for id in ChallengeGameMode.CHALLENGE_IDS:
-		pool.append(str(id))
-	var out: Array[Dictionary] = []
-	for _slot in DAILY_GAME_COUNT:
-		if pool.is_empty() or rng.randf() < DAILY_STANDARD_CHANCE:
-			out.append({"mode": "standard", "challenge_id": ""})
-		else:
-			var index := rng.randi_range(0, pool.size() - 1)
-			out.append({"mode": "challenge", "challenge_id": pool[index]})
-			pool.remove_at(index)
-	return out
+## API cũ (danh hiệu): tổng "nhiệm vụ" = tổng SAO đã đạt trong tháng
+func get_total_missions() -> int:
+	return get_month_stars()
 
 
+func get_total_stars() -> int:
+	return get_month_stars()
+
+
+## Số ngày đã hoàn thành TRỌN trong tháng
 func get_completed_count() -> int:
-	return completed_days.size()
+	var count := 0
+	var days: Dictionary = _month()["days"]
+	for day in days:
+		if is_completed(int(day)):
+			count += 1
+	return count
 
 
-## Ghi dữ liệu Daily: từ nay đi qua SaveManager (local, sẵn sàng cloud sau này).
-## File user://daily.cfg cũ chỉ còn để DI TRÚ (đọc ở _load_completed).
+## API cũ: đánh dấu ngày xong trọn (không thưởng)
+func mark_completed(day: int) -> void:
+	set_day_stars_split(day, PLAY_STARS_MAX, CHALLENGE_STARS_MAX)
+
+
+## API cũ: Xu thưởng ngày — nay thưởng nằm ở MỐC THÁNG nên luôn 0
+func day_reward_max() -> int:
+	return 0
+
+
+func day_reward_of(_day: int) -> int:
+	return 0
+
+
+func day_coins_earned(_day: int) -> int:
+	return 0
+
+
+func mission_reward(_index: int) -> int:
+	return 0
+
+
+# ---------------------------------------------------------------------------
+# LƯU / NẠP
+# ---------------------------------------------------------------------------
+
 func _save_completed() -> void:
-	Save.queue_save()
+	var save: Node = get_node_or_null("/root/SaveManager")
+	if save != null and save.has_method("queue_save"):
+		save.call("queue_save")
 
-
-# --- Tích hợp SaveManager -------------------------------------------------
 
 func export_progress() -> Dictionary:
 	return {
-		"completed_days": completed_days.duplicate(),
-		"day_missions": day_missions.duplicate(),
-		"day_coins": day_coins.duplicate(),
+		"months": months.duplicate(true),
 		"unlocked_days": unlocked_days.duplicate(),
 	}
 
 
 func import_progress(data: Dictionary) -> void:
-	if data.is_empty():
-		return
-	completed_days.clear()
-	day_missions.clear()
-	day_coins.clear()
+	months = {}
+	var raw: Variant = data.get("months", null)
+	if raw is Dictionary:
+		for key in (raw as Dictionary):
+			var entry: Variant = (raw as Dictionary)[key]
+			if entry is Dictionary:
+				months[str(key)] = (entry as Dictionary).duplicate(true)
 	unlocked_days.clear()
-	var days: Variant = data.get("completed_days", null)
-	if days is Array:
-		for day in (days as Array):
-			completed_days.append(int(day))
-	var missions: Variant = data.get("day_missions", null)
-	if missions is Dictionary:
-		for day in (missions as Dictionary):
-			day_missions[int(str(day))] = int((missions as Dictionary)[day])
-	var coins: Variant = data.get("day_coins", null)
-	if coins is Dictionary:
-		for day in (coins as Dictionary):
-			day_coins[int(str(day))] = int((coins as Dictionary)[day])
-	var unlocked: Variant = data.get("unlocked_days", null)
-	if unlocked is Array:
-		for day in (unlocked as Array):
+	var days_raw: Variant = data.get("unlocked_days", null)
+	if days_raw is Array:
+		for day in (days_raw as Array):
 			unlocked_days.append(int(day))
-	# DI TRÚ blob cũ: chỉ có "day_stars" (0..3 sao) -> coi như số nhiệm vụ đã xong
-	if day_missions.is_empty():
-		var stars: Variant = data.get("day_stars", null)
-		if stars is Dictionary:
-			for day in (stars as Dictionary):
-				day_missions[int(str(day))] = _stars_to_mask(int((stars as Dictionary)[day]))
 	daily_changed.emit()
 
 
 func reset_progress() -> void:
-	completed_days.clear()
-	day_missions.clear()
-	day_coins.clear()
+	months.clear()
 	unlocked_days.clear()
+	_save_completed()
 	daily_changed.emit()
-
-
-## 0..3 sao (dữ liệu cũ) -> bitmask nhiệm vụ (bit 0..n-1)
-static func _stars_to_mask(stars: int) -> int:
-	var mask := 0
-	for i in clampi(stars, 0, MAX_MISSIONS_PER_DAY):
-		mask |= 1 << i
-	return mask
 
 
 ## Nạp dữ liệu Daily.
 ## - Dữ liệu chính do SaveManager cấp qua import_progress().
-## - File user://daily.cfg là dữ liệu cũ: chỉ đọc để DI TRÚ sang SaveManager.
+## - File user://daily.cfg là dữ liệu bản CŨ: chỉ đọc để DI TRÚ sang mô hình Sao.
 func _load_completed() -> void:
-	completed_days.clear()
-	day_missions.clear()
-	day_coins.clear()
 	var cfg := ConfigFile.new()
 	if cfg.load(CONFIG_PATH) != OK:
 		return
-	var saved: Variant = cfg.get_value(SECTION, "completed_days", PackedInt32Array())
-	if saved is PackedInt32Array or saved is Array:
-		for day in saved:
-			completed_days.append(int(day))
-			day_missions[int(day)] = ALL_MISSIONS_MASK
-	var stars: Variant = cfg.get_value(SECTION, "day_stars", {})
-	if stars is Dictionary:
-		for day in stars:
-			day_missions[int(day)] = _stars_to_mask(int(stars[day]))
+	var legacy: Variant = cfg.get_value(SECTION, "day_missions", null)
+	var unlocked: Variant = cfg.get_value(SECTION, "unlocked_days", null)
+	if unlocked is PackedInt32Array or unlocked is Array:
+		for day in unlocked:
+			if not unlocked_days.has(int(day)):
+				unlocked_days.append(int(day))
+	if not (legacy is Dictionary):
+		return
+	var days: Dictionary = _month()["days"]
+	for key in (legacy as Dictionary):
+		var mask := int((legacy as Dictionary)[key])
+		var play := 0
+		for i in PLAY_STARS_MAX:
+			if (mask & (1 << i)) != 0:
+				play += 1
+		days[int(key)] = {
+			"play": play,
+			"challenge": CHALLENGE_STARS_MAX if (mask & (1 << 3)) != 0 else 0,
+		}
+	_save_completed()

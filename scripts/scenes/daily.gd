@@ -1,44 +1,33 @@
 class_name DailyScene
 extends BaseScene
 ## ============================================================================
-## View Controller: Màn hình Daily Mission (scenes/daily.tscn)
-## - Lịch tháng (nodes/daily/calendar.tscn) để chọn ngày nhiệm vụ
-## - Bảng nhiệm vụ ngày: 3 GAME của ngày (maze thường / challenge) + maze đặc biệt
-## - Huy hiệu chuỗi ngày (streak) và nút chơi chế độ xoay vòng của hôm nay
+## View Controller: Màn hình Thử thách hằng ngày (scenes/daily.tscn)
+##
+## Bố cục (mockup/daily_challenge.svg + bản ngang): TopBar · TIẾN ĐỘ SAO tháng
+## (thanh + 4 mốc thưởng) · LỊCH THÁNG · 2 thẻ hành động (CHƠI / THỬ THÁCH).
+##
+## Mô hình Sao (v2.28):
+##   · CHƠI      — 1 màn maze thường, mỗi NHIỆM VỤ xong = 1 Sao (tối đa 3)
+##   · THỬ THÁCH — 1 maze luật Special, thắng = +3 Sao
+##   ⇒ tối đa 6 Sao/ngày; Sao tích luỹ theo tháng để mở MỐC THƯỞNG
+##     (`DailyManager.MILESTONES`: Xu + lượt dùng công cụ).
+##
+## Mọi số đo/bố cục nằm trong SCENE (`scenes/layout/<hướng>/daily.tscn` +
+## `nodes/daily/*.tscn`); script chỉ đọc/ghi dữ liệu qua `@export` của layout.
 ## ============================================================================
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-@export var MISSION_ROW: PackedScene = preload("res://nodes/daily/mission_row.tscn")
-## Icon của nút CTA: bút chì (chơi) / đồng Xu (trả Xu mở khoá ngày bỏ lỡ) — gán trong `scenes/daily.tscn`
-@export var icon_play: Texture2D = null
-@export var icon_unlock: Texture2D = null
-## 3 GAME đầu của ngày (maze thường HOẶC challenge theo kế hoạch ngày), hàng thứ 4 = MAZE ĐẶC BIỆT
-@export var CLASSIC_MISSION_COUNT := 3
-## Quy ước scene: các hàng nhiệm vụ là node `Rows/Slot1..SlotN` KHAI SẴN trong scene —
-## mỗi hàng được ĐẶT VÀO đúng slot của nó, nên muốn đổi vị trí/kích thước hàng thì kéo
-## slot trong editor (script không tính).
-
-## ============================================================================
-## BỐ CỤC = LAYOUT CỦA SCENE (`scenes/daily.tscn` + `nodes/daily/mission_row.tscn`),
-## không hard-code số đo trong script. Các biến dưới được `_capture_design()` đọc 1 lần
-## lúc mở màn; muốn đổi cỡ/khe thì sửa trực tiếp trong scene.
-## ============================================================================
-var _row_design_h := 110.0          # chiều cao thiết kế 1 hàng (mission_row.tscn) — chỉ dùng khi scene THIẾU slot
-var _panel_design_h := 592.0        # chiều cao art bảng nhiệm vụ (dùng cho màn THẤP hơn thiết kế)
-var _rows_top_design := 112.0       # đỉnh vùng hàng nhiệm vụ trong bảng (daily.tscn > Rows)
-var _progress_design_y := 528.0     # đỉnh khối tiến độ trong bảng (daily.tscn > ProgressLabel)
-var _gap_cal_missions := 24.0       # khe lịch → bảng (đo từ scene)
-var _bottom_margin := 60.0          # lề dưới nút CHƠI (đo từ scene + canvas thiết kế)
-var _design_captured := false
+## Thẻ mốc thưởng (instantiate cho MỌI mốc trong `DailyManager.MILESTONES`)
+@export var MILESTONE_CHIP: PackedScene = preload("res://nodes/daily/milestone_chip.tscn")
 
 ## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
-## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/daily.tscn`
-## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
+## CÙNG tên node) và đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/daily.tscn`
+## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn.
 var layout: DailyLayout = null
 
-var _rows: Array[DailyMissionRow] = []
+var _chips: Array[DailyMilestoneChip] = []
 var _daily: Node = null
-## Ngày đang xem (mặc định hôm nay). Bấm ngày khác trên lịch = xem nhiệm vụ ngày đó.
+## Ngày đang chọn (mặc định hôm nay). Bấm ngày khác trên lịch = xem/ chơi ngày đó.
 var _selected_day := 1
 
 
@@ -50,15 +39,31 @@ func _ready() -> void:
 	_wire_buttons()
 	orientation_changed.connect(_on_orientation_changed)
 
-	if layout.streak_badge != null:
-		UIAnim.play_pop_in(layout.streak_badge, 0.08, 0.8, 0.25)
-
-	_build_rows()
+	_build_milestones()
 	_refresh()
-	_layout_responsive.call_deferred()
+	_layout_stage.call_deferred()
 	var vp := get_viewport()
-	if vp != null and not vp.size_changed.is_connected(_layout_responsive):
-		vp.size_changed.connect(_layout_responsive)
+	if vp != null and not vp.size_changed.is_connected(_layout_stage):
+		vp.size_changed.connect(_layout_stage)
+
+
+## Đặt khung thiết kế (`Panel/Stage`) vào giữa canvas và PHÓNG/THU ĐỀU theo canvas.
+## Nhờ vậy bố cục giữ ĐÚNG tỉ lệ mockup ở mọi cỡ màn hình (không kéo méo art).
+func _layout_stage() -> void:
+	if layout == null or not is_inside_tree():
+		return
+	var stage := layout.get_node_or_null("Panel/Stage") as Control
+	if stage == null:
+		return
+	var design := stage.custom_minimum_size
+	if design.x <= 0.0 or design.y <= 0.0:
+		design = stage.size
+	var canvas := get_viewport_rect().size
+	if design.x <= 0.0 or design.y <= 0.0 or canvas.x <= 0.0:
+		return
+	var factor := minf(canvas.x / design.x, canvas.y / design.y)
+	stage.scale = Vector2(factor, factor)
+	stage.position = ((canvas - design * factor) * 0.5).floor()
 
 
 ## Phát lại EnterAnim mỗi khi màn được kích hoạt (quay lại từ màn khác)
@@ -76,24 +81,23 @@ func _bind_refs() -> void:
 ## Nối signal + hiệu ứng (dây NÚT khai trong `scenes/daily.tscn` — guard chỉ nối lại nếu mất dây)
 func _wire_buttons() -> void:
 	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
-	ensure_signal(layout.btn_play, &"pressed", &"_on_play_pressed")
 	ensure_signal(layout.calendar, &"day_selected", &"_on_day_selected")
+	ensure_signal(layout.play_card, &"pressed", &"_on_play_pressed")
+	ensure_signal(layout.challenge_card, &"pressed", &"_on_challenge_pressed")
 	if layout.btn_back != null and not layout.btn_back.has_meta("bounce_attached"):
 		layout.btn_back.set_meta("bounce_attached", true)
 		UIAnim.attach_press_down(layout.btn_back)
-	if layout.btn_play != null and not layout.btn_play.has_meta("bounce_attached"):
-		layout.btn_play.set_meta("bounce_attached", true)
-		UIAnim.attach_press_down(layout.btn_play)
-		# "Thở" nhẹ để hút mắt vào nút CHƠI — animation "pulse" của layout (PulseAnim)
-		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.btn_play):
-			# Fallback khi layout thiếu PulseAnim
-			UIAnim.play_pulse(layout.btn_play, 1.03, 1.8)
+	if layout.play_card != null and not layout.play_card.has_meta("bounce_attached"):
+		layout.play_card.set_meta("bounce_attached", true)
+		# "Thở" nhẹ để hút mắt vào thẻ CHƠI — animation "pulse" của layout (PulseAnim)
+		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.play_card):
+			UIAnim.play_pulse(layout.play_card, 1.02, 2.0)
 	if _daily != null and _daily.has_signal("daily_changed") \
 			and not _daily.is_connected("daily_changed", _refresh):
 		_daily.connect("daily_changed", _refresh)
 
 
-## Xoay màn hình: số đo "thiết kế" đổi theo layout ⇒ đo lại rồi dàn lại hàng + nạp lại dữ liệu
+## Xoay màn hình: layout khác cấu trúc ⇒ gắn lại node + dựng lại chip mốc
 func _on_orientation_changed(_is_landscape_now: bool) -> void:
 	_rebind_after_orientation.call_deferred()
 
@@ -101,135 +105,38 @@ func _on_orientation_changed(_is_landscape_now: bool) -> void:
 func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_wire_buttons()
-	_design_captured = false
-	_capture_design()
-	_build_rows()
+	_build_milestones()
 	_refresh()
-	_layout_responsive()
+	_layout_stage()
 
 
-func _notification(what: int) -> void:
-	super._notification(what)
-	if what == NOTIFICATION_READY or what == NOTIFICATION_RESIZED:
-		_layout_responsive()
-
-
-## Bố cục theo chiều cao màn hình (màn 9:19.5/9:20 cao hơn thiết kế 1920):
-##   · Lịch giữ đúng chiều cao thiết kế
-##   · Nút CHƠI bám đáy màn hình
-##   · Bảng nhiệm vụ nằm GIỮA hai khối trên (không đè lịch)
-## Màn CAO BẰNG/HƠN thiết kế: KHÔNG can thiệp — bố cục do SCENE quyết định (anchors + slot).
-func _layout_responsive() -> void:
-	if layout == null or not is_inside_tree() \
-			or layout.calendar == null or layout.missions == null or layout.btn_play == null:
+## Dựng lại các chip MỐC THƯỞNG vào `milestones_host` của layout đang hiển thị
+func _build_milestones() -> void:
+	_chips.clear()
+	var host := layout.milestones_host
+	if host == null:
 		return
-	var canvas := get_viewport_rect().size
-	if canvas.y <= 0.0:
+	for child in host.get_children():
+		child.queue_free()
+	if _daily == null or not _daily.has_method("milestone_defs"):
 		return
-	_capture_design()
-
-	# Màn thấp hơn thiết kế (tablet 3:4): lịch vẫn giữ nguyên chiều cao nên phải kéo bảng nhiệm vụ
-	# xuống dưới lịch + ghim nút CHƠI vào đáy, nếu không bảng sẽ đè lên lịch.
-	var design_h := float(ProjectSettings.get_setting("display/window/size/viewport_height", 1920))
-	if canvas.y >= design_h - 0.5:
-		return
-
-	# 1. Nút CHƠI: bám đáy
-	var play_y := canvas.y - _bottom_margin - layout.btn_play.size.y
-	if absf(layout.btn_play.position.y - play_y) > 0.5:
-		layout.btn_play.position.y = play_y
-
-	# 2. Bảng nhiệm vụ: nằm giữa lịch và nút CHƠI
-	var top := layout.calendar.position.y + layout.calendar.size.y + _gap_cal_missions
-	var bottom := layout.btn_play.position.y - _gap_cal_missions
-	var panel_h := maxf(_min_panel_height(), bottom - top)
-	if absf(layout.missions.position.y - top) > 0.5:
-		layout.missions.position.y = top
-	if absf(layout.missions.size.y - panel_h) > 0.5:
-		layout.missions.size.y = panel_h
-
-
-## Chiều cao TỐI THIỂU của bảng nhiệm vụ = đáy slot CUỐI (scene khai) + khối tiến độ.
-## Dùng cho màn thấp hơn thiết kế để bảng không đè lên lịch và hàng không tràn xuống khối tiến độ.
-func _min_panel_height() -> float:
-	var slot_bottom := 0.0
-	for i in maxi(_mission_total(), 1):
-		var slot := layout.mission_slot(i)
-		if slot != null:
-			slot_bottom = maxf(slot_bottom, slot.position.y + slot.size.y)
-	if slot_bottom <= 0.0:
-		# Scene chưa khai slot ⇒ lấy theo chiều cao thiết kế của hàng
-		slot_bottom = _row_design_h * float(maxi(_mission_total(), 1))
-	var progress_block := maxf(_panel_design_h - _progress_design_y, 0.0)
-	return _rows_top_design + slot_bottom + progress_block
-
-
-## Đọc số đo THIẾT KẾ từ scene + art (1 lần) — không hard-code trong script
-func _capture_design() -> void:
-	if _design_captured:
-		return
-	_design_captured = true
-	var probe := MISSION_ROW.instantiate() as Control
-	if probe != null:
-		_row_design_h = maxf(probe.size.y, probe.custom_minimum_size.y)
-		probe.free()
-	if _row_design_h <= 0.0:
-		_row_design_h = 110.0
-	# Chiều cao THIẾT KẾ của bảng nhiệm vụ: lấy từ ART (không đổi theo layout) — nếu lấy `size.y` thì ở
-	# bản NGANG (bảng bị kéo cao hơn art) khối tiến độ sẽ không tụt xuống đúng đáy bảng.
-	var panel_art := layout.missions as TextureRect
-	var art_h := float(panel_art.texture.get_height()) if panel_art != null and panel_art.texture != null else 0.0
-	if art_h > 0.0:
-		_panel_design_h = art_h
-	elif layout.missions.size.y > 0.0:
-		_panel_design_h = layout.missions.size.y
-	if layout.rows_host != null:
-		_rows_top_design = layout.rows_host.position.y
-	if layout.lbl_progress != null:
-		_progress_design_y = layout.lbl_progress.position.y
-	var gap := layout.missions.position.y - (layout.calendar.position.y + layout.calendar.size.y)
-	_gap_cal_missions = gap if gap > 0.0 else _gap_cal_missions
-	var design_h := float(ProjectSettings.get_setting("display/window/size/viewport_height", 1920))
-	var margin := design_h - (layout.btn_play.position.y + layout.btn_play.size.y)
-	_bottom_margin = margin if margin > 0.0 else _bottom_margin
-
-
-## Dựng 4 hàng nhiệm vụ (3 maze thường + 1 maze đặc biệt), mỗi hàng đặt vào SLOT của scene
-func _build_rows() -> void:
-	if layout.rows_host == null:
-		return
-	_clear_rows()
-	for i in _mission_total():
-		var row: DailyMissionRow = MISSION_ROW.instantiate()
-		row.name = "Row%d" % (i + 1)
-		# ĐẶT HÀNG VÀO SLOT của scene (`Slot1..Slot4`) — slot quyết định vị trí + kích thước;
-		# `mission_row.tscn` đã khai sẵn anchors FULL RECT nên không cần chỉnh trong code.
-		var host: Control = layout.mission_slot(i)
-		if host == null:
-			host = layout.rows_host
-			push_warning("DailyScene: scene chưa khai Slot%d — hàng sẽ nằm tại gốc Rows" % (i + 1))
-		host.add_child(row)
-		row.action_pressed.connect(_on_row_action_pressed)
-		_rows.append(row)
-		UIAnim.play_fade_in(row, 0.04 * i, 0.22)
-
-
-## Xoá các hàng nhiệm vụ đã dựng (GIỮ LẠI node Slot của scene)
-func _clear_rows() -> void:
-	for row in _rows:
-		if row != null and is_instance_valid(row):
-			row.queue_free()
-	_rows.clear()
+	var defs: Array = _daily.call("milestone_defs")
+	for i in defs.size():
+		var def: Dictionary = defs[i]
+		var chip: DailyMilestoneChip = MILESTONE_CHIP.instantiate()
+		host.add_child(chip)
+		chip.claim_requested.connect(_on_milestone_claim)
+		_chips.append(chip)
 
 
 # --- API cho test -----------------------------------------------------------
 
-## Ngày đang xem trên lịch
+## Ngày đang chọn trên lịch
 func selected_day() -> int:
 	return _selected_day
 
 
-## Đổi ngày đang xem (không nhảy vào màn chơi)
+## Đổi ngày đang chọn (không nhảy vào màn chơi)
 func select_day(day: int) -> void:
 	if day <= 0:
 		return
@@ -237,15 +144,25 @@ func select_day(day: int) -> void:
 	_refresh()
 
 
-## Số hàng nhiệm vụ đang hiển thị
-func row_count() -> int:
-	return _rows.size()
+## Số chip mốc thưởng đang hiển thị
+func milestone_count() -> int:
+	return _chips.size()
 
 
-func row_at(index: int) -> DailyMissionRow:
-	if index < 0 or index >= _rows.size():
+func milestone_chip_at(index: int) -> DailyMilestoneChip:
+	if index < 0 or index >= _chips.size():
 		return null
-	return _rows[index]
+	return _chips[index]
+
+
+## Thẻ CHƠI của ngày đang chọn (test đọc trạng thái Sao)
+func play_card() -> DailyActionCard:
+	return layout.play_card
+
+
+## Thẻ THỬ THÁCH của ngày đang chọn
+func challenge_card() -> DailyActionCard:
+	return layout.challenge_card
 
 
 # ---------------------------------------------------------------------------
@@ -253,102 +170,74 @@ func row_at(index: int) -> DailyMissionRow:
 # ---------------------------------------------------------------------------
 ## Cập nhật toàn bộ nội dung theo ngày đang chọn
 func _refresh() -> void:
-	if _daily == null:
+	if _daily == null or layout == null:
 		return
 	var day := _selected_day
-	var mode_name := _mode_name(day)
-	var done := _missions_done(day)
-	var total := _mission_total()
+	var month_stars := _month_stars()
+	var goal := _month_goal()
 
-	layout.lbl_streak.text = tr("STR_DAILY_STREAK_UNIT").format([_streak()])
-	layout.lbl_mode.text = tr("STR_DAILY_SPECIAL_LABEL").format([mode_name])
-	layout.lbl_date.text = tr("STR_DAILY_DATE_BADGE").format([
-		day,
-		DailyCalendar.days_in_month(_current_year(), _current_month()),
-	])
-	layout.lbl_reward.text = tr("STR_DAILY_REWARD_STARS").format([_day_reward_max()])
+	if layout.lbl_star_total != null:
+		layout.lbl_star_total.text = str(month_stars)
+	if layout.bar_stars != null:
+		layout.bar_stars.max_value = maxi(goal, 1)
+		layout.bar_stars.value = mini(month_stars, maxi(goal, 1))
+	if layout.lbl_reset != null:
+		layout.lbl_reset.text = tr("STR_DAILY_RESET_IN").format([_reset_countdown()])
 
-	# Nút CTA: ngày bỏ lỡ đang khoá -> hiện yêu cầu trả Xu để mở khoá
-	var unlockable := _can_unlock_day(day)
-	if unlockable:
-		layout.lbl_play.text = tr("STR_DAILY_UNLOCK_COST").format([_unlock_cost()])
-	else:
-		layout.lbl_play.text = tr("STR_DAILY_PLAY_MODE").format([mode_name])
-	if layout.icon_play != null:
-		layout.icon_play.texture = icon_unlock if unlockable else icon_play
-	if layout.btn_play != null:
-		# Ngày tương lai (chưa mở) thì nút khoá hẳn; ngày bỏ lỡ vẫn bấm được để MỞ KHOÁ
-		layout.btn_play.disabled = not _is_day_playable(day) and not unlockable
+	_refresh_cards(day)
+	_refresh_milestones(month_stars)
 
-	_refresh_rows(day, mode_name)
-	_refresh_footer(day, done, total)
-
-	# Ô ngày trên lịch đổi viện trạng thái ("ĐÃ MỞ") sau khi trả Xu mở khoá
+	# Ô ngày trên lịch đổi viền trạng thái ("ĐÃ MỞ") sau khi trả Xu mở khoá
 	if layout.calendar != null:
 		layout.calendar.rebuild()
 
 
-## 4 hàng: 3 GAME của ngày (0..2 — maze thường HOẶC challenge tuỳ kế hoạch ngày) + 1 maze đặc biệt (3)
-## Mỗi hàng ĐÚNG 2 DÒNG (Title + Tiến độ) — xem `nodes/daily/mission_row.tscn`
-func _refresh_rows(day: int, mode_name: String) -> void:
+## Nội dung 2 thẻ hành động: CHƠI (3 Sao theo nhiệm vụ) + THỬ THÁCH (3 Sao khi thắng)
+func _refresh_cards(day: int) -> void:
+	var play_stars := _day_play_stars(day)
+	var challenge_stars := _day_challenge_stars(day)
+	var info := _challenge_info(day)
 	var playable := _is_day_playable(day)
-	var plan := _day_games(day)
-	for i in _rows.size():
-		var done := false
-		if _daily.has_method("is_mission_done"):
-			done = bool(_daily.call("is_mission_done", day, i))
-		_rows[i].setup(i, {
-			"title": _row_title(i, mode_name, plan),
-			"progress": tr("STR_DAILY_MISSION_PROGRESS_DONE" if done else "STR_DAILY_MISSION_PROGRESS_TODO"),
-			"reward": _mission_reward(i),
-			"done": done,
-			"special": i >= CLASSIC_MISSION_COUNT,
-			"playable": playable,
-		})
+	var unlockable := _can_unlock_day(day)
+
+	if layout.play_card != null:
+		var sub := tr("STR_DAILY_PLAY_SUB_TODAY").format([day])
+		var cta := "STR_DAILY_CARD_PLAY_BTN"
+		if unlockable:
+			cta = "STR_DAILY_UNLOCK_COST"
+			sub = tr("STR_DAILY_UNLOCK_COST").format([_unlock_cost()])
+		elif play_stars > 0:
+			cta = "STR_DAILY_CARD_PLAY_BTN_AGAIN"
+		layout.play_card.setup("STR_DAILY_CARD_PLAY", sub, cta, false, play_stars)
+		layout.play_card.set_meta("locked", not playable and not unlockable)
+
+	if layout.challenge_card != null:
+		var rule := str(info.get("title", ""))
+		var cta := "STR_DAILY_CARD_CHALLENGE_BTN"
+		if challenge_stars > 0:
+			cta = "STR_DAILY_CARD_CHALLENGE_BTN_AGAIN"
+		layout.challenge_card.setup("STR_DAILY_CARD_CHALLENGE", rule, cta, true, challenge_stars)
+		layout.challenge_card.set_meta("locked", not playable)
 
 
-## Kế hoạch 3 game của ngày (DailyManager): [{mode:"standard"/"challenge", challenge_id}]
-func _day_games(day: int) -> Array:
-	if _daily != null and _daily.has_method("get_day_games"):
-		var raw: Variant = _daily.call("get_day_games", day)
-		if raw is Array:
-			return raw as Array
-	return []
+## Cập nhật trạng thái 4 chip mốc thưởng theo tổng Sao tháng
+func _refresh_milestones(month_stars: int) -> void:
+	var defs: Array = _daily.call("milestone_defs") if _daily != null else []
+	for i in _chips.size():
+		if i >= defs.size():
+			continue
+		var def: Dictionary = defs[i]
+		var threshold := int(def.get("stars", 0))
+		var claimed := bool(_daily.call("is_milestone_claimed", threshold))
+		_chips[i].setup(def, month_stars, claimed)
 
 
-## Tên luật thử thách của 1 game (rỗng nếu game là maze thường)
-func _game_rule_name(entry: Dictionary) -> String:
-	var cid := str(entry.get("challenge_id", ""))
-	var key := str(ChallengeGameMode.NAME_KEYS.get(cid, ""))
-	return tr(key) if not key.is_empty() else ""
-
-
-## Dòng title của hàng: hàng CHALLENGE hiện THẲNG tên luật (bỏ tiền tố "TRÒ CHƠI n ·"),
-## hàng maze thường & hàng đặc biệt giữ format riêng.
-func _row_title(index: int, mode_name: String, plan: Array) -> String:
-	if index >= CLASSIC_MISSION_COUNT:
-		return tr("STR_DAILY_MISSION_SPECIAL_TITLE").format([mode_name])
-	var entry: Dictionary = {}
-	if index < plan.size() and plan[index] is Dictionary:
-		entry = plan[index] as Dictionary
-	if str(entry.get("mode", "")) == "challenge":
-		var rule := _game_rule_name(entry)
-		if not rule.is_empty():
-			return rule
-	return tr("STR_DAILY_GAME_TITLE").format([index + 1, tr("STR_DAILY_WIN_CLASSIC")])
-
-
-## Thanh tiến độ ngày (x/4 nhiệm vụ) + Xu đã nhận trong ngày
-func _refresh_footer(day: int, done: int, total: int) -> void:
-	var percent := int(round(100.0 * float(done) / float(maxi(total, 1))))
-	layout.lbl_progress.text = tr("STR_DAILY_TOTAL_PROGRESS").format([percent, "%d/%d" % [done, total]])
-	if layout.bar_progress != null:
-		layout.bar_progress.value = percent
-	if layout.lbl_claim != null:
-		layout.lbl_claim.text = tr("STR_DAILY_CLAIMED_REWARD").format([
-			_day_coins_earned(day),
-			_day_reward_max(),
-		])
+## Đồng hồ đếm ngược tới 00:00 (mốc làm mới ngày) dạng HH:MM:SS
+func _reset_countdown() -> String:
+	var t := Time.get_time_dict_from_system()
+	var left := 24 * 3600 - (int(t.get("hour", 0)) * 3600 + int(t.get("minute", 0)) * 60
+		+ int(t.get("second", 0)))
+	return "%02d:%02d:%02d" % [left / 3600, (left / 60) % 60, left % 60]
 
 
 # --- Tiện ích đọc dữ liệu DailyManager --------------------------------------
@@ -357,40 +246,31 @@ func _today() -> int:
 	return int(_daily.call("get_today")) if _daily != null else 1
 
 
-func _mission_total() -> int:
-	if _daily != null and _daily.has_method("mission_count"):
-		return int(_daily.call("mission_count"))
-	return CLASSIC_MISSION_COUNT + 1
+func _month_stars() -> int:
+	return int(_daily.call("get_month_stars")) if _daily != null else 0
 
 
-func _missions_done(day: int) -> int:
-	if _daily != null and _daily.has_method("get_day_missions"):
-		return int(_daily.call("get_day_missions", day))
-	return 0
+func _month_goal() -> int:
+	return int(_daily.call("month_star_goal")) if _daily != null else 6
 
 
-func _mission_reward(index: int) -> int:
-	if _daily != null and _daily.has_method("mission_reward"):
-		return int(_daily.call("mission_reward", index))
-	return 0
+func _day_play_stars(day: int) -> int:
+	return int(_daily.call("get_day_play_stars", day)) if _daily != null else 0
 
 
-func _day_reward_max() -> int:
-	if _daily != null and _daily.has_method("day_reward_max"):
-		return int(_daily.call("day_reward_max"))
-	return 0
+func _day_challenge_stars(day: int) -> int:
+	return int(_daily.call("get_day_challenge_stars", day)) if _daily != null else 0
 
 
-func _day_coins_earned(day: int) -> int:
-	if _daily != null and _daily.has_method("day_coins_earned"):
-		return int(_daily.call("day_coins_earned", day))
-	return 0
+func _challenge_info(day: int) -> Dictionary:
+	if _daily != null and _daily.has_method("get_daily_challenge_info"):
+		return _daily.call("get_daily_challenge_info", day)
+	return {}
 
 
 ## Ngày chơi được: hôm nay, ngày đã có tiến độ, hoặc ngày bỏ lỡ đã trả Xu mở khoá.
-## Ngày khác chỉ để XEM nhiệm vụ.
 func _is_day_playable(day: int) -> bool:
-	return day == _today() or _missions_done(day) > 0 or _is_day_unlocked(day)
+	return day == _today() or _day_play_stars(day) > 0 or _is_day_unlocked(day)
 
 
 ## Ngày đã được trả Xu mở khoá
@@ -418,13 +298,6 @@ func _streak() -> int:
 	return int(_daily.call("get_streak")) if _daily != null else 0
 
 
-func _mode_name(day: int) -> String:
-	if _daily == null:
-		return ""
-	var mode_id := str(_daily.call("get_mode_for_day", day))
-	return tr("STR_MODE_%s" % mode_id.to_upper())
-
-
 func _current_year() -> int:
 	return int(Time.get_date_dict_from_system().get("year", 2026))
 
@@ -435,21 +308,47 @@ func _current_month() -> int:
 
 # --- Sự kiện ----------------------------------------------------------------
 
-## Bấm 1 ngày trên lịch: CHỈ đổi ngày đang xem (không nhảy thẳng vào màn chơi)
+## Timer 1 giây của scene → cập nhật đồng hồ đếm ngược làm mới
+func _on_reset_timer_timeout() -> void:
+	if layout != null and layout.lbl_reset != null:
+		layout.lbl_reset.text = tr("STR_DAILY_RESET_IN").format([_reset_countdown()])
+
+
+## Bấm 1 ngày trên lịch: CHỈ đổi ngày đang chọn (không nhảy thẳng vào màn chơi)
 func _on_day_selected(day: int) -> void:
 	select_day(day)
 
 
-## Nút CTA dưới cùng: chơi MAZE ĐẶC BIỆT của ngày đang chọn
-## (ngày bỏ lỡ đang khoá -> nút đổi thành trả Xu MỞ KHOÁ)
+## Thẻ CHƠI: vào màn maze thường của ngày (ngày bỏ lỡ đang khoá → trả Xu MỞ KHOÁ)
 func _on_play_pressed() -> void:
 	if _can_unlock_day(_selected_day):
 		_unlock_selected_day()
 		return
-	_play_special()
+	if not _is_day_playable(_selected_day):
+		Sfx.play(Sfx.WALL_HIT)
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	var gm: Node = get_node_or_null("/root/GameManager")
+	if gm != null and gm.has_method("start_daily_play"):
+		gm.call("start_daily_play", _selected_day)
+	else:
+		Nav.goto_game()
 
 
-## Ngày đang xem bị BỎ LỠ: trả Xu để mở khoá, sau đó ngày chơi được như bình thường
+## Thẻ THỬ THÁCH: vào maze luật Special của ngày
+func _on_challenge_pressed() -> void:
+	if not _is_day_playable(_selected_day):
+		Sfx.play(Sfx.WALL_HIT)
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	var gm: Node = get_node_or_null("/root/GameManager")
+	if gm != null and gm.has_method("start_daily_challenge"):
+		gm.call("start_daily_challenge", _selected_day)
+	else:
+		Nav.goto_game()
+
+
+## Ngày đang chọn bị BỎ LỠ: trả Xu để mở khoá, sau đó ngày chơi được như bình thường
 func _unlock_selected_day() -> void:
 	if _daily == null or not _daily.has_method("unlock_day"):
 		return
@@ -461,45 +360,15 @@ func _unlock_selected_day() -> void:
 	Sfx.play(Sfx.WALL_HIT)
 
 
-## Nút trên hàng: 3 hàng đầu -> GAME của ngày (kế hoạch ngày quyết định), hàng 4 -> MAZE ĐẶC BIỆT
-func _on_row_action_pressed(index: int) -> void:
-	if index < CLASSIC_MISSION_COUNT:
-		_play_game(index)
-	else:
-		_play_special()
-
-
-## Game thứ `index` (0..2) của ngày đang xem — maze thường HOẶC challenge theo kế hoạch ngày
-func _play_game(index: int) -> void:
-	if not _is_day_playable(_selected_day):
+## Bấm NHẬN thưởng một mốc Sao
+func _on_milestone_claim(threshold: int) -> void:
+	if _daily == null or not _daily.has_method("claim_milestone"):
 		return
-	Sfx.play(Sfx.BTN_CLICK)
-	var gm: Node = get_node_or_null("/root/GameManager")
-	if gm != null and gm.has_method("start_daily_game"):
-		gm.call("start_daily_game", _selected_day, index)
+	if bool(_daily.call("claim_milestone", threshold)):
+		Sfx.play(Sfx.STAMP_IMPACT)
+		_refresh.call_deferred()
 	else:
-		Nav.goto_game()
-
-
-func _play_special() -> void:
-	if not _is_day_playable(_selected_day):
-		return
-	Sfx.play(Sfx.BTN_CLICK)
-	_start_daily(_selected_day, false)
-
-
-## `classic = true` -> Game Classic (maze thường), false -> maze đặc biệt của ngày
-func _start_daily(day: int, classic: bool) -> void:
-	var gm: Node = get_node_or_null("/root/GameManager")
-	if gm == null:
-		Nav.goto_game()
-		return
-	if classic and gm.has_method("start_daily_classic"):
-		gm.call("start_daily_classic", day)
-	elif gm.has_method("start_daily"):
-		gm.call("start_daily", day)
-	else:
-		Nav.goto_game()
+		Sfx.play(Sfx.WALL_HIT)
 
 
 func _on_back_pressed() -> void:

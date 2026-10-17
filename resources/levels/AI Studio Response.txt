@@ -1,0 +1,96 @@
+### BƯỚC 1: VẼ LƯỚI ĐƯỜNG ĐI DẠNG MA TRẬN 2D
+
+- **Kích thước**: 4x4, Start $S = (0, 0)$, Finish $F = (3, 3)$.
+- **Ý đồ thiết kế**: Tại $S(0, 0)$, cả 2 hướng (sang phải và đi xuống) đều mở và không có tường vô hình bao quanh, tạo ra thế rẽ nhánh. Nhánh rẽ xuống phía dưới $((0,0) \to (0,1) \to (0,2))$ là nhánh đánh lừa (ngõ cụt bị khóa kín bởi 2 tường vô hình ở $(0,2)$). Người chơi quan sát số gợi ý trên bảng sẽ suy luận ra ngay nhánh an toàn là đi vòng qua $(1,0)$.
+- **Ma trận đường đi**:
+  - `.` : Đường đi chính (Golden Path - 8 bước)
+  - `x` : Nhánh rẽ đánh lừa / ngõ cụt
+  - `o` : Ô phụ / hành lang chặn
+
+```text
+    0     1     2     3   (x)
+ 0 [S .] [ . ] [ . ] [ o ]
+ 1 [ x ] [ . ] [ . ] [ o ]
+ 2 [ x ] [ . ] [ . ] [ . ]
+ 3 [ o ] [ o ] [ o ] [ F.]
+(y)
+```
+
+- **Đường chính (Golden Path)**: $(0,0) \to (1,0) \to (2,0) \to (2,1) \to (1,1) \to (1,2) \to (2,2) \to (3,2) \to (3,3)$ ($L_{\text{optimal}} = 8$ bước).
+- **Nhánh đánh lừa**: $(0,0) \to (0,1) \to (0,2)$ (Bị chặn kín ở $(0,2)$).
+
+---
+
+### BƯỚC 2: THIẾT KẾ TƯỜNG & PHÂN TÍCH SUY LUẬN LOGIC
+
+- **Ký hiệu tường**:
+  - `|` hoặc `---` : Tường nhìn thấy được (`visible = 1`)
+  - `!` hoặc `~~~` : Tường vô hình (`visible = 0`)
+  - Khoảng trống : Lối đi thông suốt
+
+```text
+  +---+---+---+---+
+  | S       |     |
+  +   +~~~+   +   +
+  | x |       ! x |
+  +   +---+---+~~~+
+  | x !       | . |
+  +~~~+---+   +   +
+  |     |   ! | F |
+  +---+---+---+---+
+```
+
+#### Ma trận số đếm tường vô hình hiển thị trên từng ô:
+```text
+[0, 1, 0, 0]
+[0, 1, 1, 2]
+[2, 1, 0, 1]
+[1, 0, 1, 1]
+```
+
+- **Ô $S(0, 0) = 0$**: Không có tường vô hình nội bộ nào quanh $S$.
+- **Suy luận logic không đoán mò (Dry-run solver)**:
+  1. **Tại $(0, 0)$**: Ô mang số `0`. Cạnh phải sang $(1, 0)$ và cạnh dưới sang $(0, 1)$ đều không có tường vô hình.
+     - Kiểm tra nhánh $(0, 1)$: Ô $(0, 1)$ có tường nhìn thấy ở bên phải ngăn cách với $(1, 1)$, lối đi duy nhất là xuống $(0, 2)$.
+     - Ô $(0, 2)$ mang số `2`, bên trái là tường biên ngoài, cạnh trên vừa đi qua $\implies$ Cả cạnh phải và cạnh dưới của $(0, 2)$ đều là tường vô hình! Nhánh này là ngõ cụt bẫy.
+     - Nhìn sang $(1, 0)$ (số `1`): Ô $(2, 0)$ kế bên mang số `0` $\implies$ Cạnh giữa $(1, 0)$ và $(2, 0)$ chắc chắn không có tường vô hình. Do đó, tường vô hình duy nhất của $(1, 0)$ phải nằm ở cạnh dưới nối với $(1, 1)$.
+     $\implies$ **Lối đi an toàn 100% bắt buộc là rẽ phải: $(0, 0) \to (1, 0) \to (2, 0)$**.
+  2. **Tại $(2, 0)$**: Mang số `0`, bên phải có tường thấy được $\implies$ Đi xuống $(2, 1)$ an toàn.
+  3. **Tại $(2, 1)$**: Mang số `1`, cạnh dưới là tường thấy được. Ô $(1, 1)$ mang số `1` đã có tường vô hình ở cạnh trên, nên cạnh nối với $(2, 1)$ mở $\implies$ Tường vô hình của $(2, 1)$ nằm ở bên phải (nối sang $(3, 1)$).
+     $\implies$ Rẽ trái sang $(1, 1)$ an toàn.
+  4. **Tại $(1, 1) \to (1, 2)$**: Cạnh dưới mở vì $(1, 1)$ đã đủ 1 tường vô hình.
+  5. **Tại $(1, 2)$**: Cạnh trái là tường vô hình của ô $(0, 2)$, cạnh dưới là tường thấy được $\implies$ Đi sang phải vào $(2, 2)$ an toàn.
+  6. **Tại $(2, 2)$**: Mang số `0` $\implies$ Cả cạnh phải và dưới đều an toàn. Tuy nhiên, ô $(2, 3)$ bị chặn sang $(3, 3)$ bởi tường vô hình, trong khi ô $(3, 2)$ có đường xuống $(3, 3)$ an toàn.
+  7. **Từ $(2, 2) \to (3, 2) \to (3, 3) = F$**: Hoàn thành màn chơi!
+
+---
+
+### BƯỚC 3: DỊCH TỪ MA TRẬN SANG PACKEDBYTEARRAY (KẾT QUẢ PYTHON)
+
+- **Số lượng tường vô hình**: $6$
+- **$L_{\text{optimal}}$**: $8$ bước
+- **`max_steps`** (Độ khó Medium): $8 + 2 = 10$
+- **`par_time`**: $\text{Round}(8 \times 2.2 + 6 \times 1.5, 1) = 26.6$ giây
+
+```ini
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://c8q4v2m1e7y5n"]
+
+[ext_resource type="Script" uid="uid://db1uxhq02q40b" path="res://scripts/resources/level_data.gd" id="1_hndnq"]
+
+[resource]
+script = ExtResource("1_hndnq")
+level_title = "Level 2-4 · Lối Rẽ Đánh Lừa"
+difficulty = "Medium"
+width = 4
+height = 4
+start_pos = Vector2i(0, 0)
+end_pos = Vector2i(3, 3)
+max_steps = 10
+par_time = 26.6
+v_walls = PackedByteArray(1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1)
+h_walls = PackedByteArray(1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1)
+h_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1)
+challenge_types = PackedStringArray("no_wall", "steps_max", "time_max")
+challenge_params = [0, 10, 26]
+```

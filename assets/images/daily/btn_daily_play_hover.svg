@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" width="240" height="70" fill="none">
+  <defs>
+    <linearGradient id="btnPlayHoverGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4B9ED5"/>
+      <stop offset="100%" stop-color="#266D9B"/>
+    </linearGradient>
+  </defs>
+  <rect y="4" width="240" height="66" rx="16" fill="#14415F"/>
+  <rect width="240" height="66" rx="16" fill="url(#btnPlayHoverGrad)" stroke="#307AA8" stroke-width="2"/>
+  <rect x="3" y="2" width="234" height="9" rx="5" fill="#FFFFFF" fill-opacity="0.3"/>
+</svg>
