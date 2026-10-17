@@ -82,6 +82,11 @@ static func attach_press_down(btn: BaseButton, press_offset := 5.0, duration := 
 	if btn == null or not is_instance_valid(btn):
 		return
 
+	# Điểm neo (pivot) cho hiệu ứng scale phải luôn ở giữa nút — giống `attach_press_bounce`
+	_update_pivot(btn)
+	if not btn.resized.is_connected(_on_btn_resized.bind(btn)):
+		btn.resized.connect(_on_btn_resized.bind(btn))
+
 	# Lưu trạng thái để quản lý Tween và chống lỗi trôi nút khi click liên tục
 	var state := {
 		"tween": null,
