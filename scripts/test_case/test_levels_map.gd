@@ -554,46 +554,6 @@ func _check_parallax(scene: LevelScenes) -> int:
 	return failures
 
 
-	var failures := 0
-	root.size = Vector2i(2000, 920)
-	await create_timer(0.6).timeout      # đợi dựng lại bản đồ theo khung ngang
-	var map: LevelMap = scene.map
-	if not map.is_wide():
-		print("[FAIL] Khung 2000x920 phai la bo cuc NGANG")
-		return failures + 1
-	if map.node_count() != TEST_IDS:
-		print("[FAIL] Ngang: so nut phai giu nguyen %d (dang %d)" % [TEST_IDS, map.node_count()])
-		failures += 1
-	var node := map.node_for(1)
-	var next_node := map.node_for(2)
-	if node == null or next_node == null:
-		print("[FAIL] Ngang: thieu nut man")
-		return failures + 1
-	var scale_x := node.scale.x
-	var spacing := node.position.y - next_node.position.y
-	var offset_x := absf(node.position.x - 2000.0 * 0.5)
-	if scale_x <= 1.0:
-		print("[FAIL] Ngang: nut phai TO hon ban doc (scale = %.2f)" % scale_x)
-		failures += 1
-	if spacing <= 140.0:
-		print("[FAIL] Ngang: khoang cach nut phai rong hon ban doc (%.1f)" % spacing)
-		failures += 1
-	if offset_x <= 70.0:
-		print("[FAIL] Ngang: zigzag phai rong hon ban doc (x = %.1f)" % node.position.x)
-		failures += 1
-	failures += _check_road_no_cross(map)
-	root.size = Vector2i(1080, 1920)
-	await create_timer(0.4).timeout
-	if failures == 0:
-		print("[CHECK] Ngang: nut to hon (scale %.2f), khoang cach %.0f, zigzag rong, du %d nut."
-			% [scale_x, spacing, TEST_IDS])
-	return failures
-
-
-## Màn DỌC nhưng CỘT NỘI DUNG rộng hơn khung bản đồ (canvas 690×920: khung `MapArea` chỉ
-## 690×570 ⇒ "khung rộng hơn cao"). Trước đây bản đồ lấy hướng theo KHUNG nên tưởng là màn
-## NGANG: dùng zigzag 320 ⇒ nút lòi ra ngoài khung + đổi trục uốn của đường nối.
-## Hướng phải lấy theo CANVAS (xem `LevelMap.is_wide`).
 func _check_portrait_wide_column(scene: LevelScenes) -> int:
 	var failures := 0
 	root.size = Vector2i(690, 920)
