@@ -1,26 +1,26 @@
 class_name DailyLayout
 extends BaseLayout
+## ============================================================================
+## Binding node cho màn Thử thách hằng ngày (scenes/layout/<hướng>/daily.tscn).
+##
+## Hai hướng (Portrait / Landscape) dùng CÙNG bộ export — màn hình chỉ việc khai
+## `node_paths` trong scene. Mọi số đo/bố cục nằm trong scene, không ở script.
+## ============================================================================
 
 @export var btn_back: BaseButton = null
 @export var calendar: DailyCalendar = null
-@export var missions: Control = null
-@export var lbl_streak: Label = null
-@export var lbl_date: Label = null
-@export var lbl_mode: Label = null
-@export var lbl_reward: Label = null
-@export var rows_host: Control = null
-@export var lbl_progress: Label = null
-@export var bar_progress: TextureProgressBar = null
-@export var lbl_claim: Label = null
-@export var btn_play: BaseButton = null
-@export var lbl_play: Label = null
-@export var icon_play: TextureRect = null
-@export var streak_badge: Control = null
 
+@export_group("Thanh Sao tháng")
+## Số Sao tích luỹ của tháng (chữ to nằm trong ngôi sao lớn)
+@export var lbl_star_total: Label = null
+## Thanh tiến độ (nền navy + phần đã đạt màu hổ phách)
+@export var bar_stars: TextureProgressBar = null
+## HBox chứa các huy hiệu mốc thưởng
+@export var milestones_host: HBoxContainer = null
 
-## Khay của hàng nhiệm vụ thứ `index` (`Slot1..Slot4` khai trong scene dưới `rows_host`).
-## Màn Daily gọi hàm này thay vì tự lấy node con của bảng nhiệm vụ.
-func mission_slot(index: int) -> Control:
-	if rows_host == null:
-		return null
-	return rows_host.get_node_or_null("Slot%d" % (index + 1)) as Control
+@export_group("Thẻ hành động")
+@export var play_card: DailyActionCard = null
+@export var challenge_card: DailyActionCard = null
+
+@export_group("Khác")
+@export var lbl_reset: Label = null

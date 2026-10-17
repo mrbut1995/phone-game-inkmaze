@@ -1,13 +1,16 @@
 class_name DailyDayCell
 extends Control
 ## ============================================================================
-## Component: Ô ngày trong Lịch Daily Mission (nodes/daily/day.tscn)
-## Bố cục bám mockup (mockup/daily_mission.svg), ô chuẩn 130x150 px:
-##   - Số ngày (2 chữ số) ở góc trên - trái
-##   - Dấu tick đỏ ở góc trên - phải (ngày đã chơi được >= 1 sao)
-##   - Viên trạng thái ở đáy ô: "3/3 SAO" / "2/3 XONG" / "CHƯA MỞ"
-##   - Nhãn "HÔM NAY" nhô lên khỏi ô khi là ngày hiện tại
-## Toàn bộ texture trạng thái được gán từ code theo bảng TEXTURES bên dưới.
+## Component: Ô ngày trong Lịch Daily (nodes/daily/day.tscn)
+##
+## Bám ĐÚNG mockup/daily_challenge.svg (ô 114×115 trong khung 1080×1920, scene
+## dùng nửa kích thước 57×57,5):
+##   · Ô trắng + ✓ đỏ  = ngày đã chơi (được ≥ 1 Sao)
+##   · Ô hồng + ✗ đỏ   = ngày đã qua mà bỏ lỡ
+##   · Ô nét đứt       = ngày còn xa (Sắp tới)
+##   · Số trơn (không ô)= hôm qua/mai hoặc ngày tháng trước
+##   · Ô kem viền hổ phách + nhãn "HÔM NAY" + viên "x/6 ★" = hôm nay
+## Toàn bộ art trạng thái lấy từ bảng TEXTURES bên dưới.
 ## ============================================================================
 
 signal day_selected(day_number: int)
@@ -15,166 +18,141 @@ signal day_selected(day_number: int)
 enum State {
 	EMPTY,    ## Ngày của tháng trước (số mờ, không chọn được)
 	NONE,     ## Ô trống cuối tháng (không có số)
-	FUTURE,   ## Ngày sắp tới - chưa mở khoá
-	LATER,    ## Ngày còn xa trong tháng - mở mờ, gọn hơn
-	MISSED,   ## Ngày đã qua nhưng bỏ lỡ
-	PARTIAL,  ## Đã chơi nhưng chưa đủ 3 sao
-	DONE,     ## Đã hoàn thành trọn 3 sao
-	TODAY,    ## Ngày hôm nay
+	FUTURE,   ## Ngày sắp tới gần - chỉ hiện số, chưa có ô
+	LATER,    ## Ngày còn xa - ô nét đứt
+	MISSED,   ## Ngày đã qua nhưng bỏ lỡ (ô hồng + ✗)
+	PARTIAL,  ## Đã chơi nhưng chưa đủ 6 Sao (ô trắng + ✓)
+	DONE,     ## Đã hoàn thành trọn 6 Sao (ô trắng + ✓)
+	TODAY,    ## Ngày hôm nay (ô kem + nhãn + viên Sao)
 }
 
-## Số nhiệm vụ tối đa giữ trên 1 ngày — calendar.gd TRUY CẬP TĨNH qua `DailyDayCell.`
-## nên phải giữ `const` (không export được)
-const MAX_MISSIONS := 4
-const TEX_DIR := "res://assets/images-png/calendar/"
+## Tổng Sao tối đa của một ngày (khớp `DailyManager.DAY_STARS_MAX`)
+const MAX_STARS := 6
+const TEX_DIR := "res://assets/images-png/daily/"
 
-## state -> [normal, pressed, focus] ("" = dùng lại texture normal)
+## state -> texture nền ô ("" = không vẽ ô)
 const TEXTURES := {
-	State.EMPTY: ["day_cell_empty.png", "", ""],
-	State.NONE: ["day_cell_empty.png", "", ""],
-	State.FUTURE: ["day_cell_locked_normal.png", "", "day_cell_locked_focus.png"],
-	State.LATER: ["day_cell_locked_normal.png", "", "day_cell_locked_focus.png"],
-	State.MISSED: ["day_cell_locked_normal.png", "", "day_cell_locked_focus.png"],
-	State.PARTIAL: ["day_cell_completed_normal.png", "day_cell_completed_pressed.png", "day_cell_completed_focus.png"],
-	State.DONE: ["day_cell_completed_normal.png", "day_cell_completed_pressed.png", "day_cell_completed_focus.png"],
-	State.TODAY: ["day_cell_selected_normal.png", "day_cell_selected_pressed.png", "day_cell_selected_focus.png"],
-}
-
-## state -> texture viên trạng thái ("" = ẩn viên)
-const PILL_TEXTURES := {
 	State.EMPTY: "",
 	State.NONE: "",
-	State.FUTURE: "tag_progress_locked.png",
-	State.LATER: "",
-	State.MISSED: "tag_progress_missed.png",
-	State.PARTIAL: "tag_progress_partial.png",
-	State.DONE: "tag_progress_completed.png",
-	State.TODAY: "tag_progress_today.png",
+	State.FUTURE: "",
+	State.LATER: "cell_future.png",
+	State.MISSED: "cell_missed.png",
+	State.PARTIAL: "cell_done.png",
+	State.DONE: "cell_done.png",
+	State.TODAY: "cell_today.png",
 }
 
-## state -> theme variation của số ngày
-const NUM_VARIATIONS := {
-	State.EMPTY: &"DailyDayNumFaded",
-	State.NONE: &"DailyDayNumFaded",
-	State.FUTURE: &"DailyDayNumLocked",
-	State.LATER: &"DailyDayNumFuture",
-	State.MISSED: &"DailyDayNumLocked",
-	State.PARTIAL: &"DailyDayNum",
-	State.DONE: &"DailyDayNum",
-	State.TODAY: &"DailyDayNumToday",
-}
-
-## state -> theme variation của chữ trong viên trạng thái
-const PILL_VARIATIONS := {
-	State.EMPTY: &"DailyDayStatusLocked",
-	State.NONE: &"DailyDayStatusLocked",
-	State.FUTURE: &"DailyDayStatusLocked",
-	State.LATER: &"DailyDayStatusLocked",
-	State.MISSED: &"DailyDayStatusMissed",
-	State.PARTIAL: &"DailyDayStatusPartial",
-	State.DONE: &"DailyDayStatusDone",
-	State.TODAY: &"DailyDayStatusToday",
-}
+const COLOR_NUM := Color("#163A58")
+const COLOR_NUM_FADED := Color("#B8C4CC")
+const COLOR_NUM_SUN := Color("#D84444")
 
 @export var day_number: int = 1
 @export var state: State = State.FUTURE
-## Số nhiệm vụ đã hoàn thành của ngày (0..4)
-@export var missions: int = 0
+## Số Sao đã đạt của ngày (0..6)
+@export var stars: int = 0
 @export var weekend: bool = false
-## Ngày bỏ lỡ đã trả Xu MỞ KHOÁ (hiện "ĐÃ MỞ" thay vì "BỎ LỠ")
+## Ngày bỏ lỡ đã trả Xu MỞ KHOÁ
 @export var unlocked: bool = false
 
 ## Node binding: khai `node_paths` + NodePath trong `day.tscn`
-@export var btn: TextureButton = null
+@export var hit: BaseButton = null
+@export var bg: TextureRect = null
 @export var number_label: Label = null
-@export var check_icon: TextureRect = null
-@export var star_icon: TextureRect = null
+@export var number_big: Label = null
+@export var state_icon: TextureRect = null
 @export var pill: TextureRect = null
-@export var status_label: Label = null
-@export var today_tag: TextureRect = null
+@export var pill_label: Label = null
+@export var today_ribbon: TextureRect = null
 @export var today_label: Label = null
 
 
 func _ready() -> void:
-	# Dây `Button.pressed → _on_btn_pressed` khai trong `day.tscn` (cùng scene)
+	# Dây `pressed → _on_pressed` khai trong `day.tscn` (cùng scene)
 	_apply()
 
 
-func setup(p_day: int, p_state: State, p_missions: int = 0, p_weekend: bool = false, p_unlocked: bool = false) -> void:
+func setup(p_day: int, p_state: State, p_stars: int = 0, p_weekend: bool = false,
+		p_unlocked: bool = false) -> void:
 	day_number = p_day
 	state = p_state
-	missions = clampi(p_missions, 0, MAX_MISSIONS)
+	stars = clampi(p_stars, 0, MAX_STARS)
 	weekend = p_weekend
 	unlocked = p_unlocked
 	if is_node_ready():
 		_apply()
 
 
-## Gán texture + theme variation + nội dung chữ theo state hiện tại
 func _apply() -> void:
-	if btn == null:
+	if hit == null:
 		return
 
-	var files: Array = TEXTURES[state]
-	btn.texture_normal = _tex(files[0])
-	btn.texture_pressed = _tex(files[0] if files[1] == "" else files[1])
-	btn.texture_hover = _tex(files[0] if files[1] == "" else files[1])
-	btn.texture_focused = _tex(files[0] if files[2] == "" else files[2])
-	btn.texture_disabled = _tex(files[0])
+	if bg != null:
+		bg.texture = _tex(str(TEXTURES[state]))
 
-	# Bấm vào ô ngày = XEM nhiệm vụ + maze của ngày đó (màn Daily tự xử lý).
-	# Ngày bỏ lỡ vẫn xem được; ngày tương lai xa / chưa mở thì khoá.
+	# Bấm vào ô = CHỌN ngày đó (màn Daily tự xử lý); ngày tương lai / tháng khác thì khoá
 	var playable := state == State.PARTIAL or state == State.DONE \
 		or state == State.TODAY or state == State.MISSED
-	btn.disabled = not playable
-	btn.focus_mode = Control.FOCUS_ALL if playable else Control.FOCUS_NONE
+	hit.disabled = not playable
+	hit.focus_mode = Control.FOCUS_ALL if playable else Control.FOCUS_NONE
 
-	# Ô trống cuối tháng: ẩn hẳn số ngày
-	number_label.visible = state != State.NONE
-	if not number_label.visible:
-		check_icon.visible = false
-		star_icon.visible = false
-		pill.visible = false
-		today_tag.visible = false
+	number_label.visible = state != State.NONE and state != State.TODAY
+	if number_big != null:
+		number_big.visible = state == State.TODAY
+		if number_big.visible:
+			number_big.text = "%02d" % day_number
+			number_big.add_theme_color_override("font_color",
+				COLOR_NUM_SUN if weekend else Color("#A15F1B"))
+	if not number_label.visible and state != State.TODAY:
+		_hide_extras()
 		return
 
-	# Số ngày: cuối tuần tô đỏ, ngày bỏ lỡ/chưa tới thì mờ đi
 	number_label.text = "%02d" % day_number
-	var num_variation: StringName = NUM_VARIATIONS[state]
-	var faded_weekend := false
-	if weekend and state != State.EMPTY and state != State.TODAY:
-		num_variation = &"DailyDayNumSun"
-		faded_weekend = state != State.PARTIAL and state != State.DONE
-	number_label.theme_type_variation = num_variation
-	number_label.modulate = Color(1, 1, 1, 0.62) if faded_weekend else Color(1, 1, 1, 1)
+	var color := COLOR_NUM
+	if state == State.EMPTY:
+		color = COLOR_NUM_FADED
+	elif weekend:
+		color = COLOR_NUM_SUN
+		if state == State.EMPTY:
+			color = COLOR_NUM_FADED
+	number_label.add_theme_color_override("font_color", color)
 
-	# Dấu tick đỏ (đã chơi) / ngôi sao nhỏ (ngày hôm nay)
-	check_icon.visible = state == State.PARTIAL or state == State.DONE
-	star_icon.visible = state == State.TODAY
+	# ✓ đỏ (đã chơi) / ✗ đỏ (bỏ lỡ)
+	if state_icon != null:
+		var icon_file := ""
+		if state == State.PARTIAL or state == State.DONE:
+			icon_file = "check_red.png"
+		elif state == State.MISSED and not unlocked:
+			icon_file = "cross_red.png"
+		state_icon.visible = icon_file != ""
+		if state_icon.visible:
+			state_icon.texture = _tex(icon_file)
 
-	# Viên trạng thái
-	var pill_file: String = PILL_TEXTURES[state]
-	pill.visible = pill_file != ""
-	if pill.visible:
-		pill.texture = _tex(pill_file)
-		status_label.theme_type_variation = PILL_VARIATIONS[state]
-		status_label.text = _status_text()
+	# Viên "x/6 ★" chỉ có ở ô HÔM NAY (giống mockup)
+	if pill != null:
+		pill.visible = state == State.TODAY
+		if pill.visible and pill_label != null:
+			pill_label.text = tr("STR_DAILY_STARS_BADGE").format([stars, MAX_STARS])
 
-	# Nhãn "HÔM NAY"
-	today_tag.visible = state == State.TODAY
-	if today_tag.visible:
-		today_label.text = tr("STR_TODAY")
+	if today_ribbon != null:
+		today_ribbon.visible = state == State.TODAY
+		if today_ribbon.visible and today_label != null:
+			today_label.text = tr("STR_TODAY")
 
 
-func _status_text() -> String:
-	match state:
-		State.FUTURE:
-			return tr("STR_DAILY_LOCKED")
-		State.MISSED:
-			return tr("STR_DAILY_UNLOCKED") if unlocked else tr("STR_DAILY_MISSED")
-		_:
-			# Cả ngày hôm nay lẫn ngày đã chơi đều hiển thị "x/4 XONG" (thưởng bằng Xu)
-			return tr("STR_DAILY_DONE_FORMAT").format([missions, MAX_MISSIONS])
+## Chữ trong viên Sao của ô hôm nay (test đọc)
+func status_text() -> String:
+	if pill_label == null:
+		return ""
+	return pill_label.text
+
+
+func _hide_extras() -> void:
+	if state_icon != null:
+		state_icon.visible = false
+	if pill != null:
+		pill.visible = false
+	if today_ribbon != null:
+		today_ribbon.visible = false
 
 
 func _tex(file: String) -> Texture2D:
@@ -183,7 +161,7 @@ func _tex(file: String) -> Texture2D:
 	return load(TEX_DIR + file) as Texture2D
 
 
-func _on_btn_pressed() -> void:
+func _on_pressed() -> void:
 	# SFX: miết mép giấy khi chọn ngày trong lịch Daily
 	Sfx.play(Sfx.DAY_SWITCH)
 	day_selected.emit(day_number)

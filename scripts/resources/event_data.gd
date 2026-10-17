@@ -1,5 +1,7 @@
 class_name EventData
 extends Resource
+## Số SAO tối đa của một ngày Daily (3 Sao CHƠI + 3 Sao THỬ THÁCH — xem `DailyManager.DAY_STARS_MAX`)
+const DAILY_STARS_TOTAL := 6
 ## ============================================================================
 ## Resource: Dữ liệu cấu hình cho 1 Sự kiện (Event).
 ## Mỗi event = 1 file .tres trong resources/events/.
@@ -94,7 +96,7 @@ func total_progress() -> int:
 		Type.LOGIN_STREAK:
 			return login_days_required
 		Type.DAILY:
-			return 3 # 3 thử thách
+			return DAILY_STARS_TOTAL # 6 Sao/ngày (3 CHƠI + 3 THỬ THÁCH) — xem DailyManager.DAY_STARS_MAX
 		_:
 			return 1
 

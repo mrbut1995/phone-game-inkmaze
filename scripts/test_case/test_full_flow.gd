@@ -61,7 +61,7 @@ func _init() -> void:
 	await process_frame
 	assert(daily_scene.layout.btn_back != null, "DailyScene phai co btn_back")
 	# Lich thang duoc dung lai theo thang hien tai (nodes/daily/calendar.tscn)
-	var days_grid: GridContainer = daily_scene.layout.calendar.get_node_or_null("Panel/Content/Days")
+	var days_grid: GridContainer = daily_scene.layout.calendar.get_node_or_null("Panel/Days")
 	assert(days_grid != null, "DailyScene phai co Calendar/Days")
 	assert(days_grid.get_child_count() == 35, "Lich phai co 35 o ngay (7x5)")
 	assert((days_grid.get_child(0) as DailyDayCell) != null, "O lich phai la DailyDayCell")

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 130" width="400" height="65" fill="none">
+  <defs>
+    <filter id="ctaShadowF" x="-4%" y="-10%" width="112%" height="136%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#3266B1" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#ctaShadowF)">
+    <!-- Main Ticket Paper Shape focus -->
+    <path d="M10 65L55 8H745L790 65L745 122H55L10 65Z" fill="#FFFDF5"/>
+
+    <!-- Left Perforation Line -->
+    <path d="M110 20V110" stroke="#B7B8AA" stroke-width="2.5" stroke-dasharray="4 6"/>
+    <!-- Rivet Eyelet -->
+    <circle cx="75" cy="65" r="9" fill="#F2F1EB" stroke="#3266B1" stroke-width="3"/>
+
+    <!-- Right Perforation Line -->
+    <path d="M690 20V110" stroke="#B7B8AA" stroke-width="2.5" stroke-dasharray="4 6"/>
+    <!-- Right Rivet Eyelet -->
+    <circle cx="725" cy="65" r="9" fill="#F2F1EB" stroke="#3266B1" stroke-width="3"/>
+
+    <!-- Outer Contour Ink Line -->
+    <path d="M10 65L55 8H745L790 65L745 122H55L10 65Z" stroke="#3266B1" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Inner Contour Accent Line -->
+    <path d="M18 65L60 16H740L782 65L740 114H60L18 65Z" stroke="#3266B1" stroke-width="1.5" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

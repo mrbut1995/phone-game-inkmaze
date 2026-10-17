@@ -163,7 +163,8 @@ func _section_load_and_sort() -> void:
 	_check(sorted_ok, "Cac event con lai xep theo sort_order tang dan")
 
 	var daily_prog: Dictionary = _em.call("get_progress", &"daily")
-	_check(int(daily_prog.get("total", 0)) == 3, "Daily co 3 thu thach (dang %d)" % int(daily_prog.get("total", 0)))
+	_check(int(daily_prog.get("total", 0)) == EventData.DAILY_STARS_TOTAL,
+		"Daily co %d Sao/ngay (dang %d)" % [EventData.DAILY_STARS_TOTAL, int(daily_prog.get("total", 0))])
 
 
 func _section_theme_art() -> void:

@@ -1,0 +1,253 @@
+[gd_scene format=3 uid="uid://bx4mq1dw7lc0i"]
+
+[ext_resource type="Script" path="res://scripts/nodes/daily/action_card.gd" id="1_card"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/card_paper.png" id="2_paper"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/icon_box_blue.png" id="3_box_b"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/icon_box_amber.png" id="4_box_a"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/tape_blue.png" id="5_tape_b"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/tape_amber.png" id="6_tape_a"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/tri_blue.png" id="7_tri_b"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/bolt_amber.png" id="8_bolt"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/divider_dashed.png" id="9_div"]
+[ext_resource uid="uid://6voljbarwsoh" type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="10_star_on"]
+[ext_resource uid="uid://cphd7lexro270" type="Texture2D" path="res://assets/images-png/common/star_empty.png" id="11_star_off"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/tri_white.png" id="12_tri_w"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/tri_dark.png" id="13_tri_d"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/btn_cta_blue_normal.png" id="14_cta_bn"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/btn_cta_blue_pressed.png" id="15_cta_bp"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/btn_cta_amber_normal.png" id="16_cta_an"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/btn_cta_amber_pressed.png" id="17_cta_ap"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="18_theme"]
+
+[node name="ActionCard" type="Control" node_paths=PackedStringArray("paper", "icon_box", "icon", "tape_blue", "tape_amber", "lbl_title", "lbl_sub", "stars_row", "btn_cta", "lbl_cta", "icon_cta")]
+custom_minimum_size = Vector2(180, 195)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 180.0
+offset_bottom = 195.0
+theme = ExtResource("18_theme")
+script = ExtResource("1_card")
+paper = NodePath("Paper")
+icon_box = NodePath("IconBox")
+icon = NodePath("IconBox/Icon")
+tape_blue = NodePath("TapeBlue")
+tape_amber = NodePath("TapeAmber")
+lbl_title = NodePath("Title")
+lbl_sub = NodePath("Sub")
+stars_row = NodePath("Stars")
+btn_cta = NodePath("Cta")
+lbl_cta = NodePath("Cta/Center/Label")
+icon_cta = NodePath("Cta/Center/Icon")
+
+[node name="Paper" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_paper")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="TapeBlue" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 21.0
+offset_top = -11.0
+offset_right = 91.0
+offset_bottom = 6.0
+rotation = -0.0523599
+pivot_offset = Vector2(35, 8.5)
+mouse_filter = 2
+texture = ExtResource("5_tape_b")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="TapeAmber" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -112.0
+offset_top = -11.0
+offset_right = -42.0
+offset_bottom = 6.0
+grow_horizontal = 0
+rotation = 0.0523599
+pivot_offset = Vector2(35, 8.5)
+mouse_filter = 2
+texture = ExtResource("6_tape_a")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="IconBox" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(41, 41)
+layout_mode = 1
+anchors_preset = 0
+offset_left = 14.0
+offset_top = 20.0
+offset_right = 55.0
+offset_bottom = 61.0
+mouse_filter = 2
+texture = ExtResource("3_box_b")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Icon" type="TextureRect" parent="IconBox"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -7.0
+offset_right = 6.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_tri_b")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 61.0
+offset_top = 14.0
+offset_right = -10.0
+offset_bottom = 42.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
+theme_override_font_sizes/font_size = 20
+text = "STR_DAILY_CARD_PLAY"
+vertical_alignment = 1
+resize_font_to_fit = true
+
+[node name="Sub" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 61.0
+offset_top = 42.0
+offset_right = -10.0
+offset_bottom = 58.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.239216, 0.352941, 0.450980, 1)
+theme_override_font_sizes/font_size = 11
+text = "STR_DAILY_CARD_PLAY_SUB"
+vertical_alignment = 1
+resize_font_to_fit = true
+
+[node name="Stars" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_top = 0.53
+anchor_bottom = 0.53
+offset_left = -47.5
+offset_top = -14.5
+offset_right = 47.5
+offset_bottom = 14.5
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Star1" type="TextureRect" parent="Stars"]
+custom_minimum_size = Vector2(29, 29)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("10_star_on")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star2" type="TextureRect" parent="Stars"]
+custom_minimum_size = Vector2(29, 29)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("10_star_on")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star3" type="TextureRect" parent="Stars"]
+custom_minimum_size = Vector2(29, 29)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("10_star_on")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Divider" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.64
+anchor_right = 1.0
+anchor_bottom = 0.64
+offset_left = 15.0
+offset_top = -1.0
+offset_right = -15.0
+offset_bottom = 2.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("9_div")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Cta" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -54.0
+offset_right = -15.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("14_cta_bn")
+texture_pressed = ExtResource("15_cta_bp")
+texture_hover = ExtResource("15_cta_bp")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Center" type="HBoxContainer" parent="Cta"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Cta/Center"]
+custom_minimum_size = Vector2(12, 14)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("12_tri_w")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Cta/Center"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.993, 0.973, 1)
+theme_override_font_sizes/font_size = 15
+text = "STR_DAILY_CARD_PLAY_BTN"
+vertical_alignment = 1
+
+[connection signal="pressed" from="Cta" to="." method="_on_btn_cta_pressed"]

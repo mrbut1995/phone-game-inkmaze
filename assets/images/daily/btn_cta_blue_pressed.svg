@@ -1,0 +1,6 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 388 76' width='388' height='76' fill='none'>
+  <defs><filter id='sh' x='-4%' y='-14%' width='108%' height='130%'>
+    <feDropShadow dx='0' dy='4' stdDeviation='4' flood-color='#0B2233' flood-opacity='0.22'/>
+  </filter></defs>
+  <rect x='1.5' y='3' width='385' height='72' rx='22' fill='#1F5D82' stroke='#164663' stroke-width='3'/>
+</svg>

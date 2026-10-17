@@ -199,14 +199,18 @@ func _build_daily() -> void:
 	_add_value("Today", str(_daily_value("get_today", 1)))
 	_add_value("Streak", str(_daily_value("get_streak", 0)))
 	_add_value("Missions today", "%d / %d" % [
-		_daily_missions_today(), _daily_value("mission_count", 4)])
-	_add_action("Play today's CLASSIC maze", "Maze thường của ngày (3 nhiệm vụ đầu)",
+		_daily_missions_today(), _daily_value("mission_count", 3)])
+	_add_value("Stars today", "%d / %d" % [
+		_daily_stars_today(), _daily_stars_max()])
+	_add_value("Stars this month", "%d / %d" % [
+		_daily_value("get_month_stars", 0), _daily_value("month_star_goal", 150)])
+	_add_action("Play today's PLAY maze", "Màn CHƠI của ngày (3 nhiệm vụ = 3 Sao)",
 		_play_today_classic)
-	_add_action("Play today's SPECIAL maze", "Maze đặc biệt của ngày (nhiệm vụ thứ 4)",
+	_add_action("Play today's CHALLENGE maze", "Màn THỬ THÁCH của ngày (thắng = 3 Sao)",
 		_play_today_special)
-	_add_action("Mark today done (4 nhiệm vụ)", "Đánh dấu hôm nay xong hết nhiệm vụ", _complete_today_daily)
+	_add_action("Mark today done (6 sao)", "Đánh dấu hôm nay xong trọn 6 Sao", _complete_today_daily)
 	_add_action("Unlock yesterday", "Trả Xu mở khoá ngày đã bỏ lỡ (hôm qua)", _unlock_yesterday)
-	_add_action("Reset daily data", "Xoá toàn bộ ngày/nhiệm vụ/Xu đã thưởng", _reset_daily, true)
+	_add_action("Reset daily data", "Xoá toàn bộ ngày/Sao/mốc thưởng đã nhận", _reset_daily, true)
 
 
 # ---------------------------------------------------------------------------
@@ -546,7 +550,7 @@ func _play_today_classic() -> void:
 
 
 func _play_today_special() -> void:
-	_gm_call("start_daily", int(_daily_value("get_today", 1)))
+	_gm_call("start_daily_challenge", int(_daily_value("get_today", 1)))
 
 
 func _daily_missions_today() -> int:
@@ -554,6 +558,22 @@ func _daily_missions_today() -> int:
 	if daily == null:
 		return 0
 	return int(daily.call("get_day_missions", int(daily.call("get_today"))))
+
+
+## Sao CHƠI + THỬ THÁCH đã đạt của hôm nay (0..6)
+func _daily_stars_today() -> int:
+	var daily := _daily_manager()
+	if daily == null:
+		return 0
+	return int(daily.call("get_day_stars", int(daily.call("get_today"))))
+
+
+## Tổng Sao tối đa của một ngày (6 — lấy từ DailyManager)
+func _daily_stars_max() -> int:
+	var daily := _daily_manager()
+	if daily == null:
+		return 6
+	return int(daily.get("DAY_STARS_MAX"))
 
 
 func _complete_today_daily() -> void:

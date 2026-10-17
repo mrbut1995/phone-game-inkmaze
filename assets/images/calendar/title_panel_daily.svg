@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 80" width="280" height="40" fill="none">
+  <defs>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFDF5"/>
+      <stop offset="100%" stop-color="#F0EDE0"/>
+    </linearGradient>
+    <filter id="titleShadow" x="-5%" y="-12%" width="116%" height="140%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#1B3A52" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <g filter="url(#titleShadow)">
+    <!-- Ticket-style shape with angular left and right ends -->
+    <path d="M6 40L36 4H524L554 40L524 76H36L6 40Z" fill="url(#titleGrad)"/>
+    <!-- Left diagonal decorations -->
+    <path d="M36 4L6 40L36 76" fill="none" stroke="#3D83AE" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- Right diagonal decorations -->
+    <path d="M524 4L554 40L524 76" fill="none" stroke="#3D83AE" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- Inner border -->
+    <path d="M14 40L42 10H518L546 40L518 70H42L14 40Z" fill="none" stroke="#3D83AE" stroke-width="1.5" stroke-opacity="0.4"/>
+    <!-- Dashed perforations on left -->
+    <line x1="68" y1="8" x2="68" y2="72" stroke="#B0B8AA" stroke-width="1.8" stroke-dasharray="4 5" opacity="0.6"/>
+    <!-- Small rivet circle on left -->
+    <circle cx="52" cy="40" r="8" fill="#F0EDE0" stroke="#3D83AE" stroke-width="2"/>
+    <!-- Small rivet circle on right -->
+    <circle cx="508" cy="40" r="8" fill="#F0EDE0" stroke="#3D83AE" stroke-width="2"/>
+    <!-- Dashed perforations on right -->
+    <line x1="492" y1="8" x2="492" y2="72" stroke="#B0B8AA" stroke-width="1.8" stroke-dasharray="4 5" opacity="0.6"/>
+  </g>
+</svg>

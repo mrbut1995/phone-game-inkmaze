@@ -496,11 +496,14 @@ func _complete_floor() -> void:
 			"daily_variant": str(daily.get("variant", "")),
 			"daily_mode_id": str(daily.get("mode_id", "")),
 			"daily_mode_name": str(daily.get("mode_name", "")),
-			"daily_coins": int(daily.get("coins", 0)),
-			"daily_missions_done": int(daily.get("missions_done", 0)),
-			"daily_missions_total": int(daily.get("missions_total", 4)),
-			"daily_day_coins": int(daily.get("day_coins", 0)),
-			"daily_day_reward_max": int(daily.get("day_reward_max", 0)),
+			"daily_coins": 0,
+			"daily_challenge": bool(daily.get("challenge", false)),
+			"daily_stars": int(daily.get("stars", 0)),
+			"daily_stars_gained": int(daily.get("stars_gained", 0)),
+			"daily_day_stars": int(daily.get("day_stars", 0)),
+			"daily_stars_max": int(daily.get("stars_max", 6)),
+			"daily_month_stars": int(daily.get("month_stars", 0)),
+			"daily_month_goal": int(daily.get("month_goal", 150)),
 		})
 
 
@@ -1063,9 +1066,10 @@ func _on_floor_bonus_sfx_timeout() -> void:
 	_play_sfx_now(Sfx.FLOOR_BONUS)
 
 
-## Chốt TIẾN TRÌNH Daily sau khi thắng ván (2026-10 — "3 GAME + 1 SPECIAL"):
-## - Game 0..2 của ngày ("classic"/"challenge"): thắng game thứ `daily_game` = đánh dấu XONG game đó.
-## - Maze ĐẶC BIỆT ("special"): hoàn thành ván = nhiệm vụ cuối (3) của ngày.
+## Chốt TIẾN TRÌNH Daily sau khi thắng ván (v2.28 — "1 CHƠI + 1 THỬ THÁCH / ngày"):
+## - variant "classic"   (phần CHƠI)     : số Sao = số NHIỆM VỤ hoàn thành (0..3), như màn thường.
+## - variant "challenge" (phần THỬ THÁCH): luật Special không có nhiệm vụ ⇒ thắng = +3 Sao.
+## - variant "special"   (Daily kiểu cũ, Debug) : tính như THỬ THÁCH.
 ## Trả về Dictionary mô tả kết quả (RỖNG nếu ván này không phải ván Daily).
 func _complete_daily_missions(_mission_rows: Array) -> Dictionary:
 	var gm: Variant = get_node_or_null("/root/GameManager")
@@ -1077,17 +1081,14 @@ func _complete_daily_missions(_mission_rows: Array) -> Dictionary:
 		return {}
 
 	var day := maxi(int(gm.get("selected_daily_day")), 1)
-	var coins := 0
-	if variant == "special":
-		# Nhiệm vụ cuối cùng trong ngày = nhiệm vụ của maze đặc biệt
-		var special_index := maxi(int(dm.call("mission_count")) - 1, 0)
-		coins = int(dm.call("complete_day_mission", day, special_index))
-	else:
-		# 3 GAME của ngày: thắng game thứ `daily_game` -> đánh dấu xong CHÍNH game đó.
-		# Ván "classic" chơi tự do (daily_game = -1, VD Debug Console) -> không đánh dấu gì.
-		var game_index := int(gm.get("daily_game"))
-		if game_index >= 0:
-			coins = int(dm.call("complete_day_mission", day, clampi(game_index, 0, 2)))
+	var is_challenge := variant != "classic"
+	var stars := int(dm.call("get_day_challenge_stars" if is_challenge else "get_day_play_stars", day))
+	if is_challenge:
+		# Luật Special không có nhiệm vụ ⇒ hoàn thành ván là trọn 3 Sao.
+		stars = DailyManager.CHALLENGE_STARS_MAX
+	elif mission_controller != null:
+		stars = clampi(mission_controller.stars(), 0, DailyManager.PLAY_STARS_MAX)
+	var gained := int(dm.call("record_daily_win", day, is_challenge, stars))
 
 	var mode_id := ""
 	var mode_name := ""
@@ -1097,13 +1098,15 @@ func _complete_daily_missions(_mission_rows: Array) -> Dictionary:
 	return {
 		"day": day,
 		"variant": variant,
+		"challenge": is_challenge,
 		"mode_id": mode_id,
 		"mode_name": mode_name,
-		"coins": coins,
-		"missions_done": int(dm.call("get_day_missions", day)),
-		"missions_total": int(dm.call("mission_count")),
-		"day_coins": int(dm.call("day_coins_earned", day)),
-		"day_reward_max": int(dm.call("day_reward_max")),
+		"stars": stars,
+		"stars_gained": gained,
+		"day_stars": int(dm.call("get_day_stars", day)),
+		"stars_max": DailyManager.DAY_STARS_MAX,
+		"month_stars": int(dm.call("get_month_stars")),
+		"month_goal": int(dm.call("month_star_goal")),
 		"completed_day": bool(dm.call("is_completed", day)),
 	}
 
