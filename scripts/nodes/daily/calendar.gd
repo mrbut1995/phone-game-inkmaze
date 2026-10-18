@@ -29,6 +29,8 @@ const MONTH_WIDTH: Array[int] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 var year: int = 2026
 var month: int = 9
+## Ngày đang được CHỌN (0 = chưa chọn) — vẽ vòng sáng quanh ô tương ứng
+var selected_day: int = 0
 
 
 func _ready() -> void:
@@ -111,6 +113,8 @@ func rebuild() -> void:
 			unlocked = bool(daily.call("is_day_unlocked", day))
 		cell.setup(day, _state_for(day, is_current, today, daily), _stars_for(day, daily), weekend, unlocked)
 
+	_apply_selection()
+
 
 ## Xác định trạng thái của một ngày trong tháng đang xem (theo mockup)
 func _state_for(day: int, is_current: bool, today: int, daily: Node) -> DailyDayCell.State:
@@ -137,6 +141,24 @@ func _stars_for(day: int, daily: Node) -> int:
 	if daily.has_method("get_day_stars"):
 		return int(daily.call("get_day_stars", day))
 	return DailyDayCell.MAX_STARS if bool(daily.call("is_completed", day)) else 0
+
+
+## Đổi NGÀY ĐANG CHỌN (màn Daily gọi mỗi lần đổi ngày) — chỉ đổi vòng sáng, không dựng lại lưới
+func set_selected_day(day: int) -> void:
+	selected_day = day
+	_apply_selection()
+
+
+## Bật vòng sáng cho đúng ô đang chọn (ô trống / tháng khác thì không sáng)
+func _apply_selection() -> void:
+	if grid == null:
+		return
+	for child in grid.get_children():
+		var cell := child as DailyDayCell
+		if cell == null:
+			continue
+		cell.set_selected(selected_day > 0 and cell.day_number == selected_day
+			and cell.state != DailyDayCell.State.NONE)
 
 
 func _is_current_month() -> bool:

@@ -1,4 +1,4 @@
-﻿class_name LevelsLayout
+class_name LevelsLayout
 extends BaseLayout
 
 @export var btn_back: BaseButton = null

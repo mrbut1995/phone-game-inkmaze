@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://c0v2mds7aqnlx"]
+
+[ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://7ok47hp12kio" path="res://scripts/nodes/popups/daily_milestone.gd" id="2_popup"]
+[ext_resource type="Texture2D" uid="uid://u7wqegwmromx" path="res://assets/images-png/popups/paper_note_memory.png" id="3_xtuos"]
+[ext_resource type="Texture2D" uid="uid://1am8aehqp420" path="res://assets/images-png/daily/chest.png" id="4_chest"]
+[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="4_df87s"]
+[ext_resource type="Texture2D" uid="uid://d24vaiwlt8dsy" path="res://assets/images-png/daily/btn_cta_blue_normal.png" id="5_btn_n"]
+[ext_resource type="Texture2D" uid="uid://c84kjolweguv7" path="res://assets/images-png/daily/btn_cta_blue_pressed.png" id="6_btn_p"]
+
+[sub_resource type="Animation" id="Animation_pop"]
+resource_name = "chest_pop"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Content/Chest:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(0.6, 0.6), Vector2(1.08, 1.08), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dm"]
+_data = {
+&"chest_pop": SubResource("Animation_pop")
+}
+
+[node name="Base" unique_id=405293183 node_paths=PackedStringArray("title_label", "sub_label", "reward_label", "chest_icon", "btn_ok", "lbl_ok", "fx_anim") instance=ExtResource("1_base")]
+script = ExtResource("2_popup")
+title_label = NodePath("Panel/Content/Title")
+sub_label = NodePath("Panel/Content/Subtitle")
+reward_label = NodePath("Panel/Content/Reward")
+chest_icon = NodePath("Panel/Content/Chest")
+btn_ok = NodePath("Panel/Content/Ok")
+lbl_ok = NodePath("Panel/Content/Ok/Label")
+fx_anim = NodePath("FxAnim")
+
+[node name="Panel" parent="." index="1" unique_id=290635111]
+anchors_preset = 8
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -152.0
+offset_top = -138.0
+offset_right = 152.0
+offset_bottom = 138.0
+
+[node name="Art" parent="Panel" index="0" unique_id=1269512275]
+anchor_bottom = 0.7686957
+texture = ExtResource("3_xtuos")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 31
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="WashiTape" type="TextureRect" parent="Panel/Art" index="0" unique_id=110581002]
+layout_mode = 0
+offset_left = 76.0
+offset_top = -15.999996
+offset_right = 189.0
+offset_bottom = 11.000004
+rotation = -0.05
+pivot_offset = Vector2(56.5, 13.5)
+mouse_filter = 2
+texture = ExtResource("4_df87s")
+
+[node name="Content" parent="Panel" index="1" unique_id=45188561]
+anchors_preset = -1
+anchor_left = 0.032894738
+anchor_bottom = 0.79710144
+metadata/_edit_use_anchors_ = true
+
+[node name="Chest" type="TextureRect" parent="Panel/Content" index="0" unique_id=1134514322]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -26.0
+offset_top = 6.0
+offset_right = 26.0
+offset_bottom = 58.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("4_chest")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Panel/Content" index="1" unique_id=1221876066]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 62.0
+offset_right = -24.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
+theme_override_font_sizes/font_size = 20
+text = "STR_DAILY_MILESTONE_POPUP_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+
+[node name="Subtitle" type="Label" parent="Panel/Content" index="2" unique_id=1511013971]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 88.0
+offset_right = -24.0
+offset_bottom = 106.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.239216, 0.352941, 0.45098, 1)
+theme_override_font_sizes/font_size = 10
+text = "STR_DAILY_MILESTONE_POPUP_SUB"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+
+[node name="Reward" type="Label" parent="Panel/Content" index="3" unique_id=1009514747]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 112.0
+offset_right = -20.0
+offset_bottom = 152.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.721569, 0.454902, 0.113725, 1)
+theme_override_font_sizes/font_size = 13
+text = "STR_DAILY_REWARD_COINS"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Ok" type="TextureButton" parent="Panel/Content" index="4" unique_id=2145628717]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.999985
+offset_top = -68.0
+offset_right = 75.000015
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("5_btn_n")
+texture_pressed = ExtResource("6_btn_p")
+texture_hover = ExtResource("6_btn_p")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Panel/Content/Ok" index="0" unique_id=364772757]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.992157, 0.972549, 1)
+theme_override_font_sizes/font_size = 15
+text = "STR_DAILY_MILESTONE_POPUP_OK"
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="FxAnim" type="AnimationPlayer" parent="." index="3" unique_id=1831458329]
+libraries/ = SubResource("AnimationLibrary_dm")
+
+[connection signal="pressed" from="Panel/Content/Ok" to="." method="_on_ok_pressed"]

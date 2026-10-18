@@ -29,6 +29,7 @@ const POPUPS := {
 	"profiler_popup": "res://nodes/popups/profiler_popup.tscn",
 	"edit_profile_item": "res://nodes/popups/edit_profile_item.tscn",
 	"language_row": "res://nodes/popups/language_row.tscn",
+	"daily_milestone": "res://nodes/popups/daily_milestone.tscn",
 }
 ## Export được phép = null: popup `language`/`edit_profile` là scene ĐỘC LẬP không có
 ## node `AnimationPlayer` của base → `anim_player` null là ĐÚNG thiết kế (base tự chạy tween).

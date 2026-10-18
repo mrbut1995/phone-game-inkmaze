@@ -29,6 +29,8 @@ const MEMORIZE := "memory_countdown"
 const EDIT_PROFILE := "edit_profile"
 ## Popup HỒ SƠ CÁ NHÂN (toàn khung) — Edit Profile mở chồng lên trên popup này
 const PROFILER := "profiler"
+## Popup NHỎ báo phần thưởng vừa nhận ở một MỐC SAO của màn Daily
+const DAILY_MILESTONE := "daily_milestone"
 
 
 static func _mgr() -> Node:
