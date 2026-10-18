@@ -48,6 +48,8 @@ const COLOR_NUM_SUN := Color("#D84444")
 
 @export var day_number: int = 1
 @export var state: State = State.FUTURE
+## Ngày này có đang được CHỌN trên lịch (khác với "hôm nay")
+var selected: bool = false
 ## Số Sao đã đạt của ngày (0..6)
 @export var stars: int = 0
 @export var weekend: bool = false
@@ -57,6 +59,8 @@ const COLOR_NUM_SUN := Color("#D84444")
 ## Node binding: khai `node_paths` + NodePath trong `day.tscn`
 @export var hit: BaseButton = null
 @export var bg: TextureRect = null
+## Vòng sáng "đang chọn" (vẽ TRÙM ra ngoài ô 3 px để không đè viền ô HÔM NAY)
+@export var selected_ring: TextureRect = null
 @export var number_label: Label = null
 @export var number_big: Label = null
 @export var state_icon: TextureRect = null
@@ -82,7 +86,24 @@ func setup(p_day: int, p_state: State, p_stars: int = 0, p_weekend: bool = false
 		_apply()
 
 
+## Bật/tắt vòng sáng "đang chọn"
+func set_selected(value: bool) -> void:
+	selected = value
+	_apply_selected()
+
+
+## Ngày này có đang được chọn?
+func is_selected() -> bool:
+	return selected
+
+
+func _apply_selected() -> void:
+	if selected_ring != null:
+		selected_ring.visible = selected
+
+
 func _apply() -> void:
+	_apply_selected()
 	if hit == null:
 		return
 

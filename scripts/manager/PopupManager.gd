@@ -29,6 +29,8 @@ const POPUPS := {
 	"edit_profile": "res://nodes/popups/edit_profile.tscn",
 	# HỒ SƠ CÁ NHÂN (toàn khung) — mở từ sticker ở màn chính; edit_profile xếp lên trên
 	"profiler": "res://nodes/popups/profiler_popup.tscn",
+	# Nhận thưởng MỐC SAO của màn Daily (popup nhỏ)
+	"daily_milestone": "res://nodes/popups/daily_milestone.tscn",
 }
 
 const HOST_NAME := "Popups"

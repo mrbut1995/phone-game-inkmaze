@@ -198,18 +198,33 @@ func _build_daily() -> void:
 	_add_section("DAILY")
 	_add_value("Today", str(_daily_value("get_today", 1)))
 	_add_value("Streak", str(_daily_value("get_streak", 0)))
-	_add_value("Missions today", "%d / %d" % [
-		_daily_missions_today(), _daily_value("mission_count", 3)])
+	_add_value("Play stars today", "%d / %d" % [
+		_daily_play_stars_today(), _daily_play_stars_max()])
 	_add_value("Stars today", "%d / %d" % [
 		_daily_stars_today(), _daily_stars_max()])
 	_add_value("Stars this month", "%d / %d" % [
-		_daily_value("get_month_stars", 0), _daily_value("month_star_goal", 150)])
+		_daily_value("get_month_stars", 0), _daily_value("month_star_goal", 60)])
+	_add_value("Next milestone", _next_milestone_text())
+	_add_value("Milestones claimed", _claimed_milestones_text())
+	_add_value("Yesterday", _yesterday_state_text())
+	_add_value("AdsManager", _ads_state_text())
 	_add_action("Play today's PLAY maze", "Màn CHƠI của ngày (3 nhiệm vụ = 3 Sao)",
 		_play_today_classic)
 	_add_action("Play today's CHALLENGE maze", "Màn THỬ THÁCH của ngày (thắng = 3 Sao)",
 		_play_today_special)
-	_add_action("Mark today done (6 sao)", "Đánh dấu hôm nay xong trọn 6 Sao", _complete_today_daily)
-	_add_action("Unlock yesterday", "Trả Xu mở khoá ngày đã bỏ lỡ (hôm qua)", _unlock_yesterday)
+	_add_action("Mark today done (6 Sao)", "Đánh dấu hôm nay xong trọn 6 Sao (3 CHƠI + 3 THỬ THÁCH)",
+		_complete_today_daily)
+	_add_action("Add +30 stars this month",
+		"Cộng 30 Sao vào đầu tháng — test thanh tiến độ + huy hiệu mốc", _add_month_stars)
+	_add_action("Claim next milestone",
+		"Nhận mốc kế tiếp đã đủ Sao + mở POPUP thưởng (test luồng nhận)", _claim_next_milestone)
+	_add_action("Test rewarded ad",
+		"Gọi AdsManager.show_rewarded('daily_unlock') — placeholder, không ghi dữ liệu",
+		_test_rewarded_ad)
+	_add_action("Unlock yesterday (AD · free)",
+		"Mở khoá ngày HÔM QUA như vừa xem quảng cáo — KHÔNG trừ Xu", _unlock_yesterday_by_ad)
+	_add_action("Unlock all missed days (AD · free)",
+		"Mở khoá MỌI ngày đã qua còn bỏ lỡ — KHÔNG trừ Xu", _unlock_all_missed)
 	_add_action("Reset daily data", "Xoá toàn bộ ngày/Sao/mốc thưởng đã nhận", _reset_daily, true)
 
 
@@ -553,11 +568,20 @@ func _play_today_special() -> void:
 	_gm_call("start_daily_challenge", int(_daily_value("get_today", 1)))
 
 
-func _daily_missions_today() -> int:
+## Sao phần CHƠI của hôm nay (0..3)
+func _daily_play_stars_today() -> int:
 	var daily := _daily_manager()
 	if daily == null:
 		return 0
-	return int(daily.call("get_day_missions", int(daily.call("get_today"))))
+	return int(daily.call("get_day_play_stars", int(daily.call("get_today"))))
+
+
+## Sao tối đa của phần CHƠI (3)
+func _daily_play_stars_max() -> int:
+	var daily := _daily_manager()
+	if daily == null:
+		return 3
+	return int(daily.get("PLAY_STARS_MAX"))
 
 
 ## Sao CHƠI + THỬ THÁCH đã đạt của hôm nay (0..6)
@@ -583,19 +607,134 @@ func _complete_today_daily() -> void:
 	var day := int(daily.call("get_today"))
 	var flags: Array[bool] = [true, true, true, true]
 	daily.call("complete_day_missions", day, flags)
-	_rebuild_after_action("Đã đánh dấu hôm nay hoàn thành (4 nhiệm vụ)")
+	_rebuild_after_action("Đã đánh dấu hôm nay hoàn thành (6 Sao: 3 CHƠI + 3 THỬ THÁCH)")
 
 
-## Trả Xu mở khoá ngày HÔM QUA nếu ngày đó đang bỏ lỡ (thử nút MỞ KHÓA ở màn Daily)
-func _unlock_yesterday() -> void:
+## Mốc kế tiếp chưa đạt — "N★ (còn X★)" hoặc "đã đạt hết"
+func _next_milestone_text() -> String:
+	var daily := _daily_manager()
+	if daily == null or not daily.has_method("milestone_defs"):
+		return "-"
+	var stars := int(daily.call("get_month_stars"))
+	for def in daily.call("milestone_defs"):
+		var threshold := int((def as Dictionary).get("stars", 0))
+		if stars < threshold:
+			return "%d★ (còn %d★)" % [threshold, threshold - stars]
+	return "đã đạt hết"
+
+
+## Số mốc đã nhận / tổng số mốc của tháng
+func _claimed_milestones_text() -> String:
+	var daily := _daily_manager()
+	if daily == null or not daily.has_method("milestone_defs"):
+		return "-"
+	var total := 0
+	var claimed := 0
+	for def in daily.call("milestone_defs"):
+		total += 1
+		if bool(daily.call("is_milestone_claimed", int((def as Dictionary).get("stars", 0)))):
+			claimed += 1
+	return "%d / %d" % [claimed, total]
+
+
+## Trạng thái ngày HÔM QUA: đã chơi/mở khoá hay còn BỎ LỠ
+func _yesterday_state_text() -> String:
+	var daily := _daily_manager()
+	if daily == null:
+		return "-"
+	var day := int(daily.call("get_today")) - 1
+	if day < 1:
+		return "- (hôm nay là ngày 01)"
+	if int(daily.call("get_day_stars", day)) > 0 or bool(daily.call("is_day_unlocked", day)):
+		return "ngày %d: đã chơi / đã mở khoá" % day
+	return "ngày %d: BỎ LỠ (cần quảng cáo)" % day
+
+
+## Trạng thái AdsManager (placeholder hay đã tắt)
+func _ads_state_text() -> String:
+	var ads := get_node_or_null("/root/AdsManager")
+	if ads == null:
+		return "không có"
+	var ready := false
+	if ads.has_method("is_rewarded_ready"):
+		ready = bool(ads.call("is_rewarded_ready"))
+	return "placeholder BẬT" if ready else "TẮT (show_rewarded trả false)"
+
+
+## Cộng Sao vào đầu tháng (mỗi ngày tối đa 6 Sao) — test thanh tiến độ + huy hiệu mốc
+func _add_month_stars(amount := 30) -> void:
+	var daily := _daily_manager()
+	if daily == null:
+		return
+	var left := amount
+	var day := 1
+	while left > 0 and day <= 28:
+		var play := mini(3, left)
+		left -= play
+		var challenge := mini(3, left)
+		left -= challenge
+		daily.call("set_day_stars_split", day,
+			maxi(int(daily.call("get_day_play_stars", day)), play),
+			maxi(int(daily.call("get_day_challenge_stars", day)), challenge))
+		day += 1
+	_rebuild_after_action("Đã cộng %d Sao (tổng tháng %d / %d)" % [
+		amount, int(daily.call("get_month_stars")), int(daily.call("month_star_goal"))])
+
+
+## Nhận mốc kế tiếp đã đủ Sao + mở popup thưởng (test luồng nhận thưởng)
+func _claim_next_milestone() -> void:
+	var daily := _daily_manager()
+	if daily == null or not daily.has_method("milestone_defs"):
+		return
+	var stars := int(daily.call("get_month_stars"))
+	for def in daily.call("milestone_defs"):
+		var d: Dictionary = def
+		var threshold := int(d.get("stars", 0))
+		if stars < threshold or bool(daily.call("is_milestone_claimed", threshold)):
+			continue
+		if bool(daily.call("claim_milestone", threshold)):
+			Popups.open(Popups.DAILY_MILESTONE, {"stars": threshold, "reward": d})
+			_rebuild_after_action("Đã nhận mốc %d★ (xem popup thưởng)" % threshold)
+			return
+	_rebuild_after_action("Không có mốc nào đủ Sao để nhận (tháng %d Sao)" % stars)
+
+
+## Thử quảng cáo thưởng (placeholder) — KHÔNG ghi dữ liệu, chỉ xem AdsManager trả gì
+func _test_rewarded_ad() -> void:
+	var ads := get_node_or_null("/root/AdsManager")
+	if ads == null or not ads.has_method("show_rewarded"):
+		_rebuild_after_action("Không có AdsManager")
+		return
+	var ok := bool(ads.call("show_rewarded", "daily_unlock"))
+	_rebuild_after_action("Quảng cáo placeholder: %s" % ("xem xong ✔" if ok else "KHÔNG phát được ✘"))
+
+
+## Mở khoá ngày HÔM QUA miễn phí (mô phỏng kết quả sau khi xem quảng cáo) — không trừ Xu
+func _unlock_yesterday_by_ad() -> void:
 	var daily := _daily_manager()
 	if daily == null:
 		return
 	var day := int(daily.call("get_today")) - 1
-	if day >= 1 and bool(daily.call("unlock_day", day)):
-		_rebuild_after_action("Đã mở khoá ngày %d (−%d Xu)" % [day, int(daily.call("unlock_cost"))])
-	else:
-		_rebuild_after_action("Không mở khoá được ngày %d (chưa bỏ lỡ / thiếu Xu)" % day)
+	if day < 1:
+		_rebuild_after_action("Hôm nay là ngày 01 — không có ngày bỏ lỡ")
+		return
+	daily.call("set_day_unlocked", day, true)
+	_rebuild_after_action("Đã mở khoá ngày %d bằng quảng cáo (không trừ Xu)" % day)
+
+
+## Mở khoá MỌI ngày đã qua còn bỏ lỡ (miễn phí) — test nhanh trạng thái lịch
+func _unlock_all_missed() -> void:
+	var daily := _daily_manager()
+	if daily == null:
+		return
+	var today := int(daily.call("get_today"))
+	var unlocked := 0
+	for day in range(1, today):
+		if int(daily.call("get_day_stars", day)) > 0 or bool(daily.call("is_day_unlocked", day)):
+			continue
+		daily.call("set_day_unlocked", day, true)
+		unlocked += 1
+	_rebuild_after_action("Đã mở khoá %d ngày bỏ lỡ bằng quảng cáo (không trừ Xu)" % unlocked)
 
 
 func _reset_daily() -> void:

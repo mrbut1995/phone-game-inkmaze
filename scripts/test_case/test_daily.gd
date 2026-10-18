@@ -51,6 +51,8 @@ func _init() -> void:
 	_section_3_unlock(dm, arch)
 	_section_4_game_manager(gm, dm)
 	await _section_5_scene(dm)
+	await _section_5b_selection_and_ads(dm, arch)
+	await _section_5c_milestone_popup(dm)
 	await _section_6_popup()
 	await _section_7_challenge_run(gm, dm)
 
@@ -336,6 +338,126 @@ func _section_5_scene(dm: Node) -> void:
 			"Vien trang thai ghi 'x/6 ★' ('%s')" % cell.status_text())
 
 	dm.call("set_day_stars_split", today, 0, 0)
+	scene.queue_free()
+	await process_frame
+
+
+# ---------------------------------------------------------------------------
+# 5b. Ô lịch ĐANG CHỌN (vòng sáng) + ngày bỏ lỡ mở bằng QUẢNG CÁO (không trừ Xu)
+# ---------------------------------------------------------------------------
+func _section_5b_selection_and_ads(dm: Node, arch: Node) -> void:
+	print("--- 5b. Vong sang o dang chon + mo khoa bang quang cao ---")
+	var packed: PackedScene = load("res://scenes/daily.tscn")
+	if packed == null:
+		return
+	var scene: DailyScene = packed.instantiate()
+	root.add_child(scene)
+	await process_frame
+	await process_frame
+
+	var today := int(dm.call("get_today"))
+	var other := today - 2 if today > 2 else today + 1
+
+	# --- Vòng sáng: đúng 1 ô sáng, và là ô đang chọn
+	scene.select_day(today)
+	await process_frame
+	var ring_count := 0
+	var ring_on_selected := false
+	var grid := scene.layout.calendar.get_node_or_null("Panel/Days")
+	if grid != null:
+		for child in grid.get_children():
+			var c := child as DailyDayCell
+			if c == null or not c.is_selected():
+				continue
+			ring_count += 1
+			if c.day_number == today:
+				ring_on_selected = true
+	_check(ring_count == 1, "Chi 1 o lich co vong sang 'dang chon' (nhan %d)" % ring_count)
+	_check(ring_on_selected, "Vong sang nam dung o ngay dang chon (%d)" % today)
+	var cell_today := _cell_for(scene, today)
+	if cell_today != null:
+		_check(cell_today.get("selected_ring").visible, "O dang chon bat vong sang")
+
+	# --- Ngày BỎ LỠ: nút ghi như game đã mua (không còn "XU"), bấm thì chạy quảng cáo
+	if today > 2:
+		var missed := today - 2
+		dm.call("set_day_stars_split", missed, 0, 0)
+		dm.call("set_day_unlocked", missed, false)
+		scene.select_day(missed)
+		await process_frame
+		var cta := scene.play_card().cta_text()
+		_check(not cta.to_upper().contains("XU"),
+			"Nut the CHOI cua ngay bo lo KHONG con chu XU ('%s')" % cta)
+		_check(cta == tr("STR_DAILY_CARD_PLAY_BTN"),
+			"Nut the CHOI cua ngay bo lo ghi nhu game da moa ('%s')" % cta)
+
+		# Quảng cáo (placeholder) chạy được và KHÔNG trừ Xu
+		var ads: Node = root.get_node_or_null("AdsManager")
+		_check(ads != null and ads.has_method("show_rewarded"), "Co AdsManager de chay quang cao")
+		var coins_before := int(arch.get("coins")) if arch != null else 0
+		scene.call("_grant_day_unlock")
+		await process_frame
+		_check(bool(dm.call("is_day_unlocked", missed)),
+			"Xem quang cao xong -> ngay %d duoc MO KHOA" % missed)
+		if arch != null:
+			_check(int(arch.get("coins")) == coins_before,
+				"Mo khoa bang quang cao KHONG tru Xu (truoc %d, sau %d)"
+					% [coins_before, int(arch.get("coins"))])
+		dm.call("set_day_unlocked", missed, false)
+
+	# --- Ngày TƯƠNG LAI: bấm không vào được (không đổi màn hình)
+	if today < 28:
+		scene.select_day(today + 3)
+		await process_frame
+		_check(not scene.is_inside_tree() or scene.get_tree() != null, "Man Daily van con sau khi bam ngay tuong lai")
+
+	dm.call("set_day_stars_split", today, 0, 0)
+	scene.queue_free()
+	await process_frame
+
+
+# ---------------------------------------------------------------------------
+# 5c. Nhận thưởng MỐC → mở popup nhỏ báo phần thưởng
+# ---------------------------------------------------------------------------
+func _section_5c_milestone_popup(dm: Node) -> void:
+	print("--- 5c. Nhan moc -> popup nho bao thuong ---")
+	var packed: PackedScene = load("res://scenes/daily.tscn")
+	if packed == null:
+		return
+	var scene: DailyScene = packed.instantiate()
+	root.add_child(scene)
+	await process_frame
+	await process_frame
+
+	var defs: Array = dm.call("milestone_defs")
+	if defs.is_empty():
+		scene.queue_free()
+		return
+	var threshold := int((defs[0] as Dictionary).get("stars", 0))
+	dm.call("reset_progress")
+	# Đẩy Sao tháng lên đủ mốc đầu
+	var needed := int(ceil(float(threshold) / 6.0))
+	for i in needed:
+		dm.call("set_day_stars_split", i + 1, 3, 3)
+	scene.call("_refresh")
+	await process_frame
+
+	Popups.close_all()
+	scene.call("_on_milestone_claim", threshold)
+	await process_frame
+	_check(Popups.is_open(Popups.DAILY_MILESTONE),
+		"Nhan moc %d -> mo popup 'daily_milestone'" % threshold)
+	var popup := Popups.get_popup(Popups.DAILY_MILESTONE)
+	if popup != null:
+		var title: Label = popup.get("title_label")
+		var reward: Label = popup.get("reward_label")
+		_check(title != null and title.text.contains(str(threshold)),
+			"Popup ghi dung moc ('%s')" % (title.text if title != null else ""))
+		_check(reward != null and not reward.text.is_empty(),
+			"Popup ghi phan thuong ('%s')" % (reward.text if reward != null else ""))
+	Popups.close_all()
+	await process_frame
+	dm.call("reset_progress")
 	scene.queue_free()
 	await process_frame
 

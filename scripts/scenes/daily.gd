@@ -17,6 +17,8 @@ extends BaseScene
 ## ============================================================================
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
+## Id "phần thưởng" gửi cho AdsManager khi mở khoá ngày bỏ lỡ bằng quảng cáo
+const ADS_REWARD_ID := "daily_unlock"
 ## Thẻ mốc thưởng (instantiate cho MỌI mốc trong `DailyManager.MILESTONES`)
 @export var MILESTONE_CHIP: PackedScene = preload("res://nodes/daily/milestone_chip.tscn")
 
@@ -27,6 +29,8 @@ var layout: DailyLayout = null
 
 var _chips: Array[DailyMilestoneChip] = []
 var _daily: Node = null
+## Đang chờ quảng cáo: true = sau khi xem xong vào THỬ THÁCH, false = vào CHƠI
+var _ad_challenge_pending := false
 ## Ngày đang chọn (mặc định hôm nay). Bấm ngày khác trên lịch = xem/ chơi ngày đó.
 var _selected_day := 1
 
@@ -187,9 +191,10 @@ func _refresh() -> void:
 	_refresh_cards(day)
 	_refresh_milestones(month_stars)
 
-	# Ô ngày trên lịch đổi viền trạng thái ("ĐÃ MỞ") sau khi trả Xu mở khoá
+	# Ô ngày trên lịch đổi viền trạng thái ("ĐÃ MỞ") + vòng sáng ô ĐANG CHỌN
 	if layout.calendar != null:
 		layout.calendar.rebuild()
+		layout.calendar.set_selected_day(_selected_day)
 
 
 ## Nội dung 2 thẻ hành động: CHƠI (3 Sao theo nhiệm vụ) + THỬ THÁCH (3 Sao khi thắng)
@@ -198,18 +203,14 @@ func _refresh_cards(day: int) -> void:
 	var challenge_stars := _day_challenge_stars(day)
 	var info := _challenge_info(day)
 	var playable := _is_day_playable(day)
-	var unlockable := _can_unlock_day(day)
 
 	if layout.play_card != null:
 		var sub := tr("STR_DAILY_PLAY_SUB_TODAY").format([day])
 		var cta := "STR_DAILY_CARD_PLAY_BTN"
-		if unlockable:
-			cta = "STR_DAILY_UNLOCK_COST"
-			sub = tr("STR_DAILY_UNLOCK_COST").format([_unlock_cost()])
-		elif play_stars > 0:
+		if play_stars > 0:
 			cta = "STR_DAILY_CARD_PLAY_BTN_AGAIN"
 		layout.play_card.setup("STR_DAILY_CARD_PLAY", sub, cta, false, play_stars)
-		layout.play_card.set_meta("locked", not playable and not unlockable)
+		layout.play_card.set_meta("locked", not playable)
 
 	if layout.challenge_card != null:
 		var rule := str(info.get("title", ""))
@@ -268,9 +269,10 @@ func _challenge_info(day: int) -> Dictionary:
 	return {}
 
 
-## Ngày chơi được: hôm nay, ngày đã có tiến độ, hoặc ngày bỏ lỡ đã trả Xu mở khoá.
+## Ngày chơi được: hôm nay, ngày đã có tiến độ, hoặc ngày đã mở khoá (bằng quảng cáo)
 func _is_day_playable(day: int) -> bool:
-	return day == _today() or _day_play_stars(day) > 0 or _is_day_unlocked(day)
+	return day == _today() or _day_play_stars(day) > 0 or _day_challenge_stars(day) > 0 \
+		or _is_day_unlocked(day)
 
 
 ## Ngày đã được trả Xu mở khoá
@@ -278,20 +280,6 @@ func _is_day_unlocked(day: int) -> bool:
 	if _daily != null and _daily.has_method("is_day_unlocked"):
 		return bool(_daily.call("is_day_unlocked", day))
 	return false
-
-
-## Ngày bỏ lỡ có thể trả Xu mở khoá (ngày đã qua, chưa chơi gì, chưa mở khoá)
-func _can_unlock_day(day: int) -> bool:
-	if _daily != null and _daily.has_method("can_unlock_day"):
-		return bool(_daily.call("can_unlock_day", day))
-	return false
-
-
-## Giá mở khoá một ngày bỏ lỡ (Xu)
-func _unlock_cost() -> int:
-	if _daily != null and _daily.has_method("unlock_cost"):
-		return int(_daily.call("unlock_cost"))
-	return 0
 
 
 func _streak() -> int:
@@ -319,56 +307,93 @@ func _on_day_selected(day: int) -> void:
 	select_day(day)
 
 
-## Thẻ CHƠI: vào màn maze thường của ngày (ngày bỏ lỡ đang khoá → trả Xu MỞ KHOÁ)
+## Thẻ CHƠI: vào màn maze thường của ngày
 func _on_play_pressed() -> void:
-	if _can_unlock_day(_selected_day):
-		_unlock_selected_day()
-		return
-	if not _is_day_playable(_selected_day):
-		Sfx.play(Sfx.WALL_HIT)
-		return
-	Sfx.play(Sfx.BTN_CLICK)
-	var gm: Node = get_node_or_null("/root/GameManager")
-	if gm != null and gm.has_method("start_daily_play"):
-		gm.call("start_daily_play", _selected_day)
-	else:
-		Nav.goto_game()
+	_enter_day(false)
 
 
 ## Thẻ THỬ THÁCH: vào maze luật Special của ngày
 func _on_challenge_pressed() -> void:
-	if not _is_day_playable(_selected_day):
-		Sfx.play(Sfx.WALL_HIT)
+	_enter_day(true)
+
+
+## Vào 1 hoạt động của ngày đang chọn.
+## Ngày BỎ LỠ (đã qua, chưa chơi, chưa mở khoá): xem QUẢNG CÁO (AdsManager) rồi mới vào —
+## KHÔNG còn trả Xu. Ngày tương lai thì chưa mở được.
+func _enter_day(is_challenge: bool) -> void:
+	var day := _selected_day
+	if _is_day_playable(day):
+		_start_day(day, is_challenge)
 		return
+	if day < _today():
+		_request_ad_then_play(is_challenge)
+		return
+	Sfx.play(Sfx.WALL_HIT)
+
+
+## Chạy quảng cáo thưởng để MỞ KHOÁ ngày bỏ lỡ; xem xong mới vào màn.
+## AdsManager hiện là PLACEHOLDER: khi chưa gắn SDK nó giả lập "xem xong" ngay.
+func _request_ad_then_play(is_challenge: bool) -> void:
+	var ads: Node = get_node_or_null("/root/AdsManager")
+	if ads == null or not ads.has_method("show_rewarded"):
+		# Không có hệ thống quảng cáo (bản test): mở khoá luôn để không chặn người chơi
+		_grant_day_unlock()
+		_start_day(_selected_day, is_challenge)
+		return
+	if not ads.is_connected("rewarded_completed", _on_ad_rewarded):
+		ads.connect("rewarded_completed", _on_ad_rewarded)
+	_ad_challenge_pending = is_challenge
+	if not bool(ads.call("show_rewarded", ADS_REWARD_ID)):
+		_ad_challenge_pending = false
+		Sfx.play(Sfx.WALL_HIT)
+
+
+## Quảng cáo xong → mở khoá ngày (MIỄN PHÍ) rồi vào đúng hoạt động vừa bấm
+func _on_ad_rewarded(reward_id: String) -> void:
+	if reward_id != ADS_REWARD_ID:
+		return
+	var is_challenge := _ad_challenge_pending
+	_ad_challenge_pending = false
+	_grant_day_unlock()
+	_start_day(_selected_day, is_challenge)
+
+
+## Mở khoá ngày đang chọn (không trừ Xu) — dùng sau khi xem quảng cáo
+func _grant_day_unlock() -> void:
+	if _daily == null or not _daily.has_method("set_day_unlocked"):
+		return
+	_daily.call("set_day_unlocked", _selected_day, true)
+	Sfx.play(Sfx.STAMP_IMPACT)
+
+
+func _start_day(day: int, is_challenge: bool) -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	var gm: Node = get_node_or_null("/root/GameManager")
-	if gm != null and gm.has_method("start_daily_challenge"):
-		gm.call("start_daily_challenge", _selected_day)
+	var method := "start_daily_challenge" if is_challenge else "start_daily_play"
+	if gm != null and gm.has_method(method):
+		gm.call(method, day)
 	else:
 		Nav.goto_game()
 
 
-## Ngày đang chọn bị BỎ LỠ: trả Xu để mở khoá, sau đó ngày chơi được như bình thường
-func _unlock_selected_day() -> void:
-	if _daily == null or not _daily.has_method("unlock_day"):
-		return
-	if bool(_daily.call("unlock_day", _selected_day)):
-		# "Cộp" con dấu khi mở khoá thành công
-		Sfx.play(Sfx.STAMP_IMPACT)
-		return
-	# Ví không đủ Xu: gãy ngòi chì báo không mở được
-	Sfx.play(Sfx.WALL_HIT)
-
-
-## Bấm NHẬN thưởng một mốc Sao
+## Bấm NHẬN thưởng một mốc Sao → mở popup nhỏ báo phần thưởng vừa nhận
 func _on_milestone_claim(threshold: int) -> void:
 	if _daily == null or not _daily.has_method("claim_milestone"):
 		return
 	if bool(_daily.call("claim_milestone", threshold)):
 		Sfx.play(Sfx.STAMP_IMPACT)
+		_show_milestone_reward(threshold)
 		_refresh.call_deferred()
 	else:
 		Sfx.play(Sfx.WALL_HIT)
+
+
+## Popup nhỏ "đã nhận thưởng mốc" (nodes/popups/daily_milestone.tscn)
+func _show_milestone_reward(threshold: int) -> void:
+	var def: Dictionary = {}
+	if _daily != null and _daily.has_method("milestone_def"):
+		def = _daily.call("milestone_def", threshold)
+	Popups.open(Popups.DAILY_MILESTONE, {"stars": threshold, "reward": def})
 
 
 func _on_back_pressed() -> void:
