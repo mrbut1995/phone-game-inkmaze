@@ -7,8 +7,8 @@ extends Control
 
 signal plus_pressed
 
-@onready var value_label: Label = $Value
-@onready var plus_button: Button = $Plus
+@onready var value_label: Label = $Content/Value
+@onready var plus_button: Button = $Content/Plus
 
 
 func _ready() -> void:

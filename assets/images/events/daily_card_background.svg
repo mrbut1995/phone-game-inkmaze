@@ -1,63 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="170" height="252">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 504" width="340" height="504">
   <defs>
-    <!-- Pattern lưới ô ly mờ trên nền giấy vở -->
+    <!-- Pattern lưới ô ly nhạt -->
     <pattern id="gd" width="30" height="30" patternUnits="userSpaceOnUse">
       <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#163A58" stroke-width="1" opacity="0.07"/>
     </pattern>
 
-    <!-- Gradient trang giấy trắng kem ngả ấm Daily -->
+    <!-- Nền gradient Card Daily -->
     <linearGradient id="bg_daily" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#FFFDF8"/>
-      <stop offset="1" stop-color="#FFF3EE"/>
+      <stop offset="0.55" stop-color="#FFF6EC"/>
+      <stop offset="1" stop-color="#FFE9E4"/>
     </linearGradient>
 
-    <!-- ClipPath bo góc chuẩn 340x504 -->
+    <!-- Clip path bo góc card -->
     <clipPath id="cardClip">
       <rect width="340" height="504" rx="28"/>
     </clipPath>
   </defs>
 
-  <!-- Container bọc clipPath theo form của Card sự kiện -->
+  <!-- CHỈ THÂN CARD (340x504). Gờ đáy + bóng đổ do StyleBox "Lip" trong scene vẽ -->
   <g clip-path="url(#cardClip)">
-    <!-- 1. Lớp nền gradient & texture lưới ô ly vở viết -->
     <rect width="340" height="504" fill="url(#bg_daily)"/>
     <rect width="340" height="504" fill="url(#gd)"/>
-
-    <!-- 2. Nhóm chi tiết artwork: Dòng kẻ vở, lề đỏ & phôi tờ lịch bàn trống -->
-    <g transform="translate(0,-45)">
-      <!-- Các dòng kẻ ngang xanh vở học sinh -->
-      <line x1="0" y1="36" x2="340" y2="36" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="72" x2="340" y2="72" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="108" x2="340" y2="108" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="144" x2="340" y2="144" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="180" x2="340" y2="180" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="216" x2="340" y2="216" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="252" x2="340" y2="252" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="288" x2="340" y2="288" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="324" x2="340" y2="324" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="360" x2="340" y2="360" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="396" x2="340" y2="396" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="432" x2="340" y2="432" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="468" x2="340" y2="468" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="504" x2="340" y2="504" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="540" x2="340" y2="540" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="576" x2="340" y2="576" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-      <line x1="0" y1="612" x2="340" y2="612" stroke="#8FB9D2" stroke-opacity="0.4" stroke-width="1.5"/>
-
-      <!-- Đường kẻ lề đỏ tập vở -->
-      <line x1="14" y1="0" x2="14" y2="620" stroke="#D84444" stroke-width="3" opacity="0.7"/>
-
-      <!-- Khung tờ lịch bàn trống (Placeholder sẵn sàng chèn text dynamic) -->
-      <g transform="translate(100,112)">
-        <rect width="140" height="150" rx="18" fill="#FFFFFF" stroke="#D84444" stroke-width="3.5"/>
-        <path d="M 0 46 L 0 18 A 18 18 0 0 1 18 0 L 122 0 A 18 18 0 0 1 140 18 L 140 46 Z" fill="#D84444"/>
-        <!-- Hai khoen móc lịch -->
-        <circle cx="40" cy="2" r="8" fill="#FAF5EB" stroke="#9B2C2C" stroke-width="2"/>
-        <circle cx="100" cy="2" r="8" fill="#FAF5EB" stroke="#9B2C2C" stroke-width="2"/>
-      </g>
-    </g>
+    <line x1="14" y1="0" x2="14" y2="504" stroke="#D84444" stroke-width="3" opacity="0.55"/>
   </g>
 
-  <!-- Viền nét đỏ đặc trưng của riêng Daily Challenge -->
+  <!-- Viền bo đỏ ngoài card -->
   <rect x="1.5" y="1.5" width="337" height="501" rx="27" fill="none" stroke="#D84444" stroke-opacity="0.9" stroke-width="3"/>
 </svg>

@@ -60,8 +60,15 @@ func _init() -> void:
 		var badge_label := header.get_node_or_null("Badge/CountLabel") as Label
 		assert(badge_label != null and badge_label.text == str(expected_event_count),
 			"Badge dem dung so EventData dang hien")
+		var daily_first := carousel.get_node_or_null("ScrollContainer/HBox/DailyCard") as Control
+		assert(daily_first is DailyCard, "The DAILY dung lop DailyCard (tach khoi EventCard)")
+		assert(daily_first != null and daily_first.get_node_or_null("Content/Text/DailyDate") != null,
+			"DailyCard co la lich (Content/Text/DailyDate)")
 		var first_event_card := carousel.get_node_or_null("ScrollContainer/HBox/EventCard") as Control
 		assert(first_event_card != null, "Carousel co the event de kiem tra thu tu lop")
+		assert(first_event_card is EventCard, "The su kien that dung lop EventCard")
+		assert(first_event_card.get_node_or_null("Content/Text/DailyDate") == null,
+			"EventCard KHONG con la lich Daily (da tach sang DailyCard)")
 		if first_event_card != null:
 			var event_background := first_event_card.get_node("Content/Background") as Control
 			var event_text := first_event_card.get_node("Content/Text") as Control
@@ -114,6 +121,8 @@ func _init() -> void:
 	# 6. Thẻ sự kiện có đúng cấu trúc con + dùng node khai sẵn
 	var card_node: Node = main_scene.ui("EventCard")
 	assert(card_node != null, "Carousel phai instantiate it nhat 1 EventCard")
+	assert(card_node is EventCard and not (card_node is DailyCard),
+		"EventCard va DailyCard la 2 lop rieng")
 	if card_node != null:
 		for child in [
 			"Content/Background/BgGradient",
@@ -128,12 +137,24 @@ func _init() -> void:
 
 	# 7. Thẻ DAILY phải mở THẲNG màn Daily (`scenes/daily.tscn`), KHÔNG qua màn chi tiết Event
 	# (Daily là event ẢO: không có file .tres và không có màn chi tiết riêng).
-	var daily_card: EventCard = null
+	var daily_card: DailyCard = null
 	for child in carousel.get_node("ScrollContainer/HBox").get_children():
-		if child is EventCard and str((child as EventCard).get("_event_id")) == "daily":
-			daily_card = child as EventCard
+		if child is DailyCard:
+			daily_card = child as DailyCard
+			break
 	assert(daily_card != null, "Carousel phai co the Daily (ghim dau)")
-	# Bấm thẻ = phát signal như cú chạm thật (EventCard -> EventCarousel -> MainScene)
+	for daily_child in [
+		"Content/Background/BackArt",
+		"Content/Chips/ThemeChip",
+		"Content/Text/DailyDate/Month",
+		"Content/Text/DailyDate/Day",
+		"Content/Text/DailyDate/Weekday",
+		"Content/Stars/Row/Value",
+		"Content/CtaButton",
+	]:
+		assert(daily_card.get_node_or_null(daily_child) != null,
+			"DailyCard phai co node %s" % daily_child)
+	# Bấm thẻ = phát signal như cú chạm thật (DailyCard -> EventCarousel -> MainScene)
 	daily_card.card_pressed.emit(&"daily")
 	for i in 3:
 		await process_frame

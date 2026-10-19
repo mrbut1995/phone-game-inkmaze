@@ -38,6 +38,12 @@ enum PathState {
 @export var width_upcoming := 6.5
 @export var width_locked := 5.5
 
+@export_group("Gờ đáy (khớp nút màn kiểu gờ)")
+## Mỗi nét được vẽ 2 lớp: lớp dưới tối hơn, lệch xuống `edge_offset` px ⇒ đường có "gờ"
+## giống gờ đáy của nút màn. `edge_offset` = 3 khớp gờ 6px thiết kế / 2 của art nút.
+@export_range(0.0, 10.0, 0.5) var edge_offset := 3.0
+@export_range(0.0, 0.8, 0.05) var edge_darken := 0.35
+
 @export_group("Nét đứt / lấy mẫu")
 ## Độ dài 1 gạch và 1 khe của nét đứt (px)
 @export var dash_length := 15.0
@@ -158,11 +164,20 @@ func _dashed_stroke(from_d: float, to_d: float, state: int) -> Dictionary:
 
 
 func _draw() -> void:
-	for stroke in _strokes:
-		var points: PackedVector2Array = stroke["points"]
-		var color: Color = stroke["color"]
-		var width: float = stroke["width"]
-		if bool(stroke["dashed"]):
-			draw_multiline(points, color, width)
-		else:
-			draw_polyline(points, color, width, true)
+	# Lượt 0: GỜ ĐÁY (tối, lệch xuống) · lượt 1: MẶT đường — cùng kiểu với nút màn có gờ
+	for pass_index in 2:
+		var is_edge := pass_index == 0
+		if is_edge and edge_offset <= 0.0:
+			continue
+		draw_set_transform(Vector2(0.0, edge_offset) if is_edge else Vector2.ZERO)
+		for stroke in _strokes:
+			var points: PackedVector2Array = stroke["points"]
+			var color: Color = stroke["color"]
+			if is_edge:
+				color = color.darkened(edge_darken)
+			var width: float = stroke["width"]
+			if bool(stroke["dashed"]):
+				draw_multiline(points, color, width)
+			else:
+				draw_polyline(points, color, width, true)
+	draw_set_transform(Vector2.ZERO)

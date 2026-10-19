@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://chbg12rc46dp"]
 
-[ext_resource uid="uid://cfij1ru5ost4t" type="Texture2D" path="res://assets/images-png/game/card_board.png" id="1_pr7sl"]
+[ext_resource type="Texture2D" uid="uid://cfij1ru5ost4t" path="res://assets/images-png/game/card_board.png" id="1_pr7sl"]
 [ext_resource type="Script" uid="uid://ctapikig1gy5k" path="res://scripts/nodes/game/board.gd" id="1_v7f7a"]
 [ext_resource type="PackedScene" uid="uid://djsrgljk5e128" path="res://nodes/game/board_layers.tscn" id="2_layers"]
-[ext_resource uid="uid://bm6vvrmscsoyf" type="Texture2D" path="res://assets/images-png/icons/icon_reset_big.png" id="6_w0r1h"]
+[ext_resource type="Texture2D" uid="uid://b06a5wgxn10bn" path="res://assets/images-png/popups/popup_washi_tape.png" id="3_xql2x"]
+[ext_resource type="Texture2D" uid="uid://bm6vvrmscsoyf" path="res://assets/images-png/icons/icon_reset_big.png" id="6_w0r1h"]
 
 [node name="Board" type="Control" unique_id=181012636 node_paths=PackedStringArray("layers")]
 custom_minimum_size = Vector2(510, 510)
@@ -25,10 +26,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_pr7sl")
-patch_margin_left = 37
-patch_margin_top = 42
-patch_margin_right = 43
-patch_margin_bottom = 75
+patch_margin_left = 112
+patch_margin_top = 96
+patch_margin_right = 110
+patch_margin_bottom = 89
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 metadata/_edit_use_anchors_ = true
@@ -101,5 +102,23 @@ text = "Hết nước đi"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="NoMovesOverlay/Dim" to="." method="_on_no_moves_retry_btn_pressed"]
+[node name="Tape" type="NinePatchRect" parent="." unique_id=632233668]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.367
+anchor_top = -0.0054347827
+anchor_right = 0.68100005
+anchor_bottom = 0.07700001
+offset_left = -68.18001
+offset_right = 56.25998
+offset_bottom = 0.15999603
+texture = ExtResource("3_xql2x")
+patch_margin_left = 18
+patch_margin_top = 10
+patch_margin_right = 16
+patch_margin_bottom = 11
+axis_stretch_horizontal = 2
+metadata/_edit_use_anchors_ = true
+
 [connection signal="resized" from="Panel" to="." method="_update_layout_positions"]
+[connection signal="pressed" from="NoMovesOverlay/Dim" to="." method="_on_no_moves_retry_btn_pressed"]

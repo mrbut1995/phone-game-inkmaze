@@ -52,12 +52,6 @@
     <rect width="930" height="940" rx="24" fill="none" stroke="#6EA0C8" stroke-width="4" />
   </g>
 
-  <!-- Miếng băng dính (Washi Tape) dán mép trên -->
-  <g transform="translate(400, 24)">
-    <rect width="220" height="48" rx="4" fill="#E8DFCA" fill-opacity="0.88" stroke="#D1C6AE" stroke-width="1.5" />
-    <path d="M 20 0 L 0 20 M 60 0 L 0 60 M 100 0 L 48 48 M 140 0 L 88 48 M 180 0 L 128 48 M 220 0 L 168 48" stroke="#B5A98F" stroke-width="1.2" opacity="0.35" />
-  </g>
-
   <!-- Kẹp giấy kim loại ở góc trên bên trái -->
   <g transform="translate(165, 26)" filter="url(#clipShadowClean)">
     <path d="M 0 50 L 0 12 A 12 12 0 0 1 24 12 L 24 60 A 18 18 0 0 1 -12 60 L -12 18" fill="none" stroke="#7A8F9B" stroke-width="5" stroke-linecap="round" />

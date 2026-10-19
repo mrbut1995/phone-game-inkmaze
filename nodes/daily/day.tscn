@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://cggt0mrkea7fs"]
 
 [ext_resource type="Script" uid="uid://c0jpbwfj0dbrw" path="res://scripts/nodes/daily/day.gd" id="1_day"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/cell_done.png" id="2_bg"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/check_red.png" id="3_check"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/pill_stars.png" id="4_pill"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/today_ribbon.png" id="5_ribbon"]
+[ext_resource uid="uid://xdtni041v1i0" type="Texture2D" path="res://assets/images-png/daily/cell_done.png" id="2_bg"]
+[ext_resource uid="uid://b0yc3thcmxut" type="Texture2D" path="res://assets/images-png/daily/check_red.png" id="3_check"]
+[ext_resource uid="uid://c6j6k3elbn2kt" type="Texture2D" path="res://assets/images-png/daily/pill_stars.png" id="4_pill"]
+[ext_resource uid="uid://b0pqwduguhyuo" type="Texture2D" path="res://assets/images-png/daily/today_ribbon.png" id="5_ribbon"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="6_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/cell_selected_ring.png" id="7_ring"]
+[ext_resource uid="uid://dqwe4umo80phn" type="Texture2D" path="res://assets/images-png/daily/cell_selected_ring.png" id="7_ring"]
 
 [node name="Day" type="Control" node_paths=PackedStringArray("hit", "bg", "selected_ring", "number_label", "number_big", "state_icon", "pill", "pill_label", "today_ribbon", "today_label")]
 custom_minimum_size = Vector2(57.0, 58.0)

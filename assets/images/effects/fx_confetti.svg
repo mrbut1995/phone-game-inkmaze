@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <!-- Mảnh giấy confetti trắng: tô màu bằng modulate/color_ramp trong CPUParticles2D -->
+  <rect x="14" y="24" width="36" height="16" rx="4" fill="#FFFFFF"/>
+  <rect x="14" y="24" width="36" height="6" rx="3" fill="#FFFFFF" opacity="0.6"/>
+</svg>

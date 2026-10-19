@@ -7,13 +7,24 @@ extends BasePopup
 ## Mở bằng `Popups.open(Popups.DAILY_MILESTONE, { "stars": <ngưỡng>, "reward": <def> })`
 ## trong đó `reward` là Dictionary của `DailyManager.MILESTONES`
 ## (`{stars, coins, hint, undo, skip}`) — script chỉ HIỂN THỊ, không tự cộng gì.
+##
+## RƯƠNG QUÀ: dùng `AnimatedSprite2D` + `SpriteFrames` sinh từ
+## `assets/images/spritesheets/chest_spritesheet.png` (4 animation: `closed` ·
+## `opening` · `idle` · `open` cũ). Toàn bộ HIỆU ỨNG viết bằng AnimationPlayer NGAY
+## TRONG SCENE, script chỉ gọi `play("reveal")` — không tween/hiệu ứng nào trong code:
+##   - `FxAnim` / `reveal` (~2.6s): rương rơi xuống nảy → rung tăng dần → ép xuống rồi
+##     bật nắp (`opening`) kèm bùng sáng, 2 vòng sóng, tia sáng, nổ sparkle/xu/confetti
+##     → rương `idle` lấp lánh → dòng phần thưởng bật ra.
+##   - `LoopAnim` / `idle_loop` (autoplay, lặp vô hạn): tia sáng xoay + vầng sáng thở.
+## SVG hiệu ứng nằm ở `assets/images/effects/` (fx_*.svg).
 ## ============================================================================
 
 ## Node binding: khai `node_paths` + NodePath trong `daily_milestone.tscn`
 @export var title_label: Label = null
 @export var sub_label: Label = null
 @export var reward_label: Label = null
-@export var chest_icon: TextureRect = null
+## Rương quà dạng sprite animation (SpriteFrames `chest_frames.tres`)
+@export var chest_sprite: AnimatedSprite2D = null
 @export var btn_ok: BaseButton = null
 @export var lbl_ok: Label = null
 @export var fx_anim: AnimationPlayer = null
@@ -32,7 +43,7 @@ func _on_open() -> void:
 		reward_label.text = _reward_text(reward)
 	if lbl_ok != null:
 		lbl_ok.text = tr("STR_DAILY_MILESTONE_POPUP_OK")
-	_pop_chest()
+	_replay_reveal()
 
 
 ## Ghép chuỗi phần thưởng (Xu + lượt công cụ) từ định nghĩa mốc
@@ -43,17 +54,14 @@ func _reward_text(reward: Dictionary) -> String:
 	return ""
 
 
-## Rương nảy nhẹ khi popup mở (animation "chest_pop" khai trong scene)
-func _pop_chest() -> void:
-	if DisplayServer.get_name() == "headless" or chest_icon == null:
+## Chạy lại chuỗi hiệu ứng rương (mở lại popup khi nó đã tồn tại)
+func _replay_reveal() -> void:
+	if fx_anim == null or not fx_anim.has_animation(&"reveal"):
 		return
-	chest_icon.pivot_offset = chest_icon.size * 0.5
-	if fx_anim != null and fx_anim.has_animation(&"chest_pop"):
-		fx_anim.play(&"chest_pop")
-		return
-	chest_icon.scale = Vector2.ONE * 0.6
-	var tw := create_tween()
-	tw.tween_property(chest_icon, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	fx_anim.stop()
+	fx_anim.play(&"reveal")
+	# Áp trạng thái t=0 ngay (rương/phần thưởng ẩn) để không lộ 1 khung hình sai trước khi chạy
+	fx_anim.advance(0.0)
 
 
 func _on_ok_pressed() -> void:

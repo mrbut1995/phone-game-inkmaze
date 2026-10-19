@@ -1,0 +1,397 @@
+[gd_scene format=3 uid="uid://dx5dcc8knvqm3"]
+
+[ext_resource type="Script" uid="uid://3l50i73mlew" path="res://scripts/nodes/daily_card.gd" id="1_card"]
+[ext_resource type="Texture2D" uid="uid://cwum1n04j1scb" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
+[ext_resource type="Texture2D" uid="uid://dkto7e26t3okj" path="res://assets/images-png/events/daily_card_background.png" id="3_bg"]
+[ext_resource type="Texture2D" uid="uid://i66mjhc14d4v" path="res://assets/images-png/events/daily_card_frontgrount.png" id="3_bg0b0"]
+[ext_resource type="Texture2D" uid="uid://6voljbarwsoh" path="res://assets/images-png/common/star_highlight.png" id="5_star"]
+
+[sub_resource type="StyleBoxFlat" id="sb_card_lip"]
+bg_color = Color(0.608, 0.173, 0.173, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="sb_cta"]
+bg_color = Color(0.847, 0.267, 0.267, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.5, 0.12, 0.12, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 6
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="sb_cta_pressed"]
+bg_color = Color(0.745, 0.235, 0.235, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.486, 0.153, 0.153, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 3
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="sb_cta_hover"]
+bg_color = Color(0.894, 0.322, 0.322, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.5, 0.12, 0.12, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 6
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="sb_cta_disabled"]
+bg_color = Color(0.62, 0.5, 0.5, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.43, 0.34, 0.34, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="sb_empty"]
+
+[node name="DailyCard" type="AspectRatioContainer" unique_id=716409578]
+custom_minimum_size = Vector2(216, 270)
+size_flags_horizontal = 0
+size_flags_vertical = 3
+ratio = 0.8
+stretch_mode = 1
+script = ExtResource("1_card")
+
+[node name="Content" type="Control" parent="." unique_id=1581392981]
+layout_mode = 2
+
+[node name="Background" type="Control" parent="Content" unique_id=52977740]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Lip" type="Panel" parent="Content/Background" unique_id=1269357600]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_card_lip")
+
+[node name="BgGradient" type="ColorRect" parent="Content/Background" unique_id=1423496074]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.992, 0.973, 1)
+
+[node name="Panel" type="TextureRect" parent="Content/Background" unique_id=1269357587]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_bg")
+expand_mode = 1
+
+[node name="BackArt" type="TextureRect" parent="Content/Background" unique_id=1397698245]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+
+[node name="FrontArt" type="NinePatchRect" parent="Content/Background" unique_id=2092638586]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_bg0b0")
+region_rect = Rect2(0, 0, 340, 504)
+
+[node name="Chips" type="HBoxContainer" parent="Content" unique_id=1849247899]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.036363635
+anchor_top = 0.02962963
+anchor_right = 0.96363634
+anchor_bottom = 0.1037037
+metadata/_edit_use_anchors_ = true
+
+[node name="ThemeChip" type="PanelContainer" parent="Content/Chips" unique_id=1297966141]
+custom_minimum_size = Vector2(65, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+mouse_filter = 2
+
+[node name="Content" type="HBoxContainer" parent="Content/Chips/ThemeChip" unique_id=543715662]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Content/Chips/ThemeChip/Content" unique_id=706223978]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="ChipDot" type="ColorRect" parent="Content/Chips/ThemeChip/Content" unique_id=1367979274]
+custom_minimum_size = Vector2(6.5, 6.5)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.1
+color = Color(0.847, 0.267, 0.267, 1)
+
+[node name="ChipLabel" type="Label" parent="Content/Chips/ThemeChip/Content" unique_id=2036539521]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EventChipLabel"
+text = "STR_EVENT_DAILY_CHIP"
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Content/Chips/ThemeChip/Content" unique_id=1194087397]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="TimerChip" type="PanelContainer" parent="Content/Chips" unique_id=1962859506]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+
+[node name="Content" type="HBoxContainer" parent="Content/Chips/TimerChip" unique_id=202488739]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Content/Chips/TimerChip/Content" unique_id=382861126]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="ClockIcon" type="TextureRect" parent="Content/Chips/TimerChip/Content" unique_id=20914664]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_clock")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimerLabel" type="Label" parent="Content/Chips/TimerChip/Content" unique_id=1522502705]
+layout_mode = 2
+theme_type_variation = &"EventTimerLabel"
+text = "STR_EVENT_TIMER_HOURS"
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Content/Chips/TimerChip/Content" unique_id=1910184720]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="Text" type="Control" parent="Content" unique_id=1693669317]
+z_index = 1
+layout_mode = 1
+anchor_left = 0.046296295
+anchor_top = 0.12222222
+anchor_right = 0.9554782
+anchor_bottom = 0.71481484
+metadata/_edit_use_anchors_ = true
+
+[node name="DailyDate" type="Control" parent="Content/Text" unique_id=1625921222]
+layout_mode = 1
+anchor_left = 0.29024875
+anchor_top = 0.0375
+anchor_right = 0.7077513
+anchor_bottom = 0.50650007
+offset_right = 0.009475708
+offset_bottom = -0.040008545
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Month" type="Label" parent="Content/Text/DailyDate" unique_id=1021520020]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.29333332
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"EventDailyMonth"
+theme_override_font_sizes/font_size = 13
+text = "STR_MONTH_SEP"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Day" type="Label" parent="Content/Text/DailyDate" unique_id=1258856582]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"EventDailyDay"
+text = "01"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="Weekday" type="Label" parent="Content/Text/DailyDate" unique_id=1472632105]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.7733333
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"EventDailyWeekday"
+theme_override_font_sizes/font_size = 13
+text = "STR_WEEKDAY_MON"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer" type="Control" parent="Content/Text" unique_id=861705467]
+custom_minimum_size = Vector2(0, 3)
+anchors_preset = 0
+offset_top = 97.0
+offset_right = 196.0
+offset_bottom = 100.0
+
+[node name="Title" type="VBoxContainer" parent="Content/Text" unique_id=1139436637]
+layout_mode = 0
+offset_top = 90.0
+offset_right = 196.0
+offset_bottom = 136.0
+
+[node name="Title1" type="Label" parent="Content/Text/Title" unique_id=1425496981]
+layout_mode = 2
+theme_type_variation = &"EventTitle"
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 16
+text = "STR_EVENT_DAILY_TITLE_1"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="Title2" type="Label" parent="Content/Text/Title" unique_id=1511208675]
+layout_mode = 2
+theme_type_variation = &"EventTitle"
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 16
+text = "STR_EVENT_DAILY_TITLE_2"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="Stars" type="Panel" parent="Content" unique_id=976879453]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06363636
+anchor_top = 0.661
+anchor_right = 0.93600005
+anchor_bottom = 0.74100006
+offset_top = -0.069992065
+offset_right = 0.07853699
+offset_bottom = -0.07002258
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Row" type="HBoxContainer" parent="Content/Stars" unique_id=1971708473]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="StarIcon" type="TextureRect" parent="Content/Stars/Row" unique_id=1999818662]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("5_star")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="Content/Stars/Row" unique_id=852978112]
+layout_mode = 2
+theme_type_variation = &"EventRewardLabel"
+text = "STR_DAILY_STARS_BADGE"
+vertical_alignment = 1
+
+[node name="CtaButton" type="Button" parent="Content" unique_id=485104235]
+z_index = 1
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06363636
+anchor_top = 0.83000004
+anchor_right = 0.93600005
+anchor_bottom = 0.96300006
+offset_top = -16.000015
+offset_right = 0.07853699
+offset_bottom = -15.910019
+theme_override_styles/normal = SubResource("sb_cta")
+theme_override_styles/pressed = SubResource("sb_cta_pressed")
+theme_override_styles/hover = SubResource("sb_cta_hover")
+theme_override_styles/disabled = SubResource("sb_cta_disabled")
+theme_override_styles/focus = SubResource("sb_empty")
+
+[node name="CtaLabel" type="Label" parent="Content/CtaButton" unique_id=756599569]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"EventCtaLabel"
+text = "STR_EVENT_DAILY_CTA"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="CountdownTimer" type="Timer" parent="Content" unique_id=197499928]
+wait_time = 30.0

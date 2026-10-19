@@ -1,7 +1,10 @@
 class_name EventCarousel
 extends Control
 ## ============================================================================
-## Node: EventCarousel — Carousel ngang chứa các EventCard.
+## Node: EventCarousel — Carousel ngang chứa thẻ sự kiện trên Main Screen.
+## Hai loại thẻ (tách từ 1 scene `event_card` cũ):
+##   · `DailyCard` (nodes/main/daily_card.tscn) — event ẢO của DailyManager (ghim đầu)
+##   · `EventCard` (nodes/main/event_card.tscn) — sự kiện THẬT trong resources/events
 ##
 ## Cách dùng: đặt trong scene Main, gọi refresh() khi EventManager thay đổi.
 ## Snap theo trang khi thả tay (vuốt có quán tính nhẹ).
@@ -17,8 +20,10 @@ const DRAG_THRESHOLD := 12.0
 @onready var hbox: HBoxContainer = $ScrollContainer/HBox
 @onready var dots: EventDots = $EventDots
 
-## Scene thẻ event (gán trong Inspector hoặc preload)
+## Scene thẻ EVENT thật (gán trong Inspector hoặc preload)
 @export var event_card_scene: PackedScene = null
+## Scene thẻ DAILY (event ảo của `DailyManager`) — tách riêng khỏi EventCard
+@export var daily_card_scene: PackedScene = null
 
 ## Chỉ bật tạm thời để kiểm tra toàn bộ EventData trên Main.
 @export var show_all_events_for_preview: bool = false
@@ -27,7 +32,7 @@ const DRAG_THRESHOLD := 12.0
 @export var dot_active_color: Color = Color("#256C96")
 @export var dot_inactive_color: Color = Color("#D8E2E8")
 
-var _cards: Array[EventCard] = []
+var _cards: Array[EventCardBase] = []
 var _current_page: int = 0
 var _drag_active: bool = false
 var _drag_moved: bool = false
@@ -44,6 +49,8 @@ func _ready() -> void:
 			scroll.scroll_ended.connect(_on_scroll_ended)
 	if event_card_scene == null:
 		event_card_scene = load("res://nodes/main/event_card.tscn")
+	if daily_card_scene == null:
+		daily_card_scene = load("res://nodes/main/daily_card.tscn")
 
 
 ## Nạp lại danh sách thẻ từ EventManager
@@ -88,9 +95,11 @@ func _update_cards_layout() -> void:
 
 
 func _add_card(data: EventData, preview_mode: bool) -> void:
-	if event_card_scene == null:
+	# Daily là event ẢO của DailyManager ⇒ dùng thẻ riêng (lá lịch + Sao hôm nay)
+	var scene := daily_card_scene if data.type == EventData.Type.DAILY else event_card_scene
+	if scene == null:
 		return
-	var card := event_card_scene.instantiate() as EventCard
+	var card := scene.instantiate() as EventCardBase
 	if card == null:
 		return
 	if scroll != null and scroll.size.y > 0.0:
