@@ -2,46 +2,25 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://qiwpvkc8th8g" path="res://scripts/nodes/popups/gameover_level.gd" id="2_level"]
-[ext_resource type="Texture2D" uid="uid://8o13vtagn2ox" path="res://assets/images-png/popups/paper_slip_gameover.png" id="3_slip"]
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="4_clip"]
 [ext_resource type="Texture2D" uid="uid://u7rxj8oviqdf" path="res://assets/images-png/popups/stamp_failed.png" id="5_stamp"]
+[ext_resource type="Texture2D" uid="uid://bmjgppp6dr4og" path="res://assets/images-png/popups/panel_popup.png" id="5_vqse6"]
 [ext_resource type="Texture2D" uid="uid://b8lv6kcyhcqms" path="res://assets/images-png/popups/icon_cross_red.png" id="6_cross"]
+[ext_resource type="Texture2D" uid="uid://b06a5wgxn10bn" path="res://assets/images-png/popups/popup_washi_tape.png" id="6_how8g"]
 [ext_resource type="Texture2D" uid="uid://cbwmyb5u8ban6" path="res://assets/images-png/popups/banner_revive.png" id="7_banner"]
 [ext_resource type="Texture2D" uid="uid://b4bnagmk0jj2g" path="res://assets/images-png/icons/icon_ad.png" id="8_ad"]
 [ext_resource type="Texture2D" uid="uid://b3pxjd6mceamh" path="res://assets/images-png/popups/btn_revive_ad_normal.png" id="9_rev_n"]
 [ext_resource type="Texture2D" uid="uid://22m656wge4qf" path="res://assets/images-png/popups/btn_revive_ad_pressed.png" id="10_rev_p"]
 [ext_resource type="Texture2D" uid="uid://dd5ghevkdqo7o" path="res://assets/images-png/popups/btn_revive_ad_focus.png" id="11_rev_f"]
-[ext_resource uid="uid://b8rwt2332ygre" type="Texture2D" path="res://assets/images-png/common/popup_btn_normal.png" id="12_men_n"]
-[ext_resource uid="uid://cydicvgwyy1rd" type="Texture2D" path="res://assets/images-png/common/popup_btn_pressed.png" id="13_men_p"]
-[ext_resource uid="uid://c48bl0l8o5lrv" type="Texture2D" path="res://assets/images-png/common/popup_btn_focus.png" id="14_men_f"]
+[ext_resource type="Texture2D" uid="uid://b8rwt2332ygre" path="res://assets/images-png/common/popup_btn_normal.png" id="12_men_n"]
+[ext_resource type="Texture2D" uid="uid://cydicvgwyy1rd" path="res://assets/images-png/common/popup_btn_pressed.png" id="13_men_p"]
+[ext_resource type="Texture2D" uid="uid://c48bl0l8o5lrv" path="res://assets/images-png/common/popup_btn_focus.png" id="14_men_f"]
 [ext_resource type="Texture2D" uid="uid://der7d7ytwsbeq" path="res://assets/images-png/popups/btn_popup_danger_normal.png" id="15_ret_n"]
 [ext_resource type="Texture2D" uid="uid://comcrt2xgtjwm" path="res://assets/images-png/popups/btn_popup_danger_pressed.png" id="16_ret_p"]
 [ext_resource type="Texture2D" uid="uid://cnugf8wcc03sm" path="res://assets/images-png/popups/btn_popup_danger_focus.png" id="17_ret_f"]
 [ext_resource type="Texture2D" uid="uid://cphd7lexro270" path="res://assets/images-png/common/star_empty.png" id="18_star_off"]
-[ext_resource uid="uid://6voljbarwsoh" type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="19_star_full"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="18_yr0sl"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h0h1r"]
-content_margin_left = 25.0
-content_margin_top = 7.0
-content_margin_right = 14.0
-content_margin_bottom = 10.0
-texture = ExtResource("15_ret_n")
-texture_margin_left = 25.0
-texture_margin_top = 7.0
-texture_margin_right = 14.0
-texture_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vqse6"]
-content_margin_left = 25.0
-content_margin_top = 7.0
-content_margin_right = 14.0
-content_margin_bottom = 10.0
-texture = ExtResource("16_ret_p")
-texture_margin_left = 25.0
-texture_margin_top = 7.0
-texture_margin_right = 14.0
-texture_margin_bottom = 10.0
+[ext_resource type="Texture2D" uid="uid://6voljbarwsoh" path="res://assets/images-png/common/star_highlight.png" id="19_star_full"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_how8g"]
 content_margin_left = 25.0
@@ -59,13 +38,35 @@ content_margin_left = 25.0
 content_margin_top = 7.0
 content_margin_right = 14.0
 content_margin_bottom = 10.0
-texture = ExtResource("15_ret_n")
+texture = ExtResource("16_ret_p")
 texture_margin_left = 25.0
 texture_margin_top = 7.0
 texture_margin_right = 14.0
 texture_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_shesj"]
+content_margin_left = 25.0
+content_margin_top = 7.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+texture = ExtResource("15_ret_n")
+texture_margin_left = 25.0
+texture_margin_top = 7.0
+texture_margin_right = 14.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3u8nf"]
+content_margin_left = 25.0
+content_margin_top = 7.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+texture = ExtResource("15_ret_n")
+texture_margin_left = 25.0
+texture_margin_top = 7.0
+texture_margin_right = 14.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_51xv3"]
 content_margin_left = 25.0
 content_margin_top = 7.0
 content_margin_right = 14.0
@@ -78,7 +79,10 @@ texture_margin_bottom = 10.0
 
 [node name="Base" unique_id=1975349716 node_paths=PackedStringArray("label_title", "label_subtitle", "revive_desc", "stamp_count", "mission_count", "btn_menu", "row1_star", "row1_name", "row1_status", "row2_star", "row2_name", "row2_status", "row3_star", "row3_name", "row3_status") instance=ExtResource("1_base")]
 script = ExtResource("2_level")
-label_title = NodePath("Panel/Content/Title")
+COUNT = 3
+star_full = ExtResource("19_star_full")
+star_empty = ExtResource("18_star_off")
+label_title = NodePath("Panel/Art/WashiTape/Title")
 label_subtitle = NodePath("Panel/Content/Subtitle")
 revive_desc = NodePath("Panel/Content/Information/Banner/Desc")
 stamp_count = NodePath("Panel/Content/Stamp/StampCount")
@@ -93,15 +97,13 @@ row2_status = NodePath("Panel/Content/Information/Row2/Status")
 row3_star = NodePath("Panel/Content/Information/Row3/Star")
 row3_name = NodePath("Panel/Content/Information/Row3/Name")
 row3_status = NodePath("Panel/Content/Information/Row3/Status")
-star_full = ExtResource("19_star_full")
-star_empty = ExtResource("18_star_off")
 close_on_outside = false
 
 [node name="Panel" parent="." index="1" unique_id=290635111]
-anchor_left = 0.49100003
-anchor_top = 0.1466087
-anchor_right = 0.49100003
-anchor_bottom = 0.147
+anchor_left = 0.5280371
+anchor_top = 0.23900001
+anchor_right = 0.49470374
+anchor_bottom = 0.013304337
 offset_left = -239.14001
 offset_right = 238.85999
 offset_bottom = 684.76
@@ -120,31 +122,67 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_slip")
+texture = ExtResource("5_vqse6")
+patch_margin_left = 76
+patch_margin_top = 36
+patch_margin_bottom = 54
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="WashiTape" type="NinePatchRect" parent="Panel/Art" index="0" unique_id=821413594]
+self_modulate = Color(0.91, 0.31850004, 0.3283582, 1)
+layout_mode = 0
+offset_left = 52.422077
+offset_top = -14.339806
+offset_right = 394.4555
+offset_bottom = 54.09043
+rotation = -0.05
+pivot_offset = Vector2(56.5, 13.5)
+texture = ExtResource("6_how8g")
+patch_margin_left = 29
+patch_margin_right = 27
+axis_stretch_horizontal = 2
+
+[node name="Title" type="Label" parent="Panel/Art/WashiTape" index="0" unique_id=1280996057]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 0.098861694
+offset_top = 16.787468
+offset_right = 330.67358
+offset_bottom = 47.787468
+theme_type_variation = &"PopupTitleDanger"
+theme_override_font_sizes/font_size = 24
+text = "STR_GAME_OVER_LEVEL_TITLE"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
 
 [node name="Content" parent="Panel" index="1" unique_id=45188561]
-offset_left = 46.0
+anchors_preset = -1
+anchor_left = 0.1
+anchor_right = 0.90900004
+anchor_bottom = 0.88900006
 offset_top = 51.159546
-offset_right = -42.0
-offset_bottom = -53.159546
+offset_right = -0.14001465
+offset_bottom = -0.21258545
 
 [node name="Clip" type="TextureRect" parent="Panel/Content" index="0" unique_id=1090087767]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 67.0
-offset_top = 15.0
-offset_right = 90.0
-offset_bottom = 55.5
+offset_left = -25.0
+offset_top = -57.159546
+offset_right = -2.0
+offset_bottom = -16.159546
 mouse_filter = 2
 texture = ExtResource("4_clip")
 
 [node name="Stamp" type="TextureRect" parent="Panel/Content" index="1" unique_id=1033586844]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 310.0
-offset_top = 70.4907
-offset_right = 390.0
-offset_bottom = 122.0093
+offset_left = 291.0
+offset_top = -25.159538
+offset_right = 390.53775
+offset_bottom = 39.539978
 mouse_filter = 2
 texture = ExtResource("5_stamp")
 
@@ -181,50 +219,41 @@ clip_text = true
 text_overrun_behavior = 3
 
 [node name="Cross" type="TextureRect" parent="Panel/Content" index="2" unique_id=263786180]
+visible = false
 modulate = Color(1, 1, 1, 0.55)
 layout_mode = 1
 anchors_preset = -1
-offset_left = 185.0
-offset_top = 105.0
-offset_right = 205.0
-offset_bottom = 125.0
+offset_left = 330.0
+offset_top = -18.159546
+offset_right = 400.0
+offset_bottom = 51.840454
 mouse_filter = 2
 texture = ExtResource("6_cross")
 
-[node name="Title" type="Label" parent="Panel/Content" index="3" unique_id=1280996057]
+[node name="Subtitle" type="Label" parent="Panel/Content" index="3" unique_id=4207123]
+visible = false
 layout_mode = 1
 anchors_preset = -1
-offset_left = 45.0
-offset_top = 28.0
-offset_right = 345.0
-offset_bottom = 53.0
-theme_type_variation = &"PopupTitleDanger"
-text = "STR_GAME_OVER_LEVEL_TITLE"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Subtitle" type="Label" parent="Panel/Content" index="4" unique_id=4207123]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 45.0
-offset_top = 55.5
-offset_right = 345.0
-offset_bottom = 67.5
+offset_left = 40.0
+offset_top = 59.840454
+offset_right = 340.0
+offset_bottom = 73.840454
 theme_type_variation = &"PopupSubtitle"
 text = "STR_GAME_OVER_LEVEL_SUBTITLE"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Information" type="VBoxContainer" parent="Panel/Content" index="5" unique_id=350836454]
+[node name="Information" type="VBoxContainer" parent="Panel/Content" index="4" unique_id=350836454]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.08461538
-anchor_top = 0.26170713
-anchor_right = 0.9153846
-anchor_bottom = 0.89000005
-offset_bottom = 0.21350098
+anchor_left = 0.018817209
+anchor_top = 0.12546122
+anchor_right = 0.88433003
+anchor_bottom = 1.0779865
+offset_top = 0.08345413
+offset_right = 0.02923584
+offset_bottom = 0.09553528
 theme_override_constants/separation = 0
 metadata/_edit_use_anchors_ = true
 
@@ -440,11 +469,11 @@ text_overrun_behavior = 3
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxTexture_h0h1r")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_vqse6")
-theme_override_styles/hover = SubResource("StyleBoxTexture_how8g")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_hmfic")
-theme_override_styles/focus = SubResource("StyleBoxTexture_shesj")
+theme_override_styles/normal = SubResource("StyleBoxTexture_how8g")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hmfic")
+theme_override_styles/hover = SubResource("StyleBoxTexture_shesj")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_3u8nf")
+theme_override_styles/focus = SubResource("StyleBoxTexture_51xv3")
 script = ExtResource("18_yr0sl")
 texture_normal = ExtResource("15_ret_n")
 texture_hover = ExtResource("15_ret_n")

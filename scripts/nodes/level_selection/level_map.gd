@@ -56,6 +56,9 @@ signal scrolled(delta_y: float)
 ## Nửa bề rộng art nút màn (nút 112 px ở bản dọc) — dùng để KẸP zigzag cho nút
 ## không lòi ra ngoài khung bản đồ ở màn hẹp
 @export_range(0.0, 200.0, 1.0) var node_half_width := 56.0
+## Tâm MẶT nút lệch lên so với tâm art (nút có gờ đáy ~6px ở dưới ⇒ mặt nút nằm cao hơn ~3px).
+## Đường nối đi qua tâm MẶT nút cho khớp mắt nhìn (nhân theo tỉ lệ nút ở màn ngang).
+@export_range(-20.0, 20.0, 0.5) var node_face_center_y := -3.0
 
 @export_group("Cờ đích / mũi chỉ")
 ## Nút màn hiển thị 112px (art 2× vẽ ở scale 0.5): nửa nút = 56, LÒNG nút (mặt giấy) = 96
@@ -230,10 +233,16 @@ func _build_paths(sorted_ids: Array[int], positions: Array[Vector2]) -> void:
 		return
 	var road := path_scene.instantiate() as LevelMapPath
 	items.add_child(road)
+	var node_scale := node_scale_landscape if is_wide() else 1.0
+	# Đường đi qua tâm MẶT nút (cao hơn tâm art vài px) + gờ đáy của đường theo tỉ lệ nút
+	var face_points: Array[Vector2] = []
+	for point in positions:
+		face_points.append(point + Vector2(0.0, node_face_center_y * node_scale))
+	road.edge_offset *= node_scale
 	var states: Array[int] = []
 	for index in range(sorted_ids.size() - 1):
 		states.append(int(_path_state_for(sorted_ids[index])))
-	road.setup(positions, states, _road_sway())
+	road.setup(face_points, states, _road_sway())
 
 
 ## Độ lệch của điểm uốn giữa mỗi đoạn nối: theo nhịp dọc nhưng không vượt mép khung.

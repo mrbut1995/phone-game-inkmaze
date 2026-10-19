@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
+  <!-- Ngôi sao 4 cánh lấp lánh, màu vàng kem hợp tông rương -->
+  <path d="M64 6 C68 40 88 60 122 64 C88 68 68 88 64 122 C60 88 40 68 6 64 C40 60 60 40 64 6 Z" fill="#FFD166" stroke="#E8B86D" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M64 28 C66 48 80 62 100 64 C80 66 66 80 64 100 C62 80 48 66 28 64 C48 62 62 48 64 28 Z" fill="#FFF0A5"/>
+  <circle cx="64" cy="64" r="9" fill="#FFFFFF"/>
+</svg>

@@ -2,39 +2,336 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://7ok47hp12kio" path="res://scripts/nodes/popups/daily_milestone.gd" id="2_popup"]
-[ext_resource type="Texture2D" uid="uid://u7wqegwmromx" path="res://assets/images-png/popups/paper_note_memory.png" id="3_xtuos"]
-[ext_resource type="Texture2D" uid="uid://1am8aehqp420" path="res://assets/images-png/daily/chest.png" id="4_chest"]
-[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="4_df87s"]
+[ext_resource type="Texture2D" uid="uid://bmjgppp6dr4og" path="res://assets/images-png/popups/panel_popup.png" id="3_df87s"]
+[ext_resource type="SpriteFrames" uid="uid://c8g3im8x3mbi1" path="res://resources/animations/chest_frames.tres" id="4_chest"]
+[ext_resource type="Texture2D" uid="uid://b06a5wgxn10bn" path="res://assets/images-png/popups/popup_washi_tape.png" id="4_df87s"]
 [ext_resource type="Texture2D" uid="uid://d24vaiwlt8dsy" path="res://assets/images-png/daily/btn_cta_blue_normal.png" id="5_btn_n"]
 [ext_resource type="Texture2D" uid="uid://c84kjolweguv7" path="res://assets/images-png/daily/btn_cta_blue_pressed.png" id="6_btn_p"]
+[ext_resource type="Texture2D" path="res://assets/images/effects/fx_glow_rays.svg" id="7_rays"]
+[ext_resource type="Texture2D" path="res://assets/images/effects/fx_glow_soft.svg" id="8_glow"]
+[ext_resource type="Texture2D" path="res://assets/images/effects/fx_ring.svg" id="9_ring"]
+[ext_resource type="Texture2D" path="res://assets/images/effects/fx_sparkle.svg" id="10_sparkle"]
+[ext_resource type="Texture2D" path="res://assets/images/effects/fx_coin.svg" id="11_coin"]
+[ext_resource type="Texture2D" path="res://assets/images/effects/fx_confetti.svg" id="12_confetti"]
 
-[sub_resource type="Animation" id="Animation_pop"]
-resource_name = "chest_pop"
-length = 0.4
+[sub_resource type="Gradient" id="Gradient_fade"]
+offsets = PackedFloat32Array(0, 0.65, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_confetti"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8)
+colors = PackedColorArray(0.969, 0.71, 0.627, 1, 1, 0.82, 0.4, 1, 0.565, 0.878, 0.937, 1, 0.584, 0.835, 0.698, 1, 1, 0.396, 0.518, 1)
+
+[sub_resource type="Curve" id="Curve_pop"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_confetti"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.45), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_reveal"]
+resource_name = "reveal"
+length = 2.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/Content/Chest:scale")
+tracks/0/path = NodePath("Panel/Content/Chest/Sprite:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(0.5, 2, 1),
+"times": PackedFloat32Array(0, 1.3, 2.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [&"closed", &"opening", &"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Content/Chest/Sprite:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.3, 2.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Content/Chest/Sprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0.6, 0.6), Vector2(1.08, 1.08), Vector2(1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Content/Chest/Sprite:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.32, 0.5, 0.68, 1.22, 1.3, 1.4, 1.55, 1.8),
+"transitions": PackedFloat32Array(0.5, 1, 1, 1, 1, 1, 0.5, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0.7, 0.55), Vector2(0.58, 0.64), Vector2(0.61, 0.61), Vector2(0.61, 0.61), Vector2(0.66, 0.55), Vector2(0.575, 0.67), Vector2(0.62, 0.6), Vector2(0.61, 0.61)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Panel/Content/Chest/Sprite:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 0, -0.05, 0.05, -0.07, 0.07, -0.09, 0.09, 0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Panel/Content/Chest/Sprite:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.32, 0.5, 1.3, 1.4, 1.62),
+"transitions": PackedFloat32Array(2, 0.5, 1, 0.5, 2, 1),
+"update": 0,
+"values": [Vector2(0, -40), Vector2(0, 6), Vector2(0, 0), Vector2(0, 0), Vector2(0, -18), Vector2(0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Panel/Content/Chest/Glow:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.25, 1.4, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.35), Color(1, 1, 1, 1), Color(1, 1, 1, 0.6)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Panel/Content/Chest/Glow:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.4, 2.4),
+"transitions": PackedFloat32Array(1, 1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.6, 0.6), Vector2(2.3, 2.3), Vector2(1.7, 1.7)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Panel/Content/Chest/Rays:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 1.3, 1.6, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.82, 0.4, 0), Color(1, 0.82, 0.4, 0), Color(1, 0.82, 0.4, 0.9), Color(1, 0.82, 0.4, 0.6)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Panel/Content/Chest/Rays:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1.3, 2),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.3, 0.3), Vector2(0.3, 0.3), Vector2(0.95, 0.95)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Panel/Content/Chest/Ring:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1.3, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.9), Color(1, 1, 1, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Panel/Content/Chest/Ring:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 1.3, 1.8),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.3, 0.3), Vector2(0.3, 0.3), Vector2(2.6, 2.6)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Panel/Content/Chest/Ring2:modulate")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 1.42, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.7), Color(1, 1, 1, 0)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Panel/Content/Chest/Ring2:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 1.42, 2),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(0.3, 0.3), Vector2(0.3, 0.3), Vector2(2.2, 2.2)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Panel/Content/Chest/Sparkles:emitting")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 1.34),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Panel/Content/Chest/Coins:emitting")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 1.38),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Panel/Content/Chest/Confetti:emitting")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 1.34),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Panel/Content/Chest/Twinkle:emitting")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 2.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Panel/Content/Reward:modulate")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 1.55, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Panel/Content/Reward:scale")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 1.55, 1.85, 2, 2.2),
+"transitions": PackedFloat32Array(1, 0.5, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.4, 0.4), Vector2(0.4, 0.4), Vector2(1.18, 1.18), Vector2(0.95, 0.95), Vector2(1, 1)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Panel/Art/WashiTape:rotation")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 1.3, 1.42, 1.65),
+"transitions": PackedFloat32Array(1, 2, 2, 2),
+"update": 0,
+"values": [-0.05, -0.05, -0.085, -0.05]
+}
+
+[sub_resource type="Animation" id="Animation_loop"]
+resource_name = "idle_loop"
+length = 12.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Content/Chest/Rays:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 12),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 6.2832]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Content/Chest/Glow:self_modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.2, 2.4, 3.6, 4.8, 6, 7.2, 8.4, 9.6, 10.8, 12),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.72), Color(1, 1, 1, 1), Color(1, 1, 1, 0.72), Color(1, 1, 1, 1), Color(1, 1, 1, 0.72), Color(1, 1, 1, 1), Color(1, 1, 1, 0.72), Color(1, 1, 1, 1), Color(1, 1, 1, 0.72), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dm"]
 _data = {
-&"chest_pop": SubResource("Animation_pop")
+&"reveal": SubResource("Animation_reveal")
 }
 
-[node name="Base" unique_id=405293183 node_paths=PackedStringArray("title_label", "sub_label", "reward_label", "chest_icon", "btn_ok", "lbl_ok", "fx_anim") instance=ExtResource("1_base")]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_loop"]
+_data = {
+&"idle_loop": SubResource("Animation_loop")
+}
+
+[node name="Base" unique_id=405293183 node_paths=PackedStringArray("title_label", "sub_label", "reward_label", "chest_sprite", "btn_ok", "lbl_ok", "fx_anim") instance=ExtResource("1_base")]
 script = ExtResource("2_popup")
-title_label = NodePath("Panel/Content/Title")
+title_label = NodePath("Panel/Art/WashiTape/Title")
 sub_label = NodePath("Panel/Content/Subtitle")
 reward_label = NodePath("Panel/Content/Reward")
-chest_icon = NodePath("Panel/Content/Chest")
+chest_sprite = NodePath("Panel/Content/Chest/Sprite")
 btn_ok = NodePath("Panel/Content/Ok")
 lbl_ok = NodePath("Panel/Content/Ok/Label")
 fx_anim = NodePath("FxAnim")
@@ -47,27 +344,51 @@ offset_left = -152.0
 offset_top = -138.0
 offset_right = 152.0
 offset_bottom = 138.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Art" parent="Panel" index="0" unique_id=1269512275]
-anchor_bottom = 0.7686957
-texture = ExtResource("3_xtuos")
-patch_margin_left = 40
+anchor_left = -0.17425996
+anchor_top = -0.26213047
+anchor_right = 1.17426
+anchor_bottom = 1.0078262
+texture = ExtResource("3_df87s")
+patch_margin_left = 67
 patch_margin_top = 40
-patch_margin_right = 40
+patch_margin_right = 54
 patch_margin_bottom = 31
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="WashiTape" type="TextureRect" parent="Panel/Art" index="0" unique_id=110581002]
+[node name="WashiTape" type="NinePatchRect" parent="Panel/Art" index="0" unique_id=96960914]
 layout_mode = 0
-offset_left = 76.0
-offset_top = -15.999996
-offset_right = 189.0
-offset_bottom = 11.000004
+offset_left = 57.666348
+offset_top = -14.602238
+offset_right = 314.88828
+offset_bottom = 53.828
 rotation = -0.05
 pivot_offset = Vector2(56.5, 13.5)
-mouse_filter = 2
 texture = ExtResource("4_df87s")
+patch_margin_left = 29
+patch_margin_right = 27
+axis_stretch_horizontal = 2
+
+[node name="Title" type="Label" parent="Panel/Art/WashiTape" index="0" unique_id=1221876066]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.98600006
+anchor_bottom = 0.018000001
+offset_left = -83.30003
+offset_top = 10.679596
+offset_right = 95.476776
+offset_bottom = 41.627823
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
+theme_override_font_sizes/font_size = 26
+text = "STR_DAILY_MILESTONE_POPUP_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+minimum_font_size = 23
 
 [node name="Content" parent="Panel" index="1" unique_id=45188561]
 anchors_preset = -1
@@ -75,70 +396,159 @@ anchor_left = 0.032894738
 anchor_bottom = 0.79710144
 metadata/_edit_use_anchors_ = true
 
-[node name="Chest" type="TextureRect" parent="Panel/Content" index="0" unique_id=1134514322]
+[node name="Chest" type="Control" parent="Panel/Content" index="0" unique_id=1134514322]
 layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -26.0
-offset_top = 6.0
-offset_right = 26.0
-offset_bottom = 58.0
+offset_top = 86.0
+offset_bottom = 86.0
 grow_horizontal = 2
 mouse_filter = 2
-texture = ExtResource("4_chest")
-expand_mode = 1
-stretch_mode = 5
 
-[node name="Title" type="Label" parent="Panel/Content" index="1" unique_id=1221876066]
+[node name="Glow" type="Sprite2D" parent="Panel/Content/Chest" index="0" unique_id=1900000100]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, -22)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("8_glow")
+
+[node name="Rays" type="Sprite2D" parent="Panel/Content/Chest" index="1" unique_id=1900000101]
+modulate = Color(1, 0.82, 0.4, 0)
+position = Vector2(0, -22)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("7_rays")
+
+[node name="Ring" type="Sprite2D" parent="Panel/Content/Chest" index="2" unique_id=1900000102]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, -30)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("9_ring")
+
+[node name="Ring2" type="Sprite2D" parent="Panel/Content/Chest" index="3" unique_id=1900000103]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, -30)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("9_ring")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Panel/Content/Chest" index="4" unique_id=1207621201]
+scale = Vector2(0.61, 0.61)
+sprite_frames = ExtResource("4_chest")
+animation = &"closed"
+autoplay = "closed"
+
+[node name="Sparkles" type="CPUParticles2D" parent="Panel/Content/Chest" index="5" unique_id=1900000105]
+position = Vector2(0, -28)
+emitting = false
+texture = ExtResource("10_sparkle")
+amount = 18
+lifetime = 1.3
+one_shot = true
+explosiveness = 0.95
+direction = Vector2(0, -1)
+spread = 80.0
+gravity = Vector2(0, 240)
+initial_velocity_min = 140.0
+initial_velocity_max = 320.0
+angular_velocity_min = -120.0
+angular_velocity_max = 120.0
+scale_amount_min = 0.12
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_pop")
+color_ramp = SubResource("Gradient_fade")
+[node name="Coins" type="CPUParticles2D" parent="Panel/Content/Chest" index="6" unique_id=1900000106]
+position = Vector2(0, -28)
+emitting = false
+texture = ExtResource("11_coin")
+amount = 14
+lifetime = 1.7
+one_shot = true
+explosiveness = 0.9
+direction = Vector2(0, -1)
+spread = 55.0
+gravity = Vector2(0, 900)
+initial_velocity_min = 260.0
+initial_velocity_max = 470.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+scale_amount_min = 0.22
+scale_amount_max = 0.34
+color_ramp = SubResource("Gradient_fade")
+[node name="Confetti" type="CPUParticles2D" parent="Panel/Content/Chest" index="7" unique_id=1900000107]
+position = Vector2(0, -28)
+emitting = false
+texture = ExtResource("12_confetti")
+amount = 36
+lifetime = 2.1
+one_shot = true
+explosiveness = 0.9
+direction = Vector2(0, -1)
+spread = 100.0
+gravity = Vector2(0, 380)
+initial_velocity_min = 200.0
+initial_velocity_max = 430.0
+damping_min = 40.0
+damping_max = 90.0
+angular_velocity_min = -540.0
+angular_velocity_max = 540.0
+scale_amount_min = 0.35
+scale_amount_max = 0.7
+scale_amount_curve = SubResource("Curve_confetti")
+color_ramp = SubResource("Gradient_fade")
+color_initial_ramp = SubResource("Gradient_confetti")
+[node name="Twinkle" type="CPUParticles2D" parent="Panel/Content/Chest" index="8" unique_id=1900000108]
+position = Vector2(0, -20)
+emitting = false
+texture = ExtResource("10_sparkle")
+amount = 10
+lifetime = 1.3
+emission_shape = 3
+emission_rect_extents = Vector2(95, 62)
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, -14)
+initial_velocity_min = 6.0
+initial_velocity_max = 20.0
+angular_velocity_min = -60.0
+angular_velocity_max = 60.0
+scale_amount_min = 0.06
+scale_amount_max = 0.16
+scale_amount_curve = SubResource("Curve_pop")
+color_ramp = SubResource("Gradient_fade")
+[node name="Subtitle" type="Label" parent="Panel/Content" index="1" unique_id=1511013971]
+visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 24.0
-offset_top = 62.0
+offset_top = 162.0
 offset_right = -24.0
-offset_bottom = 90.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
-theme_override_font_sizes/font_size = 20
-text = "STR_DAILY_MILESTONE_POPUP_TITLE"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
-
-[node name="Subtitle" type="Label" parent="Panel/Content" index="2" unique_id=1511013971]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 24.0
-offset_top = 88.0
-offset_right = -24.0
-offset_bottom = 106.0
+offset_bottom = 180.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.239216, 0.352941, 0.45098, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 18
 text = "STR_DAILY_MILESTONE_POPUP_SUB"
 horizontal_alignment = 1
 vertical_alignment = 1
-resize_font_to_fit = true
 
-[node name="Reward" type="Label" parent="Panel/Content" index="3" unique_id=1009514747]
+[node name="Reward" type="Label" parent="Panel/Content" index="2" unique_id=1009514747]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 20.0
-offset_top = 112.0
+offset_top = 186.0
 offset_right = -20.0
-offset_bottom = 152.0
+offset_bottom = 226.0
 grow_horizontal = 2
+pivot_offset = Vector2(127, 20)
 theme_override_colors/font_color = Color(0.721569, 0.454902, 0.113725, 1)
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 28
 text = "STR_DAILY_REWARD_COINS"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Ok" type="TextureButton" parent="Panel/Content" index="4" unique_id=2145628717]
+[node name="Ok" type="TextureButton" parent="Panel/Content" index="3" unique_id=2145628717]
+visible = false
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 1
 anchors_preset = -1
@@ -178,5 +588,10 @@ metadata/_edit_lock_ = true
 
 [node name="FxAnim" type="AnimationPlayer" parent="." index="3" unique_id=1831458329]
 libraries/ = SubResource("AnimationLibrary_dm")
+autoplay = &"reveal"
+
+[node name="LoopAnim" type="AnimationPlayer" parent="." index="4" unique_id=1900000200]
+libraries/ = SubResource("AnimationLibrary_loop")
+autoplay = &"idle_loop"
 
 [connection signal="pressed" from="Panel/Content/Ok" to="." method="_on_ok_pressed"]

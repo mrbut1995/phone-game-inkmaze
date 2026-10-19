@@ -130,11 +130,11 @@ func _on_anim_finished(anim_name: StringName) -> void:
 # ---------------------------------------------------------------------------
 # Nội dung trôi theo nút (không "float" khi nhấn / rê)
 # ---------------------------------------------------------------------------
-## Art nút vẽ sẵn độ lệch: pressed chìm 4px thiết kế = 2px hiển thị; hover nâng 2px
+## Art nút (kiểu GỜ ĐÁY) vẽ sẵn độ lệch: pressed chìm 10px thiết kế = 5px hiển thị; hover nâng 2px
 ## thiết kế = 1px. Bù đúng chừng đó cho các node nội dung (số màn · hàng sao · ổ khoá ·
 ## vòng halo) để chúng dính chặt vào mặt nút.
 @export_group("Nội dung trôi theo nút")
-@export_range(0.0, 12.0, 0.5) var content_press_sink := 2.0
+@export_range(0.0, 12.0, 0.5) var content_press_sink := 5.0
 @export_range(-6.0, 6.0, 0.5) var content_hover_lift := -1.0
 @export_range(0.01, 0.5, 0.01) var content_follow_sec := 0.08
 

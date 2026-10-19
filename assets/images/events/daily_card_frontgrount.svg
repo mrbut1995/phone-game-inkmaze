@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 520" width="340" height="520">
+  <defs>
+    <clipPath id="cardClip">
+      <rect width="340" height="504" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#cardClip)">
+    <!-- Mê cung nhỏ dán băng keo -->
+    <g transform="translate(26,128) rotate(-8) scale(0.62)" stroke="#256C96" stroke-linecap="round">
+      <rect width="112" height="112" rx="22" fill="#F4F8FA" stroke-width="4"/>
+      <g stroke-width="1.5" opacity="0.4">
+        <line x1="28" y1="0" x2="28" y2="112"/>
+        <line x1="56" y1="0" x2="56" y2="112"/>
+        <line x1="84" y1="0" x2="84" y2="112"/>
+        <line x1="0" y1="28" x2="112" y2="28"/>
+        <line x1="0" y1="56" x2="112" y2="56"/>
+        <line x1="0" y1="84" x2="112" y2="84"/>
+      </g>
+      <path d="M 16 96 L 16 58 L 56 58 L 56 20 L 96 20" fill="none" stroke="#D84444" stroke-width="7" stroke-linejoin="round"/>
+      <circle cx="16" cy="96" r="8" fill="#163A58" stroke="none"/>
+      <circle cx="96" cy="20" r="8" fill="#D84444" stroke="none"/>
+      <!-- Miếng băng keo -->
+      <g transform="translate(6,-10) rotate(-12)">
+        <rect width="64" height="20" rx="3" fill="#F6C453" fill-opacity="0.9" stroke="none"/>
+      </g>
+    </g>
+
+    <!-- Bút chì -->
+    <g transform="translate(288,160) rotate(32)">
+      <rect x="-8" y="-52" width="16" height="12" rx="3" fill="#F9A8C0" stroke="#B45309" stroke-width="2.5"/>
+      <rect x="-8" y="-42" width="16" height="6" fill="#CBD5DB" stroke="#7A8A94" stroke-width="2"/>
+      <rect x="-8" y="-36" width="16" height="62" fill="#F59E0B" stroke="#B45309" stroke-width="2.5"/>
+      <line x1="0" y1="-34" x2="0" y2="24" stroke="#B45309" stroke-width="1.5" opacity="0.5"/>
+      <polygon points="-8,26 8,26 0,44" fill="#F3D9A8" stroke="#B45309" stroke-width="2.5" stroke-linejoin="round"/>
+      <polygon points="-3,38 3,38 0,44" fill="#163A58"/>
+    </g>
+
+    <!-- Tờ lịch phía sau -->
+    <g transform="translate(176,142) rotate(5)">
+      <rect x="-70" y="-74" width="140" height="150" rx="18" fill="#DDEEF8" stroke="#6EA0C8" stroke-width="3"/>
+    </g>
+
+    <!-- Tờ lịch chính (Đã bỏ ngày tháng và ngôi sao) -->
+    <g transform="translate(100,68)">
+      <rect x="0" y="4" width="140" height="150" rx="18" fill="#000" fill-opacity="0.12"/>
+      <rect width="140" height="150" rx="18" fill="#FFFFFF" stroke="#D84444" stroke-width="3.5"/>
+      <!-- Header đỏ của tờ lịch -->
+      <path d="M 0 46 L 0 18 A 18 18 0 0 1 18 0 L 122 0 A 18 18 0 0 1 140 18 L 140 46 Z" fill="#D84444"/>
+      <!-- Lỗ treo lịch -->
+      <circle cx="40" cy="3" r="8" fill="#FAF5EB" stroke="#9B2C2C" stroke-width="2"/>
+      <circle cx="100" cy="3" r="8" fill="#FAF5EB" stroke="#9B2C2C" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

@@ -4,14 +4,89 @@
 [ext_resource type="Texture2D" uid="uid://cwum1n04j1scb" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
 [ext_resource type="Texture2D" uid="uid://c1e8elv060y5" path="res://assets/images-png/events/halloween_event_card_background.png" id="2_d08ep"]
 [ext_resource type="Texture2D" uid="uid://6s27psw45flr" path="res://assets/images-png/events/halloween_event_card_frontground.png" id="3_jnhu0"]
+[ext_resource type="Texture2D" uid="uid://bjvqkyigfh5q" path="res://assets/images/events/halloween_card_grid.svg" id="5_grid"]
+
+[sub_resource type="StyleBoxFlat" id="sb_card_lip"]
+bg_color = Color(0.541, 0.196, 0.012, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="sb_card_mask"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="sb_card_frame"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.91, 0.365, 0.016, 0.9)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
 
 [sub_resource type="StyleBoxFlat" id="sb_cta"]
 bg_color = Color(0.847, 0.267, 0.267, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.631, 0.169, 0.169, 1)
+border_width_bottom = 4
+border_color = Color(0.5, 0.12, 0.12, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 6
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="sb_cta_pressed"]
+bg_color = Color(0.745, 0.235, 0.235, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.486, 0.153, 0.153, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 3
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="sb_cta_hover"]
+bg_color = Color(0.894, 0.322, 0.322, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.5, 0.12, 0.12, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 6
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="sb_cta_disabled"]
+bg_color = Color(0.62, 0.5, 0.5, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.43, 0.34, 0.34, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -21,27 +96,47 @@ corner_radius_bottom_left = 10
 
 [node name="EventCard" type="AspectRatioContainer" unique_id=1846176079]
 custom_minimum_size = Vector2(216, 270)
-layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 3
 ratio = 0.8
 stretch_mode = 1
-alignment_horizontal = 1
-alignment_vertical = 1
 script = ExtResource("1_card")
 
 [node name="Content" type="Control" parent="." unique_id=461250899]
 layout_mode = 2
 
-[node name="Background" type="Control" parent="Content" unique_id=1895401948]
+[node name="Background" type="Control" parent="Content" unique_id=1122985189]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="BgGradient" type="ColorRect" parent="Content/Background" unique_id=2025717736]
+[node name="Lip" type="Panel" parent="Content/Background" unique_id=1122985190]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_card_lip")
+
+[node name="ContentMask" type="Panel" parent="Content/Background" unique_id=1290117869]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_card_mask")
+
+[node name="BgGradient" type="ColorRect" parent="Content/Background/ContentMask" unique_id=2025717736]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,7 +146,18 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.1, 0.07, 0.2, 1)
 
-[node name="BackArt" type="TextureRect" parent="Content/Background" unique_id=1815859565]
+[node name="BgGrid" type="TextureRect" parent="Content/Background/ContentMask/BgGradient" unique_id=1122985191]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_grid")
+expand_mode = 1
+
+[node name="BackArt" type="TextureRect" parent="Content/Background/ContentMask" unique_id=1815859565]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -62,7 +168,7 @@ mouse_filter = 2
 texture = ExtResource("2_d08ep")
 expand_mode = 1
 
-[node name="FrontArt" type="NinePatchRect" parent="Content/Background" unique_id=1012687160]
+[node name="FrontArt" type="NinePatchRect" parent="Content/Background/ContentMask" unique_id=1012687160]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,6 +177,17 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_jnhu0")
 region_rect = Rect2(0, 0, 340, 504)
+
+[node name="Frame" type="Panel" parent="Content/Background" unique_id=1122985192]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_card_frame")
 
 [node name="Chips" type="HBoxContainer" parent="Content" unique_id=286276332]
 z_index = 1
@@ -149,44 +266,13 @@ layout_mode = 2
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.03181818
+anchor_left = 0.046296295
 anchor_top = 0.17037037
-anchor_right = 0.9410001
-anchor_bottom = 0.615
-offset_right = -0.020019531
-offset_bottom = -0.05000305
+anchor_right = 0.9554782
+anchor_bottom = 0.5444444
 theme_override_constants/separation = 14
 alignment = 2
 metadata/_edit_use_anchors_ = true
-
-[node name="DailyDate" type="VBoxContainer" parent="Content/Text" unique_id=211784393]
-visible = false
-layout_mode = 2
-mouse_filter = 2
-
-[node name="Month" type="Label" parent="Content/Text/DailyDate" unique_id=496465143]
-layout_mode = 2
-theme_type_variation = &"EventDailyMonth"
-text = "THÁNG 10"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
-
-[node name="Day" type="Label" parent="Content/Text/DailyDate" unique_id=1362914701]
-layout_mode = 2
-theme_type_variation = &"EventDailyDay"
-text = "10"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
-
-[node name="Weekday" type="Label" parent="Content/Text/DailyDate" unique_id=2033491359]
-layout_mode = 2
-theme_type_variation = &"EventDailyWeekday"
-text = "Thứ Bảy"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
 
 [node name="Title" type="VBoxContainer" parent="Content/Text" unique_id=1852283813]
 layout_mode = 2
@@ -196,7 +282,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 theme_type_variation = &"EventTitle"
 theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 22
 text = "Tiêu đề"
 horizontal_alignment = 1
 clip_text = true
@@ -205,7 +291,7 @@ clip_text = true
 layout_mode = 2
 theme_type_variation = &"EventTitle"
 theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 22
 text = "Dòng 2"
 horizontal_alignment = 1
 clip_text = true
@@ -239,11 +325,10 @@ z_index = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.06363636
-anchor_top = 0.688963
-anchor_right = 0.93636364
-anchor_bottom = 0.9777778
-offset_top = -19.020004
-offset_bottom = 5.0
+anchor_top = 0.5629
+anchor_right = 0.93600005
+anchor_bottom = 0.96300006
+offset_bottom = -15.910019
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -273,6 +358,7 @@ layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
 expand_mode = 1
+stretch_mode = 5
 
 [node name="RewardLabel" type="Label" parent="Content/Information/ProgressPanel/Rewards/Reward1" unique_id=1602495665]
 layout_mode = 2
@@ -308,7 +394,9 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 theme_override_styles/normal = SubResource("sb_cta")
-theme_override_styles/hover = SubResource("sb_cta")
+theme_override_styles/pressed = SubResource("sb_cta_pressed")
+theme_override_styles/hover = SubResource("sb_cta_hover")
+theme_override_styles/disabled = SubResource("sb_cta_disabled")
 theme_override_styles/focus = SubResource("sb_empty")
 
 [node name="CtaLabel" type="Label" parent="Content/Information/CtaButton" unique_id=1998966182]
@@ -316,6 +404,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"EventCtaLabel"
@@ -326,9 +415,11 @@ clip_text = true
 
 [node name="CompletedOverlay" type="ColorRect" parent="Content" unique_id=343414216]
 visible = false
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

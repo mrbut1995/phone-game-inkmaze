@@ -1,31 +1,29 @@
 [gd_scene format=3 uid="uid://dq7k1m4lamg2c"]
 
-[ext_resource type="Script" path="res://scripts/nodes/daily/milestone_chip.gd" id="1_chip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/ring_on.png" id="2_on"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/ring_off.png" id="3_off"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/chest.png" id="4_chest"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/check_badge.png" id="5_badge"]
+[ext_resource type="Script" uid="uid://dwc2xw57tk2jh" path="res://scripts/nodes/daily/milestone_chip.gd" id="1_chip"]
+[ext_resource type="Texture2D" uid="uid://c3uruc8moyy18" path="res://assets/images-png/daily/ring_off.png" id="3_off"]
+[ext_resource uid="uid://bhdewqbcltopn" type="Texture2D" path="res://assets/images-png/daily/chest_closed.png" id="4_chest"]
+[ext_resource uid="uid://1am8aehqp420" type="Texture2D" path="res://assets/images-png/daily/chest.png" id="7_chest_open"]
+[ext_resource type="Texture2D" uid="uid://b3fvm8sypownm" path="res://assets/images-png/daily/check_badge.png" id="5_badge"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="6_theme"]
 
-[node name="MilestoneChip" type="Button" node_paths=PackedStringArray("ring", "chest", "badge", "lbl_stars")]
+[node name="MilestoneChip" type="Button" unique_id=1213168266 node_paths=PackedStringArray("ring", "chest", "badge", "lbl_stars")]
 custom_minimum_size = Vector2(40, 40)
-layout_mode = 3
-anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 mouse_default_cursor_shape = 2
-flat = true
 theme = ExtResource("6_theme")
+flat = true
 script = ExtResource("1_chip")
 ring = NodePath("Ring")
 chest = NodePath("Ring/Chest")
 badge = NodePath("Ring/Badge")
 lbl_stars = NodePath("Stars")
 
-[node name="Ring" type="TextureRect" parent="."]
+[node name="Ring" type="TextureRect" parent="." unique_id=360493906]
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 1
 anchors_preset = 8
@@ -44,7 +42,7 @@ texture = ExtResource("3_off")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Chest" type="TextureRect" parent="Ring"]
+[node name="Chest" type="TextureRect" parent="Ring" unique_id=1235099882]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 1
 anchors_preset = 8
@@ -52,10 +50,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -12.0
-offset_top = -12.0
-offset_right = 12.0
-offset_bottom = 12.0
+offset_left = -23.0
+offset_top = -28.0
+offset_right = 23.0
+offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -63,7 +61,7 @@ texture = ExtResource("4_chest")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Badge" type="TextureRect" parent="Ring"]
+[node name="Badge" type="TextureRect" parent="Ring" unique_id=1115598138]
 visible = false
 layout_mode = 1
 anchors_preset = 1
@@ -79,7 +77,7 @@ texture = ExtResource("5_badge")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Stars" type="Label" parent="."]
+[node name="Stars" type="Label" parent="." unique_id=2005335415]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -89,10 +87,8 @@ anchor_bottom = 1.0
 offset_left = -25.0
 offset_top = -18.0
 offset_right = 25.0
-offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 0
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.0941176, 0.239216, 0.352941, 1)
 theme_override_font_sizes/font_size = 11
 text = "STR_DAILY_MILESTONE_STARS"

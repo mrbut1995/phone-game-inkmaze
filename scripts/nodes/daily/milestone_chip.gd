@@ -33,6 +33,8 @@ func setup(def: Dictionary, stars_now: int, claimed: bool) -> void:
 	if ring != null:
 		ring.texture = _tex("ring_on.png" if reached else "ring_off.png")
 	if chest != null:
+		# Rương ĐÓNG (`chest_closed`) khi chưa nhận thưởng · rương MỞ (`chest`) khi đã nhận
+		chest.texture = _tex("chest.png" if claimed else "chest_closed.png")
 		chest.modulate = Color(1, 1, 1, 1) if reached else Color(1, 1, 1, 0.85)
 	if badge != null:
 		badge.visible = claimed

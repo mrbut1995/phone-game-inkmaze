@@ -4,13 +4,13 @@
 [ext_resource type="Script" uid="uid://d3tppcudxm1tm" path="res://scripts/scenes/layout/daily_layout.gd" id="2_layout"]
 [ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
 [ext_resource type="PackedScene" uid="uid://bx4mq1dw7lc0i" path="res://nodes/daily/action_card.tscn" id="4_card"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/btn_square_normal.png" id="5_back_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/btn_square_pressed.png" id="6_back_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/bar_track.png" id="7_bar_bg"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/bar_fill.png" id="8_bar_fill"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/star_big.png" id="9_star"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/chip_white.png" id="10_chip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/clock_blue.png" id="11_clock"]
+[ext_resource uid="uid://7a3hksoy62bs" type="Texture2D" path="res://assets/images-png/daily/btn_square_normal.png" id="5_back_n"]
+[ext_resource uid="uid://c2jn7vk016ust" type="Texture2D" path="res://assets/images-png/daily/btn_square_pressed.png" id="6_back_p"]
+[ext_resource uid="uid://ctwwng3qoistt" type="Texture2D" path="res://assets/images-png/daily/bar_track.png" id="7_bar_bg"]
+[ext_resource uid="uid://j26r0do5uakc" type="Texture2D" path="res://assets/images-png/daily/bar_fill.png" id="8_bar_fill"]
+[ext_resource uid="uid://bypi88itx11cm" type="Texture2D" path="res://assets/images-png/daily/star_big.png" id="9_star"]
+[ext_resource uid="uid://dopputx02por5" type="Texture2D" path="res://assets/images-png/daily/chip_white.png" id="10_chip"]
+[ext_resource uid="uid://byt8wshkuayfy" type="Texture2D" path="res://assets/images-png/daily/clock_blue.png" id="11_clock"]
 
 [sub_resource type="Animation" id="Animation_pulse"]
 resource_name = "pulse"
@@ -323,10 +323,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="PulseAnim" type="AnimationPlayer" parent="." index="1" unique_id=544807469]
-libraries/ = SubResource("AnimationLibrary_pulse")
+libraries = {
+&"": SubResource("AnimationLibrary_pulse")
+}
 
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="2" unique_id=928098753]
-libraries/ = SubResource("AnimationLibrary_enter")
+libraries = {
+&"": SubResource("AnimationLibrary_enter")
+}
 autoplay = &"enter"
 
 [connection signal="pressed" from="Panel/Stage/TopBar/Back" to="." method="_on_back_pressed"]
