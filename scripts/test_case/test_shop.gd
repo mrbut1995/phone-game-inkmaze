@@ -323,9 +323,10 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	await process_frame
 	await process_frame
 
-	_entry(_ui(scene, "TopBar/Back") is TextureButton, "Co nut Back")
+	_entry(_ui(scene, "TopBar/HeaderRow/Back") is TextureButton, "Co nut Back")
 	_entry(_ui(scene, "Tabs") is HBoxContainer, "Co hang tab")
-	_entry(scene.layout.wallet_bar != null and scene.layout.wallet_count is Label, "Co vi Xu")
+	_entry(scene.layout.wallet_bar is CoinChip and scene.layout.wallet_count is Label,
+		"Vi Xu dung CoinChip chung")
 	_entry(_ui(scene, "Content/List") is VBoxContainer, "Co danh sach mon hang")
 	_entry(_ui(scene, "GiftBanner/GiftBtn") is TextureButton, "Co nut o banner tiep suc")
 	_entry(scene.layout.tabs_box.get_child_count() == 4, "4 tab khai san trong scene bo cuc")

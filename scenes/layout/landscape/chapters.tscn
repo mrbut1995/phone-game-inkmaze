@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" path="res://scripts/scenes/layout/chapters_layout.gd" id="2_layout"]
+[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="coin_chip"]
 [ext_resource uid="uid://yssg5du4e4fc" type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource uid="uid://c8fvwpvick2hx" type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
 [ext_resource uid="uid://c8ys5j8qkltn2" type="Texture2D" path="res://assets/images-png/chapters/wallet_chip.png" id="5_wallet"]
@@ -56,15 +57,16 @@ _data = {
 &"pulse": SubResource("Animation_chapters_pulse_l")
 }
 
-[node name="Landscape" node_paths=PackedStringArray("btn_back", "cards_box", "lbl_wallet", "btn_continue", "lbl_continue", "list", "top_bar", "wallet_bar", "banner") instance=ExtResource("1_parent")]
+[node name="Landscape" node_paths=PackedStringArray("btn_back", "cards_box", "lbl_wallet", "btn_continue", "lbl_continue", "list", "top_bar", "wallet_bar", "banner", "header_anchor") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
-btn_back = NodePath("Body/Left/TopBar/Back")
+header_anchor = NodePath("Body/Left/TopBarAnchor")
+btn_back = NodePath("TopBar/HeaderRow/Back")
 cards_box = NodePath("Body/List/Cards")
 lbl_wallet = NodePath("Body/Left/Wallet/Count")
 btn_continue = NodePath("Body/Left/ContinueButton")
 lbl_continue = NodePath("Body/Left/ContinueButton/Label")
 list = NodePath("Body/List")
-top_bar = NodePath("Body/Left/TopBar")
+top_bar = NodePath("TopBar/HeaderRow")
 wallet_bar = NodePath("Body/Left/Wallet")
 banner = NodePath("Body/Left/Banner")
 anchors_preset = 15
@@ -88,12 +90,20 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.35
 theme_override_constants/separation = 10
 
-[node name="TopBar" type="HBoxContainer" parent="Body/Left"]
+[node name="TopBarAnchor" type="Control" parent="Body/Left" index="0"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+mouse_filter = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="TopBar" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 40)
 theme_override_constants/separation = 10
 
-[node name="Back" type="TextureButton" parent="Body/Left/TopBar"]
+
+[node name="Back" type="TextureButton" parent="TopBar/HeaderRow"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_vertical = 4
@@ -106,7 +116,7 @@ texture_focused = ExtResource("3_back_n")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="Body/Left/TopBar"]
+[node name="Title" type="Label" parent="TopBar/HeaderRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LevelsTitle"
@@ -157,6 +167,11 @@ theme_type_variation = &"ChapterWalletLabel"
 text = "STR_CHAPTER_STARS_HELD"
 vertical_alignment = 1
 mouse_filter = 2
+
+[node name="CoinChip" parent="TopBar/HeaderRow" index="3" instance=ExtResource("coin_chip")]
+custom_minimum_size = Vector2(111, 32)
+layout_mode = 2
+size_flags_vertical = 4
 
 [node name="Banner" type="TextureRect" parent="Body/Left"]
 custom_minimum_size = Vector2(0, 64)

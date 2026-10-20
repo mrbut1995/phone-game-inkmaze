@@ -23,8 +23,8 @@ metadata/_edit_use_anchors_ = true
 wait_time = 1.0
 autostart = true
 
-[connection signal="pressed" from="Portrait/Panel/Stage/TopBar/Back" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="Landscape/Panel/Stage/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Landscape/TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Portrait/Panel/Stage/Actions/PlayCard" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Landscape/Panel/Stage/RightCol/Actions/PlayCard" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Portrait/Panel/Stage/Actions/ChallengeCard" to="." method="_on_challenge_pressed"]

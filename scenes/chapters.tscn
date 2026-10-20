@@ -27,5 +27,5 @@ script = ExtResource("2_script")
 
 [connection signal="pressed" from="Portrait/TopBar/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Portrait/ContinueButton" to="." method="_on_continue_pressed"]
-[connection signal="pressed" from="Landscape/Body/Left/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Landscape/TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Landscape/Body/Left/ContinueButton" to="." method="_on_continue_pressed"]

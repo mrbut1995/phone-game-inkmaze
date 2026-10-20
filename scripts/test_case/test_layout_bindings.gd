@@ -137,7 +137,9 @@ func _check_exports(scene: Node, holder: Node, screen: String, holder_name: Stri
 			continue
 		total += 1
 		var value: Variant = holder.get(str(prop.get("name")))
-		if value == null and not opt.has(str(prop.get("name"))):
+		# `header_anchor` là hook TUỲ CHỌN của BaseLayout: chỉ màn có thanh trên cục bộ mới bind.
+		var optional_name := str(prop.get("name")) == "header_anchor"
+		if value == null and not optional_name and not opt.has(str(prop.get("name"))):
 			missing.append(str(prop.get("name")))
 	_entry(total > 0, "%s/%s: có %d export node trên script layout" % [screen, holder_name, total])
 	_entry(missing.is_empty(), "%s/%s: mọi export trỏ tới node thật%s"

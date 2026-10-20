@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bh04s7e4a26qx" path="res://assets/images-png/archivements/stamp_claimed.png" id="12_stamp"]
 [ext_resource type="Texture2D" uid="uid://botll0m83hqk5" path="res://assets/images-png/archivements/tab_active.png" id="13_nvjrs"]
 [ext_resource type="PackedScene" uid="uid://d1di7hj3ikjhg" path="res://nodes/archivements/tab_button.tscn" id="20_tab"]
+[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="coin_chip"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c5arx"]
 content_margin_left = 7.0
@@ -438,7 +439,7 @@ dots_box = NodePath("Sheet/Dots")
 empty_label = NodePath("Sheet/EmptyLabel")
 stamp_label = NodePath("Sheet/Footer/Stamp/Label")
 
-[node name="TopBar" type="HBoxContainer" parent="." index="0" unique_id=1782657395]
+[node name="TopBar" parent="." index="0" unique_id=1782657395]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.034
@@ -763,3 +764,8 @@ vertical_alignment = 1
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="2" unique_id=1819513660]
 libraries/ = SubResource("AnimationLibrary_ach_enter_p")
 autoplay = &"enter"
+
+[node name="CoinChip" parent="TopBar" index="2" instance=ExtResource("coin_chip")]
+custom_minimum_size = Vector2(111, 32)
+layout_mode = 2
+size_flags_vertical = 4

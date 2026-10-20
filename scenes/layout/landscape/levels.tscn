@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://bbivg47hraoh6" path="res://scripts/scenes/layout/levels_layout.gd" id="2_nkhig"]
+[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="coin_chip"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
 [ext_resource type="Texture2D" uid="uid://eeqy8ny5601j" path="res://assets/images-png/level_selector/chapter_banner.png" id="5_banner"]
@@ -125,14 +126,15 @@ _data = {
 &"enter": SubResource("Animation_levels_enter_p")
 }
 
-[node name="Landscape" unique_id=569217120 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_stars", "lbl_stars_total", "lbl_chapter", "lbl_change_chapter", "banner") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=569217120 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_stars", "lbl_stars_total", "lbl_chapter", "lbl_change_chapter", "banner", "header_anchor") instance=ExtResource("1_parent")]
 mouse_filter = 2
 script = ExtResource("2_nkhig")
-btn_back = NodePath("Content/InformationArea/TopBar/Back")
+header_anchor = NodePath("Content/InformationArea/TopBarAnchor")
+btn_back = NodePath("TopBar/HeaderRow/Back")
 btn_continue = NodePath("Content/InformationArea/ContinueButton")
 lbl_continue = NodePath("Content/InformationArea/ContinueButton/Label")
-lbl_stars = NodePath("Content/InformationArea/TopBar/StarsCounter/CountRow/Count")
-lbl_stars_total = NodePath("Content/InformationArea/TopBar/StarsCounter/CountRow/Total")
+lbl_stars = NodePath("TopBar/HeaderRow/StarsCounter/CountRow/Count")
+lbl_stars_total = NodePath("TopBar/HeaderRow/StarsCounter/CountRow/Total")
 lbl_chapter = NodePath("Content/InformationArea/ChapterBanner/TitleContainer/Title")
 lbl_change_chapter = NodePath("Content/InformationArea/ChapterBanner/TitleContainer/ChangeChapter")
 banner = NodePath("Content/InformationArea/ChapterBanner")
@@ -156,6 +158,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="TopBar" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+
+
+[node name="CoinChip" parent="TopBar/HeaderRow" index="3" instance=ExtResource("coin_chip")]
+custom_minimum_size = Vector2(111, 32)
+layout_mode = 2
+size_flags_vertical = 4
 
 [node name="ChapterBanner" type="NinePatchRect" parent="Content/InformationArea" index="0" unique_id=1534693521]
 layout_mode = 1
@@ -265,7 +280,7 @@ texture = ExtResource("13_play")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="TopBar" type="HBoxContainer" parent="Content/InformationArea" index="2" unique_id=1798765780]
+[node name="TopBarAnchor" type="Control" parent="Content/InformationArea" index="2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.034
@@ -273,9 +288,9 @@ anchor_top = 0.033770833
 anchor_right = 0.961
 anchor_bottom = 0.142
 offset_bottom = -3.5708313
-metadata/_edit_use_anchors_ = true
+mouse_filter = 2
 
-[node name="Back" type="TextureButton" parent="Content/InformationArea/TopBar" index="0" unique_id=429014728]
+[node name="Back" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=429014728]
 layout_mode = 2
 texture_normal = ExtResource("3_back_n")
 texture_pressed = ExtResource("4_back_p")
@@ -284,7 +299,7 @@ texture_disabled = ExtResource("3_back_n")
 texture_focused = ExtResource("3_back_n")
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="Content/InformationArea/TopBar" index="1" unique_id=776406799]
+[node name="Title" type="Label" parent="TopBar/HeaderRow" index="1" unique_id=776406799]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LevelsTitle"
@@ -292,7 +307,7 @@ text = "STR_SELECT_LEVEL_TITLE"
 horizontal_alignment = 1
 text_overrun_behavior = 3
 
-[node name="StarsCounter" type="NinePatchRect" parent="Content/InformationArea/TopBar" index="2" unique_id=486461161]
+[node name="StarsCounter" type="NinePatchRect" parent="TopBar/HeaderRow" index="2" unique_id=486461161]
 custom_minimum_size = Vector2(120, 55)
 layout_mode = 2
 size_flags_vertical = 4
@@ -302,7 +317,7 @@ patch_margin_top = 12
 patch_margin_right = 13
 patch_margin_bottom = 15
 
-[node name="CountRow" type="HBoxContainer" parent="Content/InformationArea/TopBar/StarsCounter" index="0" unique_id=549809886]
+[node name="CountRow" type="HBoxContainer" parent="TopBar/HeaderRow/StarsCounter" index="0" unique_id=549809886]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.04
@@ -314,7 +329,7 @@ grow_vertical = 2
 theme_override_constants/separation = 6
 alignment = 1
 
-[node name="Icon" type="TextureRect" parent="Content/InformationArea/TopBar/StarsCounter/CountRow" index="0" unique_id=1359081211]
+[node name="Icon" type="TextureRect" parent="TopBar/HeaderRow/StarsCounter/CountRow" index="0" unique_id=1359081211]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_vertical = 4
@@ -323,14 +338,14 @@ texture = ExtResource("8_star")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Count" type="Label" parent="Content/InformationArea/TopBar/StarsCounter/CountRow" index="1" unique_id=532223457]
+[node name="Count" type="Label" parent="TopBar/HeaderRow/StarsCounter/CountRow" index="1" unique_id=532223457]
 layout_mode = 2
 theme_type_variation = &"LevelsStarCount"
 theme_override_font_sizes/font_size = 30
 text = "0"
 vertical_alignment = 1
 
-[node name="Total" type="Label" parent="Content/InformationArea/TopBar/StarsCounter/CountRow" index="2" unique_id=882088240]
+[node name="Total" type="Label" parent="TopBar/HeaderRow/StarsCounter/CountRow" index="2" unique_id=882088240]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
 theme_override_font_sizes/font_size = 18

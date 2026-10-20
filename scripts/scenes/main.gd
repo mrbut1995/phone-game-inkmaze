@@ -193,9 +193,7 @@ func _setup_buttons() -> void:
 	if layout.dock_badges != null:
 		layout.dock_badges.set_badge(0)
 	
-	# Ví Xu: nút `+` mở Cửa hàng
-	if layout.coin_chip != null and not layout.coin_chip.plus_pressed.is_connected(_on_shop_pressed):
-		layout.coin_chip.plus_pressed.connect(_on_shop_pressed)
+	# Ví Xu tự lo nút `+` (CoinChip mở Cửa hàng) — main chỉ cần cập nhật số dư
 
 
 ## ModeCard phát `card_pressed` (không dùng `pressed` để tránh trùng với nút CTA bên trong)

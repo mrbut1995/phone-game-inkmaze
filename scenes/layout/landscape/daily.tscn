@@ -47,7 +47,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/Stage/TopBar:modulate")
+tracks/0/path = NodePath("TopBar/HeaderRow:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -87,7 +87,7 @@ length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/Stage/TopBar:modulate")
+tracks/0/path = NodePath("TopBar/HeaderRow:modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -894,9 +894,10 @@ _data = {
 &"arrive": SubResource("Animation_arrive")
 }
 
-[node name="Landscape" unique_id=1219837756 node_paths=PackedStringArray("btn_back", "calendar", "lbl_star_total", "bar_stars", "milestones_host", "play_card", "challenge_card", "lbl_reset", "coin_chip", "star_big", "vfx_anim", "arrive_anim", "fly_host") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=1219837756 node_paths=PackedStringArray("btn_back", "calendar", "lbl_star_total", "bar_stars", "milestones_host", "play_card", "challenge_card", "lbl_reset", "coin_chip", "star_big", "vfx_anim", "arrive_anim", "fly_host", "header_anchor") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
-btn_back = NodePath("Panel/Stage/TopBar/Back")
+header_anchor = NodePath("Panel/Stage/TopBarAnchor")
+btn_back = NodePath("TopBar/HeaderRow/Back")
 calendar = NodePath("Panel/Stage/Calendar")
 lbl_star_total = NodePath("Panel/Stage/RightCol/StarBar/Star/Total")
 bar_stars = NodePath("Panel/Stage/RightCol/StarBar/Bar")
@@ -904,7 +905,7 @@ milestones_host = NodePath("Panel/Stage/RightCol/StarBar/Milestones")
 play_card = NodePath("Panel/Stage/RightCol/Actions/PlayCard")
 challenge_card = NodePath("Panel/Stage/RightCol/Actions/ChallengeCard")
 lbl_reset = NodePath("Panel/Stage/RightCol/ResetChip/Center/Label")
-coin_chip = NodePath("Panel/Stage/TopBar/CoinChip")
+coin_chip = NodePath("TopBar/HeaderRow/CoinChip")
 star_big = NodePath("Panel/Stage/RightCol/StarBar/Star")
 vfx_anim = NodePath("VfxAnim")
 arrive_anim = NodePath("ArriveAnim")
@@ -934,14 +935,21 @@ offset_bottom = 540.0
 mouse_filter = 2
 color = Color(0.847, 0.267, 0.267, 0.85)
 
-[node name="TopBar" type="Control" parent="Panel/Stage" index="1" unique_id=1787579780]
+[node name="TopBarAnchor" type="Control" parent="Panel/Stage" index="1"]
 anchors_preset = 0
 offset_top = 8.0
 offset_right = 960.0
 offset_bottom = 48.0
 mouse_filter = 2
 
-[node name="Back" type="TextureButton" parent="Panel/Stage/TopBar" index="0" unique_id=42469856]
+[node name="HeaderRow" type="Control" parent="TopBar" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+
+[node name="Back" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=42469856]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
 offset_left = 30.0
@@ -956,7 +964,7 @@ texture_hover = ExtResource("6_back_p")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Title" type="Label" parent="Panel/Stage/TopBar" index="1" unique_id=251495373]
+[node name="Title" type="Label" parent="TopBar/HeaderRow" index="1" unique_id=251495373]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -972,7 +980,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
 
-[node name="CoinChip" parent="Panel/Stage/TopBar" instance=ExtResource("13_coin")]
+[node name="CoinChip" parent="TopBar/HeaderRow" instance=ExtResource("13_coin")]
 custom_minimum_size = Vector2(111, 32)
 layout_mode = 0
 anchors_preset = 0
@@ -1303,7 +1311,7 @@ libraries/ = SubResource("AnimationLibrary_vfx")
 libraries/ = SubResource("AnimationLibrary_arrive")
 
 [connection signal="animation_finished" from="VfxAnim" to="." method="_on_vfx_anim_finished"]
-[connection signal="pressed" from="Panel/Stage/TopBar/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
 [connection signal="day_selected" from="Panel/Stage/Calendar" to="." method="_on_day_selected"]
 [connection signal="pressed" from="Panel/Stage/RightCol/Actions/PlayCard" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Panel/Stage/RightCol/Actions/ChallengeCard" to="." method="_on_challenge_pressed"]

@@ -103,5 +103,5 @@ script = ExtResource("14_chal")
 [connection signal="timeout" from="Controllers/GameController/FloorBonusSfxTimer" to="Controllers/GameController" method="_on_floor_bonus_sfx_timeout"]
 [connection signal="pressed" from="Portrait/Status/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="Portrait/Status/Instruction" to="Controllers/GameController" method="open_instruction"]
-[connection signal="pressed" from="Landscape/Content/LeftCol/Status/Bar/Pause" to="." method="_on_pause_pressed"]
-[connection signal="pressed" from="Landscape/Content/LeftCol/Status/Bar/Instruction" to="Controllers/GameController" method="open_instruction"]
+[connection signal="pressed" from="Landscape/TopBar/HeaderRow/Bar/Pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="Landscape/TopBar/HeaderRow/Bar/Instruction" to="Controllers/GameController" method="open_instruction"]

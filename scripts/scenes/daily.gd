@@ -176,17 +176,9 @@ func _wire_buttons() -> void:
 		# "Thở" nhẹ để hút mắt vào thẻ CHƠI — animation "pulse" của layout (PulseAnim)
 		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.play_card):
 			UIAnim.play_pulse(layout.play_card, 1.02, 2.0)
-	if layout.coin_chip != null and not layout.coin_chip.plus_pressed.is_connected(_on_coin_plus_pressed):
-		layout.coin_chip.plus_pressed.connect(_on_coin_plus_pressed)
 	if _daily != null and _daily.has_signal("daily_changed") \
 			and not _daily.is_connected("daily_changed", _refresh):
 		_daily.connect("daily_changed", _refresh)
-
-
-## Bấm `+` trên ví Xu → mở Cửa hàng
-func _on_coin_plus_pressed() -> void:
-	Sfx.play(Sfx.BTN_CLICK)
-	Nav.goto_shop()
 
 
 ## Cập nhật số Xu trên ví (ví dùng chung `ArchivementManager.coins` với Main Screen)

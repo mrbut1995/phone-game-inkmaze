@@ -80,7 +80,7 @@ func _check_status_bar_landscape() -> void:
 	root.add_child(ls)
 	await process_frame
 	_check(ls.get("instruction_btn") != null, "layout ngang: co bind instruction_btn")
-	_check(ls.get_node_or_null("Content/LeftCol/Status/Bar/Instruction") != null,
+	_check(ls.get_node_or_null("TopBar/HeaderRow/Bar/Instruction") != null,
 			"StatusBar ngang: co nut Instruction")
 	ls.queue_free()
 	await process_frame

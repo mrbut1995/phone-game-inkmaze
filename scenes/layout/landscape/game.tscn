@@ -13,19 +13,21 @@
 [ext_resource type="Texture2D" uid="uid://dksftry4xsxbo" path="res://assets/images-png/game/btn_help_disabled.png" id="10_help_d"]
 [ext_resource type="PackedScene" uid="uid://dxpf4nu3wy753" path="res://nodes/hud/landscape/game/action_bar.tscn" id="11_actionbar"]
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="12_landhud"]
+[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="coin_chip"]
 [ext_resource type="Texture2D" uid="uid://dt35romkvsuuq" path="res://assets/images-png/game/btn_help_focus.png" id="13_ayin1"]
 
-[node name="Landscape" unique_id=949375316 node_paths=PackedStringArray("landscape_action_bar", "status_bar", "hud_slot", "board_holder", "pause_btn", "instruction_btn", "level_label", "subtitle_label") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=949375316 node_paths=PackedStringArray("landscape_action_bar", "status_bar", "hud_slot", "board_holder", "pause_btn", "instruction_btn", "level_label", "subtitle_label", "header_anchor") instance=ExtResource("1_parent")]
 theme = ExtResource("2_d1bci")
 script = ExtResource("2_mqnje")
+header_anchor = NodePath("Content/LeftCol/TopBarAnchor")
 landscape_action_bar = NodePath("Content/LeftCol/ActionBar")
-status_bar = NodePath("Content/LeftCol/Status")
+status_bar = NodePath("TopBar/HeaderRow")
 hud_slot = NodePath("Content/LeftCol/Information")
 board_holder = NodePath("Content/LeftCol/MiddlePart/BoardSlot")
-pause_btn = NodePath("Content/LeftCol/Status/Bar/Pause")
-instruction_btn = NodePath("Content/LeftCol/Status/Bar/Instruction")
-level_label = NodePath("Content/LeftCol/Status/Bar/Title/LevelLabel")
-subtitle_label = NodePath("Content/LeftCol/Status/Bar/Title/Subtitle")
+pause_btn = NodePath("TopBar/HeaderRow/Bar/Pause")
+instruction_btn = NodePath("TopBar/HeaderRow/Bar/Instruction")
+level_label = NodePath("TopBar/HeaderRow/Bar/Title/LevelLabel")
+subtitle_label = NodePath("TopBar/HeaderRow/Bar/Title/Subtitle")
 
 [node name="Content" type="HBoxContainer" parent="." index="0" unique_id=1503357712]
 layout_mode = 1
@@ -45,12 +47,20 @@ size_flags_stretch_ratio = 0.55
 theme_override_constants/separation = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="Status" type="Control" parent="Content/LeftCol" index="0" unique_id=806159538]
+[node name="TopBarAnchor" type="Control" parent="Content/LeftCol" index="0"]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_vertical = 0
+mouse_filter = 2
 
-[node name="Bg" type="TextureRect" parent="Content/LeftCol/Status" index="0" unique_id=372573994]
+[node name="HeaderRow" type="Control" parent="TopBar" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 48)
+
+
+[node name="Bg" type="TextureRect" parent="TopBar/HeaderRow" index="0" unique_id=372573994]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -62,7 +72,7 @@ mouse_filter = 2
 texture = ExtResource("3_head_bg")
 metadata/_edit_use_anchors_ = true
 
-[node name="Bar" type="HBoxContainer" parent="Content/LeftCol/Status" index="1" unique_id=17020371]
+[node name="Bar" type="HBoxContainer" parent="TopBar/HeaderRow" index="1" unique_id=17020371]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -75,7 +85,7 @@ theme_override_constants/separation = 4
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Pause" type="TextureButton" parent="Content/LeftCol/Status/Bar" index="0" unique_id=1765245490]
+[node name="Pause" type="TextureButton" parent="TopBar/HeaderRow/Bar" index="0" unique_id=1765245490]
 layout_mode = 2
 texture_normal = ExtResource("4_6ckgu")
 texture_pressed = ExtResource("5_d1bci")
@@ -83,14 +93,14 @@ texture_hover = ExtResource("4_6ckgu")
 texture_disabled = ExtResource("6_ihder")
 texture_focused = ExtResource("7_0wfj4")
 
-[node name="Title" type="VBoxContainer" parent="Content/LeftCol/Status/Bar" index="1" unique_id=759259273]
+[node name="Title" type="VBoxContainer" parent="TopBar/HeaderRow/Bar" index="1" unique_id=759259273]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_constants/separation = -2
 alignment = 1
 
-[node name="Subtitle" type="Label" parent="Content/LeftCol/Status/Bar/Title" index="0" unique_id=1420793601]
+[node name="Subtitle" type="Label" parent="TopBar/HeaderRow/Bar/Title" index="0" unique_id=1420793601]
 modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
@@ -98,7 +108,7 @@ text = "PLAY MODE · CHƯƠNG 1"
 theme_type_variation = &"GameCardLabel"
 horizontal_alignment = 1
 
-[node name="LevelLabel" type="Label" parent="Content/LeftCol/Status/Bar/Title" index="1" unique_id=1375018799]
+[node name="LevelLabel" type="Label" parent="TopBar/HeaderRow/Bar/Title" index="1" unique_id=1375018799]
 modulate = Color(0.13333334, 0.29803923, 0.42745098, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 34
@@ -106,7 +116,7 @@ text = "MÀN 01"
 theme_type_variation = &"GameTitle"
 horizontal_alignment = 1
 
-[node name="Instruction" type="TextureButton" parent="Content/LeftCol/Status/Bar" index="2" unique_id=816551734]
+[node name="Instruction" type="TextureButton" parent="TopBar/HeaderRow/Bar" index="2" unique_id=816551734]
 layout_mode = 2
 size_flags_horizontal = 8
 texture_normal = ExtResource("8_help_n")
@@ -114,6 +124,11 @@ texture_pressed = ExtResource("9_help_p")
 texture_hover = ExtResource("8_help_n")
 texture_disabled = ExtResource("10_help_d")
 texture_focused = ExtResource("13_ayin1")
+
+[node name="CoinChip" parent="TopBar/HeaderRow/Bar" index="3" instance=ExtResource("coin_chip")]
+custom_minimum_size = Vector2(96, 30)
+layout_mode = 2
+size_flags_vertical = 4
 
 [node name="Spacer" type="Control" parent="Content/LeftCol" index="1" unique_id=417899857]
 layout_mode = 2
