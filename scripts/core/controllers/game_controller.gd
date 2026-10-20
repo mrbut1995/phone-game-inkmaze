@@ -67,6 +67,11 @@ func start_new_run(start_floor := 1) -> void:
 	_run_active = true
 	_floor_finished = false
 
+	# Ván mới (kể cả bấm THỬ LẠI) ⇒ lượt chơi lại được phép trừ khi thua về sau
+	var game_manager := get_node_or_null("/root/GameManager")
+	if game_manager != null and game_manager.has_method("begin_run_guard"):
+		game_manager.call("begin_run_guard")
+
 	var mode := game_mode_controller.game_mode
 	if ui_controller != null:
 		ui_controller.hide_overlays()

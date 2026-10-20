@@ -678,3 +678,9 @@ text = "VER 1.0.0"
 theme_type_variation = &"SettingsVersion"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CoinChip" parent="TopBar"]
+visible = false
+
+[node name="LifeChip" parent="TopBar"]
+visible = false

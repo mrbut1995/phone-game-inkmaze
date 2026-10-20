@@ -30,21 +30,24 @@ func _init() -> void:
 	var coin_chip := main_scene.layout.coin_chip
 	var star_chip := main_scene.layout.star_chip
 	var btn_settings := main_scene.layout.btn_settings
+	var life_chip := portrait.get_node_or_null("TopBar/LifeChip") as Control
 	assert(profile_card != null and coin_chip != null and star_chip != null and btn_settings != null,
 		"Thanh tren phai co du Ho so · Xu · Sao · Cai dat")
 	assert(profile_card.global_position.x < coin_chip.global_position.x,
 		"Ho so phai nam ben trai vi Xu")
-	# Thứ tự trái→phải xét theo THỨ TỰ CON trong thanh trên (HBox xếp theo index): ô Sao có
-	# thể được ẩn có chủ ý trên Main nên KHÔNG dựa vào toạ độ (container bỏ qua node ẩn).
-	assert(coin_chip.get_index() < star_chip.get_index(),
-		"Vi Xu phai dung TRUOC o Sao trong thanh tren")
+	# v2.40: mọi node của thanh trên nằm TRỰC TIẾP trong `TopBar` (không còn `HeaderRow`), thứ tự
+	# đúng như thiết kế cũ: Hồ sơ → Xu → Lượt chơi → Sao → Cài đặt.
+	assert(portrait.get_node_or_null("TopBar/HeaderRow") == null,
+		"Thanh tren KHONG con node boc HeaderRow")
+	assert(coin_chip.get_index() < star_chip.get_index(), "Vi Xu phai dung TRUOC o Sao")
+	assert(life_chip != null and coin_chip.get_index() < life_chip.get_index(),
+		"LifeChip phai nam ben phai CoinChip")
+	assert(life_chip != null and life_chip.get_index() < star_chip.get_index(),
+		"LifeChip phai dung TRUOC o Sao")
 	assert(star_chip.get_index() < btn_settings.get_index(),
 		"Nut Cai dat phai la o CUOI thanh tren")
-	if star_chip.visible:
-		assert(coin_chip.global_position.x < star_chip.global_position.x,
-			"Vi Xu phai nam ben trai o Sao")
-		assert(star_chip.global_position.x < btn_settings.global_position.x,
-			"Nut Cai dat phai nam ben phai cung thanh tren")
+	assert(life_chip != null and life_chip.global_position.x < btn_settings.global_position.x,
+		"Hai chip phai nam ben trai nut Cai dat")
 	assert(profile_card.size.x >= 120.0, "The ho so phai du rong (%.0f)" % profile_card.size.x)
 
 	# 2. Khối sự kiện — header TRÊN carousel

@@ -186,6 +186,7 @@ script = ExtResource("6_autofit")
 min_font_size = 14
 
 [node name="Control" type="Control" parent="Content/Texts" unique_id=76276250]
+custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 
 [node name="Subtitle" type="Label" parent="Content/Texts" unique_id=1080875824]
@@ -193,7 +194,12 @@ layout_mode = 2
 theme_type_variation = &"ModeCardSub"
 text = "Chọn màn theo chương"
 
+[node name="Spacer2" type="Control" parent="Content/Texts" unique_id=860235710]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
 [node name="Info" type="HBoxContainer" parent="Content/Texts" unique_id=681107286]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 3

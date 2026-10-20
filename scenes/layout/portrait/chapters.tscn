@@ -13,7 +13,6 @@
 [ext_resource uid="uid://d0tl47hvj62ph" type="Texture2D" path="res://assets/images-png/common/btn_paper_cta_focus.png" id="11_cta_f"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="11_xj2ga"]
 [ext_resource uid="uid://oalyje7bs0yo" type="Texture2D" path="res://assets/images-png/level_selector/icon_play_triangle.png" id="12_play_icon"]
-[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="coin_chip"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bf55c"]
 content_margin_left = 41.0
@@ -308,8 +307,3 @@ libraries = {
 libraries = {
 "": SubResource("AnimationLibrary_chapters_pulse_p")
 }
-
-[node name="CoinChip" parent="TopBar" index="3" instance=ExtResource("coin_chip")]
-custom_minimum_size = Vector2(111, 32)
-layout_mode = 2
-size_flags_vertical = 4

@@ -99,7 +99,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-
 [node name="Close" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=1632266485]
 layout_mode = 1
 anchors_preset = -1
@@ -424,7 +423,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
 
-
 [node name="Stamp" type="Control" parent="Sheet" index="6" unique_id=1907945464]
 anchors_preset = 0
 offset_left = 370.0001
@@ -456,3 +454,9 @@ text = "STR_PROFILE_STAMP"
 theme_type_variation = &"ProfilerStamp"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CoinChip" parent="TopBar"]
+visible = false
+
+[node name="LifeChip" parent="TopBar"]
+visible = false

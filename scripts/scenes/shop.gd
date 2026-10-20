@@ -89,16 +89,19 @@ var _drag_start := Vector2.ZERO
 var _drag_last := Vector2.ZERO
 var _drag_scroll := 0.0
 var _click_lock_until := 0.0
+## Màn cần quay về sau khi xem Cửa hàng — chỉ đặt khi vào Shop từ popup HẾT LƯỢT CHƠI (§5.10b)
+var _return_path := ""
 
 
 func _ready() -> void:
 	_bind_refs()
 	_wire_buttons()
+	_return_path = _take_return_path()
 	orientation_changed.connect(_on_orientation_changed)
 
-	if layout.top_bar != null:
+	if layout.can_animate_bar(layout.top_bar):
 		UIAnim.play_slide_in(layout.top_bar, Vector2(0, -22), 0.0, 0.25)
-	if layout.wallet_bar != null:
+	if layout.can_animate_bar(layout.wallet_bar):
 		UIAnim.play_slide_in(layout.wallet_bar, Vector2(0, -22), 0.04, 0.25)
 	if layout.tabs_box != null:
 		UIAnim.play_slide_in(layout.tabs_box, Vector2(0, -12), 0.08, 0.25)
@@ -147,6 +150,9 @@ func _wire_buttons() -> void:
 	# Dây NÚT khai trong `scenes/shop.tscn` (cả 2 hướng) — guard chỉ nối lại nếu dây bị mất
 	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 	ensure_signal(layout.wallet_plus, &"pressed", &"_on_wallet_plus_pressed")
+	# Chip LƯỢT CHƠI: bấm `+` = mở tab DỤNG CỤ (nơi bán gói thêm lượt)
+	if layout.life_chip != null and not layout.life_chip.plus_pressed.is_connected(_on_life_plus_pressed):
+		layout.life_chip.plus_pressed.connect(_on_life_plus_pressed)
 	ensure_signal(layout.btn_prev, &"pressed", &"_on_prev_page")
 	ensure_signal(layout.btn_next, &"pressed", &"_on_next_page")
 	ensure_signal(layout.btn_gift, &"pressed", &"_on_gift_pressed")
@@ -841,6 +847,13 @@ func _on_wallet_plus_pressed() -> void:
 	show_tab("coin")
 
 
+## Chip LƯỢT CHƠI: nút `+` mở tab DỤNG CỤ (gói thêm lượt nằm ở đó)
+func _on_life_plus_pressed() -> void:
+	if _clicks_locked():
+		return
+	show_tab("tool")
+
+
 func _refresh_wallet(animate := false) -> void:
 	if layout.wallet_count != null:
 		layout.wallet_count.text = Shop.thousands(Shop.coins())
@@ -866,4 +879,18 @@ func _on_back_pressed() -> void:
 	if _clicks_locked():
 		return
 	Sfx.play(Sfx.BTN_WOOD_TAP)
+	# Vào Cửa hàng từ popup "HẾT LƯỢT CHƠI" ⇒ Back phải quay về ĐÚNG màn trước đó
+	if not _return_path.is_empty():
+		var target := _return_path
+		_return_path = ""
+		Nav.back_to(target)
+		return
 	Nav.goto_main()
+
+
+## Đọc 1 lần màn cần quay về (GameManager ghi khi mở Shop từ popup hết lượt)
+func _take_return_path() -> String:
+	var game_manager := get_node_or_null("/root/GameManager")
+	if game_manager == null or not game_manager.has_method("take_shop_return_path"):
+		return ""
+	return str(game_manager.call("take_shop_return_path"))

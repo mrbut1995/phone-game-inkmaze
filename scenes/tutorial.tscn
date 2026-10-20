@@ -20,7 +20,7 @@ layout_mode = 1
 script = ExtResource("5_controller_script")
 
 [connection signal="sequence_finished" from="Controllers/TutorialController" to="." method="_on_sequence_finished"]
-[connection signal="pressed" from="Portrait/TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/TopBar/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnFirstTime" to="." method="_on_select_tutorial" binds= ["first_time"]]
 [connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnMove" to="." method="_on_select_tutorial" binds= ["how_to_play_move"]]
 [connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnCheckingWall" to="." method="_on_select_tutorial" binds= ["how_to_play_checking_wall"]]

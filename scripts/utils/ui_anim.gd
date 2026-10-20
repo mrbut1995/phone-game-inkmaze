@@ -168,6 +168,9 @@ static func play_pop_in(node: Control, delay := 0.0, from_scale := 0.85, duratio
 
 ## Hiệu ứng trượt nhẹ kết hợp hiện hình (Slide-in)
 ## LƯU Ý: Không dùng cho node con trực tiếp của Container (VBox/HBox/Grid) vì Container tự kiểm soát position.
+## Trượt bằng OFFSET, KHÔNG ghi `position`: node neo phải/giữa (VD `CoinChip`/`LifeChip` trong thanh trên)
+## sẽ bị Godot "đóng băng" offsets thành số tuyệt đối nếu gán `position` lúc thanh chưa dàn xong bề rộng
+## ⇒ chip văng ra ngoài màn hình. Tween offsets giữ nguyên anchors nên an toàn cho mọi loại neo.
 static func play_slide_in(node: Control, offset := Vector2(0, 35), delay := 0.0, duration := 0.28) -> Tween:
 	if node == null or not is_instance_valid(node):
 		return null
@@ -175,14 +178,24 @@ static func play_slide_in(node: Control, offset := Vector2(0, 35), delay := 0.0,
 	if node.get_parent() is Container:
 		return play_fade_in(node, delay, duration)
 
-	var target_pos := node.position
-	node.position = target_pos + offset
+	var base_left := node.offset_left
+	var base_top := node.offset_top
+	var base_right := node.offset_right
+	var base_bottom := node.offset_bottom
+	node.offset_left = base_left + offset.x
+	node.offset_top = base_top + offset.y
+	node.offset_right = base_right + offset.x
+	node.offset_bottom = base_bottom + offset.y
 	node.modulate.a = 0.0
 	var tw := node.create_tween()
 	if delay > 0.0:
 		tw.tween_interval(delay)
 	tw.set_parallel(true)
-	tw.tween_property(node, "position", target_pos, duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	if not is_zero_approx(offset.x):
+		tw.tween_property(node, "offset_left", base_left, duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tw.tween_property(node, "offset_right", base_right, duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tw.tween_property(node, "offset_top", base_top, duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tw.tween_property(node, "offset_bottom", base_bottom, duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tw.tween_property(node, "modulate:a", 1.0, duration * 0.75).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	return tw
 

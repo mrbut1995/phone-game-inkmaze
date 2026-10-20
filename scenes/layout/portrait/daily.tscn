@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://bypi88itx11cm" path="res://assets/images-png/daily/star_big.png" id="9_star"]
 [ext_resource type="Texture2D" uid="uid://dopputx02por5" path="res://assets/images-png/daily/chip_white.png" id="10_chip"]
 [ext_resource type="Texture2D" uid="uid://byt8wshkuayfy" path="res://assets/images-png/daily/clock_blue.png" id="11_clock"]
-[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="12_coin"]
 [ext_resource type="Script" path="res://scripts/nodes/daily/vf_star_fly.gd" id="20_fly"]
 [ext_resource uid="uid://dfb5ixvypt2mh" type="Texture2D" path="res://assets/images-png/effects/vf_star.png" id="21_vfstar"]
 [ext_resource uid="uid://gcrrlpspitgu" type="Texture2D" path="res://assets/images-png/effects/vf_star_trail.png" id="22_trail"]
@@ -905,7 +904,7 @@ milestones_host = NodePath("Panel/Stage/StarBar/Milestones")
 play_card = NodePath("Panel/Stage/Actions/PlayCard")
 challenge_card = NodePath("Panel/Stage/Actions/ChallengeCard")
 lbl_reset = NodePath("Panel/Stage/ResetChip/Center/Label")
-coin_chip = NodePath("TopBar/HeaderRow/CoinChip")
+coin_chip = NodePath("TopBar/CoinChip")
 star_big = NodePath("Panel/Stage/StarBar/Star")
 vfx_anim = NodePath("VfxAnim")
 arrive_anim = NodePath("ArriveAnim")
@@ -948,7 +947,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-
 [node name="Back" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=619384443]
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 0
@@ -968,10 +966,10 @@ stretch_mode = 0
 layout_mode = 0
 offset_left = 70.0
 offset_top = 2.0
-offset_right = 410.0
+offset_right = 292.0
 offset_bottom = 28.0
 theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
-theme_override_font_sizes/font_size = 21
+theme_override_font_sizes/font_size = 17
 text = "STR_DAILY_SCREEN_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -981,7 +979,7 @@ resize_font_to_fit = true
 layout_mode = 0
 offset_left = 70.0
 offset_top = 28.0
-offset_right = 410.0
+offset_right = 292.0
 offset_bottom = 42.0
 theme_override_colors/font_color = Color(0.239216, 0.352941, 0.45098, 1)
 theme_override_font_sizes/font_size = 10
@@ -989,17 +987,6 @@ text = "STR_DAILY_SCREEN_SUB"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
-
-[node name="CoinChip" parent="TopBar/HeaderRow" instance=ExtResource("12_coin")]
-custom_minimum_size = Vector2(111, 32)
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 417.0
-offset_top = 6.0
-offset_right = 528.0
-offset_bottom = 38.0
 
 [node name="StarBar" type="Control" parent="Panel/Stage" index="2" unique_id=521713214]
 anchors_preset = 0

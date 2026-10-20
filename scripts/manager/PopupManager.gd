@@ -32,6 +32,8 @@ const POPUPS := {
 	"profiler": "res://nodes/popups/profiler_popup.tscn",
 	# Nhận thưởng MỐC SAO của màn Daily (popup nhỏ)
 	"daily_milestone": "res://nodes/popups/daily_milestone.tscn",
+	# HẾT LƯỢT CHƠI (life = 0): thoát ra hoặc vào Cửa hàng mua thêm lượt
+	"out_of_life": "res://nodes/popups/out_of_life.tscn",
 }
 
 const HOST_NAME := "Popups"

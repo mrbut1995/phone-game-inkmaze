@@ -9,12 +9,16 @@ signal level_completed(level_id: int, stars: int, score: int)
 signal mode_changed(new_mode: String)
 signal chapter_unlocked(chapter_id: int)
 signal tool_inventory_changed(tool_id: String, remaining: int)
+## Lượt chơi (life) đổi — LifeChip trên thanh trên nghe signal này để tự cập nhật
+signal life_changed(lives: int, max_lives: int)
 
 const TOOL_SKIP := "skip"
 const TOOL_UNDO := "undo"
 const TOOL_HINT := "hint"
 const TOOL_IDS: Array[String] = [TOOL_SKIP, TOOL_UNDO, TOOL_HINT]
 const INITIAL_TOOL_USES := 3
+## Scene của ván chơi (mọi chế độ đều vào đây)
+const GAME_SCENE := "res://scenes/game.tscn"
 
 var current_mode: String = "dungeon"
 var current_difficulty: String = "medium"
@@ -25,6 +29,34 @@ var tool_uses: Dictionary = {
 	TOOL_UNDO: INITIAL_TOOL_USES,
 	TOOL_HINT: INITIAL_TOOL_USES,
 }
+
+# ---------------------------------------------------------------------------
+# LƯỢT CHƠI (life) — dùng chung TOÀN BỘ trò chơi
+#   · Mỗi ván THUA mà người chơi KHÔNG thử lại (bỏ qua popup Retry) = mất 1 lượt.
+#   · Còn lượt mới vào được ván nào (Play / Dungeon / Daily / Event / Special).
+#   · Hết lượt: mỗi 30 phút hồi 1 lượt; mua ở Cửa hàng hoặc thưởng nhiệm vụ cũng cộng lượt.
+# ---------------------------------------------------------------------------
+const MAX_LIVES := 5
+## Thời gian hồi 1 lượt (giây) — 30 phút
+const LIFE_RECHARGE_SECONDS := 30 * 60
+## Nguồn hợp lệ khi cộng lượt chơi (mua hàng · nhiệm vụ · mốc thưởng Daily)
+const LIFE_GRANT_SOURCES: Array[String] = ["purchase", "mission", "daily_milestone"]
+
+var lives: int = MAX_LIVES
+## Mốc unix (giây) lượt kế tiếp hồi xong; 0 = đang đầy lượt (không đếm ngược)
+var next_life_at: int = 0
+## Màn cần quay về sau khi vào Cửa hàng từ popup "hết lượt" (rỗng = không có)
+var shop_return_path: String = ""
+
+## Ván hiện tại đã bị trừ lượt chưa (chống trừ 2 lần khi popup thua mở lại)
+var _loss_charged := false
+var _life_tick := 0.0
+
+## [TEST/DEBUG] Ép kết quả `can_start_run()`: 0 = theo lượt chơi · 1 = luôn cho vào · -1 = luôn chặn
+var life_gate_override: int = 0
+## [TEST] Cho phép trừ lượt khi chạy test runner tự động (mặc định: test KHÔNG trừ lượt,
+## để bộ test không làm cạn lượt của người chơi thật)
+var life_cost_in_tests := false
 
 # Tiến trình người chơi
 var unlocked_levels: int = 1
@@ -153,6 +185,15 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 
+## Đồng hồ hồi lượt chạy cả khi đang ở menu (và bắt kịp thời gian offline khi vào lại game)
+func _process(delta: float) -> void:
+	_life_tick += delta
+	if _life_tick < 0.5:
+		return
+	_life_tick = 0.0
+	_refresh_life_recharge()
+
+
 ## Khởi động Dungeon Mode
 func start_dungeon() -> void:
 	clear_event_run()
@@ -163,7 +204,7 @@ func start_dungeon() -> void:
 	debug_run = false
 	start_floor_override = 0
 	mode_changed.emit(current_mode)
-	_change_scene("res://scenes/game.tscn")
+	_enter_game_scene()
 
 
 ## Khởi động 1 MÀN trong màn Chọn màn.
@@ -175,7 +216,7 @@ func start_level(level_id: int) -> void:
 	prepare_level_run(level_id)
 	if _open_mode_tutorial_once():
 		return
-	_change_scene("res://scenes/game.tscn")
+	_enter_game_scene()
 
 
 ## Chơi 1 MÀN của SỰ KIỆN (LevelData truyền thẳng, không tra theo id — §B7).
@@ -193,7 +234,7 @@ func start_level_from_event(level: LevelData, event_id: StringName) -> void:
 	debug_run = false
 	start_floor_override = 0
 	mode_changed.emit(current_mode)
-	_change_scene("res://scenes/game.tscn")
+	_enter_game_scene()
 
 
 ## Xoá trạng thái ván sự kiện (gọi khi bắt đầu ván KHÔNG phải event)
@@ -337,12 +378,196 @@ func _set_tool_uses(tool_id: String, amount: int) -> bool:
 	return true
 
 
+# ---------------------------------------------------------------------------
+# LƯỢT CHƠI (life)
+# ---------------------------------------------------------------------------
+func max_lives() -> int:
+	return MAX_LIVES
+
+
+## Số lượt còn lại (đã tính cả lượt vừa hồi theo thời gian)
+func lives_left() -> int:
+	_refresh_life_recharge()
+	return clampi(lives, 0, MAX_LIVES)
+
+
+func has_life() -> bool:
+	return lives_left() > 0
+
+
+## Giây còn lại tới lượt kế tiếp (0 = đang đầy lượt)
+func seconds_to_next_life() -> int:
+	_refresh_life_recharge()
+	if lives >= MAX_LIVES or next_life_at <= 0:
+		return 0
+	return maxi(next_life_at - _now_seconds(), 0)
+
+
+## Trừ 1 lượt khi THUA chốt ván. Trả về true nếu vừa trừ.
+func consume_life() -> bool:
+	if lives_left() <= 0:
+		return false
+	lives -= 1
+	if lives < MAX_LIVES and next_life_at <= 0:
+		next_life_at = _now_seconds() + LIFE_RECHARGE_SECONDS
+	life_changed.emit(lives, MAX_LIVES)
+	Save.queue_save()
+	return true
+
+
+## Chốt MỘT lần thua cho mỗi ván (UIController gọi khi popup thua cuối cùng hiện ra).
+## Ván Debug Console / test runner tự động không bị trừ lượt.
+func register_run_loss() -> bool:
+	if debug_run or _loss_charged:
+		return false
+	if _is_automated_test() and not life_cost_in_tests:
+		return false
+	_loss_charged = true
+	return consume_life()
+
+
+## Đang chạy bộ test tự động (`godot --script res://scripts/test_case/...`) hay không
+func _is_automated_test() -> bool:
+	var main_loop := Engine.get_main_loop()
+	if main_loop == null:
+		return false
+	var script: Variant = main_loop.get_script()
+	return script != null and str(script.resource_path).contains("test_case")
+
+
+## Ván mới bắt đầu (kể cả bấm Thử lại) ⇒ ván sau lại được trừ lượt khi thua
+func begin_run_guard() -> void:
+	_loss_charged = false
+
+
+## Cộng lượt từ nguồn hợp lệ (mua ở Cửa hàng · thưởng nhiệm vụ · mốc Sao Daily).
+## Trả về false khi nguồn không hợp lệ hoặc đã đầy lượt.
+func grant_lives(amount: int, source: String) -> bool:
+	if amount <= 0 or not LIFE_GRANT_SOURCES.has(source):
+		return false
+	var before := lives_left()
+	if before >= MAX_LIVES:
+		return false
+	lives = mini(before + amount, MAX_LIVES)
+	if lives >= MAX_LIVES:
+		next_life_at = 0
+	life_changed.emit(lives, MAX_LIVES)
+	Save.queue_save()
+	return true
+
+
+## Chỉnh số lượt trong Debug Console (chỉ debug build)
+func debug_set_lives(amount: int) -> bool:
+	if not OS.is_debug_build():
+		push_warning("[GameManager] Chi cho phep chinh luot choi trong debug build")
+		return false
+	_set_lives(amount)
+	return true
+
+
+## [DEBUG] Đẩy nhanh đồng hồ hồi lượt để thử luồng hồi lượt (giây)
+func debug_advance_life_recharge(seconds: int) -> void:
+	if not OS.is_debug_build() or seconds <= 0:
+		return
+	if lives >= MAX_LIVES:
+		return
+	var now := _now_seconds()
+	if next_life_at <= 0:
+		next_life_at = now + LIFE_RECHARGE_SECONDS
+	next_life_at = maxi(next_life_at - seconds, now)
+	_refresh_life_recharge()
+
+
+func _set_lives(amount: int) -> void:
+	var target := clampi(amount, 0, MAX_LIVES)
+	if target == lives:
+		return
+	lives = target
+	if lives >= MAX_LIVES:
+		next_life_at = 0
+	elif next_life_at <= 0:
+		next_life_at = _now_seconds() + LIFE_RECHARGE_SECONDS
+	life_changed.emit(lives, MAX_LIVES)
+	Save.queue_save()
+
+
+## Bắt kịp các lượt đã hồi theo đồng hồ thực (kể cả lúc app đóng): mỗi 30 phút +1 lượt.
+func _refresh_life_recharge() -> void:
+	if lives >= MAX_LIVES:
+		if next_life_at != 0:
+			next_life_at = 0
+		return
+	if next_life_at <= 0:
+		next_life_at = _now_seconds() + LIFE_RECHARGE_SECONDS
+		return
+	var now := _now_seconds()
+	var gained := 0
+	while lives < MAX_LIVES and now >= next_life_at:
+		lives += 1
+		gained += 1
+		next_life_at += LIFE_RECHARGE_SECONDS
+	if lives >= MAX_LIVES:
+		next_life_at = 0
+	if gained > 0:
+		life_changed.emit(lives, MAX_LIVES)
+		Save.queue_save()
+
+
+func _now_seconds() -> int:
+	return int(Time.get_unix_time_from_system())
+
+
+## Còn lượt thì mới được vào ván (ván Debug/test bỏ qua kiểm tra)
+func can_start_run() -> bool:
+	if life_gate_override != 0:
+		return life_gate_override > 0
+	if debug_run or _is_automated_test():
+		return true
+	return lives_left() > 0
+
+
+## Vào Cửa hàng từ popup "hết lượt": nhớ màn hiện tại để nút Back của Shop quay lại đúng màn đó.
+func request_shop_from_life_gate() -> void:
+	var scene := get_tree().current_scene if is_inside_tree() else null
+	shop_return_path = scene.scene_file_path if scene != null else ""
+	Nav.goto_shop()
+
+
+## Shop đọc 1 lần rồi xoá: màn cần quay về sau khi xem Cửa hàng ("" = không có yêu cầu)
+func take_shop_return_path() -> String:
+	var path := shop_return_path
+	shop_return_path = ""
+	return path
+
+
+## Mở popup HẾT LƯỢT CHƠI (dùng cho test / khi cần báo thủ công)
+func open_out_of_life_popup() -> void:
+	_show_out_of_life()
+
+
+func _show_out_of_life() -> void:
+	var popup := Popups.open(Popups.OUT_OF_LIFE, {"max_lives": MAX_LIVES})
+	if popup == null:
+		return
+	if popup.has_signal("shop_requested") \
+			and not popup.is_connected("shop_requested", request_shop_from_life_gate):
+		popup.connect("shop_requested", request_shop_from_life_gate)
+
+
+## Vào màn chơi — chặn khi hết lượt và mở popup báo hết lượt
+func _enter_game_scene() -> void:
+	if not can_start_run():
+		_show_out_of_life()
+		return
+	_change_scene(GAME_SCENE)
+
+
 ## Khởi động Daily Mission theo ngày — MAZE ĐẶC BIỆT (mode xoay vòng của ngày)
 func start_daily(day: int) -> void:
 	prepare_daily_run(day, "special")
 	if _open_mode_tutorial_once():
 		return
-	_change_scene("res://scenes/game.tscn")
+	_enter_game_scene()
 
 
 ## Khởi động Daily Mission theo ngày — MAZE THƯỜNG (classic)
@@ -350,7 +575,7 @@ func start_daily_classic(day: int) -> void:
 	prepare_daily_run(day, "classic")
 	if _open_mode_tutorial_once():
 		return
-	_change_scene("res://scenes/game.tscn")
+	_enter_game_scene()
 
 
 ## Khởi động phần CHƠI của ngày (1 màn maze thường, tối đa 3 Sao theo nhiệm vụ)
@@ -367,7 +592,7 @@ func start_daily_challenge(day: int) -> void:
 	prepare_daily_run(day, "challenge")
 	if _open_mode_tutorial_once():
 		return
-	_change_scene("res://scenes/game.tscn")
+	_enter_game_scene()
 
 
 ## [DEBUG/TEST] Chuẩn bị 1 GAME (0..2) trong ngày nhưng KHÔNG chuyển scene.
@@ -399,7 +624,7 @@ func start_daily_game(day: int, index: int) -> void:
 	prepare_daily_game(day, index)
 	if _open_mode_tutorial_once():
 		return
-	_change_scene("res://scenes/game.tscn")
+	_enter_game_scene()
 
 
 ## LẦN ĐẦU vào 1 chế độ Special (từ Daily hoặc từ màn có `mode_id`): mở bài học của chế
@@ -471,7 +696,7 @@ func prepare_mode_run(mode_id: String, difficulty := "medium", test_run := false
 func start_mode(mode_id: String, difficulty := "medium", test_run := false,
 		floor_override := 0) -> void:
 	prepare_mode_run(mode_id, difficulty, test_run, floor_override)
-	_change_scene("res://scenes/game.tscn")
+	_enter_game_scene()
 
 
 ## Điều hướng tới Main Menu
@@ -650,6 +875,8 @@ func export_progress() -> Dictionary:
 		"selected_daily_day": selected_daily_day,
 		"current_level": current_level,
 		"tool_uses": tool_uses.duplicate(),
+		"lives": lives,
+		"next_life_at": next_life_at,
 		"unlocked_chapters": unlocked_chapters.duplicate(),
 		"current_chapter": current_chapter,
 		"tutorial_progress": tutorial_progress.duplicate(),
@@ -671,6 +898,10 @@ func import_progress(data: Dictionary) -> void:
 		for tool_id in TOOL_IDS:
 			if saved_tool_uses.has(tool_id):
 				tool_uses[tool_id] = maxi(int(saved_tool_uses[tool_id]), 0)
+	lives = clampi(int(data.get("lives", lives)), 0, MAX_LIVES)
+	next_life_at = maxi(int(data.get("next_life_at", 0)), 0)
+	_refresh_life_recharge()
+	life_changed.emit(lives, MAX_LIVES)
 	unlocked_chapters = _int_array(data.get("unlocked_chapters", null))
 	if unlocked_chapters.is_empty():
 		unlocked_chapters = [1]
@@ -700,6 +931,11 @@ func reset_progress() -> void:
 	current_chapter = 1
 	tutorial_flow_step = 0
 	tutorial_flow_done = false
+	lives = MAX_LIVES
+	next_life_at = 0
+	_loss_charged = false
+	shop_return_path = ""
+	life_changed.emit(lives, MAX_LIVES)
 	for k in tutorial_progress:
 		tutorial_progress[k] = false
 

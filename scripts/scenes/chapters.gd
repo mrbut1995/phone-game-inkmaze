@@ -60,9 +60,9 @@ func _ready() -> void:
 	_bind_refs()
 	_wire_buttons()
 
-	if layout.top_bar != null:
+	if layout.can_animate_bar(layout.top_bar):
 		UIAnim.play_slide_in(layout.top_bar, Vector2(0, -22), 0.0, 0.25)
-	if layout.wallet_bar != null:
+	if layout.can_animate_bar(layout.wallet_bar):
 		UIAnim.play_slide_in(layout.wallet_bar, Vector2(0, -22), 0.04, 0.25)
 	if layout.banner != null:
 		UIAnim.play_slide_in(layout.banner, Vector2(0, -15), 0.08, 0.25)

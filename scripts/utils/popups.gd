@@ -33,6 +33,8 @@ const EDIT_PROFILE := "edit_profile"
 const PROFILER := "profiler"
 ## Popup NHỎ báo phần thưởng vừa nhận ở một MỐC SAO của màn Daily
 const DAILY_MILESTONE := "daily_milestone"
+## Hết LƯỢT CHƠI (life = 0): chọn thoát ra hoặc vào Cửa hàng mua thêm lượt
+const OUT_OF_LIFE := "out_of_life"
 
 
 static func _mgr() -> Node:

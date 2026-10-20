@@ -92,6 +92,9 @@ const ITEMS: Array[Dictionary] = [
 		"badge_key": "STR_SHOP_BADGE_EXAM", "paper": "#FFFFFF", "line": "#DC2626"},
 
 	# --- DỤNG CỤ (mua bằng Xu, dùng 1 lượt = trừ 1) ------------------------
+	{"id": "life_x1", "category": "tool", "price": 300, "amount": 1, "color": "#D84444",
+		"icon": "life", "life": true, "name_key": "STR_SHOP_LIFE_NAME",
+		"desc_key": "STR_SHOP_LIFE_DESC", "badge_key": "STR_SHOP_BADGE_PACK"},
 	{"id": "tool_undo_x10", "category": "tool", "price": 150, "amount": 10, "color": "#3D83AE",
 		"icon": "tool_undo", "name_key": "STR_SHOP_TOOL_UNDO_NAME", "desc_key": "STR_SHOP_TOOL_UNDO_DESC",
 		"badge_key": "STR_SHOP_BADGE_PACK"},
@@ -187,6 +190,11 @@ func is_consumable(item_id: String) -> bool:
 	return category_of(item_id) == "tool"
 
 
+## Gói LƯỢT CHƠI (life) — cộng vào `GameManager.lives`, không cộng vào kho dụng cụ
+func is_life_pack(item_id: String) -> bool:
+	return bool(item(item_id).get("life", false))
+
+
 func is_equippable(item_id: String) -> bool:
 	return EQUIP_CATEGORIES.has(category_of(item_id))
 
@@ -254,6 +262,9 @@ func buy(item_id: String) -> bool:
 
 
 func _buy_consumable(item_id: String, item_data: Dictionary) -> bool:
+	# Gói LƯỢT CHƠI (life): cộng thẳng vào GameManager — dùng chung mọi chế độ
+	if bool(item_data.get("life", false)):
+		return _buy_life_pack(item_id)
 	var price := int(item_data.get("price", 0))
 	if price <= 0 or not can_afford(item_id):
 		return false
@@ -268,8 +279,27 @@ func _buy_consumable(item_id: String, item_data: Dictionary) -> bool:
 	return true
 
 
-## Nạp gói Xu bằng tiền thật (IAP) — hiện là STUB: cộng Xu ngay để test luồng chơi.
-## Khi nối Google Play Billing chỉ cần thay thân hàm này bằng luồng thanh toán thật.
+## Mua gói LƯỢT CHƠI: cộng vào GameManager (life dùng chung), đầy lượt thì không mua được.
+func _buy_life_pack(item_id: String) -> bool:
+	var game_manager := get_node_or_null("/root/GameManager")
+	if game_manager == null or not game_manager.has_method("grant_lives"):
+		return false
+	var price := price_of(item_id)
+	if price > 0 and not can_afford(item_id):
+		return false
+	if not bool(game_manager.call("grant_lives", amount_of(item_id), "purchase")):
+		return false
+	if price > 0:
+		_add_coins(-price)
+	if not owned.has(item_id):
+		owned[item_id] = true
+	purchase_log.append(item_id)
+	item_purchased.emit(item_id)
+	queue_save()
+	return true
+
+
+## Nạp gói Xu bằng tiền thật (IAP) — hiện là STUB: cộng Xu ngay để test luồng chơi.## Khi nối Google Play Billing chỉ cần thay thân hàm này bằng luồng thanh toán thật.
 func purchase_coin_pack(item_id: String) -> bool:
 	var item_data := item(item_id)
 	if item_data.is_empty() or category_of(item_id) != "coin":

@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://c8wjjvea1kmhm" path="res://scripts/scenes/layout/shop_layout.gd" id="2_layout"]
-[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="coin_chip"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="4_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="5_back_p"]
 [ext_resource type="Texture2D" uid="uid://by5pnt7sch66d" path="res://assets/images-png/calendar/day_btn_prev_normal.png" id="9_prev"]
@@ -22,7 +21,7 @@ length = 0.22
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TopBar/HeaderRow/CoinChip/Content/Value:scale")
+tracks/0/path = NodePath("TopBar/CoinChip/Content/Value:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -168,14 +167,14 @@ _data = {
 &"enter": SubResource("Animation_shop_enter_p")
 }
 
-[node name="Portrait" unique_id=816747492 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line", "item_grid", "doodle_pad", "noads_row") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=816747492 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line", "item_grid", "doodle_pad", "noads_row", "life_chip") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/HeaderRow/Back")
 tabs_box = NodePath("Tabs")
 list_box = NodePath("Content/List")
 scroll = NodePath("Content")
-wallet_count = NodePath("TopBar/HeaderRow/CoinChip/Content/Value")
-wallet_plus = NodePath("TopBar/HeaderRow/CoinChip/Content/Plus")
+wallet_count = NodePath("TopBar/CoinChip/Content/Value")
+wallet_plus = NodePath("TopBar/CoinChip/Content/Plus")
 pager = NodePath("Pager")
 page_label = NodePath("Pager/ChangePage/PageLabel")
 btn_prev = NodePath("Pager/ChangePage/Prev")
@@ -183,12 +182,21 @@ btn_next = NodePath("Pager/ChangePage/Next")
 dots_box = NodePath("Pager/Dots")
 btn_gift = NodePath("GiftBanner/GiftBtn")
 top_bar = NodePath("TopBar")
-wallet_bar = NodePath("TopBar/HeaderRow/CoinChip")
+wallet_bar = NodePath("TopBar/CoinChip")
 gift_banner = NodePath("GiftBanner")
 tab_line = NodePath("TabLine")
 item_grid = NodePath("Content/List/Grid")
 doodle_pad = NodePath("Content/List/Pad")
 noads_row = NodePath("Content/List/NoAds")
+life_chip = NodePath("TopBar/LifeChip")
+
+[node name="CoinChip" parent="TopBar" index="1"]
+navigate_on_plus = false
+custom_minimum_size = Vector2(128, 35)
+
+[node name="LifeChip" parent="TopBar" index="2"]
+navigate_on_plus = false
+custom_minimum_size = Vector2(128, 35)
 
 [node name="TopBar" parent="." index="0" unique_id=1562446976]
 layout_mode = 1
@@ -244,21 +252,6 @@ theme_type_variation = &"ShopTitle"
 text = "STR_SHOP_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="CoinChip" parent="TopBar/HeaderRow" index="3" instance=ExtResource("coin_chip")]
-navigate_on_plus = false
-custom_minimum_size = Vector2(128, 35)
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 0.0
-offset_left = -152.5
-offset_top = 42.5
-offset_right = -24.5
-offset_bottom = 77.5
-grow_horizontal = 0
 
 [node name="Tabs" type="HBoxContainer" parent="." index="1" unique_id=1748476601]
 layout_mode = 1

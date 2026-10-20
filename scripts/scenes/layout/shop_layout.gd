@@ -15,6 +15,8 @@ extends BaseLayout
 @export var btn_gift: BaseButton = null
 @export var top_bar: Control = null
 @export var wallet_bar: Control = null
+## Chip LƯỢT CHƠI trên thanh trên (bấm `+` = mở tab DỤNG CỤ để mua thêm lượt)
+@export var life_chip: LifeChip = null
 @export var gift_banner: Control = null
 @export var tab_line: ColorRect = null
 ## Khung riêng cho BÀN NHÁP THỬ BÚT (bố cục NGANG đặt nó ở cột trái như mockup;

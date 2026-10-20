@@ -69,10 +69,22 @@ static func is_consumable(item_id: String) -> bool:
 	return bool(node.call("is_consumable", item_id)) if node != null else false
 
 
+## Gói hàng có tồn tại trong catalog không
+static func has_item(item_id: String) -> bool:
+	var node := manager()
+	return bool(node.call("has_item", item_id)) if node != null else false
+
+
 ## Nhóm hàng: pen / theme / tool / coin
 static func category_of(item_id: String) -> String:
 	var node := manager()
 	return str(node.call("category_of", item_id)) if node != null else ""
+
+
+## Gói LƯỢT CHƠI (life) — mua xong cộng thẳng vào GameManager.lives
+static func is_life_pack(item_id: String) -> bool:
+	var node := manager()
+	return bool(node.call("is_life_pack", item_id)) if node != null else false
 
 
 ## Giá bằng Xu (0 = món mặc định hoặc không bán bằng Xu)
