@@ -7,12 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://b06a5wgxn10bn" path="res://assets/images-png/popups/popup_washi_tape.png" id="4_df87s"]
 [ext_resource type="Texture2D" uid="uid://d24vaiwlt8dsy" path="res://assets/images-png/daily/btn_cta_blue_normal.png" id="5_btn_n"]
 [ext_resource type="Texture2D" uid="uid://c84kjolweguv7" path="res://assets/images-png/daily/btn_cta_blue_pressed.png" id="6_btn_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_glow_rays.png" id="7_rays"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="8_glow"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_ring.png" id="9_ring"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="10_sparkle"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_coin.png" id="11_coin"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_confetti.png" id="12_confetti"]
+[ext_resource uid="uid://bn1h3ynvrcb0k" type="Texture2D" path="res://assets/images-png/effects/fx_glow_rays.png" id="7_rays"]
+[ext_resource uid="uid://isr1cd5s5mxk" type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="8_glow"]
+[ext_resource uid="uid://cpk7f5vprutoo" type="Texture2D" path="res://assets/images-png/effects/fx_ring.png" id="9_ring"]
+[ext_resource uid="uid://buhsd5kh2cdyp" type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="10_sparkle"]
+[ext_resource uid="uid://dk22osf6jo26n" type="Texture2D" path="res://assets/images-png/effects/fx_coin.png" id="11_coin"]
+[ext_resource uid="uid://c4xo8tjno7rw1" type="Texture2D" path="res://assets/images-png/effects/fx_confetti.png" id="12_confetti"]
 
 [sub_resource type="Gradient" id="Gradient_fade"]
 offsets = PackedFloat32Array(0, 0.65, 1)

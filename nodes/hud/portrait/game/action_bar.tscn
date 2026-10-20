@@ -2,49 +2,38 @@
 
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="1_w6pjg"]
 [ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="5_l0kg0"]
-[ext_resource uid="uid://b62wcl4y41lv7" type="Texture2D" path="res://assets/images-png/game/btn_submit_normal.png" id="13_8y1nw"]
-[ext_resource uid="uid://blq6cnnryjyqu" type="Texture2D" path="res://assets/images-png/game/btn_restart_normal.png" id="13_31yh8"]
-[ext_resource uid="uid://cvvjfxne56g5k" type="Texture2D" path="res://assets/images-png/game/btn_submit_pressed.png" id="14_7v77u"]
-[ext_resource uid="uid://e42nujmud7ck" type="Texture2D" path="res://assets/images-png/game/btn_restart_pressed.png" id="14_irvt4"]
-[ext_resource uid="uid://dbhwrsi5ewmbg" type="Texture2D" path="res://assets/images-png/game/btn_skip_normal.png" id="14_kn0bs"]
-[ext_resource uid="uid://bma8xm7w4gmh6" type="Texture2D" path="res://assets/images-png/game/btn_submit_disabled.png" id="15_kn0bs"]
-[ext_resource uid="uid://cftwvp13ryeqs" type="Texture2D" path="res://assets/images-png/game/btn_restart_disabled.png" id="15_oj83g"]
-[ext_resource uid="uid://c1udpquhff0e1" type="Texture2D" path="res://assets/images-png/game/btn_skip_pressed.png" id="15_vjyni"]
-[ext_resource uid="uid://din4ucp1xnysu" type="Texture2D" path="res://assets/images-png/game/btn_restart_focus.png" id="16_5kyg3"]
-[ext_resource uid="uid://cd1lfyfbiymhx" type="Texture2D" path="res://assets/images-png/game/btn_skip_disable.png" id="16_trajn"]
+[ext_resource type="Texture2D" uid="uid://b62wcl4y41lv7" path="res://assets/images-png/game/btn_submit_normal.png" id="13_8y1nw"]
+[ext_resource type="Texture2D" uid="uid://blq6cnnryjyqu" path="res://assets/images-png/game/btn_restart_normal.png" id="13_31yh8"]
+[ext_resource type="Texture2D" uid="uid://cvvjfxne56g5k" path="res://assets/images-png/game/btn_submit_pressed.png" id="14_7v77u"]
+[ext_resource type="Texture2D" uid="uid://e42nujmud7ck" path="res://assets/images-png/game/btn_restart_pressed.png" id="14_irvt4"]
+[ext_resource type="Texture2D" uid="uid://dbhwrsi5ewmbg" path="res://assets/images-png/game/btn_skip_normal.png" id="14_kn0bs"]
+[ext_resource type="Texture2D" uid="uid://bma8xm7w4gmh6" path="res://assets/images-png/game/btn_submit_disabled.png" id="15_kn0bs"]
+[ext_resource type="Texture2D" uid="uid://cftwvp13ryeqs" path="res://assets/images-png/game/btn_restart_disabled.png" id="15_oj83g"]
+[ext_resource type="Texture2D" uid="uid://c1udpquhff0e1" path="res://assets/images-png/game/btn_skip_pressed.png" id="15_vjyni"]
+[ext_resource type="Texture2D" uid="uid://din4ucp1xnysu" path="res://assets/images-png/game/btn_restart_focus.png" id="16_5kyg3"]
+[ext_resource type="Texture2D" uid="uid://cd1lfyfbiymhx" path="res://assets/images-png/game/btn_skip_disable.png" id="16_trajn"]
 [ext_resource type="Script" uid="uid://blpdwtvxerh8h" path="res://scripts/tool/nine_patch/NinePatchStateTexture.gd" id="23_7v77u"]
-[ext_resource uid="uid://bs6bmfy2ow7bv" type="Texture2D" path="res://assets/images-png/common/btn_item_normal.png" id="24_kfsk0"]
-[ext_resource uid="uid://bwj5ympwe2hm3" type="Texture2D" path="res://assets/images-png/common/btn_item_pressed.png" id="25_vvy6r"]
-[ext_resource uid="uid://dg85ewia3cxa7" type="Texture2D" path="res://assets/images-png/common/btn_item_disable.png" id="26_1uc10"]
-[ext_resource uid="uid://cp27il6y8f1dp" type="Texture2D" path="res://assets/images-png/icons/icon_bulb.png" id="bar_bulbicon"]
+[ext_resource type="Texture2D" uid="uid://bs6bmfy2ow7bv" path="res://assets/images-png/common/btn_item_normal.png" id="24_kfsk0"]
+[ext_resource type="Texture2D" uid="uid://bwj5ympwe2hm3" path="res://assets/images-png/common/btn_item_pressed.png" id="25_vvy6r"]
+[ext_resource type="Texture2D" uid="uid://dg85ewia3cxa7" path="res://assets/images-png/common/btn_item_disable.png" id="26_1uc10"]
+[ext_resource type="Texture2D" uid="uid://cp27il6y8f1dp" path="res://assets/images-png/icons/icon_bulb.png" id="bar_bulbicon"]
 [ext_resource type="Script" uid="uid://bt8f7hl74mar" path="res://scripts/nodes/game/hint_guide.gd" id="bar_hintguide"]
-[ext_resource uid="uid://caee6d0qm2nx1" type="Texture2D" path="res://assets/images-png/game/panel_hint_guide.png" id="bar_hintpanel"]
-[ext_resource uid="uid://dybqvaw2rmp7w" type="Texture2D" path="res://assets/images-png/game/btn_hint_disabled.png" id="bar_hint_d"]
-[ext_resource uid="uid://c4louruvu6ijq" type="Texture2D" path="res://assets/images-png/game/btn_hint_normal.png" id="bar_hint_n"]
-[ext_resource uid="uid://c1rsbeag67ckp" type="Texture2D" path="res://assets/images-png/game/btn_hint_pressed.png" id="bar_hint_p"]
+[ext_resource type="Texture2D" uid="uid://caee6d0qm2nx1" path="res://assets/images-png/game/panel_hint_guide.png" id="bar_hintpanel"]
+[ext_resource type="Texture2D" uid="uid://dybqvaw2rmp7w" path="res://assets/images-png/game/btn_hint_disabled.png" id="bar_hint_d"]
+[ext_resource type="Texture2D" uid="uid://c4louruvu6ijq" path="res://assets/images-png/game/btn_hint_normal.png" id="bar_hint_n"]
+[ext_resource type="Texture2D" uid="uid://c1rsbeag67ckp" path="res://assets/images-png/game/btn_hint_pressed.png" id="bar_hint_p"]
 [ext_resource type="Script" uid="uid://bbq8fo18vt532" path="res://scripts/nodes/hud/game/action_bar.gd" id="bar_script"]
-[ext_resource type="Script" path="res://scripts/nodes/hud/game/limited_button.gd" id="limit_btn"]
-[ext_resource uid="uid://bm1khrfv3tkx7" type="Texture2D" path="res://assets/images-png/game/btn_undo_disabled.png" id="bar_undo_d"]
-[ext_resource uid="uid://duvuocvoymd43" type="Texture2D" path="res://assets/images-png/game/btn_undo_normal.png" id="bar_undo_n"]
-[ext_resource uid="uid://pvdjm7lb1xxc" type="Texture2D" path="res://assets/images-png/game/btn_undo_pressed.png" id="bar_undo_p"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8y1nw"]
-content_margin_left = 61.0
-content_margin_top = 18.0
-content_margin_right = 30.0
-content_margin_bottom = 20.0
-texture = ExtResource("13_8y1nw")
-texture_margin_left = 61.0
-texture_margin_top = 18.0
-texture_margin_right = 30.0
-texture_margin_bottom = 20.0
+[ext_resource type="Texture2D" uid="uid://bm1khrfv3tkx7" path="res://assets/images-png/game/btn_undo_disabled.png" id="bar_undo_d"]
+[ext_resource type="Texture2D" uid="uid://duvuocvoymd43" path="res://assets/images-png/game/btn_undo_normal.png" id="bar_undo_n"]
+[ext_resource type="Texture2D" uid="uid://pvdjm7lb1xxc" path="res://assets/images-png/game/btn_undo_pressed.png" id="bar_undo_p"]
+[ext_resource type="Script" uid="uid://6o5plv3ncq4w" path="res://scripts/nodes/hud/game/limited_button.gd" id="limit_btn"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7v77u"]
 content_margin_left = 61.0
 content_margin_top = 18.0
 content_margin_right = 30.0
 content_margin_bottom = 20.0
-texture = ExtResource("14_7v77u")
+texture = ExtResource("13_8y1nw")
 texture_margin_left = 61.0
 texture_margin_top = 18.0
 texture_margin_right = 30.0
@@ -55,13 +44,24 @@ content_margin_left = 61.0
 content_margin_top = 18.0
 content_margin_right = 30.0
 content_margin_bottom = 20.0
-texture = ExtResource("13_8y1nw")
+texture = ExtResource("14_7v77u")
 texture_margin_left = 61.0
 texture_margin_top = 18.0
 texture_margin_right = 30.0
 texture_margin_bottom = 20.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vjyni"]
+content_margin_left = 61.0
+content_margin_top = 18.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("13_8y1nw")
+texture_margin_left = 61.0
+texture_margin_top = 18.0
+texture_margin_right = 30.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_trajn"]
 content_margin_left = 61.0
 content_margin_top = 18.0
 content_margin_right = 30.0
@@ -97,13 +97,11 @@ _data = {
 [node name="ActionBar" type="VBoxContainer" unique_id=647431502]
 anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 0.136
-offset_bottom = -0.120010376
+anchor_bottom = 0.17
+offset_bottom = -0.40000916
 grow_horizontal = 2
-grow_vertical = 2
 theme = ExtResource("1_w6pjg")
 script = ExtResource("bar_script")
-metadata/_edit_use_anchors_ = true
 
 [node name="HintGuide" type="Control" parent="." unique_id=2049437720 node_paths=PackedStringArray("text_label")]
 visible = false
@@ -152,10 +150,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tooltip_text = "STR_TOOL_SUBMIT"
-theme_override_styles/normal = SubResource("StyleBoxTexture_8y1nw")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_7v77u")
-theme_override_styles/hover = SubResource("StyleBoxTexture_kn0bs")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_vjyni")
+theme_override_styles/normal = SubResource("StyleBoxTexture_7v77u")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_kn0bs")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vjyni")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_trajn")
 script = ExtResource("5_l0kg0")
 texture_normal = ExtResource("13_8y1nw")
 texture_hover = ExtResource("13_8y1nw")
@@ -197,9 +195,6 @@ texture_disabled = ExtResource("15_oj83g")
 texture_focused = ExtResource("16_5kyg3")
 
 [node name="Skip" type="TextureButton" parent="Row" unique_id=368139109 node_paths=PackedStringArray("panel_limit", "limit_label")]
-script = ExtResource("limit_btn")
-panel_limit = NodePath("PanelLimit")
-limit_label = NodePath("PanelLimit/Label")
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_stretch_ratio = 0.2
@@ -209,13 +204,16 @@ texture_pressed = ExtResource("15_vjyni")
 texture_hover = ExtResource("14_kn0bs")
 texture_disabled = ExtResource("16_trajn")
 texture_focused = ExtResource("14_kn0bs")
+script = ExtResource("limit_btn")
+panel_limit = NodePath("")
+limit_label = NodePath("")
 
-[node name="PanelLimit" type="Control" parent="Row/Skip" unique_id=390261103]
+[node name="PanelLimit" type="Control" parent="Row/Skip" unique_id=1194304523]
 layout_mode = 1
-anchor_left = 0.59300005
-anchor_top = -0.279
-anchor_right = 1.088
-anchor_bottom = 0.344
+anchor_left = 0.58201104
+anchor_top = -0.24477175
+anchor_right = 1.077011
+anchor_bottom = 0.23530437
 offset_left = 0.036994934
 offset_top = 0.019001007
 offset_right = -0.008003235
@@ -231,8 +229,9 @@ texture_hover = ExtResource("24_kfsk0")
 texture_pressed = ExtResource("25_vvy6r")
 texture_disabled = ExtResource("26_1uc10")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Row/Skip/PanelLimit" unique_id=390261104]
+[node name="Label" type="Label" parent="Row/Skip/PanelLimit" unique_id=2120515569]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1521739
@@ -254,9 +253,6 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.8
 
 [node name="Undo" type="TextureButton" parent="Row" unique_id=1686832729 node_paths=PackedStringArray("panel_limit", "limit_label")]
-script = ExtResource("limit_btn")
-panel_limit = NodePath("PanelLimit")
-limit_label = NodePath("PanelLimit/Label")
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
@@ -265,13 +261,16 @@ tooltip_text = "STR_TOOL_UNDO"
 texture_normal = ExtResource("bar_undo_n")
 texture_pressed = ExtResource("bar_undo_p")
 texture_disabled = ExtResource("bar_undo_d")
+script = ExtResource("limit_btn")
+panel_limit = NodePath("PanelLimit")
+limit_label = NodePath("PanelLimit/Label")
 
 [node name="PanelLimit" type="Control" parent="Row/Undo" unique_id=1117707689]
 layout_mode = 1
-anchor_left = 0.59300005
-anchor_top = -0.279
-anchor_right = 1.088
-anchor_bottom = 0.344
+anchor_left = 0.58201104
+anchor_top = -0.24477175
+anchor_right = 1.077011
+anchor_bottom = 0.23530437
 offset_left = 0.036994934
 offset_top = 0.019001007
 offset_right = -0.008003235
@@ -287,6 +286,7 @@ texture_hover = ExtResource("24_kfsk0")
 texture_pressed = ExtResource("25_vvy6r")
 texture_disabled = ExtResource("26_1uc10")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Row/Undo/PanelLimit" unique_id=1581698055]
 layout_mode = 1
@@ -305,9 +305,6 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Hint" type="TextureButton" parent="Row" unique_id=801132198 node_paths=PackedStringArray("panel_limit", "limit_label")]
-script = ExtResource("limit_btn")
-panel_limit = NodePath("PanelLimit")
-limit_label = NodePath("PanelLimit/Label")
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
@@ -316,13 +313,16 @@ tooltip_text = "STR_TOOL_HINT"
 texture_normal = ExtResource("bar_hint_n")
 texture_pressed = ExtResource("bar_hint_p")
 texture_disabled = ExtResource("bar_hint_d")
+script = ExtResource("limit_btn")
+panel_limit = NodePath("")
+limit_label = NodePath("")
 
-[node name="PanelLimit" type="Control" parent="Row/Hint" unique_id=205338599]
+[node name="PanelLimit" type="Control" parent="Row/Hint" unique_id=412242771]
 layout_mode = 1
-anchor_left = 0.59300005
-anchor_top = -0.279
-anchor_right = 1.088
-anchor_bottom = 0.344
+anchor_left = 0.58201104
+anchor_top = -0.24477175
+anchor_right = 1.077011
+anchor_bottom = 0.23530437
 offset_left = 0.036994934
 offset_top = 0.019001007
 offset_right = -0.008003235
@@ -338,8 +338,9 @@ texture_hover = ExtResource("24_kfsk0")
 texture_pressed = ExtResource("25_vvy6r")
 texture_disabled = ExtResource("26_1uc10")
 metadata/_custom_type_script = "uid://blpdwtvxerh8h"
+metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Row/Hint/PanelLimit" unique_id=905504051]
+[node name="Label" type="Label" parent="Row/Hint/PanelLimit" unique_id=1253585341]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1521739
@@ -355,7 +356,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="PulseAnim" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_undo_pulse_p")
-}
+[node name="PulseAnim" type="AnimationPlayer" parent="." unique_id=1415538603]
+libraries/ = SubResource("AnimationLibrary_undo_pulse_p")

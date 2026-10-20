@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" width="11" height="11">
-  
-  <circle cx="11" cy="11" r="10.5" fill="#D97706" />
-  <circle cx="11" cy="11" r="8.5" fill="#FBBF24" />
-  <path d="M 11 5.6 L 12.7 9.3 L 16.6 9.8 L 13.7 12.6 L 14.4 16.5 L 11 14.5 L 7.6 16.5 L 8.3 12.6 L 5.4 9.8 L 9.3 9.3 Z" fill="#B45309" />
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" fill="none">
+  <!-- Đồng xu vàng: viền tối #333745 cùng phong cách với rương -->
+  <circle cx="48" cy="48" r="38" fill="#FFD166" stroke="#333745" stroke-width="5"/>
+  <circle cx="48" cy="48" r="28" fill="#FFE082" stroke="#E8B86D" stroke-width="3"/>
+  <path d="M48 30 L53 42 L66 43 L56 52 L59 65 L48 58 L37 65 L40 52 L30 43 L43 42 Z" fill="#EAA023" stroke="#C99738" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M22 36 C26 24 36 17 46 16" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
 </svg>

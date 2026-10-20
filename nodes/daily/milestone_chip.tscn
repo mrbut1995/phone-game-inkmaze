@@ -6,8 +6,8 @@
 [ext_resource uid="uid://1am8aehqp420" type="Texture2D" path="res://assets/images-png/daily/chest.png" id="7_chest_open"]
 [ext_resource type="Texture2D" uid="uid://b3fvm8sypownm" path="res://assets/images-png/daily/check_badge.png" id="5_badge"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="6_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="20_glow"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="21_spark"]
+[ext_resource uid="uid://isr1cd5s5mxk" type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="20_glow"]
+[ext_resource uid="uid://buhsd5kh2cdyp" type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="21_spark"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
 blend_mode = 1
@@ -247,7 +247,7 @@ _data = {
 &"ready": SubResource("Animation_chip_ready")
 }
 
-[node name="MilestoneChip" type="Button" unique_id=1213168266 node_paths=PackedStringArray("ring", "chest", "badge", "lbl_stars", "fx_anim")]
+[node name="MilestoneChip" type="Button" unique_id=1213168266 node_paths=PackedStringArray("ring", "chest", "badge", "lbl_stars", "fx_anim", "hold_timer")]
 custom_minimum_size = Vector2(40, 40)
 offset_right = 40.0
 offset_bottom = 40.0
@@ -263,6 +263,7 @@ chest = NodePath("Ring/Chest")
 badge = NodePath("Ring/Badge")
 lbl_stars = NodePath("Stars")
 fx_anim = NodePath("FxAnim")
+hold_timer = NodePath("HoldTimer")
 
 [node name="Ring" type="TextureRect" parent="." unique_id=360493906]
 custom_minimum_size = Vector2(36, 36)
@@ -355,4 +356,11 @@ vertical_alignment = 1
 [node name="FxAnim" type="AnimationPlayer" parent="." unique_id=1900400003]
 libraries/ = SubResource("AnimationLibrary_chip")
 
+[node name="HoldTimer" type="Timer" parent="." unique_id=1900700001]
+wait_time = 0.35
+one_shot = true
+
 [connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="timeout" from="HoldTimer" to="." method="_on_hold_timeout"]

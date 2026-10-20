@@ -21,6 +21,10 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const ADS_REWARD_ID := "daily_unlock"
 ## Thẻ mốc thưởng (instantiate cho MỌI mốc trong `DailyManager.MILESTONES`)
 @export var MILESTONE_CHIP: PackedScene = preload("res://nodes/daily/milestone_chip.tscn")
+## Bong bóng thông tin phần thưởng (hiện khi NHẤN GIỮ chip mốc)
+@export var REWARD_TIP: PackedScene = preload("res://nodes/daily/reward_tip.tscn")
+## Hiệu ứng trang trí thanh Sao (đầu thanh sáng + dải sáng quét)
+@export var STAR_BAR_FX: PackedScene = preload("res://nodes/daily/star_bar_fx.tscn")
 
 ## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
 ## CÙNG tên node) và đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/daily.tscn`
@@ -28,6 +32,7 @@ const ADS_REWARD_ID := "daily_unlock"
 var layout: DailyLayout = null
 
 var _chips: Array[DailyMilestoneChip] = []
+var _tip: DailyRewardTip = null
 var _daily: Node = null
 ## Đang chờ quảng cáo: true = sau khi xem xong vào THỬ THÁCH, false = vào CHƠI
 var _ad_challenge_pending := false
@@ -139,6 +144,9 @@ func _layout_stage() -> void:
 	var factor := minf(canvas.x / design.x, canvas.y / design.y)
 	stage.scale = Vector2(factor, factor)
 	stage.position = ((canvas - design * factor) * 0.5).floor()
+	# Stage đổi cỡ ⇒ vị trí chip đổi ⇒ đo lại để thanh Sao vẫn khớp các chip
+	_hide_tip(true)
+	layout.refresh_bar.call_deferred()
 
 
 ## Phát lại EnterAnim mỗi khi màn được kích hoạt (quay lại từ màn khác)
@@ -198,6 +206,10 @@ func _rebind_after_orientation() -> void:
 		if layout != null:
 			layout.stop_star_gain()
 		_celebrating = false
+	_hide_tip(true)
+	_tip = null
+	if layout != null:
+		layout.clear_bar_fx()
 	_bind_refs()
 	_wire_buttons()
 	_build_milestones()
@@ -208,6 +220,7 @@ func _rebind_after_orientation() -> void:
 ## Dựng lại các chip MỐC THƯỞNG vào `milestones_host` của layout đang hiển thị
 func _build_milestones() -> void:
 	_chips.clear()
+	_ensure_bar_fx()
 	var host := layout.milestones_host
 	if host == null:
 		return
@@ -221,7 +234,60 @@ func _build_milestones() -> void:
 		var chip: DailyMilestoneChip = MILESTONE_CHIP.instantiate()
 		host.add_child(chip)
 		chip.claim_requested.connect(_on_milestone_claim)
+		chip.hold_started.connect(_on_chip_hold_started)
+		chip.hold_ended.connect(_hide_tip)
 		_chips.append(chip)
+	var thresholds: Array = []
+	for def in defs:
+		thresholds.append(int((def as Dictionary).get("stars", 0)))
+	layout.set_milestone_thresholds(thresholds)
+
+
+## Gắn hiệu ứng thanh Sao vào layout đang hiển thị (1 lần cho mỗi layout)
+func _ensure_bar_fx() -> void:
+	if layout == null or STAR_BAR_FX == null or layout.bar_stars == null or layout.has_bar_fx():
+		return
+	var fx := STAR_BAR_FX.instantiate() as StarBarFx
+	if fx != null:
+		layout.attach_bar_fx(fx)
+
+
+## Nhấn giữ chip ⇒ hiện bóng thông tin phần thưởng của mốc đó
+func _on_chip_hold_started(chip: DailyMilestoneChip) -> void:
+	if _daily == null or layout == null or chip == null:
+		return
+	var stage := layout.get_node_or_null("Panel/Stage") as Control
+	if stage == null or not _ensure_tip(stage):
+		return
+	var def: Dictionary = _daily.call("milestone_def", chip.threshold) if _daily.has_method("milestone_def") else {}
+	if def.is_empty():
+		def = {"stars": chip.threshold}
+	var shown := _hold_stars if _celebrating else _month_stars()
+	var claimed := bool(_daily.call("is_milestone_claimed", chip.threshold))
+	_tip.popup_at(chip, def, shown, claimed, stage, chip.ring)
+
+
+func _ensure_tip(stage: Control) -> bool:
+	if _tip != null and is_instance_valid(_tip) and _tip.get_parent() == stage:
+		stage.move_child(_tip, stage.get_child_count() - 1)
+		return true
+	if REWARD_TIP == null:
+		return false
+	_tip = REWARD_TIP.instantiate() as DailyRewardTip
+	if _tip == null:
+		return false
+	stage.add_child(_tip)
+	return true
+
+
+func _hide_tip(immediately := false) -> void:
+	if _tip == null or not is_instance_valid(_tip):
+		return
+	if immediately:
+		_tip.visible = false
+		_tip.dismiss()
+	else:
+		_tip.dismiss()
 
 
 # --- API cho test -----------------------------------------------------------
@@ -273,14 +339,9 @@ func _refresh() -> void:
 	var shown_stars := _hold_stars if _celebrating else month_stars
 	var goal := _month_goal()
 
-	if layout.bar_stars != null:
-		layout.bar_stars.max_value = maxi(goal, 1)
 	# Trong lúc sao bay, số/thanh Sao do DailyLayout điều khiển từng bước — không ghi đè
 	if not layout.is_star_gain_playing():
-		if layout.lbl_star_total != null:
-			layout.lbl_star_total.text = str(shown_stars)
-		if layout.bar_stars != null:
-			layout.bar_stars.value = mini(shown_stars, maxi(goal, 1))
+		layout.show_stars(float(mini(shown_stars, maxi(goal, 1))))
 	if layout.lbl_reset != null:
 		layout.lbl_reset.text = tr("STR_DAILY_RESET_IN").format([_reset_countdown()])
 

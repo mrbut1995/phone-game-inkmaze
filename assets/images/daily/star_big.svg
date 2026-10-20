@@ -1,3 +1,5 @@
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 130' width='150' height='130' fill='none'>
-  <path d='M75 6 L93 47 L137 52 L105 82 L113 126 L75 105 L37 126 L45 82 L13 52 L57 47 Z' fill='#FBBF24' stroke='#B45309' stroke-width='7' stroke-linejoin='round'/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 130" width="150" height="130" fill="none">
+  <!-- star_big: ngôi sao lớn đầu thanh Sao. Tâm ngoại tiếp đặt đúng TÂM ảnh (75,65) để căn giữa với thanh;
+       hổ phách phẳng + viền navy cùng tông giấy vở. -->
+  <polygon points="75.0 5.0 93.2 39.9 132.1 46.5 104.5 74.6 110.3 113.5 75.0 96.0 39.7 113.5 45.5 74.6 17.9 46.5 56.8 39.9" fill="#FBBF24" stroke="#164663" stroke-width="7" stroke-linejoin="round"/>
 </svg>
