@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 144" width="192" height="144" fill="none">
+  <!-- reward_tip_bg: nền bong bóng thông tin thưởng (tờ giấy ô ly bo góc, viền navy). NinePatch, margin 40.
+       Vẽ gấp đôi kích thước hiển thị (node đặt scale 0.5) để nét sắc trên màn độ phân giải cao. -->
+  <defs>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="#FFFDF7"/>
+      <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#D7E3EB" stroke-width="1.2"/>
+    </pattern>
+  </defs>
+  <rect x="5" y="11" width="182" height="128" rx="30" fill="#164663" opacity="0.18"/>
+  <rect x="5" y="5" width="182" height="128" rx="30" fill="url(#grid)" stroke="#164663" stroke-width="5"/>
+  <path d="M 24 14 H 168" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+</svg>

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cakuvp3hoy31u"
-path="res://.godot/imported/btn_tool_wall_inactive.svg-d91b3144b036d7df33b836c51b6a6a06.ctex"
+uid="uid://btl6aaoaw418f"
+path="res://.godot/imported/reward_tip_bg.svg-0d2db3f0378afc6e310d9ee0f139b4a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/game/btn_tool_wall_inactive.svg"
-dest_files=["res://.godot/imported/btn_tool_wall_inactive.svg-d91b3144b036d7df33b836c51b6a6a06.ctex"]
+source_file="res://assets/images/daily/reward_tip_bg.svg"
+dest_files=["res://.godot/imported/reward_tip_bg.svg-0d2db3f0378afc6e310d9ee0f139b4a6.ctex"]
 
 [params]
 

@@ -13,7 +13,12 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [node name="DockButton" type="Button" unique_id=2131757796]
-custom_minimum_size = Vector2(0, 64)
+custom_minimum_size = Vector2(0, 76)
+anchors_preset = -1
+anchor_right = 0.074
+anchor_bottom = 0.093
+offset_right = -39.96
+offset_bottom = -85.560005
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = ExtResource("2_n")

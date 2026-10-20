@@ -5,29 +5,39 @@
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
 [ext_resource type="Texture2D" uid="uid://b3hsm3p524syt" path="res://assets/images-png/ranking/rank_sheet.png" id="5_sheet"]
-[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="6_tape"]
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="7_clip"]
+[ext_resource type="Texture2D" uid="uid://b06a5wgxn10bn" path="res://assets/images-png/popups/popup_washi_tape.png" id="8_4cuta"]
 [ext_resource type="Texture2D" uid="uid://bir8bpmt03wuv" path="res://assets/images-png/icons/icon_trophy.png" id="8_trophy"]
 [ext_resource type="Texture2D" uid="uid://c0ghvvkvr38pj" path="res://assets/images-png/ranking/chip_scope.png" id="9_chip"]
 [ext_resource type="Texture2D" uid="uid://duqcleabqujwd" path="res://assets/images-png/settings/divider_dashed.png" id="10_divider"]
 [ext_resource type="Texture2D" uid="uid://nr8strlnr3mt" path="res://assets/images-png/ranking/medal_gold.png" id="11_medal_g"]
-[ext_resource uid="uid://do17ddvk7aivr" type="Texture2D" path="res://assets/images-png/common/medal_place.png" id="12_medal_s"]
+[ext_resource type="Texture2D" uid="uid://do17ddvk7aivr" path="res://assets/images-png/common/medal_place.png" id="12_medal_s"]
 [ext_resource type="Texture2D" uid="uid://coes0kdnsaiv" path="res://assets/images-png/ranking/podium_gold.png" id="14_podium_g"]
 [ext_resource type="Texture2D" uid="uid://c1r6hcmsb6uls" path="res://assets/images-png/ranking/podium_silver.png" id="15_podium_s"]
 [ext_resource type="Texture2D" uid="uid://b8xcvk264ibmj" path="res://assets/images-png/ranking/podium_bronze.png" id="16_podium_b"]
 [ext_resource type="Texture2D" uid="uid://cfmy24n74f1hj" path="res://assets/images-png/ranking/my_rank_bar.png" id="17_mybar"]
 [ext_resource type="PackedScene" uid="uid://dydi6np3xsxp0" path="res://nodes/ranking/tab_button.tscn" id="20_tab"]
+[ext_resource type="Shader" uid="uid://bvgsk8cmw04xi" path="res://shaders/color_remap.gdshader" id="sh_color_remap"]
 
-[ext_resource type="Shader" path="res://shaders/color_remap.gdshader" id="sh_color_remap"]
 [sub_resource type="ShaderMaterial" id="mat_bronze"]
 shader = ExtResource("sh_color_remap")
-shader_parameter/tolerance = 0.06
 shader_parameter/f1 = Color(0.392157, 0.454902, 0.545098, 1)
 shader_parameter/t1 = Color(0.705882, 0.32549, 0.035294, 1)
 shader_parameter/f2 = Color(0.886275, 0.909804, 0.941176, 1)
 shader_parameter/t2 = Color(0.984314, 0.835294, 0.647059, 1)
 shader_parameter/f3 = Color(0.972549, 0.980392, 0.988235, 1)
 shader_parameter/t3 = Color(0.996078, 0.952941, 0.780392, 1)
+shader_parameter/f4 = Color(1, 1, 1, 1)
+shader_parameter/t4 = Color(1, 1, 1, 1)
+shader_parameter/f5 = Color(1, 1, 1, 1)
+shader_parameter/t5 = Color(1, 1, 1, 1)
+shader_parameter/f6 = Color(1, 1, 1, 1)
+shader_parameter/t6 = Color(1, 1, 1, 1)
+shader_parameter/f7 = Color(1, 1, 1, 1)
+shader_parameter/t7 = Color(1, 1, 1, 1)
+shader_parameter/f8 = Color(1, 1, 1, 1)
+shader_parameter/t8 = Color(1, 1, 1, 1)
+shader_parameter/tolerance = 0.06
 
 [sub_resource type="Animation" id="Animation_rank_enter_reset"]
 length = 0.001
@@ -177,11 +187,11 @@ anchors_preset = -1
 anchor_left = 0.034
 anchor_top = 0.033770833
 anchor_right = 0.961
-anchor_bottom = 0.07877084
+anchor_bottom = 0.116000004
 offset_left = 0.139999
 offset_top = -0.42
-offset_right = 0.0599976
-offset_bottom = -0.120003
+offset_right = 0.05999756
+offset_bottom = -34.370834
 metadata/_edit_use_anchors_ = true
 
 [node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=1324359746]
@@ -198,47 +208,59 @@ size_flags_horizontal = 3
 theme_type_variation = &"LevelsTitle"
 text = "STR_RANK_TITLE"
 horizontal_alignment = 1
+text_overrun_behavior = 3
 
-[node name="Chip" type="TextureRect" parent="." index="1" unique_id=484711494]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -125.0
-offset_top = 42.5
-offset_right = -25.0
-offset_bottom = 77.5
-grow_horizontal = 0
-mouse_filter = 2
+[node name="Chip" type="AspectRatioContainer" parent="TopBar" index="2" unique_id=209620414]
+custom_minimum_size = Vector2(48, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.4
+ratio = 5.0
+stretch_mode = 0
+
+[node name="Chip" type="NinePatchRect" parent="TopBar/Chip" index="0" unique_id=202352200]
+custom_minimum_size = Vector2(48, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.4
 texture = ExtResource("9_chip")
+region_rect = Rect2(0, 0, 100, 35)
+patch_margin_left = 14
+patch_margin_top = 7
+patch_margin_right = 13
+patch_margin_bottom = 9
 
-[node name="Icon" type="TextureRect" parent="Chip" index="0" unique_id=625206080]
-layout_mode = 0
-offset_left = 10.0
-offset_top = 7.5
-offset_right = 30.0
-offset_bottom = 27.5
+[node name="Content" type="HBoxContainer" parent="TopBar/Chip" index="1" unique_id=451688820]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="TopBar/Chip/Content" index="0" unique_id=1873134684]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="TopBar/Chip/Content" index="1" unique_id=625206080]
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("8_trophy")
-expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Chip" index="1" unique_id=383752297]
-layout_mode = 0
-offset_left = 34.0
-offset_right = 93.0
-offset_bottom = 35.0
+[node name="Label" type="Label" parent="TopBar/Chip/Content" index="2" unique_id=383752297]
+layout_mode = 2
 theme_type_variation = &"RankChip"
 text = "STR_RANK_SCOPE"
 vertical_alignment = 1
 
-[node name="Sheet" type="NinePatchRect" parent="." index="2" unique_id=1673019476]
+[node name="Spacer2" type="Control" parent="TopBar/Chip/Content" index="3" unique_id=1052650362]
+layout_mode = 2
+
+[node name="Sheet" type="NinePatchRect" parent="." index="1" unique_id=1673019476]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.065000005
-anchor_top = 0.096
-anchor_right = 0.93500006
-anchor_bottom = 0.91400003
+anchor_left = 0.0612963
+anchor_top = 0.13223913
+anchor_right = 0.93129635
+anchor_bottom = 0.9502392
 offset_left = -0.100002
 offset_top = 0.339996
 offset_right = 0.0999756
@@ -251,15 +273,24 @@ patch_margin_right = 72
 patch_margin_bottom = 115
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Tape" type="TextureRect" parent="Sheet" index="0" unique_id=680707585]
-layout_mode = 0
-offset_left = 180.0
-offset_top = -11.0
-offset_right = 293.0
-offset_bottom = 16.0
-mouse_filter = 2
-texture = ExtResource("6_tape")
+[node name="Tape" type="NinePatchRect" parent="Sheet" index="0" unique_id=151714154]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.26000002
+anchor_top = -0.027999999
+anchor_right = 0.72953194
+anchor_bottom = 0.025
+offset_left = -0.2000122
+offset_top = 0.06383896
+offset_right = 0.11999512
+offset_bottom = 0.1930008
+texture = ExtResource("8_4cuta")
+patch_margin_left = 28
+patch_margin_right = 27
+axis_stretch_horizontal = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Clip" type="TextureRect" parent="Sheet" index="1" unique_id=928489748]
 layout_mode = 0
@@ -617,6 +648,7 @@ offset_left = -108.0
 offset_top = 10.0
 offset_right = -15.5
 offset_bottom = 28.0
+grow_horizontal = 0
 theme_type_variation = &"RankMyRecord"
 text = "TẦNG 12"
 horizontal_alignment = 2
@@ -630,6 +662,7 @@ offset_left = -125.5
 offset_top = 29.0
 offset_right = -15.5
 offset_bottom = 47.0
+grow_horizontal = 0
 theme_type_variation = &"RankMyValue"
 text = "7,840 PTS"
 horizontal_alignment = 2
@@ -654,6 +687,6 @@ theme_type_variation = &"RankFooterNote"
 text = "STR_RANK_DEMO"
 horizontal_alignment = 1
 
-[node name="EnterAnim" type="AnimationPlayer" parent="." index="3" unique_id=853185818]
+[node name="EnterAnim" type="AnimationPlayer" parent="." index="2" unique_id=853185818]
 libraries/ = SubResource("AnimationLibrary_rank_enter_p")
 autoplay = &"enter"

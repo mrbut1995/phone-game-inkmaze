@@ -49,6 +49,12 @@ signal star_gain_finished
 ## thuộc tính này để thanh Sao chạy mượt, số trên Sao lớn đổi theo)
 @export_range(0.0, 1.0, 0.001) var star_progress := 1.0: set = _set_star_progress
 
+## Hiệu ứng thanh Sao (đầu thanh sáng + dải sáng quét) — màn Daily instance rồi gắn vào đây
+var _bar_fx: StarBarFx = null
+## Ngưỡng Sao của các mốc (theo thứ tự chip trong `milestones_host`)
+var _thresholds: Array[int] = []
+## Số Sao đang hiển thị (có thể lẻ trong lúc sao bay)
+var _stars_shown := 0.0
 var _gain_active := false
 var _gain_count := 0
 var _ticks := 0
@@ -85,8 +91,6 @@ func play_star_gain(card: DailyActionCard, gained: int, total_from: int, total_t
 	_star_from = float(total_from)
 	_star_to = float(total_from)
 	star_progress = 1.0
-	if bar_stars != null:
-		bar_stars.step = 0.01
 	vfx_anim.stop()
 	vfx_anim.play(&"fly")
 	return true
@@ -139,10 +143,106 @@ func _set_star_progress(value: float) -> void:
 	_shown = lerpf(_star_from, _star_to, star_progress)
 	if not _gain_active:
 		return
-	if bar_stars != null:
-		bar_stars.value = _shown
+	show_stars(_shown)
+
+
+# --- Thanh Sao: tỉ lệ đầy khớp với vị trí các chip mốc --------------------------
+
+## Đặt ngưỡng Sao các mốc (theo thứ tự chip) — màn Daily gọi sau khi dựng chip
+func set_milestone_thresholds(values: Array) -> void:
+	_thresholds.clear()
+	for v in values:
+		_thresholds.append(int(v))
+	_chip_fractions.clear()
+	if milestones_host != null and not milestones_host.sort_children.is_connected(_on_host_sorted):
+		milestones_host.sort_children.connect(_on_host_sorted)
+	refresh_bar.call_deferred()
+
+
+## Hiện `stars` Sao: chữ trên Sao lớn + độ đầy của thanh (tính theo vị trí chip, không tuyến tính)
+func show_stars(stars: float) -> void:
+	_stars_shown = stars
 	if lbl_star_total != null:
-		lbl_star_total.text = str(roundi(_shown))
+		lbl_star_total.text = str(roundi(stars))
+	var fraction := bar_fraction(stars)
+	if bar_stars != null:
+		bar_stars.min_value = 0.0
+		bar_stars.max_value = 1.0
+		bar_stars.step = 0.0005
+		bar_stars.value = fraction
+	if _bar_fx != null:
+		_bar_fx.set_fraction(fraction)
+
+
+## Tính lại vị trí các chip (sau khi bố cục/Stage đổi cỡ) rồi áp lại độ đầy của thanh
+func refresh_bar() -> void:
+	_chip_fractions = _measure_chip_fractions()
+	show_stars(_stars_shown)
+
+
+## 0..1 — độ đầy của thanh ứng với `stars` Sao. Nội suy từng đoạn qua TÂM các chip:
+## 0 Sao → mép trái · mỗi mốc → đúng tâm chip của nó · mốc cuối → mép phải (thanh đầy khi đủ mốc cuối).
+func bar_fraction(stars: float) -> float:
+	if _thresholds.is_empty():
+		var goal := maxf(bar_stars.max_value if bar_stars != null else 1.0, 1.0)
+		return clampf(stars / goal, 0.0, 1.0)
+	var fr := _chip_fractions
+	var n := _thresholds.size()
+	var prev_t := 0.0
+	var prev_f := 0.0
+	for i in n:
+		var t := float(_thresholds[i])
+		var f := 1.0 if i == n - 1 else (fr[i] if i < fr.size() else float(i + 1) / float(n))
+		if stars <= t:
+			if t <= prev_t:
+				return f
+			return lerpf(prev_f, f, clampf((stars - prev_t) / (t - prev_t), 0.0, 1.0))
+		prev_t = t
+		prev_f = f
+	return 1.0
+
+
+## Gắn node hiệu ứng thanh (do màn Daily instance) làm con của thanh Sao
+func attach_bar_fx(fx: StarBarFx) -> void:
+	if bar_stars == null or fx == null:
+		return
+	_bar_fx = fx
+	if fx.get_parent() != bar_stars:
+		bar_stars.add_child(fx)
+	fx.set_fraction(bar_fraction(_stars_shown))
+
+
+func has_bar_fx() -> bool:
+	return _bar_fx != null and is_instance_valid(_bar_fx) and _bar_fx.get_parent() == bar_stars
+
+
+## Dọn hiệu ứng thanh (đổi hướng: layout cũ không còn dùng)
+func clear_bar_fx() -> void:
+	_bar_fx = null
+
+
+var _chip_fractions: Array[float] = []
+
+
+func _on_host_sorted() -> void:
+	refresh_bar.call_deferred()
+
+
+func _measure_chip_fractions() -> Array[float]:
+	var out: Array[float] = []
+	if bar_stars == null or milestones_host == null or bar_stars.size.x <= 0.0:
+		return out
+	var inv := bar_stars.get_global_transform().affine_inverse()
+	for child in milestones_host.get_children():
+		var chip := child as Control
+		if chip == null or chip.is_queued_for_deletion():
+			continue
+		var c := inv * (chip.get_global_transform() * (chip.size * 0.5))
+		out.append(clampf(c.x / bar_stars.size.x, 0.0, 1.0))
+	# Bảo đảm tăng dần (tránh nội suy ngược nếu bố cục chưa ổn định)
+	for i in range(1, out.size()):
+		out[i] = maxf(out[i], out[i - 1])
+	return out
 
 
 func _flies() -> Array[VfStarFly]:

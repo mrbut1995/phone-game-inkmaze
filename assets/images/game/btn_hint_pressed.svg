@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 94" width="91" height="61.1">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 141" width="91" height="91.65">
   <!-- Gờ đáy chỉ còn lộ 1px, bóng gần như mất -->
-  <rect x="1.5" y="8.5" width="137" height="83" rx="21" fill="#1E2830" fill-opacity="0.10"/>
-  <rect x="1.5" y="7.5" width="137" height="83" rx="21" fill="#2F6E96"/>
+  <rect x="1.5" y="8.5" width="137" height="124.5" rx="21" fill="#1E2830" fill-opacity="0.10"/>
+  <rect x="1.5" y="7.5" width="137" height="124.5" rx="21" fill="#2F6E96"/>
   <!-- Mặt nút chìm xuống 5px -->
-  <rect x="1.5" y="6.5" width="137" height="83" rx="21" fill="#EDE6D8" stroke="#B45309" stroke-width="2.6"/>
-  <g transform="translate(0,3)"><g transform="translate(25, -25)"><path d="M45 56.5 C35 56.5 32 66.5 38 76.5 L52 76.5 C58 66.5 55 56.5 45 56.5 Z" fill="none" stroke="#B45309" stroke-width="3.5"/><line x1="40" y1="83.5" x2="50" y2="83.5" stroke="#B45309" stroke-width="3" stroke-linecap="round"/></g></g>
+  <rect x="1.5" y="6.5" width="137" height="124.5" rx="21" fill="#EDE6D8" stroke="#B45309" stroke-width="2.6"/>
+  <g transform="translate(0,3)"><g transform="translate(25, -4)"><path d="M45 56.5 C35 56.5 32 66.5 38 76.5 L52 76.5 C58 66.5 55 56.5 45 56.5 Z" fill="none" stroke="#B45309" stroke-width="3.5"/><line x1="40" y1="83.5" x2="50" y2="83.5" stroke="#B45309" stroke-width="3" stroke-linecap="round"/></g></g>
 </svg>

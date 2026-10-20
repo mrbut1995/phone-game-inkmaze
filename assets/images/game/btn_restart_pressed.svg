@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 94" width="91" height="61.1">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 141" width="91" height="91.65">
   <!-- Gờ đáy chỉ còn lộ 1px, bóng gần như mất -->
-  <rect x="1.5" y="8.5" width="137" height="83" rx="21" fill="#1E2830" fill-opacity="0.10"/>
-  <rect x="1.5" y="7.5" width="137" height="83" rx="21" fill="#2F6E96"/>
+  <rect x="1.5" y="8.5" width="137" height="124.5" rx="21" fill="#1E2830" fill-opacity="0.10"/>
+  <rect x="1.5" y="7.5" width="137" height="124.5" rx="21" fill="#2F6E96"/>
   <!-- Mặt nút chìm xuống 5px -->
-  <rect x="1.5" y="6.5" width="137" height="83" rx="21" fill="#EDE6D8" stroke="#256286" stroke-width="2.6"/>
-  <g transform="translate(0,3)"><g transform="translate(49.5, 30.5)"><path d="M 21.2 28.8 L 11.2 28.8 L 4.3 22 C 2.7 20.4 2.7 17.8 4.3 16.2 L 19.7 0.8 C 21.3 -0.8 23.9 -0.8 25.5 0.8 L 34.5 9.8 C 36.1 11.4 36.1 14 34.5 15.6 L 21.2 28.8 Z" fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1.5" y="6.5" width="137" height="124.5" rx="21" fill="#EDE6D8" stroke="#256286" stroke-width="2.6"/>
+  <g transform="translate(0,3)"><g transform="translate(49.5, 51.25)"><path d="M 21.2 28.8 L 11.2 28.8 L 4.3 22 C 2.7 20.4 2.7 17.8 4.3 16.2 L 19.7 0.8 C 21.3 -0.8 23.9 -0.8 25.5 0.8 L 34.5 9.8 C 36.1 11.4 36.1 14 34.5 15.6 L 21.2 28.8 Z" fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M 8 12.5 L 22.4 26.9" fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M 26 28.8 H 38" fill="none" stroke="#256286" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></g></g>
 </svg>

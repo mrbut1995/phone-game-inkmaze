@@ -1,0 +1,182 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/daily/star_bar_fx.gd" id="1_fx"]
+[ext_resource uid="uid://isr1cd5s5mxk" type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="2_glow"]
+[ext_resource uid="uid://buhsd5kh2cdyp" type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="3_spark"]
+[ext_resource uid="uid://bhdq46dggifbf" type="Texture2D" path="res://assets/images-png/effects/vf_bar_shine.png" id="4_shine"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:sheen_t")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Tip/Glow:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0.55)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Tip/Spark:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:sheen_t")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 4),
+"transitions": PackedFloat32Array(0.8, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Tip/Glow:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0.55), Color(1, 0.85, 0.4, 0.95), Color(1, 0.85, 0.4, 0.55), Color(1, 0.85, 0.4, 0.95), Color(1, 0.85, 0.4, 0.55), Color(1, 0.85, 0.4, 0.95), Color(1, 0.85, 0.4, 0.55), Color(1, 0.85, 0.4, 0.95), Color(1, 0.85, 0.4, 0.55)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Tip/Glow:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.17, 0.17), Vector2(0.23, 0.23), Vector2(0.17, 0.17), Vector2(0.23, 0.23), Vector2(0.17, 0.17), Vector2(0.23, 0.23), Vector2(0.17, 0.17), Vector2(0.23, 0.23), Vector2(0.17, 0.17)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Tip/Spark:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.97, 0.8, 0.9), Color(1, 0.97, 0.8, 0.35), Color(1, 0.97, 0.8, 0.9), Color(1, 0.97, 0.8, 0.35), Color(1, 0.97, 0.8, 0.9), Color(1, 0.97, 0.8, 0.35), Color(1, 0.97, 0.8, 0.9), Color(1, 0.97, 0.8, 0.35), Color(1, 0.97, 0.8, 0.9)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Tip/Spark:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.2832]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Tip/Spark:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.11, 0.11), Vector2(0.17, 0.17), Vector2(0.11, 0.11), Vector2(0.17, 0.17), Vector2(0.11, 0.11), Vector2(0.17, 0.17), Vector2(0.11, 0.11), Vector2(0.17, 0.17), Vector2(0.11, 0.11)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fx"]
+_data = {
+&"RESET": SubResource("Animation_reset"),
+&"idle": SubResource("Animation_idle")
+}
+
+[node name="StarBarFx" type="Control" unique_id=1900800001 node_paths=PackedStringArray("tip", "sheen_clip", "sheen", "anim")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_fx")
+tip = NodePath("Tip")
+sheen_clip = NodePath("SheenClip")
+sheen = NodePath("SheenClip/Sheen")
+anim = NodePath("Anim")
+
+[node name="SheenClip" type="Control" parent="." unique_id=1900800002]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Sheen" type="TextureRect" parent="SheenClip" unique_id=1900800003]
+modulate = Color(1, 1, 1, 0.6)
+material = SubResource("CanvasItemMaterial_add")
+layout_mode = 0
+offset_left = -40.0
+offset_right = 8.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("4_shine")
+expand_mode = 1
+
+[node name="Tip" type="Control" parent="." unique_id=1900800004]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Glow" type="Sprite2D" parent="Tip" unique_id=1900800005]
+modulate = Color(1, 0.85, 0.4, 0.55)
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("2_glow")
+
+[node name="Spark" type="Sprite2D" parent="Tip" unique_id=1900800006]
+modulate = Color(1, 0.97, 0.8, 0.9)
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.11, 0.11)
+texture = ExtResource("3_spark")
+
+[node name="Anim" type="AnimationPlayer" parent="." unique_id=1900800007]
+libraries/ = SubResource("AnimationLibrary_fx")

@@ -12,11 +12,171 @@
 [ext_resource type="Texture2D" uid="uid://d24vaiwlt8dsy" path="res://assets/images-png/daily/btn_cta_blue_normal.png" id="14_cta_bn"]
 [ext_resource type="Texture2D" uid="uid://c84kjolweguv7" path="res://assets/images-png/daily/btn_cta_blue_pressed.png" id="15_cta_bp"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="18_theme"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="20_glow"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="21_spark"]
+[ext_resource type="Texture2D" uid="uid://isr1cd5s5mxk" path="res://assets/images-png/effects/fx_glow_soft.png" id="20_glow"]
+[ext_resource type="Texture2D" uid="uid://buhsd5kh2cdyp" path="res://assets/images-png/effects/fx_sparkle.png" id="21_spark"]
+[ext_resource type="Script" uid="uid://cwlut4ae8sqmq" path="res://scripts/tool/cta_content_follow.gd" id="22_follow"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
 blend_mode = 1
+
+[sub_resource type="Animation" id="Animation_celebrate_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Stars/Star1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Stars/Star1:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Stars/Star1/Glow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Stars/Star1/Glint:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.97, 0.8, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Stars/Star2:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Stars/Star2:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Stars/Star2/Glow:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Stars/Star2/Glint:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.97, 0.8, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Stars/Star3:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Stars/Star3:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Stars/Star3/Glow:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Stars/Star3/Glint:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.97, 0.8, 0)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("IconBox:scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_celebrate_1"]
 resource_name = "celebrate_1"
@@ -57,7 +217,6 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1.14, 1.14), Vector2(0.96, 0.96), Vector2(1, 1)]
 }
-
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
@@ -118,6 +277,7 @@ tracks/7/keys = {
 "update": 0,
 "values": [0.0, 0.9, 1.8]
 }
+
 [sub_resource type="Animation" id="Animation_celebrate_2"]
 resource_name = "celebrate_2"
 length = 1.05
@@ -181,7 +341,6 @@ tracks/4/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1.14, 1.14), Vector2(0.96, 0.96), Vector2(1, 1)]
 }
-
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
@@ -302,6 +461,7 @@ tracks/14/keys = {
 "update": 0,
 "values": [0.0, 0.9, 1.8]
 }
+
 [sub_resource type="Animation" id="Animation_celebrate_3"]
 resource_name = "celebrate_3"
 length = 1.2
@@ -389,7 +549,6 @@ tracks/6/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1.14, 1.14), Vector2(0.96, 0.96), Vector2(1, 1)]
 }
-
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
@@ -570,164 +729,6 @@ tracks/21/keys = {
 "update": 0,
 "values": [0.0, 0.9, 1.8]
 }
-[sub_resource type="Animation" id="Animation_celebrate_reset"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Stars/Star1:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Stars/Star1:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Stars/Star1/Glow:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0.85, 0.4, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Stars/Star1/Glint:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0.97, 0.8, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Stars/Star2:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Stars/Star2:rotation")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Stars/Star2/Glow:modulate")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0.85, 0.4, 0)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Stars/Star2/Glint:modulate")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0.97, 0.8, 0)]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Stars/Star3:scale")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("Stars/Star3:rotation")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("Stars/Star3/Glow:modulate")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0.85, 0.4, 0)]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("Stars/Star3/Glint:modulate")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0.97, 0.8, 0)]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("IconBox:scale")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_celebrate"]
 _data = {
@@ -877,15 +878,14 @@ alignment = 1
 [node name="Star1" type="TextureRect" parent="Stars" unique_id=318685245]
 custom_minimum_size = Vector2(29, 29)
 layout_mode = 2
-pivot_offset = Vector2(14.5, 14.5)
 mouse_filter = 2
 texture = ExtResource("10_star_on")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Glow" type="Sprite2D" parent="Stars/Star1" unique_id=1900300002]
-show_behind_parent = true
 modulate = Color(1, 0.85, 0.4, 0)
+show_behind_parent = true
 material = SubResource("CanvasItemMaterial_add")
 position = Vector2(14.5, 14.5)
 scale = Vector2(0.1, 0.1)
@@ -901,15 +901,14 @@ texture = ExtResource("21_spark")
 [node name="Star2" type="TextureRect" parent="Stars" unique_id=2070121742]
 custom_minimum_size = Vector2(29, 29)
 layout_mode = 2
-pivot_offset = Vector2(14.5, 14.5)
 mouse_filter = 2
 texture = ExtResource("10_star_on")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Glow" type="Sprite2D" parent="Stars/Star2" unique_id=1900300004]
-show_behind_parent = true
 modulate = Color(1, 0.85, 0.4, 0)
+show_behind_parent = true
 material = SubResource("CanvasItemMaterial_add")
 position = Vector2(14.5, 14.5)
 scale = Vector2(0.1, 0.1)
@@ -925,15 +924,14 @@ texture = ExtResource("21_spark")
 [node name="Star3" type="TextureRect" parent="Stars" unique_id=1321920097]
 custom_minimum_size = Vector2(29, 29)
 layout_mode = 2
-pivot_offset = Vector2(14.5, 14.5)
 mouse_filter = 2
 texture = ExtResource("10_star_on")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Glow" type="Sprite2D" parent="Stars/Star3" unique_id=1900300006]
-show_behind_parent = true
 modulate = Color(1, 0.85, 0.4, 0)
+show_behind_parent = true
 material = SubResource("CanvasItemMaterial_add")
 position = Vector2(14.5, 14.5)
 scale = Vector2(0.1, 0.1)
@@ -961,7 +959,7 @@ mouse_filter = 2
 texture = ExtResource("9_div")
 expand_mode = 1
 
-[node name="Cta" type="TextureButton" parent="." unique_id=1310595455]
+[node name="Cta" type="TextureButton" parent="." unique_id=1310595455 node_paths=PackedStringArray("content")]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -977,15 +975,18 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("14_cta_bn")
 texture_pressed = ExtResource("15_cta_bp")
-texture_hover = ExtResource("15_cta_bp")
+texture_hover = ExtResource("14_cta_bn")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("22_follow")
+content = NodePath("Center")
 
 [node name="Center" type="HBoxContainer" parent="Cta" unique_id=755285935]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

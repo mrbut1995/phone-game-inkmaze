@@ -20,20 +20,20 @@ signal pressed
 ## Số Sao tối đa của một thẻ (khớp `DailyManager.PLAY_STARS_MAX` / `CHALLENGE_STARS_MAX`)
 const STARS_MAX := 3
 
-const ART_DIR := "res://assets/images/daily/"
-const ICON_TEXTURES := {false: "tri_blue.svg", true: "bolt_amber.svg"}
-const BOX_TEXTURES := {false: "icon_box_blue.svg", true: "icon_box_amber.svg"}
-const CTA_ICON_TEXTURES := {false: "tri_white.svg", true: "tri_dark.svg"}
+const ART_DIR := "res://assets/images-png/daily/"
+const ICON_TEXTURES := {false: "tri_blue.png", true: "bolt_amber.png"}
+const BOX_TEXTURES := {false: "icon_box_blue.png", true: "icon_box_amber.png"}
+const CTA_ICON_TEXTURES := {false: "tri_white.png", true: "tri_dark.png"}
 ## [normal, pressed]
 const CTA_TEXTURES := {
-	false: ["btn_cta_blue_normal.svg", "btn_cta_blue_pressed.svg"],
-	true: ["btn_cta_amber_normal.svg", "btn_cta_amber_pressed.svg"],
+	false: ["btn_cta_blue_normal.png", "btn_cta_blue_pressed.png"],
+	true: ["btn_cta_amber_normal.png", "btn_cta_amber_pressed.png"],
 }
 const CTA_LABEL_COLORS := {false: Color("#FFFDF8"), true: Color("#2A1A05")}
 const SUB_COLORS := {false: Color("#3D5A73"), true: Color("#C4843A")}
-const PAPER_TEXTURES := {false: "card_paper.svg", true: "card_paper_amber.svg"}
-const STAR_ON := "res://assets/images/common/star_highlight.svg"
-const STAR_OFF := "res://assets/images/common/star_empty.svg"
+const PAPER_TEXTURES := {false: "card_paper.png", true: "card_paper_amber.png"}
+const STAR_ON := "res://assets/images-png/common/star_highlight.png"
+const STAR_OFF := "res://assets/images-png/common/star_empty.png"
 
 @export var paper: TextureRect = null
 @export var icon_box: TextureRect = null

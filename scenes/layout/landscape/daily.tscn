@@ -13,12 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://byt8wshkuayfy" path="res://assets/images-png/daily/clock_blue.png" id="12_clock"]
 [ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="13_coin"]
 [ext_resource type="Script" path="res://scripts/nodes/daily/vf_star_fly.gd" id="20_fly"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/vf_star.png" id="21_vfstar"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/vf_star_trail.png" id="22_trail"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/vf_star_burst.png" id="23_burst"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/vf_bar_shine.png" id="24_shine"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="25_glow"]
-[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="26_spark"]
+[ext_resource uid="uid://dfb5ixvypt2mh" type="Texture2D" path="res://assets/images-png/effects/vf_star.png" id="21_vfstar"]
+[ext_resource uid="uid://gcrrlpspitgu" type="Texture2D" path="res://assets/images-png/effects/vf_star_trail.png" id="22_trail"]
+[ext_resource uid="uid://tuhfphups7rg" type="Texture2D" path="res://assets/images-png/effects/vf_star_burst.png" id="23_burst"]
+[ext_resource uid="uid://bhdq46dggifbf" type="Texture2D" path="res://assets/images-png/effects/vf_bar_shine.png" id="24_shine"]
+[ext_resource uid="uid://isr1cd5s5mxk" type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="25_glow"]
+[ext_resource uid="uid://buhsd5kh2cdyp" type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="26_spark"]
 
 [sub_resource type="Animation" id="Animation_pulse"]
 resource_name = "pulse"
@@ -1013,9 +1013,9 @@ offset_bottom = 42.0
 mouse_filter = 2
 nine_patch_stretch = true
 stretch_margin_left = 16
-stretch_margin_top = 16
+stretch_margin_top = 0
 stretch_margin_right = 16
-stretch_margin_bottom = 16
+stretch_margin_bottom = 0
 texture_under = ExtResource("7_bar_bg")
 texture_progress = ExtResource("8_bar_fill")
 
@@ -1051,8 +1051,9 @@ theme_override_constants/separation = 0
 
 [node name="Star" type="TextureRect" parent="Panel/Stage/RightCol/StarBar" index="3" unique_id=430859280]
 layout_mode = 0
+offset_top = -4.0
 offset_right = 65.0
-offset_bottom = 60.0
+offset_bottom = 56.0
 pivot_offset = Vector2(32.5, 30)
 mouse_filter = 2
 texture = ExtResource("9_star")
@@ -1066,7 +1067,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.360784, 0.203922, 0.019608, 1)
+theme_override_colors/font_color = Color(0.0941176, 0.239216, 0.352941, 1)
 theme_override_font_sizes/font_size = 18
 text = "0"
 horizontal_alignment = 1
