@@ -53,6 +53,7 @@ func _init() -> void:
 	await _section_5_scene(dm)
 	await _section_5b_selection_and_ads(dm, arch)
 	await _section_5c_milestone_popup(dm)
+	await _section_5d_wallet_and_celebrate(dm, gm, arch)
 	await _section_6_popup()
 	await _section_7_challenge_run(gm, dm)
 
@@ -458,6 +459,82 @@ func _section_5c_milestone_popup(dm: Node) -> void:
 	Popups.close_all()
 	await process_frame
 	dm.call("reset_progress")
+	scene.queue_free()
+	await process_frame
+
+
+# ---------------------------------------------------------------------------
+# 5d. Ví Xu ở thanh trên (cả 2 hướng) + hiệu ứng Sao khi vừa hoàn thành ván
+# ---------------------------------------------------------------------------
+func _section_5d_wallet_and_celebrate(dm: Node, gm: Node, arch: Node) -> void:
+	print("--- 5d. Vi Xu + hieu ung Sao khi hoan thanh van ---")
+	var packed: PackedScene = load("res://scenes/daily.tscn")
+	if packed == null:
+		return
+	var scene: DailyScene = packed.instantiate()
+	root.add_child(scene)
+	await process_frame
+	await process_frame
+
+	# --- Ví Xu: có ở CẢ 2 bố cục và hiện đúng số Xu
+	var coins_now := int(arch.get("coins")) if arch != null else int(Shop.coins())
+	_check(scene.layout.coin_chip != null, "daily.tscn co Vi Xu o thanh tren (doc)")
+	if scene.layout.coin_chip != null:
+		_check(scene.layout.coin_chip.value_label.text == Shop.thousands(coins_now),
+			"Vi Xu hien dung so Xu ('%s')" % scene.layout.coin_chip.value_label.text)
+	var land: Node = scene.get_node_or_null("Landscape")
+	_check(land != null and land.get("coin_chip") != null,
+		"daily.tscn co Vi Xu o thanh tren (ngang)")
+
+	# --- Đổi ví -> `_refresh_wallet()` cập nhật số trên chip
+	if arch != null and scene.layout.coin_chip != null:
+		arch.set("coins", coins_now + 1234)
+		scene.call("_refresh_wallet")
+		_check(scene.layout.coin_chip.value_label.text == Shop.thousands(coins_now + 1234),
+			"refresh_wallet cap nhat so Xu moi")
+		arch.set("coins", coins_now)
+		arch.call("notify_coins_changed")
+
+	# --- Ván CHƠI (classic) vừa xong: thẻ CHƠI nảy Sao, thẻ THỬ THÁCH im
+	var today := int(dm.call("get_today"))
+	dm.call("set_day_stars_split", today, 2, 0)
+	scene.select_day(today)
+	gm.set("daily_celebrate", {"day": today, "challenge": false, "stars": 2, "gained": 2})
+	await scene._celebrate_daily_win()
+	_check(scene.play_card().is_celebrating(), "The CHOI chay hieu ung Sao sau khi xong van")
+	_check(not scene.challenge_card().is_celebrating(), "The THU THACH khong chay hieu ung")
+	_check((gm.get("daily_celebrate") as Dictionary).is_empty(),
+		"Trang thai 'vua xong van' chi doc 1 lan roi xoa")
+	scene.play_card().stop_celebrate()
+	await process_frame
+
+	# --- Ván THỬ THÁCH vừa xong: đúng thẻ THỬ THÁCH chạy hiệu ứng
+	dm.call("set_day_stars_split", today, 3, 3)
+	scene.select_day(today)
+	gm.set("daily_celebrate", {"day": today, "challenge": true, "stars": 3, "gained": 3})
+	await scene._celebrate_daily_win()
+	_check(scene.challenge_card().is_celebrating(),
+		"The THU THACH chay hieu ung Sao (3 sao)")
+	scene.challenge_card().stop_celebrate()
+	await process_frame
+
+	# --- Ván của NGÀY KHÁC: màn tự chọn đúng ngày vừa chơi
+	var other := 1 if today > 1 else 2
+	gm.set("daily_celebrate", {"day": other, "challenge": false, "stars": 1, "gained": 1})
+	await scene._celebrate_daily_win()
+	_check(scene.selected_day() == other,
+		"Hieu ung mo dung ngay vua choi (ngay %d)" % other)
+	scene.play_card().stop_celebrate()
+	await process_frame
+
+	# --- Không có gì để ăn mừng -> không lỗi, không chạy hiệu ứng
+	gm.set("daily_celebrate", {})
+	await scene._celebrate_daily_win()
+	_check(not scene.play_card().is_celebrating() and not scene.challenge_card().is_celebrating(),
+		"Khong co van vua xong -> khong chay hieu ung")
+
+	dm.call("set_day_stars_split", today, 0, 0)
+	dm.call("set_day_stars_split", other, 0, 0)
 	scene.queue_free()
 	await process_frame
 

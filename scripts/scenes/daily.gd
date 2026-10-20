@@ -33,11 +33,18 @@ var _daily: Node = null
 var _ad_challenge_pending := false
 ## Ngày đang chọn (mặc định hôm nay). Bấm ngày khác trên lịch = xem/ chơi ngày đó.
 var _selected_day := 1
+## Ván Daily VỪA THẮNG (đọc 1 lần từ GameManager) + trạng thái hiệu ứng Sao bay.
+## Trong lúc `_celebrating`, thanh Sao/chip mốc hiện số Sao CŨ (`_hold_stars` = tổng tháng trước ván)
+## cho tới khi sao bay tới nơi — nếu không thanh sẽ "nhảy" tới số mới trước cả khi sao bay.
+var _celebrate_info: Dictionary = {}
+var _celebrating := false
+var _hold_stars := 0
 
 
 func _ready() -> void:
 	_daily = get_node_or_null("/root/DailyManager")
 	_selected_day = _today()
+	_take_celebrate_info()
 
 	_bind_refs()
 	_wire_buttons()
@@ -46,9 +53,73 @@ func _ready() -> void:
 	_build_milestones()
 	_refresh()
 	_layout_stage.call_deferred()
+	_celebrate_daily_win.call_deferred()
 	var vp := get_viewport()
 	if vp != null and not vp.size_changed.is_connected(_layout_stage):
 		vp.size_changed.connect(_layout_stage)
+
+
+## Đọc 1 LẦN trạng thái "vừa thắng ván Daily" từ GameManager (phải gọi TRƯỚC `_refresh()` đầu tiên
+## để thanh Sao hiện số cũ). `gained` > 0 ⇒ chạy hiệu ứng Sao bay.
+func _take_celebrate_info() -> void:
+	_celebrate_info = {}
+	_celebrating = false
+	var gm: Node = get_node_or_null("/root/GameManager")
+	if gm == null or not gm.has_method("take_daily_celebrate"):
+		return
+	_celebrate_info = gm.call("take_daily_celebrate")
+	var gained := int(_celebrate_info.get("gained", 0))
+	if gained > 0:
+		_hold_stars = maxi(_month_stars() - gained, 0)
+		_celebrating = true
+
+
+## Hiệu ứng "vừa hoàn thành ván Daily": ĐÚNG thẻ vừa chơi (CHƠI hoặc THỬ THÁCH) nảy các sao đã
+## đạt, rồi các sao MỚI bay lên Sao lớn trên thanh Sao (animation khai trong scene:
+## `action_card.tscn` `celebrate_1..3`, layout `VfxAnim/fly` + `ArriveAnim/arrive`).
+func _celebrate_daily_win() -> void:
+	var info := _celebrate_info
+	_celebrate_info = {}
+	if info.is_empty():
+		return
+	var day := int(info.get("day", 0))
+	if day > 0 and day != _selected_day:
+		select_day(day)
+	var gained := int(info.get("gained", 0))
+	var is_challenge := bool(info.get("challenge", false))
+	# Chờ EnterAnim của layout chạy xong rồi mới chạy hiệu ứng (tránh chồng hiệu ứng)
+	await get_tree().create_timer(0.55).timeout
+	if not is_inside_tree() or layout == null:
+		return
+	var card := layout.challenge_card if is_challenge else layout.play_card
+	var flying := false
+	if card != null and _celebrating:
+		# Lấy toạ độ sao TRƯỚC khi thẻ nảy sao (sao bay xuất phát đúng chỗ ngôi sao vừa đạt)
+		flying = layout.play_star_gain(card, gained, _hold_stars, _hold_stars + gained)
+	if card != null:
+		card.play_celebrate()
+	if not flying:
+		_end_celebrate()
+
+
+## Sao bay xong + thanh Sao chạy đủ (signal của DailyLayout, dây nối trong `_wire_buttons`)
+func _on_star_gain_finished() -> void:
+	_end_celebrate(true)
+
+
+## Kết thúc hiệu ứng: hiện số liệu thật; `play_fx` = bật hiệu ứng cho chip mốc VỪA ĐẠT
+func _end_celebrate(play_fx := false) -> void:
+	if not _celebrating:
+		return
+	var before := _hold_stars
+	_celebrating = false
+	_refresh()
+	if not play_fx:
+		return
+	var now := _month_stars()
+	for chip in _chips:
+		if chip.threshold > before and chip.threshold <= now:
+			chip.play_unlock()
 
 
 ## Đặt khung thiết kế (`Panel/Stage`) vào giữa canvas và PHÓNG/THU ĐỀU theo canvas.
@@ -84,6 +155,7 @@ func _bind_refs() -> void:
 
 ## Nối signal + hiệu ứng (dây NÚT khai trong `scenes/daily.tscn` — guard chỉ nối lại nếu mất dây)
 func _wire_buttons() -> void:
+	ensure_signal(layout, &"star_gain_finished", &"_on_star_gain_finished")
 	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 	ensure_signal(layout.calendar, &"day_selected", &"_on_day_selected")
 	ensure_signal(layout.play_card, &"pressed", &"_on_play_pressed")
@@ -96,9 +168,23 @@ func _wire_buttons() -> void:
 		# "Thở" nhẹ để hút mắt vào thẻ CHƠI — animation "pulse" của layout (PulseAnim)
 		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.play_card):
 			UIAnim.play_pulse(layout.play_card, 1.02, 2.0)
+	if layout.coin_chip != null and not layout.coin_chip.plus_pressed.is_connected(_on_coin_plus_pressed):
+		layout.coin_chip.plus_pressed.connect(_on_coin_plus_pressed)
 	if _daily != null and _daily.has_signal("daily_changed") \
 			and not _daily.is_connected("daily_changed", _refresh):
 		_daily.connect("daily_changed", _refresh)
+
+
+## Bấm `+` trên ví Xu → mở Cửa hàng
+func _on_coin_plus_pressed() -> void:
+	Sfx.play(Sfx.BTN_CLICK)
+	Nav.goto_shop()
+
+
+## Cập nhật số Xu trên ví (ví dùng chung `ArchivementManager.coins` với Main Screen)
+func _refresh_wallet() -> void:
+	if layout != null and layout.coin_chip != null:
+		layout.coin_chip.set_value(Shop.coins())
 
 
 ## Xoay màn hình: layout khác cấu trúc ⇒ gắn lại node + dựng lại chip mốc
@@ -107,6 +193,11 @@ func _on_orientation_changed(_is_landscape_now: bool) -> void:
 
 
 func _rebind_after_orientation() -> void:
+	if _celebrating:
+		# Đổi hướng giữa lúc sao đang bay: bố cục cũ không còn hiển thị ⇒ dừng hiệu ứng, hiện số liệu thật
+		if layout != null:
+			layout.stop_star_gain()
+		_celebrating = false
 	_bind_refs()
 	_wire_buttons()
 	_build_milestones()
@@ -178,18 +269,24 @@ func _refresh() -> void:
 		return
 	var day := _selected_day
 	var month_stars := _month_stars()
+	# Đang chờ sao bay: hiện số Sao CŨ (trước ván); xong hiệu ứng mới hiện số thật
+	var shown_stars := _hold_stars if _celebrating else month_stars
 	var goal := _month_goal()
 
-	if layout.lbl_star_total != null:
-		layout.lbl_star_total.text = str(month_stars)
 	if layout.bar_stars != null:
 		layout.bar_stars.max_value = maxi(goal, 1)
-		layout.bar_stars.value = mini(month_stars, maxi(goal, 1))
+	# Trong lúc sao bay, số/thanh Sao do DailyLayout điều khiển từng bước — không ghi đè
+	if not layout.is_star_gain_playing():
+		if layout.lbl_star_total != null:
+			layout.lbl_star_total.text = str(shown_stars)
+		if layout.bar_stars != null:
+			layout.bar_stars.value = mini(shown_stars, maxi(goal, 1))
 	if layout.lbl_reset != null:
 		layout.lbl_reset.text = tr("STR_DAILY_RESET_IN").format([_reset_countdown()])
 
+	_refresh_wallet()
 	_refresh_cards(day)
-	_refresh_milestones(month_stars)
+	_refresh_milestones(shown_stars)
 
 	# Ô ngày trên lịch đổi viền trạng thái ("ĐÃ MỞ") + vòng sáng ô ĐANG CHỌN
 	if layout.calendar != null:

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192" fill="none">
+  <!-- vf_star_burst: tia sáng + vòng nổ khi sao bay chạm Sao lớn (8 tia dài/ngắn xen kẽ). Dùng blend Add. -->
+  <defs>
+    <linearGradient id="ray" x1="0" y1="96" x2="0" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFBEB" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#FBBF24" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="core" cx="96" cy="96" r="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#FDE68A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="96" cy="96" r="40" fill="url(#core)"/>
+  <circle cx="96" cy="96" r="58" stroke="#FDE68A" stroke-width="4" opacity="0.8"/>
+  <g fill="url(#ray)">
+    <path d="M 90 96 L 96 4 L 102 96 Z"/>
+    <path transform="rotate(90 96 96)" d="M 90 96 L 96 4 L 102 96 Z"/>
+    <path transform="rotate(180 96 96)" d="M 90 96 L 96 4 L 102 96 Z"/>
+    <path transform="rotate(270 96 96)" d="M 90 96 L 96 4 L 102 96 Z"/>
+    <path transform="rotate(45 96 96)" d="M 91 96 L 96 26 L 101 96 Z"/>
+    <path transform="rotate(135 96 96)" d="M 91 96 L 96 26 L 101 96 Z"/>
+    <path transform="rotate(225 96 96)" d="M 91 96 L 96 26 L 101 96 Z"/>
+    <path transform="rotate(315 96 96)" d="M 91 96 L 96 26 L 101 96 Z"/>
+  </g>
+</svg>

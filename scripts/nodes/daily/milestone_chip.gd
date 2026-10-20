@@ -22,6 +22,11 @@ var threshold: int = 0
 @export var chest: TextureRect = null
 @export var badge: TextureRect = null
 @export var lbl_stars: Label = null
+## AnimationPlayer: `unlock` (vừa đạt mốc: nảy + toả sáng) · `ready` (lặp: lắc nhẹ gọi bấm NHẬN) · `RESET`
+@export var fx_anim: AnimationPlayer = null
+
+## Mốc đã đủ Sao nhưng chưa nhận ⇒ chạy `ready` để hút mắt
+var _claimable := false
 
 
 ## `stars_now` = tổng Sao của tháng, `claimed` = mốc này đã nhận chưa
@@ -42,6 +47,32 @@ func setup(def: Dictionary, stars_now: int, claimed: bool) -> void:
 	disabled = not ready
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if ready else Control.CURSOR_ARROW
 	tooltip_text = "" if claimed else tr("STR_DAILY_MILESTONE_CLAIM")
+	_claimable = ready
+	_update_idle_fx()
+
+
+## Vừa đạt mốc (Sao bay xong, thanh vượt ngưỡng): nảy + toả sáng rồi chuyển sang `ready` lặp
+func play_unlock() -> void:
+	if fx_anim == null or not fx_anim.has_animation(&"unlock"):
+		return
+	fx_anim.play(&"unlock")
+	if _claimable and fx_anim.has_animation(&"ready"):
+		fx_anim.queue(&"ready")
+
+
+## Chip đủ Sao + chưa nhận ⇒ `ready` lặp; còn lại ⇒ về trạng thái nghỉ (không restart nếu đang chạy)
+func _update_idle_fx() -> void:
+	if fx_anim == null:
+		return
+	if _claimable:
+		if (not fx_anim.is_playing() or fx_anim.current_animation == "RESET") \
+				and fx_anim.has_animation(&"ready"):
+			fx_anim.play(&"ready")
+	elif fx_anim.is_playing() and fx_anim.current_animation != "RESET":
+		fx_anim.stop()
+		if fx_anim.has_animation(&"RESET"):
+			fx_anim.play(&"RESET")
+			fx_anim.seek(0.0, true)
 
 
 func _tex(file: String) -> Texture2D:

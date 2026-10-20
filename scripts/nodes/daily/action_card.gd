@@ -20,20 +20,20 @@ signal pressed
 ## Số Sao tối đa của một thẻ (khớp `DailyManager.PLAY_STARS_MAX` / `CHALLENGE_STARS_MAX`)
 const STARS_MAX := 3
 
-const ART_DIR := "res://assets/images-png/daily/"
-const ICON_TEXTURES := {false: "tri_blue.png", true: "bolt_amber.png"}
-const BOX_TEXTURES := {false: "icon_box_blue.png", true: "icon_box_amber.png"}
-const CTA_ICON_TEXTURES := {false: "tri_white.png", true: "tri_dark.png"}
+const ART_DIR := "res://assets/images/daily/"
+const ICON_TEXTURES := {false: "tri_blue.svg", true: "bolt_amber.svg"}
+const BOX_TEXTURES := {false: "icon_box_blue.svg", true: "icon_box_amber.svg"}
+const CTA_ICON_TEXTURES := {false: "tri_white.svg", true: "tri_dark.svg"}
 ## [normal, pressed]
 const CTA_TEXTURES := {
-	false: ["btn_cta_blue_normal.png", "btn_cta_blue_pressed.png"],
-	true: ["btn_cta_amber_normal.png", "btn_cta_amber_pressed.png"],
+	false: ["btn_cta_blue_normal.svg", "btn_cta_blue_pressed.svg"],
+	true: ["btn_cta_amber_normal.svg", "btn_cta_amber_pressed.svg"],
 }
 const CTA_LABEL_COLORS := {false: Color("#FFFDF8"), true: Color("#2A1A05")}
 const SUB_COLORS := {false: Color("#3D5A73"), true: Color("#C4843A")}
-const PAPER_TEXTURES := {false: "card_paper.png", true: "card_paper_amber.png"}
-const STAR_ON := "res://assets/images-png/common/star_highlight.png"
-const STAR_OFF := "res://assets/images-png/common/star_empty.png"
+const PAPER_TEXTURES := {false: "card_paper.svg", true: "card_paper_amber.svg"}
+const STAR_ON := "res://assets/images/common/star_highlight.svg"
+const STAR_OFF := "res://assets/images/common/star_empty.svg"
 
 @export var paper: TextureRect = null
 @export var icon_box: TextureRect = null
@@ -46,9 +46,61 @@ const STAR_OFF := "res://assets/images-png/common/star_empty.png"
 @export var btn_cta: TextureButton = null
 @export var lbl_cta: Label = null
 @export var icon_cta: TextureRect = null
+## AnimationPlayer chứa `celebrate_1..3` (sao nảy + toả sáng + lấp lánh khi vừa hoàn thành ván) và `RESET`
+@export var fx_anim: AnimationPlayer = null
 
 ## Số Sao đã đạt của thẻ hiện tại (0..3)
 var _stars: int = 0
+## Đang chạy hiệu ứng "vừa hoàn thành" (test/tiện ích đọc)
+var _celebrating: bool = false
+
+
+func _ready() -> void:
+	if fx_anim != null and not fx_anim.animation_finished.is_connected(_on_fx_finished):
+		fx_anim.animation_finished.connect(_on_fx_finished)
+
+
+## Phát hiệu ứng "vừa hoàn thành ván": các ngôi sao ĐÃ ĐẠT nảy lần lượt + khung icon
+## nhún nhẹ. Animation khai sẵn trong `action_card.tscn` (`celebrate_1..3`) — script
+## chỉ CHỌN animation theo số Sao rồi play, không tween trong code.
+func play_celebrate() -> bool:
+	if fx_anim == null or _stars <= 0:
+		return false
+	var anim := "celebrate_%d" % clampi(_stars, 1, STARS_MAX)
+	if not fx_anim.has_animation(anim):
+		return false
+	fx_anim.stop()
+	fx_anim.play(anim)
+	_celebrating = true
+	return true
+
+
+## Thẻ có đang chạy hiệu ứng "vừa hoàn thành" không
+func is_celebrating() -> bool:
+	return _celebrating
+
+
+## Dừng hiệu ứng (đổi ngày giữa lúc đang ăn mừng / dọn dẹp) và đưa sao/khung icon về trạng thái nghỉ
+func stop_celebrate() -> void:
+	if fx_anim != null:
+		fx_anim.stop()
+		if fx_anim.has_animation(&"RESET"):
+			fx_anim.play(&"RESET")
+			fx_anim.seek(0.0, true)
+	_celebrating = false
+
+
+## Tâm (toạ độ GLOBAL) của ngôi sao thứ `index` (0..2) — điểm xuất phát của sao bay lên thanh Sao
+func star_center(index: int) -> Vector2:
+	if stars_row != null and index >= 0 and index < stars_row.get_child_count():
+		var star := stars_row.get_child(index) as Control
+		if star != null:
+			return star.get_global_transform() * (star.size * 0.5)
+	return get_global_transform() * (size * 0.5)
+
+
+func _on_fx_finished(_anim_name: StringName) -> void:
+	_celebrating = false
 
 
 ## `stars` = số Sao đã đạt của thẻ này (0..3)

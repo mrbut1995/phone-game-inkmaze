@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96" fill="none">
+  <!-- vf_star: ngôi sao bay (VFX) chạy lên thanh Sao. Cùng hình/màu với star_highlight.svg
+       nhưng bỏ filter bóng đổ (rẻ hơn khi nhân bản nhiều ngôi) và thêm lõi sáng để nổi trên nền giấy. -->
+  <defs>
+    <radialGradient id="core" cx="24" cy="22" r="14" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFBEB"/>
+      <stop offset="0.55" stop-color="#FDE68A"/>
+      <stop offset="1" stop-color="#FBBF24"/>
+    </radialGradient>
+  </defs>
+  <path d="M 24 4 L 29.8 16.3 L 43 17.9 L 33.3 26.9 L 35.8 40 L 24 33.4 L 12.2 40 L 14.7 26.9 L 5 17.9 L 18.2 16.3 Z"
+        fill="url(#core)" stroke="#D97706" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 24 8 L 28 16.5 L 37 17.8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="24" cy="24" r="2.6" fill="#FFFFFF" opacity="0.85"/>
+</svg>
