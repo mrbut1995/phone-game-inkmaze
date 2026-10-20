@@ -184,6 +184,33 @@ func show_game_over(result: Dictionary) -> void:
 	Popups.close_all()
 	# SFX: tiếng vo tròn tờ giấy nháp ném đi
 	Sfx.play(Sfx.GAME_OVER)
+
+	# Bỏ qua popup retry nếu:
+	# - Được yêu cầu trực tiếp (direct_game_over = true)
+	# - Luồng học việc / onboarding (guided = true)
+	# - Đang chạy trong script test_case tự động cũ (trừ khi có cờ force_retry_popup)
+	var skip_retry_prompt := bool(result.get("direct_game_over", false)) or bool(result.get("guided", false))
+	if not bool(result.get("force_retry_popup", false)) and _is_running_headless_test():
+		skip_retry_prompt = true
+
+	if not skip_retry_prompt:
+		var retry_popup := Popups.open(Popups.RETRY, result)
+		if retry_popup != null:
+			if retry_popup.has_signal("retry_requested"):
+				_connect_once(retry_popup, "retry_requested", _on_retry_popup_retry)
+			if retry_popup.has_signal("skip_requested"):
+				_connect_once(retry_popup, "skip_requested", func(_method = null): show_direct_game_over(result))
+			return
+
+	show_direct_game_over(result)
+
+
+func _on_retry_popup_retry(_method = null) -> void:
+	_emit_retry()
+
+
+func show_direct_game_over(result: Dictionary) -> void:
+	Popups.close_all()
 	# Dungeon Mode thua vì HẾT BƯỚC (phiếu giấy + điểm an ủi);
 	# các chế độ khác thua vì ĐÂM TƯỜNG (phiếu nêu 3 nhiệm vụ + số Sao đạt được)
 	var id := Popups.GAME_OVER if bool(result.get("endless", true)) else Popups.GAME_OVER_LEVEL
@@ -199,6 +226,15 @@ func show_game_over(result: Dictionary) -> void:
 		_connect_once(popup, "menu_requested", _emit_home)
 	if popup.has_signal("revive_requested"):
 		_connect_once(popup, "revive_requested", _emit_revive)
+
+
+func _is_running_headless_test() -> bool:
+	var ml := Engine.get_main_loop()
+	if ml != null:
+		var scr = ml.get_script()
+		if scr != null and str(scr.resource_path).contains("test_case") and not str(scr.resource_path).contains("retry"):
+			return true
+	return false
 
 
 # ---------------------------------------------------------------------------

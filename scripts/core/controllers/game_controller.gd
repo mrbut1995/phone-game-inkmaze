@@ -1089,6 +1089,11 @@ func _complete_daily_missions(_mission_rows: Array) -> Dictionary:
 	elif mission_controller != null:
 		stars = clampi(mission_controller.stars(), 0, DailyManager.PLAY_STARS_MAX)
 	var gained := int(dm.call("record_daily_win", day, is_challenge, stars))
+	# Đánh dấu "vừa thắng ván Daily" để màn Daily chạy hiệu ứng Sao trên đúng thẻ vừa chơi
+	if stars > 0:
+		gm.set("daily_celebrate", {
+			"day": day, "challenge": is_challenge, "stars": stars, "gained": gained,
+		})
 
 	var mode_id := ""
 	var mode_name := ""

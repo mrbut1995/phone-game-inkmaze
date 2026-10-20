@@ -4,13 +4,21 @@
 [ext_resource type="Script" uid="uid://d3tppcudxm1tm" path="res://scripts/scenes/layout/daily_layout.gd" id="2_layout"]
 [ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
 [ext_resource type="PackedScene" uid="uid://bx4mq1dw7lc0i" path="res://nodes/daily/action_card.tscn" id="4_card"]
-[ext_resource uid="uid://7a3hksoy62bs" type="Texture2D" path="res://assets/images-png/daily/btn_square_normal.png" id="5_back_n"]
-[ext_resource uid="uid://c2jn7vk016ust" type="Texture2D" path="res://assets/images-png/daily/btn_square_pressed.png" id="6_back_p"]
-[ext_resource uid="uid://ctwwng3qoistt" type="Texture2D" path="res://assets/images-png/daily/bar_track.png" id="7_bar_bg"]
-[ext_resource uid="uid://j26r0do5uakc" type="Texture2D" path="res://assets/images-png/daily/bar_fill.png" id="8_bar_fill"]
-[ext_resource uid="uid://bypi88itx11cm" type="Texture2D" path="res://assets/images-png/daily/star_big.png" id="9_star"]
-[ext_resource uid="uid://dopputx02por5" type="Texture2D" path="res://assets/images-png/daily/chip_white.png" id="10_chip"]
-[ext_resource uid="uid://byt8wshkuayfy" type="Texture2D" path="res://assets/images-png/daily/clock_blue.png" id="11_clock"]
+[ext_resource type="Texture2D" uid="uid://7a3hksoy62bs" path="res://assets/images-png/daily/btn_square_normal.png" id="5_back_n"]
+[ext_resource type="Texture2D" uid="uid://c2jn7vk016ust" path="res://assets/images-png/daily/btn_square_pressed.png" id="6_back_p"]
+[ext_resource type="Texture2D" uid="uid://ctwwng3qoistt" path="res://assets/images-png/daily/bar_track.png" id="7_bar_bg"]
+[ext_resource type="Texture2D" uid="uid://j26r0do5uakc" path="res://assets/images-png/daily/bar_fill.png" id="8_bar_fill"]
+[ext_resource type="Texture2D" uid="uid://bypi88itx11cm" path="res://assets/images-png/daily/star_big.png" id="9_star"]
+[ext_resource type="Texture2D" uid="uid://dopputx02por5" path="res://assets/images-png/daily/chip_white.png" id="10_chip"]
+[ext_resource type="Texture2D" uid="uid://byt8wshkuayfy" path="res://assets/images-png/daily/clock_blue.png" id="11_clock"]
+[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="12_coin"]
+[ext_resource type="Script" path="res://scripts/nodes/daily/vf_star_fly.gd" id="20_fly"]
+[ext_resource type="Texture2D" path="res://assets/images-png/effects/vf_star.png" id="21_vfstar"]
+[ext_resource type="Texture2D" path="res://assets/images-png/effects/vf_star_trail.png" id="22_trail"]
+[ext_resource type="Texture2D" path="res://assets/images-png/effects/vf_star_burst.png" id="23_burst"]
+[ext_resource type="Texture2D" path="res://assets/images-png/effects/vf_bar_shine.png" id="24_shine"]
+[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="25_glow"]
+[ext_resource type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="26_spark"]
 
 [sub_resource type="Animation" id="Animation_pulse"]
 resource_name = "pulse"
@@ -119,7 +127,774 @@ _data = {
 &"enter": SubResource("Animation_enter")
 }
 
-[node name="Portrait" unique_id=1822426536 node_paths=PackedStringArray("btn_back", "calendar", "lbl_star_total", "bar_stars", "milestones_host", "play_card", "challenge_card", "lbl_reset") instance=ExtResource("1_parent")]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_fade"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_pop"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Animation" id="Animation_fly"]
+resource_name = "fly"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Stage/Fx/Fly0:t")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.12),
+"transitions": PackedFloat32Array(1, 1.7, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Stage/Fx/Fly0:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.48, 1.07, 1.17),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Stage/Fx/Fly0/Star:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.52, 0.76, 1.12),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.3, 0.3), Vector2(0.3, 0.3), Vector2(0.46, 0.46), Vector2(0.4, 0.4), Vector2(0.3, 0.3)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Stage/Fx/Fly0/Star:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.12),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 7.854]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Panel/Stage/Fx/Fly0/Trail:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 1, 1.12),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.85), Color(1, 1, 1, 0.85), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Panel/Stage/Fx/Fly0/Glow:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 1.12),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0), Color(1, 0.85, 0.4, 0), Color(1, 0.85, 0.4, 0.8), Color(1, 0.85, 0.4, 0.5)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Panel/Stage/Fx/Fly0/Dust:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.12),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Panel/Stage/Fx/Fly1:t")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.32),
+"transitions": PackedFloat32Array(1, 1.7, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Panel/Stage/Fx/Fly1:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.68, 1.27, 1.37),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Panel/Stage/Fx/Fly1/Star:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.72, 0.96, 1.32),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.3, 0.3), Vector2(0.3, 0.3), Vector2(0.46, 0.46), Vector2(0.4, 0.4), Vector2(0.3, 0.3)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Panel/Stage/Fx/Fly1/Star:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.32),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 7.854]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Panel/Stage/Fx/Fly1/Trail:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7, 1.2, 1.32),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.85), Color(1, 1, 1, 0.85), Color(1, 1, 1, 0)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Panel/Stage/Fx/Fly1/Glow:modulate")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7, 1.32),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0), Color(1, 0.85, 0.4, 0), Color(1, 0.85, 0.4, 0.8), Color(1, 0.85, 0.4, 0.5)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Panel/Stage/Fx/Fly1/Dust:emitting")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.32),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Panel/Stage/Fx/Fly2:t")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.52),
+"transitions": PackedFloat32Array(1, 1.7, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Panel/Stage/Fx/Fly2:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.8, 0.88, 1.47, 1.57),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Panel/Stage/Fx/Fly2/Star:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.8, 0.92, 1.16, 1.52),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.3, 0.3), Vector2(0.3, 0.3), Vector2(0.46, 0.46), Vector2(0.4, 0.4), Vector2(0.3, 0.3)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Panel/Stage/Fx/Fly2/Star:rotation")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.52),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 7.854]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Panel/Stage/Fx/Fly2/Trail:modulate")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.8, 0.9, 1.4, 1.52),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.85), Color(1, 1, 1, 0.85), Color(1, 1, 1, 0)]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Panel/Stage/Fx/Fly2/Glow:modulate")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.8, 0.9, 1.52),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0), Color(1, 0.85, 0.4, 0), Color(1, 0.85, 0.4, 0.8), Color(1, 0.85, 0.4, 0.5)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Panel/Stage/Fx/Fly2/Dust:emitting")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.52),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/21/type = "method"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath(".")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(1.12, 1.32, 1.52),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [0.0],
+"method": &"on_fly_arrived"
+}, {
+"args": [1.0],
+"method": &"on_fly_arrived"
+}, {
+"args": [2.0],
+"method": &"on_fly_arrived"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_vfx_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Stage/Fx/Fly0:t")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Stage/Fx/Fly0:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Stage/Fx/Fly0/Star:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.3, 0.3)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Stage/Fx/Fly0/Star:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Panel/Stage/Fx/Fly0/Trail:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Panel/Stage/Fx/Fly0/Glow:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Panel/Stage/Fx/Fly0/Dust:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Panel/Stage/Fx/Fly1:t")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Panel/Stage/Fx/Fly1:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Panel/Stage/Fx/Fly1/Star:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.3, 0.3)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Panel/Stage/Fx/Fly1/Star:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Panel/Stage/Fx/Fly1/Trail:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Panel/Stage/Fx/Fly1/Glow:modulate")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Panel/Stage/Fx/Fly1/Dust:emitting")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Panel/Stage/Fx/Fly2:t")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Panel/Stage/Fx/Fly2:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Panel/Stage/Fx/Fly2/Star:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.3, 0.3)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Panel/Stage/Fx/Fly2/Star:rotation")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Panel/Stage/Fx/Fly2/Trail:modulate")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Panel/Stage/Fx/Fly2/Glow:modulate")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Panel/Stage/Fx/Fly2/Dust:emitting")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vfx"]
+_data = {
+&"RESET": SubResource("Animation_vfx_reset"),
+&"fly": SubResource("Animation_fly")
+}
+
+[sub_resource type="Animation" id="Animation_arrive"]
+resource_name = "arrive"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:star_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Stage/StarBar/Star:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.09, 0.24, 0.42),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.34, 1.34), Vector2(0.93, 0.93), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Stage/StarBar/Star:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.22, 0.36),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.14, 0.09, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Stage/StarBar/Star/Glow:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0), Color(1, 0.85, 0.4, 0.95), Color(1, 0.85, 0.4, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Panel/Stage/StarBar/Star/Glow:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.15, 0.15), Vector2(0.55, 0.55)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Panel/Stage/StarBar/Star/Burst:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Panel/Stage/StarBar/Star/Burst:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.25, 0.25), Vector2(0.7, 0.7)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Panel/Stage/StarBar/Star/Burst:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.4]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Panel/Stage/StarBar/Bar:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1.3, 1.22, 1.05, 1), Color(1, 1, 1, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Panel/Stage/StarBar/BarShine/Shine:position:x")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-64.0, 403.0]
+}
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Panel/Stage/StarBar/Star/Sparks")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_arrive_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Stage/StarBar/Star:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Stage/StarBar/Star:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Stage/StarBar/Star/Glow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Stage/StarBar/Star/Burst:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Panel/Stage/StarBar/Bar:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Panel/Stage/StarBar/BarShine/Shine:position:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-64.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_arrive"]
+_data = {
+&"RESET": SubResource("Animation_arrive_reset"),
+&"arrive": SubResource("Animation_arrive")
+}
+
+[node name="Portrait" unique_id=1822426536 node_paths=PackedStringArray("btn_back", "calendar", "lbl_star_total", "bar_stars", "milestones_host", "play_card", "challenge_card", "lbl_reset", "coin_chip", "star_big", "vfx_anim", "arrive_anim", "fly_host") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("Panel/Stage/TopBar/Back")
 calendar = NodePath("Panel/Stage/Calendar")
@@ -129,6 +904,11 @@ milestones_host = NodePath("Panel/Stage/StarBar/Milestones")
 play_card = NodePath("Panel/Stage/Actions/PlayCard")
 challenge_card = NodePath("Panel/Stage/Actions/ChallengeCard")
 lbl_reset = NodePath("Panel/Stage/ResetChip/Center/Label")
+coin_chip = NodePath("Panel/Stage/TopBar/CoinChip")
+star_big = NodePath("Panel/Stage/StarBar/Star")
+vfx_anim = NodePath("VfxAnim")
+arrive_anim = NodePath("ArriveAnim")
+fly_host = NodePath("Panel/Stage/Fx")
 
 [node name="Panel" type="Control" parent="." index="0" unique_id=493383061]
 layout_mode = 1
@@ -180,7 +960,7 @@ stretch_mode = 0
 layout_mode = 0
 offset_left = 70.0
 offset_top = 2.0
-offset_right = 470.0
+offset_right = 410.0
 offset_bottom = 28.0
 theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
 theme_override_font_sizes/font_size = 21
@@ -193,7 +973,7 @@ resize_font_to_fit = true
 layout_mode = 0
 offset_left = 70.0
 offset_top = 28.0
-offset_right = 470.0
+offset_right = 410.0
 offset_bottom = 42.0
 theme_override_colors/font_color = Color(0.239216, 0.352941, 0.45098, 1)
 theme_override_font_sizes/font_size = 10
@@ -201,6 +981,17 @@ text = "STR_DAILY_SCREEN_SUB"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
+
+[node name="CoinChip" parent="Panel/Stage/TopBar" instance=ExtResource("12_coin")]
+custom_minimum_size = Vector2(111, 32)
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 417.0
+offset_top = 6.0
+offset_right = 528.0
+offset_bottom = 38.0
 
 [node name="StarBar" type="Control" parent="Panel/Stage" index="2" unique_id=521713214]
 anchors_preset = 0
@@ -225,7 +1016,26 @@ stretch_margin_bottom = 16
 texture_under = ExtResource("7_bar_bg")
 texture_progress = ExtResource("8_bar_fill")
 
-[node name="Milestones" type="HBoxContainer" parent="Panel/Stage/StarBar" index="1" unique_id=1803168461]
+[node name="BarShine" type="Control" parent="Panel/Stage/StarBar" index="1" unique_id=1900600001]
+clip_contents = true
+layout_mode = 0
+offset_left = 32
+offset_top = 14
+offset_right = 419
+offset_bottom = 46
+mouse_filter = 2
+
+[node name="Shine" type="TextureRect" parent="Panel/Stage/StarBar/BarShine" unique_id=1900600002]
+material = SubResource("CanvasItemMaterial_add")
+layout_mode = 0
+offset_left = -64.0
+offset_right = -16.0
+offset_bottom = 32
+mouse_filter = 2
+texture = ExtResource("24_shine")
+expand_mode = 1
+
+[node name="Milestones" type="HBoxContainer" parent="Panel/Stage/StarBar" index="2" unique_id=1803168461]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.235
@@ -236,12 +1046,11 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Star" type="TextureRect" parent="Panel/Stage/StarBar" index="2" unique_id=2031939451]
+[node name="Star" type="TextureRect" parent="Panel/Stage/StarBar" index="3" unique_id=2031939451]
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
 offset_right = 65.0
 offset_bottom = 62.0
+pivot_offset = Vector2(32.5, 31)
 mouse_filter = 2
 texture = ExtResource("9_star")
 expand_mode = 1
@@ -260,6 +1069,41 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Glow" type="Sprite2D" parent="Panel/Stage/StarBar/Star" unique_id=1900600003]
+show_behind_parent = true
+modulate = Color(1, 0.85, 0.4, 0)
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(32.5, 31)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("25_glow")
+
+[node name="Burst" type="Sprite2D" parent="Panel/Stage/StarBar/Star" unique_id=1900600004]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(32.5, 31)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("23_burst")
+
+[node name="Sparks" type="CPUParticles2D" parent="Panel/Stage/StarBar/Star" unique_id=1900600005]
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(32.5, 31)
+emitting = false
+amount = 12
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("26_spark")
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 160)
+initial_velocity_min = 70.0
+initial_velocity_max = 150.0
+scale_amount_min = 0.06
+scale_amount_max = 0.14
+scale_amount_curve = SubResource("Curve_pop")
+color = Color(1, 0.92, 0.6, 1)
+color_ramp = SubResource("Gradient_fade")
+
 [node name="Calendar" parent="Panel/Stage" index="3" unique_id=452268403 instance=ExtResource("3_calendar")]
 layout_mode = 0
 offset_left = 39.0
@@ -276,9 +1120,8 @@ offset_bottom = 646.0
 mouse_filter = 2
 texture = ExtResource("10_chip")
 expand_mode = 1
-stretch_mode = 0
 
-[node name="Center" type="HBoxContainer" parent="Panel/Stage/ResetChip" index="0"]
+[node name="Center" type="HBoxContainer" parent="Panel/Stage/ResetChip" index="0" unique_id=252771085]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -289,7 +1132,7 @@ mouse_filter = 2
 theme_override_constants/separation = 6
 alignment = 1
 
-[node name="Clock" type="TextureRect" parent="Panel/Stage/ResetChip/Center" index="0"]
+[node name="Clock" type="TextureRect" parent="Panel/Stage/ResetChip/Center" index="0" unique_id=229189611]
 custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
 size_flags_vertical = 4
@@ -300,7 +1143,6 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="Panel/Stage/ResetChip/Center" index="1" unique_id=1401897053]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
 theme_override_font_sizes/font_size = 11
 text = "STR_DAILY_RESET_IN"
@@ -322,17 +1164,145 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="Fx" type="Control" parent="Panel/Stage" index="6" unique_id=1900600006]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Fly0" type="Node2D" parent="Panel/Stage/Fx" unique_id=1900600007]
+modulate = Color(1, 1, 1, 0)
+script = ExtResource("20_fly")
+arc = 0.22
+
+[node name="Trail" type="Sprite2D" parent="Panel/Stage/Fx/Fly0" unique_id=1900600008]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(-38, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("22_trail")
+
+[node name="Dust" type="CPUParticles2D" parent="Panel/Stage/Fx/Fly0" unique_id=1900600009]
+material = SubResource("CanvasItemMaterial_add")
+emitting = false
+amount = 16
+lifetime = 0.45
+local_coords = false
+texture = ExtResource("26_spark")
+direction = Vector2(-1, 0)
+spread = 35.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 70.0
+scale_amount_min = 0.05
+scale_amount_max = 0.12
+scale_amount_curve = SubResource("Curve_pop")
+color = Color(1, 0.92, 0.6, 1)
+color_ramp = SubResource("Gradient_fade")
+
+[node name="Glow" type="Sprite2D" parent="Panel/Stage/Fx/Fly0" unique_id=1900600010]
+modulate = Color(1, 0.85, 0.4, 0)
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("25_glow")
+
+[node name="Star" type="Sprite2D" parent="Panel/Stage/Fx/Fly0" unique_id=1900600011]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("21_vfstar")
+
+[node name="Fly1" type="Node2D" parent="Panel/Stage/Fx" unique_id=1900600012]
+modulate = Color(1, 1, 1, 0)
+script = ExtResource("20_fly")
+arc = -0.24
+
+[node name="Trail" type="Sprite2D" parent="Panel/Stage/Fx/Fly1" unique_id=1900600013]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(-38, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("22_trail")
+
+[node name="Dust" type="CPUParticles2D" parent="Panel/Stage/Fx/Fly1" unique_id=1900600014]
+material = SubResource("CanvasItemMaterial_add")
+emitting = false
+amount = 16
+lifetime = 0.45
+local_coords = false
+texture = ExtResource("26_spark")
+direction = Vector2(-1, 0)
+spread = 35.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 70.0
+scale_amount_min = 0.05
+scale_amount_max = 0.12
+scale_amount_curve = SubResource("Curve_pop")
+color = Color(1, 0.92, 0.6, 1)
+color_ramp = SubResource("Gradient_fade")
+
+[node name="Glow" type="Sprite2D" parent="Panel/Stage/Fx/Fly1" unique_id=1900600015]
+modulate = Color(1, 0.85, 0.4, 0)
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("25_glow")
+
+[node name="Star" type="Sprite2D" parent="Panel/Stage/Fx/Fly1" unique_id=1900600016]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("21_vfstar")
+
+[node name="Fly2" type="Node2D" parent="Panel/Stage/Fx" unique_id=1900600017]
+modulate = Color(1, 1, 1, 0)
+script = ExtResource("20_fly")
+arc = 0.3
+
+[node name="Trail" type="Sprite2D" parent="Panel/Stage/Fx/Fly2" unique_id=1900600018]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(-38, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("22_trail")
+
+[node name="Dust" type="CPUParticles2D" parent="Panel/Stage/Fx/Fly2" unique_id=1900600019]
+material = SubResource("CanvasItemMaterial_add")
+emitting = false
+amount = 16
+lifetime = 0.45
+local_coords = false
+texture = ExtResource("26_spark")
+direction = Vector2(-1, 0)
+spread = 35.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 70.0
+scale_amount_min = 0.05
+scale_amount_max = 0.12
+scale_amount_curve = SubResource("Curve_pop")
+color = Color(1, 0.92, 0.6, 1)
+color_ramp = SubResource("Gradient_fade")
+
+[node name="Glow" type="Sprite2D" parent="Panel/Stage/Fx/Fly2" unique_id=1900600020]
+modulate = Color(1, 0.85, 0.4, 0)
+material = SubResource("CanvasItemMaterial_add")
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("25_glow")
+
+[node name="Star" type="Sprite2D" parent="Panel/Stage/Fx/Fly2" unique_id=1900600021]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("21_vfstar")
+
 [node name="PulseAnim" type="AnimationPlayer" parent="." index="1" unique_id=544807469]
-libraries = {
-&"": SubResource("AnimationLibrary_pulse")
-}
+libraries/ = SubResource("AnimationLibrary_pulse")
 
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="2" unique_id=928098753]
-libraries = {
-&"": SubResource("AnimationLibrary_enter")
-}
+libraries/ = SubResource("AnimationLibrary_enter")
 autoplay = &"enter"
 
+[node name="VfxAnim" type="AnimationPlayer" parent="." index="3" unique_id=1385834518]
+libraries/ = SubResource("AnimationLibrary_vfx")
+
+[node name="ArriveAnim" type="AnimationPlayer" parent="." index="4" unique_id=1900600022]
+libraries/ = SubResource("AnimationLibrary_arrive")
+
+[connection signal="animation_finished" from="VfxAnim" to="." method="_on_vfx_anim_finished"]
 [connection signal="pressed" from="Panel/Stage/TopBar/Back" to="." method="_on_back_pressed"]
 [connection signal="day_selected" from="Panel/Stage/Calendar" to="." method="_on_day_selected"]
 [connection signal="pressed" from="Panel/Stage/Actions/PlayCard" to="." method="_on_play_pressed"]

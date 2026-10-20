@@ -21,6 +21,7 @@ const POPUPS := {
 	"gameover": "res://nodes/popups/gameover.tscn",
 	"gameover_level": "res://nodes/popups/gameover_level.tscn",
 	"gameover_challenge": "res://nodes/popups/gameover_challenge.tscn",
+	"retry": "res://nodes/popups/retry.tscn",
 	"next_floor": "res://nodes/popups/next_floor.tscn",
 	"pause": "res://nodes/popups/pause.tscn",
 	"memory_countdown": "res://nodes/popups/memory_countdown.tscn",

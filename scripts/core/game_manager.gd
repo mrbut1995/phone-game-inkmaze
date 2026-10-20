@@ -38,6 +38,10 @@ var daily_variant: String = ""
 var daily_game: int = -1
 ## Daily: luật thử thách của game đang chơi (rỗng nếu không phải game challenge)
 var daily_challenge_id: String = ""
+## Ván Daily VỪA THẮNG trong phiên này — màn Daily đọc 1 LẦN để chạy hiệu ứng Sao
+## trên đúng thẻ vừa chơi. `{ day: int, challenge: bool, stars: int, gained: int }` ·
+## rỗng = không có gì để ăn mừng.
+var daily_celebrate: Dictionary = {}
 ## CHƯƠNG: danh sách chương đã mở khóa + chương đang xem ở màn Chọn màn
 var unlocked_chapters: Array[int] = [1]
 var current_chapter: int = 1
@@ -196,6 +200,14 @@ func start_level_from_event(level: LevelData, event_id: StringName) -> void:
 func clear_event_run() -> void:
 	current_event_id = &""
 	event_level = null
+
+
+## Đọc + XOÁ trạng thái "vừa thắng ván Daily" (màn Daily gọi 1 lần để chạy hiệu ứng Sao).
+## Rỗng = không có gì để ăn mừng (ván không phải Daily, hoặc vừa ăn mừng xong).
+func take_daily_celebrate() -> Dictionary:
+	var info := daily_celebrate
+	daily_celebrate = {}
+	return info
 
 
 ## Chế độ của 1 LevelData ("play" nếu không khai hoặc khai id lạ — khớp mode_id_of_level)

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 32" width="128" height="32" fill="none">
+  <!-- vf_star_trail: vệt sáng đuôi sao bay. ĐẦU ở bên PHẢI (sát ngôi sao), đuôi nhọn mờ dần sang TRÁI.
+       Node dùng: Sprite2D đặt lùi về phía sau hướng bay, cộng blend Add. -->
+  <defs>
+    <linearGradient id="tail" x1="0" y1="0" x2="128" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FBBF24" stop-opacity="0"/>
+      <stop offset="0.55" stop-color="#FDE68A" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FFFBEB" stop-opacity="0.95"/>
+    </linearGradient>
+  </defs>
+  <path d="M 0 16 L 112 4 Q 128 16 112 28 Z" fill="url(#tail)"/>
+  <path d="M 24 16 L 112 10 Q 120 16 112 22 Z" fill="#FFFFFF" opacity="0.55"/>
+</svg>

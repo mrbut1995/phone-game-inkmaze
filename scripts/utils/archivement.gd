@@ -47,6 +47,11 @@ static func coins() -> int:
 	return int(m.get("coins")) if m != null else 0
 
 
+static func spend_coins(amount: int) -> bool:
+	var m := manager()
+	return bool(m.call("spend_coins", amount)) if m != null and m.has_method("spend_coins") else false
+
+
 static func unlocked_count() -> int:
 	var m := manager()
 	return int(m.call("unlocked_count")) if m != null and m.has_method("unlocked_count") else 0

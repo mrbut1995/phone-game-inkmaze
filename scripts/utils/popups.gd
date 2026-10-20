@@ -20,6 +20,8 @@ const GAME_OVER := "game_over"
 const GAME_OVER_LEVEL := "game_over_level"
 ## CHALLENGE MODE: thua vì vi phạm / hết hạn thử thách (nêu rõ luật + lý do)
 const GAME_OVER_CHALLENGE := "game_over_challenge"
+## Popup thử lại màn trước khi vào game over
+const RETRY := "retry"
 const NEXT_FLOOR := "next_floor"
 const PAUSE := "pause"
 const LANGUAGE := "language"

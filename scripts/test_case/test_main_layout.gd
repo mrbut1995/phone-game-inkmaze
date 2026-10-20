@@ -36,10 +36,17 @@ func _init() -> void:
 		"Thanh tren phai co du Ho so · Xu · Sao · Cai dat")
 	assert(profile_card.global_position.x < coin_chip.global_position.x,
 		"Ho so phai nam ben trai vi Xu")
-	assert(coin_chip.global_position.x < star_chip.global_position.x,
-		"Vi Xu phai nam ben trai o Sao")
-	assert(star_chip.global_position.x < btn_settings.global_position.x,
-		"Nut Cai dat phai nam ben phai cung thanh tren")
+	# Thứ tự trái→phải xét theo THỨ TỰ CON trong thanh trên (HBox xếp theo index): ô Sao có
+	# thể được ẩn có chủ ý trên Main nên KHÔNG dựa vào toạ độ (container bỏ qua node ẩn).
+	assert(coin_chip.get_index() < star_chip.get_index(),
+		"Vi Xu phai dung TRUOC o Sao trong thanh tren")
+	assert(star_chip.get_index() < btn_settings.get_index(),
+		"Nut Cai dat phai la o CUOI thanh tren")
+	if star_chip.visible:
+		assert(coin_chip.global_position.x < star_chip.global_position.x,
+			"Vi Xu phai nam ben trai o Sao")
+		assert(star_chip.global_position.x < btn_settings.global_position.x,
+			"Nut Cai dat phai nam ben phai cung thanh tren")
 	assert(profile_card.size.x >= 120.0, "The ho so phai du rong (%.0f)" % profile_card.size.x)
 
 	# 2. Khối sự kiện — header TRÊN carousel
@@ -125,9 +132,9 @@ func _init() -> void:
 		"EventCard va DailyCard la 2 lop rieng")
 	if card_node != null:
 		for child in [
-			"Content/Background/BgGradient",
-			"Content/Background/BackArt",
-			"Content/Background/FrontArt",
+			"Content/Background/ContentMask/BgGradient",
+			"Content/Background/ContentMask/BackArt",
+			"Content/Background/ContentMask/FrontArt",
 			"Content/Chips/ThemeChip",
 			"Content/Chips/TimerChip",
 			"Content/Information/ProgressPanel",
