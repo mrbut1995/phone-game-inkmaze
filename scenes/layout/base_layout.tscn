@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://d28jmv5bkqkx5"]
 
 [ext_resource type="Script" uid="uid://dnsnipq7q1n51" path="res://scripts/scenes/layout/base_layout.gd" id="1_rv2x2"]
+[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="2_coin"]
+[ext_resource type="PackedScene" path="res://nodes/main/life_chip.tscn" id="3_life"]
 
 [node name="BaseLayout" type="Control" unique_id=1041501532]
 layout_mode = 3
@@ -18,3 +20,13 @@ anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 mouse_filter = 2
+
+[node name="CoinChip" parent="TopBar" instance=ExtResource("2_coin")]
+custom_minimum_size = Vector2(111, 32)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="LifeChip" parent="TopBar" instance=ExtResource("3_life")]
+custom_minimum_size = Vector2(96, 32)
+layout_mode = 2
+size_flags_vertical = 4

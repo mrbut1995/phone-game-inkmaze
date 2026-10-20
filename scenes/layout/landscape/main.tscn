@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://dmhi5353c17ko" path="res://scripts/scenes/layout/main_layout.gd" id="2_layout"]
 [ext_resource type="PackedScene" uid="uid://kk7tudhk7r3m" path="res://nodes/main/profile_card.tscn" id="3_profile"]
-[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="4_coin"]
 [ext_resource type="PackedScene" uid="uid://dxm1sm66f5qi1" path="res://nodes/main/star_chip.tscn" id="5_star"]
 [ext_resource type="PackedScene" uid="uid://xuj64d8yo0mg" path="res://nodes/main/event_header.tscn" id="6_header"]
 [ext_resource type="PackedScene" uid="uid://cb8r4phad4ar5" path="res://nodes/main/event_carousel.tscn" id="7_carousel"]
@@ -21,12 +20,21 @@
 [ext_resource type="Texture2D" uid="uid://bix4mh6ckd2l" path="res://assets/images-png/main/card_mode_disabled.png" id="17_kncrx"]
 [ext_resource type="Texture2D" uid="uid://b5nskow6rjg7t" path="res://assets/images-png/common/card_mode_focus.png" id="18_luyyg"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o5gjt"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_01kb5"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
 content_margin_bottom = 0.0
 texture = ExtResource("15_01kb5")
+texture_margin_left = 38.0
+texture_margin_right = 46.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o5gjt"]
+content_margin_left = 38.0
+content_margin_top = 0.0
+content_margin_right = 46.0
+content_margin_bottom = 0.0
+texture = ExtResource("16_o5gjt")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
@@ -35,7 +43,7 @@ content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
 content_margin_bottom = 0.0
-texture = ExtResource("16_o5gjt")
+texture = ExtResource("15_01kb5")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
@@ -44,7 +52,7 @@ content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
 content_margin_bottom = 0.0
-texture = ExtResource("15_01kb5")
+texture = ExtResource("17_kncrx")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
@@ -53,7 +61,7 @@ content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
 content_margin_bottom = 0.0
-texture = ExtResource("17_kncrx")
+texture = ExtResource("18_luyyg")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
@@ -62,7 +70,7 @@ content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
 content_margin_bottom = 0.0
-texture = ExtResource("18_luyyg")
+texture = ExtResource("15_01kb5")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
@@ -71,7 +79,7 @@ content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
 content_margin_bottom = 0.0
-texture = ExtResource("15_01kb5")
+texture = ExtResource("16_o5gjt")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
@@ -80,7 +88,7 @@ content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
 content_margin_bottom = 0.0
-texture = ExtResource("16_o5gjt")
+texture = ExtResource("15_01kb5")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
@@ -89,20 +97,11 @@ content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
 content_margin_bottom = 0.0
-texture = ExtResource("15_01kb5")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_27xem"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
 texture = ExtResource("17_kncrx")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_thsqy"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_27xem"]
 content_margin_left = 38.0
 content_margin_top = 0.0
 content_margin_right = 46.0
@@ -112,14 +111,12 @@ texture_margin_left = 38.0
 texture_margin_right = 46.0
 
 [node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "card_play", "card_dungeon", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "mode_box", "header_anchor") instance=ExtResource("1_parent")]
-visible = false
 script = ExtResource("2_layout")
-header_anchor = NodePath("Scaler/Body/TopBarAnchor")
-logo = NodePath("TopBar/HeaderRow/LogoBlock/Logo")
-profile_card = NodePath("TopBar/HeaderRow/ProfileCard")
-coin_chip = NodePath("TopBar/HeaderRow/CoinChip")
-star_chip = NodePath("TopBar/HeaderRow/StarChip")
-btn_settings = NodePath("TopBar/HeaderRow/Settings")
+logo = NodePath("TopBar/LogoBlock/Logo")
+profile_card = NodePath("TopBar/ProfileCard")
+coin_chip = NodePath("TopBar/CoinChip")
+star_chip = NodePath("TopBar/StarChip")
+btn_settings = NodePath("TopBar/Settings")
 event_header = NodePath("Scaler/Body/Mid/Left/EventHeader")
 event_carousel = NodePath("Scaler/Body/Mid/Left/EventCarousel")
 card_play = NodePath("Scaler/Body/Mid/Right/Modes/Play")
@@ -131,6 +128,7 @@ dock_rules = NodePath("Scaler/Body/Dock/DockRules")
 stamp_panel = NodePath("Scaler/Body/Mid/Right/Stamp")
 stamp_label = NodePath("Scaler/Body/Mid/Right/Stamp/Label")
 mode_box = NodePath("Scaler/Body/Mid/Right/Modes")
+header_anchor = NodePath("Scaler/Body/TopBarAnchor")
 
 [node name="Scaler" type="Control" parent="." index="0" unique_id=1700000101 node_paths=PackedStringArray("inset_target")]
 anchors_preset = 0
@@ -152,77 +150,11 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="TopBarAnchor" type="Control" parent="Scaler/Body" index="0"]
+[node name="TopBarAnchor" type="Control" parent="Scaler/Body" index="0" unique_id=1431751695]
 custom_minimum_size = Vector2(0, 68)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-
-[node name="HeaderRow" type="HBoxContainer" parent="TopBar" index="0"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 68)
-mouse_filter = 2
-theme_override_constants/separation = 8
-
-
-[node name="ProfileCard" parent="TopBar/HeaderRow" index="0" unique_id=225078020 instance=ExtResource("3_profile")]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-
-[node name="SpacerL" type="Control" parent="TopBar/HeaderRow" index="1" unique_id=195009206]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="LogoBlock" type="VBoxContainer" parent="TopBar/HeaderRow" index="2" unique_id=1700000102]
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_constants/separation = 1
-
-[node name="Logo" type="TextureRect" parent="TopBar/HeaderRow/LogoBlock" index="0" unique_id=1295283578]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-size_flags_horizontal = 4
-mouse_filter = 2
-texture = ExtResource("10_logo")
-expand_mode = 5
-stretch_mode = 5
-
-[node name="Tagline" type="Label" parent="TopBar/HeaderRow/LogoBlock" index="1" unique_id=2115060436]
-layout_mode = 2
-theme_type_variation = &"TopProfileXP"
-text = "STR_GENRE_SUBTITLE"
-horizontal_alignment = 1
-
-[node name="SpacerR" type="Control" parent="TopBar/HeaderRow" index="3" unique_id=1700000103]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="CoinChip" parent="TopBar/HeaderRow" index="4" unique_id=1560233474 instance=ExtResource("4_coin")]
-custom_minimum_size = Vector2(75, 32)
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="StarChip" parent="TopBar/HeaderRow" index="5" unique_id=1568568062 instance=ExtResource("5_star")]
-custom_minimum_size = Vector2(75, 32)
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="Settings" type="TextureButton" parent="TopBar/HeaderRow" index="6" unique_id=772786432]
-custom_minimum_size = Vector2(66, 66)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_default_cursor_shape = 2
-texture_normal = ExtResource("8_o5gjt")
-texture_pressed = ExtResource("9_kncrx")
-texture_hover = ExtResource("10_luyyg")
-texture_disabled = ExtResource("11_vyx2u")
-texture_focused = ExtResource("12_p5bnh")
 
 [node name="Mid" type="HBoxContainer" parent="Scaler/Body" index="1" unique_id=907647981]
 layout_mode = 2
@@ -265,19 +197,19 @@ theme_override_constants/separation = 10
 
 [node name="Play" parent="Scaler/Body/Mid/Right/Modes" index="0" unique_id=380544602 instance=ExtResource("8_mode")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_o5gjt")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_kncrx")
-theme_override_styles/hover = SubResource("StyleBoxTexture_luyyg")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_vyx2u")
-theme_override_styles/focus = SubResource("StyleBoxTexture_p5bnh")
+theme_override_styles/normal = SubResource("StyleBoxTexture_01kb5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_o5gjt")
+theme_override_styles/hover = SubResource("StyleBoxTexture_kncrx")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_luyyg")
+theme_override_styles/focus = SubResource("StyleBoxTexture_vyx2u")
 
 [node name="Dungeon" parent="Scaler/Body/Mid/Right/Modes" index="1" unique_id=371360531 instance=ExtResource("8_mode")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_cpq7c")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_p4608")
-theme_override_styles/hover = SubResource("StyleBoxTexture_rgobc")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_27xem")
-theme_override_styles/focus = SubResource("StyleBoxTexture_thsqy")
+theme_override_styles/normal = SubResource("StyleBoxTexture_p5bnh")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cpq7c")
+theme_override_styles/hover = SubResource("StyleBoxTexture_p4608")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_rgobc")
+theme_override_styles/focus = SubResource("StyleBoxTexture_27xem")
 mode_id = &"dungeon"
 
 [node name="Stamp" type="Control" parent="Scaler/Body/Mid/Right" index="1" unique_id=2015064019]
@@ -315,3 +247,57 @@ layout_mode = 2
 
 [node name="DockRules" parent="Scaler/Body/Dock" index="3" unique_id=2074934512 instance=ExtResource("9_dock")]
 layout_mode = 2
+
+[node name="ProfileCard" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="0" unique_id=225078020 instance=ExtResource("3_profile")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="SpacerL" type="Control" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="1" unique_id=195009206]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="LogoBlock" type="VBoxContainer" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="2" unique_id=1700000102]
+visible = false
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 1
+
+[node name="Logo" type="TextureRect" parent="TopBar/LogoBlock" index="0" unique_id=1295283578]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = ExtResource("10_logo")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Tagline" type="Label" parent="TopBar/LogoBlock" index="1" unique_id=2115060436]
+layout_mode = 2
+theme_type_variation = &"TopProfileXP"
+text = "STR_GENRE_SUBTITLE"
+horizontal_alignment = 1
+
+[node name="SpacerR" type="Control" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="3" unique_id=1700000103]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="StarChip" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="6" unique_id=1568568062 instance=ExtResource("5_star")]
+visible = false
+custom_minimum_size = Vector2(75, 32)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Settings" type="TextureButton" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="7" unique_id=772786432]
+custom_minimum_size = Vector2(66, 66)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("8_o5gjt")
+texture_pressed = ExtResource("9_kncrx")
+texture_hover = ExtResource("10_luyyg")
+texture_disabled = ExtResource("11_vyx2u")
+texture_focused = ExtResource("12_p5bnh")

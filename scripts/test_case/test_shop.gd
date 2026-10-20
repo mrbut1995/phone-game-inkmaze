@@ -17,7 +17,7 @@ extends SceneTree
 
 const TITLE := "CỬA HÀNG"
 const SCENE_PATH := "res://scenes/shop.tscn"
-const EXPECTED_COUNTS := {"pen": 10, "theme": 8, "tool": 6, "coin": 6}
+const EXPECTED_COUNTS := {"pen": 10, "theme": 8, "tool": 7, "coin": 6}
 
 var _backup := ""
 var _shop_backup: Dictionary = {}
@@ -170,7 +170,7 @@ func _section_1_catalog(shop: Node) -> void:
 			# Mọi món phải có icon thật trong assets/images/shop
 			var icon_path := "res://assets/images-png/icons/icon_%s.png" % str(item.get("icon", ""))
 			_entry(ResourceLoader.exists(icon_path), "Co icon cho %s (%s)" % [item_id, icon_path])
-	_entry(total == 30, "Tong cong 30 mon hang (nhan %d)" % total)
+	_entry(total == 31, "Tong cong 31 mon hang (nhan %d)" % total)
 
 	# Mọi khoá dịch phải tồn tại trong file chuỗi (translate(key) != key)
 	var missing: Array[String] = []
@@ -327,6 +327,21 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	_entry(_ui(scene, "Tabs") is HBoxContainer, "Co hang tab")
 	_entry(scene.layout.wallet_bar is CoinChip and scene.layout.wallet_count is Label,
 		"Vi Xu dung CoinChip chung")
+	# Hồi quy 2026-10-20: animation slide-in KHÔNG được làm chip neo phải bị "đóng băng" offsets
+	# (bug: ví Xu văng ra ngoài màn hình khi vào Cửa hàng)
+	var coin_chip := _ui(scene, "TopBar/CoinChip") as Control
+	var life_chip_scene := _ui(scene, "TopBar/LifeChip") as Control
+	var header_row := _ui(scene, "TopBar") as Control
+	_entry(coin_chip != null and life_chip_scene != null, "Thanh tren co CoinChip + LifeChip")
+	if life_chip_scene != null and header_row != null:
+		_entry(life_chip_scene.global_position.x > header_row.global_position.x + 1.0,
+			"LifeChip nam TRONG man hinh (x=%.0f)" % life_chip_scene.global_position.x)
+		var right_gap := (header_row.global_position.x + header_row.size.x) \
+			- (life_chip_scene.global_position.x + life_chip_scene.size.x)
+		_entry(absf(right_gap) < 40.0, "Chip bam MEP PHAI thanh tren (cach %.0f px)" % right_gap)
+	if life_chip_scene != null and coin_chip != null:
+		_entry(coin_chip.global_position.x < life_chip_scene.global_position.x,
+			"CoinChip nam ben TRAI LifeChip")
 	_entry(_ui(scene, "Content/List") is VBoxContainer, "Co danh sach mon hang")
 	_entry(_ui(scene, "GiftBanner/GiftBtn") is TextureButton, "Co nut o banner tiep suc")
 	_entry(scene.layout.tabs_box.get_child_count() == 4, "4 tab khai san trong scene bo cuc")
@@ -454,7 +469,7 @@ func _section_6_scene(shop: Node, wallet: Node) -> void:
 	await process_frame
 	_entry(scene.current_tab() == "tool", "Doi sang tab DUNG CU")
 	_entry(scene.doodle_pad() == null, "Tab DUNG CU khong co ban nhap thu but")
-	_entry(scene.item_count() == 6, "Tab dung cu hien 6 mon (nhan %d)" % scene.item_count())
+	_entry(scene.item_count() == 7, "Tab dung cu hien 7 mon (nhan %d)" % scene.item_count())
 	_entry(scene.page_count() == 1, "Tab dung cu khong phan trang")
 	_entry(not _ui(scene, "Pager").visible, "An thanh phan trang khi 1 trang")
 

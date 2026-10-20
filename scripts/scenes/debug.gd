@@ -104,6 +104,7 @@ func _build() -> void:
 
 	_build_state()
 	_build_tool_balances()
+	_build_life_balances()
 	_build_navigate()
 	_build_progress()
 	_build_daily()
@@ -168,6 +169,54 @@ func _build_tool_balances() -> void:
 			gm.call("debug_set_tool_uses", tool_id, int(value))
 		)
 		row.add_child(amount)
+
+
+## LƯỢT CHƠI (life): xem số lượt, đặt lại số lượt, tua đồng hồ hồi lượt để thử luồng chờ.
+func _build_life_balances() -> void:
+	_add_section("LIVES")
+	_add_label("Tối đa 5 lượt, mỗi 30 phút hồi 1 lượt. Thua mà không thử lại = mất 1 lượt.",
+		&"PopupSubtitle")
+	var gm := _game_manager()
+	if gm == null:
+		_add_label("Không tìm thấy GameManager", &"PopupSubtitle")
+		return
+	_add_value("Lives", "%d / %d" % [Life.count(), Life.max_count()])
+	_add_value("Next life", "đầy lượt" if Life.seconds_to_next() <= 0
+		else Life.clock_text(Life.seconds_to_next()))
+
+	var row := HBoxContainer.new()
+	row.custom_minimum_size = Vector2(0, 58)
+	row.add_theme_constant_override("separation", 16)
+	layout.rows_box.add_child(row)
+
+	var label := Label.new()
+	label.theme_type_variation = &"PopupRowLabel"
+	label.text = "Lives"
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	row.add_child(label)
+
+	var amount := SpinBox.new()
+	amount.min_value = 0
+	amount.max_value = Life.max_count()
+	amount.step = 1
+	amount.value = Life.count()
+	amount.custom_minimum_size = Vector2(180, 48)
+	amount.value_changed.connect(func(value: float) -> void:
+		gm.call("debug_set_lives", int(value))
+		_build()
+	)
+	row.add_child(amount)
+
+	_add_action("Empty lives (0)", "Đặt lượt chơi về 0 để thử popup HẾT LƯỢT CHƠI", func() -> void:
+		gm.call("debug_set_lives", 0)
+		_build())
+	_add_action("Fill lives (5)", "Hồi đầy 5 lượt chơi", func() -> void:
+		gm.call("debug_set_lives", Life.max_count())
+		_build())
+	_add_action("Advance 30 min recharge", "Tua đồng hồ hồi lượt thêm 30 phút", func() -> void:
+		gm.call("debug_advance_life_recharge", Life.RECHARGE_SECONDS)
+		_build())
 
 
 func _build_navigate() -> void:

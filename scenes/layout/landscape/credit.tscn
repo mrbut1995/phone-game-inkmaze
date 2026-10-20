@@ -17,8 +17,6 @@
 [ext_resource uid="uid://c0nhdhr5qww35" type="Texture2D" path="res://assets/images-png/icons/icon_book.png" id="14_book"]
 [ext_resource uid="uid://bt4mb18wc2rf2" type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="15_stamp"]
 [ext_resource type="Script" path="res://scripts/scenes/layout/credit_layout.gd" id="2_layout"]
-[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="coin_chip"]
-
 
 [node name="Landscape" node_paths=PackedStringArray("btn_back", "theme_value", "track_value", "version_label", "content_root") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
@@ -330,8 +328,3 @@ text = "VER 1.0.0"
 theme_type_variation = &"SettingsVersion"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="CoinChip" parent="TopBar" index="2" instance=ExtResource("coin_chip")]
-custom_minimum_size = Vector2(111, 32)
-layout_mode = 2
-size_flags_vertical = 4

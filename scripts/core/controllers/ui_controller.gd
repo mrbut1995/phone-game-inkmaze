@@ -211,6 +211,8 @@ func _on_retry_popup_retry(_method = null) -> void:
 
 func show_direct_game_over(result: Dictionary) -> void:
 	Popups.close_all()
+	# THUA CHỐT VÁN (không thử lại) ⇒ mất 1 LƯỢT CHƠI dùng chung toàn game (§5.11)
+	_charge_life_cost(result)
 	# Dungeon Mode thua vì HẾT BƯỚC (phiếu giấy + điểm an ủi);
 	# các chế độ khác thua vì ĐÂM TƯỜNG (phiếu nêu 3 nhiệm vụ + số Sao đạt được)
 	var id := Popups.GAME_OVER if bool(result.get("endless", true)) else Popups.GAME_OVER_LEVEL
@@ -226,6 +228,16 @@ func show_direct_game_over(result: Dictionary) -> void:
 		_connect_once(popup, "menu_requested", _emit_home)
 	if popup.has_signal("revive_requested"):
 		_connect_once(popup, "revive_requested", _emit_revive)
+
+
+## Trừ 1 LƯỢT CHƠI khi ván thua đã chốt (đã bỏ qua popup Thử lại).
+## Luồng HỌC VIỆC (guided) và ván Debug Console không bị trừ.
+func _charge_life_cost(result: Dictionary) -> void:
+	if bool(result.get("guided", false)):
+		return
+	var game_manager := get_node_or_null("/root/GameManager")
+	if game_manager != null and game_manager.has_method("register_run_loss"):
+		game_manager.call("register_run_loss")
 
 
 func _is_running_headless_test() -> bool:

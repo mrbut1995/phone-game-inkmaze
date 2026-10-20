@@ -262,7 +262,7 @@ func _ready() -> void:
 		if btn != null:
 			UIAnim.attach_press_down(btn)
 
-	if layout != null and layout.status_bar != null:
+	if layout != null and layout.can_animate_bar(layout.status_bar):
 		UIAnim.play_slide_in(layout.status_bar, Vector2(0, -25), 0.0, 0.25)
 	if layout != null and layout.hud_slot != null:
 		UIAnim.play_slide_in(layout.hud_slot, Vector2(0, -15), 0.04, 0.25)

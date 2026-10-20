@@ -1,0 +1,76 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/life_chip.gd" id="1_life"]
+[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_life.png" id="2_ico"]
+
+[sub_resource type="StyleBoxFlat" id="sb_panel"]
+bg_color = Color(1, 0.99215686, 0.9411765, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.7176471, 0.7607843, 0.8039216, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="sb_plus"]
+bg_color = Color(0.14509805, 0.42352942, 0.5882353, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[node name="LifeChip" type="PanelContainer"]
+custom_minimum_size = Vector2(96, 32)
+anchors_preset = -1
+anchor_right = 0.257
+anchor_bottom = 0.046000004
+offset_right = 0.22000122
+offset_bottom = -0.3200035
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_panel")
+script = ExtResource("1_life")
+
+[node name="Content" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Content"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Content"]
+custom_minimum_size = Vector2(18, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+texture = ExtResource("2_ico")
+expand_mode = 1
+stretch_mode = 5
+self_modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+
+[node name="Value" type="Label" parent="Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TopChipValue"
+text = "5/5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Plus" type="Button" parent="Content"]
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("sb_plus")
+theme_override_styles/pressed = SubResource("sb_plus")
+theme_override_styles/hover = SubResource("sb_plus")
+text = "+"
+icon_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Content"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2

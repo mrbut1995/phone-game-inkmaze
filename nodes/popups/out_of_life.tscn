@@ -1,0 +1,178 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/nodes/popups/out_of_life.gd" id="2_life"]
+[ext_resource type="Texture2D" uid="uid://bmjgppp6dr4og" path="res://assets/images-png/popups/panel_popup.png" id="3_panel"]
+[ext_resource type="Texture2D" uid="uid://b06a5wgxn10bn" path="res://assets/images-png/popups/popup_washi_tape.png" id="4_tape"]
+[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_life.png" id="5_heart"]
+[ext_resource type="Texture2D" uid="uid://b8rwt2332ygre" path="res://assets/images-png/common/popup_btn_normal.png" id="6_btn_n"]
+[ext_resource type="Texture2D" uid="uid://cydicvgwyy1rd" path="res://assets/images-png/common/popup_btn_pressed.png" id="7_btn_p"]
+[ext_resource type="Texture2D" uid="uid://c48bl0l8o5lrv" path="res://assets/images-png/common/popup_btn_focus.png" id="8_btn_f"]
+
+[node name="Base" node_paths=PackedStringArray("label_title", "label_subtitle", "label_recharge", "icon_life", "btn_exit", "btn_shop") instance=ExtResource("1_base")]
+script = ExtResource("2_life")
+label_title = NodePath("Panel/Art/WashiTape/Title")
+label_subtitle = NodePath("Panel/Content/Information/Subtitle")
+label_recharge = NodePath("Panel/Content/Information/Recharge")
+icon_life = NodePath("Panel/Content/Heart")
+btn_exit = NodePath("Panel/Content/Information/Buttons/ExitBtn")
+btn_shop = NodePath("Panel/Content/Information/Buttons/ShopBtn")
+close_on_outside = false
+
+[node name="Panel" parent="." index="1"]
+anchor_left = 0.5
+anchor_top = 0.24
+anchor_right = 0.5
+anchor_bottom = 0.24
+offset_left = -235.0
+offset_right = 235.0
+offset_bottom = 330.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Art" parent="Panel" index="0"]
+texture = ExtResource("3_panel")
+
+[node name="WashiTape" type="NinePatchRect" parent="Panel/Art" index="0"]
+self_modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+layout_mode = 0
+offset_left = 56.0
+offset_top = -14.0
+offset_right = 398.0
+offset_bottom = 54.0
+rotation = -0.04
+pivot_offset = Vector2(171, 34)
+texture = ExtResource("4_tape")
+patch_margin_left = 29
+patch_margin_right = 27
+axis_stretch_horizontal = 2
+
+[node name="Title" type="Label" parent="Panel/Art/WashiTape" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PopupTitleDanger"
+theme_override_font_sizes/font_size = 22
+text = "STR_LIFE_EMPTY_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Content" parent="Panel" index="1"]
+anchors_preset = -1
+anchor_left = 0.08
+anchor_right = 0.92
+anchor_bottom = 0.92
+offset_top = 58.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Heart" type="TextureRect" parent="Panel/Content" index="0"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -26.0
+offset_top = 6.0
+offset_right = 26.0
+offset_bottom = 58.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("5_heart")
+expand_mode = 1
+stretch_mode = 5
+self_modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+
+[node name="Information" type="VBoxContainer" parent="Panel/Content" index="1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Subtitle" type="Label" parent="Panel/Content/Information" index="0"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PopupSubtitle"
+text = "STR_LIFE_EMPTY_SUBTITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Recharge" type="Label" parent="Panel/Content/Information" index="1"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PopupStatValueSm"
+text = "STR_LIFE_EMPTY_RECHARGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpacerMid" type="Control" parent="Panel/Content/Information" index="2"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information" index="3"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ExitBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="0"]
+custom_minimum_size = Vector2(190, 46)
+layout_mode = 2
+texture_normal = ExtResource("6_btn_n")
+texture_pressed = ExtResource("7_btn_p")
+texture_hover = ExtResource("6_btn_n")
+texture_focused = ExtResource("8_btn_f")
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/ExitBtn" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PopupBtnTextMuted22"
+text = "STR_LIFE_BTN_EXIT"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="ShopBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="1"]
+custom_minimum_size = Vector2(190, 46)
+layout_mode = 2
+self_modulate = Color(0.98, 0.85, 0.35, 1)
+texture_normal = ExtResource("6_btn_n")
+texture_pressed = ExtResource("7_btn_p")
+texture_hover = ExtResource("6_btn_n")
+texture_focused = ExtResource("8_btn_f")
+
+[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/ShopBtn" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PopupBtnText"
+text = "STR_LIFE_BTN_SHOP"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="SpacerBottom" type="Control" parent="Panel/Content/Information" index="4"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[connection signal="pressed" from="Panel/Content/Information/Buttons/ExitBtn" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Buttons/ShopBtn" to="." method="_on_shop_pressed"]

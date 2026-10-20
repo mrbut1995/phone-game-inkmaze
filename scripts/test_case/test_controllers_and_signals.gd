@@ -245,7 +245,8 @@ func _init() -> void:
 	root.add_child(debug_scene)
 	await process_frame
 	var tool_spinners := debug_scene.find_children("*", "SpinBox", true, false)
-	assert(tool_spinners.size() == 3, "Debug Console phai co SpinBox de chinh ca 3 cong cu")
+	# 3 SpinBox công cụ (SKIP · UNDO · HINT) + 1 SpinBox LƯỢT CHƠI (lives)
+	assert(tool_spinners.size() == 4, "Debug Console phai co SpinBox chinh 3 cong cu + luot choi")
 	var hint_spinner := tool_spinners[2] as SpinBox
 	var hint_balance := int(manager.call("tool_uses_left", GameManagerClass.TOOL_HINT))
 	hint_spinner.value = hint_balance + 1

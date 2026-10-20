@@ -24,6 +24,7 @@ const ICONS := {
 	"tool_time": preload("res://assets/images-png/icons/icon_tool_time.png"),
 	"tool_revive": preload("res://assets/images-png/icons/icon_tool_revive.png"),
 	"tool_shield": preload("res://assets/images-png/icons/icon_tool_shield.png"),
+	"life": preload("res://assets/images-png/icons/icon_life.png"),
 }
 
 var item_id: String = ""
@@ -71,6 +72,10 @@ func _set_texts() -> void:
 
 ## Dòng phụ: kho hàng còn lại (dụng cụ) hoặc ưu đãi (gói nạp)
 func _stock_text() -> String:
+	# Gói LƯỢT CHƠI: hiện số lượt đang có / tối đa (lượt dùng chung toàn game)
+	if Shop.is_life_pack(item_id):
+		return TranslationServer.translate("STR_SHOP_LIFE_STOCK_FORMAT").format([
+			Life.count(), Life.max_count()])
 	if Shop.is_consumable(item_id):
 		return TranslationServer.translate("STR_SHOP_STOCK_FORMAT").format([
 			Shop.tool_count(item_id),
@@ -109,6 +114,14 @@ func _set_button(color: Color) -> void:
 	# Dụng cụ / bút / chủ đề
 	if Shop.is_equipped(item_id):
 		_use_done_style(btn, label)
+		return
+	# Gói LƯỢT CHƠI đã đầy lượt ⇒ không mua thêm được
+	if Shop.is_life_pack(item_id) and Life.is_full():
+		btn.texture_normal = BTN_DONE
+		btn.texture_pressed = BTN_DONE
+		btn.disabled = true
+		label.theme_type_variation = &"ShopBtnTextDone"
+		label.text = TranslationServer.translate("STR_SHOP_LIFE_FULL")
 		return
 	btn.texture_normal = BTN_NORMAL
 	btn.texture_pressed = BTN_PRESSED

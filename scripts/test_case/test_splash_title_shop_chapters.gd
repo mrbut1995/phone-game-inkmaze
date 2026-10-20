@@ -119,7 +119,7 @@ func _init() -> void:
 	await process_frame
 
 	assert(_has(shop_inst, "TopBar"), "Shop phai co TopBar")
-	assert(_has(shop_inst, "TopBar/HeaderRow/CoinChip"), "Shop phai dung CoinChip dung chung (nam trong TopBar)")
+	assert(_has(shop_inst, "TopBar/CoinChip"), "Shop phai dung CoinChip dung chung (nam trong TopBar)")
 	assert(_has(shop_inst, "Tabs"), "Shop phai co Tabs")
 	assert(_has(shop_inst, "GiftBanner"), "Shop phai co GiftBanner")
 	print("[CHECK] ShopScene load va khoi chay cac animation thanh cong.")

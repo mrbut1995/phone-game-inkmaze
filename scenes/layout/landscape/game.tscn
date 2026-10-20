@@ -13,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://dksftry4xsxbo" path="res://assets/images-png/game/btn_help_disabled.png" id="10_help_d"]
 [ext_resource type="PackedScene" uid="uid://dxpf4nu3wy753" path="res://nodes/hud/landscape/game/action_bar.tscn" id="11_actionbar"]
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="12_landhud"]
-[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="coin_chip"]
 [ext_resource type="Texture2D" uid="uid://dt35romkvsuuq" path="res://assets/images-png/game/btn_help_focus.png" id="13_ayin1"]
 
 [node name="Landscape" unique_id=949375316 node_paths=PackedStringArray("landscape_action_bar", "status_bar", "hud_slot", "board_holder", "pause_btn", "instruction_btn", "level_label", "subtitle_label", "header_anchor") instance=ExtResource("1_parent")]
@@ -58,7 +57,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_minimum_size = Vector2(0, 48)
-
 
 [node name="Bg" type="TextureRect" parent="TopBar/HeaderRow" index="0" unique_id=372573994]
 visible = false
@@ -124,11 +122,6 @@ texture_pressed = ExtResource("9_help_p")
 texture_hover = ExtResource("8_help_n")
 texture_disabled = ExtResource("10_help_d")
 texture_focused = ExtResource("13_ayin1")
-
-[node name="CoinChip" parent="TopBar/HeaderRow/Bar" index="3" instance=ExtResource("coin_chip")]
-custom_minimum_size = Vector2(96, 30)
-layout_mode = 2
-size_flags_vertical = 4
 
 [node name="Spacer" type="Control" parent="Content/LeftCol" index="1" unique_id=417899857]
 layout_mode = 2

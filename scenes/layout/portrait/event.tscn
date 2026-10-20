@@ -4,15 +4,14 @@
 [ext_resource type="Script" uid="uid://baxctysnb2on2" path="res://scripts/scenes/layout/event_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
-[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="coin_chip"]
 
 [node name="Portrait" unique_id=1041501532 node_paths=PackedStringArray("btn_back", "event_title", "event_subtitle", "event_timer", "progress_label", "cta_button", "header_anchor") instance=ExtResource("1_qx0ac")]
 script = ExtResource("2_layout")
 header_anchor = NodePath("Content/TopBarAnchor")
-btn_back = NodePath("TopBar/HeaderRow/BtnBack")
+btn_back = NodePath("TopBar/BtnBack")
 event_title = NodePath("Content/Body/BodyContent/Title")
 event_subtitle = NodePath("Content/Body/BodyContent/Subtitle")
-event_timer = NodePath("TopBar/HeaderRow/TimerLabel")
+event_timer = NodePath("TopBar/TimerLabel")
 progress_label = NodePath("Content/Body/BodyContent/ProgressRow/ProgressText")
 cta_button = NodePath("Content/Footer/CtaButton")
 
@@ -32,38 +31,25 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="HeaderRow" type="HBoxContainer" parent="TopBar" index="0"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 36)
-theme_override_constants/separation = 6
-
-
-[node name="BtnBack" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=1241633460]
+[node name="BtnBack" type="TextureButton" parent="TopBar" index="0" unique_id=1241633460]
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 texture_normal = ExtResource("3_back_n")
 texture_pressed = ExtResource("4_back_p")
 stretch_mode = 5
 
-[node name="TitleLabel" type="Label" parent="TopBar/HeaderRow" index="1" unique_id=1552727494]
+[node name="TitleLabel" type="Label" parent="TopBar" index="1" unique_id=1552727494]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"ShopTitle"
 text = "STR_EVENT_HEADER"
 vertical_alignment = 1
 
-[node name="TimerLabel" type="Label" parent="TopBar/HeaderRow" index="2" unique_id=641542597]
+[node name="TimerLabel" type="Label" parent="TopBar" index="2" unique_id=641542597]
 layout_mode = 2
 theme_type_variation = &"EventTimerLabel"
 horizontal_alignment = 2
 vertical_alignment = 1
-
-[node name="CoinChip" parent="TopBar/HeaderRow" index="3" instance=ExtResource("coin_chip")]
-custom_minimum_size = Vector2(96, 30)
-layout_mode = 2
-size_flags_vertical = 4
 
 [node name="Body" type="ScrollContainer" parent="Content" index="1" unique_id=499620545]
 layout_mode = 2

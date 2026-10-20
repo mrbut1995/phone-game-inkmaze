@@ -24,7 +24,7 @@ layout_mode = 1
 script = ExtResource("5_controller_script")
 
 [connection signal="sequence_finished" from="Controllers/TutorialController" to="." method="_on_sequence_finished"]
-[connection signal="pressed" from="Portrait/TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/TopBar/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnFirstTime" to="." method="_on_select_tutorial" binds= ["first_time"]]
 [connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnMove" to="." method="_on_select_tutorial" binds= ["how_to_play_move"]]
 [connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnCheckingWall" to="." method="_on_select_tutorial" binds= ["how_to_play_checking_wall"]]
@@ -37,7 +37,7 @@ script = ExtResource("5_controller_script")
 [connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnFogOfWar" to="." method="_on_select_tutorial" binds= ["how_to_play_fog_of_war"]]
 [connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnBlindMemory" to="." method="_on_select_tutorial" binds= ["how_to_play_blind_memory"]]
 [connection signal="pressed" from="Portrait/Paper/ModeScroll/ModeList/BtnUseTool" to="." method="_on_select_tutorial" binds= ["how_to_use_tool"]]
-[connection signal="pressed" from="Landscape/TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Landscape/TopBar/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Landscape/Paper/Body/RightCol/ModeScroll/ModeList/BtnFirstTime" to="." method="_on_select_tutorial" binds= ["first_time"]]
 [connection signal="pressed" from="Landscape/Paper/Body/RightCol/ModeScroll/ModeList/BtnMove" to="." method="_on_select_tutorial" binds= ["how_to_play_move"]]
 [connection signal="pressed" from="Landscape/Paper/Body/RightCol/ModeScroll/ModeList/BtnCheckingWall" to="." method="_on_select_tutorial" binds= ["how_to_play_checking_wall"]]

@@ -112,7 +112,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-
 [node name="Close" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=308425477]
 layout_mode = 1
 anchors_preset = 1
@@ -473,3 +472,9 @@ vertical_scroll_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
+
+[node name="CoinChip" parent="TopBar"]
+visible = false
+
+[node name="LifeChip" parent="TopBar"]
+visible = false
