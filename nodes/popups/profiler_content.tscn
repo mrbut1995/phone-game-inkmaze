@@ -19,5 +19,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Portrait" parent="." unique_id=19506614 instance=ExtResource("L_Portrait")]
 layout_mode = 1
 
-[connection signal="pressed" from="Portrait/Sheet/TopBar/Close" to="." method="_on_close_pressed"]
+layout_mode = 1
+
+[connection signal="pressed" from="Portrait/TopBar/HeaderRow/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="Portrait/Sheet/Hero/Bg/Content/Profile" to="." method="_on_edit_pressed"]

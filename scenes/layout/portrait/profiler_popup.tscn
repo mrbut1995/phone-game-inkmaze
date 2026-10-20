@@ -24,12 +24,13 @@
 [ext_resource type="Texture2D" uid="uid://c01iwhf75vw5v" path="res://assets/images-png/icons/icon_pen_name.png" id="70_pen_name"]
 [ext_resource type="Script" path="res://scripts/nodes/profiler/scroll_drag.gd" id="9_info_scroll"]
 
-[node name="Portrait" unique_id=843989875 node_paths=PackedStringArray("btn_close", "lbl_title", "level_chip", "hero", "info_scroll", "info_list", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=843989875 node_paths=PackedStringArray("btn_close", "lbl_title", "level_chip", "hero", "info_scroll", "info_list", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill", "header_anchor") instance=ExtResource("1_parent")]
 theme = ExtResource("60_theme")
 script = ExtResource("2_layout")
-btn_close = NodePath("Sheet/TopBar/Close")
-lbl_title = NodePath("Sheet/TopBar/Title")
-level_chip = NodePath("Sheet/TopBar/LevelChip")
+header_anchor = NodePath("Sheet/TopBarAnchor")
+btn_close = NodePath("TopBar/HeaderRow/Close")
+lbl_title = NodePath("TopBar/HeaderRow/Title")
+level_chip = NodePath("TopBar/HeaderRow/LevelChip")
 hero = NodePath("Sheet/Hero")
 info_scroll = NodePath("Sheet/InfoScroll")
 info_list = NodePath("Sheet/InfoScroll/InfoList")
@@ -81,7 +82,7 @@ texture = ExtResource("7_clip")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TopBar" type="Control" parent="Sheet" index="2" unique_id=1712200068]
+[node name="TopBarAnchor" type="Control" parent="Sheet" index="2"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -92,7 +93,14 @@ offset_bottom = 54.50036
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Close" type="TextureButton" parent="Sheet/TopBar" index="0" unique_id=1632266485]
+[node name="HeaderRow" type="Control" parent="TopBar" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+
+[node name="Close" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=1632266485]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.93500006
@@ -108,7 +116,7 @@ texture_focused = ExtResource("3_close_n")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="Sheet/TopBar" index="1" unique_id=622376274]
+[node name="Title" type="Label" parent="TopBar/HeaderRow" index="1" unique_id=622376274]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -120,7 +128,7 @@ theme_type_variation = &"ProfilerTitle"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelChip" type="Control" parent="Sheet/TopBar" index="2" unique_id=936840929]
+[node name="LevelChip" type="Control" parent="TopBar/HeaderRow" index="2" unique_id=936840929]
 visible = false
 layout_mode = 1
 anchors_preset = 1
@@ -132,7 +140,7 @@ offset_bottom = 26.5
 grow_horizontal = 0
 mouse_filter = 2
 
-[node name="Bg" type="TextureRect" parent="Sheet/TopBar/LevelChip" index="0" unique_id=428455426]
+[node name="Bg" type="TextureRect" parent="TopBar/HeaderRow/LevelChip" index="0" unique_id=428455426]
 self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -144,7 +152,7 @@ mouse_filter = 2
 texture = ExtResource("8_chip_gold")
 expand_mode = 1
 
-[node name="Text" type="Label" parent="Sheet/TopBar/LevelChip" index="1" unique_id=426084283]
+[node name="Text" type="Label" parent="TopBar/HeaderRow/LevelChip" index="1" unique_id=426084283]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

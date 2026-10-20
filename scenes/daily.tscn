@@ -18,6 +18,12 @@ layout_mode = 1
 
 metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="Portrait/Panel/HUD/Content/Information/TopBar/Back" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="Portrait/Panel/Play" to="." method="_on_play_pressed"]
-[connection signal="day_selected" from="Portrait/Panel/Calendar" to="." method="_on_day_selected"]
+[node name="ResetTimer" type="Timer" parent="."]
+wait_time = 1.0
+autostart = true
+
+[connection signal="pressed" from="Portrait/TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Stage/Actions/PlayCard" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Portrait/Panel/Stage/Actions/ChallengeCard" to="." method="_on_challenge_pressed"]
+[connection signal="day_selected" from="Portrait/Panel/Stage/Calendar" to="." method="_on_day_selected"]
+[connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]

@@ -57,7 +57,7 @@ btn_credits = NodePath("Panel/Content/Actions/Credits")
 btn_reset = NodePath("Panel/Content/Actions/Reset")
 lbl_version = NodePath("Panel/Content/Footer/Stamp/Label")
 
-[node name="TopBar" type="HBoxContainer" parent="." index="1" unique_id=1720649669]
+[node name="TopBar" parent="." index="1" unique_id=1720649669]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.034

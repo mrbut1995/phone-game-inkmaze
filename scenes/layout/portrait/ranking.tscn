@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cfmy24n74f1hj" path="res://assets/images-png/ranking/my_rank_bar.png" id="17_mybar"]
 [ext_resource type="PackedScene" uid="uid://dydi6np3xsxp0" path="res://nodes/ranking/tab_button.tscn" id="20_tab"]
 [ext_resource type="Shader" uid="uid://bvgsk8cmw04xi" path="res://shaders/color_remap.gdshader" id="sh_color_remap"]
+[ext_resource type="PackedScene" uid="uid://ceilo8vk5g5u1" path="res://nodes/main/coin_chip.tscn" id="coin_chip"]
 
 [sub_resource type="ShaderMaterial" id="mat_bronze"]
 shader = ExtResource("sh_color_remap")
@@ -181,7 +182,7 @@ scroll = NodePath("Sheet/Scroll")
 rows_box = NodePath("Sheet/Scroll/Rows")
 my_rank_bar = NodePath("Sheet/MyRank")
 
-[node name="TopBar" type="HBoxContainer" parent="." index="0" unique_id=1793113191]
+[node name="TopBar" parent="." index="0" unique_id=1793113191]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.034
@@ -690,3 +691,8 @@ horizontal_alignment = 1
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="2" unique_id=853185818]
 libraries/ = SubResource("AnimationLibrary_rank_enter_p")
 autoplay = &"enter"
+
+[node name="CoinChip" parent="TopBar" index="3" instance=ExtResource("coin_chip")]
+custom_minimum_size = Vector2(111, 32)
+layout_mode = 2
+size_flags_vertical = 4

@@ -117,10 +117,11 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="Portrait" unique_id=787593752 node_paths=PackedStringArray("btn_back", "lbl_title", "tutorial_container", "mode_list", "btn_first_time", "btn_move", "btn_checking_wall", "btn_minesweeper", "btn_one_stroke", "btn_sum_path", "btn_wall_builder", "btn_countdown_cost", "btn_fading_ink", "btn_fog_of_war", "btn_blind_memory", "btn_use_tool") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=787593752 node_paths=PackedStringArray("btn_back", "lbl_title", "tutorial_container", "mode_list", "btn_first_time", "btn_move", "btn_checking_wall", "btn_minesweeper", "btn_one_stroke", "btn_sum_path", "btn_wall_builder", "btn_countdown_cost", "btn_fading_ink", "btn_fog_of_war", "btn_blind_memory", "btn_use_tool", "header_anchor") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
-btn_back = NodePath("Paper/TopBar/Back")
-lbl_title = NodePath("Paper/TopBar/Title")
+header_anchor = NodePath("Paper/TopBarAnchor")
+btn_back = NodePath("TopBar/HeaderRow/Back")
+lbl_title = NodePath("TopBar/HeaderRow/Title")
 tutorial_container = NodePath("TutorialContainer")
 mode_list = NodePath("Paper/ModeScroll/ModeList")
 btn_first_time = NodePath("Paper/ModeScroll/ModeList/BtnFirstTime")
@@ -152,17 +153,24 @@ patch_margin_right = 107
 patch_margin_bottom = 253
 axis_stretch_vertical = 1
 
-[node name="TopBar" type="HBoxContainer" parent="Paper" index="0" unique_id=1414809264]
+[node name="TopBarAnchor" type="Control" parent="Paper" index="0"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.08
 anchor_top = 0.04
 anchor_right = 0.92
 anchor_bottom = 0.095
+mouse_filter = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="TopBar" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Back" type="TextureButton" parent="Paper/TopBar" index="0" unique_id=733028255]
+
+[node name="Back" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=733028255]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_vertical = 4
@@ -173,7 +181,7 @@ texture_pressed = ExtResource("4_back_p")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="Paper/TopBar" index="1" unique_id=844044841]
+[node name="Title" type="Label" parent="TopBar/HeaderRow" index="1" unique_id=844044841]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"GameTitle"
@@ -181,7 +189,7 @@ text = "STR_TUT_COMMON_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Spacer" type="Control" parent="Paper/TopBar" index="2" unique_id=381823765]
+[node name="Spacer" type="Control" parent="TopBar/HeaderRow" index="2" unique_id=381823765]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_vertical = 4

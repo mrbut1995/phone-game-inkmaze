@@ -10,3 +10,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rv2x2")
+
+[node name="TopBar" type="HBoxContainer" parent="." unique_id=837555641]
+z_index = 10
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 2

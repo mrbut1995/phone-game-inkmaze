@@ -110,13 +110,14 @@ texture = ExtResource("17_6y0m5")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[node name="Portrait" unique_id=732847808 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "card_play", "card_dungeon", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "mode_box") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=732847808 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "card_play", "card_dungeon", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "mode_box", "header_anchor") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
+header_anchor = NodePath("Body/TopBarAnchor")
 logo = NodePath("Body/Scroll/Column/Logo")
-profile_card = NodePath("Body/TopBar/ProfileCard")
-coin_chip = NodePath("Body/TopBar/CoinChip")
-star_chip = NodePath("Body/TopBar/StarChip")
-btn_settings = NodePath("Body/TopBar/Settings")
+profile_card = NodePath("TopBar/HeaderRow/ProfileCard")
+coin_chip = NodePath("TopBar/HeaderRow/CoinChip")
+star_chip = NodePath("TopBar/HeaderRow/StarChip")
+btn_settings = NodePath("TopBar/HeaderRow/Settings")
 event_header = NodePath("Body/Scroll/Column/EventHeader")
 event_carousel = NodePath("Body/Scroll/Column/EventCarousel")
 card_play = NodePath("Body/Scroll/Column/Modes/Play")
@@ -145,30 +146,39 @@ mouse_filter = 2
 theme_override_constants/separation = 4
 metadata/_edit_use_anchors_ = true
 
-[node name="TopBar" type="HBoxContainer" parent="Body" index="0" unique_id=63837071]
+[node name="TopBarAnchor" type="Control" parent="Body" index="0"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
 mouse_filter = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="TopBar" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 60)
+size_flags_stretch_ratio = 0.15
+mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="ProfileCard" parent="Body/TopBar" index="0" unique_id=905524368 instance=ExtResource("3_profile")]
+
+[node name="ProfileCard" parent="TopBar/HeaderRow" index="0" unique_id=905524368 instance=ExtResource("3_profile")]
 layout_mode = 2
 
-[node name="CoinChip" parent="Body/TopBar" index="1" unique_id=863088215 instance=ExtResource("4_coin")]
+[node name="CoinChip" parent="TopBar/HeaderRow" index="1" unique_id=863088215 instance=ExtResource("4_coin")]
 custom_minimum_size = Vector2(75, 32)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="StarChip" parent="Body/TopBar" index="2" unique_id=1659631256 instance=ExtResource("5_star")]
+[node name="StarChip" parent="TopBar/HeaderRow" index="2" unique_id=1659631256 instance=ExtResource("5_star")]
 visible = false
 custom_minimum_size = Vector2(75, 32)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Settings" type="TextureButton" parent="Body/TopBar" index="3" unique_id=1915005296]
+[node name="Settings" type="TextureButton" parent="TopBar/HeaderRow" index="3" unique_id=1915005296]
 custom_minimum_size = Vector2(66, 66)
 layout_mode = 2
 size_flags_vertical = 0

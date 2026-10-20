@@ -116,7 +116,7 @@ func _init() -> void:
 	await process_frame
 
 	assert(_has(shop_inst, "TopBar"), "Shop phai co TopBar")
-	assert(_has(shop_inst, "TopBar/Wallet"), "Shop phai co Wallet (nam trong TopBar)")
+	assert(_has(shop_inst, "TopBar/HeaderRow/CoinChip"), "Shop phai dung CoinChip dung chung (nam trong TopBar)")
 	assert(_has(shop_inst, "Tabs"), "Shop phai co Tabs")
 	assert(_has(shop_inst, "GiftBanner"), "Shop phai co GiftBanner")
 	print("[CHECK] ShopScene load va khoi chay cac animation thanh cong.")
@@ -155,7 +155,8 @@ func _init() -> void:
 	await process_frame
 
 	assert(_has(chapters_inst, "TopBar"), "Chapters phai co TopBar")
-	assert(_has(chapters_inst, "TopBar/Wallet"), "Chapters phai co Wallet (nam trong TopBar)")
+	assert(_has(chapters_inst, "TopBar/Wallet"), "Chapters phai co Wallet Sao (nam trong TopBar)")
+	assert(_has(chapters_inst, "TopBar/CoinChip"), "Chapters phai co CoinChip dung chung")
 	assert(_has(chapters_inst, "Banner"), "Chapters phai co Banner")
 	assert(_has(chapters_inst, "ContinueButton"), "Chapters phai co ContinueButton")
 	print("[CHECK] ChaptersScene load va khoi chay cac animation thanh cong.")
