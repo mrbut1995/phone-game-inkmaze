@@ -1,540 +1,800 @@
-[gd_scene format=3 uid="uid://c1qxfvaio7bo1"]
+[gd_scene format=3 uid="uid://dk7hw8k4h4rom"]
 
-[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" uid="uid://tfcecgmo7yw" path="res://scripts/scenes/layout/ranking_layout.gd" id="2_layout"]
-[ext_resource uid="uid://yssg5du4e4fc" type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
-[ext_resource uid="uid://c8fvwpvick2hx" type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
-[ext_resource uid="uid://b3hsm3p524syt" type="Texture2D" path="res://assets/images-png/ranking/rank_sheet.png" id="5_sheet"]
-[ext_resource uid="uid://ruoaaeu82tl0" type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="6_tape"]
-[ext_resource uid="uid://blmy5cbx5kmeg" type="Texture2D" path="res://assets/images-png/popups/paper_clip.png" id="7_clip"]
-[ext_resource uid="uid://bir8bpmt03wuv" type="Texture2D" path="res://assets/images-png/icons/icon_trophy.png" id="8_trophy"]
-[ext_resource uid="uid://c0ghvvkvr38pj" type="Texture2D" path="res://assets/images-png/ranking/chip_scope.png" id="9_chip"]
-[ext_resource uid="uid://duqcleabqujwd" type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="10_divider"]
-[ext_resource uid="uid://nr8strlnr3mt" type="Texture2D" path="res://assets/images-png/ranking/medal_gold.png" id="11_medal_g"]
-[ext_resource uid="uid://do17ddvk7aivr" type="Texture2D" path="res://assets/images-png/common/medal_place.png" id="12_medal_s"]
-[ext_resource uid="uid://coes0kdnsaiv" type="Texture2D" path="res://assets/images-png/ranking/podium_gold.png" id="14_podium_g"]
-[ext_resource uid="uid://c1r6hcmsb6uls" type="Texture2D" path="res://assets/images-png/ranking/podium_silver.png" id="15_podium_s"]
-[ext_resource uid="uid://b8xcvk264ibmj" type="Texture2D" path="res://assets/images-png/ranking/podium_bronze.png" id="16_podium_b"]
-[ext_resource uid="uid://cfmy24n74f1hj" type="Texture2D" path="res://assets/images-png/ranking/my_rank_bar.png" id="17_mybar"]
-[ext_resource type="PackedScene" path="res://nodes/ranking/tab_button.tscn" id="20_tab"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="parent"]
+[ext_resource type="Script" uid="uid://tfcecgmo7yw" path="res://scripts/scenes/layout/ranking_layout.gd" id="script"]
+[ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="back_n"]
+[ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="back_p"]
+[ext_resource type="Texture2D" uid="uid://b3hsm3p524syt" path="res://assets/images-png/ranking/rank_sheet.png" id="sheet"]
+[ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="clip"]
+[ext_resource type="Texture2D" uid="uid://cfmy24n74f1hj" path="res://assets/images-png/ranking/my_rank_bar.png" id="mybar"]
+[ext_resource type="PackedScene" uid="uid://dydi6np3xsxp0" path="res://nodes/ranking/tab_button.tscn" id="tab"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/hero_card.png" id="hero"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/duo_card_silver.png" id="duo_s"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/duo_card_bronze.png" id="duo_b"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/trophy_gold.png" id="trophy_gold"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/trophy_silver.png" id="trophy_silver"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/trophy_bronze.png" id="trophy_bronze"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/banner_title.png" id="banner"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/hole.png" id="hole"]
 
-[ext_resource type="Shader" path="res://shaders/color_remap.gdshader" id="sh_color_remap"]
-[sub_resource type="ShaderMaterial" id="mat_bronze"]
-shader = ExtResource("sh_color_remap")
-shader_parameter/tolerance = 0.06
-shader_parameter/f1 = Color(0.392157, 0.454902, 0.545098, 1)
-shader_parameter/t1 = Color(0.705882, 0.32549, 0.035294, 1)
-shader_parameter/f2 = Color(0.886275, 0.909804, 0.941176, 1)
-shader_parameter/t2 = Color(0.984314, 0.835294, 0.647059, 1)
-shader_parameter/f3 = Color(0.972549, 0.980392, 0.988235, 1)
-shader_parameter/t3 = Color(0.996078, 0.952941, 0.780392, 1)
+[sub_resource type="Animation" id="Anim_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TopBar:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sheet:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sheet:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sheet/Body:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
-[node name="Landscape" unique_id=384404976 node_paths=PackedStringArray("btn_back", "tabs_box", "podium", "scroll", "rows_box", "my_rank_bar") instance=ExtResource("1_parent")]
-script = ExtResource("2_layout")
+[sub_resource type="Animation" id="Anim_enter"]
+resource_name = "enter"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TopBar:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sheet:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06, 0.38),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sheet:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.06, 0.38),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(0.94, 0.94), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sheet/Body:modulate")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.22, 0.58),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimLib_enter"]
+_data = {
+&"RESET": SubResource("Anim_reset"),
+&"enter": SubResource("Anim_enter")
+}
+
+[node name="Landscape" node_paths=PackedStringArray("btn_back", "tabs_box", "podium", "scroll", "rows_box", "my_rank_bar", "content") instance=ExtResource("parent")]
+script = ExtResource("script")
 btn_back = NodePath("TopBar/Back")
-tabs_box = NodePath("Sheet/Body/Tabs")
-podium = NodePath("Sheet/Body/Row/LeftCol/Podium")
-scroll = NodePath("Sheet/Body/Row/RightCol/Scroll")
-rows_box = NodePath("Sheet/Body/Row/RightCol/Scroll/Rows")
-my_rank_bar = NodePath("Sheet/Body/Row/LeftCol/MyRank")
+tabs_box = NodePath("Sheet/Tabs")
+podium = NodePath("Sheet/Body/LeftCol/Podium")
+scroll = NodePath("Sheet/Body/RightCol/Scroll")
+rows_box = NodePath("Sheet/Body/RightCol/Scroll/Rows")
+my_rank_bar = NodePath("Sheet/Body/LeftCol/MyRank")
+content = NodePath("Sheet/Body")
 
-[node name="TopBar" parent="." index="0" unique_id=1034513199]
-layout_mode = 1
+[node name="TopBar" parent="." index="0"]
 anchors_preset = -1
 anchor_left = 0.02708
 anchor_top = 0.02407
 anchor_right = 0.96583
 anchor_bottom = 0.104
+offset_left = 0
+offset_top = 0
+offset_right = 0
+offset_bottom = 0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
-metadata/_edit_use_anchors_ = true
+theme_override_constants/separation = 10
 
-[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=303657822]
-custom_minimum_size = Vector2(40, 40)
+[node name="Back" type="TextureButton" parent="TopBar" index="0"]
+custom_minimum_size = Vector2(48, 53)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
-texture_normal = ExtResource("3_back_n")
-texture_pressed = ExtResource("4_back_p")
-texture_hover = ExtResource("4_back_p")
-texture_disabled = ExtResource("3_back_n")
-texture_focused = ExtResource("3_back_n")
+texture_normal = ExtResource("back_n")
+texture_pressed = ExtResource("back_p")
+texture_hover = ExtResource("back_n")
+texture_disabled = ExtResource("back_n")
+texture_focused = ExtResource("back_n")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="TopBar" index="1" unique_id=1094690269]
+[node name="Spacer" type="Control" parent="TopBar" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"LevelsTitle"
-text = "STR_RANK_TITLE"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Chip" type="NinePatchRect" parent="TopBar" index="2" unique_id=1524542774]
-custom_minimum_size = Vector2(196, 40)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("9_chip")
-patch_margin_left = 10
-patch_margin_top = 7
-patch_margin_right = 12
-patch_margin_bottom = 8
-
-[node name="Icon" type="TextureRect" parent="TopBar/Chip" index="0" unique_id=811034078]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.028775517
-anchor_top = 0.18000002
-anchor_right = 0.16877551
-anchor_bottom = 0.82000005
-offset_right = -0.07684326
 mouse_filter = 2
-texture = ExtResource("8_trophy")
-expand_mode = 1
-stretch_mode = 5
-metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="TopBar/Chip" index="1" unique_id=158672648]
+[node name="Sheet" type="NinePatchRect" parent="." index="1"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.19389379
-anchor_top = 0.12494497
-anchor_right = 0.92360795
-anchor_bottom = 0.8750001
-offset_right = -0.024017334
-offset_bottom = 0.0021972656
-theme_type_variation = &"RankChip"
-text = "STR_RANK_SCOPE"
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="Sheet" type="NinePatchRect" parent="." index="1" unique_id=1048949161]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.031000001
+anchor_left = 0.031
 anchor_top = 0.128
-anchor_right = 0.96900004
-anchor_bottom = 0.9708519
-offset_left = 0.23999786
-offset_top = -0.12000275
-offset_right = -0.24005127
-offset_bottom = -0.26000977
+anchor_right = 0.945
+anchor_bottom = 0.9708
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_sheet")
-region_rect = Rect2(0, 0, 470, 785)
-patch_margin_left = 58
-patch_margin_top = 110
-patch_margin_right = 30
-patch_margin_bottom = 73
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-metadata/_edit_use_anchors_ = true
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("sheet")
+region_rect = Rect2(0, 0, 472, 820)
+patch_margin_left = 40
+patch_margin_top = 60
+patch_margin_right = 24
+patch_margin_bottom = 24
 
-[node name="Tape" type="TextureRect" parent="Sheet" index="0" unique_id=1912968870]
+[node name="Hole1" type="TextureRect" parent="Sheet"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.04
-anchor_right = 0.16600001
-anchor_bottom = 0.051000003
-offset_right = -32.400017
-offset_bottom = -8.528
+anchor_left = 0
+anchor_top = 0.12
+anchor_right = 0
+anchor_bottom = 0.12
+offset_left = 11
+offset_top = -6
+offset_right = 23
+offset_bottom = 6
 mouse_filter = 2
-texture = ExtResource("6_tape")
+texture = ExtResource("hole")
 
-[node name="Clip" type="TextureRect" parent="Sheet" index="1" unique_id=1210169226]
+[node name="Hole2" type="TextureRect" parent="Sheet"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.005
-anchor_right = 0.035
-anchor_bottom = 0.07
+anchor_left = 0
+anchor_top = 0.3
+anchor_right = 0
+anchor_bottom = 0.3
+offset_left = 11
+offset_top = -6
+offset_right = 23
+offset_bottom = 6
 mouse_filter = 2
-texture = ExtResource("7_clip")
+texture = ExtResource("hole")
 
-[node name="Body" type="VBoxContainer" parent="Sheet" index="2" unique_id=1184676196]
+[node name="Hole3" type="TextureRect" parent="Sheet"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.045
-anchor_top = 0.045
-anchor_right = 0.96
-anchor_bottom = 0.96
+anchor_left = 0
+anchor_top = 0.48
+anchor_right = 0
+anchor_bottom = 0.48
+offset_left = 11
+offset_top = -6
+offset_right = 23
+offset_bottom = 6
+mouse_filter = 2
+texture = ExtResource("hole")
+
+[node name="Hole4" type="TextureRect" parent="Sheet"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0.66
+anchor_right = 0
+anchor_bottom = 0.66
+offset_left = 11
+offset_top = -6
+offset_right = 23
+offset_bottom = 6
+mouse_filter = 2
+texture = ExtResource("hole")
+
+[node name="Hole5" type="TextureRect" parent="Sheet"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0.84
+anchor_right = 0
+anchor_bottom = 0.84
+offset_left = 11
+offset_top = -6
+offset_right = 23
+offset_bottom = 6
+mouse_filter = 2
+texture = ExtResource("hole")
+
+[node name="Body" type="HBoxContainer" parent="Sheet"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 10
-
-[node name="Tabs" type="HBoxContainer" parent="Sheet/Body" index="0" unique_id=1288978225]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="Tab_dungeon" parent="Sheet/Body/Tabs" index="0" instance=ExtResource("20_tab")]
-layout_mode = 2
-size_flags_horizontal = 3
-board_id = "dungeon"
-label_key = "STR_RANK_TAB_DUNGEON"
-
-[node name="Tab_play" parent="Sheet/Body/Tabs" index="1" instance=ExtResource("20_tab")]
-layout_mode = 2
-size_flags_horizontal = 3
-board_id = "play"
-label_key = "STR_RANK_TAB_PLAY"
-
-[node name="Tab_daily" parent="Sheet/Body/Tabs" index="2" instance=ExtResource("20_tab")]
-layout_mode = 2
-size_flags_horizontal = 3
-board_id = "daily"
-label_key = "STR_RANK_TAB_DAILY"
-
-[node name="Divider" type="TextureRect" parent="Sheet/Body" index="1" unique_id=1810808398]
-custom_minimum_size = Vector2(0, 4)
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("10_divider")
-expand_mode = 1
-stretch_mode = 1
-
-[node name="Row" type="HBoxContainer" parent="Sheet/Body" index="2" unique_id=1833323665]
-layout_mode = 2
-size_flags_vertical = 3
+offset_left = 52
+offset_top = 46
+offset_right = -32
+offset_bottom = -26
 theme_override_constants/separation = 18
 
-[node name="LeftCol" type="VBoxContainer" parent="Sheet/Body/Row" index="0" unique_id=1560124589]
+[node name="LeftCol" type="VBoxContainer" parent="Sheet/Body"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.42
-theme_override_constants/separation = 10
+size_flags_stretch_ratio = 0.46
+theme_override_constants/separation = 12
 
-[node name="Podium" type="Control" parent="Sheet/Body/Row/LeftCol" index="0" unique_id=684506794]
+[node name="Podium" type="VBoxContainer" parent="Sheet/Body/LeftCol"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Gold" type="Control" parent="Sheet/Body/LeftCol/Podium"]
+custom_minimum_size = Vector2(0, 122)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Sheet/Body/LeftCol/Podium/Gold"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("hero")
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 30
+
+[node name="Trophy" type="TextureRect" parent="Sheet/Body/LeftCol/Podium/Gold"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 0
+anchor_bottom = 0
+offset_left = 16
+offset_top = 22
+offset_right = 92
+offset_bottom = 98
+mouse_filter = 2
+texture = ExtResource("trophy_gold")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Sheet/Body/LeftCol/Podium/Gold"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 104
+offset_top = 26
+offset_right = -160
+offset_bottom = 56
+theme_type_variation = &"RankPodiumName"
+theme_override_colors/font_color = Color(0.4196, 0.2667, 0.0000, 1)
+theme_override_font_sizes/font_size = 20
+text = "Alex_Maze"
+horizontal_alignment = 0
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Record" type="Label" parent="Sheet/Body/LeftCol/Podium/Gold"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 104
+offset_top = 58
+offset_right = -160
+offset_bottom = 80
+theme_type_variation = &"RankPodiumRecord"
+theme_override_colors/font_color = Color(0.4196, 0.2667, 0.0000, 1)
+theme_override_font_sizes/font_size = 12
+text = "TẦNG 33"
+horizontal_alignment = 0
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Points" type="Label" parent="Sheet/Body/LeftCol/Podium/Gold"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = -170
+offset_top = 38
+offset_right = -18
+offset_bottom = 76
+theme_type_variation = &"RankPodiumPointsGold"
+theme_override_colors/font_color = Color(0.4196, 0.2667, 0.0000, 1)
+theme_override_font_sizes/font_size = 18
+text = "20,620 ĐIỂM"
+horizontal_alignment = 2
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Duo" type="HBoxContainer" parent="Sheet/Body/LeftCol/Podium"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Silver" type="Control" parent="Sheet/Body/LeftCol/Podium/Duo"]
+custom_minimum_size = Vector2(0, 109)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Sheet/Body/LeftCol/Podium/Duo/Silver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("duo_s")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 25
+
+[node name="Trophy" type="TextureRect" parent="Sheet/Body/LeftCol/Podium/Duo/Silver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -24
+offset_top = 6
+offset_right = 24
+offset_bottom = 54
+mouse_filter = 2
+texture = ExtResource("trophy_silver")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Sheet/Body/LeftCol/Podium/Duo/Silver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 6
+offset_top = 56
+offset_right = -6
+offset_bottom = 74
+theme_type_variation = &"RankPodiumName"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 13
+text = "Minh_Logic"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Record" type="Label" parent="Sheet/Body/LeftCol/Podium/Duo/Silver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 6
+offset_top = 74
+offset_right = -6
+offset_bottom = 89
+theme_type_variation = &"RankPodiumRecord"
+theme_override_colors/font_color = Color(0.3569, 0.4314, 0.5098, 1)
+theme_override_font_sizes/font_size = 11
+text = "TẦNG 29"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Points" type="Label" parent="Sheet/Body/LeftCol/Podium/Duo/Silver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 6
+offset_top = 89
+offset_right = -6
+offset_bottom = 103
+theme_type_variation = &"RankPodiumPointsSilver"
+theme_override_colors/font_color = Color(0.3569, 0.4314, 0.5098, 1)
+theme_override_font_sizes/font_size = 11
+text = "18,666 ĐIỂM"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Bronze" type="Control" parent="Sheet/Body/LeftCol/Podium/Duo"]
+custom_minimum_size = Vector2(0, 109)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Bg" type="NinePatchRect" parent="Sheet/Body/LeftCol/Podium/Duo/Bronze"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("duo_b")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 25
+
+[node name="Trophy" type="TextureRect" parent="Sheet/Body/LeftCol/Podium/Duo/Bronze"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -24
+offset_top = 6
+offset_right = 24
+offset_bottom = 54
+mouse_filter = 2
+texture = ExtResource("trophy_bronze")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Sheet/Body/LeftCol/Podium/Duo/Bronze"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 6
+offset_top = 56
+offset_right = -6
+offset_bottom = 74
+theme_type_variation = &"RankPodiumName"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 13
+text = "Kenji_Tokyo"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Record" type="Label" parent="Sheet/Body/LeftCol/Podium/Duo/Bronze"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 6
+offset_top = 74
+offset_right = -6
+offset_bottom = 89
+theme_type_variation = &"RankPodiumRecord"
+theme_override_colors/font_color = Color(0.3569, 0.4314, 0.5098, 1)
+theme_override_font_sizes/font_size = 11
+text = "TẦNG 27"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Points" type="Label" parent="Sheet/Body/LeftCol/Podium/Duo/Bronze"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 6
+offset_top = 89
+offset_right = -6
+offset_bottom = 103
+theme_type_variation = &"RankPodiumPointsBronze"
+theme_override_colors/font_color = Color(0.3569, 0.4314, 0.5098, 1)
+theme_override_font_sizes/font_size = 11
+text = "16,912 ĐIỂM"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Fill" type="Control" parent="Sheet/Body/LeftCol"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Silver" type="Control" parent="Sheet/Body/Row/LeftCol/Podium" index="0" unique_id=713900107]
-layout_mode = 1
-anchor_top = 0.42
-anchor_right = 0.325
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Medal" type="TextureRect" parent="Sheet/Body/Row/LeftCol/Podium/Silver" index="0" unique_id=1332085942]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.35
-anchor_right = 0.65
-anchor_bottom = 0.17
-mouse_filter = 2
-texture = ExtResource("12_medal_s")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Silver" index="1" unique_id=1616614877]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.18
-anchor_right = 1.0
-anchor_bottom = 0.28
-theme_type_variation = &"RankPodiumName"
-text = "Kenji_Tokyo"
-horizontal_alignment = 1
-text_overrun_behavior = 3
-
-[node name="Record" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Silver" index="2" unique_id=311357236]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.29
-anchor_right = 1.0
-anchor_bottom = 0.38
-theme_type_variation = &"RankPodiumRecord"
-text = "TẦNG 26"
-horizontal_alignment = 1
-
-[node name="Block" type="NinePatchRect" parent="Sheet/Body/Row/LeftCol/Podium/Silver" index="3" unique_id=2004757487]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.06
-anchor_top = 0.4
-anchor_right = 0.94
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("15_podium_s")
-patch_margin_top = 28
-patch_margin_bottom = 28
-
-[node name="Rank" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Silver/Block" index="0" unique_id=1489276153]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.06
-anchor_right = 0.95
-anchor_bottom = 0.5
-theme_type_variation = &"RankPodiumRankSilver"
-text = "2"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Points" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Silver/Block" index="1" unique_id=440737807]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.52
-anchor_right = 0.95
-anchor_bottom = 0.92
-theme_type_variation = &"RankPodiumPointsSilver"
-text = "16,420 PTS"
-horizontal_alignment = 1
-
-[node name="Gold" type="Control" parent="Sheet/Body/Row/LeftCol/Podium" index="1" unique_id=438544901]
-layout_mode = 1
-anchor_left = 0.335
-anchor_top = 0.12
-anchor_right = 0.665
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Medal" type="TextureRect" parent="Sheet/Body/Row/LeftCol/Podium/Gold" index="0" unique_id=1192455288]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.33
-anchor_right = 0.67
-anchor_bottom = 0.18
-mouse_filter = 2
-texture = ExtResource("11_medal_g")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Gold" index="1" unique_id=1887349293]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.19
-anchor_right = 1.0
-anchor_bottom = 0.29
-theme_type_variation = &"RankPodiumName"
-text = "Alex_Maze"
-horizontal_alignment = 1
-text_overrun_behavior = 3
-
-[node name="Record" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Gold" index="2" unique_id=1365980897]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.3
-anchor_right = 1.0
-anchor_bottom = 0.39
-theme_type_variation = &"RankPodiumRecord"
-text = "TẦNG 28"
-horizontal_alignment = 1
-
-[node name="Block" type="NinePatchRect" parent="Sheet/Body/Row/LeftCol/Podium/Gold" index="3" unique_id=2092666502]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.04
-anchor_top = 0.41
-anchor_right = 0.96
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("14_podium_g")
-patch_margin_top = 28
-patch_margin_bottom = 28
-
-[node name="Rank" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Gold/Block" index="0" unique_id=1004847590]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.06
-anchor_right = 0.95
-anchor_bottom = 0.52
-theme_type_variation = &"RankPodiumRankGold"
-text = "1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Points" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Gold/Block" index="1" unique_id=939269084]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.55
-anchor_right = 0.95
-anchor_bottom = 0.93
-theme_type_variation = &"RankPodiumPointsGold"
-text = "18,250 PTS"
-horizontal_alignment = 1
-
-[node name="Bronze" type="Control" parent="Sheet/Body/Row/LeftCol/Podium" index="2" unique_id=1930984048]
-layout_mode = 1
-anchor_left = 0.675
-anchor_top = 0.52
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Medal" type="TextureRect" parent="Sheet/Body/Row/LeftCol/Podium/Bronze" index="0" unique_id=1573213136]
-material = SubResource("mat_bronze")
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.35
-anchor_right = 0.65
-anchor_bottom = 0.18
-mouse_filter = 2
-texture = ExtResource("12_medal_s")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Name" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Bronze" index="1" unique_id=1557166885]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.19
-anchor_right = 1.0
-anchor_bottom = 0.29
-theme_type_variation = &"RankPodiumName"
-text = "Li_Wei_Maze"
-horizontal_alignment = 1
-text_overrun_behavior = 3
-
-[node name="Record" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Bronze" index="2" unique_id=2032419132]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.3
-anchor_right = 1.0
-anchor_bottom = 0.39
-theme_type_variation = &"RankPodiumRecord"
-text = "TẦNG 24"
-horizontal_alignment = 1
-
-[node name="Block" type="NinePatchRect" parent="Sheet/Body/Row/LeftCol/Podium/Bronze" index="3" unique_id=1431780267]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.06
-anchor_top = 0.41
-anchor_right = 0.94
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("16_podium_b")
-patch_margin_top = 28
-patch_margin_bottom = 28
-
-[node name="Rank" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Bronze/Block" index="0" unique_id=24923554]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.06
-anchor_right = 0.95
-anchor_bottom = 0.5
-theme_type_variation = &"RankPodiumRankBronze"
-text = "3"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Points" type="Label" parent="Sheet/Body/Row/LeftCol/Podium/Bronze/Block" index="1" unique_id=585163225]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.53
-anchor_right = 0.95
-anchor_bottom = 0.93
-theme_type_variation = &"RankPodiumPointsBronze"
-text = "14,880 PTS"
-horizontal_alignment = 1
-
-[node name="MyRank" type="TextureRect" parent="Sheet/Body/Row/LeftCol" index="1" unique_id=461284606]
-custom_minimum_size = Vector2(0, 64)
+[node name="MyRank" type="TextureRect" parent="Sheet/Body/LeftCol"]
+custom_minimum_size = Vector2(0, 68)
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("17_mybar")
+rotation = -0.0209
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("mybar")
 expand_mode = 1
 
-[node name="Rank" type="Label" parent="Sheet/Body/Row/LeftCol/MyRank" index="0" unique_id=92447475]
+[node name="Rank" type="Label" parent="Sheet/Body/LeftCol/MyRank"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.02
-anchor_right = 0.16
-anchor_bottom = 1.0
+anchor_left = 0
+anchor_top = 0
+anchor_right = 0
+anchor_bottom = 0
+offset_left = 10
+offset_top = 0
+offset_right = 66
+offset_bottom = 62
 theme_type_variation = &"RankMyRank"
+theme_override_colors/font_color = Color(0.7020, 0.2510, 0.1020, 1)
+theme_override_font_sizes/font_size = 22
 text = "#25"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Flag" type="TextureRect" parent="Sheet/Body/Row/LeftCol/MyRank" index="1" unique_id=753996756]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.17
-anchor_top = 0.28
-anchor_right = 0.24
-anchor_bottom = 0.72
 mouse_filter = 2
 
-[node name="Name" type="Label" parent="Sheet/Body/Row/LeftCol/MyRank" index="2" unique_id=1479373512]
+[node name="Flag" type="TextureRect" parent="Sheet/Body/LeftCol/MyRank"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.25
-anchor_top = 0.03
-anchor_right = 0.6
-anchor_bottom = 0.52
+anchor_left = 0
+anchor_top = 0
+anchor_right = 0
+anchor_bottom = 0
+offset_left = 70
+offset_top = 23
+offset_right = 92
+offset_bottom = 38
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Sheet/Body/LeftCol/MyRank"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 102
+offset_top = 8
+offset_right = -108
+offset_bottom = 32
 theme_type_variation = &"RankMyName"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 14
 text = "BẠN (Người chơi)"
+horizontal_alignment = 0
 vertical_alignment = 1
 text_overrun_behavior = 3
+mouse_filter = 2
 
-[node name="Sub" type="Label" parent="Sheet/Body/Row/LeftCol/MyRank" index="3" unique_id=2018109456]
+[node name="Sub" type="Label" parent="Sheet/Body/LeftCol/MyRank"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.25
-anchor_top = 0.54
-anchor_right = 0.6
-anchor_bottom = 0.98
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 102
+offset_top = 32
+offset_right = -108
+offset_bottom = 54
 theme_type_variation = &"RankMySub"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 11
 text = "KỶ LỤC CÁ NHÂN"
+horizontal_alignment = 0
 vertical_alignment = 1
 text_overrun_behavior = 3
+mouse_filter = 2
 
-[node name="Record" type="Label" parent="Sheet/Body/Row/LeftCol/MyRank" index="4" unique_id=324699798]
+[node name="Record" type="Label" parent="Sheet/Body/LeftCol/MyRank"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.62
-anchor_top = 0.08
-anchor_right = 0.86
-anchor_bottom = 0.52
+anchor_left = 1
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = -120
+offset_top = 10
+offset_right = -14
+offset_bottom = 32
 theme_type_variation = &"RankMyRecord"
+theme_override_colors/font_color = Color(0.7020, 0.2510, 0.1020, 1)
+theme_override_font_sizes/font_size = 12
 text = "-"
 horizontal_alignment = 2
 vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
 
-[node name="Points" type="Label" parent="Sheet/Body/Row/LeftCol/MyRank" index="5" unique_id=1112931431]
+[node name="Points" type="Label" parent="Sheet/Body/LeftCol/MyRank"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.62
-anchor_top = 0.54
-anchor_right = 0.97
-anchor_bottom = 0.98
+anchor_left = 1
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = -120
+offset_top = 32
+offset_right = -14
+offset_bottom = 54
 theme_type_variation = &"RankMyValue"
+theme_override_colors/font_color = Color(0.7020, 0.2510, 0.1020, 1)
+theme_override_font_sizes/font_size = 12
 text = "-"
 horizontal_alignment = 2
 vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
 
-[node name="RightCol" type="VBoxContainer" parent="Sheet/Body/Row" index="1" unique_id=1971214685]
+[node name="RightCol" type="VBoxContainer" parent="Sheet/Body"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.58
+size_flags_stretch_ratio = 0.54
 
-[node name="Scroll" type="ScrollContainer" parent="Sheet/Body/Row/RightCol" index="0" unique_id=913121425]
+[node name="Scroll" type="ScrollContainer" parent="Sheet/Body/RightCol"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 scroll_deadzone = 12
 
-[node name="Rows" type="VBoxContainer" parent="Sheet/Body/Row/RightCol/Scroll" index="0" unique_id=1431371717]
+[node name="Rows" type="VBoxContainer" parent="Sheet/Body/RightCol/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 15
+theme_override_constants/separation = 0
+
+[node name="Tabs" type="VBoxContainer" parent="Sheet"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -14
+offset_top = 70
+offset_right = 32
+offset_bottom = 430
+theme_override_constants/separation = 12
+
+[node name="Tab_dungeon" parent="Sheet/Tabs" instance=ExtResource("tab")]
+layout_mode = 2
+size_flags_horizontal = 0
+board_id = "dungeon"
+label_key = "STR_RANK_TAB_DUNGEON"
+
+[node name="Tab_play" parent="Sheet/Tabs" instance=ExtResource("tab")]
+layout_mode = 2
+size_flags_horizontal = 0
+board_id = "play"
+label_key = "STR_RANK_TAB_PLAY"
+
+[node name="Tab_daily" parent="Sheet/Tabs" instance=ExtResource("tab")]
+layout_mode = 2
+size_flags_horizontal = 0
+board_id = "daily"
+label_key = "STR_RANK_TAB_DAILY"
+
+[node name="Banner" type="NinePatchRect" parent="Sheet"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 70
+offset_top = -30
+offset_right = -40
+offset_bottom = 32
+rotation = -0.0349
+pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("banner")
+patch_margin_left = 16
+patch_margin_right = 16
+
+[node name="Title" type="Label" parent="Sheet/Banner"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"LevelsTitle"
+theme_override_colors/font_color = Color(1.0000, 1.0000, 1.0000, 1)
+theme_override_font_sizes/font_size = 26
+text = "STR_RANK_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="Clip" type="TextureRect" parent="Sheet"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 0
+anchor_bottom = 0
+offset_left = 46
+offset_top = -26
+offset_right = 72
+offset_bottom = 36
+mouse_filter = 2
+texture = ExtResource("clip")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EnterAnim" type="AnimationPlayer" parent="." index="2"]
+libraries/ = SubResource("AnimLib_enter")
+autoplay = &"enter"
+

@@ -1,20 +1,5 @@
-<svg width="76" height="76" viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g filter="url(#shadow_normal_76)">
-    <path d="M12 3H64L72 11V63L64 71H12L4 63V11L12 3Z" fill="#FFFCF0"/>
-  </g>
-  <path d="M14 7.5H62L67.5 13V61L62 66.5H14L8.5 61V13L14 7.5Z" stroke="#3266B1" stroke-width="1.2"/>
-  <!-- Chevron Icon -->
-  <path d="M46 24.5L29 37L46 49.5" fill="none" stroke="#3266B1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <defs>
-    <filter id="shadow_normal_76" x="0" y="0" width="76" height="76" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feOffset dy="2"/>
-      <feGaussianBlur stdDeviation="2"/>
-      <feComposite in2="hardAlpha" operator="out"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.270588 0 0 0 0 0.262745 0 0 0 0 0.192157 0 0 0 0.08 0"/>
-      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
-    </filter>
-  </defs>
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nút Back kiểu 3D (cao 48 + đế 5). Toạ độ vẽ ở cỡ 1x, viewBox gấp đôi (xuất PNG 96x106 hoặc 48x53). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 106" width="48" height="53"><g transform="scale(2)">
+<rect y="5" width="48" height="48" rx="16" fill="#1E5578"/><rect x="1" y="1" width="46" height="46" rx="15" fill="#2F77A5" stroke="#1E5578" stroke-width="2"/><path d="M30 14L18 26l12 12" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" transform="translate(-6 0) translate(6 -2)"/>
+</g></svg>

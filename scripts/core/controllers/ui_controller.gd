@@ -15,7 +15,11 @@ signal retry_requested
 signal quit_requested
 signal home_requested
 signal pause_toggled(is_paused: bool)
+## Nút HỒI SINH của popup Game Over: còn phải chạy quảng cáo trước khi hồi sinh
 signal revive_requested
+## Popup Thử lại (Retry) đã TỰ chạy quảng cáo / trừ Xu xong -> áp dụng hồi sinh NGAY
+## (không hỏi lại quảng cáo như `revive_requested`)
+signal revive_confirmed
 ## Popup thắng Daily: người chơi bấm "VỀ DAILY" -> quay lại màn Daily
 signal daily_requested
 ## Popup thắng THỬ THÁCH: bấm "TRỞ VỀ" -> quay lại MÀN TRƯỚC ĐÓ (Daily / Chọn màn / Debug)
@@ -196,8 +200,11 @@ func show_game_over(result: Dictionary) -> void:
 	if not skip_retry_prompt:
 		var retry_popup := Popups.open(Popups.RETRY, result)
 		if retry_popup != null:
-			if retry_popup.has_signal("retry_requested"):
-				_connect_once(retry_popup, "retry_requested", _on_retry_popup_retry)
+			# THỬ LẠI của popup Retry = HỒI SINH của popup Game Over: tiếp tục ĐÚNG ván đang chơi
+			# (mở khoá bàn cờ, chạy lại đồng hồ) thay vì bắt đầu ván mới.
+			# Popup đã tự chạy quảng cáo / trừ Xu nên chỉ cần áp dụng phần thưởng.
+			if retry_popup.has_signal("revive_requested"):
+				_connect_once(retry_popup, "revive_requested", _on_retry_popup_revive)
 			if retry_popup.has_signal("skip_requested"):
 				_connect_once(retry_popup, "skip_requested", func(_method = null): show_direct_game_over(result))
 			return
@@ -205,8 +212,11 @@ func show_game_over(result: Dictionary) -> void:
 	show_direct_game_over(result)
 
 
-func _on_retry_popup_retry(_method = null) -> void:
-	_emit_retry()
+## Popup Retry: người chơi đã xem quảng cáo (hoặc trả Xu) xong -> hồi sinh và chơi tiếp.
+## Đi đúng đường của nút HỒI SINH trong popup Game Over (`GameController.revive_run()`),
+## nhờ vậy bàn cờ được MỞ KHOÁ và đồng hồ chạy lại y như khi hồi sinh ở màn Game Over.
+func _on_retry_popup_revive(_method = null) -> void:
+	revive_confirmed.emit()
 
 
 func show_direct_game_over(result: Dictionary) -> void:

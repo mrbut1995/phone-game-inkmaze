@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Huy chương trắng — tô màu bằng self_modulate (vàng/bạc/đồng). Toạ độ vẽ ở cỡ 1x, viewBox gấp đôi (xuất PNG 176x176 hoặc 88x88). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" width="88" height="88"><g transform="scale(2)">
+<circle cx="44" cy="44" r="44" fill="#000" opacity=".22"/>
+<circle cx="44" cy="44" r="40" fill="#fff"/>
+</g></svg>

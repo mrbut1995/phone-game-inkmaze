@@ -66,6 +66,13 @@ func _init() -> void:
 	# Play mode dùng popup thua bản LEVEL (3 nhiệm vụ), Dungeon dùng bản bước còn lại
 	var endless: bool = controller.game_mode != null and controller.game_mode.is_endless
 	var over_id: String = Popups.GAME_OVER if endless else Popups.GAME_OVER_LEVEL
+	# Popup RETRY mở TRƯỚC popup thua thật (§5.10a) -> bấm BỎ QUA mới vào popup thua
+	var retry_popup: Node = Popups.get_popup(Popups.RETRY)
+	if retry_popup != null:
+		print("[CHECK] Popup RETRY mo truoc — bam BO QUA de vao popup thua.")
+		retry_popup.call("_on_skip_pressed")
+		await process_frame
+		await create_timer(0.6).timeout
 	var popup: Node = Popups.get_popup(over_id)
 	if popup == null:
 		print("[FAIL] Popup Game Over khong mo sau khi thua man")

@@ -160,6 +160,8 @@ func _wire_controllers() -> void:
 	_connect_once(ui_controller, "continue_requested", game_controller, "_on_continue_requested")
 	_connect_once(ui_controller, "retry_requested", game_controller, "_on_retry_requested")
 	_connect_once(ui_controller, "revive_requested", game_controller, "_on_revive_requested")
+	# Popup Retry đã tự trả giá (quảng cáo / Xu) -> hồi sinh thẳng, y như nút HỒI SINH ở popup Game Over
+	_connect_once(ui_controller, "revive_confirmed", game_controller, "revive_run")
 	_connect_once(ui_controller, "home_requested", game_controller, "_on_home_requested")
 	_connect_once(ui_controller, "daily_requested", game_controller, "_on_daily_requested")
 	_connect_once(ui_controller, "back_requested", game_controller, "_on_back_requested")

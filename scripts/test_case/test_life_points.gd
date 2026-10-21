@@ -201,23 +201,29 @@ func _section_popup() -> void:
 	root.add_child(popup)
 	_check(popup.get("label_title") != null, "Bind label_title")
 	_check(popup.get("label_subtitle") != null, "Bind label_subtitle")
-	_check(popup.get("label_recharge") != null, "Bind label_recharge")
+	# Popup dùng chung `RetryPencils` với popup Retry để vẽ hàng bút + đếm ngược hồi
+	_check(popup.get("pencils") != null, "Bind pencils (hang but + dem nguoc hoi)")
 	_check(popup.get("btn_exit") != null, "Bind btn_exit")
 	_check(popup.get("btn_shop") != null, "Bind btn_shop")
 	_check(popup.has_signal("exit_requested"), "Co signal exit_requested")
 	_check(popup.has_signal("shop_requested"), "Co signal shop_requested")
+	# Popup chỉ hiện khi HẾT bút ⇒ đặt số lượt = 0 để phụ đề nêu đúng "0/x"
+	var gm := root.get_node_or_null("GameManager")
+	if gm != null:
+		gm.call("debug_set_lives", 0)
 	popup.call("open", {"max_lives": 5})
 	await process_frame
 	var title: Label = popup.get("label_title")
 	var subtitle: Label = popup.get("label_subtitle")
-	var recharge: Label = popup.get("label_recharge")
 	_check(title != null and not title.text.is_empty()
 		and title.text != "STR_LIFE_EMPTY_TITLE", "Tieu de da dich ('%s')" % title.text)
-	_check(subtitle != null and subtitle.text.contains("5"), "Phu de neu so luot toi da")
-	_check(recharge != null and not recharge.text.is_empty()
-		and recharge.text != "STR_LIFE_EMPTY_RECHARGE", "Co dong dem nguoc hoi luot ('%s')" % recharge.text)
+	_check(subtitle != null and subtitle.text.contains("5")
+		and subtitle.text != "STR_LIFE_EMPTY_SUBTITLE",
+		"Phu de neu so luot toi da ('%s')" % (subtitle.text if subtitle != null else "<null>"))
 	popup.queue_free()
 	await process_frame
+	if gm != null:
+		gm.call("debug_set_lives", 5)
 
 
 # ---------------------------------------------------------------------------

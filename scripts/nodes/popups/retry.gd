@@ -1,12 +1,16 @@
 class_name RetryPopup
 extends BasePopup
 ## ============================================================================
-## Popup: Thử lại màn chơi khi Game Over (nodes/popups/retry.tscn)
+## Popup: HỒI SINH khi thua (nodes/popups/retry.tscn)
 ##
 ## Xuất hiện TRƯỚC popup Game Over thông thường:
-##   1. Xem quảng cáo (nút xanh dương)  -> thử lại
-##   2. Trả Xu (nút xanh lá)            -> thử lại
+##   1. Xem quảng cáo (nút xanh dương)  -> HỒI SINH
+##   2. Trả Xu (nút xanh lá)            -> HỒI SINH
 ##   3. Bỏ qua                          -> popup Game Over thật (UIController trừ 1 LƯỢT)
+##
+## HỒI SINH = tiếp tục ĐÚNG ván đang chơi (Level: lùi về bước trước · Dungeon: +bước),
+## KHÔNG bắt đầu lại ván. Popup đã tự lo quảng cáo / trừ Xu; UIController nhận
+## `revive_requested` rồi phát `revive_confirmed` -> GameController.revive_run().
 ##
 ## LƯỢT CHƠI = "bút chì": GameManager giữ số lượt (lives), mốc hồi (next_life_at)
 ## và trừ lượt trong register_run_loss() — popup này CHỈ HIỂN THỊ, không trừ lượt.
@@ -43,7 +47,7 @@ func _on_open() -> void:
 	if label_title != null:
 		label_title.text = tr("STR_RETRY_POPUP_TITLE")
 	if label_subtitle != null:
-		label_subtitle.text = tr("STR_RETRY_POPUP_SUBTITLE")
+		label_subtitle.text = _subtitle_text()
 	if label_gold_cost != null:
 		label_gold_cost.text = str(_gold_cost)
 
@@ -54,6 +58,14 @@ func _on_open() -> void:
 	_hide_warning()
 	if _will_charge_life() and _lives_now() == 1:
 		_show_warning("STR_RETRY_LAST_PENCIL")
+
+
+## Lời nhắn theo cách hồi sinh của chế độ: Dungeon (endless) được CỘNG BƯỚC, các chế độ
+## còn lại LÙI VỀ BƯỚC TRƯỚC (xem GameController.revive_run).
+func _subtitle_text() -> String:
+	if bool(data.get("endless", false)):
+		return tr("STR_RETRY_SUBTITLE_STEPS").format([int(data.get("revive_steps", 0))])
+	return tr("STR_RETRY_POPUP_SUBTITLE")
 
 
 func _on_close() -> void:
