@@ -3,26 +3,26 @@
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/popups/retry.gd" id="2_retry"]
 [ext_resource type="Script" path="res://scripts/nodes/popups/retry_pencils.gd" id="2b_pencils"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_panel.png" id="3_panel"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_washi_tape.png" id="4_tape"]
+[ext_resource uid="uid://d0xo6gwvno2bm" type="Texture2D" path="res://assets/images-png/popups/retry_panel.png" id="3_panel"]
+[ext_resource uid="uid://bs4syowdu4fqb" type="Texture2D" path="res://assets/images-png/popups/retry_washi_tape.png" id="4_tape"]
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="5_clip"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_hero_pencil.png" id="6_hero"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_pencil_full.png" id="7_pn_full"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_pencil_empty.png" id="8_pn_empty"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_pencil_risk.png" id="9_pn_risk"]
+[ext_resource uid="uid://cgk51c7mkwnfw" type="Texture2D" path="res://assets/images-png/popups/retry_hero_pencil.png" id="6_hero"]
+[ext_resource uid="uid://h4gbn618cpba" type="Texture2D" path="res://assets/images-png/popups/retry_pencil_full.png" id="7_pn_full"]
+[ext_resource uid="uid://d1voe6ygm7iw1" type="Texture2D" path="res://assets/images-png/popups/retry_pencil_empty.png" id="8_pn_empty"]
+[ext_resource uid="uid://265i5wa7f3v6" type="Texture2D" path="res://assets/images-png/popups/retry_pencil_risk.png" id="9_pn_risk"]
 [ext_resource type="Texture2D" uid="uid://b4bnagmk0jj2g" path="res://assets/images-png/icons/icon_ad.png" id="12_icon_ad"]
 [ext_resource type="Texture2D" uid="uid://bsenhucno4lsr" path="res://assets/images-png/icons/icon_coin.png" id="13_icon_coin"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_icon_pencil.png" id="13b_icon_pencil"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_price_pill.png" id="13c_pill"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_icon_retry.png" id="13d_icon_retry"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_btn_ad_normal.png" id="14_ad_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_btn_ad_pressed.png" id="15_ad_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_btn_ad_focus.png" id="16_ad_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_btn_gold_normal.png" id="17_gold_n"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_btn_gold_pressed.png" id="18_gold_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_btn_gold_focus.png" id="19_gold_f"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_skip_pressed.png" id="21_skip_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_skip_focus.png" id="22_skip_f"]
+[ext_resource uid="uid://qxs50r5yjcs5" type="Texture2D" path="res://assets/images-png/popups/retry_icon_pencil.png" id="13b_icon_pencil"]
+[ext_resource uid="uid://covpp61iw3n47" type="Texture2D" path="res://assets/images-png/popups/retry_price_pill.png" id="13c_pill"]
+[ext_resource uid="uid://dlrqt205jqrdb" type="Texture2D" path="res://assets/images-png/popups/retry_icon_retry.png" id="13d_icon_retry"]
+[ext_resource uid="uid://f6bve04uo4o4" type="Texture2D" path="res://assets/images-png/popups/retry_btn_ad_normal.png" id="14_ad_n"]
+[ext_resource uid="uid://bo1n1vmk887qc" type="Texture2D" path="res://assets/images-png/popups/retry_btn_ad_pressed.png" id="15_ad_p"]
+[ext_resource uid="uid://c1fsg2i70wmmw" type="Texture2D" path="res://assets/images-png/popups/retry_btn_ad_focus.png" id="16_ad_f"]
+[ext_resource uid="uid://ctu7dvghw4bwr" type="Texture2D" path="res://assets/images-png/popups/retry_btn_gold_normal.png" id="17_gold_n"]
+[ext_resource uid="uid://cocdbksbhhoqb" type="Texture2D" path="res://assets/images-png/popups/retry_btn_gold_pressed.png" id="18_gold_p"]
+[ext_resource uid="uid://vncrn8ujldnh" type="Texture2D" path="res://assets/images-png/popups/retry_btn_gold_focus.png" id="19_gold_f"]
+[ext_resource uid="uid://cy54fvbtaqfwc" type="Texture2D" path="res://assets/images-png/popups/retry_skip_pressed.png" id="21_skip_p"]
+[ext_resource uid="uid://uj3uuiylpcm6" type="Texture2D" path="res://assets/images-png/popups/retry_skip_focus.png" id="22_skip_f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
 bg_color = Color(0.898, 0.286, 0.227, 1)
@@ -123,7 +123,7 @@ anchor_bottom = 1.0
 offset_top = 16.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"PopupTitleDanger"
+theme_type_variation = &"PopupTitleOnTape"
 theme_override_font_sizes/font_size = 22
 text = "STR_RETRY_POPUP_TITLE"
 horizontal_alignment = 1

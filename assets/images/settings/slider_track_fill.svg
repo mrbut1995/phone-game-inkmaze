@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 372 24" width="186" height="12">
-  
-  <rect width="360" height="12" rx="6" fill="#3D83AE" />
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phần đã trượt. Vẽ ở toạ độ 1x, viewBox gấp đôi (xuất PNG 186x14 hoặc 372x28). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 372 28" width="186" height="14"><g transform="scale(2)">
+<rect x="1" y="1" width="184" height="12" rx="6" fill="#2F77A5" stroke="#1E5578" stroke-width="2"/>
+</g></svg>

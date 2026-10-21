@@ -1,135 +1,136 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
-  <!-- MOCKUP: POPUP GAME OVER — PLAY MODE / CHỌN MÀN (thua do đâm tường; hồi sinh = quay lại bước trước) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 680" width="540" height="680">
+<title>Game Over – Level (Concept D)</title>
+<defs><radialGradient id="g1" cx=".3" cy=".2" r=".55"><stop offset="0" stop-color="#3F6FA8"/><stop offset="1" stop-color="#3F6FA8" stop-opacity="0"/></radialGradient>
+<radialGradient id="g2" cx=".8" cy=".7" r=".5"><stop offset="0" stop-color="#A8533F"/><stop offset="1" stop-color="#A8533F" stop-opacity="0"/></radialGradient>
+<linearGradient id="g0" x1="0" y1="0" x2=".4" y2="1"><stop offset="0" stop-color="#2C4A6E"/><stop offset="1" stop-color="#1A2A40"/></linearGradient></defs>
+<rect width="540" height="680" fill="url(#g0)"/><rect width="540" height="680" fill="url(#g1)"/><rect width="540" height="680" fill="url(#g2)"/><rect width="540" height="680" fill="#080E1A" fill-opacity=".62"/>
+<g transform="translate(31 70) scale(1.0 1.0) translate(-0.0 -0.0) " ><defs>
+<filter id="ps" x="0" y="0" width="478" height="520" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="4" stdDeviation="4.5" flood-color="#111B30" flood-opacity="0.22"/></filter>
+<linearGradient id="pf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFEF9"/><stop offset="1" stop-color="#FBF6E8"/></linearGradient>
+<pattern id="gm" x="58" y="16" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#E3EBEF" stroke-width="0.7"/></pattern>
+<pattern id="gM" x="58" y="16" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#D3DFE6" stroke-width="0.9"/></pattern></defs>
+<rect x="24" y="26" width="444" height="462" rx="3" fill="#E4E1D2" transform="rotate(1.6 246 260)"/>
+<rect x="18" y="20" width="444" height="464" rx="3" fill="#EDEADC" transform="rotate(-0.9 240 260)"/>
+<g filter="url(#ps)"><path d="M 14 16 L 20 13 L 26 16 L 32 13 L 38 16 L 44 13 L 50 16 L 56 13 L 62 16 L 68 13 L 74 16 L 80 13 L 86 16 L 92 13 L 98 16 L 104 13 L 110 16 L 116 13 L 122 16 L 128 13 L 134 16 L 140 13 L 146 16 L 152 13 L 158 16 L 164 13 L 170 16 L 176 13 L 182 16 L 188 13 L 194 16 L 200 13 L 206 16 L 212 13 L 218 16 L 224 13 L 230 16 L 236 13 L 242 16 L 248 13 L 254 16 L 260 13 L 266 16 L 272 13 L 278 16 L 284 13 L 290 16 L 296 13 L 302 16 L 308 13 L 314 16 L 320 13 L 326 16 L 332 13 L 338 16 L 344 13 L 350 16 L 356 13 L 362 16 L 368 13 L 374 16 L 380 13 L 386 16 L 392 13 L 398 16 L 404 13 L 410 16 L 416 13 L 422 16 L 428 13 L 434 16 L 440 13 L 446 16 L 452 13 L 458 16 V 502 L 452 505 L 446 502 L 440 505 L 434 502 L 428 505 L 422 502 L 416 505 L 410 502 L 404 505 L 398 502 L 392 505 L 386 502 L 380 505 L 374 502 L 368 505 L 362 502 L 356 505 L 350 502 L 344 505 L 338 502 L 332 505 L 326 502 L 320 505 L 314 502 L 308 505 L 302 502 L 296 505 L 290 502 L 284 505 L 278 502 L 272 505 L 266 502 L 260 505 L 254 502 L 248 505 L 242 502 L 236 505 L 230 502 L 224 505 L 218 502 L 212 505 L 206 502 L 200 505 L 194 502 L 188 505 L 182 502 L 176 505 L 170 502 L 164 505 L 158 502 L 152 505 L 146 502 L 140 505 L 134 502 L 128 505 L 122 502 L 116 505 L 110 502 L 104 505 L 98 502 L 92 505 L 86 502 L 80 505 L 74 502 L 68 505 L 62 502 L 56 505 L 50 502 L 44 505 L 38 502 L 32 505 L 26 502 L 20 505 L 14 502 Z" fill="url(#pf)"/></g>
+<rect x="58" y="16" width="400" height="486" fill="url(#gm)"/><rect x="58" y="16" width="400" height="486" fill="url(#gM)"/>
+<rect x="14" y="14" width="34" height="490" fill="#FFFCF0"/><rect x="48" y="14" width="0.8" height="490" fill="#DAD6C4"/>
+<rect x="56" y="16" width="1" height="486" fill="#E9B3B0"/><rect x="59" y="16" width="1" height="486" fill="#E9B3B0" opacity="0.7"/><circle cx="31" cy="62" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><circle cx="31" cy="132" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><circle cx="31" cy="202" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><circle cx="31" cy="272" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><circle cx="31" cy="342" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><circle cx="31" cy="412" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/></g><g transform="rotate(-2.86 290.0 90.0)"><g transform="translate(119 56)"><clipPath id="tc3"><rect x="0" y="0" width="29" height="68.0"/></clipPath><g clip-path="url(#tc3)" transform="translate(0 0) scale(1 1.0)">
+  <!-- Washi tape trung tính (xám rất nhạt) để tô màu bằng self_modulate; không dùng filter/text -->
+  <path d="M0.00 4.20 L115.00 4.20 L111.80 12.07 L115.00 19.95 L111.80 27.82 L115.00 35.70 L111.80 43.58 L115.00 51.45 L111.80 59.33 L115.00 67.20 L0.00 67.20 L3.20 59.33 L0.00 51.45 L3.20 43.58 L0.00 35.70 L3.20 27.82 L0.00 19.95 L3.20 12.07 L0.00 4.20 Z" fill="#000000" fill-opacity="0.05"/>
+  <path d="M0.00 3.20 L115.00 3.20 L111.80 11.07 L115.00 18.95 L111.80 26.82 L115.00 34.70 L111.80 42.58 L115.00 50.45 L111.80 58.33 L115.00 66.20 L0.00 66.20 L3.20 58.33 L0.00 50.45 L3.20 42.58 L0.00 34.70 L3.20 26.82 L0.00 18.95 L3.20 11.07 L0.00 3.20 Z" fill="#000000" fill-opacity="0.09"/>
+  <path d="M0.00 2.00 L115.00 2.00 L111.80 9.88 L115.00 17.75 L111.80 25.62 L115.00 33.50 L111.80 41.38 L115.00 49.25 L111.80 57.12 L115.00 65.00 L0.00 65.00 L3.20 57.12 L0.00 49.25 L3.20 41.38 L0.00 33.50 L3.20 25.62 L0.00 17.75 L3.20 9.88 L0.00 2.00 Z" fill="#D84B4E" fill-opacity="0.96"/>
+  <rect x="0" y="2.6" width="115" height="21.4" fill="#E85153" fill-opacity="0.55"/>
+  <rect x="0" y="44.8" width="115" height="20.2" fill="#000000" fill-opacity="0.045"/>
+  <line x1="6" y1="23.5" x2="109" y2="23.5" stroke="#E85153" stroke-opacity="0.37" stroke-width="0.7"/>
+  <line x1="6" y1="42.1" x2="109" y2="42.1" stroke="#000000" stroke-opacity="0.05" stroke-width="0.7"/>
+  <line x1="6" y1="35.5" x2="109" y2="35.5" stroke="#E85153" stroke-opacity="0.39" stroke-width="0.7"/>
+  <line x1="6" y1="8.3" x2="109" y2="8.3" stroke="#000000" stroke-opacity="0.07" stroke-width="0.7"/>
+  <line x1="6" y1="7.1" x2="109" y2="7.1" stroke="#E85153" stroke-opacity="0.39" stroke-width="0.7"/>
+  <line x1="6" y1="9.0" x2="109" y2="9.0" stroke="#000000" stroke-opacity="0.05" stroke-width="0.7"/>
+  <line x1="6" y1="29.2" x2="109" y2="29.2" stroke="#E85153" stroke-opacity="0.43" stroke-width="0.7"/>
+  <line x1="6" y1="12.1" x2="109" y2="12.1" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="6" y1="40.8" x2="109" y2="40.8" stroke="#E85153" stroke-opacity="0.44" stroke-width="0.7"/>
+  <line x1="6" y1="37.9" x2="109" y2="37.9" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="6" y1="60.6" x2="109" y2="60.6" stroke="#E85153" stroke-opacity="0.35" stroke-width="0.7"/>
+  <line x1="6" y1="53.9" x2="109" y2="53.9" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="0" y1="4.2" x2="115" y2="4.2" stroke="#E85153" stroke-opacity="0.85" stroke-width="1"/>
+  <line x1="0" y1="62.8" x2="115" y2="62.8" stroke="#E85153" stroke-opacity="0.85" stroke-width="1"/>
+  <line x1="0" y1="2.5" x2="115" y2="2.5" stroke="#000000" stroke-opacity="0.10" stroke-width="1"/>
+  <line x1="0" y1="64.5" x2="115" y2="64.5" stroke="#000000" stroke-opacity="0.14" stroke-width="1"/>
+</g><clipPath id="tc4"><rect x="29" y="0" width="59.0" height="68.0"/></clipPath><g clip-path="url(#tc4)" transform="translate(-111.57627118644069 0) scale(4.8474576271186445 1.0)">
+  <!-- Washi tape trung tính (xám rất nhạt) để tô màu bằng self_modulate; không dùng filter/text -->
+  <path d="M0.00 4.20 L115.00 4.20 L111.80 12.07 L115.00 19.95 L111.80 27.82 L115.00 35.70 L111.80 43.58 L115.00 51.45 L111.80 59.33 L115.00 67.20 L0.00 67.20 L3.20 59.33 L0.00 51.45 L3.20 43.58 L0.00 35.70 L3.20 27.82 L0.00 19.95 L3.20 12.07 L0.00 4.20 Z" fill="#000000" fill-opacity="0.05"/>
+  <path d="M0.00 3.20 L115.00 3.20 L111.80 11.07 L115.00 18.95 L111.80 26.82 L115.00 34.70 L111.80 42.58 L115.00 50.45 L111.80 58.33 L115.00 66.20 L0.00 66.20 L3.20 58.33 L0.00 50.45 L3.20 42.58 L0.00 34.70 L3.20 26.82 L0.00 18.95 L3.20 11.07 L0.00 3.20 Z" fill="#000000" fill-opacity="0.09"/>
+  <path d="M0.00 2.00 L115.00 2.00 L111.80 9.88 L115.00 17.75 L111.80 25.62 L115.00 33.50 L111.80 41.38 L115.00 49.25 L111.80 57.12 L115.00 65.00 L0.00 65.00 L3.20 57.12 L0.00 49.25 L3.20 41.38 L0.00 33.50 L3.20 25.62 L0.00 17.75 L3.20 9.88 L0.00 2.00 Z" fill="#D84B4E" fill-opacity="0.96"/>
+  <rect x="0" y="2.6" width="115" height="21.4" fill="#E85153" fill-opacity="0.55"/>
+  <rect x="0" y="44.8" width="115" height="20.2" fill="#000000" fill-opacity="0.045"/>
+  <line x1="6" y1="23.5" x2="109" y2="23.5" stroke="#E85153" stroke-opacity="0.37" stroke-width="0.7"/>
+  <line x1="6" y1="42.1" x2="109" y2="42.1" stroke="#000000" stroke-opacity="0.05" stroke-width="0.7"/>
+  <line x1="6" y1="35.5" x2="109" y2="35.5" stroke="#E85153" stroke-opacity="0.39" stroke-width="0.7"/>
+  <line x1="6" y1="8.3" x2="109" y2="8.3" stroke="#000000" stroke-opacity="0.07" stroke-width="0.7"/>
+  <line x1="6" y1="7.1" x2="109" y2="7.1" stroke="#E85153" stroke-opacity="0.39" stroke-width="0.7"/>
+  <line x1="6" y1="9.0" x2="109" y2="9.0" stroke="#000000" stroke-opacity="0.05" stroke-width="0.7"/>
+  <line x1="6" y1="29.2" x2="109" y2="29.2" stroke="#E85153" stroke-opacity="0.43" stroke-width="0.7"/>
+  <line x1="6" y1="12.1" x2="109" y2="12.1" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="6" y1="40.8" x2="109" y2="40.8" stroke="#E85153" stroke-opacity="0.44" stroke-width="0.7"/>
+  <line x1="6" y1="37.9" x2="109" y2="37.9" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="6" y1="60.6" x2="109" y2="60.6" stroke="#E85153" stroke-opacity="0.35" stroke-width="0.7"/>
+  <line x1="6" y1="53.9" x2="109" y2="53.9" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="0" y1="4.2" x2="115" y2="4.2" stroke="#E85153" stroke-opacity="0.85" stroke-width="1"/>
+  <line x1="0" y1="62.8" x2="115" y2="62.8" stroke="#E85153" stroke-opacity="0.85" stroke-width="1"/>
+  <line x1="0" y1="2.5" x2="115" y2="2.5" stroke="#000000" stroke-opacity="0.10" stroke-width="1"/>
+  <line x1="0" y1="64.5" x2="115" y2="64.5" stroke="#000000" stroke-opacity="0.14" stroke-width="1"/>
+</g><clipPath id="tc5"><rect x="88.0" y="0" width="27" height="68.0"/></clipPath><g clip-path="url(#tc5)" transform="translate(227.0 0) scale(1 1.0)">
+  <!-- Washi tape trung tính (xám rất nhạt) để tô màu bằng self_modulate; không dùng filter/text -->
+  <path d="M0.00 4.20 L115.00 4.20 L111.80 12.07 L115.00 19.95 L111.80 27.82 L115.00 35.70 L111.80 43.58 L115.00 51.45 L111.80 59.33 L115.00 67.20 L0.00 67.20 L3.20 59.33 L0.00 51.45 L3.20 43.58 L0.00 35.70 L3.20 27.82 L0.00 19.95 L3.20 12.07 L0.00 4.20 Z" fill="#000000" fill-opacity="0.05"/>
+  <path d="M0.00 3.20 L115.00 3.20 L111.80 11.07 L115.00 18.95 L111.80 26.82 L115.00 34.70 L111.80 42.58 L115.00 50.45 L111.80 58.33 L115.00 66.20 L0.00 66.20 L3.20 58.33 L0.00 50.45 L3.20 42.58 L0.00 34.70 L3.20 26.82 L0.00 18.95 L3.20 11.07 L0.00 3.20 Z" fill="#000000" fill-opacity="0.09"/>
+  <path d="M0.00 2.00 L115.00 2.00 L111.80 9.88 L115.00 17.75 L111.80 25.62 L115.00 33.50 L111.80 41.38 L115.00 49.25 L111.80 57.12 L115.00 65.00 L0.00 65.00 L3.20 57.12 L0.00 49.25 L3.20 41.38 L0.00 33.50 L3.20 25.62 L0.00 17.75 L3.20 9.88 L0.00 2.00 Z" fill="#D84B4E" fill-opacity="0.96"/>
+  <rect x="0" y="2.6" width="115" height="21.4" fill="#E85153" fill-opacity="0.55"/>
+  <rect x="0" y="44.8" width="115" height="20.2" fill="#000000" fill-opacity="0.045"/>
+  <line x1="6" y1="23.5" x2="109" y2="23.5" stroke="#E85153" stroke-opacity="0.37" stroke-width="0.7"/>
+  <line x1="6" y1="42.1" x2="109" y2="42.1" stroke="#000000" stroke-opacity="0.05" stroke-width="0.7"/>
+  <line x1="6" y1="35.5" x2="109" y2="35.5" stroke="#E85153" stroke-opacity="0.39" stroke-width="0.7"/>
+  <line x1="6" y1="8.3" x2="109" y2="8.3" stroke="#000000" stroke-opacity="0.07" stroke-width="0.7"/>
+  <line x1="6" y1="7.1" x2="109" y2="7.1" stroke="#E85153" stroke-opacity="0.39" stroke-width="0.7"/>
+  <line x1="6" y1="9.0" x2="109" y2="9.0" stroke="#000000" stroke-opacity="0.05" stroke-width="0.7"/>
+  <line x1="6" y1="29.2" x2="109" y2="29.2" stroke="#E85153" stroke-opacity="0.43" stroke-width="0.7"/>
+  <line x1="6" y1="12.1" x2="109" y2="12.1" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="6" y1="40.8" x2="109" y2="40.8" stroke="#E85153" stroke-opacity="0.44" stroke-width="0.7"/>
+  <line x1="6" y1="37.9" x2="109" y2="37.9" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="6" y1="60.6" x2="109" y2="60.6" stroke="#E85153" stroke-opacity="0.35" stroke-width="0.7"/>
+  <line x1="6" y1="53.9" x2="109" y2="53.9" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="0" y1="4.2" x2="115" y2="4.2" stroke="#E85153" stroke-opacity="0.85" stroke-width="1"/>
+  <line x1="0" y1="62.8" x2="115" y2="62.8" stroke="#E85153" stroke-opacity="0.85" stroke-width="1"/>
+  <line x1="0" y1="2.5" x2="115" y2="2.5" stroke="#000000" stroke-opacity="0.10" stroke-width="1"/>
+  <line x1="0" y1="64.5" x2="115" y2="64.5" stroke="#000000" stroke-opacity="0.14" stroke-width="1"/>
+</g></g><text x="290.0" y="106.36" text-anchor="middle" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="900" font-size="22" fill="#3A0A0A" fill-opacity=".45" transform="translate(0 2)">GAME OVER</text><text x="290.0" y="106.36" text-anchor="middle" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="900" font-size="22" fill="#FFFFFF">GAME OVER</text></g><g transform="translate(84 72) scale(0.5 0.5) translate(6.0 -5.0) " >
   <defs>
-    <pattern id="bgGridFail" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#8FB9D2" stroke-width="1.2" opacity="0.5"/>
-      <line x1="0" y1="0" x2="40" y2="0" stroke="#3D83AE" stroke-width="2" opacity="0.15"/>
-    </pattern>
-
-    <filter id="failPaperShadow" x="-15%" y="-15%" width="130%" height="135%">
-      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#301A1A" flood-opacity="0.32"/>
+    <filter id="clipShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="1" dy="3" stdDeviation="2" flood-color="#1E2830" flood-opacity="0.25" />
     </filter>
-
-    <!-- TÁI SỬ DỤNG: NGÔI SAO TRẠNG THÁI THỬ THÁCH (ĐÃ ĐẠT / CHƯA ĐẠT) -->
-    <g id="star-fail">
-      <path d="M 13 2 L 16.8 9.6 L 25.2 10.8 L 19 16.8 L 20.4 25.2 L 13 21.2 L 5.6 25.2 L 7 16.8 L 0.8 10.8 L 9.2 9.6 Z"
-            fill="#F1EADB" stroke="#B5A98F" stroke-width="2" stroke-linejoin="round"/>
-    </g>
-    <g id="star-pass">
-      <path d="M 13 2 L 16.8 9.6 L 25.2 10.8 L 19 16.8 L 20.4 25.2 L 13 21.2 L 5.6 25.2 L 7 16.8 L 0.8 10.8 L 9.2 9.6 Z"
-            fill="#FBBF24" stroke="#D97706" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M 13 6.5 L 15 10.8 L 19.6 11.5" fill="none" stroke="#FEF3C7" stroke-width="1.8" stroke-linecap="round"/>
-    </g>
   </defs>
+  <path d="M 12 70 L 12 20 A 10 10 0 0 1 32 20 L 32 60 A 16 16 0 0 1 0 60 L 0 15" fill="none" stroke="#6F828F" stroke-width="4.5" stroke-linecap="round" filter="url(#clipShadow)" />
+</g><rect x="100" y="133" width="380" height="130" rx="14" fill="#FFFFFF" fill-opacity=".94" stroke="#E0E8EF" stroke-width="2"/><line x1="328.0" y1="188.7" x2="332.3" y2="189.3" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="336.7" y1="189.9" x2="341.0" y2="190.3" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="345.3" y1="190.6" x2="349.7" y2="190.8" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="354.0" y1="190.8" x2="358.3" y2="190.7" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="362.7" y1="190.4" x2="367.0" y2="189.9" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="371.3" y1="189.3" x2="375.7" y2="188.6" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="380.0" y1="187.7" x2="384.3" y2="186.6" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="388.7" y1="185.4" x2="393.0" y2="184.1" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="397.3" y1="182.6" x2="401.7" y2="181.0" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="406.0" y1="179.3" x2="410.3" y2="177.5" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="414.7" y1="175.6" x2="419.0" y2="173.5" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="423.3" y1="171.5" x2="427.7" y2="169.3" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="432.0" y1="167.1" x2="436.3" y2="164.8" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><line x1="440.7" y1="162.6" x2="445.0" y2="160.3" stroke="#C3CFDA" stroke-width="5" stroke-linecap="round"/><polyline points="133.0,197.7 137.3,195.4 141.7,193.2 146.0,190.9 150.3,188.7 154.7,186.5 159.0,184.5 163.3,182.4 167.7,180.5 172.0,178.7 176.3,177.0 180.7,175.4 185.0,173.9 189.3,172.6 193.7,171.4 198.0,170.3 202.3,169.4 206.7,168.7 211.0,168.1 215.3,167.6 219.7,167.3 224.0,167.2 228.3,167.2 232.7,167.4 237.0,167.7 241.3,168.1 245.7,168.7 250.0,169.3 254.3,170.1 258.7,171.0 263.0,172.0 267.3,173.0 271.7,174.1 276.0,175.3 280.3,176.5 284.7,177.8 289.0,179.0 293.3,180.2 297.7,181.5 302.0,182.7 306.3,183.9 310.7,185.0 315.0,186.0 319.3,187.0 323.7,187.9 326.4,188.4" fill="none" stroke="#5BA4D6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="133.0" cy="197.7" r="9" fill="#333745"/><circle cx="133.0" cy="197.7" r="6.5" fill="#6DBE2A"/><line x1="445.0" y1="160.3" x2="445.0" y2="134.3" stroke="#333745" stroke-width="3" stroke-linecap="round"/><polygon points="446.0,134.3 462.0,140.3 446.0,146.3" fill="#E5493A"/><circle cx="326.4" cy="188.4" r="14" fill="#E5493A"/><circle cx="326.4" cy="188.4" r="11" fill="#fff"/><path d="M321.4 183.4 L331.4 193.4 M321.4 193.4 L331.4 183.4" stroke="#E5493A" stroke-width="3" stroke-linecap="round"/><text x="111" y="250" text-anchor="start" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="800" font-size="14" fill="#5A6D7C" >Đi được</text><text x="290" y="252" text-anchor="middle" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="900" font-size="30" fill="#3B80B8" >62%</text><text x="469" y="250" text-anchor="end" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="800" font-size="14" fill="#5A6D7C" >01:24 · 1 lần đâm</text><rect x="100.0" y="275" width="118.66666666666667" height="84" rx="14" fill="#FFFFFF" fill-opacity=".94" stroke="#E0E8EF" stroke-width="2"/><g transform="translate(145.33333333333334 290.0) scale(0.5833333333333334)"><path d="M24 4l6.1 12.6 13.9 1.9-10.1 9.7 2.5 13.8L24 35.5 11.6 42l2.5-13.8L4 18.5l13.9-1.9z" fill="#F1EEE4" stroke="#B9C2C9" stroke-width="3" stroke-linejoin="round" stroke-dasharray="4 3"/></g><text x="159.33333333333334" y="332" text-anchor="middle" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="800" font-size="12" fill="#7A8794" >Không đâm tường</text><rect x="230.66666666666669" y="275" width="118.66666666666667" height="84" rx="14" fill="#FFFFFF" fill-opacity=".94" stroke="#E0E8EF" stroke-width="2"/><g transform="translate(276.0 290.0) scale(0.5833333333333334)"><path d="M24 4l6.1 12.6 13.9 1.9-10.1 9.7 2.5 13.8L24 35.5 11.6 42l2.5-13.8L4 18.5l13.9-1.9z" fill="#FFD166" stroke="#333745" stroke-width="3" stroke-linejoin="round" /></g><text x="290.0" y="332" text-anchor="middle" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="800" font-size="12" fill="#B07A0A" >Hoàn thành</text><text x="290.0" y="346" text-anchor="middle" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="800" font-size="12" fill="#B07A0A" >≤ 24 bước</text><rect x="361.33333333333337" y="275" width="118.66666666666667" height="84" rx="14" fill="#FFFFFF" fill-opacity=".94" stroke="#E0E8EF" stroke-width="2"/><g transform="translate(406.6666666666667 290.0) scale(0.5833333333333334)"><path d="M24 4l6.1 12.6 13.9 1.9-10.1 9.7 2.5 13.8L24 35.5 11.6 42l2.5-13.8L4 18.5l13.9-1.9z" fill="#F1EEE4" stroke="#B9C2C9" stroke-width="3" stroke-linejoin="round" stroke-dasharray="4 3"/></g><text x="420.6666666666667" y="332" text-anchor="middle" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="800" font-size="12" fill="#7A8794" >Dưới 01:30</text><rect x="100" y="371" width="380" height="98" rx="14" fill="#FFFFFF" fill-opacity=".94" stroke="#E0E8EF" stroke-width="2"/><g transform="translate(162.0 381) scale(0.9 0.8615384615384616) translate(-0.0 1.0) " >
 
-  <!-- NỀN TRANG VỞ VẪN HIỆN DIỆN MỜ PHÍA SAU -->
-  <rect width="1080" height="1920" fill="#FAF5EB"/>
-  <rect width="1080" height="1920" fill="url(#bgGridFail)"/>
-  <line x1="90" y1="0" x2="90" y2="1920" stroke="#D84444" stroke-width="3.5"/>
-  <rect width="1080" height="1920" fill="#2E1B1B" fill-opacity="0.35"/>
+  <rect x="3" y="0.5" width="14" height="6.5" rx="3" fill="#F4A6B7" stroke="#333745" stroke-width="1.1"/>
+  <rect x="3" y="7" width="14" height="6" fill="#C3CBD2" stroke="#333745" stroke-width="1.1"/>
+  <rect x="3" y="13" width="14" height="34" fill="#FFD166" stroke="#333745" stroke-width="1.1"/>
+  <rect x="9" y="13" width="3" height="34" fill="#EAA023"/>
+  <path d="M5.6 16 V44" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
+  <polygon points="3,47 17,47 10,60" fill="#F6DDB0" stroke="#333745" stroke-width="1.1" stroke-linejoin="round"/>
+  <polygon points="7.7,55.2 12.3,55.2 10,60" fill="#333745"/>
+</g><g transform="translate(200.0 381) scale(0.9 0.8615384615384616) translate(-0.0 1.0) " >
 
-  <!-- ================= MẢNH GIẤY NHÁP GAME OVER (HƠI XOAY NHẸ -1 ĐỘ TẠO ĐỘ THẬT) ================= -->
-  <g transform="translate(115, 390) rotate(-1 425 560)">
+  <rect x="3" y="0.5" width="14" height="6.5" rx="3" fill="#F4A6B7" stroke="#333745" stroke-width="1.1"/>
+  <rect x="3" y="7" width="14" height="6" fill="#C3CBD2" stroke="#333745" stroke-width="1.1"/>
+  <rect x="3" y="13" width="14" height="34" fill="#FFD166" stroke="#333745" stroke-width="1.1"/>
+  <rect x="9" y="13" width="3" height="34" fill="#EAA023"/>
+  <path d="M5.6 16 V44" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
+  <polygon points="3,47 17,47 10,60" fill="#F6DDB0" stroke="#333745" stroke-width="1.1" stroke-linejoin="round"/>
+  <polygon points="7.7,55.2 12.3,55.2 10,60" fill="#333745"/>
+</g><g transform="translate(238.0 381) scale(0.9 0.8615384615384616) translate(-0.0 1.0) " >
 
-    <!-- TỜ GIẤY CÓ BÓNG NỔI TỰ NHIÊN -->
-    <g filter="url(#failPaperShadow)">
-      <!-- Màu giấy hơi ố xám nhạt thể hiện bài thi hỏng -->
-      <rect width="850" height="1120" rx="18" fill="#FDFBF7"/>
-      
-      <!-- Lưới ngang mờ -->
-      <g stroke="#BAC7CF" stroke-width="1" opacity="0.4">
-        <line x1="60" y1="200" x2="790" y2="200"/><line x1="60" y1="270" x2="790" y2="270"/>
-        <line x1="60" y1="340" x2="790" y2="340"/><line x1="60" y1="410" x2="790" y2="410"/>
-        <line x1="60" y1="480" x2="790" y2="480"/><line x1="60" y1="550" x2="790" y2="550"/>
-        <line x1="60" y1="620" x2="790" y2="620"/><line x1="60" y1="690" x2="790" y2="690"/>
-      </g>
-
-      <!-- Lề đỏ nét đứt -->
-      <line x1="75" y1="0" x2="75" y2="1120" stroke="#D84444" stroke-width="2.5" stroke-dasharray="6 4"/>
-      <!-- Viền mực đỏ quanh mép giấy nháp -->
-      <rect width="850" height="1120" rx="18" fill="none" stroke="#D84444" stroke-width="3"/>
-    </g>
-
-    <!-- GHIM KẸP GIẤY KIM LOẠI Ở GÓC TRÊN TRÁI -->
-    <g transform="translate(100, -15)">
-      <path d="M 0 45 L 0 10 A 12 12 0 0 1 24 10 L 24 55 A 18 18 0 0 1 -12 55 L -12 18" 
-            fill="none" stroke="#7A8F9B" stroke-width="4.5" stroke-linecap="round"/>
-    </g>
-
-    <!-- CON DẤU MỘC VUÔNG MỰC ĐỎ CHẤM THI: SỐ THỬ THÁCH ĐÃ HOÀN THÀNH -->
-    <g transform="translate(615, 85) rotate(-8)">
-      <rect x="0" y="0" width="175" height="90" rx="10" fill="#D84444" fill-opacity="0.08" stroke="#D84444" stroke-width="3.5" stroke-dasharray="6 3"/>
-      <text x="87" y="38" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="900" fill="#D84444" letter-spacing="1">THỬ THÁCH ĐÃ ĐẠT</text>
-      <text x="87" y="74" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="32" font-weight="900" fill="#D84444">1 / 3 ★</text>
-    </g>
-
-    <!-- TIÊU ĐỀ BÚT MỰC ĐỎ GẠCH CHÉO -->
-    <g transform="translate(120, 95)">
-      <text x="0" y="0" font-family="'Segoe UI', sans-serif" font-size="40" font-weight="900" fill="#D84444">ĐÂM VÀO TƯỜNG VÔ HÌNH!</text>
-      <text x="0" y="36" font-family="sans-serif" font-size="22" font-weight="700" fill="#718B9E">Chạm tường một lần là kết thúc màn chơi — đã đi được 75% mê cung</text>
-    </g>
-
-    <!-- DẤU X ĐỎ TO VẼ BẰNG BÚT DẠ -->
-    <g transform="translate(425, 230)">
-      <circle cx="0" cy="0" r="44" fill="#FEE2E2" stroke="#D84444" stroke-width="3"/>
-      <path d="M -20 -20 L 20 20 M 20 -20 L -20 20" stroke="#D84444" stroke-width="6" stroke-linecap="round"/>
-    </g>
-
-    <!-- BẢNG TỔNG KẾT: 3 THỬ THÁCH CỦA MÀN + TRẠNG THÁI HOÀN THÀNH -->
-    <g transform="translate(115, 360)">
-      <text x="0" y="0" font-family="sans-serif" font-size="24" font-weight="800" fill="#5A6D7C">🎯 THỬ THÁCH CỦA MÀN:</text>
-      <text x="640" y="0" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="28" font-weight="900" fill="#B45309">1 / 3 ★</text>
-
-      <!-- Thử thách 1: đâm tường -> chưa đạt -->
-      <g transform="translate(0, 60)">
-        <use href="#star-fail" x="0" y="0"/>
-        <text x="52" y="26" font-family="sans-serif" font-size="24" font-weight="700" fill="#5A6D7C">Không đâm vào tường</text>
-        <text x="640" y="26" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="900" fill="#D84444">CHƯA ĐẠT</text>
-      </g>
-
-      <!-- Thử thách 2: vẫn giữ được -> đạt -->
-      <g transform="translate(0, 130)">
-        <use href="#star-pass" x="0" y="0"/>
-        <text x="52" y="26" font-family="sans-serif" font-size="24" font-weight="700" fill="#5A6D7C">Đi không quá 15 bước</text>
-        <text x="640" y="26" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="900" fill="#2E7D32">✓ ĐẠT</text>
-      </g>
-
-      <!-- Thử thách 3: chưa kịp về đích -> chưa đạt -->
-      <g transform="translate(0, 200)">
-        <use href="#star-fail" x="0" y="0"/>
-        <text x="52" y="26" font-family="sans-serif" font-size="24" font-weight="700" fill="#5A6D7C">Về đích dưới 45 giây</text>
-        <text x="640" y="26" text-anchor="end" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="900" fill="#D84444">CHƯA ĐẠT</text>
-      </g>
-    </g>
-
-    <!-- MIẾNG GIẤY DÁN STICKER VÀNG CỨU NGUY (HỒI SINH) -->
-    <g transform="translate(115, 620)" style="cursor: pointer;">
-      <rect width="640" height="88" rx="14" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2.5"/>
-      <!-- Băng keo dán mép sticker -->
-      <rect x="20" y="-8" width="50" height="18" fill="#E6DFCC" opacity="0.8"/>
-      <text x="45" y="52" font-family="sans-serif" font-size="22" font-weight="800" fill="#B45309">🎬 Quay lại bước trước đó</text>
-      <rect x="470" y="18" width="145" height="52" rx="12" fill="#F59E0B"/>
-      <text x="542" y="51" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="900" fill="#FFFFFF">HỒI SINH</text>
-    </g>
-
-    <!-- CỤM NÚT DẠNG THẺ GIẤY Ở CHÂN TRANG -->
-    <g transform="translate(115, 780)">
-      <!-- Thoát ra menu -->
-      <g transform="translate(0, 0)" style="cursor: pointer;">
-        <rect width="210" height="96" rx="16" fill="#FEFDFA" stroke="#BAC7CF" stroke-width="2.5"/>
-        <text x="105" y="58" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="800" fill="#718B9E">VỀ MENU</text>
-      </g>
-
-      <!-- Nút Thử lại (Sticker màu đỏ đậm bút mực) -->
-      <g transform="translate(240, 0)" style="cursor: pointer;">
-        <rect width="400" height="96" rx="18" fill="#D84444" stroke="#A72828" stroke-width="3"/>
-        <line x1="30" y1="0" x2="30" y2="96" stroke="#FAF5EB" stroke-width="2.5" opacity="0.6"/>
-        <text x="220" y="58" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="26" font-weight="900" fill="#FFFFFF" letter-spacing="1">THỬ LẠI TRANG NÀY ⟲</text>
-      </g>
-    </g>
-
-    <text x="425" y="960" text-anchor="middle" font-family="sans-serif" font-size="18" font-style="italic" fill="#718B9E">
-      "Chạm tường vô hình là thua ngay — hãy dùng Ghi Nhớ để cắm cờ các cạnh nghi ngờ!"
-    </text>
-  </g>
+  <rect x="3" y="0.5" width="14" height="6.5" rx="3" fill="#F4A6B7" stroke="#333745" stroke-width="1.1"/>
+  <rect x="3" y="7" width="14" height="6" fill="#C3CBD2" stroke="#333745" stroke-width="1.1"/>
+  <rect x="3" y="13" width="14" height="34" fill="#FFD166" stroke="#333745" stroke-width="1.1"/>
+  <rect x="9" y="13" width="3" height="34" fill="#EAA023"/>
+  <path d="M5.6 16 V44" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
+  <polygon points="3,47 17,47 10,60" fill="#F6DDB0" stroke="#333745" stroke-width="1.1" stroke-linejoin="round"/>
+  <polygon points="7.7,55.2 12.3,55.2 10,60" fill="#333745"/>
+</g><g transform="translate(276.0 381) scale(0.9 0.8615384615384616) translate(-0.0 1.0) " >
+<path d="M3 1 H17 V47 L10 60 L3 47 Z" fill="none" stroke="#B6C3CB" stroke-width="1.4" stroke-dasharray="3 2.5"/>
+</g><rect x="285.0" y="368" width="28" height="16" rx="8" fill="#E5493A" stroke="#fff" stroke-width="2"/><text x="299.0" y="379.5" text-anchor="middle" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="900" font-size="10" fill="#fff" >−1</text><g transform="translate(314.0 381) scale(0.9 0.8615384615384616) translate(-0.0 1.0) " >
+<path d="M3 1 H17 V47 L10 60 L3 47 Z" fill="none" stroke="#B6C3CB" stroke-width="1.4" stroke-dasharray="3 2.5"/>
+</g><text x="247" y="455" text-anchor="middle" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="700" font-size="12" fill="#5B6B75" >Bút mới sau 29:12</text><rect x="393" y="378" width="2" height="84" fill="#C7D1DB"/><text x="437" y="430" text-anchor="middle" font-family="Nunito, 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif" font-weight="900" font-size="26" fill="#3B80B8" >3/5</text><g transform="translate(99 480) scale(1.0 1.0) translate(-0.0 -0.0) " >
+<rect x="1.25" y="9.25" width="107.5" height="62" rx="13" fill="#1E2830" fill-opacity="0.16"/><rect x="1.25" y="6.25" width="107.5" height="62" rx="13" fill="#7D8D9A"/><rect x="1.25" y="1.25" width="107.5" height="62" rx="13" fill="#A9B6C1" stroke="#D6DEE5" stroke-width="2.5"/>
+</g><g transform="translate(136 495) scale(0.5625 0.5625) translate(-0.0 -0.0) " >
+  <g stroke="#333745" stroke-width="13" stroke-linejoin="round" stroke-linecap="round" fill="#333745"><path d="M12 32 L32 14 L52 32"/><path d="M18 30 V50 H46 V30"/></g>
+  <g stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M12 32 L32 14 L52 32"/><path d="M18 30 V50 H46 V30"/></g>
+</g><g transform="translate(219 480) scale(1.0 1.0) translate(-0.0 -0.0) " >
+<rect x="1.25" y="9.25" width="259.5" height="62" rx="13" fill="#1E2830" fill-opacity="0.16"/><rect x="1.25" y="6.25" width="259.5" height="62" rx="13" fill="#4A9418"/><rect x="1.25" y="1.25" width="259.5" height="62" rx="13" fill="#6DBE2A" stroke="#A8DC72" stroke-width="2.5"/>
+</g><g transform="translate(332 495) scale(0.5625 0.5625) translate(-0.0 -0.0) " >
+  <path d="M22 14 L50 32 L22 50 Z" fill="#333745" stroke="#333745" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M22 14 L50 32 L22 50 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+</g>
 </svg>

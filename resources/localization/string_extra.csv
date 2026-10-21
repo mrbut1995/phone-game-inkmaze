@@ -1678,3 +1678,5 @@ STR_LIFE_EMPTY_RECHARGE,"Next life in {0}","Lượt kế tiếp sau {0}"
 STR_LIFE_EMPTY_RECHARGE_FULL,"Lives are full","Lượt chơi đã đầy"
 STR_LIFE_BTN_EXIT,"EXIT","THOÁT RA"
 STR_LIFE_BTN_SHOP,"SHOP","CỬA HÀNG"
+STR_GO_WALKED,Đi được,Đi được
+STR_GO_STATS,{0} · {1} lần đâm,{0} · {1} lần đâm

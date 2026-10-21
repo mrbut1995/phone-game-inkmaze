@@ -1,686 +1,979 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://b2tlnr58h4d6u" path="res://scripts/scenes/settings.gd" id="2_script"]
-[ext_resource uid="uid://dxo4cid632xo" type="Texture2D" path="res://assets/images-png/settings/settings_panel.png" id="3_panel"]
-[ext_resource uid="uid://c0h3fpd7dw73h" type="Texture2D" path="res://assets/images-png/settings/section_chip.png" id="4_chip"]
-[ext_resource uid="uid://duqcleabqujwd" type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="5_divider"]
-[ext_resource uid="uid://4kpoxtt12gwc" type="Texture2D" path="res://assets/images-png/common/icon_chevron.png" id="6_chevron"]
-[ext_resource uid="uid://ruoaaeu82tl0" type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="8_washi"]
-[ext_resource uid="uid://blmy5cbx5kmeg" type="Texture2D" path="res://assets/images-png/popups/paper_clip.png" id="9_clip"]
-[ext_resource uid="uid://bt4mb18wc2rf2" type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="10_stamp"]
-[ext_resource uid="uid://yssg5du4e4fc" type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="11_back_n"]
-[ext_resource uid="uid://c8fvwpvick2hx" type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="12_back_p"]
-[ext_resource uid="uid://btdcp0w0yafgs" type="Texture2D" path="res://assets/images-png/btn_header_back_focus.png" id="13_back_f"]
-[ext_resource uid="uid://dq7236j6ybsew" type="Texture2D" path="res://assets/images-png/btn_header_back_disabled.png" id="14_back_d"]
-[ext_resource type="Theme" uid="uid://car0jeqlr0xi" path="res://resources/settings/theme_hslider.tres" id="15_slider_theme"]
-[ext_resource uid="uid://wpidjs6dq5qh" type="Texture2D" path="res://assets/images-png/common/checkbox_normal.png" id="16_chk_n"]
-[ext_resource uid="uid://dtotkcc3xdr4i" type="Texture2D" path="res://assets/images-png/common/checkbox_checked.png" id="17_chk_on"]
-[ext_resource uid="uid://ctamkm1ntnavc" type="Texture2D" path="res://assets/images-png/common/checkbox_disabled.png" id="18_chk_off"]
-[ext_resource uid="uid://co6rqsr2wfdqi" type="Texture2D" path="res://assets/images-png/settings/dropdown_normal.png" id="19_dd_n"]
-[ext_resource uid="uid://p8qbebxngyrx" type="Texture2D" path="res://assets/images-png/settings/dropdown_pressed.png" id="20_dd_p"]
-[ext_resource uid="uid://ce1uu3m65yc4s" type="Texture2D" path="res://assets/images-png/settings/dropdown_focus.png" id="21_dd_f"]
-[ext_resource uid="uid://wg626xhx5fkj" type="Texture2D" path="res://assets/images-png/settings/dropdown_disabled.png" id="22_dd_dis"]
-[ext_resource uid="uid://ct8opnm1mvbbh" type="Texture2D" path="res://assets/images-png/settings/row_button_normal.png" id="23_row_n"]
-[ext_resource uid="uid://htv0o4u2u0a2" type="Texture2D" path="res://assets/images-png/settings/row_button_pressed.png" id="24_row_p"]
-[ext_resource uid="uid://b584v4pnnb50u" type="Texture2D" path="res://assets/images-png/settings/row_button_focus.png" id="25_row_f"]
-[ext_resource uid="uid://c4dakww170cnp" type="Texture2D" path="res://assets/images-png/settings/row_button_disabled.png" id="26_row_dis"]
-[ext_resource uid="uid://ckmyiv3u3ihk6" type="Texture2D" path="res://assets/images-png/settings/row_button_danger_normal.png" id="27_dan_n"]
-[ext_resource uid="uid://hfy50l3s1y3x" type="Texture2D" path="res://assets/images-png/settings/row_button_danger_pressed.png" id="28_dan_p"]
-[ext_resource uid="uid://cabf5hf3lxm5q" type="Texture2D" path="res://assets/images-png/settings/row_button_danger_focus.png" id="29_dan_f"]
-[ext_resource uid="uid://dj767g2ifpxpo" type="Texture2D" path="res://assets/images-png/settings/chip_cloud_connected.png" id="30_cloud"]
-[ext_resource uid="uid://cdiucqykqdjxd" type="Texture2D" path="res://assets/images-png/icons/icon_music.png" id="43_icon_music"]
-[ext_resource uid="uid://c6tck7hsq3e6t" type="Texture2D" path="res://assets/images-png/icons/icon_bell.png" id="44_icon_bell"]
-[ext_resource uid="uid://dsw7s2jf7fc4k" type="Texture2D" path="res://assets/images-png/icons/icon_globe.png" id="45_icon_globe"]
-[ext_resource uid="uid://d17jecucc0du8" type="Texture2D" path="res://assets/images-png/icons/icon_cloud.png" id="46_icon_cloud"]
-[ext_resource uid="uid://c0nhdhr5qww35" type="Texture2D" path="res://assets/images-png/icons/icon_book.png" id="47_icon_book"]
-[ext_resource uid="uid://dr8vki2dcl570" type="Texture2D" path="res://assets/images-png/icons/icon_reset.png" id="48_icon_reset"]
-[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" path="res://scripts/scenes/layout/settings_layout.gd" id="2_layout"]
+[ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="parent"]
+[ext_resource type="Script" uid="uid://blu4gqnjmvqys" path="res://scripts/scenes/layout/settings_layout.gd" id="layout_script"]
+[ext_resource type="Texture2D" uid="uid://dxo4cid632xo" path="res://assets/images-png/settings/settings_panel.png" id="panel"]
+[ext_resource type="Texture2D" uid="uid://bt4mb18wc2rf2" path="res://assets/images-png/main/stamp_version.png" id="stamp"]
+[ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="back_n"]
+[ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="back_p"]
+[ext_resource type="Texture2D" uid="uid://btdcp0w0yafgs" path="res://assets/images-png/btn_header_back_focus.png" id="back_f"]
+[ext_resource type="Texture2D" uid="uid://dq7236j6ybsew" path="res://assets/images-png/btn_header_back_disabled.png" id="back_d"]
+[ext_resource type="Theme" uid="uid://car0jeqlr0xi" path="res://resources/settings/theme_hslider.tres" id="slider_theme"]
+[ext_resource type="Texture2D" uid="uid://co6rqsr2wfdqi" path="res://assets/images-png/settings/dropdown_normal.png" id="dd_n"]
+[ext_resource type="Texture2D" uid="uid://p8qbebxngyrx" path="res://assets/images-png/settings/dropdown_pressed.png" id="dd_p"]
+[ext_resource type="Texture2D" uid="uid://ce1uu3m65yc4s" path="res://assets/images-png/settings/dropdown_focus.png" id="dd_f"]
+[ext_resource type="Texture2D" uid="uid://wg626xhx5fkj" path="res://assets/images-png/settings/dropdown_disabled.png" id="dd_dis"]
+[ext_resource type="Texture2D" uid="uid://ct8opnm1mvbbh" path="res://assets/images-png/settings/row_button_normal.png" id="row_n"]
+[ext_resource type="Texture2D" uid="uid://htv0o4u2u0a2" path="res://assets/images-png/settings/row_button_pressed.png" id="row_p"]
+[ext_resource type="Texture2D" uid="uid://b584v4pnnb50u" path="res://assets/images-png/settings/row_button_focus.png" id="row_f"]
+[ext_resource type="Texture2D" uid="uid://c4dakww170cnp" path="res://assets/images-png/settings/row_button_disabled.png" id="row_dis"]
+[ext_resource type="Texture2D" uid="uid://ckmyiv3u3ihk6" path="res://assets/images-png/settings/row_button_danger_normal.png" id="dan_n"]
+[ext_resource type="Texture2D" uid="uid://hfy50l3s1y3x" path="res://assets/images-png/settings/row_button_danger_pressed.png" id="dan_p"]
+[ext_resource type="Texture2D" uid="uid://cabf5hf3lxm5q" path="res://assets/images-png/settings/row_button_danger_focus.png" id="dan_f"]
+[ext_resource type="Texture2D" uid="uid://dj767g2ifpxpo" path="res://assets/images-png/settings/chip_cloud_connected.png" id="cloud_chip"]
+[ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="clip"]
+[ext_resource uid="uid://d1jsebin0vqrg" type="Texture2D" path="res://assets/images-png/ranking/banner_title.png" id="banner"]
+[ext_resource uid="uid://d0va6pi8ee73v" type="Texture2D" path="res://assets/images-png/ranking/hole.png" id="hole"]
+[ext_resource uid="uid://u4wp6333bmx4" type="Texture2D" path="res://assets/images-png/settings/tile_off.png" id="tile_off"]
+[ext_resource uid="uid://cdwll1mtp16jd" type="Texture2D" path="res://assets/images-png/settings/tile_on.png" id="tile_on"]
+[ext_resource uid="uid://cek0qnclhuman" type="Texture2D" path="res://assets/images-png/settings/ic_music.png" id="ic_music"]
+[ext_resource uid="uid://r7mbmflni582" type="Texture2D" path="res://assets/images-png/settings/ic_bell.png" id="ic_bell"]
+[ext_resource uid="uid://bodw10apcsv5f" type="Texture2D" path="res://assets/images-png/settings/ic_vibrate.png" id="ic_vibrate"]
+[ext_resource uid="uid://dlfudwrly6yr7" type="Texture2D" path="res://assets/images-png/settings/ic_mark.png" id="ic_mark"]
+[ext_resource uid="uid://bh7rj66y5vqxt" type="Texture2D" path="res://assets/images-png/settings/ic_glow.png" id="ic_glow"]
+[ext_resource uid="uid://8jqvcdi06hwb" type="Texture2D" path="res://assets/images-png/settings/ic_cloud.png" id="ic_cloud"]
+[ext_resource uid="uid://2cn7csaxifl3" type="Texture2D" path="res://assets/images-png/settings/ic_globe.png" id="ic_globe"]
+[ext_resource uid="uid://c0sentmb65ada" type="Texture2D" path="res://assets/images-png/settings/ic_book.png" id="ic_book"]
+[ext_resource uid="uid://dbegbtl7rlpf3" type="Texture2D" path="res://assets/images-png/settings/ic_info.png" id="ic_info"]
+[ext_resource uid="uid://ff2cgvot430q" type="Texture2D" path="res://assets/images-png/settings/ic_reset.png" id="ic_reset"]
 
-[node name="Portrait" node_paths=PackedStringArray("btn_back", "content_root", "bgm_slider", "bgm_value", "sfx_slider", "sfx_value", "chk_haptic", "chk_auto_mark", "chk_glow", "btn_language", "lbl_language", "lbl_player_id", "btn_guide", "btn_credits", "btn_reset", "lbl_version") instance=ExtResource("1_parent")]
-script = ExtResource("2_layout")
+[node name="Portrait" node_paths=PackedStringArray("btn_back", "content_root", "bgm_slider", "bgm_value", "sfx_slider", "sfx_value", "chk_haptic", "chk_auto_mark", "chk_glow", "btn_language", "lbl_language", "lbl_player_id", "btn_guide", "btn_credits", "btn_reset", "lbl_version") instance=ExtResource("parent")]
+script = ExtResource("layout_script")
 btn_back = NodePath("TopBar/Back")
 content_root = NodePath("Panel/Content")
-bgm_slider = NodePath("Panel/Content/Audio/BgmRow/Slider")
-bgm_value = NodePath("Panel/Content/Audio/BgmRow/Value")
-sfx_slider = NodePath("Panel/Content/Audio/SfxRow/Slider")
-sfx_value = NodePath("Panel/Content/Audio/SfxRow/Value")
-chk_haptic = NodePath("Panel/Content/Board/HapticRow/Check")
-chk_auto_mark = NodePath("Panel/Content/Board/AutoMarkRow/Check")
-chk_glow = NodePath("Panel/Content/Board/GlowRow/Check")
-btn_language = NodePath("Panel/Content/Language/LangRow/LangButton")
-lbl_language = NodePath("Panel/Content/Language/LangRow/LangButton/LangValue")
-lbl_player_id = NodePath("Panel/Content/Language/PlayerRow/PlayerIdValue")
+bgm_slider = NodePath("Panel/Content/Faders/BgmTile/SliderBox/Slider")
+bgm_value = NodePath("Panel/Content/Faders/BgmTile/Value")
+sfx_slider = NodePath("Panel/Content/Faders/SfxTile/SliderBox/Slider")
+sfx_value = NodePath("Panel/Content/Faders/SfxTile/Value")
+chk_haptic = NodePath("Panel/Content/Toggles/Haptic")
+chk_auto_mark = NodePath("Panel/Content/Toggles/AutoMark")
+chk_glow = NodePath("Panel/Content/Toggles/Glow")
+btn_language = NodePath("Panel/Content/LangCard/Row/LangButton")
+lbl_language = NodePath("Panel/Content/LangCard/Row/LangButton/LangValue")
+lbl_player_id = NodePath("Panel/Content/Footer/PlayerRow/PlayerIdValue")
 btn_guide = NodePath("Panel/Content/Actions/Guide")
 btn_credits = NodePath("Panel/Content/Actions/Credits")
 btn_reset = NodePath("Panel/Content/Actions/Reset")
 lbl_version = NodePath("Panel/Content/Footer/Stamp/Label")
 
-[node name="TopBar" parent="." index="1" unique_id=1720649669]
+[node name="TopBar" parent="." index="0"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.034
-anchor_top = 0.033770833
-anchor_right = 0.961
-anchor_bottom = 0.07877084
-offset_top =  -0.42
-offset_bottom =  -0.12
-metadata/_edit_use_anchors_ = true
+anchor_left = 0.0444
+anchor_top = 0.025
+anchor_right = 0.9556
+anchor_bottom = 0.075
+offset_left = 0
+offset_top = 0
+offset_right = 0
+offset_bottom = 0
 
-[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=305592045]
+[node name="Back" type="TextureButton" parent="TopBar" index="0"]
+custom_minimum_size = Vector2(48, 53)
 layout_mode = 2
-texture_normal = ExtResource("11_back_n")
-texture_pressed = ExtResource("12_back_p")
-texture_hover = ExtResource("11_back_n")
-texture_disabled = ExtResource("14_back_d")
-texture_focused = ExtResource("13_back_f")
+size_flags_vertical = 4
+texture_normal = ExtResource("back_n")
+texture_pressed = ExtResource("back_p")
+texture_hover = ExtResource("back_n")
+texture_disabled = ExtResource("back_d")
+texture_focused = ExtResource("back_f")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="Title" type="Label" parent="TopBar" index="1" unique_id=27927468]
+[node name="Spacer" type="Control" parent="TopBar" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "STR_BTN_SETTINGS"
-theme_type_variation = &"GameTitle"
-horizontal_alignment = 1
+mouse_filter = 2
 
-[node name="Panel" type="TextureRect" parent="." index="2" unique_id=143178994]
+[node name="Panel" type="NinePatchRect" parent="." index="1"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.074074075
-anchor_top = 0.09895833
-anchor_right = 0.9259259
-anchor_bottom = 0.90625
+anchor_left = 0.0519
+anchor_top = 0.1167
+anchor_right = 0.9259
+anchor_bottom = 0.9708
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_panel")
-metadata/_edit_use_anchors_ = true
+texture = ExtResource("panel")
+patch_margin_left = 40
+patch_margin_top = 60
+patch_margin_right = 24
+patch_margin_bottom = 24
 
-[node name="Washi" type="TextureRect" parent="Panel" index="0" unique_id=1260349670]
-layout_mode = 0
-offset_left =  179
-offset_top =  -7
-offset_right =  292
-offset_bottom =  20
-texture = ExtResource("8_washi")
+[node name="Hole1" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0.12
+anchor_right = 0
+anchor_bottom = 0.12
+offset_left = 11
+offset_top = -6
+offset_right = 23
+offset_bottom = 6
+mouse_filter = 2
+texture = ExtResource("hole")
 
-[node name="Clip" type="TextureRect" parent="Panel" index="1" unique_id=1260349671]
-layout_mode = 0
-offset_left =  51.5
-offset_top =  -5
-offset_right =  74.5
-offset_bottom =  35.5
-texture = ExtResource("9_clip")
+[node name="Hole2" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0.3
+anchor_right = 0
+anchor_bottom = 0.3
+offset_left = 11
+offset_top = -6
+offset_right = 23
+offset_bottom = 6
+mouse_filter = 2
+texture = ExtResource("hole")
 
-[node name="Content" type="VBoxContainer" parent="Panel" index="2" unique_id=1210858816]
+[node name="Hole3" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0.48
+anchor_right = 0
+anchor_bottom = 0.48
+offset_left = 11
+offset_top = -6
+offset_right = 23
+offset_bottom = 6
+mouse_filter = 2
+texture = ExtResource("hole")
+
+[node name="Hole4" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0.66
+anchor_right = 0
+anchor_bottom = 0.66
+offset_left = 11
+offset_top = -6
+offset_right = 23
+offset_bottom = 6
+mouse_filter = 2
+texture = ExtResource("hole")
+
+[node name="Hole5" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0.84
+anchor_right = 0
+anchor_bottom = 0.84
+offset_left = 11
+offset_top = -6
+offset_right = 23
+offset_bottom = 6
+mouse_filter = 2
+texture = ExtResource("hole")
+
+[node name="Content" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left =  59
-offset_top =  28
-offset_right =  -44
-offset_bottom =  -104
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation =  8
+offset_left = 52
+offset_top = 46
+offset_right = -32
+offset_bottom = -26
+theme_override_constants/separation = 12
 
-[node name="Header" type="VBoxContainer" parent="Panel/Content" index="0" unique_id=1210858817]
+[node name="Faders" type="HBoxContainer" parent="Panel/Content"]
 layout_mode = 2
-theme_override_constants/separation =  0
+theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="Panel/Content/Header" index="0" unique_id=1210858818]
+[node name="BgmTile" type="NinePatchRect" parent="Panel/Content/Faders"]
+custom_minimum_size = Vector2(0, 222)
 layout_mode = 2
-text = "STR_SETTINGS_SUBTITLE_TITLE"
-theme_type_variation = &"SettingsTitle"
+size_flags_horizontal = 3
+mouse_filter = 2
+texture = ExtResource("tile_off")
+patch_margin_left = 18
+patch_margin_top = 18
+patch_margin_right = 18
+patch_margin_bottom = 22
 
-[node name="Subtitle" type="Label" parent="Panel/Content/Header" index="1" unique_id=1210858819]
-layout_mode = 2
-text = "STR_SETTINGS_SUBTITLE_DESC"
-theme_type_variation = &"SettingsSubtitle"
-
-[node name="Audio" type="VBoxContainer" parent="Panel/Content" index="1" unique_id=126270710]
-layout_mode = 2
-theme_override_constants/separation =  5
-
-[node name="SectionChip" type="TextureRect" parent="Panel/Content/Audio" index="0" unique_id=1392439238]
-custom_minimum_size =  Vector2(70, 14)
-layout_mode = 2
-size_flags_horizontal = 0
-texture = ExtResource("4_chip")
-
-[node name="Label" type="Label" parent="Panel/Content/Audio/SectionChip" index="0" unique_id=790885896]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Faders/BgmTile"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_SETTINGS_AUDIO_SECTION"
-theme_type_variation = &"SettingsSection"
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -17
+offset_top = 14
+offset_right = 17
+offset_bottom = 48
+mouse_filter = 2
+texture = ExtResource("ic_music")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="Panel/Content/Faders/BgmTile"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 0
+offset_top = 52
+offset_right = 0
+offset_bottom = 82
+theme_type_variation = &"SettingsValue"
+theme_override_colors/font_color = Color(0.1843, 0.4667, 0.6471, 1)
+theme_override_font_sizes/font_size = 22
+text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
 
-[node name="BgmRow" type="HBoxContainer" parent="Panel/Content/Audio" index="1" unique_id=2043596894]
-layout_mode = 2
-theme_override_constants/separation =  5
+[node name="SliderBox" type="Control" parent="Panel/Content/Faders/BgmTile"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -15
+offset_top = 88
+offset_right = 15
+offset_bottom = 188
+mouse_filter = 2
 
-[node name="Icon" type="TextureRect" parent="Panel/Content/Audio/BgmRow" index="0" unique_id=361251387]
-custom_minimum_size =  Vector2(17, 17)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("43_icon_music")
-
-[node name="Slider" type="HSlider" parent="Panel/Content/Audio/BgmRow" index="1" unique_id=2043596895]
-custom_minimum_size =  Vector2(180, 20)
-layout_mode = 2
-theme = ExtResource("15_slider_theme")
-theme_override_constants/center_grabber =  0.5
+[node name="Slider" type="HSlider" parent="Panel/Content/Faders/BgmTile/SliderBox"]
+custom_minimum_size = Vector2(100, 22)
+layout_mode = 0
+offset_left = 4
+offset_top = 100
+offset_right = 104
+offset_bottom = 122
+rotation = -1.5708
+theme = ExtResource("slider_theme")
 max_value = 1.0
 step = 0.05
 
-[node name="Value" type="Label" parent="Panel/Content/Audio/BgmRow" index="2" unique_id=2043596896]
-custom_minimum_size =  Vector2(45, 0)
-layout_mode = 2
-text = "100%"
-theme_type_variation = &"SettingsValue"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Label" type="Label" parent="Panel/Content/Audio/BgmRow" index="3" unique_id=523782966]
-layout_mode = 2
-size_flags_horizontal = 3
+[node name="Name" type="Label" parent="Panel/Content/Faders/BgmTile"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 4
+offset_top = 196
+offset_right = -4
+offset_bottom = 218
+theme_type_variation = &"SettingsRow"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 13
 text = "STR_SETTINGS_BGM"
-theme_type_variation = &"SettingsRow"
+horizontal_alignment = 1
 vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
 
-[node name="SfxRow" type="HBoxContainer" parent="Panel/Content/Audio" index="2" unique_id=2043596897]
+[node name="SfxTile" type="NinePatchRect" parent="Panel/Content/Faders"]
+custom_minimum_size = Vector2(0, 222)
 layout_mode = 2
-theme_override_constants/separation =  5
+size_flags_horizontal = 3
+mouse_filter = 2
+texture = ExtResource("tile_off")
+patch_margin_left = 18
+patch_margin_top = 18
+patch_margin_right = 18
+patch_margin_bottom = 22
 
-[node name="Icon" type="TextureRect" parent="Panel/Content/Audio/SfxRow" index="0" unique_id=648278852]
-custom_minimum_size =  Vector2(17, 17)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("44_icon_bell")
+[node name="Icon" type="TextureRect" parent="Panel/Content/Faders/SfxTile"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -17
+offset_top = 14
+offset_right = 17
+offset_bottom = 48
+mouse_filter = 2
+texture = ExtResource("ic_bell")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Slider" type="HSlider" parent="Panel/Content/Audio/SfxRow" index="1" unique_id=2043596898]
-custom_minimum_size =  Vector2(180, 20)
-layout_mode = 2
-theme = ExtResource("15_slider_theme")
-theme_override_constants/center_grabber =  0.5
+[node name="Value" type="Label" parent="Panel/Content/Faders/SfxTile"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 0
+offset_top = 52
+offset_right = 0
+offset_bottom = 82
+theme_type_variation = &"SettingsValue"
+theme_override_colors/font_color = Color(0.1843, 0.4667, 0.6471, 1)
+theme_override_font_sizes/font_size = 22
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="SliderBox" type="Control" parent="Panel/Content/Faders/SfxTile"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -15
+offset_top = 88
+offset_right = 15
+offset_bottom = 188
+mouse_filter = 2
+
+[node name="Slider" type="HSlider" parent="Panel/Content/Faders/SfxTile/SliderBox"]
+custom_minimum_size = Vector2(100, 22)
+layout_mode = 0
+offset_left = 4
+offset_top = 100
+offset_right = 104
+offset_bottom = 122
+rotation = -1.5708
+theme = ExtResource("slider_theme")
 max_value = 1.0
 step = 0.05
 
-[node name="Value" type="Label" parent="Panel/Content/Audio/SfxRow" index="2" unique_id=2043596899]
-custom_minimum_size =  Vector2(45, 0)
-layout_mode = 2
-text = "100%"
-theme_type_variation = &"SettingsValue"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Label" type="Label" parent="Panel/Content/Audio/SfxRow" index="3" unique_id=523782967]
-layout_mode = 2
-size_flags_horizontal = 3
+[node name="Name" type="Label" parent="Panel/Content/Faders/SfxTile"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 4
+offset_top = 196
+offset_right = -4
+offset_bottom = 218
+theme_type_variation = &"SettingsRow"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 13
 text = "STR_SETTINGS_SFX"
-theme_type_variation = &"SettingsRow"
-vertical_alignment = 1
-
-[node name="Divider1" type="TextureRect" parent="Panel/Content" index="2" unique_id=1260349672]
-custom_minimum_size =  Vector2(0, 2)
-layout_mode = 2
-texture = ExtResource("5_divider")
-expand_mode = 1
-stretch_mode = 1
-
-[node name="Board" type="VBoxContainer" parent="Panel/Content" index="3" unique_id=2006969508]
-layout_mode = 2
-theme_override_constants/separation =  11
-
-[node name="SectionChip" type="TextureRect" parent="Panel/Content/Board" index="0" unique_id=1881797316]
-custom_minimum_size =  Vector2(100, 14)
-layout_mode = 2
-size_flags_horizontal = 0
-texture = ExtResource("4_chip")
-
-[node name="Label" type="Label" parent="Panel/Content/Board/SectionChip" index="0" unique_id=2018529550]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_SETTINGS_BOARD_SECTION"
-theme_type_variation = &"SettingsSection"
 horizontal_alignment = 1
 vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
 
-[node name="HapticRow" type="HBoxContainer" parent="Panel/Content/Board" index="1" unique_id=2006969509]
+[node name="Toggles" type="GridContainer" parent="Panel/Content"]
 layout_mode = 2
-theme_override_constants/separation =  3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 2
 
-[node name="Check" type="TextureButton" parent="Panel/Content/Board/HapticRow" index="0" unique_id=2006969510]
-custom_minimum_size =  Vector2(25, 25)
+[node name="Haptic" type="TextureButton" parent="Panel/Content/Toggles"]
+custom_minimum_size = Vector2(0, 112)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_horizontal = 3
 toggle_mode = true
-texture_normal = ExtResource("16_chk_n")
-texture_pressed = ExtResource("17_chk_on")
-texture_hover = ExtResource("16_chk_n")
-texture_disabled = ExtResource("18_chk_off")
+texture_normal = ExtResource("tile_off")
+texture_pressed = ExtResource("tile_on")
+texture_disabled = ExtResource("tile_off")
 ignore_texture_size = true
+stretch_mode = 0
 
-[node name="Text" type="VBoxContainer" parent="Panel/Content/Board/HapticRow" index="1" unique_id=2006969511]
-layout_mode = 2
-theme_override_constants/separation =  0
+[node name="Icon" type="TextureRect" parent="Panel/Content/Toggles/Haptic"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -17
+offset_top = 12
+offset_right = 17
+offset_bottom = 46
+mouse_filter = 2
+texture = ExtResource("ic_vibrate")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Title" type="Label" parent="Panel/Content/Board/HapticRow/Text" index="0" unique_id=2006969512]
-layout_mode = 2
+[node name="Title" type="Label" parent="Panel/Content/Toggles/Haptic"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 1
+offset_left = 8
+offset_top = 50
+offset_right = -8
+offset_bottom = -12
+theme_type_variation = &"SettingsRow"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 13
 text = "STR_SETTINGS_HAPTIC"
-theme_type_variation = &"SettingsRow"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 0
+mouse_filter = 2
+autowrap_mode = 3
 
-[node name="Desc" type="Label" parent="Panel/Content/Board/HapticRow/Text" index="1" unique_id=2006969513]
+[node name="AutoMark" type="TextureButton" parent="Panel/Content/Toggles"]
+custom_minimum_size = Vector2(0, 112)
 layout_mode = 2
-text = "STR_SETTINGS_HAPTIC_DESC"
-theme_type_variation = &"SettingsDesc"
-
-[node name="AutoMarkRow" type="HBoxContainer" parent="Panel/Content/Board" index="2" unique_id=2006969514]
-layout_mode = 2
-theme_override_constants/separation =  3
-
-[node name="Check" type="TextureButton" parent="Panel/Content/Board/AutoMarkRow" index="0" unique_id=2006969515]
-custom_minimum_size =  Vector2(25, 25)
-layout_mode = 2
-size_flags_vertical = 0
+size_flags_horizontal = 3
 toggle_mode = true
-texture_normal = ExtResource("16_chk_n")
-texture_pressed = ExtResource("17_chk_on")
-texture_hover = ExtResource("16_chk_n")
-texture_disabled = ExtResource("18_chk_off")
+texture_normal = ExtResource("tile_off")
+texture_pressed = ExtResource("tile_on")
+texture_disabled = ExtResource("tile_off")
 ignore_texture_size = true
+stretch_mode = 0
 
-[node name="Text" type="VBoxContainer" parent="Panel/Content/Board/AutoMarkRow" index="1" unique_id=2006969516]
-layout_mode = 2
-theme_override_constants/separation =  0
+[node name="Icon" type="TextureRect" parent="Panel/Content/Toggles/AutoMark"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -17
+offset_top = 12
+offset_right = 17
+offset_bottom = 46
+mouse_filter = 2
+texture = ExtResource("ic_mark")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Title" type="Label" parent="Panel/Content/Board/AutoMarkRow/Text" index="0" unique_id=2006969517]
-layout_mode = 2
+[node name="Title" type="Label" parent="Panel/Content/Toggles/AutoMark"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 1
+offset_left = 8
+offset_top = 50
+offset_right = -8
+offset_bottom = -12
+theme_type_variation = &"SettingsRow"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 13
 text = "STR_SETTINGS_AUTO_MARK_SAFE"
-theme_type_variation = &"SettingsRow"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 0
+mouse_filter = 2
+autowrap_mode = 3
 
-[node name="Desc" type="Label" parent="Panel/Content/Board/AutoMarkRow/Text" index="1" unique_id=2006969518]
+[node name="Glow" type="TextureButton" parent="Panel/Content/Toggles"]
+custom_minimum_size = Vector2(0, 112)
 layout_mode = 2
-text = "STR_SETTINGS_AUTO_MARK_SAFE_DESC"
-theme_type_variation = &"SettingsDesc"
-
-[node name="GlowRow" type="HBoxContainer" parent="Panel/Content/Board" index="3" unique_id=2006969519]
-layout_mode = 2
-theme_override_constants/separation =  3
-
-[node name="Check" type="TextureButton" parent="Panel/Content/Board/GlowRow" index="0" unique_id=2006969520]
-custom_minimum_size =  Vector2(25, 25)
-layout_mode = 2
-size_flags_vertical = 0
+size_flags_horizontal = 3
 toggle_mode = true
-texture_normal = ExtResource("16_chk_n")
-texture_pressed = ExtResource("17_chk_on")
-texture_hover = ExtResource("16_chk_n")
-texture_disabled = ExtResource("18_chk_off")
+texture_normal = ExtResource("tile_off")
+texture_pressed = ExtResource("tile_on")
+texture_disabled = ExtResource("tile_off")
 ignore_texture_size = true
+stretch_mode = 0
 
-[node name="Text" type="VBoxContainer" parent="Panel/Content/Board/GlowRow" index="1" unique_id=2006969521]
-layout_mode = 2
-theme_override_constants/separation =  0
+[node name="Icon" type="TextureRect" parent="Panel/Content/Toggles/Glow"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -17
+offset_top = 12
+offset_right = 17
+offset_bottom = 46
+mouse_filter = 2
+texture = ExtResource("ic_glow")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Title" type="Label" parent="Panel/Content/Board/GlowRow/Text" index="0" unique_id=2006969522]
-layout_mode = 2
+[node name="Title" type="Label" parent="Panel/Content/Toggles/Glow"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 1
+offset_left = 8
+offset_top = 50
+offset_right = -8
+offset_bottom = -12
+theme_type_variation = &"SettingsRow"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 13
 text = "STR_SETTINGS_GLOW"
-theme_type_variation = &"SettingsRow"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 0
+mouse_filter = 2
+autowrap_mode = 3
 
-[node name="Desc" type="Label" parent="Panel/Content/Board/GlowRow/Text" index="1" unique_id=2006969523]
+[node name="Cloud" type="NinePatchRect" parent="Panel/Content/Toggles"]
+custom_minimum_size = Vector2(0, 112)
 layout_mode = 2
-text = "STR_SETTINGS_GLOW_DESC"
-theme_type_variation = &"SettingsDesc"
+size_flags_horizontal = 3
+mouse_filter = 2
+texture = ExtResource("tile_on")
+patch_margin_left = 18
+patch_margin_top = 18
+patch_margin_right = 18
+patch_margin_bottom = 22
 
-[node name="Divider2" type="TextureRect" parent="Panel/Content" index="4" unique_id=1260349673]
-custom_minimum_size =  Vector2(0, 2)
-layout_mode = 2
-texture = ExtResource("5_divider")
+[node name="Icon" type="TextureRect" parent="Panel/Content/Toggles/Cloud"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -17
+offset_top = 10
+offset_right = 17
+offset_bottom = 44
+mouse_filter = 2
+texture = ExtResource("ic_cloud")
 expand_mode = 1
-stretch_mode = 1
+stretch_mode = 5
 
-[node name="Language" type="VBoxContainer" parent="Panel/Content" index="5" unique_id=1918901383]
-layout_mode = 2
-theme_override_constants/separation =  20
-
-[node name="SectionChip" type="TextureRect" parent="Panel/Content/Language" index="0" unique_id=1371078982]
-custom_minimum_size =  Vector2(90, 14)
-layout_mode = 2
-size_flags_horizontal = 0
-texture = ExtResource("4_chip")
-
-[node name="Label" type="Label" parent="Panel/Content/Language/SectionChip" index="0" unique_id=1297301470]
+[node name="Title" type="Label" parent="Panel/Content/Toggles/Cloud"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_SETTINGS_LANGUAGE_SECTION"
-theme_type_variation = &"SettingsSection"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="LangRow" type="HBoxContainer" parent="Panel/Content/Language" index="1" unique_id=1918901384]
-layout_mode = 2
-theme_override_constants/separation =  5
-
-[node name="Icon" type="TextureRect" parent="Panel/Content/Language/LangRow" index="0" unique_id=680426215]
-custom_minimum_size =  Vector2(17, 17)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("45_icon_globe")
-
-[node name="LangButton" type="TextureButton" parent="Panel/Content/Language/LangRow" index="1" unique_id=1918901386]
-custom_minimum_size = Vector2(153.0, 25.0)
-layout_mode = 2
-size_flags_horizontal = 0
-texture_normal = ExtResource("19_dd_n")
-texture_pressed = ExtResource("20_dd_p")
-texture_hover = ExtResource("19_dd_n")
-texture_disabled = ExtResource("22_dd_dis")
-texture_focused = ExtResource("21_dd_f")
-ignore_texture_size = true
-
-[node name="LangValue" type="Label" parent="Panel/Content/Language/LangRow/LangButton" index="0" unique_id=1918901387]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left =  17.5
-offset_right =  -22.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Tiếng Việt (VN)"
-theme_type_variation = &"SettingsDropdown"
-vertical_alignment = 1
-
-[node name="Label" type="Label" parent="Panel/Content/Language/LangRow" index="2" unique_id=1918901385]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "STR_SETTINGS_LANGUAGE"
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 8
+offset_top = 46
+offset_right = -8
+offset_bottom = 66
 theme_type_variation = &"SettingsRow"
-vertical_alignment = 1
-
-[node name="CloudRow" type="HBoxContainer" parent="Panel/Content/Language" index="2" unique_id=1918901388]
-layout_mode = 2
-theme_override_constants/separation =  5
-
-[node name="Icon" type="TextureRect" parent="Panel/Content/Language/CloudRow" index="0" unique_id=605047393]
-custom_minimum_size =  Vector2(17, 17)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("46_icon_cloud")
-
-[node name="Chip" type="TextureRect" parent="Panel/Content/Language/CloudRow" index="1" unique_id=1918901392]
-custom_minimum_size = Vector2(76.2791, 17.8889)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("30_cloud")
-
-[node name="Label" type="Label" parent="Panel/Content/Language/CloudRow/Chip" index="0" unique_id=1918901393]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_SETTINGS_CONNECTED"
-theme_type_variation = &"SettingsChip"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Text" type="VBoxContainer" parent="Panel/Content/Language/CloudRow" index="2" unique_id=1918901389]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation =  0
-
-[node name="Title" type="Label" parent="Panel/Content/Language/CloudRow/Text" index="0" unique_id=1918901390]
-layout_mode = 2
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 13
 text = "STR_SETTINGS_CLOUD"
-theme_type_variation = &"SettingsRow"
-
-[node name="Desc" type="Label" parent="Panel/Content/Language/CloudRow/Text" index="1" unique_id=1918901391]
-layout_mode = 2
-text = "STR_SETTINGS_CLOUD_DESC"
-theme_type_variation = &"SettingsDesc"
-
-[node name="PlayerRow" type="HBoxContainer" parent="Panel/Content/Language" index="3" unique_id=1918901394]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Panel/Content/Language/PlayerRow" index="0" unique_id=1918901395]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "STR_SETTINGS_PLAYER_ID"
-theme_type_variation = &"SettingsDesc"
+horizontal_alignment = 1
 vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
 
-[node name="PlayerIdValue" type="Label" parent="Panel/Content/Language/PlayerRow" index="1" unique_id=1918901396]
-layout_mode = 2
-text = "#NM-8924-VN"
-theme_type_variation = &"SettingsValue"
-horizontal_alignment = 2
-
-[node name="Divider3" type="TextureRect" parent="Panel/Content" index="6" unique_id=1260349674]
-custom_minimum_size =  Vector2(0, 2)
-layout_mode = 2
-texture = ExtResource("5_divider")
+[node name="Chip" type="TextureRect" parent="Panel/Content/Toggles/Cloud"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1
+anchor_right = 0.5
+anchor_bottom = 1
+offset_left = -38
+offset_top = -30
+offset_right = 38
+offset_bottom = -12
+mouse_filter = 2
+texture = ExtResource("cloud_chip")
 expand_mode = 1
-stretch_mode = 1
 
-[node name="Actions" type="VBoxContainer" parent="Panel/Content" index="7" unique_id=1617146451]
-layout_mode = 2
-theme_override_constants/separation =  20
-
-[node name="Guide" type="TextureButton" parent="Panel/Content/Actions" index="0" unique_id=1617146452]
-custom_minimum_size = Vector2(1.0, 38.0)
-layout_mode = 2
-texture_normal = ExtResource("23_row_n")
-texture_pressed = ExtResource("24_row_p")
-texture_hover = ExtResource("23_row_n")
-texture_disabled = ExtResource("26_row_dis")
-texture_focused = ExtResource("25_row_f")
-ignore_texture_size = true
-
-[node name="Icon" type="TextureRect" parent="Panel/Content/Actions/Guide" index="0" unique_id=1705905787]
+[node name="Label" type="Label" parent="Panel/Content/Toggles/Cloud/Chip"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left =  20
-offset_top =  -8.5
-offset_right =  37
-offset_bottom =  8.5
-grow_vertical = 2
-texture = ExtResource("47_icon_book")
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 1
+offset_left = 0
+offset_top = 0
+offset_right = 0
+offset_bottom = 0
+theme_type_variation = &"SettingsChip"
+theme_override_colors/font_color = Color(0.1059, 0.3686, 0.1255, 1)
+theme_override_font_sizes/font_size = 10
+text = "STR_SETTINGS_CONNECTED"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
 
-[node name="Chevron" type="TextureRect" parent="Panel/Content/Actions/Guide" index="1" unique_id=1617146454]
-self_modulate = Color(0.239216, 0.513726, 0.682353, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -7.0
-offset_right = -17.0
-offset_bottom = 7.0
-grow_horizontal = 0
-grow_vertical = 2
-texture = ExtResource("6_chevron")
+[node name="LangCard" type="NinePatchRect" parent="Panel/Content"]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("tile_off")
+patch_margin_left = 18
+patch_margin_top = 18
+patch_margin_right = 18
+patch_margin_bottom = 22
 
-[node name="Label" type="Label" parent="Panel/Content/Actions/Guide" index="2" unique_id=1617146453]
+[node name="Row" type="HBoxContainer" parent="Panel/Content/LangCard"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left =  42.5
-offset_right =  -30
 grow_horizontal = 2
 grow_vertical = 2
-text = "STR_SETTINGS_GUIDE"
+offset_left = 14
+offset_top = 0
+offset_right = -14
+offset_bottom = -5
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="TextureRect" parent="Panel/Content/LangCard/Row"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("ic_globe")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/Content/LangCard/Row"]
+layout_mode = 2
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 0
+anchor_bottom = 0
+offset_left = 0
+offset_top = 0
+offset_right = 0
+offset_bottom = 0
 theme_type_variation = &"SettingsRow"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 13
+text = "STR_SETTINGS_LANGUAGE"
+horizontal_alignment = 0
 vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+size_flags_horizontal = 3
 
-[node name="Credits" type="TextureButton" parent="Panel/Content/Actions" index="1" unique_id=1106923312]
-custom_minimum_size = Vector2(1.0, 38.0)
+[node name="LangButton" type="TextureButton" parent="Panel/Content/LangCard/Row"]
+custom_minimum_size = Vector2(190, 41)
 layout_mode = 2
-texture_normal = ExtResource("23_row_n")
-texture_pressed = ExtResource("24_row_p")
-texture_hover = ExtResource("23_row_n")
-texture_disabled = ExtResource("26_row_dis")
-texture_focused = ExtResource("25_row_f")
+size_flags_vertical = 4
+texture_normal = ExtResource("dd_n")
+texture_pressed = ExtResource("dd_p")
+texture_hover = ExtResource("dd_n")
+texture_disabled = ExtResource("dd_dis")
+texture_focused = ExtResource("dd_f")
 ignore_texture_size = true
+stretch_mode = 0
 
-[node name="Icon" type="TextureRect" parent="Panel/Content/Actions/Credits" index="0" unique_id=2007174117]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left =  20
-offset_top =  -8.5
-offset_right =  37
-offset_bottom =  8.5
-grow_vertical = 2
-texture = ExtResource("43_icon_music")
-
-[node name="Chevron" type="TextureRect" parent="Panel/Content/Actions/Credits" index="1" unique_id=968373481]
-self_modulate = Color(0.239216, 0.513726, 0.682353, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -7.0
-offset_right = -17.0
-offset_bottom = 7.0
-grow_horizontal = 0
-grow_vertical = 2
-texture = ExtResource("6_chevron")
-
-[node name="Label" type="Label" parent="Panel/Content/Actions/Credits" index="2" unique_id=141746594]
+[node name="LangValue" type="Label" parent="Panel/Content/LangCard/Row/LangButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left =  42.5
-offset_right =  -30
 grow_horizontal = 2
 grow_vertical = 2
-text = "STR_SETTINGS_CREDITS"
-theme_type_variation = &"SettingsRow"
+offset_left = 14
+offset_top = 0
+offset_right = -34
+offset_bottom = -3
+theme_type_variation = &"SettingsDropdown"
+text = "Tiếng Việt (VN)"
 vertical_alignment = 1
+mouse_filter = 2
 
-[node name="Reset" type="TextureButton" parent="Panel/Content/Actions" index="2" unique_id=1617146455]
-custom_minimum_size = Vector2(1.0, 38.0)
+[node name="Fill" type="Control" parent="Panel/Content"]
 layout_mode = 2
-texture_normal = ExtResource("27_dan_n")
-texture_pressed = ExtResource("28_dan_p")
-texture_hover = ExtResource("27_dan_n")
-texture_disabled = ExtResource("26_row_dis")
-texture_focused = ExtResource("29_dan_f")
-ignore_texture_size = true
+size_flags_vertical = 3
+mouse_filter = 2
 
-[node name="Icon" type="TextureRect" parent="Panel/Content/Actions/Reset" index="0" unique_id=1465930329]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left =  20
-offset_top =  -8.5
-offset_right =  37
-offset_bottom =  8.5
-grow_vertical = 2
-texture = ExtResource("48_icon_reset")
-
-[node name="Chevron" type="TextureRect" parent="Panel/Content/Actions/Reset" index="1" unique_id=1617146457]
-self_modulate = Color(0.847059, 0.266667, 0.266667, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -7.0
-offset_right = -17.0
-offset_bottom = 7.0
-grow_horizontal = 0
-grow_vertical = 2
-texture = ExtResource("6_chevron")
-
-[node name="Label" type="Label" parent="Panel/Content/Actions/Reset" index="2" unique_id=1617146456]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left =  42.5
-offset_right =  -30
-grow_horizontal = 2
-grow_vertical = 2
-text = "STR_SETTINGS_RESET"
-theme_type_variation = &"SettingsRowDanger"
-vertical_alignment = 1
-
-[node name="Footer" type="HBoxContainer" parent="Panel/Content" index="8" unique_id=1617146458]
-custom_minimum_size =  Vector2(0, 40)
+[node name="Actions" type="HBoxContainer" parent="Panel/Content"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="Quote" type="Label" parent="Panel/Content/Footer" index="0" unique_id=1617146459]
+[node name="Guide" type="TextureButton" parent="Panel/Content/Actions"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "STR_SETTINGS_FOOTER"
-theme_type_variation = &"SettingsDesc"
-vertical_alignment = 1
+texture_normal = ExtResource("row_n")
+texture_pressed = ExtResource("row_p")
+texture_hover = ExtResource("row_n")
+texture_disabled = ExtResource("row_dis")
+texture_focused = ExtResource("row_f")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="Stamp" type="Control" parent="Panel/Content/Footer" index="1" unique_id=1617146460]
-custom_minimum_size =  Vector2(80, 37)
+[node name="Icon" type="TextureRect" parent="Panel/Content/Actions/Guide"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -14
+offset_top = 8
+offset_right = 14
+offset_bottom = 36
+mouse_filter = 2
+texture = ExtResource("ic_book")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/Content/Actions/Guide"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 1
+offset_left = 4
+offset_top = 38
+offset_right = -4
+offset_bottom = -10
+theme_type_variation = &"SettingsRow"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 12
+text = "STR_SETTINGS_GUIDE"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Credits" type="TextureButton" parent="Panel/Content/Actions"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("row_n")
+texture_pressed = ExtResource("row_p")
+texture_hover = ExtResource("row_n")
+texture_disabled = ExtResource("row_dis")
+texture_focused = ExtResource("row_f")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Icon" type="TextureRect" parent="Panel/Content/Actions/Credits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -14
+offset_top = 8
+offset_right = 14
+offset_bottom = 36
+mouse_filter = 2
+texture = ExtResource("ic_info")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/Content/Actions/Credits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 1
+offset_left = 4
+offset_top = 38
+offset_right = -4
+offset_bottom = -10
+theme_type_variation = &"SettingsRow"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 12
+text = "STR_SETTINGS_CREDITS"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Reset" type="TextureButton" parent="Panel/Content/Actions"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("dan_n")
+texture_pressed = ExtResource("dan_p")
+texture_hover = ExtResource("dan_n")
+texture_disabled = ExtResource("row_dis")
+texture_focused = ExtResource("dan_f")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Icon" type="TextureRect" parent="Panel/Content/Actions/Reset"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0
+anchor_right = 0.5
+anchor_bottom = 0
+offset_left = -14
+offset_top = 8
+offset_right = 14
+offset_bottom = 36
+mouse_filter = 2
+texture = ExtResource("ic_reset")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/Content/Actions/Reset"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 1
+offset_left = 4
+offset_top = 38
+offset_right = -4
+offset_bottom = -10
+theme_type_variation = &"SettingsRowDanger"
+theme_override_colors/font_color = Color(0.7020, 0.1490, 0.1176, 1)
+theme_override_font_sizes/font_size = 12
+text = "STR_SETTINGS_RESET"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Footer" type="HBoxContainer" parent="Panel/Content"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="PlayerRow" type="HBoxContainer" parent="Panel/Content/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="Panel/Content/Footer/PlayerRow"]
+layout_mode = 2
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 0
+anchor_bottom = 0
+offset_left = 0
+offset_top = 0
+offset_right = 0
+offset_bottom = 0
+theme_type_variation = &"SettingsDesc"
+theme_override_colors/font_color = Color(0.3569, 0.4314, 0.5098, 1)
+theme_override_font_sizes/font_size = 11
+text = "STR_SETTINGS_PLAYER_ID"
+horizontal_alignment = 0
+vertical_alignment = 1
+text_overrun_behavior = 0
+mouse_filter = 2
+
+[node name="PlayerIdValue" type="Label" parent="Panel/Content/Footer/PlayerRow"]
+layout_mode = 2
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 0
+anchor_bottom = 0
+offset_left = 0
+offset_top = 0
+offset_right = 0
+offset_bottom = 0
+theme_type_variation = &"SettingsValue"
+theme_override_colors/font_color = Color(0.1843, 0.4667, 0.6471, 1)
+theme_override_font_sizes/font_size = 12
+text = "#NM-8924-VN"
+horizontal_alignment = 0
+vertical_alignment = 1
+text_overrun_behavior = 0
+mouse_filter = 2
+
+[node name="Stamp" type="Control" parent="Panel/Content/Footer"]
+custom_minimum_size = Vector2(80, 37)
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="Border" type="TextureRect" parent="Panel/Content/Footer/Stamp" index="0" unique_id=1617146461]
+[node name="Border" type="TextureRect" parent="Panel/Content/Footer/Stamp"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("10_stamp")
+texture = ExtResource("stamp")
 
-[node name="Label" type="Label" parent="Panel/Content/Footer/Stamp" index="1" unique_id=1617146462]
+[node name="Label" type="Label" parent="Panel/Content/Footer/Stamp"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top =  -1.5
-offset_bottom =  -1.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "VER 1.0.0"
+offset_left = 0
+offset_top = -1.5
+offset_right = 0
+offset_bottom = -1.5
 theme_type_variation = &"SettingsVersion"
+text = "VER 1.0.0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Banner" type="NinePatchRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 70
+offset_top = -30
+offset_right = -40
+offset_bottom = 32
+rotation = -0.0349
+pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("banner")
+patch_margin_left = 16
+patch_margin_right = 16
+
+[node name="Title" type="Label" parent="Panel/Banner"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 1
+offset_left = 0
+offset_top = 0
+offset_right = 0
+offset_bottom = 0
+theme_type_variation = &"GameTitle"
+theme_override_colors/font_color = Color(1.0000, 1.0000, 1.0000, 1)
+theme_override_font_sizes/font_size = 26
+text = "STR_BTN_SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Clip" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 0
+anchor_bottom = 0
+offset_left = 46
+offset_top = -26
+offset_right = 72
+offset_bottom = 36
+mouse_filter = 2
+texture = ExtResource("clip")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="CoinChip" parent="TopBar"]
 visible = false
 
 [node name="LifeChip" parent="TopBar"]
 visible = false
+
