@@ -1,0 +1,24 @@
+<svg width="115" height="68" viewBox="0 0 115 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Washi tape trung tính (xám rất nhạt) để tô màu bằng self_modulate; không dùng filter/text -->
+  <path d="M0.00 4.20 L115.00 4.20 L111.80 12.07 L115.00 19.95 L111.80 27.82 L115.00 35.70 L111.80 43.58 L115.00 51.45 L111.80 59.33 L115.00 67.20 L0.00 67.20 L3.20 59.33 L0.00 51.45 L3.20 43.58 L0.00 35.70 L3.20 27.82 L0.00 19.95 L3.20 12.07 L0.00 4.20 Z" fill="#000000" fill-opacity="0.05"/>
+  <path d="M0.00 3.20 L115.00 3.20 L111.80 11.07 L115.00 18.95 L111.80 26.82 L115.00 34.70 L111.80 42.58 L115.00 50.45 L111.80 58.33 L115.00 66.20 L0.00 66.20 L3.20 58.33 L0.00 50.45 L3.20 42.58 L0.00 34.70 L3.20 26.82 L0.00 18.95 L3.20 11.07 L0.00 3.20 Z" fill="#000000" fill-opacity="0.09"/>
+  <path d="M0.00 2.00 L115.00 2.00 L111.80 9.88 L115.00 17.75 L111.80 25.62 L115.00 33.50 L111.80 41.38 L115.00 49.25 L111.80 57.12 L115.00 65.00 L0.00 65.00 L3.20 57.12 L0.00 49.25 L3.20 41.38 L0.00 33.50 L3.20 25.62 L0.00 17.75 L3.20 9.88 L0.00 2.00 Z" fill="#EEEEEE" fill-opacity="0.96"/>
+  <rect x="0" y="2.6" width="115" height="21.4" fill="#FFFFFF" fill-opacity="0.55"/>
+  <rect x="0" y="44.8" width="115" height="20.2" fill="#000000" fill-opacity="0.045"/>
+  <line x1="6" y1="23.5" x2="109" y2="23.5" stroke="#FFFFFF" stroke-opacity="0.37" stroke-width="0.7"/>
+  <line x1="6" y1="42.1" x2="109" y2="42.1" stroke="#000000" stroke-opacity="0.05" stroke-width="0.7"/>
+  <line x1="6" y1="35.5" x2="109" y2="35.5" stroke="#FFFFFF" stroke-opacity="0.39" stroke-width="0.7"/>
+  <line x1="6" y1="8.3" x2="109" y2="8.3" stroke="#000000" stroke-opacity="0.07" stroke-width="0.7"/>
+  <line x1="6" y1="7.1" x2="109" y2="7.1" stroke="#FFFFFF" stroke-opacity="0.39" stroke-width="0.7"/>
+  <line x1="6" y1="9.0" x2="109" y2="9.0" stroke="#000000" stroke-opacity="0.05" stroke-width="0.7"/>
+  <line x1="6" y1="29.2" x2="109" y2="29.2" stroke="#FFFFFF" stroke-opacity="0.43" stroke-width="0.7"/>
+  <line x1="6" y1="12.1" x2="109" y2="12.1" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="6" y1="40.8" x2="109" y2="40.8" stroke="#FFFFFF" stroke-opacity="0.44" stroke-width="0.7"/>
+  <line x1="6" y1="37.9" x2="109" y2="37.9" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="6" y1="60.6" x2="109" y2="60.6" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="0.7"/>
+  <line x1="6" y1="53.9" x2="109" y2="53.9" stroke="#000000" stroke-opacity="0.06" stroke-width="0.7"/>
+  <line x1="0" y1="4.2" x2="115" y2="4.2" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="1"/>
+  <line x1="0" y1="62.8" x2="115" y2="62.8" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="1"/>
+  <line x1="0" y1="2.5" x2="115" y2="2.5" stroke="#000000" stroke-opacity="0.10" stroke-width="1"/>
+  <line x1="0" y1="64.5" x2="115" y2="64.5" stroke="#000000" stroke-opacity="0.14" stroke-width="1"/>
+</svg>
