@@ -80,7 +80,7 @@ func _check_status_bar_portrait() -> void:
 	root.add_child(ls)
 	await process_frame
 	_check(ls.get("instruction_btn") != null, "layout doc: co bind instruction_btn")
-	_check(ls.get_node_or_null("TopBar/HeaderRow/Instruction") != null,
+	_check(ls.get_node_or_null("TopBar/Instruction") != null,
 			"StatusBar doc: co nut Instruction")
 	ls.queue_free()
 	await process_frame

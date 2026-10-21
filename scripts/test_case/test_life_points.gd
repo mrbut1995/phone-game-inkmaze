@@ -15,10 +15,6 @@ extends SceneTree
 
 const LIFE_POPUP_SCENE := "res://nodes/popups/out_of_life.tscn"
 const LAYOUT_CHIP_EXCLUDED := ["settings", "tutorial", "splash", "title", "profiler_popup"]
-## Ngoại lệ: màn có "thanh trên" KHÔNG phải dải ngang nên 2 chip dùng chung của base_layout không
-## hiển thị được — màn tự khai 2 chip cục bộ đặt đúng chỗ và ẩn 2 chip dùng chung (`visible = false`).
-## (`landscape/event`: thanh trên là CỘT DỌC 36 px bên trái, tiêu đề nằm trong hàng tiêu đề của nội dung)
-const LAYOUT_LOCAL_CHIPS := {"landscape/event": 2}
 
 var _backup := ""
 var _checks := 0
@@ -297,7 +293,7 @@ func _section_layouts() -> void:
 	_check(_count_nodes(base_text, "LifeChip") == 1, "base_layout co dung 1 LifeChip")
 	_check(base_text.contains('parent="TopBar"'), "Hai chip nam trong TopBar cua base_layout")
 
-	for path in ["portrait", "landscape"]:
+	for path in ["portrait"]:
 		var dir := DirAccess.open("res://scenes/layout/%s" % path)
 		if dir == null:
 			_check(false, "Mo duoc scenes/layout/%s" % path)
@@ -308,20 +304,13 @@ func _section_layouts() -> void:
 			var scene_path := "res://scenes/layout/%s/%s" % [path, file]
 			var text := FileAccess.get_file_as_string(scene_path)
 			var base := file.get_basename()
-			var key := "%s/%s" % [path, base]
-			var local_expected: int = int(LAYOUT_LOCAL_CHIPS.get(key, 0))
 			var coin_local := _count_nodes(text, "CoinChip")
 			var life_local := _count_nodes(text, "LifeChip")
-			if local_expected == 0:
-				# Layout KHÔNG khai lại 2 chip: chỉ kế thừa từ base_layout
-				_check(coin_local == 0 and life_local == 0,
-					"%s: khong khai lai chip (dung chip cua base_layout)" % file)
-			else:
-				# Ngoại lệ: màn có thanh trên KHÔNG phải dải ngang (xem LAYOUT_LOCAL_CHIPS)
-				_check(coin_local == 1 and life_local == 1,
-					"%s: khai 2 chip cuc bo dung cho thanh tren dac biet" % file)
+			# Layout KHÔNG khai lại 2 chip: chỉ kế thừa từ base_layout
+			_check(coin_local == 0 and life_local == 0,
+				"%s: khong khai lai chip (dung chip cua base_layout)" % file)
 			var hides := _hides_shared_chips(text)
-			var should_hide := LAYOUT_CHIP_EXCLUDED.has(base) or local_expected > 0
+			var should_hide := LAYOUT_CHIP_EXCLUDED.has(base)
 			_check(hides == should_hide, "%s: an 2 chip dung chung = %s (muon %s)"
 				% [file, hides, should_hide])
 
