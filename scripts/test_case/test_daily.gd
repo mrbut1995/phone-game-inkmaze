@@ -313,9 +313,13 @@ func _section_5_scene(dm: Node) -> void:
 	_check(scene.challenge_card() != null, "Co the THU THACH")
 	_check(scene.milestone_count() == 4, "Hien 4 chip moc thuong (nhan %d)" % scene.milestone_count())
 	_check(scene.layout.milestones_host != null, "milestones_host da gan")
-	_check(scene.layout.bar_stars != null and int(scene.layout.bar_stars.max_value)
-		== int(dm.call("month_star_goal")),
-		"Thanh tien do co max = moc cuoi thang")
+	## Thanh Sao chay thang 0..1 (ti le so voi moc cuoi thang) — xem `DailyLayout.set_star_progress()`
+	_check(scene.layout.bar_stars != null
+		and is_equal_approx(float(scene.layout.bar_stars.max_value), 1.0)
+		and float(scene.layout.bar_stars.value) >= 0.0
+		and float(scene.layout.bar_stars.value) <= 1.0,
+		"Thanh tien do chay 0..1 theo ti le moc cuoi thang (%.2f)" % float(
+			scene.layout.bar_stars.value if scene.layout.bar_stars != null else 0.0))
 
 	# Ngày đã có 2 Sao CHƠI -> thẻ CHƠI hiện "CHƠI LẠI" + 2 sao sáng
 	dm.call("set_day_stars_split", today, 2, 0)
@@ -500,6 +504,7 @@ func _section_5d_wallet_and_celebrate(dm: Node, gm: Node, arch: Node) -> void:
 	dm.call("set_day_stars_split", today, 2, 0)
 	scene.select_day(today)
 	gm.set("daily_celebrate", {"day": today, "challenge": false, "stars": 2, "gained": 2})
+	scene._take_celebrate_info()
 	await scene._celebrate_daily_win()
 	_check(scene.play_card().is_celebrating(), "The CHOI chay hieu ung Sao sau khi xong van")
 	_check(not scene.challenge_card().is_celebrating(), "The THU THACH khong chay hieu ung")
@@ -512,6 +517,7 @@ func _section_5d_wallet_and_celebrate(dm: Node, gm: Node, arch: Node) -> void:
 	dm.call("set_day_stars_split", today, 3, 3)
 	scene.select_day(today)
 	gm.set("daily_celebrate", {"day": today, "challenge": true, "stars": 3, "gained": 3})
+	scene._take_celebrate_info()
 	await scene._celebrate_daily_win()
 	_check(scene.challenge_card().is_celebrating(),
 		"The THU THACH chay hieu ung Sao (3 sao)")
@@ -521,6 +527,7 @@ func _section_5d_wallet_and_celebrate(dm: Node, gm: Node, arch: Node) -> void:
 	# --- Ván của NGÀY KHÁC: màn tự chọn đúng ngày vừa chơi
 	var other := 1 if today > 1 else 2
 	gm.set("daily_celebrate", {"day": other, "challenge": false, "stars": 1, "gained": 1})
+	scene._take_celebrate_info()
 	await scene._celebrate_daily_win()
 	_check(scene.selected_day() == other,
 		"Hieu ung mo dung ngay vua choi (ngay %d)" % other)
@@ -529,6 +536,7 @@ func _section_5d_wallet_and_celebrate(dm: Node, gm: Node, arch: Node) -> void:
 
 	# --- Không có gì để ăn mừng -> không lỗi, không chạy hiệu ứng
 	gm.set("daily_celebrate", {})
+	scene._take_celebrate_info()
 	await scene._celebrate_daily_win()
 	_check(not scene.play_card().is_celebrating() and not scene.challenge_card().is_celebrating(),
 		"Khong co van vua xong -> khong chay hieu ung")

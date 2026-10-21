@@ -247,9 +247,10 @@ func _section_4_ranking() -> void:
 	if tab == null:
 		return
 	_entry(tab.get_node_or_null("Label") != null, "tab Xếp hạng co nhan tu scene")
-	_entry(is_equal_approx(tab.custom_minimum_size.x, 0.0)
-			and is_equal_approx(tab.custom_minimum_size.y, 26.0),
-		"tab giu CHIEU CAO 26, be rong do HBox chia (%.0fx%.0f)"
+	# Tab xếp hạng bản mới là tab DỌC: nhãn xoay 90°, cao 108 · rộng 38 cố định
+	_entry(is_equal_approx(tab.custom_minimum_size.x, 38.0)
+			and is_equal_approx(tab.custom_minimum_size.y, 108.0),
+			"tab giu kich thuoc DOC 38x108 (nhan xoay 90 do) (%.0fx%.0f)"
 			% [tab.custom_minimum_size.x, tab.custom_minimum_size.y])
 
 	# Tab khai trong scene bo cuc: gan `board_id` + `label_key` TRUOC khi vao cay ⇒ `_ready` tu dich nhan

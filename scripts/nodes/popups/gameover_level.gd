@@ -48,21 +48,29 @@ var _charged := false
 
 
 func _on_open() -> void:
-	# Tiêu đề riêng theo LÝ DO thua (giữ như bản cũ)
-	match str(data.get("reason", "")):
-		"dead_end":
-			label_title.text = tr("STR_GAME_OVER_NO_PATH")
-		"revisit":
-			label_title.text = tr("STR_GAME_OVER_REVISIT")
-		"out_of_submits":
-			label_title.text = tr("STR_GAME_OVER_OUT_OF_SUBMITS")
+	# Tiêu đề riêng theo LÝ DO thua (giữ như bản cũ).
+	# ⚠️ Mọi khối dưới đây đều PHẢI chịu được node null: `gameover_challenge.tscn` giữ layout
+	# CŨ (Subtitle + Banner hồi sinh, không có thẻ đường đi / bút chì) nhưng vẫn kế thừa hàm này.
+	if label_title != null:
+		match str(data.get("reason", "")):
+			"dead_end":
+				label_title.text = tr("STR_GAME_OVER_NO_PATH")
+			"revisit":
+				label_title.text = tr("STR_GAME_OVER_REVISIT")
+			"out_of_submits":
+				label_title.text = tr("STR_GAME_OVER_OUT_OF_SUBMITS")
 
-	# 1. Đường đi
-	var progress := clampi(int(data.get("progress", 0)), 0, 100)
-	path.set_progress(progress / 100.0)
-	label_percent.text = "%d%%" % progress
-	label_walked.text = tr("STR_GO_WALKED")
-	label_stats.text = tr("STR_GO_STATS").format([_format_time(data.get("time", 0)), int(data.get("wall_hits", 0))])
+	# 1. Đường đi (chỉ popup có layout "BẢN ĐỒ ĐƯỜNG ĐI")
+	if path != null:
+		var progress := clampi(int(data.get("progress", 0)), 0, 100)
+		path.set_progress(progress / 100.0)
+		if label_percent != null:
+			label_percent.text = "%d%%" % progress
+		if label_walked != null:
+			label_walked.text = tr("STR_GO_WALKED")
+		if label_stats != null:
+			label_stats.text = tr("STR_GO_STATS").format([
+				_format_time(data.get("time", 0)), int(data.get("wall_hits", 0))])
 
 	# 2. Nhiệm vụ
 	var rows: Array = data.get("missions", [])
@@ -71,15 +79,19 @@ func _on_open() -> void:
 	for i in COUNT:
 		var row: Dictionary = rows[i] if i < rows.size() else {}
 		var ok := bool(row.get("done", false))
-		stars[i].texture = star_full if ok else star_empty
+		if stars[i] != null:
+			stars[i].texture = star_full if ok else star_empty
+		if names[i] == null:
+			continue
 		if row.has("title"):
 			names[i].text = str(row.get("title"))
 		names[i].add_theme_color_override("font_color", COLOR_MISSION_OK if ok else COLOR_MISSION_FAIL)
 
-	# 3. Bút
+	# 3. Bút (chỉ popup có thẻ bút chì)
 	_charged = _will_charge_life()
 	_connect_life_signal()
-	_refresh_pencils()
+	if pencils != null:
+		_refresh_pencils()
 
 	# 4. Luồng học lần đầu: không cho "Về Menu"
 	if btn_menu != null:
@@ -131,6 +143,8 @@ func _can_play() -> bool:
 
 
 func _refresh_pencils() -> void:
+	if pencils == null:
+		return
 	var gm := _game_manager()
 	var lives := 0
 	var maximum := 5
@@ -147,7 +161,8 @@ func _refresh_pencils() -> void:
 	# Bút vừa gãy = ô trống đầu tiên (đã bị trừ trước khi popup mở)
 	var lost := lives if _charged else -1
 	pencils.set_state(lives, maximum, next_unix, false, lost)
-	label_count.text = "%d/%d" % [lives, maximum]
+	if label_count != null:
+		label_count.text = "%d/%d" % [lives, maximum]
 	if not pencils.recover_finished.is_connected(_refresh_pencils):
 		pencils.recover_finished.connect(_refresh_pencils, CONNECT_DEFERRED)
 	# Hết bút: làm mờ nút Chơi lại (bấm vẫn mở popup Hết bút)
