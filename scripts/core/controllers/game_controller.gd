@@ -112,6 +112,11 @@ func _start_floor(floor_number: int) -> void:
 	_ch_backtracks = 0
 	if game_state != null:
 		game_state.floor_number = floor_number
+	# KỶ LỤC TẦNG (ngày/tuần/tháng): chỉ ván VÔ TẬN (Dungeon) mới có "tầng" tăng dần vô hạn
+	if mode != null and mode.is_endless:
+		var gm: Node = get_node_or_null("/root/GameManager")
+		if gm != null and gm.has_method("record_floor_reached"):
+			gm.call("record_floor_reached", floor_number)
 	# Chốt ngưỡng 3 nhiệm vụ của màn/tầng mới (số bước thiết kế đã nạp trong setup_floor)
 	if mission_controller != null:
 		mission_controller.setup_for_floor(

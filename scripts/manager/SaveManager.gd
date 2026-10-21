@@ -51,7 +51,12 @@ func _ensure_ready() -> void:
 		return
 	_booted = true
 
-	register_provider(tree.root.get_node_or_null("GameManager"), "level_completed")
+	var gm := tree.root.get_node_or_null("GameManager")
+	register_provider(gm, "level_completed")
+	# Kỷ lục tầng (ngày/tuần/tháng) cũng phải được lưu ngay khi vừa lập
+	if gm != null and gm.has_signal("floor_record_changed") \
+			and not gm.is_connected("floor_record_changed", _on_provider_changed):
+		gm.connect("floor_record_changed", _on_provider_changed)
 	register_provider(tree.root.get_node_or_null("DailyManager"), "daily_changed")
 	register_provider(tree.root.get_node_or_null("ArchivementManager"), "progress_changed")
 	register_provider(tree.root.get_node_or_null("ShopManager"), "item_purchased")

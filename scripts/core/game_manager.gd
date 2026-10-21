@@ -11,6 +11,8 @@ signal chapter_unlocked(chapter_id: int)
 signal tool_inventory_changed(tool_id: String, remaining: int)
 ## Lượt chơi (life) đổi — LifeChip trên thanh trên nghe signal này để tự cập nhật
 signal life_changed(lives: int, max_lives: int)
+## Kỷ lục tầng của một kỳ ("day" · "week" · "month") vừa được nâng lên
+signal floor_record_changed(kind: String, floor_number: int)
 
 const TOOL_SKIP := "skip"
 const TOOL_UNDO := "undo"
@@ -51,6 +53,22 @@ var shop_return_path: String = ""
 ## Ván hiện tại đã bị trừ lượt chưa (chống trừ 2 lần khi popup thua mở lại)
 var _loss_charged := false
 var _life_tick := 0.0
+
+# ---------------------------------------------------------------------------
+# KỶ LỤC TẦNG CAO NHẤT — theo NGÀY / TUẦN / THÁNG
+#   · Chỉ tính tầng của ván VÔ TẬN (Dungeon) vì đó mới là "tầng" tăng dần vô hạn.
+#   · Mỗi kỳ giữ `key` (mốc thời gian) + `floor`: sang ngày/tuần/tháng mới thì tự về 0.
+#   · `week` dùng mốc THỨ HAI của tuần (ISO) để tuần luôn bắt đầu từ thứ Hai.
+# ---------------------------------------------------------------------------
+const FLOOR_RECORD_KINDS: Array[String] = ["day", "week", "month"]
+var floor_records: Dictionary = {
+	"day": {"key": "", "floor": 0},
+	"week": {"key": "", "floor": 0},
+	"month": {"key": "", "floor": 0},
+}
+## [TEST] Cho phép ghi kỷ lục khi chạy test runner tự động (mặc định: test KHÔNG ghi,
+## để bộ test không làm bẩn kỷ lục của người chơi thật)
+var floor_record_in_tests := false
 
 ## [TEST/DEBUG] Ép kết quả `can_start_run()`: 0 = theo lượt chơi · 1 = luôn cho vào · -1 = luôn chặn
 var life_gate_override: int = 0
@@ -540,6 +558,85 @@ func take_shop_return_path() -> String:
 	return path
 
 
+# ---------------------------------------------------------------------------
+# KỶ LỤC TẦNG — ngày / tuần / tháng
+# ---------------------------------------------------------------------------
+
+## Khoá thời gian của kỳ `kind` cho một mốc ngày cụ thể:
+##  · "day"   -> "2026-10-21"
+##  · "week"  -> ngày THỨ HAI của tuần chứa mốc đó (tuần ISO bắt đầu từ thứ Hai)
+##  · "month" -> "2026-10"
+static func period_key(kind: String, date: Dictionary) -> String:
+	match kind:
+		"month":
+			return "%04d-%02d" % [int(date.get("year", 1970)), int(date.get("month", 1))]
+		"week":
+			return _week_start_key(date)
+		_:
+			return _date_key(date)
+
+
+## Khoá của kỳ hiện tại theo đồng hồ hệ thống
+static func current_period_key(kind: String) -> String:
+	return period_key(kind, Time.get_datetime_dict_from_system())
+
+
+static func _date_key(date: Dictionary) -> String:
+	return "%04d-%02d-%02d" % [
+		int(date.get("year", 1970)), int(date.get("month", 1)), int(date.get("day", 1))]
+
+
+## Ngày THỨ HAI của tuần chứa `date` (`weekday`: 0 = Chủ nhật … 6 = thứ Bảy như Godot).
+## Lùi số ngày bằng unix-time để tự xử lý đúng khi lùi qua tháng/năm.
+static func _week_start_key(date: Dictionary) -> String:
+	var back := (int(date.get("weekday", 0)) + 6) % 7
+	var stamp := Time.get_unix_time_from_datetime_dict({
+		"year": int(date.get("year", 1970)),
+		"month": int(date.get("month", 1)),
+		"day": int(date.get("day", 1)),
+		"hour": 0, "minute": 0, "second": 0,
+	})
+	return Time.get_date_string_from_unix_time(int(stamp) - back * 86400)
+
+
+## Tầng cao nhất đạt được trong kỳ hiện tại (0 = chưa có kỷ lục). Kỳ đã đổi thì đọc ra 0.
+func best_floor(kind := "week") -> int:
+	if not floor_records.has(kind):
+		return 0
+	var bucket: Dictionary = floor_records.get(kind, {})
+	if str(bucket.get("key", "")) != current_period_key(kind):
+		return 0
+	return maxi(int(bucket.get("floor", 0)), 0)
+
+
+## Ghi nhận vừa ĐẠT tới `floor_number` (gọi khi vào tầng mới của ván Dungeon).
+## Trả về true nếu có ít nhất một kỳ (ngày/tuần/tháng) lập kỷ lục mới.
+func record_floor_reached(floor_number := 0) -> bool:
+	if floor_number <= 0 or debug_run:
+		return false
+	if _is_automated_test() and not floor_record_in_tests:
+		return false
+	_sync_floor_records()
+	var improved := false
+	for kind in FLOOR_RECORD_KINDS:
+		var bucket: Dictionary = floor_records[kind]
+		if floor_number > int(bucket.get("floor", 0)):
+			bucket["floor"] = floor_number
+			improved = true
+			floor_record_changed.emit(kind, floor_number)
+	return improved
+
+
+## Bỏ kỷ lục của kỳ đã qua (sang ngày/tuần/tháng mới thì kỷ lục bắt đầu lại từ 0)
+func _sync_floor_records() -> void:
+	var date := Time.get_datetime_dict_from_system()
+	for kind in FLOOR_RECORD_KINDS:
+		var key := period_key(kind, date)
+		var bucket: Dictionary = floor_records.get(kind, {})
+		if str(bucket.get("key", "")) != key:
+			floor_records[kind] = {"key": key, "floor": 0}
+
+
 ## Mở popup HẾT LƯỢT CHƠI (dùng cho test / khi cần báo thủ công)
 func open_out_of_life_popup() -> void:
 	_show_out_of_life()
@@ -877,6 +974,7 @@ func export_progress() -> Dictionary:
 		"tool_uses": tool_uses.duplicate(),
 		"lives": lives,
 		"next_life_at": next_life_at,
+		"floor_records": floor_records.duplicate(true),
 		"unlocked_chapters": unlocked_chapters.duplicate(),
 		"current_chapter": current_chapter,
 		"tutorial_progress": tutorial_progress.duplicate(),
@@ -902,6 +1000,7 @@ func import_progress(data: Dictionary) -> void:
 	next_life_at = maxi(int(data.get("next_life_at", 0)), 0)
 	_refresh_life_recharge()
 	life_changed.emit(lives, MAX_LIVES)
+	_import_floor_records(data.get("floor_records", null))
 	unlocked_chapters = _int_array(data.get("unlocked_chapters", null))
 	if unlocked_chapters.is_empty():
 		unlocked_chapters = [1]
@@ -920,6 +1019,22 @@ func import_progress(data: Dictionary) -> void:
 		tutorial_flow_done = bool(tutorial_progress.get("core_completed", false))
 
 
+## Nạp kỷ lục tầng từ blob tiến trình; kỳ nào đã qua (khác mốc hiện tại) thì coi như 0.
+func _import_floor_records(value: Variant) -> void:
+	for kind in FLOOR_RECORD_KINDS:
+		floor_records[kind] = {"key": "", "floor": 0}
+	if value is Dictionary:
+		var saved: Dictionary = value
+		for kind in FLOOR_RECORD_KINDS:
+			var bucket: Variant = saved.get(kind, null)
+			if bucket is Dictionary:
+				floor_records[kind] = {
+					"key": str(bucket.get("key", "")),
+					"floor": maxi(int(bucket.get("floor", 0)), 0),
+				}
+	_sync_floor_records()
+
+
 func reset_progress() -> void:
 	unlocked_levels = 1
 	level_stars = { 1: 0 }
@@ -935,6 +1050,11 @@ func reset_progress() -> void:
 	next_life_at = 0
 	_loss_charged = false
 	shop_return_path = ""
+	floor_records = {
+		"day": {"key": "", "floor": 0},
+		"week": {"key": "", "floor": 0},
+		"month": {"key": "", "floor": 0},
+	}
 	life_changed.emit(lives, MAX_LIVES)
 	for k in tutorial_progress:
 		tutorial_progress[k] = false
