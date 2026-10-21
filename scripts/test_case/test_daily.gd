@@ -468,7 +468,7 @@ func _section_5c_milestone_popup(dm: Node) -> void:
 
 
 # ---------------------------------------------------------------------------
-# 5d. Ví Xu ở thanh trên (cả 2 hướng) + hiệu ứng Sao khi vừa hoàn thành ván
+# 5d. Ví Xu ở thanh trên + hiệu ứng Sao khi vừa hoàn thành ván
 # ---------------------------------------------------------------------------
 func _section_5d_wallet_and_celebrate(dm: Node, gm: Node, arch: Node) -> void:
 	print("--- 5d. Vi Xu + hieu ung Sao khi hoan thanh van ---")
@@ -480,15 +480,12 @@ func _section_5d_wallet_and_celebrate(dm: Node, gm: Node, arch: Node) -> void:
 	await process_frame
 	await process_frame
 
-	# --- Ví Xu: có ở CẢ 2 bố cục và hiện đúng số Xu
+	# --- Ví Xu: hiện đúng số Xu
 	var coins_now := int(arch.get("coins")) if arch != null else int(Shop.coins())
 	_check(scene.layout.coin_chip != null, "daily.tscn co Vi Xu o thanh tren (doc)")
 	if scene.layout.coin_chip != null:
 		_check(scene.layout.coin_chip.value_label.text == Shop.thousands(coins_now),
 			"Vi Xu hien dung so Xu ('%s')" % scene.layout.coin_chip.value_label.text)
-	var land: Node = scene.get_node_or_null("Landscape")
-	_check(land != null and land.get("coin_chip") != null,
-		"daily.tscn co Vi Xu o thanh tren (ngang)")
 
 	# --- Đổi ví -> `_refresh_wallet()` cập nhật số trên chip
 	if arch != null and scene.layout.coin_chip != null:
