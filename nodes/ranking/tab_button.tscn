@@ -4,13 +4,8 @@
 [ext_resource type="Script" uid="uid://icpf5ojff2kn" path="res://scripts/nodes/ranking/tab_button.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://cebpgcr6ffrrr" path="res://assets/images-png/ranking/tab_active.png" id="2_art_active"]
 
-[node name="TabButton" type="Button" unique_id=850703946 node_paths=PackedStringArray("label")]
-custom_minimum_size = Vector2(120, 26)
-anchors_preset = -1
-anchor_right = 0.22200002
-anchor_bottom = 0.028
-offset_right = 0.11998749
-offset_bottom = 0.23999977
+[node name="TabButton" type="Button" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(38, 108)
 focus_mode = 0
 script = ExtResource("1_script")
 art_active = ExtResource("2_art_active")
@@ -21,25 +16,30 @@ texture_hover = ExtResource("1_art")
 texture_pressed = ExtResource("1_art")
 texture_disabled = ExtResource("1_art")
 texture_focus = ExtResource("1_art")
-patch_margin_left = 12.0
-patch_margin_right = 12.0
+patch_margin_left = 4.0
+patch_margin_right = 14.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="Label" type="Label" parent="." unique_id=487053315]
+[node name="Label" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.08979592
-anchor_top = 0.10576923
-anchor_right = 0.922449
-anchor_bottom = 0.875
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -14.0
+offset_right = 48.0
+offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 1.5707964
+pivot_offset = Vector2(50, 14)
+mouse_filter = 2
 theme_type_variation = &"RankTabLabel"
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "TAB"
 horizontal_alignment = 1
 vertical_alignment = 1
-maximum_font_size = 40
-metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="." to="." method="_emit_tab_pressed"]

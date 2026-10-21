@@ -1,6 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 52" width="120" height="26">
-  
-  <rect width="240" height="52" rx="14" fill="#256286" />
-  <rect x="1.8" y="1.8" width="236.4" height="48.4" rx="12.2" fill="#3D83AE" />
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tab gáy sổ dọc (46x108). Cạnh trái hở (nằm dưới mép giấy). Button NinePatch: L4 R14. Toạ độ vẽ ở cỡ 1x, viewBox gấp đôi (xuất PNG 92x216 hoặc 46x108). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 216" width="46" height="108"><g transform="scale(2)">
+<path d="M0 0H34a12 12 0 0112 12v84a12 12 0 01-12 12H0z" fill="#1E5578" transform="translate(0 0)"/>
+<path d="M0 0H31a12 12 0 0112 12v84a12 12 0 01-12 12H0z" fill="#2F77A5"/>
+<path d="M0 1H31a11 11 0 0111 11v84a11 11 0 01-11 11H0" fill="none" stroke="#1E5578" stroke-width="2"/>
+</g></svg>

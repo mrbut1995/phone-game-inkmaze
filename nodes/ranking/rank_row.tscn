@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" uid="uid://c45w07472jvgh" path="res://scripts/nodes/ranking/rank_row.gd" id="1_row"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="2_theme"]
-[ext_resource uid="uid://clkjr627kgppm" type="Texture2D" path="res://assets/images-png/ranking/rank_row.png" id="3_art_row"]
-[ext_resource uid="uid://m8uufqbponih" type="Texture2D" path="res://assets/images-png/ranking/rank_row_you.png" id="4_art_you"]
+[ext_resource type="Texture2D" uid="uid://clkjr627kgppm" path="res://assets/images-png/ranking/rank_row.png" id="3_art_row"]
+[ext_resource type="Texture2D" uid="uid://m8uufqbponih" path="res://assets/images-png/ranking/rank_row_you.png" id="4_art_you"]
 
-[node name="RankRow" type="Control" unique_id=2119227117 node_paths=PackedStringArray("bg", "rank_label", "flag", "name_label", "record_label", "points_label")]
-custom_minimum_size = Vector2(377.5, 45)
+[node name="RankRow" type="Control" node_paths=PackedStringArray("bg", "rank_label", "flag", "name_label", "record_label", "points_label")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 377.5
-offset_bottom = 45.0
+offset_right = 388.0
+offset_bottom = 50.0
 theme = ExtResource("2_theme")
 script = ExtResource("1_row")
 bg = NodePath("Bg")
@@ -22,7 +22,7 @@ points_label = NodePath("Body/Stats/Points")
 row_art = ExtResource("3_art_row")
 row_you_art = ExtResource("4_art_you")
 
-[node name="Bg" type="TextureRect" parent="." unique_id=669903944]
+[node name="Bg" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,64 +31,74 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 expand_mode = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Body" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0212
-anchor_right = 0.9682
+anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_right = -4.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 10
 
-[node name="Rank" type="Label" parent="Body" unique_id=1377323667]
-custom_minimum_size = Vector2(40, 0)
+[node name="Rank" type="Label" parent="Body"]
+custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
 theme_type_variation = &"RankRowIndex"
-text = "1"
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.4784, 0.549, 0.6275, 1)
+theme_override_font_sizes/font_size = 13
+text = "4"
 vertical_alignment = 1
 mouse_filter = 2
 
-[node name="Flag" type="TextureRect" parent="Body" unique_id=1524705675]
-custom_minimum_size = Vector2(19, 14)
+[node name="Flag" type="TextureRect" parent="Body"]
+custom_minimum_size = Vector2(22, 15)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Name" type="Label" parent="Body" unique_id=1578347483]
+[node name="Name" type="Label" parent="Body"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"RankRowName"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 13
 text = "Alex_Maze"
 vertical_alignment = 1
 text_overrun_behavior = 3
 mouse_filter = 2
 
 [node name="Stats" type="VBoxContainer" parent="Body"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-theme_override_constants/separation = 1
+theme_override_constants/separation = 0
 
-[node name="Record" type="Label" parent="Body/Stats" unique_id=743804609]
-custom_minimum_size = Vector2(0, 17)
+[node name="Record" type="Label" parent="Body/Stats"]
+custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 theme_type_variation = &"RankRowRecord"
-text = "TẦNG 23"
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 12
+text = "TẦNG 25"
+horizontal_alignment = 2
 vertical_alignment = 1
 mouse_filter = 2
 
-[node name="Points" type="Label" parent="Body/Stats" unique_id=709965624]
-custom_minimum_size = Vector2(0, 17)
+[node name="Points" type="Label" parent="Body/Stats"]
+custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 theme_type_variation = &"RankRowPoints"
-text = "13,920 PTS"
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.3569, 0.4314, 0.5098, 1)
+theme_override_font_sizes/font_size = 11
+text = "16,005 ĐIỂM"
+horizontal_alignment = 2
 vertical_alignment = 1
 mouse_filter = 2

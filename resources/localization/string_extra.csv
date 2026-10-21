@@ -134,7 +134,8 @@ STR_GAME_OVER_LEVEL_SUBTITLE,One wall hit ends the run — {0}% of the maze clea
 STR_REVIVE_DESC_STEPS,Get +{0} more Steps to continue,Nhận thêm +{0} Bước để đi tiếp
 STR_REVIVE_DESC_UNDO,Return to the previous step,Quay lại bước trước đó
 STR_RETRY_POPUP_TITLE,PENCIL IN DANGER!,SẮP GÃY BÚT CHÌ!
-STR_RETRY_POPUP_SUBTITLE,Retry to save your pencil – or skip and lose 1.,Thử lại để giữ bút chì – hoặc bỏ qua và mất 1 bút.
+STR_RETRY_POPUP_SUBTITLE,Go back one step to keep playing – or skip and lose 1 pencil.,Quay lại bước trước để chơi tiếp – hoặc bỏ qua và mất 1 bút.
+STR_RETRY_SUBTITLE_STEPS,Get +{0} steps and keep going – or skip and lose 1 pencil.,Nhận thêm {0} bước để chơi tiếp – hoặc bỏ qua và mất 1 bút.
 STR_RETRY_AD_TITLE,WATCH AD,XEM QUẢNG CÁO
 STR_RETRY_AD_DESC,Free retry by watching a video,Thử lại miễn phí bằng cách xem video
 STR_RETRY_BTN_WATCH,WATCH ⏵,XEM ⏵

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Thẻ hạng 2. NinePatch: L20 T20 R20 B25. Toạ độ vẽ ở cỡ 1x, viewBox gấp đôi (xuất PNG 376x218 hoặc 188x109). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 376 218" width="188" height="109"><g transform="scale(2)">
+<rect y="5" width="188" height="104" rx="16" fill="#9DB2C6"/>
+<rect x="1" y="1" width="186" height="102" rx="15" fill="#fff" stroke="#E3D8C6" stroke-width="2"/>
+</g></svg>
