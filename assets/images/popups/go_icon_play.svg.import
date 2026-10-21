@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clrm1ufodcx5e"
-valid=false
+uid="uid://ci38silydqv1p"
+path="res://.godot/imported/go_icon_play.svg-0e793bc36958b3eb560fd41d5d9cf14f.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://mockup/ranking_daily.svg"
+source_file="res://assets/images/popups/go_icon_play.svg"
+dest_files=["res://.godot/imported/go_icon_play.svg-0e793bc36958b3eb560fd41d5d9cf14f.ctex"]
 
 [params]
 

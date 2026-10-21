@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ô điều khiển TẮT / thẻ tĩnh. NinePatch: 18/18/18/22. Vẽ ở toạ độ 1x, viewBox gấp đôi (xuất PNG 199x117 hoặc 398x234). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 398 234" width="199" height="117"><g transform="scale(2)">
+<rect y="5" width="199" height="112" rx="16" fill="#D9CCB9"/><rect x="1" y="1" width="197" height="110" rx="15" fill="#fff" stroke="#E3D8C6" stroke-width="2"/>
+</g></svg>

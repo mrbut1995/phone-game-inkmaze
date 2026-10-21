@@ -25,7 +25,8 @@ var _finished_emitted: bool = false
 ## current: số bút đang có. maximum: sức chứa tối đa (số slot hiện ra).
 ## next_recover_unix: mốc UNIX (giây) bút kế tiếp hồi xong; <= 0 nghĩa là không đếm.
 ## show_risk: đánh dấu bút sẽ gãy nếu bỏ qua (khung đỏ + nhãn −1) — bút CUỐI đang có.
-func set_state(current: int, maximum: int, next_recover_unix: float = 0.0, show_risk: bool = true) -> void:
+## lost_index: slot bút VỪA GÃY (đã trừ rồi) — chỉ hiện nhãn −1, không khung; -1 = không có.
+func set_state(current: int, maximum: int, next_recover_unix: float = 0.0, show_risk: bool = true, lost_index: int = -1) -> void:
 	_maximum = clampi(maximum, 0, row.get_child_count())
 	_current = clampi(current, 0, _maximum)
 	_next_recover_unix = next_recover_unix
@@ -37,7 +38,7 @@ func set_state(current: int, maximum: int, next_recover_unix: float = 0.0, show_
 		var pencil: TextureRect = slot.get_node("Pencil")
 		pencil.texture = tex_full if i < _current else tex_empty
 		slot.get_node("RiskFrame").visible = (i == risk_index)
-		slot.get_node("Badge").visible = (i == risk_index)
+		slot.get_node("Badge").visible = (i == risk_index) or (i == lost_index)
 	_refresh_countdown()
 
 

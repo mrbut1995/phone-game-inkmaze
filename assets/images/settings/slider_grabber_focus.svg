@@ -1,7 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 40 40" width="20" height="20">
-  
-  <circle cx="0" cy="0" r="16.5" fill="none" stroke="#C4843A" stroke-width="2" stroke-dasharray="4 3" />
-  <circle cx="0" cy="0" r="13.5" fill="#FFFDF8" stroke="#C4843A" stroke-width="2.5" />
-  <circle cx="0" cy="0" r="4" fill="#D84444" />
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nút kéo 30x30 (đế 3px). Vẽ ở toạ độ 1x, viewBox gấp đôi (xuất PNG 30x30 hoặc 60x60). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="30" height="30"><g transform="scale(2)">
+<circle cx="15" cy="17" r="12" fill="#1E5578"/><circle cx="15" cy="14" r="12" fill="#FAF5EB" stroke="#E4622B" stroke-width="3"/><circle cx="15" cy="14" r="4" fill="#D84444"/>
+</g></svg>
