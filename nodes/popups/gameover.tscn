@@ -131,13 +131,15 @@ texture_margin_top = 11.0
 texture_margin_right = 14.0
 texture_margin_bottom = 11.0
 
-[node name="Base" unique_id=570730758 node_paths=PackedStringArray("value_progress", "value_walls", "value_score", "stamp_count", "revive_desc") instance=ExtResource("1_base")]
+[node name="Base" unique_id=570730758 node_paths=PackedStringArray("value_progress", "value_walls", "value_score", "stamp_count", "revive_desc", "value_best_week", "value_best_month") instance=ExtResource("1_base")]
 script = ExtResource("2_over")
 value_progress = NodePath("Panel/Content/Information/Stat1/Value")
 value_walls = NodePath("Panel/Content/Information/Stat2/Value")
 value_score = NodePath("Panel/Content/Information/Stat3/Value")
 stamp_count = NodePath("Panel/Content/Stamp/StampCount")
 revive_desc = NodePath("Panel/Content/Information/Banner/Desc")
+value_best_week = NodePath("Panel/Content/Information/Records/WeekBest")
+value_best_month = NodePath("Panel/Content/Information/Records/MonthBest")
 close_on_outside = false
 
 [node name="Panel" parent="." index="1" unique_id=290635111]
@@ -333,12 +335,38 @@ text = "+0 PTS"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Spacer" type="Control" parent="Panel/Content/Information" index="4" unique_id=1022812413]
+[node name="Spacer" type="Control" parent="Panel/Content/Information" index="5" unique_id=1022812413]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.23
+size_flags_stretch_ratio = 0.13
 
-[node name="Banner" type="TextureRect" parent="Panel/Content/Information" index="5" unique_id=88017727]
+[node name="Records" type="HBoxContainer" parent="Panel/Content/Information" index="4" unique_id=1900800001]
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="WeekBest" type="Label" parent="Panel/Content/Information/Records" index="0" unique_id=1900800002]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PopupStatLabelMuted"
+text = "STR_GAMEOVER_BEST_WEEK"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="MonthBest" type="Label" parent="Panel/Content/Information/Records" index="1" unique_id=1900800003]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PopupStatLabelMuted"
+text = "STR_GAMEOVER_BEST_MONTH"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Banner" type="TextureRect" parent="Panel/Content/Information" index="6" unique_id=88017727]
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
@@ -393,12 +421,12 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="SpacerB" type="Control" parent="Panel/Content/Information" index="6" unique_id=691644348]
+[node name="SpacerB" type="Control" parent="Panel/Content/Information" index="7" unique_id=691644348]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
 
-[node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information" index="7" unique_id=1988303326]
+[node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information" index="8" unique_id=1988303326]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_constants/separation = 20
@@ -473,12 +501,12 @@ clip_text = true
 text_overrun_behavior = 3
 resize_font_to_fit = true
 
-[node name="Spacer2" type="Control" parent="Panel/Content/Information" index="8" unique_id=542083628]
+[node name="Spacer2" type="Control" parent="Panel/Content/Information" index="9" unique_id=542083628]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_stretch_ratio = 0.1
 
-[node name="Quote" type="Label" parent="Panel/Content/Information" index="9" unique_id=793972754]
+[node name="Quote" type="Label" parent="Panel/Content/Information" index="10" unique_id=793972754]
 layout_mode = 2
 theme_type_variation = &"PopupQuote"
 text = "STR_GAME_OVER_TIP"

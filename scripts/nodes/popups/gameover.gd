@@ -17,6 +17,9 @@ signal revive_requested
 @export var value_score: Label = null
 @export var stamp_count: Label = null
 @export var revive_desc: Label = null
+## Kỷ lục tầng cao nhất trong TUẦN / THÁNG (dòng riêng dưới 3 chỉ số)
+@export var value_best_week: Label = null
+@export var value_best_month: Label = null
 
 
 func _on_open() -> void:
@@ -36,7 +39,29 @@ func _on_open() -> void:
 	# Dòng mô tả nút HỒI SINH: số bước thưởng do GameController truyền sang (mặc định 3)
 	revive_desc.text = tr("STR_REVIVE_DESC_STEPS").format([int(data.get("revive_steps", 3))])
 
+	# KỶ LỤC TẦNG: cao nhất đạt được trong tuần / tháng (Dungeon = tầng vô tận)
+	_set_record(value_best_week, "STR_GAMEOVER_BEST_WEEK", "week")
+	_set_record(value_best_month, "STR_GAMEOVER_BEST_MONTH", "month")
+
 	# Dây 3 nút (Hồi sinh / Menu / Thử lại) khai trong `gameover.tscn` (cùng scene)
+
+
+## Vẽ 1 dòng kỷ lục: ưu tiên số trong `data` (GameController truyền sang), thiếu thì hỏi GameManager.
+func _set_record(label: Label, key: String, kind: String) -> void:
+	if label == null:
+		return
+	var best := int(data.get("best_floor_%s" % kind, -1))
+	if best < 0:
+		best = _best_floor(kind)
+	label.text = tr(key).format([str(best) if best > 0 else tr("STR_GAMEOVER_BEST_NONE")])
+
+
+## Tầng cao nhất của kỳ `kind` (đọc qua /root như các manager khác — an toàn khi chạy test)
+func _best_floor(kind: String) -> int:
+	var gm := get_node_or_null("/root/GameManager")
+	if gm != null and gm.has_method("best_floor"):
+		return int(gm.call("best_floor", kind))
+	return 0
 
 
 func _on_revive_pressed() -> void:
