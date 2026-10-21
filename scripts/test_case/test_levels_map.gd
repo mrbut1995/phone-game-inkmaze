@@ -189,7 +189,10 @@ func _check_road(map: LevelMap) -> int:
 		var node := map.node_for(level_id)
 		if node == null:
 			continue
-		if curve.get_closest_point(node.position).distance_to(node.position) > 0.5:
+		# Đường nối đi qua TÂM MẶT nút (lệch `node_face_center_y` so với tâm art) — xem
+		# `LevelMap._build_paths()`; ở bản dọc hệ số tỉ lệ nút = 1.
+		var face_center: Vector2 = node.position + Vector2(0.0, float(map.get("node_face_center_y")))
+		if curve.get_closest_point(face_center).distance_to(face_center) > 0.5:
 			print("[FAIL] Nut man %d phai nam TREN duong noi" % level_id)
 			failures += 1
 			break

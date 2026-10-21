@@ -11,6 +11,10 @@ extends GameOverLevelPopup
 
 ## Nút HỒI SINH của layout gốc — ẩn trong bản thử thách
 @export var btn_revive: BaseButton = null
+## Popup thử thách giữ layout CŨ (có Subtitle + Banner hồi sinh) nên tự khai 2 node này;
+## `gameover_level.gd` đã đổi sang layout "Bản đồ đường đi" và gỡ 2 export tương ứng.
+@export var label_subtitle: Label = null
+@export var revive_desc: Label = null
 
 
 func _on_open() -> void:

@@ -37,6 +37,10 @@ const POPUPS := {
 const OPTIONAL := {
 	"language": ["anim_player"],
 	"edit_profile": ["anim_player"],
+	## Popup THỬ THÁCH giữ layout CŨ (Subtitle + Banner hồi sinh) nên KHÔNG có thẻ đường đi /
+	## bút chì / nút Chơi lại của layout mới — các export đó null là ĐÚNG thiết kế.
+	"gameover_challenge": ["path", "label_percent", "label_walked", "label_stats",
+		"label_count", "pencils", "btn_retry"],
 }
 
 var _failed := 0

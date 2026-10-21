@@ -133,6 +133,9 @@ func _check_exports(scene: Node, holder: Node, screen: String, holder_name: Stri
 	for prop: Dictionary in script.get_script_property_list():
 		if not (int(prop.get("usage", 0)) & PROPERTY_USAGE_SCRIPT_VARIABLE):
 			continue
+		# Biến NỘI BỘ (bắt đầu bằng `_`) là trạng thái lúc chạy, KHÔNG phải binding trong .tscn
+		if str(prop.get("name", "")).begins_with("_"):
+			continue
 		if int(prop.get("type", 0)) != TYPE_OBJECT:
 			continue
 		total += 1
