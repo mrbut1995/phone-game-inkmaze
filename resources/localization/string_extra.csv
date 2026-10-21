@@ -133,8 +133,8 @@ STR_GAME_OVER_LEVEL_TITLE,HIDDEN WALL HIT!,ĐÂM VÀO TƯỜNG VÔ HÌNH!
 STR_GAME_OVER_LEVEL_SUBTITLE,One wall hit ends the run — {0}% of the maze cleared,Chạm tường là hết màn — đã đi được {0}% mê cung
 STR_REVIVE_DESC_STEPS,Get +{0} more Steps to continue,Nhận thêm +{0} Bước để đi tiếp
 STR_REVIVE_DESC_UNDO,Return to the previous step,Quay lại bước trước đó
-STR_RETRY_POPUP_TITLE,RETRY LEVEL?,THỬ LẠI MÀN CHƠI?
-STR_RETRY_POPUP_SUBTITLE,Obstacle hit! Choose an option to retry or skip to results.,Đâm chướng ngại vật! Chọn xem quảng cáo hoặc dùng Xu để thử lại hoặc bỏ qua.
+STR_RETRY_POPUP_TITLE,PENCIL IN DANGER!,SẮP GÃY BÚT CHÌ!
+STR_RETRY_POPUP_SUBTITLE,Retry to save your pencil – or skip and lose 1.,Thử lại để giữ bút chì – hoặc bỏ qua và mất 1 bút.
 STR_RETRY_AD_TITLE,WATCH AD,XEM QUẢNG CÁO
 STR_RETRY_AD_DESC,Free retry by watching a video,Thử lại miễn phí bằng cách xem video
 STR_RETRY_BTN_WATCH,WATCH ⏵,XEM ⏵
@@ -142,6 +142,8 @@ STR_RETRY_GOLD_TITLE,{0} GOLD,{0} XU
 STR_RETRY_GOLD_DESC,Balance: {0} Gold,Số dư: {0} Xu
 STR_RETRY_BTN_PAY,PAY,TRẢ XU
 STR_RETRY_BTN_SKIP,SKIP,BỎ QUA
+STR_RETRY_NEXT_PENCIL,Next pencil in {0},Bút mới sau {0}
+STR_RETRY_LAST_PENCIL,Last pencil! Skipping leaves you with none.,Bút cuối cùng! Bỏ qua là hết bút chơi.
 STR_RETRY_NOT_ENOUGH_GOLD,Not enough Gold! Watch an ad instead.,Không đủ Xu! Hãy xem video quảng cáo.
 STR_RETRY_AD_NOT_AVAILABLE,Ad not available right now!,Quảng cáo hiện chưa sẵn sàng!
 STR_HUD_STEPS,STEPS,SỐ BƯỚC
@@ -1668,8 +1670,9 @@ STR_SHOP_LIFE_NAME,"Life (x1)","Lượt Chơi (x1)"
 STR_SHOP_LIFE_DESC,"Add one life so you can keep playing any mode","Cộng thêm 1 lượt chơi để tiếp tục chơi mọi chế độ"
 STR_SHOP_LIFE_STOCK_FORMAT,"Lives: {0}/{1}","Lượt chơi: {0}/{1}"
 STR_SHOP_LIFE_FULL,"LIVES FULL","ĐÃ ĐẦY LƯỢT"
-STR_LIFE_EMPTY_TITLE,"OUT OF LIVES!","HẾT LƯỢT CHƠI!"
-STR_LIFE_EMPTY_SUBTITLE,"You used all {0} lives. Wait for a recharge or buy more lives in the Shop.","Bạn đã dùng hết {0} lượt chơi. Hãy đợi hồi lượt hoặc mua thêm lượt ở Cửa hàng."
+STR_LIFE_EMPTY_TITLE,OUT OF PENCILS!,HẾT BÚT CHÌ!
+STR_LIFE_EMPTY_SUBTITLE,You're out of pencils (0/{0}). Wait for one to grow back or buy more in the Shop.,Bạn đã hết bút chì (0/{0}). Chờ bút hồi lại hoặc ghé Cửa hàng mua thêm.
+STR_LIFE_EMPTY_RECOVERED,A pencil is back! Close this to keep playing.,Bút đã hồi! Thoát ra để chơi tiếp.
 STR_LIFE_EMPTY_RECHARGE,"Next life in {0}","Lượt kế tiếp sau {0}"
 STR_LIFE_EMPTY_RECHARGE_FULL,"Lives are full","Lượt chơi đã đầy"
 STR_LIFE_BTN_EXIT,"EXIT","THOÁT RA"

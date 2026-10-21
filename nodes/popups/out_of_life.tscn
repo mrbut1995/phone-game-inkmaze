@@ -2,52 +2,88 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
 [ext_resource type="Script" path="res://scripts/nodes/popups/out_of_life.gd" id="2_life"]
-[ext_resource type="Texture2D" uid="uid://bmjgppp6dr4og" path="res://assets/images-png/popups/panel_popup.png" id="3_panel"]
-[ext_resource type="Texture2D" uid="uid://b06a5wgxn10bn" path="res://assets/images-png/popups/popup_washi_tape.png" id="4_tape"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_life.png" id="5_heart"]
-[ext_resource type="Texture2D" uid="uid://b8rwt2332ygre" path="res://assets/images-png/common/popup_btn_normal.png" id="6_btn_n"]
-[ext_resource type="Texture2D" uid="uid://cydicvgwyy1rd" path="res://assets/images-png/common/popup_btn_pressed.png" id="7_btn_p"]
-[ext_resource type="Texture2D" uid="uid://c48bl0l8o5lrv" path="res://assets/images-png/common/popup_btn_focus.png" id="8_btn_f"]
+[ext_resource type="Script" path="res://scripts/nodes/popups/retry_pencils.gd" id="2b_pencils"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/oof_panel.png" id="3_panel"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_washi_tape.png" id="4_tape"]
+[ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="5_clip"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_hero_pencil.png" id="6_hero"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_pencil_full.png" id="7_pn_full"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_pencil_empty.png" id="8_pn_empty"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_pencil_risk.png" id="9_pn_risk"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/oof_icon_exit.png" id="10_icon_exit"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/oof_icon_shop.png" id="11_icon_shop"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/oof_btn_exit_normal.png" id="12_ex_n"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/oof_btn_exit_pressed.png" id="13_ex_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/oof_btn_exit_focus.png" id="14_ex_f"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/oof_btn_shop_normal.png" id="15_sh_n"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/oof_btn_shop_pressed.png" id="16_sh_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/popups/oof_btn_shop_focus.png" id="17_sh_f"]
 
-[node name="Base" node_paths=PackedStringArray("label_title", "label_subtitle", "label_recharge", "icon_life", "btn_exit", "btn_shop") instance=ExtResource("1_base")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+bg_color = Color(0.898, 0.286, 0.227, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Base" node_paths=PackedStringArray("label_title", "label_subtitle", "pencils", "btn_exit", "btn_shop") instance=ExtResource("1_base")]
 script = ExtResource("2_life")
 label_title = NodePath("Panel/Art/WashiTape/Title")
 label_subtitle = NodePath("Panel/Content/Information/Subtitle")
-label_recharge = NodePath("Panel/Content/Information/Recharge")
-icon_life = NodePath("Panel/Content/Heart")
-btn_exit = NodePath("Panel/Content/Information/Buttons/ExitBtn")
-btn_shop = NodePath("Panel/Content/Information/Buttons/ShopBtn")
+pencils = NodePath("Panel/Content/Information/PencilBox")
+btn_exit = NodePath("Panel/Content/Information/Choices/ExitBtn")
+btn_shop = NodePath("Panel/Content/Information/Choices/ShopBtn")
 close_on_outside = false
 
-[node name="Panel" parent="." index="1"]
+[node name="Panel" parent="." index="1" unique_id=290635111]
 anchor_left = 0.5
-anchor_top = 0.24
+anchor_top = 0.22
 anchor_right = 0.5
-anchor_bottom = 0.24
-offset_left = -235.0
-offset_right = 235.0
-offset_bottom = 330.0
+anchor_bottom = 0.22
+offset_left = -239.0
+offset_right = 239.0
+offset_bottom = 440.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Art" parent="Panel" index="0"]
+[node name="Art" parent="Panel" index="0" unique_id=1269512275]
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_panel")
+patch_margin_left = 70
+patch_margin_top = 30
+patch_margin_right = 30
+patch_margin_bottom = 30
 
-[node name="WashiTape" type="NinePatchRect" parent="Panel/Art" index="0"]
+[node name="WashiTape" type="NinePatchRect" parent="Panel/Art" index="0" unique_id=821413594]
 self_modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
 layout_mode = 0
-offset_left = 56.0
+offset_left = 88.0
 offset_top = -14.0
-offset_right = 398.0
+offset_right = 430.0
 offset_bottom = 54.0
-rotation = -0.04
+rotation = -0.05
 pivot_offset = Vector2(171, 34)
 texture = ExtResource("4_tape")
 patch_margin_left = 29
 patch_margin_right = 27
 axis_stretch_horizontal = 2
 
-[node name="Title" type="Label" parent="Panel/Art/WashiTape" index="0"]
+[node name="Title" type="Label" parent="Panel/Art/WashiTape" index="0" unique_id=1280996057]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,116 +99,355 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Content" parent="Panel" index="1"]
+[node name="Content" parent="Panel" index="1" unique_id=45188561]
 anchors_preset = -1
-anchor_left = 0.08
-anchor_right = 0.92
-anchor_bottom = 0.92
-offset_top = 58.0
-offset_right = 0.0
-offset_bottom = 0.0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 68.0
+offset_top = 62.0
+offset_right = -28.0
+offset_bottom = -22.0
 
-[node name="Heart" type="TextureRect" parent="Panel/Content" index="0"]
+[node name="Clip" type="TextureRect" parent="Panel/Content" index="0" unique_id=1090087767]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -26.0
-offset_top = 6.0
-offset_right = 26.0
-offset_bottom = 58.0
-grow_horizontal = 2
+anchors_preset = -1
+offset_left = -15.0
+offset_top = -60.0
+offset_right = 8.0
+offset_bottom = -19.0
 mouse_filter = 2
-texture = ExtResource("5_heart")
-expand_mode = 1
-stretch_mode = 5
-self_modulate = Color(0.84705883, 0.26666668, 0.26666668, 1)
+texture = ExtResource("5_clip")
 
-[node name="Information" type="VBoxContainer" parent="Panel/Content" index="1"]
+[node name="Information" type="VBoxContainer" parent="Panel/Content" index="1" unique_id=350836454]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 62.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 8
 
-[node name="Subtitle" type="Label" parent="Panel/Content/Information" index="0"]
+[node name="Subtitle" type="Label" parent="Panel/Content/Information" index="0" unique_id=4207123]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PopupSubtitle"
+theme_override_font_sizes/font_size = 14
 text = "STR_LIFE_EMPTY_SUBTITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Recharge" type="Label" parent="Panel/Content/Information" index="1"]
-custom_minimum_size = Vector2(0, 26)
+[node name="Hero" type="TextureRect" parent="Panel/Content/Information" index="1" unique_id=1744934001]
+custom_minimum_size = Vector2(114, 74)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"PopupStatValueSm"
-text = "STR_LIFE_EMPTY_RECHARGE"
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = ExtResource("6_hero")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PencilBox" type="VBoxContainer" parent="Panel/Content/Information" index="2" unique_id=1744934002 node_paths=PackedStringArray("row", "recover_label")]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_constants/separation = 8
+script = ExtResource("2b_pencils")
+tex_full = ExtResource("7_pn_full")
+tex_empty = ExtResource("8_pn_empty")
+row = NodePath("Row")
+recover_label = NodePath("RecoverLabel")
+
+[node name="Row" type="HBoxContainer" parent="Panel/Content/Information/PencilBox" index="0" unique_id=1744934003]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Slot1" type="Control" parent="Panel/Content/Information/PencilBox/Row" index="0" unique_id=1744934010]
+custom_minimum_size = Vector2(30, 56)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RiskFrame" type="TextureRect" parent="Panel/Content/Information/PencilBox/Row/Slot1" index="0" unique_id=1744934011]
+visible = false
+layout_mode = 0
+offset_top = -6.0
+offset_right = 30.0
+offset_bottom = 62.0
+mouse_filter = 2
+texture = ExtResource("9_pn_risk")
+expand_mode = 1
+
+[node name="Pencil" type="TextureRect" parent="Panel/Content/Information/PencilBox/Row/Slot1" index="1" unique_id=1744934012]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 24.0
+offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("8_pn_empty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Badge" type="Label" parent="Panel/Content/Information/PencilBox/Row/Slot1" index="2" unique_id=1744934013]
+visible = false
+layout_mode = 0
+offset_left = 14.0
+offset_top = -14.0
+offset_right = 42.0
+offset_bottom = 2.0
+mouse_filter = 2
+theme_type_variation = &"PopupCtaSmall"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = "−1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SpacerMid" type="Control" parent="Panel/Content/Information" index="2"]
-custom_minimum_size = Vector2(0, 10)
+[node name="Slot2" type="Control" parent="Panel/Content/Information/PencilBox/Row" index="1" unique_id=1744934014]
+custom_minimum_size = Vector2(30, 56)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RiskFrame" type="TextureRect" parent="Panel/Content/Information/PencilBox/Row/Slot2" index="0" unique_id=1744934015]
+visible = false
+layout_mode = 0
+offset_top = -6.0
+offset_right = 30.0
+offset_bottom = 62.0
+mouse_filter = 2
+texture = ExtResource("9_pn_risk")
+expand_mode = 1
+
+[node name="Pencil" type="TextureRect" parent="Panel/Content/Information/PencilBox/Row/Slot2" index="1" unique_id=1744934016]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 24.0
+offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("8_pn_empty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Badge" type="Label" parent="Panel/Content/Information/PencilBox/Row/Slot2" index="2" unique_id=1744934017]
+visible = false
+layout_mode = 0
+offset_left = 14.0
+offset_top = -14.0
+offset_right = 42.0
+offset_bottom = 2.0
+mouse_filter = 2
+theme_type_variation = &"PopupCtaSmall"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = "−1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot3" type="Control" parent="Panel/Content/Information/PencilBox/Row" index="2" unique_id=1744934018]
+custom_minimum_size = Vector2(30, 56)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RiskFrame" type="TextureRect" parent="Panel/Content/Information/PencilBox/Row/Slot3" index="0" unique_id=1744934019]
+visible = false
+layout_mode = 0
+offset_top = -6.0
+offset_right = 30.0
+offset_bottom = 62.0
+mouse_filter = 2
+texture = ExtResource("9_pn_risk")
+expand_mode = 1
+
+[node name="Pencil" type="TextureRect" parent="Panel/Content/Information/PencilBox/Row/Slot3" index="1" unique_id=1744934020]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 24.0
+offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("8_pn_empty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Badge" type="Label" parent="Panel/Content/Information/PencilBox/Row/Slot3" index="2" unique_id=1744934021]
+visible = false
+layout_mode = 0
+offset_left = 14.0
+offset_top = -14.0
+offset_right = 42.0
+offset_bottom = 2.0
+mouse_filter = 2
+theme_type_variation = &"PopupCtaSmall"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = "−1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot4" type="Control" parent="Panel/Content/Information/PencilBox/Row" index="3" unique_id=1744934022]
+custom_minimum_size = Vector2(30, 56)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RiskFrame" type="TextureRect" parent="Panel/Content/Information/PencilBox/Row/Slot4" index="0" unique_id=1744934023]
+visible = false
+layout_mode = 0
+offset_top = -6.0
+offset_right = 30.0
+offset_bottom = 62.0
+mouse_filter = 2
+texture = ExtResource("9_pn_risk")
+expand_mode = 1
+
+[node name="Pencil" type="TextureRect" parent="Panel/Content/Information/PencilBox/Row/Slot4" index="1" unique_id=1744934024]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 24.0
+offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("8_pn_empty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Badge" type="Label" parent="Panel/Content/Information/PencilBox/Row/Slot4" index="2" unique_id=1744934025]
+visible = false
+layout_mode = 0
+offset_left = 14.0
+offset_top = -14.0
+offset_right = 42.0
+offset_bottom = 2.0
+mouse_filter = 2
+theme_type_variation = &"PopupCtaSmall"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = "−1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot5" type="Control" parent="Panel/Content/Information/PencilBox/Row" index="4" unique_id=1744934026]
+custom_minimum_size = Vector2(30, 56)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RiskFrame" type="TextureRect" parent="Panel/Content/Information/PencilBox/Row/Slot5" index="0" unique_id=1744934027]
+visible = false
+layout_mode = 0
+offset_top = -6.0
+offset_right = 30.0
+offset_bottom = 62.0
+mouse_filter = 2
+texture = ExtResource("9_pn_risk")
+expand_mode = 1
+
+[node name="Pencil" type="TextureRect" parent="Panel/Content/Information/PencilBox/Row/Slot5" index="1" unique_id=1744934028]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 24.0
+offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("8_pn_empty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Badge" type="Label" parent="Panel/Content/Information/PencilBox/Row/Slot5" index="2" unique_id=1744934029]
+visible = false
+layout_mode = 0
+offset_left = 14.0
+offset_top = -14.0
+offset_right = 42.0
+offset_bottom = 2.0
+mouse_filter = 2
+theme_type_variation = &"PopupCtaSmall"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = "−1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RecoverLabel" type="Label" parent="Panel/Content/Information/PencilBox" index="1" unique_id=1744934040]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_type_variation = &"PopupSubtitle"
+theme_override_font_sizes/font_size = 12
+text = "STR_RETRY_NEXT_PENCIL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RecoverTimer" type="Timer" parent="Panel/Content/Information/PencilBox" index="2" unique_id=1744934041]
+autostart = true
+
+[node name="SpacerMid" type="Control" parent="Panel/Content/Information" index="3"]
+custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Buttons" type="HBoxContainer" parent="Panel/Content/Information" index="3"]
+[node name="Choices" type="HBoxContainer" parent="Panel/Content/Information" index="4"]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 10
 alignment = 1
 
-[node name="ExitBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="0"]
-custom_minimum_size = Vector2(190, 46)
+[node name="ExitBtn" type="TextureButton" parent="Panel/Content/Information/Choices" index="0"]
 layout_mode = 2
-texture_normal = ExtResource("6_btn_n")
-texture_pressed = ExtResource("7_btn_p")
-texture_hover = ExtResource("6_btn_n")
-texture_focused = ExtResource("8_btn_f")
+size_flags_vertical = 4
+texture_normal = ExtResource("12_ex_n")
+texture_pressed = ExtResource("13_ex_p")
+texture_hover = ExtResource("12_ex_n")
+texture_focused = ExtResource("14_ex_f")
 
-[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/ExitBtn" index="0"]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Information/Choices/ExitBtn" index="0"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -34.0
+offset_right = 29.0
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"PopupBtnTextMuted22"
-text = "STR_LIFE_BTN_EXIT"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
+mouse_filter = 2
+texture = ExtResource("10_icon_exit")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="ShopBtn" type="TextureButton" parent="Panel/Content/Information/Buttons" index="1"]
-custom_minimum_size = Vector2(190, 46)
+[node name="ShopBtn" type="TextureButton" parent="Panel/Content/Information/Choices" index="1"]
 layout_mode = 2
-self_modulate = Color(0.98, 0.85, 0.35, 1)
-texture_normal = ExtResource("6_btn_n")
-texture_pressed = ExtResource("7_btn_p")
-texture_hover = ExtResource("6_btn_n")
-texture_focused = ExtResource("8_btn_f")
+size_flags_vertical = 4
+texture_normal = ExtResource("15_sh_n")
+texture_pressed = ExtResource("16_sh_p")
+texture_hover = ExtResource("15_sh_n")
+texture_focused = ExtResource("17_sh_f")
 
-[node name="Label" type="Label" parent="Panel/Content/Information/Buttons/ShopBtn" index="0"]
+[node name="Icon" type="TextureRect" parent="Panel/Content/Information/Choices/ShopBtn" index="0"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -36.0
+offset_right = 31.0
+offset_bottom = 26.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_type_variation = &"PopupBtnText"
-text = "STR_LIFE_BTN_SHOP"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
+mouse_filter = 2
+texture = ExtResource("11_icon_shop")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="SpacerBottom" type="Control" parent="Panel/Content/Information" index="4"]
-custom_minimum_size = Vector2(0, 8)
+[node name="SpacerBottom" type="Control" parent="Panel/Content/Information" index="5"]
+custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 
-[connection signal="pressed" from="Panel/Content/Information/Buttons/ExitBtn" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="Panel/Content/Information/Buttons/ShopBtn" to="." method="_on_shop_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Choices/ExitBtn" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Panel/Content/Information/Choices/ShopBtn" to="." method="_on_shop_pressed"]
+[connection signal="timeout" from="Panel/Content/Information/PencilBox/RecoverTimer" to="Panel/Content/Information/PencilBox" method="_on_recover_timer_timeout"]

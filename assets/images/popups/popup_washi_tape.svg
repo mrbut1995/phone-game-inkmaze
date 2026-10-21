@@ -1,27 +1,18 @@
-<svg width="115" height="40" viewBox="0 0 115 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <!-- Đổ bóng nhẹ cho Washi Tape -->
-    <filter id="shadow_tape" x="0" y="0" width="120" height="40" filterUnits="userSpaceOnUse">
-      <feOffset dy="1"/>
-      <feGaussianBlur stdDeviation="1"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
-    </filter>
-  </defs>
-
-  <g>
-    <!-- Bóng đổ của tape -->
-    <path d="M2 5 L108 4 L112 12 L110 22 L105 32 L5 34 L0 24 L2 12 Z" fill="black" opacity="0.05" />
-    
-    <!-- Miếng băng keo -->
-    <path d="
-      M 5 5 
-      Q 55 4, 105 5 
-      L 108 8 L 104 12 L 109 16 L 105 20 L 108 24 L 104 28 L 107 32
-      Q 55 33, 5 32
-      L 2 28 L 6 24 L 1 20 L 5 16 L 1 12 L 6 8 Z" 
-      fill="#B2DFDB" fill-opacity="0.85" />
-      
-    <!-- Vân trang trí trên băng keo (vạch trắng nhẹ) -->
-    <path d="M20 5 L15 32 M40 4 L35 32 M60 4 L55 33 M80 5 L75 32 M100 5 L95 32" stroke="white" stroke-width="2" stroke-opacity="0.3" />
-  </g>
+<svg width="115" height="40" viewBox="0 0 115 40" fill="none" xmlns="http://www.w3.org/2000/svg">   <!-- Washi tape trung tính (xám rất nhạt) để tô màu bằng self_modulate; không dùng filter/text -->
+  <path d="M0.00 4.20 L115.00 4.20 L111.80 11.20 L115.00 18.20 L111.80 25.20 L115.00 32.20 L111.80 39.20 L3.20 39.20 L0.00 32.20 L3.20 25.20 L0.00 18.20 L3.20 11.20 L0.00 4.20 Z" fill="#000000" fill-opacity="0.05"/>
+  <path d="M0.00 3.20 L115.00 3.20 L111.80 10.20 L115.00 17.20 L111.80 24.20 L115.00 31.20 L111.80 38.20 L3.20 38.20 L0.00 31.20 L3.20 24.20 L0.00 17.20 L3.20 10.20 L0.00 3.20 Z" fill="#000000" fill-opacity="0.09"/>
+  <path d="M0.00 2.00 L115.00 2.00 L111.80 9.00 L115.00 16.00 L111.80 23.00 L115.00 30.00 L111.80 37.00 L3.20 37.00 L0.00 30.00 L3.20 23.00 L0.00 16.00 L3.20 9.00 L0.00 2.00 Z" fill="#EEEEEE" fill-opacity="0.96"/>
+  <rect x="0" y="2.6" width="115" height="11.9" fill="#FFFFFF" fill-opacity="0.55"/>
+  <rect x="0" y="25.8" width="115" height="11.2" fill="#000000" fill-opacity="0.045"/>
+  <line x1="6" y1="14.4" x2="109" y2="14.4" stroke="#FFFFFF" stroke-opacity="0.37" stroke-width="0.7"/>
+  <line x1="6" y1="23.9" x2="109" y2="23.9" stroke="#000000" stroke-opacity="0.05" stroke-width="0.7"/>
+  <line x1="6" y1="20.5" x2="109" y2="20.5" stroke="#FFFFFF" stroke-opacity="0.39" stroke-width="0.7"/>
+  <line x1="6" y1="6.7" x2="109" y2="6.7" stroke="#000000" stroke-opacity="0.07" stroke-width="0.7"/>
+  <line x1="6" y1="6.1" x2="109" y2="6.1" stroke="#FFFFFF" stroke-opacity="0.39" stroke-width="0.7"/>
+  <line x1="6" y1="7.0" x2="109" y2="7.0" stroke="#000000" stroke-opacity="0.05" stroke-width="0.7"/>
+  <line x1="6" y1="17.3" x2="109" y2="17.3" stroke="#FFFFFF" stroke-opacity="0.43" stroke-width="0.7"/>
+  <line x1="0" y1="4.2" x2="115" y2="4.2" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="1"/>
+  <line x1="0" y1="34.8" x2="115" y2="34.8" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="1"/>
+  <line x1="0" y1="2.5" x2="115" y2="2.5" stroke="#000000" stroke-opacity="0.10" stroke-width="1"/>
+  <line x1="0" y1="36.5" x2="115" y2="36.5" stroke="#000000" stroke-opacity="0.14" stroke-width="1"/>
 </svg>

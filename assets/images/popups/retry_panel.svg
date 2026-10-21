@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 478 500" width="478" height="500">
+
+  <defs>
+    <filter id="ps" x="0" y="0" width="478" height="500" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="4.5" flood-color="#111B30" flood-opacity="0.22"/>
+    </filter>
+    <linearGradient id="pf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFEF9"/><stop offset="1" stop-color="#FBF6E8"/></linearGradient>
+    <pattern id="gm" x="58" y="16" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M 16 0 L 0 0 0 16" fill="none" stroke="#E3EBEF" stroke-width="0.7"/></pattern>
+    <pattern id="gM" x="58" y="16" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M 64 0 L 0 0 0 64" fill="none" stroke="#D3DFE6" stroke-width="0.9"/></pattern>
+  </defs>
+  <rect x="24" y="26" width="444" height="442" rx="3" fill="#E4E1D2" transform="rotate(1.6 246 250)"/>
+  <rect x="18" y="20" width="444" height="444" rx="3" fill="#EDEADC" transform="rotate(-0.9 240 250)"/>
+  <g filter="url(#ps)"><path d="M 14 16 L 20 13 L 26 16 L 32 13 L 38 16 L 44 13 L 50 16 L 56 13 L 62 16 L 68 13 L 74 16 L 80 13 L 86 16 L 92 13 L 98 16 L 104 13 L 110 16 L 116 13 L 122 16 L 128 13 L 134 16 L 140 13 L 146 16 L 152 13 L 158 16 L 164 13 L 170 16 L 176 13 L 182 16 L 188 13 L 194 16 L 200 13 L 206 16 L 212 13 L 218 16 L 224 13 L 230 16 L 236 13 L 242 16 L 248 13 L 254 16 L 260 13 L 266 16 L 272 13 L 278 16 L 284 13 L 290 16 L 296 13 L 302 16 L 308 13 L 314 16 L 320 13 L 326 16 L 332 13 L 338 16 L 344 13 L 350 16 L 356 13 L 362 16 L 368 13 L 374 16 L 380 13 L 386 16 L 392 13 L 398 16 L 404 13 L 410 16 L 416 13 L 422 16 L 428 13 L 434 16 L 440 13 L 446 16 L 452 13 L 458 16 V 482 L 452 485 L 446 482 L 440 485 L 434 482 L 428 485 L 422 482 L 416 485 L 410 482 L 404 485 L 398 482 L 392 485 L 386 482 L 380 485 L 374 482 L 368 485 L 362 482 L 356 485 L 350 482 L 344 485 L 338 482 L 332 485 L 326 482 L 320 485 L 314 482 L 308 485 L 302 482 L 296 485 L 290 482 L 284 485 L 278 482 L 272 485 L 266 482 L 260 485 L 254 482 L 248 485 L 242 482 L 236 485 L 230 482 L 224 485 L 218 482 L 212 485 L 206 482 L 200 485 L 194 482 L 188 485 L 182 482 L 176 485 L 170 482 L 164 485 L 158 482 L 152 485 L 146 482 L 140 485 L 134 482 L 128 485 L 122 482 L 116 485 L 110 482 L 104 485 L 98 482 L 92 485 L 86 482 L 80 485 L 74 482 L 68 485 L 62 482 L 56 485 L 50 482 L 44 485 L 38 482 L 32 485 L 26 482 L 20 485 L 14 482 Z" fill="url(#pf)"/></g>
+  <rect x="58" y="16" width="400" height="466" fill="url(#gm)"/>
+  <rect x="58" y="16" width="400" height="466" fill="url(#gM)"/>
+  <rect x="14" y="14" width="34" height="470" fill="#FFFCF0"/>
+  <rect x="48" y="14" width="0.8" height="470" fill="#DAD6C4"/>
+  <rect x="56" y="16" width="1" height="466" fill="#E9B3B0"/>
+  <rect x="59" y="16" width="1" height="466" fill="#E9B3B0" opacity="0.7"/>
+  <circle cx="31" cy="62" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><path d="M 26.8 63.6 A 5.2 5.2 0 0 0 35.2 63.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="1"/><circle cx="31" cy="132" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><path d="M 26.8 133.6 A 5.2 5.2 0 0 0 35.2 133.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="1"/><circle cx="31" cy="202" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><path d="M 26.8 203.6 A 5.2 5.2 0 0 0 35.2 203.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="1"/><circle cx="31" cy="272" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><path d="M 26.8 273.6 A 5.2 5.2 0 0 0 35.2 273.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="1"/><circle cx="31" cy="342" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><path d="M 26.8 343.6 A 5.2 5.2 0 0 0 35.2 343.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="1"/><circle cx="31" cy="412" r="5.2" fill="#E4E0CE" stroke="#C9C4AE" stroke-width="0.8"/><path d="M 26.8 413.6 A 5.2 5.2 0 0 0 35.2 413.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="1"/>
+</svg>

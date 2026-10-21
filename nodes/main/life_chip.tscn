@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/life_chip.gd" id="1_life"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_life.png" id="2_ico"]
+[ext_resource uid="uid://c352dc54ss5rc" type="Texture2D" path="res://assets/images-png/icons/icon_life.png" id="2_ico"]
 
 [sub_resource type="StyleBoxFlat" id="sb_panel"]
 bg_color = Color(1, 0.99215686, 0.9411765, 1)

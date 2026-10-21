@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="88" height="88">
+  <g transform="translate(-3.2 -0.4) scale(0.748)"><g transform="rotate(42 48 48)">
+    <rect x="39" y="6" width="18" height="14" rx="6" fill="#F4A6B7" stroke="#333745" stroke-width="4.5"/>
+    <rect x="39" y="20" width="18" height="9" fill="#C3CBD2" stroke="#333745" stroke-width="4.5"/>
+    <rect x="39" y="29" width="18" height="38" fill="#FFD166" stroke="#333745" stroke-width="4.5"/>
+    <rect x="46.5" y="29" width="3" height="38" fill="#EAA023"/>
+    <path d="M42.5 33 V63" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" opacity="0.85"/>
+    <polygon points="39,67 57,67 48,88" fill="#F6DDB0" stroke="#333745" stroke-width="4.5" stroke-linejoin="round"/>
+    <polygon points="44.3,78 51.7,78 48,88" fill="#333745"/>
+  </g></g>
+  <path d="M72 56 V84 M58 70 H86" fill="none" stroke="#333745" stroke-width="17" stroke-linecap="round"/>
+  <path d="M72 56 V84 M58 70 H86" fill="none" stroke="#FFFFFF" stroke-width="9.5" stroke-linecap="round"/>
+</svg>

@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
 [ext_resource type="Texture2D" uid="uid://b3hsm3p524syt" path="res://assets/images-png/ranking/rank_sheet.png" id="5_sheet"]
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="7_clip"]
-[ext_resource type="Texture2D" uid="uid://b06a5wgxn10bn" path="res://assets/images-png/popups/popup_washi_tape.png" id="8_4cuta"]
+[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="8_4cuta"]
 [ext_resource type="Texture2D" uid="uid://bir8bpmt03wuv" path="res://assets/images-png/icons/icon_trophy.png" id="8_trophy"]
 [ext_resource type="Texture2D" uid="uid://c0ghvvkvr38pj" path="res://assets/images-png/ranking/chip_scope.png" id="9_chip"]
 [ext_resource type="Texture2D" uid="uid://duqcleabqujwd" path="res://assets/images-png/settings/divider_dashed.png" id="10_divider"]
