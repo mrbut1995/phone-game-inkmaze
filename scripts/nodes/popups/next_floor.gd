@@ -1,87 +1,106 @@
 class_name NextFloorPopup
 extends BasePopup
 ## ============================================================================
-## Popup: Phiếu thông qua tầng (nodes/popups/next_floor.tscn)
-## Mockup: mockup/popup_to_next_floor.svg
-## Dữ liệu: open({ floor, next_floor, steps_bonus, base_score, move_bonus,
-##                perfect_bonus, total_score })
+## Popup: QUA TẦNG của DUNGEON (nodes/popups/next_floor.tscn)
+## Bố cục (cùng ngôn ngữ với Game Over Dungeon):
+##   1. Đầu: "TẦNG n" (xanh)
+##   2. Thước tầng (NextFloorRuler): tầng vừa qua · SẮP VÀO tầng kế · kỷ lục TUẦN/THÁNG
+##   3. Thẻ điểm CỘNG DỒN: Cơ bản +a · Đi nhanh +b · Hoàn hảo +c ──── Tổng (dòng bằng 0 tự ẩn)
+##   4. Thẻ thưởng bước đi "+N" (có hiệu ứng "bonus_pop"; N = 0 thì ẩn)
+##   5. Nút: Về Menu · Vào tầng kế
+##
+## Dữ liệu (GameController._complete_floor): floor, next_floor, bonus_steps|steps_bonus,
+##   base_score, move_bonus, perfect_bonus, total_score|score, best_floor_week?, best_floor_month?
+## Signal giữ nguyên tên cũ để UIController nối như trước:
+##   rest_requested  -> _emit_home      enter_requested -> _emit_continue
 ## ============================================================================
 
-signal enter_requested
 signal rest_requested
+signal enter_requested
 
 ## Node binding: khai `node_paths` + `NodePath` trong `next_floor.tscn`
-@export var value_bonus: Label = null
+@export var label_floor: Label = null
+@export var ruler: NextFloorRuler = null
+@export var row_move: Control = null
+@export var row_perfect: Control = null
 @export var value_base: Label = null
 @export var value_move: Label = null
 @export var value_perfect: Label = null
 @export var value_total: Label = null
-@export var warn_title: Label = null
+@export var bonus_card: Control = null
+@export var value_bonus: Label = null
 @export var go_label: Label = null
-@export var stamp_title: Label = null
-@export var stamp_sub: Label = null
-## Hiệu ứng riêng của popup (animation "bonus_pop") — node tên `FxAnim` vì popup đã có
-## `AnimationPlayer` của base.tscn (mở/đóng popup) — không được trùng tên.
 @export var fx_anim: AnimationPlayer = null
 
 
-func _play_fx(anim_name: StringName) -> bool:
-	if fx_anim == null or not fx_anim.has_animation(anim_name):
-		return false
-	fx_anim.play(anim_name)
-	return true
-
-
 func _on_open() -> void:
-	var floor := int(data.get("floor", 1))
-	var next_floor := int(data.get("next_floor", floor + 1))
+	var floor_no := maxi(int(data.get("floor", data.get("level", 1))), 1)
+	var next_no := maxi(int(data.get("next_floor", floor_no + 1)), floor_no + 1)
+	label_floor.text = tr("STR_GO_FLOOR").format([floor_no])
+	go_label.text = tr("STR_NF_ENTER").format([next_no])
 
-	value_bonus.text = tr("STR_BONUS_STEPS_GAINED").format([int(data.get("steps_bonus", 0))])
-	value_base.text = tr("STR_SCORE_FORMAT").format([int(data.get("base_score", 0))])
-	value_move.text = tr("STR_SCORE_FORMAT").format([int(data.get("move_bonus", 0))])
-	value_perfect.text = tr("STR_SCORE_FORMAT").format([int(data.get("perfect_bonus", 0))])
-	var total_sc := int(data.get("total_score", 0))
-	if DisplayServer.get_name() != "headless" and total_sc > 0:
-		value_total.text = tr("STR_RANK_POINTS").format([0])
-		# (GIỮ tween) Đếm số = NỘI SUY DỮ LIỆU (điểm lúc chạy) + format text mỗi khung hình
-		var tw_sc := create_tween()
-		tw_sc.tween_method(func(v: float) -> void:
-			if is_instance_valid(value_total):
-				value_total.text = tr("STR_RANK_POINTS").format([_thousands(int(round(v)))])
-		, 0.0, float(total_sc), 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	else:
-		value_total.text = tr("STR_RANK_POINTS").format([_thousands(total_sc)])
+	var week := _record("week")
+	var month := _record("month")
+	ruler.set_data(floor_no, next_no, week, month,
+		tr("STR_GO_YOU"), tr("STR_NF_NEXT"), tr("STR_GO_WEEK"), tr("STR_GO_MONTH"))
 
+	var base_pts := int(data.get("base_score", 0))
+	var move_pts := int(data.get("move_bonus", 0))
+	var perfect_pts := int(data.get("perfect_bonus", 0))
+	value_base.text = _fmt_signed(base_pts)
+	value_move.text = _fmt_signed(move_pts)
+	value_perfect.text = _fmt_signed(perfect_pts)
+	# Khoản bằng 0 thì ẩn cho gọn
+	row_move.visible = move_pts != 0
+	row_perfect.visible = perfect_pts != 0
+	value_total.text = _fmt_int(int(data.get("total_score", data.get("score", 0))))
+
+	var bonus := int(data.get("bonus_steps", data.get("steps_bonus", 0)))
+	value_bonus.text = "+%d" % bonus
+	bonus_card.visible = bonus > 0
+	_play_bonus_pop.call_deferred(bonus)
+
+
+func _play_bonus_pop(bonus: int) -> void:
+	if bonus <= 0 or fx_anim == null or not is_inside_tree():
+		return
 	value_bonus.pivot_offset = value_bonus.size * 0.5
-	if not _play_fx(&"bonus_pop"):
-		# Fallback khi scene thiếu FxAnim
-		var tw_b := create_tween()
-		tw_b.tween_property(value_bonus, "scale", Vector2(1.2, 1.2), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		tw_b.tween_property(value_bonus, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-
-	warn_title.text = tr("STR_FLOOR_WARNING_TITLE").format([next_floor])
-	go_label.text = tr("STR_BTN_ENTER_NEXT_FLOOR").format([next_floor])
-
-	# Con dấu xanh lục ở góc: "ĐÃ QUA" + "TẦNG 0n ✔" (mockup popup_to_next_floor.svg)
-	stamp_title.text = tr("STR_RESULT_STAMP_PASSED")
-	stamp_sub.text = tr("STR_RESULT_STAMP_FLOOR").format(["%02d" % floor])
-
-	# Dây 2 nút (Nghỉ / Vào tầng kế) khai trong `next_floor.tscn` (cùng scene)
+	if fx_anim.has_animation(&"bonus_pop"):
+		fx_anim.play(&"bonus_pop")
 
 
-## 4690 -> "4,690" cho khớp mockup
-func _thousands(value: int) -> String:
-	var digits := str(absi(value))
+# ---------------------------------------------------------------------------
+# Kỷ lục (cho thước tầng)
+# ---------------------------------------------------------------------------
+func _record(kind: String) -> int:
+	var best := int(data.get("best_floor_%s" % kind, -1))
+	if best >= 0:
+		return best
+	var gm := get_node_or_null("/root/GameManager")
+	if gm != null and gm.has_method("best_floor"):
+		return int(gm.call("best_floor", kind))
+	return 0
+
+
+## 1240 -> "1.240"
+static func _fmt_int(value: int) -> String:
+	var s := str(absi(value))
 	var out := ""
-	var count := 0
-	for i in range(digits.length() - 1, -1, -1):
-		out = digits[i] + out
-		count += 1
-		if count % 3 == 0 and i > 0:
-			out = "," + out
+	for i in s.length():
+		if i > 0 and (s.length() - i) % 3 == 0:
+			out += "."
+		out += s[i]
 	return ("-" if value < 0 else "") + out
 
 
+## 200 -> "+200"
+static func _fmt_signed(value: int) -> String:
+	return ("+" if value >= 0 else "-") + _fmt_int(absi(value))
+
+
+# ---------------------------------------------------------------------------
+# Nút (nối trong next_floor.tscn)
+# ---------------------------------------------------------------------------
 func _on_rest_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	rest_requested.emit()

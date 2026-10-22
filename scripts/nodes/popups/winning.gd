@@ -1,157 +1,108 @@
-class_name WinningPopup
+class_name WinningLevelPopup
 extends BasePopup
 ## ============================================================================
-## Popup: Kết quả màn chơi (nodes/popups/winning.tscn) - mockup popup_win_level.svg
-## Dữ liệu nhận qua open({ level, grid, time, steps_used, steps_max, wall_hits, score, stars })
+## Popup: THẮNG MÀN ở chế độ màn chơi (nodes/popups/winning_level.tscn)
+## Bố cục (cùng ngôn ngữ với Game Over / Qua tầng):
+##   1. 3 sao lớn (sao đạt nảy lên lần lượt) + "MÀN n"
+##   2. 3 thẻ nhiệm vụ (sao đạt / chưa đạt + tên ngắn)
+##   3. Thẻ 3 cột: Thời gian · Bước · Đâm tường
+##   4. Nút: Chơi lại · Màn kế tiếp (hoặc "Chọn chương" khi hết chương)
+##
+## Dữ liệu (GameController._complete_floor): level|floor, stars, missions: [{title, done, status}],
+##   time, steps_used, steps_max, wall_hits, next_available
+## Signal giữ tên cũ để UIController nối như trước:
+##   next_requested -> _emit_continue      replay_requested -> _emit_retry
+##
+## Popup thắng cũ (winning.tscn / WinningPopup) KHÔNG bị đụng tới — winning_daily vẫn dùng nó.
 ## ============================================================================
 
-signal replay_requested
 signal next_requested
+signal replay_requested
 
-## Art sao — gán trong `winning.tscn` + `winning_challenge.tscn` (ExtResource)
+const COUNT := 3
+const COLOR_DONE := Color(0.69, 0.478, 0.039, 1)
+const COLOR_FAIL := Color(0.478, 0.529, 0.58, 1)
+const STAR_DELAY := 0.25
+const STAR_STEP := 0.22
+
+## Art sao — gán trong `winning_level.tscn` (ExtResource)
 @export var star_full: Texture2D = null
 @export var star_empty: Texture2D = null
 
-## Node binding: khai `node_paths` + `NodePath` trong `winning.tscn` (xem `chapters_layout`)
-@export var stars_row: Control = null
-@export var label_subtitle: Label = null
-@export var label_next: Label = null
+## Node binding: khai `node_paths` + `NodePath` trong `winning_level.tscn`
+@export var label_level: Label = null
+@export var hero1: TextureRect = null
+@export var hero2: TextureRect = null
+@export var hero3: TextureRect = null
+@export var m1_star: TextureRect = null
+@export var m1_name: Label = null
+@export var m2_star: TextureRect = null
+@export var m2_name: Label = null
+@export var m3_star: TextureRect = null
+@export var m3_name: Label = null
 @export var value_time: Label = null
 @export var value_steps: Label = null
 @export var value_walls: Label = null
-@export var value_score: Label = null
-@export var stamp_title: Label = null
-@export var stamp_sub: Label = null
-## Hiệu ứng riêng của popup (animation "stars") — node tên `FxAnim` vì popup đã có sẵn
-## `AnimationPlayer` của base.tscn (hiệu ứng mở/đóng) — không được trùng tên.
-@export var fx_anim: AnimationPlayer = null
+@export var label_next: Label = null
 
 
 func _on_open() -> void:
-	if data.is_empty():
-		return
-	label_subtitle.text = tr("STR_RESULT_SUBTITLE").format([
-		int(data.get("level", 1)),
-		str(data.get("grid", "5×5")),
-	])
+	var level := maxi(int(data.get("level", data.get("floor", 1))), 1)
+	label_level.text = tr("STR_WL_LEVEL").format([level])
 
-	var seconds := float(data.get("time", 0.0))
-	value_time.text = "%02d:%02ds" % [int(seconds) / 60, int(seconds) % 60]
+	# --- Sao lớn: sao đạt nảy lên lần lượt ---------------------------------
+	var earned := clampi(int(data.get("stars", 0)), 0, COUNT)
+	var heroes: Array[TextureRect] = [hero1, hero2, hero3]
+	for i in COUNT:
+		var h := heroes[i]
+		var on := i < earned
+		h.texture = star_full if on else star_empty
+		h.pivot_offset = h.size * 0.5
+		if on:
+			h.scale = Vector2(0.4, 0.4)
+			h.modulate.a = 0.0
+			_pop_star(h, STAR_DELAY + STAR_STEP * float(i))
 
-	var used := int(data.get("steps_used", 0))
-	var max_steps := int(data.get("steps_max", 0))
-	value_steps.text = tr("STR_STEPS_LEFT_FORMAT").format([used, max_steps, maxi(max_steps - used, 0)])
+	# --- 3 thẻ nhiệm vụ ------------------------------------------------------
+	var rows: Array = data.get("missions", [])
+	var stars: Array[TextureRect] = [m1_star, m2_star, m3_star]
+	var names: Array[Label] = [m1_name, m2_name, m3_name]
+	for i in COUNT:
+		var row: Dictionary = rows[i] if i < rows.size() else {}
+		var ok := bool(row.get("done", false))
+		stars[i].texture = star_full if ok else star_empty
+		if row.has("title"):
+			names[i].text = str(row.get("title"))
+		names[i].add_theme_color_override(&"font_color", COLOR_DONE if ok else COLOR_FAIL)
 
-	var hits := int(data.get("wall_hits", 0))
-	value_walls.text = tr("STR_WALL_HITS_FORMAT").format([hits, tr("STR_PERFECT_TAG")]) if hits == 0 \
-		else tr("STR_WALL_HITS_FORMAT").format([hits, ""]).strip_edges()
-	value_walls.theme_type_variation = &"PopupStatValueGood" if hits == 0 else &"PopupStatValueBad"
+	# --- Số liệu -------------------------------------------------------------
+	var secs := maxi(int(round(float(data.get("time", 0.0)))), 0)
+	value_time.text = "%02d:%02d" % [secs / 60, secs % 60]
+	value_steps.text = "%d/%d" % [int(data.get("steps_used", 0)), int(data.get("steps_max", 0))]
+	value_walls.text = str(int(data.get("wall_hits", 0)))
 
-	var target_score := int(data.get("score", 0))
-	if DisplayServer.get_name() != "headless" and target_score > 0:
-		value_score.text = tr("STR_SCORE_FORMAT").format([0])
-		# (GIỮ tween) Đếm số = NỘI SUY DỮ LIỆU (điểm lúc chạy) + format text mỗi khung hình
-		var tw_s := create_tween()
-		tw_s.tween_method(func(v: float) -> void:
-			if is_instance_valid(value_score):
-				value_score.text = tr("STR_SCORE_FORMAT").format([_thousands(int(round(v)))])
-		, 0.0, float(target_score), 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	else:
-		value_score.text = tr("STR_SCORE_FORMAT").format([_thousands(target_score)])
-
-	_set_stars(int(data.get("stars", 0)))
-	_fill_stamp(int(data.get("stars", 0)), data.get("missions", null))
-	# Dây 2 nút (Chơi lại / Màn kế) khai trong `winning.tscn` (cùng scene)
-	# Hết chương (hoặc chương kế chưa mở) -> nút đổi thành "CHỌN CHƯƠNG" (bấm ra màn Chọn Chương)
-	label_next.text = TranslationServer.translate(
-		"STR_BTN_NEXT_LEVEL" if bool(data.get("next_available", true))
-		else "STR_CHAPTER_SCREEN_TITLE")
+	# --- Nút chính: hết chương (hoặc chương sau chưa mở) -> "CHỌN CHƯƠNG" ------
+	label_next.text = tr("STR_WL_NEXT") if bool(data.get("next_available", true)) else tr("STR_WL_CHAPTERS")
 
 
-## Con dấu đỏ ở góc phải: "n / m NHIỆM VỤ" + "★ ĐẠT n SAO ★" (mockup popup_win_level.svg)
-func _fill_stamp(stars: int, missions: Variant) -> void:
-	var done := 0
-	var total := 0
-	var rows: Array = []
-	if missions is Array:
-		rows = missions as Array
-	for row in rows:
-		total += 1
-		if row is Dictionary and bool((row as Dictionary).get("done", false)):
-			done += 1
-	stamp_title.text = tr("STR_WIN_STAMP_TITLE").format([done, total])
-	stamp_sub.text = tr("STR_WIN_STAMP_SUB").format([stars])
-
-
-## 2850 -> "2,850" cho khớp mockup
-static func _thousands(value: int) -> String:
-	var digits := str(absi(value))
-	var out := ""
-	var count := 0
-	for i in range(digits.length() - 1, -1, -1):
-		out = digits[i] + out
-		count += 1
-		if count % 3 == 0 and i > 0:
-			out = "," + out
-	return ("-" if value < 0 else "") + out
-
-
-## Tô sáng số sao đạt được và phóng nhẹ từng ngôi sao theo nhịp (animation "stars" trong scene)
-func _set_stars(stars: int) -> void:
-	if stars_row == null:
-		return
-	var children := stars_row.get_children()
-	var earned_count := 0
-	for i in children.size():
-		var star := children[i] as TextureRect
-		if star == null:
-			continue
-		var earned := i < stars
-		star.texture = star_full if earned else star_empty
-		star.modulate = Color(1, 1, 1, 1) if earned else Color(1, 1, 1, 0.75)
-		if not earned:
-			continue
-		earned_count += 1
-		star.pivot_offset = star.size * 0.5
-		star.scale = Vector2.ONE * 0.4
-	if earned_count == 0:
-		return
-	# Chỉ BẬT track của sao ĐẠT được: track 0/1/2 = Star1/2/3 (scale), track 3/4/5 = tiếng "pop"
-	var anim := fx_anim.get_animation(&"stars") if fx_anim != null else null
-	if anim == null:
-		# Fallback khi scene thiếu FxAnim/animation
-		for i in earned_count:
-			var star_fb := children[i] as TextureRect
-			if star_fb == null:
-				continue
-			var tw := create_tween()
-			tw.tween_interval(0.25 + i * 0.22)
-			tw.tween_property(star_fb, "scale", Vector2.ONE, 0.28).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			tw.tween_callback(_star_pop)
-		return
-	for t in anim.get_track_count():
-		anim.track_set_enabled(t, (t % 3) < earned_count)
-	fx_anim.play(&"stars")
-
-
-## Tiếng "pop" mỗi lần một ngôi sao nảy lên — gọi từ method track của animation "stars"
-func _star_pop() -> void:
-	Sfx.play(Sfx.STAR_POP)
-
-
-## Tiếng "chuông" cao dần khi 3 sao hiện — 3 Timer autostart khai trong `winning.tscn`
-## (mỗi dây `[connection]` bind sẵn chỉ số sao qua `binds`)
-func _on_star_tone(index: int) -> void:
-	Sfx.star_pop(index)
-
-
-func _on_replay_pressed() -> void:
-	Sfx.play(Sfx.BTN_CLICK)
-	replay_requested.emit()
-	close()
+func _pop_star(star: TextureRect, delay: float) -> void:
+	var tw := create_tween()
+	tw.tween_interval(delay)
+	tw.tween_callback(func() -> void:
+		star.modulate.a = 1.0
+		Sfx.play(Sfx.LEVEL_WIN))
+	tw.tween_property(star, "scale", Vector2(1.15, 1.15), 0.18) \
+		.from(Vector2(0.4, 0.4)).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(star, "scale", Vector2.ONE, 0.12)
 
 
 func _on_next_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	next_requested.emit()
+	close()
+
+
+func _on_replay_pressed() -> void:
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	replay_requested.emit()
 	close()
