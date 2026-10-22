@@ -16,3 +16,6 @@ extends BaseLayout
 ## Tham chiếu đến LevelMap — dùng chung 1 instance từ scenes/levels.tscn
 ## (portrait & landscape đều trỏ vào cùng node)
 @export var level_map: LevelMap = null
+## Thanh tiến độ Sao + 3 rương mốc thưởng của CHƯƠNG đang chơi
+## (`nodes/chapters/chapter_progress.tscn`) — nằm ngay dưới banner chương
+@export var progress: ChapterProgress = null

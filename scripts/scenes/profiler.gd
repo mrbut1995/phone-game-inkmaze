@@ -10,14 +10,13 @@ extends BaseUI
 ## Nút Back đóng popup qua `owner_popup`; popup Edit Profile mở chồng LÊN TRÊN.
 ##
 ## Nguồn dữ liệu: PlayerProfileManager (qua facade `Profile`) — toàn bộ số liệu
-## tích luỹ nằm trong `Profile.deep_stats()` (5 nhóm: Play · Dungeon · Time · Game Mode · In Game).
+## tích luỹ nằm trong `Profile.deep_stats()` (4 nhóm hiển thị: Play · Dungeon · Time · In Game).
 ##
-## DANH SÁCH THÔNG TIN (theo mockup): 5 nhóm, mỗi nhóm = băng washi dán tiêu đề +
+## DANH SÁCH THÔNG TIN (theo mockup): 4 nhóm, mỗi nhóm = băng washi dán tiêu đề +
 ## lưới THẺ số liệu (`ProfilerStatCard`) có ICON:
-##   · Icon tách từ mockup → `assets/images/profiler/ic_*.svg` (21 icon)
-##   · Chế độ đặc biệt không có icon trong mockup → dùng icon sẵn có của game (`icons/`)
+##   · Icon tách từ mockup → `assets/images/profiler/ic_*.svg`
 ##   · Icon + màu washi/đầu nhóm theo nhóm (xem `TAPES`/`SQUIGGLES`)
-## Bố cục DỌC: thẻ đứng (icon trên, số dưới + nét nguệch ngoạc), lưới 3/2/3/4/3 cột.
+## Bố cục DỌC: thẻ đứng (icon trên, số dưới + nét nguệch ngoạc), lưới 3/2/3/3 cột.
 ## Bố cục NGANG (mockup profiler_landscape): Hero nằm CỘT TRÁI, danh sách ở CỘT PHẢI cuộn DỌC
 ## với thẻ NGANG (icon trái, số phải), lưới 4 cột; đầu nhóm = băng washi dán trái + đường gạch nối.
 ## Hero card GIỮ CỐ ĐỊNH ngoài vùng cuộn ở cả 2 hướng (KHÔNG còn nút Đổi avatar/Chia sẻ —
@@ -30,8 +29,7 @@ extends BaseUI
 ## Scene 1 NHÓM số liệu (băng washi + lưới thẻ) — dựng vào `layout.info_list`
 const GROUP_SCENE := preload("res://nodes/profiler/stat_group.tscn")
 
-## Icon từng ô số liệu: 21 icon tách từ mockup + 7 icon có sẵn của game
-## (các CHẾ ĐỘ ĐẶC BIỆT không xuất hiện trong mockup: mìn, tổng đường, đếm ngược…)
+## Icon từng ô số liệu: icon tách từ mockup (không còn icon riêng cho từng chế độ)
 const ICONS := {
 	"play": preload("res://assets/images-png/profiler/ic_play.png"),
 	"trophy": preload("res://assets/images-png/profiler/ic_trophy.png"),
@@ -50,17 +48,6 @@ const ICONS := {
 	"revert": preload("res://assets/images-png/profiler/ic_revert.png"),
 	"undo": preload("res://assets/images-png/profiler/ic_undo.png"),
 	"skip": preload("res://assets/images-png/profiler/ic_skip.png"),
-	"maze": preload("res://assets/images-png/profiler/ic_maze.png"),
-	"gate": preload("res://assets/images-png/profiler/ic_gate.png"),
-	"sun": preload("res://assets/images-png/profiler/ic_sun.png"),
-	"rocket": preload("res://assets/images-png/profiler/ic_rocket.png"),
-	"bomb": preload("res://assets/images-png/icons/icon_bomb.png"),
-	"logic": preload("res://assets/images-png/icons/icon_logic.png"),
-	"tool_time": preload("res://assets/images-png/icons/icon_tool_time.png"),
-	"bulb": preload("res://assets/images-png/icons/icon_bulb.png"),
-	"cloud": preload("res://assets/images-png/icons/icon_cloud.png"),
-	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
-	"pen": preload("res://assets/images-png/icons/icon_pen.png"),
 }
 
 ## Băng washi tiêu đề theo nhóm (màu lấy đúng mockup)
@@ -68,7 +55,6 @@ const TAPES := {
 	"play": preload("res://assets/images-png/profiler/tape_play.png"),
 	"dungeon": preload("res://assets/images-png/profiler/tape_dungeon.png"),
 	"time": preload("res://assets/images-png/profiler/tape_time.png"),
-	"mode": preload("res://assets/images-png/profiler/tape_mode.png"),
 	"ingame": preload("res://assets/images-png/profiler/tape_ingame.png"),
 }
 
@@ -77,27 +63,8 @@ const SQUIGGLES := {
 	"play": preload("res://assets/images-png/profiler/squiggle_play.png"),
 	"dungeon": preload("res://assets/images-png/profiler/squiggle_dungeon.png"),
 	"time": preload("res://assets/images-png/profiler/squiggle_time.png"),
-	"mode": preload("res://assets/images-png/profiler/squiggle_mode.png"),
 	"ingame": preload("res://assets/images-png/profiler/squiggle_ingame.png"),
 }
-
-## Nhóm "GAME MODE STATS": mỗi THẺ = 1 chế độ (SỐ LẦN CHƠI) + icon riêng;
-## `ids` = các mode_id cộng dồn vào thẻ đó; `icon` = khoá trong `ICONS`
-const MODE_ROWS: Array = [
-	{"key": "STR_MODE_PLAY_NAME", "ids": ["play"], "icon": "maze"},
-	{"key": "STR_MODE_DUNGEON_NAME", "ids": ["dungeon"], "icon": "gate"},
-	{"key": "STR_MODE_DAILY_CLASSIC_NAME", "ids": ["daily_classic"], "icon": "sun"},
-	{"key": "STR_MODE_DAILY_CHALLENGE_NAME", "ids": ["daily_challenge"], "icon": "calendar"},
-	{"key": "STR_MODE_CHALLENGE_NAME", "ids": ["challenge"], "icon": "rocket"},
-	{"key": "STR_MODE_MINESWEEPER", "ids": ["minesweeper"], "icon": "bomb"},
-	{"key": "STR_MODE_SUM_PATH", "ids": ["sum_path"], "icon": "logic"},
-	{"key": "STR_MODE_COUNTDOWN_COST", "ids": ["countdown_cost"], "icon": "tool_time"},
-	{"key": "STR_MODE_BLIND_MEMORY", "ids": ["blind_memory"], "icon": "bulb"},
-	{"key": "STR_MODE_FOG_OF_WAR", "ids": ["fog_of_war"], "icon": "cloud"},
-	{"key": "STR_MODE_FADING_INK", "ids": ["fading_ink"], "icon": "ink"},
-	{"key": "STR_MODE_ONE_STROKE", "ids": ["one_stroke"], "icon": "pen"},
-	{"key": "STR_MODE_WALL_BUILDER", "ids": ["wall_builder"], "icon": "wall"},
-]
 
 ## Chiều rộng 1 nhóm ở bố cục NGANG — danh sách chiếm hết cột phải nên không cần nữa
 
@@ -236,7 +203,7 @@ func _fill_bar() -> void:
 
 
 # ---------------------------------------------------------------------------
-# Danh sách thông tin — 5 nhóm THẺ có icon, cuộn DỌC ở cả 2 hướng
+# Danh sách thông tin — 4 nhóm THẺ có icon, cuộn DỌC ở cả 2 hướng
 # ---------------------------------------------------------------------------
 func _refresh_info() -> void:
 	if layout.info_list == null:
@@ -245,7 +212,6 @@ func _refresh_info() -> void:
 		layout.info_list.remove_child(child)
 		child.queue_free()
 	var data := Profile.deep_stats()
-	var mode_counts: Dictionary = data.get("mode_plays", {})
 
 	# 1. PLAY STATS — 6 thẻ (3 cột × 2 hàng)
 	_add_info_group("play", tr("STR_PROFILE_GROUP_PLAY"), 3, [
@@ -272,17 +238,7 @@ func _refresh_info() -> void:
 			tr("STR_PROFILE_TIME_SEC").format(["%.1f" % float(data.get("avg_time_move", 0.0))])),
 	])
 
-	# 4. GAME MODE STATS — SỐ LẦN CHƠI TỪNG CHẾ ĐỘ (13 thẻ, 4 cột; chưa chơi → thẻ mờ)
-	var mode_cards: Array = []
-	for entry_v in MODE_ROWS:
-		var entry: Dictionary = entry_v
-		var count := 0
-		for mode_id in entry.get("ids", []):
-			count += int(mode_counts.get(str(mode_id), 0))
-		mode_cards.append(_card(str(entry.get("icon", "")), str(entry.get("key", "")), str(count), count == 0))
-	_add_info_group("mode", tr("STR_PROFILE_GROUP_MODES"), 4, mode_cards)
-
-	# 5. IN GAME STATS — 6 thẻ (3 cột × 2 hàng)
+	# 4. IN GAME STATS — 6 thẻ (3 cột × 2 hàng)
 	_add_info_group("ingame", tr("STR_PROFILE_GROUP_INGAME"), 3, [
 		_card("route", "STR_PROFILE_STAT_AVG_MOVE", "%.1f" % float(data.get("avg_move", 0.0))),
 		_card("feet", "STR_PROFILE_STAT_TOTAL_MOVE", str(int(data.get("moves_total", 0)))),

@@ -40,11 +40,16 @@ func _ready() -> void:
 	orientation_changed.connect(_on_orientation_changed)
 	_build_map()
 	_refresh_header()
+	_wire_progress()
+	_refresh_progress()
 
 
 ## Phát lại EnterAnim mỗi khi màn được kích hoạt (quay lại từ màn khác)
 func _on_active() -> void:
 	UIAnim.play_layout_anim(active_layout(), "EnterAnim", &"enter")
+	# Thắng/thua màn xong quay lại đây ⇒ số Sao có thể đã đổi ⇒ vẽ lại thanh + rương
+	_refresh_header()
+	_refresh_progress()
 
 
 ## Gắn node UI từ BỐ CỤC đang hiển thị (2 bố cục là 2 scene riêng nhưng CÙNG script
@@ -197,7 +202,87 @@ func _rebind_after_orientation() -> void:
 	_bind_refs()
 	_setup_button_effects()
 	_refresh_header()
+	_wire_progress()
+	_refresh_progress()
 	# Bản đồ tự dựng lại khi khung đổi cỡ (LevelMap nghe `size_changed` của viewport)
+
+
+# ---------------------------------------------------------------------------
+# Thanh tiến độ Sao + 3 RƯƠNG MỐC thưởng của CHƯƠNG đang chơi
+# ---------------------------------------------------------------------------
+## Nối dây "bấm rương" của widget (gọi lại mỗi lần đổi hướng vì mỗi bố cục có widget riêng)
+func _wire_progress() -> void:
+	if layout == null or layout.progress == null:
+		return
+	if not layout.progress.claim_requested.is_connected(_on_chest_claim_requested):
+		layout.progress.claim_requested.connect(_on_chest_claim_requested)
+
+
+## Đổ số Sao của chương đang chơi vào thanh tiến độ + trạng thái 3 rương
+func _refresh_progress() -> void:
+	if layout == null or layout.progress == null:
+		return
+	var chapter := _chapter_data()
+	var chapter_id := chapter.chapter_id if chapter != null else maxi(_current_chapter(), 1)
+	layout.progress.set_meta("chapter_id", chapter_id)
+	layout.progress.setup(_chapter_stars(chapter_id), _chapter_star_total(chapter_id))
+
+
+func _chapter_stars(chapter_id: int) -> int:
+	var lm: Node = get_node_or_null("/root/LevelManager")
+	if lm != null and lm.has_method("chapter_stars"):
+		return int(lm.call("chapter_stars", chapter_id))
+	var own := 0
+	for value in _stars_dict().values():
+		own += int(value)
+	return own
+
+
+func _chapter_star_total(chapter_id: int) -> int:
+	var lm: Node = get_node_or_null("/root/LevelManager")
+	if lm != null and lm.has_method("chapter_star_total"):
+		return maxi(int(lm.call("chapter_star_total", chapter_id)), 1)
+	return maxi(_level_ids.size(), 1) * 3
+
+
+## Bấm RƯƠNG MỐC trên thanh tiến độ: trao thưởng (một lần/chương) rồi mở popup rương.
+## Dùng lại popup mốc Daily (`nodes/popups/daily_milestone.tscn`) để có sẵn animation rương.
+func _on_chest_claim_requested(index: int) -> void:
+	var gm := _game_manager()
+	if gm == null or not gm.has_method("claim_chapter_chest"):
+		return
+	var chapter := _chapter_data()
+	var chapter_id := chapter.chapter_id if chapter != null else maxi(_current_chapter(), 1)
+	var def: Dictionary = gm.call("claim_chapter_chest", chapter_id, index,
+		_chapter_stars(chapter_id), _chapter_star_total(chapter_id))
+	if def.is_empty():
+		Sfx.play(Sfx.BTN_CLICK)
+		return
+	Sfx.play(Sfx.ACHIEVEMENT)
+	_show_chest_reward(chapter_id, def)
+	_refresh_header()
+	_refresh_progress()
+
+
+## Popup báo phần thưởng rương vừa nhận (dùng lại popup rương của Daily)
+func _show_chest_reward(chapter_id: int, def: Dictionary) -> void:
+	var gm := _game_manager()
+	var reward_text := ""
+	if gm != null and gm.has_method("chapter_chest_reward_text"):
+		reward_text = str(gm.call("chapter_chest_reward_text", def))
+	Popups.open(Popups.DAILY_MILESTONE, {
+		"stars": int(def.get("stars", 0)),
+		"reward": def,
+		"reward_text": reward_text,
+		"title_text": TranslationServer.translate("STR_CHAPTER_CHEST_POPUP_TITLE").format([
+			chapter_id, int(def.get("stars", 0))]),
+		"sub_text": TranslationServer.translate("STR_CHAPTER_CHEST_POPUP_SUB"),
+	})
+
+
+## API cho test: widget thanh tiến độ của bố cục đang hiển thị
+func progress_widget() -> ChapterProgress:
+	return layout.progress if layout != null else null
 
 
 # ---------------------------------------------------------------------------

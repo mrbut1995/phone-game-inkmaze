@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/chapters/chest_chip.gd" id="1_chip"]
+[ext_resource type="Texture2D" uid="uid://c3uruc8moyy18" path="res://assets/images-png/daily/ring_off.png" id="2_ring"]
+[ext_resource type="Texture2D" uid="uid://bhdewqbcltopn" path="res://assets/images-png/daily/chest_closed.png" id="3_chest"]
+[ext_resource type="Texture2D" uid="uid://b3fvm8sypownm" path="res://assets/images-png/daily/check_badge.png" id="4_badge"]
+
+[node name="ChestChip" type="Button" node_paths=PackedStringArray("ring", "chest", "badge")]
+custom_minimum_size = Vector2(30, 30)
+size = Vector2(30, 30)
+focus_mode = 0
+script = ExtResource("1_chip")
+ring = NodePath("Ring")
+chest = NodePath("Ring/Chest")
+badge = NodePath("Ring/Badge")
+
+[node name="Ring" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_ring")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Chest" type="TextureRect" parent="Ring"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -8.0
+offset_right = 9.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_chest")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Badge" type="TextureRect" parent="Ring"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -10.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 10.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("4_badge")
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

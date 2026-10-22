@@ -193,7 +193,7 @@ func _section_4_recent(manager: Node) -> void:
 # 4b. Số liệu MỞ RỘNG (bản Hồ sơ mới)
 # ---------------------------------------------------------------------------
 func _section_4b_deep_stats(manager: Node) -> void:
-	print("\n--- 4b. SO LIEU MO RONG (PLAY / DUNGEON / TIME / MODE / INGAME) ---")
+	print("\n--- 4b. SO LIEU MO RONG (PLAY / DUNGEON / TIME / INGAME) ---")
 	manager.call("reset_progress")
 	manager.call("record_run", {
 		"won": true, "mode_id": "play", "level_run": true, "level_id": 5,
@@ -303,7 +303,7 @@ func _section_5_scene(manager: Node) -> void:
 	var info_scroll := scene.layout.info_scroll
 	_entry(info_scroll != null and scene.layout.info_list != null, "Co vung cuon InfoScroll + InfoList")
 	var groups := scene.info_group_count()
-	_entry(groups == 5, "Danh sach thong tin: 5 nhom (Play/Dungeon/Time/Mode/InGame — dang %d)" % groups)
+	_entry(groups == 4, "Danh sach thong tin: 4 nhom (Play/Dungeon/Time/InGame — dang %d)" % groups)
 	var info_ok := true
 	var cards_ok := true
 	var total_cards := 0
@@ -322,7 +322,7 @@ func _section_5_scene(manager: Node) -> void:
 						or card.value_label == null or card.value_label.text.strip_edges().is_empty():
 					cards_ok = false
 	_entry(info_ok, "Moi nhom co bang washi tieu de + luoi the so lieu day du")
-	_entry(total_cards == 30, "Tong so the so lieu = 30 (6+2+3+13+6; dang %d)" % total_cards)
+	_entry(total_cards == 17, "Tong so the so lieu = 17 (6+2+3+6; dang %d)" % total_cards)
 	_entry(cards_ok, "Moi the co ICON + nhan + gia tri (icon tach tu mockup)")
 	if scene.layout.info_list != null and scene.layout.info_list.get_child_count() > 0:
 		var g0 := scene.layout.info_list.get_child(0) as ProfilerStatGroup
@@ -344,9 +344,12 @@ func _section_5_scene(manager: Node) -> void:
 		var vbar := info_scroll.get_v_scroll_bar()
 		_entry(vbar.max_value > vbar.page + 1.0,
 			"Portrait: noi dung dai hon khung -> keo len/xuong duoc (max %.0f > page %.0f)" % [vbar.max_value, vbar.page])
-		info_scroll.scroll_vertical = 40
+		# Cuộn tới ĐÁY (dùng đúng mức cuộn tối đa — nội dung ngắn hơn thì mức này cũng nhỏ đi)
+		var bottom := int(maxf(vbar.max_value - vbar.page, 0.0))
+		info_scroll.scroll_vertical = bottom
 		await process_frame
-		_entry(info_scroll.scroll_vertical == 40, "Portrait: dat scroll_vertical = 40 (dang %d)" % info_scroll.scroll_vertical)
+		_entry(info_scroll.scroll_vertical == bottom,
+			"Portrait: cuon duoc xuong cuoi (dang %d/%d)" % [info_scroll.scroll_vertical, bottom])
 
 	# KHÔNG còn nút "ĐỔI AVATAR & TÊN"/"CHIA SẺ": bấm THẺ AVATAR để mở Edit Profile (vẫn xếp TRÊN Profiler)
 	var portrait_holder := scene.get_node_or_null("Portrait")
@@ -406,8 +409,15 @@ func _section_5_scene(manager: Node) -> void:
 			"Landscape: cuon NGANG tat")
 		await process_frame
 		var vbar_l := l_scroll.get_v_scroll_bar()
-		_entry(vbar_l.max_value > vbar_l.page + 1.0,
-			"Landscape: noi dung dai hon khung -> keo len/xuong duoc (max %.0f > page %.0f)" % [vbar_l.max_value, vbar_l.page])
+		# Sau khi bỏ nhóm "Số lần chơi chế độ", cột phải có thể VỪA khung ⇒ không bắt buộc tràn;
+		# chỉ cần nội dung KHÔNG bị cắt và cuộn được tới cuối.
+		_entry(vbar_l.max_value + 1.0 >= vbar_l.page,
+			"Landscape: noi dung khong bi cat (max %.0f >= page %.0f)" % [vbar_l.max_value, vbar_l.page])
+		var bottom_l := int(maxf(vbar_l.max_value - vbar_l.page, 0.0))
+		l_scroll.scroll_vertical = bottom_l
+		await process_frame
+		_entry(l_scroll.scroll_vertical == bottom_l,
+			"Landscape: cuon duoc xuong cuoi (dang %d/%d)" % [l_scroll.scroll_vertical, bottom_l])
 		_entry(land.info_list is VBoxContainer, "Landscape: danh sach xep DOC (VBox — cot phai)")
 		var g_land := land.info_list.get_child(0) as ProfilerStatGroup
 		_entry(g_land != null and g_land.tape_label != null and not g_land.tape_label.text.strip_edges().is_empty(),
