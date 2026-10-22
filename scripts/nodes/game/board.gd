@@ -62,7 +62,10 @@ var _fit_scale := 1.0
 ## Lưu theo TỈ LỆ 0..1 của Panel (left, top, right, bottom) — KHÔNG lưu pixel texture:
 ## panel bị kéo giãn theo màn hình (màn 9:20 cao hơn thiết kế) nên insets phải scale
 ## theo kích thước panel, nếu không lưới bị lệch LÊN TRÊN so với tâm thẻ giấy.
-var _panel_insets := Vector4.ZERO      # left, top, right, bottom (tỉ lệ 0..1)
+var _panel_insets := Vector4.ZERO      # (không còn dùng — giữ để khỏi vỡ tham chiếu cũ)
+var _sheet_tex_rect := Rect2()         # vùng GIẤY ĐẶC (bỏ bóng đổ), đơn vị pixel TEXTURE của Panel
+var _margin_tex_x := -1.0              # x vạch lề đỏ (pixel texture, mép phải vạch); -1 = không có
+var _tex_px := Vector2.ZERO            # kích thước texture của Panel
 
 var _cell_nodes: Array = []        # MazeCell
 var _cell_rects: Array[Rect2] = []
@@ -85,6 +88,7 @@ var _cursor: PlayerCursor = null
 var _player_hidden: bool = false
 ## Ngòi bút đang dùng (PenSkin) — quyết định icon con trỏ + màu/chất liệu nét mực
 var _pen_id := PenSkin.DEFAULT_PEN
+var _feel: Dictionary = PenSkin.feel_of(PenSkin.DEFAULT_PEN)   # cảm giác viết của bút đang dùng
 
 var _interaction_enabled := true
 
@@ -127,8 +131,79 @@ var _history_template: Line2D = null
 ## con trỏ · 4 node mẫu) — lấy từ `BoardLayers.fixed_nodes()`
 var _keep_nodes: Array = []
 
+# ============================================================================
+# CẢM GIÁC VIẾT / QUẸT (Pen writing feel) — mọi số chỉnh được trong Inspector
+# ============================================================================
+@export_group("Pen writing feel")
+## Công tắc tổng. TẮT = hành vi cũ (con trỏ nhún từng ô, nét mực nhảy cách ô).
+@export var WRITING_MODE := true
+## Tốc độ đầu bút đuổi theo ngón tay / trượt tới ô mới (càng lớn càng "dính" tay, 18–40).
+@export_range(8.0, 60.0, 1.0) var TIP_FOLLOW_SPEED := 30.0
+## Vùng chết quanh tâm ô (× bước ô): ngón tay chưa kéo quá mức này thì chưa ra đuôi mực
+@export_range(0.0, 0.3, 0.01) var TAIL_DEADZONE := 0.10
+## Đuôi mực dài tối đa (× bước ô) trước khi chốt sang ô kế
+@export_range(0.2, 0.9, 0.01) var TAIL_MAX := 0.55
+## Đuôi mực dài ra nhanh hơn ngón tay bao nhiêu lần (tạo cảm giác mực "chảy" theo)
+@export_range(0.6, 2.0, 0.05) var TAIL_GAIN := 1.15
+## Chống chạm nhầm ô chéo: ngón tay phải vào ô kế quá mép này (× bước ô) mới tính là chốt
+@export_range(0.0, 0.3, 0.01) var CORNER_GUARD := 0.08
+## Khoảng cách lấy mẫu dọc đường ngón tay (× bước ô) — quẹt nhanh không còn mất ô
+@export_range(0.1, 0.5, 0.01) var SAMPLE_SPACING := 0.25
+## Độ nghiêng bút theo tốc độ quẹt (rad mỗi px/giây) và nghiêng tối đa
+@export var LEAN_PER_SPEED := 0.00035
+@export var LEAN_MAX := 0.22
+## Nảy (pulse) ô mỗi khi chốt bước. Tắt khi viết để lưới không "nhấp nhô"
+@export var PULSE_CELLS_WHILE_WRITING := false
+## Vết bút (footstep) mỗi ô. Tắt vì nét mực đã liền mạch
+@export var FOOTSTEP_ON_STEP := false
+## Rung nhẹ mỗi bước (chỉ mobile)
+@export var HAPTIC_ON_STEP := false
+@export var HAPTIC_MS := 8
+## Ẩn vệt mờ (history) nằm DƯỚI đường đi hiện tại — tránh viền góc vuông lộ ra sau nét đã bo tròn
+@export var HIDE_HISTORY_UNDER_PATH := true
+## Kéo neo (Wall Builder): nét chỉ dẫn bò theo TRỤC lưới và tự hít vào neo kề
+@export var ANCHOR_AXIS_SNAP := true
+## Phần bước ô cuối còn lại khi neo kề bắt đầu "hít" (0.45 ⇒ kéo ≥ 0.55 bước là bám)
+@export_range(0.1, 0.8, 0.01) var ANCHOR_MAGNET := 0.45
+## Nét chỉ dẫn khi kéo neo dày hơn tường thường bao nhiêu lần (nổi bật trên đường kẻ ô)
+@export_range(1.0, 2.5, 0.05) var GUIDE_WIDTH_SCALE := 1.45
+## Quầng giấy sáng quanh nét chỉ dẫn (× bề rộng nét) — tách nét khỏi đường kẻ ô phía sau
+@export_range(1.0, 3.0, 0.05) var GUIDE_HALO_SCALE := 2.1
+## Phóng to hình neo so với cỡ khai trong anchor.tscn (1.0 = giữ nguyên). Neo to hơn = dễ thấy hơn
+@export_range(1.0, 2.0, 0.05) var ANCHOR_SIZE_BOOST := 1.15
+## Vùng chạm tối thiểu quanh neo (px)
+@export var ANCHOR_MIN_TOUCH := 16.0
+## Chạm NHẸ vào khe giữa 2 ô (không kéo) = bật/tắt 1 đoạn Tường Nghi Ngờ — nhanh hơn kéo 2 neo
+@export var TAP_EDGE_TO_MARK := true
+## Bề rộng vùng chạm quanh đường lưới (× bước ô, mỗi bên). 0.2 ≈ dải rộng 40% ô
+@export_range(0.08, 0.3, 0.01) var EDGE_TAP_BAND := 0.2
+## Khi bấm giữ 1 neo: các neo kề hợp lệ phóng to lên để người chơi thấy NỐI ĐƯỢC tới đâu
+@export var ANCHOR_SHOW_CANDIDATES := true
+@export_group("Paper (giấy học sinh)")
+## Chừa biên TRONG tờ giấy (tỉ lệ so với TỜ GIẤY đặc, đã bỏ bóng đổ): trái, trên, phải, dưới.
+## Trên chừa nhiều hơn để không đè lên băng keo + kẹp giấy.
+@export var PAPER_INSET := Vector4(0.03, 0.075, 0.03, 0.035)
+## Đặt lưới nằm hẳn bên PHẢI vạch lề đỏ của vở. Tắt (mặc định): lưới đè lên lề đỏ như tờ bảng
+## dán trên trang vở — giữ nguyên cỡ ô. Bật: lưới nằm trong vùng viết, ô nhỏ đi ~15%.
+@export var PAPER_AVOID_MARGIN := false
+@export var PAPER_MARGIN_GAP := 14.0
+@export_group("")
+
+var _pen_down := false                       # ngón tay đang đặt xuống & kéo vẽ đường đi
+var _pointer_last := Vector2.ZERO            # vị trí con trỏ ở sự kiện kéo trước (LOCAL)
+var _finger := Vector2.ZERO                  # vị trí ngón tay mới nhất (LOCAL)
+var _tip := Vector2.ZERO                     # ĐẦU BÚT hiển thị (đã làm mượt)
+var _tip_prev := Vector2.ZERO
+var _tip_dir := Vector2i.ZERO                # trục đuôi mực đang dùng (chống nhảy trục)
+var _blocked_cell := Vector2i(-1, -1)        # ô vừa bị từ chối (đâm tường...) — khoá tới khi ngón tay rời ô
+var _path_edge_keys: Dictionary = {}         # cạnh nằm trên đường đi hiện tại
+var _cursor_block_t := 0.0                   # >0: đang chạy bonk/mìn, đừng ghi đè vị trí con trỏ
+var _pending_run_finished := false
+var _candidate_nodes: Array = []             # neo kề đang được phóng to khi kéo từ 1 neo
+
 
 func _ready() -> void:
+	set_process(false)
 	_init_layers()
 	_connect_skin_signal()
 
@@ -249,6 +324,7 @@ func setup_maze(p_maze: MazeData, p_mode: BaseGameMode = null) -> void:
 ##   · vệt bước chân mực -> đúng icon + màu mực của bút
 func apply_pen_skin() -> void:
 	_pen_id = PenSkin.equipped_id()
+	_feel = PenSkin.feel_of(_pen_id)
 	if _cursor != null:
 		_cursor.apply_pen(_pen_id)
 	if _moving_line != null:
@@ -319,14 +395,22 @@ func _read_metrics_from_scenes() -> void:
 ## bằng alpha bbox trên ảnh thu nhỏ -> canh lưới vào đúng phần giấy, không chạm viền.
 func _read_panel_insets() -> void:
 	_panel_insets = Vector4.ZERO
-	var panel: TextureRect = get_node_or_null("Panel") as TextureRect
+	_sheet_tex_rect = Rect2()
+	_margin_tex_x = -1.0
+	_tex_px = Vector2.ZERO
+	# Panel là NinePatchRect (không phải TextureRect) — trước đây ép kiểu sai nên không đọc được gì
+	var panel := get_node_or_null("Panel") as NinePatchRect
 	if panel == null or panel.texture == null:
 		return
 	var img := panel.texture.get_image()
 	if img == null or img.get_width() <= 0 or img.get_height() <= 0:
 		return
+	if img.is_compressed():
+		img.decompress()
+	_tex_px = Vector2(img.get_width(), img.get_height())
 
-	const PROBE := 64
+	# 1) Vùng GIẤY ĐẶC: lấy các pixel gần như đặc (alpha > 0.7) — bỏ bóng đổ mờ quanh tờ giấy
+	const PROBE := 128
 	var probe := img.duplicate() as Image
 	probe.resize(PROBE, PROBE, Image.INTERPOLATE_BILINEAR)
 	var min_x := PROBE
@@ -335,36 +419,74 @@ func _read_panel_insets() -> void:
 	var max_y := -1
 	for y in PROBE:
 		for x in PROBE:
-			if probe.get_pixel(x, y).a > 0.05:
+			if probe.get_pixel(x, y).a > 0.7:
 				min_x = mini(min_x, x)
 				max_x = maxi(max_x, x)
 				min_y = mini(min_y, y)
 				max_y = maxi(max_y, y)
-	if max_x < min_x or max_y < min_y:
-		return
+	if max_x >= min_x and max_y >= min_y:
+		_sheet_tex_rect = Rect2(
+			float(min_x) / PROBE * _tex_px.x, float(min_y) / PROBE * _tex_px.y,
+			float(max_x + 1 - min_x) / PROBE * _tex_px.x, float(max_y + 1 - min_y) / PROBE * _tex_px.y)
 
-	# Lưu TỈ LỆ 0..1 (không phải pixel texture) — xem chú thích `_panel_insets`.
-	_panel_insets = Vector4(
-		float(min_x) / float(PROBE),
-		float(min_y) / float(PROBE),
-		float(max_x + 1) / float(PROBE),
-		float(max_y + 1) / float(PROBE))
+	# 2) Vạch LỀ ĐỎ: quét 1 hàng ngang giữa ảnh (nửa trái), lấy mép phải của vạch đỏ đầu tiên
+	var row := int(_tex_px.y * 0.5)
+	var in_line := false
+	for x in range(0, int(_tex_px.x * 0.4)):
+		var c := img.get_pixel(x, row)
+		var is_red := c.a > 0.5 and c.r > 0.7 and c.r - c.g > 0.3 and c.r - c.b > 0.3
+		if is_red:
+			in_line = true
+			_margin_tex_x = float(x + 1)
+		elif in_line:
+			break
 
 
-## Vùng giấy vẽ thật (toạ độ cục bộ của Board) - dùng để canh lưới + cho test
+## Đổi toạ độ pixel TEXTURE → toạ độ điều khiển (control) của Panel theo luật NinePatch:
+## góc không co giãn, phần giữa co theo kích thước Panel.
+func _nine_map(tex_v: float, horizontal: bool) -> float:
+	var panel := get_node_or_null("Panel") as NinePatchRect
+	if panel == null:
+		return tex_v
+	var tex_len := _tex_px.x if horizontal else _tex_px.y
+	var ctrl_len := panel.size.x if horizontal else panel.size.y
+	var m_a := float(panel.patch_margin_left if horizontal else panel.patch_margin_top)
+	var m_b := float(panel.patch_margin_right if horizontal else panel.patch_margin_bottom)
+	if tex_len <= 0.0:
+		return tex_v
+	if tex_len <= m_a + m_b or ctrl_len <= m_a + m_b:
+		return tex_v / tex_len * ctrl_len
+	if tex_v <= m_a:
+		return tex_v
+	if tex_v >= tex_len - m_b:
+		return ctrl_len - (tex_len - tex_v)
+	return m_a + (tex_v - m_a) * (ctrl_len - m_a - m_b) / (tex_len - m_a - m_b)
+
+
+## Vùng giấy vẽ thật (toạ độ cục bộ của Board) - dùng để canh lưới + cho test:
+## TỜ GIẤY đặc (bỏ bóng đổ) trừ biên PAPER_INSET, và (tuỳ chọn) nằm bên phải lề đỏ.
 func panel_inner_rect() -> Rect2:
 	var panel: Control = get_node_or_null("Panel") as Control
 	if panel == null:
 		return Rect2(Vector2.ZERO, size)
-	# Insets là TỈ LỆ -> nhân với kích thước panel THẬT (panel giãn theo màn hình)
-	var inner_pos := panel.position + Vector2(
-		_panel_insets.x * panel.size.x, _panel_insets.y * panel.size.y)
-	var inner_size := Vector2(
-		(_panel_insets.z - _panel_insets.x) * panel.size.x,
-		(_panel_insets.w - _panel_insets.y) * panel.size.y)
-	if inner_size.x <= 0.0 or inner_size.y <= 0.0:
-		return Rect2(panel.position, panel.size)
-	return Rect2(inner_pos, inner_size)
+	var full := Rect2(panel.position, panel.size)
+	if _sheet_tex_rect.size.x <= 0.0 or _sheet_tex_rect.size.y <= 0.0 or _tex_px.x <= 0.0:
+		return full
+	var l := _nine_map(_sheet_tex_rect.position.x, true)
+	var t := _nine_map(_sheet_tex_rect.position.y, false)
+	var r := _nine_map(_sheet_tex_rect.end.x, true)
+	var b := _nine_map(_sheet_tex_rect.end.y, false)
+	var sheet_w := r - l
+	var sheet_h := b - t
+	l += PAPER_INSET.x * sheet_w
+	t += PAPER_INSET.y * sheet_h
+	r -= PAPER_INSET.z * sheet_w
+	b -= PAPER_INSET.w * sheet_h
+	if PAPER_AVOID_MARGIN and _margin_tex_x >= 0.0:
+		l = maxf(l, _nine_map(_margin_tex_x, true) + PAPER_MARGIN_GAP)
+	if r - l <= 1.0 or b - t <= 1.0:
+		return full
+	return Rect2(panel.position + Vector2(l, t), Vector2(r - l, b - t))
 
 
 ## Nhân bản node MẪU khai sẵn trong scene (thay cho `PackedScene.instantiate()` lúc chạy):
@@ -445,11 +567,13 @@ func _apply_metrics_scale() -> void:
 		cell.set_cell_size(cell_side)          # cỡ ô + tâm xoay (ô tự lo)
 		cell.set_font_size(_scaled_font_size())
 
-	var anchor_side := maxf(_anchor_size * _fit_scale, MIN_ANCHOR_SIZE)
+	var anchor_side := maxf(_anchor_size * _fit_scale * ANCHOR_SIZE_BOOST, MIN_ANCHOR_SIZE)
 	for info in _anchor_nodes:
 		var anchor: MazeAnchor = info.node
 		anchor.set_anchor_size(anchor_side)    # cỡ neo + tâm xoay (neo tự lo)
-	_anchor_hit_radius = maxf(_anchor_size * 0.75 * _fit_scale, anchor_side * 0.5)
+	_anchor_hit_radius = maxf(maxf(_anchor_size * 0.75 * _fit_scale, anchor_side * 0.5), ANCHOR_MIN_TOUCH)
+	# Không để vùng chạm của 2 neo kề nhau chồng lên nhau
+	_anchor_hit_radius = minf(_anchor_hit_radius, maxf(_step * 0.42, anchor_side * 0.5))
 
 	_apply_wall_width()
 
@@ -469,17 +593,20 @@ func _scaled_font_size() -> int:
 
 func _apply_wall_width() -> void:
 	var width := _scaled_wall_width()
+	# set_line_width: tường người chơi tự đánh dấu tự dày hơn + quầng sáng theo kịp (xem wall_segment.gd)
 	for key in _wall_segments:
-		(_wall_segments[key] as Line2D).width = width
+		(_wall_segments[key] as WallSegment).set_line_width(width)
 	for key in _suspected_lines:
-		(_suspected_lines[key] as Line2D).width = width
+		(_suspected_lines[key] as WallSegment).set_line_width(width)
 	for key in _history_lines:
 		(_history_lines[key] as Line2D).width = width
 	if _drag_guide_line != null:
-		_drag_guide_line.width = width
+		_drag_guide_line.width = width * GUIDE_WIDTH_SCALE
+		_set_guide_points(_drag_guide_line.points)
 	if _moving_line != null:
 		var line_width := maxf(_moving_line_width * _fit_scale, MIN_WALL_WIDTH)
 		_moving_line.set_base_width(line_width)
+		_moving_line.set_metrics(_step, _fit_scale)
 
 
 func _update_layout_positions() -> void:
@@ -527,6 +654,7 @@ func _update_layout_positions() -> void:
 	# Cập nhật toạ độ player cursor (giữ ĐẦU BÚT trên tâm ô — xem `cursor_pos_at`)
 	if _cursor != null:
 		_cursor.position = cursor_pos_at(_cell_center(_player_current_cell))
+	_snap_tip_to_center()
 
 	# Nét ĐÃ VẼ (đường đang đi · vệt mực cũ · đường kéo neo) nhớ danh sách Ô, nhưng pixel
 	# đã dựng từ lưới CŨ ⇒ vẽ lại theo lưới mới, nếu không đường đi nằm lệch khỏi các ô.
@@ -537,10 +665,7 @@ func _update_layout_positions() -> void:
 ## Nét chỉ nhớ Ô (nguồn sự thật) nên chỉ cần suy lại tâm ô mới.
 func _refresh_drawn_strokes() -> void:
 	if _moving_line != null and not _moving_path.is_empty():
-		var pts := PackedVector2Array()
-		for p in _moving_path:
-			pts.append(_cell_center(p))
-		_moving_line.set_stroke(pts)
+		_push_path_to_stroke()
 
 	for key: String in _history_lines:
 		var line: Line2D = _history_lines[key]
@@ -552,8 +677,8 @@ func _refresh_drawn_strokes() -> void:
 
 	# Đường kéo neo (nếu đang kéo dở): bám lại 2 đầu theo lưới mới
 	if _drag_guide_line != null and _is_dragging_anchor and _drag_source_anchor_id != -1:
-		_drag_guide_line.points = PackedVector2Array(
-			[_anchor_center_pos(_drag_source_anchor_corner), _drag_guide_other_end()])
+		_set_guide_points(PackedVector2Array(
+			[_anchor_center_pos(_drag_source_anchor_corner), _drag_guide_other_end()]))
 
 
 ## Đầu thứ 2 của đường kéo neo: tâm neo đang rê trúng, hoặc vị trí chuột cuối cùng
@@ -638,7 +763,7 @@ func _create_wall_segment(is_h: bool, lattice: Vector2i, state: String) -> WallS
 	_walls_layer.add_child(seg)
 	seg.set_wall_points(pts[0], pts[1])
 	# Bề rộng tường co theo cỡ board (board càng nhiều ô thì nét càng mảnh)
-	seg.width = _scaled_wall_width()
+	seg.set_line_width(_scaled_wall_width())
 	seg.set_meta("base_state", state)
 	seg.set_state(state)
 	return seg
@@ -717,8 +842,14 @@ func _build_moving_line() -> void:
 		return
 	_moving_line.position = Vector2.ZERO
 	_moving_path.clear()
+	_path_edge_keys.clear()
+	_pen_down = false
+	_blocked_cell = Vector2i(-1, -1)
+	_cursor_block_t = 0.0
+	set_process(false)
 	# width/default_color lấy nguyên từ moving_line.tscn
 	_set_line_points(_moving_line, PackedVector2Array())
+	_snap_tip_to_center()
 
 
 ## Đường kẻ chỉ dẫn khi KÉO NEO (cùng loại nét với moving_line, ẩn đến khi cần)
@@ -726,10 +857,12 @@ func _build_drag_guide_line() -> void:
 	if _drag_guide_line == null:
 		return
 	_drag_guide_line.position = Vector2.ZERO
-	_drag_guide_line.width = _wall_width
-	_drag_guide_line.default_color = Color(0.77, 0.52, 0.23, 0.75)
+	_drag_guide_line.width = _wall_width * GUIDE_WIDTH_SCALE
+	_drag_guide_line.default_color = Color(0.77, 0.52, 0.23, 0.97)
 	_drag_guide_line.visible = false
+	_ensure_guide_halo()
 	_set_line_points(_drag_guide_line, PackedVector2Array())
+	_set_guide_points(PackedVector2Array())
 
 
 ## Ghi điểm cho nét — dùng `set_stroke()` của InkStroke (đồng bộ luôn quầng sáng)
@@ -749,6 +882,7 @@ func _place_cursor_at_start() -> void:
 	_cursor.position = target_pos
 	_cursor.visible = not _player_hidden
 	_player_current_cell = maze.get_start()
+	_snap_tip_to_center()
 	# SFX: bước vào ô xuất phát S khi bắt đầu mỗi floor
 	Sfx.play(Sfx.STAIRS_ENTER)
 	if DisplayServer.get_name() != "headless":
@@ -787,8 +921,9 @@ func move_cursor_to(pos: Vector2i) -> void:
 	var target_pos := cursor_pos_at(target_center)
 	var move_dir := (Vector2(pos) - Vector2(prev_cell)).normalized()
 
-	# Hiệu ứng vệt chân mực lan nhẹ khi cất bước
-	_spawn_ink_footstep(from_center)
+	# Hiệu ứng vệt chân mực lan nhẹ khi cất bước (tắt khi viết: nét mực đã liền mạch)
+	if FOOTSTEP_ON_STEP or not WRITING_MODE:
+		_spawn_ink_footstep(from_center)
 
 	# SFX: chấm bút chì khi vào tâm ô mới; thêm tiếng "vào cầu thang" khi tới ô F
 	Sfx.play(Sfx.CELL_STEP)
@@ -797,13 +932,21 @@ func move_cursor_to(pos: Vector2i) -> void:
 		if _cursor != null:
 			_cursor.play_celebration()
 
-	# Chạy animation bước nhảy (Hop / Squash & Stretch / Tilt)
-	_cursor.run_to(target_pos, move_dir, 0.16)
+	if WRITING_MODE:
+		# Đầu bút TRƯỢT mượt tới tâm ô mới (xem `_process`) — nét mực dài ra liên tục theo đầu bút,
+		# không còn nhún nhảy / nhảy cóc giữa các ô.
+		_tip_dir = Vector2i.ZERO
+		_pending_run_finished = true
+		set_process(true)
+	else:
+		# Chạy animation bước nhảy (Hop / Squash & Stretch / Tilt)
+		_cursor.run_to(target_pos, move_dir, 0.16)
 
-	var c_idx := _cell_index(pos.x, pos.y)
-	if c_idx >= 0 and c_idx < _cell_nodes.size():
-		var cell_node: MazeCell = _cell_nodes[c_idx]
-		cell_node.pulse()
+	if PULSE_CELLS_WHILE_WRITING or not WRITING_MODE or not _pen_down:
+		var c_idx := _cell_index(pos.x, pos.y)
+		if c_idx >= 0 and c_idx < _cell_nodes.size():
+			var cell_node: MazeCell = _cell_nodes[c_idx]
+			cell_node.pulse()
 
 
 func _spawn_ink_footstep(pos: Vector2) -> void:
@@ -820,11 +963,37 @@ func set_moving_path(path: Array[Vector2i]) -> void:
 		return
 	# Nhớ đường đi theo Ô để còn vẽ LẠI khi lưới đổi cỡ (xem `_refresh_drawn_strokes`)
 	_moving_path = path.duplicate()
-	var pts := PackedVector2Array()
-	for p in path:
-		pts.append(_cell_center(p))
-	_moving_line.set_stroke(pts)
+	# Không có đầu bút nào đang trượt (hoàn tác · khởi động lại · gợi ý...) -> nét dừng đúng cuối đường mới,
+	# tránh đuôi mực cũ còn sót lại.
+	if not is_processing() and not _moving_path.is_empty():
+		_tip = _cell_center(_moving_path[_moving_path.size() - 1])
+		_tip_prev = _tip
+	_push_path_to_stroke()
+	_refresh_path_edge_keys()
 	_set_path_focus(path)
+
+
+## Dựng lại nét mực từ danh sách Ô (tâm ô theo lưới hiện tại) + đầu bút hiện tại
+func _push_path_to_stroke() -> void:
+	if _moving_line == null:
+		return
+	var pts := PackedVector2Array()
+	for p in _moving_path:
+		pts.append(_cell_center(p))
+	_moving_line.set_metrics(_step, _fit_scale)
+	_moving_line.set_path_vertices(pts)
+	_moving_line.set_tip(_tip, true)
+
+
+## Ghi nhớ các CẠNH nằm trên đường đi hiện tại + ẩn vệt mờ (history) trùng dưới nét
+func _refresh_path_edge_keys() -> void:
+	_path_edge_keys.clear()
+	for i in range(1, _moving_path.size()):
+		_path_edge_keys[_cell_edge_key(_moving_path[i - 1], _moving_path[i])] = true
+	for key: String in _history_lines:
+		var line: Line2D = _history_lines[key]
+		if is_instance_valid(line):
+			line.visible = not (HIDE_HISTORY_UNDER_PATH and _path_edge_keys.has(key))
 
 
 func reset_to_start() -> void:
@@ -837,6 +1006,7 @@ func reset_to_start() -> void:
 	var tw := create_tween()
 	tw.tween_property(_cursor, "position", target_pos, 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	set_moving_path([maze.get_start()])
+	_snap_tip_to_center()
 
 
 func show_history_edge(a: Vector2i, b: Vector2i) -> void:
@@ -851,6 +1021,7 @@ func show_history_edge(a: Vector2i, b: Vector2i) -> void:
 	line.set_meta("cell_b", b)
 	# Vệt bút mờ cũ: cùng MÀU + chất liệu ngòi bút (mờ hơn nét đang đi)
 	InkStroke.style_plain(line, _pen_id, _scaled_wall_width(), 0.55)
+	line.visible = not (HIDE_HISTORY_UNDER_PATH and _path_edge_keys.has(key))
 	_history_lines[key] = line
 
 
@@ -886,7 +1057,8 @@ func show_wall_hit(from_pos: Vector2i, to_pos: Vector2i) -> void:
 	crash.scale = Vector2.ZERO
 	# Nảy to → giữ → mờ dần (và tự xoá): khai trong `nodes/sfx/crash.tscn` (AnimationPlayer autoplay)
 
-	# Tác động lực giật nảy lên con trỏ người chơi (Bonk recoil)
+	# Mực thụt về tâm ô ngay khi va chạm, rồi con trỏ mới giật nảy (Bonk recoil)
+	_snap_pen_for_impact()
 	if _cursor != null:
 		var recoil_dir := (Vector2(from_pos) - Vector2(to_pos)).normalized()
 		_cursor.play_bonk_recoil(recoil_dir)
@@ -903,6 +1075,7 @@ func show_mine_hit(pos: Vector2i) -> void:
 			cell_node.set_bomb(true)
 			cell_node.play_shudder()
 
+	_snap_pen_for_impact()
 	if _cursor != null:
 		_cursor.play_bonk_recoil(Vector2(0, -1))
 
@@ -1159,6 +1332,7 @@ func show_no_moves_overlay(on: bool) -> void:
 	if on:
 		# Huỷ drag đang diễn ra — người dùng giữ ngón tay sẽ không tiếp tục kéo qua overlay
 		_dragging_player = false
+		_end_pen_down()
 		_pressed_cell = Vector2i(-1, -1)
 		_has_dragged = false
 		_cancel_anchor_drag()
@@ -1176,6 +1350,7 @@ func set_interaction_enabled(enabled: bool) -> void:
 	_interaction_enabled = enabled
 	if not enabled:
 		_dragging_player = false
+		_end_pen_down()
 		_pressed_cell = Vector2i(-1, -1)
 		_has_dragged = false
 		_cancel_anchor_drag()
@@ -1282,6 +1457,7 @@ func _on_press(local_pos: Vector2) -> void:
 	if cell != Vector2i(-1, -1):
 		_pressed_cell = cell
 		_dragging_player = true
+		_begin_pen_down(local_pos)
 
 
 func _on_drag(local_pos: Vector2) -> void:
@@ -1297,10 +1473,10 @@ func _on_drag(local_pos: Vector2) -> void:
 		if not _drag_draw_sfx_on:
 			_drag_draw_sfx_on = true
 			Sfx.play(Sfx.PATH_DRAW)
-		var cell := _hit_cell(local_pos)
-		if cell != Vector2i(-1, -1) and cell != _player_current_cell:
-			if _is_adjacent(_player_current_cell, cell):
-				drag_updated.emit(cell)
+		_finger = local_pos
+		# Lấy mẫu dọc đường ngón tay đã đi từ sự kiện trước tới giờ — quẹt nhanh vẫn không lọt ô
+		_sample_pointer_path(_pointer_last, local_pos)
+		_pointer_last = local_pos
 
 
 func _on_release(local_pos: Vector2) -> void:
@@ -1311,8 +1487,16 @@ func _on_release(local_pos: Vector2) -> void:
 		_has_dragged = false
 		return
 
+	# Chạm nhẹ vào khe giữa 2 ô (không kéo) ⇒ bật/tắt đoạn Tường Nghi Ngờ ở khe đó
+	if _dragging_player and TAP_EDGE_TO_MARK and not _has_dragged \
+			and local_pos.distance_to(_press_start_pos) <= 12.0:
+		var edge := _edge_at(_press_start_pos)
+		if not edge.is_empty():
+			_mark_edge_by_tap(edge[0], edge[1])
+
 	if _dragging_player:
 		_dragging_player = false
+	_end_pen_down()
 
 	_pressed_cell = Vector2i(-1, -1)
 	_has_dragged = false
@@ -1339,7 +1523,8 @@ func _start_anchor_drag(anchor_info: Dictionary) -> void:
 	var anchor_center := _anchor_center_pos(_drag_source_anchor_corner)
 	_drag_guide_last_local = anchor_center
 	_drag_guide_line.visible = true
-	_drag_guide_line.points = PackedVector2Array([anchor_center, anchor_center])
+	_set_guide_points(PackedVector2Array([anchor_center, anchor_center]))
+	_show_anchor_candidates(_drag_source_anchor_corner)
 
 
 func _update_anchor_drag(local_pos: Vector2) -> void:
@@ -1348,6 +1533,9 @@ func _update_anchor_drag(local_pos: Vector2) -> void:
 
 	_drag_guide_last_local = local_pos
 	var anchor_a_pos := _anchor_center_pos(_drag_source_anchor_corner)
+	if ANCHOR_AXIS_SNAP:
+		_update_anchor_drag_axis(local_pos, anchor_a_pos)
+		return
 	var hovered_anchor := _hit_anchor_info(local_pos)
 
 	if not hovered_anchor.is_empty() and hovered_anchor.has("node"):
@@ -1362,12 +1550,12 @@ func _update_anchor_drag(local_pos: Vector2) -> void:
 					node.set_selected(true)
 
 				var target_pos := _anchor_center_pos(hovered_anchor.corner)
-				_drag_guide_line.points = PackedVector2Array([anchor_a_pos, target_pos])
+				_set_guide_points(PackedVector2Array([anchor_a_pos, target_pos]))
 				return
 
 	_clear_hover_target_highlight()
 	_hover_target_anchor_id = -1
-	_drag_guide_line.points = PackedVector2Array([anchor_a_pos, local_pos])
+	_set_guide_points(PackedVector2Array([anchor_a_pos, local_pos]))
 
 
 func _finish_anchor_drag(local_pos: Vector2) -> void:
@@ -1376,7 +1564,10 @@ func _finish_anchor_drag(local_pos: Vector2) -> void:
 
 	var target_anchor := _hit_anchor_info(local_pos)
 	var target_id := -1
-	if not target_anchor.is_empty() and target_anchor.has("node"):
+	if ANCHOR_AXIS_SNAP:
+		# Nét chỉ dẫn đã tự hít vào neo kề: thả tay ở đâu cũng nối đúng neo đang sáng
+		target_id = _hover_target_anchor_id
+	elif not target_anchor.is_empty() and target_anchor.has("node"):
 		var node: MazeAnchor = target_anchor.node
 		if node.anchor_id != _drag_source_anchor_id:
 			target_id = node.anchor_id
@@ -1400,6 +1591,7 @@ func _finish_anchor_drag(local_pos: Vector2) -> void:
 
 
 func _cancel_anchor_drag() -> void:
+	_clear_anchor_candidates()
 	_clear_hover_target_highlight()
 	if _drag_source_anchor_id != -1:
 		var src_node := _get_anchor_node(_drag_source_anchor_id)
@@ -1435,23 +1627,35 @@ func _anchor_center_pos(corner: Vector2i) -> Vector2:
 
 
 func _hit_anchor_info(local_pos: Vector2) -> Dictionary:
+	# Chọn neo GẦN NHẤT trong vùng chạm (không phải neo đầu tiên tìm thấy)
+	var best: Dictionary = {}
+	var best_d := INF
 	for info in _anchor_nodes:
 		var node: MazeAnchor = info.node
 		var center: Vector2 = node.position + node.size * 0.5
-		if center.distance_to(local_pos) <= _anchor_hit_radius:
-			return info
-	return {}
+		var d := center.distance_to(local_pos)
+		if d <= _anchor_hit_radius and d < best_d:
+			best = info
+			best_d = d
+	return best
 
 
+## Ô chứa điểm `local_pos` — tính số học O(1) (trước đây duyệt cả bảng mỗi sự kiện kéo)
 func _hit_cell(local_pos: Vector2) -> Vector2i:
-	for y in _height:
-		for x in _width:
-			var pos := Vector2i(x, y)
-			if maze != null and not maze.is_cell_active(pos):
-				continue      # ô ngoài board: không bấm được
-			if _cell_rects[_cell_index(x, y)].has_point(local_pos):
-				return pos
-	return Vector2i(-1, -1)
+	return _cell_at(local_pos)
+
+
+func _cell_at(local_pos: Vector2) -> Vector2i:
+	if _col_edge_x.is_empty() or _row_edge_y.is_empty() or _step <= 0.0:
+		return Vector2i(-1, -1)
+	var ix := int(floor((local_pos.x - float(_col_edge_x[0])) / _step))
+	var iy := int(floor((local_pos.y - float(_row_edge_y[0])) / _step))
+	if ix < 0 or iy < 0 or ix >= _width or iy >= _height:
+		return Vector2i(-1, -1)
+	var pos := Vector2i(ix, iy)
+	if maze != null and not maze.is_cell_active(pos):
+		return Vector2i(-1, -1)      # ô ngoài board: không bấm được
+	return pos
 
 
 func _is_adjacent(a: Vector2i, b: Vector2i) -> bool:
@@ -1493,7 +1697,8 @@ func _corner_edge(a: Vector2i, b: Vector2i) -> Array:
 func cursor_pos_at(center: Vector2) -> Vector2:
 	if _cursor == null:
 		return center
-	return center - CURSOR_TIP_UV * _cursor.size
+	# Đầu bút của TỪNG bút nằm ở chỗ khác nhau trong icon (PenSkin.tip_uv → cursor.tip_uv)
+	return center - _cursor.tip_uv * _cursor.size
 
 
 ## Tâm của 1 ô (toạ độ lưới → pixel). Chỉ số được KẸP vào trong bảng nên không bao giờ
@@ -1520,3 +1725,328 @@ func _cell_edge_key(a: Vector2i, b: Vector2i) -> String:
 		lo = b
 		hi = a
 	return "%d,%d->%d,%d" % [lo.x, lo.y, hi.x, hi.y]
+
+
+# ============================================================================
+# BÚT VIẾT: lấy mẫu ngón tay · đuôi mực · đầu bút trượt mượt
+#
+#   Mô hình: LOGIC vẫn rời rạc theo ô (controller chỉ nhận `drag_updated(cell)` như cũ),
+#   còn HIỂN THỊ liên tục:
+#     ngón tay ──▶ `_tail_target()` (đuôi mực bò theo trục, tối đa nửa ô)
+#              ──▶ `_tip` (đầu bút, làm mượt) ──▶ InkStroke.set_tip() + PlayerCursor.write_at()
+#   Khi ngón tay vượt mép ô kề ⇒ chốt ô (signal) ⇒ đầu bút trượt nốt tới tâm ô mới.
+# ============================================================================
+func _begin_pen_down(local_pos: Vector2) -> void:
+	_pen_down = true
+	_pointer_last = local_pos
+	_finger = local_pos
+	_blocked_cell = Vector2i(-1, -1)
+	_tip_dir = Vector2i.ZERO
+	if not WRITING_MODE:
+		return
+	if _cursor != null and _cursor.visible and not _player_hidden and _cursor_block_t <= 0.0:
+		_cursor.begin_writing()
+	set_process(true)
+
+
+## Nhấc ngón tay: đầu bút tự rút về tâm ô (xem `_process`), xong thì nhả bút
+func _end_pen_down() -> void:
+	_pen_down = false
+	_blocked_cell = Vector2i(-1, -1)
+
+
+## Đặt đầu bút đúng tâm ô hiện tại, không hoạt ảnh
+func _snap_tip_to_center() -> void:
+	_tip = _cell_center(_player_current_cell)
+	_tip_prev = _tip
+	if _moving_line != null:
+		_moving_line.set_tip(_tip, true)
+
+
+## Trước hiệu ứng va chạm (tường · mìn): mực thụt về tâm ô, con trỏ về dáng chuẩn
+func _snap_pen_for_impact() -> void:
+	_snap_tip_to_center()
+	_cursor_block_t = 0.3
+	if _cursor != null:
+		_cursor.stop_writing_immediate()
+		_cursor.position = cursor_pos_at(_tip)
+	if WRITING_MODE:
+		set_process(true)
+
+
+func _process(delta: float) -> void:
+	if maze == null or _width <= 0:
+		set_process(false)
+		return
+	if _cursor_block_t > 0.0:
+		_cursor_block_t -= delta
+
+	var center := _cell_center(_player_current_cell)
+	var target := center
+	if _pen_down and not _player_hidden and _cursor_block_t <= 0.0:
+		target = _tail_target(center)
+
+	_tip_prev = _tip
+	_tip = _tip.lerp(target, 1.0 - exp(-delta * TIP_FOLLOW_SPEED * float(_feel.get("follow", 1.0))))
+	if _tip.distance_squared_to(target) < 0.12:
+		_tip = target
+	_apply_tip_visual(delta)
+
+	if not _pen_down and _tip == target and _cursor_block_t <= 0.0:
+		_finish_pen_visual()
+
+
+## Điểm đầu bút MUỐN tới: tâm ô, hoặc tâm ô + đuôi mực bò theo trục về phía ngón tay
+func _tail_target(center: Vector2) -> Vector2:
+	var d := _finger - center
+	var ax := absf(d.x)
+	var ay := absf(d.y)
+	if ax > _step * 1.6 or ay > _step * 1.6:
+		return center                      # ngón tay ở xa bút: bút đứng yên
+	# Chọn trục (có "trễ" để đuôi mực không nhảy trục khi ngón tay đi chéo)
+	var use_x: bool
+	if _tip_dir.x != 0:
+		use_x = ax * 1.25 >= ay
+	elif _tip_dir.y != 0:
+		use_x = ax > ay * 1.25
+	else:
+		use_x = ax >= ay
+	var dir := Vector2i.ZERO
+	var along := 0.0
+	if use_x:
+		dir = Vector2i(1 if d.x > 0.0 else -1, 0)
+		along = ax
+	else:
+		dir = Vector2i(0, 1 if d.y > 0.0 else -1)
+		along = ay
+	var length := clampf((along - TAIL_DEADZONE * _step) * TAIL_GAIN * float(_feel.get("tail", 1.0)),
+		0.0, TAIL_MAX * _step)
+	if length <= 0.0:
+		_tip_dir = Vector2i.ZERO
+		return center
+	_tip_dir = dir
+
+	var nb := _player_current_cell + dir
+	# Không kéo đuôi mực ngược về ô vừa đi qua (đó là quay lui, để bút tự lùi khi chốt)
+	if _moving_path.size() >= 2 and nb == _moving_path[_moving_path.size() - 2]:
+		return center
+	if nb == _blocked_cell:
+		return center                      # ô vừa bị từ chối: bút "cứng" lại
+	var open_cell := nb.x >= 0 and nb.y >= 0 and nb.x < _width and nb.y < _height \
+			and maze != null and maze.is_cell_active(nb)
+	if not open_cell:
+		length = minf(length, _step * 0.08)    # ngoài board: chỉ nhích nhẹ như bị cản
+	return center + Vector2(dir) * length
+
+
+func _apply_tip_visual(delta: float) -> void:
+	if _moving_line != null:
+		_moving_line.set_tip(_tip, true)
+	if _cursor == null or _cursor_block_t > 0.0 or not WRITING_MODE:
+		return
+	if _pen_down and _cursor.visible and not _cursor.is_writing():
+		_cursor.begin_writing()
+	if _cursor.is_writing():
+		var vx := (_tip.x - _tip_prev.x) / maxf(delta, 0.001)
+		var lean_k := float(_feel.get("lean", 1.0))
+		_cursor.write_at(_tip, clampf(vx * LEAN_PER_SPEED * lean_k, -LEAN_MAX * lean_k, LEAN_MAX * lean_k), delta)
+	else:
+		_cursor.position = cursor_pos_at(_tip)
+
+
+## Đầu bút đã về tâm ô và ngón tay đã nhấc: nhả bút, dừng vòng cập nhật
+func _finish_pen_visual() -> void:
+	set_process(false)
+	_snap_tip_to_center()
+	if _cursor != null:
+		_cursor.position = cursor_pos_at(_tip)
+		_cursor.end_writing()
+		if _pending_run_finished:
+			_cursor.notify_run_finished()
+	_pending_run_finished = false
+
+
+## Đi dọc đoạn from→to, mỗi ~¼ ô thử chốt ô nếu ngón tay đã vào ô kề
+func _sample_pointer_path(from: Vector2, to: Vector2) -> void:
+	var spacing := maxf(_step * SAMPLE_SPACING, 2.0)
+	var count := maxi(1, int(ceil(from.distance_to(to) / spacing)))
+	for i in range(1, count + 1):
+		if not _try_step_at(from.lerp(to, float(i) / float(count))):
+			return
+
+
+## Trả về false khi bước bị từ chối (dừng lấy mẫu tiếp trong sự kiện này)
+func _try_step_at(p: Vector2) -> bool:
+	var cell := _cell_at(p)
+	if cell == Vector2i(-1, -1):
+		return true
+	if cell != _blocked_cell:
+		_blocked_cell = Vector2i(-1, -1)     # ngón tay đã rời ô bị từ chối ⇒ mở khoá
+	else:
+		return true                          # vẫn kẹt trong ô vừa bị từ chối: không gửi lại liên tục
+	if cell == _player_current_cell or not _is_adjacent(_player_current_cell, cell):
+		return true
+	# Chỉ lướt qua mép góc của ô kề thì chưa tính
+	var c := _cell_center(cell)
+	var dir := cell - _player_current_cell
+	var off := absf(p.y - c.y) if dir.x != 0 else absf(p.x - c.x)
+	if off > _step * (0.5 - CORNER_GUARD):
+		return true
+
+	var before := _player_current_cell
+	drag_updated.emit(cell)
+	if _player_current_cell == before:
+		_blocked_cell = cell
+		return false
+	if HAPTIC_ON_STEP and OS.has_feature("mobile"):
+		Input.vibrate_handheld(maxi(1, int(round(HAPTIC_MS * float(_feel.get("haptic", 8)) / 8.0))), 0.35)
+	return true
+
+
+# ----------------------------------------------------------------------------
+# Kéo neo kiểu "viết": nét chỉ dẫn bò theo trục lưới, hít vào neo kề
+# ----------------------------------------------------------------------------
+func _update_anchor_drag_axis(local_pos: Vector2, anchor_a_pos: Vector2) -> void:
+	var d := local_pos - anchor_a_pos
+	var along_x := absf(d.x) >= absf(d.y)
+	var dir := Vector2i.ZERO
+	var along := 0.0
+	if along_x:
+		dir = Vector2i(1 if d.x > 0.0 else -1, 0)
+		along = absf(d.x)
+	else:
+		dir = Vector2i(0, 1 if d.y > 0.0 else -1)
+		along = absf(d.y)
+
+	var target_corner := _drag_source_anchor_corner + dir
+	var target_info := _anchor_info_at_corner(target_corner)
+	var valid := not target_info.is_empty() \
+			and not _corner_edge(_drag_source_anchor_corner, target_corner).is_empty()
+
+	var length := minf(along, _step)
+	var engage_at := _step * (1.0 - ANCHOR_MAGNET)
+	if valid and along >= engage_at:
+		var node: MazeAnchor = target_info.node
+		if _hover_target_anchor_id != node.anchor_id:
+			_clear_hover_target_highlight()
+			_hover_target_anchor_id = node.anchor_id
+			node.set_selected(true)
+			Sfx.play(Sfx.ANCHOR_SNAP)
+		# Hít dần vào tâm neo kề (mượt, không giật)
+		var m := smoothstep(engage_at, _step * 0.85, along)
+		length = lerpf(along, _step, m)
+	else:
+		_clear_hover_target_highlight()
+		_hover_target_anchor_id = -1
+		if not valid:
+			length = minf(length, _step * 0.35)    # hướng không có neo: nét chỉ bò ngắn như bị cản
+	_set_guide_points(PackedVector2Array([anchor_a_pos, anchor_a_pos + Vector2(dir) * length]))
+
+
+func _anchor_info_at_corner(corner: Vector2i) -> Dictionary:
+	for info in _anchor_nodes:
+		if info.corner == corner:
+			return info
+	return {}
+
+
+# ----------------------------------------------------------------------------
+# Đặt hint dễ hơn: chạm vào khe · neo kề sáng lên
+# ----------------------------------------------------------------------------
+## Khe (cạnh giữa 2 neo kề) gần điểm `p` nhất, trong dải EDGE_TAP_BAND quanh đường lưới.
+## Trả [corner_a, corner_b] hoặc [] nếu không có khe hợp lệ (ngoài board / thiếu neo).
+func _edge_at(p: Vector2) -> Array:
+	if _col_edge_x.is_empty() or _row_edge_y.is_empty() or _step <= 0.0:
+		return []
+	var fx := (p.x - float(_col_edge_x[0])) / _step      # toạ độ lưới (đơn vị ô)
+	var fy := (p.y - float(_row_edge_y[0])) / _step
+	var nx := roundi(fx)
+	var ny := roundi(fy)
+	var dx := absf(fx - float(nx))
+	var dy := absf(fy - float(ny))
+	var a := Vector2i.ZERO
+	var b := Vector2i.ZERO
+	if dx <= dy and dx <= EDGE_TAP_BAND:
+		var j := int(floor(fy))
+		a = Vector2i(nx, j)
+		b = Vector2i(nx, j + 1)
+	elif dy < dx and dy <= EDGE_TAP_BAND:
+		var i := int(floor(fx))
+		a = Vector2i(i, ny)
+		b = Vector2i(i + 1, ny)
+	else:
+		return []
+	var edge := _corner_edge(a, b)
+	if edge.is_empty() or not _edge_touches_board(edge[0], edge[1]):
+		return []
+	if _anchor_info_at_corner(a).is_empty() or _anchor_info_at_corner(b).is_empty():
+		return []
+	return [a, b]
+
+
+## Giống hệt kéo nối 2 neo: phát `anchor_connected` để controller bật/tắt Tường Nghi Ngờ
+func _mark_edge_by_tap(a: Vector2i, b: Vector2i) -> void:
+	anchor_connected.emit(a, b)
+	Sfx.play(Sfx.WALL_MARK)
+	for corner in [a, b]:
+		var info := _anchor_info_at_corner(corner)
+		if not info.is_empty():
+			(info.node as MazeAnchor).pulse()
+
+
+## Phóng to các neo kề NỐI ĐƯỢC từ `corner` (đang bấm giữ) — thấy ngay mình có thể kéo tới đâu
+func _show_anchor_candidates(corner: Vector2i) -> void:
+	_clear_anchor_candidates()
+	if not ANCHOR_SHOW_CANDIDATES:
+		return
+	for dir in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+		var other: Vector2i = corner + dir
+		var info := _anchor_info_at_corner(other)
+		if info.is_empty():
+			continue
+		var edge := _corner_edge(corner, other)
+		if edge.is_empty() or not _edge_touches_board(edge[0], edge[1]):
+			continue
+		var node := info.node as MazeAnchor
+		_candidate_nodes.append(node)
+		var tw := node.create_tween()
+		tw.tween_property(node, "scale", Vector2.ONE * 1.5, 0.14) \
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func _clear_anchor_candidates() -> void:
+	for node in _candidate_nodes:
+		if is_instance_valid(node):
+			var tw := (node as Node).create_tween()
+			tw.tween_property(node, "scale", Vector2.ONE, 0.10)
+	_candidate_nodes.clear()
+
+
+# ----------------------------------------------------------------------------
+# Nét chỉ dẫn kéo neo: thêm QUẦNG GIẤY SÁNG phía sau để nổi trên đường kẻ ô
+# ----------------------------------------------------------------------------
+var _guide_halo: Line2D = null
+
+
+func _ensure_guide_halo() -> void:
+	if _drag_guide_line == null:
+		return
+	if _guide_halo != null and is_instance_valid(_guide_halo):
+		return
+	_guide_halo = Line2D.new()
+	_guide_halo.name = "Halo"
+	_guide_halo.show_behind_parent = true
+	_guide_halo.joint_mode = Line2D.LINE_JOINT_ROUND
+	_guide_halo.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	_guide_halo.end_cap_mode = Line2D.LINE_CAP_ROUND
+	_guide_halo.default_color = Color(1.0, 0.99, 0.94, 0.95)
+	_drag_guide_line.add_child(_guide_halo)
+
+
+func _set_guide_points(pts: PackedVector2Array) -> void:
+	if _drag_guide_line == null:
+		return
+	_drag_guide_line.points = pts
+	if _guide_halo != null and is_instance_valid(_guide_halo):
+		_guide_halo.points = pts
+		_guide_halo.width = _drag_guide_line.width * GUIDE_HALO_SCALE

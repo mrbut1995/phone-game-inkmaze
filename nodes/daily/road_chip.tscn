@@ -1,0 +1,384 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://dwc2xw57tk2jh" path="res://scripts/nodes/daily/milestone_chip.gd" id="1_chip"]
+[ext_resource type="Texture2D" uid="uid://c3uruc8moyy18" path="res://assets/images-png/daily/ring_off.png" id="3_off"]
+[ext_resource uid="uid://bhdewqbcltopn" type="Texture2D" path="res://assets/images-png/daily/chest_closed.png" id="4_chest"]
+[ext_resource uid="uid://1am8aehqp420" type="Texture2D" path="res://assets/images-png/daily/chest.png" id="7_chest_open"]
+[ext_resource type="Texture2D" uid="uid://b3fvm8sypownm" path="res://assets/images-png/daily/check_badge.png" id="5_badge"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/road_tag.png" id="30_tag"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="6_theme"]
+[ext_resource uid="uid://isr1cd5s5mxk" type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="20_glow"]
+[ext_resource uid="uid://buhsd5kh2cdyp" type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="21_spark"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[sub_resource type="Animation" id="Animation_chip_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ring:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ring:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Ring/Glow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Ring/Sparkle:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.97, 0.8, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_chip_unlock"]
+resource_name = "unlock"
+length = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ring:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.48, 0.65),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.82, 0.82), Vector2(1.32, 1.32), Vector2(0.94, 0.94), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ring:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.22, 0.16, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Ring/Glow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.18, 0.95),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0), Color(1, 0.85, 0.4, 1), Color(1, 0.85, 0.4, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Ring/Glow:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.18, 0.95),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.2333, 0.2333), Vector2(0.7778, 0.7778), Vector2(0.9644, 0.9644)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Ring/Sparkle:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.12, 0.28, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.97, 0.8, 0), Color(1, 0.97, 0.8, 1), Color(1, 0.97, 0.8, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Ring/Sparkle:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.12, 0.28, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.0778, 0.0778), Vector2(0.4978, 0.4978), Vector2(0.0778, 0.0778)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Ring/Sparkle:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.12, 0.28, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.6, 3.2]
+}
+
+[sub_resource type="Animation" id="Animation_chip_ready"]
+resource_name = "ready"
+length = 1.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ring:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.1, 0.1, -0.06, 0.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ring:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.08, 1.08), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Ring/Glow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.9, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.85, 0.4, 0), Color(1, 0.85, 0.4, 0.7), Color(1, 0.85, 0.4, 0), Color(1, 0.85, 0.4, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Ring/Glow:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.9, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.4667, 0.4667), Vector2(0.6533, 0.6533), Vector2(0.4667, 0.4667), Vector2(0.4667, 0.4667)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Ring/Sparkle:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.1, 1.5, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.97, 0.8, 0), Color(1, 0.97, 0.8, 0), Color(1, 0.97, 0.8, 1), Color(1, 0.97, 0.8, 0), Color(1, 0.97, 0.8, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Ring/Sparkle:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.1, 1.5, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.0778, 0.0778), Vector2(0.0778, 0.0778), Vector2(0.4044, 0.4044), Vector2(0.0778, 0.0778), Vector2(0.0778, 0.0778)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Ring/Sparkle:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.1, 1.5, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.2, 2.4, 2.4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_chip"]
+_data = {
+&"RESET": SubResource("Animation_chip_reset"),
+&"unlock": SubResource("Animation_chip_unlock"),
+&"ready": SubResource("Animation_chip_ready")
+}
+
+[node name="RoadChip" type="Button" unique_id=1213168266 node_paths=PackedStringArray("ring", "chest", "badge", "lbl_stars", "lbl_reward", "tag", "fx_anim", "hold_timer")]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 64.0
+offset_bottom = 64.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("6_theme")
+flat = true
+script = ExtResource("1_chip")
+ring = NodePath("Ring")
+chest = NodePath("Ring/Chest")
+badge = NodePath("Ring/Badge")
+lbl_stars = NodePath("Tag/Stars")
+lbl_reward = NodePath("Tag/Reward")
+tag = NodePath("Tag")
+fx_anim = NodePath("FxAnim")
+hold_timer = NodePath("HoldTimer")
+
+[node name="Ring" type="TextureRect" parent="." unique_id=360493906]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(28, 28)
+mouse_filter = 2
+texture = ExtResource("3_off")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Chest" type="TextureRect" parent="Ring" unique_id=1235099882]
+custom_minimum_size = Vector2(37, 37)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -43.0
+offset_right = 36.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_chest")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Badge" type="TextureRect" parent="Ring" unique_id=1115598138]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -14.0
+offset_top = -6.0
+offset_right = 10.0
+offset_bottom = 18.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("5_badge")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Glow" type="Sprite2D" parent="Ring" unique_id=1900400001]
+show_behind_parent = true
+modulate = Color(1, 0.85, 0.4, 0)
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(28, 28)
+scale = Vector2(0.4667, 0.4667)
+texture = ExtResource("20_glow")
+
+[node name="Sparkle" type="Sprite2D" parent="Ring" unique_id=1900400002]
+modulate = Color(1, 0.97, 0.8, 0)
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(46, 6)
+scale = Vector2(0.0778, 0.0778)
+texture = ExtResource("21_spark")
+
+[node name="Tag" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 9.0
+offset_right = 162.0
+offset_bottom = 55.0
+mouse_filter = 2
+texture = ExtResource("30_tag")
+expand_mode = 1
+
+[node name="Stars" type="Label" parent="Tag"]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 96.0
+offset_bottom = 24.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.0941176, 0.239216, 0.352941, 1)
+theme_override_font_sizes/font_size = 14
+text = "STR_DAILY_MILESTONE_STARS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Reward" type="Label" parent="Tag"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 23.0
+offset_right = 92.0
+offset_bottom = 38.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.356863, 0.431373, 0.509804, 1)
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+resize_font_to_fit = true
+
+[node name="FxAnim" type="AnimationPlayer" parent="." unique_id=1900400003]
+libraries/ = SubResource("AnimationLibrary_chip")
+
+[node name="HoldTimer" type="Timer" parent="." unique_id=1900700001]
+wait_time = 0.35
+one_shot = true
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="timeout" from="HoldTimer" to="." method="_on_hold_timeout"]

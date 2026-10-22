@@ -26,6 +26,9 @@ var threshold: int = 0
 @export var chest: TextureRect = null
 @export var badge: TextureRect = null
 @export var lbl_stars: Label = null
+## Bản "đường mốc" (road_chip.tscn): nhãn phần thưởng + bảng chứa 2 nhãn, đặt cạnh vòng huy hiệu
+@export var lbl_reward: Label = null
+@export var tag: Control = null
 ## AnimationPlayer: `unlock` (vừa đạt mốc: nảy + toả sáng) · `ready` (lặp: lắc nhẹ gọi bấm NHẬN) · `RESET`
 @export var fx_anim: AnimationPlayer = null
 ## Timer one-shot: hết giờ = coi là nhấn giữ
@@ -42,6 +45,8 @@ func setup(def: Dictionary, stars_now: int, claimed: bool) -> void:
 	threshold = int(def.get("stars", 0))
 	if lbl_stars != null:
 		lbl_stars.text = tr("STR_DAILY_MILESTONE_STARS").format([threshold])
+	if lbl_reward != null:
+		lbl_reward.text = _reward_text(def)
 	var reached := stars_now >= threshold
 	if ring != null:
 		ring.texture = _tex("ring_on.png" if reached else "ring_off.png")
@@ -79,6 +84,24 @@ func _update_idle_fx() -> void:
 		if fx_anim.has_animation(&"RESET"):
 			fx_anim.play(&"RESET")
 			fx_anim.seek(0.0, true)
+
+
+## Đặt bảng phần thưởng bên PHẢI (true) hoặc bên TRÁI (false) vòng huy hiệu
+func set_tag_side(on_right: bool) -> void:
+	if tag == null or ring == null:
+		return
+	var center := size * 0.5
+	var gap := 6.0
+	var half := ring.size.x * 0.5
+	var x := center.x + half + gap if on_right else center.x - half - gap - tag.size.x
+	tag.position = Vector2(x, center.y - tag.size.y * 0.5)
+
+
+func _reward_text(def: Dictionary) -> String:
+	var dm: Node = get_node_or_null("/root/DailyManager")
+	if dm != null and dm.has_method("reward_text"):
+		return str(dm.call("reward_text", def))
+	return ""
 
 
 func _tex(file: String) -> Texture2D:

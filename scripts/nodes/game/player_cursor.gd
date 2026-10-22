@@ -10,6 +10,8 @@ extends Control
 ##   - Nhảy múa ăn mừng (Celebration) khi tới đích F (xoay 360 độ).
 ##   - Rơi nhẹ vào ván mới (Spawn Drop) tại ô xuất phát S.
 ##   - Nhịp thở & cựa quậy sinh động khi đứng yên (Idle).
+##   - CHẾ ĐỘ VIẾT (mới): khi người chơi đang kéo, con trỏ KHÔNG nhún nhảy mà đóng vai ĐẦU BÚT —
+##     bám sát đầu nét mực (`write_at`), ấn nhẹ xuống giấy (scale nhỏ lại) và nghiêng theo hướng quẹt.
 ## ============================================================================
 
 signal run_finished()
@@ -24,6 +26,15 @@ signal celebration_finished()
 
 ## Độ dài chuẩn của animation "hop_*" — khi `duration` khác thì đổi `speed_scale` theo tỉ lệ
 @export var HOP_LENGTH := 0.16
+
+## Vị trí ĐẦU BÚT trong art (toạ độ chuẩn hoá 0..1) — phải trùng `BoardView.CURSOR_TIP_UV`.
+## Khi viết, tâm xoay/co giãn đặt đúng ở đầu bút nên nghiêng/ấn bút không làm đầu bút lệch khỏi nét.
+@export var tip_uv := Vector2(0.786, 0.786)
+## Độ co lại khi "ấn bút xuống giấy"
+@export_range(0.7, 1.0, 0.01) var pen_down_scale := 0.94
+
+var _writing := false
+var _lean := 0.0
 
 var _move_tween: Tween = null
 var _demo_tween: Tween = null
@@ -43,6 +54,8 @@ func _ready() -> void:
 func _play_anim(anim_name: StringName, speed: float = 1.0) -> bool:
 	if anim == null or not anim.has_animation(anim_name):
 		return false
+	if not _writing:
+		pivot_offset = size * 0.5
 	# Đổi animation khi cú RƠI VÀO VÁN (`spawn_drop`) còn dang dở: animation mới (idle/hop/bonk/
 	# demo…) KHÔNG đụng tới `Icon:position` ⇒ Icon kẹt lơ lửng ở -42px (bút "lệch hẳn bên trên").
 	# Nhả Icon về đúng chỗ trước khi chạy animation mới.
@@ -68,6 +81,8 @@ func _kill_demo_tween() -> void:
 	if _demo_tween != null and _demo_tween.is_valid():
 		_demo_tween.kill()
 	_demo_tween = null
+	if not _writing:
+		pivot_offset = size * 0.5
 
 
 ## Xong 1 animation one-shot: reset dáng + phát tín hiệu + về lại nhịp thở
@@ -94,6 +109,9 @@ func apply_pen(pen_id: String) -> void:
 	var tex := PenSkin.cursor_texture(pen_id)
 	if tex != null and icon != null:
 		icon.texture = tex
+	# Mỗi bút có ĐẦU BÚT ở chỗ khác nhau trong icon + cách ấn xuống giấy khác nhau (PenSkin)
+	tip_uv = PenSkin.tip_uv(pen_id)
+	pen_down_scale = float(PenSkin.feel_of(pen_id).get("press", pen_down_scale))
 
 
 ## Hiện hoặc ẩn con trỏ (khi ẩn sẽ tạm dừng hoạt cảnh)
@@ -297,6 +315,77 @@ func start_idle() -> void:
 	if _is_running or _is_celebrating or _is_demoing:
 		return
 	_play_anim(&"idle")
+
+
+# ============================================================================
+# CHẾ ĐỘ VIẾT — con trỏ là ĐẦU BÚT bám sát nét mực
+# ============================================================================
+func is_writing() -> bool:
+	return _writing
+
+
+## Bắt đầu viết (người chơi chạm xuống giấy): dừng mọi hoạt ảnh nhún/thở, ấn bút xuống nhẹ.
+func begin_writing() -> void:
+	if _is_celebrating:
+		return
+	_writing = true
+	_kill_move_tween()
+	_kill_demo_tween()
+	_stop_anim()
+	_is_running = false
+	_is_demoing = false
+	_lean = 0.0
+	if icon != null:
+		icon.position = Vector2.ZERO
+	modulate.a = 1.0
+	rotation = 0.0
+	pivot_offset = size * tip_uv
+	_move_tween = create_tween()
+	_move_tween.tween_property(self, "scale", Vector2.ONE * pen_down_scale, 0.06) \
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+## Đặt ĐẦU BÚT đúng tại `tip_pos` (toạ độ board). `lean_target` = góc nghiêng mong muốn (rad),
+## được làm mượt để bút nghiêng theo hướng quẹt chứ không giật.
+func write_at(tip_pos: Vector2, lean_target := 0.0, dt := 0.016) -> void:
+	position = tip_pos - tip_uv * size
+	if _writing and not _is_celebrating:
+		_lean = lerpf(_lean, lean_target, 1.0 - exp(-dt * 18.0))
+		rotation = _lean
+
+
+## Nhấc bút lên: nở lại cỡ cũ (nảy nhẹ) rồi về nhịp thở.
+func end_writing() -> void:
+	if not _writing:
+		return
+	_writing = false
+	_lean = 0.0
+	_kill_move_tween()
+	_move_tween = create_tween().set_parallel(true)
+	_move_tween.tween_property(self, "scale", Vector2.ONE, 0.12) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_move_tween.tween_property(self, "rotation", 0.0, 0.12)
+	_move_tween.chain().tween_callback(_on_end_writing_done)
+
+
+## Dừng viết NGAY (không tween) — dùng trước các hiệu ứng va chạm (bonk) để chúng chạy từ dáng chuẩn.
+func stop_writing_immediate() -> void:
+	_writing = false
+	_lean = 0.0
+	_kill_move_tween()
+	scale = Vector2.ONE
+	rotation = 0.0
+	pivot_offset = size * 0.5
+
+
+func _on_end_writing_done() -> void:
+	pivot_offset = size * 0.5
+	start_idle()
+
+
+## Báo "đã tới nơi" cho bên đang chờ `run_finished` khi bàn dùng chuyển động trượt thay vì nhún.
+func notify_run_finished() -> void:
+	run_finished.emit()
 
 
 ## Bước chạy 1 ô: VỊ TRÍ do tween dưới đây lo (toạ độ bàn cờ tính lúc chạy);
