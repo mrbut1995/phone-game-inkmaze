@@ -15,3 +15,6 @@ extends BaseLayout
 @export var banner_focus: Texture2D = null
 ## Tham chiếu đến LevelMap — lấy từ instance trong `scenes/levels.tscn`
 @export var level_map: LevelMap = null
+## Thanh tiến độ Sao + 3 rương mốc thưởng của CHƯƠNG đang chơi
+## (`nodes/chapters/chapter_progress.tscn`) — nằm ngay dưới banner chương
+@export var progress: ChapterProgress = null

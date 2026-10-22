@@ -36,11 +36,16 @@ func _on_open() -> void:
 	var threshold := int(data.get("stars", 0))
 	var reward: Dictionary = data.get("reward", {}) if data.get("reward") is Dictionary else {}
 	if title_label != null:
-		title_label.text = tr("STR_DAILY_MILESTONE_POPUP_TITLE").format([threshold])
+		# `title_text` = tiêu đề do nơi mở truyền sẵn (VD rương mốc của CHƯƠNG ở màn Chọn chương)
+		if data.has("title_text"):
+			title_label.text = str(data.get("title_text"))
+		else:
+			title_label.text = tr("STR_DAILY_MILESTONE_POPUP_TITLE").format([threshold])
 	if sub_label != null:
-		sub_label.text = tr("STR_DAILY_MILESTONE_POPUP_SUB")
+		sub_label.text = str(data.get("sub_text", tr("STR_DAILY_MILESTONE_POPUP_SUB")))
 	if reward_label != null:
-		reward_label.text = _reward_text(reward)
+		# `reward_text` = chuỗi phần thưởng dựng sẵn (rương chương có thêm "lượt chơi")
+		reward_label.text = str(data.get("reward_text", _reward_text(reward)))
 	if lbl_ok != null:
 		lbl_ok.text = tr("STR_DAILY_MILESTONE_POPUP_OK")
 	_replay_reveal()

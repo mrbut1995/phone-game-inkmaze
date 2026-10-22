@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://d0tl47hvj62ph" path="res://assets/images-png/common/btn_paper_cta_focus.png" id="11_cont_f"]
 [ext_resource type="Texture2D" uid="uid://oalyje7bs0yo" path="res://assets/images-png/level_selector/icon_play_triangle.png" id="12_play_icon"]
 [ext_resource type="Texture2D" uid="uid://6voljbarwsoh" path="res://assets/images-png/common/star_highlight.png" id="15_star"]
+[ext_resource type="PackedScene" path="res://nodes/chapters/chapter_progress.tscn" id="30_progress"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lun85"]
 content_margin_left = 72.0
@@ -196,7 +197,7 @@ _data = {
 &"enter": SubResource("Animation_levels_enter_p")
 }
 
-[node name="Portrait" unique_id=589500212 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_stars", "lbl_stars_total", "lbl_chapter", "lbl_change_chapter", "banner", "header_anchor") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=589500212 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_stars", "lbl_stars_total", "lbl_chapter", "lbl_change_chapter", "banner", "header_anchor", "progress") instance=ExtResource("1_parent")]
 mouse_filter = 2
 script = ExtResource("2_h3psh")
 header_anchor = NodePath("Content/InformationArea/TopBarAnchor")
@@ -208,6 +209,7 @@ lbl_stars_total = NodePath("TopBar/StarsCounter/CountRow/Total")
 lbl_chapter = NodePath("Content/InformationArea/ChapterBanner/TitleContainer/Title")
 lbl_change_chapter = NodePath("Content/InformationArea/ChapterBanner/TitleContainer/ChangeChapter")
 banner = NodePath("Content/InformationArea/ChapterBanner")
+progress = NodePath("Content/InformationArea/Progress")
 banner_normal = ExtResource("6_banner")
 banner_focus = null
 
@@ -349,7 +351,18 @@ theme_type_variation = &"LevelsChangeChapter"
 text = "STR_CHANGE_CHAPTER"
 vertical_alignment = 1
 
-[node name="ContinueButton" type="Button" parent="Content/InformationArea" index="2" unique_id=84591377]
+[node name="Progress" parent="Content/InformationArea" index="2" instance=ExtResource("30_progress")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.13
+anchor_top = 0.232
+anchor_right = 0.87
+anchor_bottom = 0.3
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ContinueButton" type="Button" parent="Content/InformationArea" index="3" unique_id=84591377]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.13000001

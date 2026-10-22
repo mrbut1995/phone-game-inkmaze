@@ -13,6 +13,8 @@ signal tool_inventory_changed(tool_id: String, remaining: int)
 signal life_changed(lives: int, max_lives: int)
 ## Kỷ lục tầng của một kỳ ("day" · "week" · "month") vừa được nâng lên
 signal floor_record_changed(kind: String, floor_number: int)
+## Vừa nhận thưởng một RƯƠNG MỐC của chương (chapter_id, index 0..2)
+signal chapter_chest_claimed(chapter_id: int, index: int)
 
 const TOOL_SKIP := "skip"
 const TOOL_UNDO := "undo"
@@ -41,8 +43,8 @@ var tool_uses: Dictionary = {
 const MAX_LIVES := 5
 ## Thời gian hồi 1 lượt (giây) — 30 phút
 const LIFE_RECHARGE_SECONDS := 30 * 60
-## Nguồn hợp lệ khi cộng lượt chơi (mua hàng · nhiệm vụ · mốc thưởng Daily)
-const LIFE_GRANT_SOURCES: Array[String] = ["purchase", "mission", "daily_milestone"]
+## Nguồn hợp lệ khi cộng lượt chơi (mua hàng · nhiệm vụ · mốc thưởng Daily · rương mốc chương)
+const LIFE_GRANT_SOURCES: Array[String] = ["purchase", "mission", "daily_milestone", "chapter_chest"]
 
 var lives: int = MAX_LIVES
 ## Mốc unix (giây) lượt kế tiếp hồi xong; 0 = đang đầy lượt (không đếm ngược)
@@ -69,6 +71,22 @@ var floor_records: Dictionary = {
 ## [TEST] Cho phép ghi kỷ lục khi chạy test runner tự động (mặc định: test KHÔNG ghi,
 ## để bộ test không làm bẩn kỷ lục của người chơi thật)
 var floor_record_in_tests := false
+
+# ---------------------------------------------------------------------------
+# RƯƠNG MỐC THƯỞNG CỦA CHƯƠNG (tầng B của "Chiến lược thưởng chế độ Play")
+#   · 3 rương nằm trên thanh tiến độ ở màn Chọn chương, mốc theo TỈ LỆ Sao của chương
+#     (33% · 67% · 100% ⇒ chương 27★ được 9★/18★/27★).
+#   · Mỗi rương nhận ĐÚNG MỘT LẦN cho mỗi chương (idempotent, không farm bằng chơi lại).
+# ---------------------------------------------------------------------------
+const CHAPTER_CHEST_RATIOS: Array[float] = [0.33, 0.67, 1.0]
+## Thưởng theo planning §2 (Xu · lượt công cụ · 1 lượt chơi ở rương cuối)
+const CHAPTER_CHEST_REWARDS: Array[Dictionary] = [
+	{"coins": 50},
+	{"hint": 2, "undo": 1},
+	{"coins": 150, "life": 1},
+]
+## chapter_id -> Array[int] các mốc (0..2) đã nhận
+var chapter_chests: Dictionary = {}
 
 ## [TEST/DEBUG] Ép kết quả `can_start_run()`: 0 = theo lượt chơi · 1 = luôn cho vào · -1 = luôn chặn
 var life_gate_override: int = 0
@@ -365,7 +383,7 @@ func consume_tool_use(tool_id: String) -> bool:
 
 
 ## Nguồn hợp lệ khi cấp lượt dùng công cụ: mua ở Shop, thưởng nhiệm vụ, thưởng mốc Sao Daily
-const GRANT_SOURCES: Array[String] = ["purchase", "mission", "daily_milestone"]
+const GRANT_SOURCES: Array[String] = ["purchase", "mission", "daily_milestone", "chapter_chest"]
 
 
 ## Cấp lượt từ nguồn mua hàng/nhiệm vụ/mốc thưởng Daily.
@@ -635,6 +653,106 @@ func _sync_floor_records() -> void:
 		var bucket: Dictionary = floor_records.get(kind, {})
 		if str(bucket.get("key", "")) != key:
 			floor_records[kind] = {"key": key, "floor": 0}
+
+
+# ---------------------------------------------------------------------------
+# RƯƠNG MỐC THƯỞNG CỦA CHƯƠNG
+# ---------------------------------------------------------------------------
+
+## 3 định nghĩa rương của một chương có `stars_total` Sao tối đa.
+## Mỗi phần tử: `{ index, stars, coins, hint, undo, skip, life }` (`stars` = ngưỡng Sao cần).
+func chapter_chest_defs(stars_total: int) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var total := maxi(stars_total, 0)
+	for i in CHAPTER_CHEST_REWARDS.size():
+		var def: Dictionary = (CHAPTER_CHEST_REWARDS[i] as Dictionary).duplicate(true)
+		def["index"] = i
+		def["stars"] = chest_threshold(CHAPTER_CHEST_RATIOS[i], total)
+		out.append(def)
+	return out
+
+
+## Ngưỡng Sao của một mốc = `ratio × tổng Sao chương` (làm tròn), kẹp trong [1, tổng].
+## Chương 27★: 33% → 9★ · 67% → 18★ · 100% → 27★ (đúng tinh thần mốc 10/20/30 của planning).
+static func chest_threshold(ratio: float, stars_total: int) -> int:
+	if stars_total <= 0:
+		return 0
+	if ratio >= 1.0:
+		return stars_total
+	return clampi(roundi(stars_total * ratio), 1, stars_total)
+
+
+## Các mốc đã nhận của chương (bản sao — UI không sửa được dữ liệu gốc)
+func claimed_chapter_chests(chapter_id: int) -> Array[int]:
+	var out: Array[int] = []
+	var saved: Variant = chapter_chests.get(chapter_id, null)
+	if saved is Array:
+		for item in saved:
+			out.append(int(item))
+	return out
+
+
+func is_chapter_chest_claimed(chapter_id: int, index: int) -> bool:
+	return claimed_chapter_chests(chapter_id).has(index)
+
+
+## Đủ Sao + chưa nhận ⇒ nhận được rương này
+func can_claim_chapter_chest(chapter_id: int, index: int, stars_own: int, stars_total: int) -> bool:
+	var defs := chapter_chest_defs(stars_total)
+	if chapter_id < 1 or index < 0 or index >= defs.size():
+		return false
+	if is_chapter_chest_claimed(chapter_id, index):
+		return false
+	return stars_own >= int((defs[index] as Dictionary).get("stars", 0))
+
+
+## Nhận thưởng rương mốc của chương. Trả về định nghĩa rương ĐÃ TRAO ({} nếu không nhận được).
+func claim_chapter_chest(chapter_id: int, index: int, stars_own: int, stars_total: int) -> Dictionary:
+	if not can_claim_chapter_chest(chapter_id, index, stars_own, stars_total):
+		return {}
+	var def: Dictionary = (chapter_chest_defs(stars_total)[index] as Dictionary).duplicate(true)
+	# Đánh dấu ĐÃ NHẬN TRƯỚC khi trao (tránh nhận 2 lần nếu UI bấm liên tiếp)
+	var claimed := claimed_chapter_chests(chapter_id)
+	claimed.append(index)
+	chapter_chests[chapter_id] = claimed
+	_grant_chapter_chest(def)
+	chapter_chest_claimed.emit(chapter_id, index)
+	Save.queue_save()
+	return def
+
+
+## Trao thưởng của một rương: Xu (ví chung) + lượt công cụ + lượt chơi (qua API có nguồn)
+func _grant_chapter_chest(def: Dictionary) -> void:
+	var coins := int(def.get("coins", 0))
+	if coins > 0:
+		var wallet: Node = get_node_or_null("/root/ArchivementManager")
+		if wallet != null:
+			wallet.set("coins", maxi(int(wallet.get("coins")) + coins, 0))
+			if wallet.has_method("notify_coins_changed"):
+				wallet.call("notify_coins_changed")
+	for tool_id in TOOL_IDS:
+		var amount := int(def.get(tool_id, 0))
+		if amount > 0:
+			grant_tool_uses(tool_id, amount, "chapter_chest")
+	var extra_lives := int(def.get("life", 0))
+	if extra_lives > 0:
+		grant_lives(extra_lives, "chapter_chest")
+
+
+## Chuỗi mô tả phần thưởng của một rương chương — dùng chung cho UI (chip + popup)
+func chapter_chest_reward_text(def: Dictionary) -> String:
+	var parts: Array[String] = []
+	var coins := int(def.get("coins", 0))
+	if coins > 0:
+		parts.append(tr("STR_DAILY_REWARD_COINS").format([coins]))
+	for tool_id in TOOL_IDS:
+		var amount := int(def.get(tool_id, 0))
+		if amount > 0:
+			parts.append(tr("STR_DAILY_TOOL_%s" % tool_id.to_upper()).format([amount]))
+	var extra_lives := int(def.get("life", 0))
+	if extra_lives > 0:
+		parts.append(tr("STR_CHAPTER_CHEST_LIFE").format([extra_lives]))
+	return " + ".join(parts)
 
 
 ## Mở popup HẾT LƯỢT CHƠI (dùng cho test / khi cần báo thủ công)
@@ -975,6 +1093,7 @@ func export_progress() -> Dictionary:
 		"lives": lives,
 		"next_life_at": next_life_at,
 		"floor_records": floor_records.duplicate(true),
+		"chapter_chests": chapter_chests.duplicate(true),
 		"unlocked_chapters": unlocked_chapters.duplicate(),
 		"current_chapter": current_chapter,
 		"tutorial_progress": tutorial_progress.duplicate(),
@@ -1001,6 +1120,7 @@ func import_progress(data: Dictionary) -> void:
 	_refresh_life_recharge()
 	life_changed.emit(lives, MAX_LIVES)
 	_import_floor_records(data.get("floor_records", null))
+	_import_chapter_chests(data.get("chapter_chests", null))
 	unlocked_chapters = _int_array(data.get("unlocked_chapters", null))
 	if unlocked_chapters.is_empty():
 		unlocked_chapters = [1]
@@ -1035,6 +1155,26 @@ func _import_floor_records(value: Variant) -> void:
 	_sync_floor_records()
 
 
+## Nạp trạng thái "đã nhận rương mốc" của từng chương từ blob tiến trình.
+## JSON biến khoá số thành CHUỖI và phần tử thành float ⇒ phải ép kiểu lại.
+func _import_chapter_chests(value: Variant) -> void:
+	chapter_chests.clear()
+	if not (value is Dictionary):
+		return
+	for key in (value as Dictionary):
+		var chapter_id := int(str(key))
+		if chapter_id < 1:
+			continue
+		var saved: Variant = (value as Dictionary)[key]
+		var indices: Array[int] = []
+		if saved is Array:
+			for item in saved:
+				var index := int(item)
+				if index >= 0 and not indices.has(index):
+					indices.append(index)
+		chapter_chests[chapter_id] = indices
+
+
 func reset_progress() -> void:
 	unlocked_levels = 1
 	level_stars = { 1: 0 }
@@ -1055,6 +1195,7 @@ func reset_progress() -> void:
 		"week": {"key": "", "floor": 0},
 		"month": {"key": "", "floor": 0},
 	}
+	chapter_chests.clear()
 	life_changed.emit(lives, MAX_LIVES)
 	for k in tutorial_progress:
 		tutorial_progress[k] = false
