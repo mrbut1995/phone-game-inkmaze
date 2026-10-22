@@ -1683,3 +1683,15 @@ STR_LIFE_BTN_EXIT,"EXIT","THOÁT RA"
 STR_LIFE_BTN_SHOP,"SHOP","CỬA HÀNG"
 STR_GO_WALKED,Đi được,Đi được
 STR_GO_STATS,{0} · {1} lần đâm,{0} · {1} lần đâm
+STR_GO_FLOOR,TẦNG {0},TẦNG {0}
+STR_GO_REASON_STEPS,HẾT BƯỚC,HẾT BƯỚC
+STR_GO_YOU,BẠN,BẠN
+STR_GO_WEEK,TUẦN,TUẦN
+STR_GO_MONTH,THÁNG,THÁNG
+STR_GO_LOSE_AT,Bạn thua ở,Bạn thua ở
+STR_GO_REC_REMAIN,Còn {0} tầng nữa tới kỷ lục tháng,Còn {0} tầng nữa tới kỷ lục tháng
+STR_GO_REC_WEEK_HOLD,Kỷ lục tuần! Còn {0} tầng tới kỷ lục tháng,Kỷ lục tuần! Còn {0} tầng tới kỷ lục tháng
+STR_GO_REC_MONTH_HOLD,Bạn đang giữ kỷ lục tháng!,Bạn đang giữ kỷ lục tháng!
+STR_GO_STAT_PROGRESS,ĐÃ ĐI TRONG TẦNG,ĐÃ ĐI TRONG TẦNG
+STR_GO_STAT_WALLS,ĐÂM TƯỜNG,ĐÂM TƯỜNG
+STR_GO_STAT_SCORE,ĐIỂM,ĐIỂM
