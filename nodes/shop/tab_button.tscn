@@ -5,10 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://bjahdjaapxol5" path="res://assets/images-png/shop/tab_active.png" id="3_art_active"]
 [ext_resource type="Theme" path="res://resources/settings/theme_default.tres" id="4_theme"]
 
-[node name="TabButton" type="TextureButton" node_paths=PackedStringArray("label")]
-custom_minimum_size =  Vector2(120, 49)
-offset_right =  120
-offset_bottom =  49
+[node name="TabButton" type="TextureButton" node_paths=PackedStringArray("label", "icon")]
+custom_minimum_size = Vector2(100, 60)
+offset_right = 100.0
+offset_bottom = 60.0
 theme = ExtResource("4_theme")
 focus_mode = 0
 texture_normal = ExtResource("2_art_idle")
@@ -20,15 +20,29 @@ ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_script")
 label = NodePath("Label")
+icon = NodePath("Icon")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 6.0
+offset_right = 63.0
+offset_bottom = 32.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_right =  120
-offset_bottom =  49
+offset_top = 33.0
+offset_right = 100.0
+offset_bottom = 57.0
 mouse_filter = 2
 theme_type_variation = &"ShopTabLabel"
+theme_override_font_sizes/font_size = 10
 text = "TAB"
 horizontal_alignment = 1
 vertical_alignment = 1
+text_overrun_behavior = 3
 
 [connection signal="pressed" from="." to="." method="_emit_tab_pressed"]

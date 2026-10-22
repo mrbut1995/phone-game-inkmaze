@@ -65,17 +65,17 @@ texture_margin_top = 6.0
 texture_margin_right = 9.0
 texture_margin_bottom = 6.0
 
-[node name="ItemTile" type="Control" unique_id=815505060]
+[node name="ItemTile" type="Control"]
 custom_minimum_size = Vector2(237.5, 147)
 layout_mode = 3
-anchor_right = 0.44000003
+anchor_right = 0.44
 anchor_bottom = 0.202
-offset_right = -0.1000061
-offset_bottom = 0.2599945
+offset_right = -0.1
+offset_bottom = 0.26
 theme = ExtResource("2_theme")
 script = ExtResource("1_tile")
 
-[node name="Panel" type="NinePatchRect" parent="." unique_id=1344451306]
+[node name="Panel" type="NinePatchRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -83,148 +83,159 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_card")
-patch_margin_left = 15
-patch_margin_top = 12
-patch_margin_right = 23
-patch_margin_bottom = 13
-metadata/_edit_use_anchors_ = true
+patch_margin_left = 18
+patch_margin_top = 18
+patch_margin_right = 18
+patch_margin_bottom = 24
 
-[node name="Bar" type="ColorRect" parent="Panel" unique_id=2076853579]
+[node name="IconCircle" type="TextureRect" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_bottom = 1.0
-offset_left = 13.5
-offset_top = 9.0
-offset_right = 15.0
-offset_bottom = -9.0
-mouse_filter = 2
-color = Color(0.23921569, 0.5137255, 0.68235296, 1)
-
-[node name="IconCircle" type="TextureRect" parent="Panel" unique_id=1903623936]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -24.25
-offset_top = 29.999996
-offset_right = 23.75
-offset_bottom = 74.0
+anchor_left = 0
+anchor_top = 0
+anchor_right = 0
+anchor_bottom = 0
+offset_left = 12
+offset_top = 12
+offset_right = 58
+offset_bottom = 58
 mouse_filter = 2
 texture = ExtResource("5_circle")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Icon" type="TextureRect" parent="Panel/IconCircle" unique_id=587026745]
+[node name="Icon" type="TextureRect" parent="Panel/IconCircle"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.47700003
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.47700003
-offset_left = -13.0
-offset_top = -12.987999
-offset_right = 13.0
-offset_bottom = 13.012001
+anchor_bottom = 0.5
+offset_left = -14
+offset_top = -14
+offset_right = 14
+offset_bottom = 14
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Stroke" type="TextureRect" parent="Panel" unique_id=930380236]
+[node name="Description" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Name" type="Label" parent="Panel/Description"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.28800002
-anchor_top = 0.35418373
-anchor_right = 0.70900005
-anchor_bottom = 0.54399997
-offset_left = 0.099998474
-offset_top = 7.93499
-offset_right = 0.11248779
-offset_bottom = 8.03199
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 66
+offset_top = 14
+offset_right = -12
+offset_bottom = 36
+theme_type_variation = &"ShopNameTile"
+theme_override_colors/font_color = Color(0.1686, 0.2392, 0.3137, 1)
+theme_override_font_sizes/font_size = 14
+text = "Tên món hàng"
+horizontal_alignment = 0
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Desc" type="Label" parent="Panel/Description"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = 66
+offset_top = 36
+offset_right = -12
+offset_bottom = 56
+theme_type_variation = &"ShopDesc"
+theme_override_colors/font_color = Color(0.3569, 0.4314, 0.5098, 1)
+theme_override_font_sizes/font_size = 10
+text = "Mô tả"
+horizontal_alignment = 0
+vertical_alignment = 1
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Note" type="Label" parent="Panel/Description"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_right = 1.0
+offset_bottom = 1.0
+theme_type_variation = &"ShopStock"
+mouse_filter = 2
+
+[node name="Stroke" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0
+anchor_top = 0.5
+anchor_right = 1
+anchor_bottom = 0.5
+offset_left = 18
+offset_top = -8
+offset_right = -18
+offset_bottom = 18
 mouse_filter = 2
 texture = ExtResource("6_stroke")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Badge" type="NinePatchRect" parent="Panel" unique_id=338334650]
+[node name="Badge" type="NinePatchRect" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.312
-anchor_right = 0.69100004
-anchor_bottom = 0.156
-offset_left = -0.099998474
-offset_top = 4.0
-offset_right = -0.11250305
-offset_bottom = 0.067998886
+anchor_left = 1
+anchor_top = 0
+anchor_right = 1
+anchor_bottom = 0
+offset_left = -70
+offset_top = -7
+offset_right = -8
+offset_bottom = 12
+mouse_filter = 2
 texture = ExtResource("4_chip")
 patch_margin_left = 4
 patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
 
-[node name="BadgeLabel" type="Label" parent="Panel/Badge" unique_id=201777654]
+[node name="BadgeLabel" type="Label" parent="Panel/Badge"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.22200002
-anchor_right = 0.77800006
-anchor_bottom = 0.78900003
-offset_left = 0.01999855
-offset_top = 4.0
-offset_right = -0.020004272
-offset_bottom = 0.008998871
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"ShopBadge"
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 9
 text = "CƠ BẢN"
 horizontal_alignment = 1
 vertical_alignment = 1
+mouse_filter = 2
 
-[node name="Description" type="VBoxContainer" parent="Panel" unique_id=991031160]
+[node name="Action" type="Button" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.21473685
-anchor_top = 0.5850341
-anchor_right = 0.7868948
-anchor_bottom = 0.8440273
-offset_right = 0.11249542
-offset_bottom = -0.072006226
-theme_override_constants/separation = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Name" type="Label" parent="Panel/Description" unique_id=202963172]
-layout_mode = 2
-theme_type_variation = &"ShopNameTile"
-text = "Tên món hàng"
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 3
-
-[node name="Desc" type="Label" parent="Panel/Description" unique_id=1214979928]
-layout_mode = 2
-theme_type_variation = &"ShopDesc"
-text = "Mô tả"
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 3
-
-[node name="Note" type="Label" parent="Panel/Description" unique_id=340507330]
-layout_mode = 2
-theme_type_variation = &"ShopStock"
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 3
-
-[node name="Action" type="Button" parent="Panel" unique_id=1671809826]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -50.25
-offset_top = -31.0
-offset_right = 49.75
-offset_bottom = -8.0
+anchor_left = 0
+anchor_top = 1
+anchor_right = 1
+anchor_bottom = 1
+offset_left = 14
+offset_top = -44
+offset_right = -14
+offset_bottom = -13
 focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_wwefb")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_uvha2")
@@ -240,31 +251,36 @@ patch_margin_right = 9.0
 patch_margin_bottom = 6.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
 
-[node name="Container" type="HBoxContainer" parent="Panel/Action" unique_id=1248488957]
+[node name="Container" type="HBoxContainer" parent="Panel/Action"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.045
-anchor_top = 0.13043478
-anchor_right = 0.965
-anchor_bottom = 0.82608694
+anchor_left = 0.04
+anchor_top = 0.1
+anchor_right = 0.96
+anchor_bottom = 0.86
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+mouse_filter = 2
+alignment = 1
+theme_override_constants/separation = 4
 
-[node name="CoinIcon" type="TextureRect" parent="Panel/Action/Container" unique_id=1261539695]
-custom_minimum_size = Vector2(12, 12)
+[node name="CoinIcon" type="TextureRect" parent="Panel/Action/Container"]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
+size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("8_coin")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionLabel" type="Label" parent="Panel/Action/Container" unique_id=1649384882]
+[node name="ActionLabel" type="Label" parent="Panel/Action/Container"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"ShopPrice"
+theme_override_font_sizes/font_size = 13
 text = "350 XU"
 horizontal_alignment = 1
 vertical_alignment = 1
+mouse_filter = 2
 
 [connection signal="pressed" from="Panel/Action" to="." method="_on_action_pressed"]

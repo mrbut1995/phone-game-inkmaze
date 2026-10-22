@@ -466,7 +466,18 @@ func show_tab(category: String) -> void:
 	_page = 0
 	_refresh_tab_visuals()
 	_rebuild()
+	_settle_pagination()
 
+
+## Khung danh sách (Content) có thể ĐỔI CỠ khi đổi tab (bố cục dọc: bàn nháp hiện/ẩn làm khung co giãn)
+## ⇒ chờ container dàn xong rồi tính lại cỡ thẻ + số món/trang cho khớp khung mới.
+func _settle_pagination() -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not is_inside_tree() or layout == null:
+		return
+	_apply_card_metrics()
+	_refresh_pagination_if_needed()
 
 func _refresh_tab_visuals() -> void:
 	for key in _tabs.keys():

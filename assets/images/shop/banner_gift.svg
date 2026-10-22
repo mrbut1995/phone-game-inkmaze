@@ -1,7 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 115" width="490" height="57.5">
-  
-  <rect width="980" height="115" rx="24" fill="#FEFDFA" />
-  <rect x="1.5" y="1.5" width="977" height="112" rx="22.5" fill="none" stroke="#D84444" stroke-width="3" />
-  <line x1="36" y1="0" x2="36" y2="115" stroke="#D84444" stroke-width="3" />
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Banner quà tặng (ghi đè banner_gift.png). NinePatch giữ: L35 T14 R36 B13. Vẽ 1x, viewBox gấp đôi (xuất PNG 490x58 hoặc 980x116). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 116" width="490" height="58"><g transform="scale(2)">
+<rect y="4" width="490" height="54" rx="16" fill="#E0B93A"/><rect x="1" y="1" width="488" height="52" rx="15" fill="#FFE98A" stroke="#E0B93A" stroke-width="2"/>
+</g></svg>

@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 98" width="120" height="49">
-  
-  <path d="M 0 16 A 16 16 0 0 1 16 0 L 224 0 A 16 16 0 0 1 240 16 L 240 98 L 0 98 Z" fill="#3D83AE" />
-  <line x1="16" y1="0" x2="16" y2="98" stroke="#FAF5EB" stroke-width="2" opacity="0.6" />
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tab đang chọn (cao 60 = chiều cao tab chuẩn). Vẽ 1x, viewBox gấp đôi (xuất PNG 120x60 hoặc 240x120). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120" width="120" height="60"><g transform="scale(2)">
+<rect y="4" width="120" height="56" rx="14" fill="#1E5578"/><rect x="1" y="1" width="118" height="54" rx="13" fill="#2F77A5" stroke="#1E5578" stroke-width="2"/>
+</g></svg>

@@ -14,6 +14,11 @@
 [ext_resource type="PackedScene" uid="uid://deknldvs1yxnu" path="res://nodes/shop/doodle_pad.tscn" id="22_pad"]
 [ext_resource type="PackedScene" path="res://nodes/shop/noads_row.tscn" id="23_noads"]
 [ext_resource type="Material" path="res://resources/materials/btn_action_amber.tres" id="mat_amber_gift"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/nav_bar.png" id="nav_bar"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/nav_pen.png" id="nav_pen"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/nav_paper.png" id="nav_paper"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/nav_tool.png" id="nav_tool"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/nav_coin.png" id="nav_coin"]
 
 [sub_resource type="Animation" id="Animation_wallet_pop_psh"]
 resource_name = "wallet_pop"
@@ -64,7 +69,7 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("TopBar:modulate")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
@@ -75,8 +80,8 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Tabs:modulate")
-tracks/1/interp = 1
+tracks/1/path = NodePath("Body:modulate")
+tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
@@ -87,8 +92,8 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Content:modulate")
-tracks/2/interp = 1
+tracks/2/path = NodePath("GiftBanner:modulate")
+tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
@@ -99,10 +104,22 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("GiftBanner:modulate")
-tracks/3/interp = 1
+tracks/3/path = NodePath("NavBar:modulate")
+tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Tabs:modulate")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -111,7 +128,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_shop_enter_p"]
 resource_name = "enter"
-length = 0.5
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -127,11 +144,11 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Tabs:modulate")
+tracks/1/path = NodePath("Body:modulate")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.07, 0.3),
+"times": PackedFloat32Array(0.06, 0.34),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -139,11 +156,11 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Content:modulate")
+tracks/2/path = NodePath("GiftBanner:modulate")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.12, 0.45),
+"times": PackedFloat32Array(0.14, 0.42),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -151,11 +168,23 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("GiftBanner:modulate")
+tracks/3/path = NodePath("NavBar:modulate")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.2, 0.5),
+"times": PackedFloat32Array(0.10, 0.40),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Tabs:modulate")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.18, 0.46),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -167,12 +196,12 @@ _data = {
 &"enter": SubResource("Animation_shop_enter_p")
 }
 
-[node name="Portrait" unique_id=816747492 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line", "item_grid", "doodle_pad", "noads_row", "life_chip") instance=ExtResource("1_parent")]
+[node name="Portrait" node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "gift_banner", "tab_line", "item_grid", "doodle_pad", "noads_row", "life_chip", "pad_slot") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/HeaderRow/Back")
 tabs_box = NodePath("Tabs")
-list_box = NodePath("Content/List")
-scroll = NodePath("Content")
+list_box = NodePath("Body/Content/List")
+scroll = NodePath("Body/Content")
 wallet_count = NodePath("TopBar/CoinChip/Content/Value")
 wallet_plus = NodePath("TopBar/CoinChip/Content/Plus")
 pager = NodePath("Pager")
@@ -185,24 +214,26 @@ top_bar = NodePath("TopBar")
 wallet_bar = NodePath("TopBar/CoinChip")
 gift_banner = NodePath("GiftBanner")
 tab_line = NodePath("TabLine")
-item_grid = NodePath("Content/List/Grid")
-doodle_pad = NodePath("Content/List/Pad")
-noads_row = NodePath("Content/List/NoAds")
+item_grid = NodePath("Body/Content/List/Grid")
+doodle_pad = NodePath("Body/PadSlot/Pad")
+noads_row = NodePath("Body/Content/List/NoAds")
 life_chip = NodePath("TopBar/LifeChip")
+pad_slot = NodePath("Body/PadSlot")
 
 [node name="CoinChip" parent="TopBar" index="1"]
 navigate_on_plus = false
-custom_minimum_size = Vector2(128, 35)
+custom_minimum_size = Vector2(120, 35)
 
 [node name="LifeChip" parent="TopBar" index="2"]
 navigate_on_plus = false
-custom_minimum_size = Vector2(128, 35)
+custom_minimum_size = Vector2(110, 35)
 
-[node name="TopBar" parent="." index="0" unique_id=1562446976]
+[node name="TopBar" parent="." index="0"]
 layout_mode = 1
 anchor_right = 1.0
-anchor_bottom = 0.095000006
-offset_bottom = 0.099990845
+anchor_bottom = 0.1
+offset_right = 0.0
+offset_bottom = 0.0
 mouse_filter = 2
 
 [node name="HeaderRow" type="Control" parent="TopBar" index="0"]
@@ -211,151 +242,124 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Back" type="TextureButton" parent="TopBar/HeaderRow" index="0" unique_id=1169383300]
+[node name="Back" type="TextureButton" parent="TopBar/HeaderRow" index="0"]
 layout_mode = 0
-offset_left = 25.0
-offset_top = 42.5
-offset_right = 60.0
-offset_bottom = 77.5
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 72.0
+offset_bottom = 75.0
+focus_mode = 0
 texture_normal = ExtResource("4_back_n")
 texture_pressed = ExtResource("5_back_p")
 texture_hover = ExtResource("4_back_n")
 texture_disabled = ExtResource("4_back_n")
 texture_focused = ExtResource("4_back_n")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="Eyebrow" type="Label" parent="TopBar/HeaderRow" index="1" unique_id=1586477588]
+[node name="Eyebrow" type="Label" parent="TopBar/HeaderRow" index="1"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.185
-anchor_top = 0.5
-anchor_right = 0.70400006
-anchor_bottom = 0.78900003
-offset_left = 0.099998474
-offset_top = 2.25
-offset_right = -0.16003418
-offset_bottom = -9.537506
+anchor_right = 1.0
+offset_left = 84.0
+offset_top = 22.0
+offset_right = -4.0
+offset_bottom = 42.0
 theme_type_variation = &"ShopEyebrow"
 text = "STR_SHOP_EYEBROW"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
+text_overrun_behavior = 3
 
-[node name="Title" type="Label" parent="TopBar/HeaderRow" index="2" unique_id=1896483052]
+[node name="Title" type="Label" parent="TopBar/HeaderRow" index="2"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.185
-anchor_top = 0.68
-anchor_right = 0.70400006
-anchor_bottom = 0.96000004
-offset_left = 0.099998474
-offset_right = -0.16003418
+anchor_right = 1.0
+offset_left = 84.0
+offset_top = 40.0
+offset_right = -4.0
+offset_bottom = 76.0
 theme_type_variation = &"ShopTitle"
 text = "STR_SHOP_TITLE"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
+text_overrun_behavior = 3
 
-[node name="Tabs" type="HBoxContainer" parent="." index="1" unique_id=1748476601]
+[node name="Body" type="VBoxContainer" parent="." index="1"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.046000004
-anchor_top = 0.093
-anchor_right = 0.95400006
-anchor_bottom = 0.147
-offset_left = 0.15999794
-offset_top = 0.4399948
-offset_right = -0.16003418
-offset_bottom = -0.2400055
-theme_override_constants/separation = 4
+anchor_left = 0.0444
+anchor_right = 0.9556
+anchor_bottom = 1.0
+offset_top = 100.0
+offset_bottom = -232.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
 
-[node name="Tab_pen" parent="Tabs" index="0" unique_id=1408682654 instance=ExtResource("20_tab")]
+[node name="PadSlot" type="Control" parent="Body" index="0"]
+visible = false
+custom_minimum_size = Vector2(0, 270)
 layout_mode = 2
-size_flags_horizontal = 3
-category = "pen"
-label_key = "STR_SHOP_TAB_PEN"
-
-[node name="Tab_theme" parent="Tabs" index="1" unique_id=558099961 instance=ExtResource("20_tab")]
-layout_mode = 2
-size_flags_horizontal = 3
-category = "theme"
-label_key = "STR_SHOP_TAB_THEME"
-
-[node name="Tab_tool" parent="Tabs" index="2" unique_id=2108222235 instance=ExtResource("20_tab")]
-layout_mode = 2
-size_flags_horizontal = 3
-category = "tool"
-label_key = "STR_SHOP_TAB_TOOL"
-
-[node name="Tab_coin" parent="Tabs" index="3" unique_id=157333754 instance=ExtResource("20_tab")]
-layout_mode = 2
-size_flags_horizontal = 3
-category = "coin"
-label_key = "STR_SHOP_TAB_COIN"
-
-[node name="TabLine" type="ColorRect" parent="." index="2" unique_id=2061983417]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 135.0
-offset_right = 515.0
-offset_bottom = 137.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 100.0
 mouse_filter = 2
-color = Color(0.23921569, 0.5137255, 0.68235296, 1)
 
-[node name="Content" type="ScrollContainer" parent="." index="3" unique_id=651984919]
+[node name="Pad" parent="Body/PadSlot" index="0" instance=ExtResource("22_pad")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 25.0
-offset_top = 142.0
-offset_right = -25.0
-offset_bottom = -245.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Content" type="ScrollContainer" parent="Body" index="1"]
+custom_minimum_size = Vector2(0, 176)
+layout_mode = 2
+size_flags_vertical = 3
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 scroll_deadzone = 12
 
-[node name="List" type="VBoxContainer" parent="Content" index="0" unique_id=696334226]
+[node name="List" type="VBoxContainer" parent="Body/Content" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Pad" parent="Content/List" index="0" unique_id=1336530176 instance=ExtResource("22_pad")]
+[node name="NoAds" parent="Body/Content/List" index="0" instance=ExtResource("23_noads")]
 visible = false
 layout_mode = 2
 
-[node name="NoAds" parent="Content/List" index="1" unique_id=1621309379 instance=ExtResource("23_noads")]
+[node name="Grid" parent="Body/Content/List" index="1" instance=ExtResource("21_grid")]
 visible = false
 layout_mode = 2
 
-[node name="Grid" parent="Content/List" index="2" unique_id=1707342477 instance=ExtResource("21_grid")]
-visible = false
-layout_mode = 2
-
-[node name="Pager" type="VBoxContainer" parent="." index="4" unique_id=469403228]
+[node name="Pager" type="VBoxContainer" parent="." index="2"]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 144.0
-offset_top = -240.0
+offset_top = -224.0
 offset_right = -140.0
-offset_bottom = -179.0
+offset_bottom = -180.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="Dots" type="HBoxContainer" parent="Pager" index="0" unique_id=1536223205]
+[node name="Dots" type="HBoxContainer" parent="Pager" index="0"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="ChangePage" type="HBoxContainer" parent="Pager" index="1" unique_id=846751052]
+[node name="ChangePage" type="HBoxContainer" parent="Pager" index="1"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Prev" type="TextureButton" parent="Pager/ChangePage" index="0" unique_id=1132602761]
+[node name="Prev" type="TextureButton" parent="Pager/ChangePage" index="0"]
 custom_minimum_size = Vector2(32, 28)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -367,7 +371,7 @@ texture_hover = ExtResource("9_prev")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="PageLabel" type="Label" parent="Pager/ChangePage" index="1" unique_id=71839614]
+[node name="PageLabel" type="Label" parent="Pager/ChangePage" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -378,7 +382,7 @@ text = "TRANG 1 / 2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Next" type="TextureButton" parent="Pager/ChangePage" index="2" unique_id=695487616]
+[node name="Next" type="TextureButton" parent="Pager/ChangePage" index="2"]
 custom_minimum_size = Vector2(32, 28)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -390,16 +394,16 @@ texture_hover = ExtResource("10_next")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="GiftBanner" type="NinePatchRect" parent="." index="5" unique_id=1022285972]
+[node name="GiftBanner" type="NinePatchRect" parent="." index="3"]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 25.0
-offset_top = -173.0
-offset_right = -25.0
-offset_bottom = -115.0
+offset_left = 24.0
+offset_top = -172.0
+offset_right = -24.0
+offset_bottom = -114.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("11_gift")
@@ -408,54 +412,49 @@ patch_margin_top = 14
 patch_margin_right = 36
 patch_margin_bottom = 13
 
-[node name="GiftIcon" type="TextureRect" parent="GiftBanner" index="0" unique_id=578668435]
+[node name="GiftIcon" type="TextureRect" parent="GiftBanner" index="0"]
 layout_mode = 0
 offset_left = 32.5
-offset_top = 15.0
+offset_top = 13.0
 offset_right = 60.0
-offset_bottom = 42.5
+offset_bottom = 40.5
 mouse_filter = 2
 texture = ExtResource("12_gift_box")
 
-[node name="GiftTitle" type="Label" parent="GiftBanner" index="1" unique_id=448380499]
+[node name="GiftTitle" type="Label" parent="GiftBanner" index="1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.148
-anchor_top = 0.20700002
+anchor_top = 0.2
 anchor_right = 0.776
-anchor_bottom = 0.20700002
-offset_left = -0.020004272
-offset_top = -0.006000519
-offset_right = -0.24002075
-offset_bottom = 15.9939995
+anchor_bottom = 0.2
+offset_bottom = 16.0
 theme_type_variation = &"ShopBannerTitle"
 text = "STR_SHOP_BANNER_TITLE"
 vertical_alignment = 1
 
-[node name="GiftDesc" type="Label" parent="GiftBanner" index="2" unique_id=326107323]
+[node name="GiftDesc" type="Label" parent="GiftBanner" index="2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.148
-anchor_top = 0.5
+anchor_top = 0.48
 anchor_right = 0.776
-anchor_bottom = 0.5
-offset_left = -0.020004272
-offset_right = -0.24002075
+anchor_bottom = 0.48
 offset_bottom = 16.0
 theme_type_variation = &"ShopBannerDesc"
 text = "STR_SHOP_BANNER_DESC"
 vertical_alignment = 1
 
-[node name="GiftBtn" type="TextureButton" parent="GiftBanner" index="3" unique_id=2073492906]
+[node name="GiftBtn" type="TextureButton" parent="GiftBanner" index="3"]
 material = ExtResource("mat_amber_gift")
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -105.0
-offset_top = 13.0
+offset_top = 11.0
 offset_right = -15.0
-offset_bottom = 44.0
+offset_bottom = 42.0
 grow_horizontal = 0
 focus_mode = 0
 texture_normal = ExtResource("13_btn_amber")
@@ -464,7 +463,7 @@ texture_hover = ExtResource("13_btn_amber")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="GiftBtnLabel" type="Label" parent="GiftBanner/GiftBtn" index="0" unique_id=2032303212]
+[node name="GiftBtnLabel" type="Label" parent="GiftBanner/GiftBtn" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -476,7 +475,8 @@ text = "STR_SHOP_BANNER_BTN"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Footer" type="Label" parent="." index="6" unique_id=466609682]
+[node name="Footer" type="Label" parent="." index="4"]
+visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -493,14 +493,84 @@ text = "STR_SHOP_FOOTER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="WalletAnim" type="AnimationPlayer" parent="." index="7" unique_id=1726305689]
+[node name="NavBar" type="NinePatchRect" parent="." index="5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -100.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("nav_bar")
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 26
+
+[node name="Tabs" type="HBoxContainer" parent="." index="6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -96.0
+offset_right = -32.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 4
+
+[node name="Tab_pen" parent="Tabs" index="0" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "pen"
+label_key = "STR_SHOP_TAB_PEN"
+icon_texture = ExtResource("nav_pen")
+
+[node name="Tab_theme" parent="Tabs" index="1" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "theme"
+label_key = "STR_SHOP_TAB_THEME"
+icon_texture = ExtResource("nav_paper")
+
+[node name="Tab_tool" parent="Tabs" index="2" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "tool"
+label_key = "STR_SHOP_TAB_TOOL"
+icon_texture = ExtResource("nav_tool")
+
+[node name="Tab_coin" parent="Tabs" index="3" instance=ExtResource("20_tab")]
+layout_mode = 2
+size_flags_horizontal = 3
+category = "coin"
+label_key = "STR_SHOP_TAB_COIN"
+icon_texture = ExtResource("nav_coin")
+
+[node name="TabLine" type="ColorRect" parent="." index="7"]
+visible = false
+layout_mode = 0
+offset_right = 1.0
+offset_bottom = 1.0
+mouse_filter = 2
+color = Color(0.2392, 0.5137, 0.6824, 1)
+
+[node name="WalletAnim" type="AnimationPlayer" parent="." index="8"]
 libraries = {
 "": SubResource("AnimationLibrary_wallet_psh")
 }
 
-[node name="PulseAnim" type="AnimationPlayer" parent="." index="8" unique_id=715610947]
+[node name="PulseAnim" type="AnimationPlayer" parent="." index="9"]
 libraries/ = SubResource("AnimationLibrary_shop_pulse_p")
 
-[node name="EnterAnim" type="AnimationPlayer" parent="." index="9" unique_id=432504541]
+[node name="EnterAnim" type="AnimationPlayer" parent="." index="10"]
 libraries/ = SubResource("AnimationLibrary_shop_enter_p")
 autoplay = &"enter"
+

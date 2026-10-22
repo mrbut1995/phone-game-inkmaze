@@ -22,6 +22,8 @@ const ICONS := {
 	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
 	"paper": preload("res://assets/images-png/icons/icon_paper.png"),
 }
+const CARD_NORMAL := preload("res://assets/images-png/shop/card_tile.png")
+const CARD_SELECTED := preload("res://assets/images-png/shop/card_tile_selected.png")
 const VIP_BADGE := "STR_SHOP_BADGE_VIP"
 
 ## ============================================================================
@@ -51,13 +53,14 @@ func _refresh() -> void:
 
 
 func _refresh_preview(color: Color) -> void:
+	_apply_card_art()
 	var margin := get_node_or_null("Panel/Bar") as ColorRect
 	if margin != null:
 		margin.color = color
 	# Texture vòng icon / nét mực đã khai sẵn trong `item_tile.tscn` — ở đây chỉ tô màu món hàng
 	var circle := get_node_or_null("Panel/IconCircle") as TextureRect
 	if circle != null:
-		circle.self_modulate = Color(color.r, color.g, color.b, 0.30 if _selected else 0.16)
+		circle.self_modulate = Color(color.r, color.g, color.b, 0.36 if _selected else 0.20)
 	var icon := get_node_or_null("Panel/IconCircle/Icon") as TextureRect
 	if icon != null:
 		var cursor_tex := PenSkin.cursor_texture(item_id) if _is_pen() else null
@@ -74,6 +77,13 @@ func _refresh_preview(color: Color) -> void:
 		stroke.self_modulate = PenSkin.ink_color(item_id) if _is_pen() else color
 
 
+## Thẻ đang xem thử dùng art viền xanh + nền sáng; thẻ thường dùng art trắng viền kem
+func _apply_card_art() -> void:
+	var panel := get_node_or_null("Panel") as NinePatchRect
+	if panel != null:
+		panel.texture = CARD_SELECTED if _selected else CARD_NORMAL
+
+
 func _is_pen() -> bool:
 	return str(item_data.get("category", "")) == "pen"
 
@@ -83,10 +93,11 @@ func set_selected(on: bool) -> void:
 	if _selected == on:
 		return
 	_selected = on
+	_apply_card_art()
 	var color := Color(str(item_data.get("color", "#3D83AE")))
 	var circle := get_node_or_null("Panel/IconCircle") as TextureRect
 	if circle != null:
-		circle.self_modulate = Color(color.r, color.g, color.b, 0.30 if _selected else 0.16)
+		circle.self_modulate = Color(color.r, color.g, color.b, 0.36 if _selected else 0.20)
 
 
 ## Chạm thân thẻ (vùng không bị nút hành động "ăn") = chọn xem thử

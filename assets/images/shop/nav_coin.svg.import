@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2iwjrdlfypky"
-path="res://.godot/imported/level_card_active.svg-cca8949ef5f5397f21972144a788bda0.ctex"
+uid="uid://bjdyqgp266uyo"
+path="res://.godot/imported/nav_coin.svg-c080fd3a64b4c296e4e4419012f43227.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mockup/level_card_active.svg"
-dest_files=["res://.godot/imported/level_card_active.svg-cca8949ef5f5397f21972144a788bda0.ctex"]
+source_file="res://assets/images/shop/nav_coin.svg"
+dest_files=["res://.godot/imported/nav_coin.svg-c080fd3a64b4c296e4e4419012f43227.ctex"]
 
 [params]
 

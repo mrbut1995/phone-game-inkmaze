@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2jiohlkbo582"
-path="res://.godot/imported/daily_challenge_missed.svg-781cde486724558f83e601309296557e.ctex"
+uid="uid://bscup4r2mcqqp"
+path="res://.godot/imported/card_tile_selected.svg-d7bc66cbc611c7765492895729571da0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mockup/daily_challenge_missed.svg"
-dest_files=["res://.godot/imported/daily_challenge_missed.svg-781cde486724558f83e601309296557e.ctex"]
+source_file="res://assets/images/shop/card_tile_selected.svg"
+dest_files=["res://.godot/imported/card_tile_selected.svg-d7bc66cbc611c7765492895729571da0.ctex"]
 
 [params]
 

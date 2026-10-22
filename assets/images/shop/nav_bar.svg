@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Thanh tab dưới. NinePatch: L24 T24 R24 B26. Vẽ 1x, viewBox gấp đôi (xuất PNG 492x76 hoặc 984x152). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 984 152" width="492" height="76"><g transform="scale(2)">
+<rect y="5" width="492" height="71" rx="20" fill="#D9CCB9"/><rect x="1" y="1" width="490" height="69" rx="19" fill="#fff" stroke="#E3D8C6" stroke-width="2"/>
+</g></svg>
