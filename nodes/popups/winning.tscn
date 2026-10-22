@@ -1,7 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://efuxbstp7y2c"]
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
-[ext_resource type="Script" path="res://scripts/nodes/popups/winning.gd" id="2_win"]
+[ext_resource type="Script" uid="uid://bc7ui1gwgx8xp" path="res://scripts/nodes/popups/winning.gd" id="2_win"]
 [ext_resource type="Texture2D" path="res://assets/images-png/popups/go_panel.png" id="3_panel"]
 [ext_resource type="Texture2D" path="res://assets/images-png/popups/retry_washi_tape.png" id="4_tape"]
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="5_clip"]
@@ -56,7 +56,7 @@ corner_radius_bottom_right = 0
 corner_radius_bottom_left = 0
 
 
-[node name="Base" unique_id=1761000000 node_paths=PackedStringArray("label_level", "hero1", "hero2", "hero3", "m1_star", "m1_name", "m2_star", "m2_name", "m3_star", "m3_name", "value_time", "value_steps", "value_walls", "label_next") instance=ExtResource("1_base")]
+[node name="Base" unique_id=1146332468 node_paths=PackedStringArray("label_level", "hero1", "hero2", "hero3", "m1_star", "m1_name", "m2_star", "m2_name", "m3_star", "m3_name", "value_time", "value_steps", "value_walls", "label_next") instance=ExtResource("1_base")]
 script = ExtResource("2_win")
 label_level = NodePath("Panel/Content/Information/Level")
 hero1 = NodePath("Panel/Content/Information/Stars/Star1")
@@ -467,7 +467,7 @@ alignment = 1
 layout_mode = 2
 mouse_filter = 2
 theme_type_variation = &"PopupBtnPrimarySm"
-text = "STR_WL_NEXT"
+text = "STR_BTN_NEXT_LEVEL"
 vertical_alignment = 1
 
 [node name="Icon" type="TextureRect" parent="Panel/Content/Information/Buttons/NextBtn/H" unique_id=1761000043]

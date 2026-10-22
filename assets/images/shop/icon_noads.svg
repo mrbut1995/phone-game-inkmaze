@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Icon No Ads 56x56 (file MỚI icon_noads.png). Vẽ 1x, viewBox gấp đôi (xuất PNG 56x56 hoặc 112x112). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 112" width="56" height="56"><g transform="scale(2)">
+<circle cx="28" cy="31" r="26" fill="#E8A09B"/><circle cx="28" cy="28" r="26" fill="#fff" stroke="#D84444" stroke-width="3.5"/><path d="M13 43L43 13" stroke="#D84444" stroke-width="4" stroke-linecap="round"/><path d="M17 36l5-14h3l5 14M19 31.500h9" fill="none" stroke="#8F1F1A" stroke-width="2.800" stroke-linecap="round" stroke-linejoin="round"/><path d="M33 22h4a5 5 0 010 14h-4z" fill="none" stroke="#8F1F1A" stroke-width="2.800" stroke-linejoin="round" transform="translate(0 0)"/>
+</g></svg>

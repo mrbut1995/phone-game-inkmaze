@@ -114,7 +114,7 @@ func _apply_own_size() -> void:
 		_row_h = art_height()
 	var h := _row_h if active else _row_h * inactive_ratio()
 	custom_minimum_size = Vector2(0.0, h)
-	size_flags_vertical = Control.SIZE_SHRINK_END
+	size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var width := size.x if size.x > 0.0 else custom_minimum_size.x
 	if icon != null:
 		var icon_px := h * ICON_SIZE

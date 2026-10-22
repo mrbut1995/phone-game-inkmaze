@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 180" width="490" height="90">
-  
-  <rect width="980" height="180" rx="24" fill="#FEFDFA" />
-  <rect x="1.5" y="1.5" width="977" height="177" rx="22.5" fill="none" stroke="#6EA0C8" stroke-width="3" />
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Thẻ hàng dụng cụ (ghi đè card_row.png). NinePatch: L18 T18 R18 B24. Vẽ 1x, viewBox gấp đôi (xuất PNG 120x90 hoặc 240x180). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="120" height="90"><g transform="scale(2)">
+<rect y="5" width="120" height="85" rx="16" fill="#D9CCB9"/><rect x="1" y="1" width="118" height="82" rx="15" fill="#FFFFFF" stroke="#E3D8C6" stroke-width="2"/>
+</g></svg>
