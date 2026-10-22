@@ -1,0 +1,104 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/daily/week_day.gd" id="1_wd"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/week_today.png" id="2_today"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/week_sel.png" id="3_sel"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/check_red.png" id="4_check"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="5_theme"]
+
+[node name="WeekDay" type="Control" node_paths=PackedStringArray("hit", "today_bg", "selected_ring", "lbl_dow", "lbl_num", "mark")]
+custom_minimum_size = Vector2(54, 54)
+layout_mode = 2
+theme = ExtResource("5_theme")
+script = ExtResource("1_wd")
+hit = NodePath("Hit")
+today_bg = NodePath("TodayBg")
+selected_ring = NodePath("SelRing")
+lbl_dow = NodePath("Dow")
+lbl_num = NodePath("Num")
+mark = NodePath("Mark")
+
+[node name="TodayBg" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -27.0
+offset_right = 23.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_today")
+expand_mode = 1
+
+[node name="SelRing" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -27.0
+offset_right = 23.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_sel")
+expand_mode = 1
+
+[node name="Dow" type="Label" parent="."]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 54.0
+offset_bottom = 17.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.356863, 0.431373, 0.509804, 1)
+theme_override_font_sizes/font_size = 10
+text = "T2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Num" type="Label" parent="."]
+layout_mode = 0
+offset_top = 16.0
+offset_right = 54.0
+offset_bottom = 38.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.0862745, 0.27451, 0.388235, 1)
+theme_override_font_sizes/font_size = 17
+text = "18"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Mark" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 21.0
+offset_top = 38.0
+offset_right = 33.0
+offset_bottom = 50.0
+mouse_filter = 2
+texture = ExtResource("4_check")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Hit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+flat = true
+
+[connection signal="pressed" from="Hit" to="." method="_on_pressed"]

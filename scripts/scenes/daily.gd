@@ -3,8 +3,9 @@ extends BaseScene
 ## ============================================================================
 ## View Controller: Màn hình Thử thách hằng ngày (scenes/daily.tscn)
 ##
-## Bố cục (mockup/daily_challenge.svg + bản ngang): TopBar · TIẾN ĐỘ SAO tháng
-## (thanh + 4 mốc thưởng) · LỊCH THÁNG · 2 thẻ hành động (CHƠI / THỬ THÁCH).
+## Bố cục dọc (bản D "Đường mốc"): TopBar · banner tiêu đề · DẢI TUẦN (+ nút mở lịch tháng) ·
+## ĐƯỜNG PHẦN THƯỞNG (sao tổng → 4 rương) · 2 thẻ hành động (CHƠI / THỬ THÁCH).
+## Bố cục ngang giữ bản cũ: thanh Sao + lịch tháng luôn hiện (cùng bộ `@export` của DailyLayout).
 ##
 ## Mô hình Sao (v2.28):
 ##   · CHƠI      — 1 màn maze thường, mỗi NHIỆM VỤ xong = 1 Sao (tối đa 3)
@@ -166,6 +167,8 @@ func _wire_buttons() -> void:
 	ensure_signal(layout, &"star_gain_finished", &"_on_star_gain_finished")
 	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
 	ensure_signal(layout.calendar, &"day_selected", &"_on_day_selected")
+	ensure_signal(layout.week_strip, &"day_selected", &"_on_day_selected")
+	ensure_signal(layout.week_strip, &"month_requested", &"_on_month_requested")
 	ensure_signal(layout.play_card, &"pressed", &"_on_play_pressed")
 	ensure_signal(layout.challenge_card, &"pressed", &"_on_challenge_pressed")
 	if layout.btn_back != null and not layout.btn_back.has_meta("bounce_attached"):
@@ -223,7 +226,8 @@ func _build_milestones() -> void:
 	var defs: Array = _daily.call("milestone_defs")
 	for i in defs.size():
 		var def: Dictionary = defs[i]
-		var chip: DailyMilestoneChip = MILESTONE_CHIP.instantiate()
+		var scene: PackedScene = layout.chip_scene if layout.chip_scene != null else MILESTONE_CHIP
+		var chip: DailyMilestoneChip = scene.instantiate()
 		host.add_child(chip)
 		chip.claim_requested.connect(_on_milestone_claim)
 		chip.hold_started.connect(_on_chip_hold_started)
@@ -340,6 +344,11 @@ func _refresh() -> void:
 	_refresh_wallet()
 	_refresh_cards(day)
 	_refresh_milestones(shown_stars)
+	_refresh_road_hint(shown_stars)
+
+	# Dải tuần (bản đường mốc): 7 ngày của tuần chứa ngày đang chọn
+	if layout.week_strip != null:
+		layout.week_strip.rebuild(_selected_day)
 
 	# Ô ngày trên lịch đổi viền trạng thái ("ĐÃ MỞ") + vòng sáng ô ĐANG CHỌN
 	if layout.calendar != null:
@@ -381,6 +390,19 @@ func _refresh_milestones(month_stars: int) -> void:
 		var threshold := int(def.get("stars", 0))
 		var claimed := bool(_daily.call("is_milestone_claimed", threshold))
 		_chips[i].setup(def, month_stars, claimed)
+
+
+## Dòng gợi ý dưới sao tổng: còn bao nhiêu Sao tới rương kế tiếp (hoặc đã mở hết)
+func _refresh_road_hint(shown_stars: int) -> void:
+	if layout.lbl_road_hint == null or _daily == null or not _daily.has_method("milestone_defs"):
+		return
+	var text := tr("STR_DAILY_ROAD_ALL")
+	for def in _daily.call("milestone_defs"):
+		var threshold := int((def as Dictionary).get("stars", 0))
+		if threshold > shown_stars:
+			text = tr("STR_DAILY_ROAD_NEXT").format([threshold - shown_stars, threshold])
+			break
+	layout.set_road_hint(text)
 
 
 ## Đồng hồ đếm ngược tới 00:00 (mốc làm mới ngày) dạng HH:MM:SS
@@ -455,6 +477,15 @@ func _on_reset_timer_timeout() -> void:
 ## Bấm 1 ngày trên lịch: CHỈ đổi ngày đang chọn (không nhảy thẳng vào màn chơi)
 func _on_day_selected(day: int) -> void:
 	select_day(day)
+	# Chọn ngày trong bảng lịch tháng xong thì đóng bảng
+	if layout != null:
+		layout.close_month_sheet()
+
+
+## Bấm nút lịch ở dải tuần: mở bảng lịch tháng
+func _on_month_requested() -> void:
+	if layout != null:
+		layout.open_month_sheet()
 
 
 ## Thẻ CHƠI: vào màn maze thường của ngày
@@ -547,6 +578,10 @@ func _show_milestone_reward(threshold: int) -> void:
 
 
 func _on_back_pressed() -> void:
+	# Đang mở bảng lịch tháng: Back chỉ đóng bảng
+	if layout != null and layout.is_month_sheet_open():
+		layout.close_month_sheet()
+		return
 	# SFX: gõ thẻ giấy cho nút phụ (Back)
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	var gm: Node = get_node_or_null("/root/GameManager")

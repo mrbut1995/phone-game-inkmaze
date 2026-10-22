@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 54" width="92" height="108" fill="none">
+  <!-- week_sel: viền ngày ĐANG CHỌN (không phải hôm nay): xanh nét đứt bút chì (46x54) -->
+  <rect x="1.5" y="1.5" width="43" height="51" rx="13" fill="#E9F3FA" stroke="#5BA3D6" stroke-width="3" stroke-dasharray="6 4"/>
+</svg>

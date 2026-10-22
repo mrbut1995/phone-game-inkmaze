@@ -25,7 +25,21 @@ signal star_gain_finished
 ## Thanh tiến độ (nền navy + phần đã đạt màu hổ phách)
 @export var bar_stars: TextureProgressBar = null
 ## HBox chứa các huy hiệu mốc thưởng
-@export var milestones_host: HBoxContainer = null
+## Node chứa các huy hiệu mốc thưởng (bản ngang: HBox · bản đường mốc: Control, chip đặt theo `Slot`)
+@export var milestones_host: Control = null
+
+@export_group("Bản đường mốc (dải tuần + đường phần thưởng)")
+## Đường phần thưởng (thay thanh Sao). Null ở bản ngang.
+@export var road: DailyRoad = null
+## Dải 7 ngày + nút mở lịch tháng. Null ở bản ngang (lịch tháng luôn hiện).
+@export var week_strip: DailyWeekStrip = null
+## Dòng "Còn N★ tới rương M★" dưới sao tổng
+@export var lbl_road_hint: Label = null
+## Scene chip mốc riêng của bố cục (null = dùng `MILESTONE_CHIP` của màn)
+@export var chip_scene: PackedScene = null
+## Bảng lịch tháng (overlay) + AnimationPlayer có `open` / `close` / `RESET`
+@export var month_sheet: Control = null
+@export var sheet_anim: AnimationPlayer = null
 
 @export_group("Thẻ hành động")
 @export var play_card: DailyActionCard = null
@@ -154,8 +168,8 @@ func set_milestone_thresholds(values: Array) -> void:
 	for v in values:
 		_thresholds.append(int(v))
 	_chip_fractions.clear()
-	if milestones_host != null and not milestones_host.sort_children.is_connected(_on_host_sorted):
-		milestones_host.sort_children.connect(_on_host_sorted)
+	if milestones_host is Container and not (milestones_host as Container).sort_children.is_connected(_on_host_sorted):
+		(milestones_host as Container).sort_children.connect(_on_host_sorted)
 	refresh_bar.call_deferred()
 
 
@@ -172,11 +186,89 @@ func show_stars(stars: float) -> void:
 		bar_stars.value = fraction
 	if _bar_fx != null:
 		_bar_fx.set_fraction(fraction)
+	if road != null:
+		road.progress = road_progress(stars)
+
+
+## Bản đường mốc: đặt chip thứ i vào đúng `Slot` thứ i của `road` (tâm chip = tâm slot) và
+## chọn bên hiển thị bảng phần thưởng (mốc nằm nửa phải → bảng bên phải, ngược lại bên trái)
+func place_chips() -> void:
+	if road == null or road.slots_host == null or milestones_host == null:
+		return
+	var slots := road.slots_host.get_children()
+	var chips: Array[Control] = []
+	for child in milestones_host.get_children():
+		var chip := child as Control
+		if chip != null and not chip.is_queued_for_deletion():
+			chips.append(chip)
+	var half := road.size.x * 0.5
+	for i in mini(chips.size(), slots.size()):
+		var slot := slots[i] as Control
+		var chip := chips[i]
+		var sz := chip.size.max(chip.get_combined_minimum_size())
+		chip.size = sz
+		chip.position = slot.position - sz * 0.5
+		if chip is DailyMilestoneChip:
+			(chip as DailyMilestoneChip).set_tag_side(slot.position.x > half)
+
+
+## Bản đường mốc: mở / đóng bảng lịch tháng (animation `open` / `close` khai trong scene)
+func open_month_sheet() -> void:
+	if month_sheet == null:
+		return
+	month_sheet.visible = true
+	if sheet_anim != null and sheet_anim.has_animation(&"open"):
+		sheet_anim.stop()
+		sheet_anim.play(&"open")
+
+
+func close_month_sheet() -> void:
+	if month_sheet == null or not month_sheet.visible:
+		return
+	if sheet_anim != null and sheet_anim.has_animation(&"close"):
+		sheet_anim.stop()
+		sheet_anim.play(&"close")
+	else:
+		month_sheet.visible = false
+
+
+## Dây `pressed` của nền mờ (`MonthSheet/Dim`) khai trong scene: bấm ra ngoài = đóng bảng
+func _on_sheet_close_pressed() -> void:
+	close_month_sheet()
+
+
+func is_month_sheet_open() -> bool:
+	return month_sheet != null and month_sheet.visible and (sheet_anim == null
+		or sheet_anim.current_animation != "close" or not sheet_anim.is_playing())
+
+
+## Chữ gợi ý dưới sao tổng ("Còn 9★ tới rương 45★")
+func set_road_hint(text: String) -> void:
+	if lbl_road_hint != null:
+		lbl_road_hint.text = text
+
+
+## Tiến độ theo ĐOẠN của đường (0 = ở sao · i = tới mốc i), nội suy theo ngưỡng Sao của các mốc
+func road_progress(stars: float) -> float:
+	if _thresholds.is_empty():
+		return 0.0
+	var prev_t := 0.0
+	for i in _thresholds.size():
+		var t := float(_thresholds[i])
+		if stars <= t:
+			if t <= prev_t:
+				return float(i + 1)
+			return float(i) + clampf((stars - prev_t) / (t - prev_t), 0.0, 1.0)
+		prev_t = t
+	return float(_thresholds.size())
 
 
 ## Tính lại vị trí các chip (sau khi bố cục/Stage đổi cỡ) rồi áp lại độ đầy của thanh
 func refresh_bar() -> void:
 	_chip_fractions = _measure_chip_fractions()
+	if road != null:
+		place_chips()
+		road.rebuild()
 	show_stars(_stars_shown)
 
 

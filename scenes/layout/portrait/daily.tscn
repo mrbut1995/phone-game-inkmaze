@@ -18,6 +18,12 @@
 [ext_resource uid="uid://bhdq46dggifbf" type="Texture2D" path="res://assets/images-png/effects/vf_bar_shine.png" id="24_shine"]
 [ext_resource uid="uid://isr1cd5s5mxk" type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="25_glow"]
 [ext_resource uid="uid://buhsd5kh2cdyp" type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="26_spark"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/title_banner.png" id="40_banner"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/road_card.png" id="41_card"]
+[ext_resource type="Texture2D" path="res://assets/images-png/daily/road_pencil.png" id="42_pencil"]
+[ext_resource type="Script" path="res://scripts/nodes/daily/road_path.gd" id="43_road"]
+[ext_resource type="PackedScene" path="res://nodes/daily/week_strip.tscn" id="44_week"]
+[ext_resource type="PackedScene" path="res://nodes/daily/road_chip.tscn" id="45_chip"]
 
 [sub_resource type="Animation" id="Animation_pulse"]
 resource_name = "pulse"
@@ -58,7 +64,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Panel/Stage/StarBar:modulate")
+tracks/1/path = NodePath("Panel/Stage/Banner:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -70,10 +76,22 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Panel/Stage/Calendar:modulate")
+tracks/2/path = NodePath("Panel/Stage/WeekStrip:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Stage/Road:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -98,11 +116,11 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Panel/Stage/StarBar:modulate")
+tracks/1/path = NodePath("Panel/Stage/Banner:modulate")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.06, 0.36),
+"times": PackedFloat32Array(0.04, 0.3),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -110,11 +128,23 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Panel/Stage/Calendar:modulate")
+tracks/2/path = NodePath("Panel/Stage/WeekStrip:modulate")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.14, 0.5),
+"times": PackedFloat32Array(0.1, 0.38),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Stage/Road:modulate")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.16, 0.5),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -692,7 +722,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Panel/Stage/StarBar/Star:scale")
+tracks/1/path = NodePath("Panel/Stage/Road/Star:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -704,7 +734,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Panel/Stage/StarBar/Star:rotation")
+tracks/2/path = NodePath("Panel/Stage/Road/Star:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -716,7 +746,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Panel/Stage/StarBar/Star/Glow:modulate")
+tracks/3/path = NodePath("Panel/Stage/Road/Star/Glow:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -728,7 +758,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Panel/Stage/StarBar/Star/Glow:scale")
+tracks/4/path = NodePath("Panel/Stage/Road/Star/Glow:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -740,7 +770,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Panel/Stage/StarBar/Star/Burst:modulate")
+tracks/5/path = NodePath("Panel/Stage/Road/Star/Burst:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -752,7 +782,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Panel/Stage/StarBar/Star/Burst:scale")
+tracks/6/path = NodePath("Panel/Stage/Road/Star/Burst:scale")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -764,7 +794,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Panel/Stage/StarBar/Star/Burst:rotation")
+tracks/7/path = NodePath("Panel/Stage/Road/Star/Burst:rotation")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -776,7 +806,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Panel/Stage/StarBar/Bar:modulate")
+tracks/8/path = NodePath("Panel/Stage/Road/Dots:modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -785,25 +815,13 @@ tracks/8/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1.3, 1.22, 1.05, 1), Color(1, 1, 1, 1)]
 }
-tracks/9/type = "value"
+tracks/9/type = "method"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Panel/Stage/StarBar/BarShine/Shine:position:x")
+tracks/9/path = NodePath("Panel/Stage/Road/Star/Sparks")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-64.0, 403.0]
-}
-tracks/10/type = "method"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("Panel/Stage/StarBar/Star/Sparks")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -811,13 +829,25 @@ tracks/10/keys = {
 "method": &"restart"
 }]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Panel/Stage/Road/Pencil:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.25, 1.25), Vector2(0.95, 0.95), Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_arrive_reset"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/Stage/StarBar/Star:scale")
+tracks/0/path = NodePath("Panel/Stage/Road/Star:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -829,7 +859,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Panel/Stage/StarBar/Star:rotation")
+tracks/1/path = NodePath("Panel/Stage/Road/Star:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -841,7 +871,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Panel/Stage/StarBar/Star/Glow:modulate")
+tracks/2/path = NodePath("Panel/Stage/Road/Star/Glow:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -853,7 +883,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Panel/Stage/StarBar/Star/Burst:modulate")
+tracks/3/path = NodePath("Panel/Stage/Road/Star/Burst:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -865,7 +895,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Panel/Stage/StarBar/Bar:modulate")
+tracks/4/path = NodePath("Panel/Stage/Road/Dots:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -877,14 +907,14 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Panel/Stage/StarBar/BarShine/Shine:position:x")
+tracks/5/path = NodePath("Panel/Stage/Road/Pencil:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-64.0]
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_arrive"]
@@ -893,22 +923,175 @@ _data = {
 &"arrive": SubResource("Animation_arrive")
 }
 
-[node name="Portrait" unique_id=1822426536 node_paths=PackedStringArray("btn_back", "calendar", "lbl_star_total", "bar_stars", "milestones_host", "play_card", "challenge_card", "lbl_reset", "coin_chip", "star_big", "vfx_anim", "arrive_anim", "fly_host", "header_anchor") instance=ExtResource("1_parent")]
+[sub_resource type="Animation" id="Animation_sheet_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Stage/MonthSheet:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Stage/MonthSheet:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Stage/MonthSheet/Calendar:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sheet_open"]
+resource_name = "open"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Stage/MonthSheet:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Stage/MonthSheet:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Stage/MonthSheet/Calendar:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.18, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.9, 0.9), Vector2(1.03, 1.03), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sheet_close"]
+resource_name = "close"
+length = 0.18
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Stage/MonthSheet:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Stage/MonthSheet/Calendar:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.94, 0.94)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Stage/MonthSheet:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.17),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sheet"]
+_data = {
+&"RESET": SubResource("Animation_sheet_reset"),
+&"close": SubResource("Animation_sheet_close"),
+&"open": SubResource("Animation_sheet_open")
+}
+
+[sub_resource type="Animation" id="Animation_pencil_idle"]
+resource_name = "idle"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Stage/Road/Pencil/Art:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.61, 0.5, 0.61]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pencil"]
+_data = {
+&"idle": SubResource("Animation_pencil_idle")
+}
+
+[node name="Portrait" unique_id=1822426536 node_paths=PackedStringArray("btn_back", "calendar", "lbl_star_total", "milestones_host", "play_card", "challenge_card", "lbl_reset", "coin_chip", "star_big", "vfx_anim", "arrive_anim", "fly_host", "header_anchor", "road", "week_strip", "lbl_road_hint", "month_sheet", "sheet_anim") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 header_anchor = NodePath("Panel/Stage/TopBarAnchor")
 btn_back = NodePath("TopBar/HeaderRow/Back")
-calendar = NodePath("Panel/Stage/Calendar")
-lbl_star_total = NodePath("Panel/Stage/StarBar/Star/Total")
-bar_stars = NodePath("Panel/Stage/StarBar/Bar")
-milestones_host = NodePath("Panel/Stage/StarBar/Milestones")
+calendar = NodePath("Panel/Stage/MonthSheet/Calendar")
+lbl_star_total = NodePath("Panel/Stage/Road/Star/Total")
+milestones_host = NodePath("Panel/Stage/Road/Nodes")
 play_card = NodePath("Panel/Stage/Actions/PlayCard")
 challenge_card = NodePath("Panel/Stage/Actions/ChallengeCard")
 lbl_reset = NodePath("Panel/Stage/ResetChip/Center/Label")
 coin_chip = NodePath("TopBar/CoinChip")
-star_big = NodePath("Panel/Stage/StarBar/Star")
+star_big = NodePath("Panel/Stage/Road/Star")
 vfx_anim = NodePath("VfxAnim")
 arrive_anim = NodePath("ArriveAnim")
 fly_host = NodePath("Panel/Stage/Fx")
+road = NodePath("Panel/Stage/Road/Dots")
+week_strip = NodePath("Panel/Stage/WeekStrip")
+lbl_road_hint = NodePath("Panel/Stage/Road/Hint")
+chip_scene = ExtResource("45_chip")
+month_sheet = NodePath("Panel/Stage/MonthSheet")
+sheet_anim = NodePath("SheetAnim")
 
 [node name="Panel" type="Control" parent="." index="0" unique_id=493383061]
 layout_mode = 1
@@ -926,7 +1109,7 @@ offset_right = 540.0
 offset_bottom = 920.0
 mouse_filter = 2
 
-[node name="MarginLine" type="ColorRect" parent="Panel/Stage" index="0" unique_id=1218672977]
+[node name="MarginLine" type="ColorRect" parent="Panel/Stage" unique_id=1218672977]
 layout_mode = 0
 offset_left = 43.0
 offset_right = 44.5
@@ -934,7 +1117,7 @@ offset_bottom = 920.0
 mouse_filter = 2
 color = Color(0.866667, 0.372549, 0.372549, 0.85)
 
-[node name="TopBarAnchor" type="Control" parent="Panel/Stage" index="1"]
+[node name="TopBarAnchor" type="Control" parent="Panel/Stage"]
 anchors_preset = 0
 offset_top = 40.0
 offset_right = 540.0
@@ -962,97 +1145,157 @@ texture_hover = ExtResource("6_back_p")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Title" type="Label" parent="TopBar/HeaderRow" index="1" unique_id=140729280]
+[node name="Banner" type="TextureRect" parent="Panel/Stage"]
 layout_mode = 0
-offset_left = 70.0
-offset_top = 2.0
-offset_right = 292.0
-offset_bottom = 28.0
-theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
-theme_override_font_sizes/font_size = 17
+offset_left = 95.0
+offset_top = 90.0
+offset_right = 445.0
+offset_bottom = 158.0
+rotation = -0.0349066
+pivot_offset = Vector2(175, 34)
+mouse_filter = 2
+texture = ExtResource("40_banner")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="Panel/Stage/Banner"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 8.0
+offset_right = 336.0
+offset_bottom = 60.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.478431, 0.176471, 0.047059, 0.4)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 22
 text = "STR_DAILY_SCREEN_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 resize_font_to_fit = true
 
-[node name="Sub" type="Label" parent="TopBar/HeaderRow" index="2" unique_id=1679896551]
+[node name="WeekStrip" parent="Panel/Stage" instance=ExtResource("44_week")]
 layout_mode = 0
-offset_left = 70.0
-offset_top = 28.0
-offset_right = 292.0
-offset_bottom = 42.0
-theme_override_colors/font_color = Color(0.239216, 0.352941, 0.45098, 1)
-theme_override_font_sizes/font_size = 10
-text = "STR_DAILY_SCREEN_SUB"
-horizontal_alignment = 1
-vertical_alignment = 1
-resize_font_to_fit = true
+offset_left = 45.0
+offset_top = 170.0
+offset_right = 495.0
+offset_bottom = 236.0
 
-[node name="StarBar" type="Control" parent="Panel/Stage" index="2" unique_id=521713214]
-anchors_preset = 0
-offset_left = 65.0
-offset_top = 100.0
-offset_right = 490.0
-offset_bottom = 168.0
+[node name="Road" type="Control" parent="Panel/Stage"]
+layout_mode = 0
+offset_left = 26
+offset_top = 248
+offset_right = 514
+offset_bottom = 616
 mouse_filter = 2
 
-[node name="Bar" type="TextureProgressBar" parent="Panel/Stage/StarBar" index="0" unique_id=296841847]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 14.0
-offset_right = 419.0
-offset_bottom = 46.0
-mouse_filter = 2
-nine_patch_stretch = true
-stretch_margin_left = 16
-stretch_margin_top = 0
-stretch_margin_right = 16
-stretch_margin_bottom = 0
-texture_under = ExtResource("7_bar_bg")
-texture_progress = ExtResource("8_bar_fill")
-
-[node name="BarShine" type="Control" parent="Panel/Stage/StarBar" index="1" unique_id=1900600001]
-clip_contents = true
-layout_mode = 0
-offset_left = 32
-offset_top = 14
-offset_right = 419
-offset_bottom = 46
-mouse_filter = 2
-
-[node name="Shine" type="TextureRect" parent="Panel/Stage/StarBar/BarShine" unique_id=1900600002]
-material = SubResource("CanvasItemMaterial_add")
-layout_mode = 0
-offset_left = -64.0
-offset_right = -16.0
-offset_bottom = 32
-mouse_filter = 2
-texture = ExtResource("24_shine")
-expand_mode = 1
-
-[node name="Milestones" type="HBoxContainer" parent="Panel/Stage/StarBar" index="2" unique_id=1803168461]
+[node name="Card" type="TextureRect" parent="Panel/Stage/Road"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.235
-anchor_right = 0.955
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/separation = 0
+texture = ExtResource("41_card")
+expand_mode = 1
 
-[node name="Star" type="TextureRect" parent="Panel/Stage/StarBar" index="3" unique_id=2031939451]
+[node name="Title" type="Label" parent="Panel/Stage/Road"]
 layout_mode = 0
-offset_top = -1.0
-offset_right = 65.0
-offset_bottom = 61.0
-pivot_offset = Vector2(32.5, 31)
+offset_top = 14.0
+offset_right = 488.0
+offset_bottom = 34.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.788235, 0.541176, 0.0431373, 1)
+theme_override_font_sizes/font_size = 12
+text = "STR_DAILY_ROAD_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slots" type="Control" parent="Panel/Stage/Road"]
+layout_mode = 0
+offset_left = 0
+offset_top = 0
+offset_right = 0
+offset_bottom = 0
+mouse_filter = 2
+
+[node name="Slot1" type="Control" parent="Panel/Stage/Road/Slots"]
+layout_mode = 0
+offset_left = 346
+offset_top = 277
+offset_right = 346
+offset_bottom = 277
+
+[node name="Slot2" type="Control" parent="Panel/Stage/Road/Slots"]
+layout_mode = 0
+offset_left = 142
+offset_top = 211
+offset_right = 142
+offset_bottom = 211
+
+[node name="Slot3" type="Control" parent="Panel/Stage/Road/Slots"]
+layout_mode = 0
+offset_left = 346
+offset_top = 144
+offset_right = 346
+offset_bottom = 144
+
+[node name="Slot4" type="Control" parent="Panel/Stage/Road/Slots"]
+layout_mode = 0
+offset_left = 142
+offset_top = 77
+offset_right = 142
+offset_bottom = 77
+
+[node name="Dots" type="Control" parent="Panel/Stage/Road" node_paths=PackedStringArray("start", "slots_host", "pencil")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("43_road")
+start = NodePath("../Star")
+slots_host = NodePath("../Slots")
+pencil = NodePath("../Pencil")
+
+[node name="Hint" type="Label" parent="Panel/Stage/Road"]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 338.0
+offset_right = 474.0
+offset_bottom = 356.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.894118, 0.384314, 0.168627, 1)
+theme_override_font_sizes/font_size = 11
+text = "STR_DAILY_ROAD_NEXT"
+vertical_alignment = 1
+resize_font_to_fit = true
+
+[node name="Nodes" type="Control" parent="Panel/Stage/Road"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Star" type="TextureRect" parent="Panel/Stage/Road" unique_id=2031939451]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 291.5
+offset_right = 125.0
+offset_bottom = 366.5
+pivot_offset = Vector2(39, 37.5)
 mouse_filter = 2
 texture = ExtResource("9_star")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Total" type="Label" parent="Panel/Stage/StarBar/Star" index="0" unique_id=1429037497]
+[node name="Total" type="Label" parent="Panel/Stage/Road/Star" unique_id=1429037497]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1060,29 +1303,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.0941176, 0.239216, 0.352941, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 22
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Glow" type="Sprite2D" parent="Panel/Stage/StarBar/Star" unique_id=1900600003]
+[node name="Glow" type="Sprite2D" parent="Panel/Stage/Road/Star" unique_id=1900600003]
 show_behind_parent = true
 modulate = Color(1, 0.85, 0.4, 0)
 material = SubResource("CanvasItemMaterial_add")
-position = Vector2(32.5, 31)
+position = Vector2(39, 37.5)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("25_glow")
 
-[node name="Burst" type="Sprite2D" parent="Panel/Stage/StarBar/Star" unique_id=1900600004]
+[node name="Burst" type="Sprite2D" parent="Panel/Stage/Road/Star" unique_id=1900600004]
 modulate = Color(1, 1, 1, 0)
 material = SubResource("CanvasItemMaterial_add")
-position = Vector2(32.5, 31)
+position = Vector2(39, 37.5)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("23_burst")
 
-[node name="Sparks" type="CPUParticles2D" parent="Panel/Stage/StarBar/Star" unique_id=1900600005]
+[node name="Sparks" type="CPUParticles2D" parent="Panel/Stage/Road/Star" unique_id=1900600005]
 material = SubResource("CanvasItemMaterial_add")
-position = Vector2(32.5, 31)
+position = Vector2(39, 37.5)
 emitting = false
 amount = 12
 lifetime = 0.6
@@ -1100,14 +1343,27 @@ scale_amount_curve = SubResource("Curve_pop")
 color = Color(1, 0.92, 0.6, 1)
 color_ramp = SubResource("Gradient_fade")
 
-[node name="Calendar" parent="Panel/Stage" index="3" unique_id=452268403 instance=ExtResource("3_calendar")]
+[node name="Pencil" type="Control" parent="Panel/Stage/Road"]
 layout_mode = 0
-offset_left = 39.0
-offset_top = 186.0
-offset_right = 501.0
-offset_bottom = 603.0
+offset_left = 120.0
+offset_top = 320.0
+offset_right = 120.0
+offset_bottom = 320.0
+mouse_filter = 2
 
-[node name="ResetChip" type="TextureRect" parent="Panel/Stage" index="4" unique_id=1473369192]
+[node name="Art" type="TextureRect" parent="Panel/Stage/Road/Pencil"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -46.0
+offset_right = 8.0
+offset_bottom = 0.0
+rotation = 0.61
+pivot_offset = Vector2(8, 46)
+mouse_filter = 2
+texture = ExtResource("42_pencil")
+expand_mode = 1
+
+[node name="ResetChip" type="TextureRect" parent="Panel/Stage" unique_id=1473369192]
 layout_mode = 0
 offset_left = 177.0
 offset_top = 622.0
@@ -1117,7 +1373,7 @@ mouse_filter = 2
 texture = ExtResource("10_chip")
 expand_mode = 1
 
-[node name="Center" type="HBoxContainer" parent="Panel/Stage/ResetChip" index="0" unique_id=252771085]
+[node name="Center" type="HBoxContainer" parent="Panel/Stage/ResetChip" unique_id=252771085]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1128,7 +1384,7 @@ mouse_filter = 2
 theme_override_constants/separation = 6
 alignment = 1
 
-[node name="Clock" type="TextureRect" parent="Panel/Stage/ResetChip/Center" index="0" unique_id=229189611]
+[node name="Clock" type="TextureRect" parent="Panel/Stage/ResetChip/Center" unique_id=229189611]
 custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
 size_flags_vertical = 4
@@ -1137,14 +1393,14 @@ texture = ExtResource("11_clock")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Panel/Stage/ResetChip/Center" index="1" unique_id=1401897053]
+[node name="Label" type="Label" parent="Panel/Stage/ResetChip/Center" unique_id=1401897053]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0862745, 0.227451, 0.345098, 1)
 theme_override_font_sizes/font_size = 11
 text = "STR_DAILY_RESET_IN"
 vertical_alignment = 1
 
-[node name="Actions" type="HBoxContainer" parent="Panel/Stage" index="5" unique_id=295896336]
+[node name="Actions" type="HBoxContainer" parent="Panel/Stage" unique_id=295896336]
 layout_mode = 0
 offset_left = 39.0
 offset_top = 660.0
@@ -1152,15 +1408,49 @@ offset_right = 501.0
 offset_bottom = 855.0
 theme_override_constants/separation = 20
 
-[node name="PlayCard" parent="Panel/Stage/Actions" index="0" unique_id=1974475108 instance=ExtResource("4_card")]
+[node name="PlayCard" parent="Panel/Stage/Actions" unique_id=1974475108 instance=ExtResource("4_card")]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ChallengeCard" parent="Panel/Stage/Actions" index="1" unique_id=351214067 instance=ExtResource("4_card")]
+[node name="ChallengeCard" parent="Panel/Stage/Actions" unique_id=351214067 instance=ExtResource("4_card")]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Fx" type="Control" parent="Panel/Stage" index="6" unique_id=1900600006]
+[node name="MonthSheet" type="Control" parent="Panel/Stage"]
+visible = false
+layout_mode = 0
+offset_right = 540.0
+offset_bottom = 920.0
+mouse_filter = 2
+
+[node name="Dim" type="Button" parent="Panel/Stage/MonthSheet"]
+layout_mode = 0
+offset_left = -1500.0
+offset_top = -1500.0
+offset_right = 2040.0
+offset_bottom = 2420.0
+focus_mode = 0
+flat = true
+
+[node name="Tint" type="ColorRect" parent="Panel/Stage/MonthSheet/Dim"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0862745, 0.27451, 0.388235, 0.5)
+
+[node name="Calendar" parent="Panel/Stage/MonthSheet" unique_id=452268403 instance=ExtResource("3_calendar")]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 252.0
+offset_right = 501.0
+offset_bottom = 669.0
+pivot_offset = Vector2(231, 208.5)
+
+[node name="Fx" type="Control" parent="Panel/Stage" unique_id=1900600006]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
@@ -1298,8 +1588,16 @@ libraries/ = SubResource("AnimationLibrary_vfx")
 [node name="ArriveAnim" type="AnimationPlayer" parent="." index="4" unique_id=1900600022]
 libraries/ = SubResource("AnimationLibrary_arrive")
 
+[node name="SheetAnim" type="AnimationPlayer" parent="."]
+libraries/ = SubResource("AnimationLibrary_sheet")
+
+[node name="RoadAnim" type="AnimationPlayer" parent="."]
+libraries/ = SubResource("AnimationLibrary_pencil")
+autoplay = &"idle"
+
 [connection signal="animation_finished" from="VfxAnim" to="." method="_on_vfx_anim_finished"]
 [connection signal="pressed" from="TopBar/HeaderRow/Back" to="." method="_on_back_pressed"]
-[connection signal="day_selected" from="Panel/Stage/Calendar" to="." method="_on_day_selected"]
+[connection signal="day_selected" from="Panel/Stage/MonthSheet/Calendar" to="." method="_on_day_selected"]
 [connection signal="pressed" from="Panel/Stage/Actions/PlayCard" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Panel/Stage/Actions/ChallengeCard" to="." method="_on_challenge_pressed"]
+[connection signal="pressed" from="Panel/Stage/MonthSheet/Dim" to="." method="_on_sheet_close_pressed"]
