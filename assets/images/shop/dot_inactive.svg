@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chấm trang thường (file MỚI trong shop/). Vẽ 1x, viewBox gấp đôi (xuất PNG 12x14 hoặc 24x28). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28" width="12" height="14"><g transform="scale(2)">
+<circle cx="6" cy="8" r="6" fill="#8FB9D2"/><circle cx="6" cy="6" r="6" fill="#CFE0EE"/>
+</g></svg>

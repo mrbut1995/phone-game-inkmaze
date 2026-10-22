@@ -2,21 +2,22 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ca35jx8yqbu0f"
-path="res://.godot/imported/shopping_theme_page_2.svg-20ac90c07f9c869b4d8d8f2bd7e297e8.ctex"
+uid="uid://cnt36080ggcer"
+path="res://.godot/imported/dot_active.svg-025ef8e5735aaf172db761b169652cb5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mockup/shopping_theme_page_2.svg"
-dest_files=["res://.godot/imported/shopping_theme_page_2.svg-20ac90c07f9c869b4d8d8f2bd7e297e8.ctex"]
+source_file="res://assets/images/shop/dot_active.svg"
+dest_files=["res://.godot/imported/dot_active.svg-025ef8e5735aaf172db761b169652cb5.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

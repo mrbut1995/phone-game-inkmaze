@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://c8wjjvea1kmhm" path="res://scripts/scenes/layout/shop_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="4_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="5_back_p"]
-[ext_resource type="Texture2D" uid="uid://by5pnt7sch66d" path="res://assets/images-png/calendar/day_btn_prev_normal.png" id="9_prev"]
-[ext_resource type="Texture2D" uid="uid://bi20hlvtod50l" path="res://assets/images-png/calendar/day_btn_next_normal.png" id="10_next"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/pager_prev.png" id="9_prev"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/pager_next.png" id="10_next"]
 [ext_resource type="Texture2D" uid="uid://bh1rhqkg2ui5u" path="res://assets/images-png/shop/banner_gift.png" id="11_gift"]
 [ext_resource type="Texture2D" uid="uid://dcy54bnvb3uwd" path="res://assets/images-png/shop/gift_box.png" id="12_gift_box"]
 [ext_resource type="Texture2D" uid="uid://bb0ma7g36al6e" path="res://assets/images-png/common/btn_action_normal.png" id="13_btn_amber"]
@@ -205,10 +205,10 @@ scroll = NodePath("Body/Content")
 wallet_count = NodePath("TopBar/CoinChip/Content/Value")
 wallet_plus = NodePath("TopBar/CoinChip/Content/Plus")
 pager = NodePath("Pager")
-page_label = NodePath("Pager/ChangePage/PageLabel")
-btn_prev = NodePath("Pager/ChangePage/Prev")
-btn_next = NodePath("Pager/ChangePage/Next")
-dots_box = NodePath("Pager/Dots")
+page_label = NodePath("Pager/Mid/PageLabel")
+btn_prev = NodePath("Pager/Prev")
+btn_next = NodePath("Pager/Next")
+dots_box = NodePath("Pager/Mid/Dots")
 btn_gift = NodePath("GiftBanner/GiftBtn")
 top_bar = NodePath("TopBar")
 wallet_bar = NodePath("TopBar/CoinChip")
@@ -335,35 +335,26 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="Pager" type="VBoxContainer" parent="." index="2"]
+[node name="Pager" type="HBoxContainer" parent="." index="2"]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 144.0
-offset_top = -224.0
-offset_right = -140.0
-offset_bottom = -180.0
+offset_left = -130.0
+offset_top = -226.0
+offset_right = 130.0
+offset_bottom = -176.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
+theme_override_constants/separation = 10
 
-[node name="Dots" type="HBoxContainer" parent="Pager" index="0"]
+[node name="Prev" type="TextureButton" parent="Pager" index="0"]
+custom_minimum_size = Vector2(44, 40)
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
-alignment = 1
-
-[node name="ChangePage" type="HBoxContainer" parent="Pager" index="1"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Prev" type="TextureButton" parent="Pager/ChangePage" index="0"]
-custom_minimum_size = Vector2(32, 28)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.1
+size_flags_vertical = 4
 focus_mode = 0
 texture_normal = ExtResource("9_prev")
 texture_pressed = ExtResource("9_prev")
@@ -371,22 +362,32 @@ texture_hover = ExtResource("9_prev")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="PageLabel" type="Label" parent="Pager/ChangePage" index="1"]
+[node name="Mid" type="VBoxContainer" parent="Pager" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-size_flags_stretch_ratio = 0.8
+mouse_filter = 2
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="PageLabel" type="Label" parent="Pager/Mid" index="0"]
+layout_mode = 2
 theme_type_variation = &"ShopPageLabel"
-theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.3569, 0.4314, 0.5098, 1)
+theme_override_font_sizes/font_size = 11
 text = "TRANG 1 / 2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Next" type="TextureButton" parent="Pager/ChangePage" index="2"]
-custom_minimum_size = Vector2(32, 28)
+[node name="Dots" type="HBoxContainer" parent="Pager/Mid" index="1"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.1
+mouse_filter = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Next" type="TextureButton" parent="Pager" index="2"]
+custom_minimum_size = Vector2(44, 40)
+layout_mode = 2
+size_flags_vertical = 4
 focus_mode = 0
 texture_normal = ExtResource("10_next")
 texture_pressed = ExtResource("10_next")
@@ -519,7 +520,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 32.0
-offset_top = -96.0
+offset_top = -95.0
 offset_right = -32.0
 offset_bottom = -34.0
 grow_horizontal = 2

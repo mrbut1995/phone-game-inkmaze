@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chấm trang ĐANG XEM (file MỚI trong shop/, không dùng chung level_selector). Vẽ 1x, viewBox gấp đôi (xuất PNG 34x14 hoặc 68x28). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 28" width="34" height="14"><g transform="scale(2)">
+<rect y="2" width="34" height="12" rx="6" fill="#1E5578"/><rect width="34" height="12" rx="6" fill="#2F77A5"/>
+</g></svg>

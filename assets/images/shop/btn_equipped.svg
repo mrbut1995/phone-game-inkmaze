@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 75" width="135" height="37.5">
-  
-  <rect width="270" height="75" rx="20" fill="#E8F5E9" />
-  <rect x="1.4" y="1.4" width="267.2" height="72.2" rx="18.6" fill="none" stroke="#81C784" stroke-width="2.8" />
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nút ĐANG DÙNG / ĐÃ SỞ HỮU (ghi đè btn_equipped.png) — giữ tỉ lệ ~135x40. Vẽ 1x, viewBox gấp đôi (xuất PNG 135x40 hoặc 270x80). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 80" width="135" height="40"><g transform="scale(2)">
+<rect y="4" width="135" height="36" rx="12" fill="#86C99A"/><rect x="1" y="1" width="133" height="33" rx="11" fill="#E3F5E7" stroke="#2E9E4F" stroke-width="2"/>
+</g></svg>

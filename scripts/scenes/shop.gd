@@ -204,7 +204,8 @@ func screen_scale() -> float:
 ## Chiều cao TAB đang dùng = chiều cao ART tab đang chọn (`tab_active.svg`) × hệ số màn hình
 ## (muốn đổi cỡ tab: sửa 2 file SVG trong assets/images/shop — không cần sửa script)
 func tab_height() -> float:
-	return ShopTabButton.art_height() * screen_scale()
+	# Thanh tab dưới có chiều cao CỐ ĐỊNH (nav_bar) ⇒ không phóng to quá cỡ art, chỉ thu nhỏ khi màn thấp
+	return ShopTabButton.art_height() * minf(screen_scale(), 1.0)
 
 
 ## Cỡ THIẾT KẾ của thẻ ô — đọc từ `nodes/shop/item_tile.tscn` (layout là nguồn số thật)

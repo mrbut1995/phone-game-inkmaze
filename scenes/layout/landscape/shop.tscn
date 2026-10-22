@@ -5,8 +5,8 @@
 [ext_resource uid="uid://yssg5du4e4fc" type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource uid="uid://c8fvwpvick2hx" type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
 [ext_resource uid="uid://cu4e6t41rs731" type="Texture2D" path="res://assets/images-png/common/panel_information.png" id="5_chip"]
-[ext_resource uid="uid://by5pnt7sch66d" type="Texture2D" path="res://assets/images-png/calendar/day_btn_prev_normal.png" id="9_prev"]
-[ext_resource uid="uid://bi20hlvtod50l" type="Texture2D" path="res://assets/images-png/calendar/day_btn_next_normal.png" id="10_next"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/pager_prev.png" id="9_prev"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/pager_next.png" id="10_next"]
 [ext_resource uid="uid://bh1rhqkg2ui5u" type="Texture2D" path="res://assets/images-png/shop/banner_gift.png" id="11_gift"]
 [ext_resource uid="uid://dcy54bnvb3uwd" type="Texture2D" path="res://assets/images-png/shop/gift_box.png" id="12_gift_box"]
 [ext_resource uid="uid://bb0ma7g36al6e" type="Texture2D" path="res://assets/images-png/common/btn_action_normal.png" id="13_btn_amber"]
@@ -369,13 +369,13 @@ layout_mode = 2
 
 [node name="Pager" type="HBoxContainer" parent="Body/RightCol" index="3"]
 visible = false
-custom_minimum_size = Vector2(0, 36)
+custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
 [node name="Prev" type="TextureButton" parent="Body/RightCol/Pager" index="0"]
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(44, 40)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
@@ -393,17 +393,18 @@ theme_override_constants/separation = 2
 [node name="PageLabel" type="Label" parent="Body/RightCol/Pager/Mid" index="0"]
 layout_mode = 2
 theme_type_variation = &"ShopPageLabel"
+theme_override_colors/font_color = Color(0.3569, 0.4314, 0.5098, 1)
 theme_override_font_sizes/font_size = 11
 text = "TRANG 1 / 2"
 horizontal_alignment = 1
 
 [node name="Dots" type="HBoxContainer" parent="Body/RightCol/Pager/Mid" index="1"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 6
 alignment = 1
 
 [node name="Next" type="TextureButton" parent="Body/RightCol/Pager" index="2"]
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(44, 40)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0

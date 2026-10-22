@@ -5,17 +5,18 @@
 [ext_resource type="Texture2D" uid="uid://yqvn4ejvw4wr" path="res://assets/images-png/shop/card_noads.png" id="3_card"]
 [ext_resource type="Texture2D" uid="uid://bry3ikg70dfnj" path="res://assets/images-png/chapters/chip_need.png" id="4_chip"]
 [ext_resource type="Texture2D" uid="uid://bhfrjjyhde2xk" path="res://assets/images-png/shop/btn_noads.png" id="5_btn"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/icon_noads.png" id="6_icon"]
 
 [node name="NoadsRow" type="Control"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 104)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 490.0
-offset_bottom = 100.0
+offset_bottom = 104.0
 theme = ExtResource("2_theme")
 script = ExtResource("1_row")
 
-[node name="Bg" type="TextureRect" parent="."]
+[node name="Bg" type="NinePatchRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,35 +25,38 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("3_card")
-expand_mode = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Bar" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.1
-anchor_bottom = 0.9
-offset_left = 17.0
-offset_right = 18.5
-mouse_filter = 2
-color = Color(0.84705883, 0.26666668, 0.26666668, 1)
+patch_margin_left = 18
+patch_margin_top = 18
+patch_margin_right = 18
+patch_margin_bottom = 24
 
 [node name="Body" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0561
-anchor_top = 0.1
-anchor_right = 0.9592
-anchor_bottom = 0.9
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+offset_left = 16
+offset_top = 12
+offset_right = -16
+offset_bottom = -17
 mouse_filter = 2
 theme_override_constants/separation = 12
+
+[node name="Icon" type="TextureRect" parent="Body"]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("6_icon")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Info" type="VBoxContainer" parent="Body"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 0
+size_flags_vertical = 4
 mouse_filter = 2
 theme_override_constants/separation = 3
 
@@ -74,34 +78,37 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_type_variation = &"ShopBadgeDanger"
+theme_override_font_sizes/font_size = 9
 text = "KHUYÊN DÙNG"
+mouse_filter = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Title" type="Label" parent="Body/Info"]
+theme_type_variation = &"ShopNoadsTitle"
+theme_override_font_sizes/font_size = 15
+text = "GÓI XÓA QUẢNG CÁO (NO ADS)"
+mouse_filter = 2
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_horizontal = 3
-mouse_filter = 2
-theme_type_variation = &"ShopNoadsTitle"
-text = "GÓI XÓA QUẢNG CÁO (NO ADS)"
 vertical_alignment = 1
 text_overrun_behavior = 3
 
 [node name="Desc" type="Label" parent="Body/Info"]
+theme_type_variation = &"ShopNoadsDesc"
+theme_override_font_sizes/font_size = 10
+text = "Mô tả gói xoá quảng cáo"
+mouse_filter = 2
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 3
-mouse_filter = 2
-theme_type_variation = &"ShopNoadsDesc"
-text = "Mô tả gói xoá quảng cáo"
 vertical_alignment = 1
 text_overrun_behavior = 3
 
 [node name="Action" type="TextureButton" parent="Body"]
-custom_minimum_size = Vector2(115, 40)
+custom_minimum_size = Vector2(115, 42)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
@@ -119,10 +126,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_type_variation = &"ShopNoadsPrice"
+theme_override_font_sizes/font_size = 13
 text = "49.000 VNĐ"
+mouse_filter = 2
 horizontal_alignment = 1
 vertical_alignment = 1
+offset_bottom = -3.0
 
 [connection signal="pressed" from="Body/Action" to="." method="_on_action_pressed"]
