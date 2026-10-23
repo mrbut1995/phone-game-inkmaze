@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Nút giá No Ads (ghi đè btn_noads.png) — giữ tỉ lệ ~115x42. Vẽ 1x, viewBox gấp đôi (xuất PNG 115x42 hoặc 230x84). Không dùng filter. -->
+<!-- Ô THÔNG TIN giá No Ads (PHẲNG, chữ trắng) — ghi đè btn_noads.png. Vẽ 1x, viewBox gấp đôi (xuất PNG 115x42 hoặc 230x84). Không dùng filter. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 84" width="115" height="42"><g transform="scale(2)">
-<rect y="4" width="115" height="38" rx="12" fill="#8F1F1A"/><rect x="1" y="1" width="113" height="35" rx="11" fill="#D84444" stroke="#8F1F1A" stroke-width="2"/>
+<rect x="0" y="0" width="115" height="42" rx="10" fill="#D84444"/>
 </g></svg>

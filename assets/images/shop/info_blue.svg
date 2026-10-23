@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ô THÔNG TIN giá (PHẲNG — không bấm riêng) trên thẻ dụng cụ. FILE MỚI info_blue.png. Vẽ 1x, viewBox gấp đôi (xuất PNG 112x40 hoặc 224x80). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 80" width="112" height="40"><g transform="scale(2)">
+<rect x="0" y="0" width="112" height="40" rx="10" fill="#DCEBF5"/>
+</g></svg>

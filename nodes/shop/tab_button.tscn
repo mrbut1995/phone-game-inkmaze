@@ -1,28 +1,27 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bmwv2ocykurpc"]
 
 [ext_resource type="Script" uid="uid://b6yunweed574j" path="res://scripts/nodes/shop/tab_button.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://62r6r1frm5ia" path="res://assets/images-png/shop/tab_inactive.png" id="2_art_idle"]
-[ext_resource type="Texture2D" uid="uid://bjahdjaapxol5" path="res://assets/images-png/shop/tab_active.png" id="3_art_active"]
-[ext_resource type="Theme" path="res://resources/settings/theme_default.tres" id="4_theme"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="4_theme"]
 
-[node name="TabButton" type="TextureButton" node_paths=PackedStringArray("label", "icon")]
+[node name="TabButton" type="TextureButton" unique_id=584291408 node_paths=PackedStringArray("label", "icon")]
 custom_minimum_size = Vector2(100, 60)
 offset_right = 100.0
 offset_bottom = 60.0
-theme = ExtResource("4_theme")
 focus_mode = 0
+theme = ExtResource("4_theme")
 texture_normal = ExtResource("2_art_idle")
 texture_pressed = ExtResource("2_art_idle")
 texture_hover = ExtResource("2_art_idle")
-texture_focused = ExtResource("2_art_idle")
 texture_disabled = ExtResource("2_art_idle")
+texture_focused = ExtResource("2_art_idle")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_script")
 label = NodePath("Label")
 icon = NodePath("Icon")
 
-[node name="Icon" type="TextureRect" parent="."]
+[node name="Icon" type="TextureRect" parent="." unique_id=309359615]
 layout_mode = 0
 offset_left = 37.0
 offset_top = 6.0
@@ -32,12 +31,11 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=267695377]
 layout_mode = 0
 offset_top = 33.0
 offset_right = 100.0
 offset_bottom = 57.0
-mouse_filter = 2
 theme_type_variation = &"ShopTabLabel"
 theme_override_font_sizes/font_size = 10
 text = "TAB"
