@@ -4,12 +4,12 @@
 [ext_resource type="Script" uid="uid://bbivg47hraoh6" path="res://scripts/scenes/layout/levels_layout.gd" id="2_h3psh"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/card_chapter.png" id="6_card"]
+[ext_resource type="Texture2D" uid="uid://x8gfrqofrmtf" path="res://assets/images-png/level_selector/card_chapter.png" id="6_card"]
 [ext_resource type="Texture2D" uid="uid://6voljbarwsoh" path="res://assets/images-png/common/star_highlight.png" id="15_star"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_tabs.tscn" id="31_tabs"]
-[ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="34_sheet"]
 [ext_resource type="PackedScene" path="res://nodes/chapters/chapter_rail.tscn" id="32_rail"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/next_level_card.tscn" id="33_next"]
+[ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="34_sheet"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill"]
 content_margin_left = 8.0
@@ -160,22 +160,22 @@ _data = {
 &"enter": SubResource("Animation_levels_enter")
 }
 
-[node name="Portrait" node_paths=PackedStringArray("btn_back", "lbl_chapter", "banner", "header_anchor", "tabs", "rail", "next_card", "lock_sheet", "card_subtitle", "card_stars", "card_levels") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=198759852 node_paths=PackedStringArray("btn_back", "lbl_chapter", "banner", "rail", "tabs", "next_card", "lock_sheet", "card_subtitle", "card_stars", "card_levels", "header_anchor") instance=ExtResource("1_parent")]
 mouse_filter = 2
 script = ExtResource("2_h3psh")
-header_anchor = NodePath("Content/InformationArea/TopBarAnchor")
 btn_back = NodePath("TopBar/Back")
 lbl_chapter = NodePath("Content/InformationArea/ChapterBanner/Title")
 banner = NodePath("Content/InformationArea/ChapterBanner")
-tabs = NodePath("Content/InformationArea/Tabs")
 rail = NodePath("Content/InformationArea/Rail")
+tabs = NodePath("Content/InformationArea/Tabs")
 next_card = NodePath("Content/InformationArea/NextCard")
 lock_sheet = NodePath("LockSheet")
 card_subtitle = NodePath("Content/InformationArea/ChapterBanner/Subtitle")
 card_stars = NodePath("Content/InformationArea/ChapterBanner/StarsPill/Row/Stars")
 card_levels = NodePath("Content/InformationArea/ChapterBanner/Levels")
+header_anchor = NodePath("Content/InformationArea/TopBarAnchor")
 
-[node name="Content" type="Control" parent="." index="0"]
+[node name="Content" type="Control" parent="." index="0" unique_id=1825968132]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -184,7 +184,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="InformationArea" type="Control" parent="Content" index="0"]
+[node name="InformationArea" type="Control" parent="Content" index="0" unique_id=286871103]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -193,9 +193,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="TopBarAnchor" type="Control" parent="Content/InformationArea" index="0"]
+[node name="TopBarAnchor" type="Control" parent="Content/InformationArea" index="0" unique_id=439865093]
 layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.034
 anchor_top = 0.033770833
 anchor_right = 0.961
@@ -203,32 +202,19 @@ anchor_bottom = 0.142
 offset_bottom = -3.5708313
 mouse_filter = 2
 
-[node name="Back" type="TextureButton" parent="TopBar" index="0"]
-layout_mode = 2
-texture_normal = ExtResource("3_back_n")
-texture_pressed = ExtResource("4_back_p")
-texture_hover = ExtResource("3_back_n")
-texture_disabled = ExtResource("3_back_n")
-texture_focused = ExtResource("3_back_n")
-stretch_mode = 5
-
-[node name="Spacer" type="Control" parent="TopBar" index="1"]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="Tabs" parent="Content/InformationArea" index="1" instance=ExtResource("31_tabs")]
+[node name="Tabs" parent="Content/InformationArea" index="1" unique_id=42252826 instance=ExtResource("31_tabs")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.03
+anchor_left = 0.046296295
 anchor_top = 0.146
-anchor_right = 0.97
+anchor_right = 0.96999985
 anchor_bottom = 0.196
-grow_horizontal = 2
+offset_top = -6.0
+offset_bottom = 14.0
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="ChapterBanner" type="NinePatchRect" parent="Content/InformationArea" index="2"]
+[node name="ChapterBanner" type="NinePatchRect" parent="Content/InformationArea" index="2" unique_id=1649854089]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.044
@@ -241,43 +227,45 @@ offset_right = 2.130005
 offset_bottom = 3.7799988
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("6_card")
-patch_margin_left = 22
-patch_margin_top = 20
-patch_margin_right = 22
-patch_margin_bottom = 24
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 20
+patch_margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="Title" type="Label" parent="Content/InformationArea/ChapterBanner"]
+[node name="Title" type="Label" parent="Content/InformationArea/ChapterBanner" index="0" unique_id=1363091942]
 layout_mode = 1
 anchors_preset = -1
+anchor_right = 1.0
 offset_left = 24.0
 offset_top = 8.0
 offset_right = -150.0
 offset_bottom = 36.0
-anchor_right = 1.0
 theme_type_variation = &"LevelsBannerTitle"
+theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
+theme_override_font_sizes/font_size = 22
 text = "—"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Subtitle" type="Label" parent="Content/InformationArea/ChapterBanner"]
+[node name="Subtitle" type="Label" parent="Content/InformationArea/ChapterBanner" index="1" unique_id=22415442]
 layout_mode = 1
 anchors_preset = -1
+anchor_right = 1.0
 offset_left = 24.0
 offset_top = 36.0
 offset_right = -150.0
 offset_bottom = 54.0
-anchor_right = 1.0
 theme_type_variation = &"ChapterCardSubtitle"
+theme_override_font_sizes/font_size = 12
 text = "—"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="StarsPill" type="PanelContainer" parent="Content/InformationArea/ChapterBanner"]
+[node name="StarsPill" type="PanelContainer" parent="Content/InformationArea/ChapterBanner" index="2" unique_id=1056132160]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -289,13 +277,13 @@ offset_bottom = 34.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pill")
 
-[node name="Row" type="HBoxContainer" parent="Content/InformationArea/ChapterBanner/StarsPill"]
+[node name="Row" type="HBoxContainer" parent="Content/InformationArea/ChapterBanner/StarsPill" index="0" unique_id=1266806052]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="Icon" type="TextureRect" parent="Content/InformationArea/ChapterBanner/StarsPill/Row"]
+[node name="Icon" type="TextureRect" parent="Content/InformationArea/ChapterBanner/StarsPill/Row" index="0" unique_id=6991564]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_vertical = 4
@@ -304,27 +292,30 @@ texture = ExtResource("15_star")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Stars" type="Label" parent="Content/InformationArea/ChapterBanner/StarsPill/Row"]
+[node name="Stars" type="Label" parent="Content/InformationArea/ChapterBanner/StarsPill/Row" index="1" unique_id=359432230]
 layout_mode = 2
 theme_type_variation = &"ChapterStars"
 text = "0 / 0"
 vertical_alignment = 1
 
-[node name="Levels" type="Label" parent="Content/InformationArea/ChapterBanner"]
+[node name="Levels" type="Label" parent="Content/InformationArea/ChapterBanner" index="3" unique_id=1293178432]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 24.0
-offset_top = 54.0
-offset_right = -20.0
-offset_bottom = 74.0
+anchor_left = 1.0
 anchor_right = 1.0
+offset_left = -230.0
+offset_top = 46.0
+offset_right = -22.0
+offset_bottom = 64.0
 theme_type_variation = &"ChapterChipSizeMuted"
+theme_override_colors/font_color = Color(0.5412, 0.3529, 0.0706, 1)
+theme_override_font_sizes/font_size = 11
 text = "—"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Rail" parent="Content/InformationArea" index="3" instance=ExtResource("32_rail")]
+[node name="Rail" parent="Content/InformationArea" index="3" unique_id=1403419619 instance=ExtResource("32_rail")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.015
@@ -335,26 +326,33 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="NextCard" parent="Content/InformationArea" index="4" instance=ExtResource("33_next")]
+[node name="NextCard" parent="Content/InformationArea" index="4" unique_id=2090381423 instance=ExtResource("33_next")]
 layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.048
 anchor_top = 0.845
 anchor_right = 0.952
 anchor_bottom = 0.945
-grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="LockSheet" parent="." index="1" instance=ExtResource("34_sheet")]
+[node name="LockSheet" parent="." index="1" unique_id=1670747158 instance=ExtResource("34_sheet")]
 z_index = 20
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
-[node name="EnterAnim" type="AnimationPlayer" parent="." index="2"]
+[node name="EnterAnim" type="AnimationPlayer" parent="." index="2" unique_id=795321241]
 libraries/ = SubResource("AnimationLibrary_levels_enter")
 autoplay = &"enter"
+
+[node name="Back" type="TextureButton" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="0" unique_id=1992809675]
+layout_mode = 2
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+texture_hover = ExtResource("3_back_n")
+texture_disabled = ExtResource("3_back_n")
+texture_focused = ExtResource("3_back_n")
+stretch_mode = 5
+
+[node name="Spacer" type="Control" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="1" unique_id=1536129151]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2

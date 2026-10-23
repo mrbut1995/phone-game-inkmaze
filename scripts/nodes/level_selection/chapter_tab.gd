@@ -25,8 +25,8 @@ enum State { SELECTED, OPEN, READY, LOCKED, COMING }
 ## Bản ngang đặt 92×40 / 52×34 ngay trên instance trong layout.
 @export var width_selected := 150.0
 @export var width_normal := 70.0
-@export var height_selected := 46.0
-@export var height_normal := 38.0
+@export var height_selected := 54.0
+@export var height_normal := 46.0
 @export var font_size_selected := 14
 @export var font_size_normal := 15
 
