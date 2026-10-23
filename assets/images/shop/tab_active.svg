@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Tab đang chọn (cao 60 = chiều cao tab chuẩn). Vẽ 1x, viewBox gấp đôi (xuất PNG 120x60 hoặc 240x120). Không dùng filter. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120" width="120" height="60"><g transform="scale(2)">
-<rect y="4" width="120" height="56" rx="14" fill="#1E5578"/><rect x="1" y="1" width="118" height="54" rx="13" fill="#2F77A5" stroke="#1E5578" stroke-width="2"/>
+<!-- Tab đang chọn — như cũ nhưng CAO 67 = đúng lòng thanh tab: sát viền trên và dưới, KHÔNG chừa khoảng trống. Vẽ 1x, viewBox gấp đôi (xuất PNG 120x67 hoặc 240x134). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 134" width="120" height="67"><g transform="scale(2)">
+<rect y="4" width="120" height="63" rx="16" fill="#1E5578"/><rect x="1" y="1" width="118" height="61" rx="15" fill="#2F77A5" stroke="#1E5578" stroke-width="2"/>
 </g></svg>

@@ -90,14 +90,14 @@ patch_margin_bottom = 24
 [node name="Badge" type="NinePatchRect" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 1
+anchor_left = 0
 anchor_top = 0
-anchor_right = 1
+anchor_right = 0
 anchor_bottom = 0
-offset_left = -96
-offset_top = -7
-offset_right = -8
-offset_bottom = 11
+offset_left = 78
+offset_top = 9
+offset_right = 162
+offset_bottom = 23
 mouse_filter = 2
 texture = ExtResource("5_chip")
 patch_margin_left = 4
@@ -127,14 +127,14 @@ anchor_top = 0
 anchor_right = 1
 anchor_bottom = 0
 offset_left = 14
-offset_top = 13
+offset_top = 26
 offset_right = -12
-offset_bottom = 71
+offset_bottom = 76
 mouse_filter = 2
 theme_override_constants/separation = 10
 
 [node name="IconCircle" type="TextureRect" parent="Panel/Content"]
-custom_minimum_size = Vector2(54, 54)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
@@ -220,6 +220,7 @@ patch_margin_top = 7.0
 patch_margin_right = 10.0
 patch_margin_bottom = 8.0
 metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
+mouse_filter = 2
 
 [node name="ActionLabel" type="Label" parent="Panel/Action"]
 layout_mode = 1

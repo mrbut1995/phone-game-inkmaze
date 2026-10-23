@@ -37,6 +37,8 @@ const VIP_BADGE := "STR_SHOP_BADGE_VIP"
 var item_id: String = ""
 var item_data: Dictionary = {}
 var _selected := false
+var _armed := false
+var _tap := ShopCardTap.new()
 
 
 func setup(data: Dictionary) -> void:
@@ -81,7 +83,7 @@ func _refresh_preview(color: Color) -> void:
 func _apply_card_art() -> void:
 	var panel := get_node_or_null("Panel") as NinePatchRect
 	if panel != null:
-		panel.texture = CARD_SELECTED if _selected else CARD_NORMAL
+		panel.texture = CARD_SELECTED if (_selected or _armed) else CARD_NORMAL
 
 
 func _is_pen() -> bool:
@@ -100,16 +102,18 @@ func set_selected(on: bool) -> void:
 		circle.self_modulate = Color(color.r, color.g, color.b, 0.36 if _selected else 0.20)
 
 
-## Chạm thân thẻ (vùng không bị nút hành động "ăn") = chọn xem thử
+## Chạm CẢ THẺ (ô giá bên trong bỏ qua chuột) — xem _on_card_tapped()
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		var mb := event as InputEventMouseButton
-		if mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
-			preview_pressed.emit(item_id)
-	elif event is InputEventScreenTouch:
-		var touch := event as InputEventScreenTouch
-		if touch.pressed:
-			preview_pressed.emit(item_id)
+	match _tap.feed(event):
+		ShopCardTap.Result.DOWN:
+			ShopCardTap.press_fx(self, true)
+		ShopCardTap.Result.TAP:
+			ShopCardTap.press_fx(self, false)
+			_on_card_tapped()
+		ShopCardTap.Result.CANCEL:
+			ShopCardTap.press_fx(self, false)
+
+
 
 
 func _set_texts() -> void:
@@ -160,6 +164,7 @@ func _set_button(color: Color) -> void:
 		btn.material = MAT_TILE_DONE
 		btn.disabled = true
 		label.theme_type_variation = &"ShopBtnTextDone"
+		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))
 		label.text = TranslationServer.translate("STR_SHOP_EQUIPPED")
 		if coin != null:
 			coin.visible = false
@@ -172,6 +177,7 @@ func _set_button(color: Color) -> void:
 		btn.material = MAT_TILE_NORMAL
 		btn.self_modulate = color
 		label.theme_type_variation = &"ShopBtnText"
+		label.remove_theme_color_override("font_color")
 		label.text = TranslationServer.translate("STR_SHOP_USE")
 		if coin != null:
 			coin.visible = false
@@ -184,6 +190,7 @@ func _set_button(color: Color) -> void:
 		btn.material = MAT_TILE_VIP
 	btn.disabled = not Shop.can_afford(item_id)
 	label.theme_type_variation = &"ShopBtnText" if vip else &"ShopPrice"
+	label.remove_theme_color_override("font_color")
 	label.text = TranslationServer.translate("STR_SHOP_PRICE_FORMAT").format([
 		Shop.thousands(int(item_data.get("price", 0)))])
 	if coin != null:
@@ -196,3 +203,37 @@ func _set_label(path: String, text: String) -> void:
 
 func _on_action_pressed() -> void:
 	action_pressed.emit(item_id)
+
+
+## CHẠM CẢ THẺ (ô giá bên trong chỉ là nhãn thông tin, không bấm riêng):
+##  • đang dùng  → chỉ chọn/xem thử
+##  • đã có      → dùng ngay (không tốn xu)
+##  • chưa có    → chạm lần 1 chọn + xem thử, chạm lần 2 mua (tránh lỡ tay tốn xu)
+func _on_card_tapped() -> void:
+	if Shop.is_equipped(item_id):
+		preview_pressed.emit(item_id)
+		return
+	if Shop.is_owned(item_id):
+		preview_pressed.emit(item_id)
+		action_pressed.emit(item_id)
+		return
+	if not ShopCardTap.is_armed(self):
+		ShopCardTap.arm(self)
+		_set_armed(true)
+		preview_pressed.emit(item_id)
+		return
+	if not Shop.can_afford(item_id):
+		ShopCardTap.shake(self, get_node_or_null("Panel/Action") as Control)
+		return
+	ShopCardTap.disarm()
+	action_pressed.emit(item_id)
+
+
+func _set_armed(on: bool) -> void:
+	_armed = on
+	_apply_card_art()
+
+
+## ShopCardTap gọi khi thẻ khác được chọn / hết hạn chờ mua
+func _on_disarmed() -> void:
+	_set_armed(false)

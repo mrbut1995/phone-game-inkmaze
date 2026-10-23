@@ -19,6 +19,7 @@ const ICONS := {
 
 var item_id: String = ""
 var item_data: Dictionary = {}
+var _tap := ShopCardTap.new()
 
 
 func setup(data: Dictionary) -> void:
@@ -95,6 +96,21 @@ func _set_label(path: String, text: String) -> void:
 	if label != null:
 		label.text = text
 
+func _gui_input(event: InputEvent) -> void:
+	match _tap.feed(event):
+		ShopCardTap.Result.DOWN:
+			ShopCardTap.press_fx(self, true)
+		ShopCardTap.Result.TAP:
+			ShopCardTap.press_fx(self, false)
+			_on_card_tapped()
+		ShopCardTap.Result.CANCEL:
+			ShopCardTap.press_fx(self, false)
+
+
+## CHẠM CẢ THẺ để mua (ô giá VNĐ chỉ là nhãn thông tin; cửa hàng hệ thống sẽ xác nhận lại)
+func _on_card_tapped() -> void:
+	action_pressed.emit(item_id)
+
 
 func _on_action_pressed() -> void:
-	action_pressed.emit(item_id)
+	_on_card_tapped()

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Tab chưa chọn: TRONG SUỐT, cùng cao 60 với tab đang chọn. Vẽ 1x, viewBox gấp đôi (xuất PNG 120x60 hoặc 240x120). Không dùng filter. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120" width="120" height="60"><g transform="scale(2)">
-<rect width="120" height="60" fill="none"/>
+<!-- Tab chưa chọn: TRONG SUỐT, cùng cao 67 với tab đang chọn (script đọc chiều cao ảnh). Vẽ 1x, viewBox gấp đôi (xuất PNG 120x67 hoặc 240x134). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 134" width="120" height="67"><g transform="scale(2)">
+<rect width="120" height="67" fill="none"/>
 </g></svg>

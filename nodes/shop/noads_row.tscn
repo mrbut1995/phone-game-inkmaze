@@ -118,6 +118,7 @@ texture_hover = ExtResource("5_btn")
 texture_disabled = ExtResource("5_btn")
 ignore_texture_size = true
 stretch_mode = 5
+mouse_filter = 2
 
 [node name="ActionLabel" type="Label" parent="Body/Action"]
 layout_mode = 1

@@ -14,16 +14,13 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
-shadow_color = Color(0.851, 0.8, 0.7255, 1)
-shadow_size = 1
-shadow_offset = Vector2(0, 3)
 
 [sub_resource type="StyleBoxFlat" id="sb_plus"]
 bg_color = Color(0.1843, 0.4667, 0.6471, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
 border_color = Color(0.1176, 0.3333, 0.4706, 1)
 corner_radius_top_left = 7
 corner_radius_top_right = 7

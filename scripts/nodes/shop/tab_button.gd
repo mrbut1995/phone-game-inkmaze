@@ -59,7 +59,13 @@ func apply_metrics(active_h: float) -> void:
 
 func set_label_text(text: String) -> void:
 	if label != null and not text.is_empty():
-		label.text = text
+		label.text = _strip_leading_symbols(text)
+
+
+## Tab đã có icon riêng ⇒ bỏ emoji/ký hiệu đứng đầu chuỗi dịch ("📖 GIẤY VỞ" → "GIẤY VỞ")
+static func _strip_leading_symbols(text: String) -> String:
+	var cleaned := RegEx.create_from_string("^[^\\p{L}\\p{N}]+").sub(text, "").strip_edges()
+	return cleaned if not cleaned.is_empty() else text
 
 
 func _emit_tab_pressed() -> void:
@@ -116,10 +122,11 @@ func _apply_own_size() -> void:
 	custom_minimum_size = Vector2(0.0, h)
 	size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var width := size.x if size.x > 0.0 else custom_minimum_size.x
+	var offset = Vector2(0,0 if active else 5)
 	if icon != null:
 		var icon_px := h * ICON_SIZE
-		icon.size = Vector2(icon_px, icon_px)
+		icon.size = Vector2(icon_px, icon_px) + offset
 		icon.position = Vector2((width - icon_px) * 0.5, h * ICON_TOP)
 	if label != null:
-		label.position = Vector2(0.0, h * LABEL_TOP)
+		label.position = Vector2(0.0, h * LABEL_TOP) + offset
 		label.size = Vector2(width, h * (0.96 - LABEL_TOP))

@@ -1,10 +1,12 @@
 class_name PausePopup
 extends BasePopup
 ## ============================================================================
-## Popup: Tạm dừng ván chơi (nodes/popups/pause.tscn)
-## Mockup: mockup/popup_settings.svg
-## - Chỉnh âm lượng BGM/SFX và 2 tuỳ chọn bàn cờ, đồng bộ thẳng với SettingManager
-## - Hiển thị tiến độ hiện tại (tầng / số bước còn lại) từ dữ liệu truyền vào
+## Popup: Tạm dừng ván chơi (nodes/popups/pause.tscn) — mockup L
+## Bố cục (giấy phẳng, băng keo xanh "TẠM DỪNG"):
+##   1. 2 thẻ nhỏ: TẦNG + BƯỚC CÒN LẠI
+##   2. Mục ÂM THANH: slider nhạc nền + hiệu ứng (đồng bộ thẳng SettingManager)
+##   3. Mục BÀN CỜ: 2 ô tick (rung, tự đánh dấu ô an toàn)
+##   4. Nút TIẾP TỤC (lớn) + 2 nút icon: Chơi lại · Về menu
 ## ============================================================================
 
 signal resume_requested
@@ -18,6 +20,7 @@ signal menu_requested
 @export var label_sfx: Label = null
 @export var check_haptic: TextureButton = null
 @export var check_safe: TextureButton = null
+@export var label_floor_caption: Label = null
 @export var value_floor: Label = null
 @export var value_steps: Label = null
 ## Nút "Chơi lại" + "Về Menu" — ẩn trong LUỒNG HỌC LẦN ĐẦU (xem `_on_open`)
@@ -108,15 +111,16 @@ func _update_percent(label: Label, value: float) -> void:
 		label.text = "%d%%" % int(round(value * 100.0))
 
 
-## Thẻ tiến độ: tầng hiện tại + số bước còn lại
+## 2 thẻ nhỏ: tầng hiện tại + số bước còn lại
 func _refresh_progress() -> void:
 	var floor := int(data.get("floor", 1))
 	var steps_left := int(data.get("steps_left", 0))
 	var steps_max := int(data.get("steps_max", 0))
-	var mode_name := str(data.get("mode_name", "DUNGEON")).to_upper()
 
-	value_floor.text = "%s %02d • %s" % [tr("STR_FLOOR_NUM").format([""]).strip_edges(), floor, mode_name]
-	value_steps.text = "%d / %d" % [steps_left, steps_max]
+	if label_floor_caption != null:
+		label_floor_caption.text = tr("STR_FLOOR_NUM").format([""]).strip_edges()
+	value_floor.text = "%02d" % floor
+	value_steps.text = "%d/%d" % [steps_left, steps_max]
 
 
 func _settings() -> Node:

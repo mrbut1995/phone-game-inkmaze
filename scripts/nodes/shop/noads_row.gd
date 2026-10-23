@@ -12,6 +12,7 @@ const OWNED_BTN := preload("res://assets/images-png/shop/btn_equipped.png")
 
 var item_id: String = ""
 var item_data: Dictionary = {}
+var _tap := ShopCardTap.new()
 
 
 func setup(data: Dictionary) -> void:
@@ -49,6 +50,7 @@ func _set_button() -> void:
 		btn.texture_disabled = OWNED_BTN
 		btn.disabled = true
 		label.theme_type_variation = &"ShopBtnTextDone"
+		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))
 		label.text = TranslationServer.translate("STR_SHOP_OWNED_BTN")
 		return
 	btn.disabled = false
@@ -57,6 +59,7 @@ func _set_button() -> void:
 	btn.texture_hover = BTN
 	btn.texture_disabled = BTN
 	label.theme_type_variation = &"ShopNoadsPrice"
+	label.remove_theme_color_override("font_color")
 	label.text = Shop.vnd_text(int(item_data.get("vnd", 0)))
 
 
@@ -65,6 +68,23 @@ func _set_label(path: String, text: String) -> void:
 	if label != null:
 		label.text = text
 
+func _gui_input(event: InputEvent) -> void:
+	match _tap.feed(event):
+		ShopCardTap.Result.DOWN:
+			ShopCardTap.press_fx(self, true)
+		ShopCardTap.Result.TAP:
+			ShopCardTap.press_fx(self, false)
+			_on_card_tapped()
+		ShopCardTap.Result.CANCEL:
+			ShopCardTap.press_fx(self, false)
+
+
+## CHẠM CẢ HÀNG để mua (đã mua rồi thì bỏ qua)
+func _on_card_tapped() -> void:
+	if Shop.is_owned(item_id):
+		return
+	action_pressed.emit(item_id)
+
 
 func _on_action_pressed() -> void:
-	action_pressed.emit(item_id)
+	_on_card_tapped()
