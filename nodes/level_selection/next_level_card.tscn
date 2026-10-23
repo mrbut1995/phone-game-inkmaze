@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/level_selector/btn_play_blue_disabled.png" id="8_cta_d"]
 [ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_badge_gold.png" id="9_badge"]
 [ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_play_icon.png" id="10_icon"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/tape_blue.png" id="11_tape"]
 
 [sub_resource type="StyleBoxTexture" id="SB_n"]
 content_margin_left = 20.0
@@ -105,10 +106,25 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_paper")
-patch_margin_left = 24
-patch_margin_top = 24
-patch_margin_right = 24
-patch_margin_bottom = 28
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 20
+patch_margin_bottom = 26
+
+[node name="Tape" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -34.0
+offset_top = -9.0
+offset_right = 34.0
+offset_bottom = 9.0
+grow_horizontal = 2
+rotation = -0.0524
+pivot_offset = Vector2(34, 9)
+mouse_filter = 2
+texture = ExtResource("11_tape")
 
 [node name="Badge" type="TextureRect" parent="."]
 layout_mode = 1
@@ -139,11 +155,13 @@ vertical_alignment = 1
 [node name="Title" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.14
+anchor_top = 0.08
 anchor_right = 0.62
-anchor_bottom = 0.42
+anchor_bottom = 0.36
 offset_left = 90.0
 theme_type_variation = &"ChapterBannerText"
+theme_override_colors/font_color = Color(0.8941, 0.3843, 0.1686, 1)
+theme_override_font_sizes/font_size = 12
 text = "STR_LEVEL_NEXT_CARD_TITLE"
 vertical_alignment = 1
 clip_text = true
@@ -152,11 +170,13 @@ text_overrun_behavior = 3
 [node name="Level" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.42
+anchor_top = 0.36
 anchor_right = 0.62
-anchor_bottom = 0.70
+anchor_bottom = 0.66
 offset_left = 90.0
 theme_type_variation = &"ChapterCardSubtitle"
+theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
+theme_override_font_sizes/font_size = 22
 text = "STR_LEVEL_TITLE_FORMAT"
 vertical_alignment = 1
 clip_text = true
@@ -166,13 +186,13 @@ text_overrun_behavior = 3
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0
-anchor_top = 0.84
+anchor_top = 0.77
 anchor_right = 0.0
-anchor_bottom = 0.84
+anchor_bottom = 0.77
 offset_left = 90.0
-offset_top = -11.0
+offset_top = -9.0
 offset_right = 112.0
-offset_bottom = 11.0
+offset_bottom = 9.0
 mouse_filter = 2
 texture = ExtResource("4_star_empty")
 expand_mode = 1
@@ -182,13 +202,13 @@ stretch_mode = 5
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0
-anchor_top = 0.84
+anchor_top = 0.77
 anchor_right = 0.0
-anchor_bottom = 0.84
+anchor_bottom = 0.77
 offset_left = 116.0
-offset_top = -11.0
+offset_top = -9.0
 offset_right = 138.0
-offset_bottom = 11.0
+offset_bottom = 9.0
 mouse_filter = 2
 texture = ExtResource("4_star_empty")
 expand_mode = 1
@@ -198,13 +218,13 @@ stretch_mode = 5
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0
-anchor_top = 0.84
+anchor_top = 0.77
 anchor_right = 0.0
-anchor_bottom = 0.84
+anchor_bottom = 0.77
 offset_left = 142.0
-offset_top = -11.0
+offset_top = -9.0
 offset_right = 164.0
-offset_bottom = 11.0
+offset_bottom = 9.0
 mouse_filter = 2
 texture = ExtResource("4_star_empty")
 expand_mode = 1

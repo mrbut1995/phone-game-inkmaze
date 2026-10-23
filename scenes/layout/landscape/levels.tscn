@@ -4,13 +4,13 @@
 [ext_resource type="Script" uid="uid://bbivg47hraoh6" path="res://scripts/scenes/layout/levels_layout.gd" id="2_h3psh"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/card_chapter.png" id="6_card"]
+[ext_resource type="Texture2D" uid="uid://x8gfrqofrmtf" path="res://assets/images-png/level_selector/card_chapter.png" id="6_card"]
 [ext_resource type="Texture2D" uid="uid://6voljbarwsoh" path="res://assets/images-png/common/star_highlight.png" id="15_star"]
+[ext_resource type="Script" uid="uid://dj8domu5fj6ud" path="res://scripts/tool/fit_stage.gd" id="30_fit"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_tabs.tscn" id="31_tabs"]
-[ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="34_sheet"]
-[ext_resource type="Script" path="res://scripts/tool/fit_stage.gd" id="30_fit"]
 [ext_resource type="PackedScene" path="res://nodes/chapters/chapter_progress_h.tscn" id="32_progress"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/next_level_card_land.tscn" id="33_next"]
+[ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="34_sheet"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill"]
 content_margin_left = 8.0
@@ -161,10 +161,9 @@ _data = {
 &"enter": SubResource("Animation_levels_enter")
 }
 
-[node name="Landscape" node_paths=PackedStringArray("btn_back", "lbl_chapter", "banner", "header_anchor", "progress", "tabs", "next_card", "lock_sheet", "map_slot", "card_subtitle", "card_stars", "card_levels") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=1232529603 node_paths=PackedStringArray("btn_back", "lbl_chapter", "banner", "progress", "tabs", "next_card", "lock_sheet", "map_slot", "card_subtitle", "card_stars", "card_levels", "header_anchor") instance=ExtResource("1_parent")]
 mouse_filter = 2
 script = ExtResource("2_h3psh")
-header_anchor = NodePath("Content/FitStage/TopBarAnchor")
 btn_back = NodePath("TopBar/Back")
 lbl_chapter = NodePath("Content/FitStage/ChapterBanner/Title")
 banner = NodePath("Content/FitStage/ChapterBanner")
@@ -176,8 +175,9 @@ map_slot = NodePath("Content/FitStage/MapSlot")
 card_subtitle = NodePath("Content/FitStage/ChapterBanner/Subtitle")
 card_stars = NodePath("Content/FitStage/ChapterBanner/StarsPill/Row/Stars")
 card_levels = NodePath("Content/FitStage/ChapterBanner/Levels")
+header_anchor = NodePath("Content/FitStage/TopBarAnchor")
 
-[node name="Content" type="Control" parent="." index="0"]
+[node name="Content" type="Control" parent="." index="0" unique_id=675435416]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -186,99 +186,89 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="FitStage" type="Control" parent="Content" index="0"]
-layout_mode = 0
+[node name="FitStage" type="Control" parent="Content" index="0" unique_id=1745586515]
+anchors_preset = 0
 offset_right = 960.0
 offset_bottom = 540.0
 mouse_filter = 2
 script = ExtResource("30_fit")
 
-[node name="TopBarAnchor" type="Control" parent="Content/FitStage" index="0"]
-layout_mode = 0
+[node name="TopBarAnchor" type="Control" parent="Content/FitStage" index="0" unique_id=921508227]
+anchors_preset = 0
 offset_left = 24.0
 offset_top = 10.0
 offset_right = 936.0
 offset_bottom = 58.0
 mouse_filter = 2
 
-[node name="Back" type="TextureButton" parent="TopBar" index="0"]
-layout_mode = 2
-texture_normal = ExtResource("3_back_n")
-texture_pressed = ExtResource("4_back_p")
-texture_hover = ExtResource("3_back_n")
-texture_disabled = ExtResource("3_back_n")
-texture_focused = ExtResource("3_back_n")
-stretch_mode = 5
-
-[node name="Spacer" type="Control" parent="TopBar" index="1"]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="MapSlot" type="Control" parent="Content/FitStage" index="1"]
-layout_mode = 0
+[node name="MapSlot" type="Control" parent="Content/FitStage" index="1" unique_id=1470080148]
+anchors_preset = 0
 offset_left = 302.0
 offset_top = 62.0
 offset_right = 942.0
 offset_bottom = 534.0
 mouse_filter = 2
 
-[node name="Tabs" parent="Content/FitStage" index="2" instance=ExtResource("31_tabs")]
+[node name="Tabs" parent="Content/FitStage" index="2" unique_id=722994284 instance=ExtResource("31_tabs")]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 60.0
+anchors_preset = 0
+anchor_right = 0.0
+offset_left = 28.0
+offset_top = 54.0
 offset_right = 292.0
-offset_bottom = 110.0
+offset_bottom = 118.0
+grow_horizontal = 1
 tab_width_selected = 88.0
 tab_width_normal = 50.0
-tab_height_selected = 40.0
-tab_height_normal = 34.0
+tab_height_selected = 48.0
+tab_height_normal = 42.0
 tab_font_selected = 12
 tab_font_normal = 13
 
-[node name="ChapterBanner" type="NinePatchRect" parent="Content/FitStage" index="3"]
+[node name="ChapterBanner" type="NinePatchRect" parent="Content/FitStage" index="3" unique_id=341395832]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 110.0
 offset_right = 292.0
 offset_bottom = 234.0
-mouse_filter = 2
 texture = ExtResource("6_card")
-patch_margin_left = 22
-patch_margin_top = 20
-patch_margin_right = 22
-patch_margin_bottom = 24
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 20
+patch_margin_bottom = 26
 
-[node name="Title" type="Label" parent="Content/FitStage/ChapterBanner"]
+[node name="Title" type="Label" parent="Content/FitStage/ChapterBanner" index="0" unique_id=1109211423]
 layout_mode = 1
 anchors_preset = -1
+anchor_right = 1.0
 offset_left = 18.0
 offset_top = 12.0
 offset_right = -14.0
 offset_bottom = 42.0
-anchor_right = 1.0
 theme_type_variation = &"LevelsBannerTitle"
+theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
 theme_override_font_sizes/font_size = 22
 text = "—"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Subtitle" type="Label" parent="Content/FitStage/ChapterBanner"]
+[node name="Subtitle" type="Label" parent="Content/FitStage/ChapterBanner" index="1" unique_id=635462968]
 layout_mode = 1
 anchors_preset = -1
+anchor_right = 1.0
 offset_left = 18.0
 offset_top = 42.0
 offset_right = -14.0
 offset_bottom = 60.0
-anchor_right = 1.0
 theme_type_variation = &"ChapterCardSubtitle"
+theme_override_font_sizes/font_size = 12
 text = "—"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="StarsPill" type="PanelContainer" parent="Content/FitStage/ChapterBanner"]
+[node name="StarsPill" type="PanelContainer" parent="Content/FitStage/ChapterBanner" index="2" unique_id=267935989]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 18.0
@@ -288,13 +278,13 @@ offset_bottom = 90.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pill")
 
-[node name="Row" type="HBoxContainer" parent="Content/FitStage/ChapterBanner/StarsPill"]
+[node name="Row" type="HBoxContainer" parent="Content/FitStage/ChapterBanner/StarsPill" index="0" unique_id=458907050]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="Icon" type="TextureRect" parent="Content/FitStage/ChapterBanner/StarsPill/Row"]
+[node name="Icon" type="TextureRect" parent="Content/FitStage/ChapterBanner/StarsPill/Row" index="0" unique_id=2039607098]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_vertical = 4
@@ -303,45 +293,61 @@ texture = ExtResource("15_star")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Stars" type="Label" parent="Content/FitStage/ChapterBanner/StarsPill/Row"]
+[node name="Stars" type="Label" parent="Content/FitStage/ChapterBanner/StarsPill/Row" index="1" unique_id=467538943]
 layout_mode = 2
 theme_type_variation = &"ChapterStars"
 text = "0 / 0"
 vertical_alignment = 1
 
-[node name="Levels" type="Label" parent="Content/FitStage/ChapterBanner"]
+[node name="Levels" type="Label" parent="Content/FitStage/ChapterBanner" index="3" unique_id=55672712]
 layout_mode = 1
 anchors_preset = -1
+anchor_right = 1.0
 offset_left = 18.0
 offset_top = 94.0
 offset_right = -14.0
 offset_bottom = 114.0
-anchor_right = 1.0
 theme_type_variation = &"ChapterChipSizeMuted"
+theme_override_colors/font_color = Color(0.5412, 0.3529, 0.0706, 1)
+theme_override_font_sizes/font_size = 11
 text = "—"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Progress" parent="Content/FitStage" index="4" instance=ExtResource("32_progress")]
+[node name="Progress" parent="Content/FitStage" index="4" unique_id=1811425237 instance=ExtResource("32_progress")]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 252.0
 offset_right = 292.0
 offset_bottom = 336.0
 
-[node name="NextCard" parent="Content/FitStage" index="5" instance=ExtResource("33_next")]
+[node name="NextCard" parent="Content/FitStage" index="5" unique_id=2075709056 instance=ExtResource("33_next")]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 352.0
 offset_right = 292.0
 offset_bottom = 516.0
 
-[node name="LockSheet" parent="Content/FitStage" index="6" instance=ExtResource("34_sheet")]
+[node name="LockSheet" parent="Content/FitStage" index="6" unique_id=1861010715 instance=ExtResource("34_sheet")]
 z_index = 20
 layout_mode = 1
 dim_overscan = 2000.0
 
-[node name="EnterAnim" type="AnimationPlayer" parent="." index="1"]
+[node name="EnterAnim" type="AnimationPlayer" parent="." index="1" unique_id=1305175120]
 libraries/ = SubResource("AnimationLibrary_levels_enter")
 autoplay = &"enter"
+
+[node name="Back" type="TextureButton" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="0" unique_id=1124738377]
+layout_mode = 2
+texture_normal = ExtResource("3_back_n")
+texture_pressed = ExtResource("4_back_p")
+texture_hover = ExtResource("3_back_n")
+texture_disabled = ExtResource("3_back_n")
+texture_focused = ExtResource("3_back_n")
+stretch_mode = 5
+
+[node name="Spacer" type="Control" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="1" unique_id=1682846875]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2

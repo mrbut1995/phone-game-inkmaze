@@ -87,6 +87,12 @@ func _apply_texts() -> void:
 		level_label.visible = not cleared
 	if lbl_play != null:
 		lbl_play.text = tr("STR_CHAPTER_GO_NEXT") if cleared else tr("STR_LEVEL_PLAY")
+		# "CHƯƠNG TIẾP ›" dài hơn "CHƠI": bỏ icon ▶ + chữ nhỏ lại để không bị cắt
+		var icon := lbl_play.get_parent().get_node_or_null("Icon") as Control
+		if icon != null:
+			icon.visible = not cleared
+		lbl_play.offset_left = 10.0 if cleared else 36.0
+		lbl_play.add_theme_font_size_override("font_size", 14 if cleared else 16)
 
 
 ## Nút CHƠI "thở" (giữ tên player/animation cũ để `UIAnim.play_layout_anim` chạy được)

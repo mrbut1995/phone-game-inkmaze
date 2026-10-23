@@ -3,7 +3,7 @@
 /android/
 *.apk
 hotfix/*
-
+helpers/
 # Python tooling caches (tools/**)
 __pycache__/
 *.pyc
