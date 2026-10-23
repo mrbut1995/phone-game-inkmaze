@@ -189,26 +189,54 @@ func levels_in_chapter(chapter_id: int) -> Array[int]:
 	return out
 
 
-## Tổng số Sao tối đa của chương (= số màn x 3)
+## Các màn CHÍNH của chương (bỏ màn BONUS — xem `ChapterData.main_level_count`)
+func main_levels_in_chapter(chapter_id: int) -> Array[int]:
+	var all_ids := levels_in_chapter(chapter_id)
+	var chapter := get_chapter(chapter_id)
+	var main_count := chapter.main_level_count if chapter != null else 0
+	if main_count <= 0 or main_count >= all_ids.size():
+		return all_ids
+	var out: Array[int] = []
+	for index in main_count:
+		out.append(all_ids[index])
+	return out
+
+
+## Các màn BONUS của chương (rỗng nếu chương không có)
+func bonus_levels_in_chapter(chapter_id: int) -> Array[int]:
+	var main_ids := main_levels_in_chapter(chapter_id)
+	var out: Array[int] = []
+	for level_id in levels_in_chapter(chapter_id):
+		if not main_ids.has(level_id):
+			out.append(level_id)
+	return out
+
+
+## Màn này có phải BONUS không
+func is_bonus_level(level_id: int) -> bool:
+	return bonus_levels_in_chapter(chapter_of_level(level_id)).has(level_id)
+
+
+## Tổng số Sao tối đa của chương (= số màn CHÍNH x 3; BONUS không tính)
 func chapter_star_total(chapter_id: int) -> int:
-	return levels_in_chapter(chapter_id).size() * 3
+	return main_levels_in_chapter(chapter_id).size() * 3
 
 
-## Số màn đã hoàn thành của chương (>= 1 Sao)
+## Số màn CHÍNH đã hoàn thành của chương (>= 1 Sao)
 func chapter_cleared_count(chapter_id: int) -> int:
 	var stars := _level_stars()
 	var count := 0
-	for level_id in levels_in_chapter(chapter_id):
+	for level_id in main_levels_in_chapter(chapter_id):
 		if int(stars.get(level_id, 0)) > 0:
 			count += 1
 	return count
 
 
-## Số Sao đã đạt TRONG chương này
+## Số Sao đã đạt TRONG chương này (chỉ màn CHÍNH — khớp `chapter_star_total`)
 func chapter_stars(chapter_id: int) -> int:
 	var stars := _level_stars()
 	var total := 0
-	for level_id in levels_in_chapter(chapter_id):
+	for level_id in main_levels_in_chapter(chapter_id):
 		total += int(stars.get(level_id, 0))
 	return total
 

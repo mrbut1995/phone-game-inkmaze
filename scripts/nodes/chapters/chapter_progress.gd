@@ -19,7 +19,15 @@ extends Control
 signal claim_requested(index: int)
 
 ## Khoảng hở hai đầu thanh để rương ở 0%/100% không bị cắt mất nửa vòng tròn
-const EDGE_MARGIN := 16.0
+const EDGE_MARGIN := 19.0
+## Lề dọc (bản dọc) để rương ở 0★ / 100% không bị cắt
+const EDGE_MARGIN_V := 19.0
+
+## `true` = thanh DỌC ở lề trái (bản dọc màn Chọn màn): 0★ ở ĐÁY, 100% ở ĐỈNH.
+## `false` = thanh NGANG như cũ (bản ngang + màn Chọn chương cũ).
+@export var vertical := false
+## Nhãn ngưỡng "9★" nằm DƯỚI chip (bản ngang); `false` = bên phải chip (thanh dọc)
+@export var threshold_below := false
 
 @export var bar: TextureProgressBar = null
 ## Nhãn "x / y SAO" (góc phải trên)
@@ -110,12 +118,16 @@ func _refresh_chips() -> void:
 		if gm != null and gm.has_method("is_chapter_chest_claimed"):
 			claimed = bool(gm.call("is_chapter_chest_claimed", chapter_id(), i))
 		chip.visible = true
+		chip.set_label_below(threshold_below)
 		chip.setup(def, _stars_own, claimed)
 
 
 ## Đặt 3 rương đúng tâm thanh tại tỉ lệ ngưỡng Sao của chúng
 func _layout_chips() -> void:
 	if bar == null or chips_host == null:
+		return
+	if vertical:
+		_layout_chips_vertical()
 		return
 	var chips := chip_list()
 	var span := maxf(bar.size.x - EDGE_MARGIN * 2.0, 0.0)
@@ -131,6 +143,24 @@ func _layout_chips() -> void:
 		chip.position = Vector2(
 			roundf(left + span * frac - size.x * 0.5),
 			roundf(center_y - size.y * 0.5))
+
+
+## Bản DỌC: rương ở 0★ đáy → 100% đỉnh; tâm thanh theo trục dọc
+func _layout_chips_vertical() -> void:
+	var chips := chip_list()
+	var span := maxf(bar.size.y - EDGE_MARGIN_V * 2.0, 0.0)
+	var bottom := bar.position.y + bar.size.y - EDGE_MARGIN_V
+	var center_x := bar.position.x + bar.size.x * 0.5
+	for i in chips.size():
+		var chip := chips[i]
+		if i >= _chip_defs.size() or not chip.visible:
+			continue
+		var threshold := int((_chip_defs[i] as Dictionary).get("stars", 0))
+		var frac := 0.0 if _stars_total <= 0 else clampf(float(threshold) / float(_stars_total), 0.0, 1.0)
+		var size := chip.size if chip.size.x > 0.0 else chip.custom_minimum_size
+		chip.position = Vector2(
+			roundf(center_x - size.x * 0.5),
+			roundf(bottom - span * frac - size.y * 0.5))
 
 
 ## Danh sách chip theo thứ tự mốc (con của `chips_host`)

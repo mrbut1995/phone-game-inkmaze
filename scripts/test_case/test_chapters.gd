@@ -7,18 +7,15 @@ extends SceneTree
 ## 3. GameManager: tổng Sao, điều kiện mở khóa, mở khóa bằng Sao, chương đang chơi.
 ## 4. Bền vững: export/import/reset giữ đúng unlocked_chapters + current_chapter.
 ## 4b. Khoá theo chương: xong màn cuối chương KHÔNG mở màn của chương chưa unlock.
-## 5. Thẻ chương: đúng cấu trúc node + 5 trạng thái (đang chơi/đã mở/đủ điều kiện/khóa/sắp ra mắt).
-## 6. Màn Chọn Chương: dựng thẻ theo dữ liệu thật, ví Sao, nút tiếp tục, nút Back.
-## 7. Màn Chọn màn: lọc theo chương, số Sao THEO CHƯƠNG, CTA theo chương, banner focus.
-## 8. Popup thắng màn: nút MÀN KẾ TIẾP đổi thành CHỌN CHƯƠNG khi hết chương.
-## 9. Nối dây: Nav/SceneManager/Debug Console + nút CHƠI ở Main.
+## 8. Popup thắng màn: nút MÀN KẾ TIẾP đổi thành CHỌN MÀN khi hết chương.
+## 9. Nối dây: Nav/SceneManager + nút CHƠI ở Main trỏ thẳng màn Chọn màn.
+##
+## ⚠️ Màn "CHỌN CHƯƠNG" đã XOÁ (2026-10-23): thay bằng TAB chương + khung khoá ngay trong
+## màn Chọn màn (`ChapterTabs` / `ChapterLockSheet`) ⇒ test không còn mục thẻ chương /
+## màn Chọn chương / vòng Back Chọn màn ⇄ Chọn chương.
 ## ============================================================================
 
 const TITLE := "HỆ THỐNG CHƯƠNG"
-const CARD_SCENE_PATH := "res://nodes/chapters/chapter_card.tscn"
-const SCENE_PATH := "res://scenes/chapters.tscn"
-const LEVELS_SCENE_PATH := "res://scenes/levels.tscn"
-const MAIN_SCENE_PATH := "res://scenes/main.tscn"
 
 var _backup := ""
 var _progress: Dictionary = {}
@@ -50,12 +47,8 @@ func _init() -> void:
 	_section_3_unlock(gm, lm)
 	_section_4_persist(gm)
 	_section_4b_chapter_gate(gm, lm)
-	await _section_5_card()
-	await _section_6_scene(lm)
-	await _section_7_levels_screen(gm, lm)
 	await _section_8_win_popup(gm)
 	_section_9_wiring()
-	await _section_10_back_loop()
 
 	# --- Khôi phục dữ liệu người chơi ---
 	if not _progress.is_empty():
@@ -264,408 +257,7 @@ func _section_4b_chapter_gate(gm: Node, lm: Node) -> void:
 
 
 # ---------------------------------------------------------------------------
-# 5. Thẻ chương (nodes/chapters/chapter_card.tscn)
-# ---------------------------------------------------------------------------
-func _section_5_card() -> void:
-	print("[5] The chuong...")
-	var packed := load(CARD_SCENE_PATH) as PackedScene
-	_entry(packed != null, "Load duoc %s" % CARD_SCENE_PATH)
-	if packed == null:
-		return
-	var card: ChapterCard = packed.instantiate()
-	root.add_child(card)
-	await process_frame
-
-	# Mọi node (trừ Halo) nằm TRONG Panel (nền thẻ); khối doodle + chữ nằm trong Content/Display
-	for path in ["Halo", "Panel", "Panel/Content", "Panel/Content/Display",
-			"Panel/Content/Display/Doodle", "Panel/Content/Display/Doodle/Lock",
-			"Panel/Ribbon", "Panel/Ribbon/RibbonLabel",
-			"Panel/Content/Display/Info", "Panel/Content/Display/Info/Chip",
-			"Panel/Content/Display/Info/Chip/ChipLabel", "Panel/Content/Display/Info/Title",
-			"Panel/Content/Display/Info/Subtitle", "Panel/Content/Display/Info/Bar",
-			"Panel/Content/Display/Info/Bar/Fill", "Panel/Content/Display/Info/Stats",
-			"Panel/Content/Display/Info/Stats/Stars", "Panel/Content/Display/Info/Stats/StarsSub",
-			"Panel/Content/Display/Info/HaveChip", "Panel/Content/Display/Info/HaveChip/HaveLabel",
-			"Panel/Content/Action", "Panel/Content/Action/Btn", "Panel/Content/Action/Btn/Title",
-			"Panel/Content/Action/Btn/Sub", "Panel/Content/Action/Btn/Icon",
-			"Panel/Content/Action/Btn/LockIcon", "Panel/Content/Action/NeedChip",
-			"Panel/Content/Action/NeedChip/NeedLabel"]:
-		_entry(card.get_node_or_null(path) != null, "The co node '%s'" % path)
-	_entry((card.get_node("Panel/Content/Action/Btn") as TextureButton).pressed.get_connections().size() >= 1,
-		"Nut hanh dong da noi tin hieu pressed trong .tscn")
-
-	var lm: Node = root.get_node_or_null("LevelManager")
-	var chapter: ChapterData = lm.call("get_chapter", 2)
-	var info := {
-		"state": ChapterCard.State.PLAYING, "stars_own": 7, "stars_total": 15,
-		"levels_cleared": 2, "levels_total": 5, "star_cost": 25, "total_stars": 30,
-		"next_level": 12, "size_tier": "medium",
-	}
-	card.setup(chapter, info)
-	_entry(card.chapter_id == 2, "setup() luu chapter_id = 2")
-	_entry(card.state == ChapterCard.State.PLAYING, "Trang thai DANG CHOI")
-	_entry((card.get_node("Panel") as TextureRect).texture != null, "The dang choi co nen rieng")
-	_entry(not (card.get_node("Halo") as Control).visible, "Dang choi -> khong co hao quang")
-	_entry(not (card.get_node("Panel/Content/Display/Doodle/Lock") as Control).visible, "Dang choi -> khong hien o khoa")
-	var title := card.get_node("Panel/Content/Display/Info/Title") as Label
-	_entry(title.text == TranslationServer.translate("STR_CHAPTER_TITLE_FORMAT").format(
-		[chapter.chapter_id, chapter.display_title()]), "Tieu de theo dinh dang 'CHUONG n: Ten' (da dich)")
-	_entry((card.get_node("Panel/Content/Display/Info/Subtitle") as Label).text
-		== chapter.display_subtitle(), "Mo ta lay tu du lieu chuong (da dich)")
-	_entry((card.get_node("Panel/Ribbon/RibbonLabel") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_RIBBON_PLAYING"), "Ruy bang = DANG CHOI")
-	# Nút chương MỞ: chỗ trống bên trái nút được đặt ICON PLAY
-	var play_icon := card.get_node("Panel/Content/Action/Btn/Icon") as TextureRect
-	_entry(play_icon.visible, "Nut VÀO CHƠI co icon play (khong de trong)")
-	_entry(play_icon.texture == load("res://assets/images-png/level_selector/icon_play_triangle.png"),
-		"Icon do dung la hinh tam giac play")
-	# Ổ khóa lớn phải canh giữa theo doodle (thân khóa nằm trong art 72x72 tai y 30..64)
-	var doodle := card.get_node("Panel/Content/Display/Doodle") as TextureRect
-	var lock := card.get_node("Panel/Content/Display/Doodle/Lock") as TextureRect
-	_entry(absf(lock.position.x + lock.size.x * 0.5 - doodle.size.x * 0.5) <= 1.0,
-		"O khoa canh giua theo chieu ngang")
-	_entry(absf(lock.position.y + 23.5 - doodle.size.y * 0.5) <= 6.0,
-		"Than o khoa trung tam doodle (lech <= 6px)")
-	# Chữ to hơn cho dễ đọc
-	_entry(title.get_theme_font_size("font_size") >= 20,
-		"Tieu de chuong >= 20px (nhan %d)" % title.get_theme_font_size("font_size"))
-	_entry((card.get_node("Panel/Content/Display/Info/Subtitle") as Label).get_theme_font_size("font_size") >= 11,
-		"Mo ta chuong >= 11px")
-	_entry((card.get_node("Panel/Content/Display/Info/Stats/Stars") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_STARS_FORMAT").format([7, 15]),
-		"Thanh sao hien 7 / 15")
-	var fill := card.get_node("Panel/Content/Display/Info/Bar/Fill") as TextureRect
-	var bar := card.get_node("Panel/Content/Display/Info/Bar") as Control
-	_entry(is_equal_approx(fill.size.x, bar.size.x * 7.0 / 15.0),
-		"Thanh sao do dung ti le 7/15 (%.1f/%d)" % [fill.size.x, bar.size.x])
-	_entry((card.get_node("Panel/Content/Action/Btn/Title") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_PLAY"), "Nut = VAO CHOI")
-	_entry((card.get_node("Panel/Content/Action/Btn/Sub") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_PLAY_SUB").format([12]),
-		"Nhan phu = 'Man 12 >'")
-	_entry(not (card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled, "Nut bam duoc")
-	_entry(not (card.get_node("Panel/Content/Display/Info/HaveChip") as Control).visible, "Dang choi -> an chip 'da du'")
-	_entry(not (card.get_node("Panel/Content/Action/NeedChip") as Control).visible, "Dang choi -> an chip 'con thieu'")
-
-	# Bấm nút -> phát selected(chapter_id)
-	var picked: Array = []
-	card.selected.connect(func(id: int) -> void: picked.append(id))
-	(card.get_node("Panel/Content/Action/Btn") as TextureButton).pressed.emit()
-	_entry(picked.size() == 1 and int(picked[0]) == 2, "Bam nut the DANG CHOI -> selected(2)")
-
-	# --- ĐỦ ĐIỀU KIỆN (chờ bấm mở khóa) ---
-	var ready := info.duplicate()
-	ready["state"] = ChapterCard.State.READY
-	ready["stars_own"] = 0
-	ready["total_stars"] = 30
-	card.setup(chapter, ready)
-	_entry(card.state == ChapterCard.State.READY, "Trang thai DU DIEU KIEN")
-	_entry((card.get_node("Halo") as Control).visible, "Du dieu kien -> hien hao quang net dut")
-	_entry((card.get_node("Panel/Content/Display/Info/HaveChip") as Control).visible, "Du dieu kien -> hien chip 'DA DU: 30 / 25 SAO'")
-	_entry((card.get_node("Panel/Content/Display/Info/HaveChip/HaveLabel") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_HAVE_FORMAT").format([30, 25]),
-		"Noi dung chip 'da du' dung dinh dang")
-	_entry((card.get_node("Panel/Content/Action/Btn/Title") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_UNLOCK"), "Nut = MO KHOA")
-	_entry((card.get_node("Panel/Content/Action/Btn/Icon") as Control).visible, "Nut mo khoa co icon ngoi sao")
-	_entry((card.get_node("Panel/Content/Action/Btn/Icon") as TextureRect).texture
-		== load("res://assets/images-png/icons/icon_star_white.png"),
-		"Icon nut MO KHOA la ngoi sao TRANG (khong bi chim mau)")
-	_entry(not (card.get_node("Panel/Content/Action/Btn/LockIcon") as Control).visible,
-		"The du dieu kien khong hien o khoa trong nut")
-	_entry(not (card.get_node("Panel/Content/Display/Info/Bar") as Control).visible, "Du dieu kien -> an thanh tien do")
-	_entry(not (card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled, "Nut mo khoa bam duoc")
-	var unlocks: Array = []
-	card.unlock_requested.connect(func(id: int) -> void: unlocks.append(id))
-	(card.get_node("Panel/Content/Action/Btn") as TextureButton).pressed.emit()
-	_entry(unlocks.size() == 1 and int(unlocks[0]) == 2, "Bam nut the DU DIEU KIEN -> unlock_requested(2)")
-
-	# --- ĐANG KHÓA ---
-	var locked := info.duplicate()
-	locked["state"] = ChapterCard.State.LOCKED
-	locked["total_stars"] = 12
-	card.setup(chapter, locked)
-	_entry(card.state == ChapterCard.State.LOCKED, "Trang thai DANG KHOA")
-	_entry((card.get_node("Panel/Content/Display/Doodle/Lock") as Control).visible, "Dang khoa -> hien o khoa tren doodle")
-	_entry((card.get_node("Panel") as TextureRect).texture
-		== load("res://assets/images-png/chapters/card_locked.png"), "Dang khoa -> nen giay xam")
-	_entry((card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled, "Nut bi khoa")
-	# Ổ khóa trong nút KHÔNG được đè lên chữ (lỗi cũ: chữ bị cắt "CẦN 45")
-	var action_title := card.get_node("Panel/Content/Action/Btn/Title") as Label
-	var action_icon := card.get_node("Panel/Content/Action/Btn/LockIcon") as Control
-	_entry(action_icon.visible, "Nut bi khoa co icon o khoa ben trai")
-	_entry(action_icon.position.x + action_icon.size.x <= action_title.position.x,
-		"Icon o khoa khong de len chu nut (icon ket thuc %.0f <= chu bat dau %.0f)" % [
-			action_icon.position.x + action_icon.size.x, action_title.position.x])
-	_entry((card.get_node("Panel/Content/Action/Btn/Title") as Label).get_theme_font_size("font_size") >= 12,
-		"Chu tren nut >= 12px")
-	_entry((card.get_node("Panel/Content/Action/NeedChip") as Control).visible, "Hien chip 'con thieu'")
-	_entry((card.get_node("Panel/Content/Action/NeedChip/NeedLabel") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_NEED_FORMAT").format([13]),
-		"Chip bao con thieu 13 sao (25 - 12)")
-	_entry((card.get_node("Panel/Content/Display/Info/Stats/Stars") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_STARS_FORMAT").format([12, 25]),
-		"Thanh tien do mo khoa: 12 / 25 sao")
-	_entry((card.get_node("Panel/Ribbon/RibbonLabel") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_RIBBON_LOCKED"), "Ruy bang = DANG KHOA")
-
-	# --- SẮP RA MẮT ---
-	var coming := info.duplicate()
-	coming["state"] = ChapterCard.State.COMING
-	coming["levels_total"] = 0
-	card.setup(chapter, coming)
-	_entry(card.state == ChapterCard.State.COMING, "Trang thai SAP RA MAT")
-	_entry((card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled, "Sap ra mat -> nut bi khoa")
-	_entry((card.get_node("Panel/Content/Action/Btn/Title") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_RIBBON_COMING"), "Nut = SAP RA MAT")
-	card.queue_free()
-	await process_frame
-
-
-# ---------------------------------------------------------------------------
-# 6. Màn Chọn Chương (scenes/chapters.tscn)
-# ---------------------------------------------------------------------------
-func _section_6_scene(lm: Node) -> void:
-	print("[6] Man CHON CHUONG...")
-	# Trạng thái XÁC ĐỊNH để kiểm tra đủ 4 thẻ: chương 1 đang chơi, chương 2 đã mở, 3-4 còn khóa
-	var gm: Node = root.get_node_or_null("GameManager")
-	gm.call("reset_progress")
-	var stars: Dictionary = gm.get("level_stars")
-	for level_id in lm.call("levels_in_chapter", 1):
-		stars[int(level_id)] = 3
-	stars[10] = 3                                   # 30 sao: đủ mở chương 2 (25), chưa đủ chương 3 (45)
-	gm.set("current_level", 3)
-	gm.call("set_chapter", 1)
-	_entry(bool(gm.call("unlock_chapter", 2)), "Mo chuong 2 bang 30 sao (chuan bi kiem tra the)")
-
-	var packed := load(SCENE_PATH) as PackedScene
-	_entry(packed != null, "Load duoc %s" % SCENE_PATH)
-	if packed == null:
-		return
-	var scene: ChaptersScene = packed.instantiate()
-	root.add_child(scene)
-	await process_frame
-	await process_frame
-
-	_entry(scene.ui_path("TopBar/Back") is TextureButton, "Co nut Back o TopBar")
-	var title := scene.ui_path("TopBar/Title") as Label
-	_entry(title != null and title.text == "STR_CHAPTER_SCREEN_TITLE",
-		"Tieu de man dung khoa dich STR_CHAPTER_SCREEN_TITLE")
-	_entry(scene.layout.wallet_bar is TextureRect, "Co vi Sao goc phai")
-	_entry(scene.ui_child("Wallet", "Star") is TextureRect, "Vi Sao co icon ngoi sao")
-	_entry(scene.ui_path("Banner/Text") is Label, "Co bang huong dan Banner/Text")
-	_entry((scene.ui_path("Banner/Text") as Label).text == "STR_CHAPTER_BANNER",
-		"Bang huong dan dung khoa dich STR_CHAPTER_BANNER")
-	_entry(scene.ui_path("List/Cards") is VBoxContainer, "Co danh sach the List/Cards")
-	_entry(scene.layout.btn_continue is BaseButton, "Co nut CTA chan trang")
-	_entry((scene.ui_path("List/Cards") as Node).get_child_count()
-		== int(lm.call("chapter_count")),
-		"Danh sach co dung %d the chuong" % lm.call("chapter_count"))
-	_entry(scene.card_count() == int(lm.call("chapter_count")),
-		"card_count() = %d" % scene.card_count())
-	_entry(scene.card_for(1) != null, "card_for(1) tra ve the chuong 1")
-	_entry(scene.card_for(99) == null, "card_for(99) = null")
-	_entry(scene.card_at(0) != null and scene.card_at(0).chapter_id == 1, "The dau tien la chuong 1")
-	_entry(scene.card_at(-1) == null, "card_at(-1) an toan -> null")
-
-	var playing: int = scene.playing_chapter_id()
-	_entry(playing >= 1, "playing_chapter_id() = %d" % playing)
-	var card := scene.card_for(playing)
-	_entry(card != null and card.state == ChapterCard.State.PLAYING,
-		"The cua chuong dang choi o trang thai DANG CHOI")
-	_entry(card != null and (card.get_node("Panel/Ribbon/RibbonLabel") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_RIBBON_PLAYING"),
-		"Ruy bang chuong dang choi = DANG CHOI")
-	var opened := scene.card_for(2)
-	_entry(opened != null and opened.state == ChapterCard.State.PLAYING,
-		"Chuong 2 da mo -> the van bam duoc")
-	# Mỗi chương 1 ICON khác nhau (dễ nhận biết)
-	var icon_1 := (scene.card_for(1).get_node("Panel/Content/Display/Doodle") as TextureRect).texture
-	var icon_2 := (opened.get_node("Panel/Content/Display/Doodle") as TextureRect).texture
-	var icon_3 := (scene.card_for(3).get_node("Panel/Content/Display/Doodle") as TextureRect).texture
-	_entry(icon_1 != icon_2 and icon_2 != icon_3 and icon_1 != icon_3,
-		"Icon 3 chuong khac nhau")
-	_entry(icon_1 == load("res://assets/images-png/icons/icon_intro.png"),
-		"Chuong 1 dung icon 'intro'")
-	_entry(icon_2 == load("res://assets/images-png/icons/icon_logic.png"),
-		"Chuong 2 dung icon 'logic'")
-	_entry(opened != null and (opened.get_node("Panel/Ribbon/RibbonLabel") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_RIBBON_OPEN"),
-		"Ruy bang chuong 2 (da mo, khong phai dang choi) = DA MO")
-	_entry(opened != null and (opened.get_node("Panel/Content/Action/Btn/Title") as Label).text
-		== TranslationServer.translate("STR_CHAPTER_PLAY"), "Chuong 2 co nut VAO CHOI")
-	for locked_id in [3, 4]:
-		var locked_card := scene.card_for(locked_id)
-		_entry(locked_card != null and locked_card.state == ChapterCard.State.LOCKED,
-			"Chuong %d thieu sao -> the DANG KHOA" % locked_id)
-		_entry(locked_card != null and (locked_card.get_node("Panel/Content/Action/Btn") as TextureButton).disabled,
-			"Chuong %d: nut bi khoa, khong bam duoc" % locked_id)
-	var playable := 0
-	for index in scene.card_count():
-		var each := scene.card_at(index)
-		if each != null and each.state == ChapterCard.State.PLAYING:
-			playable += 1
-	_entry(playable == 2, "Dung 2 the bam duoc (chuong 1 dang choi + chuong 2 da mo) — nhan %d" % playable)
-
-	var wallet_count := scene.ui_child("Wallet", "Count") as Label
-	_entry(wallet_count != null and wallet_count.text == str(int(gm.call("total_stars"))),
-		"Vi Sao hien tong sao hien co (%s)" % (wallet_count.text if wallet_count != null else "<null>"))
-	var wallet := scene.layout.wallet_bar as Control
-	_entry(wallet != null and wallet.size.y <= 40.0 and wallet.size.x >= 120.0,
-		"Panel Vi giu dung co art 125x35, khong bi keo gian theo hang (%.0fx%.0f)" % [wallet.size.x, wallet.size.y])
-	var cta := scene.ui_child("ContinueButton", "Label") as Label
-	_entry(cta != null and cta.text.contains(str(playing)),
-		"Nhan CTA nhac toi chuong dang choi (%s)" % (cta.text if cta != null else "<null>"))
-	# Nút chân trang dùng art GIẤY ⇒ nhãn phải là MỰC ĐẬM; trước đây là chữ TRẮNG của nút xanh
-	# cũ ⇒ trắng trên giấy trắng = vô hình.
-	_entry(cta != null and cta.get_theme_color("font_color").get_luminance() < 0.35,
-		"Nhan CTA dung mau MUC dam, khong phai chu trang (do sang %.2f)"
-			% (cta.get_theme_color("font_color").get_luminance() if cta != null else 1.0))
-	var cta_icon := scene.ui_child("ContinueButton", "Icon") as TextureRect
-	_entry(cta_icon != null and cta_icon.texture != null, "CTA co icon tam giac")
-	_entry((scene.ui_path("List/Cards") as VBoxContainer).get_theme_constant("separation") == 15,
-		"Khoang cach giua cac the = 15px")
-	# Mọi thẻ đều nối tín hiệu tới màn
-	var connected := true
-	for index in scene.card_count():
-		var each := scene.card_at(index)
-		if each == null or each.selected.get_connections().is_empty() \
-				or each.unlock_requested.get_connections().is_empty():
-			connected = false
-	_entry(connected, "Moi the deu noi selected + unlock_requested toi man")
-	scene.queue_free()
-	await process_frame
-
-
-# ---------------------------------------------------------------------------
-# 7. Màn Chọn màn lọc theo chương
-# ---------------------------------------------------------------------------
-func _section_7_levels_screen(gm: Node, lm: Node) -> void:
-	print("[7] Man Chon man loc theo chuong...")
-	var packed := load("res://scenes/levels.tscn") as PackedScene
-	_entry(packed != null, "Load duoc scenes/levels.tscn")
-	if packed == null:
-		return
-	gm.call("set_chapter", 2)
-	var scene: LevelScenes = packed.instantiate()
-	root.add_child(scene)
-	await process_frame
-	await process_frame
-
-	var ids: Array = scene.level_ids()
-	_entry(ids.size() == int(lm.call("levels_in_chapter", 2).size()),
-		"Man chuong 2 hien %d man (tong %d)" % [ids.size(), lm.call("levels_in_chapter", 2).size()])
-	var all_in_chapter := true
-	for level_id in ids:
-		if int(lm.call("chapter_of_level", level_id)) != 2:
-			all_in_chapter = false
-	_entry(all_in_chapter, "Moi the man deu thuoc chuong 2")
-	_entry(scene.chapter_title().contains(lm.call("get_chapter", 2).title),
-		"Banner man hinh hien ten chuong ('%s')" % scene.chapter_title())
-	_entry(scene.page_count() >= 1, "So trang >= 1 (%d)" % scene.page_count())
-	_entry(scene.chapter_continue_level() == 11,
-		"Man tiep theo TRONG chuong 2 = man chua dat sao dau tien (11) — nhan %d"
-			% scene.chapter_continue_level())
-	_entry(not scene.chapter_cleared(), "Chuong 2 chua hoan thanh het")
-	_entry(scene.layout.lbl_change_chapter is Label,
-		"Banner co dong 'DOI CHUONG'")
-	var banner_node := scene.layout.banner
-	_entry(banner_node != null and banner_node.gui_input.get_connections().size() >= 1,
-		"Bam CA PANEL banner -> sang man Chon Chuong (co noi gui_input)")
-	_entry(scene.layout.btn_back is BaseButton, "Man chon man co nut Back")
-
-	# --- Số Sao hiển thị phải là CỦA CHƯƠNG đang xem (không cộng Sao chương khác) ---
-	gm.call("reset_progress")
-	var chapter_stars: Dictionary = gm.get("level_stars")
-	for level_id in lm.call("levels_in_chapter", 1):
-		chapter_stars[int(level_id)] = 3
-	chapter_stars[3] = 0                        # màn 3 CHƯA đạt sao -> xong chương = false
-	for level_id in lm.call("levels_in_chapter", 2):
-		chapter_stars[int(level_id)] = 1        # 5 sao thuộc chương 2 (không được cộng vào ô đếm)
-	gm.call("set_chapter", 1)
-	# Mở hết màn để thẻ "MÀN TIẾP" hiện trạng thái FOCUS (thẻ khoá thì không hiện hào quang)
-	gm.set("unlocked_levels", 9)
-	var scene2: LevelScenes = packed.instantiate()
-	root.add_child(scene2)
-	await process_frame
-	await process_frame
-	# Chờ hiệu ứng vào màn (EnterAnim autoplay) chạy xong — modulate mới về trạng thái chuẩn
-	var enter_anim := scene2.find_child("EnterAnim", true, false) as AnimationPlayer
-	if enter_anim != null and enter_anim.is_playing():
-		await enter_anim.animation_finished
-	var count := scene2.layout.lbl_stars as Label
-	var count_total := scene2.layout.lbl_stars_total as Label
-	_entry(count.text == "24" and count_total.text.contains("27"),
-		"So Sao theo CHUONG 1 = 24/27 (loi cu: cong ca chuong khac) — nhan '%s%s'"
-			% [count.text, count_total.text])
-	# Thẻ "MÀN TIẾP" (FOCUS): màn nên chơi tiếp = thẻ có hào quang + ruy băng + vạch kẻ CAM
-	var focus_card: LevelCard = null
-	for card in scene2.find_children("*", "LevelCard", true, false):
-		if int(card.get("level_id")) == scene2.chapter_continue_level():
-			focus_card = card
-	_entry(focus_card != null and focus_card.is_next
-			and (focus_card.get("next_halo") as Control).visible
-			and (focus_card.get("next_ribbon") as Control).visible,
-		"Man nen choi tiep (man %d) la the FOCUS: hao quang + ruy bang NEW" % scene2.chapter_continue_level())
-	var focus_sep: Control = focus_card.get("seperator") if focus_card != null else null
-	_entry(focus_sep != null and focus_sep.get("texture") != null
-			and (focus_sep.get("texture") as Texture2D).resource_path.contains("seperator_next"),
-		"The FOCUS doi vach ke sang net dut CAM")
-	_entry((scene2.layout.lbl_chapter as Label).text == scene2.chapter_title(),
-		"Tieu de banner = ten chuong dang xem")
-	_entry(scene2.chapter_continue_level() == 3,
-		"Man tiep theo TRONG chuong 1 = man CHUA dat sao dau tien (3) — nhan %d"
-			% scene2.chapter_continue_level())
-	_entry(not scene2.chapter_cleared(), "Chuong 1 chua hoan thanh (con man 3)")
-	_entry(_banner_texture(scene2)
-		== load("res://assets/images-png/level_selector/chapter_banner_focus.png"),
-		"Banner doi sang art FOCUS khi co chuong du Sao de mo")
-	_entry(scene2.layout.lbl_change_chapter.text
-		== TranslationServer.translate("STR_CHAPTER_UNLOCKABLE"),
-		"Dong tren banner bao 'co Chuong moi co the mo khoa'")
-	_entry(scene2.layout.banner.modulate == Color.WHITE,
-		"Banner focus giu nguyen mau (chi doi art + nhap nhay)")
-	scene2.queue_free()
-	await process_frame
-
-	# --- Xong HẾT chương 1 -> nút chân trang đổi thành CHỌN CHƯƠNG ---
-	for level_id in lm.call("levels_in_chapter", 1):
-		chapter_stars[int(level_id)] = 3
-	var scene3: LevelScenes = packed.instantiate()
-	root.add_child(scene3)
-	await process_frame
-	await process_frame
-	_entry(scene3.chapter_cleared(), "Chuong 1 da hoan thanh het man")
-	_entry((scene3.layout.lbl_stars as Label).text == "27"
-			and (scene3.layout.lbl_stars_total as Label).text.contains("27"),
-		"Chuong 1 xong: 27/27 Sao")
-	var cta3 := scene3.ui_child("ContinueButton", "Label") as Label
-	_entry(cta3 != null and cta3.text == TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE"),
-		"Nut chan trang doi thanh CHON CHUONG khi xong het chuong")
-	scene3.queue_free()
-	await process_frame
-
-	# --- Mở chương 2 rồi -> banner trở về art thường ---
-	gm.call("unlock_chapter", 2)
-	var scene4: LevelScenes = packed.instantiate()
-	root.add_child(scene4)
-	await process_frame
-	await process_frame
-	_entry(_banner_texture(scene4)
-		== load("res://assets/images-png/level_selector/chapter_banner.png"),
-		"Mo chuong roi -> banner ve art thuong")
-	_entry((scene4.layout.lbl_change_chapter as Label).text
-		== TranslationServer.translate("STR_CHANGE_CHAPTER"), "Dong banner ve 'DOI CHUONG'")
-	scene4.queue_free()
-	await process_frame
-
-	scene.queue_free()
-	await process_frame
-	gm.call("set_chapter", 1)
-
-
-# ---------------------------------------------------------------------------
-# 8. Popup thắng màn: nút "MÀN KẾ TIẾP" đổi thành "CHỌN CHƯƠNG" khi hết chương
+# 8. Popup thắng màn: nút "MÀN KẾ TIẾP" đổi thành "CHỌN MÀN" khi hết chương
 # ---------------------------------------------------------------------------
 func _section_8_win_popup(gm: Node) -> void:
 	print("[8] Popup thang man...")
@@ -686,9 +278,9 @@ func _section_8_win_popup(gm: Node) -> void:
 	end_data["next_available"] = false
 	popup_end.open(end_data)
 	await process_frame
-	var end_label := popup_end.get_node("Panel/Content/Information/Buttons/NextBtn/Label") as Label
+	var end_label := popup_end.get_node("Panel/Content/Information/Buttons/NextBtn/H/Label") as Label
 	_entry(end_label.text == TranslationServer.translate("STR_CHAPTER_SCREEN_TITLE"),
-		"Het chuong: nut doi thanh CHON CHUONG ('%s')" % end_label.text)
+		"Het chuong: nut doi thanh CHON MAN ('%s')" % end_label.text)
 	popup_end.queue_free()
 	await process_frame
 
@@ -700,105 +292,52 @@ func _section_8_win_popup(gm: Node) -> void:
 	mid_data["next_available"] = true
 	popup_mid.open(mid_data)
 	await process_frame
-	var mid_label := popup_mid.get_node("Panel/Content/Information/Buttons/NextBtn/Label") as Label
+	var mid_label := popup_mid.get_node("Panel/Content/Information/Buttons/NextBtn/H/Label") as Label
 	_entry(mid_label.text == TranslationServer.translate("STR_BTN_NEXT_LEVEL"),
 		"Con man trong chuong: nut van la MAN KE TIEP ('%s')" % mid_label.text)
 	var gc_src := FileAccess.get_file_as_string("res://scripts/core/controllers/game_controller.gd")
 	_entry(gc_src.contains("next_level_in_chapter"),
 		"GameController di tiep trong CUNG CHUONG (khong nhay chuong khac)")
-	_entry(gc_src.contains("go_to_chapters"), "Het chuong -> chuyen sang man Chon Chuong")
+	_entry(gc_src.contains("go_to_levels"), "Het chuong -> quay ve man CHON MAN")
 	popup_mid.queue_free()
 	await process_frame
 
 
 # ---------------------------------------------------------------------------
-# 9. Nối dây điều hướng
+# 9. Nối dây điều hướng — màn CHỌN CHƯƠNG đã xoá (2026-10-23): Tab chương + khung khoá
+#    nằm ngay trong màn Chọn màn, nên KHÔNG còn route `chapters` ở bất kỳ đâu.
 # ---------------------------------------------------------------------------
 func _section_9_wiring() -> void:
 	print("[9] Noi day dieu huong...")
-	_entry(Nav.SCENE_CHAPTERS == SCENE_PATH, "Nav.SCENE_CHAPTERS tro dung scenes/chapters.tscn")
 	var nav_src := FileAccess.get_file_as_string("res://scripts/utils/nav.gd")
-	_entry(nav_src.contains("func goto_chapters"), "Nav co ham goto_chapters()")
+	_entry(nav_src.contains("const SCENE_LEVELS"), "Nav co route toi man Chon man")
+	_entry(not nav_src.contains("goto_chapters") and not nav_src.contains("SCENE_CHAPTERS"),
+		"Nav KHONG con route Chon chuong (man da xoa)")
 	var sm: Node = root.get_node_or_null("SceneManager")
 	_entry(sm != null, "Autoload SceneManager ton tai")
 	if sm != null:
-		_entry(sm.get_script().get_script_constant_map().get("SCENE_CHAPTERS", "") == SCENE_PATH,
-			"SceneManager.SCENE_CHAPTERS tro dung scenes/chapters.tscn")
-		_entry(sm.has_method("goto_chapters"), "SceneManager co goto_chapters()")
+		_entry(not sm.get_script().get_script_constant_map().has("SCENE_CHAPTERS"),
+			"SceneManager khong con SCENE_CHAPTERS")
+		_entry(not sm.has_method("goto_chapters"), "SceneManager khong con goto_chapters()")
 	var main_src := FileAccess.get_file_as_string("res://scripts/scenes/main.gd")
 	_entry(main_src.contains("go_to_levels") or main_src.contains("goto_levels"),
-		"Nut CHOI o Main vao thang man Chon man (khong qua Chon Chuong)")
+		"Nut CHOI o Main vao thang man Chon man")
 	var levels_src := FileAccess.get_file_as_string("res://scripts/scenes/levels.gd")
-	_entry(levels_src.contains("_on_banner_input") and levels_src.contains("Nav.goto_chapters()"),
-		"Bam banner o man Chon man -> man Chon Chuong")
+	_entry(not levels_src.contains("goto_chapters()"),
+		"Man Chon man KHONG con loi tat sang man Chon chuong")
+	_entry(levels_src.contains("layout.tabs") or levels_src.contains("layout.lock_sheet"),
+		"Man Chon man doi chuong bang TAB + khung khoa (ChapterTabs/ChapterLockSheet)")
 	_entry(levels_src.contains("Nav.back_to_main()"),
 		"Back o man Chon man -> Main, KHONG ghi lich su (goi y: Nav.back_to_main)")
-	var chapters_src := FileAccess.get_file_as_string("res://scripts/scenes/chapters.gd")
-	_entry(chapters_src.contains("Nav.back_to_levels()"),
-		"Back o man Chon Chuong -> man Chon man, KHONG ghi lich su (goi y: Nav.back_to_levels)")
 	_entry(levels_src.contains("current_chapter"), "Man Chon man doc current_chapter")
+	_entry(not ResourceLoader.exists("res://scenes/chapters.tscn"),
+		"File scenes/chapters.tscn da bi xoa")
 	var debug_src := FileAccess.get_file_as_string("res://scripts/scenes/debug.gd")
-	_entry(debug_src.contains("scenes/chapters.tscn"), "Debug Console co muc chon chuong")
+	_entry(not debug_src.contains("scenes/chapters.tscn"), "Debug Console bo muc chon chuong")
 	var gm_src := FileAccess.get_file_as_string("res://scripts/core/game_manager.gd")
 	_entry(gm_src.contains("\"unlocked_chapters\""), "GameManager luu unlocked_chapters")
-	_entry(gm_src.contains("func go_to_chapters"), "GameManager co go_to_chapters()")
-
-
-# ---------------------------------------------------------------------------
-# 10. Back KHÔNG được LẶP: Chọn màn → Chọn chương → Back → Chọn màn → Back → Main
-#     (lỗi thật 2026-10-16: `chapters._on_back_pressed()` gọi `Nav.goto_levels()` — CÓ ghi
-#      lịch sử — nên Back ở Chọn màn lại pop ra Chọn chương ⇒ kẹt vòng lặp 2 màn này)
-# ---------------------------------------------------------------------------
-func _section_10_back_loop() -> void:
-	print("[10] Back khong lap: Chon man <-> Chon chuong...")
-	var screen: Node = root.get_node_or_null("ScreenManager")
-	if screen == null:
-		_entry(false, "Autoload ScreenManager ton tai")
-		return
-	screen.call("clear_history")
-
-	# Mở màn Chọn màn (mô phỏng người chơi vào từ Main — chưa cần lịch sử)
-	var levels_scene: Node = (load(LEVELS_SCENE_PATH) as PackedScene).instantiate()
-	root.add_child(levels_scene)
-	current_scene = levels_scene
-	await _frames(3)
-
-	# Vào Chọn chương như bấm BANNER (có ghi lịch sử)
-	Nav.goto_chapters()
-	await _frames(6)
-	_entry(_scene_path() == SCENE_PATH,
-		"Banner o Chon man -> mo man Chon chuong (dang '%s')" % _scene_path())
-
-	# Back ở Chọn chương -> về Chọn màn
-	current_scene.call("_on_back_pressed")
-	await _frames(6)
-	_entry(_scene_path() == LEVELS_SCENE_PATH,
-		"Back o Chon chuong -> ve CHON MAN (dang '%s')" % _scene_path())
-
-	# Back ở Chọn màn -> Main, KHÔNG được nhảy ngược về Chọn chương
-	current_scene.call("_on_back_pressed")
-	await _frames(6)
-	_entry(_scene_path() == MAIN_SCENE_PATH,
-		"Back o Chon man -> MAN HINH CHINH, khong lap ve Chon chuong (dang '%s')" % _scene_path())
-
-	if current_scene != null:
-		current_scene.queue_free()
-		current_scene = null
-	screen.call("clear_history")
-	await _frames(2)
-
-
-# ---------------------------------------------------------------------------
-# Harness
-# ---------------------------------------------------------------------------
-## Banner chương là TextureRect (bản dọc) hoặc NinePatchRect (bản ngang đã 9-slice)
-## ⇒ đọc texture qua `get()` thay vì ép kiểu, để test chạy được ở CẢ 2 layout.
-func _banner_texture(scene: Node) -> Texture2D:
-	var layout: Node = scene.get("layout")
-	var banner: Control = layout.banner as Control if layout != null else null
-	if banner == null:
-		return null
-	return banner.get("texture") as Texture2D
+	_entry(not gm_src.contains("func go_to_chapters"), "GameManager khong con go_to_chapters()")
+	_entry(gm_src.contains("func go_to_levels"), "GameManager co go_to_levels()")
 
 
 func _entry(condition: bool, label: String) -> void:
@@ -808,13 +347,3 @@ func _entry(condition: bool, label: String) -> void:
 	else:
 		_failed += 1
 		print("  [FAIL] %s" % label)
-
-
-## Đường dẫn scene đang mở (rỗng nếu chưa có)
-func _scene_path() -> String:
-	return current_scene.scene_file_path if current_scene != null else ""
-
-
-func _frames(n: int) -> void:
-	for i in n:
-		await process_frame

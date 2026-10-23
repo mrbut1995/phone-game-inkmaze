@@ -17,8 +17,6 @@ const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
 const SCENE_ARCHIVEMENT := "res://scenes/archivement.tscn"
 const SCENE_RANKING := "res://scenes/ranking.tscn"
-## Màn CHỌN CHƯƠNG — xem scripts/scenes/chapters.gd
-const SCENE_CHAPTERS := "res://scenes/chapters.tscn"
 ## Màn CỬA HÀNG — xem scripts/scenes/shop.gd
 const SCENE_SHOP := "res://scenes/shop.tscn"
 ## Màn CREDIT — soundtrack + ghi công
@@ -94,11 +92,6 @@ static func goto_archivement() -> void:
 ## Bảng xếp hạng (Dungeon · Play · Daily)
 static func goto_ranking() -> void:
 	change_scene(SCENE_RANKING)
-
-
-## Màn CHỌN CHƯƠNG (xem tiến độ + mở khóa chương bằng Sao)
-static func goto_chapters() -> void:
-	change_scene(SCENE_CHAPTERS)
 
 
 ## Màn CỬA HÀNG (bút · giấy vở · dụng cụ · nạp xu)

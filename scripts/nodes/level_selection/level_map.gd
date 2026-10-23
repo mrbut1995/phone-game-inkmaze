@@ -3,9 +3,13 @@ extends Node2D
 ## ============================================================================
 ## LevelMap — Bản đồ road map dọc của màn Chọn màn
 ##
-## Bố cục: các nút màn xếp DỌC từ dưới lên (màn 1 ở dưới cùng), lệch zigzag quanh trục
-## giữa, nối nhau bằng MỘT đường `LevelMapPath` uốn liền mạch qua tâm các nút. Cuộn bản
-## đồ bằng cách dịch node `Tracks` (KHÔNG dùng Camera2D để UI — header, banner — đứng yên).
+## Bố cục: các nút màn xếp kiểu RẮN (snake) từ dưới lên (màn 1 ở dưới cùng, hàng chẵn đi
+## trái→phải, hàng lẻ phải→trái), nối nhau bằng MỘT đường `LevelMapPath` có cung quay đầu ở
+## mép. Bản DỌC 3 cột · bản NGANG 5 cột (số đo bản ngang tính theo khung thiết kế 960×540 rồi
+## nhân `design_unit()`). Cuộn bản đồ bằng cách dịch node `Tracks` (KHÔNG dùng Camera2D).
+##
+## Màn BONUS (cuối chương, `bonus_ids`) vẽ bằng nút màu cam + băng "BONUS"; cờ đích cắm ở màn
+## CHÍNH cuối cùng. (Kiểu zigzag cũ chỉ còn khi đặt cột = 0.)
 ##
 ## Quy ước của project (CẤU HÌNH TĨNH nằm trong `level_map.tscn`):
 ##   · `Tracks` — node dịch chuyển khi cuộn (bind `@export`)
@@ -34,13 +38,29 @@ signal scrolled(delta_y: float)
 @export var path_scene: PackedScene = preload("res://nodes/level_selection/level_path.tscn")
 
 @export_group("Bố cục")
+## Số CỘT của bản đồ kiểu RẮN (snake): hàng 0 ở ĐÁY đi trái→phải, hàng 1 đi phải→trái…
+## `0` = giữ kiểu zigzag cũ (2 cột lệch nhau).
+@export_range(0, 8, 1) var columns := 3
+@export_range(0, 8, 1) var columns_landscape := 5
+## Bản DỌC (px canvas): khoảng cách tâm 2 nút theo trục X / Y, độ phình cung quay đầu
+## (tính theo "đơn vị nút" ⇒ nhân `node_scale`), dịch cả cụm cột sang PHẢI (dành lề trái cho thanh thưởng dọc)
+@export_range(60.0, 260.0, 1.0) var column_spacing := 120.0
+@export_range(80.0, 320.0, 1.0) var row_spacing := 170.0
+@export_range(0.0, 200.0, 1.0) var turn_bulge := 76.0
+@export_range(-200.0, 200.0, 1.0) var snake_center_shift := 50.0
+## Cỡ nút ở bản dọc (art nút hiển thị 112px ở scale 1 ⇒ 0.68 cho mặt nút ≈ 62px như mockup)
+@export_range(0.2, 2.5, 0.01) var node_scale_portrait := 0.68
+## Bản NGANG — số đo theo KHUNG THIẾT KẾ 960×540, tự nhân với `design_unit()` (= độ phóng của khung)
+@export_range(60.0, 260.0, 1.0) var column_spacing_landscape := 118.0
+@export_range(80.0, 320.0, 1.0) var row_spacing_landscape := 140.0
+@export_range(0.0, 200.0, 1.0) var turn_bulge_landscape := 106.0
+@export_range(-200.0, 200.0, 1.0) var snake_center_shift_landscape := 0.0
+@export_range(0.2, 2.5, 0.01) var node_scale_landscape := 0.68
 ## Khoảng cách tâm 2 nút theo trục Y (px) và độ lệch zigzag quanh tâm — theo hướng màn hình
 @export_range(80.0, 400.0, 1.0) var spacing_portrait := 158.0
 @export_range(100.0, 600.0, 1.0) var spacing_landscape := 200.0
 @export_range(0.0, 300.0, 1.0) var zigzag_portrait := 74.0
 @export_range(0.0, 800.0, 1.0) var zigzag_landscape := 320.0
-## Nút cùng art to hơn ở màn ngang cho cân bề ngang rộng
-@export_range(0.5, 2.5, 0.01) var node_scale_landscape := 1.28
 ## Độ uốn ngang của đường nối tại điểm giữa mỗi đoạn (dáng chữ S như mockup):
 ## lấy theo nhịp dọc SPACING × tỉ lệ này, nhưng KẸP lại để không tràn khỏi khung.
 ## Dùng khi 2 nút liền nhau lệch chủ yếu theo trục DỌC (bản dọc: nút xếp gần như thẳng cột
@@ -58,20 +78,18 @@ signal scrolled(delta_y: float)
 @export_range(0.0, 200.0, 1.0) var node_half_width := 56.0
 ## Tâm MẶT nút lệch lên so với tâm art (nút có gờ đáy ~6px ở dưới ⇒ mặt nút nằm cao hơn ~3px).
 ## Đường nối đi qua tâm MẶT nút cho khớp mắt nhìn (nhân theo tỉ lệ nút ở màn ngang).
-@export_range(-20.0, 20.0, 0.5) var node_face_center_y := -3.0
+@export_range(-20.0, 20.0, 0.5) var node_face_center_y := -2.0
 
 @export_group("Cờ đích / mũi chỉ")
-## Nút màn hiển thị 112px (art 2× vẽ ở scale 0.5): nửa nút = 56, LÒNG nút (mặt giấy) = 96
-## ⇒ mép trên mặt nút cách tâm 48 — dùng để cắm cờ đích / đặt mũi chỉ cho khớp nút
-@export_range(0.0, 120.0, 1.0) var node_face_top := 48.0
-## Art cờ đích 64×88 (tâm giữa ⇒ đáy cột cờ cách tâm 44) + độ chồng lên mép nút
-@export_range(0.0, 120.0, 1.0) var flag_half_height := 44.0
-@export_range(0.0, 80.0, 1.0) var flag_overlap := 20.0
-## Cột cờ nằm lệch trái tâm art 18px (art 64 rộng, cột ở x≈14) ⇒ canh bù để CỘT CỜ
-## trùng trục giữa nút cuối (nhìn như cắm giữa nút, không lệch ra ngoài)
-@export_range(0.0, 60.0, 1.0) var flag_pole_offset := 18.0
-## Khoảng cách mũi chỉ (màn tiếp theo) phía trên mặt nút (px)
-@export_range(0.0, 80.0, 1.0) var marker_face_gap := 20.0
+## Mặt nút (khối giấy) cao 88 trên art 112 ⇒ mép trên mặt nút cách TÂM art 46 (ở scale 1)
+@export_range(0.0, 120.0, 1.0) var node_face_top := 46.0
+## Cờ đích `lv_flag` hiển thị ~59×77 (art 2x, scale 0.74 trong `level_map.tscn`): nửa cao 38,5;
+## chồng nhẹ xuống mép nút; cột cờ nằm lệch TRÁI tâm art ~15px nên canh bù để cột trùng trục giữa nút
+@export_range(0.0, 120.0, 1.0) var flag_half_height := 38.5
+@export_range(0.0, 80.0, 1.0) var flag_overlap := 4.0
+@export_range(0.0, 60.0, 1.0) var flag_pole_offset := 15.0
+## Khoảng cách từ mép trên mặt nút tới TÂM bút chì chỉ `lv_pencil` (nửa cao ~41 + hở 6)
+@export_range(0.0, 120.0, 1.0) var marker_face_gap := 48.0
 
 @export_group("Cuộn / kéo")
 ## Lề trên/dưới khi tính giới hạn cuộn (px)
@@ -95,6 +113,7 @@ var _level_ids: Array[int] = []
 var _stars: Dictionary = {}       # level_id -> int(sao)
 var _unlocked := 1                # level_id cao nhất đã unlock
 var _current_id := 1              # màn tiếp theo cần chơi
+var _bonus_ids: Array[int] = []   # các màn BONUS (cuối chương)
 
 var _nodes: Dictionary = {}       # level_id -> LevelMapNode
 var _min_scroll_y := 0.0
@@ -108,11 +127,17 @@ var _velocity_y := 0.0
 var _scroll_tween: Tween = null
 
 var _last_area_width := 0.0
+var _last_unit := 1.0
+var _last_area_height := 0.0
+var _last_wide := false
 
 
 func _ready() -> void:
 	set_process(false)   # chỉ bật khi đang có quán tính kéo
 	_last_area_width = _area_size().x
+	_last_area_height = _area_size().y
+	_last_unit = design_unit()
+	_last_wide = is_wide()
 	# Khung bản đồ đổi cỡ (layout) → dựng lại theo hướng mới; viewport là dự phòng cho
 	# trường hợp map không nằm trong Control (test / dùng lẻ).
 	var area := _map_area()
@@ -125,9 +150,15 @@ func _ready() -> void:
 
 func _on_viewport_size_changed() -> void:
 	var width := _area_size().x
-	# Chỉ dựng lại khi bề rộng khung THẬT SỰ đổi (tránh gọi trùng lúc khởi động)
-	if absf(width - _last_area_width) > 2.0:
+	var height := _area_size().y
+	var unit := design_unit()
+	var wide := is_wide()
+	# Chỉ dựng lại khi bề rộng khung / độ phóng / hướng THẬT SỰ đổi (tránh gọi trùng lúc khởi động)
+	if absf(width - _last_area_width) > 2.0 or absf(height - _last_area_height) > 2.0 or absf(unit - _last_unit) > 0.01 or wide != _last_wide:
 		_last_area_width = width
+		_last_area_height = height
+		_last_unit = unit
+		_last_wide = wide
 		if not _level_ids.is_empty():
 			_rebuild()
 
@@ -136,12 +167,14 @@ func _on_viewport_size_changed() -> void:
 # Public API (gọi từ levels.gd / test)
 # ---------------------------------------------------------------------------
 
-## Dựng toàn bộ bản đồ từ dữ liệu chương hiện tại
-func build(level_ids: Array[int], stars: Dictionary, unlocked: int, current_id: int) -> void:
+## Dựng toàn bộ bản đồ từ dữ liệu chương hiện tại (`bonus_ids` = các màn BONUS trong `level_ids`)
+func build(level_ids: Array[int], stars: Dictionary, unlocked: int, current_id: int,
+		bonus_ids: Array[int] = []) -> void:
 	_level_ids = level_ids
 	_stars = stars
 	_unlocked = unlocked
 	_current_id = current_id
+	_bonus_ids = bonus_ids
 	_rebuild()
 
 
@@ -206,25 +239,130 @@ func _rebuild() -> void:
 	var wide := is_wide()
 	var spacing := spacing_landscape if wide else spacing_portrait
 	var zigzag := _zigzag()
-	var node_scale := node_scale_landscape if wide else 1.0
+	var node_scale := _node_scale()
 	var center_x := area.x * 0.5
+	var cols := effective_columns()
 
 	# Sắp xếp tăng dần: màn nhỏ nhất ở dưới cùng (y = 0), các màn sau leo dần lên (y âm)
 	var sorted_ids := _level_ids.duplicate()
 	sorted_ids.sort()
 	var positions: Array[Vector2] = []
-	for index in sorted_ids.size():
-		var direction := 1.0 if index % 2 == 0 else -1.0
-		positions.append(Vector2(center_x + direction * zigzag, -float(index) * spacing))
+	if cols >= 2:
+		positions = _snake_positions(sorted_ids.size(), center_x)
+	else:
+		for index in sorted_ids.size():
+			var direction := 1.0 if index % 2 == 0 else -1.0
+			positions.append(Vector2(center_x + direction * zigzag, -float(index) * spacing))
 
-	_build_paths(sorted_ids, positions)
+	if cols >= 2:
+		_build_snake_paths(sorted_ids, positions, cols)
+	else:
+		_build_paths(sorted_ids, positions)
 	_build_nodes(sorted_ids, positions, node_scale)
 
-	var count := sorted_ids.size()
-	_min_scroll_y = _focus_y() - scroll_margin
-	_max_scroll_y = _focus_y() + float(count - 1) * spacing + scroll_margin
+	# Giới hạn cuộn lấy theo VỊ TRÍ THẬT (đúng cho cả zigzag lẫn nhiều hàng kiểu rắn)
+	var min_y := 0.0
+	for point in positions:
+		min_y = minf(min_y, point.y)
+	var margin := scroll_margin * design_unit()
+	_min_scroll_y = _focus_y() - margin
+	_max_scroll_y = _focus_y() - min_y + margin
 	_set_scroll_y(_focus_y() - _current_position_y(positions, sorted_ids))
 	call_deferred("scroll_to", _current_id, true)
+
+
+## Số cột THẬT SỰ dùng: bản dọc `columns`, bản ngang `columns_landscape` (< 2 ⇒ zigzag cũ)
+func effective_columns() -> int:
+	return maxi(columns_landscape if is_wide() else columns, 0)
+
+
+## Độ phóng của khung thiết kế bản NGANG (960×540 ⇒ canvas, kiểu "contain"); bản dọc = 1
+func design_unit() -> float:
+	if not is_wide():
+		return 1.0
+	var canvas := get_viewport_rect().size
+	if canvas.x <= 0.0 or canvas.y <= 0.0:
+		return 1.0
+	return maxf(minf(canvas.x / 960.0, canvas.y / 540.0), 0.1)
+
+
+## Tỉ lệ của nút màn trên bản đồ (bản ngang = số đo thiết kế × `design_unit()`)
+func _node_scale() -> float:
+	return node_scale_landscape * design_unit() if is_wide() else node_scale_portrait
+
+
+## Vị trí các nút kiểu RẮN: hàng 0 ở ĐÁY đi trái→phải, hàng 1 đi phải→trái…
+## (màn 1-2-3 dưới, 4-5-6 giữa, 7-8-9 trên như mockup `level_final`).
+func _snake_positions(count: int, center_x: float) -> Array[Vector2]:
+	var out: Array[Vector2] = []
+	var cols := maxi(effective_columns(), 2)
+	var half := float(cols - 1) * 0.5
+	var unit := design_unit()
+	var wide := is_wide()
+	var col_spacing := column_spacing_landscape * unit if wide else column_spacing
+	var row_gap := row_spacing_landscape * unit if wide else row_spacing
+	var shift := (snake_center_shift_landscape * unit) if wide else snake_center_shift
+	for index in count:
+		var row := floori(float(index) / float(cols))
+		var col := index % cols
+		# Hàng lẻ chạy ngược để nét nối liền mạch (snake)
+		var x_index := col if row % 2 == 0 else cols - 1 - col
+		out.append(Vector2(
+			center_x + shift + (float(x_index) - half) * col_spacing,
+			-float(row) * row_gap))
+	return out
+
+
+## Đường nối kiểu RẮN: trong cùng hàng nối thẳng, giữa 2 hàng nối bằng cung vòng ra MÉP
+## (điểm uốn nằm ngoài cột biên) nên nhìn như sợi dây quấn quanh mép bản đồ.
+func _build_snake_paths(sorted_ids: Array[int], positions: Array[Vector2], cols: int) -> void:
+	if items == null or sorted_ids.size() < 2:
+		return
+	var node_scale := _node_scale()
+	var points := _snake_path_points(positions, cols, node_scale)
+	var states: Array[int] = []
+	for segment in range(points.size() - 1):
+		var id_index := _snake_state_index(segment, cols, sorted_ids.size())
+		states.append(int(_path_state_for(sorted_ids[id_index])))
+	var road := path_scene.instantiate() as LevelMapPath
+	items.add_child(road)
+	var flat_points: Array[Vector2] = []
+	for point in points:
+		flat_points.append(Vector2(point.x, point.y + node_face_center_y * node_scale))
+	road.edge_offset *= node_scale
+	road.setup(flat_points, states, 0.0)
+
+
+## Danh sách điểm cho đường nối kiểu rắn: mỗi nút 1 điểm, chèn thêm ĐIỂM UỐN ở mép khi
+## chuyển hàng. Vector3(x, y, z) với `z = 1` đánh dấu điểm uốn (không phải nút màn).
+func _snake_path_points(positions: Array[Vector2], cols: int, node_scale: float) -> Array[Vector3]:
+	var out: Array[Vector3] = []
+	var edge_x := positions[0].x
+	var min_x := positions[0].x
+	for point in positions:
+		edge_x = maxf(edge_x, point.x)
+		min_x = minf(min_x, point.x)
+	var bulge := (turn_bulge_landscape if is_wide() else turn_bulge) * node_scale
+	for index in positions.size():
+		if index > 0 and index % cols == 0:
+			# Chuyển hàng: cung vòng ra mép (phải nếu hàng trước chạy xuôi, trái nếu chạy ngược)
+			var prev := positions[index - 1]
+			var next := positions[index]
+			var row := floori(float(index) / float(cols))
+			var outward := 1.0 if (row - 1) % 2 == 0 else -1.0
+			var edge := edge_x if outward > 0.0 else min_x
+			out.append(Vector3(edge + outward * bulge, (prev.y + next.y) * 0.5, 1.0))
+		out.append(Vector3(positions[index].x, positions[index].y, 0.0))
+	return out
+
+
+## Chỉ số `sorted_ids` của nút ĐỨNG TRƯỚC đoạn nối thứ `segment` trong danh sách điểm
+## (điểm uốn thuộc về nút đứng trước nó nên 2 đoạn liền nhau cùng một trạng thái).
+func _snake_state_index(segment: int, cols: int, count: int) -> int:
+	var elbows := 0
+	if segment >= cols:
+		elbows = floori(float(segment - cols) / float(cols + 1)) + 1
+	return clampi(segment - elbows, 0, count - 1)
 
 
 ## Đường nối nằm DƯỚI các nút (thêm trước): MỘT đường uốn chữ S qua tâm TẤT CẢ các nút
@@ -233,7 +371,7 @@ func _build_paths(sorted_ids: Array[int], positions: Array[Vector2]) -> void:
 		return
 	var road := path_scene.instantiate() as LevelMapPath
 	items.add_child(road)
-	var node_scale := node_scale_landscape if is_wide() else 1.0
+	var node_scale := _node_scale()
 	# Đường đi qua tâm MẶT nút (cao hơn tâm art vài px) + gờ đáy của đường theo tỉ lệ nút
 	var face_points: Array[Vector2] = []
 	for point in positions:
@@ -270,13 +408,18 @@ func _build_nodes(sorted_ids: Array[int], positions: Array[Vector2], node_scale:
 		items.add_child(node)
 		node.position = positions[index]
 		node.scale = Vector2.ONE * node_scale
-		node.setup(level_id, _node_state_for(level_id), int(_stars.get(level_id, 0)))
+		node.setup(level_id, _node_state_for(level_id), int(_stars.get(level_id, 0)),
+			_bonus_ids.has(level_id))
 		# Nút sinh lúc chạy nên phải nối ở đây (scene không thể khai dây cho node động)
 		node.pressed.connect(_on_node_pressed)
 		_nodes[level_id] = node
 
-	var last_position := positions[positions.size() - 1]
-	var last_id: int = sorted_ids[sorted_ids.size() - 1]
+	# Cờ đích cắm ở màn CHÍNH cuối cùng (BONUS nằm sau cờ)
+	var last_index := sorted_ids.size() - 1
+	while last_index > 0 and _bonus_ids.has(sorted_ids[last_index]):
+		last_index -= 1
+	var last_position := positions[last_index]
+	var last_id: int = sorted_ids[last_index]
 	if goal != null:
 		goal.visible = true
 		goal.scale = Vector2.ONE * node_scale
@@ -373,7 +516,7 @@ func is_wide() -> bool:
 func _zigzag() -> float:
 	var area := _area_size()
 	var wide := is_wide()
-	var scale := node_scale_landscape if wide else 1.0
+	var scale := _node_scale()
 	var wanted := zigzag_landscape if wide else zigzag_portrait
 	var room := maxf(0.0, area.x * 0.5 - node_half_width * scale - sway_edge_margin)
 	return clampf(wanted, 0.0, room)

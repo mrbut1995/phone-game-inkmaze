@@ -24,6 +24,10 @@ extends Resource
 ## Tên icon riêng của chương (intro/logic/trap/master — rỗng = tự suy theo số chương)
 ## Icon thật nằm ở assets/images/icons/icon_<tên>.svg (xem ChapterCard.ICON_KEYS)
 @export var icon: String = ""
+## Số màn CHÍNH của chương (tính theo thứ tự id tăng dần trong chương). Các màn đứng SAU đó là
+## màn BONUS: không bắt buộc để hoàn thành chương, không tính vào Sao của chương / mốc rương.
+## 0 = chương không có BONUS (mọi màn đều là màn chính).
+@export var main_level_count: int = 0
 
 
 func is_valid() -> bool:

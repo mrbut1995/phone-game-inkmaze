@@ -11,11 +11,12 @@ extends Node2D
 ## script chỉ bind bằng `@export` rồi nhận dữ liệu qua `setup()`.
 ##
 ## Trạng thái (đổi qua `setup`):
-##   LOCKED  → `Button.disabled = true` (art xám) + hiện ổ khoá, ẩn số/sao
-##   CURRENT → hiện vòng `Halo` nét đứt đỏ + "thở" (`pulse`)
-##   DONE    → hiện số + sao đã đạt
+##   LOCKED  → `Button.disabled = true` (art xám nét đứt) + ổ khoá + số nhỏ bên dưới, ẩn sao
+##   CURRENT → mặt nút VÀNG + vòng `Halo` nét đứt đỏ + "thở" (`pulse`)
+##   DONE    → hiện số + sao đã đạt (viên thuốc 3 sao nằm DƯỚI nút)
 ##   SKIPPED → ẩn số (chỉ còn sao trống) để nhấc người chơi quay lại
 ##   NORMAL  → nút thường
+## Màn BONUS (`setup(..., p_bonus = true)`): bộ art cam + băng "BONUS" phía trên nút.
 ## Nhấn giữ / rê chuột: art nút tự vẽ độ lệch (pressed chìm, hover nâng) nên số màn +
 ## hàng sao + ổ khoá + vòng halo được TRÔI THEO cùng độ lệch — nội dung dính vào nút.
 ## ============================================================================
@@ -34,9 +35,18 @@ enum State {
 @export var star_highlight: Texture2D = null
 @export var star_empty: Texture2D = null
 
-## Màu số màn theo trạng thái (màn đang chơi nhấn bằng đỏ mực, còn lại mực xanh đậm)
-@export var color_number_current := Color(0.85, 0.26, 0.26, 1.0)
-@export var color_number_normal := Color(0.13, 0.18, 0.23, 1.0)
+## Màu số màn theo trạng thái (mực navy — mặt nút vàng của màn đang chơi vẫn đọc rõ)
+@export var color_number_current := Color(0.0863, 0.2745, 0.3882, 1.0)
+@export var color_number_normal := Color(0.0863, 0.2745, 0.3882, 1.0)
+
+@export_group("Bộ art theo trạng thái")
+## Bộ art mặc định (normal · hover · pressed · disabled) lấy từ `Body/Button` trong scene.
+## 2 bộ dưới đây thay vào khi màn ĐANG CHƠI / màn BONUS.
+@export var tex_current: Texture2D = null
+@export var tex_bonus_normal: Texture2D = null
+@export var tex_bonus_pressed: Texture2D = null
+@export var tex_bonus_current: Texture2D = null
+@export var tex_bonus_disabled: Texture2D = null
 
 ## Node con — bind bằng `@export` trong `level_node.tscn`
 @export var button: TextureButton2D = null
@@ -47,22 +57,60 @@ enum State {
 @export var star2: TextureRect = null
 @export var star3: TextureRect = null
 @export var lock_icon: Sprite2D = null
+## Số màn nhỏ nằm dưới ổ khoá (chỉ hiện khi màn khoá)
+@export var lock_number: Label = null
+## Viên thuốc 3 sao nằm dưới nút (chứa `stars_box`)
+@export var stars_pill: Control = null
+## Băng "BONUS" phía trên nút (chỉ màn BONUS)
+@export var bonus_ribbon: Node2D = null
+@export var bonus_label: Label = null
 @export var anim: AnimationPlayer = null
 
 var level_id: int = 0
 var state: State = State.LOCKED
+var is_bonus := false
+
+var _skin_default: Array[Texture2D] = []
 
 
-## Thiết lập node với dữ liệu từ LevelMap
-func setup(p_level_id: int, p_state: State, stars: int = 0) -> void:
+## Thiết lập node với dữ liệu từ LevelMap (`p_bonus` = màn BONUS cuối chương)
+func setup(p_level_id: int, p_state: State, stars: int = 0, p_bonus: bool = false) -> void:
 	level_id = p_level_id
 	state = p_state
+	is_bonus = p_bonus
+	_apply_skin()
 	_apply_state_look()
 	_apply_number()
 	_apply_stars(stars)
 	_play_enter_anim()
 	if state == State.CURRENT:
 		play_pulse()
+
+
+## Chọn bộ art cho nút theo (màn đang chơi / BONUS). Bộ mặc định nhớ từ scene ở lần gọi đầu.
+func _apply_skin() -> void:
+	if button == null:
+		return
+	if _skin_default.is_empty():
+		_skin_default = [button.texture_normal, button.texture_hover,
+			button.texture_pressed, button.texture_disabled]
+	var normal: Texture2D = _skin_default[0]
+	var hover: Texture2D = _skin_default[1]
+	var pressed_tex: Texture2D = _skin_default[2]
+	var disabled_tex: Texture2D = _skin_default[3]
+	if is_bonus:
+		var base: Texture2D = tex_bonus_normal if tex_bonus_normal != null else normal
+		normal = tex_bonus_current if state == State.CURRENT and tex_bonus_current != null else base
+		hover = normal
+		pressed_tex = tex_bonus_pressed if tex_bonus_pressed != null else pressed_tex
+		disabled_tex = tex_bonus_disabled if tex_bonus_disabled != null else disabled_tex
+	elif state == State.CURRENT and tex_current != null:
+		normal = tex_current
+		hover = tex_current
+	button.texture_normal = normal
+	button.texture_hover = hover
+	button.texture_pressed = pressed_tex
+	button.texture_disabled = disabled_tex
 
 
 ## Dáng nút theo trạng thái: khoá thì tắt tương tác + hiện ổ khoá; màn đang chơi có vòng sáng
@@ -73,6 +121,14 @@ func _apply_state_look() -> void:
 		halo.visible = state == State.CURRENT
 	if lock_icon != null:
 		lock_icon.visible = state == State.LOCKED
+	if lock_number != null:
+		lock_number.visible = state == State.LOCKED
+		lock_number.text = str(level_id)
+	if bonus_ribbon != null:
+		bonus_ribbon.visible = is_bonus
+	if is_bonus and bonus_label != null:
+		var text := TranslationServer.translate("STR_LEVEL_BONUS_LABEL")
+		bonus_label.text = "BONUS" if text == "STR_LEVEL_BONUS_LABEL" else text
 
 
 ## Số màn (màn khoá / đã bỏ qua thì ẩn số)
@@ -86,8 +142,10 @@ func _apply_number() -> void:
 	label.modulate = color_number_current if state == State.CURRENT else color_number_normal
 
 
-## 3 sao của màn (màn khoá ẩn cả hàng sao)
+## 3 sao của màn (màn khoá ẩn cả viên thuốc sao)
 func _apply_stars(stars: int) -> void:
+	if stars_pill != null:
+		stars_pill.visible = state != State.LOCKED
 	if stars_box == null:
 		return
 	stars_box.visible = state != State.LOCKED
@@ -177,15 +235,16 @@ func _follow_button_art() -> void:
 		_content_tween.tween_property(node, "position", base + Vector2(0.0, target), content_follow_sec)
 
 
-## Các node là "nội dung mặt nút" (mọi thứ TRỪ art nút): halo · số · hàng sao · ổ khoá
+## Các node là "nội dung mặt nút" (mọi thứ TRỪ art nút): halo · số · ổ khoá · số dưới ổ khoá.
+## Viên thuốc sao + băng BONUS nằm NGOÀI mặt nút nên đứng yên khi nhấn / rê.
 func _content_nodes() -> Array[Node]:
 	var out: Array[Node] = []
 	if halo != null:
 		out.append(halo)
 	if label != null:
 		out.append(label)
-	if stars_box != null:
-		out.append(stars_box)
 	if lock_icon != null:
 		out.append(lock_icon)
+	if lock_number != null:
+		out.append(lock_number)
 	return out

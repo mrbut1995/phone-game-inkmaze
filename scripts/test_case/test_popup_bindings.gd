@@ -3,7 +3,7 @@ extends SceneTree
 ## Test Case: BINDING NODE CỦA POPUP (export ⇄ node trong .tscn)
 ##
 ## Mọi popup khai `@export` node và BIND SẴN trong .tscn bằng `node_paths` + `NodePath`
-## (chuẩn `chapters_layout`/`chapters.tscn`) — script KHÔNG tự dò node bằng chuỗi lúc chạy
+## (chuẩn `levels_layout`/`levels.tscn`) — script KHÔNG tự dò node bằng chuỗi lúc chạy
 ## (không còn `piece()` / `get_node_or_null("Panel/...")`).
 ##
 ## Test này instantiate từng scene popup và đòi: MỌI `@export` kiểu Object trên script gốc

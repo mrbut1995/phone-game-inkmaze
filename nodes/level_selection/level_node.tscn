@@ -1,15 +1,37 @@
-[gd_scene load_steps=16 format=3 uid="uid://bi3gnmrmf3cqr"]
+[gd_scene load_steps=24 format=3 uid="uid://bi3gnmrmf3cqr"]
 
 [ext_resource type="Script" uid="uid://d2vt03lbgcomk" path="res://scripts/nodes/level_selection/level_node.gd" id="1_6b1ut"]
 [ext_resource type="Script" uid="uid://5833lhk0ggnb" path="res://scripts/tool/TextureButton2D.gd" id="2_tbtn2d"]
-[ext_resource type="Texture2D" uid="uid://bcis41uhfiusk" path="res://assets/images-png/level_selector/level_node_btn_normal.png" id="3_btn_n"]
-[ext_resource type="Texture2D" uid="uid://bm53w5ex4eda5" path="res://assets/images-png/level_selector/level_node_btn_hover.png" id="4_btn_h"]
-[ext_resource type="Texture2D" uid="uid://dygejiibo2hbj" path="res://assets/images-png/level_selector/level_node_btn_pressed.png" id="5_btn_p"]
-[ext_resource type="Texture2D" uid="uid://dvkcdbe03vq0f" path="res://assets/images-png/level_selector/level_node_btn_disabled.png" id="6_btn_d"]
-[ext_resource type="Texture2D" uid="uid://bge7ohe3efauf" path="res://assets/images-png/level_selector/level_node_halo.png" id="7_halo"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_node_normal.png" id="3_btn_n"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_node_hover.png" id="4_btn_h"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_node_pressed.png" id="5_btn_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_node_disabled.png" id="6_btn_d"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_node_current.png" id="6_btn_c"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_node_bonus_normal.png" id="6_bn"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_node_bonus_pressed.png" id="6_bp"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_node_bonus_current.png" id="6_bc"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_node_bonus_disabled.png" id="6_bd"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_node_halo.png" id="7_halo"]
 [ext_resource type="Texture2D" uid="uid://6voljbarwsoh" path="res://assets/images-png/common/star_highlight.png" id="9_starfull"]
 [ext_resource type="Texture2D" uid="uid://cphd7lexro270" path="res://assets/images-png/common/star_empty.png" id="10_starempty"]
-[ext_resource type="Texture2D" uid="uid://boafjmoalh4w6" path="res://assets/images-png/level_selector/icon_lock_locked.png" id="9_lock"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_lock.png" id="9_lock"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/bonus_ribbon.png" id="11_ribbon"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill"]
+content_margin_left = 8.0
+content_margin_top = 3.0
+content_margin_right = 8.0
+content_margin_bottom = 3.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8902, 0.8471, 0.7765, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [sub_resource type="Animation" id="Animation_node_reset"]
 length = 0.001
@@ -83,30 +105,39 @@ _data = {
 &"pulse": SubResource("Animation_node_pulse")
 }
 
-[node name="LevelNode" type="Node2D" unique_id=1435095361 node_paths=PackedStringArray("button", "halo", "label", "stars_box", "star1", "star2", "star3", "lock_icon", "anim")]
+[node name="LevelNode" type="Node2D" node_paths=PackedStringArray("button", "halo", "label", "stars_box", "star1", "star2", "star3", "lock_icon", "lock_number", "stars_pill", "bonus_ribbon", "bonus_label", "anim")]
 script = ExtResource("1_6b1ut")
 button = NodePath("Body/Button")
 halo = NodePath("Body/Halo")
 label = NodePath("Body/Label")
-stars_box = NodePath("Body/Stars")
-star1 = NodePath("Body/Stars/Star1")
-star2 = NodePath("Body/Stars/Star2")
-star3 = NodePath("Body/Stars/Star3")
+stars_box = NodePath("Body/StarsPill/Stars")
+star1 = NodePath("Body/StarsPill/Stars/Star1")
+star2 = NodePath("Body/StarsPill/Stars/Star2")
+star3 = NodePath("Body/StarsPill/Stars/Star3")
 lock_icon = NodePath("Body/Lock")
+lock_number = NodePath("Body/LockNum")
+stars_pill = NodePath("Body/StarsPill")
+bonus_ribbon = NodePath("Body/Ribbon")
+bonus_label = NodePath("Body/Ribbon/Label")
 anim = NodePath("AnimationPlayer")
 star_highlight = ExtResource("9_starfull")
 star_empty = ExtResource("10_starempty")
+tex_current = ExtResource("6_btn_c")
+tex_bonus_normal = ExtResource("6_bn")
+tex_bonus_pressed = ExtResource("6_bp")
+tex_bonus_current = ExtResource("6_bc")
+tex_bonus_disabled = ExtResource("6_bd")
 
-[node name="Body" type="Node2D" parent="." unique_id=1712345601]
+[node name="Body" type="Node2D" parent="."]
 
-[node name="Halo" type="Sprite2D" parent="Body" unique_id=1712345602]
+[node name="Halo" type="Sprite2D" parent="Body"]
 visible = false
 texture_filter = 1
-position = Vector2(0, -3)
+position = Vector2(0, -2)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("7_halo")
 
-[node name="Button" type="Node2D" parent="Body" unique_id=778899001]
+[node name="Button" type="Node2D" parent="Body"]
 texture_filter = 1
 scale = Vector2(0.5, 0.5)
 script = ExtResource("2_tbtn2d")
@@ -116,11 +147,11 @@ texture_pressed = ExtResource("5_btn_p")
 texture_disabled = ExtResource("6_btn_d")
 metadata/_custom_type_script = "uid://5833lhk0ggnb"
 
-[node name="Label" type="Label" parent="Body" unique_id=2891047211]
+[node name="Label" type="Label" parent="Body"]
 offset_left = -48.0
-offset_top = -49.0
+offset_top = -29.0
 offset_right = 48.0
-offset_bottom = 5.0
+offset_bottom = 25.0
 pivot_offset = Vector2(48, 27)
 theme_type_variation = &"LevelMapNumber"
 theme_override_font_sizes/font_size = 40
@@ -128,50 +159,90 @@ text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Stars" type="HBoxContainer" parent="Body" unique_id=987162534]
-offset_left = -40.0
-offset_top = 13.0
-offset_right = 40.0
-offset_bottom = 37.0
-mouse_filter = 2
-theme_override_constants/separation = 4
-alignment = 1
-
-[node name="Star1" type="TextureRect" parent="Body/Stars" unique_id=111222331]
-custom_minimum_size = Vector2(22, 22)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-texture = ExtResource("10_starempty")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Star2" type="TextureRect" parent="Body/Stars" unique_id=111222332]
-custom_minimum_size = Vector2(22, 22)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-texture = ExtResource("10_starempty")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Star3" type="TextureRect" parent="Body/Stars" unique_id=111222333]
-custom_minimum_size = Vector2(22, 22)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-texture = ExtResource("10_starempty")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Lock" type="Sprite2D" parent="Body" unique_id=1712345603]
+[node name="Lock" type="Sprite2D" parent="Body"]
 visible = false
 texture_filter = 1
-position = Vector2(0, -3)
-scale = Vector2(0.5, 0.5)
+position = Vector2(0, -9)
+scale = Vector2(0.625, 0.625)
 texture = ExtResource("9_lock")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1645814861]
+[node name="LockNum" type="Label" parent="Body"]
+visible = false
+offset_left = -40.0
+offset_top = 10.0
+offset_right = 40.0
+offset_bottom = 38.0
+pivot_offset = Vector2(40, 14)
+theme_type_variation = &"LevelMapNumber"
+theme_override_colors/font_color = Color(0.6039, 0.6824, 0.7412, 1)
+theme_override_font_sizes/font_size = 22
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StarsPill" type="PanelContainer" parent="Body"]
+offset_left = -49.0
+offset_top = 57.0
+offset_right = 49.0
+offset_bottom = 87.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pill")
+
+[node name="Stars" type="HBoxContainer" parent="Body/StarsPill"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Star1" type="TextureRect" parent="Body/StarsPill/Stars"]
+custom_minimum_size = Vector2(21, 21)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("10_starempty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star2" type="TextureRect" parent="Body/StarsPill/Stars"]
+custom_minimum_size = Vector2(21, 21)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("10_starempty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star3" type="TextureRect" parent="Body/StarsPill/Stars"]
+custom_minimum_size = Vector2(21, 21)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("10_starempty")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Ribbon" type="Node2D" parent="Body"]
+visible = false
+position = Vector2(0, -52)
+
+[node name="Sprite" type="Sprite2D" parent="Body/Ribbon"]
+texture_filter = 1
+scale = Vector2(1.35, 1.35)
+texture = ExtResource("11_ribbon")
+
+[node name="Label" type="Label" parent="Body/Ribbon"]
+offset_left = -34.0
+offset_top = -10.0
+offset_right = 34.0
+offset_bottom = 10.0
+theme_type_variation = &"ChapterStars"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "BONUS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries/ = SubResource("AnimationLibrary_node")
 
 [connection signal="pressed" from="Body/Button" to="." method="_on_button_pressed"]

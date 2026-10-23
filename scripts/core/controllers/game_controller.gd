@@ -595,12 +595,12 @@ func _on_continue_requested() -> void:
 			var tm: Node = get_node_or_null("/root/TutorialManager")
 			if tm != null and tm.has_method("on_level_finished") and bool(tm.call("on_level_finished", current)):
 				return
-			# CHỈ đi tiếp trong cùng chương (và chương đó phải đã mở); hết chương -> màn Chọn Chương
+			# CHỈ đi tiếp trong cùng chương (và chương đó phải đã mở); hết chương -> màn Chọn màn
 			var next_lvl := int(gm.call("next_level_in_chapter", current))
 			if next_lvl > 0 and bool(gm.call("can_play_level", next_lvl)):
 				gm.call("start_level", next_lvl)
 			else:
-				gm.call("go_to_chapters")
+				gm.call("go_to_levels")
 		else:
 			# Không có GameManager: chơi lại đúng màn hiện tại thay vì về màn 1
 			start_new_run(current_floor())
@@ -668,7 +668,7 @@ func skip_current_level() -> bool:
 	if next_id > 0:
 		gm.call("start_level", next_id)
 	else:
-		gm.call("go_to_chapters")
+		gm.call("go_to_levels")
 	return true
 
 

@@ -214,19 +214,40 @@ func _section_progress(gm: Node, lm: Node) -> void:
 		await process_frame
 		return
 
-	# Bố cục: thanh nằm ngay DƯỚI banner chương, và TRÊN vùng bản đồ
+	# Bố cục: bản NGANG thanh nằm ngay DƯỚI banner chương + TRÊN bản đồ; bản DỌC thanh là
+	# RAIL dọc ở lề TRÁI (giữa thẻ chương phía trên và thẻ "Màn tiếp theo" phía dưới).
 	var layout_ok := true
-	if scene.layout != null and scene.layout.banner != null:
+	var vertical := widget.vertical
+	var widget_rect: Rect2 = widget.get_global_rect()
+	var map_area := scene.get_node_or_null("MapArea") as Control
+	if vertical:
+		var card: Control = scene.layout.banner if scene.layout != null else null
+		var next_card: Control = scene.layout.next_card if scene.layout != null else null
+		if card != null:
+			layout_ok = widget_rect.position.y >= card.get_global_rect().end.y - 1.0
+		if next_card != null:
+			layout_ok = layout_ok and widget_rect.end.y <= next_card.get_global_rect().position.y + 1.0
+		if map_area != null:
+			layout_ok = layout_ok and widget_rect.get_center().x < map_area.get_global_rect().get_center().x
+	elif scene.layout != null and scene.layout.banner != null:
 		var banner_rect: Rect2 = scene.layout.banner.get_global_rect()
-		var widget_rect: Rect2 = widget.get_global_rect()
 		layout_ok = widget_rect.position.y >= banner_rect.end.y - 1.0
-		var map_area := scene.get_node_or_null("MapArea") as Control
 		if map_area != null:
 			layout_ok = layout_ok and widget_rect.end.y <= map_area.get_global_rect().position.y + 1.0
-	_check(layout_ok, "Thanh tien do nam giua banner chuong va ban do")
-	_check(widget.count_label != null and widget.count_label.text.contains("10")
-		and widget.count_label.text.contains("27"),
-		"Nhan Sao '%s'" % (widget.count_label.text if widget.count_label != null else "<null>"))
+	_check(layout_ok, "Thanh tien do nam dung cho (%s)"
+		% ("rail doc ben trai" if vertical else "giua banner chuong va ban do"))
+	if vertical:
+		# Rail dọc KHÔNG có nhãn "x / y SAO" riêng — số Sao hiện trên thẻ chương
+		# (`card_stars` của màn Chọn màn) ⇒ chỉ kiểm thanh + rương.
+		_check(scene.layout != null and scene.layout.card_stars != null
+			and scene.layout.card_stars.text.contains("10"),
+			"The chuong hien so Sao '%s'"
+				% (scene.layout.card_stars.text if scene.layout != null
+					and scene.layout.card_stars != null else "<null>"))
+	else:
+		_check(widget.count_label != null and widget.count_label.text.contains("10")
+			and widget.count_label.text.contains("27"),
+			"Nhan Sao '%s'" % (widget.count_label.text if widget.count_label != null else "<null>"))
 	_check(absf(widget.fraction() - 10.0 / 27.0) < 0.001,
 		"Do day cua thanh = 10/27 (%.3f)" % widget.fraction())
 	_check(widget.bar != null and absf(widget.bar.value - 10.0) < 0.01,
@@ -238,8 +259,12 @@ func _section_progress(gm: Node, lm: Node) -> void:
 	if chips.size() == 3:
 		_check(chips[0].threshold == 9 and chips[1].threshold == 18 and chips[2].threshold == 27,
 			"Nguong ruong 9 / 18 / 27")
-		_check(chips[0].position.x < chips[1].position.x and chips[1].position.x < chips[2].position.x,
-			"Ruong xep tang dan theo be ngang")
+		if vertical:
+			_check(chips[0].position.y > chips[1].position.y and chips[1].position.y > chips[2].position.y,
+				"Ruong xep tang dan tu DAY len DINH (rail doc)")
+		else:
+			_check(chips[0].position.x < chips[1].position.x and chips[1].position.x < chips[2].position.x,
+				"Ruong xep tang dan theo be ngang")
 		var bar_rect := widget.bar.get_global_rect()
 		_check(bar_rect.has_point(chips[0].get_global_rect().get_center())
 			and bar_rect.has_point(chips[2].get_global_rect().get_center()),
@@ -282,16 +307,6 @@ func _section_progress(gm: Node, lm: Node) -> void:
 			"GameManager ghi nhan 1 ruong da nhan")
 
 	scene.queue_free()
-	await process_frame
-
-	# Màn CHỌN CHƯƠNG không còn thanh này (đã chuyển sang Chọn màn)
-	var chapters_scene: Node = (load("res://scenes/chapters.tscn") as PackedScene).instantiate()
-	root.add_child(chapters_scene)
-	await process_frame
-	await process_frame
-	_check(chapters_scene.find_children("*", "ChapterProgress", true, false).is_empty(),
-		"Man CHON CHUONG KHONG con thanh tien do chuong")
-	chapters_scene.queue_free()
 	await process_frame
 
 
