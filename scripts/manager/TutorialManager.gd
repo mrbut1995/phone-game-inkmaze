@@ -178,6 +178,7 @@ func begin_mode_tutorial(mode_id: String) -> bool:
 		return false
 	gm.set("pending_tutorial", tutorial_id)
 	gm.set("pending_return_to_game", true)
+	gm.set("pending_return_to_list", false)
 	NAV.goto_tutorial()
 	return true
 
@@ -213,6 +214,7 @@ func _open_step(step: Dictionary) -> bool:
 		var gm := _game_manager()
 		gm.set("pending_tutorial", str(step.get("id", "")))
 		gm.set("pending_return_to_game", false)
+		gm.set("pending_return_to_list", false)
 		NAV.goto_tutorial()
 		return true
 	_start_level(int(step.get("id", 1)))

@@ -228,7 +228,7 @@ func _build_navigate() -> void:
 	_add_action("Daily Mission", "scenes/daily.tscn", func() -> void: Nav.goto_daily())
 	_add_action("Settings", "scenes/settings.tscn", func() -> void: Nav.goto_settings())
 	_add_action("Credits", "scenes/credit.tscn", func() -> void: Nav.goto_credit())
-	_add_action("Tutorial (menu)", "scenes/tutorial.tscn", func() -> void: Nav.goto_tutorial())
+	_add_action("Tutorial (menu)", "scenes/tutorial_list.tscn", func() -> void: Nav.goto_tutorial_list())
 	_add_action("Badge Book", "scenes/archivement.tscn", func() -> void: Nav.goto_archivement())
 	_add_action("Leaderboard", "scenes/ranking.tscn", func() -> void: Nav.goto_ranking())
 	_add_action("Dungeon run", "DungeonGameMode - tầng 1", func() -> void: _gm_call("start_dungeon"))

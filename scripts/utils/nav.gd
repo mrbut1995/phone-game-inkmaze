@@ -23,8 +23,10 @@ const SCENE_CHAPTERS := "res://scenes/chapters.tscn"
 const SCENE_SHOP := "res://scenes/shop.tscn"
 ## Màn CREDIT — soundtrack + ghi công
 const SCENE_CREDIT := "res://scenes/credit.tscn"
-## Màn TUTORIAL — hướng dẫn tương tác
+## Màn TUTORIAL — CHI TIẾT bài hướng dẫn (mount đúng bài được yêu cầu)
 const SCENE_TUTORIAL := "res://scenes/tutorial.tscn"
+## Màn DANH SÁCH bài hướng dẫn — bấm 1 bài mới mở `SCENE_TUTORIAL`
+const SCENE_TUTORIAL_LIST := "res://scenes/tutorial_list.tscn"
 ## Màn CHI TIẾT SỰ KIỆN — xem scripts/scenes/event.gd
 const SCENE_EVENT := "res://scenes/event.tscn"
 ## (HỒ SƠ CÁ NHÂN nay là POPUP — mở bằng `Popups.open(Popups.PROFILER)`)
@@ -114,9 +116,20 @@ static func goto_debug() -> void:
 	change_scene(SCENE_DEBUG)
 
 
-## Màn TUTORIAL (hướng dẫn chơi tương tác)
+## Màn TUTORIAL — CHI TIẾT (màn mount bài học). Yêu cầu bài đặt TRƯỚC qua
+## `GameManager.request_tutorial(id)`; mở từ danh sách thì dùng `request_tutorial(id, true)`.
 static func goto_tutorial() -> void:
 	change_scene(SCENE_TUTORIAL)
+
+
+## Màn DANH SÁCH bài hướng dẫn (nút LUẬT CHƠI ở Main)
+static func goto_tutorial_list() -> void:
+	change_scene(SCENE_TUTORIAL_LIST)
+
+
+## Back từ màn CHI TIẾT về DANH SÁCH (không ghi lịch sử)
+static func back_to_tutorial_list() -> void:
+	back_to(SCENE_TUTORIAL_LIST)
 
 
 ## Màn CHI TIẾT SỰ KIỆN — truyền event_id qua SceneManager trước khi chuyển cảnh

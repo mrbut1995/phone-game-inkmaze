@@ -897,6 +897,8 @@ func open_instruction() -> void:
 	if timer_controller != null:
 		timer_controller.pause()
 	gm.set("pending_return_to_game", true)
+	# Lớp phủ KHÔNG đi qua danh sách ⇒ xoá cờ "về danh sách" còn sót của lần trước
+	gm.set("pending_return_to_list", false)
 	# pending_tutorial được đọc bởi tutorial.gd; nhiều bài nối bằng dấu phẩy → chạy theo chuỗi
 	gm.set("pending_tutorial", ",".join(ids))
 	_open_tutorial_overlay()
