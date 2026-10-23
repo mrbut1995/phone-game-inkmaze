@@ -1,0 +1,119 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" uid="uid://304w8ir3unig" path="res://scripts/nodes/level_selection/chapter_tab.gd" id="1_tab"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/tab_selected.png" id="2_sel"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/tab_normal.png" id="3_norm"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/tab_locked.png" id="4_lock"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_lock.png" id="5_icon"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/badge_ready.png" id="6_ready"]
+
+[sub_resource type="Animation" id="Animation_ready"]
+resource_name = "ready"
+length = 1.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ReadyBadge:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.55, 1.1),
+"transitions": PackedFloat32Array(7, 7, 7),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.18, 1.18), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tab"]
+_data = {
+&"ready": SubResource("Animation_ready")
+}
+
+[node name="ChapterTab" type="Button" node_paths=PackedStringArray("bg", "lbl_title", "lock_icon", "ready_badge", "pulse_anim")]
+custom_minimum_size = Vector2(70, 38)
+focus_mode = 0
+flat = true
+script = ExtResource("1_tab")
+art_selected = ExtResource("2_sel")
+art_normal = ExtResource("3_norm")
+art_locked = ExtResource("4_lock")
+icon_lock = ExtResource("5_icon")
+bg = NodePath("Bg")
+lbl_title = NodePath("Title")
+lock_icon = NodePath("Lock")
+ready_badge = NodePath("ReadyBadge")
+pulse_anim = NodePath("PulseAnim")
+
+[node name="Bg" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_norm")
+patch_margin_left = 14
+patch_margin_top = 12
+patch_margin_right = 14
+patch_margin_bottom = 12
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -3.0
+offset_right = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"ChapterCardTitle"
+theme_override_font_sizes/font_size = 15
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Lock" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -9.0
+offset_right = -6.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ReadyBadge" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -14.0
+offset_top = -8.0
+offset_right = 6.0
+offset_bottom = 12.0
+grow_horizontal = 0
+mouse_filter = 2
+pivot_offset = Vector2(10, 10)
+texture = ExtResource("6_ready")
+
+[node name="PulseAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tab")
+}
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

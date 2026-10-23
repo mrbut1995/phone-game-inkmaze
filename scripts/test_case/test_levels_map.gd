@@ -124,12 +124,37 @@ func _check_structure(map: LevelMap) -> int:
 		print("[FAIL] Ban do phai co %d nut (dang %d)" % [TEST_IDS, map.node_count()])
 		return failures + 1
 
-	# Màn 1 ở DƯỚI CÙNG (y = 0), các màn sau leo lên với khoảng cách ĐỀU
+	# Màn 1 ở DƯỚI CÙNG (y = 0) — bố cục RẮN: hàng 0 ở đáy, 3 cột, hàng lẻ chạy NGƯỢC
 	var first := map.node_for(1)
 	var second := map.node_for(2)
+	var cols := map.effective_columns()
 	if first == null or second == null or not is_equal_approx(first.position.y, 0.0):
 		print("[FAIL] Man 1 phai nam duoi cung (y = %.1f)" % (first.position.y if first != null else 999.0))
 		failures += 1
+	elif cols >= 2:
+		# 3 màn đầu nằm CÙNG hàng đáy, cách nhau đúng `column_spacing`
+		var ok_snake := true
+		for level_id in range(2, TEST_IDS + 1):
+			var node := map.node_for(level_id)
+			if node == null:
+				ok_snake = false
+				break
+			var row := floori(float(level_id - 1) / float(cols))
+			var col := (level_id - 1) % cols
+			var x_index := col if row % 2 == 0 else cols - 1 - col
+			var expected := Vector2(
+				first.position.x + float(x_index) * map.column_spacing,
+				-float(row) * map.row_spacing)
+			if not node.position.is_equal_approx(expected):
+				print("[FAIL] Man %d phai o %s (dang %s)"
+					% [level_id, str(expected), str(node.position)])
+				ok_snake = false
+				break
+		if ok_snake:
+			print("[CHECK] Ban do RAN: %d man / %d cot, hang 0 duoi cung, hang le chay nguoc."
+				% [TEST_IDS, cols])
+		else:
+			failures += 1
 	else:
 		var spacing := first.position.y - second.position.y
 		if spacing <= 0.0:
@@ -158,8 +183,12 @@ func _check_structure(map: LevelMap) -> int:
 		failures += 1
 
 	if failures == 0:
-		print("[CHECK] Ban do: %d nut, man 1 duoi cung, leo deu len tren, zigzag dung, Items = %d con."
-			% [TEST_IDS, expected_items])
+		if cols >= 2:
+			print("[CHECK] Ban do: %d nut xep RAN %d cot (hang 0 duoi cung), Items = %d con."
+				% [TEST_IDS, cols, expected_items])
+		else:
+			print("[CHECK] Ban do: %d nut, man 1 duoi cung, leo deu len tren, zigzag dung, Items = %d con."
+				% [TEST_IDS, expected_items])
 	return failures
 
 
@@ -179,8 +208,11 @@ func _check_road(map: LevelMap) -> int:
 		print("[FAIL] Duong noi phai giu curve tron ven trong `Path`")
 		return failures + 1
 	var curve := road.path_node.curve
-	# n nút + (n-1) điểm uốn xen kẽ giữa các đoạn
+	# Bố cục RẮN: n nút + 1 ĐIỂM UỐN ở mỗi lần chuyển hàng; kiểu zigzag cũ: n + (n-1)
+	var cols := map.effective_columns()
 	var expected_controls := map.node_count() * 2 - 1
+	if cols >= 2:
+		expected_controls = map.node_count() + floori(float(maxi(map.node_count() - 1, 0)) / float(cols))
 	if curve.point_count != expected_controls:
 		print("[FAIL] Curve phai co %d diem kiem soat (nut + diem uon) (dang %d)"
 			% [expected_controls, curve.point_count])
@@ -196,10 +228,19 @@ func _check_road(map: LevelMap) -> int:
 			print("[FAIL] Nut man %d phai nam TREN duong noi" % level_id)
 			failures += 1
 			break
-	# Đường phải UỐN (chữ S) chứ không nối thẳng: đo độ lệch của điểm giữa cung
-	# so với dây cung nối 2 nút liền nhau.
+	# Đường phải UỐN chứ không nối thẳng cứng. Bản DỌC (rắn): chỉ các ĐOẠN CHUYỂN HÀNG mới
+	# uốn (cung vòng ra ngoài dải cột theo `turn_bulge`), đoạn trong cùng hàng nối thẳng.
+	# Bản NGANG (zigzag cũ): mọi đoạn đều uốn.
+	var segments: Array[int] = []
+	if cols >= 2:
+		for index in range(cols, TEST_IDS, cols):
+			if index > 0 and index < TEST_IDS:
+				segments.append(index)
+	else:
+		for index in range(1, TEST_IDS):
+			segments.append(index)
 	var min_bulge := 99999.0
-	for index in range(1, TEST_IDS):
+	for index in segments:
 		var from_node := map.node_for(index)
 		var to_node := map.node_for(index + 1)
 		if from_node == null or to_node == null:
@@ -207,14 +248,18 @@ func _check_road(map: LevelMap) -> int:
 		var from_d := curve.get_closest_offset(from_node.position)
 		var to_d := curve.get_closest_offset(to_node.position)
 		var arc_mid := curve.sample_baked((from_d + to_d) * 0.5)
-		var chord_point := Geometry2D.get_closest_point_to_segment(arc_mid, from_node.position, to_node.position)
+		var chord_point := Geometry2D.get_closest_point_to_segment(
+			arc_mid, from_node.position, to_node.position)
 		min_bulge = minf(min_bulge, arc_mid.distance_to(chord_point))
-	if min_bulge < MIN_SEGMENT_BULGE:
-		print("[FAIL] Duong noi bi THANG giua cac nut (lech giua doan chi %.1fpx < %.0fpx)"
-			% [min_bulge, MIN_SEGMENT_BULGE])
+	var min_required := MIN_SEGMENT_BULGE
+	if cols >= 2:
+		min_required = map.turn_bulge * 0.6
+	if min_bulge < min_required:
+		print("[FAIL] Duong noi bi THANG giua cac nut (lech giua doan chi %.1fpx < %.1fpx)"
+			% [min_bulge, min_required])
 		failures += 1
 	if failures == 0:
-		print("[CHECK] Duong noi uon chu S: 1 path qua %d nut (lech giua doan >= %.1fpx), moi nut nam tren duong."
+		print("[CHECK] Duong noi uon: 1 path qua %d nut (lech giua doan >= %.1fpx), moi nut nam tren duong."
 			% [TEST_IDS, min_bulge])
 	failures += _check_road_no_cross(map)
 	return failures
@@ -407,12 +452,18 @@ func _check_screen_wiring(scene: LevelScenes) -> int:
 	if layout.btn_back == null or not layout.btn_back.pressed.is_connected(Callable(scene, "_on_back_pressed")):
 		print("[FAIL] Nut Back phai noi bang [connection] trong scenes/levels.tscn")
 		failures += 1
-	if layout.btn_continue == null \
-			or not layout.btn_continue.pressed.is_connected(Callable(scene, "_on_continue_pressed")):
-		print("[FAIL] Nut Tiep tuc phai noi bang [connection] trong scenes/levels.tscn")
+	# Chân màn: thẻ "MÀN TIẾP THEO" (`NextLevelCard`) nối dây trong `_wire_chapter_ui`
+	var next_card_ok: bool = layout.next_card != null \
+		and layout.next_card.play_requested.is_connected(Callable(scene, "_on_continue_pressed"))
+	if not next_card_ok:
+		print("[FAIL] The MAN TIEP THEO phai noi toi `_on_continue_pressed`")
 		failures += 1
-	if layout.banner == null or not layout.banner.gui_input.is_connected(Callable(scene, "_on_banner_input")):
-		print("[FAIL] Banner phai noi gui_input bang [connection]")
+	# Thẻ chương chỉ để XEM: màn Chọn chương đã xoá ⇒ banner KHÔNG còn dây điều hướng nào
+	if layout.banner == null:
+		print("[FAIL] The chuong phai duoc bind (layout.banner)")
+		failures += 1
+	elif layout.banner.gui_input.get_connections().size() > 0:
+		print("[FAIL] The chuong KHONG duoc noi gui_input (man Chon chuong da xoa)")
 		failures += 1
 	if not scene.map.level_selected.is_connected(Callable(scene, "_on_level_selected")):
 		print("[FAIL] LevelMap.level_selected phai noi bang [connection]")
@@ -616,11 +667,12 @@ func _check_portrait_wide_column(scene: LevelScenes) -> int:
 		print("[FAIL] Canvas DOC %s nhung ban do lai coi la NGANG (khung %s)" % [str(canvas), str(area.size)])
 		failures += 1
 	var node := map.node_for(1)
-	var next_node := map.node_for(2)
-	if node == null or next_node == null:
+	var cols := maxi(map.effective_columns(), 1)
+	var below := map.node_for(2 if cols < 2 else cols + 1)
+	if node == null or below == null:
 		print("[FAIL] Doc-rong: thieu nut man")
 		return failures + 1
-	var spacing := node.position.y - next_node.position.y
+	var spacing := node.position.y - below.position.y
 	var zigzag := absf(node.position.x - area.size.x * 0.5)
 	var inside := node.position.x - 56.0 >= 0.0 and node.position.x + 56.0 <= area.size.x
 	if zigzag > 120.0:

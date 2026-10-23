@@ -22,8 +22,6 @@ const SCENE_DEBUG := "res://scenes/debug.tscn"
 const SCENE_ARCHIVEMENT := "res://scenes/archivement.tscn"
 ## Bảng xếp hạng — xem scripts/scenes/ranking.gd
 const SCENE_RANKING := "res://scenes/ranking.tscn"
-## Màn CHỌN CHƯƠNG — xem scripts/scenes/chapters.gd
-const SCENE_CHAPTERS := "res://scenes/chapters.tscn"
 ## Màn CỬA HÀNG — xem scripts/scenes/shop.gd
 const SCENE_SHOP := "res://scenes/shop.tscn"
 ## Màn CREDIT — soundtrack + ghi công đội ngũ
@@ -174,10 +172,6 @@ func goto_archivement() -> void:
 
 func goto_ranking() -> void:
 	change_scene(SCENE_RANKING)
-
-
-func goto_chapters() -> void:
-	change_scene(SCENE_CHAPTERS)
 
 
 func goto_shop() -> void:

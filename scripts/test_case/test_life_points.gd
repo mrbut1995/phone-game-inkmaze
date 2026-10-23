@@ -327,7 +327,7 @@ func _section_layouts() -> void:
 
 	# Xác nhận RUNTIME: `.tscn` khai `visible = false` thì 2 chip thật sự ẩn, màn có ví thì vẫn hiện
 	await _check_shared_chip_visibility("res://scenes/layout/portrait/title.tscn", false)
-	await _check_shared_chip_visibility("res://scenes/layout/portrait/chapters.tscn", true)
+	await _check_shared_chip_visibility("res://scenes/layout/portrait/levels.tscn", true)
 
 
 ## Nạp thẳng 1 layout và kiểm tra 2 chip dùng chung hiện/ẩn đúng như khai trong `.tscn`.

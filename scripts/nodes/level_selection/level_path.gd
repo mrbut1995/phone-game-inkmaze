@@ -9,10 +9,10 @@ extends Node2D
 ## nên không có "khúc"/gãy góc ở các mối nối.
 ##
 ## Trạng thái thể hiện qua màu / kiểu nét TỪNG ĐOẠN (đoạn i nối nút i → nút i+1):
-##   COMPLETE  → nét liền đậm màu đỏ ink (#D84444); các đoạn liền nhau GỘP thành 1 nét
+##   COMPLETE  → nét mực navy (#164663) — đứt dài như bút kẻ (`complete_dashed`) hoặc liền
 ##   SKIPPED   → nét đứt màu cam (#E8A020)
 ##   UPCOMING  → nét đứt màu xanh mực (#507894)
-##   LOCKED    → nét đứt màu xám (#8FA0B0)
+##   LOCKED    → chấm tròn nhỏ xám nhạt (#B9C7D3)
 ##
 ## Quy ước của project: node con (`Path` giữ curve trọn vẹn) khai trong
 ## `level_path.tscn`; script chỉ còn phần ĐỘNG: dựng curve + cắt nét theo trạng thái.
@@ -26,28 +26,34 @@ enum PathState {
 }
 
 @export_group("Màu theo trạng thái")
-@export var color_complete := Color(0.847, 0.267, 0.267, 1.0)   # Đỏ ink mực phê
+@export var color_complete := Color(0.0863, 0.2745, 0.3882, 1.0)  # Mực navy #164663
 @export var color_skipped := Color(0.910, 0.580, 0.120, 1.0)    # Cam cảnh báo
 @export var color_upcoming := Color(0.320, 0.480, 0.620, 0.95)  # Xanh mực đậm rõ nét
-@export var color_locked := Color(0.550, 0.640, 0.720, 0.65)    # Xám xanh mờ hơn
+@export var color_locked := Color(0.725, 0.780, 0.827, 1.0)      # Xám nhạt #B9C7D3
 
 @export_group("Độ dày nét theo trạng thái")
-## Nét dày hơn để đường nối rõ trên màn điện thoại (canvas 540 px rộng)
-@export var width_complete := 8.0
-@export var width_skipped := 7.0
-@export var width_upcoming := 6.5
-@export var width_locked := 5.5
+## Nét mảnh kiểu bút kẻ trên giấy ô ly (khớp mockup `level_final`)
+@export var width_complete := 4.0
+@export var width_skipped := 4.0
+@export var width_upcoming := 3.5
+@export var width_locked := 3.5
 
 @export_group("Gờ đáy (khớp nút màn kiểu gờ)")
 ## Mỗi nét được vẽ 2 lớp: lớp dưới tối hơn, lệch xuống `edge_offset` px ⇒ đường có "gờ"
 ## giống gờ đáy của nút màn. `edge_offset` = 3 khớp gờ 6px thiết kế / 2 của art nút.
-@export_range(0.0, 10.0, 0.5) var edge_offset := 3.0
+## Mặc định 0 = nét PHẲNG (không gờ) cho hợp phong cách giấy vở; đặt > 0 để bật lại gờ.
+@export_range(0.0, 10.0, 0.5) var edge_offset := 0.0
 @export_range(0.0, 0.8, 0.05) var edge_darken := 0.35
 
 @export_group("Nét đứt / lấy mẫu")
 ## Độ dài 1 gạch và 1 khe của nét đứt (px)
-@export var dash_length := 15.0
-@export var dash_gap := 11.0
+@export var dash_length := 14.0
+@export var dash_gap := 9.0
+## Đoạn đã hoàn thành vẽ bằng nét ĐỨT dài (true, như mockup) hay nét LIỀN (false, kiểu cũ)
+@export var complete_dashed := true
+## Đoạn KHOÁ vẽ bằng CHẤM tròn nhỏ: độ dài chấm / khe (px)
+@export var locked_dash_length := 2.5
+@export var locked_dash_gap := 10.0
 ## Bước lấy mẫu cho nét LIỀN (px) — nhỏ thì đường cong mượt hơn
 @export var solid_sample_step := 3.0
 
@@ -117,7 +123,7 @@ func _build_strokes(points: Array[Vector2], states: Array[int]) -> void:
 		var from_d := bounds[index]
 		var to_d := bounds[index + 1]
 		var state: int = states[index] if index < states.size() else PathState.LOCKED
-		if state == PathState.COMPLETE:
+		if state == PathState.COMPLETE and not complete_dashed:
 			solid_run.append_array(_sample_range(from_d, to_d, not solid_run.is_empty()))
 			continue
 		if not solid_run.is_empty():
@@ -147,13 +153,21 @@ func _solid_stroke(points: PackedVector2Array) -> Dictionary:
 func _dashed_stroke(from_d: float, to_d: float, state: int) -> Dictionary:
 	var points := PackedVector2Array()
 	var distance := from_d
+	var dash := dash_length
+	var gap := dash_gap
+	if state == PathState.LOCKED:
+		dash = locked_dash_length
+		gap = locked_dash_gap
 	while distance < to_d:
 		points.append(_curve.sample_baked(distance))
-		points.append(_curve.sample_baked(minf(distance + dash_length, to_d)))
-		distance += dash_length + dash_gap
+		points.append(_curve.sample_baked(minf(distance + dash, to_d)))
+		distance += dash + gap
 	var color := color_locked
 	var width := width_locked
 	match state:
+		PathState.COMPLETE:
+			color = color_complete
+			width = width_complete
 		PathState.SKIPPED:
 			color = color_skipped
 			width = width_skipped

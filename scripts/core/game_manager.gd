@@ -765,6 +765,15 @@ func chapter_chest_reward_text(def: Dictionary) -> String:
 	return " + ".join(parts)
 
 
+## Xoá trạng thái “đã nhận rương” của MỌI chương (Debug Console “Reset progress”).
+## Dùng chung một chỗ để UI/Debug không phải sửa thẳng `chapter_chests`.
+func reset_chapter_chests() -> void:
+	if chapter_chests.is_empty():
+		return
+	chapter_chests.clear()
+	Save.queue_save()
+
+
 ## Mở popup HẾT LƯỢT CHƠI (dùng cho test / khi cần báo thủ công)
 func open_out_of_life_popup() -> void:
 	_show_out_of_life()
@@ -932,11 +941,6 @@ func go_to_main_menu() -> void:
 ## Điều hướng tới Màn hình Chọn Màn
 func go_to_levels() -> void:
 	_change_scene("res://scenes/levels.tscn")
-
-
-## Điều hướng tới Màn hình CHỌN CHƯƠNG (bước trước màn Chọn màn)
-func go_to_chapters() -> void:
-	_change_scene("res://scenes/chapters.tscn")
 
 
 ## Điều hướng tới Màn hình Daily Mission

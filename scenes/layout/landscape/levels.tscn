@@ -1,148 +1,183 @@
 [gd_scene format=3 uid="uid://hng3ln6muswr"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" uid="uid://bbivg47hraoh6" path="res://scripts/scenes/layout/levels_layout.gd" id="2_nkhig"]
+[ext_resource type="Script" uid="uid://bbivg47hraoh6" path="res://scripts/scenes/layout/levels_layout.gd" id="2_h3psh"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
-[ext_resource type="Texture2D" uid="uid://eeqy8ny5601j" path="res://assets/images-png/level_selector/chapter_banner.png" id="5_banner"]
-[ext_resource type="Texture2D" uid="uid://gofkv8dr1561" path="res://assets/images-landscape-png/level_selector/chapter_banner_focus.png" id="6_banner_f"]
-[ext_resource type="Texture2D" uid="uid://cc6ovyh3bxfx7" path="res://assets/images-png/level_selector/badge_stars_counter.png" id="7_stars"]
-[ext_resource type="Texture2D" uid="uid://6voljbarwsoh" path="res://assets/images-png/common/star_highlight.png" id="8_star"]
-[ext_resource type="Texture2D" uid="uid://ckxdbnug8ecl6" path="res://assets/images-png/common/btn_paper_cta_normal.png" id="9_cont_n"]
-[ext_resource type="Texture2D" uid="uid://5vjrbk835y5f" path="res://assets/images-png/common/btn_paper_cta_pressed.png" id="10_cont_p"]
-[ext_resource type="Texture2D" uid="uid://csfgixtwrrm4j" path="res://assets/images-png/common/btn_paper_cta_disabled.png" id="11_cont_d"]
-[ext_resource type="Texture2D" uid="uid://d0tl47hvj62ph" path="res://assets/images-png/common/btn_paper_cta_focus.png" id="12_cont_f"]
-[ext_resource type="Texture2D" uid="uid://oalyje7bs0yo" path="res://assets/images-png/level_selector/icon_play_triangle.png" id="13_play"]
-[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="14_nine"]
-[ext_resource type="PackedScene" path="res://nodes/chapters/chapter_progress.tscn" id="30_progress"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/card_chapter.png" id="6_card"]
+[ext_resource type="Texture2D" uid="uid://6voljbarwsoh" path="res://assets/images-png/common/star_highlight.png" id="15_star"]
+[ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_tabs.tscn" id="31_tabs"]
+[ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="34_sheet"]
+[ext_resource type="Script" path="res://scripts/tool/fit_stage.gd" id="30_fit"]
+[ext_resource type="PackedScene" path="res://nodes/chapters/chapter_progress_h.tscn" id="32_progress"]
+[ext_resource type="PackedScene" path="res://nodes/level_selection/next_level_card_land.tscn" id="33_next"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7cae8"]
-content_margin_left = 72.0
-content_margin_top = 0.0
-content_margin_right = 34.0
-content_margin_bottom = 0.0
-texture = ExtResource("9_cont_n")
-texture_margin_left = 72.0
-texture_margin_right = 34.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xuhkg"]
-content_margin_left = 72.0
-content_margin_top = 0.0
-content_margin_right = 34.0
-content_margin_bottom = 0.0
-texture = ExtResource("10_cont_p")
-texture_margin_left = 72.0
-texture_margin_right = 34.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p7s8q"]
-content_margin_left = 72.0
-content_margin_top = 0.0
-content_margin_right = 34.0
-content_margin_bottom = 0.0
-texture = ExtResource("9_cont_n")
-texture_margin_left = 72.0
-texture_margin_right = 34.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2ijhr"]
-content_margin_left = 72.0
-content_margin_top = 0.0
-content_margin_right = 34.0
-content_margin_bottom = 0.0
-texture = ExtResource("11_cont_d")
-texture_margin_left = 72.0
-texture_margin_right = 34.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vf13l"]
-content_margin_left = 72.0
-content_margin_top = 0.0
-content_margin_right = 34.0
-content_margin_bottom = 0.0
-texture = ExtResource("12_cont_f")
-texture_margin_left = 72.0
-texture_margin_right = 34.0
-
-[sub_resource type="Animation" id="Animation_levels_pulse_banner_p"]
-resource_name = "pulse_banner"
-length = 1.6
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Content/InformationArea/ChapterBanner:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.8, 1.6),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.02, 1.02), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_levels_pulse_continue_p"]
-resource_name = "pulse_continue"
-length = 1.8
-loop_mode = 1
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_rulf0"]
-_data = {
-&"pulse_banner": SubResource("Animation_levels_pulse_banner_p"),
-&"pulse_continue": SubResource("Animation_levels_pulse_continue_p")
-}
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8902, 0.8471, 0.7765, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [sub_resource type="Animation" id="Animation_levels_enter_reset"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Content/InformationArea/ChapterBanner:modulate")
+tracks/0/path = NodePath("TopBar:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(2),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Content/FitStage/Tabs:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(2),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Content/FitStage/ChapterBanner:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(2),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Content/FitStage/Progress:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(2),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Content/FitStage/NextCard:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(2),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_levels_enter_p"]
+[sub_resource type="Animation" id="Animation_levels_enter"]
 resource_name = "enter"
-length = 0.44
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Content/InformationArea/ChapterBanner:modulate")
+tracks/0/path = NodePath("TopBar:modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.06, 0.35),
+"times": PackedFloat32Array(0, 0.24),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Content/FitStage/Tabs:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.04, 0.3),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Content/FitStage/ChapterBanner:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.08, 0.35),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Content/FitStage/Progress:modulate")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.14, 0.4),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Content/FitStage/NextCard:modulate")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_4qak1"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_levels_enter"]
 _data = {
 &"RESET": SubResource("Animation_levels_enter_reset"),
-&"enter": SubResource("Animation_levels_enter_p")
+&"enter": SubResource("Animation_levels_enter")
 }
 
-[node name="Landscape" unique_id=569217120 node_paths=PackedStringArray("btn_back", "btn_continue", "lbl_continue", "lbl_stars", "lbl_stars_total", "lbl_chapter", "lbl_change_chapter", "banner", "header_anchor", "progress") instance=ExtResource("1_parent")]
+[node name="Landscape" node_paths=PackedStringArray("btn_back", "lbl_chapter", "banner", "header_anchor", "progress", "tabs", "next_card", "lock_sheet", "map_slot", "card_subtitle", "card_stars", "card_levels") instance=ExtResource("1_parent")]
 mouse_filter = 2
-script = ExtResource("2_nkhig")
-header_anchor = NodePath("Content/InformationArea/TopBarAnchor")
+script = ExtResource("2_h3psh")
+header_anchor = NodePath("Content/FitStage/TopBarAnchor")
 btn_back = NodePath("TopBar/Back")
-btn_continue = NodePath("Content/InformationArea/ContinueButton")
-lbl_continue = NodePath("Content/InformationArea/ContinueButton/Label")
-lbl_stars = NodePath("TopBar/StarsCounter/CountRow/Count")
-lbl_stars_total = NodePath("TopBar/StarsCounter/CountRow/Total")
-lbl_chapter = NodePath("Content/InformationArea/ChapterBanner/TitleContainer/Title")
-lbl_change_chapter = NodePath("Content/InformationArea/ChapterBanner/TitleContainer/ChangeChapter")
-banner = NodePath("Content/InformationArea/ChapterBanner")
-progress = NodePath("Content/InformationArea/Progress")
-banner_normal = ExtResource("5_banner")
-banner_focus = ExtResource("6_banner_f")
+lbl_chapter = NodePath("Content/FitStage/ChapterBanner/Title")
+banner = NodePath("Content/FitStage/ChapterBanner")
+progress = NodePath("Content/FitStage/Progress")
+tabs = NodePath("Content/FitStage/Tabs")
+next_card = NodePath("Content/FitStage/NextCard")
+lock_sheet = NodePath("Content/FitStage/LockSheet")
+map_slot = NodePath("Content/FitStage/MapSlot")
+card_subtitle = NodePath("Content/FitStage/ChapterBanner/Subtitle")
+card_stars = NodePath("Content/FitStage/ChapterBanner/StarsPill/Row/Stars")
+card_levels = NodePath("Content/FitStage/ChapterBanner/Levels")
 
-[node name="Content" type="Control" parent="." index="0" unique_id=1704964074]
+[node name="Content" type="Control" parent="." index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -151,145 +186,22 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="InformationArea" type="Control" parent="Content" index="0" unique_id=57534011]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="FitStage" type="Control" parent="Content" index="0"]
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+mouse_filter = 2
+script = ExtResource("30_fit")
+
+[node name="TopBarAnchor" type="Control" parent="Content/FitStage" index="0"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 10.0
+offset_right = 936.0
+offset_bottom = 58.0
 mouse_filter = 2
 
-[node name="ChapterBanner" type="NinePatchRect" parent="Content/InformationArea" index="0" unique_id=1534693521]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.044000003
-anchor_top = 0.12747827
-anchor_right = 0.9571667
-anchor_bottom = 0.20947826
-offset_left = -2.130005
-offset_top = 0.21999359
-offset_right = 2.130005
-offset_bottom = 3.7799988
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_banner")
-patch_margin_left = 28
-patch_margin_top = 13
-patch_margin_right = 16
-patch_margin_bottom = 18
-metadata/_edit_use_anchors_ = true
-
-[node name="TitleContainer" type="HBoxContainer" parent="Content/InformationArea/ChapterBanner" index="0" unique_id=1831550229]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.076
-anchor_top = 0.32
-anchor_right = 0.966
-anchor_bottom = 0.64
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/separation = 12
-metadata/_edit_use_anchors_ = true
-
-[node name="Title" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="0" unique_id=103463027]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"LevelsBannerTitle"
-text = "STR_CHAPTER_1_TITLE"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="ChangeChapter" type="Label" parent="Content/InformationArea/ChapterBanner/TitleContainer" index="1" unique_id=1212192529]
-layout_mode = 2
-size_flags_horizontal = 8
-theme_type_variation = &"LevelsChangeChapter"
-text = "STR_CHANGE_CHAPTER"
-vertical_alignment = 1
-
-[node name="ContinueButton" type="Button" parent="Content/InformationArea" index="1" unique_id=409525765]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.13000001
-anchor_top = 0.82219213
-anchor_right = 0.87000006
-anchor_bottom = 0.91952354
-offset_left = -0.20000458
-offset_right = 0.19995117
-offset_bottom = 0.038330078
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_7cae8")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_xuhkg")
-theme_override_styles/hover = SubResource("StyleBoxTexture_p7s8q")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_2ijhr")
-theme_override_styles/focus = SubResource("StyleBoxTexture_vf13l")
-script = ExtResource("14_nine")
-texture_normal = ExtResource("9_cont_n")
-texture_hover = ExtResource("9_cont_n")
-texture_pressed = ExtResource("10_cont_p")
-texture_disabled = ExtResource("11_cont_d")
-texture_focus = ExtResource("12_cont_f")
-patch_margin_left = 72.0
-patch_margin_right = 34.0
-metadata/_custom_type_script = "uid://buvtj4fdu8ooi"
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Content/InformationArea/ContinueButton" index="0" unique_id=903807445]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 60.0
-offset_top = 15.0
-offset_right = -26.0
-offset_bottom = -15.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"PaperCtaLabel"
-text = "STR_BTN_CONTINUE_LEVEL"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Icon" type="TextureRect" parent="Content/InformationArea/ContinueButton" index="1" unique_id=1310317374]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 52.5
-offset_top = 21.0
-offset_right = 67.5
-offset_bottom = 39.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("13_play")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="Progress" parent="Content/InformationArea" index="2" instance=ExtResource("30_progress")]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.18
-anchor_top = 0.215
-anchor_right = 0.82
-anchor_bottom = 0.283
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="TopBarAnchor" type="Control" parent="Content/InformationArea" index="3"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.034
-anchor_top = 0.033770833
-anchor_right = 0.961
-anchor_bottom = 0.142
-offset_bottom = -3.5708313
-mouse_filter = 2
-
-[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=429014728]
+[node name="Back" type="TextureButton" parent="TopBar" index="0"]
 layout_mode = 2
 texture_normal = ExtResource("3_back_n")
 texture_pressed = ExtResource("4_back_p")
@@ -298,62 +210,138 @@ texture_disabled = ExtResource("3_back_n")
 texture_focused = ExtResource("3_back_n")
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="TopBar" index="1" unique_id=776406799]
+[node name="Spacer" type="Control" parent="TopBar" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"LevelsTitle"
-text = "STR_SELECT_LEVEL_TITLE"
-horizontal_alignment = 1
-text_overrun_behavior = 3
+mouse_filter = 2
 
-[node name="StarsCounter" type="NinePatchRect" parent="TopBar" index="2" unique_id=486461161]
-custom_minimum_size = Vector2(120, 55)
-layout_mode = 2
-size_flags_vertical = 4
-texture = ExtResource("7_stars")
-patch_margin_left = 11
-patch_margin_top = 12
-patch_margin_right = 13
-patch_margin_bottom = 15
+[node name="MapSlot" type="Control" parent="Content/FitStage" index="1"]
+layout_mode = 0
+offset_left = 302.0
+offset_top = 62.0
+offset_right = 942.0
+offset_bottom = 534.0
+mouse_filter = 2
 
-[node name="CountRow" type="HBoxContainer" parent="TopBar/StarsCounter" index="0" unique_id=549809886]
+[node name="Tabs" parent="Content/FitStage" index="2" instance=ExtResource("31_tabs")]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 60.0
+offset_right = 292.0
+offset_bottom = 110.0
+tab_width_selected = 88.0
+tab_width_normal = 50.0
+tab_height_selected = 40.0
+tab_height_normal = 34.0
+tab_font_selected = 12
+tab_font_normal = 13
+
+[node name="ChapterBanner" type="NinePatchRect" parent="Content/FitStage" index="3"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 110.0
+offset_right = 292.0
+offset_bottom = 234.0
+mouse_filter = 2
+texture = ExtResource("6_card")
+patch_margin_left = 22
+patch_margin_top = 20
+patch_margin_right = 22
+patch_margin_bottom = 24
+
+[node name="Title" type="Label" parent="Content/FitStage/ChapterBanner"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.04
-anchor_top = 0.15
-anchor_right = 0.96
-anchor_bottom = 0.85
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 6
+offset_left = 18.0
+offset_top = 12.0
+offset_right = -14.0
+offset_bottom = 42.0
+anchor_right = 1.0
+theme_type_variation = &"LevelsBannerTitle"
+theme_override_font_sizes/font_size = 22
+text = "—"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Subtitle" type="Label" parent="Content/FitStage/ChapterBanner"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 18.0
+offset_top = 42.0
+offset_right = -14.0
+offset_bottom = 60.0
+anchor_right = 1.0
+theme_type_variation = &"ChapterCardSubtitle"
+text = "—"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="StarsPill" type="PanelContainer" parent="Content/FitStage/ChapterBanner"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 18.0
+offset_top = 66.0
+offset_right = 120.0
+offset_bottom = 90.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pill")
+
+[node name="Row" type="HBoxContainer" parent="Content/FitStage/ChapterBanner/StarsPill"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
 alignment = 1
 
-[node name="Icon" type="TextureRect" parent="TopBar/StarsCounter/CountRow" index="0" unique_id=1359081211]
-custom_minimum_size = Vector2(24, 24)
+[node name="Icon" type="TextureRect" parent="Content/FitStage/ChapterBanner/StarsPill/Row"]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-texture = ExtResource("8_star")
+texture = ExtResource("15_star")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Count" type="Label" parent="TopBar/StarsCounter/CountRow" index="1" unique_id=532223457]
+[node name="Stars" type="Label" parent="Content/FitStage/ChapterBanner/StarsPill/Row"]
 layout_mode = 2
-theme_type_variation = &"LevelsStarCount"
-theme_override_font_sizes/font_size = 30
-text = "0"
+theme_type_variation = &"ChapterStars"
+text = "0 / 0"
 vertical_alignment = 1
 
-[node name="Total" type="Label" parent="TopBar/StarsCounter/CountRow" index="2" unique_id=882088240]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.44313726, 0.54509807, 0.61960787, 1)
-theme_override_font_sizes/font_size = 18
-text = "STR_STARS_TOTAL_FORMAT"
+[node name="Levels" type="Label" parent="Content/FitStage/ChapterBanner"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 18.0
+offset_top = 94.0
+offset_right = -14.0
+offset_bottom = 114.0
+anchor_right = 1.0
+theme_type_variation = &"ChapterChipSizeMuted"
+text = "—"
 vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
 
-[node name="PulseAnim" type="AnimationPlayer" parent="." index="1" unique_id=1268405968]
-libraries/ = SubResource("AnimationLibrary_rulf0")
+[node name="Progress" parent="Content/FitStage" index="4" instance=ExtResource("32_progress")]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 252.0
+offset_right = 292.0
+offset_bottom = 336.0
 
-[node name="EnterAnim" type="AnimationPlayer" parent="." index="2" unique_id=908111743]
-libraries/ = SubResource("AnimationLibrary_4qak1")
+[node name="NextCard" parent="Content/FitStage" index="5" instance=ExtResource("33_next")]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 352.0
+offset_right = 292.0
+offset_bottom = 516.0
+
+[node name="LockSheet" parent="Content/FitStage" index="6" instance=ExtResource("34_sheet")]
+z_index = 20
+layout_mode = 1
+dim_overscan = 2000.0
+
+[node name="EnterAnim" type="AnimationPlayer" parent="." index="1"]
+libraries/ = SubResource("AnimationLibrary_levels_enter")
 autoplay = &"enter"

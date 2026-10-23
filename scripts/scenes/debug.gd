@@ -222,7 +222,6 @@ func _build_life_balances() -> void:
 func _build_navigate() -> void:
 	_add_section("NAVIGATE")
 	_add_action("Main Menu", "scenes/main.tscn", func() -> void: Nav.goto_main())
-	_add_action("Select Chapter", "scenes/chapters.tscn", func() -> void: Nav.goto_chapters())
 	_add_action("Shop", "scenes/shop.tscn", func() -> void: Nav.goto_shop())
 	_add_action("Select Level", "scenes/levels.tscn", func() -> void: Nav.goto_levels())
 	_add_action("Daily Mission", "scenes/daily.tscn", func() -> void: Nav.goto_daily())
@@ -240,7 +239,8 @@ func _build_progress() -> void:
 	_add_level_grid()
 	_add_action("Unlock all levels", "Mở khoá 1..%d và lưu lại" % _top_level_id(), _unlock_all_levels)
 	_add_action("Set 3 stars (màn đã mở)", "Ghi 3 sao cho mọi màn đang mở khoá", _set_all_stars)
-	_add_action("Reset progress", "Xoá màn đã mở + sao (không xoá Daily)", _reset_progress, true)
+	_add_action("Reset progress", "Xoá màn đã mở + sao + rương thưởng chương (không xoá Daily)",
+		_reset_progress, true)
 
 
 func _build_daily() -> void:
@@ -605,8 +605,11 @@ func _reset_progress() -> void:
 	gm.set("level_stars", { 1: 0 })
 	gm.set("level_best_time", {})
 	gm.set("current_level", 1)
+	# Rương mốc thưởng của TỪNG CHƯƠNG (chapter_chests) cũng là tiến trình ⇒ xoá cùng
+	if gm.has_method("reset_chapter_chests"):
+		gm.call("reset_chapter_chests")
 	Save.queue_save()
-	_rebuild_after_action("Đã xoá tiến trình màn chơi")
+	_rebuild_after_action("Đã xoá tiến trình màn chơi + rương thưởng chương")
 
 
 func _play_today_classic() -> void:

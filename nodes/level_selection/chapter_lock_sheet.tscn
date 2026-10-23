@@ -1,0 +1,392 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/level_selection/chapter_lock_sheet.gd" id="1_sheet"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/card_lock_sheet.png" id="2_card"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_lock.png" id="3_lock"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="4_star"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/rail_track_h.png" id="5_track"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/rail_fill_h.png" id="6_fill"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/rail_fill_h_green.png" id="10_fill_g"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/btn_green_normal.png" id="7_cta_n"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/btn_green_pressed.png" id="8_cta_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/btn_grey_disabled.png" id="9_cta_f"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cta_n"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 16.0
+texture = ExtResource("7_cta_n")
+texture_margin_left = 20.0
+texture_margin_top = 12.0
+texture_margin_right = 20.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cta_p"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 16.0
+texture = ExtResource("8_cta_p")
+texture_margin_left = 20.0
+texture_margin_top = 12.0
+texture_margin_right = 20.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cta_d"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 16.0
+texture = ExtResource("9_cta_f")
+texture_margin_left = 20.0
+texture_margin_top = 12.0
+texture_margin_right = 20.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="Animation" id="Animation_reset"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Card:scale")
+tracks/0/interp = 1
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Card:modulate")
+tracks/1/interp = 1
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Dim/Tint:modulate")
+tracks/2/interp = 1
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_open"]
+resource_name = "open"
+length = 0.26
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dim/Tint:modulate")
+tracks/0/interp = 1
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Card:scale")
+tracks/1/interp = 2
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.26),
+"transitions": PackedFloat32Array(7, 7),
+"update": 0,
+"values": [Vector2(0.82, 0.82), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Card:modulate")
+tracks/2/interp = 1
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.26),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_close"]
+resource_name = "close"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dim/Tint:modulate")
+tracks/0/interp = 1
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Card:scale")
+tracks/1/interp = 1
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.88, 0.88)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Card:modulate")
+tracks/2/interp = 1
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sheet"]
+_data = {
+&"RESET": SubResource("Animation_reset"),
+&"close": SubResource("Animation_close"),
+&"open": SubResource("Animation_open")
+}
+
+[node name="ChapterLockSheet" type="Control" node_paths=PackedStringArray("dim", "icon", "lbl_index", "lbl_title", "lbl_subtitle", "lbl_size", "lbl_require", "lbl_progress", "star_bar", "lbl_status", "btn_unlock", "lbl_unlock", "btn_close", "sheet_anim")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_sheet")
+dim = NodePath("Dim")
+icon = NodePath("Card/Body/Icon")
+lbl_index = NodePath("Card/Body/Index")
+lbl_title = NodePath("Card/Body/Title")
+lbl_subtitle = NodePath("Card/Body/Subtitle")
+lbl_size = NodePath("Card/Body/Size")
+lbl_require = NodePath("Card/Body/Require")
+lbl_progress = NodePath("Card/Body/Progress")
+star_bar = NodePath("Card/Body/StarBar")
+lbl_status = NodePath("Card/Body/Status")
+btn_unlock = NodePath("Card/Body/Unlock")
+lbl_unlock = NodePath("Card/Body/Unlock/Label")
+btn_close = NodePath("Card/Close")
+sheet_anim = NodePath("SheetAnim")
+art_icon_locked = ExtResource("3_lock")
+art_icon_ready = ExtResource("4_star")
+art_bar_locked = ExtResource("6_fill")
+art_bar_ready = ExtResource("10_fill_g")
+
+[node name="Dim" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+flat = true
+
+[node name="Tint" type="ColorRect" parent="Dim"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0862745, 0.27451, 0.388235, 0.5)
+
+[node name="Card" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -175.0
+offset_right = 220.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(220, 175)
+texture = ExtResource("2_card")
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 30
+
+[node name="Body" type="VBoxContainer" parent="Card"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 26.0
+offset_right = -28.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="Icon" type="TextureRect" parent="Card/Body"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = ExtResource("3_lock")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Index" type="Label" parent="Card/Body"]
+layout_mode = 2
+theme_type_variation = &"PopupStatLabelMuted"
+theme_override_colors/font_color = Color(0.894, 0.384, 0.169, 1)
+text = "STR_CHAPTER_FORMAT"
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="Card/Body"]
+layout_mode = 2
+theme_type_variation = &"ChapterCardTitle"
+text = "—"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Subtitle" type="Label" parent="Card/Body"]
+layout_mode = 2
+theme_type_variation = &"ChapterCardSubtitle"
+text = "—"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Size" type="Label" parent="Card/Body"]
+layout_mode = 2
+theme_type_variation = &"ChapterChipSize"
+text = "STR_CHAPTER_SIZE_FORMAT"
+horizontal_alignment = 1
+
+[node name="Require" type="Label" parent="Card/Body"]
+layout_mode = 2
+theme_type_variation = &"ChapterNeedChip"
+text = "STR_CHAPTER_REQUIRE_FORMAT"
+horizontal_alignment = 1
+
+[node name="Progress" type="Label" parent="Card/Body"]
+layout_mode = 2
+theme_type_variation = &"ChapterStars"
+text = "STR_CHAPTER_STARS_FORMAT"
+horizontal_alignment = 1
+
+[node name="StarBar" type="TextureProgressBar" parent="Card/Body"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+mouse_filter = 2
+nine_patch_stretch = true
+stretch_margin_left = 7
+stretch_margin_top = 0
+stretch_margin_right = 7
+stretch_margin_bottom = 0
+texture_under = ExtResource("5_track")
+texture_progress = ExtResource("6_fill")
+
+[node name="Status" type="Label" parent="Card/Body"]
+layout_mode = 2
+theme_type_variation = &"ChapterStarsMuted"
+text = "STR_CHAPTER_NEED_FORMAT"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Unlock" type="Button" parent="Card/Body"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_cta_n")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cta_p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_cta_n")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_cta_d")
+theme_override_styles/focus = SubResource("StyleBoxTexture_cta_n")
+
+[node name="Label" type="Label" parent="Card/Body/Unlock"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PaperCtaLabel"
+text = "STR_CHAPTER_UNLOCK"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Close" type="Button" parent="Card"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -44.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 44.0
+grow_horizontal = 0
+focus_mode = 0
+flat = true
+
+[node name="Label" type="Label" parent="Card/Close"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PopupBtnTextMuted22"
+text = "✕"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SheetAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sheet")
+}
+
+[connection signal="pressed" from="Dim" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="Card/Body/Unlock" to="." method="_on_unlock_pressed"]
+[connection signal="pressed" from="Card/Close" to="." method="_on_close_pressed"]

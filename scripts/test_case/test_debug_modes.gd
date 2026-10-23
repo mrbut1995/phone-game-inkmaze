@@ -8,6 +8,7 @@ extends SceneTree
 ## 4. Ván TEST không ghi tiến trình (không đánh dấu Daily, không báo danh hiệu).
 ## 5. Tầng ép: minesweeper ở tầng 3 -> bàn 5x5 (2 + tầng), tầng 1 -> 3x3.
 ## 6. Tutorial: mục "TUTORIAL (TEST)" + API mở thẳng bài + Test mode KHÔNG ghi tiến trình.
+## 7. "Reset progress": xoá luôn RƯƠNG THƯỞNG của từng chương (`chapter_chests`).
 ## ============================================================================
 
 const MINESWEEPER := "minesweeper"
@@ -50,6 +51,7 @@ func _init() -> void:
 	await _section_4_no_progress(gm, dm, today, today_mask, arch)
 	await _section_5_floor_override(gm)
 	await _section_6_tutorials(gm, saved_tutorial)
+	await _section_7_reset_progress(gm)
 
 	# Khôi phục trạng thái (không phá dữ liệu người chơi)
 	gm.set("current_mode", saved_mode)
@@ -323,6 +325,44 @@ func _section_6_tutorials(gm: Node, saved: Dictionary) -> void:
 	scene.queue_free()
 	await process_frame
 	_check(saved.size() > 0, "Da sao luu tien trinh tutorial truoc khi test (%d co)" % saved.size())
+
+
+# ---------------------------------------------------------------------------
+# 7. "Reset progress" xoá cả RƯƠNG THƯỞNG của từng chương
+# ---------------------------------------------------------------------------
+func _section_7_reset_progress(gm: Node) -> void:
+	print("\n--- 7. RESET PROGRESS XOA RUONG THUONG CHUONG ---")
+	var snapshot: Dictionary = gm.call("export_progress")
+
+	# Giả lập: đã nhận rương 0 của chương 1 và rương 1 của chương 2
+	gm.set("chapter_chests", { 1: [0], 2: [1] })
+	_check(bool(gm.call("is_chapter_chest_claimed", 1, 0))
+			and bool(gm.call("is_chapter_chest_claimed", 2, 1)),
+		"Truoc reset: ruong chuong 1 va 2 da duoc danh dau da nhan")
+
+	# Bấm "Reset progress" trong Debug Console (không cần UI: gọi thẳng handler)
+	var debug_scene: Node = (load("res://scenes/debug.tscn") as PackedScene).instantiate()
+	root.add_child(debug_scene)
+	await process_frame
+	debug_scene.call("_reset_progress")
+	await process_frame
+	_check(not bool(gm.call("is_chapter_chest_claimed", 1, 0)),
+		"Reset progress: ruong chuong 1 KHONG con o trang thai da nhan")
+	_check(not bool(gm.call("is_chapter_chest_claimed", 2, 1)),
+		"Reset progress: ruong chuong 2 KHONG con o trang thai da nhan")
+	_check((gm.get("chapter_chests") as Dictionary).is_empty(),
+		"Reset progress: chapter_chests rong hoan toan")
+	_check(int(gm.get("unlocked_levels")) == 1 and int(gm.get("current_level")) == 1,
+		"Reset progress: van xoa tien trinh man choi nhu cu (mo lai man 1)")
+
+	debug_scene.queue_free()
+	await process_frame
+
+	# Trả lại tiến trình người chơi + ghi NGAY để không còn autosave treo ghi đè
+	gm.call("import_progress", snapshot)
+	var sm: Node = root.get_node_or_null("SaveManager")
+	if sm != null and sm.has_method("flush"):
+		sm.call("flush")
 
 
 # ---------------------------------------------------------------------------

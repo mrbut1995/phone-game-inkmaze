@@ -17,7 +17,6 @@ const SCREENS := {
 	"settings": "SettingsLayout",
 	"main": "MainLayout",
 	"ranking": "RankingLayout",
-	"chapters": "ChaptersLayout",
 	"daily": "DailyLayout",
 	"shop": "ShopLayout",
 	"archivement": "ArchivementLayout",
@@ -57,12 +56,12 @@ const OPTIONAL := {
 	## Sticker HỒ SƠ ở bản dọc chỉ là avatar nhỏ (không có chỗ ghi tên);
 	## thẻ hồ sơ ở bản NGANG mới hiện tên người chơi.
 	"main|portrait": ["profile_name"],
-	## Màn Chọn màn: bản DỌC không có art banner "focus" riêng (dùng art gốc + preload dự phòng).
-	## `level_map` là node DÙNG CHUNG nằm NGOÀI 2 bố cục (trong `scenes/levels.tscn` →
-	## `MapArea/LevelMap`) nên bố cục đứng riêng không thể bind — binding thật khai ở
-	## node gốc màn và được `test_levels_map` kiểm.
-	"levels|portrait": ["banner_focus", "level_map"],
-	"levels|landscape": ["level_map"],
+	## Màn Chọn màn: `level_map` là node DÙNG CHUNG nằm NGOÀI 2 bố cục (trong `scenes/levels.tscn`
+	## → `MapArea/LevelMap`) nên bố cục đứng riêng không thể bind — binding thật khai ở node gốc
+	## màn và được `test_levels_map` kiểm. `map_slot` CHỈ bản NGANG có (khung `FitStage`), bản DỌC
+	## giữ neo `MapArea` mặc định. `progress` (thanh ngang) chỉ bản NGANG, `rail` (dọc) chỉ bản DỌC.
+	"levels|portrait": ["level_map", "progress", "map_slot"],
+	"levels|landscape": ["level_map", "rail"],
 	## Nội dung Hồ sơ: bản DỌC không tách 2 nhãn riêng UID/THAM GIA + dòng "còn EXP" (chỉ bản
 	## NGANG theo mockup landscape mới); bản NGANG không có con dấu INK VERIFIED.
 	"profiler_content|portrait": ["hero_exp_remain", "hero_join"],

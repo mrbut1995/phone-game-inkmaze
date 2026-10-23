@@ -148,26 +148,7 @@ func _init() -> void:
 	credit_inst.queue_free()
 	await process_frame
 
-	# 5. Test Chapters Scene
-	var chapters_packed: PackedScene = load("res://scenes/chapters.tscn")
-	assert(chapters_packed != null, "scenes/chapters.tscn phai load duoc")
-	var chapters_inst = chapters_packed.instantiate()
-	assert(chapters_inst != null, "scenes/chapters.tscn phai instantiate duoc")
-	root.add_child(chapters_inst)
-	await process_frame
-	await process_frame
-
-	assert(_has(chapters_inst, "TopBar"), "Chapters phai co TopBar")
-	assert(_has(chapters_inst, "TopBar/Wallet"), "Chapters phai co Wallet Sao (nam trong TopBar)")
-	assert(_has(chapters_inst, "TopBar/CoinChip"), "Chapters phai co CoinChip dung chung")
-	assert(_has(chapters_inst, "Banner"), "Chapters phai co Banner")
-	assert(_has(chapters_inst, "ContinueButton"), "Chapters phai co ContinueButton")
-	print("[CHECK] ChaptersScene load va khoi chay cac animation thanh cong.")
-
-	chapters_inst.queue_free()
-	await process_frame
-
 	print("\n========================================================")
-	print("  TAT CA TEST SPLASH, TITLE, SHOP, CREDIT, CHAPTERS DEU PASS!")
+	print("  TAT CA TEST SPLASH, TITLE, SHOP, CREDIT DEU PASS!")
 	print("========================================================\n")
 	quit(0)

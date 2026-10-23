@@ -42,7 +42,6 @@ const SCREENS := [
 	{"id": "splash", "path": "res://scenes/splash.tscn"},
 	{"id": "title", "path": "res://scenes/title.tscn"},
 	{"id": "levels", "path": "res://scenes/levels.tscn"},
-	{"id": "chapters", "path": "res://scenes/chapters.tscn"},
 	{"id": "daily", "path": "res://scenes/daily.tscn"},
 	{"id": "settings", "path": "res://scenes/settings.tscn"},
 	{"id": "shop", "path": "res://scenes/shop.tscn"},
