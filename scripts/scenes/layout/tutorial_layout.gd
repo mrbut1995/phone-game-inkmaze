@@ -2,24 +2,19 @@ class_name TutorialLayout
 extends BaseLayout
 
 ## ============================================================================
-## TutorialLayout: Layout nền tảng cho màn hình Tutorial (Portrait & Landscape).
-## Bố cục chứa TopBar (Back + Title) và Container để mount các Tutorial node.
+## TutorialLayout: bố cục màn CHI TIẾT bài hướng dẫn (`scenes/tutorial.tscn`).
+##
+## Chỉ còn nền giấy + TopBar (Back + tiêu đề) và `TutorialContainer` — nơi
+## `TutorialController` MOUNT đúng bài người chơi đã chọn (`BaseTutorial`).
+##
+## Danh sách bài học nằm ở màn RIÊNG `scenes/tutorial_list.tscn`
+## (`TutorialListLayout`) — bấm 1 bài ở đó mới mở màn này.
+##
+## `TutorialContainer.z_index = 30` (> `TopBar.z_index = 10` của `base_layout`) nên bài học
+## luôn VẼ ĐÈ thanh trên: mỗi `BaseTutorial` đã có header + nút Bỏ qua riêng, nhờ vậy không
+## còn 2 tiêu đề chồng nhau như khi danh sách và bài học dùng chung 1 màn.
 ## ============================================================================
 
 @export var btn_back: BaseButton = null
 @export var lbl_title: Label = null
 @export var tutorial_container: Control = null
-@export var mode_list: Control = null
-
-@export var btn_first_time: BaseButton = null
-@export var btn_move: BaseButton = null
-@export var btn_checking_wall: BaseButton = null
-@export var btn_minesweeper: BaseButton = null
-@export var btn_one_stroke: BaseButton = null
-@export var btn_sum_path: BaseButton = null
-@export var btn_wall_builder: BaseButton = null
-@export var btn_countdown_cost: BaseButton = null
-@export var btn_fading_ink: BaseButton = null
-@export var btn_fog_of_war: BaseButton = null
-@export var btn_blind_memory: BaseButton = null
-@export var btn_use_tool: BaseButton = null

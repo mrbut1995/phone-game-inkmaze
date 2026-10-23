@@ -26,6 +26,10 @@ const SCREENS := {
 	"splash": "SplashLayout",
 	"title": "TitleLayout",
 	"levels": "LevelsLayout",
+	## TUTORIAL tách đôi (2026-10): DANH SÁCH bài (`tutorial_list.tscn`) và CHI TIẾT bài đang
+	## xem (`tutorial.tscn`) — 2 màn, 2 script layout riêng.
+	"tutorial": "TutorialLayout",
+	"tutorial_list": "TutorialListLayout",
 	## Màn chơi: mỗi hướng 1 script riêng, đều kế thừa `GameSceneLayout`
 	"game": "GameSceneLayout|GameLayout",
 }

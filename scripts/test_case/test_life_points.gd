@@ -14,7 +14,7 @@ extends SceneTree
 ## ============================================================================
 
 const LIFE_POPUP_SCENE := "res://nodes/popups/out_of_life.tscn"
-const LAYOUT_CHIP_EXCLUDED := ["settings", "tutorial", "splash", "title", "profiler_popup"]
+const LAYOUT_CHIP_EXCLUDED := ["settings", "tutorial", "tutorial_list", "splash", "title", "profiler_popup"]
 ## Ngoại lệ: màn có "thanh trên" KHÔNG phải dải ngang nên 2 chip dùng chung của base_layout không
 ## hiển thị được — màn tự khai 2 chip cục bộ đặt đúng chỗ và ẩn 2 chip dùng chung (`visible = false`).
 ## (`landscape/event`: thanh trên là CỘT DỌC 36 px bên trái, tiêu đề nằm trong hàng tiêu đề của nội dung)

@@ -15,6 +15,8 @@ extends SceneTree
 ## ============================================================================
 
 const TUTORIAL_SCENE_PATH := "res://scenes/tutorial.tscn"
+## Màn DANH SÁCH bài học (tách khỏi màn CHI TIẾT — mỗi màn 1 việc)
+const TUTORIAL_LIST_SCENE_PATH := "res://scenes/tutorial_list.tscn"
 const GAME_SCENE_PATH := "res://scenes/game.tscn"
 const MAIN_SCENE_PATH := "res://scenes/main.tscn"
 const BLIND_MEMORY_LEVEL := 16
@@ -308,9 +310,10 @@ func _section_2d_resume() -> void:
 		"Chon ve Main -> mo man hinh chinh (dang '%s')" % _scene_path())
 
 
-# ---------------------------------------------------------------------------# 2e. Nút LUẬT CHƠI ở Màn hình chính: HIỆN DANH SÁCH bài học (không tự chạy chuỗi CORE);
+# ---------------------------------------------------------------------------# 2e. Nút LUẬT CHƠI ở Màn hình chính → màn DANH SÁCH bài học (màn RIÊNG, không mount bài);
 #     bài ĐÃ XEM = nút ACTIVE · bài CHƯA XEM = nút KHOÁ (mờ, không bấm được).
-#     “Bỏ qua tất cả” khi mở từ DANH SÁCH → quay lại DANH SÁCH.
+#     Bấm bài đã xem ⇒ màn CHI TIẾT (`scenes/tutorial.tscn`) mở đúng bài;
+#     “Bỏ qua tất cả” ⇒ quay lại DANH SÁCH.
 # ---------------------------------------------------------------------------
 func _section_2e_list() -> void:
 	print("\n-- 2e. Danh sach bai hoc (nut LUAT CHOI) --")
@@ -323,11 +326,10 @@ func _section_2e_list() -> void:
 	await _settle(3)
 	main.call("_on_rules_pressed")
 	await _settle(4)
-	_check(_scene_path() == TUTORIAL_SCENE_PATH,
-		"Nut LUAT CHOI -> mo man Tutorial (dang '%s')" % _scene_path())
-	var ctrl: Node = _tutorial_controller()
-	_check(ctrl != null and ctrl.get("active_tutorial_node") == null,
-		"Vao man Tutorial: HIEN DANH SACH, khong tu chay bai nao")
+	_check(_scene_path() == TUTORIAL_LIST_SCENE_PATH,
+		"Nut LUAT CHOI -> mo man DANH SACH tutorial (dang '%s')" % _scene_path())
+	_check(current_scene != null and current_scene.get("tutorial_controller") == null,
+		"Man DANH SACH khong mount bai nao (khong co TutorialController)")
 
 	var layout: Node = current_scene.get("layout") if current_scene != null else null
 	var btn_seen: BaseButton = layout.get("btn_first_time") if layout != null else null
@@ -337,29 +339,54 @@ func _section_2e_list() -> void:
 	_check(btn_new != null and btn_new.disabled and btn_new.modulate.a < 0.9,
 		"Bai CHUA XEM (minesweeper): nut KHOA (mo)")
 
-	# Bấm bài CHƯA XEM → không mở gì cả
+	# Bấm bài CHƯA XEM → không mở gì cả (vẫn đứng ở DANH SÁCH)
 	if btn_new != null:
 		btn_new.pressed.emit()
-	await _settle(2)
-	_check(ctrl != null and ctrl.get("active_tutorial_node") == null,
-		"Bam bai CHUA XEM -> khong mo gi (nut dang khoa)")
+	await _settle(3)
+	_check(_scene_path() == TUTORIAL_LIST_SCENE_PATH,
+		"Bam bai CHUA XEM -> van o DANH SACH (dang '%s')" % _scene_path())
 
-	# Bấm bài ĐÃ XEM → mở ĐÚNG bài đó (không chạy chuỗi CORE)
+	# Bấm bài ĐÃ XEM → màn CHI TIẾT, đúng bài đó
 	if btn_seen != null:
 		btn_seen.pressed.emit()
-	await _settle(3)
+	await _settle(4)
+	_check(_scene_path() == TUTORIAL_SCENE_PATH,
+		"Bam bai da xem -> mo man CHI TIET (dang '%s')" % _scene_path())
 	_check(str(_current_tutorial_id()) == "first_time",
-		"Bam bai da xem -> mo dung bai do (dang '%s')" % _current_tutorial_id())
+		"Man CHI TIET mo dung bai do (dang '%s')" % _current_tutorial_id())
+	_check(current_scene != null and bool(current_scene.get("_return_to_list")),
+		"Mo tu DANH SACH -> bat co quay ve danh sach")
 
-	# “Bỏ qua tất cả” khi mở từ DANH SÁCH → quay lại DANH SÁCH (ở lại màn Tutorial)
+	# “Bỏ qua tất cả” khi mở từ DANH SÁCH → quay lại DANH SÁCH
+	var ctrl: Node = _tutorial_controller()
 	var active: Node = ctrl.get("active_tutorial_node") if ctrl != null else null
 	if active != null:
 		active.call("skip_all_tutorials")
 	await _settle(4)
-	_check(_scene_path() == TUTORIAL_SCENE_PATH,
-		"Bo qua tat ca tu danh sach -> o lai man Tutorial (dang '%s')" % _scene_path())
-	_check(_tutorial_controller() != null and _tutorial_controller().get("active_tutorial_node") == null,
-		"Bo qua tat ca tu danh sach -> hien lai danh sach (khong bai nao dang mo)")
+	_check(_scene_path() == TUTORIAL_LIST_SCENE_PATH,
+		"Bo qua tat ca tu danh sach -> quay lai DANH SACH (dang '%s')" % _scene_path())
+
+	# Nút BACK ở màn CHI TIẾT (không phải bỏ qua) cũng phải về DANH SÁCH
+	if current_scene != null:
+		var layout2: Node = current_scene.get("layout")
+		var btn_seen2: BaseButton = layout2.get("btn_first_time") if layout2 != null else null
+		if btn_seen2 != null:
+			btn_seen2.pressed.emit()
+		await _settle(4)
+		_check(_scene_path() == TUTORIAL_SCENE_PATH,
+			"Mo lai bai tu DANH SACH (dang '%s')" % _scene_path())
+		if current_scene != null:
+			current_scene.call("_on_back_pressed")
+		await _settle(4)
+		_check(_scene_path() == TUTORIAL_LIST_SCENE_PATH,
+			"Nut BACK o man CHI TIET -> ve DANH SACH (dang '%s')" % _scene_path())
+
+	# Back ở màn DANH SÁCH → Màn hình chính (không ghi lịch sử)
+	if current_scene != null:
+		current_scene.call("_on_back_pressed")
+	await _settle(4)
+	_check(_scene_path() == MAIN_SCENE_PATH,
+		"Nut BACK o man DANH SACH -> ve Main (dang '%s')" % _scene_path())
 
 	if current_scene != null:
 		current_scene.queue_free()

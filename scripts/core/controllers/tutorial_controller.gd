@@ -81,7 +81,10 @@ func _play_next_in_queue() -> void:
 		return
 
 	var next_id: String = sequence_queue.pop_front()
-	load_tutorial(next_id)
+	# Bài KHÔNG tồn tại (id sai / save cũ) ⇒ bỏ qua để không kẹt màn CHI TIẾT trống:
+	# queue ngắn dần nên đệ quy luôn dừng, hết queue thì phát `sequence_finished`.
+	if load_tutorial(next_id) == null:
+		_play_next_in_queue()
 
 
 func load_tutorial(tutorial_id: String) -> BaseTutorial:

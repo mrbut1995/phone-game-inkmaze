@@ -190,10 +190,14 @@ func mark_core_tutorials_completed() -> void:
 var pending_tutorial: String = ""
 ## Khi mở tutorial từ màn chơi: trả về game thay vì Main sau khi kết thúc
 var pending_return_to_game: bool = false
+## Khi mở tutorial từ DANH SÁCH bài học: Back/xong ⇒ về lại danh sách (không về Main)
+var pending_return_to_list: bool = false
 
 
-func request_tutorial(tutorial_id: String) -> void:
+## `from_list = true` khi người chơi bấm 1 bài ở màn DANH SÁCH (`scenes/tutorial_list.tscn`)
+func request_tutorial(tutorial_id: String, from_list := false) -> void:
 	pending_tutorial = tutorial_id.strip_edges()
+	pending_return_to_list = from_list
 
 
 ## Màn Tutorial đọc 1 lần rồi xoá yêu cầu (không giữ lại cho lần sau)
@@ -206,6 +210,12 @@ func take_tutorial_request() -> String:
 func take_return_to_game_flag() -> bool:
 	var flag := pending_return_to_game
 	pending_return_to_game = false
+	return flag
+
+
+func take_return_to_list_flag() -> bool:
+	var flag := pending_return_to_list
+	pending_return_to_list = false
 	return flag
 
 

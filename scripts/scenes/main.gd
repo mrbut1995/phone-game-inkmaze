@@ -255,10 +255,10 @@ func _on_archivement_pressed() -> void:
 	Nav.goto_archivement()
 
 
-## Luật chơi → màn TUTORIAL (đề xuất §A5)
+## Luật chơi → màn DANH SÁCH bài hướng dẫn (bấm 1 bài mới vào màn CHI TIẾT)
 func _on_rules_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
-	Nav.goto_tutorial()
+	Nav.goto_tutorial_list()
 
 
 ## Thẻ HỒ SƠ mở POPUP hồ sơ cá nhân (không đổi màn hình)
