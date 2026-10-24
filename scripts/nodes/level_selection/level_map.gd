@@ -23,6 +23,9 @@ extends Node2D
 ## cách và zigzag rộng hơn. Cuộn xong phát `scrolled` để nền giấy parallax trượt theo.
 ## ============================================================================
 
+## Cạnh art nút màn ở cỡ 1.0 (px)
+const ART_SIZE := 112.0
+
 signal level_selected(level_id: int)
 ## Độ dịch cuộn THẬT của bản đồ (px) so với GIỮA khoảng cuộn — `Background` dùng để trượt
 ## parallax: nền chạy theo đúng nhịp ngón tay (tỉ lệ cố định), không phụ thuộc chương
@@ -42,20 +45,20 @@ signal scrolled(delta_y: float)
 ## `0` = giữ kiểu zigzag cũ (2 cột lệch nhau).
 @export_range(0, 8, 1) var columns := 3
 @export_range(0, 8, 1) var columns_landscape := 5
-## Bản DỌC (px canvas): khoảng cách tâm 2 nút theo trục X / Y, độ phình cung quay đầu
-## (tính theo "đơn vị nút" ⇒ nhân `node_scale`), dịch cả cụm cột sang PHẢI (dành lề trái cho thanh thưởng dọc)
-@export_range(60.0, 260.0, 1.0) var column_spacing := 120.0
-@export_range(80.0, 320.0, 1.0) var row_spacing := 170.0
-@export_range(0.0, 200.0, 1.0) var turn_bulge := 76.0
-@export_range(-200.0, 200.0, 1.0) var snake_center_shift := 50.0
-## Cỡ nút ở bản dọc (art nút hiển thị 112px ở scale 1 ⇒ 0.68 cho mặt nút ≈ 62px như mockup)
-@export_range(0.2, 2.5, 0.01) var node_scale_portrait := 0.68
-## Bản NGANG — số đo theo KHUNG THIẾT KẾ 960×540, tự nhân với `design_unit()` (= độ phóng của khung)
-@export_range(60.0, 260.0, 1.0) var column_spacing_landscape := 118.0
-@export_range(80.0, 320.0, 1.0) var row_spacing_landscape := 140.0
-@export_range(0.0, 200.0, 1.0) var turn_bulge_landscape := 106.0
+## Cỡ nút TỐI ĐA (1.0 = art 112 px ⇒ mặt nút ≈ 88 px). Cỡ THẬT = min(giá trị này, cỡ vừa khít bề rộng khung bản đồ)
+## nên nút luôn to nhất có thể mà không lòi ra ngoài khung (bản ngang: số đo thiết kế × `design_unit()`).
+@export_range(0.2, 2.5, 0.01) var node_scale_portrait := 1.0
+@export_range(0.2, 2.5, 0.01) var node_scale_landscape := 1.0
+## Khoảng cách tâm 2 nút CÙNG HÀNG / giữa 2 HÀNG, đo theo bề rộng art nút (112 px × cỡ nút).
+## 1.38 ⇒ hai nút cách nhau ~38% bề rộng nút (đủ chỗ cho đường nối, ngón tay không chạm nhầm).
+@export_range(1.0, 2.5, 0.01) var column_gap_ratio := 1.38
+@export_range(1.0, 2.5, 0.01) var row_gap_ratio_portrait := 1.6
+@export_range(1.0, 2.5, 0.01) var row_gap_ratio_landscape := 1.6
+## Độ phình cung quay đầu ở mép (đo ở cỡ nút 1.0, nhân với cỡ nút) và độ dịch cả cụm cột sang PHẢI
+@export_range(0.0, 200.0, 1.0) var turn_bulge := 64.0
+@export_range(0.0, 200.0, 1.0) var turn_bulge_landscape := 100.0
+@export_range(-200.0, 200.0, 1.0) var snake_center_shift := 0.0
 @export_range(-200.0, 200.0, 1.0) var snake_center_shift_landscape := 0.0
-@export_range(0.2, 2.5, 0.01) var node_scale_landscape := 0.68
 ## Khoảng cách tâm 2 nút theo trục Y (px) và độ lệch zigzag quanh tâm — theo hướng màn hình
 @export_range(80.0, 400.0, 1.0) var spacing_portrait := 158.0
 @export_range(100.0, 600.0, 1.0) var spacing_landscape := 200.0
@@ -92,13 +95,14 @@ signal scrolled(delta_y: float)
 @export_range(0.0, 120.0, 1.0) var marker_face_gap := 48.0
 
 @export_group("Cuộn / kéo")
-## Lề trên/dưới khi tính giới hạn cuộn (px)
-@export_range(0.0, 300.0, 1.0) var scroll_margin := 90.0
 ## Thời gian auto-scroll đến màn đang chơi (giây)
 @export_range(0.05, 2.0, 0.05) var scroll_to_duration := 0.5
 ## Quán tính kéo: hệ số giảm tốc mỗi frame + tốc độ tối thiểu để còn trượt (px/frame)
 @export_range(0.5, 0.999, 0.001) var drag_friction := 0.88
 @export_range(0.0, 20.0, 0.1) var drag_min_speed := 1.5
+## Vị trí (theo chiều cao khung, 0 = đỉnh · 1 = đáy) mà màn đang chơi được đưa tới khi cuộn.
+## 0.6 = hơi thấp hơn giữa khung: đường đi leo LÊN nên phần phía trên (các màn sắp chơi) được thấy nhiều hơn.
+@export_range(0.3, 0.8, 0.01) var focus_ratio := 0.6
 ## Bước cuộn mỗi nấc lăn chuột (px)
 @export_range(10.0, 300.0, 1.0) var wheel_step := 70.0
 
@@ -264,11 +268,26 @@ func _rebuild() -> void:
 	var min_y := 0.0
 	for point in positions:
 		min_y = minf(min_y, point.y)
-	var margin := scroll_margin * design_unit()
-	_min_scroll_y = _focus_y() - margin
-	_max_scroll_y = _focus_y() - min_y + margin
+	_update_scroll_range(min_y, node_scale)
 	_set_scroll_y(_focus_y() - _current_position_y(positions, sorted_ids))
 	call_deferred("scroll_to", _current_id, true)
+
+
+## Khoảng cuộn sao cho bản đồ LẤP ĐẦY khung: kéo hết xuống thì hàng 1 nằm sát đáy khung, kéo hết lên thì
+## đỉnh (cờ đích) nằm sát đỉnh khung ⇒ không còn khoảng trống thừa ở đầu/cuối. Bản đồ NGẮN hơn khung được canh giữa.
+func _update_scroll_range(min_y: float, node_scale: float) -> void:
+	var area_h := _area_size().y
+	var top_ext := (node_face_top + flag_half_height * 2.0 + 6.0) * node_scale
+	var bottom_ext := (ART_SIZE * 0.5 + 34.0) * node_scale   # nửa nút + viên thuốc sao dưới nút
+	var to_top := top_ext - min_y          # `tracks.y` khi kéo hết lên đỉnh
+	var to_bottom := area_h - bottom_ext   # `tracks.y` khi kéo hết xuống đáy
+	if to_bottom >= to_top:
+		var centered := area_h * 0.5 - (min_y - top_ext + bottom_ext) * 0.5
+		_min_scroll_y = centered
+		_max_scroll_y = centered
+	else:
+		_min_scroll_y = to_bottom
+		_max_scroll_y = to_top
 
 
 ## Số cột THẬT SỰ dùng: bản dọc `columns`, bản ngang `columns_landscape` (< 2 ⇒ zigzag cũ)
@@ -286,9 +305,22 @@ func design_unit() -> float:
 	return maxf(minf(canvas.x / 960.0, canvas.y / 540.0), 0.1)
 
 
-## Tỉ lệ của nút màn trên bản đồ (bản ngang = số đo thiết kế × `design_unit()`)
+## Tỉ lệ của nút màn trên bản đồ: to nhất có thể (tối đa `node_scale_*`) nhưng cả cụm cột + cung quay đầu
+## phải lọt trong bề rộng khung bản đồ. Bản ngang đã nhân sẵn `design_unit()`.
 func _node_scale() -> float:
-	return node_scale_landscape * design_unit() if is_wide() else node_scale_portrait
+	var wide := is_wide()
+	var cap := node_scale_landscape * design_unit() if wide else node_scale_portrait
+	var cols := effective_columns()
+	if cols < 2:
+		return cap
+	var half := float(cols - 1) * 0.5
+	var bulge := turn_bulge_landscape if wide else turn_bulge
+	var shift := absf(snake_center_shift_landscape if wide else snake_center_shift)
+	var half_span := half * column_gap_ratio * ART_SIZE + bulge   # nửa bề rộng cụm ở cỡ 1.0
+	var room := _area_size().x * 0.5 - shift - 10.0
+	if room <= 0.0 or half_span <= 0.0:
+		return cap
+	return clampf(room / half_span, 0.3, cap)
 
 
 ## Vị trí các nút kiểu RẮN: hàng 0 ở ĐÁY đi trái→phải, hàng 1 đi phải→trái…
@@ -299,8 +331,9 @@ func _snake_positions(count: int, center_x: float) -> Array[Vector2]:
 	var half := float(cols - 1) * 0.5
 	var unit := design_unit()
 	var wide := is_wide()
-	var col_spacing := column_spacing_landscape * unit if wide else column_spacing
-	var row_gap := row_spacing_landscape * unit if wide else row_spacing
+	var art := ART_SIZE * _node_scale()
+	var col_spacing := column_gap_ratio * art
+	var row_gap := (row_gap_ratio_landscape if wide else row_gap_ratio_portrait) * art
 	var shift := (snake_center_shift_landscape * unit) if wide else snake_center_shift
 	for index in count:
 		var row := floori(float(index) / float(cols))
@@ -495,7 +528,7 @@ func _area_size() -> Vector2:
 
 
 func _focus_y() -> float:
-	return _area_size().y * 0.5
+	return _area_size().y * focus_ratio
 
 
 ## Có phải màn NGANG (canvas rộng hơn cao) — quyết định cỡ nút / khoảng cách.

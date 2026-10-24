@@ -12,6 +12,11 @@ extends Control
 signal fitted
 
 @export var design_size := Vector2(960, 540)
+## `false` (mặc định) = "contain": khung giữ đúng 960×540 và canh GIỮA (màn dài/rộng hơn sẽ thừa lề hai bên).
+## `true` = "fill": độ phóng vẫn như contain nhưng khung được KÉO DÀI theo trục thừa
+## (màn 20:9 ⇒ khung rộng ~1200 đơn vị) để nội dung neo trái/phải/dưới chạm sát mép màn hình.
+## Con của khung dùng neo (anchor) để bám theo mép; vẫn coi 960×540 là cỡ tối thiểu.
+@export var fill := false
 
 
 func _ready() -> void:
@@ -32,8 +37,12 @@ func _fit() -> void:
 		return
 	var unit := minf(avail.x / design_size.x, avail.y / design_size.y)
 	set_anchors_preset(Control.PRESET_TOP_LEFT)
-	size = design_size
 	pivot_offset = Vector2.ZERO
 	scale = Vector2(unit, unit)
-	position = (avail - design_size * unit) * 0.5
+	if fill:
+		size = Vector2(maxf(design_size.x, avail.x / unit), maxf(design_size.y, avail.y / unit))
+		position = Vector2.ZERO
+	else:
+		size = design_size
+		position = (avail - design_size * unit) * 0.5
 	fitted.emit()

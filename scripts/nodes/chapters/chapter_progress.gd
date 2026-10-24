@@ -19,9 +19,9 @@ extends Control
 signal claim_requested(index: int)
 
 ## Khoảng hở hai đầu thanh để rương ở 0%/100% không bị cắt mất nửa vòng tròn
-const EDGE_MARGIN := 19.0
+const EDGE_MARGIN := 24.0
 ## Lề dọc (bản dọc) để rương ở 0★ / 100% không bị cắt
-const EDGE_MARGIN_V := 19.0
+const EDGE_MARGIN_V := 24.0
 
 ## `true` = thanh DỌC ở lề trái (bản dọc màn Chọn màn): 0★ ở ĐÁY, 100% ở ĐỈNH.
 ## `false` = thanh NGANG như cũ (bản ngang + màn Chọn chương cũ).

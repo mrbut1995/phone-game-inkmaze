@@ -97,6 +97,17 @@ func set_tag_side(on_right: bool) -> void:
 	tag.position = Vector2(x, center.y - tag.size.y * 0.5)
 
 
+## Bản NGANG: bảng phần thưởng nằm DƯỚI (true) hoặc TRÊN (false) vòng huy hiệu, canh giữa theo chiều ngang
+func set_tag_vertical(below: bool) -> void:
+	if tag == null or ring == null:
+		return
+	var center := size * 0.5
+	var gap := 4.0
+	var half := ring.size.y * 0.5
+	var y := center.y + half + gap if below else center.y - half - gap - tag.size.y
+	tag.position = Vector2(center.x - tag.size.x * 0.5, y)
+
+
 func _reward_text(def: Dictionary) -> String:
 	var dm: Node = get_node_or_null("/root/DailyManager")
 	if dm != null and dm.has_method("reward_text"):

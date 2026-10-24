@@ -37,6 +37,8 @@ signal star_gain_finished
 @export var lbl_road_hint: Label = null
 ## Scene chip mốc riêng của bố cục (null = dùng `MILESTONE_CHIP` của màn)
 @export var chip_scene: PackedScene = null
+## Bản NGANG: đường đi ngang (zigzag lên/xuống) ⇒ bảng phần thưởng nằm TRÊN/DƯỚI chip thay vì bên cạnh
+@export var tag_vertical := false
 ## Bảng lịch tháng (overlay) + AnimationPlayer có `open` / `close` / `RESET`
 @export var month_sheet: Control = null
 @export var sheet_anim: AnimationPlayer = null
@@ -209,7 +211,11 @@ func place_chips() -> void:
 		chip.size = sz
 		chip.position = slot.position - sz * 0.5
 		if chip is DailyMilestoneChip:
-			(chip as DailyMilestoneChip).set_tag_side(slot.position.x > half)
+			if tag_vertical:
+				# Chip ở nửa TRÊN ⇒ bảng nằm dưới; chip ở nửa DƯỚI ⇒ bảng nằm trên (không đè lên nhau)
+				(chip as DailyMilestoneChip).set_tag_vertical(slot.position.y < road.size.y * 0.5)
+			else:
+				(chip as DailyMilestoneChip).set_tag_side(slot.position.x > half)
 
 
 ## Bản đường mốc: mở / đóng bảng lịch tháng (animation `open` / `close` khai trong scene)

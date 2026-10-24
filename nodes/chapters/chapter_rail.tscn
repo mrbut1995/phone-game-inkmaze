@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" path="res://nodes/chapters/chest_chip.tscn" id="4_chip"]
 
 [node name="ChapterRail" type="Control" node_paths=PackedStringArray("bar", "chips_host")]
-custom_minimum_size = Vector2(112, 420)
+custom_minimum_size = Vector2(96, 420)
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
@@ -18,22 +18,20 @@ chips_host = NodePath("Chips")
 [node name="Bar" type="TextureProgressBar" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
-anchor_right = 0.3
 anchor_bottom = 1.0
-offset_left = -7.0
-offset_top = 8.0
-offset_right = 7.0
-offset_bottom = -8.0
+offset_left = 15.0
+offset_top = 6.0
+offset_right = 37.0
+offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 fill_mode = 3
 nine_patch_stretch = true
 stretch_margin_left = 0
-stretch_margin_top = 7
+stretch_margin_top = 10
 stretch_margin_right = 0
-stretch_margin_bottom = 7
+stretch_margin_bottom = 10
 texture_under = ExtResource("2_track")
 texture_progress = ExtResource("3_fill")
 
@@ -48,15 +46,15 @@ mouse_filter = 2
 
 [node name="Chip0" parent="Chips" instance=ExtResource("4_chip")]
 layout_mode = 0
-offset_right = 38.0
-offset_bottom = 38.0
+offset_right = 46.0
+offset_bottom = 46.0
 
 [node name="Chip1" parent="Chips" instance=ExtResource("4_chip")]
 layout_mode = 0
-offset_right = 38.0
-offset_bottom = 38.0
+offset_right = 46.0
+offset_bottom = 46.0
 
 [node name="Chip2" parent="Chips" instance=ExtResource("4_chip")]
 layout_mode = 0
-offset_right = 38.0
-offset_bottom = 38.0
+offset_right = 46.0
+offset_bottom = 46.0
