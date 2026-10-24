@@ -109,7 +109,7 @@ texture = ExtResource("17_6y0m5")
 texture_margin_left = 38.0
 texture_margin_right = 46.0
 
-[node name="Portrait" unique_id=732847808 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "card_play", "card_dungeon", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "mode_box", "header_anchor") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=732847808 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "card_play", "card_dungeon", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "mode_box", "header_anchor", "bottom_safe_spacer") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 logo = NodePath("Body/Scroll/Column/Logo")
 profile_card = NodePath("TopBar/ProfileCard")
@@ -128,6 +128,7 @@ stamp_panel = NodePath("Body/Stamp")
 stamp_label = NodePath("Body/Stamp/Label")
 mode_box = NodePath("Body/Scroll/Column/Modes")
 header_anchor = NodePath("Body/TopBarAnchor")
+bottom_safe_spacer = NodePath("Body/BottomSafe")
 
 [node name="Body" type="VBoxContainer" parent="." index="0" unique_id=1179107270]
 layout_mode = 1
@@ -273,6 +274,11 @@ theme_type_variation = &"SettingsVersion"
 text = "STR_SETTINGS_VERSION"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BottomSafe" type="Control" parent="Body" index="4" unique_id=712345001]
+layout_mode = 2
+mouse_filter = 2
+
 
 [node name="ProfileCard" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="0" unique_id=905524368 instance=ExtResource("3_profile")]
 layout_mode = 2

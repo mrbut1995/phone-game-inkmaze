@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nối từ nút BÊN TRÁI xuống nút BÊN PHẢI (portrait). 332x50. Vẽ 1x, viewBox gấp đôi (xuất PNG 332x50 hoặc 664x100). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 664 100" width="332" height="50"><g transform="scale(2)">
+<path d="M2 0V16Q2 26 12 26H320Q330 26 330 36V50" fill="none" stroke="#BFD0DE" stroke-width="3.5" stroke-dasharray="2 8" stroke-linecap="round"/>
+</g></svg>

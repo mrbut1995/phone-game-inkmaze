@@ -196,7 +196,7 @@ _data = {
 &"enter": SubResource("Animation_shop_enter_p")
 }
 
-[node name="Portrait" unique_id=2113142704 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "life_chip", "gift_banner", "tab_line", "pad_slot", "item_grid", "doodle_pad", "noads_row") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=2113142704 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "life_chip", "gift_banner", "tab_line", "pad_slot", "item_grid", "doodle_pad", "noads_row", "nav_bar", "content_body") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/HeaderRow/Back")
 tabs_box = NodePath("Tabs")
@@ -219,6 +219,8 @@ pad_slot = NodePath("Body/PadSlot")
 item_grid = NodePath("Body/Content/List/Grid")
 doodle_pad = NodePath("Body/PadSlot/Pad")
 noads_row = NodePath("Body/Content/List/NoAds")
+nav_bar = NodePath("NavBar")
+content_body = NodePath("Body")
 
 [node name="TopBar" parent="." index="0" unique_id=837555641]
 anchors_preset = -1

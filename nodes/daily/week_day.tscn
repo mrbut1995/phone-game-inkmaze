@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/daily/week_day.gd" id="1_wd"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/week_today.png" id="2_today"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/week_sel.png" id="3_sel"]
-[ext_resource type="Texture2D" path="res://assets/images-png/daily/check_red.png" id="4_check"]
+[ext_resource uid="uid://bxtmeh78g5u05" type="Texture2D" path="res://assets/images-png/daily/week_today.png" id="2_today"]
+[ext_resource uid="uid://bv4j7sta0723p" type="Texture2D" path="res://assets/images-png/daily/week_sel.png" id="3_sel"]
+[ext_resource uid="uid://b0yc3thcmxut" type="Texture2D" path="res://assets/images-png/daily/check_red.png" id="4_check"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="5_theme"]
 
 [node name="WeekDay" type="Control" node_paths=PackedStringArray("hit", "today_bg", "selected_ring", "lbl_dow", "lbl_num", "mark")]
