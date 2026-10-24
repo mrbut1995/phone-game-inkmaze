@@ -141,7 +141,9 @@ func _refresh_stamp() -> void:
 
 func _setup_animations() -> void:
 	if DisplayServer.get_name() == "headless":
-		_goto_title()
+		# Đổi scene NGAY trong `_ready` sẽ gọi `root.remove_child()` lúc root đang bận
+		# thêm scene ⇒ lỗi "Parent node is busy adding/removing children". Hoãn 1 nhịp.
+		_goto_title.call_deferred()
 		return
 
 	if layout.anim_player != null and layout.anim_player.has_animation("play_entrance"):

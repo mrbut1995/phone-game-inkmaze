@@ -48,7 +48,10 @@ const OPTIONAL := {
 	"splash|portrait": ["pencil", "stamp_label", "studio_label", "tagline_label"],
 	"game|portrait": ["hud_slot"],
 	"shop|portrait": ["pad_slot"],
-	## Sticker HỒ SƠ ở bản dọc chỉ là avatar nhỏ (không có chỗ ghi tên người chơi).
+	## Shop NGANG: toàn bộ UI nằm trong `Body` (HBox) — không có `NavBar` nền dưới như bản
+	## DỌC nên 2 export safe-area (`nav_bar`, `content_body`) để trống ở hướng này.
+	## Sticker HỒ SƠ ở bản dọc chỉ là avatar nhỏ (không có chỗ ghi tên);
+	## thẻ hồ sơ ở bản NGANG mới hiện tên người chơi.
 	"main|portrait": ["profile_name"],
 	## Màn Chọn màn: `level_map` là node DÙNG CHUNG nằm NGOÀI 2 bố cục (trong `scenes/levels.tscn`
 	## → `MapArea/LevelMap`) nên bố cục đứng riêng không thể bind — binding thật khai ở node gốc
@@ -137,8 +140,9 @@ func _check_exports(scene: Node, holder: Node, screen: String, holder_name: Stri
 			continue
 		total += 1
 		var value: Variant = holder.get(str(prop.get("name")))
-		# `header_anchor` là hook TUỲ CHỌN của BaseLayout: chỉ màn có thanh trên cục bộ mới bind.
-		var optional_name := str(prop.get("name")) == "header_anchor"
+		# `header_anchor` / `bottom_safe_spacer` là hook TUỲ CHỌN của BaseLayout: chỉ màn
+		# có thanh trên cục bộ / khoảng đệm safe area mới bind.
+		var optional_name := str(prop.get("name")) in ["header_anchor", "bottom_safe_spacer"]
 		if value == null and not optional_name and not opt.has(str(prop.get("name"))):
 			missing.append(str(prop.get("name")))
 	_entry(total > 0, "%s/%s: có %d export node trên script layout" % [screen, holder_name, total])

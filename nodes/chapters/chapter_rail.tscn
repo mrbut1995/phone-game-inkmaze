@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/chapters/chapter_progress.gd" id="1_progress"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/rail_track_v.png" id="2_track"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/rail_fill_v.png" id="3_fill"]
+[ext_resource uid="uid://bq5fjqndqf08h" type="Texture2D" path="res://assets/images-png/level_selector/rail_track_v.png" id="2_track"]
+[ext_resource uid="uid://dmhml2bxkxfvs" type="Texture2D" path="res://assets/images-png/level_selector/rail_fill_v.png" id="3_fill"]
 [ext_resource type="PackedScene" path="res://nodes/chapters/chest_chip.tscn" id="4_chip"]
 
 [node name="ChapterRail" type="Control" node_paths=PackedStringArray("bar", "chips_host")]

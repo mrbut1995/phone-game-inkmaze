@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" uid="uid://304w8ir3unig" path="res://scripts/nodes/level_selection/chapter_tab.gd" id="1_tab"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/tab_selected.png" id="2_sel"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/tab_normal.png" id="3_norm"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/tab_locked.png" id="4_lock"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/lv_lock.png" id="5_icon"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/badge_ready.png" id="6_ready"]
+[ext_resource uid="uid://stso1n3ewhwk" type="Texture2D" path="res://assets/images-png/level_selector/tab_selected.png" id="2_sel"]
+[ext_resource uid="uid://b3f56dcu2jhc2" type="Texture2D" path="res://assets/images-png/level_selector/tab_normal.png" id="3_norm"]
+[ext_resource uid="uid://fxixwk8cbagf" type="Texture2D" path="res://assets/images-png/level_selector/tab_locked.png" id="4_lock"]
+[ext_resource uid="uid://btca5a2hnk334" type="Texture2D" path="res://assets/images-png/level_selector/lv_lock.png" id="5_icon"]
+[ext_resource uid="uid://pom5qjacol8r" type="Texture2D" path="res://assets/images-png/level_selector/badge_ready.png" id="6_ready"]
 
 [sub_resource type="Animation" id="Animation_ready"]
 resource_name = "ready"

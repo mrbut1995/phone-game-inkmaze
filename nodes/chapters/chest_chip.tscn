@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c3uruc8moyy18" path="res://assets/images-png/daily/ring_off.png" id="2_ring"]
 [ext_resource type="Texture2D" uid="uid://bhdewqbcltopn" path="res://assets/images-png/daily/chest_closed.png" id="3_chest"]
 [ext_resource type="Texture2D" uid="uid://b3fvm8sypownm" path="res://assets/images-png/daily/check_badge.png" id="4_badge"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/badge_ready.png" id="5_ready"]
+[ext_resource uid="uid://pom5qjacol8r" type="Texture2D" path="res://assets/images-png/level_selector/badge_ready.png" id="5_ready"]
 
 [sub_resource type="Animation" id="Animation_ready"]
 resource_name = "ready"

@@ -31,3 +31,62 @@ extends BaseLayout
 ## Hàng VIP "Xoá quảng cáo" KHAI SẴN trong scene (`Content/List/NoAds` — nodes/shop/noads_row.tscn);
 ## màn chỉ hiện ở tab NẠP XU rồi nạp dữ liệu vào.
 @export var noads_row: Control = null
+## NavBar nền dưới (NinePatchRect — bối cảnh cho hàng tab)
+@export var nav_bar: Control = null
+## Khung nội dung chính (VBoxContainer 'Body') — cần điều chỉnh offset_bottom theo safe area
+@export var content_body: Control = null
+
+# --- Safe area: lưu offset GỐC (design) của các node neo ở đáy màn ---
+var _sa_nodes: Array[Control] = []              # danh sách node cần shift
+var _sa_base_offset_top: Array[float] = []      # offset_top thiết kế
+var _sa_base_offset_bottom: Array[float] = []   # offset_bottom thiết kế
+var _sa_body_base_bottom: float = -232.0        # offset_bottom thiết kế của Body
+var _sa_inited: bool = false
+
+
+func _ready() -> void:
+	super._ready()
+	_init_safe_area_bases.call_deferred()
+
+
+## Thu thập offset GỐC của các node neo ở đáy TRƯỚC khi safe area được áp lần đầu.
+## Dùng call_deferred để đảm bảo các node đã sẵn sàng.
+func _init_safe_area_bases() -> void:
+	_sa_nodes.clear()
+	_sa_base_offset_top.clear()
+	_sa_base_offset_bottom.clear()
+
+	# Chỉ thu thập khi node tồn tại VÀ anchor top = 1 (nghĩa là neo ở đáy)
+	for node in [nav_bar, tabs_box, gift_banner, pager]:
+		var ctrl := node as Control
+		if ctrl == null:
+			continue
+		if not is_equal_approx(ctrl.anchor_top, 1.0):
+			continue
+		_sa_nodes.append(ctrl)
+		_sa_base_offset_top.append(ctrl.offset_top)
+		_sa_base_offset_bottom.append(ctrl.offset_bottom)
+
+	_sa_inited = true
+	# Lưu offset thiết kế của Body (nếu có)
+	if content_body != null and is_instance_valid(content_body):
+		_sa_body_base_bottom = content_body.offset_bottom
+	# Áp ngay sau khi lấy base (SafeArea có thể đã phát tín hiệu rồi)
+	_apply_safe_area()
+
+
+## Override hook từ BaseLayout: shift các node neo ở đáy lên theo safe area bottom inset.
+## Đồng thời thu nhỏ vùng nội dung Body (offset_bottom) để không bị NavBar che.
+func _on_safe_area_applied(inset_px: float) -> void:
+	if not _sa_inited:
+		return
+	for i in _sa_nodes.size():
+		var ctrl := _sa_nodes[i]
+		if ctrl == null or not is_instance_valid(ctrl):
+			continue
+		ctrl.offset_top    = _sa_base_offset_top[i]    - inset_px
+		ctrl.offset_bottom = _sa_base_offset_bottom[i] - inset_px
+	# Body cũng phải thu lại để nội dung không bị NavBar che khuất
+	if content_body != null and is_instance_valid(content_body):
+		if content_body.anchor_bottom > 0.5:  # chỉ điều chỉnh khi Body neo ở đáy
+			content_body.offset_bottom = _sa_body_base_bottom - inset_px

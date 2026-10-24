@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Thẻ bài học khi ĐANG NHẤN. NinePatch: L18 T18 R18 B24. Vẽ 1x, viewBox gấp đôi (xuất PNG 120x90 hoặc 240x180). Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="120" height="90"><g transform="scale(2)">
+<rect y="5" width="120" height="85" rx="16" fill="#1E5578"/><rect x="1" y="1" width="118" height="82" rx="15" fill="#EEF6FB" stroke="#2F77A5" stroke-width="2"/>
+</g></svg>

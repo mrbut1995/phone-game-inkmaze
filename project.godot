@@ -24,6 +24,7 @@ config/icon="res://assets/images-png/icon.png"
 
 [autoload]
 
+SafeArea="*res://scripts/utils/safe_area.gd"
 LoadingManager="*res://scripts/manager/LoadingManager.gd"
 LevelManager="*res://scripts/core/level_manager.gd"
 GameManager="*res://scripts/core/game_manager.gd"
