@@ -2,8 +2,15 @@ class_name LevelsLayout
 extends BaseLayout
 
 @export var btn_back: BaseButton = null
+## Nút CONTINUE cũ — để trống (đã thay bằng `next_card`); giữ để bố cục cũ vẫn nạp được
+@export var btn_continue: BaseButton = null
+@export var lbl_continue: Label = null
+@export var lbl_stars: Label = null
+## Tổng Sao tối đa của chương (".../27") — cùng hàng với `lbl_stars`
+@export var lbl_stars_total: Label = null
 ## Tên chương trên thẻ chương ("NHẬP MÔN")
 @export var lbl_chapter: Label = null
+@export var lbl_change_chapter: Label = null
 ## Thẻ chương (nền giấy) — chỉ để xem, không bấm
 @export var banner: Control = null
 ## Tham chiếu đến LevelMap — dùng chung 1 instance từ scenes/levels.tscn
@@ -19,8 +26,8 @@ extends BaseLayout
 @export var next_card: NextLevelCard = null
 ## Khung "CHƯƠNG ĐANG KHOÁ" (overlay trong scene màn Level)
 @export var lock_sheet: ChapterLockSheet = null
-## Bản NGANG: ô chứa bản đồ (nằm trong `FitStage`). `MapArea` của scene chính được kéo về khớp ô này.
-## Bản DỌC để trống (MapArea giữ neo 31%–82% chiều cao).
+## Ô chứa bản đồ (cả bản NGANG lẫn DỌC). `MapArea` của scene chính được kéo về khớp ô này mỗi khi ô đổi cỡ.
+## Để trống ⇒ MapArea giữ neo mặc định (31%–82% chiều cao).
 @export var map_slot: Control = null
 
 @export_group("Thẻ chương")

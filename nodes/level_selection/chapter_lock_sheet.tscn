@@ -315,13 +315,13 @@ text = "STR_CHAPTER_STARS_FORMAT"
 horizontal_alignment = 1
 
 [node name="StarBar" type="TextureProgressBar" parent="Card/Body"]
-custom_minimum_size = Vector2(0, 16)
+custom_minimum_size = Vector2(0, 22)
 layout_mode = 2
 mouse_filter = 2
 nine_patch_stretch = true
-stretch_margin_left = 7
+stretch_margin_left = 10
 stretch_margin_top = 0
-stretch_margin_right = 7
+stretch_margin_right = 10
 stretch_margin_bottom = 0
 texture_under = ExtResource("5_track")
 texture_progress = ExtResource("6_fill")

@@ -15,6 +15,12 @@ extends Button
 signal claim_requested(index: int)
 
 const TEX_DIR := "res://assets/images-png/daily/"
+## Đĩa nền rương (vẽ riêng cho màn Level): khoá = nét đứt xám · đủ Sao = vàng viền navy
+const RING_DIR := "res://assets/images-png/level_selector/"
+## Màu rương khi CHƯA đủ Sao (xám xanh nhưng vẫn đọc được) và màu nhãn ngưỡng tương ứng
+const CHEST_LOCKED := Color(0.62, 0.72, 0.8, 1.0)
+const LABEL_LOCKED := Color(0.42, 0.52, 0.6, 1.0)
+const LABEL_REACHED := Color(0.0863, 0.2745, 0.3882, 1.0)
 
 ## Mốc (0..2) mà chip này đang hiển thị
 var index: int = 0
@@ -44,10 +50,10 @@ func set_label_below(below: bool) -> void:
 		lbl_threshold.anchor_right = 0.5
 		lbl_threshold.anchor_top = 1.0
 		lbl_threshold.anchor_bottom = 1.0
-		lbl_threshold.offset_left = -24.0
-		lbl_threshold.offset_right = 24.0
-		lbl_threshold.offset_top = 1.0
-		lbl_threshold.offset_bottom = 17.0
+		lbl_threshold.offset_left = -20.0
+		lbl_threshold.offset_right = 20.0
+		lbl_threshold.offset_top = 3.0
+		lbl_threshold.offset_bottom = 25.0
 		lbl_threshold.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	else:
 		lbl_threshold.anchor_left = 1.0
@@ -56,9 +62,9 @@ func set_label_below(below: bool) -> void:
 		lbl_threshold.anchor_bottom = 0.5
 		lbl_threshold.offset_left = 4.0
 		lbl_threshold.offset_right = 44.0
-		lbl_threshold.offset_top = -9.0
-		lbl_threshold.offset_bottom = 9.0
-		lbl_threshold.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		lbl_threshold.offset_top = -11.0
+		lbl_threshold.offset_bottom = 11.0
+		lbl_threshold.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 
 ## `def` = định nghĩa rương (`GameManager.chapter_chest_defs()`), `stars_now` = Sao hiện có của chương
@@ -67,17 +73,20 @@ func setup(def: Dictionary, stars_now: int, claimed: bool) -> void:
 	threshold = int(def.get("stars", 0))
 	var reached := threshold > 0 and stars_now >= threshold
 	if ring != null:
-		ring.texture = _tex("ring_on.png" if reached else "ring_off.png")
+		ring.texture = load(RING_DIR + ("reward_disc_on.png" if reached else "reward_disc_off.png")) as Texture2D
 	if chest != null:
 		chest.texture = _tex("chest.png" if claimed else "chest_closed.png")
-		chest.modulate = Color(1, 1, 1, 1) if reached else Color(1, 1, 1, 0.8)
+		chest.modulate = Color(1, 1, 1, 1) if reached else CHEST_LOCKED
 	if badge != null:
 		badge.visible = claimed
 	_claimable = reached and not claimed
-	# Khoá (chưa đủ Sao) ⇒ làm mờ cả chip; sẵn sàng ⇒ hiện "!" + nhịp thở
+	# Sẵn sàng (đủ Sao, chưa nhận) ⇒ hiện "!" + nhịp thở. Chip KHÔNG bị làm mờ: trạng thái khoá
+	# thể hiện bằng đĩa nét đứt + rương xám xanh (mờ cả chip trước đây làm thanh nhìn "ma").
 	if ready_badge != null:
 		ready_badge.visible = _claimable
-	modulate = Color(1, 1, 1, 1) if reached else Color(1, 1, 1, 0.62)
+	modulate = Color(1, 1, 1, 1)
+	if lbl_threshold != null:
+		lbl_threshold.add_theme_color_override("font_color", LABEL_REACHED if reached else LABEL_LOCKED)
 	_update_pulse()
 	if lbl_threshold != null:
 		lbl_threshold.text = tr("STR_DAILY_MILESTONE_STARS").format([threshold]) \

@@ -45,13 +45,13 @@ func _ready() -> void:
 	_refresh_chapter_ui()
 
 
-## Bản NGANG: `MapArea` (nằm ngoài bố cục) phải khớp khung `map_slot` — khung này nằm trong
-## `FitStage` nên đổi theo cỡ cửa sổ ⇒ kiểm tra mỗi frame (chỉ tốn khi rect đổi).
+## `MapArea` (nằm ngoài bố cục) phải khớp khung `map_slot` của bố cục đang hiện (dọc hoặc ngang) —
+## khung này đổi theo cỡ cửa sổ / `FitStage` ⇒ kiểm tra mỗi frame (chỉ tốn khi rect đổi).
 func _process(_delta: float) -> void:
 	_fit_map_area()
 
 
-## Kéo `MapArea` về đúng ô `map_slot` của bố cục NGANG; bản DỌC trả về neo mặc định (31%–82% cao).
+## Kéo `MapArea` về đúng ô `map_slot` của bố cục đang hiện; không có ô ⇒ trả về neo mặc định (31%–82% cao).
 func _fit_map_area() -> void:
 	var area := map.get_parent() as Control if map != null else null
 	if area == null or layout == null:
@@ -535,6 +535,21 @@ func _refresh_header() -> void:
 	if layout == null:
 		return
 	var chapter := _chapter_data()
+	var own := 0
+	var total := maxi(main_level_ids().size(), 1) * 3
+	var stars := _stars_dict()
+	var lm: Node = get_node_or_null("/root/LevelManager")
+	if chapter != null and lm != null and lm.has_method("chapter_stars"):
+		own   = int(lm.call("chapter_stars", chapter.chapter_id))
+		total = maxi(int(lm.call("chapter_star_total", chapter.chapter_id)), 1)
+	else:
+		for value in stars.values():
+			own += int(value)
+
+	if layout.lbl_stars != null:
+		layout.lbl_stars.text = str(own)
+	if layout.lbl_stars_total != null:
+		layout.lbl_stars_total.text = tr("STR_STARS_TOTAL_FORMAT").format([total])
 	if layout.lbl_chapter != null and chapter != null:
 		layout.lbl_chapter.text = chapter.display_title()
 

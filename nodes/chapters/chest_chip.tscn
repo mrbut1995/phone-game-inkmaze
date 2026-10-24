@@ -1,10 +1,26 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/chapters/chest_chip.gd" id="1_chip"]
-[ext_resource type="Texture2D" uid="uid://c3uruc8moyy18" path="res://assets/images-png/daily/ring_off.png" id="2_ring"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/reward_disc_off.png" id="2_ring"]
 [ext_resource type="Texture2D" uid="uid://bhdewqbcltopn" path="res://assets/images-png/daily/chest_closed.png" id="3_chest"]
 [ext_resource type="Texture2D" uid="uid://b3fvm8sypownm" path="res://assets/images-png/daily/check_badge.png" id="4_badge"]
 [ext_resource uid="uid://pom5qjacol8r" type="Texture2D" path="res://assets/images-png/level_selector/badge_ready.png" id="5_ready"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_label"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 0.9922, 0.9686, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8902, 0.8471, 0.7765, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="Animation" id="Animation_ready"]
 resource_name = "ready"
@@ -29,8 +45,8 @@ _data = {
 }
 
 [node name="ChestChip" type="Button" node_paths=PackedStringArray("ring", "chest", "badge", "lbl_threshold", "ready_badge", "pulse_anim")]
-custom_minimum_size = Vector2(38, 38)
-size = Vector2(38, 38)
+custom_minimum_size = Vector2(46, 46)
+size = Vector2(46, 46)
 focus_mode = 0
 flat = true
 script = ExtResource("1_chip")
@@ -60,9 +76,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -12.0
-offset_top = -11.0
-offset_right = 12.0
+offset_left = -14.0
+offset_top = -15.0
+offset_right = 14.0
 offset_bottom = 13.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -77,10 +93,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -12.0
-offset_top = -5.0
-offset_right = 4.0
-offset_bottom = 11.0
+offset_left = -14.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 14.0
 grow_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("4_badge")
@@ -93,12 +109,12 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -12.0
+offset_left = -16.0
 offset_top = -8.0
 offset_right = 8.0
-offset_bottom = 12.0
+offset_bottom = 16.0
 grow_horizontal = 0
-pivot_offset = Vector2(10, 10)
+pivot_offset = Vector2(12, 12)
 mouse_filter = 2
 texture = ExtResource("5_ready")
 expand_mode = 1
@@ -112,14 +128,17 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = 4.0
-offset_top = -9.0
+offset_top = -11.0
 offset_right = 44.0
-offset_bottom = 9.0
+offset_bottom = 11.0
 grow_horizontal = 0
 mouse_filter = 2
-theme_type_variation = &"ChapterStarsMuted"
-theme_override_font_sizes/font_size = 12
+theme_type_variation = &"ChapterStars"
+theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_label")
 text = "9★"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PulseAnim" type="AnimationPlayer" parent="."]
