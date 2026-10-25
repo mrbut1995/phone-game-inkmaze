@@ -2,25 +2,25 @@
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
 [ext_resource type="Script" uid="uid://dnk2a0loscjvb" path="res://scripts/scenes/layout/archivement_layout.gd" id="2_layout"]
-[ext_resource uid="uid://yssg5du4e4fc" type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
-[ext_resource uid="uid://c8fvwpvick2hx" type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
-[ext_resource uid="uid://t2ok4t76hk45" type="Texture2D" path="res://assets/images-png/archivements/sheet.png" id="5_sheet"]
-[ext_resource uid="uid://ruoaaeu82tl0" type="Texture2D" path="res://assets/images-png/popups/washi_tape.png" id="6_tape"]
-[ext_resource uid="uid://blmy5cbx5kmeg" type="Texture2D" path="res://assets/images-png/popups/paper_clip.png" id="7_clip"]
-[ext_resource uid="uid://cjsccwwarse1m" type="Texture2D" path="res://assets/images-png/archivements/overview_card.png" id="8_overview"]
-[ext_resource uid="uid://bir8bpmt03wuv" type="Texture2D" path="res://assets/images-png/icons/icon_trophy.png" id="9_trophy"]
-[ext_resource uid="uid://iqcnvasdqake" type="Texture2D" path="res://assets/images-png/common/bar_track.png" id="10_track"]
-[ext_resource uid="uid://ckrmagf1xljl5" type="Texture2D" path="res://assets/images-png/common/bar_fill.png" id="11_fill"]
-[ext_resource uid="uid://bh04s7e4a26qx" type="Texture2D" path="res://assets/images-png/archivements/stamp_claimed.png" id="12_stamp"]
-[ext_resource type="PackedScene" path="res://nodes/archivements/tab_button_landscape.tscn" id="20_tab"]
+[ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
+[ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
+[ext_resource type="Texture2D" uid="uid://t2ok4t76hk45" path="res://assets/images-png/archivements/sheet.png" id="5_sheet"]
+[ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="6_tape"]
+[ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="7_clip"]
+[ext_resource type="Texture2D" uid="uid://bh04s7e4a26qx" path="res://assets/images-png/archivements/stamp_claimed.png" id="12_stamp"]
+[ext_resource type="PackedScene" path="res://nodes/archivements/tab_button_seg_land.tscn" id="20_tab"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/seg_track.png" id="30_track"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_ico_all.png" id="31_i0"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_ico_levels.png" id="32_i1"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_ico_dungeon.png" id="33_i2"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_ico_daily.png" id="34_i3"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_ico_special.png" id="35_i4"]
+[ext_resource type="PackedScene" path="res://nodes/archivements/card_big_land.tscn" id="22_card"]
+[ext_resource type="PackedScene" path="res://nodes/archivements/thumb.tscn" id="23_thumb"]
 
-[node name="Landscape" unique_id=1597886665 node_paths=PackedStringArray("btn_back", "overview_bar", "overview_fill", "overview_pct", "overview_summary", "tabs_box", "card_area", "scroll", "pages_host", "dots_box", "empty_label", "stamp_label") instance=ExtResource("1_parent")]
+[node name="Landscape" node_paths=PackedStringArray("btn_back", "tabs_box", "card_area", "scroll", "pages_host", "dots_box", "empty_label", "stamp_label", "thumbs_box") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/Back")
-overview_bar = NodePath("Sheet/Body/LeftCol/Overview/Bar")
-overview_fill = NodePath("Sheet/Body/LeftCol/Overview/Bar/Track/Fill")
-overview_pct = NodePath("Sheet/Body/LeftCol/Overview/Percent")
-overview_summary = NodePath("Sheet/Body/LeftCol/Overview/Summary")
 tabs_box = NodePath("Sheet/Body/LeftCol/Tabs")
 card_area = NodePath("Sheet/Body/RightCol/CardArea")
 scroll = NodePath("Sheet/Body/RightCol/CardArea/Scroll")
@@ -28,8 +28,17 @@ pages_host = NodePath("Sheet/Body/RightCol/CardArea/Scroll/Pages")
 dots_box = NodePath("Sheet/Body/RightCol/Dots")
 empty_label = NodePath("Sheet/Body/RightCol/CardArea/EmptyLabel")
 stamp_label = NodePath("Sheet/Body/LeftCol/Spacer/Stamp/Label")
+card_scene = ExtResource("22_card")
+cards_per_page = 1
+page_width = 250.0
+peek_scale = 0.86
+peek_alpha = 0.6
+peek_tilt = 0.09
+thumbs_box = NodePath("Sheet/Body/RightCol/Thumbs")
+thumb_scene = ExtResource("23_thumb")
+thumb_count = 7
 
-[node name="TopBar" parent="." index="0" unique_id=655760613]
+[node name="TopBar" parent="." index="0"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03125
@@ -40,8 +49,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
 
-[node name="Back" type="TextureButton" parent="TopBar" index="0" unique_id=525174880]
-custom_minimum_size = Vector2(40, 40)
+[node name="Back" type="TextureButton" parent="TopBar" index="0"]
+custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
@@ -53,7 +62,7 @@ texture_focused = ExtResource("3_back_n")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="TopBar" index="1" unique_id=1308824498]
+[node name="Title" type="Label" parent="TopBar" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LevelsTitle"
@@ -61,7 +70,7 @@ text = "STR_ACH_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sheet" type="NinePatchRect" parent="." index="1" unique_id=1774593425]
+[node name="Sheet" type="NinePatchRect" parent="." index="1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03125
@@ -76,7 +85,7 @@ patch_margin_bottom = 122
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
-[node name="Tape" type="TextureRect" parent="Sheet" index="0" unique_id=1433953621]
+[node name="Tape" type="TextureRect" parent="Sheet" index="0"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4
@@ -87,7 +96,7 @@ mouse_filter = 2
 texture = ExtResource("6_tape")
 expand_mode = 1
 
-[node name="Clip" type="TextureRect" parent="Sheet" index="1" unique_id=1215972539]
+[node name="Clip" type="TextureRect" parent="Sheet" index="1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.115
@@ -99,7 +108,7 @@ offset_bottom = -0.21280289
 mouse_filter = 2
 texture = ExtResource("7_clip")
 
-[node name="Body" type="HBoxContainer" parent="Sheet" index="2" unique_id=195873109]
+[node name="Body" type="HBoxContainer" parent="Sheet" index="2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.035
@@ -110,175 +119,87 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 18
 
-[node name="LeftCol" type="VBoxContainer" parent="Sheet/Body" index="0" unique_id=220095344]
+[node name="LeftCol" type="VBoxContainer" parent="Sheet/Body" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.38
-theme_override_constants/separation = 10
+size_flags_stretch_ratio = 0.27
+theme_override_constants/separation = 12
 
-[node name="Overview" type="NinePatchRect" parent="Sheet/Body/LeftCol" index="0" unique_id=914432441]
-custom_minimum_size = Vector2(0, 104)
-layout_mode = 2
-texture = ExtResource("8_overview")
-patch_margin_left = 28
-patch_margin_top = 12
-patch_margin_right = 42
-patch_margin_bottom = 9
-
-[node name="Icon" type="TextureRect" parent="Sheet/Body/LeftCol/Overview" index="0" unique_id=1770306316]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.035
-anchor_top = 0.21157691
-anchor_right = 0.17
-anchor_bottom = 0.6
-mouse_filter = 2
-texture = ExtResource("9_trophy")
-expand_mode = 1
-stretch_mode = 5
-metadata/_edit_use_anchors_ = true
-
-[node name="Title" type="Label" parent="Sheet/Body/LeftCol/Overview" index="1" unique_id=2116233338]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.2
-anchor_top = 0.21884611
-anchor_right = 0.97
-anchor_bottom = 0.44
-theme_type_variation = &"AchOverviewTitle"
-theme_override_font_sizes/font_size = 16
-text = "STR_ACH_OVERVIEW_TITLE"
-vertical_alignment = 1
-text_overrun_behavior = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="Bar" type="Control" parent="Sheet/Body/LeftCol/Overview" index="2" unique_id=809497002]
-clip_contents = true
-layout_mode = 1
-anchor_left = 0.2
-anchor_top = 0.63461536
-anchor_right = 0.806875
-anchor_bottom = 0.7115769
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Track" type="NinePatchRect" parent="Sheet/Body/LeftCol/Overview/Bar" index="0" unique_id=783775116]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("10_track")
-patch_margin_left = 5
-patch_margin_top = 2
-patch_margin_right = 4
-patch_margin_bottom = 2
-
-[node name="Fill" type="NinePatchRect" parent="Sheet/Body/LeftCol/Overview/Bar/Track" index="0" unique_id=1159689666]
-modulate = Color(0.23921569, 0.5137255, 0.68235296, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.467
-anchor_bottom = 1.0
-offset_right = 0.03931427
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_fill")
-patch_margin_left = 4
-patch_margin_top = 2
-patch_margin_right = 5
-patch_margin_bottom = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Percent" type="Label" parent="Sheet/Body/LeftCol/Overview" index="3" unique_id=360382870]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.74
-anchor_top = 0.42
-anchor_right = 0.98
-anchor_bottom = 0.86
-theme_type_variation = &"AchOverviewPct"
-text = "0%"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Summary" type="Label" parent="Sheet/Body/LeftCol/Overview" index="4" unique_id=2060737265]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.04
-anchor_top = 0.82
-anchor_right = 0.97
-anchor_bottom = 1.0
-theme_type_variation = &"AchOverviewSummary"
-text = "Đã mở: 0 / 0 Danh hiệu • Điểm: 0 AP"
-vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="Tabs" type="GridContainer" parent="Sheet/Body/LeftCol" index="1" unique_id=705973657]
+[node name="Tabs" type="GridContainer" parent="Sheet/Body/LeftCol" index="0"]
 layout_mode = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
-columns = 2
+columns = 1
 
 [node name="Tab0" parent="Sheet/Body/LeftCol/Tabs" index="0" instance=ExtResource("20_tab")]
 layout_mode = 2
-category = ""
+
+[node name="Icon" parent="Sheet/Body/LeftCol/Tabs/Tab0" index="1"]
+texture = ExtResource("31_i0")
 
 [node name="Tab1" parent="Sheet/Body/LeftCol/Tabs" index="1" instance=ExtResource("20_tab")]
 layout_mode = 2
 category = "levels"
 
+[node name="Icon" parent="Sheet/Body/LeftCol/Tabs/Tab1" index="1"]
+texture = ExtResource("32_i1")
+
 [node name="Tab2" parent="Sheet/Body/LeftCol/Tabs" index="2" instance=ExtResource("20_tab")]
 layout_mode = 2
 category = "dungeon"
+
+[node name="Icon" parent="Sheet/Body/LeftCol/Tabs/Tab2" index="1"]
+texture = ExtResource("33_i2")
 
 [node name="Tab3" parent="Sheet/Body/LeftCol/Tabs" index="3" instance=ExtResource("20_tab")]
 layout_mode = 2
 category = "daily"
 
+[node name="Icon" parent="Sheet/Body/LeftCol/Tabs/Tab3" index="1"]
+texture = ExtResource("34_i3")
+
 [node name="Tab4" parent="Sheet/Body/LeftCol/Tabs" index="4" instance=ExtResource("20_tab")]
 layout_mode = 2
 category = "special"
 
-[node name="Spacer" type="Control" parent="Sheet/Body/LeftCol" index="2" unique_id=240991435]
+[node name="Icon" parent="Sheet/Body/LeftCol/Tabs/Tab4" index="1"]
+texture = ExtResource("35_i4")
+
+[node name="Spacer" type="Control" parent="Sheet/Body/LeftCol" index="1"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Stamp" type="Control" parent="Sheet/Body/LeftCol/Spacer" index="0" unique_id=1635254628]
-custom_minimum_size = Vector2(150, 46)
+[node name="Stamp" type="Control" parent="Sheet/Body/LeftCol/Spacer" index="0"]
 layout_mode = 1
-anchor_left = 0.16663472
-anchor_top = 0.2862724
-anchor_right = 0.79423404
-anchor_bottom = 0.48447496
-offset_left = 0.0625
-offset_top = 0.04799652
-offset_right = 0.06248474
-offset_bottom = -0.088012695
-rotation = -0.32931298
-size_flags_horizontal = 4
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -26.0
+offset_right = 85.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.20943952
+pivot_offset = Vector2(85, 26)
 mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
-[node name="Bg" type="NinePatchRect" parent="Sheet/Body/LeftCol/Spacer/Stamp" index="0" unique_id=455472805]
+[node name="Bg" type="TextureRect" parent="Sheet/Body/LeftCol/Spacer/Stamp" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("12_stamp")
-patch_margin_left = 7
-patch_margin_top = 4
-patch_margin_right = 8
-patch_margin_bottom = 5
-axis_stretch_horizontal = 2
-axis_stretch_vertical = 2
+expand_mode = 1
+stretch_mode = 0
 
-[node name="Label" type="Label" parent="Sheet/Body/LeftCol/Spacer/Stamp" index="1" unique_id=1197436828]
+[node name="Label" type="Label" parent="Sheet/Body/LeftCol/Spacer/Stamp" index="1"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -286,40 +207,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"AchBadgesStamp"
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 text = "0/0 BADGES"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Quote" type="Label" parent="Sheet/Body/LeftCol/Spacer" index="1" unique_id=343674059]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.020000001
-anchor_top = 0.43500003
-anchor_right = 1.0200001
-anchor_bottom = 0.514
-offset_left = 1.0624995
-offset_top = 61.983986
-offset_right = 1.0624695
-offset_bottom = 61.916
-theme_type_variation = &"AchQuote"
-text = "STR_ACH_QUOTE"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="RightCol" type="VBoxContainer" parent="Sheet/Body" index="1" unique_id=1803283041]
+[node name="RightCol" type="VBoxContainer" parent="Sheet/Body" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.62
+size_flags_stretch_ratio = 0.73
 theme_override_constants/separation = 6
 
-[node name="CardArea" type="Control" parent="Sheet/Body/RightCol" index="0" unique_id=172415174]
+[node name="CardArea" type="Control" parent="Sheet/Body/RightCol" index="0"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Scroll" type="ScrollContainer" parent="Sheet/Body/RightCol/CardArea" index="0" unique_id=1876525916]
+[node name="Scroll" type="ScrollContainer" parent="Sheet/Body/RightCol/CardArea" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -330,13 +234,13 @@ horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 scroll_deadzone = 12
 
-[node name="Pages" type="HBoxContainer" parent="Sheet/Body/RightCol/CardArea/Scroll" index="0" unique_id=1510913512]
+[node name="Pages" type="HBoxContainer" parent="Sheet/Body/RightCol/CardArea/Scroll" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="EmptyLabel" type="Label" parent="Sheet/Body/RightCol/CardArea" index="1" unique_id=997047293]
+[node name="EmptyLabel" type="Label" parent="Sheet/Body/RightCol/CardArea" index="1"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -345,12 +249,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"AchEmpty"
+theme_override_font_sizes/font_size = 20
 text = "STR_ACH_EMPTY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Dots" type="HBoxContainer" parent="Sheet/Body/RightCol" index="1" unique_id=503152149]
-custom_minimum_size = Vector2(0, 22)
+[node name="Thumbs" type="HBoxContainer" parent="Sheet/Body/RightCol" index="1"]
+custom_minimum_size = Vector2(0, 66)
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Dots" type="HBoxContainer" parent="Sheet/Body/RightCol" index="2"]
+visible = false
+layout_mode = 2
 alignment = 1

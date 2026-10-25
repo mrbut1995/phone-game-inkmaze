@@ -34,6 +34,8 @@ var active := false
 
 ## Node binding: khai `node_paths` + NodePath trong `tab_button*.tscn`
 @export var label: Label = null
+## Icon phân loại (trắng) — tô màu theo trạng thái cùng nhãn. Có thể để trống
+@export var tab_icon: TextureRect = null
 
 
 func _ready() -> void:
@@ -61,9 +63,17 @@ func set_active(on: bool) -> void:
 	texture_pressed = art
 	texture_hover = art
 	texture_focus = art
+	var offset = 0
+	if on:
+		offset = 6
+	$Label.position.y = 38 - offset
+	$Icon.position.y = 12 - offset
+
 	if label != null:
 		# Đổi màu TỨC THỜI (contract đồng bộ: set_active() xong là đọc được màu mới)
 		label.modulate = LABEL_ACTIVE_COLOR if on else LABEL_IDLE_COLOR
+	if tab_icon != null:
+		tab_icon.modulate = LABEL_ACTIVE_COLOR if on else LABEL_IDLE_COLOR
 	# Pop nhẹ khi tab được KÍCH HOẠT (chỉ hiệu ứng scale — không ảnh hưởng giá trị đọc được)
 	if on and not Engine.is_editor_hint():
 		UIAnim._update_pivot(self)

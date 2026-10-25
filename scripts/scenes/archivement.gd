@@ -53,6 +53,8 @@ var _drag_active := false
 var _drag_moved := false
 var _drag_start_x := 0.0
 var _drag_start_scroll := 0.0
+## Chỉ số danh hiệu của thumb ĐẦU dải ảnh thu nhỏ (bố cục G — xem `_update_thumbs`)
+var _thumb_start := 0
 
 
 func _ready() -> void:
@@ -87,6 +89,8 @@ func _bind_refs() -> void:
 	layout = active_layout() as ArchivementLayout
 	if layout == null:
 		push_warning("archivement: bố cục chưa gắn ArchivementLayout — thiếu binding trong scenes/layout/<hướng>/archivement.tscn")
+		return
+	_connect_peek()
 
 
 ## Cỡ KHUNG NHÌN thật của vùng thẻ.
@@ -104,6 +108,9 @@ func _viewport_size() -> Vector2:
 
 ## Số thẻ mỗi trang: bản DỌC = 5 (1 cột × 5 hàng); bản NGANG = lưới nhiều cột × số hàng vừa khung
 func _cards_per_page() -> int:
+	# Bố cục "thẻ bài lớn" (G) ghim 1 thẻ/trang qua `layout.cards_per_page`
+	if layout != null and layout.cards_per_page > 0:
+		return layout.cards_per_page
 	return _columns_per_page() * _rows_per_page()
 
 
@@ -238,6 +245,12 @@ func _build_pages() -> void:
 		layout.pages_host.remove_child(child)
 		child.queue_free()
 
+	# Bố cục G (page_width > 0): đệm 2 đầu để thẻ đầu/cuối nằm GIỮA khung nhìn (rộng ra khi `_apply_layout`)
+	var padded := layout.page_width > 0.0
+	if padded:
+		layout.pages_host.add_child(_make_pad("PadL"))
+
+	var card_scene: PackedScene = layout.card_scene if layout.card_scene != null else CARD_SCENE
 	# Số thẻ mỗi trang = số Ô VỪA KHUNG (cột × hàng). Dùng ĐÚNG con số này khi chia trang —
 	# nếu ghim cứng CARDS_PER_PAGE thì ở bản NGANG (khung thấp hơn) thẻ cuối sẽ tràn ra ngoài và bị cắt.
 	var per_page := maxi(_cards_per_page(), 1)
@@ -250,26 +263,67 @@ func _build_pages() -> void:
 		var grid := column as GridContainer
 		if grid != null:
 			grid.columns = maxi(_columns_per_page(), 1)
+		if padded:
+			# Thẻ lớn nằm GIỮA trang; thẻ nghiêng/phóng không bị cắt ở mép trang
+			page.clip_contents = false
+			var box := column as BoxContainer
+			if box != null:
+				box.alignment = BoxContainer.ALIGNMENT_CENTER
 		for slot in per_page:
 			var list_index := page_index * per_page + slot
 			if list_index >= _entries.size():
 				break
-			var card: Control = CARD_SCENE.instantiate()
+			var card: Control = card_scene.instantiate()
 			column.add_child(card)
 			if card.has_method("setup"):
-				card.call("setup", _entries[list_index])
+				card.call("setup", _decorated_entry(list_index))
 			if card.has_signal("claim_requested"):
 				card.connect("claim_requested", _on_claim_requested)
-			UIAnim.play_pop_in(card, 0.02 * slot, 0.9, 0.18)
+			# Thẻ lớn (G) có hiệu ứng thu/phóng riêng theo vị trí cuộn (`_update_peek`) ⇒ bỏ pop-in
+			if not padded:
+				UIAnim.play_pop_in(card, 0.02 * slot, 0.9, 0.18)
+
+	if padded:
+		layout.pages_host.add_child(_make_pad("PadR"))
 
 	if layout.empty_label != null:
 		layout.empty_label.visible = _entries.is_empty()
 
 
+## Entry + các khoá phụ cho thẻ lớn: số thứ tự, tổng, phân loại (thẻ cũ bỏ qua các khoá này)
+func _decorated_entry(list_index: int) -> Dictionary:
+	var entry: Dictionary = (_entries[list_index] as Dictionary).duplicate()
+	entry["index"] = list_index + 1
+	entry["total"] = _entries.size()
+	if not entry.has("category"):
+		entry["category"] = _category
+	return entry
+
+
+func _make_pad(pad_name: String) -> Control:
+	var pad := Control.new()
+	pad.name = pad_name
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return pad
+
+
+## Chỉ các TRANG (bỏ 2 ô đệm PadL/PadR của bố cục G)
+func _pages() -> Array[AchPage]:
+	var result: Array[AchPage] = []
+	if layout == null or layout.pages_host == null:
+		return result
+	for child in layout.pages_host.get_children():
+		var page := child as AchPage
+		if page != null and not page.is_queued_for_deletion():
+			result.append(page)
+	return result
+
+
 func _page_node(index: int) -> Control:
-	if layout.pages_host == null or index < 0 or index >= layout.pages_host.get_child_count():
+	var pages := _pages()
+	if index < 0 or index >= pages.size():
 		return null
-	return layout.pages_host.get_child(index) as Control
+	return pages[index]
 
 
 func _on_claim_requested(id: String) -> void:
@@ -329,6 +383,12 @@ func _on_tab_pressed(category: String) -> void:
 # Chỉ số trang (dots)
 # ---------------------------------------------------------------------------
 func _build_dots() -> void:
+	# Bố cục G: dải ảnh thu nhỏ thay cho chấm trang
+	if layout.thumbs_box != null and layout.thumb_scene != null:
+		if layout.dots_box != null:
+			layout.dots_box.visible = false
+		_build_thumbs()
+		return
 	if layout.dots_box == null:
 		return
 	for child in layout.dots_box.get_children():
@@ -346,6 +406,9 @@ func _build_dots() -> void:
 
 
 func _update_dots() -> void:
+	if layout.thumbs_box != null and layout.thumb_scene != null:
+		_update_thumbs()
+		return
 	if layout.dots_box == null:
 		return
 	var dots := layout.dots_box.get_children()
@@ -378,11 +441,19 @@ func _apply_layout() -> void:
 		_reload(true)
 	_page = clampi(_page, 0, maxi(_page_count - 1, 0))
 	var view := _viewport_size()
-	_page_width = maxf(view.x, 1.0)
-	for page in layout.pages_host.get_children():
+	# Bố cục G: trang hẹp hơn khung (lộ rìa thẻ bên cạnh) + đệm 2 đầu = (khung − trang) / 2
+	_page_width = layout.page_width if layout.page_width > 0.0 else maxf(view.x, 1.0)
+	_page_width = maxf(_page_width, 1.0)
+	var pad := maxf((view.x - _page_width) * 0.5, 0.0) if layout.page_width > 0.0 else 0.0
+	for pad_name in ["PadL", "PadR"]:
+		var pad_node := layout.pages_host.get_node_or_null(pad_name) as Control
+		if pad_node != null:
+			pad_node.custom_minimum_size = Vector2(pad, view.y)
+	for page in _pages():
 		page.custom_minimum_size = Vector2(_page_width, view.y)
 	_stop_tween()
 	layout.scroll.scroll_horizontal = int(float(_page) * _page_width)
+	_update_peek()
 	# Khung còn đổi cỡ tiếp ở frame sau (container dàn lại) ⇒ hẹn áp lại cho khớp số mới
 	if not _viewport_size().is_equal_approx(view):
 		_schedule_apply_layout()
@@ -439,6 +510,81 @@ func _page_for_first_claimable() -> int:
 		if bool((_entries[index] as Dictionary).get("claimable", false)):
 			return clampi(index / per_page, 0, maxi(_page_count - 1, 0))
 	return 0
+
+
+# ---------------------------------------------------------------------------
+# Bố cục G: dải ảnh thu nhỏ + hiệu ứng thẻ bên cạnh
+# ---------------------------------------------------------------------------
+## Tạo (hoặc cắt bớt) các thumb: tối đa `layout.thumb_count` cái, cửa sổ trượt theo trang đang xem
+func _build_thumbs() -> void:
+	var box := layout.thumbs_box
+	for child in box.get_children():
+		box.remove_child(child)
+		child.queue_free()
+	var count := mini(maxi(layout.thumb_count, 1), _entries.size())
+	for i in count:
+		var thumb := layout.thumb_scene.instantiate() as AchThumb
+		thumb.name = "Thumb%d" % (i + 1)
+		box.add_child(thumb)
+		thumb.pressed.connect(_on_thumb_pressed.bind(thumb))
+	box.visible = count > 0
+	_update_thumbs()
+
+
+## Cửa sổ thumb: giữ trang hiện tại ở GIỮA dải, chạm đầu/cuối thì dừng
+func _update_thumbs() -> void:
+	var box := layout.thumbs_box
+	if box == null:
+		return
+	var thumbs := box.get_children()
+	var count := thumbs.size()
+	if count == 0 or _entries.is_empty():
+		return
+	_thumb_start = clampi(_page - count / 2, 0, maxi(_entries.size() - count, 0))
+	for i in count:
+		var thumb := thumbs[i] as AchThumb
+		var index := _thumb_start + i
+		if thumb != null and index < _entries.size():
+			thumb.setup(_entries[index], index, index == _page)
+
+
+func _on_thumb_pressed(thumb: AchThumb) -> void:
+	Sfx.play(Sfx.PAGE_TURN)
+	_go_to_page(thumb.entry_index)
+
+
+func _connect_peek() -> void:
+	if layout.scroll == null:
+		return
+	var bar := layout.scroll.get_h_scroll_bar()
+	if bar != null and not bar.value_changed.is_connected(_on_scroll_value_changed):
+		bar.value_changed.connect(_on_scroll_value_changed)
+
+
+func _on_scroll_value_changed(_value: float) -> void:
+	_update_peek()
+
+
+## Thẻ càng xa tâm khung càng nhỏ + mờ + nghiêng ra ngoài (chỉ khi bố cục khai `page_width`)
+func _update_peek() -> void:
+	if layout == null or layout.page_width <= 0.0 or layout.scroll == null or _page_width <= 0.0:
+		return
+	var scroll_x := float(layout.scroll.scroll_horizontal)
+	var pages := _pages()
+	for i in pages.size():
+		var column := pages[i].column()
+		if column.get_child_count() == 0:
+			continue
+		var card := column.get_child(0) as Control
+		var offset := (float(i) * _page_width - scroll_x) / _page_width   # −1 = trang trái · 0 = giữa · +1 = trang phải
+		var dist := absf(offset)
+		var t := clampf(dist, 0.0, 1.0)
+		card.pivot_offset = card.size * 0.5
+		card.scale = Vector2.ONE * lerpf(1.0, layout.peek_scale, t)
+		card.rotation = signf(offset) * layout.peek_tilt * t
+		# Thẻ bên cạnh nằm DƯỚI thẻ giữa (đè lên nhau); thẻ cách 2 trang trở đi mờ dần rồi ẩn
+		card.modulate.a = lerpf(1.0, layout.peek_alpha, t) * clampf(2.0 - dist, 0.0, 1.0)
+		card.z_index = 10 - int(round(minf(dist, 3.0) * 3.0))
 
 
 # ---------------------------------------------------------------------------

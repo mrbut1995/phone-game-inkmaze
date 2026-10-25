@@ -1,0 +1,70 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/archivements/tab_button.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/seg_active.png" id="2_art_active"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/seg_idle_card.png" id="3_art_idle"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a"]
+texture = ExtResource("2_art_active")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+
+[node name="TabButton" type="Button" node_paths=PackedStringArray("label", "tab_icon")]
+custom_minimum_size = Vector2(0, 62)
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_a")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_a")
+theme_override_styles/hover = SubResource("StyleBoxTexture_a")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_a")
+theme_override_styles/focus = SubResource("StyleBoxTexture_a")
+script = ExtResource("1_script")
+label = NodePath("Label")
+tab_icon = NodePath("Icon")
+art_active = ExtResource("2_art_active")
+art_idle = ExtResource("3_art_idle")
+texture_normal = ExtResource("2_art_active")
+texture_hover = ExtResource("2_art_active")
+texture_pressed = ExtResource("2_art_active")
+texture_disabled = ExtResource("2_art_active")
+texture_focus = ExtResource("2_art_active")
+patch_margin_left = 18.0
+patch_margin_top = 18.0
+patch_margin_right = 18.0
+patch_margin_bottom = 18.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 58.0
+offset_top = 0.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_alignment = 1
+theme_type_variation = &"AchTabLabel"
+theme_override_font_sizes/font_size = 16
+text = "TAB"
+clip_text = true
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 18.0
+offset_top = -17.0
+offset_right = 50.0
+offset_bottom = 12.0
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="pressed" from="." to="." method="_emit_tab_pressed"]

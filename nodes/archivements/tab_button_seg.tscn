@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://bhl6o5bkj2h2p"]
+
+[ext_resource type="Script" uid="uid://0waeoqw62pm0" path="res://scripts/nodes/archivements/tab_button.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dv4w3hvusewkk" path="res://assets/images-png/archivements/seg_active.png" id="2_art_active"]
+[ext_resource type="Texture2D" uid="uid://cmwedjh5vj0sw" path="res://assets/images-png/archivements/seg_idle.png" id="3_art_idle"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2moag"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("2_art_active")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y3xcc"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("2_art_active")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dm3jp"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("2_art_active")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a53n3"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("2_art_active")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uqvb5"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+texture = ExtResource("2_art_active")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+
+[node name="TabButton" type="Button" unique_id=1666738180 node_paths=PackedStringArray("label", "tab_icon")]
+custom_minimum_size = Vector2(0, 62)
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_2moag")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y3xcc")
+theme_override_styles/hover = SubResource("StyleBoxTexture_dm3jp")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_a53n3")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uqvb5")
+script = ExtResource("1_script")
+art_active = ExtResource("2_art_active")
+art_idle = ExtResource("3_art_idle")
+label = NodePath("Label")
+tab_icon = NodePath("Icon")
+texture_normal = ExtResource("2_art_active")
+texture_hover = ExtResource("2_art_active")
+texture_pressed = ExtResource("2_art_active")
+texture_disabled = ExtResource("2_art_active")
+texture_focus = ExtResource("2_art_active")
+patch_margin_left = 18.0
+patch_margin_top = 18.0
+patch_margin_right = 18.0
+patch_margin_bottom = 18.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="." unique_id=2126748385]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 33.0
+offset_right = -2.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_type_variation = &"AchTabLabel"
+theme_override_font_sizes/font_size = 11
+text = "TAB"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1437343856]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -13.0
+offset_top = 7.0
+offset_right = 13.0
+offset_bottom = 33.0
+grow_horizontal = 2
+offset_transform_enabled = true
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="pressed" from="." to="." method="_emit_tab_pressed"]
