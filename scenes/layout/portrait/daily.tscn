@@ -1576,23 +1576,35 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("21_vfstar")
 
 [node name="PulseAnim" type="AnimationPlayer" parent="." index="1" unique_id=544807469]
-libraries/ = SubResource("AnimationLibrary_pulse")
+libraries = {
+"": SubResource("AnimationLibrary_pulse")
+}
 
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="2" unique_id=928098753]
-libraries/ = SubResource("AnimationLibrary_enter")
+libraries = {
+"": SubResource("AnimationLibrary_enter")
+}
 autoplay = &"enter"
 
 [node name="VfxAnim" type="AnimationPlayer" parent="." index="3" unique_id=1385834518]
-libraries/ = SubResource("AnimationLibrary_vfx")
+libraries = {
+"": SubResource("AnimationLibrary_vfx")
+}
 
 [node name="ArriveAnim" type="AnimationPlayer" parent="." index="4" unique_id=1900600022]
-libraries/ = SubResource("AnimationLibrary_arrive")
+libraries = {
+"": SubResource("AnimationLibrary_arrive")
+}
 
 [node name="SheetAnim" type="AnimationPlayer" parent="."]
-libraries/ = SubResource("AnimationLibrary_sheet")
+libraries = {
+"": SubResource("AnimationLibrary_sheet")
+}
 
 [node name="RoadAnim" type="AnimationPlayer" parent="."]
-libraries/ = SubResource("AnimationLibrary_pencil")
+libraries = {
+"": SubResource("AnimationLibrary_pencil")
+}
 autoplay = &"idle"
 
 [connection signal="animation_finished" from="VfxAnim" to="." method="_on_vfx_anim_finished"]

@@ -139,6 +139,12 @@ func _refresh_stamp() -> void:
 	layout.stamp_label.text = tr("STR_SETTINGS_VERSION").format([version])
 
 
+## Đặt pivot về tâm node (gọi sau lượt layout đầu để `size` đã đúng)
+func _center_pivot_deferred(ctrl: Control) -> void:
+	if is_instance_valid(ctrl):
+		ctrl.pivot_offset = ctrl.size * 0.5
+
+
 func _setup_animations() -> void:
 	if DisplayServer.get_name() == "headless":
 		# Đổi scene NGAY trong `_ready` sẽ gọi `root.remove_child()` lúc root đang bận
@@ -147,9 +153,12 @@ func _setup_animations() -> void:
 		return
 
 	if layout.anim_player != null and layout.anim_player.has_animation("play_entrance"):
-		# Đặt các pivot cơ bản
+		# Đặt các pivot cơ bản — animation scale quanh tâm, không phải góc trên-trái
 		if layout.logo_container != null:
 			layout.logo_container.pivot_offset = layout.logo_container.size * 0.5
+		if layout.title_label != null:
+			# Label chỉ có size sau lượt layout đầu ⇒ đặt pivot ở frame kế tiếp
+			_center_pivot_deferred.call_deferred(layout.title_label)
 		layout.anim_player.play("play_entrance")
 		
 		# Ngòi bút chì vẽ phác thảo quanh logo — animation "pencil_idle" (loop) của layout

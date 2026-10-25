@@ -343,5 +343,7 @@ layout_mode = 1
 dim_overscan = 2000.0
 
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="1"]
-libraries/ = SubResource("AnimationLibrary_levels_enter")
+libraries = {
+"": SubResource("AnimationLibrary_levels_enter")
+}
 autoplay = &"enter"

@@ -123,6 +123,8 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
 [node name="FxAnim" type="AnimationPlayer" parent="." index="3" unique_id=417332510]
-libraries/ = SubResource("AnimationLibrary_mcfx")
+libraries = {
+"": SubResource("AnimationLibrary_mcfx")
+}
 
 [connection signal="opened" from="." to="." method="_start_countdown"]

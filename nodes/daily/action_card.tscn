@@ -1010,6 +1010,8 @@ text = "STR_DAILY_CARD_PLAY_BTN"
 vertical_alignment = 1
 
 [node name="FxAnim" type="AnimationPlayer" parent="." unique_id=1221938247]
-libraries/ = SubResource("AnimationLibrary_celebrate")
+libraries = {
+"": SubResource("AnimationLibrary_celebrate")
+}
 
 [connection signal="pressed" from="Cta" to="." method="_on_btn_cta_pressed"]

@@ -415,11 +415,17 @@ navigate_on_plus = false
 show_max = false
 
 [node name="WalletAnim" type="AnimationPlayer" parent="." index="2" unique_id=1902385334]
-libraries/ = SubResource("AnimationLibrary_wallet_lsh")
+libraries = {
+"": SubResource("AnimationLibrary_wallet_lsh")
+}
 
 [node name="PulseAnim" type="AnimationPlayer" parent="." index="3" unique_id=120562696]
-libraries/ = SubResource("AnimationLibrary_shop_pulse_l")
+libraries = {
+"": SubResource("AnimationLibrary_shop_pulse_l")
+}
 
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="4" unique_id=2130316307]
-libraries/ = SubResource("AnimationLibrary_shop_enter_l")
+libraries = {
+"": SubResource("AnimationLibrary_shop_enter_l")
+}
 autoplay = &"enter"

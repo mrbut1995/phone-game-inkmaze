@@ -795,6 +795,8 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="2"]
-libraries/ = SubResource("AnimLib_enter")
+libraries = {
+"": SubResource("AnimLib_enter")
+}
 autoplay = &"enter"
 

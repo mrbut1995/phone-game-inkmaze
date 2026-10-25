@@ -59,7 +59,7 @@ texture_margin_top = 18.0
 texture_margin_right = 18.0
 texture_margin_bottom = 18.0
 
-[node name="TabButton" type="Button" unique_id=1666738180 node_paths=PackedStringArray("label", "tab_icon")]
+[node name="TabButton" type="Button" unique_id=1223474404 node_paths=PackedStringArray("label", "tab_icon")]
 custom_minimum_size = Vector2(0, 62)
 size_flags_horizontal = 3
 focus_mode = 0
@@ -84,7 +84,7 @@ patch_margin_right = 18.0
 patch_margin_bottom = 18.0
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="." unique_id=2126748385]
+[node name="Label" type="Label" parent="." unique_id=379002130]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -95,7 +95,6 @@ offset_right = -2.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
-offset_transform_enabled = true
 theme_type_variation = &"AchTabLabel"
 theme_override_font_sizes/font_size = 11
 text = "TAB"
@@ -103,7 +102,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 
-[node name="Icon" type="TextureRect" parent="." unique_id=1437343856]
+[node name="Icon" type="TextureRect" parent="." unique_id=1960796450]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -113,7 +112,6 @@ offset_top = 7.0
 offset_right = 13.0
 offset_bottom = 33.0
 grow_horizontal = 2
-offset_transform_enabled = true
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5

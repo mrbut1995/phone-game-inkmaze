@@ -243,7 +243,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries/ = SubResource("AnimationLibrary_node")
+libraries = {
+"": SubResource("AnimationLibrary_node")
+}
 
 [connection signal="pressed" from="Body/Button" to="." method="_on_button_pressed"]
 [connection signal="press_changed" from="Body/Button" to="." method="_on_button_press_changed"]

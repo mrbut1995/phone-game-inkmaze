@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" path="res://assets/images-png/archivements/badge_big_ring.png" id="7_ring"]
 [ext_resource type="Texture2D" uid="uid://iqcnvasdqake" path="res://assets/images-png/common/bar_track.png" id="8_track"]
 [ext_resource type="Texture2D" uid="uid://ckrmagf1xljl5" path="res://assets/images-png/common/bar_fill.png" id="9_fill"]
-[ext_resource type="Texture2D" uid="uid://bh04s7e4a26qx" path="res://assets/images-png/archivements/stamp_claimed.png" id="10_stamp"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/stamp_big.png" id="10_stamp"]
 [ext_resource type="Texture2D" uid="uid://ctpolvsc88ypl" path="res://assets/images-png/archivements/chip_reward.png" id="11_chip"]
 [ext_resource type="Texture2D" uid="uid://bsenhucno4lsr" path="res://assets/images-png/icons/icon_coin.png" id="12_coin"]
 [ext_resource type="Texture2D" path="res://assets/images-png/archivements/btn_claim_big_normal.png" id="13_claim_n"]
@@ -23,6 +23,7 @@ custom_minimum_size = Vector2(240, 432)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_card")
 bg = NodePath("Panel")
@@ -186,9 +187,9 @@ max_lines_visible = 2
 clip_contents = true
 layout_mode = 0
 offset_left = 20
-offset_top = 306
+offset_top = 300
 offset_right = 220
-offset_bottom = 318
+offset_bottom = 312
 mouse_filter = 2
 
 [node name="Track" type="NinePatchRect" parent="Bar"]
@@ -221,21 +222,19 @@ stretch_mode = 0
 [node name="Progress" type="Label" parent="."]
 layout_mode = 0
 offset_left = 20
-offset_top = 324
+offset_top = 316
 offset_right = 220
-offset_bottom = 350
+offset_bottom = 356
 theme_type_variation = &"AchCardProgress"
 theme_override_font_sizes/font_size = 15
 text = "Tiến độ: 0 / 1 Màn"
 horizontal_alignment = 1
 vertical_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
 
 [node name="Footer" type="Control" parent="."]
 layout_mode = 0
 offset_left = 16
-offset_top = 352
+offset_top = 360
 offset_right = 224
 offset_bottom = 414
 mouse_filter = 2
@@ -248,14 +247,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -65.0
-offset_top = -31.0
-offset_right = 65.0
-offset_bottom = 31.0
+offset_left = -62.0
+offset_top = -25.0
+offset_right = 62.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.13962634
-pivot_offset = Vector2(65.0, 31.0)
+pivot_offset = Vector2(62.0, 25.0)
 mouse_filter = 2
 
 [node name="Bg" type="TextureRect" parent="Footer/Stamp"]
@@ -273,11 +272,12 @@ stretch_mode = 0
 [node name="State" type="Label" parent="Footer/Stamp"]
 layout_mode = 1
 anchors_preset = -1
+anchor_top = 0.06
 anchor_right = 1.0
 anchor_bottom = 0.54
 grow_horizontal = 2
 theme_type_variation = &"AchStampBig"
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 18
 text = "ĐÃ ĐẠT"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -285,12 +285,12 @@ vertical_alignment = 1
 [node name="Reward" type="Label" parent="Footer/Stamp"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.12
-anchor_top = 0.54
-anchor_right = 0.76
-anchor_bottom = 0.9
+anchor_left = 0.1
+anchor_top = 0.52
+anchor_right = 0.7
+anchor_bottom = 0.92
 theme_type_variation = &"AchStampSmall"
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 15
 text = "+0"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -298,10 +298,10 @@ vertical_alignment = 1
 [node name="Coin" type="TextureRect" parent="Footer/Stamp"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.78
+anchor_left = 0.72
 anchor_top = 0.56
-anchor_right = 0.95
-anchor_bottom = 0.86
+anchor_right = 0.9
+anchor_bottom = 0.9
 mouse_filter = 2
 texture = ExtResource("12_coin")
 expand_mode = 1
@@ -316,9 +316,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -28.0
+offset_top = -25.0
 offset_right = 100.0
-offset_bottom = 28.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -367,9 +367,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -88.0
-offset_top = -21.0
+offset_top = -19.0
 offset_right = 88.0
-offset_bottom = 21.0
+offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

@@ -266,6 +266,7 @@ func _build_pages() -> void:
 		if padded:
 			# Thẻ lớn nằm GIỮA trang; thẻ nghiêng/phóng không bị cắt ở mép trang
 			page.clip_contents = false
+			page.mouse_filter = Control.MOUSE_FILTER_IGNORE   # trang kế bên (nằm sau trong cây) không được chặn nút của thẻ giữa
 			var box := column as BoxContainer
 			if box != null:
 				box.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -327,9 +328,92 @@ func _page_node(index: int) -> Control:
 
 
 func _on_claim_requested(id: String) -> void:
+	var origin := _claim_origin(id)       # đo TRƯỚC khi dựng lại (thẻ cũ sẽ bị thay)
 	if Archivement.claim(id):
 		Sfx.play(Sfx.STAMP_IMPACT)
+		_fly_coins(origin)
 		_refresh_all()
+		_play_claimed_fx(id)
+
+
+# ---------------------------------------------------------------------------
+# Hiệu ứng nhận thưởng: xu bay lên ví + dấu mộc đóng xuống thẻ
+# ---------------------------------------------------------------------------
+const FX_COIN := preload("res://assets/images-png/icons/icon_coin.png")
+@export var FX_COIN_COUNT := 8
+
+func _card_by_id(id: String) -> Control:
+	for page in _pages():
+		for card in page.column().get_children():
+			if card.has_method("entry_id") and str(card.call("entry_id")) == id:
+				return card as Control
+	return null
+
+
+func _claim_origin(id: String) -> Vector2:
+	var card := _card_by_id(id)
+	if card == null:
+		return get_viewport_rect().size * 0.5
+	if card.has_method("claim_origin"):
+		return card.call("claim_origin")
+	return card.get_global_rect().get_center()
+
+
+## Ví xu ở thanh trên (CoinChip) — đích của xu bay
+func _coin_target() -> Control:
+	if layout == null:
+		return null
+	return layout.get_node_or_null("TopBar/CoinChip") as Control
+
+
+func _fly_coins(from: Vector2) -> void:
+	var target := _coin_target()
+	var to := target.get_global_rect().get_center() if target != null else from + Vector2(0, -300)
+	var half := Vector2(13, 13)
+	for i in FX_COIN_COUNT:
+		var coin := TextureRect.new()
+		coin.texture = FX_COIN
+		coin.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		coin.stretch_mode = TextureRect.STRETCH_SCALE
+		coin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		coin.size = half * 2.0
+		coin.pivot_offset = half
+		coin.z_index = 100
+		coin.top_level = true
+		add_child(coin)
+		coin.global_position = from - half
+		coin.scale = Vector2.ZERO
+		var burst := from + Vector2(randf_range(-70.0, 70.0), randf_range(-80.0, -20.0)) - half
+		var tw := create_tween()
+		tw.tween_interval(0.04 * i)
+		tw.tween_property(coin, "scale", Vector2.ONE, 0.1)
+		tw.parallel().tween_property(coin, "global_position", burst, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tw.tween_property(coin, "global_position", to - half, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tw.parallel().tween_property(coin, "scale", Vector2.ONE * 0.55, 0.5)
+		tw.tween_callback(_on_coin_arrived.bind(coin, i == FX_COIN_COUNT - 1, target))
+
+
+func _on_coin_arrived(coin: Control, is_last: bool, target: Control) -> void:
+	coin.queue_free()
+	if target == null or not is_instance_valid(target):
+		return
+	# Ví nảy nhẹ mỗi lần xu chạm; xu cuối nảy mạnh hơn
+	target.pivot_offset = target.size * 0.5
+	var punch := 1.2 if is_last else 1.08
+	var tw := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(target, "scale", Vector2.ONE * punch, 0.07)
+	tw.tween_property(target, "scale", Vector2.ONE, 0.12)
+
+
+## Chờ container dàn xong thẻ mới (đã ở trạng thái ĐÃ ĐẠT) rồi đóng dấu
+func _play_claimed_fx(id: String) -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not is_inside_tree():
+		return
+	var card := _card_by_id(id)
+	if card != null and card.has_method("play_claimed_fx"):
+		card.call("play_claimed_fx")
 
 
 # ---------------------------------------------------------------------------
@@ -585,6 +669,9 @@ func _update_peek() -> void:
 		# Thẻ bên cạnh nằm DƯỚI thẻ giữa (đè lên nhau); thẻ cách 2 trang trở đi mờ dần rồi ẩn
 		card.modulate.a = lerpf(1.0, layout.peek_alpha, t) * clampf(2.0 - dist, 0.0, 1.0)
 		card.z_index = 10 - int(round(minf(dist, 3.0) * 3.0))
+		# Chỉ thẻ ĐANG XEM nhận bấm: nút NHẬN của thẻ bên cạnh đè lên nửa phải thẻ giữa sẽ chặn chuột
+		if card.has_method("set_interactive"):
+			card.call("set_interactive", dist < 0.5)
 
 
 # ---------------------------------------------------------------------------
