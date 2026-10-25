@@ -1,0 +1,78 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/archivements/thumb.gd" id="1_thumb"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/thumb_halo.png" id="2_halo"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/thumb_ring.png" id="3_ring"]
+[ext_resource type="Texture2D" path="res://assets/images-png/archivements/thumb_face.png" id="4_face"]
+[ext_resource type="Texture2D" uid="uid://cw3gi00w0cnpu" path="res://assets/images-png/icons/icon_lock.png" id="5_lock"]
+
+[node name="Thumb" type="TextureButton" node_paths=PackedStringArray("halo", "ring", "face", "icon")]
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+script = ExtResource("1_thumb")
+icon_lock = ExtResource("5_lock")
+halo = NodePath("Halo")
+ring = NodePath("Ring")
+face = NodePath("Face")
+icon = NodePath("Icon")
+
+[node name="Halo" type="TextureRect" parent="."]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_halo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Ring" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_ring")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Face" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_face")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24
+anchor_top = 0.24
+anchor_right = 0.76
+anchor_bottom = 0.76
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
