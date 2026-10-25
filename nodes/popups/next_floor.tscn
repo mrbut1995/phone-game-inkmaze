@@ -438,7 +438,9 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="FxAnim" type="AnimationPlayer" parent="." unique_id=1760800037 index="3"]
-libraries/ = SubResource("AnimationLibrary_nffx")
+libraries = {
+"": SubResource("AnimationLibrary_nffx")
+}
 
 [connection signal="pressed" from="Panel/Content/Information/Buttons/RestBtn" to="." method="_on_rest_pressed"]
 [connection signal="pressed" from="Panel/Content/Information/Buttons/EnterBtn" to="." method="_on_enter_pressed"]

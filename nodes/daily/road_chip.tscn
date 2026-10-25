@@ -372,7 +372,9 @@ vertical_alignment = 1
 resize_font_to_fit = true
 
 [node name="FxAnim" type="AnimationPlayer" parent="." unique_id=1900400003]
-libraries/ = SubResource("AnimationLibrary_chip")
+libraries = {
+"": SubResource("AnimationLibrary_chip")
+}
 
 [node name="HoldTimer" type="Timer" parent="." unique_id=1900700001]
 wait_time = 0.35

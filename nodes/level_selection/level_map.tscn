@@ -65,7 +65,9 @@ scale = Vector2(0.74, 0.74)
 texture = ExtResource("2_flag")
 
 [node name="Anim" type="AnimationPlayer" parent="Tracks/Goal" index="1"]
-libraries/ = SubResource("AnimationLibrary_goal")
+libraries = {
+"": SubResource("AnimationLibrary_goal")
+}
 autoplay = &"bob"
 
 [node name="Items" type="Node2D" parent="Tracks" index="1"]
@@ -78,5 +80,7 @@ scale = Vector2(0.74, 0.74)
 texture = ExtResource("3_marker")
 
 [node name="Anim" type="AnimationPlayer" parent="Tracks/Marker" index="1"]
-libraries/ = SubResource("AnimationLibrary_marker")
+libraries = {
+"": SubResource("AnimationLibrary_marker")
+}
 autoplay = &"bob"

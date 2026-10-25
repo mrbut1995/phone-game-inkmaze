@@ -160,6 +160,8 @@ text = "0/15"
 horizontal_alignment = 1
 
 [node name="Anim" type="AnimationPlayer" parent="." unique_id=1900900008]
-libraries/ = SubResource("AnimationLibrary_tip")
+libraries = {
+"": SubResource("AnimationLibrary_tip")
+}
 
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_finished"]

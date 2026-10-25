@@ -357,4 +357,6 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="PulseAnim" type="AnimationPlayer" parent="." unique_id=1415538603]
-libraries/ = SubResource("AnimationLibrary_undo_pulse_p")
+libraries = {
+"": SubResource("AnimationLibrary_undo_pulse_p")
+}

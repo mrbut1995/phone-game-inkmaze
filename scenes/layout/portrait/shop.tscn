@@ -561,11 +561,17 @@ mouse_filter = 2
 color = Color(0.2392, 0.5137, 0.6824, 1)
 
 [node name="WalletAnim" type="AnimationPlayer" parent="." index="8" unique_id=1722495398]
-libraries/ = SubResource("AnimationLibrary_wallet_psh")
+libraries = {
+"": SubResource("AnimationLibrary_wallet_psh")
+}
 
 [node name="PulseAnim" type="AnimationPlayer" parent="." index="9" unique_id=721877341]
-libraries/ = SubResource("AnimationLibrary_shop_pulse_p")
+libraries = {
+"": SubResource("AnimationLibrary_shop_pulse_p")
+}
 
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="10" unique_id=1195333969]
-libraries/ = SubResource("AnimationLibrary_shop_enter_p")
+libraries = {
+"": SubResource("AnimationLibrary_shop_enter_p")
+}
 autoplay = &"enter"

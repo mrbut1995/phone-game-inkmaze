@@ -179,4 +179,6 @@ scale = Vector2(0.11, 0.11)
 texture = ExtResource("3_spark")
 
 [node name="Anim" type="AnimationPlayer" parent="." unique_id=1900800007]
-libraries/ = SubResource("AnimationLibrary_fx")
+libraries = {
+"": SubResource("AnimationLibrary_fx")
+}

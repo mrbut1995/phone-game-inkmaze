@@ -587,11 +587,15 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
 [node name="FxAnim" type="AnimationPlayer" parent="." index="3" unique_id=1831458329]
-libraries/ = SubResource("AnimationLibrary_dm")
+libraries = {
+"": SubResource("AnimationLibrary_dm")
+}
 autoplay = &"reveal"
 
 [node name="LoopAnim" type="AnimationPlayer" parent="." index="4" unique_id=1900000200]
-libraries/ = SubResource("AnimationLibrary_loop")
+libraries = {
+"": SubResource("AnimationLibrary_loop")
+}
 autoplay = &"idle_loop"
 
 [connection signal="pressed" from="Panel/Content/Ok" to="." method="_on_ok_pressed"]
