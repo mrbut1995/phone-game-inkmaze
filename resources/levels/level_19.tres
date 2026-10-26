@@ -4,22 +4,19 @@
 
 [resource]
 script = ExtResource("1_level")
-level_id = 19
-level_title = "Level 2-10 · One Stroke — một nét phủ kín"
+level_title = "Level 2-9 · Bàn Cờ Lỗ (polyomino)"
 chapter = 2
-mode_id = "one_stroke"
-difficulty = "easy"
-width = 6
-height = 4
-start_pos = Vector2i(0, 0)
-end_pos = Vector2i(0, 3)
-max_steps = 7
-par_time = 21.0
-v_walls = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1)
-v_walls_visible = PackedByteArray(1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1)
-h_walls = PackedByteArray(1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1)
-h_walls_visible = PackedByteArray(1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1)
-cell_mask = PackedByteArray()
-mission_types = PackedStringArray()
-mission_params = PackedInt32Array()
+mode_id = "play"
+difficulty = "hard"
+width = 7
+height = 5
+start_pos = Vector2i(0, 4)
+end_pos = Vector2i(6, 0)
+max_steps = 40
+par_time = 120.0
+v_walls = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1)
+cell_mask = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1)
 custom_cell_values = {}

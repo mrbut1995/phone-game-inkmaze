@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1_chapter")
 chapter_id = 4
-title = "BẬC THẦY"
-subtitle = "Mê cung khổng lồ dành cho cao thủ suy luận"
+title = "THỬ THÁCH"
+subtitle = "Bàn lớn hơn, nhiều lối rẽ đánh lừa"
 title_key = "STR_CHAPTER_4_NAME"
 subtitle_key = "STR_CHAPTER_4_SUB"
-size_label = "9×9"
-star_cost = 70
-icon = "master"
+size_label = "6×6 – 9×9"
+star_cost = 120
+icon = "logic"

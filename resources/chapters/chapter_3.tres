@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1_chapter")
 chapter_id = 3
-title = "BẪY ẨN"
-subtitle = "Nhiệm vụ trí nhớ và khả năng vẽ không chạm tường"
+title = "MÊ CUNG"
+subtitle = "Hình dạng đa dạng, tường ẩn dày đặc"
 title_key = "STR_CHAPTER_3_NAME"
 subtitle_key = "STR_CHAPTER_3_SUB"
-size_label = "8×8"
-star_cost = 45
-icon = "trap"
+size_label = "5×5 – 7×7"
+star_cost = 60
+icon = "logic"

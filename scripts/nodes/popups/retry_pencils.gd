@@ -20,6 +20,7 @@ var _current: int = 0
 var _maximum: int = 0
 var _next_recover_unix: float = 0.0
 var _finished_emitted: bool = false
+var _lost_index: int = -1
 
 
 ## current: số bút đang có. maximum: sức chứa tối đa (số slot hiện ra).
@@ -31,6 +32,7 @@ func set_state(current: int, maximum: int, next_recover_unix: float = 0.0, show_
 	_current = clampi(current, 0, _maximum)
 	_next_recover_unix = next_recover_unix
 	_finished_emitted = false
+	_lost_index = lost_index
 	var risk_index: int = _current - 1 if show_risk else -1
 	for i in row.get_child_count():
 		var slot: Control = row.get_child(i)
@@ -40,6 +42,35 @@ func set_state(current: int, maximum: int, next_recover_unix: float = 0.0, show_
 		slot.get_node("RiskFrame").visible = (i == risk_index)
 		slot.get_node("Badge").visible = (i == risk_index) or (i == lost_index)
 	_refresh_countdown()
+
+
+## Hiệu ứng bút VỪA GÃY (gameover): bút hiện lành → rung → "rắc" gãy (đổi sang bút rỗng, tiếng gõ)
+## → nhãn −1 bật ra. Không làm gì nếu không có bút vừa gãy.
+func play_lost_effect(delay: float = 0.0) -> void:
+	if _lost_index < 0 or _lost_index >= row.get_child_count():
+		return
+	var slot: Control = row.get_child(_lost_index)
+	var pencil: TextureRect = slot.get_node("Pencil")
+	var badge: Control = slot.get_node("Badge")
+	pencil.pivot_offset = Vector2(pencil.size.x * 0.5, pencil.size.y)
+	pencil.texture = tex_full
+	badge.pivot_offset = badge.size * 0.5
+	badge.modulate.a = 0.0
+	var tw := create_tween()
+	tw.tween_interval(delay)
+	for a in [-0.35, 0.35, -0.3, 0.3, -0.2, 0.0]:
+		tw.tween_property(pencil, "rotation", float(a), 0.06)
+	tw.tween_callback(func() -> void:
+		pencil.texture = tex_empty
+		Sfx.play(Sfx.BTN_WOOD_TAP))
+	tw.tween_property(pencil, "scale", Vector2(1.3, 1.3), 0.08)
+	tw.tween_property(pencil, "scale", Vector2.ONE, 0.12)
+	tw.tween_callback(func() -> void:
+		badge.scale = Vector2.ONE * 0.4
+		badge.modulate.a = 1.0)
+	tw.tween_property(badge, "scale", Vector2(1.35, 1.35), 0.14) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(badge, "scale", Vector2.ONE, 0.1)
 
 
 func _refresh_countdown() -> void:

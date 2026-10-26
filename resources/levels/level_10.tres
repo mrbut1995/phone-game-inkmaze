@@ -4,22 +4,19 @@
 
 [resource]
 script = ExtResource("1_level")
-level_id = 10
-level_title = "Level 2-1 · Chữ H (polyomino)"
-chapter = 2
+level_title = "Level 1-10 · Kim Cương (polyomino)"
+chapter = 1
 mode_id = "play"
-difficulty = "easy"
-width = 4
-height = 3
-start_pos = Vector2i(0, 2)
-end_pos = Vector2i(3, 0)
-max_steps = 9
-par_time = 27.0
-v_walls = PackedByteArray(1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1)
-v_walls_visible = PackedByteArray(1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1)
-h_walls = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1)
-h_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1)
-cell_mask = PackedByteArray(1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1)
-mission_types = PackedStringArray("no_wall", "steps_max", "no_hint")
-mission_params = PackedInt32Array(0, 9, 0)
+difficulty = "medium"
+width = 5
+height = 5
+start_pos = Vector2i(2, 0)
+end_pos = Vector2i(2, 4)
+max_steps = 14
+par_time = 42.0
+v_walls = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+h_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1)
+cell_mask = PackedByteArray(0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0)
 custom_cell_values = {}

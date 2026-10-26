@@ -4,22 +4,19 @@
 
 [resource]
 script = ExtResource("1_level")
-level_id = 17
-level_title = "Level 2-8 · Fog of War — sương mù quanh nhân vật"
+level_title = "Level 2-7 · Chữ Thập Lớn (polyomino)"
 chapter = 2
-mode_id = "fog_of_war"
-difficulty = "medium"
-width = 7
-height = 5
-start_pos = Vector2i(0, 4)
-end_pos = Vector2i(6, 0)
-max_steps = 14
-par_time = 42.0
-v_walls = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
-v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
-h_walls = PackedByteArray(1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1)
-h_walls_visible = PackedByteArray(1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1)
-cell_mask = PackedByteArray()
-mission_types = PackedStringArray()
-mission_params = PackedInt32Array()
+mode_id = "play"
+difficulty = "hard"
+width = 6
+height = 6
+start_pos = Vector2i(3, 0)
+end_pos = Vector2i(0, 3)
+max_steps = 24
+par_time = 72.0
+v_walls = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1)
+h_walls_visible = PackedByteArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1)
+cell_mask = PackedByteArray(0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0)
 custom_cell_values = {}
