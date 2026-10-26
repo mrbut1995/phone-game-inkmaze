@@ -22,20 +22,21 @@
 [ext_resource type="Texture2D" uid="uid://cabf5hf3lxm5q" path="res://assets/images-png/settings/row_button_danger_focus.png" id="dan_f"]
 [ext_resource type="Texture2D" uid="uid://dj767g2ifpxpo" path="res://assets/images-png/settings/chip_cloud_connected.png" id="cloud_chip"]
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="clip"]
-[ext_resource uid="uid://d1jsebin0vqrg" type="Texture2D" path="res://assets/images-png/ranking/banner_title.png" id="banner"]
-[ext_resource uid="uid://d0va6pi8ee73v" type="Texture2D" path="res://assets/images-png/ranking/hole.png" id="hole"]
-[ext_resource uid="uid://u4wp6333bmx4" type="Texture2D" path="res://assets/images-png/settings/tile_off.png" id="tile_off"]
-[ext_resource uid="uid://cdwll1mtp16jd" type="Texture2D" path="res://assets/images-png/settings/tile_on.png" id="tile_on"]
-[ext_resource uid="uid://cek0qnclhuman" type="Texture2D" path="res://assets/images-png/settings/ic_music.png" id="ic_music"]
-[ext_resource uid="uid://r7mbmflni582" type="Texture2D" path="res://assets/images-png/settings/ic_bell.png" id="ic_bell"]
-[ext_resource uid="uid://bodw10apcsv5f" type="Texture2D" path="res://assets/images-png/settings/ic_vibrate.png" id="ic_vibrate"]
-[ext_resource uid="uid://dlfudwrly6yr7" type="Texture2D" path="res://assets/images-png/settings/ic_mark.png" id="ic_mark"]
-[ext_resource uid="uid://bh7rj66y5vqxt" type="Texture2D" path="res://assets/images-png/settings/ic_glow.png" id="ic_glow"]
-[ext_resource uid="uid://8jqvcdi06hwb" type="Texture2D" path="res://assets/images-png/settings/ic_cloud.png" id="ic_cloud"]
-[ext_resource uid="uid://2cn7csaxifl3" type="Texture2D" path="res://assets/images-png/settings/ic_globe.png" id="ic_globe"]
-[ext_resource uid="uid://c0sentmb65ada" type="Texture2D" path="res://assets/images-png/settings/ic_book.png" id="ic_book"]
-[ext_resource uid="uid://dbegbtl7rlpf3" type="Texture2D" path="res://assets/images-png/settings/ic_info.png" id="ic_info"]
-[ext_resource uid="uid://ff2cgvot430q" type="Texture2D" path="res://assets/images-png/settings/ic_reset.png" id="ic_reset"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/banner_title.png" id="banner"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/hole.png" id="hole"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/tile_off.png" id="tile_off"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/tile_on.png" id="tile_on"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/ic_music.png" id="ic_music"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/ic_bell.png" id="ic_bell"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/ic_vibrate.png" id="ic_vibrate"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/ic_mark.png" id="ic_mark"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/ic_glow.png" id="ic_glow"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/ic_cloud.png" id="ic_cloud"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/ic_globe.png" id="ic_globe"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/ic_book.png" id="ic_book"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/ic_info.png" id="ic_info"]
+[ext_resource type="Texture2D" path="res://assets/images-png/settings/ic_reset.png" id="ic_reset"]
+[ext_resource type="PackedScene" path="res://nodes/common/notebook_sheet.tscn" id="nbsheet"]
 
 [node name="Landscape" node_paths=PackedStringArray("btn_back", "content_root", "bgm_slider", "bgm_value", "sfx_slider", "sfx_value", "chk_haptic", "chk_auto_mark", "chk_glow", "btn_language", "lbl_language", "lbl_player_id", "btn_guide", "btn_credits", "btn_reset", "lbl_version") instance=ExtResource("parent")]
 script = ExtResource("layout_script")
@@ -85,7 +86,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Panel" type="NinePatchRect" parent="." index="1"]
+[node name="Panel" parent="." index="1" instance=ExtResource("nbsheet")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.029
@@ -94,11 +95,6 @@ anchor_right = 0.981
 anchor_bottom = 0.9556
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("panel")
-patch_margin_left = 40
-patch_margin_top = 60
-patch_margin_right = 24
-patch_margin_bottom = 24
 
 [node name="Hole1" type="TextureRect" parent="Panel"]
 layout_mode = 1

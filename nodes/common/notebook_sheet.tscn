@@ -1,0 +1,213 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/common/sheet_grid_16.png" id="g16"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/sheet_grid_64.png" id="g64"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/sheet_edge_top.png" id="etop"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/sheet_edge_bottom.png" id="ebot"]
+
+[sub_resource type="StyleBoxFlat" id="sb_back2"]
+bg_color = Color(0.8235, 0.7922, 0.6902, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6392, 0.6039, 0.4941, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="sb_back1"]
+bg_color = Color(0.9255, 0.9020, 0.8157, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.7098, 0.6745, 0.5647, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="sb_body"]
+bg_color = Color(1, 0.9922, 0.9608, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.9922, 0.9608, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0.0667, 0.1059, 0.1882, 0.38)
+shadow_size = 16
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="sb_strip"]
+bg_color = Color(0.9686, 0.9137, 0.7765, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9686, 0.9137, 0.7765, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="NotebookSheet" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SheetBack2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+offset_left = 10
+offset_top = 8
+offset_right = 0
+offset_bottom = 0
+rotation = 0.028
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/panel = SubResource("sb_back2")
+
+[node name="SheetBack1" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+offset_left = 5
+offset_top = 4
+offset_right = -5
+offset_bottom = -4
+rotation = -0.016
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/panel = SubResource("sb_back1")
+
+[node name="SheetBody" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+offset_left = 0
+offset_top = 6
+offset_right = -10
+offset_bottom = -14
+theme_override_styles/panel = SubResource("sb_body")
+
+[node name="SheetGridSmall" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+offset_left = 42
+offset_top = 8
+offset_right = -12
+offset_bottom = -16
+texture = ExtResource("g16")
+stretch_mode = 1
+
+[node name="SheetGridBig" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+offset_left = 42
+offset_top = 8
+offset_right = -12
+offset_bottom = -16
+texture = ExtResource("g64")
+stretch_mode = 1
+
+[node name="SheetStrip" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+offset_left = 0
+offset_top = 6
+offset_right = 34
+offset_bottom = -14
+theme_override_styles/panel = SubResource("sb_strip")
+
+[node name="SheetLine1" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+offset_left = 35
+offset_top = 6
+offset_right = 37
+offset_bottom = -14
+color = Color(0.9373, 0.6627, 0.6392, 1)
+
+[node name="SheetLine2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+offset_left = 40
+offset_top = 6
+offset_right = 41
+offset_bottom = -14
+color = Color(0.9373, 0.6627, 0.6392, 0.65)
+
+[node name="SheetEdgeTop" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = -10
+offset_bottom = 6
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("etop")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="SheetEdgeBottom" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -14
+offset_right = -10
+offset_bottom = -8
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("ebot")
+expand_mode = 1
+stretch_mode = 1
+

@@ -131,7 +131,65 @@ func _init() -> void:
 	transition.queue_free()
 	await process_frame
 
+	# 6. Lịch sử điều hướng khi ván chơi KẾT THÚC (lỗi: thắng màn 9 → Chọn màn → Back → lại màn 9)
+	await _check_back_after_run()
+
 	print("\n========================================================")
 	print("  TAT CA TEST TRANSITIONS & ANIMATIONS DEU PASS!")
 	print("========================================================\n")
 	quit(0)
+
+
+## Thắng màn cuối chương ⇒ về Chọn màn phải là thao tác BACK (không đẩy màn CHƠI vào lịch sử,
+## gỡ luôn mục "Chọn màn" đã đẩy lúc vào ván) ⇒ Back ở Chọn màn về Main, KHÔNG quay lại ván.
+func _check_back_after_run() -> void:
+	var sm: Node = root.get_node("SceneManager")
+	var screen: Node = root.get_node("ScreenManager")
+	var gm: Node = root.get_node("GameManager")
+	screen.call("clear_history")
+
+	# Main → Chọn màn (đi TIẾN) → vào ván màn 9
+	sm.call("change_scene", "res://scenes/main.tscn")
+	await _frames(3)
+	gm.call("go_to_levels")
+	await _frames(3)
+	assert(current_scene.scene_file_path == "res://scenes/levels.tscn", "Phai o man Chon man truoc khi vao van")
+	sm.call("change_scene", "res://scenes/game.tscn")
+	await _frames(3)
+	assert(str(screen.call("peek_history")) == "res://scenes/levels.tscn",
+		"Vao van tu Chon man: lich su phai giu man Chon man de Back con dung")
+
+	# Thắng màn cuối chương (nút "CHỌN CHƯƠNG" ⇒ `return_to_levels()`)
+	gm.call("return_to_levels")
+	await _frames(3)
+	assert(current_scene.scene_file_path == "res://scenes/levels.tscn", "return_to_levels phai ve man Chon man")
+	assert(str(screen.call("peek_history")) != "res://scenes/game.tscn",
+		"Man CHƠI KHONG duoc nam trong lich su sau khi van ket thuc")
+	assert(str(screen.call("peek_history")) == "res://scenes/main.tscn",
+		"return_to_levels phai go muc 'Chon man' da day luc vao van ⇒ Back con ve Main")
+	print("[CHECK] Van ket thuc -> ve Chon man KHONG day man choi vao lich su.")
+
+	# Back ở Chọn màn ⇒ về Main (trước đây quay lại đúng ván vừa chơi)
+	screen.call("go_back")
+	await _frames(4)
+	assert(current_scene.scene_file_path == "res://scenes/main.tscn",
+		"Back o man Chon man phai ve Main, KHONG quay lai man vua choi")
+	print("[CHECK] Back o man Chon man ve Main (het loi 'quay lai man 9').")
+
+	# Ván Daily kết thúc ⇒ "VỀ DAILY" cũng không được đẩy màn chơi vào lịch sử
+	screen.call("clear_history")
+	gm.call("go_to_daily")
+	await _frames(3)
+	sm.call("change_scene", "res://scenes/game.tscn")
+	await _frames(3)
+	gm.call("return_to_daily")
+	await _frames(3)
+	assert(current_scene.scene_file_path == "res://scenes/daily.tscn", "return_to_daily phai ve man Daily")
+	assert(str(screen.call("peek_history")) == "res://scenes/main.tscn",
+		"return_to_daily phai go muc 'Daily' da day luc vao van, chi con man truoc do")
+	print("[CHECK] Van Daily ket thuc -> ve Daily khong de lai lich su man choi.")
+
+
+func _frames(n: int) -> void:
+	for i in n:
+		await process_frame

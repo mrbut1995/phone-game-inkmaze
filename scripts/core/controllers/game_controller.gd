@@ -600,7 +600,9 @@ func _on_continue_requested() -> void:
 			if next_lvl > 0 and bool(gm.call("can_play_level", next_lvl)):
 				gm.call("start_level", next_lvl)
 			else:
-				gm.call("go_to_levels")
+				# Về Chọn màn như một thao tác BACK: không ghi lịch sử, nếu không Back ở màn
+				# Chọn màn sẽ pop đúng màn CHƠI vừa rồi (thắng màn 9 → Back → lại màn 9)
+				gm.call("return_to_levels")
 		else:
 			# Không có GameManager: chơi lại đúng màn hiện tại thay vì về màn 1
 			start_new_run(current_floor())
@@ -668,7 +670,7 @@ func skip_current_level() -> bool:
 	if next_id > 0:
 		gm.call("start_level", next_id)
 	else:
-		gm.call("go_to_levels")
+		gm.call("return_to_levels")
 	return true
 
 
@@ -756,9 +758,9 @@ func _on_daily_requested() -> void:
 		ui_controller.hide_overlays()
 	var gm: Node = get_node_or_null("/root/GameManager")
 	if gm != null:
-		gm.call("go_to_daily")
+		gm.call("return_to_daily")
 	else:
-		Nav.goto_daily()
+		Nav.back_to(Nav.SCENE_DAILY)
 
 
 ## Popup thắng THỬ THÁCH: người chơi bấm "TRỞ VỀ" — quay lại ĐÚNG màn trước đó.
@@ -768,14 +770,14 @@ func _on_back_requested() -> void:
 		ui_controller.hide_overlays()
 	var gm: Node = get_node_or_null("/root/GameManager")
 	if gm != null and not str(gm.get("daily_variant")).is_empty():
-		gm.call("go_to_daily")
+		gm.call("return_to_daily")
 		return
 	var screen: Node = get_node_or_null("/root/ScreenManager")
 	if screen != null and screen.has_method("go_back") and bool(screen.call("go_back")):
 		return
 	# Không còn lịch sử để lùi: ván màn -> Chọn màn, còn lại -> Menu chính
 	if gm != null and bool(gm.get("level_run")):
-		gm.call("go_to_levels")
+		gm.call("return_to_levels")
 	elif gm != null:
 		gm.call("go_to_main_menu")
 	else:

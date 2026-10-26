@@ -26,6 +26,13 @@ extends Control
 @export var line_y := 44.0
 @export var pad_x := 18.0
 
+## Hiệu ứng "chạy": 0 → ghim chạy từ đầu thước tới tầng vừa qua (đoạn xanh nối theo), rồi đoạn nét đứt dài ra
+## tới tầng kế. 1 = vẽ đầy đủ (mặc định). next_floor.gd tween thuộc tính này khi mở popup.
+var progress := 1.0:
+	set(value):
+		progress = clampf(value, 0.0, 1.0)
+		queue_redraw()
+
 var _floor := 1
 var _next := 2
 var _week := 0
@@ -70,13 +77,15 @@ func _draw() -> void:
 	draw_circle(Vector2(x0, line_y), 4.0, color_track)
 	draw_circle(Vector2(x1, line_y), 4.0, color_track)
 	# Đoạn đã qua (xanh đặc) + đoạn kế tiếp (nét đứt)
-	var xf := _x_of(_floor, hi)
+	var xf_full := _x_of(_floor, hi)
 	var xn := _x_of(_next, hi)
+	var xf := lerpf(x0, xf_full, clampf(progress / 0.7, 0.0, 1.0))
+	var xn_draw := lerpf(xf_full, xn, clampf((progress - 0.7) / 0.3, 0.0, 1.0))
 	draw_rect(Rect2(x0, line_y - 4.0, xf - x0, 8.0), color_you)
 	draw_circle(Vector2(x0, line_y), 4.0, color_you)
-	var dx := xf
-	while dx < xn - 0.5:
-		draw_rect(Rect2(dx, line_y - 4.0, minf(6.0, xn - dx), 8.0), color_next)
+	var dx := xf_full
+	while dx < xn_draw - 0.5:
+		draw_rect(Rect2(dx, line_y - 4.0, minf(6.0, xn_draw - dx), 8.0), color_next)
 		dx += 10.0
 	# Vạch chia
 	var step := 1 if hi <= 20 else (5 if hi <= 60 else 10)
