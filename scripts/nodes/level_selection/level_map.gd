@@ -596,6 +596,9 @@ func _input(event: InputEvent) -> void:
 ## Chỉ nhận kéo khi bắt đầu TRONG khung bản đồ (không giành input của header/nút)
 func _inside_area(pos: Vector2) -> bool:
 	var area := _map_area()
+	# [MERGE] Main có 2 LevelMap (1 mỗi bố cục Portrait/Landscape) ⇒ bản đang ẨN không được nhận kéo
+	if area != null and not area.is_visible_in_tree():
+		return false
 	return area == null or area.get_global_rect().has_point(pos)
 
 

@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://dxm1sm66f5qi1" path="res://nodes/main/star_chip.tscn" id="5_star"]
 [ext_resource type="PackedScene" uid="uid://xuj64d8yo0mg" path="res://nodes/main/event_header.tscn" id="6_header"]
 [ext_resource type="PackedScene" uid="uid://cb8r4phad4ar5" path="res://nodes/main/event_carousel.tscn" id="7_carousel"]
-[ext_resource type="PackedScene" uid="uid://rtaworqe3fbl" path="res://nodes/main/mode_card.tscn" id="8_mode"]
 [ext_resource type="Texture2D" uid="uid://ht772c02qnl" path="res://assets/images-png/main/btn_settings_normal.png" id="8_o5gjt"]
 [ext_resource type="PackedScene" uid="uid://k2k3skjevrxy" path="res://nodes/main/dock_button.tscn" id="9_dock"]
 [ext_resource type="Texture2D" uid="uid://cheydeptnm3w6" path="res://assets/images-png/main/btn_settings_pressed.png" id="9_kncrx"]
@@ -14,103 +13,31 @@
 [ext_resource type="Texture2D" uid="uid://d0gks40yyxdv2" path="res://assets/images-png/main/btn_settings_hover.png" id="10_luyyg"]
 [ext_resource type="Texture2D" uid="uid://daksl6ghofec0" path="res://assets/images-png/main/btn_settings_disabled.png" id="11_vyx2u"]
 [ext_resource type="Texture2D" uid="uid://dhkgonrwe7f5o" path="res://assets/images-png/main/btn_settings_focus.png" id="12_p5bnh"]
-[ext_resource type="Texture2D" uid="uid://clxkdp7v1picf" path="res://assets/images-png/common/card_mode_normal.png" id="15_01kb5"]
 [ext_resource type="Script" uid="uid://cpgvknnr8kupu" path="res://scripts/nodes/common/ui_scaler.gd" id="15_scaler"]
-[ext_resource type="Texture2D" uid="uid://cgnqga8nqe183" path="res://assets/images-png/common/card_mode_pressed.png" id="16_o5gjt"]
-[ext_resource type="Texture2D" uid="uid://bix4mh6ckd2l" path="res://assets/images-png/main/card_mode_disabled.png" id="17_kncrx"]
-[ext_resource type="Texture2D" uid="uid://b5nskow6rjg7t" path="res://assets/images-png/common/card_mode_focus.png" id="18_luyyg"]
+[ext_resource type="PackedScene" path="res://nodes/main/level_section.tscn" id="L_section"]
+[ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="L_sheet"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_01kb5"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
-texture = ExtResource("15_01kb5")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
+bg_color = Color(1, 1, 1, 0.94)
+border_width_top = 2
+border_color = Color(0.8902, 0.8471, 0.7765, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o5gjt"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
-texture = ExtResource("16_o5gjt")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dock"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kncrx"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
-texture = ExtResource("15_01kb5")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dock_pressed"]
+bg_color = Color(0.9843, 0.749, 0.1412, 0.22)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_luyyg"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
-texture = ExtResource("17_kncrx")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vyx2u"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
-texture = ExtResource("18_luyyg")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p5bnh"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
-texture = ExtResource("15_01kb5")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cpq7c"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
-texture = ExtResource("16_o5gjt")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4608"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
-texture = ExtResource("15_01kb5")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rgobc"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
-texture = ExtResource("17_kncrx")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_27xem"]
-content_margin_left = 38.0
-content_margin_top = 0.0
-content_margin_right = 46.0
-content_margin_bottom = 0.0
-texture = ExtResource("18_luyyg")
-texture_margin_left = 38.0
-texture_margin_right = 46.0
-
-[node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "card_play", "card_dungeon", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "mode_box", "header_anchor") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "level_section", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "header_anchor") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 logo = NodePath("TopBar/LogoBlock/Logo")
 profile_card = NodePath("TopBar/ProfileCard")
@@ -119,24 +46,22 @@ star_chip = NodePath("TopBar/StarChip")
 btn_settings = NodePath("TopBar/Settings")
 event_header = NodePath("Scaler/Body/Mid/Left/EventHeader")
 event_carousel = NodePath("Scaler/Body/Mid/Left/EventCarousel")
-card_play = NodePath("Scaler/Body/Mid/Right/Modes/Play")
-card_dungeon = NodePath("Scaler/Body/Mid/Right/Modes/Dungeon")
-dock_shop = NodePath("Scaler/Body/Dock/DockShop")
-dock_ranking = NodePath("Scaler/Body/Dock/DockRanking")
-dock_badges = NodePath("Scaler/Body/Dock/DockBadges")
-dock_rules = NodePath("Scaler/Body/Dock/DockRules")
-stamp_panel = NodePath("Scaler/Body/Mid/Right/Stamp")
-stamp_label = NodePath("Scaler/Body/Mid/Right/Stamp/Label")
-mode_box = NodePath("Scaler/Body/Mid/Right/Modes")
+level_section = NodePath("Scaler/Body/Mid/LevelSection")
+dock_shop = NodePath("Scaler/Body/Dock/Row/DockShop")
+dock_ranking = NodePath("Scaler/Body/Dock/Row/DockRanking")
+dock_badges = NodePath("Scaler/Body/Dock/Row/DockBadges")
+dock_rules = NodePath("Scaler/Body/Dock/Row/DockRules")
+stamp_panel = NodePath("Scaler/Body/Mid/Left/Stamp")
+stamp_label = NodePath("Scaler/Body/Mid/Left/Stamp/Label")
 header_anchor = NodePath("Scaler/Body/TopBarAnchor")
 
-[node name="Scaler" type="Control" parent="." index="0" unique_id=1700000101 node_paths=PackedStringArray("inset_target")]
+[node name="Scaler" type="Control" parent="." index="0" node_paths=PackedStringArray("inset_target")]
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("15_scaler")
 inset_target = NodePath("Body")
 
-[node name="Body" type="VBoxContainer" parent="Scaler" index="0" unique_id=1180502567]
+[node name="Body" type="VBoxContainer" parent="Scaler" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -150,74 +75,46 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="TopBarAnchor" type="Control" parent="Scaler/Body" index="0" unique_id=1431751695]
+[node name="TopBarAnchor" type="Control" parent="Scaler/Body"]
 custom_minimum_size = Vector2(0, 68)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Mid" type="HBoxContainer" parent="Scaler/Body" index="1" unique_id=907647981]
+[node name="HeadGap" type="Control" parent="Scaler/Body"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Mid" type="HBoxContainer" parent="Scaler/Body"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 14
 
-[node name="Left" type="VBoxContainer" parent="Scaler/Body/Mid" index="0" unique_id=1997863189]
+[node name="Left" type="VBoxContainer" parent="Scaler/Body/Mid"]
+custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 0
+size_flags_stretch_ratio = 0.42
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="Spacer" type="Control" parent="Scaler/Body/Mid/Left" index="0" unique_id=426236803]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-
-[node name="EventHeader" parent="Scaler/Body/Mid/Left" index="1" unique_id=216143274 instance=ExtResource("6_header")]
+[node name="EventHeader" parent="Scaler/Body/Mid/Left" instance=ExtResource("6_header")]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="EventCarousel" parent="Scaler/Body/Mid/Left" index="2" unique_id=1447527780 instance=ExtResource("7_carousel")]
+[node name="EventCarousel" parent="Scaler/Body/Mid/Left" instance=ExtResource("7_carousel")]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Right" type="VBoxContainer" parent="Scaler/Body/Mid" index="1" unique_id=915989192]
-custom_minimum_size = Vector2(440, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-size_flags_stretch_ratio = 0.7
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Modes" type="VBoxContainer" parent="Scaler/Body/Mid/Right" index="0" unique_id=1628678520]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 10
-
-[node name="Play" parent="Scaler/Body/Mid/Right/Modes" index="0" unique_id=380544602 instance=ExtResource("8_mode")]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_01kb5")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_o5gjt")
-theme_override_styles/hover = SubResource("StyleBoxTexture_kncrx")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_luyyg")
-theme_override_styles/focus = SubResource("StyleBoxTexture_vyx2u")
-
-[node name="Dungeon" parent="Scaler/Body/Mid/Right/Modes" index="1" unique_id=371360531 instance=ExtResource("8_mode")]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_p5bnh")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_cpq7c")
-theme_override_styles/hover = SubResource("StyleBoxTexture_p4608")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_rgobc")
-theme_override_styles/focus = SubResource("StyleBoxTexture_27xem")
-mode_id = &"dungeon"
-
-[node name="Stamp" type="Control" parent="Scaler/Body/Mid/Right" index="1" unique_id=2015064019]
+[node name="Stamp" type="Control" parent="Scaler/Body/Mid/Left"]
 custom_minimum_size = Vector2(0, 14)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="Scaler/Body/Mid/Right/Stamp" index="0" unique_id=839956713]
+[node name="Label" type="Label" parent="Scaler/Body/Mid/Left/Stamp"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -227,26 +124,63 @@ grow_vertical = 2
 theme_type_variation = &"SettingsVersion"
 text = "STR_SETTINGS_VERSION"
 horizontal_alignment = 2
-vertical_alignment = 1
 
-[node name="Dock" type="HBoxContainer" parent="Scaler/Body" index="2" unique_id=905149038]
+[node name="LevelSection" parent="Scaler/Body/Mid" node_paths=PackedStringArray("lock_sheet") instance=ExtResource("L_section")]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.58
+size_flags_vertical = 3
+lock_sheet = NodePath("../../../../LockSheet")
+
+[node name="Dock" type="PanelContainer" parent="Scaler/Body"]
 custom_minimum_size = Vector2(0, 65)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-theme_override_constants/separation = 12
+theme_override_styles/panel = SubResource("StyleBoxFlat_bar")
 
-[node name="DockShop" parent="Scaler/Body/Dock" index="0" unique_id=1228355722 instance=ExtResource("9_dock")]
+[node name="Row" type="HBoxContainer" parent="Scaler/Body/Dock"]
 layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
 
-[node name="DockRanking" parent="Scaler/Body/Dock" index="1" unique_id=1248345980 instance=ExtResource("9_dock")]
+[node name="DockShop" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
 
-[node name="DockBadges" parent="Scaler/Body/Dock" index="2" unique_id=323000122 instance=ExtResource("9_dock")]
+[node name="DockRanking" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
 
-[node name="DockRules" parent="Scaler/Body/Dock" index="3" unique_id=2074934512 instance=ExtResource("9_dock")]
+[node name="DockBadges" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
+
+[node name="DockRules" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
+
+[node name="LockSheet" parent="." instance=ExtResource("L_sheet")]
+z_index = 20
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ProfileCard" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="0" unique_id=225078020 instance=ExtResource("3_profile")]
 layout_mode = 2

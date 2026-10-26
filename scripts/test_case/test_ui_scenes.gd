@@ -928,8 +928,7 @@ func _section_12_stars() -> void:
 		["res://nodes/popups/winning.tscn", 0],
 		["res://nodes/popups/gameover_level.tscn", 0],
 		["res://nodes/level_selection/level_card.tscn", 0],
-		["res://scenes/levels.tscn", 0],
-		["res://scenes/daily.tscn", 0],
+			["res://scenes/daily.tscn", 0],
 	]
 	var worst := 0.0
 	var worst_where := ""

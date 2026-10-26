@@ -275,12 +275,12 @@ func _section_shop(gm: Node) -> void:
 		wallet.call("notify_coins_changed")
 
 	# Back của Shop quay về ĐÚNG màn trước đó khi vào từ popup hết lượt
-	gm.set("shop_return_path", "res://scenes/levels.tscn")
+	gm.set("shop_return_path", "res://scenes/main.tscn")
 	var shop_scene := (load("res://scenes/shop.tscn") as PackedScene).instantiate()
 	root.add_child(shop_scene)
 	await process_frame
 	await process_frame
-	_check(str(shop_scene.get("_return_path")) == "res://scenes/levels.tscn",
+	_check(str(shop_scene.get("_return_path")) == "res://scenes/main.tscn",
 		"Shop doc duoc man can quay ve ('%s')" % str(shop_scene.get("_return_path")))
 	_check(str(gm.get("shop_return_path")).is_empty(), "Man quay ve chi dung 1 lan")
 	shop_scene.queue_free()
@@ -327,7 +327,7 @@ func _section_layouts() -> void:
 
 	# Xác nhận RUNTIME: `.tscn` khai `visible = false` thì 2 chip thật sự ẩn, màn có ví thì vẫn hiện
 	await _check_shared_chip_visibility("res://scenes/layout/portrait/title.tscn", false)
-	await _check_shared_chip_visibility("res://scenes/layout/portrait/levels.tscn", true)
+	await _check_shared_chip_visibility("res://scenes/layout/portrait/main.tscn", true)
 
 
 ## Nạp thẳng 1 layout và kiểm tra 2 chip dùng chung hiện/ẩn đúng như khai trong `.tscn`.

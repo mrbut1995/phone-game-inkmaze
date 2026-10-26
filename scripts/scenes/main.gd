@@ -1,22 +1,19 @@
 class_name MainScene
 extends BaseScene
 ## ============================================================================
-## View Controller: Màn hình chính (Main Screen) — bố cục mới (§A).
+## View Controller: Màn hình chính (Main Screen) — bố cục GỘP (Main = màn chọn màn).
 ##
-## Hai cổng chơi thường trực là 2 thẻ giấy `ModeCard`: Play (chọn màn) & Dungeon
-## (vô tận). Daily Challenge KHÔNG còn thẻ riêng — nằm trong KHỐI SỰ KIỆN (carousel
-## thẻ dọc, ghim đầu). 8 luật Special chỉ vào qua Daily/Event.
+## Màn Main hiển thị THẲNG bản đồ màn chơi (`LevelSection`, logic ở
+## scripts/nodes/main/level_section.gd) — màn Levels riêng đã bị gỡ. Dungeon là nút nổi
+## `DungeonPill` nằm trên bản đồ. Daily Challenge nằm trong KHỐI SỰ KIỆN (carousel,
+## ghim đầu). 8 luật Special chỉ vào qua Daily/Event.
 ##
 ## Node UI nằm trong bố cục đang hiển thị (`Portrait` / `Landscape`) và đã BIND SẴN
 ## bằng `@export` trong `scenes/layout/<hướng>/main.tscn` ⇒ code đọc qua `layout.<tên>`.
 ## ============================================================================
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
-## Ảnh icon dùng cho 2 thẻ chế độ + dock (nạp 1 lần)
-const ICON_STARS := "res://assets/images-png/icons/icon_stat_stars.png"
-const ICON_STEPS := "res://assets/images-png/icons/icon_steps.png"
-const ICON_PLAY := "res://assets/images-png/icons/icon_play.png"
-const ICON_CASTLE := "res://assets/images-png/icons/icon_castle.png"
+## Ảnh icon dock (nạp 1 lần)
 const ICON_SHOP := "res://assets/images-png/icons/icon_shop.png"
 const ICON_RANK := "res://assets/images-png/icons/icon_trophy.png"
 const ICON_BADGES := "res://assets/images-png/icons/icon_badge_medal.png"
@@ -35,11 +32,48 @@ func _ready() -> void:
 	orientation_changed.connect(_on_orientation_changed)
 
 
+## Quay lại Main (vd: thắng/thua màn xong) ⇒ số Sao/Xu/rương và bản đồ có thể đã đổi
+func _on_active() -> void:
+	_refresh_wallet()
+	_refresh_stars()
+	_refresh_dungeon_pill()
+	if layout != null and layout.level_section != null:
+		layout.level_section.refresh()
+
+
 ## Gắn lại toàn bộ node UI theo layout ĐANG HIỂN THỊ (dọc ⇄ ngang)
 func _bind_layout() -> void:
 	layout = active_layout() as MainLayout
 	if layout == null:
 		push_warning("main: bố cục chưa gắn MainLayout — thiếu binding trong scenes/layout/<hướng>/main.tscn")
+		return
+	var section := layout.level_section
+	if section != null:
+		ensure_signal(section, &"scrolled", &"_on_map_scrolled")
+		ensure_signal(section, &"chest_claimed", &"_on_chest_claimed")
+
+
+## Kéo bản đồ ⇒ nền giấy (parallax) trượt theo, như màn Levels cũ
+func _on_map_scrolled(delta_y: float) -> void:
+	var background := get_node_or_null("Background") as SceneBackground
+	if background != null:
+		background.set_scroll_delta(delta_y)
+
+
+## Nhận rương mốc ⇒ Xu/Sao đổi
+func _on_chest_claimed() -> void:
+	_refresh_wallet()
+	_refresh_stars()
+
+
+## Back cứng / Esc: khung "chương đang khoá" đang mở ⇒ chỉ đóng khung
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("ui_cancel"):
+		return
+	var section := layout.level_section if layout != null else null
+	if section != null and section.is_sheet_open():
+		section.close_sheet()
+		get_viewport().set_input_as_handled()
 
 
 func _on_orientation_changed(_is_landscape_now: bool) -> void:
@@ -59,7 +93,7 @@ func _refresh_all() -> void:
 	_refresh_wallet()
 	_refresh_stars()
 	_refresh_stamp()
-	_refresh_mode_cards()
+	_refresh_dungeon_pill()
 
 
 func _refresh_wallet() -> void:
@@ -87,61 +121,11 @@ func _refresh_stamp() -> void:
 	layout.stamp_label.text = tr("STR_SETTINGS_VERSION").format([version])
 
 
-## 2 thẻ chế độ (Play · Dungeon) — dữ liệu màn/kỷ lục/tổng sao
-func _refresh_mode_cards() -> void:
-	if layout == null:
+## Nút Dungeon nổi: "DUNGEON · Tầng N" (kỷ lục)
+func _refresh_dungeon_pill() -> void:
+	if layout == null or layout.level_section == null or layout.level_section.dungeon_pill == null:
 		return
-	var gm := get_node_or_null("/root/GameManager")
-	var level := 1
-	if gm != null:
-		level = maxi(int(gm.get("current_level")), 1)
-	var stars := 0
-	if gm != null and gm.has_method("total_stars"):
-		stars = int(gm.call("total_stars"))
-	var star_total := _total_stars()
-	var floor := Archivement.stat_value("dungeon_best_floor")
-
-	if layout.card_play != null:
-		layout.card_play.setup({
-			"icon": load(ICON_PLAY),
-			"chip": tr("STR_MODECARD_PLAY_CHIP"),
-			"chip_color": Color("#9CCBE8"),
-			"chip_text": Color("#164663"),
-			"title": tr("STR_MODE_PLAY_TITLE"),
-			"subtitle": tr("STR_MODE_PLAY_DESC_1"),
-			"info": tr("STR_MODECARD_PLAY_INFO").format([stars, star_total]),
-			"info_icon": load(ICON_STARS),
-			"stat_label": tr("STR_MODECARD_PLAY_STAT"),
-			"stat_value": tr("STR_MODECARD_LEVEL_VAL").format([level]),
-			"button": tr("STR_MODECARD_PLAY_BUTTON"),
-			"tape_color": Color("#9CCBE8"),
-			"accent_color": Color("#256C96"),
-		})
-
-	if layout.card_dungeon != null:
-		layout.card_dungeon.setup({
-			"icon": load(ICON_CASTLE),
-			"chip": tr("STR_MODECARD_DUNGEON_CHIP"),
-			"chip_color": Color("#F6C453"),
-			"chip_text": Color("#6B4406"),
-			"title": tr("STR_MODE_DUNGEON_TITLE"),
-			"subtitle": tr("STR_MODE_DUNGEON_DESC_1"),
-			"info": tr("STR_MODECARD_DUNGEON_INFO"),
-			"info_icon": load(ICON_STEPS),
-			"stat_label": tr("STR_MODECARD_DUNGEON_STAT"),
-			"stat_value": tr("STR_MODECARD_FLOOR_VAL").format([floor]),
-			"button": tr("STR_MODECARD_DUNGEON_BUTTON"),
-			"tape_color": Color("#F6C453"),
-			"accent_color": Color("#F59E0B"),
-		})
-
-
-## Tổng số sao tối đa (số màn × 3) — dùng cho "x / y sao" trên thẻ Play
-func _total_stars() -> int:
-	var lm := get_node_or_null("/root/LevelManager")
-	if lm == null or not lm.has_method("get_level_count"):
-		return 0
-	return int(lm.call("get_level_count")) * 3
+	layout.level_section.dungeon_pill.setup(int(Archivement.stat_value("dungeon_best_floor")))
 
 
 ## Sticker HỒ SƠ: avatar + viền khung + cấp độ + tên + XP (node con tự lo)
@@ -177,8 +161,8 @@ func _setup_buttons() -> void:
 	_connect_pressed(layout.dock_badges, _on_archivement_pressed)
 	_connect_pressed(layout.dock_rules, _on_rules_pressed)
 	#_connect_pressed(layout.profile_card, _on_profile_pressed)
-	_connect_mode_card(layout.card_play, _on_play_pressed)
-	_connect_mode_card(layout.card_dungeon, _on_dungeon_pressed)
+	if layout.level_section != null:
+		_connect_pressed(layout.level_section.dungeon_pill, _on_dungeon_pressed)
 
 	# Dock: gán icon + nhãn
 	_setup_dock_button(layout.dock_shop, ICON_SHOP, tr("STR_BTN_SHOP"))
@@ -196,16 +180,6 @@ func _setup_buttons() -> void:
 	# Ví Xu tự lo nút `+` (CoinChip mở Cửa hàng) — main chỉ cần cập nhật số dư
 
 
-## ModeCard phát `card_pressed` (không dùng `pressed` để tránh trùng với nút CTA bên trong)
-func _connect_mode_card(card: ModeCard, handler: Callable) -> void:
-	if card == null:
-		return
-	if card.card_pressed.is_connected(handler):
-		return
-	card.card_pressed.connect(handler)
-	UIAnim.attach_press_down(card)
-
-
 func _setup_dock_button(button: DockButton, icon_path: String, label: String) -> void:
 	if button == null:
 		return
@@ -217,8 +191,6 @@ func _setup_animations() -> void:
 		return
 	if layout.logo != null:
 		UIAnim.play_float_idle(layout.logo, 4.0, 2.4)
-	if layout.mode_box != null:
-		UIAnim.play_slide_in(layout.mode_box, Vector2(0, 22), 0.0, 0.26)
 	if layout.stamp_panel != null:
 		UIAnim.play_pop_in(layout.stamp_panel, 0.2, 0.85, 0.25)
 
@@ -227,16 +199,7 @@ func _setup_animations() -> void:
 # HÀNH VI NÚT
 # ---------------------------------------------------------------------------
 
-func _on_play_pressed(_mode_id: StringName = &"") -> void:
-	Sfx.play(Sfx.BTN_CLICK)
-	var gm := get_node_or_null("/root/GameManager")
-	if gm != null and gm.has_method("go_to_levels"):
-		gm.go_to_levels()
-	else:
-		Nav.goto_levels()
-
-
-func _on_dungeon_pressed(_mode_id: StringName = &"") -> void:
+func _on_dungeon_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	var gm := get_node_or_null("/root/GameManager")
 	if gm != null and gm.has_method("start_dungeon"):
@@ -293,6 +256,9 @@ func _setup_event_carousel() -> void:
 		if not em.is_connected("events_changed", _on_events_changed):
 			em.events_changed.connect(_on_events_changed)
 	carousel.refresh()
+	# Chấm phân trang dời lên cạnh badge số event (EventHeader.DotsSlot)
+	if layout.event_header != null:
+		layout.event_header.attach_dots(carousel.get_node_or_null("EventDots") as Control)
 	_refresh_event_header()
 
 

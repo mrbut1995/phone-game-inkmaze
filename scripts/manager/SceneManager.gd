@@ -13,7 +13,8 @@ signal scene_changed(path: String)
 const SCENE_MAIN := "res://scenes/main.tscn"
 const SCENE_SPLASH := "res://scenes/splash.tscn"
 const SCENE_TITLE := "res://scenes/title.tscn"
-const SCENE_LEVELS := "res://scenes/levels.tscn"
+## Màn CHỌN MÀN đã GỘP vào Main (bản đồ nằm ngay trong Main)
+const SCENE_LEVELS := "res://scenes/main.tscn"
 const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
@@ -150,8 +151,9 @@ func goto_title() -> void:
 
 
 
+## DEPRECATED — Levels đã GỘP vào Main: mở thẳng Main (bản đồ nằm trong Main).
 func goto_levels() -> void:
-	change_scene(SCENE_LEVELS)
+	change_scene(SCENE_MAIN)
 
 
 func goto_game() -> void:

@@ -24,7 +24,6 @@ const SCREENS := {
 	"debug": "DebugLayout",
 	"splash": "SplashLayout",
 	"title": "TitleLayout",
-	"levels": "LevelsLayout",
 	## TUTORIAL tách đôi (2026-10): DANH SÁCH bài (`tutorial_list.tscn`) và CHI TIẾT bài đang
 	## xem (`tutorial.tscn`) — 2 màn, 2 script layout riêng.
 	"tutorial": "TutorialLayout",
@@ -63,8 +62,6 @@ const OPTIONAL := {
 	## → `MapArea/LevelMap`) nên bố cục đứng riêng không thể bind — binding thật khai ở node gốc
 	## màn và được `test_levels_map` kiểm. `map_slot` CHỈ bản NGANG có (khung `FitStage`), bản DỌC
 	## giữ neo `MapArea` mặc định. `progress` (thanh ngang) chỉ bản NGANG, `rail` (dọc) chỉ bản DỌC.
-	"levels|portrait": ["level_map", "progress", "map_slot"],
-	"levels|landscape": ["level_map", "rail"],
 	## Nội dung Hồ sơ: bản DỌC không tách 2 nhãn riêng UID/THAM GIA + dòng "còn EXP" (chỉ bản
 	## NGANG theo mockup landscape mới); bản NGANG không có con dấu INK VERIFIED.
 	"profiler_content|portrait": ["hero_exp_remain", "hero_join"],

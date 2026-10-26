@@ -95,27 +95,29 @@ func _init() -> void:
 				assert(title_label.get_theme_constant("outline_size") >= 5,
 					"%s co outline de title_outline trong theme resource co hieu luc" % title_path)
 
-	# 3. 2 thẻ chế độ — Play TRÊN Dungeon, đủ cấu trúc ModeCard
-	var card_play: ModeCard = main_scene.layout.card_play
-	var card_dungeon: ModeCard = main_scene.layout.card_dungeon
-	assert(card_play != null and card_dungeon != null, "Phai co 2 the che do Play + Dungeon")
-	assert(card_play.global_position.y < card_dungeon.global_position.y,
-		"The Play phai nam TREN the Dungeon")
-	for card in [card_play, card_dungeon]:
-		assert(card.get_node_or_null("Content/IconBox/Panel/Icon") != null, "ModeCard phai co Icon")
-		assert(card.get_node_or_null("Content/Texts/Title") != null, "ModeCard phai co Title")
-		assert(card.get_node_or_null("Content/Right/StatValue") != null, "ModeCard phai co StatValue")
-		assert(card.get_node_or_null("Content/Right/ActionButton") != null, "ModeCard phai co ActionButton")
-		assert(card.size.x > 0.0 and card.size.y > 0.0, "ModeCard phai co kich thuoc")
-		assert(card.card_pressed.get_connections().size() > 0, "ModeCard phai noi card_pressed")
+	# 3. KH?I B?N ?? (b?n G?P ? m?n Levels ?? g?, b?n ?? n?m ngay trong Main)
+	var section: LevelSection = main_scene.layout.level_section
+	assert(section != null, "Main phai co LevelSection (ban do man choi)")
+	assert(section.map != null, "LevelSection phai bind LevelMap (bang @export)")
+	assert(section.map.node_count() > 0, "Ban do phai co nut man")
+	assert(section.chapter_chip != null, "LevelSection phai co ChapterChip")
+	assert(section.chest != null, "LevelSection phai co ruong moc thuong")
+	assert(section.dungeon_pill != null, "LevelSection phai co nut Dungeon noi")
+	assert(section.dungeon_pill.pressed.get_connections().size() > 0,
+		"Nut Dungeon noi phai noi toi Main")
 
 	# 4. Dock 4 nút — đều nhau, đủ rộng
 	var dock: Node = main_scene.ui("Dock")
 	assert(dock != null, "Phai co Dock duoi cung")
-	assert(dock.get_child_count() == 4, "Dock phai co dung 4 nut, dang %d" % dock.get_child_count())
+	# Dock la thanh kem (PanelContainer) chua hang nut Row
+	var dock_row: Node = dock.get_node_or_null("Row")
+	assert(dock_row != null, "Dock phai la thanh kem chua hang nut Row")
+	if dock_row == null:
+		dock_row = dock
+	assert(dock_row.get_child_count() == 4, "Dock phai co dung 4 nut, dang %d" % dock_row.get_child_count())
 	var names := ["DockShop", "DockRanking", "DockBadges", "DockRules"]
 	for i in names.size():
-		var btn := dock.get_node_or_null(names[i]) as Control
+		var btn := dock_row.get_node_or_null(names[i]) as Control
 		assert(btn != null, "Dock phai co nut %s" % names[i])
 		assert(btn.size.x > 40.0 and btn.size.y > 40.0, "Nut %s phai co kich thuoc" % names[i])
 		var label := btn.get_node_or_null("Label") as Label
@@ -126,6 +128,7 @@ func _init() -> void:
 	assert(main_scene.ui("Other") == null, "KHONG con hang nut Other")
 	assert(main_scene.ui("DailyMission") == null, "KHONG con the Daily rieng")
 	assert(main_scene.ui("GameMode") == null, "KHONG con khoi GameMode cu")
+	assert(main_scene.ui("Modes") == null, "KHONG con khoi 2 the che do (ModeCard da xoa)")
 	assert(main_scene.ui("Archivement") == null, "KHONG con nut Danh hieu lon cu")
 
 	# 6. Thẻ sự kiện có đúng cấu trúc con + dùng node khai sẵn

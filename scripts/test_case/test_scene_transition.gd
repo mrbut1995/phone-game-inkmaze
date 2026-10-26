@@ -94,7 +94,7 @@ func _init() -> void:
 
 	# Chạy transition với await
 	await transition.play_transition(
-		"res://scenes/levels.tscn",
+		"res://scenes/main.tscn",
 		func() -> void: callback_called[0] = true,
 		"page_turn_forward"
 	)
@@ -153,21 +153,21 @@ func _check_back_after_run() -> void:
 	await _frames(3)
 	gm.call("go_to_levels")
 	await _frames(3)
-	assert(current_scene.scene_file_path == "res://scenes/levels.tscn", "Phai o man Chon man truoc khi vao van")
+	assert(current_scene.scene_file_path == "res://scenes/main.tscn", "go_to_levels() phai ve Main (ban do nam trong Main)")
 	sm.call("change_scene", "res://scenes/game.tscn")
 	await _frames(3)
-	assert(str(screen.call("peek_history")) == "res://scenes/levels.tscn",
-		"Vao van tu Chon man: lich su phai giu man Chon man de Back con dung")
+	assert(str(screen.call("peek_history")) == "res://scenes/main.tscn",
+		"Vao van tu Main: lich su phai giu Main de Back con dung")
 
 	# Thắng màn cuối chương (nút "CHỌN CHƯƠNG" ⇒ `return_to_levels()`)
 	gm.call("return_to_levels")
 	await _frames(3)
-	assert(current_scene.scene_file_path == "res://scenes/levels.tscn", "return_to_levels phai ve man Chon man")
+	assert(current_scene.scene_file_path == "res://scenes/main.tscn", "return_to_levels phai ve Main")
 	assert(str(screen.call("peek_history")) != "res://scenes/game.tscn",
 		"Man CHƠI KHONG duoc nam trong lich su sau khi van ket thuc")
 	assert(str(screen.call("peek_history")) == "res://scenes/main.tscn",
 		"return_to_levels phai go muc 'Chon man' da day luc vao van ⇒ Back con ve Main")
-	print("[CHECK] Van ket thuc -> ve Chon man KHONG day man choi vao lich su.")
+	print("[CHECK] Van ket thuc -> ve Main KHONG day man choi vao lich su.")
 
 	# Back ở Chọn màn ⇒ về Main (trước đây quay lại đúng ván vừa chơi)
 	screen.call("go_back")

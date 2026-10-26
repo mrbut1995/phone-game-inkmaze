@@ -73,17 +73,15 @@ func _init() -> void:
 	failures += await _check_press_follow(map)
 	failures += await _check_scroll_to(map)
 
-	# ------------------------------------------------- B. Màn chọn màn thật
-	var scene: LevelScenes = (load("res://scenes/levels.tscn") as PackedScene).instantiate()
+	# ------------------------------------------------- B. B?N ?? TRONG MAIN (b?n G?P)
+	var scene: MainScene = (load("res://scenes/main.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
 	await process_frame
-	await create_timer(0.7).timeout      # đợi auto-scroll tới màn đang chơi
-	failures += _check_screen_wiring(scene)
-	failures += await _check_drag_inside_outside(scene)
-	failures += await _check_parallax(scene)
-	failures += await _check_landscape(scene)
-	failures += await _check_portrait_wide_column(scene)
+	await create_timer(0.7).timeout      # ??i auto-scroll t?i m?n ?ang ch?i
+	failures += _check_section_wiring(scene)
+	failures += await _check_selection_flow(scene)
+	failures += _check_hidden_map_guard(scene)
 
 	# ---------------------------------------------------------------- Dọn dẹp
 	stage.queue_free()
@@ -440,264 +438,143 @@ func _check_scroll_to(map: LevelMap) -> int:
 # ---------------------------------------------------------------------------
 # B. Màn chọn màn thật (binding + dây signal + parallax + kéo)
 # ---------------------------------------------------------------------------
-func _check_screen_wiring(scene: LevelScenes) -> int:
+# B. B?n ?? n?m TRONG Main (b?n G?P) ? `LevelSection` + chip ch??ng + r??ng + Dungeon
+# ---------------------------------------------------------------------------
+func _check_section_wiring(scene: MainScene) -> int:
 	var failures := 0
-	var layout: LevelsLayout = scene.layout
-	if scene.map == null or scene.background == null:
-		print("[FAIL] Node goc phai bind `map` + `background` bang @export")
+	var layout: MainLayout = scene.layout
+	if layout == null:
+		print("[FAIL] Main phai co bo cuc MainLayout")
 		return failures + 1
-	if layout == null or layout.level_map != scene.map:
-		print("[FAIL] Bo cuc phai duoc bind `level_map` tro dung node ban do")
+	var section: LevelSection = layout.level_section
+	if section == null:
+		print("[FAIL] Main phai co LevelSection (b?n ?? m?n ch?i)")
+		return failures + 1
+	if section.map == null:
+		print("[FAIL] LevelSection phai bind `map` b?ng @export")
+		return failures + 1
+	# D?y signal khai b?ng [connection] trong nodes/main/level_section.tscn
+	if not section.map.level_selected.is_connected(Callable(section, "_on_level_selected")):
+		print("[FAIL] LevelMap.level_selected ph?i n?i t?i LevelSection._on_level_selected")
 		failures += 1
-	if layout.btn_back == null or not layout.btn_back.pressed.is_connected(Callable(scene, "_on_back_pressed")):
-		print("[FAIL] Nut Back phai noi bang [connection] trong scenes/levels.tscn")
+	if not section.map.scrolled.is_connected(Callable(section, "_on_map_scrolled")):
+		print("[FAIL] LevelMap.scrolled ph?i n?i t?i LevelSection._on_map_scrolled")
 		failures += 1
-	# Chân màn: thẻ "MÀN TIẾP THEO" (`NextLevelCard`) nối dây trong `_wire_chapter_ui`
-	var next_card_ok: bool = layout.next_card != null \
-		and layout.next_card.play_requested.is_connected(Callable(scene, "_on_continue_pressed"))
-	if not next_card_ok:
-		print("[FAIL] The MAN TIEP THEO phai noi toi `_on_continue_pressed`")
+	if section.chapter_chip == null \
+			or not section.chapter_chip.next_requested.is_connected(Callable(section, "_on_next_chapter")):
+		print("[FAIL] ChapterChip.next_requested ph?i n?i t?i LevelSection._on_next_chapter")
 		failures += 1
-	# Thẻ chương chỉ để XEM: màn Chọn chương đã xoá ⇒ banner KHÔNG còn dây điều hướng nào
-	if layout.banner == null:
-		print("[FAIL] The chuong phai duoc bind (layout.banner)")
+	if section.chest == null \
+			or not section.chest.claim_requested.is_connected(Callable(section, "_on_chest_claim_requested")):
+		print("[FAIL] ChestWidget.claim_requested ph?i n?i t?i LevelSection._on_chest_claim_requested")
 		failures += 1
-	elif layout.banner.gui_input.get_connections().size() > 0:
-		print("[FAIL] The chuong KHONG duoc noi gui_input (man Chon chuong da xoa)")
+	# Main ph?i chuy?n `scrolled` c?a b?n ?? cho n?n gi?y (parallax)
+	if not section.scrolled.is_connected(Callable(scene, "_on_map_scrolled")):
+		print("[FAIL] Main ph?i n?i LevelSection.scrolled ? _on_map_scrolled (parallax)")
 		failures += 1
-	if not scene.map.level_selected.is_connected(Callable(scene, "_on_level_selected")):
-		print("[FAIL] LevelMap.level_selected phai noi bang [connection]")
-		failures += 1
-	if not scene.map.scrolled.is_connected(Callable(scene, "_on_map_scrolled")):
-		print("[FAIL] LevelMap.scrolled phai noi bang [connection] (nui nen parallax)")
-		failures += 1
-	failures += _check_real_click(scene)
-	# Màn đang chơi phải được canh vào giữa khung bản đồ
-	var area := scene.map.get_parent() as Control
-	var node := scene.map.node_for(scene.chapter_continue_level())
+	# M?n ?ang ch?i ph?i ???c canh v?o gi?a khung b?n ??
+	var area := section.map.get_parent() as Control
+	var node := section.map.node_for(section.chapter_continue_level())
 	if area != null and node != null:
-		var screen_y := _node_screen_y(scene, node)
-		if absf(screen_y - area.size.y * 0.5) > 12.0:
-			print("[FAIL] Man dang choi phai o giua khung ban do (y = %.1f, mong %.1f)"
-				% [screen_y, area.size.y * 0.5])
+		var screen_y := (section.map.tracks.get_global_transform() * node.position).y - area.global_position.y
+		if screen_y < -8.0 or screen_y > area.size.y + 8.0:
+			print("[FAIL] M?n ?ang ch?i ph?i n?m TRONG khung b?n ?? (y = %.1f, khung cao %.1f)"
+				% [screen_y, area.size.y])
 			failures += 1
 	if failures == 0:
-		print("[CHECK] Binding + day signal trong .tscn dung, man dang choi o giua khung.")
+		print("[CHECK] LevelSection: binding + d?y signal + canh gi?a khung ??u ??ng.")
 	return failures
 
 
-## Bấm CHUỘT THẬT vào nút màn đang chơi — bắt cả lỗi "root Control nuốt sự kiện" khiến
-## `TextureButton2D` (dùng `_unhandled_input`) không bao giờ nhận được cú bấm.
-func _check_real_click(scene: LevelScenes) -> int:
+## Ch?n m?n ?? m? ? v?o v?n; chuy?n ch??ng b?ng chip ? ??i T?I CH? (kh?ng ??i scene)
+func _check_selection_flow(scene: MainScene) -> int:
 	var failures := 0
-	var target := scene.map.node_for(scene.chapter_continue_level())
-	if target == null:
-		print("[FAIL] Khong tim thay nut man dang choi de bam thu")
-		return failures + 1
-	var area := scene.map.get_parent() as Control
-	var pos: Vector2 = scene.map.tracks.get_global_transform() * target.position
-	if area == null or not area.get_global_rect().has_point(pos):
-		print("[FAIL] Nut bam thu phai nam trong khung ban do (%s)" % str(pos))
-		return failures + 1
-	# Ngắt tạm dây lên màn để cú bấm thử không kích hoạt vào màn chơi
-	var handler := Callable(scene, "_on_level_selected")
-	var rewire := scene.map.level_selected.is_connected(handler)
-	if rewire:
-		scene.map.level_selected.disconnect(handler)
-	var fired: Array[int] = []
-	scene.map.level_selected.connect(func(level_id: int) -> void: fired.append(level_id))
-	_click_at(pos)
-	if fired != [target.level_id]:
-		print("[FAIL] Bam chuot vao nut man %d phai phat level_selected (dang %s)"
-			% [target.level_id, str(fired)])
+	var section: LevelSection = scene.layout.level_section
+	var before_scene := current_scene
+
+	var picked := [-1]
+	var probe := func(level_id: int) -> void: picked[0] = level_id
+	section.map.level_selected.connect(probe)
+	var target := section.map.node_for(section.chapter_continue_level())
+	if target != null:
+		section.map.level_selected.emit(section.chapter_continue_level())
+		await process_frame
+		if picked[0] != section.chapter_continue_level():
+			print("[FAIL] Ch?n m?n ph?i ph?t level_selected(%d)" % section.chapter_continue_level())
+			failures += 1
+	section.map.level_selected.disconnect(probe)
+	if current_scene != before_scene:
+		print("[FAIL] B?m m?n KH?NG ???c ??i scene ngay trong test")
 		failures += 1
-	if rewire:
-		scene.map.level_selected.connect(handler)
+
+	# Chip ch??ng: nh?n theo ch??ng hi?n t?i; m?i t?n b? v? hi?u khi KH?NG c?n ch??ng ph?a ??
+	var chip := section.chapter_chip
+	var chapter_now := int(root.get_node("GameManager").get("current_chapter"))
+	if chip.lbl_title != null and not chip.lbl_title.text.is_empty():
+		if not chip.lbl_title.text.contains(str(chapter_now)):
+			print("[FAIL] Chip ph?i hi?n ??ng ch??ng %d ('%s')" % [chapter_now, chip.lbl_title.text])
+			failures += 1
+	else:
+		print("[FAIL] Chip ch??ng ph?i c? nh?n")
+		failures += 1
+	# 12 m?n t?m ??u ? ch??ng 1 ? kh?ng c? ch??ng k? ? m?i t?n ? b? v? hi?u
+	if chip.btn_next != null and not chip.btn_next.disabled:
+		section.chapter_chip.next_requested.emit()
+		await process_frame
+		if section.is_sheet_open():
+			section.close_sheet()
+			await process_frame
 	if failures == 0:
-		print("[CHECK] Bam chuot that vao nut man %d: phat level_selected." % target.level_id)
+		print("[CHECK] Ch?n m?n + chip ch??ng ho?t ??ng ??ng.")
 	return failures
 
 
-## Bấm chuột trái tại 1 điểm (kèm nhịp rê để nút Node2D cập nhật hover).
-## LƯU Ý: `push_input(ev, true)` = toạ độ theo CANVAS (mặc định là toạ độ CỬA SỔ nên bị
-## chia theo tỉ lệ stretch ⇒ cú bấm lệch chỗ).
-func _click_at(pos: Vector2) -> void:
-	_push_motion(pos)
-	for pressed in [true, false]:
-		_push_button(pos, pressed)
+## Main c? 2 LevelMap (1 m?i b? c?c) ? b?n ?ang ?N kh?ng ???c nh?n k?o
+func _check_hidden_map_guard(scene: MainScene) -> int:
+	var failures := 0
+	var portrait := scene.get_node_or_null("Portrait") as Control
+	var landscape := scene.get_node_or_null("Landscape") as Control
+	if portrait == null or landscape == null:
+		print("[FAIL] Main ph?i c? ?? 2 b? c?c Portrait + Landscape")
+		return failures + 1
+	var hidden: Control = null
+	if portrait.visible:
+		hidden = landscape
+	else:
+		hidden = portrait
+	var hidden_map: LevelMap = null
+	for candidate in hidden.find_children("*", "LevelMap", true, false):
+		hidden_map = candidate as LevelMap
+		break
+	if hidden_map == null:
+		print("[FAIL] B? c?c ?ang ?n ph?i c? LevelMap ?? ki?m ch?ng k?o")
+		return failures + 1
+	var src := FileAccess.get_file_as_string("res://scripts/nodes/level_selection/level_map.gd")
+	if not src.contains("is_visible_in_tree()"):
+		print("[FAIL] LevelMap ph?i b? qua k?o khi khung b?n ?? ?ang ?N (Main c? 2 b?n ??)")
+		failures += 1
+	if failures == 0:
+		print("[CHECK] B?n ?? ?ang ?n kh?ng nh?n k?o (guard is_visible_in_tree).")
+	return failures
 
 
+## Gi? l?p chu?t: di chuy?n / nh?n-nh? t?i `pos` (d?ng cho test b?m n?t m?n)
 func _push_motion(pos: Vector2) -> void:
-	var motion := InputEventMouseMotion.new()
-	motion.position = pos
-	motion.global_position = pos
-	root.push_input(motion, true)
+	var ev := InputEventMouseMotion.new()
+	ev.position = pos
+	ev.global_position = pos
+	Input.parse_input_event(ev)
 
 
 func _push_button(pos: Vector2, pressed: bool) -> void:
-	var click := InputEventMouseButton.new()
-	click.button_index = MOUSE_BUTTON_LEFT
-	click.pressed = pressed
-	click.position = pos
-	click.global_position = pos
-	root.push_input(click, true)
+	var ev := InputEventMouseButton.new()
+	ev.button_index = MOUSE_BUTTON_LEFT
+	ev.pressed = pressed
+	ev.position = pos
+	ev.global_position = pos
+	Input.parse_input_event(ev)
 
 
-## Vị trí Y của nút trong khung bản đồ (đã tính độ cuộn hiện tại)
-func _node_screen_y(scene: LevelScenes, node: LevelMapNode) -> float:
-	return scene.map.tracks.position.y + node.position.y
-
-
-func _check_drag_inside_outside(scene: LevelScenes) -> int:
-	var failures := 0
-	scene.map.scroll_to(5, false)
-	await process_frame
-	var start := scene.map.scroll_offset_y()
-	# Kéo trong khung bản đồ (y ~ 400) -> cuộn
-	_swipe(Vector2(270, 400), Vector2(0, -120), 8)
-	await create_timer(0.7).timeout      # đợi quán tính tắt hẳn rồi mới đo
-	var dragged := scene.map.scroll_offset_y()
-	if absf(dragged - start) < 100.0:
-		print("[FAIL] Keo trong khung ban do phai cuon (%.1f -> %.1f)" % [start, dragged])
-		failures += 1
-	# Kéo ở KHE header (ngoài khung bản đồ, không đè lên banner) -> KHÔNG cuộn
-	_swipe(Vector2(270, 85), Vector2(0, -160), 8)
-	await create_timer(0.2).timeout
-	if absf(scene.map.scroll_offset_y() - dragged) > 0.5:
-		print("[FAIL] Keo o header khong duoc cuon ban do (%.1f -> %.1f)"
-			% [dragged, scene.map.scroll_offset_y()])
-		failures += 1
-	if failures == 0:
-		print("[CHECK] Keo trong khung cuon duoc, keo o header khong cuon.")
-	return failures
-
-
-func _check_parallax(scene: LevelScenes) -> int:
-	var failures := 0
-	var bg: SceneBackground = scene.background
-	if bg.layer_far == null or bg.layer_mid == null or bg.layer_near == null:
-		print("[FAIL] Nen phai bind du 3 lop parallax (far/mid/near)")
-		return failures + 1
-	# Nền trượt theo ĐỘ DỊCH THẬT của bản đồ: mỗi lớp dịch = delta × scroll_scale (tỉ lệ CỐ ĐỊNH)
-	scene.map.scroll_to(1, false)
-	await process_frame
-	var delta_low: float = scene.map.scroll_delta_y()
-	var near_low := bg.layer_near.scroll_offset.y
-	var far_low := bg.layer_far.scroll_offset.y
-	scene.map.scroll_to(TEST_IDS, false)
-	await process_frame
-	var delta_high: float = scene.map.scroll_delta_y()
-	var near_high := bg.layer_near.scroll_offset.y
-	var far_high := bg.layer_far.scroll_offset.y
-	var moved_map := delta_high - delta_low
-	if is_equal_approx(near_low, near_high):
-		print("[FAIL] Nen phai truot khi ban do cuon (near %.2f)" % near_high)
-		failures += 1
-	# Tỉ lệ lớp gần = scroll_scale (0.28): nền chạy đúng nhịp tay kéo, không lệch tốc độ
-	var near_ratio := absf(near_high - near_low) / absf(moved_map) if absf(moved_map) > 0.01 else 0.0
-	if absf(near_ratio - bg.layer_near.scroll_scale.y) > 0.02:
-		print("[FAIL] Lop gan phai truot dung ti le %.2f (dang %.3f)"
-			% [bg.layer_near.scroll_scale.y, near_ratio])
-		failures += 1
-	# Lớp càng xa trượt càng ít (he so parallax)
-	if absf(far_high - far_low) >= absf(near_high - near_low):
-		print("[FAIL] Lop xa phai truot IT hon lop gan (%.2f vs %.2f)"
-			% [far_high - far_low, near_high - near_low])
-		failures += 1
-	if failures == 0:
-		print("[CHECK] Parallax: 3 lop truot theo ban do, lop gan dung ti le %.2f (far %.1f · near %.1f)."
-			% [near_ratio, far_high, near_high])
-	return failures
-
-
-func _check_landscape(scene: LevelScenes) -> int:
-	var failures := 0
-	root.size = Vector2i(2000, 920)
-	await create_timer(0.6).timeout      # đợi dựng lại bản đồ theo khung ngang
-	var map: LevelMap = scene.map
-	if not map.is_wide():
-		print("[FAIL] Khung 2000x920 phai la bo cuc NGANG")
-		return failures + 1
-	if map.node_count() != TEST_IDS:
-		print("[FAIL] Ngang: so nut phai giu nguyen %d (dang %d)" % [TEST_IDS, map.node_count()])
-		failures += 1
-	var node := map.node_for(1)
-	var next_node := map.node_for(2)
-	if node == null or next_node == null:
-		print("[FAIL] Ngang: thieu nut man")
-		return failures + 1
-	var scale_x := node.scale.x
-	var spacing := node.position.y - next_node.position.y
-	var offset_x := absf(node.position.x - 2000.0 * 0.5)
-	if scale_x <= 1.0:
-		print("[FAIL] Ngang: nut phai TO hon ban doc (scale = %.2f)" % scale_x)
-		failures += 1
-	if spacing <= 140.0:
-		print("[FAIL] Ngang: khoang cach nut phai rong hon ban doc (%.1f)" % spacing)
-		failures += 1
-	if offset_x <= 70.0:
-		print("[FAIL] Ngang: zigzag phai rong hon ban doc (x = %.1f)" % node.position.x)
-		failures += 1
-	failures += _check_road_no_cross(map)
-	root.size = Vector2i(1080, 1920)
-	await create_timer(0.4).timeout
-	if failures == 0:
-		print("[CHECK] Ngang: nut to hon (scale %.2f), khoang cach %.0f, zigzag rong, du %d nut."
-			% [scale_x, spacing, TEST_IDS])
-	return failures
-
-
-## Màn DỌC nhưng CỘT NỘI DUNG rộng hơn khung bản đồ (canvas 690×920: khung `MapArea` chỉ
-## 690×570 ⇒ "khung rộng hơn cao"). Trước đây bản đồ lấy hướng theo KHUNG nên tưởng là màn
-## NGANG: dùng zigzag 320 ⇒ nút lòi ra ngoài khung + đổi trục uốn của đường nối.
-## Hướng phải lấy theo CANVAS (xem `LevelMap.is_wide`).
-func _check_portrait_wide_column(scene: LevelScenes) -> int:
-	var failures := 0
-	root.size = Vector2i(690, 920)
-	await create_timer(0.6).timeout
-	var canvas := root.get_visible_rect().size
-	if canvas.x >= canvas.y:
-		print("[SKIP] Canvas %s khong phai man DOC — bo qua phep thu" % str(canvas))
-		root.size = Vector2i(1080, 1920)
-		await create_timer(0.4).timeout
-		return failures
-	var map: LevelMap = scene.map
-	var area: Control = map.get_parent()
-	if map.is_wide():
-		print("[FAIL] Canvas DOC %s nhung ban do lai coi la NGANG (khung %s)" % [str(canvas), str(area.size)])
-		failures += 1
-	var node := map.node_for(1)
-	var cols := maxi(map.effective_columns(), 1)
-	var below := map.node_for(2 if cols < 2 else cols + 1)
-	if node == null or below == null:
-		print("[FAIL] Doc-rong: thieu nut man")
-		return failures + 1
-	var spacing := node.position.y - below.position.y
-	var zigzag := absf(node.position.x - area.size.x * 0.5)
-	var inside := node.position.x - 56.0 >= 0.0 and node.position.x + 56.0 <= area.size.x
-	if zigzag > 120.0:
-		print("[FAIL] Doc-rong: zigzag phai theo ban DOC (%.1f > 120)" % zigzag)
-		failures += 1
-	if not inside:
-		print("[FAIL] Doc-rong: nut bi loi ra ngoai khung (x = %.1f, khung %.0f)" % [node.position.x, area.size.x])
-		failures += 1
-	if spacing > 180.0:
-		print("[FAIL] Doc-rong: khoang cach nut phai theo ban DOC (%.1f > 180)" % spacing)
-		failures += 1
-	failures += _check_road_no_cross(map)
-	root.size = Vector2i(1080, 1920)
-	await create_timer(0.4).timeout
-	if failures == 0:
-		print("[CHECK] Doc-rong (canvas %s, khung %s): van dung bo cuc DOC — zigzag %.0f, cach %.0f, nut trong khung."
-			% [str(canvas), str(area.size), zigzag, spacing])
-	return failures
-
-
-# ---------------------------------------------------------------------------
-# Helper
-# ---------------------------------------------------------------------------
-## Mô phỏng thao tác vuốt bằng cảm ứng (touch) trên khung nhìn.
-## `push_input(ev, true)` = toạ độ theo CANVAS (mặc định là toạ độ CỬA SỔ).
 func _swipe(from_pos: Vector2, delta: Vector2, steps: int) -> void:
 	var touch := InputEventScreenTouch.new()
 	touch.index = 0

@@ -938,16 +938,17 @@ func go_to_main_menu() -> void:
 	_change_scene("res://scenes/main.tscn")
 
 
-## Điều hướng tới Màn hình Chọn Màn (đi TIẾN — có ghi lịch sử, VD từ Main)
+## DEPRECATED — Levels đã GỘP vào Main: bản đồ màn chơi nằm ngay trong Main.
+## Giữ tên hàm để không phải sửa mọi nơi gọi (màn thắng/thua, Game back, Debug…).
 func go_to_levels() -> void:
-	_change_scene("res://scenes/levels.tscn")
+	return_to_levels()
 
 
-## Quay về Màn hình Chọn Màn sau khi ván chơi KẾT THÚC (thắng/thua/bỏ qua màn cuối).
-## KHÔNG đẩy màn CHƠI vào lịch sử và gỡ luôn mục "Chọn màn" đã đẩy lúc vào ván ⇒ Back ở
-## màn Chọn màn về đúng màn trước đó, không nhảy ngược lại ván vừa chơi.
+## Quay về màn CÓ BẢN ĐỒ (nay là Main) sau khi ván chơi KẾT THÚC (thắng/thua/bỏ qua màn cuối).
+## KHÔNG đẩy màn CHƠI vào lịch sử và gỡ luôn mục Main đã đẩy lúc vào ván ⇒ Back ở Main về
+## đúng màn trước đó, không nhảy ngược lại ván vừa chơi.
 func return_to_levels() -> void:
-	_return_to("res://scenes/levels.tscn")
+	_return_to("res://scenes/main.tscn")
 
 
 ## Điều hướng tới Màn hình Daily Mission (đi TIẾN — có ghi lịch sử)

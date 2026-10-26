@@ -10,7 +10,9 @@ extends RefCounted
 ## ============================================================================
 
 const SCENE_MAIN := "res://scenes/main.tscn"
-const SCENE_LEVELS := "res://scenes/levels.tscn"
+## Màn CHỌN MÀN đã GỘP vào Main (bản đồ nằm ngay trong Main) — giữ tên hằng để code cũ
+## không vỡ, nhưng trỏ về Main.
+const SCENE_LEVELS := "res://scenes/main.tscn"
 const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
@@ -45,8 +47,10 @@ static func goto_main() -> void:
 	change_scene(SCENE_MAIN)
 
 
+## DEPRECATED — Levels đã GỘP vào Main: bản đồ màn chơi nằm ngay trong Main.
+## Giữ tên hàm để không phải sửa mọi nơi gọi.
 static func goto_levels() -> void:
-	change_scene(SCENE_LEVELS)
+	back_to_main()
 
 
 ## Điều hướng KHÔNG ghi lịch sử — dùng cho nút BACK (về màn CHA).
@@ -67,9 +71,9 @@ static func back_to_main() -> void:
 	back_to(SCENE_MAIN)
 
 
-## Back về màn CHỌN MÀN (không ghi lịch sử)
+## Back về màn CÓ BẢN ĐỒ ĐỒ (nay là Main) — không ghi lịch sử
 static func back_to_levels() -> void:
-	back_to(SCENE_LEVELS)
+	back_to_main()
 
 
 static func goto_game() -> void:

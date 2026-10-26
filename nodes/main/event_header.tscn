@@ -40,6 +40,12 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="DotsSlot" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+
 [node name="Spacer" type="Control" parent="." unique_id=789402521]
 layout_mode = 2
 size_flags_horizontal = 3
