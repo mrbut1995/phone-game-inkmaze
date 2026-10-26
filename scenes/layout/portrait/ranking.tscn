@@ -8,14 +8,49 @@
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="clip"]
 [ext_resource type="Texture2D" uid="uid://cfmy24n74f1hj" path="res://assets/images-png/ranking/my_rank_bar.png" id="mybar"]
 [ext_resource type="PackedScene" uid="uid://dydi6np3xsxp0" path="res://nodes/ranking/tab_button.tscn" id="tab"]
-[ext_resource uid="uid://bynxravt7qdvi" type="Texture2D" path="res://assets/images-png/ranking/hero_card.png" id="hero"]
-[ext_resource uid="uid://dslk2e2kf102l" type="Texture2D" path="res://assets/images-png/ranking/duo_card_silver.png" id="duo_s"]
-[ext_resource uid="uid://dl8eugjqjuhcr" type="Texture2D" path="res://assets/images-png/ranking/duo_card_bronze.png" id="duo_b"]
-[ext_resource uid="uid://diytikf7vo0sk" type="Texture2D" path="res://assets/images-png/ranking/trophy_gold.png" id="trophy_gold"]
-[ext_resource uid="uid://b64rcxjyttjq6" type="Texture2D" path="res://assets/images-png/ranking/trophy_silver.png" id="trophy_silver"]
-[ext_resource uid="uid://dpg2gdukkqfqx" type="Texture2D" path="res://assets/images-png/ranking/trophy_bronze.png" id="trophy_bronze"]
-[ext_resource uid="uid://d1jsebin0vqrg" type="Texture2D" path="res://assets/images-png/ranking/banner_title.png" id="banner"]
-[ext_resource uid="uid://d0va6pi8ee73v" type="Texture2D" path="res://assets/images-png/ranking/hole.png" id="hole"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/hero_card.png" id="hero"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/duo_card_silver.png" id="duo_s"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/duo_card_bronze.png" id="duo_b"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/trophy_gold.png" id="trophy_gold"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/trophy_silver.png" id="trophy_silver"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/trophy_bronze.png" id="trophy_bronze"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/banner_title.png" id="banner"]
+[ext_resource type="Texture2D" path="res://assets/images-png/ranking/hole.png" id="hole"]
+[ext_resource type="PackedScene" path="res://nodes/common/notebook_sheet.tscn" id="nbsheet"]
+
+[sub_resource type="StyleBoxFlat" id="sb_scroll"]
+bg_color = Color(0.902, 0.875, 0.812, 0.75)
+content_margin_left = 4.0
+content_margin_right = 4.0
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="sb_grab"]
+bg_color = Color(0.1843, 0.4667, 0.6471, 1)
+content_margin_left = 4.0
+content_margin_right = 4.0
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="sb_grab_h"]
+bg_color = Color(0.1176, 0.3333, 0.4706, 1)
+content_margin_left = 4.0
+content_margin_right = 4.0
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Theme" id="th_scroll"]
+VScrollBar/styles/scroll = SubResource("sb_scroll")
+VScrollBar/styles/scroll_focus = SubResource("sb_scroll")
+VScrollBar/styles/grabber = SubResource("sb_grab")
+VScrollBar/styles/grabber_highlight = SubResource("sb_grab_h")
+VScrollBar/styles/grabber_pressed = SubResource("sb_grab_h")
 
 [sub_resource type="Animation" id="Anim_reset"]
 length = 0.001
@@ -168,7 +203,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Sheet" type="NinePatchRect" parent="." index="1"]
+[node name="Sheet" parent="." index="1" instance=ExtResource("nbsheet")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0519
@@ -178,12 +213,6 @@ anchor_bottom = 0.9708
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("sheet")
-region_rect = Rect2(0, 0, 472, 820)
-patch_margin_left = 40
-patch_margin_top = 60
-patch_margin_right = 24
-patch_margin_bottom = 24
 
 [node name="Hole1" type="TextureRect" parent="Sheet"]
 layout_mode = 1
@@ -569,8 +598,9 @@ mouse_filter = 2
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 3
+vertical_scroll_mode = 1
 scroll_deadzone = 12
+theme = SubResource("th_scroll")
 
 [node name="Rows" type="VBoxContainer" parent="Sheet/Body/Scroll"]
 layout_mode = 2
@@ -779,8 +809,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="EnterAnim" type="AnimationPlayer" parent="." index="2"]
-libraries = {
-"": SubResource("AnimLib_enter")
-}
+libraries/ = SubResource("AnimLib_enter")
 autoplay = &"enter"
 

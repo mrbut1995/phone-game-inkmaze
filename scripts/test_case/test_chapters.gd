@@ -298,7 +298,10 @@ func _section_8_win_popup(gm: Node) -> void:
 	var gc_src := FileAccess.get_file_as_string("res://scripts/core/controllers/game_controller.gd")
 	_entry(gc_src.contains("next_level_in_chapter"),
 		"GameController di tiep trong CUNG CHUONG (khong nhay chuong khac)")
-	_entry(gc_src.contains("go_to_levels"), "Het chuong -> quay ve man CHON MAN")
+	_entry(gc_src.contains("go_to_levels") or gc_src.contains("return_to_levels"),
+		"Het chuong -> quay ve man CHON MAN")
+	_entry(gc_src.contains("return_to_levels"),
+		"Het chuong -> ve Chon man bang `return_to_levels()` (KHONG day man choi vao lich su)")
 	popup_mid.queue_free()
 	await process_frame
 

@@ -38,6 +38,23 @@ func pop_history() -> String:
 	return path
 
 
+## Gỡ mục CUỐI nếu nó đúng bằng `path` (trả về true nếu có gỡ).
+## Dùng khi QUAY VỀ màn cha sau khi ván chơi kết thúc: lúc vào ván `SceneManager` đã đẩy
+## màn nguồn (VD Chọn màn) vào lịch sử; nếu để nguyên, Back ở màn nguồn sẽ pop đúng màn
+## CHƠI vừa rồi ⇒ "thắng màn 9 → Chọn màn → Back → quay lại màn 9".
+func drop_history(path: String) -> bool:
+	if path.is_empty() or _history.is_empty() or _history.back() != path:
+		return false
+	_history.pop_back()
+	history_changed.emit(_history.size())
+	return true
+
+
+## Mục CUỐI của lịch sử ("" nếu rỗng) — chỉ để đọc, KHÔNG pop
+func peek_history() -> String:
+	return "" if _history.is_empty() else _history.back()
+
+
 func can_go_back() -> bool:
 	return not _history.is_empty()
 

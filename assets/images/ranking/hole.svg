@@ -1,5 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Lỗ gáy sổ. Toạ độ vẽ ở cỡ 1x, viewBox gấp đôi (xuất PNG 24x24 hoặc 12x12). Không dùng filter. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><g transform="scale(2)">
-<circle cx="6" cy="6" r="6" fill="#E3E3DA"/>
-</g></svg>
+<!-- Lỗ gáy sổ (đậm hơn bản cũ để nhìn rõ trên dải gáy). Vẽ 1x 12x12, viewBox gấp đôi. Dùng chung: ranking/hole.png -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><g transform="scale(2)"><circle cx="6" cy="6.600" r="5.400" fill="#B3AA8F" opacity=".35"/><circle cx="6" cy="6" r="5.200" fill="#DDD6BF" stroke="#B3AA8F" stroke-width="1"/></g></svg>

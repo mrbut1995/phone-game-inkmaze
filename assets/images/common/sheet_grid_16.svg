@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ô nhỏ 16px của tờ giấy (LÁT GẠCH — TextureRect stretch_mode=Tile). Xuất đúng 16x16. Vẽ 1x, viewBox gấp đôi. Không dùng filter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16"><g transform="scale(2)">
+<path d="M16 .35H0V16" fill="none" stroke="#DCE6EC" stroke-width=".7"/>
+</g></svg>

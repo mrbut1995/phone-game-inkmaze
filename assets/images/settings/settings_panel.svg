@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Tờ giấy + trang lệch phía sau. NinePatch: L40 T60 R24 B24. Vẽ ở toạ độ 1x, viewBox gấp đôi (xuất PNG 472x820 hoặc 944x1640). Không dùng filter. -->
+<!-- Tờ giấy "tập vở" cho MÀN HÌNH (khác popup: không rách mép, không xoay); tách nền bằng viền đậm + chồng trang + bóng đổ. Vẽ 1x 472x820, viewBox gấp đôi. NinePatch: L40 T60 R24 B24. Không dùng filter. Dùng chung: ranking/rank_sheet.png, settings/settings_panel.png (cùng art). -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 944 1640" width="472" height="820"><g transform="scale(2)">
-<rect x="10" y="8" width="462" height="812" rx="10" fill="#E6DFCF"/>
-<rect x="0" y="6" width="462" height="812" rx="10" fill="#000" opacity=".08"/>
-<rect width="462" height="812" rx="10" fill="#FFFDF5"/>
-<path d="M10 0h24v812H10a10 10 0 01-10-10V10A10 10 0 0110 0z" fill="#FFFDEF"/>
-<rect x="33" y="0" width="2" height="812" fill="#F0B4AE"/>
+<defs><linearGradient id="pf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFBEC"/></linearGradient></defs>
+<rect x="10" y="8" width="462" height="812" rx="11" fill="#2E2616" opacity=".13"/>
+<rect x="8" y="7" width="462" height="812" rx="11" fill="#2E2616" opacity=".10"/>
+<rect x="11" y="9" width="460" height="810" rx="10" fill="#D2CAB0" stroke="#A39A7E" stroke-width="1.5"/>
+<rect x="6" y="4.500" width="460" height="808" rx="10" fill="#ECE6D0" stroke="#B5AC90" stroke-width="1.5"/>
+<rect x="1" y="1" width="460" height="810" rx="10" fill="url(#pf)" stroke="#A89F84" stroke-width="2.2"/>
+<path d="M11 1.500H34V810.500H11A9.500 9.500 0 011.500 801V11A9.500 9.500 0 0111 1.500z" fill="#F7E9C6"/>
+<rect x="34" y="2" width="1.500" height="808" fill="#DDD2B3"/>
+<rect x="35.500" y="2" width="2" height="808" fill="#EFA9A3"/>
+<rect x="40" y="2" width="1" height="808" fill="#EFA9A3" opacity=".6"/>
 </g></svg>

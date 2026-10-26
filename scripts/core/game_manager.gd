@@ -938,14 +938,35 @@ func go_to_main_menu() -> void:
 	_change_scene("res://scenes/main.tscn")
 
 
-## Điều hướng tới Màn hình Chọn Màn
+## Điều hướng tới Màn hình Chọn Màn (đi TIẾN — có ghi lịch sử, VD từ Main)
 func go_to_levels() -> void:
 	_change_scene("res://scenes/levels.tscn")
 
 
-## Điều hướng tới Màn hình Daily Mission
+## Quay về Màn hình Chọn Màn sau khi ván chơi KẾT THÚC (thắng/thua/bỏ qua màn cuối).
+## KHÔNG đẩy màn CHƠI vào lịch sử và gỡ luôn mục "Chọn màn" đã đẩy lúc vào ván ⇒ Back ở
+## màn Chọn màn về đúng màn trước đó, không nhảy ngược lại ván vừa chơi.
+func return_to_levels() -> void:
+	_return_to("res://scenes/levels.tscn")
+
+
+## Điều hướng tới Màn hình Daily Mission (đi TIẾN — có ghi lịch sử)
 func go_to_daily() -> void:
 	_change_scene("res://scenes/daily.tscn")
+
+
+## Quay về Màn hình Daily sau khi ván Daily kết thúc (xem `return_to_levels()`)
+func return_to_daily() -> void:
+	_return_to("res://scenes/daily.tscn")
+
+
+## Lùi về `path` như một thao tác BACK: gỡ mục `path` còn sót trên đỉnh lịch sử (do lúc vào
+## ván đã đẩy) rồi chuyển màn KHÔNG ghi thêm lịch sử.
+func _return_to(path: String) -> void:
+	var screen := get_node_or_null("/root/ScreenManager")
+	if screen != null and screen.has_method("drop_history"):
+		screen.call("drop_history", path)
+	Nav.back_to(path)
 
 
 ## Chuyển màn qua Nav/SceneManager (tự có SFX lật trang + ghi lịch sử cho nút Back)
