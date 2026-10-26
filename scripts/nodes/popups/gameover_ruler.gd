@@ -22,6 +22,12 @@ extends Control
 @export var line_y := 44.0
 @export var pad_x := 18.0
 
+## Hiệu ứng "chạy": 0 → 1 = đoạn đỏ + ghim ✕ chạy từ đầu thước tới tầng vừa thua. 1 = vẽ đầy đủ (mặc định).
+var progress := 1.0:
+	set(value):
+		progress = clampf(value, 0.0, 1.0)
+		queue_redraw()
+
 var _floor := 1
 var _week := 0
 var _month := 0
@@ -61,7 +67,7 @@ func _draw() -> void:
 	draw_rect(Rect2(x0, line_y - 4.0, x1 - x0, 8.0), color_track)
 	draw_circle(Vector2(x0, line_y), 4.0, color_track)
 	draw_circle(Vector2(x1, line_y), 4.0, color_track)
-	var xf := _x_of(_floor, hi)
+	var xf := lerpf(x0, _x_of(_floor, hi), progress)
 	draw_rect(Rect2(x0, line_y - 4.0, xf - x0, 8.0), color_you)
 	draw_circle(Vector2(x0, line_y), 4.0, color_you)
 	# Vạch chia: mỗi tầng nếu ít, thưa dần nếu nhiều

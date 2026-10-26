@@ -4,24 +4,19 @@
 
 [resource]
 script = ExtResource("1_level")
-level_id = 21
-level_title = "Level 2-12 · Challenge — chỉ đi trên ô có số"
-chapter = 2
-mode_id = "challenge"
+level_title = "Level 3-1 · Chữ H (polyomino)"
+chapter = 3
+mode_id = "play"
 difficulty = "medium"
-challenge = "walk_number_only"
-challenge_param = 0
 width = 6
 height = 5
 start_pos = Vector2i(0, 4)
-end_pos = Vector2i(5, 0)
-max_steps = 13
-par_time = 39.0
-v_walls = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1)
-v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1)
-h_walls = PackedByteArray(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1)
-h_walls_visible = PackedByteArray(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1)
-cell_mask = PackedByteArray()
-mission_types = PackedStringArray()
-mission_params = PackedInt32Array()
+end_pos = Vector2i(5, 3)
+max_steps = 42
+par_time = 126.0
+v_walls = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1)
+v_walls_visible = PackedByteArray(1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1)
+h_walls = PackedByteArray(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1)
+h_walls_visible = PackedByteArray(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1)
+cell_mask = PackedByteArray(1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1)
 custom_cell_values = {}

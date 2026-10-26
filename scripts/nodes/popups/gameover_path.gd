@@ -14,6 +14,11 @@ extends Control
 
 const SAMPLES := 72
 var _progress := 0.0
+## Hiệu ứng "chạy": 0 -> 1 = nét xanh + ✕ chạy từ điểm xuất phát tới điểm thua. 1 = vẽ đầy đủ (mặc định).
+var anim := 1.0:
+	set(value):
+		anim = clampf(value, 0.0, 1.0)
+		queue_redraw()
 
 
 func set_progress(value: float) -> void:
@@ -39,7 +44,7 @@ func _point(s: float) -> Vector2:
 func _draw() -> void:
 	if size.x < 40.0 or size.y < 30.0:
 		return
-	var s_fail := maxf(_progress, 0.04)
+	var s_fail := maxf(_progress * anim, 0.04)
 	var done := PackedVector2Array()
 	for i in SAMPLES + 1:
 		var s := float(i) / SAMPLES

@@ -23,7 +23,7 @@ extends BasePopup
 signal rest_requested
 signal enter_requested
 
-const COUNT_TIME := 0.6
+const COUNT_TIME := 0.35
 const HALO_ALPHA := 0.65
 const COUNT := 3
 ## Màu hào quang vàng ấm (nhân với màu ảnh fx_glow_*.png) — chỉnh tại đây
@@ -163,7 +163,7 @@ func _play_intro(floor_no: int, next_no: int, bonus: int, base_pts: int, move_pt
 	fx_header.pivot_offset = Vector2(60.0, fx_header.size.y * 0.5)
 	fx_header.scale = Vector2.ONE * 0.6
 	var th := _track(create_tween())
-	th.tween_interval(0.25)
+	th.tween_interval(0.1)
 	th.tween_callback(func() -> void:
 		fx_header.modulate.a = 1.0
 		Sfx.play(Sfx.STAR_POP)
@@ -175,15 +175,15 @@ func _play_intro(floor_no: int, next_no: int, bonus: int, base_pts: int, move_pt
 	th.tween_property(fx_header, "scale", Vector2.ONE, 0.14)
 
 	# thước tầng: thẻ hiện -> ghim chạy -> nét đứt dài tới tầng kế
-	var t_ruler := 0.7
+	var t_ruler := 0.35
 	_fade_in(fx_ruler_card, t_ruler, 0.95)
 	var tr_ := _track(create_tween())
-	tr_.tween_interval(t_ruler + 0.2)
-	tr_.tween_property(ruler, "progress", 1.0, 1.0) \
+	tr_.tween_interval(t_ruler + 0.1)
+	tr_.tween_property(ruler, "progress", 1.0, 0.55) \
 		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 
 	# thẻ điểm cộng dồn: từng dòng trượt vào + số đếm lên; TỔNG nảy
-	var t := t_ruler + 0.9
+	var t := t_ruler + 0.5
 	var rows := fx_score_rows.get_children()
 	var value_of := {
 		"RowBase": [value_base, base_pts], "RowMove": [value_move, move_pts],
@@ -206,13 +206,13 @@ func _play_intro(floor_no: int, next_no: int, bonus: int, base_pts: int, move_pt
 			tc.tween_interval(t + 0.05)
 			tc.tween_method(_count_signed.bind(lbl), 0.0, float(target), COUNT_TIME) \
 				.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-			t += 0.28
+			t += 0.12
 		elif rname == "RowTotal":
 			value_total.text = _fmt_int(0)
 			value_total.pivot_offset = value_total.size * 0.5
 			var tt := _track(create_tween())
 			tt.tween_interval(t + 0.1)
-			tt.tween_method(_count_int.bind(value_total), 0.0, float(total), COUNT_TIME + 0.2) \
+			tt.tween_method(_count_int.bind(value_total), 0.0, float(total), COUNT_TIME + 0.1) \
 				.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 			tt.tween_callback(func() -> void:
 				Sfx.play(Sfx.STAR_POP)
@@ -220,7 +220,7 @@ func _play_intro(floor_no: int, next_no: int, bonus: int, base_pts: int, move_pt
 			tt.tween_property(value_total, "scale", Vector2(1.3, 1.3), 0.14) \
 				.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			tt.tween_property(value_total, "scale", Vector2.ONE, 0.12)
-			t += COUNT_TIME + 0.5
+			t += COUNT_TIME + 0.2
 		else:
 			t += 0.1
 
@@ -228,20 +228,20 @@ func _play_intro(floor_no: int, next_no: int, bonus: int, base_pts: int, move_pt
 	if bonus > 0:
 		_fade_in(bonus_card, t, 0.9)
 		var tb := _track(create_tween())
-		tb.tween_interval(t + 0.2)
+		tb.tween_interval(t + 0.1)
 		tb.tween_callback(func() -> void:
 			Sfx.play(Sfx.STAR_POP)
 			Sfx.star_pop(2)
 			_burst(value_bonus, 12)
 			_play_bonus_pop(bonus))
-		t += 0.5
+		t += 0.3
 
 	# nút: hiện; nút "Vào tầng" thở nhẹ mời bấm
 	_fade_in(fx_buttons, t, 0.9)
 	if btn_enter != null:
 		btn_enter.pivot_offset = btn_enter.size * 0.5
 		var tp := _track(create_tween())
-		tp.tween_interval(t + 0.5)
+		tp.tween_interval(t + 0.3)
 		tp.tween_callback(func() -> void:
 			var loop := _track(create_tween().set_loops())
 			loop.tween_property(btn_enter, "scale", Vector2(1.05, 1.05), 0.6) \
@@ -440,10 +440,10 @@ func _intro_tape() -> void:
 	fx_tape.rotation = _tape_rot - 0.14
 	fx_tape.modulate.a = 0.0
 	var tw := _track(create_tween().set_parallel(true))
-	tw.tween_property(fx_tape, "position", _tape_rest, 0.42) \
+	tw.tween_property(fx_tape, "position", _tape_rest, 0.3) \
 		.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	tw.tween_property(fx_tape, "modulate:a", 1.0, 0.15)
-	tw.tween_property(fx_tape, "rotation", _tape_rot, 0.6) \
+	tw.tween_property(fx_tape, "rotation", _tape_rot, 0.4) \
 		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
 
@@ -455,8 +455,8 @@ func _fade_in(node: Control, delay: float, from_scale: float) -> void:
 	node.scale = Vector2.ONE * from_scale
 	var tw := _track(create_tween())
 	tw.tween_interval(delay)
-	tw.tween_property(node, "modulate:a", 1.0, 0.2)
-	tw.parallel().tween_property(node, "scale", Vector2.ONE, 0.26) \
+	tw.tween_property(node, "modulate:a", 1.0, 0.12)
+	tw.parallel().tween_property(node, "scale", Vector2.ONE, 0.18) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
