@@ -16,39 +16,30 @@ func _init() -> void:
 	print("[CHECK] MainScene instantiated.")
 	await process_frame
 	await process_frame
-	assert(main_scene.layout.card_play != null, "MainScene phai co the Play (ModeCard)")
-	assert(main_scene.layout.card_dungeon != null, "MainScene phai co the Dungeon (ModeCard)")
 	assert(main_scene.layout.event_carousel != null, "MainScene phai co EventCarousel")
-	main_scene.queue_free()
-	await process_frame
-
-	# 2. Test Level Selection Scene
-	var levels_packed: PackedScene = load("res://scenes/levels.tscn")
-	assert(levels_packed != null, "scenes/levels.tscn phai load duoc")
-	var levels_scene: LevelScenes = levels_packed.instantiate()
-	root.add_child(levels_scene)
-	print("[CHECK] LevelScenes instantiated.")
-	await process_frame
-	await process_frame
-	assert(levels_scene.layout.btn_back != null, "LevelScenes phai co btn_back")
-	assert(levels_scene.map != null, "LevelScenes phai co ban do LevelMap (bind bang @export)")
-	var levels_count := levels_scene.level_ids().size()
-	assert(levels_scene.map.node_count() == levels_count,
+	# Ban GOP: ban do man choi nam NGAY trong Main (man Levels rieng da go)
+	var section: LevelSection = main_scene.layout.level_section
+	assert(section != null, "MainScene phai co LevelSection (ban do man choi)")
+	assert(section.map != null, "LevelSection phai co ban do LevelMap (bind bang @export)")
+	assert(section.chapter_chip != null, "LevelSection phai co ChapterChip")
+	assert(section.dungeon_pill != null, "LevelSection phai co nut Dungeon noi")
+	var levels_count := section.level_ids().size()
+	assert(section.map.node_count() == levels_count,
 		"So nut tren ban do phai bang so man cua chuong (dang %d nut / %d man)"
-			% [levels_scene.map.node_count(), levels_count])
+			% [section.map.node_count(), levels_count])
 	# Cụm nút màn + đường nối nằm trong `Tracks/Items`; cờ đích + mũi chỉ là node có sẵn
-	var items: Node2D = levels_scene.map.items
+	var items: Node2D = section.map.items
 	var expected_items := levels_count + (1 if levels_count >= 2 else 0)
 	assert(items != null and items.get_child_count() == expected_items,
 		"Items phai co %d con (nut man + duong noi lien mach)" % expected_items)
-	var current_node: LevelMapNode = levels_scene.map.node_for(levels_scene.chapter_continue_level())
+	var current_node: LevelMapNode = section.map.node_for(section.chapter_continue_level())
 	assert(current_node != null and current_node.state == LevelMapNode.State.CURRENT,
 		"Man nen choi tiep phai co nut o trang thai CURRENT")
-	assert(levels_scene.map.marker != null and levels_scene.map.marker.visible,
+	assert(section.map.marker != null and section.map.marker.visible,
 		"Mui chi 'man tiep theo' phai hien tren ban do")
-	print("[CHECK] LevelScenes: %d man -> %d nut ban do, mui chi o man %d."
-		% [levels_count, levels_scene.map.node_count(), levels_scene.chapter_continue_level()])
-	levels_scene.queue_free()
+	print("[CHECK] LevelSection: %d man -> %d nut ban do, mui chi o man %d."
+		% [levels_count, section.map.node_count(), section.chapter_continue_level()])
+	main_scene.queue_free()
 	await process_frame
 
 	# 3. Test Daily Mission Scene

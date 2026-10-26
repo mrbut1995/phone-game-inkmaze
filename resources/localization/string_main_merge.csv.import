@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://d2vjheak2ceh2"
+
+[deps]
+
+files=["res://resources/localization/string_main_merge.en.translation", "res://resources/localization/string_main_merge.vi.translation"]
+
+source_file="res://resources/localization/string_main_merge.csv"
+dest_files=["res://resources/localization/string_main_merge.en.translation", "res://resources/localization/string_main_merge.vi.translation"]
+
+[params]
+
+compress=true
+delimiter=0

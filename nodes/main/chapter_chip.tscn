@@ -1,0 +1,129 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/main/chapter_chip.gd" id="1_chip"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(1, 0.9922, 0.9686, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8902, 0.8471, 0.7765, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_empty"]
+bg_color = Color(0,0,0,0)
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+
+[sub_resource type="Animation" id="Animation_reset"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBox/Next:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hint"]
+resource_name = "next_hint"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBox/Next:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.3, 1.3), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_chip"]
+_data = {
+&"RESET": SubResource("Animation_reset"),
+&"next_hint": SubResource("Animation_hint")
+}
+
+[node name="ChapterChip" type="PanelContainer" node_paths=PackedStringArray("lbl_title", "btn_prev", "btn_next", "anim")]
+custom_minimum_size = Vector2(178, 44)
+offset_right = 178.0
+offset_bottom = 44.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+script = ExtResource("1_chip")
+lbl_title = NodePath("HBox/Title")
+btn_prev = NodePath("HBox/Prev")
+btn_next = NodePath("HBox/Next")
+anim = NodePath("Anim")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Prev" type="Button" parent="HBox"]
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
+theme_override_colors/font_pressed_color = Color(0.0863, 0.2745, 0.3882, 1)
+theme_override_colors/font_hover_color = Color(0.0863, 0.2745, 0.3882, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_empty")
+theme_override_styles/hover = SubResource("StyleBoxFlat_empty")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_empty")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_empty")
+theme_override_styles/focus = SubResource("StyleBoxFlat_empty")
+text = "‹"
+
+[node name="Title" type="Label" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
+theme_override_font_sizes/font_size = 15
+text = "STR_MAIN_CHAPTER_CHIP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Next" type="Button" parent="HBox"]
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+pivot_offset = Vector2(20, 18)
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
+theme_override_colors/font_pressed_color = Color(0.0863, 0.2745, 0.3882, 1)
+theme_override_colors/font_hover_color = Color(0.0863, 0.2745, 0.3882, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_empty")
+theme_override_styles/hover = SubResource("StyleBoxFlat_empty")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_empty")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_empty")
+theme_override_styles/focus = SubResource("StyleBoxFlat_empty")
+text = "›"
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_chip")
+}
+
+[connection signal="pressed" from="HBox/Prev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="HBox/Next" to="." method="_on_next_pressed"]
