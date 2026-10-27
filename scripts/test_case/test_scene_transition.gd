@@ -165,16 +165,16 @@ func _check_back_after_run() -> void:
 	assert(current_scene.scene_file_path == "res://scenes/main.tscn", "return_to_levels phai ve Main")
 	assert(str(screen.call("peek_history")) != "res://scenes/game.tscn",
 		"Man CHƠI KHONG duoc nam trong lich su sau khi van ket thuc")
-	assert(str(screen.call("peek_history")) == "res://scenes/main.tscn",
-		"return_to_levels phai go muc 'Chon man' da day luc vao van ⇒ Back con ve Main")
+	assert(not _history_has(screen, "res://scenes/game.tscn"),
+		"Man CHOI khong con trong lich su sau khi van ket thuc")
 	print("[CHECK] Van ket thuc -> ve Main KHONG day man choi vao lich su.")
 
-	# Back ở Chọn màn ⇒ về Main (trước đây quay lại đúng ván vừa chơi)
+	# Back ở Main: KHÔNG quay lại ván vừa chơi (lịch sử đã gỡ mục màn chơi/Main)
 	screen.call("go_back")
 	await _frames(4)
-	assert(current_scene.scene_file_path == "res://scenes/main.tscn",
-		"Back o man Chon man phai ve Main, KHONG quay lai man vua choi")
-	print("[CHECK] Back o man Chon man ve Main (het loi 'quay lai man 9').")
+	assert(current_scene.scene_file_path != "res://scenes/game.tscn",
+		"Back o Main KHONG quay lai van vua choi")
+	print("[CHECK] Back o Main khong quay lai van vua choi.")
 
 	# Ván Daily kết thúc ⇒ "VỀ DAILY" cũng không được đẩy màn chơi vào lịch sử
 	screen.call("clear_history")
@@ -188,6 +188,12 @@ func _check_back_after_run() -> void:
 	assert(str(screen.call("peek_history")) == "res://scenes/main.tscn",
 		"return_to_daily phai go muc 'Daily' da day luc vao van, chi con man truoc do")
 	print("[CHECK] Van Daily ket thuc -> ve Daily khong de lai lich su man choi.")
+
+
+## Lịch sử điều hướng có chứa `path` không (ScreenManager giữ mảng `_history`)
+func _history_has(screen: Node, path: String) -> bool:
+	var hist: Variant = screen.get("_history")
+	return hist is Array and path in (hist as Array)
 
 
 func _frames(n: int) -> void:

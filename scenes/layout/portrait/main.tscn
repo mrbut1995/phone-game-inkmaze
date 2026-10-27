@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://dhkgonrwe7f5o" path="res://assets/images-png/main/btn_settings_focus.png" id="10_r22o1"]
 [ext_resource type="PackedScene" path="res://nodes/main/level_section.tscn" id="L_section"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="L_sheet"]
+[ext_resource type="PackedScene" path="res://nodes/main/event_card_compact.tscn" id="L_evc"]
+[ext_resource type="PackedScene" path="res://nodes/main/daily_card_compact.tscn" id="L_dlc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
 bg_color = Color(1, 1, 1, 0.94)
@@ -87,6 +89,8 @@ size_flags_horizontal = 3
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 size_flags_vertical = 0
+event_card_scene = ExtResource("L_evc")
+daily_card_scene = ExtResource("L_dlc")
 
 [node name="LevelSection" parent="Body" node_paths=PackedStringArray("lock_sheet") instance=ExtResource("L_section")]
 custom_minimum_size = Vector2(0, 300)

@@ -14,8 +14,10 @@ func _init() -> void:
 	var main_scene: MainScene = main_packed.instantiate()
 	root.add_child(main_scene)
 	print("[CHECK] MainScene instantiated.")
-	await process_frame
-	await process_frame
+	# LevelSection d?ng b?n ?? SAU khi b? c?c ?ang hi?n th? c? c? th?t (v?i frame + 1 nh?p
+	# `visibility_changed`) ? ch? ?? l?u r?i m?i ki?m tr?ng th?i n?t m?n.
+	for i in 20:
+		await process_frame
 	assert(main_scene.layout.event_carousel != null, "MainScene phai co EventCarousel")
 	# Ban GOP: ban do man choi nam NGAY trong Main (man Levels rieng da go)
 	var section: LevelSection = main_scene.layout.level_section

@@ -70,13 +70,18 @@ func _init() -> void:
 		var badge_label := header.get_node_or_null("Badge/CountLabel") as Label
 		assert(badge_label != null and badge_label.text == str(expected_event_count),
 			"Badge dem dung so EventData dang hien")
-		var daily_first := carousel.get_node_or_null("ScrollContainer/HBox/DailyCard") as Control
-		assert(daily_first is DailyCard, "The DAILY dung lop DailyCard (tach khoi EventCard)")
-		assert(daily_first != null and daily_first.get_node_or_null("Content/Text/DailyDate") != null,
+		# Ban GOP dung the GON (EventCardCompact/DailyCardCompact) ? tim theo LOP, khong theo ten node
+		var daily_first: Control = null
+		var first_event_card: Control = null
+		for child in carousel.get_node("ScrollContainer/HBox").get_children():
+			if child is DailyCard and daily_first == null:
+				daily_first = child as Control
+			elif child is EventCard and first_event_card == null:
+				first_event_card = child as Control
+		assert(daily_first != null, "The DAILY dung lop DailyCard (tach khoi EventCard)")
+		assert(daily_first.get_node_or_null("Content/Text/DailyDate") != null,
 			"DailyCard co la lich (Content/Text/DailyDate)")
-		var first_event_card := carousel.get_node_or_null("ScrollContainer/HBox/EventCard") as Control
 		assert(first_event_card != null, "Carousel co the event de kiem tra thu tu lop")
-		assert(first_event_card is EventCard, "The su kien that dung lop EventCard")
 		assert(first_event_card.get_node_or_null("Content/Text/DailyDate") == null,
 			"EventCard KHONG con la lich Daily (da tach sang DailyCard)")
 		if first_event_card != null:
@@ -92,7 +97,9 @@ func _init() -> void:
 				"Thong tin tien do va CTA nam tren lop artwork")
 			for title_path in ["Content/Text/Title/Title1", "Content/Text/Title/Title2"]:
 				var title_label := first_event_card.get_node(title_path) as Label
-				assert(title_label.get_theme_constant("outline_size") >= 5,
+				# Th? G?N d?ng c? ch? 13 n?n vi?n m?ng (3px) l? ??; c?t l? title_outline
+				# c?a theme resource C? hi?u l?c (outline_size > 0).
+				assert(title_label.get_theme_constant("outline_size") > 0,
 					"%s co outline de title_outline trong theme resource co hieu luc" % title_path)
 
 	# 3. KH?I B?N ?? (b?n G?P ? m?n Levels ?? g?, b?n ?? n?m ngay trong Main)
@@ -132,7 +139,12 @@ func _init() -> void:
 	assert(main_scene.ui("Archivement") == null, "KHONG con nut Danh hieu lon cu")
 
 	# 6. Thẻ sự kiện có đúng cấu trúc con + dùng node khai sẵn
-	var card_node: Node = main_scene.ui("EventCard")
+	# (bản GỘP dùng thẻ GỌN nên tìm theo LỚP, không theo tên node "EventCard")
+	var card_node: Node = null
+	for child in carousel.get_node("ScrollContainer/HBox").get_children():
+		if child is EventCard and not (child is DailyCard):
+			card_node = child
+			break
 	assert(card_node != null, "Carousel phai instantiate it nhat 1 EventCard")
 	assert(card_node is EventCard and not (card_node is DailyCard),
 		"EventCard va DailyCard la 2 lop rieng")

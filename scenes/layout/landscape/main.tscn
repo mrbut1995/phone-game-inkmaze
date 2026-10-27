@@ -16,6 +16,8 @@
 [ext_resource type="Script" uid="uid://cpgvknnr8kupu" path="res://scripts/nodes/common/ui_scaler.gd" id="15_scaler"]
 [ext_resource type="PackedScene" path="res://nodes/main/level_section.tscn" id="L_section"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="L_sheet"]
+[ext_resource type="PackedScene" path="res://nodes/main/event_card_compact.tscn" id="L_evc"]
+[ext_resource type="PackedScene" path="res://nodes/main/daily_card_compact.tscn" id="L_dlc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
 bg_color = Color(1, 1, 1, 0.94)
@@ -105,9 +107,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="EventCarousel" parent="Scaler/Body/Mid/Left" instance=ExtResource("7_carousel")]
-custom_minimum_size = Vector2(0, 200)
+custom_minimum_size = Vector2(0, 170)
 layout_mode = 2
 size_flags_vertical = 3
+event_card_scene = ExtResource("L_evc")
+daily_card_scene = ExtResource("L_dlc")
 
 [node name="Stamp" type="Control" parent="Scaler/Body/Mid/Left"]
 custom_minimum_size = Vector2(0, 14)

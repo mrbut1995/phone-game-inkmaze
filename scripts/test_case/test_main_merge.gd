@@ -35,6 +35,7 @@ func _init() -> void:
 		await process_frame
 
 	_section_layout(scene)
+	await _section_compact_cards(scene)
 	await _section_chip(scene, gm, lm)
 	await _section_chest(scene, gm)
 	_section_dungeon(scene, gm)
@@ -141,6 +142,61 @@ func _section_layout(scene: MainScene) -> void:
 # ---------------------------------------------------------------------------
 # 4. Chip chương
 # ---------------------------------------------------------------------------
+## 3b. Th? s? ki?n G?N (package_event_compact) ? carousel th?p 150 px v?n kh?ng c?t ch?
+func _section_compact_cards(scene: MainScene) -> void:
+	print("[3b] The su kien GON...")
+	var carousel: EventCarousel = scene.layout.event_carousel
+	if carousel == null:
+		return
+	var ec_path := carousel.event_card_scene.resource_path if carousel.event_card_scene != null else ""
+	var dc_path := carousel.daily_card_scene.resource_path if carousel.daily_card_scene != null else ""
+	_check(ec_path.get_file() == "event_card_compact.tscn",
+		"Carousel dung the GON cho su kien ('%s')" % ec_path.get_file())
+	_check(dc_path.get_file() == "daily_card_compact.tscn",
+		"Carousel dung the GON cho Daily ('%s')" % dc_path.get_file())
+
+	var daily: Node = null
+	var event: Node = null
+	for child in carousel.get_node("ScrollContainer/HBox").get_children():
+		if child is DailyCardCompact and daily == null:
+			daily = child
+		elif child is EventCardCompact and event == null:
+			event = child
+	_check(daily != null, "Co the DailyCardCompact trong carousel")
+	_check(event != null, "Co the EventCardCompact trong carousel")
+	if daily == null or event == null:
+		return
+	_check(daily.size.y <= 165.0, "The Daily gon thap <= 165 px (%.0f)" % daily.size.y)
+	_check(event.size.y <= 165.0, "The su kien gon thap <= 165 px (%.0f)" % event.size.y)
+
+	var chips: Control = daily.get_node("Content/Chips") as Control
+	var leaf: Control = daily.get_node("Content/Background/Mask/Leaf") as Control
+	var date: Control = daily.get_node("Content/Text/DailyDate") as Control
+	var title: Control = daily.get_node("Content/Text/Title") as Control
+	var cta: Control = daily.get_node("Content/CtaButton") as Control
+	_check(chips != null and leaf != null and date != null and title != null and cta != null,
+		"The Daily gon du node (chips ? la lich ? nhan ngay ? tieu de ? CTA)")
+	if chips != null and date != null:
+		_check(chips.get_global_rect().end.y <= date.get_global_rect().position.y + 2.0,
+			"Dai CHIP nam TREN la lich (khong de len nhau)")
+	if date != null and title != null:
+		_check(date.get_global_rect().end.y <= title.get_global_rect().position.y + 2.0,
+			"Nhan ngay nam TREN dai tieu de")
+	if title != null and cta != null:
+		_check(title.get_global_rect().end.x <= cta.get_global_rect().position.x + 2.0,
+			"Tieu de va CTA khong de nhau")
+	var cta_label: Label = daily.get_node_or_null("Content/CtaButton/CtaLabel") as Label
+	if cta_label != null and cta != null:
+		var font: Font = cta_label.get_theme_font("font")
+		var fs: int = cta_label.get_theme_font_size("font_size")
+		var need := font.get_string_size(cta_label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+		_check(need <= cta.size.x + 1.0, "Nhan CTA '%s' vua nut (%.0f <= %.0f)"
+			% [cta_label.text, need, cta.size.x])
+	var progress: Control = event.get_node_or_null("Content/Information/ProgressPanel") as Control
+	_check(progress == null or not progress.visible,
+		"The su kien gon an panel tien do/qua (dai duoi da chat)")
+
+
 func _section_chip(scene: MainScene, _gm: Node, lm: Node) -> void:
 	print("[4] Chip chuong...")
 	var chip: ChapterChip = scene.layout.level_section.chapter_chip

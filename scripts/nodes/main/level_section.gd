@@ -35,6 +35,7 @@ var _dirty := true
 func _ready() -> void:
 	_wire_lock_sheet()
 	_connect_locale_signal()
+	_connect_save_signal()
 	visibility_changed.connect(_on_visibility_changed)
 	refresh()
 
@@ -74,6 +75,21 @@ func _connect_locale_signal() -> void:
 	if loc != null and loc.has_signal("locale_changed") \
 			and not loc.is_connected("locale_changed", _on_locale_changed):
 		loc.connect("locale_changed", _on_locale_changed)
+
+
+## Tiến trình người chơi có thể nạp XONG sau khi bản đồ đã dựng (mở Main sớm, test harness):
+## lúc đó `GameManager.current_chapter`/`level_stars` mới đúng ⇒ phải DỰNG LẠI, nếu không
+## bản đồ hiển thị chương mặc định (1) và nút "màn nên chơi tiếp" không ở trạng thái CURRENT.
+func _connect_save_signal() -> void:
+	var save: Node = get_node_or_null("/root/SaveManager")
+	if save != null and save.has_signal("data_loaded") \
+			and not save.is_connected("data_loaded", _on_data_loaded):
+		save.connect("data_loaded", _on_data_loaded)
+
+
+func _on_data_loaded(_source: String) -> void:
+	_dirty = true
+	refresh()
 
 
 func _on_locale_changed(_locale: String) -> void:

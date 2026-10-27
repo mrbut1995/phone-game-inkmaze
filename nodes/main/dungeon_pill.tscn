@@ -35,8 +35,8 @@ corner_radius_bottom_right = 0
 corner_radius_bottom_left = 0
 
 [node name="DungeonPill" type="Button" node_paths=PackedStringArray("icon_tex", "lbl_title", "lbl_floor")]
-custom_minimum_size = Vector2(170, 56)
-offset_right = 170.0
+custom_minimum_size = Vector2(196, 56)
+offset_right = 196.0
 offset_bottom = 56.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
@@ -81,8 +81,9 @@ theme_override_constants/separation = -2
 [node name="Title" type="Label" parent="Row/Text"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 14
 text = "DUNGEON"
+clip_text = true
 
 [node name="Floor" type="Label" parent="Row/Text"]
 layout_mode = 2
