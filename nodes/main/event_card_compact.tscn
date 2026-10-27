@@ -1,0 +1,377 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/event_card_compact.gd" id="1_card"]
+[ext_resource type="Texture2D" uid="uid://cwum1n04j1scb" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
+
+[sub_resource type="StyleBoxFlat" id="sb_card_lip"]
+bg_color = Color(0.541, 0.196, 0.012, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+[sub_resource type="StyleBoxFlat" id="sb_card_mask"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="sb_card_frame"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.91, 0.365, 0.016, 0.9)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="sb_cta"]
+bg_color = Color(0.847, 0.267, 0.267, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.5, 0.12, 0.12, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="sb_cta_pressed"]
+bg_color = Color(0.745, 0.235, 0.235, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.486, 0.153, 0.153, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="sb_cta_hover"]
+bg_color = Color(0.894, 0.322, 0.322, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.5, 0.12, 0.12, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="sb_cta_disabled"]
+bg_color = Color(0.62, 0.5, 0.5, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.43, 0.34, 0.34, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="sb_empty"]
+
+[node name="EventCardCompact" type="AspectRatioContainer"]
+custom_minimum_size = Vector2(0, 150)
+size_flags_horizontal = 0
+size_flags_vertical = 3
+ratio = 1.259
+stretch_mode = 1
+script = ExtResource("1_card")
+
+[node name="Content" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Background" type="Control" parent="Content"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Lip" type="Panel" parent="Content/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_card_lip")
+
+[node name="ContentMask" type="Panel" parent="Content/Background"]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_bottom = -2.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_card_mask")
+
+[node name="BgGradient" type="ColorRect" parent="Content/Background/ContentMask"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.1, 0.07, 0.2, 1)
+
+[node name="BackArt" type="TextureRect" parent="Content/Background/ContentMask"]
+layout_mode = 0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="FrontArt" type="NinePatchRect" parent="Content/Background/ContentMask"]
+layout_mode = 0
+region_rect = Rect2(0, 0, 340, 504)
+
+[node name="Frame" type="Panel" parent="Content/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_bottom = -2.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_card_frame")
+
+[node name="Chips" type="HBoxContainer" parent="Content"]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.03
+anchor_right = 0.96
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ThemeChip" type="PanelContainer" parent="Content/Chips"]
+custom_minimum_size = Vector2(46, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+mouse_filter = 2
+
+[node name="Content" type="HBoxContainer" parent="Content/Chips/ThemeChip"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Content/Chips/ThemeChip/Content"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="ChipDot" type="ColorRect" parent="Content/Chips/ThemeChip/Content"]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.1
+color = Color(0.847, 0.267, 0.267, 1)
+
+[node name="ChipLabel" type="Label" parent="Content/Chips/ThemeChip/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EventChipLabel"
+theme_override_font_sizes/font_size = 9
+text = "EVENT"
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Content/Chips/ThemeChip/Content"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="TimerChip" type="PanelContainer" parent="Content/Chips"]
+custom_minimum_size = Vector2(56, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+
+[node name="Content" type="HBoxContainer" parent="Content/Chips/TimerChip"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Content/Chips/TimerChip/Content"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="ClockIcon" type="TextureRect" parent="Content/Chips/TimerChip/Content"]
+custom_minimum_size = Vector2(9, 9)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_clock")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimerLabel" type="Label" parent="Content/Chips/TimerChip/Content"]
+layout_mode = 2
+theme_type_variation = &"EventTimerLabel"
+theme_override_font_sizes/font_size = 9
+text = "Còn 3 ngày"
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Content/Chips/TimerChip/Content"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="Content"]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.7
+anchor_right = 0.64
+anchor_bottom = 0.97
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Title" type="VBoxContainer" parent="Content/Text"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Title1" type="Label" parent="Content/Text/Title"]
+layout_mode = 2
+theme_type_variation = &"EventTitle"
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 0
+clip_text = true
+text = "Tiêu đề"
+
+[node name="Title2" type="Label" parent="Content/Text/Title"]
+layout_mode = 2
+theme_type_variation = &"EventTitle"
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 0
+clip_text = true
+text = "Dòng 2"
+
+[node name="Sub1" type="Label" parent="Content"]
+visible = false
+layout_mode = 0
+theme_type_variation = &"EventSubLabel"
+text = "Phụ đề dòng 1"
+
+[node name="Sub2" type="Label" parent="Content"]
+visible = false
+layout_mode = 0
+theme_type_variation = &"EventSubLabel"
+text = "Phụ đề dòng 2"
+
+[node name="Information" type="Control" parent="Content"]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.66
+anchor_top = 0.72
+anchor_right = 0.96
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ProgressPanel" type="Panel" parent="Content/Information"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Rewards" type="VBoxContainer" parent="Content/Information/ProgressPanel"]
+layout_mode = 2
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Reward1" type="HBoxContainer" parent="Content/Information/ProgressPanel/Rewards"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Content/Information/ProgressPanel/Rewards/Reward1"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RewardLabel" type="Label" parent="Content/Information/ProgressPanel/Rewards/Reward1"]
+layout_mode = 2
+theme_type_variation = &"EventRewardLabel"
+text = "Quà"
+
+[node name="Reward2" type="HBoxContainer" parent="Content/Information/ProgressPanel/Rewards"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Content/Information/ProgressPanel/Rewards/Reward2"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RewardLabel" type="Label" parent="Content/Information/ProgressPanel/Rewards/Reward2"]
+layout_mode = 2
+theme_type_variation = &"EventRewardLabel"
+text = "Quà"
+
+[node name="CtaButton" type="Button" parent="Content/Information"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_minimum_size = Vector2(0, 0)
+theme_override_styles/normal = SubResource("sb_cta")
+theme_override_styles/pressed = SubResource("sb_cta_pressed")
+theme_override_styles/hover = SubResource("sb_cta_hover")
+theme_override_styles/disabled = SubResource("sb_cta_disabled")
+theme_override_styles/focus = SubResource("sb_empty")
+
+[node name="CtaLabel" type="Label" parent="Content/Information/CtaButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_bottom = -2.0
+theme_type_variation = &"EventCtaLabel"
+theme_override_font_sizes/font_size = 11
+text = "CHƠI"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="CompletedOverlay" type="ColorRect" parent="Content"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_bottom = -2.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="CountdownTimer" type="Timer" parent="Content"]
+wait_time = 45.0
