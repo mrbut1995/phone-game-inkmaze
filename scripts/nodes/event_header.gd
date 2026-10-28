@@ -42,4 +42,5 @@ func attach_dots(dots: Control) -> void:
 		return
 	dots.reparent(slot, false)
 	dots.custom_minimum_size = Vector2(DOTS_MIN_WIDTH, 6.0)
+	dots.size_flags_horizontal = Control.SIZE_SHRINK_END
 	dots.size_flags_vertical = Control.SIZE_SHRINK_CENTER

@@ -20,20 +20,27 @@
 [ext_resource type="PackedScene" path="res://nodes/main/daily_card_compact.tscn" id="L_dlc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
-bg_color = Color(1, 1, 1, 0.94)
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
 border_width_top = 2
-border_color = Color(0.8902, 0.8471, 0.7765, 1)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
+border_width_right = 2
+border_width_bottom = 5
+border_color = Color(0.894118, 0.862745, 0.776471, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
 content_margin_left = 8.0
 content_margin_top = 6.0
 content_margin_right = 8.0
 content_margin_bottom = 6.0
+expand_margin_left = -6.0
+expand_margin_right = -6.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dock"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dock_pressed"]
-bg_color = Color(0.9843, 0.749, 0.1412, 0.22)
+bg_color = Color(0.0862745, 0.27451, 0.388235, 0.1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -56,6 +63,7 @@ dock_rules = NodePath("Scaler/Body/Dock/Row/DockRules")
 stamp_panel = NodePath("Scaler/Body/Mid/Left/Stamp")
 stamp_label = NodePath("Scaler/Body/Mid/Left/Stamp/Label")
 header_anchor = NodePath("Scaler/Body/TopBarAnchor")
+mouse_filter = 2
 
 [node name="Scaler" type="Control" parent="." index="0" node_paths=PackedStringArray("inset_target")]
 anchors_preset = 0
@@ -107,9 +115,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="EventCarousel" parent="Scaler/Body/Mid/Left" instance=ExtResource("7_carousel")]
-custom_minimum_size = Vector2(0, 170)
+custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 1
 event_card_scene = ExtResource("L_evc")
 daily_card_scene = ExtResource("L_dlc")
 

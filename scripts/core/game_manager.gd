@@ -1051,6 +1051,14 @@ func unlock_chapter(chapter_id: int) -> bool:
 	if is_chapter_unlocked(chapter_id) or not can_unlock_chapter(chapter_id):
 		return false
 	unlocked_chapters.append(chapter_id)
+	# Đường liền có CỔNG: mở khoá xong thì màn ĐẦU của chương phải SÁNG ngay, nếu không cả chương
+	# vẫn hiện xám vì `unlocked_levels` còn dừng ở màn cuối chương trước.
+	var lm := get_node_or_null("/root/LevelManager")
+	if lm != null and lm.has_method("levels_in_chapter"):
+		var ids: Array[int] = []
+		ids.assign(lm.call("levels_in_chapter", chapter_id))
+		if not ids.is_empty():
+			unlocked_levels = maxi(unlocked_levels, ids.min())
 	chapter_unlocked.emit(chapter_id)
 	Save.queue_save()
 	return true

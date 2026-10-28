@@ -26,14 +26,23 @@ signal chest_claimed
 @export var dungeon_pill: DungeonPill = null
 ## Khung chương khoá (NodePath ghi đè trong bố cục Main)
 @export var lock_sheet: ChapterLockSheet = null
+## ĐƯỜNG LIỀN: nối mọi chương thành MỘT đường, giữa 2 chương có CỔNG yêu cầu đủ Sao (xem `_line_ids`).
+## Tắt ⇒ hành vi cũ (mỗi lần một chương, đổi chương bằng chip ‹ ›).
+@export var continuous := true
 
 var _level_ids: Array[int] = []
 var _level_data: Dictionary = {}   # level_id -> LevelData
 var _dirty := true
+var _line_ids: Array[int] = []        # đường liền: mã màn (dương) xen mã cổng (ÂM = -chương phía trên)
+var _gate_info: Dictionary = {}       # gate_id -> {chapter, from, own, need, unlocked}
+var _unlocking := false               # đang chạy hiệu ứng mở cổng (chặn bấm trùng)
+var _view_chapter := 0                # chương đang nằm ở tiêu điểm (chỉ đường liền)
 
 
 func _ready() -> void:
 	_wire_lock_sheet()
+	if map != null:
+		map.tap_guard = func() -> bool: return not is_sheet_open()
 	_connect_locale_signal()
 	_connect_save_signal()
 	visibility_changed.connect(_on_visibility_changed)
@@ -77,23 +86,22 @@ func _connect_locale_signal() -> void:
 		loc.connect("locale_changed", _on_locale_changed)
 
 
-## Tiến trình người chơi có thể nạp XONG sau khi bản đồ đã dựng (mở Main sớm, test harness):
-## lúc đó `GameManager.current_chapter`/`level_stars` mới đúng ⇒ phải DỰNG LẠI, nếu không
-## bản đồ hiển thị chương mặc định (1) và nút "màn nên chơi tiếp" không ở trạng thái CURRENT.
+func _on_locale_changed(_locale: String) -> void:
+	refresh_progress()
+
+
+## Tiến trình (Sao/chương mở) nạp XONG sau khi màn Main đã mở ⇒ phải dựng lại bản đồ, nếu không
+## bản đồ hiện sai trạng thái (vd. "màn nên chơi tiếp" không phải CURRENT)
 func _connect_save_signal() -> void:
 	var save: Node = get_node_or_null("/root/SaveManager")
 	if save != null and save.has_signal("data_loaded") \
-			and not save.is_connected("data_loaded", _on_data_loaded):
-		save.connect("data_loaded", _on_data_loaded)
+			and not save.is_connected("data_loaded", _on_save_data_loaded):
+		save.connect("data_loaded", _on_save_data_loaded)
 
 
-func _on_data_loaded(_source: String) -> void:
-	_dirty = true
+func _on_save_data_loaded(_a = null, _b = null) -> void:
+	_view_chapter = 0
 	refresh()
-
-
-func _on_locale_changed(_locale: String) -> void:
-	refresh_progress()
 
 
 # ---------------------------------------------------------------------------
@@ -104,6 +112,8 @@ func _wire_lock_sheet() -> void:
 		return
 	if not lock_sheet.unlock_requested.is_connected(_on_unlock_chapter_requested):
 		lock_sheet.unlock_requested.connect(_on_unlock_chapter_requested)
+	if map != null and not map.gate_pressed.is_connected(_on_gate_pressed):
+		map.gate_pressed.connect(_on_gate_pressed)
 
 
 func is_sheet_open() -> bool:
@@ -119,11 +129,18 @@ func _on_unlock_chapter_requested(chapter_id: int) -> void:
 	var gm := _game_manager()
 	if gm == null:
 		return
+	if _unlocking:
+		return
 	if bool(gm.call("unlock_chapter", chapter_id)):
 		Sfx.play(Sfx.ACHIEVEMENT)
 		close_sheet()
 		gm.call("set_chapter", chapter_id)
-		_rebuild_for_chapter()
+		if continuous:
+			_unlocking = true
+			await _play_unlock_sequence(chapter_id)
+			_unlocking = false
+		else:
+			_rebuild_for_chapter()
 	else:
 		Sfx.play(Sfx.BTN_CLICK)
 
@@ -135,15 +152,101 @@ func _build_map() -> void:
 	_load_level_ids()
 	if map == null:
 		return
-	map.build(_level_ids, _stars_dict(), _unlocked_level(), chapter_continue_level(), bonus_level_ids())
+	if continuous:
+		_build_line()
+		map.build(_line_ids, _stars_dict(), _unlocked_level(), chapter_continue_level(),
+			_all_bonus_ids(), _gate_info)
+		if _view_chapter <= 0:
+			_view_chapter = _chapter_of(chapter_continue_level())
+	else:
+		map.build(_level_ids, _stars_dict(), _unlocked_level(), chapter_continue_level(), bonus_level_ids())
 
 
 func _on_map_scrolled(delta_y: float) -> void:
 	scrolled.emit(delta_y)
+	if continuous:
+		_update_view_chapter()
+
+
+## Chương ở tiêu điểm đổi (cuộn qua cổng) ⇒ cập nhật header chương + rương
+func _update_view_chapter() -> void:
+	if map == null:
+		return
+	var id := map.focus_level_id()
+	if id == 0:
+		return
+	var chapter := int((_gate_info.get(id, {}) as Dictionary).get("from", 0)) if id < 0 else _chapter_of(id)
+	if chapter > 0 and chapter != _view_chapter:
+		_view_chapter = chapter
+		_refresh_chapter_chip()
+		_refresh_chest()
+
+
+## Dựng danh sách ĐƯỜNG LIỀN: màn từng chương (tăng dần) xen CỔNG trước mỗi chương cần Sao/đang khoá
+func _build_line() -> void:
+	_line_ids.clear()
+	_gate_info.clear()
+	var gm := _game_manager()
+	var chapters := _chapter_ids()
+	if chapters.is_empty():
+		_line_ids.append_array(_level_ids)
+		return
+	var previous := 0
+	for chapter_id in chapters:
+		var ids: Array[int] = []
+		for level_id in _level_ids:
+			if _chapter_of(level_id) == chapter_id:
+				ids.append(level_id)
+		ids.sort()
+		if ids.is_empty():
+			continue
+		if previous > 0 and gm != null:
+			var need := int(gm.call("chapter_star_cost", chapter_id))
+			var opened := bool(gm.call("is_chapter_unlocked", chapter_id))
+			if need > 0 or not opened:
+				var gate_id := -chapter_id
+				_line_ids.append(gate_id)
+				_gate_info[gate_id] = {"chapter": chapter_id, "from": previous,
+					"own": int(gm.call("total_stars")), "need": need, "unlocked": opened}
+		_line_ids.append_array(ids)
+		previous = chapter_id
+
+
+## Mở cổng thành công: cửa mở ra ⇒ bản đồ trượt sang màn đầu chương mới ⇒ các màn phía sau SÁNG DẦN
+func _play_unlock_sequence(chapter_id: int) -> void:
+	if map != null:
+		await map.play_gate_open(-chapter_id)
+		map.prepare_reveal(-chapter_id)
+	_view_chapter = chapter_id
+	_build_map()
+	_refresh_chapter_chip()
+	_refresh_chest()
+
+
+## Bấm cổng (KHÔNG mở popup): chương còn khoá + ĐỦ Sao ⇒ mở khoá luôn (cổng mở + sang chương mới) ·
+## chưa đủ Sao ⇒ cổng lắc (từ chối) · chương đã mở ⇒ không làm gì
+func _on_gate_pressed(chapter_id: int) -> void:
+	var gm := _game_manager()
+	if gm == null or _unlocking or bool(gm.call("is_chapter_unlocked", chapter_id)):
+		return
+	if bool(gm.call("can_unlock_chapter", chapter_id)):
+		_on_unlock_chapter_requested(chapter_id)
+	elif map != null:
+		map.reject_gate(-chapter_id)
+
+
+func _all_bonus_ids() -> Array[int]:
+	var ids: Array[int] = []
+	for level_id in _level_ids:
+		if _is_bonus(level_id):
+			ids.append(level_id)
+	return ids
 
 
 func _on_level_selected(level_id: int) -> void:
 	var gm := _game_manager()
+	if continuous and gm != null and gm.has_method("set_chapter"):
+		gm.call("set_chapter", _chapter_of(level_id))   # ván này thuộc chương nào thì "chương hiện tại" là chương đó
 	if gm != null and gm.has_method("start_level"):
 		gm.call("start_level", level_id)
 	else:
@@ -159,7 +262,8 @@ func _load_level_ids() -> void:
 			_level_ids.append(int(level_id))
 		for level_id in _level_ids:
 			_level_data[level_id] = lm.call("load_level", level_id)
-		_filter_by_chapter()
+		if not continuous:
+			_filter_by_chapter()
 	else:
 		for level_id in range(1, 10):
 			_level_ids.append(level_id)
@@ -190,6 +294,8 @@ func _current_chapter() -> int:
 
 
 func _chapter_id() -> int:
+	if continuous and _view_chapter > 0:
+		return _view_chapter
 	return maxi(_current_chapter(), 1)
 
 
@@ -201,10 +307,37 @@ func _unlocked_level() -> int:
 ## Màn "nên chơi tiếp" TRONG chương: màn CHƯA đạt sao đầu tiên
 func chapter_continue_level() -> int:
 	var stars := _stars_dict()
+	if continuous:
+		return _continue_level_line(stars)
 	for level_id in _level_ids:
 		if int(stars.get(level_id, 0)) <= 0:
 			return level_id
 	return _level_ids[_level_ids.size() - 1] if not _level_ids.is_empty() else 1
+
+
+## Đường liền: màn CHƯA có sao đầu tiên trong các chương ĐÃ MỞ (không nhảy qua cổng khoá)
+func _continue_level_line(stars: Dictionary) -> int:
+	var gm := _game_manager()
+	var sorted := _level_ids.duplicate()
+	sorted.sort()
+	var last_open := 1
+	for level_id in sorted:
+		var chapter := _chapter_of(level_id)
+		if gm != null and chapter > 1 and not bool(gm.call("is_chapter_unlocked", chapter)):
+			continue
+		last_open = level_id
+		if int(stars.get(level_id, 0)) <= 0 and not _is_bonus(level_id):
+			return level_id
+	return last_open
+
+
+func _chapter_levels(chapter_id: int) -> Array[int]:
+	var ids: Array[int] = []
+	for level_id in _level_ids:
+		if _chapter_of(level_id) == chapter_id:
+			ids.append(level_id)
+	ids.sort()
+	return ids
 
 
 func _is_bonus(level_id: int) -> bool:
@@ -214,7 +347,7 @@ func _is_bonus(level_id: int) -> bool:
 
 func main_level_ids() -> Array[int]:
 	var ids: Array[int] = []
-	for level_id in _level_ids:
+	for level_id in (_chapter_levels(_chapter_id()) if continuous else _level_ids):
 		if not _is_bonus(level_id):
 			ids.append(level_id)
 	return ids
@@ -222,7 +355,7 @@ func main_level_ids() -> Array[int]:
 
 func bonus_level_ids() -> Array[int]:
 	var ids: Array[int] = []
-	for level_id in _level_ids:
+	for level_id in (_chapter_levels(_chapter_id()) if continuous else _level_ids):
 		if _is_bonus(level_id):
 			ids.append(level_id)
 	return ids
@@ -293,6 +426,9 @@ func _neighbor_chapter(dir: int) -> int:
 func _refresh_chapter_chip() -> void:
 	if chapter_chip == null:
 		return
+	if continuous:
+		chapter_chip.visible = false   # đường liền: nhãn "CHƯƠNG n" nằm DƯỚI từng cổng, không cần chip nổi
+		return
 	chapter_chip.setup(_chapter_id(), _neighbor_chapter(-1) > 0, _neighbor_chapter(1) > 0,
 		chapter_cleared())
 
@@ -312,12 +448,26 @@ func _go_chapter(chapter_id: int) -> void:
 	var gm := _game_manager()
 	if gm == null:
 		return
+	if continuous:
+		_scroll_to_chapter(chapter_id, bool(gm.call("is_chapter_unlocked", chapter_id)))
+		return
 	if not bool(gm.call("is_chapter_unlocked", chapter_id)):
 		if lock_sheet != null:
 			lock_sheet.open_chapter(chapter_id)
 		return
 	gm.call("set_chapter", chapter_id)
 	_rebuild_for_chapter()
+
+
+## Đường liền: ‹ › cuộn tới màn ĐẦU chương (đã mở) hoặc tới CỔNG chương (còn khoá)
+func _scroll_to_chapter(chapter_id: int, opened: bool) -> void:
+	var ids := _chapter_levels(chapter_id)
+	if map == null or ids.is_empty():
+		return
+	map.scroll_to(ids[0] if opened else -chapter_id, true)
+	_view_chapter = chapter_id
+	_refresh_chapter_chip()
+	_refresh_chest()
 
 
 func _rebuild_for_chapter() -> void:

@@ -27,6 +27,8 @@ extends Node2D
 const ART_SIZE := 112.0
 
 signal level_selected(level_id: int)
+## Bấm CỔNG chương (chế độ ĐƯỜNG LIỀN): `chapter_id` = chương PHÍA TRÊN cổng
+signal gate_pressed(chapter_id: int)
 ## Độ dịch cuộn THẬT của bản đồ (px) so với GIỮA khoảng cuộn — `Background` dùng để trượt
 ## parallax: nền chạy theo đúng nhịp ngón tay (tỉ lệ cố định), không phụ thuộc chương
 ## dài/ngắn như khi quy về tiến độ [-1..1].
@@ -39,6 +41,8 @@ signal scrolled(delta_y: float)
 ## Scene nút màn + scene đường nối (đổi art/logic không cần sửa code)
 @export var node_scene: PackedScene = preload("res://nodes/level_selection/level_node.tscn")
 @export var path_scene: PackedScene = preload("res://nodes/level_selection/level_path.tscn")
+## Scene CỔNG chương (chỉ dùng khi dựng đường liền nhiều chương — `build(..., gates)`)
+@export var gate_scene: PackedScene = preload("res://nodes/main/chapter_gate.tscn")
 
 @export_group("Bố cục")
 ## Số CỘT của bản đồ kiểu RẮN (snake): hàng 0 ở ĐÁY đi trái→phải, hàng 1 đi phải→trái…
@@ -83,6 +87,10 @@ signal scrolled(delta_y: float)
 ## Đường nối đi qua tâm MẶT nút cho khớp mắt nhìn (nhân theo tỉ lệ nút ở màn ngang).
 @export_range(-20.0, 20.0, 0.5) var node_face_center_y := -2.0
 
+@export_group("Chừa chỗ")
+## Chừa thêm ở ĐÁY khung bản đồ (px) để hàng nút đầu tiên không bị nút Dungeon nổi / rương che
+@export_range(0.0, 300.0, 1.0) var bottom_reserve := 0.0
+
 @export_group("Cờ đích / mũi chỉ")
 ## Mặt nút (khối giấy) cao 88 trên art 112 ⇒ mép trên mặt nút cách TÂM art 46 (ở scale 1)
 @export_range(0.0, 120.0, 1.0) var node_face_top := 46.0
@@ -120,6 +128,11 @@ var _current_id := 1              # màn tiếp theo cần chơi
 var _bonus_ids: Array[int] = []   # các màn BONUS (cuối chương)
 
 var _nodes: Dictionary = {}       # level_id -> LevelMapNode
+var _gates: Dictionary = {}       # gate_id (ÂM = -chapter_id phía trên) -> {chapter, own, need, unlocked}
+var _gate_nodes: Dictionary = {}  # gate_id -> ChapterGateNode
+var _pending_reveal_gate := 0     # !=0: lần dựng kế tiếp chạy hiệu ứng "mở cổng → sang chương mới"
+var _truncated_at_gate := false   # true = đường CẮT ở cổng khoá (không dựng/không cuộn được qua cổng)
+var _ordered := false             # true = giữ NGUYÊN thứ tự `level_ids` (đường liền, có cổng xen kẽ)
 var _min_scroll_y := 0.0
 var _max_scroll_y := 0.0
 
@@ -129,6 +142,16 @@ var _drag_start_y := 0.0
 var _tracks_start_y := 0.0
 var _velocity_y := 0.0
 var _scroll_tween: Tween = null
+
+## [TAP] Bản đồ TỰ bắt cú chạm vào nút màn (không phụ thuộc `_unhandled_input` của nút): mọi Control
+## STOP phủ lên bản đồ (khung Main, layout...) đều làm nút Node2D không nhận được cú bấm.
+## `tap_guard` (Callable → bool): trả false khi KHÔNG được chọn màn (vd. khung chương khoá đang mở).
+var tap_guard: Callable = Callable()
+const TAP_MAX_MOVE := 14.0
+var _tap_start := Vector2.ZERO
+var _tap_active := false
+var _last_emit_frame := -1
+var _last_emit_id := 0
 
 var _last_area_width := 0.0
 var _last_unit := 1.0
@@ -172,8 +195,12 @@ func _on_viewport_size_changed() -> void:
 # ---------------------------------------------------------------------------
 
 ## Dựng toàn bộ bản đồ từ dữ liệu chương hiện tại (`bonus_ids` = các màn BONUS trong `level_ids`)
+## `gates` (tuỳ chọn) bật chế độ ĐƯỜNG LIỀN: `level_ids` đã SẮP SẴN thứ tự, xen các mã âm (gate_id)
+## đại diện cổng; `gates[gate_id] = {chapter, own, need, unlocked}`.
 func build(level_ids: Array[int], stars: Dictionary, unlocked: int, current_id: int,
-		bonus_ids: Array[int] = []) -> void:
+		bonus_ids: Array[int] = [], gates: Dictionary = {}) -> void:
+	_gates = gates
+	_ordered = not gates.is_empty()
 	_level_ids = level_ids
 	_stars = stars
 	_unlocked = unlocked
@@ -184,10 +211,10 @@ func build(level_ids: Array[int], stars: Dictionary, unlocked: int, current_id: 
 
 ## Cuộn đến nút của `level_id` (đưa nút về giữa khung bản đồ)
 func scroll_to(level_id: int, animate := true) -> void:
-	var node := node_for(level_id)
-	if node == null:
+	var node_y := _node_y(level_id)
+	if is_nan(node_y):
 		return
-	var target_y := clampf(_focus_y() - node.position.y, _min_scroll_y, _max_scroll_y)
+	var target_y := clampf(_focus_y() - node_y, _min_scroll_y, _max_scroll_y)
 	_stop_scroll_tween()
 	if not animate:
 		_set_scroll_y(target_y)
@@ -195,6 +222,33 @@ func scroll_to(level_id: int, animate := true) -> void:
 	_scroll_tween = create_tween()
 	_scroll_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	_scroll_tween.tween_method(_set_scroll_y, scroll_offset_y(), target_y, scroll_to_duration)
+
+
+## Toạ độ Y (trong `Tracks`) của nút màn / cổng; NAN nếu không có
+func _node_y(id: int) -> float:
+	if id < 0:
+		var gate: Node2D = _gate_nodes.get(id, null)
+		return gate.position.y if gate != null and is_instance_valid(gate) else NAN
+	var node := node_for(id)
+	return node.position.y if node != null else NAN
+
+
+## Mã nút (màn dương / cổng âm) đang GẦN đường tiêu điểm nhất — để header chương biết đang xem chương nào
+func focus_level_id() -> int:
+	var best_id := 0
+	var best_dist := INF
+	var focus := _focus_y() - scroll_offset_y()
+	for id in _nodes.keys():
+		var d := absf(_node_y(int(id)) - focus)
+		if d < best_dist:
+			best_dist = d
+			best_id = int(id)
+	for id in _gate_nodes.keys():
+		var d2 := absf(_node_y(int(id)) - focus)
+		if d2 < best_dist:
+			best_dist = d2
+			best_id = int(id)
+	return best_id
 
 
 ## Nút của 1 màn (null nếu màn không thuộc chương đang xem)
@@ -249,7 +303,17 @@ func _rebuild() -> void:
 
 	# Sắp xếp tăng dần: màn nhỏ nhất ở dưới cùng (y = 0), các màn sau leo dần lên (y âm)
 	var sorted_ids := _level_ids.duplicate()
-	sorted_ids.sort()
+	if not _ordered:
+		sorted_ids.sort()
+	# Chương còn khoá ⇒ đường DỪNG ở cổng: không dựng màn phía sau, không cuộn lên được tới đó
+	_truncated_at_gate = false
+	if _ordered:
+		for index in sorted_ids.size():
+			var id: int = sorted_ids[index]
+			if id < 0 and not bool((_gates.get(id, {}) as Dictionary).get("unlocked", false)):
+				sorted_ids = sorted_ids.slice(0, index + 1)
+				_truncated_at_gate = true
+				break
 	var positions: Array[Vector2] = []
 	if cols >= 2:
 		positions = _snake_positions(sorted_ids.size(), center_x)
@@ -270,6 +334,8 @@ func _rebuild() -> void:
 		min_y = minf(min_y, point.y)
 	_update_scroll_range(min_y, node_scale)
 	_set_scroll_y(_focus_y() - _current_position_y(positions, sorted_ids))
+	if _pending_reveal_gate != 0:
+		_begin_reveal(sorted_ids)
 	call_deferred("scroll_to", _current_id, true)
 
 
@@ -278,7 +344,10 @@ func _rebuild() -> void:
 func _update_scroll_range(min_y: float, node_scale: float) -> void:
 	var area_h := _area_size().y
 	var top_ext := (node_face_top + flag_half_height * 2.0 + 6.0) * node_scale
+	if _truncated_at_gate:   # đỉnh bản đồ là CỔNG: chỉ chừa chỗ cho cổng, không để trống kiểu cờ đích
+		top_ext = (node_face_top + 18.0) * node_scale
 	var bottom_ext := (ART_SIZE * 0.5 + 34.0) * node_scale   # nửa nút + viên thuốc sao dưới nút
+	bottom_ext += bottom_reserve
 	var to_top := top_ext - min_y          # `tracks.y` khi kéo hết lên đỉnh
 	var to_bottom := area_h - bottom_ext   # `tracks.y` khi kéo hết xuống đáy
 	if to_bottom >= to_top:
@@ -437,6 +506,9 @@ func _build_nodes(sorted_ids: Array[int], positions: Array[Vector2], node_scale:
 		return
 	for index in sorted_ids.size():
 		var level_id := sorted_ids[index]
+		if level_id < 0:
+			_build_gate(level_id, positions[index], node_scale)
+			continue
 		var node := node_scene.instantiate() as LevelMapNode
 		items.add_child(node)
 		node.position = positions[index]
@@ -453,7 +525,9 @@ func _build_nodes(sorted_ids: Array[int], positions: Array[Vector2], node_scale:
 		last_index -= 1
 	var last_position := positions[last_index]
 	var last_id: int = sorted_ids[last_index]
-	if goal != null:
+	if goal != null and last_id < 0:
+		goal.visible = false   # đỉnh là cổng khoá ⇒ chưa có cờ đích
+	elif goal != null:
 		goal.visible = true
 		goal.scale = Vector2.ONE * node_scale
 		# Cắm cờ vào MÉP TRÊN nút cuối (chồng nhẹ) — cờ nằm trong nút "End Level", không lơ lửng
@@ -466,6 +540,72 @@ func _build_nodes(sorted_ids: Array[int], positions: Array[Vector2], node_scale:
 		if show_marker:
 			marker.scale = Vector2.ONE * node_scale
 			marker.position = current.position + Vector2(0.0, -(node_face_top + marker_face_gap) * node_scale)
+
+
+## Dựng 1 cổng chương (đường liền)
+func _build_gate(gate_id: int, pos: Vector2, node_scale: float) -> void:
+	if gate_scene == null:
+		return
+	var info: Dictionary = _gates.get(gate_id, {})
+	var gate := gate_scene.instantiate() as ChapterGateNode
+	items.add_child(gate)
+	gate.position = pos
+	gate.scale = Vector2.ONE * node_scale
+	var state := ChapterGateNode.State.OPEN
+	if not bool(info.get("unlocked", false)):
+		state = ChapterGateNode.State.READY \
+			if int(info.get("own", 0)) >= int(info.get("need", 0)) else ChapterGateNode.State.LOCKED
+	gate.setup(int(info.get("chapter", -gate_id)), int(info.get("own", 0)), int(info.get("need", 0)), state)
+	gate.pressed.connect(_on_gate_pressed)
+	_gate_nodes[gate_id] = gate
+
+
+# ---------------------------------------------------------------------------
+# Mở cổng → sang chương mới
+# ---------------------------------------------------------------------------
+## Bước 1: chạy animation mở cổng `gate_id` TRÊN bản đồ hiện tại; trả về khi cửa mở xong
+func play_gate_open(gate_id: int) -> void:
+	var gate: ChapterGateNode = _gate_nodes.get(gate_id, null)
+	if gate == null or not is_instance_valid(gate):
+		return
+	scroll_to(gate_id, true)
+	await get_tree().create_timer(scroll_to_duration).timeout
+	gate.play_open()
+	await gate.opened
+
+
+## Cổng `gate_id` bị từ chối (chưa đủ Sao): cổng lắc + nháy đỏ, KHÔNG mở popup
+func reject_gate(gate_id: int) -> void:
+	var gate: ChapterGateNode = _gate_nodes.get(gate_id, null)
+	if gate != null and is_instance_valid(gate):
+		gate.play_reject()
+
+
+## Bước 2 (gọi TRƯỚC `build`): lần dựng kế tiếp sẽ đặt cổng ở tiêu điểm, ẩn các nút phía sau cổng,
+## rồi cuộn lên màn kế tiếp và cho chúng SÁNG DẦN
+func prepare_reveal(gate_id: int) -> void:
+	_pending_reveal_gate = gate_id
+
+
+func _begin_reveal(sorted_ids: Array) -> void:
+	var gate_id := _pending_reveal_gate
+	_pending_reveal_gate = 0
+	var gate_index := sorted_ids.find(gate_id)
+	if gate_index < 0:
+		return
+	_set_scroll_y(_focus_y() - _node_y(gate_id))   # bắt đầu ngay tại cổng (đã mở)
+	var fade_nodes: Array[Node] = []
+	for index in range(gate_index + 1, sorted_ids.size()):
+		var id: int = sorted_ids[index]
+		var node: Node = _gate_nodes.get(id, null) if id < 0 else _nodes.get(id, null)
+		if node != null:
+			fade_nodes.append(node)
+	for node in fade_nodes:
+		(node as CanvasItem).modulate.a = 0.0
+	var tween := create_tween()
+	tween.tween_interval(scroll_to_duration * 0.6)   # chờ bản đồ trượt lên một chút
+	for i in fade_nodes.size():
+		tween.parallel().tween_property(fade_nodes[i], "modulate:a", 1.0, 0.35).set_delay(0.05 * float(i))
 
 
 func _set_decor_visible(visible_now: bool) -> void:
@@ -484,6 +624,7 @@ func _current_position_y(positions: Array[Vector2], sorted_ids: Array[int]) -> f
 
 func _clear_items() -> void:
 	_nodes.clear()
+	_gate_nodes.clear()
 	if items == null:
 		return
 	for child in items.get_children():
@@ -506,6 +647,9 @@ func _node_state_for(level_id: int) -> LevelMapNode.State:
 
 ## Trạng thái của ĐOẠN NỐI sau màn `level_id`
 func _path_state_for(level_id: int) -> LevelMapPath.PathState:
+	if level_id < 0:   # đoạn nối SAU cổng
+		return LevelMapPath.PathState.COMPLETE if bool(
+			(_gates.get(level_id, {}) as Dictionary).get("unlocked", false)) else LevelMapPath.PathState.LOCKED
 	if level_id > _unlocked:
 		return LevelMapPath.PathState.LOCKED
 	if int(_stars.get(level_id, 0)) > 0:
@@ -569,6 +713,7 @@ func _set_scroll_y(value: float) -> void:
 # Kéo / cuộn (dọc, thân thiện cảm ứng)
 # ---------------------------------------------------------------------------
 func _input(event: InputEvent) -> void:
+	_track_tap(event)
 	if event is InputEventScreenTouch and event.index == 0:
 		if event.pressed:
 			if _inside_area(event.position):
@@ -641,4 +786,70 @@ func _stop_scroll_tween() -> void:
 # Events
 # ---------------------------------------------------------------------------
 func _on_node_pressed(level_id: int) -> void:
+	_emit_selected(level_id)
+
+
+## Phát `level_selected` đúng 1 lần cho mỗi cú bấm (nút tự bắt + bản đồ tự bắt có thể cùng báo)
+func _emit_selected(level_id: int) -> void:
+	var frame := Engine.get_process_frames()
+	if level_id == _last_emit_id and absf(float(frame - _last_emit_frame)) <= 2.0:
+		return
+	_last_emit_id = level_id
+	_last_emit_frame = frame
 	level_selected.emit(level_id)
+
+
+## Theo dõi "chạm": nhấn rồi thả gần như tại chỗ (không kéo) trên MỘT nút màn đang mở ⇒ chọn màn đó
+func _track_tap(event: InputEvent) -> void:
+	var pos := Vector2.ZERO
+	var is_press := false
+	var is_release := false
+	if event is InputEventMouseButton and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+		pos = (event as InputEventMouseButton).position
+		is_press = (event as InputEventMouseButton).pressed
+		is_release = not is_press
+	elif event is InputEventScreenTouch and (event as InputEventScreenTouch).index == 0:
+		pos = (event as InputEventScreenTouch).position
+		is_press = (event as InputEventScreenTouch).pressed
+		is_release = not is_press
+	else:
+		return
+	if is_press:
+		_tap_active = _inside_area(pos)
+		_tap_start = pos
+		return
+	if not is_release or not _tap_active:
+		return
+	_tap_active = false
+	if pos.distance_to(_tap_start) > TAP_MAX_MOVE or not _inside_area(pos):
+		return
+	if tap_guard.is_valid() and not bool(tap_guard.call()):
+		return
+	var hit := _node_at(pos)
+	if hit != null:
+		_emit_selected(hit.level_id)
+
+
+## Nút màn (đang mở) nằm dưới điểm `pos` (toạ độ viewport); null nếu không có
+func _node_at(pos: Vector2) -> LevelMapNode:
+	var best: LevelMapNode = null
+	var best_dist := INF
+	for id in _nodes.keys():
+		var node := _nodes[id] as LevelMapNode
+		if node == null or not is_instance_valid(node) or node.button == null or node.button.disabled:
+			continue
+		var tex := node.button.texture_normal
+		if tex == null:
+			continue
+		var local := node.button.get_global_transform().affine_inverse() * pos
+		var half := tex.get_size() * 0.5
+		if absf(local.x) <= half.x and absf(local.y) <= half.y:
+			var d := local.length()
+			if d < best_dist:
+				best_dist = d
+				best = node
+	return best
+
+
+func _on_gate_pressed(chapter_id: int) -> void:
+	gate_pressed.emit(chapter_id)

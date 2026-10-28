@@ -77,6 +77,13 @@ func _init() -> void:
 	var scene: MainScene = (load("res://scenes/main.tscn") as PackedScene).instantiate()
 	root.add_child(scene)
 	await process_frame
+	# Test này giữ hành vi CŨ (mỗi lần xem MỘT chương + chip ‹ CHƯƠNG n ›):
+	# tắt ĐƯỜNG LIỀN của LevelSection rồi dựng lại (xem `05_HUONG_DAN_GOP_V9.md` Bước 6).
+	for node in scene.find_children("*", "", true, false):
+		if node is LevelSection:
+			node.continuous = false
+			node.call("refresh")
+	await process_frame
 	await process_frame
 	await create_timer(0.7).timeout      # ??i auto-scroll t?i m?n ?ang ch?i
 	failures += _check_section_wiring(scene)

@@ -17,9 +17,11 @@ script = ExtResource("1_head")
 
 [node name="Title" type="Label" parent="." unique_id=1986212383]
 layout_mode = 2
+size_flags_horizontal = 0
 theme_type_variation = &"EventHeaderTitle"
 theme_override_font_sizes/font_size = 16
 text = "STR_EVENT_SECTION_TITLE"
+autowrap_mode = 0
 
 [node name="Badge" type="Panel" parent="." unique_id=801472962]
 custom_minimum_size = Vector2(18, 15)
@@ -40,16 +42,17 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DotsSlot" type="HBoxContainer" parent="."]
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_constants/separation = 0
-
 [node name="Spacer" type="Control" parent="." unique_id=789402521]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
+
+[node name="DotsSlot" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
 
 [node name="ViewAll" type="Button" parent="." unique_id=973540797]
 layout_mode = 2

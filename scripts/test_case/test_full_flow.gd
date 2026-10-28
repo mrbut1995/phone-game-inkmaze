@@ -23,24 +23,35 @@ func _init() -> void:
 	var section: LevelSection = main_scene.layout.level_section
 	assert(section != null, "MainScene phai co LevelSection (ban do man choi)")
 	assert(section.map != null, "LevelSection phai co ban do LevelMap (bind bang @export)")
-	assert(section.chapter_chip != null, "LevelSection phai co ChapterChip")
 	assert(section.dungeon_pill != null, "LevelSection phai co nut Dungeon noi")
-	var levels_count := section.level_ids().size()
-	assert(section.map.node_count() == levels_count,
-		"So nut tren ban do phai bang so man cua chuong (dang %d nut / %d man)"
-			% [section.map.node_count(), levels_count])
-	# Cụm nút màn + đường nối nằm trong `Tracks/Items`; cờ đích + mũi chỉ là node có sẵn
+	# ĐƯỜNG LIỀN: `_line_ids` = màn của MỌI chương (xen CỔNG mã ÂM), nhưng bản đồ chỉ dựng
+	# tới CỔNG KHOÁ đầu tiên ⇒ đếm phần đầu đó rồi so với số nút thật.
+	var section_line: Array = section.get("_line_ids")
+	var gate_info: Dictionary = section.get("_gate_info")
+	var built_ids: Array = []
+	for id in section_line:
+		built_ids.append(int(id))
+		if int(id) < 0 and not bool((gate_info.get(id, {}) as Dictionary).get("unlocked", false)):
+			break
+	var planned_levels := 0
+	for id in built_ids:
+		if int(id) > 0:
+			planned_levels += 1
+	assert(section.map.node_count() == planned_levels,
+		"So nut tren ban do phai bang so man duoc dung (dang %d nut / %d man)"
+			% [section.map.node_count(), planned_levels])
+	# Cụm nút màn + cổng + đường nối nằm trong `Tracks/Items`
 	var items: Node2D = section.map.items
-	var expected_items := levels_count + (1 if levels_count >= 2 else 0)
+	var expected_items := built_ids.size() + (1 if built_ids.size() >= 2 else 0)
 	assert(items != null and items.get_child_count() == expected_items,
-		"Items phai co %d con (nut man + duong noi lien mach)" % expected_items)
+		"Items phai co %d con (nut man + cong + duong noi lien mach)" % expected_items)
 	var current_node: LevelMapNode = section.map.node_for(section.chapter_continue_level())
 	assert(current_node != null and current_node.state == LevelMapNode.State.CURRENT,
 		"Man nen choi tiep phai co nut o trang thai CURRENT")
 	assert(section.map.marker != null and section.map.marker.visible,
 		"Mui chi 'man tiep theo' phai hien tren ban do")
 	print("[CHECK] LevelSection: %d man -> %d nut ban do, mui chi o man %d."
-		% [levels_count, section.map.node_count(), section.chapter_continue_level()])
+		% [planned_levels, section.map.node_count(), section.chapter_continue_level()])
 	main_scene.queue_free()
 	await process_frame
 

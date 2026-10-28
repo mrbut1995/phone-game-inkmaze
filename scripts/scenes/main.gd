@@ -14,10 +14,10 @@ extends BaseScene
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 ## Ảnh icon dock (nạp 1 lần)
-const ICON_SHOP := "res://assets/images-png/icons/icon_shop.png"
-const ICON_RANK := "res://assets/images-png/icons/icon_trophy.png"
-const ICON_BADGES := "res://assets/images-png/icons/icon_badge_medal.png"
-const ICON_RULES := "res://assets/images-png/icons/icon_book.png"
+const ICON_SHOP := "res://assets/images-png/dock/dock_shop.png"
+const ICON_RANK := "res://assets/images-png/dock/dock_ranking.png"
+const ICON_BADGES := "res://assets/images-png/dock/dock_badges.png"
+const ICON_RULES := "res://assets/images-png/dock/dock_rules.png"
 
 var layout: MainLayout = null
 
@@ -184,6 +184,16 @@ func _setup_dock_button(button: DockButton, icon_path: String, label: String) ->
 	if button == null:
 		return
 	button.setup(load(icon_path), label)
+	_tint_dock_labels(button)
+
+
+## Dock nền trắng kiểu v8 ⇒ mọi nhãn chữ trong nút dock dùng mực navy #164663 (icon cũng là bản mực).
+func _tint_dock_labels(node: Node) -> void:
+	for child in node.get_children():
+		if child is Label:
+			(child as Label).add_theme_color_override("font_color", Color("164663"))
+			(child as Label).add_theme_color_override("font_outline_color", Color(0, 0, 0, 0))
+		_tint_dock_labels(child)
 
 
 func _setup_animations() -> void:
