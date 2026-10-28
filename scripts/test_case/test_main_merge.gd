@@ -39,6 +39,7 @@ func _init() -> void:
 	await _section_chip(scene, gm, lm)
 	await _section_chest(scene, gm)
 	_section_dungeon(scene, gm)
+	await _section_tap(scene)
 	await _section_lock_sheet(scene, gm, lm)
 	await _section_orientation(scene)
 
@@ -197,27 +198,48 @@ func _section_compact_cards(scene: MainScene) -> void:
 		"The su kien gon an panel tien do/qua (dai duoi da chat)")
 
 
-func _section_chip(scene: MainScene, _gm: Node, lm: Node) -> void:
-	print("[4] Chip chuong...")
-	var chip: ChapterChip = scene.layout.level_section.chapter_chip
-	if chip == null:
-		return
+func _section_chip(scene: MainScene, gm: Node, lm: Node) -> void:
+	print("[4] Duong lien + cong chuong...")
+	var section := scene.layout.level_section
+	var chip: ChapterChip = section.chapter_chip
+	var map: LevelMap = section.map
+	_check(section.continuous, "LevelSection.continuous == true (duong lien)")
+	_check(chip != null and not chip.visible, "Duong lien -> KHONG con chip 'CHUONG n' noi")
 	var chapters: Array = lm.call("get_chapters")
 	_check(chapters.size() > 0, "LevelManager co chuong (%d)" % chapters.size())
-	var chapter_now := int(root.get_node("GameManager").get("current_chapter"))
-	_check(chip.lbl_title != null and chip.lbl_title.text.contains(str(chapter_now)),
-		"Nhan chip hien dung chuong %d ('%s')" % [chapter_now, chip.lbl_title.text if chip.lbl_title else ""])
-	_check(chip.btn_prev != null and chip.btn_next != null, "Chip co 2 mui ten ‹ ›")
-	# Chương 1 ⇒ không còn chương trước ⇒ mũi tên ‹ bị vô hiệu
-	if chapter_now <= 1:
-		_check(chip.btn_prev.disabled, "Chuong 1 -> mui ten ‹ bi vo hieu")
-	# Bấm › khi KHÔNG có chương kế ⇒ không đổi chương, không mở khung
-	if chip.btn_next.disabled:
-		var before := int(root.get_node("GameManager").get("current_chapter"))
-		chip.next_requested.emit()
-		await process_frame
-		_check(int(root.get_node("GameManager").get("current_chapter")) == before,
-			"Khong co chuong ke -> bam › khong doi chuong")
+	if map == null:
+		return
+	var line: Array = section.get("_line_ids")
+	var gates: Dictionary = section.get("_gate_info")
+	# Chương cần Sao (star_cost > 0) và ĐÃ MỞ ⇒ chắc chắn có cổng trong danh sách đường liền
+	var opened_gates := 0
+	var first_locked := 0
+	for chapter in chapters:
+		var cid := int(chapter.get("chapter_id"))
+		if cid <= 1 or int(gm.call("chapter_star_cost", cid)) <= 0:
+			continue
+		if bool(gm.call("is_chapter_unlocked", cid)):
+			opened_gates += 1
+			_check(line.has(-cid), "Chuong %d can %d sao + da mo -> co cong (%d)"
+				% [cid, int(gm.call("chapter_star_cost", cid)), -cid])
+		elif first_locked == 0:
+			first_locked = cid
+			_check(line.has(-cid), "Chuong %d con khoa -> co cong chan (%d)" % [cid, -cid])
+	_check(gates.size() == line.filter(func(id): return int(id) < 0).size(),
+		"Danh sach cong khop danh sach duong (%d cong)" % gates.size())
+	# Chương còn KHOÁ ⇒ KHÔNG dựng màn nào của chương đó (đường cắt ở cổng)
+	if first_locked > 0:
+		var hidden_ok := true
+		for level_id in lm.call("levels_in_chapter", first_locked):
+			if map.node_for(int(level_id)) != null:
+				hidden_ok = false
+		_check(hidden_ok, "Chuong %d con khoa -> khong dung man nao cua chuong do" % first_locked)
+		_check(map.get("_truncated_at_gate"), "Duong CAT o cong khoa (khong cuon qua duoc)")
+		var gate_y: float = map.call("_node_y", -first_locked)
+		if not is_nan(gate_y):
+			_check(float(map.get("_max_scroll_y")) <= float(map.call("_focus_y")) - gate_y + 1.0,
+				"Cuon len dinh dung o cong (%.1f <= %.1f)"
+					% [float(map.get("_max_scroll_y")), float(map.call("_focus_y")) - gate_y])
 
 
 # ---------------------------------------------------------------------------
@@ -264,6 +286,55 @@ func _section_dungeon(scene: MainScene, _gm: Node) -> void:
 	_check(pill.lbl_title != null and not pill.lbl_title.text.is_empty(),
 		"Pill co nhan DUNGEON ('%s')" % (pill.lbl_title.text if pill.lbl_title else ""))
 	_check(pill.pressed.get_connections().size() > 0, "Pill noi toi Main (_on_dungeon_pressed)")
+
+
+## Bấm THẬT vào nút màn phải chọn được màn.
+## Nút màn là `TextureButton2D` (Node2D) ⇒ chỉ nhận cú bấm ở `_unhandled_input`, nên nếu có
+## một `Control` phủ kín với `mouse_filter = STOP` nằm trên (vd. node gốc của bố cục Main) thì
+## GUI nuốt mất sự kiện và nút **không bao giờ** được bấm (lỗi 2026-10-28).
+func _section_tap(scene: MainScene) -> void:
+	print("[6b] Bam THAT vao nut man...")
+	var section: LevelSection = scene.layout.level_section
+	var map: LevelMap = section.map
+	var root_control: Control = section.get_parent().get_parent() as Control
+	_check(root_control != null and root_control.mouse_filter != Control.MOUSE_FILTER_STOP,
+		"Nut goc bo cuc Main KHONG nuot cu bam (mouse_filter = %d)"
+			% (root_control.mouse_filter if root_control != null else -1))
+	var level_id := int(section.chapter_continue_level())
+	map.call("scroll_to", level_id, false)
+	for i in 4:
+		await process_frame
+	var node: LevelMapNode = map.node_for(level_id)
+	if node == null or node.button == null:
+		_check(false, "Man %d phai co nut de bam" % level_id)
+		return
+	var picked := [-1]
+	var on_pick := func(id: int) -> void: picked[0] = id
+	map.level_selected.connect(on_pick)
+	await _tap(node.button.get_global_transform_with_canvas().origin)
+	_check(picked[0] == level_id,
+		"Bam vao man %d -> chon duoc man do (nhan %d)" % [level_id, picked[0]])
+	picked[0] = -1
+	# Bấm ra NGOÀI mọi nút (góc trên trái khung bản đồ) ⇒ không chọn màn nào
+	var area: Control = map.get_parent() as Control
+	await _tap(area.get_global_rect().position + Vector2(4, 4))
+	_check(picked[0] == -1, "Bam vao cho trong -> khong chon man (%d)" % picked[0])
+	map.level_selected.disconnect(on_pick)
+
+
+## Đẩy 1 cú nhấn + nhả chuột trái (toạ độ CANVAS) rồi chờ vài frame
+func _tap(canvas_pos: Vector2) -> void:
+	var pos: Vector2 = root.get_final_transform() * canvas_pos
+	for pressed in [true, false]:
+		var ev := InputEventMouseButton.new()
+		ev.button_index = MOUSE_BUTTON_LEFT
+		ev.pressed = pressed
+		ev.position = pos
+		ev.global_position = pos
+		root.push_input(ev)
+		await process_frame
+	for i in 3:
+		await process_frame
 
 
 # ---------------------------------------------------------------------------

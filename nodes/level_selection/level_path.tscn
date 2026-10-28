@@ -6,6 +6,10 @@
 
 [node name="LevelPath" type="Node2D" unique_id=837943706 node_paths=PackedStringArray("path_node")]
 script = ExtResource("1_path")
+color_complete = Color(0.494118, 0.611765, 0.698039, 1)
+color_upcoming = Color(0.788235, 0.847059, 0.890196, 1)
+color_locked = Color(0.827451, 0.882353, 0.921569, 1)
+width_complete = 3.5
 path_node = NodePath("Path")
 
 [node name="Path" type="Path2D" parent="." unique_id=2088888183]

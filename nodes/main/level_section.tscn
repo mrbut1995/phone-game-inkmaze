@@ -45,6 +45,7 @@ mouse_filter = 2
 
 [node name="LevelMap" parent="MapArea" instance=ExtResource("2_map")]
 columns_landscape = 3
+bottom_reserve = 72.0
 
 [node name="FadeTop" type="TextureRect" parent="MapArea"]
 visible = false

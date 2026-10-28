@@ -1,9 +1,16 @@
 [gd_scene format=3 uid="uid://k2k3skjevrxy"]
 
 [ext_resource type="Script" uid="uid://kxlhe7ypu0ni" path="res://scripts/nodes/dock_button.gd" id="1_dock"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_normal.tres" id="2_n"]
-[ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_pressed.tres" id="3_p"]
 [ext_resource type="StyleBox" path="res://resources/settings/styles/menu/util_focus.tres" id="4_f"]
+
+[sub_resource type="StyleBoxEmpty" id="sb_empty"]
+
+[sub_resource type="StyleBoxFlat" id="sb_pressed"]
+bg_color = Color(1, 1, 1, 0.18)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="sb_badge"]
 bg_color = Color(0.84705883, 0.26666668, 0.26666668, 1)
@@ -21,9 +28,9 @@ offset_right = -39.96
 offset_bottom = -68.08
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = ExtResource("2_n")
-theme_override_styles/pressed = ExtResource("3_p")
-theme_override_styles/hover = ExtResource("2_n")
+theme_override_styles/normal = SubResource("sb_empty")
+theme_override_styles/pressed = SubResource("sb_pressed")
+theme_override_styles/hover = SubResource("sb_empty")
 theme_override_styles/focus = ExtResource("4_f")
 script = ExtResource("1_dock")
 
