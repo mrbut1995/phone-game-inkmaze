@@ -45,6 +45,7 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
 [node name="Portrait" unique_id=732847808 node_paths=PackedStringArray("profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "level_section", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "header_anchor", "bottom_safe_spacer") instance=ExtResource("1_parent")]
+mouse_filter = 2
 script = ExtResource("2_layout")
 profile_card = NodePath("TopBar/ProfileCard")
 coin_chip = NodePath("TopBar/CoinChip")
@@ -61,7 +62,6 @@ stamp_panel = NodePath("Body/Stamp")
 stamp_label = NodePath("Body/Stamp/Label")
 header_anchor = NodePath("Body/TopBarAnchor")
 bottom_safe_spacer = NodePath("Body/BottomSafe")
-mouse_filter = 2
 
 [node name="Body" type="VBoxContainer" parent="." index="0" unique_id=972036978]
 layout_mode = 1
