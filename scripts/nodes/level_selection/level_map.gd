@@ -147,6 +147,8 @@ var _scroll_tween: Tween = null
 ## STOP phủ lên bản đồ (khung Main, layout...) đều làm nút Node2D không nhận được cú bấm.
 ## `tap_guard` (Callable → bool): trả false khi KHÔNG được chọn màn (vd. khung chương khoá đang mở).
 var tap_guard: Callable = Callable()
+## Control nổi đè lên bản đồ (vd. cột nút event) — chạm trúng vùng của chúng KHÔNG chọn màn bên dưới.
+var blockers: Array[Control] = []
 const TAP_MAX_MOVE := 14.0
 var _tap_start := Vector2.ZERO
 var _tap_active := false
@@ -825,6 +827,9 @@ func _track_tap(event: InputEvent) -> void:
 		return
 	if tap_guard.is_valid() and not bool(tap_guard.call()):
 		return
+	for blocker in blockers:
+		if is_instance_valid(blocker) and blocker.is_visible_in_tree() and blocker.get_global_rect().has_point(pos):
+			return
 	var hit := _node_at(pos)
 	if hit != null:
 		_emit_selected(hit.level_id)

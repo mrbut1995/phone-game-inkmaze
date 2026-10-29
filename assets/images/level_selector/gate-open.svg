@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 224" width="224" height="224">
+  <g transform="scale(2)">
+    <!-- 1. Đáy khối 3D (Shadow) lệch 6px -->
+    <path d="M 18,48 A 38,38 0 0,1 94,48 L 94,90 A 8,8 0 0,1 86,98 L 26,98 A 8,8 0 0,1 18,90 Z"
+          transform="translate(0, 6)" fill="#1D5FAF" stroke="#3D2314" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- 2. Khoảng tối bên trong cổng -->
+    <path d="M 18,48 A 38,38 0 0,1 94,48 L 94,90 A 8,8 0 0,1 86,98 L 26,98 A 8,8 0 0,1 18,90 Z" fill="#26150B"/>
+
+    <!-- 3. Ánh sáng vàng hắt ra khi cổng mở -->
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.25;0.45;0.75;0.9;1" dur="6s" repeatCount="indefinite"/>
+      <path d="M 34,95 L 78,95 L 70,40 C 66,28 46,28 42,40 Z" fill="#FFC93C" fill-opacity="0.25"/>
+      <path d="M 42,95 L 70,95 L 65,48 C 63,40 49,40 47,48 Z" fill="#FFC93C" fill-opacity="0.4"/>
+      <path d="M 50,95 L 62,95 L 60,56 C 59,51 53,51 52,56 Z" fill="#FFF3C4" fill-opacity="0.75"/>
+    </g>
+
+    <!-- 4. Cánh trái -->
+    <path fill="#2F8FE8" d="M 18,48 C 18,27.01 35.01,10 56,10 L 56,98 L 26,98 C 21.58,98 18,94.42 18,90 Z">
+      <animate attributeName="d" dur="6s" repeatCount="indefinite" calcMode="spline"
+               keyTimes="0;0.25;0.45;0.75;0.9;1"
+               keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"
+               values="M 18,48 C 18,27.01 35.01,10 56,10 L 56,98 L 26,98 C 21.58,98 18,94.42 18,90 Z;
+                       M 18,48 C 18,27.01 35.01,10 56,10 L 56,98 L 26,98 C 21.58,98 18,94.42 18,90 Z;
+                       M 18,48 C 18,42 20,36 26,30 L 26,92 L 22,98 C 19.5,98 18,94.5 18,90 Z;
+                       M 18,48 C 18,42 20,36 26,30 L 26,92 L 22,98 C 19.5,98 18,94.5 18,90 Z;
+                       M 18,48 C 18,27.01 35.01,10 56,10 L 56,98 L 26,98 C 21.58,98 18,94.42 18,90 Z;
+                       M 18,48 C 18,27.01 35.01,10 56,10 L 56,98 L 26,98 C 21.58,98 18,94.42 18,90 Z"/>
+    </path>
+
+    <!-- 5. Cánh phải -->
+    <path fill="#2F8FE8" d="M 94,48 C 94,27.01 76.99,10 56,10 L 56,98 L 86,98 C 90.42,98 94,94.42 94,90 Z">
+      <animate attributeName="d" dur="6s" repeatCount="indefinite" calcMode="spline"
+               keyTimes="0;0.25;0.45;0.75;0.9;1"
+               keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"
+               values="M 94,48 C 94,27.01 76.99,10 56,10 L 56,98 L 86,98 C 90.42,98 94,94.42 94,90 Z;
+                       M 94,48 C 94,27.01 76.99,10 56,10 L 56,98 L 86,98 C 90.42,98 94,94.42 94,90 Z;
+                       M 94,48 C 94,42 92,36 86,30 L 86,92 L 90,98 C 92.5,98 94,94.5 94,90 Z;
+                       M 94,48 C 94,42 92,36 86,30 L 86,92 L 90,98 C 92.5,98 94,94.5 94,90 Z;
+                       M 94,48 C 94,27.01 76.99,10 56,10 L 56,98 L 86,98 C 90.42,98 94,94.42 94,90 Z;
+                       M 94,48 C 94,27.01 76.99,10 56,10 L 56,98 L 86,98 C 90.42,98 94,94.42 94,90 Z"/>
+    </path>
+
+    <!-- 6. Đường viền phản quang trắng mờ, đi theo từng cánh -->
+    <path fill="none" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="2" d="M 56,17.5 C 39.15,17.5 25.5,31.15 25.5,48 L 25.5,86.5 C 25.5,88.71 27.29,90.5 29.5,90.5 L 56,90.5">
+      <animate attributeName="d" dur="6s" repeatCount="indefinite" calcMode="spline"
+               keyTimes="0;0.25;0.45;0.75;0.9;1"
+               keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"
+               values="M 56,17.5 C 39.15,17.5 25.5,31.15 25.5,48 L 25.5,86.5 C 25.5,88.71 27.29,90.5 29.5,90.5 L 56,90.5;
+                       M 56,17.5 C 39.15,17.5 25.5,31.15 25.5,48 L 25.5,86.5 C 25.5,88.71 27.29,90.5 29.5,90.5 L 56,90.5;
+                       M 26,34 C 24,36 21.5,40 21.5,48 L 21.5,86 C 21.5,88 22.3,90 23.5,90.5 L 26,90.5;
+                       M 26,34 C 24,36 21.5,40 21.5,48 L 21.5,86 C 21.5,88 22.3,90 23.5,90.5 L 26,90.5;
+                       M 56,17.5 C 39.15,17.5 25.5,31.15 25.5,48 L 25.5,86.5 C 25.5,88.71 27.29,90.5 29.5,90.5 L 56,90.5;
+                       M 56,17.5 C 39.15,17.5 25.5,31.15 25.5,48 L 25.5,86.5 C 25.5,88.71 27.29,90.5 29.5,90.5 L 56,90.5"/>
+    </path>
+    <path fill="none" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="2" d="M 56,17.5 C 72.85,17.5 86.5,31.15 86.5,48 L 86.5,86.5 C 86.5,88.71 84.71,90.5 82.5,90.5 L 56,90.5">
+      <animate attributeName="d" dur="6s" repeatCount="indefinite" calcMode="spline"
+               keyTimes="0;0.25;0.45;0.75;0.9;1"
+               keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"
+               values="M 56,17.5 C 72.85,17.5 86.5,31.15 86.5,48 L 86.5,86.5 C 86.5,88.71 84.71,90.5 82.5,90.5 L 56,90.5;
+                       M 56,17.5 C 72.85,17.5 86.5,31.15 86.5,48 L 86.5,86.5 C 86.5,88.71 84.71,90.5 82.5,90.5 L 56,90.5;
+                       M 86,34 C 88,36 90.5,40 90.5,48 L 90.5,86 C 90.5,88 89.7,90 88.5,90.5 L 86,90.5;
+                       M 86,34 C 88,36 90.5,40 90.5,48 L 90.5,86 C 90.5,88 89.7,90 88.5,90.5 L 86,90.5;
+                       M 56,17.5 C 72.85,17.5 86.5,31.15 86.5,48 L 86.5,86.5 C 86.5,88.71 84.71,90.5 82.5,90.5 L 56,90.5;
+                       M 56,17.5 C 72.85,17.5 86.5,31.15 86.5,48 L 86.5,86.5 C 86.5,88.71 84.71,90.5 82.5,90.5 L 56,90.5"/>
+    </path>
+
+    <!-- 7. Viền nâu ngoài cùng (vẽ sau cùng để che mép hai cánh) -->
+    <path d="M 18,48 A 38,38 0 0,1 94,48 L 94,90 A 8,8 0 0,1 86,98 L 26,98 A 8,8 0 0,1 18,90 Z"
+          fill="none" stroke="#3D2314" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- 8. Đường khe giữa 2 cánh, mờ đi khi cổng mở -->
+    <line x1="56" y1="12" x2="56" y2="96" stroke="#3D2314" stroke-width="2.5" stroke-opacity="0.5">
+      <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;0.25;0.3;0.85;0.9;1" dur="6s" repeatCount="indefinite"/>
+    </line>
+
+    <!-- 9. Ổ khóa vàng: mở ra rồi rơi xuống -->
+    <g>
+      <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;0.2;0.28;0.84;0.95;1" dur="6s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 10;0 10;0 0;0 0" keyTimes="0;0.2;0.28;0.84;0.85;1" dur="6s" repeatCount="indefinite"/>
+      <path d="M 48,53 C 48,43 64,43 64,53" fill="none" stroke="#3D2314" stroke-width="3.5" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 -6;0 -6;0 0;0 0" keyTimes="0;0.1;0.18;0.84;0.85;1" dur="6s" repeatCount="indefinite"/>
+      </path>
+      <rect x="44" y="55" width="24" height="18" rx="4" fill="#D29100" stroke="#3D2314" stroke-width="3"/>
+      <rect x="44" y="52" width="24" height="18" rx="4" fill="#FFC93C" stroke="#3D2314" stroke-width="3"/>
+      <circle cx="56" cy="61" r="2" fill="#3D2314"/>
+    </g>
+  </g>
+</svg>

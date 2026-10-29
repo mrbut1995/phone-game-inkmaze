@@ -35,9 +35,11 @@ enum State {
 @export var star_highlight: Texture2D = null
 @export var star_empty: Texture2D = null
 
-## Màu số màn theo trạng thái (mực navy — mặt nút vàng của màn đang chơi vẫn đọc rõ)
+## Màu số màn theo trạng thái: nút COLORFUL — màn thường nền xanh/tím đậm ⇒ số TRẮNG có viền tối;
+## màn đang chơi nền vàng/hồng sáng ⇒ số navy
 @export var color_number_current := Color(0.0863, 0.2745, 0.3882, 1.0)
-@export var color_number_normal := Color(0.0863, 0.2745, 0.3882, 1.0)
+@export var color_number_normal := Color(1.0, 1.0, 1.0, 1.0)
+@export var color_number_outline := Color(0.05, 0.16, 0.30, 0.55)
 
 @export_group("Bộ art theo trạng thái")
 ## Bộ art mặc định (normal · hover · pressed · disabled) lấy từ `Body/Button` trong scene.
@@ -139,7 +141,12 @@ func _apply_number() -> void:
 	label.visible = show_number
 	if show_number:
 		label.text = str(level_id)
-	label.modulate = color_number_current if state == State.CURRENT else color_number_normal
+	# Ghi đè màu chữ trực tiếp (không dùng modulate: màu font của theme có thể không phải trắng)
+	label.modulate = Color.WHITE
+	var is_current := state == State.CURRENT
+	label.add_theme_color_override("font_color", color_number_current if is_current else color_number_normal)
+	label.add_theme_color_override("font_outline_color", color_number_outline)
+	label.add_theme_constant_override("outline_size", 0 if is_current else 5)
 
 
 ## 3 sao của màn (màn khoá ẩn cả viên thuốc sao)

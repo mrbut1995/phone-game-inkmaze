@@ -27,10 +27,10 @@ const OPEN_SECONDS := 1.4
 ## Thời gian chờ thêm sau khi cửa mở xong để quầng sáng kịp lan rồi mới sang bước kế
 const OPEN_HOLD := 0.35
 ## Cổng cao ~96 px, rộng ~86 px (khớp nút màn)
-const DOOR_W := 86.0
-const DOOR_H := 96.0
+const DOOR_W := 78.0
+const DOOR_H := 94.0
 const BASE_DROP := 10.0
-const LABEL_Y := 62.0
+const LABEL_Y := 56.0
 
 @export var hit: Button = null
 @export var visual: Node2D = null
@@ -235,9 +235,10 @@ func _draw_overlay() -> void:
 	var font := ThemeDB.fallback_font
 	var text := tr("STR_MAIN_GATE_OPEN") if _show_open_word or _need <= 0 else "%d/%d" % [_own, _need]
 	var pos := Vector2(-DOOR_W * 0.5, 38.0)
-	var col := Color(INK.r, INK.g, INK.b, fade)
+	var col := Color(1, 1, 1, fade)
+	var edge := Color(0.239, 0.137, 0.078, fade)   # nâu #3D2314 như viền cổng
+	overlay.draw_string_outline(font, pos, text, HORIZONTAL_ALIGNMENT_CENTER, DOOR_W, 16, 6, edge)
 	overlay.draw_string(font, pos, text, HORIZONTAL_ALIGNMENT_CENTER, DOOR_W, 16, col)
-	overlay.draw_string(font, pos + Vector2(0.8, 0), text, HORIZONTAL_ALIGNMENT_CENTER, DOOR_W, 16, col)
 
 
 ## Nhãn "CHƯƠNG n" ngay DƯỚI cửa
