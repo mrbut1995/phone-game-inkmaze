@@ -13,11 +13,11 @@
 [ext_resource type="PackedScene" path="res://nodes/archivements/card_big.tscn" id="22_card"]
 [ext_resource type="PackedScene" path="res://nodes/archivements/thumb.tscn" id="23_thumb"]
 [ext_resource type="Texture2D" uid="uid://em3x77f1xc4j" path="res://assets/images-png/archivements/seg_track.png" id="30_track"]
-[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_ico_all.png" id="31_i0"]
-[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_ico_levels.png" id="32_i1"]
-[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_ico_dungeon.png" id="33_i2"]
-[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_ico_daily.png" id="34_i3"]
-[ext_resource type="Texture2D" path="res://assets/images-png/archivements/tab_ico_special.png" id="35_i4"]
+[ext_resource uid="uid://dhl2xpaeecutv" type="Texture2D" path="res://assets/images-png/archivements/tab_ico_all.png" id="31_i0"]
+[ext_resource uid="uid://xgkrurfoonwu" type="Texture2D" path="res://assets/images-png/archivements/tab_ico_levels.png" id="32_i1"]
+[ext_resource uid="uid://gtyy058ar334" type="Texture2D" path="res://assets/images-png/archivements/tab_ico_dungeon.png" id="33_i2"]
+[ext_resource uid="uid://df0yukvitjllv" type="Texture2D" path="res://assets/images-png/archivements/tab_ico_daily.png" id="34_i3"]
+[ext_resource uid="uid://b5tms3l64tlpv" type="Texture2D" path="res://assets/images-png/archivements/tab_ico_special.png" id="35_i4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nvjrs"]
 content_margin_left = 18.0

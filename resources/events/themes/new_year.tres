@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
 [ext_resource uid="uid://d3v7x8vkp5b0o" type="Texture2D" path="res://assets/images-png/events/new_year_card_background.png" id="2_background"]
 [ext_resource uid="uid://djry74254dfqx" type="Texture2D" path="res://assets/images-png/events/new_year_card_frontground.png" id="3_foreground"]
+[ext_resource uid="uid://bl8pnwrl1lmf0" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_new_year_normal.png" id="btn_normal"]
+[ext_resource uid="uid://bfhk0smc3g8h6" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_new_year_pressed.png" id="btn_pressed"]
 
 [resource]
 script = ExtResource("1_script")
@@ -25,3 +27,5 @@ cta_stroke = Color(0.72156864, 0.5254902, 0.043137256, 1)
 cta_text = Color(0.039215688, 0.047058824, 0.1254902, 1)
 chip_fill = Color(0.02745098, 0.03529412, 0.11372549, 0.9)
 chip_text = Color(1, 0.9137255, 0.7607843, 1)
+button_normal = ExtResource("btn_normal")
+button_pressed = ExtResource("btn_pressed")

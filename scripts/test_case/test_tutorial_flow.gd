@@ -320,14 +320,19 @@ func _section_2e_list() -> void:
 	_set_flow_state(0, true, 9)
 	_gm.call("set_tutorial_completed", "first_time", true)
 
-	var main: Node = (load(MAIN_SCENE_PATH) as PackedScene).instantiate()
-	root.add_child(main)
-	current_scene = main
+	# Nut LUAT CHOI da CHUYEN tu dock Main sang man CAI DAT (xem 06_...LUAT_CHOI_SANG_SETTINGS)
+	var settings: Node = (load("res://scenes/settings.tscn") as PackedScene).instantiate()
+	root.add_child(settings)
+	current_scene = settings
 	await _settle(3)
-	main.call("_on_rules_pressed")
+	var settings_layout: Node = settings.get("layout") if settings != null else null
+	var btn_rules: BaseButton = settings_layout.get("btn_rules") if settings_layout != null else null
+	_check(btn_rules != null, "Man CAI DAT co nut LUAT CHOI (`btn_rules`)")
+	if btn_rules != null:
+		btn_rules.pressed.emit()
 	await _settle(4)
 	_check(_scene_path() == TUTORIAL_LIST_SCENE_PATH,
-		"Nut LUAT CHOI -> mo man DANH SACH tutorial (dang '%s')" % _scene_path())
+		"Nut LUAT CHOI (trong Cai dat) -> mo man DANH SACH tutorial (dang '%s')" % _scene_path())
 	_check(current_scene != null and current_scene.get("tutorial_controller") == null,
 		"Man DANH SACH khong mount bai nao (khong co TutorialController)")
 
@@ -385,8 +390,8 @@ func _section_2e_list() -> void:
 	if current_scene != null:
 		current_scene.call("_on_back_pressed")
 	await _settle(4)
-	_check(_scene_path() == MAIN_SCENE_PATH,
-		"Nut BACK o man DANH SACH -> ve Main (dang '%s')" % _scene_path())
+	_check(_scene_path() == "res://scenes/settings.tscn",
+		"Nut BACK o man DANH SACH -> ve man DA MO no (Cai dat) (dang '%s')" % _scene_path())
 
 	if current_scene != null:
 		current_scene.queue_free()

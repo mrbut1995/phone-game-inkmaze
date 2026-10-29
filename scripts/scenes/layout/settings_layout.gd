@@ -14,6 +14,7 @@ extends BaseLayout
 @export var lbl_language: Label = null
 @export var lbl_player_id: Label = null
 @export var btn_guide: TextureButton = null
+@export var btn_rules: TextureButton = null
 @export var btn_credits: TextureButton = null
 @export var btn_reset: TextureButton = null
 @export var lbl_version: Label = null

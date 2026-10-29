@@ -66,11 +66,12 @@ func _wire_buttons() -> void:
 	ensure_signal(layout.chk_glow, &"toggled", &"_on_glow_toggled")
 	ensure_signal(layout.btn_language, &"pressed", &"_on_language_pressed")
 	ensure_signal(layout.btn_guide, &"pressed", &"_on_guide_pressed")
+	ensure_signal(layout.btn_rules, &"pressed", &"_on_rules_pressed")
 	ensure_signal(layout.btn_credits, &"pressed", &"_on_credits_pressed")
 	ensure_signal(layout.btn_reset, &"pressed", &"_on_reset_pressed")
 
 	for node in [layout.btn_back, layout.chk_haptic, layout.chk_auto_mark, layout.chk_glow,
-			layout.btn_language, layout.btn_guide, layout.btn_credits, layout.btn_reset]:
+			layout.btn_language, layout.btn_guide, layout.btn_rules, layout.btn_credits, layout.btn_reset]:
 		if _wire_once(node):
 			UIAnim.attach_press_down(node)
 
@@ -247,6 +248,12 @@ func _on_guide_pressed() -> void:
 	# TODO: mở màn "Hướng dẫn & 9 bộ luật chơi" khi có scene tương ứng
 	push_warning("[Settings] Chưa có scene hướng dẫn - cần bổ sung sau.")
 	guide_requested.emit()
+
+
+## LUẬT CHƠI (chuyển từ dock Main sang) → màn DANH SÁCH bài hướng dẫn
+func _on_rules_pressed() -> void:
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	Nav.goto_tutorial_list()
 
 
 func _on_credits_pressed() -> void:

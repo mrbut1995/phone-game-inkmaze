@@ -3,6 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://dpv423dwk3u5l" path="res://assets/images-png/events/explore_pyramid_card_background.png" id="1_cw6e4"]
 [ext_resource type="Texture2D" uid="uid://c5d058s3oncsw" path="res://assets/images-png/events/explore_pyramid_card_frontground.png" id="2_r8rk8"]
 [ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="2_yt6uv"]
+[ext_resource uid="uid://df87x0s5dkipc" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_normal.png" id="btn_normal"]
+[ext_resource uid="uid://bwpltr2h1aumu" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_pressed.png" id="btn_pressed"]
 
 [resource]
 script = ExtResource("2_yt6uv")
@@ -24,3 +26,5 @@ cta_stroke = Color(0.6039216, 0.41568628, 0.07058824, 1)
 cta_text = Color(0.16470589, 0.08627451, 0.03137255, 1)
 chip_fill = Color(0.11764706, 0.05882353, 0.019607844, 1)
 chip_text = Color(1, 0.9137255, 0.6901961, 1)
+button_normal = ExtResource("btn_normal")
+button_pressed = ExtResource("btn_pressed")

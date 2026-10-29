@@ -2,6 +2,8 @@
 
 [ext_resource uid="uid://dow2h5c00787d" type="Texture2D" path="res://assets/images-png/events/dungeon_card_background.png" id="1_w12t0"]
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_g7myi"]
+[ext_resource uid="uid://cftc1njjup18e" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_dungeon_normal.png" id="btn_normal"]
+[ext_resource uid="uid://du51l6oux4upb" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_dungeon_pressed.png" id="btn_pressed"]
 
 [resource]
 script = ExtResource("2_g7myi")
@@ -23,3 +25,5 @@ cta_stroke = Color(0.7058824, 0.3254902, 0.03529412, 1)
 cta_text = Color(0.16470589, 0.101960786, 0.019607844, 1)
 chip_fill = Color(0, 0, 0, 1)
 chip_text = Color(0.99215686, 0.9019608, 0.5411765, 1)
+button_normal = ExtResource("btn_normal")
+button_pressed = ExtResource("btn_pressed")

@@ -120,12 +120,13 @@ func _is_seen(tid: String) -> bool:
 
 
 func _on_back_pressed() -> void:
-	NavHelper.back_to_main()
+	NavHelper.go_back()
 
 
-## ScreenManager gọi khi Back (nút cứng Android / phím Esc): rời danh sách về Main
+## ScreenManager gọi khi Back (nút cứng Android / phím Esc): về màn ĐÃ MỞ danh sách
+## (Main hoặc Cài đặt — xem `Nav.goto_tutorial_list()` gọi từ `settings.gd`)
 func close_from_back() -> void:
-	NavHelper.back_to_main()
+	NavHelper.go_back()
 
 
 func _on_orientation_changed(_is_land: bool) -> void:

@@ -31,8 +31,6 @@ extends BaseLayout
 @export var dock_ranking: DockButton = null
 ## Dock: Sổ tay thành tựu (danh hiệu)
 @export var dock_badges: DockButton = null
-## Dock: Luật chơi (Tutorial)
-@export var dock_rules: DockButton = null
 ## Con dấu phiên bản
 @export var stamp_panel: Control = null
 @export var stamp_label: Label = null

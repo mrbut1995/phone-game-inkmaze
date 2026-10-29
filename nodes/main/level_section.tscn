@@ -1,8 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://7haijnwmq3kt"]
 
-[ext_resource type="Script" path="res://scripts/nodes/main/level_section.gd" id="1_sec"]
+[ext_resource type="Script" uid="uid://dyqoxeuolv1ce" path="res://scripts/nodes/main/level_section.gd" id="1_sec"]
 [ext_resource type="PackedScene" uid="uid://cp4og3e21hxqe" path="res://nodes/level_selection/level_map.tscn" id="2_map"]
-[ext_resource type="PackedScene" path="res://nodes/main/chapter_chip.tscn" id="3_chip"]
 [ext_resource type="PackedScene" path="res://nodes/main/chest_widget.tscn" id="4_chest"]
 [ext_resource type="PackedScene" path="res://nodes/main/dungeon_pill.tscn" id="5_pill"]
 
@@ -19,7 +18,7 @@ gradient = SubResource("Gradient_fade")
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 0)
 
-[node name="LevelSection" type="Control" node_paths=PackedStringArray("map", "chapter_chip", "chest", "dungeon_pill")]
+[node name="LevelSection" type="Control" unique_id=1574037684 node_paths=PackedStringArray("map", "chapter_chip", "chest", "dungeon_pill")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,11 +28,11 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_sec")
 map = NodePath("MapArea/LevelMap")
-chapter_chip = NodePath("ChapterChip")
+chapter_chip = NodePath("")
 chest = NodePath("ChestWidget")
 dungeon_pill = NodePath("DungeonPill")
 
-[node name="MapArea" type="Control" parent="."]
+[node name="MapArea" type="Control" parent="." unique_id=1458737360]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 15
@@ -43,11 +42,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="LevelMap" parent="MapArea" instance=ExtResource("2_map")]
+[node name="LevelMap" parent="MapArea" unique_id=1269095073 instance=ExtResource("2_map")]
 columns_landscape = 3
 bottom_reserve = 72.0
 
-[node name="FadeTop" type="TextureRect" parent="MapArea"]
+[node name="FadeTop" type="TextureRect" parent="MapArea" unique_id=1011168929]
 visible = false
 layout_mode = 1
 anchors_preset = 10
@@ -58,7 +57,7 @@ mouse_filter = 2
 texture = SubResource("GradientTexture2D_top")
 expand_mode = 1
 
-[node name="FadeBottom" type="TextureRect" parent="MapArea"]
+[node name="FadeBottom" type="TextureRect" parent="MapArea" unique_id=1371749727]
 visible = false
 layout_mode = 1
 anchors_preset = 12
@@ -72,18 +71,7 @@ mouse_filter = 2
 texture = SubResource("GradientTexture2D_bottom")
 expand_mode = 1
 
-[node name="ChapterChip" parent="." instance=ExtResource("3_chip")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -89.0
-offset_top = 8.0
-offset_right = 89.0
-offset_bottom = 52.0
-grow_horizontal = 2
-
-[node name="ChestWidget" parent="." instance=ExtResource("4_chest")]
+[node name="ChestWidget" parent="." unique_id=1308813912 instance=ExtResource("4_chest")]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -97,7 +85,7 @@ offset_bottom = -12.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="DungeonPill" parent="." instance=ExtResource("5_pill")]
+[node name="DungeonPill" parent="." unique_id=519750396 instance=ExtResource("5_pill")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -110,6 +98,4 @@ grow_vertical = 0
 
 [connection signal="level_selected" from="MapArea/LevelMap" to="." method="_on_level_selected"]
 [connection signal="scrolled" from="MapArea/LevelMap" to="." method="_on_map_scrolled"]
-[connection signal="prev_requested" from="ChapterChip" to="." method="_on_prev_chapter"]
-[connection signal="next_requested" from="ChapterChip" to="." method="_on_next_chapter"]
 [connection signal="claim_requested" from="ChestWidget" to="." method="_on_chest_claim_requested"]

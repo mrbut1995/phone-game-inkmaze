@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
 [ext_resource uid="uid://c672ql20ir6a8" type="Texture2D" path="res://assets/images-png/events/easter_card_background.png" id="2_background"]
 [ext_resource uid="uid://b2xixlptycgw4" type="Texture2D" path="res://assets/images-png/events/easter_card_frontground.png" id="3_foreground"]
+[ext_resource uid="uid://cda4w6hvfm02s" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_easter_normal.png" id="btn_normal"]
+[ext_resource uid="uid://1fpci6weuokc" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_easter_pressed.png" id="btn_pressed"]
 
 [resource]
 script = ExtResource("1_script")
@@ -24,3 +26,5 @@ cta_stroke = Color(0.11764706, 0.4392157, 0.23529412, 1)
 cta_text = Color(1, 1, 1, 1)
 chip_fill = Color(1, 1, 1, 0.88)
 chip_text = Color(0.08627451, 0.2784314, 0.15686275, 1)
+button_normal = ExtResource("btn_normal")
+button_pressed = ExtResource("btn_pressed")

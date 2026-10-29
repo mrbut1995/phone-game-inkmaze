@@ -1,7 +1,6 @@
-class_name EventButtonColumn
 extends VBoxContainer
 ## ============================================================================
-## Node: EventButtonColumn — CỘT NÚT ICON EVENT nổi bên phải bản đồ (Main, phương án C).
+## Node: EventButtonColumn (KHÔNG khai báo class_name — trong project đã có class trùng tên; main.gd nạp bằng preload) — CỘT NÚT ICON EVENT nổi bên phải bản đồ (Main, phương án C).
 ## Thay khối thẻ event (header + carousel). Mỗi event = 1 huy hiệu tròn theo theme + viên thuốc
 ## "Còn N ngày" NẰM DƯỚI nút. Tối đa MAX_EVENTS nút (game đảm bảo ≤ 5 event cùng lúc).
 ## Daily KHÔNG nằm ở đây (đã về dock).
@@ -18,6 +17,8 @@ const FALLBACK_THEME := "anniversary"
 const BUTTON_SIZE := 60.0
 ## Bề rộng vùng BỎ TRỐNG bên phải bản đồ cho cột nút (bản đồ co lại ⇒ node level không bị đè)
 const GUTTER := 88.0
+## Chừa mép TRÁI cho vạch đỏ + lỗ gáy vở (bản đồ dịch sang phải)
+const LEFT_INSET := 34.0
 const MARGIN_RIGHT := 4.0
 const MARGIN_TOP := 10.0
 const INK := Color("164663")
@@ -66,6 +67,7 @@ func set_events(events: Array, manager: Node) -> void:
 ## Chừa/thả vùng bên phải của `MapArea` (cha của LevelMap): có event ⇒ co bản đồ lại, không ⇒ trả đủ rộng
 func reserve_gutter(map_area: Control) -> void:
 	if map_area != null:
+		map_area.offset_left = LEFT_INSET
 		map_area.offset_right = -GUTTER if visible else 0.0
 
 
@@ -78,8 +80,8 @@ func _make_item(ev: Object) -> Control:
 
 	var button := TextureButton.new()
 	var theme_id := _theme_id_of(ev)
-	button.texture_normal = _load_icon(theme_id, "normal")
-	button.texture_pressed = _load_icon(theme_id, "pressed")
+	button.texture_normal = _load_icon(ev, theme_id, "normal")
+	button.texture_pressed = _load_icon(ev, theme_id, "pressed")
 	button.ignore_texture_size = true
 	button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
 	button.custom_minimum_size = Vector2(BUTTON_SIZE + 8.0, BUTTON_SIZE + 4.0)
@@ -124,7 +126,14 @@ func _theme_id_of(ev: Object) -> String:
 	return str(t)
 
 
-func _load_icon(theme_id: String, state: String) -> Texture2D:
+## Ưu tiên art NÚT khai báo trong EventTheme (`button_normal` / `button_pressed`); chưa khai báo thì
+## tìm theo tên file `event_btn_<theme_id>_<state>.png`; cuối cùng dùng icon dự phòng.
+func _load_icon(ev: Object, theme_id: String, state: String) -> Texture2D:
+	var th: Variant = ev.get("theme")
+	if th is Object:
+		var tex: Variant = (th as Object).get("button_" + state)
+		if tex is Texture2D:
+			return tex as Texture2D
 	var path := "%sevent_btn_%s_%s.png" % [ICON_DIR, theme_id, state]
 	if not ResourceLoader.exists(path):
 		path = "%sevent_btn_%s_%s.png" % [ICON_DIR, FALLBACK_THEME, state]

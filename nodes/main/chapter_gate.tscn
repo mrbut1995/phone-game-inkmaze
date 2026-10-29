@@ -6,7 +6,6 @@
 [sub_resource type="StyleBoxEmpty" id="sb_empty"]
 
 [node name="ChapterGate" type="Node2D" node_paths=PackedStringArray("hit", "visual", "art", "overlay", "sparks")]
-z_index = 1
 script = ExtResource("1_gate")
 hit = NodePath("Hit")
 visual = NodePath("Visual")
