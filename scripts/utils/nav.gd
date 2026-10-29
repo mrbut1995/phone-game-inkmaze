@@ -124,6 +124,25 @@ static func goto_tutorial_list() -> void:
 	change_scene(SCENE_TUTORIAL_LIST)
 
 
+## Lùi về MÀN TRƯỚC theo lịch sử `ScreenManager` (hết lịch sử ⇒ về Main).
+## Dùng cho màn mở được từ NHIỀU nơi khác nhau — vd DANH SÁCH hướng dẫn mở từ Main
+## hoặc từ Cài đặt ⇒ Back phải về đúng màn đã mở nó, không phải luôn về Main.
+static func go_back() -> void:
+	var manager := _manager()
+	var screen := _screen()
+	# Bỏ các mục lịch sử TRÙNG màn hiện tại (đi tới rồi lùi trong CÙNG một màn, vd Danh sách
+	# ⇄ Chi tiết bài) — nếu để nguyên, Back sẽ "quay lại chính nó" và người chơi thấy như nút hỏng.
+	if manager != null and screen != null and manager.has_method("current_scene_path") \
+			and screen.has_method("drop_history"):
+		var current := str(manager.call("current_scene_path"))
+		while bool(screen.call("drop_history", current)):
+			pass
+	if manager != null and manager.has_method("go_back"):
+		manager.call("go_back")
+		return
+	back_to_main()
+
+
 ## Back từ màn CHI TIẾT về DANH SÁCH (không ghi lịch sử)
 static func back_to_tutorial_list() -> void:
 	back_to(SCENE_TUTORIAL_LIST)
@@ -142,6 +161,13 @@ static func _manager() -> Node:
 	var tree := _tree()
 	if tree != null and tree.root != null:
 		return tree.root.get_node_or_null("SceneManager")
+	return null
+
+
+static func _screen() -> Node:
+	var tree := _tree()
+	if tree != null and tree.root != null:
+		return tree.root.get_node_or_null("ScreenManager")
 	return null
 
 

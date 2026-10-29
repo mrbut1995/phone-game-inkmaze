@@ -1,2 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 224" width="224" height="224"><g transform="scale(2)"><defs><clipPath id="clip_pressed"><rect x="21" y="24" width="70" height="70" rx="13"/></clipPath></defs><rect x="12" y="16" width="88" height="88" rx="22" fill="#1D5FAF" stroke="#3D2314" stroke-width="3"/><rect x="12" y="15" width="88" height="88" rx="22" fill="#2A82D6" stroke="#3D2314" stroke-width="3"/><g clip-path="url(#clip_pressed)"><rect x="21" y="24" width="70" height="70" fill="#DCEEFC"/><rect x="21" y="24" width="70" height="12" fill="#ACD4F8"/></g><rect x="21" y="24" width="70" height="70" rx="13" fill="none" stroke="#3D2314" stroke-width="2.5"/></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="224" height="224" viewBox="0 0 224 224">
+  <rect x="20.5" y="30.5" width="182.0" height="174.0" rx="41.5" fill="#FFFDF7" stroke="#C3D3DE" stroke-width="5.0"/>
+  <rect x="22.5" y="32.5" width="178.0" height="170.0" rx="39.5" fill="none" stroke="#E1E8EA" stroke-width="1.0"/>
+</svg>

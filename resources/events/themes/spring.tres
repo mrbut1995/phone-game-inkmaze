@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
 [ext_resource uid="uid://shbkk4ltqk4x" type="Texture2D" path="res://assets/images-png/events/spring_card_background.png" id="2_background"]
 [ext_resource uid="uid://dm4y377eyar7p" type="Texture2D" path="res://assets/images-png/events/spring_card_frontground.png" id="3_foreground"]
+[ext_resource uid="uid://dvlkx5arodqi5" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_spring_normal.png" id="btn_normal"]
+[ext_resource uid="uid://bvgumxs37km8" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_spring_pressed.png" id="btn_pressed"]
 
 [resource]
 script = ExtResource("1_script")
@@ -24,3 +26,5 @@ cta_stroke = Color(0.6627451, 0.19607843, 0.34509805, 1)
 cta_text = Color(1, 1, 1, 1)
 chip_fill = Color(1, 1, 1, 0.88)
 chip_text = Color(0.16470589, 0.31764707, 0.21960784, 1)
+button_normal = ExtResource("btn_normal")
+button_pressed = ExtResource("btn_pressed")

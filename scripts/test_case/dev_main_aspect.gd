@@ -75,7 +75,7 @@ func _run(size: Vector2i) -> void:
 		str(landscape.visible if landscape != null else false)])
 	for name in ["Body", "TopBar", "Logo", "ProfileCard", "CoinChip", "StarChip", "Settings",
 			"EventHeader", "EventCarousel", "Modes", "Play", "Dungeon", "Dock", "DockShop",
-			"DockRules", "Stamp"]:
+			"DockDaily", "DockBadges", "Stamp"]:
 		var node := scene.ui(name) as Control
 		if node == null:
 			continue

@@ -3,6 +3,8 @@
 [ext_resource uid="uid://c1e8elv060y5" type="Texture2D" path="res://assets/images-png/events/halloween_event_card_background.png" id="1_vw1fq"]
 [ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="2_8lt8r"]
 [ext_resource uid="uid://6s27psw45flr" type="Texture2D" path="res://assets/images-png/events/halloween_event_card_frontground.png" id="2_memky"]
+[ext_resource uid="uid://b3awqytug0lvm" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_halloween_normal.png" id="btn_normal"]
+[ext_resource uid="uid://bujj486taulr4" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_halloween_pressed.png" id="btn_pressed"]
 
 [resource]
 script = ExtResource("2_8lt8r")
@@ -25,3 +27,5 @@ cta_stroke = Color(0.7058824, 0.3254902, 0.03529412, 1)
 cta_text = Color(0.16470589, 0.05882353, 0.30980393, 1)
 chip_fill = Color(0.07058824, 0.023529412, 0.12156863, 1)
 chip_text = Color(1, 0.9137255, 0.7607843, 1)
+button_normal = ExtResource("btn_normal")
+button_pressed = ExtResource("btn_pressed")

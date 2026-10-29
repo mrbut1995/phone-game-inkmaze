@@ -35,7 +35,7 @@ func _init() -> void:
 		await process_frame
 
 	_section_layout(scene)
-	await _section_compact_cards(scene)
+	await _section_event_buttons(scene)
 	await _section_chip(scene, gm, lm)
 	await _section_chest(scene, gm)
 	_section_dungeon(scene, gm)
@@ -129,74 +129,70 @@ func _section_layout(scene: MainScene) -> void:
 		"Ban doc dung 3 cot (%d)" % section.map.effective_columns())
 	var area := section.map.get_parent() as Control
 	_check(area != null and area.clip_contents, "Ban do nam trong khung clip_contents (MapArea)")
-	# Chấm phân trang DỜI vào EventHeader.DotsSlot (thay vì nằm dưới carousel)
-	var slot: Node = layout.event_header.get_node_or_null("DotsSlot")
-	var dots_in_slot := false
-	if slot != null:
-		for child in slot.get_children():
-			if child is EventDots:
-				dots_in_slot = true
-				break
-	_check(dots_in_slot, "Cham phan trang nam trong EventHeader.DotsSlot")
+	# EVENT trên Main nay là CỘT NÚT icon (không còn khối thẻ: header + carousel bị ẨN)
+	_check(layout.event_header == null or not layout.event_header.visible,
+		"EventHeader bi AN tren Main (event la cot nut)")
+	_check(layout.event_carousel == null or not layout.event_carousel.visible,
+		"EventCarousel bi AN tren Main (event la cot nut)")
 
 
 # ---------------------------------------------------------------------------
-# 4. Chip chương
+# 3b. EVENT = CỘT NÚT ICON (thay khối thẻ cũ)
 # ---------------------------------------------------------------------------
-## 3b. Th? s? ki?n G?N (package_event_compact) ? carousel th?p 150 px v?n kh?ng c?t ch?
-func _section_compact_cards(scene: MainScene) -> void:
-	print("[3b] The su kien GON...")
-	var carousel: EventCarousel = scene.layout.event_carousel
-	if carousel == null:
+func _section_event_buttons(scene: MainScene) -> void:
+	print("[3b] Cot nut event...")
+	var section: LevelSection = scene.layout.level_section
+	if section == null or section.map == null:
 		return
-	var ec_path := carousel.event_card_scene.resource_path if carousel.event_card_scene != null else ""
-	var dc_path := carousel.daily_card_scene.resource_path if carousel.daily_card_scene != null else ""
-	_check(ec_path.get_file() == "event_card_compact.tscn",
-		"Carousel dung the GON cho su kien ('%s')" % ec_path.get_file())
-	_check(dc_path.get_file() == "daily_card_compact.tscn",
-		"Carousel dung the GON cho Daily ('%s')" % dc_path.get_file())
-
-	var daily: Node = null
-	var event: Node = null
-	for child in carousel.get_node("ScrollContainer/HBox").get_children():
-		if child is DailyCardCompact and daily == null:
-			daily = child
-		elif child is EventCardCompact and event == null:
-			event = child
-	_check(daily != null, "Co the DailyCardCompact trong carousel")
-	_check(event != null, "Co the EventCardCompact trong carousel")
-	if daily == null or event == null:
+	var column: Control = null
+	for child in section.get_children():
+		if child.name == "EventButtons":
+			column = child as Control
+			break
+	_check(column != null, "LevelSection co cot nut `EventButtons`")
+	if column == null:
 		return
-	_check(daily.size.y <= 165.0, "The Daily gon thap <= 165 px (%.0f)" % daily.size.y)
-	_check(event.size.y <= 165.0, "The su kien gon thap <= 165 px (%.0f)" % event.size.y)
+	_check(section.map.blockers.has(column),
+		"Ban do coi cot nut la vat can (khong keo/bam xuyen)")
+	# Nút lấy art từ EventTheme (`button_normal`) chứ không dò theo tên file
+	var em: Node = root.get_node_or_null("EventManager")
+	var events: Array = []
+	if em != null and em.has_method("get_active_events"):
+		events = em.call("get_active_events")
+	var real: Array = []
+	for ev in events:
+		if ev != null and not _is_daily_event_test(ev):
+			real.append(ev)
+	_check(column.get_child_count() <= 6,
+		"Toi da 5 nut + Timer (dang %d con)" % column.get_child_count())
+	if real.is_empty():
+		_check(not column.visible, "Khong co event -> cot nut AN")
+		return
+	_check(column.visible, "Co event -> cot nut HIEN")
+	var theme: EventTheme = real[0].get("theme") as EventTheme
+	_check(theme != null and theme.button_normal != null,
+		"EventTheme khai bao art NUT `button_normal`")
+	_check(theme != null and theme.button_pressed != null,
+		"EventTheme khai bao art NUT `button_pressed`")
+	var first_button: TextureButton = null
+	for child in column.get_children():
+		if child is VBoxContainer and child.get_child_count() > 0:
+			first_button = child.get_child(0) as TextureButton
+			break
+	_check(first_button != null and first_button.texture_normal != null,
+		"Nut event dau tien co texture (khong null)")
+	if first_button != null and theme != null and theme.button_normal != null:
+		_check(first_button.texture_normal == theme.button_normal,
+			"Texture cua nut LAY TU theme (khong phai file roi)")
+	var area := section.map.get_parent() as Control
+	_check(area != null and area.offset_right <= -80.0,
+		"MapArea chua cho cot nut (offset_right = %.0f)" % (area.offset_right if area != null else 0.0))
 
-	var chips: Control = daily.get_node("Content/Chips") as Control
-	var leaf: Control = daily.get_node("Content/Background/Mask/Leaf") as Control
-	var date: Control = daily.get_node("Content/Text/DailyDate") as Control
-	var title: Control = daily.get_node("Content/Text/Title") as Control
-	var cta: Control = daily.get_node("Content/CtaButton") as Control
-	_check(chips != null and leaf != null and date != null and title != null and cta != null,
-		"The Daily gon du node (chips ? la lich ? nhan ngay ? tieu de ? CTA)")
-	if chips != null and date != null:
-		_check(chips.get_global_rect().end.y <= date.get_global_rect().position.y + 2.0,
-			"Dai CHIP nam TREN la lich (khong de len nhau)")
-	if date != null and title != null:
-		_check(date.get_global_rect().end.y <= title.get_global_rect().position.y + 2.0,
-			"Nhan ngay nam TREN dai tieu de")
-	if title != null and cta != null:
-		_check(title.get_global_rect().end.x <= cta.get_global_rect().position.x + 2.0,
-			"Tieu de va CTA khong de nhau")
-	var cta_label: Label = daily.get_node_or_null("Content/CtaButton/CtaLabel") as Label
-	if cta_label != null and cta != null:
-		var font: Font = cta_label.get_theme_font("font")
-		var fs: int = cta_label.get_theme_font_size("font_size")
-		var need := font.get_string_size(cta_label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
-		_check(need <= cta.size.x + 1.0, "Nhan CTA '%s' vua nut (%.0f <= %.0f)"
-			% [cta_label.text, need, cta.size.x])
-	var progress: Control = event.get_node_or_null("Content/Information/ProgressPanel") as Control
-	_check(progress == null or not progress.visible,
-		"The su kien gon an panel tien do/qua (dai duoi da chat)")
 
+## Event có phải Daily không (Daily đã về dock, không nằm trong cột nút)
+func _is_daily_event_test(ev: Object) -> bool:
+	var tid := str(ev.get("id"))
+	return tid == "daily" or tid.begins_with("daily_")
 
 func _section_chip(scene: MainScene, gm: Node, lm: Node) -> void:
 	print("[4] Duong lien + cong chuong...")

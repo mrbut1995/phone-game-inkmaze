@@ -46,7 +46,7 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "level_section", "dock_shop", "dock_ranking", "dock_badges", "dock_rules", "stamp_panel", "stamp_label", "header_anchor") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "level_section", "dock_shop", "dock_ranking", "dock_badges", "stamp_panel", "stamp_label", "header_anchor") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 logo = NodePath("TopBar/LogoBlock/Logo")
 profile_card = NodePath("TopBar/ProfileCard")
@@ -59,7 +59,6 @@ level_section = NodePath("Scaler/Body/Mid/LevelSection")
 dock_shop = NodePath("Scaler/Body/Dock/Row/DockShop")
 dock_ranking = NodePath("Scaler/Body/Dock/Row/DockRanking")
 dock_badges = NodePath("Scaler/Body/Dock/Row/DockBadges")
-dock_rules = NodePath("Scaler/Body/Dock/Row/DockRules")
 stamp_panel = NodePath("Scaler/Body/Mid/Left/Stamp")
 stamp_label = NodePath("Scaler/Body/Mid/Left/Stamp/Label")
 header_anchor = NodePath("Scaler/Body/TopBarAnchor")
@@ -172,13 +171,6 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
 
 [node name="DockBadges" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
-
-[node name="DockRules" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")

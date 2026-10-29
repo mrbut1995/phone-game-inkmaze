@@ -17,7 +17,8 @@ const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 const ICON_SHOP := "res://assets/images-png/dock/dock_shop.png"
 const ICON_RANK := "res://assets/images-png/dock/dock_ranking.png"
 const ICON_BADGES := "res://assets/images-png/dock/dock_badges.png"
-const ICON_RULES := "res://assets/images-png/dock/dock_rules.png"
+## Khoảng chừa đáy bản đồ (px) — lớn hơn DungeonPill + nửa cổng chương
+const MAP_BOTTOM_RESERVE := 130.0
 const ICON_DAILY := "res://assets/images-png/dock/dock_daily.png"
 const DOCK_BUTTON_SCENE := preload("res://nodes/main/dock_button.tscn")
 const EventButtonColumnScript := preload("res://scripts/nodes/main/event_button_column.gd")
@@ -28,7 +29,6 @@ const DOCK_COLORS := {
 	"shop": ["FF9F1C", "FFD58F", "B96400"],
 	"rank": ["3B8EEA", "A3CDF8", "1D5AA3"],
 	"badges": ["8E5BD9", "C9AEF2", "593596"],
-	"rules": ["22B59B", "8FE3D2", "13796A"],
 	"daily": ["E8504F", "F8B0AE", "9E2424"],
 }
 
@@ -176,7 +176,6 @@ func _setup_buttons() -> void:
 	_connect_pressed(layout.dock_shop, _on_shop_pressed)
 	_connect_pressed(layout.dock_ranking, _on_leaderboard_pressed)
 	_connect_pressed(layout.dock_badges, _on_archivement_pressed)
-	_connect_pressed(layout.dock_rules, _on_rules_pressed)
 	#_connect_pressed(layout.profile_card, _on_profile_pressed)
 	if layout.level_section != null:
 		_connect_pressed(layout.level_section.dungeon_pill, _on_dungeon_pressed)
@@ -185,7 +184,10 @@ func _setup_buttons() -> void:
 	_setup_dock_button(layout.dock_shop, ICON_SHOP, tr("STR_BTN_SHOP"), "shop")
 	_setup_dock_button(layout.dock_ranking, ICON_RANK, tr("STR_BTN_LEADERBOARD"), "rank")
 	_setup_dock_button(layout.dock_badges, ICON_BADGES, tr("STR_BTN_ARCHIVEMENT"), "badges")
-	_setup_dock_button(layout.dock_rules, ICON_RULES, tr("STR_MAIN_DOCK_RULES"), "rules")
+	# "Luật chơi" đã CHUYỂN sang màn Cài đặt ⇒ dock chỉ còn 4 nút (Cửa hàng · Xếp hạng · Thử thách · Danh hiệu).
+	# Nếu node DockRules chưa bị xoá khỏi scene thì ẩn tạm (xoá node + export `dock_rules` xong thì bỏ 2 dòng này).
+	if layout.get("dock_rules") != null:
+		(layout.get("dock_rules") as Control).visible = false
 	_ensure_dock_daily()
 	
 	if layout.profile_card != null:
@@ -335,12 +337,6 @@ func _on_archivement_pressed() -> void:
 	Nav.goto_archivement()
 
 
-## Luật chơi → màn DANH SÁCH bài hướng dẫn (bấm 1 bài mới vào màn CHI TIẾT)
-func _on_rules_pressed() -> void:
-	Sfx.play(Sfx.BTN_CLICK)
-	Nav.goto_tutorial_list()
-
-
 ## Thẻ HỒ SƠ mở POPUP hồ sơ cá nhân (không đổi màn hình)
 func _on_profile_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
@@ -407,6 +403,8 @@ func _refresh_event_buttons() -> void:
 	var section := layout.level_section if layout != null else null
 	if section != null and section.map != null:
 		_event_buttons.reserve_gutter(section.map.get_parent() as Control)
+		# Chừa đáy đủ cho DungeonPill (cao ~68px) ⇒ cổng chương / hàng node cuối không bị pill đè
+		section.map.bottom_reserve = maxf(section.map.bottom_reserve, MAP_BOTTOM_RESERVE)
 
 
 func _on_events_changed() -> void:

@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://assets/images-png/common/sheet_grid_16.png" id="g16"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/sheet_grid_64.png" id="g64"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/sheet_edge_top.png" id="etop"]
-[ext_resource type="Texture2D" path="res://assets/images-png/common/sheet_edge_bottom.png" id="ebot"]
+[ext_resource uid="uid://b0c1dbv0smdof" type="Texture2D" path="res://assets/images-png/common/sheet_grid_16.png" id="g16"]
+[ext_resource uid="uid://caxbmyvpx2nsp" type="Texture2D" path="res://assets/images-png/common/sheet_grid_64.png" id="g64"]
+[ext_resource uid="uid://dkeqixudkix8l" type="Texture2D" path="res://assets/images-png/common/sheet_edge_top.png" id="etop"]
+[ext_resource uid="uid://d4fx743ksq3wl" type="Texture2D" path="res://assets/images-png/common/sheet_edge_bottom.png" id="ebot"]
 
 [sub_resource type="StyleBoxFlat" id="sb_back2"]
 bg_color = Color(0.8235, 0.7922, 0.6902, 1)

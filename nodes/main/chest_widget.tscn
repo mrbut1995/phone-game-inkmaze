@@ -1,12 +1,12 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/main/chest_widget.gd" id="1_chest"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/reward_disc_off.png" id="2_ring"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/reward_disc_on.png" id="3_glow"]
+[ext_resource uid="uid://cienf0wpr5sk7" type="Texture2D" path="res://assets/images-png/level_selector/reward_disc_off.png" id="2_ring"]
+[ext_resource uid="uid://b0bk7i6fnsm3k" type="Texture2D" path="res://assets/images-png/level_selector/reward_disc_on.png" id="3_glow"]
 [ext_resource type="Texture2D" uid="uid://bhdewqbcltopn" path="res://assets/images-png/daily/chest_closed.png" id="4_chest"]
 [ext_resource type="Texture2D" uid="uid://b3fvm8sypownm" path="res://assets/images-png/daily/check_badge.png" id="5_check"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/badge_ready.png" id="6_ready"]
-[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_stat_stars.png" id="7_star"]
+[ext_resource uid="uid://pom5qjacol8r" type="Texture2D" path="res://assets/images-png/level_selector/badge_ready.png" id="6_ready"]
+[ext_resource uid="uid://bray4sykmnjpa" type="Texture2D" path="res://assets/images-png/icons/icon_stat_stars.png" id="7_star"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill"]
 bg_color = Color(1, 0.9922, 0.9686, 0.96)

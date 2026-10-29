@@ -22,6 +22,10 @@ extends Resource
 ## Dịch dọc cả 2 lớp art so với toạ độ vẽ gốc (âm = lên, dương = xuống)
 @export var art_offset_y: float = -25.0
 
+## Art NÚT event trên Main (thay cho thẻ) — PNG 192×192, hiển thị scale ~0.3
+@export var button_normal: Texture2D = null
+@export var button_pressed: Texture2D = null
+
 ## Màu nhấn chính (dùng cho tiến độ, chấm chip, điểm nhấn)
 @export var accent: Color = Color(0.847, 0.267, 0.267, 1.0)
 

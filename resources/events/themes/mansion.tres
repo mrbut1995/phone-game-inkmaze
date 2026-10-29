@@ -3,6 +3,8 @@
 [ext_resource uid="uid://b55pyixlchrvp" type="Texture2D" path="res://assets/images-png/events/haunted_house_card_background.png" id="1_lvks4"]
 [ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="2_182mh"]
 [ext_resource uid="uid://cfelief58leej" type="Texture2D" path="res://assets/images-png/events/haunted_house_card_frontground.png" id="2_y1edl"]
+[ext_resource uid="uid://3rrplqc3x56w" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_mansion_normal.png" id="btn_normal"]
+[ext_resource uid="uid://djkxdwq3llr5b" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_mansion_pressed.png" id="btn_pressed"]
 
 [resource]
 script = ExtResource("2_182mh")
@@ -25,3 +27,5 @@ cta_stroke = Color(0.18039216, 0.56078434, 0.4, 1)
 cta_text = Color(0.015686275, 0.15686275, 0.105882354, 1)
 chip_fill = Color(0, 0, 0, 1)
 chip_text = Color(0.7490196, 1, 0.8627451, 1)
+button_normal = ExtResource("btn_normal")
+button_pressed = ExtResource("btn_pressed")

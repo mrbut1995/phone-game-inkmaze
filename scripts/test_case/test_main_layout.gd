@@ -52,55 +52,30 @@ func _init() -> void:
 		"Hai chip phai nam ben trai nut Cai dat")
 	assert(profile_card.size.x >= 120.0, "The ho so phai du rong (%.0f)" % profile_card.size.x)
 
-	# 2. Khối sự kiện — header TRÊN carousel
+	# 2. Khối sự kiện — Main bản GỘP nay ẨN khối thẻ (header + carousel), event là CỘT NÚT icon
 	var header: Node = main_scene.layout.event_header
 	var carousel: Node = main_scene.layout.event_carousel
 	assert(header != null, "Phai co EventHeader")
 	assert(carousel != null, "Phai co EventCarousel")
-	assert(header.global_position.y < carousel.global_position.y,
-		"Tieu de khoi su kien phai nam TREN carousel")
-	var preview_carousel := carousel as EventCarousel
-	assert(preview_carousel != null and preview_carousel.show_all_events_for_preview,
-		"Main bat che do xem thu tat ca EventData")
-	if preview_carousel != null:
-		var em := root.get_node_or_null("EventManager")
-		var expected_event_count := (em.call("get_all_events_for_preview") as Array).size() if em != null else 0
-		assert(preview_carousel.get_displayed_event_count() == expected_event_count,
-			"Carousel hien thi du %d EventData" % expected_event_count)
-		var badge_label := header.get_node_or_null("Badge/CountLabel") as Label
-		assert(badge_label != null and badge_label.text == str(expected_event_count),
-			"Badge dem dung so EventData dang hien")
-		# Ban GOP dung the GON (EventCardCompact/DailyCardCompact) ? tim theo LOP, khong theo ten node
-		var daily_first: Control = null
-		var first_event_card: Control = null
-		for child in carousel.get_node("ScrollContainer/HBox").get_children():
-			if child is DailyCard and daily_first == null:
-				daily_first = child as Control
-			elif child is EventCard and first_event_card == null:
-				first_event_card = child as Control
-		assert(daily_first != null, "The DAILY dung lop DailyCard (tach khoi EventCard)")
-		assert(daily_first.get_node_or_null("Content/Text/DailyDate") != null,
-			"DailyCard co la lich (Content/Text/DailyDate)")
-		assert(first_event_card != null, "Carousel co the event de kiem tra thu tu lop")
-		assert(first_event_card.get_node_or_null("Content/Text/DailyDate") == null,
-			"EventCard KHONG con la lich Daily (da tach sang DailyCard)")
-		if first_event_card != null:
-			var event_background := first_event_card.get_node("Content/Background") as Control
-			var event_text := first_event_card.get_node("Content/Text") as Control
-			var event_chips := first_event_card.get_node("Content/Chips") as Control
-			var event_information := first_event_card.get_node("Content/Information") as Control
-			assert(event_text.z_index > event_background.z_index,
-				"Title va ngay Daily nam tren lop artwork")
-			assert(event_chips.z_index > event_background.z_index,
-				"Chip chu nam tren lop artwork")
-			assert(event_information.z_index > event_background.z_index,
-				"Thong tin tien do va CTA nam tren lop artwork")
-			for title_path in ["Content/Text/Title/Title1", "Content/Text/Title/Title2"]:
-				var title_label := first_event_card.get_node(title_path) as Label
-				# Th? G?N d?ng c? ch? 13 n?n vi?n m?ng (3px) l? ??; c?t l? title_outline
-				# c?a theme resource C? hi?u l?c (outline_size > 0).
-				assert(title_label.get_theme_constant("outline_size") > 0,
-					"%s co outline de title_outline trong theme resource co hieu luc" % title_path)
+	assert(not (header as Control).visible and not (carousel as Control).visible,
+		"Khoi the event (header + carousel) phai AN tren Main — event la cot nut icon")
+	var section_for_events: Node = main_scene.layout.level_section
+	var event_column: Node = section_for_events.get_node_or_null("EventButtons") if section_for_events != null else null
+	assert(event_column != null, "LevelSection phai co cot nut `EventButtons`")
+	# Cot nut event: toi da 5 nut, art lay tu EventTheme
+	assert(event_column.get_child_count() <= 6,
+		"Cot nut event toi da 5 nut + Timer (dang %d con)" % event_column.get_child_count())
+	var em_node := root.get_node_or_null("EventManager")
+	var active_events: Array = em_node.call("get_active_events") if em_node != null and em_node.has_method("get_active_events") else []
+	# Bo qua event Daily (theme `daily` khong co art NUT ? Daily da ve dock)
+	var ev_theme: EventTheme = null
+	for ev in active_events:
+		var th: EventTheme = ev.get("theme") as EventTheme
+		if th != null and th.button_normal != null:
+			ev_theme = th
+			break
+	if ev_theme != null:
+		assert(ev_theme.button_pressed != null, "EventTheme phai khai bao `button_pressed`")
 
 	# 3. KH?I B?N ?? (b?n G?P ? m?n Levels ?? g?, b?n ?? n?m ngay trong Main)
 	var section: LevelSection = main_scene.layout.level_section
@@ -122,7 +97,7 @@ func _init() -> void:
 	if dock_row == null:
 		dock_row = dock
 	assert(dock_row.get_child_count() == 4, "Dock phai co dung 4 nut, dang %d" % dock_row.get_child_count())
-	var names := ["DockShop", "DockRanking", "DockBadges", "DockRules"]
+	var names := ["DockShop", "DockRanking", "DockDaily", "DockBadges"]
 	for i in names.size():
 		var btn := dock_row.get_node_or_null(names[i]) as Control
 		assert(btn != null, "Dock phai co nut %s" % names[i])
@@ -138,55 +113,17 @@ func _init() -> void:
 	assert(main_scene.ui("Modes") == null, "KHONG con khoi 2 the che do (ModeCard da xoa)")
 	assert(main_scene.ui("Archivement") == null, "KHONG con nut Danh hieu lon cu")
 
-	# 6. Thẻ sự kiện có đúng cấu trúc con + dùng node khai sẵn
-	# (bản GỘP dùng thẻ GỌN nên tìm theo LỚP, không theo tên node "EventCard")
-	var card_node: Node = null
-	for child in carousel.get_node("ScrollContainer/HBox").get_children():
-		if child is EventCard and not (child is DailyCard):
-			card_node = child
-			break
-	assert(card_node != null, "Carousel phai instantiate it nhat 1 EventCard")
-	assert(card_node is EventCard and not (card_node is DailyCard),
-		"EventCard va DailyCard la 2 lop rieng")
-	if card_node != null:
-		for child in [
-			"Content/Background/ContentMask/BgGradient",
-			"Content/Background/ContentMask/BackArt",
-			"Content/Background/ContentMask/FrontArt",
-			"Content/Chips/ThemeChip",
-			"Content/Chips/TimerChip",
-			"Content/Information/ProgressPanel",
-			"Content/Information/CtaButton",
-		]:
-			assert(card_node.get_node_or_null(child) != null, "EventCard phai co node %s" % child)
-
-	# 7. Thẻ DAILY phải mở THẲNG màn Daily (`scenes/daily.tscn`), KHÔNG qua màn chi tiết Event
-	# (Daily là event ẢO: không có file .tres và không có màn chi tiết riêng).
-	var daily_card: DailyCard = null
-	for child in carousel.get_node("ScrollContainer/HBox").get_children():
-		if child is DailyCard:
-			daily_card = child as DailyCard
-			break
-	assert(daily_card != null, "Carousel phai co the Daily (ghim dau)")
-	for daily_child in [
-		"Content/Background/BackArt",
-		"Content/Chips/ThemeChip",
-		"Content/Text/DailyDate/Month",
-		"Content/Text/DailyDate/Day",
-		"Content/Text/DailyDate/Weekday",
-		"Content/Stars/Row/Value",
-		"Content/CtaButton",
-	]:
-		assert(daily_card.get_node_or_null(daily_child) != null,
-			"DailyCard phai co node %s" % daily_child)
-	# Bấm thẻ = phát signal như cú chạm thật (DailyCard -> EventCarousel -> MainScene)
-	daily_card.card_pressed.emit(&"daily")
-	for i in 3:
-		await process_frame
-	var scene_manager := root.get_node_or_null("SceneManager")
-	var now_path := str(scene_manager.call("current_scene_path")) if scene_manager != null else ""
-	assert(now_path == "res://scenes/daily.tscn",
-		"Bam the Daily phai mo scenes/daily.tscn (dang '%s')" % now_path)
+	# 7. Nut THU THACH (Daily) o dock mo thang scenes/daily.tscn
+	var dock_daily: Node = dock_row.get_node_or_null("DockDaily")
+	assert(dock_daily != null, "Dock phai co nut Thu thach (Daily)")
+	if dock_daily != null:
+		(dock_daily as BaseButton).pressed.emit()
+		for i in 3:
+			await process_frame
+		var sm := root.get_node_or_null("SceneManager")
+		var now_path := str(sm.call("current_scene_path")) if sm != null else ""
+		assert(now_path == "res://scenes/daily.tscn",
+			"Bam nut Thu thach phai mo scenes/daily.tscn (dang '%s')" % now_path)
 
 	print("\n[SUCCESS] Bo cuc Main Screen moi dung: thanh tren · su kien · 2 the che do · dock 4 nut.\n")
 	main_scene.queue_free()

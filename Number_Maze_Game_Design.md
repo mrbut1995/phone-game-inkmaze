@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Tài liệu** | Number Maze — Game Design Document| **Phiên bản** | v2.57 — 2026-10-28 (**BẤM ĐƯỢC NÚT MÀN**: node gốc bố cục Main để `mouse_filter = STOP` nên nuốt cú bấm, `TextureButton2D` (Node2D) không nhận được sự kiện — đặt `IGNORE` cho `Portrait`/`Landscape` + test bấm thật 68 → 71; tiếp theo là **GIAO DIỆN V9 CHO MAIN BẢN GỘP (§13.29)**: mọi chương nối thành **ĐƯỜNG LIỀN** có **CỔNG VÒM** chắn giữa 2 chương — cổng `LOCKED`/`READY`/`OPEN` (ổ khoá + `own/need`, chữ `MỞ`, animation 2 cánh mở ra rồi bản đồ trượt sang chương mới); chương còn khoá thì đường **CẮT** ở cổng nên không cuộn qua và không thấy màn phía sau; bỏ chip `‹ CHƯƠNG n ›` nổi (nhãn nằm dưới cửa). Nút màn đổi sang bộ **nhạt v8** (10 ảnh `lv_node_*`), đường nối xám-xanh mảnh, `bottom_reserve 72` để pill Dungeon không che hàng nút đầu. **Dock nền NAVY `#1B4965`** + icon glyph trắng + chữ trắng; chấm trang dời sát phải. Kèm **SVG nguồn** cho 14 asset mới (`assets/images-png/**` bị gitignore) — regenerte bằng `tools/svg_to_png.py` vẫn ra đúng giao diện, IoU 0,98–0,99) |
+| **Tài liệu** | Number Maze — Game Design Document| **Phiên bản** | v2.58 — 2026-10-29 (**LUẬT CHƠI SANG CÀI ĐẶT + EVENT DÙNG ART NÚT (§13.30)**: dock Main còn **4 nút** (Cửa hàng · Xếp hạng · Thử thách · Danh hiệu); nút **LUẬT CHƠI** chuyển vào khối Actions của **Cài đặt** (2×2 grid, icon `ic_rules.svg`), Back ở Danh sách hướng dẫn quay về **đúng màn đã mở** (`Nav.go_back()` lùi theo lịch sử). `EventTheme` có thêm **`button_normal`/`button_pressed`** — 15/15 theme được gắn art nút bằng `tools/patch_event_theme_buttons.py`, cột nút event đọc art **từ resource** thay vì dò tên file. Kèm: sinh lại 10 SVG nút màn **nhạt v8** bị hồi quy. Trước đó: **BẤM ĐƯỢC NÚT MÀN**: node gốc bố cục Main để `mouse_filter = STOP` nên nuốt cú bấm, `TextureButton2D` (Node2D) không nhận được sự kiện — đặt `IGNORE` cho `Portrait`/`Landscape` + test bấm thật 68 → 71; tiếp theo là **GIAO DIỆN V9 CHO MAIN BẢN GỘP (§13.29)**: mọi chương nối thành **ĐƯỜNG LIỀN** có **CỔNG VÒM** chắn giữa 2 chương — cổng `LOCKED`/`READY`/`OPEN` (ổ khoá + `own/need`, chữ `MỞ`, animation 2 cánh mở ra rồi bản đồ trượt sang chương mới); chương còn khoá thì đường **CẮT** ở cổng nên không cuộn qua và không thấy màn phía sau; bỏ chip `‹ CHƯƠNG n ›` nổi (nhãn nằm dưới cửa). Nút màn đổi sang bộ **nhạt v8** (10 ảnh `lv_node_*`), đường nối xám-xanh mảnh, `bottom_reserve 72` để pill Dungeon không che hàng nút đầu. **Dock nền NAVY `#1B4965`** + icon glyph trắng + chữ trắng; chấm trang dời sát phải. Kèm **SVG nguồn** cho 14 asset mới (`assets/images-png/**` bị gitignore) — regenerte bằng `tools/svg_to_png.py` vẫn ra đúng giao diện, IoU 0,98–0,99) |
 | **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
 | **Cập nhật tính năng** | 2026-10-10: số lượt Skip/Eraser/Hint được lưu dùng chung toàn game, badge `PanelLimit` hiện số dư, và Debug Console cho phép chỉnh số lượng. |
 | **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
@@ -3077,8 +3077,66 @@ chặn bấm vẫn chặn: `ChapterLockSheet` có `Dim` là `Button` STOP phủ 
 + bấm chỗ trống ⇒ không chọn. Toạ độ cú bấm phải nhân `root.get_final_transform()` (bản NGANG có `content_scale`
 0,587) nếu không cú bấm rơi ngoài cửa sổ.
 
-**Việc chưa làm (đã báo user, không tự quyết).** Skip ở màn cuối chương (`next_level_in_chapter() == -1`) hiện về
-Main — nên vào thẳng chương sau khi cổng đã mở, hay cuộn tới cổng? Chương 1 không có cổng ⇒ không có nhãn "CHƯƠNG 1".
+**Việc chưa làm (đã báo user, không tự quyết).** Skip ở màn cuối chương (`next_level_in_chapter() == -1`) hiện về Main — nên vào thẳng chương sau khi cổng đã mở, hay cuộn tới cổng? Chương 1 không có cổng ⇒ không có nhãn "CHƯƠNG 1".
+
+---
+
+### 13.30. "LUẬT CHƠI" SANG CÀI ĐẶT + EVENT DÙNG ART NÚT TỪ THEME (v2.58, 2026-10-29)
+
+**Yêu cầu (user):** *"Tôi muốn update lại event resource và handle event — Bạn hãy follow this instruction"*
+(`06_LUAT_CHOI_SANG_SETTINGS_VA_EVENT_BUTTON.md`, nhánh **`portrait_landscape_feature`**).
+
+**1. "Luật chơi" rời dock Main → nút trong Cài đặt.** Dock Main còn **4 nút**: Cửa hàng · Xếp hạng · Thử thách
+(Daily) · Danh hiệu — đúng như mockup. Nút `Rules` (`btn_rules`) nằm trong khối `Actions` của màn Cài đặt (cả 2
+bố cục), nhãn dùng khoá có sẵn **`STR_MAIN_DOCK_RULES`**, icon mới `assets/images/settings/ic_rules.svg` (khuôn
+24×24 stroke `#2F77A5` như `ic_book`/`ic_info`). Bấm ⇒ `Nav.goto_tutorial_list()`.
+
+| Việc | Chi tiết |
+|---|---|
+| Dock | Xoá node `DockRules` khỏi **cả hai** `scenes/layout/{portrait,landscape}/main.tscn` (+ `"dock_rules"` trong `node_paths`, + dòng `dock_rules = NodePath(...)`); xoá `@export var dock_rules` trong `main_layout.gd`; xoá `ICON_RULES` + `_on_rules_pressed` + ô `"rules"` trong `DOCK_COLORS` của `main.gd` |
+| Cài đặt | `settings_layout.gd` thêm `@export var btn_rules`; 2 `settings.tscn` thêm node `Rules` (cùng kiểu `Guide`/`Credits`) + `btn_rules` trong `node_paths`; `settings.gd` thêm `ensure_signal(...)` + `_on_rules_pressed()` |
+| `Actions` | Đổi `HBoxContainer` → **`GridContainer` `columns = 2`** ở cả 2 bố cục: 4 nút xếp 2×2 nên nhãn dài ("Khôi phục cài đặt mặc định", "LUẬT CHƠI") **không còn bị cắt** (5 nút trên 1 hàng thì cắt hết) |
+| Back | `Nav.go_back()` (mới) = lùi theo lịch sử `ScreenManager`; **bỏ trước** các mục trùng màn hiện tại để Back không "quay lại chính nó". `tutorial_list.gd` dùng nó cho `_on_back_pressed` + `close_from_back` ⇒ vào từ Main thì về Main, vào từ **Cài đặt** thì về Cài đặt |
+
+**2. Event dùng art NÚT khai báo trong `EventTheme` (không dò tên file).**
+`scripts/resources/event_theme.gd` thêm `button_normal` / `button_pressed` (PNG 192×192, hiển thị ~60 px).
+`tools/patch_event_theme_buttons.py` gắn 2 `ext_resource` + 2 dòng cho **15/15 theme** trong
+`resources/events/themes/*.tres` (chỉ `daily.tres` bị bỏ qua — Daily đã về dock, không nằm trong cột nút; script
+báo `THIẾU icon` cho nó là **đúng**). `event_button_column.gd` (bản mới, **bỏ `class_name`** vì `main.gd` nạp
+bằng `preload`) đọc `event.theme.button_normal/pressed`, không có mới dò `event_btn_<theme>_<state>.png`, cuối
+cùng mới dùng icon dự phòng.
+
+Công cụ `patch_event_theme_buttons.py` được sửa 1 chỗ để chạy được trên Windows: `sys.stdout.reconfigure(
+encoding="utf-8", errors="replace")` — console mặc định `cp1252` làm script **crash giữa đường** khi in tiếng Việt.
+
+**3. Khối thẻ event trên Main = ĐÃ ẨN (từ trước), test phải phản ánh đúng.** `main.gd` ẩn `EventHeader` +
+`EventCarousel`, thêm `EventButtons` (cột nút, tối đa 5) vào `LevelSection` và đăng ký nó vào `map.blockers`
++ `reserve_gutter()` để bản đồ co lại 88 px. Vì vậy các test cũ kiểm "header TRÊN carousel", "có thẻ
+EventCardCompact/DailyCardCompact trong carousel", "chấm phân trang trong DotsSlot" **không còn đúng**:
+
+| Test | Trước | Sau |
+|---|---|---|
+| `test_main_merge` | 62 check, kiểm thẻ gọn trong carousel | **70 check**: header/carousel phải **ẨN**; cột `EventButtons` tồn tại + nằm trong `map.blockers`; nút lấy `texture_normal` **từ theme**; `MapArea.offset_right ≤ -80` |
+| `test_main_layout` | assert header nằm trên carousel | assert 2 khối đó **ẩn**, có cột nút, và bấm nút **Thử thách** ở dock mở `scenes/daily.tscn` |
+| `test_tutorial_flow` | bấm `main._on_rules_pressed()` | mở **Cài đặt** → bấm `btn_rules` ⇒ Danh sách; Back ở Danh sách ⇒ **Cài đặt** (4 → **4/84**, giữ nguyên 4 lỗi cũ ở mục 4/5) |
+| `test_main_layout` (dock) | `DockRules` | `DockDaily` |
+
+**Kiểm chứng.** `--import` + boot headless + chạy thật `opengl3` **540×960 và 960×540**: 0 `SCRIPT ERROR`.
+`test_main_merge` **70/70** · `test_main_layout` **SUCCESS** · `test_full_flow` **SUCCESS** ·
+`test_event_manager` **225/225** · `test_life_points` **126/126**; `test_layout_bindings` 5 · `test_localization`
+13 · `test_ui_scenes` 10 · `test_chapters` 8 · `test_shop` 6 · `test_tutorial_flow` 4 **= baseline**.
+Ảnh chụp: Main dọc/ngang dock **4 nút màu** (không còn LUẬT CHƠI) + cột nút event bên phải kèm "Còn N ngày";
+Cài đặt dọc/ngang có nút **LUẬT CHƠI** xếp 2×2, nhãn không bị cắt.
+
+⚠️ **Hồi quy đã sửa:** khi kiểm baseline bằng `git stash --include-untracked`, bộ art nút màn **nhạt v8** bị dựng
+lại thành bộ navy cũ (PNG sinh từ SVG). Đã **sinh lại 10 `assets/images/level_selector/lv_node_*.svg`** theo
+khuôn v8 (mặt `#FFFDF7`/`#FFF3D6`/…, viền `#C3D3DE`, gờ sáng 1 px, `pressed` không có đáy và tụt 10 px, `halo`
+alpha 71) rồi chạy `tools/svg_to_png.py --only lv_node` — màu mặt nút khớp lại đúng bảng màu v8.
+
+**Việc chưa làm.** `Guide` trong Cài đặt vẫn là nút **chết** (`push_warning`) và **trùng chức năng** với nút
+`LUẬT CHƠI` mới — nên xoá `Guide` (hoặc gán `Guide` = `_on_rules_pressed`) khi user đồng ý.
+`--drop-card-art` (B4) **chưa chạy**: màn chi tiết Event vẫn dùng thẻ nên `back_art`/`front_art`/`art_offset_y`
+phải giữ nguyên.
 
 ---
 
