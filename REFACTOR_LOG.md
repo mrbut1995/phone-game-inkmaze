@@ -550,10 +550,10 @@ nên cách ánh xạ ô polyomino vẫn nằm ở `BoardView`.
 
 | File | Dòng | Đã tách | Còn lại (gợi ý đợt sau) |
 |---|---|---|---|
-| `scripts/ui/game/board.gd` | 2005 | `BoardCellsView` | input (kéo/chạm/neo) · dựng tường + `reveal_*` · hiệu ứng mực (tip/tail/sample) · cụm `NoMovesOverlay`/shake |
-| `scripts/ui/screens/debug.gd` | 1192 | — | tách theo tab (`_build_*` + `_*` action) |
-| `scripts/autoload/game_manager.gd` | 1026 | 6 store | `prepare_daily_*`/`prepare_mode_run` (Daily & Special) · `start_*` · `export/import_progress` |
-| `scripts/core/controllers/game_controller.gd` | 1004 | 7 helper | dùng công cụ (undo/hint/submit) · HUD context (`_update_hud`) · vòng đời ván (`_start_floor`/`_complete_floor`) |
+| `scripts/ui/game/board.gd` | 1824 | `BoardCellsView` · `PaperGeometry` | input (kéo/chạm/neo) · dựng tường + `reveal_*` · hiệu ứng mực (tip/tail/sample) · cụm `NoMovesOverlay`/shake |
+| `scripts/ui/screens/debug.gd` | 1007 | `DebugData` | tách theo tab (`_build_*` + `_*` action) |
+| `scripts/autoload/game_manager.gd` | 1000 | 7 phần | `prepare_daily_*`/`prepare_mode_run` (Daily & Special) · `start_*` · `export/import_progress` |
+| `scripts/core/controllers/game_controller.gd` | 971 | 8 phần | dùng công cụ (undo/hint/submit) · HUD context (`_update_hud`) · vòng đời ván (`_start_floor`/`_complete_floor`) |
 | `scripts/ui/screens/shop.gd` · `level_map.gd` · `achievement.gd` · `PlayerProfileManager.gd` | 911 · 860 · 745 · 741 | — | UI / logic / persistence (§8.3 gợi ý) |
 
 ### Phase 5 (§8.3) — đợt 12: TRA CỨU CHẾ ĐỘ/ĐỘ KHÓ → `LevelCatalog`
@@ -578,22 +578,46 @@ cho popup thắng. `GameController._complete_daily_missions()` chỉ còn guard 
 **Kiểm chứng 12 + 13:** full suite **7 PASS / 13 FAIL** y hệt baseline; `test_daily` **4/100** (không đổi) ·
 `test_debug_modes` **64/64** PASS.
 
+### Phase 5 (§8.3) — đợt 14: TRUY VẤN CHỈ-ĐỌC CỦA MÀN DEBUG → `DebugData`
+
+`scripts/ui/screens/debug_data.gd` (~135 dòng, toàn `static`, chỉ đọc qua `Svc`):
+Sao Daily hôm nay / tối đa · Sao phần CHƠI · mốc tháng kế tiếp · số mốc đã nhận · trạng thái hôm qua ·
+trạng thái Ads · danh sách + cờ + số bài tutorial đã xong.
+
+`debug.gd` bỏ 12 hàm trung gian (`_daily_*`, `_next_milestone_text`, …, `_tutorial_*`), gọi thẳng
+`DebugData.*` tại 8 chỗ ⇒ **1193 → 1007 dòng**. Không đụng phần dựng UI.
+
+### Phase 5 (§8.3) — đợt 15: HÌNH HỌC TỜ GIẤY → `PaperGeometry`
+
+`scripts/ui/game/paper_geometry.gd` (~110 dòng, thuần toán, nhận ảnh/Panel/số đo qua tham số):
+`sheet_tex_rect(img, tex_px)` (vùng giấy đặc, probe 128×128) · `margin_line_x(img, tex_px)` (vạch lề đỏ) ·
+`nine_map(tex_v, horizontal, panel, tex_px)` (luật NinePatch) ·
+`inner_rect(panel, sheet, tex_px, margin_x, inset, avoid_margin, gap, fallback)`.
+
+`board.gd` giữ nguyên 3 hàm mỏng `_read_panel_insets` · `_nine_map` · `panel_inner_rect` (uỷ thác) nên
+`test_layout_bindings` / `test_ui_scenes` vẫn gọi được như cũ ⇒ **2006 → 1824 dòng**.
+
+**Kiểm chứng 14 + 15:** full suite **7 PASS / 13 FAIL** với số check **y hệt** baseline
+(`layout_bindings` 5/84 · `level_special_modes` 36/141 · `challenge_mode` 3/78 · `ui_scenes` 10/139 …);
+`test_debug_modes` 64/64 PASS · `test_instruction` PASS · `test_game_scene_integration` PASS.
+
 ### Vì sao DỪNG ở đây cho `debug.gd` và `board.gd` (phân tích, không phải bỏ sót)
 
 Hai file này **không thể tách tiếp bằng cách di chuyển hàm** như 13 đợt vừa rồi — cần đổi thiết kế, tức là
 vượt khỏi phạm vi “refactor không đổi hành vi” của một lượt:
 
-- **`scripts/ui/screens/debug.gd` (1192)** — mọi `_build_*()` gọi trực tiếp helper dựng UI của chính màn
+- **`scripts/ui/screens/debug.gd` (1007)** — phần DỮ LIỆU đã tách xong (đợt 14). Phần còn lại: mọi `_build_*()` gọi trực tiếp helper dựng UI của chính màn
   (`_add_section` · `_add_value` · `_add_action` · `_add_toggle`) và các action gọi lại `_build()`.
   Tách theo tab ⇒ phải truyền màn hình vào helper (gọi chuỗi `call("_add_action")`) hoặc đổi sang **dựng UI
   theo dữ liệu** (mô tả tab bằng Array[Dictionary], một builder chung render). Cách sau mới đúng tinh thần,
   nhưng là viết lại ~1200 dòng UI ⇒ cần lượt riêng + review thị giác.
-- **`scripts/ui/game/board.gd` (2005)** — input (kéo/chạm/neo), dựng tường + `reveal_*`, hiệu ứng mực
+- **`scripts/ui/game/board.gd` (1824)** — phần TOÁN HÌNH HỌC đã tách xong (đợt 15). Phần còn lại:
+  input (kéo/chạm/neo), dựng tường + `reveal_*`, hiệu ứng mực
   (tip/tail/sample) và vẽ ô đều đọc/ghi **cùng một bộ ~35 field** (`_step`, `_cell_rects`, `_col_center_x`,
   `_wall_segments`, `_cursor`, `_tip`, `_pen_down`…). Tách rời cần **gom state thành object**
   (`BoardMetrics` · `BoardWalls` · `BoardPen`) rồi truyền tham chiếu — đúng hướng §8.3 nhưng phải có
   **probe đo hình ảnh trước/sau** (như đã làm với màn Main) để chứng minh không đổi pixel.
-  Đã tách được phần an toàn nhất (`BoardCellsView` — đợt 11).
+  Đã tách được 2 phần an toàn nhất: `BoardCellsView` (đợt 11) và `PaperGeometry` (đợt 15).
 
 ⇒ Đề xuất lượt sau: (a) `board.gd` tách `BoardMetrics` (layout/ô/cạnh) + `BoardWalls`, kèm probe A/B;
 (b) `debug.gd` chuyển sang builder dữ liệu; (c) `shop.gd` · `level_map.gd` · `achievement.gd` ·
