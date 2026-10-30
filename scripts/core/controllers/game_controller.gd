@@ -954,48 +954,15 @@ func _on_floor_bonus_sfx_timeout() -> void:
 ## - variant "special"   (Daily kiểu cũ, Debug) : tính như THỬ THÁCH.
 ## Trả về Dictionary mô tả kết quả (RỖNG nếu ván này không phải ván Daily).
 func _complete_daily_missions(_mission_rows: Array) -> Dictionary:
-	var gm: Variant = Svc.game()
-	var dm: Variant = Svc.daily()
-	if gm == null or dm == null or _is_debug_run():
+	if _is_debug_run():
 		return {}
-	var variant := str(gm.get("daily_variant"))
-	if variant.is_empty():
-		return {}
-
-	var day := maxi(int(gm.get("selected_daily_day")), 1)
-	var is_challenge := variant != "classic"
-	var stars := int(dm.call("get_day_challenge_stars" if is_challenge else "get_day_play_stars", day))
-	if is_challenge:
-		# Luật Special không có nhiệm vụ ⇒ hoàn thành ván là trọn 3 Sao.
-		stars = DailyManager.CHALLENGE_STARS_MAX
-	elif mission_controller != null:
-		stars = clampi(mission_controller.stars(), 0, DailyManager.PLAY_STARS_MAX)
-	var gained := int(dm.call("record_daily_win", day, is_challenge, stars))
-	# Đánh dấu "vừa thắng ván Daily" để màn Daily chạy hiệu ứng Sao trên đúng thẻ vừa chơi
-	if stars > 0:
-		gm.set("daily_celebrate", {
-			"day": day, "challenge": is_challenge, "stars": stars, "gained": gained,
-		})
-
+	var mission_stars := mission_controller.stars() if mission_controller != null else 0
 	var mode_id := ""
 	var mode_name := ""
 	if game_mode_controller != null and game_mode_controller.game_mode != null:
 		mode_id = game_mode_controller.game_mode.mode_id
 		mode_name = game_mode_controller.game_mode.mode_name
-	return {
-		"day": day,
-		"variant": variant,
-		"challenge": is_challenge,
-		"mode_id": mode_id,
-		"mode_name": mode_name,
-		"stars": stars,
-		"stars_gained": gained,
-		"day_stars": int(dm.call("get_day_stars", day)),
-		"stars_max": DailyManager.DAY_STARS_MAX,
-		"month_stars": int(dm.call("get_month_stars")),
-		"month_goal": int(dm.call("month_star_goal")),
-		"completed_day": bool(dm.call("is_completed", day)),
-	}
+	return DailyRunReporter.complete(mission_stars, mode_id, mode_name)
 
 
 ## Ván hiện tại có phải ván TEST mở từ Debug Console? (không ghi tiến trình)
