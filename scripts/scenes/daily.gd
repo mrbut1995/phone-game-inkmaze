@@ -184,7 +184,7 @@ func _wire_buttons() -> void:
 		_daily.connect("daily_changed", _refresh)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
-## Cập nhật số Xu trên ví (ví dùng chung `ArchivementManager.coins` với Main Screen)
+## Cập nhật số Xu trên ví (ví dùng chung `AchievementManager.coins` với Main Screen)
 func _refresh_wallet() -> void:
 	if layout != null and layout.coin_chip != null:
 		layout.coin_chip.set_value(Shop.coins())

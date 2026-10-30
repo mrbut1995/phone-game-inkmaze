@@ -20,8 +20,8 @@ const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
-## Sổ tay thành tựu (danh hiệu) — xem scripts/scenes/archivement.gd
-const SCENE_ARCHIVEMENT := "res://scenes/archivement.tscn"
+## Sổ tay thành tựu (danh hiệu) — xem scripts/scenes/achievement.gd
+const SCENE_ACHIEVEMENT := "res://scenes/achievement.tscn"
 ## Bảng xếp hạng — xem scripts/scenes/ranking.gd
 const SCENE_RANKING := "res://scenes/ranking.tscn"
 ## Màn CỬA HÀNG — xem scripts/scenes/shop.gd
@@ -169,8 +169,8 @@ func goto_settings() -> void:
 	change_scene(SCENE_SETTINGS)
 
 
-func goto_archivement() -> void:
-	change_scene(SCENE_ARCHIVEMENT)
+func goto_achievement() -> void:
+	change_scene(SCENE_ACHIEVEMENT)
 
 
 func goto_ranking() -> void:

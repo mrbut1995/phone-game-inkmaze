@@ -114,7 +114,7 @@ func _init() -> void:
 	assert(main_scene.ui("DailyMission") == null, "KHONG con the Daily rieng")
 	assert(main_scene.ui("GameMode") == null, "KHONG con khoi GameMode cu")
 	assert(main_scene.ui("Modes") == null, "KHONG con khoi 2 the che do (ModeCard da xoa)")
-	assert(main_scene.ui("Archivement") == null, "KHONG con nut Danh hieu lon cu")
+	assert(main_scene.ui("Achievement") == null, "KHONG con nut Danh hieu lon cu")
 
 	# 7. Nut THU THACH (Daily) o dock mo thang scenes/daily.tscn
 	var dock_daily: Node = dock_row.get_node_or_null("DockDaily")

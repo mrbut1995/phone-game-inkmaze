@@ -41,7 +41,7 @@ func _init() -> void:
 	var saved_floor := int(gm.get("start_floor_override"))
 	var today := int(dm.call("get_today"))
 	var today_mask := int(dm.call("get_day_mission_mask", today))
-	var arch: Node = root.get_node_or_null("ArchivementManager")
+	var arch: Node = root.get_node_or_null("AchievementManager")
 	var saved_seconds := int(arch.call("stat_value", "play_seconds")) if arch != null else 0
 	var saved_tutorial: Dictionary = (gm.get("tutorial_progress") as Dictionary).duplicate()
 
@@ -194,7 +194,7 @@ func _section_4_no_progress(gm: Node, dm: Node, today: int, mask_before: int, ar
 
 		if arch != null:
 			var seconds_before := int(arch.call("stat_value", "play_seconds"))
-			controller.call("_report_to_archivements", true, 12.0)
+			controller.call("_report_to_achievements", true, 12.0)
 			_check(int(arch.call("stat_value", "play_seconds")) == seconds_before,
 				"Van TEST: khong ghi so lieu vao So tay thanh tuu")
 			_check(str(gm.get("current_mode")) == "minesweeper", "Mode trong GameManager khong bi doi")

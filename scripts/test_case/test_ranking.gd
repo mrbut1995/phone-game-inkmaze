@@ -36,7 +36,7 @@ func _init() -> void:
 	assert(manager != null, "Autoload RankingManager phai ton tai")
 	assert(manager.has_method("entries"), "RankingManager phai co entries()")
 
-	var arch: Node = root.get_node_or_null("ArchivementManager")
+	var arch: Node = root.get_node_or_null("AchievementManager")
 	var stats: Dictionary = arch.call("export_progress") if arch != null else {}
 
 	_section_1_boards(manager)

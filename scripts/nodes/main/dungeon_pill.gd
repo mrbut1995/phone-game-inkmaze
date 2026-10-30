@@ -12,7 +12,7 @@ extends Button
 @export var lbl_floor: Label = null
 
 
-## `best_floor` = tầng kỷ lục (Archivement.stat_value("dungeon_best_floor"))
+## `best_floor` = tầng kỷ lục (Achievement.stat_value("dungeon_best_floor"))
 func setup(best_floor: int) -> void:
 	if lbl_title != null:
 		lbl_title.text = tr("STR_MODE_DUNGEON_TITLE").to_upper()

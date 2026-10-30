@@ -9,7 +9,7 @@ extends Node
 ##   tool  · DỤNG CỤ    — vật phẩm tiêu hao mua bằng Xu (undo · gợi ý · ...)
 ##   coin  · NẠP XU     — gói nạp tiền thật (IAP) + gói xoá quảng cáo
 ##
-## - Ví Xu dùng CHUNG với Sổ tay thành tựu (ArchivementManager.coins) — mua hàng
+## - Ví Xu dùng CHUNG với Sổ tay thành tựu (AchievementManager.coins) — mua hàng
 ##   bằng Xu sẽ trừ trực tiếp vào ví đó.
 ## - Đã mua / đang dùng / số lượt còn lại của dụng cụ được LƯU vào save
 ##   (SaveManager tự gọi export_progress / import_progress).
@@ -209,12 +209,12 @@ func is_default(item_id: String) -> bool:
 # Ví Xu (dùng chung với Sổ tay thành tựu)
 # ---------------------------------------------------------------------------
 func coins() -> int:
-	var wallet: Node = Svc.archivement()
+	var wallet: Node = Svc.achievement()
 	return maxi(int(wallet.get("coins")), 0) if wallet != null else 0
 
 
 func _add_coins(amount: int) -> void:
-	var wallet: Node = Svc.archivement()
+	var wallet: Node = Svc.achievement()
 	if wallet == null:
 		return
 	wallet.set("coins", maxi(int(wallet.get("coins")) + amount, 0))
@@ -227,7 +227,7 @@ func _add_coins(amount: int) -> void:
 func add_coins(amount: int, _source: String = "") -> bool:
 	if amount == 0:
 		return false
-	if Svc.archivement() == null:
+	if Svc.achievement() == null:
 		return false
 	_add_coins(amount)
 	return true

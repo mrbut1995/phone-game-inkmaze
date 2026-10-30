@@ -204,7 +204,7 @@ theme_override_styles/pressed = ExtResource("sb_badges_p")
 theme_override_styles/hover = ExtResource("sb_badges_n")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
 icon_texture = ExtResource("ic_badges")
-label_key = &"STR_BTN_ARCHIVEMENT"
+label_key = &"STR_BTN_ACHIEVEMENT"
 outline_color = Color(0.349, 0.2078, 0.5882, 1)
 
 [node name="LockSheet" parent="." instance=ExtResource("L_sheet")]

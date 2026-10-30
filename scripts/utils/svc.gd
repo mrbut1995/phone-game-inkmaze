@@ -93,8 +93,8 @@ static func shop() -> ShopManagerClass:
 	return node(&"ShopManager") as ShopManagerClass
 
 
-static func archivement() -> ArchivementManagerClass:
-	return node(&"ArchivementManager") as ArchivementManagerClass
+static func achievement() -> AchievementManagerClass:
+	return node(&"AchievementManager") as AchievementManagerClass
 
 
 static func profile() -> PlayerProfileManagerClass:

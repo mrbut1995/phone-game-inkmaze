@@ -45,7 +45,7 @@ const SCREENS := [
 	{"id": "settings", "path": "res://scenes/settings.tscn"},
 	{"id": "shop", "path": "res://scenes/shop.tscn"},
 	{"id": "ranking", "path": "res://scenes/ranking.tscn"},
-	{"id": "archivement", "path": "res://scenes/archivement.tscn"},
+	{"id": "achievement", "path": "res://scenes/achievement.tscn"},
 	{"id": "profiler", "path": "res://nodes/popups/profiler_content.tscn", "embedded": true},
 	{"id": "credit", "path": "res://scenes/credit.tscn"},
 	{"id": "debug", "path": "res://scenes/debug.tscn"},

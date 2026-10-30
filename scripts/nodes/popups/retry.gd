@@ -164,7 +164,7 @@ func _on_gold_pressed() -> void:
 		return
 	Sfx.play(Sfx.BTN_CLICK)
 
-	if Archivement.coins() < _gold_cost or not Archivement.spend_coins(_gold_cost):
+	if Achievement.coins() < _gold_cost or not Achievement.spend_coins(_gold_cost):
 		_show_warning("STR_RETRY_NOT_ENOUGH_GOLD")
 		Sfx.play(Sfx.WALL_HIT)
 		return

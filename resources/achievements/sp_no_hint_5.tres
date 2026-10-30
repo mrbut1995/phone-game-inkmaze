@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3]
+
+[ext_resource uid="uid://dhmi604rmmgl7" type="Texture2D" path="res://assets/images-png/icons/icon_check_green.png" id="1_hn6sg"]
+[ext_resource type="Script" path="res://scripts/resources/achievement_data.gd" id="2_we550"]
+
+[resource]
+script = ExtResource("2_we550")
+id = "sp_no_hint_5"
+category = "special"
+title = "Tự Lực Cánh Sinh"
+description = "Thắng 5 màn/tầng mà KHÔNG dùng gợi ý"
+title_key = "STR_ACH_SP_NO_HINT_5_TITLE"
+desc_key = "STR_ACH_SP_NO_HINT_5_DESC"
+icon = ExtResource("1_hn6sg")
+stat = "wins_no_hint"
+target = 5
+unit = "Ván"
+reward_coins = 100
+points = 20

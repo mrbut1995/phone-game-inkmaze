@@ -735,7 +735,7 @@ func claim_chapter_chest(chapter_id: int, index: int, stars_own: int, stars_tota
 func _grant_chapter_chest(def: Dictionary) -> void:
 	var coins := int(def.get("coins", 0))
 	if coins > 0:
-		var wallet: Node = Svc.archivement()
+		var wallet: Node = Svc.achievement()
 		if wallet != null:
 			wallet.set("coins", maxi(int(wallet.get("coins")) + coins, 0))
 			if wallet.has_method("notify_coins_changed"):

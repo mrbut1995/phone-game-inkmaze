@@ -170,7 +170,7 @@ SPECS: dict[str, list[tuple]] = {    # §6.2 — Header trên cùng, thân chia 
         }),
     ],
     # §6.4 (Sổ tay danh hiệu) — Tờ giấy trải rộng, lưới thẻ nhiều cột
-    "archivement": [
+    "achievement": [
         ("keep", "TopBar", ".", {
             "set": {"anchor_left": "0.05", "anchor_top": "0.03",
                     "anchor_right": "0.95", "anchor_bottom": "0.10"},

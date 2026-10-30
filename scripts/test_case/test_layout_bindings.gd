@@ -19,7 +19,7 @@ const SCREENS := {
 	"ranking": "RankingLayout",
 	"daily": "DailyLayout",
 	"shop": "ShopLayout",
-	"archivement": "ArchivementLayout",
+	"achievement": "AchievementLayout",
 	"credit": "CreditLayout",
 	"debug": "DebugLayout",
 	"splash": "SplashLayout",

@@ -5,7 +5,7 @@ extends Resource
 ## "DIỆN MẠO HỒ SƠ" (tab AVATAR).
 ##
 ## Mỗi avatar là 1 file .tres trong res://resources/profiler/avatars/ (giống
-## danh hiệu là .tres trong resources/archivements/) -> PlayerProfileManager
+## danh hiệu là .tres trong resources/achievements/) -> PlayerProfileManager
 ## quét thư mục để nạp danh sách, nên THÊM avatar mới chỉ cần tạo file .tres,
 ## KHÔNG phải sửa code.
 ##
