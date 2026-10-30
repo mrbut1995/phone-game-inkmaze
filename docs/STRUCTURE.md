@@ -22,10 +22,10 @@ scripts/
   services/                 # save backend (local · play games)
   utils/                    # facade tĩnh: Svc · Nav · Popups · Sfx · Shop · Profile · Achievement · Loc · Life · UIAnim · PenSkin
   ui/
-    screens/                # điều khiển MÀN (extends BaseScene / BaseUI): main · shop · daily · game …
+    screens/                # điều khiển MÀN (extends BaseScene / BaseUI): main · shop · daily · game · debug (+ debug_data) …
     layouts/                # `<màn>_layout.gd` — @export node UI của layout; game_scene_layout + game_layout_portrait|landscape
     hud/                    # base_hud + hud/game/<mode>_hud
-    game/                   # board · board_cells_view · cell · cursor · ink · wall (bàn cờ & hiệu ứng)
+    game/                   # board · board_cells_view · paper_geometry · cell · cursor · ink · wall (bàn cờ & hiệu ứng)
     popups/                 # base popup + từng popup (win · gameover · retry · pause …)
     tutorial/               # base_tutorial + các bài how_to_play_*
     widgets/                # chip/card/button + widget theo màn: common · main · daily · shop · ranking · level_selection · profiler · achievements
