@@ -107,7 +107,7 @@ size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bar")
 
-[node name="Row" type="HBoxContainer" parent="Body/Dock" index="0" unique_id=1964936121]
+[node name="Row" type="HBoxContainer" parent="Body/Dock" index="1" unique_id=1964936121]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
