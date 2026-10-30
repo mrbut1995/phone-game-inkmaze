@@ -3,7 +3,7 @@
 Format tham chiếu (do Godot sinh ra):
 
     [gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://..."]
-    [ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_hndnq"]
+    [ext_resource type="Script" path="res://scripts/data/level_data.gd" id="1_hndnq"]
     [resource]
     script = ExtResource("1_hndnq")
     level_id = 3

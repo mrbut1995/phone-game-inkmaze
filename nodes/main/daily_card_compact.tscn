@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/daily_card_compact.gd" id="1_card"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/daily_card_compact.gd" id="1_card"]
 [ext_resource type="Texture2D" uid="uid://cwum1n04j1scb" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
 [ext_resource type="Texture2D" uid="uid://dkto7e26t3okj" path="res://assets/images-png/events/daily_card_background.png" id="3_bg"]
 [ext_resource type="Texture2D" uid="uid://i66mjhc14d4v" path="res://assets/images-png/events/daily_card_frontgrount.png" id="3_bg0b0"]

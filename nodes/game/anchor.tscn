@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dig7mt8e1aqsg"]
 
 [ext_resource uid="uid://dxmvuyyd2tetc" type="Texture2D" path="res://assets/images-png/game/anchor_normal.png" id="1_aae84"]
-[ext_resource type="Script" uid="uid://ija82o52h4mq" path="res://scripts/nodes/game/anchor.gd" id="1_fgv2j"]
+[ext_resource type="Script" uid="uid://ija82o52h4mq" path="res://scripts/ui/game/anchor.gd" id="1_fgv2j"]
 [ext_resource uid="uid://dxecul80qvakj" type="Texture2D" path="res://assets/images-png/game/anchor_pressed.png" id="2_6q3p4"]
 [ext_resource uid="uid://bjujt0gsrxiqg" type="Texture2D" path="res://assets/images-png/game/anchor_disabled.png" id="3_6q3p4"]
 [ext_resource uid="uid://cch54lvvo0xn6" type="Texture2D" path="res://assets/images-png/game/anchor_focus.png" id="3_fgv2j"]

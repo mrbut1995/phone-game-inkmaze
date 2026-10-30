@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/daily/star_bar_fx.gd" id="1_fx"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/daily/star_bar_fx.gd" id="1_fx"]
 [ext_resource uid="uid://isr1cd5s5mxk" type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="2_glow"]
 [ext_resource uid="uid://buhsd5kh2cdyp" type="Texture2D" path="res://assets/images-png/effects/fx_sparkle.png" id="3_spark"]
 [ext_resource uid="uid://bhdq46dggifbf" type="Texture2D" path="res://assets/images-png/effects/vf_bar_shine.png" id="4_shine"]

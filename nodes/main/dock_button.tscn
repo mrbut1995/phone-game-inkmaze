@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://k2k3skjevrxy"]
 
-[ext_resource type="Script" uid="uid://kxlhe7ypu0ni" path="res://scripts/nodes/dock_button.gd" id="1_dock"]
+[ext_resource type="Script" uid="uid://kxlhe7ypu0ni" path="res://scripts/ui/widgets/dock_button.gd" id="1_dock"]
 
 [sub_resource type="StyleBoxFlat" id="sb_badge"]
 bg_color = Color(0.84705883, 0.26666668, 0.26666668, 1)

@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="EventData" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_level"]
+[ext_resource type="Script" path="res://scripts/data/level_data.gd" id="1_level"]
 [ext_resource type="Resource" path="res://resources/levels/events/winter/level_1406.tres" id="2_level"]
 [ext_resource type="Resource" path="res://resources/levels/events/winter/level_1407.tres" id="3_level"]
 [ext_resource type="Resource" path="res://resources/levels/events/winter/level_1408.tres" id="4_level"]
-[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="5_reward"]
-[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="6_event"]
+[ext_resource type="Script" path="res://scripts/data/event_reward.gd" id="5_reward"]
+[ext_resource type="Script" path="res://scripts/data/event_data.gd" id="6_event"]
 [ext_resource type="Resource" path="res://resources/events/themes/thanksgiving.tres" id="7_theme"]
 
 [sub_resource type="Resource" id="Reward_1"]

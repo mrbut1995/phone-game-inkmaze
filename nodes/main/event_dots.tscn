@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bgkpwurp12qw3"]
 
-[ext_resource type="Script" uid="uid://b2aedgadj7rqm" path="res://scripts/nodes/event_dots.gd" id="1_dots"]
+[ext_resource type="Script" uid="uid://b2aedgadj7rqm" path="res://scripts/ui/widgets/event_dots.gd" id="1_dots"]
 [ext_resource type="PackedScene" path="res://nodes/main/event_dot.tscn" id="2_dot"]
 
 [sub_resource type="StyleBoxFlat" id="sb_dot"]

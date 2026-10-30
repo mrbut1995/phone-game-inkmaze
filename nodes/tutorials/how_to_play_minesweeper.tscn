@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bmine0000001"]
 
 [ext_resource type="PackedScene" uid="uid://bdaud8s52opsm" path="res://nodes/tutorials/base_tutorial.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://b004i8grnb2ed" path="res://scripts/nodes/tutorial/how_to_play_minesweeper.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://b004i8grnb2ed" path="res://scripts/ui/tutorial/how_to_play_minesweeper.gd" id="2_script"]
 [ext_resource type="PackedScene" uid="uid://334hk6vbotgi" path="res://nodes/tutorials/board_tutorial.tscn" id="3_board"]
 
 [node name="HowToPlayMinesweeper" unique_id=1679484934 node_paths=PackedStringArray("board_tutorial") instance=ExtResource("1_base")]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://kk7tudhk7r3m"]
 
-[ext_resource type="Script" uid="uid://c8cd4nb4704rv" path="res://scripts/nodes/profile_card.gd" id="1_prof"]
+[ext_resource type="Script" uid="uid://c8cd4nb4704rv" path="res://scripts/ui/widgets/profile_card.gd" id="1_prof"]
 [ext_resource type="Texture2D" uid="uid://dx7gk3075tpxu" path="res://assets/images-png/profiler/profiler_disc_normal.png" id="4_v7job"]
 [ext_resource type="Texture2D" uid="uid://d1b6ds3wgbpty" path="res://assets/images-png/profiler/profiler_disc_pressed.png" id="5_77svf"]
 [ext_resource type="Texture2D" uid="uid://cid3n7oklo1fq" path="res://assets/images-png/profiler/profiler_disc_disabled.png" id="6_r4xkw"]

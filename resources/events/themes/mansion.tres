@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3 uid="uid://b6o6j21k7ifwm"]
 
-[ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="2_182mh"]
+[ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/data/event_theme.gd" id="2_182mh"]
 [ext_resource uid="uid://3rrplqc3x56w" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_mansion_normal.png" id="btn_normal"]
 [ext_resource uid="uid://djkxdwq3llr5b" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_mansion_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://chmt3ahd6ihuy" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_mansion_disabled.png" id="btn_disabled"]

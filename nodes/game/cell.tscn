@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dby0vymb3wuhs"]
 
-[ext_resource type="Script" uid="uid://dbnom6k6sjlek" path="res://scripts/nodes/game/cell.gd" id="1_fj7pj"]
+[ext_resource type="Script" uid="uid://dbnom6k6sjlek" path="res://scripts/ui/game/cell.gd" id="1_fj7pj"]
 [ext_resource uid="uid://d1cpghes4s4v7" type="Texture2D" path="res://assets/images-png/game/cell_normal.png" id="1_pne7a"]
 [ext_resource type="LabelSettings" uid="uid://d1q5q45o84b40" path="res://resources/settings/text/text_game_cell.tres" id="2_cjyvu"]
 [ext_resource uid="uid://hd8jc2u88ani" type="Texture2D" path="res://assets/images-png/game/cell_pressed.png" id="3_cobij"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_33ob7"]
 [ext_resource type="PackedScene" uid="uid://dvtlk8ts62t82" path="res://nodes/popups/profiler_content.tscn" id="2_b7pm4"]
-[ext_resource type="Script" uid="uid://citrrwk6hs1ub" path="res://scripts/nodes/popups/profiler_popup.gd" id="2_rk2nf"]
+[ext_resource type="Script" uid="uid://citrrwk6hs1ub" path="res://scripts/ui/popups/profiler_popup.gd" id="2_rk2nf"]
 
 [node name="Base" unique_id=1640959766 node_paths=PackedStringArray("content_node") instance=ExtResource("1_33ob7")]
 script = ExtResource("2_rk2nf")

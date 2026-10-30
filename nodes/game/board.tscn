@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://chbg12rc46dp"]
 
 [ext_resource type="Texture2D" uid="uid://cfij1ru5ost4t" path="res://assets/images-png/game/card_board.png" id="1_pr7sl"]
-[ext_resource type="Script" uid="uid://ctapikig1gy5k" path="res://scripts/nodes/game/board.gd" id="1_v7f7a"]
+[ext_resource type="Script" uid="uid://ctapikig1gy5k" path="res://scripts/ui/game/board.gd" id="1_v7f7a"]
 [ext_resource type="PackedScene" uid="uid://djsrgljk5e128" path="res://nodes/game/board_layers.tscn" id="2_layers"]
 [ext_resource type="Texture2D" uid="uid://ruoaaeu82tl0" path="res://assets/images-png/popups/washi_tape.png" id="5_xql2x"]
 [ext_resource type="Texture2D" uid="uid://bm6vvrmscsoyf" path="res://assets/images-png/icons/icon_reset_big.png" id="6_w0r1h"]

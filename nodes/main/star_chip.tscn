@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dxm1sm66f5qi1"]
 
-[ext_resource type="Script" uid="uid://dvytliwilt5i1" path="res://scripts/nodes/star_chip.gd" id="1_star"]
+[ext_resource type="Script" uid="uid://dvytliwilt5i1" path="res://scripts/ui/widgets/star_chip.gd" id="1_star"]
 [ext_resource type="Texture2D" uid="uid://bray4sykmnjpa" path="res://assets/images-png/icons/icon_stat_stars.png" id="2_ico"]
 
 [sub_resource type="StyleBoxFlat" id="sb_panel"]

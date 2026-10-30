@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
 
 [ext_resource uid="uid://bt4j47chemb01" type="Texture2D" path="res://assets/images-png/avatars/avatar-indian-male-man.png" id="1_m2y4p"]
-[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_gysdi"]
+[ext_resource type="Script" path="res://scripts/data/avatar_data.gd" id="2_gysdi"]
 
 [resource]
 script = ExtResource("2_gysdi")

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bmwv2ocykurpc"]
 
-[ext_resource type="Script" uid="uid://b6yunweed574j" path="res://scripts/nodes/shop/tab_button.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://b6yunweed574j" path="res://scripts/ui/widgets/shop/tab_button.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://62r6r1frm5ia" path="res://assets/images-png/shop/tab_inactive.png" id="2_art_idle"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="4_theme"]
 

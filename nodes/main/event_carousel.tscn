@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cb8r4phad4ar5"]
 
-[ext_resource type="Script" uid="uid://bvae4rnw5wify" path="res://scripts/nodes/event_carousel.gd" id="1_carousel"]
+[ext_resource type="Script" uid="uid://bvae4rnw5wify" path="res://scripts/ui/widgets/event_carousel.gd" id="1_carousel"]
 [ext_resource type="PackedScene" uid="uid://bjq8mjemf8glo" path="res://nodes/main/event_card.tscn" id="2_card"]
 [ext_resource type="PackedScene" uid="uid://bgkpwurp12qw3" path="res://nodes/main/event_dots.tscn" id="3_dots"]
 [ext_resource type="PackedScene" uid="uid://dx5dcc8knvqm3" path="res://nodes/main/daily_card.tscn" id="4_daily"]

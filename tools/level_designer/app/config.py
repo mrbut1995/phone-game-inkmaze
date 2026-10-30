@@ -36,12 +36,12 @@ LEVELS_DIR = PROJECT_ROOT / "resources" / "levels"
 CHAPTERS_DIR = PROJECT_ROOT / "resources" / "chapters"
 
 # Đường dẫn script Godot mà file .tres trỏ tới (giữ nguyên như Godot sinh ra)
-LEVEL_SCRIPT_RES = "res://scripts/resources/level_data.gd"
+LEVEL_SCRIPT_RES = "res://scripts/data/level_data.gd"
 # Id ext_resource trong file .tres (Godot dùng id nội bộ, giá trị nào cũng hợp lệ)
 LEVEL_SCRIPT_ID = "1_level"
 
 # CHƯƠNG (màn "CHỌN CHƯƠNG" của game) - xem scripts/resources/chapter_data.gd
-CHAPTER_SCRIPT_RES = "res://scripts/resources/chapter_data.gd"
+CHAPTER_SCRIPT_RES = "res://scripts/data/chapter_data.gd"
 CHAPTER_SCRIPT_ID = "1_chapter"
 MIN_CHAPTER_ID = 1
 MAX_CHAPTER_ID = 99

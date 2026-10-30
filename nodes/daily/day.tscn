@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cggt0mrkea7fs"]
 
-[ext_resource type="Script" uid="uid://c0jpbwfj0dbrw" path="res://scripts/nodes/daily/day.gd" id="1_day"]
+[ext_resource type="Script" uid="uid://c0jpbwfj0dbrw" path="res://scripts/ui/widgets/daily/day.gd" id="1_day"]
 [ext_resource uid="uid://xdtni041v1i0" type="Texture2D" path="res://assets/images-png/daily/cell_done.png" id="2_bg"]
 [ext_resource uid="uid://b0yc3thcmxut" type="Texture2D" path="res://assets/images-png/daily/check_red.png" id="3_check"]
 [ext_resource uid="uid://c6j6k3elbn2kt" type="Texture2D" path="res://assets/images-png/daily/pill_stars.png" id="4_pill"]

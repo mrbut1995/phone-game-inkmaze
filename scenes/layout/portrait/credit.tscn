@@ -13,7 +13,7 @@
 [ext_resource uid="uid://c0nhdhr5qww35" type="Texture2D" path="res://assets/images-png/icons/icon_book.png" id="14_book"]
 [ext_resource uid="uid://bt4mb18wc2rf2" type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="15_stamp"]
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" path="res://scripts/scenes/layout/credit_layout.gd" id="2_layout"]
+[ext_resource type="Script" path="res://scripts/ui/layouts/credit_layout.gd" id="2_layout"]
 
 [node name="Portrait" node_paths=PackedStringArray("btn_back", "theme_value", "track_value", "version_label", "content_root") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")

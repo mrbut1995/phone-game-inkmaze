@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/game/wall_segment.gd" id="1_wall"]
+[ext_resource type="Script" path="res://scripts/ui/game/wall_segment.gd" id="1_wall"]
 
 [sub_resource type="Animation" id="Animation_wall_preview"]
 resource_name = "preview_pulse"

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bjq8mjemf8glo"]
 
-[ext_resource type="Script" uid="uid://bjmxaiw28fnlx" path="res://scripts/nodes/event_card.gd" id="1_card"]
+[ext_resource type="Script" uid="uid://bjmxaiw28fnlx" path="res://scripts/ui/widgets/event_card.gd" id="1_card"]
 [ext_resource type="Texture2D" uid="uid://cwum1n04j1scb" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
 [ext_resource type="Texture2D" uid="uid://ca6le4lmtwuww" path="res://assets/images-png/events/halloween_card_grid.png" id="5_grid"]
 

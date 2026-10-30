@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://7haijnwmq3kt"]
 
-[ext_resource type="Script" uid="uid://dyqoxeuolv1ce" path="res://scripts/nodes/main/level_section.gd" id="1_sec"]
+[ext_resource type="Script" uid="uid://dyqoxeuolv1ce" path="res://scripts/ui/widgets/main/level_section.gd" id="1_sec"]
 [ext_resource type="PackedScene" uid="uid://cp4og3e21hxqe" path="res://nodes/level_selection/level_map.tscn" id="2_map"]
 [ext_resource type="PackedScene" path="res://nodes/main/chest_widget.tscn" id="4_chest"]
 [ext_resource type="PackedScene" path="res://nodes/main/dungeon_pill.tscn" id="5_pill"]

@@ -114,7 +114,7 @@ func _section_2_game(shop: Node) -> void:
 	if cursor == null or line == null:
 		scene.queue_free()
 		return
-	_entry(line.get_script() == preload("res://scripts/nodes/game/ink_stroke.gd"),
+	_entry(line.get_script() == preload("res://scripts/ui/game/ink_stroke.gd"),
 		"moving_line dung InkStroke (net muc song theo but)")
 
 	var widths := {}

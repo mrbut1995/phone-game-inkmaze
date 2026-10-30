@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://f1txpqipipdg"]
 
-[ext_resource type="Script" path="res://scripts/nodes/tutorial/anchor_callout.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/ui/tutorial/anchor_callout.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://i8w4kewq1j3" path="res://assets/fonts/Be_Vietnam_Pro/BeVietnamPro-Black.ttf" id="2_font"]
 
 [sub_resource type="StyleBoxFlat" id="ring"]

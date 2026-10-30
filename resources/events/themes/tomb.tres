@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3 uid="uid://ytia1j27gt6f"]
 
-[ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="2_yt6uv"]
+[ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/data/event_theme.gd" id="2_yt6uv"]
 [ext_resource uid="uid://df87x0s5dkipc" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_normal.png" id="btn_normal"]
 [ext_resource uid="uid://bwpltr2h1aumu" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://yi001m5fv6bj" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_disabled.png" id="btn_disabled"]

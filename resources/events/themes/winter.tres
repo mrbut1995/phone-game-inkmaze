@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_im8b3"]
+[ext_resource type="Script" path="res://scripts/data/event_theme.gd" id="2_im8b3"]
 [ext_resource uid="uid://clb7vccmibiuu" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_winter_normal.png" id="btn_normal"]
 [ext_resource uid="uid://vrimr27bi8se" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_winter_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://8kjydcw85upd" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_winter_disabled.png" id="btn_disabled"]

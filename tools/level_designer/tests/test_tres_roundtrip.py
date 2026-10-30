@@ -63,7 +63,7 @@ class TestTresFormat(unittest.TestCase):
         text = (
             '[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 '
             'uid="uid://abc123"]\n'
-            '[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_level"]\n'
+            '[ext_resource type="Script" path="res://scripts/data/level_data.gd" id="1_level"]\n'
             "\n"
             "[resource]\n"
             'script = ExtResource("1_level")\n'
@@ -94,7 +94,7 @@ class TestTresFormat(unittest.TestCase):
     def test_missing_arrays_do_not_crash(self) -> None:
         text = (
             '[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]\n'
-            '[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_level"]\n'
+            '[ext_resource type="Script" path="res://scripts/data/level_data.gd" id="1_level"]\n'
             "[resource]\n"
             'script = ExtResource("1_level")\n'
             "level_id = 3\n"

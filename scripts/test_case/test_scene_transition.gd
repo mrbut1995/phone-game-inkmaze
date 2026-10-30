@@ -4,7 +4,7 @@ extends SceneTree
 ## ============================================================================
 
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-const SceneTransition := preload("res://scripts/nodes/common/scene_transition.gd")
+const SceneTransition := preload("res://scripts/ui/widgets/common/scene_transition.gd")
 
 func _init() -> void:
 	print("\n========================================================")

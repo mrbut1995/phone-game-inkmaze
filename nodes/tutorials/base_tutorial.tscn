@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bdaud8s52opsm"]
 
-[ext_resource type="Script" uid="uid://due7yap3gb5o" path="res://scripts/nodes/tutorial/base_tutorial.gd" id="1_7x6e2"]
+[ext_resource type="Script" uid="uid://due7yap3gb5o" path="res://scripts/ui/tutorial/base_tutorial.gd" id="1_7x6e2"]
 [ext_resource type="Texture2D" uid="uid://bq1g3a72wtikh" path="res://assets/images-png/tutorial/tutorial_spotlight.png" id="3_spotlight"]
 
 [sub_resource type="StyleBoxFlat" id="btn_primary"]

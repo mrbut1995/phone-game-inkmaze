@@ -19,7 +19,7 @@ func _initialize() -> void:
 	if ResourceLoader.exists("res://nodes/main/event_button_column.tscn"):
 		_node = load("res://nodes/main/event_button_column.tscn").instantiate() as Control
 	else:
-		_node = load("res://scripts/nodes/main/event_button_column.gd").new() as Control
+		_node = load("res://scripts/ui/widgets/main/event_button_column.gd").new() as Control
 	_node.name = "EventButtons"
 	var host := Control.new()
 	host.size = Vector2(420, 500)

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://xmhigo8albro"]
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://bdgf5rpilmx26" path="res://scripts/nodes/hud/game/minesweep_hud.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://bdgf5rpilmx26" path="res://scripts/ui/hud/game/minesweep_hud.gd" id="2_script"]
 
 [node name="Hud" unique_id=213000205 instance=ExtResource("1_base")]
 script = ExtResource("2_script")

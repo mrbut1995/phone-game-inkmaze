@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bx4mq1dw7lc0i"]
 
-[ext_resource type="Script" uid="uid://blet24a0jlmbi" path="res://scripts/nodes/daily/action_card.gd" id="1_card"]
+[ext_resource type="Script" uid="uid://blet24a0jlmbi" path="res://scripts/ui/widgets/daily/action_card.gd" id="1_card"]
 [ext_resource type="Texture2D" uid="uid://37bhlyddwc4n" path="res://assets/images-png/daily/card_paper.png" id="2_paper"]
 [ext_resource type="Texture2D" uid="uid://brxfojl2ilhkq" path="res://assets/images-png/daily/icon_box_blue.png" id="3_box_b"]
 [ext_resource type="Texture2D" uid="uid://ck8e7oj7prlaq" path="res://assets/images-png/daily/tape_blue.png" id="5_tape_b"]
@@ -14,7 +14,7 @@
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="18_theme"]
 [ext_resource type="Texture2D" uid="uid://isr1cd5s5mxk" path="res://assets/images-png/effects/fx_glow_soft.png" id="20_glow"]
 [ext_resource type="Texture2D" uid="uid://buhsd5kh2cdyp" path="res://assets/images-png/effects/fx_sparkle.png" id="21_spark"]
-[ext_resource type="Script" uid="uid://cwlut4ae8sqmq" path="res://scripts/tool/cta_content_follow.gd" id="22_follow"]
+[ext_resource type="Script" uid="uid://cwlut4ae8sqmq" path="res://scripts/tools/cta_content_follow.gd" id="22_follow"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
 blend_mode = 1

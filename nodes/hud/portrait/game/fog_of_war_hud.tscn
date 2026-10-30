@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bayt4b25wm81e"]
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://brkqre7amkosw" path="res://scripts/nodes/hud/game/fog_of_war_hud.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://brkqre7amkosw" path="res://scripts/ui/hud/game/fog_of_war_hud.gd" id="2_script"]
 
 [node name="Hud" unique_id=2092734398 node_paths=PackedStringArray("retry_value_node", "retry_max_label", "retry_note_label") instance=ExtResource("1_base")]
 script = ExtResource("2_script")

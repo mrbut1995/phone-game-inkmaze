@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ceilo8vk5g5u1"]
 
-[ext_resource type="Script" uid="uid://h74t0sknqj0p" path="res://scripts/nodes/coin_chip.gd" id="1_coin"]
+[ext_resource type="Script" uid="uid://h74t0sknqj0p" path="res://scripts/ui/widgets/coin_chip.gd" id="1_coin"]
 [ext_resource type="Texture2D" uid="uid://bsenhucno4lsr" path="res://assets/images-png/icons/icon_coin.png" id="2_ico"]
 
 [sub_resource type="StyleBoxFlat" id="sb_panel"]

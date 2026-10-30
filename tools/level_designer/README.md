@@ -157,7 +157,7 @@ File `level_N.tres` giữ đúng các trường của `scripts/resources/level_d
 
 ```gdscript
 [gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://..."]
-[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_level"]
+[ext_resource type="Script" path="res://scripts/data/level_data.gd" id="1_level"]
 
 [resource]
 script = ExtResource("1_level")

@@ -2,8 +2,7 @@ extends SceneTree
 ## ============================================================================
 ## Test Case: BINDING NODE CỦA MÀN ⇄ SCENE LAYOUT (Portrait)
 ##
-## Mỗi màn tách bố cục `scenes/layout/portrait/<màn>.tscn`; script layout
-## (`scripts/scenes/layout/<màn>_layout.gd`) khai `@export` node và .tscn BIND SẴN bằng
+## (`scripts/ui/layouts/<màn>_layout.gd`) khai `@export` node và .tscn BIND SẴN bằng
 ## `NodePath` — script màn chỉ đọc `layout.<tên>`.
 ##
 ## Test này mở từng màn, soi bố cục Portrait và đòi:

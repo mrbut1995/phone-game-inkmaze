@@ -1,0 +1,17 @@
+class_name SplashLayout
+extends BaseLayout
+
+@export var studio_label: Label = null
+@export var logo_container: Control = null
+@export var logo: TextureRect = null
+@export var pencil: TextureRect = null
+@export var title_label: Label = null
+@export var tagline_label: Label = null
+@export var stamp_label: Label = null
+@export var touch_button: TextureButton = null
+@export var fade_overlay: ColorRect = null
+@export var anim_player: AnimationPlayer = null
+## Khối thanh tiến trình nạp (LoadingBox/LoadingLabel/LoadingBar) — xem scripts/autoload/LoadingManager.gd
+@export var loading_box: Control = null
+@export var loading_label: Label = null
+@export var loading_bar: ProgressBar = null

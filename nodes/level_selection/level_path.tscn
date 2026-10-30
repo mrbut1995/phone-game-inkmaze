@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://deips2j5618mp"]
 
-[ext_resource type="Script" uid="uid://c1vl3ptnf4kjx" path="res://scripts/nodes/level_selection/level_path.gd" id="1_path"]
+[ext_resource type="Script" uid="uid://c1vl3ptnf4kjx" path="res://scripts/ui/widgets/level_selection/level_path.gd" id="1_path"]
 
 [sub_resource type="Curve2D" id="Curve2D_10lku"]
 

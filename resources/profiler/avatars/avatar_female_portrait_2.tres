@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
 
 [ext_resource uid="uid://cxq1y1jv6yqko" type="Texture2D" path="res://assets/images-png/avatars/avatar-female-portrait-2.png" id="1_4w2b5"]
-[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_tha33"]
+[ext_resource type="Script" path="res://scripts/data/avatar_data.gd" id="2_tha33"]
 
 [resource]
 script = ExtResource("2_tha33")

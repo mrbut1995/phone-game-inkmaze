@@ -65,10 +65,10 @@ func _section_files() -> void:
 		"res://" + "scenes/levels.tscn",
 		"res://" + "scenes/layout/portrait/levels.tscn",
 		"res://" + "scenes/layout/landscape/levels.tscn",
-		"res://" + "scripts/scenes/levels.gd",
-		"res://" + "scripts/scenes/layout/levels_layout.gd",
+		"res://" + "scripts/ui/screens/levels.gd",
+		"res://" + "scripts/ui/layouts/levels_layout.gd",
 		"res://" + "nodes/main/mode_card.tscn",
-		"res://" + "scripts/nodes/mode_card.gd",
+		"res://" + "scripts/ui/widgets/mode_card.gd",
 	]:
 		_check(not ResourceLoader.exists(path), "Da xoa %s" % path.get_file())
 	for path in [
@@ -88,10 +88,10 @@ func _section_navigation() -> void:
 	var nav_src := FileAccess.get_file_as_string("res://scripts/utils/nav.gd")
 	_check(nav_src.contains("static func goto_levels"), "Nav van giu goto_levels() (deprecated)")
 	_check(not nav_src.contains("scenes/levels.tscn"), "Nav KHONG con tro toi scenes/levels.tscn")
-	var gm_src := FileAccess.get_file_as_string("res://scripts/core/game_manager.gd")
+	var gm_src := FileAccess.get_file_as_string("res://scripts/autoload/game_manager.gd")
 	_check(gm_src.contains("func go_to_levels"), "GameManager van giu go_to_levels() (deprecated)")
 	_check(not gm_src.contains("scenes/levels.tscn"), "GameManager KHONG con tro toi scenes/levels.tscn")
-	var loading_src := FileAccess.get_file_as_string("res://scripts/manager/LoadingManager.gd")
+	var loading_src := FileAccess.get_file_as_string("res://scripts/autoload/loading_manager.gd")
 	_check(not loading_src.contains("scenes/levels.tscn"), "LoadingManager khong nap san man Levels da xoa")
 
 	var sm: Node = root.get_node("SceneManager")

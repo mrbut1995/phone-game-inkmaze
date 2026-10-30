@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventData" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_7hnp4"]
+[ext_resource type="Script" path="res://scripts/data/level_data.gd" id="1_7hnp4"]
 [ext_resource type="Resource" path="res://resources/levels/events/winter/level_1400.tres" id="2_mou7r"]
 [ext_resource type="Resource" path="res://resources/levels/events/winter/level_1401.tres" id="3_w2qvl"]
 [ext_resource type="Resource" path="res://resources/levels/events/winter/level_1402.tres" id="4_twuw6"]
@@ -11,8 +11,8 @@
 [ext_resource type="Resource" path="res://resources/levels/events/winter/level_1407.tres" id="9_ofpui"]
 [ext_resource type="Resource" path="res://resources/levels/events/winter/level_1408.tres" id="10_r55ca"]
 [ext_resource type="Resource" path="res://resources/levels/events/winter/level_1409.tres" id="11_4lxi3"]
-[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="12_18877"]
-[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="13_6kyhs"]
+[ext_resource type="Script" path="res://scripts/data/event_reward.gd" id="12_18877"]
+[ext_resource type="Script" path="res://scripts/data/event_data.gd" id="13_6kyhs"]
 [ext_resource type="Resource" path="res://resources/events/themes/winter.tres" id="14_0o3v3"]
 
 [sub_resource type="Resource" id="Resource_haa0r"]
