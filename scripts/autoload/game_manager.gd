@@ -152,12 +152,6 @@ var current_chapter: int:
 var debug_run: bool = false
 var start_floor_override: int = 0        # 0 = tự động (mode tự quyết định)
 
-## LUỒNG HỌC LẦN ĐẦU (TutorialManager điều khiển — xem scripts/autoload/TutorialManager.gd):
-## bước đang ở trong chuỗi onboarding + đã học xong luồng chưa. Lưu cùng tiến trình để
-## thoát giữa chừng vẫn chạy tiếp đúng bước ở lần mở sau.
-var tutorial_flow_step: int = 0
-var tutorial_flow_done: bool = false
-
 ## Ván đang chơi có phải là MÀN trong mạch màn Chọn màn không (khác Daily / Dungeon / Debug).
 ## Dùng để: (1) hiện nút SKIP LEVEL trên thanh hành động, (2) cho chế độ SPECIAL chạy trên
 ## BÀN DO NHÀ THIẾT KẾ VẼ của màn thay vì tự sinh bàn (xem BaseGameMode.designed_maze).
@@ -179,86 +173,80 @@ const DAILY_MODES: Array[String] = [
 	"wall_builder"
 ]
 
-var tutorial_progress: Dictionary = {
-	"first_time": false,
-	"how_to_play_move": false,
-	"how_to_play_checking_wall": false,
-	"how_to_play_writting_hint": false,
-	"core_completed": false,
-	"how_to_play_minesweeper": false,
-	"how_to_play_one_stroke": false,
-	"how_to_play_sum_path": false,
-	"how_to_play_wall_builder": false,
-}
+## Tiến trình học + yêu cầu mở bài nằm ở `TutorialStore` (xem `scripts/core/tutorial_store.gd`);
+## các property dưới đây giữ nguyên tên cũ để code/test đọc/ghi như trước.
+var _tutorials := TutorialStore.new()
+var tutorial_progress: Dictionary:
+	get:
+		return _tutorials.progress
+	set(value):
+		_tutorials.progress = value
+var tutorial_flow_step: int:
+	get:
+		return _tutorials.flow_step
+	set(value):
+		_tutorials.flow_step = value
+var tutorial_flow_done: bool:
+	get:
+		return _tutorials.flow_done
+	set(value):
+		_tutorials.flow_done = value
+var pending_tutorial: String:
+	get:
+		return _tutorials.pending_tutorial
+	set(value):
+		_tutorials.pending_tutorial = value
+var pending_return_to_game: bool:
+	get:
+		return _tutorials.pending_return_to_game
+	set(value):
+		_tutorials.pending_return_to_game = value
+var pending_return_to_list: bool:
+	get:
+		return _tutorials.pending_return_to_list
+	set(value):
+		_tutorials.pending_return_to_list = value
 
 
 func is_tutorial_completed(tutorial_id: String) -> bool:
-	return bool(tutorial_progress.get(tutorial_id, false))
+	return _tutorials.is_completed(tutorial_id)
 
 
 ## Ghi vị trí luồng onboarding (TutorialManager gọi sau mỗi bước / khi xong luồng)
 func set_tutorial_flow(step: int, done: bool) -> void:
-	tutorial_flow_step = clampi(step, 0, 64)
-	tutorial_flow_done = done
+	_tutorials.set_flow(step, done)
 	Save.queue_save()
 
 
 func set_tutorial_completed(tutorial_id: String, completed := true) -> void:
-	tutorial_progress[tutorial_id] = completed
-	if tutorial_progress.get("first_time", false) and \
-		tutorial_progress.get("how_to_play_move", false) and \
-		tutorial_progress.get("how_to_play_checking_wall", false):
-		tutorial_progress["core_completed"] = true
+	_tutorials.set_completed(tutorial_id, completed)
 
 
 func mark_core_tutorials_completed() -> void:
-	tutorial_progress["first_time"] = true
-	tutorial_progress["how_to_play_move"] = true
-	tutorial_progress["how_to_play_checking_wall"] = true
-	tutorial_progress["how_to_play_writting_hint"] = true
-	tutorial_progress["core_completed"] = true
+	_tutorials.mark_core_completed()
 
 
-## Yêu cầu MỞ THẲNG 1 bài khi vào màn Tutorial (Debug Console đặt rồi đổi scene).
-## Giá trị: "" = chạy chuỗi mặc định · id bài · `TutorialController.REQUEST_CORE` = chuỗi CORE.
-var pending_tutorial: String = ""
-## Khi mở tutorial từ màn chơi: trả về game thay vì Main sau khi kết thúc
-var pending_return_to_game: bool = false
-## Khi mở tutorial từ DANH SÁCH bài học: Back/xong ⇒ về lại danh sách (không về Main)
-var pending_return_to_list: bool = false
-
-
-## `from_list = true` khi người chơi bấm 1 bài ở màn DANH SÁCH (`scenes/tutorial_list.tscn`)
+## `from_list = true` khi người chơi chọn bài từ màn danh sách
 func request_tutorial(tutorial_id: String, from_list := false) -> void:
-	pending_tutorial = tutorial_id.strip_edges()
-	pending_return_to_list = from_list
+	_tutorials.request(tutorial_id, from_list)
 
 
 ## Màn Tutorial đọc 1 lần rồi xoá yêu cầu (không giữ lại cho lần sau)
 func take_tutorial_request() -> String:
-	var requested := pending_tutorial
-	pending_tutorial = ""
-	return requested
+	return _tutorials.take_request()
 
 
 func take_return_to_game_flag() -> bool:
-	var flag := pending_return_to_game
-	pending_return_to_game = false
-	return flag
+	return _tutorials.take_return_to_game()
 
 
 func take_return_to_list_flag() -> bool:
-	var flag := pending_return_to_list
-	pending_return_to_list = false
-	return flag
+	return _tutorials.take_return_to_list()
 
 
 ## Xoá tiến trình tutorial (Debug Console) — KHÔNG đụng tới tiến trình màn chơi
 func reset_tutorial_progress() -> void:
-	for key in tutorial_progress:
-		tutorial_progress[key] = false
-	tutorial_flow_step = 0
-	tutorial_flow_done = false
+	_tutorials.reset()
 
 
 func _ready() -> void:
