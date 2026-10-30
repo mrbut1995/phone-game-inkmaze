@@ -1,18 +1,14 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource uid="uid://dcw8rf6jyc56x" type="Texture2D" path="res://assets/images-png/events/april_fool_card_background.png" id="1_5bgil"]
-[ext_resource uid="uid://dxhryxeb2mhqx" type="Texture2D" path="res://assets/images-png/events/april_fool_card_frontground.png" id="3_front"]
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_guwn7"]
 [ext_resource uid="uid://cqjhruuad8m4v" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_april_normal.png" id="btn_normal"]
 [ext_resource uid="uid://djuunwlyimjgh" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_april_pressed.png" id="btn_pressed"]
+[ext_resource uid="uid://csjf2u8exi3r4" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_april_disabled.png" id="btn_disabled"]
 
 [resource]
 script = ExtResource("2_guwn7")
 id = &"april"
 bg_stops = PackedColorArray(1, 0.94509804, 0.4627451, 1, 1, 0.76862746, 0.91764706, 1, 1, 0.6039216, 0.8666667, 1)
-back_art = ExtResource("1_5bgil")
-front_art = ExtResource("3_front")
-art_offset_y = 0.0
 accent = Color(0.9137255, 0.11764706, 0.54901963, 1)
 accent2 = Color(0, 0.7019608, 0.6431373, 1)
 title_color = Color(0.42, 0.11, 0.6, 1)
@@ -27,3 +23,4 @@ chip_fill = Color(0.23137255, 0.039215688, 0.27058825, 1)
 chip_text = Color(1, 0.94509804, 0.4627451, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
+button_disabled = ExtResource("btn_disabled")

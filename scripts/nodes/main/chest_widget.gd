@@ -10,7 +10,7 @@ extends Button
 ##   · ĐỦ sao, chưa nhận ⇒ đĩa vàng, huy hiệu "!", rương lắc + sáng (animation `ready`)
 ##   · ĐÃ NHẬN HẾT ⇒ rương mở + dấu ✓, nhãn "sao/tổng", đứng yên
 ## Bấm khi đủ sao ⇒ `claim_requested(index)`; LevelSection gọi GameManager trao thưởng.
-## Art dùng lại của rương mốc Daily + đĩa thưởng (assets/images-png/daily + level_selector).
+## Art dùng lại của chest_chip.gd (assets/images-png/daily + level_selector).
 ## ============================================================================
 
 signal claim_requested(index: int)
@@ -69,8 +69,7 @@ func is_claimable() -> bool:
 
 
 func _apply_look(reached: bool, opened: bool) -> void:
-	if ring != null:
-		ring.texture = load(RING_DIR + ("reward_disc_on.png" if reached else "reward_disc_off.png")) as Texture2D
+	# Không còn đĩa tròn nền: chỉ hiện icon rương (Ring chỉ là trục xoay cho animation lắc)
 	if chest != null:
 		chest.texture = load(TEX_DIR + ("chest.png" if opened else "chest_closed.png")) as Texture2D
 		chest.modulate = Color(1, 1, 1, 1) if reached else CHEST_LOCKED

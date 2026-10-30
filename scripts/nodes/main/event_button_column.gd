@@ -14,7 +14,9 @@ signal event_pressed(event_id: StringName)
 const MAX_EVENTS := 5
 const ICON_DIR := "res://assets/images-png/event_btn/"
 const FALLBACK_THEME := "anniversary"
-const BUTTON_SIZE := 60.0
+const BUTTON_SIZE := 58.0
+## Tỉ lệ cao/rộng của art nút mới (209×216)
+const ART_ASPECT := 216.0 / 209.0
 ## Bề rộng vùng BỎ TRỐNG bên phải bản đồ cho cột nút (bản đồ co lại ⇒ node level không bị đè)
 const GUTTER := 88.0
 ## Chừa mép TRÁI cho vạch đỏ + lỗ gáy vở (bản đồ dịch sang phải)
@@ -82,9 +84,10 @@ func _make_item(ev: Object) -> Control:
 	var theme_id := _theme_id_of(ev)
 	button.texture_normal = _load_icon(ev, theme_id, "normal")
 	button.texture_pressed = _load_icon(ev, theme_id, "pressed")
+	button.texture_disabled = _load_icon(ev, theme_id, "disabled")
 	button.ignore_texture_size = true
 	button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
-	button.custom_minimum_size = Vector2(BUTTON_SIZE + 8.0, BUTTON_SIZE + 4.0)
+	button.custom_minimum_size = Vector2(BUTTON_SIZE, BUTTON_SIZE * ART_ASPECT)
 	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	button.pressed.connect(func() -> void: event_pressed.emit(id))
@@ -137,6 +140,8 @@ func _load_icon(ev: Object, theme_id: String, state: String) -> Texture2D:
 	var path := "%sevent_btn_%s_%s.png" % [ICON_DIR, theme_id, state]
 	if not ResourceLoader.exists(path):
 		path = "%sevent_btn_%s_%s.png" % [ICON_DIR, FALLBACK_THEME, state]
+	if not ResourceLoader.exists(path):
+		return null
 	return load(path) as Texture2D
 
 

@@ -1,19 +1,15 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
-[ext_resource uid="uid://d3v7x8vkp5b0o" type="Texture2D" path="res://assets/images-png/events/new_year_card_background.png" id="2_background"]
-[ext_resource uid="uid://djry74254dfqx" type="Texture2D" path="res://assets/images-png/events/new_year_card_frontground.png" id="3_foreground"]
 [ext_resource uid="uid://bl8pnwrl1lmf0" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_new_year_normal.png" id="btn_normal"]
 [ext_resource uid="uid://bfhk0smc3g8h6" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_new_year_pressed.png" id="btn_pressed"]
+[ext_resource uid="uid://cmtok2qsx7q3v" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_new_year_disabled.png" id="btn_disabled"]
 
 [resource]
 script = ExtResource("1_script")
 id = &"new_year"
 bg_stops = PackedColorArray(0.078431375, 0.10980392, 0.25882354, 1, 0.0627451, 0.07450981, 0.2, 1, 0.039215688, 0.047058824, 0.1254902, 1)
 grid_overlay = &"white"
-back_art = ExtResource("2_background")
-front_art = ExtResource("3_foreground")
-art_offset_y = 0.0
 accent = Color(1, 0.8352941, 0.30980393, 1)
 accent2 = Color(0, 0.8980392, 1, 1)
 title_color = Color(1, 0.94, 0.6, 1)
@@ -29,3 +25,4 @@ chip_fill = Color(0.02745098, 0.03529412, 0.11372549, 0.9)
 chip_text = Color(1, 0.9137255, 0.7607843, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
+button_disabled = ExtResource("btn_disabled")

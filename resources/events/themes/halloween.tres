@@ -1,19 +1,15 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3 uid="uid://nb22ne0qu5b1"]
 
-[ext_resource uid="uid://c1e8elv060y5" type="Texture2D" path="res://assets/images-png/events/halloween_event_card_background.png" id="1_vw1fq"]
 [ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="2_8lt8r"]
-[ext_resource uid="uid://6s27psw45flr" type="Texture2D" path="res://assets/images-png/events/halloween_event_card_frontground.png" id="2_memky"]
 [ext_resource uid="uid://b3awqytug0lvm" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_halloween_normal.png" id="btn_normal"]
 [ext_resource uid="uid://bujj486taulr4" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_halloween_pressed.png" id="btn_pressed"]
+[ext_resource uid="uid://n7n5tnfbmrar" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_halloween_disabled.png" id="btn_disabled"]
 
 [resource]
 script = ExtResource("2_8lt8r")
 id = &"halloween"
 bg_stops = PackedColorArray(0.105882354, 0.043137256, 0.2, 1, 0.23137255, 0.08627451, 0.40784314, 1, 0.13333334, 0.043137256, 0.24705882, 1)
 grid_overlay = &"white"
-back_art = ExtResource("1_vw1fq")
-front_art = ExtResource("2_memky")
-art_offset_y = 0.0
 accent = Color(1, 0.5411765, 0.12156863, 1)
 accent2 = Color(1, 0.78431374, 0.34117648, 1)
 title_color = Color(1, 0.68, 0.15, 1)
@@ -29,3 +25,4 @@ chip_fill = Color(0.07058824, 0.023529412, 0.12156863, 1)
 chip_text = Color(1, 0.9137255, 0.7607843, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
+button_disabled = ExtResource("btn_disabled")

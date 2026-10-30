@@ -17,8 +17,6 @@ extends EventCardBase
 @onready var card_lip: Panel = $Content/Background/Lip
 @onready var card_frame: Panel = $Content/Background/Frame
 @onready var bg_gradient: ColorRect = $Content/Background/ContentMask/BgGradient
-@onready var back_art: TextureRect = $Content/Background/ContentMask/BackArt
-@onready var front_art: NinePatchRect = $Content/Background/ContentMask/FrontArt
 @onready var theme_chip: PanelContainer = $Content/Chips/ThemeChip
 @onready var chip_label: Label = $Content/Chips/ThemeChip/Content/ChipLabel
 @onready var chip_dot: ColorRect = $Content/Chips/ThemeChip/Content/ChipDot
@@ -74,7 +72,6 @@ func _apply_card(data: EventData) -> void:
 func _apply_theme(t: EventTheme) -> void:
 	if t == null:
 		return
-	_paint_background(t, bg_gradient, back_art, front_art)
 	_paint_card_edges(card_lip, card_frame, t)
 	_paint_chip(theme_chip, chip_dot, chip_label, t)
 	_paint_chip(timer_chip, null, timer_label, t)

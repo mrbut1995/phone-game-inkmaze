@@ -52,13 +52,14 @@ func _init() -> void:
 		"Hai chip phai nam ben trai nut Cai dat")
 	assert(profile_card.size.x >= 120.0, "The ho so phai du rong (%.0f)" % profile_card.size.x)
 
-	# 2. Khối sự kiện — Main bản GỘP nay ẨN khối thẻ (header + carousel), event là CỘT NÚT icon
-	var header: Node = main_scene.layout.event_header
-	var carousel: Node = main_scene.layout.event_carousel
-	assert(header != null, "Phai co EventHeader")
-	assert(carousel != null, "Phai co EventCarousel")
-	assert(not (header as Control).visible and not (carousel as Control).visible,
-		"Khoi the event (header + carousel) phai AN tren Main — event la cot nut icon")
+	# 2. Khối sự kiện — Main bản GỘP bỏ hẳn khối THẺ (header + carousel); event là CỘT NÚT icon
+	# (bố cục DỌC đã xoá hẳn 2 node đó; bố cục NGANG còn nhưng bị `main.gd` ẩn)
+	var header: Control = main_scene.layout.event_header
+	var carousel: Control = main_scene.layout.event_carousel
+	assert(header == null or not header.visible,
+		"Khoi the event: EventHeader phai AN (hoac da xoa) — event la cot nut icon")
+	assert(carousel == null or not carousel.visible,
+		"Khoi the event: EventCarousel phai AN (hoac da xoa) — event la cot nut icon")
 	var section_for_events: Node = main_scene.layout.level_section
 	var event_column: Node = section_for_events.get_node_or_null("EventButtons") if section_for_events != null else null
 	assert(event_column != null, "LevelSection phai co cot nut `EventButtons`")
@@ -82,7 +83,9 @@ func _init() -> void:
 	assert(section != null, "Main phai co LevelSection (ban do man choi)")
 	assert(section.map != null, "LevelSection phai bind LevelMap (bang @export)")
 	assert(section.map.node_count() > 0, "Ban do phai co nut man")
-	assert(section.chapter_chip != null, "LevelSection phai co ChapterChip")
+	# Duong LIEN: nhan "CHUONG n" nam duoi CONG nen chip noi da bi xoa (co the con o bo cuc khac)
+	assert(section.chapter_chip == null or not section.chapter_chip.visible,
+		"Chip chuong noi phai AN (hoac da xoa) — nhan chuong nam duoi cong")
 	assert(section.chest != null, "LevelSection phai co ruong moc thuong")
 	assert(section.dungeon_pill != null, "LevelSection phai co nut Dungeon noi")
 	assert(section.dungeon_pill.pressed.get_connections().size() > 0,

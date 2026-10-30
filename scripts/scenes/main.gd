@@ -19,6 +19,16 @@ const ICON_RANK := "res://assets/images-png/dock/dock_ranking.png"
 const ICON_BADGES := "res://assets/images-png/dock/dock_badges.png"
 ## Khoảng chừa đáy bản đồ (px) — lớn hơn DungeonPill + nửa cổng chương
 const MAP_BOTTOM_RESERVE := 130.0
+## ---- Cỡ cho ĐIỆN THOẠI (màn thật nhỏ hơn bản xem trên máy tính) ----
+const DOCK_HEIGHT := 112.0          ## cao nút dock (trước ~68)
+const DOCK_ICON := 48.0
+const DOCK_FONT := 15
+const CHIP_HEIGHT := 46.0           ## chip Xu / Mạng (trước 32)
+const CHIP_FONT := 22
+const SETTINGS_SIZE := 56.0
+const TOP_MARGIN := 24.0            ## khoảng thở giữa mép trên và thanh top bar
+const CHEST_SIZE := Vector2(104.0, 118.0)
+const SETTINGS_TEX := "res://assets/images-png/common/settings_btn_%s.png"
 const ICON_DAILY := "res://assets/images-png/dock/dock_daily.png"
 const DOCK_BUTTON_SCENE := preload("res://nodes/main/dock_button.tscn")
 const EventButtonColumnScript := preload("res://scripts/nodes/main/event_button_column.gd")
@@ -180,6 +190,8 @@ func _setup_buttons() -> void:
 	if layout.level_section != null:
 		_connect_pressed(layout.level_section.dungeon_pill, _on_dungeon_pressed)
 
+	_apply_mobile_sizing()
+
 	# Dock: gán icon + nhãn
 	_setup_dock_button(layout.dock_shop, ICON_SHOP, tr("STR_BTN_SHOP"), "shop")
 	_setup_dock_button(layout.dock_ranking, ICON_RANK, tr("STR_BTN_LEADERBOARD"), "rank")
@@ -198,6 +210,64 @@ func _setup_buttons() -> void:
 		layout.dock_badges.set_badge(0)
 	
 	# Ví Xu tự lo nút `+` (CoinChip mở Cửa hàng) — main chỉ cần cập nhật số dư
+
+
+## Phóng to / chỉnh các phần quá nhỏ trên điện thoại: top bar (chip + Cài đặt), khoảng cách mép trên, rương.
+func _apply_mobile_sizing() -> void:
+	if layout == null:
+		return
+	# Khoảng thở phía trên top bar
+	if layout.header_anchor != null:
+		var body := layout.header_anchor.get_parent() as Control
+		if body != null:
+			body.offset_top = maxf(body.offset_top, TOP_MARGIN)
+	# Chip Xu + Mạng
+	var life := layout.find_child("LifeChip", true, false) as Control
+	for chip in [layout.coin_chip, life]:
+		_enlarge_chip(chip as Control)
+	# Nút Cài đặt: cùng phong cách chip (nền trắng · viền kem · bánh răng navy)
+	var sb := layout.btn_settings
+	if sb != null and ResourceLoader.exists(SETTINGS_TEX % "normal"):
+		var normal := load(SETTINGS_TEX % "normal") as Texture2D
+		sb.texture_normal = normal
+		sb.texture_hover = normal
+		sb.texture_pressed = load(SETTINGS_TEX % "pressed") as Texture2D
+		sb.texture_disabled = null
+		sb.texture_focused = null
+		sb.ignore_texture_size = true
+		sb.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+		sb.custom_minimum_size = Vector2(SETTINGS_SIZE, SETTINGS_SIZE)
+		sb.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	# Rương góc dưới-phải: to hơn cho dễ bấm
+	if layout.level_section != null and layout.level_section.chest != null:
+		var chest := layout.level_section.chest as Control
+		chest.custom_minimum_size = CHEST_SIZE
+		chest.offset_right = -14.0
+		chest.offset_bottom = -12.0
+		chest.offset_left = chest.offset_right - CHEST_SIZE.x
+		chest.offset_top = chest.offset_bottom - CHEST_SIZE.y
+	# Dock cao hơn
+	var dock_row := layout.dock_shop.get_parent() if layout.dock_shop != null else null
+	var dock_panel := dock_row.get_parent() as Control if dock_row != null else null
+	if dock_panel != null:
+		dock_panel.custom_minimum_size.y = DOCK_HEIGHT + 4.0
+
+
+## Phóng to 1 chip (Xu / Mạng): cao `CHIP_HEIGHT`, rộng ×1.3, icon + số + nút `+` to theo
+func _enlarge_chip(chip: Control) -> void:
+	if chip == null:
+		return
+	chip.custom_minimum_size = Vector2(chip.custom_minimum_size.x * 1.3, CHIP_HEIGHT)
+	var icon := chip.find_child("Icon", true, false) as Control
+	if icon != null:
+		icon.custom_minimum_size.x = 32.0
+	var value := chip.find_child("Value", true, false) as Label
+	if value != null:
+		value.add_theme_font_size_override("font_size", CHIP_FONT)
+	var plus := chip.find_child("Plus", true, false) as Control
+	if plus != null:
+		plus.custom_minimum_size = Vector2(32.0, 32.0)
+		plus.add_theme_font_size_override("font_size", 18)
 
 
 ## Daily về DOCK (không còn nằm trong nhóm event): nút thứ 3 — chính giữa hàng 5 nút.
@@ -255,14 +325,18 @@ func _style_dock_button(button: DockButton, key: String, face: Color, base: Colo
 	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	_tint_dock_labels(button, base)
 	# Mặt nút cao ~57px (đáy 3D nằm dưới): kéo nhãn/icon lên để không đè lên đáy
+	button.custom_minimum_size.y = DOCK_HEIGHT
 	var icon_node := button.get_node_or_null("Icon") as Control
 	if icon_node != null:
-		icon_node.offset_top = 6.0
-		icon_node.offset_bottom = 38.0
+		icon_node.offset_left = -DOCK_ICON * 0.5
+		icon_node.offset_right = DOCK_ICON * 0.5
+		icon_node.offset_top = 12.0
+		icon_node.offset_bottom = 12.0 + DOCK_ICON
 	var label_node := button.get_node_or_null("Label") as Control
 	if label_node != null:
-		label_node.offset_top = -27.0
-		label_node.offset_bottom = -11.0
+		label_node.offset_top = -44.0
+		label_node.offset_bottom = -17.0
+		label_node.add_theme_font_size_override("font_size", DOCK_FONT)
 
 
 func _dock_tex_box(key: String, state: String) -> StyleBoxTexture:

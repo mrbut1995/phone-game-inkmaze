@@ -467,8 +467,9 @@ func _check_section_wiring(scene: MainScene) -> int:
 	if not section.map.scrolled.is_connected(Callable(section, "_on_map_scrolled")):
 		print("[FAIL] LevelMap.scrolled ph?i n?i t?i LevelSection._on_map_scrolled")
 		failures += 1
-	if section.chapter_chip == null \
-			or not section.chapter_chip.next_requested.is_connected(Callable(section, "_on_next_chapter")):
+	# Chip chương nổi đã bị xoá (đường LIỀN vẽ nhãn chương dưới CỔNG) ⇒ chỉ kiểm khi còn node
+	if section.chapter_chip != null \
+			and not section.chapter_chip.next_requested.is_connected(Callable(section, "_on_next_chapter")):
 		print("[FAIL] ChapterChip.next_requested ph?i n?i t?i LevelSection._on_next_chapter")
 		failures += 1
 	if section.chest == null \

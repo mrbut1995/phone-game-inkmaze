@@ -115,13 +115,15 @@ func _section_layout(scene: MainScene) -> void:
 	if layout == null:
 		return
 	_check(layout.level_section != null, "Bo cuc bind `level_section`")
-	_check(layout.event_carousel != null, "Bo cuc giu `event_carousel`")
+	_check(layout.event_carousel == null or not layout.event_carousel.visible,
+		"Khoi the event (neu con) phai AN — event la cot nut")
 	_check(layout.dock_shop != null and layout.dock_badges != null, "Dock 4 nut van bind")
 	var section: LevelSection = layout.level_section
 	if section == null:
 		return
 	_check(section.map != null, "LevelSection bind `map`")
-	_check(section.chapter_chip != null, "LevelSection bind `chapter_chip`")
+	_check(section.chapter_chip == null or not section.chapter_chip.visible,
+		"Chip chuong noi AN (hoac da xoa) — duong lien co nhan duoi cong")
 	_check(section.chest != null, "LevelSection bind `chest`")
 	_check(section.dungeon_pill != null, "LevelSection bind `dungeon_pill`")
 	_check(section.map.node_count() > 0, "Ban do co nut man (%d)" % section.map.node_count())
@@ -200,7 +202,7 @@ func _section_chip(scene: MainScene, gm: Node, lm: Node) -> void:
 	var chip: ChapterChip = section.chapter_chip
 	var map: LevelMap = section.map
 	_check(section.continuous, "LevelSection.continuous == true (duong lien)")
-	_check(chip != null and not chip.visible, "Duong lien -> KHONG con chip 'CHUONG n' noi")
+	_check(chip == null or not chip.visible, "Duong lien -> KHONG con chip 'CHUONG n' noi")
 	var chapters: Array = lm.call("get_chapters")
 	_check(chapters.size() > 0, "LevelManager co chuong (%d)" % chapters.size())
 	if map == null:

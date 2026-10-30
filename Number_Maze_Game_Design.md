@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Tài liệu** | Number Maze — Game Design Document| **Phiên bản** | v2.58 — 2026-10-29 (**LUẬT CHƠI SANG CÀI ĐẶT + EVENT DÙNG ART NÚT (§13.30)**: dock Main còn **4 nút** (Cửa hàng · Xếp hạng · Thử thách · Danh hiệu); nút **LUẬT CHƠI** chuyển vào khối Actions của **Cài đặt** (2×2 grid, icon `ic_rules.svg`), Back ở Danh sách hướng dẫn quay về **đúng màn đã mở** (`Nav.go_back()` lùi theo lịch sử). `EventTheme` có thêm **`button_normal`/`button_pressed`** — 15/15 theme được gắn art nút bằng `tools/patch_event_theme_buttons.py`, cột nút event đọc art **từ resource** thay vì dò tên file. Kèm: sinh lại 10 SVG nút màn **nhạt v8** bị hồi quy. Trước đó: **BẤM ĐƯỢC NÚT MÀN**: node gốc bố cục Main để `mouse_filter = STOP` nên nuốt cú bấm, `TextureButton2D` (Node2D) không nhận được sự kiện — đặt `IGNORE` cho `Portrait`/`Landscape` + test bấm thật 68 → 71; tiếp theo là **GIAO DIỆN V9 CHO MAIN BẢN GỘP (§13.29)**: mọi chương nối thành **ĐƯỜNG LIỀN** có **CỔNG VÒM** chắn giữa 2 chương — cổng `LOCKED`/`READY`/`OPEN` (ổ khoá + `own/need`, chữ `MỞ`, animation 2 cánh mở ra rồi bản đồ trượt sang chương mới); chương còn khoá thì đường **CẮT** ở cổng nên không cuộn qua và không thấy màn phía sau; bỏ chip `‹ CHƯƠNG n ›` nổi (nhãn nằm dưới cửa). Nút màn đổi sang bộ **nhạt v8** (10 ảnh `lv_node_*`), đường nối xám-xanh mảnh, `bottom_reserve 72` để pill Dungeon không che hàng nút đầu. **Dock nền NAVY `#1B4965`** + icon glyph trắng + chữ trắng; chấm trang dời sát phải. Kèm **SVG nguồn** cho 14 asset mới (`assets/images-png/**` bị gitignore) — regenerte bằng `tools/svg_to_png.py` vẫn ra đúng giao diện, IoU 0,98–0,99) |
+| **Tài liệu** | Number Maze — Game Design Document| **Phiên bản** | v2.59 — 2026-10-29 (**BỘ NÚT EVENT v2 (§13.31)**: 20 bộ art 209×216 resize còn **128×132** → nút **58×60** giữ tỉ lệ 209:216, có `texture_disabled`; **`EventTheme` bỏ hẳn `back_art`/`front_art`/`art_offset_y`**, 15/15 theme được gắn `button_normal/pressed/disabled` bằng `tools/install_event_buttons_v2.py` (`--map dungeon=carnival`). Thẻ event (màn chi tiết) giờ chỉ còn nền gradient + chữ. Art lá lịch Daily được giữ lại. Trước đó: **LUẬT CHƠI SANG CÀI ĐẶT + EVENT DÙNG ART NÚT (§13.30)**: dock Main còn **4 nút** (Cửa hàng · Xếp hạng · Thử thách · Danh hiệu); nút **LUẬT CHƠI** chuyển vào khối Actions của **Cài đặt** (2×2 grid, icon `ic_rules.svg`), Back ở Danh sách hướng dẫn quay về **đúng màn đã mở** (`Nav.go_back()` lùi theo lịch sử). `EventTheme` có thêm **`button_normal`/`button_pressed`** — 15/15 theme được gắn art nút bằng `tools/patch_event_theme_buttons.py`, cột nút event đọc art **từ resource** thay vì dò tên file. Kèm: sinh lại 10 SVG nút màn **nhạt v8** bị hồi quy. Trước đó: **BẤM ĐƯỢC NÚT MÀN**: node gốc bố cục Main để `mouse_filter = STOP` nên nuốt cú bấm, `TextureButton2D` (Node2D) không nhận được sự kiện — đặt `IGNORE` cho `Portrait`/`Landscape` + test bấm thật 68 → 71; tiếp theo là **GIAO DIỆN V9 CHO MAIN BẢN GỘP (§13.29)**: mọi chương nối thành **ĐƯỜNG LIỀN** có **CỔNG VÒM** chắn giữa 2 chương — cổng `LOCKED`/`READY`/`OPEN` (ổ khoá + `own/need`, chữ `MỞ`, animation 2 cánh mở ra rồi bản đồ trượt sang chương mới); chương còn khoá thì đường **CẮT** ở cổng nên không cuộn qua và không thấy màn phía sau; bỏ chip `‹ CHƯƠNG n ›` nổi (nhãn nằm dưới cửa). Nút màn đổi sang bộ **nhạt v8** (10 ảnh `lv_node_*`), đường nối xám-xanh mảnh, `bottom_reserve 72` để pill Dungeon không che hàng nút đầu. **Dock nền NAVY `#1B4965`** + icon glyph trắng + chữ trắng; chấm trang dời sát phải. Kèm **SVG nguồn** cho 14 asset mới (`assets/images-png/**` bị gitignore) — regenerte bằng `tools/svg_to_png.py` vẫn ra đúng giao diện, IoU 0,98–0,99) |
 | **Trạng thái** | Đang phát triển · build Godot 4.7 · màn hình dọc 1080×1920 |
 | **Cập nhật tính năng** | 2026-10-10: số lượt Skip/Eraser/Hint được lưu dùng chung toàn game, badge `PanelLimit` hiện số dư, và Debug Console cho phép chỉnh số lượng. |
 | **Nguồn sự thật** | **Code là nguồn sự thật cuối cùng**: `scripts/modes/*.gd` · `nodes/hud/*.tscn` · `scenes/game.tscn` · `resources/levels/*.tres`. Tài liệu này mô tả đúng theo code tại thời điểm cập nhật. |
@@ -3078,6 +3078,74 @@ chặn bấm vẫn chặn: `ChapterLockSheet` có `Dim` là `Button` STOP phủ 
 0,587) nếu không cú bấm rơi ngoài cửa sổ.
 
 **Việc chưa làm (đã báo user, không tự quyết).** Skip ở màn cuối chương (`next_level_in_chapter() == -1`) hiện về Main — nên vào thẳng chương sau khi cổng đã mở, hay cuộn tới cổng? Chương 1 không có cổng ⇒ không có nhãn "CHƯƠNG 1".
+---
+
+### 13.31. BỘ NÚT EVENT v2 + BỎ HẲN ART THẺ KHỎI `EventTheme` (v2.59, 2026-10-29)
+
+**Yêu cầu (user):** *"Bạn hãy giúp tôi update lại các button, và chỉnh lại theo instruction"*
+(`07_THAY_NUT_EVENT_MOI_VA_BO_ART_THE.md` + `helpers/buttons_v2/`, nhánh **`portrait_landscape_feature`**).
+
+**1. Art mới.** 20 bộ `buttons_v2/<thưmục>/<thưmục>_{normal,pressed,disabled}.png` (gốc **209×216**). Mỗi ảnh
+được **resize về 128×132** (LANCZOS, giữ nguyên tỉ lệ + khung canvas) rồi ghi thành
+`assets/images-png/event_btn/event_btn_<theme_id>_{normal,pressed,disabled}.png` — 128 px ≈ 2,1× kích thước hiển
+thị nên không bị răng cưa trên màn 2x. Ảnh `pressed` **đã "lún" sẵn** ⇒ code không tự scale/dịch.
+
+**2. Nút trong cột event (58×60).** `event_button_column.gd`: `BUTTON_SIZE = 58`,
+`custom_minimum_size = (58, 58 × 216/209 ≈ 60)`, `stretch_mode = KEEP_ASPECT_CENTERED`,
+`texture_normal/pressed/disabled` đều đọc từ theme. Thêm `LEFT_INSET = 34` (chừa gáy vở + vạch đỏ bên trái bản đồ)
+và `GUTTER = 88` (bản đồ co lại nhường cột nút). **KHÔNG đặt `custom_minimum_size` vuông.**
+
+**3. Gắn art vào resource.** `tools/install_event_buttons_v2.py` (mới) chạy 1 lần:
+`python tools/install_event_buttons_v2.py . helpers/buttons_v2 --map dungeon=carnival --apply`
+→ **15/15 theme** có `button_normal/pressed/disabled` (`.tres` + ext_resource), và **xoá** `back_art` /
+`front_art` / `art_offset_y` + ext_resource art thẻ. Alias: `april→april_fool`, `autumn→autumn_event`,
+`easter→easter_egg`, `mansion→haunted_house`, `newyear→chinese_new_year`, `tomb→explore_pyramid`,
+`dungeon→carnival` (theo đúng gợi ý trong guide). `daily.tres` **không** gắn (Daily là nút dock, không nằm trong cột
+nút) — nhưng phải **dọn tay** 2 property `back_art`/`art_offset_y` còn sót (nếu để lại, Godot báo property không
+tồn tại vì 2 export đó đã bị xoá).
+
+**4. Bỏ art thẻ khỏi code (để script được phép xoá 3 export).**
+
+| File | Việc |
+|---|---|
+| `scripts/nodes/event_card_base.gd` | xoá hẳn `_paint_background()` (hàm duy nhất đọc `back_art`/`front_art`/`art_offset_y`) |
+| `scripts/nodes/event_card.gd` | bỏ 2 `@onready back_art/front_art` + lời gọi `_paint_background(...)` — thẻ chỉ còn **nền gradient + chữ** |
+| `scripts/nodes/daily_card.gd` | bỏ `back_art` + 2 dòng comment (lời gọi đã comment từ trước) |
+| `scripts/nodes/event_card_compact.gd` | rút về **subclass chỉ-doc** (mất `crop_top`/`crop_height` + `_layout_art` vì không còn art để cắt) |
+| `scripts/manager/EventManager.gd` | bỏ `t.art_offset_y = -22.0` trong theme daily mặc định |
+| `nodes/main/event_card.tscn` | bỏ 2 `ext_resource` + 2 dòng `texture =` của `BackArt`/`FrontArt` (giữ node rỗng) |
+
+⚠️ Script còn **chuyển vào `_removed_unused/`** cả `assets/images*/events/*card_*` — trong đó có
+`daily_card_background.png` + `daily_card_frontgrount.png` đang được `nodes/main/daily_card.tscn` và
+`daily_card_compact.tscn` dùng làm **lá lịch**. Đã **chuyển lại 2 PNG + 2 SVG** đó về chỗ cũ (art lá lịch KHÔNG
+phải art theme). `_removed_unused/` giữ nguyên để đối chiếu, **không commit**.
+
+**5. Test cập nhật theo hiện trạng scene (bố cục DỌC đã bị xoá `EventCarousel` + `ChapterChip`).**
+
+| Test | Trước | Sau |
+|---|---|---|
+| `test_event_manager` | kiểm `theme.back_art`/`front_art` + cùng tỉ lệ khung | kiểm `button_normal/pressed/disabled` + **3 trạng thái cùng cỡ** (241/241) |
+| `test_main_merge` | đòi `event_carousel != null`, `chapter_chip != null` | "**nếu còn** thì phải ẨN" (70/70) |
+| `test_main_layout` | `assert(carousel != null)` | cho phép đã xoá + `EventTheme.button_normal` phải có |
+| `test_full_flow` | `assert(layout.event_carousel != null)` | đòi `LevelSection` (thứ thật sự còn dùng) |
+| `test_levels_map` | đòi `chapter_chip.next_requested` có dây | chỉ kiểm **khi node còn** (2 lỗi cũ giữ nguyên) |
+
+**Kiểm chứng.** `--import` 0 · boot headless **0 `SCRIPT ERROR`** · chạy thật `opengl3` **540×960 + 960×540** 0 lỗi.
+Đo trong game: nút **58 × 59,94 px**, texture **128×132**, có `texture_disabled = true`, nhãn dưới nút
+"Còn 9 ngày"/"Còn 2 ngày"; `MapArea` `offset_left = 34`, `offset_right = 88`. **Bấm THẬT** vào nút (đẩy
+`InputEventMouseButton` ở toạ độ tâm, quy đổi qua `root.get_final_transform()`) ở **cả 2 hướng** đều phát
+`event_pressed` và mở `scenes/event.tscn`. `test_event_manager` **241/241** · `test_main_merge` **70/70** ·
+`test_main_layout` · `test_full_flow` SUCCESS; `test_tutorial_flow` 4 · `test_levels_map` 2 · `test_ui_scenes` 10 ·
+`test_localization` 13 · `test_chapters` 8 · `test_shop` 6 **= baseline**.
+
+⚠️ **Cạm bẫy khi commit:** `assets/images-png/**` vẫn nằm trong `.gitignore` nên **45 PNG nút mới phải
+`git add -f assets/images-png/event_btn/*.png`**; nếu không, bản clone sẽ **không có art nút**. Bộ art này là ảnh
+raster do thiết kế cung cấp (không có SVG nguồn) nên không thể sinh lại từ `tools/svg_to_png.py`.
+
+**Việc chưa làm.** (a) `event_btn_*.svg` cũ đã vào `_removed_unused/` — nếu muốn giữ icon vector cho vài theme thì
+khôi phục. (b) `dungeon ← carnival` (bánh xe/loa phóng thanh) là **ánh xạ tạm** theo gợi ý của guide; nên vẽ art
+riêng cho Dungeon. (c) 5 bộ chưa có theme dùng: `christmas`, `earth_day`, `music_festival`,
+`saint_patricks_day`, `school_start` — cần tạo `EventTheme` + `EventData` khi muốn bật.
 
 ---
 

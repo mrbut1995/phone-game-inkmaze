@@ -153,7 +153,6 @@ func _make_default_daily_theme() -> EventTheme:
 	t.id = &"daily"
 	t.bg_stops = PackedColorArray([Color("#FFFDF8"), Color("#FFF3EE")])
 	t.grid_overlay = &"dark"
-	t.art_offset_y = -22.0
 	t.accent = Color("#D84444")
 	t.accent2 = Color("#F59E0B")
 	t.title_color = Color("#163A58")

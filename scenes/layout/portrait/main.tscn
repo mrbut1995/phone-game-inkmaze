@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://k2k3skjevrxy" path="res://nodes/main/dock_button.tscn" id="9_dock"]
 [ext_resource type="Texture2D" uid="uid://daksl6ghofec0" path="res://assets/images-png/main/btn_settings_disabled.png" id="9_nuhf0"]
 [ext_resource type="Texture2D" uid="uid://dhkgonrwe7f5o" path="res://assets/images-png/main/btn_settings_focus.png" id="10_r22o1"]
-[ext_resource type="PackedScene" path="res://nodes/main/level_section.tscn" id="L_section"]
+[ext_resource type="PackedScene" uid="uid://7haijnwmq3kt" path="res://nodes/main/level_section.tscn" id="L_section"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="L_sheet"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
@@ -41,7 +41,7 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[node name="Portrait" unique_id=732847808 node_paths=PackedStringArray("profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "level_section", "dock_shop", "dock_ranking", "dock_badges", "stamp_panel", "stamp_label", "header_anchor", "bottom_safe_spacer") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=732847808 node_paths=PackedStringArray("profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "level_section", "dock_shop", "dock_ranking", "dock_badges", "stamp_panel", "stamp_label", "header_anchor", "bottom_safe_spacer") instance=ExtResource("1_parent")]
 mouse_filter = 2
 script = ExtResource("2_layout")
 profile_card = NodePath("TopBar/ProfileCard")
@@ -49,7 +49,6 @@ coin_chip = NodePath("TopBar/CoinChip")
 star_chip = NodePath("TopBar/StarChip")
 btn_settings = NodePath("TopBar/Settings")
 event_header = NodePath("Body/EventHeader")
-event_carousel = NodePath("")
 level_section = NodePath("Body/LevelSection")
 dock_shop = NodePath("Body/Dock/Row/DockShop")
 dock_ranking = NodePath("Body/Dock/Row/DockRanking")
@@ -150,16 +149,23 @@ visible = false
 layout_mode = 2
 mouse_filter = 2
 
-[node name="ProfileCard" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="0" unique_id=905524368 instance=ExtResource("3_profile")]
+[node name="TopBar" parent="." index="1" unique_id=837555641]
+anchors_preset = -1
+anchor_left = 0.16100001
+offset_left = 0.05998993
+offset_bottom = 76.0
+
+[node name="ProfileCard" parent="TopBar" index="0" unique_id=905524368 instance=ExtResource("3_profile")]
+custom_minimum_size = Vector2(120, 65)
 layout_mode = 2
 
-[node name="StarChip" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="3" unique_id=1659631256 instance=ExtResource("5_star")]
+[node name="StarChip" parent="TopBar" index="3" unique_id=1659631256 instance=ExtResource("5_star")]
 visible = false
 custom_minimum_size = Vector2(75, 32)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Settings" type="TextureButton" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="4" unique_id=1915005296]
+[node name="Settings" type="TextureButton" parent="TopBar" index="4" unique_id=1915005296]
 custom_minimum_size = Vector2(66, 66)
 layout_mode = 2
 size_flags_vertical = 0

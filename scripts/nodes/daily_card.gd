@@ -23,8 +23,6 @@ const _WEEKDAY_KEYS := [
 
 @onready var card_lip: Panel = $Content/Background/Lip
 @onready var bg_gradient: ColorRect = $Content/Background/BgGradient
-@onready var back_art: TextureRect = $Content/Background/BackArt
-#@onready var front_art: NinePatchRect = $Content/Background/FrontArt
 @onready var theme_chip: PanelContainer = $Content/Chips/ThemeChip
 @onready var chip_label: Label = $Content/Chips/ThemeChip/Content/ChipLabel
 @onready var chip_dot: ColorRect = $Content/Chips/ThemeChip/Content/ChipDot
@@ -70,8 +68,7 @@ func _apply_card(data: EventData) -> void:
 func _apply_theme(t: EventTheme) -> void:
 	if t == null:
 		return
-	#_paint_background(t, bg_gradient, back_art, front_art)
-	# Daily: viền đỏ nằm sẵn trong ảnh nền → chỉ đổi màu gờ đáy (không có node Frame)
+	# Daily: viền đỏ + lá lịch nằm sẵn trong ảnh nền của scene (theme không còn art thẻ)
 	_paint_card_edges(card_lip, null, t)
 	_paint_chip(theme_chip, chip_dot, chip_label, t)
 	_paint_chip(timer_chip, null, timer_label, t)
