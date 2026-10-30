@@ -5,19 +5,6 @@
 [ext_resource type="PackedScene" path="res://nodes/main/chest_widget.tscn" id="4_chest"]
 [ext_resource type="PackedScene" path="res://nodes/main/dungeon_pill.tscn" id="5_pill"]
 
-[sub_resource type="Gradient" id="Gradient_fade"]
-offsets = PackedFloat32Array(0, 0.45, 1)
-colors = PackedColorArray(0.980392, 0.960784, 0.921569, 1, 0.980392, 0.960784, 0.921569, 0.55, 0.980392, 0.960784, 0.921569, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_top"]
-gradient = SubResource("Gradient_fade")
-fill_to = Vector2(0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_bottom"]
-gradient = SubResource("Gradient_fade")
-fill_from = Vector2(0, 1)
-fill_to = Vector2(0, 0)
-
 [node name="LevelSection" type="Control" unique_id=1574037684 node_paths=PackedStringArray("map", "chapter_chip", "chest", "dungeon_pill")]
 layout_mode = 3
 anchors_preset = 15
@@ -45,31 +32,6 @@ mouse_filter = 2
 [node name="LevelMap" parent="MapArea" unique_id=1269095073 instance=ExtResource("2_map")]
 columns_landscape = 3
 bottom_reserve = 72.0
-
-[node name="FadeTop" type="TextureRect" parent="MapArea" unique_id=1011168929]
-visible = false
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 48.0
-grow_horizontal = 2
-mouse_filter = 2
-texture = SubResource("GradientTexture2D_top")
-expand_mode = 1
-
-[node name="FadeBottom" type="TextureRect" parent="MapArea" unique_id=1371749727]
-visible = false
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -48.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 2
-texture = SubResource("GradientTexture2D_bottom")
-expand_mode = 1
 
 [node name="ChestWidget" parent="." unique_id=1308813912 instance=ExtResource("4_chest")]
 layout_mode = 1
