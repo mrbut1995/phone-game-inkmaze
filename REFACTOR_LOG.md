@@ -362,6 +362,62 @@ Lý do lịch sử: harness `godot --script` không có autoload nên gọi th�
 
 ---
 
+### Phase 3 — chuẩn hóa cấu trúc & đặt tên (commit `refactor: rename archivement…` + `refactor(structure): …`)
+
+**3A. Sửa chính tả `archivement` → `achievement`** (người dùng đã đồng ý **mất tiến trình**, nên đổi cả key save):
+
+| Nhóm | Trước → Sau |
+|---|---|
+| Thư mục | `nodes/archivements/` → `nodes/achievements/` · `resources/archivements/` → `resources/achievements/` · `assets/images*/archivements/` → `…/achievements/` |
+| Script | `AchievementManager.gd` · `achievement_data.gd` · `achievement.gd` (màn) · `achievement_layout.gd` · `utils/achievement.gd` · `test_achievement.gd` |
+| Scene | `scenes/achievement.tscn` · `scenes/layout/{portrait,landscape}/achievement.tscn` |
+| Định danh | class `Archivement*` → `Achievement*`; autoload `ArchivementManager` → **`AchievementManager`**; `Svc.archivement()` → `Svc.achievement()`; `Nav.SCENE_ARCHIVEMENT` → `SCENE_ACHIEVEMENT`; khoá dịch `STR_BTN_ARCHIVEMENT` → `STR_BTN_ACHIEVEMENT` |
+
+→ 361 chuỗi trên 92 file; kiểm tra lại: **0** chuỗi `archivement` trong `scripts/`, `scenes/`, `nodes/`, `resources/`,
+`project.godot`, `tools/` (chỉ còn trong tài liệu thiết kế `Number_Maze_Game_Design.md` và log này — cố ý giữ).
+Ảnh `assets/images-png/**` là bản build (gitignored) nên phải `Move-Item` + chạy lại `--import`.
+
+**3B. Sắp lại `scripts/` theo tầng** (418 file di chuyển bằng script giữ nguyên newline, 415 file cập nhật `res://`):
+
+```
+scripts/autoload/     ← manager/ (24 singleton, snake_case) + core/{level,game}_manager.gd + utils/safe_area.gd
+scripts/core/         ← logic thuần (controllers/ giữ nguyên)
+scripts/modes/  data/ ← resources/  ·  services/  utils/
+scripts/ui/screens/   ← scenes/*.gd
+scripts/ui/layouts/   ← scenes/layout/*.gd + layout/{portrait,landscape}/  (game_scene_layout + *_portrait/_landscape)
+scripts/ui/{hud,game,popups,tutorial}/  ← nodes/{hud,game,popups,tutorial}/
+scripts/ui/widgets/** ← phần còn lại của nodes/ (common · main · daily · shop · ranking · level_selection · profiler · achievements)
+scripts/tools/        ← tool/ + snake_case (Button2D → button_2d, NinePatch* → nine_patch_*)
+```
+
+- **Xoá lớp trung gian** `manager/LevelManager.gd` (5 dòng `extends LevelManagerClass`) — autoload đã trỏ thẳng `core/level_manager.gd`.
+- Đổi tên chống trùng khi gộp: `scenes/layout/game_layout.gd` → `ui/layouts/game_scene_layout.gd` (`class_name GameSceneLayout`),
+  `layout/landscape/game_layout.gd` → `ui/layouts/game_layout_landscape.gd` (`class_name GameLayout`), `layout/portrait/game.gd` → `ui/layouts/game_layout_portrait.gd`.
+- Cập nhật 4 đường dẫn thư mục trong `test_ui_scenes.gd` (quét source) + comment trỏ đường dẫn cũ trong 27 file.
+- **Không** đổi tên file/thư mục **scene** (`nodes/main`, `nodes/chapters`…) ngoài phần `archivements` — tránh đổi đường dẫn ảnh/hình.
+
+**Kiểm chứng:** `check_integrity` E1 trong phạm vi = 1 (art Halloween có sẵn); W1/W2 = 0; full suite **7 PASS / 13 FAIL** y hệt baseline.
+
+### Phase 5 (§8.3) — tách god class, đợt 1: LƯỢT CHƠI ra khỏi `GameManager`
+
+Chọn `GameManager` (1256 dòng, 52 chỗ gọi) vì đây là autoload lớn nhất và phần "lượt chơi" là khối **tự chứa**:
+trước khi tách đã xác minh **0 chỗ nào khác đọc trực tiếp** `lives` / `next_life_at` / `life_gate_override` /
+`life_cost_in_tests` (chỉ 2 comment) ⇒ đổi sang uỷ thác không phá API.
+
+| Trước | Sau |
+|---|---|
+| `_process` đếm `_life_tick` rồi tự hồi lượt trong `_refresh_life_recharge()` | `LifeStore.refresh()` |
+| `consume_life()` · `grant_lives()` · `_set_lives()` · `seconds_to_next_life()` · `can_start_run()` · `register_run_loss()` | uỷ thác `_life.…`; phần quyết định "ván Debug/test không trừ lượt" vẫn ở `GameManager` (nó biết `debug_run`) |
+| `life_changed.emit(...) + Save.queue_save()` rải ở 4 hàm | `LifeStore.changed` → 1 handler `_on_life_changed()` |
+| `life_gate_override` / `life_cost_in_tests` là biến thường | **property có get/set** uỷ thác `_life` (giữ đúng `gm.get()/set()` mà `test_life_points.gd` dùng) |
+
+`game_manager.gd` **1256 → 1199 dòng**, thêm `scripts/core/life_store.gd` (154 dòng).
+
+**Kiểm chứng:** `test_life_points` **120/120 CHECK PASS** (không nằm trong bộ 20 test mặc định nên chạy riêng);
+full suite **7 PASS / 13 FAIL** y hệt baseline.
+
+---
+
 ## 4. Việc còn lại (CHƯA làm) & lý do
 
 | Nhóm | Nội dung | Trạng thái / lý do |

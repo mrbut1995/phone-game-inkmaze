@@ -46,15 +46,28 @@ const LIFE_RECHARGE_SECONDS := 30 * 60
 ## Nguồn hợp lệ khi cộng lượt chơi (mua hàng · nhiệm vụ · mốc thưởng Daily · rương mốc chương)
 const LIFE_GRANT_SOURCES: Array[String] = ["purchase", "mission", "daily_milestone", "chapter_chest"]
 
-var lives: int = MAX_LIVES
-## Mốc unix (giây) lượt kế tiếp hồi xong; 0 = đang đầy lượt (không đếm ngược)
-var next_life_at: int = 0
+## Trạng thái lượt chơi nằm ở `LifeStore` (xem `scripts/core/life_store.gd`);
+## dưới đây chỉ còn cửa ngõ công khai để mọi script cũ không phải đổi.
+var _life := LifeStore.new()
+var _life_tick := 0.0
+
+## [TEST/DEBUG] Ép kết quả `can_start_run()`: 0 = theo lượt chơi · 1 = luôn cho vào · -1 = luôn chặn
+var life_gate_override: int:
+	get:
+		return _life.gate_override
+	set(value):
+		_life.gate_override = value
+
+## [TEST] Cho phép trừ lượt khi chạy test runner tự động (mặc định: test KHÔNG trừ lượt,
+## để bộ test không làm cạn lượt của người chơi thật)
+var life_cost_in_tests: bool:
+	get:
+		return _life.charge_in_tests
+	set(value):
+		_life.charge_in_tests = value
+
 ## Màn cần quay về sau khi vào Cửa hàng từ popup "hết lượt" (rỗng = không có)
 var shop_return_path: String = ""
-
-## Ván hiện tại đã bị trừ lượt chưa (chống trừ 2 lần khi popup thua mở lại)
-var _loss_charged := false
-var _life_tick := 0.0
 
 # ---------------------------------------------------------------------------
 # KỶ LỤC TẦNG CAO NHẤT — theo NGÀY / TUẦN / THÁNG
@@ -87,12 +100,6 @@ const CHAPTER_CHEST_REWARDS: Array[Dictionary] = [
 ]
 ## chapter_id -> Array[int] các mốc (0..2) đã nhận
 var chapter_chests: Dictionary = {}
-
-## [TEST/DEBUG] Ép kết quả `can_start_run()`: 0 = theo lượt chơi · 1 = luôn cho vào · -1 = luôn chặn
-var life_gate_override: int = 0
-## [TEST] Cho phép trừ lượt khi chạy test runner tự động (mặc định: test KHÔNG trừ lượt,
-## để bộ test không làm cạn lượt của người chơi thật)
-var life_cost_in_tests := false
 
 # Tiến trình người chơi
 var unlocked_levels: int = 1
@@ -229,6 +236,13 @@ func reset_tutorial_progress() -> void:
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_life.changed.connect(_on_life_changed)
+
+
+## Số lượt đổi (hồi theo giờ mua · thưởng · thua) ⇒ phát cho UI + hẹn lưu
+func _on_life_changed(current: int, max_value: int) -> void:
+	life_changed.emit(current, max_value)
+	Save.queue_save()
 
 
 ## Đồng hồ hồi lượt chạy cả khi đang ở menu (và bắt kịp thời gian offline khi vào lại game)
@@ -237,7 +251,7 @@ func _process(delta: float) -> void:
 	if _life_tick < 0.5:
 		return
 	_life_tick = 0.0
-	_refresh_life_recharge()
+	_life.refresh()
 
 
 ## Khởi động Dungeon Mode
@@ -428,48 +442,36 @@ func _set_tool_uses(tool_id: String, amount: int) -> bool:
 # LƯỢT CHƠI (life)
 # ---------------------------------------------------------------------------
 func max_lives() -> int:
-	return MAX_LIVES
+	return _life.max_lives()
 
 
 ## Số lượt còn lại (đã tính cả lượt vừa hồi theo thời gian)
 func lives_left() -> int:
-	_refresh_life_recharge()
-	return clampi(lives, 0, MAX_LIVES)
+	return _life.lives_left()
 
 
 func has_life() -> bool:
-	return lives_left() > 0
+	return _life.has_life()
 
 
 ## Giây còn lại tới lượt kế tiếp (0 = đang đầy lượt)
 func seconds_to_next_life() -> int:
-	_refresh_life_recharge()
-	if lives >= MAX_LIVES or next_life_at <= 0:
-		return 0
-	return maxi(next_life_at - _now_seconds(), 0)
+	return _life.seconds_to_next_life()
 
 
 ## Trừ 1 lượt khi THUA chốt ván. Trả về true nếu vừa trừ.
 func consume_life() -> bool:
-	if lives_left() <= 0:
-		return false
-	lives -= 1
-	if lives < MAX_LIVES and next_life_at <= 0:
-		next_life_at = _now_seconds() + LIFE_RECHARGE_SECONDS
-	life_changed.emit(lives, MAX_LIVES)
-	Save.queue_save()
-	return true
+	return _life.consume_life()
 
 
 ## Chốt MỘT lần thua cho mỗi ván (UIController gọi khi popup thua cuối cùng hiện ra).
 ## Ván Debug Console / test runner tự động không bị trừ lượt.
 func register_run_loss() -> bool:
-	if debug_run or _loss_charged:
+	if debug_run:
 		return false
-	if _is_automated_test() and not life_cost_in_tests:
+	if _is_automated_test() and not _life.charge_in_tests:
 		return false
-	_loss_charged = true
-	return consume_life()
+	return _life.charge_loss_once()
 
 
 ## Đang chạy bộ test tự động (tiến trình chạy bằng `--script` trỏ tới `scripts/test_case/`) hay không
@@ -483,23 +485,13 @@ func _is_automated_test() -> bool:
 
 ## Ván mới bắt đầu (kể cả bấm Thử lại) ⇒ ván sau lại được trừ lượt khi thua
 func begin_run_guard() -> void:
-	_loss_charged = false
+	_life.begin_run_guard()
 
 
 ## Cộng lượt từ nguồn hợp lệ (mua ở Cửa hàng · thưởng nhiệm vụ · mốc Sao Daily).
 ## Trả về false khi nguồn không hợp lệ hoặc đã đầy lượt.
 func grant_lives(amount: int, source: String) -> bool:
-	if amount <= 0 or not LIFE_GRANT_SOURCES.has(source):
-		return false
-	var before := lives_left()
-	if before >= MAX_LIVES:
-		return false
-	lives = mini(before + amount, MAX_LIVES)
-	if lives >= MAX_LIVES:
-		next_life_at = 0
-	life_changed.emit(lives, MAX_LIVES)
-	Save.queue_save()
-	return true
+	return _life.grant_lives(amount, source)
 
 
 ## Chỉnh số lượt trong Debug Console (chỉ debug build)
@@ -507,69 +499,24 @@ func debug_set_lives(amount: int) -> bool:
 	if not OS.is_debug_build():
 		push_warning("[GameManager] Chi cho phep chinh luot choi trong debug build")
 		return false
-	_set_lives(amount)
+	_life.set_lives(amount)
 	return true
 
 
 ## [DEBUG] Đẩy nhanh đồng hồ hồi lượt để thử luồng hồi lượt (giây)
 func debug_advance_life_recharge(seconds: int) -> void:
-	if not OS.is_debug_build() or seconds <= 0:
+	if not OS.is_debug_build():
 		return
-	if lives >= MAX_LIVES:
-		return
-	var now := _now_seconds()
-	if next_life_at <= 0:
-		next_life_at = now + LIFE_RECHARGE_SECONDS
-	next_life_at = maxi(next_life_at - seconds, now)
-	_refresh_life_recharge()
-
-
-func _set_lives(amount: int) -> void:
-	var target := clampi(amount, 0, MAX_LIVES)
-	if target == lives:
-		return
-	lives = target
-	if lives >= MAX_LIVES:
-		next_life_at = 0
-	elif next_life_at <= 0:
-		next_life_at = _now_seconds() + LIFE_RECHARGE_SECONDS
-	life_changed.emit(lives, MAX_LIVES)
-	Save.queue_save()
-
-
-## Bắt kịp các lượt đã hồi theo đồng hồ thực (kể cả lúc app đóng): mỗi 30 phút +1 lượt.
-func _refresh_life_recharge() -> void:
-	if lives >= MAX_LIVES:
-		if next_life_at != 0:
-			next_life_at = 0
-		return
-	if next_life_at <= 0:
-		next_life_at = _now_seconds() + LIFE_RECHARGE_SECONDS
-		return
-	var now := _now_seconds()
-	var gained := 0
-	while lives < MAX_LIVES and now >= next_life_at:
-		lives += 1
-		gained += 1
-		next_life_at += LIFE_RECHARGE_SECONDS
-	if lives >= MAX_LIVES:
-		next_life_at = 0
-	if gained > 0:
-		life_changed.emit(lives, MAX_LIVES)
-		Save.queue_save()
-
-
-func _now_seconds() -> int:
-	return int(Time.get_unix_time_from_system())
+	_life.advance_recharge(seconds)
 
 
 ## Còn lượt thì mới được vào ván (ván Debug/test bỏ qua kiểm tra)
 func can_start_run() -> bool:
-	if life_gate_override != 0:
-		return life_gate_override > 0
+	if _life.gate_override != 0:
+		return _life.gate_override > 0
 	if debug_run or _is_automated_test():
 		return true
-	return lives_left() > 0
+	return _life.lives_left() > 0
 
 
 ## Vào Cửa hàng từ popup "hết lượt": nhớ màn hiện tại để nút Back của Shop quay lại đúng màn đó.
@@ -1134,8 +1081,8 @@ func export_progress() -> Dictionary:
 		"selected_daily_day": selected_daily_day,
 		"current_level": current_level,
 		"tool_uses": tool_uses.duplicate(),
-		"lives": lives,
-		"next_life_at": next_life_at,
+		"lives": _life.lives,
+		"next_life_at": _life.next_life_at,
 		"floor_records": floor_records.duplicate(true),
 		"chapter_chests": chapter_chests.duplicate(true),
 		"unlocked_chapters": unlocked_chapters.duplicate(),
@@ -1159,10 +1106,8 @@ func import_progress(data: Dictionary) -> void:
 		for tool_id in TOOL_IDS:
 			if saved_tool_uses.has(tool_id):
 				tool_uses[tool_id] = maxi(int(saved_tool_uses[tool_id]), 0)
-	lives = clampi(int(data.get("lives", lives)), 0, MAX_LIVES)
-	next_life_at = maxi(int(data.get("next_life_at", 0)), 0)
-	_refresh_life_recharge()
-	life_changed.emit(lives, MAX_LIVES)
+	_life.load_state(data.get("lives", _life.lives), data.get("next_life_at", 0))
+	life_changed.emit(_life.lives, MAX_LIVES)
 	_import_floor_records(data.get("floor_records", null))
 	_import_chapter_chests(data.get("chapter_chests", null))
 	unlocked_chapters = _int_array(data.get("unlocked_chapters", null))
@@ -1230,9 +1175,7 @@ func reset_progress() -> void:
 	current_chapter = 1
 	tutorial_flow_step = 0
 	tutorial_flow_done = false
-	lives = MAX_LIVES
-	next_life_at = 0
-	_loss_charged = false
+	_life.reset()
 	shop_return_path = ""
 	floor_records = {
 		"day": {"key": "", "floor": 0},
@@ -1240,7 +1183,7 @@ func reset_progress() -> void:
 		"month": {"key": "", "floor": 0},
 	}
 	chapter_chests.clear()
-	life_changed.emit(lives, MAX_LIVES)
+	life_changed.emit(_life.lives, MAX_LIVES)
 	for k in tutorial_progress:
 		tutorial_progress[k] = false
 
