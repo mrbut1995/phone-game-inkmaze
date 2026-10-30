@@ -32,10 +32,8 @@ var hint_left := 0
 var _move_costs: Array[int] = []
 ## Đang khoá tương tác vì Countdown Cost hết ngân sách (chỉ mở lại khi VỪA lùi bước để có thêm bước)
 var _countdown_locked := false
-## CHALLENGE MODE: mốc `floor_elapsed` lúc bắt đầu bước hiện tại (đồng hồ con luật "mỗi bước")
-var _ch_step_start := 0.0
-## CHALLENGE MODE: số lần QUAY ĐẦU đã dùng của màn (luật "giới hạn quay đầu")
-var _ch_backtracks := 0
+## Trạng thái + luật của Challenge Mode (xem `scripts/core/challenge_rules.gd`)
+var _challenge_rules := ChallengeRules.new()
 ## Đang ở pha GHI NHỚ (Blind Memory): đồng hồ dừng, tường hiện, popup đếm ngược đang chạy
 var _memorize_active := false
 ## Đang hiện overlay "Hết nước đi" trên bàn (Sum Path / Countdown Cost / Fading Ink)
@@ -108,8 +106,7 @@ func _start_floor(floor_number: int) -> void:
 	_floor_finished = false
 	_move_costs.clear()
 	# Challenge: cấp lại đồng hồ con "mỗi bước" + lượt quay đầu cho màn mới
-	_ch_step_start = 0.0
-	_ch_backtracks = 0
+	_challenge_rules.reset()
 	if game_state != null:
 		game_state.floor_number = floor_number
 	# KỶ LỤC TẦNG (ngày/tuần/tháng): chỉ ván VÔ TẬN (Dungeon) mới có "tầng" tăng dần vô hạn
@@ -289,7 +286,8 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 		# Challenge: reset đồng hồ con "mỗi bước" + soi vi phạm (vượt bước · giẫm lại · quay đầu).
 		# `grid_controller.path` đã cập nhật vị trí mới TRƯỚC khi signal này bắn ra.
 		if _challenge() != null:
-			_ch_step_start = timer_controller.floor_elapsed if timer_controller != null else 0.0
+			_challenge_rules.begin_step(
+				timer_controller.floor_elapsed if timer_controller != null else 0.0)
 			_challenge_after_step()
 	if hit_hazard:
 		# Challenge: bước vào ô vi phạm luật (hazard "challenge_*") -> thua NGAY,
@@ -366,40 +364,25 @@ func _is_challenge_hazard() -> bool:
 	return grid_controller != null and grid_controller.last_hazard_type.begins_with("challenge_")
 
 
-## Soi 2 luật có ĐỒNG HỒ mỗi khung hình: đếm ngược tổng + "mỗi bước trong X giây".
-## LƯU Ý: KHÔNG dùng TimerController.is_countdown (đổi nghĩa floor_elapsed, phá Nhiệm vụ) —
-## chỉ so `floor_elapsed` với hạn mức trong lúc đồng hồ vẫn chạy bình thường.
+## Soi 2 luật có ĐỒNG HỒ mỗi khung hình (chi tiết ở `ChallengeRules.tick`)
 func _challenge_tick() -> void:
 	var ch := _challenge()
 	if ch == null or not _run_active or game_state == null or timer_controller == null:
 		return
-	var elapsed: float = timer_controller.floor_elapsed
-	if ch.challenge_id == ChallengeGameMode.COUNTDOWN and elapsed >= float(ch.challenge_param):
-		_challenge_fail(ch.challenge_id)
-	elif ch.challenge_id == ChallengeGameMode.STEP_TIMER \
-			and elapsed - _ch_step_start >= float(ch.challenge_param):
-		_challenge_fail(ch.challenge_id)
+	var fail := _challenge_rules.tick(ch, timer_controller.floor_elapsed)
+	if fail != "":
+		_challenge_fail(fail)
 
 
-## Soi 3 luật theo NƯỚC ĐI (gọi ngay sau khi bước thành công — path đã có vị trí mới):
-## vượt số bước · đi lại trên đường đã đi · quay đầu quá số lượt.
+## Soi 3 luật theo NƯỚC ĐI (chi tiết ở `ChallengeRules.after_step`)
 func _challenge_after_step() -> void:
 	var ch := _challenge()
 	if ch == null or not _run_active or game_state == null:
 		return
 	var path: Array[Vector2i] = grid_controller.path if grid_controller != null else []
-	match ch.challenge_id:
-		ChallengeGameMode.MOVE_LIMIT:
-			if game_state.floor_moves > ch.challenge_param:
-				_challenge_fail(ch.challenge_id)
-		ChallengeGameMode.NO_MOVE_OVERLAPPED:
-			if not path.is_empty() and path.count(path[path.size() - 1]) > 1:
-				_challenge_fail(ch.challenge_id)
-		ChallengeGameMode.BACKTRACK_LIMIT:
-			if path.size() >= 3 and path[path.size() - 1] == path[path.size() - 3]:
-				_ch_backtracks += 1
-				if _ch_backtracks > ch.challenge_param:
-					_challenge_fail(ch.challenge_id)
+	var fail := _challenge_rules.after_step(ch, path, game_state.floor_moves)
+	if fail != "":
+		_challenge_fail(fail)
 
 
 ## Dữ liệu khối THỜI GIAN cho ChallengeHUD (rỗng nếu ván này không có thử thách)
@@ -408,12 +391,7 @@ func _challenge_hud_ctx() -> Dictionary:
 	if ch == null or game_state == null:
 		return {}
 	var elapsed: float = timer_controller.floor_elapsed if timer_controller != null else 0.0
-	return ch.hud_state(
-		float(ch.challenge_param) - elapsed,
-		game_state.floor_moves,
-		float(ch.challenge_param) - (elapsed - _ch_step_start),
-		ch.challenge_param - _ch_backtracks
-	)
+	return _challenge_rules.hud_state(ch, elapsed, game_state.floor_moves)
 
 
 func _on_reached_end() -> void:
