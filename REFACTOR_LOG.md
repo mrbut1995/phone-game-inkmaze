@@ -594,7 +594,7 @@ Số P/T/C/S/E **theo từng commit**:
 | Việc | Lý do |
 |---|---|
 | Phase 3 — đổi `archivement` → `achievement` + sắp xếp lại `scripts/` | **XONG** sau khi người dùng đồng ý mất tiến trình (xem §2). Ảnh trong `assets/images*` cũng đã đổi tên thư mục + import lại |
-| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1199 sau đợt 1) · `game_controller.gd` (1136) · `debug.gd` (1192) | **Mới làm `game_manager.gd` phần LƯỢT CHƠI** → `scripts/core/life_store.gd` (đợt 1). Còn lại: floor records + chapter chests + tool inventory trong `game_manager`; `board.gd` (input/render/effects); `game_controller.gd` (challenge/tutorial/tool); `debug.gd` (theo tab) |
+| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1083 sau 4 đợt) · `game_controller.gd` (1136) · `debug.gd` (1192) | **ĐÃ TÁCH `game_manager.gd`**: lượt chơi · kỷ lục tầng · kho dụng cụ · rương mốc chương → 4 "store" trong `scripts/core/` (1256 → 1083 dòng). Còn lại: `board.gd` (input/render/effects); `game_controller.gd` (challenge/tutorial/tool); `debug.gd` (theo tab); phần còn lại của `game_manager.gd` (daily/mode prepare, tiến trình chương) |
 | Phase 4 — gộp scene Portrait/Landscape trùng nhau | Tùy chọn (§7), cần review thị giác từng màn; rủi ro đổi hình ảnh mà không xác nhận được ⇒ theo §10 phải hỏi |
 | Xoá hàm "ngờ thừa" (`Nav.goto_levels`, `GameManager.go_to_levels`, helper levels của `SceneManager`) | `scripts/test_case/test_main_merge.gd:88,91` khẳng định chúng **phải tồn tại** |
 
