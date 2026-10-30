@@ -16,7 +16,7 @@ nodes/                      # COMPONENT (.tscn; script tương ứng ở scripts
 scripts/
   autoload/                 # 24 SINGLETON (tên file = snake_case của tên autoload) — xem §4
   core/                     # logic không phụ thuộc UI: game_state · maze_data · score_calculator · controllers/
-                            # + helper tách từ autoload/controller: life_store · floor_records_store · tool_inventory · chapter_chests_store · progress_store · challenge_rules · run_reporter · tutorial_launcher
+                            # + helper tách từ autoload/controller: life_store · floor_records_store · tool_inventory · chapter_chests_store · progress_store · tutorial_store · challenge_rules · run_reporter · tutorial_launcher · run_navigator
   modes/                    # *_game_mode.gd (Standard · Countdown · Dungeon · Fog …)
   data/                     # script Resource (class_name): LevelData · ChapterData · AchievementData · Avatar/Frame/Title
   services/                 # save backend (local · play games)
@@ -25,7 +25,7 @@ scripts/
     screens/                # điều khiển MÀN (extends BaseScene / BaseUI): main · shop · daily · game …
     layouts/                # `<màn>_layout.gd` — @export node UI của layout; game_scene_layout + game_layout_portrait|landscape
     hud/                    # base_hud + hud/game/<mode>_hud
-    game/                   # board · cell · cursor · ink · wall (bàn cờ & hiệu ứng)
+    game/                   # board · board_cells_view · cell · cursor · ink · wall (bàn cờ & hiệu ứng)
     popups/                 # base popup + từng popup (win · gameover · retry · pause …)
     tutorial/               # base_tutorial + các bài how_to_play_*
     widgets/                # chip/card/button + widget theo màn: common · main · daily · shop · ranking · level_selection · profiler · achievements
