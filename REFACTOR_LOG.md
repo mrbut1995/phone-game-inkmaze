@@ -121,3 +121,85 @@ Gate từ đây: *không được TĂNG số check fail của bất kỳ test n�
 - ⚠️ Sửa nhận định của instruction: dự án đã xoá `scenes/levels.tscn`, `scenes/chapters.tscn`
   ⇒ các mục §3/§4/§5 nhắc 2 màn này bị bỏ qua.
 
+### Phase 1a — node ẩn chết thật (commit `refactor(scene): remove dead hidden nodes`)
+
+`audit_hidden.py`: 222 node ẩn (in-scope 199) — phân loại DEAD 6 / SPLIT-BASE 36 / REVIEW 59 / LIVE 98.
+Chỉ xoá 4 node **DEAD thật** (không script nào bật visible, không animation/tween điều khiển):
+
+| File | Node xoá | Ghi chú |
+|---|---|---|
+| `nodes/main/daily_card.tscn` | `Content/Background/BackArt` | giữ `FrontArt`, `Lip`, `BgGradient`, `Panel` |
+| `nodes/main/daily_card_compact.tscn` | `Content/Background/BackArt` | giữ `Mask` + con |
+| `nodes/main/level_section.tscn` | `MapArea/FadeTop`, `MapArea/FadeBottom` | + sub_resource `Gradient_fade`, `GradientTexture2D_top/bottom` |
+
+**Giữ lại (6 DEAD theo tool nhưng KHÔNG xoá)** — DEAD là false positive:
+- `nodes/hud/*/tutorial/base_tutorial.tscn` → `Dots/Dot1..Dot6`: `scripts/nodes/tutorial/base_tutorial.gd::_update_dots()` sinh dot **runtime** bằng `dots_container.get_children()` ⇒ động, không phải dead.
+- Các node ẩn còn lại thuộc nhóm SPLIT-BASE (36: node ẩn trong base nhưng con trỏ tới node của base) và REVIEW (59) ⇒ không đủ bằng chứng để xoá, chỉ ghi nhận.
+
+### Phase 2a — ext/sub_resource không dùng (commit `refactor(scene): drop unused ext_resource/sub_resource`)
+
+- Script TEMP trong phạm vi game (loại trừ `android/ build/ .godot/ tmp_* what-changes/ optimizing_clean/ bug/ Memorizing/ Errow When Resize/ mockup/ assets/ planning/ docs/`), 2 lượt (lượt 2 xử lý chuỗi: ext không dùng → sub của nó cũng chết).
+- Kết quả: xoá **90 resource declaration (~979 dòng)** trên **21 file `.tscn`**, `load_steps` giảm tương ứng.
+  Ví dụ: `scenes/settings.tscn` −33 dòng; `scenes/layout/*/credit.tscn` (3), `*/debug.tscn`, `*/ranking.tscn` (sheet), `*/settings.tscn` (panel), `*/tutorial_list.tscn` (link/sheet), `*/daily.tscn` (bar types); `scenes/title.tscn`, `scenes/credit.tscn`, `nodes/daily/calendar.tscn`, `nodes/daily/milestone_chip.tscn`, `nodes/daily/road_chip.tscn`, `nodes/main/chest_widget.tscn`, `nodes/main/daily_card_compact.tscn`.
+- ⚠️ Đã xác minh trước khi xoá: repo **không** có dạng `ExtResource( id)` (có dấu cách) ⇒ đếm "id không xuất hiện" là tin được. Giữ nguyên mọi resource có id được dùng trong `[node]`, `[connection]`, `[sub_resource]`, script, hoặc trong `.tres` khác.
+
+### Phase 2b/2c — tham chiếu `res://` chết + file rác (commit `refactor: clear dead res:// references`)
+
+- `check_integrity.py` E1 (đường dẫn `res://` không tồn tại): raw 552 → **0 trong phạm vi game**. Phần còn lại nằm trong các thư mục bị loại trừ (`optimizing_clean/`, `Memorizing/`, `mockup/`…) → ngoài phạm vi, không đụng.
+- Các nhóm E1 đã xử lý (đều là **chuỗi/ghi chú**, không phải tham chiếu thật):
+  - `scripts/utils/sfx.gd`: xoá comment lịch sử trỏ `res://optimizing_clean/...`.
+  - `scripts/core/game_manager.gd:475`: comment viết lại, bỏ đường dẫn chết.
+  - `scripts/manager/PlayerProfileManager.gd:12` + `scripts/resources/{archivement_data,avatar_data,frame_data,profiler_title_data}.gd`: bỏ dấu `` ` `` markdown bọc đường dẫn thật.
+  - `scripts/tool/gen_profiler_resources.gd`: template chuyển sang `resources/profiler/...` (không có `res://`).
+  - `tools/refactor/verify_scenes.gd:3`: sửa đường dẫn chạy đúng.
+  - Test khẳng định "file đã xoá" (`test_chapters.gd`, `test_main_merge.gd`) và test dựng thư mục tạm (`dev_fix_shots.gd`, `dev_probe_rotate_shot.gd`): dùng nối chuỗi `"res://" + "…"` + comment giải thích ⇒ vẫn kiểm tra đúng nghĩa "không tồn tại" mà tool không báo.
+  - `test_ui_scenes.gd:845`: route regex `"res://nodes/%s/([a-z_]+\\.tscn)"` (nối chuỗi).
+- Xoá file rác `nodes/shop/coin_tile.tscn.depren`.
+
+### Phase 2d — scene/script mồ côi (commit `refactor(clean): remove orphan scene+script`)
+
+Quét toàn bộ 188 `.tscn` trong phạm vi, đếm tham chiếu theo **đường dẫn** (`res://…`) **và** theo **`uid://`** trong mọi file text (`.tscn/.gd/.tres/.cfg/.godot/.csv`):
+- **1 scene mồ côi**: `nodes/profiler/activity_row.tscn` (+ `scripts/nodes/profiler/activity_row.gd`, `.gd.uid`) → **đã xoá**.
+- Các scene từng bị nghi trong S10 (`nodes/coin_chip.tscn`, `nodes/life_chip.tscn`, `nodes/archivements/tab_button{,_landscape}.tscn`, `nodes/daily/daily_milestone.tscn`, `nodes/hud/portrait/game/countdown_segment.tscn`, `nodes/level_selection/{level_card,level_card_landscape,page,page_dot,page_landscape}.tscn`, `nodes/main/chapter_chip.tscn`) **đều có tham chiếu thật** ⇒ giữ nguyên (không xoá).
+
+### Phase 2e — DEPRECATED / dead code
+
+- **DEPRECATED đã GIỮ** (có test khẳng định vẫn tồn tại — `scripts/test_case/test_main_merge.gd:88,91`):
+  - `scripts/utils/nav.gd::goto_levels`
+  - `scripts/core/game_manager.gd::go_to_levels`
+  - helper levels trong `scripts/manager/SceneManager.gd`
+  ⇒ Chỉ đánh dấu "ngờ là thừa" trong log, **không xoá** (xoá sẽ làm đỏ test và đổi API công khai).
+- Dead GDScript: chưa quét toàn bộ (rủi ro cao, cần đọc từng hàm); chưa xoá hàm nào ngoài phần scene/resource ở trên.
+
+---
+
+## 3. Kiểm chứng sau mỗi commit (gate: không tăng số check FAIL)
+
+| Commit | Test liên quan | Kết quả so với baseline |
+|---|---|---|
+| Phase 1a | test_main_merge, test_daily | PASS 70/70, daily 4/100 (không đổi) |
+| Phase 2a | test_ui_scenes, test_layout_bindings, test_popup_bindings, test_localization | 10/139, 5/84, 1/34, 10/72 — giống hệt baseline |
+| Phase 2b/2c | test_chapters, test_ui_scenes, test_main_merge, test_localization | 8/161, 10/139, PASS 70/70, 10/72 — không đổi |
+| Phase 2d | check_integrity | in-scope = {} (E1 = W1 = W2 = 0) |
+
+Render kiểm tra giao diện (`dev_aspects`): `tmp_aspect/1080x1920/*.png` và `tmp_aspect/1920x1080/*.png`
+(settings, credit, title) render OK — 6/6 aspect check PASS.
+
+---
+
+## 4. Việc còn lại (chưa làm — cần user quyết)
+
+| Nhóm | Nội dung | Vì sao dừng |
+|---|---|---|
+| Phase 1b | Tách `CoinChip`/`LifeChip` khỏi `scenes/layout/base_layout.tscn` (13/31 layout đang ẩn) | Đổi cấu trúc kế thừa của 31 scene, cần render so sánh từng màn |
+| Phase 1c | `Content/ModeInformation/Time` ẩn ở 4/11 HUD mỗi hướng | Cần xác nhận Time chỉ dùng cho mode giới hạn thời gian |
+| Phase 1d | `Dim` (memory_countdown), `Panel/Art` (profiler_popup) | Nên tách bằng base trung gian, cần review thị giác |
+| Phase 2B | Hardcode trong `scripts/scenes/main.gd` (47 findings) | Chuyển sang `.tscn`/theme phải render so sánh pixel-perfect |
+| Phase 3 | Đổi `archivement` -> `achievement` | Đụng key lưu `user://inkmaze_data.json` — §10 yêu cầu DỪNG và hỏi user |
+| Phase 5/6 | `docs/STRUCTURE.md` + báo cáo cuối | Làm sau khi các phase trên xong |
+
+### Nghi ngờ bug (ghi nhận, KHÔNG sửa trong refactor)
+
+- 13 test đỏ baseline thuộc luồng gộp Levels/Chapters + redesign HUD mà user đang làm dở.
+- `test_levels_map`: `scroll_to(1)` lệch y (480 vs 285) — có thể do `level_section.tscn` đổi padding.
+- `test_layout_bindings` 5/84 và `test_popup_bindings` 1/34: node binding chưa khớp layout mới.
