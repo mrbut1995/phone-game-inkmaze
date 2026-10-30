@@ -424,9 +424,9 @@ full suite **7 PASS / 13 FAIL** y hệt baseline.
 |---|---|---|
 | Phase 2B (code) | Chuyển giá trị tĩnh trong code ra `.tscn`/Theme | **XONG** — in-scope 0 finding; phần còn lại đã đánh dấu `# keep-code:` có lý do |
 | Phase 2B (widget dựng bằng code) | `event_button_column.gd` (cột nút event) | **XONG** (đợt 4): thành `nodes/main/event_button_column.tscn` + `event_button_item.tscn` + `styles/event/pill.tres` |
-| Phase 3 | Đổi `archivement` → `achievement` (file/class/hàm) + sắp xếp lại `scripts/` theo cây đích | **DỪNG theo §10**: tên autoload `ArchivementManager` là **key trong blob save** (`user://inkmaze_data.json`) ⇒ đổi là mất tiến trình người chơi. Cần user duyệt kèm migration |
+| Phase 3 | Đổi `archivement` → `achievement` + sắp xếp lại `scripts/` theo cây đích | **XONG** (2 commit) — người dùng đã đồng ý mất tiến trình nên đổi cả key save |
 | Phase 5 (`Svc`) | Thay 184 chỗ `"/root/..."` bằng accessor tĩnh có kiểu | **XONG** (đợt 5) — còn 1 chuỗi trong `svc.gd` |
-| Phase 5 (S7) | Tách god class `board.gd` (2052) · `game_manager.gd` (1256) · `game_controller.gd` (1136) · `debug.gd` (1192) | Đổi API công khai ⇒ phải làm từng file + chạy full suite (13 test đang đỏ sẵn, khó phân biệt hồi quy) |
+| Phase 5 (S7) | Tách god class `board.gd` (2052) · `game_manager.gd` (1256) · `game_controller.gd` (1136) · `debug.gd` (1192) | **ĐÃ LÀM 1/4**: `game_manager.gd` tách phần LƯỢT CHƠI ra `scripts/core/life_store.gd`. Còn `board.gd` · `game_controller.gd` · `debug.gd` + phần còn lại của `game_manager.gd` — mỗi file 1 commit |
 | Phase 4 | Gộp scene dọc/ngang trùng nhau | Tùy chọn (§7); cần review thị giác từng màn |
 
 ### Nghi ngờ bug (ghi nhận, KHÔNG sửa trong refactor — §10)
@@ -463,6 +463,9 @@ full suite **7 PASS / 13 FAIL** y hệt baseline.
 | `check_integrity` W1 / W2 (phạm vi game) | 13 / 5 | **0 / 0** | |
 | `audit_hardcode` P / T / C / S / E | 387 / 29 / 122 / 26 / 101 | **0 / 0 / 0 / 0 / 0** (in-scope) | toàn bộ 116 finding còn lại nằm ngoài phạm vi game (`test_case/`, backup WIP, `android/`) |
 | `"/root/…"` trong `scripts/` | 184 | **1** (ghi chú trong `svc.gd`) | Phase 5 §8.2 |
+| File `.gd` không `snake_case` | 31 (`manager/*.gd`, `tool/*.gd`) | **0** | Phase 3B |
+| Chuỗi `archivement` trong code/scene/resource | 361 chuỗi / 92 file | **0** (chỉ còn trong tài liệu thiết kế + log) | Phase 3A |
+| `game_manager.gd` | 1256 dòng | **1199** (tách 154 dòng sang `LifeStore`) | Phase 5 §8.3 đợt 1 |
 | `audit_hidden` DEAD / SPLIT-BASE / REVIEW / LIVE (in-scope) | 6 / 36 / 59 / 98 | 2 / 36 / 59 / 98 | 4 node DEAD thật đã xoá (Phase 1a) |
 | Full suite | 7 PASS · 13 FAIL | **7 PASS · 13 FAIL** (số check fail y hệt) | Không tăng hồi quy ở bất kỳ test nào |
 
@@ -530,6 +533,9 @@ Số P/T/C/S/E **theo từng commit**:
 | Xoá | `nodes/shop/coin_tile.tscn.depren` (file rác) |
 | Xoá | 90 khai báo `ext_resource`/`sub_resource` không dùng trên 21 file `.tscn` (~979 dòng) |
 | Xoá | `scripts/utils/{archivement,profile,ranking}.gd::_tree()` (không còn ai gọi sau khi có `Svc`) |
+| Thêm | `scripts/core/life_store.gd` — sổ LƯỢT CHƠI tách từ `GameManager` |
+| Di chuyển | Phase 3: 418 file `.gd`(+`.uid`) sang cây mới `scripts/{autoload,data,ui/*,tools}`; xoá lớp trung gian `manager/LevelManager.gd` |
+| Đổi tên | Phase 3A: `archivement*` → `achievement*` (thư mục + file + class + scene + art + khoá dịch + autoload) |
 | Thêm | `scripts/utils/svc.gd` — accessor autoload duy nhất |
 | Thêm | `nodes/main/event_button_column.tscn` · `nodes/main/event_button_item.tscn` · `resources/settings/styles/event/pill.tres` |
 | Thêm | `resources/settings/styles/dock/*.tres` (8 stylebox nút dock) |
@@ -547,8 +553,8 @@ Số P/T/C/S/E **theo từng commit**:
 
 | Việc | Lý do |
 |---|---|
-| Phase 3 — đổi `archivement` → `achievement` + sắp xếp lại `scripts/` | **Chặn theo §10**: tên autoload `ArchivementManager` là key trong blob save `user://inkmaze_data.json` ⇒ đổi là mất tiến trình người chơi. Cần người dùng quyết + migration |
-| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1256) · `game_controller.gd` (1136) · `debug.gd` (1192) | **Chưa làm**: mỗi file phải đọc toàn bộ + tách + chạy lại suite (13 test đang đỏ sẵn nên khó phân biệt hồi quy). Cần lượt riêng cho từng file (1 file/commit như instruction) |
+| Phase 3 — đổi `archivement` → `achievement` + sắp xếp lại `scripts/` | **XONG** sau khi người dùng đồng ý mất tiến trình (xem §2). Ảnh trong `assets/images*` cũng đã đổi tên thư mục + import lại |
+| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1199 sau đợt 1) · `game_controller.gd` (1136) · `debug.gd` (1192) | **Mới làm `game_manager.gd` phần LƯỢT CHƠI** → `scripts/core/life_store.gd` (đợt 1). Còn lại: floor records + chapter chests + tool inventory trong `game_manager`; `board.gd` (input/render/effects); `game_controller.gd` (challenge/tutorial/tool); `debug.gd` (theo tab) |
 | Phase 4 — gộp scene Portrait/Landscape trùng nhau | Tùy chọn (§7), cần review thị giác từng màn; rủi ro đổi hình ảnh mà không xác nhận được ⇒ theo §10 phải hỏi |
 | Xoá hàm "ngờ thừa" (`Nav.goto_levels`, `GameManager.go_to_levels`, helper levels của `SceneManager`) | `scripts/test_case/test_main_merge.gd:88,91` khẳng định chúng **phải tồn tại** |
 
