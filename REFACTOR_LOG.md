@@ -481,6 +481,20 @@ thay vì tự mở popup thua.
 **Kiểm chứng đợt 5 + 6:** full suite **7 PASS / 13 FAIL** y hệt baseline; `test_challenge_mode` vẫn **3/78**
 (không thêm luật nào bị sai).
 
+### Phase 5 (§8.3) — đợt 7: MỞ BÀI HỌC ("?") → `TutorialLauncher`
+
+`scripts/core/tutorial_launcher.gd` (80 dòng): `IDS` (bài học theo từng chế độ) · `MODES_WITHOUT_TUTORIAL` ·
+`ids_for(mode_id, floor)` (ưu tiên `TutorialManager.practice_tutorial_for_level` khi đang ở luồng học lần đầu) ·
+`launch(host, ids)` (ghi `pending_tutorial` / `pending_return_to_game` + dựng lớp phủ `tutorial.tscn`) ·
+`_open_overlay()`.
+
+Đồng thời thay 2 chỗ còn dùng `Engine.get_main_loop().root.get_node_or_null("TutorialManager"|"GameManager")`
+bằng `Svc.tutorial()` / `Svc.game()` — hết truy cập autoload kiểu cũ trong controller.
+
+`game_controller.gd` **1068 → 1020 dòng** (1136 → **1020**, −116).
+
+**Kiểm chứng:** full suite **7 PASS / 13 FAIL** y hệt baseline.
+
 ---
 
 ## 4. Việc còn lại (CHƯA làm) & lý do
@@ -619,7 +633,7 @@ Số P/T/C/S/E **theo từng commit**:
 | Việc | Lý do |
 |---|---|
 | Phase 3 — đổi `archivement` → `achievement` + sắp xếp lại `scripts/` | **XONG** sau khi người dùng đồng ý mất tiến trình (xem §2). Ảnh trong `assets/images*` cũng đã đổi tên thư mục + import lại |
-| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1083) · `game_controller.gd` (1068) · `debug.gd` (1192) | **ĐÃ TÁCH 6 đợt**: `game_manager.gd` 4 store (lượt chơi · kỷ lục tầng · kho dụng cụ · rương chương) + `game_controller.gd` 2 helper (luật thử thách · báo kết quả ván). Còn lại: `board.gd` (input/render/effects); `debug.gd` (theo tab); `game_controller` phần tutorial/tool; `game_manager` phần daily/mode + tiến trình chương |
+| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1083) · `game_controller.gd` (1020) · `debug.gd` (1192) | **ĐÃ TÁCH 7 đợt**: `game_manager.gd` 4 store + `game_controller.gd` 3 helper (luật thử thách · báo kết quả ván · mở bài học). Còn lại: `board.gd` (input/render/effects); `debug.gd` (theo tab); `game_controller` phần tool/HUD; `game_manager` phần daily/mode + tiến trình chương |
 | Phase 4 — gộp scene Portrait/Landscape trùng nhau | Tùy chọn (§7), cần review thị giác từng màn; rủi ro đổi hình ảnh mà không xác nhận được ⇒ theo §10 phải hỏi |
 | Xoá hàm "ngờ thừa" (`Nav.goto_levels`, `GameManager.go_to_levels`, helper levels của `SceneManager`) | `scripts/test_case/test_main_merge.gd:88,91` khẳng định chúng **phải tồn tại** |
 
