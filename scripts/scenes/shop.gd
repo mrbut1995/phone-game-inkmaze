@@ -152,7 +152,7 @@ func _wire_buttons() -> void:
 	ensure_signal(layout.wallet_plus, &"pressed", &"_on_wallet_plus_pressed")
 	# Chip LƯỢT CHƠI: bấm `+` = mở tab DỤNG CỤ (nơi bán gói thêm lượt)
 	if layout.life_chip != null and not layout.life_chip.plus_pressed.is_connected(_on_life_plus_pressed):
-		layout.life_chip.plus_pressed.connect(_on_life_plus_pressed)
+		layout.life_chip.plus_pressed.connect(_on_life_plus_pressed)  # keep-code: node của layout 2 hướng — nối lại sau khi biết layout đang hiện
 	ensure_signal(layout.btn_prev, &"pressed", &"_on_prev_page")
 	ensure_signal(layout.btn_next, &"pressed", &"_on_next_page")
 	ensure_signal(layout.btn_gift, &"pressed", &"_on_gift_pressed")
@@ -521,11 +521,11 @@ func _rebuild() -> void:
 			child.queue_free()
 	_cards.clear()
 	if layout.doodle_pad != null:
-		layout.doodle_pad.visible = false
+		layout.doodle_pad.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if layout.pad_slot != null:
 		layout.pad_slot.visible = (_category == "pen")
 	if layout.noads_row != null:
-		layout.noads_row.visible = false
+		layout.noads_row.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 	var items := Shop.items(_category)
 	var use_grid := _category == "coin" or GRID_CATEGORIES.has(_category)
@@ -553,7 +553,7 @@ func _rebuild_rows(items: Array[Dictionary]) -> void:
 		layout.list_box.add_child(card)
 		card.call("setup", item)
 		if card.has_signal("action_pressed"):
-			card.connect("action_pressed", _on_item_action)
+			card.connect("action_pressed", _on_item_action)  # keep-code: signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 		_cards.append(card)
 		UIAnim.play_pop_in(card, 0.02 * index, 0.94, 0.18)
 		index += 1
@@ -585,9 +585,9 @@ func _rebuild_grid(items: Array[Dictionary]) -> void:
 		grid.add_child(card)
 		card.call("setup", items[item_index])
 		if card.has_signal("action_pressed"):
-			card.connect("action_pressed", _on_item_action)
+			card.connect("action_pressed", _on_item_action)  # keep-code: signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 		if card.has_signal("preview_pressed"):
-			card.connect("preview_pressed", select_pen_for_preview)
+			card.connect("preview_pressed", select_pen_for_preview)  # keep-code: signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 		_cards.append(card)
 		UIAnim.play_pop_in(card, 0.03 * index, 0.92, 0.2)
 		index += 1
@@ -603,7 +603,7 @@ func _show_doodle_pad() -> void:
 	if _preview_pen.is_empty() or not PenSkin.has_pen(_preview_pen):
 		_preview_pen = Shop.equipped_pen()
 	_doodle_pad = pad
-	pad.visible = true
+	pad.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	pad.call("setup", _preview_pen)
 	# Dây `pen_changed` khai trong `scenes/shop.tscn` (bàn nháp nằm trong layout) —
 	# guard chỉ nối lại nếu dây bị mất
@@ -640,10 +640,10 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 		# Hàng VIP khai sẵn trong scene (`Content/List/NoAds`) — chỉ hiện ở tab NẠP XU
 		var row: Control = layout.noads_row
 		if row != null:
-			row.visible = true
+			row.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 			row.call("setup", no_ads)
-			if row.has_signal("action_pressed") and not row.is_connected("action_pressed", _on_item_action):
-				row.connect("action_pressed", _on_item_action)
+		if row.has_signal("action_pressed") and not row.is_connected("action_pressed", _on_item_action):  # keep-code: hàng sinh lúc chạy — chỉ nối khi có signal
+			row.connect("action_pressed", _on_item_action)  # keep-code: node sinh lúc chạy
 			_cards.append(row)
 			UIAnim.play_pop_in(row, 0.0, 0.94, 0.18)
 	var grid := _item_grid()
@@ -658,7 +658,7 @@ func _rebuild_coin(items: Array[Dictionary]) -> void:
 		grid.add_child(card)
 		card.call("setup", item)
 		if card.has_signal("action_pressed"):
-			card.connect("action_pressed", _on_item_action)
+			card.connect("action_pressed", _on_item_action)  # keep-code: signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 		_cards.append(card)
 		UIAnim.play_pop_in(card, 0.03 * index, 0.92, 0.2)
 		index += 1

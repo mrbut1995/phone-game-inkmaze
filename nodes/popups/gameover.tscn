@@ -682,3 +682,4 @@ stretch_mode = 5
 [connection signal="pressed" from="Panel/Content/Information/Buttons/MenuBtn" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="Panel/Content/Information/Buttons/RetryBtn" to="." method="_on_retry_pressed"]
 [connection signal="timeout" from="Panel/Content/Information/PencilCard/H/PencilBox/RecoverTimer" to="Panel/Content/Information/PencilCard/H/PencilBox" method="_on_recover_timer_timeout"]
+[connection signal="recover_finished" from="Panel/Content/Information/PencilCard/H/PencilBox" to="." method="_refresh_pencils" flags=3]

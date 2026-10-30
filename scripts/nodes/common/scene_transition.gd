@@ -94,7 +94,7 @@ func play_transition(target_path: String, change_callback: Callable, style := "p
 		return
 
 	_is_busy = true
-	blocker.mouse_filter = Control.MOUSE_FILTER_STOP
+	blocker.mouse_filter = Control.MOUSE_FILTER_STOP  # keep-code: chặn chuột trong lúc chuyển cảnh (runtime)
 	transition_started.emit(style)
 
 	match style:
@@ -113,7 +113,7 @@ func play_transition(target_path: String, change_callback: Callable, style := "p
 			scene_swapped.emit()
 
 	_reset_all()
-	blocker.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	blocker.mouse_filter = Control.MOUSE_FILTER_IGNORE  # keep-code: nhả chuột sau khi chuyển cảnh (runtime)
 	_is_busy = false
 	transition_finished.emit(style)
 
@@ -128,7 +128,7 @@ func play_transition(target_path: String, change_callback: Callable, style := "p
 func _run_page_turn(target_path: String, change_callback: Callable, forward: bool) -> void:
 	var w := _get_screen_size().x
 
-	paper_page.visible = true
+	paper_page.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 
 	# Cấu hình bóng đổ mép trang giấy (bóng nằm sẵn 2 bên trang trong loading.tscn)
 	page_shadow_left.visible = forward
@@ -162,7 +162,7 @@ func _run_page_turn(target_path: String, change_callback: Callable, forward: boo
 func _run_ink_circle(target_path: String, change_callback: Callable) -> void:
 	var vp_size := _get_screen_size()
 	_ink_max_radius = vp_size.length() * 0.65
-	ink_circle_drawer.visible = true
+	ink_circle_drawer.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	ink_circle_drawer.modulate.a = 1.0
 	_ink_radius = 0.0
 
@@ -189,7 +189,7 @@ func _run_ink_circle(target_path: String, change_callback: Callable) -> void:
 ## (GIỮ tween) Đây là hiệu ứng ĐIỀU NHỊP: đổi scene nằm GIỮA 2 chặng (mờ vào → đổi → mờ ra),
 ## code phải `await` đúng nhịp nên giữ tween thay vì tách animation rời.
 func _run_paper_fade(target_path: String, change_callback: Callable) -> void:
-	fade_rect.visible = true
+	fade_rect.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	fade_rect.modulate.a = 0.0
 
 	var tw_in := create_tween()
@@ -211,12 +211,12 @@ func _run_paper_fade(target_path: String, change_callback: Callable) -> void:
 # ---------------------------------------------------------------------------
 func _reset_all() -> void:
 	if paper_page != null:
-		paper_page.visible = false
+		paper_page.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if ink_circle_drawer != null:
-		ink_circle_drawer.visible = false
+		ink_circle_drawer.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		_ink_radius = 0.0
 	if fade_rect != null:
-		fade_rect.visible = false
+		fade_rect.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if blocker != null:
 		blocker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 

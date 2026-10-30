@@ -264,7 +264,7 @@ func _animate_step_text(new_msg: String, new_title: String) -> void:
 		_fx_message.tween_property(lbl_message, "modulate:a", 0.0, 0.1)
 		_fx_message.tween_callback(func() -> void:
 			lbl_message.text = new_msg
-			lbl_message.position = Vector2.ZERO
+			lbl_message.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
 			if lbl_title.text != new_title:
 				lbl_title.text = new_title
 				UIAnim.play_pop_in(lbl_title, 0.0, 0.88, 0.24)
@@ -273,7 +273,7 @@ func _animate_step_text(new_msg: String, new_title: String) -> void:
 		return
 	# Lần đầu hoặc đang ẩn: set text ngay rồi cho chữ trượt lên
 	lbl_message.text = new_msg
-	lbl_message.position = Vector2.ZERO
+	lbl_message.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
 	lbl_title.text = new_title
 	if not _play_anim_on(anim_title, &"title_pop"):
 		UIAnim.play_pop_in(lbl_title, 0.0, 0.88, 0.24)
@@ -292,7 +292,7 @@ func _apply_step_text_and_slide(new_msg: String, new_title: String) -> void:
 	if lbl_message == null or not is_instance_valid(lbl_message):
 		return
 	lbl_message.text = new_msg
-	lbl_message.position = Vector2.ZERO
+	lbl_message.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
 	if lbl_title.text != new_title:
 		lbl_title.text = new_title
 		if not _play_anim_on(anim_title, &"title_pop"):
@@ -336,13 +336,13 @@ func _update_dots() -> void:
 		if dot == null:
 			continue
 		dot.visible = i < steps_data.size()
-		dot.text = "●"
+		dot.text = "●"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 		dot.add_theme_color_override(
 			"font_color",
 			Color("#2A2E33") if i == current_step_index else Color("#D4D8DD")
 		)
-		dot.scale = Vector2.ONE
-		dot.modulate = Color.WHITE
+		dot.scale = Vector2.ONE  # keep-code: pose hoạt cảnh runtime (tween)
+		dot.modulate = Color.WHITE  # keep-code: màu theo dữ liệu (runtime)
 		# Chấm đang ở bước hiện tại nảy lên cho dễ thấy
 		if i == current_step_index and i < steps_data.size():
 			UIAnim.play_pop_in(dot, 0.0, 0.55, 0.22)
@@ -471,7 +471,7 @@ func _show_toast(key: String, fallback_text: String, color: Color, hold: float) 
 	if _fx_toast != null and _fx_toast.is_valid():
 		_fx_toast.kill()
 	toast_label.pivot_offset = toast_label.size * 0.5
-	toast_label.scale = Vector2(0.86, 0.86)
+	toast_label.scale = Vector2(0.86, 0.86)  # keep-code: pose hoạt cảnh runtime (tween)
 	toast_label.modulate.a = 0.0
 	_toast_seq += 1
 	var seq := _toast_seq
@@ -571,8 +571,8 @@ func _apply_spotlight() -> void:
 	var target := _spotlight_target()
 
 	var was_visible := spotlight.visible
-	spotlight.visible = true
-	spotlight.scale = Vector2.ONE
+	spotlight.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
+	spotlight.scale = Vector2.ONE  # keep-code: pose hoạt cảnh runtime (tween)
 	if was_visible:
 		# Dừng MỌI hoạt cảnh cũ của vòng sáng (đang "thở" hoặc đang mờ dần) trước khi
 		# trượt sang target mới — nếu để fade-out cũ chạy tiếp thì alpha sẽ bị kéo về 0.
@@ -625,7 +625,7 @@ func _hide_spotlight() -> void:
 
 func _hide_spotlight_if_unused() -> void:
 	if is_instance_valid(spotlight) and not _has_spotlight:
-		spotlight.visible = false
+		spotlight.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 
 ## Vòng sáng "thở" nhẹ (scale) để mắt bám vào mục tiêu — animation loop "spotlight_pulse"

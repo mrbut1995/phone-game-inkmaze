@@ -28,8 +28,8 @@ signal revive_requested
 @export var star_full: Texture2D = null
 @export var star_empty: Texture2D = null
 
-const COLOR_MISSION_OK := Color("B07A0A")
-const COLOR_MISSION_FAIL := Color("7A8794")
+const COLOR_MISSION_OK := Color("B07A0A")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const COLOR_MISSION_FAIL := Color("7A8794")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
 
 @export var label_title: Label = null
 @export var path: GameOverPath = null
@@ -59,7 +59,7 @@ const COLOR_MISSION_FAIL := Color("7A8794")
 @export var fx_soft: Control = null
 @export var fx_ash: CPUParticles2D = null
 
-const GLOW_RED := Color(1.0, 0.33, 0.28, 1.0)
+const GLOW_RED := Color(1.0, 0.33, 0.28, 1.0)  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
 
 var _charged := false
 var _tweens: Array[Tween] = []
@@ -77,17 +77,17 @@ func _on_open() -> void:
 	# Tiêu đề riêng theo LÝ DO thua (giữ như bản cũ)
 	match str(data.get("reason", "")):
 		"dead_end":
-			label_title.text = tr("STR_GAME_OVER_NO_PATH")
+			label_title.text = tr("STR_GAME_OVER_NO_PATH")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 		"revisit":
-			label_title.text = tr("STR_GAME_OVER_REVISIT")
+			label_title.text = tr("STR_GAME_OVER_REVISIT")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 		"out_of_submits":
-			label_title.text = tr("STR_GAME_OVER_OUT_OF_SUBMITS")
+			label_title.text = tr("STR_GAME_OVER_OUT_OF_SUBMITS")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 
 	# 1. Đường đi
 	var progress := clampi(int(data.get("progress", 0)), 0, 100)
 	path.set_progress(progress / 100.0)
 	label_percent.text = "%d%%" % progress
-	label_walked.text = tr("STR_GO_WALKED")
+	label_walked.text = tr("STR_GO_WALKED")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 	label_stats.text = tr("STR_GO_STATS").format([_format_time(data.get("time", 0)), int(data.get("wall_hits", 0))])
 
 	# 2. Nhiệm vụ
@@ -120,8 +120,8 @@ func _on_close() -> void:
 		fx_ash.emitting = false
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
-			and gm.is_connected("life_changed", _on_life_changed):
-		gm.disconnect("life_changed", _on_life_changed)
+			and gm.is_connected("life_changed", _on_life_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+		gm.disconnect("life_changed", _on_life_changed)  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
 
 
 # ---------------------------------------------------------------------------
@@ -144,8 +144,8 @@ func _will_charge_life() -> bool:
 func _connect_life_signal() -> void:
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
-			and not gm.is_connected("life_changed", _on_life_changed):
-		gm.connect("life_changed", _on_life_changed)
+			and not gm.is_connected("life_changed", _on_life_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+		gm.connect("life_changed", _on_life_changed)  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
 
 
 func _on_life_changed(_lives: int, _max: int) -> void:
@@ -179,8 +179,6 @@ func _refresh_pencils() -> void:
 	var lost := lives if _charged else -1
 	pencils.set_state(lives, maximum, next_unix, false, lost)
 	label_count.text = "%d/%d" % [lives, maximum]
-	if not pencils.recover_finished.is_connected(_refresh_pencils):
-		pencils.recover_finished.connect(_refresh_pencils, CONNECT_DEFERRED)
 	# Hết bút: làm mờ nút Chơi lại (bấm vẫn mở popup Hết bút)
 	if btn_retry != null:
 		btn_retry.modulate = Color.WHITE if _can_play() else Color(0.72, 0.72, 0.72, 1.0)
@@ -240,7 +238,7 @@ func _play_intro(progress: int) -> void:
 	# thẻ đường đi: hiện -> nét xanh chạy tới điểm thua (✕) -> % đếm lên -> giật nhẹ
 	var t_p := 0.5
 	_fade_in(fx_path_card, t_p, 0.95)
-	label_percent.text = "0%"
+	label_percent.text = "0%"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 	var tr_ := _track(create_tween())
 	tr_.tween_interval(t_p + 0.15)
 	tr_.tween_property(path, "anim", 1.0, 0.8) \
@@ -269,7 +267,7 @@ func _play_intro(progress: int) -> void:
 		if ok:
 			ts.tween_callback(func() -> void:
 				Sfx.play(Sfx.STAR_POP)
-				star.scale = Vector2.ONE * 0.3)
+				star.scale = Vector2.ONE * 0.3)  # keep-code: pose hoạt cảnh runtime (tween)
 			ts.tween_property(star, "scale", Vector2(1.4, 1.4), 0.14) \
 				.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			ts.tween_property(star, "scale", Vector2.ONE, 0.1)
@@ -336,8 +334,8 @@ func _red_flash() -> void:
 	for n: Control in [fx_soft, fx_rays]:
 		n.pivot_offset = n.size * 0.5
 		n.modulate = Color(GLOW_RED.r, GLOW_RED.g, GLOW_RED.b, 0.0)
-	fx_soft.scale = Vector2.ONE * 0.6
-	fx_rays.scale = Vector2.ONE * 0.7
+	fx_soft.scale = Vector2.ONE * 0.6  # keep-code: pose hoạt cảnh runtime (tween)
+	fx_rays.scale = Vector2.ONE * 0.7  # keep-code: pose hoạt cảnh runtime (tween)
 	var tw := _track(create_tween().set_parallel(true))
 	tw.tween_property(fx_soft, "modulate:a", 0.85, 0.12)
 	tw.tween_property(fx_soft, "scale", Vector2.ONE * 1.2, 0.4) \

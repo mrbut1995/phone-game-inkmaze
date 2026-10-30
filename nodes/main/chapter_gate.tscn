@@ -39,6 +39,9 @@ initial_velocity_max = 150.0
 scale_amount_min = 0.5
 scale_amount_max = 1.1
 
+[connection signal="pressed" from="Hit" to="." method="_on_hit_pressed"]
+[connection signal="draw" from="Visual/Overlay" to="." method="_draw_overlay"]
+
 [node name="Hit" type="Button" parent="."]
 offset_left = -44.0
 offset_top = -50.0

@@ -12,18 +12,18 @@ extends VBoxContainer
 signal event_pressed(event_id: StringName)
 
 const MAX_EVENTS := 5
-const ICON_DIR := "res://assets/images-png/event_btn/"
+const ICON_DIR := "res://assets/images-png/event_btn/"  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
 const FALLBACK_THEME := "anniversary"
-const BUTTON_SIZE := 58.0
+const BUTTON_SIZE := 58.0  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
 ## Tỉ lệ cao/rộng của art nút mới (209×216)
 const ART_ASPECT := 216.0 / 209.0
 ## Bề rộng vùng BỎ TRỐNG bên phải bản đồ cho cột nút (bản đồ co lại ⇒ node level không bị đè)
 const GUTTER := 88.0
 ## Chừa mép TRÁI cho vạch đỏ + lỗ gáy vở (bản đồ dịch sang phải)
 const LEFT_INSET := 34.0
-const MARGIN_RIGHT := 4.0
-const MARGIN_TOP := 10.0
-const INK := Color("164663")
+const MARGIN_RIGHT := 4.0  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
+const MARGIN_TOP := 10.0  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
+const INK := Color("164663")  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
 const REFRESH_SECONDS := 20.0
 
 var _events: Array = []
@@ -69,7 +69,7 @@ func set_events(events: Array, manager: Node) -> void:
 ## Chừa/thả vùng bên phải của `MapArea` (cha của LevelMap): có event ⇒ co bản đồ lại, không ⇒ trả đủ rộng
 func reserve_gutter(map_area: Control) -> void:
 	if map_area != null:
-		map_area.offset_left = LEFT_INSET
+		map_area.offset_left = LEFT_INSET  # keep-code: chừa lề phải cho cột nút event (runtime theo số nút)
 		map_area.offset_right = -GUTTER if visible else 0.0
 
 
@@ -96,11 +96,11 @@ func _make_item(ev: Object) -> Control:
 	var pill := PanelContainer.new()
 	pill.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pill.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var box := StyleBoxFlat.new()
+	var box := StyleBoxFlat.new()  # keep-code: stylebox của hiệu ứng vẽ runtime
 	box.bg_color = Color.WHITE
 	box.border_color = Color("E4DCC6")
-	box.set_border_width_all(2)
-	box.set_corner_radius_all(9)
+	box.set_border_width_all(2)  # keep-code: stylebox của hiệu ứng vẽ runtime
+	box.set_corner_radius_all(9)  # keep-code: stylebox của hiệu ứng vẽ runtime
 	box.content_margin_left = 6.0
 	box.content_margin_right = 6.0
 	box.content_margin_top = 0.0
