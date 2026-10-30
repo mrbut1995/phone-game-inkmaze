@@ -72,6 +72,10 @@ func _check_static() -> void:
 		var panel := b.get_parent().get_parent() as Control
 		var paper := panel.get_node_or_null("PaperHolder/PaperArt") as NinePatchRect
 		_check(paper != null, "Dock thiếu PaperHolder/PaperArt")
+		# Nền giấy phải là con ĐẦU TIÊN ⇒ hàng nút (Row) vẽ ĐÈ LÊN trên
+		var first := panel.get_child(0)
+		_check(first.name == "PaperHolder", "PaperHolder phải là con đầu của Dock (đang là %s)" % first.name)
+		_check(b.get_parent().get_index() > first.get_index(), "hàng nút phải nằm SAU nền giấy để vẽ đè lên")
 		if paper != null:
 			_check(paper.texture != null, "PaperArt chưa nạp dock_panel.png")
 			var holder := paper.get_parent() as Control
