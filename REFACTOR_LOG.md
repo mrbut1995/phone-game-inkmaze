@@ -416,6 +416,28 @@ trước khi tách đã xác minh **0 chỗ nào khác đọc trực tiếp** `l
 **Kiểm chứng:** `test_life_points` **120/120 CHECK PASS** (không nằm trong bộ 20 test mặc định nên chạy riêng);
 full suite **7 PASS / 13 FAIL** y hệt baseline.
 
+### Phase 5 (§8.3) — đợt 2: KỶ LỤC TẦNG → `FloorRecordsStore`
+
+`scripts/core/floor_records_store.gd` (125 dòng): `KINDS` (day/week/month) · `records` · `period_key()` /
+`current_period_key()` (tuần ISO bắt đầu thứ Hai) · `best(kind)` · `reach(floor)` (trả danh sách kỳ vừa lập kỷ lục) ·
+`sync()` · `load_state()` · `reset()`.
+
+`GameManager` giữ **chính sách** (ván Debug / test tự động không ghi kỷ lục) và phát lại `floor_record_changed`;
+`period_key` / `current_period_key` còn là static delegate để API công khai không đổi; `floor_record_in_tests` thành property get/set.
+
+`game_manager.gd` **1199 → 1138 dòng**.
+
+### Phase 5 (§8.3) — đợt 3: KHO DỤNG CỤ → `ToolInventory`
+
+`scripts/core/tool_inventory.gd` (78 dòng): `SKIP/UNDO/HINT` · `IDS` · `INITIAL_USES = 3` · `GRANT_SOURCES` ·
+`uses` · `left()` · `consume()` · `grant()` · `set_uses()` · `load_state()` + signal `changed`.
+
+`GameManager` uỷ thác 4 hàm công khai, gom `tool_inventory_changed.emit + Save.queue_save()` về 1 handler;
+`TOOL_*` / `TOOL_IDS` / `INITIAL_TOOL_USES` vẫn khai ở `GameManager` (nhiều script đọc `GameManagerClass.TOOL_SKIP`…).
+
+**Kiểm chứng đợt 2 + 3:** full suite **7 PASS / 13 FAIL** y hệt baseline; `test_controllers_and_signals` (dùng
+`tool_uses_left` / `debug_set_tool_uses`) PASS.
+
 ---
 
 ## 4. Việc còn lại (CHƯA làm) & lý do
