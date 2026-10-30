@@ -11,45 +11,24 @@ extends VBoxContainer
 
 signal event_pressed(event_id: StringName)
 
+## Cấu trúc tĩnh (khung, offset, separation, Timer, stylebox "Còn N ngày") nằm trong
+## `nodes/main/event_button_column.tscn`; 1 nút event = `nodes/main/event_button_item.tscn`.
+const ITEM_SCENE := preload("res://nodes/main/event_button_item.tscn")
+
 const MAX_EVENTS := 5
-const ICON_DIR := "res://assets/images-png/event_btn/"  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
-const FALLBACK_THEME := "anniversary"
-const BUTTON_SIZE := 58.0  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
-## Tỉ lệ cao/rộng của art nút mới (209×216)
-const ART_ASPECT := 216.0 / 209.0
+const ICON_DIR := "res://assets/images-png/event_btn/"  # keep-code: đường dẫn art chọn theo theme_id của event (dữ liệu runtime)
+const FALLBACK_THEME := "anniversary"                    # keep-code: art dự phòng khi theme event chưa có file nút
+
 ## Bề rộng vùng BỎ TRỐNG bên phải bản đồ cho cột nút (bản đồ co lại ⇒ node level không bị đè)
-const GUTTER := 88.0
+@export var gutter := 88.0
 ## Chừa mép TRÁI cho vạch đỏ + lỗ gáy vở (bản đồ dịch sang phải)
-const LEFT_INSET := 34.0
-const MARGIN_RIGHT := 4.0  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
-const MARGIN_TOP := 10.0  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
-const INK := Color("164663")  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
-const REFRESH_SECONDS := 20.0
+@export var left_inset := 34.0
 
 var _events: Array = []
 var _manager: Node = null
-var _timer: Timer = null
 var _time_labels: Dictionary = {}   # event_id -> Label
 
-
-func _ready() -> void:
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_theme_constant_override("separation", 6)
-	# Neo góc phải-trên của LevelSection (cha), rộng vừa nút
-	anchor_left = 1.0
-	anchor_right = 1.0
-	anchor_top = 0.0
-	anchor_bottom = 0.0
-	grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	grow_vertical = Control.GROW_DIRECTION_END
-	offset_right = -MARGIN_RIGHT
-	offset_left = -MARGIN_RIGHT - BUTTON_SIZE - 14.0
-	offset_top = MARGIN_TOP
-	_timer = Timer.new()
-	_timer.wait_time = REFRESH_SECONDS
-	_timer.autostart = true
-	_timer.timeout.connect(_refresh_times)
-	add_child(_timer)
+@onready var _timer: Timer = $Refresh
 
 
 ## `events`: Array[EventData] (đã bỏ Daily) · `manager`: EventManager (hỏi `seconds_left(id)`)
@@ -69,52 +48,24 @@ func set_events(events: Array, manager: Node) -> void:
 ## Chừa/thả vùng bên phải của `MapArea` (cha của LevelMap): có event ⇒ co bản đồ lại, không ⇒ trả đủ rộng
 func reserve_gutter(map_area: Control) -> void:
 	if map_area != null:
-		map_area.offset_left = LEFT_INSET  # keep-code: chừa lề phải cho cột nút event (runtime theo số nút)
-		map_area.offset_right = -GUTTER if visible else 0.0
+		# keep-code: lề trái/phải đặt theo TRẠNG THÁI (có event hay không) của cha, không cố định được
+		map_area.offset_left = left_inset
+		map_area.offset_right = -gutter if visible else 0.0
 
 
 func _make_item(ev: Object) -> Control:
 	var id := StringName(str(ev.get("id")))
-	var item := VBoxContainer.new()
-	item.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	item.add_theme_constant_override("separation", 1)
-	item.alignment = BoxContainer.ALIGNMENT_BEGIN
-
-	var button := TextureButton.new()
+	var item := ITEM_SCENE.instantiate() as Control
+	var button := item.get_node("Icon") as TextureButton
 	var theme_id := _theme_id_of(ev)
 	button.texture_normal = _load_icon(ev, theme_id, "normal")
 	button.texture_pressed = _load_icon(ev, theme_id, "pressed")
 	button.texture_disabled = _load_icon(ev, theme_id, "disabled")
-	button.ignore_texture_size = true
-	button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
-	button.custom_minimum_size = Vector2(BUTTON_SIZE, BUTTON_SIZE * ART_ASPECT)
-	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	# keep-code: `item` sinh lúc chạy nên signal phải nối bằng code (mang theo event_id)
 	button.pressed.connect(func() -> void: event_pressed.emit(id))
-	item.add_child(button)
-
-	var pill := PanelContainer.new()
-	pill.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	pill.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var box := StyleBoxFlat.new()  # keep-code: stylebox của hiệu ứng vẽ runtime
-	box.bg_color = Color.WHITE
-	box.border_color = Color("E4DCC6")
-	box.set_border_width_all(2)  # keep-code: stylebox của hiệu ứng vẽ runtime
-	box.set_corner_radius_all(9)  # keep-code: stylebox của hiệu ứng vẽ runtime
-	box.content_margin_left = 6.0
-	box.content_margin_right = 6.0
-	box.content_margin_top = 0.0
-	box.content_margin_bottom = 0.0
-	pill.add_theme_stylebox_override("panel", box)
-	var label := Label.new()
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.add_theme_font_size_override("font_size", 12)
-	label.add_theme_color_override("font_color", INK)
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	pill.add_child(label)
-	item.add_child(pill)
-	_time_labels[id] = label
+	_time_labels[id] = item.get_node("Pill/Label") as Label
 	return item
+
 
 
 ## theme_id của event: ưu tiên `theme_id`, rồi `theme.id`, cuối cùng chính `id`

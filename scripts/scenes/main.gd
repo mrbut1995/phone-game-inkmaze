@@ -12,7 +12,7 @@ extends BaseScene
 ## bằng `@export` trong `scenes/layout/<hướng>/main.tscn` ⇒ code đọc qua `layout.<tên>`.
 ## ============================================================================
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-const EventButtonColumnScript := preload("res://scripts/nodes/main/event_button_column.gd")
+const EventButtonColumnScene := preload("res://nodes/main/event_button_column.tscn")
 
 var layout: MainLayout = null
 ## Cột nút event nổi trên bản đồ (dựng 1 lần, chuyển theo bố cục đang hiện)
@@ -227,7 +227,8 @@ func _setup_event_buttons() -> void:
 	if section == null:
 		return
 	if _event_buttons == null or not is_instance_valid(_event_buttons) or _event_buttons.get_parent() != section:
-		_event_buttons = EventButtonColumnScript.new()
+		_event_buttons = EventButtonColumnScene.instantiate() as Control
+		# keep-code: tên node là HỢP ĐỒNG với test (`LevelSection/EventButtons`), không phải bố cục
 		_event_buttons.name = "EventButtons"
 		section.add_child(_event_buttons)
 		_event_buttons.event_pressed.connect(_on_event_card_pressed)
