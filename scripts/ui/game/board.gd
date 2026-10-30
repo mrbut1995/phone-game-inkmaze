@@ -1130,65 +1130,18 @@ func hide_all_walls() -> void:
 	set_interaction_enabled(true)
 
 
-## Cập nhật lại SỐ trên mọi ô theo GameMode (mode có giá trị đổi theo thời gian — Fading Ink).
-## `dim_unwalkable` = ô không còn đi vào được thì mờ đi (hết mực thì coi như trống).
-## Mode có `ink_left()` (Fading Ink): thay vì mờ cả ô, ô hiện LỚP cảnh báo riêng
-## (1 mực = nền hổ phách "SẮP PHAI" · 0 mực = lớp gạch + huy hiệu "CẠN") để phần
-## huy hiệu không bị mờ theo ô.
+## Cập nhật HIỂN THỊ từng ô theo chế độ chơi (số · lớp mực · ô đã đi · sương mù).
+## Phần duyệt ô nằm ở `BoardCellsView`; board chỉ truyền cách tra node theo toạ độ.
 func refresh_cell_texts(dim_unwalkable: bool = false) -> void:
-	if maze == null or game_mode == null:
-		return
-	var has_ink := game_mode.shows_ink_left()
-	# One Stroke: ô đã đi qua bị KHOÁ -> tô mực xanh + gạch chéo + nhãn "ĐÃ ĐI"
-	var has_visited := game_mode.tracks_visited_cells()
-	# Wall Builder: ô đã KHỚP SỐ (đủ tường quanh ô) -> nền xanh lá nhạt
-	var has_satisfied := game_mode.tracks_satisfied_cells()
-	for y in _height:
-		for x in _width:
-			var pos := Vector2i(x, y)
-			var cell_node := _cell_node(pos)
-			if cell_node == null:
-				continue
-			cell_node.set_text(game_mode.get_cell_text(pos, maze))
-			_sync_bomb_marker(cell_node, pos)
-			if has_ink:
-				# Ô S/F không bao giờ cạn mực -> tắt lớp cảnh báo
-				var ink := -1
-				if pos != maze.get_start() and pos != maze.get_end():
-					ink = game_mode.ink_left(pos)
-				cell_node.set_ink_left(ink)
-				cell_node.modulate = Color(1, 1, 1, 1)  # keep-code: màu theo dữ liệu (runtime)
-			elif has_visited:
-				# Ô S/F giữ nguyên art xuất phát/đích (mockup không gạch chéo 2 ô này)
-				var seen := false
-				if pos != maze.get_start() and pos != maze.get_end():
-					seen = game_mode.is_cell_visited(pos)
-				cell_node.set_visited_own(seen)
-				cell_node.modulate = Color(1, 1, 1, 1)  # keep-code: màu theo dữ liệu (runtime)
-			elif has_satisfied:
-				cell_node.set_satisfied(game_mode.is_cell_satisfied(pos))
-				cell_node.modulate = Color(1, 1, 1, 1)  # keep-code: màu theo dữ liệu (runtime)
-			elif dim_unwalkable:
-				var walkable := game_mode.is_walkable(pos)
-				cell_node.modulate = Color(1, 1, 1, 1) if walkable else Color(1, 1, 1, 0.4)
+	BoardCellsView.refresh_texts(_width, _height, _cell_node, maze, game_mode,
+			dim_unwalkable, _sync_bomb_marker)
 
 
 func apply_fog_of_war(_center: Vector2i, _radius: int, explored: Dictionary) -> void:
-	if maze == null or game_mode == null:
-		return
-	for y in _height:
-		for x in _width:
-			var p := Vector2i(x, y)
-			var cell_node := _cell_node(p)
-			if cell_node == null:
-				continue      # ô ngoài board: không có số để làm mờ
-			var text: String = game_mode.get_cell_text(p, maze)
-			cell_node.set_text(text)
-			_sync_bomb_marker(cell_node, p)
-			if explored.has(p):
-				cell_node.modulate = Color(1, 1, 1, 1.0)  # keep-code: màu theo dữ liệu (runtime)
-			else:
-				cell_node.modulate = Color(0.6, 0.6, 0.6, 0.4)  # keep-code: màu theo dữ liệu (runtime)
+	BoardCellsView.apply_fog(_width, _height, _cell_node, maze, game_mode,
+			explored, _sync_bomb_marker)
+
+
 
 
 func _play_grid_shake() -> void:
