@@ -16,6 +16,16 @@ signal plus_pressed
 ## Ẩn nút `+` khi đã đầy lượt (mặc định: đúng — chỉ hiện khi còn thiếu lượt)
 @export var hide_plus_when_full := true
 
+@export_group("Large variant")
+## Biến thể LỚN dùng ở màn Main (cao hơn, icon/số/nút `+` to hơn) — bật trong `.tscn`
+@export var large := false
+@export var large_height := 46.0
+@export var large_width_scale := 1.3
+@export var large_icon_width := 32.0
+@export var large_value_font := 22
+@export var large_plus_size := 32.0
+@export var large_plus_font := 18
+
 @onready var value_label: Label = $Content/Value
 @onready var plus_button: Button = $Content/Plus
 
@@ -23,11 +33,25 @@ signal plus_pressed
 func _ready() -> void:
 	if plus_button != null:
 		plus_button.pressed.connect(_on_plus_pressed)
+	if large:
+		_apply_large()
 	var game_manager := get_node_or_null("/root/GameManager")
 	if game_manager != null and game_manager.has_signal("life_changed") \
 			and not game_manager.is_connected("life_changed", _on_life_changed):
 		game_manager.connect("life_changed", _on_life_changed)
 	refresh()
+
+
+func _apply_large() -> void:
+	var icon := get_node_or_null("Content/Icon") as Control
+	custom_minimum_size = Vector2(custom_minimum_size.x * large_width_scale, large_height)
+	if icon != null:
+		icon.custom_minimum_size.x = large_icon_width
+	if value_label != null:
+		value_label.add_theme_font_size_override("font_size", large_value_font)
+	if plus_button != null:
+		plus_button.custom_minimum_size = Vector2(large_plus_size, large_plus_size)
+		plus_button.add_theme_font_size_override("font_size", large_plus_font)
 
 
 ## Đọc lại số lượt từ GameManager

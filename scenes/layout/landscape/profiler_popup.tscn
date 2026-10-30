@@ -474,7 +474,11 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 12
 
 [node name="CoinChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="LifeChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false

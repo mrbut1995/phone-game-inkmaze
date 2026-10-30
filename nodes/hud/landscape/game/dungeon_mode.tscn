@@ -9,6 +9,8 @@ step_value_node = NodePath("Content/ModeInformation/Control/Step/Value")
 floor_value_node = NodePath("Content/ModeInformation/Control/Floor/Value")
 
 [node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=834934233]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="Control" type="Control" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1893622585]

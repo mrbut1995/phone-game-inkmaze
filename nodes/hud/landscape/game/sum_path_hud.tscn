@@ -19,6 +19,8 @@ target_value_node = NodePath("Content/ModeInformation/Sheet/BlockTarget/Target/V
 need_label = NodePath("Content/ModeInformation/Sheet/BlockTarget/Target/ChipNeed/Need")
 
 [node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=561028501]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1830702977]

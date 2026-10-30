@@ -11,6 +11,8 @@ budget_value_node = NodePath("Content/ModeInformation/Sheet/Budget/Label")
 budget_max_label = NodePath("Content/ModeInformation/Sheet/Budget/Display/Max")
 
 [node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=834934233]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="Sheet" type="Control" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1601715472]

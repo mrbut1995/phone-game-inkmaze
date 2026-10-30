@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/images-png/dock/dock_btn_daily_pressed.png" id="1_tex"]
+
+[resource]
+texture = ExtResource("1_tex")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 26.0

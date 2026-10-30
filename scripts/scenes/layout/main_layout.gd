@@ -31,6 +31,16 @@ extends BaseLayout
 @export var dock_ranking: DockButton = null
 ## Dock: Sổ tay thành tựu (danh hiệu)
 @export var dock_badges: DockButton = null
+## Dock: Thử thách hằng ngày (nút giữa, mở màn Daily)
+@export var dock_daily: DockButton = null
 ## Con dấu phiên bản
 @export var stamp_panel: Control = null
 @export var stamp_label: Label = null
+
+
+## Thẻ hồ sơ bị bấm (dây nối trong `.tscn` của layout) — màn Main mở popup hồ sơ
+signal profile_pressed
+
+
+func _on_profile_card_pressed() -> void:
+	profile_pressed.emit()

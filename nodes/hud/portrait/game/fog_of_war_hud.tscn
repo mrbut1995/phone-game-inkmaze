@@ -69,4 +69,6 @@ text = "/3"
 vertical_alignment = 1
 
 [node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="1" unique_id=212466531]
+mouse_filter = 2
+process_mode = 4
 visible = false

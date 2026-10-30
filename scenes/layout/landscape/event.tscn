@@ -120,7 +120,11 @@ text = "STR_EVENT_CTA_PLAY"
 theme_type_variation = &"EventCtaButton"
 
 [node name="CoinChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="LifeChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false
