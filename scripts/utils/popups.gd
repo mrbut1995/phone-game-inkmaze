@@ -6,7 +6,7 @@ extends RefCounted
 ## Vì sao không gọi thẳng `PopupManager.open_popup(...)`?
 ##   Test runner chạy bằng `godot --script ...` -> identifier của autoload không
 ##   resolve được lúc parse. Vì vậy mọi nơi chỉ tham chiếu class `Popups` này,
-##   node autoload được lấy động qua /root/PopupManager.
+##   node autoload được lấy qua `Svc.popup()`.
 ## ============================================================================
 
 ## Id các popup có sẵn (khớp PopupManager.POPUPS)
@@ -38,11 +38,7 @@ const OUT_OF_LIFE := "out_of_life"
 
 
 static func _mgr() -> Node:
-	var main_loop := Engine.get_main_loop()
-	var tree := main_loop as SceneTree
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("PopupManager")
-	return null
+	return Svc.popup()
 
 
 ## Mở popup theo id. Trả về node popup (null nếu chưa có manager).

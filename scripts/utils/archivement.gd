@@ -1,19 +1,16 @@
 class_name Archivement
 extends RefCounted
 ## ============================================================================
-## Helper tĩnh: truy cập ArchivementManager (autoload) qua /root.
+## Helper tĩnh: truy cập ArchivementManager (autoload).
 ##
 ## Lý do tồn tại: test runner chạy bằng `godot --script ...` không resolve được
 ## identifier autoload lúc parse, nên script khác KHÔNG được tham chiếu thẳng
-## `ArchivementManager`. Ở đây lấy node động qua /root/ArchivementManager.
+## `ArchivementManager`. Node autoload lấy qua `Svc.archivement()`.
 ## ============================================================================
 
 
 static func manager() -> Node:
-	var tree := _tree()
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("ArchivementManager")
-	return null
+	return Svc.archivement()
 
 
 ## Danh sách danh hiệu đã tính sẵn trạng thái (rỗng = tất cả)
@@ -95,8 +92,3 @@ static func notify_run_result(results: Dictionary) -> void:
 	var m := manager()
 	if m != null and m.has_method("notify_run_result"):
 		m.call("notify_run_result", results)
-
-
-static func _tree() -> SceneTree:
-	var main_loop := Engine.get_main_loop()
-	return main_loop as SceneTree if main_loop is SceneTree else null

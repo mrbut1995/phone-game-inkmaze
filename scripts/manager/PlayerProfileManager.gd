@@ -1,3 +1,4 @@
+class_name PlayerProfileManagerClass
 extends Node
 ## ============================================================================
 ## Manager: PlayerProfileManager — HỒ SƠ NGƯỜI CHƠI (Profiler)
@@ -86,15 +87,15 @@ var skips_total := 0            # tổng lượt SKIP màn
 # Truy cập manager khác qua /root
 # ---------------------------------------------------------------------------
 func _achievements() -> Node:
-	return get_node_or_null("/root/ArchivementManager")
+	return Svc.archivement()
 
 
 func _levels() -> Node:
-	return get_node_or_null("/root/LevelManager")
+	return Svc.level()
 
 
 func _gm() -> Node:
-	return get_node_or_null("/root/GameManager")
+	return Svc.game()
 
 
 ## Số liệu Sổ tay (dungeon_best_floor / daily_streak / level_stars_total / points…)
@@ -356,7 +357,7 @@ func deep_stats() -> Dictionary:
 
 ## Số NGÀY đã hoàn thành Daily Challenge (DailyManager giữ danh sách completed_days)
 func _daily_completed_days() -> int:
-	var dm := get_node_or_null("/root/DailyManager")
+	var dm := Svc.daily()
 	if dm == null or not dm.has_method("get_completed_count"):
 		return 0
 	return int(dm.call("get_completed_count"))
@@ -531,7 +532,7 @@ var _initialized := false
 func _ready() -> void:
 	# Quét + nạp danh mục hồ sơ (avatar/khung/danh hiệu) là việc NẶNG ⇒ hoãn tới khi màn
 	# Splash đã hiện (xem LoadingManager). Headless thì LoadingManager gọi lại NGAY nên hành vi không đổi.
-	var boot: Node = get_node_or_null("/root/LoadingManager")
+	var boot: Node = Svc.loading()
 	if boot != null and boot.has_method("add_step"):
 		boot.call("add_step", Callable(self, "initialize"), "player_profile")
 	else:

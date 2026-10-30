@@ -128,7 +128,7 @@ func _on_close() -> void:
 # Bút chì (đọc từ GameManager)
 # ---------------------------------------------------------------------------
 func _game_manager() -> Node:
-	return get_node_or_null("/root/GameManager")
+	return Svc.game()
 
 
 ## Ván này có bị trừ bút không? Khớp UIController._charge_life_cost (guided / debug_run miễn).

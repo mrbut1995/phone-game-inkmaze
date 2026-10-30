@@ -1,6 +1,7 @@
 ## SafeArea — Autoload singleton
 ## Đọc vùng an toàn màn hình từ DisplayServer và cung cấp cho toàn ứng dụng.
 ## Dùng để đẩy UI lên khỏi thanh điều hướng hệ thống / vùng notch trên Android.
+class_name SafeAreaClass
 extends Node
 
 ## Phát khi safe area thay đổi (xoay màn hình, cửa sổ thay đổi kích thước...)

@@ -70,7 +70,7 @@ func _ready() -> void:
 
 ## Đổi ngôn ngữ ⇒ viết lại nội dung sheet (nếu đang mở)
 func _connect_locale_signal() -> void:
-	var loc: Node = get_node_or_null("/root/LocalizationManager")
+	var loc: Node = Svc.loc()
 	if loc != null and loc.has_signal("locale_changed") \
 			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		loc.connect("locale_changed", _on_locale_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
@@ -177,14 +177,14 @@ func _on_close_pressed() -> void:
 
 
 func _chapter_data() -> ChapterData:
-	var lm := get_node_or_null("/root/LevelManager")
+	var lm := Svc.level()
 	if lm == null or not lm.has_method("get_chapter"):
 		return null
 	return lm.call("get_chapter", chapter_id) as ChapterData
 
 
 func _total_stars() -> int:
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	if gm == null or not gm.has_method("total_stars"):
 		return 0
 	return int(gm.call("total_stars"))

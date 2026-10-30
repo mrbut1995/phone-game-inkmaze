@@ -102,7 +102,7 @@ func _refresh_wallet() -> void:
 func _refresh_stars() -> void:
 	if layout == null or layout.star_chip == null:
 		return
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	var total := 0
 	if gm != null and gm.has_method("total_stars"):
 		total = int(gm.call("total_stars"))
@@ -112,7 +112,7 @@ func _refresh_stars() -> void:
 func _refresh_stamp() -> void:
 	if layout == null or layout.stamp_label == null:
 		return
-	var app := get_node_or_null("/root/AppManager")
+	var app := Svc.app()
 	var version := "1.0.0"
 	if app != null:
 		version = str(app.call("get_version"))
@@ -183,7 +183,7 @@ func _setup_animations() -> void:
 
 func _on_dungeon_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	if gm != null and gm.has_method("start_dungeon"):
 		gm.start_dungeon()
 	else:
@@ -234,7 +234,7 @@ func _setup_event_buttons() -> void:
 		_event_buttons.event_pressed.connect(_on_event_card_pressed)
 		if section.map != null and not section.map.blockers.has(_event_buttons):
 			section.map.blockers.append(_event_buttons)
-	var em := get_node_or_null("/root/EventManager")
+	var em := Svc.event()
 	# keep-code: nối tới AUTOLOAD EventManager (không phải node tĩnh) — §5B.4 mục 4
 	if em != null and em.has_signal("events_changed") and not em.is_connected("events_changed", _on_events_changed):
 		em.events_changed.connect(_on_events_changed)
@@ -245,7 +245,7 @@ func _setup_event_buttons() -> void:
 func _refresh_event_buttons() -> void:
 	if _event_buttons == null or not is_instance_valid(_event_buttons):
 		return
-	var em := get_node_or_null("/root/EventManager")
+	var em := Svc.event()
 	var list: Array = []
 	if em != null and em.has_method("get_active_events"):
 		for ev in em.call("get_active_events") as Array:
@@ -275,7 +275,7 @@ func _on_event_card_pressed(event_id: StringName) -> void:
 
 ## Có phải event DAILY (ảo) không — dùng EventManager để tra loại theo id
 func _is_daily_event(event_id: StringName) -> bool:
-	var em := get_node_or_null("/root/EventManager")
+	var em := Svc.event()
 	if em == null or not em.has_method("get_event"):
 		return event_id == &"daily"
 	var event: EventData = em.call("get_event", event_id)

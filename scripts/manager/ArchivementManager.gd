@@ -1,3 +1,4 @@
+class_name ArchivementManagerClass
 extends Node
 ## ============================================================================
 ## Manager: ArchivementManager (autoload) — "Sổ tay thành tựu" (Danh hiệu).
@@ -52,7 +53,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	# Quét + nạp toàn bộ danh hiệu là việc NẶNG ⇒ hoãn tới khi màn Splash đã hiện
 	# (xem LoadingManager). Headless thì LoadingManager gọi lại NGAY nên hành vi không đổi.
-	var boot: Node = get_node_or_null("/root/LoadingManager")
+	var boot: Node = Svc.loading()
 	if boot != null and boot.has_method("add_step"):
 		boot.call("add_step", Callable(self, "initialize"), "archivements")
 	else:
@@ -238,11 +239,11 @@ func _daily_stars() -> int:
 
 
 func _game_manager() -> Node:
-	return get_node_or_null("/root/GameManager")
+	return Svc.game()
 
 
 func _daily_manager() -> Node:
-	return get_node_or_null("/root/DailyManager")
+	return Svc.daily()
 
 
 # ---------------------------------------------------------------------------

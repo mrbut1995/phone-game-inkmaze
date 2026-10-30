@@ -97,7 +97,7 @@ func _reveal_choice_buttons() -> void:
 
 ## "CHƠI BÀN TIẾP THEO": học xong luồng sẽ mở luôn màn kế trong chương
 func _on_continue_pressed() -> void:
-	var tm := get_node_or_null("/root/TutorialManager")
+	var tm := Svc.tutorial()
 	if tm != null and tm.has_method("request_continue_after_flow"):
 		tm.call("request_continue_after_flow")
 	Sfx.play(Sfx.BTN_CLICK)

@@ -1,3 +1,4 @@
+class_name SfxManagerClass
 extends Node
 ## ============================================================================
 ## Manager: SfxManager - Phát hiệu ứng âm thanh (SFX) toàn cục.
@@ -39,7 +40,7 @@ var _next_player := 0
 func _ready() -> void:
 	_build_pool()
 	_refresh_gain()
-	var sm: Variant = get_node_or_null("/root/SettingManager")
+	var sm: Variant = Svc.setting()
 	if sm != null and sm.has_signal("volume_changed"):
 		sm.connect("volume_changed", _on_volume_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
@@ -181,7 +182,7 @@ func _gain_to_db() -> float:
 
 
 func _refresh_gain() -> void:
-	var sm: Variant = get_node_or_null("/root/SettingManager")
+	var sm: Variant = Svc.setting()
 	_sfx_gain = clampf(float(sm.get("sfx_volume")) if sm != null else 1.0, 0.0, 1.0)
 
 

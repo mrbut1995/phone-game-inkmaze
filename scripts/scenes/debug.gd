@@ -316,7 +316,7 @@ func _build_events() -> void:
 
 
 func _event_manager() -> Node:
-	return get_node_or_null("/root/EventManager")
+	return Svc.event()
 
 
 func _events_start_all() -> void:
@@ -704,7 +704,7 @@ func _yesterday_state_text() -> String:
 
 ## Trạng thái AdsManager (placeholder hay đã tắt)
 func _ads_state_text() -> String:
-	var ads := get_node_or_null("/root/AdsManager")
+	var ads := Svc.ads()
 	if ads == null:
 		return "không có"
 	var ready := false
@@ -753,7 +753,7 @@ func _claim_next_milestone() -> void:
 
 ## Thử quảng cáo thưởng (placeholder) — KHÔNG ghi dữ liệu, chỉ xem AdsManager trả gì
 func _test_rewarded_ad() -> void:
-	var ads := get_node_or_null("/root/AdsManager")
+	var ads := Svc.ads()
 	if ads == null or not ads.has_method("show_rewarded"):
 		_rebuild_after_action("Không có AdsManager")
 		return
@@ -1067,7 +1067,7 @@ func _add_toggle(text: String, desc: String, value: bool, handler: Callable) -> 
 ## Danh sách level_id THẬT của dự án (LevelManager quét resources/levels/level_*.tres)
 func _level_ids() -> Array[int]:
 	var ids: Array[int] = []
-	var lm := get_node_or_null("/root/LevelManager")
+	var lm := Svc.level()
 	if lm != null and lm.has_method("get_level_ids"):
 		for value in lm.call("get_level_ids"):
 			ids.append(int(value))
@@ -1147,19 +1147,19 @@ func _add_blob_dump() -> void:
 # Truy cập manager (dùng /root để chạy được cả trong test --script)
 # ---------------------------------------------------------------------------
 func _game_manager() -> Node:
-	return get_node_or_null("/root/GameManager")
+	return Svc.game()
 
 
 func _daily_manager() -> Node:
-	return get_node_or_null("/root/DailyManager")
+	return Svc.daily()
 
 
 func _save_manager() -> Node:
-	return get_node_or_null("/root/SaveManager")
+	return Svc.save()
 
 
 func _debug_manager() -> Node:
-	return get_node_or_null("/root/DebugManager")
+	return Svc.debug()
 
 
 func _gm_value(key: String, fallback: Variant) -> Variant:

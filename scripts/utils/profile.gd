@@ -1,19 +1,16 @@
 class_name Profile
 extends RefCounted
 ## ============================================================================
-## Helper tĩnh: truy cập PlayerProfileManager (autoload) qua /root.
+## Helper tĩnh: truy cập PlayerProfileManager (autoload).
 ##
 ## Lý do tồn tại: test runner chạy bằng `godot --script ...` không resolve được
 ## identifier autoload lúc parse, nên script khác KHÔNG được tham chiếu thẳng
-## `PlayerProfileManager`. Ở đây lấy node động qua /root/PlayerProfileManager.
+## `PlayerProfileManager`. Node autoload lấy qua `Svc.profile()`.
 ## ============================================================================
 
 
 static func manager() -> Node:
-	var tree := _tree()
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("PlayerProfileManager")
-	return null
+	return Svc.profile()
 
 
 static func _call(method: String, args: Array = []) -> Variant:
@@ -143,8 +140,3 @@ static func record_run(info: Dictionary) -> void:
 static func recent(limit: int = 3) -> Array:
 	var value: Variant = _call("recent_activity", [limit])
 	return value if value is Array else []
-
-
-static func _tree() -> SceneTree:
-	var main_loop := Engine.get_main_loop()
-	return main_loop as SceneTree if main_loop is SceneTree else null

@@ -80,7 +80,7 @@ func _on_visibility_changed() -> void:
 
 
 func _connect_locale_signal() -> void:
-	var loc: Node = get_node_or_null("/root/LocalizationManager")
+	var loc: Node = Svc.loc()
 	if loc != null and loc.has_signal("locale_changed") \
 			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		loc.connect("locale_changed", _on_locale_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
@@ -93,7 +93,7 @@ func _on_locale_changed(_locale: String) -> void:
 ## Tiến trình (Sao/chương mở) nạp XONG sau khi màn Main đã mở ⇒ phải dựng lại bản đồ, nếu không
 ## bản đồ hiện sai trạng thái (vd. "màn nên chơi tiếp" không phải CURRENT)
 func _connect_save_signal() -> void:
-	var save: Node = get_node_or_null("/root/SaveManager")
+	var save: Node = Svc.save()
 	if save != null and save.has_signal("data_loaded") \
 			and not save.is_connected("data_loaded", _on_save_data_loaded):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		save.connect("data_loaded", _on_save_data_loaded)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
@@ -256,7 +256,7 @@ func _on_level_selected(level_id: int) -> void:
 func _load_level_ids() -> void:
 	_level_ids.clear()
 	_level_data.clear()
-	var lm: Node = get_node_or_null("/root/LevelManager")
+	var lm: Node = Svc.level()
 	if lm != null and lm.has_method("get_level_ids"):
 		for level_id in lm.call("get_level_ids"):
 			_level_ids.append(int(level_id))
@@ -341,7 +341,7 @@ func _chapter_levels(chapter_id: int) -> Array[int]:
 
 
 func _is_bonus(level_id: int) -> bool:
-	var lm: Node = get_node_or_null("/root/LevelManager")
+	var lm: Node = Svc.level()
 	return lm != null and lm.has_method("is_bonus_level") and bool(lm.call("is_bonus_level", level_id))
 
 
@@ -378,7 +378,7 @@ func _stars_dict() -> Dictionary:
 
 
 func _game_manager() -> Node:
-	return get_node_or_null("/root/GameManager")
+	return Svc.game()
 
 
 func level_ids() -> Array[int]:
@@ -389,7 +389,7 @@ func level_ids() -> Array[int]:
 # Chương: chip ‹ CHƯƠNG n › + chuyển chương
 # ---------------------------------------------------------------------------
 func _chapters() -> Array:
-	var lm: Node = get_node_or_null("/root/LevelManager")
+	var lm: Node = Svc.level()
 	if lm == null or not lm.has_method("get_chapters"):
 		return []
 	return lm.call("get_chapters")
@@ -398,7 +398,7 @@ func _chapters() -> Array:
 ## Mã các chương CÓ màn, tăng dần
 func _chapter_ids() -> Array[int]:
 	var ids: Array[int] = []
-	var lm: Node = get_node_or_null("/root/LevelManager")
+	var lm: Node = Svc.level()
 	for chapter_v in _chapters():
 		var chapter := chapter_v as ChapterData
 		if chapter == null:
@@ -480,7 +480,7 @@ func _rebuild_for_chapter() -> void:
 # Rương mốc thưởng của chương
 # ---------------------------------------------------------------------------
 func _chapter_stars(chapter_id: int) -> int:
-	var lm: Node = get_node_or_null("/root/LevelManager")
+	var lm: Node = Svc.level()
 	if lm != null and lm.has_method("chapter_stars"):
 		return int(lm.call("chapter_stars", chapter_id))
 	var own := 0
@@ -490,7 +490,7 @@ func _chapter_stars(chapter_id: int) -> int:
 
 
 func _chapter_star_total(chapter_id: int) -> int:
-	var lm: Node = get_node_or_null("/root/LevelManager")
+	var lm: Node = Svc.level()
 	if lm != null and lm.has_method("chapter_star_total"):
 		return maxi(int(lm.call("chapter_star_total", chapter_id)), 1)
 	return maxi(main_level_ids().size(), 1) * 3

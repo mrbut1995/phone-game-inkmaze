@@ -1,3 +1,4 @@
+class_name SceneManagerClass
 extends Node
 ## ============================================================================
 ## Manager: SceneManager - Điều hướng giữa các scene + Animation chuyển cảnh
@@ -80,7 +81,7 @@ func change_scene(path: String, record_history := true, style := "auto") -> void
 
 	var previous := current_scene_path()
 	if record_history and not previous.is_empty() and previous != path:
-		var screen: Variant = get_node_or_null("/root/ScreenManager")
+		var screen: Variant = Svc.screen()
 		if screen != null and screen.has_method("push_history"):
 			screen.call("push_history", previous)
 
@@ -209,7 +210,7 @@ func consume_pending_event_id() -> StringName:
 ## Hết lịch sử ⇒ về Main và KHÔNG ghi thêm lịch sử (nếu ghi, Back ở Main sẽ nhảy ngược lại
 ## màn vừa rời — lỗi "Back không về được" khi bấm liên tiếp).
 func go_back() -> void:
-	var screen: Node = get_node_or_null("/root/ScreenManager")
+	var screen: Node = Svc.screen()
 	if screen != null and screen.has_method("pop_history"):
 		var prev: String = screen.call("pop_history")
 		if not prev.is_empty():

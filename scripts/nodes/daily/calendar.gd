@@ -84,7 +84,7 @@ func rebuild() -> void:
 	month_label.text = "%s • %d" % [tr("STR_MONTH_%02d" % month), year]
 	_refresh_dow()
 
-	var daily: Node = get_node_or_null("/root/DailyManager")
+	var daily: Node = Svc.daily()
 	var days_in_month := days_in_month(year, month)
 	var days_in_prev := days_in_month(year, month - 1) if month > 1 else days_in_month(year - 1, 12)
 	var offset := (weekday_of(year, month, 1) + 6) % 7  # cột bắt đầu, tuần tự Thứ 2

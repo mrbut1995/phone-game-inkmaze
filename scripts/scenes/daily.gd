@@ -48,7 +48,7 @@ var _hold_stars := 0
 
 
 func _ready() -> void:
-	_daily = get_node_or_null("/root/DailyManager")
+	_daily = Svc.daily()
 	_selected_day = _today()
 	_take_celebrate_info()
 
@@ -70,7 +70,7 @@ func _ready() -> void:
 func _take_celebrate_info() -> void:
 	_celebrate_info = {}
 	_celebrating = false
-	var gm: Node = get_node_or_null("/root/GameManager")
+	var gm: Node = Svc.game()
 	if gm == null or not gm.has_method("take_daily_celebrate"):
 		return
 	_celebrate_info = gm.call("take_daily_celebrate")
@@ -515,7 +515,7 @@ func _enter_day(is_challenge: bool) -> void:
 ## Chạy quảng cáo thưởng để MỞ KHOÁ ngày bỏ lỡ; xem xong mới vào màn.
 ## AdsManager hiện là PLACEHOLDER: khi chưa gắn SDK nó giả lập "xem xong" ngay.
 func _request_ad_then_play(is_challenge: bool) -> void:
-	var ads: Node = get_node_or_null("/root/AdsManager")
+	var ads: Node = Svc.ads()
 	if ads == null or not ads.has_method("show_rewarded"):
 		# Không có hệ thống quảng cáo (bản test): mở khoá luôn để không chặn người chơi
 		_grant_day_unlock()
@@ -549,7 +549,7 @@ func _grant_day_unlock() -> void:
 
 func _start_day(day: int, is_challenge: bool) -> void:
 	Sfx.play(Sfx.BTN_CLICK)
-	var gm: Node = get_node_or_null("/root/GameManager")
+	var gm: Node = Svc.game()
 	var method := "start_daily_challenge" if is_challenge else "start_daily_play"
 	if gm != null and gm.has_method(method):
 		gm.call(method, day)
@@ -584,7 +584,7 @@ func _on_back_pressed() -> void:
 		return
 	# SFX: gõ thẻ giấy cho nút phụ (Back)
 	Sfx.play(Sfx.BTN_WOOD_TAP)
-	var gm: Node = get_node_or_null("/root/GameManager")
+	var gm: Node = Svc.game()
 	if gm != null:
 		gm.go_to_main_menu()
 	else:

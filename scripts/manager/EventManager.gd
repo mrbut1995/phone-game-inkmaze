@@ -1,3 +1,4 @@
+class_name EventManagerClass
 extends Node
 ## ============================================================================
 ## Autoload: EventManager — Quản lý toàn bộ Event System.
@@ -44,7 +45,7 @@ var _initialized := false
 func _ready() -> void:
 	# Quét thư mục + nạp toàn bộ EventData là việc NẶNG ⇒ hoãn tới khi màn Splash đã hiện
 	# (xem LoadingManager). Headless thì LoadingManager gọi lại NGAY nên hành vi không đổi.
-	var boot: Node = get_node_or_null("/root/LoadingManager")
+	var boot: Node = Svc.loading()
 	if boot != null and boot.has_method("add_step"):
 		boot.call("add_step", Callable(self, "initialize"), "events")
 	else:
@@ -421,17 +422,17 @@ func _cleanup_stale() -> void:
 
 
 func _queue_save() -> void:
-	var sm := get_node_or_null("/root/SaveManager")
+	var sm := Svc.save()
 	if sm != null and sm.has_method("queue_save"):
 		sm.call("queue_save")
 
 
 func _get_shop_manager() -> Node:
-	return get_node_or_null("/root/ShopManager")
+	return Svc.shop()
 
 
 func _get_daily_manager() -> Node:
-	return get_node_or_null("/root/DailyManager")
+	return Svc.daily()
 
 
 # ---------------------------------------------------------------------------

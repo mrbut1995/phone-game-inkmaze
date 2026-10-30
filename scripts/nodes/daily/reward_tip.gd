@@ -112,7 +112,7 @@ func _on_anim_finished(anim_name: StringName) -> void:
 
 
 func _reward_text(def: Dictionary) -> String:
-	var dm: Node = get_node_or_null("/root/DailyManager")
+	var dm: Node = Svc.daily()
 	if dm != null and dm.has_method("reward_text"):
 		return str(dm.call("reward_text", def))
 	return ""

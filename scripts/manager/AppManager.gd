@@ -1,3 +1,4 @@
+class_name AppManagerClass
 extends Node
 ## ============================================================================
 ## Manager: AppManager - Vòng đời ứng dụng (quan trọng trên Android).

@@ -34,7 +34,7 @@ func _ready() -> void:
 	# Nút `+` (`Content/Plus`) nối `pressed` trong nodes/main/life_chip.tscn
 	if large:
 		_apply_large()
-	var game_manager := get_node_or_null("/root/GameManager")
+	var game_manager := Svc.game()
 	if game_manager != null and game_manager.has_signal("life_changed") \
 			and not game_manager.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		game_manager.connect("life_changed", _on_life_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh

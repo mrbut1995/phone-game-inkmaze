@@ -1,3 +1,4 @@
+class_name ScreenManagerClass
 extends Node
 ## ============================================================================
 ## Manager: ScreenManager - Lịch sử điều hướng màn hình.
@@ -69,7 +70,7 @@ func go_back() -> bool:
 	if not can_go_back():
 		return false
 	var path := pop_history()
-	var scene_manager: Variant = get_node_or_null("/root/SceneManager")
+	var scene_manager: Variant = Svc.scene()
 	if scene_manager != null and scene_manager.has_method("change_scene"):
 		scene_manager.call("change_scene", path, false)
 	else:
@@ -103,7 +104,7 @@ func _handle_back(allow_quit: bool) -> bool:
 	call_deferred("_clear_back_busy")
 
 	# Popup đang mở: đóng popup trên cùng, KHÔNG đổi màn hình
-	var popup_manager: Node = get_node_or_null("/root/PopupManager")
+	var popup_manager: Node = Svc.popup()
 	if popup_manager != null and popup_manager.has_method("has_open") \
 			and bool(popup_manager.call("has_open")):
 		var top_popup: Variant = popup_manager.call("top") if popup_manager.has_method("top") else null
@@ -127,7 +128,7 @@ func _handle_back(allow_quit: bool) -> bool:
 
 	# Hết lịch sử: về màn chính (SceneManager.go_back() tự fallback, KHÔNG ghi thêm lịch sử);
 	# đang ở màn chính thì thoát app (chỉ luồng Back hệ thống Android)
-	var scene_manager: Node = get_node_or_null("/root/SceneManager")
+	var scene_manager: Node = Svc.scene()
 	if scene_manager == null:
 		return false
 	if not bool(scene_manager.call("is_main_scene")):
@@ -144,7 +145,7 @@ func _clear_back_busy() -> void:
 
 ## Thoát app (Android): lưu dữ liệu trước rồi mới thoát
 func _quit_app() -> void:
-	var save: Node = get_node_or_null("/root/SaveManager")
+	var save: Node = Svc.save()
 	if save != null and save.has_method("flush"):
 		save.call("flush")
 	get_tree().quit()

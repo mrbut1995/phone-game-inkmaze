@@ -1,11 +1,11 @@
 class_name Ranking
 extends RefCounted
 ## ============================================================================
-## Helper tĩnh: truy cập RankingManager (autoload) qua /root + định dạng hiển thị.
+## Helper tĩnh: truy cập RankingManager (autoload) + định dạng hiển thị.
 ##
 ## Lý do tồn tại: test runner chạy bằng `godot --script ...` không resolve được
 ## identifier autoload lúc parse, nên script khác KHÔNG được tham chiếu thẳng
-## `RankingManager`. Ở đây lấy node động qua /root/RankingManager.
+## `RankingManager`. Node autoload lấy qua `Svc.ranking()`.
 ##
 ## Ngoài ra gom luôn phần ĐỊNH DẠNG (chữ kỷ lục / điểm / tên) để màn hình, hàng
 ## danh sách và bục vinh quang hiển thị giống nhau tuyệt đối.
@@ -13,10 +13,7 @@ extends RefCounted
 
 
 static func manager() -> Node:
-	var tree := _tree()
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("RankingManager")
-	return null
+	return Svc.ranking()
 
 
 # ---------------------------------------------------------------------------
@@ -111,8 +108,3 @@ static func thousands(value: int) -> String:
 		if count % 3 == 0 and i > 0:
 			out = "," + out
 	return ("-" + out) if value < 0 else out
-
-
-static func _tree() -> SceneTree:
-	var main_loop := Engine.get_main_loop()
-	return main_loop as SceneTree if main_loop is SceneTree else null

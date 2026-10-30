@@ -56,7 +56,7 @@ func _ready() -> void:
 ## Nạp lại danh sách thẻ từ EventManager
 func refresh() -> void:
 	_clear_cards()
-	var em := get_node_or_null("/root/EventManager")
+	var em := Svc.event()
 	if em == null:
 		return
 	var events: Array[EventData] = (

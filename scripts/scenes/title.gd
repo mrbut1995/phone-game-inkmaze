@@ -46,7 +46,7 @@ func _ready() -> void:
 func _refresh_stamp() -> void:
 	if layout.stamp_label == null:
 		return
-	var app := get_node_or_null("/root/AppManager")
+	var app := Svc.app()
 	var version := "1.0.0"
 	if app != null:
 		version = str(app.call("get_version"))
@@ -174,10 +174,10 @@ func _on_exit_animation_finished(anim_name: StringName) -> void:
 
 func _goto_main() -> void:
 	# Người chơi MỚI: vào luồng học lần đầu (first_time → … → màn thực hành) thay vì Main
-	var tm := get_node_or_null("/root/TutorialManager")
+	var tm := Svc.tutorial()
 	if tm != null and tm.has_method("start_onboarding") and bool(tm.call("start_onboarding")):
 		return
-	var sm := get_node_or_null("/root/SceneManager")
+	var sm := Svc.scene()
 	if sm != null and sm.has_method("goto_main"):
 		sm.call("goto_main")
 	else:

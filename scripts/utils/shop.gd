@@ -11,10 +11,7 @@ const CATEGORIES := ["pen", "theme", "tool", "coin"]
 
 
 static func manager() -> Node:
-	var tree := Engine.get_main_loop() as SceneTree
-	if tree == null or tree.root == null:
-		return null
-	return tree.root.get_node_or_null("ShopManager")
+	return Svc.shop()
 
 
 static func available() -> bool:

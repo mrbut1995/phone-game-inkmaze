@@ -479,7 +479,7 @@ func _record(kind: String) -> int:
 	var best := int(data.get("best_floor_%s" % kind, -1))
 	if best >= 0:
 		return best
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	if gm != null and gm.has_method("best_floor"):
 		return int(gm.call("best_floor", kind))
 	return 0

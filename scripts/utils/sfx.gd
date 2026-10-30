@@ -7,8 +7,7 @@ extends RefCounted
 ##   Test runner của dự án chạy bằng `godot --script ...`. Ở chế độ này,
 ##   identifier của autoload KHÔNG resolve được lúc parse => script nào tham
 ##   chiếu thẳng tên autoload sẽ lỗi parse. Vì vậy mọi nơi chỉ tham chiếu
-##   class `Sfx` này; node autoload được lấy động qua /root/SfxManager
-##   (đúng pattern `get_node_or_null` mà các manager khác đang dùng).
+##   class `Sfx` này; node autoload được lấy qua `Svc.sfx()`.
 ##
 ## Danh mục SFX + tình huống kích hoạt: xem `sfx_suggestion.txt` ở thư mục gốc.
 ## ============================================================================
@@ -100,9 +99,4 @@ static func stop_loop(sfx_name: String) -> void:
 
 
 static func _manager() -> Node:
-	var main_loop := Engine.get_main_loop()
-	if main_loop is SceneTree:
-		var tree := main_loop as SceneTree
-		if tree.root != null:
-			return tree.root.get_node_or_null("SfxManager")
-	return null
+	return Svc.sfx()

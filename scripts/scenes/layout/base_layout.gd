@@ -14,8 +14,10 @@ func _ready() -> void:
 	_sync_shared_header()
 	_apply_safe_area()
 	# Lắng nghe thay đổi safe area (xoay màn hình, v.v.)
-	if has_node("/root/SafeArea"):
-		get_node("/root/SafeArea").changed.connect(_on_safe_area_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	var safe := Svc.safe_area()
+	# keep-code: signal của AUTOLOAD (không phải node tĩnh)
+	if safe != null:
+		safe.changed.connect(_on_safe_area_changed)
 
 
 func _process(_delta: float) -> void:
@@ -74,7 +76,7 @@ func _on_orientation_changed():
 ## Áp dụng bottom safe area inset vào `bottom_safe_spacer`.
 ## Gọi tự động khi `_ready` và khi `SafeArea.changed` phát ra.
 func _apply_safe_area() -> void:
-	var sa_node := get_node_or_null("/root/SafeArea")
+	var sa_node := Svc.safe_area()
 	var inset := 0.0
 	if sa_node != null:
 		inset = sa_node.bottom_ui()

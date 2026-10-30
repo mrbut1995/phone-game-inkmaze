@@ -1,3 +1,4 @@
+class_name LocalizationManagerClass
 extends Node
 ## ============================================================================
 ## Manager: LocalizationManager - Quản lý ngôn ngữ hiển thị (vi/en).
@@ -57,7 +58,7 @@ var _initialized := false
 func _ready() -> void:
 	# Nạp bảng dịch là việc NẶNG (~200 ms) ⇒ hoãn tới khi màn Splash đã hiện
 	# (xem LoadingManager). Headless thì LoadingManager gọi lại NGAY nên hành vi không đổi.
-	var boot: Node = get_node_or_null("/root/LoadingManager")
+	var boot: Node = Svc.loading()
 	if boot != null and boot.has_method("add_step"):
 		boot.call("add_step", Callable(self, "initialize"), "localization")
 	else:
@@ -70,7 +71,7 @@ func initialize() -> void:
 		return
 	_initialized = true
 	_load_translations()
-	var sm: Variant = get_node_or_null("/root/SettingManager")
+	var sm: Variant = Svc.setting()
 	var saved := DEFAULT_LOCALE
 	if sm != null:
 		saved = str(sm.call("get_setting", "locale", DEFAULT_LOCALE))
@@ -219,7 +220,7 @@ func set_locale(code: String, save := true) -> void:
 	TranslationServer.set_locale(code)
 	locale_changed.emit(code)
 	if save:
-		var sm: Variant = get_node_or_null("/root/SettingManager")
+		var sm: Variant = Svc.setting()
 		if sm != null:
 			sm.call("set_setting", "locale", code)
 

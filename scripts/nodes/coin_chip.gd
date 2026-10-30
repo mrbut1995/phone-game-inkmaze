@@ -31,7 +31,7 @@ func _ready() -> void:
 	# Nút `+` (`Content/Plus`) nối `pressed` trong nodes/main/coin_chip.tscn
 	if large:
 		_apply_large()
-	var wallet := get_node_or_null("/root/ArchivementManager")
+	var wallet := Svc.archivement()
 	if wallet != null and wallet.has_signal("progress_changed") \
 			and not wallet.is_connected("progress_changed", _on_wallet_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		wallet.connect("progress_changed", _on_wallet_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh

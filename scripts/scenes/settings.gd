@@ -114,7 +114,7 @@ func _on_stamp_gui_input(event: InputEvent) -> void:
 	if _stamp_taps < DEBUG_TAP_COUNT:
 		return
 	_stamp_taps = 0
-	var dbg: Node = get_node_or_null("/root/DebugManager")
+	var dbg: Node = Svc.debug()
 	if dbg != null:
 		dbg.call("toggle_console")
 
@@ -123,7 +123,7 @@ func _on_stamp_gui_input(event: InputEvent) -> void:
 # Đồng bộ UI <-> SettingManager
 # ---------------------------------------------------------------------------
 func _sm() -> Node:
-	return get_node_or_null("/root/SettingManager")
+	return Svc.setting()
 
 
 func _sync_from_settings() -> void:
@@ -164,7 +164,7 @@ func _refresh_language() -> void:
 
 func _refresh_version() -> void:
 	if layout.lbl_version != null:
-		var app := get_node_or_null("/root/AppManager")
+		var app := Svc.app()
 		var version := "1.0.0"
 		if app != null:
 			version = str(app.call("get_version"))
@@ -275,7 +275,7 @@ func _on_reset_pressed() -> void:
 # ---------------------------------------------------------------------------
 func _on_back_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	if gm != null and gm.has_method("go_to_main_menu"):
 		gm.call("go_to_main_menu")
 	else:

@@ -234,10 +234,7 @@ static func icon_texture(pen_id: String) -> Texture2D:
 
 ## Ngòi bút đang dùng (ShopManager.equipped_pen) — dùng khi không truyền id cụ thể
 static func equipped_id() -> String:
-	var tree := Engine.get_main_loop() as SceneTree
-	if tree == null or tree.root == null:
-		return DEFAULT_PEN
-	var shop := tree.root.get_node_or_null("ShopManager")
+	var shop := Svc.shop()
 	if shop == null:
 		return DEFAULT_PEN
 	var pen := str(shop.get("equipped_pen"))

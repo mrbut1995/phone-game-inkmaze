@@ -1,18 +1,14 @@
 class_name Loc
 extends RefCounted
 ## ============================================================================
-## Helper tĩnh: truy cập LocalizationManager qua /root (autoload) để script
-## chạy được cả khi test bằng `godot --script` (không resolve identifier autoload
-## lúc parse). Xem thêm Sfx / Nav.
+## Helper tĩnh: truy cập LocalizationManager (autoload) để script chạy được
+## cả khi test bằng `godot --script` (không resolve identifier autoload lúc parse).
+## Node autoload lấy qua `Svc.loc()` — xem `scripts/utils/svc.gd`.
 ## ============================================================================
 
 
 static func _mgr() -> Node:
-	var main_loop := Engine.get_main_loop()
-	var tree := main_loop as SceneTree
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("LocalizationManager")
-	return null
+	return Svc.loc()
 
 
 ## Danh sach ma ngon ngu duoc ho tro (nap tu string.csv)

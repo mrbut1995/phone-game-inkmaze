@@ -328,7 +328,7 @@ func level_data_of(level_id: int) -> LevelData:
 	# Ván SỰ KIỆN: màn event không nằm trong danh sách chương → trả LevelData đã truyền vào
 	if event_level != null and not current_event_id.is_empty() and level_id == current_level:
 		return event_level
-	var lm := get_node_or_null("/root/LevelManager")
+	var lm := Svc.level()
 	if lm == null or not lm.has_method("load_level"):
 		return null
 	if lm.has_method("has_level") and not bool(lm.call("has_level", level_id)):
@@ -735,7 +735,7 @@ func claim_chapter_chest(chapter_id: int, index: int, stars_own: int, stars_tota
 func _grant_chapter_chest(def: Dictionary) -> void:
 	var coins := int(def.get("coins", 0))
 	if coins > 0:
-		var wallet: Node = get_node_or_null("/root/ArchivementManager")
+		var wallet: Node = Svc.archivement()
 		if wallet != null:
 			wallet.set("coins", maxi(int(wallet.get("coins")) + coins, 0))
 			if wallet.has_method("notify_coins_changed"):
@@ -819,7 +819,7 @@ func start_daily_play(day: int) -> void:
 
 ## Khởi động phần THỬ THÁCH của ngày (luật Special xoay vòng, thắng = 3 Sao)
 func start_daily_challenge(day: int) -> void:
-	var dm := get_node_or_null("/root/DailyManager")
+	var dm := Svc.daily()
 	daily_challenge_id = ""
 	if dm != null and dm.has_method("challenge_mode_for_day"):
 		daily_challenge_id = str(dm.call("challenge_mode_for_day", maxi(day, 1)))
@@ -832,7 +832,7 @@ func start_daily_challenge(day: int) -> void:
 ## [DEBUG/TEST] Chuẩn bị 1 GAME (0..2) trong ngày nhưng KHÔNG chuyển scene.
 ## Kế hoạch ngày (`DailyManager.get_day_games`) quyết định game là MAZE THƯỜNG hay CHALLENGE.
 func prepare_daily_game(day: int, index: int) -> String:
-	var dm := get_node_or_null("/root/DailyManager")
+	var dm := Svc.daily()
 	var plan: Array = []
 	if dm != null and dm.has_method("get_day_games"):
 		var raw: Variant = dm.call("get_day_games", maxi(day, 1))
@@ -867,7 +867,7 @@ func start_daily_game(day: int, index: int) -> void:
 func _open_mode_tutorial_once() -> bool:
 	if debug_run:
 		return false
-	var tm := get_node_or_null("/root/TutorialManager")
+	var tm := Svc.tutorial()
 	if tm == null or not tm.has_method("begin_mode_tutorial"):
 		return false
 	return bool(tm.call("begin_mode_tutorial", current_mode))
@@ -964,7 +964,7 @@ func return_to_daily() -> void:
 ## Lùi về `path` như một thao tác BACK: gỡ mục `path` còn sót trên đỉnh lịch sử (do lúc vào
 ## ván đã đẩy) rồi chuyển màn KHÔNG ghi thêm lịch sử.
 func _return_to(path: String) -> void:
-	var screen := get_node_or_null("/root/ScreenManager")
+	var screen := Svc.screen()
 	if screen != null and screen.has_method("drop_history"):
 		screen.call("drop_history", path)
 	Nav.back_to(path)
@@ -979,7 +979,7 @@ func _change_scene(path: String) -> void:
 func record_level_clear(level_id: int, stars: int, clear_time: float) -> void:
 	# Ván SỰ KIỆN: chỉ báo cho EventManager, KHÔNG ghi Sao/mở khoá vào mạch màn thường (§B7)
 	if not current_event_id.is_empty():
-		var em := get_node_or_null("/root/EventManager")
+		var em := Svc.event()
 		var lvl := level_data_of(level_id)
 		if em != null and em.has_method("on_level_won") and lvl != null:
 			em.call("on_level_won", current_event_id, lvl, stars)
@@ -998,7 +998,7 @@ func record_level_clear(level_id: int, stars: int, clear_time: float) -> void:
 		# Mở khoá màn kế tiếp nếu màn đó THẬT SỰ tồn tại VÀ thuộc chương ĐÃ MỞ
 		# (tránh nhảy sang màn của chương chưa unlock khi màn cuối chương vừa hoàn thành)
 		var next_id := level_id + 1
-		var lm: Node = get_node_or_null("/root/LevelManager")
+		var lm: Node = Svc.level()
 		var has_next := true
 		if lm != null and lm.has_method("has_level"):
 			has_next = bool(lm.call("has_level", next_id))
@@ -1032,7 +1032,7 @@ func is_chapter_unlocked(chapter_id: int) -> bool:
 
 ## Số Sao cần để mở chương này (0 = không cần điều kiện)
 func chapter_star_cost(chapter_id: int) -> int:
-	var lm := get_node_or_null("/root/LevelManager")
+	var lm := Svc.level()
 	if lm == null or not lm.has_method("get_chapter"):
 		return 0
 	var data: Variant = lm.call("get_chapter", chapter_id)
@@ -1053,7 +1053,7 @@ func unlock_chapter(chapter_id: int) -> bool:
 	unlocked_chapters.append(chapter_id)
 	# Đường liền có CỔNG: mở khoá xong thì màn ĐẦU của chương phải SÁNG ngay, nếu không cả chương
 	# vẫn hiện xám vì `unlocked_levels` còn dừng ở màn cuối chương trước.
-	var lm := get_node_or_null("/root/LevelManager")
+	var lm := Svc.level()
 	if lm != null and lm.has_method("levels_in_chapter"):
 		var ids: Array[int] = []
 		ids.assign(lm.call("levels_in_chapter", chapter_id))
@@ -1071,7 +1071,7 @@ func set_chapter(chapter_id: int) -> void:
 
 ## Chương chứa màn này (1 nếu không có LevelManager)
 func chapter_of_level(level_id: int) -> int:
-	var lm := get_node_or_null("/root/LevelManager")
+	var lm := Svc.level()
 	if lm != null and lm.has_method("chapter_of_level"):
 		return maxi(int(lm.call("chapter_of_level", level_id)), 1)
 	return 1
@@ -1080,7 +1080,7 @@ func chapter_of_level(level_id: int) -> int:
 ## Màn kế tiếp TRONG CÙNG CHƯƠNG (-1 nếu đây là màn cuối của chương)
 ## Màn chọn màn / popup thắng dựa vào đây để KHÔNG nhảy sang chương khác.
 func next_level_in_chapter(level_id: int) -> int:
-	var lm := get_node_or_null("/root/LevelManager")
+	var lm := Svc.level()
 	if lm == null or not lm.has_method("levels_in_chapter"):
 		return level_id + 1 if level_id < 9 else -1
 	var ids: Array = lm.call("levels_in_chapter", chapter_of_level(level_id))
@@ -1094,7 +1094,7 @@ func next_level_in_chapter(level_id: int) -> int:
 func can_play_level(level_id: int) -> bool:
 	if level_id < 1 or not is_chapter_unlocked(chapter_of_level(level_id)):
 		return false
-	var lm := get_node_or_null("/root/LevelManager")
+	var lm := Svc.level()
 	if lm != null and lm.has_method("has_level") and not bool(lm.call("has_level", level_id)):
 		return false
 	return level_id <= unlocked_levels
@@ -1102,7 +1102,7 @@ func can_play_level(level_id: int) -> bool:
 
 ## Có chương nào ĐỦ Sao để mở mà chưa mở không (màn Chọn màn nhấp nháy banner báo tin)
 func has_unlockable_chapter() -> bool:
-	var lm := get_node_or_null("/root/LevelManager")
+	var lm := Svc.level()
 	if lm == null or not lm.has_method("get_chapters"):
 		return false
 	for chapter in lm.call("get_chapters"):

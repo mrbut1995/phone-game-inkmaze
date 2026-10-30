@@ -6,7 +6,7 @@ extends RefCounted
 ##
 ## Lý do tồn tại: test runner chạy bằng `godot --script ...` không resolve
 ## được identifier autoload lúc parse, nên script khác không được tham chiếu
-## thẳng `SceneManager`. Ở đây lấy node động qua /root/SceneManager.
+## thẳng `SceneManager`. Node autoload lấy qua `Svc.scene()` / `Svc.screen()`.
 ## ============================================================================
 
 const SCENE_MAIN := "res://scenes/main.tscn"
@@ -158,17 +158,11 @@ static func goto_event(event_id: StringName) -> void:
 
 
 static func _manager() -> Node:
-	var tree := _tree()
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("SceneManager")
-	return null
+	return Svc.scene()
 
 
 static func _screen() -> Node:
-	var tree := _tree()
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("ScreenManager")
-	return null
+	return Svc.screen()
 
 
 static func _tree() -> SceneTree:

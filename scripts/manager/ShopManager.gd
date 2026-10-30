@@ -1,3 +1,4 @@
+class_name ShopManagerClass
 extends Node
 ## ============================================================================
 ## Manager: ShopManager — CỬA HÀNG (mockup/shopping_*.svg)
@@ -208,12 +209,12 @@ func is_default(item_id: String) -> bool:
 # Ví Xu (dùng chung với Sổ tay thành tựu)
 # ---------------------------------------------------------------------------
 func coins() -> int:
-	var wallet: Node = get_node_or_null("/root/ArchivementManager")
+	var wallet: Node = Svc.archivement()
 	return maxi(int(wallet.get("coins")), 0) if wallet != null else 0
 
 
 func _add_coins(amount: int) -> void:
-	var wallet: Node = get_node_or_null("/root/ArchivementManager")
+	var wallet: Node = Svc.archivement()
 	if wallet == null:
 		return
 	wallet.set("coins", maxi(int(wallet.get("coins")) + amount, 0))
@@ -226,7 +227,7 @@ func _add_coins(amount: int) -> void:
 func add_coins(amount: int, _source: String = "") -> bool:
 	if amount == 0:
 		return false
-	if get_node_or_null("/root/ArchivementManager") == null:
+	if Svc.archivement() == null:
 		return false
 	_add_coins(amount)
 	return true
@@ -281,7 +282,7 @@ func _buy_consumable(item_id: String, item_data: Dictionary) -> bool:
 
 ## Mua gói LƯỢT CHƠI: cộng vào GameManager (life dùng chung), đầy lượt thì không mua được.
 func _buy_life_pack(item_id: String) -> bool:
-	var game_manager := get_node_or_null("/root/GameManager")
+	var game_manager := Svc.game()
 	if game_manager == null or not game_manager.has_method("grant_lives"):
 		return false
 	var price := price_of(item_id)
@@ -438,7 +439,7 @@ func _reset_defaults() -> void:
 
 ## Đồng bộ sang ThemeManager (nó đọc lại equipped_* + màu tương ứng)
 func _tell_theme_manager() -> void:
-	var themes: Node = get_node_or_null("/root/ThemeManager")
+	var themes: Node = Svc.theme()
 	if themes != null and themes.has_method("sync_from_shop"):
 		themes.call("sync_from_shop")
 

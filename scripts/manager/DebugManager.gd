@@ -1,3 +1,4 @@
+class_name DebugManagerClass
 extends Node
 ## ============================================================================
 ## Manager: DebugManager - Cờ debug, log phân loại và màn hình Debug Console.
@@ -46,7 +47,7 @@ func can_open_console() -> bool:
 func toggle_console() -> void:
 	if not can_open_console():
 		return
-	var scene_manager: Node = get_node_or_null("/root/SceneManager")
+	var scene_manager: Node = Svc.scene()
 	if scene_manager == null:
 		return
 	if bool(scene_manager.call("is_debug_scene")):
@@ -57,10 +58,10 @@ func toggle_console() -> void:
 
 ## Đóng màn debug: quay lại màn trước đó, nếu không có thì về Main
 func close_console() -> void:
-	var screen: Node = get_node_or_null("/root/ScreenManager")
+	var screen: Node = Svc.screen()
 	if screen != null and bool(screen.call("can_go_back")) and bool(screen.call("go_back")):
 		return
-	var scene_manager: Node = get_node_or_null("/root/SceneManager")
+	var scene_manager: Node = Svc.scene()
 	if scene_manager != null:
 		scene_manager.call("goto_main")
 
