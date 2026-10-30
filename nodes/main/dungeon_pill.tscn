@@ -1,92 +1,73 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/main/dungeon_pill.gd" id="1_pill"]
-[ext_resource uid="uid://j2x0g1f5tl6p" type="Texture2D" path="res://assets/images-png/icons/icon_castle.png" id="2_icon"]
+[ext_resource type="Texture2D" path="res://assets/images-png/dungeon/dungeon_ticket.png" id="2_ticket"]
+[ext_resource type="Texture2D" path="res://assets/images-png/dungeon/dungeon_icon.png" id="3_icon"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_normal"]
-bg_color = Color(0.9843, 0.749, 0.1412, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.7882, 0.5412, 0.0431, 1)
-corner_radius_top_left = 28
-corner_radius_top_right = 28
-corner_radius_bottom_right = 28
-corner_radius_bottom_left = 28
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pressed"]
-bg_color = Color(0.9608, 0.6627, 0.0549, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.7882, 0.5412, 0.0431, 1)
-corner_radius_top_left = 28
-corner_radius_top_right = 28
-corner_radius_bottom_right = 28
-corner_radius_bottom_left = 28
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_empty"]
-bg_color = Color(0,0,0,0)
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
-
-[node name="DungeonPill" type="Button" node_paths=PackedStringArray("icon_tex", "lbl_title", "lbl_floor")]
-custom_minimum_size = Vector2(196, 56)
-offset_right = 196.0
-offset_bottom = 56.0
+[node name="DungeonPill" type="Button" node_paths=PackedStringArray("icon_tex", "lbl_title", "lbl_floor", "art", "content")]
+custom_minimum_size = Vector2(244, 86)
+offset_right = 244.0
+offset_bottom = 86.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_empty")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0")
 script = ExtResource("1_pill")
-icon_tex = NodePath("Row/Icon")
-lbl_title = NodePath("Row/Text/Title")
-lbl_floor = NodePath("Row/Text/Floor")
+icon_tex = NodePath("Content/Icon")
+lbl_title = NodePath("Content/Title")
+lbl_floor = NodePath("Content/Floor")
+art = NodePath("Art")
+content = NodePath("Content")
 
-[node name="Row" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 12.0
-offset_right = -14.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Art" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 244.0
+offset_bottom = 86.0
 mouse_filter = 2
-theme_override_constants/separation = 8
-
-[node name="Icon" type="TextureRect" parent="Row"]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-texture = ExtResource("2_icon")
+texture = ExtResource("2_ticket")
 expand_mode = 1
-stretch_mode = 5
 
-[node name="Text" type="VBoxContainer" parent="Row"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
+[node name="Content" type="Control" parent="."]
+layout_mode = 0
+offset_right = 244.0
+offset_bottom = 86.0
 mouse_filter = 2
-theme_override_constants/separation = -2
 
-[node name="Title" type="Label" parent="Row/Text"]
-layout_mode = 2
+[node name="Icon" type="TextureRect" parent="Content"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 14.0
+offset_right = 65.0
+offset_bottom = 64.0
+mouse_filter = 2
+texture = ExtResource("3_icon")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="Content"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 17.0
+offset_right = 232.0
+offset_bottom = 44.0
+mouse_filter = 2
 theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 17
 text = "DUNGEON"
-clip_text = true
+vertical_alignment = 1
 
-[node name="Floor" type="Label" parent="Row/Text"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4196, 0.2667, 0.0235, 1)
+[node name="Floor" type="Label" parent="Content"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 42.0
+offset_right = 232.0
+offset_bottom = 64.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.5412, 0.3529, 0, 1)
 theme_override_font_sizes/font_size = 13
 text = "Tầng 0"
+vertical_alignment = 1
