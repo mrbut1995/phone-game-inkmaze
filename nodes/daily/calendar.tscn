@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://b8u3x0v0x0ol0" path="res://scripts/nodes/daily/calendar.gd" id="1_cal"]
 [ext_resource uid="uid://dcnr5x8lxgprs" type="Texture2D" path="res://assets/images-png/daily/board.png" id="2_board"]
-[ext_resource type="PackedScene" uid="uid://cggt0mrkea7fs" path="res://nodes/daily/day.tscn" id="3_day"]
 [ext_resource uid="uid://b0uecaqo3t80v" type="Texture2D" path="res://assets/images-png/daily/btn_nav_normal.png" id="4_nav_n"]
 [ext_resource uid="uid://cse03txo7xama" type="Texture2D" path="res://assets/images-png/daily/btn_nav_pressed.png" id="5_nav_p"]
 [ext_resource uid="uid://bn0ykh2s0tstg" type="Texture2D" path="res://assets/images-png/daily/btn_nav_r_normal.png" id="6_navr_n"]

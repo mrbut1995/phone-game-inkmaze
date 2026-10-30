@@ -22,8 +22,6 @@
 [ext_resource uid="uid://bjybtcsmqpwsd" type="Texture2D" path="res://assets/images-png/tutorial/tut_card_off.png" id="tut_card_off"]
 [ext_resource uid="uid://gustmdd07cjx" type="Texture2D" path="res://assets/images-png/tutorial/tut_link_lr.png" id="tut_link_lr"]
 [ext_resource uid="uid://u4aprf1jvw82" type="Texture2D" path="res://assets/images-png/tutorial/tut_link_rl.png" id="tut_link_rl"]
-[ext_resource uid="uid://bmdm8db5rjbj1" type="Texture2D" path="res://assets/images-png/tutorial/tut_link_v.png" id="tut_link_v"]
-[ext_resource uid="uid://b3hsm3p524syt" type="Texture2D" path="res://assets/images-png/ranking/rank_sheet.png" id="sheet"]
 [ext_resource uid="uid://d1jsebin0vqrg" type="Texture2D" path="res://assets/images-png/ranking/banner_title.png" id="banner"]
 [ext_resource uid="uid://d0va6pi8ee73v" type="Texture2D" path="res://assets/images-png/ranking/hole.png" id="hole"]
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="clip"]
