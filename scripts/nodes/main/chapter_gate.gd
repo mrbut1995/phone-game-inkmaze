@@ -19,9 +19,9 @@ signal opened
 
 enum State { LOCKED, READY, OPEN }
 
-const INK := Color("0F3B5F")
-const GOLD := Color("ECAD2E")
-const GLOW := Color("FFD66B")
+const INK := Color("0F3B5F")  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
+const GOLD := Color("ECAD2E")  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
+const GLOW := Color("FFD66B")  # keep-code: màu vẽ thủ công của component (không thuộc theme tĩnh)
 const FRAMES := 30
 const OPEN_SECONDS := 1.4
 ## Thời gian chờ thêm sau khi cửa mở xong để quầng sáng kịp lan rồi mới sang bước kế
@@ -52,10 +52,7 @@ var _idle: Tween = null
 
 
 func _ready() -> void:
-	if hit != null and not hit.pressed.is_connected(_on_hit_pressed):
-		hit.pressed.connect(_on_hit_pressed)
-	if overlay != null:
-		overlay.draw.connect(_draw_overlay)
+	# Dây `Hit.pressed` (nút bấm) + `Overlay.draw` (vẽ chữ/quầng) khai trong nodes/main/chapter_gate.tscn
 	_setup_sparks()
 	_apply_frame()
 
@@ -112,9 +109,9 @@ func play_reject() -> void:
 	_tween.parallel().tween_property(visual, "modulate", Color(1.0, 0.62, 0.62), 0.08)
 	_tween.parallel().tween_property(visual, "modulate", Color.WHITE, 0.3).set_delay(0.12)
 	_tween.tween_callback(func() -> void:
-		visual.position = Vector2.ZERO
-		visual.rotation = 0.0
-		visual.modulate = Color.WHITE
+		visual.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
+		visual.rotation = 0.0  # keep-code: pose hoạt cảnh runtime (tween)
+		visual.modulate = Color.WHITE  # keep-code: màu theo dữ liệu (runtime)
 		_busy = false
 		_update_idle())
 
@@ -174,7 +171,7 @@ func _stop_idle() -> void:
 		_idle.kill()
 		_idle = null
 	if visual != null:
-		visual.scale = Vector2.ONE
+		visual.scale = Vector2.ONE  # keep-code: pose hoạt cảnh runtime (tween)
 
 
 # ---------------------------------------------------------------------------
@@ -194,7 +191,7 @@ func _setup_sparks() -> void:
 	grad.offsets = PackedFloat32Array([0.0, 0.45, 1.0])
 	tex.gradient = grad
 	sparks.texture = tex
-	sparks.position = Vector2(0, -4)
+	sparks.position = Vector2(0, -4)  # keep-code: pose hoạt cảnh runtime (tween)
 	var fade := Gradient.new()
 	fade.colors = PackedColorArray([Color(1, 1, 1, 1), Color(1, 1, 1, 0)])
 	fade.offsets = PackedFloat32Array([0.4, 1.0])
@@ -248,11 +245,11 @@ func _draw_chapter_label() -> void:
 	var text := tr("STR_MAIN_CHAPTER_CHIP").format([chapter_id])
 	var font := ThemeDB.fallback_font
 	var box := Rect2(Vector2(-44.0, LABEL_Y), Vector2(88.0, 24.0))
-	var sb := StyleBoxFlat.new()
+	var sb := StyleBoxFlat.new()  # keep-code: stylebox của hiệu ứng vẽ runtime
 	sb.bg_color = Color(1, 1, 1, 1)
 	sb.border_color = Color("E4DCC6")
-	sb.set_border_width_all(2)
-	sb.set_corner_radius_all(12)
+	sb.set_border_width_all(2)  # keep-code: stylebox của hiệu ứng vẽ runtime
+	sb.set_corner_radius_all(12)  # keep-code: stylebox của hiệu ứng vẽ runtime
 	draw_style_box(sb, box)
 	draw_string(font, box.position + Vector2(0, 17.0), text, HORIZONTAL_ALIGNMENT_CENTER, box.size.x, 14, INK)
 	draw_string(font, box.position + Vector2(0.7, 17.0), text, HORIZONTAL_ALIGNMENT_CENTER, box.size.x, 14, INK)

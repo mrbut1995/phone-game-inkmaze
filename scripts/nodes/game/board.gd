@@ -221,8 +221,8 @@ func _connect_skin_signal() -> void:
 	var themes := get_node_or_null("/root/ThemeManager")
 	if themes == null or not themes.has_signal("skin_changed"):
 		return
-	if not themes.is_connected("skin_changed", _on_skin_changed):
-		themes.connect("skin_changed", _on_skin_changed)
+	if not themes.is_connected("skin_changed", _on_skin_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+		themes.connect("skin_changed", _on_skin_changed)  # keep-code: signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
 
 
 func _on_skin_changed(_theme_id: String, _pen_id: String) -> void:
@@ -497,14 +497,14 @@ func _spawn_template(template: Node) -> Node:
 	var node := template.duplicate()
 	var item := node as CanvasItem
 	if item != null:
-		item.visible = true
+		item.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	var control := node as Control
 	if control != null:
-		control.position = Vector2.ZERO
+		control.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
 	else:
 		var node2d := node as Node2D
 		if node2d != null:
-			node2d.position = Vector2.ZERO
+			node2d.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
 	return node
 
 
@@ -702,7 +702,7 @@ func _build_cells() -> void:
 			if maze != null and not maze.is_cell_active(pos):
 				continue
 			var c := _spawn_template(_cell_template) as MazeCell
-			c.set_anchors_preset(Control.PRESET_TOP_LEFT)
+			c.set_anchors_preset(Control.PRESET_TOP_LEFT)  # keep-code: ô sinh lúc chạy — đặt anchor khi dựng
 			# Không set size: kích thước lấy nguyên từ cell.tscn
 			c.grid_pos = pos
 			_cells_layer.add_child(c)
@@ -790,7 +790,7 @@ func _build_anchors() -> void:
 			if not _corner_touches_board(ix, iy):
 				continue
 			var a := _spawn_template(_anchor_template) as MazeAnchor
-			a.set_anchors_preset(Control.PRESET_TOP_LEFT)
+			a.set_anchors_preset(Control.PRESET_TOP_LEFT)  # keep-code: neo sinh lúc chạy — đặt anchor khi dựng
 			# Không set size/position: kích thước lấy từ anchor.tscn,
 			# vị trí do _update_layout_positions() căn theo lưới
 			a.anchor_id = id
@@ -840,7 +840,7 @@ func _corner_touches_board(ix: int, iy: int) -> bool:
 func _build_moving_line() -> void:
 	if _moving_line == null:
 		return
-	_moving_line.position = Vector2.ZERO
+	_moving_line.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
 	_moving_path.clear()
 	_path_edge_keys.clear()
 	_pen_down = false
@@ -856,10 +856,10 @@ func _build_moving_line() -> void:
 func _build_drag_guide_line() -> void:
 	if _drag_guide_line == null:
 		return
-	_drag_guide_line.position = Vector2.ZERO
+	_drag_guide_line.position = Vector2.ZERO  # keep-code: pose hoạt cảnh runtime (tween)
 	_drag_guide_line.width = _wall_width * GUIDE_WIDTH_SCALE
 	_drag_guide_line.default_color = Color(0.77, 0.52, 0.23, 0.97)
-	_drag_guide_line.visible = false
+	_drag_guide_line.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	_ensure_guide_halo()
 	_set_line_points(_drag_guide_line, PackedVector2Array())
 	_set_guide_points(PackedVector2Array())
@@ -1157,17 +1157,17 @@ func refresh_cell_texts(dim_unwalkable: bool = false) -> void:
 				if pos != maze.get_start() and pos != maze.get_end():
 					ink = game_mode.ink_left(pos)
 				cell_node.set_ink_left(ink)
-				cell_node.modulate = Color(1, 1, 1, 1)
+				cell_node.modulate = Color(1, 1, 1, 1)  # keep-code: màu theo dữ liệu (runtime)
 			elif has_visited:
 				# Ô S/F giữ nguyên art xuất phát/đích (mockup không gạch chéo 2 ô này)
 				var seen := false
 				if pos != maze.get_start() and pos != maze.get_end():
 					seen = game_mode.is_cell_visited(pos)
 				cell_node.set_visited_own(seen)
-				cell_node.modulate = Color(1, 1, 1, 1)
+				cell_node.modulate = Color(1, 1, 1, 1)  # keep-code: màu theo dữ liệu (runtime)
 			elif has_satisfied:
 				cell_node.set_satisfied(game_mode.is_cell_satisfied(pos))
-				cell_node.modulate = Color(1, 1, 1, 1)
+				cell_node.modulate = Color(1, 1, 1, 1)  # keep-code: màu theo dữ liệu (runtime)
 			elif dim_unwalkable:
 				var walkable := game_mode.is_walkable(pos)
 				cell_node.modulate = Color(1, 1, 1, 1) if walkable else Color(1, 1, 1, 0.4)
@@ -1186,9 +1186,9 @@ func apply_fog_of_war(_center: Vector2i, _radius: int, explored: Dictionary) -> 
 			cell_node.set_text(text)
 			_sync_bomb_marker(cell_node, p)
 			if explored.has(p):
-				cell_node.modulate = Color(1, 1, 1, 1.0)
+				cell_node.modulate = Color(1, 1, 1, 1.0)  # keep-code: màu theo dữ liệu (runtime)
 			else:
-				cell_node.modulate = Color(0.6, 0.6, 0.6, 0.4)
+				cell_node.modulate = Color(0.6, 0.6, 0.6, 0.4)  # keep-code: màu theo dữ liệu (runtime)
 
 
 func _play_grid_shake() -> void:
@@ -1239,7 +1239,7 @@ func set_suspected_wall(is_h: bool, lattice: Vector2i, active: bool) -> void:
 		if _wall_segments.has(key):
 			seg.set_state(seg.get_meta("base_state", "invisible"))
 		else:
-			seg.visible = false
+			seg.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 
 ## Wall Builder: bàn chơi KHÔNG có nhân vật -> ẩn cursor (nhớ trạng thái cho lần tạo lại)
@@ -1264,7 +1264,7 @@ func animate_cursor_drag(from_cell: Vector2i, to_cell: Vector2i, duration: float
 	if _cursor == null:
 		return
 	_player_hidden = false
-	_cursor.visible = true
+	_cursor.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	var p1 := cursor_pos_at(_cell_center(from_cell))
 	var p2 := cursor_pos_at(_cell_center(to_cell))
 	_cursor.play_demo_drag(p1, p2, duration)
@@ -1275,7 +1275,7 @@ func animate_cursor_tap(cell: Vector2i) -> void:
 	if _cursor == null:
 		return
 	_player_hidden = false
-	_cursor.visible = true
+	_cursor.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	var p := cursor_pos_at(_cell_center(cell))
 	_cursor.play_demo_tap(p)
 
@@ -1288,7 +1288,7 @@ func stop_cursor_animation() -> void:
 	if maze != null:
 		_cursor.position = cursor_pos_at(_cell_center(_player_current_cell))
 	if _player_hidden:
-		_cursor.visible = false
+		_cursor.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 
 ## Trình diễn cursor di chuyển qua chuỗi ô (dùng cho demo full-path, lặp)
@@ -1296,7 +1296,7 @@ func animate_cursor_path(path: Array[Vector2i], dur_per_step: float = 0.45) -> v
 	if _cursor == null or path.size() < 2:
 		return
 	_player_hidden = false
-	_cursor.visible = true
+	_cursor.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	var positions: Array[Vector2] = []
 	for cell in path:
 		positions.append(cursor_pos_at(_cell_center(cell)))
@@ -1308,7 +1308,7 @@ func animate_cursor_fail_attempt(from_cell: Vector2i, toward_cell: Vector2i) -> 
 	if _cursor == null:
 		return
 	_player_hidden = false
-	_cursor.visible = true
+	_cursor.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	var from_p := cursor_pos_at(_cell_center(from_cell))
 	var toward_p := cursor_pos_at(_cell_center(toward_cell))
 	var midway := from_p.lerp(toward_p, 0.5)
@@ -1522,7 +1522,7 @@ func _start_anchor_drag(anchor_info: Dictionary) -> void:
 
 	var anchor_center := _anchor_center_pos(_drag_source_anchor_corner)
 	_drag_guide_last_local = anchor_center
-	_drag_guide_line.visible = true
+	_drag_guide_line.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	_set_guide_points(PackedVector2Array([anchor_center, anchor_center]))
 	_show_anchor_candidates(_drag_source_anchor_corner)
 
@@ -1599,7 +1599,7 @@ func _cancel_anchor_drag() -> void:
 			src_node.set_selected(false)
 
 	if _drag_guide_line != null:
-		_drag_guide_line.visible = false
+		_drag_guide_line.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 	_is_dragging_anchor = false
 	_drag_source_anchor_id = -1

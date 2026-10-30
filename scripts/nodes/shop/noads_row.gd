@@ -7,8 +7,8 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const BTN := preload("res://assets/images-png/shop/btn_noads.png")
-const OWNED_BTN := preload("res://assets/images-png/shop/btn_equipped.png")
+const BTN := preload("res://assets/images-png/shop/btn_noads.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const OWNED_BTN := preload("res://assets/images-png/shop/btn_equipped.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
 
 var item_id: String = ""
 var item_data: Dictionary = {}
@@ -44,21 +44,21 @@ func _set_button() -> void:
 	if btn == null or label == null:
 		return
 	if Shop.is_owned(item_id):		# đã mua gói xoá quảng cáo -> khoá nút
-		btn.texture_normal = OWNED_BTN
-		btn.texture_pressed = OWNED_BTN
-		btn.texture_hover = OWNED_BTN
-		btn.texture_disabled = OWNED_BTN
+		btn.texture_normal = OWNED_BTN  # keep-code: art theo trạng thái món hàng (runtime)
+		btn.texture_pressed = OWNED_BTN  # keep-code: art theo trạng thái món hàng (runtime)
+		btn.texture_hover = OWNED_BTN  # keep-code: art theo trạng thái món hàng (runtime)
+		btn.texture_disabled = OWNED_BTN  # keep-code: art theo trạng thái món hàng (runtime)
 		btn.disabled = true
-		label.theme_type_variation = &"ShopBtnTextDone"
-		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))
+		label.theme_type_variation = &"ShopBtnTextDone"  # keep-code: biến thể chữ theo trạng thái (runtime)
+		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))  # keep-code: màu theo dữ liệu (runtime)
 		label.text = TranslationServer.translate("STR_SHOP_OWNED_BTN")
 		return
 	btn.disabled = false
-	btn.texture_normal = BTN
-	btn.texture_pressed = BTN
-	btn.texture_hover = BTN
-	btn.texture_disabled = BTN
-	label.theme_type_variation = &"ShopNoadsPrice"
+	btn.texture_normal = BTN  # keep-code: art theo trạng thái món hàng (runtime)
+	btn.texture_pressed = BTN  # keep-code: art theo trạng thái món hàng (runtime)
+	btn.texture_hover = BTN  # keep-code: art theo trạng thái món hàng (runtime)
+	btn.texture_disabled = BTN  # keep-code: art theo trạng thái món hàng (runtime)
+	label.theme_type_variation = &"ShopNoadsPrice"  # keep-code: biến thể chữ theo trạng thái (runtime)
 	label.remove_theme_color_override("font_color")
 	label.text = Shop.vnd_text(int(item_data.get("vnd", 0)))
 

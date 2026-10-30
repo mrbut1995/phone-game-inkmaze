@@ -13,7 +13,7 @@ signal action_pressed(item_id: String)
 ## Chạm vào thân thẻ (ngoài nút) = chọn ngòi bút này để XEM THỬ ở Bàn nháp thử bút
 signal preview_pressed(item_id: String)
 
-const BTN_TILE := preload("res://assets/images-png/common/btn_tile.png")
+const BTN_TILE := preload("res://assets/images-png/common/btn_tile.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
 const MAT_TILE_NORMAL := preload("res://resources/materials/btn_tile_normal.tres")
 const MAT_TILE_DONE := preload("res://resources/materials/btn_tile_done.tres")
 const MAT_TILE_VIP := preload("res://resources/materials/btn_tile_vip.tres")
@@ -22,8 +22,8 @@ const ICONS := {
 	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
 	"paper": preload("res://assets/images-png/icons/icon_paper.png"),
 }
-const CARD_NORMAL := preload("res://assets/images-png/shop/card_tile.png")
-const CARD_SELECTED := preload("res://assets/images-png/shop/card_tile_selected.png")
+const CARD_NORMAL := preload("res://assets/images-png/shop/card_tile.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const CARD_SELECTED := preload("res://assets/images-png/shop/card_tile_selected.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
 const VIP_BADGE := "STR_SHOP_BADGE_VIP"
 
 ## ============================================================================
@@ -69,7 +69,7 @@ func _refresh_preview(color: Color) -> void:
 		if cursor_tex != null:
 			# BÚT & MỰC: hiện đúng icon con trỏ sẽ dùng trong game của ngòi bút này
 			icon.texture = cursor_tex
-			icon.self_modulate = Color.WHITE
+			icon.self_modulate = Color.WHITE  # keep-code: màu theo dữ liệu (runtime)
 		else:
 			icon.texture = ICONS.get(str(item_data.get("icon", "pen")), ICONS["pen"])
 			icon.self_modulate = color
@@ -131,11 +131,11 @@ func _refresh_badge() -> void:
 	if badge == null or badge_label == null:
 		return
 	if badge_key.is_empty():
-		badge.visible = false
-		badge_label.visible = false
+		badge.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+		badge_label.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		return
-	badge.visible = true
-	badge_label.visible = true
+	badge.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
+	badge_label.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	badge_label.text = TranslationServer.translate(badge_key)
 
 
@@ -155,37 +155,37 @@ func _set_button(color: Color) -> void:
 	var coin := get_node_or_null("Panel/Action/Container/CoinIcon") as TextureRect
 	if btn == null or label == null:
 		return
-	btn.self_modulate = Color.WHITE
+	btn.self_modulate = Color.WHITE  # keep-code: màu theo dữ liệu (runtime)
 	btn.disabled = false
 	btn.material = null
 	# Đang dùng -> con dấu xanh lá (khoá bấm)
 	if Shop.is_equipped(item_id):
-		btn.texture_normal = BTN_TILE
+		btn.texture_normal = BTN_TILE  # keep-code: art theo trạng thái món hàng (runtime)
 		btn.material = MAT_TILE_DONE
 		btn.disabled = true
-		label.theme_type_variation = &"ShopBtnTextDone"
-		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))
+		label.theme_type_variation = &"ShopBtnTextDone"  # keep-code: biến thể chữ theo trạng thái (runtime)
+		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))  # keep-code: màu theo dữ liệu (runtime)
 		label.text = TranslationServer.translate("STR_SHOP_EQUIPPED")
 		if coin != null:
-			coin.visible = false
+			coin.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		return
 		
 	# Đã sở hữu -> nút "SỬ DỤNG" tô màu món hàng (art TRẮNG + modulate)
 	# (pressed/hover/disabled tự lấy theo `normal` — NinePatchButton lo phần fallback)
 	if Shop.is_owned(item_id):
-		btn.texture_normal = BTN_TILE
+		btn.texture_normal = BTN_TILE  # keep-code: art theo trạng thái món hàng (runtime)
 		btn.material = MAT_TILE_NORMAL
 		btn.self_modulate = color
-		label.theme_type_variation = &"ShopBtnText"
+		label.theme_type_variation = &"ShopBtnText"  # keep-code: biến thể chữ theo trạng thái (runtime)
 		label.remove_theme_color_override("font_color")
 		label.text = TranslationServer.translate("STR_SHOP_USE")
 		if coin != null:
-			coin.visible = false
+			coin.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		return
 		
 	# Chưa sở hữu -> nút giá Xu (món VIP dùng nút hổ phách đặc, chữ trắng)
 	var vip := str(item_data.get("badge_key", "")) == VIP_BADGE
-	btn.texture_normal = BTN_TILE
+	btn.texture_normal = BTN_TILE  # keep-code: art theo trạng thái món hàng (runtime)
 	if vip:
 		btn.material = MAT_TILE_VIP
 	btn.disabled = not Shop.can_afford(item_id)

@@ -54,9 +54,9 @@ var _pct := 0
 func _ready() -> void:
 	# Dây `ClaimButton.pressed → _on_claim_pressed` khai trong `card.tscn` (cùng scene)
 	if stamp_state != null:
-		stamp_state.text = tr("STR_ACH_STATE_CLAIMED")
+		stamp_state.text = tr("STR_ACH_STATE_CLAIMED")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 	if chip_label != null:
-		chip_label.text = tr("STR_ACH_STATE_LOCKED")
+		chip_label.text = tr("STR_ACH_STATE_LOCKED")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 
 
 func _notification(what: int) -> void:
@@ -101,16 +101,16 @@ func setup(entry: Dictionary) -> void:
 	# Huy hiệu + tiêu đề + mô tả
 	if hidden:
 		icon.texture = icon_lock
-		title_label.text = tr("STR_ACH_SECRET_TITLE")
-		desc_label.text = tr("STR_ACH_SECRET_DESC")
-		title_label.modulate = COLOR_LOCKED
-		desc_label.modulate = COLOR_DESC_LOCKED
+		title_label.text = tr("STR_ACH_SECRET_TITLE")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+		desc_label.text = tr("STR_ACH_SECRET_DESC")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+		title_label.modulate = COLOR_LOCKED  # keep-code: màu theo dữ liệu (runtime)
+		desc_label.modulate = COLOR_DESC_LOCKED  # keep-code: màu theo dữ liệu (runtime)
 	else:
 		icon.texture = entry.get("icon", null)
 		title_label.text = str(entry.get("title", ""))
 		desc_label.text = str(entry.get("desc", ""))
-		title_label.modulate = Color(1, 1, 1, 1)
-		desc_label.modulate = COLOR_DESC
+		title_label.modulate = Color(1, 1, 1, 1)  # keep-code: màu theo dữ liệu (runtime)
+		desc_label.modulate = COLOR_DESC  # keep-code: màu theo dữ liệu (runtime)
 
 	# Thanh tiến độ (bề rộng đo lại trong `_apply_bar_fill()` — xem `_notification`)
 	_pct = pct
@@ -122,8 +122,8 @@ func setup(entry: Dictionary) -> void:
 
 	# Dòng tiến độ
 	if hidden:
-		progress_label.text = tr("STR_ACH_SECRET_PROGRESS")
-		progress_label.modulate = COLOR_DESC_LOCKED
+		progress_label.text = tr("STR_ACH_SECRET_PROGRESS")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+		progress_label.modulate = COLOR_DESC_LOCKED  # keep-code: màu theo dữ liệu (runtime)
 	else:
 		var progress := int(entry.get("progress", 0))
 		var target := int(entry.get("target", 1))

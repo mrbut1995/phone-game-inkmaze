@@ -50,7 +50,7 @@ signal revive_requested
 @export var fx_soft: Control = null
 @export var fx_ash: CPUParticles2D = null
 
-const GLOW_RED := Color(1.0, 0.33, 0.28, 1.0)
+const GLOW_RED := Color(1.0, 0.33, 0.28, 1.0)  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
 const COUNT_TIME := 0.6
 
 var _tweens: Array[Tween] = []
@@ -70,7 +70,7 @@ func _on_open() -> void:
 	var floor_no := maxi(int(data.get("floor", 1)), 1)
 	var progress := clampi(int(round(float(data.get("progress", 0.0)))), 0, 100)
 	label_floor.text = tr("STR_GO_FLOOR").format([floor_no])
-	label_reason.text = tr("STR_GO_REASON_STEPS")
+	label_reason.text = tr("STR_GO_REASON_STEPS")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 	value_progress.text = "%d%%" % progress
 	value_walls.text = str(int(data.get("wall_hits", 0)))
 	value_score.text = _fmt_int(int(data.get("score", 0)))
@@ -98,8 +98,8 @@ func _on_close() -> void:
 		fx_ash.emitting = false
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
-			and gm.is_connected("life_changed", _on_life_changed):
-		gm.disconnect("life_changed", _on_life_changed)
+			and gm.is_connected("life_changed", _on_life_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+		gm.disconnect("life_changed", _on_life_changed)  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
 
 
 # ---------------------------------------------------------------------------
@@ -144,7 +144,7 @@ func _play_intro(progress: int, walls: int, score: int) -> void:
 
 	# "TẦNG n" đập xuống
 	fx_header.pivot_offset = Vector2(60.0, fx_header.size.y * 0.5)
-	fx_header.scale = Vector2.ONE * 1.5
+	fx_header.scale = Vector2.ONE * 1.5  # keep-code: pose hoạt cảnh runtime (tween)
 	var th := _track(create_tween())
 	th.tween_interval(0.55)
 	th.tween_property(fx_header, "modulate:a", 1.0, 0.08)
@@ -170,9 +170,9 @@ func _play_intro(progress: int, walls: int, score: int) -> void:
 	# số liệu đếm lên
 	var t_s := t_r + 1.4
 	_fade_in(fx_stats, t_s, 0.95)
-	value_progress.text = "0%"
-	value_walls.text = "0"
-	value_score.text = "0"
+	value_progress.text = "0%"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+	value_walls.text = "0"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+	value_score.text = "0"  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 	var tc := _track(create_tween())
 	tc.tween_interval(t_s + 0.1)
 	tc.tween_method(_count_progress, 0.0, float(progress), COUNT_TIME) \
@@ -248,8 +248,8 @@ func _red_flash() -> void:
 	for n: Control in [fx_soft, fx_rays]:
 		n.pivot_offset = n.size * 0.5
 		n.modulate = Color(GLOW_RED.r, GLOW_RED.g, GLOW_RED.b, 0.0)
-	fx_soft.scale = Vector2.ONE * 0.6
-	fx_rays.scale = Vector2.ONE * 0.7
+	fx_soft.scale = Vector2.ONE * 0.6  # keep-code: pose hoạt cảnh runtime (tween)
+	fx_rays.scale = Vector2.ONE * 0.7  # keep-code: pose hoạt cảnh runtime (tween)
 	var tw := _track(create_tween().set_parallel(true))
 	tw.tween_property(fx_soft, "modulate:a", 0.85, 0.12)
 	tw.tween_property(fx_soft, "scale", Vector2.ONE * 1.2, 0.4) \
@@ -330,12 +330,12 @@ func _refresh_hint(floor_no: int, week: int, month: int) -> void:
 	if label_hint == null:
 		return
 	if month <= 0:
-		label_hint.text = ""
-		label_hint.visible = false
+		label_hint.text = ""  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+		label_hint.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		return
-	label_hint.visible = true
+	label_hint.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	if floor_no >= month:
-		label_hint.text = tr("STR_GO_REC_MONTH_HOLD")
+		label_hint.text = tr("STR_GO_REC_MONTH_HOLD")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
 	elif week > 0 and floor_no >= week:
 		label_hint.text = tr("STR_GO_REC_WEEK_HOLD").format([month - floor_no])
 	else:
@@ -373,8 +373,8 @@ func _will_charge_life() -> bool:
 func _connect_life_signal() -> void:
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
-			and not gm.is_connected("life_changed", _on_life_changed):
-		gm.connect("life_changed", _on_life_changed)
+			and not gm.is_connected("life_changed", _on_life_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
+		gm.connect("life_changed", _on_life_changed)  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)
 
 
 func _on_life_changed(_lives: int, _max: int) -> void:
@@ -408,8 +408,6 @@ func _refresh_pencils() -> void:
 	var lost := lives if _charged else -1
 	pencils.set_state(lives, maximum, next_unix, false, lost)
 	label_count.text = "%d/%d" % [lives, maximum]
-	if not pencils.recover_finished.is_connected(_refresh_pencils):
-		pencils.recover_finished.connect(_refresh_pencils, CONNECT_DEFERRED)
 	if btn_retry != null:
 		btn_retry.modulate = Color.WHITE if _can_play() else Color(0.72, 0.72, 0.72, 1.0)
 
