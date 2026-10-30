@@ -162,16 +162,7 @@ var level_run: bool = false
 var current_event_id: StringName = &""
 var event_level: LevelData = null
 
-const DAILY_MODES: Array[String] = [
-	"minesweeper",
-	"sum_path",
-	"countdown_cost",
-	"blind_memory",
-	"fog_of_war",
-	"fading_ink",
-	"one_stroke",
-	"wall_builder"
-]
+const DAILY_MODES: Array[String] = LevelCatalog.SPECIAL_MODES
 
 ## Tiến trình học + yêu cầu mở bài nằm ở `TutorialStore` (xem `scripts/core/tutorial_store.gd`);
 ## các property dưới đây giữ nguyên tên cũ để code/test đọc/ghi như trước.
@@ -335,12 +326,7 @@ func take_daily_celebrate() -> Dictionary:
 
 ## Chế độ của 1 LevelData ("play" nếu không khai hoặc khai id lạ — khớp mode_id_of_level)
 func _mode_of_level_data(data: LevelData) -> String:
-	if data == null:
-		return "play"
-	var mode_id := str(data.mode_id).strip_edges().to_lower()
-	if mode_id.is_empty() or mode_id == "dungeon" or not is_known_mode(mode_id):
-		return "play"
-	return mode_id
+	return LevelCatalog.mode_of(data)
 
 
 ## Nạp cấu hình 1 MÀN nhưng KHÔNG chuyển scene (test gọi được). Trả về mode id sẽ dùng.
@@ -375,29 +361,17 @@ func level_data_of(level_id: int) -> LevelData:
 ## Chế độ ghi trong màn (`play` nếu không khai hoặc khai id lạ)
 ## LƯU Ý: "dungeon" KHÔNG dùng được cho màn (chế độ bất tận, chỉ vào từ Main Screen) ⇒ coi như `play`.
 func mode_id_of_level(level_id: int) -> String:
-	var data := level_data_of(level_id)
-	if data == null:
-		return "play"
-	var mode_id := str(data.mode_id).strip_edges().to_lower()
-	if mode_id.is_empty() or mode_id == "dungeon" or not is_known_mode(mode_id):
-		return "play"
-	return mode_id
+	return LevelCatalog.mode_of(level_data_of(level_id))
 
 
 ## Độ khó ghi trong màn (`medium` nếu không khai)
 func difficulty_of_level(level_id: int) -> String:
-	var data := level_data_of(level_id)
-	if data == null or str(data.difficulty).is_empty():
-		return "medium"
-	return str(data.difficulty)
+	return LevelCatalog.difficulty_of(level_data_of(level_id))
 
 
 ## id chế độ có tồn tại không (Play · Dungeon · Daily Classic · 8 chế độ Special)
 func is_known_mode(mode_id: String) -> bool:
-	if mode_id in ["play", "classic", "standard", "challenge", "dungeon", "daily_classic", "daily_challenge"]:
-		return true
-	return DAILY_MODES.has(mode_id)
-
+	return LevelCatalog.is_known_mode(mode_id)
 
 ## SKIP MÀN: mở khoá màn KẾ TIẾP trong cùng chương nhưng **KHÔNG ghi Sao / thời gian**
 ## (người chơi bỏ qua màn đang chơi). Trả về id màn kế tiếp, -1 nếu đây là màn cuối chương.
