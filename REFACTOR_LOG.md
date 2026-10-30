@@ -597,6 +597,16 @@ trạng thái Ads · danh sách + cờ + số bài tutorial đã xong.
 `board.gd` giữ nguyên 3 hàm mỏng `_read_panel_insets` · `_nine_map` · `panel_inner_rect` (uỷ thác) nên
 `test_layout_bindings` / `test_ui_scenes` vẫn gọi được như cũ ⇒ **2006 → 1824 dòng**.
 
+### Trạng thái cuối lượt làm việc (sau 15 đợt)
+
+- 15 đợt tách god class, mỗi đợt **1 commit riêng**, không merge.
+- Bộ kiểm tra (đo lại): `audit_hardcode` **không phát sinh mục mới** trong phạm vi
+  (`level_catalog` · `daily_run_reporter` · `paper_geometry` · `debug_data` · `board.gd` ·
+  `debug.gd` · `game_manager.gd` · `game_controller.gd` đều **0 phát hiện**);
+  `check_integrity` không có `W1/W2` mới, `E1` chỉ còn ở thư mục ngoài phạm vi
+  (`android/build/` · `what-changes/` · `scripts/test_case/`) và 1 mục tranh Halloween đã ghi ở §1.1.
+- `git status` sạch trên nhánh `refactor/cleanup`.
+
 **Kiểm chứng 14 + 15:** full suite **7 PASS / 13 FAIL** với số check **y hệt** baseline
 (`layout_bindings` 5/84 · `level_special_modes` 36/141 · `challenge_mode` 3/78 · `ui_scenes` 10/139 …);
 `test_debug_modes` 64/64 PASS · `test_instruction` PASS · `test_game_scene_integration` PASS.
