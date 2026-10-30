@@ -4,7 +4,7 @@ extends BaseHUD
 ## HUD Countdown Cost.
 ##
 ## 2026-09-27 — theo yêu cầu "chỉ hiện thứ cần thiết": HUD này CHỈ hiện **NGÂN SÁCH CÒN**
-## ("12 / 15").  Đã gỡ khỏi HUD: TIÊU TỐN · GIÁ CƯỚC + chip rẻ/đắt · dải phân đoạn ngân sách ·
+## ("12 / 15"). KHÔNG thuộc HUD: TIÊU TỐN · GIÁ CƯỚC + chip rẻ/đắt · dải phân đoạn ngân sách ·
 ## đồng hồ THỜI GIAN (node `Time` của bản DỌC để `visible = false`, bản NGANG đã xoá khỏi scene).
 ## Giá cước từng ô vẫn hiện NGAY TRÊN Ô của bàn cờ (số trên ô = chi phí bước).
 ## ============================================================================

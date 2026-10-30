@@ -5,7 +5,7 @@ extends BaseHUD
 ##
 ## 2026-09-27 — theo yêu cầu "chỉ hiện thứ cần thiết": HUD này CHỈ hiện **TỔNG hiện tại ·
 ## TOÁN TỬ (< = >) · MỤC TIÊU** (+ chip "CẦN THÊM / CÒN ĐƯỢC / ĐANG VƯỢT" nằm trong khối MỤC TIÊU).
-## Đã gỡ khỏi HUD: dòng tiêu đề thẻ · thanh tiến độ (tổng/mục tiêu) · đồng hồ THỜI GIAN
+## KHÔNG thuộc HUD: dòng tiêu đề thẻ · thanh tiến độ (tổng/mục tiêu) · đồng hồ THỜI GIAN
 ## (node `Time` của bản DỌC để `visible = false`, bản NGANG đã xoá khỏi scene).
 ## ============================================================================
 
