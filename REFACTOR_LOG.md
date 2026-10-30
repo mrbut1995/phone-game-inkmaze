@@ -438,6 +438,24 @@ full suite **7 PASS / 13 FAIL** y hệt baseline.
 **Kiểm chứng đợt 2 + 3:** full suite **7 PASS / 13 FAIL** y hệt baseline; `test_controllers_and_signals` (dùng
 `tool_uses_left` / `debug_set_tool_uses`) PASS.
 
+### Phase 5 (§8.3) — đợt 4: RƯƠNG MỐC CHƯƠNG → `ChapterChestsStore`
+
+`scripts/core/chapter_chests_store.gd` (100 dòng): `RATIOS` · `REWARDS` · `claimed` · `defs()` · `claimed_of()` ·
+`is_claimed()` · `can_claim()` · `mark_claimed()` · `load_state()` · `reset()` · `static threshold()`.
+
+`GameManager` giữ phần **trao thưởng** (`_grant_chapter_chest` → Xu/công cụ/lượt), signal `chapter_chest_claimed`,
+`chapter_chest_reward_text()` (cần `tr()`), và property `chapter_chests` (get/set) cho code cũ
+(`test_debug_modes.gd` đặt thẳng `gm.set("chapter_chests", …)`).
+
+`game_manager.gd` **1123 → 1083 dòng** (tổng: 1256 → **1083**, −173 dòng trong 4 đợt).
+
+**Kiểm chứng:** full suite **7 PASS / 13 FAIL** y hệt baseline; chạy thêm 2 test ngoài bộ mặc định:
+`test_debug_modes` **64/64 PASS** · `test_main_merge` **70/70 PASS**.
+
+> **Bài học:** lượt đầu tách `ToolInventory` làm `test_controllers_and_signals` TIMEOUT vì test cũ đọc
+> `gm.get("tool_uses")` (property đã mất). Cách sửa: giữ **property get/set uỷ thác** cho mọi dữ liệu cũ — áp dụng luôn
+> cho `chapter_chests` để không lặp lại lỗi.
+
 ---
 
 ## 4. Việc còn lại (CHƯA làm) & lý do
