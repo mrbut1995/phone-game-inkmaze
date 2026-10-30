@@ -27,12 +27,16 @@ const GAME_SCENE := "res://scenes/game.tscn"
 var current_mode: String = "dungeon"
 var current_difficulty: String = "medium"
 var current_level: int = 1
-## Số lượt dùng công cụ còn lại trên TOÀN BỘ trò chơi, không được cấp lại theo màn/tầng.
-var tool_uses: Dictionary = {
-	TOOL_SKIP: INITIAL_TOOL_USES,
-	TOOL_UNDO: INITIAL_TOOL_USES,
-	TOOL_HINT: INITIAL_TOOL_USES,
-}
+## Số lượt dùng công cụ nằm ở `ToolInventory` (xem `scripts/core/tool_inventory.gd`)
+var _tools := ToolInventory.new()
+
+## [TƯƠNG THÍCH] Dữ liệu kho dụng cụ dưới dạng Dictionary — đọc/ghi thẳng vào store.
+## Giữ để chỗ cũ (`get("tool_uses")`, `set("tool_uses", …)`) không phải đổi.
+var tool_uses: Dictionary:
+	get:
+		return _tools.uses
+	set(value):
+		_tools.uses = value
 
 # ---------------------------------------------------------------------------
 # LƯỢT CHƠI (life) — dùng chung TOÀN BỘ trò chơi
@@ -238,6 +242,13 @@ func reset_tutorial_progress() -> void:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_life.changed.connect(_on_life_changed)
+	_tools.changed.connect(_on_tools_changed)
+
+
+## Số lượt dùng công cụ đổi ⇒ phát cho UI + hẹn lưu
+func _on_tools_changed(tool_id: String, remaining: int) -> void:
+	tool_inventory_changed.emit(tool_id, remaining)
+	Save.queue_save()
 
 
 ## Số lượt đổi (hồi theo giờ mua · thưởng · thua) ⇒ phát cho UI + hẹn lưu
@@ -392,19 +403,12 @@ func skip_level(level_id: int) -> int:
 
 ## Số lượt còn lại của công cụ trên toàn tài khoản người chơi.
 func tool_uses_left(tool_id: String) -> int:
-	if not TOOL_IDS.has(tool_id):
-		return 0
-	return maxi(int(tool_uses.get(tool_id, 0)), 0)
+	return _tools.left(tool_id)
 
 
 ## Tiêu thụ một lượt dùng. Trả false khi công cụ không hợp lệ hoặc đã hết lượt.
 func consume_tool_use(tool_id: String) -> bool:
-	if not TOOL_IDS.has(tool_id) or tool_uses_left(tool_id) <= 0:
-		return false
-	tool_uses[tool_id] = tool_uses_left(tool_id) - 1
-	tool_inventory_changed.emit(tool_id, tool_uses_left(tool_id))
-	Save.queue_save()
-	return true
+	return _tools.consume(tool_id)
 
 
 ## Nguồn hợp lệ khi cấp lượt dùng công cụ: mua ở Shop, thưởng nhiệm vụ, thưởng mốc Sao Daily
@@ -413,9 +417,7 @@ const GRANT_SOURCES: Array[String] = ["purchase", "mission", "daily_milestone", 
 
 ## Cấp lượt từ nguồn mua hàng/nhiệm vụ/mốc thưởng Daily.
 func grant_tool_uses(tool_id: String, amount: int, source: String) -> bool:
-	if not TOOL_IDS.has(tool_id) or amount <= 0 or not GRANT_SOURCES.has(source):
-		return false
-	return _set_tool_uses(tool_id, tool_uses_left(tool_id) + amount)
+	return _tools.grant(tool_id, amount, source)
 
 
 ## Chỉnh số dư trong Debug Console; giá trị được lưu như tiến trình người chơi.
@@ -423,20 +425,7 @@ func debug_set_tool_uses(tool_id: String, amount: int) -> bool:
 	if not OS.is_debug_build():
 		push_warning("[GameManager] Chi cho phep chinh so du cong cu trong debug build")
 		return false
-	return _set_tool_uses(tool_id, amount)
-
-
-func _set_tool_uses(tool_id: String, amount: int) -> bool:
-	if not TOOL_IDS.has(tool_id):
-		push_warning("[GameManager] Cong cu khong hop le: '%s'" % tool_id)
-		return false
-	var remaining := maxi(amount, 0)
-	if tool_uses_left(tool_id) == remaining:
-		return true
-	tool_uses[tool_id] = remaining
-	tool_inventory_changed.emit(tool_id, remaining)
-	Save.queue_save()
-	return true
+	return _tools.set_uses(tool_id, amount)
 
 
 # ---------------------------------------------------------------------------
@@ -1034,7 +1023,7 @@ func export_progress() -> Dictionary:
 		"level_best_time": level_best_time.duplicate(),
 		"selected_daily_day": selected_daily_day,
 		"current_level": current_level,
-		"tool_uses": tool_uses.duplicate(),
+		"tool_uses": _tools.uses.duplicate(),
 		"lives": _life.lives,
 		"next_life_at": _life.next_life_at,
 		"floor_records": _records.records.duplicate(true),
@@ -1055,11 +1044,7 @@ func import_progress(data: Dictionary) -> void:
 	level_best_time = _int_key_dict(data.get("level_best_time", null), level_best_time, false)
 	selected_daily_day = int(data.get("selected_daily_day", selected_daily_day))
 	current_level = maxi(int(data.get("current_level", current_level)), 1)
-	if data.get("tool_uses", null) is Dictionary:
-		var saved_tool_uses: Dictionary = data["tool_uses"]
-		for tool_id in TOOL_IDS:
-			if saved_tool_uses.has(tool_id):
-				tool_uses[tool_id] = maxi(int(saved_tool_uses[tool_id]), 0)
+	_tools.load_state(data.get("tool_uses", null))
 	_life.load_state(data.get("lives", _life.lives), data.get("next_life_at", 0))
 	life_changed.emit(_life.lives, MAX_LIVES)
 	_import_floor_records(data.get("floor_records", null))
