@@ -31,18 +31,8 @@ const ICON_DAILY := "res://assets/images-png/dock/dock_daily.png"
 const DOCK_BUTTON_SCENE := preload("res://nodes/main/dock_button.tscn")
 const EventButtonColumnScript := preload("res://scripts/nodes/main/event_button_column.gd")
 
-## Màu từng nút dock — PHẢI khớp bảng DOCK trong gen/gen_colorful_art.py: [mặt, viền sáng, đáy 3D tối]
-## (code chỉ dùng mặt + đáy cho viền chữ / dự phòng khi thiếu PNG)
-const DOCK_COLORS := {
-	"shop": ["FF9F1C", "FFD58F", "B96400"],
-	"rank": ["3B8EEA", "A3CDF8", "1D5AA3"],
-	"badges": ["8E5BD9", "C9AEF2", "593596"],
-	"daily": ["E8504F", "F8B0AE", "9E2424"],
-}
-
 var layout: MainLayout = null
-## Nút Daily trên dock (tạo bằng code — không cần sửa scene) và cột nút event nổi trên bản đồ
-var _dock_daily: DockButton = null
+## Cột nút event nổi trên bản đồ (dựng 1 lần, chuyển theo bố cục đang hiện)
 var _event_buttons: Control = null
 
 
@@ -162,6 +152,7 @@ func _refresh_profile() -> void:
 ## Hồ sơ đổi (đổi avatar/viền/tên ở popup) → thẻ hồ sơ cập nhật theo
 func _connect_profile_manager() -> void:
 	var m := Profile.manager()
+	# keep-code: nối tới AUTOLOAD ProfileManager (không phải node tĩnh) — §5B.4 mục 4
 	if m != null and m.has_signal("profile_changed") and not m.is_connected("profile_changed", _refresh_profile):
 		m.connect("profile_changed", _refresh_profile)
 
@@ -183,8 +174,8 @@ func _setup_buttons() -> void:
 	_connect_pressed(layout.btn_settings, _on_settings_pressed)
 	_connect_pressed(layout.dock_shop, _on_shop_pressed)
 	_connect_pressed(layout.dock_ranking, _on_leaderboard_pressed)
+	_connect_pressed(layout.dock_daily, _on_daily_pressed)
 	_connect_pressed(layout.dock_badges, _on_archivement_pressed)
-	#_connect_pressed(layout.profile_card, _on_profile_pressed)
 	if layout.level_section != null:
 		_connect_pressed(layout.level_section.dungeon_pill, _on_dungeon_pressed)
 
@@ -379,21 +370,9 @@ func _on_shop_pressed() -> void:
 func _setup_event_buttons() -> void:
 	if layout == null:
 		return
-	# Khối thẻ event cũ (header + carousel) ẨN HẲN — nhường chỗ cho bản đồ. Event giờ là cột nút icon.
-	if layout.event_header != null:
-		layout.event_header.visible = false
-	if layout.event_carousel != null:
-		layout.event_carousel.visible = false
 	var section := layout.level_section
 	if section == null:
 		return
-	# BỐ CỤC NGANG: header + carousel nằm trong cột `Left` (42% bề rộng) cạnh bản đồ ⇒ ẩn luôn cả cột đó
-	# (kèm con dấu phiên bản) để bản đồ chiếm trọn chiều ngang. Bố cục dọc: header & carousel là con của
-	# `Body` (cùng cha với bản đồ) ⇒ KHÔNG ẩn cha.
-	if layout.event_header != null:
-		var holder := layout.event_header.get_parent() as Control
-		if holder != null and holder != section.get_parent():
-			holder.visible = false
 	if _event_buttons == null or not is_instance_valid(_event_buttons) or _event_buttons.get_parent() != section:
 		_event_buttons = EventButtonColumnScript.new()
 		_event_buttons.name = "EventButtons"
@@ -402,6 +381,7 @@ func _setup_event_buttons() -> void:
 		if section.map != null and not section.map.blockers.has(_event_buttons):
 			section.map.blockers.append(_event_buttons)
 	var em := get_node_or_null("/root/EventManager")
+	# keep-code: nối tới AUTOLOAD EventManager (không phải node tĩnh) — §5B.4 mục 4
 	if em != null and em.has_signal("events_changed") and not em.is_connected("events_changed", _on_events_changed):
 		em.events_changed.connect(_on_events_changed)
 	_refresh_event_buttons()
@@ -422,8 +402,6 @@ func _refresh_event_buttons() -> void:
 	var section := layout.level_section if layout != null else null
 	if section != null and section.map != null:
 		_event_buttons.reserve_gutter(section.map.get_parent() as Control)
-		# Chừa đáy đủ cho DungeonPill (cao ~68px) ⇒ cổng chương / hàng node cuối không bị pill đè
-		section.map.bottom_reserve = maxf(section.map.bottom_reserve, MAP_BOTTOM_RESERVE)
 
 
 func _on_events_changed() -> void:

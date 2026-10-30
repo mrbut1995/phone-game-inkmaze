@@ -31,17 +31,18 @@ mouse_filter = 2
 
 [node name="LevelMap" parent="MapArea" unique_id=1269095073 instance=ExtResource("2_map")]
 columns_landscape = 3
-bottom_reserve = 72.0
+bottom_reserve = 130.0
 
 [node name="ChestWidget" parent="." unique_id=1308813912 instance=ExtResource("4_chest")]
+custom_minimum_size = Vector2(104, 118)
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -98.0
-offset_top = -104.0
+offset_left = -118.0
+offset_top = -130.0
 offset_right = -14.0
 offset_bottom = -12.0
 grow_horizontal = 0
