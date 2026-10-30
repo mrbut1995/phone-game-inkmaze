@@ -19,7 +19,7 @@ const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
 const SCENE_ACHIEVEMENT := "res://scenes/achievement.tscn"
 const SCENE_RANKING := "res://scenes/ranking.tscn"
-## Màn CỬA HÀNG — xem scripts/scenes/shop.gd
+## Màn CỬA HÀNG — xem scripts/ui/screens/shop.gd
 const SCENE_SHOP := "res://scenes/shop.tscn"
 ## Màn CREDIT — soundtrack + ghi công
 const SCENE_CREDIT := "res://scenes/credit.tscn"
@@ -27,7 +27,7 @@ const SCENE_CREDIT := "res://scenes/credit.tscn"
 const SCENE_TUTORIAL := "res://scenes/tutorial.tscn"
 ## Màn DANH SÁCH bài hướng dẫn — bấm 1 bài mới mở `SCENE_TUTORIAL`
 const SCENE_TUTORIAL_LIST := "res://scenes/tutorial_list.tscn"
-## Màn CHI TIẾT SỰ KIỆN — xem scripts/scenes/event.gd
+## Màn CHI TIẾT SỰ KIỆN — xem scripts/ui/screens/event.gd
 const SCENE_EVENT := "res://scenes/event.tscn"
 ## (HỒ SƠ CÁ NHÂN nay là POPUP — mở bằng `Popups.open(Popups.PROFILER)`)
 

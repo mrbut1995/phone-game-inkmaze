@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://xuj64d8yo0mg"]
 
-[ext_resource type="Script" uid="uid://btsi4u0i0wvxu" path="res://scripts/nodes/event_header.gd" id="1_head"]
+[ext_resource type="Script" uid="uid://btsi4u0i0wvxu" path="res://scripts/ui/widgets/event_header.gd" id="1_head"]
 
 [sub_resource type="StyleBoxFlat" id="sb_badge"]
 bg_color = Color(0.9882353, 0.61960787, 0.043137256, 1)

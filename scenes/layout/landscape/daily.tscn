@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ka36asr06er2"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" uid="uid://d3tppcudxm1tm" path="res://scripts/scenes/layout/daily_layout.gd" id="2_layout"]
+[ext_resource type="Script" uid="uid://d3tppcudxm1tm" path="res://scripts/ui/layouts/daily_layout.gd" id="2_layout"]
 [ext_resource type="PackedScene" uid="uid://ba36iykveefpu" path="res://nodes/daily/calendar.tscn" id="3_calendar"]
 [ext_resource type="PackedScene" uid="uid://bx4mq1dw7lc0i" path="res://nodes/daily/action_card.tscn" id="4_card"]
 [ext_resource type="Texture2D" uid="uid://7a3hksoy62bs" path="res://assets/images-png/daily/btn_square_normal.png" id="5_back_n"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bypi88itx11cm" path="res://assets/images-png/daily/star_big.png" id="9_star"]
 [ext_resource type="Texture2D" uid="uid://dopputx02por5" path="res://assets/images-png/daily/chip_white.png" id="10_chip"]
 [ext_resource type="Texture2D" uid="uid://byt8wshkuayfy" path="res://assets/images-png/daily/clock_blue.png" id="11_clock"]
-[ext_resource type="Script" path="res://scripts/nodes/daily/vf_star_fly.gd" id="20_fly"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/daily/vf_star_fly.gd" id="20_fly"]
 [ext_resource uid="uid://dfb5ixvypt2mh" type="Texture2D" path="res://assets/images-png/effects/vf_star.png" id="21_vfstar"]
 [ext_resource uid="uid://gcrrlpspitgu" type="Texture2D" path="res://assets/images-png/effects/vf_star_trail.png" id="22_trail"]
 [ext_resource uid="uid://tuhfphups7rg" type="Texture2D" path="res://assets/images-png/effects/vf_star_burst.png" id="23_burst"]
@@ -18,7 +18,7 @@
 [ext_resource uid="uid://dd7lw18t5dnwe" type="Texture2D" path="res://assets/images-png/daily/title_banner.png" id="40_banner"]
 [ext_resource uid="uid://bj223e65xfx2y" type="Texture2D" path="res://assets/images-png/daily/road_card.png" id="41_card"]
 [ext_resource uid="uid://dhphcbbgsa2pf" type="Texture2D" path="res://assets/images-png/daily/road_pencil.png" id="42_pencil"]
-[ext_resource type="Script" path="res://scripts/nodes/daily/road_path.gd" id="43_road"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/daily/road_path.gd" id="43_road"]
 [ext_resource type="PackedScene" path="res://nodes/daily/week_strip.tscn" id="44_week"]
 [ext_resource type="PackedScene" path="res://nodes/daily/road_chip.tscn" id="45_chip"]
 

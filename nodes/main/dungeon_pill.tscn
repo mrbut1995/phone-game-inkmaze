@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/main/dungeon_pill.gd" id="1_pill"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/main/dungeon_pill.gd" id="1_pill"]
 [ext_resource uid="uid://j2x0g1f5tl6p" type="Texture2D" path="res://assets/images-png/icons/icon_castle.png" id="2_icon"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_normal"]

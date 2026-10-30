@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/main/event_button_column.gd" id="1_1hlbh"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/main/event_button_column.gd" id="1_1hlbh"]
 
 [node name="EventButtonColumn" type="VBoxContainer" unique_id=814471012]
 anchor_left = 1.0

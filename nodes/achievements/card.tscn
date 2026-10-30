@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cachv0rds8ydt"]
 
-[ext_resource type="Script" uid="uid://bgl8atsqin8dq" path="res://scripts/nodes/achievements/card.gd" id="1_card"]
+[ext_resource type="Script" uid="uid://bgl8atsqin8dq" path="res://scripts/ui/widgets/achievements/card.gd" id="1_card"]
 [ext_resource uid="uid://bbrc0ilkamtey" type="Texture2D" path="res://assets/images-png/achievements/card_progress.png" id="2_bg_progress"]
 [ext_resource uid="uid://b7pfsmfjbjetg" type="Texture2D" path="res://assets/images-png/achievements/badge_ring.png" id="6_ring"]
 [ext_resource uid="uid://c2vn8nstbi4yf" type="Texture2D" path="res://assets/images-png/common/bar_track_sm.png" id="7_track"]

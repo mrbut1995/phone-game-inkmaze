@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AchievementData" format=3]
 
 [ext_resource uid="uid://bir8bpmt03wuv" type="Texture2D" path="res://assets/images-png/icons/icon_trophy.png" id="1_brubn"]
-[ext_resource type="Script" path="res://scripts/resources/achievement_data.gd" id="2_51p8g"]
+[ext_resource type="Script" path="res://scripts/data/achievement_data.gd" id="2_51p8g"]
 
 [resource]
 script = ExtResource("2_51p8g")

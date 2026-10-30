@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://db5obqq87fu6a"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" uid="uid://bwcvgfi1l2f6i" path="res://scripts/scenes/layout/title_layout.gd" id="2_layout"]
+[ext_resource type="Script" uid="uid://bwcvgfi1l2f6i" path="res://scripts/ui/layouts/title_layout.gd" id="2_layout"]
 [ext_resource uid="uid://dodkr1s1s7ick" type="Texture2D" path="res://assets/images-png/main/main_menu_paper.png" id="4_paper"]
 [ext_resource uid="uid://bo8mw46r5qoak" type="Texture2D" path="res://assets/images-png/main/logo_doodle_maze_large.png" id="4_tcygh"]
 [ext_resource uid="uid://bjey8neasfcau" type="Texture2D" path="res://assets/images-png/game/pen_type/pen_fountain_pen_nib.png" id="6_hiwto"]

@@ -17,14 +17,14 @@ const SKIP_SOURCES := ["debug.gd"]
 ## Những scene đã KHAI SẴN trong scene cha (node MẪU hoặc node cố định) ⇒ script này KHÔNG được
 ## nhắc tới đường dẫn của chúng nữa (không preload, không instantiate) — xem GDD §10.2g.
 const FIXED_SCENES := {
-	"res://scripts/nodes/game/board.gd": [
+	"res://scripts/ui/game/board.gd": [
 		"nodes/game/cell.tscn", "nodes/game/anchor.tscn", "nodes/game/wall_segment.tscn",
 		"nodes/game/history_line.tscn", "nodes/game/moving_line.tscn",
 		"nodes/game/player_cursor.tscn", "nodes/game/board_layers.tscn",
 	],
-	"res://scripts/scenes/shop.gd": ["nodes/shop/tab_button.tscn", "nodes/shop/item_grid.tscn"],
-	"res://scripts/scenes/ranking.gd": ["nodes/ranking/tab_button.tscn"],
-	"res://scripts/scenes/achievement.gd": ["nodes/achievements/tab_button.tscn"],
+	"res://scripts/ui/screens/shop.gd": ["nodes/shop/tab_button.tscn", "nodes/shop/item_grid.tscn"],
+	"res://scripts/ui/screens/ranking.gd": ["nodes/ranking/tab_button.tscn"],
+	"res://scripts/ui/screens/achievement.gd": ["nodes/achievements/tab_button.tscn"],
 }
 
 var _failed := 0
@@ -335,7 +335,7 @@ func _section_6_sources() -> void:
 	comments.compile("#[^\\n]*")
 
 	var sources: Array[String] = []
-	for folder in ["res://scripts/scenes", "res://scripts/nodes", "res://scripts/utils"]:
+	for folder in ["res://scripts/ui/screens", "res://scripts/ui", "res://scripts/utils"]:
 		_collect_sources(folder, sources)
 
 	var offenders: Array[String] = []
@@ -541,7 +541,7 @@ func _section_9_hud_bindings() -> void:
 	comments.compile("#[^\\n]*")
 	var offenders: Array[String] = []
 	var sources: Array[String] = []
-	_collect_sources("res://scripts/nodes/hud", sources)
+	_collect_sources("res://scripts/ui/hud", sources)
 	for path in sources:
 		if not FileAccess.file_exists(path):
 			continue
@@ -826,7 +826,7 @@ func _section_11_tutorials() -> void:
 	comments.compile("#[^\\n]*")
 	var offenders: Array[String] = []
 	var sources: Array[String] = []
-	_collect_sources("res://scripts/nodes/tutorial", sources)
+	_collect_sources("res://scripts/ui/tutorial", sources)
 	for path in sources:
 		if not FileAccess.file_exists(path):
 			continue

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dfmh01huguti4"]
 
-[ext_resource type="Script" uid="uid://3e0i4bldywkh" path="res://scripts/nodes/level_selection/level_card.gd" id="1_066fa"]
+[ext_resource type="Script" uid="uid://3e0i4bldywkh" path="res://scripts/ui/widgets/level_selection/level_card.gd" id="1_066fa"]
 [ext_resource uid="uid://bpttt21y46dho" type="Texture2D" path="res://assets/images-png/level_selector/level_card_unlocked_normal.png" id="2_23rcg"]
 [ext_resource uid="uid://brfv0q4sqmn26" type="Texture2D" path="res://assets/images-png/level_selector/level_card_locked.png" id="3_fwgxh"]
 [ext_resource uid="uid://cphd7lexro270" type="Texture2D" path="res://assets/images-png/common/star_empty.png" id="3_h4clh"]
@@ -8,7 +8,7 @@
 [ext_resource uid="uid://b27135c7tvyot" type="Texture2D" path="res://assets/images-png/level_selector/level_card_unlocked_pressed.png" id="5_press"]
 [ext_resource uid="uid://dgfi1ybnnec75" type="Texture2D" path="res://assets/images-png/level_selector/stamp_done_circle.png" id="6_23rcg"]
 [ext_resource uid="uid://boafjmoalh4w6" type="Texture2D" path="res://assets/images-png/level_selector/icon_lock_locked.png" id="6_fwgxh"]
-[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tool/nine_patch/NinePatchButton.gd" id="6_ihwf0"]
+[ext_resource type="Script" uid="uid://buvtj4fdu8ooi" path="res://scripts/tools/nine_patch/nine_patch_button.gd" id="6_ihwf0"]
 [ext_resource uid="uid://boessvvtvl6t1" type="Texture2D" path="res://assets/images-png/level_selector/level_card_seperator.png" id="8_jnyni"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="9_theme_text"]
 [ext_resource uid="uid://giqwc1uvd2k3" type="Texture2D" path="res://assets/images-png/level_selector/level_card_unlocked_next.png" id="10_next"]

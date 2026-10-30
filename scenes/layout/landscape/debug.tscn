@@ -4,7 +4,7 @@
 [ext_resource uid="uid://yssg5du4e4fc" type="Texture2D" path="res://assets/images-png/btn_header_back_normal.png" id="4_back_n"]
 [ext_resource uid="uid://c8fvwpvick2hx" type="Texture2D" path="res://assets/images-png/btn_header_back_pressed.png" id="5_back_p"]
 [ext_resource uid="uid://dxo4cid632xo" type="Texture2D" path="res://assets/images-png/settings/settings_panel.png" id="6_panel"]
-[ext_resource type="Script" path="res://scripts/scenes/layout/debug_layout.gd" id="2_layout"]
+[ext_resource type="Script" path="res://scripts/ui/layouts/debug_layout.gd" id="2_layout"]
 
 [node name="Landscape" node_paths=PackedStringArray("btn_back", "lbl_title", "rows_box", "lbl_stats", "lbl_footer") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")

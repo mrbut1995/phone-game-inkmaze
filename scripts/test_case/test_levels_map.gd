@@ -557,7 +557,7 @@ func _check_hidden_map_guard(scene: MainScene) -> int:
 	if hidden_map == null:
 		print("[FAIL] B? c?c ?ang ?n ph?i c? LevelMap ?? ki?m ch?ng k?o")
 		return failures + 1
-	var src := FileAccess.get_file_as_string("res://scripts/nodes/level_selection/level_map.gd")
+	var src := FileAccess.get_file_as_string("res://scripts/ui/widgets/level_selection/level_map.gd")
 	if not src.contains("is_visible_in_tree()"):
 		print("[FAIL] LevelMap ph?i b? qua k?o khi khung b?n ?? ?ang ?N (Main c? 2 b?n ??)")
 		failures += 1

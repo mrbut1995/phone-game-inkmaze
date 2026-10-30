@@ -183,7 +183,7 @@ class PolyominoIOTest(unittest.TestCase):
     def test_old_file_without_mask_is_full_rect(self) -> None:
         text = (
             '[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3]\n'
-            '[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_level"]\n'
+            '[ext_resource type="Script" path="res://scripts/data/level_data.gd" id="1_level"]\n'
             "[resource]\n"
             'script = ExtResource("1_level")\n'
             "level_id = 3\n"

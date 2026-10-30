@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/data/event_theme.gd" id="1_script"]
 [ext_resource uid="uid://cda4w6hvfm02s" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_easter_normal.png" id="btn_normal"]
 [ext_resource uid="uid://1fpci6weuokc" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_easter_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://hikcsp5xwouc" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_easter_disabled.png" id="btn_disabled"]

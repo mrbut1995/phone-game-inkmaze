@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/profiler/stat_card.gd" id="1_card"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/profiler/stat_card.gd" id="1_card"]
 [ext_resource uid="uid://vp0gj5oue3qw" type="Texture2D" path="res://assets/images-png/profiler/card_stat.png" id="2_bg"]
 [ext_resource uid="uid://duqcleabqujwd" type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="3_dash"]
 

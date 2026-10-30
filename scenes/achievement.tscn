@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dfjqwo7t8k64y"]
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://d0utnvo7ghx3f" path="res://scripts/scenes/achievement.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://d0utnvo7ghx3f" path="res://scripts/ui/screens/achievement.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="13_theme"]
 [ext_resource type="PackedScene" uid="uid://tlhro2tkyc4u" path="res://scenes/layout/landscape/achievement.tscn" id="L_Landscape"]
 [ext_resource type="PackedScene" uid="uid://dy3rxdsj3gjk7" path="res://scenes/layout/portrait/achievement.tscn" id="L_Portrait"]

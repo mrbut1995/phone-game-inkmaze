@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bhl6o5bkj2h2p"]
 
-[ext_resource type="Script" uid="uid://0waeoqw62pm0" path="res://scripts/nodes/achievements/tab_button.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://0waeoqw62pm0" path="res://scripts/ui/widgets/achievements/tab_button.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://dv4w3hvusewkk" path="res://assets/images-png/achievements/seg_active.png" id="2_art_active"]
 [ext_resource type="Texture2D" uid="uid://cmwedjh5vj0sw" path="res://assets/images-png/achievements/seg_idle.png" id="3_art_idle"]
 

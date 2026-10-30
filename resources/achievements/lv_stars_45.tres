@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AchievementData" format=3]
 
 [ext_resource uid="uid://6voljbarwsoh" type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="1_axe6p"]
-[ext_resource type="Script" path="res://scripts/resources/achievement_data.gd" id="2_ih6i4"]
+[ext_resource type="Script" path="res://scripts/data/achievement_data.gd" id="2_ih6i4"]
 
 [resource]
 script = ExtResource("2_ih6i4")

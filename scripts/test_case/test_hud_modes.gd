@@ -20,17 +20,17 @@ extends SceneTree
 ## ============================================================================
 
 const HUD_SCRIPTS := {
-	"play": "res://scripts/nodes/hud/game/level_hud.gd",
-	"fog_of_war": "res://scripts/nodes/hud/game/fog_of_war_hud.gd",
-	"dungeon": "res://scripts/nodes/hud/game/dungeon_hud.gd",
-	"minesweeper": "res://scripts/nodes/hud/game/minesweep_hud.gd",
-	"blind_memory": "res://scripts/nodes/hud/game/blind_memory_hud.gd",
-	"sum_path": "res://scripts/nodes/hud/game/sum_path_hud.gd",
-	"countdown_cost": "res://scripts/nodes/hud/game/countdown_hud.gd",
-	"fading_ink": "res://scripts/nodes/hud/game/fading_ink_hud.gd",
-	"one_stroke": "res://scripts/nodes/hud/game/one_stroke_hud.gd",
-	"wall_builder": "res://scripts/nodes/hud/game/wall_builder_hud.gd",
-	"challenge": "res://scripts/nodes/hud/game/challenge_hud.gd",
+	"play": "res://scripts/ui/hud/game/level_hud.gd",
+	"fog_of_war": "res://scripts/ui/hud/game/fog_of_war_hud.gd",
+	"dungeon": "res://scripts/ui/hud/game/dungeon_hud.gd",
+	"minesweeper": "res://scripts/ui/hud/game/minesweep_hud.gd",
+	"blind_memory": "res://scripts/ui/hud/game/blind_memory_hud.gd",
+	"sum_path": "res://scripts/ui/hud/game/sum_path_hud.gd",
+	"countdown_cost": "res://scripts/ui/hud/game/countdown_hud.gd",
+	"fading_ink": "res://scripts/ui/hud/game/fading_ink_hud.gd",
+	"one_stroke": "res://scripts/ui/hud/game/one_stroke_hud.gd",
+	"wall_builder": "res://scripts/ui/hud/game/wall_builder_hud.gd",
+	"challenge": "res://scripts/ui/hud/game/challenge_hud.gd",
 }
 
 var _failed := 0

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="FrameData" load_steps=3 format=3]
 
 [ext_resource uid="uid://dm1x88yww31u6" type="Texture2D" path="res://assets/images-png/frames/frame_leaf.png" id="1_8u62x"]
-[ext_resource type="Script" path="res://scripts/resources/frame_data.gd" id="2_7wrlg"]
+[ext_resource type="Script" path="res://scripts/data/frame_data.gd" id="2_7wrlg"]
 
 [resource]
 script = ExtResource("2_7wrlg")

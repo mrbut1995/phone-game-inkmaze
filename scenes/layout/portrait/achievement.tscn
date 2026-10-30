@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dy3rxdsj3gjk7"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" uid="uid://dnk2a0loscjvb" path="res://scripts/scenes/layout/achievement_layout.gd" id="2_layout"]
+[ext_resource type="Script" uid="uid://dnk2a0loscjvb" path="res://scripts/ui/layouts/achievement_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
 [ext_resource type="Texture2D" uid="uid://t2ok4t76hk45" path="res://assets/images-png/achievements/sheet.png" id="5_sheet"]

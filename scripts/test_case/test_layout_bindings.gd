@@ -3,7 +3,7 @@ extends SceneTree
 ## Test Case: BINDING NODE CỦA MÀN ⇄ SCENE LAYOUT (Portrait / Landscape)
 ##
 ## Mỗi màn tách 2 bố cục `scenes/layout/{portrait,landscape}/<màn>.tscn`; script layout
-## (`scripts/scenes/layout/<màn>_layout.gd`) khai `@export` node và .tscn BIND SẴN bằng
+## (`scripts/ui/layouts/<màn>_layout.gd`) khai `@export` node và .tscn BIND SẴN bằng
 ## `NodePath` — script màn chỉ đọc `layout.<tên>`.
 ##
 ## Test này mở từng màn, soi CẢ 2 bố cục và đòi:

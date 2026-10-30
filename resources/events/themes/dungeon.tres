@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="2_g7myi"]
+[ext_resource type="Script" path="res://scripts/data/event_theme.gd" id="2_g7myi"]
 [ext_resource uid="uid://cftc1njjup18e" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_dungeon_normal.png" id="btn_normal"]
 [ext_resource uid="uid://du51l6oux4upb" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_dungeon_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://c06ap7se4ge20" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_dungeon_disabled.png" id="btn_disabled"]

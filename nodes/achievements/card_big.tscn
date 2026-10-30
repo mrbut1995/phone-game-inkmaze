@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/achievements/card_big.gd" id="1_card"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/achievements/card_big.gd" id="1_card"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="2_theme"]
 [ext_resource uid="uid://bnfyurwba8jhs" type="Texture2D" path="res://assets/images-png/achievements/card_big_progress.png" id="3_progress"]
 [ext_resource uid="uid://dl7dgyk25x4ee" type="Texture2D" path="res://assets/images-png/achievements/card_big_claimed.png" id="4_claimed"]

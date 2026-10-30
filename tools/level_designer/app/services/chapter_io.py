@@ -3,7 +3,7 @@
 Format giống hệt file do game sinh ra (resources/chapters/chapter_N.tres):
 
     [gd_resource type="Resource" script_class="ChapterData" load_steps=2 format=3 uid="uid://..."]
-    [ext_resource type="Script" path="res://scripts/resources/chapter_data.gd" id="1_chapter"]
+    [ext_resource type="Script" path="res://scripts/data/chapter_data.gd" id="1_chapter"]
     [resource]
     script = ExtResource("1_chapter")
     chapter_id = 1

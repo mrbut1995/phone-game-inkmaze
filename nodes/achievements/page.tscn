@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cm6hfd631nvqg"]
 
-[ext_resource type="Script" uid="uid://sm4teeovhr25" path="res://scripts/nodes/achievements/page.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://sm4teeovhr25" path="res://scripts/ui/widgets/achievements/page.gd" id="1_script"]
 
 [node name="Page" type="Control" unique_id=576239674]
 clip_contents = true

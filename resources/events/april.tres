@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="EventData" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_abge6"]
+[ext_resource type="Script" path="res://scripts/data/level_data.gd" id="1_abge6"]
 [ext_resource type="Resource" path="res://resources/levels/events/april/level_1300.tres" id="2_w0t17"]
 [ext_resource type="Resource" path="res://resources/levels/events/april/level_1301.tres" id="3_c31db"]
 [ext_resource type="Resource" path="res://resources/levels/events/april/level_1302.tres" id="4_y7sa2"]
 [ext_resource type="Resource" path="res://resources/levels/events/april/level_1303.tres" id="5_f1mmi"]
 [ext_resource type="Resource" path="res://resources/levels/events/april/level_1304.tres" id="6_wgu3t"]
 [ext_resource type="Resource" path="res://resources/levels/events/april/level_1305.tres" id="7_v4ih6"]
-[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="8_pg7t7"]
-[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="9_gruwh"]
+[ext_resource type="Script" path="res://scripts/data/event_reward.gd" id="8_pg7t7"]
+[ext_resource type="Script" path="res://scripts/data/event_data.gd" id="9_gruwh"]
 [ext_resource type="Resource" path="res://resources/events/themes/april.tres" id="10_8l4lr"]
 
 [sub_resource type="Resource" id="Resource_2cqki"]

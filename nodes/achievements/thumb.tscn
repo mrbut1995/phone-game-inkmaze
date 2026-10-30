@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/achievements/thumb.gd" id="1_thumb"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/achievements/thumb.gd" id="1_thumb"]
 [ext_resource uid="uid://ddjwm1ymcs4eg" type="Texture2D" path="res://assets/images-png/achievements/thumb_halo.png" id="2_halo"]
 [ext_resource uid="uid://bckvrq7v6upkd" type="Texture2D" path="res://assets/images-png/achievements/thumb_ring.png" id="3_ring"]
 [ext_resource uid="uid://cmh3r7aq6kvtp" type="Texture2D" path="res://assets/images-png/achievements/thumb_face.png" id="4_face"]
