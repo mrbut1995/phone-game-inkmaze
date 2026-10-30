@@ -20,9 +20,7 @@ const ICON_BADGES := "res://assets/images-png/dock/dock_badges.png"
 ## Khoảng chừa đáy bản đồ (px) — lớn hơn DungeonPill + nửa cổng chương
 const MAP_BOTTOM_RESERVE := 130.0
 ## ---- Cỡ cho ĐIỆN THOẠI (màn thật nhỏ hơn bản xem trên máy tính) ----
-const DOCK_HEIGHT := 112.0          ## cao nút dock (trước ~68)
-const DOCK_ICON := 48.0
-const DOCK_FONT := 15
+const DockStyleJ := preload("res://scripts/nodes/main/dock_style_j.gd")   ## dock kiểu giấy lò xo + thẻ focus
 const CHIP_HEIGHT := 46.0           ## chip Xu / Mạng (trước 32)
 const CHIP_FONT := 22
 const SETTINGS_SIZE := 56.0
@@ -250,7 +248,8 @@ func _apply_mobile_sizing() -> void:
 	var dock_row := layout.dock_shop.get_parent() if layout.dock_shop != null else null
 	var dock_panel := dock_row.get_parent() as Control if dock_row != null else null
 	if dock_panel != null:
-		dock_panel.custom_minimum_size.y = DOCK_HEIGHT + 4.0
+		DockStyleJ.apply_panel(dock_panel)
+		dock_panel.custom_minimum_size.y = DockStyleJ.HEIGHT + 6.0
 
 
 ## Phóng to 1 chip (Xu / Mạng): cao `CHIP_HEIGHT`, rộng ×1.3, icon + số + nút `+` to theo
@@ -258,6 +257,13 @@ func _enlarge_chip(chip: Control) -> void:
 	if chip == null:
 		return
 	chip.custom_minimum_size = Vector2(chip.custom_minimum_size.x * 1.3, CHIP_HEIGHT)
+	# Bo tròn theo chiều cao mới (bản gốc bo 16 cho chip cao 32) — nhân đôi style để không đổi chip ở màn khác
+	var panel := chip.get_theme_stylebox("panel") as StyleBoxFlat
+	if panel != null:
+		var pill := panel.duplicate() as StyleBoxFlat
+		pill.set_corner_radius_all(int(CHIP_HEIGHT * 0.5))
+		pill.shadow_offset = Vector2(0.0, 4.0)
+		chip.add_theme_stylebox_override("panel", pill)
 	var icon := chip.find_child("Icon", true, false) as Control
 	if icon != null:
 		icon.custom_minimum_size.x = 32.0
@@ -267,6 +273,12 @@ func _enlarge_chip(chip: Control) -> void:
 	var plus := chip.find_child("Plus", true, false) as Control
 	if plus != null:
 		plus.custom_minimum_size = Vector2(32.0, 32.0)
+		for state in ["normal", "pressed", "hover"]:
+			var box := plus.get_theme_stylebox(state) as StyleBoxFlat
+			if box != null:
+				var round_box := box.duplicate() as StyleBoxFlat
+				round_box.set_corner_radius_all(11)
+				plus.add_theme_stylebox_override(state, round_box)
 		plus.add_theme_font_size_override("font_size", 18)
 
 
@@ -307,76 +319,9 @@ func _setup_dock_button(button: DockButton, icon_path: String, label: String, ke
 	_style_dock_button(button, key, Color(colors[0]), Color(colors[2]))
 
 
-## Nút dock MÀU: art SVG→PNG 9-slice `assets/images-png/dock/dock_btn_<khoá>_{normal,pressed,focus}.png`
-## (nguồn SVG ở `assets/images/dock/`; đổi theme = sửa SVG hoặc `gen/gen_colorful_art.py`).
-## Thiếu PNG thì dùng StyleBoxFlat dự phòng. Chữ trắng + viền màu đáy nút; icon trắng.
-func _style_dock_button(button: DockButton, key: String, face: Color, base: Color) -> void:
-	var normal := _dock_tex_box(key, "normal")
-	var pressed := _dock_tex_box(key, "pressed")
-	if normal != null and pressed != null:
-		button.add_theme_stylebox_override("normal", normal)
-		button.add_theme_stylebox_override("hover", normal)
-		button.add_theme_stylebox_override("pressed", pressed)
-	else:
-		var flat := _dock_box(face, face.lightened(0.4), base, 5.0, 0.0)
-		button.add_theme_stylebox_override("normal", flat)
-		button.add_theme_stylebox_override("hover", flat)
-		button.add_theme_stylebox_override("pressed", _dock_box(face.darkened(0.1), face.lightened(0.4), base, 1.0, 4.0))
-	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-	_tint_dock_labels(button, base)
-	# Mặt nút cao ~57px (đáy 3D nằm dưới): kéo nhãn/icon lên để không đè lên đáy
-	button.custom_minimum_size.y = DOCK_HEIGHT
-	var icon_node := button.get_node_or_null("Icon") as Control
-	if icon_node != null:
-		icon_node.offset_left = -DOCK_ICON * 0.5
-		icon_node.offset_right = DOCK_ICON * 0.5
-		icon_node.offset_top = 12.0
-		icon_node.offset_bottom = 12.0 + DOCK_ICON
-	var label_node := button.get_node_or_null("Label") as Control
-	if label_node != null:
-		label_node.offset_top = -44.0
-		label_node.offset_bottom = -17.0
-		label_node.add_theme_font_size_override("font_size", DOCK_FONT)
-
-
-func _dock_tex_box(key: String, state: String) -> StyleBoxTexture:
-	var path := "res://assets/images-png/dock/dock_btn_%s_%s.png" % [key, state]
-	if not ResourceLoader.exists(path):
-		return null
-	var sb := StyleBoxTexture.new()
-	sb.texture = load(path)
-	sb.texture_margin_left = 20.0
-	sb.texture_margin_right = 20.0
-	sb.texture_margin_top = 20.0
-	sb.texture_margin_bottom = 26.0
-	return sb
-
-
-func _dock_box(face: Color, light: Color, base: Color, drop: float, sink: float) -> StyleBoxFlat:
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = face
-	sb.border_color = light
-	sb.set_border_width_all(2)
-	sb.set_corner_radius_all(16)
-	sb.shadow_color = base
-	sb.shadow_size = 1
-	sb.shadow_offset = Vector2(0.0, drop)
-	if sink > 0.0:
-		sb.expand_margin_top = -sink
-		sb.expand_margin_bottom = sink
-	sb.anti_aliasing = true
-	return sb
-
-
-## Mọi nhãn chữ trong nút dock: TRẮNG + viền màu đáy nút (đọc rõ trên nền màu).
-func _tint_dock_labels(node: Node, outline: Color = Color(0, 0, 0, 0.35)) -> void:
-	for child in node.get_children():
-		if child is Label:
-			var lbl := child as Label
-			lbl.add_theme_color_override("font_color", Color.WHITE)
-			lbl.add_theme_color_override("font_outline_color", outline)
-			lbl.add_theme_constant_override("outline_size", 4)
-		_tint_dock_labels(child, outline)
+## Nút dock kiểu J: huy hiệu tròn màu; bấm giữ / tab hiện hành thì NHÔ LÊN thành thẻ (xem dock_style_j.gd)
+func _style_dock_button(button: DockButton, key: String, _face: Color, _base: Color) -> void:
+	DockStyleJ.style_button(button, key)
 
 
 func _setup_animations() -> void:
