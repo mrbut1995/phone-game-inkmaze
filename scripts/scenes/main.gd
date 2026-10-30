@@ -137,7 +137,7 @@ func _connect_profile_manager() -> void:
 	var m := Profile.manager()
 	# keep-code: nối tới AUTOLOAD ProfileManager (không phải node tĩnh) — §5B.4 mục 4
 	if m != null and m.has_signal("profile_changed") and not m.is_connected("profile_changed", _refresh_profile):
-		m.connect("profile_changed", _refresh_profile)
+		m.connect("profile_changed", _refresh_profile)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 # ---------------------------------------------------------------------------

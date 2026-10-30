@@ -36,15 +36,15 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 		btn_continue.text = _tr_key("STR_TUT_CONGRATS_CONTINUE", "CHƠI BÀN TIẾP THEO")
 	if btn_main != null:
 		btn_main.text = _tr_key("STR_TUT_CONGRATS_MAIN", "VỀ MÀN HÌNH CHÍNH")
-	nav_bar.visible = false
-	btn_skip.visible = false
+	nav_bar.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+	btn_skip.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if dots_container != null:
-		dots_container.visible = false
+		dots_container.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	# Pose ban đầu đặt NGAY bằng code (khung hình đầu đã đúng dáng, trước khi AnimationPlayer chạy);
 	# phần rơi con dấu + hiện dần 2 nút khai trong animation "congrats" của scene.
 	if stamp != null:
 		stamp.pivot_offset = stamp.size * 0.5
-		stamp.scale = Vector2(1.6, 1.6)
+		stamp.scale = Vector2(1.6, 1.6)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 		stamp.modulate.a = 0.0
 		stamp.rotation = deg_to_rad(-5.0)
 	for btn_node in [btn_continue, btn_main]:
@@ -52,7 +52,7 @@ func _on_step_entered(_index: int, _data: Dictionary) -> void:
 		if b != null:
 			b.pivot_offset = b.size * 0.5
 			b.modulate.a = 0.0
-			b.scale = Vector2(0.88, 0.88)
+			b.scale = Vector2(0.88, 0.88)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	if fx_anim != null and fx_anim.has_animation(&"congrats"):
 		fx_anim.play(&"congrats")
 		return

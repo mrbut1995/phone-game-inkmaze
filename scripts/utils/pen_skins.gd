@@ -11,10 +11,10 @@ extends RefCounted
 ## ============================================================================
 
 const DEFAULT_PEN := "pen_blue"
-const CURSOR_DIR := "res://assets/images-png/game/player_cursor/"
-const ICON_DIR := "res://assets/images-png/game/pen_type/"
+const CURSOR_DIR := "res://assets/images-png/game/player_cursor/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const ICON_DIR := "res://assets/images-png/game/pen_type/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 ## Bề rộng texture nét đứt mặc định (px)
-const DASH_TEX_WIDTH := 16
+const DASH_TEX_WIDTH := 16  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 ## id món hàng -> { cursor: icon con trỏ · tip: vị trí ĐẦU BÚT trong icon (0..1) · icon: hình ngòi bút ·
 ##                   ink: màu mực · style: chất liệu }
@@ -279,7 +279,7 @@ static func apply_line(line: Line2D, pen_id: String, base_width: float,
 	else:
 		line.texture_mode = Line2D.LINE_TEXTURE_NONE
 		line.texture_repeat = CanvasItem.TEXTURE_REPEAT_DISABLED
-		line.texture = null
+		line.texture = null  # keep-code: art theo trạng thái (runtime)
 		line.material = null
 
 

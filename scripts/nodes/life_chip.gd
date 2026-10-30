@@ -31,14 +31,13 @@ signal plus_pressed
 
 
 func _ready() -> void:
-	if plus_button != null:
-		plus_button.pressed.connect(_on_plus_pressed)
+	# Nút `+` (`Content/Plus`) nối `pressed` trong nodes/main/life_chip.tscn
 	if large:
 		_apply_large()
 	var game_manager := get_node_or_null("/root/GameManager")
 	if game_manager != null and game_manager.has_signal("life_changed") \
-			and not game_manager.is_connected("life_changed", _on_life_changed):
-		game_manager.connect("life_changed", _on_life_changed)
+			and not game_manager.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		game_manager.connect("life_changed", _on_life_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	refresh()
 
 

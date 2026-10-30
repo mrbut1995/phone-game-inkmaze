@@ -54,20 +54,20 @@ func _apply_cell_text(text: String) -> void:
 			sprite.texture_normal = texture_start
 			sprite.texture_hover  = texture_start
 			sprite.texture_focused = texture_start
-			label.text    = ""
-			label.visible = false
+			label.text    = ""  # keep-code: chữ theo dữ liệu (runtime)
+			label.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		"F":
 			sprite.texture_normal = texture_finish
 			sprite.texture_hover  = texture_finish
 			sprite.texture_focused = texture_finish
-			label.text    = ""
-			label.visible = false
+			label.text    = ""  # keep-code: chữ theo dữ liệu (runtime)
+			label.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		"F_CLOSED":
 			sprite.texture_normal = texture_finish_closed
 			sprite.texture_hover  = texture_finish_closed
 			sprite.texture_focused = texture_finish_closed
-			label.text    = ""
-			label.visible = false
+			label.text    = ""  # keep-code: chữ theo dữ liệu (runtime)
+			label.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		_:
 			sprite.texture_normal = texture_normal
 			sprite.texture_hover  = texture_normal

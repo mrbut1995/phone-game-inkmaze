@@ -24,7 +24,7 @@ extends Node2D
 ## ============================================================================
 
 ## Cạnh art nút màn ở cỡ 1.0 (px)
-const ART_SIZE := 112.0
+const ART_SIZE := 112.0  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 signal level_selected(level_id: int)
 ## Bấm CỔNG chương (chế độ ĐƯỜNG LIỀN): `chapter_id` = chương PHÍA TRÊN cổng
@@ -528,9 +528,9 @@ func _build_nodes(sorted_ids: Array[int], positions: Array[Vector2], node_scale:
 	var last_position := positions[last_index]
 	var last_id: int = sorted_ids[last_index]
 	if goal != null and last_id < 0:
-		goal.visible = false   # đỉnh là cổng khoá ⇒ chưa có cờ đích
+		goal.visible = false   # đỉnh là cổng khoá ⇒ chưa có cờ đích  # keep-code: trạng thái theo dữ liệu (runtime)
 	elif goal != null:
-		goal.visible = true
+		goal.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 		goal.scale = Vector2.ONE * node_scale
 		# Cắm cờ vào MÉP TRÊN nút cuối (chồng nhẹ) — cờ nằm trong nút "End Level", không lơ lửng
 		var lift := (node_face_top + flag_half_height - flag_overlap) * node_scale

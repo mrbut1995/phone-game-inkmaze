@@ -20,7 +20,7 @@ signal pressed
 ## Số Sao tối đa của một thẻ (khớp `DailyManager.PLAY_STARS_MAX` / `CHALLENGE_STARS_MAX`)
 const STARS_MAX := 3
 
-const ART_DIR := "res://assets/images-png/daily/"
+const ART_DIR := "res://assets/images-png/daily/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const ICON_TEXTURES := {false: "tri_blue.png", true: "bolt_amber.png"}
 const BOX_TEXTURES := {false: "icon_box_blue.png", true: "icon_box_amber.png"}
 const CTA_ICON_TEXTURES := {false: "tri_white.png", true: "tri_dark.png"}
@@ -29,11 +29,11 @@ const CTA_TEXTURES := {
 	false: ["btn_cta_blue_normal.png", "btn_cta_blue_pressed.png"],
 	true: ["btn_cta_amber_normal.png", "btn_cta_amber_pressed.png"],
 }
-const CTA_LABEL_COLORS := {false: Color("#FFFDF8"), true: Color("#2A1A05")}
-const SUB_COLORS := {false: Color("#3D5A73"), true: Color("#C4843A")}
+const CTA_LABEL_COLORS := {false: Color("#FFFDF8"), true: Color("#2A1A05")}  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const SUB_COLORS := {false: Color("#3D5A73"), true: Color("#C4843A")}  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const PAPER_TEXTURES := {false: "card_paper.png", true: "card_paper_amber.png"}
-const STAR_ON := "res://assets/images-png/common/star_highlight.png"
-const STAR_OFF := "res://assets/images-png/common/star_empty.png"
+const STAR_ON := "res://assets/images-png/common/star_highlight.png"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const STAR_OFF := "res://assets/images-png/common/star_empty.png"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 @export var paper: TextureRect = null
 @export var icon_box: TextureRect = null
@@ -56,8 +56,8 @@ var _celebrating: bool = false
 
 
 func _ready() -> void:
-	if fx_anim != null and not fx_anim.animation_finished.is_connected(_on_fx_finished):
-		fx_anim.animation_finished.connect(_on_fx_finished)
+	# Dây `FxAnim.animation_finished -> _on_fx_finished` khai trong nodes/daily/action_card.tscn
+	pass
 
 
 ## Phát hiệu ứng "vừa hoàn thành ván": các ngôi sao ĐÃ ĐẠT nảy lần lượt + khung icon

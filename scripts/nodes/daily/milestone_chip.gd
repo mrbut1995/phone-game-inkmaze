@@ -17,7 +17,7 @@ signal claim_requested(threshold: int)
 signal hold_started(chip: DailyMilestoneChip)
 signal hold_ended
 
-const TEX_DIR := "res://assets/images-png/daily/"
+const TEX_DIR := "res://assets/images-png/daily/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 ## Ngưỡng Sao của mốc đang hiển thị
 var threshold: int = 0

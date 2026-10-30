@@ -28,14 +28,13 @@ signal plus_pressed
 
 
 func _ready() -> void:
-	if plus_button != null:
-		plus_button.pressed.connect(_on_plus_pressed)
+	# Nút `+` (`Content/Plus`) nối `pressed` trong nodes/main/coin_chip.tscn
 	if large:
 		_apply_large()
 	var wallet := get_node_or_null("/root/ArchivementManager")
 	if wallet != null and wallet.has_signal("progress_changed") \
-			and not wallet.is_connected("progress_changed", _on_wallet_changed):
-		wallet.connect("progress_changed", _on_wallet_changed)
+			and not wallet.is_connected("progress_changed", _on_wallet_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		wallet.connect("progress_changed", _on_wallet_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	set_value(Shop.coins())
 
 

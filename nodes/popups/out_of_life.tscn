@@ -451,3 +451,5 @@ layout_mode = 2
 [connection signal="pressed" from="Panel/Content/Information/Choices/ExitBtn" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Panel/Content/Information/Choices/ShopBtn" to="." method="_on_shop_pressed"]
 [connection signal="timeout" from="Panel/Content/Information/PencilBox/RecoverTimer" to="Panel/Content/Information/PencilBox" method="_on_recover_timer_timeout"]
+
+[connection signal="recover_finished" from="Panel/Content/Information/PencilBox" to="." method="_refresh" flags=3]

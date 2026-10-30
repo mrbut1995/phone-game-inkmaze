@@ -152,10 +152,10 @@ func setup_tutorial(
 	if _anchors_enabled:
 		_build_anchors()
 		if _anchors_layer != null:
-			_anchors_layer.visible = true
+			_anchors_layer.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	else:
 		if _anchors_layer != null:
-			_anchors_layer.visible = false
+			_anchors_layer.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 	_read_metrics_from_scenes()
 	_update_layout_positions()
@@ -170,7 +170,7 @@ func setup_tutorial(
 	else:
 		_player_hidden = true
 		if _cursor != null:
-			_cursor.visible = false
+			_cursor.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 	apply_pen_skin()
 	_apply_metrics_scale()
@@ -361,7 +361,7 @@ func show_dashed_wall(is_h: bool, lattice: Vector2i) -> WallSegment:
 	if _dashed_previews.has(key):
 		var existing: WallSegment = _dashed_previews[key]
 		if is_instance_valid(existing):
-			existing.visible = true
+			existing.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 			return existing
 	var seg := _create_wall_segment(is_h, lattice, "suspected")
 	if seg == null:
@@ -389,7 +389,7 @@ func cancel_wall_demo() -> void:
 	_wall_demo_token += 1
 	hide_anchor_callouts()
 	if _drag_guide_line != null:
-		_drag_guide_line.visible = false
+		_drag_guide_line.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	for info in _anchor_nodes:
 		var anchor: MazeAnchor = info.node
 		if is_instance_valid(anchor):
@@ -413,12 +413,12 @@ func play_wall_demo_drag(is_h: bool, lattice: Vector2i, duration := 0.55) -> voi
 	var token := _wall_demo_token
 
 	_cursor.stop_demo()
-	_cursor.visible = true
+	_cursor.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	_cursor.position = cursor_pos_at(a_center)
 	_set_demo_anchor_selected(corner_a, true)
 	_pulse_demo_anchor(corner_a)
 	Sfx.play(Sfx.ANCHOR_SNAP)
-	_drag_guide_line.visible = true
+	_drag_guide_line.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	_drag_guide_line.points = PackedVector2Array([a_center, a_center])
 
 	get_tree().create_timer(0.15).timeout.connect(func() -> void:
@@ -438,7 +438,7 @@ func play_wall_demo_drag(is_h: bool, lattice: Vector2i, duration := 0.55) -> voi
 		_pulse_demo_anchor(corner_b)
 		Sfx.play(Sfx.WALL_MARK)
 		toggle_wall(is_h, lattice)
-		_drag_guide_line.visible = false
+		_drag_guide_line.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		_set_demo_anchor_selected(corner_a, false)
 	)
 

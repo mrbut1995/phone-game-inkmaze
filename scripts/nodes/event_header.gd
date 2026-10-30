@@ -10,16 +10,16 @@ signal view_all_pressed
 
 ## Bề rộng tối thiểu của cụm chấm phân trang khi dời cạnh badge số event.
 ## Đủ chỗ cho ~6 chấm (chấm 5 px + nhịp 4 px); dư thì `Dots` tự căn giữa.
-const DOTS_MIN_WIDTH := 54.0
+const DOTS_MIN_WIDTH := 54.0  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 @onready var title_label: Label = $Title
 @onready var count_label: Label = $Badge/CountLabel
 @onready var view_all: Button = $ViewAll
 
 
-func _ready() -> void:
-	if view_all != null:
-		view_all.pressed.connect(func() -> void: view_all_pressed.emit())
+## Dây `ViewAll.pressed` khai trong nodes/main/event_header.tscn
+func _on_view_all_pressed() -> void:
+	view_all_pressed.emit()
 
 
 ## Số event đang mở (hiện trên badge cam)
@@ -41,6 +41,6 @@ func attach_dots(dots: Control) -> void:
 	if slot == null or dots == null or dots.get_parent() == slot:
 		return
 	dots.reparent(slot, false)
-	dots.custom_minimum_size = Vector2(DOTS_MIN_WIDTH, 6.0)
-	dots.size_flags_horizontal = Control.SIZE_SHRINK_END
-	dots.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	dots.custom_minimum_size = Vector2(DOTS_MIN_WIDTH, 6.0)  # keep-code: chấm trang sinh lúc chạy (runtime)
+	dots.size_flags_horizontal = Control.SIZE_SHRINK_END  # keep-code: chấm trang sinh lúc chạy (runtime)
+	dots.size_flags_vertical = Control.SIZE_SHRINK_CENTER  # keep-code: chấm trang sinh lúc chạy (runtime)

@@ -19,8 +19,8 @@ extends Node
 
 signal profile_changed
 
-const AVATAR_DIR := "res://assets/images-png/avatars/"
-const FRAME_DIR := "res://assets/images-png/frames/"
+const AVATAR_DIR := "res://assets/images-png/avatars/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const FRAME_DIR := "res://assets/images-png/frames/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const MAX_RECENT := 10
 ## Mỗi 200 EXP = 1 Cấp; mỗi Sao = 25 EXP
 const EXP_PER_LEVEL := 200

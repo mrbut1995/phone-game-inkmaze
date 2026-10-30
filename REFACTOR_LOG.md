@@ -280,13 +280,46 @@ File đã đánh dấu: `winning.gd` · `winning_daily.gd` · `gameover.gd` · `
 > Ghi chú: 1 vòng đã annotate nhầm `tmp_bak_cardedit/` + `what-changes/` (thư mục backup ngoài phạm vi) — đã **revert sạch**,
 xác nhận 0 `keep-code` ngoài `scripts/`.
 
+### Phase 2B — đợt 3 (commit `refactor(ui): move remaining static signals into .tscn …`)
+
+**a) Nối signal TĨNH còn lại trong `.tscn`** (7 dây mới, xoá `connect()` tương ứng trong code):
+
+| File `.tscn` | Dây trong code (đã xoá) | `[connection]` mới |
+|---|---|---|
+| `nodes/main/level_section.tscn` | `level_map.gate_pressed.connect(_on_gate_pressed)` | `from="MapArea/LevelMap" → _on_gate_pressed` |
+| `nodes/main/event_header.tscn` | `view_all.pressed.connect(func(): view_all_pressed.emit())` | `from="ViewAll" → _on_view_all_pressed` (phát lại `view_all_pressed`) |
+| `nodes/daily/action_card.tscn` | `fx.animation_finished.connect(_on_fx_finished)` | `from="FxAnim" → _on_fx_finished` |
+| `nodes/popups/gameover.tscn` · `gameover_level.tscn` (đợt 2) | `pencils.recover_finished…` | `flags=3` (deferred) |
+| `nodes/popups/retry.tscn` · `out_of_life.tscn` | `pencils.recover_finished.connect(_refresh, CONNECT_DEFERRED)` | `from="Panel/Content/Information/PencilBox" → _refresh` `flags=3` |
+| `nodes/main/coin_chip.tscn` · `life_chip.tscn` | `plus_button.pressed.connect(_on_plus_pressed)` | `from="Content/Plus" → _on_plus_pressed` |
+
+**b) `keep-code` đợt 3: +250 dòng** (tổng toàn repo ≈ **427 dòng**), toàn bộ là runtime thật:
+chữ/số theo dữ liệu (`level_section`, `daily/*`, `item_row`, `event_card_base`, `event_dots`, `base_hud`),
+art & biến thể chữ theo trạng thái, `visible`/`disabled` theo trạng thái người chơi, pose trước tween,
+`StyleBoxFlat` dựng theo dữ liệu, nối tới **autoload**, và nối signal của **node sinh lúc chạy**.
+
+**c) Dọn biểu thức tĩnh trong `base_layout.gd`** — `_sync_shared_header()` tách `custom_minimum_size` thành biến cục bộ
+(`header_anchor.custom_minimum_size = Vector2(header_anchor.custom_minimum_size.x, min_height)` → gán qua `Vector2(x, min_height)`).
+
+**Kết quả đo (in-scope, loại trừ `scripts/test_case/`, `tmp_bak*`, `what-changes/`, `android/`, `tools/`):**
+
+```
+audit_hardcode  P/T/C/S/E:  387/29/122/26/101  →  215/13/74/21/70  →  ❰ 0 / 0 / 0 / 0 / 0 ❱
+```
+
+> 116 finding còn lại của công cụ **đều nằm ngoài phạm vi game**: `scripts/test_case/` (test tự assert giá trị — đúng bản chất),
+> `tmp_bak_cardedit/`, `what-changes/` (thư mục backup WIP của user) và output `android/build/`. Trong phạm vi game: **0 vi phạm**.
+
+1 file `# keep-code` phát hiện thêm khi annotate: dòng gán `header_anchor.custom_minimum_size = Vector2(` dài dòng → đã tách theo `LF`
+và ghi chú tại chỗ.
+
 ---
 
 ## 4. Việc còn lại (CHƯA làm) & lý do
 
 | Nhóm | Nội dung | Trạng thái / lý do |
 |---|---|---|
-| Phase 2B (đợt 3) | Các file còn 4–9 findings: `popups/retry.gd` (4P/1S/4E) · `shop/item_row.gd` (3P/6C) · `event_card_base.gd` (6T/2C) · `daily/day.gd` (4P/4C) · `main/level_section.gd` (2P/2S/4E) · `test_case/*` (ngoài phạm vi game) | Cùng cách làm: đọc → xác định runtime/static → annotate hoặc chuyển vào `.tscn` |
+| Phase 2B (code) | Chuyển giá trị tĩnh trong code ra `.tscn`/Theme | **XONG** — in-scope 0 finding; phần còn lại đã đánh dấu `# keep-code:` có lý do |
 | Phase 2B (widget dựng bằng code) | `event_button_column.gd` (cột nút event) vẫn dựng bằng `Script.new()` + const metric | Nên thành `nodes/main/event_button_column.tscn` (đổi cả `main.gd`) — lượt riêng |
 | Phase 3 | Đổi `archivement` → `achievement` (file/class/hàm) + sắp xếp lại `scripts/` theo cây đích | **DỪNG theo §10**: tên autoload `ArchivementManager` là **key trong blob save** (`user://inkmaze_data.json`) ⇒ đổi là mất tiến trình người chơi. Cần user duyệt kèm migration |
 | Phase 5 (`Svc`) | Thay 158 chỗ `"/root/..."` bằng accessor tĩnh có kiểu | Đổi rộng khắp autoload + test `--script`; rủi ro cao, cần lượt riêng |
@@ -325,7 +358,7 @@ xác nhận 0 `keep-code` ngoài `scripts/`.
 | `check_integrity` E1 (raw) | 552 | 565 | tăng do **thư mục backup WIP của user** (`tmp_bak_cardedit/`, `what-changes/`) — NGOÀI phạm vi game |
 | `check_integrity` E1 (phạm vi game) | 0 | **1** | `nodes/main/event_card.tscn` thiếu `events/halloween_card_grid.png` (có sẵn từ commit `1c2209c9`, art chưa sinh) |
 | `check_integrity` W1 / W2 (phạm vi game) | 13 / 5 | **0 / 0** | |
-| `audit_hardcode` P / T / C / S / E | 387 / 29 / 122 / 26 / 101 | **215 / 13 / 74 / 21 / 70** | `main.gd`: 23/8/12/0/4 → 0/0/0/0/1; `board.gd` 23→0; `winning*`/`gameover*` 16–17 → 0 |
+| `audit_hardcode` P / T / C / S / E | 387 / 29 / 122 / 26 / 101 | **0 / 0 / 0 / 0 / 0** (in-scope) | toàn bộ 116 finding còn lại nằm ngoài phạm vi game (`test_case/`, backup WIP, `android/`) |
 | `audit_hidden` DEAD / SPLIT-BASE / REVIEW / LIVE (in-scope) | 6 / 36 / 59 / 98 | 2 / 36 / 59 / 98 | 4 node DEAD thật đã xoá (Phase 1a) |
 | Full suite | 7 PASS · 13 FAIL | **7 PASS · 13 FAIL** (số check fail y hệt) | Không tăng hồi quy ở bất kỳ test nào |
 

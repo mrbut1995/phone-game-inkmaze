@@ -71,7 +71,7 @@ func _apply_canvas_layout() -> void:
 	# cha = CỘT nội dung ⇒ hai bên màn rộng không tối — lỗi Dim của popup Hồ sơ).
 	if dim.anchor_left != 0.0 or dim.anchor_top != 0.0 \
 			or dim.anchor_right != 0.0 or dim.anchor_bottom != 0.0:
-		dim.set_anchors_preset(Control.PRESET_TOP_LEFT, true)
+		dim.set_anchors_preset(Control.PRESET_TOP_LEFT, true)  # keep-code: node sinh lúc chạy — đặt anchor khi dựng
 	var canvas := get_viewport_rect().size
 	var dim_pos := -global_position
 	if dim.position != dim_pos:
@@ -98,7 +98,7 @@ func _setup_dim() -> void:
 	if close_on_outside:
 		# Nền phải HỨNG chuột (STOP) mới nhận được cú bấm ra ngoài;
 		# để IGNORE thì cú bấm xuyên thẳng xuống màn hình phía sau.
-		dim.mouse_filter = Control.MOUSE_FILTER_STOP
+		dim.mouse_filter = Control.MOUSE_FILTER_STOP  # keep-code: bắt buộc để bấm nền đóng popup (runtime)
 
 
 ## Bấm/chạm vào NỀN MỜ ngoài thẻ popup ⇒ đóng popup (giống bấm Back).
@@ -136,11 +136,11 @@ func open(p_data: Dictionary = {}) -> void:
 	else:
 		# Fallback khi scene thiếu animation "open" (các popup đã khai "open" trong .tscn)
 		if dim != null:
-			dim.modulate = Color(1, 1, 1, 0)
+			dim.modulate = Color(1, 1, 1, 0)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 		if panel != null:
 			panel.pivot_offset = panel.size * 0.5
 			panel.scale = Vector2.ONE * scale_from
-			panel.modulate = Color(1, 1, 1, 0)
+			panel.modulate = Color(1, 1, 1, 0)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 
 		var tw := create_tween()
 		_tween = tw

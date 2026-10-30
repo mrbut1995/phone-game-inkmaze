@@ -82,7 +82,7 @@ func _apply_orientation_layout(portrait_layout: CanvasItem, landscape_layout: Ca
 			continue
 		if ctrl.anchor_right != 1.0 or ctrl.anchor_bottom != 1.0 \
 				or ctrl.offset_right != 0.0 or ctrl.offset_bottom != 0.0:
-			ctrl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			ctrl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # keep-code: node sinh lúc chạy — đặt anchor khi dựng
 
 
 ## Hook — chạy ĐẦU `_enter_tree` (trước lần áp layout đầu tiên)

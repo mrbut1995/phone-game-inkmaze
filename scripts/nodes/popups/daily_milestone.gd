@@ -47,7 +47,7 @@ func _on_open() -> void:
 		# `reward_text` = chuỗi phần thưởng dựng sẵn (rương chương có thêm "lượt chơi")
 		reward_label.text = str(data.get("reward_text", _reward_text(reward)))
 	if lbl_ok != null:
-		lbl_ok.text = tr("STR_DAILY_MILESTONE_POPUP_OK")
+		lbl_ok.text = tr("STR_DAILY_MILESTONE_POPUP_OK")  # keep-code: chữ theo dữ liệu (runtime)
 	_replay_reveal()
 
 

@@ -15,8 +15,8 @@ extends BaseHUD
 
 ## Màu dòng "CÒN n LẦN VỀ S": xanh khi còn nhiều, đỏ khi chỉ còn ≤ 1 lượt
 ## Màu chữ gợi ý (test truy cập TĨNH `FogOfWarHUD.COLOR_NOTE_*` ⇒ PHẢI là const, không được đổi sang @export)
-const COLOR_NOTE_OK := Color(0.18039216, 0.49019608, 0.19607843)
-const COLOR_NOTE_DANGER := Color(0.84705883, 0.26666668, 0.26666668)
+const COLOR_NOTE_OK := Color(0.18039216, 0.49019608, 0.19607843)  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COLOR_NOTE_DANGER := Color(0.84705883, 0.26666668, 0.26666668)  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 ## LƯỢT THỬ LẠI còn lại (`Content/ModeInformation/Sheet/Retry/Value`)
 @export var retry_value_node : Label

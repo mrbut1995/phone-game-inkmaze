@@ -11,7 +11,7 @@ extends Node
 
 signal soundtrack_changed(track_path: String, theme_id: String, context_name: String)
 
-const DEFAULT_SOUNDTRACK := "res://assets/soundtrack/Wallpaper.mp3"
+const DEFAULT_SOUNDTRACK := "res://assets/soundtrack/Wallpaper.mp3"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const DEFAULT_THEME := "theme_gride_4ly"
 
 const SCENE_GAME := "res://scenes/game.tscn"
@@ -101,8 +101,8 @@ func _bind_setting_manager() -> void:
 	if settings == null or not settings.has_signal("volume_changed"):
 		return
 	var cb := Callable(self, "_on_volume_changed")
-	if not settings.is_connected("volume_changed", cb):
-		settings.connect("volume_changed", cb)
+	if not settings.is_connected("volume_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		settings.connect("volume_changed", cb)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _bind_theme_manager() -> void:
@@ -110,8 +110,8 @@ func _bind_theme_manager() -> void:
 	if themes == null or not themes.has_signal("skin_changed"):
 		return
 	var cb := Callable(self, "_on_skin_changed")
-	if not themes.is_connected("skin_changed", cb):
-		themes.connect("skin_changed", cb)
+	if not themes.is_connected("skin_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		themes.connect("skin_changed", cb)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _bind_scene_manager() -> void:
@@ -119,8 +119,8 @@ func _bind_scene_manager() -> void:
 	if scenes == null or not scenes.has_signal("scene_changed"):
 		return
 	var cb := Callable(self, "_on_scene_changed")
-	if not scenes.is_connected("scene_changed", cb):
-		scenes.connect("scene_changed", cb)
+	if not scenes.is_connected("scene_changed", cb):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		scenes.connect("scene_changed", cb)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _ensure_player() -> void:

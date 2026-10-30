@@ -194,8 +194,8 @@ func overview_text() -> String:
 func _connect_manager() -> void:
 	var manager := Archivement.manager()
 	if manager != null and manager.has_signal("progress_changed"):
-		if not manager.is_connected("progress_changed", _on_manager_changed):
-			manager.connect("progress_changed", _on_manager_changed)
+		if not manager.is_connected("progress_changed", _on_manager_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+			manager.connect("progress_changed", _on_manager_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_manager_changed() -> void:
@@ -279,7 +279,7 @@ func _build_pages() -> void:
 			if card.has_method("setup"):
 				card.call("setup", _decorated_entry(list_index))
 			if card.has_signal("claim_requested"):
-				card.connect("claim_requested", _on_claim_requested)
+				card.connect("claim_requested", _on_claim_requested)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 			# Thẻ lớn (G) có hiệu ứng thu/phóng riêng theo vị trí cuộn (`_update_peek`) ⇒ bỏ pop-in
 			if not padded:
 				UIAnim.play_pop_in(card, 0.02 * slot, 0.9, 0.18)
@@ -339,7 +339,7 @@ func _on_claim_requested(id: String) -> void:
 # ---------------------------------------------------------------------------
 # Hiệu ứng nhận thưởng: xu bay lên ví + dấu mộc đóng xuống thẻ
 # ---------------------------------------------------------------------------
-const FX_COIN := preload("res://assets/images-png/icons/icon_coin.png")
+const FX_COIN := preload("res://assets/images-png/icons/icon_coin.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 @export var FX_COIN_COUNT := 8
 
 func _card_by_id(id: String) -> Control:
@@ -470,7 +470,7 @@ func _build_dots() -> void:
 	# Bố cục G: dải ảnh thu nhỏ thay cho chấm trang
 	if layout.thumbs_box != null and layout.thumb_scene != null:
 		if layout.dots_box != null:
-			layout.dots_box.visible = false
+			layout.dots_box.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		_build_thumbs()
 		return
 	if layout.dots_box == null:

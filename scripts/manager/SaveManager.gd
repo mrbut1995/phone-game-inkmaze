@@ -55,8 +55,8 @@ func _ensure_ready() -> void:
 	register_provider(gm, "level_completed")
 	# Kỷ lục tầng (ngày/tuần/tháng) cũng phải được lưu ngay khi vừa lập
 	if gm != null and gm.has_signal("floor_record_changed") \
-			and not gm.is_connected("floor_record_changed", _on_provider_changed):
-		gm.connect("floor_record_changed", _on_provider_changed)
+			and not gm.is_connected("floor_record_changed", _on_provider_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		gm.connect("floor_record_changed", _on_provider_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	register_provider(tree.root.get_node_or_null("DailyManager"), "daily_changed")
 	register_provider(tree.root.get_node_or_null("ArchivementManager"), "progress_changed")
 	register_provider(tree.root.get_node_or_null("ShopManager"), "item_purchased")
@@ -64,8 +64,8 @@ func _ensure_ready() -> void:
 	register_provider(tree.root.get_node_or_null("EventManager"), "event_progress_changed")
 
 	var app: Node = tree.root.get_node_or_null("AppManager")
-	if app != null and app.has_signal("app_paused") and not app.is_connected("app_paused", _on_app_paused):
-		app.connect("app_paused", _on_app_paused)
+	if app != null and app.has_signal("app_paused") and not app.is_connected("app_paused", _on_app_paused):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		app.connect("app_paused", _on_app_paused)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 	load_all()
 

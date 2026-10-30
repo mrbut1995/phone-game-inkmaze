@@ -86,3 +86,5 @@ icon_alignment = 1
 [node name="Spacer2" type="Control" parent="Content"]
 custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
+
+[connection signal="pressed" from="Content/Plus" to="." method="_on_plus_pressed"]

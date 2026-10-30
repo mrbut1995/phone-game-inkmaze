@@ -135,12 +135,12 @@ func update_visuals() -> void:
 		seperator.set("texture", next_seperator if show_next else _base_tex_seperator)
 	if prefix_lbl != null:
 		if show_next:
-			prefix_lbl.add_theme_color_override("font_color", NEXT_COLOR)
+			prefix_lbl.add_theme_color_override("font_color", NEXT_COLOR)  # keep-code: màu theo dữ liệu (runtime)
 		else:
 			prefix_lbl.remove_theme_color_override("font_color")
 	if level_lbl != null:
 		if show_next:
-			level_lbl.add_theme_color_override("font_color", NEXT_COLOR)
+			level_lbl.add_theme_color_override("font_color", NEXT_COLOR)  # keep-code: màu theo dữ liệu (runtime)
 		else:
 			level_lbl.remove_theme_color_override("font_color")
 

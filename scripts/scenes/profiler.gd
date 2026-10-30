@@ -105,8 +105,8 @@ func _rebind_after_orientation() -> void:
 
 func _connect_manager() -> void:
 	var m := Profile.manager()
-	if m != null and m.has_signal("profile_changed") and not m.is_connected("profile_changed", _on_profile_changed):
-		m.connect("profile_changed", _on_profile_changed)
+	if m != null and m.has_signal("profile_changed") and not m.is_connected("profile_changed", _on_profile_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		m.connect("profile_changed", _on_profile_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_profile_changed() -> void:
@@ -161,7 +161,7 @@ func _refresh_header() -> void:
 	if chip != null:
 		chip.text = tr("STR_PROFILE_LEVEL_FORMAT").format([Profile.level()])
 	if layout.lbl_title != null:
-		layout.lbl_title.text = tr("STR_PROFILE_TITLE")
+		layout.lbl_title.text = tr("STR_PROFILE_TITLE")  # keep-code: chữ theo dữ liệu (runtime)
 
 
 func _refresh_hero() -> void:

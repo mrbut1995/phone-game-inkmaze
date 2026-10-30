@@ -33,7 +33,7 @@ func _ready() -> void:
 ## (`TopBar` là instance của `base_layout` nên không tự dịch như Label khai trong layout con).
 func _apply_texts() -> void:
 	if layout != null and layout.lbl_title != null:
-		layout.lbl_title.text = tr("STR_TUT_COMMON_TITLE")
+		layout.lbl_title.text = tr("STR_TUT_COMMON_TITLE")  # keep-code: chữ theo dữ liệu (runtime)
 
 
 ## Bảng dịch nạp XONG SAU `_ready()` (LoadingManager hoãn ~200 ms) ⇒ phải viết lại nhãn
@@ -41,8 +41,8 @@ func _apply_texts() -> void:
 func _connect_locale_signal() -> void:
 	var loc: Node = get_node_or_null("/root/LocalizationManager")
 	if loc != null and loc.has_signal("locale_changed") \
-			and not loc.is_connected("locale_changed", _on_locale_changed):
-		loc.connect("locale_changed", _on_locale_changed)
+			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loc.connect("locale_changed", _on_locale_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_changed(_locale: String) -> void:

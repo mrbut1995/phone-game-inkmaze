@@ -13,8 +13,8 @@ extends WinningPopup
 signal back_requested
 
 ## Tên luật dài hơn "MÀN 12" -> thu cỡ chữ cho vừa thẻ
-const NAME_FONT_SIZE := 24
-const NAME_FONT_SIZE_LONG := 18
+const NAME_FONT_SIZE := 24  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const NAME_FONT_SIZE_LONG := 18  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const LONG_NAME_CHARS := 16
 
 
@@ -32,7 +32,7 @@ func _on_open() -> void:
 		label_level.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	# Nút chính (BackBtn): "TRỞ VỀ" thay cho "MÀN KẾ TIẾP" — dây bấm khai trong .tscn
 	if label_next != null:
-		label_next.text = tr("STR_BTN_BACK_PREV")
+		label_next.text = tr("STR_BTN_BACK_PREV")  # keep-code: chữ theo dữ liệu (runtime)
 
 
 ## Bấm nút chính "TRỞ VỀ": đóng popup + báo về màn trước đó

@@ -60,9 +60,9 @@ func _ready() -> void:
 	_sync_special_selection()
 	# Dây `Back.pressed → _on_back_pressed` khai trong `scenes/debug.tscn` (cả 2 bố cục)
 	if layout.lbl_title != null:
-		layout.lbl_title.text = "DEBUG CONSOLE"
+		layout.lbl_title.text = "DEBUG CONSOLE"  # keep-code: chữ theo dữ liệu (runtime)
 	if layout.lbl_footer != null:
-		layout.lbl_footer.text = "~ F9 để đóng · chỉ hiển thị trong bản debug ~"
+		layout.lbl_footer.text = "~ F9 để đóng · chỉ hiển thị trong bản debug ~"  # keep-code: chữ theo dữ liệu (runtime)
 	_build()
 
 
@@ -117,7 +117,7 @@ func _build() -> void:
 
 	if scroll != null:
 		scroll.scroll_vertical = keep_scroll
-		scroll.set_deferred("scroll_vertical", keep_scroll)
+		scroll.set_deferred("scroll_vertical", keep_scroll)  # keep-code: giữ vị trí cuộn (runtime)
 
 
 func _build_state() -> void:
@@ -939,7 +939,7 @@ func _add_section(title: String) -> void:
 	var label := Label.new()
 	label.theme_type_variation = &"PopupSectionLabel"
 	label.text = title
-	label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # keep-code: node sinh lúc chạy — đặt anchor khi dựng
 	label.offset_left = 6
 	label.offset_top = 6
 	label.offset_right = -6
@@ -1122,7 +1122,7 @@ func _add_level_grid() -> void:
 		var num := Label.new()
 		num.theme_type_variation = &"PopupTotalLabelSm"
 		num.text = str(level_id) if not is_special else "%d\n◆" % level_id
-		num.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		num.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # keep-code: node sinh lúc chạy — đặt anchor khi dựng
 		num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		num.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		num.modulate = Color(1, 1, 1, 1) if unlocked else Color(1, 1, 1, 0.45)

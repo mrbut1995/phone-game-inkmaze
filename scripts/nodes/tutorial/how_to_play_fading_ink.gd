@@ -272,7 +272,7 @@ func _update_hud(animated: bool = true) -> void:
 		return
 	UIAnim.play_pop_in(lbl_hud_ink, 0.0, 0.88, 0.2)
 	if moves_left <= 1:
-		lbl_hud_ink.add_theme_color_override("font_color", Color(0.78, 0.18, 0.18))
+		lbl_hud_ink.add_theme_color_override("font_color", Color(0.78, 0.18, 0.18))  # keep-code: màu theo dữ liệu (runtime)
 	else:
 		lbl_hud_ink.remove_theme_color_override("font_color")
 

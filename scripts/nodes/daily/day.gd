@@ -28,7 +28,7 @@ enum State {
 
 ## Tổng Sao tối đa của một ngày (khớp `DailyManager.DAY_STARS_MAX`)
 const MAX_STARS := 6
-const TEX_DIR := "res://assets/images-png/daily/"
+const TEX_DIR := "res://assets/images-png/daily/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 ## state -> texture nền ô ("" = không vẽ ô)
 const TEXTURES := {
@@ -42,9 +42,9 @@ const TEXTURES := {
 	State.TODAY: "cell_today.png",
 }
 
-const COLOR_NUM := Color("#163A58")
-const COLOR_NUM_FADED := Color("#B8C4CC")
-const COLOR_NUM_SUN := Color("#D84444")
+const COLOR_NUM := Color("#163A58")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COLOR_NUM_FADED := Color("#B8C4CC")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COLOR_NUM_SUN := Color("#D84444")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 @export var day_number: int = 1
 @export var state: State = State.FUTURE
@@ -157,7 +157,7 @@ func _apply() -> void:
 	if today_ribbon != null:
 		today_ribbon.visible = state == State.TODAY
 		if today_ribbon.visible and today_label != null:
-			today_label.text = tr("STR_TODAY")
+			today_label.text = tr("STR_TODAY")  # keep-code: chữ theo dữ liệu (runtime)
 
 
 ## Chữ trong viên Sao của ô hôm nay (test đọc)
@@ -169,11 +169,11 @@ func status_text() -> String:
 
 func _hide_extras() -> void:
 	if state_icon != null:
-		state_icon.visible = false
+		state_icon.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if pill != null:
-		pill.visible = false
+		pill.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if today_ribbon != null:
-		today_ribbon.visible = false
+		today_ribbon.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 
 func _tex(file: String) -> Texture2D:

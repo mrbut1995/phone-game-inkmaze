@@ -86,7 +86,7 @@ func set_selected(active: bool) -> void:
 		else:
 			scale = Vector2.ONE
 			if button != null:
-				button.modulate = NORMAL_MODULATE
+				button.modulate = NORMAL_MODULATE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 			return
 	# Fallback khi scene thiếu AnimationPlayer
 	var tw := create_tween().set_parallel(true)

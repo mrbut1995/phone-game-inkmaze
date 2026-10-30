@@ -130,7 +130,7 @@ func hint_btn() -> BaseButton:
 func allow_board_input() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if content_root != null:
-		content_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		content_root.mouse_filter = Control.MOUSE_FILTER_IGNORE  # keep-code: để bàn cờ nhận input (runtime)
 
 
 ## Khung Hướng dẫn (HintGuide) — mỗi hướng khai một chỗ khác nhau (bản NGANG: `Content/HintGuide`;

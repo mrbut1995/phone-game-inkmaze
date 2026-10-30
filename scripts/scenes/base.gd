@@ -23,10 +23,10 @@ extends BaseUI
 ## ============================================================================
 
 ## Bề rộng thiết kế của cột nội dung (khớp `display/window/size/viewport_width`)
-const DESIGN_WIDTH := 540
+const DESIGN_WIDTH := 540  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 ## Bề rộng TỐI ĐA của cột nội dung ở màn DỌC: máy tính bảng 3:4 (canvas 1440×1920) nở ra
 ## dùng trọn bề ngang màn hình; màn nào hẹp hơn thì cột đúng bằng bề ngang canvas.
-const MAX_CONTENT_WIDTH := 1440.0
+const MAX_CONTENT_WIDTH := 1440.0  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 
 ## Bỏ anchors full-rect của node gốc — từ đây Root tự quản size/position (nếu giữ anchors

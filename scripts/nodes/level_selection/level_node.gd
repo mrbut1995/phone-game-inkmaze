@@ -142,7 +142,7 @@ func _apply_number() -> void:
 	if show_number:
 		label.text = str(level_id)
 	# Ghi đè màu chữ trực tiếp (không dùng modulate: màu font của theme có thể không phải trắng)
-	label.modulate = Color.WHITE
+	label.modulate = Color.WHITE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	var is_current := state == State.CURRENT
 	label.add_theme_color_override("font_color", color_number_current if is_current else color_number_normal)
 	label.add_theme_color_override("font_outline_color", color_number_outline)

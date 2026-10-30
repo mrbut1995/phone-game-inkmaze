@@ -527,7 +527,7 @@ func _apply_hud_for_mode(mode_name: String) -> void:
 	# tiếp theo là lỗi "Trying to cast a freed object" (tái hiện: xoay dọc→ngang ở mode Minesweeper).
 	if hud_host != null and is_instance_valid(hud_host) and hud_host != slot:
 		hud_host.queue_free()
-	slot.visible = false
+	slot.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	hud_host = new_hud
 	UIAnim.play_slide_in(new_hud, Vector2(0, -15), 0.0, 0.25)
 	_bind_hud_nodes()

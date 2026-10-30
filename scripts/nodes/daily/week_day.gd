@@ -9,13 +9,13 @@ extends Control
 
 signal day_selected(day_number: int)
 
-const TEX_DIR := "res://assets/images-png/daily/"
-const COLOR_NUM := Color("#164663")
-const COLOR_NUM_FADED := Color("#B8C4CC")
-const COLOR_NUM_SUN := Color("#D84444")
-const COLOR_DOW := Color("#5B6E82")
-const COLOR_TODAY := Color("#A15F1B")
-const COLOR_DOW_TODAY := Color("#8A5A12")
+const TEX_DIR := "res://assets/images-png/daily/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COLOR_NUM := Color("#164663")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COLOR_NUM_FADED := Color("#B8C4CC")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COLOR_NUM_SUN := Color("#D84444")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COLOR_DOW := Color("#5B6E82")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COLOR_TODAY := Color("#A15F1B")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const COLOR_DOW_TODAY := Color("#8A5A12")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 @export var hit: BaseButton = null
 @export var today_bg: Control = null
