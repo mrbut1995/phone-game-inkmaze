@@ -256,13 +256,38 @@ sau  : D81D681BD0FBCA898BF139602CB574FE6AF89156E7FFB7DBAE84EF434FDBC0D6   ← gi
 - `docs/STRUCTURE.md` (mới): cây thư mục · quy ước tên · mô hình Portrait/Landscape · bảng autoload & trách nhiệm.
 - Quét leftovers (§9.1) và phân loại — xem §5 bên dưới.
 
+### Phase 2B — đợt 2 (commit `refactor(ui): wire static signals in .tscn …`)
+
+Hai việc, tất cả KHÔNG đổi hành vi:
+
+**a) Nối signal TĨNH trong `.tscn` (bỏ `connect()` trong code):**
+
+| File | Dây cũ trong code | Dây mới trong `.tscn` |
+|---|---|---|
+| `nodes/main/chapter_gate.tscn` | `hit.pressed.connect(_on_hit_pressed)` · `overlay.draw.connect(_draw_overlay)` | `[connection signal="pressed" from="Hit" …]` · `[connection signal="draw" from="Visual/Overlay" …]` |
+| `nodes/popups/gameover.tscn` | `pencils.recover_finished.connect(_refresh_pencils, CONNECT_DEFERRED)` | `[connection … from="Panel/Content/Information/PencilCard/H/PencilBox" method="_refresh_pencils" flags=3]` |
+| `nodes/popups/gameover_level.tscn` | như trên | như trên |
+
+**b) Đánh dấu `# keep-code: <lý do>` cho các dòng THẬT SỰ là runtime** (audit trước đây báo oan là "giá trị tĩnh"):
+pose hoạt cảnh trước tween (`h.scale = Vector2.ONE * 0.3`), chữ/trạng thái theo dữ liệu ván,
+art/biến thể chữ theo trạng thái món hàng, màu theo dữ liệu, `StyleBoxFlat` của hiệu ứng vẽ,
+nối tới autoload, và nối signal của node sinh lúc chạy.
+
+File đã đánh dấu: `winning.gd` · `winning_daily.gd` · `gameover.gd` · `gameover_level.gd` · `item_tile.gd` · `noads_row.gd` ·
+`archivements/card.gd` · `tutorial/base_tutorial.gd` · `scenes/shop.gd` · `main/chapter_gate.gd` · `game/board.gd` ·
+`common/scene_transition.gd` · `main/event_button_column.gd` — **177 dòng** trên toàn bộ `scripts/` (≈ 0.6% số dòng mã nguồn).
+
+> Ghi chú: 1 vòng đã annotate nhầm `tmp_bak_cardedit/` + `what-changes/` (thư mục backup ngoài phạm vi) — đã **revert sạch**,
+xác nhận 0 `keep-code` ngoài `scripts/`.
+
 ---
 
 ## 4. Việc còn lại (CHƯA làm) & lý do
 
 | Nhóm | Nội dung | Trạng thái / lý do |
 |---|---|---|
-| Phase 2B (phần lớn) | 20 file còn lại vẫn còn P/T/C: `board.gd` (23) · `gameover.gd` (17) · `item_tile.gd` (17) · `winning.gd` (16) · `winning_daily.gd` (16) · `chapter_gate.gd` (13) · `noads_row.gd` (13) · `shop.gd` (11) … | Mỗi file cần probe riêng để chứng minh ảnh không đổi (như đã làm với `main.gd`); chưa làm trong lượt này |
+| Phase 2B (đợt 3) | Các file còn 4–9 findings: `popups/retry.gd` (4P/1S/4E) · `shop/item_row.gd` (3P/6C) · `event_card_base.gd` (6T/2C) · `daily/day.gd` (4P/4C) · `main/level_section.gd` (2P/2S/4E) · `test_case/*` (ngoài phạm vi game) | Cùng cách làm: đọc → xác định runtime/static → annotate hoặc chuyển vào `.tscn` |
+| Phase 2B (widget dựng bằng code) | `event_button_column.gd` (cột nút event) vẫn dựng bằng `Script.new()` + const metric | Nên thành `nodes/main/event_button_column.tscn` (đổi cả `main.gd`) — lượt riêng |
 | Phase 3 | Đổi `archivement` → `achievement` (file/class/hàm) + sắp xếp lại `scripts/` theo cây đích | **DỪNG theo §10**: tên autoload `ArchivementManager` là **key trong blob save** (`user://inkmaze_data.json`) ⇒ đổi là mất tiến trình người chơi. Cần user duyệt kèm migration |
 | Phase 5 (`Svc`) | Thay 158 chỗ `"/root/..."` bằng accessor tĩnh có kiểu | Đổi rộng khắp autoload + test `--script`; rủi ro cao, cần lượt riêng |
 | Phase 5 (S7) | Tách god class `board.gd` (2052) · `game_manager.gd` (1256) · `game_controller.gd` (1136) · `debug.gd` (1192) | Đổi API công khai ⇒ phải làm từng file + chạy full suite (13 test đang đỏ sẵn, khó phân biệt hồi quy) |
@@ -300,7 +325,7 @@ sau  : D81D681BD0FBCA898BF139602CB574FE6AF89156E7FFB7DBAE84EF434FDBC0D6   ← gi
 | `check_integrity` E1 (raw) | 552 | 565 | tăng do **thư mục backup WIP của user** (`tmp_bak_cardedit/`, `what-changes/`) — NGOÀI phạm vi game |
 | `check_integrity` E1 (phạm vi game) | 0 | **1** | `nodes/main/event_card.tscn` thiếu `events/halloween_card_grid.png` (có sẵn từ commit `1c2209c9`, art chưa sinh) |
 | `check_integrity` W1 / W2 (phạm vi game) | 13 / 5 | **0 / 0** | |
-| `audit_hardcode` P / T / C / S / E | 387 / 29 / 122 / 26 / 101 | **364 / 21 / 110 / 26 / 98** | `main.gd`: 23/8/12/0/4 → 0/0/0/0/1 |
+| `audit_hardcode` P / T / C / S / E | 387 / 29 / 122 / 26 / 101 | **215 / 13 / 74 / 21 / 70** | `main.gd`: 23/8/12/0/4 → 0/0/0/0/1; `board.gd` 23→0; `winning*`/`gameover*` 16–17 → 0 |
 | `audit_hidden` DEAD / SPLIT-BASE / REVIEW / LIVE (in-scope) | 6 / 36 / 59 / 98 | 2 / 36 / 59 / 98 | 4 node DEAD thật đã xoá (Phase 1a) |
 | Full suite | 7 PASS · 13 FAIL | **7 PASS · 13 FAIL** (số check fail y hệt) | Không tăng hồi quy ở bất kỳ test nào |
 
