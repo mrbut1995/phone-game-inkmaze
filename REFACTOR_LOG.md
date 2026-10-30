@@ -456,6 +456,31 @@ full suite **7 PASS / 13 FAIL** y hệt baseline.
 > `gm.get("tool_uses")` (property đã mất). Cách sửa: giữ **property get/set uỷ thác** cho mọi dữ liệu cũ — áp dụng luôn
 > cho `chapter_chests` để không lặp lại lỗi.
 
+### Phase 5 (§8.3) — đợt 5: LUẬT CHẾ ĐỘ THỬ THÁCH → `ChallengeRules`
+
+`scripts/core/challenge_rules.gd` (74 dòng): `step_start` / `backtracks` + `tick()` (2 luật có đồng hồ) ·
+`after_step()` (3 luật theo nước đi) · `hud_state()`; mỗi hàm **trả về id luật bị vi phạm** (`""` = ổn)
+thay vì tự mở popup thua.
+
+`GameController` giữ: `_challenge()` (tra mode đang bật) · `_challenge_fail()` (`_game_over.call_deferred`) ·
+`_is_challenge_hazard()` (đọc `grid_controller`) · các guard `_run_active` / `game_state`. Hai biến
+`_ch_step_start` + `_ch_backtracks` → một `_challenge_rules`.
+
+`game_controller.gd` **1136 → 1114 dòng**.
+
+### Phase 5 (§8.3) — đợt 6: BÁO KẾT QUẢ VÁN → `RunReporter`
+
+`scripts/core/run_reporter.gd` (57 dòng): gộp `Achievement.notify_run_result(...)` + `Profile.record_run(...)`
+(một chỗ duy nhất biết "ván này báo gì cho hệ thống tiến trình").
+
+`GameController._report_to_achievements()` giữ nguyên tên + chữ ký (vì `test_debug_modes.gd:197` gọi qua
+`controller.call("_report_to_achievements", …)`), chỉ còn guard + thu thập `stars`/`maze` rồi gọi `RunReporter.report(...)`.
+
+`game_controller.gd` **1114 → 1068 dòng** (1136 → **1068**, −68).
+
+**Kiểm chứng đợt 5 + 6:** full suite **7 PASS / 13 FAIL** y hệt baseline; `test_challenge_mode` vẫn **3/78**
+(không thêm luật nào bị sai).
+
 ---
 
 ## 4. Việc còn lại (CHƯA làm) & lý do
@@ -594,7 +619,7 @@ Số P/T/C/S/E **theo từng commit**:
 | Việc | Lý do |
 |---|---|
 | Phase 3 — đổi `archivement` → `achievement` + sắp xếp lại `scripts/` | **XONG** sau khi người dùng đồng ý mất tiến trình (xem §2). Ảnh trong `assets/images*` cũng đã đổi tên thư mục + import lại |
-| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1083 sau 4 đợt) · `game_controller.gd` (1136) · `debug.gd` (1192) | **ĐÃ TÁCH `game_manager.gd`**: lượt chơi · kỷ lục tầng · kho dụng cụ · rương mốc chương → 4 "store" trong `scripts/core/` (1256 → 1083 dòng). Còn lại: `board.gd` (input/render/effects); `game_controller.gd` (challenge/tutorial/tool); `debug.gd` (theo tab); phần còn lại của `game_manager.gd` (daily/mode prepare, tiến trình chương) |
+| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1083) · `game_controller.gd` (1068) · `debug.gd` (1192) | **ĐÃ TÁCH 6 đợt**: `game_manager.gd` 4 store (lượt chơi · kỷ lục tầng · kho dụng cụ · rương chương) + `game_controller.gd` 2 helper (luật thử thách · báo kết quả ván). Còn lại: `board.gd` (input/render/effects); `debug.gd` (theo tab); `game_controller` phần tutorial/tool; `game_manager` phần daily/mode + tiến trình chương |
 | Phase 4 — gộp scene Portrait/Landscape trùng nhau | Tùy chọn (§7), cần review thị giác từng màn; rủi ro đổi hình ảnh mà không xác nhận được ⇒ theo §10 phải hỏi |
 | Xoá hàm "ngờ thừa" (`Nav.goto_levels`, `GameManager.go_to_levels`, helper levels của `SceneManager`) | `scripts/test_case/test_main_merge.gd:88,91` khẳng định chúng **phải tồn tại** |
 
