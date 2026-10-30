@@ -556,6 +556,49 @@ nên cách ánh xạ ô polyomino vẫn nằm ở `BoardView`.
 | `scripts/core/controllers/game_controller.gd` | 1004 | 7 helper | dùng công cụ (undo/hint/submit) · HUD context (`_update_hud`) · vòng đời ván (`_start_floor`/`_complete_floor`) |
 | `scripts/ui/screens/shop.gd` · `level_map.gd` · `achievement.gd` · `PlayerProfileManager.gd` | 911 · 860 · 745 · 741 | — | UI / logic / persistence (§8.3 gợi ý) |
 
+### Phase 5 (§8.3) — đợt 12: TRA CỨU CHẾ ĐỘ/ĐỘ KHÓ → `LevelCatalog`
+
+`scripts/core/level_catalog.gd` (~55 dòng): `SPECIAL_MODES` (8 chế độ Daily, giữ đúng thứ tự xoay vòng) ·
+`BASE_MODES` · `mode_of(data)` (màn không khai / khai lạ / "dungeon" ⇒ `play`) · `difficulty_of(data)` ·
+`is_known_mode()` · `special_mode_ids()`.
+
+`GameManager` giữ `const DAILY_MODES := LevelCatalog.SPECIAL_MODES` + 4 hàm uỷ thác
+(`mode_id_of_level` · `difficulty_of_level` · `is_known_mode` · `special_mode_ids`) ⇒ API không đổi.
+
+`game_manager.gd` **1026 → 1000 dòng**.
+
+### Phase 5 (§8.3) — đợt 13: CHỐT KẾT QUẢ VÁN DAILY → `DailyRunReporter`
+
+`scripts/core/daily_run_reporter.gd` (~55 dòng): tính Sao ván Daily (`challenge`/`special` = `CHALLENGE_STARS_MAX`;
+`classic` = số nhiệm vụ, kẹp `PLAY_STARS_MAX`), `record_daily_win`, đặt `daily_celebrate`, và trả Dictionary
+cho popup thắng. `GameController._complete_daily_missions()` chỉ còn guard + thu thập `mission_stars`/`mode_*`.
+
+`game_controller.gd` **1004 → 971 dòng**.
+
+**Kiểm chứng 12 + 13:** full suite **7 PASS / 13 FAIL** y hệt baseline; `test_daily` **4/100** (không đổi) ·
+`test_debug_modes` **64/64** PASS.
+
+### Vì sao DỪNG ở đây cho `debug.gd` và `board.gd` (phân tích, không phải bỏ sót)
+
+Hai file này **không thể tách tiếp bằng cách di chuyển hàm** như 13 đợt vừa rồi — cần đổi thiết kế, tức là
+vượt khỏi phạm vi “refactor không đổi hành vi” của một lượt:
+
+- **`scripts/ui/screens/debug.gd` (1192)** — mọi `_build_*()` gọi trực tiếp helper dựng UI của chính màn
+  (`_add_section` · `_add_value` · `_add_action` · `_add_toggle`) và các action gọi lại `_build()`.
+  Tách theo tab ⇒ phải truyền màn hình vào helper (gọi chuỗi `call("_add_action")`) hoặc đổi sang **dựng UI
+  theo dữ liệu** (mô tả tab bằng Array[Dictionary], một builder chung render). Cách sau mới đúng tinh thần,
+  nhưng là viết lại ~1200 dòng UI ⇒ cần lượt riêng + review thị giác.
+- **`scripts/ui/game/board.gd` (2005)** — input (kéo/chạm/neo), dựng tường + `reveal_*`, hiệu ứng mực
+  (tip/tail/sample) và vẽ ô đều đọc/ghi **cùng một bộ ~35 field** (`_step`, `_cell_rects`, `_col_center_x`,
+  `_wall_segments`, `_cursor`, `_tip`, `_pen_down`…). Tách rời cần **gom state thành object**
+  (`BoardMetrics` · `BoardWalls` · `BoardPen`) rồi truyền tham chiếu — đúng hướng §8.3 nhưng phải có
+  **probe đo hình ảnh trước/sau** (như đã làm với màn Main) để chứng minh không đổi pixel.
+  Đã tách được phần an toàn nhất (`BoardCellsView` — đợt 11).
+
+⇒ Đề xuất lượt sau: (a) `board.gd` tách `BoardMetrics` (layout/ô/cạnh) + `BoardWalls`, kèm probe A/B;
+(b) `debug.gd` chuyển sang builder dữ liệu; (c) `shop.gd` · `level_map.gd` · `achievement.gd` ·
+`PlayerProfileManager.gd` tách UI/logic/persistence theo §8.3.
+
 ---
 
 ## 8. Phase 6 (§9.1) — quét từ khoá lần cuối
@@ -732,7 +775,7 @@ Số P/T/C/S/E **theo từng commit**:
 | Việc | Lý do |
 |---|---|
 | Phase 3 — đổi `archivement` → `achievement` + sắp xếp lại `scripts/` | **XONG** sau khi người dùng đồng ý mất tiến trình (xem §2). Ảnh trong `assets/images*` cũng đã đổi tên thư mục + import lại |
-| Phase 5 (§8.3) — tách god class `board.gd` (2005) · `game_manager.gd` (1026) · `game_controller.gd` (1004) · `debug.gd` (1192) | **ĐÃ TÁCH 11 đợt**: `game_manager` 6 store · `game_controller` 4 helper · `board` 1 view. Còn lại xem bảng “Còn lại của Phase 5” ở §2 |
+| Phase 5 (§8.3) — tách god class `board.gd` (2005) · `game_manager.gd` (1000) · `game_controller.gd` (971) · `debug.gd` (1192) | **ĐÃ TÁCH 13 đợt**: `game_manager` 7 phần · `game_controller` 5 phần · `board` 1 view. `debug.gd`/`board.gd` còn lại cần ĐỔI THIẾT KẾ (không phải di chuyển hàm) — xem mục “Vì sao DỪNG” ở §2 |
 | Phase 4 — gộp scene Portrait/Landscape trùng nhau | Tùy chọn (§7), cần review thị giác từng màn; rủi ro đổi hình ảnh mà không xác nhận được ⇒ theo §10 phải hỏi |
 | Xoá hàm "ngờ thừa" (`Nav.goto_levels`, `GameManager.go_to_levels`, helper levels của `SceneManager`) | `scripts/test_case/test_main_merge.gd:88,91` khẳng định chúng **phải tồn tại** |
 
