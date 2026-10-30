@@ -185,7 +185,8 @@ func _section_theme_art() -> void:
 			_check(theme != null, "%s load thanh EventTheme" % filename)
 			if theme != null:
 				loaded_ids.append(theme.id)
-				_check(theme.back_art != null, "%s co background art" % theme.id)
+				# Bộ NÚT event v2 (§13.31): mọi theme (trừ `daily` — Daily ở dock) phải có art NÚT.
+				# Art THẺ đã bỏ khỏi EventTheme (chi con art NUT).
 				_check(theme.title_color.a == 1.0 and theme.title_outline.a == 1.0,
 					"%s dung title color/outline khong trong suot" % theme.id)
 				_check(theme.title_color != theme.title_outline,
@@ -198,15 +199,15 @@ func _section_theme_art() -> void:
 				var title_contrast := _contrast_ratio(theme.title_color, theme.title_outline)
 				_check(title_contrast >= 4.5,
 					"%s chu tieu de tuong phan voi vien (%.2f)" % [theme.id, title_contrast])
-				if theme.id not in [&"daily", &"dungeon"]:
-					_check(theme.front_art != null, "%s co foreground art" % theme.id)
-					if theme.back_art != null and theme.front_art != null:
-						var bg_size := theme.back_art.get_size()
-						var fg_size := theme.front_art.get_size()
-						var bg_aspect := bg_size.x / bg_size.y if bg_size.y > 0.0 else 0.0
-						var fg_aspect := fg_size.x / fg_size.y if fg_size.y > 0.0 else 0.0
-						_check(is_equal_approx(bg_aspect, fg_aspect),
-							"%s background/foreground giu cung ti le khung" % theme.id)
+				if theme.id not in [&"daily"]:
+					_check(theme.button_normal != null, "%s co art NUT (button_normal)" % theme.id)
+					_check(theme.button_pressed != null, "%s co button_pressed" % theme.id)
+					_check(theme.button_disabled != null, "%s co button_disabled" % theme.id)
+					if theme.button_normal != null and theme.button_disabled != null:
+						var n_size := theme.button_normal.get_size()
+						var d_size := theme.button_disabled.get_size()
+						_check(n_size == d_size,
+							"%s 3 trang thai nut cung co (%s vs %s)" % [theme.id, n_size, d_size])
 		filename = dir.get_next()
 	dir.list_dir_end()
 

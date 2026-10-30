@@ -1,19 +1,15 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3 uid="uid://b6o6j21k7ifwm"]
 
-[ext_resource uid="uid://b55pyixlchrvp" type="Texture2D" path="res://assets/images-png/events/haunted_house_card_background.png" id="1_lvks4"]
 [ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="2_182mh"]
-[ext_resource uid="uid://cfelief58leej" type="Texture2D" path="res://assets/images-png/events/haunted_house_card_frontground.png" id="2_y1edl"]
 [ext_resource uid="uid://3rrplqc3x56w" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_mansion_normal.png" id="btn_normal"]
 [ext_resource uid="uid://djkxdwq3llr5b" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_mansion_pressed.png" id="btn_pressed"]
+[ext_resource uid="uid://chmt3ahd6ihuy" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_mansion_disabled.png" id="btn_disabled"]
 
 [resource]
 script = ExtResource("2_182mh")
 id = &"mansion"
 bg_stops = PackedColorArray(0.05882353, 0.16470589, 0.18039216, 1, 0.047058824, 0.10980392, 0.1254902, 1, 0.02745098, 0.050980393, 0.05882353, 1)
 grid_overlay = &"white"
-back_art = ExtResource("1_lvks4")
-front_art = ExtResource("2_y1edl")
-art_offset_y = 0.0
 accent = Color(0.35686275, 0.8509804, 0.6039216, 1)
 accent2 = Color(0.7490196, 1, 0.8627451, 1)
 title_color = Color(0.38, 1, 0.72, 1)
@@ -29,3 +25,4 @@ chip_fill = Color(0, 0, 0, 1)
 chip_text = Color(0.7490196, 1, 0.8627451, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
+button_disabled = ExtResource("btn_disabled")

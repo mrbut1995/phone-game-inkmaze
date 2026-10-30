@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bjmxaiw28fnlx" path="res://scripts/nodes/event_card.gd" id="1_card"]
 [ext_resource type="Texture2D" uid="uid://cwum1n04j1scb" path="res://assets/images-png/icons/icon_tool_time.png" id="2_clock"]
-[ext_resource type="Texture2D" uid="uid://c1e8elv060y5" path="res://assets/images-png/events/halloween_event_card_background.png" id="2_d08ep"]
-[ext_resource type="Texture2D" uid="uid://6s27psw45flr" path="res://assets/images-png/events/halloween_event_card_frontground.png" id="3_jnhu0"]
 [ext_resource type="Texture2D" uid="uid://ca6le4lmtwuww" path="res://assets/images-png/events/halloween_card_grid.png" id="5_grid"]
 
 [sub_resource type="StyleBoxFlat" id="sb_card_lip"]
@@ -165,7 +163,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_d08ep")
 expand_mode = 1
 
 [node name="FrontArt" type="NinePatchRect" parent="Content/Background/ContentMask" unique_id=1012687160]
@@ -175,7 +172,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_jnhu0")
 region_rect = Rect2(0, 0, 340, 504)
 
 [node name="Frame" type="Panel" parent="Content/Background" unique_id=1122985192]

@@ -1,18 +1,14 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3 uid="uid://ytia1j27gt6f"]
 
-[ext_resource type="Texture2D" uid="uid://dpv423dwk3u5l" path="res://assets/images-png/events/explore_pyramid_card_background.png" id="1_cw6e4"]
-[ext_resource type="Texture2D" uid="uid://c5d058s3oncsw" path="res://assets/images-png/events/explore_pyramid_card_frontground.png" id="2_r8rk8"]
 [ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="2_yt6uv"]
 [ext_resource uid="uid://df87x0s5dkipc" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_normal.png" id="btn_normal"]
 [ext_resource uid="uid://bwpltr2h1aumu" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_pressed.png" id="btn_pressed"]
+[ext_resource uid="uid://yi001m5fv6bj" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_tomb_disabled.png" id="btn_disabled"]
 
 [resource]
 script = ExtResource("2_yt6uv")
 id = &"tomb"
 bg_stops = PackedColorArray(1, 0.8862745, 0.627451, 1, 0.90588236, 0.6627451, 0.3529412, 1, 0.22745098, 0.12941177, 0.05490196, 1)
-back_art = ExtResource("1_cw6e4")
-front_art = ExtResource("2_r8rk8")
-art_offset_y = 0.0
 accent = Color(0.9490196, 0.72156864, 0.29411766, 1)
 accent2 = Color(1, 0.9137255, 0.6901961, 1)
 title_color = Color(0.26, 0.12, 0.02, 1)
@@ -28,3 +24,4 @@ chip_fill = Color(0.11764706, 0.05882353, 0.019607844, 1)
 chip_text = Color(1, 0.9137255, 0.6901961, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
+button_disabled = ExtResource("btn_disabled")

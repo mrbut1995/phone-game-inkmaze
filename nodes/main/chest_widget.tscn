@@ -1,12 +1,12 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/main/chest_widget.gd" id="1_chest"]
-[ext_resource uid="uid://cienf0wpr5sk7" type="Texture2D" path="res://assets/images-png/level_selector/reward_disc_off.png" id="2_ring"]
-[ext_resource uid="uid://b0bk7i6fnsm3k" type="Texture2D" path="res://assets/images-png/level_selector/reward_disc_on.png" id="3_glow"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/reward_disc_off.png" id="2_ring"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/reward_disc_on.png" id="3_glow"]
 [ext_resource type="Texture2D" uid="uid://bhdewqbcltopn" path="res://assets/images-png/daily/chest_closed.png" id="4_chest"]
 [ext_resource type="Texture2D" uid="uid://b3fvm8sypownm" path="res://assets/images-png/daily/check_badge.png" id="5_check"]
-[ext_resource uid="uid://pom5qjacol8r" type="Texture2D" path="res://assets/images-png/level_selector/badge_ready.png" id="6_ready"]
-[ext_resource uid="uid://bray4sykmnjpa" type="Texture2D" path="res://assets/images-png/icons/icon_stat_stars.png" id="7_star"]
+[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/badge_ready.png" id="6_ready"]
+[ext_resource type="Texture2D" path="res://assets/images-png/icons/icon_stat_stars.png" id="7_star"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill"]
 bg_color = Color(1, 0.9922, 0.9686, 0.96)
@@ -135,9 +135,9 @@ _data = {
 }
 
 [node name="ChestWidget" type="Button" node_paths=PackedStringArray("ring", "chest", "badge_done", "badge_ready", "glow", "lbl_stars", "anim")]
-custom_minimum_size = Vector2(84, 92)
-offset_right = 84.0
-offset_bottom = 92.0
+custom_minimum_size = Vector2(104, 118)
+offset_right = 104.0
+offset_bottom = 118.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
 flat = true
@@ -154,11 +154,11 @@ anim = NodePath("Anim")
 visible = false
 modulate = Color(1, 0.9, 0.4, 0)
 layout_mode = 0
-offset_left = 14.0
-offset_top = 2.0
-offset_right = 70.0
-offset_bottom = 58.0
-pivot_offset = Vector2(28, 28)
+offset_left = 4.0
+offset_top = -4.0
+offset_right = 100.0
+offset_bottom = 92.0
+pivot_offset = Vector2(48, 48)
 mouse_filter = 2
 texture = ExtResource("3_glow")
 expand_mode = 1
@@ -166,15 +166,12 @@ stretch_mode = 5
 
 [node name="Ring" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 2.0
-offset_right = 70.0
-offset_bottom = 58.0
-pivot_offset = Vector2(28, 4)
+offset_left = 8.0
+offset_top = 0.0
+offset_right = 96.0
+offset_bottom = 88.0
+pivot_offset = Vector2(44, 4)
 mouse_filter = 2
-texture = ExtResource("2_ring")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="Chest" type="TextureRect" parent="Ring"]
 layout_mode = 1
@@ -183,10 +180,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -17.0
-offset_top = -18.0
-offset_right = 17.0
-offset_bottom = 16.0
+offset_left = -42.0
+offset_top = -42.0
+offset_right = 42.0
+offset_bottom = 42.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -200,10 +197,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -16.0
-offset_top = -6.0
-offset_right = 4.0
-offset_bottom = 14.0
+offset_left = -24.0
+offset_top = -4.0
+offset_right = 8.0
+offset_bottom = 28.0
 grow_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("5_check")
@@ -213,11 +210,11 @@ stretch_mode = 5
 [node name="Ready" type="TextureRect" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 56.0
-offset_top = -4.0
-offset_right = 80.0
-offset_bottom = 20.0
-pivot_offset = Vector2(12, 12)
+offset_left = 68.0
+offset_top = -6.0
+offset_right = 100.0
+offset_bottom = 26.0
+pivot_offset = Vector2(16, 16)
 mouse_filter = 2
 texture = ExtResource("6_ready")
 expand_mode = 1
@@ -225,10 +222,10 @@ stretch_mode = 5
 
 [node name="Pill" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 60.0
-offset_right = 80.0
-offset_bottom = 88.0
+offset_left = 6.0
+offset_top = 88.0
+offset_right = 98.0
+offset_bottom = 116.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pill")
 
@@ -239,7 +236,7 @@ theme_override_constants/separation = 3
 alignment = 1
 
 [node name="Star" type="TextureRect" parent="Pill/Row"]
-custom_minimum_size = Vector2(14, 14)
+custom_minimum_size = Vector2(18, 18)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
@@ -250,7 +247,7 @@ stretch_mode = 5
 [node name="Stars" type="Label" parent="Pill/Row"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0863, 0.2745, 0.3882, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 17
 text = "0/0"
 vertical_alignment = 1
 

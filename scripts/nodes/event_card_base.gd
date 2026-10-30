@@ -126,23 +126,6 @@ func _on_timer_tick() -> void:
 
 # --- Helper tô màu theo theme (dùng cho cả 2 lớp con) ------------------------
 
-## Nền + art trước/sau của thẻ
-func _paint_background(t: EventTheme, bg_gradient: ColorRect, back_art: TextureRect,
-		front_art: NinePatchRect) -> void:
-	if t == null:
-		return
-	if bg_gradient != null and t.bg_stops.size() > 0:
-		bg_gradient.color = t.bg_stops[0]
-	if back_art != null:
-		back_art.texture = t.back_art
-		back_art.visible = t.back_art != null
-		back_art.position.y = t.art_offset_y
-	if front_art != null:
-		front_art.texture = t.front_art
-		front_art.visible = t.front_art != null
-		front_art.position.y = t.art_offset_y
-
-
 ## Chip nhỏ (nền + chấm màu + chữ)
 func _paint_chip(chip: PanelContainer, dot: ColorRect, label: Label, t: EventTheme) -> void:
 	if t == null:

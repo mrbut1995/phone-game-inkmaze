@@ -1,18 +1,14 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
-[ext_resource uid="uid://shbkk4ltqk4x" type="Texture2D" path="res://assets/images-png/events/spring_card_background.png" id="2_background"]
-[ext_resource uid="uid://dm4y377eyar7p" type="Texture2D" path="res://assets/images-png/events/spring_card_frontground.png" id="3_foreground"]
 [ext_resource uid="uid://dvlkx5arodqi5" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_spring_normal.png" id="btn_normal"]
 [ext_resource uid="uid://bvgumxs37km8" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_spring_pressed.png" id="btn_pressed"]
+[ext_resource uid="uid://dj8rpxwofgkmv" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_spring_disabled.png" id="btn_disabled"]
 
 [resource]
 script = ExtResource("1_script")
 id = &"spring"
 bg_stops = PackedColorArray(0.90588236, 0.972549, 1, 1, 0.8117647, 0.9490196, 0.8901961, 1, 0.6039216, 0.84705883, 0.6901961, 1)
-back_art = ExtResource("2_background")
-front_art = ExtResource("3_foreground")
-art_offset_y = 0.0
 accent = Color(0.8980392, 0.35686275, 0.52156866, 1)
 accent2 = Color(1, 0.8352941, 0.30980393, 1)
 title_color = Color(0.76, 0.09, 0.36, 1)
@@ -28,3 +24,4 @@ chip_fill = Color(1, 1, 1, 0.88)
 chip_text = Color(0.16470589, 0.31764707, 0.21960784, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
+button_disabled = ExtResource("btn_disabled")

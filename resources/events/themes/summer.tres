@@ -1,18 +1,14 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
-[ext_resource uid="uid://00d4ybr6qxh" type="Texture2D" path="res://assets/images-png/events/summer_card_background.png" id="2_background"]
-[ext_resource uid="uid://cmg5uod387d2b" type="Texture2D" path="res://assets/images-png/events/summer_card_frontground.png" id="3_foreground"]
 [ext_resource uid="uid://jtqoq2nf6xnp" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_summer_normal.png" id="btn_normal"]
 [ext_resource uid="uid://ddsshuum4mbiq" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_summer_pressed.png" id="btn_pressed"]
+[ext_resource uid="uid://djqsotxd1quej" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_summer_disabled.png" id="btn_disabled"]
 
 [resource]
 script = ExtResource("1_script")
 id = &"summer"
 bg_stops = PackedColorArray(0.6156863, 0.9411765, 1, 1, 0.1254902, 0.8117647, 0.9098039, 1, 0.023529412, 0.47058824, 0.6156863, 1)
-back_art = ExtResource("2_background")
-front_art = ExtResource("3_foreground")
-art_offset_y = 0.0
 accent = Color(1, 0.6901961, 0.1254902, 1)
 accent2 = Color(1, 0.91764706, 0.32156864, 1)
 title_color = Color(0, 0.3, 0.38, 1)
@@ -28,3 +24,4 @@ chip_fill = Color(0.9254902, 0.9843137, 1, 0.9)
 chip_text = Color(0.03137255, 0.20784314, 0.2784314, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
+button_disabled = ExtResource("btn_disabled")

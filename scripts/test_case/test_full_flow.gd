@@ -18,7 +18,7 @@ func _init() -> void:
 	# `visibility_changed`) ? ch? ?? l?u r?i m?i ki?m tr?ng th?i n?t m?n.
 	for i in 20:
 		await process_frame
-	assert(main_scene.layout.event_carousel != null, "MainScene phai co EventCarousel")
+	assert(main_scene.layout.level_section != null, "MainScene phai co LevelSection (ban do man choi)")
 	# Ban GOP: ban do man choi nam NGAY trong Main (man Levels rieng da go)
 	var section: LevelSection = main_scene.layout.level_section
 	assert(section != null, "MainScene phai co LevelSection (ban do man choi)")

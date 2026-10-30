@@ -1,19 +1,15 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
-[ext_resource uid="uid://bow2ajt356blk" type="Texture2D" path="res://assets/images-png/events/autumn_card_background.png" id="2_background"]
-[ext_resource uid="uid://hximrf5sve5j" type="Texture2D" path="res://assets/images-png/events/autumn_card_frontground.png" id="3_foreground"]
 [ext_resource uid="uid://sknjw7swj2vb" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_autumn_normal.png" id="btn_normal"]
 [ext_resource uid="uid://qsjgdivkvypq" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_autumn_pressed.png" id="btn_pressed"]
+[ext_resource uid="uid://6160twssbkh4" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_autumn_disabled.png" id="btn_disabled"]
 
 [resource]
 script = ExtResource("1_script")
 id = &"autumn"
 bg_stops = PackedColorArray(0.22745098, 0.101960786, 0.043137256, 1, 0.1764706, 0.07450981, 0.02745098, 1, 0.105882354, 0.039215688, 0.011764706, 1)
 grid_overlay = &"white"
-back_art = ExtResource("2_background")
-front_art = ExtResource("3_foreground")
-art_offset_y = 0.0
 accent = Color(0.8509804, 0.47843137, 0.16078432, 1)
 accent2 = Color(1, 0.76862746, 0.41960785, 1)
 title_color = Color(1, 0.63, 0.25, 1)
@@ -29,3 +25,4 @@ chip_fill = Color(0.105882354, 0.039215688, 0.011764706, 0.9)
 chip_text = Color(1, 0.84313726, 0.57254905, 1)
 button_normal = ExtResource("btn_normal")
 button_pressed = ExtResource("btn_pressed")
+button_disabled = ExtResource("btn_disabled")

@@ -7,10 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://c721ocng7punk" path="res://assets/images-png/profiler/profiler_disc_focus.png" id="7_2f652"]
 [ext_resource type="Texture2D" uid="uid://cd635wxi2hio4" path="res://assets/images-png/frames/frame_default.png" id="8_oc215"]
 [ext_resource type="Texture2D" uid="uid://de1fy87ucyxya" path="res://assets/images-png/avatars/avatar-baby-child-kid.png" id="9_6u7fr"]
-[ext_resource type="Script" uid="uid://hib4lg7y201m" path="res://scripts/tool/nine_patch/NinePatchProgressBar.gd" id="11_5ct6p"]
-[ext_resource type="Texture2D" uid="uid://hv0sne6ucuxk" path="res://assets/images-png/common/bar_pill.png" id="12_f5v0l"]
-[ext_resource type="Texture2D" uid="uid://cmlxyub4bj30v" path="res://assets/images-png/common/chip_pill.png" id="12_nf6dd"]
-[ext_resource type="Texture2D" uid="uid://bep55y6ym3jv7" path="res://assets/images-png/common/bar_pill_fill.png" id="13_77svf"]
 
 [sub_resource type="StyleBoxFlat" id="sb_lvl"]
 bg_color = Color(0.9882353, 0.61960787, 0.043137256, 1)
@@ -18,20 +14,6 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5ct6p"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-texture = ExtResource("12_f5v0l")
-texture_margin_left = 7.0
-texture_margin_right = 8.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f5v0l"]
-texture = ExtResource("13_77svf")
-texture_margin_left = 7.0
-texture_margin_right = 8.0
 
 [node name="ProfileCard" type="Control" unique_id=718635705]
 custom_minimum_size = Vector2(240, 65)
@@ -70,8 +52,8 @@ color = Color(0.847059, 0.266667, 0.266667, 0.7)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.059000004
-anchor_top = 0.02604082
-anchor_right = 0.94100004
+anchor_top = 0.026040819
+anchor_right = 0.4162132
 anchor_bottom = 0.87600005
 offset_left = 0.18278503
 offset_top = 12.059999
@@ -154,116 +136,5 @@ theme_type_variation = &"ProfileLevelChip"
 text = "LV. 1"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Spacer" type="Control" parent="Bg/Content" unique_id=1360319437]
-custom_minimum_size = Vector2(15, 0)
-layout_mode = 2
-
-[node name="ProfileInformation" type="VBoxContainer" parent="Bg/Content" unique_id=1676156017]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.6
-
-[node name="NameRow" type="HBoxContainer" parent="Bg/Content/ProfileInformation" unique_id=864401903]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.3
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Name" type="Label" parent="Bg/Content/ProfileInformation/NameRow" unique_id=1431237362]
-layout_mode = 2
-size_flags_vertical = 3
-theme_type_variation = &"ProfilerName"
-text = "MazeWalker #1024"
-vertical_alignment = 2
-
-[node name="TierChip" type="HBoxContainer" parent="Bg/Content/ProfileInformation" unique_id=656034498]
-visible = false
-custom_maximum_size = Vector2(-1, 20)
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.2
-mouse_filter = 2
-
-[node name="Bg" type="NinePatchRect" parent="Bg/Content/ProfileInformation/TierChip" unique_id=88583604]
-self_modulate = Color(0.996078, 0.952941, 0.780392, 1)
-custom_minimum_size = Vector2(90, 14)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.2
-texture = ExtResource("12_nf6dd")
-patch_margin_left = 9
-patch_margin_top = 6
-patch_margin_right = 11
-patch_margin_bottom = 6
-
-[node name="Text" type="Label" parent="Bg/Content/ProfileInformation/TierChip/Bg" unique_id=103131977]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.57143
-offset_top = 1.5
-offset_right = -5.57143
-offset_bottom = -1.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"ProfilerChipGold"
-text = "ROOKIE"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Spacer" type="Control" parent="Bg/Content/ProfileInformation/TierChip" unique_id=2027584671]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.8
-
-[node name="Exp" type="HBoxContainer" parent="Bg/Content/ProfileInformation" unique_id=857876755]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.2
-
-[node name="ExpLabel" type="Label" parent="Bg/Content/ProfileInformation/Exp" unique_id=844115907]
-layout_mode = 2
-size_flags_horizontal = 2
-theme_type_variation = &"ProfilerLabel"
-text = "STR_PROFILE_EXP_LABEL"
-resize_font_to_fit = true
-
-[node name="ExpValue" type="Label" parent="Bg/Content/ProfileInformation/Exp" unique_id=2066931222]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_type_variation = &"ProfilerLabel"
-text = "0 / 200"
-horizontal_alignment = 2
-
-[node name="Bar" type="ProgressBar" parent="Bg/Content/ProfileInformation" unique_id=2009351503]
-visible = false
-self_modulate = Color(0.886275, 0.909804, 0.941176, 1)
-custom_minimum_size = Vector2(0, 7)
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.05
-mouse_filter = 2
-theme_override_styles/background = SubResource("StyleBoxTexture_5ct6p")
-theme_override_styles/fill = SubResource("StyleBoxTexture_f5v0l")
-show_percentage = false
-script = ExtResource("11_5ct6p")
-texture_background = ExtResource("12_f5v0l")
-bg_margin_left = 7.0
-bg_margin_right = 8.0
-texture_fill = ExtResource("13_77svf")
-fill_margin_left = 7.0
-fill_margin_right = 8.0
-metadata/_custom_type_script = "uid://hib4lg7y201m"
-
-[node name="Uid" type="Label" parent="Bg/Content/ProfileInformation" unique_id=29648154]
-visible = false
-layout_mode = 2
-theme_type_variation = &"ProfilerLabel"
-text = "UID: #IM-0000"
 
 [connection signal="pressed" from="Bg/Content/Profile" to="." method="_on_profile_pressed"]

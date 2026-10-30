@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/nodes/main/chapter_gate.gd" id="1_gate"]
-[ext_resource type="Texture2D" path="res://assets/images-png/level_selector/gate_sheet.png" id="2_sheet"]
+[ext_resource uid="uid://bsoade6t05dup" type="Texture2D" path="res://assets/images-png/level_selector/gate_sheet.png" id="2_sheet"]
 
 [sub_resource type="StyleBoxEmpty" id="sb_empty"]
 
