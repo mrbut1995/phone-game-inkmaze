@@ -313,6 +313,32 @@ audit_hardcode  P/T/C/S/E:  387/29/122/26/101  →  215/13/74/21/70  →  ❰ 0 
 1 file `# keep-code` phát hiện thêm khi annotate: dòng gán `header_anchor.custom_minimum_size = Vector2(` dài dòng → đã tách theo `LF`
 và ghi chú tại chỗ.
 
+### Phase 2B — đợt 4: cột nút Event từ "dựng bằng code" thành scene
+
+`event_button_column.gd` trước đây tự `Timer.new()`, `VBoxContainer.new()`, `TextureButton.new()`,
+`PanelContainer.new()`, `StyleBoxFlat.new()` + 8 hằng số metric trong `_ready()`. Nay:
+
+| Thành phần | Chỗ mới |
+|---|---|
+| Khung cột (anchor phải-trên, offset −76/−4/10, `separation` 6, `mouse_filter` IGNORE) | `nodes/main/event_button_column.tscn` |
+| `Timer` 20s autostart | node `Refresh` trong scene + `[connection timeout → _refresh_times]` |
+| 1 nút event (VBox + TextureButton 58×59.94 + PanelContainer + Label cỡ 12, màu `164663`) | `nodes/main/event_button_item.tscn` (instance lúc chạy) |
+| Stylebox viên thuốc "Còn N ngày" | `resources/settings/styles/event/pill.tres` |
+| `gutter` 88 / `left_inset` 34 | `@export` trong script, giá trị nằm ở `.tscn` |
+| `main.gd` | `preload(...).instantiate()` thay `Script.new()` |
+| Còn trong code | texture theo `theme_id` (art runtime), text "Còn N ngày" theo `seconds_left()`, `visible` theo số event, nối `pressed` của **nút sinh lúc chạy** |
+
+**Bằng chứng A/B** (`tools/probe_event_column.gd`): chạy probe trên code cũ (`git stash`, tạm rút `.tscn`) và code mới,
+so `Compare-Object` phần **giá trị hiệu dụng** (rect cột · `gutter`/`left_inset` áp lên `MapArea` khi có/không event ·
+rect + `custom_minimum_size` + `size_flags` + `mouse_filter` từng nút · texture normal/pressed/disabled · `stretch_mode` ·
+`StyleBoxFlat` đủ 14 thuộc tính · font size + màu + căn lề label):
+
+```
+giống 100% — khác duy nhất TÊN node con (cũ: @VBoxContainer@4…, mới: EventButtonItem/Icon/Pill/Label)
+```
+
+`audit_hardcode --file scripts/nodes/main/event_button_column.gd`: `P 8 · T 1 · C 2 · S 4 · E 0` → **0 / 0 / 0 / 0 / 0**.
+
 ---
 
 ## 4. Việc còn lại (CHƯA làm) & lý do
@@ -320,7 +346,7 @@ và ghi chú tại chỗ.
 | Nhóm | Nội dung | Trạng thái / lý do |
 |---|---|---|
 | Phase 2B (code) | Chuyển giá trị tĩnh trong code ra `.tscn`/Theme | **XONG** — in-scope 0 finding; phần còn lại đã đánh dấu `# keep-code:` có lý do |
-| Phase 2B (widget dựng bằng code) | `event_button_column.gd` (cột nút event) vẫn dựng bằng `Script.new()` + const metric | Nên thành `nodes/main/event_button_column.tscn` (đổi cả `main.gd`) — lượt riêng |
+| Phase 2B (widget dựng bằng code) | `event_button_column.gd` (cột nút event) | **XONG** (đợt 4): thành `nodes/main/event_button_column.tscn` + `event_button_item.tscn` + `styles/event/pill.tres` |
 | Phase 3 | Đổi `archivement` → `achievement` (file/class/hàm) + sắp xếp lại `scripts/` theo cây đích | **DỪNG theo §10**: tên autoload `ArchivementManager` là **key trong blob save** (`user://inkmaze_data.json`) ⇒ đổi là mất tiến trình người chơi. Cần user duyệt kèm migration |
 | Phase 5 (`Svc`) | Thay 158 chỗ `"/root/..."` bằng accessor tĩnh có kiểu | Đổi rộng khắp autoload + test `--script`; rủi ro cao, cần lượt riêng |
 | Phase 5 (S7) | Tách god class `board.gd` (2052) · `game_manager.gd` (1256) · `game_controller.gd` (1136) · `debug.gd` (1192) | Đổi API công khai ⇒ phải làm từng file + chạy full suite (13 test đang đỏ sẵn, khó phân biệt hồi quy) |

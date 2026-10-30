@@ -12,24 +12,7 @@ extends BaseScene
 ## bằng `@export` trong `scenes/layout/<hướng>/main.tscn` ⇒ code đọc qua `layout.<tên>`.
 ## ============================================================================
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
-
-## Ảnh icon dock (glyph TRẮNG 96×96 nạp 1 lần — nút dock là khối MÀU đậm nên icon để trắng)
-const ICON_SHOP := "res://assets/images-png/dock/dock_shop.png"
-const ICON_RANK := "res://assets/images-png/dock/dock_ranking.png"
-const ICON_BADGES := "res://assets/images-png/dock/dock_badges.png"
-## Khoảng chừa đáy bản đồ (px) — lớn hơn DungeonPill + nửa cổng chương
-const MAP_BOTTOM_RESERVE := 130.0
-## ---- Cỡ cho ĐIỆN THOẠI (màn thật nhỏ hơn bản xem trên máy tính) ----
-const DockStyleJ := preload("res://scripts/nodes/main/dock_style_j.gd")   ## dock kiểu giấy lò xo + thẻ focus
-const CHIP_HEIGHT := 46.0           ## chip Xu / Mạng (trước 32)
-const CHIP_FONT := 22
-const SETTINGS_SIZE := 56.0
-const TOP_MARGIN := 24.0            ## khoảng thở giữa mép trên và thanh top bar
-const CHEST_SIZE := Vector2(104.0, 118.0)
-const SETTINGS_TEX := "res://assets/images-png/common/settings_btn_%s.png"
-const ICON_DAILY := "res://assets/images-png/dock/dock_daily.png"
-const DOCK_BUTTON_SCENE := preload("res://nodes/main/dock_button.tscn")
-const EventButtonColumnScript := preload("res://scripts/nodes/main/event_button_column.gd")
+const EventButtonColumnScene := preload("res://nodes/main/event_button_column.tscn")
 
 var layout: MainLayout = null
 ## Cột nút event nổi trên bản đồ (dựng 1 lần, chuyển theo bố cục đang hiện)
@@ -179,140 +162,10 @@ func _setup_buttons() -> void:
 	if layout.level_section != null:
 		_connect_pressed(layout.level_section.dungeon_pill, _on_dungeon_pressed)
 
-	_apply_mobile_sizing()
-
-	# Dock: gán icon + nhãn
-	_setup_dock_button(layout.dock_shop, ICON_SHOP, tr("STR_BTN_SHOP"), "shop")
-	_setup_dock_button(layout.dock_ranking, ICON_RANK, tr("STR_BTN_LEADERBOARD"), "rank")
-	_setup_dock_button(layout.dock_badges, ICON_BADGES, tr("STR_BTN_ARCHIVEMENT"), "badges")
-	# "Luật chơi" đã CHUYỂN sang màn Cài đặt ⇒ dock chỉ còn 4 nút (Cửa hàng · Xếp hạng · Thử thách · Danh hiệu).
-	# Nếu node DockRules chưa bị xoá khỏi scene thì ẩn tạm (xoá node + export `dock_rules` xong thì bỏ 2 dòng này).
-	if layout.get("dock_rules") != null:
-		(layout.get("dock_rules") as Control).visible = false
-	_ensure_dock_daily()
-	
-	if layout.profile_card != null:
-		layout.profile_card.connect(&"pressed", _on_profile_pressed)
-	
-	# Badge danh hiệu: số đã mở / tổng — hiện ở dock Danh hiệu (chấm đỏ chỉ báo)
-	if layout.dock_badges != null:
-		layout.dock_badges.set_badge(0)
-	
-	# Ví Xu tự lo nút `+` (CoinChip mở Cửa hàng) — main chỉ cần cập nhật số dư
-
-
-## Phóng to / chỉnh các phần quá nhỏ trên điện thoại: top bar (chip + Cài đặt), khoảng cách mép trên, rương.
-func _apply_mobile_sizing() -> void:
-	if layout == null:
-		return
-	# Khoảng thở phía trên top bar
-	if layout.header_anchor != null:
-		var body := layout.header_anchor.get_parent() as Control
-		if body != null:
-			body.offset_top = maxf(body.offset_top, TOP_MARGIN)
-	# Chip Xu + Mạng
-	var life := layout.find_child("LifeChip", true, false) as Control
-	for chip in [layout.coin_chip, life]:
-		_enlarge_chip(chip as Control)
-	# Nút Cài đặt: cùng phong cách chip (nền trắng · viền kem · bánh răng navy)
-	var sb := layout.btn_settings
-	if sb != null and ResourceLoader.exists(SETTINGS_TEX % "normal"):
-		var normal := load(SETTINGS_TEX % "normal") as Texture2D
-		sb.texture_normal = normal
-		sb.texture_hover = normal
-		sb.texture_pressed = load(SETTINGS_TEX % "pressed") as Texture2D
-		sb.texture_disabled = null
-		sb.texture_focused = null
-		sb.ignore_texture_size = true
-		sb.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
-		sb.custom_minimum_size = Vector2(SETTINGS_SIZE, SETTINGS_SIZE)
-		sb.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-	# Rương góc dưới-phải: to hơn cho dễ bấm
-	if layout.level_section != null and layout.level_section.chest != null:
-		var chest := layout.level_section.chest as Control
-		chest.custom_minimum_size = CHEST_SIZE
-		chest.offset_right = -14.0
-		chest.offset_bottom = -12.0
-		chest.offset_left = chest.offset_right - CHEST_SIZE.x
-		chest.offset_top = chest.offset_bottom - CHEST_SIZE.y
-	# Dock cao hơn
-	var dock_row := layout.dock_shop.get_parent() if layout.dock_shop != null else null
-	var dock_panel := dock_row.get_parent() as Control if dock_row != null else null
-	if dock_panel != null:
-		DockStyleJ.apply_panel(dock_panel)
-		dock_panel.custom_minimum_size.y = DockStyleJ.HEIGHT + 6.0
-
-
-## Phóng to 1 chip (Xu / Mạng): cao `CHIP_HEIGHT`, rộng ×1.3, icon + số + nút `+` to theo
-func _enlarge_chip(chip: Control) -> void:
-	if chip == null:
-		return
-	chip.custom_minimum_size = Vector2(chip.custom_minimum_size.x * 1.3, CHIP_HEIGHT)
-	# Bo tròn theo chiều cao mới (bản gốc bo 16 cho chip cao 32) — nhân đôi style để không đổi chip ở màn khác
-	var panel := chip.get_theme_stylebox("panel") as StyleBoxFlat
-	if panel != null:
-		var pill := panel.duplicate() as StyleBoxFlat
-		pill.set_corner_radius_all(int(CHIP_HEIGHT * 0.5))
-		pill.shadow_offset = Vector2(0.0, 4.0)
-		chip.add_theme_stylebox_override("panel", pill)
-	var icon := chip.find_child("Icon", true, false) as Control
-	if icon != null:
-		icon.custom_minimum_size.x = 32.0
-	var value := chip.find_child("Value", true, false) as Label
-	if value != null:
-		value.add_theme_font_size_override("font_size", CHIP_FONT)
-	var plus := chip.find_child("Plus", true, false) as Control
-	if plus != null:
-		plus.custom_minimum_size = Vector2(32.0, 32.0)
-		for state in ["normal", "pressed", "hover"]:
-			var box := plus.get_theme_stylebox(state) as StyleBoxFlat
-			if box != null:
-				var round_box := box.duplicate() as StyleBoxFlat
-				round_box.set_corner_radius_all(11)
-				plus.add_theme_stylebox_override(state, round_box)
-		plus.add_theme_font_size_override("font_size", 18)
-
-
-## Daily về DOCK (không còn nằm trong nhóm event): nút thứ 3 — chính giữa hàng 5 nút.
-## Tạo bằng code từ `dock_button.tscn` nên KHÔNG phải sửa main.tscn (cả dọc lẫn ngang).
-func _ensure_dock_daily() -> void:
-	if layout == null or layout.dock_shop == null:
-		return
-	var row := layout.dock_shop.get_parent()
-	if row == null:
-		return
-	if _dock_daily == null or not is_instance_valid(_dock_daily) or _dock_daily.get_parent() != row:
-		_dock_daily = DOCK_BUTTON_SCENE.instantiate() as DockButton
-		_dock_daily.name = "DockDaily"
-		_dock_daily.layout_mode = 2
-		_dock_daily.size_flags_horizontal = layout.dock_shop.size_flags_horizontal
-		_dock_daily.size_flags_vertical = layout.dock_shop.size_flags_vertical
-		_dock_daily.custom_minimum_size = layout.dock_shop.custom_minimum_size
-		row.add_child(_dock_daily)
-		row.move_child(_dock_daily, mini(2, row.get_child_count() - 1))
-	var label := tr("STR_MAIN_DOCK_DAILY")
-	if label == "STR_MAIN_DOCK_DAILY":
-		label = "THỬ THÁCH"   # chưa có khoá dịch ⇒ chữ mặc định
-	_setup_dock_button(_dock_daily, ICON_DAILY, label, "daily")
-	_connect_pressed(_dock_daily, _on_daily_pressed)
-
 
 func _on_daily_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	Nav.goto_daily()
-
-
-func _setup_dock_button(button: DockButton, icon_path: String, label: String, key: String) -> void:
-	if button == null:
-		return
-	button.setup(load(icon_path), label)
-	var colors: Array = DOCK_COLORS.get(key, DOCK_COLORS["shop"])
-	_style_dock_button(button, key, Color(colors[0]), Color(colors[2]))
-
-
-## Nút dock kiểu J: huy hiệu tròn màu; bấm giữ / tab hiện hành thì NHÔ LÊN thành thẻ (xem dock_style_j.gd)
-func _style_dock_button(button: DockButton, key: String, _face: Color, _base: Color) -> void:
-	DockStyleJ.style_button(button, key)
 
 
 func _setup_animations() -> void:
@@ -374,7 +227,8 @@ func _setup_event_buttons() -> void:
 	if section == null:
 		return
 	if _event_buttons == null or not is_instance_valid(_event_buttons) or _event_buttons.get_parent() != section:
-		_event_buttons = EventButtonColumnScript.new()
+		_event_buttons = EventButtonColumnScene.instantiate() as Control
+		# keep-code: tên node là HỢP ĐỒNG với test (`LevelSection/EventButtons`), không phải bố cục
 		_event_buttons.name = "EventButtons"
 		section.add_child(_event_buttons)
 		_event_buttons.event_pressed.connect(_on_event_card_pressed)
