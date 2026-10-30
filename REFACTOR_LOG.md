@@ -497,6 +497,23 @@ bằng `Svc.tutorial()` / `Svc.game()` — hết truy cập autoload kiểu cũ 
 
 ---
 
+## 8. Phase 6 (§9.1) — quét từ khoá lần cuối
+
+| Từ khoá | Trước | Sau | Ghi chú |
+|---|---|---|---|
+| `đã gỡ` / `trước đây` / `bản cũ` (comment kể lịch sử) | 32 | **0** | Theo §8.1 comment phải tả HIỆN TRẠNG + lý do ⇒ đã viết lại 29 file (chỉ comment, không đổi hành vi) |
+| `DEPRECATED` | 3 | 3 | `Nav.goto_levels` · `GameManager.go_to_levels` · helper levels của `SceneManager` — **giữ vì test khẳng định phải tồn tại** (`test_main_merge.gd:88,91`) |
+| `legacy` | 4 | 4 | `daily_manager.gd` đọc `user://daily.cfg` để **DI TRÚ** dữ liệu định dạng cũ sang mô hình Sao — việc thật, không phải mã chết |
+| `TODO` | 19 | 19 | Việc tương lai thật: AdMob (Android) · Play Games cloud sync · server sync chống chỉnh giờ · bật skin Theme |
+| `FIXME` | 0 | 0 | — |
+| `optimizing_clean` (đường dẫn chết) | 0 | 0 | — |
+| `print(` | 7 | 7 | 4 chỗ có tiền tố log trong Manager (`[ADS]`, `[DEBUG]`, `[LocalizationManager]`) + 3 trong `scripts/tools/` (tool chạy tay) |
+| `"/root/…"` | 184 | **1** | Chỉ còn ghi chú quy ước trong `scripts/utils/svc.gd` |
+
+**Kiểm chứng:** 29 file `--check-only` → 0 lỗi parse; full suite **7 PASS / 13 FAIL** y hệt baseline.
+
+---
+
 ## 4. Việc còn lại (CHƯA làm) & lý do
 
 | Nhóm | Nội dung | Trạng thái / lý do |
