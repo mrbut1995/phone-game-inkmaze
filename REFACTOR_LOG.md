@@ -510,6 +510,52 @@ trong test/dev-tool vẫn chạy), cộng phần phát signal (`level_completed`
 **Kiểm chứng:** full suite **7 PASS / 13 FAIL** y hệt baseline (kể cả `test_chapters` vẫn **8/161**);
 `test_main_merge` **70/70** · `test_debug_modes` **64/64** PASS.
 
+### Phase 5 (§8.3) — đợt 9: TIẾN TRÌNH HỌC → `TutorialStore`
+
+`scripts/core/tutorial_store.gd` (~110 dòng): `progress` (cờ đã học từng bài) · `flow_step`/`flow_done`
+(luồng onboarding) · `pending_tutorial` / `pending_return_to_game` / `pending_return_to_list`
+(yêu cầu mở bài do màn khác đặt trước khi đổi scene) + `is_completed/set_flow/set_completed/`
+`mark_core_completed/request/take_*/reset`.
+
+`GameManager` giữ **6 property cùng tên** uỷ thác store — quan trọng vì `test_tutorial_flow`,
+`test_debug_modes`, `tutorial_manager.gd`, `debug.gd` đều `gm.get("tutorial_flow_step")` / `gm.set("tutorial_progress", …)`.
+
+`game_manager.gd` **1038 → 1026 dòng**.
+
+### Phase 5 (§8.3) — đợt 10: RỜI VÁN → `RunNavigator`
+
+`scripts/core/run_navigator.gd` (~45 dòng): `home()` · `daily()` · `back()` — gom 3 nhánh điều hướng rời ván
+(nút Home · "VỀ DAILY" · "TRỞ VỀ"/phím back) vào một chỗ, mỗi nhánh chỉ còn `GameManager.return_to_*` hoặc `Nav.*`.
+
+⚠️ **Sửa hồi quy do đợt 7:** `test_instruction` (không nằm trong bộ 20 test mặc định) gọi
+`GameController.TUTORIAL_IDS` — hằng này đã chuyển sang `TutorialLauncher.IDS`. Đã thêm lại **alias**
+`const TUTORIAL_IDS := TutorialLauncher.IDS` (+ `MODES_WITHOUT_TUTORIAL`) để API công khai không đổi;
+`test_instruction` **PASS** trở lại.
+
+`game_controller.gd` **1020 → 1004 dòng**.
+
+### Phase 5 (§8.3) — đợt 11: HIỂN THỊ TỪNG Ô → `BoardCellsView`
+
+`scripts/ui/game/board_cells_view.gd` (~75 dòng): `refresh_texts()` (số ô · lớp mực Fading Ink · ô đã đi One Stroke ·
+ô khớp số Wall Builder · ô mờ) và `apply_fog()` (Fog of War). Board truyền 2 `Callable` (`cell_at`, `sync_marker`)
+nên cách ánh xạ ô polyomino vẫn nằm ở `BoardView`.
+
+`board.gd` **2052 → 2005 dòng**.
+
+**Kiểm chứng 3 đợt:** full suite **7 PASS / 13 FAIL** y hệt baseline; test ngoài bộ 20:
+`test_debug_modes` **64/64** · `test_main_merge` **70/70** · `test_blind_memory` PASS · `test_instruction` **PASS** ·
+`test_life_points` **120/120**.
+
+### Còn lại của Phase 5 (§8.3) — trạng thái thật sau 11 đợt
+
+| File | Dòng | Đã tách | Còn lại (gợi ý đợt sau) |
+|---|---|---|---|
+| `scripts/ui/game/board.gd` | 2005 | `BoardCellsView` | input (kéo/chạm/neo) · dựng tường + `reveal_*` · hiệu ứng mực (tip/tail/sample) · cụm `NoMovesOverlay`/shake |
+| `scripts/ui/screens/debug.gd` | 1192 | — | tách theo tab (`_build_*` + `_*` action) |
+| `scripts/autoload/game_manager.gd` | 1026 | 6 store | `prepare_daily_*`/`prepare_mode_run` (Daily & Special) · `start_*` · `export/import_progress` |
+| `scripts/core/controllers/game_controller.gd` | 1004 | 7 helper | dùng công cụ (undo/hint/submit) · HUD context (`_update_hud`) · vòng đời ván (`_start_floor`/`_complete_floor`) |
+| `scripts/ui/screens/shop.gd` · `level_map.gd` · `achievement.gd` · `PlayerProfileManager.gd` | 911 · 860 · 745 · 741 | — | UI / logic / persistence (§8.3 gợi ý) |
+
 ---
 
 ## 8. Phase 6 (§9.1) — quét từ khoá lần cuối
@@ -526,6 +572,27 @@ trong test/dev-tool vẫn chạy), cộng phần phát signal (`level_completed`
 | `"/root/…"` | 184 | **1** | Chỉ còn ghi chú quy ước trong `scripts/utils/svc.gd` |
 
 **Kiểm chứng:** 29 file `--check-only` → 0 lỗi parse; full suite **7 PASS / 13 FAIL** y hệt baseline.
+
+### Phase 6 §9.2 — trạng thái bộ kiểm tra (đo lại sau 11 đợt)
+
+| Mục tiêu §9.2 | Hiện tại | Ghi chú |
+|---|---|---|
+| `check_integrity` E = 0 | **1** (phạm vi game) | `nodes/main/event_card.tscn` trỏ art Halloween **chưa được sinh** (lỗi có sẵn từ commit `1c2209c9` của người dùng) — refactor không tạo art |
+| `check_integrity` W1 / W2 = 0 | **0 / 0** | |
+| `audit_hardcode` S = E = T = 0 | **0 / 0 / 0** (phạm vi game) | 116 finding còn lại đều ở `scripts/test_case/`, `tmp_bak_cardedit/`, `what-changes/`, `android/` |
+| `audit_hardcode` P / C ≈ 0 | **0 / 0** (phạm vi game) | mọi dòng runtime còn lại đánh dấu `# keep-code` |
+| `audit_hidden` 0 DEAD / BASE-DEAD / SPLIT-BASE | **6 DEAD · 0 BASE-DEAD · 36 SPLIT-BASE** | ⚠️ xem giải thích dưới — **không thể đạt 0 mà không trái quyết định của người dùng** |
+
+**Vì sao không thể đạt 0 SPLIT-BASE** (theo §4.1 nhóm B2b, phải “tách base”):
+
+- 26/36 mục là `TopBar/CoinChip` + `TopBar/LifeChip` ẩn ở 13 layout (settings · splash · title · tutorial · tutorial_list ·
+  profiler_popup · event bản ngang). Cách §4.2 khuyến nghị là **bỏ 2 chip khỏi `base_layout.tscn`** rồi tạo
+  `base_layout_currency.tscn`. **Người dùng đã quyết định ngược lại** (yêu cầu trực tiếp: *“Tuyệt đối không tách
+  CoinChip/LifeChip ra khỏi base_layout.tscn. Những scene nào không sử dụng thì chỉ cần hide và deactive”*) ⇒ giữ nguyên.
+- 8/36 mục là `Content/ModeInformation/Time` ẩn ở 4 HUD × 2 hướng (các HUD này dùng `Sheet` thay `Time`) — cùng dạng, giữ.
+- 2/36 mục là `Dim` (`memory_countdown`) và `Panel/Art` (`profiler_popup`) — popup duy nhất ẩn thành phần của base.
+- **6 DEAD** là `nodes/tutorials/base_tutorial.tscn` → `Dots/Dot1..6`: bị `base_tutorial.gd::_update_dots()` **sinh lại
+  runtime** ⇒ false positive của công cụ (đã xác minh bằng đọc code), giữ.
 
 ---
 
@@ -665,7 +732,7 @@ Số P/T/C/S/E **theo từng commit**:
 | Việc | Lý do |
 |---|---|
 | Phase 3 — đổi `archivement` → `achievement` + sắp xếp lại `scripts/` | **XONG** sau khi người dùng đồng ý mất tiến trình (xem §2). Ảnh trong `assets/images*` cũng đã đổi tên thư mục + import lại |
-| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1038) · `game_controller.gd` (1020) · `debug.gd` (1192) | **ĐÃ TÁCH 8 đợt**: `game_manager.gd` 5 store (lượt chơi · kỷ lục tầng · kho dụng cụ · rương chương · tiến trình màn/chương) + `game_controller.gd` 3 helper (luật thử thách · báo kết quả ván · mở bài học). Còn lại: `board.gd` (input/render/effects); `debug.gd` (theo tab); `game_controller` phần tool/HUD; `game_manager` phần daily/mode |
+| Phase 5 (§8.3) — tách god class `board.gd` (2005) · `game_manager.gd` (1026) · `game_controller.gd` (1004) · `debug.gd` (1192) | **ĐÃ TÁCH 11 đợt**: `game_manager` 6 store · `game_controller` 4 helper · `board` 1 view. Còn lại xem bảng “Còn lại của Phase 5” ở §2 |
 | Phase 4 — gộp scene Portrait/Landscape trùng nhau | Tùy chọn (§7), cần review thị giác từng màn; rủi ro đổi hình ảnh mà không xác nhận được ⇒ theo §10 phải hỏi |
 | Xoá hàm "ngờ thừa" (`Nav.goto_levels`, `GameManager.go_to_levels`, helper levels của `SceneManager`) | `scripts/test_case/test_main_merge.gd:88,91` khẳng định chúng **phải tồn tại** |
 
