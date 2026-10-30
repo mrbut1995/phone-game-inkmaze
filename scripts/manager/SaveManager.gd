@@ -59,7 +59,7 @@ func _ensure_ready() -> void:
 			and not gm.is_connected("floor_record_changed", _on_provider_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		gm.connect("floor_record_changed", _on_provider_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	register_provider(tree.root.get_node_or_null("DailyManager"), "daily_changed")
-	register_provider(tree.root.get_node_or_null("ArchivementManager"), "progress_changed")
+	register_provider(tree.root.get_node_or_null("AchievementManager"), "progress_changed")
 	register_provider(tree.root.get_node_or_null("ShopManager"), "item_purchased")
 	register_provider(tree.root.get_node_or_null("PlayerProfileManager"), "profile_changed")
 	register_provider(tree.root.get_node_or_null("EventManager"), "event_progress_changed")

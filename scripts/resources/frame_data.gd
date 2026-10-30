@@ -5,7 +5,7 @@ extends Resource
 ## "DIỆN MẠO HỒ SƠ" (tab VIỀN KHUNG).
 ##
 ## Mỗi viền khung là 1 file .tres trong res://resources/profiler/frames/
-## (giống danh hiệu là .tres trong resources/archivements/) -> PlayerProfileManager
+## (giống danh hiệu là .tres trong resources/achievements/) -> PlayerProfileManager
 ## quét thư mục để nạp danh sách, nên THÊM viền mới chỉ cần tạo file .tres,
 ## KHÔNG phải sửa code.
 ##

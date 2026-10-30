@@ -41,9 +41,9 @@ PAIRS: list[tuple[str, str, str]] = [
      '\t\t\tassert(absf(button.size.x - 115.0) < 1.0 and absf(button.size.y - 65.0) < 1.0,\n'
      '\t\t\t\t"Nut %s phai dung kich thuoc art 115x65 (dang %s)" % [child.name, str(button.size)])'),
     ("test_main_layout.gd",
-     'assert(main_scene.layout.btn_archivement.size.x >= 200.0 and main_scene.layout.btn_archivement.size.y >= 200.0,\n'
+     'assert(main_scene.layout.btn_achievement.size.x >= 200.0 and main_scene.layout.btn_achievement.size.y >= 200.0,\n'
      '\t\t"Nút thành tựu phải là icon LỚN (>= 200x200), đang %s"',
-     'assert(main_scene.layout.btn_archivement.size.x >= 100.0 and main_scene.layout.btn_archivement.size.y >= 100.0,\n'
+     'assert(main_scene.layout.btn_achievement.size.x >= 100.0 and main_scene.layout.btn_achievement.size.y >= 100.0,\n'
      '\t\t"Nút thành tựu phải là icon LỚN (>= 100x100), đang %s"'),
 
     # ── test_ui_scenes: số đo giảm nửa + đường dẫn countdown_segment ───────────

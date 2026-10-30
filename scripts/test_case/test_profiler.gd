@@ -144,7 +144,7 @@ func _section_2_equip_and_name(manager: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_3_stats(manager: Node) -> void:
 	print("\n--- 3. THONG KE + EXP ---")
-	var ach: Node = root.get_node_or_null("ArchivementManager")
+	var ach: Node = root.get_node_or_null("AchievementManager")
 	var stats: Dictionary = manager.call("stats")
 	var points := int(ach.call("points"))
 	var stars := int(ach.call("stat_value", "level_stars_total"))

@@ -267,11 +267,11 @@ func _grant(def: Dictionary) -> void:
 			gm.call("grant_tool_uses", tool_id, amount, "daily_milestone")
 
 
-## Cộng Xu vào ví chung (Shop / Archivement dùng cùng ví này)
+## Cộng Xu vào ví chung (Shop / Achievement dùng cùng ví này)
 func _pay_coins(amount: int) -> void:
 	if amount <= 0:
 		return
-	var wallet: Node = Svc.archivement()
+	var wallet: Node = Svc.achievement()
 	if wallet == null:
 		return
 	wallet.set("coins", maxi(int(wallet.get("coins")) + amount, 0))
@@ -350,7 +350,7 @@ func is_day_unlocked(day: int) -> bool:
 func can_unlock_day(day: int) -> bool:
 	if day >= get_today() or day < 1 or is_day_unlocked(day):
 		return false
-	var wallet: Node = Svc.archivement()
+	var wallet: Node = Svc.achievement()
 	if wallet == null:
 		return false
 	return int(wallet.get("coins")) >= UNLOCK_COST
@@ -378,7 +378,7 @@ func set_day_unlocked(day: int, value: bool) -> void:
 
 
 func _spend_coins(amount: int) -> bool:
-	var wallet: Node = Svc.archivement()
+	var wallet: Node = Svc.achievement()
 	if wallet == null or int(wallet.get("coins")) < amount:
 		return false
 	wallet.set("coins", maxi(int(wallet.get("coins")) - amount, 0))

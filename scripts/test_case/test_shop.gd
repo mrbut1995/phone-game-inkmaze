@@ -114,7 +114,7 @@ func _init() -> void:
 
 	var shop: Node = root.get_node_or_null("ShopManager")
 	var themes: Node = root.get_node_or_null("ThemeManager")
-	var wallet: Node = root.get_node_or_null("ArchivementManager")
+	var wallet: Node = root.get_node_or_null("AchievementManager")
 	assert(shop != null, "Autoload ShopManager phai ton tai")
 	assert(themes != null, "Autoload ThemeManager phai ton tai")
 	_shop_backup = shop.call("export_progress")
@@ -222,7 +222,7 @@ func _section_2_wallet(shop: Node, wallet: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_3_tools(shop: Node) -> void:
 	print("[3] Dung cu...")
-	var wallet: Node = root.get_node_or_null("ArchivementManager")
+	var wallet: Node = root.get_node_or_null("AchievementManager")
 	shop.call("reset_progress")
 	wallet.set("coins", 500)
 	_entry(int(shop.call("tool_count", "tool_undo_x10")) == 0, "Chua mua -> 0 luot undo")
@@ -246,7 +246,7 @@ func _section_3_tools(shop: Node) -> void:
 # ---------------------------------------------------------------------------
 func _section_4_equip(shop: Node, themes: Node) -> void:
 	print("[4] Trang bi but / chu de...")
-	var wallet: Node = root.get_node_or_null("ArchivementManager")
+	var wallet: Node = root.get_node_or_null("AchievementManager")
 	shop.call("reset_progress")
 	wallet.set("coins", 5000)
 

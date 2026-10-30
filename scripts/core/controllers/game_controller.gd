@@ -448,7 +448,7 @@ func _complete_floor() -> void:
 	if _pending_bonus > 0:
 		_play_sfx_delayed(sfx_timer_floor_bonus, Sfx.FLOOR_BONUS, 1.1)
 
-	_report_to_archivements(true, floor_time)
+	_report_to_achievements(true, floor_time)
 
 	# SỰ KIỆN: báo qua tầng cho event DUNGEON đang chạy (ghi mốc tầng — §B7)
 	var em := Svc.event()
@@ -552,7 +552,7 @@ func _game_over(reason := "") -> void:
 		mission_controller.refresh(_mission_ctx)
 		mission_rows = mission_controller.rows()
 		stars = mission_controller.stars()
-	_report_to_archivements(false, floor_time)
+	_report_to_achievements(false, floor_time)
 
 	var mode: BaseGameMode = game_mode_controller.game_mode
 	var ch := _challenge()
@@ -784,15 +784,15 @@ func _on_back_requested() -> void:
 		Nav.goto_main()
 
 
-## Báo kết quả màn/tầng cho Sổ tay thành tựu (Archivement) — thắng hoặc thua.
-## Số liệu tích luỹ (tầng sâu nhất, số ván thắng, gợi ý/hoàn tác...) do ArchivementManager ghi nhận.
-func _report_to_archivements(won: bool, floor_time: float) -> void:
+## Báo kết quả màn/tầng cho Sổ tay thành tựu (Achievement) — thắng hoặc thua.
+## Số liệu tích luỹ (tầng sâu nhất, số ván thắng, gợi ý/hoàn tác...) do AchievementManager ghi nhận.
+func _report_to_achievements(won: bool, floor_time: float) -> void:
 	if game_state == null or game_mode_controller.game_mode == null:
 		return
 	if _is_debug_run():
 		return                      # ván test từ Debug Console không tính vào danh hiệu
 	var mode := game_mode_controller.game_mode
-	Archivement.notify_run_result({
+	Achievement.notify_run_result({
 		"mode_id": mode.mode_id,
 		"won": won,
 		"endless": mode.is_endless,

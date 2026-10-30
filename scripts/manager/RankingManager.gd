@@ -4,7 +4,7 @@ extends Node
 ## Manager: BẢNG XẾP HẠNG (Ranking) — màn "BẢNG XẾP HẠNG" theo mockup/ranking.svg
 ##
 ## 3 bảng (tab): `dungeon` · `play` · `daily`.
-## - Kỷ lục của NGƯỜI CHƠI lấy THẬT từ GameManager / DailyManager / ArchivementManager
+## - Kỷ lục của NGƯỜI CHƠI lấy THẬT từ GameManager / DailyManager / AchievementManager
 ##   (tầng cao nhất · số màn đã qua · chuỗi ngày...) — xem `_player_entry()`.
 ## - Các đối thủ còn lại là dữ liệu MÔ PHỎNG (offline): sinh từ `RIVAL_POOL` với seed
 ##   cố định theo (bảng | tên | khung-thời-gian) nên bảng **ổn định giữa các phiên** và
@@ -221,7 +221,7 @@ func _player_entry(board: String) -> Dictionary:
 ## Các chỉ số "sống" lấy từ manager khác (qua /root — không tham chiếu identifier autoload).
 func _stats() -> Dictionary:
 	var out := {}
-	var arch := _node("ArchivementManager")
+	var arch := _node("AchievementManager")
 	if arch != null and arch.has_method("stat_value"):
 		for key in ["dungeon_best_floor", "dungeon_best_score", "levels_cleared",
 				"level_stars_total", "fastest_clear", "daily_streak", "daily_stars_total",

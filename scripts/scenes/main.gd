@@ -123,7 +123,7 @@ func _refresh_stamp() -> void:
 func _refresh_dungeon_pill() -> void:
 	if layout == null or layout.level_section == null or layout.level_section.dungeon_pill == null:
 		return
-	layout.level_section.dungeon_pill.setup(int(Archivement.stat_value("dungeon_best_floor")))
+	layout.level_section.dungeon_pill.setup(int(Achievement.stat_value("dungeon_best_floor")))
 
 
 ## Sticker HỒ SƠ: avatar + viền khung + cấp độ + tên + XP (node con tự lo)
@@ -158,7 +158,7 @@ func _setup_buttons() -> void:
 	_connect_pressed(layout.dock_shop, _on_shop_pressed)
 	_connect_pressed(layout.dock_ranking, _on_leaderboard_pressed)
 	_connect_pressed(layout.dock_daily, _on_daily_pressed)
-	_connect_pressed(layout.dock_badges, _on_archivement_pressed)
+	_connect_pressed(layout.dock_badges, _on_achievement_pressed)
 	if layout.level_section != null:
 		_connect_pressed(layout.level_section.dungeon_pill, _on_dungeon_pressed)
 
@@ -195,9 +195,9 @@ func _on_settings_pressed() -> void:
 	Nav.goto_settings()
 
 
-func _on_archivement_pressed() -> void:
+func _on_achievement_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
-	Nav.goto_archivement()
+	Nav.goto_achievement()
 
 
 ## Thẻ HỒ SƠ mở POPUP hồ sơ cá nhân (không đổi màn hình)

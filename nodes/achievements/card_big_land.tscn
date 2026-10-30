@@ -1,0 +1,407 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/achievements/card_big.gd" id="1_card"]
+[ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="2_theme"]
+[ext_resource uid="uid://tebm8ixbny3e" type="Texture2D" path="res://assets/images-png/achievements/card_land_progress.png" id="3_progress"]
+[ext_resource uid="uid://0e0hvt8j23e1" type="Texture2D" path="res://assets/images-png/achievements/card_land_claimed.png" id="4_claimed"]
+[ext_resource uid="uid://ch0bgaf20oo75" type="Texture2D" path="res://assets/images-png/achievements/card_land_claimable.png" id="5_claimable"]
+[ext_resource uid="uid://byiofg48cdi6p" type="Texture2D" path="res://assets/images-png/achievements/card_land_locked.png" id="6_locked"]
+[ext_resource uid="uid://rg2wxbl4pcpu" type="Texture2D" path="res://assets/images-png/achievements/badge_big_ring.png" id="7_ring"]
+[ext_resource type="Texture2D" uid="uid://iqcnvasdqake" path="res://assets/images-png/common/bar_track.png" id="8_track"]
+[ext_resource type="Texture2D" uid="uid://ckrmagf1xljl5" path="res://assets/images-png/common/bar_fill.png" id="9_fill"]
+[ext_resource uid="uid://dkap5ds0asbm2" type="Texture2D" path="res://assets/images-png/achievements/stamp_big.png" id="10_stamp"]
+[ext_resource type="Texture2D" uid="uid://ctpolvsc88ypl" path="res://assets/images-png/achievements/chip_reward.png" id="11_chip"]
+[ext_resource type="Texture2D" uid="uid://bsenhucno4lsr" path="res://assets/images-png/icons/icon_coin.png" id="12_coin"]
+[ext_resource uid="uid://vk50havnstsn" type="Texture2D" path="res://assets/images-png/achievements/btn_claim_big_normal.png" id="13_claim_n"]
+[ext_resource uid="uid://cww478ijs75km" type="Texture2D" path="res://assets/images-png/achievements/btn_claim_big_pressed.png" id="14_claim_p"]
+[ext_resource type="Texture2D" uid="uid://cw3gi00w0cnpu" path="res://assets/images-png/icons/icon_lock.png" id="15_lock"]
+[ext_resource uid="uid://b27biucgoi44t" type="Texture2D" path="res://assets/images-png/achievements/chip_cat.png" id="16_cat"]
+[ext_resource uid="uid://c00yatv288pow" type="Texture2D" path="res://assets/images-png/achievements/sticker_index.png" id="17_sticker"]
+
+[node name="CardBigLand" type="Control" node_paths=PackedStringArray("bg", "icon_ring", "icon", "title_label", "desc_label", "bar", "bar_track", "bar_fill", "progress_label", "stamp", "stamp_state", "stamp_reward", "claim_btn", "claim_label", "chip", "chip_label", "cat_chip", "cat_label", "index_sticker", "index_label")]
+custom_minimum_size = Vector2(420, 300)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_card")
+bg = NodePath("Panel")
+icon_ring = NodePath("Medal/IconRing")
+icon = NodePath("Medal/Icon")
+title_label = NodePath("Title")
+desc_label = NodePath("Desc")
+bar = NodePath("Bar")
+bar_track = NodePath("Bar/Track")
+bar_fill = NodePath("Bar/Fill")
+progress_label = NodePath("Progress")
+stamp = NodePath("Footer/Stamp")
+stamp_state = NodePath("Footer/Stamp/State")
+stamp_reward = NodePath("Footer/Stamp/Reward")
+claim_btn = NodePath("Footer/ClaimButton")
+claim_label = NodePath("Footer/ClaimButton/Label")
+chip = NodePath("Footer/Chip")
+chip_label = NodePath("Footer/Chip/Label")
+bg_progress = ExtResource("3_progress")
+bg_claimed = ExtResource("4_claimed")
+bg_claimable = ExtResource("5_claimable")
+bg_locked = ExtResource("6_locked")
+icon_lock = ExtResource("15_lock")
+cat_chip = NodePath("CatChip")
+cat_label = NodePath("CatChip/Label")
+index_sticker = NodePath("Sticker")
+index_label = NodePath("Sticker/Label")
+
+[node name="Panel" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_progress")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+
+[node name="CatChip" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_left = 16
+offset_top = 16
+offset_right = 100
+offset_bottom = 44
+mouse_filter = 2
+texture = ExtResource("16_cat")
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 14
+
+[node name="Label" type="Label" parent="CatChip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"AchTabLabel"
+theme_override_font_sizes/font_size = 14
+text = "DAILY"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="Sticker" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_left = 330
+offset_top = 16
+offset_right = 404
+offset_bottom = 44
+rotation = 0.10471976
+pivot_offset = Vector2(37.0, 14.0)
+mouse_filter = 2
+texture = ExtResource("17_sticker")
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 14
+
+[node name="Label" type="Label" parent="Sticker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"AchStampBig"
+theme_override_font_sizes/font_size = 14
+text = "#1 / 28"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Medal" type="Control" parent="."]
+layout_mode = 0
+offset_left = 32
+offset_top = 98
+offset_right = 136
+offset_bottom = 202
+mouse_filter = 2
+
+[node name="IconRing" type="TextureRect" parent="Medal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_ring")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="Medal"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.22
+anchor_top = 0.22
+anchor_right = 0.78
+anchor_bottom = 0.78
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 178
+offset_top = 46
+offset_right = 410
+offset_bottom = 106
+theme_type_variation = &"AchCardTitle"
+theme_override_font_sizes/font_size = 26
+text = "Tên danh hiệu"
+horizontal_alignment = 0
+vertical_alignment = 1
+autowrap_mode = 3
+text_overrun_behavior = 3
+max_lines_visible = 2
+
+[node name="Desc" type="Label" parent="."]
+layout_mode = 0
+offset_left = 182
+offset_top = 106
+offset_right = 406
+offset_bottom = 154
+theme_type_variation = &"AchCardDesc"
+theme_override_font_sizes/font_size = 15
+text = "Mô tả điều kiện đạt danh hiệu"
+horizontal_alignment = 0
+vertical_alignment = 1
+autowrap_mode = 3
+text_overrun_behavior = 3
+max_lines_visible = 2
+
+[node name="Bar" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_left = 184
+offset_top = 164
+offset_right = 400
+offset_bottom = 176
+mouse_filter = 2
+
+[node name="Track" type="NinePatchRect" parent="Bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_track")
+patch_margin_left = 5
+patch_margin_top = 2
+patch_margin_right = 4
+patch_margin_bottom = 2
+
+[node name="Fill" type="TextureRect" parent="Bar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = -1.0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("9_fill")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Progress" type="Label" parent="."]
+layout_mode = 0
+offset_left = 184
+offset_top = 182
+offset_right = 400
+offset_bottom = 222
+theme_type_variation = &"AchCardProgress"
+theme_override_font_sizes/font_size = 15
+text = "Tiến độ: 0 / 1 Màn"
+horizontal_alignment = 0
+vertical_alignment = 1
+
+[node name="Footer" type="Control" parent="."]
+layout_mode = 0
+offset_left = 176
+offset_top = 228
+offset_right = 412
+offset_bottom = 288
+mouse_filter = 2
+
+[node name="Stamp" type="Control" parent="Footer"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -25.0
+offset_right = 62.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.13962634
+pivot_offset = Vector2(62.0, 25.0)
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="Footer/Stamp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("10_stamp")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="State" type="Label" parent="Footer/Stamp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.06
+anchor_right = 1.0
+anchor_bottom = 0.54
+grow_horizontal = 2
+theme_type_variation = &"AchStampBig"
+theme_override_font_sizes/font_size = 18
+text = "ĐÃ ĐẠT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Reward" type="Label" parent="Footer/Stamp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.52
+anchor_right = 0.7
+anchor_bottom = 0.92
+theme_type_variation = &"AchStampSmall"
+theme_override_font_sizes/font_size = 15
+text = "+0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Coin" type="TextureRect" parent="Footer/Stamp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.56
+anchor_right = 0.9
+anchor_bottom = 0.9
+mouse_filter = 2
+texture = ExtResource("12_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ClaimButton" type="TextureButton" parent="Footer"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -25.0
+offset_right = 110.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+texture_normal = ExtResource("13_claim_n")
+texture_pressed = ExtResource("14_claim_p")
+texture_hover = ExtResource("13_claim_n")
+texture_focused = ExtResource("13_claim_n")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Coin" type="TextureRect" parent="Footer/ClaimButton"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 22.0
+offset_top = -13.0
+offset_right = 48.0
+offset_bottom = 13.0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("12_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Footer/ClaimButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24
+anchor_right = 0.95
+anchor_bottom = 0.84
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"AchClaim"
+theme_override_font_sizes/font_size = 20
+text = "NHẬN +0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Chip" type="NinePatchRect" parent="Footer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -94.0
+offset_top = -20.0
+offset_right = 94.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("11_chip")
+patch_margin_left = 7
+patch_margin_top = 4
+patch_margin_right = 7
+patch_margin_bottom = 5
+
+[node name="Label" type="Label" parent="Footer/Chip"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.08
+anchor_right = 0.76
+anchor_bottom = 0.92
+theme_type_variation = &"AchChip"
+theme_override_font_sizes/font_size = 16
+text = "Thưởng: +0"
+vertical_alignment = 1
+clip_text = true
+
+[node name="Coin" type="TextureRect" parent="Footer/Chip"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.78
+anchor_top = 0.18
+anchor_right = 0.94
+anchor_bottom = 0.82
+mouse_filter = 2
+texture = ExtResource("12_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="pressed" from="Footer/ClaimButton" to="." method="_on_claim_pressed"]

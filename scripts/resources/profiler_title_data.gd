@@ -5,7 +5,7 @@ extends Resource
 ## `PlayerProfileManager.title_key()`.
 ##
 ## Mỗi bậc là 1 file .tres trong res://resources/profiler/titles/
-## (giống danh hiệu là .tres trong resources/archivements/) -> PlayerProfileManager
+## (giống danh hiệu là .tres trong resources/achievements/) -> PlayerProfileManager
 ## quét thư mục + sắp theo `min_level`, nên THÊM bậc mới chỉ cần tạo file .tres,
 ## KHÔNG phải sửa code.
 ##

@@ -1,0 +1,153 @@
+class_name AchievementCard
+extends Control
+## ============================================================================
+## Thẻ 1 danh hiệu trong "Sổ tay thành tựu" (nodes/achievements/card.tscn).
+## 4 trạng thái theo mockup/achievement_scene.svg:
+##   - ĐÃ ĐẠT     : nền xanh + dải xanh lá, thanh 100%, dấu mộc "ĐÃ ĐẠT +N"
+##   - NHẬN THƯỞNG: nền viền vàng, có nút "NHẬN +N"
+##   - ĐANG LÀM   : nền xanh nhạt, chip "Thưởng: +N"
+##   - ẨN / KHOÁ  : nền xám nét đứt, ổ khoá, tiến độ "??? / ???"
+## Nhận dữ liệu đã tính sẵn từ AchievementManager qua `setup(entry)`.
+## ============================================================================
+
+signal claim_requested(id: String)
+
+## Nền 4 trạng thái + ổ khoá gán trong `card.tscn` (ExtResource) — KHÔNG hard-code
+@export var bg_claimed: Texture2D = null
+@export var bg_claimable: Texture2D = null
+@export var bg_progress: Texture2D = null
+@export var bg_locked: Texture2D = null
+## Ổ khoá của thẻ: dùng icon CHUNG ở `assets/images/icons/` (bản riêng trong achievements/ đã gỡ)
+@export var icon_lock: Texture2D = null
+
+@export var COLOR_CLAIMED := Color(0.18039216, 0.49019608, 0.19607843, 1)   # #2E7D32
+@export var COLOR_CLAIMABLE := Color(0.8509804, 0.46666667, 0.023529412, 1)  # #D97706
+@export var COLOR_PROGRESS := Color(0.23921569, 0.5137255, 0.68235296, 1)    # #3D83AE
+@export var COLOR_LOCKED := Color(0.47843137, 0.56078434, 0.60784316, 1)     # #7A8F9B
+@export var COLOR_DESC := Color(0.44313726, 0.54509807, 0.61960787, 1)
+@export var COLOR_DESC_LOCKED := Color(0.6313726, 0.69411767, 0.7372549, 1)
+
+## Node UI nằm trong CẤU TRÚC: `Panel` (nền thẻ) → `Body` (HBox) → IconRing · Info (VBox) · Side (Stamp/ClaimButton/Chip)
+## Mọi thành phần nằm TRONG `Panel` để nền và nội dung luôn khớp nhau khi co giãn.
+## Node binding: khai `node_paths` + NodePath trong `card.tscn`
+@export var bg: NinePatchRect = null
+@export var icon_ring: TextureRect = null
+@export var icon: TextureRect = null
+@export var title_label: Label = null
+@export var desc_label: Label = null
+@export var bar: Control = null
+@export var bar_track: NinePatchRect = null
+@export var bar_fill: TextureRect = null
+@export var progress_label: Label = null
+@export var stamp: Control = null
+@export var stamp_state: Label = null
+@export var stamp_reward: Label = null
+@export var claim_btn: TextureButton = null
+@export var claim_label: Label = null
+@export var chip: NinePatchRect = null
+@export var chip_label: Label = null
+
+var _entry: Dictionary = {}
+var _pct := 0
+
+
+func _ready() -> void:
+	# Dây `ClaimButton.pressed → _on_claim_pressed` khai trong `card.tscn` (cùng scene)
+	if stamp_state != null:
+		stamp_state.text = tr("STR_ACH_STATE_CLAIMED")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+	if chip_label != null:
+		chip_label.text = tr("STR_ACH_STATE_LOCKED")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED:
+		_apply_bar_fill()
+
+
+## Vạch tiến độ: đo lại mỗi khi thẻ đổi cỡ — thẻ nằm trong CONTAINER nên lúc `setup()`
+## bề rộng thanh có thể còn 0 (bố cục chưa dàn xong).
+func _apply_bar_fill() -> void:
+	if bar == null or bar_fill == null:
+		return
+	bar_fill.size.x = maxf((bar.size.x - 2.0) * float(_pct) / 100.0, 0.0)
+
+
+## Vẽ thẻ theo dữ liệu đã tính sẵn của AchievementManager
+func setup(entry: Dictionary) -> void:
+	_entry = entry
+	var hidden := bool(entry.get("secret_hidden", false))
+	var unlocked := bool(entry.get("unlocked", false))
+	var claimed := bool(entry.get("claimed", false))
+	var claimable := bool(entry.get("claimable", false))
+	var coins := int(entry.get("coins", 0))
+	var pct := clampi(int(entry.get("pct", 0)), 0, 100)
+
+	# Nền + màu trạng thái
+	var state_color := COLOR_PROGRESS
+	if hidden:
+		bg.texture = bg_locked
+		state_color = COLOR_LOCKED
+	elif claimed:
+		bg.texture = bg_claimed
+		state_color = COLOR_CLAIMED
+	elif claimable:
+		bg.texture = bg_claimable
+		state_color = COLOR_CLAIMABLE
+	else:
+		bg.texture = bg_progress
+
+	icon_ring.modulate = state_color
+
+	# Huy hiệu + tiêu đề + mô tả
+	if hidden:
+		icon.texture = icon_lock
+		title_label.text = tr("STR_ACH_SECRET_TITLE")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+		desc_label.text = tr("STR_ACH_SECRET_DESC")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+		title_label.modulate = COLOR_LOCKED  # keep-code: màu theo dữ liệu (runtime)
+		desc_label.modulate = COLOR_DESC_LOCKED  # keep-code: màu theo dữ liệu (runtime)
+	else:
+		icon.texture = entry.get("icon", null)
+		title_label.text = str(entry.get("title", ""))
+		desc_label.text = str(entry.get("desc", ""))
+		title_label.modulate = Color(1, 1, 1, 1)  # keep-code: màu theo dữ liệu (runtime)
+		desc_label.modulate = COLOR_DESC  # keep-code: màu theo dữ liệu (runtime)
+
+	# Thanh tiến độ (bề rộng đo lại trong `_apply_bar_fill()` — xem `_notification`)
+	_pct = pct
+	_apply_bar_fill()
+	if bar_fill != null:
+		bar_fill.modulate = state_color
+	if bar_track != null:
+		bar_track.modulate = Color(1, 1, 1, 0.55) if hidden else Color(1, 1, 1, 1)
+
+	# Dòng tiến độ
+	if hidden:
+		progress_label.text = tr("STR_ACH_SECRET_PROGRESS")  # keep-code: chữ theo dữ liệu ván chơi (runtime)
+		progress_label.modulate = COLOR_DESC_LOCKED  # keep-code: màu theo dữ liệu (runtime)
+	else:
+		var progress := int(entry.get("progress", 0))
+		var target := int(entry.get("target", 1))
+		var unit := str(entry.get("unit", ""))
+		if claimed:
+			progress_label.text = tr("STR_ACH_PROGRESS_DONE").format([progress, target, unit])
+		else:
+			progress_label.text = tr("STR_ACH_PROGRESS_FORMAT").format([progress, target, unit])
+		progress_label.modulate = state_color
+
+	# Phần thưởng: dấu mộc (đã nhận) · nút nhận (đủ điều kiện) · chip (đang làm / khoá)
+	stamp.visible = claimed
+	claim_btn.visible = claimable
+	chip.visible = not claimed and not claimable
+	if claimed:
+		stamp_reward.text = "+%d" % coins
+	elif claimable:
+		claim_label.text = tr("STR_ACH_STATE_CLAIM").format([coins])
+	elif chip.visible:
+		chip_label.text = tr("STR_ACH_STATE_LOCKED") if hidden \
+			else tr("STR_ACH_STATE_REWARD").format([coins])
+
+
+func _on_claim_pressed() -> void:
+	if _entry.is_empty():
+		return
+	claim_requested.emit(str(_entry.get("id", "")))

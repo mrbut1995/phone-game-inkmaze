@@ -17,7 +17,7 @@ const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
-const SCENE_ARCHIVEMENT := "res://scenes/archivement.tscn"
+const SCENE_ACHIEVEMENT := "res://scenes/achievement.tscn"
 const SCENE_RANKING := "res://scenes/ranking.tscn"
 ## Màn CỬA HÀNG — xem scripts/scenes/shop.gd
 const SCENE_SHOP := "res://scenes/shop.tscn"
@@ -89,8 +89,8 @@ static func goto_settings() -> void:
 
 
 ## Sổ tay thành tựu (danh hiệu)
-static func goto_archivement() -> void:
-	change_scene(SCENE_ARCHIVEMENT)
+static func goto_achievement() -> void:
+	change_scene(SCENE_ACHIEVEMENT)
 
 
 ## Bảng xếp hạng (Dungeon · Play · Daily)

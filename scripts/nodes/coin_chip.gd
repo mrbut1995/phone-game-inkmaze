@@ -4,7 +4,7 @@ extends Control
 ## Node: CoinChip — ví "Xu Mực" dùng chung trên thanh trên của mọi màn hình.
 ## Icon giọt mực vàng + số Xu + nút `+` (mặc định mở Cửa hàng).
 ##
-## Chip TỰ cập nhật số dư (nghe `ArchivementManager.progress_changed`) nên màn
+## Chip TỰ cập nhật số dư (nghe `AchievementManager.progress_changed`) nên màn
 ## hình không phải nối dây thủ công. `navigate_on_plus = false` dành cho màn
 ## Cửa hàng, nơi nút `+` chỉ chuyển sang tab NẠP XU.
 ## ============================================================================
@@ -31,7 +31,7 @@ func _ready() -> void:
 	# Nút `+` (`Content/Plus`) nối `pressed` trong nodes/main/coin_chip.tscn
 	if large:
 		_apply_large()
-	var wallet := Svc.archivement()
+	var wallet := Svc.achievement()
 	if wallet != null and wallet.has_signal("progress_changed") \
 			and not wallet.is_connected("progress_changed", _on_wallet_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		wallet.connect("progress_changed", _on_wallet_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh

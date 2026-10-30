@@ -10,21 +10,21 @@ scenes/                     # MÀN HÌNH: x.tscn = vỏ (base.tscn + Portrait/La
     base_layout.tscn        # layout gốc: TopBar (CoinChip · LifeChip) — DÙNG CHUNG mọi màn
     portrait/<màn>.tscn     # layout DỌC (kế thừa base_layout)
     landscape/<màn>.tscn    # layout NGANG (kế thừa base_layout)
-  <màn>.tscn                # main · settings · shop · daily · ranking · archivement · title · splash · credit · tutorial · debug
+  <màn>.tscn                # main · settings · shop · daily · ranking · achievement · title · splash · credit · tutorial · debug
 nodes/                      # COMPONENT (.tscn + script cùng tên ở scripts/nodes/)
-  game/  hud/  popups/  main/  daily/  shop/  ranking/  chapters/  level_selection/  profiler/  archivements/  tutorials/  common/
+  game/  hud/  popups/  main/  daily/  shop/  ranking/  chapters/  level_selection/  profiler/  achievements/  tutorials/  common/
 scripts/
   scenes/<màn>.gd           # điều khiển màn hình (extends BaseScene / BaseUI)
   scenes/layout/<màn>_layout.gd  # `@export` node UI của layout (MainLayout, ShopLayout…)
   nodes/<...>.gd            # hành vi component
   core/                     # logic không phụ thuộc UI: game_state · maze_data · level_manager · controllers/ · modes ở scripts/modes/
   manager/                  # AUTOLOAD (singleton) — xem §4
-  resources/                # script Resource (`class_name`): LevelData · ChapterData · ArchivementData · Avatar/Frame/Title
+  resources/                # script Resource (`class_name`): LevelData · ChapterData · AchievementData · Avatar/Frame/Title
   services/                 # save backend (local · play games)
-  utils/                    # facade tĩnh: Nav · Popups · Sfx · Shop · Profile · Archivement · Loc · UIAnim · PenSkin
+  utils/                    # facade tĩnh: Nav · Popups · Sfx · Shop · Profile · Achievement · Loc · UIAnim · PenSkin
   test_case/                # test/harness chạy `--script` (dev_* = probe thủ công)
 assets/ images/ frames/ icons/ sfx/ soundtrack/ fonts/   (SVG nguồn + assets/images-png là bản build — gitignored)
-resources/ settings/ (theme_default.tres · theme_hslider.tres · text/*.tres · styles/) · levels/ · chapters/ · archivements/ · profiler/
+resources/ settings/ (theme_default.tres · theme_hslider.tres · text/*.tres · styles/) · levels/ · chapters/ · achievements/ · profiler/
 tools/                      # tool Python/GDScript ngoài runtime (refactor/, level_designer/, svg_to_png.py, run_tests.py…)
 ```
 
@@ -71,7 +71,7 @@ tools/                      # tool Python/GDScript ngoài runtime (refactor/, le
 | `AdsManager` | `manager/AdsManager.gd` | stub quảng cáo (rewarded) |
 | `LocalizationManager` | `manager/LocalizationManager.gd` | nạp CSV đa ngôn ngữ (19 locale) |
 | `SaveManager` | `manager/SaveManager.gd` | gom `export/import_progress` của provider → backend (local/cloud) |
-| `ShopManager` · `ArchivementManager` | `manager/*` | cửa hàng & ví Xu · sổ tay thành tựu (AP, mốc) |
+| `ShopManager` · `AchievementManager` | `manager/*` | cửa hàng & ví Xu · sổ tay thành tựu (AP, mốc) |
 | `PlayerProfileManager` | `manager/PlayerProfileManager.gd` | hồ sơ: avatar/viền/tên, thống kê sâu |
 | `RankingManager` | `manager/RankingManager.gd` | 3 bảng xếp hạng (mô phỏng đối thủ, seed 10 phút) |
 | `ThemeManager` | `manager/ThemeManager.gd` | skin giấy/mực + ngòi bút (áp lên bàn cờ & nền) |

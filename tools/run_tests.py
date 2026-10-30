@@ -35,7 +35,7 @@ DEFAULT = [
     "test_main_layout",
     "test_daily",
     "test_shop",
-    "test_archivement",
+    "test_achievement",
     "test_profiler",
     "test_ranking",
     "test_chapters",

@@ -120,7 +120,7 @@ func _on_profile_changed() -> void:
 func refresh() -> void:
 	if layout == null:
 		return
-	Archivement.refresh()
+	Achievement.refresh()
 	_refresh_header()
 	_refresh_hero()
 	_refresh_info()

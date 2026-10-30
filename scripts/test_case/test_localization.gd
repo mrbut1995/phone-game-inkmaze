@@ -196,7 +196,7 @@ func _section_4_node_names() -> void:
 # ---------------------------------------------------------------------------
 func _section_5_resource_keys() -> void:
 	print("[5] Khoa dich trong .tres (thanh tuu / chuong / ho so)...")
-	_check_tres_keys("res://resources/archivements", ["title_key", "desc_key"])
+	_check_tres_keys("res://resources/achievements", ["title_key", "desc_key"])
 	_check_tres_keys("res://resources/chapters", ["title_key", "subtitle_key"])
 	_check_tres_keys("res://resources/profiler/avatars", ["name_key"])
 	_check_tres_keys("res://resources/profiler/frames", ["name_key"])

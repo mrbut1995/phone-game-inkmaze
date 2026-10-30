@@ -87,7 +87,7 @@ var skips_total := 0            # tổng lượt SKIP màn
 # Truy cập manager khác qua /root
 # ---------------------------------------------------------------------------
 func _achievements() -> Node:
-	return Svc.archivement()
+	return Svc.achievement()
 
 
 func _levels() -> Node:
@@ -202,7 +202,7 @@ func buy_frame(frame_ident: String) -> bool:
 	return _buy(_find_frame(frame_ident), owned_frames)
 
 
-## Mua 1 món trong catalog — Xu mực lấy từ kho danh hiệu (ArchivementManager.spend_coins)
+## Mua 1 món trong catalog — Xu mực lấy từ kho danh hiệu (AchievementManager.spend_coins)
 func _buy(data: Resource, owned_list: Array[String]) -> bool:
 	if data == null:
 		return false
@@ -556,7 +556,7 @@ func reload_catalog() -> void:
 	profile_changed.emit()
 
 
-## Quét 3 thư mục resources/profiler/ (giống ArchivementManager quét danh hiệu)
+## Quét 3 thư mục resources/profiler/ (giống AchievementManager quét danh hiệu)
 func _load_catalog() -> void:
 	_load_avatars()
 	_load_frames()

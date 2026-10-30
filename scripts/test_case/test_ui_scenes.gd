@@ -24,7 +24,7 @@ const FIXED_SCENES := {
 	],
 	"res://scripts/scenes/shop.gd": ["nodes/shop/tab_button.tscn", "nodes/shop/item_grid.tscn"],
 	"res://scripts/scenes/ranking.gd": ["nodes/ranking/tab_button.tscn"],
-	"res://scripts/scenes/archivement.gd": ["nodes/archivements/tab_button.tscn"],
+	"res://scripts/scenes/achievement.gd": ["nodes/achievements/tab_button.tscn"],
 }
 
 var _failed := 0
@@ -40,7 +40,7 @@ func _init() -> void:
 	root.size = Vector2i(1080, 1920)
 
 	_section_1_shop()
-	_section_2_archivement()
+	_section_2_achievement()
 	_section_3_levels()
 	_section_4_ranking()
 	_section_5_host()
@@ -132,10 +132,10 @@ func _section_1_shop() -> void:
 # ---------------------------------------------------------------------------
 # 2. Sổ tay: tab · trang (cột dọc) · chấm trang
 # ---------------------------------------------------------------------------
-func _section_2_archivement() -> void:
+func _section_2_achievement() -> void:
 	print("[2] Scene con màn Sổ tay...")
 
-	var tab := _spawn("res://nodes/archivements/tab_button.tscn") as AchTabButton
+	var tab := _spawn("res://nodes/achievements/tab_button.tscn") as AchTabButton
 	_entry(tab != null, "tab_button.tscn instantiate ra AchTabButton")
 	if tab != null:
 		_entry(tab.get_node_or_null("Label") != null, "tab Sổ tay co nhan tu scene")
@@ -151,14 +151,14 @@ func _section_2_archivement() -> void:
 			"tab DOC: nhan dai nhat vua o 67px (%.0f <= 59)" % tab.label.get_minimum_size().x)
 		tab.queue_free()
 
-	# TAB: 1 hàng 5 tab (nhỏ gọn) — mỗi layout instante ĐÚNG scene tab của bản dọc
-	_check_layout_tab("res://scenes/layout/portrait/archivement.tscn",
+	# TAB: 1 hàng 5 tab (nhỏ gọn) — layout instantiate ĐÚNG scene tab của bản dọc
+	_check_layout_tab("res://scenes/layout/portrait/achievement.tscn",
 		"tab_button.tscn")
 	# Cỡ chữ khai trong scene: 9 (5 tab/hàng 355px)
-	_entry(FileAccess.get_file_as_string("res://nodes/archivements/tab_button.tscn").contains("font_size = 9"),
+	_entry(FileAccess.get_file_as_string("res://nodes/achievements/tab_button.tscn").contains("font_size = 9"),
 		"tab DOC khai co chu 9 trong scene")
 
-	var page := _spawn("res://nodes/archivements/page.tscn") as AchPage
+	var page := _spawn("res://nodes/achievements/page.tscn") as AchPage
 	_entry(page != null, "page.tscn instantiate ra AchPage")
 	if page != null:
 		_entry(page.get_node_or_null("Column") != null,
@@ -172,7 +172,7 @@ func _section_2_archivement() -> void:
 		_entry(page.column().get_child_count() == 1, "them the vao cot = vao dung trang")
 		page.queue_free()
 
-	var dot := _spawn("res://nodes/archivements/page_dot.tscn")
+	var dot := _spawn("res://nodes/achievements/page_dot.tscn")
 	_entry(dot != null, "page_dot.tscn instantiate duoc")
 	if dot != null:
 		dot.call("set_current", true)
@@ -936,7 +936,7 @@ func _collect_star_rects(node: Node, out: Array[Node]) -> void:
 ## Layout Sổ tay phải instance ĐÚNG scene tab của hướng mình (và KHÔNG dùng của hướng kia)
 func _check_layout_tab(layout_path: String, expect_file: String) -> void:
 	var text := FileAccess.get_file_as_string(layout_path)
-	var expect := "res://nodes/archivements/%s" % expect_file
+	var expect := "res://nodes/achievements/%s" % expect_file
 	_entry(text.contains(expect), "%s dung %s" % [layout_path.get_file(), expect_file])
 
 
