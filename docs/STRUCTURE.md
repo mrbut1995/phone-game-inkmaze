@@ -16,7 +16,7 @@ nodes/                      # COMPONENT (.tscn; script tương ứng ở scripts
 scripts/
   autoload/                 # 24 SINGLETON (tên file = snake_case của tên autoload) — xem §4
   core/                     # logic không phụ thuộc UI: game_state · maze_data · score_calculator · controllers/
-                            # + "store" tách từ GameManager: life_store (lượt chơi) · floor_records_store (kỷ lục tầng) · tool_inventory (kho dụng cụ)
+                            # + "store" tách từ GameManager: life_store · floor_records_store · tool_inventory · chapter_chests_store
   modes/                    # *_game_mode.gd (Standard · Countdown · Dungeon · Fog …)
   data/                     # script Resource (class_name): LevelData · ChapterData · AchievementData · Avatar/Frame/Title
   services/                 # save backend (local · play games)
