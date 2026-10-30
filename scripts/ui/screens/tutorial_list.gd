@@ -4,8 +4,7 @@ extends BaseScene
 ## ============================================================================
 ## View Controller: màn DANH SÁCH bài hướng dẫn (`scenes/tutorial_list.tscn`)
 ##
-## Trước đây danh sách và bài học nằm CHUNG 1 màn (bài học mount đè lên danh sách).
-## Nay tách đôi:
+## Danh sách và bài học là 2 MÀN RIÊNG (bài học không mount đè lên danh sách):
 ##   · `tutorial_list` (màn này) — chỉ hiện danh sách, KHÔNG mount bài nào.
 ##   · `tutorial` (`scenes/tutorial.tscn`) — màn CHI TIẾT, mount đúng bài người chơi chọn.
 ##

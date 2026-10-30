@@ -414,7 +414,7 @@ func clicks_locked() -> bool:
 
 
 func doodle_pad() -> Control:
-	# Chỉ trả về node khi tab hiện tại ĐANG hiện bàn nháp (tab khác = null như trước đây)
+	# Chỉ trả về node khi tab hiện tại ĐANG hiện bàn nháp (tab khác = null)
 	if _doodle_pad == null or not is_instance_valid(_doodle_pad) or not _doodle_pad.visible:
 		return null
 	return _doodle_pad

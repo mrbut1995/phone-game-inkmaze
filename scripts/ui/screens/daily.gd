@@ -5,7 +5,7 @@ extends BaseScene
 ##
 ## Bố cục dọc (bản D "Đường mốc"): TopBar · banner tiêu đề · DẢI TUẦN (+ nút mở lịch tháng) ·
 ## ĐƯỜNG PHẦN THƯỞNG (sao tổng → 4 rương) · 2 thẻ hành động (CHƠI / THỬ THÁCH).
-## Bố cục ngang giữ bản cũ: thanh Sao + lịch tháng luôn hiện (cùng bộ `@export` của DailyLayout).
+## Bố cục ngang: thanh Sao + lịch tháng luôn hiện (cùng bộ `@export` của DailyLayout).
 ##
 ## Mô hình Sao (v2.28):
 ##   · CHƠI      — 1 màn maze thường, mỗi NHIỆM VỤ xong = 1 Sao (tối đa 3)

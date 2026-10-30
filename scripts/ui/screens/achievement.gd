@@ -115,7 +115,7 @@ func _cards_per_page() -> int:
 
 
 ## Số CỘT thẻ mỗi trang: cột của trang (`nodes/achievements/page.tscn`) là **VBoxContainer** ⇒ LUÔN 1 cột.
-## (Trước đây bản NGANG tự chia 2–3 cột theo bề rộng, nhưng cột thẻ chỉ xếp được 1 cột
+## (Bản NGANG không tự chia 2–3 cột theo bề rộng vì cột thẻ chỉ xếp được 1 cột
 ##  ⇒ trang nhận gấp đôi số thẻ và đẩy thẻ cuối tràn ra ngoài đáy trang.)
 func _columns_per_page() -> int:
 	return PORTRAIT_COLUMNS

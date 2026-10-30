@@ -74,7 +74,7 @@ var _rest_saved := false
 func _on_open() -> void:
 	_kill_tweens()
 	_hide_for_intro()
-	# Tiêu đề riêng theo LÝ DO thua (giữ như bản cũ)
+	# Tiêu đề riêng theo LÝ DO thua (quy ước cố định)
 	match str(data.get("reason", "")):
 		"dead_end":
 			label_title.text = tr("STR_GAME_OVER_NO_PATH")  # keep-code: chữ theo dữ liệu ván chơi (runtime)

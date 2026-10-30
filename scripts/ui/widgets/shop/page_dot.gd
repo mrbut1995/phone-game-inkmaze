@@ -2,7 +2,7 @@ class_name ShopPageDot
 extends TextureRect
 ## ============================================================================
 ## Chấm chỉ số trang của màn Cửa hàng (nodes/shop/page_dot.tscn)
-## Trước đây chấm được tạo bằng code (`TextureRect.new()`) — nay là SCENE riêng.
+## Là SCENE riêng.
 ## Cỡ + art: chấm ĐANG XEM to (34×24), các chấm khác nhỏ (12×24).
 ## ============================================================================
 

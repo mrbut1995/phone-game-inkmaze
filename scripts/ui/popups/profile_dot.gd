@@ -2,7 +2,7 @@ class_name EditProfileDot
 extends TextureButton
 ## ============================================================================
 ## Chấm phân trang của popup DIỆN MẠO HỒ SƠ (nodes/popups/profile_dot.tscn)
-## Trước đây chấm được tạo bằng code (`TextureButton.new()`) — nay là SCENE riêng.
+## Là SCENE riêng.
 ## Bấm được để nhảy tới trang tương ứng; chấm ĐANG XEM thì khoá lại.
 ## ============================================================================
 

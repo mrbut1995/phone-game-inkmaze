@@ -118,7 +118,7 @@ func _refresh_overlay_positions() -> void:
 	if _has_spotlight:
 		_apply_spotlight()
 	# KHÔNG đụng vào hoạt cảnh con trỏ ở đây!
-	# Trước đây hàm này gọi `_update_cursor_demonstration()` ⇒ mỗi sự kiện resize lại
+	# KHÔNG gọi `_update_cursor_demonstration()` ở đây: mỗi sự kiện resize sẽ
 	# `stop_cursor_animation()` (bước không khai báo pointer_drag/pointer_tap) hoặc
 	# khởi động lại drag (bước có khai báo) ⇒ con trỏ ĐỨNG HÌNH suốt lúc kéo cửa sổ.
 	# Demo con trỏ tự chạy vòng lặp riêng (blueprint loop hoặc chu kỳ của script bài học),
