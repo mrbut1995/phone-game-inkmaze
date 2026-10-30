@@ -34,7 +34,7 @@ func rebuild(p_selected: int) -> void:
 	var dim := DailyCalendar.days_in_month(year, month)
 	var prev_dim := DailyCalendar.days_in_month(year, month - 1) if month > 1 \
 		else DailyCalendar.days_in_month(year - 1, 12)
-	var daily: Node = get_node_or_null("/root/DailyManager")
+	var daily: Node = Svc.daily()
 	var today := int(daily.call("get_today")) if daily != null else -1
 	var anchor := p_selected if p_selected > 0 else today
 	var offset := (DailyCalendar.weekday_of(year, month, clampi(anchor, 1, dim)) + 6) % 7

@@ -1,3 +1,4 @@
+class_name TutorialManagerClass
 extends Node
 ## ============================================================================
 ## Manager: TutorialManager — điều phối LUỒNG HỌC LẦN ĐẦU (onboarding) và

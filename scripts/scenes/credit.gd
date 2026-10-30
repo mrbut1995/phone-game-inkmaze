@@ -42,7 +42,7 @@ func _apply_credit_context() -> void:
 
 
 func _bind_theme_signal() -> void:
-	var themes: Variant = get_node_or_null("/root/ThemeManager")
+	var themes: Variant = Svc.theme()
 	if themes == null or not themes.has_signal("skin_changed"):
 		return
 	var cb := Callable(self, "_on_skin_changed")
@@ -69,7 +69,7 @@ func _refresh_theme_name() -> void:
 	if layout.theme_value == null:
 		return
 	var fallback := tr("STR_SHOP_THEME_4LY_NAME")
-	var shop: Variant = get_node_or_null("/root/ShopManager")
+	var shop: Variant = Svc.shop()
 	if shop == null or not shop.has_method("item"):
 		layout.theme_value.text = fallback
 		return
@@ -96,7 +96,7 @@ func _refresh_track_name() -> void:
 func _refresh_version() -> void:
 	if layout.version_label == null:
 		return
-	var app := get_node_or_null("/root/AppManager")
+	var app := Svc.app()
 	var version := "1.0.0"
 	if app != null:
 		version = str(app.call("get_version"))
@@ -104,7 +104,7 @@ func _refresh_version() -> void:
 
 
 func _music_manager() -> Node:
-	return get_node_or_null("/root/MusicManager")
+	return Svc.music()
 
 
 func _on_skin_changed(_theme_id: String, _pen_id: String) -> void:
@@ -117,7 +117,7 @@ func _on_soundtrack_changed(_track_path: String, _theme_id: String, _context_nam
 
 func _on_back_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
-	var screen: Variant = get_node_or_null("/root/ScreenManager")
+	var screen: Variant = Svc.screen()
 	if screen != null and screen.has_method("go_back") and bool(screen.call("go_back")):
 		return
 	Nav.goto_settings()

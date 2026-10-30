@@ -339,6 +339,27 @@ giống 100% — khác duy nhất TÊN node con (cũ: @VBoxContainer@4…, mới
 
 `audit_hardcode --file scripts/nodes/main/event_button_column.gd`: `P 8 · T 1 · C 2 · S 4 · E 0` → **0 / 0 / 0 / 0 / 0**.
 
+### Phase 5 — đợt 5: `Svc` — điểm truy cập autoload duy nhất (§8.2)
+
+**Vấn đề:** 184 chỗ viết `get_node_or_null("/root/X")` nằm rải ở 50 file, mỗi file tự dựng lại
+boilerplate lấy `Engine.get_main_loop()`; 12 facade trong `scripts/utils/` lại có thêm `_mgr()` riêng.
+Lý do lịch sử: harness `godot --script` không có autoload nên gọi thẳng tên autoload sẽ lỗi parse.
+
+**Đã làm:**
+
+| Việc | Chi tiết |
+|---|---|
+| `scripts/utils/svc.gd` (mới, `class_name Svc`) | 24 accessor có kiểu (`Svc.game() -> GameManagerClass` · `Svc.loc() -> LocalizationManagerClass` …) + `Svc.node(name)`; lấy node qua `Engine.get_main_loop().root` ⇒ vẫn `null` an toàn khi chạy `--script` |
+| 22 script autoload | thêm `class_name <Tên>Class` (đúng quy ước sẵn có của `GameManagerClass` / `LevelManagerClass`) để accessor có kiểu |
+| 50 file | `get_node_or_null("/root/X")` → `Svc.x()` (**175** chỗ) |
+| `base_layout.gd` | `has_node/get_node("/root/SafeArea")` → `Svc.safe_area()` (9 chỗ cuối cùng) |
+| 12 facade `scripts/utils/` | `_mgr()`/`manager()` chỉ còn `return Svc.x()`; xoá 3 hàm `_tree()` không còn dùng (`archivement` · `profile` · `ranking`) |
+
+**Kết quả `grep "/root/"`:** 184 → **1** (chỉ còn dòng ghi chú quy ước trong `svc.gd`) — đạt §8.2.4.
+
+**Kiểm chứng:** 60 file `--check-only` → 0 lỗi parse; full suite **7 PASS / 13 FAIL**, số check fail của
+13 test y hệt baseline (không hồi quy).
+
 ---
 
 ## 4. Việc còn lại (CHƯA làm) & lý do
@@ -348,7 +369,7 @@ giống 100% — khác duy nhất TÊN node con (cũ: @VBoxContainer@4…, mới
 | Phase 2B (code) | Chuyển giá trị tĩnh trong code ra `.tscn`/Theme | **XONG** — in-scope 0 finding; phần còn lại đã đánh dấu `# keep-code:` có lý do |
 | Phase 2B (widget dựng bằng code) | `event_button_column.gd` (cột nút event) | **XONG** (đợt 4): thành `nodes/main/event_button_column.tscn` + `event_button_item.tscn` + `styles/event/pill.tres` |
 | Phase 3 | Đổi `archivement` → `achievement` (file/class/hàm) + sắp xếp lại `scripts/` theo cây đích | **DỪNG theo §10**: tên autoload `ArchivementManager` là **key trong blob save** (`user://inkmaze_data.json`) ⇒ đổi là mất tiến trình người chơi. Cần user duyệt kèm migration |
-| Phase 5 (`Svc`) | Thay 158 chỗ `"/root/..."` bằng accessor tĩnh có kiểu | Đổi rộng khắp autoload + test `--script`; rủi ro cao, cần lượt riêng |
+| Phase 5 (`Svc`) | Thay 184 chỗ `"/root/..."` bằng accessor tĩnh có kiểu | **XONG** (đợt 5) — còn 1 chuỗi trong `svc.gd` |
 | Phase 5 (S7) | Tách god class `board.gd` (2052) · `game_manager.gd` (1256) · `game_controller.gd` (1136) · `debug.gd` (1192) | Đổi API công khai ⇒ phải làm từng file + chạy full suite (13 test đang đỏ sẵn, khó phân biệt hồi quy) |
 | Phase 4 | Gộp scene dọc/ngang trùng nhau | Tùy chọn (§7); cần review thị giác từng màn |
 
@@ -373,7 +394,7 @@ giống 100% — khác duy nhất TÊN node con (cũ: @VBoxContainer@4…, mới
 | Hàm DEPRECATED | `Nav.goto_levels` · `GameManager.go_to_levels` · helper levels của `SceneManager` — `test_main_merge.gd:88,91` assert phải tồn tại |
 | `print()` còn lại | 4 chỗ có tiền tố log: `AdsManager.gd:56`, `DebugManager.gd:92`, `LocalizationManager.gd:100,162` (chủ đích, giữ) |
 | `TODO` | đều là việc tương lai thật (Google Play / AdMob / event sync / màn hướng dẫn) |
-| `"/root/…"` | 158 chỗ, đều để tránh lỗi parse autoload khi chạy `--script` (Phase 5 `Svc` sẽ gom) |
+| `"/root/…"` | cền 1 chỗ: ghi chú quy ước trong `scripts/utils/svc.gd` (mọi chỗ khác đã dùng `Svc.x()`) |
 
 ---
 
@@ -385,6 +406,7 @@ giống 100% — khác duy nhất TÊN node con (cũ: @VBoxContainer@4…, mới
 | `check_integrity` E1 (phạm vi game) | 0 | **1** | `nodes/main/event_card.tscn` thiếu `events/halloween_card_grid.png` (có sẵn từ commit `1c2209c9`, art chưa sinh) |
 | `check_integrity` W1 / W2 (phạm vi game) | 13 / 5 | **0 / 0** | |
 | `audit_hardcode` P / T / C / S / E | 387 / 29 / 122 / 26 / 101 | **0 / 0 / 0 / 0 / 0** (in-scope) | toàn bộ 116 finding còn lại nằm ngoài phạm vi game (`test_case/`, backup WIP, `android/`) |
+| `"/root/…"` trong `scripts/` | 184 | **1** (ghi chú trong `svc.gd`) | Phase 5 §8.2 |
 | `audit_hidden` DEAD / SPLIT-BASE / REVIEW / LIVE (in-scope) | 6 / 36 / 59 / 98 | 2 / 36 / 59 / 98 | 4 node DEAD thật đã xoá (Phase 1a) |
 | Full suite | 7 PASS · 13 FAIL | **7 PASS · 13 FAIL** (số check fail y hệt) | Không tăng hồi quy ở bất kỳ test nào |
 

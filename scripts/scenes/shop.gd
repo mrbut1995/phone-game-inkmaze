@@ -905,7 +905,7 @@ func _on_back_pressed() -> void:
 
 ## Đọc 1 lần màn cần quay về (GameManager ghi khi mở Shop từ popup hết lượt)
 func _take_return_path() -> String:
-	var game_manager := get_node_or_null("/root/GameManager")
+	var game_manager := Svc.game()
 	if game_manager == null or not game_manager.has_method("take_shop_return_path"):
 		return ""
 	return str(game_manager.call("take_shop_return_path"))

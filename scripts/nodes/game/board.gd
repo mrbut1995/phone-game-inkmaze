@@ -218,7 +218,7 @@ func relayout() -> void:
 
 ## Người chơi đổi bút ở Cửa hàng -> đổi luôn con trỏ + nét mực đang hiển thị
 func _connect_skin_signal() -> void:
-	var themes := get_node_or_null("/root/ThemeManager")
+	var themes := Svc.theme()
 	if themes == null or not themes.has_signal("skin_changed"):
 		return
 	if not themes.is_connected("skin_changed", _on_skin_changed):  # keep-code: nối/ngắt AUTOLOAD GameManager (không phải node tĩnh)

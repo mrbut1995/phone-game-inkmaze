@@ -53,7 +53,7 @@ func _on_open() -> void:
 
 ## Ghép chuỗi phần thưởng (Xu + lượt công cụ) từ định nghĩa mốc
 func _reward_text(reward: Dictionary) -> String:
-	var dm: Node = get_node_or_null("/root/DailyManager")
+	var dm: Node = Svc.daily()
 	if dm != null and dm.has_method("reward_text"):
 		return str(dm.call("reward_text", reward))
 	return ""

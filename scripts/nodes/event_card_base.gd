@@ -249,8 +249,8 @@ func _paint_card_edges(lip: Panel, frame: Panel, t: EventTheme) -> void:
 # --- Helper dữ liệu ----------------------------------------------------------
 
 func _get_event_manager() -> Node:
-	return get_node_or_null("/root/EventManager")
+	return Svc.event()
 
 
 func _get_daily_manager() -> Node:
-	return get_node_or_null("/root/DailyManager")
+	return Svc.daily()

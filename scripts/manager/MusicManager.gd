@@ -1,3 +1,4 @@
+class_name MusicManagerClass
 extends Node
 ## ============================================================================
 ## Manager: MusicManager - Phát soundtrack nền theo chủ đề đang dùng.
@@ -97,7 +98,7 @@ func _refresh_runtime_state() -> void:
 
 
 func _bind_setting_manager() -> void:
-	var settings: Variant = get_node_or_null("/root/SettingManager")
+	var settings: Variant = Svc.setting()
 	if settings == null or not settings.has_signal("volume_changed"):
 		return
 	var cb := Callable(self, "_on_volume_changed")
@@ -106,7 +107,7 @@ func _bind_setting_manager() -> void:
 
 
 func _bind_theme_manager() -> void:
-	var themes: Variant = get_node_or_null("/root/ThemeManager")
+	var themes: Variant = Svc.theme()
 	if themes == null or not themes.has_signal("skin_changed"):
 		return
 	var cb := Callable(self, "_on_skin_changed")
@@ -115,7 +116,7 @@ func _bind_theme_manager() -> void:
 
 
 func _bind_scene_manager() -> void:
-	var scenes: Variant = get_node_or_null("/root/SceneManager")
+	var scenes: Variant = Svc.scene()
 	if scenes == null or not scenes.has_signal("scene_changed"):
 		return
 	var cb := Callable(self, "_on_scene_changed")
@@ -162,7 +163,7 @@ func _refresh_soundtrack(restart: bool) -> void:
 func _resolve_track_path() -> String:
 	if _context_name == "credits":
 		return DEFAULT_SOUNDTRACK
-	var shop: Variant = get_node_or_null("/root/ShopManager")
+	var shop: Variant = Svc.shop()
 	if shop != null and shop.has_method("item"):
 		var data: Variant = shop.call("item", _theme_id)
 		if data is Dictionary and data.has("soundtrack"):
@@ -209,19 +210,19 @@ func _apply_mix() -> void:
 # Nguồn dữ liệu
 # ---------------------------------------------------------------------------
 func _read_music_gain() -> float:
-	var settings: Variant = get_node_or_null("/root/SettingManager")
+	var settings: Variant = Svc.setting()
 	if settings == null:
 		return _music_gain
 	return clampf(float(settings.get("music_volume")), 0.0, 1.0)
 
 
 func _detect_theme_id() -> String:
-	var themes: Variant = get_node_or_null("/root/ThemeManager")
+	var themes: Variant = Svc.theme()
 	if themes != null and themes.has_method("theme_id"):
 		var selected := str(themes.call("theme_id"))
 		if not selected.is_empty():
 			return selected
-	var shop: Variant = get_node_or_null("/root/ShopManager")
+	var shop: Variant = Svc.shop()
 	if shop != null:
 		var fallback := str(shop.get("equipped_theme"))
 		if not fallback.is_empty():
@@ -230,7 +231,7 @@ func _detect_theme_id() -> String:
 
 
 func _current_scene_path() -> String:
-	var scene_manager: Variant = get_node_or_null("/root/SceneManager")
+	var scene_manager: Variant = Svc.scene()
 	if scene_manager != null and scene_manager.has_method("current_scene_path"):
 		return str(scene_manager.call("current_scene_path"))
 	var scene := get_tree().current_scene

@@ -99,7 +99,7 @@ func _play(name: StringName) -> void:
 
 
 func _reward_text(def: Dictionary) -> String:
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	if gm != null and gm.has_method("chapter_chest_reward_text"):
 		return str(gm.call("chapter_chest_reward_text", def))
 	return ""

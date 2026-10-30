@@ -46,7 +46,7 @@ func _on_close() -> void:
 # Lượt chơi (đọc từ GameManager, qua /root như các manager khác)
 # ---------------------------------------------------------------------------
 func _game_manager() -> Node:
-	return get_node_or_null("/root/GameManager")
+	return Svc.game()
 
 
 func _lives_now() -> int:

@@ -1,3 +1,4 @@
+class_name AdsManagerClass
 extends Node
 ## ============================================================================
 ## Manager: AdsManager - Cầu nối quảng cáo (PLACEHOLDER).
@@ -49,7 +50,7 @@ func show_interstitial() -> bool:
 
 
 func _debug_log(message: String) -> void:
-	var dbg: Variant = get_node_or_null("/root/DebugManager")
+	var dbg: Variant = Svc.debug()
 	if dbg != null and dbg.has_method("log"):
 		dbg.call("log", "ads", message)
 	else:

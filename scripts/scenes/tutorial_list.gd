@@ -39,7 +39,7 @@ func _apply_texts() -> void:
 ## Bảng dịch nạp XONG SAU `_ready()` (LoadingManager hoãn ~200 ms) ⇒ phải viết lại nhãn
 ## khi `LocalizationManager` phát `locale_changed`, nếu không tiêu đề sẽ hiện khoá thô.
 func _connect_locale_signal() -> void:
-	var loc: Node = get_node_or_null("/root/LocalizationManager")
+	var loc: Node = Svc.loc()
 	if loc != null and loc.has_signal("locale_changed") \
 			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		loc.connect("locale_changed", _on_locale_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
@@ -86,7 +86,7 @@ func _list_buttons() -> Dictionary:
 
 ## DANH SÁCH: bài ĐÃ XEM → nút ACTIVE · bài CHƯA XEM → nút KHOÁ (mờ, không bấm được)
 func _refresh_list_state() -> void:
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	var buttons := _list_buttons()
 	for tid in buttons:
 		var btn: BaseButton = buttons[tid]
@@ -106,14 +106,14 @@ func _on_select_tutorial(tid: String) -> void:
 	# Nút bài CHƯA XEM đã bị khoá — chặn thêm một lần nữa nếu tín hiệu bị phát bằng tay
 	if not _is_seen(tid):
 		return
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	if gm != null and gm.has_method("request_tutorial"):
 		gm.call("request_tutorial", tid, true)
 	NavHelper.goto_tutorial()
 
 
 func _is_seen(tid: String) -> bool:
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	if gm == null or not gm.has_method("is_tutorial_completed"):
 		return true
 	return bool(gm.call("is_tutorial_completed", tid))

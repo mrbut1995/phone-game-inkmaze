@@ -243,14 +243,14 @@ func chapter_stars(chapter_id: int) -> int:
 
 ## Chương đang chứa màn chơi hiện tại (GameManager.current_level)
 func current_chapter_id() -> int:
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	if gm == null:
 		return 1
 	return chapter_of_level(maxi(int(gm.get("current_level")), 1))
 
 
 func _level_stars() -> Dictionary:
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	var stars: Variant = gm.get("level_stars") if gm != null else null
 	return stars if stars is Dictionary else {}
 

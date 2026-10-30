@@ -78,7 +78,7 @@ func _bind_loading() -> void:
 
 
 func _loading_manager() -> Node:
-	return get_node_or_null("/root/LoadingManager")
+	return Svc.loading()
 
 
 func _on_loading_progress(value: float, _label: String) -> void:
@@ -110,7 +110,7 @@ func _update_loading_text(value: float) -> void:
 	if layout.loading_label == null:
 		return
 	var percent := roundi(clampf(value, 0.0, 1.0) * 100.0)
-	var loc := get_node_or_null("/root/LocalizationManager")
+	var loc := Svc.loc()
 	var translated := loc != null and bool(loc.call("is_ready"))
 	layout.loading_label.text = (tr("STR_LOADING_PROGRESS").format([percent])
 		if translated else "%d%%" % percent)
@@ -132,7 +132,7 @@ func _wait_min_display() -> void:
 func _refresh_stamp() -> void:
 	if layout.stamp_label == null:
 		return
-	var app := get_node_or_null("/root/AppManager")
+	var app := Svc.app()
 	var version := "1.0.0"
 	if app != null:
 		version = str(app.call("get_version"))
@@ -270,7 +270,7 @@ func _on_exit_animation_finished(anim_name: StringName) -> void:
 
 
 func _goto_title() -> void:
-	var sm := get_node_or_null("/root/SceneManager")
+	var sm := Svc.scene()
 	if sm != null and sm.has_method("change_scene_instant"):
 		sm.call("change_scene_instant", SCENE_TITLE, false)
 	else:

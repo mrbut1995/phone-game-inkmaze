@@ -273,7 +273,7 @@ func _ready() -> void:
 		UIAnim.play_slide_in(button_bar, Vector2(0, 30), 0.08, 0.25)
 
 	# Khởi động ván chơi dựa trên GameManager hoặc mặc định
-	var gm: Node = get_node_or_null("/root/GameManager")
+	var gm: Node = Svc.game()
 	var initial_mode: String = "dungeon"
 	var initial_diff: String = "medium"
 	if gm != null:
@@ -355,13 +355,13 @@ func _apply_mode_buttons(mode_name: String) -> void:
 
 ## Ván này có phải là ván chơi MÀN (màn Chọn màn) không — đọc cờ từ GameManager
 func _is_level_run() -> bool:
-	var gm: Node = get_node_or_null("/root/GameManager")
+	var gm: Node = Svc.game()
 	return gm != null and bool(gm.get("level_run"))
 
 
 ## Ván đang nằm trong LUỒNG HỌC LẦN ĐẦU (cờ do TutorialManager giữ) → xem `_apply_mode_buttons`
 func _is_guided_run() -> bool:
-	var tm: Node = get_node_or_null("/root/TutorialManager")
+	var tm: Node = Svc.tutorial()
 	return tm != null and bool(tm.get("flow_active"))
 
 
@@ -400,7 +400,7 @@ func _refresh_hint_guide() -> void:
 ##   · Play (Classic): y như trên.
 ##   · Các chế độ khác (Dungeon/Daily/Debug): bắt đầu từ 1 (trừ khi Debug Console ép tầng).
 func _start_floor_for(mode_name: String) -> int:
-	var gm: Node = get_node_or_null("/root/GameManager")
+	var gm: Node = Svc.game()
 	match mode_name.to_lower():
 		"play", "classic", "standard":
 			if gm != null:

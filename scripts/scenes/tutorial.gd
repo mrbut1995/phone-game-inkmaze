@@ -56,7 +56,7 @@ func _start_requested() -> void:
 	var requested := _take_tutorial_request()
 	_stay_after_finish = _is_test_mode()
 	# Kiểm flag quay về game (mở từ nút ? trên màn chơi)
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	if gm != null and gm.has_method("take_return_to_game_flag"):
 		_return_to_game = bool(gm.call("take_return_to_game_flag"))
 	else:
@@ -103,13 +103,13 @@ func _is_flow_tutorial(tutorial_id: String) -> bool:
 
 ## Ván TEST (Debug Console bật “Test mode”): không ghi tiến trình, không tự nhảy màn
 func _is_test_mode() -> bool:
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	return bool(gm.get("debug_run")) if gm != null else false
 
 
 ## Đọc yêu cầu từ GameManager (lấy động qua /root — xem chú thích ở `utils/nav.gd`)
 func _take_tutorial_request() -> String:
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	if gm != null and gm.has_method("take_tutorial_request"):
 		return str(gm.call("take_tutorial_request"))
 	return ""
@@ -117,7 +117,7 @@ func _take_tutorial_request() -> String:
 
 ## Manager điều phối luồng học lần đầu (lấy động qua /root như mọi autoload khác)
 func _tutorial_manager() -> Node:
-	return get_node_or_null("/root/TutorialManager")
+	return Svc.tutorial()
 
 
 func _bind_refs() -> void:
@@ -136,7 +136,7 @@ func _apply_texts() -> void:
 ## Bảng dịch nạp XONG SAU `_ready()` (LoadingManager hoãn ~200 ms) ⇒ viết lại nhãn khi
 ## `LocalizationManager` phát `locale_changed`, nếu không tiêu đề hiện khoá thô.
 func _connect_locale_signal() -> void:
-	var loc: Node = get_node_or_null("/root/LocalizationManager")
+	var loc: Node = Svc.loc()
 	if loc != null and loc.has_signal("locale_changed") \
 			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		loc.connect("locale_changed", _on_locale_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh

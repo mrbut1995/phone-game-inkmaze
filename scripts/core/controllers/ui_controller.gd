@@ -245,7 +245,7 @@ func show_direct_game_over(result: Dictionary) -> void:
 func _charge_life_cost(result: Dictionary) -> void:
 	if bool(result.get("guided", false)):
 		return
-	var game_manager := get_node_or_null("/root/GameManager")
+	var game_manager := Svc.game()
 	if game_manager != null and game_manager.has_method("register_run_loss"):
 		game_manager.call("register_run_loss")
 

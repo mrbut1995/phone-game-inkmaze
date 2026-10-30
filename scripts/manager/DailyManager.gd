@@ -1,3 +1,4 @@
+class_name DailyManagerClass
 extends Node
 ## ============================================================================
 ## Manager: DailyManager — Thử thách hằng ngày (v2.28 "1 Màn + 1 Thử thách").
@@ -257,7 +258,7 @@ func _grant(def: Dictionary) -> void:
 	if coins > 0:
 		_pay_coins(coins)
 		coins_awarded.emit(get_today(), coins)
-	var gm: Node = get_node_or_null("/root/GameManager")
+	var gm: Node = Svc.game()
 	if gm == null or not gm.has_method("grant_tool_uses"):
 		return
 	for tool_id in ["hint", "undo", "skip"]:
@@ -270,7 +271,7 @@ func _grant(def: Dictionary) -> void:
 func _pay_coins(amount: int) -> void:
 	if amount <= 0:
 		return
-	var wallet: Node = get_node_or_null("/root/ArchivementManager")
+	var wallet: Node = Svc.archivement()
 	if wallet == null:
 		return
 	wallet.set("coins", maxi(int(wallet.get("coins")) + amount, 0))
@@ -349,7 +350,7 @@ func is_day_unlocked(day: int) -> bool:
 func can_unlock_day(day: int) -> bool:
 	if day >= get_today() or day < 1 or is_day_unlocked(day):
 		return false
-	var wallet: Node = get_node_or_null("/root/ArchivementManager")
+	var wallet: Node = Svc.archivement()
 	if wallet == null:
 		return false
 	return int(wallet.get("coins")) >= UNLOCK_COST
@@ -377,7 +378,7 @@ func set_day_unlocked(day: int, value: bool) -> void:
 
 
 func _spend_coins(amount: int) -> bool:
-	var wallet: Node = get_node_or_null("/root/ArchivementManager")
+	var wallet: Node = Svc.archivement()
 	if wallet == null or int(wallet.get("coins")) < amount:
 		return false
 	wallet.set("coins", maxi(int(wallet.get("coins")) - amount, 0))
@@ -514,7 +515,7 @@ func mission_reward(_index: int) -> int:
 # ---------------------------------------------------------------------------
 
 func _save_completed() -> void:
-	var save: Node = get_node_or_null("/root/SaveManager")
+	var save: Node = Svc.save()
 	if save != null and save.has_method("queue_save"):
 		save.call("queue_save")
 

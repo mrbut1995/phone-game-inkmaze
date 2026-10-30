@@ -14,7 +14,7 @@ var _layout: EventLayout = null
 func _ready() -> void:
 	# Lấy event_id từ SceneManager nếu chưa được set từ bên ngoài
 	if _event_id.is_empty():
-		var sm := get_node_or_null("/root/SceneManager")
+		var sm := Svc.scene()
 		if sm != null and sm.has_method("consume_pending_event_id"):
 			_event_id = sm.call("consume_pending_event_id")
 	_bind_layout()
@@ -43,7 +43,7 @@ func set_event_id(id: StringName) -> void:
 func _refresh() -> void:
 	if _layout == null or _event_id.is_empty():
 		return
-	var em := get_node_or_null("/root/EventManager")
+	var em := Svc.event()
 	if em == null:
 		return
 	var data: EventData = em.get_event(_event_id)
@@ -93,15 +93,15 @@ func _refresh() -> void:
 
 func _on_back_pressed() -> void:
 	Sfx.play(Sfx.BTN_CLICK)
-	var sm := get_node_or_null("/root/SceneManager")
+	var sm := Svc.scene()
 	if sm != null and sm.has_method("go_back"):
 		sm.call("go_back")
 	else:
-		get_node_or_null("/root/SceneManager").call("goto_main")
+		Svc.scene().call("goto_main")
 
 
 func _on_cta_pressed() -> void:
-	var em := get_node_or_null("/root/EventManager")
+	var em := Svc.event()
 	if em == null:
 		return
 	var data: EventData = em.get_event(_event_id)
@@ -119,7 +119,7 @@ func _on_cta_pressed() -> void:
 	# Vào chơi theo loại event
 	match data.type:
 		EventData.Type.DAILY:
-			var gm := get_node_or_null("/root/GameManager")
+			var gm := Svc.game()
 			if gm != null and gm.has_method("go_to_daily"):
 				gm.go_to_daily()
 			else:
@@ -130,7 +130,7 @@ func _on_cta_pressed() -> void:
 			for level in data.levels:
 				var lid := str(level.level_id)
 				if not done_list.has(lid):
-					var gm := get_node_or_null("/root/GameManager")
+					var gm := Svc.game()
 					if gm != null and gm.has_method("start_level_from_event"):
 						gm.call("start_level_from_event", level, _event_id)
 					else:
@@ -138,11 +138,11 @@ func _on_cta_pressed() -> void:
 					return
 			# Đã xong hết — mở lại từ đầu (replay)
 			if data.levels.size() > 0:
-				var gm := get_node_or_null("/root/GameManager")
+				var gm := Svc.game()
 				if gm != null and gm.has_method("start_level_from_event"):
 					gm.call("start_level_from_event", data.levels[0], _event_id)
 		EventData.Type.DUNGEON:
-			var gm := get_node_or_null("/root/GameManager")
+			var gm := Svc.game()
 			if gm != null and gm.has_method("start_dungeon"):
 				gm.start_dungeon()
 			else:

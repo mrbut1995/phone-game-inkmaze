@@ -1,3 +1,4 @@
+class_name ThemeManagerClass
 extends Node
 ## ============================================================================
 ## Manager: ThemeManager — ÁP DỤNG CHỦ ĐỀ GIẤY + MÀU MỰC (skin) cho toàn game.
@@ -41,7 +42,7 @@ func _ready() -> void:
 # Đọc trạng thái từ ShopManager
 # ---------------------------------------------------------------------------
 func shop() -> Node:
-	return get_node_or_null("/root/ShopManager")
+	return Svc.shop()
 
 
 ## Đọc lại bút/chủ đề đang dùng từ ShopManager rồi phát tín hiệu

@@ -124,7 +124,7 @@ func _refresh_progress() -> void:
 
 
 func _settings() -> Node:
-	return get_node_or_null("/root/SettingManager")
+	return Svc.setting()
 
 
 func _on_resume_pressed() -> void:

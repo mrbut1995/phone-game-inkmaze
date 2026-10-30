@@ -6,7 +6,7 @@ extends RefCounted
 ## Vì sao không gọi thẳng `SaveManager.flush()`?
 ##   Test runner chạy bằng `godot --script ...` -> identifier autoload không
 ##   resolve được lúc parse. Vì vậy mọi nơi chỉ tham chiếu class `Save` này,
-##   node autoload được lấy động qua /root/SaveManager (giống Sfx/Nav/Loc/Popups).
+##   node autoload được lấy qua `Svc.save()`.
 ##
 ## Cách dùng:
 ##   Save.queue_save()                 # hẹn lưu (debounce) sau khi tiến trình đổi
@@ -19,11 +19,7 @@ const PLAY_GAMES := "play_games"
 
 
 static func _mgr() -> Node:
-	var main_loop := Engine.get_main_loop()
-	var tree := main_loop as SceneTree
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("SaveManager")
-	return null
+	return Svc.save()
 
 
 ## Hẹn lưu sau một nhịp (gộp nhiều thay đổi liên tiếp)
