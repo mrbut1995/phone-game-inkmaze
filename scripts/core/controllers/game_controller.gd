@@ -769,55 +769,9 @@ func _report_to_achievements(won: bool, floor_time: float) -> void:
 		return
 	if _is_debug_run():
 		return                      # ván test từ Debug Console không tính vào danh hiệu
-	var mode := game_mode_controller.game_mode
-	Achievement.notify_run_result({
-		"mode_id": mode.mode_id,
-		"won": won,
-		"endless": mode.is_endless,
-		"floor": game_state.floor_number,
-		"score": game_state.score,
-		"elapsed": floor_time,
-		"wall_hits": game_state.floor_wall_hits,
-		"hints_used": game_state.hints_used,
-		"undos_used": game_state.undos_used,
-		"hardcore": str(mode.difficulty).to_lower() == "hardcore",
-	})
-	_record_profile_run(mode, won, floor_time)
-
-
-## Ghi ván vừa chơi vào LỊCH SỬ HỒ SƠ (màn Profiler — "HOẠT ĐỘNG GẦN ĐÂY").
-## Chỉ nhận dữ liệu RUNTIME; câu chữ/màu do màn Profiler dựng lại từ dict này.
-func _record_profile_run(mode: BaseGameMode, won: bool, floor_time: float) -> void:
-	if game_state == null or mode == null:
-		return
-	var gm: Node = Svc.game()
-	var daily := gm != null and not str(gm.get("daily_variant")).is_empty()
-	var stars := 0
-	if mission_controller != null:
-		stars = mission_controller.stars()
+	var stars := mission_controller.stars() if mission_controller != null else 0
 	var maze: MazeData = grid_controller.maze if grid_controller != null else null
-	Profile.record_run({
-		"mode_id": mode.mode_id,
-		"won": won,
-		"endless": mode.is_endless,
-		"daily": daily,
-		"floor": game_state.floor_number,
-		"score": game_state.score,
-		"elapsed": floor_time,
-		"moves": game_state.floor_moves,
-		"wall_hits": game_state.floor_wall_hits,
-		"width": maze.width if maze != null else 0,
-		"height": maze.height if maze != null else 0,
-		"stars": stars,
-		# --- Số liệu mở rộng cho bản Hồ sơ mới (Profiler stats) ---
-		"level_run": gm != null and bool(gm.get("level_run")),
-		"level_id": int(gm.get("current_level")) if gm != null else 0,
-		"undos": game_state.undos_used,
-		"hints": game_state.hints_used,
-		"wall_draws": game_state.wall_draws,
-		"wall_erases": game_state.wall_erases,
-		"skips": game_state.skips_used,
-	})
+	RunReporter.report(game_state, game_mode_controller.game_mode, won, floor_time, stars, maze)
 
 
 # ---------------------------------------------------------------------------
