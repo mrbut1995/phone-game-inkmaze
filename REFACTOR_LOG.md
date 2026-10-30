@@ -495,6 +495,21 @@ bằng `Svc.tutorial()` / `Svc.game()` — hết truy cập autoload kiểu cũ 
 
 **Kiểm chứng:** full suite **7 PASS / 13 FAIL** y hệt baseline.
 
+### Phase 5 (§8.3) — đợt 8: TIẾN TRÌNH MÀN/CHƯƠNG → `ProgressStore`
+
+`scripts/core/progress_store.gd` (~140 dòng): `unlocked_levels` · `level_stars` · `level_best_time` ·
+`unlocked_chapters` · `current_chapter` + `total_stars()` · `is_chapter_unlocked()` · `chapter_star_cost()` ·
+`can_unlock_chapter()` · `unlock_chapter()` · `set_chapter()` · `chapter_of_level()` · `next_level_in_chapter()` ·
+`can_play_level()` · `has_unlockable_chapter()` · `record_clear()` · `reset()`.
+
+`GameManager` giữ **5 property cùng tên** uỷ thác store (nên `gm.get("level_stars")`, `gm.set("unlocked_levels", 99)`
+trong test/dev-tool vẫn chạy), cộng phần phát signal (`level_completed` · `chapter_unlocked`) và `Save.queue_save()`.
+
+`game_manager.gd` **1083 → 1038 dòng** (1256 → **1038**, −218 qua 5 đợt).
+
+**Kiểm chứng:** full suite **7 PASS / 13 FAIL** y hệt baseline (kể cả `test_chapters` vẫn **8/161**);
+`test_main_merge` **70/70** · `test_debug_modes` **64/64** PASS.
+
 ---
 
 ## 8. Phase 6 (§9.1) — quét từ khoá lần cuối
@@ -650,7 +665,7 @@ Số P/T/C/S/E **theo từng commit**:
 | Việc | Lý do |
 |---|---|
 | Phase 3 — đổi `archivement` → `achievement` + sắp xếp lại `scripts/` | **XONG** sau khi người dùng đồng ý mất tiến trình (xem §2). Ảnh trong `assets/images*` cũng đã đổi tên thư mục + import lại |
-| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1083) · `game_controller.gd` (1020) · `debug.gd` (1192) | **ĐÃ TÁCH 7 đợt**: `game_manager.gd` 4 store + `game_controller.gd` 3 helper (luật thử thách · báo kết quả ván · mở bài học). Còn lại: `board.gd` (input/render/effects); `debug.gd` (theo tab); `game_controller` phần tool/HUD; `game_manager` phần daily/mode + tiến trình chương |
+| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1038) · `game_controller.gd` (1020) · `debug.gd` (1192) | **ĐÃ TÁCH 8 đợt**: `game_manager.gd` 5 store (lượt chơi · kỷ lục tầng · kho dụng cụ · rương chương · tiến trình màn/chương) + `game_controller.gd` 3 helper (luật thử thách · báo kết quả ván · mở bài học). Còn lại: `board.gd` (input/render/effects); `debug.gd` (theo tab); `game_controller` phần tool/HUD; `game_manager` phần daily/mode |
 | Phase 4 — gộp scene Portrait/Landscape trùng nhau | Tùy chọn (§7), cần review thị giác từng màn; rủi ro đổi hình ảnh mà không xác nhận được ⇒ theo §10 phải hỏi |
 | Xoá hàm "ngờ thừa" (`Nav.goto_levels`, `GameManager.go_to_levels`, helper levels của `SceneManager`) | `scripts/test_case/test_main_merge.gd:88,91` khẳng định chúng **phải tồn tại** |
 
