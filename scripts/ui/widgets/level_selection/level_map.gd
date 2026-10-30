@@ -271,7 +271,7 @@ func scroll_offset_y() -> float:
 ## Độ cuộn so với GIỮA khoảng cuộn (px · dương = bản đồ trôi xuống).
 ## Nền parallax dùng giá trị này nhân với hệ số riêng của từng lớp ⇒ tốc độ nền luôn
 ## tỉ lệ CỐ ĐỊNH với tốc độ tay kéo (không bị "chậm dần/kịch trần" như cách chuẩn hoá theo
-## độ dài chương trước đây).
+## độ dài chương).
 func scroll_delta_y() -> float:
 	if _max_scroll_y <= _min_scroll_y:
 		return 0.0
@@ -680,7 +680,7 @@ func _focus_y() -> float:
 ## Có phải màn NGANG (canvas rộng hơn cao) — quyết định cỡ nút / khoảng cách.
 ## LẤY THEO CANVAS (không theo khung `MapArea`): khung này chỉ cao ~62% canvas và nằm trong
 ## CỘT NỘI DUNG canh giữa (xem `scripts/ui/screens/base.gd`), nên với màn DỌC rộng (3:4, cửa sổ
-## lớn…) khung vẫn "rộng hơn cao" ⇒ trước đây bản đồ lỡ dùng thông số NGANG: zigzag 320 làm
+## lớn…) khung vẫn "rộng hơn cao" ⇒ bản đồ có thể lỡ dùng thông số NGANG: zigzag 320 làm
 ## nút lòi ra ngoài khung + đổi cả trục uốn của đường nối ⇒ đường nối vẽ sai (đã gặp thật).
 ## Dùng canvas cho khớp cách `BaseUI` quyết định hướng layout.
 func is_wide() -> bool:

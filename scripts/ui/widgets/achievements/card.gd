@@ -17,7 +17,7 @@ signal claim_requested(id: String)
 @export var bg_claimable: Texture2D = null
 @export var bg_progress: Texture2D = null
 @export var bg_locked: Texture2D = null
-## Ổ khoá của thẻ: dùng icon CHUNG ở `assets/images/icons/` (bản riêng trong achievements/ đã gỡ)
+## Ổ khoá của thẻ: dùng icon CHUNG ở `assets/images/icons/` 
 @export var icon_lock: Texture2D = null
 
 @export var COLOR_CLAIMED := Color(0.18039216, 0.49019608, 0.19607843, 1)   # #2E7D32

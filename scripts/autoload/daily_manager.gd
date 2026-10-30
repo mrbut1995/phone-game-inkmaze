@@ -391,7 +391,7 @@ func _spend_coins(amount: int) -> bool:
 # API TƯƠNG THÍCH (Debug Console / thống kê cũ dùng bitmask nhiệm vụ)
 # ---------------------------------------------------------------------------
 
-## Bitmask 4 bit như bản cũ: bit 0..2 = nhiệm vụ CHƠI đã xong, bit 3 = đã xong THỬ THÁCH
+## Bitmask 4 bit của dữ liệu daily.cfg: bit 0..2 = nhiệm vụ CHƠI đã xong, bit 3 = đã xong THỬ THÁCH
 func get_day_mission_mask(day: int) -> int:
 	var mask := 0
 	for i in get_day_play_stars(day):
@@ -552,7 +552,7 @@ func reset_progress() -> void:
 
 ## Nạp dữ liệu Daily.
 ## - Dữ liệu chính do SaveManager cấp qua import_progress().
-## - File user://daily.cfg là dữ liệu bản CŨ: chỉ đọc để DI TRÚ sang mô hình Sao.
+## - File user://daily.cfg là dữ liệu định dạng cũ: chỉ đọc để DI TRÚ sang mô hình Sao.
 func _load_completed() -> void:
 	var cfg := ConfigFile.new()
 	if cfg.load(CONFIG_PATH) != OK:

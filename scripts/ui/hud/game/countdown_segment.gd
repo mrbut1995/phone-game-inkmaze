@@ -4,7 +4,7 @@ extends TextureRect
 ## Một VẠCH trong dải phân đoạn ngân sách của HUD đếm ngược
 ## (nodes/hud/countdown_segment.tscn)
 ##
-## Trước đây HUD tự dựng vạch bằng `TextureRect.new()` — nay là SCENE riêng:
+## Là SCENE riêng:
 ## art (xám / cam) + cỡ sửa được ngay trong scene, HUD chỉ đặt bề rộng + trạng thái.
 ## ============================================================================
 

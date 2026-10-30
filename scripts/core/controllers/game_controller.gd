@@ -676,7 +676,7 @@ func revive_run() -> void:
 	var endless := game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless
 	if endless:
 		# Endless (Dungeon): hồi sinh GIỮ NGUYÊN mê cung + vị trí + đường đã đi,
-		# chỉ cộng thêm bước và cho chơi tiếp (trước đây tạo lại tầng mới).
+		# chỉ cộng thêm bước và cho chơi tiếp (không tạo lại tầng mới).
 		game_state.add_bonus_steps(revive_bonus_steps)
 		if timer_controller != null:
 			timer_controller.resume()

@@ -18,7 +18,7 @@ const CRASH_SFX_SCENE := preload("res://nodes/sfx/crash.tscn")
 const MINE_SFX_SCENE := preload("res://nodes/sfx/mine_explosion.tscn")
 const FOOTSTEP_SCENE := preload("res://nodes/game/ink_footstep.tscn")
 
-## Cỡ THIẾT KẾ đọc 1 LẦN từ scene gốc (dùng cho mọi tầng/bàn — trước đây đọc lại mỗi tầng)
+## Cỡ THIẾT KẾ đọc 1 LẦN từ scene gốc (dùng cho mọi tầng/bàn , không đọc lại mỗi tầng)
 static var _design_wall_width := 0.0
 static var _design_history_line_width := 0.0
 static var _design_moving_line_width := 0.0
@@ -398,7 +398,7 @@ func _read_panel_insets() -> void:
 	_sheet_tex_rect = Rect2()
 	_margin_tex_x = -1.0
 	_tex_px = Vector2.ZERO
-	# Panel là NinePatchRect (không phải TextureRect) — trước đây ép kiểu sai nên không đọc được gì
+	# Panel là NinePatchRect (không phải TextureRect) — ép sai kiểu sẽ không đọc được gì
 	var panel := get_node_or_null("Panel") as NinePatchRect
 	if panel == null or panel.texture == null:
 		return
@@ -1640,7 +1640,7 @@ func _hit_anchor_info(local_pos: Vector2) -> Dictionary:
 	return best
 
 
-## Ô chứa điểm `local_pos` — tính số học O(1) (trước đây duyệt cả bảng mỗi sự kiện kéo)
+## Ô chứa điểm `local_pos` — tính số học O(1) (không duyệt cả bảng mỗi sự kiện kéo)
 func _hit_cell(local_pos: Vector2) -> Vector2i:
 	return _cell_at(local_pos)
 

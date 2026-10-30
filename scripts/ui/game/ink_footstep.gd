@@ -3,8 +3,7 @@ extends Control
 ## ============================================================================
 ## Vệt mực "bước chân" khi nhân vật đi qua một ô (nodes/game/ink_footstep.tscn)
 ##
-## Trước đây bàn tự dựng bằng `Control.new()` + `TextureRect.new()` — nay là
-## SCENE riêng: cỡ 36×36 · con "Mark" bám kín · alpha mờ 0.45.
+## Là SCENE riêng: cỡ 36×36 · con "Mark" bám kín · alpha mờ 0.45.
 ## Hiệu ứng lan to + mờ dần (và tự xoá) khai trong `ink_footstep.tscn` (AnimationPlayer autoplay).
 ## Bàn chỉ việc: `footstep.setup(tâm_ô, texture_ngòi_bút, màu_mực)`.
 ##

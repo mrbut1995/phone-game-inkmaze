@@ -131,9 +131,9 @@ func _bind_refs() -> void:
 
 ## ============================================================================
 ## NỐI DÂY GIỮA CONTROLLER VÀ VIEW
-## Trước đây các dây này khai bằng `[connection]` trong `scenes/orientation/*/game.tscn`,
-## nhưng khi tách layout / dọn node thì phần `[connection]` bị mất ⇒ bàn cờ kéo không đi được,
-## nút bấm không ăn. Nối lại bằng code (có guard `is_connected` nên gọi lại nhiều lần vẫn an toàn).
+## Các dây này khai bằng CODE (không khai `[connection]` trong scene layout): mỗi hướng màn hình
+## có bộ controller riêng; thiếu dây thì bàn cờ kéo không đi được,
+## nút bấm không ăn. Có guard `is_connected` nên gọi lại nhiều lần vẫn an toàn.
 ## LƯU Ý: mỗi layout có BỘ controller riêng ⇒ phải gọi lại mỗi lần `_bind_refs()` (đổi hướng màn hình).
 ## ============================================================================
 func _wire_controllers() -> void:
@@ -523,7 +523,7 @@ func _apply_hud_for_mode(mode_name: String) -> void:
 	_copy_layout_from(slot, new_hud)
 	_hud_variant_landscape = want_landscape
 	# ⚠️ KHÔNG xoá khung gốc (`layout.hud_slot`): mỗi lần xoay màn hình `_bind_refs()` cần nó làm
-	# mốc để đặt HUD mới. Trước đây xoá nó ⇒ `layout.hud_slot` thành node đã free ⇒ xoay/resize
+	# mốc để đặt HUD mới. Xoá nó ⇒ `layout.hud_slot` thành node đã free ⇒ xoay/resize
 	# tiếp theo là lỗi "Trying to cast a freed object" (tái hiện: xoay dọc→ngang ở mode Minesweeper).
 	if hud_host != null and is_instance_valid(hud_host) and hud_host != slot:
 		hud_host.queue_free()

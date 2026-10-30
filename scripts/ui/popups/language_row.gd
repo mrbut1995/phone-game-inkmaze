@@ -3,8 +3,7 @@ extends Button
 ## ============================================================================
 ## Một HÀNG ngôn ngữ trong popup Chọn ngôn ngữ (nodes/popups/language_row.tscn)
 ##
-## Trước đây popup tự dựng hàng + cờ + 2 nhãn + dấu tích bằng `.new()` — nay là
-## SCENE riêng: art (thường · đang chọn · nhấn · focus) + cỡ + vị trí cờ/nhãn/tích
+## Là SCENE riêng: art (thường · đang chọn · nhấn · focus) + cỡ + vị trí cờ/nhãn/tích
 ## sửa được ngay trong scene. Popup chỉ việc: setup() rồi set_selected().
 ## ============================================================================
 

@@ -2,7 +2,7 @@ class_name AchPageDot
 extends TextureButton
 ## ============================================================================
 ## Chấm chỉ số trang của Sổ tay thành tựu (nodes/achievements/page_dot.tscn)
-## Trước đây chấm được tạo bằng code (`TextureButton.new()`) — nay là SCENE riêng.
+## Là SCENE riêng.
 ## Bấm được để nhảy tới trang tương ứng (màn nối signal `pressed`).
 ## ============================================================================
 
