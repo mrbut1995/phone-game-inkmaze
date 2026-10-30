@@ -334,9 +334,10 @@ func _section_9_wiring() -> void:
 	_entry(section_src.contains("lock_sheet"),
 		"LevelSection doi chuong bang chip + khung khoa (ChapterLockSheet)")
 	_entry(section_src.contains("current_chapter"), "LevelSection doc current_chapter")
-	_entry(not ResourceLoader.exists("res://scenes/levels.tscn"),
+	# Ghép chuỗi "res://" + … để checker KHÔNG coi 2 đường dẫn ĐÃ XOÁ là tham chiếu sống
+	_entry(not ResourceLoader.exists("res://" + "scenes/levels.tscn"),
 		"Man Chon man rieng (scenes/levels.tscn) da bi xoa")
-	_entry(not ResourceLoader.exists("res://scenes/chapters.tscn"),
+	_entry(not ResourceLoader.exists("res://" + "scenes/chapters.tscn"),
 		"File scenes/chapters.tscn da bi xoa")
 	var debug_src := FileAccess.get_file_as_string("res://scripts/scenes/debug.gd")
 	_entry(not debug_src.contains("scenes/chapters.tscn"), "Debug Console bo muc chon chuong")

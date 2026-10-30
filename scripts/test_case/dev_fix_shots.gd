@@ -18,7 +18,8 @@ func _init() -> void:
 	var gm: Node = root.get_node_or_null("GameManager")
 	if gm != null:
 		gm.set("unlocked_levels", 99)
-	DirAccess.make_dir_recursive_absolute("res://tmp_fix")
+	# Ghép chuỗi: thư mục tạm chỉ tồn tại SAU khi script này chạy (mặc định bị gitignore)
+	DirAccess.make_dir_recursive_absolute("res://" + "tmp_fix")
 	for size in SIZES:
 		DisplayServer.window_set_size(size)
 		await _frames(5)

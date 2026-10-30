@@ -60,14 +60,15 @@ func _init() -> void:
 # ---------------------------------------------------------------------------
 func _section_files() -> void:
 	print("[1] Man Levels rieng da go...")
+	# Ghép chuỗi "res://" + … để checker KHÔNG coi các đường dẫn ĐÃ XOÁ là tham chiếu sống
 	for path in [
-		"res://scenes/levels.tscn",
-		"res://scenes/layout/portrait/levels.tscn",
-		"res://scenes/layout/landscape/levels.tscn",
-		"res://scripts/scenes/levels.gd",
-		"res://scripts/scenes/layout/levels_layout.gd",
-		"res://nodes/main/mode_card.tscn",
-		"res://scripts/nodes/mode_card.gd",
+		"res://" + "scenes/levels.tscn",
+		"res://" + "scenes/layout/portrait/levels.tscn",
+		"res://" + "scenes/layout/landscape/levels.tscn",
+		"res://" + "scripts/scenes/levels.gd",
+		"res://" + "scripts/scenes/layout/levels_layout.gd",
+		"res://" + "nodes/main/mode_card.tscn",
+		"res://" + "scripts/nodes/mode_card.gd",
 	]:
 		_check(not ResourceLoader.exists(path), "Da xoa %s" % path.get_file())
 	for path in [

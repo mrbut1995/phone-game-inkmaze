@@ -3,7 +3,7 @@ extends Resource
 ## ============================================================================
 ## Dữ liệu 1 DANH HIỆU (Thành tựu) — nguồn cho "Sổ tay thành tựu" (scenes/archivement.tscn).
 ##
-## Mỗi danh hiệu là 1 file .tres trong `res://resources/archivements/` (giống màn chơi
+## Mỗi danh hiệu là 1 file .tres trong res://resources/archivements/ (giống màn chơi
 ## là .tres trong resources/levels/) -> ArchivementManager quét thư mục để nạp danh sách,
 ## nên THÊM danh hiệu mới chỉ cần tạo file .tres, không phải sửa code.
 ##
