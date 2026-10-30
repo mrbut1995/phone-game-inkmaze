@@ -4,9 +4,9 @@ extends BaseLayout
 ## Layout: Main Screen — node UI bind sẵn cho cả 2 bố cục (Portrait / Landscape).
 ## Script màn chỉ đọc `layout.<tên>` (xem scripts/scenes/main.gd).
 ##
-## Bố cục GỘP (nhánh portrait_landscape_feature): thanh trên (hồ sơ · Xu · Sao · Cài đặt)
-## + khối Sự kiện (header + carousel) + KHỐI BẢN ĐỒ MÀN CHƠI (`LevelSection`: bản đồ · chip chương
-## · rương mốc · nút Dungeon nổi) + dock 4 nút. Màn Levels riêng đã bị gỡ.
+## Bố cục GỘP: thanh trên (hồ sơ · Xu · Sao · Cài đặt)
+## + KHỐI BẢN ĐỒ MÀN CHƠI (`LevelSection`: bản đồ · chip chương
+## · rương mốc · nút Dungeon nổi) + dock 4 nút (Cửa hàng · Xếp hạng · Thử thách · Danh hiệu).
 ## ============================================================================
 
 ## Logo/tiêu đề game (nhỏ, đầu màn)

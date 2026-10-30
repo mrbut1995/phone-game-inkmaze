@@ -185,21 +185,145 @@ Quét toàn bộ 188 `.tscn` trong phạm vi, đếm tham chiếu theo **đườ
 Render kiểm tra giao diện (`dev_aspects`): `tmp_aspect/1080x1920/*.png` và `tmp_aspect/1920x1080/*.png`
 (settings, credit, title) render OK — 6/6 aspect check PASS.
 
+### Phase 1b — chip dùng chung: CHỈ ẩn + vô hiệu (quyết định của user)
+
+**Không tách `CoinChip`/`LifeChip` khỏi `scenes/layout/base_layout.tscn`** (user yêu cầu rõ). 13 layout không dùng 2 chip
+này (dọc: `profiler_popup`, `settings`, `splash`, `title`, `tutorial`, `tutorial_list`; ngang: thêm `event`) nay override:
+
+```ini
+[node name="CoinChip" parent="TopBar"]
+visible = false
+mouse_filter = 2      # không ăn chuột
+process_mode = 4      # PROCESS_MODE_DISABLED
+```
+
+26 stanza / 13 file. Chip ở mọi màn khác giữ nguyên 100%.
+
+### Phase 1c — `Content/ModeInformation/Time` không dùng trong HUD
+
+8 node `Time` (4/hướng) vốn đã `visible = false` tĩnh trong scene; thêm `mouse_filter = 2` + `process_mode = 4`
+(8 file `nodes/hud/{portrait,landscape}/game/{countdown,dungeon_mode,fog_of_war,sum_path}*`). Không xoá, không tách base.
+
+### Phase 1d — `Dim` / `Panel/Art`
+
+- `nodes/popups/memory_countdown.tscn` → `Dim` `visible = false` **có chủ đích** (pha ghi nhớ phải NHÌN THẤY tường);
+- `nodes/popups/profiler_popup.tscn` → `Panel/Art` `visible = false` (hồ sơ full-bleed, không dùng tờ giấy).
+- Cả 2 đã ẩn **tĩnh trong scene**, không code nào bật lại (`grep "dim.visible|art.visible"` = 0) ⇒ **không cần sửa**.
+
+### Phase 2B — `scripts/scenes/main.gd` (commit `refactor(ui): move Main static layout values into scenes/theme`)
+
+Mục tiêu: mở `.tscn` là thấy đúng giao diện Main, không phải đọc `_ready()`.
+
+| Trước (code đè) | Sau (khai ở đâu) |
+|---|---|
+| `TOP_MARGIN` → `body.offset_top = maxf(..., 24)` | `offset_top = 24` của node `Body` trong **cả 2** `scenes/layout/*/main.tscn` |
+| `_enlarge_chip()`: cao 46, rộng ×1.3, `Icon` 32, `Value` font 22, `Plus` 32×32 font 18 | biến thể `large` của component: `@export large/large_*` trong `scripts/nodes/{coin,life}_chip.gd`, bật bằng `large = true` trên instance `TopBar/CoinChip` + `TopBar/LifeChip` của 2 layout |
+| `SETTINGS_TEX` + `ResourceLoader.exists` + gán 5 texture/cỡ/cờ | node `Settings` trong 2 layout: `texture_normal/hover/pressed` = `common/settings_btn_*`, `ignore_texture_size = true`, `stretch_mode = 5`, `custom_minimum_size = (56,56)`, `size_flags_vertical = 0` |
+| `CHEST_SIZE` + 4 offset rương | `nodes/main/level_section.tscn`: `ChestWidget` `custom_minimum_size = (104,118)`, offsets `-118/-130/-14/-12` |
+| `MAP_BOTTOM_RESERVE` → `map.bottom_reserve = maxf(...,130)` | `LevelMap` trong `nodes/main/level_section.tscn`: `bottom_reserve = 130.0` |
+| `DOCK_HEIGHT + 4` → `dock_panel.custom_minimum_size.y` | `Dock` (`PanelContainer`) của 2 layout: `custom_minimum_size = (0,116)` |
+| `DOCK_HEIGHT/DOCK_ICON/DOCK_FONT` + offset icon/nhãn + font | `nodes/main/dock_button.tscn`: cao **112**, `Icon` offsets `-24/12/24/60`, `Label` `-44/-17` + font **15** + `font_color` trắng + `outline_size 4` |
+| `DOCK_COLORS` + `_dock_tex_box()/StyleBoxTexture.new()` + `_dock_box()` dự phòng | **8 file** `resources/settings/styles/dock/dock_btn_<shop|rank|badges|daily>_{normal,pressed}.tres` (StyleBoxTexture 9-slice margin 20/20/20/26) gán thẳng `theme_override_styles/*` của từng nút trong 2 layout |
+| `_tint_dock_labels()` gán màu viền chữ | `@export outline_color` của `DockButton` (giá trị đặt ở 2 layout), `font_color` trắng cố định trong `dock_button.tscn` |
+| `ICON_SHOP/RANK/BADGES/DAILY` + `_setup_dock_button()` | `@export icon_texture` + `@export label_key` của `DockButton`, giá trị ở 2 layout (`icon_texture = ExtResource(...)`, `label_key = &"STR_BTN_SHOP"` …) |
+| `_ensure_dock_daily()` **tạo nút Daily bằng code** (chèn index 2) | node `DockDaily` thật trong `Row` của 2 layout (index 2: Shop · Ranking · **Daily** · Badges) + `@export dock_daily` trong `MainLayout` |
+| `layout.event_header.visible = false`, `event_carousel.visible = false`, ẩn cột `Left` bằng code | `visible = false` + `mouse_filter = 2` + `process_mode = 4` của `EventHeader`/`EventCarousel`/`Left` **trong `.tscn`** |
+| `layout.profile_card.connect(&"pressed", …)` | `[connection]` trong layout (`ProfileCard.pressed → MainLayout._on_profile_card_pressed`) → signal ngữ nghĩa `profile_pressed` → `[connection]` trong `scenes/main.tscn` (`Portrait`/`Landscape` → `_on_profile_pressed`) |
+
+**Kết quả đo** (`audit_hardcode.py --file scripts/scenes/main.gd`): `P 23→0 · T 8→0 · C 12→0 · E 4→1 · S 0`.
+`main.gd` **455 → 281 dòng**; xoá hẳn 8 hàm (`_apply_mobile_sizing`, `_enlarge_chip`, `_ensure_dock_daily`,
+`_setup_dock_button`, `_style_dock_button`, `_dock_tex_box`, `_dock_box`, `_tint_dock_labels`) + 12 hằng số.
+
+**Ngoại lệ `keep-code` (1 dòng, có lý do tại chỗ):** `m.connect("profile_changed", …)` và
+`em.events_changed.connect(…)` — nối tới **AUTOLOAD** (không phải node tĩnh), §5B.4 mục 4 cho phép; muốn cú pháp có kiểu
+phải làm Phase 5 (`Svc` accessor) — chưa làm.
+
+### Bằng chứng "hình ảnh không đổi" (Phase 2B)
+
+Probe `scripts/test_case/dev_probe_main_metrics.gd` (dev probe, giữ lại) instantiate `scenes/main.tscn`, gắn lần lượt
+layout **dọc 540×920** và **ngang 1174×540**, chạy `_setup_buttons` + `_setup_event_buttons` rồi dump giá trị HIỆU DỤNG:
+`Body.offset_top` · cỡ/icon/font `CoinChip`+`LifeChip` · 5 texture + cỡ nút `Settings` · cỡ + rect `Chest` ·
+`Map.bottom_reserve` · `DockPanel` + **từng nút dock** (Icon/Label offsets, font, màu chữ, màu viền, 4 stylebox + texture margins) ·
+visible của `EventHeader`/`EventCarousel`/`Stamp`/`Left` · thứ tự nút trong `Row`.
+
+```
+trước: D81D681BD0FBCA898BF139602CB574FE6AF89156E7FFB7DBAE84EF434FDBC0D6
+sau  : D81D681BD0FBCA898BF139602CB574FE6AF89156E7FFB7DBAE84EF434FDBC0D6   ← giống từng byte
+```
+
+### Phase 5 / 6 — phần đã làm
+
+- `docs/STRUCTURE.md` (mới): cây thư mục · quy ước tên · mô hình Portrait/Landscape · bảng autoload & trách nhiệm.
+- Quét leftovers (§9.1) và phân loại — xem §5 bên dưới.
+
 ---
 
-## 4. Việc còn lại (chưa làm — cần user quyết)
+## 4. Việc còn lại (CHƯA làm) & lý do
 
-| Nhóm | Nội dung | Vì sao dừng |
+| Nhóm | Nội dung | Trạng thái / lý do |
 |---|---|---|
-| Phase 1b | Tách `CoinChip`/`LifeChip` khỏi `scenes/layout/base_layout.tscn` (13/31 layout đang ẩn) | Đổi cấu trúc kế thừa của 31 scene, cần render so sánh từng màn |
-| Phase 1c | `Content/ModeInformation/Time` ẩn ở 4/11 HUD mỗi hướng | Cần xác nhận Time chỉ dùng cho mode giới hạn thời gian |
-| Phase 1d | `Dim` (memory_countdown), `Panel/Art` (profiler_popup) | Nên tách bằng base trung gian, cần review thị giác |
-| Phase 2B | Hardcode trong `scripts/scenes/main.gd` (47 findings) | Chuyển sang `.tscn`/theme phải render so sánh pixel-perfect |
-| Phase 3 | Đổi `archivement` -> `achievement` | Đụng key lưu `user://inkmaze_data.json` — §10 yêu cầu DỪNG và hỏi user |
-| Phase 5/6 | `docs/STRUCTURE.md` + báo cáo cuối | Làm sau khi các phase trên xong |
+| Phase 2B (phần lớn) | 20 file còn lại vẫn còn P/T/C: `board.gd` (23) · `gameover.gd` (17) · `item_tile.gd` (17) · `winning.gd` (16) · `winning_daily.gd` (16) · `chapter_gate.gd` (13) · `noads_row.gd` (13) · `shop.gd` (11) … | Mỗi file cần probe riêng để chứng minh ảnh không đổi (như đã làm với `main.gd`); chưa làm trong lượt này |
+| Phase 3 | Đổi `archivement` → `achievement` (file/class/hàm) + sắp xếp lại `scripts/` theo cây đích | **DỪNG theo §10**: tên autoload `ArchivementManager` là **key trong blob save** (`user://inkmaze_data.json`) ⇒ đổi là mất tiến trình người chơi. Cần user duyệt kèm migration |
+| Phase 5 (`Svc`) | Thay 158 chỗ `"/root/..."` bằng accessor tĩnh có kiểu | Đổi rộng khắp autoload + test `--script`; rủi ro cao, cần lượt riêng |
+| Phase 5 (S7) | Tách god class `board.gd` (2052) · `game_manager.gd` (1256) · `game_controller.gd` (1136) · `debug.gd` (1192) | Đổi API công khai ⇒ phải làm từng file + chạy full suite (13 test đang đỏ sẵn, khó phân biệt hồi quy) |
+| Phase 4 | Gộp scene dọc/ngang trùng nhau | Tùy chọn (§7); cần review thị giác từng màn |
 
-### Nghi ngờ bug (ghi nhận, KHÔNG sửa trong refactor)
+### Nghi ngờ bug (ghi nhận, KHÔNG sửa trong refactor — §10)
 
 - 13 test đỏ baseline thuộc luồng gộp Levels/Chapters + redesign HUD mà user đang làm dở.
 - `test_levels_map`: `scroll_to(1)` lệch y (480 vs 285) — có thể do `level_section.tscn` đổi padding.
 - `test_layout_bindings` 5/84 và `test_popup_bindings` 1/34: node binding chưa khớp layout mới.
+- **`nodes/main/event_card.tscn:5` trỏ `res://assets/images-png/events/halloween_card_grid.png` KHÔNG tồn tại**
+  (E1 duy nhất còn lại trong phạm vi game; commit `1c2209c9` của user, cả PNG lẫn SVG đều chưa có) ⇒ art event Halloween
+  chưa được sinh. Không sửa vì refactor không được tạo art.
+- **`dev_aspects` FAIL ở Main bố cục NGANG**: `Landscape/TopBar/ProfileCard` cao 109.5 > thanh `TopBar` ⇒ thò lên trên mép
+  (y = −8.26). Đã chứng minh **PRE-EXISTING** bằng A/B: checkout `HEAD~1` (trước commit 2B) rồi chạy lại `dev_aspects
+  --only=main` cho **đúng cùng** thông số lỗi ⇒ không phải do refactor. Nghi là WIP redesign thẻ hồ sơ (`profile_card.tscn`
+  min-height 109 trong khi TopBar ngang ~93).
+
+### Ngoại lệ được GIỮ có kiểm chứng
+
+| Loại | Chi tiết |
+|---|---|
+| Node ẩn nhưng SỐNG | `tutorial/base_tutorial.tscn` → `Dots/Dot1..6` do `_update_dots()` sinh runtime |
+| Hàm DEPRECATED | `Nav.goto_levels` · `GameManager.go_to_levels` · helper levels của `SceneManager` — `test_main_merge.gd:88,91` assert phải tồn tại |
+| `print()` còn lại | 4 chỗ có tiền tố log: `AdsManager.gd:56`, `DebugManager.gd:92`, `LocalizationManager.gd:100,162` (chủ đích, giữ) |
+| `TODO` | đều là việc tương lai thật (Google Play / AdMob / event sync / màn hướng dẫn) |
+| `"/root/…"` | 158 chỗ, đều để tránh lỗi parse autoload khi chạy `--script` (Phase 5 `Svc` sẽ gom) |
+
+---
+
+## 5. Bộ kiểm tra: baseline → hiện tại
+
+| Chỉ số | Baseline (Phase 0) | Hiện tại | Ghi chú |
+|---|---|---|---|
+| `check_integrity` E1 (raw) | 552 | 565 | tăng do **thư mục backup WIP của user** (`tmp_bak_cardedit/`, `what-changes/`) — NGOÀI phạm vi game |
+| `check_integrity` E1 (phạm vi game) | 0 | **1** | `nodes/main/event_card.tscn` thiếu `events/halloween_card_grid.png` (có sẵn từ commit `1c2209c9`, art chưa sinh) |
+| `check_integrity` W1 / W2 (phạm vi game) | 13 / 5 | **0 / 0** | |
+| `audit_hardcode` P / T / C / S / E | 387 / 29 / 122 / 26 / 101 | **364 / 21 / 110 / 26 / 98** | `main.gd`: 23/8/12/0/4 → 0/0/0/0/1 |
+| `audit_hidden` DEAD / SPLIT-BASE / REVIEW / LIVE (in-scope) | 6 / 36 / 59 / 98 | 2 / 36 / 59 / 98 | 4 node DEAD thật đã xoá (Phase 1a) |
+| Full suite | 7 PASS · 13 FAIL | **7 PASS · 13 FAIL** (số check fail y hệt) | Không tăng hồi quy ở bất kỳ test nào |
+
+`Refactor cả 2 file layout Main` = 0 diff về **giá trị hiệu dụng** (probe ở Phase 2B, hash trùng từng byte).
+
+---
+
+## 6. Người dùng cần test thủ công trong editor (§11.7)
+
+Cả **Portrait** và **Landscape**:
+
+- [ ] **Title** · **Splash** · **Credit**
+- [ ] **Main**: chip Xu + chip Mạng (cỡ lớn, nút `+`), nút Cài đặt (art `common/settings_btn_*`, chạm được),
+      dock 4 nút (Cửa hàng · Xếp hạng · **Thử thách** · Danh hiệu — màu + nhãn + icon đúng), rương góc dưới-phải,
+      chạm chip Hồ sơ → mở popup Hồ sơ, `DungeonPill`, cột nút Event bên phải bản đồ
+- [ ] **Game** từng mode: Standard · Countdown · Dungeon · Fog of War · Sum Path · Wall Builder · One Stroke ·
+      Fading Ink · Blind Memory · Minesweeper · Challenge
+- [ ] **Daily** · **Shop** · **Ranking** · **Achievement** · **Settings** · **Tutorial** (danh sách + 1 bài)
+- [ ] Popup: Win · GameOver · Retry · Next floor · Pause · Profiler · Edit profile · Language
+- [ ] Màn **không dùng chip** (Settings · Splash · Title · Tutorial · Tutorial list · Profiler popup · Event):
+      xác nhận KHÔNG thấy ví Xu/lượt và **không** có vùng chạm "vô hình" ở thanh trên
+
+
+
+
+
