@@ -47,13 +47,11 @@ var _floor := 1
 var _stats_elapsed := 0.0
 var _stats_text := ""
 
-
 ## Gắn node của layout đang hiển thị (2 layout giữ CÙNG đường dẫn node)
 func _bind_refs() -> void:
 	layout = active_layout() as DebugLayout
 	if layout == null:
 		push_warning("debug: bố cục chưa gắn DebugLayout — thiếu binding trong scenes/layout/<hướng>/debug.tscn")
-
 
 func _ready() -> void:
 	_bind_refs()
@@ -64,7 +62,6 @@ func _ready() -> void:
 	if layout.lbl_footer != null:
 		layout.lbl_footer.text = "~ F9 để đóng · chỉ hiển thị trong bản debug ~"  # keep-code: chữ theo dữ liệu (runtime)
 	_build()
-
 
 func _process(delta: float) -> void:
 	if layout.lbl_stats == null:
@@ -84,7 +81,6 @@ func _process(delta: float) -> void:
 	if text != _stats_text:
 		_stats_text = text
 		layout.lbl_stats.text = text
-
 
 # ---------------------------------------------------------------------------
 # Dựng nội dung
@@ -119,7 +115,6 @@ func _build() -> void:
 		scroll.scroll_vertical = keep_scroll
 		scroll.set_deferred("scroll_vertical", keep_scroll)  # keep-code: giữ vị trí cuộn (runtime)
 
-
 func _build_state() -> void:
 	_add_section("STATE")
 	_add_value("Mode", _current_mode())
@@ -131,7 +126,6 @@ func _build_state() -> void:
 	_add_value("Test run", "%s · floor %d" % [str(_gm_value("debug_run", false)),
 		int(_gm_value("start_floor_override", 0))])
 	_add_value("Popups open", str(Popups.has_open()))
-
 
 func _build_tool_balances() -> void:
 	_add_section("TOOL BALANCES")
@@ -169,7 +163,6 @@ func _build_tool_balances() -> void:
 			gm.call("debug_set_tool_uses", tool_id, int(value))
 		)
 		row.add_child(amount)
-
 
 ## LƯỢT CHƠI (life): xem số lượt, đặt lại số lượt, tua đồng hồ hồi lượt để thử luồng chờ.
 func _build_life_balances() -> void:
@@ -218,7 +211,6 @@ func _build_life_balances() -> void:
 		gm.call("debug_advance_life_recharge", Life.RECHARGE_SECONDS)
 		_build())
 
-
 func _build_navigate() -> void:
 	_add_section("NAVIGATE")
 	_add_action("Main Menu", "scenes/main.tscn", func() -> void: Nav.goto_main())
@@ -232,7 +224,6 @@ func _build_navigate() -> void:
 	_add_action("Leaderboard", "scenes/ranking.tscn", func() -> void: Nav.goto_ranking())
 	_add_action("Dungeon run", "DungeonGameMode - tầng 1", func() -> void: _gm_call("start_dungeon"))
 
-
 func _build_progress() -> void:
 	_add_section("PROGRESS")
 	_add_label("Nhảy tới màn (màn có ◆ = chạy CHẾ ĐỘ SPECIAL ghi trong màn):", &"PopupSubtitle")
@@ -242,21 +233,20 @@ func _build_progress() -> void:
 	_add_action("Reset progress", "Xoá màn đã mở + sao + rương thưởng chương (không xoá Daily)",
 		_reset_progress, true)
 
-
 func _build_daily() -> void:
 	_add_section("DAILY")
 	_add_value("Today", str(_daily_value("get_today", 1)))
 	_add_value("Streak", str(_daily_value("get_streak", 0)))
 	_add_value("Play stars today", "%d / %d" % [
-		_daily_play_stars_today(), _daily_play_stars_max()])
+		DebugData.play_stars_today(), DebugData.play_stars_max()])
 	_add_value("Stars today", "%d / %d" % [
-		_daily_stars_today(), _daily_stars_max()])
+		DebugData.stars_today(), DebugData.stars_max()])
 	_add_value("Stars this month", "%d / %d" % [
 		_daily_value("get_month_stars", 0), _daily_value("month_star_goal", 60)])
-	_add_value("Next milestone", _next_milestone_text())
-	_add_value("Milestones claimed", _claimed_milestones_text())
-	_add_value("Yesterday", _yesterday_state_text())
-	_add_value("AdsManager", _ads_state_text())
+	_add_value("Next milestone", DebugData.next_milestone_text())
+	_add_value("Milestones claimed", DebugData.claimed_milestones_text())
+	_add_value("Yesterday", DebugData.yesterday_state_text())
+	_add_value("AdsManager", DebugData.ads_state_text())
 	_add_action("Play today's PLAY maze", "Màn CHƠI của ngày (3 nhiệm vụ = 3 Sao)",
 		_play_today_classic)
 	_add_action("Play today's CHALLENGE maze", "Màn THỬ THÁCH của ngày (thắng = 3 Sao)",
@@ -275,7 +265,6 @@ func _build_daily() -> void:
 	_add_action("Unlock all missed days (AD · free)",
 		"Mở khoá MỌI ngày đã qua còn bỏ lỡ — KHÔNG trừ Xu", _unlock_all_missed)
 	_add_action("Reset daily data", "Xoá toàn bộ ngày/Sao/mốc thưởng đã nhận", _reset_daily, true)
-
 
 # ---------------------------------------------------------------------------
 # EVENTS (Sự kiện — chỉ có ở bản dev)
@@ -314,10 +303,8 @@ func _build_events() -> void:
 	_add_action("Reset tiến độ + cờ đã nhận", "Xoá tiến độ và cờ claimed của mọi event",
 		_events_reset, true)
 
-
 func _event_manager() -> Node:
 	return Svc.event()
-
 
 func _events_start_all() -> void:
 	var em := _event_manager()
@@ -327,7 +314,6 @@ func _events_start_all() -> void:
 	for ev in em.call("get_active_events"):
 		em.call("debug_set_window", (ev as EventData).id, -3600, 86400 * 7)
 
-
 func _events_end_all() -> void:
 	var em := _event_manager()
 	if em == null:
@@ -336,14 +322,12 @@ func _events_end_all() -> void:
 	for ev in em.call("get_active_events"):
 		em.call("debug_set_window", (ev as EventData).id, -86400 * 2, -3600)
 
-
 func _events_shift(delta: int) -> void:
 	var em := _event_manager()
 	if em == null:
 		return
 	Sfx.play(Sfx.BTN_CLICK)
 	em.call("debug_shift_time", delta)
-
 
 func _events_complete_next() -> void:
 	var em := _event_manager()
@@ -354,7 +338,6 @@ func _events_complete_next() -> void:
 		em.call("debug_complete_next_level", (ev as EventData).id)
 	_build()
 
-
 func _events_set_full() -> void:
 	var em := _event_manager()
 	if em == null:
@@ -364,7 +347,6 @@ func _events_set_full() -> void:
 		var ev_data: EventData = ev
 		em.call("debug_set_progress", ev_data.id, maxi(ev_data.total_progress(), 1))
 	_build()
-
 
 func _events_claim_all() -> void:
 	var em := _event_manager()
@@ -377,7 +359,6 @@ func _events_claim_all() -> void:
 			em.call("claim_reward", id)
 	_build()
 
-
 func _events_reset() -> void:
 	var em := _event_manager()
 	if em == null:
@@ -386,7 +367,6 @@ func _events_reset() -> void:
 	for ev in em.call("get_active_events"):
 		em.call("debug_reset_event", (ev as EventData).id)
 	_build()
-
 
 # ---------------------------------------------------------------------------
 # SPECIAL MODES: vào thẳng 7 chế độ chỉ chơi được qua Daily để test
@@ -427,7 +407,6 @@ func _build_special_modes() -> void:
 	_add_action("Chế độ kế tiếp", "Xoay vòng qua 7 chế độ Special", _start_next_special_mode)
 	_add_action("Chế độ ngẫu nhiên", "Random 1 trong 7 chế độ Special", _start_random_special_mode)
 
-
 # ---------------------------------------------------------------------------
 # TUTORIAL: vào thẳng từng bài + chạy lại chuỗi onboarding (không cần qua menu)
 # ---------------------------------------------------------------------------
@@ -443,17 +422,16 @@ const TUTORIAL_LABELS := {
 	"congrats_first_time": "Chúc mừng xong chuỗi mở đầu (về Main hoặc bàn kế)",
 }
 
-
 func _build_tutorials() -> void:
 	_add_section("TUTORIAL (TEST)")
 	_add_label("Vào thẳng từng bài học tương tác — bật “Test mode” nếu KHÔNG muốn ghi tiến trình:",
 		&"PopupSubtitle")
-	var ids := _tutorial_ids()
-	_add_value("Đã hoàn thành", "%d / %d bài" % [_tutorial_done_count(), ids.size()])
+	var ids := DebugData.tutorial_ids()
+	_add_value("Đã hoàn thành", "%d / %d bài" % [DebugData.tutorial_done_count(), ids.size()])
 	_add_toggle("Test mode (không ghi tiến trình)",
 		"Bài chạy từ đây sẽ không đánh dấu là đã học xong", _test_mode, _set_test_mode)
 	for id in ids:
-		var mark := "●" if _tutorial_flag(id) else "○"
+		var mark := "●" if DebugData.tutorial_flag(id) else "○"
 		_add_action("%s  %s" % [mark, id], str(TUTORIAL_LABELS.get(id, "")),
 			_request_tutorial.bind(id))
 	_add_action("Chạy chuỗi CORE (3 bài onboarding)", "first_time → move → checking wall",
@@ -463,34 +441,6 @@ func _build_tutorials() -> void:
 	_add_action("Xoá tiến trình tutorial", "Chạy lại onboarding từ đầu (không xoá màn chơi)",
 		_reset_tutorials, true)
 
-
-func _tutorial_ids() -> Array[String]:
-	var ids: Array[String] = []
-	for id in TutorialController.TUTORIAL_SCENES:
-		ids.append(str(id))
-	return ids
-
-
-func _tutorial_progress() -> Dictionary:
-	var gm := _game_manager()
-	if gm == null:
-		return {}
-	var progress: Variant = gm.get("tutorial_progress")
-	return progress if progress is Dictionary else {}
-
-
-func _tutorial_flag(tutorial_id: String) -> bool:
-	return bool(_tutorial_progress().get(tutorial_id, false))
-
-
-func _tutorial_done_count() -> int:
-	var done := 0
-	for id in _tutorial_ids():
-		if _tutorial_flag(id):
-			done += 1
-	return done
-
-
 ## Đặt yêu cầu mở THẲNG 1 bài rồi sang màn Tutorial (GameManager giữ yêu cầu qua scene change)
 func _request_tutorial(tutorial_id: String) -> void:
 	var gm := _game_manager()
@@ -499,10 +449,8 @@ func _request_tutorial(tutorial_id: String) -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	Nav.goto_tutorial()
 
-
 func _request_core_sequence() -> void:
 	_request_tutorial(TutorialController.REQUEST_CORE)
-
 
 func _mark_tutorials_done() -> void:
 	var gm := _game_manager()
@@ -511,11 +459,10 @@ func _mark_tutorials_done() -> void:
 	if gm.has_method("mark_core_tutorials_completed"):
 		gm.call("mark_core_tutorials_completed")
 	if gm.has_method("set_tutorial_completed"):
-		for id in _tutorial_ids():
+		for id in DebugData.tutorial_ids():
 			gm.call("set_tutorial_completed", id, true)
 	Save.queue_save()
-	_rebuild_after_action("Đã đánh dấu xong %d bài tutorial" % _tutorial_ids().size())
-
+	_rebuild_after_action("Đã đánh dấu xong %d bài tutorial" % DebugData.tutorial_ids().size())
 
 func _reset_tutorials() -> void:
 	var gm := _game_manager()
@@ -525,7 +472,6 @@ func _reset_tutorials() -> void:
 		gm.call("reset_tutorial_progress")
 	Save.queue_save()
 	_rebuild_after_action("Đã xoá tiến trình tutorial")
-
 
 func _build_save() -> void:
 	_add_section("SAVE")
@@ -539,7 +485,6 @@ func _build_save() -> void:
 	_add_label("Blob hiện tại:", &"PopupSubtitle")
 	_add_blob_dump()
 
-
 func _build_popups() -> void:
 	_add_section("POPUPS")
 	_add_action("Win popup", "Thắng màn (Play mode)", func() -> void: _open_popup(Popups.WIN, _win_data()))
@@ -548,7 +493,6 @@ func _build_popups() -> void:
 	_add_action("Pause popup", "Tạm dừng + âm lượng", func() -> void: _open_popup(Popups.PAUSE, _pause_data()))
 	_add_action("Language popup", "Chọn ngôn ngữ", func() -> void: _open_popup(Popups.LANGUAGE, {}))
 	_add_action("Close all popups", "Đóng mọi popup đang mở", func() -> void: Popups.close_all())
-
 
 func _build_debug_flags() -> void:
 	_add_section("DEBUG FLAGS")
@@ -564,7 +508,6 @@ func _build_debug_flags() -> void:
 		_add_toggle("· %s" % name, "Nhóm log", current,
 			func(on: bool) -> void: dbg.call("set_flag", name, on))
 	_add_action("Test log (all categories)", "In thử 4 dòng log", _test_logs)
-
 
 # ---------------------------------------------------------------------------
 # Hành động
@@ -583,7 +526,6 @@ func _unlock_all_levels() -> void:
 	Save.queue_save()
 	_rebuild_after_action("Đã mở khoá %d màn" % ids.size())
 
-
 func _set_all_stars() -> void:
 	var gm := _game_manager()
 	if gm == null:
@@ -595,7 +537,6 @@ func _set_all_stars() -> void:
 	gm.set("level_stars", stars)
 	Save.queue_save()
 	_rebuild_after_action("Đã ghi 3 sao cho %d màn" % unlocked)
-
 
 func _reset_progress() -> void:
 	var gm := _game_manager()
@@ -611,46 +552,11 @@ func _reset_progress() -> void:
 	Save.queue_save()
 	_rebuild_after_action("Đã xoá tiến trình màn chơi + rương thưởng chương")
 
-
 func _play_today_classic() -> void:
 	_gm_call("start_daily_classic", int(_daily_value("get_today", 1)))
 
-
 func _play_today_special() -> void:
 	_gm_call("start_daily_challenge", int(_daily_value("get_today", 1)))
-
-
-## Sao phần CHƠI của hôm nay (0..3)
-func _daily_play_stars_today() -> int:
-	var daily := _daily_manager()
-	if daily == null:
-		return 0
-	return int(daily.call("get_day_play_stars", int(daily.call("get_today"))))
-
-
-## Sao tối đa của phần CHƠI (3)
-func _daily_play_stars_max() -> int:
-	var daily := _daily_manager()
-	if daily == null:
-		return 3
-	return int(daily.get("PLAY_STARS_MAX"))
-
-
-## Sao CHƠI + THỬ THÁCH đã đạt của hôm nay (0..6)
-func _daily_stars_today() -> int:
-	var daily := _daily_manager()
-	if daily == null:
-		return 0
-	return int(daily.call("get_day_stars", int(daily.call("get_today"))))
-
-
-## Tổng Sao tối đa của một ngày (6 — lấy từ DailyManager)
-func _daily_stars_max() -> int:
-	var daily := _daily_manager()
-	if daily == null:
-		return 6
-	return int(daily.get("DAY_STARS_MAX"))
-
 
 func _complete_today_daily() -> void:
 	var daily := _daily_manager()
@@ -660,58 +566,6 @@ func _complete_today_daily() -> void:
 	var flags: Array[bool] = [true, true, true, true]
 	daily.call("complete_day_missions", day, flags)
 	_rebuild_after_action("Đã đánh dấu hôm nay hoàn thành (6 Sao: 3 CHƠI + 3 THỬ THÁCH)")
-
-
-## Mốc kế tiếp chưa đạt — "N★ (còn X★)" hoặc "đã đạt hết"
-func _next_milestone_text() -> String:
-	var daily := _daily_manager()
-	if daily == null or not daily.has_method("milestone_defs"):
-		return "-"
-	var stars := int(daily.call("get_month_stars"))
-	for def in daily.call("milestone_defs"):
-		var threshold := int((def as Dictionary).get("stars", 0))
-		if stars < threshold:
-			return "%d★ (còn %d★)" % [threshold, threshold - stars]
-	return "đã đạt hết"
-
-
-## Số mốc đã nhận / tổng số mốc của tháng
-func _claimed_milestones_text() -> String:
-	var daily := _daily_manager()
-	if daily == null or not daily.has_method("milestone_defs"):
-		return "-"
-	var total := 0
-	var claimed := 0
-	for def in daily.call("milestone_defs"):
-		total += 1
-		if bool(daily.call("is_milestone_claimed", int((def as Dictionary).get("stars", 0)))):
-			claimed += 1
-	return "%d / %d" % [claimed, total]
-
-
-## Trạng thái ngày HÔM QUA: đã chơi/mở khoá hay còn BỎ LỠ
-func _yesterday_state_text() -> String:
-	var daily := _daily_manager()
-	if daily == null:
-		return "-"
-	var day := int(daily.call("get_today")) - 1
-	if day < 1:
-		return "- (hôm nay là ngày 01)"
-	if int(daily.call("get_day_stars", day)) > 0 or bool(daily.call("is_day_unlocked", day)):
-		return "ngày %d: đã chơi / đã mở khoá" % day
-	return "ngày %d: BỎ LỠ (cần quảng cáo)" % day
-
-
-## Trạng thái AdsManager (placeholder hay đã tắt)
-func _ads_state_text() -> String:
-	var ads := Svc.ads()
-	if ads == null:
-		return "không có"
-	var ready := false
-	if ads.has_method("is_rewarded_ready"):
-		ready = bool(ads.call("is_rewarded_ready"))
-	return "placeholder BẬT" if ready else "TẮT (show_rewarded trả false)"
-
 
 ## Cộng Sao vào đầu tháng (mỗi ngày tối đa 6 Sao) — test thanh tiến độ + huy hiệu mốc
 func _add_month_stars(amount := 30) -> void:
@@ -732,7 +586,6 @@ func _add_month_stars(amount := 30) -> void:
 	_rebuild_after_action("Đã cộng %d Sao (tổng tháng %d / %d)" % [
 		amount, int(daily.call("get_month_stars")), int(daily.call("month_star_goal"))])
 
-
 ## Nhận mốc kế tiếp đã đủ Sao + mở popup thưởng (test luồng nhận thưởng)
 func _claim_next_milestone() -> void:
 	var daily := _daily_manager()
@@ -750,7 +603,6 @@ func _claim_next_milestone() -> void:
 			return
 	_rebuild_after_action("Không có mốc nào đủ Sao để nhận (tháng %d Sao)" % stars)
 
-
 ## Thử quảng cáo thưởng (placeholder) — KHÔNG ghi dữ liệu, chỉ xem AdsManager trả gì
 func _test_rewarded_ad() -> void:
 	var ads := Svc.ads()
@@ -759,7 +611,6 @@ func _test_rewarded_ad() -> void:
 		return
 	var ok := bool(ads.call("show_rewarded", "daily_unlock"))
 	_rebuild_after_action("Quảng cáo placeholder: %s" % ("xem xong ✔" if ok else "KHÔNG phát được ✘"))
-
 
 ## Mở khoá ngày HÔM QUA miễn phí (mô phỏng kết quả sau khi xem quảng cáo) — không trừ Xu
 func _unlock_yesterday_by_ad() -> void:
@@ -772,7 +623,6 @@ func _unlock_yesterday_by_ad() -> void:
 		return
 	daily.call("set_day_unlocked", day, true)
 	_rebuild_after_action("Đã mở khoá ngày %d bằng quảng cáo (không trừ Xu)" % day)
-
 
 ## Mở khoá MỌI ngày đã qua còn bỏ lỡ (miễn phí) — test nhanh trạng thái lịch
 func _unlock_all_missed() -> void:
@@ -788,7 +638,6 @@ func _unlock_all_missed() -> void:
 		unlocked += 1
 	_rebuild_after_action("Đã mở khoá %d ngày bỏ lỡ bằng quảng cáo (không trừ Xu)" % unlocked)
 
-
 func _reset_daily() -> void:
 	var daily := _daily_manager()
 	if daily == null:
@@ -797,7 +646,6 @@ func _reset_daily() -> void:
 		daily.call("reset_progress")
 	Save.queue_save()
 	_rebuild_after_action("Đã xoá dữ liệu Daily")
-
 
 # ---------------------------------------------------------------------------
 # SPECIAL MODES: lựa chọn + khởi động
@@ -814,10 +662,8 @@ func _sync_special_selection() -> void:
 	if floor_override > 0:
 		_floor = floor_override
 
-
 func _choice_text(prefix: String, value: String, selected: bool) -> String:
 	return "%s: %s%s" % [prefix, value, "  ✔" if selected else ""]
-
 
 func _special_mode_ids() -> Array[String]:
 	var gm := _game_manager()
@@ -832,7 +678,6 @@ func _special_mode_ids() -> Array[String]:
 		ids.append("wall_builder")
 	return ids
 
-
 func _set_test_mode(on: bool) -> void:
 	_test_mode = on
 	var gm := _game_manager()
@@ -840,16 +685,13 @@ func _set_test_mode(on: bool) -> void:
 		gm.set("debug_run", on)
 	_rebuild_after_action("Test mode: %s" % ("BẬT — không ghi tiến trình" if on else "TẮT — có ghi tiến trình"))
 
-
 func _set_difficulty(diff: String) -> void:
 	_difficulty = diff
 	_rebuild_after_action("Độ khó test: %s" % diff.to_upper())
 
-
 func _set_test_floor(floor_number: int) -> void:
 	_floor = floor_number
 	_rebuild_after_action("Tầng bắt đầu test: %d" % floor_number)
-
 
 ## Vào thẳng 1 chế độ Special với độ khó / tầng / chế độ test đang chọn
 func _start_special_mode(mode_id: String) -> void:
@@ -859,7 +701,6 @@ func _start_special_mode(mode_id: String) -> void:
 	Sfx.play(Sfx.BTN_CLICK)
 	gm.call("start_mode", mode_id, _difficulty, _test_mode, _floor)
 
-
 func _start_next_special_mode() -> void:
 	var ids := _special_mode_ids()
 	if ids.is_empty():
@@ -867,13 +708,11 @@ func _start_next_special_mode() -> void:
 	var index := ids.find(_current_mode())
 	_start_special_mode(ids[(index + 1) % ids.size()] if index >= 0 else ids[0])
 
-
 func _start_random_special_mode() -> void:
 	var ids := _special_mode_ids()
 	if ids.is_empty():
 		return
 	_start_special_mode(ids[randi() % ids.size()])
-
 
 func _test_logs() -> void:
 	var dbg := _debug_manager()
@@ -884,18 +723,15 @@ func _test_logs() -> void:
 	dbg.call("log", dbg.CAT_FLOW, "debug console test - flow")
 	dbg.call("log", dbg.CAT_SAVE, "debug console test - save")
 
-
 func _open_popup(id: String, data: Dictionary) -> void:
 	if not Popups.has_open():
 		Popups.open(id, data)
-
 
 func _rebuild_after_action(message: String) -> void:
 	Sfx.play(Sfx.CHECKBOX)
 	if layout.lbl_footer != null:
 		layout.lbl_footer.text = "~ %s ~" % message
 	_build()
-
 
 # ---------------------------------------------------------------------------
 # Dữ liệu mẫu cho popup
@@ -906,21 +742,17 @@ func _win_data() -> Dictionary:
 		"steps_used": 11, "steps_max": 20, "wall_hits": 0, "score": 2850, "stars": 3,
 	}
 
-
 func _next_floor_data() -> Dictionary:
 	return {
 		"floor": 4, "next_floor": 5, "steps_bonus": 5, "base_score": 500,
 		"move_bonus": 240, "perfect_bonus": 300, "total_score": 4690,
 	}
 
-
 func _game_over_data() -> Dictionary:
 	return {"floor": 4, "progress": 75.0, "wall_hits": 3, "score": 850}
 
-
 func _pause_data() -> Dictionary:
 	return {"floor": 4, "steps_left": 14, "steps_max": 20, "mode_name": "dungeon"}
-
 
 # ---------------------------------------------------------------------------
 # Tiện ích dựng UI
@@ -955,14 +787,12 @@ func _add_section(title: String) -> void:
 	divider.stretch_mode = TextureRect.STRETCH_TILE
 	layout.rows_box.add_child(divider)
 
-
 func _add_label(text: String, variation: StringName) -> void:
 	var label := Label.new()
 	label.theme_type_variation = variation
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	layout.rows_box.add_child(label)
-
 
 ## Hàng chỉ để xem thông tin: tên bên trái, giá trị bên phải
 func _add_value(name: String, value: String) -> void:
@@ -983,7 +813,6 @@ func _add_value(name: String, value: String) -> void:
 	val.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	val.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row.add_child(val)
-
 
 ## Nút hành động (danger = đỏ cho hành động phá dữ liệu)
 func _add_action(text: String, desc: String, handler: Callable, danger := false) -> TextureButton:
@@ -1022,7 +851,6 @@ func _add_action(text: String, desc: String, handler: Callable, danger := false)
 	button.add_child(sub)
 
 	return button
-
 
 ## Hàng có checkbox bật/tắt
 func _add_toggle(text: String, desc: String, value: bool, handler: Callable) -> void:
@@ -1063,7 +891,6 @@ func _add_toggle(text: String, desc: String, value: bool, handler: Callable) -> 
 	)
 	row.add_child(check)
 
-
 ## Danh sách level_id THẬT của dự án (LevelManager quét resources/levels/level_*.tres)
 func _level_ids() -> Array[int]:
 	var ids: Array[int] = []
@@ -1076,12 +903,10 @@ func _level_ids() -> Array[int]:
 			ids.append(id)
 	return ids
 
-
 ## id màn lớn nhất đang có (dùng cho "Unlock all levels")
 func _top_level_id() -> int:
 	var ids := _level_ids()
 	return ids[ids.size() - 1] if not ids.is_empty() else FALLBACK_TOTAL_LEVELS
-
 
 ## Chế độ riêng ghi trong màn ("" = màn thường) — hiện bằng dấu ◆ trên nút nhảy nhanh
 func _level_mode(level_id: int) -> String:
@@ -1090,7 +915,6 @@ func _level_mode(level_id: int) -> String:
 		return ""
 	var mode_id := str(gm.call("mode_id_of_level", level_id))
 	return "" if mode_id == "play" else mode_id
-
 
 ## Lưới nút nhảy nhanh tới từng màn (màn chạy chế độ Special có thêm dấu ◆)
 func _add_level_grid() -> void:
@@ -1128,7 +952,6 @@ func _add_level_grid() -> void:
 		num.modulate = Color(1, 1, 1, 1) if unlocked else Color(1, 1, 1, 0.45)
 		btn.add_child(num)
 
-
 ## Xem nhanh blob lưu trữ (JSON) - hữu ích khi kiểm tra tiến trình
 func _add_blob_dump() -> void:
 	var sm := _save_manager()
@@ -1142,30 +965,24 @@ func _add_blob_dump() -> void:
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	layout.rows_box.add_child(label)
 
-
 # ---------------------------------------------------------------------------
 # Truy cập manager (dùng /root để chạy được cả trong test --script)
 # ---------------------------------------------------------------------------
 func _game_manager() -> Node:
 	return Svc.game()
 
-
 func _daily_manager() -> Node:
 	return Svc.daily()
-
 
 func _save_manager() -> Node:
 	return Svc.save()
 
-
 func _debug_manager() -> Node:
 	return Svc.debug()
-
 
 func _gm_value(key: String, fallback: Variant) -> Variant:
 	var gm := _game_manager()
 	return gm.get(key) if gm != null else fallback
-
 
 func _gm_call(method: String, arg: Variant = null) -> void:
 	var gm := _game_manager()
@@ -1177,15 +994,12 @@ func _gm_call(method: String, arg: Variant = null) -> void:
 	else:
 		gm.call(method, arg)
 
-
 func _daily_value(method: String, fallback: Variant) -> Variant:
 	var daily := _daily_manager()
 	return daily.call(method) if daily != null else fallback
 
-
 func _current_mode() -> String:
 	return str(_gm_value("current_mode", "dungeon"))
-
 
 func _on_back_pressed() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
