@@ -76,14 +76,15 @@ var shop_return_path: String = ""
 #   · `week` dùng mốc THỨ HAI của tuần (ISO) để tuần luôn bắt đầu từ thứ Hai.
 # ---------------------------------------------------------------------------
 const FLOOR_RECORD_KINDS: Array[String] = ["day", "week", "month"]
-var floor_records: Dictionary = {
-	"day": {"key": "", "floor": 0},
-	"week": {"key": "", "floor": 0},
-	"month": {"key": "", "floor": 0},
-}
+## Kỷ lục tầng nằm ở `FloorRecordsStore` (xem `scripts/core/floor_records_store.gd`)
+var _records := FloorRecordsStore.new()
 ## [TEST] Cho phép ghi kỷ lục khi chạy test runner tự động (mặc định: test KHÔNG ghi,
 ## để bộ test không làm bẩn kỷ lục của người chơi thật)
-var floor_record_in_tests := false
+var floor_record_in_tests: bool:
+	get:
+		return _records.record_in_tests
+	set(value):
+		_records.record_in_tests = value
 
 # ---------------------------------------------------------------------------
 # RƯƠNG MỐC THƯỞNG CỦA CHƯƠNG (tầng B của "Chiến lược thưởng chế độ Play")
@@ -537,51 +538,19 @@ func take_shop_return_path() -> String:
 # KỶ LỤC TẦNG — ngày / tuần / tháng
 # ---------------------------------------------------------------------------
 
-## Khoá thời gian của kỳ `kind` cho một mốc ngày cụ thể:
-##  · "day"   -> "2026-10-21"
-##  · "week"  -> ngày THỨ HAI của tuần chứa mốc đó (tuần ISO bắt đầu từ thứ Hai)
-##  · "month" -> "2026-10"
+## Khoá thời gian của kỳ `kind` cho một mốc ngày cụ thể (xem `FloorRecordsStore.period_key`)
 static func period_key(kind: String, date: Dictionary) -> String:
-	match kind:
-		"month":
-			return "%04d-%02d" % [int(date.get("year", 1970)), int(date.get("month", 1))]
-		"week":
-			return _week_start_key(date)
-		_:
-			return _date_key(date)
+	return FloorRecordsStore.period_key(kind, date)
 
 
 ## Khoá của kỳ hiện tại theo đồng hồ hệ thống
 static func current_period_key(kind: String) -> String:
-	return period_key(kind, Time.get_datetime_dict_from_system())
-
-
-static func _date_key(date: Dictionary) -> String:
-	return "%04d-%02d-%02d" % [
-		int(date.get("year", 1970)), int(date.get("month", 1)), int(date.get("day", 1))]
-
-
-## Ngày THỨ HAI của tuần chứa `date` (`weekday`: 0 = Chủ nhật … 6 = thứ Bảy như Godot).
-## Lùi số ngày bằng unix-time để tự xử lý đúng khi lùi qua tháng/năm.
-static func _week_start_key(date: Dictionary) -> String:
-	var back := (int(date.get("weekday", 0)) + 6) % 7
-	var stamp := Time.get_unix_time_from_datetime_dict({
-		"year": int(date.get("year", 1970)),
-		"month": int(date.get("month", 1)),
-		"day": int(date.get("day", 1)),
-		"hour": 0, "minute": 0, "second": 0,
-	})
-	return Time.get_date_string_from_unix_time(int(stamp) - back * 86400)
+	return FloorRecordsStore.current_period_key(kind)
 
 
 ## Tầng cao nhất đạt được trong kỳ hiện tại (0 = chưa có kỷ lục). Kỳ đã đổi thì đọc ra 0.
 func best_floor(kind := "week") -> int:
-	if not floor_records.has(kind):
-		return 0
-	var bucket: Dictionary = floor_records.get(kind, {})
-	if str(bucket.get("key", "")) != current_period_key(kind):
-		return 0
-	return maxi(int(bucket.get("floor", 0)), 0)
+	return _records.best(kind)
 
 
 ## Ghi nhận vừa ĐẠT tới `floor_number` (gọi khi vào tầng mới của ván Dungeon).
@@ -589,27 +558,12 @@ func best_floor(kind := "week") -> int:
 func record_floor_reached(floor_number := 0) -> bool:
 	if floor_number <= 0 or debug_run:
 		return false
-	if _is_automated_test() and not floor_record_in_tests:
+	if _is_automated_test() and not _records.record_in_tests:
 		return false
-	_sync_floor_records()
-	var improved := false
-	for kind in FLOOR_RECORD_KINDS:
-		var bucket: Dictionary = floor_records[kind]
-		if floor_number > int(bucket.get("floor", 0)):
-			bucket["floor"] = floor_number
-			improved = true
-			floor_record_changed.emit(kind, floor_number)
-	return improved
-
-
-## Bỏ kỷ lục của kỳ đã qua (sang ngày/tuần/tháng mới thì kỷ lục bắt đầu lại từ 0)
-func _sync_floor_records() -> void:
-	var date := Time.get_datetime_dict_from_system()
-	for kind in FLOOR_RECORD_KINDS:
-		var key := period_key(kind, date)
-		var bucket: Dictionary = floor_records.get(kind, {})
-		if str(bucket.get("key", "")) != key:
-			floor_records[kind] = {"key": key, "floor": 0}
+	var improved := _records.reach(floor_number)
+	for kind in improved:
+		floor_record_changed.emit(kind, floor_number)
+	return not improved.is_empty()
 
 
 # ---------------------------------------------------------------------------
@@ -1083,7 +1037,7 @@ func export_progress() -> Dictionary:
 		"tool_uses": tool_uses.duplicate(),
 		"lives": _life.lives,
 		"next_life_at": _life.next_life_at,
-		"floor_records": floor_records.duplicate(true),
+		"floor_records": _records.records.duplicate(true),
 		"chapter_chests": chapter_chests.duplicate(true),
 		"unlocked_chapters": unlocked_chapters.duplicate(),
 		"current_chapter": current_chapter,
@@ -1130,18 +1084,7 @@ func import_progress(data: Dictionary) -> void:
 
 ## Nạp kỷ lục tầng từ blob tiến trình; kỳ nào đã qua (khác mốc hiện tại) thì coi như 0.
 func _import_floor_records(value: Variant) -> void:
-	for kind in FLOOR_RECORD_KINDS:
-		floor_records[kind] = {"key": "", "floor": 0}
-	if value is Dictionary:
-		var saved: Dictionary = value
-		for kind in FLOOR_RECORD_KINDS:
-			var bucket: Variant = saved.get(kind, null)
-			if bucket is Dictionary:
-				floor_records[kind] = {
-					"key": str(bucket.get("key", "")),
-					"floor": maxi(int(bucket.get("floor", 0)), 0),
-				}
-	_sync_floor_records()
+	_records.load_state(value)
 
 
 ## Nạp trạng thái "đã nhận rương mốc" của từng chương từ blob tiến trình.
@@ -1177,11 +1120,7 @@ func reset_progress() -> void:
 	tutorial_flow_done = false
 	_life.reset()
 	shop_return_path = ""
-	floor_records = {
-		"day": {"key": "", "floor": 0},
-		"week": {"key": "", "floor": 0},
-		"month": {"key": "", "floor": 0},
-	}
+	_records.reset()
 	chapter_chests.clear()
 	life_changed.emit(_life.lives, MAX_LIVES)
 	for k in tutorial_progress:
