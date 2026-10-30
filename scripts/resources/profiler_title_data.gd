@@ -4,7 +4,7 @@ extends Resource
 ## Dữ liệu 1 BẬC DANH HIỆU HỒ SƠ (chip cạnh tên trong Profiler) — nguồn cho
 ## `PlayerProfileManager.title_key()`.
 ##
-## Mỗi bậc là 1 file .tres trong `res://resources/profiler/titles/`
+## Mỗi bậc là 1 file .tres trong res://resources/profiler/titles/
 ## (giống danh hiệu là .tres trong resources/archivements/) -> PlayerProfileManager
 ## quét thư mục + sắp theo `min_level`, nên THÊM bậc mới chỉ cần tạo file .tres,
 ## KHÔNG phải sửa code.

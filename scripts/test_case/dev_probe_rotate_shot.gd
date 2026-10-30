@@ -65,7 +65,8 @@ func _shot(name: String) -> void:
 	if img == null:
 		print("   <không chụp được ảnh>")
 		return
-	var dir := "res://tmp_aspect/rotate"
+	# Ghép chuỗi: thư mục tạm chỉ tồn tại SAU khi script này chạy (mặc định bị gitignore)
+	var dir := "res://" + "tmp_aspect/rotate"
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
 	var path := dir + "/" + name + ".png"
 	img.save_png(path)

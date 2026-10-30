@@ -9,7 +9,7 @@ extends Node
 ##   · Lịch sử 10 ván gần nhất (GameController gọi `record_run` khi kết thúc ván)
 ##
 ## Danh mục Avatar / Viền khung / Bậc danh hiệu = các file .tres
-## (AvatarData / FrameData / ProfilerTitleData) trong `res://resources/profiler/` —
+## (AvatarData / FrameData / ProfilerTitleData) trong res://resources/profiler/ —
 ## quét thư mục lúc khởi động, THÊM món mới chỉ cần tạo file .tres trong editor.
 ##
 ## Lưu save qua SaveManager (provider "PlayerProfileManager", autosave theo signal).

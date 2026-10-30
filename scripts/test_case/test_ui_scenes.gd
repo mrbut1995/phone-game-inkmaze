@@ -842,7 +842,7 @@ func _section_11_tutorials() -> void:
 	# Bảng scene của TutorialController phải trỏ tới scene CÓ THẬT
 	var controller := FileAccess.get_file_as_string("res://scripts/core/controllers/tutorial_controller.gd")
 	var route_re := RegEx.new()
-	route_re.compile("\"res://nodes/tutorials/([a-z_]+\\.tscn)\"")
+	route_re.compile("\"res://nodes/%s/([a-z_]+\\.tscn)\"" % "tutorials")
 	var routes := route_re.search_all(controller)
 	var bad_paths: Array[String] = []
 	for m in routes:

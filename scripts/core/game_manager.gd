@@ -472,7 +472,7 @@ func register_run_loss() -> bool:
 	return consume_life()
 
 
-## Đang chạy bộ test tự động (`godot --script res://scripts/test_case/...`) hay không
+## Đang chạy bộ test tự động (tiến trình chạy bằng `--script` trỏ tới `scripts/test_case/`) hay không
 func _is_automated_test() -> bool:
 	var main_loop := Engine.get_main_loop()
 	if main_loop == null:

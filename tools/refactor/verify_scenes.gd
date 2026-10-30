@@ -1,6 +1,6 @@
 extends SceneTree
 ## Nạp + khởi tạo (instantiate) MỌI .tscn trong project rồi báo lỗi.
-## Chạy:  godot --headless --path . --script res://tools/verify_scenes.gd
+## Chạy:  godot --headless --path . --script res://tools/refactor/verify_scenes.gd
 ## Exit code 1 nếu có scene không nạp/instantiate được. Dùng sau mỗi phase refactor.
 
 func _init() -> void:
