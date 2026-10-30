@@ -69,14 +69,14 @@ func set_undo_highlight(on: bool) -> void:
 	# Nhịp "thở" khai trong `action_bar.tscn` (player `PulseAnim`); thiếu thì fallback tween
 	var bar := _undo_pulse_bar()
 	if on:
-		undo_button.modulate = Color(1.25, 1.15, 0.55)
+		undo_button.modulate = Color(1.25, 1.15, 0.55)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 		if bar == null or not UIAnim.play_layout_anim(bar, "PulseAnim", &"pulse_undo", undo_button):
 			_undo_highlight_tween = UIAnim.play_pulse(undo_button, 1.12, 0.7)
 	else:
-		undo_button.modulate = Color.WHITE
+		undo_button.modulate = Color.WHITE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 		if bar != null:
 			UIAnim.stop_layout_anim(bar, "PulseAnim")
-		undo_button.scale = Vector2.ONE
+		undo_button.scale = Vector2.ONE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 
 
 ## Thanh công cụ của HUD đang dùng (chứa player `PulseAnim` cho nhịp nút Undo)
@@ -245,7 +245,7 @@ func show_direct_game_over(result: Dictionary) -> void:
 func _charge_life_cost(result: Dictionary) -> void:
 	if bool(result.get("guided", false)):
 		return
-	var game_manager := get_node_or_null("/root/GameManager")
+	var game_manager := Svc.game()
 	if game_manager != null and game_manager.has_method("register_run_loss"):
 		game_manager.call("register_run_loss")
 

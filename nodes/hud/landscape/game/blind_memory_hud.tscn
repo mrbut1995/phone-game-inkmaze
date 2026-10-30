@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://chvknk1x1s2p"]
 
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://de5k2iuaudflb" path="res://scripts/nodes/hud/game/blind_memory_hud.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://de5k2iuaudflb" path="res://scripts/ui/hud/game/blind_memory_hud.gd" id="2_script"]
 
 [node name="Hud" unique_id=878113461 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_base")]
 script = ExtResource("2_script")

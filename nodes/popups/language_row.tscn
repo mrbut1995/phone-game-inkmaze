@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/popups/language_row.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/ui/popups/language_row.gd" id="1_script"]
 [ext_resource uid="uid://cujdcc37e708g" type="Texture2D" path="res://assets/images-png/popups/lang_item_normal.png" id="2_art_normal"]
 [ext_resource uid="uid://lcih45n4mm0k" type="Texture2D" path="res://assets/images-png/popups/box_dungeon_bonus.png" id="3_art_pressed"]
 [ext_resource uid="uid://dypjxt4hp47ue" type="Texture2D" path="res://assets/images-png/popups/lang_item_pressed.png" id="4_art_hover"]

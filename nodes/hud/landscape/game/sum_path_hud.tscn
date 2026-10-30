@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c6lkgqerjx7yq"]
 
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://4bgj8itq83wv" path="res://scripts/nodes/hud/game/sum_path_hud.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://4bgj8itq83wv" path="res://scripts/ui/hud/game/sum_path_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="3_theme"]
 [ext_resource uid="uid://btsb48rmdx7ty" type="Texture2D" path="res://assets/images-landscape-png/game/card_sum_path.png" id="7_sheet"]
 [ext_resource uid="uid://bbb2thlmaw5so" type="Texture2D" path="res://assets/images-png/game/card_sum_block_current.png" id="8_block_current"]
@@ -19,6 +19,8 @@ target_value_node = NodePath("Content/ModeInformation/Sheet/BlockTarget/Target/V
 need_label = NodePath("Content/ModeInformation/Sheet/BlockTarget/Target/ChipNeed/Need")
 
 [node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=561028501]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="Sheet" type="NinePatchRect" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1830702977]

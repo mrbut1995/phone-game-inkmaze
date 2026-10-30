@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/daily/week_strip.gd" id="1_ws"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/daily/week_strip.gd" id="1_ws"]
 [ext_resource uid="uid://bglp8d242ltby" type="Texture2D" path="res://assets/images-png/daily/week_bar.png" id="2_bar"]
 [ext_resource type="PackedScene" path="res://nodes/daily/week_day.tscn" id="3_day"]
 [ext_resource uid="uid://ccnqwssg10ixk" type="Texture2D" path="res://assets/images-png/daily/btn_month_normal.png" id="4_bn"]

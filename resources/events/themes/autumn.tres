@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/data/event_theme.gd" id="1_script"]
 [ext_resource uid="uid://sknjw7swj2vb" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_autumn_normal.png" id="btn_normal"]
 [ext_resource uid="uid://qsjgdivkvypq" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_autumn_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://6160twssbkh4" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_autumn_disabled.png" id="btn_disabled"]

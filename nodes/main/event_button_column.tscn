@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/widgets/main/event_button_column.gd" id="1_1hlbh"]
+
+[node name="EventButtonColumn" type="VBoxContainer" unique_id=814471012]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_top = 10.0
+offset_right = -4.0
+offset_bottom = 10.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 6
+script = ExtResource("1_1hlbh")
+
+[node name="Refresh" type="Timer" parent="." unique_id=624252630]
+wait_time = 20.0
+autostart = true
+
+[connection signal="timeout" from="Refresh" to="." method="_refresh_times"]

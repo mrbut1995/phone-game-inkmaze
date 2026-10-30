@@ -36,7 +36,7 @@ func _init() -> void:
 	assert(manager != null, "Autoload RankingManager phai ton tai")
 	assert(manager.has_method("entries"), "RankingManager phai co entries()")
 
-	var arch: Node = root.get_node_or_null("ArchivementManager")
+	var arch: Node = root.get_node_or_null("AchievementManager")
 	var stats: Dictionary = arch.call("export_progress") if arch != null else {}
 
 	_section_1_boards(manager)
@@ -347,7 +347,7 @@ func _section_8_wiring() -> void:
 		_entry(str(sm_consts.get("SCENE_RANKING", "")) == "res://scenes/ranking.tscn",
 			"SceneManager.SCENE_RANKING tro dung scenes/ranking.tscn")
 		_entry(scene_manager.has_method("goto_ranking"), "SceneManager co goto_ranking()")
-	var main_src := FileAccess.get_file_as_string("res://scripts/scenes/main.gd")
+	var main_src := FileAccess.get_file_as_string("res://scripts/ui/screens/main.gd")
 	_entry(main_src.contains("_on_leaderboard_pressed") and main_src.contains("Nav.goto_ranking()"),
 		"Nut XEP HANG o Main da noi toi Nav.goto_ranking()")
 

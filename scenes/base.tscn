@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://3ol477wsv33k"]
 
 [ext_resource type="PackedScene" path="res://nodes/common/parallax_background.tscn" id="bg_scene"]
-[ext_resource type="Script" uid="uid://bxshv77j0bvff" path="res://scripts/scenes/base.gd" id="1_baglu"]
+[ext_resource type="Script" uid="uid://bxshv77j0bvff" path="res://scripts/ui/screens/base.gd" id="1_baglu"]
 
 [node name="Control" type="Control" unique_id=1978794255]
 layout_mode = 3

@@ -1,0 +1,9 @@
+class_name OneStrokeHUD
+extends BaseHUD
+## ============================================================================
+## HUD One Stroke.
+##
+## 2026-09-27 — theo yêu cầu "chỉ hiện thứ cần thiết": HUD này CHỈ hiện **THỜI GIAN**.
+## Không thuộc HUD: bảng "TIẾN ĐỘ PHỦ KÍN" (ô đã phủ · chip % · thanh tiến độ · dòng luật) — tiến độ thấy
+## TRỰC TIẾP trên bàn cờ (ô đã đi bị gạch chéo "ĐÃ ĐI"), luật đọc ở khung Hướng dẫn.
+## ============================================================================

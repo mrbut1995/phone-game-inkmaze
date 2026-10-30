@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://issxgiaa2yq4"]
 
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_fvytb"]
-[ext_resource type="Script" uid="uid://64aali4bsomk" path="res://scripts/nodes/hud/game/level_hud.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://64aali4bsomk" path="res://scripts/ui/hud/game/level_hud.gd" id="2_script"]
 
 [node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("time_value_node") instance=ExtResource("1_fvytb")]
 script = ExtResource("2_script")

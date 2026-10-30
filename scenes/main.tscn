@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bipfa7yko86fv"]
 
 [ext_resource type="PackedScene" uid="uid://3ol477wsv33k" path="res://scenes/base.tscn" id="1_o5qli"]
-[ext_resource type="Script" uid="uid://dcn5tod78ae07" path="res://scripts/scenes/main.gd" id="2_eb6dy"]
+[ext_resource type="Script" uid="uid://dcn5tod78ae07" path="res://scripts/ui/screens/main.gd" id="2_eb6dy"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="22_theme_text"]
 [ext_resource type="PackedScene" path="res://scenes/layout/landscape/main.tscn" id="L_main_landscape"]
 [ext_resource type="PackedScene" path="res://scenes/layout/portrait/main.tscn" id="L_main_portrait"]
@@ -16,3 +16,6 @@ layout_mode = 1
 [node name="Landscape" parent="." index="2" unique_id=2059472326 instance=ExtResource("L_main_landscape")]
 layout_mode = 1
 anchors_preset = -1
+
+[connection signal="profile_pressed" from="Portrait" to="." method="_on_profile_pressed"]
+[connection signal="profile_pressed" from="Landscape" to="." method="_on_profile_pressed"]

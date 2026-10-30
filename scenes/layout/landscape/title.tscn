@@ -6,7 +6,7 @@
 [ext_resource uid="uid://bjey8neasfcau" type="Texture2D" path="res://assets/images-png/game/pen_type/pen_fountain_pen_nib.png" id="6_hiwto"]
 [ext_resource uid="uid://oalyje7bs0yo" type="Texture2D" path="res://assets/images-png/level_selector/icon_play_triangle.png" id="7_play_icon"]
 [ext_resource uid="uid://bt4mb18wc2rf2" type="Texture2D" path="res://assets/images-png/main/stamp_version.png" id="8_stamp"]
-[ext_resource type="Script" path="res://scripts/scenes/layout/title_layout.gd" id="2_layout"]
+[ext_resource type="Script" path="res://scripts/ui/layouts/title_layout.gd" id="2_layout"]
 
 [sub_resource type="Animation" id="Animation_reset_title"]
 length = 0.001
@@ -493,7 +493,11 @@ size_flags_horizontal = 3
 mouse_filter = 2
 
 [node name="CoinChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="LifeChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false

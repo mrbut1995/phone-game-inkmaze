@@ -1,0 +1,90 @@
+class_name ShopNoadsRow
+extends Control
+## ============================================================================
+## Hàng VIP "GÓI XOÁ QUẢNG CÁO (NO ADS)" — 980×200, nằm TRÊN CÙNG tab NẠP XU
+## (mockup/shopping_coin.svg): nhãn đỏ · tiêu đề lớn · mô tả · nút giá VNĐ đỏ.
+## ============================================================================
+
+signal action_pressed(item_id: String)
+
+const BTN := preload("res://assets/images-png/shop/btn_noads.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const OWNED_BTN := preload("res://assets/images-png/shop/btn_equipped.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+
+var item_id: String = ""
+var item_data: Dictionary = {}
+var _tap := ShopCardTap.new()
+
+
+func setup(data: Dictionary) -> void:
+	item_data = data
+	item_id = str(data.get("id", ""))
+	_refresh()
+
+
+func _refresh() -> void:
+	_set_label("Body/Info/Title", TranslationServer.translate(str(item_data.get("name_key", ""))))
+	_set_label("Body/Info/Desc", TranslationServer.translate(str(item_data.get("desc_key", ""))))
+	var badge_label := get_node_or_null("Body/Info/Badge/BadgeLabel") as Label
+	if badge_label != null:
+		var badge_key := str(item_data.get("badge_key", ""))
+		badge_label.visible = not badge_key.is_empty()
+		if not badge_key.is_empty():
+			badge_label.text = TranslationServer.translate(badge_key)
+		var badge := get_node_or_null("Body/Info/Badge") as NinePatchRect
+		if badge != null:
+			badge.visible = badge_label.visible
+			# chip ÔM NHÃN: chỉ đặt bề rộng TỐI THIỂU theo bề rộng chữ (vị trí do VBoxContainer dàn)
+			badge.custom_minimum_size.x = badge_label.get_minimum_size().x + 12.0
+	_set_button()
+
+
+func _set_button() -> void:
+	var btn := get_node_or_null("Body/Action") as TextureButton
+	var label := get_node_or_null("Body/Action/ActionLabel") as Label
+	if btn == null or label == null:
+		return
+	if Shop.is_owned(item_id):		# đã mua gói xoá quảng cáo -> khoá nút
+		btn.texture_normal = OWNED_BTN  # keep-code: art theo trạng thái món hàng (runtime)
+		btn.texture_pressed = OWNED_BTN  # keep-code: art theo trạng thái món hàng (runtime)
+		btn.texture_hover = OWNED_BTN  # keep-code: art theo trạng thái món hàng (runtime)
+		btn.texture_disabled = OWNED_BTN  # keep-code: art theo trạng thái món hàng (runtime)
+		btn.disabled = true
+		label.theme_type_variation = &"ShopBtnTextDone"  # keep-code: biến thể chữ theo trạng thái (runtime)
+		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))  # keep-code: màu theo dữ liệu (runtime)
+		label.text = TranslationServer.translate("STR_SHOP_OWNED_BTN")
+		return
+	btn.disabled = false
+	btn.texture_normal = BTN  # keep-code: art theo trạng thái món hàng (runtime)
+	btn.texture_pressed = BTN  # keep-code: art theo trạng thái món hàng (runtime)
+	btn.texture_hover = BTN  # keep-code: art theo trạng thái món hàng (runtime)
+	btn.texture_disabled = BTN  # keep-code: art theo trạng thái món hàng (runtime)
+	label.theme_type_variation = &"ShopNoadsPrice"  # keep-code: biến thể chữ theo trạng thái (runtime)
+	label.remove_theme_color_override("font_color")
+	label.text = Shop.vnd_text(int(item_data.get("vnd", 0)))
+
+
+func _set_label(path: String, text: String) -> void:
+	var label := get_node_or_null(path) as Label
+	if label != null:
+		label.text = text
+
+func _gui_input(event: InputEvent) -> void:
+	match _tap.feed(event):
+		ShopCardTap.Result.DOWN:
+			ShopCardTap.press_fx(self, true)
+		ShopCardTap.Result.TAP:
+			ShopCardTap.press_fx(self, false)
+			_on_card_tapped()
+		ShopCardTap.Result.CANCEL:
+			ShopCardTap.press_fx(self, false)
+
+
+## CHẠM CẢ HÀNG để mua (đã mua rồi thì bỏ qua)
+func _on_card_tapped() -> void:
+	if Shop.is_owned(item_id):
+		return
+	action_pressed.emit(item_id)
+
+
+func _on_action_pressed() -> void:
+	_on_card_tapped()

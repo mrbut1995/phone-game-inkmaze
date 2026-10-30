@@ -17,11 +17,7 @@ const RECHARGE_SECONDS := 30 * 60
 
 
 static func manager() -> Node:
-	var main_loop := Engine.get_main_loop()
-	var tree := main_loop as SceneTree
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("GameManager")
-	return null
+	return Svc.game()
 
 
 static func available() -> bool:

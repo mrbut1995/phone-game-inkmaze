@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_dymst"]
-[ext_resource type="Script" path="res://scripts/scenes/layout/tutorial_list_layout.gd" id="2_layout"]
+[ext_resource type="Script" path="res://scripts/ui/layouts/tutorial_list_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
 [ext_resource type="Texture2D" uid="uid://c0nhdhr5qww35" path="res://assets/images-png/icons/icon_book.png" id="9_ic_book"]
@@ -21,13 +21,8 @@
 [ext_resource uid="uid://d3jf1wagqcfjk" type="Texture2D" path="res://assets/images-png/tutorial/tut_card.png" id="tut_card"]
 [ext_resource uid="uid://csccatg841ixy" type="Texture2D" path="res://assets/images-png/tutorial/tut_card_pressed.png" id="tut_card_pressed"]
 [ext_resource uid="uid://bjybtcsmqpwsd" type="Texture2D" path="res://assets/images-png/tutorial/tut_card_off.png" id="tut_card_off"]
-[ext_resource uid="uid://gustmdd07cjx" type="Texture2D" path="res://assets/images-png/tutorial/tut_link_lr.png" id="tut_link_lr"]
-[ext_resource uid="uid://u4aprf1jvw82" type="Texture2D" path="res://assets/images-png/tutorial/tut_link_rl.png" id="tut_link_rl"]
 [ext_resource uid="uid://bmdm8db5rjbj1" type="Texture2D" path="res://assets/images-png/tutorial/tut_link_v.png" id="tut_link_v"]
-[ext_resource uid="uid://b3hsm3p524syt" type="Texture2D" path="res://assets/images-png/ranking/rank_sheet.png" id="sheet"]
-[ext_resource uid="uid://d1jsebin0vqrg" type="Texture2D" path="res://assets/images-png/ranking/banner_title.png" id="banner"]
 [ext_resource uid="uid://d0va6pi8ee73v" type="Texture2D" path="res://assets/images-png/ranking/hole.png" id="hole"]
-[ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="clip"]
 [ext_resource type="PackedScene" path="res://nodes/common/notebook_sheet.tscn" id="nbsheet"]
 
 [sub_resource type="StyleBoxTexture" id="sb_n"]
@@ -141,24 +136,6 @@ VScrollBar/styles/scroll_focus = SubResource("sb_scroll")
 VScrollBar/styles/grabber = SubResource("sb_grab")
 VScrollBar/styles/grabber_highlight = SubResource("sb_grab_h")
 VScrollBar/styles/grabber_pressed = SubResource("sb_grab_h")
-
-[sub_resource type="Gradient" id="grad_down"]
-offsets = PackedFloat32Array(0, 1)
-colors = PackedColorArray(1, 0.992, 0.961, 0, 1, 0.992, 0.961, 1)
-
-[sub_resource type="Gradient" id="grad_up"]
-offsets = PackedFloat32Array(0, 1)
-colors = PackedColorArray(1, 0.992, 0.961, 1, 1, 0.992, 0.961, 0)
-
-[sub_resource type="GradientTexture2D" id="gt_down"]
-gradient = SubResource("grad_down")
-fill_from = Vector2(0, 0)
-fill_to = Vector2(0, 1)
-
-[sub_resource type="GradientTexture2D" id="gt_up"]
-gradient = SubResource("grad_up")
-fill_from = Vector2(0, 0)
-fill_to = Vector2(0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_heropanel"]
 bg_color = Color(1, 1, 1, 0.96)
@@ -1650,8 +1627,12 @@ size_flags_vertical = 4
 mouse_filter = 2
 
 [node name="CoinChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="LifeChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false
 

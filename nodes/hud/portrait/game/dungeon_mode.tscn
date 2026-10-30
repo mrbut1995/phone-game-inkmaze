@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dt0b7kv16svfy"]
 
 [ext_resource type="PackedScene" uid="uid://bl4r7bsfws086" path="res://nodes/hud/portrait/game/game_hud.tscn" id="1_pt42g"]
-[ext_resource type="Script" uid="uid://jtc5actxn551" path="res://scripts/nodes/hud/game/dungeon_hud.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://jtc5actxn551" path="res://scripts/ui/hud/game/dungeon_hud.gd" id="2_script"]
 
 [node name="Hud" unique_id=1383101299 node_paths=PackedStringArray("step_value_node", "floor_value_node") instance=ExtResource("1_pt42g")]
 script = ExtResource("2_script")
@@ -73,4 +73,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(366839706) index="2" unique_id=212466531]
+mouse_filter = 2
+process_mode = 4
 visible = false

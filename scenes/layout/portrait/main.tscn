@@ -1,47 +1,20 @@
 [gd_scene format=3 uid="uid://bjk34x4h5ljhx"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" uid="uid://dmhi5353c17ko" path="res://scripts/scenes/layout/main_layout.gd" id="2_layout"]
+[ext_resource type="Script" uid="uid://dmhi5353c17ko" path="res://scripts/ui/layouts/main_layout.gd" id="2_layout"]
 [ext_resource type="PackedScene" uid="uid://kk7tudhk7r3m" path="res://nodes/main/profile_card.tscn" id="3_profile"]
 [ext_resource type="PackedScene" uid="uid://dxm1sm66f5qi1" path="res://nodes/main/star_chip.tscn" id="5_star"]
 [ext_resource type="PackedScene" uid="uid://xuj64d8yo0mg" path="res://nodes/main/event_header.tscn" id="6_header"]
-[ext_resource type="Texture2D" uid="uid://ht772c02qnl" path="res://assets/images-png/main/btn_settings_normal.png" id="6_i6aov"]
-[ext_resource type="Texture2D" uid="uid://cheydeptnm3w6" path="res://assets/images-png/main/btn_settings_pressed.png" id="7_t0ecn"]
-[ext_resource type="Texture2D" uid="uid://d0gks40yyxdv2" path="res://assets/images-png/main/btn_settings_hover.png" id="8_6y0m5"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/settings_btn_normal.png" id="6_settings_n"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/settings_btn_pressed.png" id="7_settings_p"]
 [ext_resource type="PackedScene" uid="uid://k2k3skjevrxy" path="res://nodes/main/dock_button.tscn" id="9_dock"]
-[ext_resource type="Texture2D" uid="uid://daksl6ghofec0" path="res://assets/images-png/main/btn_settings_disabled.png" id="9_nuhf0"]
-[ext_resource type="Texture2D" uid="uid://dhkgonrwe7f5o" path="res://assets/images-png/main/btn_settings_focus.png" id="10_r22o1"]
+[ext_resource type="Texture2D" path="res://assets/images-png/dock/dock_panel.png" id="tex_dock_panel"]
 [ext_resource type="PackedScene" uid="uid://7haijnwmq3kt" path="res://nodes/main/level_section.tscn" id="L_section"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="L_sheet"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 5
-border_color = Color(0.894118, 0.862745, 0.776471, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-expand_margin_left = -6.0
-expand_margin_right = -6.0
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dock"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dock_pressed"]
-bg_color = Color(0.0862745, 0.27451, 0.388235, 0.1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[node name="Portrait" unique_id=732847808 node_paths=PackedStringArray("profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "level_section", "dock_shop", "dock_ranking", "dock_badges", "stamp_panel", "stamp_label", "header_anchor", "bottom_safe_spacer") instance=ExtResource("1_parent")]
+[node name="Portrait" unique_id=732847808 node_paths=PackedStringArray("profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "level_section", "dock_shop", "dock_ranking", "dock_daily", "dock_badges", "stamp_panel", "stamp_label", "header_anchor", "bottom_safe_spacer") instance=ExtResource("1_parent")]
 mouse_filter = 2
 script = ExtResource("2_layout")
 profile_card = NodePath("TopBar/ProfileCard")
@@ -52,6 +25,7 @@ event_header = NodePath("Body/EventHeader")
 level_section = NodePath("Body/LevelSection")
 dock_shop = NodePath("Body/Dock/Row/DockShop")
 dock_ranking = NodePath("Body/Dock/Row/DockRanking")
+dock_daily = NodePath("Body/Dock/Row/DockDaily")
 dock_badges = NodePath("Body/Dock/Row/DockBadges")
 stamp_panel = NodePath("Body/Stamp")
 stamp_label = NodePath("Body/Stamp/Label")
@@ -64,7 +38,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 10.0
-offset_top = 8.0
+offset_top = 24.0
 offset_right = -10.0
 offset_bottom = -4.0
 grow_horizontal = 2
@@ -84,8 +58,11 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="EventHeader" parent="Body" index="2" unique_id=2066375565 instance=ExtResource("6_header")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
+process_mode = 4
 
 [node name="LevelSection" parent="Body" index="3" unique_id=2076419110 node_paths=PackedStringArray("lock_sheet") instance=ExtResource("L_section")]
 custom_minimum_size = Vector2(0, 300)
@@ -95,11 +72,30 @@ size_flags_vertical = 3
 lock_sheet = NodePath("../../LockSheet")
 
 [node name="Dock" type="PanelContainer" parent="Body" index="4" unique_id=1319287755]
-custom_minimum_size = Vector2(0, 72)
+custom_minimum_size = Vector2(0, 106)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bar")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_dock")
+
+[node name="PaperHolder" type="Control" parent="Body/Dock"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PaperArt" type="NinePatchRect" parent="Body/Dock/PaperHolder"]
+layout_mode = 0
+offset_top = -12.0
+offset_right = 640.0
+offset_bottom = 200.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("tex_dock_panel")
+patch_margin_left = 56
+patch_margin_top = 60
+patch_margin_right = 56
+patch_margin_bottom = 60
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 0
 
 [node name="Row" type="HBoxContainer" parent="Body/Dock" index="0" unique_id=1964936121]
 layout_mode = 2
@@ -108,24 +104,23 @@ theme_override_constants/separation = 4
 
 [node name="DockShop" parent="Body/Dock/Row" index="0" unique_id=1428109260 instance=ExtResource("9_dock")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
+art_key = &"shop"
+label_key = &"STR_BTN_SHOP"
 
 [node name="DockRanking" parent="Body/Dock/Row" index="1" unique_id=988222034 instance=ExtResource("9_dock")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
+art_key = &"rank"
+label_key = &"STR_BTN_LEADERBOARD"
 
-[node name="DockBadges" parent="Body/Dock/Row" index="2" unique_id=959157184 instance=ExtResource("9_dock")]
+[node name="DockDaily" parent="Body/Dock/Row" index="2" unique_id=1700000201 instance=ExtResource("9_dock")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
+art_key = &"daily"
+label_key = &"STR_MAIN_DOCK_DAILY"
+
+[node name="DockBadges" parent="Body/Dock/Row" index="3" unique_id=959157184 instance=ExtResource("9_dock")]
+layout_mode = 2
+art_key = &"badges"
+label_key = &"STR_BTN_ACHIEVEMENT"
 
 [node name="Stamp" type="Control" parent="Body" index="5" unique_id=915123778]
 visible = false
@@ -161,21 +156,31 @@ layout_mode = 2
 
 [node name="StarChip" parent="TopBar" index="3" unique_id=1659631256 instance=ExtResource("5_star")]
 visible = false
+mouse_filter = 2
+process_mode = 4
 custom_minimum_size = Vector2(75, 32)
 layout_mode = 2
 size_flags_vertical = 0
 
+[node name="CoinChip" parent="TopBar" index="1"]
+large = true
+
+[node name="LifeChip" parent="TopBar" index="2"]
+large = true
+
 [node name="Settings" type="TextureButton" parent="TopBar" index="4" unique_id=1915005296]
-custom_minimum_size = Vector2(66, 66)
+custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("6_i6aov")
-texture_pressed = ExtResource("7_t0ecn")
-texture_hover = ExtResource("8_6y0m5")
-texture_disabled = ExtResource("9_nuhf0")
-texture_focused = ExtResource("10_r22o1")
+texture_normal = ExtResource("6_settings_n")
+texture_pressed = ExtResource("7_settings_p")
+texture_hover = ExtResource("6_settings_n")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="LockSheet" parent="." index="2" unique_id=982853190 instance=ExtResource("L_sheet")]
 z_index = 20
 layout_mode = 1
+
+[connection signal="pressed" from="TopBar/ProfileCard" to="." method="_on_profile_card_pressed"]

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3]
+
+[ext_resource uid="uid://bir8bpmt03wuv" type="Texture2D" path="res://assets/images-png/icons/icon_trophy.png" id="1_wojss"]
+[ext_resource type="Script" path="res://scripts/data/achievement_data.gd" id="2_pdtav"]
+
+[resource]
+script = ExtResource("2_pdtav")
+id = "sp_claimed_10"
+category = "special"
+title = "Nhà Sưu Tầm Danh Hiệu"
+description = "Nhận thưởng 10 danh hiệu"
+title_key = "STR_ACH_SP_CLAIMED_10_TITLE"
+desc_key = "STR_ACH_SP_CLAIMED_10_DESC"
+icon = ExtResource("1_wojss")
+stat = "claimed_count"
+target = 10
+unit = "Danh hiệu"
+reward_coins = 100
+points = 20

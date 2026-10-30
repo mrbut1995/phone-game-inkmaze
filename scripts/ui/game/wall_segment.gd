@@ -1,0 +1,185 @@
+class_name WallSegment
+extends Line2D
+## ============================================================================
+## View: 1 đoạn tường (dùng Line2D nối 2 điểm neo Anchor).
+## Màu theo state: "visible" (tường thật), "invisible" (ẩn),
+##                 "suspected" (tường nghi ngờ - vàng cam), "hit" (va chạm - đỏ).
+## Tích hợp animation vẽ nét bút chì (Pencil Stroke) & phản hồi va chạm nảy nét.
+## ============================================================================
+
+var _state := "invisible"
+var _base_width := 11.0
+var _p1 := Vector2.ZERO
+var _p2 := Vector2.ZERO
+var _preview_pulse: Tween = null
+## AnimationPlayer của `wall_segment.tscn` — hiệu ứng nhấp nháy lớp preview khai trong scene
+## Node binding: khai `node_paths` + NodePath trong `wall_segment.tscn`
+@export var anim: AnimationPlayer = null
+
+
+func _play_anim(anim_name: StringName) -> bool:
+	if anim == null or not anim.has_animation(anim_name):
+		return false
+	anim.play(anim_name)
+	return true
+
+@export var COLOR_VISIBLE := Color(0.12, 0.16, 0.23, 1.0)        # #1E283A
+@export var COLOR_SUSPECTED := Color(0.77, 0.52, 0.23, 1.0)      # #C4843A
+@export var COLOR_HIT := Color(0.85, 0.27, 0.27, 1.0)            # #D84444
+## Wall Builder: đoạn tường người chơi TỰ DỰNG (xanh lá — khớp tông "xây tường" của mode)
+@export var COLOR_BUILT := Color(0.18039216, 0.49019608, 0.19607843, 1.0)   # #2E7D32
+## Tường người chơi TỰ ĐÁNH DẤU (nghi ngờ · tự dựng) dày hơn tường thường để nổi trên đường kẻ ô
+@export_range(1.0, 2.5, 0.05) var MARK_WIDTH_SCALE := 1.4
+## Quầng giấy sáng phía sau nét đánh dấu (× bề rộng) — tách nét khỏi đường kẻ ô của bàn cờ
+@export_range(1.0, 3.0, 0.05) var HALO_SCALE := 2.0
+@export var HALO_COLOR := Color(1.0, 0.99, 0.94, 0.95)
+
+var _halo: Line2D = null
+
+
+func _ensure_halo() -> Line2D:
+	if _halo == null or not is_instance_valid(_halo):
+		_halo = Line2D.new()
+		_halo.name = "Halo"
+		_halo.show_behind_parent = true
+		_halo.joint_mode = Line2D.LINE_JOINT_ROUND
+		_halo.begin_cap_mode = Line2D.LINE_CAP_ROUND
+		_halo.end_cap_mode = Line2D.LINE_CAP_ROUND
+		add_child(_halo)
+	_halo.default_color = HALO_COLOR
+	return _halo
+
+
+func _sync_halo() -> void:
+	if _halo == null or not is_instance_valid(_halo):
+		return
+	_halo.points = points
+	_halo.width = width * HALO_SCALE
+
+
+func get_state() -> String:
+	return _state
+
+
+func set_wall_points(p1: Vector2, p2: Vector2) -> void:
+	_p1 = p1
+	_p2 = p2
+	points = PackedVector2Array([p1, p2])
+	_sync_halo()
+
+
+func set_line_width(w: float) -> void:
+	_base_width = w
+	width = _state_width()
+	_sync_halo()
+
+
+## Bề rộng theo state: tường người chơi tự đánh dấu dày hơn
+func _state_width() -> float:
+	if _state == "suspected" or _state == "built":
+		return _base_width * MARK_WIDTH_SCALE
+	return _base_width
+
+
+func set_state(state: String) -> void:
+	_state = state
+	var marked := state == "suspected" or state == "built"
+	match state:
+		"visible":
+			visible = true
+			default_color = COLOR_VISIBLE
+		"invisible":
+			visible = false
+		"suspected":
+			visible = true
+			default_color = COLOR_SUSPECTED
+		"built":
+			# Wall Builder: đoạn tường người chơi TỰ DỰNG
+			visible = true
+			default_color = COLOR_BUILT
+		"hit":
+			visible = true
+			default_color = COLOR_HIT
+	width = _state_width()
+	if marked:
+		_ensure_halo().visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
+		_sync_halo()
+	elif _halo != null and is_instance_valid(_halo):
+		_halo.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+
+
+## Hiệu ứng xuất hiện kèm nét vẽ bút chì lướt từ điểm đầu đến điểm cuối
+func animate_appear() -> void:
+	animate_stroke_draw(0.14)
+
+
+## Hiệu ứng nét bút chì/mực kéo dài từ p1 sang p2
+## (GIỮ tween) Nét vẽ dần bằng cách NỘI SUY ĐIỂM của Line2D — `points` là dữ liệu hình học
+## lúc chạy (số điểm tăng dần), không phải thuộc tính khai được trong animation.
+func animate_stroke_draw(duration := 0.12) -> void:
+	if points.size() < 2:
+		modulate.a = 0.0
+		var tw_fade := create_tween()
+		tw_fade.tween_property(self, "modulate:a", 1.0, duration)
+		return
+
+	var start_pt := points[0]
+	var end_pt := points[1]
+	points = PackedVector2Array([start_pt, start_pt])
+	visible = true
+	modulate.a = 1.0
+
+	var tw := create_tween()
+	tw.tween_method(func(prog: float) -> void:
+		points = PackedVector2Array([start_pt, start_pt.lerp(end_pt, prog)])
+		_sync_halo()
+	, 0.0, 1.0, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+## Bật/tắt kiểu NÉT ĐỨT (Wall Builder tutorial: preview "tường đứt đoạn").
+## Line2D không có nét đứt gốc — dùng texture lặp như chất liệu bút chì (PenSkin).
+func set_dashed(on: bool) -> void:
+	if on:
+		var w := maxf(width, 1.0)
+		texture_mode = Line2D.LINE_TEXTURE_TILE
+		texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+		texture = PenSkin.dash_texture_for(w * 2.2, w)
+	else:
+		texture_mode = Line2D.LINE_TEXTURE_NONE
+		texture_repeat = CanvasItem.TEXTURE_REPEAT_DISABLED
+		texture = null
+
+
+## Nhấp nháy nhẹ lớp preview (tường đứt đoạn) để mắt bám vào — tắt thì trả alpha về 1.
+## Nhịp nhấp nháy khai trong animation "preview_pulse" (loop) của scene.
+func set_preview_pulse(on: bool) -> void:
+	if _preview_pulse != null and _preview_pulse.is_valid():
+		_preview_pulse.kill()
+	_preview_pulse = null
+	if on:
+		if _play_anim(&"preview_pulse"):
+			return
+		# Fallback khi scene thiếu AnimationPlayer
+		_preview_pulse = create_tween().set_loops()
+		_preview_pulse.tween_property(self, "modulate:a", 0.45, 0.7)
+		_preview_pulse.tween_property(self, "modulate:a", 1.0, 0.7)
+	else:
+		if anim != null:
+			anim.stop()
+		modulate.a = 1.0
+
+
+## Hiệu ứng nảy dày nét và đỏ rực khi người chơi đâm trúng tường
+## (GIỮ tween) Bề dày đích = _base_width × 1.75 — _base_width do Board set lúc chạy
+## (co theo cỡ bàn) nên không thể bake giá trị tuyệt đối vào track của scene.
+func flash_hit_then_stay_visible() -> void:
+	set_state("hit")
+	var target_width := _base_width * 1.75
+	var tw := create_tween()
+	# Nở to nét tường giật mình
+	tw.tween_property(self, "width", target_width, 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "width", _base_width, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_interval(0.28)
+	tw.tween_callback(func() -> void:
+		set_state("visible")
+	)

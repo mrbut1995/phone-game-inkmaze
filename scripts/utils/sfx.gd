@@ -7,8 +7,7 @@ extends RefCounted
 ##   Test runner của dự án chạy bằng `godot --script ...`. Ở chế độ này,
 ##   identifier của autoload KHÔNG resolve được lúc parse => script nào tham
 ##   chiếu thẳng tên autoload sẽ lỗi parse. Vì vậy mọi nơi chỉ tham chiếu
-##   class `Sfx` này; node autoload được lấy động qua /root/SfxManager
-##   (đúng pattern `get_node_or_null` mà các manager khác đang dùng).
+##   class `Sfx` này; node autoload được lấy qua `Svc.sfx()`.
 ##
 ## Danh mục SFX + tình huống kích hoạt: xem `sfx_suggestion.txt` ở thư mục gốc.
 ## ============================================================================
@@ -39,7 +38,7 @@ const ACHIEVEMENT := "achievement"      # Thành tích (ví dụ: floor hoàn h�
 const LIBRARY := {
 	"path_draw": "sfx_path_draw.wav",
 	# sfx_cell_step.wav TRÙNG KHÍT sfx_path_draw.wav ⇒ dùng chung 1 file
-	# (bản gốc đã chuyển sang res://optimizing_clean/duplicate/assets/sfx/)
+
 	"cell_step": "sfx_path_draw.wav",
 	"anchor_snap": "sfx_anchor_snap.wav",
 	"wall_mark": "sfx_wall_mark.wav",
@@ -61,7 +60,7 @@ const LIBRARY := {
 	"achievement": "sfx_achivement.wav",
 }
 
-const SOUND_DIR := "res://assets/sfx/"
+const SOUND_DIR := "res://assets/sfx/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const DEFAULT_PITCH_JITTER := 0.04
 
 
@@ -100,9 +99,4 @@ static func stop_loop(sfx_name: String) -> void:
 
 
 static func _manager() -> Node:
-	var main_loop := Engine.get_main_loop()
-	if main_loop is SceneTree:
-		var tree := main_loop as SceneTree
-		if tree.root != null:
-			return tree.root.get_node_or_null("SfxManager")
-	return null
+	return Svc.sfx()

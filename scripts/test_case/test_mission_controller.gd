@@ -2,7 +2,7 @@ extends SceneTree
 ## ============================================================================
 ## Test Case: Hệ thống 3 Nhiệm vụ & Sao (MissionController) + popup thua.
 ##   - Mỗi màn có đúng 3 nhiệm vụ; hoàn thành 1 = 1 Sao (không tính theo thời gian còn lại).
-##   - Hệ HUD tách theo chế độ: scripts/nodes/hud/*.gd + nodes/hud/*.tscn
+##   - Hệ HUD tách theo chế độ: scripts/ui/hud/*.gd + nodes/hud/*.tscn
 ##     (Play = LevelHUD thẻ Nhiệm vụ, Dungeon = DungeonHUD bước/tầng, Minesweeper/Sum Path riêng).
 ##   - Popup thua: Level -> gameover_level.tscn (nhiệm vụ + số Sao), Dungeon -> gameover.tscn (bước).
 ##   - Hồi sinh: Level = quay lại bước trước đó, Endless = GIỮ NGUYÊN mê cung + cộng thêm bước.

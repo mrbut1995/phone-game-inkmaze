@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/profiler/stat_group.gd" id="1_group"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/profiler/stat_group.gd" id="1_group"]
 [ext_resource uid="uid://duqcleabqujwd" type="Texture2D" path="res://assets/images-png/settings/divider_dashed.png" id="2_dash"]
 
 [node name="StatGroup" type="VBoxContainer" node_paths=PackedStringArray("tape_bg", "tape_label", "header_row", "header_dash", "cards_grid")]

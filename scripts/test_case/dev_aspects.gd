@@ -13,7 +13,7 @@ extends SceneTree
 ##   --modes play,sum_path  chỉ kiểm tra vài chế độ của màn game
 ##
 ## Kiểm tra mỗi (màn × tỉ lệ):
-##   · Cột nội dung 1080px canh giữa (scripts/scenes/base.gd)
+##   · Cột nội dung 1080px canh giữa (scripts/ui/screens/base.gd)
 ##   · PaperFill phủ kín canvas · Background phủ kín cột
 ##   · Không có node hiển thị nào tràn ra ngoài màn hình
 ##   · Màn game: Board + HUD trong cột; popup pause có Dim phủ canvas, thẻ canh giữa cột
@@ -45,7 +45,7 @@ const SCREENS := [
 	{"id": "settings", "path": "res://scenes/settings.tscn"},
 	{"id": "shop", "path": "res://scenes/shop.tscn"},
 	{"id": "ranking", "path": "res://scenes/ranking.tscn"},
-	{"id": "archivement", "path": "res://scenes/archivement.tscn"},
+	{"id": "achievement", "path": "res://scenes/achievement.tscn"},
 	{"id": "profiler", "path": "res://nodes/popups/profiler_content.tscn", "embedded": true},
 	{"id": "credit", "path": "res://scenes/credit.tscn"},
 	{"id": "debug", "path": "res://scenes/debug.tscn"},

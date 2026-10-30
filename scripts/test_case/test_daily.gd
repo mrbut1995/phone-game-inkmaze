@@ -34,7 +34,7 @@ func _init() -> void:
 
 	var dm: Node = root.get_node_or_null("DailyManager")
 	var gm: Node = root.get_node_or_null("GameManager")
-	var arch: Node = root.get_node_or_null("ArchivementManager")
+	var arch: Node = root.get_node_or_null("AchievementManager")
 	_check(dm != null, "Autoload DailyManager ton tai")
 	_check(gm != null, "Autoload GameManager ton tai")
 	if dm == null or gm == null:

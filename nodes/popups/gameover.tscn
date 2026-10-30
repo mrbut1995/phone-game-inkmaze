@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://c43u1q7j8h7vg"]
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://cx4o6qtfdn7ty" path="res://scripts/nodes/popups/gameover.gd" id="2_over"]
-[ext_resource type="Script" path="res://scripts/nodes/popups/gameover_ruler.gd" id="2b_ruler"]
-[ext_resource type="Script" path="res://scripts/nodes/popups/retry_pencils.gd" id="2c_pencils"]
+[ext_resource type="Script" uid="uid://cx4o6qtfdn7ty" path="res://scripts/ui/popups/gameover.gd" id="2_over"]
+[ext_resource type="Script" path="res://scripts/ui/popups/gameover_ruler.gd" id="2b_ruler"]
+[ext_resource type="Script" path="res://scripts/ui/popups/retry_pencils.gd" id="2c_pencils"]
 [ext_resource uid="uid://dx1xsafatrfpn" type="Texture2D" path="res://assets/images-png/popups/go_panel_dungeon.png" id="3_panel"]
 [ext_resource uid="uid://bs4syowdu4fqb" type="Texture2D" path="res://assets/images-png/popups/retry_washi_tape.png" id="4_tape"]
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="5_clip"]
@@ -682,3 +682,4 @@ stretch_mode = 5
 [connection signal="pressed" from="Panel/Content/Information/Buttons/MenuBtn" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="Panel/Content/Information/Buttons/RetryBtn" to="." method="_on_retry_pressed"]
 [connection signal="timeout" from="Panel/Content/Information/PencilCard/H/PencilBox/RecoverTimer" to="Panel/Content/Information/PencilCard/H/PencilBox" method="_on_recover_timer_timeout"]
+[connection signal="recover_finished" from="Panel/Content/Information/PencilCard/H/PencilBox" to="." method="_refresh_pencils" flags=3]

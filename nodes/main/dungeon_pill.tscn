@@ -1,8 +1,9 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/main/dungeon_pill.gd" id="1_pill"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/main/dungeon_pill.gd" id="1_pill"]
 [ext_resource type="Texture2D" path="res://assets/images-png/dungeon/dungeon_ticket.png" id="2_ticket"]
 [ext_resource type="Texture2D" path="res://assets/images-png/dungeon/dungeon_icon.png" id="3_icon"]
+[ext_resource type="Texture2D" path="res://assets/images-png/dungeon/dungeon_ticket_pressed.png" id="4_ticket_down"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0"]
 
@@ -23,6 +24,7 @@ lbl_title = NodePath("Content/Title")
 lbl_floor = NodePath("Content/Floor")
 art = NodePath("Art")
 content = NodePath("Content")
+art_pressed = ExtResource("4_ticket_down")
 
 [node name="Art" type="TextureRect" parent="."]
 layout_mode = 0
@@ -71,3 +73,7 @@ theme_override_colors/font_color = Color(0.5412, 0.3529, 0, 1)
 theme_override_font_sizes/font_size = 13
 text = "Tầng 0"
 vertical_alignment = 1
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="mouse_exited" from="." to="." method="_on_pointer_exited"]

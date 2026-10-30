@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://smn1ps0pfgs3"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" uid="uid://v4tlpu7npbjs" path="res://scripts/scenes/layout/tutorial_layout.gd" id="2_layout"]
+[ext_resource type="Script" uid="uid://v4tlpu7npbjs" path="res://scripts/ui/layouts/tutorial_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://dodkr1s1s7ick" path="res://assets/images-png/main/main_menu_paper.png" id="2_paper"]
 [ext_resource type="Texture2D" uid="uid://yssg5du4e4fc" path="res://assets/images-png/btn_header_back_normal.png" id="3_back_n"]
 [ext_resource type="Texture2D" uid="uid://c8fvwpvick2hx" path="res://assets/images-png/btn_header_back_pressed.png" id="4_back_p"]
@@ -74,7 +74,11 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="CoinChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="LifeChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false

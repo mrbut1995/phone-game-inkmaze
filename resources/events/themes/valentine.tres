@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3 uid="uid://dr5blvx5v0pjb"]
 
-[ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/resources/event_theme.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://bd8kuuw3gihih" path="res://scripts/data/event_theme.gd" id="1_script"]
 [ext_resource uid="uid://cowl0or14wafr" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_valentine_normal.png" id="btn_normal"]
 [ext_resource uid="uid://0cp6dipscge8" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_valentine_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://dphe52dui51k1" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_valentine_disabled.png" id="btn_disabled"]

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
 
 [ext_resource uid="uid://cay1vkdr5f2r2" type="Texture2D" path="res://assets/images-png/avatars/avatar-dead-monster.png" id="1_rbucq"]
-[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_yotxs"]
+[ext_resource type="Script" path="res://scripts/data/avatar_data.gd" id="2_yotxs"]
 
 [resource]
 script = ExtResource("2_yotxs")

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://h036hefvdqif"]
 
 [ext_resource type="PackedScene" uid="uid://j75ew1kc04k7" path="res://nodes/popups/base.tscn" id="1_base"]
-[ext_resource type="Script" path="res://scripts/nodes/popups/retry.gd" id="2_retry"]
-[ext_resource type="Script" path="res://scripts/nodes/popups/retry_pencils.gd" id="2b_pencils"]
+[ext_resource type="Script" path="res://scripts/ui/popups/retry.gd" id="2_retry"]
+[ext_resource type="Script" path="res://scripts/ui/popups/retry_pencils.gd" id="2b_pencils"]
 [ext_resource uid="uid://d0xo6gwvno2bm" type="Texture2D" path="res://assets/images-png/popups/retry_panel.png" id="3_panel"]
 [ext_resource uid="uid://bs4syowdu4fqb" type="Texture2D" path="res://assets/images-png/popups/retry_washi_tape.png" id="4_tape"]
 [ext_resource type="Texture2D" uid="uid://blmy5cbx5kmeg" path="res://assets/images-png/popups/paper_clip.png" id="5_clip"]
@@ -601,3 +601,5 @@ layout_mode = 2
 [connection signal="pressed" from="Panel/Content/Information/Choices/BtnGold" to="." method="_on_gold_pressed"]
 [connection signal="pressed" from="Panel/Content/Information/Buttons/SkipBtn" to="." method="_on_skip_pressed"]
 [connection signal="timeout" from="Panel/Content/Information/PencilBox/RecoverTimer" to="Panel/Content/Information/PencilBox" method="_on_recover_timer_timeout"]
+
+[connection signal="recover_finished" from="Panel/Content/Information/PencilBox" to="." method="_refresh_pencils" flags=3]

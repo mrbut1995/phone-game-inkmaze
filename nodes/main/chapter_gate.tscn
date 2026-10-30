@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/nodes/main/chapter_gate.gd" id="1_gate"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/main/chapter_gate.gd" id="1_gate"]
 [ext_resource uid="uid://bsoade6t05dup" type="Texture2D" path="res://assets/images-png/level_selector/gate_sheet.png" id="2_sheet"]
 
 [sub_resource type="StyleBoxEmpty" id="sb_empty"]
@@ -38,6 +38,9 @@ initial_velocity_min = 60.0
 initial_velocity_max = 150.0
 scale_amount_min = 0.5
 scale_amount_max = 1.1
+
+[connection signal="pressed" from="Hit" to="." method="_on_hit_pressed"]
+[connection signal="draw" from="Visual/Overlay" to="." method="_draw_overlay"]
 
 [node name="Hit" type="Button" parent="."]
 offset_left = -44.0

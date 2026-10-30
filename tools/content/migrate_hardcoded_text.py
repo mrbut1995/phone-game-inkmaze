@@ -2,7 +2,7 @@
 """Chuyển CHUỖI CỨNG trong UI sang KHOÁ DỊCH (chạy 1 lần, idempotent).
 
  - Scene/script: thay `text = "<literal>"` → `text = "STR_…"` theo bảng bên dưới.
- - `.tres` danh hiệu: điền `title_key` / `desc_key` (ArchivementData đã hỗ trợ sẵn).
+ - `.tres` danh hiệu: điền `title_key` / `desc_key` (AchievementData đã hỗ trợ sẵn).
  - `.tres` chương: điền `title_key` / `subtitle_key` (ChapterData vừa thêm hỗ trợ).
  - Khoá MỚI ghi vào `resources/localization/string_extra.csv` (en + vi; ngôn ngữ khác
    dùng bản EN qua fallback).
@@ -189,7 +189,7 @@ def replace_in_file(rel: str, pairs: list[tuple[str, str]], dry: bool, report: l
 
 def migrate_achievements(dry: bool, report: list[str]) -> list[tuple[str, str, str]]:
     rows: list[tuple[str, str, str]] = []
-    for path in sorted((ROOT / "resources" / "archivements").glob("*.tres")):
+    for path in sorted((ROOT / "resources" / "achievements").glob("*.tres")):
         text = read_text(path)
         ach_id = path.stem
         if "title_key" in text:

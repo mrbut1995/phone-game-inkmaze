@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="EventData" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/level_data.gd" id="1_ex6i5"]
-[ext_resource type="Script" path="res://scripts/resources/event_reward.gd" id="2_iuv04"]
-[ext_resource type="Script" path="res://scripts/resources/event_data.gd" id="3_20vu0"]
+[ext_resource type="Script" path="res://scripts/data/level_data.gd" id="1_ex6i5"]
+[ext_resource type="Script" path="res://scripts/data/event_reward.gd" id="2_iuv04"]
+[ext_resource type="Script" path="res://scripts/data/event_data.gd" id="3_20vu0"]
 [ext_resource type="Resource" path="res://resources/events/themes/newyear.tres" id="4_0phry"]
 
 [sub_resource type="Resource" id="Resource_vmbef"]

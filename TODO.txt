@@ -342,7 +342,7 @@
 #       mỗi lần đổi tab. Bỏ luôn probe + `DOODLE_PAD_SCENE` còn sót (`_doodle_pad_height()` đọc
 #       `custom_minimum_size` của node khai sẵn, fallback hằng `FALLBACK_PAD_H`).
 #     · TEST — `test_ui_scenes` mục 7 kiểm 4 node MẪU (đang ẩn) + `fixed_nodes()` = 7 + `board.tscn` có `Layers`;
-#       thêm **mục 8** = hàng rào quét mã nguồn: `board.gd` · `shop.gd` · `ranking.gd` · `archivement.gd`
+#       thêm **mục 8** = hàng rào quét mã nguồn: `board.gd` · `shop.gd` · `ranking.gd` · `achievement.gd`
 #       KHÔNG được còn `preload()/instantiate()` các scene đã khai sẵn (bảng `FIXED_SCENES`) ⇒ ui_scenes
 #       **64/64**; FULL SUITE **14/14 PASS** (shop 252 · ranking 69 · sổ tay 57 · layout_bindings 78).
 #     · SỬA LỖI 2 DÒNG BỊ DÍNH từ lượt trước làm HỎNG PARSE: `scripts/scenes/layout/shop_layout.gd`
@@ -1152,7 +1152,7 @@
 #        STR_CHAPTER_FORMAT · STR_LEVEL_TITLE_FORMAT.
 #     - Test: test_challenge_controller.gd cập nhật theo node mới (Bg/Check/Badge, CountRow/Count, thẻ TẦNG);
 #        13/13 bộ test game PASS; render 1:1 (SubViewport 1080x1920) đã đối chiếu 2 mockup.
-# [ ] CHƯA LÀM: mockup/archivement_scene.svg (MỚI) chưa dựng màn Thành tích; popup thắng màn (winning.tscn)
+# [ ] CHƯA LÀM: mockup/achievement_scene.svg (MỚI) chưa dựng màn Thành tích; popup thắng màn (winning.tscn)
 #     vẫn theo layout cũ (xem mục THỬ THÁCH bên dưới).
 # [ ] CÓ THỂ LÀM: thẻ THỜI GIAN bên trái vẫn 250x138 (thấp hơn thẻ THỬ THÁCH 246) - nếu muốn 2 thẻ cao bằng nhau
 #     thì phóng to card_time.svg + card_floor.svg rồi giãn nội dung (chưa được yêu cầu).
@@ -1452,26 +1452,26 @@
 # SỔ TAY THÀNH TỰU (ACHIEVEMENT / DANH HIỆU) — 2026-02
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM (2026-02): Màn "Sổ tay thành tựu" data-driven + phân trang
-#     - Catalog = các file .tres (ArchivementData) trong resources/archivements/ (hiện 28 danh hiệu:
+#     - Catalog = các file .tres (AchievementData) trong resources/achievements/ (hiện 28 danh hiệu:
 #       7 Màn chơi · 7 Dungeon · 7 Daily · 7 Đặc biệt, trong đó 2 danh hiệu ẨN).
-#       Thêm/bớt danh hiệu = thêm/bớt file .tres, KHÔNG sửa code (ArchivementManager tự quét).
-#     - scripts/manager/ArchivementManager.gd (autoload): số liệu DẪN XUẤT đọc từ GameManager/DailyManager
+#       Thêm/bớt danh hiệu = thêm/bớt file .tres, KHÔNG sửa code (AchievementManager tự quét).
+#     - scripts/manager/AchievementManager.gd (autoload): số liệu DẪN XUẤT đọc từ GameManager/DailyManager
 #       (số màn, tổng sao, số màn 3 sao, best time, số ngày/chuỗi/sao Daily) + số liệu TÍCH LUỸ do game báo về
-#       qua Archivement.notify_run_result() (tầng sâu nhất, tổng tầng, điểm cao, số ván thắng, no-hint/no-undo,
+#       qua Achievement.notify_run_result() (tầng sâu nhất, tổng tầng, điểm cao, số ván thắng, no-hint/no-undo,
 #       hints/undos, hardcore, tổng thời gian chơi). Provider của SaveManager (export/import/reset_progress
 #       + autosave qua signal progress_changed).
-#     - scripts/utils/archivement.gd = facade tĩnh cho UI/test; GameController báo kết quả ở _complete_floor()
+#     - scripts/utils/achievement.gd = facade tĩnh cho UI/test; GameController báo kết quả ở _complete_floor()
 #       và _game_over() -> danh hiệu mở khoá ngay sau mỗi ván.
-#     - scenes/archivement.tscn + scripts/scenes/archivement.gd: 5 tab lọc (TẤT CẢ · MÀN CHƠI · DUNGEON ·
+#     - scenes/achievement.tscn + scripts/scenes/achievement.gd: 5 tab lọc (TẤT CẢ · MÀN CHƠI · DUNGEON ·
 #       DAILY · ĐẶC BIỆT) + 5 thẻ/trang, vuốt ngang/dots đổi trang (giống màn Chọn màn), tự nhảy tới trang
 #       chứa danh hiệu đang chờ NHẬN; thẻ tổng kết (% đã mở + x/y danh hiệu + AP + dấu mộc BADGES).
-#     - nodes/archivements/card.tscn: thẻ 4 trạng thái ĐÃ ĐẠT (xanh lá + dấu mộc) · NHẬN THƯỞNG (cam + nút NHẬN)
+#     - nodes/achievements/card.tscn: thẻ 4 trạng thái ĐÃ ĐẠT (xanh lá + dấu mộc) · NHẬN THƯỞNG (cam + nút NHẬN)
 #       · ĐANG LÀM (xanh dương + chip Thưởng) · ẨN/KHOÁ (xám + ổ khoá + ??? / ???).
 #     - Lối vào: Main -> nút "SỔ TAY THÀNH TỰU" (hàng Other, 4 nút 180x146) + Debug Console "Badge Book".
-#     - Test mới: scripts/test_case/test_archivement.gd (54 check: catalog · tiến độ · nhận thưởng 2 lần ·
+#     - Test mới: scripts/test_case/test_achievement.gd (54 check: catalog · tiến độ · nhận thưởng 2 lần ·
 #       AP/% · export-import · 5 thẻ/trang · tabs · dots · bấm NHẬN trên thẻ) + test_main_layout.gd (nút thứ 4).
-#     - Tài liệu: Number_Maze_Game_Design.md mục 8 (Sổ tay thành tựu) · archivements_list.txt (danh sách 28 danh hiệu).
-# [ ] Xu chưa có chỗ tiêu (chưa có Shop/Đổi quà) — hiện chỉ tích luỹ ở ArchivementManager.coins
+#     - Tài liệu: Number_Maze_Game_Design.md mục 8 (Sổ tay thành tựu) · achievements_list.txt (danh sách 28 danh hiệu).
+# [ ] Xu chưa có chỗ tiêu (chưa có Shop/Đổi quà) — hiện chỉ tích luỹ ở AchievementManager.coins
 # [ ] Chưa có toast "Vừa mở khoá danh hiệu" khi chơi (signal achievement_unlocked đã có sẵn, chỉ cần UI)
 # [ ] Hàng nút Main: Leaderboard chưa có màn hình (mới chỉ có nút) — RIÊNG XẾP HẠNG ĐÃ XONG 2026-02 (xem log cuối file)
 
@@ -1484,7 +1484,7 @@
 #       + huy chương ruy băng), ô giữa huy chương hiện "x/y" danh hiệu đã mở (node Count, variation MainBadgeCount),
 #       nhãn DANH HIỆU nằm dưới sticker (caption theo OtherLabel).
 #     - Nút LUẬT CHƠI -> CỬA HÀNG: icon mới assets/images/icons/icon_shop.svg + chuỗi STR_BTN_SHOP (string.csv, 20 locale);
-#       khung nút dùng lại btn_menu_utility_*; đã xoá btn_menu_rules.svg + archivements/icon_medal.svg (hết dùng).
+#       khung nút dùng lại btn_menu_utility_*; đã xoá btn_menu_rules.svg + achievements/icon_medal.svg (hết dùng).
 #     - Hàng Other còn 3 nút, mỗi nút = ĐÚNG kích thước art 230x130 (separation 5, alignment center) — trước đây
 #       để custom_minimum_size 180x146 + stretch_mode KEEP_ASPECT nên art bị co nhỏ.
 #     - Test: test_main_layout.gd (btn_shop thay btn_rules; nút thành tựu >= 200px, nằm TRÊN hàng Other và bên phải;
@@ -1497,7 +1497,7 @@
 # [x] ĐÃ LÀM (2026-02): theo mockup/ranking.svg
 #     - RankingManager (autoload mới): 3 bảng dungeon · play · daily; 24 đối thủ mô phỏng (RIVAL_POOL
 #       {name, flag, power}) + người chơi; điểm = khoá sắp xếp duy nhất (bằng điểm thì xếp theo tên).
-#       Kỷ lục người chơi lấy THẬT từ ArchivementManager.stat_value() (best_floor · best_score · levels_cleared ·
+#       Kỷ lục người chơi lấy THẬT từ AchievementManager.stat_value() (best_floor · best_score · levels_cleared ·
 #       stars · fastest_clear · streak · daily days/stars) — chưa chơi thì hiện "CHƯA CÓ".
 #     - Bảng tự "làm mới" mỗi 10 phút: seed đối thủ = hash("bảng|tên|khung-10-phút") nên ổn định giữa các phiên,
 #       chỉ đổi nhẹ mỗi khung → mô phỏng bảng xếp hạng sống (refresh(force) để dựng lại ngay, last_refresh_unix()).
@@ -1558,7 +1558,7 @@
 #       special_mode_ids(); start_dungeon/start_level/start_daily reset 2 cờ này.
 #     - game.gd::_start_floor_for() đọc `start_floor_override` -> test được ở tầng 3/5 (bàn to dần).
 #     - GameController: ván test KHÔNG đánh dấu Daily (_mark_daily_completed_if_needed) và KHÔNG ghi
-#       số liệu vào Sổ tay thành tựu (_report_to_archivements) — tránh phá tiến trình khi test.
+#       số liệu vào Sổ tay thành tựu (_report_to_achievements) — tránh phá tiến trình khi test.
 #     - Debug scene: toggle Test mode · chọn độ khó (easy/medium/hard) · chọn tầng (1/2/3/5) ·
 #       7 hàng vào thẳng từng chế độ (tiêu đề = Tên mode [id] · Daily ngày N, N+7…) · mô tả lấy từ
 #       mode_description · "Chế độ kế tiếp" + "Chế độ ngẫu nhiên"; hàng lệnh cho mô tả xuống 2 dòng.
@@ -1571,7 +1571,7 @@
 # ----------------------------------------------------------------------------
 # [x] ĐÃ LÀM (2026-02): màn Cửa hàng + catalog 30 món + chuẩn bị việc apply chủ đề/ngòi bút
 #     - `ShopManager` (autoload) + facade `Shop`: 4 nhóm hàng pen(10) · theme(8) · tool(6) · coin(6);
-#       ví Xu Mực DÙNG CHUNG với Sổ tay thành tựu (ArchivementManager.coins) + `spend_coins()`/`notify_coins_changed()`.
+#       ví Xu Mực DÙNG CHUNG với Sổ tay thành tựu (AchievementManager.coins) + `spend_coins()`/`notify_coins_changed()`.
 #       API: items/item/has_item/price_of/category_of/is_consumable/is_equippable/can_afford/buy/use_tool/equip/
 #       tool_count/purchase_coin_pack (STUB IAP)/export-import-reset_progress; signal coins_changed/item_purchased/item_equipped/tool_used.
 #     - Món mặc định có sẵn: `pen_blue` (Mực Xanh Học Trò) + `theme_gride_4ly` (Vở Ô Ly 4 Ly); dụng cụ mua lại được
@@ -1832,7 +1832,7 @@
 #    `class_name ShopTabButton`: art + cỡ 240×98 nằm trong scene · `art_height()`/`inactive_ratio()` đọc từ art ·
 #    `set_active()` · `apply_row_layout()` canh đáy hàng), `item_grid.tscn` (`ShopItemGrid` — 2 cột, khe 30/24 trong
 #    scene), `page_dot.tscn` (`ShopPageDot.set_current()` — 34×24 / 12×24).
-# 2. SỔ TAY — 3 scene: `nodes/archivements/tab_button.tscn` (`AchTabButton`: 134×46 + nhãn · `setup()` ·
+# 2. SỔ TAY — 3 scene: `nodes/achievements/tab_button.tscn` (`AchTabButton`: 134×46 + nhãn · `setup()` ·
 #    `set_active()` đổi art + modulate nhãn), `page.tscn` (`AchPage`: con `Column` VBox — khe 20 nằm trong SCENE,
 #    hết `CARD_PITCH` trong script), `page_dot.tscn` (`AchPageDot`).
 # 3. CHỌN MÀN — 2 scene: `nodes/level_selection/page.tscn` (`LevelsPage`: con `Grid` 3 cột · khe 46/24 · gốc lưới
@@ -1851,7 +1851,7 @@
 # 8. KIỂM CHỨNG: `scripts/test_case/test_ui_scenes.gd` (MỚI, **50/50**): dựng từng scene con + kiểm cấu trúc con,
 #    API setup/set_active/set_current, và QUÉT MÃ NGUỒN (`scripts/scenes` + `scripts/nodes`) — không script UI nào
 #    còn `.new()` cho lớp UI (ngoại lệ: `debug.gd`). Toàn bộ suite PASS · harness tỉ lệ **220/220 PASS** ·
-#    `test_shop.gd` 252/252 · `test_archivement.gd` · `test_levels_paging.gd` · `test_ranking.gd` đều PASS.
+#    `test_shop.gd` 252/252 · `test_achievement.gd` · `test_levels_paging.gd` · `test_ranking.gd` đều PASS.
 # 9. SỬA KÈM: `nodes/shop/item_tile.tscn` root `offset_bottom` 364 → **294** (khớp `custom_minimum_size`; trước đó
 #    `tile_design_size()` đọc ra 475×364 làm `test_shop` FAIL 2 check).
 #
@@ -2042,7 +2042,7 @@
 # 6. TEST: mọi lookup trong test phải đi qua layout (`scene.ui_path("TopBar/Back")`) — test_chapters **243/243 PASS** ·
 #    harness `dev_aspects.gd -- --only=chapters,main --shots=1` **10/10 OK** (16:9 lưới 2 cột · 19.5:9 3 cột · 4:3 1 cột).
 # [ ] CÒN LẠI (thứ tự đề xuất): levels (số thẻ/trang + lưới động) → settings (2 cột) → daily → shop → ranking →
-#     archivement → splash/title/credit/debug → game (màn chơi). Mỗi màn: tạo layout ngang → chạy tool tách →
+#     achievement → splash/title/credit/debug → game (màn chơi). Mỗi màn: tạo layout ngang → chạy tool tách →
 #     refactor script sang `ui_path`/`ui()` + `orientation_changed` → bổ sung 9-slice hoặc art `images-landscape/` →
 #     sửa test + chạy harness 10 tỉ lệ.
 

@@ -32,10 +32,8 @@ var hint_left := 0
 var _move_costs: Array[int] = []
 ## Đang khoá tương tác vì Countdown Cost hết ngân sách (chỉ mở lại khi VỪA lùi bước để có thêm bước)
 var _countdown_locked := false
-## CHALLENGE MODE: mốc `floor_elapsed` lúc bắt đầu bước hiện tại (đồng hồ con luật "mỗi bước")
-var _ch_step_start := 0.0
-## CHALLENGE MODE: số lần QUAY ĐẦU đã dùng của màn (luật "giới hạn quay đầu")
-var _ch_backtracks := 0
+## Trạng thái + luật của Challenge Mode (xem `scripts/core/challenge_rules.gd`)
+var _challenge_rules := ChallengeRules.new()
 ## Đang ở pha GHI NHỚ (Blind Memory): đồng hồ dừng, tường hiện, popup đếm ngược đang chạy
 var _memorize_active := false
 ## Đang hiện overlay "Hết nước đi" trên bàn (Sum Path / Countdown Cost / Fading Ink)
@@ -68,7 +66,7 @@ func start_new_run(start_floor := 1) -> void:
 	_floor_finished = false
 
 	# Ván mới (kể cả bấm THỬ LẠI) ⇒ lượt chơi lại được phép trừ khi thua về sau
-	var game_manager := get_node_or_null("/root/GameManager")
+	var game_manager := Svc.game()
 	if game_manager != null and game_manager.has_method("begin_run_guard"):
 		game_manager.call("begin_run_guard")
 
@@ -108,13 +106,12 @@ func _start_floor(floor_number: int) -> void:
 	_floor_finished = false
 	_move_costs.clear()
 	# Challenge: cấp lại đồng hồ con "mỗi bước" + lượt quay đầu cho màn mới
-	_ch_step_start = 0.0
-	_ch_backtracks = 0
+	_challenge_rules.reset()
 	if game_state != null:
 		game_state.floor_number = floor_number
 	# KỶ LỤC TẦNG (ngày/tuần/tháng): chỉ ván VÔ TẬN (Dungeon) mới có "tầng" tăng dần vô hạn
 	if mode != null and mode.is_endless:
-		var gm: Node = get_node_or_null("/root/GameManager")
+		var gm: Node = Svc.game()
 		if gm != null and gm.has_method("record_floor_reached"):
 			gm.call("record_floor_reached", floor_number)
 	# Chốt ngưỡng 3 nhiệm vụ của màn/tầng mới (số bước thiết kế đã nạp trong setup_floor)
@@ -194,7 +191,7 @@ func _on_dead_end() -> void:
 ## Luồng này dẫn người chơi mới qua từng bài học / màn thực hành nên KHÓA các lối thoát:
 ## nút "?" (game.gd), "Chơi lại" + "Về Menu" (pause.gd), "Về Menu" (gameover_level.gd).
 func _guided_run() -> bool:
-	var tm: Node = get_node_or_null("/root/TutorialManager")
+	var tm: Node = Svc.tutorial()
 	return tm != null and bool(tm.get("flow_active"))
 
 
@@ -289,7 +286,8 @@ func _on_step_consumed(cost: int, hit_hazard: bool) -> void:
 		# Challenge: reset đồng hồ con "mỗi bước" + soi vi phạm (vượt bước · giẫm lại · quay đầu).
 		# `grid_controller.path` đã cập nhật vị trí mới TRƯỚC khi signal này bắn ra.
 		if _challenge() != null:
-			_ch_step_start = timer_controller.floor_elapsed if timer_controller != null else 0.0
+			_challenge_rules.begin_step(
+				timer_controller.floor_elapsed if timer_controller != null else 0.0)
 			_challenge_after_step()
 	if hit_hazard:
 		# Challenge: bước vào ô vi phạm luật (hazard "challenge_*") -> thua NGAY,
@@ -366,40 +364,25 @@ func _is_challenge_hazard() -> bool:
 	return grid_controller != null and grid_controller.last_hazard_type.begins_with("challenge_")
 
 
-## Soi 2 luật có ĐỒNG HỒ mỗi khung hình: đếm ngược tổng + "mỗi bước trong X giây".
-## LƯU Ý: KHÔNG dùng TimerController.is_countdown (đổi nghĩa floor_elapsed, phá Nhiệm vụ) —
-## chỉ so `floor_elapsed` với hạn mức trong lúc đồng hồ vẫn chạy bình thường.
+## Soi 2 luật có ĐỒNG HỒ mỗi khung hình (chi tiết ở `ChallengeRules.tick`)
 func _challenge_tick() -> void:
 	var ch := _challenge()
 	if ch == null or not _run_active or game_state == null or timer_controller == null:
 		return
-	var elapsed: float = timer_controller.floor_elapsed
-	if ch.challenge_id == ChallengeGameMode.COUNTDOWN and elapsed >= float(ch.challenge_param):
-		_challenge_fail(ch.challenge_id)
-	elif ch.challenge_id == ChallengeGameMode.STEP_TIMER \
-			and elapsed - _ch_step_start >= float(ch.challenge_param):
-		_challenge_fail(ch.challenge_id)
+	var fail := _challenge_rules.tick(ch, timer_controller.floor_elapsed)
+	if fail != "":
+		_challenge_fail(fail)
 
 
-## Soi 3 luật theo NƯỚC ĐI (gọi ngay sau khi bước thành công — path đã có vị trí mới):
-## vượt số bước · đi lại trên đường đã đi · quay đầu quá số lượt.
+## Soi 3 luật theo NƯỚC ĐI (chi tiết ở `ChallengeRules.after_step`)
 func _challenge_after_step() -> void:
 	var ch := _challenge()
 	if ch == null or not _run_active or game_state == null:
 		return
 	var path: Array[Vector2i] = grid_controller.path if grid_controller != null else []
-	match ch.challenge_id:
-		ChallengeGameMode.MOVE_LIMIT:
-			if game_state.floor_moves > ch.challenge_param:
-				_challenge_fail(ch.challenge_id)
-		ChallengeGameMode.NO_MOVE_OVERLAPPED:
-			if not path.is_empty() and path.count(path[path.size() - 1]) > 1:
-				_challenge_fail(ch.challenge_id)
-		ChallengeGameMode.BACKTRACK_LIMIT:
-			if path.size() >= 3 and path[path.size() - 1] == path[path.size() - 3]:
-				_ch_backtracks += 1
-				if _ch_backtracks > ch.challenge_param:
-					_challenge_fail(ch.challenge_id)
+	var fail := _challenge_rules.after_step(ch, path, game_state.floor_moves)
+	if fail != "":
+		_challenge_fail(fail)
 
 
 ## Dữ liệu khối THỜI GIAN cho ChallengeHUD (rỗng nếu ván này không có thử thách)
@@ -408,12 +391,7 @@ func _challenge_hud_ctx() -> Dictionary:
 	if ch == null or game_state == null:
 		return {}
 	var elapsed: float = timer_controller.floor_elapsed if timer_controller != null else 0.0
-	return ch.hud_state(
-		float(ch.challenge_param) - elapsed,
-		game_state.floor_moves,
-		float(ch.challenge_param) - (elapsed - _ch_step_start),
-		ch.challenge_param - _ch_backtracks
-	)
+	return _challenge_rules.hud_state(ch, elapsed, game_state.floor_moves)
 
 
 func _on_reached_end() -> void:
@@ -448,10 +426,10 @@ func _complete_floor() -> void:
 	if _pending_bonus > 0:
 		_play_sfx_delayed(sfx_timer_floor_bonus, Sfx.FLOOR_BONUS, 1.1)
 
-	_report_to_archivements(true, floor_time)
+	_report_to_achievements(true, floor_time)
 
 	# SỰ KIỆN: báo qua tầng cho event DUNGEON đang chạy (ghi mốc tầng — §B7)
-	var em := get_node_or_null("/root/EventManager")
+	var em := Svc.event()
 	if em != null and em.has_method("on_dungeon_floor_cleared"):
 		em.call("on_dungeon_floor_cleared", game_state.floor_number)
 
@@ -471,7 +449,7 @@ func _complete_floor() -> void:
 	var ch := _challenge()
 	if ui_controller != null:
 		var next_available := true
-		var gm_node: Node = get_node_or_null("/root/GameManager")
+		var gm_node: Node = Svc.game()
 		if gm_node != null and daily.is_empty():
 			# Còn màn kế tiếp TRONG CÙNG CHƯƠNG và chương đó đã mở -> nút "MÀN KẾ TIẾP",
 			# hết chương (hoặc chương sau chưa mở) -> nút "CHỌN CHƯƠNG" (mở màn Chọn Chương)
@@ -552,7 +530,7 @@ func _game_over(reason := "") -> void:
 		mission_controller.refresh(_mission_ctx)
 		mission_rows = mission_controller.rows()
 		stars = mission_controller.stars()
-	_report_to_archivements(false, floor_time)
+	_report_to_achievements(false, floor_time)
 
 	var mode: BaseGameMode = game_mode_controller.game_mode
 	var ch := _challenge()
@@ -586,13 +564,13 @@ func _on_continue_requested() -> void:
 		ui_controller.hide_overlays()
 
 	if game_mode_controller != null and game_mode_controller.game_mode != null and not game_mode_controller.game_mode.is_endless:
-		var gm: Node = get_node_or_null("/root/GameManager")
+		var gm: Node = Svc.game()
 		if gm != null:
 			var stars: int = mission_controller.stars() if mission_controller != null else 0
 			var current := int(gm.get("current_level"))
 			gm.call("record_level_clear", current, stars, game_state.elapsed_time)
 			# LUỒNG HỌC LẦN ĐẦU: màn 1..4 dẫn tiếp sang bài học / màn thực hành kế của luồng
-			var tm: Node = get_node_or_null("/root/TutorialManager")
+			var tm: Node = Svc.tutorial()
 			if tm != null and tm.has_method("on_level_finished") and bool(tm.call("on_level_finished", current)):
 				return
 			# CHỈ đi tiếp trong cùng chương (và chương đó phải đã mở); hết chương -> màn Chọn màn
@@ -635,7 +613,7 @@ func current_floor() -> int:
 	# Chưa có ván nào: mode theo màn (Play) thì lấy màn đang chọn trong GameManager
 	if game_mode_controller != null and game_mode_controller.game_mode != null:
 		if not game_mode_controller.game_mode.is_endless:
-			var gm: Node = get_node_or_null("/root/GameManager")
+			var gm: Node = Svc.game()
 			if gm != null:
 				return maxi(int(gm.get("current_level")), 1)
 	return 1
@@ -645,7 +623,7 @@ func current_floor() -> int:
 ## Special rắc lên bàn thiết kế (mìn · chi phí ô · điểm ô · mực...) GIỐNG HỆT nhau ở mọi lần
 ## chơi lại — màn đã thiết kế thì kết quả phải cố định (Dungeon/Daily vẫn ngẫu nhiên như cũ).
 func _seed_level_run(floor_number: int) -> void:
-	var gm: Node = get_node_or_null("/root/GameManager")
+	var gm: Node = Svc.game()
 	if gm == null or not bool(gm.get("level_run")):
 		return
 	seed(maxi(floor_number, 1) * 7919 + 13)
@@ -655,7 +633,7 @@ func _seed_level_run(floor_number: int) -> void:
 ## cùng chương nhưng **KHÔNG ghi Sao / thời gian**, rồi vào luôn màn đó.
 ## Hết chương (không còn màn kế) -> mở màn Chọn Chương. Trả về false nếu không phải ván màn hoặc hết lượt Skip.
 func skip_current_level() -> bool:
-	var gm: Node = get_node_or_null("/root/GameManager")
+	var gm: Node = Svc.game()
 	if gm == null or not bool(gm.get("level_run")):
 		return false
 	if _tool_uses_left(GameManagerClass.TOOL_SKIP) <= 0:
@@ -679,7 +657,7 @@ func skip_current_level() -> bool:
 ## - Play/Level Mode: thua vì đâm tường -> QUAY LẠI BƯỚC TRƯỚC ĐÓ (undo bước vừa đi),
 ##   không cộng thêm bước vì chế độ này không giới hạn bước (xem Design.md 5.10).
 func _on_revive_requested() -> void:
-	var ads: Node = get_node_or_null("/root/AdsManager")
+	var ads: Node = Svc.ads()
 	var rewarded := true
 	if ads != null and ads.has_method("show_rewarded"):
 		rewarded = bool(ads.call("show_rewarded", "revive"))
@@ -698,7 +676,7 @@ func revive_run() -> void:
 	var endless := game_mode_controller.game_mode != null and game_mode_controller.game_mode.is_endless
 	if endless:
 		# Endless (Dungeon): hồi sinh GIỮ NGUYÊN mê cung + vị trí + đường đã đi,
-		# chỉ cộng thêm bước và cho chơi tiếp (trước đây tạo lại tầng mới).
+		# chỉ cộng thêm bước và cho chơi tiếp (không tạo lại tầng mới).
 		game_state.add_bonus_steps(revive_bonus_steps)
 		if timer_controller != null:
 			timer_controller.resume()
@@ -744,11 +722,7 @@ func _maze_progress_percent() -> int:
 func _on_home_requested() -> void:
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-	var gm: Node = get_node_or_null("/root/GameManager")
-	if gm != null:
-		gm.call("go_to_main_menu")
-	else:
-		Nav.goto_main()
+	RunNavigator.home()
 
 
 ## Popup thắng Daily: người chơi bấm "VỀ DAILY" -> quay lại màn Daily
@@ -756,90 +730,26 @@ func _on_home_requested() -> void:
 func _on_daily_requested() -> void:
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-	var gm: Node = get_node_or_null("/root/GameManager")
-	if gm != null:
-		gm.call("return_to_daily")
-	else:
-		Nav.back_to(Nav.SCENE_DAILY)
+	RunNavigator.daily()
 
 
 ## Popup thắng THỬ THÁCH: người chơi bấm "TRỞ VỀ" — quay lại ĐÚNG màn trước đó.
-## Ván Daily -> màn Daily; còn lại -> lùi LỊCH SỬ điều hướng (Chọn màn / Debug / màn đã vào ván).
 func _on_back_requested() -> void:
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-	var gm: Node = get_node_or_null("/root/GameManager")
-	if gm != null and not str(gm.get("daily_variant")).is_empty():
-		gm.call("return_to_daily")
-		return
-	var screen: Node = get_node_or_null("/root/ScreenManager")
-	if screen != null and screen.has_method("go_back") and bool(screen.call("go_back")):
-		return
-	# Không còn lịch sử để lùi: ván màn -> Chọn màn, còn lại -> Menu chính
-	if gm != null and bool(gm.get("level_run")):
-		gm.call("return_to_levels")
-	elif gm != null:
-		gm.call("go_to_main_menu")
-	else:
-		Nav.goto_main()
+	RunNavigator.back()
 
 
-## Báo kết quả màn/tầng cho Sổ tay thành tựu (Archivement) — thắng hoặc thua.
-## Số liệu tích luỹ (tầng sâu nhất, số ván thắng, gợi ý/hoàn tác...) do ArchivementManager ghi nhận.
-func _report_to_archivements(won: bool, floor_time: float) -> void:
+## Báo kết quả màn/tầng cho Sổ tay thành tựu (Achievement) — thắng hoặc thua.
+## Số liệu tích luỹ (tầng sâu nhất, số ván thắng, gợi ý/hoàn tác...) do AchievementManager ghi nhận.
+func _report_to_achievements(won: bool, floor_time: float) -> void:
 	if game_state == null or game_mode_controller.game_mode == null:
 		return
 	if _is_debug_run():
 		return                      # ván test từ Debug Console không tính vào danh hiệu
-	var mode := game_mode_controller.game_mode
-	Archivement.notify_run_result({
-		"mode_id": mode.mode_id,
-		"won": won,
-		"endless": mode.is_endless,
-		"floor": game_state.floor_number,
-		"score": game_state.score,
-		"elapsed": floor_time,
-		"wall_hits": game_state.floor_wall_hits,
-		"hints_used": game_state.hints_used,
-		"undos_used": game_state.undos_used,
-		"hardcore": str(mode.difficulty).to_lower() == "hardcore",
-	})
-	_record_profile_run(mode, won, floor_time)
-
-
-## Ghi ván vừa chơi vào LỊCH SỬ HỒ SƠ (màn Profiler — "HOẠT ĐỘNG GẦN ĐÂY").
-## Chỉ nhận dữ liệu RUNTIME; câu chữ/màu do màn Profiler dựng lại từ dict này.
-func _record_profile_run(mode: BaseGameMode, won: bool, floor_time: float) -> void:
-	if game_state == null or mode == null:
-		return
-	var gm: Node = get_node_or_null("/root/GameManager")
-	var daily := gm != null and not str(gm.get("daily_variant")).is_empty()
-	var stars := 0
-	if mission_controller != null:
-		stars = mission_controller.stars()
+	var stars := mission_controller.stars() if mission_controller != null else 0
 	var maze: MazeData = grid_controller.maze if grid_controller != null else null
-	Profile.record_run({
-		"mode_id": mode.mode_id,
-		"won": won,
-		"endless": mode.is_endless,
-		"daily": daily,
-		"floor": game_state.floor_number,
-		"score": game_state.score,
-		"elapsed": floor_time,
-		"moves": game_state.floor_moves,
-		"wall_hits": game_state.floor_wall_hits,
-		"width": maze.width if maze != null else 0,
-		"height": maze.height if maze != null else 0,
-		"stars": stars,
-		# --- Số liệu mở rộng cho bản Hồ sơ mới (Profiler stats) ---
-		"level_run": gm != null and bool(gm.get("level_run")),
-		"level_id": int(gm.get("current_level")) if gm != null else 0,
-		"undos": game_state.undos_used,
-		"hints": game_state.hints_used,
-		"wall_draws": game_state.wall_draws,
-		"wall_erases": game_state.wall_erases,
-		"skips": game_state.skips_used,
-	})
+	RunReporter.report(game_state, game_mode_controller.game_mode, won, floor_time, stars, maze)
 
 
 # ---------------------------------------------------------------------------
@@ -857,75 +767,33 @@ func _on_no_moves_retry_pressed() -> void:
 	_on_retry_requested()
 
 
-## Tutorial ID tương ứng với mỗi chế độ chơi — thay thế popup Instruction cũ.
-const TUTORIAL_IDS := {
-	"play":           ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"standard":       ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"challenge":      ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"daily_classic":  ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"daily_challenge": ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"minesweeper":    ["how_to_play_minesweeper"],
-	"sum_path":       ["how_to_play_sum_path"],
-	"countdown_cost": ["how_to_play_countdown_cost"],
-	"blind_memory":   ["how_to_play_blind_memory"],
-	"fog_of_war":     ["how_to_play_fog_of_war"],
-	"fading_ink":     ["how_to_play_fading_ink"],
-	"one_stroke":     ["how_to_play_one_stroke"],
-	"wall_builder":   ["how_to_play_wall_builder"],
-}
-## Chế độ không có nút "?" (dungeon)
-const MODES_WITHOUT_TUTORIAL := ["dungeon"]
+## Bảng bài học theo chế độ — nguồn sự thật ở `TutorialLauncher.IDS` (giữ tên cũ cho test/tool)
+const TUTORIAL_IDS := TutorialLauncher.IDS
+## Chế độ không có nút "?" (Dungeon)
+const MODES_WITHOUT_TUTORIAL: Array[String] = TutorialLauncher.MODES_WITHOUT_TUTORIAL
 
 
+## Mở bài học ("?") của chế độ đang chơi dưới dạng lớp phủ ngay trên ván.
 func open_instruction() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	var mode: BaseGameMode = game_mode
 	var mode_id := mode.mode_id if mode != null else ""
-	if mode_id in MODES_WITHOUT_TUTORIAL:
-		return
-	var ids: Array = TUTORIAL_IDS.get(mode_id, [])
-	# Trong LUỒNG HỌC LẦN ĐẦU: màn thực hành (1·2·3) chỉ mở ĐÚNG bài học của màn đó,
-	# không mở cả 3 bài cơ bản (xem TutorialManager.PRACTICE_TUTORIALS)
-	var tm: Node = Engine.get_main_loop().root.get_node_or_null("TutorialManager") if Engine.get_main_loop() != null else null
-	if tm != null and tm.has_method("practice_tutorial_for_level"):
-		var only := str(tm.call("practice_tutorial_for_level", current_floor()))
-		if not only.is_empty():
-			ids = [only]
+	var ids := TutorialLauncher.ids_for(mode_id, current_floor())
 	if ids.is_empty():
 		return
-	var gm: Node = Engine.get_main_loop().root.get_node_or_null("GameManager") if Engine.get_main_loop() != null else null
-	if gm == null:
+	if Svc.game() == null:
 		return
 	if timer_controller != null:
 		timer_controller.pause()
-	gm.set("pending_return_to_game", true)
-	# Lớp phủ KHÔNG đi qua danh sách ⇒ xoá cờ "về danh sách" còn sót của lần trước
-	gm.set("pending_return_to_list", false)
-	# pending_tutorial được đọc bởi tutorial.gd; nhiều bài nối bằng dấu phẩy → chạy theo chuỗi
-	gm.set("pending_tutorial", ",".join(ids))
-	_open_tutorial_overlay()
+	TutorialLauncher.launch(_tutorial_host(), ids)
 
 
-## Mở màn Tutorial dạng LỚP PHỦ ngay TRÊN màn chơi (không đổi scene): ván đang chơi được
-## GIỮ NGUYÊN (đường đã vẽ · vị trí · đồng hồ đang dừng) và tạm DỪNG xử lý trong lúc học.
-## Đóng lớp phủ (học xong / bỏ qua / Back) → chơi tiếp ĐÚNG ván đó — xem `tutorial.gd`.
-func _open_tutorial_overlay() -> void:
+## Node nhận lớp phủ Tutorial: màn chơi (`owner`) hoặc scene hiện tại
+func _tutorial_host() -> Node:
 	var host: Node = owner
-	if host == null:
-		host = get_tree().current_scene if get_tree() != null else null
-	if host == null or host.has_node("TutorialOverlay"):
-		return
-	var scene := load("res://scenes/tutorial.tscn") as PackedScene
-	if scene == null:
-		return
-	var overlay := scene.instantiate()
-	overlay.name = "TutorialOverlay"
-	# Cờ này được TutorialScene đọc trong `_ready` ⇒ phải set TRƯỚC khi add_child
-	overlay.set("overlay_mode", true)
-	overlay.process_mode = Node.PROCESS_MODE_ALWAYS
-	host.add_child(overlay)
-	# Màn chơi bên dưới đứng yên hoàn toàn (cả nhận input) cho tới khi đóng lớp phủ
-	host.process_mode = Node.PROCESS_MODE_DISABLED
+	if host == null and get_tree() != null:
+		host = get_tree().current_scene
+	return host
 
 
 func undo() -> void:
@@ -989,12 +857,12 @@ func hint() -> void:
 
 
 func _tool_uses_left(tool_id: String) -> int:
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	return int(gm.call("tool_uses_left", tool_id)) if gm != null else 0
 
 
 func _consume_tool_use(tool_id: String) -> bool:
-	var gm := get_node_or_null("/root/GameManager")
+	var gm := Svc.game()
 	return bool(gm.call("consume_tool_use", tool_id)) if gm != null else false
 
 
@@ -1086,51 +954,18 @@ func _on_floor_bonus_sfx_timeout() -> void:
 ## - variant "special"   (Daily kiểu cũ, Debug) : tính như THỬ THÁCH.
 ## Trả về Dictionary mô tả kết quả (RỖNG nếu ván này không phải ván Daily).
 func _complete_daily_missions(_mission_rows: Array) -> Dictionary:
-	var gm: Variant = get_node_or_null("/root/GameManager")
-	var dm: Variant = get_node_or_null("/root/DailyManager")
-	if gm == null or dm == null or _is_debug_run():
+	if _is_debug_run():
 		return {}
-	var variant := str(gm.get("daily_variant"))
-	if variant.is_empty():
-		return {}
-
-	var day := maxi(int(gm.get("selected_daily_day")), 1)
-	var is_challenge := variant != "classic"
-	var stars := int(dm.call("get_day_challenge_stars" if is_challenge else "get_day_play_stars", day))
-	if is_challenge:
-		# Luật Special không có nhiệm vụ ⇒ hoàn thành ván là trọn 3 Sao.
-		stars = DailyManager.CHALLENGE_STARS_MAX
-	elif mission_controller != null:
-		stars = clampi(mission_controller.stars(), 0, DailyManager.PLAY_STARS_MAX)
-	var gained := int(dm.call("record_daily_win", day, is_challenge, stars))
-	# Đánh dấu "vừa thắng ván Daily" để màn Daily chạy hiệu ứng Sao trên đúng thẻ vừa chơi
-	if stars > 0:
-		gm.set("daily_celebrate", {
-			"day": day, "challenge": is_challenge, "stars": stars, "gained": gained,
-		})
-
+	var mission_stars := mission_controller.stars() if mission_controller != null else 0
 	var mode_id := ""
 	var mode_name := ""
 	if game_mode_controller != null and game_mode_controller.game_mode != null:
 		mode_id = game_mode_controller.game_mode.mode_id
 		mode_name = game_mode_controller.game_mode.mode_name
-	return {
-		"day": day,
-		"variant": variant,
-		"challenge": is_challenge,
-		"mode_id": mode_id,
-		"mode_name": mode_name,
-		"stars": stars,
-		"stars_gained": gained,
-		"day_stars": int(dm.call("get_day_stars", day)),
-		"stars_max": DailyManager.DAY_STARS_MAX,
-		"month_stars": int(dm.call("get_month_stars")),
-		"month_goal": int(dm.call("month_star_goal")),
-		"completed_day": bool(dm.call("is_completed", day)),
-	}
+	return DailyRunReporter.complete(mission_stars, mode_id, mode_name)
 
 
 ## Ván hiện tại có phải ván TEST mở từ Debug Console? (không ghi tiến trình)
 func _is_debug_run() -> bool:
-	var gm: Variant = get_node_or_null("/root/GameManager")
+	var gm: Variant = Svc.game()
 	return gm != null and bool(gm.get("debug_run"))

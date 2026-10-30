@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://xuj64d8yo0mg"]
 
-[ext_resource type="Script" uid="uid://btsi4u0i0wvxu" path="res://scripts/nodes/event_header.gd" id="1_head"]
+[ext_resource type="Script" uid="uid://btsi4u0i0wvxu" path="res://scripts/ui/widgets/event_header.gd" id="1_head"]
 
 [sub_resource type="StyleBoxFlat" id="sb_badge"]
 bg_color = Color(0.9882353, 0.61960787, 0.043137256, 1)
@@ -62,3 +62,5 @@ theme_type_variation = &"EventViewAll"
 theme_override_font_sizes/font_size = 10
 text = "STR_EVENT_VIEW_ALL"
 flat = true
+
+[connection signal="pressed" from="ViewAll" to="." method="_on_view_all_pressed"]

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AvatarData" load_steps=3 format=3]
 
 [ext_resource uid="uid://dcpfo45fdutgm" type="Texture2D" path="res://assets/images-png/avatars/avatar-animal-avatar-mutton.png" id="1_q7o3r"]
-[ext_resource type="Script" path="res://scripts/resources/avatar_data.gd" id="2_dmp6i"]
+[ext_resource type="Script" path="res://scripts/data/avatar_data.gd" id="2_dmp6i"]
 
 [resource]
 script = ExtResource("2_dmp6i")

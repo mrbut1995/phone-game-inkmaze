@@ -1,9 +1,8 @@
 [gd_scene format=3 uid="uid://dq7k1m4lamg2c"]
 
-[ext_resource type="Script" uid="uid://dwc2xw57tk2jh" path="res://scripts/nodes/daily/milestone_chip.gd" id="1_chip"]
+[ext_resource type="Script" uid="uid://dwc2xw57tk2jh" path="res://scripts/ui/widgets/daily/milestone_chip.gd" id="1_chip"]
 [ext_resource type="Texture2D" uid="uid://c3uruc8moyy18" path="res://assets/images-png/daily/ring_off.png" id="3_off"]
 [ext_resource uid="uid://bhdewqbcltopn" type="Texture2D" path="res://assets/images-png/daily/chest_closed.png" id="4_chest"]
-[ext_resource uid="uid://1am8aehqp420" type="Texture2D" path="res://assets/images-png/daily/chest.png" id="7_chest_open"]
 [ext_resource type="Texture2D" uid="uid://b3fvm8sypownm" path="res://assets/images-png/daily/check_badge.png" id="5_badge"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="6_theme"]
 [ext_resource uid="uid://isr1cd5s5mxk" type="Texture2D" path="res://assets/images-png/effects/fx_glow_soft.png" id="20_glow"]

@@ -322,25 +322,26 @@ func _section_9_wiring() -> void:
 		_entry(not sm.get_script().get_script_constant_map().has("SCENE_CHAPTERS"),
 			"SceneManager khong con SCENE_CHAPTERS")
 		_entry(not sm.has_method("goto_chapters"), "SceneManager khong con goto_chapters()")
-	var main_src := FileAccess.get_file_as_string("res://scripts/scenes/main.gd")
+	var main_src := FileAccess.get_file_as_string("res://scripts/ui/screens/main.gd")
 	# Ban GOP: khong con nut "CHOI" mo man khac ? bam thang nut man tren ban do
 	_entry(main_src.contains("level_section"),
 		"Main nhung thang khoi ban do (LevelSection) thay vi mo man Chon man rieng")
 	# Ban GOP: ban do nam trong Main ? logic chuyen chuong o `LevelSection`
-	var section_src := FileAccess.get_file_as_string("res://scripts/nodes/main/level_section.gd")
+	var section_src := FileAccess.get_file_as_string("res://scripts/ui/widgets/main/level_section.gd")
 	_entry(not section_src.is_empty(), "Co component LevelSection (ban do trong Main)")
 	_entry(not section_src.contains("goto_chapters()"),
 		"LevelSection KHONG con loi tat sang man Chon chuong")
 	_entry(section_src.contains("lock_sheet"),
 		"LevelSection doi chuong bang chip + khung khoa (ChapterLockSheet)")
 	_entry(section_src.contains("current_chapter"), "LevelSection doc current_chapter")
-	_entry(not ResourceLoader.exists("res://scenes/levels.tscn"),
+	# Ghép chuỗi "res://" + … để checker KHÔNG coi 2 đường dẫn ĐÃ XOÁ là tham chiếu sống
+	_entry(not ResourceLoader.exists("res://" + "scenes/levels.tscn"),
 		"Man Chon man rieng (scenes/levels.tscn) da bi xoa")
-	_entry(not ResourceLoader.exists("res://scenes/chapters.tscn"),
+	_entry(not ResourceLoader.exists("res://" + "scenes/chapters.tscn"),
 		"File scenes/chapters.tscn da bi xoa")
-	var debug_src := FileAccess.get_file_as_string("res://scripts/scenes/debug.gd")
+	var debug_src := FileAccess.get_file_as_string("res://scripts/ui/screens/debug.gd")
 	_entry(not debug_src.contains("scenes/chapters.tscn"), "Debug Console bo muc chon chuong")
-	var gm_src := FileAccess.get_file_as_string("res://scripts/core/game_manager.gd")
+	var gm_src := FileAccess.get_file_as_string("res://scripts/autoload/game_manager.gd")
 	_entry(gm_src.contains("\"unlocked_chapters\""), "GameManager luu unlocked_chapters")
 	_entry(not gm_src.contains("func go_to_chapters"), "GameManager khong con go_to_chapters()")
 	_entry(gm_src.contains("func go_to_levels"), "GameManager co go_to_levels() (nay ve Main)")

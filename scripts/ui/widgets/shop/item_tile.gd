@@ -1,0 +1,239 @@
+class_name ShopItemTile
+extends Control
+## ============================================================================
+## Thẻ HÀNG dạng Ô 475×315 — dùng cho tab BÚT & MỰC và GIẤY VỞ
+## (theo mockup/shopping_pencil.svg):
+##   nhãn góc trên-trái · vòng icon + hình minh hoạ + NÉT MỰC vẽ thử ·
+##   tên · mô tả · dòng trạng thái · nút 200×46 (SỬ DỤNG / ĐANG DÙNG / giá Xu)
+##
+## Màu món hàng (data.color) tô cho: lề trái · vòng icon · icon · nét mực · nút.
+## ============================================================================
+
+signal action_pressed(item_id: String)
+## Chạm vào thân thẻ (ngoài nút) = chọn ngòi bút này để XEM THỬ ở Bàn nháp thử bút
+signal preview_pressed(item_id: String)
+
+const BTN_TILE := preload("res://assets/images-png/common/btn_tile.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const MAT_TILE_NORMAL := preload("res://resources/materials/btn_tile_normal.tres")
+const MAT_TILE_DONE := preload("res://resources/materials/btn_tile_done.tres")
+const MAT_TILE_VIP := preload("res://resources/materials/btn_tile_vip.tres")
+const ICONS := {
+	"pen": preload("res://assets/images-png/icons/icon_pen.png"),
+	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
+	"paper": preload("res://assets/images-png/icons/icon_paper.png"),
+}
+const CARD_NORMAL := preload("res://assets/images-png/shop/card_tile.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const CARD_SELECTED := preload("res://assets/images-png/shop/card_tile_selected.png")  # keep-code: màu/art hiệu ứng runtime — không thuộc theme tĩnh
+const VIP_BADGE := "STR_SHOP_BADGE_VIP"
+
+## ============================================================================
+## CỠ & BỐ CỤC CỦA THẺ NẰM TRONG `nodes/shop/item_tile.tscn` (layout là nguồn số thật):
+##   · cỡ thiết kế của thẻ = custom_minimum_size của node gốc (475×294)
+##   · các khối con đều dùng ANCHORS nên tự dàn khi chiều cao thẻ đổi
+##     (script chỉ đặt cỡ thẻ mới — xem `ShopScene.tile_size()`)
+## Muốn chỉnh cỡ/vị trí: sửa trực tiếp file scene (hoặc kéo trong Editor).
+## ============================================================================
+
+var item_id: String = ""
+var item_data: Dictionary = {}
+var _selected := false
+var _armed := false
+var _tap := ShopCardTap.new()
+
+
+func setup(data: Dictionary) -> void:
+	item_data = data
+	item_id = str(data.get("id", ""))
+	_refresh()
+
+
+func _refresh() -> void:
+	var color := Color(str(item_data.get("color", "#3D83AE")))
+	_refresh_preview(color)
+	_set_texts()
+	_set_button(color)
+
+
+func _refresh_preview(color: Color) -> void:
+	_apply_card_art()
+	var margin := get_node_or_null("Panel/Bar") as ColorRect
+	if margin != null:
+		margin.color = color
+	# Texture vòng icon / nét mực đã khai sẵn trong `item_tile.tscn` — ở đây chỉ tô màu món hàng
+	var circle := get_node_or_null("Panel/IconCircle") as TextureRect
+	if circle != null:
+		circle.self_modulate = Color(color.r, color.g, color.b, 0.36 if _selected else 0.20)
+	var icon := get_node_or_null("Panel/IconCircle/Icon") as TextureRect
+	if icon != null:
+		var cursor_tex := PenSkin.cursor_texture(item_id) if _is_pen() else null
+		if cursor_tex != null:
+			# BÚT & MỰC: hiện đúng icon con trỏ sẽ dùng trong game của ngòi bút này
+			icon.texture = cursor_tex
+			icon.self_modulate = Color.WHITE  # keep-code: màu theo dữ liệu (runtime)
+		else:
+			icon.texture = ICONS.get(str(item_data.get("icon", "pen")), ICONS["pen"])
+			icon.self_modulate = color
+	var stroke := get_node_or_null("Panel/Stroke") as TextureRect
+	if stroke != null:
+		# Nét mực mẫu: màu mực thật của ngòi bút (trùng màu nét vẽ trong game)
+		stroke.self_modulate = PenSkin.ink_color(item_id) if _is_pen() else color
+
+
+## Thẻ đang xem thử dùng art viền xanh + nền sáng; thẻ thường dùng art trắng viền kem
+func _apply_card_art() -> void:
+	var panel := get_node_or_null("Panel") as NinePatchRect
+	if panel != null:
+		panel.texture = CARD_SELECTED if (_selected or _armed) else CARD_NORMAL
+
+
+func _is_pen() -> bool:
+	return str(item_data.get("category", "")) == "pen"
+
+
+## Thẻ đang được Bàn nháp thử bút xem thử -> vòng tròn icon sáng hơn
+func set_selected(on: bool) -> void:
+	if _selected == on:
+		return
+	_selected = on
+	_apply_card_art()
+	var color := Color(str(item_data.get("color", "#3D83AE")))
+	var circle := get_node_or_null("Panel/IconCircle") as TextureRect
+	if circle != null:
+		circle.self_modulate = Color(color.r, color.g, color.b, 0.36 if _selected else 0.20)
+
+
+## Chạm CẢ THẺ (ô giá bên trong bỏ qua chuột) — xem _on_card_tapped()
+func _gui_input(event: InputEvent) -> void:
+	match _tap.feed(event):
+		ShopCardTap.Result.DOWN:
+			ShopCardTap.press_fx(self, true)
+		ShopCardTap.Result.TAP:
+			ShopCardTap.press_fx(self, false)
+			_on_card_tapped()
+		ShopCardTap.Result.CANCEL:
+			ShopCardTap.press_fx(self, false)
+
+
+
+
+func _set_texts() -> void:
+	_set_label("Panel/Description/Name", TranslationServer.translate(str(item_data.get("name_key", ""))))
+	_set_label("Panel/Description/Desc", TranslationServer.translate(str(item_data.get("desc_key", ""))))
+	_set_label("Panel/Description/Note", _note_text())
+	_refresh_badge()
+
+
+## Nhãn góc: bề ngang co theo chữ (mockup: chip ở góc trên-trái, không tràn thẻ)
+func _refresh_badge() -> void:
+	var badge := get_node_or_null("Panel/Badge") as NinePatchRect
+	var badge_label := get_node_or_null("Panel/Badge/BadgeLabel") as Label
+	var badge_key := str(item_data.get("badge_key", ""))
+	if badge == null or badge_label == null:
+		return
+	if badge_key.is_empty():
+		badge.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+		badge_label.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+		return
+	badge.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
+	badge_label.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
+	badge_label.text = TranslationServer.translate(badge_key)
+
+
+func _note_text() -> String:
+	if Shop.is_equipped(item_id):
+		return TranslationServer.translate("STR_SHOP_EQUIPPED_NOTE")
+	if Shop.is_owned(item_id):
+		return TranslationServer.translate("STR_SHOP_OWNED_NOTE")
+	if not Shop.can_afford(item_id):
+		return TranslationServer.translate("STR_SHOP_NOT_ENOUGH")
+	return ""
+
+
+func _set_button(color: Color) -> void:
+	var btn := get_node_or_null("Panel/Action") as NinePatchButton
+	var label := get_node_or_null("Panel/Action/Container/ActionLabel") as Label
+	var coin := get_node_or_null("Panel/Action/Container/CoinIcon") as TextureRect
+	if btn == null or label == null:
+		return
+	btn.self_modulate = Color.WHITE  # keep-code: màu theo dữ liệu (runtime)
+	btn.disabled = false
+	btn.material = null
+	# Đang dùng -> con dấu xanh lá (khoá bấm)
+	if Shop.is_equipped(item_id):
+		btn.texture_normal = BTN_TILE  # keep-code: art theo trạng thái món hàng (runtime)
+		btn.material = MAT_TILE_DONE
+		btn.disabled = true
+		label.theme_type_variation = &"ShopBtnTextDone"  # keep-code: biến thể chữ theo trạng thái (runtime)
+		label.add_theme_color_override("font_color", Color(0.0863, 0.3961, 0.2039))  # keep-code: màu theo dữ liệu (runtime)
+		label.text = TranslationServer.translate("STR_SHOP_EQUIPPED")
+		if coin != null:
+			coin.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+		return
+		
+	# Đã sở hữu -> nút "SỬ DỤNG" tô màu món hàng (art TRẮNG + modulate)
+	# (pressed/hover/disabled tự lấy theo `normal` — NinePatchButton lo phần fallback)
+	if Shop.is_owned(item_id):
+		btn.texture_normal = BTN_TILE  # keep-code: art theo trạng thái món hàng (runtime)
+		btn.material = MAT_TILE_NORMAL
+		btn.self_modulate = color
+		label.theme_type_variation = &"ShopBtnText"  # keep-code: biến thể chữ theo trạng thái (runtime)
+		label.remove_theme_color_override("font_color")
+		label.text = TranslationServer.translate("STR_SHOP_USE")
+		if coin != null:
+			coin.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+		return
+		
+	# Chưa sở hữu -> nút giá Xu (món VIP dùng nút hổ phách đặc, chữ trắng)
+	var vip := str(item_data.get("badge_key", "")) == VIP_BADGE
+	btn.texture_normal = BTN_TILE  # keep-code: art theo trạng thái món hàng (runtime)
+	if vip:
+		btn.material = MAT_TILE_VIP
+	btn.disabled = not Shop.can_afford(item_id)
+	label.theme_type_variation = &"ShopBtnText" if vip else &"ShopPrice"
+	label.remove_theme_color_override("font_color")
+	label.text = TranslationServer.translate("STR_SHOP_PRICE_FORMAT").format([
+		Shop.thousands(int(item_data.get("price", 0)))])
+	if coin != null:
+		coin.visible = not vip
+
+func _set_label(path: String, text: String) -> void:
+	var label := get_node_or_null(path) as Label
+	if label != null:
+		label.text = text
+
+func _on_action_pressed() -> void:
+	action_pressed.emit(item_id)
+
+
+## CHẠM CẢ THẺ (ô giá bên trong chỉ là nhãn thông tin, không bấm riêng):
+##  • đang dùng  → chỉ chọn/xem thử
+##  • đã có      → dùng ngay (không tốn xu)
+##  • chưa có    → chạm lần 1 chọn + xem thử, chạm lần 2 mua (tránh lỡ tay tốn xu)
+func _on_card_tapped() -> void:
+	if Shop.is_equipped(item_id):
+		preview_pressed.emit(item_id)
+		return
+	if Shop.is_owned(item_id):
+		preview_pressed.emit(item_id)
+		action_pressed.emit(item_id)
+		return
+	if not ShopCardTap.is_armed(self):
+		ShopCardTap.arm(self)
+		_set_armed(true)
+		preview_pressed.emit(item_id)
+		return
+	if not Shop.can_afford(item_id):
+		ShopCardTap.shake(self, get_node_or_null("Panel/Action") as Control)
+		return
+	ShopCardTap.disarm()
+	action_pressed.emit(item_id)
+
+
+func _set_armed(on: bool) -> void:
+	_armed = on
+	_apply_card_art()
+
+
+## ShopCardTap gọi khi thẻ khác được chọn / hết hạn chờ mua
+func _on_disarmed() -> void:
+	_set_armed(false)

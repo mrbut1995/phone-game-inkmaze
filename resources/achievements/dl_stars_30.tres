@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3]
+
+[ext_resource uid="uid://6voljbarwsoh" type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="1_cvmtm"]
+[ext_resource type="Script" path="res://scripts/data/achievement_data.gd" id="2_tixac"]
+
+[resource]
+script = ExtResource("2_tixac")
+id = "dl_stars_30"
+category = "daily"
+title = "Kho Sao Daily"
+description = "Thu thập 30 sao từ các ngày Daily Mission"
+title_key = "STR_ACH_DL_STARS_30_TITLE"
+desc_key = "STR_ACH_DL_STARS_30_DESC"
+icon = ExtResource("1_cvmtm")
+stat = "daily_stars_total"
+target = 30
+unit = "Sao"
+reward_coins = 200
+points = 30

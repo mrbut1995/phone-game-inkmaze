@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bdudpxxwdkx8u"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" uid="uid://dflm08pygt1p8" path="res://scripts/scenes/layout/profiler_layout.gd" id="2_layout"]
+[ext_resource type="Script" uid="uid://dflm08pygt1p8" path="res://scripts/ui/layouts/profiler_layout.gd" id="2_layout"]
 [ext_resource type="Texture2D" uid="uid://c7ng3gx7uq2fr" path="res://assets/images-png/btn_header_cancel_normal.png" id="3_close_n"]
 [ext_resource type="Texture2D" uid="uid://ptgbk5np0gkd" path="res://assets/images-png/btn_header_cancel_pressed.png" id="4_close_p"]
 [ext_resource type="Texture2D" uid="uid://dp0x85lki83lb" path="res://assets/images-png/profiler/sheet.png" id="5_sheet"]
@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://tiymsnphf22l" path="res://assets/images-png/profiler/stamp_verified.png" id="31_stamp"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="60_theme"]
 [ext_resource type="Texture2D" uid="uid://c01iwhf75vw5v" path="res://assets/images-png/icons/icon_pen_name.png" id="70_pen_name"]
-[ext_resource type="Script" path="res://scripts/nodes/profiler/scroll_drag.gd" id="9_info_scroll"]
+[ext_resource type="Script" path="res://scripts/ui/widgets/profiler/scroll_drag.gd" id="9_info_scroll"]
 
 [node name="Portrait" unique_id=843989875 node_paths=PackedStringArray("btn_close", "lbl_title", "level_chip", "hero", "info_scroll", "info_list", "stamp", "hero_btn_avatar", "hero_avatar", "hero_frame", "hero_name", "hero_tier_text", "hero_exp_value", "hero_uid", "hero_track", "hero_fill", "header_anchor") instance=ExtResource("1_parent")]
 theme = ExtResource("60_theme")
@@ -456,7 +456,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CoinChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="LifeChip" parent="TopBar"]
+mouse_filter = 2
+process_mode = 4
 visible = false

@@ -1,0 +1,911 @@
+class_name ShopScene
+extends BaseScene
+## ============================================================================
+## Màn CỬA HÀNG (mockup/shopping_*.svg) — 4 tab:
+##   BÚT & MỰC (pen) · GIẤY VỞ (theme) · DỤNG CỤ (tool) · NẠP XU (coin)
+##
+## - Tab BÚT & MỰC / GIẤY VỞ: lưới ô TỰ CHIA CỘT theo bề rộng khung (màn thiết kế: 2 cột,
+##   6 món/trang) — kéo dãn ngang đủ chỗ là THÊM cột, thu nhỏ là BỎ cột (có phân trang, VUỐT NGANG đổi trang)
+## - Tab DỤNG CỤ: danh sách thẻ ngang 980×180 (cuộn dọc)
+## - Tab NẠP XU: hàng VIP "Xoá quảng cáo" 980×200 nằm TRÊN CÙNG + lưới các gói Xu (tự chia cột như lưới ô)
+## - Mua bằng Xu Mực (ví dùng chung với Sổ tay thành tựu) hoặc gói nạp tiền thật (STUB IAP)
+## - Bút / chủ đề sau khi mua có nút SỬ DỤNG -> ThemeSkin.apply_* (ĐÃ CHUẨN BỊ, chưa đổi giao diện)
+## - VUỐT DỌC để cuộn danh sách (tự xử lý ở `_input` vì nút trên thẻ "ăn" sự kiện kéo)
+## ============================================================================
+
+@export var ROW_SCENE: PackedScene = preload("res://nodes/shop/item_row.tscn")
+@export var TILE_SCENE: PackedScene = preload("res://nodes/shop/item_tile.tscn")
+@export var COIN_SCENE: PackedScene = preload("res://nodes/shop/coin_tile.tscn")
+@export var PAGE_DOT_SCENE: PackedScene = preload("res://nodes/shop/page_dot.tscn")
+const UIAnim := preload("res://scripts/utils/ui_anim.gd")
+
+## Số món mỗi trang ở lưới 2 cột — GIÁ TRỊ THIẾT KẾ (màn 1080×1920).
+## Số thực tế được tính lại theo CHIỀU CAO khung nhìn (`_grid_per_page`): màn thấp /
+## xoay ngang thì ít hàng hơn, màn cao thì nhiều hàng hơn (content giãn hết chỗ trống).
+@export var TILES_PER_PAGE := 3
+## Lưới ô: số cột TỰ CHIA theo bề rộng khung (cả 2 hướng) — `GRID_COLUMNS` là mức tối thiểu,
+## `GRID_COLUMNS_MAX` là mức tối đa; khe ngang 30 / khe dọc 24 — khai trong `item_grid.tscn`.
+@export var GRID_COLUMNS := 2
+@export var GRID_COLUMNS_MAX := 4
+## Bề rộng TỐI THIỂU của 1 thẻ ô ở bản NGANG — cơ sở để chia số cột (thẻ tự nở đầy ô)
+@export var TILE_MIN_W := 130.0
+## Lưới GÓI NẠP XU dùng chung cách chia cột với lưới ô (xem `grid_columns`)
+@export var GRID_H_SEP := 30.0
+@export var GRID_V_SEP := 24.0
+## Khe dọc giữa các khối trong danh sách (khớp `List.theme_override_constants/separation`)
+@export var LIST_SEP := 20.0
+## Ngưỡng nhận diện kéo (px) và ngưỡng tính là "vuốt" (px)
+@export var DRAG_THRESHOLD := 14.0
+@export var SWIPE_MIN := 70.0
+## Khoá bấm nút trong bao lâu sau khi vuốt (tránh vừa vuốt vừa mua nhầm)
+@export var CLICK_LOCK_TIME := 0.35
+## Thứ tự tab trong hàng — tab THẬT nằm SẴN trong scene bố cục (`Tabs/*`), mỗi tab tự khai
+## `category` + `label_key`; danh sách này chỉ dùng để kiểm tra tên tab hợp lệ.
+const TAB_ORDER := ["pen", "theme", "tool", "coin"]
+## Nhóm hiện dạng lưới ô (2 cột); còn lại hiện dạng thẻ ngang
+const GRID_CATEGORIES := ["pen", "theme"]
+
+# --- Cỡ TAB & THẺ Ô theo màn hình (2026-09-17) -------------------------------
+## MỌI CỠ ĐỀU LẤY TỪ LAYOUT/ART — sửa ở file scene/SVG, script chỉ nhân hệ số:
+##   · TAB  : chiều cao = chiều cao art `tab_active.svg` (tab chưa chọn = art `tab_inactive.svg`)
+##   · THẺ Ô: rộng × cao = `custom_minimum_size` của `nodes/shop/item_tile.tscn`
+## Canvas thiết kế (chiều cao). Hệ số co giãn = cao_canvas / 1920, kẹp trong khoảng dưới.
+@export var DESIGN_CANVAS_H := 1920.0
+@export var SCREEN_SCALE_MIN := 0.85      # màn ngang / thấp: nhỏ nhất còn 0,85×
+@export var SCREEN_SCALE_MAX := 1.5       # màn dọc siêu cao: lớn nhất 1,5×
+## Hệ số phóng to THẺ Ô so với cỡ thiết kế trong `item_tile.tscn`
+## (muốn cỡ khác: sửa số này HOẶC sửa cỡ thiết kế trong scene — không cần sửa gì khác)
+@export var TILE_SCALE := 1.25
+## Node UI của màn nằm trong BỐ CỤC đang hiển thị (`Portrait` / `Landscape` — 2 hướng dùng
+## CÙNG tên node). Các node đã BIND SẴN bằng `@export` trong `scenes/layout/<hướng>/shop.tscn`
+## ⇒ code đọc qua `layout.<tên>`, KHÔNG tra đường dẫn; thêm/đổi node chỉ cần sửa scene + export.
+var layout: ShopLayout = null
+
+var _tabs: Dictionary = {}          # category -> ShopTabButton (scene nodes/shop/tab_button.tscn)
+var _cards: Array[Control] = []
+var _category := "pen"
+var _page := 0
+var _pages := 1
+## id món ĐẦU trang đang xem — dùng để giữ đúng vị trí khi xoay màn hình (phân trang lại)
+var _page_first_id := ""
+## Số món/trang đang áp dụng (để biết có cần phân trang lại khi màn hình đổi cỡ)
+var _last_per_page := 0
+var _last_columns := 0
+## Cỡ THIẾT KẾ của thẻ ô (đọc 1 lần từ item_tile.tscn) — phục vụ tính số hàng vừa khung
+static var _tile_size := Vector2.ZERO
+## Cỡ thiết kế thẻ GÓI NẠP (đọc 1 lần từ `nodes/shop/coin_tile.tscn`)
+var _coin_size := Vector2.ZERO
+## Cỡ bàn nháp thử bút khi SCENE không khai `custom_minimum_size` (giá trị thật nằm trong
+## `nodes/shop/doodle_pad.tscn` — node khai sẵn trong bố cục, xem `ShopLayout.doodle_pad`)
+@export var FALLBACK_PAD_H := 215.0
+## Bàn nháp thử bút (chỉ tab BÚT & MỰC) + ngòi bút đang xem thử trên đó
+var _doodle_pad: Control = null
+var _preview_pen := ""
+# Trạng thái kéo/vuốt (xem `_input`)
+var _drag_active := false
+var _drag_moved := false
+var _drag_axis := 0                 # 0 = chưa rõ · 1 = ngang (vuốt trang) · 2 = dọc (cuộn)
+var _drag_start := Vector2.ZERO
+var _drag_last := Vector2.ZERO
+var _drag_scroll := 0.0
+var _click_lock_until := 0.0
+## Màn cần quay về sau khi xem Cửa hàng — chỉ đặt khi vào Shop từ popup HẾT LƯỢT CHƠI (§5.10b)
+var _return_path := ""
+
+
+func _ready() -> void:
+	_bind_refs()
+	_wire_buttons()
+	_return_path = _take_return_path()
+	orientation_changed.connect(_on_orientation_changed)
+
+	if layout.can_animate_bar(layout.top_bar):
+		UIAnim.play_slide_in(layout.top_bar, Vector2(0, -22), 0.0, 0.25)
+	if layout.can_animate_bar(layout.wallet_bar):
+		UIAnim.play_slide_in(layout.wallet_bar, Vector2(0, -22), 0.04, 0.25)
+	if layout.tabs_box != null:
+		UIAnim.play_slide_in(layout.tabs_box, Vector2(0, -12), 0.08, 0.25)
+	if layout.gift_banner != null:
+		UIAnim.play_slide_in(layout.gift_banner, Vector2(0, 20), 0.12, 0.25)
+
+	_collect_tabs()
+	_refresh_wallet()
+	show_tab(_category)
+	# Xoay màn hình (dọc ⇄ ngang) -> tính lại số món/trang và giữ nguyên món đang xem
+	var vp := get_viewport()
+	if vp != null and not vp.size_changed.is_connected(_on_viewport_resized):
+		vp.size_changed.connect(_on_viewport_resized)
+	# Khung danh sách chỉ có kích thước THẬT sau frame đầu -> tính lại phân trang cho khớp
+	await get_tree().process_frame
+	await get_tree().process_frame
+	# Bố cục dùng CONTAINER (HBox/VBox): khung danh sách chỉ có cỡ thật sau khi dàn xong frame đầu
+	# ⇒ áp lại cỡ THẺ + phân trang ở đây (cỡ TAB do `_collect_tabs` lo, bề rộng do HBox chia).
+	_apply_tab_metrics()
+	_apply_card_metrics()
+	_refresh_pagination_if_needed()
+
+
+## Phát lại EnterAnim mỗi khi màn được kích hoạt (quay lại từ màn khác)
+func _on_active() -> void:
+	UIAnim.play_layout_anim(active_layout(), "EnterAnim", &"enter")
+
+
+## Gắn node của layout đang hiển thị (2 layout giữ cùng đường dẫn nên dùng `ui_path`)
+func _bind_refs() -> void:
+	layout = active_layout() as ShopLayout
+	_doodle_pad = layout.doodle_pad if layout != null else null
+	if layout == null:
+		push_warning("shop: bố cục chưa gắn ShopLayout — thiếu binding trong scenes/layout/<hướng>/shop.tscn")
+
+
+## Mỗi NODE chỉ nối signal 1 lần (xoay màn hình không nhân đôi connection/hiệu ứng)
+func _wire_once(node: Node) -> bool:
+	if node == null or node.has_meta("wired"):
+		return false
+	node.set_meta("wired", true)
+	return true
+
+
+func _wire_buttons() -> void:
+	# Dây NÚT khai trong `scenes/shop.tscn` (cả 2 hướng) — guard chỉ nối lại nếu dây bị mất
+	ensure_signal(layout.btn_back, &"pressed", &"_on_back_pressed")
+	ensure_signal(layout.wallet_plus, &"pressed", &"_on_wallet_plus_pressed")
+	# Chip LƯỢT CHƠI: bấm `+` = mở tab DỤNG CỤ (nơi bán gói thêm lượt)
+	if layout.life_chip != null and not layout.life_chip.plus_pressed.is_connected(_on_life_plus_pressed):
+		layout.life_chip.plus_pressed.connect(_on_life_plus_pressed)  # keep-code: node của layout 2 hướng — nối lại sau khi biết layout đang hiện
+	ensure_signal(layout.btn_prev, &"pressed", &"_on_prev_page")
+	ensure_signal(layout.btn_next, &"pressed", &"_on_next_page")
+	ensure_signal(layout.btn_gift, &"pressed", &"_on_gift_pressed")
+	if _wire_once(layout.btn_back):
+		UIAnim.attach_press_down(layout.btn_back)
+	if _wire_once(layout.wallet_plus):
+		UIAnim.attach_press_down(layout.wallet_plus)
+	if _wire_once(layout.btn_prev):
+		UIAnim.attach_press_down(layout.btn_prev)
+	if _wire_once(layout.btn_next):
+		UIAnim.attach_press_down(layout.btn_next)
+	if _wire_once(layout.btn_gift):
+		UIAnim.attach_press_down(layout.btn_gift)
+		# "Thở" nhẹ để hút mắt vào nút quà tặng — animation "pulse" của layout (PulseAnim)
+		if not UIAnim.play_layout_anim(layout, "PulseAnim", &"pulse", layout.btn_gift):
+			# Fallback khi layout thiếu PulseAnim
+			UIAnim.play_pulse(layout.btn_gift, 1.04, 1.8)
+
+
+## Xoay màn hình: gắn lại node + gom lại tab/trang của layout mới
+func _on_orientation_changed(_is_landscape_now: bool) -> void:
+	_rebind_after_orientation.call_deferred()
+
+
+func _rebind_after_orientation() -> void:
+	_bind_refs()
+	_wire_buttons()
+	_collect_tabs()
+	_refresh_wallet()
+	_refresh_tab_visuals()
+	_rebuild()
+	# Chờ các container của layout mới hoàn thành dàn kích thước thật (1-2 frame)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_apply_tab_metrics()
+	_apply_card_metrics()
+	_refresh_pagination_if_needed()
+
+
+## Hệ số co giãn theo CHIỀU CAO màn hình hiện tại (1,0 = canvas thiết kế 1920)
+## Màn dọc cao (điện thoại 1080×2424) -> tab/thẻ cao hơn; màn ngang thấp -> thấp hơn (sàn 0,85).
+func screen_scale() -> float:
+	var canvas_h := get_viewport_rect().size.y if is_inside_tree() else 0.0
+	if canvas_h <= 0.0:
+		return 1.0
+	return clampf(canvas_h / DESIGN_CANVAS_H, SCREEN_SCALE_MIN, SCREEN_SCALE_MAX)
+
+
+## Chiều cao TAB đang dùng = chiều cao ART tab đang chọn (`tab_active.svg`) × hệ số màn hình
+## (muốn đổi cỡ tab: sửa 2 file SVG trong assets/images/shop — không cần sửa script)
+func tab_height() -> float:
+	# Thanh tab DƯỚI (portrait) có chiều cao CỐ ĐỊNH: tab phải khít lòng thanh, sát viền trên/dưới
+	# ⇒ dùng đúng cỡ art. Hàng tab của bố cục ngang vẫn co theo màn hình thấp.
+	if layout != null and layout.tabs_box != null and layout.tabs_box.anchor_top >= 1.0:
+		return ShopTabButton.art_height()
+	return ShopTabButton.art_height() * minf(screen_scale(), 1.0)
+
+
+## Cỡ THIẾT KẾ của thẻ ô — đọc từ `nodes/shop/item_tile.tscn` (layout là nguồn số thật)
+func tile_design_size() -> Vector2:
+	if _tile_size == Vector2.ZERO:
+		var probe := TILE_SCENE.instantiate() as Control
+		if probe != null:
+			_tile_size = Vector2(
+				maxf(probe.size.x, probe.custom_minimum_size.x),
+				maxf(probe.size.y, probe.custom_minimum_size.y))
+			probe.free()
+		if _tile_size.x <= 0.0 or _tile_size.y <= 0.0:
+			_tile_size = Vector2(475.0, 294.0)
+	return _tile_size
+
+
+## Cỡ THẺ Ô đang dùng: cao = thiết kế × `TILE_SCALE` × hệ số màn hình; rộng = bề rộng Ô LƯỚI
+## theo số cột hiện tại ⇒ lưới luôn vừa khung, kéo dãn ngang là thẻ nở theo (sàn `TILE_MIN_W`).
+func tile_size() -> Vector2:
+	var design := tile_design_size()
+	var height := design.y * TILE_SCALE * screen_scale()
+	var width := layout.scroll.size.x if layout.scroll != null else 0.0
+	if width <= 0.0:
+		return Vector2(design.x, height)
+	var columns := grid_columns()
+	var cell := (width - GRID_H_SEP * float(columns - 1)) / float(columns)
+	return Vector2(maxf(cell, TILE_MIN_W), height)
+
+
+## Chiều cao THẺ Ô đang dùng (dùng cho tính số hàng vừa khung)
+func tile_height() -> float:
+	return tile_size().y
+
+
+## Số CỘT của lưới ô theo BỀ RỘNG THẬT của khung danh sách (cả 2 hướng):
+##  · Bản NGANG: điện thoại cầm tay giữ 2 cột to rõ, dễ nhìn, nút bấm dễ chạm ngón cái;
+##    màn hình rộng (tablet/PC) tự tăng lên 3-4 cột.
+##  · Bản DỌC : lấy cỡ THIẾT KẾ của thẻ làm mốc rồi làm tròn tới cột gần nhất ⇒ kéo dãn
+##    ngang đủ chỗ là TỰ THÊM một cột, thu nhỏ không đủ chỗ là BỎ cột đó đi.
+## Không bao giờ hẹp hơn `TILE_MIN_W` và không quá `GRID_COLUMNS_MAX`.
+func grid_columns() -> int:
+	var width := layout.scroll.size.x if layout.scroll != null else 0.0
+	if width <= 0.0:
+		return GRID_COLUMNS
+	if is_landscape:
+		var tile_min_w := 200.0 if _category != "coin" else coin_design_size().x
+		return clampi(int((width + GRID_H_SEP * 0.5) / (tile_min_w + GRID_H_SEP)),
+			GRID_COLUMNS, GRID_COLUMNS_MAX)
+	var design_w: float = (coin_design_size() if _category == "coin" else tile_design_size()).x
+	# Số cột xếp ĐẦY theo cỡ thiết kế, rồi thêm 1 cột nếu chỗ còn thừa ≥ NỬA cột
+	# (thu nhỏ tới mức không đủ nửa cột thì tự bỏ cột đó đi).
+	var by_design := int((width + GRID_H_SEP) / (design_w + GRID_H_SEP))
+	var used := float(by_design) * design_w + float(maxi(by_design - 1, 0)) * GRID_H_SEP
+	if width - used >= design_w * 0.5:
+		by_design += 1
+	var by_min := int((width + GRID_H_SEP) / (TILE_MIN_W + GRID_H_SEP))
+	return clampi(by_design, 1, clampi(by_min, 1, GRID_COLUMNS_MAX))
+
+
+## Cỡ THIẾT KẾ của thẻ GÓI NẠP (đọc từ `nodes/shop/coin_tile.tscn`)
+func coin_design_size() -> Vector2:
+	if _coin_size == Vector2.ZERO:
+		var probe := COIN_SCENE.instantiate() as Control
+		if probe != null:
+			_coin_size = Vector2(
+				maxf(probe.size.x, probe.custom_minimum_size.x),
+				maxf(probe.size.y, probe.custom_minimum_size.y))
+			probe.free()
+		if _coin_size.x <= 0.0 or _coin_size.y <= 0.0:
+			_coin_size = Vector2(237.5, 120.0)
+	return _coin_size
+
+
+## Cỡ THẺ GÓI NẠP đang dùng: thẻ NỞ ĐẦY Ô theo số cột hiện tại (cao giữ cỡ thiết kế)
+## ⇒ lưới không bao giờ tràn ra ngoài khung cuộn, kéo dãn ngang là thêm cột.
+func coin_tile_size() -> Vector2:
+	var design := coin_design_size()
+	var width := layout.scroll.size.x if layout.scroll != null else 0.0
+	if width <= 0.0:
+		return design
+	var columns := grid_columns()
+	var cell := (width - GRID_H_SEP * float(columns - 1)) / float(columns)
+	return Vector2(maxf(cell, TILE_MIN_W), design.y)
+
+
+## Số món mỗi trang theo CHIỀU CAO thật của khung danh sách (đổi khi xoay màn hình)
+func _grid_per_page() -> int:
+	var avail := layout.scroll.size.y if layout.scroll != null else 0.0
+	if avail <= 0.0:
+		return TILES_PER_PAGE
+	# Bàn nháp thử bút (tab BÚT & MỰC) nếu nằm TRONG danh sách thì chiếm mất một khoảng dọc
+	# (bố cục NGANG đặt bàn nháp sang cột trái ⇒ không trừ)
+	var extra := 0.0
+	if _category == "pen" and layout.pad_slot == null:
+		extra = _doodle_pad_height() + LIST_SEP
+	var grid_avail := maxf(avail - extra, 0.0)
+	var columns := grid_columns()
+	var row_h := tile_height() + GRID_V_SEP
+	var rows := maxi(1, int(floor((grid_avail + GRID_V_SEP) / maxf(row_h, 1.0))))
+	return maxi(columns, rows * columns)
+
+
+## Chiều cao bàn nháp thử bút = cỡ KHAI TRONG SCENE (`custom_minimum_size` của `Content/List/Pad`).
+## KHÔNG đọc `size.y`: pad nằm sẵn trong khung nên lúc ẨN vẫn giãn theo khung (số sẽ sai).
+func _doodle_pad_height() -> float:
+	if _doodle_pad != null and is_instance_valid(_doodle_pad) and _doodle_pad.custom_minimum_size.y > 0.0:
+		return _doodle_pad.custom_minimum_size.y
+	return FALLBACK_PAD_H
+
+
+## Áp cỡ thẻ ô hiện tại cho mọi thẻ đang hiện (thẻ tự dàn khối bên trong bằng anchors).
+## Tab NẠP XU: chỉ thẻ GÓI XU nở theo cột — hàng VIP "Xoá quảng cáo" giữ cỡ của scene.
+func _apply_card_metrics() -> void:
+	var is_coin := _category == "coin"
+	if not GRID_CATEGORIES.has(_category) and not is_coin:
+		return
+	var size: Vector2 = coin_tile_size() if is_coin else tile_size()
+	for card in _cards:
+		if card == null or not is_instance_valid(card):
+			continue
+		if is_coin and not card.has_method("icon_texture"):
+			continue
+		card.custom_minimum_size = size
+
+
+## Đổi cỡ màn hình: co/giãn số món mỗi trang rồi đặt lại trang sao cho
+## MÓN ĐANG XEM vẫn nằm trong trang hiện tại (không nhảy về trang 1).
+func _on_viewport_resized() -> void:
+	await get_tree().process_frame          # chờ khung Content nhận kích thước mới
+	_apply_tab_metrics()                    # tab & vùng danh sách cao theo màn hình
+	if not GRID_CATEGORIES.has(_category) and _category != "coin":
+		return
+	_apply_card_metrics()                   # thẻ ô cao theo màn hình
+	# Kéo dãn / thu nhỏ NGANG: số CỘT có thể đổi ⇒ phải dựng lại lưới cho khớp
+	if grid_columns() != _last_columns:
+		_rebuild()
+		return
+	_refresh_pagination_if_needed()
+
+
+## Phân trang lại NẾU số món mỗi trang đã đổi (màn hình đổi cỡ) — giữ món đang xem
+func _refresh_pagination_if_needed() -> void:
+	if not is_inside_tree() or not GRID_CATEGORIES.has(_category):
+		return
+	var per_page := _grid_per_page()
+	if per_page == _last_per_page:
+		return
+	var anchor := _page_first_id
+	if per_page > 0 and not anchor.is_empty():
+		var items := Shop.items(_category)
+		for i in items.size():
+			if str(items[i].get("id", "")) == anchor:
+				_page = i / per_page
+				break
+	_rebuild()
+
+
+# ---------------------------------------------------------------------------
+# API cho test
+# ---------------------------------------------------------------------------
+func current_tab() -> String:
+	return _category
+
+
+func tab_button(category: String) -> TextureButton:
+	return _tabs.get(category, null)
+
+
+func item_count() -> int:
+	return _cards.size()
+
+
+func card_at(index: int) -> Control:
+	return _cards[index] if index >= 0 and index < _cards.size() else null
+
+
+func item_id_at(index: int) -> String:
+	var card := card_at(index)
+	if card == null:
+		return ""
+	return str(card.get("item_id"))
+
+
+func page_count() -> int:
+	return _pages
+
+
+func current_page() -> int:
+	return _page
+
+
+func wallet_text() -> String:
+	return layout.wallet_count.text if layout.wallet_count != null else ""
+
+
+func items_per_page() -> int:
+	return _grid_per_page() if GRID_CATEGORIES.has(_category) else 0
+
+
+## Có đang khoá bấm nút không (vừa vuốt xong) — dùng cho test
+func clicks_locked() -> bool:
+	return _clicks_locked()
+
+
+func doodle_pad() -> Control:
+	# Chỉ trả về node khi tab hiện tại ĐANG hiện bàn nháp (tab khác = null)
+	if _doodle_pad == null or not is_instance_valid(_doodle_pad) or not _doodle_pad.visible:
+		return null
+	return _doodle_pad
+
+
+func preview_pen_id() -> String:
+	return _preview_pen
+
+
+## Chọn 1 ngòi bút BÚT & MỰC để xem thử ở Bàn nháp (chạm thẻ bút)
+func select_pen_for_preview(item_id: String) -> void:
+	if _doodle_pad == null or not is_instance_valid(_doodle_pad):
+		return
+	if str(Shop.category_of(item_id)) != "pen" or item_id == _preview_pen:
+		return
+	Sfx.play(Sfx.CELL_STEP)
+	_doodle_pad.call("select_pen", item_id)
+
+
+# ---------------------------------------------------------------------------
+# Tab
+# ---------------------------------------------------------------------------
+## Gom các tab KHAI SẴN trong scene bố cục (`Tabs/*` — 4 tab: pen · theme · tool · coin),
+## mỗi tab tự khai `category` + `label_key` + tự nối `pressed` → `tab_pressed`.
+## Màn chỉ gom lại + nối 1 lần ⇒ KHÔNG còn dựng tab bằng code.
+func _collect_tabs() -> void:
+	_tabs.clear()
+	if layout == null or layout.tabs_box == null:
+		return
+	for child in layout.tabs_box.get_children():
+		var button := child as ShopTabButton
+		if button == null:
+			continue
+		ensure_signal(button, &"tab_pressed", &"_on_tab_pressed")
+		_tabs[button.category] = button
+	_apply_tab_metrics()
+
+
+## Tab cao theo cỡ màn hình: tab đang chọn cao hết hàng (nhô lên), tab chưa chọn thấp hơn
+## & canh ĐÁY hàng — bề rộng do HBox chia đều (export + anchors trong scene lo phần dàn hàng).
+func _apply_tab_metrics() -> void:
+	var h := tab_height()
+	for key in _tabs.keys():
+		var button := _tabs[key] as ShopTabButton
+		if button != null:
+			button.apply_metrics(h)
+
+
+func show_tab(category: String) -> void:
+	if not TAB_ORDER.has(category):
+		return
+	_category = category
+	_page = 0
+	_refresh_tab_visuals()
+	_rebuild()
+	_settle_pagination()
+
+
+## Khung danh sách (Content) có thể ĐỔI CỠ khi đổi tab (bố cục dọc: bàn nháp hiện/ẩn làm khung co giãn)
+## ⇒ chờ container dàn xong rồi tính lại cỡ thẻ + số món/trang cho khớp khung mới.
+func _settle_pagination() -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not is_inside_tree() or layout == null:
+		return
+	_apply_card_metrics()
+	_refresh_pagination_if_needed()
+
+func _refresh_tab_visuals() -> void:
+	for key in _tabs.keys():
+		var button := _tabs[key] as ShopTabButton
+		if button != null:
+			button.set_active(str(key) == _category)
+	# Tab đang chọn cao hơn -> cập nhật lại cỡ hàng tab cho khớp
+	_apply_tab_metrics()
+
+
+func _on_tab_pressed(category: String) -> void:
+	if _clicks_locked():
+		return
+	if category == _category:
+		return
+	Sfx.play(Sfx.PAGE_TURN)
+	show_tab(category)
+
+
+# ---------------------------------------------------------------------------
+# Dựng danh sách món hàng
+# ---------------------------------------------------------------------------
+func _rebuild() -> void:
+	if layout.list_box == null:
+		return
+	for child in layout.list_box.get_children():
+		if child == layout.item_grid or child == layout.doodle_pad or child == layout.noads_row:
+			continue            # node KHAI SẴN trong scene — dùng lại, không xoá
+		layout.list_box.remove_child(child)
+		child.queue_free()
+	# Khung bàn nháp (bố cục NGANG) cũng phải dọn phiếu cũ — riêng bàn nháp khai sẵn thì GIỮ LẠI
+	if layout.pad_slot != null:
+		for child in layout.pad_slot.get_children():
+			if child == layout.doodle_pad:
+				continue
+			layout.pad_slot.remove_child(child)
+			child.queue_free()
+	_cards.clear()
+	if layout.doodle_pad != null:
+		layout.doodle_pad.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+	if layout.pad_slot != null:
+		layout.pad_slot.visible = (_category == "pen")
+	if layout.noads_row != null:
+		layout.noads_row.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+
+	var items := Shop.items(_category)
+	var use_grid := _category == "coin" or GRID_CATEGORIES.has(_category)
+	if layout.item_grid != null:
+		layout.item_grid.visible = use_grid
+	if _category == "coin":
+		_rebuild_coin(items)
+	elif GRID_CATEGORIES.has(_category):
+		_rebuild_grid(items)
+	else:
+		_rebuild_rows(items)
+	_last_columns = grid_columns()
+	_refresh_pager()
+	if layout.scroll != null:
+		layout.scroll.scroll_vertical = 0
+
+
+func _rebuild_rows(items: Array[Dictionary]) -> void:
+	_pages = 1
+	_page = 0
+	_page_first_id = ""
+	var index := 0
+	for item in items:
+		var card: Control = ROW_SCENE.instantiate()
+		layout.list_box.add_child(card)
+		card.call("setup", item)
+		if card.has_signal("action_pressed"):
+			card.connect("action_pressed", _on_item_action)  # keep-code: signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
+		_cards.append(card)
+		UIAnim.play_pop_in(card, 0.02 * index, 0.94, 0.18)
+		index += 1
+
+
+func _rebuild_grid(items: Array[Dictionary]) -> void:
+	var per_page := _grid_per_page()
+	_last_per_page = per_page
+	_pages = maxi(1, int(ceil(float(items.size()) / float(per_page))))
+	_page = clampi(_page, 0, _pages - 1)
+	# Bàn nháp thử bút nằm TRÊN lưới (chỉ tab BÚT & MỰC — mockup/shopping_pencil.svg)
+	if _category == "pen":
+		_show_doodle_pad()
+	var grid := _item_grid()
+	if grid == null:
+		return
+	layout.list_box.move_child(grid, layout.list_box.get_child_count() - 1)
+
+	var start := _page * per_page
+	_page_first_id = str(items[start].get("id", "")) if start < items.size() else ""
+	var index := 0
+	var tile_size_now := tile_size()
+	for offset in per_page:
+		var item_index := start + offset
+		if item_index >= items.size():
+			break
+		var card: Control = TILE_SCENE.instantiate()
+		card.custom_minimum_size = tile_size_now
+		grid.add_child(card)
+		card.call("setup", items[item_index])
+		if card.has_signal("action_pressed"):
+			card.connect("action_pressed", _on_item_action)  # keep-code: signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
+		if card.has_signal("preview_pressed"):
+			card.connect("preview_pressed", select_pen_for_preview)  # keep-code: signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
+		_cards.append(card)
+		UIAnim.play_pop_in(card, 0.03 * index, 0.92, 0.2)
+		index += 1
+	_refresh_card_selection()
+
+
+## Bàn nháp thử bút KHAI SẴN trong scene (bản DỌC: `Content/List/Pad` · bản NGANG: `PadSlot/Pad`)
+## — mỗi lần vào tab BÚT & MỰC chỉ HIỆN LẠI + nạp ngòi đang xem thử (không tạo node mới).
+func _show_doodle_pad() -> void:
+	var pad := layout.doodle_pad if layout != null else null
+	if pad == null:
+		return
+	if _preview_pen.is_empty() or not PenSkin.has_pen(_preview_pen):
+		_preview_pen = Shop.equipped_pen()
+	_doodle_pad = pad
+	pad.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
+	pad.call("setup", _preview_pen)
+	# Dây `pen_changed` khai trong `scenes/shop.tscn` (bàn nháp nằm trong layout) —
+	# guard chỉ nối lại nếu dây bị mất
+	ensure_signal(pad, &"pen_changed", &"_on_pad_pen_changed")
+	UIAnim.play_pop_in(pad, 0.0, 0.96, 0.2)
+
+
+func _on_pad_pen_changed(pen_id: String) -> void:
+	_preview_pen = pen_id
+	_refresh_card_selection()
+
+
+## Thẻ đang xem thử sáng vòng tròn icon hơn các thẻ khác
+func _refresh_card_selection() -> void:
+	for card in _cards:
+		if card != null and is_instance_valid(card) and card.has_method("set_selected"):
+			card.call("set_selected", str(card.get("item_id")) == _preview_pen)
+
+
+## Tab NẠP XU: hàng VIP "Xoá quảng cáo" chiếm TRỌN MỘT HÀNG trên cùng,
+## các gói Xu còn lại xếp lưới ô (số cột chia theo bề rộng khung — mockup/shopping_coin.svg)
+func _rebuild_coin(items: Array[Dictionary]) -> void:
+	_pages = 1
+	_page = 0
+	_page_first_id = ""
+	var no_ads: Dictionary = {}
+	var packs: Array[Dictionary] = []
+	for item in items:
+		if bool(item.get("no_ads", false)):
+			no_ads = item
+		else:
+			packs.append(item)
+	if not no_ads.is_empty():
+		# Hàng VIP khai sẵn trong scene (`Content/List/NoAds`) — chỉ hiện ở tab NẠP XU
+		var row: Control = layout.noads_row
+		if row != null:
+			row.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
+			row.call("setup", no_ads)
+		if row.has_signal("action_pressed") and not row.is_connected("action_pressed", _on_item_action):  # keep-code: hàng sinh lúc chạy — chỉ nối khi có signal
+			row.connect("action_pressed", _on_item_action)  # keep-code: node sinh lúc chạy
+			_cards.append(row)
+			UIAnim.play_pop_in(row, 0.0, 0.94, 0.18)
+	var grid := _item_grid()
+	if grid == null:
+		return
+	layout.list_box.move_child(grid, layout.list_box.get_child_count() - 1)
+	var index := 0
+	var coin_size_now := coin_tile_size()
+	for item in packs:
+		var card: Control = COIN_SCENE.instantiate()
+		card.custom_minimum_size = coin_size_now
+		grid.add_child(card)
+		card.call("setup", item)
+		if card.has_signal("action_pressed"):
+			card.connect("action_pressed", _on_item_action)  # keep-code: signal của node sinh lúc chạy / biến thể (nối 1 chỗ khi tạo)
+		_cards.append(card)
+		UIAnim.play_pop_in(card, 0.03 * index, 0.92, 0.2)
+		index += 1
+
+
+## Lưới ô KHAI SẴN trong scene bố cục (`Content/List/Grid`) — dùng lại giữa các lần đổi
+## tab/trang (không instantiate lại), chỉ dọn thẻ cũ + cập nhật số cột theo bề rộng khung.
+func _item_grid() -> ShopItemGrid:
+	var grid := layout.item_grid if layout != null else null
+	if grid == null:
+		return null
+	for child in grid.get_children():
+		grid.remove_child(child)
+		child.queue_free()
+	grid.columns = grid_columns()
+	return grid
+
+
+func _refresh_pager() -> void:
+	var show_pager := _pages > 1
+	if layout.pager != null:
+		layout.pager.visible = show_pager
+	if layout.page_label != null:
+		layout.page_label.text = TranslationServer.translate("STR_SHOP_PAGE_FORMAT").format([_page + 1, _pages])
+	if layout.btn_prev != null:
+		layout.btn_prev.modulate = Color(1, 1, 1, 1) if _page > 0 else Color(1, 1, 1, 0.4)
+	if layout.btn_next != null:
+		layout.btn_next.modulate = Color(1, 1, 1, 1) if _page < _pages - 1 else Color(1, 1, 1, 0.4)
+	if layout.dots_box == null:
+		return
+	for child in layout.dots_box.get_children():
+		layout.dots_box.remove_child(child)
+		child.queue_free()
+	for index in _pages:
+		var dot := PAGE_DOT_SCENE.instantiate() as ShopPageDot
+		dot.name = "Dot%d" % (index + 1)
+		layout.dots_box.add_child(dot)
+		dot.set_current(index == _page)
+
+
+func goto_page(index: int) -> void:
+	if index == _page or index < 0 or index >= _pages:
+		return
+	_page = index
+	_rebuild()
+
+
+func _on_prev_page() -> void:
+	if _clicks_locked():
+		return
+	_step_page(-1)
+
+
+func _on_next_page() -> void:
+	if _clicks_locked():
+		return
+	_step_page(1)
+
+
+## Đổi trang 1 bước (dùng chung cho nút mũi tên và vuốt ngang)
+func _step_page(step: int) -> void:
+	var target := _page + step
+	if target < 0 or target >= _pages:
+		return
+	Sfx.play(Sfx.PAGE_TURN)
+	goto_page(target)
+
+
+# ---------------------------------------------------------------------------
+# VUỐT / CUỘN — tự xử lý ở mức `_input` (xem đầu file)
+# ---------------------------------------------------------------------------
+func _input(event: InputEvent) -> void:
+	if layout.scroll == null or not is_visible_in_tree():
+		return
+	if event is InputEventScreenTouch and event.index == 0:
+		if event.pressed:
+			_begin_drag(event.position)
+		else:
+			_end_drag()
+	elif event is InputEventScreenDrag and event.index == 0:
+		_update_drag(event.position)
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_begin_drag(event.position)
+		else:
+			_end_drag()
+	elif event is InputEventMouseMotion:
+		if (event.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
+			_update_drag(event.position)
+
+
+func _begin_drag(pos: Vector2) -> void:
+	if layout.scroll == null or not layout.scroll.get_global_rect().has_point(pos):
+		return
+	# Bàn nháp thử bút "ăn" sự kiện kéo để người chơi VẼ THỬ (không cuộn/vuốt trang)
+	if _doodle_pad != null and is_instance_valid(_doodle_pad) \
+			and _doodle_pad.has_method("blocks_scroll_at") \
+			and bool(_doodle_pad.call("blocks_scroll_at", pos)):
+		return
+	_drag_active = true
+	_drag_moved = false
+	_drag_axis = 0
+	_drag_start = pos
+	_drag_last = pos
+	_drag_scroll = float(layout.scroll.scroll_vertical)
+
+
+func _update_drag(pos: Vector2) -> void:
+	if not _drag_active:
+		return
+	_drag_last = pos
+	var delta := pos - _drag_start
+	if _drag_axis == 0:
+		if absf(delta.x) < DRAG_THRESHOLD and absf(delta.y) < DRAG_THRESHOLD:
+			return
+		_drag_axis = 1 if absf(delta.x) > absf(delta.y) else 2
+		_drag_moved = true
+	# Dọc: kéo nội dung theo tay (kéo lên -> xem phần dưới)
+	if _drag_axis == 2:
+		layout.scroll.scroll_vertical = int(_drag_scroll - delta.y)
+	_lock_clicks()
+	if is_inside_tree():
+		get_viewport().set_input_as_handled()
+
+
+func _end_drag() -> void:
+	if not _drag_active:
+		return
+	_drag_active = false
+	if not _drag_moved:
+		return
+	var delta_x := _drag_last.x - _drag_start.x
+	if _drag_axis == 1 and _pages > 1 and absf(delta_x) >= SWIPE_MIN:
+		_step_page(1 if delta_x < 0.0 else -1)
+	_lock_clicks()
+
+
+func _clicks_locked() -> bool:
+	return _now() < _click_lock_until
+
+
+func _lock_clicks() -> void:
+	_click_lock_until = _now() + CLICK_LOCK_TIME
+
+
+func _now() -> float:
+	return float(Time.get_ticks_msec()) / 1000.0
+
+
+# ---------------------------------------------------------------------------
+# Hành động mua / dùng
+# ---------------------------------------------------------------------------
+func _on_item_action(item_id: String) -> void:
+	if _clicks_locked():
+		return
+	var category: String = str(Shop.category_of(item_id))
+	match category:
+		"coin":
+			if Shop.purchase_coin_pack(item_id):
+				Sfx.play(Sfx.ACHIEVEMENT)
+		"tool":
+			if Shop.buy(item_id):
+				Sfx.play(Sfx.BTN_CLICK)
+		"pen", "theme":
+			if category == "pen":
+				_preview_pen = item_id          # bàn nháp xem thử đúng món vừa mua/dùng
+			_handle_equip(item_id)
+		_:
+			return
+	_refresh_wallet(true)
+	_rebuild()
+
+
+## Bút / chủ đề: chưa có thì MUA, có rồi thì chọn SỬ DỤNG (ThemeSkin.apply_* đã chuẩn bị sẵn)
+func _handle_equip(item_id: String) -> void:
+	if Shop.is_owned(item_id):
+		var ok := false
+		if Shop.category_of(item_id) == "theme":
+			ok = ThemeSkin.apply_theme(item_id)
+		else:
+			ok = ThemeSkin.apply_pen(item_id)
+		if ok:
+			Sfx.play(Sfx.STAR_POP, 1)
+		return
+	if Shop.buy(item_id):
+		Sfx.play(Sfx.ACHIEVEMENT)
+
+
+func _on_gift_pressed() -> void:
+	# Góc tiếp sức: bật tab NẠP XU (bản đầy đủ sẽ là luồng xem quảng cáo +50 Xu)
+	if _clicks_locked():
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	show_tab("coin")
+
+
+func _on_wallet_plus_pressed() -> void:
+	if _clicks_locked():
+		return
+	Sfx.play(Sfx.BTN_CLICK)
+	show_tab("coin")
+
+
+## Chip LƯỢT CHƠI: nút `+` mở tab DỤNG CỤ (gói thêm lượt nằm ở đó)
+func _on_life_plus_pressed() -> void:
+	if _clicks_locked():
+		return
+	show_tab("tool")
+
+
+func _refresh_wallet(animate := false) -> void:
+	if layout.wallet_count != null:
+		layout.wallet_count.text = Shop.thousands(Shop.coins())
+		if animate and DisplayServer.get_name() != "headless":
+			layout.wallet_count.pivot_offset = layout.wallet_count.size * 0.5
+			if not _play_wallet_pop():
+				# Fallback khi layout thiếu WalletAnim
+				var tw := layout.wallet_count.create_tween()
+				tw.tween_property(layout.wallet_count, "scale", Vector2(1.28, 1.28), 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+				tw.tween_property(layout.wallet_count, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+## Ví xu nảy nhẹ khi số xu đổi — animation "wallet_pop" của layout (`WalletAnim`)
+func _play_wallet_pop() -> bool:
+	var player := layout.get_node_or_null("WalletAnim") as AnimationPlayer
+	if player == null or not player.has_animation(&"wallet_pop"):
+		return false
+	player.play(&"wallet_pop")
+	return true
+
+
+func _on_back_pressed() -> void:
+	if _clicks_locked():
+		return
+	Sfx.play(Sfx.BTN_WOOD_TAP)
+	# Vào Cửa hàng từ popup "HẾT LƯỢT CHƠI" ⇒ Back phải quay về ĐÚNG màn trước đó
+	if not _return_path.is_empty():
+		var target := _return_path
+		_return_path = ""
+		Nav.back_to(target)
+		return
+	Nav.goto_main()
+
+
+## Đọc 1 lần màn cần quay về (GameManager ghi khi mở Shop từ popup hết lượt)
+func _take_return_path() -> String:
+	var game_manager := Svc.game()
+	if game_manager == null or not game_manager.has_method("take_shop_return_path"):
+		return ""
+	return str(game_manager.call("take_shop_return_path"))

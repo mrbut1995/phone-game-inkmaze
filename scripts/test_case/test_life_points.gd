@@ -257,7 +257,7 @@ func _section_shop(gm: Node) -> void:
 	_check(Shop.category_of("life_x1") == "tool", "life_x1 nam trong tab DUNG CU")
 
 	var shop: Node = root.get_node_or_null("ShopManager")
-	var wallet: Node = root.get_node_or_null("ArchivementManager")
+	var wallet: Node = root.get_node_or_null("AchievementManager")
 	var coins_backup := int(wallet.get("coins")) if wallet != null else 0
 	gm.call("debug_set_lives", 5)
 	_check(not Shop.buy("life_x1"), "Day luot => KHONG mua duoc goi luot")

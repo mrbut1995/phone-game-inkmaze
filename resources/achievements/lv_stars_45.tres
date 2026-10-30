@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3]
+
+[ext_resource uid="uid://6voljbarwsoh" type="Texture2D" path="res://assets/images-png/common/star_highlight.png" id="1_axe6p"]
+[ext_resource type="Script" path="res://scripts/data/achievement_data.gd" id="2_ih6i4"]
+
+[resource]
+script = ExtResource("2_ih6i4")
+id = "lv_stars_45"
+title = "Bầu Trời Sao"
+description = "Thu thập 45 ngôi sao từ các màn chơi"
+title_key = "STR_ACH_LV_STARS_45_TITLE"
+desc_key = "STR_ACH_LV_STARS_45_DESC"
+icon = ExtResource("1_axe6p")
+stat = "level_stars_total"
+target = 45
+unit = "Sao"
+reward_coins = 250
+points = 40

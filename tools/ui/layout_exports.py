@@ -265,8 +265,8 @@ SPECS: dict[str, dict] = {
             ("btn_leaderboard", "BaseButton", ["name", "Leaderboard"]),
             ("btn_shop", "BaseButton", ["name", "Shop"]),
             ("btn_settings", "BaseButton", ["name", "Settings"]),
-            ("btn_archivement", "BaseButton", ["name", "Archivement"]),
-            ("badge_count_label", "Label", ["child", "Archivement", "Count"]),
+            ("btn_achievement", "BaseButton", ["name", "Achievement"]),
+            ("badge_count_label", "Label", ["child", "Achievement", "Count"]),
             ("badge_play", "Label", ["child", "Play", "Badge"]),
             ("badge_dungeon", "Label", ["child", "Dungeon", "Badge"]),
             ("badge_daily", "Label", ["child", "DailyMission", "Badge"]),
@@ -347,9 +347,9 @@ SPECS: dict[str, dict] = {
             ("tab_line", "ColorRect", ["name", "TabLine"]),
         ],
     },
-    "archivement": {
-        "layout_class": "ArchivementLayout",
-        "layout_script": "scripts/scenes/layout/archivement_layout.gd",
+    "achievement": {
+        "layout_class": "AchievementLayout",
+        "layout_script": "scripts/scenes/layout/achievement_layout.gd",
         "items": [
             ("btn_back", "BaseButton", ["path", "TopBar/Back"]),
             ("overview_bar", "Control", ["path", "Sheet/Overview/Bar"]),

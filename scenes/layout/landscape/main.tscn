@@ -1,52 +1,25 @@
 [gd_scene format=3 uid="uid://btocfh1b2n54"]
 
 [ext_resource type="PackedScene" uid="uid://d28jmv5bkqkx5" path="res://scenes/layout/base_layout.tscn" id="1_parent"]
-[ext_resource type="Script" uid="uid://dmhi5353c17ko" path="res://scripts/scenes/layout/main_layout.gd" id="2_layout"]
+[ext_resource type="Script" uid="uid://dmhi5353c17ko" path="res://scripts/ui/layouts/main_layout.gd" id="2_layout"]
 [ext_resource type="PackedScene" uid="uid://kk7tudhk7r3m" path="res://nodes/main/profile_card.tscn" id="3_profile"]
 [ext_resource type="PackedScene" uid="uid://dxm1sm66f5qi1" path="res://nodes/main/star_chip.tscn" id="5_star"]
 [ext_resource type="PackedScene" uid="uid://xuj64d8yo0mg" path="res://nodes/main/event_header.tscn" id="6_header"]
 [ext_resource type="PackedScene" uid="uid://cb8r4phad4ar5" path="res://nodes/main/event_carousel.tscn" id="7_carousel"]
-[ext_resource type="Texture2D" uid="uid://ht772c02qnl" path="res://assets/images-png/main/btn_settings_normal.png" id="8_o5gjt"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/settings_btn_normal.png" id="8_o5gjt"]
 [ext_resource type="PackedScene" uid="uid://k2k3skjevrxy" path="res://nodes/main/dock_button.tscn" id="9_dock"]
-[ext_resource type="Texture2D" uid="uid://cheydeptnm3w6" path="res://assets/images-png/main/btn_settings_pressed.png" id="9_kncrx"]
+[ext_resource type="Texture2D" path="res://assets/images-png/dock/dock_panel.png" id="tex_dock_panel"]
+[ext_resource type="Texture2D" path="res://assets/images-png/common/settings_btn_pressed.png" id="9_kncrx"]
 [ext_resource type="Texture2D" uid="uid://bssvcnaam8t6i" path="res://assets/images-png/main/logo_doodle_maze.png" id="10_logo"]
-[ext_resource type="Texture2D" uid="uid://d0gks40yyxdv2" path="res://assets/images-png/main/btn_settings_hover.png" id="10_luyyg"]
-[ext_resource type="Texture2D" uid="uid://daksl6ghofec0" path="res://assets/images-png/main/btn_settings_disabled.png" id="11_vyx2u"]
-[ext_resource type="Texture2D" uid="uid://dhkgonrwe7f5o" path="res://assets/images-png/main/btn_settings_focus.png" id="12_p5bnh"]
-[ext_resource type="Script" uid="uid://cpgvknnr8kupu" path="res://scripts/nodes/common/ui_scaler.gd" id="15_scaler"]
+[ext_resource type="Script" uid="uid://cpgvknnr8kupu" path="res://scripts/ui/widgets/common/ui_scaler.gd" id="15_scaler"]
 [ext_resource type="PackedScene" path="res://nodes/main/level_section.tscn" id="L_section"]
 [ext_resource type="PackedScene" path="res://nodes/level_selection/chapter_lock_sheet.tscn" id="L_sheet"]
 [ext_resource type="PackedScene" path="res://nodes/main/event_card_compact.tscn" id="L_evc"]
 [ext_resource type="PackedScene" path="res://nodes/main/daily_card_compact.tscn" id="L_dlc"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 5
-border_color = Color(0.894118, 0.862745, 0.776471, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-expand_margin_left = -6.0
-expand_margin_right = -6.0
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dock"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dock_pressed"]
-bg_color = Color(0.0862745, 0.27451, 0.388235, 0.1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "level_section", "dock_shop", "dock_ranking", "dock_badges", "stamp_panel", "stamp_label", "header_anchor") instance=ExtResource("1_parent")]
+[node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "level_section", "dock_shop", "dock_ranking", "dock_daily", "dock_badges", "stamp_panel", "stamp_label", "header_anchor") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 logo = NodePath("TopBar/LogoBlock/Logo")
 profile_card = NodePath("TopBar/ProfileCard")
@@ -58,6 +31,7 @@ event_carousel = NodePath("Scaler/Body/Mid/Left/EventCarousel")
 level_section = NodePath("Scaler/Body/Mid/LevelSection")
 dock_shop = NodePath("Scaler/Body/Dock/Row/DockShop")
 dock_ranking = NodePath("Scaler/Body/Dock/Row/DockRanking")
+dock_daily = NodePath("Scaler/Body/Dock/Row/DockDaily")
 dock_badges = NodePath("Scaler/Body/Dock/Row/DockBadges")
 stamp_panel = NodePath("Scaler/Body/Mid/Left/Stamp")
 stamp_label = NodePath("Scaler/Body/Mid/Left/Stamp/Label")
@@ -76,7 +50,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 31.0
-offset_top = 20.0
+offset_top = 24.0
 offset_right = -12.0
 offset_bottom = -8.0
 grow_horizontal = 2
@@ -102,6 +76,8 @@ mouse_filter = 2
 theme_override_constants/separation = 14
 
 [node name="Left" type="VBoxContainer" parent="Scaler/Body/Mid"]
+visible = false
+process_mode = 4
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -110,13 +86,19 @@ mouse_filter = 2
 theme_override_constants/separation = 6
 
 [node name="EventHeader" parent="Scaler/Body/Mid/Left" instance=ExtResource("6_header")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
+process_mode = 4
 
 [node name="EventCarousel" parent="Scaler/Body/Mid/Left" instance=ExtResource("7_carousel")]
+visible = false
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 size_flags_vertical = 1
+mouse_filter = 2
+process_mode = 4
 event_card_scene = ExtResource("L_evc")
 daily_card_scene = ExtResource("L_dlc")
 
@@ -145,11 +127,30 @@ size_flags_vertical = 3
 lock_sheet = NodePath("../../../../LockSheet")
 
 [node name="Dock" type="PanelContainer" parent="Scaler/Body"]
-custom_minimum_size = Vector2(0, 65)
+custom_minimum_size = Vector2(0, 106)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bar")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_dock")
+
+[node name="PaperHolder" type="Control" parent="Scaler/Body/Dock"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PaperArt" type="NinePatchRect" parent="Scaler/Body/Dock/PaperHolder"]
+layout_mode = 0
+offset_top = -12.0
+offset_right = 640.0
+offset_bottom = 200.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("tex_dock_panel")
+patch_margin_left = 56
+patch_margin_top = 60
+patch_margin_right = 56
+patch_margin_bottom = 60
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 0
 
 [node name="Row" type="HBoxContainer" parent="Scaler/Body/Dock"]
 layout_mode = 2
@@ -158,24 +159,23 @@ theme_override_constants/separation = 4
 
 [node name="DockShop" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
+art_key = &"shop"
+label_key = &"STR_BTN_SHOP"
 
 [node name="DockRanking" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
+art_key = &"rank"
+label_key = &"STR_BTN_LEADERBOARD"
+
+[node name="DockDaily" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
+layout_mode = 2
+art_key = &"daily"
+label_key = &"STR_MAIN_DOCK_DAILY"
 
 [node name="DockBadges" parent="Scaler/Body/Dock/Row" instance=ExtResource("9_dock")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dock_pressed")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_dock")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dock")
+art_key = &"badges"
+label_key = &"STR_BTN_ACHIEVEMENT"
 
 [node name="LockSheet" parent="." instance=ExtResource("L_sheet")]
 z_index = 20
@@ -223,19 +223,29 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
+[node name="CoinChip" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="4"]
+large = true
+
+[node name="LifeChip" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="5"]
+large = true
+
 [node name="StarChip" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="6" unique_id=1568568062 instance=ExtResource("5_star")]
 visible = false
+mouse_filter = 2
+process_mode = 4
 custom_minimum_size = Vector2(75, 32)
 layout_mode = 2
 size_flags_vertical = 4
 
 [node name="Settings" type="TextureButton" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="7" unique_id=772786432]
-custom_minimum_size = Vector2(66, 66)
+custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
-size_flags_vertical = 4
+size_flags_vertical = 0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("8_o5gjt")
 texture_pressed = ExtResource("9_kncrx")
-texture_hover = ExtResource("10_luyyg")
-texture_disabled = ExtResource("11_vyx2u")
-texture_focused = ExtResource("12_p5bnh")
+texture_hover = ExtResource("8_o5gjt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="pressed" from="TopBar/ProfileCard" to="." method="_on_profile_card_pressed"]

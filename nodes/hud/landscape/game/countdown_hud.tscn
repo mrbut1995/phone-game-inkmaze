@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://gydy4twhag5y"]
 
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://c7v12qmn3er7o" path="res://scripts/nodes/hud/game/countdown_hud.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://c7v12qmn3er7o" path="res://scripts/ui/hud/game/countdown_hud.gd" id="2_script"]
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="3_theme"]
 
 [node name="Hud" unique_id=1464339223 node_paths=PackedStringArray("budget_value_node", "budget_max_label") instance=ExtResource("1_base")]
@@ -11,6 +11,8 @@ budget_value_node = NodePath("Content/ModeInformation/Sheet/Budget/Label")
 budget_max_label = NodePath("Content/ModeInformation/Sheet/Budget/Display/Max")
 
 [node name="Time" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="0" unique_id=834934233]
+mouse_filter = 2
+process_mode = 4
 visible = false
 
 [node name="Sheet" type="Control" parent="Content/ModeInformation" parent_id_path=PackedInt32Array(1591333926) index="1" unique_id=1601715472]

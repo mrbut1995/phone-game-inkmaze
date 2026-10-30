@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3]
+
+[ext_resource uid="uid://dr8vki2dcl570" type="Texture2D" path="res://assets/images-png/icons/icon_reset.png" id="1_skmr5"]
+[ext_resource type="Script" path="res://scripts/data/achievement_data.gd" id="2_38iha"]
+
+[resource]
+script = ExtResource("2_38iha")
+id = "sp_no_undo_10"
+category = "special"
+title = "Đi Không Quay Lại"
+description = "Thắng 10 màn/tầng mà KHÔNG dùng hoàn tác"
+title_key = "STR_ACH_SP_NO_UNDO_10_TITLE"
+desc_key = "STR_ACH_SP_NO_UNDO_10_DESC"
+icon = ExtResource("1_skmr5")
+stat = "wins_no_undo"
+target = 10
+unit = "Ván"
+reward_coins = 150
+points = 25

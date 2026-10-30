@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EventTheme" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/event_theme.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/data/event_theme.gd" id="1_script"]
 [ext_resource uid="uid://bl8pnwrl1lmf0" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_new_year_normal.png" id="btn_normal"]
 [ext_resource uid="uid://bfhk0smc3g8h6" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_new_year_pressed.png" id="btn_pressed"]
 [ext_resource uid="uid://cmtok2qsx7q3v" type="Texture2D" path="res://assets/images-png/event_btn/event_btn_new_year_disabled.png" id="btn_disabled"]

@@ -6,7 +6,7 @@ extends RefCounted
 ##
 ## Lý do tồn tại: test runner chạy bằng `godot --script ...` không resolve
 ## được identifier autoload lúc parse, nên script khác không được tham chiếu
-## thẳng `SceneManager`. Ở đây lấy node động qua /root/SceneManager.
+## thẳng `SceneManager`. Node autoload lấy qua `Svc.scene()` / `Svc.screen()`.
 ## ============================================================================
 
 const SCENE_MAIN := "res://scenes/main.tscn"
@@ -17,9 +17,9 @@ const SCENE_GAME := "res://scenes/game.tscn"
 const SCENE_DAILY := "res://scenes/daily.tscn"
 const SCENE_SETTINGS := "res://scenes/settings.tscn"
 const SCENE_DEBUG := "res://scenes/debug.tscn"
-const SCENE_ARCHIVEMENT := "res://scenes/archivement.tscn"
+const SCENE_ACHIEVEMENT := "res://scenes/achievement.tscn"
 const SCENE_RANKING := "res://scenes/ranking.tscn"
-## Màn CỬA HÀNG — xem scripts/scenes/shop.gd
+## Màn CỬA HÀNG — xem scripts/ui/screens/shop.gd
 const SCENE_SHOP := "res://scenes/shop.tscn"
 ## Màn CREDIT — soundtrack + ghi công
 const SCENE_CREDIT := "res://scenes/credit.tscn"
@@ -27,7 +27,7 @@ const SCENE_CREDIT := "res://scenes/credit.tscn"
 const SCENE_TUTORIAL := "res://scenes/tutorial.tscn"
 ## Màn DANH SÁCH bài hướng dẫn — bấm 1 bài mới mở `SCENE_TUTORIAL`
 const SCENE_TUTORIAL_LIST := "res://scenes/tutorial_list.tscn"
-## Màn CHI TIẾT SỰ KIỆN — xem scripts/scenes/event.gd
+## Màn CHI TIẾT SỰ KIỆN — xem scripts/ui/screens/event.gd
 const SCENE_EVENT := "res://scenes/event.tscn"
 ## (HỒ SƠ CÁ NHÂN nay là POPUP — mở bằng `Popups.open(Popups.PROFILER)`)
 
@@ -89,8 +89,8 @@ static func goto_settings() -> void:
 
 
 ## Sổ tay thành tựu (danh hiệu)
-static func goto_archivement() -> void:
-	change_scene(SCENE_ARCHIVEMENT)
+static func goto_achievement() -> void:
+	change_scene(SCENE_ACHIEVEMENT)
 
 
 ## Bảng xếp hạng (Dungeon · Play · Daily)
@@ -158,17 +158,11 @@ static func goto_event(event_id: StringName) -> void:
 
 
 static func _manager() -> Node:
-	var tree := _tree()
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("SceneManager")
-	return null
+	return Svc.scene()
 
 
 static func _screen() -> Node:
-	var tree := _tree()
-	if tree != null and tree.root != null:
-		return tree.root.get_node_or_null("ScreenManager")
-	return null
+	return Svc.screen()
 
 
 static func _tree() -> SceneTree:
