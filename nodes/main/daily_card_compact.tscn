@@ -129,11 +129,6 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 0.992, 0.973, 1)
 
-[node name="BackArt" type="TextureRect" parent="Content/Background"]
-visible = false
-layout_mode = 0
-mouse_filter = 2
-
 [node name="Mask" type="Panel" parent="Content/Background"]
 clip_children = 1
 layout_mode = 1
