@@ -722,11 +722,7 @@ func _maze_progress_percent() -> int:
 func _on_home_requested() -> void:
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-	var gm: Node = Svc.game()
-	if gm != null:
-		gm.call("go_to_main_menu")
-	else:
-		Nav.goto_main()
+	RunNavigator.home()
 
 
 ## Popup thắng Daily: người chơi bấm "VỀ DAILY" -> quay lại màn Daily
@@ -734,32 +730,14 @@ func _on_home_requested() -> void:
 func _on_daily_requested() -> void:
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-	var gm: Node = Svc.game()
-	if gm != null:
-		gm.call("return_to_daily")
-	else:
-		Nav.back_to(Nav.SCENE_DAILY)
+	RunNavigator.daily()
 
 
 ## Popup thắng THỬ THÁCH: người chơi bấm "TRỞ VỀ" — quay lại ĐÚNG màn trước đó.
-## Ván Daily -> màn Daily; còn lại -> lùi LỊCH SỬ điều hướng (Chọn màn / Debug / màn đã vào ván).
 func _on_back_requested() -> void:
 	if ui_controller != null:
 		ui_controller.hide_overlays()
-	var gm: Node = Svc.game()
-	if gm != null and not str(gm.get("daily_variant")).is_empty():
-		gm.call("return_to_daily")
-		return
-	var screen: Node = Svc.screen()
-	if screen != null and screen.has_method("go_back") and bool(screen.call("go_back")):
-		return
-	# Không còn lịch sử để lùi: ván màn -> Chọn màn, còn lại -> Menu chính
-	if gm != null and bool(gm.get("level_run")):
-		gm.call("return_to_levels")
-	elif gm != null:
-		gm.call("go_to_main_menu")
-	else:
-		Nav.goto_main()
+	RunNavigator.back()
 
 
 ## Báo kết quả màn/tầng cho Sổ tay thành tựu (Achievement) — thắng hoặc thua.
@@ -789,7 +767,13 @@ func _on_no_moves_retry_pressed() -> void:
 	_on_retry_requested()
 
 
-## Tutorial ID tương ứng với mỗi chế độ chơi — thay thế popup Instruction cũ.
+## Bảng bài học theo chế độ — nguồn sự thật ở `TutorialLauncher.IDS` (giữ tên cũ cho test/tool)
+const TUTORIAL_IDS := TutorialLauncher.IDS
+## Chế độ không có nút "?" (Dungeon)
+const MODES_WITHOUT_TUTORIAL: Array[String] = TutorialLauncher.MODES_WITHOUT_TUTORIAL
+
+
+## Mở bài học ("?") của chế độ đang chơi dưới dạng lớp phủ ngay trên ván.
 func open_instruction() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	var mode: BaseGameMode = game_mode
