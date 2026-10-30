@@ -790,74 +790,26 @@ func _on_no_moves_retry_pressed() -> void:
 
 
 ## Tutorial ID tương ứng với mỗi chế độ chơi — thay thế popup Instruction cũ.
-const TUTORIAL_IDS := {
-	"play":           ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"standard":       ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"challenge":      ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"daily_classic":  ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"daily_challenge": ["how_to_play_move", "how_to_play_checking_wall", "how_to_use_tool"],
-	"minesweeper":    ["how_to_play_minesweeper"],
-	"sum_path":       ["how_to_play_sum_path"],
-	"countdown_cost": ["how_to_play_countdown_cost"],
-	"blind_memory":   ["how_to_play_blind_memory"],
-	"fog_of_war":     ["how_to_play_fog_of_war"],
-	"fading_ink":     ["how_to_play_fading_ink"],
-	"one_stroke":     ["how_to_play_one_stroke"],
-	"wall_builder":   ["how_to_play_wall_builder"],
-}
-## Chế độ không có nút "?" (dungeon)
-const MODES_WITHOUT_TUTORIAL := ["dungeon"]
-
-
 func open_instruction() -> void:
 	Sfx.play(Sfx.BTN_WOOD_TAP)
 	var mode: BaseGameMode = game_mode
 	var mode_id := mode.mode_id if mode != null else ""
-	if mode_id in MODES_WITHOUT_TUTORIAL:
-		return
-	var ids: Array = TUTORIAL_IDS.get(mode_id, [])
-	# Trong LUỒNG HỌC LẦN ĐẦU: màn thực hành (1·2·3) chỉ mở ĐÚNG bài học của màn đó,
-	# không mở cả 3 bài cơ bản (xem TutorialManager.PRACTICE_TUTORIALS)
-	var tm: Node = Engine.get_main_loop().root.get_node_or_null("TutorialManager") if Engine.get_main_loop() != null else null
-	if tm != null and tm.has_method("practice_tutorial_for_level"):
-		var only := str(tm.call("practice_tutorial_for_level", current_floor()))
-		if not only.is_empty():
-			ids = [only]
+	var ids := TutorialLauncher.ids_for(mode_id, current_floor())
 	if ids.is_empty():
 		return
-	var gm: Node = Engine.get_main_loop().root.get_node_or_null("GameManager") if Engine.get_main_loop() != null else null
-	if gm == null:
+	if Svc.game() == null:
 		return
 	if timer_controller != null:
 		timer_controller.pause()
-	gm.set("pending_return_to_game", true)
-	# Lớp phủ KHÔNG đi qua danh sách ⇒ xoá cờ "về danh sách" còn sót của lần trước
-	gm.set("pending_return_to_list", false)
-	# pending_tutorial được đọc bởi tutorial.gd; nhiều bài nối bằng dấu phẩy → chạy theo chuỗi
-	gm.set("pending_tutorial", ",".join(ids))
-	_open_tutorial_overlay()
+	TutorialLauncher.launch(_tutorial_host(), ids)
 
 
-## Mở màn Tutorial dạng LỚP PHỦ ngay TRÊN màn chơi (không đổi scene): ván đang chơi được
-## GIỮ NGUYÊN (đường đã vẽ · vị trí · đồng hồ đang dừng) và tạm DỪNG xử lý trong lúc học.
-## Đóng lớp phủ (học xong / bỏ qua / Back) → chơi tiếp ĐÚNG ván đó — xem `tutorial.gd`.
-func _open_tutorial_overlay() -> void:
+## Node nhận lớp phủ Tutorial: màn chơi (`owner`) hoặc scene hiện tại
+func _tutorial_host() -> Node:
 	var host: Node = owner
-	if host == null:
-		host = get_tree().current_scene if get_tree() != null else null
-	if host == null or host.has_node("TutorialOverlay"):
-		return
-	var scene := load("res://scenes/tutorial.tscn") as PackedScene
-	if scene == null:
-		return
-	var overlay := scene.instantiate()
-	overlay.name = "TutorialOverlay"
-	# Cờ này được TutorialScene đọc trong `_ready` ⇒ phải set TRƯỚC khi add_child
-	overlay.set("overlay_mode", true)
-	overlay.process_mode = Node.PROCESS_MODE_ALWAYS
-	host.add_child(overlay)
-	# Màn chơi bên dưới đứng yên hoàn toàn (cả nhận input) cho tới khi đóng lớp phủ
-	host.process_mode = Node.PROCESS_MODE_DISABLED
+	if host == null and get_tree() != null:
+		host = get_tree().current_scene
+	return host
 
 
 func undo() -> void:
