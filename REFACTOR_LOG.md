@@ -429,7 +429,96 @@ Cả **Portrait** và **Landscape**:
 - [ ] Màn **không dùng chip** (Settings · Splash · Title · Tutorial · Tutorial list · Profiler popup · Event):
       xác nhận KHÔNG thấy ví Xu/lượt và **không** có vùng chạm "vô hình" ở thanh trên
 
+---
 
+## 7. BÁO CÁO CUỐI (§11 của REFACTOR_INSTRUCTIONS) — trạng thái tại commit `0dd55cfd`
 
+> Nhánh `refactor/cleanup`. **Chưa merge.** Dừng ở commit cuối để người dùng review + test trong editor.
 
+### 7.1 Baseline → kết quả
 
+| Bộ kiểm tra | Baseline | Hiện tại |
+|---|---|---|
+| Full suite (`tools/run_tests.py`) | 7 PASS · 13 FAIL | **7 PASS · 13 FAIL** — số check fail của từng test **y hệt** baseline |
+| `check_integrity` E1 (phạm vi game) | 0 | **1** (`nodes/main/event_card.tscn` → art Halloween chưa sinh, lỗi có sẵn từ commit `1c2209c9`) |
+| `check_integrity` W1 / W2 (phạm vi game) | 13 / 5 | **0 / 0** |
+| `audit_hidden` DEAD (phạm vi game) | 6 | **2** (đều là false positive — dot sinh runtime) |
+| `audit_hardcode` P / T / C / S / E (phạm vi game) | 387 / 29 / 122 / 26 / 101 | **0 / 0 / 0 / 0 / 0** |
+| `"/root/…"` trong `scripts/` | 184 | **1** (ghi chú trong `svc.gd`) |
+| `# keep-code:` (dòng runtime được đánh dấu có lý do) | 0 | 441 |
+
+Số P/T/C/S/E **theo từng commit**:
+
+| Mốc | P | T | C | S | E |
+|---|---|---|---|---|---|
+| Baseline (Phase 0) | 387 | 29 | 122 | 26 | 101 |
+| Sau Phase 1b/1c + Phase 2B cho `main.gd` | 215 | 13 | 74 | 21 | 70 |
+| Sau Phase 2B đợt 2 (nối signal tĩnh + 177 `keep-code`) | 215 | 13 | 74 | 13 | 69 |
+| Sau Phase 2B đợt 3 (+250 `keep-code`) | 0 | 0 | 0 | 0 | 0 (phạm vi game) |
+| Sau đợt 4 (cột nút Event thành scene) | 0 | 0 | 0 | 0 | 0 (phạm vi game) |
+| Sau đợt 5 (`Svc`) | 0 | 0 | 0 | 0 | 0 (phạm vi game) |
+
+### 7.2 Node đã xoá
+
+| Scene | Node | Lý do an toàn |
+|---|---|---|
+| `nodes/main/daily_card.tscn` | `Content/Background/BackArt` | Không script nào bật `visible`, không animation/tween/Tween điều khiển (kiểm bằng `audit_hidden` + grep toàn bộ `visible = true`/`show()`/`AnimationPlayer` trên đường dẫn node) |
+| `nodes/main/daily_card_compact.tscn` | `Content/Background/BackArt` | như trên (giữ `Mask` + con) |
+| `nodes/main/level_section.tscn` | `MapArea/FadeTop`, `MapArea/FadeBottom` | như trên; kèm 3 sub_resource gradient chỉ phục vụ 2 node này |
+
+### 7.3 File đã xoá / di chuyển / thêm
+
+| Loại | Đường dẫn |
+|---|---|
+| Xoá | `nodes/profiler/activity_row.tscn` + `scripts/nodes/profiler/activity_row.gd` + `.gd.uid` (scene mồ côi, 0 tham chiếu theo path **và** `uid://`) |
+| Xoá | `nodes/shop/coin_tile.tscn.depren` (file rác) |
+| Xoá | 90 khai báo `ext_resource`/`sub_resource` không dùng trên 21 file `.tscn` (~979 dòng) |
+| Xoá | `scripts/utils/{archivement,profile,ranking}.gd::_tree()` (không còn ai gọi sau khi có `Svc`) |
+| Thêm | `scripts/utils/svc.gd` — accessor autoload duy nhất |
+| Thêm | `nodes/main/event_button_column.tscn` · `nodes/main/event_button_item.tscn` · `resources/settings/styles/event/pill.tres` |
+| Thêm | `resources/settings/styles/dock/*.tres` (8 stylebox nút dock) |
+| Thêm | `docs/STRUCTURE.md` · `REFACTOR_LOG.md` · `tools/refactor/*` · `tools/probe_event_column.gd` · `tools/print_autoload_paths.gd` · `scripts/test_case/dev_probe_main_metrics.gd` |
+
+### 7.4 Nghi ngờ / đã GIỮ (node ẩn còn lại + code bật nó)
+
+| Node ẩn | Code bật |
+|---|---|
+| `nodes/hud/*/tutorial/base_tutorial.tscn` → `Dots/Dot1..6` | `scripts/nodes/tutorial/base_tutorial.gd::_update_dots()` sinh dot theo tiến trình bài học |
+| 36 node nhóm SPLIT-BASE + 59 node nhóm REVIEW | Không đủ bằng chứng tĩnh để xoá; ghi nhận, giữ nguyên |
+| `CoinChip` / `LifeChip` trong `scenes/layout/base_layout.tscn` | **Theo yêu cầu người dùng**: giữ trong base; màn không dùng thì ẩn + `mouse_filter=2` + `process_mode=4` **tại layout** (13 layout/26 stanza) |
+
+### 7.5 Việc bỏ qua + lý do
+
+| Việc | Lý do |
+|---|---|
+| Phase 3 — đổi `archivement` → `achievement` + sắp xếp lại `scripts/` | **Chặn theo §10**: tên autoload `ArchivementManager` là key trong blob save `user://inkmaze_data.json` ⇒ đổi là mất tiến trình người chơi. Cần người dùng quyết + migration |
+| Phase 5 (§8.3) — tách god class `board.gd` (2052) · `game_manager.gd` (1256) · `game_controller.gd` (1136) · `debug.gd` (1192) | **Chưa làm**: mỗi file phải đọc toàn bộ + tách + chạy lại suite (13 test đang đỏ sẵn nên khó phân biệt hồi quy). Cần lượt riêng cho từng file (1 file/commit như instruction) |
+| Phase 4 — gộp scene Portrait/Landscape trùng nhau | Tùy chọn (§7), cần review thị giác từng màn; rủi ro đổi hình ảnh mà không xác nhận được ⇒ theo §10 phải hỏi |
+| Xoá hàm "ngờ thừa" (`Nav.goto_levels`, `GameManager.go_to_levels`, helper levels của `SceneManager`) | `scripts/test_case/test_main_merge.gd:88,91` khẳng định chúng **phải tồn tại** |
+
+### 7.6 Bảng "hard-code → vị trí mới" (tóm tắt; chi tiết từng dòng ở §2)
+
+| File cũ | Giá trị | Vị trí mới |
+|---|---|---|
+| `scripts/scenes/main.gd` (23 P · 8 T · 12 C · 4 E) | cỡ/màu/texture/vị trí chip, nút Settings, dock 4 nút, chest, `Body.offset_top` | `scenes/layout/{portrait,landscape}/main.tscn` · `resources/settings/styles/dock/*.tres` · `nodes/main/dock_button.tscn` · `scripts/nodes/dock_button.gd` (`@export`) |
+| `scripts/nodes/main/chapter_gate.gd` · `popups/gameover*.gd` · `daily/action_card.gd` · `event_header.gd` · `level_section.gd` · `coin_chip.gd` · `life_chip.gd` | nối signal của **node tĩnh** | `[connection]` trong `.tscn` tương ứng (7 dây mới ở đợt 3) |
+| `scripts/nodes/main/event_button_column.gd` (8 P · 1 T · 2 C · 4 S) | khung cột, `Timer`, nút event, stylebox viên thuốc, `gutter`/`left_inset` | `nodes/main/event_button_column.tscn` · `event_button_item.tscn` · `styles/event/pill.tres` · `@export` |
+| `scripts/nodes/main/level_section.tscn` (qua script) | `LevelMap.bottom_reserve`, kích cỡ `ChestWidget` | `.tscn` |
+| `scripts/nodes/{coin,life}_chip.gd` | biến thể "lớn" (cao/rộng/icon/font) | `@export` + giá trị trong `main.tscn` |
+| Toàn bộ `scripts/` | 441 dòng runtime thật (chữ/số theo dữ liệu, art theo trạng thái, pose trước tween, stylebox vẽ runtime, nối autoload, nối node sinh lúc chạy) | giữ tại chỗ + `# keep-code: <lý do>` |
+
+### 7.7 Nghi ngờ bug (ghi nhận — KHÔNG sửa trong refactor)
+
+1. `nodes/main/event_card.tscn:5` trỏ `res://assets/images-png/events/halloween_card_grid.png` **không tồn tại** (cả PNG lẫn SVG) ⇒ art event Halloween chưa được sinh.
+2. `dev_aspects --only=main` bố cục NGANG: `Landscape/TopBar/ProfileCard` cao 109.5 > `TopBar` (y = −8.26) ⇒ thò lên trên mép. Đã chứng minh **PRE-EXISTING** bằng A/B trên `HEAD~1`.
+3. `test_levels_map`: `scroll_to(1)` đưa nút tới y = 480 trong khi mong đợi 285 (có thể do padding `level_section` đổi).
+4. `test_layout_bindings` 5/84 và `test_popup_bindings` 1/34: binding chưa khớp layout mới (thuộc WIP redesign của người dùng).
+5. 13 test đỏ baseline đều thuộc luồng gộp Levels/Chapters vào Main + redesign HUD mà người dùng đang làm dở.
+
+### 7.8 Cần người dùng test thủ công trong editor (cả Portrait và Landscape)
+
+Xem checklist đầy đủ ở **§6** (Title · Splash · Credit · Main · Game từng mode · Daily · Shop · Ranking ·
+Achievement · Settings · Tutorial · các popup Win/GameOver/Retry/OutOfLife/Pause).
+Riêng 2 điểm mới của refactor cần soi kỹ:
+- **Main**: cột nút Event bên phải bản đồ (khoảng cách, viên thuốc "Còn N ngày", chạm mở event) và bản đồ có bị nút đè không.
+- **Màn không dùng chip** (Settings/Splash/Title/Tutorial/Profiler/Event): không thấy ví Xu/lượt, không có vùng chạm "vô hình" ở thanh trên.
