@@ -72,8 +72,8 @@ func _ready() -> void:
 func _connect_locale_signal() -> void:
 	var loc: Node = get_node_or_null("/root/LocalizationManager")
 	if loc != null and loc.has_signal("locale_changed") \
-			and not loc.is_connected("locale_changed", _on_locale_changed):
-		loc.connect("locale_changed", _on_locale_changed)
+			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loc.connect("locale_changed", _on_locale_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_changed(_locale: String) -> void:
@@ -132,7 +132,7 @@ func _refresh() -> void:
 	if lbl_require != null:
 		lbl_require.text = TranslationServer.translate("STR_CHAPTER_REQUIRE_FORMAT").format([cost])
 	if star_bar != null:
-		star_bar.min_value = 0.0
+		star_bar.min_value = 0.0  # keep-code: khởi tạo thanh Sao (runtime)
 		star_bar.max_value = maxf(float(cost), 1.0)
 		star_bar.value = float(mini(have_stars, maxi(cost, 0)))
 	if star_bar != null:
@@ -147,7 +147,7 @@ func _refresh() -> void:
 		if enough:
 			lbl_status.text = TranslationServer.translate("STR_CHAPTER_HAVE_FORMAT").format([have_stars, cost])
 		else:
-			lbl_status.text = "%s · %s" % [
+			lbl_status.text = "%s · %s" % [  # keep-code: chữ theo dữ liệu (runtime)
 				TranslationServer.translate("STR_CHAPTER_STARS_FORMAT").format([have_stars, cost]),
 				TranslationServer.translate("STR_CHAPTER_NEED_FORMAT").format([maxi(cost - have_stars, 0)])]
 		lbl_status.add_theme_color_override("font_color",

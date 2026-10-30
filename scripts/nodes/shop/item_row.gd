@@ -8,13 +8,13 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const ICON_BOX := preload("res://assets/images-png/icons/icon_box.png")
+const ICON_BOX := preload("res://assets/images-png/icons/icon_box.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 ## Ô THÔNG TIN giá/trạng thái (PHẲNG, không bấm riêng) + art thẻ
-const INFO_BLUE := preload("res://assets/images-png/shop/info_blue.png")
-const INFO_DONE := preload("res://assets/images-png/shop/btn_equipped.png")
-const INFO_AMBER := preload("res://assets/images-png/shop/btn_coin.png")
-const CARD_NORMAL := preload("res://assets/images-png/shop/card_row.png")
-const CARD_ARMED := preload("res://assets/images-png/shop/card_row_selected.png")
+const INFO_BLUE := preload("res://assets/images-png/shop/info_blue.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const INFO_DONE := preload("res://assets/images-png/shop/btn_equipped.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const INFO_AMBER := preload("res://assets/images-png/shop/btn_coin.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const CARD_NORMAL := preload("res://assets/images-png/shop/card_row.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const CARD_ARMED := preload("res://assets/images-png/shop/card_row_selected.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const ICONS := {
 	"pen": preload("res://assets/images-png/icons/icon_pen.png"),
 	"ink": preload("res://assets/images-png/icons/icon_ink.png"),
@@ -53,7 +53,7 @@ func _refresh() -> void:
 func _set_icon(color: Color) -> void:
 	var box := get_node_or_null("Panel/IconBox") as TextureRect
 	if box != null:
-		box.texture = ICON_BOX
+		box.texture = ICON_BOX  # keep-code: art theo trạng thái (runtime)
 		box.self_modulate = Color(color.r, color.g, color.b, 1.0).lerp(Color.WHITE, 0.78)
 	var icon := get_node_or_null("Panel/IconBox/Icon") as TextureRect
 	if icon != null:
@@ -102,7 +102,7 @@ func _set_button(_color: Color) -> void:
 		return
 	btn.disabled = false
 	btn.material = null
-	btn.mouse_filter = Control.MOUSE_FILTER_IGNORE   # ô giá chỉ là thông tin: chạm cả thẻ mới có tác dụng
+	btn.mouse_filter = Control.MOUSE_FILTER_IGNORE   # ô giá chỉ là thông tin: chạm cả thẻ mới có tác dụng  # keep-code: ô giá chỉ là thông tin — chạm cả thẻ mới có tác dụng
 	_tappable = true
 	_affordable = true
 	_needs_confirm = false
@@ -141,7 +141,7 @@ func _set_info(btn: TextureButton, label: Label, art: Texture2D, color: Color, v
 	btn.texture_pressed = art
 	btn.texture_hover = art
 	btn.texture_disabled = art
-	btn.modulate = Color(1, 1, 1, 1)
+	btn.modulate = Color(1, 1, 1, 1)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	label.theme_type_variation = variation
 	label.add_theme_color_override("font_color", color)
 

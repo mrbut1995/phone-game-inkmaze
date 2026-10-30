@@ -297,7 +297,7 @@ func _refresh() -> void:
 		return
 	if glow.is_empty():
 		# Bút không có quầng sáng -> chỉ ẨN node khai sẵn trong scene (không xoá/tạo lại)
-		glow_node.visible = false
+		glow_node.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		set_process(false)
 		return
 	glow_node.width = maxf(width * float(glow.get("width_mult", 1.0)), 1.0)
@@ -305,7 +305,7 @@ func _refresh() -> void:
 	glow_node.default_color = Color(ink.r, ink.g, ink.b,
 		clampf(float(glow.get("alpha", 0.0)) * _alpha_scale, 0.0, 1.0))
 	glow_node.points = points
-	glow_node.visible = true
+	glow_node.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	_glow_alpha_base = glow_node.default_color.a
 	set_process(use_pen_feel and _shimmer > 0.0)
 

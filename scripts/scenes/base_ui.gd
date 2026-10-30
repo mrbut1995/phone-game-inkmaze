@@ -63,18 +63,15 @@ func _apply_responsive_layout() -> void:
 		orientation_changed.emit(false)
 
 
-## Giữ layout `Portrait` luôn HIỆN + neo nó kín khung nội dung (chỉ gọi khi có layout này).
-func _apply_portrait_layout(portrait_layout: CanvasItem) -> void:
-	if portrait_layout == null:
-		return
-	portrait_layout.visible = true
-	# Neo layout phụ kín khung nội dung để node con luôn co đúng theo cột.
-	var ctrl := portrait_layout as Control
-	if ctrl == null:
-		return
-	if ctrl.anchor_right != 1.0 or ctrl.anchor_bottom != 1.0 \
-			or ctrl.offset_right != 0.0 or ctrl.offset_bottom != 0.0:
-		ctrl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+## Bật/tắt + neo kín khung nội dung 2 layout (chỉ gọi khi có ít nhất 1 layout).
+	if portrait_layout != null:
+	# Neo 2 layout phụ kín khung nội dung: layout đang ẨN vẫn phải co theo khung,
+	# nếu không các node con giữ kích thước của lần NGANG trước đó (bị báo "tràn màn hình").
+		if ctrl == null:
+			continue
+		if ctrl.anchor_right != 1.0 or ctrl.anchor_bottom != 1.0 \
+				or ctrl.offset_right != 0.0 or ctrl.offset_bottom != 0.0:
+			ctrl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # keep-code: node sinh lúc chạy — đặt anchor khi dựng
 
 
 ## Hook — chạy ĐẦU `_enter_tree` (trước lần áp layout đầu tiên)

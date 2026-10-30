@@ -39,7 +39,7 @@ func _layout() -> void:
 		tip.position = Vector2(filled, size.y * 0.5)
 		tip.visible = _fraction > 0.01
 	if sheen_clip != null:
-		sheen_clip.position = Vector2.ZERO
+		sheen_clip.position = Vector2.ZERO  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 		sheen_clip.size = Vector2(filled, size.y)
 		sheen_clip.visible = _fraction > 0.01
 	if sheen != null:

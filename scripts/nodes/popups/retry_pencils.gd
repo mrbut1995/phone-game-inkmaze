@@ -66,7 +66,7 @@ func play_lost_effect(delay: float = 0.0) -> void:
 	tw.tween_property(pencil, "scale", Vector2(1.3, 1.3), 0.08)
 	tw.tween_property(pencil, "scale", Vector2.ONE, 0.12)
 	tw.tween_callback(func() -> void:
-		badge.scale = Vector2.ONE * 0.4
+		badge.scale = Vector2.ONE * 0.4  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 		badge.modulate.a = 1.0)
 	tw.tween_property(badge, "scale", Vector2(1.35, 1.35), 0.14) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)

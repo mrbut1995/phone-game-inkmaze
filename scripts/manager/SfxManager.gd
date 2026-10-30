@@ -19,7 +19,7 @@ signal sfx_played(sfx_name: String)
 
 ## Danh mục tên SFX + file tương ứng nằm trong class helper `Sfx`
 ## (res://scripts/utils/sfx.gd) để mọi script gọi an toàn: Sfx.play(Sfx.BTN_CLICK)
-const POOL_SIZE := 6
+const POOL_SIZE := 6  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 ## ±8% => pitch 0.92..1.08 (đúng gợi ý trong sfx_suggestion.txt)
 const DEFAULT_PITCH_JITTER := 0.04
 ## Khoảng lặp tối thiểu (giây) để 1 SFX không bị phát dồn dập chói tai
@@ -41,7 +41,7 @@ func _ready() -> void:
 	_refresh_gain()
 	var sm: Variant = get_node_or_null("/root/SettingManager")
 	if sm != null and sm.has_signal("volume_changed"):
-		sm.connect("volume_changed", _on_volume_changed)
+		sm.connect("volume_changed", _on_volume_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 # ---------------------------------------------------------------------------

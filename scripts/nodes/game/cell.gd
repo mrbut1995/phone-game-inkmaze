@@ -63,14 +63,14 @@ func set_text(text: String) -> void:
 		if button != null:
 			button.texture_normal = texture_start
 		if label != null:
-			label.text = ""
-			label.visible = false
+			label.text = ""  # keep-code: chữ theo dữ liệu (runtime)
+			label.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	elif text == "F":
 		if button != null:
 			button.texture_normal = texture_finish
 		if label != null:
-			label.text = ""
-			label.visible = false
+			label.text = ""  # keep-code: chữ theo dữ liệu (runtime)
+			label.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	else:
 		if button != null:
 			button.texture_normal = texture_normal
@@ -172,7 +172,7 @@ func set_visited_own(on: bool) -> void:
 	if visited_label != null:
 		visited_label.visible = on
 		if on:
-			visited_label.text = tr("STR_OS_CELL_VISITED")
+			visited_label.text = tr("STR_OS_CELL_VISITED")  # keep-code: chữ theo dữ liệu (runtime)
 
 
 func visited_visible() -> bool:
@@ -257,7 +257,7 @@ func play_shudder() -> void:
 	if button == null:
 		return
 	# Fallback khi scene thiếu AnimationPlayer
-	button.position = Vector2.ZERO
+	button.position = Vector2.ZERO  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	var tw := create_tween()
 	tw.tween_property(button, "position", Vector2(-6, 4), 0.035)
 	tw.tween_property(button, "position", Vector2(6, -4), 0.035)
@@ -319,7 +319,7 @@ func play_fail() -> void:
 		return
 	if button != null:
 		# Fallback khi scene thiếu AnimationPlayer
-		button.position = Vector2.ZERO
+		button.position = Vector2.ZERO  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 		var tw := create_tween()
 		tw.tween_property(button, "position", Vector2(-6, 4), 0.035)
 		tw.tween_property(button, "position", Vector2(6, -4), 0.035)

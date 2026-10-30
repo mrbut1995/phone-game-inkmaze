@@ -30,7 +30,7 @@ var _maximum := 5
 func _on_open() -> void:
 	_maximum = maxi(int(data.get("max_lives", _max_lives())), 1)
 	if label_title != null:
-		label_title.text = tr("STR_LIFE_EMPTY_TITLE")
+		label_title.text = tr("STR_LIFE_EMPTY_TITLE")  # keep-code: chữ theo dữ liệu (runtime)
 	_connect_life_signal()
 	_refresh()
 
@@ -38,8 +38,8 @@ func _on_open() -> void:
 func _on_close() -> void:
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
-			and gm.is_connected("life_changed", _on_life_changed):
-		gm.disconnect("life_changed", _on_life_changed)
+			and gm.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		gm.disconnect("life_changed", _on_life_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 # ---------------------------------------------------------------------------
@@ -66,8 +66,8 @@ func _max_lives() -> int:
 func _connect_life_signal() -> void:
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
-			and not gm.is_connected("life_changed", _on_life_changed):
-		gm.connect("life_changed", _on_life_changed)
+			and not gm.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		gm.connect("life_changed", _on_life_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 ## Hồi xong 1 bút khi popup đang mở -> vẽ lại hàng bút + đổi lời nhắn
@@ -79,7 +79,7 @@ func _refresh() -> void:
 	var lives := _lives_now()
 	if label_subtitle != null:
 		if lives > 0:
-			label_subtitle.text = tr("STR_LIFE_EMPTY_RECOVERED")
+			label_subtitle.text = tr("STR_LIFE_EMPTY_RECOVERED")  # keep-code: chữ theo dữ liệu (runtime)
 		else:
 			label_subtitle.text = tr("STR_LIFE_EMPTY_SUBTITLE").format([_maximum])
 	if pencils == null:
@@ -92,10 +92,7 @@ func _refresh() -> void:
 			next_unix = Time.get_unix_time_from_system() + float(wait)
 	# show_risk = false: popup này không có "bút sắp gãy"
 	pencils.set_state(lives, _maximum, next_unix, false)
-	# DEFERRED: tránh gọi lại set_state ngay trong lúc nó đang phát recover_finished
-	if not pencils.recover_finished.is_connected(_refresh):
-		pencils.recover_finished.connect(_refresh, CONNECT_DEFERRED)
-
+		# Dây `recover_finished -> _refresh` (deferred) khai trong nodes/popups/out_of_life.tscn
 
 # ---------------------------------------------------------------------------
 # Nút bấm

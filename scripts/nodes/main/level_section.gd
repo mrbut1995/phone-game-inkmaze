@@ -82,8 +82,8 @@ func _on_visibility_changed() -> void:
 func _connect_locale_signal() -> void:
 	var loc: Node = get_node_or_null("/root/LocalizationManager")
 	if loc != null and loc.has_signal("locale_changed") \
-			and not loc.is_connected("locale_changed", _on_locale_changed):
-		loc.connect("locale_changed", _on_locale_changed)
+			and not loc.is_connected("locale_changed", _on_locale_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loc.connect("locale_changed", _on_locale_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_changed(_locale: String) -> void:
@@ -95,8 +95,8 @@ func _on_locale_changed(_locale: String) -> void:
 func _connect_save_signal() -> void:
 	var save: Node = get_node_or_null("/root/SaveManager")
 	if save != null and save.has_signal("data_loaded") \
-			and not save.is_connected("data_loaded", _on_save_data_loaded):
-		save.connect("data_loaded", _on_save_data_loaded)
+			and not save.is_connected("data_loaded", _on_save_data_loaded):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		save.connect("data_loaded", _on_save_data_loaded)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_save_data_loaded(_a = null, _b = null) -> void:
@@ -110,10 +110,10 @@ func _on_save_data_loaded(_a = null, _b = null) -> void:
 func _wire_lock_sheet() -> void:
 	if lock_sheet == null:
 		return
+	# `map.gate_pressed` khai trong nodes/main/level_section.tscn;
+	# `lock_sheet` nằm NGOÀI scene này (con của layout) nên nối tại đây sau khi biết layout.
 	if not lock_sheet.unlock_requested.is_connected(_on_unlock_chapter_requested):
-		lock_sheet.unlock_requested.connect(_on_unlock_chapter_requested)
-	if map != null and not map.gate_pressed.is_connected(_on_gate_pressed):
-		map.gate_pressed.connect(_on_gate_pressed)
+		lock_sheet.unlock_requested.connect(_on_unlock_chapter_requested)  # keep-code: node của layout (ngoài scene này)
 
 
 func is_sheet_open() -> bool:
@@ -427,7 +427,7 @@ func _refresh_chapter_chip() -> void:
 	if chapter_chip == null:
 		return
 	if continuous:
-		chapter_chip.visible = false   # đường liền: nhãn "CHƯƠNG n" nằm DƯỚI từng cổng, không cần chip nổi
+		chapter_chip.visible = false   # đường liền: nhãn "CHƯƠNG n" nằm DƯỚI từng cổng, không cần chip nổi  # keep-code: trạng thái theo dữ liệu (runtime)
 		return
 	chapter_chip.setup(_chapter_id(), _neighbor_chapter(-1) > 0, _neighbor_chapter(1) > 0,
 		chapter_cleared())
@@ -501,7 +501,7 @@ func _refresh_chest() -> void:
 		return
 	var gm := _game_manager()
 	if gm == null or not gm.has_method("chapter_chest_defs"):
-		chest.visible = false
+		chest.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		return
 	var chapter_id := _chapter_id()
 	var total := _chapter_star_total(chapter_id)

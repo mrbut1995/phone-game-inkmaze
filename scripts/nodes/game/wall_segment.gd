@@ -102,10 +102,10 @@ func set_state(state: String) -> void:
 			default_color = COLOR_HIT
 	width = _state_width()
 	if marked:
-		_ensure_halo().visible = true
+		_ensure_halo().visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 		_sync_halo()
 	elif _halo != null and is_instance_valid(_halo):
-		_halo.visible = false
+		_halo.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 
 ## Hiệu ứng xuất hiện kèm nét vẽ bút chì lướt từ điểm đầu đến điểm cuối

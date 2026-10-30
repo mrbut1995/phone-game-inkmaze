@@ -182,9 +182,9 @@ func show_stars(stars: float) -> void:
 		lbl_star_total.text = str(roundi(stars))
 	var fraction := bar_fraction(stars)
 	if bar_stars != null:
-		bar_stars.min_value = 0.0
-		bar_stars.max_value = 1.0
-		bar_stars.step = 0.0005
+		bar_stars.min_value = 0.0  # keep-code: khởi tạo thanh Sao (runtime)
+		bar_stars.max_value = 1.0  # keep-code: khởi tạo thanh Sao (runtime)
+		bar_stars.step = 0.0005  # keep-code: khởi tạo thanh Sao (runtime)
 		bar_stars.value = fraction
 	if _bar_fx != null:
 		_bar_fx.set_fraction(fraction)
@@ -222,7 +222,7 @@ func place_chips() -> void:
 func open_month_sheet() -> void:
 	if month_sheet == null:
 		return
-	month_sheet.visible = true
+	month_sheet.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	if sheet_anim != null and sheet_anim.has_animation(&"open"):
 		sheet_anim.stop()
 		sheet_anim.play(&"open")
@@ -235,7 +235,7 @@ func close_month_sheet() -> void:
 		sheet_anim.stop()
 		sheet_anim.play(&"close")
 	else:
-		month_sheet.visible = false
+		month_sheet.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 
 ## Dây `pressed` của nền mờ (`MonthSheet/Dim`) khai trong scene: bấm ra ngoài = đóng bảng

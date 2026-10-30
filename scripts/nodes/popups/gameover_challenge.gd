@@ -22,11 +22,11 @@ func _on_open() -> void:
 	var name_key := str(data.get("challenge_name_key", ""))
 	var fail_text := tr(ChallengeGameMode.fail_key(str(data.get("reason", ""))))
 	if label_title != null:
-		label_title.text = tr("STR_CHALLENGE_FAIL_TITLE")
+		label_title.text = tr("STR_CHALLENGE_FAIL_TITLE")  # keep-code: chữ theo dữ liệu (runtime)
 	if label_subtitle != null:
 		label_subtitle.text = fail_text if name_key.is_empty() \
 			else "%s · %s" % [tr(name_key), fail_text]
 	if revive_desc != null and not name_key.is_empty():
 		revive_desc.text = tr("STR_CHALLENGE_RULE_LINE").format([tr(name_key)])
 	if btn_revive != null:
-		btn_revive.visible = false
+		btn_revive.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)

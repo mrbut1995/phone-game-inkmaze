@@ -218,7 +218,7 @@ func _reset_all() -> void:
 	if fade_rect != null:
 		fade_rect.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 	if blocker != null:
-		blocker.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		blocker.mouse_filter = Control.MOUSE_FILTER_IGNORE  # keep-code: nhả chuột sau khi chuyển cảnh (runtime)
 
 
 func _set_ink_radius(r: float) -> void:

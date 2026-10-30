@@ -784,8 +784,8 @@ func _show_out_of_life() -> void:
 	if popup == null:
 		return
 	if popup.has_signal("shop_requested") \
-			and not popup.is_connected("shop_requested", request_shop_from_life_gate):
-		popup.connect("shop_requested", request_shop_from_life_gate)
+			and not popup.is_connected("shop_requested", request_shop_from_life_gate):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		popup.connect("shop_requested", request_shop_from_life_gate)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 ## Vào màn chơi — chặn khi hết lượt và mở popup báo hết lượt

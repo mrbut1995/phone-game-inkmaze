@@ -39,7 +39,7 @@ func setup(entry: Dictionary, index: int, selected: bool) -> void:
 	ring.modulate = color
 	face.modulate = color.lerp(Color.WHITE, FACE_LIGHTEN)
 	icon.texture = icon_lock if hidden else entry.get("icon", null)
-	icon.modulate = Color.WHITE
+	icon.modulate = Color.WHITE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	set_selected(selected)
 
 

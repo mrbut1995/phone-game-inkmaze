@@ -80,17 +80,17 @@ func _paint_state(equipped: bool, locked: bool, owned: bool, price: int, entry: 
 	state_bg.visible = equipped or owned
 	state_bg.modulate = COLOR_CHIP_EQUIPPED if equipped else Color(1, 1, 1, 1)
 	if equipped:
-		state_label.text = tr("STR_EDIT_EQUIPPED")
+		state_label.text = tr("STR_EDIT_EQUIPPED")  # keep-code: chữ theo dữ liệu (runtime)
 		_tint(state_label, COLOR_EQUIPPED)
 	elif locked:
 		state_label.text = _lock_text(entry)
 		_tint(state_label, _lock_color(str(entry.get("lock_stat", ""))))
 	elif owned:
-		state_label.text = tr("STR_EDIT_OWNED")
+		state_label.text = tr("STR_EDIT_OWNED")  # keep-code: chữ theo dữ liệu (runtime)
 		_tint(state_label, COLOR_OWNED)
 	else:
 		# Món bán bằng Xu nhưng chưa mua: giá hiện trong chip vàng, nhãn trạng thái để trống
-		state_label.text = ""
+		state_label.text = ""  # keep-code: chữ theo dữ liệu (runtime)
 
 
 ## "Dungeon Tầng 50" · "Chuỗi Daily 30 ngày" · "500 AP Danh Hiệu"

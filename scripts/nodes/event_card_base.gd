@@ -19,8 +19,8 @@ const CARD_CLICK_DRAG_THRESHOLD := 12.0
 
 ## Nút CTA kiểu 3D (gờ đáy + bóng đổ)
 const CTA_LIP := 4
-const CTA_RADIUS := 10
-const CTA_PRESS_OFFSET := 2.0
+const CTA_RADIUS := 10  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const CTA_PRESS_OFFSET := 2.0  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const CTA_PRESS_TIME := 0.05
 
 var _event_data: EventData = null
@@ -135,7 +135,7 @@ func _paint_chip(chip: PanelContainer, dot: ColorRect, label: Label, t: EventThe
 	if label != null:
 		label.add_theme_color_override("font_color", t.chip_text)
 	if chip != null:
-		var style := StyleBoxFlat.new()
+		var style := StyleBoxFlat.new()  # keep-code: stylebox của hiệu ứng vẽ runtime
 		style.bg_color = t.chip_fill
 		style.corner_radius_top_left = 8
 		style.corner_radius_top_right = 8
@@ -156,7 +156,7 @@ func _paint_title(label: Label, t: EventTheme) -> void:
 func _paint_panel(panel: Panel, t: EventTheme) -> void:
 	if panel == null or t == null:
 		return
-	var ps := StyleBoxFlat.new()
+	var ps := StyleBoxFlat.new()  # keep-code: stylebox của hiệu ứng vẽ runtime
 	ps.bg_color = t.panel_color
 	ps.border_color = t.panel_stroke
 	ps.border_width_top = 1
@@ -191,14 +191,14 @@ func _paint_cta(button: Button, label: Label, t: EventTheme) -> void:
 
 
 func _make_cta_style(fill: Color, lip: Color, pressed: bool) -> StyleBoxFlat:
-	var s := StyleBoxFlat.new()
+	var s := StyleBoxFlat.new()  # keep-code: stylebox của hiệu ứng vẽ runtime
 	s.bg_color = fill
 	s.border_color = lip
 	s.border_width_left = 1
 	s.border_width_top = 1
 	s.border_width_right = 1
 	s.border_width_bottom = 2 if pressed else CTA_LIP
-	s.set_corner_radius_all(CTA_RADIUS)
+	s.set_corner_radius_all(CTA_RADIUS)  # keep-code: stylebox của hiệu ứng vẽ runtime
 	s.shadow_color = Color(0, 0, 0, 0.3 if pressed else 0.4)
 	s.shadow_size = 3 if pressed else 6
 	s.shadow_offset = Vector2(0, 1 if pressed else 4)
@@ -234,13 +234,13 @@ func _paint_card_edges(lip: Panel, frame: Panel, t: EventTheme) -> void:
 	if lip != null:
 		var ls := lip.get_theme_stylebox("panel") as StyleBoxFlat
 		if ls != null:
-			ls = ls.duplicate() as StyleBoxFlat
+			ls = ls.duplicate() as StyleBoxFlat  # keep-code: StyleBox nhân bản để tô màu theo dữ liệu (runtime)
 			ls.bg_color = (t.cta_stroke as Color).darkened(0.3)
 			lip.add_theme_stylebox_override("panel", ls)
 	if frame != null:
 		var fs := frame.get_theme_stylebox("panel") as StyleBoxFlat
 		if fs != null:
-			fs = fs.duplicate() as StyleBoxFlat
+			fs = fs.duplicate() as StyleBoxFlat  # keep-code: StyleBox nhân bản để tô màu theo dữ liệu (runtime)
 			var c: Color = t.accent
 			fs.border_color = Color(c.r, c.g, c.b, 0.9)
 			frame.add_theme_stylebox_override("panel", fs)

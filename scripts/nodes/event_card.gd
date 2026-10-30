@@ -144,11 +144,11 @@ func _refresh_progress() -> void:
 	# Trạng thái CTA
 	if cta_label != null:
 		if claimed:
-			cta_label.text = tr("STR_EVENT_CTA_CLAIMED")
+			cta_label.text = tr("STR_EVENT_CTA_CLAIMED")  # keep-code: chữ theo dữ liệu (runtime)
 			if cta_button != null:
 				cta_button.disabled = true
 		elif completed:
-			cta_label.text = tr("STR_EVENT_CTA_CLAIM")
+			cta_label.text = tr("STR_EVENT_CTA_CLAIM")  # keep-code: chữ theo dữ liệu (runtime)
 		else:
 			cta_label.text = tr(str(_event_data.cta_key))
 	# Overlay mờ khi đã nhận quà

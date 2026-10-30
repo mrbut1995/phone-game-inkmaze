@@ -27,8 +27,8 @@ const COUNT_TIME := 0.35
 const HALO_ALPHA := 0.65
 const COUNT := 3
 ## Màu hào quang vàng ấm (nhân với màu ảnh fx_glow_*.png) — chỉnh tại đây
-const GLOW_COLOR := Color(1.0, 0.84, 0.45, 1.0)
-const RING_COLOR := Color(1.0, 0.8, 0.25, 1.0)
+const GLOW_COLOR := Color(1.0, 0.84, 0.45, 1.0)  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const RING_COLOR := Color(1.0, 0.8, 0.25, 1.0)  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const SPARK_PX := 18.0
 const CONFETTI_PX := 12.0
 const FW_PX := 22.0
@@ -161,7 +161,7 @@ func _play_intro(floor_no: int, next_no: int, bonus: int, base_pts: int, move_pt
 
 	# "TẦNG n" nảy + hào quang + pháo hoa
 	fx_header.pivot_offset = Vector2(60.0, fx_header.size.y * 0.5)
-	fx_header.scale = Vector2.ONE * 0.6
+	fx_header.scale = Vector2.ONE * 0.6  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	var th := _track(create_tween())
 	th.tween_interval(0.1)
 	th.tween_callback(func() -> void:
@@ -306,7 +306,7 @@ func _start_halo() -> void:
 		if n != null:
 			n.pivot_offset = n.size * 0.5
 			n.modulate = Color(GLOW_COLOR.r, GLOW_COLOR.g, GLOW_COLOR.b, 0.0)
-			n.scale = Vector2.ONE * 0.3
+			n.scale = Vector2.ONE * 0.3  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 
 	for entry: Array in _halo_plan():
 		var n := entry[0] as Control
@@ -388,7 +388,7 @@ func _firework(slot: int, pos: Vector2, color: Color, amount: int, power: float)
 	var f := fw.get_node_or_null("Flash") as Control
 	if f != null:
 		f.pivot_offset = f.size * 0.5
-		f.scale = Vector2.ONE * 0.3
+		f.scale = Vector2.ONE * 0.3  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 		f.modulate = Color(color.r, color.g, color.b, 0.9)
 		var tw := _track(create_tween().set_parallel(true))
 		tw.tween_property(f, "scale", Vector2.ONE * (1.2 * power), 0.4) \

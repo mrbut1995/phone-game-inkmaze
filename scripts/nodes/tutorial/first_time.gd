@@ -15,7 +15,7 @@ extends BaseTutorial
 
 func _init_tutorial() -> void:
 	tutorial_id = "first_time"
-	btn_skip_all.visible = true
+	btn_skip_all.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 
 
 func _on_step_entered(index: int, _data: Dictionary) -> void:

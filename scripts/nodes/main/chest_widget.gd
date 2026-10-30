@@ -15,9 +15,9 @@ extends Button
 
 signal claim_requested(index: int)
 
-const TEX_DIR := "res://assets/images-png/daily/"
-const RING_DIR := "res://assets/images-png/level_selector/"
-const CHEST_LOCKED := Color(0.62, 0.72, 0.8, 1.0)
+const TEX_DIR := "res://assets/images-png/daily/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const RING_DIR := "res://assets/images-png/level_selector/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const CHEST_LOCKED := Color(0.62, 0.72, 0.8, 1.0)  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 @export var ring: TextureRect = null
 @export var chest: TextureRect = null

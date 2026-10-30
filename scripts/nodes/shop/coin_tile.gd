@@ -8,7 +8,7 @@ extends Control
 
 signal action_pressed(item_id: String)
 
-const CARD_ART := preload("res://assets/images-png/shop/card_coin.png")
+const CARD_ART := preload("res://assets/images-png/shop/card_coin.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const ICONS := {
 	"coin_t1": preload("res://assets/images-png/icons/icon_coin_t1.png"),
 	"coin_t2": preload("res://assets/images-png/icons/icon_coin_t2.png"),
@@ -58,11 +58,11 @@ func _refresh_badge() -> void:
 	if badge == null or badge_label == null:
 		return
 	if badge_key.is_empty():
-		badge.visible = false
-		badge_label.visible = false
+		badge.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
+		badge_label.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 		return
-	badge.visible = true
-	badge_label.visible = true
+	badge.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
+	badge_label.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	badge_label.text = TranslationServer.translate(badge_key)
 
 
@@ -77,7 +77,7 @@ func _set_texts() -> void:
 		var show_bonus := bonus > 0 and not desc.contains(Shop.thousands(bonus))
 		bonus_label.visible = show_bonus
 		if show_bonus:
-			bonus_label.text = "%s +%s %s" % [
+			bonus_label.text = "%s +%s %s" % [  # keep-code: chữ theo dữ liệu (runtime)
 				TranslationServer.translate("STR_SHOP_BONUS_TAG"),
 				Shop.thousands(bonus),
 				TranslationServer.translate("STR_SHOP_UNIT_COIN")]

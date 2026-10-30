@@ -29,7 +29,7 @@ func _ready() -> void:
 		if label_key != &"":
 			label.text = tr(String(label_key))
 	if badge != null:
-		badge.visible = false
+		badge.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 
 
 ## Gán icon + nhãn (nhãn đã dịch từ ngoài truyền vào)

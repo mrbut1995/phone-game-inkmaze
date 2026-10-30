@@ -95,7 +95,7 @@ func _setup_debug_stamp_taps() -> void:
 	var stamp := layout.lbl_version.get_parent() as Control
 	if stamp == null:
 		return
-	stamp.mouse_filter = Control.MOUSE_FILTER_STOP
+	stamp.mouse_filter = Control.MOUSE_FILTER_STOP  # keep-code: để bấm được con dấu version (runtime)
 	for child in stamp.get_children():
 		if child is Control:
 			(child as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -170,7 +170,7 @@ func _refresh_version() -> void:
 			version = str(app.call("get_version"))
 		layout.lbl_version.text = tr("STR_SETTINGS_VERSION").format([version])
 	if layout.lbl_player_id != null:
-		layout.lbl_player_id.text = PLAYER_ID_PLACEHOLDER
+		layout.lbl_player_id.text = PLAYER_ID_PLACEHOLDER  # keep-code: chữ theo dữ liệu (runtime)
 
 
 # ---------------------------------------------------------------------------
@@ -232,8 +232,8 @@ func _on_language_pressed() -> void:
 	var popup := Popups.open(Popups.LANGUAGE)
 	if popup == null:
 		return
-	if not popup.is_connected("locale_applied", _on_locale_applied):
-		popup.connect("locale_applied", _on_locale_applied)
+	if not popup.is_connected("locale_applied", _on_locale_applied):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		popup.connect("locale_applied", _on_locale_applied)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _on_locale_applied(_code: String) -> void:

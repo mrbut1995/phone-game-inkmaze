@@ -115,7 +115,7 @@ func blocks_scroll_at(global_pos: Vector2) -> bool:
 # ---------------------------------------------------------------------------
 func _refresh_badge() -> void:
 	if badge_eyebrow != null:
-		badge_eyebrow.text = tr("STR_SHOP_TRY_BADGE")
+		badge_eyebrow.text = tr("STR_SHOP_TRY_BADGE")  # keep-code: chữ theo dữ liệu (runtime)
 	if badge_name_label != null:
 		badge_name_label.text = TranslationServer.translate(str(Shop.item(_pen_id).get("name_key", "")))
 
@@ -220,5 +220,5 @@ func _end_stroke() -> void:
 func _move_tip(pos: Vector2) -> void:
 	if pen_tip == null:
 		return
-	pen_tip.visible = true
+	pen_tip.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	pen_tip.position = pos - pen_tip.size * 0.5

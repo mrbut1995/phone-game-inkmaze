@@ -7,8 +7,8 @@ extends TextureButton
 ## 4 tab (pen · theme · tool · coin) KHAI SẴN trong scene bố cục (`Tabs/*`), mỗi tab tự khai
 ## `category` + `label_key` + `icon_texture`. Bề rộng do HBox chia đều; cao = art × hệ số màn hình.
 ## ============================================================================
-const TAB_ACTIVE := preload("res://assets/images-png/shop/tab_active.png")
-const TAB_INACTIVE := preload("res://assets/images-png/shop/tab_inactive.png")
+const TAB_ACTIVE := preload("res://assets/images-png/shop/tab_active.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
+const TAB_INACTIVE := preload("res://assets/images-png/shop/tab_inactive.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
 
 signal tab_pressed(category: String)

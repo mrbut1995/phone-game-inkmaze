@@ -45,7 +45,7 @@ func _on_open() -> void:
 	_gold_cost = int(data.get("gold_cost", DEFAULT_GOLD_COST))
 
 	if label_title != null:
-		label_title.text = tr("STR_RETRY_POPUP_TITLE")
+		label_title.text = tr("STR_RETRY_POPUP_TITLE")  # keep-code: chữ theo dữ liệu (runtime)
 	if label_subtitle != null:
 		label_subtitle.text = _subtitle_text()
 	if label_gold_cost != null:
@@ -71,8 +71,8 @@ func _subtitle_text() -> String:
 func _on_close() -> void:
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
-			and gm.is_connected("life_changed", _on_life_changed):
-		gm.disconnect("life_changed", _on_life_changed)
+			and gm.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		gm.disconnect("life_changed", _on_life_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	if not _chosen:
 		_chosen = true
 		skip_requested.emit()
@@ -113,8 +113,8 @@ func _will_charge_life() -> bool:
 func _connect_life_signal() -> void:
 	var gm := _game_manager()
 	if gm != null and gm.has_signal("life_changed") \
-			and not gm.is_connected("life_changed", _on_life_changed):
-		gm.connect("life_changed", _on_life_changed)
+			and not gm.is_connected("life_changed", _on_life_changed):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		gm.connect("life_changed", _on_life_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 ## Lượt đổi khi popup đang mở (vd hồi xong 1 bút) -> vẽ lại hàng bút
@@ -135,10 +135,7 @@ func _refresh_pencils() -> void:
 		if wait > 0:
 			next_unix = Time.get_unix_time_from_system() + float(wait)
 	pencils.set_state(_lives_now(), _max_lives(), next_unix, will_charge)
-	# DEFERRED: tránh gọi lại set_state ngay trong lúc nó đang phát recover_finished
-	if not pencils.recover_finished.is_connected(_refresh_pencils):
-		pencils.recover_finished.connect(_refresh_pencils, CONNECT_DEFERRED)
-
+		# Dây `recover_finished -> _refresh_pencils` (deferred) khai trong nodes/popups/retry.tscn
 
 # ---------------------------------------------------------------------------
 # Nút bấm
@@ -193,11 +190,11 @@ func _show_warning(key: String) -> void:
 	if label_warning == null:
 		return
 	label_warning.text = tr(key)
-	label_warning.visible = true
+	label_warning.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 
 
 func _hide_warning() -> void:
 	if label_warning == null:
 		return
-	label_warning.text = ""
-	label_warning.visible = false
+	label_warning.text = ""  # keep-code: chữ theo dữ liệu (runtime)
+	label_warning.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)

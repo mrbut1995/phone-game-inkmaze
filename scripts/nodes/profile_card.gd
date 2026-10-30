@@ -44,4 +44,4 @@ func _refresh() -> void:
 
 
 func _on_profile_pressed() -> void:
-	emit_signal("pressed")
+	pressed.emit()

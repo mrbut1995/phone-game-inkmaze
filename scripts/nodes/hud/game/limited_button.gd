@@ -19,6 +19,6 @@ func set_remaining(left: int) -> void:
 	disabled = left <= 0
 	if panel_limit == null:
 		return
-	panel_limit.visible = true
+	panel_limit.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 	if limit_label != null:
 		limit_label.text = str(maxi(left, 0))

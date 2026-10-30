@@ -69,10 +69,10 @@ func _bind_loading() -> void:
 		_set_loading_progress(1.0)
 		_set_loading_box_visible(false)
 		return
-	if not loading.is_connected("progress_changed", _on_loading_progress):
-		loading.connect("progress_changed", _on_loading_progress)
-	if not loading.is_connected("loading_finished", _on_loading_finished):
-		loading.connect("loading_finished", _on_loading_finished)
+	if not loading.is_connected("progress_changed", _on_loading_progress):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loading.connect("progress_changed", _on_loading_progress)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+	if not loading.is_connected("loading_finished", _on_loading_finished):  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
+		loading.connect("loading_finished", _on_loading_finished)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 	_on_loading_progress(float(loading.call("progress")), "")
 	loading.call("start")
 
@@ -176,14 +176,14 @@ func _setup_animations() -> void:
 			layout.studio_label.modulate.a = 0.0
 		if layout.logo_container != null:
 			layout.logo_container.pivot_offset = layout.logo_container.size * 0.5
-			layout.logo_container.scale = Vector2(0.3, 0.3)
+			layout.logo_container.scale = Vector2(0.3, 0.3)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 			layout.logo_container.modulate.a = 0.0
 		if layout.title_label != null:
 			layout.title_label.modulate.a = 0.0
 		if layout.tagline_label != null:
 			layout.tagline_label.modulate.a = 0.0
 		if layout.fade_overlay != null:
-			layout.fade_overlay.visible = false
+			layout.fade_overlay.visible = false  # keep-code: trạng thái theo dữ liệu (runtime)
 			layout.fade_overlay.modulate.a = 0.0
 
 		# 1. Studio label hiện nhẹ
@@ -249,12 +249,12 @@ func _advance_to_title() -> void:
 	if layout.anim_player != null and layout.anim_player.has_animation("play_exit"):
 		if not layout.anim_player.animation_finished.is_connected(_on_exit_animation_finished):
 			# Guard: chỉ nối lại khi dây trong .tscn bị mất (layout đổi cấu trúc)
-			layout.anim_player.animation_finished.connect(_on_exit_animation_finished)
+			layout.anim_player.animation_finished.connect(_on_exit_animation_finished)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		layout.anim_player.play("play_exit")
 	else:
 		# Fallback khi layout thiếu animation "play_exit"
 		if layout.fade_overlay != null:
-			layout.fade_overlay.visible = true
+			layout.fade_overlay.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 			layout.fade_overlay.modulate.a = 0.0
 			var tw_out := create_tween()
 			tw_out.tween_property(layout.fade_overlay, "modulate:a", 1.0, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)

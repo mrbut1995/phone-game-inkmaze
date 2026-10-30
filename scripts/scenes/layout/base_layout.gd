@@ -15,7 +15,7 @@ func _ready() -> void:
 	_apply_safe_area()
 	# Lắng nghe thay đổi safe area (xoay màn hình, v.v.)
 	if has_node("/root/SafeArea"):
-		get_node("/root/SafeArea").changed.connect(_on_safe_area_changed)
+		get_node("/root/SafeArea").changed.connect(_on_safe_area_changed)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 
 
 func _process(_delta: float) -> void:
@@ -34,9 +34,9 @@ func _sync_shared_header() -> void:
 	# nếu không container sẽ co neo còn 0 và nội dung bên dưới bị thanh trên đè lên.
 	# Bề rộng của neo giữ nguyên theo thiết kế (không cộng bề rộng chip) để container không nới rộng.
 	var min_height := _content_min_height(bar)
-	if not is_equal_approx(header_anchor.custom_minimum_size.y, min_height):
-		header_anchor.custom_minimum_size = Vector2(
-			header_anchor.custom_minimum_size.x, min_height)
+	var anchor_min := header_anchor.custom_minimum_size
+	if not is_equal_approx(anchor_min.y, min_height):
+		header_anchor.custom_minimum_size = Vector2(anchor_min.x, min_height)
 	var target_pos := header_anchor.global_position
 	var target_size := header_anchor.size
 	var target_scale := header_anchor.get_global_transform().get_scale()

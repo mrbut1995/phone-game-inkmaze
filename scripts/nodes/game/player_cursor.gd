@@ -60,7 +60,7 @@ func _play_anim(anim_name: StringName, speed: float = 1.0) -> bool:
 	# demo…) KHÔNG đụng tới `Icon:position` ⇒ Icon kẹt lơ lửng ở -42px (bút "lệch hẳn bên trên").
 	# Nhả Icon về đúng chỗ trước khi chạy animation mới.
 	if anim_name != &"spawn_drop" and anim.current_animation == &"spawn_drop" and icon != null:
-		icon.position = Vector2.ZERO
+		icon.position = Vector2.ZERO  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	anim.speed_scale = speed
 	anim.play(anim_name)
 	return true
@@ -306,7 +306,7 @@ func stop_demo() -> void:
 	modulate.a = 1.0
 	# Nhả offset Icon (nếu cú rơi spawn_drop đang dở — xem chú thích `_play_anim`)
 	if icon != null:
-		icon.position = Vector2.ZERO
+		icon.position = Vector2.ZERO  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	start_idle()
 
 
@@ -336,7 +336,7 @@ func begin_writing() -> void:
 	_is_demoing = false
 	_lean = 0.0
 	if icon != null:
-		icon.position = Vector2.ZERO
+		icon.position = Vector2.ZERO  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	modulate.a = 1.0
 	rotation = 0.0
 	pivot_offset = size * tip_uv
@@ -424,7 +424,7 @@ func snap_to(target_pos: Vector2) -> void:
 	# Nhả luôn offset Icon (phòng khi cú rơi spawn_drop bị cắt giữa chừng hoặc scene thiếu
 	# AnimationPlayer — xem chú thích `_play_anim`)
 	if icon != null:
-		icon.position = Vector2.ZERO
+		icon.position = Vector2.ZERO  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	_stop_anim()
 	start_idle()
 
@@ -489,12 +489,12 @@ func play_celebration() -> void:
 func play_spawn_drop(_target_pos: Vector2) -> void:
 	_kill_move_tween()
 	if icon != null:
-		icon.position = Vector2(0.0, -42.0)
+		icon.position = Vector2(0.0, -42.0)  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 	scale = Vector2(0.7, 1.35)
 	modulate.a = 0.0
 	if not _play_anim(&"spawn_drop"):
 		if icon != null:
-			icon.position = Vector2.ZERO
+			icon.position = Vector2.ZERO  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 		scale = Vector2.ONE
 		modulate.a = 1.0
 		start_idle()

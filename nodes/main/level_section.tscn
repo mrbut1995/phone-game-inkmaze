@@ -62,3 +62,5 @@ grow_vertical = 0
 [connection signal="level_selected" from="MapArea/LevelMap" to="." method="_on_level_selected"]
 [connection signal="scrolled" from="MapArea/LevelMap" to="." method="_on_map_scrolled"]
 [connection signal="claim_requested" from="ChestWidget" to="." method="_on_chest_claim_requested"]
+
+[connection signal="gate_pressed" from="MapArea/LevelMap" to="." method="_on_gate_pressed"]

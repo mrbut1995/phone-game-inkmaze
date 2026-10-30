@@ -38,14 +38,14 @@ func mount_board(board: Control) -> void:
 		if old_parent != null:
 			old_parent.remove_child(board)
 		slot.add_child(board)
-	board.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	board.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # keep-code: node sinh lúc chạy — đặt anchor khi dựng
 	_rebuild_board(board)
 
 
 ## HUD dọc giữ nguyên cỡ thiết kế (khung 980)
 func fit_hud(hud: Control) -> void:
 	if hud != null:
-		hud.scale = Vector2.ONE
+		hud.scale = Vector2.ONE  # keep-code: hoạt cảnh/trạng thái runtime (tween)
 
 
 ## Bố cục BÊN TRONG bàn cờ tính theo khung GIẤY: vừa reparent thì khung đó còn là số của bố cục

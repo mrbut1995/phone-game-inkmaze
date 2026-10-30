@@ -10,7 +10,7 @@ extends ChallengeGameMode
 ##   · move_limit luôn nới đủ thắng (đường ngắn nhất + dự phòng)
 ## ============================================================================
 
-const MAZE_SIZE := 2.5
+const MAZE_SIZE := 2.5  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const WALL_VISIBLE_RATIO := 0.5
 ## Giống maze thường của ngày (DailyClassicGameMode): 20 bước · 60 giây
 const DESIGN_STEPS := 20

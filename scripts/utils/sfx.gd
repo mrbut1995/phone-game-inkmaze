@@ -61,7 +61,7 @@ const LIBRARY := {
 	"achievement": "sfx_achivement.wav",
 }
 
-const SOUND_DIR := "res://assets/sfx/"
+const SOUND_DIR := "res://assets/sfx/"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const DEFAULT_PITCH_JITTER := 0.04
 
 

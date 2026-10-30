@@ -11,7 +11,7 @@ extends Control
 ## ============================================================================
 
 ## Khoảng đệm giữa bóng và chip + mép an toàn của khung thiết kế
-const GAP := 4.0
+const GAP := 4.0  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const EDGE := 6.0
 
 @export var bg: Control = null
@@ -44,9 +44,9 @@ func popup_at(chip: Control, def: Dictionary, stars_now: int, claimed: bool, sta
 		lbl_reward.text = _reward_text(def)
 	if lbl_status != null:
 		if claimed:
-			lbl_status.text = "✓"
+			lbl_status.text = "✓"  # keep-code: chữ theo dữ liệu (runtime)
 		elif stars_now >= threshold:
-			lbl_status.text = tr("STR_DAILY_MILESTONE_CLAIM")
+			lbl_status.text = tr("STR_DAILY_MILESTONE_CLAIM")  # keep-code: chữ theo dữ liệu (runtime)
 		else:
 			lbl_status.text = "%d/%d ★" % [stars_now, threshold]
 		var tint := Color(0.13, 0.5, 0.27) if (claimed or stars_now >= threshold) \

@@ -178,11 +178,11 @@ func _update_hud(animated: bool = true) -> void:
 		return
 
 	if _displayed_sum == TARGET_SUM:
-		lbl_hud_sum.add_theme_color_override("font_color", Color("#2E7D32"))
+		lbl_hud_sum.add_theme_color_override("font_color", Color("#2E7D32"))  # keep-code: màu theo dữ liệu (runtime)
 	elif _displayed_sum > TARGET_SUM:
-		lbl_hud_sum.add_theme_color_override("font_color", Color("#C62828"))
+		lbl_hud_sum.add_theme_color_override("font_color", Color("#C62828"))  # keep-code: màu theo dữ liệu (runtime)
 	else:
-		lbl_hud_sum.add_theme_color_override("font_color", Color("#2C3E50"))
+		lbl_hud_sum.add_theme_color_override("font_color", Color("#2C3E50"))  # keep-code: màu theo dữ liệu (runtime)
 	UIAnim.play_pop_in(lbl_hud_sum, 0.0, 0.88, 0.2)
 
 

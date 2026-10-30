@@ -12,7 +12,7 @@ extends LevelHUD
 ## số chính chuyển ĐỎ để cảnh báo người chơi.
 ## ============================================================================
 
-const COLOR_WARN := Color(0.85, 0.2, 0.2)
+const COLOR_WARN := Color(0.85, 0.2, 0.2)  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 ## Node binding: khai `node_paths` + `NodePath` trong `challenge_hud.tscn` (2 bản dọc/ngang)
 @export var head_node: Label = null

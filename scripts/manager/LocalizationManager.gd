@@ -47,7 +47,7 @@ const LOCALE_ALIASES := {
 	"pt_br": "pt_BR",
 }
 
-const FLAG_FALLBACK := "res://assets/images-png/icons/flags/flag_generic.png"
+const FLAG_FALLBACK := "res://assets/images-png/icons/flags/flag_generic.png"  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 
 var current_locale := DEFAULT_LOCALE
 

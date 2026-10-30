@@ -83,7 +83,7 @@ func _setup_animations() -> void:
 	else:
 		# Fallback khi layout thiếu animation "play_entrance": hiệu ứng hé mở từ trang giấy trắng/ngà
 		if layout.fade_overlay != null:
-			layout.fade_overlay.visible = true
+			layout.fade_overlay.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 			layout.fade_overlay.modulate.a = 1.0
 			var tw_in := create_tween()
 			tw_in.tween_property(layout.fade_overlay, "modulate:a", 0.0, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -152,12 +152,12 @@ func _on_start_pressed() -> void:
 	if layout.anim_player != null and layout.anim_player.has_animation("play_exit"):
 		if not layout.anim_player.animation_finished.is_connected(_on_exit_animation_finished):
 			# Guard: chỉ nối lại khi dây trong .tscn bị mất (layout đổi cấu trúc)
-			layout.anim_player.animation_finished.connect(_on_exit_animation_finished)
+			layout.anim_player.animation_finished.connect(_on_exit_animation_finished)  # keep-code: signal của AUTOLOAD / node sinh lúc chạy — không phải node tĩnh
 		layout.anim_player.play("play_exit")
 	else:
 		# Fallback khi layout thiếu animation "play_exit"
 		if layout.fade_overlay != null:
-			layout.fade_overlay.visible = true
+			layout.fade_overlay.visible = true  # keep-code: trạng thái theo dữ liệu (runtime)
 			layout.fade_overlay.modulate.a = 0.0
 			var tw_out := create_tween()
 			tw_out.tween_property(layout.fade_overlay, "modulate:a", 1.0, 0.24).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
