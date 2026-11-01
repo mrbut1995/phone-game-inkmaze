@@ -25,12 +25,14 @@ signal tab_pressed(category: String)
 @export var icon_texture: Texture2D = null
 
 @export var LABEL_COLOR := Color("164663")
+## > 0 ⇒ tab cao đủ CẢ panel (bố cục NGANG: panel tự cao theo hàng tab, lề trên/dưới của panel = 0). Màn dọc: để 0.
+@export var panel_h := 0.0
 ## Vị trí theo hệ toạ độ hàng tab (đỉnh hàng = đỉnh vòng lò xo; giấy bắt đầu ở y=12), đơn vị thiết kế
 @export_group("Vị trí (đơn vị thiết kế)")
 @export var IDLE_TOP := 24.0             ## đỉnh art huy hiệu
 @export var IDLE_LABEL_TOP := 78.0       ## đỉnh nhãn dưới huy hiệu
 @export var FOCUS_BOTTOM := 108.0        ## đáy thẻ focus (≈ đáy giấy − 4) ⇒ thẻ nhô lên trên vòng lò xo
-@export var FOCUS_LABEL_FRAC := 0.665    ## đỉnh nhãn trong thẻ / cao thẻ
+@export var FOCUS_LABEL_FRAC := 0.60    ## đỉnh nhãn trong thẻ / cao thẻ
 @export_group("")
 
 var active := false
@@ -80,7 +82,9 @@ func _notification(what: int) -> void:
 
 ## Màn Cửa hàng gọi khi cỡ màn hình đổi: `active_h` = chiều cao hàng tab
 func apply_metrics(active_h: float) -> void:
-	if active_h > 0.0:
+	if panel_h > 0.0:
+		_row_h = ROW_H          # bố cục NGANG: panel luôn cỡ thiết kế (không co theo màn hình thấp) ⇒ thẻ không lệch khỏi panel
+	elif active_h > 0.0:
 		_row_h = active_h
 	_apply_own_size()
 
@@ -88,6 +92,7 @@ func apply_metrics(active_h: float) -> void:
 func set_label_text(text: String) -> void:
 	if label != null and not text.is_empty():
 		label.text = _strip_leading_symbols(text)
+		_apply_own_size()
 
 
 ## Tab đã có icon riêng ⇒ bỏ emoji/ký hiệu đứng đầu chuỗi dịch ("📖 GIẤY VỞ" → "GIẤY VỞ")
@@ -134,25 +139,57 @@ func _apply_own_size() -> void:
 	if _row_h <= 0.0:
 		_row_h = art_height()
 	var h := _row_h
-	custom_minimum_size = Vector2(0.0, h)
-	size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var width := size.x if size.x > 0.0 else 88.0
 	var k := h / ROW_H
+	custom_minimum_size = Vector2(0.0, maxf(h, panel_h * k) if panel_h > 0.0 else h)
+	size_flags_vertical = Control.SIZE_FILL if panel_h > 0.0 else Control.SIZE_SHRINK_CENTER
+	var width := size.x if size.x > 0.0 else 88.0
 	var tex: Texture2D = _tex_focus if active else _tex_idle
 	if _art != null:
 		_art.texture = tex
 		if tex != null:
 			var sz := tex.get_size() * 0.5 * k          # PNG 2× ⇒ cỡ logic = nửa PNG
 			var y := (FOCUS_BOTTOM * k - sz.y) if active else IDLE_TOP * k
-			_art.size = sz
-			_art.position = Vector2((width - sz.x) * 0.5, y)
+			_set_centered(_art, sz, y)
 	if label != null:
 		label.visible = true
 		if active and tex != null:
 			var csz := tex.get_size() * 0.5 * k
 			var top := FOCUS_BOTTOM * k - csz.y + csz.y * FOCUS_LABEL_FRAC
-			label.position = Vector2((width - csz.x) * 0.5, top)
-			label.size = Vector2(csz.x, csz.y * 0.24)
+			_set_centered(label, Vector2(csz.x, csz.y * 0.26), top)
+			_fit_label(csz.x - 8.0)
 		else:
-			label.position = Vector2(0.0, IDLE_LABEL_TOP * k)
-			label.size = Vector2(width, 20.0 * k)
+			label.anchor_left = 0.0
+			label.anchor_right = 1.0
+			label.anchor_top = 0.0
+			label.anchor_bottom = 0.0
+			label.offset_left = 0.0
+			label.offset_right = 0.0
+			label.offset_top = IDLE_LABEL_TOP * k
+			label.offset_bottom = (IDLE_LABEL_TOP + 20.0) * k
+			_fit_label(width - 4.0)
+
+
+## Đặt control CĂN GIỮA theo chiều ngang bằng ANCHOR (không phụ thuộc bề rộng nút lúc gọi ⇒ không lệch khi nút chưa có cỡ thật)
+func _set_centered(c: Control, sz: Vector2, top: float) -> void:
+	c.anchor_left = 0.5
+	c.anchor_right = 0.5
+	c.anchor_top = 0.0
+	c.anchor_bottom = 0.0
+	c.offset_left = -sz.x * 0.5
+	c.offset_right = sz.x * 0.5
+	c.offset_top = top
+	c.offset_bottom = top + sz.y
+
+
+## Thu nhỏ chữ nhãn cho VỪA bề rộng `max_w` (tên tab dài / dịch ngôn ngữ khác); cỡ gốc nhớ lại ở lần đầu
+var _label_base := 0
+func _fit_label(max_w: float, min_size := 7) -> void:
+	if label == null:
+		return
+	if _label_base <= 0:
+		_label_base = label.get_theme_font_size("font_size")
+	var font := label.get_theme_font("font")
+	var fs := _label_base
+	while fs > min_size and font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > max_w:
+		fs -= 1
+	label.add_theme_font_size_override("font_size", fs)

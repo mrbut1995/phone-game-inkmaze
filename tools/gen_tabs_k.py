@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """ART TAB kiểu DOCK (như dock màn Main) cho CỬA HÀNG và SỔ TAY THÀNH TỰU — SVG là NGUỒN, PNG xuất 2x.
 Mỗi tab có 2 art (icon đã nằm TRONG art; chữ nhãn do Label của scene, để dịch được):
-  <nhóm>/tab_idle_<k>.svg|png   huy hiệu tròn + icon (chưa chọn)      shop 56×62 · achievements 50×56 (logic)
+  <nhóm>/tab_idle_<k>.svg|png   huy hiệu tròn + icon (chưa chọn)      shop 56×62 · achievements 54×60 (logic)
   <nhóm>/tab_focus_<k>.svg|png  thẻ trắng viền màu + huy hiệu to + icon (đang chọn; chừa chỗ cho nhãn phía dưới)
-                                shop 96×126 · achievements 80×106 (logic)
+                                shop 81×106 · achievements 73×96 (logic)
 k: shop = pen · theme · tool · coin  |  achievements = all · levels · dungeon · daily · special
 ĐỔI THEME = thay file cùng tên + cùng kích thước logic (PNG = 2× logic). Dùng: python3 gen_tabs_k.py [thư_mục_assets]"""
 import os, sys
@@ -36,9 +36,11 @@ def focus(k):  # canvas 96×126: thẻ trắng + huy hiệu to (nhãn nằm ở 
     return 96, 126, (f'<rect x="4" y="7" width="88" height="118" rx="22" fill="{d}"/>'
                      f'<rect x="4" y="2" width="88" height="118" rx="22" fill="#FFFFFF" stroke="{f}" stroke-width="3"/>' + badge(k, 48, 40, 29))
 jobs = []
-for g, keys, s in (("shop", ("pen", "theme", "tool", "coin"), 1.0), ("achievements", ("all", "levels", "dungeon", "daily", "special"), 0.8333)):
+# (nhóm, danh sách tab, tỉ lệ huy hiệu chưa chọn, tỉ lệ thẻ focus) — Archive nhiều tab nên thẻ hẹp hơn, huy hiệu to hơn (không nhãn)
+for g, keys, si, sf in (("shop", ("pen", "theme", "tool", "coin"), 1.0, 0.84),
+                        ("achievements", ("all", "levels", "dungeon", "daily", "special"), 0.96, 0.76)):
     for k in keys:
-        for nm, fn in (("idle", idle), ("focus", focus)):
+        for nm, fn, s in (("idle", idle, si), ("focus", focus, sf)):
             w, h, body = fn(k)
             W, H = round(w * s), round(h * s)
             jobs.append((g, f"tab_{nm}_{k}", W, H, f'<g transform="scale({s})">{body}</g>'))

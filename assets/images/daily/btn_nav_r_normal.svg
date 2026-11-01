@@ -1,4 +1,2 @@
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 54' width='54' height='54' fill='none'>
-  <rect x='1.5' y='1.5' width='51' height='51' rx='14' fill='#FFFDF8' stroke='#6EA0C8' stroke-width='3'/>
-  <path d='M21 17 L32 27 L21 37' stroke='#163A58' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/>
-</svg>
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 27" width="27" height="27"><rect x="1" y="3" width="25" height="24" rx="12.5" fill="#D9CCB8"/><rect x="2.0" y="2.0" width="23" height="22" rx="11.5" fill="#FFFFFF" stroke="#E3D8C6" stroke-width="2"/><polyline points="10.3,5.5 16.7,11.5 10.3,17.5" fill="none" stroke="#164663" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>

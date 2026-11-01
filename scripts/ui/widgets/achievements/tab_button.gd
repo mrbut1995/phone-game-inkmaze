@@ -37,10 +37,9 @@ const J_ACTIVE_ICON_TOP := 0.13
 const J_ACTIVE_LABEL_TOP := 0.64
 ## (bản DỌC) art kiểu DOCK `tab_idle_<k>.png` / `tab_focus_<k>.png` (2×, icon nằm trong art — xem tools/gen_tabs_k.py)
 const J_ROW_H := 92.0          ## cao tab thiết kế; art co theo `cao thực / J_ROW_H`
-const J_IDLE_TOP := 24.0       ## đỉnh art huy hiệu (đỉnh tab = đỉnh vòng lò xo)
-const J_IDLE_LABEL_TOP := 72.0
+const J_IDLE_TOP := 22.0       ## đỉnh art huy hiệu (đỉnh tab = đỉnh vòng lò xo); tab chưa chọn KHÔNG nhãn ⇒ huy hiệu nằm giữa giấy
 const J_FOCUS_BOTTOM := 88.0   ## đáy thẻ focus ⇒ thẻ nhô lên trên vòng lò xo
-const J_FOCUS_LABEL_FRAC := 0.665
+const J_FOCUS_LABEL_FRAC := 0.60
 ## (bản NGANG) ô vuông trắng của tab chưa chọn
 const J_BADGE_ICON := 0.62     ## icon / cạnh ô vuông
 ## Màu ĐẬM của icon khi chưa chọn (trùng màu gờ đáy trong art) — theo category; thiếu ⇒ navy
@@ -154,7 +153,6 @@ func _layout_j(on: bool) -> void:
 		_layout_j_side(on)
 		return
 	var h := maxf(size.y, custom_minimum_size.y)
-	var w := size.x if size.x > 0.0 else 66.0
 	var k := h / J_ROW_H
 	var tex: Texture2D = _j_focus if on else _j_idle
 	var ic := get_node_or_null("Icon") as Control
@@ -164,21 +162,25 @@ func _layout_j(on: bool) -> void:
 		_j_art.texture = tex
 		if tex != null:
 			var sz := tex.get_size() * 0.5 * k
-			_j_art.size = sz
-			_j_art.position = Vector2((w - sz.x) * 0.5, (J_FOCUS_BOTTOM * k - sz.y) if on else J_IDLE_TOP * k)
+			_j_center(_j_art, sz, (J_FOCUS_BOTTOM * k - sz.y) if on else J_IDLE_TOP * k)
 	if label != null:
-		label.visible = true
-		label.anchor_left = 0.0
-		label.anchor_right = 0.0
-		label.anchor_top = 0.0
-		label.anchor_bottom = 0.0
+		label.visible = on         # NHIỀU TAB ⇒ chỉ tab đang chọn hiện chữ
 		if on and tex != null:
 			var csz := tex.get_size() * 0.5 * k
-			label.position = Vector2((w - csz.x) * 0.5, J_FOCUS_BOTTOM * k - csz.y + csz.y * J_FOCUS_LABEL_FRAC)
-			label.size = Vector2(csz.x, csz.y * 0.24)
-		else:
-			label.position = Vector2(0.0, J_IDLE_LABEL_TOP * k)
-			label.size = Vector2(w, 20.0 * k)
+			_j_center(label, Vector2(csz.x, csz.y * 0.26), J_FOCUS_BOTTOM * k - csz.y + csz.y * J_FOCUS_LABEL_FRAC)
+			_fit_label(csz.x - 6.0)
+
+
+## Căn GIỮA theo chiều ngang bằng ANCHOR (không phụ thuộc bề rộng nút lúc gọi ⇒ lần đầu vào màn không bị lệch chữ)
+func _j_center(c: Control, sz: Vector2, top: float) -> void:
+	c.anchor_left = 0.5
+	c.anchor_right = 0.5
+	c.anchor_top = 0.0
+	c.anchor_bottom = 0.0
+	c.offset_left = -sz.x * 0.5
+	c.offset_right = sz.x * 0.5
+	c.offset_top = top
+	c.offset_bottom = top + sz.y
 
 
 func _notification(what: int) -> void:
@@ -193,6 +195,22 @@ func _emit_tab_pressed() -> void:
 func set_label_text(text: String) -> void:
 	if label != null:
 		label.text = text
+		if j_style and not j_side:
+			_layout_j(active)
+
+
+## Thu nhỏ chữ nhãn cho VỪA bề rộng `max_w` (vd "TẤT CẢ (28)"); cỡ gốc nhớ lại ở lần đầu
+var _label_base := 0
+func _fit_label(max_w: float, min_size := 7) -> void:
+	if label == null:
+		return
+	if _label_base <= 0:
+		_label_base = label.get_theme_font_size("font_size")
+	var font := label.get_theme_font("font")
+	var fs := _label_base
+	while fs > min_size and font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > max_w:
+		fs -= 1
+	label.add_theme_font_size_override("font_size", fs)
 
 
 ## Đổi trạng thái chọn: đổi art + màu nhãn có hiệu ứng transition mượt
