@@ -21,6 +21,7 @@
 
 [node name="Landscape" unique_id=1978474116 node_paths=PackedStringArray("logo", "profile_card", "coin_chip", "star_chip", "btn_settings", "event_header", "event_carousel", "level_section", "dock_shop", "dock_ranking", "dock_daily", "dock_badges", "stamp_panel", "stamp_label", "header_anchor") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
+header_inset_left = 10.0
 logo = NodePath("TopBar/LogoBlock/Logo")
 profile_card = NodePath("TopBar/ProfileCard")
 coin_chip = NodePath("TopBar/CoinChip")
@@ -240,7 +241,7 @@ size_flags_vertical = 4
 [node name="Settings" type="TextureButton" parent="TopBar" parent_id_path=PackedInt32Array(837555641) index="7" unique_id=772786432]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 4
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("8_o5gjt")
 texture_pressed = ExtResource("9_kncrx")

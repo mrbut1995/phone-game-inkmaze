@@ -16,11 +16,24 @@
 [ext_resource uid="uid://b5tms3l64tlpv" type="Texture2D" path="res://assets/images-png/achievements/tab_ico_special.png" id="35_i4"]
 [ext_resource type="PackedScene" path="res://nodes/achievements/card_big_land.tscn" id="22_card"]
 [ext_resource type="PackedScene" path="res://nodes/achievements/thumb.tscn" id="23_thumb"]
+[ext_resource type="Texture2D" path="res://assets/images-png/achievements/seg_track_land.png" id="seg_land"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_segland"]
+texture = ExtResource("seg_land")
+texture_margin_left = 30.0
+texture_margin_top = 28.0
+texture_margin_right = 30.0
+texture_margin_bottom = 28.0
+content_margin_left = 16.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 8.0
+axis_stretch_vertical = 2
 
 [node name="Landscape" node_paths=PackedStringArray("btn_back", "tabs_box", "card_area", "scroll", "pages_host", "dots_box", "empty_label", "stamp_label", "thumbs_box") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/Back")
-tabs_box = NodePath("Sheet/Body/LeftCol/Tabs")
+tabs_box = NodePath("Sheet/Body/LeftCol/TabsPanel/Tabs")
 card_area = NodePath("Sheet/Body/RightCol/CardArea")
 scroll = NodePath("Sheet/Body/RightCol/CardArea/Scroll")
 pages_host = NodePath("Sheet/Body/RightCol/CardArea/Scroll/Pages")
@@ -124,44 +137,49 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.27
 theme_override_constants/separation = 12
 
-[node name="Tabs" type="GridContainer" parent="Sheet/Body/LeftCol" index="0"]
+[node name="TabsPanel" type="PanelContainer" parent="Sheet/Body/LeftCol" index="0"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_segland")
+
+[node name="Tabs" type="GridContainer" parent="Sheet/Body/LeftCol/TabsPanel" index="0"]
 layout_mode = 2
 theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 8
+theme_override_constants/v_separation = 6
 columns = 1
 
-[node name="Tab0" parent="Sheet/Body/LeftCol/Tabs" index="0" instance=ExtResource("20_tab")]
+[node name="Tab0" parent="Sheet/Body/LeftCol/TabsPanel/Tabs" index="0" instance=ExtResource("20_tab")]
 layout_mode = 2
 
-[node name="Icon" parent="Sheet/Body/LeftCol/Tabs/Tab0" index="1"]
+[node name="Icon" parent="Sheet/Body/LeftCol/TabsPanel/Tabs/Tab0" index="1"]
 texture = ExtResource("31_i0")
 
-[node name="Tab1" parent="Sheet/Body/LeftCol/Tabs" index="1" instance=ExtResource("20_tab")]
+[node name="Tab1" parent="Sheet/Body/LeftCol/TabsPanel/Tabs" index="1" instance=ExtResource("20_tab")]
 layout_mode = 2
 category = "levels"
 
-[node name="Icon" parent="Sheet/Body/LeftCol/Tabs/Tab1" index="1"]
+[node name="Icon" parent="Sheet/Body/LeftCol/TabsPanel/Tabs/Tab1" index="1"]
 texture = ExtResource("32_i1")
 
-[node name="Tab2" parent="Sheet/Body/LeftCol/Tabs" index="2" instance=ExtResource("20_tab")]
+[node name="Tab2" parent="Sheet/Body/LeftCol/TabsPanel/Tabs" index="2" instance=ExtResource("20_tab")]
 layout_mode = 2
 category = "dungeon"
 
-[node name="Icon" parent="Sheet/Body/LeftCol/Tabs/Tab2" index="1"]
+[node name="Icon" parent="Sheet/Body/LeftCol/TabsPanel/Tabs/Tab2" index="1"]
 texture = ExtResource("33_i2")
 
-[node name="Tab3" parent="Sheet/Body/LeftCol/Tabs" index="3" instance=ExtResource("20_tab")]
+[node name="Tab3" parent="Sheet/Body/LeftCol/TabsPanel/Tabs" index="3" instance=ExtResource("20_tab")]
 layout_mode = 2
 category = "daily"
 
-[node name="Icon" parent="Sheet/Body/LeftCol/Tabs/Tab3" index="1"]
+[node name="Icon" parent="Sheet/Body/LeftCol/TabsPanel/Tabs/Tab3" index="1"]
 texture = ExtResource("34_i3")
 
-[node name="Tab4" parent="Sheet/Body/LeftCol/Tabs" index="4" instance=ExtResource("20_tab")]
+[node name="Tab4" parent="Sheet/Body/LeftCol/TabsPanel/Tabs" index="4" instance=ExtResource("20_tab")]
 layout_mode = 2
 category = "special"
 
-[node name="Icon" parent="Sheet/Body/LeftCol/Tabs/Tab4" index="1"]
+[node name="Icon" parent="Sheet/Body/LeftCol/TabsPanel/Tabs/Tab4" index="1"]
 texture = ExtResource("35_i4")
 
 [node name="Spacer" type="Control" parent="Sheet/Body/LeftCol" index="1"]

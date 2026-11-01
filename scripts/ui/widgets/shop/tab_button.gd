@@ -7,9 +7,13 @@ extends TextureButton
 ## 4 tab (pen · theme · tool · coin) KHAI SẴN trong scene bố cục (`Tabs/*`), mỗi tab tự khai
 ## `category` + `label_key` + `icon_texture`. Bề rộng do HBox chia đều; cao = art × hệ số màn hình.
 ## ============================================================================
-const TAB_ACTIVE := preload("res://assets/images-png/shop/tab_active.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
-const TAB_INACTIVE := preload("res://assets/images-png/shop/tab_inactive.png")  # keep-code: hằng dùng cho hiệu ứng/dữ liệu runtime (không phải bố cục tĩnh)
 const UIAnim := preload("res://scripts/utils/ui_anim.gd")
+## Art theo TỪNG tab (kiểu DOCK): `tab_idle_<category>.png` (huy hiệu + icon) và `tab_focus_<category>.png`
+## (thẻ trắng + huy hiệu to + icon) — xuất 2× (xem tools/gen_tabs_k.py). Icon đã NẰM TRONG art ⇒ script không vẽ gì.
+## ĐỔI THEME = thay file cùng tên + cùng kích thước logic.
+const ART_DIR := "res://assets/images-png/shop/"
+## Chiều cao hàng tab thiết kế (cao tab ở màn dọc) — art co theo `hàng thực / ROW_H`
+const ROW_H := 84.0
 
 signal tab_pressed(category: String)
 
@@ -20,22 +24,28 @@ signal tab_pressed(category: String)
 ## Icon của tab (art trắng nav_*.svg) — KHAI TRONG SCENE; để trống thì chỉ hiện nhãn
 @export var icon_texture: Texture2D = null
 
-## Màu icon + nhãn theo trạng thái
-@export var COLOR_ACTIVE := Color(1, 1, 1)
-@export var COLOR_IDLE := Color(0.1843, 0.3725, 0.5098)
-## Bố cục bên trong tab theo CHIỀU CAO tab: lề trên của icon, cỡ icon, vị trí nhãn
-@export var ICON_TOP := 0.10
-@export var ICON_SIZE := 0.43
-@export var LABEL_TOP := 0.55
+@export var LABEL_COLOR := Color("164663")
+## Vị trí theo hệ toạ độ hàng tab (đỉnh hàng = đỉnh vòng lò xo; giấy bắt đầu ở y=12), đơn vị thiết kế
+@export_group("Vị trí (đơn vị thiết kế)")
+@export var IDLE_TOP := 24.0             ## đỉnh art huy hiệu
+@export var IDLE_LABEL_TOP := 78.0       ## đỉnh nhãn dưới huy hiệu
+@export var FOCUS_BOTTOM := 108.0        ## đáy thẻ focus (≈ đáy giấy − 4) ⇒ thẻ nhô lên trên vòng lò xo
+@export var FOCUS_LABEL_FRAC := 0.665    ## đỉnh nhãn trong thẻ / cao thẻ
+@export_group("")
 
 var active := false
 var _row_h := 0.0
+var _tex_idle: Texture2D = null
+var _tex_focus: Texture2D = null
+var _art: TextureRect = null
 
 @export var label: Label = null
 @export var icon: TextureRect = null
 
 
 func _ready() -> void:
+	stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+	_build_art()
 	set_label_text(TranslationServer.translate(label_key))
 	if icon != null:
 		icon.texture = icon_texture
@@ -43,6 +53,24 @@ func _ready() -> void:
 	UIAnim.attach_press_down(self)
 	_apply_colors()
 	_apply_own_size()
+
+
+## Nạp art riêng của tab này + node con hiển thị art (nằm DƯỚI nhãn, không nhận chuột)
+func _build_art() -> void:
+	var key := category if not category.is_empty() else "pen"
+	_tex_idle = _load(ART_DIR + "tab_idle_%s.png" % key)
+	_tex_focus = _load(ART_DIR + "tab_focus_%s.png" % key)
+	_art = TextureRect.new()
+	_art.name = "TabArt"
+	_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_art.stretch_mode = TextureRect.STRETCH_SCALE
+	add_child(_art)
+	move_child(_art, 0)
+
+
+static func _load(path: String) -> Texture2D:
+	return load(path) as Texture2D if ResourceLoader.exists(path) else null
 
 
 func _notification(what: int) -> void:
@@ -72,17 +100,9 @@ func _emit_tab_pressed() -> void:
 	tab_pressed.emit(category)
 
 
-## Chiều cao ART tab — màn Cửa hàng dùng làm mốc cỡ hàng tab
+## Chiều cao hàng tab thiết kế — màn Cửa hàng dùng làm mốc cỡ hàng tab
 static func art_height() -> float:
-	return float(TAB_ACTIVE.get_height())
-
-
-## Tỉ lệ chiều cao tab CHƯA CHỌN / ĐANG CHỌN (hai art cùng cao ⇒ 1,0)
-static func inactive_ratio() -> float:
-	var active_h := float(TAB_ACTIVE.get_height())
-	if active_h <= 0.0:
-		return 1.0
-	return float(TAB_INACTIVE.get_height()) / active_h
+	return ROW_H
 
 
 func set_active(on: bool) -> void:
@@ -90,12 +110,7 @@ func set_active(on: bool) -> void:
 	active = on
 	if label != null:
 		label.theme_type_variation = &"ShopTabLabelActive" if on else &"ShopTabLabel"
-	var art: Texture2D = TAB_ACTIVE if on else TAB_INACTIVE
-	texture_normal = art
-	texture_hover = art
-	texture_pressed = art
-	texture_focused = art
-	texture_disabled = art
+	# Nút không có art riêng (trong suốt); art tab là node con `TabArt` (xem `_apply_own_size`)
 	_apply_colors()
 	_apply_own_size()
 	# Pop nhẹ khi tab được KÍCH HOẠT để tạo cảm giác responsive
@@ -107,26 +122,37 @@ func set_active(on: bool) -> void:
 
 
 func _apply_colors() -> void:
-	var color := COLOR_ACTIVE if active else COLOR_IDLE
 	if label != null:
-		label.add_theme_color_override("font_color", color)
+		label.add_theme_color_override("font_color", LABEL_COLOR)
+		label.visible = true
 	if icon != null:
-		icon.self_modulate = color
+		icon.visible = false   # icon đã nằm trong art
 
 
-## Cao theo hàng tab; icon + nhãn dàn lại theo cỡ thật của nút
+## Art + nhãn dàn lại theo cỡ thật của nút. Thẻ focus giữ NGUYÊN tỉ lệ (dọc), canh giữa ô, nhô lên trên vòng lò xo.
 func _apply_own_size() -> void:
 	if _row_h <= 0.0:
 		_row_h = art_height()
-	var h := _row_h if active else _row_h * inactive_ratio()
+	var h := _row_h
 	custom_minimum_size = Vector2(0.0, h)
 	size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var width := size.x if size.x > 0.0 else custom_minimum_size.x
-	var offset = Vector2(0,0 if active else 5)
-	if icon != null:
-		var icon_px := h * ICON_SIZE
-		icon.size = Vector2(icon_px, icon_px) + offset
-		icon.position = Vector2((width - icon_px) * 0.5, h * ICON_TOP)
+	var width := size.x if size.x > 0.0 else 88.0
+	var k := h / ROW_H
+	var tex: Texture2D = _tex_focus if active else _tex_idle
+	if _art != null:
+		_art.texture = tex
+		if tex != null:
+			var sz := tex.get_size() * 0.5 * k          # PNG 2× ⇒ cỡ logic = nửa PNG
+			var y := (FOCUS_BOTTOM * k - sz.y) if active else IDLE_TOP * k
+			_art.size = sz
+			_art.position = Vector2((width - sz.x) * 0.5, y)
 	if label != null:
-		label.position = Vector2(0.0, h * LABEL_TOP) + offset
-		label.size = Vector2(width, h * (0.96 - LABEL_TOP))
+		label.visible = true
+		if active and tex != null:
+			var csz := tex.get_size() * 0.5 * k
+			var top := FOCUS_BOTTOM * k - csz.y + csz.y * FOCUS_LABEL_FRAC
+			label.position = Vector2((width - csz.x) * 0.5, top)
+			label.size = Vector2(csz.x, csz.y * 0.24)
+		else:
+			label.position = Vector2(0.0, IDLE_LABEL_TOP * k)
+			label.size = Vector2(width, 20.0 * k)

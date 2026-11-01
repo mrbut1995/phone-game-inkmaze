@@ -5,6 +5,11 @@ class_name BaseLayout
 ## (node dùng chung của base_layout) được kéo về đúng vị trí/kích thước/tỉ lệ của nó.
 @export var header_anchor: Control = null
 
+## Lề thêm (px thiết kế) trừ vào 2 mép của `TopBar` so với `header_anchor` — để nút/ảnh đầu thanh
+## (VD khung avatar) không đè lên mép vở. 0 = như cũ.
+@export var header_inset_left := 0.0
+@export var header_inset_right := 0.0
+
 ## (Tuỳ chọn) Node Control dùng làm khoảng đệm dưới cho safe area Android.
 ## Đặt nó ở cuối VBoxContainer chính của layout — base_layout tự điều chỉnh chiều cao.
 @export var bottom_safe_spacer: Control = null
@@ -39,9 +44,9 @@ func _sync_shared_header() -> void:
 	var anchor_min := header_anchor.custom_minimum_size
 	if not is_equal_approx(anchor_min.y, min_height):
 		header_anchor.custom_minimum_size = Vector2(anchor_min.x, min_height)
-	var target_pos := header_anchor.global_position
-	var target_size := header_anchor.size
 	var target_scale := header_anchor.get_global_transform().get_scale()
+	var target_pos := header_anchor.global_position + Vector2(header_inset_left * target_scale.x, 0.0)
+	var target_size := header_anchor.size - Vector2(header_inset_left + header_inset_right, 0.0)
 	if bar.global_position != target_pos:
 		bar.global_position = target_pos
 	if bar.size != target_size:

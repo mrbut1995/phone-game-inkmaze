@@ -18,6 +18,18 @@
 [ext_resource type="Texture2D" uid="uid://dy7pg6bsg4d51" path="res://assets/images-png/shop/nav_paper.png" id="nav_paper"]
 [ext_resource type="Texture2D" uid="uid://boypfmedvt21m" path="res://assets/images-png/shop/nav_pen.png" id="nav_pen"]
 [ext_resource type="Texture2D" uid="uid://dfyys4rb7hcss" path="res://assets/images-png/shop/nav_tool.png" id="nav_tool"]
+[ext_resource type="Texture2D" path="res://assets/images-png/shop/nav_bar.png" id="nav_bar_land"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_navland"]
+texture = ExtResource("nav_bar_land")
+texture_margin_left = 28.0
+texture_margin_top = 30.0
+texture_margin_right = 28.0
+texture_margin_bottom = 30.0
+content_margin_left = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+axis_stretch_horizontal = 2
 
 [sub_resource type="Animation" id="Animation_wallet_pop_lsh"]
 resource_name = "wallet_pop"
@@ -102,7 +114,7 @@ _data = {
 [node name="Landscape" unique_id=1521884553 node_paths=PackedStringArray("btn_back", "tabs_box", "list_box", "scroll", "wallet_count", "wallet_plus", "pager", "page_label", "btn_prev", "btn_next", "dots_box", "btn_gift", "top_bar", "wallet_bar", "life_chip", "gift_banner", "tab_line", "pad_slot", "item_grid", "doodle_pad", "noads_row", "header_anchor") instance=ExtResource("1_parent")]
 script = ExtResource("2_layout")
 btn_back = NodePath("TopBar/Back")
-tabs_box = NodePath("Body/RightCol/Tabs")
+tabs_box = NodePath("Body/RightCol/TabsPanel/Tabs")
 list_box = NodePath("Body/RightCol/Content/List")
 scroll = NodePath("Body/RightCol/Content")
 wallet_count = NodePath("TopBar/CoinChip/Content/Value")
@@ -252,32 +264,37 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.6
 theme_override_constants/separation = 6
 
-[node name="Tabs" type="HBoxContainer" parent="Body/RightCol" index="0" unique_id=1594647430]
+[node name="TabsPanel" type="PanelContainer" parent="Body/RightCol" index="0"]
 layout_mode = 2
-theme_override_constants/separation = 8
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_navland")
 
-[node name="Tab_pen" parent="Body/RightCol/Tabs" index="0" unique_id=1973613049 instance=ExtResource("20_tab")]
+[node name="Tabs" type="HBoxContainer" parent="Body/RightCol/TabsPanel" index="0" unique_id=1594647430]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Tab_pen" parent="Body/RightCol/TabsPanel/Tabs" index="0" unique_id=1973613049 instance=ExtResource("20_tab")]
 layout_mode = 2
 size_flags_horizontal = 3
 category = "pen"
 label_key = "STR_SHOP_TAB_PEN"
 icon_texture = ExtResource("nav_pen")
 
-[node name="Tab_theme" parent="Body/RightCol/Tabs" index="1" unique_id=407913860 instance=ExtResource("20_tab")]
+[node name="Tab_theme" parent="Body/RightCol/TabsPanel/Tabs" index="1" unique_id=407913860 instance=ExtResource("20_tab")]
 layout_mode = 2
 size_flags_horizontal = 3
 category = "theme"
 label_key = "STR_SHOP_TAB_THEME"
 icon_texture = ExtResource("nav_paper")
 
-[node name="Tab_tool" parent="Body/RightCol/Tabs" index="2" unique_id=1177983095 instance=ExtResource("20_tab")]
+[node name="Tab_tool" parent="Body/RightCol/TabsPanel/Tabs" index="2" unique_id=1177983095 instance=ExtResource("20_tab")]
 layout_mode = 2
 size_flags_horizontal = 3
 category = "tool"
 label_key = "STR_SHOP_TAB_TOOL"
 icon_texture = ExtResource("nav_tool")
 
-[node name="Tab_coin" parent="Body/RightCol/Tabs" index="3" unique_id=1724387667 instance=ExtResource("20_tab")]
+[node name="Tab_coin" parent="Body/RightCol/TabsPanel/Tabs" index="3" unique_id=1724387667 instance=ExtResource("20_tab")]
 layout_mode = 2
 size_flags_horizontal = 3
 category = "coin"
@@ -285,6 +302,7 @@ label_key = "STR_SHOP_TAB_COIN"
 icon_texture = ExtResource("nav_coin")
 
 [node name="TabLine" type="ColorRect" parent="Body/RightCol" index="1" unique_id=92438417]
+visible = false
 custom_minimum_size = Vector2(0, 3)
 layout_mode = 2
 mouse_filter = 2

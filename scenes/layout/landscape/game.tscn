@@ -4,16 +4,14 @@
 [ext_resource type="Theme" uid="uid://tgkncqeoxj2g" path="res://resources/settings/theme_default.tres" id="2_d1bci"]
 [ext_resource type="Script" uid="uid://bxr5a1ltiv2i8" path="res://scripts/ui/layouts/game_layout_landscape.gd" id="2_mqnje"]
 [ext_resource type="Texture2D" uid="uid://b0cfor5ac21gf" path="res://assets/images-landscape-png/game/header_card.png" id="3_head_bg"]
-[ext_resource type="Texture2D" uid="uid://6udgh5v4ekry" path="res://assets/images-png/game/btn_pause_normal.png" id="4_6ckgu"]
-[ext_resource type="Texture2D" uid="uid://c0p6xp7ptpbnw" path="res://assets/images-png/game/btn_pause_pressed.png" id="5_d1bci"]
-[ext_resource type="Texture2D" uid="uid://yofg7h0dxuld" path="res://assets/images-png/game/btn_pause_disabled.png" id="6_ihder"]
-[ext_resource type="Texture2D" uid="uid://cqf1v0873mcr" path="res://assets/images-png/game/btn_pause_focus.png" id="7_0wfj4"]
-[ext_resource type="Texture2D" uid="uid://bvgtydu0gct1p" path="res://assets/images-png/game/btn_help_normal.png" id="8_help_n"]
-[ext_resource type="Texture2D" uid="uid://c3uwde13d8a8i" path="res://assets/images-png/game/btn_help_pressed.png" id="9_help_p"]
-[ext_resource type="Texture2D" uid="uid://dksftry4xsxbo" path="res://assets/images-png/game/btn_help_disabled.png" id="10_help_d"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_normal.png" id="4_6ckgu"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_pressed.png" id="5_d1bci"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_pause_chip_disabled.png" id="6_ihder"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_help_chip_normal.png" id="8_help_n"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_help_chip_pressed.png" id="9_help_p"]
+[ext_resource type="Texture2D" path="res://assets/images-png/game/btn_help_chip_disabled.png" id="10_help_d"]
 [ext_resource type="PackedScene" uid="uid://dxpf4nu3wy753" path="res://nodes/hud/landscape/game/action_bar.tscn" id="11_actionbar"]
 [ext_resource type="PackedScene" uid="uid://cchuuwsep7gyy" path="res://nodes/hud/landscape/game/game_hud.tscn" id="12_landhud"]
-[ext_resource type="Texture2D" uid="uid://dt35romkvsuuq" path="res://assets/images-png/game/btn_help_focus.png" id="13_ayin1"]
 
 [node name="Landscape" unique_id=949375316 node_paths=PackedStringArray("landscape_action_bar", "status_bar", "hud_slot", "board_holder", "pause_btn", "instruction_btn", "level_label", "subtitle_label", "header_anchor") instance=ExtResource("1_parent")]
 theme = ExtResource("2_d1bci")
@@ -84,12 +82,16 @@ alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Pause" type="TextureButton" parent="TopBar/HeaderRow/Bar" index="0" unique_id=1765245490]
+custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 5
 texture_normal = ExtResource("4_6ckgu")
 texture_pressed = ExtResource("5_d1bci")
 texture_hover = ExtResource("4_6ckgu")
 texture_disabled = ExtResource("6_ihder")
-texture_focused = ExtResource("7_0wfj4")
 
 [node name="Title" type="VBoxContainer" parent="TopBar/HeaderRow/Bar" index="1" unique_id=759259273]
 layout_mode = 2
@@ -115,13 +117,16 @@ theme_type_variation = &"GameTitle"
 horizontal_alignment = 1
 
 [node name="Instruction" type="TextureButton" parent="TopBar/HeaderRow/Bar" index="2" unique_id=816551734]
+custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 5
 texture_normal = ExtResource("8_help_n")
 texture_pressed = ExtResource("9_help_p")
 texture_hover = ExtResource("8_help_n")
 texture_disabled = ExtResource("10_help_d")
-texture_focused = ExtResource("13_ayin1")
 
 [node name="Spacer" type="Control" parent="Content/LeftCol" index="1" unique_id=417899857]
 layout_mode = 2

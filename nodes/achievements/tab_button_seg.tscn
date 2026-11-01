@@ -60,7 +60,7 @@ texture_margin_right = 18.0
 texture_margin_bottom = 18.0
 
 [node name="TabButton" type="Button" unique_id=1223474404 node_paths=PackedStringArray("label", "tab_icon")]
-custom_minimum_size = Vector2(0, 62)
+custom_minimum_size = Vector2(0, 80)
 size_flags_horizontal = 3
 focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_2moag")
@@ -69,6 +69,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_dm3jp")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_a53n3")
 theme_override_styles/focus = SubResource("StyleBoxTexture_uqvb5")
 script = ExtResource("1_script")
+j_style = true
 art_active = ExtResource("2_art_active")
 art_idle = ExtResource("3_art_idle")
 label = NodePath("Label")
